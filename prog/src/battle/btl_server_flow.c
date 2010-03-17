@@ -35,6 +35,8 @@
 #include "btl_server_local.h"
 #include "btl_server.h"
 #include "btl_server_flow.h"
+#include "btl_server_flow_tool.h"
+
 
 #define SOGA_DEBUG  //暫定でsogaがデバッグした箇所
 
@@ -475,7 +477,7 @@ static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_
 static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, WazaID waza );
 static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam,
-    BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag, u16* dstDamage );
+    BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag, BOOL fEnableRand, u16* dstDamage );
 static void scproc_Fight_Damage_Kickback( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u32 wazaDamage );
 static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage, BTL_HANDEX_STR_PARAMS* str );
 static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
@@ -1140,9 +1142,10 @@ static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk )
     {
       BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, i );
       u8 side = BTL_MAIN_GetClientSide( wk->mainModule, i );
-      if( BTL_PARTY_GetAliveMemberCount(party) )
+      u8 aliveCnt = BTL_PARTY_GetAliveMemberCount( party );
+      if( aliveCnt )
       {
-        BTL_N_Printf( DBGSTR_SVFL_ClientPokeStillAlive, i, side);
+        BTL_N_Printf( DBGSTR_SVFL_ClientPokeStillAlive, i, side, aliveCnt );
         pokeExist[ side ] = TRUE;
       }
       else{
@@ -5628,7 +5631,7 @@ static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
   {
     bpp[i] = BTL_POKESET_Get( targets, i );
     critical_flg[i] = scEvent_CheckCritical( wk, attacker, bpp[i], wazaParam->wazaID );
-    fFixDamage = scEvent_CalcDamage( wk, attacker, bpp[i], wazaParam, affAry[i], dmg_ratio, critical_flg[i], &dmg[i] );
+    fFixDamage = scEvent_CalcDamage( wk, attacker, bpp[i], wazaParam, affAry[i], dmg_ratio, critical_flg[i], TRUE, &dmg[i] );
     if( fFixDamage ){
       affAry[i] = BTL_TYPEAFF_100;
       critical_flg[i] = FALSE;
@@ -5803,7 +5806,7 @@ static u32 svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
   {
     fCritical = scEvent_CheckCritical( wk, attacker, defender, wazaParam->wazaID );
     fFixDamage = scEvent_CalcDamage( wk, attacker, defender, wazaParam,
-                  affinity, targetDmgRatio, fCritical, &damage );
+                  affinity, targetDmgRatio, fCritical, TRUE, &damage );
     hitCount = i + 1;
 
     if( fFixDamage ){
@@ -6440,7 +6443,7 @@ static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
 //----------------------------------------------------------------------------------
 static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam,
-    BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag, u16* dstDamage )
+    BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag, BOOL fEnableRand, u16* dstDamage )
 {
   enum {
     PRINT_FLG = TRUE,
@@ -6509,8 +6512,12 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     //ランダム補正(100～85％)
     if( !BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_DMG_RAND_OFF) )
     {
-      u16 ratio = 100 - BTL_CALC_GetRand( 16 );
-//      rawDamage = (rawDamage * ratio) / 100;
+      u16 ratio;
+      if( fEnableRand ){
+        ratio = 100 - BTL_CALC_GetRand( 16 );
+      }else{
+        ratio = 85;
+      }
       fxDamage = (fxDamage * ratio) / 100;
       BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_RandomHosei, ratio, fxDamage);
     }
@@ -11706,12 +11713,12 @@ BOOL BTL_SVFTOOL_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokusei toku
  * @param   defPokeID       防御ポケID
  * @param   waza            ワザ
  * @param   fAffinity       相性計算するか（FALSEなら等倍で計算）
- * @param   fCriticalCheck  クリティカル判定するか
+ * @param   fEnableRand     乱数有効
  *
  * @retval  u32
  */
 //--------------------------------------------------------------------------------------
-u32 BTL_SVFTOOL_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeID, WazaID waza, BOOL fAffinity, BOOL fCriticalCheck )
+u32 BTL_SVFTOOL_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeID, WazaID waza, BOOL fAffinity, BOOL fEnableRand )
 {
   const BTL_POKEPARAM* attacker = BTL_POKECON_GetPokeParam( wk->pokeCon, atkPokeID );
   const BTL_POKEPARAM* defender = BTL_POKECON_GetPokeParam( wk->pokeCon, defPokeID );
@@ -11728,16 +11735,10 @@ u32 BTL_SVFTOOL_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeI
     aff = BTL_TYPEAFF_100;
   }
 
-  if( fCriticalCheck ){
-    critical_flag = scEvent_CheckCritical( wk, attacker, defender, waza );
-  }else{
-    critical_flag = FALSE;
-  }
-
   scEvent_GetWazaParam( wk, waza, attacker, &wazaParam );
 
   scEvent_CalcDamage( wk, attacker, defender, &wazaParam, aff,
-    BTL_CALC_DMG_TARGET_RATIO_NONE, critical_flag, &damage );
+    BTL_CALC_DMG_TARGET_RATIO_NONE, FALSE, fEnableRand, &damage );
 
   return damage;
 }
@@ -12143,6 +12144,38 @@ BtlWeather BTL_SVFTOOL_GetWeather( BTL_SVFLOW_WORK* wk )
 BOOL BTL_SVFTOOL_GetDebugFlag( BTL_SVFLOW_WORK* wk, BtlDebugFlag flag )
 {
   return BTL_MAIN_GetDebugFlag( wk->mainModule, flag );
+}
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] 指定サイドエフェクトが働いているか判定
+ *
+ * @param   wk
+ * @param   BtlPokePos      pos
+ * @param   BtlSideEffect
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_IsExistSideEffect( BTL_SVFLOW_WORK* wk, BtlPokePos pos, BtlSideEffect sideEffect )
+{
+  BtlSide side = BTL_MAINUTIL_PosToSide( pos );
+  return BTL_HANDER_SIDE_IsExist( side, sideEffect );
+}
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] 指定サイドエフェクトが働いているか判定
+ *
+ * @param   wk
+ * @param   BtlPokePos      pos
+ * @param   BtlSideEffect
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------------------
+u32 BTL_SVFTOOL_GetSideEffectCount( BTL_SVFLOW_WORK* wk, BtlPokePos pos, BtlSideEffect sideEffect )
+{
+  BtlSide side = BTL_MAINUTIL_PosToSide( pos );
+  return BTL_HANDLER_SIDE_GetAddCount( side, sideEffect );
 }
 
 

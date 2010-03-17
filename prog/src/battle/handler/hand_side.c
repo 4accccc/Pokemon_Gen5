@@ -164,6 +164,28 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_SIDE_Add( BtlSide side, BtlSideEffect sideEffect,
   }
   return NULL;
 }
+
+
+
+//=============================================================================================
+/**
+ * サイドエフェクトの重ねがけカウンタを取得
+ *
+ * @param   side
+ * @param   effect
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_HANDLER_SIDE_GetAddCount( BtlSide side, BtlSideEffect effect )
+{
+  GF_ASSERT(side < BTL_SIDE_MAX);
+  GF_ASSERT(effect < BTL_SIDEEFF_MAX);
+
+  return ExistEffect[ side ][ effect ].add_counter;
+}
+
+
 //=============================================================================================
 /**
  * 特定サイドエフェクトが存在しているか判定

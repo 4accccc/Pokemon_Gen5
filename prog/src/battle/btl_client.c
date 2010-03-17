@@ -662,6 +662,8 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
     {
       // nextTurn を引数にして全クライアントの BTL_CLIENT_SetChapterSkip がコールバックされる
       u32 nextTurn = RecPlayer_GetNextTurn( &wk->recPlayer );
+
+      PMSND_AllPlayerVolumeEnable( FALSE, PMSND_MASKPL_BGM );
       BTL_MAIN_ResetForRecPlay( wk->mainModule, nextTurn );
     }
     break;
@@ -716,6 +718,7 @@ static BOOL ClientMain_ChapterSkip( BTL_CLIENT* wk )
       {
         BTL_N_Printf( DBGSTR_CLIENT_RecPlay_ChapterSkipped, wk->myID, wk->recPlayer.nextTurnCount);
         if( wk->viewCore ){
+          PMSND_AllPlayerVolumeEnable( TRUE, PMSND_MASKPL_BGM );
           BTLV_RecPlayFadeIn_Start( wk->viewCore );
           PMSND_FadeInBGM( 30 );
         }

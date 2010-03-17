@@ -21,6 +21,7 @@
 #include "battle/btl_pokeparam.h"
 #include "battle/btl_sideeff.h"
 #include "battle/btl_util.h"
+#include "../btl_server_flow.h"
 
 #include "item/item.h"
 
@@ -1067,12 +1068,13 @@ static  VMCMD_RESULT  AI_IFN_SIDEEFF( VMHANDLE* vmh, void* context_work )
 static  void  ai_if_sideeff( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond )
 {
   int side  = ( int )VMGetU32( vmh );
-  BtlSideEffect value = ( BtlSideEffect )VMGetU32( vmh );
+  BtlSideEffect effect = ( BtlSideEffect )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
-  BtlSideEffect sideeff = 0; //@todo 取得関数に置き換える必要がある
 
-  branch_act( vmh, cond, sideeff, value, adrs );
+  BOOL exist_flag = (BTL_SVFTOOL_GetSideEffectCount( taw->svfWork, pos, effect ) != 0);
+
+  branch_act( vmh, cond, exist_flag, TRUE, adrs );
 }
 
 //------------------------------------------------------------
@@ -1262,7 +1264,7 @@ static  VMCMD_RESULT  AI_CHECK_TURN( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
 
-  taw->calc_work = 1;  //@todo 取得関数に置き換える必要があります
+  taw->calc_work = BTL_SVFTOOL_GetTurnCount( taw->svfWork );
 
   return taw->vmcmd_result;
 }
@@ -1398,7 +1400,13 @@ static  VMCMD_RESULT  AI_IF_FIRST( VMHANDLE* vmh, void* context_work )
   int cond  = ( int )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
 
-  //@todo どちらが先攻かを取得する関数を作る必要があります
+  //@todo これで良いか確認。
+  u16 atk_agility = BTL_SVFTOOL_CalcAgility( taw->svfWork, taw->atk_bpp, TRUE );
+  u16 def_agility = BTL_SVFTOOL_CalcAgility( taw->svfWork, taw->def_bpp, TRUE );
+
+  if( atk_agility > def_agility ){
+    VMCMD_Jump( vmh, vmh->adrs + adrs );
+  }
 
   return taw->vmcmd_result;
 }
@@ -1672,7 +1680,9 @@ static  void  ai_if_waza_hinshi( VMHANDLE* vmh, TR_AI_WORK* taw, BranchCond cond
   int loss_flag = ( int )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
   int hp = BPP_GetValue( taw->def_bpp, BPP_HP );
-  int damage = 1; //@todo ダメージ取得処理が必要
+
+  int damage = BTL_SVFTOOL_SimulationDamage( taw->svfWork, BPP_GetID(taw->atk_bpp), BPP_GetID(taw->def_bpp),
+                    taw->waza_no, TRUE, FALSE );
 
   branch_act( vmh, cond, hp, damage, adrs );
 }
@@ -1918,9 +1928,9 @@ static  VMCMD_RESULT  AI_CHECK_NEKODAMASI( VMHANDLE* vmh, void* context_work )
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int side  = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
+  const BTL_POKEPARAM* bpp = get_bpp( taw, pos );
 
-  //@todo のちほど変更
-  taw->calc_work = ( BPP_GetTurnCount( get_bpp( taw, pos ) ) == 0 );
+  taw->calc_work = ( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_ACTION_DONE) == FALSE );
 
   return taw->vmcmd_result;
 }
@@ -2183,9 +2193,16 @@ static  VMCMD_RESULT  AI_CHECK_HAVE_TOKUSEI( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_IF_ALREADY_MORAIBI( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
+  int side    = ( int )VMGetU32( vmh );
+  int adrs    = ( int )VMGetU32( vmh );
 
-  //@todo
-  GF_ASSERT_MSG( 0, "未作成" );
+  BtlPokePos  pos = get_poke_pos( taw, side );
+  const BTL_POKEPARAM* bpp = get_bpp( taw, pos );
+
+  //@todo 作ったけどこれで良いか後で確認
+  if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_MORAIBI) ){
+    VMCMD_Jump( vmh, vmh->adrs + adrs );
+  }
 
   return taw->vmcmd_result;
 }
@@ -2202,8 +2219,10 @@ static  VMCMD_RESULT  AI_IF_HAVE_ITEM( VMHANDLE* vmh, void* context_work )
   BtlPokePos  pos = get_poke_pos( taw, side );
   u32 have_item = BPP_GetItem( get_bpp( taw, pos ) );
 
-  //@todo
-  GF_ASSERT_MSG( 0, "未作成" );
+  //@todo 作ったけどこれで良いか後で確認
+  if( item == have_item ){
+    VMCMD_Jump( vmh, vmh->adrs + adrs );
+  }
 
   return taw->vmcmd_result;
 }
@@ -2234,7 +2253,9 @@ static  VMCMD_RESULT  AI_CHECK_SIDEEFF_COUNT( VMHANDLE* vmh, void* context_work 
   BtlPokePos  pos = get_poke_pos( taw, side );
 
   //flagでまきびし、どくびしを分岐
-  taw->calc_work = 0;//@todo 取得関数
+  // @todo 作ったけどこれでいいか確認
+  BtlSideEffect  effect = (flag)? BTL_SIDEEFF_MAKIBISI : BTL_SIDEEFF_DOKUBISI;
+  taw->calc_work = BTL_SVFTOOL_GetSideEffectCount( taw->svfWork, pos, effect );
 
   return taw->vmcmd_result;
 }

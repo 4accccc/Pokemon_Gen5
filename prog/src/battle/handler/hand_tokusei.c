@@ -277,6 +277,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Simerike( u32* numElems );
 static void handler_Moraibi_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Moraibi_DmgRecoverFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Moraibi_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Moraibi_Remove( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Moraibi( u32* numElems );
 static void handler_Nightmare( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Nightmare( u32* numElems );
@@ -4171,15 +4172,20 @@ static void handler_Moraibi_DmgRecoverFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    if( work[0] == 0 )
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_MORAIBI) == FALSE )
     {
-      work[0] = 1;  // 「もらいび」発動フラグとして利用
-
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
       {
         BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+        BTL_HANDEX_PARAM_SET_CONTFLAG* flg_param;
+
         HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MoraibiExe );
         HANDEX_STR_AddArg( &param->str, pokeID );
+
+        flg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
+        flg_param->pokeID = pokeID;
+        flg_param->flag = BPP_CONTFLG_MORAIBI;
       }
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
     }
@@ -4192,7 +4198,8 @@ static void handler_Moraibi_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     // 「もらいび」状態の時
-    if( work[0] )
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_MORAIBI) )
     {
       // 炎ワザの威力1.5倍
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
@@ -4203,12 +4210,29 @@ static void handler_Moraibi_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     }
   }
 }
+// とくせい書き換え直前ハンドラ
+static void handler_Moraibi_Remove( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    // 「もらいび」状態の解除
+
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_MORAIBI) )
+    {
+      BTL_HANDEX_PARAM_RESET_CONTFLAG* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_CONTFLAG, pokeID );
+      param->pokeID = pokeID;
+      param->flag = BPP_CONTFLG_MORAIBI;
+    }
+  }
+}
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Moraibi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DMG_TO_RECOVER_CHECK, handler_Moraibi_NoEffect      }, // ダメージワザ回復化チェックハンドラ
-    { BTL_EVENT_DMG_TO_RECOVER_FIX,   handler_Moraibi_DmgRecoverFix }, // ダメージ回復化決定ハンドラ
-    { BTL_EVENT_ATTACKER_POWER,       handler_Moraibi_AtkPower      }, // 攻撃力決定ハンドラ
+    { BTL_EVENT_DMG_TO_RECOVER_CHECK,  handler_Moraibi_NoEffect      }, // ダメージワザ回復化チェックハンドラ
+    { BTL_EVENT_DMG_TO_RECOVER_FIX,    handler_Moraibi_DmgRecoverFix }, // ダメージ回復化決定ハンドラ
+    { BTL_EVENT_ATTACKER_POWER,        handler_Moraibi_AtkPower      }, // 攻撃力決定ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_BEFORE, handler_Moraibi_Remove        }, // とくせい書き換え直前ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

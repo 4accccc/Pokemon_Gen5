@@ -185,7 +185,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_WazaPower:           return "ワザID=%d : 威力=%d  (ratio=%08x)\n";
   case DBGSTR_SVFL_UncategoryWazaInfo:  return "未分類ワザ 攻撃PokeID=%d, 対象ポケ数=%d/%d\n";
   case DBGSTR_SVFL_QueWritePtr:         return "[* SVF *]         Que WritePtr=%d\n";
-  case DBGSTR_SVFL_ClientPokeStillAlive:return "クライアント_%d (SIDE:%d) のポケはまだ何体か生きている\n";
+  case DBGSTR_SVFL_ClientPokeStillAlive:return "クライアント_%d (SIDE:%d) のポケはまだ%d体生きている\n";
   case DBGSTR_SVFL_ClientPokeDeadAll:   return "クライアント_%d (SIDE:%d) のポケは全滅した\n";
   case DBGSTR_SVFL_PosEffAdd:           return "位置エフェクトハンドラ生成: pos=%d, effect=%d, pokeID=%d\n";
   case DBGSTR_SVFL_PosEffDupFail:       return "位置(%d)にPOSEffect[%d]ハンドラを追加失敗（使用ポケ=%d）\n";
