@@ -170,6 +170,7 @@ static BOOL debugMenuCallProc_DebugMakePoke( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugReWritePoke( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_DebugItem( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_DebugSecretItem( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_DebugPDWItem( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_SetBtlBox( DEBUG_MENU_EVENT_WORK *wk );
@@ -283,6 +284,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR65, debugMenuCallProc_DebugReWritePoke },//ポケモン書き換え
   { DEBUG_FIELD_STR32, debugMenuCallProc_DebugItem },       //アイテム作成
   { DEBUG_FIELD_STR33, debugMenuCallProc_DebugSecretItem }, //隠されアイテム作成
+  { DEBUG_FIELD_STR34, debugMenuCallProc_DebugPDWItem },    //PDWアイテム作成
   { DEBUG_FIELD_STR37, debugMenuCallProc_BoxMax },          //ボックス最大
   { DEBUG_FIELD_STR39, debugMenuCallProc_MyItemMax },       //アイテム最大
   { DEBUG_FIELD_MAKE_EGG,   debugMenuCallProc_MakeEgg },          //タマゴ作成
@@ -2583,6 +2585,27 @@ static BOOL debugMenuCallProc_DebugSecretItem( DEBUG_MENU_EVENT_WORK *wk )
 
   child_event = GMEVENT_CreateOverlayEventCall(
       gameSys, FS_OVERLAY_ID( debug_item ), EVENT_DebugSecretItemMake, NULL );
+  GMEVENT_ChangeEvent( event, child_event );
+
+  return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   デバッグPDWアイテム作成
+ * @param   wk DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_DebugPDWItem( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT *event = wk->gmEvent;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  GAMESYS_WORK  *gameSys  = wk->gmSys;
+  GMEVENT * child_event;
+
+  child_event = GMEVENT_CreateOverlayEventCall(
+      gameSys, FS_OVERLAY_ID( debug_item ), EVENT_DebugPDWItemMake, NULL );
   GMEVENT_ChangeEvent( event, child_event );
 
   return( TRUE );

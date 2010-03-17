@@ -15,6 +15,6 @@ FS_EXTERN_OVERLAY( debug_item );
 
 extern GMEVENT* EVENT_DebugItemMake( GAMESYS_WORK * gsys, void * work );
 extern GMEVENT* EVENT_DebugSecretItemMake( GAMESYS_WORK * gsys, void * work );
-//extern GMEVENT* EVENT_DebugItemMake( GAMESYS_WORK * gsys, HEAPID heapID);
+extern GMEVENT* EVENT_DebugPDWItemMake( GAMESYS_WORK * gsys, void * work );
 
 

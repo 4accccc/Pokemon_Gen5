@@ -46,6 +46,14 @@
 //------------------------------------------------------------------
 #include "system/main.h"      //GFL_HEAPID_APP参照
 
+//------------------------------------------------------------------
+//  PDWアイテム用追加分
+//------------------------------------------------------------------
+#include "savedata/dreamworld_data.h" 
+
+//============================================================================================
+//============================================================================================
+
 //============================================================================================
 //============================================================================================
 
@@ -56,6 +64,7 @@
 typedef enum {
   DEBUGITEM_MODE_MYBAG,
   DEBUGITEM_MODE_SECRETITEM,
+  DEBUGITEM_MODE_PDWITEM,
 }DEBUGITEM_MODE;
 
 typedef struct _DEBUGITEM_PARAM EVENT_DEBUGITEM_WORK;
@@ -108,6 +117,7 @@ static void _itemNumSelectMenu(EVENT_DEBUGITEM_WORK* wk);
 static void _itemKindSelectMenu(EVENT_DEBUGITEM_WORK* wk);
 
 static void _addIntrudeSecretItem( GAMEDATA * gamedata, HEAPID heapID, u16 item_no, u16 tbl_no);
+static void _addPDWItem( GAMEDATA * gamedata, u16 item_id, u16 item_num );
 
 #ifdef _NET_DEBUG
 #define   _CHANGE_STATE(pWork, state)  _changeStateDebug(pWork ,state, __LINE__)
@@ -354,14 +364,24 @@ static void _itemNumSelectMenu(EVENT_DEBUGITEM_WORK* wk)
   }
 
   if(GFL_UI_KEY_GetTrg()==PAD_BUTTON_DECIDE){  //追加
-    if (wk->mode == DEBUGITEM_MODE_MYBAG )
+    switch ( wk->mode )
     {
-      MYITEM_PTR pMyItem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(wk->gsys));
-      MYITEM_AddItem(pMyItem,wk->itemid, wk->itemnum,wk->heapID);
-    } else if (wk->mode == DEBUGITEM_MODE_SECRETITEM) {
+    case DEBUGITEM_MODE_MYBAG:
+      {
+        MYITEM_PTR pMyItem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(wk->gsys));
+        MYITEM_AddItem(pMyItem,wk->itemid, wk->itemnum,wk->heapID);
+      }
+      break;
+    case DEBUGITEM_MODE_SECRETITEM:
       _addIntrudeSecretItem(
           GAMESYSTEM_GetGameData(wk->gsys),
           wk->heapID,wk->itemid,wk->itemnum);
+      break;
+    case DEBUGITEM_MODE_PDWITEM:
+      _addPDWItem( GAMESYSTEM_GetGameData(wk->gsys), wk->itemid, wk->itemnum);
+      break;
+    default:
+      GF_ASSERT(0);
     }
     PMSND_PlaySystemSE( SEQ_SE_DECIDE3 );
     _windowRewrite(wk,0);
@@ -466,7 +486,7 @@ static void _windowRewrite(EVENT_DEBUGITEM_WORK* wk, int type)
 
 
 
-  if (wk->mode == DEBUGITEM_MODE_MYBAG )
+  if (wk->mode == DEBUGITEM_MODE_MYBAG || wk->mode == DEBUGITEM_MODE_PDWITEM )
   {
     GFL_MSG_GetString(  wk->MsgManager, DEBUG_FIELD_ITEM_STR2, wk->pStrBuf );
   } else {
@@ -517,6 +537,23 @@ static void _addIntrudeSecretItem( GAMEDATA * gamedata, HEAPID heapID, u16 item_
   GFL_STR_DeleteBuffer( namebuf );
   GFL_MSG_Delete( msgman );
 }
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+static void _addPDWItem( GAMEDATA * gamedata, u16 item_id, u16 item_num )
+{
+  int i;
+  DREAMWORLD_SAVEDATA *  dws;
+  dws = DREAMWORLD_SV_GetDreamWorldSaveData( GAMEDATA_GetSaveControlWork( gamedata ) );
+  for ( i = 0; i < DREAM_WORLD_DATA_MAX_ITEMBOX; i++ )
+  {
+    if ( DREAMWORLD_SV_GetItem( dws, i ) == 0 )
+    {
+      DREAMWORLD_SV_SetItem( dws, i, item_id, item_num );
+      return;
+    }
+  }
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   デバッグプロセス初期化
@@ -713,11 +750,38 @@ GMEVENT* EVENT_DebugSecretItemMake( GAMESYS_WORK * gsys, void * work )
   wk = GMEVENT_GetEventWork(new_event);
   GFL_STD_MemClear(wk, sizeof(EVENT_DEBUGITEM_WORK));
   wk->mode = DEBUGITEM_MODE_SECRETITEM;
-  //wk->ctrl = GAMEDATA_GetSaveControlWork(gamedata);
   wk->gsys = gsys;
   wk->heapID = heapID;
   wk->itemnum = 1;
   wk->itemmax = SECRET_ITEM_DATA_TBL_MAX;
   return new_event;
 }
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   デバッグ：PDWで受け取ったアイテムを作るイベント
+ * @param   gsys
+ * @param   work
+ * @return  GMEVENT 生成したイベント
+ */
+//------------------------------------------------------------------------------
+GMEVENT* EVENT_DebugPDWItemMake( GAMESYS_WORK * gsys, void * work )
+{
+  GMEVENT * new_event;
+  EVENT_DEBUGITEM_WORK * wk;
+  HEAPID heapID = HEAPID_FIELDMAP;
+  GAMEDATA* gamedata=  GAMESYSTEM_GetGameData(gsys);
+
+  new_event = GMEVENT_Create( gsys, NULL, EVENT_DebugItemMain, sizeof( EVENT_DEBUGITEM_WORK ) );
+  wk = GMEVENT_GetEventWork(new_event);
+  GFL_STD_MemClear(wk, sizeof(EVENT_DEBUGITEM_WORK));
+  wk->mode = DEBUGITEM_MODE_PDWITEM;
+  wk->gsys = gsys;
+  wk->heapID = heapID;
+  wk->itemnum = 1;
+  wk->itemmax = 20;
+  return new_event;
+}
+
+
 
