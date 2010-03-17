@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-11T17:08:26"/>
+	<create user="matsumiya" host="W00224" date="2010-03-17T18:48:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,15 +330,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="111" right="1993" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="532"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="545"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="699"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -359,7 +359,7 @@
 	</lock>
 
 
-	<row id="msg_c04p01_boss_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04p01_boss_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・最初からGRIDX=23、GRIDZ=13）下向きで待機
 ・pos（GRIDX=20.GRIDZ=12^16）を踏むと
@@ -369,15 +369,15 @@
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……キミは　プラズマだんを
 さがして　いるんだろう？▼
 この　ゆうえんちの
-おくに　にげていったさ▽
+おくに　にげていった▽
 さあ　ついてきたまえ[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……キミは　プラズマ団を
 探して　いるんだろう？▼
-この遊園地の　奥に逃げていったさ
+この遊園地の　奥に逃げていった
 さあ　ついてきたまえ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・観覧車前に到達して
 　辺りを見回す動きの後にメッセージ表示
@@ -388,53 +388,53 @@
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……いないね▼
 かんらんしゃに　のって
 さがすことに　しよう▼
-フフフ……　ボクは
-かんらんしゃが　だいすき　なんだ▼
+ボクは　かんらんしゃが
+だいすき　なんだ▼
 あの　えんうんどう……　りきがく……
 うつくしい　すうしきの　あつまり……[BE:09:速度コントロール:0]▼
 以下　観覧車デモでのセリフ▼
 さて　おきづき　だろうが
 ボクが　プラズマだんの　おうさま▼
 だから　これいじょう　プラズマだんの
-メンバーを　たおしてほしくないな▼
+メンバーを　たおしてほしくない▼
 キミが　がんばれば　がんばるほど
 ポケモンが　くるしむことに　なる！▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……いないね▼
 観覧車に　乗って
 探すことに　しよう▼
-フフフ……　ボクは
-観覧車が　大好き　なんだ▼
+ボクは　観覧車が
+大好きなんだ▼
 あの　円運動……　力学……
 美しい　数式の　集まり……[BE:09:速度コントロール:0]▼
 以下　観覧車デモでのセリフ▼
 さて　お気づき　だろうが
 ボクが　プラズマ団の　王様▼
 だから　これ以上　プラズマ団の
-メンバーを　倒してほしくないな▼
+メンバーを　倒してほしくない▼
 キミが　がんばれば　がんばるほど
 ポケモンが　苦しむことに　なる！▼</language>
 	</row>
 
-	<row id="msg_c04p01_hakaim1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04p01_hakaim1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・観覧車から降りるとプラズマ団が近づいてきて
 　メッセージ表示
 ・続けてhakaim2_01</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
 		<language name="JPN" width="256">プラズマだん『Ｎさま！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマだん『</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『Ｎさま！▼</language>
 	</row>
 
-	<row id="msg_c04p01_hakaim2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04p01_hakaim2_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてboss_03
 ・戦闘後には削除済みで</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
 		<language name="JPN" width="256">プラズマだん『ごぶじ　ですか！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマだん『</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『ご無事ですか！▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・プラズマ団のほうは向かない(気にしていない）
 ・はい/いいえの選択
@@ -458,7 +458,7 @@
 ボクの　考え　理解できるかい？[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_c04p01_boss_04" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_04" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・はい選択時
 ・トレーナー戦闘に</comment>
@@ -469,7 +469,7 @@
 本当かどうか　確かめさせてもらうよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_05" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04p01_boss_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・トレーナー戦闘に</comment>
@@ -484,7 +484,7 @@
 みせてあげるよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c04p01_boss_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c04p01_boss_06" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・戦闘後
 ･メッセージ表示後
