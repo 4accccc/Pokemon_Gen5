@@ -290,7 +290,7 @@ VMCMD_RESULT EvCmdStartResearch( VMHANDLE *core, void *wk )
    {
      int totalCount = QuestionnaireWork_GetTotalCount( qSave, qID[i] );
      int todayCount = QuestionnaireWork_GetTodayCount( qSave, qID[i] );
-     int sumCount = totalCount + sumCount  
+     int sumCount = totalCount + todayCount;  
      MISC_SetResearchStartCount( misc, i, sumCount );
 
      // DEBUG:
@@ -462,7 +462,7 @@ VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
       }
       OS_TFPrintf( 3, 
           "questionID=%d, answerIdx=%d, sumCount=%d(%d+%d)\n", 
-          qID, ansIdx, sumCount, totalCount, todayCiount );
+          qID, ansIdx, sumCount, totalCount, todayCount );
     }
   }
 
