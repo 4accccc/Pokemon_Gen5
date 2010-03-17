@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-22T22:44:47"/>
+	<create user="matsumiya" host="W00224" date="2010-03-17T17:14:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="234"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="173" right="952" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,18 +292,31 @@
 	</lock>
 
 
-	<row id="msg_c04r0501_trainerm_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_c04r0501_trainerm_01" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
+・アイテム入手処理
+　No601「かいりき」</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
-		<language name="JPN" width="256">はてさて
-じてんしゃで　さばくを　こえる……[BE:01:ページ切り替え（クリア）]
-そんな　チャレンジを　こころみる
-オレの　ともだちは　きっと　すごいな</language>
-		<language name="JPN_KANJI" width="256">はてさて
-じてんしゃで　砂漠を　越える……[BE:01:ページ切り替え（クリア）]
-そんな　チャレンジを　試みる
-オレの　友達は　きっと　すごいな</language>
+		<language name="JPN" width="256">きみ！　ちからもちの
+きぶんを　あじわってみないか！▽
+というか　あじわえっ！！▼</language>
+		<language name="JPN_KANJI" width="256">きみ！　力持ちの
+気分を　体験してみないか！▽
+というか　体験しろっ！！▼</language>
+	</row>
+
+	<row id="msg_c04r0501_trainerm_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">かいりきを　つかえる　ポケモンは
+たたかっていない　ときでも▽
+おおきな　いわを　おせるんだ！▽
+ドッスン！　ドッスン！</language>
+		<language name="JPN_KANJI" width="256">かいりきを　使える　ポケモンは
+戦っていない　ときでも▽
+大きな　岩を　押せるんだ！▽
+ドッスン！　ドッスン！</language>
 	</row>
 
 	<row id="msg_c04r0501_lady_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
