@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-03-09T19:57:44"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-14T18:09:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -552,7 +552,7 @@
 40→50に変更[100308岩尾]
 ０：コンテストランク</comment>
 		<attribute name="キャラ指定">オーナー
-個人評価2：評価点50以上</attribute>
+個人評価2：評価点40以上</attribute>
 		<language name="JPN">キレのある　うごきを　みていたら
 わたしまで　[1:23:コンテストランク:1]な　きぶん！▼
 また　ぜひ　さんかしてください！▼</language>
