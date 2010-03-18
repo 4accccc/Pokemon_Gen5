@@ -39,7 +39,6 @@ EVENT_START		ev_c03r0402_director_01
 	_DEBUG_PRINT_WK(LWK_LOCAL)
 	_DEBUG_PRINT_WK(LWK_GLOBAL)
 
-
 	//既にマップ内で表彰済の場合
 	IF $LOCALWORK10 == 1 THEN
 	
@@ -48,31 +47,8 @@ EVENT_START		ev_c03r0402_director_01
 	//初会話の場合
 	ELSE
 		
-		//全国図鑑が完成している場合
-		IF $LWK_GLOBAL == TRUE THEN
-		
-			_TALK_OBJ_START()
-			_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_03 )
-			_MSGWIN_CLOSE()
-			
-			_CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_ZENKOKU, 1 )
-
-			_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_04a )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-
-			//========================================/
-			
-			//フラグ操作
-			_FLAG_RESET( FV_T01R0102_AWARD_02 )
-			
-			//部長会話済
-			$LOCALWORK10 = 1
-
-			//========================================/
-		
-		//全国図鑑は完成していない
-		ELSE
+		//地方図鑑の表彰をしていない
+		IF FLAG_OFF( FE_AWARD_LOCAL ) THEN
 		
 			//地方図鑑が完成している
 			IF $LWK_LOCAL == TRUE THEN
@@ -91,21 +67,66 @@ EVENT_START		ev_c03r0402_director_01
 			
 				//フラグ操作
 				_FLAG_RESET( FV_T01R0102_AWARD_01 )
+				_FLAG_SET( FE_AWARD_LOCAL )
 				
 				//部長会話済
 				$LOCALWORK10 = 1
 
 				//========================================/
 		
-			//地方図鑑も完成していない
+			//地方図鑑は完成していない
 			ELSE
 			
 				_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_01 )
 		
 			ENDIF
 		
+		//地方図鑑の表彰は終わっている
+		ELSE
+		
+			//全国図鑑の表彰をしていない
+			IF FLAG_OFF( FE_AWARD_NATIONAL ) THEN
+			
+				//全国図鑑が完成している場合
+				IF $LWK_GLOBAL == TRUE THEN
+		
+					_TALK_OBJ_START()
+					_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_03 )
+					_MSGWIN_CLOSE()
+			
+					_CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_ZENKOKU, 1 )
+
+					_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_04a )
+					_LAST_KEYWAIT()
+					_MSGWIN_CLOSE()
+
+					//========================================/
+			
+					//フラグ操作
+					_FLAG_RESET( FV_T01R0102_AWARD_02 )
+					_FLAG_SET( FE_AWARD_NATIONAL )
+					
+					//部長会話済
+					$LOCALWORK10 = 1
+
+					//========================================/
+				
+				//全国図鑑は完成していない
+				ELSE
+					
+					_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_01 )
+				
+				ENDIF
+			
+			//全国図鑑の表彰は終わっている
+			ELSE
+			
+				_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_04 )
+			
+			ENDIF
+		
 		ENDIF
-	
+
 	ENDIF
 
 EVENT_END
