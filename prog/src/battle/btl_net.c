@@ -175,6 +175,24 @@ const NetRecvFuncTable BtlRecvFuncTable[] = {
 };
 
 
+static inline u32 netIDBitToConnectNum( u16 netIDBit )
+{
+  u32 i, max, cnt;
+
+  for(i=0, cnt=0; i<BTL_NET_CONNECT_MACHINE_MAX; ++i){
+    if( netIDBit & (1<<i) ){
+      ++cnt;
+    }
+  }
+
+  max = GFL_NET_GetConnectNum();
+  if( cnt > max ){
+    cnt = max;
+  }
+
+  return cnt;
+}
+
 void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, u16 netIDBit, HEAPID heapID )
 {
   if( netHandle )
@@ -189,7 +207,7 @@ void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, u16 netIDBit, HEAPID heapID )
 
     Sys->serverCmdReceived = FALSE;
     Sys->clientDataReturned = FALSE;
-    Sys->memberCount = GFL_NET_GetConnectNum();
+    Sys->memberCount = netIDBitToConnectNum( netIDBit );
     Sys->timingID = BTL_NET_TIMING_NULL;
     Sys->timingSyncStartFlag = FALSE;
 
@@ -294,9 +312,9 @@ static void recv_serverVer( const int netID, const int size, const void* pData, 
 
       Sys->serverNetID = NETID_NULL;
 
-      for(i=0; i<Sys->memberCount; i++)
+      for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
       {
-        if( swk->recvTable[i].version == swk->maxVersion )
+        if( (swk->recvTable[netID].recvedFlag) && (swk->recvTable[i].version == swk->maxVersion) )
         {
           Sys->serverNetID = i;
           BTL_N_Printf( DBGSTR_NET_ServerDetermine, i);
@@ -307,6 +325,12 @@ static void recv_serverVer( const int netID, const int size, const void* pData, 
       GF_ASSERT(Sys->serverNetID != NETID_NULL);
     }
   }
+}
+
+static BOOL is_battle_conneter( int netID )
+{
+  SVVER_WORK* swk = (SVVER_WORK*)(&Sys->svverWork);
+  return swk->recvTable[netID].recvedFlag;
 }
 
 // サーバとなるマシンが確定したかどうかチェック
@@ -327,9 +351,8 @@ BOOL BTL_NET_ImServer( void )
 static u8 clientIDtoNetID( u8 clientID )
 {
   int i, max;
-  max = GFL_NET_GetConnectNum();
 
-  for(i=0; i<max; i++)
+  for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
   {
     if( Sys->clientID[i] == clientID )
     {
@@ -432,18 +455,16 @@ static void recv_partyData( const int netID, const int size, const void* pData, 
 // パーティデータの相互受信が完了したか？
 BOOL BTL_NET_IsCompleteNotifyPartyData( void )
 {
-  int i, max;
+  int i;
 
-  max = GFL_NET_GetConnectNum();
-
-  for(i=0; i<max; i++)
+  for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
   {
-    if( Sys->tmpLargeBufUsedSize[i] == 0 )
+    if( is_battle_conneter(i) && (Sys->tmpLargeBufUsedSize[i] == 0) )
     {
       return FALSE;
     }
   }
-  BTL_N_PrintfEx( PRINT_FLG, DBGSTR_NET_PartyDataComplete, max);
+  BTL_N_PrintfEx( PRINT_FLG, DBGSTR_NET_PartyDataComplete, Sys->memberCount );
   return TRUE;
 }
 
@@ -570,13 +591,11 @@ static void recv_playerData( const int netID, const int size, const void* pData,
 // プレイヤーデータの相互受信が完了したか？
 BOOL BTL_NET_IsCompleteNotifyPlayerData( void )
 {
-  int i, max;
+  int i;
 
-  max = GFL_NET_GetConnectNum();
-
-  for(i=0; i<max; i++)
+  for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
   {
-    if( Sys->tmpLargeBufUsedSize[i] == 0 )
+    if( is_battle_conneter(i) && (Sys->tmpLargeBufUsedSize[i] == 0) )
     {
       return FALSE;
     }
@@ -780,10 +799,11 @@ BOOL BTL_NET_CheckReturnFromClient( void )
 {
   int i;
 
-  for(i=0; i<Sys->memberCount; i++)
+  for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
   {
-    if( recvBuf_isEmpty(&Sys->recvClient[i]) )
-    {
+    if( is_battle_conneter(i)
+    &&  recvBuf_isEmpty(&Sys->recvClient[i])
+    ){
       return FALSE;
     }
   }
@@ -824,7 +844,7 @@ void BTL_NET_ClearRecvData( void )
 {
   int i;
 
-  for(i=0; i<Sys->memberCount; i++)
+  for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
   {
     recvBuf_clear( &Sys->recvClient[i] );
   }
