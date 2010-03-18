@@ -91,6 +91,15 @@ typedef enum
   FLDSPWIN_TYPE_MAX,
 }FLDSPWIN_TYPE;
 
+//--------------------------------------------------------------
+/// カーソルフラグ
+//--------------------------------------------------------------
+typedef enum
+{
+  CURSOR_STATE_NONE = 0,
+  CURSOR_STATE_WRITE,
+}KEYWAITCURSOR_STATE;
+
 //======================================================================
 //  struct
 //======================================================================
@@ -107,6 +116,8 @@ typedef struct _TAG_FLDPLAINMSGWIN FLDPLAINMSGWIN; ///<FLDPLAINMSGWIN
 typedef struct _TAG_FLDSUBMSGWIN FLDSUBMSGWIN; ///<FLDSUBMSGWIN
 typedef struct _TAG_FLDBGWIN FLDBGWIN; ///<FLDBGWIN
 typedef struct _TAG_FLDSPWIN FLDSPWIN; ///<FLDSPWIN
+
+typedef struct _FLDKEYWAITCURSOR FLDKEYWAITCURSOR;  ///<FLDKEYWAITCURSOR
 
 //--------------------------------------------------------------
 /// FLDMENUFUNC_LISTDATA
@@ -217,6 +228,7 @@ extern void FLDMSGWIN_ClearWindow( FLDMSGWIN *msgWin );
 extern void FLDMSGWIN_FillClearWindow(
     FLDMSGWIN *msgWin, u32 x, u32 y, u32 size_x, u32 size_y );
 extern FLDMSGWIN * FLDMSGWIN_AddTalkWin( FLDMSGBG *fmb, GFL_MSGDATA *msgData );
+extern GFL_BMPWIN * FLDMSGWIN_GetBmpWin( FLDMSGWIN * fldmsgwin );
 
 //システムウィンドウ
 extern FLDSYSWIN * FLDSYSWIN_Add(
@@ -396,6 +408,19 @@ extern u32 FLDSPWIN_GetNeedWindowWidthCharaSize(
     FLDMSGBG *fmb, const STRBUF *strbuf, u32 margin );
 extern u32 FLDSPWIN_GetNeedWindowHeightCharaSize(
     FLDMSGBG *fmb, const STRBUF *strbuf, u32 margin );
+
+//キー送りカーソル
+extern FLDKEYWAITCURSOR * FLDKEYWAITCURSOR_Create( HEAPID heapID );
+extern void FLDKEYWAITCURSOR_Delete( FLDKEYWAITCURSOR *work );
+extern void FLDKEYWAITCURSOR_Init( FLDKEYWAITCURSOR *work, HEAPID heapID );
+extern void FLDKEYWAITCURSOR_Finish( FLDKEYWAITCURSOR *work );
+extern KEYWAITCURSOR_STATE FLDKEYWAITCURSOR_GetState( FLDKEYWAITCURSOR *work );
+extern void FLDKEYWAITCURSOR_Clear (
+    FLDKEYWAITCURSOR *work, GFL_BMP_DATA *bmp, u16 n_col );
+extern void FLDKEYWAITCURSOR_Write(
+    FLDKEYWAITCURSOR *work, GFL_BMP_DATA *bmp, u16 n_col );
+extern void FLDKEYWAITCURSOR_WriteBmpBG(
+    FLDKEYWAITCURSOR *work, GFL_BMP_DATA *bmp, GFL_BMP_DATA *bmp_bg );
 
 //その他
 extern void FLDMSGBG_SetBlendAlpha( BOOL set );

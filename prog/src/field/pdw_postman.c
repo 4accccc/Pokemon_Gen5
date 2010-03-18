@@ -29,7 +29,7 @@
 
 #include "sound/pm_sndsys.h"
 
-#include "gamesystem\msgspeed.h"
+//#include "gamesystem\msgspeed.h"
 
 #include "winframe.naix"
 
@@ -40,14 +40,7 @@
 #include "pdw_postman.h"
 
 #include "item/itemsym.h"
-//--------------------------------------------------------------
-/// カーソルフラグ
-//--------------------------------------------------------------
-typedef enum
-{
-  CURSOR_STATE_NONE = 0,
-  CURSOR_STATE_WRITE,
-}CURSOR_STATE;
+#include "field/field_msgbg.h"
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -65,203 +58,6 @@ extern void PDWPOSTMAN_ItemWindow_Delete( PDW_ITEM_WINDOW_WORK * piww );
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 extern void PDWPOSTMAN_ItemWindow_Draw( PDW_ITEM_WINDOW_WORK * piww );
-//======================================================================
-//  typedef struct
-//======================================================================
-//--------------------------------------------------------------
-/// KEYWAIT_CURSOR_WORK
-//--------------------------------------------------------------
-typedef struct
-{
-  u8 cursor_state;
-  u8 cursor_anm_no;
-  u8 cursor_anm_frame;
-  u8 padding;
-  GFL_BMP_DATA *bmp_cursor;
-
-  void *pArcChara;
-  NNSG2dCharacterData *pChara;
-}KEYWAIT_CURSOR_WORK;
-
-#if 1
-//======================================================================
-//  キー送りカーソル
-//======================================================================
-//--------------------------------------------------------------
-/**
- * キー送りカーソル 初期化
- * @param work KEYWAIT_CURSOR_WORK
- * @param heapID HEAPID
- * @retval nothing
- */
-//--------------------------------------------------------------
-static void keyWaitCursor_Init( KEYWAIT_CURSOR_WORK *work, HEAPID heapID )
-{
-  MI_CpuClear8( work, sizeof(KEYWAIT_CURSOR_WORK) );
-  
-#if 0
-  work->bmp_cursor = GFL_BMP_CreateWithData(
-        (u8*)skip_cursor_Character,
-        2, 2, GFL_BMP_16_COLOR, heapID );
-  
-#else
-  {
-    work->pArcChara = GFL_ARC_UTIL_Load(
-        ARCID_FLDMAP_WINFRAME, NARC_winframe_talk_cursor_NCGR,
-        FALSE, heapID );
-    NNS_G2dGetUnpackedBGCharacterData( work->pArcChara, &work->pChara );
-    
-    work->bmp_cursor = GFL_BMP_CreateWithData(
-        (u8*)work->pChara->pRawData, 1, 1, GFL_BMP_16_COLOR, heapID );
-  }
-#endif
-}
-
-//--------------------------------------------------------------
-/**
- * キー送りカーソル 削除
- * @param work KEYWAIT_CURSOR_WORK
- * @retval nothing
- */
-//--------------------------------------------------------------
-static void keyWaitCursor_Delete( KEYWAIT_CURSOR_WORK *work )
-{
-  work->cursor_state = CURSOR_STATE_NONE;
-  GFL_BMP_Delete( work->bmp_cursor );
-  GFL_HEAP_FreeMemory( work->pArcChara );
-}
-
-//--------------------------------------------------------------
-/**
- * キー送りカーソル　状態取得
- * @param work KEYWAIT_CURSOR_WORK
- * @retval CURSOR_STATE
- */
-//--------------------------------------------------------------
-static CURSOR_STATE keyWaitCursor_GetState( KEYWAIT_CURSOR_WORK *work )
-{
-  return( work->cursor_state );
-}
-
-//--------------------------------------------------------------
-/**
- * キー送りカーソル クリア
- * @param work KEYWAIT_CURSOR_WORK
- * @param bmp 表示先GFL_BMP_DATA
- * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI 
- * @retval nothing
- */
-//--------------------------------------------------------------
-static void keyWaitCursor_Clear(
-    KEYWAIT_CURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
-{
-  u16 x,y;
-  u16 tbl[3] = { 0, 1, 2 };
-  
-  x = GFL_BMP_GetSizeX( bmp ) - 8;
-  y = GFL_BMP_GetSizeY( bmp ) - 8 - tbl[work->cursor_anm_no];
-  GFL_BMP_Fill( bmp, x, y, 8, 8, n_col );
-  
-  work->cursor_state = CURSOR_STATE_NONE;
-}
-
-//--------------------------------------------------------------
-/**
- * キー送りカーソル 描画部分
- * @param work KEYWAIT_CURSOR_WORK
- * @param bmp 表示先GFL_BMP_DATA
- * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
- * @retval nothing
- */
-//--------------------------------------------------------------
-static void keyWaitCursor_WriteCore(
-    KEYWAIT_CURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
-{
-  u16 x,y;
-  u16 tbl[3] = { 0, 1, 2 };
-  
-  x = GFL_BMP_GetSizeX( bmp ) - 8;
-  y = GFL_BMP_GetSizeY( bmp ) - 8 - tbl[work->cursor_anm_no];
-  GFL_BMP_Print( work->bmp_cursor, bmp, 0, 0, x, y, 8, 8, 0x00 );
-  
-  work->cursor_state = CURSOR_STATE_WRITE;
-}
-
-//--------------------------------------------------------------
-/**
- * キー送りカーソル 表示
- * @param work KEYWAIT_CURSOR_WORK
- * @param bmp 表示先GFL_BMP_DATA
- * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI 
- * @retval nothing
- */
-//--------------------------------------------------------------
-static void keyWaitCursor_Write(
-    KEYWAIT_CURSOR_WORK *work, GFL_BMP_DATA *bmp, u16 n_col )
-{
-  u16 x,y,offs;
-  u16 tbl[3] = { 0, 1, 2 };
-  
-  keyWaitCursor_Clear( work, bmp, n_col );
-  
-  work->cursor_anm_frame++;
-  
-  if( work->cursor_anm_frame >= 4 ){
-    work->cursor_anm_frame = 0;
-    work->cursor_anm_no++;
-    work->cursor_anm_no %= 3;
-  }
-  
-  keyWaitCursor_WriteCore( work, bmp, n_col );
-}
-
-//--------------------------------------------------------------
-/**
- * キー送りカーソル 表示　背景BITMAP指定
- * @param work KEYWAIT_CURSOR_WORK
- * @param bmp 表示先GFL_BMP_DATA
- * @param bmp_bg 背景に張る1キャラ分のGFL_BMP_DATA
- * @retval nothing
- */
-//--------------------------------------------------------------
-static void keyWaitCursor_WriteBmpBG(
-    KEYWAIT_CURSOR_WORK *work, GFL_BMP_DATA *bmp,
-    GFL_BMP_DATA *bmp_bg )
-{
-  s16 x,y;
-  u16 tbl[3] = { 0, 1, 2 };
-  
-  x = GFL_BMP_GetSizeX( bmp ) - 8;
-  y = GFL_BMP_GetSizeY( bmp ) - 8 - tbl[work->cursor_anm_no];
-  
-  { //クリア
-    s16 dy = y & 0x07;
-    
-    if( dy ){
-      GFL_BMP_Print( bmp_bg, bmp,
-          0, 8-dy, x, y, 8, dy, GF_BMPPRT_NOTNUKI );
-    }
-    
-    GFL_BMP_Print( bmp_bg, bmp,
-        0, 0, x, y+dy, 8, 8-dy, GF_BMPPRT_NOTNUKI );
-  }
-  
-  work->cursor_anm_frame++;
-  
-  if( work->cursor_anm_frame >= 4 ){
-    work->cursor_anm_frame = 0;
-    work->cursor_anm_no++;
-    work->cursor_anm_no %= 3;
-  }
-  
-  x = GFL_BMP_GetSizeX( bmp ) - 8;
-  y = GFL_BMP_GetSizeY( bmp ) - 8 - tbl[work->cursor_anm_no];
-  
-  GFL_BMP_Print( work->bmp_cursor, bmp, 0, 0, x, y, 8, 8, 0x00 );
-  
-  work->cursor_state = CURSOR_STATE_WRITE;
-}
-#endif
 
 //======================================================================
 //======================================================================
@@ -302,7 +98,7 @@ struct _PIWW{
   FIELDMAP_WORK * fieldmap;
   GFL_MSGDATA * msgdata;
   FLDMSGWIN * fldmsgwin;
-  KEYWAIT_CURSOR_WORK cursor_work;
+  FLDKEYWAITCURSOR * cursor_work;
   WORDSET * wordset;
   STRBUF * readBuf;
   STRBUF * expandBuf;
@@ -407,10 +203,6 @@ typedef struct {
   u16 itemPos;
 }ITEM_WINDOW_EVENT_WORK;
 
-/**
- * @todo  ちゃんと外部参照出来るようにする
- */
-extern GFL_BMPWIN * FLDMSGWIN_GetBmp( FLDMSGWIN * fldmsgwin );
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static GMEVENT_RESULT itemWindowEvent( GMEVENT * event, int *seq, void * work )
@@ -429,7 +221,7 @@ static GMEVENT_RESULT itemWindowEvent( GMEVENT * event, int *seq, void * work )
         iwew->fieldmap, &iwew->itemData[iwew->itemPos], view_count );
     //表示ウィンドウ：描画
     PDWPOSTMAN_ItemWindow_Draw( iwew->piww );
-    keyWaitCursor_Init( &iwew->piww->cursor_work, FIELDMAP_GetHeapID( iwew->fieldmap ) );
+    iwew->piww->cursor_work = FLDKEYWAITCURSOR_Create( FIELDMAP_GetHeapID( iwew->fieldmap ) );
     (*seq) ++;
     break;
 
@@ -443,9 +235,9 @@ static GMEVENT_RESULT itemWindowEvent( GMEVENT * event, int *seq, void * work )
 
   case 2:
     {
-      GFL_BMPWIN * bmpwin = FLDMSGWIN_GetBmp( iwew->piww->fldmsgwin );
+      GFL_BMPWIN * bmpwin = FLDMSGWIN_GetBmpWin( iwew->piww->fldmsgwin );
       GFL_BMP_DATA * bmp = GFL_BMPWIN_GetBmp( bmpwin );
-      keyWaitCursor_Write( &iwew->piww->cursor_work, bmp, 0x0f );
+      FLDKEYWAITCURSOR_Write( iwew->piww->cursor_work, bmp, 0x0f );
       GFL_BMPWIN_TransVramCharacter( bmpwin );
     }
     if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
@@ -457,7 +249,7 @@ static GMEVENT_RESULT itemWindowEvent( GMEVENT * event, int *seq, void * work )
 
   case 3:
     //表示ウィンドウ：消去
-    keyWaitCursor_Delete( &iwew->piww->cursor_work );
+    FLDKEYWAITCURSOR_Delete( iwew->piww->cursor_work );
     PDWPOSTMAN_ItemWindow_Delete( iwew->piww );
     (*seq) ++;
     break;
