@@ -179,8 +179,9 @@ static void ItemSearchRestart( ITEM_SEARCH_WORK* work )
 
 // TRUEのとき有効なアイテムの情報をitem_infoにいれている
 // FALSEのときもうアイテムがなくitem_infoのtypeにITEM_TYPE_NONEをいれている
+// search_typeで指定した種類のアイテムを探す(ITEM_TYPE_NONEのときは全種類のアイテムの中から探す)
 // アイテムの情報を得る
-static BOOL ItemSearchGet( ITEM_SEARCH_WORK* work, ITEM_INFO* item_info )
+static BOOL ItemSearchGet( ITEM_SEARCH_WORK* work, ITEM_INFO* item_info, ITEM_TYPE search_type )
 {
   BOOL      find           = FALSE;
   ITEM_INFO l_item_info;
@@ -196,36 +197,42 @@ static BOOL ItemSearchGet( ITEM_SEARCH_WORK* work, ITEM_INFO* item_info )
   intrude_item_posdata   = NULL;
   intrude_work_no        = work->intrude_search_no;
 
-  while( work->hide_search_no < hide_item_data_num )
+  if( search_type == ITEM_TYPE_NONE || search_type == ITEM_TYPE_HIDE )
   {
-    l_item_info.type                = ITEM_TYPE_HIDE;
-    l_item_info.info.hide.item_data = &( hide_item_data[ work->hide_search_no ] );
-    if( ItemSearchExist( work, &l_item_info ) )  // アイテムが存在する
+    while( work->hide_search_no < hide_item_data_num )
     {
-      item_info->type                = l_item_info.type;
-      item_info->info.hide.item_data = l_item_info.info.hide.item_data;
-      find = TRUE;
+      l_item_info.type                = ITEM_TYPE_HIDE;
+      l_item_info.info.hide.item_data = &( hide_item_data[ work->hide_search_no ] );
+      if( ItemSearchExist( work, &l_item_info ) )  // アイテムが存在する
+      {
+        item_info->type                = l_item_info.type;
+        item_info->info.hide.item_data = l_item_info.info.hide.item_data;
+        find = TRUE;
+      }
+      work->hide_search_no++;
+      if( find ) return TRUE;
     }
-    work->hide_search_no++;
-    if( find ) return TRUE;
   }
 
-  intrude_item_posdata = ISC_SAVE_GetItemPosData( (INTRUDE_SAVE_WORK*)(work->intrude_wk), &intrude_work_no );
-  work->intrude_search_no = intrude_work_no;
-  while( intrude_item_posdata )
+  if( search_type == ITEM_TYPE_NONE || search_type == ITEM_TYPE_INTRUDE )
   {
-    l_item_info.type                      = ITEM_TYPE_INTRUDE;
-    l_item_info.info.intrude.item_posdata = intrude_item_posdata;
-    if( ItemSearchExist( work, &l_item_info ) )  // アイテムが存在する
-    {
-      item_info->type                      = l_item_info.type;
-      item_info->info.intrude.item_posdata = l_item_info.info.intrude.item_posdata;
-      find = TRUE;
-    }
-    if( find ) return TRUE;
-  
     intrude_item_posdata = ISC_SAVE_GetItemPosData( (INTRUDE_SAVE_WORK*)(work->intrude_wk), &intrude_work_no );
     work->intrude_search_no = intrude_work_no;
+    while( intrude_item_posdata )
+    {
+      l_item_info.type                      = ITEM_TYPE_INTRUDE;
+      l_item_info.info.intrude.item_posdata = intrude_item_posdata;
+      if( ItemSearchExist( work, &l_item_info ) )  // アイテムが存在する
+      {
+        item_info->type                      = l_item_info.type;
+        item_info->info.intrude.item_posdata = l_item_info.info.intrude.item_posdata;
+        find = TRUE;
+      }
+      if( find ) return TRUE;
+  
+      intrude_item_posdata = ISC_SAVE_GetItemPosData( (INTRUDE_SAVE_WORK*)(work->intrude_wk), &intrude_work_no );
+      work->intrude_search_no = intrude_work_no;
+    }
   }
 
   item_info->type = ITEM_TYPE_NONE;
@@ -764,6 +771,7 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
   s32             player_grid_pos_z;
   u32             zone_id;
   BOOL            zone_id_field;  // zone_idがフィールドマップのゾーンIDならTRUE
+  ITEM_TYPE       item_search_type;  // 表フィールドならITEM_TYPE_HIDE、裏フィールドならITEM_TYPE_INTRUDE
 
   BOOL            search;
 
@@ -809,11 +817,14 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
 
     zone_id       = MAP_MATRIX_ZONE_ID_NON;
     zone_id_field = FALSE;
+    item_search_type = ITEM_TYPE_NONE;
 
     if( MAP_MATRIX_CheckVectorPosRange( map_mat, player_pos->x, player_pos->z ) == TRUE )
     {
       zone_id = MAP_MATRIX_GetVectorPosZoneID( map_mat, player_pos->x, player_pos->z );
       zone_id_field = ZONEDATA_IsFieldMatrixID( (u16)zone_id );
+      if( ZONEDATA_IsPalaceField( (u16)zone_id ) )item_search_type = ITEM_TYPE_INTRUDE;  // 裏フィールド
+      else                                        item_search_type = ITEM_TYPE_HIDE;     // 表フィールド
     }
   }
   
@@ -862,7 +873,7 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
    
     ItemSearchRestart( work->item_search_wk );
     
-    while( ItemSearchGet( work->item_search_wk, &item_info ) )
+    while( ItemSearchGet( work->item_search_wk, &item_info, item_search_type ) )
     {
       u16 table_idx;  // item_rod_tableのインデックス
 
