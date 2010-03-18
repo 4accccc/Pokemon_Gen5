@@ -180,9 +180,7 @@ void PDWPOSTMAN_ItemWindow_Draw( PDW_ITEM_WINDOW_WORK * piww )
   }
   GFL_MSG_Delete( item_man );
 
-  //@todo –{“–‚ÍFLDMSGWIN_‚Å“]‘—ŠÖ”‚ª‚ ‚é‚×‚«
-  //GFL_BG_LoadScreenReq( FLDMSGBG_BGFRAME );
-  GFL_BG_LoadScreenReq( GFL_BG_FRAME1_M );
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame( FLDMSGWIN_GetBmpWin( piww->fldmsgwin ) ) );
 }
 
 
