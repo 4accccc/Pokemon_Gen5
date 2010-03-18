@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-18T20:59:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1372" top="-12" right="2064" bottom="608" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="517"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="535"/>
+		<band id="3" index="4" style="0000" width="147"/>
+		<band id="4" index="0" style="0000" width="684"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -297,6 +297,104 @@
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d20r0501_bg1_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">ゆうき　あるものよ
+おうの　ことばに　みみを　かたむけよ</language>
+		<language name="JPN_KANJI" width="256">勇気　あるものよ
+王の　言葉に　耳を　かたむけよ</language>
+	</row>
+
+	<row id="msg_d20r0501_bg2_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">そすうを　りかい　するものは
+せかいの　しんりを　りかいする</language>
+		<language name="JPN_KANJI" width="256">素数を　理解する者は
+世界の　真理を　理解する</language>
+	</row>
+
+	<row id="msg_d20r0501_bg3_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうは　ゆうきを　もち
+きぼうを　もち▽
+やさしさを　もち▽
+ゆめを　もち▽
+ぼうけんしんを　もつ</language>
+		<language name="JPN_KANJI" width="256">王は　勇気を　持ち
+希望を　持ち▽
+優しさを　持ち▽
+夢を　持ち▽
+冒険心を　持つ</language>
+	</row>
+
+	<row id="msg_d20r0501_bg4_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうに　なる　ということ
+すべてを　うけいれる　こと</language>
+		<language name="JPN_KANJI" width="256">王になる　ということ
+全てを　受け入れること</language>
+	</row>
+
+	<row id="msg_d20r0501_bg5_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうに　なる　ということは
+すべてを　うけいれる　こと</language>
+		<language name="JPN_KANJI" width="256">おうに　なる　ということは
+すべてを　うけいれる　こと</language>
+	</row>
+
+	<row id="msg_d20r0501_bg6_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">ふりむくな
+あやまちを　おそれるな</language>
+		<language name="JPN_KANJI" width="256">ふりむくな
+あやまちを　おそれるな</language>
+	</row>
+
+	<row id="msg_d20r0501_bg7_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうの　たかみを　めざすものよ
+さきに　すすみ　じぶんを　ためせ▽
+ためすことは　おうを　めざすことなり</language>
+		<language name="JPN_KANJI" width="256">王の　高みを　目指すものよ
+先に　進み　自分を　試せ▽
+試す事　それは　王を　目指す事なり</language>
+	</row>
+
+	<row id="msg_d20r0501_bg8_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうの　あゆみに　まよいは　ない
+まよいごに　おうの　しかくなし</language>
+		<language name="JPN_KANJI" width="256">王の　歩みに　迷いは　無い
+迷い子に　王の　資格無し</language>
+	</row>
+
+	<row id="msg_d20r0501_bg9_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうの　あゆみに　まよいは　ない
+ゆうきある　おうよ　さきに　すすめ</language>
+		<language name="JPN_KANJI" width="256">王の　歩みに　迷いは　無い
+勇気ある王よ　先に　進め</language>
+	</row>
+
+	<row id="msg_d20r0501_sys_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>システム</comment>
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">かべが　うごき
+さきに　すすめるように　なった！</language>
+		<language name="JPN_KANJI" width="256">壁が　動き
+先に　進めるように　なった！</language>
 	</row>
 
 	<flowchart-group-list>
