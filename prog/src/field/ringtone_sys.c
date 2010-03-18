@@ -3,10 +3,13 @@
  * @file  ringtone_sys.c
  * @date  2010.03.11
  * @author  tamada GAME FREAK inc.
- * @brief   TVトランシーバー着信音制御
+ * @brief   TVトランシーバー着信音＆DS開閉でのボリューム制御
  *
  * 着信音システムはフィールドサウンドシステム、プレイヤーボリューム制御システムに
  * 依存しており、直接呼び出されることはない。
+ *
+ *
+ * 2010.3.18  着信音がなっていない場合はマスターボリュームを制御するように修正
  */
 //============================================================================================
 
@@ -21,14 +24,42 @@
 //============================================================================================
 //------------------------------------------------------------------
 /**
+ * @brief システムの状態定義
+ */
+//------------------------------------------------------------------
+typedef enum {
+  STAT_OPEN_OFF = 0, ///<蓋開いてる：着信OFF
+  STAT_OPEN_ON,      ///<蓋開いてる：着信ON
+  STAT_CLOSE_OFF,    ///<蓋閉じてる：着信OFF
+  STAT_CLOSE_ON,     ///<蓋閉じてる：着信ON
+
+  STAT_MAX,
+}RINGTONE_STAT;
+
+//------------------------------------------------------------------
+/**
+ * @brief リクエストの定義
+ */
+//------------------------------------------------------------------
+typedef enum {
+  REQ_STOP = 0,   ///<リクエスト：着信OFF
+  REQ_PLAY,       ///<リクエスト：着信ON
+  REQ_OPEN,       ///<リクエスト：ふた開けた
+  REQ_CLOSE,      ///<リクエスト：ふた閉じた
+
+  REQ_MAX,
+}RINGTONE_REQ;
+
+//------------------------------------------------------------------
+/**
  * @brief 着信音制御システムワーク定義
  */
 //------------------------------------------------------------------
 struct _RINGTONE_SYS{
-  BOOL ringFlag;       ///<着信音が鳴っているかどうか
-  BOOL isFoldMode;     ///<DSを閉じているかどうか
 
+  RINGTONE_STAT state;  ///<制御システムの状態
   u16  ringWait;       ///<着信音持続時間用カウンタ
+
 
   PLAYER_VOLUME_FADER * fader;  ///<NNSのプレイヤーボリューム制御システムへのポインタ
 
@@ -61,7 +92,14 @@ static void ringTone_sleepSoundGoFunc( void * work );
 static void ringTone_sleepSoundReleaseFunc( void * work );
 static BOOL ringTone_PlayMain( RINGTONE_SYS * rtone );
 
+static void changeStatus( RINGTONE_SYS * rtone, RINGTONE_REQ req );
+static void updateStatus( RINGTONE_SYS * rtone );
+
+
 //============================================================================================
+//
+//    外部公開関数
+//
 //============================================================================================
 //------------------------------------------------------------------
 /**
@@ -74,8 +112,6 @@ static BOOL ringTone_PlayMain( RINGTONE_SYS * rtone );
 RINGTONE_SYS * RINGTONE_SYS_Create( HEAPID heapID, PLAYER_VOLUME_FADER * fader )
 {
   RINGTONE_SYS * rtone = GFL_HEAP_AllocClearMemory( heapID, sizeof(RINGTONE_SYS) );
-  rtone->ringFlag = FALSE;
-  rtone->isFoldMode = FALSE;
   rtone->ringWait = 0;
   rtone->fader = fader;
 
@@ -106,19 +142,7 @@ void RINGTONE_SYS_Delete( RINGTONE_SYS * rtone )
 //------------------------------------------------------------------
 void RINGTONE_SYS_Main( RINGTONE_SYS * rtone )
 {
-  if ( rtone->ringFlag == TRUE )
-  {
-    BOOL flag = ringTone_PlayMain( rtone );
-    if ( flag == FALSE )
-    {
-      rtone->ringFlag = FALSE;
-      //蓋を閉じていない場合はPlayerVolumeの操作も行う
-      if (rtone->isFoldMode == FALSE)
-      {
-        PLAYER_VOLUME_FADER_SetMasterVolume( rtone->fader, MAX_VOLUME );
-      }
-    }
-  }
+  updateStatus( rtone );
 }
 
 //------------------------------------------------------------------
@@ -129,17 +153,7 @@ void RINGTONE_SYS_Main( RINGTONE_SYS * rtone )
 //------------------------------------------------------------------
 void RINGTONE_SYS_Play( RINGTONE_SYS * rtone )
 {
-  if ( rtone->ringFlag == FALSE )
-  {
-    PMSND_PlaySE_byPlayerID( RINGTONE_SE_NO, RINGTONE_SEPLAYER );
-    rtone->ringFlag = TRUE;
-    rtone->ringWait = RINGTONE_LENGTH;
-    //蓋を閉じていない場合はPlayerVolumeの操作も行う
-    if (rtone->isFoldMode == FALSE)
-    {
-      PLAYER_VOLUME_FADER_SetMasterVolume( rtone->fader, MIN_VOLUME );
-    }
-  }
+  changeStatus( rtone, REQ_PLAY );
 }
 
 //------------------------------------------------------------------
@@ -150,22 +164,20 @@ void RINGTONE_SYS_Play( RINGTONE_SYS * rtone )
 //------------------------------------------------------------------
 void RINGTONE_SYS_Stop( RINGTONE_SYS * rtone )
 {
-  if ( rtone->ringFlag == TRUE )
-  {
-    PMSND_StopSE_byPlayerID( RINGTONE_SEPLAYER );
-    rtone->ringFlag = FALSE;
-    rtone->ringWait = 0;
-    //蓋を閉じていない場合はPlayerVolumeの操作も行う
-    if (rtone->isFoldMode == FALSE)
-    {
-      PLAYER_VOLUME_FADER_SetMasterVolume( rtone->fader, MAX_VOLUME );
-    }
-  }
+  changeStatus( rtone, REQ_STOP );
 }
 
 //============================================================================================
+//
+//    内部使用関数
+//
 //============================================================================================
 //------------------------------------------------------------------
+/**
+ * @brief   着信音再生制御
+ * @param   rtone
+ * @return  BOOL  TRUEのとき、なり続けている
+ */
 //------------------------------------------------------------------
 static BOOL ringTone_PlayMain( RINGTONE_SYS * rtone )
 {
@@ -197,9 +209,7 @@ static void ringTone_sleepSoundGoFunc( void * work )
 {
   RINGTONE_SYS * rtone = ringToneSysPtr;
   //RINGTONE_SYS * rtone = (RINGTONE_SYS *)work;
-  //着信音以外のプレイヤーのボリュームを０にする
-  PLAYER_VOLUME_FADER_SetMasterVolume( rtone->fader, MIN_VOLUME );
-  rtone->isFoldMode = TRUE;
+  changeStatus( rtone, REQ_CLOSE );
 }
 
 //------------------------------------------------------------------
@@ -211,10 +221,127 @@ static void ringTone_sleepSoundReleaseFunc( void * work )
 {
   RINGTONE_SYS * rtone = ringToneSysPtr;
   //RINGTONE_SYS * rtone = (RINGTONE_SYS *)work;
-  if ( rtone->ringFlag == FALSE )
-  { //鳴っていない場合、Volumeをもとに戻す
-    PLAYER_VOLUME_FADER_SetMasterVolume( rtone->fader, MAX_VOLUME );
-  }
-  rtone->isFoldMode = FALSE;
+  changeStatus( rtone, REQ_OPEN );
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief 着信音開始
+ */
+//------------------------------------------------------------------
+static void startSE( RINGTONE_SYS * rtone )
+{
+  PMSND_PlaySE_byPlayerID( RINGTONE_SE_NO, RINGTONE_SEPLAYER );
+  rtone->ringWait = RINGTONE_LENGTH;
+}
+//------------------------------------------------------------------
+/**
+ * @brief 他のプレイヤーのミュート操作
+ */
+//------------------------------------------------------------------
+static void setMuteOther( RINGTONE_SYS * rtone, BOOL flag )
+{
+  if ( flag == TRUE ) {
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_SYS, MIN_VOLUME );
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_1, MIN_VOLUME );
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_2, MIN_VOLUME );
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_PSG, MIN_VOLUME );
+  } else {
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_SYS, MAX_VOLUME );
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_1, MAX_VOLUME );
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_2, MAX_VOLUME );
+    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_PSG, MAX_VOLUME );
+  }
+  PLAYER_VOLUME_FADER_SetMute( rtone->fader, flag );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief システムの状態変更処理
+ * @param   rtone
+ * @param   req     状態変更リクエスト
+ */
+//------------------------------------------------------------------
+static void changeStatus( RINGTONE_SYS * rtone, RINGTONE_REQ req )
+{
+  static const u8 seqTbl[STAT_MAX][REQ_MAX] = {
+    // STOP             PLAY            OPEN          CLOSE
+    { STAT_OPEN_OFF,  STAT_OPEN_OFF,  STAT_CLOSE_OFF, STAT_CLOSE_OFF }, //OPEN  & OFF
+    { STAT_OPEN_OFF,  STAT_OPEN_ON,   STAT_OPEN_ON,   STAT_CLOSE_ON },  //OPEN  & ON
+    { STAT_CLOSE_OFF, STAT_CLOSE_ON,  STAT_OPEN_OFF,  STAT_CLOSE_OFF }, //CLOSE & OFF
+    { STAT_CLOSE_OFF, STAT_CLOSE_ON,  STAT_OPEN_ON,   STAT_CLOSE_ON },  //CLOSE & ON
+  };
+
+  RINGTONE_STAT new_state = seqTbl[rtone->state][req];
+
+  //OS_TPrintf(" RINGTONE REQ(%d) STAT(%d --> %d)\n", req, rtone->state, new_state );
+  if ( rtone->state == new_state )
+  {
+    //状態が変わらないリクエスト＝＝＞何もしない
+    return;
+  }
+  switch ( new_state )
+  {
+  case STAT_OPEN_OFF:
+    NNS_SndSetMasterVolume( MAX_VOLUME ); //MasterVol  == 有効
+    setMuteOther( rtone, FALSE );         //他のPlayer == 有効
+    break;
+
+  case STAT_OPEN_ON:
+    NNS_SndSetMasterVolume( MAX_VOLUME ); //MasterVol  == 有効
+    setMuteOther( rtone, TRUE );          //他のPlayer == 無効
+    startSE( rtone );
+    break;
+
+  case STAT_CLOSE_OFF:
+    NNS_SndSetMasterVolume( MIN_VOLUME ); //MasterVol  == 無効
+    break;
+
+  case STAT_CLOSE_ON:
+    NNS_SndSetMasterVolume( MAX_VOLUME ); //MasterVol  == 有効
+    setMuteOther( rtone, TRUE );          //他のPlayer == 無効
+    startSE( rtone );
+    break;
+  }
+
+  rtone->state = new_state;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 通常更新処理
+ * @param rtone
+ */
+//------------------------------------------------------------------
+static void updateStatus( RINGTONE_SYS * rtone )
+{
+  BOOL flag;
+  switch ( rtone->state )
+  {
+  case STAT_OPEN_OFF:
+    break;
+  case STAT_OPEN_ON:
+    flag = ringTone_PlayMain( rtone );
+    if ( flag == FALSE )
+    {
+      changeStatus( rtone, STAT_OPEN_OFF );
+    }
+    break;
+
+  case STAT_CLOSE_OFF:
+    break;
+  case STAT_CLOSE_ON:
+    flag = ringTone_PlayMain( rtone );
+    if ( flag == FALSE )
+    {
+      changeStatus( rtone, STAT_CLOSE_OFF );
+    }
+    break;
+  }
+}
+
+
+
+
+
 

@@ -29,7 +29,7 @@ struct _PLAYER_VOLUME_FADER
   u8  endVolume;    // フェード最終ボリューム
   u16 fadeFrame;    // フェード フレーム数
   u16 fadeCount;    // フェード フレームカウンタ
-  u8 masterVolume;
+  u8 muteFlag;
 };
 
 
@@ -126,20 +126,9 @@ void PLAYER_VOLUME_FADER_SetVolume( PLAYER_VOLUME_FADER* fader, u8 volume, u16 f
 
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------
-void PLAYER_VOLUME_FADER_SetMasterVolume( PLAYER_VOLUME_FADER* fader, u8 volume )
+void PLAYER_VOLUME_FADER_SetMute( PLAYER_VOLUME_FADER* fader, BOOL flag )
 {
-  fader->masterVolume = volume;
-  if ( volume == 0 ) {
-    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_SYS, 0 );
-    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_1, 0 );
-    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_2, 0 );
-    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_PSG, 0 );
-  } else {
-    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_SYS, MAX_VOLUME );
-    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_1, MAX_VOLUME );
-    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_2, MAX_VOLUME );
-    NNS_SndPlayerSetPlayerVolume( PLAYER_SE_PSG, MAX_VOLUME );
-  }
+  fader->muteFlag = flag;
   UpdatePlayerVolume( fader );
 }
 
@@ -161,7 +150,7 @@ static void InitFader( PLAYER_VOLUME_FADER* fader )
   fader->endVolume   = MAX_VOLUME;
   fader->fadeFrame   = 0;
   fader->fadeCount   = 0;
-  fader->masterVolume = MAX_VOLUME;
+  fader->muteFlag    = FALSE;
 
   UpdatePlayerVolume( fader ); 
 }
@@ -265,7 +254,7 @@ static void UpdatePlayerVolume( const PLAYER_VOLUME_FADER* fader )
   int volume;
 
   volume = CalcNowVolume( fader );
-  if ( fader->masterVolume == 0 )
+  if ( fader->muteFlag )
   {
     volume = 0;
   }
