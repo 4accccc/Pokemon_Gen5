@@ -57,11 +57,6 @@
 //  __TRASH     捨てる シーケンス
 //  __SELL      売る シーケンス
 
-//@TODO Repeatフック
-static int _GFL_UI_KEY_GetRepeat( void )
-{
-  return GFL_UI_KEY_GetRepeat();
-}
 
 //=============================================================================
 // データテーブル
@@ -621,11 +616,26 @@ static BOOL _keyChangeItemCheck(FIELD_ITEMMENU_WORK* pWork)
     int pos = pWork->curpos;
     int length = ITEMMENU_GetItemPocketNumber( pWork);
 
-    if(_GFL_UI_KEY_GetRepeat()== PAD_KEY_DOWN){
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
       bChange = _posplus(pWork, length);
-    }
-    if(_GFL_UI_KEY_GetRepeat()== PAD_KEY_UP){
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
       bChange = _posminus(pWork, length);
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
+			u32	i;
+			for( i=0; i<6; i++ ){
+				if( _posplus( pWork, length ) == FALSE ){
+					break;
+				}
+			}
+			if( i != 0 ){ bChange = TRUE; }
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
+			u32	i;
+			for( i=0; i<6; i++ ){
+				if( _posminus( pWork, length ) == FALSE ){
+					break;
+				}
+			}
+			if( i != 0 ){ bChange = TRUE; }
     }
   }
   if(bChange){
@@ -652,10 +662,26 @@ static BOOL _keyMoveCheck(FIELD_ITEMMENU_WORK* pWork)
     int pos = pWork->curpos;
     int length = ITEMMENU_GetItemPocketNumber( pWork);
 
-    if(_GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN){
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
       bChange = _posplus(pWork, length);
-    }else if(_GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
       bChange = _posminus(pWork, length);
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
+			u32	i;
+			for( i=0; i<6; i++ ){
+				if( _posplus( pWork, length ) == FALSE ){
+					break;
+				}
+			}
+			if( i != 0 ){ bChange = TRUE; }
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
+			u32	i;
+			for( i=0; i<6; i++ ){
+				if( _posminus( pWork, length ) == FALSE ){
+					break;
+				}
+			}
+			if( i != 0 ){ bChange = TRUE; }
     }
   }
   return bChange;
