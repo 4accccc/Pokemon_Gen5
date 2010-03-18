@@ -61,7 +61,7 @@ static GMEVENT_RESULT ObjRiseEvt(GMEVENT * event, int * seq, void * work);
 
 //--------------------------------------------------------------
 /**
- * 指定ＯＢＪを指定シンクかけて指定値分上昇させる
+ * 指定ＯＢＪを指定シンクかけて指定値までＹを変更させる
  * @param  core    仮想マシン制御構造体へのポインタ
  * @return  VMCMD_RESULT
  * @note    条件を満たすダルタニスがいない場合は retにFALSEがセットされる
@@ -82,7 +82,6 @@ VMCMD_RESULT EvCmdRiseObj( VMHANDLE *core, void *wk )
 
   event = GMEVENT_Create(gsys, NULL, ObjRiseEvt, sizeof(OBJ_RISE_WORK));
   evt_work = GMEVENT_GetEventWork(event);
-	evt_work->Height = y_half_grid * (FIELD_CONST_GRID_FX32_SIZE/2);
   evt_work->Sync = sync;
   evt_work->NowSync = 0;
   //基点座標取得
@@ -95,6 +94,8 @@ VMCMD_RESULT EvCmdRiseObj( VMHANDLE *core, void *wk )
     // 影を消す
     MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
   }
+
+  evt_work->Height = ( y_half_grid * (FIELD_CONST_GRID_FX32_SIZE/2) ) - evt_work->BasePos.y;
   
   SCRIPT_CallEvent( sc, event );
 
