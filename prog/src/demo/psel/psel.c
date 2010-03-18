@@ -8,6 +8,9 @@
  *  モジュール名：PSEL
  */
 //============================================================================
+//#define DEBUG_POS_SET_MODE  // これが定義されているとき、位置調整モードになる
+
+
 // インクルード
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -240,9 +243,9 @@ TARGET;
 // タッチの当たり判定
 static const GFL_UI_TP_HITTBL target_tp_hittbl[TARGET_MAX +1] =
 {
-  { GFL_UI_TP_USE_CIRCLE,   88,  144,   24 },  // circle
-  { GFL_UI_TP_USE_CIRCLE,  128,  120,   24 },  // circle
-  { GFL_UI_TP_USE_CIRCLE,  168,  144,   24 },  // circle
+  { GFL_UI_TP_USE_CIRCLE,   83,  107,   23 },  // circle
+  { GFL_UI_TP_USE_CIRCLE,  128,   82,   22 },  // circle
+  { GFL_UI_TP_USE_CIRCLE,  172,  107,   23 },  // circle
   { 21*8, 24*8 -1, 9*8, 23*8 -1 },  // rect
   { GFL_UI_TP_HIT_END, 0, 0, 0 },  // テーブル終了
 };
@@ -250,9 +253,9 @@ static const GFL_UI_TP_HITTBL target_tp_hittbl[TARGET_MAX +1] =
 // 指指しカーソルの位置
 static const u8 finger_pos[TARGET_POKE_MAX][2] =
 {
-  {  88, 120 },
-  { 128,  96 },
-  { 168, 120 },
+  {  83,  58 },
+  { 128,  38 },
+  { 172,  58 },
 };
 
 // ポケモン大小セット
@@ -320,25 +323,25 @@ p0    \ /  \
 static const POKE_MOVE_DATA poke_move_data[TARGET_POKE_MAX] =
 {
   {
-     64,  96,  96, 128, 128, 160,
+     53,  99,  90, 109, 128, 120,
      8, 12, 16,
     16,
      4,  4,
-    16, 16,
+    32, 32,
   },
   {
-    128,  80, 128, 120, 128, 160,
+    128,  94, 128, 107, 128, 120,
      8, 12, 16,
     16,
      4,  4,
-    16, 16,
+    32, 32,
   },
   {
-    192,  96, 160, 128, 128, 160,
+    202,  99, 165, 109, 128, 120,
      8, 12, 16,
     16,
      4,  4,
-    16, 16,
+    32, 32,
   },
 };
 
@@ -1768,6 +1771,41 @@ static void Psel_PokeSetExit( PSEL_WORK* work )
   }
 }
 
+static void PokeSetCalcPosScale( GFL_CLACTPOS* pos, GFL_CLSCALE* scale,
+                                 u8 pos_s_x, u8 pos_s_y, u8 pos_e_x, u8 pos_e_y,
+                                 u8 scale_s, u8 scale_e,
+                                 u8 total_frame, u8 jump_y,
+                                 u16 count );
+static void PokeSetCalcPosScale( GFL_CLACTPOS* pos, GFL_CLSCALE* scale,
+                                 u8 pos_s_x, u8 pos_s_y, u8 pos_e_x, u8 pos_e_y,
+                                 u8 scale_s, u8 scale_e,
+                                 u8 total_frame, u8 jump_y,
+                                 u16 count )
+{
+  f32           f_x       = ( (f32)pos_e_x - (f32)pos_s_x ) * (f32)count / (f32)total_frame + (f32)pos_s_x;
+  f32           f_y       = ( (f32)pos_e_y - (f32)pos_s_y ) * (f32)count / (f32)total_frame + (f32)pos_s_y;
+          
+  // 求める高さ                                y
+  // 最大のジャンプの高さ                      h
+  // ジャンプする区間の移動にかかるフレーム数  f
+  // 現在のフレーム数(0<=t<f)                  t
+  // t=0のときy=0, t=fのときy=0, t=f/2のときy=hとなるようにする
+  // y = -h * ( (t-(f/2))/(f/2) )*( (t-(f/2))/(f/2) ) + h
+  f32           f_y_ofs   = - ((f32)jump_y) \
+                            * ( (f32)count - (f32)total_frame/2.0f ) * ( (f32)count - (f32)total_frame/2.0f ) \
+                            * 4.0f / (f32)total_frame / (f32)total_frame
+                            + (f32)jump_y;
+          
+  f32           f_scale   = ( (f32)scale_e - (f32)scale_s ) * (f32)count / (f32)total_frame + (f32)scale_s;
+  s16           s_x       = (s16)f_x;
+  s16           s_y       = (s16)(f_y - f_y_ofs);  // 下にいくほど正なのでマイナスする
+  fx32          fx_scale  = FX_F32_TO_FX32( f_scale / 16.0f );
+  
+  pos->x    = s_x;
+  pos->y    = s_y;
+  scale->x  = scale->y  = fx_scale;
+} 
+
 static void Psel_PokeSetMain( PSEL_WORK* work )
 {
   // ポケモン大小セットの動きの更新(パレットアニメはPsel_PokeSetPalMainに任せておく)
@@ -1825,17 +1863,13 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
         }
         else
         {
-          f32           f_x       = ( (f32)d->p1_x - (f32)d->p0_x ) * (f32)p->move_step_count / (f32)d->p0p1_frame + (f32)d->p0_x;
-          f32           f_y       = ( (f32)d->p1_y - (f32)d->p0_y ) * (f32)p->move_step_count / (f32)d->p0p1_frame + (f32)d->p0_y;
-          f32           f_scale   = ( (f32)d->p1_scale - (f32)d->p0_scale ) * (f32)p->move_step_count / (f32)d->p0p1_frame + (f32)d->p0_scale;
-          s16           s_x       = (s16)f_x;
-          s16           s_y       = (s16)f_y;
-          fx32          fx_scale  = FX_F32_TO_FX32( f_scale / 16.0f );
           GFL_CLACTPOS  pos;
           GFL_CLSCALE   scale;
-          pos.x    = s_x;
-          pos.y    = s_y;
-          scale.x  = scale.y  = fx_scale;
+          PokeSetCalcPosScale( &pos, &scale,
+                               d->p0_x, d->p0_y, d->p1_x, d->p1_y,
+                               d->p0_scale, d->p1_scale,
+                               d->p0p1_frame, d->p0p1_jump,
+                               p->move_step_count );
           GFL_CLACT_WK_SetPos( p->clwk[POKE_BIG], &pos, CLSYS_DEFREND_SUB );
           GFL_CLACT_WK_SetScale( p->clwk[POKE_BIG], &scale );
         }
@@ -1899,17 +1933,13 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
         }
         else
         {
-          f32           f_x       = ( (f32)d->p2_x - (f32)d->p1_x ) * (f32)p->move_step_count / (f32)d->p1p2_frame + (f32)d->p1_x;
-          f32           f_y       = ( (f32)d->p2_y - (f32)d->p1_y ) * (f32)p->move_step_count / (f32)d->p1p2_frame + (f32)d->p1_y;
-          f32           f_scale   = ( (f32)d->p2_scale - (f32)d->p1_scale ) * (f32)p->move_step_count / (f32)d->p1p2_frame + (f32)d->p1_scale;
-          s16           s_x       = (s16)f_x;
-          s16           s_y       = (s16)f_y;
-          fx32          fx_scale  = FX_F32_TO_FX32( f_scale / 16.0f );
           GFL_CLACTPOS  pos;
           GFL_CLSCALE   scale;
-          pos.x    = s_x;
-          pos.y    = s_y;
-          scale.x  = scale.y  = fx_scale;
+          PokeSetCalcPosScale( &pos, &scale,
+                               d->p1_x, d->p1_y, d->p2_x, d->p2_y,
+                               d->p1_scale, d->p2_scale,
+                               d->p1p2_frame, d->p1p2_jump,
+                               p->move_step_count );
           GFL_CLACT_WK_SetPos( p->clwk[POKE_BIG], &pos, CLSYS_DEFREND_SUB );
           GFL_CLACT_WK_SetScale( p->clwk[POKE_BIG], &scale );
         }
@@ -3393,6 +3423,67 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
 
   int hit = GFL_UI_TP_HIT_NONE;
   BOOL select_change = FALSE;  // 選択しているものが変わったらTRUE  // ポケモンのタイプと種族名を消すのに使用する変数
+
+
+#ifdef DEBUG_POS_SET_MODE
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  {
+#if 0
+    // サブ画面のOBJを動かして位置を調整する
+    GFL_CLACTPOS finger_pos;
+    GFL_CLACT_WK_GetPos( work->finger_clwk, &finger_pos, CLSYS_DEFREND_MAIN );
+
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      OS_Printf( "finger_pos = ( %d, %d )\n", finger_pos.x, finger_pos.y );
+    }
+    else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+    {
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )    finger_pos.y -= 1;
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )  finger_pos.y += 1;
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )  finger_pos.x -= 1;
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ) finger_pos.x += 1;
+    }
+    else if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )    finger_pos.y -= 1;
+    else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )  finger_pos.y += 1;
+    else if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )  finger_pos.x -= 1;
+    else if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ) finger_pos.x += 1;
+    
+    GFL_CLACT_WK_SetPos( work->finger_clwk, &finger_pos, CLSYS_DEFREND_MAIN );
+#else
+    // メイン画面のOBJを動かして位置を調整する
+    GFL_CLWK* small_clwk;
+    GFL_CLWK* big_clwk;
+    GFL_CLACTPOS pos;
+
+    small_clwk = work->poke_set[TARGET_MIZU].clwk[POKE_SMALL];
+    big_clwk = work->poke_set[TARGET_MIZU].clwk[POKE_BIG];
+
+    GFL_CLACT_WK_GetPos( big_clwk, &pos, CLSYS_DEFREND_SUB );
+
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      OS_Printf( "main pos = ( %d, %d )\n", pos.x, pos.y );
+    }
+    else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+    {
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )    pos.y -= 1;
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )  pos.y += 1;
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )  pos.x -= 1;
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ) pos.x += 1;
+    }
+    else if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )    pos.y -= 1;
+    else if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )  pos.y += 1;
+    else if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )  pos.x -= 1;
+    else if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ) pos.x += 1;
+    
+    GFL_CLACT_WK_SetPos( small_clwk, &pos, CLSYS_DEFREND_SUB );
+    GFL_CLACT_WK_SetPos( big_clwk, &pos, CLSYS_DEFREND_SUB );
+#endif
+    return SEQ_S02_MAIN;
+  }
+#endif
+
 
   Psel_PokeSetMain( work );
   Psel_PalMain( work );
