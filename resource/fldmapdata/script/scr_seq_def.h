@@ -6768,6 +6768,21 @@
   .short  \pattern
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def
+ * @brief
+ * @param ret_wk
+ */
+//--------------------------------------------------------------
+#define _CALL_FIRST_POKE_SELECT( ret_wk ) \
+    _ASM_FIRST_POKE_SELECT_CALL ret_wk
+
+  .macro  _ASM_CALL_FIRST_POKE_SELECT ret_wk
+  .short  EV_SEQ_CALL_FIRST_POKE_SELECT
+  .short  \ret_wk
+  .endm
+
 //======================================================================
 //  ショップ関連
 //======================================================================

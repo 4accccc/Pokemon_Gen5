@@ -603,7 +603,7 @@
   DEF_CMD( EvCmdCallZukanAward, EV_SEQ_CALL_ZUKAN_AWARD )
 
   DEF_CMD( EvCmdCallGeonet, EV_SEQ_CALL_GEONET_PROC )
-  NO_CMD()
+  DEF_CMD( EvCmdCallPsel, EV_SEQ_CALL_FIRST_POKE_SELECT )
   NO_CMD()
   NO_CMD()
   
