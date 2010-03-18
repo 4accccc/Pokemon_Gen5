@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: p_tree.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_P_TREE_NAIX_
+#define NARC_P_TREE_NAIX_
+
+enum {
+	NARC_p_tree_p_tree_all_nsbmd = 0
+};
+
+/* NARC_P_TREE_NAIX_ */
+#endif

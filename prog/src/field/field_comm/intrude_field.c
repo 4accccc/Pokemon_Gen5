@@ -894,13 +894,16 @@ static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *game
     //自分のパレス島にいて接続している相手もいない場合は通信終了
     if(_PlayerPosCheck_PalaceBridge(&player_pos) == FALSE
         && GFL_NET_SystemGetConnectNum() <= 1){
-      if(GAMESYSTEM_GetAlwaysNetFlag(gameSys) == TRUE){
-        GameCommSys_ChangeReq(game_comm, GAME_COMM_NO_FIELD_BEACON_SEARCH, gameSys);
-        OS_TPrintf("パレス通信終了：ビーコンサーチへ\n");
-      }
-      else{
-        GameCommSys_ExitReq(game_comm);
-        OS_TPrintf("パレス通信終了：通信END\n");
+      INTRUDE_COMM_SYS_PTR intcomm = GameCommSys_GetAppWork(game_comm);
+      if(intcomm->comm_status != INTRUDE_COMM_STATUS_BOOT_CHILD){ //子として親を探しに行っている場合は通信終了にはまだいかない
+        if(GAMESYSTEM_GetAlwaysNetFlag(gameSys) == TRUE){
+          GameCommSys_ChangeReq(game_comm, GAME_COMM_NO_FIELD_BEACON_SEARCH, gameSys);
+          OS_TPrintf("パレス通信終了：ビーコンサーチへ\n");
+        }
+        else{
+          GameCommSys_ExitReq(game_comm);
+          OS_TPrintf("パレス通信終了：通信END\n");
+        }
       }
     }
     break;

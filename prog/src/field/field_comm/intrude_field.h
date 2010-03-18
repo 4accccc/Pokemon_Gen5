@@ -26,6 +26,9 @@ enum{
   
 //  PALACE_MAP_RANGE_LEN = (2056-1016) << FX32_SHIFT,     ///<パレスマップのX長
   
+  PALACE_MAP_TREE_X = 504 << FX32_SHIFT,            ///<パレスの木 配置座標
+  PALACE_MAP_TREE_Y = 32 << FX32_SHIFT,
+  PALACE_MAP_TREE_Z = 456 << FX32_SHIFT,
   PALACE_MAP_MONOLITH_X = 488 << FX32_SHIFT,       ///<モノリス配置開始座標X
   PALACE_MAP_MONOLITH_Y = 32,
   PALACE_MAP_MONOLITH_Z = 472 << FX32_SHIFT,

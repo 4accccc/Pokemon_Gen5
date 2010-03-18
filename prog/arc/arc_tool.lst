@@ -285,3 +285,4 @@
   ARCID_SPPOKE_GMK  "fieldmap/sppoke.narc"  # 特殊ポケモンギミックアーカイブ
   ARCID_PSEL "psel.narc"  # 三匹選択の2D、3Dデータ
   ARCID_SUBWAY_MAP_GRA "subway_map_gra.narc"  # 地下鉄路線図のグラフィックデータ
+  ARCID_PALACE_TREE "p_tree.narc"  # パレスの木
