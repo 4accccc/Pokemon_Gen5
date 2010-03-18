@@ -10,11 +10,12 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c03r0401.h"
-  //.include  "c03r0401.h"
+  .include  "c03r0401.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
+
 
 //--------------------------------------------------------------
 //               スクリプトテーブル
@@ -24,18 +25,297 @@ _EVENT_DATA    ev_c03r0401_girl1_01		//映画関連イベントの少女
 _EVENT_DATA    ev_c03r0401_poke22_01	//映画関連イベントのゾロア
 _EVENT_DATA_END
 
+DEFINE_LOCAL poke_pos   //引数で必要なので定義
 
 /************************************************************/
 /*                      少年１（ゾロア）                    */
 /************************************************************/
 EVENT_START	ev_c03r0401_boy1_01
+  _TALK_OBJ_START()
+  //イベントが進行中か？（男の子がゾロアになっている）
+  IF $WK_SCENE_C03R0401_ZOROA == 1 THEN                   //進行中
+    
+  ELSE                                                    //進行前
+    //手持ちイベントセレビィがいるか？
+    _GET_EVT_POKE_POS( MONSNO_SEREBHI, FALSE, poke_pos, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN  //セレビィいる
+      //「きゅおー」
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy1_02 )
+      _BALLOONWIN_CLOSE()
+
+      //自機定位置へ
+      _CALL move_player 
+
+      //セレビィ出す
+      _CALL ball_out
+
+      //「るら」
+      _BALLOONWIN_OBJMSG( msg_c03r0401_celebi_01 , MMDL_ID_EVENTOBJ_00 )
+      _BALLOONWIN_CLOSE()
+
+      _CALL change_zoroa
+
+      //「きゅおー」
+      _BALLOONWIN_OBJMSG_POS( msg_c03r0401_boy1_02 ,C03R0401_POKE22_01, POS_DR  )
+      _BALLOONWIN_CLOSE()
+
+      //女の子ゾロアのほうを向く+2回はねる
+      _OBJ_ANIME( C03R0401_GIRL1_01, anm_girl_jump )
+      _OBJ_ANIME_WAIT()
+
+      //「すごーい」
+      _BALLOONWIN_OBJMSG_POS( msg_c03r0401_girl1_07 ,C03R0401_GIRL1_01, POS_DR)
+      _BALLOONWIN_CLOSE()
+
+      //セレビィ戻す
+      _CALL ball_in
+
+      //自機を前進
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_front )
+      _OBJ_ANIME_WAIT()
+
+      //ゾロアイベント進行中状態にする
+      $WK_SCENE_C03R0401_ZOROA = 1
+
+      //仲間にする処理
+      _CALL add_zoroa
+
+    ELSE                          //セレビィいない
+      //「・・・」
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy1_01 )
+    ENDIF
+  ENDIF
 EVENT_END
 
+//自機の定位置移動（姿が男の子のとき）
+move_player:
+{
+  DEFINE_LOCAL player_dir
+  //自機の向きを取得
+  _PLAYER_DIR_GET(player_dir)
+  //自機の向きでアニメ分岐
+  SWITCH $player_dir
+  CASE DIR_UP THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_up )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_right )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+}  
+_RET
+
+//自機の定位置移動（姿がゾロアのとき）
+move_player2:
+{
+  DEFINE_LOCAL player_dir
+  //自機の向きを取得
+  _PLAYER_DIR_GET(player_dir)
+  //自機の向きでアニメ分岐
+  SWITCH $player_dir
+  CASE DIR_UP THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_up2 )
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_right2 )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+}  
+_RET
+
+
+ball_out:
+//  _MOVE_BALL( SCR_BALL_ANM_TYPE_OUT, 4, 0, 7, 3, 8 )
+//  _START_BALL_ANM( SCR_BALL_ANM_TYPE_OUT, 4, 0, 7 )
+  //ボール出現フレーム待ち
+//  _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_OUT )
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,0,16,0)
+  _DISP_FADE_END_CHECK()
+  //ポケを表示
+  _OBJ_ADD_EX( 4, 7, DIR_UP, MMDL_ID_EVENTOBJ_00, TPOKE_0278, MV_DMY )
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,16,0,0)
+  _DISP_FADE_END_CHECK()
+//  _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_OUT )
+_RET
+
+ball_in:
+//  _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 5, 3, 7 )
+  //ポケ非表示フレーム待ち
+//  _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_IN )
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,0,16,0)
+  _DISP_FADE_END_CHECK()
+  //ポケ非表示
+  _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,16,0,0)
+  _DISP_FADE_END_CHECK()
+//  _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_IN )
+//  _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 5, 3, 7, 3, 8 )
+_RET
+
+zoroa_ball_in:
+//  _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 5, 3, 7 )
+  //ポケ非表示フレーム待ち
+//  _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_IN )
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,0,16,0)
+  _DISP_FADE_END_CHECK()
+  //ポケ非表示
+  _FLAG_SET( FV_C03R0401_POKE22_01 )
+  _OBJ_DEL(C03R0401_POKE22_01)
+  _DISP_FADE_START(DISP_FADE_WHITEOUT,16,0,0)
+  _DISP_FADE_END_CHECK()
+//  _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_IN )
+//  _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 5, 3, 7, 3, 8 )
+_RET
+
+
+//ゾロアに戻る
+change_zoroa:
+  //男の子を消す
+  _FLAG_SET( FV_C03R0401_BOY1_01 )
+  _OBJ_DEL(C03R0401_BOY1_01)
+  //ゾロア出す
+  _FLAG_RESET( FV_C03R0401_POKE22_01 )
+  _OBJ_ADD(C03R0401_POKE22_01)
+_RET
+
+add_zoroa:
+  DEFINE_LOCAL temoti
+  DEFINE_LOCAL box
+  DEFINE_LOCAL add_ok
+
+  //手持ちの空き数を取得
+  _GET_PARTY_POKE_COUNT( temoti, POKECOUNT_MODE_EMPTY )
+  //ボックスの空き数を取得
+  _GET_BOX_POKE_COUNT( box, POKECOUNT_MODE_EMPTY )
+
+  $add_ok = FALSE
+  IF $temoti != 0 THEN
+    $add_ok = TRUE
+  ENDIF
+  IF $box != 0 THEN
+    $add_ok = TRUE
+  ENDIF
+
+  //空きがないか？
+  IF $add_ok == FALSE THEN
+    _CALL add_ng
+  ENDIF
+
+  /*＝＝以降は仲間にできる場合の処理＝＝*/
+
+  //「仲間にしますか？」
+  _SYSWIN_MSG( msg_c03r0401_narrator_01, POS_DOWN )
+  _YES_NO_WIN( SCWK_ANSWER )
+  _SYSWIN_CLOSE()
+
+  IF $SCWK_ANSWER == 0 THEN     //仲間にする
+    //ゾロアをボールに入れて自機の場所へ @todo
+    _CALL zoroa_ball_in
+
+    IF $temoti != 0 THEN        //手持ち
+      _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_ZOROA, 0, TOKUSYU_NULL, 99, 0 )
+      _SYSWIN_MSG( msg_c03r0401_narrator_02, POS_DOWN )
+      _SYSWIN_CLOSE()
+    ELSE                        //ボックス  @todo
+      _SYSWIN_MSG( msg_c03r0401_narrator_03, POS_DOWN )
+      _SYSWIN_CLOSE()
+    ENDIF
+    //「よかったね」
+    _BALLOONWIN_OBJMSG( msg_c03r0401_girl1_09 ,C03R0401_GIRL1_01  )
+    _BALLOONWIN_CLOSE()
+
+    //女の子いなくなる
+    _OBJ_ANIME( C03R0401_GIRL1_01, anm_girl_bye )
+    _OBJ_ANIME_WAIT()
+    _FLAG_SET( FV_C03R0401_GIRL1_01 )
+    _OBJ_DEL(C03R0401_GIRL1_01)
+
+    //イベント終了
+    $WK_SCENE_C03R0401_ZOROA = 3
+  ELSE                          //仲間にしない  
+    _CALL add_ng
+  ENDIF
+
+_RET
+
+//仲間にしない・できない場合のフロー
+add_ng:
+{
+  DEFINE_LOCAL sex
+  DEFINE_LOCAL msg
+  //自分の性別取得
+  _GET_MY_SEX( sex )
+  //自分の性別で分岐
+  IF $sex == PM_MALE THEN   //男
+    $msg = msg_c03r0401_girl1_10_1
+  ELSE                      //女
+    $msg = msg_c03r0401_girl1_10_2
+  ENDIF
+  
+  //「しんぱい」
+  _BALLOONWIN_OBJMSG( msg ,C03R0401_GIRL1_01  )
+  _BALLOONWIN_CLOSE()
+
+}
+_RET
 
 /************************************************************/
 /*                          少女１                          */
 /************************************************************/
 EVENT_START	ev_c03r0401_girl1_01
+  _TALK_OBJ_START()
+  //イベントが進行中か？（男の子がゾロアになっている）
+  IF $WK_SCENE_C03R0401_ZOROA == 1 THEN                     //進行中
+    //「ゾロアがまってる」
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_12 )
+  ELSE                                                      //進行前
+    //手持ちにイベントセレビィがいるか？
+    _GET_EVT_POKE_POS( MONSNO_SEREBHI, FALSE, poke_pos, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN //セレビィいる
+    {
+      DEFINE_LOCAL sex
+      //自分の性別取得
+      _GET_MY_SEX( sex )
+      //自分の性別で分岐
+      IF $sex == PM_MALE THEN   //男
+        //「おにいちゃん　はなして」
+        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_06_1 )
+      ELSE                      //女
+        //「おねえちゃん　はなして」
+        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_06_2 )
+      ENDIF
+    }  
+    ELSE                        //セレビィいない
+      //セレビィがいない状態での話しかけは初回か？
+      IF FLAG_OFF(FE_C03R0401_GIRL2_TALK) THEN     //初回
+        //話しかけフラグセット
+        _FLAG_SET(FE_C03R0401_GIRL2_TALK)
+        
+        //「一緒にいる」
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_01 )
+        _BALLOONWIN_CLOSE()
+        //「話のつづき」
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_02 )
+        _BALLOONWIN_CLOSE()
+
+        //ゾロアを図鑑に登録済みか？
+        _GET_ZUKAN_FLAG( ZUKANCTRL_MODE_SEE, MONSNO_ZOROA, SCWK_ANSWER )
+        IF $SCWK_ANSWER == FALSE THEN    //登録まだ
+          //登録
+          _SET_ZUKAN_FLAG( ZUKANCTRL_MODE_SEE, MONSNO_ZOROA )
+          //「ゾロアはひとをばかす」
+          _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_03 )
+          _LAST_KEYWAIT()
+          _BALLOONWIN_CLOSE()
+        ENDIF
+
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_04 )
+        _LAST_KEYWAIT()
+        _BALLOONWIN_CLOSE()
+      ELSE                                        //２回目以降
+        //「まいごになるわ」
+        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_05 )
+      ENDIF
+    ENDIF
+  ENDIF
 EVENT_END
 
 
@@ -43,6 +323,82 @@ EVENT_END
 /*                          ゾロア                          */
 /************************************************************/
 EVENT_START	ev_c03r0401_poke22_01
+  //「きゅおー」
+  _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy1_02 )
+  _BALLOONWIN_CLOSE()
+
+  //自機定位置へ
+  _CALL move_player2
+
+  //仲間にする処理
+  _CALL add_zoroa
+
 EVENT_END
+
+
+//--------------------------------------------------------------------
+//自機定位置へ　下からはないかけたとき  姿が男の子
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_up
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機定位置へ　左からはなしかけたとき  姿が男の子
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_right
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機定位置へ　下からはないかけたとき  姿がゾロア
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_up2
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機定位置へ　左からはなしかけたとき  姿がゾロア
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_right2
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機を前進
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_front
+  _ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0  
+
+//--------------------------------------------------------------------
+//女の子はねる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_girl_jump
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA AC_WAIT_4F,1
+  _ANIME_DATA	AC_STAY_JUMP_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//女の子退出
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_girl_bye
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	ACMD_END,0
+  
+
+
+
+
 
 
