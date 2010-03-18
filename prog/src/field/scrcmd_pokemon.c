@@ -33,6 +33,9 @@
 
 #include "event_poke_status.h" // for EvCmdPartyPokeSelect
 
+#include "poke_tool/poke_memo.h"  //POKE_MEMO_SetTrainerMemoPP
+#include "field/zonedata.h" //ZONEDATA_GetPlaceNameID
+
 
 #include "app/waza_oshie.h"  // for WAZAOSHIE_xxxx
 
@@ -829,11 +832,16 @@ extern VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk )
   if( tokusei != TOKUSYU_NULL ){
     PP_Put( pp, ID_PARA_speabino, tokusei );  // 特性
   }
-  // 親の名前と性別
-  PP_Put( pp, ID_PARA_id_no, (u32)MyStatus_GetID(status) );
-  PP_Put( pp, ID_PARA_oyasex, MyStatus_GetMySex(status) );
-  PP_Put( pp, ID_PARA_oyaname_raw, (u32)MyStatus_GetMyName(status) );
 
+  {
+  // 親の名前と性別
+  //PP_Put( pp, ID_PARA_id_no, (u32)MyStatus_GetID(status) );
+  //PP_Put( pp, ID_PARA_oyasex, MyStatus_GetMySex(status) );
+  //PP_Put( pp, ID_PARA_oyaname_raw, (u32)MyStatus_GetMyName(status) );
+    PLAYER_WORK* player_wk = GAMEDATA_GetMyPlayerWork( gdata );
+    POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_SET_CAPTURE, status,
+        ZONEDATA_GetPlaceNameID( PLAYERWORK_getZoneID( player_wk ) ), heap_id );
+  }
   PP_Renew( pp );
 
   // 手持ちに追加
