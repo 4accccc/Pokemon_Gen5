@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-15T21:41:02"/>
+	<create user="ohmori" host="W00223" date="2010-03-18T20:46:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -304,17 +304,17 @@
 	</row>
 
 	<row id="plc_power_04">
-		<language name="JPN" width="256">そうぐうパワー　ー</language>
+		<language name="JPN" width="256">そうぐうパワー　－</language>
 		<language name="JPN_KANJI" width="256">そうぐうパワー　ー</language>
 	</row>
 
 	<row id="plc_power_05">
-		<language name="JPN" width="256">そうぐうパワー　ーー</language>
+		<language name="JPN" width="256">そうぐうパワー　－－</language>
 		<language name="JPN_KANJI" width="256">そうぐうパワー　ーー</language>
 	</row>
 
 	<row id="plc_power_06">
-		<language name="JPN" width="256">そうぐうパワー　ーーー</language>
+		<language name="JPN" width="256">そうぐうパワー　－－－</language>
 		<language name="JPN_KANJI" width="256">そうぐうパワー　ーーー</language>
 	</row>
 
@@ -409,17 +409,17 @@
 	</row>
 
 	<row id="plc_power_25">
-		<language name="JPN" width="256">けいけんちパワー　-</language>
+		<language name="JPN" width="256">けいけんちパワー　－</language>
 		<language name="JPN_KANJI" width="256">けいけんちパワー　-</language>
 	</row>
 
 	<row id="plc_power_26">
-		<language name="JPN" width="256">けいけんちパワー　--</language>
+		<language name="JPN" width="256">けいけんちパワー　－－</language>
 		<language name="JPN_KANJI" width="256">けいけんちパワー　--</language>
 	</row>
 
 	<row id="plc_power_27">
-		<language name="JPN" width="256">けいけんちパワー　---</language>
+		<language name="JPN" width="256">けいけんちパワー　－－－</language>
 		<language name="JPN_KANJI" width="256">けいけんちパワー　---</language>
 	</row>
 
