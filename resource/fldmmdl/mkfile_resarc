@@ -54,8 +54,7 @@ $(DIR_TMP)/%.nsbmd: $(DIR_RES)/%.imd
 
 #imd --> nsbtx‚Ö‚Ì•ÏŠ·ƒ‹[ƒ‹’è‹`
 $(DIR_TMP)/%.nsbtx: $(DIR_RES)/%.imd
-	@echo Texture Data Convert: $^ ¨ $@
-	@$(G3DCVTR) $^ -o $@ -etex
+	@$(G3DCVTR) $^ -o $@ -etex -tex-nomerge
 
 #itp --> nsbtp
 $(DIR_TMP)/%.nsbtp: $(DIR_RES)/%.itp
