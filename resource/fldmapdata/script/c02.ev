@@ -852,10 +852,6 @@ EVENT_START   ev_pos_c02_stone_01
     _PLAYER_POS_GET( LWK_PLAYER_POSX  ,LWK_PLAYER_POSZ ) //自機座標取得
  	_GET_ROM_VERSION ( LWK_ROM_VERSION ) 
  	
-  	//主人公、みんなの方を向く
- 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_gyoe )
-	_OBJ_ANIME_WAIT()
-	
     SWITCH $LWK_PLAYER_POSX
     CASE 640 THEN
         _OBJ_ANIME( MMDL_ID_PLAYER,anm_c02_guide_x640 )
@@ -895,29 +891,45 @@ EVENT_START   ev_pos_c02_stone_01
 	//博士（娘）がプレイヤーに気づく
 	_OBJ_ANIME( C02_HAKASE2_01, anm_common_gyoe )
 	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME( C02_HAKASE2_01, anm_common_turn_d )
-	_OBJ_ANIME_WAIT()
+//	_OBJ_ANIME( C02_HAKASE2_01, anm_common_turn_d )
+//	_OBJ_ANIME_WAIT()
 	
 	//博士（娘）が喋る
 	//ハーイ！　れきしてきに　センセーションで
-	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase2_sotne_01, C02_HAKASE2_01,POS_DL)
+	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase2_sotne_01, C02_HAKASE2_01,POS_DR)
     _BALLOONWIN_CLOSE()
     
     //c02ジムリーダーが博物館から出てくる
 	_OBJ_ANIME( C02_LEADER02_02, anm_leader2_kuru_01 )
+	_TIME_WAIT(8)
+	_SE_PLAY(SEQ_SE_KAIDAN)
+	_SE_WAIT()
 	_OBJ_ANIME_WAIT()
+	_TIME_WAIT(4)
 	_OBJ_ANIME( C02_LEADER02_02, anm_common_turn_l )
 	_OBJ_ANIME_WAIT()
 	
 	//博士（娘）が博士（父）を振り向く
+	_OBJ_ANIME( C02_HAKASE1_01, anm_common_turn_r )
+	_TIME_WAIT(6)
 	_OBJ_ANIME( C02_HAKASE2_01, anm_common_turn_l )
+	_TIME_WAIT(2)
+	_OBJ_ANIME( C02_SUPPORT_02, anm_common_turn_l )
+	_OBJ_ANIME( C02_CHAMPION_01, anm_common_turn_r )
 	_OBJ_ANIME_WAIT()
 	
 	//c02ジムリーダーが喋る
 	//……これで　いいんでしょ
-	_BALLOONWIN_OBJMSG_POS( msg_c02_leader2_sotne_01, C02_LEADER02_02,POS_DL) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_leader2_sotne_01, C02_LEADER02_02,POS_DR) 
     _BALLOONWIN_CLOSE()
 
+    //アイテムを受け取る動き
+    _OBJ_ANIME(C02_LEADER02_02,anm_common_turn_l)
+    _OBJ_ANIME_WAIT()
+	_TIME_WAIT(12)
+    _OBJ_ANIME(C02_HAKASE1_01,anm_common_turn_r)
+    _OBJ_ANIME_WAIT()
+    
 	//博士（父）が喋る
 	//うむ……　あのあと　リュウラセンのとうを
 	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase1_sotne_01, C02_HAKASE1_01,POS_DL) 
@@ -925,12 +937,15 @@ EVENT_START   ev_pos_c02_stone_01
 
 	//博士（娘）が喋る
 	//……しらべたのは　アタシ　なんですけど
-	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase2_sotne_02, C02_HAKASE2_01,POS_DL) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase2_sotne_02, C02_HAKASE2_01,POS_DR) 
     _BALLOONWIN_CLOSE()
-
+	
+	//間を作るためのウェイト
+	_TIME_WAIT(16)
+	
 	//サポートが喋る
 	//それにしても　あのとき　プラズマだん　から
-	_BALLOONWIN_OBJMSG_POS( msg_c02_white_sotne_01, C02_SUPPORT_02,POS_DL) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_white_sotne_01, C02_SUPPORT_02,POS_DR) 
     _BALLOONWIN_CLOSE()
   	
   	//アロエがサポートを振り向く
@@ -941,6 +956,14 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	//アロエが主人公を振り向く
  	_OBJ_ANIME( C02_LEADER02_02, anm_common_turn_d )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME(C02_HAKASE1_01,anm_common_turn_d)
+	_TIME_WAIT(2)
+	_OBJ_ANIME(C02_HAKASE2_01,anm_common_turn_d)
+	_TIME_WAIT(2)
+	_OBJ_ANIME(C02_CHAMPION_01,anm_common_turn_d)
+	_OBJ_ANIME(C02_SUPPORT_02,anm_common_turn_d)
 	_OBJ_ANIME_WAIT()
 	
 	//c02ジムリーダーが喋る
@@ -960,6 +983,13 @@ EVENT_START   ev_pos_c02_stone_01
 	//Ｎが　かかげたのは
 	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase1_sotne_02, C02_HAKASE1_01,POS_DL) 
     _BALLOONWIN_CLOSE()
+    
+    //アイテムを受け取る動き
+    _OBJ_ANIME(C02_HAKASE1_01,anm_common_turn_d)
+    _OBJ_ANIME_WAIT()
+	_TIME_WAIT(12)
+    _OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
+    _OBJ_ANIME_WAIT()
 	
 	//ROMVerによって、ダークストーンか、ライトストーンを入手
 	IF $LWK_ROM_VERSION == VERSION_BLACK THEN
@@ -980,16 +1010,15 @@ EVENT_START   ev_pos_c02_stone_01
     //サポートがびっくり！
  	_OBJ_ANIME( C02_SUPPORT_02, anm_common_gyoe )
 	_OBJ_ANIME_WAIT()
-	
-	//サポートが喋る
-	//さわったら　うごきましたよね！？
-	_BALLOONWIN_OBJMSG_POS( msg_c02_white_sotne_02, C02_SUPPORT_02,POS_DL) 
-    _BALLOONWIN_CLOSE()
 
 	//サポートがチャンピオンの方を向く
-	_OBJ_ANIME( C02_SUPPORT_02, anm_common_turn_l )
+	_OBJ_ANIME( C02_SUPPORT_02, anm_support_turn_l )
+	_BALLOONWIN_OBJMSG_POS( msg_c02_white_sotne_02, C02_SUPPORT_02,POS_DR) 	
+	//サポートが喋る
+	//さわったら　うごきましたよね！？
 	_OBJ_ANIME_WAIT()
-	
+    _BALLOONWIN_CLOSE()
+
 	//チャンピオンが喋る
 	//……そうか
 	_BALLOONWIN_OBJMSG_WB( msg_c02_champion_sotne_01w, msg_c02_champion_sotne_01b, C02_CHAMPION_01, POS_DL )
@@ -1001,7 +1030,7 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	//博士（娘）が喋る
 	//で　どうすれば
-	_BALLOONWIN_OBJMSG_WB( msg_c02_hakase2_sotne_03w, msg_c02_hakase2_sotne_03b, C02_HAKASE2_01, POS_DL )
+	_BALLOONWIN_OBJMSG_WB( msg_c02_hakase2_sotne_03w, msg_c02_hakase2_sotne_03b, C02_HAKASE2_01, POS_DR )
 	_MSGWIN_CLOSE()
 
 	//博士（娘）がチャンピオンの方を向く
@@ -1013,8 +1042,8 @@ EVENT_START   ev_pos_c02_stone_01
 	_BALLOONWIN_OBJMSG_POS( msg_c02_champion_sotne_02, C02_CHAMPION_01,POS_DL) 
     _BALLOONWIN_CLOSE()
 
-	//博士（父）がみんなの方を向く
-	_OBJ_ANIME( C02_HAKASE1_01, anm_common_turn_r )
+	//博士（父）がチャンピオンの方を向く
+	_OBJ_ANIME( C02_HAKASE1_01, anm_common_turn_l )
 	_OBJ_ANIME_WAIT()
 	
 	//博士（父）が喋る
@@ -1027,48 +1056,52 @@ EVENT_START   ev_pos_c02_stone_01
 	_BALLOONWIN_OBJMSG_POS( msg_c02_champion_sotne_03, C02_CHAMPION_01,POS_DL) 
     _BALLOONWIN_CLOSE()
 	
-	//博士（父）がチャンピオンの方を向く
-	_OBJ_ANIME( C02_HAKASE1_01, anm_common_turn_l )
-	_OBJ_ANIME_WAIT()
-	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
 				
 	//カメラ操作　チャンピオンの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,42041344,0,38305792,10 )	//一番最後の引数は移動にかかるフレーム数
+	_CAMERA_MOVE( 9688,0,970752,42106880,0,38305792,24 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//チャンピオン：そらをとぶアニメ
 	_CALL_NPCFLY_CUTIN(C02_CHAMPION_01)
 
 	//自機にカメラを戻す
-	_CAMERA_RECV_MOVE( 10 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_RECV_MOVE( 24 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
 	
 	//博士（父）が主人公の方を向く
 	_OBJ_ANIME( C02_HAKASE1_01, anm_common_turn_d )
+	_TIME_WAIT(6)
+	_OBJ_ANIME( C02_SUPPORT_02, anm_common_turn_d )
+	_TIME_WAIT(2)
+	_OBJ_ANIME( C02_HAKASE2_01, anm_common_turn_d )
 	_OBJ_ANIME_WAIT()
 	
 	//博士（父）が喋る
 	//おまえさんが　その　ダークストーンを
 	_BALLOONWIN_OBJMSG_WB( msg_c02_hakase1_sotne_04w, msg_c02_hakase1_sotne_04b, C02_HAKASE1_01, POS_DL )
 	_MSGWIN_CLOSE()
-	
-	//博士（娘）が主人公を向く
-	_OBJ_ANIME( C02_HAKASE2_01, anm_common_turn_d )
-	_OBJ_ANIME_WAIT()
+
+	//間を作るためのウェイト
+	_TIME_WAIT(16)
 	
 	//博士（娘）が喋る
 	//ドラゴンが
-	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase2_sotne_04, C02_HAKASE2_01,POS_DL) 
+	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase2_sotne_04, C02_HAKASE2_01,POS_DR) 
     _BALLOONWIN_CLOSE()
     
     //博士（父）が画面外に移動
     //博士（娘）が画面外に移動
 	_OBJ_ANIME( C02_HAKASE1_01, anm_hakase1_saru_01 )
 	_OBJ_ANIME( C02_HAKASE2_01, anm_hakase2_saru_01 )
+	_TIME_WAIT(42)
+	_OBJ_ANIME(C02_SUPPORT_02,anm_common_turn_r)
+	_TIME_WAIT(2)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
+	_OBJ_ANIME(C02_LEADER02_02,anm_common_turn_r)
 	_OBJ_ANIME_WAIT()
     
 	//==============フラグワーク操作==============//
@@ -1107,6 +1140,15 @@ _ANIME_LABEL	anm_common_turn_l
 	_ANIME_DATA AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+// サポートが振り向くアニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_support_turn_l
+	
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
 //--------------------------------------------------------------------
 // 共通アニメ：下振り向き                       
 //--------------------------------------------------------------------
@@ -1206,8 +1248,8 @@ _ANIME_LABEL	anm_leader2_kuru_01
 //アロエ（ジムリーダー2）：左に移動する                        
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader02_idou_01  
-	_ANIME_DATA AC_WALK_L_8F,2,1
-	_ANIME_DATA AC_DIR_D,1	
+	_ANIME_DATA AC_WALK_L_8F,1,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1	
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -1215,15 +1257,15 @@ _ANIME_LABEL	anm_leader02_idou_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	 anm_hakase1_idou_01
 	_ANIME_DATA AC_WALK_D_8F,1
-	_ANIME_DATA AC_WALK_R_8F,2	
-	_ANIME_DATA AC_DIR_D,1	
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1	
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
 // 博士（父）：去っていく                           
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase1_saru_01
-	_ANIME_DATA AC_WALK_R_8F,2
+	_ANIME_DATA AC_WALK_R_8F,1
 	_ANIME_DATA AC_WALK_D_8F,5	
 	_ANIME_DATA AC_WALK_R_8F,7	
 	_ANIME_DATA	ACMD_END,0
@@ -1240,7 +1282,8 @@ _ANIME_LABEL	anm_champion_saru_01
 // 博士（娘）：去っていく                           
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase2_saru_01
-	_ANIME_DATA AC_WALK_D_8F,7	
+	_ANIME_DATA AC_WAIT_8F,1
+	_ANIME_DATA AC_WALK_D_8F,6
 	_ANIME_DATA AC_WALK_R_8F,7	
 	_ANIME_DATA	ACMD_END,0
 

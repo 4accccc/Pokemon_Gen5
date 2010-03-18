@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/17 16:26:52
+#save date:2010/03/18 21:03:49
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02.wms
 #SECTION START:OBJ_EVENT
@@ -305,7 +305,7 @@ FV_C02_STONEEVENT_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_LEFT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -319,7 +319,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-360 0 136
+344 0 136
 #event number: 10
 #type
 1
@@ -336,7 +336,7 @@ FV_C02_STONEEVENT_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -350,7 +350,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-296 0 136
+312 0 136
 #event number: 11
 #type
 1
@@ -367,7 +367,7 @@ FV_C02_STONEEVENT_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -381,7 +381,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-280 0 120
+296 0 120
 #event number: 12
 #type
 1
@@ -398,7 +398,7 @@ FV_C02_STONEEVENT_01
 #Event Script Name
 SCRID_C02_SUPPORT_02
 #Direction Type Number
-DIR_LEFT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -412,7 +412,7 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-376 0 120
+360 0 120
 #event number: 13
 #type
 1
