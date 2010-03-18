@@ -20,6 +20,7 @@
 #include "system/wipe.h"
 #include "savedata/misc.h"
 #include "app/app_menu_common.h"
+#include "net_app/connect_anm.h"
 
 #include "arc_def.h"
 #include "mb_parent.naix"
@@ -39,7 +40,8 @@
 //======================================================================
 #pragma mark [> define
 #define MB_PARENT_FRAME_MSG (GFL_BG_FRAME1_M)
-#define MB_PARENT_FRAME_BG  (GFL_BG_FRAME3_M)
+#define MB_PARENT_FRAME_BG  (GFL_BG_FRAME2_M)
+#define MB_PARENT_FRAME_BG2  (GFL_BG_FRAME3_M)
 
 #define MB_PARENT_FRAME_SUB_MSG  (GFL_BG_FRAME1_S)
 #define MB_PARENT_FRAME_SUB_BAR  (GFL_BG_FRAME2_S)
@@ -217,6 +219,7 @@ typedef struct
   BOOL isBoxNotEnough;
   BOOL isPostMoviePoke;
   BOOL isPostMovieCapsule;
+  CONNECT_BG_PALANM bgAnmWork;
   
   MISC  *miscSave;
   
@@ -346,6 +349,10 @@ static void MB_PARENT_Term( MB_PARENT_WORK *work )
   if( work->mode == MPM_POKE_SHIFTER )
   {
     GFUser_ResetVIntrFunc();
+  }
+  else
+  {
+    ConnectBGPalAnm_End( &work->bgAnmWork );
   }
 
   if( work->gameData != NULL )
@@ -676,6 +683,12 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
   //OBJ‚ÌXV
   GFL_CLACT_SYS_Main();
   
+  //”wŒiƒAƒjƒXV
+  if( work->mode == MPM_MOVIE_TRANS )
+  {
+    ConnectBGPalAnm_Main( &work->bgAnmWork );
+  }
+  
   return FALSE;
 }
 
@@ -738,18 +751,18 @@ static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work )
       GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x6000,
       GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
-    // BG2 MAIN (ƒLƒƒƒ‰
-    //static const GFL_BG_BGCNT_HEADER header_main2 = {
-    //  0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
-    //  GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-    //  GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x10000,0x0C000,
-    //  GX_BG_EXTPLTT_23, 2, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
-    //};
-    // BG3 MAIN (”wŒi
+    // BG2 MAIN (”wŒi
+    static const GFL_BG_BGCNT_HEADER header_main2 = {
+      0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000,0x08000,
+      GX_BG_EXTPLTT_23, 2, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
+    // BG3 MAIN (”wŒi‚Q
     static const GFL_BG_BGCNT_HEADER header_main3 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x18000,0x08000,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x10000,0x08000,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
@@ -777,8 +790,8 @@ static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work )
     GFL_BG_SetBGMode( &sys_data );
 
     MB_PARENT_SetupBgFunc( &header_main1 , MB_PARENT_FRAME_MSG , GFL_BG_MODE_TEXT );
-    //MB_PARENT_SetupBgFunc( &header_main2 , LTVT_FRAME_CHARA , GFL_BG_MODE_TEXT );
-    MB_PARENT_SetupBgFunc( &header_main3 , MB_PARENT_FRAME_BG , GFL_BG_MODE_TEXT );
+    MB_PARENT_SetupBgFunc( &header_main2 , MB_PARENT_FRAME_BG , GFL_BG_MODE_TEXT );
+    MB_PARENT_SetupBgFunc( &header_main3 , MB_PARENT_FRAME_BG2 , GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_sub1  , MB_PARENT_FRAME_SUB_MSG, GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_sub2  , MB_PARENT_FRAME_SUB_BAR, GFL_BG_MODE_TEXT );
     MB_PARENT_SetupBgFunc( &header_sub3  , MB_PARENT_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
@@ -806,6 +819,7 @@ static void MB_PARENT_TermGraphic( MB_PARENT_WORK *work )
   GFL_CLACT_SYS_Delete();
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_MSG );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_BG );
+  GFL_BG_FreeBGControl( MB_PARENT_FRAME_BG2 );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_SUB_BG );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_SUB_BAR );
   GFL_BG_FreeBGControl( MB_PARENT_FRAME_SUB_MSG );
@@ -860,20 +874,27 @@ static void MB_PARENT_LoadResource( MB_PARENT_WORK *work )
     ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_WIFI_LOGIN , work->heapId );
 
     //‰º‰æ–Ê
-    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_wifi_login_conect_NCLR , 
+    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_wifi_login_connect_win_NCLR , 
                       PALTYPE_SUB_BG , 0 , 0 , work->heapId );
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_conect_sub_NCGR ,
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_connect_win_NCGR ,
                       MB_PARENT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
-    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_conect_sub_NSCR , 
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_connect_win2_d_NSCR , 
                       MB_PARENT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
     
     //ã‰æ–Ê
-    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_wifi_login_conect_NCLR , 
+    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_wifi_login_connect_win_NCLR , 
                       PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
-    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_conect_NCGR ,
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_connect_win_NCGR ,
                       MB_PARENT_FRAME_BG , 0 , 0, FALSE , work->heapId );
-    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_conect_01_NSCR , 
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_connect_win1_u_NSCR , 
                       MB_PARENT_FRAME_BG ,  0 , 0, FALSE , work->heapId );
+    //ã‰æ–Ê
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_connect_win_NCGR ,
+                      MB_PARENT_FRAME_BG2 , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_connect_win2_u_NSCR , 
+                      MB_PARENT_FRAME_BG2 ,  0 , 0, FALSE , work->heapId );
+    
+    ConnectBGPalAnm_InitBg( &work->bgAnmWork , arcHandle , NARC_wifi_login_connect_ani_NCLR , work->heapId , MB_PARENT_FRAME_BG , MB_PARENT_FRAME_BG2 );
     
     GFL_ARC_CloseDataHandle( arcHandle );
   }

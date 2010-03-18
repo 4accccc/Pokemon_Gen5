@@ -16,23 +16,27 @@
 ///nclファイル上のパレットアニメを開始させるパレット開始位置
 #define CBP_PAL_START_NUMBER	(0)
 ///パレットアニメ対象パレット本数
-#define CBP_PAL_NUM			(4)
+#define CBP_PAL_NUM			(15)
 ///アニメ転送パレット本数
 #define CBP_TRANS_PAL_NUM	(1)
+//転送位置
+#define CBP_PAL_TRANS_NUMBER	(1)
+
 
 ///パレットアニメ対象パレットの中に含まれている実際にアニメ対象のカラー開始位置
-#define CBP_PAL_COLOR_START	(1)	//CBP_PAL_COLOR_START ～ (CBP_PAL_COLOR_START + CBP_PAL_COLOR_NUM)
+#define CBP_PAL_COLOR_START	(4)	//CBP_PAL_COLOR_START ～ (CBP_PAL_COLOR_START + CBP_PAL_COLOR_NUM)
 ///パレットアニメ対象パレットの中に含まれている実際にアニメ対象のカラー数
-#define CBP_PAL_COLOR_NUM	(15)
+#define CBP_PAL_COLOR_NUM	(7)
 
 ///EVY加算値(下位8ビット小数)
-#define CBP_ADD_EVY			(0x0300)
+#define CBP_ADD_EVY			(0x0600)
 
 ///EVYパターン数
 #define CBP_EVY_ANM_NUM		((16<<8) / CBP_ADD_EVY + 2)	// +1 = 端数分 +1=0の分
 ///EVYパターン数(全アニメパターン数)
-#define CBP_EVY_TBL_ALL		(CBP_EVY_ANM_NUM * (CBP_PAL_NUM - 1))
+#define CBP_EVY_TBL_ALL		(CBP_EVY_ANM_NUM * CBP_PAL_NUM)
 
+#define CBP_SCROLL_CNT (1)
 
 //==============================================================================
 //	構造体定義
@@ -47,6 +51,8 @@ typedef struct{
 	s16 trans_pos;
 	s8 trans_dir;
 	u8 intr_count;
+	
+	u8 scroll_plane;
 }CONNECT_BG_PALANM;
 
 

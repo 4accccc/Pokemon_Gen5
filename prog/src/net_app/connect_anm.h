@@ -43,7 +43,7 @@ static inline void ConnectBGPalAnm_Init(CONNECT_BG_PALANM *cbp, ARCHANDLE* p_hdl
 	
 	GFL_STD_MemClear(cbp, sizeof(CONNECT_BG_PALANM));
 
-    p_work = GFL_ARCHDL_UTIL_LoadPalette(p_hdl, pal_index, &palData, heap_id);
+  p_work = GFL_ARCHDL_UTIL_LoadPalette(p_hdl, pal_index, &palData, heap_id);
 	
 	//バッファにパレットデータをコピー
 	GFL_STD_MemCopy(&((u16*)(palData->pRawData))[CBP_PAL_START_NUMBER * 16], 
@@ -63,6 +63,23 @@ static inline void ConnectBGPalAnm_Init(CONNECT_BG_PALANM *cbp, ARCHANDLE* p_hdl
 #endif
 	cbp->tcb = GFUser_VIntr_CreateTCB(ConnectBGPalAnm_IntrTCB, cbp, 20);
 }
+static inline void ConnectBGPalAnm_InitBg(CONNECT_BG_PALANM *cbp, ARCHANDLE* p_hdl, int pal_index, int heap_id ,
+                                          const u8 alpha_plane , const u8 base_plane )
+{
+  ConnectBGPalAnm_Init( cbp,p_hdl,pal_index,heap_id );
+  if( base_plane < GFL_BG_FRAME0_S )
+  {
+    //メイン画面
+    G2_SetBlendAlpha( 1<<alpha_plane , 1<<base_plane , 8,16 );
+  }
+  else
+  {
+    //サブ画面画面
+    G2S_SetBlendAlpha( 1<<(alpha_plane-GFL_BG_FRAME0_S) , 1<<(base_plane-GFL_BG_FRAME0_S) , 12,16 );
+  }
+  cbp->scroll_plane = alpha_plane;
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -117,8 +134,12 @@ static inline void ConnectBGPalAnm_TblCreate(CONNECT_BG_PALANM *cbp)
 	int src_pos, dest_pos, next_color_pos, evy, s, next_break;
 	
 	dest_pos = 0;
-	for(src_pos = 0; src_pos < CBP_PAL_NUM-1; src_pos++){
+	for(src_pos = 0; src_pos < CBP_PAL_NUM; src_pos++){
 		next_color_pos = src_pos + 1;
+		if( next_color_pos >= CBP_PAL_NUM )
+		{
+      next_color_pos -= CBP_PAL_NUM;
+    }
 		evy = 0;
 		next_break = 0;
 		do{
@@ -162,24 +183,25 @@ static inline void ConnectBGPalAnm_IntrTCB(GFL_TCB* tcb, void *work)
 		return;
 	}
 	
-	GX_LoadBGPltt((const void *)cbp->dest_color[cbp->trans_pos], 
-		CBP_PAL_START_NUMBER * 0x20, CBP_TRANS_PAL_NUM * 0x20);
-	GXS_LoadBGPltt((const void *)cbp->dest_color[cbp->trans_pos], 
-		CBP_PAL_START_NUMBER * 0x20, CBP_TRANS_PAL_NUM * 0x20);
-	if(cbp->trans_dir == 0){
-		cbp->trans_pos++;
-		if(cbp->trans_pos >= CBP_EVY_TBL_ALL){
-			cbp->trans_pos = CBP_EVY_TBL_ALL - 2;
-			cbp->trans_dir ^= 1;
-		}
+	GX_LoadBGPltt((const void *)&cbp->dest_color[cbp->trans_pos][CBP_PAL_COLOR_START], 
+		CBP_PAL_TRANS_NUMBER*0x20 + CBP_PAL_COLOR_START * sizeof(u16), 
+		CBP_PAL_COLOR_NUM * sizeof(u16));
+	GXS_LoadBGPltt((const void *)&cbp->dest_color[cbp->trans_pos][CBP_PAL_COLOR_START], 
+		CBP_PAL_TRANS_NUMBER*0x20 + CBP_PAL_COLOR_START * sizeof(u16), 
+		CBP_PAL_COLOR_NUM * sizeof(u16));
+
+//	GX_LoadBGPltt((const void *)cbp->dest_color[cbp->trans_pos], 
+//		CBP_PAL_START_NUMBER * 0x20, CBP_TRANS_PAL_NUM * 0x20);
+//	GXS_LoadBGPltt((const void *)cbp->dest_color[cbp->trans_pos], 
+//		CBP_PAL_START_NUMBER * 0x20, CBP_TRANS_PAL_NUM * 0x20);
+
+	cbp->trans_pos++;
+	if(cbp->trans_pos >= CBP_EVY_TBL_ALL)
+	{
+		cbp->trans_pos = 0;
 	}
-	else{
-		cbp->trans_pos--;
-		if(cbp->trans_pos < 0){
-			cbp->trans_pos = 1;
-			cbp->trans_dir ^= 1;
-		}
-	}
+	
+  GFL_BG_SetScroll( cbp->scroll_plane , GFL_BG_SCROLL_X_DEC , 7 );
 }
 
 #endif	//__CONNECT_ANM_H__
