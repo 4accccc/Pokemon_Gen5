@@ -32,44 +32,19 @@ enum{
   // ZUKANSAVE_GetPokeSexFlag系関数のエラーコード
   ZUKANSAVE_GET_SEX_ERR = 0xffffffff,
 
-
   // 全国図鑑最大
   ZUKANSAVE_ZENKOKU_MONSMAX   = MONSNO_END,
 
   // イッシュ図鑑最大数
   ZUKANSAVE_LOCAL_MONSMAX = ISSHU_MAX,
 
-  // 全国図鑑は捕まえた条件なのでマナフィーのチェックは必要になる(08.06.20)
   // ゼンコク図鑑完成に必要なポケモンの数
-  ZUKANSAVE_ZENKOKU_COMP_NOPOKE_NUM = 9,  // 不必要なポケモン数
+  ZUKANSAVE_ZENKOKU_COMP_NOPOKE_NUM = 15,  // 不必要なポケモン数
   ZUKANSAVE_ZENKOKU_COMP_NUM  = ZUKANSAVE_ZENKOKU_MONSMAX - ZUKANSAVE_ZENKOKU_COMP_NOPOKE_NUM,
 
   // イッシュ図鑑完成に必要なポケモンの数
-  ZUKANSAVE_LOCAL_COMP_NOPOKE_NUM = 2,  // 不必要なポケモン数
+  ZUKANSAVE_LOCAL_COMP_NOPOKE_NUM = 6,  // 不必要なポケモン数
   ZUKANSAVE_LOCAL_COMP_NUM  = ZUKANSAVE_LOCAL_MONSMAX - ZUKANSAVE_LOCAL_COMP_NOPOKE_NUM,
-
-
-/*
-  // シーウシ　シードルゴ シェイミ　ギラティナの形状数
-  ZUKANSAVE_UMIUSHI_FORM_NUM = 2, //(ここを変えただけではセーブ領域の方式やワークサイズは変わらないので、形状数が変わったときは内部も変更すること)
-
-  // ミノムッチ　ミノメス　ピチュー　形状数
-  ZUKANSAVE_MINOMUSHI_FORM_NUM = 3, //(ここを変えただけではセーブ領域の方式やワークサイズは変わらないので、形状数が変わったときは内部も変更すること)
-
-  // デオキシスの形状数
-  ZUKANSAVE_DEOKISISU_FORM_NUM = 4,
-  ZUKANSAVE_DEOKISISU_FORM_SAVEDATA_CUTNUM = 2, // デオキシスセーブ領域は、急遽　捕獲見たフラグのけつ1byteずづに割り振っています。各1byteにセーブできる形状の数です
-  POKEZUKAN_DEOKISISU_INIT = 0xf, // 初期化時格納されている値
-
-  // ロトムの形状数
-  ZUKANSAVE_ROTOM_FORM_NUM = 6, // (ここを変えただけではセーブ領域の方式やワークサイズは変わらないので、形状数が変わったときは内部も変更すること)
-
-  // ポワルンの形状数（セーブデータには関係ありません）
-  ZUKANSAVE_POWARUN_FORM_NUM = 4,
-
-  // チェリムの形状数（セーブデータには関係ありません）
-  ZUKANSAVE_CHERIMU_FORM_NUM = 2,
-*/
 };
 
 //----------------------------------------------------------
