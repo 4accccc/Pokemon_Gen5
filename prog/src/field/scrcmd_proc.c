@@ -533,20 +533,25 @@ VMCMD_RESULT EvCmdCallZukanAward( VMHANDLE *core, void *wk )
   switch(demo_id){
   case SCR_ZUKAN_AWARD_CHIHOU:
     {
-      CHIHOU_ZUKAN_AWARD_PARAM* param = CHIHOU_ZUKAN_AWARD_AllocParam( HEAPID_PROC, mystatus, TRUE );
+      CHIHOU_ZUKAN_AWARD_PARAM* param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(CHIHOU_ZUKAN_AWARD_PARAM) );
+      param->mystatus = mystatus;
+      param->b_fix    = patern;
       EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(chihou_zukan_award), &CHIHOU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
     }
     break;
   case SCR_ZUKAN_AWARD_ZENKOKU:
     {
-      ZENKOKU_ZUKAN_AWARD_PARAM* param = ZENKOKU_ZUKAN_AWARD_AllocParam( HEAPID_PROC, mystatus, TRUE );
+      ZENKOKU_ZUKAN_AWARD_PARAM* param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(ZENKOKU_ZUKAN_AWARD_PARAM) );
+      param->mystatus = mystatus;
+      param->b_fix    = patern;
       EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(chihou_zukan_award), &ZENKOKU_ZUKAN_AWARD_ProcData, param, NULL, NULL );
     }
     break;
   
-  case SCR_ZUKAN_AWARD_SUBWAY_ROUTE_MAP:  
+  case SCR_ZUKAN_AWARD_SUBWAY_ROUTE_MAP:
     {
-      SUBWAY_MAP_PARAM* param = SUBWAY_MAP_AllocParam( HEAPID_PROC, mystatus );
+      SUBWAY_MAP_PARAM* param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(SUBWAY_MAP_PARAM) );
+      param->mystatus = mystatus;
       EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(subway_map), &SUBWAY_MAP_ProcData, param, NULL, NULL );
     }
     break;
