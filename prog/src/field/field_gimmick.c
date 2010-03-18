@@ -262,7 +262,7 @@ const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   GATE_GIMMICK_Move,  // R12R0101
   R04D03_GIMMICK_Move,    //R04 and D03
   SPPOKE_GMK_MoveTrio,    //R08R0101
-  SPPOKE_GMK_SetupMerodhia,    //C03R0901
+  SPPOKE_GMK_MoveMerodhia,    //C03R0901
   PALACE_GMK_Move,    //
 };
 
