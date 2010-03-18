@@ -28,7 +28,7 @@ FS_EXTERN_OVERLAY(psel);
 // 選択結果
 typedef enum
 {
-  PSEL_RESULT_MIZU,
+  PSEL_RESULT_MIZU      = 0,  // 左から順に並べておく  // この並び順はpsel.cで利用されているので重要
   PSEL_RESULT_HONOO,
   PSEL_RESULT_KUSA,
 }
@@ -53,7 +53,6 @@ extern const GFL_PROC_DATA    PSEL_ProcData;
 //=====================================
 typedef struct
 {
-  u32                  dummy;         ///< [in]  ダミー
   PSEL_RESULT          result;        ///< [out] 選択結果 
 }
 PSEL_PARAM;
@@ -68,8 +67,7 @@ PSEL_PARAM;
 /// パラメータ生成
 //=====================================
 extern PSEL_PARAM*  PSEL_AllocParam(
-                                      HEAPID               heap_id,
-                                      u32                  dummy
+                                      HEAPID               heap_id
                                   );
 
 //-------------------------------------
@@ -78,13 +76,14 @@ extern PSEL_PARAM*  PSEL_AllocParam(
 extern void  PSEL_FreeParam(
                       PSEL_PARAM*  param );
 
+/*
 //-------------------------------------
 /// パラメータを設定する
 //=====================================
 extern void  PSEL_InitParam(
-                  PSEL_PARAM*      param,
-                  u32              dummy
+                  PSEL_PARAM*      param
              );
+*/
 
 //-------------------------------------
 /// 選択結果を得る

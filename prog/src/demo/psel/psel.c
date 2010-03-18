@@ -136,7 +136,7 @@ enum
 #define PSELSND_DECIDE  ( SEQ_SE_DECIDE1 )
 #define PSELSND_CANCEL  ( SEQ_SE_CANCEL1 )
 #define PSELSND_MOVE    ( SEQ_SE_SELECT1 )
-#define PSELSND_OPEN    ( SEQ_SE_OPEN1 )
+//#define PSELSND_OPEN    ( SEQ_SE_OPEN1 )
 
 
 // ProcMainのシーケンス
@@ -176,7 +176,8 @@ enum
 static const u8 bmpwin_setup[TEXT_MAX][9] =
 {
   // frmnum           posx  posy  sizx  sizy  palnum             dir                    x  y (x,yは無視してセンタリングすることもある)
-  {  BG_FRAME_M_TEXT,    1,    3,   30,   18, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
+  //{  BG_FRAME_M_TEXT,    4,    4,   24,   16, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_B, 0, 0 },  // 上下1キャラずつ余裕がある
+  {  BG_FRAME_M_TEXT,    4,    5,   24,   14, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_B, 0, 0 },  // 上下に余裕がない
   {  BG_FRAME_M_TEXT,    1,   19,   30,    2, BG_PAL_POS_M_TEXT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
   {  BG_FRAME_S_TEXT,    1,   18,   30,    4, BG_PAL_POS_S_TEXT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
 };
@@ -224,12 +225,15 @@ enum
 // 選択対象
 typedef enum
 {
-  TARGET_MIZU       = 0,                  // 左     // 左から順番に並べておく
-  TARGET_HONOO,                           // 中央
-  TARGET_KUSA,                            // 右
+  TARGET_MIZU       = PSEL_RESULT_MIZU,   // 左     // 左から順番に並べておく  // PSEL_RESULTと同じ並び順にしておくこと  // psel.c内でPSEL_RESULTの並びを利用するのはここだけで、他はこのTARGETの並びを利用するようにしておく(これで、PSEL_RESULTを変更せざるを得ないときに最小限の変更で済むかな)
+  TARGET_HONOO      = PSEL_RESULT_HONOO,  // 中央
+  TARGET_KUSA       = PSEL_RESULT_KUSA,   // 右
   TARGET_POKE_MAX,                        // ポケモン数
   TARGET_BUTTON     = TARGET_POKE_MAX,    // 確認ボタン
-  TARGET_MAX
+  TARGET_MAX,
+  TARGET_NONE       = TARGET_MAX,         // どれも選択していないとき
+  TARGET_POKE_START = TARGET_MIZU,        // TARGET_POKE_START<= <=TARGET_POKE_END
+  TARGET_POKE_END   = TARGET_KUSA,
 }
 TARGET;
 
@@ -259,13 +263,14 @@ static const u16 poke_monsno[TARGET_POKE_MAX] =
   MONSNO_554,
   MONSNO_551,
 };
-// 位置
-static const u8 poke_pos[TARGET_POKE_MAX][2] =
+// gmm
+static const u32 poke_str_id[TARGET_POKE_MAX] =
 {
-  {  64, 128 },
-  { 128,  64 },
-  { 192, 128 },
+  msg_t01r0102_ball_water_01,
+  msg_t01r0102_ball_fire_01,
+  msg_t01r0102_ball_grass_01,
 };
+
 // リソース
 static const u8 poke_res_big[TARGET_POKE_MAX][TWO_OBJ_RES_FILE_MAX] =
 {
@@ -281,12 +286,91 @@ static const u8 poke_obj_pal_pos_s[TARGET_POKE_MAX] =
   OBJ_PAL_POS_S_KUSA,
 };
 
+// ポケモンの動き
+typedef struct
+{
+  u8 p0_x;             // p0の位置
+  u8 p0_y;             // p0は一番奥の開始場所
+  u8 p1_x;             // p1の位置
+  u8 p1_y;             // p1はジャンプで着地した中間地点
+  u8 p2_x;             // p2の位置
+  u8 p2_y;             // p2は一番手前の中央
+  u8 p0_scale;         // p0におけるbigのスケール(p0_scale/16として使う)
+  u8 p1_scale;         // p1におけるbigのスケール(p0_scale/16として使う)
+  u8 p2_scale;         // p2におけるbigのスケール(p0_scale/16として使う)
+  u8 p1_frame;         // p1で待つフレーム数
+  u8 p0p1_frame;       // p0p1間の移動にかかるフレーム数
+  u8 p1p2_frame;       // p1p2間の移動にかかるフレーム数
+  u8 p0p1_jump;        // p0p1間の最大のジャンプの高さ
+  u8 p1p2_jump;        // p1p2間の最大のジャンプの高さ
+}
+POKE_MOVE_DATA;
+
+#if 0
+  __ ...p0p1_jump
+ /  \
++    \   __ ...p1p2_jump
+p0    \ /  \
+       +    \
+       p1    \
+              +
+              p2
+#endif
+
+static const POKE_MOVE_DATA poke_move_data[TARGET_POKE_MAX] =
+{
+  {
+     64,  96,  96, 128, 128, 160,
+     8, 12, 16,
+    16,
+     4,  4,
+    16, 16,
+  },
+  {
+    128,  80, 128, 120, 128, 160,
+     8, 12, 16,
+    16,
+     4,  4,
+    16, 16,
+  },
+  {
+    192,  96, 160, 128, 128, 160,
+     8, 12, 16,
+    16,
+     4,  4,
+    16, 16,
+  },
+};
+
+typedef enum
+{
+  POKE_MOVE_STEP_P0_STOP,   // 1フレーム
+  POKE_MOVE_STEP_P0_TO_P1,  // p0p1_frame
+  POKE_MOVE_STEP_P1_WAIT,   // p1_frame
+  POKE_MOVE_STEP_P1_TO_P2,  // p1p2_frame
+  POKE_MOVE_STEP_P2_STOP,   // 1フレーム
+}
+POKE_MOVE_STEP;
+
+typedef enum
+{
+  POKE_MOVE_REQ_NONE,        // 要求なし
+  POKE_MOVE_REQ_P0_TO_P2,    // 奥から手前へ移動するよう要求
+  POKE_MOVE_REQ_P2_TO_P0,    // 手前から奥へ移動するよう要求
+}
+POKE_MOVE_REQ;
+
+// 描画優先度
+#define POKE_SOFTPRI_BACK  (1)  // 奥
+#define POKE_SOFTPRI_FRONT (0)  // 手前
+
+
 // ボール内をイメージしたサブ画面BG
 enum
 {
-  INSIDE_BALL_MIZU,    // TARGETと同じ並びにしておく
-  INSIDE_BALL_HONOO,
-  INSIDE_BALL_KUSA,
+  INSIDE_BALL_MIZU    = TARGET_MIZU,    // TARGETと同じ並び順にしておく
+  INSIDE_BALL_HONOO   = TARGET_HONOO,
+  INSIDE_BALL_KUSA    = TARGET_KUSA,
   INSIDE_BALL_NONE,
   INSIDE_BALL_MAX,
 };
@@ -423,9 +507,9 @@ static const GFL_G3D_UTIL_OBJ s02_obj_tbl[] =
 };
 enum
 {
-  MB_L,
-  MB_C,
-  MB_R,
+  MB_L     = TARGET_MIZU,  // TARGETと同じ並び順にしておく
+  MB_C     = TARGET_HONOO,
+  MB_R     = TARGET_KUSA,
   MB_MAX
 };
 static const VecFx32 three_mb_trans[MB_MAX] =
@@ -458,10 +542,72 @@ enum
 {
   THREE_USER_OBJ_IDX_S01,
   THREE_USER_OBJ_IDX_S02,
-  THREE_USER_OBJ_IDX_MB_L,  // MB_(MB_MAX)と同じ並び
+  THREE_USER_OBJ_IDX_MB_L,  // MB_(MB_MAX)と同じ並び順にしておく
   THREE_USER_OBJ_IDX_MB_C,
   THREE_USER_OBJ_IDX_MB_R,
   THREE_USER_OBJ_IDX_MAX,
+};
+
+
+// 3Dフレーム数
+/*
+デザイナーさんの3Dオーサリングツール上では1フレームからスタートしているようだが、プログラムでは開始フレームを0として処理する
+デザイナーさん指定のフレーム数
+#define TIMETABLE_S01_CAMERA_MOVE      (  1)
+#define TIMETABLE_S01_CARD_COME        ( 41)
+#define TIMETABLE_S01_CARD_READ        ( 70)  // このフレームで止めておく
+#define TIMETABLE_S01_CARD_VANISH      ( 71)
+#define TIMETABLE_S01_RIBBON_LOOSE     ( 91)
+#define TIMETABLE_S01_SCENE_END        (140)  // このフレームで止めておく
+
+#define TIMETABLE_S02_BOX_OPEN         (  1)
+#define TIMETABLE_S02_BOX_STOP         ( 40)  // このフレームで止めておく
+*/
+#define TIMETABLE_S01_CAMERA_MOVE      (  0)
+#define TIMETABLE_S01_CARD_COME        ( 40)
+#define TIMETABLE_S01_CARD_READ        ( 69)  // このフレームで止めておく
+#define TIMETABLE_S01_CARD_VANISH      ( 70)
+#define TIMETABLE_S01_RIBBON_LOOSE     ( 90)
+#define TIMETABLE_S01_SCENE_END        (139)  // このフレームで止めておく
+
+#define TIMETABLE_S02_BOX_OPEN         (  0)
+#define TIMETABLE_S02_BOX_STOP         ( 39)  // このフレームで止めておく
+
+enum
+{
+  TIMETABLE_MB_ZOOM_START,
+  TIMETABLE_MB_ZOOM_END,        // このフレームで止めておく
+  TIMETABLE_MB_DECIDE_START,
+  TIMETABLE_MB_DECIDE_END,      // このフレームで止めておく
+  TIMETABLE_MB_MAX,
+};
+/*
+static const u8 timetable_mb[MB_MAX][TIMETABLE_MB_MAX] =
+{
+  {  41,  50,  71,  80 },
+  {  51,  60,  81,  90 },
+  {  61,  70,  91, 100 },
+};
+*/
+static const u8 timetable_mb[MB_MAX][TIMETABLE_MB_MAX] =
+{
+  {  40,  49,  70,  79 },
+  {  50,  59,  80,  89 },
+  {  60,  69,  90,  99 },
+};
+
+// VBlank中のリクエスト
+enum
+{
+  VBLANK_REQ_NONE                         = 0,
+  VBLANK_REQ_S01_TEXT_M_VISIBLE_ON        = 1<< 0,
+  VBLANK_REQ_S01_TEXT_M_VISIBLE_OFF       = 1<< 1,
+  VBLANK_REQ_S02_TEXT_WIN_M_VISIBLE_ON    = 1<< 2,
+  VBLANK_REQ_S02_TEXT_WIN_M_VISIBLE_OFF   = 1<< 3,
+  VBLANK_REQ_S02_TEXT_WIN_S_VISIBLE_ON    = 1<< 4,
+  VBLANK_REQ_S02_TEXT_WIN_S_VISIBLE_OFF   = 1<< 5,
+  VBLANK_REQ_S02_TEXT_M_VISIBLE_ON        = 1<< 6,
+  VBLANK_REQ_S02_TEXT_M_VISIBLE_OFF       = 1<< 7,
 };
 
 
@@ -508,13 +654,18 @@ typedef struct
 {
   u32        res[POKE_MAX][TWO_OBJ_RES_MAX];
   GFL_CLWK*  clwk[POKE_MAX];
-  
+
   // オリジナルパレットデータ
   u16        pal[POKE_PAL_MAX][16];
   
   // パレットアニメの状態
   u16        pal_anime_state;
   u16        pal_anime_count;
+
+  // 動き
+  u16              move_step_count;   // POKE_MOVE_STEP各段階におけるカウント
+  POKE_MOVE_STEP   move_step;
+  POKE_MOVE_REQ    move_req;
 }
 POKE_SET;
 
@@ -533,6 +684,8 @@ typedef struct
 
   // シーケンス
   int                         sub_seq;
+  // シーケンスフレーム
+  u32                         sub_seq_frame;  // sub_seqが切り替わったら0からスタートし直しsub_seqのフレーム数をカウントするなどの使い方をしていい、が、使わなくてもいい。使う場合は使う場所で自分で初期化して下さい。
 
   // グラフィック、フォントなど
   PSEL_GRAPHIC_WORK*          graphic;
@@ -541,6 +694,7 @@ typedef struct
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
+  u32                         vblank_req;
 
   // 3D全体
   GFL_G3D_UTIL*               three_util;
@@ -550,8 +704,13 @@ typedef struct
   THREE_OBJ_PROPERTY*         three_obj_prop_tbl;
   ICA_ANIME*                  three_ica_anime;
 
+  // モンスターボールに対して、ズームしたり決定したりするアニメ
+  TARGET                      three_mb_anime_target;
+  BOOL                        three_mb_anime_reverse;
+  u32                         three_mb_anime_frame;
+  
   // フレーム
-  u32                         frame;  // シーンが切り替わったら0からスタートし直し、3Dのフレーム数と一致するようにしておく
+  u32                         three_frame;  // シーンが切り替わったら0からスタートし直し、3Dのフレーム数と一致するようにしておく
 
   // 2D OBJ
   // ポケモン大小セット
@@ -559,6 +718,12 @@ typedef struct
   // 指指しカーソル
   u32                         finger_res[TWO_OBJ_RES_MAX];
   GFL_CLWK*                   finger_clwk;
+  
+  // 選んでいるポケモン
+  TARGET                      select_target_poke;  // TARGET_POKE_START<= <=TARGET_POKE_ENDおよびTARGET_NONEのどれか
+
+  // POKE_INFOテキストを書くフラグ
+  BOOL                        poke_info_print;  // これがTRUEのとき、ポケモンのタイプと種族名をサブ画面に書く(TRUEになったフレームで書いたらもしくは書けなかったらFALSEにするので、TRUEになっているのは1フレームだけ)
 
   // テキスト
   GFL_MSGDATA*                msgdata;
@@ -573,6 +738,9 @@ typedef struct
   APP_TASKMENU_RES*           app_taskmenu_res;
   APP_TASKMENU_WIN_WORK*      app_taskmenu_win_wk;  // タッチのときに出る「これに決めた」ボタン
   APP_TASKMENU_WORK*          app_taskmenu_wk;      // タッチでもキーでも出る最終確認の「はい」「いいえ」ボタン
+
+  // ブレンド
+  u8                          ev1;  // G2S_SetBlendAlphaのev1  // 0<=ev1<=16  // ev2=16-ev1
 
   // ボール内をイメージしたサブ画面BGのパレット
   // オリジナルパレットデータ
@@ -610,13 +778,24 @@ static void Psel_ThreeS02Init( PSEL_WORK* work );
 static void Psel_ThreeS02Exit( PSEL_WORK* work );
 static void Psel_ThreeS02Main( PSEL_WORK* work );
 
+static void Psel_ThreeS02MbZoomAnimeStart( PSEL_WORK* work, TARGET target, BOOL reverse );
+static BOOL Psel_ThreeS02MbZoomAnimeIsEnd( PSEL_WORK* work );
+static void Psel_ThreeS02MbZoomAnimeMain( PSEL_WORK* work );
+static void Psel_ThreeS02MbAnimeOnlyMbMain( PSEL_WORK* work );
+static void Psel_ThreeS02MbDecideAnimeStart( PSEL_WORK* work, TARGET target );
+static void Psel_ThreeS02MbDecideAnimeMain( PSEL_WORK* work );
+
 // ポケモン大小セット
 static void Psel_PokeSetInit( PSEL_WORK* work );
 static void Psel_PokeSetExit( PSEL_WORK* work );
+static void Psel_PokeSetMain( PSEL_WORK* work );
+static void Psel_PokeSetSelectStart( PSEL_WORK* work, TARGET target_poke );
 
 // 指指しカーソル
 static void Psel_FingerInit( PSEL_WORK* work );
 static void Psel_FingerExit( PSEL_WORK* work );
+static void Psel_FingerDrawEnable( PSEL_WORK* work, BOOL on_off );
+static void Psel_FingerUpdatePos( PSEL_WORK* work );
 
 // BG全体
 static void Psel_BgInit( PSEL_WORK* work );
@@ -639,17 +818,17 @@ static void Psel_TextInit( PSEL_WORK* work );
 static void Psel_TextExit( PSEL_WORK* work );
 static void Psel_TextMain( PSEL_WORK* work );
 static BOOL Psel_TextTransWait( PSEL_WORK* work );  // TRUEが返って来たら転送待ちなし
-static void Psel_TextStreamStart( PSEL_WORK* work, GFL_BMPWIN* bmpwin, u32 str_id );
-static BOOL Psel_TextStreamWait( PSEL_WORK* work );  // TRUEが返って来たら終了
+static void Psel_TextExplainStreamStart( PSEL_WORK* work, u32 str_id );
+static BOOL Psel_TextExplainStreamWait( PSEL_WORK* work );  // TRUEが返って来たら終了
+static void Psel_TextExplainPrintStart( PSEL_WORK* work, u32 str_id );
+static void Psel_TextExplainClear( PSEL_WORK* work );
+static void Psel_TextPokeInfoPrintStart( PSEL_WORK* work, TARGET target );
+static void Psel_TextPokeInfoClear( PSEL_WORK* work );
 
 // テキスト個別
 static void Psel_TextS01Init( PSEL_WORK* work );
 static void Psel_TextS01Exit( PSEL_WORK* work );
 static void Psel_TextS01Main( PSEL_WORK* work );
-
-static void Psel_TextS02Init( PSEL_WORK* work );
-static void Psel_TextS02Exit( PSEL_WORK* work );
-static void Psel_TextS02Main( PSEL_WORK* work );
 
 // APP_TASKMENU
 static void Psel_AppTaskmenuResInit( PSEL_WORK* work );
@@ -658,10 +837,14 @@ static void Psel_AppTaskmenuResExit( PSEL_WORK* work );
 static void Psel_AppTaskmenuWinInit( PSEL_WORK* work );
 static void Psel_AppTaskmenuWinExit( PSEL_WORK* work );
 static void Psel_AppTaskmenuWinMain( PSEL_WORK* work );
+static void Psel_AppTaskmenuWinDecideStart( PSEL_WORK* work );
+static BOOL Psel_AppTaskmenuWinDecideIsEnd( PSEL_WORK* work );
 
 static void Psel_AppTaskmenuInit( PSEL_WORK* work );
 static void Psel_AppTaskmenuExit( PSEL_WORK* work );
 static void Psel_AppTaskmenuMain( PSEL_WORK* work );
+static BOOL Psel_AppTaskmenuIsEnd( PSEL_WORK* work );
+static BOOL Psel_AppTaskmenuIsYes( PSEL_WORK* work );
 
 // パレット
 static void U16ToRGB( u16 rgb, u16* r, u16* g, u16* b );
@@ -742,20 +925,20 @@ const GFL_PROC_DATA    PSEL_ProcData =
  *  @brief           パラメータ生成
  *
  *  @param[in]       heap_id       ヒープID
- *  @param[in]       dummy         ダミー
  *
  *  @retval          PSEL_PARAM
  */
 //------------------------------------------------------------------
 PSEL_PARAM*  PSEL_AllocParam(
-                                HEAPID               heap_id,
-                                u32                  dummy
+                                HEAPID               heap_id
                            )
 {
   PSEL_PARAM* param = GFL_HEAP_AllocMemory( heap_id, sizeof( PSEL_PARAM ) );
+/*
   PSEL_InitParam(
-      param,
-      dummy );
+      param
+      );
+*/
   return param;
 }
 
@@ -779,18 +962,18 @@ void            PSEL_FreeParam(
  *  @brief           パラメータを設定する
  *
  *  @param[in,out]   param         PSEL_PARAM
- *  @param[in]       dummy         ダミー
  *
  *  @retval          
  */
 //------------------------------------------------------------------
+/*
 void  PSEL_InitParam(
-                  PSEL_PARAM*      param,
-                  u32              dummy
+                  PSEL_PARAM*      param
                          )
 {
-  param->dummy             = dummy;
+  param->result             = PSEL_RESULT_MIZU;
 }
+*/
 
 //------------------------------------------------------------------
 /**
@@ -836,6 +1019,12 @@ static GFL_PROC_RESULT Psel_ProcInit( GFL_PROC* proc, int* seq, void* pwk, void*
   // タッチorキー
   work->ktst = GFL_UI_CheckTouchOrKey();
 
+  // 選んでいるポケモン
+  work->select_target_poke = TARGET_NONE;
+
+  // POKE_INFOテキストを書くフラグ
+  work->poke_info_print = FALSE;
+
   // シーケンス
   work->sub_seq = 0;
 
@@ -862,6 +1051,11 @@ static GFL_PROC_RESULT Psel_ProcExit( GFL_PROC* proc, int* seq, void* pwk, void*
 
   // ヒープ、パラメータなど
   {
+    // 選択結果をパラメータに設定して持ち帰る
+    {
+      work->param->result = work->select_target_poke;  // PSEL_RESULTとTARGETは同じ並び順
+    }
+
     GFL_PROC_FreeWork( proc );
     GFL_HEAP_DeleteHeap( HEAPID_PSEL );
   }
@@ -922,6 +1116,52 @@ static GFL_PROC_RESULT Psel_ProcMain( GFL_PROC* proc, int* seq, void* pwk, void*
 static void Psel_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   PSEL_WORK* work = (PSEL_WORK*)wk;
+
+  if( work->vblank_req & VBLANK_REQ_S01_TEXT_M_VISIBLE_ON )
+  {
+    GFL_BG_SetVisible( BG_FRAME_M_TEXT, VISIBLE_ON );
+  }
+
+  if( work->vblank_req & VBLANK_REQ_S01_TEXT_M_VISIBLE_OFF )
+  {
+    GFL_BG_SetVisible( BG_FRAME_M_TEXT, VISIBLE_OFF );
+  }
+
+  if( work->vblank_req & VBLANK_REQ_S02_TEXT_WIN_M_VISIBLE_ON )
+  {
+    GFL_BG_SetVisible( BG_FRAME_M_TEXT, VISIBLE_ON );
+    GFL_BG_SetVisible( BG_FRAME_M_WIN, VISIBLE_ON );
+  }
+
+  if( work->vblank_req & VBLANK_REQ_S02_TEXT_WIN_M_VISIBLE_OFF )
+  {
+    GFL_BG_SetVisible( BG_FRAME_M_TEXT, VISIBLE_OFF );
+    GFL_BG_SetVisible( BG_FRAME_M_WIN, VISIBLE_OFF );
+  }
+
+  if( work->vblank_req & VBLANK_REQ_S02_TEXT_WIN_S_VISIBLE_ON )
+  {
+    GFL_BG_SetVisible( BG_FRAME_S_TEXT, VISIBLE_ON );
+    GFL_BG_SetVisible( BG_FRAME_S_WIN, VISIBLE_ON );
+  }
+
+  if( work->vblank_req & VBLANK_REQ_S02_TEXT_WIN_S_VISIBLE_OFF )
+  {
+    GFL_BG_SetVisible( BG_FRAME_S_TEXT, VISIBLE_OFF );
+    GFL_BG_SetVisible( BG_FRAME_S_WIN, VISIBLE_OFF );
+  }
+
+  if( work->vblank_req & VBLANK_REQ_S02_TEXT_M_VISIBLE_ON )
+  {
+    GFL_BG_SetVisible( BG_FRAME_M_TEXT, VISIBLE_ON );
+  }
+  
+  if( work->vblank_req & VBLANK_REQ_S02_TEXT_M_VISIBLE_OFF )
+  {
+    GFL_BG_SetVisible( BG_FRAME_M_TEXT, VISIBLE_OFF );
+  }
+
+  work->vblank_req = VBLANK_REQ_NONE;
 }
 
 //-------------------------------------
@@ -1020,6 +1260,13 @@ static void Psel_ThreeS01Init( PSEL_WORK* work )
     
     ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
   }
+
+  // フレーム
+/*
+  デザイナーさんの3Dオーサリングツール上では1フレームからスタートしているようだが、プログラムでは開始フレームを0として処理する
+  work->three_frame = 1;  // 0スタートではなく1スタート
+*/
+  work->three_frame = 0;
 }
 static void Psel_ThreeS01Exit( PSEL_WORK* work )
 {
@@ -1067,6 +1314,9 @@ static void Psel_ThreeS01Main( PSEL_WORK* work )
     ICA_ANIME_IncAnimeFrame( work->three_ica_anime, anime_speed );
     ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
   }
+
+  // フレーム
+  work->three_frame++;
 }
 
 static void Psel_ThreeS02Init( PSEL_WORK* work )
@@ -1108,6 +1358,7 @@ static void Psel_ThreeS02Init( PSEL_WORK* work )
     }
   }
 
+/*
   // アニメーション有効化
   {
     u16 i;
@@ -1123,7 +1374,19 @@ static void Psel_ThreeS02Init( PSEL_WORK* work )
       }
     }
   }
-
+*/
+  // ボックスのアニメーションだけ有効化
+  {
+    THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[ work->three_obj_prop_tbl_idx[THREE_USER_OBJ_IDX_S02] ]);
+    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
+    u16 anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+    u16 j;
+    for( j=0; j<anime_count; j++ )
+    {
+      GFL_G3D_OBJECT_EnableAnime( obj, j );
+    }
+  }
+  
   // カメラアニメ
   {
     work->three_ica_anime = ICA_ANIME_CreateStreamingAlloc(
@@ -1131,6 +1394,13 @@ static void Psel_ThreeS02Init( PSEL_WORK* work )
     
     ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
   }
+
+  // フレーム
+/*
+  デザイナーさんの3Dオーサリングツール上では1フレームからスタートしているようだが、プログラムでは開始フレームを0として処理する
+  work->three_frame = 1;  // 0スタートではなく1スタート
+*/
+  work->three_frame = 0;
 }
 static void Psel_ThreeS02Exit( PSEL_WORK* work )
 {
@@ -1156,7 +1426,8 @@ static void Psel_ThreeS02Exit( PSEL_WORK* work )
 static void Psel_ThreeS02Main( PSEL_WORK* work )
 {
   const fx32 anime_speed = FX32_ONE;  // 増加分（FX32_ONEで１フレーム進める）
-  
+
+/*
   // アニメーション更新
   {
     u16 i;
@@ -1172,13 +1443,166 @@ static void Psel_ThreeS02Main( PSEL_WORK* work )
       }
     }
   }
-  
+*/
+  // ボックスのアニメーションだけ更新
+  {
+    THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[ work->three_obj_prop_tbl_idx[THREE_USER_OBJ_IDX_S02] ]);
+    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
+    u16 anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+    u16 j;
+    for( j=0; j<anime_count; j++ )
+    {
+      GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, anime_speed );
+    }
+  }
+
   // カメラアニメ
   {
     ICA_ANIME_IncAnimeFrame( work->three_ica_anime, anime_speed );
     ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
   }
+
+  // フレーム
+  work->three_frame++;
 }
+
+static void Psel_ThreeS02MbZoomAnimeStart( PSEL_WORK* work, TARGET target, BOOL reverse )
+{
+  u8 start_frame = timetable_mb[target][(reverse)?(TIMETABLE_MB_ZOOM_END):(TIMETABLE_MB_ZOOM_START)];
+
+  // カメラアニメ
+  {
+    ICA_ANIME_SetAnimeFrame( work->three_ica_anime, FX32_CONST(start_frame) );  // これを呼ぶ前の状態のカメラと同じ位置のカメラのはず
+    ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
+  }
+
+  // 対象のモンスターボールのアニメーションだけ無効化
+  if( reverse )  // ズームアウトするときは、モンスターボールを対象からはずす
+  {
+    THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[ work->three_obj_prop_tbl_idx[THREE_USER_OBJ_IDX_MB_L +target] ]);
+    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
+    u16 anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+    u16 j;
+    for( j=0; j<anime_count; j++ )
+    {
+      GFL_G3D_OBJECT_DisableAnime( obj, j );
+    }
+  }
+
+  work->three_mb_anime_target   = target;
+  work->three_mb_anime_reverse  = reverse;
+  work->three_mb_anime_frame    = start_frame;
+}
+static BOOL Psel_ThreeS02MbZoomAnimeIsEnd( PSEL_WORK* work )
+{
+  u8 end_frame = timetable_mb[work->three_mb_anime_target][(work->three_mb_anime_reverse)?(TIMETABLE_MB_ZOOM_START):(TIMETABLE_MB_ZOOM_END)];
+
+  if( work->three_mb_anime_frame == end_frame ) return TRUE;
+  return FALSE;
+}
+static void Psel_ThreeS02MbZoomAnimeMain( PSEL_WORK* work )
+{
+  u8 end_frame = timetable_mb[work->three_mb_anime_target][(work->three_mb_anime_reverse)?(TIMETABLE_MB_ZOOM_START):(TIMETABLE_MB_ZOOM_END)];
+  
+  if( work->three_mb_anime_frame != end_frame )
+  {
+    fx32 anime_speed;
+    anime_speed = (work->three_mb_anime_reverse)?(-FX32_ONE):(FX32_ONE);  // 増加分（FX32_ONEで１フレーム進める）
+
+    // カメラアニメ
+    {
+      ICA_ANIME_IncAnimeFrame( work->three_ica_anime, anime_speed );
+      ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
+    }
+
+    // フレーム
+    (work->three_mb_anime_reverse)?(work->three_mb_anime_frame--):(work->three_mb_anime_frame++);
+
+    if( work->three_mb_anime_frame == end_frame )  // フレームを進めたことで、終了フレームになったか
+    {
+      if( work->three_mb_anime_reverse )  // どのモンスターボールも対象としていないカメラに戻す
+      {
+        // カメラアニメ
+        {
+          ICA_ANIME_SetAnimeFrame( work->three_ica_anime, FX32_CONST(TIMETABLE_S02_BOX_STOP) );  // これを呼ぶ前の状態のカメラと同じ位置のカメラのはず
+          ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
+        }
+      }
+      else  // ズームインしたときは、対象のモンスターボールのアニメを有効にして目立たせる
+      {
+        // 対象のモンスターボールのアニメーションだけ有効化
+        {
+          THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[ work->three_obj_prop_tbl_idx[THREE_USER_OBJ_IDX_MB_L +work->three_mb_anime_target] ]);
+          GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
+          u16 anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+          u16 j;
+          for( j=0; j<anime_count; j++ )
+          {
+            GFL_G3D_OBJECT_EnableAnime( obj, j );
+          }
+        }
+      }
+    }
+  }
+  else
+  {
+    if( !(work->three_mb_anime_reverse) )  // 対象のモンスターボールのアニメだけ継続させる
+    {
+      Psel_ThreeS02MbAnimeOnlyMbMain( work );
+    }
+  }
+}
+
+static void Psel_ThreeS02MbAnimeOnlyMbMain( PSEL_WORK* work )  // 対象のモンスターボールがある場合は、アニメを途切れさせずに更新しなければならないので、Psel_ThreeS02MbZoomAnimeMainを呼ばないところではこの関数を呼ぶこと。
+{
+  fx32 anime_speed = FX32_ONE;  // 増加分（FX32_ONEで１フレーム進める）
+
+  // 対象のモンスターボールのアニメーションだけ更新
+  {
+    THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[ work->three_obj_prop_tbl_idx[THREE_USER_OBJ_IDX_MB_L +work->three_mb_anime_target] ]);
+    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
+    u16 anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+    u16 j;
+    for( j=0; j<anime_count; j++ )
+    {
+      GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, anime_speed );
+    }
+  }
+}
+
+static void Psel_ThreeS02MbDecideAnimeStart( PSEL_WORK* work, TARGET target )
+{
+  u8 start_frame = timetable_mb[target][TIMETABLE_MB_DECIDE_START];
+
+  // カメラアニメ
+  {
+    ICA_ANIME_SetAnimeFrame( work->three_ica_anime, FX32_CONST(start_frame) );  // これを呼ぶ前の状態のカメラと同じ位置のカメラのはず
+    ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
+  }
+
+  work->three_mb_anime_target   = target;
+  work->three_mb_anime_reverse  = FALSE;
+  work->three_mb_anime_frame    = start_frame;
+}
+static void Psel_ThreeS02MbDecideAnimeMain( PSEL_WORK* work )
+{
+  u8 end_frame = timetable_mb[work->three_mb_anime_target][TIMETABLE_MB_DECIDE_END];
+  
+  if( work->three_mb_anime_frame != end_frame )
+  {
+    fx32 anime_speed = FX32_ONE;  // 増加分（FX32_ONEで１フレーム進める）
+
+    // カメラアニメ
+    {
+      ICA_ANIME_IncAnimeFrame( work->three_ica_anime, anime_speed );
+      ICA_CAMERA_SetCameraStatus( PSEL_GRAPHIC_GetCamera( work->graphic ), work->three_ica_anime );
+    }
+
+    // フレーム
+    work->three_mb_anime_frame++;
+  }
+}
+
 
 //-------------------------------------
 /// ポケモン大小セット
@@ -1234,10 +1658,10 @@ static void Psel_PokeSetInit( PSEL_WORK* work )
       GFL_CLWK_DATA cldata;
       GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
 
-      cldata.pos_x    = poke_pos[i][0];
-      cldata.pos_y    = poke_pos[i][1];
+      cldata.pos_x    = poke_move_data[i].p0_x;
+      cldata.pos_y    = poke_move_data[i].p0_y;
       cldata.anmseq   = 0;
-      cldata.softpri  = 0;
+      cldata.softpri  = POKE_SOFTPRI_BACK;
       cldata.bgpri    = OBJ_BG_PRI_S_POKE;
 
       work->poke_set[i].clwk[j] = GFL_CLACT_WK_Create(
@@ -1246,13 +1670,8 @@ static void Psel_PokeSetInit( PSEL_WORK* work )
           work->poke_set[i].res[j][TWO_OBJ_RES_NCL],
           work->poke_set[i].res[j][TWO_OBJ_RES_NCE],
           &cldata, CLSYS_DEFREND_SUB, work->heap_id );
-
-      //GFL_CLACT_WK_SetObjMode( work->poke_set[i].clwk[j], GX_OAM_MODE_XLU );  // 半透明OBJにはせず、パレットアニメで暗くする
-    
       
-      GFL_CLACT_WK_SetDrawEnable( work->poke_set[i].clwk[j], FALSE );
-   
-    
+      GFL_CLACT_WK_SetDrawEnable( work->poke_set[i].clwk[j], TRUE );
     }
   }
 
@@ -1295,16 +1714,16 @@ static void Psel_PokeSetInit( PSEL_WORK* work )
       GFL_CLWK_AFFINEDATA claffinedata;
       GFL_STD_MemClear( &claffinedata, sizeof(GFL_CLWK_AFFINEDATA) );
 
-      claffinedata.clwkdata.pos_x    = poke_pos[i][0];
-      claffinedata.clwkdata.pos_y    = poke_pos[i][1];
+      claffinedata.clwkdata.pos_x    = poke_move_data[i].p0_x;
+      claffinedata.clwkdata.pos_y    = poke_move_data[i].p0_y;
       claffinedata.clwkdata.anmseq   = 0;
-      claffinedata.clwkdata.softpri  = 0;
+      claffinedata.clwkdata.softpri  = POKE_SOFTPRI_BACK;
       claffinedata.clwkdata.bgpri    = OBJ_BG_PRI_S_POKE;
 
       claffinedata.affinepos_x    = 0;
       claffinedata.affinepos_y    = 0;
-      claffinedata.scale_x        = FX_F32_TO_FX32(1.0f);//FX_F32_TO_FX32(0.3f);
-      claffinedata.scale_y        = FX_F32_TO_FX32(1.0f);//FX_F32_TO_FX32(0.3f);
+      claffinedata.scale_x        = FX_F32_TO_FX32( ((f32)(poke_move_data[i].p0_scale))/16.0f );
+      claffinedata.scale_y        = FX_F32_TO_FX32( ((f32)(poke_move_data[i].p0_scale))/16.0f );
       claffinedata.rotation       = 0;  // 回転角度(0～0xffff 0xffffが360度)
       claffinedata.affine_type    = CLSYS_AFFINETYPE_NORMAL;  // 縮小しかしないので、倍角でなくてよい
 
@@ -1315,8 +1734,18 @@ static void Psel_PokeSetInit( PSEL_WORK* work )
           work->poke_set[i].res[POKE_SMALL][TWO_OBJ_RES_NCL],
           work->poke_set[i].res[j][TWO_OBJ_RES_NCE],
           &claffinedata, CLSYS_DEFREND_SUB, work->heap_id );
+      
+      GFL_CLACT_WK_SetDrawEnable( work->poke_set[i].clwk[j], FALSE );
+    }
+  }
 
-      //GFL_CLACT_WK_SetObjMode( work->poke_set[i].clwk[j], GX_OAM_MODE_XLU );  // 半透明OBJにはせず、パレットアニメで暗くする
+  // 動き
+  {
+    for( i=0; i<TARGET_POKE_MAX; i++ )
+    {
+      work->poke_set[i].move_step_count   = 0;
+      work->poke_set[i].move_step         = POKE_MOVE_STEP_P0_STOP;
+      work->poke_set[i].move_req          = POKE_MOVE_REQ_NONE;
     }
   }
 }
@@ -1338,6 +1767,232 @@ static void Psel_PokeSetExit( PSEL_WORK* work )
     }
   }
 }
+
+static void Psel_PokeSetMain( PSEL_WORK* work )
+{
+  // ポケモン大小セットの動きの更新(パレットアニメはPsel_PokeSetPalMainに任せておく)
+
+  u8 i;
+
+  for( i=0; i<TARGET_POKE_MAX; i++ )
+  {
+    POKE_SET*               p = &(work->poke_set[i]);
+    const POKE_MOVE_DATA*   d = &(poke_move_data[i]);
+    
+    s8 count_add = 0;
+
+    if( p->move_req == POKE_MOVE_REQ_NONE ) continue;
+
+    switch( p->move_req )
+    {
+    case POKE_MOVE_REQ_NONE:     count_add =  0; break;
+    case POKE_MOVE_REQ_P0_TO_P2: count_add = +1; break;
+    case POKE_MOVE_REQ_P2_TO_P0: count_add = -1; break;
+    }
+
+    switch( p->move_step )
+    {
+    case POKE_MOVE_STEP_P0_STOP:
+      {
+        if( count_add > 0 )
+        {
+          GFL_CLACT_WK_SetDrawEnable( p->clwk[POKE_SMALL], FALSE );
+          GFL_CLACT_WK_SetDrawEnable( p->clwk[POKE_BIG], TRUE );
+
+          p->move_step_count = 0;
+          p->move_step = POKE_MOVE_STEP_P0_TO_P1;
+          
+          // break;しない
+        }
+        else
+        {
+          if( p->move_req == POKE_MOVE_REQ_P2_TO_P0 ) p->move_req = POKE_MOVE_REQ_NONE;
+          
+          break;
+        }
+      }
+    case POKE_MOVE_STEP_P0_TO_P1:
+      {
+        if( p->move_step_count == 0 )
+        {
+          GFL_CLACTPOS  pos;
+          GFL_CLSCALE   scale;
+          pos.x    = d->p0_x;
+          pos.y    = d->p0_y;
+          scale.x  = scale.y  = FX_F32_TO_FX32( (f32)d->p0_scale / 16.0f );
+          GFL_CLACT_WK_SetPos( p->clwk[POKE_BIG], &pos, CLSYS_DEFREND_SUB );
+          GFL_CLACT_WK_SetScale( p->clwk[POKE_BIG], &scale );
+        }
+        else
+        {
+          f32           f_x       = ( (f32)d->p1_x - (f32)d->p0_x ) * (f32)p->move_step_count / (f32)d->p0p1_frame + (f32)d->p0_x;
+          f32           f_y       = ( (f32)d->p1_y - (f32)d->p0_y ) * (f32)p->move_step_count / (f32)d->p0p1_frame + (f32)d->p0_y;
+          f32           f_scale   = ( (f32)d->p1_scale - (f32)d->p0_scale ) * (f32)p->move_step_count / (f32)d->p0p1_frame + (f32)d->p0_scale;
+          s16           s_x       = (s16)f_x;
+          s16           s_y       = (s16)f_y;
+          fx32          fx_scale  = FX_F32_TO_FX32( f_scale / 16.0f );
+          GFL_CLACTPOS  pos;
+          GFL_CLSCALE   scale;
+          pos.x    = s_x;
+          pos.y    = s_y;
+          scale.x  = scale.y  = fx_scale;
+          GFL_CLACT_WK_SetPos( p->clwk[POKE_BIG], &pos, CLSYS_DEFREND_SUB );
+          GFL_CLACT_WK_SetScale( p->clwk[POKE_BIG], &scale );
+        }
+
+        if( p->move_step_count == 0 && count_add < 0 )
+        {
+          GFL_CLACT_WK_SetDrawEnable( p->clwk[POKE_SMALL], TRUE );
+          GFL_CLACT_WK_SetDrawEnable( p->clwk[POKE_BIG], FALSE );
+            
+          p->move_step_count = 0;
+          p->move_step = POKE_MOVE_STEP_P0_STOP;
+        }
+        else
+        {
+          p->move_step_count = p->move_step_count + count_add;
+          if( p->move_step_count == d->p0p1_frame )
+          {
+            p->move_step_count = 0;
+            p->move_step = POKE_MOVE_STEP_P1_WAIT;
+          }
+        }
+      }
+      break;
+    case POKE_MOVE_STEP_P1_WAIT:
+      {
+        GFL_CLACTPOS  pos;
+        GFL_CLSCALE   scale;
+        pos.x    = d->p1_x;
+        pos.y    = d->p1_y;
+        scale.x  = scale.y  = FX_F32_TO_FX32( (f32)d->p1_scale / 16.0f );
+        GFL_CLACT_WK_SetPos( p->clwk[POKE_BIG], &pos, CLSYS_DEFREND_SUB );
+        GFL_CLACT_WK_SetScale( p->clwk[POKE_BIG], &scale );
+
+        if( p->move_step_count == 0 && count_add < 0 )
+        {
+          p->move_step_count = d->p0p1_frame -1;
+          p->move_step = POKE_MOVE_STEP_P0_TO_P1;
+        }
+        else
+        {
+          p->move_step_count = p->move_step_count + count_add;
+          if( p->move_step_count == d->p1_frame )
+          {
+            p->move_step_count = 0;
+            p->move_step = POKE_MOVE_STEP_P1_TO_P2;
+          }
+        }
+      }
+      break;
+    case POKE_MOVE_STEP_P1_TO_P2:
+      {
+        if( p->move_step_count == 0 )
+        {
+          GFL_CLACTPOS  pos;
+          GFL_CLSCALE   scale;
+          pos.x    = d->p1_x;
+          pos.y    = d->p1_y;
+          scale.x  = scale.y  = FX_F32_TO_FX32( (f32)d->p1_scale / 16.0f );
+          GFL_CLACT_WK_SetPos( p->clwk[POKE_BIG], &pos, CLSYS_DEFREND_SUB );
+          GFL_CLACT_WK_SetScale( p->clwk[POKE_BIG], &scale );
+        }
+        else
+        {
+          f32           f_x       = ( (f32)d->p2_x - (f32)d->p1_x ) * (f32)p->move_step_count / (f32)d->p1p2_frame + (f32)d->p1_x;
+          f32           f_y       = ( (f32)d->p2_y - (f32)d->p1_y ) * (f32)p->move_step_count / (f32)d->p1p2_frame + (f32)d->p1_y;
+          f32           f_scale   = ( (f32)d->p2_scale - (f32)d->p1_scale ) * (f32)p->move_step_count / (f32)d->p1p2_frame + (f32)d->p1_scale;
+          s16           s_x       = (s16)f_x;
+          s16           s_y       = (s16)f_y;
+          fx32          fx_scale  = FX_F32_TO_FX32( f_scale / 16.0f );
+          GFL_CLACTPOS  pos;
+          GFL_CLSCALE   scale;
+          pos.x    = s_x;
+          pos.y    = s_y;
+          scale.x  = scale.y  = fx_scale;
+          GFL_CLACT_WK_SetPos( p->clwk[POKE_BIG], &pos, CLSYS_DEFREND_SUB );
+          GFL_CLACT_WK_SetScale( p->clwk[POKE_BIG], &scale );
+        }
+
+        if( p->move_step_count == 0 && count_add < 0 )
+        {
+          p->move_step_count = d->p1_frame -1;
+          p->move_step = POKE_MOVE_STEP_P1_WAIT;
+        }
+        else
+        {
+          p->move_step_count = p->move_step_count + count_add;
+          if( p->move_step_count == d->p1p2_frame )
+          {
+            p->move_step_count = 0;
+            p->move_step = POKE_MOVE_STEP_P2_STOP;
+          }
+        }
+      }
+      break;
+    case POKE_MOVE_STEP_P2_STOP:
+      {
+        GFL_CLACTPOS  pos;
+        GFL_CLSCALE   scale;
+        pos.x    = d->p2_x;
+        pos.y    = d->p2_y;
+        scale.x  = scale.y  = FX_F32_TO_FX32( (f32)d->p2_scale / 16.0f );
+        GFL_CLACT_WK_SetPos( p->clwk[POKE_BIG], &pos, CLSYS_DEFREND_SUB );
+        GFL_CLACT_WK_SetScale( p->clwk[POKE_BIG], &scale );
+        
+        if( count_add < 0 )
+        {
+          p->move_step_count = d->p1p2_frame -1;
+          p->move_step = POKE_MOVE_STEP_P1_TO_P2;
+        }
+        else
+        {
+          if( p->move_req == POKE_MOVE_REQ_P0_TO_P2 )
+          {
+            p->move_req = POKE_MOVE_REQ_NONE;
+            work->poke_info_print = TRUE;  // ポケモンのタイプと種族名を書く
+          }
+        }
+      }
+      break;
+    }
+  }
+}
+
+static void Psel_PokeSetSelectStart( PSEL_WORK* work, TARGET target_poke )  // 何回呼んでも、アニメの途中で呼んでも、大丈夫な頑強なつくりになっている
+{
+  u8 i;
+
+  for( i=0; i<TARGET_POKE_MAX; i++ )
+  {
+    // パレットアニメ
+    {
+      if( i == target_poke )
+      {
+        Psel_PokeSetPalAnimeStart( work, i, POKE_PAL_ANIME_STATE_COLOR );
+      }
+      else
+      {
+        Psel_PokeSetPalAnimeStart( work, i, POKE_PAL_ANIME_STATE_DARK );
+      }
+    }
+
+    // 動き
+    {
+      if( i == target_poke )
+      {
+        work->poke_set[i].move_req   = POKE_MOVE_REQ_P0_TO_P2;
+        GFL_CLACT_WK_SetSoftPri( work->poke_set[i].clwk[POKE_BIG], POKE_SOFTPRI_FRONT );
+      }
+      else
+      {
+        work->poke_set[i].move_req   = POKE_MOVE_REQ_P2_TO_P0;
+        GFL_CLACT_WK_SetSoftPri( work->poke_set[i].clwk[POKE_BIG], POKE_SOFTPRI_BACK );
+      }
+    }
+  }
+}
+
 
 //-------------------------------------
 /// 指指しカーソル
@@ -1374,8 +2029,8 @@ static void Psel_FingerInit( PSEL_WORK* work )
     GFL_CLWK_DATA cldata;
     GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
 
-    cldata.pos_x    = finger_pos[TARGET_MIZU][0];
-    cldata.pos_y    = finger_pos[TARGET_MIZU][1];
+    cldata.pos_x    = finger_pos[TARGET_POKE_START][0];
+    cldata.pos_y    = finger_pos[TARGET_POKE_START][1];
     cldata.anmseq   = 0;
     cldata.softpri  = 0;
     cldata.bgpri    = OBJ_BG_PRI_M_FINGER;
@@ -1384,18 +2039,9 @@ static void Psel_FingerInit( PSEL_WORK* work )
         PSEL_GRAPHIC_GetClunit( work->graphic ),
         work->finger_res[TWO_OBJ_RES_NCG], work->finger_res[TWO_OBJ_RES_NCL], work->finger_res[TWO_OBJ_RES_NCE],
         &cldata, CLSYS_DEFREND_MAIN, work->heap_id );
-/*
-    GFL_CLACT_WK_SetAnmSeq( work->obj_clwk, anmseq );
-    GFL_CLACT_WK_SetAutoAnmFlag( work->obj_clwk, TRUE );
-    GFL_CLACT_WK_SetBgPri( work->obj_clwk, bgpri );
-    GFL_CLACT_WK_SetSoftPri( work->obj_clwk, softpri );
-    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk, FALSE );
-    GFL_CLACT_WK_SetObjMode( work->obj_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
-    {
-      GFL_CLACTPOS pos;
-      GFL_CLACT_WK_SetPos( work->obj_clwk, &pos, CLSYS_DEFREND_MAIN );
-    }
-*/
+    GFL_CLACT_WK_SetAutoAnmFlag( work->finger_clwk, TRUE );
+
+    GFL_CLACT_WK_SetDrawEnable( work->finger_clwk, FALSE );
   }
 }
 static void Psel_FingerExit( PSEL_WORK* work )
@@ -1408,12 +2054,26 @@ static void Psel_FingerExit( PSEL_WORK* work )
   GFL_CLGRP_CGR_Release( work->finger_res[TWO_OBJ_RES_NCG] );
   GFL_CLGRP_PLTT_Release( work->finger_res[TWO_OBJ_RES_NCL] );
 }
+static void Psel_FingerDrawEnable( PSEL_WORK* work, BOOL on_off )
+{
+  GFL_CLACT_WK_SetDrawEnable( work->finger_clwk, on_off );
+  if( on_off ) Psel_FingerUpdatePos( work );
+}
+static void Psel_FingerUpdatePos( PSEL_WORK* work )
+{
+  GFL_CLACTPOS pos;
+  pos.x = finger_pos[work->select_target_poke][0];
+  pos.y = finger_pos[work->select_target_poke][1];
+  GFL_CLACT_WK_SetPos( work->finger_clwk, &pos, CLSYS_DEFREND_MAIN );
+}
 
 //-------------------------------------
 /// BG
 //=====================================
 static void Psel_BgInit( PSEL_WORK* work )
 {
+  // ウィンドウ用のパレットとキャラを用意する
+
   // パレットの作成＆転送
   {
     u16* pal = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(u16) * 0x10 );
@@ -1450,6 +2110,8 @@ static void Psel_BgExit( PSEL_WORK* work )
 
 static void Psel_BgS01Init( PSEL_WORK* work )
 {
+  // ウィンドウ用のスクリーンを用意する
+
   // スクリーンの作成＆転送
   {
     u16* scr = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(u16) * 32*24 );
@@ -1459,7 +2121,7 @@ static void Psel_BgS01Init( PSEL_WORK* work )
     {                         // 6.2.3.2.2 スクリーンデータのアドレスマッピング
       for(i=0; i<32; i++)     // スクリーンサイズが256×256 ドットのとき
       {                       // を参考にした。
-        u16 chara_name = (3<=j&&j<21)?1:0;  // 1キャラ目:0キャラ目
+        u16 chara_name = (4<=j&&j<20)?1:0;  // 1キャラ目:0キャラ目
         u16 flip_h     = 0;
         u16 flip_v     = 0;
         u16 pal        = BG_PAL_POS_M_WIN;
@@ -1483,12 +2145,12 @@ static void Psel_BgS01Exit( PSEL_WORK* work )
   u16 scr = ( pal << 12 ) | ( flip_v << 11 ) | ( flip_h << 10 ) | ( chara_name << 0 );
   GFL_BG_ClearScreenCodeVReq( BG_FRAME_M_WIN, scr );
 }
-static void Psel_BgS01Main( PSEL_WORK* work )
-{
-}
 
 static void Psel_BgS02Init( PSEL_WORK* work )
 {
+  // ウィンドウ用のスクリーンを用意する
+
+  // メイン画面
   // スクリーンの作成＆転送
   {
     u16* scr = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(u16) * 32*24 );
@@ -1513,7 +2175,7 @@ static void Psel_BgS02Init( PSEL_WORK* work )
     GFL_HEAP_FreeMemory( scr );
   }
 
-
+  // サブ画面
   // スクリーンの作成＆転送
   {
     u16* scr = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(u16) * 32*24 );
@@ -1540,27 +2202,25 @@ static void Psel_BgS02Init( PSEL_WORK* work )
 }
 static void Psel_BgS02Exit( PSEL_WORK* work )
 {
-  {
   u16 chara_name = 0;  // 0キャラ目
   u16 flip_h     = 0;
   u16 flip_v     = 0;
-  u16 pal        = BG_PAL_POS_M_WIN;
-  u16 scr = ( pal << 12 ) | ( flip_v << 11 ) | ( flip_h << 10 ) | ( chara_name << 0 );
-  GFL_BG_ClearScreenCodeVReq( BG_FRAME_M_WIN, scr );
-  }
+  u16 pal;
+  u16 scr;
 
-
+  // メイン画面
   {
-  u16 chara_name = 0;  // 0キャラ目
-  u16 flip_h     = 0;
-  u16 flip_v     = 0;
-  u16 pal        = BG_PAL_POS_S_WIN;
-  u16 scr = ( pal << 12 ) | ( flip_v << 11 ) | ( flip_h << 10 ) | ( chara_name << 0 );
-  GFL_BG_ClearScreenCodeVReq( BG_FRAME_S_WIN, scr );
+    pal        = BG_PAL_POS_M_WIN;
+    scr = ( pal << 12 ) | ( flip_v << 11 ) | ( flip_h << 10 ) | ( chara_name << 0 );
+    GFL_BG_ClearScreenCodeVReq( BG_FRAME_M_WIN, scr );
   }
-}
-static void Psel_BgS02Main( PSEL_WORK* work )
-{
+
+  // サブ画面
+  {
+    pal        = BG_PAL_POS_S_WIN;
+    scr = ( pal << 12 ) | ( flip_v << 11 ) | ( flip_h << 10 ) | ( chara_name << 0 );
+    GFL_BG_ClearScreenCodeVReq( BG_FRAME_S_WIN, scr );
+  }
 }
 
 static void Psel_InsideBallInit( PSEL_WORK* work )
@@ -1680,11 +2340,15 @@ static void Psel_TextExit( PSEL_WORK* work )
 }
 static void Psel_TextMain( PSEL_WORK* work )
 {
+  GFL_TCBL_Main( work->ps_tcblsys );
   Psel_TextTransWait( work );
 }
 
 static BOOL Psel_TextTransWait( PSEL_WORK* work )  // TRUEが返って来たら転送待ちなし
 {
+  // この関数は何度呼び出しても挙動は変わらないので、何度呼び出してもいい。
+  // 何度も呼び出したからといってはやく処理が行われるわけではないし、何回も転送したりするわけではないので。
+
   BOOL ret = TRUE;
   u8 i;
 
@@ -1707,8 +2371,9 @@ static BOOL Psel_TextTransWait( PSEL_WORK* work )  // TRUEが返って来たら転送待ち
   return ret;
 }
 
-static void Psel_TextStreamStart( PSEL_WORK* work, GFL_BMPWIN* bmpwin, u32 str_id )
+static void Psel_TextExplainStreamStart( PSEL_WORK* work, u32 str_id )
 {
+  GFL_BMPWIN* bmpwin = work->text_bmpwin[TEXT_EXPLAIN];
   s16 x = 0;
   s16 y = 0;
 
@@ -1722,7 +2387,25 @@ static void Psel_TextStreamStart( PSEL_WORK* work, GFL_BMPWIN* bmpwin, u32 str_i
   // 文字列作成
   {
     work->ps_strbuf  = GFL_MSG_CreateString( work->msgdata, str_id );
-    // センタリングするならここで
+  }
+
+  // センタリング
+  {
+    u16     str_width   = (u16)( PRINTSYS_GetStrWidth( work->ps_strbuf, work->font, 0 ) );
+    u16     str_height  = (u16)( PRINTSYS_GetStrHeight( work->ps_strbuf, work->font ) ); 
+
+    u16     bmp_width   = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(bmpwin) );
+    u16     bmp_height  = GFL_BMP_GetSizeY( GFL_BMPWIN_GetBmp(bmpwin) );
+
+    // センタリング
+    if( bmp_width > str_width )
+    {
+      x = (s16)( ( bmp_width - str_width ) / 2 );
+    }
+    if( bmp_height > str_height )
+    {
+      y = (s16)( ( bmp_height - str_height ) / 2 );
+    }
   }
   
   // ストリーム開始
@@ -1735,8 +2418,11 @@ static void Psel_TextStreamStart( PSEL_WORK* work, GFL_BMPWIN* bmpwin, u32 str_i
                            work->ps_tcblsys, 2,
                            work->heap_id,
                            TEXT_COLOR_B );
+
+  // スクリーンをつくっておかないと表示されない
+  GFL_BMPWIN_MakeTransWindow_VBlank( bmpwin );
 }
-static BOOL Psel_TextStreamWait( PSEL_WORK* work )  // TRUEが返って来たら終了
+static BOOL Psel_TextExplainStreamWait( PSEL_WORK* work )  // TRUEが返って来たら終了
 {
   BOOL ret = FALSE;
 
@@ -1762,6 +2448,134 @@ static BOOL Psel_TextStreamWait( PSEL_WORK* work )  // TRUEが返って来たら終了
   }
   
   return ret;
+}
+
+static void Psel_TextExplainPrintStart( PSEL_WORK* work, u32 str_id )
+{
+  GFL_BMPWIN* bmpwin = work->text_bmpwin[TEXT_EXPLAIN];
+  BOOL*       finish = &(work->text_finish[TEXT_EXPLAIN]);
+  STRBUF* strbuf;
+  u16     str_width;
+  u16     str_height; 
+  u16     bmp_width;
+  u16     bmp_height;
+  u16     x = 0;
+  u16     y = 0;
+
+  // 一旦消去
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), TEXT_COLOR_B );
+  
+  // 前のを消す
+  if( work->print_stream ) PRINTSYS_PrintStreamDelete( work->print_stream );  // この関数でタスクも削除してくれるので、同時に動くタスクは1つで済む
+  work->print_stream = NULL;  // この関数でprint_streamは使わないのでNULLを入れておくこと。
+  if( work->ps_strbuf ) GFL_STR_DeleteBuffer( work->ps_strbuf );
+  work->ps_strbuf = NULL;  // この関数でps_strbufは使わないのでNULLを入れておくこと。
+
+  // 文字列作成
+  strbuf      = GFL_MSG_CreateString( work->msgdata, str_id );
+
+  str_width   = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
+  str_height  = (u16)( PRINTSYS_GetStrHeight( strbuf, work->font ) ); 
+
+  bmp_width   = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(bmpwin) );
+  bmp_height  = GFL_BMP_GetSizeY( GFL_BMPWIN_GetBmp(bmpwin) );
+
+  // センタリング
+  if( bmp_width > str_width )
+  {
+    x = ( bmp_width - str_width ) / 2;
+  }
+  if( bmp_height > str_height )
+  {
+    y = ( bmp_height - str_height ) / 2;
+  }
+  
+  PRINTSYS_PrintQueColor(
+      work->print_que,
+      GFL_BMPWIN_GetBmp(bmpwin),
+      (s16)x, (s16)y,
+      strbuf,
+      work->font,
+      PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
+
+  GFL_STR_DeleteBuffer( strbuf );
+
+  *finish = FALSE;
+
+  // 直ちに転送できるかもしれないので、ここで1度呼んでおく
+  Psel_TextTransWait( work );
+}
+static void Psel_TextExplainClear( PSEL_WORK* work )
+{
+  // 消去
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_EXPLAIN]), TEXT_COLOR_B );
+  GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[TEXT_EXPLAIN] );
+
+  // ストリームを表示しているときかもしれないので、ストリームも削除 
+  if( work->print_stream ) PRINTSYS_PrintStreamDelete( work->print_stream );  // この関数でタスクも削除してくれるので、同時に動くタスクは1つで済む
+  work->print_stream = NULL;  // この関数でprint_streamは使わないのでNULLを入れておくこと。
+  if( work->ps_strbuf ) GFL_STR_DeleteBuffer( work->ps_strbuf );
+  work->ps_strbuf = NULL;  // この関数でps_strbufは使わないのでNULLを入れておくこと。
+}
+
+static void Psel_TextPokeInfoPrintStart( PSEL_WORK* work, TARGET target )
+{
+  GFL_BMPWIN* bmpwin = work->text_bmpwin[TEXT_POKE_INFO];
+  BOOL*       finish = &(work->text_finish[TEXT_POKE_INFO]);
+  u16     str_width;
+  u16     str_height; 
+  u16     bmp_width;
+  u16     bmp_height;
+  u16     x = 0;
+  u16     y = 0;
+
+  WORDSET*  wordset       = WORDSET_Create( work->heap_id );
+  STRBUF*   src_strbuf    = GFL_MSG_CreateString( work->msgdata, poke_str_id[target] );
+  STRBUF*   strbuf        = GFL_STR_CreateBuffer( TEXT_POKE_INFO_LEN_MAX, work->heap_id );
+  WORDSET_RegisterPokeMonsNameNo( wordset, 1, poke_monsno[target] );
+  WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
+  GFL_STR_DeleteBuffer( src_strbuf );
+  WORDSET_Delete( wordset );
+
+  // 一旦消去
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), TEXT_COLOR_B );
+
+  str_width   = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
+  str_height  = (u16)( PRINTSYS_GetStrHeight( strbuf, work->font ) ); 
+
+  bmp_width   = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(bmpwin) );
+  bmp_height  = GFL_BMP_GetSizeY( GFL_BMPWIN_GetBmp(bmpwin) );
+
+  // センタリング
+  //if( bmp_width > str_width )            // gmmにセンタリング指定を入れてあるので
+  //{                                      // プログラムで改めてセンタリングする必要はないので
+  //  x = ( bmp_width - str_width ) / 2;   // コメントアウトした
+  //}
+  if( bmp_height > str_height )
+  {
+    y = ( bmp_height - str_height ) / 2;
+  }
+  
+  PRINTSYS_PrintQueColor(
+      work->print_que,
+      GFL_BMPWIN_GetBmp(bmpwin),
+      (s16)x, (s16)y,
+      strbuf,
+      work->font,
+      PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
+
+  GFL_STR_DeleteBuffer( strbuf );
+
+  *finish = FALSE;
+
+  // 直ちに転送できるかもしれないので、ここで1度呼んでおく
+  Psel_TextTransWait( work );
+}
+static void Psel_TextPokeInfoClear( PSEL_WORK* work )
+{
+  // 消去
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_POKE_INFO]), TEXT_COLOR_B );
+  GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[TEXT_POKE_INFO] );
 }
 
 static void Psel_TextS01Init( PSEL_WORK* work )
@@ -1798,6 +2612,9 @@ static void Psel_TextS01Init( PSEL_WORK* work )
   GFL_STR_DeleteBuffer( strbuf );
 
   work->text_finish[TEXT_LETTER] = FALSE;
+
+  // 直ちに転送できるかもしれないので、ここで1度呼んでおく
+  Psel_TextTransWait( work );
 }
 static void Psel_TextS01Exit( PSEL_WORK* work )
 {
@@ -1814,107 +2631,6 @@ static void Psel_TextS01Main( PSEL_WORK* work )
 
   //APP_KEYCURSOR_Clear( work->app_keycursor_wk, GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_LETTER]), TEXT_COLOR_B );
   //GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_LETTER] );
-}
-
-static void Psel_TextS02Init( PSEL_WORK* work )
-{
-  {
-  STRBUF* strbuf      = GFL_MSG_CreateString( work->msgdata, msg_t01r0102_ball_select_02 );
-
-  u16     str_width   = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
-  u16     str_height  = (u16)( PRINTSYS_GetStrHeight( strbuf, work->font ) ); 
-
-  u16     bmp_width   = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_EXPLAIN]) );
-  u16     bmp_height  = GFL_BMP_GetSizeY( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_EXPLAIN]) );
- 
-  u16     x = 0;
-  u16     y = 0;
-
-  // センタリング
-  if( bmp_width > str_width )
-  {
-    x = ( bmp_width - str_width ) / 2;
-  }
-  if( bmp_height > str_height )
-  {
-    y = ( bmp_height - str_height ) / 2;
-  }
-  
-  PRINTSYS_PrintQueColor(
-      work->print_que,
-      GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_EXPLAIN]),
-      x, y,
-      strbuf,
-      work->font,
-      PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
-
-  GFL_STR_DeleteBuffer( strbuf );
-
-  work->text_finish[TEXT_EXPLAIN] = FALSE;
-  }
-
-
-  {
-  u16     str_width;
-  u16     str_height; 
-
-  u16     bmp_width;
-  u16     bmp_height;
- 
-  u16     x = 0;
-  u16     y = 0;
-
-  WORDSET*  wordset       = WORDSET_Create( work->heap_id );
-  STRBUF*   src_strbuf    = GFL_MSG_CreateString( work->msgdata, msg_t01r0102_ball_water_01 );
-  STRBUF*   strbuf        = GFL_STR_CreateBuffer( TEXT_POKE_INFO_LEN_MAX, work->heap_id );
-  WORDSET_RegisterPokeMonsNameNo( wordset, 1, poke_monsno[TARGET_MIZU] );
-  WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
-  GFL_STR_DeleteBuffer( src_strbuf );
-  WORDSET_Delete( wordset );
-
-  str_width   = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
-  str_height  = (u16)( PRINTSYS_GetStrHeight( strbuf, work->font ) ); 
-
-  bmp_width   = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_POKE_INFO]) );
-  bmp_height  = GFL_BMP_GetSizeY( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_POKE_INFO]) );
- 
-  x = 0;
-  y = 0;
-
-  // センタリング
-  //if( bmp_width > str_width )            // gmmにセンタリング指定を入れてあるので
-  //{                                      // プログラムで改めてセンタリングする必要はないので
-  //  x = ( bmp_width - str_width ) / 2;   // コメントアウトした
-  //}
-  if( bmp_height > str_height )
-  {
-    y = ( bmp_height - str_height ) / 2;
-  }
-  
-  PRINTSYS_PrintQueColor(
-      work->print_que,
-      GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_POKE_INFO]),
-      x, y,
-      strbuf,
-      work->font,
-      PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
-
-  GFL_STR_DeleteBuffer( strbuf );
-
-  work->text_finish[TEXT_POKE_INFO] = FALSE;
-  }
-}
-static void Psel_TextS02Exit( PSEL_WORK* work )
-{
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_EXPLAIN]), TEXT_COLOR_B );
-  GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[TEXT_EXPLAIN] );
-
-
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_POKE_INFO]), TEXT_COLOR_B );
-  GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[TEXT_POKE_INFO] );
-}
-static void Psel_TextS02Main( PSEL_WORK* work )
-{
 }
 
 //-------------------------------------
@@ -1954,6 +2670,15 @@ static void Psel_AppTaskmenuWinExit( PSEL_WORK* work )
 static void Psel_AppTaskmenuWinMain( PSEL_WORK* work )
 {
   APP_TASKMENU_WIN_Update( work->app_taskmenu_win_wk );
+}
+static void Psel_AppTaskmenuWinDecideStart( PSEL_WORK* work )
+{
+  APP_TASKMENU_WIN_SetActive( work->app_taskmenu_win_wk, TRUE );
+  APP_TASKMENU_WIN_SetDecide( work->app_taskmenu_win_wk, TRUE );
+}
+static BOOL Psel_AppTaskmenuWinDecideIsEnd( PSEL_WORK* work )
+{
+  return APP_TASKMENU_WIN_IsFinish( work->app_taskmenu_win_wk );
 }
 
 static void Psel_AppTaskmenuInit( PSEL_WORK* work )
@@ -1999,6 +2724,16 @@ static void Psel_AppTaskmenuExit( PSEL_WORK* work )
 static void Psel_AppTaskmenuMain( PSEL_WORK* work )
 {
   APP_TASKMENU_UpdateMenu( work->app_taskmenu_wk );
+}
+static BOOL Psel_AppTaskmenuIsEnd( PSEL_WORK* work )
+{
+  return APP_TASKMENU_IsFinish( work->app_taskmenu_wk );
+}
+static BOOL Psel_AppTaskmenuIsYes( PSEL_WORK* work )
+{
+  u8 pos = APP_TASKMENU_GetCursorPos( work->app_taskmenu_wk );
+  if( pos == 0 ) return TRUE;
+  return FALSE;
 }
 
 //-------------------------------------
@@ -2251,7 +2986,7 @@ static void Psel_PalMain( PSEL_WORK* work )
   Psel_InsideBallPalMain( work );
 }
 
-static void Psel_PokeSetPalAnimeStart( PSEL_WORK* work, TARGET target_poke, POKE_PAL_ANIME_STATE state )
+static void Psel_PokeSetPalAnimeStart( PSEL_WORK* work, TARGET target_poke, POKE_PAL_ANIME_STATE state )  // 何回呼んでも、アニメの途中で呼んでも、大丈夫な頑強なつくりになっている
 {
   switch( state )
   {
@@ -2274,7 +3009,7 @@ static void Psel_PokeSetPalAnimeStart( PSEL_WORK* work, TARGET target_poke, POKE
   }
 }
 
-static void Psel_InsideBallPalAnimeStart( PSEL_WORK* work, u8 end )
+static void Psel_InsideBallPalAnimeStart( PSEL_WORK* work, u8 end )  // 何回呼んでも、アニメの途中で呼んでも、大丈夫な頑強なつくりになっている
 {
   if( work->inside_ball_pal_anime_end != end )
   {
@@ -2317,7 +3052,8 @@ static int Psel_Load( PSEL_WORK* work, int* seq )
 
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Psel_VBlankFunc, work, 1 );
- 
+  work->vblank_req = VBLANK_REQ_NONE;
+
   // 3D全体
   Psel_ThreeInit( work );
   // BG
@@ -2336,36 +3072,30 @@ static int Psel_S01Init    ( PSEL_WORK* work, int* seq )
   GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x2f3b );
   GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x2f3b );
 
+  // 生成
   Psel_ThreeS01Init( work );
   Psel_BgS01Init( work );
   Psel_TextS01Init( work );
 
+  // テキストは非表示
+  work->vblank_req |= VBLANK_REQ_S01_TEXT_M_VISIBLE_OFF;
+
   // ブレンド
+  work->ev1 = 0; 
   G2_SetBlendAlpha(
-      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2/* | GX_BLEND_PLANEMASK_BG3*/,
+      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2,
       GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
-      8, 8 );
+      work->ev1, 16-work->ev1 );
   // 3Dのアルファをきれいに出すため、第1対象面にBG0を指定している
   // ev1とev2は使われない  // TWLプログラミングマニュアル「2D面とのαブレンディング」参考
 
-#if 0
-  G2S_SetBlendAlpha(
-      GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BG1/* | GX_BLEND_PLANEMASK_BG2*/,
-      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
-      8, 8 );
-#endif
-  // OBJを半透明にするのはやめて、パレットを暗くすることにした。
-  G2S_SetBlendAlpha(
-      GX_BLEND_PLANEMASK_BG1/* | GX_BLEND_PLANEMASK_BG2*/,
-      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
-      8, 8 );
-
+  // シーケンスフレーム
+  work->sub_seq_frame = 0;
   return SEQ_S01_FADE_IN;
 }
 static int Psel_S01FadeIn  ( PSEL_WORK* work, int* seq )
 {
-  Psel_ThreeS01Main( work );
-  Psel_BgS01Main( work );
+  if( work->sub_seq_frame >= 1 ) Psel_ThreeS01Main( work );  // 3Dのアニメ開始を少し遅らせる
   Psel_TextS01Main( work );
 
   switch(*seq)
@@ -2381,33 +3111,153 @@ static int Psel_S01FadeIn  ( PSEL_WORK* work, int* seq )
     {
       if( !GFL_FADE_CheckFade() )
       {
+        // シーケンスフレーム
+        work->sub_seq_frame = 0;
         return SEQ_S01_MAIN;
       }
     }
     break;
   }
+
+  // シーケンスフレーム
+  work->sub_seq_frame++;
   return SEQ_S01_FADE_IN;
 }
 static int Psel_S01Main    ( PSEL_WORK* work, int* seq )
 {
-  Psel_ThreeS01Main( work );
-  Psel_BgS01Main( work );
+  BOOL blend_m = FALSE;
+
   Psel_TextS01Main( work );
 
-  if(    ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
-      || ( GFL_UI_TP_GetTrg() ) )
+  switch(*seq)
   {
-    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ) work->ktst = GFL_APP_KTST_KEY;
-    else                                                    work->ktst = GFL_APP_KTST_TOUCH;
+  case 0:  // ～3Dのアニメが手紙を読む段階の4フレーム前になるまで
+    {
+      Psel_ThreeS01Main( work );
+      if( work->three_frame == TIMETABLE_S01_CARD_READ -4 )
+      {
+        (*seq)++;
+      }
+    }
+    break;
+  case 1:  // ～3Dのアニメが手紙を読む段階になるまで
+    {
+      // ブレンド
+      if( work->ev1 < 8 )
+      {
+        work->ev1++;
+        blend_m = TRUE;
+      }
 
-    return SEQ_S01_FADE_OUT;
+      Psel_ThreeS01Main( work );
+      if( work->three_frame == TIMETABLE_S01_CARD_READ )
+      {
+        (*seq)++;
+      }
+    }
+    break;
+  case 2:  // ～手紙のテキストを表示
+    {
+      // ブレンド
+      if( work->ev1 < 8 )
+      {
+        work->ev1++; 
+        blend_m = TRUE;
+      }
+      else
+      {
+        // テキストは表示
+        work->vblank_req |= VBLANK_REQ_S01_TEXT_M_VISIBLE_ON;
+        (*seq)++;
+      }
+    }
+    break;
+  case 3:  // 手紙のテキストが確実に表示されるよう1フレーム待つ
+    {
+      (*seq)++;
+    }
+    break;
+  case 4:  // プレイヤーの入力待ち
+    {
+      if(    ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
+          || ( GFL_UI_TP_GetTrg() ) )
+      {
+        if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ) work->ktst = GFL_APP_KTST_KEY;
+        else                                                    work->ktst = GFL_APP_KTST_TOUCH;
+        
+        PMSND_PlaySE( PSELSND_DECIDE );
+        
+        (*seq)++;
+      }
+    }
+    break;
+  case 5:  // 手紙のテキストを非表示
+    {
+      // テキストは非表示
+      work->vblank_req |= VBLANK_REQ_S01_TEXT_M_VISIBLE_OFF;
+
+      // ブレンド
+      if( work->ev1 != 0 )
+      {
+        work->ev1--; 
+        blend_m = TRUE;
+      }
+      (*seq)++;
+    }
+    break;
+  case 6:  // ～手紙のテキストのウィンドウの非表示が4フレーム進むまで
+    {
+      // ブレンド
+      if( work->ev1 != 0 )
+      {
+        work->ev1--; 
+        blend_m = TRUE;
+      }
+
+      if( work->ev1 == 4 )
+      {
+        (*seq)++;
+      }
+    }
+    break;
+  case 7:  // ～3Dのアニメが終了の8フレーム前になるまで(ここのフレームは S01_FADE_OUT_WAIT と関係あり)
+    {
+      // ブレンド
+      if( work->ev1 != 0 )
+      {
+        work->ev1--;
+        blend_m = TRUE;
+      }
+
+      Psel_ThreeS01Main( work );
+      if( work->three_frame == TIMETABLE_S01_SCENE_END -8 )
+      {
+        // シーケンスフレーム
+        work->sub_seq_frame = 0;
+        return SEQ_S01_FADE_OUT;
+      }
+    }
+    break;
   }
+
+  // ブレンド
+  if( blend_m )
+  {
+    G2_SetBlendAlpha(
+        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2,
+        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+        work->ev1, 16-work->ev1 );
+    // 3Dのアルファをきれいに出すため、第1対象面にBG0を指定している
+    // ev1とev2は使われない  // TWLプログラミングマニュアル「2D面とのαブレンディング」参考
+  }
+ 
+  // シーケンスフレーム
+  work->sub_seq_frame++;
   return SEQ_S01_MAIN;
 }
 static int Psel_S01FadeOut ( PSEL_WORK* work, int* seq )
 {
-  Psel_ThreeS01Main( work );
-  Psel_BgS01Main( work );
+  if( work->three_frame != TIMETABLE_S01_SCENE_END ) Psel_ThreeS01Main( work );  // 3Dのアニメを止める
   Psel_TextS01Main( work );
 
   switch(*seq)
@@ -2423,11 +3273,16 @@ static int Psel_S01FadeOut ( PSEL_WORK* work, int* seq )
     {
       if( !GFL_FADE_CheckFade() )
       {
+        // シーケンスフレーム
+        work->sub_seq_frame = 0;
         return SEQ_S01_EXIT;
       }
     }
     break;
   }
+
+  // シーケンスフレーム
+  work->sub_seq_frame++;
   return SEQ_S01_FADE_OUT;
 }
 static int Psel_S01Exit    ( PSEL_WORK* work, int* seq )
@@ -2439,6 +3294,9 @@ static int Psel_S01Exit    ( PSEL_WORK* work, int* seq )
   Psel_TextS01Exit( work );
   Psel_BgS01Exit( work );
   Psel_ThreeS01Exit( work );
+
+  // シーケンスフレーム
+  work->sub_seq_frame = 0;
   return SEQ_S02_INIT;
 }
 
@@ -2456,10 +3314,11 @@ static int Psel_S02Init    ( PSEL_WORK* work, int* seq )
   Psel_FingerInit( work );
   Psel_BgS02Init( work );
   Psel_InsideBallInit( work );
-  Psel_TextS02Init( work );
-  Psel_AppTaskmenuWinInit( work );
-  Psel_AppTaskmenuInit( work );
   Psel_PalInit( work );
+
+  // テキストとウィンドウは非表示
+  work->vblank_req |= VBLANK_REQ_S02_TEXT_WIN_M_VISIBLE_OFF;
+  work->vblank_req |= VBLANK_REQ_S02_TEXT_WIN_S_VISIBLE_OFF;
 
   // ブレンド
   G2_SetBlendAlpha(
@@ -2469,27 +3328,19 @@ static int Psel_S02Init    ( PSEL_WORK* work, int* seq )
   // 3Dのアルファをきれいに出すため、第1対象面にBG0を指定している
   // ev1とev2は使われない  // TWLプログラミングマニュアル「2D面とのαブレンディング」参考
 
-#if 0
-  G2S_SetBlendAlpha(
-      GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BG1/* | GX_BLEND_PLANEMASK_BG2*/,
-      GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
-      8, 8 );
-#endif
-  // OBJを半透明にするのはやめて、パレットを暗くすることにした。
   G2S_SetBlendAlpha(
       GX_BLEND_PLANEMASK_BG1/* | GX_BLEND_PLANEMASK_BG2*/,
       GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
       8, 8 );
-  
+
+  // シーケンスフレーム
+  work->sub_seq_frame = 0;
   return SEQ_S02_FADE_IN;
 }
 static int Psel_S02FadeIn  ( PSEL_WORK* work, int* seq )
 {
-  Psel_ThreeS02Main( work );
-  Psel_BgS02Main( work );
-  Psel_TextS02Main( work );
-  Psel_AppTaskmenuWinMain( work );
-  Psel_AppTaskmenuMain( work );
+  if( work->sub_seq_frame >= 16 ) Psel_ThreeS02Main( work );  // 3Dのアニメ開始を少し遅らせる
+  Psel_PokeSetMain( work );
   Psel_PalMain( work );
 
   switch(*seq)
@@ -2505,97 +3356,419 @@ static int Psel_S02FadeIn  ( PSEL_WORK* work, int* seq )
     {
       if( !GFL_FADE_CheckFade() )
       {
+        // シーケンスフレーム
+        work->sub_seq_frame = 0;
         return SEQ_S02_MAIN;
       }
     }
     break;
   }
+
+  // シーケンスフレーム
+  work->sub_seq_frame++;
   return SEQ_S02_FADE_IN;
 }
 static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
 {
-  int hit = GFL_UI_TP_HIT_NONE;
+  enum
+  {
+    S02_MAIN_SEQ_BOX_OPEN_STOP_WAIT,
+    S02_MAIN_SEQ_EXPLAIN_INIT,
+    S02_MAIN_SEQ_EXPLAIN_WAIT,
+    S02_MAIN_SEQ_SELECT_INIT,
+    S02_MAIN_SEQ_SELECT_WAIT,
+    S02_MAIN_SEQ_TOUCH_CONFIRM_INIT,
+    S02_MAIN_SEQ_TOUCH_CONFIRM_WAIT,
+    S02_MAIN_SEQ_TOUCH_CONFIRM_WAIT_DECIDE,
+    S02_MAIN_SEQ_ZOOM_IN_ANIME_INIT,
+    S02_MAIN_SEQ_ZOOM_IN_ANIME_WAIT,
+    S02_MAIN_SEQ_ANSWER_INIT,
+    S02_MAIN_SEQ_ANSWER_WAIT,
+    S02_MAIN_SEQ_ZOOM_OUT_ANIME_INIT,
+    S02_MAIN_SEQ_ZOOM_OUT_ANIME_WAIT,
+    S02_MAIN_SEQ_DECIDE_ANIME_INIT,
+    S02_MAIN_SEQ_DECIDE_ANIME_WAIT,
+    S02_MAIN_SEQ_END,
+  };
 
-  Psel_ThreeS02Main( work );
-  Psel_BgS02Main( work );
-  Psel_TextS02Main( work );
-  Psel_AppTaskmenuWinMain( work );
-  Psel_AppTaskmenuMain( work );
+  int hit = GFL_UI_TP_HIT_NONE;
+  BOOL select_change = FALSE;  // 選択しているものが変わったらTRUE  // ポケモンのタイプと種族名を消すのに使用する変数
+
+  Psel_PokeSetMain( work );
   Psel_PalMain( work );
 
-  // タッチ
-  hit = GFL_UI_TP_HitTrg(target_tp_hittbl);
-  switch(hit)
+  switch(*seq)
   {
-  case TARGET_MIZU:
+  case S02_MAIN_SEQ_BOX_OPEN_STOP_WAIT:
     {
-      PMSND_PlaySystemSE( PSELSND_DECIDE );
+      Psel_ThreeS02Main( work );
+      if( work->three_frame == TIMETABLE_S02_BOX_STOP )  // ～ボックスが開くまで
+      {
+        *seq = S02_MAIN_SEQ_EXPLAIN_INIT;
+      }
     }
     break;
-  case TARGET_HONOO:
+  case S02_MAIN_SEQ_EXPLAIN_INIT:
     {
-      PMSND_PlaySystemSE( PSELSND_CANCEL );
+      // テキストとウィンドウは表示
+      work->vblank_req |= VBLANK_REQ_S02_TEXT_WIN_M_VISIBLE_ON;
+      Psel_TextExplainStreamStart( work, msg_t01r0102_ball_select_01 );  // 何故かストリームが表示されない
+      //Psel_TextExplainPrintStart( work, msg_t01r0102_ball_select_01 );
+      
+      *seq = S02_MAIN_SEQ_EXPLAIN_WAIT;
     }
     break;
-  case TARGET_KUSA:
+  case S02_MAIN_SEQ_EXPLAIN_WAIT:
     {
-      PMSND_PlaySystemSE( PSELSND_MOVE );
+      if( Psel_TextExplainStreamWait( work ) )  // 何故かストリームが表示されない
+      //if( Psel_TextTransWait( work ) )
+      {
+        if(    ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
+            || ( GFL_UI_TP_GetTrg() ) )
+        {
+          if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ) work->ktst = GFL_APP_KTST_KEY;
+          else                                                    work->ktst = GFL_APP_KTST_TOUCH;
+
+          PMSND_PlaySE( PSELSND_DECIDE );
+
+          // テキストとウィンドウは非表示
+          work->vblank_req |= VBLANK_REQ_S02_TEXT_WIN_M_VISIBLE_OFF;
+          Psel_TextExplainClear( work );
+
+          *seq = S02_MAIN_SEQ_SELECT_INIT;
+        }
+      }
     }
     break;
-  case TARGET_BUTTON:
+  case S02_MAIN_SEQ_SELECT_INIT:
     {
-      PMSND_PlaySystemSE( PSELSND_OPEN );
+      // キー操作中
+      if( work->ktst == GFL_APP_KTST_KEY )
+      {
+        if( work->select_target_poke == TARGET_NONE )
+        {
+          work->select_target_poke = TARGET_POKE_START;
+          select_change = TRUE;  // どれも選ばれていない状態から最初のを選んでいる状態になったのでTRUEにしたが、前がどれも選ばれていない状態なので何も書かれていないはずだから、TRUEにしなくても問題はない
+        }
+        Psel_FingerDrawEnable( work, TRUE );
+        Psel_FingerUpdatePos( work );
+        Psel_PokeSetSelectStart( work, work->select_target_poke );
+        Psel_InsideBallPalAnimeStart( work, (work->select_target_poke!=TARGET_NONE)?(work->select_target_poke):(INSIDE_BALL_NONE) );
+      }
+      // タッチ操作中
+      else
+      {
+        Psel_FingerDrawEnable( work, FALSE );
+
+        // select_target_pokeは指指しカーソル表示用に位置を持っているかもしれないが、タッチなのでどれも選ばれていない状態で開始することにする
+        Psel_PokeSetSelectStart( work, TARGET_NONE );
+        Psel_InsideBallPalAnimeStart( work, INSIDE_BALL_NONE );
+        select_change = TRUE;  // どれも選ばれていない状態なので、ポケモンのタイプと種族名は消していい
+      }
+
+      *seq = S02_MAIN_SEQ_SELECT_WAIT;
+    }
+    break;
+  case S02_MAIN_SEQ_SELECT_WAIT:
+    {
+      // キー操作中
+      if( work->ktst == GFL_APP_KTST_KEY )
+      {
+        if( GFL_UI_KEY_GetTrg() )  // キー操作のまま
+        {
+          BOOL move = FALSE;
+          if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+          {
+            PMSND_PlaySE( PSELSND_DECIDE );
+            
+            *seq = S02_MAIN_SEQ_ZOOM_IN_ANIME_INIT;
+          }
+          else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+          {
+            if( work->select_target_poke > TARGET_POKE_START )
+            {
+              work->select_target_poke--;
+              move = TRUE;
+            }
+          }
+          else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+          {
+            if( work->select_target_poke < TARGET_POKE_END )
+            {
+              work->select_target_poke++;
+              move = TRUE;
+            }
+          }
+          if( move )
+          {
+            PMSND_PlaySE( PSELSND_MOVE );
+            Psel_FingerUpdatePos( work );
+            Psel_PokeSetSelectStart( work, work->select_target_poke );
+            Psel_InsideBallPalAnimeStart( work, (work->select_target_poke!=TARGET_NONE)?(work->select_target_poke):(INSIDE_BALL_NONE) );
+            select_change = TRUE;
+          }
+        }
+        else if( GFL_UI_TP_GetTrg() )  // タッチ操作に切り替え(る可能性あり)
+        {
+          hit = GFL_UI_TP_HitTrg(target_tp_hittbl);
+          if( TARGET_POKE_START<=hit && hit<=TARGET_POKE_END )
+          {
+            if( work->select_target_poke != hit )  // 選択しているものが変更されたとき
+            {
+              select_change = TRUE;
+            } 
+            PMSND_PlaySystemSE( PSELSND_MOVE );  // 選択しているものが変更されようがいまいが、タッチ操作に切り替わり次のシーケンスへ進むので、音を鳴らす
+            Psel_FingerDrawEnable( work, FALSE );
+            work->select_target_poke = hit;
+            Psel_PokeSetSelectStart( work, work->select_target_poke );
+            Psel_InsideBallPalAnimeStart( work, (work->select_target_poke!=TARGET_NONE)?(work->select_target_poke):(INSIDE_BALL_NONE) );
+            work->ktst = GFL_APP_KTST_TOUCH;
+
+            *seq = S02_MAIN_SEQ_TOUCH_CONFIRM_INIT;
+          }
+        }
+      }
+      // タッチ操作中
+      else
+      {
+        if( GFL_UI_KEY_GetTrg() )  // キー操作に切り替え
+        {
+          work->ktst = GFL_APP_KTST_KEY;
+          
+          *seq = S02_MAIN_SEQ_SELECT_INIT;
+        }
+        else if( GFL_UI_TP_GetTrg() )  // タッチ操作のまま
+        {
+          hit = GFL_UI_TP_HitTrg(target_tp_hittbl);
+          if( TARGET_POKE_START<=hit && hit<=TARGET_POKE_END )
+          {
+            PMSND_PlaySystemSE( PSELSND_MOVE );
+            work->select_target_poke = hit;
+            Psel_PokeSetSelectStart( work, work->select_target_poke );
+            Psel_InsideBallPalAnimeStart( work, (work->select_target_poke!=TARGET_NONE)?(work->select_target_poke):(INSIDE_BALL_NONE) );
+            select_change = TRUE;
+
+            *seq = S02_MAIN_SEQ_TOUCH_CONFIRM_INIT;
+          }
+        }
+      }
+    }
+    break;
+  case S02_MAIN_SEQ_TOUCH_CONFIRM_INIT:
+    {
+      Psel_AppTaskmenuWinInit( work );
+      // テキストは表示
+      work->vblank_req |= VBLANK_REQ_S02_TEXT_M_VISIBLE_ON;
+
+      *seq = S02_MAIN_SEQ_TOUCH_CONFIRM_WAIT;
+    }
+    break;
+  case S02_MAIN_SEQ_TOUCH_CONFIRM_WAIT:
+    {
+      Psel_AppTaskmenuWinMain( work );
+      if( GFL_UI_KEY_GetTrg() )  // キー操作に切り替え
+      {
+        work->ktst = GFL_APP_KTST_KEY;
+        
+        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+        {
+          PMSND_PlaySystemSE( PSELSND_DECIDE );
+          Psel_AppTaskmenuWinDecideStart( work );
+
+          *seq = S02_MAIN_SEQ_TOUCH_CONFIRM_WAIT_DECIDE;
+        }
+        else
+        {
+          Psel_AppTaskmenuWinExit( work );
+          // テキストは非表示
+          work->vblank_req |= VBLANK_REQ_S02_TEXT_M_VISIBLE_OFF;
+          Psel_TextExplainClear( work );
+
+          *seq = S02_MAIN_SEQ_SELECT_INIT;
+        }
+      }
+      else if( GFL_UI_TP_GetTrg() )  // タッチ操作のまま
+      {
+        hit = GFL_UI_TP_HitTrg(target_tp_hittbl);
+        if( hit == TARGET_BUTTON )
+        {
+          PMSND_PlaySystemSE( PSELSND_DECIDE );
+          Psel_AppTaskmenuWinDecideStart( work );
+          
+          *seq = S02_MAIN_SEQ_TOUCH_CONFIRM_WAIT_DECIDE;
+        }
+        else if( TARGET_POKE_START<=hit && hit<=TARGET_POKE_END )
+        {
+          if( work->select_target_poke != hit )  // 選んでいるものが変わったら
+          {
+            PMSND_PlaySystemSE( PSELSND_MOVE );
+            work->select_target_poke = hit;
+            Psel_PokeSetSelectStart( work, work->select_target_poke );
+            Psel_InsideBallPalAnimeStart( work, (work->select_target_poke!=TARGET_NONE)?(work->select_target_poke):(INSIDE_BALL_NONE) );
+            select_change = TRUE;
+          }
+        }
+      }
+    }
+    break;
+  case S02_MAIN_SEQ_TOUCH_CONFIRM_WAIT_DECIDE:
+    {
+      Psel_AppTaskmenuWinMain( work );
+      if( Psel_AppTaskmenuWinDecideIsEnd( work ) )
+      {
+        Psel_AppTaskmenuWinExit( work );
+        // テキストは非表示
+        work->vblank_req |= VBLANK_REQ_S02_TEXT_M_VISIBLE_OFF;
+        Psel_TextExplainClear( work );
+
+        *seq = S02_MAIN_SEQ_ZOOM_IN_ANIME_INIT;
+      }
+    }
+    break;
+  case S02_MAIN_SEQ_ZOOM_IN_ANIME_INIT:
+    {
+      // テキストとウィンドウは表示
+      work->vblank_req |= VBLANK_REQ_S02_TEXT_WIN_M_VISIBLE_ON;
+      Psel_TextExplainStreamStart( work, msg_t01r0102_ball_select_02 );  // 何故かストリームが表示されない
+      //Psel_TextExplainPrintStart( work, msg_t01r0102_ball_select_02 );
+
+      // ズームイン
+      Psel_ThreeS02MbZoomAnimeStart( work, work->select_target_poke, FALSE );
+
+      *seq = S02_MAIN_SEQ_ZOOM_IN_ANIME_WAIT;
+    }
+    break;
+  case S02_MAIN_SEQ_ZOOM_IN_ANIME_WAIT:
+    {
+      // ズーム
+      Psel_ThreeS02MbZoomAnimeMain( work );
+      
+      if( Psel_TextExplainStreamWait( work ) )  // 何故かストリームが表示されない
+      //if( Psel_TextTransWait( work ) )
+      {
+        // ズーム
+        if( Psel_ThreeS02MbZoomAnimeIsEnd( work ) )
+        {
+          *seq = S02_MAIN_SEQ_ANSWER_INIT;
+        }
+      }
+    }
+    break;
+  case S02_MAIN_SEQ_ANSWER_INIT:
+    {
+      // ズーム中
+      Psel_ThreeS02MbAnimeOnlyMbMain( work );
+      
+      // APP_TASKMENUを開く前に設定しておく
+      // タッチorキー
+      GFL_UI_SetTouchOrKey( work->ktst );
+
+      Psel_AppTaskmenuInit( work );
+
+      *seq = S02_MAIN_SEQ_ANSWER_WAIT;
+    }
+    break;
+  case S02_MAIN_SEQ_ANSWER_WAIT:
+    {
+      // ズーム中
+      Psel_ThreeS02MbAnimeOnlyMbMain( work );
+
+      Psel_AppTaskmenuMain( work );
+      if( Psel_AppTaskmenuIsEnd( work ) )
+      {
+        BOOL yes = Psel_AppTaskmenuIsYes( work );
+        Psel_AppTaskmenuExit( work );
+
+        // APP_TASKMENUを閉じた後に設定しておく
+        // タッチorキー
+        work->ktst = GFL_UI_CheckTouchOrKey();
+     
+        if( yes )
+        {
+          *seq = S02_MAIN_SEQ_DECIDE_ANIME_INIT;
+        }
+        else
+        {
+          *seq = S02_MAIN_SEQ_ZOOM_OUT_ANIME_INIT;
+        }
+
+        // テキストとウィンドウは非表示
+        work->vblank_req |= VBLANK_REQ_S02_TEXT_WIN_M_VISIBLE_OFF;
+        Psel_TextExplainClear( work );
+      }
+    }
+    break;
+  case S02_MAIN_SEQ_ZOOM_OUT_ANIME_INIT:
+    {
+      // ズームアウト
+      Psel_ThreeS02MbZoomAnimeStart( work, work->select_target_poke, TRUE );
+      
+      *seq = S02_MAIN_SEQ_ZOOM_OUT_ANIME_WAIT;
+    }
+    break;
+  case S02_MAIN_SEQ_ZOOM_OUT_ANIME_WAIT:
+    {
+      // ズーム
+      Psel_ThreeS02MbZoomAnimeMain( work );
+      if( Psel_ThreeS02MbZoomAnimeIsEnd( work ) )
+      {
+        *seq = S02_MAIN_SEQ_SELECT_INIT;
+      } 
+    }
+    break;
+  case S02_MAIN_SEQ_DECIDE_ANIME_INIT:
+    {
+      // 決定アニメ
+      Psel_ThreeS02MbDecideAnimeStart( work, work->select_target_poke );
+      
+      *seq = S02_MAIN_SEQ_DECIDE_ANIME_WAIT;
+    }
+    break;
+  case S02_MAIN_SEQ_DECIDE_ANIME_WAIT:
+    {
+      // 決定アニメ
+      Psel_ThreeS02MbDecideAnimeMain( work );
+
+      *seq = S02_MAIN_SEQ_END;
+    }
+    break;
+  case S02_MAIN_SEQ_END:
+    {
+      // 決定アニメ
+      Psel_ThreeS02MbDecideAnimeMain( work );
+
+      // シーケンスフレーム
+      work->sub_seq_frame = 0;
+      return SEQ_S02_FADE_OUT;
     }
     break;
   }
 
-
-
-
-
-
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )  Psel_InsideBallPalAnimeStart( work, INSIDE_BALL_MIZU );
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )    Psel_InsideBallPalAnimeStart( work, INSIDE_BALL_HONOO );
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ) Psel_InsideBallPalAnimeStart( work, INSIDE_BALL_KUSA );
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )  Psel_InsideBallPalAnimeStart( work, INSIDE_BALL_NONE );
-
-  if( ( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
-      && ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ) )  Psel_PokeSetPalAnimeStart( work, TARGET_MIZU, POKE_PAL_ANIME_STATE_COLOR );
-  if( ( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
-      && ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ) )  Psel_PokeSetPalAnimeStart( work, TARGET_HONOO, POKE_PAL_ANIME_STATE_COLOR );
-  if( ( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
-      && ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ) )  Psel_PokeSetPalAnimeStart( work, TARGET_KUSA, POKE_PAL_ANIME_STATE_COLOR );
-
-  if( ( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
-      && ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ) )  Psel_PokeSetPalAnimeStart( work, TARGET_MIZU, POKE_PAL_ANIME_STATE_DARK );
-  if( ( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
-      && ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ) )  Psel_PokeSetPalAnimeStart( work, TARGET_HONOO, POKE_PAL_ANIME_STATE_DARK );
-  if( ( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
-      && ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ) )  Psel_PokeSetPalAnimeStart( work, TARGET_KUSA, POKE_PAL_ANIME_STATE_DARK );
-
-
-
-
-
-
-
-  if(    ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) )
-      /*|| ( GFL_UI_TP_GetTrg() )*/ )
+  // ポケモンのタイプと種族名を書くor消す
+  if( select_change )  // 消す
   {
-    if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ) work->ktst = GFL_APP_KTST_KEY;
-    else                                                    work->ktst = GFL_APP_KTST_TOUCH;
-
-    return SEQ_S02_FADE_OUT;
+    // テキストとウィンドウは非表示
+    work->vblank_req |= VBLANK_REQ_S02_TEXT_WIN_S_VISIBLE_OFF;
+    Psel_TextPokeInfoClear( work );
   }
+  else if( work->poke_info_print )  // 書く
+  {
+    // テキストとウィンドウは表示
+    work->vblank_req |= VBLANK_REQ_S02_TEXT_WIN_S_VISIBLE_ON;
+    Psel_TextPokeInfoPrintStart( work, work->select_target_poke );
+  }
+  work->poke_info_print = FALSE;
+
+  // シーケンスフレーム
+  work->sub_seq_frame++;
   return SEQ_S02_MAIN;
 }
 static int Psel_S02FadeOut ( PSEL_WORK* work, int* seq )
 {
-  Psel_ThreeS02Main( work );
-  Psel_BgS02Main( work );
-  Psel_TextS02Main( work );
-  Psel_AppTaskmenuWinMain( work );
-  Psel_AppTaskmenuMain( work );
+  // 決定アニメ
+  Psel_ThreeS02MbDecideAnimeMain( work );
+
+  Psel_PokeSetMain( work );
   Psel_PalMain( work );
 
   switch(*seq)
@@ -2611,11 +3784,16 @@ static int Psel_S02FadeOut ( PSEL_WORK* work, int* seq )
     {
       if( !GFL_FADE_CheckFade() )
       {
+        // シーケンスフレーム
+        work->sub_seq_frame = 0;
         return SEQ_S02_EXIT;
       }
     }
     break;
   }
+
+  // シーケンスフレーム
+  work->sub_seq_frame++;
   return SEQ_S02_FADE_OUT;
 }
 static int Psel_S02Exit    ( PSEL_WORK* work, int* seq )
@@ -2625,15 +3803,14 @@ static int Psel_S02Exit    ( PSEL_WORK* work, int* seq )
   G2S_BlendNone();
 
   Psel_PalExit( work );
-  Psel_AppTaskmenuExit( work );
-  Psel_AppTaskmenuWinExit( work );
-  Psel_TextS02Exit( work );
   Psel_InsideBallExit( work );
   Psel_BgS02Exit( work );
   Psel_FingerExit( work );
   Psel_PokeSetExit( work );
   Psel_ThreeS02Exit( work );
-  
+
+  // シーケンスフレーム
+  work->sub_seq_frame = 0;
   return SEQ_UNLOAD;
 }
 

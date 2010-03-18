@@ -828,7 +828,7 @@ static void PmsInputSingleExit( KAWADA_MAIN_WORK* wk )
 static void PselInit( KAWADA_MAIN_WORK* wk )
 {
   GFL_OVERLAY_Load( FS_OVERLAY_ID(psel) );
-  wk->psel_param = PSEL_AllocParam( wk->heapID, 0 );
+  wk->psel_param = PSEL_AllocParam( wk->heapID );
   GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &PSEL_ProcData, wk->psel_param );
 }
 static void PselExit( KAWADA_MAIN_WORK* wk )
