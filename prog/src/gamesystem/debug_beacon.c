@@ -76,6 +76,7 @@ extern void BEACONINFO_Set_PokeShifter(GAMEBEACON_INFO *info);
 extern void BEACONINFO_Set_Musical(GAMEBEACON_INFO *info, const STRBUF *nickname);
 extern void BEACONINFO_Set_OtherGPowerUse(GAMEBEACON_INFO *info, GPOWER_ID gpower_id);
 extern void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 target_trainer_id);
+extern void BEACONINFO_Set_FreeWord(GAMEBEACON_INFO *info, const STRBUF *free_word);
 extern void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAMEDATA *cp_gamedata);
 extern void BEACONINFO_Set_ThanksRecvCount(GAMEBEACON_INFO *info, u32 count);
 extern void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count);

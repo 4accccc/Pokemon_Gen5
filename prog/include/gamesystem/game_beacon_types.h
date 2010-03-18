@@ -20,6 +20,8 @@
 
 ///お礼メッセージの文字数(EOM込み)
 #define GAMEBEACON_THANKYOU_MESSAGE_LEN   (9)
+///一言メッセージの文字数(EOM込み)
+#define GAMEBEACON_FREEWORD_MESSAGE_LEN   (GAMEBEACON_THANKYOU_MESSAGE_LEN)
 ///自己紹介メッセージの文字数(!! EOM除く !!)
 #define GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN   (8)
 
@@ -85,6 +87,7 @@ typedef struct{
       u32 magic_key;                        ///<マジックキー
     }distribution;
     STRCODE thankyou_message[GAMEBEACON_THANKYOU_MESSAGE_LEN]; ///お礼メッセージ
+    STRCODE freeword_message[GAMEBEACON_FREEWORD_MESSAGE_LEN]; ///一言メッセージ
   };
 }GAMEBEACON_INFO_ACTION;
 

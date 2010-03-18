@@ -89,6 +89,7 @@ typedef enum{
   GAMEBEACON_ACTION_POKESHIFTER,              ///<ポケシフターに入った                  46
   GAMEBEACON_ACTION_MUSICAL,                  ///<ミュージカル挑戦中                    47
   GAMEBEACON_ACTION_OTHER_GPOWER_USE,         ///<他人のGパワーを使用                   48
+  GAMEBEACON_ACTION_FREEWORD,                 ///<一言メッセージ                        49
   
 //  GAMEBEACON_ACTION_CONGRATULATIONS,      ///<「おめでとう！」
 //  GAMEBEACON_ACTION_UNION_OUT,            ///<ユニオンルーム退室
@@ -184,10 +185,19 @@ extern void GAMEBEACON_Set_PokeShifter(void);
 extern void GAMEBEACON_Set_Musical(const STRBUF *nickname);
 extern void GAMEBEACON_Set_OtherGPowerUse(GPOWER_ID gpower_id);
 extern void GAMEBEACON_Set_Thankyou(GAMEDATA *gamedata, u32 target_trainer_id);
+extern void GAMEBEACON_Set_FreeWord(GAMEDATA *gamedata, const STRBUF *free_word);
 
 //=====詳細パラメータセット
 extern void GAMEBEACON_Set_ZoneChange(ZONEID zone_id, const GAMEDATA *cp_gamedata);
 extern void GAMEBEACON_Set_Details_IntroductionPms(const PMS_DATA *pms);
+
+//--------------------------------------------------------------
+//  送信バッファ更新
+//--------------------------------------------------------------
+extern void GAMEBEACON_SendDataUpdate_NationArea(u8 nation, u8 area);
+extern void GAMEBEACON_SendDataUpdate_ResearchTeamRank(u8 research_team_rank);
+extern void GAMEBEACON_SendDataUpdate_TrCardIntroduction(const PMS_DATA *pms);
+extern void GAMEBEACON_SendDataUpdate_SelfIntroduction(void);
 
 //--------------------------------------------------------------
 //  アンケート

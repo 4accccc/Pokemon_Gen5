@@ -137,6 +137,7 @@ void BEACONINFO_Set_PokeShifter(GAMEBEACON_INFO *info);
 void BEACONINFO_Set_Musical(GAMEBEACON_INFO *info, const STRBUF *nickname);
 void BEACONINFO_Set_OtherGPowerUse(GAMEBEACON_INFO *info, GPOWER_ID gpower_id);
 void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 target_trainer_id);
+void BEACONINFO_Set_FreeWord(GAMEBEACON_INFO *info, const STRBUF *free_word);
 void BEACONINFO_Set_ZoneChange(GAMEBEACON_INFO *info, ZONEID zone_id, const GAMEDATA *cp_gamedata);
 void BEACONINFO_Set_ThanksRecvCount(GAMEBEACON_INFO *info, u32 count);
 void BEACONINFO_Set_SuretigaiCount(GAMEBEACON_INFO *info, u32 count);
@@ -659,10 +660,15 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
 //--------------------------------------------------------------
 static void SendBeacon_SetCommon(GAMEBEACON_SEND_MANAGER *send)
 {
-  PLAYTIME *sv_playtime = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(GameBeaconSys->gamedata) );
-
+  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(GameBeaconSys->gamedata);
+  PLAYTIME *sv_playtime = SaveData_GetPlayTime( sv_ctrl );
+  const MISC *misc = SaveData_GetMisc( sv_ctrl );
+  
   send->info.play_hour = PLAYTIME_GetHour( sv_playtime );
   send->info.play_min = PLAYTIME_GetMinute( sv_playtime );
+
+  send->info.thanks_recv_count = MISC_CrossComm_GetThanksRecvCount(misc);
+  send->info.suretigai_count = MISC_CrossComm_GetSuretigaiCount(misc);
 
   send->info.send_counter++;
   send->life = 0;
@@ -716,9 +722,18 @@ BOOL GAMEBEACON_Get_NewEntry(void)
   return new_entry;
 }
 
+
+//==============================================================================
+//
+//  送信データ更新
+//      次回のビーコン送信に備えて送信バッファの値を更新する
+//      send_counterは増やさない為、既に同じアクションを受け取っている人に反映されるのは
+//      別のアクションが発生してからになる。
+//
+//==============================================================================
 //==================================================================
 /**
- * アンケート用：自分の最新のアンケートデータをビーコン送信バッファに反映する
+ * 送信データ更新：自分の最新のアンケートデータをビーコン送信バッファに反映する
  *
  * @param   my_ans		自分のアンケートデータへのポインタ
  */
@@ -732,22 +747,77 @@ void GAMEBEACON_SendDataUpdate_Questionnaire(QUESTIONNAIRE_ANSWER_WORK *my_ans)
   send->beacon_update = TRUE;
 }
 
-#if 0 //※check　@todo　各イベントで変更した後、送信バッファも更新する必要がある
-  info->nation = MyStatus_GetMyNation(myst);
-  info->area = MyStatus_GetMyArea(myst);
-  info->research_team_rank = MISC_CrossComm_GetResearchTeamRank(misc);
-  info->thanks_recv_count = MISC_CrossComm_GetThanksRecvCount(misc);
-  info->suretigai_count = MISC_CrossComm_GetSuretigaiCount(misc);
-  MYPMS_GetPms( mypms, MYPMS_PMS_TYPE_INTRODUCTION, &pms );
-  GAMEBEACON_Set_Details_IntroductionPms(&pms);
-    src_code = MISC_CrossComm_GetSelfIntroduction(misc);
-    for(i = 0; i < GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN; i++){
-      info->self_introduction[i] = src_code[i];
-      if(src_code[i] == code_eom){
-        break;
-      }
+//==================================================================
+/**
+ * 送信データ更新：国コード、地域コードをビーコン送信バッファに反映する
+ *
+ * @param   nation		国コード
+ * @param   area		  地域コード
+ */
+//==================================================================
+void GAMEBEACON_SendDataUpdate_NationArea(u8 nation, u8 area)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  GAMEBEACON_INFO *info = &send->info;
+
+  info->nation = nation;  //MyStatus_GetMyNation(myst);
+  info->area = area;  //MyStatus_GetMyArea(myst);
+  send->beacon_update = TRUE;
+}
+
+//==================================================================
+/**
+ * 送信データ更新：調査隊員ランクを送信バッファに反映する
+ *
+ * @param   research_team_rank		
+ */
+//==================================================================
+void GAMEBEACON_SendDataUpdate_ResearchTeamRank(u8 research_team_rank)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  GAMEBEACON_INFO *info = &send->info;
+  info->research_team_rank = research_team_rank;  //MISC_CrossComm_GetResearchTeamRank(misc);
+  send->beacon_update = TRUE;
+}
+
+//==================================================================
+/**
+ * 送信データ更新：トレーナーカードの自己紹介文を送信バッファに反映する
+ *
+ * @param   pms		
+ */
+//==================================================================
+void GAMEBEACON_SendDataUpdate_TrCardIntroduction(const PMS_DATA *pms)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  GAMEBEACON_Set_Details_IntroductionPms(pms);
+  send->beacon_update = TRUE;
+}
+
+//==================================================================
+/**
+ * 送信データ更新：すれ違い通信の自己紹介文を送信バッファに反映する
+ */
+//==================================================================
+void GAMEBEACON_SendDataUpdate_SelfIntroduction(void)
+{
+  GAMEBEACON_SEND_MANAGER *send = &GameBeaconSys->send;
+  GAMEBEACON_INFO *info = &send->info;
+  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(GameBeaconSys->gamedata);
+  const MISC *misc = SaveData_GetMisc( sv_ctrl );
+  const STRCODE *src_code;
+  STRCODE code_eom = GFL_STR_GetEOMCode();
+  int i;
+  
+  src_code = MISC_CrossComm_GetSelfIntroduction(misc);
+  for(i = 0; i < GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN; i++){
+    info->self_introduction[i] = src_code[i];
+    if(src_code[i] == code_eom){
+      break;
     }
-#endif
+  }
+  send->beacon_update = TRUE;
+}
 
 //==================================================================
 /**
@@ -2123,6 +2193,34 @@ void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 targ
     info->action.thankyou_message, GAMEBEACON_THANKYOU_MESSAGE_LEN);
   info->action.action_no = GAMEBEACON_ACTION_THANKYOU;
   info->action.target_trainer_id = target_trainer_id;
+}
+
+//==================================================================
+/**
+ * 送信ビーコンセット：一言メッセージ
+ *
+ * @param   gamedata		
+ * @param   free_word   一言メッセージ
+ */
+//==================================================================
+void GAMEBEACON_Set_FreeWord(GAMEDATA *gamedata, const STRBUF *free_word)
+{
+  BEACONINFO_Set_FreeWord(&GameBeaconSys->send.info, free_word);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
+}
+
+//==================================================================
+/**
+ * ビーコンセット：一言メッセージ
+ *
+ * @param   gamedata		
+ * @param   free_word   一言メッセージ
+ */
+//==================================================================
+void BEACONINFO_Set_FreeWord(GAMEBEACON_INFO *info, const STRBUF *free_word)
+{
+  GFL_STR_GetStringCode(free_word, info->action.freeword_message, GAMEBEACON_FREEWORD_MESSAGE_LEN);
+  info->action.action_no = GAMEBEACON_ACTION_FREEWORD;
 }
 
 //==================================================================

@@ -750,6 +750,20 @@ void GAMEBEACON_Get_ThankyouMessage(const GAMEBEACON_INFO *info, STRBUF *dest)
 
 //==================================================================
 /**
+ * 一言メッセージを取得
+ *
+ * @param   info		ビーコン情報へのポインタ
+ * @param   dest		メッセージ代入先
+ */
+//==================================================================
+void GAMEBEACON_Get_FreeWordMessage(const GAMEBEACON_INFO *info, STRBUF *dest)
+{
+  GF_ASSERT(info->action.action_no == GAMEBEACON_ACTION_FREEWORD);
+  GFL_STR_SetStringCode( dest, info->action.freeword_message );
+}
+
+//==================================================================
+/**
  * 詳細情報パラメータ取得：詳細情報No
  * @param   info		ビーコン情報へのポインタ
  * @retval  GAMEBEACON_DETAILS_NO 詳細No
