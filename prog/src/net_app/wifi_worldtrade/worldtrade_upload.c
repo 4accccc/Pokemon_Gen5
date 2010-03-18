@@ -1748,14 +1748,8 @@ static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp 
 	}
 #endif
 
-	// 外国の人と交換が成立した場合はPHCでコースが一つ解放される
-	// TODO CasetteLanguageの実体がないためコメントアウト
-	//TODO DEMOとPROC
-#ifdef DEBUG_AUTHER_ONLY
-#warning TODO:CasetteLanguage
-#endif
 #ifdef PHC_EVENT_CHECK
-	if( PP_Get(pp,ID_PARA_country_code, NULL) != 0 ){	//CasetteLanguage ){
+	if( PP_Get(pp,ID_PARA_country_code, NULL) != CasetteLanguage ){
 		PHC_SVDATA *phc_svdata = SaveData_GetPhcSaveData( wk->param->savedata );
 		PhcSvData_SetCourseOpenFlag( phc_svdata, PHC_WIFI_OPEN_COURSE_NO );
 	}else{

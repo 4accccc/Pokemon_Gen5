@@ -15,7 +15,8 @@
 #include "system/bmp_winframe.h"
 #include "gamesystem/msgspeed.h"
 #include <dpw_tr.h>
-
+#include "msg/msg_wifi_gts.h"
+#include "message.naix"
 //mine
 #include "worldtrade_adapter.h"
 //=============================================================================
@@ -425,4 +426,166 @@ void WT_PRINT_ClearBuffer( WT_PRINT *wk )
       }
     }
   }
+}
+//=============================================================================
+/**
+ *    NUMFONT
+ */
+//=============================================================================
+#define NUMFONT_PRINT_UTIL_MAX  (8)
+#define NUMFONT_PRINT_COLOR   (PRINTSYS_LSB_Make(0xF,0xE,0x8))
+struct _NUMFONT
+{ 
+  GFL_FONT  *p_font;
+  PRINT_QUE *p_que;
+  WORDSET   *p_wordset;
+  GFL_MSGDATA *p_msg;
+  PRINT_UTIL  util[NUMFONT_PRINT_UTIL_MAX];
+  BOOL is_use_util[NUMFONT_PRINT_UTIL_MAX];
+  HEAPID  heapID;
+};
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NUMFONT作成
+ *
+ *	@param	int a   いらない
+ *	@param	b       いらない
+ *	@param	c       いらない
+ *	@param	heapID  ヒープID
+ *
+ *	@return NUMFONTハンドル
+ */
+//-----------------------------------------------------------------------------
+NUMFONT * NUMFONT_Create( int a, int b, int c, HEAPID heapID )
+{
+  NUMFONT *p_wk;
+  p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(NUMFONT) );
+  GFL_STD_MemClear( p_wk, sizeof(NUMFONT) );
+  p_wk->heapID  = heapID;
+  
+  p_wk->p_font  = GFL_FONT_Create( ARCID_FONT, NARC_font_num_gftr,
+			    GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+  p_wk->p_que     = PRINTSYS_QUE_Create( heapID );
+  p_wk->p_msg     = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_gts_dat, heapID );
+  p_wk->p_wordset = WORDSET_Create( heapID );
+
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NUMFONT消去
+ *
+ *	@param	NUMFONT *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void NUMFONT_Delete( NUMFONT *wk )
+{
+  WORDSET_Delete( wk->p_wordset );
+  GFL_MSG_Delete( wk->p_msg );
+  PRINTSYS_QUE_Delete( wk->p_que );
+  GFL_FONT_Delete( wk->p_font );
+  GFL_HEAP_FreeMemory( wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NUMFONTメイン処理
+ *
+ *	@param	NUMFONT *wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void NUMFONT_Main( NUMFONT *wk )
+{ 
+  int i;
+  for( i = 0; i < NUMFONT_PRINT_UTIL_MAX; i++ )
+  { 
+    if( wk->is_use_util[ i ] )
+    { 
+      if( PRINT_UTIL_Trans( &wk->util[i], wk->p_que ) )
+      {
+        wk->is_use_util[ i ]  = FALSE;
+      }
+    }
+  }
+
+  PRINTSYS_QUE_Main( wk->p_que );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NUMFONTへ数字書き込み
+ *
+ *	@param	NUMFONT *wk ワーク
+ *	@param	num     数値
+ *	@param	keta    数値の桁
+ *	@param	mode    左詰めとか右詰めとか
+ *	@param	*bmpwin     書き込みBITMAP
+ *	@param	x       座標X
+ *	@param	y       座標Y
+ */
+//-----------------------------------------------------------------------------
+void NUMFONT_WriteNumber( NUMFONT *wk, int num, int keta, int mode, GFL_BMPWIN *bmpwin, int x, int y )
+{
+  int i;
+  STRBUF  *p_dst;
+  STRBUF  *p_src;
+
+  p_dst = GFL_STR_CreateBuffer( 32, wk->heapID );
+  p_src = GFL_STR_CreateBuffer( 32, wk->heapID );
+
+
+  GFL_MSG_GetString( wk->p_msg, msg_gtc_small_font_001, p_src );
+  WORDSET_RegisterNumber( wk->p_wordset, 0, num, keta, mode, STR_NUM_CODE_DEFAULT );
+
+  WORDSET_ExpandStr( wk->p_wordset, p_dst, p_src );
+
+
+  for( i = 0; i < NUMFONT_PRINT_UTIL_MAX; i++ )
+  { 
+    if( wk->is_use_util[ i ] == FALSE )
+    { 
+      PRINT_UTIL_Setup( &wk->util[ i ], bmpwin );
+      PRINT_UTIL_PrintColor( &wk->util[ i ], wk->p_que, x, y, p_dst, wk->p_font, NUMFONT_PRINT_COLOR ); 
+      wk->is_use_util[ i ]  = TRUE;
+
+      GFL_STR_DeleteBuffer( p_src );
+      GFL_STR_DeleteBuffer( p_dst );
+      return;
+    }
+  } 
+
+  GF_ASSERT( 0 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  NUMFONTへマーク書き込み
+ *
+ *	@param	NUMFONT *wk ワーク
+ *	@param	mark      マーク
+ *	@param	*bmpwin   BMPWIN
+ *	@param	x         座標X
+ *	@param	y         座標Y
+ */
+//-----------------------------------------------------------------------------
+void NUMFONT_WriteMark( NUMFONT *wk, int mark, GFL_BMPWIN *bmpwin, int x, int y )
+{
+  int i;
+  STRBUF *p_str;
+
+  p_str = GFL_MSG_CreateString( wk->p_msg, msg_gtc_small_font_002 );
+
+
+  for( i = 0; i < NUMFONT_PRINT_UTIL_MAX; i++ )
+  { 
+    if( wk->is_use_util[ i ] == FALSE )
+    { 
+      PRINT_UTIL_Setup( &wk->util[ i ], bmpwin );
+      PRINT_UTIL_PrintColor( &wk->util[ i ], wk->p_que, x, y, p_str, wk->p_font, NUMFONT_PRINT_COLOR ); 
+      wk->is_use_util[ i ]  = TRUE;
+
+      GFL_STR_DeleteBuffer( p_str );
+      return;
+    }
+  } 
+
+  GF_ASSERT( 0 );
 }

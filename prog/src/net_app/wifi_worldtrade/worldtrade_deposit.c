@@ -138,13 +138,13 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 
 
 // ほしいポケモン・あずけるポケモン情報
-#define INFORMATION_STR_X	(  2 )
+#define INFORMATION_STR_X	(  1 )
 #define INFORMATION_STR_Y	(  3 )
 #define INFORMATION2_STR_X	(  3 )
 #define INFORMATION2_STR_Y	(  5 )
 #define INFORMATION3_STR_X	(  3 )
 #define INFORMATION3_STR_Y	(  7 )
-#define INFORMATION_STR_SX	( 11 )
+#define INFORMATION_STR_SX	( 12 )
 #define INFORMATION_STR_SY	(  2 )
 
 
@@ -693,7 +693,7 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 
 
 	// メイン画面BG1キャラ転送
-	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WORLDTRADE_GRA, NARC_worldtrade_deposit_lz_ncgr, GFL_BG_FRAME1_M, 0, 16*5*0x20, 1, HEAPID_WORLDTRADE);
+	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WORLDTRADE_GRA, NARC_worldtrade_deposit_lz_ncgr, GFL_BG_FRAME1_M, 0, 0, 1, HEAPID_WORLDTRADE);
 
 	// メイン画面BG1スクリーン転送
 	GFL_ARC_UTIL_TransVramScreen(   ARCID_WORLDTRADE_GRA, NARC_worldtrade_deposit_lz_nscr, GFL_BG_FRAME1_M, 0, 32*24*2, 1, HEAPID_WORLDTRADE);
@@ -1400,8 +1400,7 @@ static int SubSeq_DepositOkMessage( WORLDTRADE_WORK *wk )
 static int SubSeq_DepositOkYesNo( WORLDTRADE_WORK *wk )
 {
 
-//	wk->YesNoMenuWork = WorldTrade_BmpWinYesNoMake(WORLDTRADE_YESNO_PY1, YESNO_OFFSET );
-	wk->tss = WorldTrade_TouchWinYesNoMake(WORLDTRADE_YESNO_PY1, YESNO_OFFSET, 3, 0 );
+	WorldTrade_TouchWinYesNoMake(wk,WORLDTRADE_YESNO_PY1, YESNO_OFFSET, 3, 0 );
 	wk->subprocess_seq = SUBSEQ_DEPOSIT_YESNO_WAIT;
 
 	return SEQ_MAIN;
@@ -1423,7 +1422,7 @@ static int SubSeq_DepositOkYesNoWait( WORLDTRADE_WORK *wk )
 
 	if(ret==TOUCH_SW_RET_YES){
 		// はい→ポケモンをあずける
-		TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 	 	WorldTrade_SubProcessChange( wk, WORLDTRADE_UPLOAD, MODE_UPLOAD );
 		wk->subprocess_seq  = SUBSEQ_END;
 		wk->sub_out_flg = 1;
@@ -1432,7 +1431,7 @@ static int SubSeq_DepositOkYesNoWait( WORLDTRADE_WORK *wk )
 		DepositPokemonDataMake( &wk->UploadPokemonData, wk );
 	}else if(ret==TOUCH_SW_RET_NO){
 		// いいえ→ポケモン選択からやり直し
-		TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_MYBOX, MODE_DEPOSIT_SELECT );
 		wk->subprocess_seq  = SUBSEQ_END;
 	}

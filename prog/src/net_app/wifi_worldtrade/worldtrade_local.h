@@ -16,10 +16,10 @@
 #define GS_DP_GISOU
 #define GTS_DUPLICATE_BUG_FIX (1)
 
+
 #include "system/bmp_menulist.h"
 #include "system/touch_subwindow.h"
 //#include "system/numfont.h"
-//#include "system/selbox.h"
 //#include "communication/wm_icon.h"
 //#include "savedata/zukanwork.h"
 #include "savedata/wifilist.h"
@@ -34,6 +34,7 @@
 #include "worldtrade_adapter.h"
 #include "net/nhttp_rap.h"
 #include "net/nhttp_rap_evilcheck.h"
+#include "app/app_taskmenu.h"
 
 // Proc_Mainシーケンス定義
 enum {
@@ -192,8 +193,8 @@ enum
 
 
 ///< はい・いいえウインドウのY座標
-#define	WORLDTRADE_YESNO_PY2	( 10 )		// 会話ウインドウが２行の時
-#define	WORLDTRADE_YESNO_PY1	( 12 )		// 会話ウインドウが１行の時
+#define	WORLDTRADE_YESNO_PY2	( 24-6 )		// 会話ウインドウが２行の時
+#define	WORLDTRADE_YESNO_PY1	( 24-4 )		// 会話ウインドウが１行の時
 
 ///< タイトル文字列バッファ長
 #define TITLE_MESSAGE_BUF_NUM	( 20 * 2 )
@@ -215,6 +216,7 @@ enum
   RES_MAIN  = MAIN_LCD,
   RES_SUB   = SUB_LCD,
   RES_HERO, 
+  RES_CURSOR, 
   RES_NUM,
 };
 
@@ -239,7 +241,7 @@ enum{
 #define BOX_POKE_NUM		( 30 )
 
 ///< ポケモンアイコンのパレットを転送するオフセット
-#define POKEICON_PAL_OFFSET				(  3 )
+#define POKEICON_PAL_OFFSET				(  5 )
 
 ///< 選択できないポケモンアイコンのパレット
 #define POKEICON_NOTSELECT_PAL_OFFSET	(  6 )
@@ -492,9 +494,8 @@ typedef struct _WORLDTRADE_WORK{
 
 	// 画面毎に使うことがあるワーク
 	DEPOSIT_WORK			*dw;								///< 預ける用ワーク
-	TOUCH_SW_SYS			*tss;								///< はい・いいえウインドウ
-	SELBOX_SYS				*SelBoxSys;							///< タッチキー選択ボックスシステム
-	SELBOX_WORK				*SelBoxWork;						///< タッチキー選択ボックスワーク
+  APP_TASKMENU_RES  *task_res;          ///< WB用YESNOウィンドウリソース
+  APP_TASKMENU_WORK *task_work;         ///< WB用YESNOウィンドウ本体
 
 	// worldtrade_upload.c用ワーク
 	u16						saveNextSeq1st;						///< セーブの前半終了時に飛ぶシーケンス
@@ -563,11 +564,19 @@ typedef struct _WORLDTRADE_WORK{
 //============================================================================================
 // SE用定義
 //============================================================================================
-#define WORLDTRADE_MOVE_SE		(SEQ_SE_DP_SELECT)
-#define WORLDTRADE_DECIDE_SE	(SEQ_SE_DP_SELECT)
+#define WORLDTRADE_BGM        (SEQ_BGM_GTS)
+#define WORLDTRADE_MOVE_SE		(SEQ_SE_SELECT1)
+#define WORLDTRADE_DECIDE_SE	(SEQ_SE_DECIDE1)
 //#define WORLDTRADE_PAGE_SE		(SEQ_SE_DP_SELECT78)
 #define WORLDTRADE_PAGE_SE		(SEQ_SE_DP_SELECT)
-//TODO 
+#define SE_CANCEL							(SEQ_SE_CANCEL1)	
+#define SE_GTC_NG							(SEQ_SE_BEEP)
+#define SE_GTC_SEARCH					(SEQ_SE_SELECT1)
+#define SE_GTC_PLAYER_IN			(SEQ_SE_FLD_05)
+#define SE_GTC_ON							(SEQ_SE_SELECT1)
+#define SE_GTC_OFF						(SEQ_SE_SELECT1)
+#define SE_GTC_PLAYER_OUT			(SEQ_SE_FLD_05)
+#define SE_GTC_APPEAR					(SEQ_SE_FLD_05)
 
 //============================================================================================
 //	デバッグ用
@@ -579,15 +588,17 @@ typedef struct _WORLDTRADE_WORK{
 // extern宣言
 //============================================================================================
 // worldtrade.c
-extern TOUCH_SW_SYS *WorldTrade_TouchWinYesNoMake( int y, int yesno_bmp_cgx, int pltt, u8 inPassive );
-extern TOUCH_SW_SYS *WorldTrade_TouchWinYesNoMakeEx( int y, int yesno_bmp_cgx, int pltt, int frame, u8 inPassive );
+extern void WorldTrade_TouchWinYesNoMake( WORLDTRADE_WORK *wk,int y, int yesno_bmp_cgx, int pltt, u8 inPassive );
+extern void WorldTrade_TouchWinYesNoMakeEx( WORLDTRADE_WORK *wk,int y, int yesno_bmp_cgx, int pltt, int frame, u8 inPassive );
 
 extern u32 WorldTrade_TouchSwMain(WORLDTRADE_WORK *wk);
+extern void WorldTrade_TouchDelete( WORLDTRADE_WORK *wk );
 
 extern void WorldTrade_SetNextSeq( WORLDTRADE_WORK *wk, int to_seq, int next_seq );
 extern void WorldTrade_SetNextProcess( WORLDTRADE_WORK *wk, int next_process );
 extern  int WorldTrade_WifiLinkLevel( void );
 extern void WorldTrade_BmpWinPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int font, int msgno, u16 dat, WT_PRINT *print );
+extern void WorldTrade_BmpWinPrintColor( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int font, int msgno, u16 dat, WT_PRINT *print, PRINTSYS_LSB lsb );
 extern void WorldTrade_SysPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color, WT_PRINT *print );
 extern void WorldTrade_TalkPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color, WT_PRINT *print );
 extern void WorldTrade_TouchPrint( GFL_BMPWIN *win, STRBUF *strbuf, int x, int y, int flag, PRINTSYS_LSB color , WT_PRINT *print );
@@ -604,8 +615,9 @@ extern void WorldTrade_TimeIconAdd( WORLDTRADE_WORK *wk );
 extern void WorldTrade_TimeIconDel( WORLDTRADE_WORK *wk );
 extern void WorldTrade_CLACT_PosChange( GFL_CLWK * ptr, int x, int y );
 extern void WorldTrade_CLACT_PosChangeSub( GFL_CLWK * act, int x, int y );
-extern SELBOX_WORK* WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, u8 frm, int count, int y );
+extern void WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, u8 frm, int count, int y );
 extern void WorldTrade_SelBoxEnd( WORLDTRADE_WORK *wk );
+extern u32 WorldTrade_SelBoxMain( WORLDTRADE_WORK *wk );
 
 extern void WorldTrade_SetPassive(u8 inTarget);
 extern void WorldTrade_SetPassiveMyPoke(u8 inIsMain);

@@ -214,6 +214,8 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 
 				}else{
 					// 進化無しならそのまま終了
+
+          PMSND_PlayBGM( WORLDTRADE_BGM );
 					WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
 					ret = SEQ_FADEOUT;
 				}
@@ -304,6 +306,9 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 			// セーブへ
 //			WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
 			WorldTrade_SubProcessChange( wk, WORLDTRADE_UPLOAD, MODE_POKEMON_EVO_SAVE );
+
+      PMSND_PlayBGM( WORLDTRADE_BGM );
+
 			ret = SEQ_FADEOUT;
 		}
 		break;

@@ -53,6 +53,8 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk);
 static int SubSeq_End( WORLDTRADE_WORK *wk);
 static int SubSeq_YesNo( WORLDTRADE_WORK *wk);
 static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk);
+static int SubSeq_CursorEnd( WORLDTRADE_WORK *wk);
+
 static int SubSeq_MessageWait( WORLDTRADE_WORK *wk );
 static int SubSeq_Message1MinWait( WORLDTRADE_WORK *wk );
 static int SubSeq_EndDemo( WORLDTRADE_WORK *wk );
@@ -81,6 +83,8 @@ enum{
 	SUBSEQ_MES_1MIN_WAIT,
 	SUBSEQ_YESNO,
 	SUBSEQ_YESNO_SELECT,
+
+  SUBSEQ_CURSOR_WAIT,
 };
 
 static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
@@ -99,7 +103,7 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 	SubSeq_YesNo,			    // SUBSEQ_YESNO,
 	SubSeq_YesNoSelect,		    // SUBSEQ_YESNO_SELECT,
 	
-
+	SubSeq_CursorEnd,		    // SUBSEQ_CURSOR_WAIT,
 };
 
 //============================================================================================
@@ -500,8 +504,6 @@ static const u16 CursorPosTbl[][2]={
 	{128,96+5*8},
 };
 
-#define CLACT_TITLE_CURSOR_ACTNO ( 43 ) // 1
-
 //------------------------------------------------------------------
 /**
  * セルアクター登録
@@ -515,18 +517,11 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 {
 	GFL_CLWK_DATA	add;
 
-typedef struct {
-	s16	pos_x;				// ｘ座標
-	s16 pos_y;				// ｙ座標
-	u16 anmseq;				// アニメーションシーケンス
-	u8	softpri;			// ソフト優先順位	0>0xff
-	u8	bgpri;				// BG優先順位
-} GFL_CLWK_DATA;
 #if 0
-	//登録情報格納
-	CLACT_ADD add;
-	{
-		CLACT_HEADER header;
+  //登録情報格納
+  CLACT_ADD add;
+  {
+    CLACT_HEADER header;
 		// セルアクターヘッダ作成
 		GFL_CLACT_WK_SetCellResData or GFL_CLACT_WK_SetTrCellResData or GFL_CLACT_WK_SetMCellResData(&header, 0, 0, 0, 0, CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,
 				0, 1,
@@ -544,12 +539,22 @@ typedef struct {
 	add.softpri	= 0;
 	add.bgpri		= 0;
 	wk->CursorActWork = GFL_CLACT_WK_Create( wk->clactSet, 
-			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[RES_CURSOR][CLACT_U_CHAR_RES],
 			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
-			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			wk->resObjTbl[RES_CURSOR][CLACT_U_CELL_RES],
 			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAutoAnmFlag(wk->CursorActWork,1);
-	GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CLACT_TITLE_CURSOR_ACTNO );
+  GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, 0 );
+
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+  { 
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 0 );
+  }
+  else if( GFL_UI_CheckTouchOrKey() )
+  { 
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+  }
+  WirelessIconEasy();
 }
 
 //------------------------------------------------------------------
@@ -598,15 +603,15 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 	// BG0面BMPWINタイトルウインドウ確保・描画
 	
 	wk->TitleWin	= GFL_BMPWIN_Create( GFL_BG_FRAME1_M,
-	TITLE_TEXT_X, TITLE_TEXT_Y, TITLE_TEXT_SX, TITLE_TEXT_SY, WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B);
+	TITLE_TEXT_X, TITLE_TEXT_Y, TITLE_TEXT_SX, TITLE_TEXT_SY, 1,  GFL_BMP_CHRAREA_GET_B);
 
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TitleWin), 0x0000 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->TitleWin), 0xA );
 	GFL_BMPWIN_MakeTransWindow( wk->TitleWin );
 	
 	// POKMON GLOBAL TRADING SYSTEM
 	GF_STR_PrintColor(	wk->TitleWin, FONT_TALK, wk->TitleString, 
 				0, 2, MSG_ALLPUT, 
-				PRINTSYS_LSB_Make(15,6,0),&wk->print);
+				PRINTSYS_LSB_Make(0xD,0xE,0xA),&wk->print);
 
 	// BG0面BMPWINメニューテキストウインドウ確保・描画
 	{
@@ -615,7 +620,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 			wk->MenuWin[i]	= GFL_BMPWIN_Create( GFL_BG_FRAME1_M,
 			MENU_TEXT_X, MENU_TEXT_Y+i*5, MENU_TEXT_SX, MENU_TEXT_SY, 1,  
 			GFL_BMP_CHRAREA_GET_B );
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[i]), 0x0000 );
+			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[i]), 1 );
 			GFL_BMPWIN_MakeTransWindow( wk->MenuWin[i] );
 		}
 	}
@@ -885,7 +890,6 @@ static void DecideFunc( WORLDTRADE_WORK *wk, int decide )
 				// あずける
 				WorldTrade_SubProcessChange( wk, WORLDTRADE_MYBOX, MODE_DEPOSIT_SELECT );
 				wk->subprocess_seq  = SUBSEQ_END;
-				PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 			}else{
 				// ようすをみる
 				if(wk->serverWaitTime==0){
@@ -893,7 +897,6 @@ static void DecideFunc( WORLDTRADE_WORK *wk, int decide )
 					wk->sub_returnprocess = WORLDTRADE_MYPOKE;
 					wk->subprocess_seq    = SUBSEQ_END;
 					wk->serverWaitTime    = SEVER_RETRY_WAIT;
-					PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 				}else{
 					// 待ち時間が過ぎないと再度ようすを見に行くことができない
 #ifdef PM_DEBUG
@@ -902,16 +905,13 @@ static void DecideFunc( WORLDTRADE_WORK *wk, int decide )
 						wk->sub_returnprocess = WORLDTRADE_MYPOKE;
 						wk->subprocess_seq    = SUBSEQ_END;
 						wk->serverWaitTime    = SEVER_RETRY_WAIT;
-						PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 					}else{
-						GFL_CLACT_WK_SetAutoAnmFlag(wk->CursorActWork,0);
 						SubSeq_MessagePrint( wk, msg_gtc_01_035, 1, 0, 0x0f0f );
 						WorldTrade_SetNextSeq( wk, SUBSEQ_MES_1MIN_WAIT, SUBSEQ_START );
 						PMSND_PlaySE(SE_GTC_NG);
 						wk->wait = 0;
 					}
 #else
-					GFL_CLACT_WK_SetAutoAnmFlag(wk->CursorActWork,0);
 					SubSeq_MessagePrint( wk, msg_gtc_01_035, 1, 0, 0x0f0f );
 					WorldTrade_SetNextSeq( wk, SUBSEQ_MES_1MIN_WAIT, SUBSEQ_START );
 					PMSND_PlaySE(SE_GTC_NG);
@@ -927,15 +927,12 @@ static void DecideFunc( WORLDTRADE_WORK *wk, int decide )
 			wk->SubLcdTouchOK = 0;
 			WorldTrade_SubProcessChange( wk, WORLDTRADE_SEARCH, MODE_NORMAL );
 			wk->subprocess_seq  = SUBSEQ_END;
-			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 			break;
 
 		// しゅうりょうする
 		case 2:
 			SubSeq_TalkPrint( wk, msg_gtc_01_008, WorldTrade_GetTalkSpeed(wk), 0, 0x0f0f );
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_YESNO );
-			GFL_CLACT_WK_SetAutoAnmFlag(wk->CursorActWork,0);
-			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 			break;
 		}
 
@@ -962,20 +959,41 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 		WorldTrade_CLACT_PosChange(wk->CursorActWork, 
 			CursorPosTbl[wk->TitleCursorPos][0],
 			CursorPosTbl[wk->TitleCursorPos][1]);
-		DecideFunc(wk, ret);
+
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+    GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, 1 );
+    wk->subprocess_seq  = SUBSEQ_CURSOR_WAIT;
+
+    GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+
+    PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+
 		return SEQ_MAIN;
 	}
 	// キー処理
+  if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+  { 
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+    PMSND_PlaySE(WORLDTRADE_MOVE_SE);
+		return SEQ_MAIN;
+  }
 	if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
-			SubSeq_TalkPrint( wk, msg_gtc_01_008, WorldTrade_GetTalkSpeed(wk), 0, 0x0f0f );
+      SubSeq_TalkPrint( wk, msg_gtc_01_008, WorldTrade_GetTalkSpeed(wk), 0, 0x0f0f );
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_YESNO );
-			GFL_CLACT_WK_SetAutoAnmFlag(wk->CursorActWork,0);
 	}else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
-		DecideFunc( wk, wk->TitleCursorPos );
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+    GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, 1 );
+    wk->subprocess_seq  = SUBSEQ_CURSOR_WAIT;
+
+    PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+
 	}else if(GFL_UI_KEY_GetTrg() & PAD_KEY_UP){
 		if(wk->TitleCursorPos!=0){
 			wk->TitleCursorPos--;
 			PMSND_PlaySE(WORLDTRADE_MOVE_SE);
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+      GFL_CLACT_WK_ResetAnm( wk->CursorActWork );
 			WorldTrade_CLACT_PosChange(wk->CursorActWork, 
 				CursorPosTbl[wk->TitleCursorPos][0],
 				CursorPosTbl[wk->TitleCursorPos][1]);
@@ -984,6 +1002,8 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 		if(wk->TitleCursorPos<2){
 			wk->TitleCursorPos++;
 			PMSND_PlaySE(WORLDTRADE_MOVE_SE);
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+      GFL_CLACT_WK_ResetAnm( wk->CursorActWork );
 			WorldTrade_CLACT_PosChange(wk->CursorActWork, 
 				CursorPosTbl[wk->TitleCursorPos][0],
 				CursorPosTbl[wk->TitleCursorPos][1]);
@@ -1070,8 +1090,7 @@ static int SubSeq_End( WORLDTRADE_WORK *wk)
 //------------------------------------------------------------------
 static int SubSeq_YesNo( WORLDTRADE_WORK *wk)
 {
-//	wk->YesNoMenuWork = WorldTrade_BmpWinYesNoMake(, WORLDTRADE_YESNO_PY2, YESNO_OFFSET );
-	wk->tss			   = WorldTrade_TouchWinYesNoMake(WORLDTRADE_YESNO_PY2, YESNO_OFFSET, 3, 1 );
+	WorldTrade_TouchWinYesNoMake(wk,WORLDTRADE_YESNO_PY2, YESNO_OFFSET, 3, 1 );
 	wk->subprocess_seq = SUBSEQ_YESNO_SELECT;
 
 	// カーソル隠す
@@ -1098,7 +1117,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 
 	if(ret==TOUCH_SW_RET_YES){
 		// 主人公帰るデモ
-		TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 		BmpWinFrame_Clear( wk->TalkWin, WINDOW_TRANS_OFF );
 
 		GFL_BMPWIN_ClearTransWindow( wk->TalkWin );
@@ -1110,7 +1129,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 
 	}else if(ret==TOUCH_SW_RET_NO){
 		// もういっかいトライ
-		TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 		BmpWinFrame_Clear( wk->TalkWin, WINDOW_TRANS_OFF );
 		GFL_BMPWIN_ClearTransWindow( wk->TalkWin );
 		GFL_CLACT_WK_SetAutoAnmFlag(wk->CursorActWork,1);
@@ -1143,6 +1162,24 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 */
 	return SEQ_MAIN;
 	
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カーソルアニメ待ち
+ *
+ *	@param	WORLDTRADE_WORK *wk ワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static int SubSeq_CursorEnd( WORLDTRADE_WORK *wk)
+{ 
+  if( !GFL_CLACT_WK_CheckAnmActive( wk->CursorActWork) )
+  { 
+    DecideFunc( wk, wk->TitleCursorPos );
+  }
+
+  return SEQ_MAIN;
 }
 
 //------------------------------------------------------------------
@@ -1237,10 +1274,13 @@ static void TitleMenuPrint( WORLDTRADE_WORK *wk )
 
 	// ポケモンを預けているかどうかで、メニューの項目が変わる
 	for(i=0;i<3;i++){
+#if 0
 		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->MenuWin[i]), 0, 0, MENU_TEXT_SX*8, 8, 15 );
 		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->MenuWin[i]), 0, 8, MENU_TEXT_SX*8, 2, 14 );
 		GFL_BMP_Fill( GFL_BMPWIN_GetBmp(wk->MenuWin[i]), 0, 10, MENU_TEXT_SX*8,  6, 13 );
-		WorldTrade_BmpWinPrint( wk->MenuWin[i], wk->MsgManager, FONT_TOUCH, menu_str_table[menu][i], 0x0000 ,&wk->print);
+#endif
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[i]), 1 );
+		WorldTrade_BmpWinPrintColor( wk->MenuWin[i], wk->MsgManager, FONT_TOUCH, menu_str_table[menu][i], 0x0000 ,&wk->print, PRINTSYS_LSB_Make( 0xF, 0xE, 1) );
 	}
 }
 
@@ -1324,6 +1364,34 @@ void WorldTrade_BmpWinPrint( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int font, int
 
 	// 文字列描画開始
 	GF_STR_PrintColor( win, font, tempbuf, 0, 0, MSG_ALLPUT, PRINTSYS_LSB_Make( 10, 9, 0), print );
+
+	GFL_STR_DeleteBuffer(tempbuf);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   BMPWINに文字列描画  色指定
+ *
+ * @param   win		
+ * @param   msgman		
+ * @param   msgno		
+ * @param   dat		
+ *
+ * @retval  none		
+ */
+//------------------------------------------------------------------
+void WorldTrade_BmpWinPrintColor( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int font, int msgno, u16 dat, WT_PRINT *print, PRINTSYS_LSB lsb )
+{
+	// 文字列取得
+	STRBUF *tempbuf;
+	
+	tempbuf = GFL_MSG_CreateString(  msgman, msgno );
+
+	// 会話ウインドウ枠描画
+	//GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win),  dat );
+
+	// 文字列描画開始
+	GF_STR_PrintColor( win, font, tempbuf, 0, 0, MSG_ALLPUT, lsb, print );
 
 	GFL_STR_DeleteBuffer(tempbuf);
 }

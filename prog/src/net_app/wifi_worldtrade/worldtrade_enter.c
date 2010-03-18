@@ -337,6 +337,8 @@ static void FreeWork( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int Enter_Start( WORLDTRADE_WORK *wk)
 {
+  PMSND_PlayBGM( WORLDTRADE_BGM );
+
 	// WIFIコネクションに接続しますか？
   //
   //
@@ -391,13 +393,13 @@ static int Enter_ConnectYesNoSelect( WORLDTRADE_WORK *wk )
 
 	if(ret==TOUCH_SW_RET_YES){
 			// WIFIせつぞくを開始
-			TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 			//Enter_MessagePrint( wk, wk->LobbyMsgManager, msg_wifilobby_002, 1, 0x0f0f );
 			wk->subprocess_seq  = ENTER_INTERNET_CONNECT;
 			WorldTrade_TimeIconAdd(wk);
 	}else if(ret==TOUCH_SW_RET_NO){
 			// 終了
-			TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 #if 0
 		  //  CommStateWifiDPWEnd();
 #else
@@ -1250,12 +1252,12 @@ static int Enter_YesNoSelect( WORLDTRADE_WORK *wk)
   if(ret==TOUCH_SW_RET_YES){
     // WIFIせつぞくを終了
 
-    TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
     WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
     wk->subprocess_seq = ENTER_END;
 	}else if(ret==TOUCH_SW_RET_NO){
 			// もういっかいトライ
-			TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 			wk->subprocess_seq = ENTER_START;
 	}
 	
@@ -1433,7 +1435,6 @@ static int Enter_MessageWait1Second( WORLDTRADE_WORK *wk )
 static int Enter_MessageWaitYesNoStart(WORLDTRADE_WORK *wk)
 {
 	if( GF_MSG_PrintEndCheck( &wk->print )==0){
-		//wk->tss = WorldTrade_TouchWinYesNoMake(WORLDTRADE_YESNO_PY2, YESNO_OFFSET, 8, 0 );
 		wk->subprocess_seq = wk->subprocess_nextseq;
 	}
 	return SEQ_MAIN;

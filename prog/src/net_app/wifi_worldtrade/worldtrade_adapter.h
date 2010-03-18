@@ -91,15 +91,6 @@
 */
 //=============================================================================
 
-//サウンド	worldtrade_localの中にもあります
-#define SE_CANCEL							(SEQ_SE_SELECT1)	
-#define SE_GTC_NG							(SEQ_SE_SELECT1)
-#define SE_GTC_SEARCH					(SEQ_SE_SELECT1)
-#define SE_GTC_PLAYER_IN			(SEQ_SE_SELECT1)
-#define SE_GTC_ON							(SEQ_SE_SELECT1)
-#define SE_GTC_OFF						(SEQ_SE_SELECT1)
-#define SE_GTC_PLAYER_OUT			(SEQ_SE_SELECT1)
-#define SE_GTC_APPEAR					(SEQ_SE_SELECT1)
 
 #define FONT_TOUCH						(0)
 #define FONT_SYSTEM						(0)
@@ -108,11 +99,6 @@
 //メッセージ
 #define MSG_TP_ON							(0)
 #define MSG_TP_OFF						(0)
-
-
-//NUMFONT
-#define NUMFONT_MODE_LEFT			(0)
-#define NUMFONT_MARK_SLASH		(0)
 
 //PHC
 #define PHC_WIFI_OPEN_COURSE_NO	(0)
@@ -128,11 +114,6 @@ typedef struct
 {	
 	int dummy;
 }ZUKAN_WORK;
-
-typedef struct
-{	
-	int dummy;
-}NUMFONT;
 
 //=============================================================================
 /**
@@ -157,13 +138,6 @@ static inline void Snd_DataSetByScene( int a, int b, int c ){}
 
 //UI
 static inline void MsgPrintTouchPanelFlagSet( int a ){}
-
-//NUMFONT
-static inline NUMFONT * NUMFONT_Create( int a, int b, int c, HEAPID heapID ){return NULL;}
-static inline void NUMFONT_Delete( NUMFONT *wk ){}
-static inline void NUMFONT_WriteNumber( NUMFONT *wk, int a, int b, int c, GFL_BMPWIN *bmpwin, int d, int e ){}
-static inline void NUMFONT_WriteMark( NUMFONT *wk, int a, GFL_BMPWIN *bmpwin, int c, int d ){}
-
 
 //各種セーブデータ　PHC
 static inline PHC_SVDATA * SaveData_GetPhcSaveData( SAVE_CONTROL_WORK *sv ){	return NULL; }
@@ -205,7 +179,7 @@ static inline void WirelessIconEasy( void )
 {
 	//GFL_NET_ReloadIcon();  // 接続中なのでアイコン表示
 	GFL_NET_WirelessIconEasyXY(GFL_WICON_POSX, GFL_WICON_POSY, TRUE, HEAPID_WORLDTRADE);
-	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_WORLDTRADE );
+	GFL_NET_WirelessIconEasy_HoldLCD( FALSE, HEAPID_WORLDTRADE );
 }
 static inline void WirelessIconEasy_SetLevel( int level )
 {
@@ -270,7 +244,7 @@ extern POKEMON_PASO_PARAM* PPPPointerGet( POKEMON_PARAM *pp );
  *					BGWINFRM
  *
  *		GSにあったBGスクリーン加工処理は、なくなったので、
- *		WBのシステムを使い実装する
+ *		WBのシステムを使い実装する->移植したので置き換え
 */
 //=============================================================================
 #include "system/bgwinfrm.h"
@@ -319,3 +293,23 @@ extern void GF_STR_PrintColor( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int
 
 
 extern void WT_PRINT_ClearBuffer( WT_PRINT *wk );
+
+//=============================================================================
+/**
+ *      NUMFONT
+ *        WBにNUMFONTはないので、smallfontを使い実装する
+*/
+//=============================================================================
+
+//NUMFONT
+#define NUMFONT_MODE_LEFT			(STR_NUM_DISP_LEFT)
+#define NUMFONT_MARK_SLASH		(0)
+
+typedef struct _NUMFONT NUMFONT;
+
+NUMFONT * NUMFONT_Create( int a, int b, int c, HEAPID heapID );
+void NUMFONT_Delete( NUMFONT *wk );
+void NUMFONT_Main( NUMFONT *wk );
+void NUMFONT_WriteNumber( NUMFONT *wk, int num, int keta, int mode, GFL_BMPWIN *bmpwin, int x, int y );
+void NUMFONT_WriteMark( NUMFONT *wk, int mark, GFL_BMPWIN *bmpwin, int x, int y );
+

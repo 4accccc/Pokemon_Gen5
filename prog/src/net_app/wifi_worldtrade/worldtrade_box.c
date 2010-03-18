@@ -90,6 +90,8 @@ static int SubSeq_CBallDepositYesNoMessage( WORLDTRADE_WORK *wk );
 static int SubSeq_CBallDepositYesNo( WORLDTRADE_WORK *wk );
 static int SubSeq_CBallDepositYesNoSelect( WORLDTRADE_WORK *wk );
 
+static int SubSeq_CancelWait( WORLDTRADE_WORK *wk );
+
 
 static  int WantPokeCheck(POKEMON_PASO_PARAM *ppp, Dpw_Tr_PokemonSearchData *dtsd);
 static void MakeExchangePokemonData( Dpw_Tr_Data *dtd, WORLDTRADE_WORK *wk );
@@ -131,6 +133,8 @@ enum{
 	SUBSEQ_CBALL_DEPOSIT_YESNO_MES,
 	SUBSEQ_CBALL_DEPOSIT_YESNO,
 	SUBSEQ_CBALL_DEPOSIT_YESNO_SELECT,
+
+	SUBSEQ_CANCEL_WAIT,
 };
 
 static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
@@ -153,6 +157,9 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 	SubSeq_CBallDepositYesNoMessage,	// SUBSEQ_CBALL_YESNO_MES
 	SubSeq_CBallDepositYesNo,			// SUBSEQ_CBALL_YESNO
 	SubSeq_CBallDepositYesNoSelect,	// SUBSEQ_CBALL_YESNO_SELECT
+
+
+	SubSeq_CancelWait,	// SUBSEQ_CANCEL_WAIT
 };
 
 #define BOX_CUROSOR_END_POS			( 30 )
@@ -520,6 +527,15 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAutoAnmFlag(wk->CursorActWork,1);
 	GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, 4 );	
+
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+  { 
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 0 );
+  }
+  else if( GFL_UI_CheckTouchOrKey() )
+  { 
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+  }
 	
 	/*
 	 *	tomoya takahashi
@@ -600,6 +616,21 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 		GFL_CLACT_WK_SetBgPri( wk->BoxArrowActWork[i], 1 );
 	}
 
+  //指のアイコンらしいが、この画面で使っていないので流用（ボタンのひかり）
+	add.pos_x = 239;
+	add.pos_y = 136;
+  add.softpri = 30;
+  add.bgpri   = 1;
+  wk->FingerActWork = GFL_CLACT_WK_Create(wk->clactSet,
+			wk->resObjTbl[RES_CURSOR][CLACT_U_CHAR_RES],
+			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
+			wk->resObjTbl[RES_CURSOR][CLACT_U_CELL_RES],
+			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
+	GFL_CLACT_WK_SetAnmSeq( wk->FingerActWork, 12 );
+	GFL_CLACT_WK_SetAutoAnmFlag( wk->FingerActWork, 1 );
+	GFL_CLACT_WK_StopAnm( wk->FingerActWork );
+	GFL_CLACT_WK_SetDrawEnable( wk->FingerActWork, 0 );
+
 
 	// 「DSの下画面をみてねアイコン」の表示
 	GFL_CLACT_WK_SetDrawEnable( wk->PromptDsActWork, 1 );
@@ -619,6 +650,8 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 static void DelCellActor( WORLDTRADE_WORK *wk )
 {
 	int i;
+
+  GFL_CLACT_WK_Remove( wk->FingerActWork );
 
 	// ボックス横の矢印２こ
 	for(i=0;i<2;i++){
@@ -717,7 +750,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 		END_TEXT_X, END_TEXT_Y, END_TEXT_SX, END_TEXT_SY, 
 		0,  GFL_BMP_CHRAREA_GET_B );
 
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[1]), 0x0606 );
+	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[1]), 0x4 );
 	GFL_BMPWIN_MakeTransWindow(wk->MenuWin[1]);
 	// 「もどる」描画
 	WorldTrade_SysPrint( wk->MenuWin[1], wk->EndString, 0, 1, 1, PRINTSYS_LSB_Make(1,3,6), &wk->print );
@@ -894,8 +927,9 @@ static void DepositDecideFunc( WORLDTRADE_WORK*wk )
 {
 	if(wk->BoxCursorPos == BOX_CUROSOR_END_POS){
 	// タイトルメニューにもどる
-		WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
-		wk->subprocess_seq = SUBSEQ_END;
+    GFL_CLACT_WK_SetDrawEnable( wk->FingerActWork, 1);
+    GFL_CLACT_WK_ResetAnm( wk->FingerActWork);
+    wk->subprocess_seq =SUBSEQ_CANCEL_WAIT;
 		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 	}else{
 		if(wk->BoxCursorPos!=BOX_CUROSOR_TRAYNAME_POS){
@@ -932,7 +966,9 @@ static void ExchangeDecideFunc( WORLDTRADE_WORK*wk )
 {
 	if(wk->BoxCursorPos == BOX_CUROSOR_END_POS){
 		// 検索結果ポケモンの画面にもどる
-		CancelFunc( wk, MODE_EXCHANGE_SELECT );
+    GFL_CLACT_WK_SetDrawEnable( wk->FingerActWork, 1);
+    GFL_CLACT_WK_ResetAnm( wk->FingerActWork);
+    wk->subprocess_seq =SUBSEQ_CANCEL_WAIT;
 /**		
 		// サーバーチェックの後タイトルメニューへ
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_PARTNER, 0 );
@@ -987,6 +1023,8 @@ static u32 TouchFunc( WORLDTRADE_WORK *wk )
 {
 	u32 ret = GFL_UI_TP_HitTrg( BoxTouchTable );
 	if(ret!=GFL_UI_TP_HIT_NONE){
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 0 );
+    GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 		OS_Printf("box touch = %d\n", ret);
 	}
 	return ret;
@@ -1056,7 +1094,9 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 			break;
 		case TOUCH_CANCEL:
 			// タイトルに戻ったり、検索画面に戻ったり
-			CancelFunc( wk, wk->sub_process_mode );
+      GFL_CLACT_WK_SetDrawEnable( wk->FingerActWork, 1);
+      GFL_CLACT_WK_ResetAnm( wk->FingerActWork);
+      wk->subprocess_seq =SUBSEQ_CANCEL_WAIT;
 			wk->BoxCursorPos = result;
 			CursorPosPrioritySet( wk->CursorActWork, wk->BoxCursorPos );
 			break;
@@ -1075,8 +1115,9 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 		// あずける時
 		if(wk->sub_process_mode==MODE_DEPOSIT_SELECT){
 			if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
-				// タイトルメニューにもどる
-				CancelFunc( wk, MODE_DEPOSIT_SELECT );
+        GFL_CLACT_WK_SetDrawEnable( wk->FingerActWork, 1);
+        GFL_CLACT_WK_ResetAnm( wk->FingerActWork);
+        wk->subprocess_seq =SUBSEQ_CANCEL_WAIT;
 			}else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
 				DepositDecideFunc(wk);
 			}
@@ -1085,7 +1126,9 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 		}else if(wk->sub_process_mode==MODE_EXCHANGE_SELECT){
 			if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
 				// 検索結果ポケモンの画面にもどる
-				CancelFunc( wk, MODE_EXCHANGE_SELECT );
+        GFL_CLACT_WK_SetDrawEnable( wk->FingerActWork, 1);
+        GFL_CLACT_WK_ResetAnm( wk->FingerActWork);
+        wk->subprocess_seq =SUBSEQ_CANCEL_WAIT;
 			}else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
 				ExchangeDecideFunc(wk);
 			}
@@ -1108,6 +1151,14 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 static void CursorControl( WORLDTRADE_WORK *wk )
 {
 	int move=0, arrow=0, tmp=0;
+
+  if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+  { 
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+    PMSND_PlaySE(WORLDTRADE_MOVE_SE);
+    return;
+  }
 
 	// カーソル操作
 	if(GFL_UI_KEY_GetTrg() & PAD_KEY_UP){
@@ -1235,24 +1286,9 @@ static int SubSeq_SelectList( WORLDTRADE_WORK *wk )
 	// やめる
 	BmpMenuWork_ListAddArchiveString( wk->BmpMenuList, wk->MsgManager, msg_gtc_05_007, 3, HEAPID_WORLDTRADE );
 
-/*
-	temp.menu = wk->BmpMenuList;
-	temp.win  = &wk->MenuWin[0];
-
-	// 枠描画
-	// ----------------------------------------------------------------------------
-	// tomoya takahashi	ローカライズの対処を反映
-	// localize_spec_mark(LANG_ALL) imatake 2007/01/17
-	// 描画時に一瞬ゴミが映るのを修正
-	BmpWinFrame_Write( &wk->MenuWin[0], WINDOW_TRANS_OFF, WORLDTRADE_MENUFRAME_CHR, WORLDTRADE_MENUFRAME_PAL );
-	// ----------------------------------------------------------------------------
-
-	// BMPメニュー開始
-	wk->BmpMenuWork = BmpMenuAddEx( &temp, 9, 0, 0, HEAPID_WORLDTRADE, PAD_BUTTON_CANCEL );
-*/
 
 	// 選択ボックス呼び出し
-	wk->SelBoxWork = WorldTrade_SelBoxInit( wk, GFL_BG_FRAME0_M, 3, 10 );
+	WorldTrade_SelBoxInit( wk, GFL_BG_FRAME0_M, 3, WORLDTRADE_YESNO_PY1 );
 
 
 	wk->subprocess_seq = SUBSEQ_SELECT_WAIT;
@@ -1274,7 +1310,7 @@ static int SubSeq_SelectList( WORLDTRADE_WORK *wk )
 static int SubSeq_SelectWait( WORLDTRADE_WORK *wk )
 {
 	POKEMON_PASO_PARAM *ppp;
-	u32 ret = SelectBoxMain( wk->SelBoxWork );
+	u32 ret = WorldTrade_SelBoxMain( wk );
 	int error=0;
 	
 //	switch(BmpMenuMain( wk->BmpMenuWork )){
@@ -1322,10 +1358,12 @@ static int SubSeq_SelectWait( WORLDTRADE_WORK *wk )
 			if(WorldTrade_GetPPorPPP( wk->BoxTrayNo )){
 				POKEMON_PARAM *pp;
 				pp = PokeParty_GetMemberPointer(wk->param->myparty, wk->BoxCursorPos);
+#if 0 //WBにカスタムボールはない
 				if(PP_Get( pp, ID_PARA_cb_id, NULL )){
 					flag = 1;
 					wk->subprocess_seq = SUBSEQ_CBALL_DEPOSIT_YESNO_MES;
 				}
+#endif 
 				OS_Printf("てもち指定 カスタム=%d\n", PP_Get( pp, ID_PARA_cb_id, NULL ));
 			}
 
@@ -1393,7 +1431,7 @@ static int SubSeq_ExchangeSelectList( WORLDTRADE_WORK *wk )
 	wk->BmpMenuWork = BmpMenuAddEx( &temp, 9, 0, 0, HEAPID_WORLDTRADE, PAD_BUTTON_CANCEL );
 */
 	// 選択ボックス呼び出し
-	wk->SelBoxWork = WorldTrade_SelBoxInit( wk, GFL_BG_FRAME0_M, 3, 10 );
+	WorldTrade_SelBoxInit( wk, GFL_BG_FRAME0_M, 3, WORLDTRADE_YESNO_PY1 );
 
 	wk->subprocess_seq = SUBSEQ_EXCHANGE_SELECT_WAIT;
 
@@ -1416,7 +1454,7 @@ static int SubSeq_ExchangeSelectWait( WORLDTRADE_WORK *wk )
 	POKEMON_PASO_PARAM *ppp;
 	int error=0;
 //	switch(BmpMenuMain( wk->BmpMenuWork )){
-	u32 ret = SelectBoxMain( wk->SelBoxWork );
+	u32 ret = WorldTrade_SelBoxMain( wk );
 	
 	switch(ret){
 	// 「ようすをみる」
@@ -1462,10 +1500,12 @@ static int SubSeq_ExchangeSelectWait( WORLDTRADE_WORK *wk )
 			if(WorldTrade_GetPPorPPP( wk->BoxTrayNo )){
 				POKEMON_PARAM *pp;
 				pp = PokeParty_GetMemberPointer(wk->param->myparty, wk->BoxCursorPos);
+#if 0 //WBにカスタムボールはない
 				if(PP_Get( pp, ID_PARA_cb_id, NULL )){
 					flag = 1;
 					wk->subprocess_seq = SUBSEQ_CBALL_YESNO_MES;
 				}
+#endif
 				OS_Printf("てもち指定 カスタム=%d\n", PP_Get( pp, ID_PARA_cb_id, NULL ));
 			}
 			
@@ -1532,7 +1572,7 @@ static int SubSeq_End( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_YesNo( WORLDTRADE_WORK *wk)
 {
-	wk->tss = WorldTrade_TouchWinYesNoMake(WORLDTRADE_YESNO_PY1, YESNO_OFFSET, 8, 1 );
+	WorldTrade_TouchWinYesNoMake( wk, WORLDTRADE_YESNO_PY1, YESNO_OFFSET, 8, 1 );
 	wk->subprocess_seq = SUBSEQ_YESNO_SELECT;
 	return SEQ_MAIN;
 	
@@ -1559,12 +1599,12 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 
 	if(ret==TOUCH_SW_RET_YES){
 		// タイトルメニューを終了
-		TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 		wk->subprocess_seq  = SUBSEQ_END;
 		 WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
 	}else if(ret==TOUCH_SW_RET_NO){
 		// もういっかいトライ
-		TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 		wk->subprocess_seq = SUBSEQ_START;
 	}
 
@@ -1603,8 +1643,7 @@ static int SubSeq_CBallYesNoMessage( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_CBallYesNo( WORLDTRADE_WORK *wk )
 {
-	wk->tss = WorldTrade_TouchWinYesNoMake( WORLDTRADE_YESNO_PY2, YESNO_OFFSET, 8, 1 );
-//	wk->YesNoMenuWork = WorldTrade_BmpWinYesNoMake(WORLDTRADE_YESNO_PY2, YESNO_OFFSET );
+	 WorldTrade_TouchWinYesNoMake( wk, WORLDTRADE_YESNO_PY2, YESNO_OFFSET, 8, 1 );
 	wk->subprocess_seq = SUBSEQ_CBALL_YESNO_SELECT;
 
 	return SEQ_MAIN;
@@ -1627,11 +1666,11 @@ static int SubSeq_CBallYesNoSelect( WORLDTRADE_WORK *wk )
 
 	if(ret==TOUCH_SW_RET_YES){
 		// 交換へ
-		TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 		ExchangeCheck(wk);
 	}else if(ret==TOUCH_SW_RET_NO){
 		// もういっかい
-		TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 		BmpWinFrame_Clear( wk->TalkWin, WINDOW_TRANS_ON );
 		wk->subprocess_seq  = SUBSEQ_MAIN;
 	}
@@ -1722,8 +1761,7 @@ static int SubSeq_CBallDepositYesNoMessage( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_CBallDepositYesNo( WORLDTRADE_WORK *wk )
 {
-//	wk->YesNoMenuWork = WorldTrade_BmpWinYesNoMake(WORLDTRADE_YESNO_PY2, YESNO_OFFSET );
-	wk->tss = WorldTrade_TouchWinYesNoMake( WORLDTRADE_YESNO_PY2, YESNO_OFFSET, 8 ,1 );
+	 WorldTrade_TouchWinYesNoMake( wk, WORLDTRADE_YESNO_PY2, YESNO_OFFSET, 8 ,1 );
 	wk->subprocess_seq = SUBSEQ_CBALL_DEPOSIT_YESNO_SELECT;
 
 	return SEQ_MAIN;
@@ -1747,7 +1785,7 @@ static int SubSeq_CBallDepositYesNoSelect( WORLDTRADE_WORK *wk )
 
 	if(ret==TOUCH_SW_RET_YES){
 		// 交換へ
-		TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 		wk->deposit_ppp     = WorldTrade_GetPokePtr( wk->param->myparty, wk->param->mybox, 
 														wk->BoxTrayNo, wk->BoxCursorPos );
 		wk->subprocess_seq  = SUBSEQ_END;
@@ -1756,7 +1794,7 @@ static int SubSeq_CBallDepositYesNoSelect( WORLDTRADE_WORK *wk )
 																wk->BoxTrayNo, wk->BoxCursorPos));
 	}else if(ret==TOUCH_SW_RET_NO){
 		// もういっかい
-		TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 		BmpWinFrame_Clear( wk->TalkWin, WINDOW_TRANS_ON );
 		wk->subprocess_seq  = SUBSEQ_MAIN;
 	}
@@ -1780,6 +1818,24 @@ static int SubSeq_CBallDepositYesNoSelect( WORLDTRADE_WORK *wk )
 */
 	return SEQ_MAIN;
 	
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   キャンセルウェイト待ち
+ *
+ * @param   wk		GTS画面ワーク
+ *
+ * @retval  int		サブシーケンス
+ */
+//------------------------------------------------------------------
+static int SubSeq_CancelWait( WORLDTRADE_WORK *wk )
+{ 
+  if( !GFL_CLACT_WK_CheckAnmActive( wk->FingerActWork) )
+  { 
+    CancelFunc( wk, wk->sub_process_mode );
+  }
+  return SEQ_MAIN;
 }
 
 
@@ -2052,7 +2108,7 @@ static void PokemonIconSet( POKEMON_PASO_PARAM *paso, GFL_CLWK* icon,
 	PPP_FastModeOff(paso,TRUE);
 	
 	if(flag){
-		TransPokeIconCharaPal( *no, form, dat->gender, tamago, pos, icon, handle, pbuf );
+		TransPokeIconCharaPal( *no, form, dat->gender-1, tamago, pos, icon, handle, pbuf );
 		GFL_CLACT_WK_SetDrawEnable( icon, 1 );
 
 		// アイテムを持っているか
@@ -2128,13 +2184,15 @@ static void NowBoxPageInfoGet( WORLDTRADE_WORK *wk, int now)
 			PokemonLevelSet(paso, &wk->boxWork->info[i] );
 			PokemonIconSet( paso, wk->PokeIconActWork[i], wk->ItemIconActWork[i],
 							&monsno[i], i, handle, &wk->boxWork->info[i], &pokebuf[i] );
-
+      GFL_CLACT_WK_SetDrawEnable( wk->CBallActWork[i], 0 );
+#if 0 //WBにカスタムボールはない
 			// ボールカプセルをつけているか？
 			if(PP_Get(pp, ID_PARA_cb_id, NULL)){
 				GFL_CLACT_WK_SetDrawEnable( wk->CBallActWork[i], 1 );
 			}else{
 				GFL_CLACT_WK_SetDrawEnable( wk->CBallActWork[i], 0 );
 			}
+#endif 
 		}
 
 		// てもちのポケモンを表示し終わったら後は全て非表示に

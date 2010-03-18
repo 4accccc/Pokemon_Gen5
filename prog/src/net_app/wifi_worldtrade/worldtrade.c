@@ -17,7 +17,7 @@
 #include "msg/msg_wifi_lobby.h"
 #include "system/wipe.h"
 #include "gamesystem/msgspeed.h"
-
+#include "msg/msg_wifi_gts.h"
 #include "print/printsys.h"
 
 
@@ -79,7 +79,6 @@ static void InitCLACT( WORLDTRADE_WORK *wk );
 static void FreeCLACT( WORLDTRADE_WORK *wk );
 static void ServerWaitTimeFunc( WORLDTRADE_WORK *wk );
 static void BoxPokeNumGet( WORLDTRADE_WORK *wk );
-static void WorldTrade_SelBoxCallback( SELBOX_WORK* sbox, u8 cur_pos, void* work, SBOX_CB_MODE mode);
 static void WorldTrade_WndSetting(void);
 
 
@@ -522,10 +521,13 @@ static void InitCellActor(WORLDTRADE_WORK *wk, const GFL_DISP_VRAM * vram )
   //cell読み込み
   wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES] = GFL_CLGRP_CELLANIM_Register( p_handle, NARC_worldtrade_worldtrade_obj_NCER, NARC_worldtrade_worldtrade_obj_NANR, HEAPID_WORLDTRADE);
 
+  //---------上画面カーソル用-------------------
+  wk->resObjTbl[RES_CURSOR][CLACT_U_CHAR_RES] = GFL_CLGRP_CGR_Register( p_handle, NARC_worldtrade_worldtrade_obj_c_lz_ncgr, 1, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE);
+
+  //cell読み込み
+  wk->resObjTbl[RES_CURSOR][CLACT_U_CELL_RES] = GFL_CLGRP_CELLANIM_Register( p_handle, NARC_worldtrade_worldtrade_obj_c_NCER, NARC_worldtrade_worldtrade_obj_c_NANR, HEAPID_WORLDTRADE);
 
   //---------下画面用-------------------
-
-
   //chara読み込み
   wk->resObjTbl[SUB_LCD][CLACT_U_CHAR_RES] = GFL_CLGRP_CGR_Register( p_handle, NARC_worldtrade_worldtrade_obj_s_lz_ncgr, 1, CLSYS_DRAW_SUB, HEAPID_WORLDTRADE);
 
@@ -656,9 +658,9 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
  * @retval  TOUCH_SW_WORK *   はい・いいえ画面ワーク
  */
 //==============================================================================
-TOUCH_SW_SYS *WorldTrade_TouchWinYesNoMake( int y, int yesno_bmp_cgx, int pltt, u8 inPassive )
+void WorldTrade_TouchWinYesNoMake( WORLDTRADE_WORK *wk, int y, int yesno_bmp_cgx, int pltt, u8 inPassive )
 {
-  return WorldTrade_TouchWinYesNoMakeEx( y, yesno_bmp_cgx, pltt, GFL_BG_FRAME0_M, inPassive );
+  WorldTrade_TouchWinYesNoMakeEx( wk, y, yesno_bmp_cgx, pltt, GFL_BG_FRAME0_M, inPassive );
 }
 
 //==============================================================================
@@ -675,11 +677,50 @@ TOUCH_SW_SYS *WorldTrade_TouchWinYesNoMake( int y, int yesno_bmp_cgx, int pltt, 
  * @retval  TOUCH_SW_SYS *    はい・いいえ画面ワーク
  */
 //==============================================================================
-TOUCH_SW_SYS *WorldTrade_TouchWinYesNoMakeEx( int y, int yesno_bmp_cgx,
+void WorldTrade_TouchWinYesNoMakeEx( WORLDTRADE_WORK *wk, int y, int yesno_bmp_cgx,
                         int pltt, int frame, u8 inPassive )
 {
-  TOUCH_SW_SYS *tss = TOUCH_SW_AllocWork( HEAPID_WORLDTRADE );
-  TOUCH_SW_PARAM  param;
+  GF_ASSERT( wk->task_res == NULL );
+  GF_ASSERT( wk->task_work == NULL );
+
+  wk->task_res  = APP_TASKMENU_RES_Create( frame, pltt, wk->print.font, wk->print.que, HEAPID_WORLDTRADE );
+
+  { 
+    APP_TASKMENU_ITEMWORK itemWork[]  =
+    { 
+      { 
+        NULL,
+        APP_TASKMENU_ITEM_MSGCOLOR,
+        APP_TASKMENU_WIN_TYPE_NORMAL,
+      },
+      { 
+        NULL,
+        APP_TASKMENU_ITEM_MSGCOLOR,
+        APP_TASKMENU_WIN_TYPE_NORMAL,
+      },
+    };
+
+    APP_TASKMENU_INITWORK initWork;
+    GFL_STD_MemClear( &initWork, sizeof(APP_TASKMENU_INITWORK) );
+
+
+    itemWork[0].str = GFL_MSG_CreateString( wk->MsgManager, msg_gtc_02_018 );
+    itemWork[1].str = GFL_MSG_CreateString( wk->MsgManager, msg_gtc_02_019 );
+
+    initWork.heapId = HEAPID_WORLDTRADE;
+    initWork.itemNum  = 2;
+    initWork.itemWork = itemWork;
+    initWork.posType  = ATPT_RIGHT_DOWN;
+    initWork.charPosX = 32;
+    initWork.charPosY = y;
+    initWork.w = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
+    initWork.h = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
+
+    wk->task_work = APP_TASKMENU_OpenMenu( &initWork, wk->task_res );
+
+    GFL_STR_DeleteBuffer( itemWork[0].str );
+    GFL_STR_DeleteBuffer( itemWork[1].str );
+  }
 
   if (inPassive){
     u8 target = 0;
@@ -689,18 +730,33 @@ TOUCH_SW_SYS *WorldTrade_TouchWinYesNoMakeEx( int y, int yesno_bmp_cgx,
     WorldTrade_SetPassive(target);
   }
 
-  param.bg_frame  = frame;
-  param.char_offs = yesno_bmp_cgx;
-  param.pltt_offs = pltt;
-  param.x         = BMP_YESNO_PX;
-  param.y         = y;
-  param.kt_st     = GFL_APP_KTST_KEY;
-  param.key_pos   = 0;
-  param.type      = TOUCH_SW_TYPE_S;
+}
 
-  TOUCH_SW_Init( tss, &param );
-
-  return tss;
+//==============================================================================
+/**
+ * @brief   タッチ対応YESNOウインドウ（メインのみ）
+ *
+ * @param   bgl       GF_BGL_INI
+ * @param   y       Y座標
+ * @param   yesno_bmp_cgx VRAMオフセット位置
+ * @param   pltt      パレット指定
+ * @param inPassive   パッシブするか
+ *
+ * @retval  TOUCH_SW_WORK *   はい・いいえ画面ワーク
+ */
+//==============================================================================
+void WorldTrade_TouchDelete( WORLDTRADE_WORK *wk )
+{
+  if( wk->task_work )
+  { 
+    APP_TASKMENU_CloseMenu( wk->task_work );
+    wk->task_work   = NULL;
+  }
+  if( wk->task_res )
+  { 
+    APP_TASKMENU_RES_Delete( wk->task_res );
+    wk->task_res  = NULL;
+  }
 }
 
 //------------------------------------------------------------------
@@ -714,10 +770,24 @@ TOUCH_SW_SYS *WorldTrade_TouchWinYesNoMakeEx( int y, int yesno_bmp_cgx,
 //------------------------------------------------------------------
 u32 WorldTrade_TouchSwMain(WORLDTRADE_WORK* wk)
 {
-  u32 ret = TOUCH_SW_Main( wk->tss );
-  if ( (ret==TOUCH_SW_RET_YES) || (ret==TOUCH_SW_RET_NO) ){
-    //パッシブ解除
-    WorldTrade_ClearPassive();
+  u32 ret = TOUCH_SW_RET_NORMAL;
+  if( wk->task_work )
+  { 
+    APP_TASKMENU_UpdateMenu( wk->task_work );
+    if ( APP_TASKMENU_IsFinish( wk->task_work ) ){
+
+      ret = APP_TASKMENU_GetCursorPos( wk->task_work );
+      if( ret == 0 )
+      { 
+        ret = TOUCH_SW_RET_YES;
+      }
+      else if( ret == 1 )
+      { 
+        ret = TOUCH_SW_RET_NO;
+      }
+      //パッシブ解除
+      WorldTrade_ClearPassive();
+    }
   }
 
   return ret;
@@ -728,6 +798,7 @@ u32 WorldTrade_TouchSwMain(WORLDTRADE_WORK* wk)
 #define WORLDTRADESELBOX_X  ( 32 - (WORLDTRADE_SELBOX_W+2)) // 幅0の時は20
 #define WORLDTRADESELBOX_CGX_SIZE ( WORLDTRADE_SELBOX_W*2 )
 #define WORLDTRADESEL_MAX (3)
+#define WORLDTRADESELBOX_PLT (10)
 
 ///セレクトボックス　ヘッダデータ構造体
 static const SELBOX_HEAD_PRM sbox_sel = {
@@ -752,55 +823,86 @@ static const SELBOX_HEAD_PRM sbox_sel = {
  * @retval  SELBOX_WORK*    選択ボックスワークのポインタ
  */
 //==============================================================================
-SELBOX_WORK* WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, u8 frm, int count, int y )
+void WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, u8 frm, int count, int y )
 {
-  SELBOX_WORK* list_wk;
+  GF_ASSERT( wk->task_res == NULL );
+  GF_ASSERT( wk->task_work == NULL );
 
-  wk->SelBoxSys = SelectBoxSys_AllocWork( HEAPID_WORLDTRADE ,NULL );
+  wk->task_res  = APP_TASKMENU_RES_Create( frm, WORLDTRADESELBOX_PLT, wk->print.font, wk->print.que, HEAPID_WORLDTRADE );
 
-  // SELBOX描画登録
-  {
-    SELBOX_HEADER head;
+  { 
+    APP_TASKMENU_ITEMWORK itemWork[]  =
+    { 
+      { 
+        NULL,
+        APP_TASKMENU_ITEM_MSGCOLOR,
+        APP_TASKMENU_WIN_TYPE_NORMAL,
+      },
+      { 
+        NULL,
+        APP_TASKMENU_ITEM_MSGCOLOR,
+        APP_TASKMENU_WIN_TYPE_NORMAL,
+      },
+      { 
+        NULL,
+        APP_TASKMENU_ITEM_MSGCOLOR,
+        APP_TASKMENU_WIN_TYPE_NORMAL,
+      },
+    };
 
-    MI_CpuClear8(&head,sizeof(SELBOX_HEADER));
+    int i;
+    APP_TASKMENU_INITWORK initWork;
+    GFL_STD_MemClear( &initWork, sizeof(APP_TASKMENU_INITWORK) );
 
-    head.prm      = sbox_sel;
-    head.prm.frm  = frm;
-    head.list = (const BMPLIST_DATA*)wk->BmpMenuList;
-    head.fontHandle = wk->print.font;
+    GF_ASSERT( count <= NELEMS( itemWork ) );
 
-    head.count = count;
+    for( i = 0; i < count; i++ )
+    { 
+      itemWork[i].str = (STRBUF*)wk->BmpMenuList[i].str;
+    }
 
-    list_wk = SelectBoxSetEx( wk->SelBoxSys, &head, NULL, WORLDTRADE_SELBOX_X, y, WORLDTRADE_SELBOX_W, 0, WorldTrade_SelBoxCallback, NULL, TRUE );
+    initWork.heapId = HEAPID_WORLDTRADE;
+    initWork.itemNum  = count;
+    initWork.itemWork = itemWork;
+    initWork.posType  = ATPT_RIGHT_DOWN;
+    initWork.charPosX = 32;
+    initWork.charPosY = y;
+    initWork.w = APP_TASKMENU_PLATE_WIDTH;
+    initWork.h = APP_TASKMENU_PLATE_HEIGHT;
+
+    wk->task_work = APP_TASKMENU_OpenMenu( &initWork, wk->task_res );
   }
 
   //パッシブ
   WorldTrade_SetPassive(1);
 
-  return list_wk;
 }
 
-//--------------------------------------------------------------
+//----------------------------------------------------------------------------
 /**
- * @brief    選択ボックスシステムのコールバック
+ *	@brief  選択ボックス処理中
  *
- * @param   sbox    選択ボックスワークのポインタ
- * @param   cur_pos   カーソル位置
- * @param   work    選択ボックスに登録してワークポインタ
- * @param   mode    選択モード
+ *	@param	WORLDTRADE_WORK *wk ワーク
+ *
+ *	@return 決定したもののインデックス
  */
-//--------------------------------------------------------------
-static void WorldTrade_SelBoxCallback(SELBOX_WORK* sbox, u8 cur_pos, void* work, SBOX_CB_MODE mode)
-{
-    switch(mode){
-    case SBOX_CB_MODE_INI:  //初期化時
-        break;
-    case SBOX_CB_MODE_MOVE: //カーソル移動時
-    case SBOX_CB_MODE_DECIDE:   //選択肢決定
-    case SBOX_CB_MODE_CANCEL: //キャンセル
-        PMSND_PlaySE(SEQ_SE_DP_SELECT);
-        break;
+//-----------------------------------------------------------------------------
+u32 WorldTrade_SelBoxMain( WORLDTRADE_WORK *wk )
+{ 
+  u32 ret = SBOX_SELECT_NULL;
+  if( wk->task_work )
+  { 
+    APP_TASKMENU_UpdateMenu( wk->task_work );
+    if ( APP_TASKMENU_IsFinish( wk->task_work ) ){
+
+      ret = APP_TASKMENU_GetCursorPos( wk->task_work ) + 1;
+
+      //パッシブ解除
+      WorldTrade_ClearPassive();
     }
+  }
+
+  return ret;
 }
 
 //==============================================================================
@@ -816,8 +918,17 @@ static void WorldTrade_SelBoxCallback(SELBOX_WORK* sbox, u8 cur_pos, void* work,
 //==============================================================================
 void WorldTrade_SelBoxEnd( WORLDTRADE_WORK *wk )
 {
-  SelectBoxExit( wk->SelBoxWork );
-  SelectBoxSys_Free( wk->SelBoxSys );
+  if( wk->task_work )
+  { 
+    APP_TASKMENU_CloseMenu( wk->task_work );
+    wk->task_work   = NULL;
+  }
+  if( wk->task_res )
+  { 
+    APP_TASKMENU_RES_Delete( wk->task_res );
+    wk->task_res  = NULL;
+  }
+
   //パッシブ解除
   WorldTrade_ClearPassive();
 }
@@ -966,22 +1077,22 @@ static void InitCLACT( WORLDTRADE_WORK *wk )
 {
   static const GFL_DISP_VRAM tbl =
   {
-    GX_VRAM_BG_128_A,       // メイン2DエンジンのBG
+    GX_VRAM_BG_128_D,       // メイン2DエンジンのBG
     GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
 
     GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
     GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
 
-    GX_VRAM_OBJ_64_E,       // メイン2DエンジンのOBJ
+    GX_VRAM_OBJ_256_AB,       // メイン2DエンジンのOBJ
     GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
 
     GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
     GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
 
-    GX_VRAM_TEX_0_B,        // テクスチャイメージスロット
-    GX_VRAM_TEXPLTT_01_FG,      // テクスチャパレットスロット
-    GX_OBJVRAMMODE_CHAR_1D_32K,
-    GX_OBJVRAMMODE_CHAR_1D_32K,
+    GX_VRAM_TEX_NONE,        // テクスチャイメージスロット
+    GX_VRAM_TEXPLTT_NONE,      // テクスチャパレットスロット
+    GX_OBJVRAMMODE_CHAR_1D_128K,
+    GX_OBJVRAMMODE_CHAR_1D_128K,
   };
 
   // VRAM バンク設定
@@ -1023,6 +1134,9 @@ static void FreeCLACT( WORLDTRADE_WORK *wk )
   GFL_CLGRP_PLTT_Release( wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES] );
   GFL_CLGRP_CGR_Release( wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES] );
   GFL_CLGRP_CELLANIM_Release( wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES] );
+
+  GFL_CLGRP_CGR_Release( wk->resObjTbl[RES_CURSOR][CLACT_U_CHAR_RES] );
+  GFL_CLGRP_CELLANIM_Release( wk->resObjTbl[RES_CURSOR][CLACT_U_CELL_RES] );
 
   // セルアクターセット破棄
   GFL_CLACT_UNIT_Delete(wk->clactSet);

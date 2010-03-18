@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T19:50:00"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-03-16T23:40:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="156"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="-1133" top="98" right="-428" bottom="726" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -313,7 +313,7 @@
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -1919,6 +1919,18 @@ eメールエラー</comment>
 メニュー画面に戻る選択項目</comment>
 		<language name="JPN" font=" 1:small" width="216">もどる</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">もどる</language>
+	</row>
+
+	<row id="msg_gtc_small_font_001">
+		<comment>NUMFONTの代わりの数値</comment>
+		<language name="JPN" font=" 1:small" width="216">[2:00:１桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[2:00:１桁:0]</language>
+	</row>
+
+	<row id="msg_gtc_small_font_002">
+		<comment>NUMFONTの代わりの数値</comment>
+		<language name="JPN" font=" 1:small" width="216">/</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">/</language>
 	</row>
 
 	<flowchart-group-list>

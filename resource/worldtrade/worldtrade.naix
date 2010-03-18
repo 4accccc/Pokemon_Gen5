@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-03-15T18:16:22
+	Update:2010-03-18T00:08:27
  *****************************************************************************/
 
 #ifndef NARC_WORLDTRADE_NAIX_
@@ -31,34 +31,31 @@ enum {
 	NARC_worldtrade_wifi_snap_lz_ncgr = 17,
 	NARC_worldtrade_poke_view_lz_ncgr = 18,
 	NARC_worldtrade_worldtrade_obj_lz_ncgr = 19,
-	NARC_worldtrade_worldtrade_obj_lz_ncer = 20,
-	NARC_worldtrade_worldtrade_obj_lz_nanr = 21,
-	NARC_worldtrade_worldtrade_obj_NCGR = 22,
-	NARC_worldtrade_worldtrade_obj_NCER = 23,
-	NARC_worldtrade_worldtrade_obj_NANR = 24,
-	NARC_worldtrade_deposit_lz_nscr = 25,
-	NARC_worldtrade_mybox_lz_nscr = 26,
-	NARC_worldtrade_mypoke_lz_nscr = 27,
-	NARC_worldtrade_search_lz_nscr = 28,
-	NARC_worldtrade_search_sub_lz_nscr = 29,
-	NARC_worldtrade_search_seibetsu_lz_nscr = 30,
-	NARC_worldtrade_search_name1_lz_nscr = 31,
-	NARC_worldtrade_search_name2_lz_nscr = 32,
-	NARC_worldtrade_search_name3_lz_nscr = 33,
-	NARC_worldtrade_search_level_lz_nscr = 34,
-	NARC_worldtrade_searchpoke0_lz_nscr = 35,
-	NARC_worldtrade_searchpoke1_lz_nscr = 36,
-	NARC_worldtrade_title_base_lz_nscr = 37,
-	NARC_worldtrade_title_menu_lz_nscr = 38,
-	NARC_worldtrade_traderoom_lz_nscr = 39,
-	NARC_worldtrade_traderoom_win_lz_nscr = 40,
-	NARC_worldtrade_traderoom_win2_lz_nscr = 41,
-	NARC_worldtrade_worldtrade_obj_s_lz_ncer = 42,
-	NARC_worldtrade_worldtrade_obj_s_lz_nanr = 43,
-	NARC_worldtrade_worldtrade_obj_s_lz_ncgr = 44,
-	NARC_worldtrade_worldtrade_obj_s_NCER = 45,
-	NARC_worldtrade_worldtrade_obj_s_NANR = 46,
-	NARC_worldtrade_worldtrade_obj_s_NCGR = 47
+	NARC_worldtrade_worldtrade_obj_NCER = 20,
+	NARC_worldtrade_worldtrade_obj_NANR = 21,
+	NARC_worldtrade_deposit_lz_nscr = 22,
+	NARC_worldtrade_mybox_lz_nscr = 23,
+	NARC_worldtrade_mypoke_lz_nscr = 24,
+	NARC_worldtrade_search_lz_nscr = 25,
+	NARC_worldtrade_search_sub_lz_nscr = 26,
+	NARC_worldtrade_search_seibetsu_lz_nscr = 27,
+	NARC_worldtrade_search_name1_lz_nscr = 28,
+	NARC_worldtrade_search_name2_lz_nscr = 29,
+	NARC_worldtrade_search_name3_lz_nscr = 30,
+	NARC_worldtrade_search_level_lz_nscr = 31,
+	NARC_worldtrade_searchpoke0_lz_nscr = 32,
+	NARC_worldtrade_searchpoke1_lz_nscr = 33,
+	NARC_worldtrade_title_base_lz_nscr = 34,
+	NARC_worldtrade_title_menu_lz_nscr = 35,
+	NARC_worldtrade_traderoom_lz_nscr = 36,
+	NARC_worldtrade_traderoom_win_lz_nscr = 37,
+	NARC_worldtrade_traderoom_win2_lz_nscr = 38,
+	NARC_worldtrade_worldtrade_obj_s_lz_ncgr = 39,
+	NARC_worldtrade_worldtrade_obj_s_NCER = 40,
+	NARC_worldtrade_worldtrade_obj_s_NANR = 41,
+	NARC_worldtrade_worldtrade_obj_c_lz_ncgr = 42,
+	NARC_worldtrade_worldtrade_obj_c_NCER = 43,
+	NARC_worldtrade_worldtrade_obj_c_NANR = 44
 };
 
 /* NARC_WORLDTRADE_NAIX_ */

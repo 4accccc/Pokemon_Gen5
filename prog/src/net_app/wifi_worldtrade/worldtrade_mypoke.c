@@ -357,7 +357,7 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 
 
 	// メイン画面BG1キャラ転送
-	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_poke_view_lz_ncgr,  GFL_BG_FRAME1_M, 0, 16*5*0x20, 1, HEAPID_WORLDTRADE);
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_poke_view_lz_ncgr,  GFL_BG_FRAME1_M, 0, 0, 1, HEAPID_WORLDTRADE);
 
 	// メイン画面BG1スクリーン転送
 	GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_worldtrade_mypoke_lz_nscr,  GFL_BG_FRAME1_M, 0, 32*24*2, 1, HEAPID_WORLDTRADE);
@@ -405,7 +405,7 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
 			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAutoAnmFlag(wk->PokemonActWork,1);
-	GFL_CLACT_WK_SetAnmSeq( wk->PokemonActWork, 37 );
+	GFL_CLACT_WK_SetAnmSeq( wk->PokemonActWork, 36 );
 	GFL_CLACT_WK_SetBgPri(wk->PokemonActWork, 1 );
 	GFL_CLACT_WK_SetDrawEnable(wk->PokemonActWork, 1 );
 	WirelessIconEasy();
@@ -445,19 +445,19 @@ static void DelCellActor( WORLDTRADE_WORK *wk )
 
 static const info_bmpwin_table[][4]={
 	{   1,  1,  9,  2, },	// ポケモンのニックネーム
-	{   8,  4,  8,  2, },	// ポケモンの種族名
+	{   9,  4,  8,  2, },	// ポケモンの種族名
 	{  11,  1,  3,  2, },	// 「レベル」
 	{  14,  1,  3,  2, },	// レベル
 	{   1, 10,  6,  2, },	// 「もちもの」
-	{   8, 10, 11,  2, },	// 所持アイテム名
+	{  11, 10, 11,  2, },	// 所持アイテム名
 	{   1,  4,  6,  2, },	// 「なまえ」
 	{   1, 13,  9,  2, },	//「あずけたひと」
-	{  11, 13,  8,  2, },	// トレーナー名
+	{  12, 13,  8,  2, },	// トレーナー名
 	{   1, 16, 12,  2, },	// 「ほしいポケモン」
 	{   1, 18, 10,  2, },	// ポケモン種族名
-	{  11, 18, 12,  2, },	// レベル指定
+	{  10, 18, 12,  2, },	// レベル指定
 	{   1,  7,  4,  2, },	// 「おや」
-	{   8,  7,  8,  2, },	// 親名
+	{  10,  7,  8,  2, },	// 親名
 };
 
 // はい・いいえのBMPWIN領域は最後にもってきたいのだが、
@@ -678,8 +678,7 @@ static int SubSeq_End( WORLDTRADE_WORK *wk)
 //------------------------------------------------------------------
 static int SubSeq_YesNo( WORLDTRADE_WORK *wk)
 {
-//	wk->YesNoMenuWork = WorldTrade_BmpWinYesNoMake( WORLDTRADE_YESNO_PY1, YESNO_OFFSET );
- 	wk->tss	= WorldTrade_TouchWinYesNoMakeEx( WORLDTRADE_YESNO_PY1, YESNO_OFFSET, 8, GFL_BG_FRAME2_M, 1 );
+ 	WorldTrade_TouchWinYesNoMakeEx( wk, WORLDTRADE_YESNO_PY1, YESNO_OFFSET, 8, GFL_BG_FRAME2_M, 1 );
 
 	//↑の関数は通常BG0以外をパッシブ化するが、
 	//このソースのみ、BG2がメッセージ面なので、
@@ -710,7 +709,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 
 	if(ret==TOUCH_SW_RET_YES){
 		// はい→引取りへ
-		TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 		wk->subprocess_seq  = SUBSEQ_END;
 		wk->sub_out_flg = 1;
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_UPLOAD, MODE_DOWNLOAD );
@@ -720,7 +719,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 
 	}else if(ret==TOUCH_SW_RET_NO){
 		// いいえ
-		TOUCH_SW_FreeWork( wk->tss );
+    WorldTrade_TouchDelete( wk );
 		wk->subprocess_seq = SUBSEQ_START;
 		BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_ON );
 
@@ -772,7 +771,7 @@ static int SubSeq_SelectList( WORLDTRADE_WORK *wk )
 	BmpMenuWork_ListAddArchiveString( wk->BmpMenuList, wk->MsgManager, msg_gtc_02_017, 2, HEAPID_WORLDTRADE );
 
 	// 選択ボックス呼び出し
-	wk->SelBoxWork = WorldTrade_SelBoxInit( wk, GFL_BG_FRAME2_M, 2, 13 );
+	WorldTrade_SelBoxInit( wk, GFL_BG_FRAME2_M, 2, WORLDTRADE_YESNO_PY1 );
 
 	//パッシブ
 	WorldTrade_SetPassiveMyPoke(1);
@@ -823,7 +822,7 @@ static int SubSeq_SelectList( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_SelectWait( WORLDTRADE_WORK *wk )
 {
-	u32 ret = SelectBoxMain( wk->SelBoxWork );
+	u32 ret = WorldTrade_SelBoxMain( wk );
 	
 	if(ret==1){
 		// 選択ボックス解放
@@ -1090,8 +1089,8 @@ void WorldTrade_PokeInfoPrint2( GFL_MSGDATA *MsgManager, GFL_BMPWIN *win[], STRC
 	GFL_STR_DeleteBuffer( oyabuf   );
 }
 
-#define POKEGRA_VRAM_OFFSET	(   (18*32+16)*32 )
-#define POKEGRA_VRAM_SIZE	( 0x20*10*10 )
+//通信アイコン分を忘れないように
+#define POKEGRA_VRAM_OFFSET	( (16*30+12 + 16)*0x20 )
 
 //------------------------------------------------------------------
 /**
@@ -1121,14 +1120,15 @@ void WorldTrade_TransPokeGraphic( POKEMON_PARAM *pp )
 
 	// パレット転送
   { 
-    ARCDATID  pal = POKEGRA_GetPalArcIndex( PP_Get( pp, ID_PARA_monsno,	NULL ), 
+    ARCDATID  pal = POKEGRA_GetPalArcIndex( 
+        PP_Get( pp, ID_PARA_monsno,	NULL ), 
           PP_Get( pp, ID_PARA_form_no,NULL ),
           PP_Get( pp, ID_PARA_sex,	NULL ),
           PP_CheckRare( pp ),
           POKEGRA_DIR_FRONT,
           FALSE );
 
-    GFL_ARC_UTIL_TransVramPalette( POKEGRA_GetArcID(), pal, PALTYPE_MAIN_OBJ, 0x20*13, 32, HEAPID_WORLDTRADE );
+    GFL_ARC_UTIL_TransVramPalette( POKEGRA_GetArcID(), pal, PALTYPE_MAIN_OBJ, 0x20*13, POKEGRA_POKEMON_PLT_SIZE, HEAPID_WORLDTRADE );
   }
 	
 }

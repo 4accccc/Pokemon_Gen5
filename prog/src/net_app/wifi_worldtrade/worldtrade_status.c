@@ -115,6 +115,7 @@ int WorldTrade_Status_Main(WORLDTRADE_WORK *wk, int seq)
 	int ret=SEQ_MAIN;
 
 		if(1){	
+
 			WorldTrade_SubProcessChange( wk, WORLDTRADE_MYBOX, wk->sub_process_mode );
 			ret = SEQ_FADEOUT;
 		}
@@ -142,6 +143,8 @@ int WorldTrade_Status_End(WORLDTRADE_WORK *wk, int seq)
 
 	// ボックス画面に戻る
 	WorldTrade_SubProcessUpdate( wk );
+
+  PMSND_PlayBGM( WORLDTRADE_BGM );
 
 	return SEQ_INIT;
 }
