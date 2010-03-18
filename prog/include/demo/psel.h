@@ -53,6 +53,7 @@ extern const GFL_PROC_DATA    PSEL_ProcData;
 //=====================================
 typedef struct
 {
+  u16*                 evwk;          ///< [in,out] 選択結果(0=みず, 1=ほのお, 2=くさ)
   PSEL_RESULT          result;        ///< [out] 選択結果 
 }
 PSEL_PARAM;
@@ -67,7 +68,8 @@ PSEL_PARAM;
 /// パラメータ生成
 //=====================================
 extern PSEL_PARAM*  PSEL_AllocParam(
-                                      HEAPID               heap_id
+                                      HEAPID               heap_id,
+                                      u16*                 evwk
                                   );
 
 //-------------------------------------
@@ -76,14 +78,13 @@ extern PSEL_PARAM*  PSEL_AllocParam(
 extern void  PSEL_FreeParam(
                       PSEL_PARAM*  param );
 
-/*
 //-------------------------------------
 /// パラメータを設定する
 //=====================================
 extern void  PSEL_InitParam(
-                  PSEL_PARAM*      param
+                  PSEL_PARAM*      param,
+                  u16*             evwk
              );
-*/
 
 //-------------------------------------
 /// 選択結果を得る

@@ -114,6 +114,7 @@ typedef struct {
   PMSI_PARAM*    pmsi_param;
 
   // ŽO•C‘I‘ð
+  u16                evwk;
   PSEL_PARAM*        psel_param;
 
   // ’n‰º“S˜Hü}
@@ -828,11 +829,12 @@ static void PmsInputSingleExit( KAWADA_MAIN_WORK* wk )
 static void PselInit( KAWADA_MAIN_WORK* wk )
 {
   GFL_OVERLAY_Load( FS_OVERLAY_ID(psel) );
-  wk->psel_param = PSEL_AllocParam( wk->heapID );
+  wk->psel_param = PSEL_AllocParam( wk->heapID, &(wk->evwk) );
   GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &PSEL_ProcData, wk->psel_param );
 }
 static void PselExit( KAWADA_MAIN_WORK* wk )
 {
+  OS_Printf( "DebugKawada: evwk=%d\n", wk->evwk );
   PSEL_FreeParam( wk->psel_param );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(psel) );
 }

@@ -51,6 +51,7 @@
 #include "app/chihou_zukan_award.h"
 #include "app/zenkoku_zukan_award.h"
 #include "app/subway_map.h"
+#include "demo/psel.h"
 
 #include "app/mailbox.h"
 FS_EXTERN_OVERLAY(app_mail);
@@ -550,6 +551,31 @@ VMCMD_RESULT EvCmdCallZukanAward( VMHANDLE *core, void *wk )
     }
     break;
   }
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   三匹選択
+ * @param core    仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCallPsel( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  u16* evwk = SCRCMD_GetVMWork( core, wk );
+  PSEL_PARAM* param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(PSEL_PARAM) );
+  param->evwk = evwk;
+  EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(psel), &PSEL_ProcData, param, NULL, NULL );
+  // evwkに選択結果を入れて返す
+  // *evwk == 0  みずタイプ
+  // *evwk == 1  ほのおタイプ
+  // *evwk == 2  くさタイプ
   return VMCMD_RESULT_SUSPEND;
 }
 

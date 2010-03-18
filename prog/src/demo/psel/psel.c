@@ -928,20 +928,21 @@ const GFL_PROC_DATA    PSEL_ProcData =
  *  @brief           パラメータ生成
  *
  *  @param[in]       heap_id       ヒープID
+ *  @param[in,out]   evwk          選択結果(0=みず, 1=ほのお, 2=くさ)
  *
  *  @retval          PSEL_PARAM
  */
 //------------------------------------------------------------------
 PSEL_PARAM*  PSEL_AllocParam(
-                                HEAPID               heap_id
+                                HEAPID               heap_id,
+                                u16*                 evwk
                            )
 {
   PSEL_PARAM* param = GFL_HEAP_AllocMemory( heap_id, sizeof( PSEL_PARAM ) );
-/*
   PSEL_InitParam(
-      param
+      param,
+      evwk
       );
-*/
   return param;
 }
 
@@ -965,18 +966,19 @@ void            PSEL_FreeParam(
  *  @brief           パラメータを設定する
  *
  *  @param[in,out]   param         PSEL_PARAM
+ *  @param[in,out]   evwk          選択結果(0=みず, 1=ほのお, 2=くさ)
  *
  *  @retval          
  */
 //------------------------------------------------------------------
-/*
 void  PSEL_InitParam(
-                  PSEL_PARAM*      param
+                  PSEL_PARAM*      param,
+                  u16*             evwk
                          )
 {
   param->result             = PSEL_RESULT_MIZU;
+  param->evwk               = evwk;
 }
-*/
 
 //------------------------------------------------------------------
 /**
@@ -1056,7 +1058,8 @@ static GFL_PROC_RESULT Psel_ProcExit( GFL_PROC* proc, int* seq, void* pwk, void*
   {
     // 選択結果をパラメータに設定して持ち帰る
     {
-      work->param->result = work->select_target_poke;  // PSEL_RESULTとTARGETは同じ並び順
+      *(work->param->evwk) = work->select_target_poke;  // PSEL_RESULTとTARGETは同じ並び順
+      work->param->result  = work->select_target_poke;  // PSEL_RESULTとTARGETは同じ並び順
     }
 
     GFL_PROC_FreeWork( proc );
