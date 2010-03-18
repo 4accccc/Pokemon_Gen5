@@ -8133,17 +8133,17 @@
 		<language name="JPN" width="256">FLD-145</language>
 		<language name="JPN_KANJI" width="256">FLD-145</language>
 	</row>
-	<row id="msg_seq_se_dmy_270">
-		<language name="JPN" width="256">DMY-270</language>
-		<language name="JPN_KANJI" width="256">DMY-270</language>
+	<row id="msg_seq_se_fld_146">
+		<language name="JPN" width="256">FLD-146</language>
+		<language name="JPN_KANJI" width="256">FLD-146</language>
 	</row>
-	<row id="msg_seq_se_dmy_271">
-		<language name="JPN" width="256">DMY-271</language>
-		<language name="JPN_KANJI" width="256">DMY-271</language>
+	<row id="msg_seq_se_sys_88">
+		<language name="JPN" width="256">SYS-88</language>
+		<language name="JPN_KANJI" width="256">SYS-88</language>
 	</row>
-	<row id="msg_seq_se_dmy_272">
-		<language name="JPN" width="256">DMY-272</language>
-		<language name="JPN_KANJI" width="256">DMY-272</language>
+	<row id="msg_seq_se_sys_89">
+		<language name="JPN" width="256">SYS-89</language>
+		<language name="JPN_KANJI" width="256">SYS-89</language>
 	</row>
 	<row id="msg_seq_se_dmy_273">
 		<language name="JPN" width="256">DMY-273</language>
