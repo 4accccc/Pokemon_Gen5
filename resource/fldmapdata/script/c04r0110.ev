@@ -909,7 +909,7 @@ _ANIME_LABEL anm_jiki_next_car_scroll
 sub_battle_single_double:
 {
   //対戦前台詞
-  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG, BSW_NULL, BSW_NULL, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG, 0, BSW_NULL, BSW_NULL )
   
   //互いに近づく
   _CALL sub_anm_battle_start
@@ -928,7 +928,10 @@ _RET
 sub_battle_multi:
 {
   //対戦前台詞
-  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG, BSW_NULL, BSW_NULL, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG, 0, BSW_NULL, BSW_NULL )
+  
+  //対戦前台詞
+  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG, 1, BSW_NULL, BSW_NULL )
   
   //互いに近づく
   _CALL sub_anm_battle_start_multi
@@ -947,8 +950,11 @@ _RET
 sub_battle_comm_multi:
 {
   //対戦前台詞
-  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG, BSW_NULL, BSW_NULL, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG, 0, BSW_NULL, BSW_NULL )
   
+  //対戦前台詞
+  _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG, 1, BSW_NULL, BSW_NULL )
+
   //互いに近づく
   _CALL sub_anm_battle_start_multi
   
