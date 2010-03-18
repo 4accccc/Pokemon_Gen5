@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-18T20:59:07"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-18T22:14:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1372" top="-12" right="2064" bottom="608" maximized="no" rayout="Vertical2">
+	<dialog left="1353" top="185" right="2058" bottom="805" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="517"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="535"/>
+		<band id="2" index="3" style="0000" width="548"/>
 		<band id="3" index="4" style="0000" width="147"/>
-		<band id="4" index="0" style="0000" width="684"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -395,6 +395,14 @@
 さきに　すすめるように　なった！</language>
 		<language name="JPN_KANJI" width="256">壁が　動き
 先に　進めるように　なった！</language>
+	</row>
+
+	<row id="msg_d20r0501_sys_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">てんじょうに　あなが　あいている……
+うえの　かいに　すすみますか？</language>
+		<language name="JPN_KANJI" width="256">天井に　穴が　空いている……
+上の階に　進みますか？</language>
 	</row>
 
 	<flowchart-group-list>
