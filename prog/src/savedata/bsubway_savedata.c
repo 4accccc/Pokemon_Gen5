@@ -511,7 +511,6 @@ void BSUBWAY_SCOREDATA_UpdateRenshouMax(
   }
 }
 
-#if 0 //使わない
 //--------------------------------------------------------------
 /**
  * スコアデータ、連勝数セット
@@ -524,7 +523,6 @@ void BSUBWAY_SCOREDATA_SetRenshou(
 {
   bsw_score->renshou[mode] = count;
 }
-#endif
 
 //--------------------------------------------------------------
 /**

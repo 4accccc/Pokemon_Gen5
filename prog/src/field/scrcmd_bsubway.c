@@ -375,10 +375,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       
       if( flag == BSWAY_SCOREDATA_FLAG_MAX ){
         GF_ASSERT( 0 );
-        *ret_wk = 1;
       }else{
-        *ret_wk = BSUBWAY_SCOREDATA_SetFlag(
-            scoreData, flag, BSWAY_SETMODE_set );
+        BSUBWAY_SCOREDATA_SetFlag( scoreData, flag, BSWAY_SETMODE_set );
       }
     }
     break;

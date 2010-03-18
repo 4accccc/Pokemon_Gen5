@@ -790,9 +790,6 @@ BOOL BSUBWAY_SCRWORK_GetEntryPoke( BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys 
   }
 }
 
-extern void BSUBWAY_SCOREDATA_SetRenshou(
-    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count );
-
 //--------------------------------------------------------------
 /**
  *  @brief  7連勝しているかどうかチェック

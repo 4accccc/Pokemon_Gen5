@@ -253,6 +253,8 @@ extern void BSUBWAY_SCOREDATA_SetRenshouMax(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count );
 extern void BSUBWAY_SCOREDATA_UpdateRenshouMax(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count );
+extern void BSUBWAY_SCOREDATA_SetRenshou(
+    BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count );
 extern void BSUBWAY_SCOREDATA_ResetStageNo( BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
 extern void BSUBWAY_SCOREDATA_IncStageNo( BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode );
 extern void BSUBWAY_SCOREDATA_SetStageNo( BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 stage );
