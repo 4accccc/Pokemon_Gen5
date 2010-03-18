@@ -77,16 +77,17 @@ DEMO3D_CMD_WORK* Demo3D_CMD_Init( DEMO3D_ENGINE_WORK* core, HEAPID heapID )
   // メインワーク アロケーション
   wk = GFL_HEAP_AllocClearMemory( heapID, sizeof( DEMO3D_CMD_WORK ) );
 
-
   // メンバ初期化
   wk->core = core;
   wk->heapID = heapID;
   wk->tmpHeapID = GFL_HEAP_LOWID(heapID);
   wk->demo_id = core->env.demo_id;
-  wk->is_cmd_end = cmd_setup( wk, core, &wk->cmd_idx );
   wk->pre_frame = -1;
   
   cmd_SystemWorkInit( wk );
+
+  //イニシャルコマンド列実行
+  wk->is_cmd_end = cmd_setup( wk, core, &wk->cmd_idx );
 
   return wk;
 }
