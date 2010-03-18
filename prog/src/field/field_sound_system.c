@@ -233,6 +233,8 @@ static void DebugPrint_RequestQueue( const FIELD_SOUND* fieldSound );
 static void DebugPrint_pushedBGM( const FIELD_SOUND* fieldSound );
 static void DebugPrint_AllInfo( const FIELD_SOUND* fieldSound );
 
+//常駐SE判定のためのコールバック関数
+static BOOL checkStaticEntrySE( u32 sndIndex );
 
 //================================================================================= 
 // ■システム作成/破棄
@@ -258,6 +260,8 @@ FIELD_SOUND* FIELD_SOUND_Create( HEAPID heapID )
   InitFieldSoundSystem( fieldSound );
   fieldSound->playerVolumeFader = PLAYER_VOLUME_FADER_Create( heapID, PLAYER_BGM );
   fieldSound->ringToneSys = RINGTONE_SYS_Create( heapID, fieldSound->playerVolumeFader );
+  //常駐判定用コールバックを登録
+  PMSND_SetPlayableCallBack( checkStaticEntrySE );
 
   return fieldSound;
 }
@@ -271,6 +275,7 @@ FIELD_SOUND* FIELD_SOUND_Create( HEAPID heapID )
 //---------------------------------------------------------------------------------
 void FIELD_SOUND_Delete( FIELD_SOUND* fieldSound )
 {
+  PMSND_SetPlayableCallBack( NULL );
   RINGTONE_SYS_Delete( fieldSound->ringToneSys );
   PLAYER_VOLUME_FADER_Delete( fieldSound->playerVolumeFader );
   GFL_HEAP_FreeMemory( fieldSound );
@@ -710,6 +715,65 @@ void FIELD_SOUND_RePlayEnvSE( FIELD_SOUND* fieldSound )
     }
   }
 }
+
+//================================================================================= 
+//================================================================================= 
+//---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
+static const u16 StaticEntryList[] = {
+	SEQ_SE_MESSAGE,
+	SEQ_SE_SELECT1 ,
+	SEQ_SE_SELECT2,
+	SEQ_SE_SELECT4,
+	SEQ_SE_DECIDE1 ,
+	SEQ_SE_DECIDE2,
+	SEQ_SE_DECIDE3,
+	SEQ_SE_CANCEL1,
+	SEQ_SE_CANCEL2,
+	SEQ_SE_CANCEL3,
+	SEQ_SE_OPEN1,
+	SEQ_SE_CLOSE1,
+	SEQ_SE_BEEP,
+	SEQ_SE_DANSA ,
+	SEQ_SE_WALL_HIT,
+	SEQ_SE_BICYCLE ,
+	SEQ_SE_FLD_08,
+	SEQ_SE_FLD_09,
+	SEQ_SE_FLD_10,
+	SEQ_SE_FLD_11,
+	SEQ_SE_FLD_12,
+	SEQ_SE_FLD_13,
+	SEQ_SE_FLD_14,
+	SEQ_SE_FLD_31,
+	SEQ_SE_FLD_32,
+	SEQ_SE_FLD_49,
+	SEQ_SE_FLD_84,
+	SEQ_SE_FLD_85,
+	SEQ_SE_FLD_91,
+	SEQ_SE_FLD_100,
+	SEQ_SE_FLD_120,
+	SEQ_SE_FLD_122,
+	SEQ_SE_SYS_35,
+	SEQ_SE_SYS_69,
+	SEQ_SE_SYS_70,
+	SEQ_SE_SYS_11,
+	SEQ_SE_SYS_79,
+};
+
+static BOOL checkStaticEntrySE( u32 sndIndex )
+{
+  int i;
+  for ( i = 0; i < NELEMS(StaticEntryList); i ++ )
+  {
+    if ( StaticEntryList[i] == sndIndex )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
 
 //================================================================================= 
 // ■非公開関数
