@@ -38,7 +38,7 @@ INIT_EVENT_START	ev_init_d06r0101
 	IF $WK_SCENE_D06R0101 > 0 && $WK_SCENE_D06R0101 < 5 THEN
 		//Nを次のイベントの位置に移動
 		_OBJ_POS_CHANGE(D06R0101_BOSS_01,69,1,13,DIR_LEFT)
-	
+		
 	ENDIF
 	
 
@@ -626,13 +626,9 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	//ホワイトの場所を移動
 	_OBJ_POS_CHANGE( D06R0101_HAKASE2_01, 56, 0, 13, DIR_RIGHT )
 	_OBJ_POS_CHANGE( D06R0101_HEROINE_01, 58, 0, 14, DIR_RIGHT )
-	
+
 	//NのBGM再生
 	_START_EVENT_BGM( SEQ_BGM_E_N )
-	
-	//Nがやってくる
-//	_OBJ_ANIME( D06R0101_BOSS_01,anm_boss_kuru_01)
-//	_OBJ_ANIME_WAIT()
 	
 	_TIME_WAIT(12)
 	
@@ -643,39 +639,33 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
 	
-	_TIME_WAIT(16)
-	//Ｎバストアップ表示開始---------------------------------------------------
-	_START_FACEUP( FLD_FACEUP_BG_DUNGEON, FLD_FACEUP_CHAR_BOSS )
-	
 	//はい・いいえで分岐
 	IF $SCWK_ANSWER ==  SCR_YES THEN
 		//はい
 		//Nが喋る
 		//Ｎ『……さてと　ポケモンではなく　じぶんの　ちからで
-		_PLAINWIN_MSG_DOWN(msg_d06r0101_boss_02)
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_boss_02, D06R0101_BOSS_01, POS_DEFAULT )
 		_MSGWIN_CLOSE()
 	
 	ELSE
 		//いいえ
 		//Nが喋る
 		//Ｎ『……さてと　ポケモンではなく　じぶんの　ちからで
-		_PLAINWIN_MSG_DOWN(msg_d06r0101_boss_03)
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_boss_03, D06R0101_BOSS_01, POS_DEFAULT )
 		_MSGWIN_CLOSE()
 	
 	ENDIF
-
-	_END_FACEUP()	//Ｎバストアップ表示終了----------------------------------
 		
 	//Nとの戦闘
 	_CALL		ev_boss_btl
 
 	_TIME_WAIT(16)
 	//Nが喋る
-	//Ｎ『……ふしぎだな　なぜ　キミのような　にんげんが
-	_BALLOONWIN_OBJMSG( msg_d06r0101_boss_04, D06R0101_BOSS_01)
-	_BALLOONWIN_CLOSE()
 	
-	_TIME_WAIT(16)
+	_BALLOONWIN_OBJMSG_WB(msg_d06r0101_boss_04w,msg_d06r0101_boss_04b,D06R0101_BOSS_01,POS_DEFAULT)
+	_BALLOONWIN_CLOSE()
+		
+	_TIME_WAIT(20)
 	
 	//プレイヤーの名前を格納
 	_PLAYER_NAME(0)
@@ -706,6 +696,7 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	//博士2が喋る
 	//博士2:･･････ホワイティは　みみが　いいのね
 	_BALLOONWIN_OBJMSG( msg_d06r0101_hakase2_09, D06R0101_HAKASE2_01)
+	
 	_TIME_WAIT(12)
 	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_right)
 	_OBJ_ANIME_WAIT()
@@ -747,6 +738,10 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	_OBJ_ANIME( D06R0101_BOSS_01,anm_boss_saru_03)
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_right)
 	_OBJ_ANIME_WAIT()
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_OBJ_DEL( D06R0101_BOSS_01 )
+	_SE_WAIT()
 
 	//BGM終了
 	_END_EVENT_BGM()
@@ -793,7 +788,6 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	//博士とホワイト、Nを非表示にする
 	_OBJ_DEL( D06R0101_HEROINE_01 )
 	_OBJ_DEL( D06R0101_HAKASE2_01 )
-	_OBJ_DEL( D06R0101_BOSS_01 )
 	
 //===============フラグ操作===============//
 //【仮】フラグが無い為、仮
@@ -927,7 +921,7 @@ _ANIME_LABEL	anm_boss_kuru_01
 _ANIME_LABEL	anm_boss_saru_03
 	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/

@@ -257,30 +257,28 @@ EVENT_START   ev_pos_c02_boss_01
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_01)
 	_OBJ_ANIME_WAIT()
 	
+	//間を作るためのウェイト	
+	_TIME_WAIT(8)
+	
 	//Nがしゃべる
 	//まよえる　トレーナーよ
-	_BALLOONWIN_OBJMSG( msg_c02_boss_01, MMDL_ID_EVENTOBJ_00)
-//	_BALLOONWIN_OBJMSG_POS( msg_c02_boss_01, MMDL_ID_EVENTOBJ_00, POS_DR )
+	_BALLOONWIN_OBJMSG_POS( msg_c02_boss_01, MMDL_ID_EVENTOBJ_00,POS_DEFAULT)
 	
 	//はい/いいえの選択
 	_YES_NO_WIN( SCWK_ANSWER )
 	_MSGWIN_CLOSE()
 	
-	_TIME_WAIT(16)
-	//Ｎバストアップ表示開始---------------------------------------------------
-	_START_FACEUP( FLD_FACEUP_BG_CITY, FLD_FACEUP_CHAR_BOSS )
-	
 	IF $SCWK_ANSWER ==  SCR_NO THEN
 	
 		//Nが喋る・いいえの場合
 		//Ｎ『ボクを　からかっているね
-		_PLAINWIN_MSG_DOWN(msg_c02_boss_03)
+		_BALLOONWIN_OBJMSG_POS( msg_c02_boss_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
     	_MSGWIN_CLOSE()
 		
 	ELSE
 		//Nが喋る・はいの場合
 		//Ｎ『ボクに　さからうんだね
-		_PLAINWIN_MSG_DOWN(msg_c02_boss_02)
+		_BALLOONWIN_OBJMSG_POS( msg_c02_boss_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
     	_MSGWIN_CLOSE()
     	
 		//==============フラグワーク操作==============//
@@ -290,59 +288,41 @@ EVENT_START   ev_pos_c02_boss_01
     	
 	ENDIF
 	
-	_END_FACEUP()	//Ｎバストアップ表示終了----------------------------------
+	_TIME_WAIT(12) 
 	
 	//Nとの戦闘
 	_CALL		ev_boss_btl
-	
+
 	_TIME_WAIT(16)
-	//Ｎバストアップ表示開始---------------------------------------------------
-	_START_FACEUP( FLD_FACEUP_BG_CITY, FLD_FACEUP_CHAR_BOSS )
 	
 	//Nが喋る
 	//Ｎ『いまの　ボクの　ともだちとでは
-	_PLAINWIN_MSG_DOWN(msg_c02_boss_04)
+	_BALLOONWIN_OBJMSG_POS( msg_c02_boss_04, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
     _MSGWIN_CLOSE()
    
- 	_END_FACEUP()	//Ｎバストアップ表示終了----------------------------------
- 	_TIME_WAIT(16)
- /*	
-	//Nが5歩移動
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_02 )
-	_OBJ_ANIME_WAIT()
-	
-	//主人公がNのほうを向く
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_02_turn_l )
-	_OBJ_ANIME_WAIT()
-*/
-
-	//Nが一歩歩く
-	//主人公がNから下がる
-//	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_01)
-	
-//	_TIME_WAIT(8)
-//	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01)
-//	_OBJ_ANIME_WAIT()
-	
-	//間を作るためのウェイト
 	_TIME_WAIT(16)
-	
-	//Nが喋る
-	//Ｎ『せかいには
-	_BALLOONWIN_OBJMSG( msg_c02_boss_05, MMDL_ID_EVENTOBJ_00 )
-    _BALLOONWIN_CLOSE()
 	
 	//Nが画面外に移動する
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_03 )
-	_TIME_WAIT(64)
+	_TIME_WAIT(32)
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_l )
 	_OBJ_ANIME_WAIT()
+	
+	//Nが喋る
+	_BALLOONWIN_OBJMSG_WB(msg_c02_boss_05w,msg_c02_boss_05b,MMDL_ID_EVENTOBJ_00,POS_UL)
+    _BALLOONWIN_CLOSE()
+	
+	//間を作るためのウェイト
+	_TIME_WAIT(14)
 
-	//BGM終了
-	_END_EVENT_BGM()
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_boss_01_walk_04 )
+	_OBJ_ANIME_WAIT()
 	
 	//Nを消す
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//BGM終了
+	_END_EVENT_BGM()
 	
 	//==============フラグワーク操作==============//
 			
@@ -407,9 +387,18 @@ _ANIME_LABEL	anm_boss_01_walk_02
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_boss_01_walk_03
 
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_WALK_L_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//N:画面外に消える                             
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boss_01_walk_04
+
 	_ANIME_DATA	AC_WALK_L_8F,3
-	_ANIME_DATA	AC_WALK_D_8F,6
-	_ANIME_DATA	AC_WALK_L_8F,5
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/
