@@ -64,8 +64,8 @@ typedef struct
   void *recvPtr[_WIFI_NUM_MAX];  //受信バッファの32バイトアライメントしていないポインタ
   int deletedIndex[FRIENDLIST_MAXSIZE];
   int srcIndex[FRIENDLIST_MAXSIZE];
-//  DWCUserData* pSaveDataUserData;
-//  DWCFriendData* pSaveDataFriendData;
+  //  DWCUserData* pSaveDataUserData;
+  //  DWCFriendData* pSaveDataFriendData;
   GFL_NET_MYDWCReceiverFunc serverCallback;
   GFL_NET_MYDWCReceiverFunc clientCallback;
   MYDWCDisconnectFunc disconnectCallback;
@@ -80,7 +80,7 @@ typedef struct
   u8 friendinfo[FRIENDLIST_MAXSIZE][MYDWC_STATUS_DATA_SIZE_MAX]; //WC_GetFriendStatusDataで得られる値
   u32 friendupdate_index;
   u32 connectionUserData;// 新機能 繋ぐ時のユーザーデータただし4バイト
-  
+
   int state;
   int stepMatchResult;
   int matching_type;
@@ -212,7 +212,7 @@ static void _FuncNonSave(void);
 static void _setStateDebug(int state,int line)
 {
   NET_PRINT("rap%d\n",line);
-   _dWork->state = state;
+  _dWork->state = state;
 }
 #define   _CHANGE_STATE(state)  _setStateDebug(state, __LINE__)
 
@@ -220,7 +220,7 @@ static void _setStateDebug(int state,int line)
 
 static void _setState(int state)
 {
-   _dWork->state = state;
+  _dWork->state = state;
 }
 #define   _CHANGE_STATE(state)  _setState(state)
 
@@ -281,7 +281,7 @@ int GFL_NET_DWC_startConnect(DWCUserData* pUserData, DWCFriendData* pFriendData)
 
 
   _CHANGE_STATE(MDSTATE_INIT);
-//  _dWork->state = MDSTATE_INIT;
+  //  _dWork->state = MDSTATE_INIT;
 
   _dWork->vchatcodec = VCHAT_NONE;
   _dWork->friendindex = -1;
@@ -406,32 +406,32 @@ int GFL_NET_DWC_connect()
         DWC_ProcessInet();
 
 #ifdef DEBUG_ONLY_FOR_toru_nagihashi
-		 		switch ( DWC_GetInetStatus() )
-				{
-				case DWC_CONNECTINET_STATE_ERROR:
-					{
-					 	// エラー表示
-					 	DWCError err;
-					 	int errcode;
-					 	err = DWC_GetLastError( &errcode );
+        switch ( DWC_GetInetStatus() )
+        {
+        case DWC_CONNECTINET_STATE_ERROR:
+          {
+            // エラー表示
+            DWCError err;
+            int errcode;
+            err = DWC_GetLastError( &errcode );
 
-						OS_TPrintf("   Error occurred %d %d.\n", err, errcode );
-					}
-					DWC_ClearError();
+            OS_TPrintf("   Error occurred %d %d.\n", err, errcode );
+          }
+          DWC_ClearError();
 
-					DWC_CleanupInet();
-					break;
-				case DWC_CONNECTINET_STATE_FATAL_ERROR:
-					{
-					 	// エラー表示
-					 	DWCError err;
-					 	int errcode;
-					 	err = DWC_GetLastError( &errcode );
+          DWC_CleanupInet();
+          break;
+        case DWC_CONNECTINET_STATE_FATAL_ERROR:
+          {
+            // エラー表示
+            DWCError err;
+            int errcode;
+            err = DWC_GetLastError( &errcode );
 
-					 	OS_Panic("   Error occurred %d %d.\n", err, errcode );
-					}
-					break;
-				}
+            OS_Panic("   Error occurred %d %d.\n", err, errcode );
+          }
+          break;
+        }
 #endif
 
         break;
@@ -449,9 +449,9 @@ int GFL_NET_DWC_connect()
     // オーバーレイしてる場合 DWC_Initを再度CALLしてあげないとここで停止
     // フレンドライブラリ初期化
     DWC_InitFriendsMatch( _dWork->pUserData,
-													GAME_PRODUCTID, 
-													GAME_SECRET_KEY, 0, 0,
-													_dWork->pFriendData, FRIENDLIST_MAXSIZE);
+                          GAME_PRODUCTID,
+                          GAME_SECRET_KEY, 0, 0,
+                          _dWork->pFriendData, FRIENDLIST_MAXSIZE);
 
     {// IPLのユーザ名を使ってログイン
       // 自分のユーザ名を圧縮。
@@ -490,7 +490,7 @@ int GFL_NET_DWC_connect()
   case MDSTATE_UPDATESERVERSASYNC:
     DWC_ProcessFriendsMatch();
     break;
-    
+
   case MDSTATE_LOGIN:
     DWC_ProcessFriendsMatch();   // 2006.04.07 k.ohno ログインしただけの状態を持続する為
     _dWork->stepMatchResult = STEPMATCH_CONNECT;
@@ -605,9 +605,9 @@ const static char randommatch_query[] = "%s = \'%s\'";
 
 int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit )
 {
-  
 
-  
+
+
   GF_ASSERT( _dWork != NULL );
 
   if( _dWork->state != MDSTATE_LOGIN )
@@ -617,18 +617,18 @@ int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit
   mydwc_releaseRecvBuffAll();
 
 
-/*   { //@@OO TWLには関数が無かったので削除
- *     int result;
- *     DWCMatchOptMinComplete moc={TRUE, 2, {0,0}, 0};
- *     moc.timeout = timelimit*1000;
- *     //        DWCMatchOptMinComplete moc={TRUE, 2, {0,0}, _RANDOMMATCH_TIMEOUT*1000};
- *     //	    if(!bParent){
- *     //            moc.timeout = 1; // 子機に時間の主導権がないように短く設定する
- *     //        }
- *     result = DWC_SetMatchingOption(DWC_MATCH_OPTION_MIN_COMPLETE,&moc,sizeof(moc));
- *     GF_ASSERT( result == DWC_SET_MATCH_OPT_RESULT_SUCCESS );
- *   }
- */
+  /*   { //@@OO TWLには関数が無かったので削除
+   *     int result;
+   *     DWCMatchOptMinComplete moc={TRUE, 2, {0,0}, 0};
+   *     moc.timeout = timelimit*1000;
+   *     //        DWCMatchOptMinComplete moc={TRUE, 2, {0,0}, _RANDOMMATCH_TIMEOUT*1000};
+   *     //	    if(!bParent){
+   *     //            moc.timeout = 1; // 子機に時間の主導権がないように短く設定する
+   *     //        }
+   *     result = DWC_SetMatchingOption(DWC_MATCH_OPTION_MIN_COMPLETE,&moc,sizeof(moc));
+   *     GF_ASSERT( result == DWC_SET_MATCH_OPT_RESULT_SUCCESS );
+   *   }
+   */
   GF_ASSERT(DWC_AddMatchKeyString(0,PPW_LOBBY_MATCHMAKING_KEY,(const char *)keyStr)!=0);
   {
     MI_CpuClear8(_dWork->randommatch_query,_MATCHSTRINGNUM);
@@ -646,26 +646,26 @@ int GFL_NET_DWC_StartMatch( u8* keyStr,int numEntry, BOOL bParent, u32 timelimit
   }
 
   _CHANGE_STATE(MDSTATE_MATCHING);
- // _dWork->state = MDSTATE_MATCHING;
+  // _dWork->state = MDSTATE_MATCHING;
 
   MYDWC_DEBUGPRINT("mydwc_startmatch %d ",numEntry);
   _dWork->maxConnectNum = numEntry;
 
   if(FALSE==DWC_ConnectToAnybodyAsync
-    (
-      DWC_TOPOLOGY_TYPE_FULLMESH,
-      numEntry,
-      (const char*)_dWork->randommatch_query,
-      ConnectToAnybodyCallback,
-      GFL_NET_GetWork(),
-      RandomNewClientCallback,
-      GFL_NET_GetWork(),
-      EvaluateAnybodyCallback,
-      GFL_NET_GetWork(),
-      attemptCallback,
-      (u8*)&_dWork->connectionUserData,
-      GFL_NET_GetWork()
-      )){
+     (
+       DWC_TOPOLOGY_TYPE_FULLMESH,
+       numEntry,
+       (const char*)_dWork->randommatch_query,
+       ConnectToAnybodyCallback,
+       GFL_NET_GetWork(),
+       RandomNewClientCallback,
+       GFL_NET_GetWork(),
+       EvaluateAnybodyCallback,
+       GFL_NET_GetWork(),
+       attemptCallback,
+       (u8*)&_dWork->connectionUserData,
+       GFL_NET_GetWork()
+       )){
     return 0;
   }
   _dWork->matching_type = MDTYPE_RANDOM;
@@ -714,20 +714,20 @@ int GFL_NET_DWC_StartMatchFilter( char* filterStr,int numEntry,DWCEvalPlayerCall
   _CHANGE_STATE(MDSTATE_MATCHING);
   _dWork->maxConnectNum = numEntry;
   if(FALSE==DWC_ConnectToAnybodyAsync
-    (
-      DWC_TOPOLOGY_TYPE_STAR,
-      numEntry,
-      (const char*)filterStr,
-      ConnectToAnybodyCallback,
-      NULL,
-      RandomNewClientCallback,
-      NULL,
-      evalcallback,
-      pWork,
-      NULL,
-      NULL,
-      NULL
-      )){
+     (
+       DWC_TOPOLOGY_TYPE_STAR,
+       numEntry,
+       (const char*)filterStr,
+       ConnectToAnybodyCallback,
+       NULL,
+       RandomNewClientCallback,
+       NULL,
+       evalcallback,
+       pWork,
+       NULL,
+       NULL,
+       NULL
+       )){
     return 0;
   }
   _dWork->matching_type = MDTYPE_RANDOM;
@@ -760,7 +760,7 @@ static void finishcancel()
   else
   {
     _CHANGE_STATE(MDSTATE_CANCELFINISH);
-  //  _dWork->state = MDSTATE_CANCELFINISH;
+    //  _dWork->state = MDSTATE_CANCELFINISH;
   }
 }
 
@@ -792,7 +792,7 @@ int GFL_NET_DWC_stepmatch( int isCancel )
     if( isCancel )
     {
       _CHANGE_STATE(MDSTATE_CANCEL);
-     // _dWork->state = MDSTATE_CANCEL;
+      // _dWork->state = MDSTATE_CANCEL;
     }
     // 2006.7.4 yoshihara修正 ここから
     // 子機の場合、つなぎにいってる親が現在もサーバモードかどうかチェックする。
@@ -805,7 +805,7 @@ int GFL_NET_DWC_stepmatch( int isCancel )
           MYDWC_DEBUGPRINT("相手がサーバをやめてしまったので、キャンセルします。\n");
           // 既に親でなくなってしまっている。キャンセルへ移項
           _CHANGE_STATE(MDSTATE_FAIL);
-         // _dWork->state = MDSTATE_FAIL;
+          // _dWork->state = MDSTATE_FAIL;
         }
       }
     }
@@ -824,13 +824,13 @@ int GFL_NET_DWC_stepmatch( int isCancel )
     // 完了。
     {
       GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
-     if(_dWork->bVChat){
+      if(_dWork->bVChat){
         _DWC_StartVChat(pNetInit->netHeapID);
       }
       _dWork->myvchaton = 0;
 
       _CHANGE_STATE(MDSTATE_PLAYING);
-//      _dWork->state = MDSTATE_PLAYING;
+      //      _dWork->state = MDSTATE_PLAYING;
       _dWork->stepMatchResult = STEPMATCH_SUCCESS;
       return _dWork->stepMatchResult;
     }
@@ -838,7 +838,7 @@ int GFL_NET_DWC_stepmatch( int isCancel )
   case MDSTATE_CANCELFINISH:
     // ログイン直後の状態に
     _CHANGE_STATE(MDSTATE_LOGIN);
-//    _dWork->state = MDSTATE_LOGIN;
+    //    _dWork->state = MDSTATE_LOGIN;
     _dWork->sendbufflag = 0;
     _dWork->newFriendConnect = -1;
     MYDWC_DEBUGPRINT("キャンセル処理完了\n");
@@ -847,7 +847,7 @@ int GFL_NET_DWC_stepmatch( int isCancel )
   case MDSTATE_FAILFINISH:
     // ログイン直後の状態に
     _CHANGE_STATE(MDSTATE_LOGIN);
-//    _dWork->state = MDSTATE_LOGIN;
+    //    _dWork->state = MDSTATE_LOGIN;
     _dWork->sendbufflag = 0;
     _dWork->newFriendConnect = -1;
     MYDWC_DEBUGPRINT("フィニッシュ処理完了\n");
@@ -863,7 +863,7 @@ int GFL_NET_DWC_stepmatch( int isCancel )
       MYDWC_DEBUGPRINT("ボイスチャットの切断完了。\n");
       DWC_CloseAllConnectionsHard( );
       _CHANGE_STATE(MDSTATE_DISCONNECT);
-     // _dWork->state = MDSTATE_DISCONNECT;
+      // _dWork->state = MDSTATE_DISCONNECT;
       break;
     }
   case MDSTATE_LOGIN:
@@ -1120,7 +1120,7 @@ static void recvTimeoutCallback(u8 aid, void* param)
     _dWork->newFriendConnect = -1;
     // タイムアウト
     _CHANGE_STATE(MDSTATE_TIMEOUT);
- //   _dWork->state = MDSTATE_TIMEOUT;
+    //   _dWork->state = MDSTATE_TIMEOUT;
   }
 }
 
@@ -1135,12 +1135,12 @@ static void UpdateServersCallback(DWCError error, BOOL isChanged, void* param)
       // 友達リストが変更されていた
     }
     _CHANGE_STATE(MDSTATE_LOGIN);
-  //  _dWork->state = MDSTATE_LOGIN;		// ログイン完了
+    //  _dWork->state = MDSTATE_LOGIN;		// ログイン完了
   }
   else {
     // ログイン失敗扱いにしとく？
     _CHANGE_STATE(MDSTATE_ERROR);
- //   _dWork->state = MDSTATE_ERROR;
+    //   _dWork->state = MDSTATE_ERROR;
   }
 }
 
@@ -1240,8 +1240,8 @@ static void setTimerAndFlg(int index)
   int i,j;
 
   OS_TPrintf("接続しました%s%d\n",__FILE__,__LINE__);
-//  _dWork->state = MDSTATE_MATCHED;
-     _CHANGE_STATE(MDSTATE_MATCHED);
+  //  _dWork->state = MDSTATE_MATCHED;
+  _CHANGE_STATE(MDSTATE_MATCHED);
 
   setTimeoutTime();
 }
@@ -1250,11 +1250,11 @@ static void setTimerAndFlg(int index)
   友達無指定接続コールバック関数
  *---------------------------------------------------------------------------*/
 static void ConnectToAnybodyCallback(DWCError error,
-             BOOL cancel,
-             BOOL self,
-             BOOL isServer,
-             int index,
-             void *param)
+                                     BOOL cancel,
+                                     BOOL self,
+                                     BOOL isServer,
+                                     int index,
+                                     void *param)
 {
 #pragma unused(param)
 
@@ -1274,8 +1274,8 @@ static void ConnectToAnybodyCallback(DWCError error,
   }
   else {
     MYDWC_DEBUGPRINT("マッチング中にエラーが発生しました。 %d\n\n", error);
-//    _dWork->state = MDSTATE_ERROR;
-     _CHANGE_STATE(MDSTATE_ERROR);
+    //    _dWork->state = MDSTATE_ERROR;
+    _CHANGE_STATE(MDSTATE_ERROR);
   }
   if( _dWork->connectCallback ){
     // 何人とつながっても一回しか呼ばれないので自分のIDを入れている
@@ -1339,7 +1339,7 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
   topcode = (buffer[3] << 24) | (buffer[2] << 16) | (buffer[1] << 8) | buffer[0];
 
   //	MYDWC_DEBUGPRINT("[%d,%d,%d,%d]", buffer[0], buffer[1], buffer[2], buffer[3]);
-//  MYDWC_DEBUGPRINT("-受信-\n");
+  //  MYDWC_DEBUGPRINT("-受信-\n");
 
   // 一度受信してはじめてタイムアウトを設定する。
   _dWork->timeoutflag = 1;
@@ -1363,7 +1363,7 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
 #if 1
   {
     u16 *temp = (u16*)buffer + 2;
-    
+
     if( DWC_GetMyAID() == 0 )
     {
       // 自分が親の場合…クライントからサーバに対して送られてきたものと判断。
@@ -1447,9 +1447,9 @@ static void ConnectionClosedCallback(DWCError error,
         //                OHNO_PRINT("DWC_CloseAllConnectionsHard");
         //                DWC_CloseAllConnectionsHard( );
         //				_dWork->state = MDSTATE_DISCONNECT;
-   //     _dWork->state = MDSTATE_DISCONNECTTING;
-     _CHANGE_STATE(MDSTATE_DISCONNECTTING);
- 
+        //     _dWork->state = MDSTATE_DISCONNECTTING;
+        _CHANGE_STATE(MDSTATE_DISCONNECTTING);
+
         MYDWC_DEBUGPRINT("MDSTATE_DISCONNECTTING\n");
       }
       if( _dWork->isvchat )
@@ -1570,16 +1570,16 @@ int mydwc_HandleError(void)
     case DWC_ETYPE_SHOW_ERROR:  // エラー表示が必要
 
       if( -40000 >= errorCode && errorCode >= -41999 )
-      { 
+      {
         DWC_GdbShutdown();           // 簡易データベースライブラリの終了
       }
       if( -43000 >= errorCode && errorCode >= -44999 )
-      { 
+      {
         DWC_ScShutdown();     //SCライブラリの終了
         DWC_GdbShutdown();
       }
 
-      DWC_ClearError();
+      //DWC_ClearError();
       break;
 
     case DWC_ETYPE_SHUTDOWN_GHTTP:
@@ -1588,23 +1588,23 @@ int mydwc_HandleError(void)
       //エラーコードを表示してください。
       //
       if( -40000 >= errorCode && errorCode >= -41999 )
-      { 
+      {
         DWC_GdbShutdown();           // 簡易データベースライブラリの終了
       }
       if( -43000 >= errorCode && errorCode >= -44999 )
-      { 
+      {
         DWC_ScShutdown();
         DWC_GdbShutdown();           // 簡易データベースライブラリの終了
       }
 
-      DWC_ClearError();
+      //DWC_ClearError();
       break;
 
     case DWC_ETYPE_SHUTDOWN_ND:
       //DWC_NdCleanupAsync関数を呼び出して、ダウンロードライブラリを終了する必要があります。
-      //エラーコードを表示してください。 
+      //エラーコードを表示してください。
       DWC_NdCleanupAsync();
-      DWC_ClearError();
+      //DWC_ClearError();
       break;
 
     case DWC_ETYPE_SHUTDOWN_FM:
@@ -1640,18 +1640,18 @@ int mydwc_HandleError(void)
           //                  }
         }
 
-        DWC_ClearError();
+        //DWC_ClearError();
       }
       if(_dWork){
-    //    _dWork->state = MDSTATE_ERROR_DISCONNECT;
-      _CHANGE_STATE(MDSTATE_ERROR_DISCONNECT);
+        //    _dWork->state = MDSTATE_ERROR_DISCONNECT;
+        _CHANGE_STATE(MDSTATE_ERROR_DISCONNECT);
       }
       break;
     case DWC_ETYPE_FATAL:
       // FatalError相当なので、電源OFFを促す必要がある。
       if(_dWork){
-//        _dWork->state = MDSTATE_ERROR_FETAL;
-      _CHANGE_STATE(MDSTATE_ERROR_FETAL);
+        //        _dWork->state = MDSTATE_ERROR_FETAL;
+        _CHANGE_STATE(MDSTATE_ERROR_FETAL);
         // このコールバックから処理がかえってこないはず。
         if( _dWork->fetalErrorCallback != NULL ){
           _dWork->fetalErrorCallback( -errorCode );
@@ -1850,7 +1850,7 @@ static void _DWC_StartVChat(int heapID)
   _dWork->myvchaton = 1;
   _dWork->opvchaton = 1;
   _dWork->myvchat_send = 1;
-  
+
   if( _dWork->isvchat==0 ){
     switch( _dWork->vchatcodec ){
     case VCHAT_G711_ULAW:
@@ -2032,6 +2032,13 @@ int GFL_NET_DWC_ErrorType(int code, int type)
 //==============================================================================
 int GFL_NET_DWC_disconnect( int sync )
 {
+  int errorCode;
+  DWCErrorType myErrorType;
+  int ret = DWC_GetLastErrorEx( &errorCode, &myErrorType );
+  if( ret != 0 ){
+    DWC_ClearError();
+  }
+  
   if( sync == 0 ){
     MYDWC_DEBUGPRINT(" mydwc_disconnect state %d \n",_dWork->state);
     switch( _dWork->state )	{
@@ -2043,7 +2050,7 @@ int GFL_NET_DWC_disconnect( int sync )
         myvct_endConnection();
       }
       _CHANGE_STATE(MDSTATE_DISCONNECTTING);
-//      _dWork->state = MDSTATE_DISCONNECTTING;
+      //      _dWork->state = MDSTATE_DISCONNECTTING;
       break;
     case MDSTATE_LOGIN:     //親機切断時に動きを合わせるために追加 k.ohno 06.07.04
     case MDSTATE_ERROR_DISCONNECT:
@@ -2072,10 +2079,13 @@ int GFL_NET_DWC_disconnect( int sync )
 //==============================================================================
 int GFL_NET_DWC_returnLobby()
 {
-  if( _dWork->state == MDSTATE_DISCONNECT || _dWork->state == MDSTATE_TIMEOUT || _dWork->state == MDSTATE_LOGIN) {
+  if( _dWork->state == MDSTATE_DISCONNECT ||
+      _dWork->state == MDSTATE_TIMEOUT ||
+      _dWork->state == MDSTATE_ERROR_DISCONNECT ||
+      _dWork->state == MDSTATE_LOGIN) {
     //        _dWork->op_aid = -1;
     _CHANGE_STATE(MDSTATE_LOGIN);
-//    _dWork->state = MDSTATE_LOGIN;
+    //    _dWork->state = MDSTATE_LOGIN;
     _dWork->newFriendConnect = -1;
     //GFL_NET_DWC_ResetClientBlock();
     return 1;
@@ -2111,7 +2121,8 @@ void GFL_NET_DWC_setFetalErrorCallback( void (*func)(int) )
 void GFL_NET_DWC_Logout(void)
 {
   if(_dWork){
-    MYDWC_DEBUGPRINT("----------------------ok LOGOUT  \n");
+    MYDWC_DEBUGPRINT("LOGOUT\n");
+    DWC_ClearError();
     DWC_ShutdownFriendsMatch();
     DWC_CleanupInet();
     GFL_NET_DWC_StopVChat();
@@ -2330,16 +2341,16 @@ static void SetupGameServerCallback(DWCError error,
       if (_dWork->blockClient || bFriendOnly){
         if(index!=-1){
           DWC_CloseConnectionHardFromServer(index);
-/*
+          /*
 このクローズは相手ホストにも通知され、相手ホストではクローズコールバック
 DWCConnectionClosedCallbackが呼び出されます。
 ただし、このクローズ通知はUDP通信で一度しか送信されないため、
 通信路の状況などによっては相手に届かない可能性もあります。
- */
+           */
         }
       }
 
-      
+
       // 接続が確立したときのみ、
       // 代入する形に修正
       // 080624
@@ -2349,8 +2360,8 @@ DWCConnectionClosedCallbackが呼び出されます。
 
       _dWork->BlockUse_BackupBitmap = DWC_GetAIDBitmap();
       if(_dWork->BlockUse_BackupBitmap==0x01){ //自分だけつながったときにはタイムアウトにする
-    _CHANGE_STATE(MDSTATE_CANCEL);
-    //    _dWork->state = MDSTATE_CANCEL;
+        _CHANGE_STATE(MDSTATE_CANCEL);
+        //    _dWork->state = MDSTATE_CANCEL;
         MYDWC_DEBUGPRINT("自分タイムアウト %x\n",_dWork->BlockUse_BackupBitmap);
       }
       else{
@@ -2658,7 +2669,7 @@ static void _blockCallback(DWCSuspendResult result, BOOL suspend, void *data)
   }
 }
 
-   
+
 
 
 //==============================================================================
@@ -2697,7 +2708,7 @@ BOOL GFL_NET_DWC_ResetClientBlock(void)
   return DWC_RequestSuspendMatchAsync(FALSE,
                                       _blockCallback,
                                       NULL);
-//  _dWork->blockClient = _BLOCK_NONE;
+  //  _dWork->blockClient = _BLOCK_NONE;
 }
 
 //==============================================================================
@@ -2756,13 +2767,13 @@ void mydwc_releaseRecvBuff(int aid)
 void mydwc_allocRecvBuff(int i)
 {
   GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
-//	GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
+  //	GFL_NETSYS* pNet = _GFL_NET_GetNETSYS();
 
   mydwc_releaseRecvBuff(i);
 
   if(_dWork->recvPtr[i]==NULL){
     NET_PRINT("_SetRecvBufferメモリ確保 %d\n",i);
-//    _dWork->recvPtr[i] = GFL_NET_Align32Alloc(pNetInit->wifiHeapID, SIZE_RECV_BUFFER);
+    //    _dWork->recvPtr[i] = GFL_NET_Align32Alloc(pNetInit->wifiHeapID, SIZE_RECV_BUFFER);
     _dWork->recvPtr[i] = GFL_NET_Align32Alloc(pNetInit->netHeapID, SIZE_RECV_BUFFER);
     DWC_SetRecvBuffer( i, _dWork->recvPtr[i], SIZE_RECV_BUFFER );
   }
@@ -2835,14 +2846,14 @@ BOOL GFL_NET_DWC_IsLogin(void)
 //----------------------------------------------------------------------------
 /**
  *	@brief	セーブ中でない時の処理
- *	@param	
+ *	@param
  */
 //-----------------------------------------------------------------------------
 static void _FuncNonSave(void)
 {
   int i;
-  
-  
+
+
   for(i = 0;i < FRIENDLIST_MAXSIZE; i++){
     if(_dWork->deletedIndex[i] != -1){
       GFLNetInitializeStruct* pNetInit = GFL_NET_GetNETInitStruct();
@@ -2880,7 +2891,7 @@ BOOL GFL_NET_DWC_SetCancelState(void)
   if(_dWork->state == MDSTATE_MATCHING)
   {
     _CHANGE_STATE(MDSTATE_CANCEL);
-//    _dWork->state = MDSTATE_CANCEL;
+    //    _dWork->state = MDSTATE_CANCEL;
     return TRUE;
   }
   return FALSE;

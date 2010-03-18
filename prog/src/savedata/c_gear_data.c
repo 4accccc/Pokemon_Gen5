@@ -20,10 +20,25 @@
 //----------------------------------------------------------
 
 struct _CGEAR_SAVEDATA {
+#if 0
+  u16 CGearPictCRC;
+  u8 gearType;
+  u8 dummy;
+	u8 type[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
+  u8 irMarkx;
+  u8 irMarky;
+  u8 wirlessMarkx;
+  u8 wirlessMarky;
+  u8 wifiMarkx;
+  u8 wifiMarkx;
+  u8 CGearPictureON;
+  u8 CGearON;
+#else
 	u8 type[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
   u16 CGearPictCRC;
   u8 CGearPictureON;
   u8 CGearON;
+#endif
 };
 
 

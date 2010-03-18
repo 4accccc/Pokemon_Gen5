@@ -75,6 +75,7 @@ extern const NetRecvFuncTable BtlRecvFuncTable[];
 
 typedef struct{
   //PLIST_DATA PokeList;
+  GFL_PROCSYS* localProc;
   WIFICLUB_BATTLE_SUBPROC_PARAM subProcParam;
   COMM_TVT_INIT_WORK aTVT;
   WIFIP2PMATCH_PROC_PARAM* pMatchParam;
@@ -225,7 +226,7 @@ static void _pokeListWorkOut(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 gam
 
 
 //==============================================================================
-//  WIFI’ÊM“ü‚èŒû
+//  WIFI’ÊM“ü‚èŒû    
 //==============================================================================
 static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
@@ -244,9 +245,22 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
       ep2p->login.bg = WIFILOGIN_BG_NORMAL;
       ep2p->login.nsid = WB_NET_WIFICLUB;
     }
-    GMEVENT_CallProc(pClub->event, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &ep2p->login);
+
+
+    ep2p->localProc = GFL_PROC_LOCAL_boot(HEAPID_PROC);
+
+    GFL_PROC_LOCAL_CallProc(ep2p->localProc,
+                            FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &ep2p->login);
+
+    
     break;
   case P2P_LOGIN:
+    if( GFL_PROC_LOCAL_Main(ep2p->localProc) != GFL_PROC_MAIN_NULL ){
+      NetErr_DispCall(FALSE);
+      return FALSE;
+    }
+    GFL_PROC_LOCAL_Exit(ep2p->localProc);
+    
     if(WifiList_GetFriendDataNum(GAMEDATA_GetWiFiList(ep2p->pGameData)) == 0){
       ep2p->seq = P2P_NETENDCALL;
     }
