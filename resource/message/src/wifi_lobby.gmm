@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-18T18:07:23"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-03-18T19:04:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1340,9 +1340,9 @@ TVトランシーバー中です</language>
 
 	<row id="msg_wifilobby_1032" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
-たいせんを　もうしこんできました</language>
+たいせんを　もうしこんできました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
-対戦を　申し込んできました</language>
+対戦を　申し込んできました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifilobby_1033" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
