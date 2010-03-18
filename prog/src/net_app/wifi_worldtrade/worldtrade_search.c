@@ -88,7 +88,8 @@ static  int SubSeq_SearchErrorDisconnectMessage3( WORLDTRADE_WORK *wk );
 static  int SubSeq_ExchangeScreen1( WORLDTRADE_WORK *wk );
 static  int SubSeq_ReturnScreen2( WORLDTRADE_WORK *wk );
 static  int SubSeq_ExchangeMain( WORLDTRADE_WORK *wk );
-static  int SubSeq_CursorWait( WORLDTRADE_WORK *wk );
+static  int SubSeq_DecideWait( WORLDTRADE_WORK *wk );
+static  int SubSeq_CancelWait( WORLDTRADE_WORK *wk );
 
 
 static void WantLabelPrint( GFL_BMPWIN *win[], GFL_BMPWIN *country_win[], GFL_MSGDATA *MsgManager, WT_PRINT *print );
@@ -146,7 +147,8 @@ enum{
      SUBSEQ_RETURN_SCREEN2,	
      SUBSEQ_EXCHANGE_MAIN,	
 
-  SUBSEQ_CURSOR_WAIT,
+  SUBSEQ_DECIDE_WAIT,
+  SUBSEQ_CANCEL_WAIT,
 };
 
 static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
@@ -191,21 +193,22 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 	SubSeq_ReturnScreen2,			// SUBSEQ_RETURN_SCREEN2,	
 	SubSeq_ExchangeMain,			// SUBSEQ_EXCHANGE_MAIN,	
 
-  SubSeq_CursorWait, // SUBSEQ_CURSOR_WAIT
+  SubSeq_DecideWait, // SUBSEQ_DECIDE_WAIT
+  SubSeq_CancelWait, // SUBSEQ_CANCEL_WAIT
 };
 
 #define INFO_TEXT_WORD_NUM	(10*2)
 
 
 // 「さがす」画面のカーソル位置
-static u16 CursorPos[][3]={
-	{   0,    0, 2, },	// X, Y, セルアクターのアニメ番号
-	{   0,   40, 2, },
-	{   0,   80, 2, },
-	{   0,  120, 2, },
-	{ 192,   32, 3, },
-	{ 192,   72, 3, },
-	{ 192,  112, 3, },
+static u16 CursorPos[][4]={
+	{   0,    0, 2, 11 },	// X, Y, セルアクターのアニメ番号。決定時のアニメ番号
+	{   0,   40, 2, 11 },
+	{   0,   80, 2, 11 },
+	{   0,  120, 2, 11 },
+	{ 192,   32, 3, 12 },
+	{ 192,   72, 3, 12 },
+	{ 192,  112, 3, 12 },
 	
 };
 
@@ -285,20 +288,20 @@ int WorldTrade_Search_Init(WORLDTRADE_WORK *wk, int seq)
 
 	// 名前
 	WorldTrade_PokeNamePrint( wk->InfoWin[1], wk->MonsNameManager, 
-		wk->Search.characterNo, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), &wk->print  );
+		wk->Search.characterNo, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(15,2,0), &wk->print  );
 
 	// 性別条件
 	WorldTrade_SexPrint( wk->InfoWin[3], wk->MsgManager, 
-		wk->Search.gender, 1, 0, SEARCH_INFO_PRINT_FLAG, PRINTSYS_LSB_Make(1,2,0), &wk->print  );
+		wk->Search.gender, 1, 0, SEARCH_INFO_PRINT_FLAG, PRINTSYS_LSB_Make(15,2,0), &wk->print  );
 
 	// レベル指定
 	WorldTrade_WantLevelPrint( wk->InfoWin[5], wk->MsgManager, 
 		WorldTrade_LevelTermGet(wk->Search.level_min,wk->Search.level_max, LEVEL_PRINT_TBL_SEARCH),
-		SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), LEVEL_PRINT_TBL_SEARCH, &wk->print );
+		SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(15,2,0), LEVEL_PRINT_TBL_SEARCH, &wk->print );
 
 	// 国指定
 	WorldTrade_CountryPrint( wk->CountryWin[1], wk->CountryNameManager, wk->MsgManager,
-		wk->country_code, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), &wk->print );
+		wk->country_code, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(15,2,0), &wk->print );
 
 	wk->vfunc2 = SlideScreenVFunc;
 	
@@ -575,7 +578,7 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 0 );
   }
-  else if( GFL_UI_CheckTouchOrKey() )
+  else
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
   }
@@ -776,7 +779,6 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 	
 	// サブ画面のGTS説明用BMPWINを確保する
 	WorldTrade_SubLcdExpainPut( wk, EXPLAIN_SAGASU );
-
 }	
 
 //------------------------------------------------------------------
@@ -892,7 +894,16 @@ static void FreeWork( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_Start( WORLDTRADE_WORK *wk)
 {
-	// 
+  if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+  { 
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 0 );
+  }
+  else 
+  { 
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+  }
+
+
 	if( wk->sub_process_mode==MODE_PARTNER_RETURN ){
 		//メッセージ表示 「えらぶ」で　あいてを　きめてください
 		SubSeq_MessagePrint( wk, msg_gtc_01_033, MSG_ALLPUT, 0, 0x0f0f );	//一括表示
@@ -917,6 +928,8 @@ static int SubSeq_Start( WORLDTRADE_WORK *wk)
 			wk->country_code);
 
 	OS_Printf("remain ram = %d\n", GFL_HEAP_GetHeapFreeSize( HEAPID_WORLDTRADE ));
+
+
 	return SEQ_MAIN;
 }
 
@@ -965,8 +978,7 @@ static void DecideFunc( WORLDTRADE_WORK *wk, int decide )
 	switch(decide){
 	// ポケモン指定
 	case CURSOR_POS_POKEMON:	
-		wk->subprocess_seq = SUBSEQ_INPUT_POKENAME_MES;	
-		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+		wk->subprocess_seq = SUBSEQ_INPUT_POKENAME_MES;
 		break;
 	// 性別指定
 	case CURSOR_POS_SEX:		
@@ -976,22 +988,18 @@ static void DecideFunc( WORLDTRADE_WORK *wk, int decide )
 			wk->dw->sex_selection = PokePersonalParaGet(wk->Search.characterNo,POKEPER_ID_sex);
 			if(WorldTrade_SexSelectionCheck( &wk->Search, wk->dw->sex_selection )){
 				OS_Printf("性別決定？ = %d\n", wk->dw->sex_selection);
-				PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 				return;
 			}
 		}
 		wk->subprocess_seq = SUBSEQ_SEX_SELECT_MES;		
-		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 		break;
 	// レベル指定
 	case CURSOR_POS_LEVEL:		
 		wk->subprocess_seq = SUBSEQ_LEVEL_SELECT_MES;	
-		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 		break;
 	// 国指定
 	case CURSOR_POS_NATION:		
 		wk->subprocess_seq = SUBSEQ_COUNTRY_SELECT_MES;	
-		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 		break;
 	// 検索結果を見る
 	case CURSOR_POS_VIEW:
@@ -999,7 +1007,6 @@ static void DecideFunc( WORLDTRADE_WORK *wk, int decide )
 			wk->subprocess_seq = SUBSEQ_EXCHANGE_SCREEN1;
 			WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
 						WIPE_FADE_BLACK, EXCHANGE_SCREEN_SYNC, 1, HEAPID_WORLDTRADE );
-    		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 		}
 		break;
 	// 探す
@@ -1011,7 +1018,6 @@ static void DecideFunc( WORLDTRADE_WORK *wk, int decide )
 	case CURSOR_POS_BACK:
 		SubSeq_MessagePrint( wk, msg_gtc_01_016, 1, 0, 0x0f0f );
 		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_YESNO );
-		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 		break;
 	}
 
@@ -1038,12 +1044,72 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 	u32 ret=TouchPanelFunc( wk );
 	if(ret!=GFL_UI_TP_HIT_NONE){
 
-    GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
     GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 
 		TouchCursorMove( wk, ret );
-		DecideFunc( wk, ret );
-		
+
+      switch( CursorPosGet( wk ) )
+      { 
+      case CURSOR_POS_SEX:	
+        //性別指定ならば、性別が１つしかないポケモンは入力できない
+        if(wk->Search.characterNo!=0){
+          wk->dw->sex_selection = PokePersonalParaGet(wk->Search.characterNo,POKEPER_ID_sex);
+          if(WorldTrade_SexSelectionCheck( &wk->Search, wk->dw->sex_selection )){
+            OS_Printf("性別決定？ = %d\n", wk->dw->sex_selection);
+            GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+            GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
+            PMSND_PlaySE(SE_GTC_NG);
+            return SEQ_MAIN;
+          }
+        }
+
+        GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+        PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+        GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
+        wk->subprocess_seq  = SUBSEQ_DECIDE_WAIT;
+        break;
+      
+      case CURSOR_POS_SEARCH:
+        //「さがす」ならば、押せるかチェック
+        if( wk->Search.characterNo==0 || DpwSerachCompare( &wk->Search, &wk->SearchBackup, wk->country_code, wk->SearchBackup_CountryCode) )
+        { 
+          PMSND_PlaySE(SE_GTC_NG);
+        }
+        else
+        { 
+          PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+        }
+        GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+        GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
+        wk->subprocess_seq  = SUBSEQ_DECIDE_WAIT;
+        break;
+
+      case CURSOR_POS_VIEW:
+        //「えらぶ」ならばすでに選んでいかチェック
+        if(wk->SearchResult)
+        { 
+          GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+          PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+          GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
+          wk->subprocess_seq  = SUBSEQ_DECIDE_WAIT;
+        }
+        else
+        { 
+          GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+          GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
+          PMSND_PlaySE(SE_GTC_NG);
+        }
+        break;
+
+        //「えらぶ」と「さがす」以外ならばすぐに押せる
+      default:
+
+        GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+        PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+        GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
+        wk->subprocess_seq  = SUBSEQ_DECIDE_WAIT;
+        break;
+      }
 	}else{
 
 	// ------キー処理----------
@@ -1060,11 +1126,72 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 
 		// 決定
 		if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
-			DecideFunc( wk, CursorPosGet(wk) );
+
+      //「えらぶ」と「」以外ならばすぐに押せる
+      switch( CursorPosGet( wk ) )
+      {       
+      case CURSOR_POS_SEX:	
+        //性別指定ならば、性別が１つしかないポケモンは入力できない
+        if(wk->Search.characterNo!=0){
+          wk->dw->sex_selection = PokePersonalParaGet(wk->Search.characterNo,POKEPER_ID_sex);
+          if(WorldTrade_SexSelectionCheck( &wk->Search, wk->dw->sex_selection )){
+            OS_Printf("性別決定？ = %d\n", wk->dw->sex_selection);
+            GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+            GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
+            PMSND_PlaySE(SE_GTC_NG);
+            return SEQ_MAIN;
+          }
+        }
+
+        GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+        PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+        GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
+        wk->subprocess_seq  = SUBSEQ_DECIDE_WAIT;
+        break;
+
+      case CURSOR_POS_SEARCH:
+        //「さがす」ならば、押せるかチェック
+        if( wk->Search.characterNo==0 || DpwSerachCompare( &wk->Search, &wk->SearchBackup, wk->country_code, wk->SearchBackup_CountryCode) )
+        { 
+          PMSND_PlaySE(SE_GTC_NG);
+        }
+        else
+        { 
+          PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+        }
+        GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
+        wk->subprocess_seq  = SUBSEQ_DECIDE_WAIT;
+        break;
+
+      case CURSOR_POS_VIEW:
+        if(wk->SearchResult)
+        { 
+          PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+          GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
+          wk->subprocess_seq  = SUBSEQ_DECIDE_WAIT;
+        }
+        else
+        { 
+          GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
+          PMSND_PlaySE(SE_GTC_NG);
+        }
+        break;
+
+      default:
+        PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
+        GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
+        wk->subprocess_seq  = SUBSEQ_DECIDE_WAIT;
+        break;
+
+      }
 		}else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
 			// キャンセル
-			SubSeq_MessagePrint( wk, msg_gtc_01_016, 1, 0, 0x0f0f );
-			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_YESNO );
+      // キャンセル位置へ移動
+      wk->dw->cursorSide  = 1;
+      wk->dw->rightCursorPos  = 2;
+
+      GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
+      wk->subprocess_seq  = SUBSEQ_CANCEL_WAIT;
 			PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 		}else{
 #if 0
@@ -1102,7 +1229,7 @@ static int SubSeq_SearchCheck( WORLDTRADE_WORK *wk )
 	if(wk->Search.characterNo==0){
 		SubSeq_MessagePrint( wk, msg_gtc_01_013, 1, 0, 0x0f0f );
 		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_MAIN );
-		PMSND_PlaySE(SE_GTC_NG);
+		//PMSND_PlaySE(SE_GTC_NG);
 	}else{
 	// 以前の条件と違うなら
 
@@ -1110,7 +1237,7 @@ static int SubSeq_SearchCheck( WORLDTRADE_WORK *wk )
 			// 条件が変わっていないのでダメ「かわらないみたい…」
 			SubSeq_MessagePrint( wk, msg_gtc_01_034, 1, 0, 0x0f0f );
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_MAIN );
-			PMSND_PlaySE(SE_GTC_NG);
+			//PMSND_PlaySE(SE_GTC_NG);
 		}else{
 			PMSND_PlaySE(SE_GTC_SEARCH);
 
@@ -1263,8 +1390,7 @@ static int SubSeq_ServerResult( WORLDTRADE_WORK *wk )
 			// 検索の結果の数を保存
 			wk->SearchResult   = result;
 
-			//Snd_SeStopBySeqNo( SE_GTC_SEARCH, 0 );
-			//TODO
+      PMSND_StopSE();
 
 			// 下画面にＯＢＪを反映させる
 			WorldTrade_SubLcdMatchObjAppear( wk, result, 1 );
@@ -1571,7 +1697,7 @@ static void TouchCursorMove( WORLDTRADE_WORK *wk, int touch )
 	WorldTrade_CLACT_PosChange( wk->CursorActWork,  
 								CursorPos[CursorPosGet( wk )][0], 
 								CursorPos[CursorPosGet( wk )][1] );
-	GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][2] );
+//	GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][2] );
 }
 
 
@@ -1703,7 +1829,7 @@ static int SUBSEQ_PokenameSelectWait( WORLDTRADE_WORK *wk)
 		// 名前決定
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[1]), 0x0000 );
 		WorldTrade_PokeNamePrint( wk->InfoWin[1], wk->MonsNameManager, 
-			result, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), &wk->print  );
+			result, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(15,2,0), &wk->print  );
 		
 		// 決定したポケモンの性別分布を取得
 		wk->dw->sex_selection = PokePersonalParaGet(result,POKEPER_ID_sex);
@@ -1715,7 +1841,7 @@ static int SUBSEQ_PokenameSelectWait( WORLDTRADE_WORK *wk)
 
 		if(WorldTrade_SexSelectionCheck( &wk->Search, wk->dw->sex_selection )){
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[3]), 0x0000 );
-			WorldTrade_SexPrint( wk->InfoWin[3], wk->MsgManager, wk->Search.gender, 1, 0, SEARCH_INFO_PRINT_FLAG,  PRINTSYS_LSB_Make(1,2,0), &wk->print  );
+			WorldTrade_SexPrint( wk->InfoWin[3], wk->MsgManager, wk->Search.gender, 1, 0, SEARCH_INFO_PRINT_FLAG,  PRINTSYS_LSB_Make(15,2,0), &wk->print  );
 			
 		}
 
@@ -1807,7 +1933,7 @@ static int SUBSEQ_SexSelectWait( WORLDTRADE_WORK *wk)
 		// 性別決定
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[3]), 0x0000 );
 		WorldTrade_SexPrint( wk->InfoWin[3], wk->MsgManager, wk->Search.gender, 
-									1, 0, SEARCH_INFO_PRINT_FLAG, PRINTSYS_LSB_Make(1,2,0), &wk->print  );
+									1, 0, SEARCH_INFO_PRINT_FLAG, PRINTSYS_LSB_Make(15,2,0), &wk->print  );
 		break;
 	}
 
@@ -1901,7 +2027,7 @@ static int SUBSEQ_LevelSelectWait( WORLDTRADE_WORK *wk)
 
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[5]), 0x0000 );
 		// レベル指定決定
-		WorldTrade_WantLevelPrint( wk->InfoWin[5], wk->MsgManager, result, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), LEVEL_PRINT_TBL_SEARCH, &wk->print );
+		WorldTrade_WantLevelPrint( wk->InfoWin[5], wk->MsgManager, result, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(15,2,0), LEVEL_PRINT_TBL_SEARCH, &wk->print );
 
 		break;
 	}
@@ -2002,7 +2128,7 @@ static int SUBSEQ_CountrySelectWait( WORLDTRADE_WORK *wk)
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->CountryWin[1]), 0x0000 );
 		// 国指定決定
 		WorldTrade_CountryPrint( wk->CountryWin[1], wk->CountryNameManager, wk->MsgManager,
-			wk->country_code, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(1,2,0), &wk->print );
+			wk->country_code, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(15,2,0), &wk->print );
 	}
 
 	return SEQ_MAIN;
@@ -2238,18 +2364,38 @@ static int SubSeq_ExchangeMain( WORLDTRADE_WORK *wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  カーソル待ち
+ *	@brief  決定待ち
  *
  *	@param	WORLDTRADE_WORK *wk   ワーク
  *
  *	@return 終了コード
  */
 //-----------------------------------------------------------------------------
-static  int SubSeq_CursorWait( WORLDTRADE_WORK *wk )
+static  int SubSeq_DecideWait( WORLDTRADE_WORK *wk )
 { 
   if( !GFL_CLACT_WK_CheckAnmActive( wk->CursorActWork) )
   { 
-    DecideFunc( wk, wk->TitleCursorPos );
+    DecideFunc( wk, CursorPosGet( wk ) );
+  }
+
+  return SEQ_MAIN;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  キャンセル待ち
+ *
+ *	@param	WORLDTRADE_WORK *wk   ワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static  int SubSeq_CancelWait( WORLDTRADE_WORK *wk )
+{ 
+  if( !GFL_CLACT_WK_CheckAnmActive( wk->CursorActWork) )
+  { 
+    SubSeq_MessagePrint( wk, msg_gtc_01_016, 1, 0, 0x0f0f );
+    WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_YESNO );
   }
 
   return SEQ_MAIN;
@@ -2301,22 +2447,22 @@ static void WantLabelPrint( GFL_BMPWIN *win[], GFL_BMPWIN *country_win[], GFL_MS
 
 	//「ほしいポケモン」描画
 	strbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_03_002 );
-	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0),print );
+	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
 	GFL_STR_DeleteBuffer(strbuf);
 
 	// せいべつ
 	sexbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_03_004  );
-	WorldTrade_SysPrint( win[2], sexbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0),print );
+	WorldTrade_SysPrint( win[2], sexbuf,    0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
 	GFL_STR_DeleteBuffer(sexbuf);
 
 	// レベル
 	levelbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_03_006 );
-	WorldTrade_SysPrint( win[4], levelbuf,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0),print );
+	WorldTrade_SysPrint( win[4], levelbuf,  0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
 	GFL_STR_DeleteBuffer(levelbuf);
 
 	// 国
 	levelbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_search_013 );
-	WorldTrade_SysPrint( country_win[0], levelbuf,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0),print );
+	WorldTrade_SysPrint( country_win[0], levelbuf,  0, 0, 0, PRINTSYS_LSB_Make(1,2,0),print );
 	GFL_STR_DeleteBuffer(levelbuf);
 
 	//「さがす」描画

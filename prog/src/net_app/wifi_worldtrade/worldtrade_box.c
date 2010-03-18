@@ -532,7 +532,7 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 0 );
   }
-  else if( GFL_UI_CheckTouchOrKey() )
+  else
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
   }
@@ -1045,12 +1045,10 @@ static void CancelFunc( WORLDTRADE_WORK *wk, int mode )
 	if(mode==MODE_DEPOSIT_SELECT){
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
 		wk->subprocess_seq = SUBSEQ_END;
-		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 	}else if(mode==MODE_EXCHANGE_SELECT){
 		// ŒŸõŒ‹‰Êƒ|ƒPƒ‚ƒ“‚Ì‰æ–Ê‚É‚à‚Ç‚é
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_PARTNER, MODE_FROM_BOX );
 		wk->subprocess_seq  = SUBSEQ_END;
-		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 	}
 }
 
@@ -1098,6 +1096,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
       GFL_CLACT_WK_ResetAnm( wk->FingerActWork);
       wk->subprocess_seq =SUBSEQ_CANCEL_WAIT;
 			wk->BoxCursorPos = result;
+      PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 			CursorPosPrioritySet( wk->CursorActWork, wk->BoxCursorPos );
 			break;
 		default:
@@ -1118,6 +1117,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
         GFL_CLACT_WK_SetDrawEnable( wk->FingerActWork, 1);
         GFL_CLACT_WK_ResetAnm( wk->FingerActWork);
         wk->subprocess_seq =SUBSEQ_CANCEL_WAIT;
+        PMSND_PlaySE(SE_CANCEL);
 			}else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
 				DepositDecideFunc(wk);
 			}
@@ -1129,6 +1129,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
         GFL_CLACT_WK_SetDrawEnable( wk->FingerActWork, 1);
         GFL_CLACT_WK_ResetAnm( wk->FingerActWork);
         wk->subprocess_seq =SUBSEQ_CANCEL_WAIT;
+        PMSND_PlaySE(SE_CANCEL);
 			}else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
 				ExchangeDecideFunc(wk);
 			}

@@ -184,8 +184,6 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 
     //WirelessIconEasy();
 
-    PMSND_PlayBGM( SEQ_BGM_GTS );
-
     // 会話ウインドウのタッチON
     MsgPrintTouchPanelFlagSet( MSG_TP_ON );
 

@@ -550,7 +550,7 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 0 );
   }
-  else if( GFL_UI_CheckTouchOrKey() )
+  else
   { 
     GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
   }
