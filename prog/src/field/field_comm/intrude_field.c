@@ -37,6 +37,8 @@
 
 #include "intrude_minimono.h"   //DEBUG_INTRUDE_Pokemon_Add
 #include "field/event_intrude.h"
+#include "savedata/symbol_save.h"
+#include "field/event_symbol.h"
 
 
 //==============================================================================
@@ -582,13 +584,20 @@ GMEVENT * Intrude_CheckPosEvent(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys,
   }
   //ビンゴマップへワープ
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
-    if(pos.x >= FX32_CONST(984) + PALACE_MAP_LEN*i
-        && pos.x <= FX32_CONST(1064) + PALACE_MAP_LEN*i 
-        && pos.z >= FX32_CONST(184) && pos.z <= FX32_CONST(200)){
-      pos.x = 472 << FX32_SHIFT;
+    if(pos.x >= FX32_CONST(488) + PALACE_MAP_LEN*i
+        && pos.x <= FX32_CONST(536) + PALACE_MAP_LEN*i 
+        && pos.z >= FX32_CONST(328) && pos.z <= FX32_CONST(344)){
+      pos.x = 248 << FX32_SHIFT;
       pos.y = 0;
-      pos.z = 504 << FX32_SHIFT;
-      return EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACE02, &pos, 0, FALSE);
+      pos.z = 360 << FX32_SHIFT;
+      if(IntrudeSymbol_CheckIntrudeNetID(game_comm, GAMESYSTEM_GetGameData(gameSys)) == INTRUDE_NETID_NULL){
+        //自分のROMにいるので通常ワープ
+        return EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACE02, &pos, 0, FALSE);
+      }
+      else{ //侵入先のROMにいるので侵入先のシンボルポケモンを受信してからワープ
+        return EVENT_SymbolMapWarp(gameSys, fieldWork, NULL, ZONE_ID_PALACE02, &pos, 0, FALSE, 
+          SYMBOL_ZONE_TYPE_FREE_SMALL, 6);
+      }
     }
   }
   

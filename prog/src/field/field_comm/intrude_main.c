@@ -47,6 +47,7 @@ static void Intrude_CheckProfileReq(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckLeavePlayer(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckTalkAnswerNG(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_CheckWfbcReq(INTRUDE_COMM_SYS_PTR intcomm);
+static void Intrude_CheckSymbolReq(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, ZONEID mine_zone_id, fx32 mine_x, INTRUDE_STATUS *target);
 static int Intrude_GetPalaceOffsetNo(const INTRUDE_COMM_SYS_PTR intcomm, int palace_area);
 static void _SendBufferCreate_SymbolData(INTRUDE_COMM_SYS_PTR intcomm,const SYMBOL_DATA_REQ *p_sdr);
@@ -234,6 +235,7 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
   //WFBC送信リクエストがあれば送信
   Intrude_CheckWfbcReq(intcomm);
   //シンボルエンカウント要求
+  Intrude_CheckSymbolReq(intcomm);
   
   //プレイヤーステータス送信
   if(intcomm->send_status == TRUE){

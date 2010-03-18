@@ -25,6 +25,8 @@
 #include "app/pdc.h"
 #include "poke_tool/poke_tool.h"
 #include "sound/pm_sndsys.h"
+#include "field_comm/intrude_main.h"
+#include "event_mapchange.h"
 
 
 //==============================================================================
@@ -57,10 +59,24 @@ typedef struct{
   u8 map_no;
 }EVENT_REQ_SYMBOL_PARAM;
 
+typedef struct{
+  u16 *result_ptr;
+  FIELDMAP_WORK *fieldWork;
+  u16 warp_zone_id;
+  VecFx32 warp_pos;
+  u16 warp_dir;
+  BOOL seasonUpdateEnable;
+  SYMBOL_ZONE_TYPE zone_type;
+  u8 map_no;
+  u16 data_recv_result;
+}EVENT_SYMBOL_MAP_WARP;
+
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
 static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT EventReqIntrudeSymbolParam( GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk );
 
 
 
@@ -211,7 +227,6 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
 
 
 
-#if 0
 //==============================================================================
 //
 //  侵入先のシンボルデータを要求し、受信
@@ -261,6 +276,7 @@ static GMEVENT_RESULT EventReqIntrudeSymbolParam( GMEVENT *event, int *seq, void
   EVENT_REQ_SYMBOL_PARAM *ersp = wk;
 	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	INTRUDE_COMM_SYS_PTR intcomm;
 	
 	intcomm = Intrude_Check_CommConnect(game_comm);
 	if(intcomm == NULL){
@@ -306,70 +322,85 @@ static GMEVENT_RESULT EventReqIntrudeSymbolParam( GMEVENT *event, int *seq, void
  * までをイベントとして行います
  *
  * @param   gsys		
+ * @param   fieldWork		
  * @param   result_ptr		結果代入先  TRUE:正常にデータ受信してマップ遷移した。
  *                                    FALSE:受信出来なかった為マップ遷移もしていない(通信エラー)
+ * @param   warp_zone_id		
+ * @param   warp_pos		
+ * @param   warp_dir    
+ * @param   seasonUpdateEnable		
  * @param   zone_type	  	相手へ要求するSYMBOL_ZONE_TYPE
  * @param   map_no	  	  相手へ要求するマップ番号(キープゾーンの場合は0固定)
  *
  * @retval  GMEVENT *		
  *
- * 侵入先のシンボルデータ要求中に通信エラーが起きた場合はマップ遷移をせずにイベント終了します。
+ * 通信エラーが発生した場合はマップ遷移を行わずにイベント終了します
  */
 //==================================================================
-GMEVENT * EVENT_SymbolMapWarp(GAMESYS_WORK *gsys, u16 *result_ptr, SYMBOL_ZONE_TYPE zone_type, u8 map_no)
+GMEVENT * EVENT_SymbolMapWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 *result_ptr, u16 warp_zone_id, const VecFx32 *warp_pos, u16 warp_dir, BOOL seasonUpdateEnable, SYMBOL_ZONE_TYPE zone_type, u8 map_no)
 {
 	GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
-  EVENT_REQ_SYMBOL_PARAM *ersp;
+  EVENT_SYMBOL_MAP_WARP *esmw;
 	GMEVENT *event = NULL;
 	
- 	event = GMEVENT_Create(
-    		gsys, NULL,	EventReqIntrudeSymbolParam, sizeof(EVENT_REQ_SYMBOL_PARAM) );
+ 	event = GMEVENT_Create(gsys, NULL,	EventSymbolMapWarp, sizeof(EVENT_SYMBOL_MAP_WARP));
   
-	ersp = GMEVENT_GetEventWork( event );
-	GFL_STD_MemClear( ersp, sizeof(EVENT_REQ_SYMBOL_PARAM) );
+	esmw = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( esmw, sizeof(EVENT_SYMBOL_MAP_WARP) );
 
-  ersp->result_ptr = result_ptr;
-  ersp->zone_type = zone_type;
-  ersp->map_no = map_no;
+  esmw->fieldWork = fieldWork;
+  esmw->warp_zone_id = warp_zone_id;
+  esmw->warp_pos = *warp_pos;
+  esmw->seasonUpdateEnable = seasonUpdateEnable;
+  esmw->result_ptr = result_ptr;
+  esmw->zone_type = zone_type;
+  esmw->map_no = map_no;
 
 	return( event );
 }
 
 //--------------------------------------------------------------
 /**
- * 侵入先のシンボルデータを要求し、受信するまでの処理をイベントとして行います
+ * シンボルマップ遷移
+ *    シンボルマップのデータ要求 ＞ マップ遷移
+ * までをイベントとして行います
+ * 
  * @param	event	GMEVENT
  * @param	seq		シーケンス
  * @param	wk		
+ * 
+ * 通信エラーが発生した場合はマップ遷移を行わずにイベント終了します
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT EventReqIntrudeSymbolParam( GMEVENT *event, int *seq, void *wk )
+static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
 {
-  EVENT_REQ_SYMBOL_PARAM *ersp = wk;
+  EVENT_SYMBOL_MAP_WARP *esmw = wk;
 	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	
 	switch( *seq ){
 	case 0:
 	  GMEVENT_CallEvent(event, 
-	    EVENT_ReqIntrudeSymbolParam(gsys, &ersp->data_recv_result, ersp->zone_type, ersp->map_no));
+	    EVENT_ReqIntrudeSymbolParam(gsys, &esmw->data_recv_result, esmw->zone_type, esmw->map_no));
     (*seq)++;
     break;
   case 1:
-    if(ersp->data_recv_result == FALSE){
-      if(ersp->result_ptr != NULL){
-        *(ersp->result_ptr) = FALSE;
+    if(esmw->data_recv_result == FALSE){
+      if(esmw->result_ptr != NULL){
+        *(esmw->result_ptr) = FALSE;
       }
       return GMEVENT_RES_FINISH;
     }
+
+    GMEVENT_CallEvent(event, 
+      EVENT_ChangeMapPos(gsys, esmw->fieldWork, esmw->warp_zone_id, 
+      &esmw->warp_pos, esmw->warp_dir, esmw->seasonUpdateEnable));
     
-    if(IntrudeSymbol_CheckRecvSymbolData(intcomm) == TRUE){
-      (*seq)++;
-    }
+    (*seq)++;
     break;
   case 2:
-    if(ersp->result_ptr != NULL){
-      *(ersp->result_ptr) = TRUE;
+    if(esmw->result_ptr != NULL){
+      *(esmw->result_ptr) = TRUE;
     }
     return GMEVENT_RES_FINISH;
   }
@@ -377,4 +408,3 @@ static GMEVENT_RESULT EventReqIntrudeSymbolParam( GMEVENT *event, int *seq, void
 	return GMEVENT_RES_CONTINUE;
 }
 
-#endif

@@ -17,6 +17,36 @@
 
 //==================================================================
 /**
+ * 自分の侵入先のNetIDを取得する
+ *
+ * @param   game_comm		
+ * @param   gamedata		
+ *
+ * @retval  NetID		    侵入先のNetID
+ *                      非通信 OR 自分のROMにいる場合は INTRUDE_NETID_NULL
+ *
+ * 通信エラーが起きていても侵入先でエラーになっている場合は引き続き侵入先のNetIDを返します
+ */
+//==================================================================
+NetID IntrudeSymbol_CheckIntrudeNetID(GAME_COMM_SYS_PTR game_comm, GAMEDATA *gamedata)
+{
+  INTRUDE_COMM_SYS_PTR intcomm;
+  
+  if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
+    intcomm = GameCommSys_GetAppWork(game_comm);
+    if(intcomm == NULL 
+        || intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
+      return INTRUDE_NETID_NULL;
+    }
+    return intcomm->intrude_status_mine.palace_area;
+  }
+  else{
+    return INTRUDE_NETID_NULL;
+  }
+}
+
+//==================================================================
+/**
  * 侵入先の相手に対して、シンボルエンカウント用データを要求する
  *
  * @param   intcomm		  
