@@ -3059,17 +3059,51 @@ static void DeleteWordset( RESEARCH_CHECK_WORK* work )
  * @return 現在調査中の調査項目ID
  */
 //-----------------------------------------------------------------------------------------
+// @todo セーブデータの修正に合わせて変更する
+#if 1
 static u8 GetInvestigatingTopicID( const RESEARCH_CHECK_WORK* work )
 {
-  SAVE_CONTROL_WORK* saveControlWork;
-  QUESTIONNAIRE_SAVE_WORK* questionnaireSave;
+  SAVE_CONTROL_WORK* save;
+  QUESTIONNAIRE_SAVE_WORK* QSave;
 
-  saveControlWork   = GAMEDATA_GetSaveControlWork( work->gameData );
-  questionnaireSave = SaveData_GetQuestionnaire( saveControlWork );
+  save   = GAMEDATA_GetSaveControlWork( work->gameData );
+  QSave = SaveData_GetQuestionnaire( save );
 
   // セーブデータから取得
-  return QuestionnaireWork_GetInvestigatingQuestion( questionnaireSave, 0 );
+  return QuestionnaireWork_GetInvestigatingQuestion( QSave, 0 );
 }
+#endif
+#if 0
+static u8 GetInvestigatingTopicID( const RESEARCH_CHECK_WORK* work )
+{
+  int qIdx;
+  SAVE_CONTROL_WORK* save;
+  QUESTIONNAIRE_SAVE_WORK* QSave;
+  u8 questionID[ QUESTION_NUM_PER_TOPIC ];
+  u8 topicID;
+
+  save  = GAMEDATA_GetSaveControlWork( work->gameData );
+  QSave = SaveData_GetQuestionnaire( save );
+
+  // 調査中の質問IDを取得
+  for( qIdx=0; qIdx < QUESTION_NUM_PER_TOPIC; qIdx++ )
+  {
+    questionID[ qIdx ] = QuestionnaireWork_GetInvestigatingQuestion( QSave, qIdx );
+  }
+
+  // 質問IDから, 調査項目IDを求める
+  for( topicID=0; topicID < TOPIC_ID_NUM; topicID++ )
+  {
+    if( (questionID[0] == Question1_topic[ topicID ]) &&
+        (questionID[1] == Question2_topic[ topicID ]) &&
+        (questionID[2] == Question3_topic[ topicID ]) ) { return topicID; }
+  }
+
+  // 質問の組み合わせに該当する調査項目が存在しない
+  GF_ASSERT(0);
+  return 0;
+}
+#endif
 
 //-----------------------------------------------------------------------------------------
 /**
@@ -3083,23 +3117,23 @@ static u8 GetInvestigatingTopicID( const RESEARCH_CHECK_WORK* work )
 //-----------------------------------------------------------------------------------------
 u8 GetMyAnswerID( const RESEARCH_CHECK_WORK* work )
 {
-  SAVE_CONTROL_WORK* saveControlWork;
-  QUESTIONNAIRE_SAVE_WORK* questionnaireSave;
-  QUESTIONNAIRE_ANSWER_WORK* myAnswerWork;
+  SAVE_CONTROL_WORK* save;
+  QUESTIONNAIRE_SAVE_WORK* QSave;
+  QUESTIONNAIRE_ANSWER_WORK* myAnswer;
   const RESEARCH_DATA* researchData;
   u8 questionID, questionIdx;
   u16 answerID, answerIdx;
 
   // セーブデータを取得
-  saveControlWork   = GAMEDATA_GetSaveControlWork( work->gameData );
-  questionnaireSave = SaveData_GetQuestionnaire( saveControlWork );
-  myAnswerWork      = Questionnaire_GetAnswerWork( questionnaireSave );
+  save  = GAMEDATA_GetSaveControlWork( work->gameData );
+  QSave = SaveData_GetQuestionnaire( save );
+  myAnswer = Questionnaire_GetAnswerWork( QSave );
 
   // 現在表示中の質問に対する, 自分の回答インデックスを取得
   researchData = &( work->researchData );
   questionIdx  = work->questionIdx;
   questionID   = GetQuestionID( work );
-  answerIdx    = QuestionnaireAnswer_ReadBit( myAnswerWork, questionID );
+  answerIdx    = QuestionnaireAnswer_ReadBit( myAnswer, questionID );
 
   // 無回答を考慮する
   if( answerIdx == 0 ) {
@@ -3566,25 +3600,25 @@ static void SetupResearchData( RESEARCH_CHECK_WORK* work )
   u16 answerID[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
   u16 todayCountOfAnswer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
   u16 totalCountOfAnswer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
-  SAVE_CONTROL_WORK* saveControlWork;
-  QUESTIONNAIRE_SAVE_WORK* questionnaireSave;
+  SAVE_CONTROL_WORK* save;
+  QUESTIONNAIRE_SAVE_WORK* QSave;
 
   // セーブデータ取得
-  saveControlWork = GAMEDATA_GetSaveControlWork( work->gameData );
-  questionnaireSave = SaveData_GetQuestionnaire( saveControlWork );
-  topicID = QuestionnaireWork_GetInvestigatingQuestion( questionnaireSave, 0 ); // 調査項目ID
+  save = GAMEDATA_GetSaveControlWork( work->gameData );
+  QSave = SaveData_GetQuestionnaire( save );
+  topicID = QuestionnaireWork_GetInvestigatingQuestion( QSave, 0 ); // 調査項目ID
   questionID[0] = Question1_topic[ topicID ]; // 調査項目ID ==> 質問ID
   questionID[1] = Question2_topic[ topicID ]; // 調査項目ID ==> 質問ID
   questionID[2] = Question3_topic[ topicID ]; // 調査項目ID ==> 質問ID
   answerNumOfQuestion[0] = AnswerNum_question[ questionID[0] ]; // 質問ID ==> 回答選択肢の数
   answerNumOfQuestion[1] = AnswerNum_question[ questionID[1] ]; // 質問ID ==> 回答選択肢の数
   answerNumOfQuestion[2] = AnswerNum_question[ questionID[2] ]; // 質問ID ==> 回答選択肢の数
-  todayCountOfQuestion[0] = QuestionnaireWork_GetTodayCount( questionnaireSave, questionID[0] ); // 質問に対する, 今日の回答人数
-  todayCountOfQuestion[1] = QuestionnaireWork_GetTodayCount( questionnaireSave, questionID[1] ); // 質問に対する, 今日の回答人数
-  todayCountOfQuestion[2] = QuestionnaireWork_GetTodayCount( questionnaireSave, questionID[2] ); // 質問に対する, 今日の回答人数
-  totalCountOfQuestion[0] = QuestionnaireWork_GetTotalCount( questionnaireSave, questionID[0] ); // 質問に対する, いままでの回答人数
-  totalCountOfQuestion[1] = QuestionnaireWork_GetTotalCount( questionnaireSave, questionID[1] ); // 質問に対する, いままでの回答人数
-  totalCountOfQuestion[2] = QuestionnaireWork_GetTotalCount( questionnaireSave, questionID[2] ); // 質問に対する, いままでの回答人数
+  todayCountOfQuestion[0] = QuestionnaireWork_GetTodayCount( QSave, questionID[0] ); // 質問に対する, 今日の回答人数
+  todayCountOfQuestion[1] = QuestionnaireWork_GetTodayCount( QSave, questionID[1] ); // 質問に対する, 今日の回答人数
+  todayCountOfQuestion[2] = QuestionnaireWork_GetTodayCount( QSave, questionID[2] ); // 質問に対する, 今日の回答人数
+  totalCountOfQuestion[0] = QuestionnaireWork_GetTotalCount( QSave, questionID[0] ); // 質問に対する, いままでの回答人数
+  totalCountOfQuestion[1] = QuestionnaireWork_GetTotalCount( QSave, questionID[1] ); // 質問に対する, いままでの回答人数
+  totalCountOfQuestion[2] = QuestionnaireWork_GetTotalCount( QSave, questionID[2] ); // 質問に対する, いままでの回答人数
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: topicID=%d\n", topicID ); // DEBUG: 調査項目ID
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: questionID[0]=%d\n", questionID[0] ); // DEBUG: 質問ID
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: setup research data: questionID[1]=%d\n", questionID[1] ); // DEBUG: 質問ID
@@ -3605,19 +3639,20 @@ static void SetupResearchData( RESEARCH_CHECK_WORK* work )
     for( aIdx=0; aIdx < answerNumOfQuestion[ qIdx ]; aIdx++ )
     {
       answerID[ qIdx ][ aIdx ] = AnswerID_question[ qID ][ aIdx ]; // 回答ID
-      todayCountOfAnswer[ qIdx ][ aIdx ] = QuestionnaireWork_GetTodayAnswerNum( questionnaireSave, qID, aIdx + 1 ); // 回答に対する, 今日の回答人数
-      totalCountOfAnswer[ qIdx ][ aIdx ] = QuestionnaireWork_GetTotalAnswerNum( questionnaireSave, qID, aIdx + 1 ); // 回答に対する, いままでの回答人数
+      todayCountOfAnswer[ qIdx ][ aIdx ] = QuestionnaireWork_GetTodayAnswerNum( QSave, qID, aIdx + 1 ); // 回答に対する, 今日の回答人数
+      totalCountOfAnswer[ qIdx ][ aIdx ] = QuestionnaireWork_GetTotalAnswerNum( QSave, qID, aIdx + 1 ); // 回答に対する, いままでの回答人数
     }
   }
 
   // データ設定
+  // ※いままで = 今日 + 昨日まで
   work->researchData.topicID = topicID; // 調査項目ID
   for( qIdx=0; qIdx < QUESTION_NUM_PER_TOPIC; qIdx++ )
   {
     work->researchData.questionData[ qIdx ].ID = questionID[ qIdx ]; // 質問ID
     work->researchData.questionData[ qIdx ].answerNum  = answerNumOfQuestion[ qIdx ]; // 回答選択肢の数
     work->researchData.questionData[ qIdx ].todayCount = todayCountOfQuestion[ qIdx ]; // 今日の回答人数
-    work->researchData.questionData[ qIdx ].totalCount = totalCountOfQuestion[ qIdx ]; // いままでの回答人数
+    work->researchData.questionData[ qIdx ].totalCount = todayCountOfQuestion[ qIdx ] + totalCountOfQuestion[ qIdx ]; // いままでの回答人数
 
     for( aIdx=0; aIdx < MAX_ANSWER_NUM_PER_QUESTION; aIdx++ )
     {
@@ -3626,7 +3661,7 @@ static void SetupResearchData( RESEARCH_CHECK_WORK* work )
       work->researchData.questionData[ qIdx ].answerData[ aIdx ].colorG = (aIdx * 5) % 31; // 表示カラー(G)
       work->researchData.questionData[ qIdx ].answerData[ aIdx ].colorB = (aIdx * 7) % 31; // 表示カラー(B)
       work->researchData.questionData[ qIdx ].answerData[ aIdx ].todayCount = todayCountOfAnswer[ qIdx ][ aIdx ]; // 今日の回答人数
-      work->researchData.questionData[ qIdx ].answerData[ aIdx ].totalCount = totalCountOfAnswer[ qIdx ][ aIdx ];  // いままでの回答人数
+      work->researchData.questionData[ qIdx ].answerData[ aIdx ].totalCount = todayCountOfAnswer[ qIdx ][ aIdx ] + totalCountOfAnswer[ qIdx ][ aIdx ];  // いままでの回答人数
     }
   }
 }
@@ -4762,16 +4797,15 @@ static u16 GetAnswerID( const RESEARCH_CHECK_WORK* work )
 //-----------------------------------------------------------------------------------------
 static u16 GetCountOfQuestion( const RESEARCH_CHECK_WORK* work )
 {
-  switch( work->dispType )
-  {
-  case DATA_DISP_TYPE_TODAY: return GetTodayCountOfQuestion( work ); break;
-  case DATA_DISP_TYPE_TOTAL: return GetTotalCountOfQuestion( work ); break;
+  u16 count = 0;
+
+  switch( work->dispType ) {
+  case DATA_DISP_TYPE_TODAY:  count = GetTodayCountOfQuestion( work ); break;
+  case DATA_DISP_TYPE_TOTAL:  count = GetTotalCountOfQuestion( work ); break;
   default: GF_ASSERT(0);
   }
 
-  // エラー
-  GF_ASSERT(0);
-  return 0;
+  return count;
 }
 
 //-----------------------------------------------------------------------------------------
