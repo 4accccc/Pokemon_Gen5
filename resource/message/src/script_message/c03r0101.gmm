@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-03-17T20:01:06"/>
+	<create user="nakamura_akira" host="W00161" date="2010-03-18T17:41:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -352,7 +352,7 @@
 		</language>
 	</columns>
 
-	<dialog left="86" top="308" right="791" bottom="936" maximized="no" rayout="Vertical2">
+	<dialog left="273" top="335" right="978" bottom="963" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="163" right="1280" bottom="561" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -360,7 +360,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -422,27 +422,24 @@
 assistantm_01_02へ続く</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">あの　ひとが
-すきなものは　なんだろう？▼
-いま　みんなに
-はやっているものは　なんだろう？▼
+		<language name="JPN" width="256">みんなが　すきなものは？
+いま　はやっているものは？▼
 そんな　ぎもんを
 キミは　かんじたことは　ないか？▼
 ここは　すれちがい
 ちょうさたいほんぶ▼
-キミのような　まよえる　こひつじに
+キミの　ような　まよえる　こひつじに
 しんじつを　おしえる　ばしょだ▼
 ……キミは　いいめを　しているな
 たんきゅうしん　あふれる　めだ▼
 ……よろしい！　キミを　とくべつに
 ちょうさたいいんに　にんめいしよう！</language>
-		<language name="JPN_KANJI" width="256">あの人が　好きなものは　何だろう？▼
-今　みんなに
-流行っているものは　何だろう？▼
+		<language name="JPN_KANJI" width="256">みんなが　好きなものは？
+今　流行っているものは？▼
 そんな　疑問を
 キミは　感じたことは　ないか？▼
-ここは　すれ違い調査隊本部▼
-キミのような　迷える子羊に
+ここは　すれ違い　調査隊本部▼
+キミの　ような　迷える子羊に
 真実を　教える　場所だ▼
 ……キミは　いい目を　しているな
 探究心あふれる　目だ▼
@@ -457,9 +454,9 @@ assistantm_01_03へ続く
 [トレーナー名:1]＝主人公名</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:1]は　ごういんに
+		<language name="JPN" width="256">[1:00:トレーナー名:1]は
 ちょうさたいいんに　にんめいされた！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は　強引に
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 調査隊員に　任命された！</language>
 	</row>
 
@@ -481,9 +478,6 @@ assistantm_01_06へ続く
 あとは　たくさんの　ひとと
 すれちがえば　レーダーが▽
 じょうほうを　あつめてくれる▼
-ちょうさの　しゅるいは　さまざまだが　
-じぶんの　しらべたいちょうさを▽
-えらぶといい▼
 もちろん　ちょうさに　たいして
 ほうしゅうも　よういしている▼
 [1:00:トレーナー名:1]たいいん！　キミの
@@ -497,8 +491,6 @@ assistantm_01_06へ続く
 調べたい　調査を　選ぶ▼
 あとは　たくさんの人と　すれ違えば
 レーダーが　情報を　集めてくれる▼
-調査の　種類は　様々だが
-自分の　調べたい調査を　選ぶといい▼
 もちろん　調査に　たいして
 報酬も　用意している▼
 [1:00:トレーナー名:1]隊員！
@@ -545,8 +537,8 @@ assistantm_01_06へ続く
 ⇒　choice_01○へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">さて　きょうは　どうする？▼</language>
-		<language name="JPN_KANJI" width="256">さて　今日は　どうする？▼</language>
+		<language name="JPN" width="256">さて　きょうは　どうする？</language>
+		<language name="JPN_KANJI" width="256">さて　今日は　どうする？</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_01a">
@@ -605,9 +597,9 @@ assistantm_01_06へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">ちょうさいらいを　うけるんだな？
-では　ちょうさいらいを　えらんでくれ▼</language>
+では　ちょうさいらいを　えらんでくれ</language>
 		<language name="JPN_KANJI" width="256">調査依頼を　受けるんだな？
-では　調査依頼を　選んでくれ▼</language>
+では　調査依頼を　選んでくれ</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_02a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -669,12 +661,12 @@ assistantm_01_06へ続く
 ちょうさいらいを　うけているぞ！▽
 がんばって　ちょうさして　きてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">キミは　すでに
 調査依頼を　受けているぞ！▽
 がんばって　調査してきてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -689,10 +681,10 @@ assistantm_01_06へ続く
 隊長</attribute>
 		<language name="JPN" width="256">ちょうさちゅうの　データも
 すべて　しらべなおすことになるが……▽
-キャンセルして　いいのか？▼</language>
+キャンセルして　いいのか？</language>
 		<language name="JPN_KANJI" width="256">調査中の　データも
 全て　調べなおすことになるが……▽
-キャンセルして　いいのか？▼</language>
+キャンセルして　いいのか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1156,15 +1148,15 @@ assistantm_01_15へ続く
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　ざっしきしゃ　からの
 いらい　だな▼
-４じかんいじょう　ちょうさして
+４じかん　いじょう　ちょうさして
 いちばん　おおい　しごとを▽
 しらべてくる　ちょうさだ▼
 ちょうさけっかを
 とくしゅうきじに　したいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　雑誌記者　からの　依頼だな▼
-４時間以上　調査して
-１番多い　仕事を▽
+４時間　以上　調査して
+１番　多い　仕事を▽
 調べてくる　調査だ▼
 調査の　結果を
 特集記事に　したいそうだ</language>
@@ -1186,7 +1178,7 @@ assistantm_01_15へ続く
 		<language name="JPN" width="256">この　ちょうさは……▼
 とある　レジャーかいしゃ　からの
 いらい　だな▼
-４じかんいじょう　ちょうさして
+４じかん　いじょう　ちょうさして
 いちばん　おおい　しゅみを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
@@ -1194,8 +1186,8 @@ assistantm_01_15へ続く
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　レジャー会社　からの
 依頼だな▼
-４時間以上　調査して
-一番多い　趣味を▽
+４時間　以上　調査して
+一番　多い　趣味を▽
 調べてくる　調査だ▼
 調査の　結果を
 企画の参考に　したいそうだ</language>
@@ -1216,7 +1208,7 @@ assistantm_01_15へ続く
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさは……▼
 わたし　からの　いらいだな▼
-８じかんいじょう　ちょうさして
+８じかん　いじょう　ちょうさして
 たいせんと　こうかん▽
 どっちが　にんきかを▽
 しらべてくる　ちょうさだ▼
@@ -1224,7 +1216,7 @@ assistantm_01_15へ続く
 みんなの　あそびかたを　しりたいんだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 わたし　からの　依頼だな▼
-８時間以上　調査して
+８時間　以上　調査して
 対戦と　交換　どっちが人気かを▽
 調べてくる　調査だ▼
 最近　ポケモンに　はまっていてね
@@ -1719,7 +1711,7 @@ assistantm_01_15へ続く
 ジムリーダーを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
-ジムのうんえいに　やくだてたいそうだ</language>
+ジムうんえいに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　ジムリーダー　からの
 依頼だな▼
@@ -2496,7 +2488,7 @@ assistantm_01_15へ続く
 ジムリーダーを▽
 しらべてくる　ちょうさだ▼
 ちょうさの　けっかを
-ジムのうんえいに　やくだてたいそうだ</language>
+ジムうんえいに　やくだてたいそうだ</language>
 		<language name="JPN_KANJI" width="256">この調査は……▼
 とある　ジムリーダー　からの
 依頼だな▼
@@ -2580,8 +2572,8 @@ assistantm_01_15へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">この　ちょうさいらいを
-うけるのか？▼</language>
-		<language name="JPN_KANJI" width="256">この　調査依頼を　受けるのか？▼</language>
+うけるのか？</language>
+		<language name="JPN_KANJI" width="256">この　調査依頼を　受けるのか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2615,7 +2607,7 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:1]は
-『えらんだ
+『えらんだ▽
 さいしょの　ポケモンは？』の▽
 ちょうさ　いらいを　うけた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
@@ -3039,9 +3031,9 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">やめるのか？
-では　ほかのいらいを　うけるのか？▼</language>
+では　ほかの　いらいを　うけるのか？</language>
 		<language name="JPN_KANJI" width="256">やめるのか？
-では　他の依頼を　受けるのか？▼</language>
+では　他の　依頼を　受けるのか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_19" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3080,7 +3072,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『ブラックと　ホワイト
 多いのは？』の▽　
 調査が　終わっていないぞ▼
@@ -3088,7 +3080,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3112,7 +3104,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『選んだ　
 最初の　ポケモンは？』の▽
 調査が　終わっていないぞ▼
@@ -3120,7 +3112,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3144,7 +3136,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　多い　
 プレイ時間は？』の▽
 調査が　終わっていないぞ▼
@@ -3152,7 +3144,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3176,7 +3168,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『男の子と　女の子
 多いのは？』の▽
 調査が　終わっていないぞ▼
@@ -3184,7 +3176,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20e" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3208,14 +3200,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　多い　仕事は？』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20f" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3239,14 +3231,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　多い　趣味は？』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20g" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3270,7 +3262,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『対戦と　交換
 人気が　あるのは？』の▽
 調査が　終わっていないぞ▼
@@ -3278,7 +3270,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20h" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3301,14 +3293,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『好きな　ポケモンは？』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20i" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3332,7 +3324,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『好きな　ポケモンの
 タイプは？』の▽
 調査が　終わっていないぞ▼
@@ -3340,7 +3332,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20j" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3364,7 +3356,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『都会と　田舎
 住みたいのは？』の▽　
 調査が　終わっていないぞ▼
@@ -3372,7 +3364,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20k" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3396,7 +3388,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『大事に　しているものに
 ついて』の▽
 調査が　終わっていないぞ▼
@@ -3404,7 +3396,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20l" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3428,14 +3420,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『人の　魅力に　ついて』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20m" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3458,14 +3450,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『季節に　ついて』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20n" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3488,14 +3480,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『芸術に　ついて』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20o" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3519,14 +3511,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　好きな　音楽は？』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20p" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3549,14 +3541,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『映像に　ついて』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20q" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3580,7 +3572,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　好きな
 学校の　時間は？』の▽
 調査が　終わっていないぞ▼
@@ -3588,7 +3580,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20r" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3611,14 +3603,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『勉強に　ついて』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20s" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3642,7 +3634,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
 スポーツは？』の▽
 調査が　終わっていないぞ▼
@@ -3650,7 +3642,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20t" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3673,14 +3665,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『休日に　ついて』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20u" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3704,14 +3696,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　なりたいものは？』の
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20v" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3735,7 +3727,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
 ジムリーダーは？』の▽
 調査が　終わっていないぞ▼
@@ -3743,7 +3735,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_20w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3767,7 +3759,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『ポケモンの　
 面白い　ところは？』の▽
 調査が　終わっていないぞ▼
@@ -3775,7 +3767,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33_a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3798,7 +3790,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『ブラックと　ホワイト
 多いのは？』の▽
 調査が　終わっていないぞ▼
@@ -3806,7 +3798,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3822,14 +3814,14 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『えらんだ
-さいしょの　ポケモンは？』の▽　
+さいしょの　ポケモンは？』の▽
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『選んだ　
 最初の　ポケモンは？』の▽
 調査が　終わっていないぞ▼
@@ -3837,7 +3829,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3860,7 +3852,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　多い
 プレイ時間は？』の▽
 調査が　終わっていないぞ▼
@@ -3868,7 +3860,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3884,14 +3876,14 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『おとこのこと　おんなのこ
-おおいのは？』の▽　
+おおいのは？』の▽
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『男の子と　女の子
 多いのは？』の▽
 調査が　終わっていないぞ▼
@@ -3899,7 +3891,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33e" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3922,14 +3914,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　多い　仕事は？』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33f" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3952,14 +3944,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　多い　趣味は？』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33g" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3982,7 +3974,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『対戦と　交換
 人気が　あるのは？』の▽
 調査が　終わっていないぞ▼
@@ -3990,7 +3982,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33h" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4012,14 +4004,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『好きな　ポケモンは？』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33i" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4042,7 +4034,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『好きな　ポケモンの
 タイプは？』の▽
 調査が　終わっていないぞ▼
@@ -4050,7 +4042,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33j" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4073,7 +4065,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『都会と　田舎
 住みたいのは？』の▽
 調査が　終わっていないぞ▼
@@ -4081,7 +4073,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33k" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4104,7 +4096,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『大事に　しているものに
 ついて』の▽
 調査が　終わっていないぞ▼
@@ -4112,7 +4104,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33l" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4135,14 +4127,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『人の　魅力に　ついて』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33m" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4164,14 +4156,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『季節に　ついて』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33n" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4193,14 +4185,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『芸術に　ついて』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33o" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4223,14 +4215,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　好きな　音楽は？』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33p" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4252,14 +4244,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『映像に　ついて』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33q" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4282,7 +4274,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　好きな
 学校の　時間は？』の▽
 調査が　終わっていないぞ▼
@@ -4290,7 +4282,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33r" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4312,14 +4304,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『勉強に　ついて』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33s" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4342,7 +4334,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
 スポーツは？』の▽
 調査が　終わっていないぞ▼
@@ -4350,7 +4342,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33t" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4372,14 +4364,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『休日に　ついて』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33u" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4402,14 +4394,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　なりたいものは？』の
 調査が　終わっていないぞ▼
 最低　１人　以上の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33v" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4432,7 +4424,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
 ジムリーダーは？』の▽
 調査が　終わっていないぞ▼
@@ -4440,7 +4432,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_33w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4463,7 +4455,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『ポケモンの　
 面白い　ところは？』の▽
 調査が　終わっていないぞ▼
@@ -4471,7 +4463,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4495,7 +4487,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『ブラックと　ホワイト
 多いのは？』の▽　
 調査が　終わっていないぞ▼
@@ -4503,7 +4495,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4527,7 +4519,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『選んだ
 最初の　ポケモンは？』の▽
 調査が　終わっていないぞ▼
@@ -4535,7 +4527,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4559,7 +4551,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　多い　
 プレイ時間は？』の▽
 調査が　終わっていないぞ▼
@@ -4567,7 +4559,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4591,7 +4583,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『男の子と　女の子
 多いのは？』の▽
 調査が　終わっていないぞ▼
@@ -4599,7 +4591,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21e" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4623,14 +4615,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　多い　仕事は？』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21f" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4654,14 +4646,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　多い　趣味は？』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21g" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4685,7 +4677,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『対戦と　交換
 人気が　あるのは？』の▽
 調査が　終わっていないぞ▼
@@ -4693,7 +4685,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21h" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4716,14 +4708,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『好きな　ポケモンは？』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21i" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4747,7 +4739,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『好きな　ポケモンの
 タイプは？』の▽
 調査が　終わっていないぞ▼
@@ -4755,7 +4747,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21j" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4779,7 +4771,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『都会と　田舎
 住みたいのは？』の▽
 調査が　終わっていないぞ▼
@@ -4787,7 +4779,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21k" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4811,7 +4803,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『大事に　しているものに
 ついて』の▽
 調査が　終わっていないぞ▼
@@ -4819,7 +4811,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21l" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4843,14 +4835,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『人の　魅力に　ついて』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21m" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4873,14 +4865,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『季節に　ついて』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21n" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4903,14 +4895,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『芸術に　ついて』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21o" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4934,14 +4926,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　好きな　音楽は？』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21p" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4964,14 +4956,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『映像に　ついて』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21q" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4995,7 +4987,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　好きな
 学校の　時間は？』の▽
 調査が　終わっていないぞ▼
@@ -5003,7 +4995,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21r" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -5026,14 +5018,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『勉強に　ついて』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21s" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -5057,7 +5049,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　人気のある
 スポーツは？』の▽
 調査が　終わっていないぞ▼
@@ -5065,7 +5057,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21t" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -5088,14 +5080,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『休日に　ついて』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21u" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -5119,14 +5111,14 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『１番　なりたいものは？』の
 調査が　終わっていないぞ▼
 あと　[2:02:３桁:1]人の
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21v" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -5150,7 +5142,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『一番　人気のある
 ジムリーダーは？』の▽
 調査が　終わっていないぞ▼
@@ -5158,7 +5150,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_21w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -5182,7 +5174,7 @@ assistantm_01_17へ続く
 がんばって　ちょうさを
 つづけてくれ▼
 それとも　うけている
-いらいを　キャンセルするか？▼</language>
+いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『ポケモンの
 面白い　ところは？』の▽
 調査が　終わっていないぞ▼
@@ -5190,7 +5182,7 @@ assistantm_01_17へ続く
 調査が　必要だ▼
 がんばって　調査を　続けてくれ▼
 それとも　受けている
-依頼を　キャンセルするか？▼</language>
+依頼を　キャンセルするか？</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_22" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -5592,13 +5584,13 @@ assistantm_01_25へ続く
 『[1:13:アンケート回答:0]』が　おおいようだな▼
 さんこうになった▼
 どちらで　あそんでも　たのしそうだな
-ますます　まよってしまいそうだ</language>
+ますます　まよって　しまいそうだ</language>
 		<language name="JPN_KANJI" width="256">ふむふむ……　なるほど……▼
 ブラックと　ホワイトでは
 『[1:13:アンケート回答:0]』が　多いようだな▼
 参考になった▼
 どちらで　遊んでも　楽しそうだな
-ますます　迷ってしまいそうだ</language>
+ますます　迷って　しまいそうだ</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_24b" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -6441,7 +6433,7 @@ assistantm_01_29へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">つぎの　ちょうさも
-きたい　しているぞ！▼
+きたい　しているぞ！▽
 [1:00:トレーナー名:1]たいいん！</language>
 		<language name="JPN_KANJI" width="256">次の　調査も　期待しているぞ！
 [1:00:トレーナー名:1]隊員！</language>
@@ -6534,6 +6526,21 @@ assistantm_01_31へ続く
 ちゃんと　調査してる？</language>
 	</row>
 
+	<row id="msg_c03r0101_woman2_23">
+		<comment>・アンケート隊員
+隊長に話しかけ、隊員になり、尚且つ、一度もアンケート隊員に
+話しかけていない状態で、特定のポイントまで移動すると発生する
+強制イベント用メッセージ
+
+　⇒　woman2_03へ</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">しんきたいいんの　アナタ！
+ちょっと　まって！</language>
+		<language name="JPN_KANJI" width="256">新規隊員の　アナタ！
+ちょっと　まって！</language>
+	</row>
+
 	<row id="msg_c03r0101_woman2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・アンケート隊員
 はじめてアンケートを受けるときに表示
@@ -6543,36 +6550,18 @@ assistantm_01_31へ続く
 『いいえ』　⇒　woman2_05へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">そうだ　アナタに　ちょっと
+		<language name="JPN" width="256">じつは　アナタに　ちょっと
 たのみたいことが　あるの▼
-じつは　いま　たいいんの　みんなに
-アンケートを　おねがいしているの▼
-アンケートに
-きょうりょく　してくれたら▼
-おれい　として
-アンケートようしを　あげるわ▼
-このアンケートようしが　あれば
-ちょうさレーダーで　ちょうさできる▽
-こうもくが　ふえるのよ▼
-アンケートに　こたえるほど
-アナタが　ちょうさできる▽
-ないようも　ふえるってわけ▼
-どう？　アナタも
-きょうりょく　してくれない？▼</language>
-		<language name="JPN_KANJI" width="256">そうだ　アナタに　ちょっと
+いま　たいいんの　みんなに
+アンケートを　おねがいしているのよ▼
+よかったら　アナタも　アンケートに
+きょうりょくしてくれない？</language>
+		<language name="JPN_KANJI" width="256">じつは　アナタに　ちょっと
 頼みたいことが　あるの▼
-実は　今　隊員の　みんなに
-アンケートを　お願いしているの▼
-アンケートに　協力してくれたら
-お礼として▽
-アンケート用紙を　あげるわ▼
-このアンケート用紙が　あれば
-調査レーダーで　調査できる▽
-項目が　増えるのよ▼
-アンケートに　答えるほど
-アナタが　調査できる▽
-内容も　増えるってわけ▼
-どう？　アナタも　協力してくれない？▼</language>
+今　隊員の　みんなに
+アンケートを　お願いしているのよ▼
+よかったら　アナタも　アンケートに
+協力してくれない？</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -6587,10 +6576,10 @@ assistantm_01_31へ続く
 アンケート隊員</attribute>
 		<language name="JPN" width="256">またアナタに　アンケートを
 おねがいしたいんだけど……▽
-いいかな？▼</language>
+いいかな？</language>
 		<language name="JPN_KANJI" width="256">またアナタに　アンケートを
 お願いしたいんだけど……▽
-いいかな？▼</language>
+いいかな？</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -6601,9 +6590,9 @@ assistantm_01_31へ続く
 アンケート隊員</attribute>
 		<language name="JPN" width="256">しょうがないわね▼
 そのきに　なったら
-またこえを　かけてね</language>
+こえを　かけてね</language>
 		<language name="JPN_KANJI" width="256">しょうがないわね▼
-その気になったら　また声を　かけてね</language>
+その気になったら　声を　かけてね</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -6618,11 +6607,11 @@ assistantm_01_31へ続く
 		<language name="JPN" width="256">あら？　もう　ぜんぶのアンケートに
 こたえてくれたみたいね▼
 こたえた　アンケートを
-もういちど　こたえる？▼</language>
+もういちど　こたえる？</language>
 		<language name="JPN_KANJI" width="256">あら？　もう　全部のアンケートに
 答えてくれたみたいね▼
 答えた　アンケートを
-もう一度　答える？▼</language>
+もう一度　答える？</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -6637,9 +6626,9 @@ assistantm_01_31へ続く
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">それじゃ　こたえる　アンケートを
-えらんでくれる？▼</language>
+えらんでくれる？</language>
 		<language name="JPN_KANJI" width="256">それじゃ　答える　アンケートを
-選んでくれる？▼</language>
+選んでくれる？</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_04a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -6750,8 +6739,8 @@ assistantm_01_31へ続く
 『いいえ』　⇒　woman2_09へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">この　アンケートで　いいのね？▼</language>
-		<language name="JPN_KANJI" width="256">この　アンケートで　いいのね？▼</language>
+		<language name="JPN" width="256">この　アンケートで　いいのね？</language>
+		<language name="JPN_KANJI" width="256">この　アンケートで　いいのね？</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -6777,11 +6766,11 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11aへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">さあ　はじめるわよ
+		<language name="JPN" width="256">それじゃ　はじめるわよ
 こんかいの　アンケートは……▼
-『どんなひとが　いるか』に▽
+『どんなひとが　いるか』に
 ついてよ</language>
-		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+		<language name="JPN_KANJI" width="256">それじゃ　はじめるわよ
 今回の　アンケートは……▼
 『どんな人が　いるか』に　ついてよ</language>
 	</row>
@@ -6795,10 +6784,10 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11bへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">さあ　はじめるわよ
+		<language name="JPN" width="256">それじゃ　はじめるわよ
 こんかいの　アンケートは……▼
 『すきな　ポケモン』に　ついてよ</language>
-		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+		<language name="JPN_KANJI" width="256">それじゃ　はじめるわよ
 今回の　アンケートは……▼
 『好きな　ポケモン』に　ついてよ</language>
 	</row>
@@ -6812,10 +6801,10 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11cへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">さあ　はじめるわよ
+		<language name="JPN" width="256">それじゃ　はじめるわよ
 こんかいの　アンケートは……▼
 『みんなの　りそう』に　ついてよ</language>
-		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+		<language name="JPN_KANJI" width="256">それじゃ　はじめるわよ
 今回の　アンケートは……▼
 『みんなの　理想』に　ついてよ</language>
 	</row>
@@ -6829,10 +6818,10 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11dへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">さあ　はじめるわよ
+		<language name="JPN" width="256">それじゃ　はじめるわよ
 こんかいの　アンケートは……▼
 『すきな　ひと』に　ついてよ</language>
-		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+		<language name="JPN_KANJI" width="256">それじゃ　はじめるわよ
 今回の　アンケートは……▼
 『好きな　人』に　ついてよ</language>
 	</row>
@@ -6846,10 +6835,10 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11eへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">さあ　はじめるわよ
+		<language name="JPN" width="256">それじゃ　はじめるわよ
 こんかいの　アンケートは……▼
 『みんなの　このみ』に　ついてよ</language>
-		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+		<language name="JPN_KANJI" width="256">それじゃ　はじめるわよ
 今回の　アンケートは……▼
 『みんなの　好み』に　ついてよ</language>
 	</row>
@@ -6863,10 +6852,10 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11fへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">さあ　はじめるわよ
+		<language name="JPN" width="256">それじゃ　はじめるわよ
 こんかいの　アンケートは……▼
 『みんなの　しゅみ』に　ついてよ</language>
-		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+		<language name="JPN_KANJI" width="256">それじゃ　はじめるわよ
 今回の　アンケートは……▼
 『みんなの　趣味』に　ついてよ</language>
 	</row>
@@ -6880,10 +6869,10 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11gへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">さあ　はじめるわよ
+		<language name="JPN" width="256">それじゃ　はじめるわよ
 こんかいの　アンケートは……▼
 『がっこうせいかつ』に　ついてよ</language>
-		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+		<language name="JPN_KANJI" width="256">それじゃ　はじめるわよ
 今回の　アンケートは……▼
 『学校生活』に　ついてよ</language>
 	</row>
@@ -6897,11 +6886,11 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11hへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">さあ　はじめるわよ
+		<language name="JPN" width="256">それじゃ　はじめるわよ
 こんかいの　アンケートは……▼
 『どんな　あそびが　すきか』に▽
 ついてよ</language>
-		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+		<language name="JPN_KANJI" width="256">それじゃ　はじめるわよ
 今回の　アンケートは……▼
 『どんな　遊びが　好きか』に▽
 ついてよ</language>
@@ -6916,10 +6905,10 @@ assistantm_01_31へ続く
 各アンケート　⇒　msg_c03r0101_woman2_11iへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">さあ　はじめるわよ
+		<language name="JPN" width="256">それじゃ　はじめるわよ
 こんかいの　アンケートは……▼
 『ポケモン』に　ついてよ</language>
-		<language name="JPN_KANJI" width="256">さあ　はじめるわよ
+		<language name="JPN_KANJI" width="256">それじゃ　はじめるわよ
 今回の　アンケートは……▼
 『ポケモン』に　ついてよ</language>
 	</row>
@@ -6931,10 +6920,8 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん１
-『アナタの　しゅみは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問１
-『アナタの　趣味は？』▼</language>
+		<language name="JPN" width="256">『アナタの　しゅみは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタの　趣味は？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_11b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -6944,12 +6931,10 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん１
-『アナタは　たいせんと　こうかん▽
-どっちがすき？』▼</language>
-		<language name="JPN_KANJI" width="256">質問１
-『アナタは　対戦と　交換▽
-どっちが　好き？』▼</language>
+		<language name="JPN" width="256">『アナタは　たいせんと　こうかん▽
+どっちがすき？』</language>
+		<language name="JPN_KANJI" width="256">『アナタは　対戦と　交換▽
+どっちが　好き？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_11c" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -6959,12 +6944,10 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん１
-『アナタは　とかいと　いなか▽
-すむなら　どっち？』▼</language>
-		<language name="JPN_KANJI" width="256">質問１
-『アナタは　都会と　田舎▽
-住むなら　どっち？』▼</language>
+		<language name="JPN" width="256">『アナタは　とかいと　いなか▽
+すむなら　どっち？』</language>
+		<language name="JPN_KANJI" width="256">『アナタは　都会と　田舎▽
+住むなら　どっち？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_11d" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -6974,12 +6957,10 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん１
-『アナタが　あいてを　えらぶなら▽
-どっち？』▼</language>
-		<language name="JPN_KANJI" width="256">質問１
-『アナタが　相手を　選ぶなら▽
-どっち？』▼</language>
+		<language name="JPN" width="256">『アナタが　あいてを　えらぶなら▽
+どっち？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　相手を　選ぶなら▽
+どっち？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_11e" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -6989,10 +6970,8 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん１
-『アナタが　すきな　きせつは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問１
-『アナタが　好きな　季節は？』▼</language>
+		<language name="JPN" width="256">『アナタが　すきな　きせつは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　好きな　季節は？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_11f" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7002,10 +6981,8 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん１
-『アナタが　すきな　おんがくは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問１
-『アナタが　好きな　音楽は？』▼</language>
+		<language name="JPN" width="256">『アナタが　すきな　おんがくは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　好きな　音楽は？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_11g" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7015,12 +6992,10 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん１
-『アナタが　すきな▽　
-がっこうの　じかんは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問１
-『アナタが　好きな▽
-学校の　時間は？』▼</language>
+		<language name="JPN" width="256">『アナタが　すきな▽　
+がっこうの　じかんは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　好きな▽
+学校の　時間は？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_11h" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7030,12 +7005,10 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん１
-『アナタが　あそびに　いくなら▽
-どこ？』▼</language>
-		<language name="JPN_KANJI" width="256">質問１
-『アナタが　遊びに　行くなら▽
-どこ？』▼</language>
+		<language name="JPN" width="256">『アナタが　あそびに　いくなら▽
+どこ？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　遊びに　行くなら▽
+どこ？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_11i" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7045,12 +7018,10 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん１
-『アナタが　おもう▽
-ポケモンの　おもしろいところは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問１
-『アナタが　思う▽
-ポケモンの　面白いところは？』▼</language>
+		<language name="JPN" width="256">『アナタが　おもう▽
+ポケモンの　おもしろいところは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　思う▽
+ポケモンの　面白いところは？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_12a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7060,10 +7031,8 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん２
-『アナタの　おしごとは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問２
-『アナタの　お仕事は？』▼</language>
+		<language name="JPN" width="256">『アナタの　おしごとは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタの　お仕事は？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_12b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7073,10 +7042,8 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん２
-『アナタが　すきな　ポケモンは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問２
-『アナタが　好きな　ポケモンは？』▼</language>
+		<language name="JPN" width="256">『アナタが　すきな　ポケモンは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　好きな　ポケモンは？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_12c" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7086,10 +7053,8 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん２
-『アナタが　ほしいのは　どっち？』▼</language>
-		<language name="JPN_KANJI" width="256">質問２
-『アナタが　欲しいのは　どっち？』▼</language>
+		<language name="JPN" width="256">『アナタが　ほしいのは　どっち？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　欲しいのは　どっち？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_12d" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7099,12 +7064,10 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん２
-『アナタが　あいてに▽
-もとめるものは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問２
-『アナタが　相手に▽
-求めるものは？』▼</language>
+		<language name="JPN" width="256">『アナタが　あいてに▽
+もとめるものは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　相手に▽
+求めるものは？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_12e" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7114,10 +7077,8 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん２
-『アナタが　すきな　たべものは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問２
-『アナタが　好きな　食べ物は？』▼</language>
+		<language name="JPN" width="256">『アナタが　すきな　たべものは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　好きな　食べ物は？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_12f" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7127,11 +7088,9 @@ assistantm_01_31へ続く
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん２
-『アナタが　すきな▽
-TVばんぐみは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問２
-『アナタが　好きな　TV番組は？』▼</language>
+		<language name="JPN" width="256">『アナタが　すきな▽
+TVばんぐみは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　好きな　TV番組は？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_12g" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7141,11 +7100,9 @@ TVばんぐみは？』▼</language>
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん２
-『アナタが　すきな▽
-べんきょうは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問２
-『アナタが　好きな　勉強は？』▼</language>
+		<language name="JPN" width="256">『アナタが　すきな▽
+べんきょうは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　好きな　勉強は？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_12h" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7155,11 +7112,9 @@ TVばんぐみは？』▼</language>
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん２
-『アナタは　きゅうじつは▽
-なにしてる？』▼</language>
-		<language name="JPN_KANJI" width="256">質問２
-『アナタは　休日は　何してる？』▼</language>
+		<language name="JPN" width="256">『アナタは　きゅうじつは▽
+なにしてる？』</language>
+		<language name="JPN_KANJI" width="256">『アナタは　休日は　何してる？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_12i" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7169,10 +7124,8 @@ TVばんぐみは？』▼</language>
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん２
-『アナタが　もし　なれるなら？』▼</language>
-		<language name="JPN_KANJI" width="256">質問２
-『アナタが　もし　なれるなら？』▼</language>
+		<language name="JPN" width="256">『アナタが　もし　なれるなら？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　もし　なれるなら？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_13a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7188,12 +7141,10 @@ TVばんぐみは？』▼</language>
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん３
-『アナタが　すきな▽
-ポケモンの　タイプは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問３
-『アナタが　好きな▽
-ポケモンの　タイプは？』▼</language>
+		<language name="JPN" width="256">『アナタが　すきな▽
+ポケモンの　タイプは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　好きな▽
+ポケモンの　タイプは？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_13c" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7203,10 +7154,8 @@ TVばんぐみは？』▼</language>
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん３
-『アナタが　だいじなのは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問３
-『アナタが　大事なのは？』▼</language>
+		<language name="JPN" width="256">『アナタが　だいじなのは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　大事なのは？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_13d" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7216,12 +7165,10 @@ TVばんぐみは？』▼</language>
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん３
-『アナタが　すきな▽
-にんげんの　タイプは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問３
-『アナタが　好きな▽
-人間の　タイプは？』▼</language>
+		<language name="JPN" width="256">『アナタが　すきな▽
+にんげんの　タイプは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　好きな▽
+人間の　タイプは？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_13e" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7231,10 +7178,8 @@ TVばんぐみは？』▼</language>
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん３
-『アナタの　すきな　いろは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問３
-『アナタの　好きな　色は？』▼</language>
+		<language name="JPN" width="256">『アナタの　すきな　いろは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタの　好きな　色は？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_13f" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7244,10 +7189,8 @@ TVばんぐみは？』▼</language>
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん３
-『アナタが　すきな　えいがは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問３
-『アナタが　好きな　映画は？』▼</language>
+		<language name="JPN" width="256">『アナタが　すきな　えいがは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　好きな　映画は？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_13g" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7257,11 +7200,9 @@ TVばんぐみは？』▼</language>
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん３
-『アナタが　にがてな▽
-べんきょうは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問３
-『アナタが　苦手な　勉強は？』▼</language>
+		<language name="JPN" width="256">『アナタが　にがてな▽
+べんきょうは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　苦手な　勉強は？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_13h" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7271,10 +7212,8 @@ TVばんぐみは？』▼</language>
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん３
-『アナタが　すきな　スポーツは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問３
-『アナタが　好きな　スポーツは？』▼</language>
+		<language name="JPN" width="256">『アナタが　すきな　スポーツは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　好きな　スポーツは？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_13i" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7284,12 +7223,10 @@ TVばんぐみは？』▼</language>
 回答の選択後、woman2__14へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">しつもん３
-『アナタが　すきな▽
-ジムリーダーは？』▼</language>
-		<language name="JPN_KANJI" width="256">質問３
-『アナタが　好きな▽
-ジムリーダーは？』▼</language>
+		<language name="JPN" width="256">『アナタが　すきな▽
+ジムリーダーは？』</language>
+		<language name="JPN_KANJI" width="256">『アナタが　好きな▽
+ジムリーダーは？』</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_14" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -7591,10 +7528,10 @@ woman2_22へ続く
 挨拶隊員</attribute>
 		<language name="JPN" width="256">よかったら
 キミの　すきな　あいさつを▽
-ボクに　おしえてくれないかな？▼</language>
+ボクに　おしえてくれないかな？</language>
 		<language name="JPN_KANJI" width="256">よかったら
 キミの　好きな　あいさつを▽
-ボクに　教えてくれないかな？▼</language>
+ボクに　教えてくれないかな？</language>
 	</row>
 
 	<row id="msg_c03r0101_boy2_03">
@@ -7607,10 +7544,10 @@ woman2_22へ続く
 挨拶隊員</attribute>
 		<language name="JPN" width="256">よかったら
 またキミの　すきな　あいさつを▽
-おしえてくれないかな？▼</language>
+おしえてくれないかな？</language>
 		<language name="JPN_KANJI" width="256">よかったら
 またキミの　好きな　あいさつを▽
-教えてくれないかな？▼</language>
+教えてくれないかな？</language>
 	</row>
 
 	<row id="msg_c03r0101_input_a">
@@ -7709,12 +7646,12 @@ girl4_04へ続く
 かんしゃする！▼
 ささいなことだけど　だいじなことよ▼
 さあ　あなたの　かんしゃの　きもちを
-おしえてもらえるかしら？▼</language>
+おしえてもらえるかしら？</language>
 		<language name="JPN_KANJI" width="256">こら！　待ちなさい！▼
 お世話になった人には　感謝する！
 ささいなことだけど　大事なことよ▼
 さあ　あなたの　感謝の　気持ちを
-教えてもらえるかしら？▼</language>
+教えてもらえるかしら？</language>
 	</row>
 
 	<row id="msg_c03r0101_girl4_05">
@@ -7727,10 +7664,10 @@ girl4_04へ続く
 お礼隊員</attribute>
 		<language name="JPN" width="256">よかったら
 またあなたの　かんしゃの　きもちを▽
-おしえてくれるかしら？▼</language>
+おしえてくれるかしら？</language>
 		<language name="JPN_KANJI" width="256">よかったら
 またあなたの　感謝の　気持ちを▽
-教えてくれるかしら？▼</language>
+教えてくれるかしら？</language>
 	</row>
 
 	<row id="msg_c03r0101_input_b">
@@ -8256,12 +8193,12 @@ girl4_04へ続く
 	</row>
 
 	<row id="msg_c03r0101_none_debug_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>・机の書類
+		<comment>・壁の円グラフ
 隊長に話しかける前（隊員になる前）に
-机を調べるとメッセージを表示
+円グラフを調べるとメッセージを表示
 会話終了</comment>
 		<attribute name="キャラ指定">NONE
-机の書類</attribute>
+壁の円グラフ</attribute>
 		<language name="JPN" width="256">たいいん　ぼしゅうちゅう！
 しょうさいは　たいちょうまで！</language>
 		<language name="JPN_KANJI" width="256">隊員　募集中！
@@ -8269,8 +8206,8 @@ girl4_04へ続く
 	</row>
 
 	<row id="msg_c03r0101_none_debug_02a" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>・机の書類
-隊員になった後に、机を調べるとメッセージ表示
+		<comment>・壁の円グラフ
+隊員になった後に、円グラフを調べるとメッセージ表示
 プレイヤー名と現在の隊員ランクを表示
 ランクが上がるとランクを連動して変更
 
@@ -8278,7 +8215,7 @@ girl4_04へ続く
 [5桁:1]＝ライブ通信の総すれ違い人数
 [5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
-机の書類</attribute>
+壁の円グラフ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
 たいいんランク　Ｃランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
@@ -8290,8 +8227,8 @@ girl4_04へ続く
 	</row>
 
 	<row id="msg_c03r0101_none_debug_02b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>・机の書類
-隊員になった後に、机を調べるとメッセージ表示
+		<comment>・壁の円グラフ
+隊員になった後に、円グラフを調べるとメッセージ表示
 プレイヤー名と現在の隊員ランクを表示
 ランクが上がるとランクを連動して変更
 
@@ -8299,7 +8236,7 @@ girl4_04へ続く
 [5桁:1]＝ライブ通信の総すれ違い人数
 [5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
-机の書類</attribute>
+壁の円グラフ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
 たいいんランク　Ｂランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
@@ -8311,8 +8248,8 @@ girl4_04へ続く
 	</row>
 
 	<row id="msg_c03r0101_none_debug_02c" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>・机の書類
-隊員になった後に、机を調べるとメッセージ表示
+		<comment>・壁の円グラフ
+隊員になった後に、円グラフを調べるとメッセージ表示
 プレイヤー名と現在の隊員ランクを表示
 ランクが上がるとランクを連動して変更
 
@@ -8320,7 +8257,7 @@ girl4_04へ続く
 [5桁:1]＝ライブ通信の総すれ違い人数
 [5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
-机の書類</attribute>
+壁の円グラフ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
 たいいんランク　Ａランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
@@ -8332,8 +8269,8 @@ girl4_04へ続く
 	</row>
 
 	<row id="msg_c03r0101_none_debug_02d" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>・机の書類
-隊員になった後に、机を調べるとメッセージ表示
+		<comment>・壁の円グラフ
+隊員になった後に、円グラフを調べるとメッセージ表示
 プレイヤー名と現在の隊員ランクを表示
 ランクが上がるとランクを連動して変更
 
@@ -8341,7 +8278,7 @@ girl4_04へ続く
 [5桁:1]＝ライブ通信の総すれ違い人数
 [5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
-机の書類</attribute>
+壁の円グラフ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
 たいいんランク　Ｓランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
@@ -8353,8 +8290,8 @@ girl4_04へ続く
 	</row>
 
 	<row id="msg_c03r0101_none_debug_02e" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>・机の書類
-隊員になった後に、机を調べるとメッセージ表示
+		<comment>・壁の円グラフ
+隊員になった後に、円グラフを調べるとメッセージ表示
 プレイヤー名と現在の隊員ランクを表示
 ランクが上がるとランクを連動して変更
 
@@ -8362,7 +8299,7 @@ girl4_04へ続く
 [5桁:1]＝ライブ通信の総すれ違い人数
 [5桁:2]＝ライブ通信のお礼を受けた総数</comment>
 		<attribute name="キャラ指定">NONE
-机の書類</attribute>
+壁の円グラフ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
 たいいんランク　ＳＳランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
