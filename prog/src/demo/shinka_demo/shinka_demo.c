@@ -780,7 +780,8 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
             if( param->gamedata )
             {
               ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( param->gamedata );
-              ZUKANSAVE_SetPokeGet( zukan_savedata, work->pp );  // 図鑑フラグをセットする
+              ZUKANSAVE_SetPokeSee( zukan_savedata, work->pp );  // 見た  // 図鑑フラグをセットする
+              ZUKANSAVE_SetPokeGet( zukan_savedata, work->pp );  // 捕まえた  // 図鑑フラグをセットする
             }
           }
 

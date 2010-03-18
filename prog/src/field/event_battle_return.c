@@ -19,6 +19,7 @@
 #include "poke_tool\shinka_check.h"
 #include "demo\shinka_demo.h"
 #include "app/zukan_toroku.h"
+#include "poke_tool/poke_memo.h"
 
 #include "arc_def.h"
 #include "message.naix"
@@ -206,11 +207,27 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
           GFL_MSG_Delete( msgdata );
         }
 
+        // 図鑑登録（捕まえた）
+        {
+          ZUKANSAVE_SetPokeSee( zukan_savedata, wk->pp );  // 見た  // 図鑑フラグをセットする
+          ZUKANSAVE_SetPokeGet( zukan_savedata, wk->pp );  // 捕まえた  // 図鑑フラグをセットする
+        }
+
+        // トレーナーメモ
+        {
+          PLAYER_WORK* player_wk = GAMEDATA_GetMyPlayerWork( param->gameData );
+          POKE_MEMO_SetTrainerMemoPP(
+              wk->pp,
+              POKE_MEMO_SET_CAPTURE,
+              myStatus,
+              PLAYERWORK_getZoneID( player_wk ),
+              wk->heapID );
+        }
+
         // 図鑑登録画面 or ニックネーム命名確認画面 へ
         GFL_OVERLAY_Load( FS_OVERLAY_ID(zukan_toroku) );
         if( !ZUKANSAVE_GetPokeGetFlag( zukan_savedata, (u16)( PP_Get(wk->pp, ID_PARA_monsno, NULL) ) ) )
         {
-          ZUKANSAVE_SetPokeGet( zukan_savedata, wk->pp );  // 図鑑フラグをセットする
           ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_TOROKU, wk->pp, wk->box_strbuf, boxman, wk->box_tray );
         }
         else

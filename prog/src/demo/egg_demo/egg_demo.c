@@ -571,6 +571,13 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
         // ƒ^ƒ}ƒS›z‰»
         PP_Put( param->pp, ID_PARA_tamago_flag, 0 );
 
+        // }ŠÓ“o˜^i•ß‚Ü‚¦‚½j
+        {
+          ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( param->gamedata );
+          ZUKANSAVE_SetPokeSee( zukan_savedata, param->pp );  // Œ©‚½
+          ZUKANSAVE_SetPokeGet( zukan_savedata, param->pp );  // •ß‚Ü‚¦‚½
+        }
+
         {
           // ƒgƒŒ[ƒi[ƒƒ‚
           PLAYER_WORK* player_wk = GAMEDATA_GetMyPlayerWork( param->gamedata );
