@@ -805,10 +805,11 @@
 #define DRAGONBONE (0x2006) //8198(6,total 787) カイリューの頭骨
 #define TR_GRASS (0x2007) //8199(7,total 788) 盛り草
 #define TR_GROUND (0x2008) //8200(8,total 789) 盛り土
-#define OBJCODEEND_MDL (0x2009) //8201(total 790) モデルコード終端
-#define OBJCODECOUNT_MDL (0x9) //9 モデルコード数
+#define CUBE (0x2009) //8201(9,total 790) キューブ
+#define OBJCODEEND_MDL (0x200a) //8202(total 791) モデルコード終端
+#define OBJCODECOUNT_MDL (0xa) //10 モデルコード数
 
-#define OBJCODETOTAL (0x316) //790 コード総数
+#define OBJCODETOTAL (0x317) //791 コード総数
 #define OBJCODEMAX (0xffff) //65535 無効コード
 
 #endif //__FLDMMDL_OBJCODE__
