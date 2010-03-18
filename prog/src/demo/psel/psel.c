@@ -8,7 +8,8 @@
  *  モジュール名：PSEL
  */
 //============================================================================
-//#define DEBUG_POS_SET_MODE  // これが定義されているとき、位置調整モードになる
+//#define DEBUG_POS_SET_MODE_MAIN  // これが定義されているとき、位置調整モードになる
+//#define DEBUG_POS_SET_MODE_SUB   // これが定義されているとき、位置調整モードになる
 
 
 // インクルード
@@ -254,9 +255,9 @@ TARGET;
 // タッチの当たり判定
 static const GFL_UI_TP_HITTBL target_tp_hittbl[TARGET_MAX +1] =
 {
-  { GFL_UI_TP_USE_CIRCLE,   83,  107,   23 },  // circle
-  { GFL_UI_TP_USE_CIRCLE,  128,   82,   22 },  // circle
-  { GFL_UI_TP_USE_CIRCLE,  172,  107,   23 },  // circle
+  { GFL_UI_TP_USE_CIRCLE,   66,   96,   32 },  // circle
+  { GFL_UI_TP_USE_CIRCLE,  128,   66,   26 },  // circle
+  { GFL_UI_TP_USE_CIRCLE,  189,   96,   32 },  // circle
   { 21*8, 24*8 -1, 9*8, 23*8 -1 },  // rect
   { GFL_UI_TP_HIT_END, 0, 0, 0 },  // テーブル終了
 };
@@ -264,9 +265,9 @@ static const GFL_UI_TP_HITTBL target_tp_hittbl[TARGET_MAX +1] =
 // 指指しカーソルの位置
 static const u8 finger_pos[TARGET_POKE_MAX][2] =
 {
-  {  83,  58 },
-  { 128,  38 },
-  { 172,  58 },
+  {  66,  39 },
+  { 128,  13 },
+  { 189,  39 },
 };
 
 // ポケモン大小セット
@@ -334,21 +335,21 @@ p0    \ /  \
 static const POKE_MOVE_DATA poke_move_data[TARGET_POKE_MAX] =
 {
   {
-     53,  99,  90, 109, 128, 120,
+     53,  73,  90,  83, 128,  94,
      8, 12, 16,
     16,
      4,  4,
     32, 32,
   },
   {
-    128,  94, 128, 107, 128, 120,
+    128,  68, 128,  81, 128,  94,
      8, 12, 16,
     16,
      4,  4,
     32, 32,
   },
   {
-    202,  99, 165, 109, 128, 120,
+    202,  73, 165,  83, 128,  94,
      8, 12, 16,
     16,
      4,  4,
@@ -1537,9 +1538,12 @@ static void Psel_ThreeS02OnlyMbSelectAnimeStart( PSEL_WORK* work, TARGET target 
         GFL_G3D_OBJECT_DisableAnime( obj, j );
       }
     }
+  }
 
+  if(    target != TARGET_NONE
+      && work->only_mb_select_anime_target != target )
+  {
     // 対象のモンスターボールをチカチカ選択アニメさせる
-    if( target != TARGET_NONE )
     {
       THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[ work->three_obj_prop_tbl_idx[THREE_USER_OBJ_IDX_MB_L +target] ]);
       GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
@@ -3376,10 +3380,9 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
   BOOL select_change = FALSE;  // 選択しているものが変わったらTRUE  // ポケモンのタイプと種族名を消すのに使用する変数
 
 
-#ifdef DEBUG_POS_SET_MODE
+#ifdef DEBUG_POS_SET_MODE_SUB
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
   {
-#if 0
     // サブ画面のOBJを動かして位置を調整する
     GFL_CLACTPOS finger_pos;
     GFL_CLACT_WK_GetPos( work->finger_clwk, &finger_pos, CLSYS_DEFREND_MAIN );
@@ -3401,7 +3404,13 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
     else if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ) finger_pos.x += 1;
     
     GFL_CLACT_WK_SetPos( work->finger_clwk, &finger_pos, CLSYS_DEFREND_MAIN );
-#else
+    
+    return SEQ_S02_MAIN;
+  }
+#endif
+#ifdef DEBUG_POS_SET_MODE_MAIN
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  {
     // メイン画面のOBJを動かして位置を調整する
     GFL_CLWK* small_clwk;
     GFL_CLWK* big_clwk;
@@ -3430,7 +3439,7 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
     
     GFL_CLACT_WK_SetPos( small_clwk, &pos, CLSYS_DEFREND_SUB );
     GFL_CLACT_WK_SetPos( big_clwk, &pos, CLSYS_DEFREND_SUB );
-#endif
+    
     return SEQ_S02_MAIN;
   }
 #endif
