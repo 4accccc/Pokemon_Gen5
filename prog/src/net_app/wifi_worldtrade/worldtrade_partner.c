@@ -928,7 +928,7 @@ static void ChangePage( WORLDTRADE_WORK *wk )
 	GFL_ARC_UTIL_TransVramScreen(   
 		ARCID_WORLDTRADE_GRA, 
 		NARC_worldtrade_searchpoke0_lz_nscr, 
-		 GFL_BG_FRAME1_M, 0, 32*24*2, 1, HEAPID_WORLDTRADE);
+		 GFL_BG_FRAME1_M, 0, 32*32*2, 1, HEAPID_WORLDTRADE);
 
 	// 金銀はページ切り替えではなく全部表示する
 	// すんでいるばしょ

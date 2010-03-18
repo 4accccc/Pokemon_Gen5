@@ -357,7 +357,7 @@ void GF_STR_PrintSimple2( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, i
 
   setup->stream[0]  = PRINTSYS_PrintStream(
         bmpwin, x, y, str, setup->font,
-        MSGSPEED_GetWait(), setup->tcbsys, 0, HEAPID_WORLDTRADE, 0x0f );
+        MSGSPEED_GetWait(), setup->tcbsys, 0, HEAPID_WORLDTRADE, 0x0F );
 
 }
 //----------------------------------------------------------------------------

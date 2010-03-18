@@ -53,7 +53,7 @@ static inline BOOL GTS_TOOL_IsForbidRibbonPPP( POKEMON_PASO_PARAM *p_ppp )
     ID_PARA_sinou_red_ribbon,         //WCSê¢äEëÂâÔóDèüé“îzïzóp                                  
   };
 
-  BOOL ret  = TRUE;
+  BOOL ret;
 
   { 
     int i;
@@ -62,7 +62,11 @@ static inline BOOL GTS_TOOL_IsForbidRibbonPPP( POKEMON_PASO_PARAM *p_ppp )
     temp = PPP_FastModeOn( p_ppp );
     for( i = 0; i < NELEMS(sc_forbid_ribbon_tbl ); i++ )
     { 
-      ret &= PPP_Get( ppp, sc_forbid_ribbon_tbl[i], NULL );
+      ret = PPP_Get( p_ppp, sc_forbid_ribbon_tbl[i], NULL );
+      if( ret == TRUE )
+      { 
+        break;
+      }
     }
     PPP_FastModeOff( p_ppp, temp );
   }

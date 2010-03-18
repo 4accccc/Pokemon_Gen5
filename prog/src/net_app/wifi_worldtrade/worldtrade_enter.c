@@ -202,7 +202,7 @@ int WorldTrade_Enter_Init(WORLDTRADE_WORK *wk, int seq)
 
 	
 	// ワイプフェード開始
-	WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK, WORLDTRADE_WIPE_SPPED, 1, HEAPID_WORLDTRADE );
+	//WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK, WORLDTRADE_WIPE_SPPED, 1, HEAPID_WORLDTRADE );
 #ifdef GTS_FADE_OSP
 	OS_Printf( "******************** worldtrade_enter.c [172] MS ********************\n" );
 #endif
@@ -1226,7 +1226,7 @@ static int Enter_End( WORLDTRADE_WORK *wk)
 	WorldTrade_TimeIconDel( wk );
 
 	
-	WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK, WORLDTRADE_WIPE_SPPED, 1, HEAPID_WORLDTRADE );
+	//WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_BLACK, WORLDTRADE_WIPE_SPPED, 1, HEAPID_WORLDTRADE );
 #ifdef GTS_FADE_OSP
 	OS_Printf( "******************** worldtrade_enter.c [1037] MS ********************\n" );
 #endif

@@ -38,6 +38,8 @@
 
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
 
+#include "net_app/gts_tool.h"
+
 
 //============================================================================================
 //	型宣言
@@ -634,7 +636,7 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 
 	// 「DSの下画面をみてねアイコン」の表示
 	GFL_CLACT_WK_SetDrawEnable( wk->PromptDsActWork, 1 );
-	//WorldTrade_CLACT_PosChange( wk->PromptDsActWork, DS_ICON_X, DS_ICON_Y+256 );
+  WorldTrade_CLACT_PosChangeSub( wk->PromptDsActWork, DS_ICON_X, DS_ICON_Y );
 }
 
 
@@ -753,7 +755,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[1]), 0x4 );
 	GFL_BMPWIN_MakeTransWindow(wk->MenuWin[1]);
 	// 「もどる」描画
-	WorldTrade_SysPrint( wk->MenuWin[1], wk->EndString, 0, 1, 1, PRINTSYS_LSB_Make(1,3,6), &wk->print );
+	WorldTrade_SysPrint( wk->MenuWin[1], wk->EndString, 0, 1, 1, PRINTSYS_LSB_Make(0xF,0xE,4), &wk->print );
 
 	// 選択メニュー領域
 //	wk->MenuWin[0]	= GFL_BMPWIN_Create( GFL_BG_FRAME0_M,
@@ -2295,24 +2297,6 @@ static int CheckPocket( POKEPARTY *party, BOX_MANAGER *box,  int  tray, int pos 
 //==============================================================================
 // 拡張リボン用の定義
 //==============================================================================
-
-#define SPECIAL_RIBBON_NUM	( 10 )				///< 拡張リボンの総数
-
-static const u16 SpRibbonTbl[]={
-	ID_PARA_marine_ribbon,						///< マリンリボン
-	ID_PARA_land_ribbon,						///< ランドリボン
-	ID_PARA_sky_ribbon,							///< スカイリボン
-
-	ID_PARA_sinou_red_ribbon,					///< シンオウレッドリボン
-	ID_PARA_sinou_green_ribbon,					///< シンオウグリーンリボン
-	ID_PARA_sinou_blue_ribbon,					///< シンオウブルーリボン
-	ID_PARA_sinou_festival_ribbon,				///< シンオウフェスティバルリボン
-	ID_PARA_sinou_carnival_ribbon,				///< シンオウカーニバルリボン
-	ID_PARA_sinou_classic_ribbon,				///< シンオウクラシックリボン
-	ID_PARA_sinou_premiere_ribbon,				///< シンオウプレミアリボン
-};
-
-
 //------------------------------------------------------------------
 /**
  * @brief   特殊リボンを持っているかチェック
@@ -2324,23 +2308,7 @@ static const u16 SpRibbonTbl[]={
 //------------------------------------------------------------------
 static int PokeRibbonCheck( POKEMON_PASO_PARAM *ppp )
 {
-	// 特殊リボンを持っていないか？
-	int i, ret = 0, flag;
-
-	flag = PPP_FastModeOn(ppp);
-	for(i=0;i<SPECIAL_RIBBON_NUM;i++){
-		ret += PPP_Get( ppp, SpRibbonTbl[i], NULL );
-	}
-	PPP_FastModeOff(ppp, flag);
-
-	OS_Printf("特殊リボン取得数 %d\n", ret);
-
-	// 特殊リボンをもっているのでダメ
-	if(ret){
-		return 1;
-	}
-	
-	return 0;
+	return GTS_TOOL_IsForbidRibbonPPP( ppp );
 }
 
 //------------------------------------------------------------------

@@ -83,7 +83,7 @@ static void DepositPokemonDataMake( Dpw_Tr_Data *dtd, WORLDTRADE_WORK *wk );
 
 static int PokeNameSortListMake( BMP_MENULIST_DATA **menulist, GFL_MSGDATA *monsnameman, 
 									GFL_MSGDATA *msgman,u16 *table, u8 *sinou,
-									int num, int select,ZUKAN_WORK *zukan );
+									int num, int select,ZUKAN_SAVEDATA *zukan );
 static u16* ZukanSortDataGet( int heap, int idx, int* p_arry_num );
 static PRINTSYS_LSB GetSexColor( int sex, PRINTSYS_LSB color );
 static void SetCellActor(WORLDTRADE_WORK *wk);
@@ -138,11 +138,11 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 
 
 // ほしいポケモン・あずけるポケモン情報
-#define INFORMATION_STR_X	(  1 )
+#define INFORMATION_STR_X	(  0 )
 #define INFORMATION_STR_Y	(  3 )
-#define INFORMATION2_STR_X	(  3 )
+#define INFORMATION2_STR_X	(  1 )
 #define INFORMATION2_STR_Y	(  5 )
-#define INFORMATION3_STR_X	(  3 )
+#define INFORMATION3_STR_X	(  2 )
 #define INFORMATION3_STR_Y	(  7 )
 #define INFORMATION_STR_SX	( 12 )
 #define INFORMATION_STR_SY	(  2 )
@@ -810,11 +810,13 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 	add.pos_x = 160;
 	add.pos_y = 32;
 	wk->SubCursorActWork = GFL_CLACT_WK_Create(wk->clactSet,
-			wk->resObjTbl[MAIN_LCD][CLACT_U_CHAR_RES],
+			wk->resObjTbl[RES_CURSOR][CLACT_U_CHAR_RES],
 			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
-			wk->resObjTbl[MAIN_LCD][CLACT_U_CELL_RES],
+			wk->resObjTbl[RES_CURSOR][CLACT_U_CELL_RES],
 			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
-	GFL_CLACT_WK_SetAnmSeq( wk->SubCursorActWork, 47 );
+	GFL_CLACT_WK_SetAnmSeq( wk->SubCursorActWork, 12 );
+	GFL_CLACT_WK_SetAutoAnmFlag( wk->SubCursorActWork, 1 );
+	GFL_CLACT_WK_StopAnm( wk->SubCursorActWork );
 	GFL_CLACT_WK_SetDrawEnable( wk->SubCursorActWork, 0 );
 
 	// 入力用ページ移動カーソル登録（右向き）
@@ -836,7 +838,6 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 			&add, CLSYS_DRAW_MAIN, HEAPID_WORLDTRADE );
 	GFL_CLACT_WK_SetAnmSeq( wk->BoxArrowActWork[1], CELL_BOXARROW_NO+1 );
 	GFL_CLACT_WK_SetDrawEnable( wk->BoxArrowActWork[1], 0 );
-
 }
 
 //------------------------------------------------------------------
@@ -1079,9 +1080,6 @@ static int SubSeq_PokeNameSelectList( WORLDTRADE_WORK *wk )
 						wk->MsgManager, wk->MonsNameManager,wk->dw,
 						wk->param->zukanwork );
 	wk->listpos = 0xffff;
-
-	OS_Printf("in trade 図鑑フラグ = %d\n", ZukanWork_GetZenkokuZukanFlag(wk->param->zukanwork));
-
 
 	wk->subprocess_seq = SUBSEQ_POKENAME_SELECT_WAIT;
 
@@ -1818,7 +1816,7 @@ void WodrldTrade_PokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameMa
 
 	//「ほしいポケモン」描画
 	strbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_05_008 );
-	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0), print );
+	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(1,2,0), print );
 
 	// 名前・性別・レベルの欄はクリアする
 	for(i=1;i<3;i++){
@@ -1869,7 +1867,7 @@ void WodrldTrade_MyPokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsName
 
 	//「ほしいポケモン」描画
 	strbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_05_008 );
-	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0), print );
+	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(1,2,0), print );
 
 	// 名前・性別・レベルの欄はクリアする
 	for(i=1;i<3;i++){
@@ -1947,9 +1945,9 @@ static void PokeDepositPrint(
 
 	// 描画
 	WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(15,2,0), print );
-	WorldTrade_SysPrint( win[1], namebuf,   0, 0, 0, PRINTSYS_LSB_Make(1,2,0), print );
+	WorldTrade_SysPrint( win[1], namebuf,   0, 0, 0, PRINTSYS_LSB_Make(15,2,0), print );
 	//WorldTrade_SysPrint( win[2], levelbuf,  0, 0, 0, PRINTSYS_LSB_Make(15,2,0) );
-	WorldTrade_SysPrint( win[2], levelbuf,  0, 0, 2, PRINTSYS_LSB_Make(1,2,0), print );
+	WorldTrade_SysPrint( win[2], levelbuf,  0, 0, 2, PRINTSYS_LSB_Make(15,2,0), print );
 	if(sex!=DPW_TR_GENDER_NONE){
 		WorldTrade_SysPrint( win[1], sexbuf,   70, 0, 0, sex_mark_col(sex-1), print );
 	}
@@ -2317,11 +2315,11 @@ static u16 NameHeadTable[]={
 //------------------------------------------------------------------
 static int PokeNameSortListMake( BMP_MENULIST_DATA **menulist, GFL_MSGDATA *monsnameman, 
 									GFL_MSGDATA *msgman,u16 *table, u8 *sinou,
-									int num, int select,ZUKAN_WORK *zukan )
+									int num, int select,ZUKAN_SAVEDATA *zukan )
 {
 	int i,index,see_count=0;
 	int pokenum = NameHeadTable[select+1]-NameHeadTable[select];
-	int flag    = TRUE;	//ZukanWork_GetZenkokuZukanFlag(zukan); 全国図鑑になっているかは関係なくなった 2008.06.23(月) matsuda
+	int flag    = TRUE;	//ZUKANSAVE_GetZenkokuZukanFlag(zukan); 全国図鑑になっているかは関係なくなった 2008.06.23(月) matsuda
 
 	OS_TPrintf("select = %d, num = %d\n",select, pokenum);
 	
@@ -2330,14 +2328,14 @@ static int PokeNameSortListMake( BMP_MENULIST_DATA **menulist, GFL_MSGDATA *mons
 	for(i=0;i<pokenum;i++){
 		// 全国図鑑か？
 		if(flag){
-			if(ZukanWork_GetPokeSeeFlag( zukan, table[index+i] )){
+			if(ZUKANSAVE_GetPokeSeeFlag( zukan, table[index+i] )){
 				OS_Printf(" SeeCheck i = %d, table[index+i] = %d\n", i, table[index+i]);
 				see_count++;
 			}
 		}else{
 			// シンオウ図鑑にいることを確認した上で図鑑チェック
 			if(sinou[table[index+i]]){
-				if(ZukanWork_GetPokeSeeFlag( zukan, table[index+i] )){
+				if(ZUKANSAVE_GetPokeSeeFlag( zukan, table[index+i] )){
 					see_count++;
 				}
 			}
@@ -2353,14 +2351,14 @@ static int PokeNameSortListMake( BMP_MENULIST_DATA **menulist, GFL_MSGDATA *mons
 	for(i=0;i<pokenum;i++){
 		// 全国図鑑か？
 		if(flag){
-			if(ZukanWork_GetPokeSeeFlag( zukan, table[index+i] )){
+			if(ZUKANSAVE_GetPokeSeeFlag( zukan, table[index+i] )){
 				OS_Printf(" ListAdd i = %d, table[index+i] = %d\n", i, table[index+i]);
 				BmpMenuWork_ListAddArchiveString( *menulist, monsnameman, table[index+i], table[index+i], HEAPID_WORLDTRADE  );
 			}
 		}else{
 			// シンオウ図鑑にいることを確認した上で図鑑チェック
 			if(sinou[table[index+i]]){
-				if(ZukanWork_GetPokeSeeFlag( zukan, table[index+i] )){
+				if(ZUKANSAVE_GetPokeSeeFlag( zukan, table[index+i] )){
 					BmpMenuWork_ListAddArchiveString( *menulist, monsnameman, table[index+i], table[index+i], HEAPID_WORLDTRADE  );
 				}
 			}
@@ -2403,7 +2401,7 @@ static int PokeNameSortListMake( BMP_MENULIST_DATA **menulist, GFL_MSGDATA *mons
  */
 //=============================================================================================
 BMPMENULIST_WORK *WorldTrade_PokeNameListMake( WORLDTRADE_WORK *wk, BMP_MENULIST_DATA **menulist, GFL_BMPWIN *win, 
-			GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameManager, DEPOSIT_WORK* dw, ZUKAN_WORK *zukan)
+			GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameManager, DEPOSIT_WORK* dw, ZUKAN_SAVEDATA *zukan)
 {
 	BMPMENULIST_HEADER list_h;
 	int i,listnum,head;

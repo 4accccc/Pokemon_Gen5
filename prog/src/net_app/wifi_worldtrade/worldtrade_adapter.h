@@ -28,8 +28,10 @@
 #include "savedata/myitem_savedata.h"
 #include "savedata/record.h"
 #include "field/eventdata_system.h"
+#include "system/gfl_use.h"
 
 #include "gamesystem/game_data.h"
+#include "system/time_icon.h"
 
 //tool
 #include "poke_tool/poke_tool.h"
@@ -37,37 +39,7 @@
 
 #include "net_app/net_bugfix.h"
 
-//=============================================================================
-/**
- *					デバッグマクロ
-*/
-//=============================================================================
-#ifdef PM_DEBUG
 
-#define CHANGE_POKE_RULE_IGNORE	//交換用ポケモンが結果と一致していなくてもえらべる
-//#define RESERVE_POKE_GS_BINARY	//サーバーに預けるポケモンはGSから作成したバイナリを使う
-//#define DEBUG_SAVE_NONE					//デバッグ用にセーブしないで進みます
-
-
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi	//担当者が変わったら変えてください
-#define DEBUG_AUTHER_ONLY				//現在ONになっているとadapter以外で行っていないところをワーニングで知らせます
-#endif //PM_DEBUG
-
-//担当者プリント
-#ifdef DEBUG_AUTHER_ONLY
-#define MORI_PRINT(...)				OS_Printf( __VA_ARGS__ )
-#else
-#define MORI_PRINT(...)				((void)0)
-#endif //DEBUG_AUTHER_ONLY
-
-//アルセウスイベントチェック
-//#define ARUCEUSU_EVENT_CHECK
-
-//PHC解放チェック
-//#define PHC_EVENT_CHECK
-
-
-#endif //PM_DEBUG
 //=============================================================================
 /**
  *					定義
@@ -85,13 +57,16 @@
 #define PARA_UNK							(2)
 #define PARA_MALE							(0)
 #define PARA_FEMALE						(1)
+
+
 //=============================================================================
 /**
- *					置き換える予定だが、まだ定義されていないマクロ
+ *					使用していないが、置換が大変なので定義でだましているもの
 */
 //=============================================================================
 
-
+#define MSG_NO_PUT						(0)
+#define MSG_ALLPUT						(0)
 #define FONT_TOUCH						(0)
 #define FONT_SYSTEM						(0)
 #define FONT_TALK							(0)
@@ -104,41 +79,6 @@
 #define PHC_WIFI_OPEN_COURSE_NO	(0)
 typedef void PHC_SVDATA;
 
-
-//=============================================================================
-/**
- *					置き換える予定だが、まだ定義されていない関数
-*/
-//=============================================================================
-typedef struct
-{	
-	int dummy;
-}ZUKAN_WORK;
-
-//=============================================================================
-/**
- *					使用していないが、置換が大変なので定義でだましているもの
-*/
-//=============================================================================
-
-#define MSG_NO_PUT						(0)
-#define MSG_ALLPUT						(0)
-
-//=============================================================================
-/**
- *					置き換える予定だが、まだなく、中身を定義していない関数
-*/
-//=============================================================================
-//タイムウェイトアイコン
-static inline void * TimeWaitIconAdd( GFL_BMPWIN *bmpwin, int a ) {	return NULL; }
-static inline void TimeWaitIconDel( void *wk ){}
-
-//サウンド
-static inline void Snd_DataSetByScene( int a, int b, int c ){}
-
-//UI
-static inline void MsgPrintTouchPanelFlagSet( int a ){}
-
 //各種セーブデータ　PHC
 static inline PHC_SVDATA * SaveData_GetPhcSaveData( SAVE_CONTROL_WORK *sv ){	return NULL; }
 static inline void PhcSvData_SetCourseOpenFlag( PHC_SVDATA *sv, int a ){}
@@ -148,16 +88,25 @@ static inline EVENTWORK* SaveData_GetEventWork( SAVE_CONTROL_WORK *sv ){ return 
 static inline int SysWork_AruseusuEventGet( EVENTWORK *ev ){	return 0;}
 static inline void SysWork_AruseusuEventSet( EVENTWORK *ev, int a ){}
 
-//図鑑
-static inline BOOL ZukanWork_GetZenkokuZukanFlag( ZUKAN_WORK *wk ){return TRUE;}
-static inline BOOL ZukanWork_GetPokeSeeFlag( ZUKAN_WORK *zukan, int a ){return TRUE;}
-static inline void SaveData_GetPokeRegister( SAVE_CONTROL_WORK *sv, POKEMON_PARAM *pp ){}
+//UI
+static inline void MsgPrintTouchPanelFlagSet( int a ){}
 
 //=============================================================================
 /**
  *					以下、単純に置き換えた関数
 */
 //=============================================================================
+
+//タイムウェイトアイコン
+static inline void * TimeWaitIconAdd( GFL_BMPWIN *bmpwin, int a ) 
+{	
+  return  TIMEICON_Create( GFUser_VIntr_GetTCBSYS(), bmpwin, 0xF, TIMEICON_DEFAULT_WAIT, HEAPID_WORLDTRADE ); 
+}
+static inline void TimeWaitIconDel( void *wk )
+{
+  TILEICON_Exit( (TIMEICON_WORK *)wk );
+}
+
 static inline int PokePersonalParaGet(int mons_no, int param )
 { 
 	u32 ret;
@@ -307,9 +256,9 @@ extern void WT_PRINT_ClearBuffer( WT_PRINT *wk );
 
 typedef struct _NUMFONT NUMFONT;
 
-NUMFONT * NUMFONT_Create( int a, int b, int c, HEAPID heapID );
-void NUMFONT_Delete( NUMFONT *wk );
-void NUMFONT_Main( NUMFONT *wk );
-void NUMFONT_WriteNumber( NUMFONT *wk, int num, int keta, int mode, GFL_BMPWIN *bmpwin, int x, int y );
-void NUMFONT_WriteMark( NUMFONT *wk, int mark, GFL_BMPWIN *bmpwin, int x, int y );
+extern NUMFONT * NUMFONT_Create( int a, int b, int c, HEAPID heapID );
+extern void NUMFONT_Delete( NUMFONT *wk );
+extern void NUMFONT_Main( NUMFONT *wk );
+extern void NUMFONT_WriteNumber( NUMFONT *wk, int num, int keta, int mode, GFL_BMPWIN *bmpwin, int x, int y );
+extern void NUMFONT_WriteMark( NUMFONT *wk, int mark, GFL_BMPWIN *bmpwin, int x, int y );
 

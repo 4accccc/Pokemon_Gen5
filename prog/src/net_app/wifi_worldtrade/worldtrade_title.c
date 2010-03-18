@@ -537,7 +537,7 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 	add.pos_y = CursorPosTbl[wk->TitleCursorPos][1];
 	add.anmseq	= 0;
 	add.softpri	= 0;
-	add.bgpri		= 0;
+	add.bgpri		= 1;
 	wk->CursorActWork = GFL_CLACT_WK_Create( wk->clactSet, 
 			wk->resObjTbl[RES_CURSOR][CLACT_U_CHAR_RES],
 			wk->resObjTbl[MAIN_LCD][CLACT_U_PLTT_RES], 
@@ -1417,9 +1417,7 @@ void WorldTrade_SubLcdBgGraphicSet( WORLDTRADE_WORK *wk  )
 
 	// サブ画面BG1スクリーン転送
 	GFL_ARC_UTIL_TransVramScreen( ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_lz_nscr, 
-	     GFL_BG_FRAME1_S, 0, 32*24*2, 1, HEAPID_WORLDTRADE);
-	//↑が256x256全てを埋めていないスクリーンの為、下部にゴミが残るのでクリア
-	GFL_BG_FillScreen(  GFL_BG_FRAME1_S, 0, 0, 24, 32, 32-24, GFL_BG_SCRWRT_PALIN );
+	     GFL_BG_FRAME1_S, 0, 32*32*2, 1, HEAPID_WORLDTRADE);
 	GFL_BG_LoadScreenReq(  GFL_BG_FRAME1_S );
 
 	// 会話フォントパレット転送
@@ -1473,7 +1471,7 @@ void WorldTrade_SubLcdExpainPut( WORLDTRADE_WORK *wk, int explain )
 		WORLDTRADE_TALKFONT_SUB_PAL, GFL_BMP_CHRAREA_GET_B );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->ExplainWin), 0x0000 );
-	GFL_BMPWIN_MakeTransWindow( wk->ExplainWin );
+	GFL_BMPWIN_MakeTransWindow_VBlank( wk->ExplainWin );
 
 	// 上画面メッセージ
 	WorldTrade_ExplainPrint( wk->ExplainWin,  wk->MsgManager, explain, &wk->print );

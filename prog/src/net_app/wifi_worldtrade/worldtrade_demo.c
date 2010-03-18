@@ -215,7 +215,6 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 				}else{
 					// i‰»–³‚µ‚È‚ç‚»‚Ì‚Ü‚ÜI—¹
 
-          PMSND_PlayBGM( WORLDTRADE_BGM );
 					WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
 					ret = SEQ_FADEOUT;
 				}
@@ -307,8 +306,6 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 //			WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
 			WorldTrade_SubProcessChange( wk, WORLDTRADE_UPLOAD, MODE_POKEMON_EVO_SAVE );
 
-      PMSND_PlayBGM( WORLDTRADE_BGM );
-
 			ret = SEQ_FADEOUT;
 		}
 		break;
@@ -342,6 +339,8 @@ int WorldTrade_Demo_End(WORLDTRADE_WORK *wk, int seq)
     GFL_HEAP_FreeMemory(wk->sub_proc_wk);
     wk->sub_proc_wk = NULL;
   }
+
+  PMSND_PlayBGM( WORLDTRADE_BGM );
 
   WorldTrade_InitSystem( wk );
 

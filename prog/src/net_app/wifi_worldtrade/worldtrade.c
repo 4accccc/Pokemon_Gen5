@@ -166,17 +166,6 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
     wk->CountryNameManager  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_place_msg_world_dat, HEAPID_WORLDTRADE );
 
 
-/* ＧＴＳとWifiバトルタワー接続画面の最初にWIPE_ResetBrightnessを呼んでしまっているために
-   バックドロップ面が見えてしまう事があるバグを対処 */
-#if AFTERMASTER_070215_GTS_WBTOWER_INIT_FIX
-//    WIPE_ResetBrightness( WIPE_DISP_MAIN );
-//    WIPE_ResetBrightness( WIPE_DISP_SUB );
-#else
-    WIPE_ResetBrightness( WIPE_DISP_MAIN );
-    WIPE_ResetBrightness( WIPE_DISP_SUB );
-#endif
-
-
     // ワーク初期化
     InitWork( wk, param );
 
@@ -187,7 +176,9 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
     // 会話ウインドウのタッチON
     MsgPrintTouchPanelFlagSet( MSG_TP_ON );
 
-    MyStatus_SetMyNationArea( wk->param->mystatus, 102, 2);
+    //フィールドサウンドをPUSH
+    PMSND_PauseBGM(FALSE);
+    PMSND_PushBGM();
 
     return GFL_PROC_RES_FINISH;
 }
@@ -284,11 +275,6 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
   return GFL_PROC_RES_CONTINUE;
 }
 
-#define DEFAULT_NAME_MAX    18
-
-// ダイヤ・パールで変わるんだろう
-#define MALE_NAME_START     0
-#define FEMALE_NAME_START   18
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -306,6 +292,10 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
   int i;
   GF_ASSERT( GFL_HEAP_CheckHeapSafe(HEAPID_WORLDTRADE) );
 
+  //フィールドサウンド復帰
+  PMSND_PopBGM();
+  PMSND_PauseBGM(FALSE);
+  PMSND_FadeInBGM(60);
 
   WirelessIconEasyEnd();
   WorldTrade_ExitSystem( wk );

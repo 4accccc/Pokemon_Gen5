@@ -83,8 +83,8 @@ static  u32 Nation_SelectMain( WORLDTRADE_INPUT_WORK *wk );
 static void system_print( BGWINFRM_WORK *wfwk, GFL_MSGDATA *mm, GFL_BMPWIN *win, int mesno, PRINTSYS_LSB color, WT_PRINT *print );
 static void touch_print( BGWINFRM_WORK *wfwk, GFL_MSGDATA *mm, GFL_BMPWIN *win, int mesno, WT_PRINT *print );
 static  int PokeName_MakeSortList( BMPLIST_DATA **list, GFL_MSGDATA *monsnameman, 
-									GFL_MSGDATA *msgman,u8 *sinou, int select, ZUKAN_WORK *zukan );
-static int PokeName_GetSortNum( u8 *sinou, ZUKAN_WORK *zukan, int pokenum, u16 *sortlist, int start, int end );
+									GFL_MSGDATA *msgman,u8 *sinou, int select, ZUKAN_SAVEDATA *zukan );
+static int PokeName_GetSortNum( u8 *sinou, ZUKAN_SAVEDATA *zukan, int pokenum, u16 *sortlist, int start, int end );
 static void PokeName_ListPrint( WORLDTRADE_INPUT_WORK *wk, int page, int max );
 static  int _list_page_num( int num, int in_page );
 static  int Nation_GetSortListNum( int start, int *number );
@@ -299,17 +299,17 @@ static const u8 name_table[][3]={
 
 // 性別選択BMPWIN表示位置
 static const u8 sexselect_table[][2]={
-	{ 4,  3 },
-	{ 4,  7 },
-	{ 4, 11 },
+	{ 3,  3 },
+	{ 3,  7 },
+	{ 3, 11 },
 };
 
-// 性別選択BMPWIN表示位置
+// レベル選択BMPWIN表示位置
 static const u8 levelselect_table[][2]={
-	{ 4,  2 },
-	{ 4,  5 },
-	{ 4,  8 },
-	{ 4, 11 },
+	{ 3,  2 },
+	{ 3,  5 },
+	{ 3,  8 },
+	{ 3, 11 },
 
 };
 
@@ -331,9 +331,9 @@ static const u8 nation_table[][2]={
 #define INPUT_POKENAME_H	(  2 )	// ポケモン名H
 #define INPUT_NAME_PAGE_W	(  3 )	// 名前表示状態ページ数W
 #define INPUT_NAME_PAGE_H	(  1 )	// 名前表示状態ページ数H
-#define INPUT_SEXSELECT_W	(  7 )	// 性別選択W
+#define INPUT_SEXSELECT_W	(  8 )	// 性別選択W
 #define INPUT_SEXSELECT_H	(  2 )	// 性別選択H
-#define INPUT_LEVELSELECT_W	(  10 )	// レベル条件選択W
+#define INPUT_LEVELSELECT_W	(  11 )	// レベル条件選択W
 #define INPUT_LEVELSELECT_H	(  2 )	// レベル条件選択H
 #define INPUT_NONE_W		(  9 )	// 「きにしない」W
 #define INPUT_NONE_H		(  2 )	// 「きにしない」H
@@ -1553,12 +1553,16 @@ static u32 PokeName_SelectMain( WORLDTRADE_INPUT_WORK *wk )
 		ret = TouchPanelFunc( wk, MODE_POKEMON_NAME );
 		if(ret!=GFL_UI_TP_HIT_NONE){
       GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
-      WorldTrade_CLACT_PosChange( wk->CursorAct, 
-          namepostable[ret][0],namepostable[ret][1] );
-      if(ret==4){
-        GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
-      }else{
-        GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
+
+      if( ret < 5 )
+      { 
+        WorldTrade_CLACT_PosChange( wk->CursorAct, 
+            namepostable[ret][0],namepostable[ret][1] );
+        if(ret==4){
+          GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
+        }else{
+          GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
+        }
       }
 
       return NameDecideFunc( wk, ret );
@@ -1807,12 +1811,16 @@ static u32 LevelSelect_SelectMain( WORLDTRADE_INPUT_WORK *wk )
 		ret = TouchPanelFunc( wk, MODE_LEVEL );
 		if(ret!=GFL_UI_TP_HIT_NONE){
       GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
-      WorldTrade_CLACT_PosChange( wk->CursorAct, 
-          levelpostable[ret][0],levelpostable[ret][1] );
-      if(ret==4){
-        GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
-      }else{
-        GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
+
+      if( ret < 5 )
+      { 
+        WorldTrade_CLACT_PosChange( wk->CursorAct, 
+            levelpostable[ret][0],levelpostable[ret][1] );
+        if(ret==4){
+          GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
+        }else{
+          GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 6 );
+        }
       }
 
       return LevelDecideFunc( wk, ret );
@@ -2120,12 +2128,16 @@ static u32 Nation_SelectMain( WORLDTRADE_INPUT_WORK *wk )
 		if(ret!=GFL_UI_TP_HIT_NONE){
 
       GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
-      WorldTrade_CLACT_PosChange( wk->CursorAct, 
-          nationpostable[ret][0],nationpostable[ret][1] );
-      if(ret==5){
-        GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
-      }else{
-        GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 7 );
+
+      if( ret < 6 )
+      { 
+        WorldTrade_CLACT_PosChange( wk->CursorAct, 
+            nationpostable[ret][0],nationpostable[ret][1] );
+        if(ret==5){
+          GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 5 );
+        }else{
+          GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 7 );
+        }
       }
       return NationDecideFunc( wk, ret );
 		}else{
@@ -2979,11 +2991,11 @@ static int	wi_seq_head2_return( WORLDTRADE_INPUT_WORK *wk )
  * @retval  int		
  */
 //------------------------------------------------------------------
-static int PokeName_GetSortNum( u8 *sinou, ZUKAN_WORK *zukan, int pokenum, u16 *sortlist, int start, int end )
+static int PokeName_GetSortNum( u8 *sinou, ZUKAN_SAVEDATA *zukan, int pokenum, u16 *sortlist, int start, int end )
 {
 	int i, count;
 	for(i=start,count=0;i<end;i++){
-		if(ZukanWork_GetPokeSeeFlag( zukan, sortlist[i] )){
+		if(ZUKANSAVE_GetPokeSeeFlag( zukan, sortlist[i] )){
 			OS_Printf(" SeeCheck i = %d, table[index+i] = %d\n", i, sortlist[i]);
 			count++;
 		}
@@ -3005,7 +3017,7 @@ static int PokeName_GetSortNum( u8 *sinou, ZUKAN_WORK *zukan, int pokenum, u16 *
  */
 //------------------------------------------------------------------
 static int PokeName_MakeSortList( BMPLIST_DATA **list, GFL_MSGDATA *monsnameman, 
-									GFL_MSGDATA *msgman, u8 *sinou, int select, ZUKAN_WORK *zukan )
+									GFL_MSGDATA *msgman, u8 *sinou, int select, ZUKAN_SAVEDATA *zukan )
 {
 	int i,index,see_count=0;
 	int pokenum;
@@ -3025,7 +3037,7 @@ static int PokeName_MakeSortList( BMPLIST_DATA **list, GFL_MSGDATA *monsnameman,
 
 	// ポケモン名の登録
 	for(i=start;i<end;i++){
-		if(ZukanWork_GetPokeSeeFlag( zukan, sortlist[i] )){
+		if(ZUKANSAVE_GetPokeSeeFlag( zukan, sortlist[i] )){
 			OS_Printf(" ListAdd i = %d, table[index+i] = %d\n", i, sortlist[i]);
 			BmpMenuWork_ListAddArchiveString( *list, monsnameman, sortlist[i], sortlist[i], HEAPID_WORLDTRADE );
 		}

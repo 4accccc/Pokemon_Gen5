@@ -340,12 +340,13 @@ int WorldTrade_Search_Main(WORLDTRADE_WORK *wk, int seq)
 	// サブ画面のOBJ座標を移動させる処理
 	for(i=0;i<SUB_OBJ_NUM;i++){
 		WorldTrade_CLACT_PosChangeSub( wk->SubActWork[i], wk->SubActY[i][0], wk->SubActY[i][1]+wk->DrawOffset );
-		//WorldTrade_CLACT_PosChange( wk->PromptDsActWork, DS_ICON_X, DS_ICON_Y+256+wk->DrawOffset );
 	}
 
 	WorldTrade_CLACT_PosChange( wk->CursorActWork,  
 								CursorPos[CursorPosGet( wk )][0], 
 								CursorPos[CursorPosGet( wk )][1] - wk->DrawOffset );
+
+  WorldTrade_CLACT_PosChangeSub( wk->PromptDsActWork, DS_ICON_X, DS_ICON_Y+wk->DrawOffset );
 
 	return ret;
 }
@@ -523,7 +524,7 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_search_lz_ncgr,  GFL_BG_FRAME1_M, 0, 0, 1, HEAPID_WORLDTRADE);
 
 	// メイン画面BG1スクリーン転送
-	GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_worldtrade_search_lz_nscr,  GFL_BG_FRAME1_M, 0, 32*32*2, 1, HEAPID_WORLDTRADE);
+	GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_worldtrade_search_lz_nscr,  GFL_BG_FRAME1_M, 0, 0, 1, HEAPID_WORLDTRADE);
 
 	// メイン画面BG2キャラ転送
 	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_input_lz_ncgr,   GFL_BG_FRAME2_M, 0, 0, 1, HEAPID_WORLDTRADE);
@@ -835,12 +836,6 @@ static void InitWork( WORLDTRADE_WORK *wk )
 	wk->dw = GFL_HEAP_AllocMemory(HEAPID_WORLDTRADE, sizeof(DEPOSIT_WORK));
 	MI_CpuClearFast(wk->dw, sizeof(DEPOSIT_WORK));
 
-	// 図鑑ソートデータ(全国図鑑と、シンオウ図鑑の分岐が必要だとおもう）
-
-
-	// ↓たぶんこれいらない
-//	wk->dw->nameSortTable = WorldTrade_ZukanSortDataGet( HEAPID_WORLDTRADE, 0, &wk->dw->nameSortNum );
-
 	wk->dw->sinouTable    = WorldTrade_SinouZukanDataGet( HEAPID_WORLDTRADE );
 
 	// カーソル位置初期化
@@ -862,7 +857,6 @@ static void FreeWork( WORLDTRADE_WORK *wk )
 	GFL_HEAP_FreeMemory( wk->dw->sinouTable );
 
 	// ↓たぶんこれいらない
-//	GFL_HEAP_FreeMemory( wk->dw->nameSortTable );
 	GFL_HEAP_FreeMemory( wk->dw );
 
 	GFL_STR_DeleteBuffer( wk->TalkString ); 

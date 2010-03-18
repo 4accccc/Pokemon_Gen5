@@ -18,8 +18,8 @@
 #include "savedata/myitem_savedata.h"
 #include "savedata/box_savedata.h"
 #include "savedata/wifilist.h"
-#include "../../src/net_app/wifi_worldtrade/worldtrade_adapter.h"
 #include "gamesystem/gamesystem.h"
+#include "savedata/zukan_savedata.h"
 
 //============================================================================================
 //	定義
@@ -27,13 +27,12 @@
 extern const GFL_PROC_DATA WorldTrade_ProcData;
 
 
-
 typedef struct{
 	WORLDTRADE_DATA *worldtrade_data;	// 世界交換データ
 	SYSTEMDATA		*systemdata;		// システムセーブデータ（DPWライブラリ用ともだちコードを保存）
 	POKEPARTY       *myparty;			// 手持ちポケモン
 	BOX_MANAGER        *mybox;				// ボックスデータ
-	ZUKAN_WORK      *zukanwork;			// 図鑑データ
+	ZUKAN_SAVEDATA      *zukanwork;			// 図鑑データ
 	WIFI_LIST		*wifilist;			// ともだち手帳
 	WIFI_HISTORY	*wifihistory;		// 地球儀データ
 	MYSTATUS		*mystatus;			// トレーナー情報

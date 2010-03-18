@@ -16,7 +16,6 @@
 #define GS_DP_GISOU
 #define GTS_DUPLICATE_BUG_FIX (1)
 
-
 #include "system/bmp_menulist.h"
 #include "system/touch_subwindow.h"
 //#include "system/numfont.h"
@@ -35,6 +34,41 @@
 #include "net/nhttp_rap.h"
 #include "net/nhttp_rap_evilcheck.h"
 #include "app/app_taskmenu.h"
+
+#include "worldtrade_adapter.h"
+
+//=============================================================================
+/**
+ *					デバッグマクロ
+*/
+//=============================================================================
+#ifdef PM_DEBUG
+
+//#define CHANGE_POKE_RULE_IGNORE	//交換用ポケモンが結果と一致していなくてもえらべる
+//#define RESERVE_POKE_GS_BINARY	//サーバーに預けるポケモンはGSから作成したバイナリを使う
+//#define DEBUG_SAVE_NONE					//デバッグ用にセーブしないで進みます
+
+
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi	//担当者が変わったら変えてください
+#define DEBUG_AUTHER_ONLY				//現在ONになっているとadapter以外で行っていないところをワーニングで知らせます
+#endif //PM_DEBUG
+
+//担当者プリント
+#ifdef DEBUG_AUTHER_ONLY
+#define MORI_PRINT(...)				OS_Printf( __VA_ARGS__ )
+#else
+#define MORI_PRINT(...)				((void)0)
+#endif //DEBUG_AUTHER_ONLY
+
+//アルセウスイベントチェック
+//#define ARUCEUSU_EVENT_CHECK
+
+//PHC解放チェック
+//#define PHC_EVENT_CHECK
+
+
+#endif //PM_DEBUG
+
 
 // Proc_Mainシーケンス定義
 enum {
@@ -184,9 +218,9 @@ enum
 #define SELECT_MENU5_SY	(  13 )
 
 // 「GTS」とか「ポケモンをえらんでください」とか
-#define EXPLAIN_WIN_X	(  13 )
+#define EXPLAIN_WIN_X	(  12 )
 #define EXPLAIN_WIN_Y 	(  19 )
-#define EXPLAIN_WIN_SX	(  16 )
+#define EXPLAIN_WIN_SX	(  18 )
 #define EXPLAIN_WIN_SY	(   4 )
 
 #define GTS_EXPLAIN_OFFSET	   ( 1 )
@@ -524,6 +558,7 @@ typedef struct _WORLDTRADE_WORK{
 	void *boxicon;												///< ポケモンアイコン書き換えに使うキャラポインタ
 	void (*vfunc)(void *);										///< Vブランクタスク(ポケモンアイコン書き換え）
 	void (*vfunc2)(void *);										///< Vブランクタスク（BGスクロール）
+	//void (*vfunc2)(void *);										///< Vブランクタスク（説明用BMPWINを確保する）
 
 	// worldtrade_search.cで使用
 	s16						SubActY[10][2];						///< 各人物OBJの初期Y位置
@@ -703,7 +738,7 @@ extern void WodrldTrade_MyPokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *M
 
 extern BMPMENULIST_WORK *WorldTrade_WordheadBmpListMake( WORLDTRADE_WORK *wk, BMP_MENULIST_DATA **menulist, 
 													GFL_BMPWIN *win, GFL_MSGDATA *MsgManager );
-extern BMPMENULIST_WORK *WorldTrade_PokeNameListMake( WORLDTRADE_WORK *wk, BMP_MENULIST_DATA **menulist, GFL_BMPWIN *win, GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameManager, DEPOSIT_WORK* dw, ZUKAN_WORK *zukan);
+extern BMPMENULIST_WORK *WorldTrade_PokeNameListMake( WORLDTRADE_WORK *wk, BMP_MENULIST_DATA **menulist, GFL_BMPWIN *win, GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameManager, DEPOSIT_WORK* dw, ZUKAN_SAVEDATA *zukan);
 extern BMPMENULIST_WORK *WorldTrade_SexSelectListMake( BMP_MENULIST_DATA **menulist, GFL_BMPWIN *win, GFL_MSGDATA *MsgManager  );
 extern BMPMENULIST_WORK *WorldTrade_LevelListMake(BMP_MENULIST_DATA **menulist, GFL_BMPWIN *win, GFL_MSGDATA *MsgManager, int tbl_select  );
 extern const int WorldTrade_WantLevelTable[];

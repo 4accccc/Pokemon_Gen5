@@ -9,6 +9,8 @@
 #ifndef __WORLDTRADE_INPUT_H__
 #define __WORLDTRADE_INPUT_H__
 
+#include "worldtrade_adapter.h"
+
 // ・「ポケモン検索画面」と「ポケモン預け条件入力」に同時に使う
 // 　ポケモン名・性別・レベル条件・国名入力システム。
 // ・指定のBG面を一つ使用し、同じ面にBMPWINでテキストも描画する
@@ -118,7 +120,7 @@ typedef struct{
 	GFL_MSGDATA *MsgManager;			// 名前入力メッセージデータマネージャー
 	GFL_MSGDATA *MonsNameManager;		// ポケモン名メッセージデータマネージャー
 	GFL_MSGDATA *CountryNameManager;	// 名前入力メッセージデータマネージャー
-	ZUKAN_WORK		*Zukan;					// ずかん情報データ
+	ZUKAN_SAVEDATA		*Zukan;					// ずかん情報データ
 	u8				*SinouTable;			// シンオウポケモンかどうかがフラグで格納されているテーブル
 	const CONFIG	*config;				//	コンフィグデータ
 
@@ -133,7 +135,7 @@ typedef struct{
 	GFL_CLWK*	SearchCursorAct;		// 検索画面用カーソルアクターポインタ（預ける画面では使わない）
 
 	BGWINFRM_WORK   *BgWinFrm;				// BGスクリーン加工ルーチンワーク
-	ZUKAN_WORK		*zukan;					// ずかん情報データ	
+	ZUKAN_SAVEDATA		*zukan;					// ずかん情報データ	
 
 	GFL_MSGDATA *MsgManager;			// 名前入力メッセージデータマネージャー
 	GFL_MSGDATA *MonsNameManager;		// ポケモン名メッセージデータマネージャー

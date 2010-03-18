@@ -11,7 +11,6 @@
 #ifdef PM_DEBUG
 // コメントをはずすと必ずアップロードで失敗する
 //#define DEBUG_UPLOAD_ERROR
-#define DEBUG_UPLOAD_DIRTY_NONE   //不正チェックで必ず成功する
 #endif
 
 // サーバー確認からダウンロードに流れる時にﾌｪｰﾄﾞｱｳﾄしないようにする版
@@ -754,10 +753,10 @@ static int Subseq_EvilCheckResult( WORLDTRADE_WORK *wk )
     }
     else
     { 
-      // 「GTSのかくにんにしっぱいしました」
-      wk->ConnectErrorNo = DPW_TR_ERROR_DISCONNECTED;
-			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
-      GF_ASSERT(0);
+      // 「このポケモンはあずける事ができません」→タイトルへ
+      OS_TPrintf( "不正検査NG！=[%d]\n", wk->evilcheck_data.poke_result );
+      wk->ConnectErrorNo = DPW_TR_ERROR_CHEAT_DATA;
+      wk->subprocess_seq = SUBSEQ_RETURN_TITLE_MESSAGE;
     }
   }
 
@@ -2559,7 +2558,7 @@ static void DownloadPokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int 
 	int itemno = PP_Get(pp, ID_PARA_item, NULL);
 
 	// 図鑑等の登録処理
-	SaveData_GetPokeRegister( wk->param->savedata, pp );
+	ZUKANSAVE_SetPokeGet( wk->param->zukanwork, pp );
 
 	// なにはともあれてもちに入れようとする
 	// ボックスに入れようとしている時にポケモンにメールがついている場合は
@@ -2654,7 +2653,7 @@ static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int 
 {
 
 	// 図鑑登録処理
-	SaveData_GetPokeRegister( wk->param->savedata, pp );
+  ZUKANSAVE_SetPokeGet( wk->param->zukanwork, pp );
 
 	boxno = 18;
 	if(PokeParty_GetPokeCount(wk->param->myparty)==6){

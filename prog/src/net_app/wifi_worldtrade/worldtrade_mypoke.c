@@ -444,7 +444,7 @@ static void DelCellActor( WORLDTRADE_WORK *wk )
 
 
 static const info_bmpwin_table[][4]={
-	{   1,  1,  9,  2, },	// ポケモンのニックネーム
+	{   2,  1,  11,  2, },	// ポケモンのニックネーム
 	{   9,  4,  8,  2, },	// ポケモンの種族名
 	{  11,  1,  3,  2, },	// 「レベル」
 	{  14,  1,  3,  2, },	// レベル
@@ -455,7 +455,7 @@ static const info_bmpwin_table[][4]={
 	{  12, 13,  8,  2, },	// トレーナー名
 	{   1, 16, 12,  2, },	// 「ほしいポケモン」
 	{   1, 18, 10,  2, },	// ポケモン種族名
-	{  10, 18, 12,  2, },	// レベル指定
+	{  13, 18, 12,  2, },	// レベル指定
 	{   1,  7,  4,  2, },	// 「おや」
 	{  10,  7,  8,  2, },	// 親名
 };
@@ -492,9 +492,8 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 
 	// BG0面BMPWIN情報ウインドウ確保
 	{
-		int i, offset;
+		int i;
 
-		offset = INFO_TEXT_OFFSET;
 		for(i=0;i<INFOW_BMPWIN_MAX;i++){
 			wk->InfoWin[i] = GFL_BMPWIN_Create( GFL_BG_FRAME3_M,
 					info_bmpwin_table[i][0], 
@@ -503,7 +502,6 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 					info_bmpwin_table[i][3], 
 					WORLDTRADE_TALKFONT_PAL,  GFL_BMP_CHRAREA_GET_B );
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[i]), 0x0000 );
-			offset += info_bmpwin_table[i][2]*info_bmpwin_table[i][3];
 			GFL_BMPWIN_MakeTransWindow( wk->InfoWin[i] );
 		}
 	}

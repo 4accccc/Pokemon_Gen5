@@ -3118,7 +3118,7 @@ static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
     p_gts->gts.systemdata       = SaveData_GetSystemData(p_gts->gts.savedata);
     p_gts->gts.myparty          = SaveData_GetTemotiPokemon(p_gts->gts.savedata);
     p_gts->gts.mybox            = GAMEDATA_GetBoxManager(p_gamedata);
-    p_gts->gts.zukanwork        = NULL;
+    p_gts->gts.zukanwork        = GAMEDATA_GetZukanSave( p_gamedata );
     p_gts->gts.wifilist         = GAMEDATA_GetWiFiList(p_gamedata);
     p_gts->gts.wifihistory      = SaveData_GetWifiHistory(p_gts->gts.savedata);
     p_gts->gts.mystatus         = SaveData_GetMyStatus(p_gts->gts.savedata);
