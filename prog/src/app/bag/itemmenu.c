@@ -147,7 +147,7 @@ static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, u8 sub_num );
 static void InputNum_Start( FIELD_ITEMMENU_WORK* pWork, BAG_INPUT_MODE mode );
 static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork );
 static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork );
-static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
+//static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
 static void SORT_Type( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork );
 static u16 SORT_GetABCPrio( u16 item_no );
@@ -185,6 +185,8 @@ static void _endButtonAnime( FIELD_ITEMMENU_WORK * wk );
 static int CheckNumSelTouch(void);
 static void _itemTrashCancel( FIELD_ITEMMENU_WORK * wk );
 static void _itemSellInputCancel( FIELD_ITEMMENU_WORK * wk );
+static void InitPaletteAnime( FIELD_ITEMMENU_WORK * wk );
+static void ExitPaletteAnime( FIELD_ITEMMENU_WORK * wk );
 
 
 //------------------------------------------------------------------------------
@@ -891,6 +893,7 @@ static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork )
     _windowRewrite(pWork);
 
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+		ITEMDISP_ChangeActive( pWork, TRUE );
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
 }
@@ -1355,11 +1358,13 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
     pWork->ret_code2 = pWork->submenuList[selectno];
     OS_Printf("ret_code2 %d %d\n", pWork->ret_code2,selectno);
+
     switch(pWork->ret_code2){
      // ------------つかう--------------
     case BAG_MENU_TSUKAU:  
+			ITEMDISP_ChangeRetButtonActive( pWork, FALSE );		// 戻るボタンをパッシブへ
       if((pWork->pocketno==BAG_POKE_WAZA)){         //技マシン
-       _CHANGE_STATE(pWork,_itemTecniqueUseInit);
+        _CHANGE_STATE(pWork,_itemTecniqueUseInit);
       }else if(1==ITEM_GetParam( pWork->ret_item, ITEM_PRM_EVOLUTION, pWork->heapID )){
         pWork->ret_code = BAG_NEXTPROC_EVOLUTION;   //進化アイテム
         _CHANGE_STATE(pWork,NULL);
@@ -1387,6 +1392,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     // ----------おりる---------------
     case BAG_MENU_ORIRU:
       OS_Printf("おりるを選択された\n");
+			ITEMDISP_ChangeRetButtonActive( pWork, FALSE );		// 戻るボタンをパッシブへ
       if(ITEMUSE_GetItemUseCheck( pWork->icwk, ITEMCHECK_CYCLE)){
         pWork->ret_code = BAG_NEXTPROC_DROPCYCLE;  //おりる
         _CHANGE_STATE(pWork,NULL);
@@ -1408,11 +1414,13 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     case BAG_MENU_TOUROKU:  
     case BAG_MENU_KAIZYO:   
       SHORTCUT_SetEventItem( pWork, pWork->curpos );
+			ITEMDISP_ChangeActive( pWork, TRUE );
       GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
       _CHANGE_STATE(pWork, _itemKindSelectMenu);
       break;
     // ----------みる------------
     case BAG_MENU_MIRU:
+			ITEMDISP_ChangeRetButtonActive( pWork, FALSE );		// 戻るボタンをパッシブへ
       if(pWork->ret_item>=ITEM_HAZIMETEMEERU && pWork->ret_item<=ITEM_BURIZZIMEERUw){
         pWork->ret_code = BAG_NEXTPROC_MAILVIEW;  //メール閲覧
         _CHANGE_STATE(pWork,NULL);
@@ -1429,6 +1437,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       }
       // タッチ遷移なら非表示に
       KTST_SetDraw( pWork, (GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY) );
+			ITEMDISP_ChangeActive( pWork, TRUE );
       GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
       _CHANGE_STATE(pWork, _itemKindSelectMenu);
       break;
@@ -1450,6 +1459,7 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
       {
         pWork->ret_code = BAG_NEXTPROC_HAVE;
       }
+			ITEMDISP_ChangeRetButtonActive( pWork, FALSE );		// 戻るボタンをパッシブへ
       _CHANGE_STATE(pWork,NULL);
       break;
     default:
@@ -1457,20 +1467,12 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
     }
     bClear = TRUE;
   }
-/*
-  else if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_B){
-    bClear = TRUE;
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
-    _CHANGE_STATE(pWork,_itemKindSelectMenu);
-  }
-*/
 
   // 選択終了だったらメニュー面の消去
   if(bClear){
     ITEMDISP_ListPlateClear( pWork );
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;
-    G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
   }
 
 }
@@ -1695,6 +1697,7 @@ static void _itemTecniqueUseYesNo(FIELD_ITEMMENU_WORK* pWork)
       ITEMDISP_ListPlateClear( pWork );
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
       GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+			ITEMDISP_ChangeActive( pWork, TRUE );
       _CHANGE_STATE(pWork,_itemKindSelectMenu);
     }
     // YESNOの後始末
@@ -1763,9 +1766,10 @@ static void _itemTrashEndWait(FIELD_ITEMMENU_WORK* pWork)
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
     _windowRewrite(pWork);
 
-    InputNum_ButtonState( pWork, TRUE );
+//    InputNum_ButtonState( pWork, TRUE );
 
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+		ITEMDISP_ChangeActive( pWork, TRUE );
     _CHANGE_STATE(pWork,_itemKindSelectMenu);
   }
 }
@@ -1823,8 +1827,9 @@ static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork)
       _CHANGE_STATE(pWork,_itemTrashYesWait);
     }
     else{
-      InputNum_ButtonState( pWork, TRUE );
+//      InputNum_ButtonState( pWork, TRUE );
       GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+			ITEMDISP_ChangeActive( pWork, TRUE );
       _CHANGE_STATE(pWork,_itemKindSelectMenu);
     }
   }
@@ -1857,7 +1862,7 @@ static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
 {
   pWork->InputNum = 1;  //初期化
 
-  InputNum_ButtonState( pWork, FALSE );
+//  InputNum_ButtonState( pWork, FALSE );
 
   // 数値入力開始
   InputNum_Start( pWork, BAG_INPUT_MODE_TRASH );
@@ -1866,9 +1871,6 @@ static void _itemTrash(FIELD_ITEMMENU_WORK* pWork)
   ITEMMENU_WordsetItemName( pWork, 0,  pWork->ret_item );
   WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
   ITEMDISP_ItemInfoWindowDisp( pWork );
-
-  //@TODO リストとBAR双方にOBJが使われているためバッティングする。OAMの半透明を切替る必要あり
-//  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 /*| GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1*/ | GX_BLEND_PLANEMASK_OBJ , -8 );
 
   _CHANGE_STATE(pWork,_itemTrashWait);
 }
@@ -1942,7 +1944,7 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
 //-----------------------------------------------------------------------------
 static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
 {
-  InputNum_ButtonState( pWork, FALSE );
+//  InputNum_ButtonState( pWork, FALSE );
 
   // 買えないもの判定
   {
@@ -2184,9 +2186,10 @@ static void _itemSellExit( FIELD_ITEMMENU_WORK* pWork )
   // おこづかい表示終了
   ITEMDISP_GoldDispOut( pWork );
 
-  InputNum_ButtonState( pWork, TRUE );
+//  InputNum_ButtonState( pWork, TRUE );
 
   GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+	ITEMDISP_ChangeActive( pWork, TRUE );
   _CHANGE_STATE( pWork, _itemKindSelectMenu );
 }
 
@@ -2418,6 +2421,7 @@ static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork )
  *  @retval
  */
 //-----------------------------------------------------------------------------
+/*
 static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 {
   if( on_off )
@@ -2445,6 +2449,7 @@ static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
     GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[ BAR_ICON_CHECK_BOX ], BAR_ICON_ANM_CHECKBOX_OFF );
   }
 }
+*/
 
 #include "item/itemtype_def.h"
 //--------------------------------------------------------------
@@ -2872,29 +2877,7 @@ static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos )
 //-----------------------------------------------------------------------------
 static SHORTCUT_ID SHORTCUT_GetPocket( int pocketno )
 {
-  SHORTCUT_ID id;
-
-  switch( pocketno )
-  {
-  case BAG_POKE_NORMAL:
-    id = SHORTCUT_ID_BAG_ITEM;
-    break;
-  case BAG_POKE_NUTS:
-    id = SHORTCUT_ID_BAG_NUTS;
-    break;
-  case BAG_POKE_DRUG:
-    id = SHORTCUT_ID_BAG_RECOVERY;
-    break;
-  case BAG_POKE_WAZA:
-    id = SHORTCUT_ID_BAG_WAZAMACHINE;
-    break;
-  case BAG_POKE_EVENT:
-    id = SHORTCUT_ID_BAG_IMPORTANT;
-    break;
-  default : GF_ASSERT(0);
-  }
-
-  return id;
+	return ITEMDISP_GetPocketShortcut( pocketno );
 }
 
 //-----------------------------------------------------------------------------
@@ -3469,6 +3452,8 @@ static void _VBlank( GFL_TCB *tcb, void *work )
   // 上画面、表示非表示切替
   ITEMDISP_upMessageSetDispVBlank( pWork, pWork->bDispUpReq );
 
+	PaletteFadeTrans( pWork->pfd );
+
   GFL_CLACT_SYS_VBlankFunc(); //セルアクターVBlank
 
   // セルリスト更新
@@ -3492,7 +3477,7 @@ static void _VBlank( GFL_TCB *tcb, void *work )
 //-----------------------------------------------------------------------------
 static void _startState(FIELD_ITEMMENU_WORK* pWork)
 {
-  if (GFL_FADE_CheckFade() == FALSE) {
+	if( WIPE_SYS_EndCheck() == TRUE ){
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
     _CHANGE_STATE(pWork, _itemKindSelectMenu);
   }
@@ -3521,6 +3506,8 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   // メンバ初期化
   //-------------------------------------
   pWork->heapID = HEAPID_ITEMMENU;
+
+	pWork->active = TRUE;
 
   // パラメータから取得
   pWork->gamedata   = pParam->p_gamedata;
@@ -3595,10 +3582,12 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->pButton = GFL_BMN_Create( bttndata, _BttnCallBack, pWork,  pWork->heapID );
 
   InitBlinkPalAnm( pWork );
+	InitPaletteAnime( pWork );
 
   // ワイプ開始
-  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
-                  WIPE_FADE_BLACK , FLD_SUBSCR_FADE_DIV , FLD_SUBSCR_FADE_SYNC , pWork->heapID );
+	WIPE_SYS_Start(
+		WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
+		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, pWork->heapID );
 
   pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
 
@@ -3639,15 +3628,18 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
   if(state == NULL)
   {
     // ワイプ ブラックアウト開始
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
-                    WIPE_FADE_BLACK , FLD_SUBSCR_FADE_DIV , FLD_SUBSCR_FADE_SYNC , pWork->heapID );
+		WIPE_SYS_Start(
+			WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
+			WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, pWork->heapID );
 
     return GFL_PROC_RES_FINISH;
   }
+/*
   else if( WIPE_SYS_EndCheck() != TRUE )
   {
     return GFL_PROC_RES_CONTINUE;
   }
+*/
 
   state(pWork);
   _dispMain(pWork);
@@ -3719,7 +3711,8 @@ static GFL_PROC_RESULT FieldItemMenuProc_End( GFL_PROC * proc, int * seq, void *
   APP_KEYCURSOR_Delete(pWork->MsgCursorWork);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
-  ExitBlinkPalAnm( pWork );
+	ExitPaletteAnime( pWork );
+	ExitBlinkPalAnm( pWork );
   GFL_BMN_Delete(pWork->pButton);
   //  ITEMDISP_ListPlateDelete(pWork);
 
@@ -3892,18 +3885,16 @@ static void _itemTrashCancel( FIELD_ITEMMENU_WORK * wk )
 {
   InputNum_Exit( wk );
 
-  InputNum_ButtonState( wk, TRUE );
-
-  //@TODO ここでパッシブ解除していいのか？
-  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
+//  InputNum_ButtonState( wk, TRUE );
 
   GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkScroll, TRUE );
+	ITEMDISP_ChangeActive( wk, TRUE );
   _CHANGE_STATE( wk, _itemKindSelectMenu );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   売るるキャンセル処理
+ * @brief		売るキャンセル処理
  */
 //--------------------------------------------------------------------------------------------
 
@@ -3911,4 +3902,23 @@ static void _itemSellInputCancel( FIELD_ITEMMENU_WORK * wk )
 {
   InputNum_Exit( wk );
   _CHANGE_STATE( wk, _itemSellExit );
+}
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットアニメ
+ */
+//--------------------------------------------------------------------------------------------
+
+static void InitPaletteAnime( FIELD_ITEMMENU_WORK * wk )
+{
+	wk->pfd = PaletteFadeInit( wk->heapID );
+	PaletteFadeWorkAllocSet( wk->pfd, FADE_MAIN_OBJ, FADE_PAL_ALL_SIZE, wk->heapID );
+}
+
+static void ExitPaletteAnime( FIELD_ITEMMENU_WORK * wk )
+{
+	PaletteFadeWorkAllocFree( wk->pfd, FADE_MAIN_OBJ );
+	PaletteFadeFree( wk->pfd );
 }

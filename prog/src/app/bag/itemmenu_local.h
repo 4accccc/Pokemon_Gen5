@@ -22,6 +22,7 @@
 #include "system/bmp_winframe.h"
 #include "system/bmp_menulist.h"
 #include "system/touch_subwindow.h"
+#include "system/palanm.h"
 #include "system/blink_palanm.h"
 
 #include "message.naix"
@@ -251,6 +252,8 @@ struct _FIELD_ITEMMENU_PARAM {
 
 
 	BLINKPALANM_WORK * blwk;
+	PALETTE_FADE_PTR	pfd;
+	BOOL	active;		///< アクティブ/パッシブ
 	u16	tmpSeq;			///< 汎用シーケンス
 	u16	tmpCnt;			///< 汎用カウンタ
 	StateFunc * chgState;
@@ -282,6 +285,9 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _PAL_COMMON_CELL_NUM		(APP_COMMON_BARICON_PLT_NUM)
 #define _PAL_MENU_CHECKBOX_CELL			(_PAL_COMMON_CELL+_PAL_COMMON_CELL_NUM)	// チェックボックスのパレット展開位置
 #define _PAL_MENU_CHECKBOX_CELL_NUM	(1)  // チェックボックスのパレット展開位置
+
+#define	_PAL_FADE_OBJ_BIT				( 0x044f )	// パレットフェードを適用するOBJビット [ 0000_0100_0100_1111 ]
+
 
 
 // ポケット名の文字色
@@ -418,4 +424,7 @@ extern void ITEMDISP_NumFrameDisp(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_InputNumDisp(FIELD_ITEMMENU_WORK* pWork,int num);
 
 
+extern SHORTCUT_ID ITEMDISP_GetPocketShortcut( int pocketno );
 extern void ITEMDISP_ChangeCursorPosPalette( FIELD_ITEMMENU_WORK * wk, u32 pal );
+extern void ITEMDISP_ChangeActive( FIELD_ITEMMENU_WORK * wk, BOOL flg );
+extern void ITEMDISP_ChangeRetButtonActive( FIELD_ITEMMENU_WORK * wk, BOOL flg );

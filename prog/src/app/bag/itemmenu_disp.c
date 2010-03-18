@@ -1677,7 +1677,6 @@ void ITEMDISP_ListPlateClear( FIELD_ITEMMENU_WORK* pWork )
 //------------------------------------------------------------------------------
 void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
 {
-#if 1
   int i;
   APP_TASKMENU_INITWORK appinit;
 
@@ -1691,7 +1690,6 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
   appinit.w        = APP_TASKMENU_PLATE_WIDTH;
   appinit.h        = APP_TASKMENU_PLATE_HEIGHT;
 
-
   for(i=0;i<num;i++){
     pWork->appitem[i].str = GFL_STR_CreateBuffer(100, pWork->heapID);
     GFL_MSG_GetString(pWork->MsgManager, menustr[i], pWork->appitem[i].str);
@@ -1703,31 +1701,8 @@ void ITEMDISP_MenuWinDisp(  FIELD_ITEMMENU_WORK *pWork , int *menustr,int num )
   for(i=0;i<num;i++){
     GFL_STR_DeleteBuffer(pWork->appitem[i].str);
   }
-  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
 
-
-#else
-  int i;
-  int winindex = elementof(pWork->menuWin) - num;
-
-  pWork->menuNum = num;
-  for(i = 0 ; i < num ; i++)
-  {
-    PRINTSYS_LSB col;
-    GFL_BMPWIN* pwin = pWork->menuWin[winindex + i];
-
-    GFL_MSG_GetString(pWork->MsgManager, menustr[i], pWork->pStrBuf);
-    GFL_STD_MemCopy32( pWork->ncgData->pRawData ,
-                       GFL_BMP_GetCharacterAdrs(GFL_BMPWIN_GetBmp( pwin )) ,
-                       0x20*13*3 );
-    GFL_FONTSYS_SetColor( 0xe, 0xf, 0 );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 8, 4, pWork->pStrBuf, pWork->fontHandle);
-    GFL_BMPWIN_TransVramCharacter(pwin);
-    GFL_BMPWIN_MakeScreen(pwin);
-  }
-  ITEMDISP_ListPlateSelectChange(pWork, 0);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_M);
-#endif
+	ITEMDISP_ChangeActive( pWork, FALSE );
 }
 
 //------------------------------------------------------------------------------
@@ -2188,7 +2163,9 @@ void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork)
   pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
-  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
+
+	ITEMDISP_ChangeRetButtonActive( pWork, FALSE );
+	ITEMDISP_ChangeActive( pWork, FALSE );
 }
 
 //-----------------------------------------------------------------------------
@@ -2204,7 +2181,7 @@ void ITEMDISP_YesNoExit(FIELD_ITEMMENU_WORK* pWork)
 {
   APP_TASKMENU_CloseMenu(pWork->pAppTask);
   pWork->pAppTask=NULL;
-  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 0 );
+//	ITEMDISP_ChangeActive( pWork, TRUE );
 }
 
 //------------------------------------------------------------------------------
@@ -2301,6 +2278,43 @@ void ITEMDISP_InputNumDisp(FIELD_ITEMMENU_WORK* pWork,int num)
 //	↓ここから中村追加分
 //--------------------------------------------------------------------------------------------
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ショートカットＩＤ取得
+ */
+//--------------------------------------------------------------------------------------------
+SHORTCUT_ID ITEMDISP_GetPocketShortcut( int pocketno )
+{
+	SHORTCUT_ID id;
+
+	switch( pocketno ){
+	case BAG_POKE_NORMAL:
+		id = SHORTCUT_ID_BAG_ITEM;
+		break;
+	case BAG_POKE_NUTS:
+		id = SHORTCUT_ID_BAG_NUTS;
+		break;
+	case BAG_POKE_DRUG:
+		id = SHORTCUT_ID_BAG_RECOVERY;
+		break;
+	case BAG_POKE_WAZA:
+		id = SHORTCUT_ID_BAG_WAZAMACHINE;
+		break;
+	case BAG_POKE_EVENT:
+		id = SHORTCUT_ID_BAG_IMPORTANT;
+		break;
+	default:
+		GF_ASSERT(0);
+	}
+
+	return id;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル位置の項目ＯＢＪのパレットを切り替える
+ */
+//--------------------------------------------------------------------------------------------
 void ITEMDISP_ChangeCursorPosPalette( FIELD_ITEMMENU_WORK * wk, u32 pal )
 {
 	GFL_CLACTPOS	cur_pos;
@@ -2317,4 +2331,69 @@ void ITEMDISP_ChangeCursorPosPalette( FIELD_ITEMMENU_WORK * wk, u32 pal )
 	}
 
 	GFL_CLACT_WK_SetPlttOffs( wk->listCell[i], pal, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		アクティブ/パッシブ切り替え
+ */
+//--------------------------------------------------------------------------------------------
+void ITEMDISP_ChangeActive( FIELD_ITEMMENU_WORK * wk, BOOL flg )
+{
+	BOOL	shortcut;
+
+	// 二重処理対策
+	if( wk->active == flg ){
+		return;
+	}
+	wk->active = flg;
+
+	shortcut = GAMEDATA_GetShortCut( wk->gamedata, ITEMDISP_GetPocketShortcut(wk->pocketno) );
+
+	// アクティブ
+	if( flg == TRUE ){
+		PaletteFadeReq( wk->pfd, PF_BIT_MAIN_OBJ, _PAL_FADE_OBJ_BIT, 0, 0, 0, 0, GFUser_VIntr_GetTCBSYS() );
+	  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1, 0 );
+
+    // ソートボタン
+//    SORT_ModeReset( pWork );
+    // バーアイコン
+    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_LEFT],  BAR_ICON_ANM_LEFT );
+    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_RIGHT], BAR_ICON_ANM_RIGHT );
+    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_EXIT],  BAR_ICON_ANM_EXIT );
+		if( shortcut == TRUE ){
+	    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_CHECK_BOX], APP_COMMON_BARICON_CHECK_ON );
+		}else{
+	    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_CHECK_BOX], APP_COMMON_BARICON_CHECK_OFF );
+		}
+
+		ITEMDISP_ChangeRetButtonActive( wk, TRUE );		// 戻るボタンをアクティブへ
+
+	// パッシブ
+	}else{
+		PaletteWorkSet_VramCopy( wk->pfd, FADE_MAIN_OBJ, 0, FADE_PAL_ALL_SIZE );
+		PaletteFadeReq( wk->pfd, PF_BIT_MAIN_OBJ, _PAL_FADE_OBJ_BIT, 0, 8, 8, 0, GFUser_VIntr_GetTCBSYS() );
+	  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1, -8 );
+
+    // ソートボタン
+//    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 4 );
+    // バーアイコン各種
+    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_LEFT], BAR_ICON_ANM_LEFT_OFF );
+    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_RIGHT], BAR_ICON_ANM_RIGHT_OFF );
+    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_EXIT], BAR_ICON_ANM_EXIT_OFF );
+		if( shortcut == TRUE ){
+	    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_CHECK_BOX], APP_COMMON_BARICON_CHECK_ON_PASSIVE );
+		}else{
+	    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_CHECK_BOX], APP_COMMON_BARICON_CHECK_OFF_PASSIVE );
+		}
+	}
+}
+
+void ITEMDISP_ChangeRetButtonActive( FIELD_ITEMMENU_WORK * wk, BOOL flg )
+{
+	if( flg == TRUE ){
+    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_RETURN], APP_COMMON_BARICON_RETURN );
+	}else{
+    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_RETURN], APP_COMMON_BARICON_RETURN_OFF );
+	}
 }
