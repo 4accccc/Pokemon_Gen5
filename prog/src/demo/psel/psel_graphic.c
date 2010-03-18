@@ -317,7 +317,7 @@ static void Graphic_3d_SetUp( void )
 	//	フォグ、エッジマーキング、トゥーンシェードの詳細設定は
 	//	テーブルを作成して設定してください
 	G3X_SetShading( GX_SHADING_HIGHLIGHT );	//シェーディング
-	G3X_AntiAlias( FALSE );									//	アンチエイリアス
+	G3X_AntiAlias( TRUE );									//	アンチエイリアス
 	G3X_AlphaTest( FALSE, 0 );							//	アルファテスト　　オフ
 	G3X_AlphaBlend( TRUE );									//	アルファブレンド　オン
 	G3X_EdgeMarking( FALSE );								//	エッジマーキング
