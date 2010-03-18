@@ -502,9 +502,10 @@ SRCS_OVERLAY_UNION_ROOM = net_app/union/union_chara.c \
 # event_mapchange“à‚Åfield_proc‚ª¶¬‚³‚ê‚é‘O‚ÉŽg—p‚³‚ê‚éˆ—
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_FIELD_INIT		=	field/event_mapchange.c \
-        field/field_wfbc_data_local.c \
-        field/scrcmd_wfbc.c \
-        system/el_scoreboard.c
+                            field/field_wfbc_data_local.c \
+                            field/scrcmd_wfbc.c \
+                            system/el_scoreboard.c \
+                            field/event_season_display.c
 
 # field
 #===> SRCS_OVERLAY_FIELD_INIT
@@ -661,7 +662,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fld_wipe_3dobj.c \
         field/scrcmd_fldci.c \
         field/fskill_sorawotobu.c \
-        field/event_season_display.c \
         field/pleasure_boat.c \
         field/scrcmd_pl_boat.c \
         field/event_autoway.c \

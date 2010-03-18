@@ -311,8 +311,6 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
     SEQ_INPUT_NAME_RETAKE_YESNO,
     SEQ_INPUT_NAME_RETAKE_CHECK,
     SEQ_INPUT_NAME_RETAKE_CHECK_WAIT,
-    SEQ_3D_DEMO,
-    SEQ_3D_DEMO_WAIT,
     SEQ_END,
   };
   
@@ -344,7 +342,7 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
     //名前入力
     work->nameInParam->hero_sex   = MyStatus_GetMySex(work->selModeParam.mystatus);
     work->nameInParam->p_intr_sv  = work->intr_save;
-//  GFL_PROC_SysCallProc(FS_OVERLAY_ID(namein), &NameInputProcData,(void*)work->nameInParam);
+    //GFL_PROC_SysCallProc(FS_OVERLAY_ID(namein), &NameInputProcData,(void*)work->nameInParam);
     GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(namein), &NameInputProcData, work->nameInParam );
     (*seq) = SEQ_INPUT_NAME_WAIT;
     break;
@@ -389,32 +387,12 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
     // 名前入力復帰判定
     if( work->introParam.retcode == INTRO_RETCODE_NORMAL )
     {
-      (*seq) = SEQ_3D_DEMO;
+      (*seq) = SEQ_END;
     }
     else
     {
       // 名前入力に復帰
       (*seq) = SEQ_INPUT_NAME;
-    }
-    break;
-  case SEQ_3D_DEMO:
-    // 3Dデモ呼び出し
-    /*
-     *  Demo3DProcの内部でフィールドライトパラメータを取得するために
-     *  ZONEDATAが必要なのだが、このタイミングではまだGAMESYSTEMが生成されていないため
-     *  特別処理として、一時的にZONEDATAを生成する
-     */
-    ZONEDATA_Open( GFL_HEAP_LOWID( GFL_HEAPID_APP ) );
-
-    //GAMEDATAはまだない＆Introデモが必要としないので諦めてNULL指定。
-    DEMO3D_PARAM_SetFromRTC( &work->demo3dParam, NULL,DEMO3D_ID_INTRO_TOWN, 0 );
-    GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(demo3d), &Demo3DProcData, &work->demo3dParam );
-    (*seq) = SEQ_3D_DEMO_WAIT;
-    break;
-  case SEQ_3D_DEMO_WAIT:
-    if( up_status != GFL_PROC_MAIN_VALID ){
-      ZONEDATA_Close();
-      (*seq) = SEQ_END;
     }
     break;
   case SEQ_END:
