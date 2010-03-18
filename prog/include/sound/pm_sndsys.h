@@ -76,6 +76,17 @@ typedef enum {
 //------------------------------------------------------------------
 #define PMSND_NOEFFECT (-1)
 
+//------------------------------------------------------------------
+/**
+ * @brief	再生可否判定コールバック設定
+ */
+//------------------------------------------------------------------
+typedef BOOL (*PMSND_PLAYABLE_CALLBACK)( u32 soundIdx );
+
+//再生可否判定コールバック関数の登録
+extern void PMSND_SetPlayableCallBack( PMSND_PLAYABLE_CALLBACK func );
+extern void PMSND_ResetPlayableCallBack( void );
+
 //============================================================================================
 /**
  *
@@ -260,9 +271,4 @@ extern BOOL PMDSND_PlayExtraMusic( u32 dummyNo );
 extern void PMDSND_StopExtraMusic( void );
 extern void PMDSND_ReleaseExtraMusic( void );
 
-
-//サウンドテスト用
-//※現在マップ切り替わり時のデータ取得と戦闘などSubProcから帰ってくる
-//　場所が切り分けられていないので仮でフラグ管理する
-extern BOOL debugBGMsetFlag;
 #endif
