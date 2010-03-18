@@ -4499,6 +4499,24 @@ static int AC_Melodyer_1( MMDL * mmdl )
   return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * AC_MELODYER系共通　アニメ終了待ちして終了 描画ステータスは変えない
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=再起
+ */
+//--------------------------------------------------------------
+static int AC_Melodyer_1N( MMDL * mmdl )
+{
+  if( MMDL_CheckDrawMelodyerAnime(mmdl) == TRUE ){
+	  MMDL_IncAcmdSeq( mmdl );
+    return( TRUE );
+  }
+  
+  return( FALSE );
+}
+
+
 //======================================================================
 //	data	アニメーションコマンドテーブル
 //======================================================================
@@ -6274,7 +6292,7 @@ int (* const DATA_AC_MelodyerSpin_Tbl[])( MMDL * ) =
 int (* const DATA_AC_MelodyerSpinPose_Tbl[])( MMDL * ) =
 {
   AC_MelodyerSpinPose,
-  AC_Melodyer_1,
+  AC_Melodyer_1N,
 	AC_End,
 };
 
