@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/17 20:00:33
+#save date:2010/03/18 23:19:08
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r05.wms
 #SECTION START:OBJ_EVENT
@@ -18,29 +18,29 @@ TR_DANCER_01
 #OBJ CODE Number
 DANCER
 #MOVE CODE Number
-MV_RTRD         
+MV_SPIN_L
 #EVENT TYPE Number
-EV_TYPE_TRAINER_SPIN_MOVE_L
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
 SCRID_TRID_DANCER_01
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
-2
+1
 #Parameter 1 Number
 0
 #Parameter 2 Number
 0
 #Move Limit X Number
-1
+0
 #Move Limit Z Number
-1
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-584 0 -8
+584 0 -24
 #event number: 1
 #type
 1
@@ -204,7 +204,7 @@ TR_BACKPACKERM_02
 #OBJ CODE Number
 BACKPACKERM
 #MOVE CODE Number
-MV_ALONGW_L
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -212,9 +212,9 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_BACKPACKERM_02
 #Direction Type Number
-DIR_RIGHT
+DIR_LEFT
 #Parameter 0 Number
-2
+3
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -226,7 +226,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 136
+184 0 72
 #event number: 7
 #type
 1
@@ -235,15 +235,15 @@ TR_ARTIST_01
 #OBJ CODE Number
 MIDDLEMAN1
 #MOVE CODE Number
-MV_RTDR         
+MV_RIGHT
 #EVENT TYPE Number
-EV_TYPE_TRAINER_ESCAPE
+EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
 SCRID_TRID_ARTIST_01
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 3
 #Parameter 1 Number
@@ -257,7 +257,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -8
+120 0 -72
 #event number: 8
 #type
 1
