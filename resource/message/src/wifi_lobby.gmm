@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-18T18:02:40"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-03-18T18:07:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1368,16 +1368,6 @@ TVトランシーバー中です</language>
 	<row id="msg_wifilobby_1037" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[FF:00:色:2]ローテーションバトル</language>
 		<language name="JPN_KANJI" width="216">[FF:00:色:2]ローテーションバトル</language>
-	</row>
-
-	<row back-color=",,,,,,,#808080,,,#808080,,,,,,,">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row back-color=",,,,,,,#808080,,,#808080,,,,,,,">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
 	</row>
 
 	<flowchart-group-list>
