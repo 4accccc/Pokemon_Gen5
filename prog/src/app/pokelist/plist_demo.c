@@ -265,6 +265,7 @@ const BOOL PLIST_DEMO_CheckGirathnaToOrigin( PLIST_WORK *work , POKEMON_PARAM *p
 void PLIST_DEMO_ChangeGirathinaToOrigin( PLIST_WORK *work , POKEMON_PARAM *pp )
 {
   PP_ChangeFormNo( pp , FORMNO_GIRATHINA_ORIGIN );
+  ZUKANSAVE_SetPokeGet( work->plData->zkn , pp );
 }
 
 //--------------------------------------------------------------
@@ -295,6 +296,7 @@ const BOOL PLIST_DEMO_CheckGirathnaToAnother( PLIST_WORK *work , POKEMON_PARAM *
 void PLIST_DEMO_ChangeGirathinaToAnother( PLIST_WORK *work , POKEMON_PARAM *pp )
 {
   PP_ChangeFormNo( pp , FORMNO_GIRATHINA_ANOTHER );
+  ZUKANSAVE_SetPokeGet( work->plData->zkn , pp );
 }
 
 //--------------------------------------------------------------
@@ -341,4 +343,5 @@ const BOOL PLIST_DEMO_CheckSheimiToSky( PLIST_WORK *work , POKEMON_PARAM *pp )
 void PLIST_DEMO_ChangeSheimiToSky( PLIST_WORK *work , POKEMON_PARAM *pp )
 {
   PP_ChangeFormNo( pp , FORMNO_SHEIMI_SKY );
+  ZUKANSAVE_SetPokeGet( work->plData->zkn , pp );
 }

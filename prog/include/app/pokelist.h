@@ -166,6 +166,7 @@ typedef struct
   CONFIG * cfg;   // コンフィグデータ
   void * tvwk;    // テレビワーク //存在しない？
   void * reg;     // レギュレーションデータ
+  void * zkn;     // 図鑑セーブ(フォルムチェンジ時登録処理
 
   FLDSKILL_CHECK_WORK scwk;    // 技使用チェックワーク
 

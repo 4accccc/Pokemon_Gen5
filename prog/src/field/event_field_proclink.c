@@ -738,6 +738,7 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
   plistData->scwk = wk->scwk;
   plistData->myitem   = GAMEDATA_GetMyItem( gmData);    // アイテムデータ
   plistData->mailblock = GAMEDATA_GetMailBlock( gmData);
+  plistData->zkn = GAMEDATA_GetZukanSave( gmData);
   plistData->mode     = PL_MODE_FIELD;
   plistData->ret_sel  = wk->param->select_poke;
   plistData->waza = 0;
