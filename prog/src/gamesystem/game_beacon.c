@@ -18,6 +18,7 @@
 #include "app/townmap_util.h"
 #include "net_app\union\union_beacon_tool.h"
 #include "app/research_radar/research_select_def.h"   //SELECT_TOPIC_MAX_NUM
+#include "savedata/playtime.h"
 
 
 //==============================================================================
@@ -604,6 +605,12 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   info->suretigai_count = MISC_CrossComm_GetSuretigaiCount(misc);
   
   {
+    PLAYTIME *sv_playtime = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(gamedata) );
+    info->play_hour = PLAYTIME_GetHour( sv_playtime );
+    info->play_min = PLAYTIME_GetMinute( sv_playtime );
+  }
+  
+  {
     QUESTIONNAIRE_SAVE_WORK *qsw = SaveData_GetQuestionnaire(sv);
     QUESTIONNAIRE_ANSWER_WORK *ans = Questionnaire_GetAnswerWork(qsw);
     GFL_STD_MemCopy(ans, &info->question_answer, sizeof(QUESTIONNAIRE_ANSWER_WORK));
@@ -652,6 +659,11 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
 //--------------------------------------------------------------
 static void SendBeacon_SetCommon(GAMEBEACON_SEND_MANAGER *send)
 {
+  PLAYTIME *sv_playtime = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(GameBeaconSys->gamedata) );
+
+  send->info.play_hour = PLAYTIME_GetHour( sv_playtime );
+  send->info.play_min = PLAYTIME_GetMinute( sv_playtime );
+
   send->info.send_counter++;
   send->life = 0;
   send->beacon_update = TRUE;
@@ -719,6 +731,23 @@ void GAMEBEACON_SendDataUpdate_Questionnaire(QUESTIONNAIRE_ANSWER_WORK *my_ans)
   GFL_STD_MemCopy(my_ans, &info->question_answer, sizeof(QUESTIONNAIRE_ANSWER_WORK));
   send->beacon_update = TRUE;
 }
+
+#if 0 //※check　@todo　各イベントで変更した後、送信バッファも更新する必要がある
+  info->nation = MyStatus_GetMyNation(myst);
+  info->area = MyStatus_GetMyArea(myst);
+  info->research_team_rank = MISC_CrossComm_GetResearchTeamRank(misc);
+  info->thanks_recv_count = MISC_CrossComm_GetThanksRecvCount(misc);
+  info->suretigai_count = MISC_CrossComm_GetSuretigaiCount(misc);
+  MYPMS_GetPms( mypms, MYPMS_PMS_TYPE_INTRODUCTION, &pms );
+  GAMEBEACON_Set_Details_IntroductionPms(&pms);
+    src_code = MISC_CrossComm_GetSelfIntroduction(misc);
+    for(i = 0; i < GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN; i++){
+      info->self_introduction[i] = src_code[i];
+      if(src_code[i] == code_eom){
+        break;
+      }
+    }
+#endif
 
 //==================================================================
 /**
