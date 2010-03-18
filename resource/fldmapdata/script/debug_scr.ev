@@ -126,7 +126,7 @@ EVENT_START ev_debug_masafumi
 //	WHILE $SCWK_TEMP0 != 555
 
 		//メニュー作成
-		_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, SCWK_TEMP1 )
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_TEMP1 )
 		//リスト追加
 		_BMPMENU_MAKE_LIST( msg_debug_masafumi_05, 0 )	//四天王部屋
 		_BMPMENU_MAKE_LIST( msg_debug_01, 1 )	//テスト01
@@ -142,17 +142,15 @@ EVENT_START ev_debug_masafumi
 			_CALL	ev_bigfour_menu
 			$SCWK_TEMP0 = 555
 		ELSIF $SCWK_TEMP1 == 1 THEN
-			_FLAG_SET( FE_C09_FORBIDDEN )
-			//育て屋じいさんを表示＆タマゴイベントを発生
-			_FLAG_RESET( FV_R03_SODATEYA_01 )
-			$WK_OTHER_DISCOVER_EGG = 1
-			
-			$WK_SCENE_C04R0201 = 1
+			_FLAG_RESET( FV_T01_RIVAL )
+			_FLAG_RESET( FV_T01_SUPPORT )
+			$WK_SCENE_T01 = 2
 			
 			//R05のライバル戦POSイベントを有効
-			$WK_SCENE_R05 = 2
-			_FLAG_RESET( FV_R05_RIVAL )
-			_FLAG_RESET( FV_R05_LEADER4 )
+			$WK_SCENE_R05 = 1
+			_FLAG_RESET( FV_R05_CHAMPION )
+			_FLAG_SET( FV_R05_RIVAL )
+			_FLAG_SET( FV_R05_LEADER4 )
 			
 			//研究所の博士を表示
 			_FLAG_RESET( FV_T01R0401_HAKASE1 )
@@ -160,15 +158,11 @@ EVENT_START ev_debug_masafumi
 			
 		ELSIF $SCWK_TEMP1 == 2 THEN
 			
-			//マルチ戦闘呼び出しテスト
-			_TRAINER_MULTI_BTL_SET( TRID_RIVAL_13, TRID_KINDERGARTENM_04, TRID_KINDERGARTENM_03 )
-			//勝敗チェック
-			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-				_TRAINER_WIN()		//勝利
-			ELSE
-				_TRAINER_LOSE()		//負け
-			ENDIF
+			$WK_SCENE_C04R0201 = 1
+			$WK_SCENE_C04 = 2
+			_FLAG_RESET( FV_C04_SUPPORTPAPA_01 )
+			_FLAG_RESET( FV_C04_SUPPORT_01 )
+			_MAP_CHANGE( ZONE_ID_C04R0201, 14, 17, DIR_DOWN )
 			
 			$SCWK_TEMP0 = 555
 		ELSIF $SCWK_TEMP1 == 3 THEN
@@ -201,7 +195,7 @@ EVENT_END
 //四天王部屋デバッグメニュー------------------------------------
 ev_bigfour_menu:
 	//メニュー作成
-	_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 	//リスト追加
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_07, 0 )	//勝利フラグ
 	_BMPMENU_MAKE_LIST( msg_debug_04, 1 )	//ジャンプ ※階段前にジャンプ（アニメチェック用）
@@ -213,7 +207,7 @@ ev_bigfour_menu:
 		
 		WHILE $SCWK_TEMP0 != 111
 		
-			_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, SCWK_PARAM0 )
+			_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_PARAM0 )
 			_BMPMENU_MAKE_LIST( msg_debug_masafumi_01, 0 )	//ゴースト
 			_BMPMENU_MAKE_LIST( msg_debug_masafumi_02, 1 )	//あく
 			_BMPMENU_MAKE_LIST( msg_debug_masafumi_03, 2 )	//かくとう
@@ -238,7 +232,7 @@ ev_bigfour_menu:
 	ELSIF $SCWK_ANSWER == 1 THEN
 		
 		
-		_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, SCWK_PARAM0 )
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_PARAM0 )
 		_BMPMENU_MAKE_LIST( msg_debug_masafumi_01, 0 )	//ゴースト
 		_BMPMENU_MAKE_LIST( msg_debug_masafumi_02, 1 )	//あく
 		_BMPMENU_MAKE_LIST( msg_debug_masafumi_03, 2 )	//かくとう
@@ -264,7 +258,7 @@ _RET
 //イベントＯＦＦ-----------------------------------------------
 ev_event_off:
 	//メニュー作成
-	_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 	//リスト追加
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_06, 2 )	//Ｎの城
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_08, 0 )	//チャンピオン部屋
@@ -339,7 +333,7 @@ ev_event_jump:
 	{
 	DEFINE_LOCAL LWK_EVTJUMP
 	//メニュー作成
-	_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, LWK_EVTJUMP )
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, LWK_EVTJUMP )
 	//リスト追加
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_10, 1 )	//自宅２Fゲーム開始イベント
 	_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
@@ -355,7 +349,7 @@ ev_event_jump:
 		_FLAG_RESET( FV_T01R0102_BALL01 )
 		_FLAG_RESET( FV_T01R0102_BALL02 )
 		$WK_SCENE_T01R0102 = 0
-		_MAP_CHANGE( ZONE_ID_T01R0102, 4, 5, DIR_DOWN )
+		_MAP_CHANGE( ZONE_ID_T01R0102, 5, 6, DIR_DOWN )
 		
 	ENDIF
 	}
@@ -383,7 +377,7 @@ EVENT_START   ev_debug_suginaka
 	WHILE $SCWK_TEMP0 != 428
 
 		//メニュー作成
-		_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 		//リスト追加
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_04, 0 )	//演説イベント
 		_BMPMENU_MAKE_LIST( msg_debug_suginaka_05, 1 )	//D03R0101のイベント
@@ -502,7 +496,7 @@ EVENT_END
 EVENT_START   ev_debug_murakami
 
 		//メニュー作成
-		_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, SCWK_TEMP1 )
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_TEMP1 )
 		//リスト追加
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_01, 1 )	//C02ストーン入手イベント
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_03, 2 )	//デンチュラの巣を破壊
@@ -790,7 +784,7 @@ siwasawa_main_menu:
   DEFINE_LOCAL  i_ret
 
 	//メニュー作成
-	_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, i_ret )
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
 	//リスト追加
 	_BMPMENU_MAKE_LIST( msg_deb_iwasawa_main01, SEQ_IWASAWA_MV_POKE )	//いどうポケモン
 	_BMPMENU_MAKE_LIST( msg_debug_00, SEQ_IWASAWA_EXIT )	//やめる
@@ -810,7 +804,7 @@ siwasawa_mv_poke_menu:
   $i_loop = TRUE
   WHILE $i_loop == TRUE
 	  //メニュー作成
-	  _BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, i_ret )
+	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
 	  //リスト追加
 	  _BMPMENU_MAKE_LIST( msg_deb_iwasawa_mvp01, MOVE_POKE_RAIKAMI )	//ライカミ
 	  _BMPMENU_MAKE_LIST( msg_deb_iwasawa_mvp02, MOVE_POKE_KAZAKAMI )	//カザカミ
@@ -933,7 +927,7 @@ EVENT_START ev_debug_common
 	WHILE $SCWK_TEMP0 != 555
 		
 		//メニュー作成
-		_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
 		//リスト追加
 		_BMPMENU_MAKE_LIST( msg_debug_common_00, 0 )	//ゲームクリア
 		_BMPMENU_MAKE_LIST( msg_debug_common_01, 1 )	//ジムバッジ全部
