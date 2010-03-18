@@ -1,0 +1,26 @@
+
+WiFi接続画面データ詳細
+
+●キャラデータ
+・connect_win.ncg
+　→上下画面共通キャラ
+
+●カラーデータ
+・connect_win.ncl
+　→上下画面共通パレット
+
+・connect_ani.ncl
+　→パレットアニメーション用（connect_win.nclの１～Aへ順にループ転送）
+
+●BGデータ（ナンバーがプライオリティ順）
+・connect_win1.nsc
+　→上画面専用。半透明処理+右へ横スクロール（速度は要調整で）
+
+・connect_win2_u.nsc
+　→上画面専用。
+
+・connect_win2_d.nsc
+　→下画面専用。
+
+
+□■yoshida■□
