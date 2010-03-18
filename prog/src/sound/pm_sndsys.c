@@ -25,9 +25,6 @@
  *
  */
 //============================================================================================
-//仮
-BOOL debugBGMsetFlag;
-
 //------------------------------------------------------------------
 /**
  * @brief	ＳＥプレーヤー設定定義
@@ -118,6 +115,9 @@ static SOUNDMAN_PRESET_HANDLE*	usrPresetHandle1;
 static PMSND_SEPLAYER_DATA			sePlayerData[SEPLAYER_MAX];
 static SNDTrackInfo							trackInfo[TRACK_NUM];
 static u16											trackActiveBit;	
+
+static PMSND_PLAYABLE_CALLBACK	playableCallBackFunc;
+
 //static OSMutex									sndTreadMutex;		
 //
 #ifdef PM_DEBUG
@@ -169,9 +169,8 @@ void	PMSND_Init( void )
 #ifdef PM_DEBUG
 	heapRemainsAfterPresetSE = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
 #endif
-	debugBGMsetFlag = FALSE;
-  
 }
+
 void	PMSND_InitMultiBoot( void* sndData )
 {
 	// サウンドシステム初期化(マルチブート子機
@@ -183,8 +182,6 @@ void	PMSND_InitMultiBoot( void* sndData )
 	NNS_SndArcInitOnMemory( &PmSoundArc, sndData );
 
   PMSND_InitCore();
-
-	debugBGMsetFlag = FALSE;
 }
 
 //---------------------------------------------------
@@ -219,6 +216,8 @@ static void PMSND_InitCore( void )
 
 	trackActiveBit = 0;	
 	bgmFadeCounter = 0;
+
+	playableCallBackFunc = NULL;
 }
 
 
@@ -455,6 +454,35 @@ void PMSND_ChangeCaptureReverb( u32 depth, u32 samplingRate, int volume, int sto
 /**
  *
  *
+ * @brief	サウンド再生可否判定
+ *
+ *
+ */
+//============================================================================================
+static BOOL checkPlaySound( u32 soundIdx )
+{
+  // ロードスレッド動作中は再生しない
+  if( PMSND_IsLoading() == FALSE ) { return TRUE; }
+
+	if(playableCallBackFunc == NULL){ return FALSE; }
+
+	return playableCallBackFunc(soundIdx);
+}
+
+void PMSND_SetPlayableCallBack( PMSND_PLAYABLE_CALLBACK func )
+{
+	playableCallBackFunc = func;
+}
+
+void PMSND_ResetPlayableCallBack( void )
+{
+	playableCallBackFunc = NULL;
+}
+
+//============================================================================================
+/**
+ *
+ *
  *
  *
  *
@@ -493,7 +521,9 @@ static BOOL PMSND_PlayBGM_CORE( u32 soundIdx, u16 trackBit )
 	BOOL result;
 
   // ロードスレッド動作中は再生しない
-  if( PMSND_IsLoading() ) { return FALSE; }
+  //if( PMSND_IsLoading() ) { return FALSE; }
+  // 再生可否判定
+	if(checkPlaySound(soundIdx) == FALSE){ return FALSE; }
 
 	PMSND_StopBGM_CORE();
 	result = SOUNDMAN_LoadHierarchyPlayer(soundIdx);
@@ -887,6 +917,11 @@ void	PMSND_PlaySE_byPlayerID( u32 soundIdx, SEPLAYER_ID sePlayerID )
 	int playerNo = sePlayerID + PLAYER_SE_SYS;
 	BOOL result;
 
+  // ロードスレッド動作中は再生しない
+  //if( PMSND_IsLoading() ) { return; }
+  // 再生可否判定
+	if(checkPlaySound(soundIdx) == FALSE){ return; }
+
 	sePlayerData[sePlayerID].soundIdx = 0;
 	result = NNS_SndArcPlayerStartSeqEx
 		(&sePlayerData[sePlayerID].sndHandle, playerNo, -1, -1, soundIdx);
@@ -899,7 +934,9 @@ static void pmsnd_PlaySECore( u32 soundIdx, u32 volume )
 	SEPLAYER_ID	sePlayerID;
 
   // ロードスレッド動作中は再生しない
-  if( PMSND_IsLoading() ) { return; }
+  //if( PMSND_IsLoading() ) { return; }
+  // 再生可否判定
+	if(checkPlaySound(soundIdx) == FALSE){ return; }
 
 	sePlayerID = PMSND_GetSE_DefaultPlayerID(soundIdx);
 	sePlayerData[sePlayerID].soundIdx = 0;
