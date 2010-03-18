@@ -3652,7 +3652,6 @@ static void handler_GyroBall( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       pow = 150;
     }
 
-    OS_TPrintf("çUåÇë§Ç∑ÇŒÇ‚Ç≥=%d, ñhå‰ë§ëfëÅÇ≥=%d,  à–óÕ=%d\n", selfAgi, targetAgi, pow );
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }

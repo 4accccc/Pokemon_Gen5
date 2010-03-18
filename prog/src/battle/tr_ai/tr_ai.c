@@ -1347,25 +1347,30 @@ static  VMCMD_RESULT  AI_COMP_POWER( VMHANDLE* vmh, void* context_work )
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int loss_flag = ( int )VMGetU32( vmh );
 
-  //@todo 技のダメージを取得する関数を作る必要があります　とりあえず技の威力で判定
+  //@todo 作成したけど、これで良いか後で確認
   {
     int i;
-    int src_pow = get_waza_param( taw, taw->waza_no, WAZAPARAM_POWER );
+    u8  atkPokeID = BPP_GetID( taw->atk_bpp );
+    u8  defPokeID = BPP_GetID( taw->def_bpp );
 
-    if( src_pow == 0 )
+    u32 src_dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, taw->waza_no, TRUE, FALSE );
+
+    if( src_dmg == 0 )
     {
       taw->calc_work = COMP_POWER_NONE;
     }
     else
     {
+      u32 dmg;
+
       taw->calc_work = COMP_POWER_TOP;
 
       for( i = 0 ; i < BPP_WAZA_GetCount( taw->atk_bpp ) ; i++ )
       {
-        int pow = get_waza_param( taw, BPP_WAZA_GetID( taw->atk_bpp, i ), WAZAPARAM_POWER );
-
         if( i == taw->waza_pos ) continue;
-        if( pow > src_pow )
+
+        dmg = BTL_SVFTOOL_SimulationDamage( taw->svfWork, atkPokeID, defPokeID, taw->waza_no, TRUE, FALSE );
+        if( dmg > src_dmg )
         {
           taw->calc_work = COMP_POWER_NOTOP;
           break;
@@ -1498,13 +1503,8 @@ static  VMCMD_RESULT  AI_CHECK_WAZA_AISYOU( VMHANDLE* vmh, void* context_work )
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   BtlTypeAff  aisyou  = ( int )VMGetU32( vmh );
   int adrs  = ( int )VMGetU32( vmh );
-  PokeTypePair  def_type = BPP_GetPokeType( taw->def_bpp );
-  PokeType  waza_type = get_waza_param( taw, taw->waza_no, WAZAPARAM_TYPE );
-  BtlTypeAff  aff1 = BTL_CALC_TypeAff( waza_type, PokeTypePair_GetType1( def_type ) );
-  BtlTypeAff  aff2 = BTL_CALC_TypeAff( waza_type, PokeTypePair_GetType2( def_type ) );
-  BtlTypeAff  aff = BTL_CALC_TypeAffMul( aff1, aff2 );
-
-  //@todo とりあえず特性とかなにも考えずに単純に相性チェック
+  BtlTypeAff  aff = BTL_SVFTOOL_SimulationAffinity(
+            taw->svfWork, BPP_GetID(taw->atk_bpp), BPP_GetID(taw->def_bpp), taw->waza_no );
 
   branch_act( vmh, COND_EQUAL, aff, aisyou, adrs );
 

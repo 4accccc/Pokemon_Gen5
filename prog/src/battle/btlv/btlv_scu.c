@@ -3238,7 +3238,6 @@ static BOOL msgWinVisible_Update( MSGWIN_VISIBLE* wk )
                     GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
                     eva, evb );
 
-    OS_TPrintf("********* BLDALPHA EVA=%d, EVB=%d\n", eva, evb);
   }
   return FALSE;
 }

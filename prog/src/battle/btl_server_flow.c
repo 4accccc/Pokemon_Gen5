@@ -438,12 +438,6 @@ static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
     const SVFL_WAZAPARAM* wazaParam, HITCHECK_PARAM* hitCheckParam, fx32 dmg_ratio, BOOL fTargetPlural );
 static void scproc_Fight_Damage_ToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   const SVFL_WAZAPARAM* wazaParam, BTL_POKESET* targets );
-static u32 scproc_Fight_Damage_side_single( BTL_SVFLOW_WORK* wk,
-      BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam,
-      fx32 targetDmgRatio, BtlTypeAff affinity );
-static u32 svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
-    BTL_POKEPARAM* attacker,  BTL_POKEPARAM* defender,
-    const SVFL_WAZAPARAM* wazaParam, BtlTypeAff affinity, fx32 targetDmgRatio );
 static void scPut_DamageAff( BTL_SVFLOW_WORK* wk, BtlTypeAff affinity );
 static u32 MarumeDamage( const BTL_POKEPARAM* bpp, u32 damage );
 static void scproc_Fight_Damage_Determine( BTL_SVFLOW_WORK* wk,
@@ -5762,130 +5756,6 @@ static void scproc_Fight_Damage_ToRecover( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* a
   }
 }
 
-//------------------------------------------------------------------
-// サーバーフロー下請け：単体ダメージ処理（上位分岐）
-//------------------------------------------------------------------
-static u32 scproc_Fight_Damage_side_single( BTL_SVFLOW_WORK* wk,
-      BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam,
-      fx32 targetDmgRatio, BtlTypeAff affinity )
-{
-  u32 dmg_sum = svflowsub_damage_act_singular( wk, attacker, defender, wazaParam, affinity, targetDmgRatio );
-
-  scproc_CheckDeadCmd( wk, attacker );
-  scproc_CheckDeadCmd( wk, defender );
-
-  return dmg_sum;
-}
-//------------------------------------------------------------------
-// サーバーフロー下請け：単体ダメージ処理（下位）
-//------------------------------------------------------------------
-static u32 svflowsub_damage_act_singular(  BTL_SVFLOW_WORK* wk,
-    BTL_POKEPARAM* attacker,  BTL_POKEPARAM* defender,
-    const SVFL_WAZAPARAM* wazaParam, BtlTypeAff affinity, fx32 targetDmgRatio )
-{
-  u8 fPluralHit = FALSE; // 複数回ヒットフラグ
-  u8 fDead = FALSE;
-
-  u32 damage_sum;
-  u16 damage;
-  u8  hitCountMax, fPluralHitCheck, fCritical, fFixDamage, hitCount;
-  BtlPokePos atkPos;
-
-  int i;
-
-  fPluralHit = scEvent_HitCheckParam( wk, attacker, wazaParam->wazaID, &wk->hitCheckParam );
-  if( fPluralHit ){
-    BTL_Printf("複数回ヒットワザ ... 回数=%d\n", hit_count);
-  }
-
-  wazaEffCtrl_SetEnable( &wk->wazaEffCtrl );
-  atkPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(attacker) );
-  damage_sum = 0;
-
-  for(i=0; i<hitCountMax; ++i)
-  {
-    fCritical = scEvent_CheckCritical( wk, attacker, defender, wazaParam->wazaID );
-    fFixDamage = scEvent_CalcDamage( wk, attacker, defender, wazaParam,
-                  affinity, targetDmgRatio, fCritical, TRUE, &damage );
-    hitCount = i + 1;
-
-    if( fFixDamage ){
-      affinity = BTL_TYPEAFF_100;
-      fCritical = FALSE;
-    }
-
-    // 最初の１回だけダメージ直前にダメージ確定イベントコール
-    if( i == 0 ){
-      scproc_Fight_Damage_Determine( wk, attacker, defender, wazaParam );
-    }
-    // ２回目以降はワザエフェクトを追加で発生させる
-    else{
-      BtlPokePos defPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(defender) );
-      SCQUE_PUT_ACT_WazaEffect( wk->que, atkPos, defPos, wazaParam->wazaID );
-    }
-
-    if( BPP_MIGAWARI_IsExist(defender) ){
-      scproc_Migawari_Damage( wk, defender, damage );
-    }
-    else{
-      u8 koraeru_cause;
-
-      damage = MarumeDamage( defender, damage );
-
-      koraeru_cause = scEvent_CheckKoraeru( wk, attacker, defender, &damage );
-      scPut_WazaDamageSingle( wk, wazaParam, defender, affinity, damage, fCritical, fPluralHit );
-
-      // こらえ
-      if( koraeru_cause != BPP_KORAE_NONE ){
-        scproc_Koraeru( wk, defender, koraeru_cause );
-      }
-      damage_sum += damage;
-
-      // 追加効果、リアクション処理
-      scproc_CheckShrink( wk, wazaParam, attacker, defender );
-      scproc_Damage_Drain( wk, wazaParam, attacker, defender, damage );
-      scproc_WazaAdditionalEffect( wk, wazaParam, attacker, defender, damage );
-      scproc_WazaDamageReaction( wk, attacker, defender, wazaParam, affinity, damage, fCritical );
-      scproc_Fight_Damage_Kickback( wk, attacker, wazaParam->wazaID, damage );
-    }
-
-    if( BPP_IsDead(defender) ){
-      fDead = TRUE;
-    }else{
-      scproc_CheckItemReaction( wk, defender );
-    }
-
-    if( BPP_IsDead(attacker) ){
-      fDead = TRUE;
-    }
-
-    if( fDead ){
-      break;
-    }
-
-    if( fPluralHitCheck )
-    {
-      if( !scEvent_CheckHit(wk, attacker, defender, wazaParam) ){
-        break;
-      }
-    }
-  }
-
-  BTL_POKESET_AddWithDamage( &wk->pokesetDamaged, defender, damage_sum );
-  if( damage_sum ){
-    wazaDmgRec_Add( wk, atkPos, attacker, defender, wazaParam, damage_sum );
-    BPP_TURNFLAG_Set( defender, BPP_TURNFLG_DAMAGED );
-  }
-
-
-  // ○○回あたった！メッセージ
-  if( fPluralHit && (hitCount > 0)){
-    scPut_DamageAff( wk, affinity );
-    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Hit_PluralTimes, hitCount );
-  }
-
-  return damage_sum;
-}
 /**
  *  効果は○○だ　メッセージ出力
  */
@@ -11706,6 +11576,27 @@ BOOL BTL_SVFTOOL_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokusei toku
 }
 //--------------------------------------------------------------------------------------
 /**
+ *  * [ハンドラ用ツール] 相性計算シミュレート結果を返す
+ *
+ * @param   wk
+ * @param   atkPokeID
+ * @param   defPokeID
+ * @param   waza
+ *
+ * @retval  BtlTypeAff
+ */
+//--------------------------------------------------------------------------------------
+BtlTypeAff BTL_SVFTOOL_SimulationAffinity( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeID, WazaID waza )
+{
+  BTL_POKEPARAM* attacker = BTL_POKECON_GetPokeParam( wk->pokeCon, atkPokeID );
+  BTL_POKEPARAM* defender = BTL_POKECON_GetPokeParam( wk->pokeCon, defPokeID );
+  SVFL_WAZAPARAM  wazaParam;
+
+  scEvent_GetWazaParam( wk, waza, attacker, &wazaParam );
+  return scProc_checkWazaDamageAffinity( wk, attacker, defender, &wazaParam );
+}
+//--------------------------------------------------------------------------------------
+/**
  * [ハンドラ用ツール] ダメージ計算シミュレート結果を返す
  *
  * @param   flowWk
@@ -11720,27 +11611,33 @@ BOOL BTL_SVFTOOL_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokusei toku
 //--------------------------------------------------------------------------------------
 u32 BTL_SVFTOOL_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeID, WazaID waza, BOOL fAffinity, BOOL fEnableRand )
 {
-  const BTL_POKEPARAM* attacker = BTL_POKECON_GetPokeParam( wk->pokeCon, atkPokeID );
-  const BTL_POKEPARAM* defender = BTL_POKECON_GetPokeParam( wk->pokeCon, defPokeID );
+  if( WAZADATA_IsDamage(waza) )
+  {
+    const BTL_POKEPARAM* attacker = BTL_POKECON_GetPokeParam( wk->pokeCon, atkPokeID );
+    const BTL_POKEPARAM* defender = BTL_POKECON_GetPokeParam( wk->pokeCon, defPokeID );
 
-  BtlTypeAff  aff;
-  BOOL  critical_flag;
-  SVFL_WAZAPARAM  wazaParam;
-  u16  damage;
+    BtlTypeAff  aff;
+    BOOL  critical_flag;
+    SVFL_WAZAPARAM  wazaParam;
+    u16  damage;
 
-  //
-  if( fAffinity ){
-    aff = CalcTypeAffForDamage( WAZADATA_GetType(waza), BPP_GetPokeType(defender) );
-  }else{
-    aff = BTL_TYPEAFF_100;
+    //
+    if( fAffinity ){
+      aff = BTL_SVFTOOL_SimulationAffinity( wk, atkPokeID, defPokeID, waza );
+    }else{
+      aff = BTL_TYPEAFF_100;
+    }
+
+    scEvent_GetWazaParam( wk, waza, attacker, &wazaParam );
+
+    scEvent_CalcDamage( wk, attacker, defender, &wazaParam, aff,
+      BTL_CALC_DMG_TARGET_RATIO_NONE, FALSE, fEnableRand, &damage );
+
+    return damage;
   }
-
-  scEvent_GetWazaParam( wk, waza, attacker, &wazaParam );
-
-  scEvent_CalcDamage( wk, attacker, defender, &wazaParam, aff,
-    BTL_CALC_DMG_TARGET_RATIO_NONE, FALSE, fEnableRand, &damage );
-
-  return damage;
+  else{
+    return 0;
+  }
 }
 //--------------------------------------------------------------------------------------
 /**
@@ -12103,6 +12000,21 @@ u16 BTL_SVFTOOL_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BOOL
 {
   return scEvent_CalcAgility( wk, bpp, fTrickRoomEnable );
 }
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] 素早さ計算->場に出ているポケモン内でのランクを返す
+ *
+ * @param   wk
+ * @param   bpp
+ *
+ * @retval  u16 ランク（0～）
+ */
+//--------------------------------------------------------------------------------------
+u16 BTL_SVFTOOL_CalcAgilityRank( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BOOL fTrickRoomEnable )
+{
+  return scEvent_CalcAgility( wk, bpp, fTrickRoomEnable );
+}
+
 //--------------------------------------------------------------------------------------
 /**
  * [ハンドラ用ツール] “浮いている”状態チェック

@@ -392,6 +392,7 @@ static u32 calcBonusSub( const BSP_TRAINER_DATA* trData, const POKEPARTY * party
     {
       const POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, poke_cnt-1 );
       u32 tr_money_ratio = TT_TrainerDataParaGet( trData->tr_id, ID_TD_gold );
+
       return (PP_Get(pp, ID_PARA_level, NULL) * tr_money_ratio * 4);
     }
   }
