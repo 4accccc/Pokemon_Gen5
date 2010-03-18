@@ -302,8 +302,8 @@
 #define FE_SPORTS_PLAYING                  286 /* 0x011e ビッグスタジアム/リトルコート：競技中フラグ。ON=競技中=競技場に入れない */
 #define FE_AWARD_LOCAL                     287 /* 0x011f ディレクター表彰：地方図鑑完成を表彰された */
 #define FE_AWARD_NATIONAL                  288 /* 0x0120 ディレクター表彰：全国図鑑完成を表彰された */
-		/* not used   289(0x0121) */
-		/* not used   290(0x0122) */
+#define FE_C03R0401_GIRL2_TALK             289 /* 0x0121 ヒウンシティビル：映画関連ゾロアイベントの少女と会話した */
+#define FE_C04R0501_ITEMGET_01             290 /* 0x0122 ライモンシティ汎用ビル：アイテム入手フラグ（わざマシン：かいりき） */
 		/* not used   291(0x0123) */
 		/* not used   292(0x0124) */
 		/* not used   293(0x0125) */
@@ -750,9 +750,9 @@
 #define FV_STADIUM_RANDOM_03               726 /* 0x02d6 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
 #define FV_PDW_POSTMAN                     727 /* 0x02d7 PDWのアイテム配達員 */
 #define FV_STADIUM_GUARDMAN                728 /* 0x02d8 ビッグスタジアム／リトルコートエントランスのガードマン（ストッパー） */
-		/* not used   729(0x02d9) */
-		/* not used   730(0x02da) */
-		/* not used   731(0x02db) */
+#define FV_C03R0401_BOY1_01                729 /* 0x02d9 ヒウンシティビル：映画関連ゾロアイベントの少年（ゾロア） */
+#define FV_C03R0401_GIRL1_01               730 /* 0x02da ヒウンシティビル：映画関連ゾロアイベントの少女 */
+#define FV_C03R0401_POKE22_01              731 /* 0x02db ヒウンシティビル：映画関連ゾロアイベントのゾロア */
 		/* not used   732(0x02dc) */
 		/* not used   733(0x02dd) */
 		/* not used   734(0x02de) */
