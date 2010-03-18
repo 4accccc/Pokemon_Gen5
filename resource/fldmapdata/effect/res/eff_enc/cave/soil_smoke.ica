@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-11-26T23:22:42" source="soil_smoke.mb"/>
+	<create user="fuchino" host="W00152" date="2010-03-18T18:42:41" source="soil_smoke.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,11 +11,11 @@
 <body>
 
 <node_anm_info
-	frame_size="16"
+	frame_size="46"
 	scaling_rule="standard"
 	magnify="1.000000"
 	tool_start_frame="0"
-	tool_end_frame="15"
+	tool_end_frame="45"
 	interpolation="frame"
 	compress_node="merge" node_size="1 1"
 	frame_step_mode="1"
@@ -24,9 +24,12 @@
 	tolerance_translate="0.010000"
 />
 
-<node_scale_data size="16">
+<node_scale_data size="46">
 	1.000000 0.940674 0.875000 0.821777 0.800049 0.851807 0.948242 1.000000 0.968750 0.899902
-	0.831299 0.800049 0.821777 0.875000 0.940674 1.000000
+	0.831299 0.800049 0.851807 0.948242 1.000000 1.000000 0.968750 0.899902 0.831299 0.800049
+	0.851807 0.948242 1.000000 0.968750 0.899902 0.831299 0.800049 0.831299 0.899902 0.968750
+	1.000000 1.000000 0.968750 0.899902 0.831299 0.800049 0.851807 0.948242 1.000000 0.968750
+	0.899902 0.831299 0.800049 0.837158 0.918457 1.000000
 </node_scale_data>
 
 <node_rotate_data size="1">
@@ -39,9 +42,9 @@
 
 <node_anm_array size="1">
 	<node_anm index="0">
-		<scale_x frame_step="1" data_size="16" data_head="0"/>
-		<scale_y frame_step="1" data_size="16" data_head="0"/>
-		<scale_z frame_step="1" data_size="16" data_head="0"/>
+		<scale_x frame_step="1" data_size="46" data_head="0"/>
+		<scale_y frame_step="1" data_size="46" data_head="0"/>
+		<scale_z frame_step="1" data_size="46" data_head="0"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
 		<rotate_y frame_step="1" data_size="1" data_head="0"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
