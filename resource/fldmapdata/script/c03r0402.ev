@@ -31,10 +31,84 @@ _EVENT_DATA_END
 /* 			DIRECTOR										  */
 /**************************************************************/
 EVENT_START		ev_c03r0402_director_01
-	//【仮】賞状とシステムフラグが揃うまで仮
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_01 )
-EVENT_END
 
+	DEFINE_LOCAL	LWK_LOCAL
+	DEFINE_LOCAL	LWK_GLOBAL
+	_GET_ZUKAN_COMPLETE( LWK_LOCAL, SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET )
+	_GET_ZUKAN_COMPLETE( LWK_GLOBAL, SCR_ZUKAN_HYOUKA_MODE_GLOBAL )
+	_DEBUG_PRINT_WK(LWK_LOCAL)
+	_DEBUG_PRINT_WK(LWK_GLOBAL)
+
+
+	//既にマップ内で表彰済の場合
+	IF $LOCALWORK10 == 1 THEN
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_04 )
+	
+	//初会話の場合
+	ELSE
+		
+		//全国図鑑が完成している場合
+		IF $LWK_GLOBAL == TRUE THEN
+		
+			_TALK_OBJ_START()
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_03 )
+			_MSGWIN_CLOSE()
+			
+			_CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_ZENKOKU, 1 )
+
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_04a )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+
+			//========================================/
+			
+			//フラグ操作
+			_FLAG_RESET( FV_T01R0102_AWARD_02 )
+			
+			//部長会話済
+			$LOCALWORK10 = 1
+
+			//========================================/
+		
+		//全国図鑑は完成していない
+		ELSE
+		
+			//地方図鑑が完成している
+			IF $LWK_LOCAL == TRUE THEN
+
+				_TALK_OBJ_START()
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_02 )
+				_MSGWIN_CLOSE()
+				
+				_CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_CHIHOU, 1 )
+
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_02a )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+
+				//========================================/
+			
+				//フラグ操作
+				_FLAG_RESET( FV_T01R0102_AWARD_01 )
+				
+				//部長会話済
+				$LOCALWORK10 = 1
+
+				//========================================/
+		
+			//地方図鑑も完成していない
+			ELSE
+			
+				_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_director_01 )
+		
+			ENDIF
+		
+		ENDIF
+	
+	ENDIF
+
+EVENT_END
 /**************************************************************/
 /* 			assistantm										  */
 /**************************************************************/
