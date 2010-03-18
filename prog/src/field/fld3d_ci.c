@@ -787,6 +787,15 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       FLDMSGBG_RecoveryBG( fmb );
       FIELD_PLACE_NAME_RecoverBG( place_name_sys );
       FIELD_DEBUG_RecoverBgCont( debug );
+      {
+        //ＢＧセットアップ    デバッグメニュー設定と同じにする
+        G2_SetBG2ControlText(
+            GX_BG_SCRSIZE_TEXT_256x256,
+            FLDBG_MFRM_EFF1_COLORMODE,
+            FLDBG_MFRM_EFF1_SCRBASE,
+            FLDBG_MFRM_EFF1_CHARBASE
+            );
+      }
       //ＢＧ2面クリア
       GFL_BG_ClearFrame( GFL_BG_FRAME2_M );
     }
