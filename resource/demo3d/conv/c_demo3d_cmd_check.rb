@@ -51,7 +51,7 @@ class CDemo3DCmdCheck
 #    print("コマンドテーブルNum = #{@cmd_tbl.size}, cmd_param_num = #{cmd.prm_num}, cmd = #{key}\n")
     @buf.fill( "DEMO3D_CMD_PARAM_NULL", 0..CMD_PARAM_END )
    
-    #引数の数をカウント
+    #パラメータの数をカウント
     arg_num = 0
     if work == nil && cmd.prm_num == 0 then
       return @buf
@@ -62,12 +62,12 @@ class CDemo3DCmdCheck
     end
     
     if arg_num < cmd.prm_num then
-      print("Error! コマンド #{key} の引数が足りません #{arg_num}/#{cmd.prm_num}\n")
+      print("Error! コマンド #{key} のパラメータが足りません #{arg_num}/#{cmd.prm_num}\n")
       exit 1
     end
     
     if arg_num > cmd.prm_num then
-      print("Error! コマンド #{key} の引数が多すぎます #{arg_num}>#{cmd.prm_num}\n")
+      print("Error! コマンド #{key} のパラメータが多すぎます #{arg_num}>#{cmd.prm_num}\n")
       exit 1
     end
 
