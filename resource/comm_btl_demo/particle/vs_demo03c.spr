@@ -45,7 +45,7 @@
 		pos_z="0"
 		init_vel_pos="0"
 		init_vel_axis="0"
-		base_scl="4096"
+		base_scl="4385"
 		aspect="4096"
 		start_offset="25"
 		rtt_min="-366"
@@ -75,7 +75,7 @@
 	/>
 	<scl_anm
 		scl_s="7918"
-		scl_n="10110"
+		scl_n="11207"
 		scl_e="8039"
 		loop="1"
 		in="128"

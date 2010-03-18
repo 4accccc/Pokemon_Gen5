@@ -71,12 +71,12 @@
 		offset_pos="0"
 		dpol_center="0"
 		usr_flag="0"
-		tex_name="ring01b.spt"
+		tex_name="ring01.spt"
 	/>
 	<scl_anm
 		scl_s="974"
-		scl_n="6212"
-		scl_e="12668"
+		scl_n="6578"
+		scl_e="19977"
 		loop="0"
 		in="128"
 		out="128"
