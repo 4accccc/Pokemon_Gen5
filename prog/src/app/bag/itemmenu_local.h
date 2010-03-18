@@ -428,3 +428,4 @@ extern SHORTCUT_ID ITEMDISP_GetPocketShortcut( int pocketno );
 extern void ITEMDISP_ChangeCursorPosPalette( FIELD_ITEMMENU_WORK * wk, u32 pal );
 extern void ITEMDISP_ChangeActive( FIELD_ITEMMENU_WORK * wk, BOOL flg );
 extern void ITEMDISP_ChangeRetButtonActive( FIELD_ITEMMENU_WORK * wk, BOOL flg );
+extern void ITEMDISP_ChangeSortButton( FIELD_ITEMMENU_WORK * wk );

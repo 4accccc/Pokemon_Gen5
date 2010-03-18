@@ -2697,16 +2697,12 @@ static void SORT_Button( FIELD_ITEMMENU_WORK* pWork )
     return;
   }
 
-  if( pWork->sort_mode == 0 )
-  {
+  if( pWork->sort_mode == 0 ){
     SORT_ABC( pWork );
-    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 2 );
-  }
-  else if( pWork->sort_mode == 1 )
-  {
+  }else if( pWork->sort_mode == 1 ){
     SORT_Type( pWork );
-    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 3 );
   }
+	GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort, 2 );
 
   // 大切なものはABCソートのみ
   if( pWork->pocketno != BAG_POKE_EVENT )
@@ -2736,15 +2732,7 @@ static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork )
 
   HOSAKA_Printf("pocketno:%d\n", pWork->pocketno);
 
-  // ワザマシンはソート不可能
-  if( pWork->pocketno == BAG_POKE_WAZA )
-  {
-    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 4 );
-  }
-  else
-  {
-    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 0 );
-  }
+	ITEMDISP_ChangeSortButton( pWork );
 }
 
 //-----------------------------------------------------------------------------
@@ -2758,19 +2746,9 @@ static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork )
 {
-  if( GFL_CLACT_WK_CheckAnmActive( pWork->clwkSort ) == FALSE )
-  {
-    // yellow
-    if( pWork->sort_mode == 1 )
-    {
-        GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 1 );
-    }
-    // green
-    else
-    {
-        GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 0 );
-    }
-  }
+	if( GFL_CLACT_WK_CheckAnmActive( pWork->clwkSort ) == FALSE ){
+		GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort, 0 );
+	}
 }
 
 //-----------------------------------------------------------------------------

@@ -594,16 +594,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
 
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkSort, TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkSort, TRUE );
-
-#if 0
-    // 売る画面のときは非表示
-    if( pWork->mode == BAG_MODE_SELL )
-    {
-      GFL_CLACT_WK_SetDrawEnable( pWork->clwkSort, FALSE );
-    }
-#endif
   }
-
 }
 
 //-----------------------------------------------------------------------------
@@ -2366,7 +2357,7 @@ void ITEMDISP_ChangeActive( FIELD_ITEMMENU_WORK * wk, BOOL flg )
 	  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1, 0 );
 
     // ソートボタン
-//    SORT_ModeReset( pWork );
+		ITEMDISP_ChangeSortButton( wk );
     // バーアイコン
     GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_LEFT],  BAR_ICON_ANM_LEFT );
     GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_RIGHT], BAR_ICON_ANM_RIGHT );
@@ -2386,7 +2377,7 @@ void ITEMDISP_ChangeActive( FIELD_ITEMMENU_WORK * wk, BOOL flg )
 	  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1, -8 );
 
     // ソートボタン
-//    GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort , 4 );
+		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 4 );
     // バーアイコン各種
     GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_LEFT], BAR_ICON_ANM_LEFT_OFF );
     GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_RIGHT], BAR_ICON_ANM_RIGHT_OFF );
@@ -2405,5 +2396,15 @@ void ITEMDISP_ChangeRetButtonActive( FIELD_ITEMMENU_WORK * wk, BOOL flg )
     GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_RETURN], APP_COMMON_BARICON_RETURN );
 	}else{
     GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_RETURN], APP_COMMON_BARICON_RETURN_OFF );
+	}
+}
+
+void ITEMDISP_ChangeSortButton( FIELD_ITEMMENU_WORK * wk )
+{
+	// ワザマシンはソート不可能
+	if( wk->pocketno == BAG_POKE_WAZA ){
+		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 4 );
+	}else{
+		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 0 );
 	}
 }
