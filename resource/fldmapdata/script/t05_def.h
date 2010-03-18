@@ -10,5 +10,7 @@
 #define SCRID_ZONE_T05 (3)
 #define SCRID_INIT_T05 (4)
 #define SCRID_RECOVER_T05 (5)
+#define SCRID_BG_T05_RAILMAP_01 (6)
+#define SCRID_BG_T05_BOARD_01 (7)
 
 #endif //_T05_DEF_H_

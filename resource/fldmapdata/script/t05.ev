@@ -24,6 +24,8 @@ _EVENT_DATA    ev_t05_pipe_01
 _EVENT_DATA    ev_zone_t05
 _EVENT_DATA    ev_init_t05
 _EVENT_DATA    ev_recover_t05
+_EVENT_DATA    ev_bg_t05_railmap_01	//òHê¸ê}
+_EVENT_DATA    ev_bg_t05_board_01
 _EVENT_DATA_END
 
 
@@ -133,11 +135,30 @@ ev_rail_talk:
 _RET
 
 
-
 /************************************************************/
 /*					ISSÅFÉtÉãÅ[ÉgêÅÇ´						*/
 /************************************************************/
 EVENT_START	ev_t05_pipe_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t05_iss_01 )
 EVENT_END
+
+
+/************************************************************/
+/*						òHê¸ê}								*/
+/************************************************************/
+EVENT_START	ev_bg_t05_railmap_01
+	_TALK_START_SE_PLAY()
+	
+	_CALL_SUBWAY_ROUTE_MAP()
+	
+EVENT_END
+
+
+/************************************************************/
+/*							ä≈î¬							*/
+/************************************************************/
+EVENT_START	ev_bg_t05_board_01
+	_EASY_BGWIN_MSG( msg_t05_sign1_01, TYPE_TOWN )
+EVENT_END
+
 

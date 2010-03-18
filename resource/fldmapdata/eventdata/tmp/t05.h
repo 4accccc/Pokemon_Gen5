@@ -16,5 +16,7 @@
 #ifndef ZONE_T05_EVB_H
 #define ZONE_T05_EVB_H
 
+#define BG_T05_RAILMAP_01                 0
+#define BG_T05_BOARD_01                   1
 
 #endif //ZONE_T05_EVB_H
