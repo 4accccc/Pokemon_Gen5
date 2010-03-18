@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-03-11T15:38:30"/>
+	<create user="matsushima" host="W00181" date="2010-03-18T20:16:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -588,9 +588,9 @@ msg_c03r0401_girl1_04</comment>
 		<comment>●この後、仲間にするかどうかの選択肢に戻ります。
 　→msg_c03r0401_narrator_01</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">……この子コを
+		<language name="JPN" width="256">……このコを
 つれていって　あげられないの？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">……この子コを
+		<language name="JPN_KANJI" width="256">……このコを
 つれていって　あげられないの？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsushima" host="W00181" date="2010-03-18T20:14:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="250"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1372" top="274" right="2077" bottom="894" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,240 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_d13r0101_assistm_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●研究員のポジション（GRIDX=4/GRIDZ=3）
+●「！」表示後、振り向いてからセリフ
+●セリフ後、（GRIDX=6/GRIDZ=3）まで移動。
+●同時に主人公も（GRIDX=6/GRIDZ=6）まで移動。</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">なんだ　こどもか……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">なんだ　こどもか……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d13r0101_assistm_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●（GRIDX=6/GRIDZ=3）でセリフ。
+●セリフ後（GRIDX=6/GRIDZ=4）に移動。</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">まさか　おまえ……[BE:01:ページ切り替え（クリア）]
+ここに　きたと　いうことは
+インセクタの　ひみつを[BE:00:ページ切り替え（行送り）]
+さぐりにきた　という　ことか！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">まさか　おまえ……[BE:01:ページ切り替え（クリア）]
+ここに　きたと　いうことは
+インセクタの　ひみつを[BE:00:ページ切り替え（行送り）]
+さぐりにきた　という　ことか！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d13r0101_assistm_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●（GRIDX=6/GRIDZ=4）でセリフ。</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">インセクタは　わが　プラズマだんが
+かせきから　ふっかつさせて[BE:00:ページ切り替え（行送り）]
+かがくの　ちからに　よって[BE:00:ページ切り替え（行送り）]
+パワーアップさせた　ポケモン！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">インセクタは　わが　プラズマだんが
+かせきから　ふっかつさせて[BE:00:ページ切り替え（行送り）]
+かがくの　ちからに　よって[BE:00:ページ切り替え（行送り）]
+パワーアップさせた　ポケモン！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d13r0101_assistm_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●ギザギザフキダシで表示。
+●セリフ後（GRIDX=6/GRIDZ=5）に移動。</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">しじょうさいきょうの
+ポケモンなのだ！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">しじょうさいきょうの
+ポケモンなのだ！！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d13r0101_assistm_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●（GRIDX=6/GRIDZ=5）でセリフ。</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">しかし…　Ｎさまは
+かがくりょくによって　かいぞうされた[BE:00:ページ切り替え（行送り）]
+インセクタを　きにいらなかった…！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">しかし…　Ｎさまは
+かがくりょくによって　かいぞうされた[BE:00:ページ切り替え（行送り）]
+インセクタを　きにいらなかった…！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d13r0101_assistm_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●ギザギザフキダシで表示。</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">ポケモンという　かんぜんな　いのちを
+かがくによって　キズつけた！[BE:00:ページ切り替え（行送り）]</language>
+		<language name="JPN_KANJI" width="256">ポケモンという　かんぜんな　いのちを
+かがくによって　キズつけた！[BE:00:ページ切り替え（行送り）]</language>
+	</row>
+
+	<row id="msg_d13r0101_assistm_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●ノーマルフキダシで表示。</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">そう　いわれたのだ……[BE:01:ページ切り替え（クリア）]
+けんきゅうは　ちゅうしとなり
+この　しせつは　へいさ　された…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">そう　いわれたのだ……[BE:01:ページ切り替え（クリア）]
+けんきゅうは　ちゅうしとなり
+この　しせつは　へいさ　された…[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d13r0101_assistm_08" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●ギザギザフキダシで表示。</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">しかし！！[BE:01:ページ切り替え（クリア）]
+インセクタの　けんきゅうは
+すべて　わたしのものだ！！[BE:01:ページ切り替え（クリア）]
+インセクタの　ひみつを　しりたければ
+わたしと　たたかい　かつことだっ！！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">しかし！！[BE:01:ページ切り替え（クリア）]
+インセクタの　けんきゅうは
+すべて　わたしのものだ！！[BE:01:ページ切り替え（クリア）]
+インセクタの　ひみつを　しりたければ
+わたしと　たたかい　かつことだっ！！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d13r0101_narrator_01">
+		<comment>●戦闘開始の確認
+●「はい」→戦闘開始
+●「いいえ」→msg_d13r0101_assistm_13</comment>
+		<attribute name="キャラ指定">ナレーション</attribute>
+		<language name="JPN" width="256">けんきゅういんと　たたかいますか？</language>
+		<language name="JPN_KANJI" width="256">けんきゅういんと　たたかいますか？</language>
+	</row>
+
+	<row id="msg_d13r0101_assistm_09" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●戦闘勝利後のセリフ。</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">なにもかも　うしなってしまった…[BE:01:ページ切り替え（クリア）]
+せかいを　しあわせにする　という
+かがくしゃの　ほんぶんを　わすれ[BE:01:ページ切り替え（クリア）]
+ポケモンを　たたかいの　どうぐに
+しようとした　むくいか……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">なにもかも　うしなってしまった…[BE:01:ページ切り替え（クリア）]
+せかいを　しあわせにする　という
+かがくしゃの　ほんぶんを　わすれ[BE:01:ページ切り替え（クリア）]
+ポケモンを　たたかいの　どうぐに
+しようとした　むくいか……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d13r0101_assistm_10" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●フキダシを出し直し。
+
+●この後、アイテム「アクアカセット」取得。
+
+●アイテム入手処理が終わった後、振り向いて、
+（GRIDX=6/GRIDZ=4）へ移動。
+●そこで「！」マークを表示。
+●振り向いて
+（GRIDX=6/GRIDZ=5）に移動してから次のセリフ。。</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">わたしは　インセクタから
+きっぱりと　てをひく　ことにする…[BE:01:ページ切り替え（クリア）]
+これは　もう　ひつようない…
+おまえに　ゆずろう……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">わたしは　インセクタから
+きっぱりと　てをひく　ことにする…[BE:01:ページ切り替え（クリア）]
+これは　もう　ひつようない…
+おまえに　ゆずろう……[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d13r0101_assistm_11" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●（GRIDX=6/GRIDZ=5）でセリフ。
+
+●この後、アイテム「イナズマカセット」取得。</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">はんたいがわの　ポケットに
+もう　１コ　はいっていた…[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">はんたいがわの　ポケットに
+もう　１コ　はいっていた…[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d13r0101_assistm_12" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●アイテム取得後のセリフ。
+
+●この後、最初の場所（GRIDX=4/GRIDZ=3）に
+移動して、イベント終了。</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">いま　わたした　どうぐは
+インセクタの　ために　つくったもの[BE:01:ページ切り替え（クリア）]
+そうびさせると　テクノバスターという
+わざの　タイプが　かわるのだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">いま　わたした　どうぐは
+インセクタの　ために　つくったもの[BE:01:ページ切り替え（クリア）]
+そうびさせると　テクノバスターという
+わざの　タイプが　かわるのだ[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_d13r0101_assistm_13" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●戦闘を拒否したときのセリフ。
+
+●戦闘を拒否すると、研究員はその場に留まります。
+●改めて話し掛けた場合
+　　→msg_d13r0101_assistm_14</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">とんだ　こしぬけ　トレーナーが
+いたものだ！</language>
+		<language name="JPN_KANJI" width="256">とんだ　こしぬけ　トレーナーが
+いたものだ！</language>
+	</row>
+
+	<row id="msg_d13r0101_assistm_14" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●１回拒否した後、再度話し掛けたときのセリフ。
+
+●「はい」→戦闘開始
+●「いいえ」→msg_d13r0101_assistm_13</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">わたしと　たたかおうと　いうのか！？</language>
+		<language name="JPN_KANJI" width="256">わたしと　たたかおうと　いうのか！？</language>
+	</row>
+
+	<row id="msg_d13r0101_assistm_15" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●イベント終了後に話し掛けた場合のセリフ。</comment>
+		<attribute name="キャラ指定">ASSISTANTM</attribute>
+		<language name="JPN" width="256">おまえに　わたした　カセットは
+インセクタに　そうびさせると[BE:01:ページ切り替え（クリア）]
+わざ　テクノバスターの　タイプが
+かわるものだ…</language>
+		<language name="JPN_KANJI" width="256">おまえに　わたした　カセットは
+インセクタに　そうびさせると[BE:01:ページ切り替え（クリア）]
+わざ　テクノバスターの　タイプが
+かわるものだ…</language>
+	</row>
+
+	<row id="msg_d13r0101_pc_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●机のＰＣを調べたときのメッセージ。
+
+●「はい」→msg_d13r0101_pc_02
+●「いいえ」→終了</comment>
+		<attribute name="キャラ指定">PC</attribute>
+		<language name="JPN" width="256">パソコンモニターの　わきに
+メモが　はってある……[BE:01:ページ切り替え（クリア）]
+メモを　よむ？</language>
+		<language name="JPN_KANJI" width="256">パソコンモニターの　わきに
+メモが　はってある……[BE:01:ページ切り替え（クリア）]
+メモを　よむ？</language>
+	</row>
+
+	<row id="msg_d13r0101_pc_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>●メモの内容</comment>
+		<attribute name="キャラ指定">PC</attribute>
+		<language name="JPN" width="256">Ｎさまが　わたしの　けんきゅうを
+ひてい　されているようだ…[BE:01:ページ切り替え（クリア）]
+わたしの　けんきゅうは
+プラズマだんの　もくてきを[BE:00:ページ切り替え（行送り）]
+かなえるために　ひつようなこと…[BE:00:ページ切り替え（行送り）]
+さいきょうの　ポケモンを………[BE:01:ページ切り替え（クリア）]
+のこりは　メモが　やぶれてしまって
+よむことが　できない…！</language>
+		<language name="JPN_KANJI" width="256">Ｎさまが　わたしの　けんきゅうを
+ひてい　されているようだ…[BE:01:ページ切り替え（クリア）]
+わたしの　けんきゅうは
+プラズマだんの　もくてきを[BE:00:ページ切り替え（行送り）]
+かなえるために　ひつようなこと…[BE:00:ページ切り替え（行送り）]
+さいきょうの　ポケモンを………[BE:01:ページ切り替え（クリア）]
+のこりは　メモが　やぶれてしまって
+よむことが　できない…！</language>
 	</row>
 
 	<flowchart-group-list>
