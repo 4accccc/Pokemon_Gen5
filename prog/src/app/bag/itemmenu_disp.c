@@ -1532,6 +1532,8 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
 
       GFL_CLACT_WK_SetDrawEnable( pWork->clwkBarIcon[i] , TRUE );
     }
+		GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkBarIcon[BAR_ICON_LEFT], TRUE );
+		GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkBarIcon[BAR_ICON_RIGHT], TRUE );
 
     // うる画面のときはチェックボックスを非表示
     if( pWork->mode == BAG_MODE_SELL )

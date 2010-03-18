@@ -1579,7 +1579,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
       KTST_SetDraw( pWork, TRUE );
     }
     return;
-  }
+	}
 
   // カーソルなしの状態から入力があった場合、カーソルを表示して抜ける
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
@@ -1629,41 +1629,35 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   }
 
   {
-    int oldpocket = pWork->pocketno;
-    if(GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT)
-    {
-      PMSND_PlaySE( SE_BAG_POCKET_MOVE );
-      pWork->pocketno++;
-    }
-    else if(GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT)
-    {
-      PMSND_PlaySE( SE_BAG_POCKET_MOVE );
+		int	oldpocket = pWork->pocketno;
+
+		if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
+			pWork->pocketno++;
+			if( pWork->pocketno >= BAG_POKE_MAX ){
+				pWork->pocketno = 0;
+			}
+			GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_RIGHT], APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		}else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
       pWork->pocketno--;
-    }
-    if(pWork->pocketno >= BAG_POKE_MAX)
-    {
-      pWork->pocketno = 0;
-    }
-    if(pWork->pocketno < 0)
-    {
-      pWork->pocketno = BAG_POKE_MAX-1;
-    }
-    if(oldpocket != pWork->pocketno)
-    {
-      // ポケットカーソル移動
-      _pocketCursorChange(pWork, oldpocket, pWork->pocketno);
-      // ソートボタン表示切替
-      SORT_ModeReset( pWork );
-      BTN_DrawCheckBox( pWork );
-      bChange = TRUE;
-    }
-  }
+			if( pWork->pocketno < 0 ){
+				pWork->pocketno = BAG_POKE_MAX-1;
+			}
+			GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_LEFT], APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		}
+		if( oldpocket != pWork->pocketno ){
+			PMSND_PlaySE( SE_BAG_POCKET_MOVE );
+			// ポケットカーソル移動
+			_pocketCursorChange( pWork, oldpocket, pWork->pocketno );
+			// ソートボタン表示切替
+			SORT_ModeReset( pWork );
+			BTN_DrawCheckBox( pWork );
+			bChange = TRUE;
+		}
+	}
 
-  if(bChange)
-  {
-    _windowRewrite(pWork);
-  }
-
+	if(bChange){
+		_windowRewrite(pWork);
+	}
 }
 
 //=============================================================================
@@ -3329,6 +3323,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     if(pocketno < 0){
       pocketno = BAG_POKE_MAX-1;
     }
+		GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_LEFT], APP_COMMON_BARICON_CURSOR_LEFT_ON );
   }
   else if(BUTTONID_RIGHT == bttnid){
     pocketno = pWork->pocketno;
@@ -3336,6 +3331,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     if(pocketno >= BAG_POKE_MAX){
       pocketno = 0;
     }
+		GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_RIGHT], APP_COMMON_BARICON_CURSOR_RIGHT_ON );
   }
   else if(BUTTONID_SORT == bttnid){
     // ソートボタン
