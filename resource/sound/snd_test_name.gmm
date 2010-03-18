@@ -4781,6 +4781,10 @@
 		<language name="JPN" width="256">BGM-E-HANDSOME</language>
 		<language name="JPN_KANJI" width="256">BGM-E-HANDSOME</language>
 	</row>
+	<row id="msg_seq_bgm_e_champion">
+		<language name="JPN" width="256">BGM-E-CHAMPION</language>
+		<language name="JPN_KANJI" width="256">BGM-E-CHAMPION</language>
+	</row>
 	<row id="msg_seq_bgm_e_opening">
 		<language name="JPN" width="256">BGM-E-OPENING</language>
 		<language name="JPN_KANJI" width="256">BGM-E-OPENING</language>
@@ -5021,10 +5025,6 @@
 		<language name="JPN" width="256">BGM-END</language>
 		<language name="JPN_KANJI" width="256">BGM-END</language>
 	</row>
-          <row id="msg_seq_1161">
-          <language name="JPN" width="256">dmy</language>
-          <language name="JPN_KANJI" width="256">dmy</language>
-          </row>
           <row id="msg_seq_1162">
           <language name="JPN" width="256">dmy</language>
           <language name="JPN_KANJI" width="256">dmy</language>
