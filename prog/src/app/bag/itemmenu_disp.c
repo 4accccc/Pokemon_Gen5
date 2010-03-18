@@ -2401,8 +2401,8 @@ void ITEMDISP_ChangeRetButtonActive( FIELD_ITEMMENU_WORK * wk, BOOL flg )
 
 void ITEMDISP_ChangeSortButton( FIELD_ITEMMENU_WORK * wk )
 {
-	// ワザマシンはソート不可能
-	if( wk->pocketno == BAG_POKE_WAZA ){
+	// 技マシン・木の実はソート不可能
+	if( wk->pocketno == BAG_POKE_WAZA || wk->pocketno == BAG_POKE_NUTS ){
 		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 4 );
 	}else{
 		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 0 );

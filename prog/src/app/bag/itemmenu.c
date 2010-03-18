@@ -2691,11 +2691,10 @@ static u16 SORT_GetABCPrio( u16 item_no )
 //-----------------------------------------------------------------------------
 static void SORT_Button( FIELD_ITEMMENU_WORK* pWork )
 {
-  // ワザマシンは処理なし
-  if( pWork->pocketno == BAG_POKE_WAZA )
-  {
-    return;
-  }
+  // 技マシン・木の実は処理なし
+	if( pWork->pocketno == BAG_POKE_WAZA || pWork->pocketno == BAG_POKE_NUTS ){
+		return;
+	}
 
   if( pWork->sort_mode == 0 ){
     SORT_ABC( pWork );
