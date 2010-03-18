@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-17T17:14:17"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-18T13:21:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -281,7 +281,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="166"/>
+		<id position="0" width="222"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="168" top="173" right="873" bottom="800" maximized="no" rayout="Vertical2">
+	<dialog left="353" top="139" right="1058" bottom="766" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -533,13 +533,52 @@ DSシステムフォントなので
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_06">
+		<comment>アイテム持ってる
+multiboot_childと一緒</comment>
+		<language name="JPN" width="208">もっている　どうぐは　バッグに
+もどりますが　よろしいですか？</language>
+		<language name="JPN_KANJI" width="208">持っている　道具は　バッグに
+戻りますが　よろしいですか？</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_07">
+		<comment>アイテム一杯
+multiboot_childと一緒</comment>
+		<language name="JPN" width="208">バッグに　いっぱいの　どうぐは
+きえてしまいますが　よろしいですか？</language>
+		<language name="JPN_KANJI" width="208">バッグに　一杯の　道具は
+消えてしまいますが　よろしいですか？</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_08">
+		<language name="JPN" width="208">てんそうマシンで　ポケモンを
+つれてくるのを　ちゅうし　しますか？</language>
+		<language name="JPN_KANJI" width="208">てんそうマシンで　ポケモンを
+つれてくるのを　ちゅうし　しますか？</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_09">
+		<language name="JPN" width="208">ポケモンの　てんそうを
+ちゅうし　します！▼</language>
+		<language name="JPN_KANJI" width="208">ポケモンの　てんそうを
+ちゅうし　します！▼</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_10">
+		<language name="JPN" width="208">えいがの　ポケモンを　[2:02:３桁:0]ひき
+ぶじに　てんそうできました！▼</language>
+		<language name="JPN_KANJI" width="208">えいがの　ポケモンを　[2:02:３桁:0]ひき
+ぶじに　てんそうできました！▼</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_11">
 		<language name="JPN" width="208">ロックカプセルが　みつかりました。
 ロックカプセルを　ひきとりますか？</language>
 		<language name="JPN_KANJI" width="208">ロックカプセルが　みつかりました。
 ロックカプセルを　ひきとりますか？</language>
 	</row>
 
-	<row id="MSG_MB_PAERNT_MOVIE_07">
+	<row id="MSG_MB_PAERNT_MOVIE_12">
 		<language name="JPN" width="208">てんそうマシンで
 ロックカプセルを　てんそうちゅうです！
 しばらく　おまちください</language>
@@ -548,59 +587,52 @@ DSシステムフォントなので
 しばらく　おまちください</language>
 	</row>
 
-	<row id="MSG_MB_PAERNT_MOVIE_08">
-		<language name="JPN" width="208">てんそうマシンの　さぎょうが　おわりました。
-もう１だいの　ＤＳの　でんげんを
-きってください</language>
-		<language name="JPN_KANJI" width="208">てんそうマシンの　さぎょうが　おわりました。
-もう１だいの　ＤＳの　でんげんを
-きってください</language>
+	<row id="MSG_MB_PAERNT_MOVIE_13">
+		<language name="JPN" width="208">ロックカプセルを
+ぶじに　てんそうできました！▼</language>
+		<language name="JPN_KANJI" width="208">ロックカプセルを
+ぶじに　てんそうできました！▼</language>
 	</row>
 
-	<row id="MSG_MB_PAERNT_MOVIE_09">
+	<row id="MSG_MB_PAERNT_MOVIE_14">
+		<language name="JPN" width="208">ポケモンレポートに　かきこんでいます
+でんげんを　きらないでください</language>
+		<language name="JPN_KANJI" width="208">ポケモンレポートに　かきこんでいます
+でんげんを　きらないでください</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_15">
+		<language name="JPN" width="208">てんそうマシンの　さぎょうが　
+おわりました。
+もう１だいの　ＤＳの　でんげんを
+きってください▼</language>
+		<language name="JPN_KANJI" width="208">てんそうマシンの　さぎょうが　
+おわりました。
+もう１だいの　ＤＳの　でんげんを
+きってください▼</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_16">
 		<language name="JPN" width="208">ひでんわざを　おぼえている
 ポケモンを　てんそうマシンで
-つれてくる　ことが　できません！
+つれてくる　ことが　できません！▼
 おぼえていない　ポケモンを
-[2:02:３桁:0]ひき　つれてきます！
+[2:02:３桁:0]ひき　つれてきます！▼
 </language>
 		<language name="JPN_KANJI" width="208">ひでんわざを　おぼえている
 ポケモンを　てんそうマシンで
-つれてくる　ことが　できません！
+つれてくる　ことが　できません！▼
 おぼえていない　ポケモンを
-[2:02:３桁:0]ひき　つれてきます！</language>
+[2:02:３桁:0]ひき　つれてきます！▼</language>
 	</row>
 
-	<row id="MSG_MB_PAERNT_MOVIE_10">
-		<comment>アイテム持ってる
-multiboot_childと一緒</comment>
-		<language name="JPN" width="240">もっている　どうぐは　バッグに
-もどりますが　よろしいですか？</language>
-		<language name="JPN_KANJI" width="240">持っている　道具は　バッグに
-戻りますが　よろしいですか？</language>
-	</row>
-
-	<row id="MSG_MB_PAERNT_MOVIE_11">
-		<comment>アイテム一杯
-multiboot_childと一緒</comment>
-		<language name="JPN" width="240">バッグに　いっぱいの　どうぐは
-きえてしまいますが　よろしいですか？</language>
-		<language name="JPN_KANJI" width="240">バッグに　一杯の　道具は
-消えてしまいますが　よろしいですか？</language>
-	</row>
-
-	<row id="MSG_MB_PAERNT_MOVIE_12">
-		<language name="JPN" width="240">てんそうマシンで　ポケモンを
-つれてくるのを　ちゅうし　しますか？</language>
-		<language name="JPN_KANJI" width="240">てんそうマシンで　ポケモンを
-つれてくるのを　ちゅうし　しますか？</language>
-	</row>
-
-	<row id="MSG_MB_PAERNT_MOVIE_13">
-		<language name="JPN" width="240">ポケモンの　てんそうを
-ちゅうし　します！</language>
-		<language name="JPN_KANJI" width="240">ポケモンの　てんそうを
-ちゅうし　します！</language>
+	<row id="MSG_MB_PAERNT_MOVIE_17">
+		<comment>ロックカプセルか
+技マシン101をもう持ってる</comment>
+		<language name="JPN" width="208">ロックカプセルは　すでに
+うけとっています▼</language>
+		<language name="JPN_KANJI" width="208">ロックカプセルは　すでに
+うけとっています▼</language>
 	</row>
 
 	<flowchart-group-list>

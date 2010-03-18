@@ -154,11 +154,20 @@ typedef enum
 
   MPMS_POST_POKE_WAIT,
   MPMS_POST_POKE_RET_POST,
+  MPMS_POST_POKE_FINISH,
   
   MPMS_BOX_NOT_ENOUGH,
   MPMS_BOX_NOT_ENOUGH_WAIT,
 
   MPMS_WAIT_CHECK_LOCK_CAPSULE,
+  
+  MPMS_CONFIRM_LOCK_CAPSULE_WAIT,
+  MPMS_CONFIRM_LOCK_CAPSULE_YESNO,
+  MPMS_CONFIRM_LOCK_CAPSULE_POST_YET_WAIT,
+  MPMS_CONFIRM_LOCK_CAPSULE_SEND_YESNO,
+  MPMS_CONFIRM_LOCK_CAPSULE_SEND_YESNO_WAIT,
+
+  MPMS_CHECK_SAVE,
 }
 MB_PARENT_MOVIE_STATE;
 
@@ -206,6 +215,8 @@ typedef struct
   
   //映画用
   BOOL isBoxNotEnough;
+  BOOL isPostMoviePoke;
+  BOOL isPostMovieCapsule;
   
   MISC  *miscSave;
   
@@ -320,6 +331,9 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
 
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
   GFL_NET_ReloadIcon();
+  
+  work->isPostMoviePoke = FALSE;
+  work->isPostMovieCapsule = FALSE;
 
 }
 
@@ -1397,7 +1411,6 @@ static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state )
 static void MB_PARENT_SaveInit( MB_PARENT_WORK *work )
 {
   const u8 pokeNum = MB_COMM_GetPostPokeNum( work->commWork );
-
   MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_PAERNT_07 );
   MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
   
@@ -1597,7 +1610,7 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
         MB_MSG_MessageCreateWordset( work->msgWork );
         //ここでの表示は秘伝込み
-        MB_MSG_MessageWordsetNumber( work->msgWork , 0 , num+hidenNum , 2 );
+        MB_MSG_MessageWordsetNumber( work->msgWork , 0 , num+hidenNum , 3 );
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_03 , MSGSPEED_GetWait() );
         MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
         MB_MSG_MessageDeleteWordset( work->msgWork );
@@ -1626,13 +1639,13 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
   case MPMS_CONFIRM_POKE_WAIT_YESNO:
     {
       const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNoUpper( work->msgWork );
-      if( ret == MMYR_RET1 || ret == MMYR_RET2 )
+      work->yesNoRet = ret;
+      if( ret == MMYR_RET1 ) 
       {
         const u16 num = MB_COMM_GetMoviePokeNum( work->commWork );
         BOX_MANAGER *boxMng = GAMEDATA_GetBoxManager(work->initWork->gameData);
         const u16 leastBoxNum = BOXDAT_GetEmptySpaceTotal( boxMng );
 
-        work->yesNoRet = ret;
         MB_MSG_ClearYesNoUpper( work->msgWork );
         
         if( leastBoxNum < num )
@@ -1648,6 +1661,11 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
           work->movieState = MPMS_CONFIRM_HIDEN_WARN_INIT;
         }
       }
+      else
+      if( ret == MMYR_RET2 )
+      {
+        work->movieState = MPMS_CONFIRM_POKE_SEND_YESNO;
+      }
     }
     break;
     
@@ -1661,9 +1679,8 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
 
       MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
       MB_MSG_MessageCreateWordset( work->msgWork );
-      //ここでの表示は秘伝込み
-      MB_MSG_MessageWordsetNumber( work->msgWork , 0 , num , 2 );
-      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_09 , MSGSPEED_GetWait() );
+      MB_MSG_MessageWordsetNumber( work->msgWork , 0 , num , 3 );
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_16 , MSGSPEED_GetWait() );
       MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
       MB_MSG_MessageDeleteWordset( work->msgWork );
 
@@ -1679,7 +1696,6 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
   case MPMS_CONFIRM_HIDEN_WARN_WAIT:
     if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
     {
-      MB_MSG_DispYesNoUpper( work->msgWork , MMYT_MID );
       work->movieState = MPMS_CONFIRM_CHECK_ITEM_INIT;
     }
     break;
@@ -1688,7 +1704,9 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
   case MPMS_CONFIRM_CHECK_ITEM_INIT:
     if( MB_COMM_GetMoviePokeNumHaveItem( work->commWork ) == TRUE )
     {
-      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_10 , MSGSPEED_GetWait() );
+      MB_MSG_MessageHide( work->msgWork );
+      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_06 , MSGSPEED_GetWait() );
       work->movieState = MPMS_CONFIRM_CHECK_ITEM_WAIT;
     }
     else
@@ -1714,7 +1732,7 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
       {
         if( MB_COMM_GetMoviePokeNumFullItem( work->commWork ) == TRUE )
         {
-          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_11 , MSGSPEED_GetWait() );
+          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_07 , MSGSPEED_GetWait() );
           work->movieState = MPMS_CONFIRM_CHECK_FULL_WAIT;
         }
         else
@@ -1757,7 +1775,7 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
     
   //アイテム系キャンセル確認
   case MPMS_CONFIRM_CANCEL_INIT:
-    MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_12 , MSGSPEED_GetWait() );
+    MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_08 , MSGSPEED_GetWait() );
     work->movieState = MPMS_CONFIRM_CANCEL_WAIT;
     break;
 
@@ -1786,7 +1804,8 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
       }
     }
     break;
-
+  
+  //子機に選択の結果を送る
   case MPMS_CONFIRM_POKE_SEND_YESNO:
     {
       BOOL ret;
@@ -1812,6 +1831,11 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
         if( sendVal == MCMV_POKETRANS_YES )
         {
           work->movieState = MPMS_POST_POKE_WAIT;
+          MB_MSG_MessageHide( work->msgWork );
+          MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+          MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_PAERNT_MOVIE_05 );
+          MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
+          
         }
         else
         if( sendVal == MCMV_POKETRANS_NG )
@@ -1834,7 +1858,17 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
     }
     if( MB_COMM_IsPostMoviePokeFinishSend( work->commWork ) == TRUE )
     {
-      work->movieState = MPMS_WAIT_CHECK_LOCK_CAPSULE;
+      const u16 num = MB_COMM_GetMoviePokeNum( work->commWork );
+
+      MB_MSG_MessageHide( work->msgWork );
+      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+      MB_MSG_MessageCreateWordset( work->msgWork );
+      MB_MSG_MessageWordsetNumber( work->msgWork , 0 , num , 3 );
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_10 , MSGSPEED_GetWait() );
+      MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      MB_MSG_MessageDeleteWordset( work->msgWork );
+      work->movieState = MPMS_POST_POKE_FINISH;
+      work->isPostMoviePoke = TRUE;
       MB_TPrintf( "MB_Parent Finish poke trans\n" );
     }
     break;
@@ -1846,8 +1880,111 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
       work->movieState = MPMS_POST_POKE_WAIT;
     }
     break;
+  
+  case MPMS_POST_POKE_FINISH:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      work->movieState = MPMS_WAIT_CHECK_LOCK_CAPSULE;
+    }
+    break;
 
   case MPMS_WAIT_CHECK_LOCK_CAPSULE:
+    if( MB_COMM_IsPostMovieHaveLockCapsule( work->commWork ) == TRUE )
+    {
+      if( MB_COMM_IsMovieHaveLockCapsule( work->commWork ) == TRUE )
+      {
+        MB_MSG_MessageHide( work->msgWork );
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_11 , MSGSPEED_GetWait() );
+
+        work->movieState = MPMS_CONFIRM_LOCK_CAPSULE_WAIT;
+      }
+      else
+      {
+        work->movieState = MPMS_CHECK_SAVE;
+      }
+    }
+    break;
+  
+  case MPMS_CONFIRM_LOCK_CAPSULE_WAIT:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      work->movieState = MPMS_CONFIRM_LOCK_CAPSULE_YESNO;
+      MB_MSG_DispYesNoUpper( work->msgWork , MMYT_MID );
+    }
+    break;
+    
+  case MPMS_CONFIRM_LOCK_CAPSULE_YESNO:
+    {
+      const MB_MSG_YESNO_RET ret = MB_MSG_UpdateYesNoUpper( work->msgWork );
+      if( ret == MMYR_RET1 || ret == MMYR_RET2 )
+      {
+        MYITEM_PTR myItem = GAMEDATA_GetMyItem( work->initWork->gameData );
+        if( ret == MMYR_RET1 &&
+           (MYITEM_CheckItem( myItem , ITEM_ROKKUKAPUSERU , 1 , work->heapId ) == TRUE ||
+            MYITEM_CheckItem( myItem , ITEM_WAZAMASIN101 , 1 , work->heapId ) == TRUE) )
+        {
+          //もう持ってる
+          work->yesNoRet = MMYR_RET2; //強制いいえ
+          work->movieState = MPMS_CONFIRM_LOCK_CAPSULE_POST_YET_WAIT;
+
+          MB_MSG_MessageHide( work->msgWork );
+          MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_17 , MSGSPEED_GetWait() );
+          MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+        }
+        else
+        {
+          work->yesNoRet = ret;
+          work->movieState = MPMS_CONFIRM_LOCK_CAPSULE_SEND_YESNO;
+        }
+        
+      }
+    }
+    break;
+    
+  case MPMS_CONFIRM_LOCK_CAPSULE_POST_YET_WAIT:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      work->movieState = MPMS_CONFIRM_LOCK_CAPSULE_SEND_YESNO;
+    }
+    break;
+  
+  case MPMS_CONFIRM_LOCK_CAPSULE_SEND_YESNO:
+    {
+      const BOOL flg = ( work->yesNoRet == MMYR_RET1 ? TRUE : FALSE );
+      const BOOL ret = MB_COMM_Send_Flag( work->commWork , MCFT_MOVIE_LOCK_CAPSULE_TRANS_CONFIRM , flg );
+      if( ret == TRUE )
+      {
+        if( flg == TRUE )
+        {
+          MB_MSG_MessageHide( work->msgWork );
+          MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_13 , MSGSPEED_GetWait() );
+          MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+          work->isPostMovieCapsule = TRUE;
+          work->movieState = MPMS_CONFIRM_LOCK_CAPSULE_SEND_YESNO_WAIT;
+        }
+        else
+        {
+          work->movieState = MPMS_CHECK_SAVE;
+        }
+      }
+    }
+    break;
+
+  case MPMS_CONFIRM_LOCK_CAPSULE_SEND_YESNO_WAIT:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      work->movieState = MPMS_CHECK_SAVE;
+    }
+    break;
+    
+  case MPMS_CHECK_SAVE:
+    if( work->isPostMoviePoke == TRUE || work->isPostMovieCapsule == TRUE )
+    {
+      work->state = MPS_WAIT_CRC_CHECK;
+    }
     break;
   }
 }

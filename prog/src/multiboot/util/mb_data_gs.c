@@ -16,6 +16,7 @@
 
 #include "poke_tool/poke_tool.h"
 #include "multiboot/mb_data_main.h"
+#include "item/itemsym.h"
 #include "./mb_data_gs.h"
 
 #include "./gs_save.cdat"  //mb_data_gs.c ˆÈŠO‚Å“Ç‚Þ‚È
@@ -129,6 +130,7 @@ BOOL  MB_DATA_GS_LoadData( MB_DATA_WORK *dataWork )
       u8 i;
       const u32 boxStartAdd = MB_DATA_GetStartAddress(GS_GMDATA_ID_BOXDATA , dataWork->cardType );
       const u32 itemStartAdd = MB_DATA_GetStartAddress(GS_GMDATA_ID_TEMOTI_ITEM , dataWork->cardType );
+      const u32 mysteryStartAdd = MB_DATA_GetStartAddress(GS_GMDATA_ID_FUSHIGIDATA , dataWork->cardType );
       GS_SAVE_FOOTER *footer[4];
       footer[GS_MAIN_FIRST] = (GS_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(GS_GMDATA_NORMAL_FOOTER , dataWork->cardType ) ];
       footer[GS_BOX_FIRST]  = (GS_SAVE_FOOTER*)&dataWork->pData[ MB_DATA_GetStartAddress(GS_GMDATA_BOX_FOOTER , dataWork->cardType ) ];
@@ -166,11 +168,13 @@ BOOL  MB_DATA_GS_LoadData( MB_DATA_WORK *dataWork )
           if( dataWork->mainLoadPos == DDS_FIRST )
           {
             dataWork->pItemData = dataWork->pData + itemStartAdd;
+            dataWork->pMysteryData = dataWork->pData + mysteryStartAdd;
             dataWork->mainSavePos = DDS_SECOND;
           }
           else
           {
             dataWork->pItemData = dataWork->pDataMirror + itemStartAdd;
+            dataWork->pMysteryData = dataWork->pDataMirror + mysteryStartAdd;
             dataWork->mainSavePos = DDS_FIRST;
           }
         }
@@ -992,4 +996,33 @@ static const u16 MB_DATA_GS_GetItemNumFunc( MB_DATA_WORK *dataWork , u16 itemNo 
     }
   }
   return 0;
+}
+
+const BOOL MB_DATA_GS_CheckLockCapsule( MB_DATA_WORK *dataWork )
+{
+  GS_FUSHIGI_DATA *mystery = (GS_FUSHIGI_DATA*)dataWork->pMysteryData;
+  GS_GIFT_CARD *data = &mystery->rockcapcard;
+  GF_ASSERT( dataWork->pMysteryData != NULL );
+  
+  MB_DATA_TPrintf("-----MysteryData-----\n");
+  MB_DATA_TPrintf("gift_type [%d]\n",data->gift_type);
+  MB_DATA_TPrintf("itemNo    [%d]\n",data->data.item.itemNo);
+  MB_DATA_TPrintf("movieflag [%d]\n",data->data.item.movieflag);
+  MB_DATA_TPrintf("-----MysteryData-----\n");
+  
+  if( data->gift_type == GS_MYSTERYGIFT_TYPE_ITEM &&
+      data->data.item.itemNo == ITEM_ROKKUKAPUSERU )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+void MB_DATA_GS_RemoveLockCapsule( MB_DATA_WORK *dataWork )
+{
+  GS_FUSHIGI_DATA *mystery = (GS_FUSHIGI_DATA*)dataWork->pMysteryData;
+  GS_GIFT_CARD *data = &mystery->rockcapcard;
+  GF_ASSERT( dataWork->pMysteryData != NULL );
+  
+  data->gift_type = GS_MYSTERYGIFT_TYPE_NONE;
 }

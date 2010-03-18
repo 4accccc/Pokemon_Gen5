@@ -63,6 +63,7 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
   dataWork->pDataCrcCheck = NULL;
   dataWork->pBoxData = NULL;
   dataWork->pItemData = NULL;
+  dataWork->pMysteryData = NULL;
   dataWork->errorState = DES_NONE;
   dataWork->cardType = CARD_TYPE_INVALID;
   dataWork->isFinishSaveFirst = FALSE;
@@ -316,6 +317,29 @@ const u16 MB_DATA_GetItemNum( MB_DATA_WORK *dataWork , const u16 itemNo )
   }
   GF_ASSERT( NULL );
   return 0;
+}
+
+//ロックカプセル所持チェック
+const BOOL MB_DATA_CheckLockCapsule( MB_DATA_WORK *dataWork )
+{
+  if( dataWork->cardType == CARD_TYPE_GS )
+  {
+    //HGSSだけ！
+    return MB_DATA_GS_CheckLockCapsule( dataWork );
+  }
+  else
+  {
+    return FALSE;
+  }
+}
+//ロックカプセルを消す
+void MB_DATA_RemoveLockCapsule( MB_DATA_WORK *dataWork )
+{
+  if( dataWork->cardType == CARD_TYPE_GS )
+  {
+    //HGSSだけ！
+    MB_DATA_GS_RemoveLockCapsule( dataWork );
+  }
 }
 
 

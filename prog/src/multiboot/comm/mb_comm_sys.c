@@ -112,8 +112,13 @@ struct _MB_COMM_WORK
   //映画配信
   u16    isPostMoviePokeConfirm:1;
   u16    isPostMoviePokeNum:1;
-  u16    isPostMoviePokeSendFinish:1;
+  u16    isPostMoviePokeSendFinish:1; //16
   
+  u16    isPostMovieHaveLockCapsule:1; //もう一セット
+  u16    isMovieHaveLockCapsule:1;
+  u16    isPostMovieTransLockCapsule:1;
+  u16    isMovieTransLockCapsule:1;
+  u16    pad:12;
   
   u8      saveWaitCnt;
   u16     boxLeast;
@@ -319,6 +324,10 @@ void MB_COMM_InitComm( MB_COMM_WORK* commWork )
   commWork->isPostMoviePokeNum = FALSE;
   commWork->isPostMoviePokeConfirm = FALSE;
   commWork->isPostMoviePokeSendFinish = FALSE;
+  commWork->isPostMovieHaveLockCapsule = FALSE;
+  commWork->isMovieHaveLockCapsule = FALSE;
+  commWork->isPostMovieTransLockCapsule = FALSE;
+  commWork->isMovieTransLockCapsule = FALSE;
   
   commWork->moviePokeConfirm = MCMV_POKETRANS_YES;
   commWork->moviePokeNum = 0;
@@ -545,6 +554,22 @@ const BOOL MB_COMM_IsPostMoviePokeFinishSend( const MB_COMM_WORK* commWork )
 {
   return commWork->isPostMoviePokeSendFinish;
 }
+const BOOL MB_COMM_IsPostMovieHaveLockCapsule( const MB_COMM_WORK* commWork )
+{
+  return commWork->isPostMovieHaveLockCapsule;
+}
+const BOOL MB_COMM_IsMovieHaveLockCapsule( const MB_COMM_WORK* commWork )
+{
+  return commWork->isMovieHaveLockCapsule;
+}
+const BOOL MB_COMM_IsPostMovieTransLockCapsule( const MB_COMM_WORK* commWork )
+{
+  return commWork->isPostMovieTransLockCapsule;
+}
+const BOOL MB_COMM_IsMovieTransLockCapsule( const MB_COMM_WORK* commWork )
+{
+  return commWork->isMovieTransLockCapsule;
+}
 
 #pragma mark [>SendDataFunc
 //--------------------------------------------------------------
@@ -741,6 +766,11 @@ static void MB_COMM_Post_Flag( const int netID, const int size , const void* pDa
     commWork->isPostMoviePokeConfirm = TRUE;
     commWork->moviePokeConfirm = pkt->value;
     break;
+    
+  case MCFT_MOVIE_LOCK_CAPSULE_TRANS_CONFIRM:
+    commWork->isPostMovieTransLockCapsule = TRUE;
+    commWork->isMovieTransLockCapsule = pkt->value;
+    break;
 
   //映画配信 子→親----------------------------------
   case MCFT_MOVIE_POKE_NUM:
@@ -750,6 +780,11 @@ static void MB_COMM_Post_Flag( const int netID, const int size , const void* pDa
   
   case MCFT_MOVIE_FINISH_SEND_POKE:
     commWork->isPostMoviePokeSendFinish = TRUE;
+    break;
+  
+  case MCFT_MOVIE_HAVE_LOCK_CAPSULE:
+    commWork->isPostMovieHaveLockCapsule = TRUE;
+    commWork->isMovieHaveLockCapsule = pkt->value;
     break;
 
   }

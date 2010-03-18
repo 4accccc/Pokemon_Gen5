@@ -75,6 +75,9 @@ typedef enum
   MCS_TRANS_POKE_SEND_FINISH,
 
   MCS_CHECK_LOCK_CAPSULE,
+  MCS_POST_TRANS_LOCK_CAPSULE,
+  
+  MCS_CHECK_SAVE,
   
   MCS_CHECK_ROM_CRC_LOAD,
   MCS_CHECK_ROM_CRC,
@@ -124,9 +127,12 @@ typedef struct
   MB_MOVIE_STATE  state;
   MB_MOVIE_SUB_STATE  subState;
   GFL_PROCSYS   *procSys;
-  u16 moviePokeNum;
+  u32 moviePokeNum;
   u8  saveWaitCnt;
   u16 timeoutCnt;
+  
+  BOOL isSendPoke;
+  BOOL isSendCapsule;
   
   POKEMON_PASO_PARAM *boxPoke[MB_POKE_BOX_TRAY][MB_POKE_BOX_POKE];
   STRCODE *boxName[MB_POKE_BOX_TRAY];
@@ -216,6 +222,9 @@ static void MB_MOVIE_Init( MB_MOVIE_WORK *work )
   work->moviePokeNum = 0;
   work->timeoutCnt = 0;
   work->initData = NULL;
+  work->isSendPoke = FALSE;
+  work->isSendCapsule = FALSE;
+
   
   for( i=0;i<MB_POKE_BOX_TRAY;i++ )
   {
@@ -517,6 +526,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
       else
       {
         work->state = MCS_TRANS_POKE_SEND_FINISH;
+        work->isSendPoke = TRUE;
         MB_DATA_ResetSaveLoad( work->dataWork );
       }
     }
@@ -546,18 +556,58 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
       if( flg == TRUE )
       {
         work->state = MCS_CHECK_LOCK_CAPSULE;
-        MB_TPrintf("MB_Parent Finish poke trans\n");
+        MB_TPrintf("MB_Child Finish poke trans\n");
       }
     }
     break;
     
-  case MCS_CHECK_ROM_CRC_LOAD:
-    if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE )
+  case MCS_CHECK_LOCK_CAPSULE:
     {
-      if( MB_DATA_LoadRomCRC( work->dataWork ) == TRUE )
+      const BOOL flg = MB_DATA_CheckLockCapsule( work->dataWork );
+      const BOOL ret = MB_COMM_Send_Flag( work->commWork , MCFT_MOVIE_HAVE_LOCK_CAPSULE , flg );
+      if( ret == TRUE )
       {
-        work->state = MCS_CHECK_ROM_CRC;
+        if( flg == TRUE )
+        {
+          work->state = MCS_POST_TRANS_LOCK_CAPSULE;
+          MB_TPrintf("MB_Child Lock capsule found!\n");
+        }
+        else
+        {
+          work->state = MCS_CHECK_SAVE;
+          MB_TPrintf("MB_Child Lock capsule not found...\n");
+        }
       }
+    }
+    break;
+    
+  case MCS_POST_TRANS_LOCK_CAPSULE:
+    if( MB_COMM_IsPostMovieTransLockCapsule( work->commWork ) == TRUE )
+    {
+      if( MB_COMM_IsMovieTransLockCapsule( work->commWork ) == TRUE )
+      {
+        MB_DATA_RemoveLockCapsule( work->dataWork );
+        work->isSendCapsule = TRUE;
+        MB_TPrintf("MB_Child Remove lock capsule!!\n");
+      }
+      work->state = MCS_CHECK_SAVE;
+    }
+    break;
+  
+  case MCS_CHECK_SAVE:
+    if( work->isSendPoke == TRUE || work->isSendCapsule == TRUE )
+    {
+      work->state = MCS_CHECK_ROM_CRC_LOAD;
+    }
+    else
+    {
+    }
+    break;
+    
+  case MCS_CHECK_ROM_CRC_LOAD:
+    if( MB_DATA_LoadRomCRC( work->dataWork ) == TRUE )
+    {
+      work->state = MCS_CHECK_ROM_CRC;
     }
     break;
 
@@ -926,8 +976,6 @@ static const u32 MB_MOVIE_GetMoviePokeNum( MB_MOVIE_WORK *work )
   
   GFL_HEAP_FreeMemory(itemNoArr);
   
-  MB_TPrintf("Child box movie poke [%d].\n",num);
-  
   retVal = num + (hidenNum<<16);
   if( isItemPoke == TRUE )
   {
@@ -937,6 +985,8 @@ static const u32 MB_MOVIE_GetMoviePokeNum( MB_MOVIE_WORK *work )
   {
     retVal += 0x80000000;
   }
+  
+  MB_TPrintf("Child box movie poke [%d][%x].\n",num,retVal);
   
   return retVal;
 }
@@ -1048,7 +1098,7 @@ static void MB_MOVIE_SaveMain( MB_MOVIE_WORK *work )
     
   case MCSS_SAVE_INIT:
     work->subState = MCSS_SAVE_WAIT_FIRST;
-    MB_TPrintf( "MB_Parent Save Start!\n" );
+    MB_TPrintf( "MB_Child Save Start!\n" );
     break;
 
   case MCSS_SAVE_WAIT_FIRST:
@@ -1057,7 +1107,7 @@ static void MB_MOVIE_SaveMain( MB_MOVIE_WORK *work )
       if( MB_COMM_Send_Flag( work->commWork , MCFT_FINISH_FIRST_SAVE , 0 ) == TRUE )
       {
   			work->subState = MCSS_SAVE_WAIT_FIRST_SYNC;
-        MB_TPrintf( "MB_Parent Finish First!\n" );
+        MB_TPrintf( "MB_Child Finish First!\n" );
   		}
 		}
     break;
@@ -1075,7 +1125,7 @@ static void MB_MOVIE_SaveMain( MB_MOVIE_WORK *work )
       {
         work->subState = MCSS_SAVE_WAIT_SECOND;
   			MB_DATA_PermitLastSaveFirst( work->dataWork );
-        MB_TPrintf( "MB_Parent FirstLast Save!\n" );
+        MB_TPrintf( "MB_Child FirstLast Save!\n" );
       }
     }
     break;
@@ -1086,7 +1136,7 @@ static void MB_MOVIE_SaveMain( MB_MOVIE_WORK *work )
       if( MB_COMM_Send_Flag( work->commWork , MCFT_FINISH_SECOND_SAVE , 0 ) == TRUE )
       {
         work->subState = MCSS_SAVE_WAIT_SECOND_SYNC;
-        MB_TPrintf( "MB_Parent Finish Second!\n" );
+        MB_TPrintf( "MB_Child Finish Second!\n" );
   		}
 		}
     break;
@@ -1103,7 +1153,7 @@ static void MB_MOVIE_SaveMain( MB_MOVIE_WORK *work )
       if( work->saveWaitCnt > MB_COMM_GetSaveWaitTime( work->commWork ) == TRUE )
       {
         work->subState = MCSS_SAVE_WAIT_LAST_SAVE;
-        MB_TPrintf( "MB_Parent SecondLast Save!\n" );
+        MB_TPrintf( "MB_Child SecondLast Save!\n" );
   			MB_DATA_PermitLastSaveSecond( work->dataWork );
       }
     }
@@ -1122,7 +1172,7 @@ static void MB_MOVIE_SaveMain( MB_MOVIE_WORK *work )
     if( MB_COMM_GetIsPermitFinishSave( work->commWork ) == TRUE )
     {
       work->state = MCS_SAVE_TERM;
-      MB_TPrintf( "MB_Parent Finish All Save Seq!!!\n" );
+      MB_TPrintf( "MB_Child Finish All Save Seq!!!\n" );
     }
     break;
   }

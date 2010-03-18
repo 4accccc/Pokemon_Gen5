@@ -41,10 +41,12 @@ typedef enum
   
   //映画用 親→子
   MCFT_MOVIE_POKE_TRANS_CONFIRM,
+  MCFT_MOVIE_LOCK_CAPSULE_TRANS_CONFIRM,
   
   //映画用 子→親
   MCFT_MOVIE_POKE_NUM,
   MCFT_MOVIE_FINISH_SEND_POKE,
+  MCFT_MOVIE_HAVE_LOCK_CAPSULE,
 
   MCFT_MAX,
 }MB_COMM_FLG_TYPE;
@@ -140,6 +142,10 @@ extern const BOOL MB_COMM_GetMoviePokeNumFullItem( const MB_COMM_WORK* commWork 
 extern const BOOL MB_COMM_IsPostMoviePokeConfirm( const MB_COMM_WORK* commWork );
 extern const u16 MB_COMM_GetMoviePokeConfirm( const MB_COMM_WORK* commWork );
 extern const BOOL MB_COMM_IsPostMoviePokeFinishSend( const MB_COMM_WORK* commWork );
+extern const BOOL MB_COMM_IsPostMovieHaveLockCapsule( const MB_COMM_WORK* commWork );
+extern const BOOL MB_COMM_IsMovieHaveLockCapsule( const MB_COMM_WORK* commWork );
+extern const BOOL MB_COMM_IsPostMovieTransLockCapsule( const MB_COMM_WORK* commWork );
+extern const BOOL MB_COMM_IsMovieTransLockCapsule( const MB_COMM_WORK* commWork );
 
 extern void MB_COMM_InitSendGameData( MB_COMM_WORK* commWork , void* gameData , u32 size );
 extern void MB_COMM_ClearSendPokeData( MB_COMM_WORK* commWork );

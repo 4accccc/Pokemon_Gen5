@@ -37,6 +37,8 @@ extern  u16* MB_DATA_GetBoxName( MB_DATA_WORK *dataWork , const u8 tray );
 extern  void MB_DATA_ClearBoxPPP( MB_DATA_WORK *dataWork , const u8 tray , const u8 idx );
 extern  void MB_DATA_AddItem( MB_DATA_WORK *dataWork , const u16 itemNo );
 extern  const u16 MB_DATA_GetItemNum( MB_DATA_WORK *dataWork , const u16 itemNo );
+extern  const BOOL MB_DATA_CheckLockCapsule( MB_DATA_WORK *dataWork );
+extern  void MB_DATA_RemoveLockCapsule( MB_DATA_WORK *dataWork );
 
 extern  BOOL  MB_DATA_IsFinishSaveFirst( MB_DATA_WORK *dataWork );
 extern  BOOL  MB_DATA_IsFinishSaveSecond( MB_DATA_WORK *dataWork );

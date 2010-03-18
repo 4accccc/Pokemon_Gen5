@@ -174,3 +174,116 @@ typedef struct {
   u16 cnv_button2;                // 便利ボタン2
 }GS_MYITEM;
 
+//------------------------------------------------------------------
+//  ふしぎデータの定義
+//------------------------------------------------------------------
+#define GS_MYSTERYGIFT_TYPE_NONE		0	// 何も無い
+#define GS_MYSTERYGIFT_TYPE_POKEMON	1	// ポケモン
+#define GS_MYSTERYGIFT_TYPE_POKEEGG	2	// タマゴ
+#define GS_MYSTERYGIFT_TYPE_ITEM		3	// どうぐ
+#define GS_MYSTERYGIFT_TYPE_RULE		4	// ルール
+#define GS_MYSTERYGIFT_TYPE_GOODS		5	// グッズ
+#define GS_MYSTERYGIFT_TYPE_ACCESSORY	6	// アクセサリ
+#define GS_MYSTERYGIFT_TYPE_RANGEREGG	7	// マナフィーのタマゴ
+#define GS_MYSTERYGIFT_TYPE_MEMBERSCARD	8	// メンバーズカード
+#define GS_MYSTERYGIFT_TYPE_LETTER		9	// オーキドのてがみ
+#define GS_MYSTERYGIFT_TYPE_WHISTLE	10	// てんかいのふえ
+#define GS_MYSTERYGIFT_TYPE_POKETCH	11	// ポケッチ
+#define GS_MYSTERYGIFT_TYPE_SECRET_KEY	12	// 秘密の鍵
+#define GS_MYSTERYGIFT_TYPE_MOVIE		13	// 映画配布
+#define GS_MYSTERYGIFT_TYPE_PHC		14	// PHCコース
+#define GS_MYSTERYGIFT_TYPE_PHOTO		15	// 写真
+#define GS_MYSTERYGIFT_TYPE_MAX	16	// 
+#define GS_MYSTERYGIFT_TYPE_CLEAR		255	// ふしぎ領域の強制クリア
+
+#define GS_GIFT_DELIVERY_MAX	8	// 配達員８つ
+#define GS_GIFT_CARD_MAX		3	// カードデータ３つ
+#define GS_GIFT_DATA_CARD_TITLE_MAX	36
+#define GS_GIFT_DATA_CARD_TEXT_MAX		250
+#define GS_MYSTERYGIFT_POKEICON	3
+// サイズ固定用構造体
+typedef struct
+{
+  u8 data[256];
+}GS_GIFT_PRESENT_ALL;
+
+// どうぐ
+typedef struct
+{
+  int itemNo;
+  int movieflag;
+}GS_GIFT_PRESENT_ITEM;
+
+typedef union 
+{
+  GS_GIFT_PRESENT_ALL    all;
+//  GIFT_PRESENT_POKEMON    pokemon;
+//  GIFT_PRESENT_POKEEGG    egg;
+  GS_GIFT_PRESENT_ITEM   item;
+//  GIFT_PRESENT_GOODS    goods;
+//  GIFT_PRESENT_RULE   rule;
+//  GIFT_PRESENT_ACCESSORY  accessory;
+//  GIFT_PRESENT_RANGEREGG  rangeregg;
+//  GIFT_PRESENT_MEMBERSCARD  memberscard;
+//  GIFT_PRESENT_LETTER   letter;
+//  GIFT_PRESENT_WHISTLE    whistle;
+//  GIFT_PRESENT_POKETCH    poketch;
+//  GIFT_PRESENT_PHCMAP   phcmap;
+//  GIFT_PRESENT_PICTURE    picture;
+//  GIFT_PRESENT_REMOVE   remove;
+}GS_GIFT_PRESENT;
+
+// ふしぎなおくりもの　ビーコンデータ
+typedef struct
+{
+  STRCODE event_name[GS_GIFT_DATA_CARD_TITLE_MAX]; // イベントタイトル
+  u32 version;            // 対象バージョン(０の場合は制限無しで配布)
+  u16 event_id;           // イベントＩＤ(最大2048件まで)
+  u8 only_one_flag: 1;    // １度だけ受信フラグ(0..何度でも受信可能 1..１回のみ)
+  u8 access_point: 1;     // アクセスポイント(もしかして必要なくなった？)
+  u8 have_card: 1;        // カード情報を含んでいるか(0..含んでいない  1..含んでる)
+  u8 delivery_flag: 1;    // 配達員から受け取るものを含んでいるか
+  u8 re_deal_flag: 1;     // 孫配布する事が可能か？(0..出来ない 1..出来る)
+  u8 groundchild_flag: 1; // 孫配布フラグ(0..違う 1..孫配布)
+  u8 dummy: 2;
+}GS_GIFT_BEACON;
+
+// 配達員(最大８つ)
+typedef struct
+{
+  u16 gift_type;
+  u16 link : 2;         // カードへのリンク(0: 2:リンク 3リンクなし)
+  u16 dummy : 14;
+  GS_GIFT_PRESENT data;
+}GS_GIFT_DELIVERY;
+
+
+// カード情報(最大３つ)
+typedef struct 
+{
+  u16 gift_type;
+  u16 dummy;            // 配達員へのリンク
+  GS_GIFT_PRESENT data;
+
+  GS_GIFT_BEACON beacon;   // ビーコン情報と同等の情報を持つ
+
+  STRCODE event_text[GS_GIFT_DATA_CARD_TEXT_MAX];  // 説明テキスト
+  u8 re_deal_count;     // 再配布の回数(0～254、255は無制限)
+  u16 pokemon_icon[GS_MYSTERYGIFT_POKEICON]; // ポケモンアイコン３つ分
+
+  // ↑配布するのはここまで
+  // ↓この下はフラッシュにセーブする時のみ必要なデータ
+  
+  u8 re_dealed_count;       // 配布した回数
+  s32 recv_date;        // 受信した時間
+  
+} GS_GIFT_CARD;
+
+#define GS_FUSHIGI_DATA_MAX_EVENT		2048
+typedef struct 
+{
+  u8 recv_flag[GS_FUSHIGI_DATA_MAX_EVENT / 8];   //256 * 8 = 2048 bit
+  GS_GIFT_DELIVERY delivery[GS_GIFT_DELIVERY_MAX];    // 配達員８つ
+  GS_GIFT_CARD card[GS_GIFT_CARD_MAX];      // カード情報３つ
+  GS_GIFT_CARD rockcapcard;      // ロックカプセル用１つ
+}GS_FUSHIGI_DATA;
