@@ -1278,6 +1278,7 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
         G3D_PTC_CreateEmitter( &wk->wk_g3d, 1, &(VecFx32){px,py,-100} );
         G3D_PTC_CreateEmitter( &wk->wk_g3d, 2, &(VecFx32){px,py,-100} );
         G3D_PTC_CreateEmitter( &wk->wk_g3d, 3, &(VecFx32){px,py,-100} );
+        G3D_PTC_CreateEmitter( &wk->wk_g3d, 4, &(VecFx32){px,py,-100} );
       }
     
       wk->timer++;
@@ -2737,7 +2738,7 @@ static void G3D_PTC_Setup( COMM_BTL_DEMO_G3D_WORK* g3d, int spa_idx )
 
     res = GFL_PTC_LoadArcResource( ARCID_COMM_BTL_DEMO_GRA, spa_idx, g3d->heapID );
     g3d->spa_num = GFL_PTC_GetResNum( res );
-    HOSAKA_Printf("load spa_idx=%d num=%d \n", spa_idx, g3d->spa_num );
+    OS_Printf("load spa_idx=%d num=%d \n", spa_idx, g3d->spa_num );
     GFL_PTC_SetResource( g3d->ptc, res, TRUE, NULL );
   }
 }
