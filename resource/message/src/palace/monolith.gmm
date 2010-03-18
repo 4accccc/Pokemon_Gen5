@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-18T15:42:53"/>
+	<create user="ohmori" host="W00223" date="2010-03-18T20:34:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -478,9 +478,9 @@
 
 	<row id="msg_mono_pow_011" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面</comment>
-		<language name="JPN" width="256">[1:27:リボンの名前:0]　を
+		<language name="JPN" width="256">『[1:1C:簡易会話単語:0]』　を
 Ｃギアに　とうろくした！</language>
-		<language name="JPN_KANJI" width="256">[1:27:リボンの名前:0]　を
+		<language name="JPN_KANJI" width="256">『[1:1C:簡易会話単語:0]』　を
 Ｃギアに　とうろくした！</language>
 	</row>
 
@@ -518,8 +518,8 @@
 
 	<row id="msg_mono_pow_up_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面：上</comment>
-		<language name="JPN" width="256">１かい／[2:03:４桁:0]こ</language>
-		<language name="JPN_KANJI" width="256">１かい／[2:03:４桁:0]こ</language>
+		<language name="JPN" width="256">１かい／デルダマ[2:03:４桁:0]こ　しょうひ</language>
+		<language name="JPN_KANJI" width="256">１かい／デルダマ[2:03:４桁:0]こ　しょうひ</language>
 	</row>
 
 	<row id="msg_mono_pow_up_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
