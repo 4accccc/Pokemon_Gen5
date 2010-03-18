@@ -299,9 +299,9 @@
 #define FE_D05R0201_PLASMA_02              283 /* 0x011b D05R0201：プラズマ団スクリプト制御戦闘フラグ */
 #define FE_D05R0201_PLASMA_03              284 /* 0x011c D05R0201：プラズマ団スクリプト制御戦闘フラグ */
 #define FE_D05R0201_PLASMA_04              285 /* 0x011d D05R0201：プラズマ団スクリプト制御戦闘フラグ */
-		/* not used   286(0x011e) */
-		/* not used   287(0x011f) */
-		/* not used   288(0x0120) */
+#define FE_SPORTS_PLAYING                  286 /* 0x011e ビッグスタジアム/リトルコート：競技中フラグ。ON=競技中=競技場に入れない */
+#define FE_AWARD_LOCAL                     287 /* 0x011f ディレクター表彰：地方図鑑完成を表彰された */
+#define FE_AWARD_NATIONAL                  288 /* 0x0120 ディレクター表彰：全国図鑑完成を表彰された */
 		/* not used   289(0x0121) */
 		/* not used   290(0x0122) */
 		/* not used   291(0x0123) */
@@ -749,7 +749,7 @@
 #define FV_STADIUM_RANDOM_02               725 /* 0x02d5 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
 #define FV_STADIUM_RANDOM_03               726 /* 0x02d6 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
 #define FV_PDW_POSTMAN                     727 /* 0x02d7 PDWのアイテム配達員 */
-		/* not used   728(0x02d8) */
+#define FV_STADIUM_GUARDMAN                728 /* 0x02d8 ビッグスタジアム／リトルコートエントランスのガードマン（ストッパー） */
 		/* not used   729(0x02d9) */
 		/* not used   730(0x02da) */
 		/* not used   731(0x02db) */
