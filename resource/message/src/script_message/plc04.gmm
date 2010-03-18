@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-10T23:04:42"/>
+	<create user="ohmori" host="W00223" date="2010-03-18T15:43:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -298,11 +298,11 @@
 座標は４１１，４６２
 
 男</attribute>
-		<language name="JPN" width="256">……パレスだまを　さがしていたら
+		<language name="JPN" width="256">……デルダマを　さがしていたら
 こんなところに　きてしまった▼
 よく　ポケモンセンターの
 いりぐちに　おちてるんだけどな</language>
-		<language name="JPN_KANJI" width="256">……パレスだまを　探していたら
+		<language name="JPN_KANJI" width="256">……デルダマを　探していたら
 こんな所に　来てしまった▼
 よく　ポケモンセンターの
 入り口に　落ちてるんだけどな</language>

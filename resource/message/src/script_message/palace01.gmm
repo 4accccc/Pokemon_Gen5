@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-17T22:21:45"/>
+	<create user="ohmori" host="W00223" date="2010-03-18T15:40:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -310,7 +310,7 @@
 	<row id="plc_oldman1_01_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>パレスの老人：初回メッセージ</comment>
 		<attribute name="キャラ指定">OLDMAN1：
-このあと「パレスだま」
+このあと「デルダマ」
 ５つ入手</attribute>
 		<language name="JPN" width="256">われわれは　このツリーを
 「ハイルツリー」と　よんでいる▼
@@ -410,7 +410,7 @@
 さまざまな　きせきを　おこすのだ▼
 ……もし　ハイルツリーから
 デルパワーを　もらえたなら▽
-さきほど　あげた　パレスだまが▽
+さきほど　あげた　デルダマが▽
 きっと　やくにたつだろう▼</language>
 		<language name="JPN_KANJI" width="256">ハイルツリーの　もっている
 ふしぎなパワーを　われわれは▽
@@ -420,7 +420,7 @@
 さまざまな　きせきを　おこすのだ▼
 ……もし　ハイルツリーから
 デルパワーを　もらえたなら▽
-さきほど　あげた　パレスだまが▽
+さきほど　あげた　デルダマが▽
 きっと　やくにたつだろう▼</language>
 	</row>
 

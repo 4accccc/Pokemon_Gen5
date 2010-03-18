@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-16T22:59:52"/>
+	<create user="ohmori" host="W00223" date="2010-03-18T15:51:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,9 +292,9 @@
 		<comment>Ｇパワー使用時のメッセージ
 この後画面フラッシュ</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　デルパワー
-「[1:1C:簡易会話単語:2]」を　つかった！[BE:01:ページ切り替え（クリア）]</language>
+「[1:1C:簡易会話単語:2]」をつかった！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　デルパワー
-「[1:1C:簡易会話単語:2]」を　使った！[BE:01:ページ切り替え（クリア）]</language>
+「[1:1C:簡易会話単語:2]」を使った！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wonderpower_02_00">
