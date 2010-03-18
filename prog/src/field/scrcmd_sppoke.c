@@ -204,6 +204,10 @@ VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
     evt_flg = POKE_MEMO_EVENT_MERODHIA;
     skill_no = WAZANO_INISIENOUTA;
     break;
+  case MONSNO_SEREBHI:
+    evt_flg = POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_BEF;
+    skill_no = WAZANO_NULL;
+    break;
   default:
     GF_ASSERT(0);
     *ret = FALSE;
