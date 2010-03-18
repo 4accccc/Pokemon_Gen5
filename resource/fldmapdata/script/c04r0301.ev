@@ -24,7 +24,111 @@ _EVENT_DATA    ev_c04r0301_trainerm_01
 _EVENT_DATA    ev_c04r0301_ol_01
 _EVENT_DATA    ev_c04r0301_boy2_01
 _EVENT_DATA    ev_c04r0301_baseballm_01
+_EVENT_DATA    ev_pos_c04r0301_connect_01	//競技場への接続POSイベント
+_EVENT_DATA    ev_zone_c04r0301
 _EVENT_DATA_END
+
+
+//------------------------！注意！------------------------------//
+//																//
+//		LOCALWORK15を競技場への接続POSイベントに使用			//
+//		ゾーン内での使用を禁止します							//
+//																//
+//--------------------------------------------------------------//
+
+
+/************************************************************/
+/*					ZONE_CHANGE_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_c04r0301
+
+	//C04側から入った時だけ、開催競技をチェックする
+	IF $WK_OTHER_SPORTS_EVENT == SPORTS_EVENT_NONE THEN
+		//C04側から入った＝開催競技に何も入っていない
+		_CALL	ev_sports_event_chk
+	ENDIF
+
+INIT_EVENT_END
+
+
+//開催競技チェック処理
+ev_sports_event_chk:
+	//競技の種目を WK_OTHER_SPORTS_EVENT に格納
+	//競技中かを FE_SPORTS_PLAYING に格納 1 = 競技中（フィールドに降りれない）
+
+	//曜日を取得
+	_GET_WEEK( SCWK_ANSWER )
+	SWITCH $SCWK_ANSWER
+	CASE RTC_WEEK_SUNDAY, RTC_WEEK_MONDAY, RTC_WEEK_THURSDAY THEN
+	//日曜、月曜、木曜なら「野球」
+
+		$WK_OTHER_SPORTS_EVENT = SPORTS_EVENT_BASEBALL
+		
+		//競技中かチェック
+		_GET_TIME( SCWK_TEMP0, SCWK_TEMP1 )
+		IF $SCWK_TEMP0 >= 14 && $SCWK_TEMP0 <= 16 THEN
+			//14時～16時なら競技中
+			_FLAG_SET( FE_SPORTS_PLAYING )
+		ENDIF
+
+	CASE RTC_WEEK_TUESDAY, RTC_WEEK_FRIDAY THEN
+	//火曜、金曜なら「サッカー」
+
+		$WK_OTHER_SPORTS_EVENT = SPORTS_EVENT_SOCCER
+		
+		//競技中かチェック
+		_GET_TIME( SCWK_TEMP0, SCWK_TEMP1 )
+		IF $SCWK_TEMP0 >= 14 && $SCWK_TEMP0 <= 15 THEN
+			//14時～15時なら競技中
+			_FLAG_SET( FE_SPORTS_PLAYING )
+		ENDIF
+
+	DEFAULT
+	//それ以外（水曜、土曜）なら「アメフト」
+
+		$WK_OTHER_SPORTS_EVENT = SPORTS_EVENT_FOOTBALL
+		
+		//競技中かチェック
+		_GET_TIME( SCWK_TEMP0, SCWK_TEMP1 )
+		IF $SCWK_TEMP0 >= 14 && $SCWK_TEMP0 <= 15 THEN
+			//14時～15時なら競技中
+			_FLAG_SET( FE_SPORTS_PLAYING )
+		ENDIF
+
+	ENDSWITCH
+
+
+	//競技中ならワープポイントを塞ぐガードマンを表示
+	_FLAG_SET( FV_STADIUM_GUARDMAN )
+	IF FLAG_ON( FE_SPORTS_PLAYING ) THEN
+		_FLAG_RESET( FV_STADIUM_GUARDMAN )
+	ENDIF
+
+_RET
+
+
+/************************************************************/
+/*						ワープポイント						*/
+/************************************************************/
+//競技場への接続POSイベント
+EVENT_START	ev_pos_c04r0301_connect_01
+	//競技によってマップ遷移するゾーンを分岐
+
+	//野球なら
+	IF $WK_OTHER_SPORTS_EVENT == SPORTS_EVENT_BASEBALL THEN
+		_MAP_CHANGE_WARP( ZONE_ID_C04R0304, 9, 61, DIR_UP )
+
+	//サッカーなら
+	ELSIF $WK_OTHER_SPORTS_EVENT == SPORTS_EVENT_SOCCER THEN
+		_MAP_CHANGE_WARP( ZONE_ID_C04R0305, 10, 29, DIR_UP )
+	
+	//アメフトなら
+	ELSE
+		_MAP_CHANGE_WARP( ZONE_ID_C04R0303, 9, 29, DIR_UP )
+
+	ENDIF
+
+EVENT_END
 
 
 /************************************************************/

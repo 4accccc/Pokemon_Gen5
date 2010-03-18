@@ -15,6 +15,9 @@
 #define C04R0401_WOMAN2_01                 1
 #define C04R0401_SUNGLASSES_01             2
 #define C04R0401_FIGHTERW_01               3
+#define C04R0401_GUARDMAN_01               4
+#define C04R0401_GUARDMAN_02               5
+#define C04R0401_GUARDMAN_03               6
 
 #endif //ZONE_C04R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

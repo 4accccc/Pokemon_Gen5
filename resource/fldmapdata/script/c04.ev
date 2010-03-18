@@ -54,6 +54,10 @@ INIT_EVENT_START	ev_zone_c04
 	//ギアステーション内階段降りる演出用にワークをリセット
 	$WK_OTHER_STATION_CONNECT = 1
 
+	//ビッグスタジアム／リトルコートの処理を初期化
+	$WK_OTHER_SPORTS_EVENT = SPORTS_EVENT_NONE
+	_FLAG_RESET( FE_SPORTS_PLAYING )
+
 INIT_EVENT_END
 
 
