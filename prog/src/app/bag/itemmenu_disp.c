@@ -1583,26 +1583,43 @@ static void ITEMDISP_InitTaskBar( FIELD_ITEMMENU_WORK* pWork )
  * @retval  none
  */
 //------------------------------------------------------------------------------
+static GFL_CLACTPOS pokectCellPos[]={
+#include "bag_anmpos.h"
+};
+static const u8 BagSoftPriority[] = {
+	14,		// どうぐ
+	12,		// かいふく
+	18,		// わざマシン
+	10,		// きのみ
+	20		// たいせつなもの
+};
+static const u8 BagAnime[][2] =
+{	// 開, 閉
+	{ NANR_bag_parts_d_dougu1,    NANR_bag_parts_d_dougu },			// どうぐ
+	{ NANR_bag_parts_d_kaifuku1,  NANR_bag_parts_d_kaifuku },		// かいふく
+	{ NANR_bag_parts_d_waza1,     NANR_bag_parts_d_waza },			// わざマシン
+	{ NANR_bag_parts_d_kinomi1,   NANR_bag_parts_d_kinomi },		// きのみ
+	{ NANR_bag_parts_d_taisetsu1, NANR_bag_parts_d_taisetsu },	// たいせつなもの
+};
+
 void ITEMDISP_InitPocketCell( FIELD_ITEMMENU_WORK* pWork )
 {
-  {
+	GFL_CLWK_DATA dat;
+	u32	i;
 
-    u8 i;
-    GFL_CLWK_DATA cellInitData;
-    cellInitData.softpri = 10;
-    cellInitData.bgpri = 1;
-
-    cellInitData.pos_x = 0;
-    cellInitData.pos_y = 0;
-    cellInitData.anmseq = 0;
-    pWork->clwkPocketIcon = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                 pWork->cellRes[_NCG_BAGPOCKET],
-                                                 pWork->cellRes[_PLT_BAGPOCKET],
-                                                 pWork->cellRes[_ANM_BAGPOCKET],
-                                                 &cellInitData ,CLSYS_DEFREND_MAIN , pWork->heapID );
-
-    GFL_CLACT_WK_SetDrawEnable( pWork->clwkPocketIcon , FALSE );
-  }
+	for( i=0; i<BAG_POKE_MAX; i++ ){
+		dat.softpri = BagSoftPriority[i];
+		dat.bgpri   = 1;
+		dat.pos_x   = pokectCellPos[i].x;
+		dat.pos_y   = pokectCellPos[i].y;
+		dat.anmseq  = BagAnime[i][1];
+		pWork->clwkBag[i] = GFL_CLACT_WK_Create(
+													pWork->cellUnit,
+													pWork->cellRes[_NCG_BAGPOCKET],
+													pWork->cellRes[_PLT_BAGPOCKET],
+													pWork->cellRes[_ANM_BAGPOCKET],
+													&dat, CLSYS_DEFREND_MAIN, pWork->heapID );
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -1611,10 +1628,6 @@ void ITEMDISP_InitPocketCell( FIELD_ITEMMENU_WORK* pWork )
  * @retval  none
  */
 //------------------------------------------------------------------------------
-
-static GFL_CLACTPOS pokectCellPos[]={
-#include "bag_anmpos.h"
-};
 
 
 
@@ -1630,18 +1643,15 @@ static GFL_CLACTPOS pokectCellPos[]={
 //-----------------------------------------------------------------------------
 void ITEMDISP_ChangePocketCell( FIELD_ITEMMENU_WORK* pWork,int pocketno )
 {
-  int anm[] = {
-    NANR_bag_parts_d_dougu,
-    NANR_bag_parts_d_kaifuku,
-    NANR_bag_parts_d_waza,
-    NANR_bag_parts_d_kinomi,
-    NANR_bag_parts_d_taisetsu
-  };
+	u32	i;
 
-  GFL_CLACT_WK_SetAnmSeq(pWork->clwkPocketIcon, anm[pocketno]);
-  GFL_CLACT_WK_SetPos( pWork->clwkPocketIcon ,  &pokectCellPos[pocketno], CLWK_SETSF_NONE );
-  GFL_CLACT_WK_SetDrawEnable( pWork->clwkPocketIcon , TRUE );
-
+	for( i=0; i<BAG_POKE_MAX; i++ ){
+		if( i == pocketno ){
+			GFL_CLACT_WK_SetAnmSeq( pWork->clwkBag[i], BagAnime[i][0] );
+		}else{
+			GFL_CLACT_WK_SetAnmSeq( pWork->clwkBag[i], BagAnime[i][1] );
+		}
+	}
 }
 
 //------------------------------------------------------------------------------

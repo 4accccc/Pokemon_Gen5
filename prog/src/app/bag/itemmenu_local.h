@@ -58,7 +58,7 @@ enum
 #define ITEMMENU_SCROLLBAR_ENABLE_NUM (7) // スクロールバーが有効になるアイテム数
 
 #define ITEM_LIST_NUM (8)
-#define _CELLUNIT_NUM (30)
+#define _CELLUNIT_NUM (34)
 
 #define _SCROLL_TOP_Y  (8+8)  //スクロールバーの最初の位置
 #define _SCROLL_BOTTOM_Y  (8*19)  //スクロールバーの最後の位置
@@ -199,7 +199,7 @@ struct _FIELD_ITEMMENU_PARAM {
   GFL_CLWK  *cellicon;
   GFL_CLWK  *clwkCur;
   GFL_CLWK  *clwkScroll;
-  GFL_CLWK  *clwkPocketIcon;
+  GFL_CLWK  *clwkBag[BAG_POKE_MAX];
   GFL_CLWK  *clwkWazaKind;
   GFL_CLWK  *clwkWazaType;
   GFL_CLWK  *clwkBarIcon[ BAR_ICON_MAX ];
