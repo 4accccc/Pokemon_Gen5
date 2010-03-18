@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-08T12:22:07"/>
+	<create user="ohmori" host="W00223" date="2010-03-17T23:11:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -430,10 +430,10 @@
 	</row>
 
 	<row id="str_check_today_count01" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:03:Ｘ右寄せ:8]きょうのにんずうを
-[BD:03:Ｘ右寄せ:8]ひょうじします</language>
-		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:8]今日の人数を
-[BD:03:Ｘ右寄せ:8]表示します</language>
+		<language name="JPN">[BD:03:Ｘ右寄せ:30]ひょうじモード：
+[BD:03:Ｘ右寄せ:8]きょうのにんずう</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:30]表示モード：
+[BD:03:Ｘ右寄せ:8]今日の人数</language>
 	</row>
 
 	<row id="str_check_total_count" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
@@ -444,10 +444,10 @@
 	</row>
 
 	<row id="str_check_total_count01" text-color=",,,#c0c0c0,,,,,,,,,,,,,," back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:03:Ｘ右寄せ:8]ごうけいにんずうを
-[BD:03:Ｘ右寄せ:8]ひょうじします</language>
-		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:8]合計人数を
-[BD:03:Ｘ右寄せ:8]表示します</language>
+		<language name="JPN">[BD:03:Ｘ右寄せ:30]ひょうじモード：
+[BD:03:Ｘ右寄せ:8]ごうけいにんずう</language>
+		<language name="JPN_KANJI">[BD:03:Ｘ右寄せ:30]表示モード：
+[BD:03:Ｘ右寄せ:8]合計人数</language>
 	</row>
 
 	<row id="str_check_data_receive" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">

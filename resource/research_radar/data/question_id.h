@@ -1,7 +1,7 @@
 // コンバータにより生成
 #define QUESTION_ID_WB (0) //「・ホワイトとブラック　どっち？」
 #define QUESTION_ID_SEX (1) //「・おとこと　おんな　どっち？」
-#define QUESTION_ID_FUN (2) //「・たいせんと　こうかん　どっち？」
+#define QUESTION_ID_FUN (2) //「・たいせんとこうかん　どっちがすき？」
 #define QUESTION_ID_PLACE (3) //「・とかいと　いなか　すむなら？」
 #define QUESTION_ID_PARTNER (4) //「・あいてを　えらぶなら　どっち？」
 #define QUESTION_ID_WANT (5) //「・ほしいものは　どっち？」

@@ -414,8 +414,8 @@
         <language name="JPN" width="256">・おとこと　おんな　どっち？</language>
         <language name="JPN_KANJI" width="256">・男と女　どっち？</language>
       </row><row id="str_question_02">
-        <language name="JPN" width="256">・たいせんと　こうかん　どっち？</language>
-        <language name="JPN_KANJI" width="256">・対戦と交換　どっち？</language>
+        <language name="JPN" width="256">・たいせんとこうかん　どっちがすき？</language>
+        <language name="JPN_KANJI" width="256">・対戦と交換　どっちがすき？</language>
       </row><row id="str_question_03">
         <language name="JPN" width="256">・とかいと　いなか　すむなら？</language>
         <language name="JPN_KANJI" width="256">・都会と田舎　住むなら？</language>
@@ -508,10 +508,10 @@
         <language name="JPN_KANJI" width="256">男と女どっちが多い？
 を集めたアンケート</language>
       </row><row id="str_question_02_caption">
-        <language name="JPN" width="256">ポケモンで　たいせんとこうかんの　どちらが
-すき？　をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">ポケモンで対戦と交換のどちらが好き？
-を集めたアンケート</language>
+        <language name="JPN" width="256">ポケモンで　たいせんと　こうかんの
+どちらがすき？　をあつめた　アンケート</language>
+        <language name="JPN_KANJI" width="256">ポケモンで対戦と交換の
+どちらが好き？　を集めたアンケート</language>
       </row><row id="str_question_03_caption">
         <language name="JPN" width="256">とかいの　くらしと　いなかの　くらし
 どちらがすき？　をあつめた　アンケート</language>
