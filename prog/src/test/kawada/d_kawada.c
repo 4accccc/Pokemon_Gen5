@@ -50,6 +50,7 @@
 
 // 二択簡易会話
 // 一択簡易会話
+// 定型文簡易会話
 #include "app/pms_input.h"
 
 // 三匹選択
@@ -72,7 +73,7 @@ FS_EXTERN_OVERLAY(subway_map);
 //============================================================================================
 //	定数定義
 //============================================================================================
-#define	TOP_MENU_SIZ	( 9 )
+#define	TOP_MENU_SIZ	( 10 )
 
 typedef struct {
 	u32	main_seq;
@@ -111,6 +112,7 @@ typedef struct {
 
   // 二択簡易会話
   // 一択簡易会話
+  // 定型文簡易会話
   PMSI_PARAM*    pmsi_param;
 
   // 三匹選択
@@ -137,6 +139,7 @@ enum {
 	MAIN_SEQ_PMS_INPUT_SINGLE_CALL,
 	MAIN_SEQ_PSEL_CALL,
 	MAIN_SEQ_SUBWAY_MAP_CALL,
+	MAIN_SEQ_PMS_INPUT_SENTENCE_CALL,
   // ここまで
 
 	MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN,
@@ -148,6 +151,7 @@ enum {
 	MAIN_SEQ_PMS_INPUT_SINGLE_CALL_RETURN,
 	MAIN_SEQ_PSEL_CALL_RETURN,
 	MAIN_SEQ_SUBWAY_MAP_CALL_RETURN,
+	MAIN_SEQ_PMS_INPUT_SENTENCE_CALL_RETURN,
 	
   MAIN_SEQ_END,
 };
@@ -205,6 +209,10 @@ static void PselExit( KAWADA_MAIN_WORK* wk );
 // 地下鉄路線図
 static void SubwayMapInit( KAWADA_MAIN_WORK* wk );
 static void SubwayMapExit( KAWADA_MAIN_WORK* wk );
+
+// 定型文簡易会話
+static void PmsInputSentenceInit( KAWADA_MAIN_WORK* wk );
+static void PmsInputSentenceExit( KAWADA_MAIN_WORK* wk );
 
 
 //============================================================================================
@@ -426,6 +434,17 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		FadeInSet( wk, MAIN_SEQ_INIT );
 		wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
+
+
+  // 定型文簡易会話
+  case MAIN_SEQ_PMS_INPUT_SENTENCE_CALL:
+    PmsInputSentenceInit(wk);
+		wk->main_seq = MAIN_SEQ_PMS_INPUT_SENTENCE_CALL_RETURN;
+    break;
+  case MAIN_SEQ_PMS_INPUT_SENTENCE_CALL_RETURN:
+    PmsInputSentenceExit(wk); 
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
 
 
 	}
@@ -857,6 +876,51 @@ static void SubwayMapExit( KAWADA_MAIN_WORK* wk )
   SUBWAY_MAP_FreeParam( wk->subway_map_param );
   GFL_HEAP_FreeMemory( wk->mystatus );
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(subway_map));
+}
+
+// 定型文簡易会話
+static void PmsInputSentenceInit( KAWADA_MAIN_WORK* wk )
+{
+                                              // 定型文  初期入力  デコ文字
+#define SENTENCE_CHANGE_NOSET_PICTURE    (0)  // 変更可  なし      あり
+#define SENTENCE_CHANGE_SET_PICTURE      (1)  // 変更可  あり      あり
+#define SENTENCE_NOCHANGE_NOSET_PICTURE  (2)  // 固定    なし      あり
+#define SENTENCE_NOCHANGE_SET_PICTURE    (3)  // 固定    あり      あり
+#define SENTENCE_CHANGE_NOSET_NOPICTURE  (4)  // 固定    なし      なし
+
+  u8 sentence_mode = SENTENCE_CHANGE_NOSET_PICTURE;
+
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )  sentence_mode = SENTENCE_CHANGE_SET_PICTURE;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )  sentence_mode = SENTENCE_NOCHANGE_NOSET_PICTURE;
+  if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )  sentence_mode = SENTENCE_NOCHANGE_SET_PICTURE;
+  if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ) sentence_mode = SENTENCE_CHANGE_NOSET_NOPICTURE;
+
+  switch( sentence_mode )
+  {
+  case SENTENCE_CHANGE_NOSET_PICTURE:
+    {
+    }
+    break;
+  case SENTENCE_CHANGE_SET_PICTURE:
+    {
+    }
+    break;
+  case SENTENCE_NOCHANGE_NOSET_PICTURE:
+    {
+    }
+    break;
+  case SENTENCE_NOCHANGE_SET_PICTURE:
+    {
+    }
+    break;
+  case SENTENCE_CHANGE_NOSET_NOPICTURE:
+    {
+    }
+    break;
+  }
+}
+static void PmsInputSentenceExit( KAWADA_MAIN_WORK* wk )
+{
 }
 
 

@@ -585,7 +585,7 @@ enum
   TIMETABLE_MB_MAX,
 };
 
-static const u8 timetable_mb[MB_MAX][TIMETABLE_MB_MAX] =
+static const u16 timetable_mb[MB_MAX][TIMETABLE_MB_MAX] =
 {
   {  40*THREE_INTERRUPT,  49*THREE_INTERRUPT,  70*THREE_INTERRUPT,  99*THREE_INTERRUPT },
   {  50*THREE_INTERRUPT,  59*THREE_INTERRUPT, 100*THREE_INTERRUPT, 129*THREE_INTERRUPT },
@@ -1435,7 +1435,7 @@ static void Psel_ThreeS02Main( PSEL_WORK* work )
 
 static void Psel_ThreeS02MbZoomAnimeStart( PSEL_WORK* work, TARGET target, BOOL reverse )
 {
-  u8 start_frame = timetable_mb[target][(reverse)?(TIMETABLE_MB_ZOOM_END):(TIMETABLE_MB_ZOOM_START)];
+  u16 start_frame = timetable_mb[target][(reverse)?(TIMETABLE_MB_ZOOM_END):(TIMETABLE_MB_ZOOM_START)];
 
   // カメラアニメ
   {
@@ -1449,14 +1449,14 @@ static void Psel_ThreeS02MbZoomAnimeStart( PSEL_WORK* work, TARGET target, BOOL 
 }
 static BOOL Psel_ThreeS02MbZoomAnimeIsEnd( PSEL_WORK* work )
 {
-  u8 end_frame = timetable_mb[work->three_mb_anime_target][(work->three_mb_anime_reverse)?(TIMETABLE_MB_ZOOM_START):(TIMETABLE_MB_ZOOM_END)];
+  u16 end_frame = timetable_mb[work->three_mb_anime_target][(work->three_mb_anime_reverse)?(TIMETABLE_MB_ZOOM_START):(TIMETABLE_MB_ZOOM_END)];
 
   if( work->three_mb_anime_frame == end_frame ) return TRUE;
   return FALSE;
 }
 static void Psel_ThreeS02MbZoomAnimeMain( PSEL_WORK* work )
 {
-  u8 end_frame = timetable_mb[work->three_mb_anime_target][(work->three_mb_anime_reverse)?(TIMETABLE_MB_ZOOM_START):(TIMETABLE_MB_ZOOM_END)];
+  u16 end_frame = timetable_mb[work->three_mb_anime_target][(work->three_mb_anime_reverse)?(TIMETABLE_MB_ZOOM_START):(TIMETABLE_MB_ZOOM_END)];
   
   if( work->three_mb_anime_frame != end_frame )
   {
@@ -1488,7 +1488,7 @@ static void Psel_ThreeS02MbZoomAnimeMain( PSEL_WORK* work )
 
 static void Psel_ThreeS02MbDecideAnimeStart( PSEL_WORK* work, TARGET target )
 {
-  u8 start_frame = timetable_mb[target][TIMETABLE_MB_DECIDE_START];
+  u16 start_frame = timetable_mb[target][TIMETABLE_MB_DECIDE_START];
 
   // カメラアニメ
   {
@@ -1502,7 +1502,7 @@ static void Psel_ThreeS02MbDecideAnimeStart( PSEL_WORK* work, TARGET target )
 }
 static void Psel_ThreeS02MbDecideAnimeMain( PSEL_WORK* work )
 {
-  u8 end_frame = timetable_mb[work->three_mb_anime_target][TIMETABLE_MB_DECIDE_END];
+  u16 end_frame = timetable_mb[work->three_mb_anime_target][TIMETABLE_MB_DECIDE_END];
   
   if( work->three_mb_anime_frame != end_frame )
   {
