@@ -12005,14 +12005,35 @@ u16 BTL_SVFTOOL_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BOOL
  * [ハンドラ用ツール] 素早さ計算->場に出ているポケモン内でのランクを返す
  *
  * @param   wk
- * @param   bpp
+ * @param   bpp_target
  *
  * @retval  u16 ランク（0～）
  */
 //--------------------------------------------------------------------------------------
-u16 BTL_SVFTOOL_CalcAgilityRank( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BOOL fTrickRoomEnable )
+u16 BTL_SVFTOOL_CalcAgilityRank( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp_target, BOOL fTrickRoomEnable )
 {
-  return scEvent_CalcAgility( wk, bpp, fTrickRoomEnable );
+  FRONT_POKE_SEEK_WORK fps;
+  BTL_POKEPARAM* bpp;
+  u16 rank, agi, target_agi;
+  u8 target_pokeID;
+
+  target_agi = BTL_SVFTOOL_CalcAgility( wk, bpp_target, fTrickRoomEnable );
+  target_pokeID = BPP_GetID( bpp_target );
+  rank = 0;
+
+  FRONT_POKE_SEEK_InitWork( &fps, wk );
+  while( FRONT_POKE_SEEK_GetNext( &fps, wk, &bpp ) )
+  {
+    if( BPP_GetID(bpp) == target_pokeID ){
+      continue;
+    }
+    agi = BTL_SVFTOOL_CalcAgility( wk, bpp, fTrickRoomEnable );
+    if( agi > target_agi ){
+      ++rank;
+    }
+  }
+
+  return rank;
 }
 
 //--------------------------------------------------------------------------------------

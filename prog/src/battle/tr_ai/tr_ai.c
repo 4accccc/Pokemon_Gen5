@@ -1435,8 +1435,8 @@ static  VMCMD_RESULT  AI_CHECK_BENCH_COUNT( VMHANDLE* vmh, void* context_work )
   for( i = front_count ; i < BTL_PARTY_GetMemberCount( pty ) ; i++ )
   {
     const BTL_POKEPARAM* bpp = get_bpp_from_party( pty, i );
-    //@todo タマゴの場合も考慮しなければならない（田谷君の話だとタマゴならそもそもBTL_PARTYに入れなければいいということみたい）
-    if( !BPP_IsDead( bpp ) )
+
+    if( !BPP_IsFightEnable( bpp ) )
     {
       taw->calc_work++;
     }
@@ -2416,8 +2416,9 @@ static  VMCMD_RESULT  AI_CHECK_AGI_RANK( VMHANDLE* vmh, void* context_work )
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int side = ( int )VMGetU32( vmh );
   BtlPokePos  pos = get_poke_pos( taw, side );
+  const BTL_POKEPARAM* bpp = get_bpp( taw, pos );
 
-  taw->calc_work = 0;  //@todo 取得関数
+  taw->calc_work = BTL_SVFTOOL_CalcAgilityRank( taw->svfWork, bpp, TRUE );
 
   return taw->vmcmd_result;
 }
