@@ -223,8 +223,8 @@ static void POKE_MEMO_SetMyStatus( POKEMON_PASO_PARAM *ppp , const MYSTATUS* my 
   const u32 sex = MyStatus_GetMySex( my );
 
   PPP_Put( ppp , ID_PARA_oyaname , (u32)name );
-  PPP_Put( ppp , ID_PARA_oyasex , id );
-  PPP_Put( ppp , ID_PARA_id_no , sex );
+  PPP_Put( ppp , ID_PARA_oyasex , sex );
+  PPP_Put( ppp , ID_PARA_id_no , id );
 
   GFL_STR_DeleteBuffer( name );
 }

@@ -700,9 +700,9 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
         //ÇªÇÃëº
         if( isEvent == FALSE )
         {
-          if( place1 == 0 )
+          if( place2 == 0 )
           {
-            if( place2 == POKE_MEMO_PLACE_GAME_TRADE )
+            if( place1 == POKE_MEMO_PLACE_GAME_TRADE )
             {
               //ÉQÅ[ÉÄì‡åä∑
               memoId = trmemo_02_02_01;

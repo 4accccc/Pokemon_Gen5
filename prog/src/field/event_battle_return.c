@@ -20,6 +20,7 @@
 #include "demo\shinka_demo.h"
 #include "app/zukan_toroku.h"
 #include "poke_tool/poke_memo.h"
+#include "field/zonedata.h"  //ZONEDATA_GetPlaceNameID
 
 #include "arc_def.h"
 #include "message.naix"
@@ -216,7 +217,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
               wk->pp,
               POKE_MEMO_SET_CAPTURE,
               myStatus,
-              PLAYERWORK_getZoneID( player_wk ),
+              ZONEDATA_GetPlaceNameID( PLAYERWORK_getZoneID( player_wk ) ),
               wk->heapID );
         }
 

@@ -2644,14 +2644,14 @@ static void PSTD_U_getPPP( void* userWork , DEBUGWIN_ITEM* item )
     MYSTATUS *myStatus = GAMEDATA_GetMyStatus( work->psData->game_data );
 
     work->natsuki = PPP_Get( ppp , ID_PARA_friend , NULL );
-    work->year1   = PPP_Get( ppp , ID_PARA_birth_year , NULL );
-    work->month1  = PPP_Get( ppp , ID_PARA_birth_month , NULL )+1;
-    work->day1    = PPP_Get( ppp , ID_PARA_birth_day , NULL )+1;
-    work->place1  = PPP_Get( ppp , ID_PARA_birth_place , NULL );
-    work->year2   = PPP_Get( ppp , ID_PARA_get_year , NULL );
-    work->month2  = PPP_Get( ppp , ID_PARA_get_month , NULL )+1;
-    work->day2    = PPP_Get( ppp , ID_PARA_get_day , NULL )+1;
-    work->place2  = PPP_Get( ppp , ID_PARA_get_place , NULL );
+    work->year1   = PPP_Get( ppp , ID_PARA_get_year , NULL );
+    work->month1  = PPP_Get( ppp , ID_PARA_get_month , NULL )+1;
+    work->day1    = PPP_Get( ppp , ID_PARA_get_day , NULL )+1;
+    work->place1  = PPP_Get( ppp , ID_PARA_get_place , NULL );
+    work->year2   = PPP_Get( ppp , ID_PARA_birth_year , NULL );
+    work->month2  = PPP_Get( ppp , ID_PARA_birth_month , NULL )+1;
+    work->day2    = PPP_Get( ppp , ID_PARA_birth_day , NULL )+1;
+    work->place2  = PPP_Get( ppp , ID_PARA_birth_place , NULL );
     work->level   = PPP_Get( ppp , ID_PARA_get_level , NULL );
     work->devRom = PPP_Get( ppp , ID_PARA_get_cassette , NULL );
     work->isDevEgg   = PPP_Get( ppp , ID_PARA_tamago_flag , NULL );

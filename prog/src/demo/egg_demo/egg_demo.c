@@ -28,6 +28,7 @@
 #include "sound/pm_sndsys.h"
 #include "app/name_input.h"
 #include "poke_tool/poke_memo.h"
+#include "field/zonedata.h"  //ZONEDATA_GetPlaceNameID
 
 #include "egg_demo_graphic.h"
 #include "egg_demo_view.h"
@@ -585,7 +586,7 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
               param->pp,
               POKE_MEMO_INCUBATION,
               GAMEDATA_GetMyStatus( param->gamedata ),
-              PLAYERWORK_getZoneID( player_wk ),
+              ZONEDATA_GetPlaceNameID( PLAYERWORK_getZoneID( player_wk ) ),
               work->heap_id );
         }
 
