@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/17 16:47:13
+#save date:2010/03/18 20:52:57
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d20r0701.wms
 #SECTION START:OBJ_EVENT
@@ -28,7 +28,7 @@ SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-3
+1
 #Parameter 1 Number
 3
 #Parameter 2 Number
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-408 48 -152
+408 48 -168
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -75,9 +75,9 @@ EVENTDATA_POSTYPE_GRID
 #Door Event Label
 DOOR_ID_D20R0701_D20R0601_EXIT01
 #Next Zone ID Name
-ZONE_ID_D20R0601
+ZONE_ID_NONE
 #Next Door ID Name
-DOOR_ID_D20R0601_D20R0701_EXIT01
+EXIT_ID_NONE
 #Door Direction
 EXIT_DIR_NON
 #Door Type
@@ -92,9 +92,9 @@ EVENTDATA_POSTYPE_GRID
 #Door Event Label
 DOOR_ID_D20R0701_D20R0601_EXIT02
 #Next Zone ID Name
-ZONE_ID_D20R0601
+ZONE_ID_NONE
 #Next Door ID Name
-DOOR_ID_D20R0601_D20R0701_EXIT02
+EXIT_ID_NONE
 #Door Direction
 EXIT_DIR_NON
 #Door Type

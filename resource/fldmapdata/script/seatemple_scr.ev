@@ -28,7 +28,6 @@ _EVENT_DATA    ev_seatemple_step_300
 _EVENT_DATA    ev_seatemple_step_450
 _EVENT_DATA    ev_seatemple_step_500
 
-
 _EVENT_DATA    ev_seatemple_skill_use_2f
 _EVENT_DATA    ev_seatemple_skill_use_3f
 
@@ -132,4 +131,8 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_up_move
 	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_right_move
+	_ANIME_DATA	AC_WALK_R_8F,3
 	_ANIME_DATA	ACMD_END,0
