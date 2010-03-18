@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-08T14:39:01"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-18T17:01:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1537" top="198" right="2242" bottom="818" maximized="no" rayout="Vertical2">
+	<dialog left="574" top="-2" right="1279" bottom="618" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="8" top="31" right="481" bottom="429" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -309,7 +309,7 @@
 	<row id="msg_c03r0801_crew_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>リタイア受付
 全抜き時はex_2へ</comment>
-		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">ほんじつの　ロイヤルイッシュごうには
 [2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
 あなたは　[2:00:１桁:4]にんに　かちました[BE:01:ページ切り替え（クリア）]
@@ -325,7 +325,7 @@
 	<row id="msg_c03r0801_crew_01a" back-color="#800000,,,#800000,,#800000,#800000,#800000,,,#800000,,#800000,#800000,,,#800000,,">
 		<comment>リタイア受付
 全抜き時はex_2へ</comment>
-		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">ほんじつの　ロイヤルイッシュごうには
 [2:00:１桁:3]にん　トレーナーが　います[BE:01:ページ切り替え（クリア）]
 ふねは　しゅっこうちゅう　です
@@ -346,7 +346,7 @@
 msg_c03r0801_hint_01
 いいえの場合
 msg_c03r0801_hint_02</comment>
-		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">でっかい　ふねに　たくさんの　へや！
 トレーナーさがしに　こまっている[BE:01:ページ切り替え（クリア）]
 そんな　きみに　ヒントを　あげたい！
@@ -359,7 +359,7 @@ msg_c03r0801_hint_02</comment>
 
 	<row id="msg_c03r0801_crew_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>長話客の説明</comment>
-		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">きてきが　なるまで
 はなしに　むちゅうに　なってしまう[BE:01:ページ切り替え（クリア）]
 そんな　おきゃくさんも
@@ -371,7 +371,7 @@ msg_c03r0801_hint_02</comment>
 
 	<row id="msg_c03r0801_crew_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>甲板部の説明</comment>
-		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">このさきは　ロイヤルイッシュごう
 じまんの　てんぼうフロアに　なります</language>
 		<language name="JPN_KANJI" width="256">この先は　ロイヤルイッシュ号
@@ -383,7 +383,7 @@ msg_c03r0801_hint_02</comment>
 ・ダブルルームに何人いるか？
 
 </comment>
-		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">きょうは　あおいろの　ドアの　へやに
 ひとりしか　トレーナーさんは[BE:00:ページ切り替え（行送り）]
 いない　みたいだよ</language>
@@ -397,7 +397,7 @@ msg_c03r0801_hint_02</comment>
 ・ダブルルームに何人いるか？
 [1桁:1]の所に任意の数字が
 入ります。</comment>
-		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">きょうは　あおいろの　ドアの　へやに
 [2:00:１桁:2]にん　トレーナーさんが[BE:00:ページ切り替え（行送り）]
 いる　みたいだよ</language>
@@ -465,35 +465,40 @@ msg_c03r0801_hint_02</comment>
 	<row id="msg_c03r0801_businessman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>お客さん
 ・短い話</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">しごとの　あいまにね
-ついつい　のっちゃうんだよ</language>
-		<language name="JPN_KANJI" width="256">仕事の　合間にね
-ついつい　乗っちゃうんだよ</language>
+		<attribute name="キャラ指定">BUSINESSMAN
+モモト</attribute>
+		<language name="JPN" width="256">ジョウトから　しごとで　きたけど
+ここは　なにもかも　ダイナミックだな</language>
+		<language name="JPN_KANJI" width="256">ジョウトから　仕事で　来たけど
+ここは　何もかも　ダイナミックだな</language>
 	</row>
 
 	<row id="msg_c03r0801_businessman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>お客さん
 ・長い話前</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">やあやあ！　よくきたね
-はなし　あいてが　ほしかったんだ！[BE:00:ページ切り替え（行送り）]
-きいてくれよ　ぼくの　はなしをさ[BE:01:ページ切り替え（クリア）]
-……　……　……　……　……
-……　……　……　なんだけどさ[BE:01:ページ切り替え（クリア）]
-それがね　……　……　……
-……　……　……　……　……[BE:01:ページ切り替え（クリア）]
-……　……　……　……　……
-……　……　……　なんだよね！</language>
-		<language name="JPN_KANJI" width="256">やあやあ！　良く来たね
-話し相手が　ほしかったんだ！[BE:00:ページ切り替え（行送り）]
-聞いてくれよ　ぼくの　話をさ[BE:01:ページ切り替え（クリア）]
-……　……　……　……　……
-……　……　……　なんだけどさ[BE:01:ページ切り替え（クリア）]
-それがね　……　……　……
-……　……　……　……　……[BE:01:ページ切り替え（クリア）]
-……　……　……　……　……
-……　……　……　なんだよね！</language>
+		<language name="JPN" width="256">きみは　イッシュしゅっしん　かい？▼
+オレは　ジョウトから　しごとで
+ここに　きたんだけど……▼
+やっぱり　かいがいって　ちがうね！
+なにが　ちがうかってさ！▽
+……　……　……　……　……▽
+……　……　……　なんだけどさ▽
+……　……　……　……　……▽
+それがね　……　……　……　……▽
+……　……　……　……　……▽
+……　……　……　なんだよなぁ！</language>
+		<language name="JPN_KANJI" width="256">きみは　イッシュ出身　かい？▼
+オレは　ジョウトから　仕事で
+ここに　来たのだけど……▼
+やっぱり　海外って　ちがうね！
+何が　ちがうかってさ！▽
+……　……　……　……　……▽
+……　……　……　なんだけどさ▽
+……　……　……　……　……▽
+それがね　……　……　……　……▽
+……　……　……　……　……▽
+……　……　……　なんだよなぁ！</language>
 	</row>
 
 	<row id="msg_c03r0801_businessman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -531,11 +536,12 @@ msg_c03r0801_hint_02</comment>
 	<row id="msg_c03r0801_trainerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>お客さん
 ・短い話</comment>
-		<attribute name="キャラ指定">TRAINERM</attribute>
+		<attribute name="キャラ指定">TRAINERM
+タクト</attribute>
 		<language name="JPN" width="256">うみの　むこうに
-まだまだ　ポケモンが　いるんだって</language>
+まだまだ　ポケモンが　いるんだよ！</language>
 		<language name="JPN_KANJI" width="256">海の　向こうに
-まだまだ　ポケモンが　いるんだって</language>
+まだまだ　ポケモンが　いるんだよ！</language>
 	</row>
 
 	<row id="msg_c03r0801_trainerm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -1038,7 +1044,7 @@ msg_c03r0801_hint_02</comment>
 		<comment>トレーナーヒント１
 
 はいの場合</comment>
-		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">きょうはねー……[BE:01:ページ切り替え（クリア）]
 ふねの　ひだりがわには　[2:00:１桁:0]にん
 ふねの　みぎがわには　[2:00:１桁:1]にん[BE:01:ページ切り替え（クリア）]
@@ -1055,7 +1061,7 @@ msg_c03r0801_hint_02</comment>
 		<comment>トレーナーヒント１
 
 いいえの場合</comment>
-		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">また　きが　むいたら　はなしかけてよ
 おじさんは　いつでも　ヒント　だすよ</language>
 		<language name="JPN_KANJI" width="256">また　気が　向いたら　話しかけてよ
@@ -1066,7 +1072,7 @@ msg_c03r0801_hint_02</comment>
 		<comment>トレーナーヒント１
 
 再度話しかけた場合</comment>
-		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">トレーナーさがしの　ヒント
 ききたい　かい？</language>
 		<language name="JPN_KANJI" width="256">トレーナー探しの　ヒント
@@ -1075,7 +1081,7 @@ msg_c03r0801_hint_02</comment>
 
 	<row id="msg_c03r0801_retire_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>リタイア用・</comment>
-		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">かしこまりました
 そのまま　おまち　くださいませ</language>
 		<language name="JPN_KANJI" width="256">かしこまりました
@@ -1084,7 +1090,7 @@ msg_c03r0801_hint_02</comment>
 
 	<row id="msg_c03r0801_retire_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>リタイア用・</comment>
-		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">かしこまりました
 ひきつづき　おたのしみ　くださいませ</language>
 		<language name="JPN_KANJI" width="256">かしこまりました
@@ -1103,7 +1109,7 @@ msg_c03r0801_hint_02</comment>
 
 	<row id="msg_c03r0801_ex_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>案内後の受付員のセリフ</comment>
-		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">ロイヤルイッシュごうの
 ごじょうせん　ありがとうございます[BE:01:ページ切り替え（クリア）]
 ほんじつの　ロイヤルイッシュごうには
@@ -1119,7 +1125,7 @@ msg_c03r0801_hint_02</comment>
 	<row id="msg_c03r0801_ex_02" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>リタイヤ員
 全抜き時のセリフ</comment>
-		<attribute name="キャラ指定">MAN1（現在仮）</attribute>
+		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">ほんじつの　ロイヤルイッシュごうには
 [2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
 あなたは……　おめでとうございます！[BE:01:ページ切り替え（クリア）]
