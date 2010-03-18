@@ -453,7 +453,7 @@
  * @brief ポケモン：注目ポケモン設定(解除前に連続して呼べます
  *
  * #param_num 1
- * @param pokeNo  ポケモン番号(-1不可)
+ * @param pokeNo  ポケモン番号(-1原則禁止)
  *
  * #param VALUE_INT pokeNo
  */
@@ -880,7 +880,7 @@
  *
  * #param_num 4
  * @param lightNo スポットライト管理番号
- * @param pokeNo  ポケモン番号(-1不可)
+ * @param pokeNo  ポケモン番号(-1原則禁止)
  * @param frame フレーム数
  * @param ofs   オフセット(Z無効)
  *
