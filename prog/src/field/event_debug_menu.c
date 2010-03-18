@@ -5993,6 +5993,8 @@ static const FLDMENUFUNC_LIST ZukanMenuList[] =
 {
   { DEBUG_FIELD_ZUKAN_01, (void*)0 },   // 全国捕獲
   { DEBUG_FIELD_ZUKAN_07, (void*)1 },   // 全国見た
+  { DEBUG_FIELD_ZUKAN_10, (void*)6 },   // 地方捕獲
+  { DEBUG_FIELD_ZUKAN_11, (void*)7 },   // 地方見た
   { DEBUG_FIELD_ZUKAN_09, (void*)2 },   // ランダム
   { DEBUG_FIELD_ZUKAN_03, (void*)3 },   // フォルム
   { DEBUG_FIELD_ZUKAN_05, (void*)4 },   // 全国フラグ
@@ -6136,6 +6138,36 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
 
     case 5:     // バージョンアップ
       ZUKANSAVE_SetGraphicVersionUpFlag( work->sv );
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
+
+    case 6:     // 地方捕獲
+      {
+				u16 * buf;
+        u32 i;
+				buf = POKE_PERSONAL_GetZenkokuToChihouArray( work->heapID, NULL );
+        for( i=1; i<=MONSNO_END; i++ ){
+					if( buf[i] != 0 ){
+						SetZukanDataOne( wk, i, 0, 0 );
+					}
+        }
+				GFL_HEAP_FreeMemory( buf );
+      }
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
+
+    case 7:     // 地方見た
+      {
+				u16 * buf;
+        u32 i;
+				buf = POKE_PERSONAL_GetZenkokuToChihouArray( work->heapID, NULL );
+        for( i=1; i<=MONSNO_END; i++ ){
+					if( buf[i] != 0 ){
+	          SetZukanDataOne( wk, i, 0, 1 );
+					}
+        }
+				GFL_HEAP_FreeMemory( buf );
+      }
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
     }
