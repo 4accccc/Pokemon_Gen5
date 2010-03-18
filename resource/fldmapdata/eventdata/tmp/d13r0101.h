@@ -9,11 +9,13 @@
 #ifndef ZONE_D13R0101_EVC_H
 #define ZONE_D13R0101_EVC_H
 
+#define D13R0101_ASSISTANTM_01             0
 
 #endif //ZONE_D13R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d13r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_D13R0101_EVB_H
 #define ZONE_D13R0101_EVB_H
 
+#define BG_D13R0101_PC_01                 0
 
 #endif //ZONE_D13R0101_EVB_H

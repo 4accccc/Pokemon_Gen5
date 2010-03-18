@@ -753,7 +753,7 @@
 #define FV_C03R0401_BOY1_01                729 /* 0x02d9 ヒウンシティビル：映画関連ゾロアイベントの少年（ゾロア） */
 #define FV_C03R0401_GIRL1_01               730 /* 0x02da ヒウンシティビル：映画関連ゾロアイベントの少女 */
 #define FV_C03R0401_POKE22_01              731 /* 0x02db ヒウンシティビル：映画関連ゾロアイベントのゾロア */
-		/* not used   732(0x02dc) */
+#define FV_D13R0101_ASSISTANTM_01          732 /* 0x02dc P2ラボ：配布インセクタイベントの研究員 */
 		/* not used   733(0x02dd) */
 		/* not used   734(0x02de) */
 		/* not used   735(0x02df) */
