@@ -123,10 +123,11 @@
 #define ANMID_FISHINGHERO 15 //自機釣り
 #define ANMID_CUTINHERO 16 //カットイン自機
 #define ANMID_YUREHERO 17 //尾瀬揺れ自機
-#define ANMID_SHIN_MU 18 //ポケモン　シン・ム
+#define ANMID_SHIN_MU_A 18 //ポケモン　シン・ム　その１
 #define ANMID_SPIDER 19 //くもの巣
 #define ANMID_ACT0 20 //人物汎用 反転未使用+演技
 #define ANMID_MELODYER 21 //ポケモン メロディア
+#define ANMID_SHIN_MU_B 22 //ポケモン　シン・ム　その２
 
 //SEX 性別で指定するシンボルです。
 #define SEX_MALE 0
