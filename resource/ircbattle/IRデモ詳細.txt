@@ -1,0 +1,17 @@
+IRデモ詳細
+
+●キャラデータ
+　・ir_demo.ncg　→BG用
+　・ir_demo_ani.ncg　→OAM用（各アニメの配置は『ir_domoチェック用』のプレビューデータ参照）
+
+●BGデータ
+　・ir_demo1.nsc　→使用していません
+　・ir_demo2.nsc　→背景（4人通信と2人通信両方入っています）
+
+●OAMデータ
+　・ir_ani.nce　→アニメデータ
+
+●パレット
+　・ir_demo.ncl　→BG用
+　・ir_demo_ani.ncl　→BGパレットアニメ用（ループではなく、０～８→８～０のリバースアニメ）
+　・ir_demo_obj.ncl　→OAM用
