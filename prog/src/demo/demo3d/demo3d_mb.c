@@ -9,6 +9,7 @@
  */
 //=============================================================================
 #include <gflib.h>
+#include <tcbl.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
 
@@ -56,7 +57,7 @@ struct _DEMO3D_MBL_WORK {
 	GXVRamLCDC			lcdc;		// 元のLCDC
 	DEMO3D_MBL_PARAM	data;		// モーションブラー初期化パラメータ
 	BOOL				init_flg;
-	GFL_TCB*			tcb;	
+	GFL_TCBL*			tcb;	
 };//DEMO3D_MBL_WORK;
 
 //=============================================================================
@@ -64,9 +65,9 @@ struct _DEMO3D_MBL_WORK {
  *							プロトタイプ宣言
  */
 //=============================================================================
-static DEMO3D_MBL_WORK * MotionBlInit( GFL_TCBSYS* tcbsys, DEMO3D_MBL_PARAM * prm );
+static DEMO3D_MBL_WORK * MotionBlInit( GFL_TCBLSYS* tcbsys, DEMO3D_MBL_PARAM * prm );
 static void MotionBlDelete( DEMO3D_MBL_WORK * mb, GXDispMode dispMode, GXBGMode bgMode, GXBG0As bg0_2d3d );
-static void MotionBlTask( GFL_TCB* tcb, void * work );
+static void MotionBlTask( GFL_TCBL* tcb, void * work );
 static void VBlankLCDCChange( GFL_TCB* tcb, void* work );
 static void MotionBlCapture( DEMO3D_MBL_PARAM * p_data );
 
@@ -86,7 +87,7 @@ static void MotionBlCapture( DEMO3D_MBL_PARAM * p_data );
  * @return	FLD_MOTION_BL_PTR	モーションブラーポインタ
  */
 //--------------------------------------------------------------------------------------------
-DEMO3D_MBL_WORK * DEMO3D_MotionBlInit( GFL_TCBSYS* tcbsys, int eva, int evb )
+DEMO3D_MBL_WORK * DEMO3D_MotionBlInit( GFL_TCBLSYS* tcbsys, int eva, int evb )
 {
 	DEMO3D_MBL_WORK * wk;
 
@@ -167,17 +168,15 @@ void DEMO3D_MotionBlExit( DEMO3D_MBL_WORK * mb )
  *@return	モーションブラーワーク
  */
 //-----------------------------------------------------------------------------
-static DEMO3D_MBL_WORK * MotionBlInit( GFL_TCBSYS* tcbsys, DEMO3D_MBL_PARAM * prm )
+static DEMO3D_MBL_WORK * MotionBlInit( GFL_TCBLSYS* tcbsys, DEMO3D_MBL_PARAM * prm )
 {
 	DEMO3D_MBL_WORK * mb;
-	GFL_TCB* task;
+	GFL_TCBL* task;
 	
 	// モーションブラータスクをセット
-//	task = PMDS_taskAdd( MotinBlTask, sizeof(DEMO3D_MBL_WORK), 5, prm->heap_id );
-  mb = GFL_HEAP_AllocClearMemory( prm->heap_id, sizeof(DEMO3D_MBL_WORK) );
-  task = GFL_TCB_AddTask( tcbsys, MotionBlTask, mb, 5 );
+  task = GFL_TCBL_Create( tcbsys, MotionBlTask, sizeof(DEMO3D_MBL_WORK), 5 );
 
-//	mb = GFL_TCB_GetWork( task );
+	mb = GFL_TCBL_GetWork( task );
 	mb->data = *prm;
 	mb->tcb = task;
 	mb->init_flg = FALSE;
@@ -230,7 +229,7 @@ static void MotionBlDelete( DEMO3D_MBL_WORK * mb, GXDispMode dispMode, GXBGMode 
 	}
 
 	// タスク破棄
-	GFL_TCB_DeleteTask( mb->tcb );
+	GFL_TCBL_Delete( mb->tcb );
 
   // ワーク破棄
   GFL_HEAP_FreeMemory( mb );
@@ -246,7 +245,7 @@ static void MotionBlDelete( DEMO3D_MBL_WORK * mb, GXDispMode dispMode, GXBGMode 
  * @return	none
  */
 //-----------------------------------------------------------------------------
-static void MotionBlTask( GFL_TCB* tcb, void * work )
+static void MotionBlTask( GFL_TCBL* tcb, void * work )
 {
 	DEMO3D_MBL_WORK * mb = work;
 	

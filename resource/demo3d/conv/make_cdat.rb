@@ -41,6 +41,7 @@ CMD_PARAM_END = CMD_PARAM_MAX-1
 #データテーブル
 $onoff_list = ["OFF","ON"]
 $frame_rate_list = ["60fps","30fps"]
+$frame_rate_time = ["60","30"]
 $timezone_list = ["TIMEZONE_NONE","TIMEZONE_MORNING","TIMEZONE_NOON","TIMEZONE_EVENING","TIMEZONE_NIGHT","TIMEZONE_MIDNIGHT"]
 $timezone_suffix = ["","_morning","_noon","_evening","_night","_midnight"]
 
@@ -48,7 +49,7 @@ $nsx_list = ["nsbtp","nsbta","nsbca","nsbma","nsbva"]
 
 #構造体定義
 $_scene = Struct.new("SceneParam",\
-	:frame_rate, :camera_name, :zone_id, :bgm_no, :fovy_sin, :fovy_cos, :near, :far, :aspect, \
+	:frame_rate, :rate_time, :camera_name, :zone_id, :bgm_no, :fovy_sin, :fovy_cos, :near, :far, :aspect, \
   :alpha_sort_mode, :buffer_mode, :scale_w, \
 	:double_view_f, :dview_main_ofs, :dview_sub_ofs, \
   :alpha_blend_f, :alpha_test_f, :alpha_test_val, \
@@ -64,138 +65,8 @@ $_unit = Struct.new("Unit", :time_zone_f, :unit_name, :unit_num, :unit_tbl )
 
 $_scene_unit = Struct.new("SceneUnit", :main_name, :chg_type, :chg_tbl )
 
-$_command = Struct.new("Command", :command, :frame, :param )
-
-$_cmd_prm = Struct.new("CommandParam", :min, :max, :def_key)
-
-class CDemo3DCmd
-  attr  :name
-  attr  :prm_num
-  attr  :prm_tbl
-
-  def initialize name,prm_num,tbl
-    @name = name
-    @prm_num = prm_num
-
-    @prm_tbl = tbl
-
-    print("GetCmdParam = #{name} -> #{tbl.size}\n")
-  end
-end
-
-#-----------------------------------------------
-# demo3d コマンドパラメータチェッククラス
-# コマンドが増えたらチェック関数を追加する必要があります
-#-----------------------------------------------
-class CDemo3DCmdCheck
-  P_FREE = "0xFFFFFFFF"
-  STR_SE_PARAM_NONE = "PMSND_NOEFFECT"
-
-  def cmd_search key
-    for n in @cmd_tbl do
-      if n.name == key then return n end
-    end
-    print("Error! コマンド名 #{key} は未定義です\n")
-    exit 1;
-    return nil
-  end
-
-  #コマンドパラメータチェック
-  def check key, work
-    cmd = cmd_search( key )
-   
-    print("コマンドテーブルNum = #{@cmd_tbl.size}, cmd_param_num = #{cmd.prm_num}, cmd = #{key}\n")
-    @buf.fill( "DEMO3D_CMD_PARAM_NULL", 0..CMD_PARAM_END )
-   
-    #引数の数をカウント
-    arg_num = 0
-    if work == nil && cmd.prm_num == 0 then
-      return @buf
-    end
-    for i in 0..CMD_PARAM_END do
-      if work[i] == nil || work[i] == "" then break end
-      arg_num += 1
-    end
-    
-    if arg_num < cmd.prm_num then
-      print("Error! コマンド #{key} の引数が足りません #{arg_num}/#{cmd.prm_num}\n")
-      exit 1
-    end
-    
-    if arg_num > cmd.prm_num then
-      print("Error! コマンド #{key} の引数が多すぎます #{arg_num}>#{cmd.prm_num}\n")
-      exit 1
-    end
-
-    if cmd.prm_num == 0 then
-      return @buf
-    end
-
-    for i in 0..(cmd.prm_num-1) do
-      prm = cmd.prm_tbl[i]
-
-      if prm.def_key != nil then
-        val = prm.def_key.fetch(work[i],nil)
-        if val != nil then
-          print("buf#{i}= #{work[i]}\n")
-          @buf[i] = val
-          next
-        end
-      end
-
-      if prm.min != P_FREE && work[i].to_i < prm.min then
-        print("Error! 不正なパラメータ指定 #{work[i]} -> 最小値 = #{prm.min}\n")
-        exit 1
-      end
-      
-      if prm.max != P_FREE && work[i].to_i > prm.max then
-        print("Error! 不正なパラメータ指定 #{work[i]} -> 最大値 = #{prm.max}\n")
-        exit 1
-      end
-
-      print("buf#{i}= #{work[i]}\n")
-      @buf[i] = work[i]
-    end
-
-    return @buf
-  end
-
-  def initialize 
-    @buf = Array.new
- 
-    @prm_se_play = [
-      $_cmd_prm.new( P_FREE, P_FREE, nil ), #SEラベル
-      $_cmd_prm.new( 0, 127, {"---"=>STR_SE_PARAM_NONE} ),       #volume
-      $_cmd_prm.new( -128, 127, { "---"=>STR_SE_PARAM_NONE} ),      #pan
-      $_cmd_prm.new( -32768, 32768, { "---"=>STR_SE_PARAM_NONE } ),  #pitch
-      $_cmd_prm.new( 0, 3, { "---"=>STR_SE_PARAM_NONE } ),  #プレイヤー                
-    ] 
-    @prm_se_stop = [
-      $_cmd_prm.new( P_FREE, P_FREE, nil ), #SEラベル
-    ] 
-    @prm_brightness_req = [
-      $_cmd_prm.new( P_FREE, P_FREE, nil ), #
-      $_cmd_prm.new( -16, 16, nil ), #
-      $_cmd_prm.new( -16, 16, nil ), #
-    ] 
-    @prm_motionbl_start = [
-      $_cmd_prm.new( 0, 31, nil ), #
-      $_cmd_prm.new( 0, 31, nil ), #
-    ] 
-    @prm_none = [
-      $_cmd_prm.new( P_FREE, P_FREE, nil ), #
-    ] 
-    @cmd_tbl = [
-      CDemo3DCmd::new( "SE_PLAY", 5, @prm_se_play),
-      CDemo3DCmd::new( "SE_STOP", 1, @prm_se_stop),
-      CDemo3DCmd::new( "BRIGHTNESS_REQ", 3, @prm_brightness_req),
-      CDemo3DCmd::new( "MOTIONBL_START", 2, @prm_motionbl_start),
-      CDemo3DCmd::new( "MOTIONBL_END", 0, @prm_none),
-      CDemo3DCmd::new( "END", 0, @prm_none),
-    ]
-  end
-end
-
+#コマンド定義
+require 'conv/c_demo3d_cmd_check.rb'
 
 #-----------------------------------------------
 # demo3d リソースデータcsv
@@ -299,7 +170,9 @@ class CDemo3DRes
     fp.puts("static const DEMO3D_CMD_DATA demo3d_cmd_#{@base_name}_#{str}data[] = {")
     com_end = ""
     for n in tbl do
-      buf = " { DEMO3D_CMD_TYPE_#{n.command}, #{n.frame}, { "
+      frame = n.frame.gsub("RATE", @scene.rate_time)
+
+      buf = " { DEMO3D_CMD_TYPE_#{n.command}, #{frame}, { "
       for i in 0..CMD_PARAM_END do
         if n.param[i] == nil || n.param[i] == "" then
           buf += "DEMO3D_CMD_PARAM_NULL, "
@@ -463,6 +336,7 @@ class CDemo3DRes
     #フレームレート
     work = get_line(fp, 2, 1)
     @scene.frame_rate = work[0]
+    @scene.rate_time = $frame_rate_time[$frame_rate_list.index(work[0])]
 
     #カメラ
     work = get_line(fp,2, 1)

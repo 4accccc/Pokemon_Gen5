@@ -33,5 +33,6 @@ typedef struct _DEMO3D_MBL_WORK DEMO3D_MBL_WORK;
  */
 //=============================================================================
 
-extern DEMO3D_MBL_WORK * DEMO3D_MotionBlInit( GFL_TCBSYS* tcbsys, int eva, int evb );
+extern DEMO3D_MBL_WORK* DEMO3D_MotionBlInit( GFL_TCBLSYS* tcbsys, int eva, int evb );
 extern void DEMO3D_MotionBlExit( DEMO3D_MBL_WORK * mb );
+

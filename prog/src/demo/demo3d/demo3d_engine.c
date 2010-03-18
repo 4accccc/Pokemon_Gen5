@@ -29,8 +29,9 @@
 #include "demo3d_local.h"
 #include "demo3d_graphic.h"
 #include "demo3d_data.h"
-#include "demo3d_cmd.h" 
 #include "demo3d_engine.h"
+#include "demo3d_cmdsys.h" 
+#include "demo3d_engine_local.h"
 
 //=============================================================================
 /**
@@ -50,29 +51,6 @@
 //--------------------------------------------------------------
 ///	メインワーク
 //==============================================================
-struct _DEMO3D_ENGINE_WORK {
-  // [IN]
-  DEMO3D_GRAPHIC_WORK*    graphic;
-  DEMO3D_ID               demo_id;
-//  u32                     start_frame;
-
-  // [PRIVATE]
-  BOOL          is_double;
-  fx32          anime_speed;  ///< アニメーションスピード
-  ICA_ANIME*    ica_anime;
-  GFL_G3D_UTIL*   g3d_util;
-  GFL_G3D_CAMERA* camera;
-  fx32 def_top;
-  fx32 def_bottom;
-  DEMO3D_CMD_WORK*  cmd;
-
-  u16* unit_idx; // unit_idx保持（ALLOC)
-
-  //シーンパラメータ保持
-  const DEMO3D_SCENE_DATA* scene;
-  DEMO3D_SCENE_ENV        env;
-};
-
 //=============================================================================
 /**
  *							プロトタイプ宣言
@@ -124,7 +102,7 @@ static void FrustCamera_Delete( GFL_G3D_CAMERA* p_camera )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  3Dグラフィック 初期化
+ *	@brief  demo3dエンジン 初期化
  *
  *	@param	DEMO3D_GRAPHIC_WORK* graphic  グラフィックワーク
  *	@param	DEMO3D_PARAM*
@@ -204,7 +182,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
 		GFUser_SetVIntrFunc(vintrFunc);
   }
   
-  wk->cmd = Demo3D_CMD_Init( wk->demo_id, wk->env.start_frame, heapID );
+  wk->cmd = Demo3D_CMD_Init( wk, heapID );
 
   unit_max = Demo3D_DATA_GetUnitMax( wk->demo_id );
 

@@ -1,43 +1,49 @@
-//============================================================================
+//=============================================================================
 /**
- *
  *	@file		demo3d_cmd.h
- *	@brief  3Dデモコマンド
- *	@author	hosaka genya
- *	@data		2009.12.09
- *
+ *	@brief  3Dデモコマンドローカルヘッダ
+ *	@author Miyuki Iwasawa	
+ *	@data		2010.03.17
  */
-//============================================================================
+//=============================================================================
+
 #pragma once
 
-#include <gflib.h>
+#include "demo3d_graphic.h"
+#include "demo3d_mb.h" 
 
-#include "demo/demo3d.h"
+//データ
+#include "demo3d_data.h"
 
-typedef struct _DEMO3D_CMD_WORK DEMO3D_CMD_WORK;
+#include "demo3d_engine.h"
+#include "demo3d_cmdsys.h"
+#include "demo3d_engine_local.h"
 
-//=============================================================================
-/**
- *								定数定義
- */
-//=============================================================================
+//--------------------------------------------------------------
+///	コマンドワーク
+//==============================================================
+struct _DEMO3D_CMD_WORK {
+  // [IN]
+  HEAPID heapID;
+  HEAPID tmpHeapID;
+  DEMO3D_ID demo_id;
+ 
+  // [PRIVATE]
+  BOOL  is_cmd_end;
+  int   pre_frame; ///< 1sync=1
+  int   cmd_idx;
 
-//=============================================================================
-/**
- *								構造体定義
- */
-//=============================================================================
+  //コマンド制御
+  DEMO3D_ENGINE_WORK* core;
 
-//=============================================================================
-/**
- *								EXTERN宣言
- */
-//=============================================================================
+  GFL_TCBLSYS*  tcbsys;
 
+  GFL_FONT *fontHandle;
+  PRINT_QUE *printQue;
+  PRINT_STREAM* printStream;
+  
+  DEMO3D_MBL_WORK* mb;
+};
 
-extern DEMO3D_CMD_WORK* Demo3D_CMD_Init( DEMO3D_ID demo_id, u32 start_frame, HEAPID heap_id );
-
-extern void Demo3D_CMD_Exit( DEMO3D_CMD_WORK* wk );
-
-extern void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, fx32 now_frame );
+extern void (*DATA_Demo3D_CmdTable[ DEMO3D_CMD_TYPE_MAX ])();
 

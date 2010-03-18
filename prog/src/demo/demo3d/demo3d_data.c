@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
+#include "system/brightness.h"
 
 #include "system/main.h"
 #include "system/ica_anime.h"
