@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/17 18:36:04
+#save date:2010/03/18 17:50:33
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h04.wms
 #SECTION START:OBJ_EVENT
@@ -9,14 +9,14 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h04.wms
 #hold event type:
 1
 #hold event number:
-4
+13
 #event number: 0
 #type
 1
 #ID name
-H04_WHISLE
+H04_WAITRESS_01
 #OBJ CODE Number
-GRASSSOUND
+WAITRESS
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_H04_WHISLE
+SCRID_H04_WAITRESS_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -40,12 +40,260 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-280 0 -200
+936 0 -504
 #event number: 1
 #type
 1
 #ID name
-H04_GUITER
+H04_MAN1_01
+#OBJ CODE Number
+MAN1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_MAN1_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+968 0 -552
+#event number: 2
+#type
+1
+#ID name
+H04_POKE17_01
+#OBJ CODE Number
+POKE17
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_POKE17_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1080 0 -552
+#event number: 3
+#type
+1
+#ID name
+H04_POKE20_01
+#OBJ CODE Number
+POKE20
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_POKE20_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1080 0 -600
+#event number: 4
+#type
+1
+#ID name
+H04_POKE19_01
+#OBJ CODE Number
+POKE19
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_POKE19_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+984 0 -600
+#event number: 5
+#type
+1
+#ID name
+H04_PIKACHU_01
+#OBJ CODE Number
+PIKACHU
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_PIKACHU_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+984 0 -552
+#event number: 6
+#type
+1
+#ID name
+H04_GIRL2_01
+#OBJ CODE Number
+GIRL2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_GIRL2_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+968 0 -600
+#event number: 7
+#type
+1
+#ID name
+H04_WOMAN1_01
+#OBJ CODE Number
+WOMAN1
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_WOMAN1_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1064 0 -552
+#event number: 8
+#type
+1
+#ID name
+H04_MAN3_01
+#OBJ CODE Number
+MAN3
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_MAN3_01
+#Direction Type Number
+DIR_UP
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1064 0 -600
+#event number: 9
+#type
+1
+#ID name
+H04_GUITAR_01
 #OBJ CODE Number
 GUITAR
 #MOVE CODE Number
@@ -55,7 +303,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_H04_GUITER
+SCRID_H04_GUITAR_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -71,43 +319,12 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-296 0 -200
-#event number: 2
+184 0 -440
+#event number: 10
 #type
 1
 #ID name
-H04_VOICE
-#OBJ CODE Number
-MIDDLEMAN2
-#MOVE CODE Number
-MV_DMY
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_H04_VOICE
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-312 0 -200
-#event number: 3
-#type
-1
-#ID name
-H04_LEADERSINGER
+H04_LEADSINGER_01
 #OBJ CODE Number
 MIDDLEMAN1
 #MOVE CODE Number
@@ -117,7 +334,7 @@ EV_TYPE_NORMAL
 #Flag Name
 0
 #Event Script Name
-SCRID_H04_LEADERSINGER
+SCRID_H04_LEADSINGER_01
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -133,7 +350,69 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-328 0 -200
+200 0 -440
+#event number: 11
+#type
+1
+#ID name
+H04_VOICE_01
+#OBJ CODE Number
+MIDDLEMAN2
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_VOICE_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+216 0 -440
+#event number: 12
+#type
+1
+#ID name
+H04_GRASSSOUND_01
+#OBJ CODE Number
+GRASSSOUND
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_H04_GRASSSOUND_01
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+232 0 -440
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -143,7 +422,46 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+3
+#event number: 0
+#Bg Event Label
+BG_H04_SIGN_03
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_H04_SIGN_03
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1112 0 -472
+#event number: 1
+#Bg Event Label
+BG_H04_SIGN_01
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_H04_SIGN_01
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-120 0 72
+#event number: 2
+#Bg Event Label
+BG_H04_SIGN_02
+#Bg Event Type
+BG_TALK_TYPE_BOARD
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_DOWN
+#Bg Script Name
+SCRID_BG_H04_SIGN_02
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1192 0 -104
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -153,7 +471,58 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+3
+#event number: 0
+#Pos Event Label
+POS_H04_WAITRESS
+#Pos Script Name
+SCRID_POS_H04_WAITRESS
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+904 0 -504
+#size
+1 6
+#event number: 1
+#Pos Event Label
+POS_H04_WAITRESS
+#Pos Script Name
+SCRID_POS_H04_WAITRESS
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1016 0 -472
+#size
+6 1
+#event number: 2
+#Pos Event Label
+POS_H04_WAITRESS
+#Pos Script Name
+SCRID_POS_H04_WAITRESS
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1128 0 -488
+#size
+1 8
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -165,108 +534,6 @@ EVENTDATA_POSTYPE_GRID
 #hold event number:
 8
 #event number: 0
-#Door Event Label
-DOOR_ID_H04_H04R0101_EXIT01
-#Next Zone ID Name
-ZONE_ID_H04R0101
-#Next Door ID Name
-DOOR_ID_H04R0101_H04_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 32 -168
-#size
-1 1
-#event number: 1
-#Door Event Label
-DOOR_ID_H04_H04R0201_EXIT01
-#Next Zone ID Name
-ZONE_ID_H04R0201
-#Next Door ID Name
-DOOR_ID_H04R0201_H04_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-520 64 -168
-#size
-1 1
-#event number: 2
-#Door Event Label
-DOOR_ID_H04_H04R0301_EXIT01
-#Next Zone ID Name
-ZONE_ID_H04R0301
-#Next Door ID Name
-DOOR_ID_H04R0301_H04_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-632 96 -168
-#size
-1 1
-#event number: 3
-#Door Event Label
-DOOR_ID_H04_H04R0401_EXIT01
-#Next Zone ID Name
-ZONE_ID_H04R0401
-#Next Door ID Name
-DOOR_ID_H04R0401_H04_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1416 96 -168
-#size
-1 1
-#event number: 4
-#Door Event Label
-DOOR_ID_H04_H04R0501_EXIT01
-#Next Zone ID Name
-ZONE_ID_H04R0501
-#Next Door ID Name
-DOOR_ID_H04R0501_H04_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1528 64 -168
-#size
-1 1
-#event number: 5
-#Door Event Label
-DOOR_ID_H04_H04R0601_EXIT01
-#Next Zone ID Name
-ZONE_ID_H04R0601
-#Next Door ID Name
-DOOR_ID_H04R0601_H04_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_DOOR
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1640 32 -168
-#size
-1 1
-#event number: 6
 #Door Event Label
 DOOR_ID_H04_R11R0101_EXIT01
 #Next Zone ID Name
@@ -283,7 +550,7 @@ EVENTDATA_POSTYPE_GRID
 -216 0 -248
 #size
 1 3
-#event number: 7
+#event number: 1
 #Door Event Label
 DOOR_ID_H04_R12R0101_EXIT01
 #Next Zone ID Name
@@ -297,8 +564,110 @@ EXIT_TYPE_WALL
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-1800 0 -248
+1240 0 -232
 #size
 1 3
+#event number: 2
+#Door Event Label
+DOOR_ID_H04_H04R0101_EXIT01
+#Next Zone ID Name
+ZONE_ID_H04R0101
+#Next Door ID Name
+DOOR_ID_H04R0101_H04_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-40 32 -168
+#size
+1 1
+#event number: 3
+#Door Event Label
+DOOR_ID_H04_H04R0201_EXIT01
+#Next Zone ID Name
+ZONE_ID_H04R0201
+#Next Door ID Name
+DOOR_ID_H04R0201_H04_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+72 64 -168
+#size
+1 1
+#event number: 4
+#Door Event Label
+DOOR_ID_H04_H04R0301_EXIT01
+#Next Zone ID Name
+ZONE_ID_H04R0301
+#Next Door ID Name
+DOOR_ID_H04R0301_H04_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 96 -168
+#size
+1 1
+#event number: 5
+#Door Event Label
+DOOR_ID_H04_H04R0601_EXIT01
+#Next Zone ID Name
+ZONE_ID_H04R0601
+#Next Door ID Name
+DOOR_ID_H04R0601_H04_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1064 32 -168
+#size
+1 1
+#event number: 6
+#Door Event Label
+DOOR_ID_H04_H04R0501_EXIT01
+#Next Zone ID Name
+ZONE_ID_H04R0501
+#Next Door ID Name
+DOOR_ID_H04R0501_H04_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+952 64 -168
+#size
+1 1
+#event number: 7
+#Door Event Label
+DOOR_ID_H04_H04R0401_EXIT01
+#Next Zone ID Name
+ZONE_ID_H04R0401
+#Next Door ID Name
+DOOR_ID_H04R0401_H04_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+840 94 -168
+#size
+1 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
