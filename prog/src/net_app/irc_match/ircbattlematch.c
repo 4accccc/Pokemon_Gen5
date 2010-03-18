@@ -1709,6 +1709,7 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
   if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND){
     int num1 = WifiList_GetFriendDataNum( GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ); //WIFILIST_FRIEND_MAX
     if(num1==WIFILIST_FRIEND_MAX){
+      pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
       _CHANGE_STATE(pWork,_waitFinish);        // I‚í‚è()
       pWork->timer = _FULL_TIMER;
       return;
@@ -1938,6 +1939,7 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
 {
   IRC_BATTLE_MATCH* pWork = mywk;
 
+  pWork->pBattleWork->selectType = pWork->selectType;
 
   if(pWork->pAppTask){
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
