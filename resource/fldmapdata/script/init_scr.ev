@@ -221,6 +221,9 @@ init_flags:
 	_FLAG_SET( FV_C03CENTER_DANCER_01 )
 	_FLAG_SET( FV_C03CENTER_DANCER_02 )
 
+	//映画関連ゾロアイベントのゾロア。イベント起動で表示。
+	_FLAG_SET( FV_C03R0401_POKE22_01 )
+
 }
 _RET
 
