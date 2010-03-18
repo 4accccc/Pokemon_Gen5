@@ -75,7 +75,7 @@ EVENT_START		ev_c03r0901_musician_01
       _TIME_WAIT( MERODHIA_DANCE_WAIT )
       
       //ダンス開始
-//      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia )//@todo
+      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia )
       
       //ウェイト
       _TIME_WAIT( MERODHIA_RISE_WAIT ) 
@@ -102,9 +102,9 @@ EVENT_START		ev_c03r0901_musician_01
       _SYSWIN_MSG( msg_c03r0901_narrator_01, POS_DOWN )
       _SYSWIN_CLOSE()
 
-
       //メロディア着地
-
+      _EVENT_RISE_OBJ( MMDL_ID_EVENTOBJ_00, 0, 24 )
+      
       //カメラもどし
       _CAMERA_DEF_MOVE( 30 )
       _CAMERA_WAIT_MOVE()	//カメラ移動待ち
@@ -254,11 +254,11 @@ _ANIME_LABEL	anm_player_move_right
 //　メロディアアニメ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_merodhia
-  _ANIME_DATA	AC_MELODYER_SHAKE,7
+  _ANIME_DATA	AC_MELODYER_SHAKE,3
   _ANIME_DATA	AC_MELODYER_SPIN,7
   _ANIME_DATA	AC_MELODYER_SPIN_POSE,1
 	_ANIME_DATA	ACMD_END,0
-  
+
 /**************************************************************/
 /* 			WAITER（アイテム入手）	C03R0901				  */
 /**************************************************************/
