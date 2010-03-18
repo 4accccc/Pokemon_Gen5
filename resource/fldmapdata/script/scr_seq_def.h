@@ -6756,11 +6756,11 @@
 //--------------------------------------------------------------
 //図鑑
 #define _CALL_ZUKAN_AWARD( demo_id, pattern ) \
-    _ASM_CALL_ZUKAN_AWARD demo_id, pattern
+    _ASM_ZUKAN_AWARD_PROC_CALL demo_id, pattern
 
 //路線図
 #define _CALL_SUBWAY_ROUTE_MAP() \
-    _ASM_CALL_ZUKAN_AWARD SCR_ZUKAN_AWARD_SUBWAY_ROUTE_MAP, 0 
+    _ASM_ZUKAN_AWARD_PROC_CALL SCR_ZUKAN_AWARD_SUBWAY_ROUTE_MAP, 0 
 
   .macro  _ASM_CALL_ZUKAN_AWARD demo_id, pattern
   .short  EV_SEQ_CALL_ZUKAN_AWARD
@@ -7074,6 +7074,104 @@
   .macro _ASM_GPOWER_USE_EFFECT
   .short EV_SEQ_GPOWER_USE_EFFECT
   .endm
+
+
+//======================================================================
+//
+//
+//  マップフェード関連
+//
+//
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * マップフェードブラックイン
+ * @note 暗転後にアプリ起動などで、マップが破壊される場合はこちらのフェードを使います。
+ 	* _BLACK_IN()は画面を暗くするだけの時にしか使えません。
+ */
+//--------------------------------------------------------------
+#define _MAP_FADE_BLACK_IN() _ASM_MAP_FADE_BLACK_IN
+
+  .macro  _ASM_MAP_FADE_BLACK_IN
+  .short  EV_SEQ_MAP_FADE_BLACK_IN
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * マップフェード季節イン（コンティニュー専用）
+ * @note
+ * 特殊なコンティニュー処理を行うためのスクリプトコマンド。
+ * 通常は使用禁止です。
+ * 現在時刻の季節を表示してからフェードインします。
+ */
+//--------------------------------------------------------------
+#define _MAP_FADE_SEASON_IN_FORCE() _ASM_MAP_FADE_SEASON_IN_FORCE
+
+  .macro  _ASM_MAP_FADE_SEASON_IN_FORCE
+  .short  EV_SEQ_MAP_FADE_SEASON_IN_FORCE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * マップフェードブラックイン（コンティニュー専用）
+ * @note
+ * 特殊なコンティニュー処理を行うためのスクリプトコマンド。
+ * 通常は使用禁止です。
+ */
+//--------------------------------------------------------------
+#define _MAP_FADE_BLACK_IN_FORCE() _ASM_MAP_FADE_BLACK_IN_FORCE
+
+  .macro  _ASM_MAP_FADE_BLACK_IN_FORCE
+  .short  EV_SEQ_MAP_FADE_BLACK_IN_FORCE
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * マップフェードブラックアウト
+ * @note 暗転後にアプリ起動などで、マップが破壊される場合はこちらのフェードを使います。
+ * _BLACK_OUT()は画面を暗くするだけの時にしか使えません。
+ */
+//--------------------------------------------------------------
+#define _MAP_FADE_BLACK_OUT() _ASM_MAP_FADE_BLACK_OUT
+
+  .macro  _ASM_MAP_FADE_BLACK_OUT
+  .short  EV_SEQ_MAP_FADE_BLACK_OUT
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * マップフェードホワイトイン
+ */
+//--------------------------------------------------------------
+#define _MAP_FADE_WHITE_IN() _ASM_MAP_FADE_WHITE_IN
+
+  .macro  _ASM_MAP_FADE_WHITE_IN
+  .short  EV_SEQ_MAP_FADE_WHITE_IN
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * マップフェードホワイトアウト
+ */
+//--------------------------------------------------------------
+#define _MAP_FADE_WHITE_OUT() _ASM_MAP_FADE_WHITE_OUT
+
+  .macro  _ASM_MAP_FADE_WHITE_OUT
+  .short  EV_SEQ_MAP_FADE_WHITE_OUT
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  _DISP_FADE_CHECK　マップ遷移用フェード終了チェック
+ *  @param none
+ */
+//--------------------------------------------------------------
+#define _MAP_FADE_END_CHECK()  _ASM_MAP_FADE_END_CHECK
+
+  .macro  _ASM_MAP_FADE_END_CHECK
+  .short EV_SEQ_MAP_FADE_CHECK
+  .endm
+
 
 //======================================================================
 //
@@ -7757,103 +7855,6 @@
   .short  EV_SEQ_PL_BOAT_CALL_DEMO
   .short  \ret_wk
   .endm
-
-//======================================================================
-//
-//
-//  マップフェード関連
-//
-//
-//======================================================================
-//--------------------------------------------------------------
-/**
- * マップフェードブラックイン
- * @note 暗転後にアプリ起動などで、マップが破壊される場合はこちらのフェードを使います。
- 	* _BLACK_IN()は画面を暗くするだけの時にしか使えません。
- */
-//--------------------------------------------------------------
-#define _MAP_FADE_BLACK_IN() _ASM_MAP_FADE_BLACK_IN
-
-  .macro  _ASM_MAP_FADE_BLACK_IN
-  .short  EV_SEQ_MAP_FADE_BLACK_IN
-  .endm
-
-//--------------------------------------------------------------
-/**
- * マップフェード季節イン（コンティニュー専用）
- * @note
- * 特殊なコンティニュー処理を行うためのスクリプトコマンド。
- * 通常は使用禁止です。
- * 現在時刻の季節を表示してからフェードインします。
- */
-//--------------------------------------------------------------
-#define _MAP_FADE_SEASON_IN_FORCE() _ASM_MAP_FADE_SEASON_IN_FORCE
-
-  .macro  _ASM_MAP_FADE_SEASON_IN_FORCE
-  .short  EV_SEQ_MAP_FADE_SEASON_IN_FORCE
-  .endm
-
-//--------------------------------------------------------------
-/**
- * マップフェードブラックイン（コンティニュー専用）
- * @note
- * 特殊なコンティニュー処理を行うためのスクリプトコマンド。
- * 通常は使用禁止です。
- */
-//--------------------------------------------------------------
-#define _MAP_FADE_BLACK_IN_FORCE() _ASM_MAP_FADE_BLACK_IN_FORCE
-
-  .macro  _ASM_MAP_FADE_BLACK_IN_FORCE
-  .short  EV_SEQ_MAP_FADE_BLACK_IN_FORCE
-  .endm
-
-//--------------------------------------------------------------
-/**
- * マップフェードブラックアウト
- * @note 暗転後にアプリ起動などで、マップが破壊される場合はこちらのフェードを使います。
- * _BLACK_OUT()は画面を暗くするだけの時にしか使えません。
- */
-//--------------------------------------------------------------
-#define _MAP_FADE_BLACK_OUT() _ASM_MAP_FADE_BLACK_OUT
-
-  .macro  _ASM_MAP_FADE_BLACK_OUT
-  .short  EV_SEQ_MAP_FADE_BLACK_OUT
-  .endm
-
-//--------------------------------------------------------------
-/**
- * マップフェードホワイトイン
- */
-//--------------------------------------------------------------
-#define _MAP_FADE_WHITE_IN() _ASM_MAP_FADE_WHITE_IN
-
-  .macro  _ASM_MAP_FADE_WHITE_IN
-  .short  EV_SEQ_MAP_FADE_WHITE_IN
-  .endm
-
-//--------------------------------------------------------------
-/**
- * マップフェードホワイトアウト
- */
-//--------------------------------------------------------------
-#define _MAP_FADE_WHITE_OUT() _ASM_MAP_FADE_WHITE_OUT
-
-  .macro  _ASM_MAP_FADE_WHITE_OUT
-  .short  EV_SEQ_MAP_FADE_WHITE_OUT
-  .endm
-
-//--------------------------------------------------------------
-/**
- *  _DISP_FADE_CHECK　マップ遷移用フェード終了チェック
- *  @param none
- */
-//--------------------------------------------------------------
-#define _MAP_FADE_END_CHECK()  _ASM_MAP_FADE_END_CHECK
-
-  .macro  _ASM_MAP_FADE_END_CHECK
-  .short EV_SEQ_MAP_FADE_CHECK
-  .endm
-
 
 //--------------------------------------------------------------
 /**

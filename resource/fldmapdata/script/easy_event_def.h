@@ -336,3 +336,28 @@
   _POP_WORK   SCWK_PARAM0
   .endm
 
+//======================================================================
+//  表彰状＆路線図アプリ呼び出し
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief 表彰状＆路線図アプリ呼び出し
+ *
+ * @param demo_id
+ * @param pattern
+ */
+//--------------------------------------------------------------
+  .macro _ASM_ZUKAN_AWARD_PROC_CALL demo_id,pattern
+  
+  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_END_CHECK()
+  _FIELD_CLOSE()
+  
+  _ASM_CALL_ZUKAN_AWARD \demo_id,\pattern
+
+  _FIELD_OPEN()
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+ 
+  .endm
+

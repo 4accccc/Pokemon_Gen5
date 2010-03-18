@@ -202,7 +202,6 @@ sub_shop_sell:
  
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
-  _DISP_FADE_END_CHECK()
   _FIELD_CLOSE()
   
   _CALL_BAG_PROC( SCR_BAG_MODE_SELL,ret_mode, ret_item )
