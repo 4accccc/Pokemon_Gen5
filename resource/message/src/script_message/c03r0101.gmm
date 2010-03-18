@@ -415,6 +415,16 @@
 		<language name="JPN_KANJI" width="256">[1:13:アンケート回答:0]</language>
 	</row>
 
+	<row id="msg_c03r0101__choice_yes" text-color="#ffffff,,,,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">はい</language>
+		<language name="JPN_KANJI" width="256">はい</language>
+	</row>
+
+	<row id="msg_c03r0101__choice_no" text-color="#ffffff,,,,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">いいえ</language>
+		<language name="JPN_KANJI" width="256">いいえ</language>
+	</row>
+
 	<row id="msg_c03r0101_assistantm_01_01">
 		<comment>すれ違い調査隊
 
@@ -5821,7 +5831,7 @@ assistantm_01_25へ続く
 じかんと　おかねでは
 『[1:13:アンケート回答:0]』が　おおいようだな▼
 いちばん　だいじに　おもっているのは
-『[1:13:アンケート回答:0]』のようだな▼
+『[1:13:アンケート回答:1]』のようだな▼
 さんこうになった▼
 じぶんにとって　なにが　だいじか▼
 それを　みうしなわないように
@@ -5830,7 +5840,7 @@ assistantm_01_25へ続く
 時間と　お金では
 『[1:13:アンケート回答:0]』が　多いようだな▼
 １番　大事に　思っているのは
-『[1:13:アンケート回答:0]』のようだな▼
+『[1:13:アンケート回答:1]』のようだな▼
 参考になった▼
 自分にとって　何が　大事か▼
 それを　見失わないように

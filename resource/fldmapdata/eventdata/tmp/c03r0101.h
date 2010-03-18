@@ -29,7 +29,5 @@
 #define BGID_PAPER2                       0
 #define BGID_PAPER1                       1
 #define BGID_PAPER3                       2
-#define BGID_PAPER5                       3
-#define BGID_PAPER4                       4
 
 #endif //ZONE_C03R0101_EVB_H

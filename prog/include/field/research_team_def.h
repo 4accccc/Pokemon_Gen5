@@ -31,6 +31,7 @@
 #define RESEARCH_REQ_TYPE_COUNT (0) // 人数調査
 #define RESEARCH_REQ_TYPE_TIME  (1) // 時間調査
 #define RESEARCH_REQ_TYPE_NUM   (2) // 総数
+#define RESEARCH_REQ_TYPE_DUMMY (3) // ダミー
 
 // 調査依頼ID
 #define RESEARCH_REQ_ID_NONE                 (0) // ダミー ( 依頼を受けていない )
