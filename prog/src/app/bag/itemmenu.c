@@ -144,11 +144,11 @@ static void InputNum_Exit( FIELD_ITEMMENU_WORK* pWork );
 static BOOL InputNum_Main( FIELD_ITEMMENU_WORK* pWork );
 //static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
 static void SORT_Type( FIELD_ITEMMENU_WORK* pWork );
-static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork );
+//static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork );
 static u16 SORT_GetABCPrio( u16 item_no );
 static void SORT_Button( FIELD_ITEMMENU_WORK* pWork );
 static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork );
-static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork );
+//static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork );
 static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
 static void SHORTCUT_SetEventItem( FIELD_ITEMMENU_WORK* pWork, int pos );
 static void SHORTCUT_SetPocket( FIELD_ITEMMENU_WORK* pWork );
@@ -182,6 +182,8 @@ static void _itemTrashCancel( FIELD_ITEMMENU_WORK * wk );
 static void _itemSellInputCancel( FIELD_ITEMMENU_WORK * wk );
 static void InitPaletteAnime( FIELD_ITEMMENU_WORK * wk );
 static void ExitPaletteAnime( FIELD_ITEMMENU_WORK * wk );
+static void _sortMessageSet( FIELD_ITEMMENU_WORK * wk );
+static void _sortMessageWait( FIELD_ITEMMENU_WORK * wk );
 
 
 //------------------------------------------------------------------------------
@@ -1605,6 +1607,15 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
       KTST_SetDraw( pWork, TRUE );
     }
     return;
+	// ソート
+	}else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+		if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS ){
+			SORT_Button( pWork );
+	    KTST_SetDraw( pWork, TRUE );
+	    _windowRewrite(pWork);
+	    _CHANGE_STATE( pWork, _sortMessageSet );
+			return;
+		}
 	}
 
   // カーソルなしの状態から入力があった場合、カーソルを表示して抜ける
@@ -2636,6 +2647,7 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
  *  @retval
  */
 //-----------------------------------------------------------------------------
+/*
 static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
@@ -2679,8 +2691,8 @@ static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork )
 
   // 保存
   MYITEM_ITEM_STCopy(pWork->pMyItem, item, pWork->pocketno, FALSE);
-
 }
+*/
 
 #include "itemsort_abc_def.h"
 //-----------------------------------------------------------------------------
@@ -2711,29 +2723,38 @@ static u16 SORT_GetABCPrio( u16 item_no )
 //-----------------------------------------------------------------------------
 static void SORT_Button( FIELD_ITEMMENU_WORK* pWork )
 {
-  // 技マシン・木の実は処理なし
-	if( pWork->pocketno == BAG_POKE_WAZA || pWork->pocketno == BAG_POKE_NUTS ){
-		return;
-	}
+  PMSND_PlaySE( SE_BAG_SORT );
+	GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort, 2 );
 
+
+/*
   if( pWork->sort_mode == 0 ){
     SORT_ABC( pWork );
   }else if( pWork->sort_mode == 1 ){
     SORT_Type( pWork );
   }
-	GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort, 2 );
+*/
 
+/*
   // 大切なものはABCソートのみ
   if( pWork->pocketno != BAG_POKE_EVENT )
   {
     // モードチェンジ
     pWork->sort_mode ^= 1;
   }
+*/
 
+
+}
+
+static void SORT_Main( FIELD_ITEMMENU_WORK* pWork )
+{
+	// @TODO ソート改造中 2010/03/18 by nakahiro
+	if( pWork->pocketno != BAG_POKE_EVENT ){
+		SORT_Type( pWork );
+	}
   // 再描画
   _windowRewrite( pWork );
-
-  PMSND_PlaySE( SE_BAG_SORT );
 }
 
 //-----------------------------------------------------------------------------
@@ -2747,7 +2768,7 @@ static void SORT_Button( FIELD_ITEMMENU_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork )
 {
-  pWork->sort_mode = 0;
+//  pWork->sort_mode = 0;
 
   HOSAKA_Printf("pocketno:%d\n", pWork->pocketno);
 
@@ -2763,12 +2784,14 @@ static void SORT_ModeReset( FIELD_ITEMMENU_WORK* pWork )
  *  @retval
  */
 //-----------------------------------------------------------------------------
+/*
 static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork )
 {
 	if( GFL_CLACT_WK_CheckAnmActive( pWork->clwkSort ) == FALSE ){
 		GFL_CLACT_WK_SetAnmSeq( pWork->clwkSort, 0 );
 	}
 }
+*/
 
 //-----------------------------------------------------------------------------
 /**
@@ -3338,47 +3361,53 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     return;
   }
 
+	// バッグ
   if(BAG_POKE_MAX > bttnid){
     int id2no[]={1,2,3,4,0};
     pocketno = id2no[bttnid];  //どうぐのあたりが広い為、順番を最後にしている
     KTST_SetDraw( pWork, FALSE );
-  }
-  else if(BUTTONID_LEFT == bttnid){
+	// ポケット切り替え左ボタン
+  }else if(BUTTONID_LEFT == bttnid){
     pocketno = pWork->pocketno;
     pocketno--;
     if(pocketno < 0){
       pocketno = BAG_POKE_MAX-1;
     }
 		GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_LEFT], APP_COMMON_BARICON_CURSOR_LEFT_ON );
-  }
-  else if(BUTTONID_RIGHT == bttnid){
+	// ポケット切り替え右ボタン
+  }else if(BUTTONID_RIGHT == bttnid){
     pocketno = pWork->pocketno;
     pocketno++;
     if(pocketno >= BAG_POKE_MAX){
       pocketno = 0;
     }
 		GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_RIGHT], APP_COMMON_BARICON_CURSOR_RIGHT_ON );
-  }
-  else if(BUTTONID_SORT == bttnid){
-    // ソートボタン
-    SORT_Button( pWork );
-  }
-  else if(BUTTONID_CHECKBOX == bttnid){
+	// ソートボタン
+  }else if(BUTTONID_SORT == bttnid){
+	  // 技マシン・木の実は処理なし
+		if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS ){
+			SORT_Button( pWork );
+	    KTST_SetDraw( pWork, FALSE );
+	    _windowRewrite(pWork);
+			_CHANGE_STATE( pWork, _sortMessageSet );
+	  }
+	// Ｙ登録ボタン
+	}else if(BUTTONID_CHECKBOX == bttnid){
     SHORTCUT_SetPocket( pWork );
-  }
-  else if(BUTTONID_EXIT == bttnid){
+		KTST_SetDraw( pWork, FALSE );
+		_windowRewrite(pWork);
+	// 終了ボタン
+  }else if(BUTTONID_EXIT == bttnid){
     pWork->ret_code = BAG_NEXTPROC_EXIT;
-//    _CHANGE_STATE(pWork, NULL);
     SetEndButtonAnime( pWork, 1, NULL );
     _CHANGE_STATE( pWork, _endButtonAnime );
-  }
-  else if(BUTTONID_RETURN == bttnid){
+	// 戻るボタン
+  }else if(BUTTONID_RETURN == bttnid){
     pWork->ret_code = BAG_NEXTPROC_RETURN;
-//    _CHANGE_STATE(pWork, NULL);
     SetEndButtonAnime( pWork, 0, NULL );
     _CHANGE_STATE( pWork, _endButtonAnime );
-  }
-  else if((bttnid >= BUTTONID_ITEM_AREA) && (bttnid < BUTTONID_CHECK_AREA)){
+	// リスト
+  }else if((bttnid >= BUTTONID_ITEM_AREA) && (bttnid < BUTTONID_CHECK_AREA)){
     // アイテム選択シーケンスでの操作
     if(_itemKindSelectMenu == pWork->state){
       int backup = pWork->curpos;
@@ -3415,9 +3444,8 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       _CHANGE_STATE( pWork, _listSelectAnime );
     }
     return;
-  }
   // チェックボックス
-  else if(bttnid >= BUTTONID_CHECK_AREA){
+  }else if(bttnid >= BUTTONID_CHECK_AREA){
     int no = bttnid - BUTTONID_CHECK_AREA;
     SHORTCUT_SetEventItem( pWork, no );
   }
@@ -3642,7 +3670,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
 
   state(pWork);
   _dispMain(pWork);
-  SORT_Draw(pWork);
+//  SORT_Draw(pWork);
 
   PRINTSYS_QUE_Main(pWork->SysMsgQue);
 
@@ -3920,4 +3948,45 @@ static void ExitPaletteAnime( FIELD_ITEMMENU_WORK * wk )
 {
 	PaletteFadeWorkAllocFree( wk->pfd, FADE_MAIN_OBJ );
 	PaletteFadeFree( wk->pfd );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ソートメッセージ表示
+ */
+//--------------------------------------------------------------------------------------------
+static void _sortMessageSet( FIELD_ITEMMENU_WORK * wk )
+{
+  if( GFL_CLACT_WK_CheckAnmActive( wk->clwkSort ) == FALSE ){
+		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 0 );
+		SORT_Main( wk );
+		GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkScroll, FALSE );
+		GFL_MSG_GetString( wk->MsgManager, mes_bag_113, wk->pExpStrBuf );
+		ITEMDISP_ItemInfoWindowDispEx( wk, FALSE );
+		ITEMDISP_ChangeRetButtonActive( wk, FALSE );
+		ITEMDISP_ChangeActive( wk, FALSE );
+		_CHANGE_STATE( wk, _sortMessageWait );
+  }
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ソートメッセージウェイト
+ */
+//--------------------------------------------------------------------------------------------
+static void _sortMessageWait( FIELD_ITEMMENU_WORK * wk )
+{
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+		KTST_SetDraw( wk, TRUE );
+	}else if( GFL_UI_TP_GetTrg() ){
+		KTST_SetDraw( wk, FALSE );
+	}else{
+		return;
+	}
+
+	_windowRewrite( wk );
+	ITEMDISP_ListPlateClear( wk );
+	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkScroll, TRUE );
+	ITEMDISP_ChangeActive( wk, TRUE );
+	_CHANGE_STATE( wk, _itemKindSelectMenu );
 }

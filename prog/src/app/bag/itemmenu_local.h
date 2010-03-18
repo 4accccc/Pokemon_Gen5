@@ -248,7 +248,7 @@ struct _FIELD_ITEMMENU_PARAM {
   int ret_code2;
   int ret_item;       ///< 選んだアイテム
   
-  BOOL sort_mode;     ///< ソートモード
+//  BOOL sort_mode;     ///< ソートモード
 
 
 	BLINKPALANM_WORK * blwk;
