@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-03-18T17:41:57"/>
+	<create user="nakamura_akira" host="W00161" date="2010-03-18T20:26:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -477,10 +477,8 @@ assistantm_01_06へ続く
 [トレーナー名:1]＝主人公名</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">たいいんの　しごとは　ただひとつ！▼
-ちょうさたいほんぶに　あつめられる
+		<language name="JPN" width="256">たいいんの　しごとは　ただひとつ！
 ちょうさいらいを　ちょうさすることだ▼
-ちょうさほうほうは　かんたんだ▼
 まず　わたしから
 ちょうさいらいを　うける▼
 そして　ちょうさレーダーで　
@@ -493,9 +491,7 @@ assistantm_01_06へ続く
 [1:00:トレーナー名:1]たいいん！　キミの
 かつやくを　きたいしているぞ！</language>
 		<language name="JPN_KANJI" width="256">隊員の　仕事は　ただひとつ！▼
-調査隊本部に　集められる
 調査依頼を　調査することだ▼
-調査方法は　簡単だ
 まず　わたしから　調査依頼を　受ける▼
 そして　調査レーダーで　
 調べたい　調査を　選ぶ▼
