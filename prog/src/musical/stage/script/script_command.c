@@ -992,12 +992,18 @@ SCRIPT_FUNC_DEF( PokeAttentionOn )
 {
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
-  const s32 pokeNo = ScriptFunc_GetValueS32();
+  const s32 pokeNoTemp = ScriptFunc_GetValueS32();
+  const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
+  u8 pokeNo;
   SCRIPT_PRINT_LABEL(PokeAttentionOn);
 
-  GF_ASSERT_MSG( pokeNo != -1 , "事前設定不可！(ポケモン番号が-1!!)\n" );
-
-  STA_ACT_SetLightUpFlg( work->actWork , pokeNo , TRUE );
+  for( pokeNo=0;pokeNo<MUSICAL_POKE_MAX;pokeNo++ )
+  {
+    if( pokeNoBit & (1<<pokeNo) )
+    {
+      STA_ACT_SetLightUpFlg( work->actWork , pokeNo , TRUE );
+    }
+  }
 
   return SFT_CONTINUE;
 }
@@ -1825,42 +1831,50 @@ SCRIPT_FUNC_DEF( LightMoveTrace )
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   const s32 lightNo = ScriptFunc_GetValueS32();
-  const s32 pokeNo = ScriptFunc_GetValueS32();
+  const s32 pokeNoTemp = ScriptFunc_GetValueS32();
+  const s32 pokeNoBit = ScriptFunc_GetPokeBit( scriptWork , pokeNoTemp );
   const s32 frame = ScriptFunc_GetValueS32();
   const fx32 ofsX = ScriptFunc_GetValuefx32();
   const fx32 ofsY = ScriptFunc_GetValuefx32();
   //現在Zは使えない
   const fx32 ofsZ = ScriptFunc_GetValuefx32();
+  u8 pokeNo;
   
   STA_LIGHT_SYS  *lightSys = STA_ACT_GetLightSys( work->actWork );
   STA_LIGHT_WORK *lightWork = STA_ACT_GetLightWork( work->actWork , lightNo );
   STA_POKE_SYS  *pokeSys = STA_ACT_GetPokeSys( work->actWork );
-  STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
   SCRIPT_PRINT_LABEL(LightMoveTrace);
   
-  if( frame == 0 )
+  for( pokeNo=0;pokeNo<MUSICAL_POKE_MAX;pokeNo++ )
   {
-    VecFx32 pos,ofs;
-    STA_POKE_GetPosition( pokeSys , pokeWork , &pos );
-    VEC_Set( &ofs , ofsX,ofsY,ofsZ );
-    VEC_Add( &pos,&ofs,&pos );
-    STA_LIGHT_SetPosition( lightSys , lightWork , &pos );
-  }
-  else
-  {
-    STA_AUDI_SYS *audiSys = STA_ACT_GetAudienceSys( work->actWork );
-    MOVE_TRACE_LIGHT_VEC *moveTraceLight;
-    moveTraceLight = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_TRACE_LIGHT_VEC ));
-    moveTraceLight->scriptSys = work;
-    moveTraceLight->trgPokeNo = pokeNo;
-    moveTraceLight->lightWork = lightWork;
-    moveTraceLight->moveWork.actWork = work->actWork;
-    moveTraceLight->moveWork.pokeWork = pokeWork;
-    moveTraceLight->moveWork.step = 0;
-    VEC_Set( &moveTraceLight->moveWork.ofs , ofsX,ofsY,ofsZ );
-    moveTraceLight->moveWork.frame = frame;
-    
-    moveTraceLight->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveTraceLightTCB , (void*)moveTraceLight , SCRIPT_TCB_PRI_LOW );
+    STA_POKE_WORK *pokeWork = STA_ACT_GetPokeWork( work->actWork , (u8)pokeNo );
+    if( pokeNoBit & (1<<pokeNo) )
+    {
+      if( frame == 0 )
+      {
+        VecFx32 pos,ofs;
+        STA_POKE_GetPosition( pokeSys , pokeWork , &pos );
+        VEC_Set( &ofs , ofsX,ofsY,ofsZ );
+        VEC_Add( &pos,&ofs,&pos );
+        STA_LIGHT_SetPosition( lightSys , lightWork , &pos );
+      }
+      else
+      {
+        STA_AUDI_SYS *audiSys = STA_ACT_GetAudienceSys( work->actWork );
+        MOVE_TRACE_LIGHT_VEC *moveTraceLight;
+        moveTraceLight = GFL_HEAP_AllocMemory( work->heapId , sizeof( MOVE_TRACE_LIGHT_VEC ));
+        moveTraceLight->scriptSys = work;
+        moveTraceLight->trgPokeNo = pokeNo;
+        moveTraceLight->lightWork = lightWork;
+        moveTraceLight->moveWork.actWork = work->actWork;
+        moveTraceLight->moveWork.pokeWork = pokeWork;
+        moveTraceLight->moveWork.step = 0;
+        VEC_Set( &moveTraceLight->moveWork.ofs , ofsX,ofsY,ofsZ );
+        moveTraceLight->moveWork.frame = frame;
+        
+        moveTraceLight->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveTraceLightTCB , (void*)moveTraceLight , SCRIPT_TCB_PRI_LOW );
+      }
+    }
   }
   
   return SFT_CONTINUE;
