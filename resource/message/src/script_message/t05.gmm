@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-02-24T19:00:29"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-03-08T19:21:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="505" top="78" right="1210" bottom="698" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -314,7 +314,8 @@
 	<row id="msg_t05_railfan_01">
 		<comment>♂
 カメラ決定のための実験用NPC
-・仮メッセージ</comment>
+・仮メッセージ
+はい／いいえ選択表示</comment>
 		<attribute name="キャラ指定">鉄道うんちく
 MAN3（仮）</attribute>
 		<language name="JPN" width="256">きみも　あの　でんしゃが
@@ -326,7 +327,8 @@ MAN3（仮）</attribute>
 	<row id="msg_t05_railfan_02">
 		<comment>♂
 カメラ決定のための実験用NPC
-・仮メッセージ</comment>
+・仮メッセージ
+「はい」を選択</comment>
 		<attribute name="キャラ指定">鉄道うんちく
 MAN3（仮）</attribute>
 		<language name="JPN" width="256">よしきた！▼</language>
@@ -336,7 +338,8 @@ MAN3（仮）</attribute>
 	<row id="msg_t05_railfan_03">
 		<comment>♂
 カメラ決定のための実験用NPC
-・仮メッセージ</comment>
+・仮メッセージ
+「いいえ」を選択</comment>
 		<attribute name="キャラ指定">鉄道うんちく
 MAN3（仮）</attribute>
 		<language name="JPN" width="256">あー　いそいで　いるんだね
@@ -348,33 +351,50 @@ MAN3（仮）</attribute>
 	<row id="msg_t05_railfan_04">
 		<comment>♂
 カメラ決定のための実験用NPC
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">鉄道うんちく
-MAN3（仮）</attribute>
-		<language name="JPN" width="256">かいせつしよう！　その１▼</language>
-		<language name="JPN_KANJI" width="256">かいせつしよう！　その１▼</language>
-	</row>
-
-	<row id="msg_t05_railfan_05">
-		<comment>♂
-カメラ決定のための実験用NPC
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">鉄道うんちく
-MAN3（仮）</attribute>
-		<language name="JPN" width="256">かいせつしよう！　その２▼</language>
-		<language name="JPN_KANJI" width="256">かいせつしよう！　その２▼</language>
-	</row>
-
-	<row id="msg_t05_railfan_06">
-		<comment>♂
-カメラ決定のための実験用NPC
-・仮メッセージ</comment>
+・仮メッセージ
+終了メッセージ</comment>
 		<attribute name="キャラ指定">鉄道うんちく
 MAN3（仮）</attribute>
 		<language name="JPN" width="256">どうだい！　でんしゃって
 おくが　ふかいだろう！</language>
 		<language name="JPN_KANJI" width="256">どうだい！　でんしゃって
 おくが　ふかいだろう！</language>
+	</row>
+
+	<row id="msg_t05_railfan_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,,,#ff8080,#ff8080,,,,,">
+		<comment>♂
+カメラ決定のための実験用NPC
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">鉄道うんちく
+MAN3（仮）</attribute>
+		<language name="JPN" width="256">この　しゃりょうは　シングルトレイン
+バトルサブウェイで　もっとも　ふるい！</language>
+		<language name="JPN_KANJI" width="256">この　車両は　シングルトレイン
+バトルサブウェイで　もっとも　古い！</language>
+	</row>
+
+	<row id="msg_t05_railfan_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,,,#ff8080,#ff8080,,,,,">
+		<comment>♂
+カメラ決定のための実験用NPC
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">鉄道うんちく
+MAN3（仮）</attribute>
+		<language name="JPN" width="256">どうりょくけいに　もんだいが　のこってて
+けっこう　ゆれるんだよね</language>
+		<language name="JPN_KANJI" width="256">動力系に　問題が　残っていて
+けっこう　揺れるんだよね</language>
+	</row>
+
+	<row id="msg_t05_railfan_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,,,#ff8080,#ff8080,,,,,">
+		<comment>♂
+カメラ決定のための実験用NPC
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">鉄道うんちく
+MAN3（仮）</attribute>
+		<language name="JPN" width="256">ボクは　そこが　すきなんだけどね
+あの　ゆれは　おひるねに　ぴったりさ！</language>
+		<language name="JPN_KANJI" width="256">ボクは　そこが　好きなんだけどね
+あの　揺れが　お昼寝に　ぴったりさ！</language>
 	</row>
 
 	<flowchart-group-list>
