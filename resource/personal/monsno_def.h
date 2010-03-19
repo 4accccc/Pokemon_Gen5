@@ -786,8 +786,8 @@
 
 //ライ
 #define		FORMNO_RAI_A				( 0 )
-#define		FORMNO_RAI_b				( 1 )
-#define		FORMNO_RAI_c				( 2 )
+#define		FORMNO_RAI_B				( 1 )
+#define		FORMNO_RAI_C				( 2 )
 
 //メロディア
 #define		FORMNO_MERODHIA_VOICE				( 0 )
