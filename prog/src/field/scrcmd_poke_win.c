@@ -16,6 +16,7 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 #include "system/poke2dgra.h"       //for POKE2GRA
+#include "system/bmp_winframe.h"    //for BmpWinFrame_
 
 #include "fieldmap.h"
 #include "script.h"
@@ -28,21 +29,32 @@
 
 #include "scrcmd_poke_win.h"
 
+#define	POKEWIN_FRM		( GFL_BG_FRAME1_M )
+#define	POKEWIN_PX		( 10 )
+#define	POKEWIN_PY		( 3 )
+#define	POKEWIN_SX		( 12 )
+#define	POKEWIN_SY		( 12 )
+#define	POKEWIN_PAL		( 13 )
+#define	POKEWIN_CGX		( 1 )
+
 typedef struct POKE_WIN_WORK_tag{
+/**  
   GAMESYS_WORK * gsys;
   GAMEDATA * gdata;
   FIELDMAP_WORK * fieldWork;
+*/
+	GFL_BMPWIN *PokeWin;
 
-	GFL_BMPWIN * pokeWin;
-
-	GFL_CLUNIT * ClUnit;
-	GFL_CLWK * ClWk;
+	GFL_CLUNIT *ClUnit;
+	GFL_CLWK *ClWk;
 	u32	ChrRes;
 	u32	PalRes;
 	u32	CelRes;
 
 }POKE_WIN_WORK;
 
+static void PutPokeWin( POKE_WIN_WORK * wk );
+static void DelPokeWin( POKE_WIN_WORK * wk );
 static void InitPokeObj( POKE_WIN_WORK * wk,
     const int inMonsNo, const int inFormNo, const int inSex, const BOOL inRare, const int inRnd );
 static void DelPokeObj( POKE_WIN_WORK * wk );
@@ -72,12 +84,44 @@ VMCMD_RESULT EvCmdDispPokeWin( VMHANDLE *core, void *wk )
   call_event = GMEVENT_Create( gsys, NULL, PokeWinEvt, sizeof(POKE_WIN_WORK) );
 
   evt_wk = GMEVENT_GetEventWork(call_event);
+  PutPokeWin( evt_wk );
   InitPokeObj(evt_wk, monsno, form, sex, rare, 0);
 
   SCRIPT_CallEvent( sc, call_event );
 
   //イベントコールするので、一度制御を返す
   return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * ポケモン用ウィンドウ作成
+ * @param   wk        ワークポインタ
+ * @retval  none
+ */
+//--------------------------------------------------------------
+static void PutPokeWin( POKE_WIN_WORK * wk )
+{
+	wk->PokeWin = GFL_BMPWIN_Create(
+									POKEWIN_FRM, POKEWIN_PX, POKEWIN_PY,
+									POKEWIN_SX, POKEWIN_SY, POKEWIN_PAL, GFL_BMP_CHRAREA_GET_B );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->PokeWin), 0xff);
+	GFL_BMPWIN_TransVramCharacter( wk->PokeWin );
+	GFL_BMPWIN_MakeScreen( wk->PokeWin );
+	BmpWinFrame_Write( wk->PokeWin, WINDOW_TRANS_ON_V, POKEWIN_CGX, POKEWIN_PAL );
+}
+
+//--------------------------------------------------------------
+/**
+ * ポケモン用ウィンドウ破棄
+ * @param   wk        ワークポインタ
+ * @retval  none
+ */
+//--------------------------------------------------------------
+static void DelPokeWin( POKE_WIN_WORK * wk )
+{
+	BmpWinFrame_Clear( wk->PokeWin, WINDOW_TRANS_ON_V );
+	GFL_BMPWIN_Delete( wk->PokeWin );
 }
 
 //--------------------------------------------------------------
@@ -156,6 +200,7 @@ static GMEVENT_RESULT PokeWinEvt( GMEVENT* event, int* seq, void* work )
   {
     //解放処理
     DelPokeObj( evt_wk );
+    DelPokeWin( evt_wk );
     //終了
     return GMEVENT_RES_FINISH;
   }

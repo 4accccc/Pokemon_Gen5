@@ -180,7 +180,7 @@ VMCMD_RESULT EvCmdWaitBallPokeApp( VMHANDLE *core, void *wk )
  * @param  core    仮想マシン制御構造体へのポインタ
  * @return  VMCMD_RESULT
  * @note    条件を満たすポケがいない場合は retにFALSEがセットされる
- * @note　　条件は配布されたダルタニスでかつ、固有技を覚えていないこと
+ * @note　　条件は配布されたポケでかつ、固有技を覚えていないこと
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
@@ -206,6 +206,12 @@ VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
     break;
   case MONSNO_SEREBHI:
     evt_flg = POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_BEF;
+    skill_no = WAZANO_NULL;
+    break;
+  case MONSNO_ENTEI:
+  case MONSNO_RAIKOU:
+  case MONSNO_SUIKUN:
+    evt_flg = POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_BEF;
     skill_no = WAZANO_NULL;
     break;
   default:
@@ -252,7 +258,7 @@ static BOOL SearchEventPoke( POKEPARTY* party,
   {
     POKEMON_PARAM *pp = PokeParty_GetMemberPointer(party, i);
     //配布チェック
-//    if ( !POKE_MEMO_CheckEventPokePP( pp ,inEventFlg ) ) continue;
+//    if ( !POKE_MEMO_CheckEventPokePP( pp ,inEventFlg ) ) continue; @todo   デバッグのために無効化
     //モンスターナンバーチェック
     if ( PP_Get( pp, ID_PARA_monsno, NULL ) != inMonsNo ) continue;
 
@@ -272,4 +278,47 @@ static BOOL SearchEventPoke( POKEPARTY* party,
   return rc;
 }
 
+//--------------------------------------------------------------
+/**
+ * 手持ちの指定位置の配布ポケモンのイベントフラグをイベント終了状態に書き換える
+ * イベント対象ポケモンでない場合と
+ * イベント対象ポケモンだけどイベントフラグが成立していないポケモンのときは処理をスルー
+ *
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @return  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetEvtPokeAfterFlg( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  POKEPARTY* party    = GAMEDATA_GetMyPokemon( gdata );
+  u16 monsno = SCRCMD_GetVMWorkValue( core, work );
+  u16 poke_pos = SCRCMD_GetVMWorkValue( core, work );
+  int evt_flg;
+
+  switch(monsno){
+  case MONSNO_SEREBHI:
+    evt_flg = POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_BEF;
+    break;
+  default:
+    //対象ポケモンではない
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  {
+    POKEMON_PARAM *pp = PokeParty_GetMemberPointer(party, poke_pos);
+    //配布チェック
+    if ( !POKE_MEMO_CheckEventPokePP( pp ,evt_flg ) )
+    {
+      //フラグ成立していない
+      return VMCMD_RESULT_CONTINUE;
+    }
+
+    //書き換え
+    POKE_MEMO_SetEventPoke_AfterEventPP( pp , evt_flg );
+  }
+    
+  return VMCMD_RESULT_CONTINUE;
+}
 

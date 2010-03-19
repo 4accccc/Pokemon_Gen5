@@ -82,6 +82,7 @@
 
 //バッグプロセス呼び出しコード定義
 #define SCR_BAG_MODE_SELL  (0)
+#define SCR_BAG_MODE_SELECT (1)
 
 //フィールド通信切断処理イベントの結果
 #define SCR_FIELD_COMM_EXIT_OK      (0) //正常に通信切断処理が終わった

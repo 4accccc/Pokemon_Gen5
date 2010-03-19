@@ -12,3 +12,4 @@ extern VMCMD_RESULT EvCmdStartBallAnm( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdWaitBallAnm( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdWaitBallPokeApp( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdSetEvtPokeAfterFlg( VMHANDLE *core, void *wk );

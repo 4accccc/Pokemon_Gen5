@@ -9740,3 +9740,20 @@
   .short \rare
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちイベントポケモンにイベント終了フラグをセットする
+ *
+ * @param monsno      モンスターナンバー
+ * @param pos    手持ちの位置
+ */
+//--------------------------------------------------------------
+#define _SET_EVT_POKE_AFT_FLG( monsno, pos ) \
+    _ASM_SET_EVT_POKE_AFT_FLG monsno, pos
+
+  .macro _ASM_SET_EVT_POKE_AFT_FLG monsno, pos
+  .short EV_SEQ_SET_EVT_POKE_AFT_FLG
+  .short \monsno
+  .short \pos
+  .endm
+

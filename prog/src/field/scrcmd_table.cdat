@@ -963,7 +963,7 @@
   DEF_CMD( EvCmdEventRotateObj, EV_SEQ_EVENT_ROTATE_OBJ )
   DEF_CMD( EvCmdDispPokeWin, EV_SEQ_DISP_POKE_WIN )
 
-  NO_CMD()
+  DEF_CMD( EvCmdSetEvtPokeAfterFlg, EV_SEQ_SET_EVT_POKE_AFT_FLG )
   NO_CMD()
   NO_CMD()
   NO_CMD()

@@ -271,6 +271,8 @@ VMCMD_RESULT EvCmdCallBagProc( VMHANDLE *core, void *wk )
 
   if( mode == SCR_BAG_MODE_SELL ){
     mode = BAG_MODE_SELL;
+  }else if( mode == SCR_BAG_MODE_SELECT ){
+    mode = BAG_MODE_SELECT;
   }else{
     mode = BAG_MODE_FIELD;
   }
