@@ -2576,20 +2576,10 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
 
   // ソート用データ生成
 	for( i=0; i<length; i++ ){
-/*
-      void * itemdata;
-
-      //@TODO ページ切替時にロードするようにすれば、負荷が軽減される
-      itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
-			type     = ITEM_GetBufParam( itemdata, ITEM_PRM_ITEM_TYPE );
-
-      GFL_HEAP_FreeMemory( itemdata );
-*/
-
-		sort[i].type = ITEM_GetParam( item[i].id, ITEM_PRM_ITEM_TYPE, pWork->heapID );
-//		sort[i].no   = ITEM_GetParam( item[i].id, ITEM_PRM_SORT_NUMBER, pWork->heapID );
+		void * dat = ITEM_GetItemArcData( item[i].id, ITEM_GET_DATA, pWork->heapID );
+		sort[i].type = ( ITEM_GetBufParam(dat,ITEM_PRM_ITEM_TYPE) << 10 ) + ITEM_GetBufParam(dat,ITEM_PRM_SORT_NUMBER);
 		sort[i].st   = item[i];
-//		OS_Printf( "id = %d, sort = %d\n", sort[i].st.id, sort[i].no );
+		GFL_HEAP_FreeMemory( dat );
 	}
 
   MATH_QSort( (void*)sort, length, sizeof(ITEM_SORTDATA_TYPE), QSort_Type, NULL );
