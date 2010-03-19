@@ -1129,6 +1129,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.ret_item = ITEM_DUMMY_DATA;
     wk->bagData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
     wk->bagData.time_out_flg = FALSE;
+    wk->bagData.shooter_item_bit = BTL_MAIN_GetSetupShooterBit( wk->mainModule );
 
     if( BTL_POKECON_GetClientAlivePokeCount(wk->pokeCon, BTL_CLIENT_ENEMY1) > 1 ){
       wk->bagData.ball_use = BBAG_BALLUSE_DOUBLE;

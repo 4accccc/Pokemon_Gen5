@@ -22,7 +22,7 @@ typedef enum {
   BBAG_MODE_NORMAL = 0, // 通常モード
   BBAG_MODE_SHOOTER,    // サポートシューター
   BBAG_MODE_GETDEMO,    // 捕獲デモモード
-	BBAG_MODE_PDC,				// ポケモンドリームキャッチ
+  BBAG_MODE_PDC,        // ポケモンドリームキャッチ
 }BtlBagMode;
 
 // ポケットID
@@ -38,7 +38,7 @@ enum {
 enum BBagBallUse_tag {
   BBAG_BALLUSE_TRUE = 0,    // 使用可能
   BBAG_BALLUSE_POKEMAX,     // 手持ち・ボックスに空きがないため使用不可
-	BBAG_BALLUSE_DOUBLE,			// 野生ダブル・敵が２匹のため使用不可
+  BBAG_BALLUSE_DOUBLE,      // 野生ダブル・敵が２匹のため使用不可
 };
 typedef u8 BBagBallUse;
 
@@ -50,7 +50,7 @@ typedef struct {
   BtlBagMode  mode;   ///< 制御モード
   HEAPID      heap;   ///< ヒープID
 
-	SHOOTER_ITEM_BIT_WORK * shooter_item_bit;		///< シューター用アイテムワーク
+  const SHOOTER_ITEM_BIT_WORK * shooter_item_bit;   ///< シューター用アイテムワーク
   u8  energy;         ///< エネルギー値（シューター用）
   u8  reserved_energy;///< 現ターン中に既に選択したアイテムの総コスト値（シューター用）
 

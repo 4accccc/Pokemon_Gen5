@@ -4061,6 +4061,20 @@ BOOL BTL_MAIN_GetSetupStatusFlag( const BTL_MAIN_MODULE* wk, BTL_STATUS_FLAG fla
   return BATTLE_PARAM_CheckBtlStatusFlag( wk->setupParam, flag );
 }
 
+//=============================================================================================
+/**
+ *
+ *
+ * @param   wk
+ *
+ * @retval  const SHOOTER_ITEM_BIT_WORK*
+ */
+//=============================================================================================
+const SHOOTER_ITEM_BIT_WORK* BTL_MAIN_GetSetupShooterBit( const BTL_MAIN_MODULE* wk )
+{
+  return &(wk->setupParam->shooterBitWork);
+}
+
 //----------------------------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------------------------
