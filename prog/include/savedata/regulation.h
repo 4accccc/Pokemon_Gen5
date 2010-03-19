@@ -54,8 +54,8 @@ typedef enum  {
   REGULATION_MUST_POKE_FORM,  ///<  #必須ポケモンフォルム
   REGULATION_SHOOTER,    ///<    #シューター
   REGULATION_VETO_SHOOTER_ITEM, ///< 禁止道具
-  REGULATION_TIME_VS,     ///<    #対戦時間
-  REGULATION_TIME_COMMAND, ///<    #入力時間
+  REGULATION_TIME_VS,     ///<    #対戦時間 分単位バトルに渡すときには秒に変換してください
+  REGULATION_TIME_COMMAND, ///<    #入力時間  分単位バトルに渡すときには秒に変換してください
   REGULATION_NICKNAME, ///<    #ニックネーム表示
   REGULATION_AGE_LO,  ///<    #年齢制限以上
   REGULATION_AGE_HI,  ///<    #年齢制限以下
@@ -148,8 +148,8 @@ typedef struct{
   u8 MUST_POKE_FORM;   ///<    #必須ポケモンフォルム
   u8 SHOOTER;    ///<    #シューター
   u8 VETO_SHOOTER_ITEM[SHOOTER_ITEM_BIT_TBL_MAX]; ///<    #シューター禁止道具 7byte
-  u8 TIME_VS;     ///<    #対戦時間
-  u8 TIME_COMMAND; ///<    #入力時間
+  u8 TIME_VS;     ///<    #対戦時間 分単位バトルに渡すときには秒に変換してください
+  u8 TIME_COMMAND; ///<    #入力時間  分単位バトルに渡すときは秒に変換してください
   u8 NICKNAME; ///<    #ニックネーム表示
   u8 AGE_LO;  ///<    #年齢制限以上
   u8 AGE_HI;  ///<    #年齢制限以下
