@@ -20,29 +20,6 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-#if 0
-#include "common.h"
-#include "system/arc_util.h"
-#include "include/msgdata/msg.naix"
-#include "include/gflib/strbuf_family.h"
-#include "fieldsys.h"
-#include "field_event.h"
-#include "ev_mapchange.h"
-#include "ev_time.h"
-#include "savedata/zukanwork.h"
-#include "savedata/get_poke.h"
-#include "savedata/mail.h"
-#include "savedata/mail_util.h"
-#include "poketool/poke_memo.h"
-#include "itemtool/itemsym.h"
-#include "itemtool/item.h"
-#include "zonedata.h"
-#include "fielddata/maptable/zone_id.h"
-#include "fld_trade.h"
-#include "fld_trade_local.h"
-#include "onlyone_poke.h"
-#endif
-
 #include <gflib.h>
 #include "fld_trade_local.h"
 #include "fld_trade.h"
@@ -64,24 +41,6 @@
 
 FS_EXTERN_OVERLAY(pokemon_trade);
 
-
-//-----------------------------------------------------------------------------
-/**
- *					コーディング規約
- *		●関数名
- *				１文字目は大文字それ以降は小文字にする
- *		●変数名
- *				・変数共通
- *						constには c_ を付ける
- *						staticには s_ を付ける
- *						ポインタには p_ を付ける
- *						全て合わさると csp_ となる
- *				・グローバル変数
- *						１文字目は大文字
- *				・関数内変数
- *						小文字と”＿”と数字を使用する 関数の引数もこれと同じ
-*/
-//-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
 /**
@@ -136,7 +95,6 @@ FLD_TRADE_WORK* FLD_TRADE_WORK_Create( u32 heap_id, u32 trade_no )
 	work->trade_no = trade_no;
 
 	// 交換データ読み込み
-	//work->p_pokedata = ArcUtil_Load( ARC_FIELD_TRADE_POKE, trade_no, FALSE, heap_id, ALLOC_TOP );
   work->p_pokedata = GFL_ARC_LoadDataAllocOfs( ARCID_FLD_TRADE_POKE, trade_no, 
                                                heap_id, 0, sizeof(FLD_TRADE_POKEDATA) );
   // 交換ポケモンデータ作成
@@ -168,175 +126,6 @@ void FLD_TRADE_WORK_Delete( FLD_TRADE_WORK* work )
 	GFL_HEAP_FreeMemory( work->p_myste );
 	GFL_HEAP_FreeMemory( work );
 }
-
-#if 0
-//----------------------------------------------------------------------------
-/**
- *	@brief	フィールド　ポケモン預かり(他人名義のポケモンを貰う)
- *
- *	@param	heapID		ヒープID
- *	@param	trade_no	交換番号
- *
- *	@return	ワーク
- */
-//-----------------------------------------------------------------------------
-void FLD_KeepPokemonAdd( FIELDSYS_WORK* fsys, u8 trade_no ,u8 level,u16 zoneID)
-{
-	POKEPARTY* party;
-	POKEMON_PARAM* pp;
-	FLD_TRADE_POKEDATA* p_data;
-	
-	pp = PokemonParam_AllocWork( HEAPID_WORLD );
-	
-	// 交換データ読み込み
-	p_data = ArcUtil_Load( ARC_FIELD_TRADE_POKE, trade_no, FALSE, HEAPID_WORLD, ALLOC_BOTTOM );
-
-	//パラメータ生成
-	SetPokemonParam( pp, p_data, level , trade_no, zoneID ,TRMEMO_FLDKEEP_PLACESET,HEAPID_WORLD);
-
-	// 図鑑に登録
-	SaveData_GetPokeRegister( fsys->savedata, pp );
-
-	//手持ちの一番最後に追加
-	party = SaveData_GetTemotiPokemon( fsys->savedata );
-	PokeParty_Add(party, pp);
-
-	//メールポケモンだった場合、メールデータをセット
-	if(trade_no == FLD_TRADE_ONISUZUME){
-		MAIL_DATA* dat;
-		STRBUF* str;
-		POKEMON_PARAM* tp = PokeParty_GetMemberPointer( party, PokeParty_GetPokeCount(party)-1);
-		
-		str = GetTradeMsgData( HEAPID_WORLD, FLD_TRADE_GET_OYA_GMM(trade_no) );
-
-		dat = MailData_MailEventDataMake(pp,
-				ItemMailDesignGet( p_data->item ),p_data->oya_sex,str,p_data->mons_id);
-		PP_Put(tp,ID_PARA_mail_data,dat);
-
-		GFL_STR_DeleteBuffer(str);
-		sys_FreeMemoryEz(dat);
-	}
-	
-	sys_FreeMemoryEz( p_data );
-	sys_FreeMemoryEz( pp );
-}
-#endif
-
-
-#if 0
-//----------------------------------------------------------------------------
-/**
- *	@brief	フィールド　メールポケモンイベント専用メールデータを生成(オニスズメのメール専用)
- *
- *	@return	ワーク
- *
- *	@com	メモリをAllocして返すので、呼び出し側が解放すること！
- */
-//-----------------------------------------------------------------------------
-MAIL_DATA* FLD_MakeKeepPokemonEventMail( void )
-{
-	POKEMON_PARAM* pp;
-	FLD_TRADE_POKEDATA* p_data;
-	STRBUF* str;
-	MAIL_DATA* dat;
-	
-	pp = PokemonParam_AllocWork( HEAPID_WORLD );
-	
-	// 交換データ読み込み
-	p_data = ArcUtil_Load( ARC_FIELD_TRADE_POKE, FLD_TRADE_ONISUZUME, FALSE, HEAPID_WORLD, ALLOC_BOTTOM );
-
-	//パラメータ生成
-	SetPokemonParam( pp, p_data, 20 ,FLD_TRADE_ONISUZUME ,
-		ZONE_ID_R35R0101 ,TRMEMO_FLDKEEP_PLACESET,HEAPID_WORLD);
-
-	str = GetTradeMsgData( HEAPID_WORLD, FLD_TRADE_GET_OYA_GMM(FLD_TRADE_ONISUZUME) );
-
-	dat = MailData_MailEventDataMake(pp,
-			ItemMailDesignGet( p_data->item ),p_data->oya_sex,str,p_data->mons_id);
-	
-	GFL_STR_DeleteBuffer(str);
-	
-	sys_FreeMemoryEz( p_data );
-	sys_FreeMemoryEz( pp );
-
-	return dat;
-}
-#endif
-
-
-#if 0
-//----------------------------------------------------------------------------
-/**
- *	@brief	フィールド　預かりポケモン返却可不可チェック
- *
- *	手持ちのポケモンが預かりポケモンと一致するかや、アイテムの有無をチェック
- *
- *	@param	trade_no	交換番号
- *	@param	pos			チェックする手持ちのポケモン位置
- *
- *	@retval	KEEP_POKE_RERR_NONE		返せる
- *	@retval	KEEP_POKE_RERR_NGPOKE	違うポケモンだから返せない
- *	@retval	KEEP_POKE_RERR_ITEM		アイテムを持ってるから返せない
- *	@retval	KEEP_POKE_RERR_CBALL	カスタムボールがセットされてるから返せない
- */
-//-----------------------------------------------------------------------------
-u16 FLD_KeepPokemonReturnCheck( FIELDSYS_WORK* fsys, u8 trade_no ,u8 pos)
-{
-	POKEPARTY* party;
-	POKEMON_PARAM* pp;
-	
-	party = SaveData_GetTemotiPokemon( fsys->savedata );
-	pp = PokeParty_GetMemberPointer(party,pos);
-
-	//預かったポケモンかどうかチェック
-	if(OnlyonePoke_KeepPokeCheck(pp,trade_no) == FALSE){
-		return KEEP_POKE_RERR_NGPOKE;
-	}
-
-	//ホントに返していいかどうかチェック
-	
-	//ボールカプセルがセットされているかどうか
-	{
-		u8 cb_id;
-
-		cb_id = PokeParaGet( pp, ID_PARA_cb_id, NULL);
-		if(cb_id != 0){
-			return KEEP_POKE_RERR_CBALL;
-		}
-	}
-	//闘える手持ちが２匹以上いるかどうか？
-	{
-		int i,max,num = 0;
-		POKEMON_PARAM* pp;
-		max = PokeParty_GetPokeCount(party);
-		for(i = 0;i < max;i++){
-			pp = PokeParty_GetMemberPointer(party,i);
-			if(	PokeParaGet(pp,ID_PARA_fusei_tamago_flag,NULL) == TRUE || 
-				PokeParaGet(pp,ID_PARA_hp,NULL) == 0 ||
-				PokeParaGet(pp,ID_PARA_tamago_flag,NULL)){
-				continue;
-			}
-			num++;
-		}
-		if(num < 2){
-			return KEEP_POKE_RERR_ONLYONE;
-		}
-	}
-	
-	//アイテムを持っているかどうか？
-	{
-		u16 itemno;
-		
-		itemno = PokeParaGet( pp, ID_PARA_item, NULL );
-		if(itemno != ITEM_DUMMY_DATA){
-			return KEEP_POKE_RERR_ITEM;
-		}
-	}
-	return 0;
-}
-#endif
-
-
 
 //----------------------------------------------------------------------------
 /**
@@ -394,72 +183,6 @@ u32 FLD_TRADE_WORK_GetTradeMonsOyaSex( const FLD_TRADE_WORK* cwork )
 {
 	return cwork->p_pokedata->oya_sex;
 }
-
-
-#if 0
-//----------------------------------------------------------------------------
-/**
- *	@brief	交換
- *
- *	@param	p_fsys		フィールドシステム
- *	@param	work		交換ワーク
- *	@param	party_pos	パーティーポジション
- */
-//-----------------------------------------------------------------------------
-void FLD_Trade( FIELDSYS_WORK * p_fsys, FLD_TRADE_WORK* work, int party_pos )
-{
-	POKEPARTY * party = SaveData_GetTemotiPokemon( p_fsys->savedata );
-
-	// 交換実行
-	PokeParty_SetMemberData( party, party_pos, work->p_pp );
-
-	// 図鑑に登録
-	SaveData_GetPokeRegister( p_fsys->savedata, work->p_pp );
-}
-#endif
-
-
-#if 0
-void FLD_TradeDemoDataMake( FIELDSYS_WORK * p_fsys, FLD_TRADE_WORK* work, int party_pos, DEMO_TRADE_PARAM* p_demo, POKEMON_PARAM* sendPoke, POKEMON_PARAM* recvPoke )
-{
-	POKEPARTY * party = SaveData_GetTemotiPokemon( p_fsys->savedata );
-	POKEMON_PARAM* p_chg_poke;
-	STRBUF* str;
-	u32 lev;		// レベル
-	int time_zone;
-
-	// 交換するポケモン
-	p_chg_poke = PokeParty_GetMemberPointer( party, party_pos );
-	lev = PokeParaGet( p_chg_poke, ID_PARA_level, NULL );
-	
-	// 交換ポケモンの作成
-	SetPokemonParam( work->p_pp, work->p_pokedata, lev, work->trade_no,
-		p_fsys->location->zone_id ,TRMEMO_OFFTRADE_PLACESET,work->heapID);
-
-	// デモ用のポケモンパラメータに格納
-	PokeCopyPPtoPP( p_chg_poke, sendPoke );
-	PokeCopyPPtoPP( work->p_pp, recvPoke );
-
-	// デモデータ作成
-	p_demo->sendPoke	= PPPPointerGet( sendPoke );
-	p_demo->recvPoke	= PPPPointerGet( recvPoke );
-	p_demo->partner	= work->p_myste;
-	p_demo->seqFlag	= DEMO_TRADE_SEQ_FULL;
-	p_demo->config		= SaveData_GetConfig( p_fsys->savedata );
-	time_zone = EVTIME_GetTimeZone( p_fsys );
-	if( (time_zone == TIMEZONE_MORNING) || 
-		(time_zone == TIMEZONE_NOON) ){
-		p_demo->bgType		= DEMO_TRADE_BGTYPE_MORNING;
-	}else if( time_zone == TIMEZONE_EVENING ){
-		p_demo->bgType		= DEMO_TRADE_BGTYPE_EVENING;
-	}else{
-		p_demo->bgType		= DEMO_TRADE_BGTYPE_NIGHT;
-	}
-}
-#endif
-
-
-
 
 //----------------------------------------------------------------------------
 /**
@@ -674,18 +397,19 @@ static void FTP_Dump( const FLD_TRADE_POKEDATA* ftp )
 //========================================================================================
 typedef struct 
 {
-  GAMESYS_WORK*          gameSystem;
-  GAMEDATA*                gameData;
+  GAMESYS_WORK*           gameSystem;
+  GAMEDATA*               gameData;
   POKEPARTY*              pokeParty;  // 手持ちポケパーティ
-  u8                        tradeNo;  // 交換データNo.
-  u8                       partyPos;  // 交換に出すポケモンの手持ちインデックス
+  u8                      tradeNo;    // 交換データNo.
+  u8                      partyPos;   // 交換に出すポケモンの手持ちインデックス
   FLD_TRADE_WORK*         tradeWork;  // 交換ワーク
-  POKEMONTRADE_DEMO_PARAM tradeDemoParam;  // 交換デモ パラメータ
-  SHINKA_DEMO_PARAM*      shinkaDemoParam;  // 進化デモ パラメータ
+  POKEMONTRADE_DEMO_PARAM tradeDemoParam;   // 交換デモのパラメータ
+  SHINKA_DEMO_PARAM*      shinkaDemoParam;  // 進化デモのパラメータ
 
 } FLD_TRADE_EVWORK;
 
-enum{
+// シーケンス番号
+enum {
   SEQ_INIT,         // イベント初期化
   SEQ_TRADE,        // 交換デモ
   SEQ_DATA_UPDATE,  // データ更新
@@ -700,14 +424,14 @@ enum{
 //----------------------------------------------------------------------------------------
 static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
 {
-  FLD_TRADE_EVWORK* work = (FLD_TRADE_EVWORK*)wk;
+  FLD_TRADE_EVWORK* work       = (FLD_TRADE_EVWORK*)wk;
   GAMESYS_WORK*     gameSystem = work->gameSystem;
-  GAMEDATA*         gameData = work->gameData;
-  POKEPARTY*        pokeParty = work->pokeParty;
-  FIELDMAP_WORK*    fieldmap = GAMESYSTEM_GetFieldMapWork( gameSystem );
+  GAMEDATA*         gameData   = work->gameData;
+  POKEPARTY*        pokeParty  = work->pokeParty;
+  FIELDMAP_WORK*    fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
+  POKEMON_PARAM*    pokeParam  = PokeParty_GetMemberPointer( pokeParty, work->partyPos );
 
-  switch( *seq )
-  {
+  switch( *seq ) {
   // イベント初期化
   case SEQ_INIT:
     // 交換ワーク生成
@@ -725,6 +449,7 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
     FTP_Dump( work->tradeWork->p_pokedata );
     *seq = SEQ_TRADE;
     break;
+
   // 交換デモ呼び出し
   case SEQ_TRADE:
     {
@@ -732,16 +457,16 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
       FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gameSystem );
       work->tradeDemoParam.gamedata = gameData; 
       work->tradeDemoParam.pMy      = GAMEDATA_GetMyStatus( gameData );
-      work->tradeDemoParam.pMyPoke  = PokeParty_GetMemberPointer( pokeParty, work->partyPos );
+      work->tradeDemoParam.pMyPoke  = pokeParam;
       work->tradeDemoParam.pNPC     = work->tradeWork->p_myste;
       work->tradeDemoParam.pNPCPoke = work->tradeWork->p_pp;
       demo = EVENT_FieldSubProc( gameSystem, fieldmap, 
-                                  FS_OVERLAY_ID(pokemon_trade), 
-                                  &PokemonTradeDemoProcData, &work->tradeDemoParam );
+          FS_OVERLAY_ID(pokemon_trade), &PokemonTradeDemoProcData, &work->tradeDemoParam );
       GMEVENT_CallEvent( event, demo );
     }
     *seq = SEQ_EVOLUTION;
     break;
+
   // データ更新
   case SEQ_DATA_UPDATE:
     // 手持ちポケ上書き
@@ -754,29 +479,36 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
     }
     *seq = SEQ_EXIT;
     break;
+
   // 進化デモ呼び出し
   case SEQ_EVOLUTION:
     {
       SHINKA_COND cond;
-      HEAPID heapID = FIELDMAP_GetHeapID( fieldmap );
-      POKEMON_PARAM* pokeParam = PokeParty_GetMemberPointer( pokeParty, work->partyPos );
-      u16 afterMonsNo = SHINKA_Check( pokeParty, pokeParam, SHINKA_TYPE_TUUSHIN, 0, &cond, heapID );
+      u16 afterMonsNo = SHINKA_Check( pokeParty, pokeParam, SHINKA_TYPE_TUUSHIN, 0, &cond, HEAPID_PROC );
 
-      if( afterMonsNo )
-      {
+      if( afterMonsNo ) {
+        GMEVENT* demo;
+
+        // パラメータを生成
         GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
         work->shinkaDemoParam = SHINKADEMO_AllocParam( 
-            heapID, gameData, pokeParty, afterMonsNo, work->partyPos, cond, TRUE );
-        GMEVENT_CallProc( event, NO_OVERLAY_ID, &ShinkaDemoProcData, work->shinkaDemoParam );
+            HEAPID_PROC, gameData, pokeParty, afterMonsNo, work->partyPos, cond, TRUE );
+        GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+
+        // デモ呼び出し
+        demo = EVENT_FieldSubProc( gameSystem, fieldmap, 
+            FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, work->shinkaDemoParam );
+        GMEVENT_CallEvent( event, demo );
       }
     }
     *seq = SEQ_EXIT;
     break;
+  
   // イベント終了処理
   case SEQ_EXIT:
     // 進化デモの後始末
-    if( work->shinkaDemoParam )
-    {
+    if( work->shinkaDemoParam ) {
+        GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
       SHINKADEMO_FreeParam( work->shinkaDemoParam );
       GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
     }
