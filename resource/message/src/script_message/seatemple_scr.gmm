@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-17T11:15:02"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T16:06:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1587" top="271" right="2292" bottom="891" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -296,43 +296,44 @@
 		<comment>歩数０歩目</comment>
 		<language name="JPN" width="256">カチッ！
 スイッチの　おとが　ひびいた</language>
-		<language name="JPN_KANJI" width="256">カチッ！
-スイッチの　おとが　ひびいた</language>
+		<language name="JPN_KANJI" width="256">カチッ！▼
+スイッチの　音が　響いた</language>
 	</row>
 
 	<row id="msg_seatemple_step01">
 		<comment>歩数１００歩目</comment>
 		<language name="JPN" width="256">カチッ！
 また　スイッチの　おとが　した</language>
-		<language name="JPN_KANJI" width="256">カチッ！
-また　スイッチの　おとが　した</language>
+		<language name="JPN_KANJI" width="256">カチッ！▼
+また　スイッチの　音が　した</language>
 	</row>
 
 	<row id="msg_seatemple_step02">
 		<comment>歩数３００歩目</comment>
 		<language name="JPN" width="256">ゴゴゴ
 とおくで　にぶい　おとが　ひびいた</language>
-		<language name="JPN_KANJI" width="256">ゴゴゴ
-とおくで　にぶい　おとが　ひびいた</language>
+		<language name="JPN_KANJI" width="256">ゴゴゴ……▼
+遠くで　にぶい音が　響いた</language>
 	</row>
 
 	<row id="msg_seatemple_step03">
 		<comment>歩数４５０歩目</comment>
 		<language name="JPN" width="256">ゴゴゴゴゴ……
 にぶい　おとが　ちかい！</language>
-		<language name="JPN_KANJI" width="256">ゴゴゴゴゴ……
-にぶい　おとが　ちかい！</language>
+		<language name="JPN_KANJI" width="256">ゴゴゴゴゴ……▼
+近くで　にぶい音が　する！</language>
 	</row>
 
 	<row id="msg_seatemple_step04">
 		<comment>歩数５００歩目</comment>
 		<language name="JPN" width="256">すいりゅうだ！</language>
-		<language name="JPN_KANJI" width="256">すいりゅうだ！</language>
+		<language name="JPN_KANJI" width="256">水流　だ！</language>
 	</row>
 
 	<row id="msg_seatemple_skill_01">
 		<language name="JPN" width="256">ゴゴン　なにかが　うごいた……</language>
-		<language name="JPN_KANJI" width="256">ゴゴン　なにかが　うごいた……</language>
+		<language name="JPN_KANJI" width="256">ゴゴン……▼
+なにかが　動いた……</language>
 	</row>
 
 	<flowchart-group-list>
