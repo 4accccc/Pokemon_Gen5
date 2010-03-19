@@ -3185,7 +3185,7 @@ static void MYSTERY_DEMO_Init( MYSTERY_DEMO_WORK *p_wk, GFL_CLUNIT *p_unit, cons
       1,  //ポケモン
       2,  //道具
       6,  //Gパワー
-      4,   //映画
+      3,   //映画
     };
     u16 plt_ofs;
 

@@ -144,6 +144,19 @@ typedef struct
 } MYSTERY_CARD_DATA;
 
 //-------------------------------------
+///	パレットアニメワークエリア
+//=====================================
+typedef struct 
+{
+  u16 plt[0x10];
+  u16 plt_src[0x10];
+  u16 plt_dst[0x10];
+  u16 start_col;
+  u16 end_col;
+} PLTANM_WORK;
+
+
+//-------------------------------------
 ///	アルバム構造体
 //=====================================
 struct _MYSTERY_ALBUM_WORK
@@ -193,9 +206,7 @@ struct _MYSTERY_ALBUM_WORK
 
   //カーソルパレットフェード用
   u16 plt_cnt;
-  u16 plt[0x10];
-  u16 plt_src[0x10];
-  u16 plt_dst[0x10];
+  PLTANM_WORK         pltanm[MYSTERY_ALLOW_MAX];
 
 };
 
@@ -261,6 +272,13 @@ static void SEQFUNC_SwapCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 static void SEQFUNC_End( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 static void SEQFUNC_DeleteMsg( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
+
+//-------------------------------------
+///	PLTANM
+//=====================================
+static void PLTANM_Load( PLTANM_WORK *p_wk, ARCHANDLE *p_handle, ARCDATID datID, u8 dst_plt_num, u8 src_plt_num, u8 start_col, u8 end_col, HEAPID heapID );
+static void PLTANM_Main( PLTANM_WORK *p_wk, NNS_GFD_DST_TYPE type, u8 target_plt, u16 cnt );
 
 //=============================================================================
 /**
@@ -630,10 +648,9 @@ void MYSTERY_ALBUM_Main( MYSTERY_ALBUM_WORK *p_wk )
       p_wk->plt_cnt += add;
     }
 
-    for( i = 0; i < 0x10; i++ )
-    { 
-      MYSTERY_UTIL_MainPltAnm( NNS_GFD_DST_2D_OBJ_PLTT_MAIN, &p_wk->plt[i], p_wk->plt_cnt, MYSTERY_ALBUM_OBJ_CURSOR_PLT, i, p_wk->plt_src[i], p_wk->plt_dst[i] );
-    }
+    PLTANM_Main( &p_wk->pltanm[0], NNS_GFD_DST_2D_OBJ_PLTT_MAIN, MYSTERY_ALBUM_OBJ_CURSOR_PLT, p_wk->plt_cnt );
+    PLTANM_Main( &p_wk->pltanm[1], NNS_GFD_DST_2D_OBJ_PLTT_MAIN, MYSTERY_ALBUM_OBJ_CURSOR_PLT+2, p_wk->plt_cnt );
+
   }
 }
 //----------------------------------------------------------------------------
@@ -784,20 +801,8 @@ static void Mystery_Album_InitDisplay( MYSTERY_ALBUM_WORK *p_wk, HEAPID heapID )
               NARC_mystery_album_cursor_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
 
       //カーソルのパレットフェード用にパレットをメモリ読み込み
-      { 
-        void *p_buff;
-        NNSG2dPaletteData *p_plt;
-        const u16 *cp_plt_adrs;
-
-        //もとのパレットから色情報を保存
-        p_buff  = GFL_ARCHDL_UTIL_LoadPalette( p_handle, NARC_mystery_album_cursor_NCLR, &p_plt, heapID );
-        cp_plt_adrs = p_plt->pRawData;
-        GFL_STD_MemCopy( cp_plt_adrs, p_wk->plt_dst, sizeof(u16) * 0x10 );
-        GFL_STD_MemCopy( (u8*)cp_plt_adrs + 1 * 0x20, p_wk->plt_src, sizeof(u16) * 0x10 );
-
-        //パレット破棄
-        GFL_HEAP_FreeMemory( p_buff );
-      }
+      PLTANM_Load( &p_wk->pltanm[0], p_handle, NARC_mystery_album_cursor_NCLR, 0, 1, 0, 0xF, heapID );
+      PLTANM_Load( &p_wk->pltanm[1], p_handle, NARC_mystery_album_cursor_NCLR, 2, 3, 0, 0xF, heapID );
 
       GFL_ARC_CloseDataHandle( p_handle );
     }
@@ -2988,6 +2993,58 @@ static void SEQFUNC_DeleteMsg( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
   { 
     MYSTERY_TEXT_Main( p_wk->p_text );
   }  
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットアニメ読み込み
+ *
+ *	@param	PLTANM_WORK *p_wk ワーク
+ *	@param	*p_handle         読み込むハンドル
+ *	@param	datID             読み込むパレット
+ *	@param	dst_plt_num       変更前色のパレット行
+ *	@param	src_plt_num       変更後色のパレット行
+ *	@param	start_col         開始列
+ *	@param	end_col           終了列
+ *	@param	heapID            ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void PLTANM_Load( PLTANM_WORK *p_wk, ARCHANDLE *p_handle, ARCDATID datID, u8 dst_plt_num, u8 src_plt_num, u8 start_col, u8 end_col, HEAPID heapID )
+{ 
+  void *p_buff;
+  NNSG2dPaletteData *p_plt;
+  const u16 *cp_plt_adrs;
+
+  GFL_STD_MemClear( p_wk, sizeof(PLTANM_WORK) );
+  p_wk->start_col = start_col;
+  p_wk->end_col   = end_col;
+
+  //もとのパレットから色情報を保存
+  p_buff  = GFL_ARCHDL_UTIL_LoadPalette( p_handle, datID, &p_plt, heapID );
+  cp_plt_adrs = p_plt->pRawData;
+  GFL_STD_MemCopy( (u8*)cp_plt_adrs + dst_plt_num * 0x20, p_wk->plt_dst, sizeof(u16) * 0x10 );
+  GFL_STD_MemCopy( (u8*)cp_plt_adrs + src_plt_num * 0x20, p_wk->plt_src, sizeof(u16) * 0x10 );
+
+  //パレット破棄
+  GFL_HEAP_FreeMemory( p_buff );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットアニメ転送メイン
+ *
+ *	@param	PLTANM_WORK *p_wk ワーク
+ *	@param	type              転送先
+ *	@param	target_plt        どこのパレット行に転送するか
+ *	@param  cnt               カウンタ
+ */
+//-----------------------------------------------------------------------------
+static void PLTANM_Main( PLTANM_WORK *p_wk, NNS_GFD_DST_TYPE type, u8 target_plt, u16 cnt )
+{ 
+  int i;
+  for( i = p_wk->start_col; i <= p_wk->end_col; i++ )
+  { 
+    MYSTERY_UTIL_MainPltAnm( type, &p_wk->plt[i], cnt, target_plt, i, p_wk->plt_src[i], p_wk->plt_dst[i] );
+  }
 }
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
