@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/13 16:23:18
+#save date:2010/03/19 18:48:23
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d09.wms
 #SECTION START:OBJ_EVENT
@@ -230,7 +230,7 @@ EVENTDATA_POSTYPE_RAIL
 #size
 2 1
 #rail way
-DIR_UP
+DIR_RIGHT
 #event number: 1
 #Door Event Label
 DOOR_ID_D09_D09R1101_EXIT01
@@ -268,7 +268,7 @@ EVENTDATA_POSTYPE_RAIL
 #size
 2 1
 #rail way
-DIR_UP
+DIR_RIGHT
 #event number: 3
 #Door Event Label
 DOOR_ID_D09_D09R0301_EXIT01
@@ -309,25 +309,6 @@ EVENTDATA_POSTYPE_RAIL
 DIR_RIGHT
 #event number: 5
 #Door Event Label
-DOOR_ID_D09_D09R1301_EXIT01
-#Next Zone ID Name
-ZONE_ID_D09R1301
-#Next Door ID Name
-DOOR_ID_D09R1301_D09_EXIT01
-#Door Direction
-EXIT_DIR_DOWN
-#Door Type
-EXIT_TYPE_WALL
-#Pos Type
-EVENTDATA_POSTYPE_RAIL
-#position
-40 2 -3
-#size
-2 1
-#rail way
-DIR_UP
-#event number: 6
-#Door Event Label
 DOOR_ID_D09_D09R0601_EXIT01
 #Next Zone ID Name
 ZONE_ID_D09R0601
@@ -345,7 +326,7 @@ EVENTDATA_POSTYPE_RAIL
 2 1
 #rail way
 DIR_RIGHT
-#event number: 7
+#event number: 6
 #Door Event Label
 DOOR_ID_D09_D09R1201_EXIT01
 #Next Zone ID Name
@@ -364,7 +345,7 @@ EVENTDATA_POSTYPE_RAIL
 1 1
 #rail way
 DIR_RIGHT
-#event number: 8
+#event number: 7
 #Door Event Label
 DOOR_ID_D09_D09R1201_EXIT04
 #Next Zone ID Name
@@ -383,7 +364,7 @@ EVENTDATA_POSTYPE_RAIL
 1 1
 #rail way
 DIR_RIGHT
-#event number: 9
+#event number: 8
 #Door Event Label
 DOOR_ID_D09_D09R0101_EXIT01
 #Next Zone ID Name
@@ -401,8 +382,8 @@ EVENTDATA_POSTYPE_RAIL
 #size
 2 1
 #rail way
-DIR_UP
-#event number: 10
+DIR_RIGHT
+#event number: 9
 #Door Event Label
 DOOR_ID_D09_D09R0701_EXIT01
 #Next Zone ID Name
@@ -421,7 +402,7 @@ EVENTDATA_POSTYPE_RAIL
 2 1
 #rail way
 DIR_RIGHT
-#event number: 11
+#event number: 10
 #Door Event Label
 DOOR_ID_D09_D09R0901_EXIT01
 #Next Zone ID Name
@@ -439,8 +420,8 @@ EVENTDATA_POSTYPE_RAIL
 #size
 2 1
 #rail way
-DIR_UP
-#event number: 12
+DIR_RIGHT
+#event number: 11
 #Door Event Label
 DOOR_ID_D09_R10R0901_EXIT01
 #Next Zone ID Name
@@ -458,8 +439,8 @@ EVENTDATA_POSTYPE_RAIL
 #size
 3 1
 #rail way
-DIR_UP
-#event number: 13
+DIR_RIGHT
+#event number: 12
 #Door Event Label
 DOOR_ID_D09_D09R0501_EXIT01
 #Next Zone ID Name
@@ -478,7 +459,7 @@ EVENTDATA_POSTYPE_RAIL
 2 1
 #rail way
 DIR_RIGHT
-#event number: 14
+#event number: 13
 #Door Event Label
 DOOR_ID_D09_D09R1401_EXIT01
 #Next Zone ID Name
@@ -497,7 +478,7 @@ EVENTDATA_POSTYPE_RAIL
 2 1
 #rail way
 DIR_RIGHT
-#event number: 15
+#event number: 14
 #Door Event Label
 DOOR_ID_D09_C09_EXIT01
 #Next Zone ID Name
@@ -516,7 +497,7 @@ EVENTDATA_POSTYPE_RAIL
 3 1
 #rail way
 DIR_RIGHT
-#event number: 16
+#event number: 15
 #Door Event Label
 DOOR_ID_D09_D09R1201_EXIT03
 #Next Zone ID Name
@@ -535,7 +516,7 @@ EVENTDATA_POSTYPE_RAIL
 1 1
 #rail way
 DIR_RIGHT
-#event number: 17
+#event number: 16
 #Door Event Label
 DOOR_ID_D09_D09R1201_EXIT02
 #Next Zone ID Name
@@ -554,7 +535,7 @@ EVENTDATA_POSTYPE_RAIL
 1 1
 #rail way
 DIR_RIGHT
-#event number: 18
+#event number: 17
 #Door Event Label
 DOOR_ID_D09_D09R0801_EXIT01
 #Next Zone ID Name
@@ -569,6 +550,25 @@ EXIT_TYPE_WALL
 EVENTDATA_POSTYPE_RAIL
 #position
 30 6 -6
+#size
+2 1
+#rail way
+DIR_RIGHT
+#event number: 18
+#Door Event Label
+DOOR_ID_D09_D09R1301_EXIT01
+#Next Zone ID Name
+ZONE_ID_D09R1301
+#Next Door ID Name
+DOOR_ID_D09R1301_D09_EXIT01
+#Door Direction
+EXIT_DIR_DOWN
+#Door Type
+EXIT_TYPE_WALL
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+40 3 -3
 #size
 2 1
 #rail way
