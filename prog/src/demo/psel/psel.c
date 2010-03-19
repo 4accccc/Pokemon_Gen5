@@ -376,8 +376,9 @@ typedef enum
 POKE_MOVE_REQ;
 
 // •`‰æ—Dæ“x
-#define POKE_SOFTPRI_BACK  (1)  // ‰œ
-#define POKE_SOFTPRI_FRONT (0)  // è‘O
+#define POKE_SOFTPRI_BACK   (2)  // ‰œ
+#define POKE_SOFTPRI_MIDDLE (1)  // ’†
+#define POKE_SOFTPRI_FRONT  (0)  // è‘O
 
 
 // ƒ{[ƒ‹“à‚ğƒCƒ[ƒW‚µ‚½ƒTƒu‰æ–ÊBG
@@ -809,11 +810,12 @@ static void Psel_BgExit( PSEL_WORK* work );
 // BGŒÂ•Ê
 static void Psel_BgS01Init( PSEL_WORK* work );
 static void Psel_BgS01Exit( PSEL_WORK* work );
-static void Psel_BgS01Main( PSEL_WORK* work );
+
+static void Psel_BgS01SubInit( PSEL_WORK* work );
+static void Psel_BgS01SubExit( PSEL_WORK* work );
 
 static void Psel_BgS02Init( PSEL_WORK* work );
 static void Psel_BgS02Exit( PSEL_WORK* work );
-static void Psel_BgS02Main( PSEL_WORK* work );
 
 static void Psel_InsideBallInit( PSEL_WORK* work );
 static void Psel_InsideBallExit( PSEL_WORK* work );
@@ -1786,6 +1788,7 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
   // ƒ|ƒPƒ‚ƒ“‘å¬ƒZƒbƒg‚Ì“®‚«‚ÌXV(ƒpƒŒƒbƒgƒAƒjƒ‚ÍPsel_PokeSetPalMain‚É”C‚¹‚Ä‚¨‚­)
 
   u8 i;
+  u8 j;
 
   for( i=0; i<TARGET_POKE_MAX; i++ )
   {
@@ -1962,6 +1965,38 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
       break;
     }
   }
+
+  // softpri
+  {
+    u8 order[TARGET_POKE_MAX] = { TARGET_MIZU, TARGET_HONOO, TARGET_KUSA };  // order[0]=yÅ‘å‚ÌTARGET_???; order[1]=y’†‚ÌTARGET_???; order[2]=yÅ¬‚ÌTARGET_???;
+    s16 y[TARGET_POKE_MAX];  // y[TARGET_MIZU]=TARGET_MIZU‚Ìy; y[TARGET_HONOO]=TARGET_HONOO‚Ìy; y[TARGET_KUSA]=TARGET_KUSA‚Ìy;
+    GFL_CLACTPOS pos;
+    for( i=0; i<TARGET_POKE_MAX; i++ )
+    {
+      GFL_CLACT_WK_GetPos( work->poke_set[i].clwk[POKE_BIG], &pos, CLSYS_DEFREND_SUB );
+      y[i] = pos.y;
+    }
+    for( i=0; i<TARGET_POKE_MAX; i++ )
+    {
+      for( j=TARGET_POKE_MAX -1; j>i; j-- )
+      {
+        if( y[order[j]] > y[order[j-1]] )
+        {
+          u8 temp = order[j-1];
+          order[j-1] = order[j];
+          order[j] = temp;
+        }
+      }
+    }
+    for( i=0; i<TARGET_POKE_MAX; i++ )
+    {
+      u8 softpri;
+      if( order[0] == i )      softpri=POKE_SOFTPRI_FRONT;
+      else if( order[1] == i ) softpri=POKE_SOFTPRI_MIDDLE;
+      else                     softpri=POKE_SOFTPRI_BACK;    // if( order[2] == i )
+      GFL_CLACT_WK_SetSoftPri( work->poke_set[i].clwk[POKE_BIG], softpri );
+    }
+  }
 }
 
 static void Psel_PokeSetSelectStart( PSEL_WORK* work, TARGET target_poke )  // ‰½‰ñŒÄ‚ñ‚Å‚àAƒAƒjƒ‚Ì“r’†‚ÅŒÄ‚ñ‚Å‚àA‘åä•v‚ÈŠæ‹­‚È‚Â‚­‚è‚É‚È‚Á‚Ä‚¢‚é
@@ -1987,12 +2022,12 @@ static void Psel_PokeSetSelectStart( PSEL_WORK* work, TARGET target_poke )  // ‰
       if( i == target_poke )
       {
         work->poke_set[i].move_req   = POKE_MOVE_REQ_P0_TO_P2;
-        GFL_CLACT_WK_SetSoftPri( work->poke_set[i].clwk[POKE_BIG], POKE_SOFTPRI_FRONT );
+        //GFL_CLACT_WK_SetSoftPri( work->poke_set[i].clwk[POKE_BIG], POKE_SOFTPRI_FRONT );  // ’–Ú‚µ‚Ä‚¢‚È‚¢ƒ|ƒPƒ‚ƒ“‚Ì‚Ù‚¤‚ªè‘O‚Ì‚±‚Æ‚à‚ ‚é‚Ì‚ÅA–ˆƒtƒŒ[ƒ€İ’è‚·‚é‚±‚Æ‚É‚µ‚½B
       }
       else
       {
         work->poke_set[i].move_req   = POKE_MOVE_REQ_P2_TO_P0;
-        GFL_CLACT_WK_SetSoftPri( work->poke_set[i].clwk[POKE_BIG], POKE_SOFTPRI_BACK );
+        //GFL_CLACT_WK_SetSoftPri( work->poke_set[i].clwk[POKE_BIG], POKE_SOFTPRI_BACK );  // ’–Ú‚µ‚Ä‚¢‚È‚¢ƒ|ƒPƒ‚ƒ“‚Ì‚Ù‚¤‚ªè‘O‚Ì‚±‚Æ‚à‚ ‚é‚Ì‚ÅA–ˆƒtƒŒ[ƒ€İ’è‚·‚é‚±‚Æ‚É‚µ‚½B
       }
     }
   }
@@ -2149,6 +2184,45 @@ static void Psel_BgS01Exit( PSEL_WORK* work )
   u16 pal        = BG_PAL_POS_M_WIN;
   u16 scr = ( pal << 12 ) | ( flip_v << 11 ) | ( flip_h << 10 ) | ( chara_name << 0 );
   GFL_BG_ClearScreenCodeVReq( BG_FRAME_M_WIN, scr );
+}
+
+static void Psel_BgS01SubInit( PSEL_WORK* work )
+{
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_PSEL, work->heap_id );
+
+  GFL_ARCHDL_UTIL_TransVramPaletteEx(
+      handle,
+      NARC_psel_psel_bg01_NCLR,
+      PALTYPE_SUB_BG,
+      BG_PAL_POS_S_INSIDE_BALL * 0x20,
+      BG_PAL_POS_S_INSIDE_BALL * 0x20,
+      BG_PAL_NUM_S_INSIDE_BALL * 0x20,
+      work->heap_id );
+
+  GFL_ARCHDL_UTIL_TransVramBgCharacter(
+      handle,
+      NARC_psel_psel_bg01_NCGR,
+      BG_FRAME_S_INSIDE_BALL,
+			0,
+      0,  // ‘S“]‘—
+      FALSE,
+      work->heap_id );
+
+  GFL_ARCHDL_UTIL_TransVramScreen(
+      handle,
+      NARC_psel_psel_bg01_NSCR,
+      BG_FRAME_S_INSIDE_BALL,
+      0,
+      0,  // ‘S“]‘—
+      FALSE,
+      work->heap_id );
+
+  GFL_ARC_CloseDataHandle( handle );
+
+  GFL_BG_LoadScreenReq( BG_FRAME_S_INSIDE_BALL );
+}
+static void Psel_BgS01SubExit( PSEL_WORK* work )
+{
 }
 
 static void Psel_BgS02Init( PSEL_WORK* work )
@@ -3064,6 +3138,7 @@ static int Psel_S01Init    ( PSEL_WORK* work, int* seq )
   // ¶¬
   Psel_ThreeS01Init( work );
   Psel_BgS01Init( work );
+  Psel_BgS01SubInit( work );
   Psel_TextS01Init( work );
 
   // ƒeƒLƒXƒg‚Í”ñ•\¦
@@ -3277,6 +3352,7 @@ static int Psel_S01Exit    ( PSEL_WORK* work, int* seq )
   G2S_BlendNone();
 
   Psel_TextS01Exit( work );
+  Psel_BgS01SubExit( work );
   Psel_BgS01Exit( work );
   Psel_ThreeS01Exit( work );
 
