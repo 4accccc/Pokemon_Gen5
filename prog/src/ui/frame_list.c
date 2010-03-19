@@ -1883,3 +1883,17 @@ void FRAMELIST_SetCursorPosPalette( FRAMELIST_WORK * wk )
 {
 	ChangeCursorPosPalette( wk, wk->listPos, PALCHG_NONE );
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル位置のパレットを戻す
+ *
+ * @param		wk					ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void FRAMELIST_SetCursorPosPaletteOff( FRAMELIST_WORK * wk )
+{
+	ChangeCursorPosPalette( wk, PALCHG_NONE, wk->listPos );
+}
