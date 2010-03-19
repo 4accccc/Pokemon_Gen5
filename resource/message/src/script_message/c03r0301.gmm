@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T18:19:14"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T13:25:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03r0301_cleaningm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0301_cleaningm_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・入り口近くの
 　pos（GIRDX=6~8、GRIZ=10）を踏むと
@@ -311,7 +311,7 @@
 あがるなら　気を　つけなさいよ▼</language>
 	</row>
 
-	<row id="msg_c03r0301_cleaningm_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0301_cleaningm_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・画面外に消えるとこのメッセージ表示
 ・その後、エレベータの音を鳴らし終えると
@@ -324,7 +324,7 @@
 こころも　きれいに　したいのよ♪▼</language>
 	</row>
 
-	<row id="msg_c03r0301_infomationw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0301_infomationw_01">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">INFOMATIONW
 受付</attribute>
@@ -353,7 +353,7 @@
 今日も　はりきって　がんばりますよ！</language>
 	</row>
 
-	<row id="msg_c03r0301_statue_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0301_statue_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">ここは　バトルカンパニー
@@ -362,7 +362,7 @@
 どうぐの　けんきゅうかいはつ！</language>
 	</row>
 
-	<row id="msg_c03r0301_painting1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0301_painting1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">絵画？</attribute>
