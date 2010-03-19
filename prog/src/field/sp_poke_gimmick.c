@@ -16,8 +16,8 @@
 
 #include "arc/fieldmap/sppoke.naix"
 
-//#include "../../../resource/fldmapdata/gimmick/gym_anti/gym_anti_local_def.h"
-
+#include "sound/pm_sndsys.h"
+#include "sp_poke_gimmick_se_def.h"
 
 #define SPPOKE_GMK_ASSIGN_ID    (1)
 #define SPPOKE_UNIT_IDX    (0)                      //特殊ポケイベントユニットインデックス
@@ -413,13 +413,22 @@ void SPPOKE_GMK_StartBallAnm( GAMESYS_WORK *gsys, const BALL_ANM_TYPE inType, co
 {
   int i;
   int obj;
+  int se;
   GMEVENT *event;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
 
-  if ( inType == BALL_ANM_TYPE_OUT ) obj = OBJ_BALL_OUT;
-  else obj = OBJ_BALL_IN;
+  if ( inType == BALL_ANM_TYPE_OUT )
+  {
+    obj = OBJ_BALL_OUT;
+  }
+  else
+  {
+    obj = OBJ_BALL_IN;
+    se = SPPOKE_GMK_BALL_IN;
+    PMSND_PlaySE(se);
+  }
 
   //ボール座標時セット
   {
