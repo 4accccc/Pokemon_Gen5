@@ -665,7 +665,7 @@ sub_demo_train_arrival:
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN
     _TIME_WAIT( 20 ) //ちょっと待つ
     _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, 0, BTRAIN_POS_RECEIPT, BSW_NULL )
-    _TIME_WAIT( 30 ) //ちょっと待つ
+    _TIME_WAIT( 45 ) //ちょっと待つ
     
     //ブラックアウト
     _BLACK_OUT()
