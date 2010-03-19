@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-18T17:56:56"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T15:28:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1456" top="140" right="2161" bottom="769" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -483,7 +483,7 @@
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクは　すこしだけ
 キミのことを　きにいっていたのかも▼
 トレーナーとして　ではなく
-ともだちとして　ポケモンと▽
+トモダチとして　ポケモンと▽
 むかいあっている　にんげん……▼
 そう　おもえたからね[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクは　すこしだけ
@@ -504,7 +504,7 @@
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクは　すこしだけ
 キミのことを　きにいっていたのかも▼
 トレーナーとして　ではなく
-ともだちとして　ポケモンと▽
+トモダチとして　ポケモンと▽
 むかいあっている　にんげん……▼
 そう　おもえたからね[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクは　すこしだけ
@@ -575,7 +575,7 @@
 変わりゆく　世界を　見守るか[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_05w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_n01r0502_boss_05w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・WHITEver
 ・メッセージ表示後、シン登場
@@ -587,7 +587,7 @@
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]おいで　シン！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_05b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_05b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・メッセージ表示後、ム登場
@@ -942,7 +942,7 @@
 ２匹が　それぞれ　異なる
 英雄を　選んだ……▽
 こんなことも　あるのか▼
-同じ時代に　二人の英雄
+同じ時代に　２人の英雄
 理想を　求める　もの▽
 真実を　求める　もの▽
 ともに　正しいと　いうのか？[BE:09:速度コントロール:0]▼</language>
@@ -989,7 +989,7 @@
 ２匹が　それぞれ　異なる
 英雄を　選んだ……▽
 こんなことも　あるのか▼
-同じ時代に　二人の英雄
+同じ時代に　２人の英雄
 真実を　求める　もの▽
 理想を　求める　もの▽
 ともに　正しいと　いうのか？[BE:09:速度コントロール:0]▼</language>
@@ -1090,14 +1090,14 @@
 　sage1_02wか
 　sage1_02b</comment>
 		<attribute name="キャラ指定">ゲーチス</attribute>
-		<language name="JPN" width="256">ゲーチス『ふがいない　むすこ　だ▼
-それでも　ワタクシと　おなじ
-ハルモニアの　なまえを　もつ▽
-にんげん　なのか？▼</language>
-		<language name="JPN_KANJI" width="256">ゲーチス『ふがいない　息子だ▼
-それでも　ワタクシと　同じ
-ハルモニアの　名前を　持つ▽
-人間なのか？▼</language>
+		<language name="JPN" width="256">ゲーチス『それでも　ワタクシと
+おなじ　ハルモニアの　なまえをもつ▽
+にんげん　なのか？▼
+ふがいない　むすこ　め▼</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『それでも　ワタクシと
+同じ　ハルモニアの　名前をもつ▽
+人間なのか？▼
+ふがいない　息子め▼</language>
 	</row>
 
 	<row id="msg_n01r0502_sage1_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -1379,13 +1379,13 @@
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……あわれだね▼
 ポケモンの　こころも　わからなければ
-みんなの　りそうも　しんじつも
+みんなの　りそうも　しんじつも▽
 ちっとも　りかい　できていない▼
 アンタは　ここに　ふさわしくない
 さっさと　たいじょう　しようか▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……あわれだね▼
 ポケモンの　心も　わからなければ
-みんなの　理想も　真実も
+みんなの　理想も　真実も▽
 ちっとも　理解できていない▼
 アンタは　ここに　ふさわしくない
 さっさと　退場しようか▼</language>

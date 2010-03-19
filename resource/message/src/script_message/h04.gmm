@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T11:47:33"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T15:09:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1292" top="328" right="1996" bottom="956" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_h04_poke_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h04_poke_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>ポケモン
 ・OBJをウロウロさせる
 　会話後、GIRL1が通訳をする</comment>
@@ -301,7 +301,7 @@
 		<language name="JPN_KANJI" width="256">キャモメ『クルル……クル</language>
 	</row>
 
-	<row id="msg_h04_poke_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h04_poke_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>ポケモン
 ・msg_h04_girl1_02後に表示
 　その後個数によって
@@ -313,7 +313,7 @@
 		<language name="JPN_KANJI" width="256">キャモメ『クルル！</language>
 	</row>
 
-	<row id="msg_h04_poke_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h04_poke_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジャンプアニメをしてメッセージ表示</comment>
 		<attribute name="キャラ指定">POKE</attribute>
@@ -321,7 +321,7 @@
 		<language name="JPN_KANJI" width="256">キャモメ『クルルー！　クル！</language>
 	</row>
 
-	<row id="msg_h04_sys_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_h04_sys_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>システム
 ・キャモメのお礼を取得
 　アイテム未定</comment>
@@ -336,7 +336,7 @@
 なにか　落ちている</language>
 	</row>
 
-	<row id="msg_h04_girl1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h04_girl1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・直接会話時
 　配達物イベント開始</comment>
@@ -351,7 +351,7 @@
 どうにか　してあげたいのだけど……</language>
 	</row>
 
-	<row id="msg_h04_girl1_01a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h04_girl1_01a" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・先にキャモメに話しかけた場合
 　配達物イベント開始</comment>
@@ -366,7 +366,7 @@
 どうにか　してあげたいのだけど……</language>
 	</row>
 
-	<row id="msg_h04_girl1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h04_girl1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・配達物を１つ以上持っている場合
 　キャモメに渡しているようなアニメ後
@@ -380,7 +380,7 @@
 ちょっと　みせて　あげようよ！</language>
 	</row>
 
-	<row id="msg_h04_girl1_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h04_girl1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・１つ見つけている場合</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
@@ -390,7 +390,7 @@
 キャモメ　喜んでる　みたい</language>
 	</row>
 
-	<row id="msg_h04_girl1_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h04_girl1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・２つ見つけている場合</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
@@ -400,7 +400,7 @@
 キャモメ　喜んでる　みたい</language>
 	</row>
 
-	<row id="msg_h04_girl1_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h04_girl1_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・全部見つけている場合
 　msg_h04_poke_03へ</comment>
@@ -411,7 +411,7 @@
 これで　キャモメも　おおだすかりね！</language>
 	</row>
 
-	<row id="msg_h04_girl1_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_h04_girl1_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・イベントクリア後は、これを繰り返し</comment>
 		<attribute name="キャラ指定">GIRL1</attribute>
@@ -423,7 +423,7 @@
 顔をみると　シアワセに　なるね！</language>
 	</row>
 
-	<row id="msg_h04_boy1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h04_boy1_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・配達物イベント開始すると
 　あるBOY1・NPCがこれを喋るようになる
@@ -437,7 +437,7 @@
 落ちていったのを　みたよ！</language>
 	</row>
 
-	<row id="msg_h04_boy1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h04_boy1_02" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・通常時</comment>
 		<attribute name="キャラ指定">BOY1</attribute>
@@ -445,7 +445,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_h04_oldman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h04_oldman1_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・配達物イベント開始すると
 　あるOLDMAN1・NPCがこれを喋るようになる
@@ -462,7 +462,7 @@
 キャモメに　渡して　あげなされ▼</language>
 	</row>
 
-	<row id="msg_h04_oldman1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h04_oldman1_02" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・通常時</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
@@ -470,7 +470,7 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_h04_backpackerw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h04_backpackerw_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・配達物イベント開始すると
 　あるBACKPACKERWがこれを喋るようになる
@@ -491,7 +491,7 @@
 今度は　落とさないように　ってね！</language>
 	</row>
 
-	<row id="msg_h04_backpackerw_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_h04_backpackerw_02" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・通常時</comment>
 		<attribute name="キャラ指定">BACKPACKERW</attribute>

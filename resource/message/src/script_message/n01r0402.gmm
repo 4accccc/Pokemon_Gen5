@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-16T16:21:21"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T15:21:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -339,9 +339,13 @@
 ・GRIDX=5~15、GRIDZ=9</comment>
 		<attribute name="キャラ指定">BGメッセージ</attribute>
 		<language name="JPN" width="256">スケートボードで　つかう
-ハーフパイプが　おかれている……</language>
+ハーフパイプが　おかれている……▼
+そこかしこに　ポケモンの
+ひっかきあとが　ついている……</language>
 		<language name="JPN_KANJI" width="256">スケートボードで　使う
-ハーフパイプが　設置されている……</language>
+ハーフパイプが　設置されている……▼
+そこかしこに　ポケモンの
+引っかきあとが　ついている……</language>
 	</row>
 
 	<row id="msg_n01r0402_bg_06">
