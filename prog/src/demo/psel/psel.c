@@ -1576,6 +1576,9 @@ static void Psel_ThreeS02OnlyMbSelectAnimeStart( PSEL_WORK* work, TARGET target 
         GFL_G3D_OBJECT_EnableAnime( obj, j );
 	      GFL_G3D_OBJECT_SetAnimeFrame( obj, j, &anm_frm );  // 必ず0フレーム目から再生されるようにしておく
       }
+
+      GFL_CLACT_WK_SetAnmIndex( work->finger_clwk, 0 );  // 必ず0フレーム目から始まるようにしておく  // 3Dのボール選択のアニメーションと動きを合わせるために、3Dのボール選択のアニメーションが0フレームを設定されるときに、一緒に指指しカーソルにも0フレームを設定してもらう。
+
     }
   }
 
@@ -2118,7 +2121,8 @@ static void Psel_FingerInit( PSEL_WORK* work )
         &cldata, CLSYS_DEFREND_MAIN, work->heap_id );
     GFL_CLACT_WK_SetAutoAnmFlag( work->finger_clwk, TRUE );
 
-    GFL_CLACT_WK_SetDrawEnable( work->finger_clwk, FALSE );
+    //GFL_CLACT_WK_SetDrawEnable( work->finger_clwk, FALSE );  // 3Dのボール選択のアニメーションと動きを合わせるために、実際には消さず見えない位置に置いておく
+    Psel_FingerDrawEnable( work, FALSE );
   }
 }
 static void Psel_FingerExit( PSEL_WORK* work )
@@ -2133,8 +2137,21 @@ static void Psel_FingerExit( PSEL_WORK* work )
 }
 static void Psel_FingerDrawEnable( PSEL_WORK* work, BOOL on_off )
 {
-  GFL_CLACT_WK_SetDrawEnable( work->finger_clwk, on_off );
-  if( on_off ) Psel_FingerUpdatePos( work );
+  //GFL_CLACT_WK_SetDrawEnable( work->finger_clwk, on_off );  // 3Dのボール選択のアニメーションと動きを合わせるために、実際には消さず見えない位置に置いておく
+  //if( on_off ) Psel_FingerUpdatePos( work );
+
+  if( on_off )
+  {
+    Psel_FingerUpdatePos( work );
+  }
+  else
+  {
+    // 3Dのボール選択のアニメーションと動きを合わせるために、実際には消さず見えない位置に置いておく
+    GFL_CLACTPOS pos;
+    pos.x = 400;
+    pos.y = 300;
+    GFL_CLACT_WK_SetPos( work->finger_clwk, &pos, CLSYS_DEFREND_MAIN );
+  }
 }
 static void Psel_FingerUpdatePos( PSEL_WORK* work )
 {
@@ -2142,7 +2159,7 @@ static void Psel_FingerUpdatePos( PSEL_WORK* work )
   pos.x = finger_pos[work->select_target_poke][0];
   pos.y = finger_pos[work->select_target_poke][1];
   GFL_CLACT_WK_SetPos( work->finger_clwk, &pos, CLSYS_DEFREND_MAIN );
-  GFL_CLACT_WK_SetAnmIndex( work->finger_clwk, 0 );  // 必ず0フレーム目から始まるようにしておく
+  //GFL_CLACT_WK_SetAnmIndex( work->finger_clwk, 0 );  // 必ず0フレーム目から始まるようにしておく  // 3Dのボール選択のアニメーションと動きを合わせるために、3Dのボール選択のアニメーションが0フレームを設定されるときに、一緒に指指しカーソルにも0フレームを設定してもらう。
 }
 
 //-------------------------------------
