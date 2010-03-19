@@ -35,7 +35,17 @@ _EVENT_DATA_END
 /* 			MIDDLEMAN2	C03R0601							  */
 /**************************************************************/
 EVENT_START		ev_c03r0601_middleman2_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0601_middleman2_01 )
+	
+	IF $WK_SCENE_R04 == 1 THEN
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0601_middleman2_02 )
+	
+	ELSE
+	
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0601_middleman2_01 )
+	
+	ENDIF
+
 EVENT_END
 
 /**************************************************************/

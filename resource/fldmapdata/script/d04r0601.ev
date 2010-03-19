@@ -56,36 +56,52 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_OBJ_ANIME( D04R0601_SAGE1_01, anm_sage1_mae )
 	_OBJ_ANIME_WAIT()
 		
-	//イッシュの　でんせつは　ごぞんじ　なの　でしょう
+	//さて　おめでとう！
+	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG( msg_d04r0601_sage1_02 , D04R0601_SAGE1_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//そのご　あらそいを　おさめた
+	//ときはなつだと？
 	_BALLOONWIN_OBJMSG( msg_d04r0601_champion_01 , D04R0601_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
-		
-	//つごうの　いいことを　そもそも　ここに　あったのは
+
+	//おやおや　これは
+	_BALLOONWIN_OBJMSG( msg_d04r0601_sage1_03 , D04R0601_SAGE1_01 )
+	_BALLOONWIN_CLOSE()
+
+	//われらが　プラズマだんの　おうは
 	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_sage1_03w, msg_d04r0601_sage1_03b, D04R0601_SAGE1_01, WIN_NONE )
 	_BALLOONWIN_CLOSE()
 		
-	//では　われわれを　あざける……　ただ　そのためだけに
+	//ワシは　まけぬ！　ポケモンを　あいする
 	_BALLOONWIN_OBJMSG( msg_d04r0601_champion_02 , D04R0601_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//まさか　しんせつですよ　しんせつ
+	//おうは　アナタに　きょうみなど　ない
 	_BALLOONWIN_OBJMSG( msg_d04r0601_sage1_04 , D04R0601_SAGE1_01 )
+	_BALLOONWIN_CLOSE()
+
+	//ワシは　まけぬ！　ポケモンを　あいする
+	_BALLOONWIN_OBJMSG( msg_d04r0601_champion_02a , D04R0601_CHAMPION_01 )
+	_BALLOONWIN_CLOSE()
+
+	//おうは　アナタに　きょうみなど　ない
+	_BALLOONWIN_OBJMSG( msg_d04r0601_sage1_04a , D04R0601_SAGE1_01 )
 	_BALLOONWIN_CLOSE()
 
 	//ゲーチス：自機を押しのけて去る
 	_OBJ_ANIME( D04R0601_SAGE1_01, anm_sage1_saru )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_osareru )
-	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_ou )
 	_OBJ_ANIME_WAIT()
 	
 	//ゲーチスOBJを消す
 	_OBJ_DEL( D04R0601_SAGE1_01 )
 
-	//３ｖｓ１だぜ　なんとか　ならないのかよ
+	//ライバル：アデクのほうをみる
+	_OBJ_ANIME( D04R0601_RIVAL_01, anm_stay_up )
+	_OBJ_ANIME_WAIT()
+
+	//アデクさん　これから　どうするのですか？
 	_BALLOONWIN_OBJMSG( msg_d04r0601_rival_02 , D04R0601_RIVAL_01 )
 	_BALLOONWIN_CLOSE()
 
@@ -306,4 +322,24 @@ _ANIME_LABEL	anm_rival_ou
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_champion_miru
 	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+	
+
+//--------------------------------------------------------------------
+//	共通アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_up
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_left
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_right
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
