@@ -140,7 +140,7 @@ typedef void (*CLWK_ANM_CALLBACK_FUNC)( u32 param, fx32 currentFrame );
 
 
 //-------------------------------------
-///	設定サーフェース　絶対座標指定
+///	サーフェースインデックス　絶対座標指定
 //	GFL_CLWKの座標設定関数で絶対座標を設定するときに使用します。
 //=====================================
 #define CLWK_SETSF_NONE	(0xffff)
@@ -917,7 +917,9 @@ extern BOOL GFL_CLACT_WK_GetDrawEnable( const GFL_CLWK* cp_wk );
  *
  *	@param	p_wk			セルアクターワーク
  *	@param	cp_pos			座標構造体
- *	@param	setsf			サーフェースインデックス( CLSYS_DEFREND_MAIN/CLSYS_DEFREND_SUB )
+ *	@param	setsf			サーフェースインデックス
+ *	                  ( デフォルトレンダラー状態なら CLSYS_DEFREND_MAIN/CLSYS_DEFREND_SUB )
+ *	                  ( 独自レンダラー状態なら サーフェーステーブルのインデックス )
  */
 //-----------------------------------------------------------------------------
 extern void GFL_CLACT_WK_SetPos( GFL_CLWK* p_wk, const GFL_CLACTPOS* cp_pos, u16 setsf );
@@ -927,7 +929,9 @@ extern void GFL_CLACT_WK_SetPos( GFL_CLWK* p_wk, const GFL_CLACTPOS* cp_pos, u16
  *
  *	@param	cp_wk			セルアクターワーク
  *	@param	p_pos			座標格納先
- *	@param	setsf			サーフェースインデックス( CLSYS_DEFREND_MAIN/CLSYS_DEFREND_SUB )
+ *	@param	setsf			サーフェースインデックス
+ *	                  ( デフォルトレンダラー状態なら CLSYS_DEFREND_MAIN/CLSYS_DEFREND_SUB )
+ *	                  ( 独自レンダラー状態なら サーフェーステーブルのインデックス )
  */
 //-----------------------------------------------------------------------------
 extern void GFL_CLACT_WK_GetPos( const GFL_CLWK* cp_wk, GFL_CLACTPOS* p_pos, u16 setsf );
@@ -937,7 +941,9 @@ extern void GFL_CLACT_WK_GetPos( const GFL_CLWK* cp_wk, GFL_CLACTPOS* p_pos, u16
  *
  *	@param	p_wk		セルアクターワーク
  *	@param	pos			設定値
- *	@param	setsf		設定サーフェース( CLSYS_DEFREND_MAIN/CLSYS_DEFREND_SUB )
+ *	@param	setsf			サーフェースインデックス
+ *	                  ( デフォルトレンダラー状態なら CLSYS_DEFREND_MAIN/CLSYS_DEFREND_SUB )
+ *	                  ( 独自レンダラー状態なら サーフェーステーブルのインデックス )
  *	@param	type		座標タイプ
  */
 //-----------------------------------------------------------------------------
@@ -947,7 +953,9 @@ extern void GFL_CLACT_WK_SetTypePos( GFL_CLWK* p_wk, s16 pos, u16 setsf, CLSYS_M
  *	@brief	サーフェース内相対座標個別取得
  *
  *	@param	cp_wk		セルアクターワーク
- *	@param	setsf		設定サーフェース( CLSYS_DEFREND_MAIN/CLSYS_DEFREND_SUB )
+ *	@param	setsf			サーフェースインデックス
+ *	                  ( デフォルトレンダラー状態なら CLSYS_DEFREND_MAIN/CLSYS_DEFREND_SUB )
+ *	                  ( 独自レンダラー状態なら サーフェーステーブルのインデックス )
  *	@param	type		座標タイプ
  *
  *	@return	座標タイプのサーフェース内相対座標

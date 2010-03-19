@@ -119,24 +119,24 @@ exit(0);
 sub GET_ItemNo
 {
   my( $item ) = @_;
-  my( $item_def, $item_count, $end );
+  my( $item_def, $item_count, $item_no );
   
 
   $item =~ s/\s//g;
 
-  $item_count = 0;
   for( $item_count=0; $item_count<@ITEM_HEADER; $item_count++ ){
     #//comment@•”•ª‚ð’Šo
     $item_def = $ITEM_HEADER[$item_count];
 
-    if( $item_def =~ /\/\/(.*)$/ ){
+    if( $item_def =~ /\( ([0-9]*) \)\t\t\/\/(.*)$/ ){
 
-      $item_def = $1;
+      $item_no = $1;
+      $item_def = $2;
       $item_def =~ s/\s//g;
-      &DEBUG_Puts( "$item_def == $item\n" );
+      &DEBUG_Puts( "$item_def == $item  $item_no\n" );
       if( "".$item_def eq "".$item ){
         &DEBUG_Puts( "return \n" );
-        return $item_count;
+        return $item_no;
       }
     }
   }

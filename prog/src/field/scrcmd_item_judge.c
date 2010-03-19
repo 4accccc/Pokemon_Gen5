@@ -82,6 +82,7 @@ VMCMD_RESULT EvCmdItemJudgeCheck( VMHANDLE *core, void *wk )
   GF_ASSERT( obj_type <= SCR_ITEM_JUDGE_OBJTYPE_RICH );
   GF_ASSERT( item_no < ITEM_DATA_MAX );
 
+  //TOMOYA_Printf( "item_no %d  obj_type %d\n", item_no, obj_type );
 
   // ƒe[ƒuƒ‹‚Ì“Ç‚Ýž‚Ý
   p_data = GFL_ARC_UTIL_LoadEx( ARCID_ITEM_JUDGE, sc_ARC_DATA[obj_type], FALSE, GFL_HEAP_LOWID(heapID), &size );
@@ -90,8 +91,11 @@ VMCMD_RESULT EvCmdItemJudgeCheck( VMHANDLE *core, void *wk )
   // SEARCH
   *ret_money = 0;
   for( i=0; i<size; i++ ){
+    //TOMOYA_Printf( "item_no %d == %d\n", p_data[i].item_no, item_no );
     if( p_data[i].item_no == item_no ){
+      //TOMOYA_Printf( "money %d\n", p_data[i].money );
       *ret_money = p_data[i].money;
+      break;
     }
   }
   GFL_HEAP_FreeMemory( p_data );

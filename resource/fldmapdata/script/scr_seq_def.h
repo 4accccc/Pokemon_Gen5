@@ -6734,7 +6734,7 @@
 //--------------------------------------------------------------
 /**
  *  バッグプロセスを呼び出す
- *  @param  mode  呼び出しモード script_def.h SCR_BAGMODE_SELL他
+ *  @param  mode  呼び出しモード script_def.h SCR_BAGMODE_SELL, SCR_BAG_MODE_FIELD SCR_BAG_MODE_SELECT他
  *  @param  ret_mode  バッグの終了モード　script_def.h SCR_PROC_RETMODE_EXIT 他
  *  @param  ret_item  選択アイテムNo(0なら選択アイテム無し)
  *
