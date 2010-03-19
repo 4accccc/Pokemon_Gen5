@@ -334,21 +334,12 @@ BOOL GF_MSG_PrintEndCheck( WT_PRINT *setup )
  *  @return プリントストリーム
  */
 //-----------------------------------------------------------------------------
-void GF_STR_PrintSimple2( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int y, WT_PRINT *setup, const char *cp_file, int line )
+void GF_STR_PrintSimple( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int y, WT_PRINT *setup )
 {
   int i;
-  OS_TFPrintf( 3, "!!PRINT!! %s %d\n", cp_file, line );
- /* {
-    for( i = 0; i < WT_PRINT_BUFF_MAX; i++ )
-    {
-      if( setup->stream[i] == NULL )
-      {
-        break;
-      }
-    }
-    GF_ASSERT( i < WT_PRINT_BUFF_MAX );
-  }
-*/
+//  OS_TFPrintf( 3, "!!PRINT!! %s %d\n", cp_file, line );
+
+#if 0
   if( setup->stream[0] )
   { 
     PRINTSYS_PrintStreamDelete( setup->stream[0] );
@@ -358,6 +349,10 @@ void GF_STR_PrintSimple2( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, i
   setup->stream[0]  = PRINTSYS_PrintStream(
         bmpwin, x, y, str, setup->font,
         MSGSPEED_GetWait(), setup->tcbsys, 0, HEAPID_WORLDTRADE, 0x0F );
+
+#else
+  GF_STR_PrintColor( bmpwin, font_idx, str, x, y, 0, PRINTSYS_LSB_Make( 1,2, 0xF ), setup );
+#endif
 
 }
 //----------------------------------------------------------------------------

@@ -2594,7 +2594,7 @@ static void DownloadPokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int 
 		// 個性乱数から取得される性別とPOKEPARAに格納されている性別が違った場合に修正する
 		// 配布ブーバーン・エレキブル・ペラップ・エレブー・ブーバー対策
 		// 性別再計算
-		PP_Put( pp, ID_PARA_sex, 0 );
+		PP_Put( pp, ID_PARA_sex, POKETOOL_GetSex( PP_Get( pp, ID_PARA_monsno, NULL ), PP_Get( pp, ID_PARA_form_no, NULL ), PP_Get( pp, ID_PARA_personal_rnd, NULL )  ) );
 
 		// ポケモンの交換成立最終日をセーブする
 		TradeDateUpDate( wk->param->worldtrade_data, TRADE_TYPE_DEPOSIT );
@@ -2686,7 +2686,7 @@ static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int 
 	// 個性乱数から取得される性別とPOKEPARAに格納されている性別が違った場合に修正する
 	// 配布ブーバーン・エレキブル・ペラップ・エレブー・ブーバー対策
 	// 性別再計算
-	PP_Put( pp, ID_PARA_sex, 0 );
+  PP_Put( pp, ID_PARA_sex, POKETOOL_GetSex( PP_Get( pp, ID_PARA_monsno, NULL ), PP_Get( pp, ID_PARA_form_no, NULL ), PP_Get( pp, ID_PARA_personal_rnd, NULL )  ) );
 
 	// てもち(てもちが一杯はこの時点だとどうしようもないので）
 	if(boxno==18){

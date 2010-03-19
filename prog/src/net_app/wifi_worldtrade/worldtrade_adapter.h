@@ -235,9 +235,8 @@ extern void WT_PRINT_Main( WT_PRINT *wk );
 
 extern BOOL GF_MSG_PrintEndCheck( WT_PRINT *setup );
 
-extern void GF_STR_PrintSimple2( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int y, WT_PRINT *setup, const char *cp_file, int line );
+extern void GF_STR_PrintSimple( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int y, WT_PRINT *setup );
 
-#define GF_STR_PrintSimple(a,b,c,d,e,f) GF_STR_PrintSimple2(a,b,c,d,e,f,__FILE__,__LINE__)
 extern void GF_STR_PrintColor( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int y, int put_type, PRINTSYS_LSB color, WT_PRINT *setup );
 
 

@@ -391,11 +391,11 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 
 	// -------------サブ画面---------------------
 	// メイン画面BGsキャラ転送
-	GFL_ARC_UTIL_TransVramBgCharacter(  ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_win_lz_ncgr,  
-						GFL_BG_FRAME2_S,    0, 0, 1, HEAPID_WORLDTRADE);
+	GFL_ARC_UTIL_TransVramBgCharacter(  ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_win_ncgr,  
+						GFL_BG_FRAME2_S,    0, 0, 0, HEAPID_WORLDTRADE);
 
-	GFL_ARC_UTIL_TransVramScreen( ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_win2_lz_nscr,  
-					  GFL_BG_FRAME2_S,    0, 0, 1, HEAPID_WORLDTRADE);
+	GFL_ARC_UTIL_TransVramScreen( ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_win2_nscr,  
+					  GFL_BG_FRAME2_S,    0, 0, 0, HEAPID_WORLDTRADE);
 
 	// 会話フォントパレット転送
 	TalkFontPaletteLoad( PALTYPE_SUB_BG, WORLDTRADE_SUB_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );

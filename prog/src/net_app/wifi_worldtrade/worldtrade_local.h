@@ -558,7 +558,6 @@ typedef struct _WORLDTRADE_WORK{
 	void *boxicon;												///< ポケモンアイコン書き換えに使うキャラポインタ
 	void (*vfunc)(void *);										///< Vブランクタスク(ポケモンアイコン書き換え）
 	void (*vfunc2)(void *);										///< Vブランクタスク（BGスクロール）
-	//void (*vfunc2)(void *);										///< Vブランクタスク（説明用BMPWINを確保する）
 
 	// worldtrade_search.cで使用
 	s16						SubActY[10][2];						///< 各人物OBJの初期Y位置
@@ -571,8 +570,6 @@ typedef struct _WORLDTRADE_WORK{
 	Dpw_Common_ProfileResult	dc_profile_result;				// 自分の情報登録レスポンス用構造体
 
 	int							country_code;					///< 検索条件に国番号
-	
-	CONNECT_BG_PALANM cbp;		// Wifi接続BG画面のパレットアニメ制御システム
 	
 	s16 local_seq;												///< サーバー応答エラー用のシーケンスワーク
 	s16 local_wait;												///< サーバー応答エラー用のウェイト
@@ -602,15 +599,14 @@ typedef struct _WORLDTRADE_WORK{
 #define WORLDTRADE_BGM        (SEQ_BGM_GTS)
 #define WORLDTRADE_MOVE_SE		(SEQ_SE_SELECT1)
 #define WORLDTRADE_DECIDE_SE	(SEQ_SE_DECIDE1)
-//#define WORLDTRADE_PAGE_SE		(SEQ_SE_DP_SELECT78)
-#define WORLDTRADE_PAGE_SE		(SEQ_SE_DP_SELECT)
+#define WORLDTRADE_PAGE_SE		(SEQ_SE_SELECT1)
 #define SE_CANCEL							(SEQ_SE_CANCEL1)	
 #define SE_GTC_NG							(SEQ_SE_BEEP)
-#define SE_GTC_SEARCH					(SEQ_SE_SELECT1)
-#define SE_GTC_PLAYER_IN			(SEQ_SE_FLD_05)
-#define SE_GTC_ON							(SEQ_SE_SELECT1)
-#define SE_GTC_OFF						(SEQ_SE_SELECT1)
-#define SE_GTC_PLAYER_OUT			(SEQ_SE_FLD_05)
+#define SE_GTC_SEARCH					(SEQ_SE_SYS_78)
+#define SE_GTC_PLAYER_IN			(SEQ_SE_SYS_86)
+#define SE_GTC_ON							(SEQ_SE_PC_LOGIN)
+#define SE_GTC_OFF						(SEQ_SE_PC_LOGOFF)
+#define SE_GTC_PLAYER_OUT			(SEQ_SE_SYS_87)
 #define SE_GTC_APPEAR					(SEQ_SE_FLD_05)
 
 //============================================================================================

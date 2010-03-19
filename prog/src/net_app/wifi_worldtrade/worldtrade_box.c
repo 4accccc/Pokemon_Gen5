@@ -419,10 +419,10 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 	// メイン画面BG2スクリーン転送
 	GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_worldtrade_title_base_lz_nscr, GFL_BG_FRAME2_M, 0, 32*24*2, 1, HEAPID_WORLDTRADE);
 
+	GFL_ARC_CloseDataHandle( p_handle );
+
 	WorldTrade_SubLcdBgGraphicSet( wk );	// トレードルーム転送
 	WorldTrade_SubLcdWinGraphicSet( wk );   // トレードルームウインドウ転送
-
-	GFL_ARC_CloseDataHandle( p_handle );
 }
 #define BOX_SX		( 25-6 )
 #define BOX_SY		( 60-24 )

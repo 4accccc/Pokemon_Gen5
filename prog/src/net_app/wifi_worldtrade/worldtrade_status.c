@@ -144,7 +144,5 @@ int WorldTrade_Status_End(WORLDTRADE_WORK *wk, int seq)
 	// ボックス画面に戻る
 	WorldTrade_SubProcessUpdate( wk );
 
-  PMSND_PlayBGM( WORLDTRADE_BGM );
-
 	return SEQ_INIT;
 }

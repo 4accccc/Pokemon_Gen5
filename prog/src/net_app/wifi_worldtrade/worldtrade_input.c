@@ -343,10 +343,10 @@ static const u8 nation_table[][2]={
 #define INPUT_NATION_NONE_SELECT_X ( 1 )	// 国名「きにしない」位置X
 #define INPUT_NATION_NONE_SELECT_Y ( 2 )	// 国名「きにしない」位置Y
 
-#define INPUT_PAGE_X		(  7 )	// レベルとポケモン名のページ表示座標
+#define INPUT_PAGE_X		(  6 )	// レベルとポケモン名のページ表示座標
 #define INPUT_PAGE_Y		( 14 )
 
-#define INPUT_NATION_PAGE_X			( 15 )	// 国名ページ位置X
+#define INPUT_NATION_PAGE_X			( 14 )	// 国名ページ位置X
 #define INPUT_NATION_PAGE_Y			( 16 )	// 国名ページ位置Y
 
 #define HEAD1_MOVE_INIT_X 		( 32 )
@@ -1885,6 +1885,14 @@ static u32 NationHead1_SelectMain( WORLDTRADE_INPUT_WORK *wk, u8 *see_check )
 	if(oldpos < 10){    //あ～わ
 	    wk->listpos_backup_x = oldpos;  //X位置を取っておく
 	}
+
+  if( GFL_UI_KEY_GetTrg() && GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+  { 
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
+    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+    PMSND_PlaySE(WORLDTRADE_MOVE_SE);
+    return BMPMENU_NULL;
+  }
         
 	if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
 		wk->listpos = n_head1table[wk->listpos][0];

@@ -38,6 +38,8 @@
 
 //#include "msgdata/msg_ev_win.h"
 
+#include "debug/debug_nagihashi.h"
+
 #define WORLDTRADE_WORDSET_BUFLEN ( 64 )  ///< WORDSet文字列の展開用バッファ長
 
 #include "worldtrade.naix"          ///< グラフィックアーカイブ定義
@@ -135,7 +137,7 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 
 
     // ヒープ作成
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WORLDTRADE, 0x40000 );  //old 0x70000
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WORLDTRADE, 0x30000 );  //old 0x70000
 
     wk = GFL_PROC_AllocWork( proc, sizeof(WORLDTRADE_WORK), HEAPID_WORLDTRADE );
     GFL_STD_MemClear( wk, sizeof(WORLDTRADE_WORK) );
@@ -197,7 +199,6 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * param, void * work )
 {
   WORLDTRADE_WORK * wk  = work;
-
   if( GFL_NET_IsInit() )
   {
     // 受信強度リンクを反映させる
@@ -208,8 +209,6 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
     // Dpw_Tr_Main() だけは例外的にいつでも呼べる
     Dpw_Tr_Main();
   }
-
-  //DEBUG_HEAP_PrintRestUse( HEAPID_WORLDTRADE );
 
   GFL_TCB_Main( wk->tcbsys );
   WT_PRINT_Main( &wk->print );
@@ -244,11 +243,8 @@ static GFL_PROC_RESULT WorldTradeProc_Main( GFL_PROC * proc, int * seq, void * p
       // サブ処理解放(SEQ_INITに行くか、SEQ_OUTにいくかはおまかせ）
       *seq = (*SubProcessTable[wk->sub_process][2])(wk, *seq);
       if(wk->subprocflag){
-        //InitCLACT( wk );
         WorldTrade_SubLcdActorAdd( wk );
         WorldTrade_SubLcdMatchObjAppear( wk, wk->SearchResult, 0 );
-//        WorldTrade_SubLcdBgGraphicSet( wk );    // トレードルーム転送
-//        WorldTrade_SubLcdWinGraphicSet( wk );   // トレードルームウインドウ転送
         wk->subprocflag = 0;
         OS_Printf("OAMシステム臨時復帰");
       }
@@ -347,8 +343,6 @@ static void VBlankFunc( GFL_TCB *, void *work )
   }
 
   GFL_BG_VBlankFunc();
-
-  // セルアクターVram転送マネージャー実行
   GFL_CLACT_SYS_VBlankFunc();
 
 }

@@ -90,6 +90,7 @@ static  int SubSeq_ReturnScreen2( WORLDTRADE_WORK *wk );
 static  int SubSeq_ExchangeMain( WORLDTRADE_WORK *wk );
 static  int SubSeq_DecideWait( WORLDTRADE_WORK *wk );
 static  int SubSeq_CancelWait( WORLDTRADE_WORK *wk );
+static  int SubSeq_AnmWait( WORLDTRADE_WORK *wk );
 
 
 static void WantLabelPrint( GFL_BMPWIN *win[], GFL_BMPWIN *country_win[], GFL_MSGDATA *MsgManager, WT_PRINT *print );
@@ -149,6 +150,7 @@ enum{
 
   SUBSEQ_DECIDE_WAIT,
   SUBSEQ_CANCEL_WAIT,
+  SUBSEQ_ANM_WAIT,
 };
 
 static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
@@ -195,6 +197,7 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 
   SubSeq_DecideWait, // SUBSEQ_DECIDE_WAIT
   SubSeq_CancelWait, // SUBSEQ_CANCEL_WAIT
+  SubSeq_AnmWait,// SUBSEQ_ANM_WAIT
 };
 
 #define INFO_TEXT_WORD_NUM	(10*2)
@@ -1079,7 +1082,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
         break;
 
       case CURSOR_POS_VIEW:
-        //「えらぶ」ならばすでに選んでいかチェック
+        //「えらぶ」ならばすでに選んでいるかチェック
         if(wk->SearchResult)
         { 
           GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
@@ -1092,6 +1095,7 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
           GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
           GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
           PMSND_PlaySE(SE_GTC_NG);
+          wk->subprocess_seq  = SUBSEQ_ANM_WAIT;
         }
         break;
 
@@ -1166,8 +1170,10 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
         }
         else
         { 
+          GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
           GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][3] );
           PMSND_PlaySE(SE_GTC_NG);
+          wk->subprocess_seq  = SUBSEQ_ANM_WAIT;
         }
         break;
 
@@ -2175,7 +2181,10 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_TITLE, 0 );
 
 		// 下画面のOBJを隠す
-		WorldTrade_SubLcdMatchObjHide( wk );
+    if( wk->SearchResult > 0 )
+    { 
+      WorldTrade_SubLcdMatchObjHide( wk );
+    }
 
 		// 検索結果人数はクリアする
 		wk->SearchResult = 0;
@@ -2369,6 +2378,16 @@ static  int SubSeq_DecideWait( WORLDTRADE_WORK *wk )
 { 
   if( !GFL_CLACT_WK_CheckAnmActive( wk->CursorActWork) )
   { 
+    GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][2] );
+    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+    { 
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 0 );
+    }
+    else
+    { 
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+    }
+
     DecideFunc( wk, CursorPosGet( wk ) );
   }
 
@@ -2388,8 +2407,48 @@ static  int SubSeq_CancelWait( WORLDTRADE_WORK *wk )
 { 
   if( !GFL_CLACT_WK_CheckAnmActive( wk->CursorActWork) )
   { 
+    GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][2] );
+    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+    { 
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 0 );
+    }
+    else
+    { 
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+    }
+
+
     SubSeq_MessagePrint( wk, msg_gtc_01_016, 1, 0, 0x0f0f );
     WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_YESNO );
+  }
+
+  return SEQ_MAIN;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメ待ち
+ *
+ *	@param	WORLDTRADE_WORK *wk   ワーク
+ *
+ *	@return 終了コード
+ */
+//-----------------------------------------------------------------------------
+static  int SubSeq_AnmWait( WORLDTRADE_WORK *wk )
+{ 
+
+  if( !GFL_CLACT_WK_CheckAnmActive( wk->CursorActWork) )
+  { 
+    GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, CursorPos[CursorPosGet( wk )][2] );
+    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+    { 
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 0 );
+    }
+    else
+    { 
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+    }
+
+    wk->subprocess_seq  = SUBSEQ_MAIN;
   }
 
   return SEQ_MAIN;

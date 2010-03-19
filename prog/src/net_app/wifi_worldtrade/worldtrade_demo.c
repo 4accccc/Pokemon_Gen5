@@ -340,8 +340,6 @@ int WorldTrade_Demo_End(WORLDTRADE_WORK *wk, int seq)
     wk->sub_proc_wk = NULL;
   }
 
-  PMSND_PlayBGM( WORLDTRADE_BGM );
-
   WorldTrade_InitSystem( wk );
 
 	// ボックス画面に戻る

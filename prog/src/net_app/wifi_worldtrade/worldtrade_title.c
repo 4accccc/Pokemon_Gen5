@@ -482,10 +482,11 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 
 
 	// 下画面256色背景転送
-	WorldTrade_SubLcdBgGraphicSet( wk );
+  // 以前の画面で転送していたらやらない
+  WorldTrade_SubLcdBgGraphicSet( wk );
 
 	if(wk->OpeningFlag){
-		WorldTrade_SubLcdWinGraphicSet( wk );   // トレードルームウインドウ転送
+    WorldTrade_SubLcdWinGraphicSet( wk );   // トレードルームウインドウ転送
 		//サブBG0を表示
 		GFL_DISP_GXS_SetVisibleControl(  GX_PLANEMASK_BG0, VISIBLE_ON );	//サブ画面OBJ面ON
 	}else{
@@ -517,22 +518,6 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
 {
 	GFL_CLWK_DATA	add;
 
-#if 0
-  //登録情報格納
-  CLACT_ADD add;
-  {
-    CLACT_HEADER header;
-		// セルアクターヘッダ作成
-		GFL_CLACT_WK_SetCellResData or GFL_CLACT_WK_SetTrCellResData or GFL_CLACT_WK_SetMCellResData(&header, 0, 0, 0, 0, CLACT_U_HEADER_DATA_NONE, CLACT_U_HEADER_DATA_NONE,
-				0, 1,
-				wk->resMan[CLACT_U_CHAR_RES],
-				wk->resMan[CLACT_U_PLTT_RES],
-				wk->resMan[CLACT_U_CELL_RES],
-				wk->resMan[CLACT_U_CELLANM_RES],
-				NULL,NULL);
-		WorldTrade_MakeCLACT( &add,  wk, &header, NNS_G2D_VRAM_TYPE_2DMAIN );
-	}
-#endif
 	add.pos_x = CursorPosTbl[wk->TitleCursorPos][0];
 	add.pos_y = CursorPosTbl[wk->TitleCursorPos][1];
 	add.anmseq	= 0;
@@ -552,6 +537,7 @@ static void SetCellActor(WORLDTRADE_WORK *wk)
   }
   else
   { 
+    GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, 0 );
     GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
   }
   WirelessIconEasy();
@@ -979,8 +965,15 @@ static int SubSeq_Main( WORLDTRADE_WORK *wk)
 		return SEQ_MAIN;
   }
 	if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
-      SubSeq_TalkPrint( wk, msg_gtc_01_008, WorldTrade_GetTalkSpeed(wk), 0, 0x0f0f );
-			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_YESNO );
+    wk->TitleCursorPos  = 2;
+    WorldTrade_CLACT_PosChange(wk->CursorActWork, 
+        CursorPosTbl[wk->TitleCursorPos][0],
+        CursorPosTbl[wk->TitleCursorPos][1]); 
+    GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+    GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, 1 );
+    wk->subprocess_seq  = SUBSEQ_CURSOR_WAIT;
+
+    PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 	}else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
     GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, 1 );
@@ -1094,7 +1087,7 @@ static int SubSeq_YesNo( WORLDTRADE_WORK *wk)
 	wk->subprocess_seq = SUBSEQ_YESNO_SELECT;
 
 	// カーソル隠す
-	GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 0 );
+	//GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 0 );
 
 	return SEQ_MAIN;
 	
@@ -1176,6 +1169,16 @@ static int SubSeq_CursorEnd( WORLDTRADE_WORK *wk)
 { 
   if( !GFL_CLACT_WK_CheckAnmActive( wk->CursorActWork) )
   { 
+    GFL_CLACT_WK_SetAnmSeq( wk->CursorActWork, 0 );
+    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+    { 
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 0 );
+    }
+    else
+    { 
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1 );
+    }
+
     DecideFunc( wk, wk->TitleCursorPos );
   }
 
@@ -1399,7 +1402,7 @@ void WorldTrade_BmpWinPrintColor( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int font
 
 //==============================================================================
 /**
- * @brief   下画面用「世界交換ルーム」256色グラフィック転送
+ * @brief   下画面用「世界交換ルーム」グラフィック転送
  *
  * @param   wk		
  * @param   winflag	 1:トレード画面のウインドウを転送する 0:しない
@@ -1409,20 +1412,22 @@ void WorldTrade_BmpWinPrintColor( GFL_BMPWIN *win, GFL_MSGDATA *msgman, int font
 //==============================================================================
 void WorldTrade_SubLcdBgGraphicSet( WORLDTRADE_WORK *wk  )
 {
+  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_WORLDTRADE_GRA, HEAPID_WORLDTRADE );
+
 	// 下画面ＢＧパレット転送
-	GFL_ARC_UTIL_TransVramPalette( ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_nclr, PALTYPE_SUB_BG,  0, 16*16*2,  HEAPID_WORLDTRADE);
+	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_worldtrade_traderoom_nclr, PALTYPE_SUB_BG,  0, 16*16*2,  HEAPID_WORLDTRADE);
 
 	// サブ画面BG1キャラ転送
-	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_lz_ncgr,  GFL_BG_FRAME1_S, 0, 32*21*0x40, 1, HEAPID_WORLDTRADE);
+	GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_traderoom_ncgr,  GFL_BG_FRAME1_S, 0, 32*7*0x20, 0, HEAPID_WORLDTRADE);
 
 	// サブ画面BG1スクリーン転送
-	GFL_ARC_UTIL_TransVramScreen( ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_lz_nscr, 
-	     GFL_BG_FRAME1_S, 0, 32*32*2, 1, HEAPID_WORLDTRADE);
-	GFL_BG_LoadScreenReq(  GFL_BG_FRAME1_S );
+	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_worldtrade_traderoom_nscr, 
+	     GFL_BG_FRAME1_S, 0, 32*32*2, 0, HEAPID_WORLDTRADE);
+
+  GFL_ARC_CloseDataHandle( p_handle );
 
 	// 会話フォントパレット転送
 	TalkFontPaletteLoad( PALTYPE_SUB_BG, WORLDTRADE_SUB_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );
-
 }	
 
 //==============================================================================
@@ -1437,16 +1442,19 @@ void WorldTrade_SubLcdBgGraphicSet( WORLDTRADE_WORK *wk  )
 void WorldTrade_SubLcdWinGraphicSet( WORLDTRADE_WORK *wk )
 {
 	// -------------サブ画面---------------------
-  
-  GFL_ARC_UTIL_TransVramPalette( ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_win_nclr, PALTYPE_SUB_BG,  0, 32,  HEAPID_WORLDTRADE);
+   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_WORLDTRADE_GRA, HEAPID_WORLDTRADE ); 
+
+  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_worldtrade_traderoom_win_nclr, PALTYPE_SUB_BG,  0, 32,  HEAPID_WORLDTRADE);
 
 	// メイン画面BG2キャラ転送
-	GFL_ARC_UTIL_TransVramBgCharacter(  ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_win_lz_ncgr,
-						GFL_BG_FRAME2_S,    0, 0, 1, HEAPID_WORLDTRADE);
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(  p_handle, NARC_worldtrade_traderoom_win_ncgr,
+						GFL_BG_FRAME2_S,    0, 0, 0, HEAPID_WORLDTRADE);
 
-	// 状態説明スクリーン
-	GFL_ARC_UTIL_TransVramScreen( ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_win_lz_nscr,
-					  GFL_BG_FRAME2_S,    0, 0, 1, HEAPID_WORLDTRADE);
+  // 状態説明スクリーン
+	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_worldtrade_traderoom_win_nscr,
+					  GFL_BG_FRAME2_S,    0, 0, 0, HEAPID_WORLDTRADE);
+
+  GFL_ARC_CloseDataHandle( p_handle );
 
 	// 「DSの下画面をみてねアイコン」表示
 	GFL_CLACT_WK_SetDrawEnable( wk->PromptDsActWork, 1 );
@@ -1464,17 +1472,19 @@ void WorldTrade_SubLcdWinGraphicSet( WORLDTRADE_WORK *wk )
  */
 //==============================================================================
 void WorldTrade_SubLcdExpainPut( WORLDTRADE_WORK *wk, int explain )
-{
+{ 
+
 	// 「GTS」
 	wk->ExplainWin	= GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
 		EXPLAIN_WIN_X, EXPLAIN_WIN_Y, EXPLAIN_WIN_SX, EXPLAIN_WIN_SY, 
 		WORLDTRADE_TALKFONT_SUB_PAL, GFL_BMP_CHRAREA_GET_B );
 
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->ExplainWin), 0x0000 );
-	GFL_BMPWIN_MakeTransWindow_VBlank( wk->ExplainWin );
 
 	// 上画面メッセージ
 	WorldTrade_ExplainPrint( wk->ExplainWin,  wk->MsgManager, explain, &wk->print );
+
+	GFL_BMPWIN_MakeTransWindow_VBlank( wk->ExplainWin );
 
 	OS_Printf("説明ウインドウ確保\n");
 }
