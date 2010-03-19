@@ -115,6 +115,10 @@ typedef enum{
   INTRUDE_TALK_STATUS_BATTLE,       ///<対戦
   INTRUDE_TALK_STATUS_ITEM,         ///<アイテム渡す
   INTRUDE_TALK_STATUS_CARD,         ///<トレーナーカード見せて
+  INTRUDE_TALK_STATUS_SHOP_OK,      ///<売買成立
+  INTRUDE_TALK_STATUS_SHOP_NG,      ///<売買不成立
+  INTRUDE_TALK_STATUS_SHOP_SHOT_OF_MONEY,      ///<お金が足りない
+  INTRUDE_TALK_STATUS_SHOP_ITEM_FULL,          ///<アイテムがいっぱい
 }INTRUDE_TALK_STATUS;
 
 ///同期取り番号

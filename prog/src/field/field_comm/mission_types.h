@@ -136,8 +136,9 @@ typedef struct{
 
 ///ミッション系統毎に異なるdataの構造体：ATTRIBUTE
 typedef struct{
-  u16 zone_id;          ///<目的地のzone_id
-  u16 padding[2];
+  u16 item;
+  u16 price;
+  u16 padding;
 }MISSION_TYPEDATA_ATTRIBUTE;
 
 ///ミッション系統毎に異なるdataの構造体：ITEM

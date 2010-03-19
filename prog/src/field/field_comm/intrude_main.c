@@ -433,44 +433,16 @@ static void _SendBufferCreate_SymbolData(INTRUDE_COMM_SYS_PTR intcomm,const SYMB
   GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(gamedata);
   SYMBOL_SAVE_WORK *symbol_save = SymbolSave_GetSymbolData(sv_ctrl);
-  u8 occ_num, occ_num_ex;
+  u8 occ_num;
   
-  occ_num = 0;
-  occ_num_ex = 0;
-  switch(p_sdr->zone_type){
-  default:
-    GF_ASSERT(0);
-    //break through
-  case SYMBOL_ZONE_TYPE_KEEP_ALL:
-    SymbolSave_GetKeepLargeSymbolPokemon(symbol_save, sendbuf->spoke_array, 
-      SYMBOL_MAP_STOCK_MAX, &occ_num);
-    SymbolSave_GetKeepSmallSymbolPokemon(symbol_save, &sendbuf->spoke_array[occ_num], 
-      SYMBOL_MAP_STOCK_MAX - occ_num, &occ_num_ex);
-    break;
-  case SYMBOL_ZONE_TYPE_KEEP_LARGE:
-    SymbolSave_GetKeepLargeSymbolPokemon(symbol_save, sendbuf->spoke_array, 
-      SYMBOL_MAP_STOCK_MAX, &occ_num);
-    break;
-  case SYMBOL_ZONE_TYPE_KEEP_SMALL:
-    SymbolSave_GetKeepSmallSymbolPokemon(symbol_save, sendbuf->spoke_array, 
-      SYMBOL_MAP_STOCK_MAX, &occ_num);
-    break;
-  case SYMBOL_ZONE_TYPE_FREE_LARGE:
-    SymbolSave_GetFreeLargeSymbolPokemon(symbol_save, sendbuf->spoke_array, 
-      SYMBOL_MAP_STOCK_MAX, p_sdr->map_no, &occ_num);
-    break;
-  case SYMBOL_ZONE_TYPE_FREE_SMALL:
-    SymbolSave_GetFreeSmallSymbolPokemon(symbol_save, sendbuf->spoke_array, 
-      SYMBOL_MAP_STOCK_MAX, p_sdr->map_no, &occ_num);
-    break;
-  }
+  SymbolSave_GetMapIDSymbolPokemon(
+    symbol_save, sendbuf->spoke_array, SYMBOL_MAP_STOCK_MAX, p_sdr->symbol_map_id, &occ_num);
   
-  sendbuf->num = occ_num + occ_num_ex;
+  sendbuf->num = occ_num;
   sendbuf->map_level_small = SymbolSave_GetMapLevelSmall(symbol_save);
   sendbuf->map_level_large = SymbolSave_GetMapLevelLarge(symbol_save);
   sendbuf->net_id = GFL_NET_SystemGetCurrentID();
-  sendbuf->zone_type = p_sdr->zone_type;
-  sendbuf->map_no = p_sdr->map_no;
+  sendbuf->symbol_map_id = p_sdr->symbol_map_id;
 }
 
 

@@ -56,12 +56,11 @@ NetID IntrudeSymbol_CheckIntrudeNetID(GAME_COMM_SYS_PTR game_comm, GAMEDATA *gam
  * @retval  BOOL		    TRUE:送信成功　FALSE:送信失敗
  */
 //==================================================================
-BOOL IntrudeSymbol_ReqSymbolData(INTRUDE_COMM_SYS_PTR intcomm, SYMBOL_ZONE_TYPE zone_type, u8 map_no)
+BOOL IntrudeSymbol_ReqSymbolData(INTRUDE_COMM_SYS_PTR intcomm, SYMBOL_MAP_ID symbol_map_id)
 {
   SYMBOL_DATA_REQ sdr;
   
-  sdr.zone_type = zone_type;
-  sdr.map_no = map_no;
+  sdr.symbol_map_id = symbol_map_id;
   sdr.occ = TRUE;
   return IntrudeSend_SymbolDataReq(intcomm, intcomm->intrude_status_mine.palace_area, &sdr);
 }
@@ -103,8 +102,7 @@ INTRUDE_SYMBOL_WORK * IntrudeSymbol_GetSymbolBuffer(INTRUDE_COMM_SYS_PTR intcomm
  * 自分のシンボルデータに変更が発生した為、みんなに通知する
  *
  * @param   intcomm		
- * @param   zone_type		自分が変更したSYMBOL_ZONE_TYPE
- * @param   map_no		  自分が変更したマップ番号(キープゾーンの場合は0固定)
+ * @param   symbol_map_id		自分が変更したシンボルマップID
  *
  * ポケモンの移動：SymbolSave_Field_Move_FreeToKeep or SymbolSave_Field_Move_KeepToFree
  * ポケモンの捕獲：SymbolSave_DataShift
@@ -112,10 +110,9 @@ INTRUDE_SYMBOL_WORK * IntrudeSymbol_GetSymbolBuffer(INTRUDE_COMM_SYS_PTR intcomm
  * これで通信相手に知らせる事で相手側がIntrudeSymbol_CheckSymbolDataChangeで検知する事が出来ます
  */
 //==================================================================
-void IntrudeSymbol_SendSymbolDataChange(INTRUDE_COMM_SYS_PTR intcomm, SYMBOL_ZONE_TYPE zone_type, u8 map_no)
+void IntrudeSymbol_SendSymbolDataChange(INTRUDE_COMM_SYS_PTR intcomm, SYMBOL_MAP_ID symbol_map_id)
 {
-  intcomm->send_symbol_change.zone_type = zone_type;
-  intcomm->send_symbol_change.map_no = map_no;
+  intcomm->send_symbol_change.symbol_map_id = symbol_map_id;
   intcomm->send_symbol_change.occ = TRUE;
 }
 

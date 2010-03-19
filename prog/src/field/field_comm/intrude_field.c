@@ -128,6 +128,11 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   int i, my_net_id;
   BOOL update_ret;
 
+  //※check　デバッグ
+  if(ZONEDATA_IsBingo(FIELDMAP_GetZoneID(fieldWork)) && (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT)){
+    DEBUG_INTRUDE_Pokemon_Add(fieldWork);
+  }
+
   //パレス通信自動起動ON/OFF処理
   _PalaceMapCommBootCheck(fieldWork, gameSys, game_comm, pcActor);
 
@@ -177,11 +182,6 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   }
   
   _PalaceFieldPlayerWarp(fieldWork, gameSys, pcActor, intcomm);
-  
-  //※check　デバッグ
-  if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
-    DEBUG_INTRUDE_Pokemon_Add(fieldWork);
-  }
 }
 
 //==================================================================
@@ -595,8 +595,7 @@ GMEVENT * Intrude_CheckPosEvent(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys,
         return EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACE02, &pos, 0, FALSE);
       }
       else{ //侵入先のROMにいるので侵入先のシンボルポケモンを受信してからワープ
-        return EVENT_SymbolMapWarp(gameSys, fieldWork, NULL, ZONE_ID_PALACE02, &pos, 0, FALSE, 
-          SYMBOL_ZONE_TYPE_FREE_SMALL, 6);
+        return EVENT_SymbolMapWarp(gameSys, fieldWork, NULL, ZONE_ID_PALACE02, &pos, 0, FALSE, 5);
       }
     }
   }

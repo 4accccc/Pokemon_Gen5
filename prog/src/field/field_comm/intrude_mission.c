@@ -1225,7 +1225,7 @@ void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_CONV_DATA *
     {
       const MISSION_TYPEDATA_ATTRIBUTE *d_attr = (void*)cdata->data;
       
-      WORDSET_RegisterPlaceName( wordset, 0, ZONEDATA_GetPlaceNameID( d_attr->zone_id ) );
+      //WORDSET_RegisterPlaceName( wordset, 0, ZONEDATA_GetPlaceNameID( d_attr->zone_id ) );
     }
     break;
   case MISSION_TYPE_ITEM:        //“¹‹ï

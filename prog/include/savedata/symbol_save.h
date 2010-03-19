@@ -45,6 +45,16 @@ typedef enum{
   SYMBOL_ZONE_TYPE_KEEP_ALL,        ///<キープゾーンLARGEとSMALL両方
 }SYMBOL_ZONE_TYPE;
 
+///マップ番号
+typedef enum{
+  SYMBOL_MAP_ID_KEEP,               ///<MAP ID キープエリア(LARGE & SMALL)
+  
+  SYMBOL_MAP_ID_FREE_LARGE_START,   ///<MAP ID フリー(64x64)開始No
+  SYMBOL_MAP_ID_FREE_LARGE_END = SYMBOL_MAP_ID_FREE_LARGE_START + 3,
+  
+  SYMBOL_MAP_ID_FREE_SMALL_START = SYMBOL_MAP_ID_FREE_LARGE_END,  ///<MAP ID フリー(32x32)開始No
+}SYMBOL_MAP_ID;
+
 ///対象ゾーンに空きが無い事を示す値
 #define SYMBOL_SPACE_NONE        (0xffff)
 
@@ -70,7 +80,7 @@ typedef enum{
 }SYMBOL_MAP_LEVEL_SMALL;
 
 ///1マップ(32x32)でのストック数
-#define SYMBOL_MAP_STOCK_SMALL    (30)
+#define SYMBOL_MAP_STOCK_SMALL    (20)
 ///1マップ(64x64)でのストック数
 #define SYMBOL_MAP_STOCK_LARGE    (10)
 ///キープゾーン、フリーゾーンの中で最も1マップ中、多くストック出来る数

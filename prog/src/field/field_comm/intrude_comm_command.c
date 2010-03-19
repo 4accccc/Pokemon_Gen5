@@ -1885,8 +1885,7 @@ static void _IntrudeRecv_SymbolDataChange(const int netID, const int size, const
   const INTRUDE_SYMBOL_WORK *now_symbol = &intcomm->intrude_symbol;
   
   MATSUDA_Printf("RECV: symbol_change net_id=%d", netID);
-  if(now_symbol->net_id != netID || now_symbol->zone_type != p_sdc->zone_type
-      || now_symbol->map_no != p_sdc->map_no){
+  if(now_symbol->net_id != netID || now_symbol->symbol_map_id != p_sdc->symbol_map_id){
     MATSUDA_Printf("ˆá‚¤ƒ}ƒbƒv‚Ìˆ×–³Ž‹\n");
     return;
   }
