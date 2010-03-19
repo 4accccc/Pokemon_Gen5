@@ -5132,8 +5132,6 @@ static void scchg_WndWndVMoveSub_Core( const WIPE_TYPE_WND_VMOVE_DATA* p_one, WI
 	e_y_sum = sum_work / count_max;
 	e_y_sum += p_one->s_y;
 
-  OS_TFPrintf( 3, "e_y_sum = %d\n", e_y_sum );
-
 	// for•ª‚Å‚Ü‚í‚·‚½‚ßÅ¬Y‚ÆÅ‘åY‚ð‹‚ß‚é
 	if( p_one->s_y <= p_one->e_y ){
 		min_y = p_one->s_y;
