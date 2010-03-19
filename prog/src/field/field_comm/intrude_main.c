@@ -433,12 +433,20 @@ static void _SendBufferCreate_SymbolData(INTRUDE_COMM_SYS_PTR intcomm,const SYMB
   GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(gamedata);
   SYMBOL_SAVE_WORK *symbol_save = SymbolSave_GetSymbolData(sv_ctrl);
-  u8 occ_num;
+  u8 occ_num, occ_num_ex;
   
+  occ_num = 0;
+  occ_num_ex = 0;
   switch(p_sdr->zone_type){
   default:
     GF_ASSERT(0);
     //break through
+  case SYMBOL_ZONE_TYPE_KEEP_ALL:
+    SymbolSave_GetKeepLargeSymbolPokemon(symbol_save, sendbuf->spoke_array, 
+      SYMBOL_MAP_STOCK_MAX, &occ_num);
+    SymbolSave_GetKeepSmallSymbolPokemon(symbol_save, &sendbuf->spoke_array[occ_num], 
+      SYMBOL_MAP_STOCK_MAX - occ_num, &occ_num_ex);
+    break;
   case SYMBOL_ZONE_TYPE_KEEP_LARGE:
     SymbolSave_GetKeepLargeSymbolPokemon(symbol_save, sendbuf->spoke_array, 
       SYMBOL_MAP_STOCK_MAX, &occ_num);
@@ -457,7 +465,7 @@ static void _SendBufferCreate_SymbolData(INTRUDE_COMM_SYS_PTR intcomm,const SYMB
     break;
   }
   
-  sendbuf->num = occ_num;
+  sendbuf->num = occ_num + occ_num_ex;
   sendbuf->map_level_small = SymbolSave_GetMapLevelSmall(symbol_save);
   sendbuf->map_level_large = SymbolSave_GetMapLevelLarge(symbol_save);
   sendbuf->net_id = GFL_NET_SystemGetCurrentID();

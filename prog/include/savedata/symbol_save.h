@@ -41,6 +41,8 @@ typedef enum{
   SYMBOL_ZONE_TYPE_KEEP_SMALL,      ///<キープゾーン(32x32)専用エリア
   SYMBOL_ZONE_TYPE_FREE_LARGE,      ///<フリーゾーン(64x64)
   SYMBOL_ZONE_TYPE_FREE_SMALL,      ///<フリーゾーン(32x32)
+  
+  SYMBOL_ZONE_TYPE_KEEP_ALL,        ///<キープゾーンLARGEとSMALL両方
 }SYMBOL_ZONE_TYPE;
 
 ///対象ゾーンに空きが無い事を示す値
