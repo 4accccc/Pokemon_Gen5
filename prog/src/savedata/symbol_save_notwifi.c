@@ -90,7 +90,7 @@ u16 SymbolSave_GetKeepLargeSymbolPokemon(SYMBOL_SAVE_WORK *symbol_save, SYMBOL_P
 
 //==================================================================
 /**
- * フリーゾーン(32x32)のシンボルポケモンデータを一括で取得
+ * キープゾーン(32x32)のシンボルポケモンデータを一括で取得
  *
  * @param   symbol_save		
  * @param   dest_array		代入先
@@ -109,7 +109,7 @@ u16 SymbolSave_GetKeepSmallSymbolPokemon(SYMBOL_SAVE_WORK *symbol_save, SYMBOL_P
 
 //==================================================================
 /**
- * キープゾーン(64x64)のシンボルポケモンデータを一括で取得
+ * フリーゾーン(64x64)のシンボルポケモンデータを一括で取得
  *
  * @param   symbol_save		
  * @param   dest_array		代入先
