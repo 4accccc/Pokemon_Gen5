@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-15T19:01:49"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T19:57:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -332,10 +332,12 @@
 		<comment>♂
 ・続けてwhite_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『はい！▼
+		<language name="JPN" width="256">チェレン『はい！
+では　しつれい　しますね▼
 じゃあ　アララギはかせに
 おれいを　いいに　いかないと▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『はい！▼
+		<language name="JPN_KANJI" width="256">チェレン『はい！
+では　失礼しますね▼
 じゃあ　アララギ博士に
 お礼を　いいに　いかないと▼</language>
 	</row>
@@ -357,9 +359,13 @@
 　主人公に隣接してmama_01表示</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ベル『あっ
-あたし　いちど　いえにもどるね▼</language>
+あたし　いちど　いえにもどるね▼
+おばさん　どうも
+おじゃましましたあ▼</language>
 		<language name="JPN_KANJI" width="256">ベル『あっ
-あたし　一度　家にもどるね▼</language>
+あたし　一度　家にもどるね▼
+おばさん　どうも
+おじゃましましたあ▼</language>
 	</row>
 
 	<row id="msg_t01r0101_mama_01">
