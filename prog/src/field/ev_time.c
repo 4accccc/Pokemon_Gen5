@@ -240,12 +240,36 @@ const RTCDate * EVTIME_GetRTCDate( const GAMEDATA * gdata )
  * @brief	時間帯の取得
  * @param	gdata	フィールド制御ワークへのポインタ
  * @return	int		時間帯（field/timezone.hを参照）
+ *
+ *デフォルト季節の時間帯を取得します。
+ * 
+ * EVTIME_GetTimeZoneを使用するか、
+ * EVTIME_GetSeasonTimeZoneを使用するかは、企画者と相談してください。
  */
 //------------------------------------------------------------------
 int EVTIME_GetTimeZone(const GAMEDATA * gdata)
 {
 	GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
-	return GFL_RTC_ConvertHourToTimeZone(tm->sv_time.hour);
+	return GFL_RTC_ConvertHourToTimeZone( tm->sv_time.hour);
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief	時間帯の取得
+ * @param	gdata	フィールド制御ワークへのポインタ
+ * @return	int		時間帯（field/timezone.hを参照）
+ *
+ * 季節の時間帯になります。
+ *
+ * EVTIME_GetTimeZoneを使用するか、
+ * EVTIME_GetSeasonTimeZoneを使用するかは、企画者と相談してください。
+ */
+//------------------------------------------------------------------
+int EVTIME_GetSeasonTimeZone(const GAMEDATA * gdata)
+{
+	GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
+  u16 season = GAMEDATA_GetSeasonID( gdata );
+	return PM_RTC_ConvertHourToTimeZone( season, tm->sv_time.hour);
 
 }
 

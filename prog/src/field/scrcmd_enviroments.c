@@ -170,7 +170,7 @@ VMCMD_RESULT EvCmdGetTimeZone( VMHANDLE *core, void *wk )
 {
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
   u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
-  *ret_wk = EVTIME_GetTimeZone( gamedata );
+  *ret_wk = EVTIME_GetSeasonTimeZone( gamedata );
   return VMCMD_RESULT_CONTINUE;
 }
 
