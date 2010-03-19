@@ -139,14 +139,14 @@ EVENT_START		ev_pos_d20r0501_exit_01
 		//浮上アニメ
 		_PLAYER_UPDOWN_EFFECT( 0, 40, 64, 1 )
 		
-		_TIME_WAIT( 30 )
+		_TIME_WAIT( 15 )
 		
 		//暗転処理
 		_BLACK_OUT()
 		_DISP_FADE_END_CHECK()
 		
 		//マップチェンジ
-		_MAP_CHANGE( ZONE_ID_D20R0601, 29, 32, DIR_DOWN )
+		_MAP_CHANGE_NO_FADE( ZONE_ID_D20R0601, 29, 3, 32, DIR_DOWN )
 	
 	ELSE
 	

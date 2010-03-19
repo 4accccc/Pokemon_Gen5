@@ -496,7 +496,7 @@ t02_speech:
 	_OBJ_ANIME_WAIT()
 
 	//イベント曲再生
-	_START_EVENT_BGM( SEQ_BGM_E_G_CIS )
+	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
 
 	//ゲーチス入場
 	_OBJ_ANIME( T02_HAKAIM_04, anm_hakaim_in1 )
@@ -795,14 +795,8 @@ t02_speech:
 	_OBJ_ANIME( T02_N_01, anm_n_ippo )
 	_OBJ_ANIME_WAIT()
 
-	//Ｎのアップ絵表示
-	_START_FACEUP( 0, 0 )
-
-	_PLAINWIN_MSG_DOWN( msg_t02_boss_03a )
-	_PLAINWIN_CLOSE()
-
-	//Ｎのアップ絵終了
-	_END_FACEUP()
+	_BALLOONWIN_OBJMSG( msg_t02_boss_03a , T02_N_01 )
+	_BALLOONWIN_CLOSE()
 
 	//Ｎとポケモンしょうぶ。
 	_TRAINER_BTL_SET( TRID_BOSS_01, 0 )

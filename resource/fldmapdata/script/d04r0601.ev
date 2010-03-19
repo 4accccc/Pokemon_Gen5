@@ -36,9 +36,10 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	
 	//ライバル：自機に気付いて近づく
 	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_4tikaduku )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_up )
 	_OBJ_ANIME_WAIT()
 		
-	//……　こっちだ
+	//……　こっちだね
 	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG( msg_d04r0601_rival_01 , D04R0601_RIVAL_01 )
 	_BALLOONWIN_CLOSE()		
@@ -47,6 +48,8 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_4turearuki )
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_4turearuki )
 	_OBJ_ANIME_WAIT()
+
+	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
 
 	//おそろいの　ようですね　わざわざ　こんなところまで
 	_BALLOONWIN_OBJMSG_WB( msg_d04r0601_sage1_01w, msg_d04r0601_sage1_01b, D04R0601_SAGE1_01, WIN_NONE )
@@ -60,7 +63,10 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG( msg_d04r0601_sage1_02 , D04R0601_SAGE1_01 )
 	_BALLOONWIN_CLOSE()
-	
+
+	_OBJ_ANIME( D04R0601_CHAMPION_01, anm_stay_right )
+	_OBJ_ANIME_WAIT()
+
 	//ときはなつだと？
 	_BALLOONWIN_OBJMSG( msg_d04r0601_champion_01 , D04R0601_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
@@ -94,11 +100,20 @@ EVENT_START		ev_reserve_d04r0601_event_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_osareru )
 	_OBJ_ANIME_WAIT()
 	
+	_OBJ_ANIME( D04R0601_SAGE1_01, anm_sage1_saru1 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_osareru1 )
+	_OBJ_ANIME( D04R0601_RIVAL_01, anm_rival_miru )
+	_OBJ_ANIME_WAIT()
+
 	//ゲーチスOBJを消す
 	_OBJ_DEL( D04R0601_SAGE1_01 )
 
+	//BGM終了
+	_END_EVENT_BGM()
+
 	//ライバル：アデクのほうをみる
 	_OBJ_ANIME( D04R0601_RIVAL_01, anm_stay_up )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_down )
 	_OBJ_ANIME_WAIT()
 
 	//アデクさん　これから　どうするのですか？
@@ -152,6 +167,7 @@ EVENT_END
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_rival_4tikaduku
 	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_16F,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -289,6 +305,9 @@ _ANIME_LABEL	anm_sage1_mae
 _ANIME_LABEL	anm_sage1_saru
 	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_sage1_saru1
 	_ANIME_DATA	AC_WALK_L_8F,7
 	_ANIME_DATA	AC_WALK_U_8F,8
 	_ANIME_DATA	ACMD_END,0
@@ -302,6 +321,17 @@ _ANIME_LABEL	anm_player_osareru
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
 	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_osareru1
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_rival_miru
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
