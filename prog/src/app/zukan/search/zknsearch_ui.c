@@ -147,8 +147,11 @@ u32 ZKNSEARCHUI_MenuMain( ZKNSEARCHMAIN_WORK * wk )
 	}
 
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+		if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ){
+			CURSORMOVE_CursorOnOffSet( wk->cmwk, TRUE );
+		}
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-		ChangePosMenuMainKey( wk, CURSORMOVE_PosGet(wk->cmwk) );
+//		ChangePosMenuMainKey( wk, CURSORMOVE_PosGet(wk->cmwk) );
 		return ZKNSEARCHUI_Y;
 	}
 
@@ -221,6 +224,10 @@ static void MainCallBack_Touch( void * work, int now_pos, int old_pos )
 	ZKNSEARCHMAIN_WORK * wk = work;
 
 	ZKNSEARCHUI_ChangeCursorPalette( wk, old_pos, ZKNSEARCHMAIN_MBG_PAL_BUTTON_DEF );
+
+	if( now_pos == ZKNSEARCHUI_Y ){
+		CURSORMOVE_PosSet( wk->cmwk, old_pos );
+	}
 }
 
 BOOL ZKNSEARCHUI_Result( ZKNSEARCHMAIN_WORK * wk )

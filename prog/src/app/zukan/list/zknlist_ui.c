@@ -96,6 +96,10 @@ int ZKNLISTUI_ListMain( ZKNLISTMAIN_WORK * wk )
 			if( wk->dat->callMode == ZKNLIST_CALL_SEARCH ){
 				return GFL_UI_TP_HIT_NONE;
 			}
+			if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY ){
+				GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+				FRAMELIST_SetCursorPosPaletteOff( wk->lwk );
+			}
 		}
 		GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
 		return ret;
