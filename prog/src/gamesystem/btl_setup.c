@@ -153,8 +153,9 @@ void BATTLE_PARAM_SetRegulation( BATTLE_SETUP_PARAM* bp, const REGULATION *reg, 
   int i;
 
   //§ŒÀŽžŠÔ‚ðÝ’è
-  bp->LimitTimeCommand  = Regulation_GetParam( reg, REGULATION_TIME_COMMAND );
-  bp->LimitTimeGame     = Regulation_GetParam( reg, REGULATION_TIME_VS );
+  //•ª‚ð•b‚É•ÏŠ·‚µ‚Ä“n‚·
+  bp->LimitTimeCommand  = Regulation_GetParam( reg, REGULATION_TIME_COMMAND ) * 60;
+  bp->LimitTimeGame     = Regulation_GetParam( reg, REGULATION_TIME_VS ) * 60;
 
   //ƒVƒ…[ƒ^[‚ðÝ’è
   Regulation_GetShooterItem( reg, &bp->shooterBitWork );
