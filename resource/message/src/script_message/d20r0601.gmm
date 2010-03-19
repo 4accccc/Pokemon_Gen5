@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-17T19:01:05"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-19T12:12:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="41" top="-15" right="746" bottom="605" maximized="no" rayout="Vertical2">
+	<dialog left="377" top="137" right="1082" bottom="742" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -303,27 +303,48 @@
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" width="256">いきる　ということ
 それは　すべてに　かんしゃ　すること</language>
-		<language name="JPN_KANJI" width="256">いきる　ということ
-それは　すべてに　かんしゃ　すること</language>
+		<language name="JPN_KANJI" width="256">生きると　いうこと
+それは　全てに　感謝　すること</language>
 	</row>
 
-	<row id="msg_d20r0601_bg1_02">
+	<row id="msg_d20r0601_bg2_01">
+		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" width="256">たべる　ということ　それは
 あらゆる　いのちを　いただくこと</language>
-		<language name="JPN_KANJI" width="256">たべる　ということ　それは
-あらゆる　いのちを　いただくこと</language>
+		<language name="JPN_KANJI" width="256">食べる　ということ　それは
+あらゆる　命を　いただくこと</language>
 	</row>
 
-	<row id="msg_d20r0601_bg1_03">
+	<row id="msg_d20r0601_bg3_01">
+		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" width="256">せいぎと　あく　だけではない
 あいだが　あるのだ</language>
-		<language name="JPN_KANJI" width="256">せいぎと　あく　だけではない
-あいだが　あるのだ</language>
+		<language name="JPN_KANJI" width="256">正義と　悪だけではない
+間が　あるのだ</language>
 	</row>
 
-	<row id="msg_d20r0601_bg1_04">
-		<language name="JPN" width="256">やばんで　あっては　ならない</language>
-		<language name="JPN_KANJI" width="256">やばんで　あっては　ならない</language>
+	<row id="msg_d20r0601_bg4_01">
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">やばんで　あっては　ならない
+そまつに　しては　いけない</language>
+		<language name="JPN_KANJI" width="256">野蛮で　あっては　ならない
+粗末に　しては　いけない</language>
+	</row>
+
+	<row id="msg_d20r0601_bg5_01">
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">たたかいは　なにも　うまない
+むげんの　かなしみを　うむだけだ</language>
+		<language name="JPN_KANJI" width="256">戦いは　何も　生まない
+無限の　悲しみを　生むだけだ</language>
+	</row>
+
+	<row id="msg_d20r0601_bg6_01">
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうに　りかいを　しめすのならば
+ここで　ひかりを　はなて</language>
+		<language name="JPN_KANJI" width="256">王に　理解を　示すのならば
+ここで　光を　放て</language>
 	</row>
 
 	<flowchart-group-list>

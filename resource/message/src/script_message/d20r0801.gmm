@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-19T11:51:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,6 +297,46 @@
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_d20r0801_bg1_01">
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">リフーゲは　たった　ひとりで
+１０００にんの　てきを　はねのけた</language>
+		<language name="JPN_KANJI" width="256">リフーゲは　たった　１人で
+１０００人の　敵を　跳ね除けた</language>
+	</row>
+
+	<row id="msg_d20r0801_bg1_02">
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">リフーゲは　いちにちで
+１００００にんを　なかまに　した</language>
+		<language name="JPN_KANJI" width="256">リフーゲは　１日で
+１００００人を　仲間に　した</language>
+	</row>
+
+	<row id="msg_d20r0801_bg1_03">
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">リフーゲは　いちにちで
+１０００００ひきの　いきものを　よんだ</language>
+		<language name="JPN_KANJI" width="256">リフーゲは　１日で
+１０００００匹の　生き物を　呼んだ</language>
+	</row>
+
+	<row id="msg_d20r0801_bg1_04">
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">リフーゲは　わたしたちの
+きぼうで　あり　みらいで　ある</language>
+		<language name="JPN_KANJI" width="256">リフーゲは　私たちの
+希望であり　未来である</language>
+	</row>
+
+	<row id="msg_d20r0801_bg1_05">
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">ここに　いだいなる　おう
+リフーゲを　たたえる</language>
+		<language name="JPN_KANJI" width="256">ここに　偉大なる王
+リフーゲを　たたえる</language>
 	</row>
 
 	<flowchart-group-list>
