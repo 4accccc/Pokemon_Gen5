@@ -64,7 +64,7 @@ struct _FLD_TRADE_WORK
 //-----------------------------------------------------------------------------
 static STRBUF* GetTradeMsgData( u32 heapID, u32 idx );
 
-static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID, u32 zone_id,
+static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID, 
                              POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data, 
 	                           u32 trade_no );
 
@@ -208,13 +208,12 @@ static STRBUF* GetTradeMsgData( u32 heapID, u32 str_id )
  *
  *  @param  gameData
  *	@param	heapID		heapID
- *	@param	zoneID		トレーナーメモに記載するゾーンID
  *	@param	pp		    ポケモンパラム
  *	@param	data		  データ
  *	@param	trade_no	tradeナンバー
  */
 //-----------------------------------------------------------------------------
-static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID, u32 zone_id,
+static void SetPokemonParam( GAMEDATA* gameData, HEAPID heapID, 
                              POKEMON_PARAM* pp, FLD_TRADE_POKEDATA* data, 
 	                           u32 trade_no )
 {
@@ -435,15 +434,9 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
   // イベント初期化
   case SEQ_INIT:
     // 交換ワーク生成
-    {
-      u16 zoneID = FIELDMAP_GetZoneID( fieldmap );
-       
-      work->tradeWork = FLD_TRADE_WORK_Create( HEAPID_PROC, work->tradeNo );
-      SetPokemonParam( gameData, HEAPID_PROC, zoneID,
-                       work->tradeWork->p_pp, 
-                       work->tradeWork->p_pokedata, 
-                       work->tradeNo );
-    }
+    work->tradeWork = FLD_TRADE_WORK_Create( HEAPID_PROC, work->tradeNo );
+    SetPokemonParam( gameData, HEAPID_PROC, 
+        work->tradeWork->p_pp, work->tradeWork->p_pokedata, work->tradeNo );
     // DEBUG:
     PP_Dump( work->tradeWork->p_pp );
     FTP_Dump( work->tradeWork->p_pokedata );
@@ -464,7 +457,7 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
           FS_OVERLAY_ID(pokemon_trade), &PokemonTradeDemoProcData, &work->tradeDemoParam );
       GMEVENT_CallEvent( event, demo );
     }
-    *seq = SEQ_EVOLUTION;
+    *seq = SEQ_DATA_UPDATE;
     break;
 
   // データ更新
