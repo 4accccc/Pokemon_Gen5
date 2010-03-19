@@ -690,3 +690,24 @@ extern MUSICAL_SCRIPT_WORK* GAMEDATA_GetMusicalScrWork(GAMEDATA * gamedata);
  */
 //----------------------------------------------------------
 extern DREAMWORLD_SAVEDATA* GAMEDATA_GetDreamWorkdSaveWork(GAMEDATA * gamedata);
+
+//==================================================================
+/**
+ * シンボルマップの現在位置をセットする
+ *
+ * @param   gamedata		
+ * @param   symbol_map_id		シンボルマップID
+ */
+//==================================================================
+extern void GAMEDATA_SetSymbolMapID(GAMEDATA *gamedata, u8 symbol_map_id);
+
+//==================================================================
+/**
+ * シンボルマップの現在位置を取得する
+ *
+ * @param   gamedata		
+ *
+ * @retval  u8		シンボルマップID
+ */
+//==================================================================
+extern u8 GAMEDATA_GetSymbolMapID(const GAMEDATA *gamedata);

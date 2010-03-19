@@ -105,7 +105,8 @@ struct _GAMEDATA{
   u8 intrude_reverse_area;  ///<TRUE:裏フィールド侵入中
   
   u8 is_save;             ///<TRUE:セーブ実行中
-  u8 padding[2];
+  u8 symbol_map_id;       ///<シンボルマップの現在位置
+  u8 padding;
   
   OCCUPY_INFO occupy[OCCUPY_ID_MAX];    ///<占拠情報
   FIELD_WFBC_CORE wfbc[GAMEDATA_WFBC_ID_MAX];  ///<WhiteForest BlackCity
@@ -1773,4 +1774,31 @@ MUSICAL_SCRIPT_WORK* GAMEDATA_GetMusicalScrWork(GAMEDATA * gamedata)
 DREAMWORLD_SAVEDATA* GAMEDATA_GetDreamWorkdSaveWork(GAMEDATA * gamedata)
 {
   return DREAMWORLD_SV_GetDreamWorldSaveData( gamedata->sv_control_ptr );
+}
+
+//==================================================================
+/**
+ * シンボルマップの現在位置をセットする
+ *
+ * @param   gamedata		
+ * @param   symbol_map_id		シンボルマップID
+ */
+//==================================================================
+void GAMEDATA_SetSymbolMapID(GAMEDATA *gamedata, u8 symbol_map_id)
+{
+  gamedata->symbol_map_id = symbol_map_id;
+}
+
+//==================================================================
+/**
+ * シンボルマップの現在位置を取得する
+ *
+ * @param   gamedata		
+ *
+ * @retval  u8		シンボルマップID
+ */
+//==================================================================
+u8 GAMEDATA_GetSymbolMapID(const GAMEDATA *gamedata)
+{
+  return gamedata->symbol_map_id;
 }
