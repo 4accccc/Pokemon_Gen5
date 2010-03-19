@@ -1406,6 +1406,18 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
     // 「どうぐ」を選んだ
     case BTL_ACTION_ITEM:
+      // シューター使えない設定チェック
+      if( wk->bagMode == BBAG_MODE_SHOOTER )
+      {
+        const SHOOTER_ITEM_BIT_WORK* shooterReg = BTL_MAIN_GetSetupShooterBit( wk->mainModule );
+        if( shooterReg->shooter_use == FALSE)
+        {
+          BTLV_UI_Restart( wk->viewCore );
+          (*seq) = 3;
+          break;
+        }
+      }
+
       ClientSubProc_Set( wk, selact_Item );
       break;
 
@@ -1439,6 +1451,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
       break;
     }
     break;
+
   //@todo トレーナーメッセージ表示実験
   case 5:
     {
