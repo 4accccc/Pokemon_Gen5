@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"					//GFL_HEAPID_APP
+#include "system/rtc_tool.h"					//
 #include "arc_def.h"
 
 #include "net/network_define.h"
@@ -110,7 +111,6 @@
 #include "field_task_manager.h"
 #include "ev_time.h"  //EVTIME_Update
 #include "field_bbd_color.h"
-#include "field_season_time.h"
 
 #include "net_app/union_eff.h"
 
@@ -348,7 +348,6 @@ struct _FIELDMAP_WORK
 
   BOOL MainHookFlg;
 
-  FLD_SEASON_TIME* fieldSeasonTime;
 
   FACEUP_WK_PTR FaceUpWkPtr;
 };
@@ -626,7 +625,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 	fldmap_G3D_Load( fieldWork );
 	
 	//配置物設定
-	fieldWork->g3Dmapper = FLDMAPPER_Create( fieldWork->heapID );
+	fieldWork->g3Dmapper = FLDMAPPER_Create( fieldWork->heapID, GAMEDATA_GetSeasonID(fieldWork->gamedata) );
 
 	TAMADA_Printf("TEX:%06x PLT:%04x\n",
 			DEBUG_GFL_G3D_GetBlankTextureSize(),
@@ -717,10 +716,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     // シーンエリア
     fieldWork->sceneArea        = FLD_SCENEAREA_Create( fieldWork->heapID, fieldWork->camera_control );
     fieldWork->sceneAreaLoader  = FLD_SCENEAREA_LOADER_Create( fieldWork->heapID );
-
-
-    // 季節の時間帯生成
-    fieldWork->fieldSeasonTime = FLD_SEASON_TIME_Create( GAMEDATA_GetSeasonID(gdata), fieldWork->heapID );
 
     break;
 
@@ -841,6 +836,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     {
       fieldWork->light = FIELD_LIGHT_Create( AREADATA_GetLightType( fieldWork->areadata ), 
           GFL_RTC_GetTimeBySecond(), 
+          GAMEDATA_GetSeasonID( fieldWork->gamedata ),
           fieldWork->fog, fieldWork->g3Dlightset, fieldWork->heapID );
     }
 
@@ -855,7 +851,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
           fieldWork->fog,
           fieldWork->zonefog, 
           fsnd,
-          fieldWork->fieldSeasonTime,
+          GAMEDATA_GetSeasonID( fieldWork->gamedata ),
           HEAPID_FIELD_PRBUF ); // プログラムヒープを使用する。
     }
     
@@ -1261,9 +1257,6 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 
   // NOGRIDマッパー破棄
   FLDNOGRID_MAPPER_Delete( fieldWork->nogridMapper );
-
-  // 季節の時間帯破棄
-  FLD_SEASON_TIME_Delete( fieldWork->fieldSeasonTime );
 
   // シーンエリア破棄
   FLD_SCENEAREA_LOADER_Delete( fieldWork->sceneAreaLoader );
@@ -3444,7 +3437,7 @@ BOOL FIELDMAP_CheckDoEvent( const FIELDMAP_WORK* fieldWork )
 //-----------------------------------------------------------------------------
 u32 FIELDMAP_GetSeasonTimeZone( const FIELDMAP_WORK * fieldWork )
 {
-  return FLD_SEASON_TIME_GetTimeZone( fieldWork->fieldSeasonTime );
+  return PM_RTC_GetTimeZone( GAMEDATA_GetSeasonID(fieldWork->gamedata) );
 }
 
 

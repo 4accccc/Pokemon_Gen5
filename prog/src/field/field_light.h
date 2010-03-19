@@ -56,7 +56,7 @@ typedef struct _FIELD_LIGHT FIELD_LIGHT;
 //-------------------------------------
 ///	システム作成・破棄
 //=====================================
-extern FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, int rtc_second, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight, HEAPID heapID );
+extern FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, int rtc_second, int season, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight, HEAPID heapID );
 extern void FIELD_LIGHT_Delete( FIELD_LIGHT* p_sys );
 
 //-------------------------------------
@@ -129,7 +129,8 @@ extern void FIELD_LIGHT_DEBUG_PrintData( FIELD_LIGHT* p_sys, GFL_BMPWIN* p_win )
 /// ライト１データ
 //=====================================
 typedef struct {
-  u32     endtime;
+  u16     timezone;
+  s16     change_minutes;
   u8      light_flag[4];
   GXRgb   light_color[4];
   VecFx16   light_vec[4];

@@ -20,9 +20,12 @@ open( FILE, $ARGV[0] );
 @CSVFILE = <FILE>;
 close( FILE );
 
+@TIMEZONE_DEF = ( "朝", "昼", "夕方", "夜", "深夜" );
+
 
 $FRAME_NUM		= 0;		#フレーム数
 @FRAME			= undef;	#フレーム
+@TIMEZONE			= undef;	#タイムゾーン
 
 @LIGHT00_FLAG	= undef;	#ライト使用フラグ
 @LIGHT01_FLAG	= undef;	#ライト使用フラグ
@@ -78,18 +81,30 @@ $inputdata = 0;
 $datacount = 0;
 $i = 0;
 foreach $one ( @CSVFILE ){
+
+  $one =~ s/\r\n/,/g;
+  $one =~ s/\n/,/g;
+  
 	@line = split( /,/, $one );
 	if( $inputdata == 0 ){
-		if( $line[ 0 ] eq "frame" ){
+		if( "".$line[ 0 ] eq "timezone" ){
 			$inputdata = 1;
 
-			#データ数調査
-			while( $line[ $FRAME_NUM+1 ] =~ /[0-9]/ ){
-				$FRAME[ $FRAME_NUM ] = $line[ $FRAME_NUM+1 ];
-				$FRAME_NUM++;
-			}
+      #データ数調査
+      while( &IsTimeZone( $line[ $FRAME_NUM+1 ]) ){
+        $TIMEZONE[ $FRAME_NUM ] = $line[ $FRAME_NUM+1 ];
+        $FRAME_NUM++;
+      }
+
 		}
-	}else{
+  }elsif( $inputdata == 1 ){
+
+    for( $i=0; $i<$FRAME_NUM; $i++ ){
+      $FRAME[ $i ] = $line[ $i+1 ];
+    }
+    
+    $inputdata = 2;
+	}elsif( $inputdata == 2 ){
 
 		if( $datacount == 0 ){
 			
@@ -383,7 +398,8 @@ binmode( FILE );
 
 for( $i=0; $i<$FRAME_NUM; $i++ ){
 	#各フレームごとでまとめる
-	print( FILE pack( "I", $FRAME[$i] ) );
+	print( FILE pack( "S", &GET_TimeZone($TIMEZONE[$i]) ) );
+	print( FILE pack( "s", $FRAME[$i] ) );
 	
 	print( FILE pack( "C", $LIGHT00_FLAG[$i] ) );
 	print( FILE pack( "C", $LIGHT01_FLAG[$i] ) );
@@ -423,6 +439,41 @@ close( FILE );
 
 #正常終了
 exit(0);
+
+sub IsTimeZone
+{
+  my( $zone ) = @_;
+  my( $one_def, $count );
+  
+  foreach $one_def (@TIMEZONE_DEF)
+  {
+    if( "".$zone eq "".$one_def )
+    {
+      return 1;
+    }
+  }
+  return 0;
+}
+
+sub GET_TimeZone
+{
+  my( $zone ) = @_;
+  my( $one_def, $count );
+  
+  $count = 0;
+  foreach $one_def (@TIMEZONE_DEF)
+  {
+    if( "".$zone eq "".$one_def )
+    {
+      return $count;
+    }
+
+    $count ++;
+  }
+
+  print( "$zone が見つかりません\n" );
+  exit(1);
+}
 
 
 sub CONV_GetRgb

@@ -17,6 +17,8 @@
 
 #include "gamesystem/pm_season.h"
 
+#include "system/rtc_tool.h"
+
 #include "field/field_light_status.h"
 #include "field/weather_no.h"
 #include "field/zonedata.h"
@@ -43,7 +45,7 @@
 */
 //-----------------------------------------------------------------------------
 static LIGHT_DATA* LIGHT_STATUS_LoadData( u32 arcID, u32 dataIdx, u32* p_num, HEAPID heapID );
-static void LIGHT_STATUS_GetTimeColor( LIGHT_DATA* p_wk, u32 num, int time, FIELD_LIGHT_STATUS* p_color );
+static void LIGHT_STATUS_GetTimeColor( LIGHT_DATA* p_wk, u32 num, int time, int season, FIELD_LIGHT_STATUS* p_color );
 
 
 //----------------------------------------------------------------------------
@@ -69,7 +71,6 @@ void FIELD_LIGHT_STATUS_Get( u32 zone_id, int hour, int minute, int weather_id, 
 
   // 秒に変換 
   time = (hour * 60 * 60) + (minute * 60);
-  time /= 2;
 
 
   // 天気
@@ -101,7 +102,7 @@ void FIELD_LIGHT_STATUS_Get( u32 zone_id, int hour, int minute, int weather_id, 
   }
 
   // 時間の色を取得
-  LIGHT_STATUS_GetTimeColor( p_data, data_num, time, p_status );
+  LIGHT_STATUS_GetTimeColor( p_data, data_num, time, season, p_status );
 
   GFL_HEAP_FreeMemory( p_data );
 }
@@ -186,39 +187,46 @@ static LIGHT_DATA* LIGHT_STATUS_LoadData( u32 arcID, u32 dataIdx, u32* p_num, HE
  *	@param	p_wk    カラーデータ
  *	@param	num     データ数
  *	@param	time    今の時間
+ *	@param  season  季節
  *	@param	p_color 色格納先
  */
 //-----------------------------------------------------------------------------
-static void LIGHT_STATUS_GetTimeColor( LIGHT_DATA* p_wk, u32 num, int time, FIELD_LIGHT_STATUS* p_color )
+static void LIGHT_STATUS_GetTimeColor( LIGHT_DATA* p_wk, u32 num, int time, int season, FIELD_LIGHT_STATUS* p_color )
 {
   int i;
   int start_time;
+  int end_time;
   
   GF_ASSERT( num > 0 );
 
   
   start_time = 0;
+
   for( i=0; i<num; i++ )
   {
-    if( (start_time <= time) && (p_wk[i].endtime > time) )
+    end_time = PM_RTC_GetTimeZoneChangeHour( season, p_wk[i].timezone ) * 3600;
+    end_time += p_wk[i].change_minutes * 60;
+    
+    if( (start_time <= time) && (end_time > time) )
     {
-      // この色を設定
-      p_color->light  = p_wk[i].light_color[0];
-      p_color->light1 = p_wk[i].light_color[1];
-      p_color->light2 = p_wk[i].light_color[2];
-      p_color->light3 = p_wk[i].light_color[3];
-      p_color->diffuse = p_wk[i].diffuse;
-      p_color->ambient = p_wk[i].ambient;
-      p_color->specular = p_wk[i].specular;
-      p_color->emission = p_wk[i].emission;
-      return;
+      break;
     }
 
-    start_time = p_wk[i].endtime;
+    start_time = end_time;
   }
 
-  // 時間の色がみつからない
-  GF_ASSERT(0);
+  i %= num; // 最後まで行ったら０に回り込む。
+
+
+  // この色を設定
+  p_color->light  = p_wk[i].light_color[0];
+  p_color->light1 = p_wk[i].light_color[1];
+  p_color->light2 = p_wk[i].light_color[2];
+  p_color->light3 = p_wk[i].light_color[3];
+  p_color->diffuse = p_wk[i].diffuse;
+  p_color->ambient = p_wk[i].ambient;
+  p_color->specular = p_wk[i].specular;
+  p_color->emission = p_wk[i].emission;
 }
 
 

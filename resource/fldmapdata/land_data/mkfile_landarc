@@ -33,6 +33,7 @@ WBBIN_CDAT = wb_bin.cdat
 DIR_WBBIN_CDAT = $(PROJECT_ROOT)/prog/src/field/mapdatafunc/
 
 WBBIN_ALLTBL = bintmp/normal_d_bin.alltbl
+WBBIN_ALLTBL_TMP = normal_d_bin.alltbl
 
 #G3DCVTR	= $(NITROSYSTEM_ROOT)/tools/win/bin/g3dcvtr.exe
 G3DCVTR	= g3dcvtr.exe
@@ -104,6 +105,8 @@ clean:
 	-rm -f $(DIR_WBBIN_CDAT)$(WBBIN_CDAT)
 	-rm -f $(WBBIN_CDAT)
 	-rm -f $(WBBIN_ALLTBL)
+	-rm -f $(WBBIN_ALLTBL_TMP)
+  
 
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	@-rm -f $(LAND_TEMP_LIST)

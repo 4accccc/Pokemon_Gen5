@@ -213,6 +213,7 @@ typedef struct {
   TIMEZONE OldTimeZone;   ///<直前の時間帯
   BOOL update_flag;       ///<更新が必要かどうか
   u8 index;               ///<時間帯から算出されたアニメ指定
+  u8 season;              ///<季節
 }TIMEANIME_CTRL;
 
 //------------------------------------------------------------------
@@ -355,7 +356,7 @@ static void OBJHND_setAnime( OBJ_HND * objHdl, u32 anmNo, BMANM_REQUEST req);
 static BOOL OBJHND_getAnimeStatus( const OBJ_HND * objHdl, u32 anmNo);
 static fx32 OBJHND_getAnimeFrame( const OBJ_HND * objHdl, u32 anmNo);
 
-static void TIMEANIME_CTRL_init( TIMEANIME_CTRL * tmanm_ctrl );
+static void TIMEANIME_CTRL_init( TIMEANIME_CTRL * tmanm_ctrl, u8 season );
 static void TIMEANIME_CTRL_update( TIMEANIME_CTRL * tmanm_ctrl );
 static BOOL TIMEANIME_CTRL_needUpdate( const TIMEANIME_CTRL * tmanm_ctrl );
 static u8   TIMEANIME_CTRL_getIndex( const TIMEANIME_CTRL * tmanm_ctrl );
@@ -388,13 +389,13 @@ static void makeRect(FLDHIT_RECT * rect, const VecFx32 * pos);
  * @param heapID
  */
 //------------------------------------------------------------------
-FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID, FLDMAPPER * fldmapper)
+FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID, FLDMAPPER * fldmapper, u16 season)
 {	
   int i;
 	FIELD_BMODEL_MAN * man = GFL_HEAP_AllocMemory(heapID, sizeof(FIELD_BMODEL_MAN));
 	man->heapID = heapID;
   man->fldmapper = fldmapper;
-  TIMEANIME_CTRL_init( &man->tmanm_ctrl );
+  TIMEANIME_CTRL_init( &man->tmanm_ctrl, season );
 
   for (i = 0; i < BMODEL_USE_MAX; i++)
   {
@@ -1052,9 +1053,10 @@ static BM_SEARCH_ID BMINFO_getSearchID( const BMINFO * bmInfo )
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void TIMEANIME_CTRL_init(TIMEANIME_CTRL * tmanm_ctrl)
+static void TIMEANIME_CTRL_init(TIMEANIME_CTRL * tmanm_ctrl, u8 season)
 {
   tmanm_ctrl->NowTimeZone = TIMEZONE_MAX; //ありえない数
+  tmanm_ctrl->season      = season;
   TIMEANIME_CTRL_update( tmanm_ctrl );
 }
 //------------------------------------------------------------------
@@ -1066,7 +1068,7 @@ static void TIMEANIME_CTRL_update(TIMEANIME_CTRL * tmanm_ctrl)
     0, 1, 2, 3, 3,
   };
   tmanm_ctrl->OldTimeZone = tmanm_ctrl->NowTimeZone;
-  tmanm_ctrl->NowTimeZone = GFL_RTC_GetTimeZone();
+  tmanm_ctrl->NowTimeZone = PM_RTC_GetTimeZone(tmanm_ctrl->season);
   tmanm_ctrl->update_flag = (tmanm_ctrl->NowTimeZone != tmanm_ctrl->OldTimeZone);
   tmanm_ctrl->index = index[tmanm_ctrl->NowTimeZone];
 }

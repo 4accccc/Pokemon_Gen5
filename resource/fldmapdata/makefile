@@ -44,6 +44,7 @@ SUBDIRS	=	zonetable/zoneindex \
 					eventdata/binary \
 					crowd_people \
 					envse \
+					timezone \
 					diving_spot \
 					zonetable/fieldskill_mapeffect \
 					zonetable

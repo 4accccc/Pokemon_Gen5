@@ -21,6 +21,8 @@
 
 #include "msg/msg_d_tomoya.h"
 
+#include "system/rtc_tool.h"
+
 #include "font/font.naix"
 
 
@@ -44,16 +46,8 @@
 */
 //-----------------------------------------------------------------------------
 #ifdef PM_DEBUG
-//#define DEBUG_LIGHT_AUTO  // ライトを昼多めに
 #endif
 
-#ifdef DEBUG_LIGHT_AUTO
-static const u32 sc_DEBUG_LIGHT_AUTO_END_TIME[] = {
-  0, 7200, 7700, 8100,
-  9000, 14070, 21600, 30000, 34000,
-  36200, 37200, 38200, 39000, 42000, 43200,
-};
-#endif
 
 
 //-----------------------------------------------------------------------------
@@ -184,7 +178,8 @@ typedef struct {
 typedef struct {
 
   // フェードしない情報
-  u32     endtime;
+  u16     timezone;
+  s16     change_minutes;
   u8      light_flag[4];
 
   RGB_FADE    light_color[4];
@@ -217,7 +212,8 @@ typedef struct {
 /// フィールドライトシステム
 //=====================================
 struct _FIELD_LIGHT {
-  u32   seq;  // シーケンス
+  u16   seq;  // シーケンス
+  u16   season; // 季節
 
   // GFLIBライトシステム
   GFL_G3D_LIGHTSET* p_liblight;
@@ -228,7 +224,7 @@ struct _FIELD_LIGHT {
   // データバッファ
   u32     data_num;     // データ数
   LIGHT_DATA data[LIGHT_TABLE_MAX_SIZE];        // データ
-  u32     now_index;      // 今の反映インデックス
+  s32     now_index;      // 今の反映インデックス
   u16     default_lightno;
 
 
@@ -280,6 +276,8 @@ static void FIELD_LIGHT_LoadData( FIELD_LIGHT* p_sys, u32 light_no );
 static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid );
 static void FIELD_LIGHT_ReleaseData( FIELD_LIGHT* p_sys );
 static s32  FIELD_LIGHT_SearchNowIndex( const FIELD_LIGHT* cp_sys, int rtc_second );
+
+static s32  FIELD_LIGHT_GetDataSecond( int season, const LIGHT_DATA* cp_data );
 
 
 //-------------------------------------
@@ -344,6 +342,7 @@ static void DEBUG_LIGHT_SetWordsetVec( FIELD_LIGHT* p_wk, u32 bufstart, const Ve
  *
  *  @param  light_no    ライトナンバー
  *  @param  rtc_second    秒数
+ *  @param  season      季節
  *  @param  p_fog     フォグシステム
  *  @param  p_liblight    ライト管理システム
  *  @param  heapID      ヒープ
@@ -351,14 +350,15 @@ static void DEBUG_LIGHT_SetWordsetVec( FIELD_LIGHT* p_wk, u32 bufstart, const Ve
  *  @return システムワーク
  */
 //-----------------------------------------------------------------------------
-FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, int rtc_second, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight, HEAPID heapID )
+FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, int rtc_second, int season, FIELD_FOG_WORK* p_fog, GFL_G3D_LIGHTSET* p_liblight, HEAPID heapID )
 {
   FIELD_LIGHT* p_sys;
 
+  //TOMOYA_Printf( "light_no %d\n" );
+
   p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_LIGHT) );
 
-  //  1/2で考える
-  rtc_second /= 2;
+  p_sys->season = season;
 
   // ライト情報読み込み
   FIELD_LIGHT_LoadData( p_sys, light_no );
@@ -409,15 +409,15 @@ void FIELD_LIGHT_Delete( FIELD_LIGHT* p_sys )
 void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
 {
   int starttime;
+  int endtime;
+  int checktime;
+  BOOL not_add;
 
 #ifdef DEBUG_FIELD_LIGHT
   if( p_sys->debug_flag ){
     return;
   }
 #endif
-
-  //  1/2で考える
-  rtc_second /= 2;
 
   // ライトデータの有無チェック
   if( p_sys->data_num == 0 ){
@@ -428,22 +428,40 @@ void FIELD_LIGHT_Main( FIELD_LIGHT* p_sys, int rtc_second )
   switch( p_sys->seq ){
   // 通常
   case FIELD_LIGHT_SEQ_NORMAL:
+    
+    // 時間のループを考慮する。
+    endtime = FIELD_LIGHT_GetDataSecond( p_sys->season, &p_sys->data[ p_sys->now_index ] );
+
+    not_add = FALSE;
+    
     if( (p_sys->now_index - 1) < 0 ){
       starttime = 0;
+
+      // もし、今の時間が、最終データの終了時間より、大きいなら、開始時間と終了時間を変更
+      checktime = FIELD_LIGHT_GetDataSecond( p_sys->season, &p_sys->data[ p_sys->data_num - 1 ] );
+      if( checktime <= rtc_second )
+      {
+        starttime = checktime;
+        endtime   += 24*3600;
+        not_add   = TRUE;
+      }
+      
     }else{
-      starttime = p_sys->data[ p_sys->now_index-1 ].endtime;
+      
+      starttime = FIELD_LIGHT_GetDataSecond( p_sys->season, &p_sys->data[ p_sys->now_index-1 ] );
     }
 
-    //OS_TPrintf( "starttime %d endtime %d now %d\n", starttime, p_sys->data[ p_sys->now_index ].endtime, rtc_second );
+    //OS_TPrintf( "starttime %d endtime %d now %d index %d\n", starttime, endtime, rtc_second, p_sys->now_index );
     // 今のテーブルの範囲内じゃないかチェック
-    if( (starttime > rtc_second) ||
-      (p_sys->data[ p_sys->now_index ].endtime <= rtc_second) ){
+    if( (starttime > rtc_second) || (endtime <= rtc_second) ){
 
       // 変更
-      p_sys->now_index  = (p_sys->now_index + 1) % p_sys->data_num;
+      if( not_add == FALSE ){
+        p_sys->now_index  = (p_sys->now_index + 1) % p_sys->data_num;
 
-      // フェード設定
-      LIGHT_FADE_Init( &p_sys->fade, &p_sys->reflect_data, &p_sys->data[ p_sys->now_index ] );
+        // フェード設定
+        LIGHT_FADE_Init( &p_sys->fade, &p_sys->reflect_data, &p_sys->data[ p_sys->now_index ] );
+      }
     }
     break;
 
@@ -1109,9 +1127,12 @@ static void DEBUG_LIGHT_ContOther( FIELD_LIGHT* p_wk )
 static void DEBUG_LIGHT_PrintLight( FIELD_LIGHT* p_wk, GFL_BMPWIN* p_win )
 {
   int i;
+  int frame;
+
+  frame = FIELD_LIGHT_GetDataSecond( p_wk->season, &p_wk->reflect_data );
 
   //  毎回フレーム数を表示
-  WORDSET_RegisterNumber( p_wk->p_debug_wordset, 0, p_wk->reflect_data.endtime, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( p_wk->p_debug_wordset, 0, frame, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   // プリント
   GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_LIGHT_FRAME, p_wk->p_debug_strbuff_tmp );
 
@@ -1154,8 +1175,12 @@ static void DEBUG_LIGHT_PrintLight( FIELD_LIGHT* p_wk, GFL_BMPWIN* p_win )
 //-----------------------------------------------------------------------------
 static void DEBUG_LIGHT_PrintMaterial( FIELD_LIGHT* p_wk, GFL_BMPWIN* p_win )
 {
+  int frame;
+
+  frame = FIELD_LIGHT_GetDataSecond( p_wk->season, &p_wk->reflect_data );
+
   //  毎回フレーム数を表示
-  WORDSET_RegisterNumber( p_wk->p_debug_wordset, 0, p_wk->reflect_data.endtime, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( p_wk->p_debug_wordset, 0, frame, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_LIGHT_FRAME, p_wk->p_debug_strbuff_tmp );
   WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), DEBUG_PRINT_X, 72, p_wk->p_debug_strbuff, p_wk->p_debug_font );
@@ -1200,8 +1225,12 @@ static void DEBUG_LIGHT_PrintMaterial( FIELD_LIGHT* p_wk, GFL_BMPWIN* p_win )
 //-----------------------------------------------------------------------------
 static void DEBUG_LIGHT_PrintOther( FIELD_LIGHT* p_wk, GFL_BMPWIN* p_win )
 {
+  int frame;
+
+  frame = FIELD_LIGHT_GetDataSecond( p_wk->season, &p_wk->reflect_data );
+
   //  毎回フレーム数を表示
-  WORDSET_RegisterNumber( p_wk->p_debug_wordset, 0, p_wk->reflect_data.endtime, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  WORDSET_RegisterNumber( p_wk->p_debug_wordset, 0, frame, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   GFL_MSG_GetString( p_wk->p_debug_msgdata, D_TOMOYA_LIGHT_FRAME, p_wk->p_debug_strbuff_tmp );
   WORDSET_ExpandStr( p_wk->p_debug_wordset, p_wk->p_debug_strbuff, p_wk->p_debug_strbuff_tmp );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_win ), DEBUG_PRINT_X, 72, p_wk->p_debug_strbuff, p_wk->p_debug_font );
@@ -1515,25 +1544,21 @@ static void FIELD_LIGHT_LoadDataEx( FIELD_LIGHT* p_sys, u32 arcid, u32 dataid )
       VEC_Fx16Normalize( &p_sys->data[i].light_vec[j], &p_sys->data[i].light_vec[j] );
     }
 
-#ifdef DEBUG_LIGHT_AUTO
-    // 時間の部分を上書き
-    p_sys->data[i].endtime = sc_DEBUG_LIGHT_AUTO_END_TIME[i];
-#endif
-
 #if 0
     // データのデバック表示
     OS_TPrintf( "data number %d\n", i );
-    OS_TPrintf( "endtime  %d\n", p_sys->data[i].endtime );
+    OS_TPrintf( "timezone %d\n", p_sys->data[i].timezone );
+    OS_TPrintf( "change_minutes %d\n", p_sys->data[i].change_minutes );
     for( j=0; j<4; j++ ){
-      OS_TPrintf( "light_flag %d\n", p_sys->data[i].light_flag[i] );
+      OS_TPrintf( "light_flag %d\n", p_sys->data[i].light_flag[j] );
       OS_TPrintf( "light_color r=%d g=%d b=%d\n",
-          (p_sys->data[i].light_color[i] & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
-          (p_sys->data[i].light_color[i] & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
-          (p_sys->data[i].light_color[i] & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
+          (p_sys->data[i].light_color[j] & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT,
+          (p_sys->data[i].light_color[j] & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT,
+          (p_sys->data[i].light_color[j] & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT );
       OS_TPrintf( "light_vec x=0x%x y=0x%x z=0x%x\n",
-          p_sys->data[i].light_vec[i].x,
-          p_sys->data[i].light_vec[i].y,
-          p_sys->data[i].light_vec[i].z );
+          p_sys->data[i].light_vec[j].x,
+          p_sys->data[i].light_vec[j].y,
+          p_sys->data[i].light_vec[j].z );
     }
 
     OS_TPrintf( "diffuse r=%d g=%d b=%d\n",
@@ -1589,17 +1614,45 @@ static void FIELD_LIGHT_ReleaseData( FIELD_LIGHT* p_sys )
 static s32  FIELD_LIGHT_SearchNowIndex( const FIELD_LIGHT* cp_sys, int rtc_second )
 {
   int i;
+  int data_second;
+  int data_second_end;
+
+  data_second = 0;
 
   for( i=0; i<cp_sys->data_num; i++ ){
 
-    if( cp_sys->data[i].endtime > rtc_second ){
+    data_second_end = FIELD_LIGHT_GetDataSecond( cp_sys->season, &cp_sys->data[i] );
+
+    // 範囲内？
+    if( (data_second <= rtc_second) && (data_second_end > rtc_second) ){
       return i;
     }
+
+    data_second = data_second_end;
   }
 
-  // ありえない
-  GF_ASSERT( 0 );
-  return 0;
+  return 0; // 最終データ～index 0の間
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  秒数を求める
+ *
+ *	@param	timezone
+ *	@param	season
+ *	@param	change_minutes 
+ *
+ *	@return 秒数
+ */
+//-----------------------------------------------------------------------------
+static s32  FIELD_LIGHT_GetDataSecond( int season, const LIGHT_DATA* cp_data )
+{
+  int time;
+
+  time = PM_RTC_GetTimeZoneChangeHour( season, cp_data->timezone ) * 3600;
+  time += cp_data->change_minutes * 60;
+
+  return time;
 }
 
 
@@ -1727,7 +1780,8 @@ static void LIGHT_FADE_InitEx( LIGHT_FADE* p_wk, const LIGHT_DATA* cp_start, con
 
 
   // フェードしない情報も保存
-  p_wk->endtime = cp_end->endtime;
+  p_wk->timezone        = cp_end->timezone;
+  p_wk->change_minutes  = cp_end->change_minutes;
 
   for( i=0; i<4; i++ ){
 
@@ -1763,7 +1817,8 @@ static void LIGHT_FADE_InitColor( LIGHT_FADE* p_wk, const LIGHT_DATA* cp_start, 
 
 
   // フェードしない情報も保存
-  p_wk->endtime = cp_start->endtime;
+  p_wk->timezone        = cp_start->timezone;
+  p_wk->change_minutes  = cp_start->change_minutes;
 
   for( i=0; i<4; i++ ){
 
@@ -1825,7 +1880,8 @@ static void LIGHT_FADE_GetData( const LIGHT_FADE* cp_wk, LIGHT_DATA* p_data )
 {
   int i;
 
-  p_data->endtime   = cp_wk->endtime;
+  p_data->timezone        = cp_wk->timezone;
+  p_data->change_minutes  = cp_wk->change_minutes;
 
   for( i=0; i<4; i++ ){
     p_data->light_color[i]  = RGB_FADE_Calc( &cp_wk->light_color[i], cp_wk->count, cp_wk->count_max );

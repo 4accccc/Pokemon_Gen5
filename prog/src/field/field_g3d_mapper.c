@@ -212,7 +212,7 @@ static const FLD_G3D_MAP_FILE_FUNC mapFileFuncTbl[] = {
  * @brief	３Ｄマップコントロールシステム作成
  */
 //------------------------------------------------------------------
-FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID )
+FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID, u16 season )
 {
 	FLDMAPPER* g3Dmapper = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDMAPPER) );
 
@@ -232,7 +232,7 @@ FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID )
 	
   g3Dmapper->granime = NULL;
   //  配置モデルマネジャー生成
-  g3Dmapper->bmodel_man = FIELD_BMODEL_MAN_Create(g3Dmapper->heapID, g3Dmapper);
+  g3Dmapper->bmodel_man = FIELD_BMODEL_MAN_Create(g3Dmapper->heapID, g3Dmapper, season);
   // WFBCワークの生成
   g3Dmapper->wfbcwork = FIELD_WFBC_Create( heapID );
 

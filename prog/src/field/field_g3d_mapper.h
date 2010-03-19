@@ -66,7 +66,7 @@ typedef enum{
  * @brief	３Ｄマップコントロールシステム作成
  */
 //------------------------------------------------------------------
-extern FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID );
+extern FLDMAPPER*	FLDMAPPER_Create( HEAPID heapID, u16 season );
 //------------------------------------------------------------------
 /**
  * @brief	３Ｄマップコントロールシステムメイン

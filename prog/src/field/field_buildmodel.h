@@ -38,7 +38,7 @@ typedef struct _FIELD_BMODEL_MAN FIELD_BMODEL_MAN;
 //------------------------------------------------------------------
 //  ê∂ê¨
 //------------------------------------------------------------------
-extern FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID, FLDMAPPER * fldmapper);
+extern FIELD_BMODEL_MAN * FIELD_BMODEL_MAN_Create(HEAPID heapID, FLDMAPPER * fldmapper, u16 season);
 
 //------------------------------------------------------------------
 //  çÌèú

@@ -10,28 +10,14 @@
 #include <gflib.h>
 #include "system/rtc_tool.h"
 
+#include "timezone.cdat"
+
 
 //============================================================================================
 //
 //		ツール関数
 //
 //============================================================================================
-//--------------------------------------------------------------
-/**
- * @brief	夜かどうかの判定
- * @retval	TRUE	今は夜
- * @retval	FALSE	今は昼
- */
-//--------------------------------------------------------------
-BOOL GFL_RTC_IsNightTime(void)
-{
-	switch (GFL_RTC_GetTimeZone()) {
-	case TIMEZONE_MIDNIGHT:
-	case TIMEZONE_NIGHT:
-		return TRUE;
-	}
-	return FALSE;
-}
 
 //--------------------------------------------------------------
 /**
@@ -39,11 +25,88 @@ BOOL GFL_RTC_IsNightTime(void)
  * @return	int	時間帯（timezone.hを参照）
  */
 //--------------------------------------------------------------
-int GFL_RTC_GetTimeZone(void)
+int PM_RTC_GetTimeZone(int season)
 {
 	RTCTime time;
 	GFL_RTC_GetTime(&time);
-	return GFL_RTC_ConvertHourToTimeZone(time.hour);
+	return PM_RTC_ConvertHourToTimeZone(season, time.hour);
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	時間から時間帯への変換
+ * @param	season 季節 gamesystem/pm_season.h参照
+ * @param	hour	時間（０－２３）
+ * @return	int		時間帯（timezone.hを参照）
+ */
+//--------------------------------------------------------------
+int PM_RTC_ConvertHourToTimeZone(int season, int hour)
+{
+  GF_ASSERT( season < PMSEASON_TOTAL );
+	GF_ASSERT(0 <= hour && hour < 24);
+	return sc_SEASON_TIMEZONE[season][hour];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  季節の時間帯変更　時間を取得
+ *
+ *	@param	season      季節
+ *	@param	timezone    タイムゾーン
+ *
+ *	@return 変わる時間
+ */
+//-----------------------------------------------------------------------------
+int PM_RTC_GetTimeZoneChangeHour( int season, TIMEZONE timezone )
+{
+  GF_ASSERT( season < PMSEASON_TOTAL );
+  GF_ASSERT( timezone < TIMEZONE_MAX );
+
+  return sc_SEASON_TIMEZONE_CHANGE[ season ][ timezone ];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  季節の時間帯が変わるまでの時間を取得
+ *
+ *	@param	season    季節
+ *	@param	timezone  タイムゾーン
+ *
+ *	@return 変わるまでの時間（-12時間～11時間）
+ */
+//-----------------------------------------------------------------------------
+int PM_RTC_GetTimeZoneChangeMargin( int season, TIMEZONE timezone )
+{
+	RTCTime time;
+  int change_time;
+  int time_second;
+  int sub_second;
+  
+  GF_ASSERT( season < PMSEASON_TOTAL );
+  GF_ASSERT( timezone < TIMEZONE_MAX );
+  
+  GFL_RTC_GetTime( &time );
+
+  change_time = sc_SEASON_TIMEZONE_CHANGE[season][timezone];
+  time_second = (time.hour * 60 * 60) + (time.minute * 60) + time.second;
+  sub_second = (change_time*60*60) - time_second;
+  if( sub_second > (12*60*60) )
+  {
+    sub_second = (24*60*60) - sub_second;
+  }
+  return sub_second;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief	時間帯の取得
+ * @return	int	時間帯（timezone.hを参照）
+ */
+//--------------------------------------------------------------
+int GFL_RTC_GetTimeZone( void )
+{
+  return PM_RTC_GetTimeZone( PM_RTC_TIMEZONE_DEFAULT_SEASON );
 }
 
 //--------------------------------------------------------------
@@ -55,22 +118,24 @@ int GFL_RTC_GetTimeZone(void)
 //--------------------------------------------------------------
 int GFL_RTC_ConvertHourToTimeZone(int hour)
 {
-	static const u8 timezone[24] = {
-		//00:00 - 3:59
-		TIMEZONE_MIDNIGHT,TIMEZONE_MIDNIGHT,TIMEZONE_MIDNIGHT,TIMEZONE_MIDNIGHT,
-		//04:00 - 9:59
-		TIMEZONE_MORNING,TIMEZONE_MORNING,TIMEZONE_MORNING,TIMEZONE_MORNING,
-		TIMEZONE_MORNING,TIMEZONE_MORNING,
-		//10:00 - 16:59
-		TIMEZONE_NOON,TIMEZONE_NOON,TIMEZONE_NOON,TIMEZONE_NOON,TIMEZONE_NOON,
-		TIMEZONE_NOON,TIMEZONE_NOON,
-		//17:00 - 19:59
-		TIMEZONE_EVENING,TIMEZONE_EVENING,TIMEZONE_EVENING,
-		//20:00 - 23:59
-		TIMEZONE_NIGHT,TIMEZONE_NIGHT,TIMEZONE_NIGHT,TIMEZONE_NIGHT
-	};
-	GF_ASSERT(0 <= hour && hour < 24);
-	return timezone[hour];
+  return PM_RTC_ConvertHourToTimeZone( PM_RTC_TIMEZONE_DEFAULT_SEASON, hour );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief	夜かどうかの判定
+ * @retval	TRUE	今は夜
+ * @retval	FALSE	今は昼
+ */
+//--------------------------------------------------------------
+BOOL GFL_RTC_IsNightTime( void )
+{
+	switch (GFL_RTC_GetTimeZone()) {
+	case TIMEZONE_MIDNIGHT:
+	case TIMEZONE_NIGHT:
+		return TRUE;
+	}
+	return FALSE;
 }
 
 //--------------------------------------------------------------

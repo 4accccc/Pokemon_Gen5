@@ -93,6 +93,9 @@ static GMEVENT* SkillUse_Sorawotobu( const FLDSKILL_USE_HEADER *head, const FLDS
 static const FLDSKILL_FUNC_DATA SkillFuncTable[FLDSKILL_IDX_MAX];
 static const FLDSKILL_FUNC_DATA SeaTempleSkillFuncTable[FLDSKILL_IDX_MAX];
 
+// 海底神殿エリア判定
+static BOOL FLDSKILL_SEATEMPLE_IsArea( const SEATEMPLE_SKILL_USE_POS* cp_pos, u16 gx, u16 gz );
+
 //======================================================================
 //  FLDSKILL
 //======================================================================
@@ -218,15 +221,13 @@ void FLDSKILL_InitCheckWork(
 
       // 2F
       if( ZONEDATA_IsSeaTempleDungeon2F(scwk->zone_id) ){
-        if( (sc_SEATEMPLE_SKILL_USE_POS[ SEATEMPLE_USE_SKILL_2F ].gx == gx) &&
-            (sc_SEATEMPLE_SKILL_USE_POS[ SEATEMPLE_USE_SKILL_2F ].gz == gz) ){
+        if( FLDSKILL_SEATEMPLE_IsArea( &sc_SEATEMPLE_SKILL_USE_POS[ SEATEMPLE_USE_SKILL_2F ], gx, gz ) ){
           scwk->enable_skill |= (1 << FLDSKILL_IDX_FLASH);
         }
       }
       // 3F
       if( ZONEDATA_IsSeaTempleDungeon3F(scwk->zone_id) ){
-        if( (sc_SEATEMPLE_SKILL_USE_POS[ SEATEMPLE_USE_SKILL_3F ].gx == gx) &&
-            (sc_SEATEMPLE_SKILL_USE_POS[ SEATEMPLE_USE_SKILL_3F ].gz == gz) ){
+        if( FLDSKILL_SEATEMPLE_IsArea( &sc_SEATEMPLE_SKILL_USE_POS[ SEATEMPLE_USE_SKILL_3F ], gx, gz ) ){
           scwk->enable_skill |= (1 << FLDSKILL_IDX_KAIRIKI);
         }
       }
@@ -1350,6 +1351,32 @@ static BOOL CheckMapModeUse( const FLDSKILL_CHECK_WORK * scwk )
 #else
   return FALSE;
 #endif
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  海底神殿エリア内かをチェック
+ *
+ *	@param	cp_pos  エリア情報
+ *	@param	gx      ｘグリッド
+ *	@param	gz      ｚグリッド
+ *
+ *	@retval TRUE  エリア内
+ *	@retval FALSE エリア外
+ */
+//-----------------------------------------------------------------------------
+static BOOL FLDSKILL_SEATEMPLE_IsArea( const SEATEMPLE_SKILL_USE_POS* cp_pos, u16 gx, u16 gz )
+{
+  s32 dif_x, dif_z;
+  
+  dif_x = (s32)cp_pos->gx - (s32)gx;
+  dif_z = (s32)cp_pos->gz - (s32)gz;
+  
+  if( (MATH_ABS(dif_x) < cp_pos->siz_x) && (MATH_ABS(dif_z) < cp_pos->siz_z) ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //======================================================================

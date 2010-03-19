@@ -11,6 +11,9 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
 #include <gflib.h>
+
+#include "system/rtc_tool.h"
+
 #include "weather_task.h"
 
 //-----------------------------------------------------------------------------
@@ -186,11 +189,11 @@ struct _WEATHER_TASK {
 	// カメラ情報
 	const FIELD_CAMERA* cp_camera;
 
-	// SEASON 時間
-	const FLD_SEASON_TIME* cp_season_time;
-
 	// 3DBGシステム
 	FIELD_3DBG** pp_3dbg;
+
+  // 季節
+  u16 season;
 	
 
 	/* MemClearするワーク */
@@ -324,12 +327,13 @@ static void TOOL_GetPerspectiveScreenSize( const MtxFx44* cp_pers_mtx, fx32 dist
  *	@param	pp_3dbg			3DBGシステム
  *	@param	p_3dbg_back	3DBGシステム
  *	@param  p_sound    サウンドシステム
+ *	@param  season      季節
  *	@param	heapID			ヒープID
  *	
  *	@return	天気タスクワーク
  */
 //-----------------------------------------------------------------------------
-WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG** pp_3dbg, FIELD_SOUND* p_sound, const FLD_SEASON_TIME* cp_season_time, HEAPID heapID )
+WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p_light, FIELD_FOG_WORK* p_fog, const FIELD_ZONEFOGLIGHT* cp_zonefog, FIELD_3DBG** pp_3dbg, FIELD_SOUND* p_sound, u16 season, HEAPID heapID )
 {
 	WEATHER_TASK* p_wk;
 
@@ -343,7 +347,7 @@ WEATHER_TASK* WEATHER_TASK_Init( GFL_CLUNIT* p_clunit, const FIELD_CAMERA* cp_ca
 	p_wk->cp_zonefog	= cp_zonefog;
 	p_wk->pp_3dbg		= pp_3dbg;
 	p_wk->p_sound	= p_sound;
-  p_wk->cp_season_time = cp_season_time;
+  p_wk->season = season;
 
 	return p_wk;
 }
@@ -1552,7 +1556,7 @@ void WEATHER_TASK_PlaySndVol( WEATHER_TASK* p_wk, int snd_no, u32 vol )
 //-----------------------------------------------------------------------------
 int WEATHER_TASK_GetTimeZoneChangeTime( const WEATHER_TASK* cp_wk, TIMEZONE timezone )
 {
-  return FLD_SEASON_TIME_GetTimeZoneChangeTime( cp_wk->cp_season_time, timezone );
+  return PM_RTC_GetTimeZoneChangeMargin( cp_wk->season, timezone );
 }
 
 
@@ -1759,7 +1763,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	FIELD_3DBG** pp_3dbg;
 	const FIELD_CAMERA* cp_camera;
   FIELD_SOUND* p_sound;
-	const FLD_SEASON_TIME* cp_season_time;
+  u16 season;
 
 
 
@@ -1771,7 +1775,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	cp_camera	= p_wk->cp_camera;
 	pp_3dbg		= p_wk->pp_3dbg;
 	p_sound  = p_wk->p_sound;
-  cp_season_time = p_wk->cp_season_time;
+  season = p_wk->season;
 
 	// クリア
 	GFL_STD_MemClear( p_wk, sizeof(WEATHER_TASK) );
@@ -1784,7 +1788,7 @@ static void WEATHER_TASK_WK_Clear( WEATHER_TASK* p_wk )
 	p_wk->pp_3dbg	= pp_3dbg;
 	p_wk->cp_zonefog = cp_zonefog;
 	p_wk->p_sound  = p_sound;
-  p_wk->cp_season_time = cp_season_time;
+  p_wk->season = season;
 }
 
 //----------------------------------------------------------------------------
