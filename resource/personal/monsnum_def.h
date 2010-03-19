@@ -780,8 +780,8 @@
 
 //ライ
 #define		FORMNO_653_A				( 0 )
-#define		FORMNO_653_ｂ				( 1 )
-#define		FORMNO_653_ｃ				( 2 )
+#define		FORMNO_653_B				( 1 )
+#define		FORMNO_653_C				( 2 )
 
 //メロディア
 #define		FORMNO_655_VOICE				( 0 )
