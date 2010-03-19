@@ -123,16 +123,16 @@ enum
 // 本数
 enum
 {
-  OBJ_PAL_NUM_S_MIZU      = 1,  // smallもbigもこのパレット列を使う
+  OBJ_PAL_NUM_S_KUSA      = 1,  // smallもbigもこのパレット列を使う
   OBJ_PAL_NUM_S_HONOO     = 1,
-  OBJ_PAL_NUM_S_KUSA      = 1,
+  OBJ_PAL_NUM_S_MIZU      = 1,
 };
 // 位置
 enum
 {
-  OBJ_PAL_POS_S_MIZU      = 0,
+  OBJ_PAL_POS_S_KUSA      = 0,
   OBJ_PAL_POS_S_HONOO     = 1,
-  OBJ_PAL_POS_S_KUSA      = 2,
+  OBJ_PAL_POS_S_MIZU      = 2,
 };
 
 
@@ -240,15 +240,15 @@ enum
 // 選択対象
 typedef enum
 {
-  TARGET_MIZU       = PSEL_RESULT_MIZU,   // 左     // 左から順番に並べておく  // PSEL_RESULTと同じ並び順にしておくこと  // psel.c内でPSEL_RESULTの並びを利用するのはここだけで、他はこのTARGETの並びを利用するようにしておく(これで、PSEL_RESULTを変更せざるを得ないときに最小限の変更で済むかな)
+  TARGET_KUSA       = PSEL_RESULT_KUSA,   // 左     // 左から順番に並べておく  // PSEL_RESULTと同じ並び順にしておくこと  // psel.c内でPSEL_RESULTの並びを利用するのはここだけで、他はこのTARGETの並びを利用するようにしておく(これで、PSEL_RESULTを変更せざるを得ないときに最小限の変更で済むかな)
   TARGET_HONOO      = PSEL_RESULT_HONOO,  // 中央
-  TARGET_KUSA       = PSEL_RESULT_KUSA,   // 右
+  TARGET_MIZU       = PSEL_RESULT_MIZU,   // 右
   TARGET_POKE_MAX,                        // ポケモン数
   TARGET_BUTTON     = TARGET_POKE_MAX,    // 確認ボタン
   TARGET_MAX,
   TARGET_NONE       = TARGET_MAX,         // どれも選択していないとき
-  TARGET_POKE_START = TARGET_MIZU,        // TARGET_POKE_START<= <=TARGET_POKE_END
-  TARGET_POKE_END   = TARGET_KUSA,
+  TARGET_POKE_START = TARGET_KUSA,        // TARGET_POKE_START<= <=TARGET_POKE_END
+  TARGET_POKE_END   = TARGET_MIZU,
 }
 TARGET;
 
@@ -274,31 +274,31 @@ static const u8 finger_pos[TARGET_POKE_MAX][2] =
 // monsno
 static const u16 poke_monsno[TARGET_POKE_MAX] =
 {
-  MONSNO_557,  // MONSNO_???の???はグラフィックナンバー、定義されている値はmonsno
+  MONSNO_551,  // MONSNO_???の???はグラフィックナンバー、定義されている値はmonsno
   MONSNO_554,
-  MONSNO_551,
+  MONSNO_557,
 };
 // gmm
 static const u32 poke_str_id[TARGET_POKE_MAX] =
 {
-  msg_t01r0102_ball_water_01,
-  msg_t01r0102_ball_fire_01,
   msg_t01r0102_ball_grass_01,
+  msg_t01r0102_ball_fire_01,
+  msg_t01r0102_ball_water_01,
 };
 
 // リソース
 static const u8 poke_res_big[TARGET_POKE_MAX][TWO_OBJ_RES_FILE_MAX] =
 {
-  { NARC_psel_psel_557_m_NCGR, NARC_psel_psel_557_n_NCLR, NARC_psel_psel_557_m_NCER, NARC_psel_psel_557_m_NANR, NARC_psel_psel_557_x_NCLR },
-  { NARC_psel_psel_554_m_NCGR, NARC_psel_psel_554_n_NCLR, NARC_psel_psel_554_m_NCER, NARC_psel_psel_554_m_NANR, NARC_psel_psel_554_x_NCLR },
   { NARC_psel_psel_551_m_NCGR, NARC_psel_psel_551_n_NCLR, NARC_psel_psel_551_m_NCER, NARC_psel_psel_551_m_NANR, NARC_psel_psel_551_x_NCLR },
+  { NARC_psel_psel_554_m_NCGR, NARC_psel_psel_554_n_NCLR, NARC_psel_psel_554_m_NCER, NARC_psel_psel_554_m_NANR, NARC_psel_psel_554_x_NCLR },
+  { NARC_psel_psel_557_m_NCGR, NARC_psel_psel_557_n_NCLR, NARC_psel_psel_557_m_NCER, NARC_psel_psel_557_m_NANR, NARC_psel_psel_557_x_NCLR },
 };
 // パレット
 static const u8 poke_obj_pal_pos_s[TARGET_POKE_MAX] =
 {
-  OBJ_PAL_POS_S_MIZU, 
-  OBJ_PAL_POS_S_HONOO,
   OBJ_PAL_POS_S_KUSA,
+  OBJ_PAL_POS_S_HONOO,
+  OBJ_PAL_POS_S_MIZU, 
 };
 
 // ポケモンの動き
@@ -384,9 +384,9 @@ POKE_MOVE_REQ;
 // ボール内をイメージしたサブ画面BG
 enum
 {
-  INSIDE_BALL_MIZU    = TARGET_MIZU,    // TARGETと同じ並び順にしておく
+  INSIDE_BALL_KUSA    = TARGET_KUSA,    // TARGETと同じ並び順にしておく
   INSIDE_BALL_HONOO   = TARGET_HONOO,
-  INSIDE_BALL_KUSA    = TARGET_KUSA,
+  INSIDE_BALL_MIZU    = TARGET_MIZU,
   INSIDE_BALL_NONE,
   INSIDE_BALL_MAX,
 };
@@ -394,9 +394,9 @@ enum
 // ボール内をイメージしたサブ画面BGのパレットデータ
 static const u8 inside_ball_res[INSIDE_BALL_MAX] =
 {
-  NARC_psel_psel_bg02_w_NCLR, 
-  NARC_psel_psel_bg02_f_NCLR, 
   NARC_psel_psel_bg02_l_NCLR, 
+  NARC_psel_psel_bg02_f_NCLR, 
+  NARC_psel_psel_bg02_w_NCLR, 
   NARC_psel_psel_bg02_NCLR, 
 };
 
@@ -523,9 +523,9 @@ static const GFL_G3D_UTIL_OBJ s02_obj_tbl[] =
 };
 enum
 {
-  MB_L     = TARGET_MIZU,  // TARGETと同じ並び順にしておく
+  MB_L     = TARGET_KUSA,  // TARGETと同じ並び順にしておく
   MB_C     = TARGET_HONOO,
-  MB_R     = TARGET_KUSA,
+  MB_R     = TARGET_MIZU,
   MB_MAX
 };
 static const VecFx32 three_mb_trans[MB_MAX] =
@@ -979,7 +979,7 @@ void  PSEL_InitParam(
                   u16*             evwk
                          )
 {
-  param->result             = PSEL_RESULT_MIZU;
+  param->result             = PSEL_RESULT_KUSA;
   param->evwk               = evwk;
 }
 
@@ -1066,13 +1066,15 @@ static GFL_PROC_RESULT Psel_ProcExit( GFL_PROC* proc, int* seq, void* pwk, void*
       // 選択結果(スクリプトの番号 0=くさ, 1=ほのお, 2=みず に一致させる)
       switch(work->select_target_poke)
       {
-      case TARGET_MIZU:
-        *(work->param->evwk) = 2;
+      case TARGET_KUSA:
+        *(work->param->evwk) = 0;
         break;
       case TARGET_HONOO:
         *(work->param->evwk) = 1;
         break;
-      case TARGET_KUSA:
+      case TARGET_MIZU:
+        *(work->param->evwk) = 2;
+        break;
       default:
         *(work->param->evwk) = 0;
         break;
@@ -1568,9 +1570,11 @@ static void Psel_ThreeS02OnlyMbSelectAnimeStart( PSEL_WORK* work, TARGET target 
       GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
       u16 anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
       u16 j;
+      int anm_frm = 0;
       for( j=0; j<anime_count; j++ )
       {
         GFL_G3D_OBJECT_EnableAnime( obj, j );
+	      GFL_G3D_OBJECT_SetAnimeFrame( obj, j, &anm_frm );  // 必ず0フレーム目から再生されるようにしておく
       }
     }
   }
@@ -1993,8 +1997,8 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
 
   // softpri
   {
-    u8 order[TARGET_POKE_MAX] = { TARGET_MIZU, TARGET_HONOO, TARGET_KUSA };  // order[0]=y最大のTARGET_???; order[1]=y中のTARGET_???; order[2]=y最小のTARGET_???;
-    s16 y[TARGET_POKE_MAX];  // y[TARGET_MIZU]=TARGET_MIZUのy; y[TARGET_HONOO]=TARGET_HONOOのy; y[TARGET_KUSA]=TARGET_KUSAのy;
+    u8 order[TARGET_POKE_MAX] = { TARGET_KUSA, TARGET_HONOO, TARGET_MIZU };  // order[0]=y最大のTARGET_???; order[1]=y中のTARGET_???; order[2]=y最小のTARGET_???;
+    s16 y[TARGET_POKE_MAX];  // y[TARGET_KUSA]=TARGET_KUSAのy; y[TARGET_HONOO]=TARGET_HONOOのy; y[TARGET_MIZU]=TARGET_MIZUのy;
     GFL_CLACTPOS pos;
     for( i=0; i<TARGET_POKE_MAX; i++ )
     {
@@ -2138,6 +2142,7 @@ static void Psel_FingerUpdatePos( PSEL_WORK* work )
   pos.x = finger_pos[work->select_target_poke][0];
   pos.y = finger_pos[work->select_target_poke][1];
   GFL_CLACT_WK_SetPos( work->finger_clwk, &pos, CLSYS_DEFREND_MAIN );
+  GFL_CLACT_WK_SetAnmIndex( work->finger_clwk, 0 );  // 必ず0フレーム目から始まるようにしておく
 }
 
 //-------------------------------------
@@ -3527,8 +3532,8 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
     GFL_CLWK* big_clwk;
     GFL_CLACTPOS pos;
 
-    small_clwk = work->poke_set[TARGET_MIZU].clwk[POKE_SMALL];
-    big_clwk = work->poke_set[TARGET_MIZU].clwk[POKE_BIG];
+    small_clwk = work->poke_set[TARGET_KUSA].clwk[POKE_SMALL];
+    big_clwk = work->poke_set[TARGET_KUSA].clwk[POKE_BIG];
 
     GFL_CLACT_WK_GetPos( big_clwk, &pos, CLSYS_DEFREND_SUB );
 

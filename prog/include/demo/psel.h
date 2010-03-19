@@ -28,9 +28,9 @@ FS_EXTERN_OVERLAY(psel);
 // 選択結果
 typedef enum
 {
-  PSEL_RESULT_MIZU      = 0,  // 左から順に並べておく  // この並び順はpsel.cで利用されているので重要
+  PSEL_RESULT_KUSA      = 0,  // 左から順に並べておく  // この並び順はpsel.cで利用されているので重要
   PSEL_RESULT_HONOO,
-  PSEL_RESULT_KUSA,
+  PSEL_RESULT_MIZU,
 }
 PSEL_RESULT;
 
