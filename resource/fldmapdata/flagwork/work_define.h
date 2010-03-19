@@ -193,6 +193,7 @@
 #define WK_SCENE_R15R0301_RECV           16581 /* 0x40c5 パルパーク：電源OFFからの復帰イベント用ワーク */
 #define WK_SCENE_R09                     16582 /* 0x40c6 ９番道路：イベント用ワーク */
 #define WK_SCENE_C03R0401_ZOROA          16583 /* 0x40c7 C03ヒウンシティ：映画関連ゾロアイベント用ワーク */
+#define WK_SCENE_C03R0101_QUESTION       16584 /* 0x40c8 C03R0101：すれ違い調査隊 強制アンケートイベント用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
