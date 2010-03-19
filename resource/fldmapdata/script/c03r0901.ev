@@ -255,7 +255,7 @@ _ANIME_LABEL	anm_player_move_right
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_merodhia
   _ANIME_DATA	AC_MELODYER_SHAKE,4
-  _ANIME_DATA	AC_MELODYER_SPIN,6
+  _ANIME_DATA	AC_MELODYER_SPIN,13
   _ANIME_DATA	AC_MELODYER_SPIN_POSE,1
 	_ANIME_DATA	ACMD_END,0
 
