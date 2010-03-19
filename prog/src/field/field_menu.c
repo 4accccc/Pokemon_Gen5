@@ -62,7 +62,7 @@
 #define FIELD_MENU_ICON_SIZE_Y (32) 
 #define FIELD_MENU_CURSOR_SIZE_Y (44)
 //アイコン確定時のウェイト
-#define FIELD_MENU_ICON_DECIDE_ANIME_CNT (4) 
+#define FIELD_MENU_ICON_DECIDE_ANIME_CNT (3) 
 
 //カーソル不正位置
 #define FIELD_MENU_INVALU_CURSOR (0xFF)
@@ -91,12 +91,6 @@ enum
 }FIELD_MENU_OBJ_RES;
 
 //カーソルアニメ
-enum
-{
-  FCA_NORMAL_BIG,
-  FCA_NORMAL_SMALL,
-  
-}FIELD_MENU_CURSOR_ANIME;
 
 //アイコンアニメ
 enum
@@ -106,6 +100,13 @@ enum
   FIA_DECIDE,
   
 }FIELD_MENU_ICON_ANIME;
+
+// カーソルアニメ定義
+enum
+{
+ FCA_NORMAL=0,
+ FCA_DECIDE_CURSOR,
+}FIELD_MENU_CURSOR_ANIME;
 
 
 typedef enum
@@ -216,6 +217,7 @@ static void FIELD_MENU_Icon_TransBmp( FIELD_MENU_WORK* work , FIELD_MENU_ICON *i
 
 static void _trans_touchbar_screen( HEAPID heapId, int bgfrm );
 static void _cancel_func_set( FIELD_MENU_WORK *work, BOOL isCancel );
+static void _set_cursor_pos( FIELD_MENU_WORK *work );
 
 
 
@@ -494,7 +496,10 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       if( work->activeIcon->cellIcon != NULL )
       {
         work->waitCnt = 0;
-        GFL_CLACT_WK_SetAnmSeq( work->activeIcon->cellIcon , FIA_DECIDE );
+//        GFL_CLACT_WK_SetAnmSeq( work->activeIcon->cellIcon , FIA_DECIDE );
+        _set_cursor_pos( work );
+        GFL_CLACT_WK_SetAnmSeq( work->cellCursor, FCA_DECIDE_CURSOR );
+        GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
         work->state = FMS_WAIT_ICON_ANIME;
         PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
       }
@@ -507,7 +512,9 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     
   case FMS_WAIT_ICON_ANIME:
     work->waitCnt++;
-    if( work->waitCnt > FIELD_MENU_ICON_DECIDE_ANIME_CNT )
+//    if( work->waitCnt > FIELD_MENU_ICON_DECIDE_ANIME_CNT )
+    // カーソルアニメの終了待ち
+    if(GFL_CLACT_WK_CheckAnmActive( work->cellCursor )==FALSE)
     {
       work->state = FMS_EXIT_DECIDEITEM;
     }
@@ -666,15 +673,15 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_field_menu_menu_back_NSCR, 
                       FIELD_MENU_BG_BACK ,  0 , 0, FALSE , work->tempHeapId );
 
-#if 0
   // 上画面プレート
   GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle, NARC_field_menu_menu_bg_NCLR, PALTYPE_MAIN_BG, 
                                       10*32, 10*32, 32, work->tempHeapId );  
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_field_menu_menu_bg_NCGR ,
-                                        FIELD_MENU_BG_PLATE_M , 0 , 0, FALSE , work->tempHeapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_field_menu_menu_back2_NSCR, 
-                                   FIELD_MENU_BG_PLATE_M ,  0 , 0, FALSE , work->tempHeapId );
-#endif
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_field_menu_menu_bg2_NCGR ,
+                                        FIELD_MENU_BG_PLATE_M , 100 , 0, FALSE , work->tempHeapId );
+//  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_field_menu_menu_back2_NSCR, 
+//                                   FIELD_MENU_BG_PLATE_M ,  0 , 0, FALSE , work->tempHeapId );
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs( arcHandle, NARC_field_menu_menu_back2_NSCR,  
+                                          FIELD_MENU_BG_PLATE_M, 0, 100, 0, 0, work->tempHeapId);
 
   // セルアクターリソース転送(カーソル）
   work->objRes[FMO_COM_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle, NARC_field_menu_menu_obj_common_NCLR, 
@@ -1368,6 +1375,21 @@ static void  FIELD_MENU_UpdateTP( FIELD_MENU_WORK* work )
 
 //----------------------------------------------------------------------------------
 /**
+ * @brief カーソル座標セット
+ *
+ * @param   work    
+ */
+//----------------------------------------------------------------------------------
+static void _set_cursor_pos( FIELD_MENU_WORK *work )
+{
+  GFL_CLACTPOS pos;
+  pos.x = work->activeIcon->posX;
+  pos.y = work->activeIcon->posY;
+  GFL_CLACT_WK_SetPos( work->cellCursor , &pos , FIELD_MENU_RENDER_SURFACE );
+}
+
+//----------------------------------------------------------------------------------
+/**
  * @brief キャンセル操作の挙動を設定
  *
  * @param   work    
@@ -1393,24 +1415,21 @@ static void  FIELD_MENU_UpdateCursor( FIELD_MENU_WORK* work )
   if( work->isUpdateCursor == TRUE )
   {
     FIELD_MENU_ICON *prevIcon = work->activeIcon;
-    GFL_CLACTPOS pos;
     if( work->cursorPosY < 3 )
     {
       //戻る以外
       work->activeIcon = &work->icon[work->cursorPosX + work->cursorPosY*2];
 
-      GFL_CLACT_WK_SetAnmSeq( work->cellCursor , FCA_NORMAL_BIG );
+      GFL_CLACT_WK_SetAnmSeq( work->cellCursor , FCA_NORMAL );
     }
     else
     {
       //戻る
       work->activeIcon = &work->icon[6];
-      GFL_CLACT_WK_SetAnmSeq( work->cellCursor , FCA_NORMAL_SMALL );
+      GFL_CLACT_WK_SetAnmSeq( work->cellCursor , FCA_NORMAL );
     }
     
-    pos.x = work->activeIcon->posX;
-    pos.y = work->activeIcon->posY;
-    GFL_CLACT_WK_SetPos( work->cellCursor , &pos , FIELD_MENU_RENDER_SURFACE );
+    _set_cursor_pos(work);
     if( work->activeIcon->cellIcon != NULL &&
         work->isDispCursor == TRUE )
     {
