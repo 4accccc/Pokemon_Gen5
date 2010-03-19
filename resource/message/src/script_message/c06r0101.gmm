@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T15:13:23"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T13:11:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -343,7 +343,7 @@
 はやい　ポケモンって　なにかなー？</language>
 	</row>
 
-	<row id="msg_c06r0101_boy2_00" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c06r0101_boy2_00" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・c06ジムバッジ入手前</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
@@ -355,20 +355,28 @@
 すごく　いいことを　教えてあげる！</language>
 	</row>
 
-	<row id="msg_c06r0101_boy2_01" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c06r0101_boy2_01" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・c06ジムバッジ入手後
 　アイテム入手前
 ・このメッセージ表示後
 　c06にアイテム配置処理</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
-		<language name="JPN" width="256">かっそうろの　はしっこに
+		<language name="JPN" width="256">わー！　ジェットバッジ！！
+フウロねえちゃんに　かったんだ！▼
+じゃあ　いいこと
+おしえて　あげるね！▼
+かっそうろの　はしっこに
 ぼくらの　たからものを　うめたんだ！</language>
-		<language name="JPN_KANJI" width="256">滑走路の　はしっこに
+		<language name="JPN_KANJI" width="256">わー！　ジェットバッジ！！
+フウロねえちゃんに　勝ったんだ！▼
+じゃあ　いいこと
+教えて　あげるね！▼
+滑走路の　はしっこに
 ぼくらの　宝物を　埋めたんだ！</language>
 	</row>
 
-	<row id="msg_c06r0101_boy2_02" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c06r0101_boy2_02" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
