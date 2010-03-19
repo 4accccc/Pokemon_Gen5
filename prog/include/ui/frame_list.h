@@ -333,3 +333,14 @@ extern void FRAMELIST_SetCursorPos( FRAMELIST_WORK * wk, u32 pos );
  */
 //--------------------------------------------------------------------------------------------
 extern void FRAMELIST_SetCursorPosPalette( FRAMELIST_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル位置のパレットを戻す
+ *
+ * @param		wk					ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void FRAMELIST_SetCursorPosPaletteOff( FRAMELIST_WORK * wk );
