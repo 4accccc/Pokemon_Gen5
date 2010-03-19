@@ -68,7 +68,9 @@ static void DEBUG_StackOverCheck(void);
 //------------------------------------------------------------------
 //	処理時間AVERAGE
 //------------------------------------------------------------------
-#if DEBUG_MAIN_TIME_AVERAGE
+#ifdef PM_DEBUG
+
+OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now;    // 現在のチック
 
 static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start;    // 1フレーム開始
 static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_End;    // 1フレーム開始
@@ -140,9 +142,9 @@ void NitroMain(void)
 
 #endif //PM_DEBUG
 
-#if DEBUG_MAIN_TIME_AVERAGE
+#ifdef PM_DEBUG
     DEBUG_MAIN_TIME_AVERAGE_StartFunc();
-#endif // DEBUG_MAIN_TIME_AVERAGE
+#endif // PM_DEBUG
 
 #ifdef PM_DEBUG
 		DEBUG_StackOverCheck();
@@ -166,9 +168,9 @@ void NitroMain(void)
 		DEB_SD_PRINT_UpdateSystem();
 #endif //PM_DEBUG
 
-#if DEBUG_MAIN_TIME_AVERAGE
+#ifdef PM_DEBUG
     DEBUG_MAIN_TIME_AVERAGE_EndFunc();
-#endif // DEBUG_MAIN_TIME_AVERAGE
+#endif // PM_DEBUG
 
 		// VBLANK待ち
 		GFL_G3D_SwapBuffers();
@@ -384,7 +386,8 @@ static void DEBUG_StackOverCheck(void)
 
 
 
-#if DEBUG_MAIN_TIME_AVERAGE
+#ifdef PM_DEBUG
+
 static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void )
 {
   DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start = OS_GetTick(); 
@@ -397,22 +400,29 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
 
   now_time = OS_TicksToMicroSeconds(DEBUG_DEBUG_MAIN_TIME_AVERAGE_End - DEBUG_DEBUG_MAIN_TIME_AVERAGE_Start);
 
+  DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now = now_time;
+
   DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave += now_time;
   DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count ++;
   if( now_time > 16000 ){
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount ++;
+#if DEBUG_MAIN_TIME_AVERAGE
     OS_TPrintf( " over tick %ld\n", now_time );
+#endif
   }
   if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max < now_time ){
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max = now_time;
   }
   if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count >= DEBUG_DEBUG_MAIN_TIME_AVERAGE_AVE_COUNT_TIME ){
+
+#if DEBUG_MAIN_TIME_AVERAGE
     OS_TPrintf( " ave tick %d", 
         DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave / DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count );
     OS_TPrintf( " Over 120::%d",
         DEBUG_DEBUG_MAIN_TIME_AVERAGE_OverCount );
     OS_TPrintf( " Max %d\n",
         DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max );
+#endif
 
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave = 0;
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Ave_Count = 0;
@@ -420,9 +430,11 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
     DEBUG_DEBUG_MAIN_TIME_AVERAGE_Max       = 0;
   }
 
+#if DEBUG_MAIN_TIME_AVERAGE
   if( DEBUG_DEBUG_MAIN_TIME_AVERAGE_NOW_TIME_DRAW_KEY & GFL_UI_KEY_GetCont() ){
     OS_TPrintf( " now tick %ld\n", now_time );
   }
+#endif
 }
 
-#endif // DEBUG_MAIN_TIME_AVERAGE
+#endif // PM_DEBUG
