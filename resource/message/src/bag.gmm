@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-17T19:23:50"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-03-19T13:27:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -900,8 +900,8 @@ const u8 str_konanoryou[]
 		<comment>const u8 str_bag_NoXX[]
 ０＝数字（ナンバー、２桁）
 １＝わざ名</comment>
-		<language name="JPN" font=" 1:small">[BD:02:Ｘセンタリング]Ｎｏ[2:01:２桁:0][1:07:わざ名:1]</language>
-		<language name="JPN_KANJI" font=" 1:small">[BD:02:Ｘセンタリング]Ｎｏ[2:01:２桁:0][1:07:わざ名:1]</language>
+		<language name="JPN" font=" 1:small">[BD:02:Ｘセンタリング]Ｎｏ[2:02:３桁:0][1:07:わざ名:1]</language>
+		<language name="JPN_KANJI" font=" 1:small">[BD:02:Ｘセンタリング]Ｎｏ[2:02:３桁:0][1:07:わざ名:1]</language>
 	</row>
 
 	<row id="msg_bag_087">
@@ -910,16 +910,16 @@ const u8 str_konanoryou[]
 １＝木の実名
 
 ※木の実名のタグは未対応</comment>
-		<language name="JPN" font=" 1:small">Ｎｏ[2:01:２桁:0][1:07:わざ名:1]</language>
-		<language name="JPN_KANJI" font=" 1:small">Ｎｏ[2:01:２桁:0][1:07:わざ名:1]</language>
+		<language name="JPN" font=" 1:small">Ｎｏ[2:02:３桁:0][1:07:わざ名:1]</language>
+		<language name="JPN_KANJI" font=" 1:small">Ｎｏ[2:02:３桁:0][1:07:わざ名:1]</language>
 	</row>
 
 	<row id="msg_bag_088">
 		<comment>const u8 str_bag_XX[]
 ０＝数字（ナンバー、２桁）
 １＝ひでん名</comment>
-		<language name="JPN" font=" 1:small">[2:01:２桁:0][1:07:わざ名:1]</language>
-		<language name="JPN_KANJI" font=" 1:small">[2:01:２桁:0][1:07:わざ名:1]</language>
+		<language name="JPN" font=" 1:small">[2:02:３桁:0][1:07:わざ名:1]</language>
+		<language name="JPN_KANJI" font=" 1:small">[2:02:３桁:0][1:07:わざ名:1]</language>
 	</row>
 
 	<row id="msg_bag_089" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">

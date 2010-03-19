@@ -563,6 +563,7 @@ u8 ITEM_GetWazaMashineNo( u16 item )
  * @return  秘伝マシン番号
  */
 //--------------------------------------------------------------------------------------------
+/*
 u8 ITEM_GetHidenMashineNo( u16 item )
 {
   if( item >= ITEM_HIDENMASIN01 && item <= ITEM_HIDENMASIN08 ){
@@ -570,6 +571,7 @@ u8 ITEM_GetHidenMashineNo( u16 item )
   }
   return 0xff;
 }
+*/
 
 //============================================================================================
 //  メールチェック

@@ -63,7 +63,7 @@ typedef struct _MYITEM * MYITEM_PTR;
 extern int MYITEM_GetWorkSize(void);
 extern MYITEM_PTR MYITEM_AllocWork(HEAPID heapID);
 extern void MYITEM_Copy(const MYITEM_PTR from, MYITEM_PTR to);
-extern void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, int bMyGet);
+extern void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, BOOL bMyGet);
 
 //----------------------------------------------------------
 //	MYITEMëÄçÏÇÃÇΩÇﬂÇÃä÷êî

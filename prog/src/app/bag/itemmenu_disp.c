@@ -40,6 +40,7 @@
 #include "font/font.naix" //NARC_font_large_gftr
 
 #include "waza_tool/wazadata.h"
+#include "waza_tool/wazano_def.h"
 
 #include "itemmenu.h"
 #include "itemmenu_local.h"
@@ -101,7 +102,7 @@ enum
 
 #define _UP_ITEMNAME_INITX (8)
 #define _UP_ITEMNAME_INITY (5)
-#define _UP_ITEMNAME_SIZEX (14)
+#define _UP_ITEMNAME_SIZEX (15)
 #define _UP_ITEMNAME_SIZEY (3)
 #define _UP_ITEMNAME_DOTOFS_Y (4)
 
@@ -723,9 +724,9 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   else
   {
     // わざマシン名
-    GFL_MSG_GetString(  pWork->MsgManager, msg_bag_086, pWork->pStrBuf );
+    GFL_MSG_GetString( pWork->MsgManager, msg_bag_086, pWork->pStrBuf );
     WORDSET_RegisterNumber(pWork->WordSet, 0, ITEM_GetWazaMashineNo(item->id)+1,
-                           2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+                           3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
     WORDSET_RegisterWazaName(pWork->WordSet, 1, wazano);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
@@ -1195,6 +1196,25 @@ static void _cellmessage_printcolor( u16 itemtype )
 }
 */
 
+static BOOL CheckFieldWazaMachine( u16 item )
+{
+	if( ITEM_CheckWazaMachine( item ) == TRUE ){
+		switch( ITEM_GetWazaNo(item) ){
+		case WAZANO_ANAWOHORU:		// あなをほる
+		case WAZANO_HURASSYU:			// フラッシュ
+		case WAZANO_IAIGIRI:			// いあいぎり
+		case WAZANO_KAIRIKI:			// かいりき
+		case WAZANO_NAMINORI:			// なみのり
+		case WAZANO_SORAWOTOBU:		// そらをとぶ
+		case WAZANO_DAIBINGU:			// ダイビング
+		case WAZANO_TAKINOBORI:		// たきのぼり
+		case WAZANO_IWAKUDAKI:		// いわくだき
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
 //-----------------------------------------------------------------------------
 /**
  *  @brief  セル メッセージ表示
@@ -1211,7 +1231,7 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
   int length;
 
   // 文字色指定
-  static u8 color_tbl[ ITEM_LIST_NUM ] = { 1, 0, 0, 0, 0, 0, 0, 1 };
+  static const u8 color_tbl[ ITEM_LIST_NUM ] = { 1, 0, 0, 0, 0, 0, 0, 1 };
 
   // ポケット内のアイテムが0個の時
   length = ITEMMENU_GetItemPocketNumber( pWork );
@@ -1242,72 +1262,67 @@ void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork )
     GFL_BMPWIN_ClearTransWindow( pWork->winPocketNone );
   }
 
-  //@TODO 現在表示されているリストの数を取得
-  for(i = 0; i< ITEM_LIST_NUM ; i++)
-  {
+	// リスト表示
+	for( i=0; i<ITEM_LIST_NUM; i++ ){
     ITEM_ST * item;
 
-    pWork->nListEnable[i] = FALSE;
+    pWork->nListEnable[i] = 0;
 
-    if(pWork->oamlistpos+i < 0)
-    {
-      continue;
-    }
+		if( pWork->oamlistpos+i < 0 ){ continue; }
 
-    //    item = MYITEM_PosItemGet( pWork->pMyItem, pWork->pocketno,  pWork->oamlistpos+i  );
-    item = ITEMMENU_GetItem( pWork , pWork->oamlistpos+i);
+		item = ITEMMENU_GetItem( pWork, pWork->oamlistpos+i );
 
-    if((item==NULL) || (item->id==ITEM_DUMMY_DATA))
-    {
-      continue;
-    }
+    if( (item==NULL) || (item->id==ITEM_DUMMY_DATA) ){ continue; }
 
     // リスト枠
     {
       void * itemdata;
-      u8 backColor = 0xd;
+			s32	type;
 
       //@TODO ページ切替時にロードするようにすれば、負荷が軽減される
       itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
+			type     = ITEM_GetBufParam( itemdata, ITEM_PRM_ITEM_TYPE );
 
-      GFL_BMP_Clear(pWork->listBmp[i], backColor );
-
-      // 文字色指定。枠の外はグラデ
-      switch( color_tbl[i] )
-      {
-      case 0:
-/*
-        {
-          u16 type = ITEM_GetBufParam( itemdata, ITEM_PRM_ITEM_TYPE );
-          _cellmessage_printcolor( type );
-        }
-*/
-        GFL_FONTSYS_SetColor( 2, 1, backColor );
-        break;
-      case 1:
-        // 画面端はカラーフェード
-        GFL_FONTSYS_SetColor( 4, 3, backColor );
-        break;
-      default : GF_ASSERT(0);
-      }
-
-      GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
+			// 文字色指定。枠の外はグラデ
+			if( color_tbl[i] == 0 ){
+				if( CheckFieldWazaMachine( item->id ) == TRUE ){
+					GFL_FONTSYS_SetColor( 6, 5, 13 );
+				}else{
+					GFL_FONTSYS_SetColor( 2, 1, 13 );
+				}
+			// 画面端はカラーフェード
+			}else{
+				if( CheckFieldWazaMachine( item->id ) == TRUE ){
+					GFL_FONTSYS_SetColor( 8, 7, 13 );
+				}else{
+					GFL_FONTSYS_SetColor( 4, 3, 13 );
+				}
+			}
+      GFL_BMP_Clear(pWork->listBmp[i], 13 );
+      GFL_MSG_GetString( pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
       ITEMMENU_WordsetItemName( pWork, 0, item->id);
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
       PRINTSYS_Print( pWork->listBmp[i], 0, 0, pWork->pExpStrBuf, pWork->fontHandle);
 
-      if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) == 0 )
-      {
-        pWork->nListEnable[ i ] = 3;
-      }
-      else if(ITEMMENU_GetPosCnvButtonItem(pWork,item->id)==-1)
-      {
-        pWork->nListEnable[ i ] = 2;
-      }
-      else
-      {
-        pWork->nListEnable[ i ] = 1;
-      }
+			// ボール
+			if( type == ITEMTYPE_BALL	){
+				pWork->nListEnable[i] = 4;
+			// メール
+			}else if( type == ITEMTYPE_MAIL ){
+				pWork->nListEnable[i] = 5;
+			// 装備
+			}else if( type == ITEMTYPE_EQUIP ){
+				pWork->nListEnable[i] = 6;
+			// 登録できない
+			}else if( ITEM_GetBufParam( itemdata, ITEM_PRM_CNV ) == 0 ){
+				pWork->nListEnable[i] = 3;
+			// 登録されていない
+			}else if( ITEMMENU_GetPosCnvButtonItem(pWork,item->id) == -1 ){
+				pWork->nListEnable[i] = 2;
+			// その他
+			}else{
+				pWork->nListEnable[i] = 1;
+			}
       GFL_HEAP_FreeMemory( itemdata );
     }
   }
@@ -1398,28 +1413,20 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
     GX_LoadOBJ(&charbuff[(12*32)], dest_adrs, (32*4));
 #endif
 
-    if(pWork->nListEnable[i])
-    {
-      // 「たいせつなもの」のみマーカーを表示
-      if(pWork->pocketno == BAG_POKE_EVENT)
-      {
-        GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i] , pWork->nListEnable[i]-1 );
-        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , TRUE );
+    if( pWork->nListEnable[i] != 0 ){
+      //「たいせつなもの」ポケット、「どうぐ」ポケット
+      if( pWork->pocketno == BAG_POKE_EVENT || pWork->pocketno == BAG_POKE_NORMAL ){
+        GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i], pWork->nListEnable[i]-1 );
+        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], TRUE );
+			}else{
+        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], FALSE );
       }
-      else
-      {
-        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , FALSE );
-      }
-
-      GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , TRUE );
-    }
-    else
-    {
+      GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i], TRUE );
+		}else{
       GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i] , FALSE );
       GFL_CLACT_WK_SetDrawEnable( pWork->listCell[i] , FALSE );
     }
   }
-
 }
 
 //      GX_LoadOBJ(&charbuff[ 0*32], dest_adrs + (11)*32, (32*5));

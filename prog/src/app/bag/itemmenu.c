@@ -103,7 +103,6 @@ static void _changeStateDebug(FIELD_ITEMMENU_WORK* pWork,StateFunc state, int li
 static void _windowCreate(FIELD_ITEMMENU_WORK* pWork);
 static void _windowRewrite(FIELD_ITEMMENU_WORK* pWork);
 ITEM_ST* ITEMMENU_GetItem(FIELD_ITEMMENU_WORK* pWork, int no);
-int ITEMMENU_GetItemPocketNumber(FIELD_ITEMMENU_WORK* pWork);
 static void _ItemChangeSingle(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 );
 static void _ItemChange(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 );
 static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int newpocket);
@@ -1538,12 +1537,14 @@ static void _itemSelectState(FIELD_ITEMMENU_WORK* pWork)
   }
   else 
 #endif
-  if( pWork->mode == BAG_MODE_SELL )
-  {
+	// 選択のみの場合
+	if( pWork->mode == BAG_MODE_SELECT ){
+		pWork->ret_code = BAG_NEXTPROC_RETURN;
+		_CHANGE_STATE(pWork,NULL);
+	// 売る
+	}else if( pWork->mode == BAG_MODE_SELL ){
     _CHANGE_STATE(pWork,_itemSellInit);
-  }
-  else
-  {
+  }else{
     _itemUseWindowRewrite(pWork);
     ITEMDISP_ItemInfoMessageMake( pWork,pWork->ret_item );
     ITEMDISP_ItemInfoWindowDisp( pWork );
@@ -1582,6 +1583,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // キャンセル
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
     pWork->ret_code = BAG_NEXTPROC_RETURN;
+    pWork->ret_item = ITEM_DUMMY_DATA;
     GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 //    _CHANGE_STATE(pWork,NULL);
     SetEndButtonAnime( pWork, 0, NULL );
@@ -1590,6 +1592,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // 強制終了
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
     pWork->ret_code = BAG_NEXTPROC_EXIT;
+    pWork->ret_item = ITEM_DUMMY_DATA;
     GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
 //    _CHANGE_STATE(pWork,NULL);
     SetEndButtonAnime( pWork, 1, NULL );
@@ -2542,6 +2545,7 @@ static s32 QSort_Type( void* elem1, void* elem2 )
  *  @retval
  */
 //-----------------------------------------------------------------------------
+/*
 static s32 QSort_ABC( void* elem1, void* elem2 )
 {
   ITEM_ST* p1 = (ITEM_ST*) elem1;
@@ -2562,6 +2566,7 @@ static s32 QSort_ABC( void* elem1, void* elem2 )
     return -1;
   }
 }
+*/
 
 //-----------------------------------------------------------------------------
 /**
@@ -2576,8 +2581,14 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
   int length;
-  ITEM_SORTDATA_TYPE sort[ BAG_MYITEM_MAX ];
-  ITEM_ST item[ BAG_MYITEM_MAX ];
+//  ITEM_SORTDATA_TYPE sort[ BAG_MYITEM_MAX ];
+//  ITEM_ST item[ BAG_MYITEM_MAX ];
+	ITEM_SORTDATA_TYPE * sort;
+	ITEM_ST * item;
+
+	// メモリ確保
+	sort = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_SORTDATA_TYPE)*BAG_MYITEM_MAX );
+	item = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_ST)*BAG_MYITEM_MAX );
 
   //取得
   MYITEM_ITEM_STCopy(pWork->pMyItem, item, pWork->pocketno, TRUE);
@@ -2586,15 +2597,10 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
   HOSAKA_Printf("種別ソート length=%d \n", length );
 
   // ソート用データ生成
-  for( i=0; i<length; i++ )
-  {
-    sort[i].type  = ITEM_GetParam( item[i].id, ITEM_PRM_ITEM_TYPE, pWork->heapID );
-
-    GFL_STD_MemCopy(
-        &item[i],
-        &sort[i].st,
-        sizeof(ITEM_ST) );
-  }
+	for( i=0; i<length; i++ ){
+		sort[i].type = ITEM_GetParam( item[i].id, ITEM_PRM_ITEM_TYPE, pWork->heapID );
+		sort[i].st   = item[i];
+	}
 
 #ifdef PM_DEBUG
   {
@@ -2625,17 +2631,16 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
 #endif
 
   // セーブ用データに整形
-  for( i=0; i<length; i++ )
-  {
-    GFL_STD_MemCopy(
-        &sort[i].st,
-        &item[i],
-        sizeof(ITEM_ST) );
-  }
+	for( i=0; i<length; i++ ){
+		item[i] = sort[i].st;
+	}
 
   // 保存
   MYITEM_ITEM_STCopy(pWork->pMyItem, item, pWork->pocketno, FALSE);
 
+	// メモリ解放
+	GFL_HEAP_FreeMemory( item );
+	GFL_HEAP_FreeMemory( sort );
 }
 
 //-----------------------------------------------------------------------------
@@ -2694,7 +2699,7 @@ static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork )
 }
 */
 
-#include "itemsort_abc_def.h"
+//#include "itemsort_abc_def.h"
 //-----------------------------------------------------------------------------
 /**
  *  @brief  50音ソート用プライオリティを取得
@@ -2704,6 +2709,7 @@ static void SORT_ABC( FIELD_ITEMMENU_WORK* pWork )
  *  @retval
  */
 //-----------------------------------------------------------------------------
+/*
 static u16 SORT_GetABCPrio( u16 item_no )
 {
   GF_ASSERT( item_no-1 < ITEM_DATA_MAX && item_no != ITEM_DUMMY_DATA );
@@ -2711,6 +2717,7 @@ static u16 SORT_GetABCPrio( u16 item_no )
   // itemsort_abc_def.h で定義
   return ItemSortByAbc[ item_no-1 ];
 }
+*/
 
 //-----------------------------------------------------------------------------
 /**
@@ -3543,7 +3550,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->pBagCursor = pParam->p_bagcursor;
   pWork->pMyItem    = pParam->p_myitem;
   pWork->icwk       = &pParam->icwk;
-  pWork->mode       = pParam->mode;
+  pWork->mode       = BAG_MODE_SELECT;//pParam->mode;
   pWork->cycle_flg  = pParam->cycle_flg;
 
   // アイテム破損データを修復

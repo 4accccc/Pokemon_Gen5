@@ -118,7 +118,7 @@ void MYITEM_Copy(const MYITEM_PTR from, MYITEM_PTR to)
  * @param	bMyGet		myitemÇ©ÇÁÉfÅ[É^Ç™ÇŸÇµÇ¢èÍçáTRUE  myitemÇ…äiî[Ç∑ÇÈèÍçáFALSE
  */
 //------------------------------------------------------------------
-void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, int bMyGet)
+void MYITEM_ITEM_STCopy(MYITEM_PTR myitem, ITEM_ST* itemst, int pocket, BOOL bMyGet)
 {
   ITEM_ST* MyItemSt;
   u32 max;
