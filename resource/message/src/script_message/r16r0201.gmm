@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-02-25T14:12:42"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T16:00:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="142" top="187" right="847" bottom="807" maximized="no" rayout="Vertical2">
+	<dialog left="1452" top="213" right="2157" bottom="833" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="758" top="130" right="1231" bottom="528" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r16r0201_youngman_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r16r0201_youngman_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>●イベント発生前
 ・トレーラーハウスの傍にいる青年。
 ・話し掛けたときのセリフ。
@@ -300,11 +300,11 @@
 		<attribute name="キャラ指定">バックパッカー♂</attribute>
 		<language name="JPN" width="256">せかいには　いろいろな　かちかんを
 もつ　ひとが　いるってことさ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">せかいには　いろいろな　かちかんを
-もつ　ひとが　いるってことさ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">世界には　いろいろな　価値観を
+持つ　人が　いるってことさ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r16r0201_youngman_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r16r0201_youngman_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・喋り終えると、立ち去りかけてから、
 主人公を向き、
 次のセリフmsg_r16r0201_youngman_03</comment>
@@ -314,14 +314,14 @@
 せかいじゅうに　いろんな　かちかんが
 あるから　せかいは　ゆたかになるって[BE:00:ページ切り替え（行送り）]
 ボクは　おもうんだ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">じぶんは　たのしくないって　ことを
-たのしいって　おもう　ひとも　いる…[BE:01:ページ切り替え（クリア）]
-せかいじゅうに　いろんな　かちかんが
-あるから　せかいは　ゆたかになるって[BE:00:ページ切り替え（行送り）]
-ボクは　おもうんだ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">自分は　楽しくないって　ことを
+楽しいって　思う　人も　いる…[BE:01:ページ切り替え（クリア）]
+世界中に　いろんな　価値観が
+あるから　世界は　豊かになるって[BE:00:ページ切り替え（行送り）]
+ボクは　思うんだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r16r0201_youngman_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_r16r0201_youngman_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・喋り終えると、今度は立ち去る。</comment>
 		<attribute name="キャラ指定">バックパッカー♂</attribute>
 		<language name="JPN" width="256">せかいじゅうを　まわって
@@ -330,15 +330,15 @@
 この　いえに　いる　おんなのひとは
 ひとりで　しずかに　くらすことを[BE:00:ページ切り替え（行送り）]
 だいじに　おもっているんだろうね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">せかいじゅうを　まわって
-いろんな　ひとと　はなしを　するのが[BE:00:ページ切り替え（行送り）]
-ボクは　だいすきだけど[BE:01:ページ切り替え（クリア）]
-この　いえに　いる　おんなのひとは
-ひとりで　しずかに　くらすことを[BE:00:ページ切り替え（行送り）]
-だいじに　おもっているんだろうね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">世界中を　回って
+いろんな　人と　話を　するのが[BE:00:ページ切り替え（行送り）]
+ボクは　大好きだけど[BE:01:ページ切り替え（クリア）]
+この家に　いる　女の人は
+１人で　静かに　暮らすことを[BE:00:ページ切り替え（行送り）]
+大事に　思っているんだろうね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r16r0201_zoro_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r16r0201_zoro_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>●ゾロアークイベント発生時
 ・トレーラーハウスから出てきた女性に
 話し掛けたときのゾロアークの咆哮。
@@ -348,7 +348,7 @@
 		<language name="JPN_KANJI" width="256">こきゅきゅきゅきゅーんっ！！</language>
 	</row>
 
-	<row id="msg_r16r0000_zoro_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="msg_r16r0000_zoro_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>●イベント発生前
 ・トレーラーハウス内
 ・ゾロアークが化けている女性に話し掛けたとき</comment>
