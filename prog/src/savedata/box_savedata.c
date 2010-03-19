@@ -220,9 +220,13 @@ BOOL BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 trayNum, const POKEMON_PASO_PAR
 
 	PPP_RecoverPP(poke);
 
-	if( trayNum == BOXDAT_TRAYNUM_CURRENT )
-	{
+	if( trayNum == BOXDAT_TRAYNUM_CURRENT ){
 		trayNum = boxData->currentTrayNumber;
+	}else{
+		// 開放していないトレイが指定された
+		if( trayNum >= boxData->trayMax ){
+			GF_ASSERT(0);
+		}
 	}
 
 	for(i = 0; i < BOX_MAX_POS; i++)

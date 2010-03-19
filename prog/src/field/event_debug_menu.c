@@ -2640,6 +2640,8 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
     if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
       k=BOX_MAX_TRAY;
     }
+		BOXDAT_AddTrayMax( pBox );
+		BOXDAT_AddTrayMax( pBox );
     for(i=0;i < k;i++){
       for(j=0;j < 30;j++){
 //        int monsno =GFUser_GetPublicRand(MONSNO_END-1)+1;
