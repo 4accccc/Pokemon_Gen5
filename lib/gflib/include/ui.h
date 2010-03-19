@@ -68,6 +68,21 @@ typedef enum {
     GFL_UI_TP_HIT_NONE = -1	///< あたったテーブルなし
 } GF_UI_TP_CUSTOM_e;
 
+/**
+ * @brief バッテリー用
+ */
+typedef enum{
+  GFL_UI_BATTLEVEL_EMP,    ///< バッテリーが空っぽ
+  GFL_UI_BATTLEVEL_LO2,
+  GFL_UI_BATTLEVEL_LO,
+  GFL_UI_BATTLEVEL_MID2,
+  GFL_UI_BATTLEVEL_MID,
+  GFL_UI_BATTLEVEL_HI  ///< バッテリーが十分
+}GFL_UI_BATTLEVEL_e;
+
+
+
+
 
 #define	PAD_BUTTON_DECIDE	( PAD_BUTTON_A )	///< 決定ボタン定義
 #define	PAD_BUTTON_CANCEL	( PAD_BUTTON_B )	///< キャンセルボタン定義
@@ -718,6 +733,15 @@ extern void GFL_UI_ResetFrameRate( void );
  */
 //-----------------------------------------------------------------------------
 extern void GFL_UI_StartFrameRateMode( const GFL_UI_FRAMERATE_ENUM framerate );
+
+//----------------------------------------------------------------------------
+/**
+ * @brief	  バッテリーレベルの取得
+ * @param	  none
+ * @retval	GFL_UI_BATTLEVEL_e
+ */
+//-----------------------------------------------------------------------------
+extern int GFL_UI_GetBattLevel(void);
 
 
 #ifdef __cplusplus
