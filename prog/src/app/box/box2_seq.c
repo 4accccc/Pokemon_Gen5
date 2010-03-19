@@ -2970,8 +2970,9 @@ static int MainSeq_ArrangePartyPokeGetExit( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
 		BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF );
 //		BOX2MAIN_PokeInfoOff( syswk );
-		if( ( syswk->dat->callMode == BOX_MODE_BATTLE && syswk->pokechg_mode == 0 ) ||
-				syswk->get_start_mode == 0 ){
+//		if( ( syswk->dat->callMode == BOX_MODE_BATTLE && syswk->pokechg_mode == 0 ) ||
+//				syswk->get_start_mode == 0 ){
+		if( syswk->get_start_mode == 0 ){
 			BOX2BGWFRM_PartyPokeFrameOutSet( syswk->app->wfrm );
 			syswk->app->sub_seq = 2;
 		}else{
@@ -3088,6 +3089,7 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
 
 	// ‚xƒ{ƒ^ƒ“
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+		syswk->get_start_mode = 0;
 		return ChgSeqYButton( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
 	}
 
@@ -3101,6 +3103,7 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
 				BOX2BMP_MenuStrPrint( syswk, BattleBoxMenuStrTbl, 4 );
 			}
 			BOX2MAIN_PokeInfoPut( syswk, ret );
+			syswk->get_start_mode = 0;
 			return GetBattleBoxTrayPoke( syswk, ret );
 		}else{
 			CURSORMOVE_PosSet( syswk->app->cmwk, ret );
@@ -3164,7 +3167,8 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
 
 	case BOX2UI_BATTLEBOX_MAIN_GET:			// 36: ‚¢‚Ç‚¤‚·‚é
 		PMSND_PlaySE( SE_BOX2_DECIDE );
-		syswk->pokechg_mode = 0;
+//		syswk->pokechg_mode = 0;
+		syswk->get_start_mode = 0;
 		syswk->mv_cnv_mode = 0;
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU3, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT) );
 
@@ -3375,6 +3379,7 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 
 	// ‚xƒ{ƒ^ƒ“
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+		syswk->get_start_mode = 1;
 		return ChgSeqYButton( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
 	}
 
@@ -3436,7 +3441,8 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 
 	case BOX2UI_BATTLEBOX_PARTY_GET:				// 09: ‚¢‚Ç‚¤‚·‚é
 		PMSND_PlaySE( SE_BOX2_DECIDE );
-		syswk->pokechg_mode = 1;
+//		syswk->pokechg_mode = 1;
+		syswk->get_start_mode = 1;
 		syswk->mv_cnv_mode = 0;
 		return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU3, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT) );
 
@@ -8357,6 +8363,7 @@ static int GetBattleBoxTrayPoke( BOX2_SYS_WORK * syswk, u32 pos )
 {
 	syswk->get_pos  = pos;
 	syswk->get_tray = syswk->tray;
+	syswk->get_start_mode = 0;
 
 	BOX2OBJ_PokeIconPriChg( syswk->app, syswk->get_pos, BOX2OBJ_POKEICON_PRI_CHG_GET );
 	BOX2OBJ_GetPokeIcon( syswk->app, syswk->get_pos );
@@ -8511,6 +8518,7 @@ static int GetBattleBoxPartyPoke( BOX2_SYS_WORK * syswk, u32 pos )
 
 	syswk->get_pos  = pos;
 	syswk->get_tray = syswk->tray;
+	syswk->get_start_mode = 1;
 
 	BOX2OBJ_PokeIconPriChg( syswk->app, syswk->get_pos, BOX2OBJ_POKEICON_PRI_CHG_GET );
 	BOX2OBJ_GetPokeIcon( syswk->app, syswk->get_pos );
