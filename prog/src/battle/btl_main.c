@@ -398,6 +398,7 @@ static u32 calcBonusSub( const BSP_TRAINER_DATA* trData, const POKEPARTY * party
   }
   return 0;
 }
+
 static u32 calcBonusMoneyBase( const BATTLE_SETUP_PARAM* sp )
 {
   if( sp->competitor == BTL_COMPETITOR_TRAINER )
@@ -424,7 +425,6 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
     wk->posCoverClientID[i] = BTL_CLIENT_MAX;
   }
 
-  // @@@ 本来は setup_param を参照して各種初期化処理ルーチンを決定する
   if( setup_param->commMode == BTL_COMM_NONE )
   {
     BTL_UTIL_SetPrintType( BTL_PRINTTYPE_STANDALONE );
@@ -452,8 +452,6 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
       BTL_UTIL_SetupProc( bp, wk, setup_alone_single, NULL );
       break;
     }
-
-//    partyAlivePokeToTop(
   }
   else
   {
@@ -3565,6 +3563,23 @@ const BTL_PARTY* BTL_POKECON_GetPartyDataConst( const BTL_POKE_CONTAINER* wk, u3
   return &wk->party[ clientID ];
 }
 
+//=============================================================================================
+/**
+ * クライアント指定で戦えるポケモン数を取得
+ *
+ * @param   wk
+ * @param   clientID
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_POKECON_GetClientAlivePokeCount( const BTL_POKE_CONTAINER* pokeCon, u8 clientID )
+{
+  const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( pokeCon, clientID );
+  return BTL_PARTY_GetAliveMemberCount( party );
+}
+
+
 //=======================================================================================================
 // BTL_PARTY
 //=======================================================================================================
@@ -3831,6 +3846,8 @@ void BTL_PARTY_SetFakeSrcMember( BTL_PARTY* party, u8 memberIdx )
     }
   }
 }
+
+
 //----------------------------------------------------------------------------------------------
 // トレーナーパラメータ関連
 //----------------------------------------------------------------------------------------------

@@ -141,7 +141,7 @@ BOOL BATTLE_PARAM_CheckBtlStatusFlag( BATTLE_SETUP_PARAM* bp, BTL_STATUS_FLAG st
 /*
  *  @brief  バトル引数にレギュレーションを設定
  *          必ず全てのバトルパラメータを設定したあとに呼んでください
- *  
+ *
  *  内部でおこなっていること
  *  　・制限時間設定
  *    ・シューター設定
@@ -149,7 +149,7 @@ BOOL BATTLE_PARAM_CheckBtlStatusFlag( BATTLE_SETUP_PARAM* bp, BTL_STATUS_FLAG st
  *    ・レベル補正設定
  */
 void BATTLE_PARAM_SetRegulation( BATTLE_SETUP_PARAM* bp, const REGULATION *reg, HEAPID heapID )
-{ 
+{
   int i;
 
   //制限時間を設定
@@ -162,7 +162,7 @@ void BATTLE_PARAM_SetRegulation( BATTLE_SETUP_PARAM* bp, const REGULATION *reg, 
 
   //ポケパーティへの設定
   for( i = 0; i < BTL_CLIENT_NUM; i++ )
-  { 
+  {
     if( bp->party[i] )
     {
       //ニックネームを設定
@@ -331,6 +331,20 @@ void BTL_SETUP_Wild( BATTLE_SETUP_PARAM* bp, GAMEDATA* gameData,
 
   bp->competitor = BTL_COMPETITOR_WILD;
   bp->rule = rule;
+
+  // ボックス＆手持ち満杯フラグ
+  if( PokeParty_GetPokeCount(bp->party[BTL_CLIENT_PLAYER]) == PokeParty_GetPokeCountMax(bp->party[BTL_CLIENT_PLAYER]) )
+  {
+    BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( gameData );
+    int tray_num=0, box_pos=0;
+
+    // tray_num, box_pos を取得する必要は無いが、
+    // こちらの方が動作が速そう＆バトル後に空き位置を探すために同関数が使われるので
+    // 同じ関数で空きの有無をチェックしている… taya
+    if( !BOXDAT_GetEmptyTrayNumberAndPos(boxman, &tray_num, &box_pos) ){
+      BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_BOXFULL );
+    }
+  }
 }
 
 //=============================================================================================
