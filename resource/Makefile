@@ -158,6 +158,7 @@ SUBDIRS	=	wmi \
 			event_movepoke \
 			psel \
 			subway_map_gra \
+			item_judge \
 			p_tree
 
 
