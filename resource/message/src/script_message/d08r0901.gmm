@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T14:39:06"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T16:27:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -554,12 +554,16 @@
 Ｎが　でんせつの　ポケモンと
 いっしょに　いたんだ？▼
 まさか　かれは　ほんとうに
-えいゆうだと　いうのかい！？▼</language>
+えいゆうだと　いうのかい！？▼
+それに　きこえたけど
+でんせつの　ポケモンを　さがせって！？▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『どうして？▼
 Ｎが　伝説の　ポケモンと
 いっしょに　いたんだ？▼
 まさか　彼は　本当に
-英雄だと　いうのかい！？▼</language>
+英雄だと　いうのかい！？▼
+それに　聞こえたけど
+伝説の　ポケモンを　探せって！？▼</language>
 	</row>
 
 	<row id="msg_d08r0901_leader7_02">
@@ -568,11 +572,13 @@
 　d08：リュウラセンの塔（外）へ切り替え</comment>
 		<attribute name="キャラ指定">LEADER7
 ハチク</attribute>
-		<language name="JPN" width="256">ハチク『……もどろう▼
+		<language name="JPN" width="256">ハチク『……おちつけ
+まずは　もどるぞ▼
 いま　だいじ　なのは
 おきたことを　かいめい　するより▽
 これから　なにをするか　だ▼</language>
-		<language name="JPN_KANJI" width="256">ハチク『……戻ろう▼
+		<language name="JPN_KANJI" width="256">ハチク『……落ち着け
+まずは　戻るぞ▼
 いま　大事なのは
 起きたことを　解明するより▽
 これから　なにをするか　だ▼</language>
