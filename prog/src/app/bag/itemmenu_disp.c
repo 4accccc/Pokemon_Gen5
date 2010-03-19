@@ -1414,8 +1414,12 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
 #endif
 
     if( pWork->nListEnable[i] != 0 ){
-      //「たいせつなもの」ポケット、「どうぐ」ポケット
-      if( pWork->pocketno == BAG_POKE_EVENT || pWork->pocketno == BAG_POKE_NORMAL ){
+      //「たいせつなもの」ポケット
+      if( pWork->pocketno == BAG_POKE_EVENT ){
+        GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i], pWork->nListEnable[i]-1 );
+        GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], TRUE );
+			//「どうぐ」ポケット
+			}else if( pWork->pocketno == BAG_POKE_NORMAL && pWork->nListEnable[i] != 1 ){
         GFL_CLACT_WK_SetAnmSeq( pWork->listMarkCell[i], pWork->nListEnable[i]-1 );
         GFL_CLACT_WK_SetDrawEnable( pWork->listMarkCell[i], TRUE );
 			}else{

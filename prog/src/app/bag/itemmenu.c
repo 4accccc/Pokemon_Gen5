@@ -2491,8 +2491,7 @@ static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 //==============================================================
 typedef struct {
   ITEM_ST st;
-  u16 type;
-	u16	no;
+  u32 type;
 } ITEM_SORTDATA_TYPE;
 
 //-----------------------------------------------------------------------------
@@ -2511,13 +2510,7 @@ static s32 QSort_Type( void * elem1, void * elem2 )
 	ITEM_SORTDATA_TYPE * p2 = (ITEM_SORTDATA_TYPE *)elem2;
 
 	if( p1->type == p2->type ){
-		if( p1->no == p2->no ){
-			return 0;
-		}else if( p1->no > p2->no ){
-			return 1;
-		}else{
-			return -1;
-		}
+		return 0;
 	}else if( p1->type > p2->type ){
 		return 1;
   }
@@ -2570,8 +2563,6 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
 {
   int i;
   int length;
-//  ITEM_SORTDATA_TYPE sort[ BAG_MYITEM_MAX ];
-//  ITEM_ST item[ BAG_MYITEM_MAX ];
 	ITEM_SORTDATA_TYPE * sort;
 	ITEM_ST * item;
 
@@ -2579,47 +2570,29 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
 	sort = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_SORTDATA_TYPE)*BAG_MYITEM_MAX );
 	item = GFL_HEAP_AllocMemory( pWork->heapID, sizeof(ITEM_ST)*BAG_MYITEM_MAX );
 
-  //取得
-  MYITEM_ITEM_STCopy(pWork->pMyItem, item, pWork->pocketno, TRUE);
+  // 取得
+  MYITEM_ITEM_STCopy( pWork->pMyItem, item, pWork->pocketno, TRUE );
   length = ITEMMENU_GetItemPocketNumber( pWork );
-
-  HOSAKA_Printf("種別ソート length=%d \n", length );
 
   // ソート用データ生成
 	for( i=0; i<length; i++ ){
+/*
+      void * itemdata;
+
+      //@TODO ページ切替時にロードするようにすれば、負荷が軽減される
+      itemdata = ITEM_GetItemArcData( item->id, ITEM_GET_DATA, pWork->heapID );
+			type     = ITEM_GetBufParam( itemdata, ITEM_PRM_ITEM_TYPE );
+
+      GFL_HEAP_FreeMemory( itemdata );
+*/
+
 		sort[i].type = ITEM_GetParam( item[i].id, ITEM_PRM_ITEM_TYPE, pWork->heapID );
-		sort[i].no   = ITEM_GetParam( item[i].id, ITEM_PRM_SORT_NUMBER, pWork->heapID );
+//		sort[i].no   = ITEM_GetParam( item[i].id, ITEM_PRM_SORT_NUMBER, pWork->heapID );
 		sort[i].st   = item[i];
-		OS_Printf( "id = %d, sort = %d\n", sort[i].st.id, sort[i].no );
+//		OS_Printf( "id = %d, sort = %d\n", sort[i].st.id, sort[i].no );
 	}
 
-#ifdef PM_DEBUG
-  {
-    OS_TPrintf("=============================\n");
-    OS_TPrintf(" SORT BEFORE \n");
-    OS_TPrintf("=============================\n");
-
-    for( i=0; i<length; i++ )
-    {
-      OS_TPrintf("[%d] id=%d \n",i, item[i].id );
-    }
-  }
-#endif
-
   MATH_QSort( (void*)sort, length, sizeof(ITEM_SORTDATA_TYPE), QSort_Type, NULL );
-
-#ifdef PM_DEBUG
-  {
-    OS_TPrintf("=============================\n");
-    OS_TPrintf(" SORT AFTER \n");
-    OS_TPrintf("=============================\n");
-
-    for( i=0; i<length; i++ )
-    {
-      OS_TPrintf("[%d] id=%d \n",i, sort[i].st.id );
-    }
-  }
-#endif
 
   // セーブ用データに整形
 	for( i=0; i<length; i++ ){
@@ -2627,7 +2600,7 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
 	}
 
   // 保存
-  MYITEM_ITEM_STCopy(pWork->pMyItem, item, pWork->pocketno, FALSE);
+  MYITEM_ITEM_STCopy( pWork->pMyItem, item, pWork->pocketno, FALSE );
 
 	// メモリ解放
 	GFL_HEAP_FreeMemory( item );
@@ -3541,7 +3514,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   pWork->pBagCursor = pParam->p_bagcursor;
   pWork->pMyItem    = pParam->p_myitem;
   pWork->icwk       = &pParam->icwk;
-  pWork->mode       = BAG_MODE_SELECT;//pParam->mode;
+  pWork->mode       = pParam->mode;
   pWork->cycle_flg  = pParam->cycle_flg;
 
   // アイテム破損データを修復
