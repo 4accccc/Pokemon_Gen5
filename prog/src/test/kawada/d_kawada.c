@@ -93,6 +93,9 @@ typedef struct {
 
   GFL_PROCSYS*  local_procsys;
 
+  u32 yoin_count;     // —]‰C
+  u32 yoin_next_seq;  // —]‰C‚ªI‚í‚Á‚½Œã‚ÌƒV[ƒPƒ“ƒX
+
   // }ŠÓ“o˜^
   ZUKAN_TOROKU_PARAM* zukan_toroku_param;
   POKEMON_PARAM*      pp;
@@ -128,6 +131,7 @@ enum {
 	MAIN_SEQ_INIT = 0,
 	MAIN_SEQ_MAIN,
 	MAIN_SEQ_FADE_MAIN,
+  MAIN_SEQ_YOIN,
 
   // ‚±‚±‚©‚ç
 	MAIN_SEQ_ZUKAN_TOROKU_CALL,  // top_menu00
@@ -166,6 +170,8 @@ static GFL_PROC_RESULT MainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void
 
 static void FadeInSet( KAWADA_MAIN_WORK * wk, u32 next );
 static void FadeOutSet( KAWADA_MAIN_WORK * wk, u32 next );
+
+static void YoinSet( KAWADA_MAIN_WORK * wk, u32 count, u32 next );
 
 static void BgInit( KAWADA_MAIN_WORK * wk );
 static void BgExit(void);
@@ -320,6 +326,21 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 			wk->main_seq = wk->next_seq;
 		}
 		break;
+  
+  case MAIN_SEQ_YOIN:
+    if( wk->yoin_count == 0 )
+    {
+			wk->main_seq = wk->yoin_next_seq;
+      if( wk->yoin_next_seq == MAIN_SEQ_FADE_MAIN )
+      {
+		    FadeInSet( wk, MAIN_SEQ_INIT );
+      }
+    }
+    else
+    {
+      wk->yoin_count--;
+    }
+    break;
 
 	case MAIN_SEQ_END:
 		OS_Printf( "kawadaƒfƒoƒbƒOˆ—I—¹‚µ‚Ü‚µ‚½\n" );
@@ -419,8 +440,8 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     break;
   case MAIN_SEQ_PSEL_CALL_RETURN:
     PselExit(wk); 
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    YoinSet( wk, 120, MAIN_SEQ_FADE_MAIN );
+		wk->main_seq = MAIN_SEQ_YOIN;
     break;
   
     
@@ -517,6 +538,13 @@ static void FadeOutSet( KAWADA_MAIN_WORK * wk, u32 next )
 		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
 
 	wk->next_seq = next;
+}
+
+// —]‰C
+static void YoinSet( KAWADA_MAIN_WORK * wk, u32 count, u32 next )
+{
+  wk->yoin_count = count;
+  wk->yoin_next_seq = next;
 }
 
 static void TopMenuInit( KAWADA_MAIN_WORK * wk )

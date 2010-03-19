@@ -216,9 +216,9 @@ static const u8 bmpwin_setup[TEXT_MAX][9] =
 
 // フェード
 #define S01_FADE_IN_WAIT  (0)
-#define S01_FADE_OUT_WAIT (-1)
+#define S01_FADE_OUT_WAIT (1*THREE_INTERRUPT)
 #define S02_FADE_IN_WAIT  (2)
-#define S02_FADE_OUT_WAIT (0)
+#define S02_FADE_OUT_WAIT (1*THREE_INTERRUPT)
 
 
 // 2D OBJ
@@ -571,7 +571,8 @@ enum
 #define TIMETABLE_S01_CARD_READ        ( 69*THREE_INTERRUPT)  // このフレームで止めておく
 #define TIMETABLE_S01_CARD_VANISH      ( 70*THREE_INTERRUPT)
 #define TIMETABLE_S01_RIBBON_LOOSE     ( 90*THREE_INTERRUPT)
-#define TIMETABLE_S01_SCENE_END        (139*THREE_INTERRUPT)  // このフレームで止めておく
+#define TIMETABLE_S01_WO_START         (140*THREE_INTERRUPT)  // ホワイトアウトの開始フレーム  // 140-169
+#define TIMETABLE_S01_SCENE_END        (169*THREE_INTERRUPT)  // このフレームで止めておく
 
 #define TIMETABLE_S02_BOX_OPEN         (  0*THREE_INTERRUPT)
 #define TIMETABLE_S02_BOX_STOP         ( 39*THREE_INTERRUPT)  // このフレームで止めておく
@@ -582,14 +583,15 @@ enum
   TIMETABLE_MB_ZOOM_END,        // このフレームで止めておく
   TIMETABLE_MB_DECIDE_START,
   TIMETABLE_MB_DECIDE_END,      // このフレームで止めておく
+  TIMETABLE_MB_WO_START,        // ホワイトアウトの開始フレーム  // 100-129, 160-189, 220-249
   TIMETABLE_MB_MAX,
 };
 
 static const u16 timetable_mb[MB_MAX][TIMETABLE_MB_MAX] =
 {
-  {  40*THREE_INTERRUPT,  49*THREE_INTERRUPT,  70*THREE_INTERRUPT,  99*THREE_INTERRUPT },
-  {  50*THREE_INTERRUPT,  59*THREE_INTERRUPT, 100*THREE_INTERRUPT, 129*THREE_INTERRUPT },
-  {  60*THREE_INTERRUPT,  69*THREE_INTERRUPT, 130*THREE_INTERRUPT, 159*THREE_INTERRUPT },
+  {  40*THREE_INTERRUPT,  49*THREE_INTERRUPT,  70*THREE_INTERRUPT, 129*THREE_INTERRUPT, 100*THREE_INTERRUPT },
+  {  50*THREE_INTERRUPT,  59*THREE_INTERRUPT, 130*THREE_INTERRUPT, 189*THREE_INTERRUPT, 160*THREE_INTERRUPT },
+  {  60*THREE_INTERRUPT,  69*THREE_INTERRUPT, 190*THREE_INTERRUPT, 249*THREE_INTERRUPT, 220*THREE_INTERRUPT },
 };
 
 // VBlank中のリクエスト
@@ -3204,7 +3206,7 @@ static int Psel_S01Main    ( PSEL_WORK* work, int* seq )
       }
     }
     break;
-  case 7:  // ～3Dのアニメが終了の8フレーム前になるまで(ここのフレームは S01_FADE_OUT_WAIT と関係あり)
+  case 7:  // ～3Dのアニメがホワイトアウト開始の1フレーム前になるまで(ここのフレームは S01_FADE_OUT_WAIT と関係あり)
     {
       // ブレンド
       if( work->ev1 != 0 )
@@ -3214,7 +3216,7 @@ static int Psel_S01Main    ( PSEL_WORK* work, int* seq )
       }
 
       Psel_ThreeS01Main( work );
-      if( work->three_frame == TIMETABLE_S01_SCENE_END -8 )
+      if( work->three_frame == TIMETABLE_S01_WO_START -1 )
       {
         // シーケンスフレーム
         work->sub_seq_frame = 0;
@@ -3760,12 +3762,14 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
       *seq = S02_MAIN_SEQ_DECIDE_ANIME_WAIT;
     }
     break;
-  case S02_MAIN_SEQ_DECIDE_ANIME_WAIT:
+  case S02_MAIN_SEQ_DECIDE_ANIME_WAIT:  // ～3Dのアニメがホワイトアウト開始の2フレーム前になるまで(ここのフレームは S02_FADE_OUT_WAIT と関係あり)
     {
       // 決定アニメ
       Psel_ThreeS02MbDecideAnimeMain( work );
-
-      *seq = S02_MAIN_SEQ_END;
+      if( work->three_mb_anime_frame == timetable_mb[work->three_mb_anime_target][TIMETABLE_MB_WO_START] -2 )
+      {
+        *seq = S02_MAIN_SEQ_END;
+      }
     }
     break;
   case S02_MAIN_SEQ_END:
