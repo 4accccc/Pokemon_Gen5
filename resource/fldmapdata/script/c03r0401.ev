@@ -222,7 +222,7 @@ add_zoroa:
         _FIELD_CLOSE()
         
         //バッグコール
-        _CALL_BAG_PROC( SCR_BAG_MODE_SELL, ret_mode, ret_item )
+        _CALL_BAG_PROC( SCR_BAG_MODE_SELECT, ret_mode, ret_item )
 
         _FIELD_OPEN()
         _MAP_FADE_BLACK_IN()
@@ -253,13 +253,13 @@ add_zoroa:
         _CALL zoroa_ball_in
 
         IF $temoti != 0 THEN        //手持ち
-          _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_ZOROA, 0, TOKUSYU_NULL, 99, 0 )
+          _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_ZOROA, 0, TOKUSYU_NULL, 99, 0 )  //@todo レベル指定
 
           //@todo どこに追加したかをしらべて、捕まえたボールを書き換える
           _SYSWIN_MSG( msg_c03r0401_narrator_02, POS_DOWN )
           _SYSWIN_CLOSE()
         ELSE                        //ボックス
-          _ADD_POKEMON_TO_BOX( SCWK_ANSWER, MONSNO_ZOROA, 0, TOKUSYU_NULL, 99, 0 )//@todo
+          _ADD_POKEMON_TO_BOX( SCWK_ANSWER, MONSNO_ZOROA, 0, TOKUSYU_NULL, 99, 0 )//@todo レベル指定+ボール
           _SYSWIN_MSG( msg_c03r0401_narrator_03, POS_DOWN )
           _SYSWIN_CLOSE()
         ENDIF
@@ -371,6 +371,26 @@ EVENT_START	ev_c03r0401_girl1_01
         //「一緒にいる」
         _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_01 )
         _BALLOONWIN_CLOSE()
+
+        //話が始まるまでのＯＢＪアニメ
+        {
+          DEFINE_LOCAL player_dir
+          //女の子、男の子向きあう
+          _OBJ_ANIME( C03R0401_GIRL1_01, anm_girl_to_boy )
+          _OBJ_ANIME( C03R0401_BOY1_01, anm_boy_to_girl )
+          _OBJ_ANIME_WAIT()
+          
+          //自機の向きを取得
+          _PLAYER_DIR_GET(player_dir)
+          //自機の向きでアニメ分岐
+          SWITCH $player_dir
+          CASE DIR_LEFT THEN
+            //自機回り込み
+            _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_girl )
+            _OBJ_ANIME_WAIT()
+          ENDSWITCH
+        }
+
         //「話のつづき」
         _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_02 )
         _BALLOONWIN_CLOSE()
@@ -458,7 +478,30 @@ _ANIME_LABEL	anm_player_move_right2
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_move_front
   _ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0  
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機　女の子の話を聞くために正面へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_to_girl
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+  
+//--------------------------------------------------------------------
+//女の子　男の子の方を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_girl_to_boy
+  _ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//男の子　女の子の方を向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_boy_to_girl
+  _ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //女の子はねる
