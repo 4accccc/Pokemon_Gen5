@@ -3656,10 +3656,11 @@ static void SetupResearchData( RESEARCH_CHECK_WORK* work )
 
     for( aIdx=0; aIdx < MAX_ANSWER_NUM_PER_QUESTION; aIdx++ )
     {
-      work->researchData.questionData[ qIdx ].answerData[ aIdx ].ID = answerID[ qIdx ][ aIdx ]; // 回答ID
-      work->researchData.questionData[ qIdx ].answerData[ aIdx ].colorR = (aIdx * 3) % 31; // 表示カラー(R)
-      work->researchData.questionData[ qIdx ].answerData[ aIdx ].colorG = (aIdx * 5) % 31; // 表示カラー(G)
-      work->researchData.questionData[ qIdx ].answerData[ aIdx ].colorB = (aIdx * 7) % 31; // 表示カラー(B)
+      int aID = answerID[ qIdx ][ aIdx ];
+      work->researchData.questionData[ qIdx ].answerData[ aIdx ].ID = aID; // 回答ID
+      work->researchData.questionData[ qIdx ].answerData[ aIdx ].colorR = ColorR_answer[ aID ]; // 表示カラー(R)
+      work->researchData.questionData[ qIdx ].answerData[ aIdx ].colorG = ColorG_answer[ aID ]; // 表示カラー(G)
+      work->researchData.questionData[ qIdx ].answerData[ aIdx ].colorB = ColorB_answer[ aID ]; // 表示カラー(B)
       work->researchData.questionData[ qIdx ].answerData[ aIdx ].todayCount = todayCountOfAnswer[ qIdx ][ aIdx ]; // 今日の回答人数
       work->researchData.questionData[ qIdx ].answerData[ aIdx ].totalCount = todayCountOfAnswer[ qIdx ][ aIdx ] + totalCountOfAnswer[ qIdx ][ aIdx ];  // いままでの回答人数
     }
@@ -5201,6 +5202,7 @@ static void SetupMainCircleGraph( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE disp
     components[ aIdx ].outerColorR = answerData->colorR;
     components[ aIdx ].outerColorG = answerData->colorG;
     components[ aIdx ].outerColorB = answerData->colorB;
+    OS_TFPrintf( PRINT_TARGET, "color = %d, %d, %d\n", answerData->colorR, answerData->colorG, answerData->colorB );
     SetupCenterColorOfGraphComponent( &components[ aIdx ] );
     switch( dispType ) {
     case DATA_DISP_TYPE_TODAY: components[ aIdx ].value = answerData->todayCount; break;
