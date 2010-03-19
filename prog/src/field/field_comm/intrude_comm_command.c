@@ -802,15 +802,17 @@ static void _IntrudeRecv_MissionList(const int netID, const int size, const void
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   const MISSION_CHOICE_LIST *mlist = pData;
   GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  NetID list_netid;   //ミッションリスト所有者のNetID
   
-  MISSION_SetMissionList(&intcomm->mission, mlist, netID);
+  list_netid = mlist->target_info.net_id;
+  MISSION_SetMissionList(&intcomm->mission, mlist, list_netid);
 
-  if(netID != GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){//自分のデータで無いなら占拠情報もセット
-    OCCUPY_INFO *dest_occupy = GAMEDATA_GetOccupyInfo(gamedata, netID);
+  if(list_netid != GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){//自分のデータで無いなら占拠情報もセット
+    OCCUPY_INFO *dest_occupy = GAMEDATA_GetOccupyInfo(gamedata, list_netid);
     GFL_STD_MemCopy(&mlist->occupy, dest_occupy, sizeof(OCCUPY_INFO));
   }
   
-  OS_TPrintf("RECEIVE: ミッションリスト netID = %d\n", netID);
+  OS_TPrintf("RECEIVE: ミッションリスト list_netid = %d\n", list_netid);
 }
 
 //==================================================================

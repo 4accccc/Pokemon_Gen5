@@ -1224,8 +1224,12 @@ void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_CONV_DATA *
   case MISSION_TYPE_ATTRIBUTE:   //‘®«
     {
       const MISSION_TYPEDATA_ATTRIBUTE *d_attr = (void*)cdata->data;
-      
-      //WORDSET_RegisterPlaceName( wordset, 0, ZONEDATA_GetPlaceNameID( d_attr->zone_id ) );
+
+      _Wordset_Strcode(wordset, 0, target->name, 
+        PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
+      WORDSET_RegisterItemName( wordset, 1, d_attr->item );
+      WORDSET_RegisterNumber( 
+        wordset, 2, d_attr->price, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     }
     break;
   case MISSION_TYPE_ITEM:        //“¹‹ï

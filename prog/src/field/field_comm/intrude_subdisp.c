@@ -573,6 +573,7 @@ static void _IntSub_SystemExit(INTRUDE_SUBDISP_PTR intsub)
   GFL_STR_DeleteBuffer(intsub->strbuf_title);
   
   GFL_MSG_Delete(intsub->msgdata);
+  PRINTSYS_QUE_Clear(intsub->print_que);
   PRINTSYS_QUE_Delete(intsub->print_que);
   WORDSET_Delete(intsub->wordset);
 	GFL_FONT_Delete(intsub->font_handle);
