@@ -2637,14 +2637,14 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
     int i,j,k=1;
     BOX_MANAGER* pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(gameSys));
 
-    if(GFL_UI_KEY_GetCont() & PAD_KEY_UP){
+    if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
       k=BOX_MAX_TRAY;
     }
     for(i=0;i < k;i++){
       for(j=0;j < 30;j++){
 //        int monsno =GFUser_GetPublicRand(MONSNO_END-1)+1;
-        int monsno = i+10;
-        monsno = GFUser_GetPublicRand(300);
+//        int monsno = i+10;
+        int monsno = GFUser_GetPublicRand(300)+1;
         OS_TPrintf("%d  %d %dì¬\n",monsno, i, j);
         PP_Setup(pp,  monsno , 100, MyStatus_GetID( myStatus ));
 
