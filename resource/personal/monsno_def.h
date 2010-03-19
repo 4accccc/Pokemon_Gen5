@@ -784,6 +784,11 @@
 #define		FORMNO_SIKIZIKA_AUTUMN				( 2 )
 #define		FORMNO_SIKIZIKA_WINTER				( 3 )
 
+//ライ
+#define		FORMNO_RAI_A				( 0 )
+#define		FORMNO_RAI_ｂ				( 1 )
+#define		FORMNO_RAI_ｃ				( 2 )
+
 //メロディア
 #define		FORMNO_MERODHIA_VOICE				( 0 )
 #define		FORMNO_MERODHIA_STEP				( 1 )
@@ -796,4 +801,4 @@
 #define		FORMNO_INSEKUTA_FREEZE				( 4 )
 
 //フォルム違いトータル
-#define OTHER_FORM_MAX  ( 60 )
+#define OTHER_FORM_MAX  ( 62 )

@@ -778,6 +778,11 @@
 #define		FORMNO_527_AUTUMN				( 2 )
 #define		FORMNO_527_WINTER				( 3 )
 
+//ライ
+#define		FORMNO_653_A				( 0 )
+#define		FORMNO_653_ｂ				( 1 )
+#define		FORMNO_653_ｃ				( 2 )
+
 //メロディア
 #define		FORMNO_655_VOICE				( 0 )
 #define		FORMNO_655_STEP				( 1 )
