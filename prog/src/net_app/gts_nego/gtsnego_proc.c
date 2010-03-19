@@ -47,8 +47,7 @@
 
 #if DEBUG_ONLY_FOR_ohno
 #define _NET_DEBUG (1)
-
-#define _DISP_DEBUG (0)  //•\Ž¦ì‚è‚±‚Ý
+#define _DISP_DEBUG (1)  //•\Ž¦ì‚è‚±‚Ý
 #else
 #define _NET_DEBUG (0)
 #define _DISP_DEBUG (0)
@@ -663,6 +662,11 @@ static void _lookatDownState( GTSNEGO_WORK *pWork )
 static void _matchingState( GTSNEGO_WORK *pWork )
 {
 #if _DISP_DEBUG
+  if(GFL_UI_KEY_GetTrg()==0){
+    return;
+  }
+
+  
   if(1){
 #else
     //Ú‘±‚µ‚½‚ç•\Ž¦‚µ‚ÄŒðŠ·‚É
@@ -734,9 +738,11 @@ static void _matchKeyMake( GTSNEGO_WORK *pWork )
   if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-#if _DISP_DEBUG
+  if(!GFL_NET_IsInit()){
     _CHANGE_STATE(pWork,_matchingState);
-#else //_DISP_DEBUG
+    return;
+  }
+  
 
   GFL_NET_SetWifiBothNet(FALSE);
   
@@ -775,7 +781,7 @@ static void _matchKeyMake( GTSNEGO_WORK *pWork )
   else{
     //@todo
   }
-#endif  //_DISP_DEBUG
+
 }
 
 //----------------------------------------------------------------------------
@@ -972,6 +978,7 @@ static void _friendSelectDecide3( GTSNEGO_WORK *pWork )
     switch(selectno){
     case 0:
       GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_019);
+      GTSNEGO_DISP_SearchPeopleDispSet(pWork->pDispWork);
       _CHANGE_STATE(pWork,_matchKeyMake);
       break;
     case 1:

@@ -11,22 +11,24 @@
 #define NARC_CG_COMM_NAIX_
 
 enum {
-	NARC_cg_comm_comm_bg_NCLR = 0,
-	NARC_cg_comm_comm_bg_ir_NCLR = 1,
-	NARC_cg_comm_comm_btn_NCLR = 2,
-	NARC_cg_comm_comm_bg_NCGR = 3,
-	NARC_cg_comm_comm_btn_NCGR = 4,
-	NARC_cg_comm_comm_obj_NCGR = 5,
-	NARC_cg_comm_comm_btn_NCER = 6,
-	NARC_cg_comm_comm_obj_NCER = 7,
-	NARC_cg_comm_comm_base_NSCR = 8,
-	NARC_cg_comm_comm_ir_btn_NSCR = 9,
-	NARC_cg_comm_comm_vs1_btn_NSCR = 10,
-	NARC_cg_comm_comm_vs2_btn_NSCR = 11,
-	NARC_cg_comm_comm_wifi_btn_NSCR = 12,
-	NARC_cg_comm_comm_wireless_btn_NSCR = 13,
-	NARC_cg_comm_comm_btn_NANR = 14,
-	NARC_cg_comm_comm_obj_NANR = 15
+	NARC_cg_comm_background_NCLR = 0,
+	NARC_cg_comm_comm_bg_NCLR = 1,
+	NARC_cg_comm_comm_bg_ir_NCLR = 2,
+	NARC_cg_comm_comm_btn_NCLR = 3,
+	NARC_cg_comm_comm_bg_NCGR = 4,
+	NARC_cg_comm_comm_btn_NCGR = 5,
+	NARC_cg_comm_comm_obj_NCGR = 6,
+	NARC_cg_comm_comm_btn_NCER = 7,
+	NARC_cg_comm_comm_obj_NCER = 8,
+	NARC_cg_comm_comm_base_NSCR = 9,
+	NARC_cg_comm_comm_help_NSCR = 10,
+	NARC_cg_comm_comm_ir_btn_NSCR = 11,
+	NARC_cg_comm_comm_vs1_btn_NSCR = 12,
+	NARC_cg_comm_comm_vs2_btn_NSCR = 13,
+	NARC_cg_comm_comm_wifi_btn_NSCR = 14,
+	NARC_cg_comm_comm_wireless_btn_NSCR = 15,
+	NARC_cg_comm_comm_btn_NANR = 16,
+	NARC_cg_comm_comm_obj_NANR = 17
 };
 
 /* NARC_CG_COMM_NAIX_ */

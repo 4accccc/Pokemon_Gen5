@@ -335,6 +335,18 @@ static void _createSubBg(CG_WIRELESS_MENU* pWork)
     GFL_BG_SetVisible( frame, VISIBLE_ON );
     GFL_BG_LoadScreenReq( frame );
   }
+  {
+    int frame = GFL_BG_FRAME3_S;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
+      1, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_LoadScreenReq( frame );
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -348,7 +360,7 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,CG_WIRELESS_MENU* pWork, _
 {
   int i;
   u32 cgx;
-  int frame = GFL_BG_FRAME1_S;
+  int frame = GFL_BG_FRAME3_S;
 
 
   pWork->windowNum = num;
@@ -384,7 +396,7 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,CG_WIRELESS_MENU* pWork, _
 		GFL_BMN_Delete(pWork->pButton);
 	}
   pWork->pButton = NULL;
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
 }
 
 
@@ -498,7 +510,7 @@ static void _CreateButtonObj(CG_WIRELESS_MENU* pWork)
     cellInitData.pos_y = buffy[i];
     cellInitData.anmseq = buttonno[i];
     cellInitData.softpri = 1;
-    cellInitData.bgpri = 1;
+    cellInitData.bgpri = 2;
     pWork->buttonObj[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                pWork->cellRes[CHAR_OBJ],
                                                pWork->cellRes[PLT_OBJ],
@@ -515,7 +527,7 @@ static void _CreateButtonObj(CG_WIRELESS_MENU* pWork)
   cellInitData.pos_y = 192/2;
   cellInitData.anmseq = 15;
   cellInitData.softpri = 0;
-  cellInitData.bgpri = 1;
+  cellInitData.bgpri = 2;
   pWork->TVTCall = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                         pWork->cellRes[CHAR_OBJ],
                                         pWork->cellRes[PLT_OBJ],
@@ -551,6 +563,8 @@ static void _modeInit(CG_WIRELESS_MENU* pWork)
 
   {
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_CG_COMM, pWork->heapID );
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_cg_comm_background_NCLR,
+                                      PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_cg_comm_comm_bg_NCLR,
                                       PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
 
@@ -652,7 +666,7 @@ static void _workEnd(CG_WIRELESS_MENU* pWork)
   GFL_STR_DeleteBuffer(pWork->pStrBufTVTName);
   GFL_BMPWIN_Delete(pWork->nameWin);
   
-  GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+//  GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
 
 }
 
@@ -705,8 +719,14 @@ static void _modeAppWinFlashCallback(u32 param, fx32 currentFrame )
 {
   CG_WIRELESS_MENU* pWork = (CG_WIRELESS_MENU*)param;
   {
-    _CHANGE_STATE(pWork, _modeFadeoutStart);        // I‚í‚è
+    if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(GAMEDATA_GetSaveControlWork(pWork->gamedata)))){
+      if(pWork->selectType != CG_WIRELESS_RETURNMODE_NONE){
+        _CHANGE_STATE(pWork, _modeReportInit);
+        return;
+      }
+    }
   }
+  _CHANGE_STATE(pWork, _modeFadeoutStart);        // I‚í‚è
 }
 
 static void _modeAppWinFlash2(CG_WIRELESS_MENU* pWork)
@@ -845,7 +865,7 @@ static void _MessageDisp(int i,int message,int change,BOOL expand ,CG_WIRELESS_M
 //  OS_TPrintf("%d %d\n",_msg_wireless[i].width, _msg_wireless[i].height);
 
   pWork->buttonWin[i] = GFL_BMPWIN_Create(
-    GFL_BG_FRAME1_S,
+    GFL_BG_FRAME3_S,
     _msg_wireless[i].leftx, _msg_wireless[i].lefty,
     _msg_wireless[i].width, _msg_wireless[i].height, _SUBLIST_NORMAL_PAL,GFL_BMP_CHRAREA_GET_F);
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
@@ -890,7 +910,7 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
     _MessageDisp(_FUSHIGI_ONOFF, CGEAR_WIRLESS_007,bChange,TRUE,pWork);
   }
 
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
 
 
 }
@@ -1042,7 +1062,7 @@ static void _modeReportInit(CG_WIRELESS_MENU* pWork)
 {
 
   GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
-  GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_OFF);
+//  GFL_BG_SetVisible(GFL_BG_FRAME1_S,VISIBLE_OFF);
 
   GFL_MSG_GetString( pWork->pMsgData, CGEAR_WIRLESS_011, pWork->pStrBuf );
   
@@ -1083,9 +1103,9 @@ static void _modeReporting(CG_WIRELESS_MENU* pWork)
       GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
       GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
 
-      GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1);
+   //   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1);
 
-      _CHANGE_STATE(pWork,_FadeWait);
+      _CHANGE_STATE(pWork,_modeFadeoutStart);
     }
   }
 }
@@ -1110,9 +1130,9 @@ static void _modeReportWait2(CG_WIRELESS_MENU* pWork)
       _CHANGE_STATE(pWork,_modeReporting);
     }
     else{
-      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+      GFL_BG_ClearScreen(GFL_BG_FRAME1_M);
       pWork->selectType = CG_WIRELESS_RETURNMODE_NONE;
-      _CHANGE_STATE(pWork,NULL);
+      _CHANGE_STATE(pWork,_modeFadeoutStart);
     }
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;
@@ -1134,7 +1154,7 @@ static void _modeNetworkOn3(CG_WIRELESS_MENU* pWork)
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
     if(selectno==0){
-      GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_ON);
+//      GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_ON);
       _CHANGE_STATE(pWork, _modeSelectMenuInit);
     }
     else{
@@ -1172,7 +1192,7 @@ static void _modeNetworkOn2(CG_WIRELESS_MENU* pWork)
 static void _modeNetworkOn(CG_WIRELESS_MENU* pWork)
 {
   GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
-  GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_OFF);
+//  GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_OFF);
 
   GFL_MSG_GetString( pWork->pMsgData, CGEAR_WIRLESS_011, pWork->pStrBuf );
   
@@ -1412,7 +1432,7 @@ static GFL_PROC_RESULT CG_WirelessMenuProcInit( GFL_PROC * proc, int * seq, void
     G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0 , 15, 4 );
 		WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_OBJ );
+    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
 
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
     pWork->dbw = pwk;

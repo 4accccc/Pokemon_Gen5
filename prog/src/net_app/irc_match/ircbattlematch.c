@@ -40,6 +40,8 @@
 
 #include "ircbattlematch.cdat"
 
+#include "net/dwc_rapfriend.h"
+
 
 enum _IBMODE_SELECT {
   _SELECTMODE_EXIT,
@@ -147,8 +149,11 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work );
 static BOOL _cancelButtonCallback(int bttnid,IRC_BATTLE_MATCH* pWork);
 static void _RecvMyStatusData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _RecvPokePartyData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvFriendCode(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static u8* _getPokePartyBuff(int netID, void* pWork, int size);
 static void _firstConnectMessage(IRC_BATTLE_MATCH* pWork);
+static void _msgWindowCreate(int* pMsgBuff,IRC_BATTLE_MATCH* pWork);
+static void _friendNumWindowCreate(int msgno,IRC_BATTLE_MATCH* pWork);
 
 
 ///通信コマンド
@@ -156,11 +161,13 @@ typedef enum {
   _NETCMD_TYPESEND = GFL_NET_CMD_IRCBATTLE,
   _NETCMD_MYSTATUSSEND,
   _NETCMD_POKEPARTY_SEND,
+  _NETCMD_FRIENDCODE,
 } _BATTLEIRC_SENDCMD;
 
 
 #define _TIMINGNO_CS (120)
 #define _TIMINGNO_DS (121)
+#define _TIMINGNO_DSF (123)
 #define _TIMINGNO_POKEP (122)
 
 //--------------------------------------------
@@ -215,6 +222,7 @@ static const NetRecvFuncTable _PacketTbl[] = {
   {_RecvModeCheckData,          NULL},  ///_NETCMD_TYPESEND
   {_RecvMyStatusData,          NULL},  ///_NETCMD_MYSTATUSSEND
   {_RecvPokePartyData,       _getPokePartyBuff},  ///_NETCMD_POKEPARTY_SEND
+  {_recvFriendCode,         NULL},    ///_NETCMD_FRIENDCODE
 };
 
 #define _MAXNUM   (2)         // 最大接続人数
@@ -651,12 +659,77 @@ static u8* _getPokePartyBuff(int netID, void* pWk, int size)
 }
 
 
+//--------------------------------------------------------------
+/**
+ * @brief   POKEPARTY受信関数 _NETCMD_POKEPARTY_SEND
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none
+ */
+//--------------------------------------------------------------
+static void _recvFriendCode(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  IRC_BATTLE_MATCH *pWork = pWk;
+  MYSTATUS* pTargetSt;
+  GAMEDATA* pGameData = pWork->pBattleWork->gamedata;
+  
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_SystemGetCurrentID()){
+    return;	//自分のデータは無視
+  }
+
+  pTargetSt = GAMEDATA_GetMyStatusPlayer(pGameData, netID);  //netIDで代入
+
+  GFL_NET_DWC_FriendDataAdd(pGameData, pTargetSt, (DWCFriendData*)pData, pWork->heapID);
+
+  WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pGameData), pTargetSt);
+}
+
+
+
+
+
+static void _modeSuccessMessageKeyWait(IRC_BATTLE_MATCH* pWork)
+{
+  if(GFL_UI_KEY_GetTrg() | GFL_UI_TP_GetTrg()){
+    pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+    GFL_NET_Exit(NULL);
+    _CHANGE_STATE(pWork,_modeFadeoutStart);
+  }
+
+}
+
+
+static void _modeSuccessMessage(IRC_BATTLE_MATCH* pWork)
+{
+  int aMsgBuff[]={IRCBTL_STR_43};
+  
+  _msgWindowCreate(aMsgBuff, pWork);
+  PMSND_PlaySystemSE(SEQ_SE_FLD_124);
+  _friendNumWindowCreate(IRCBTL_STR_35, pWork);
+  _CHANGE_STATE(pWork,_modeSuccessMessageKeyWait);
+  
+}
+
+
 
 static void _modeCheckStart5(IRC_BATTLE_MATCH* pWork)
 {
  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_POKEP, WB_NET_IRCBATTLE)){
-   _CHANGE_STATE(pWork,_modeFadeoutStart);
-  }
+   switch(pWork->selectType){
+   case EVENTIRCBTL_ENTRYMODE_FRIEND:
+     _CHANGE_STATE(pWork,_modeSuccessMessage);
+     break;
+   default:
+     _CHANGE_STATE(pWork,_modeFadeoutStart);
+     break;
+   }
+ }
 }
 
 
@@ -682,6 +755,25 @@ static void _modeCheckStart4(IRC_BATTLE_MATCH* pWork)
 }
 
 
+static void _modeCheckStart33(IRC_BATTLE_MATCH* pWork)
+{
+
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DSF, WB_NET_IRCBATTLE)){
+    DWCFriendData friendData;
+
+    GFL_NET_DWC_GetMySendedFriendCode(
+      GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ,&friendData);
+
+    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_FRIENDCODE,
+                        sizeof(DWCFriendData),&friendData)){
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DS,WB_NET_IRCBATTLE);
+      _CHANGE_STATE(pWork,_modeCheckStart4);
+    }
+  }
+}
+
+
+
 static void _modeCheckStart3(IRC_BATTLE_MATCH* pWork)
 {
   OS_TPrintf("mystatus %x\n",(u32)GAMEDATA_GetMyStatus(pWork->pBattleWork->gamedata));
@@ -689,8 +781,8 @@ static void _modeCheckStart3(IRC_BATTLE_MATCH* pWork)
 
   if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_MYSTATUSSEND,
                       MyStatus_GetWorkSize(), GAMEDATA_GetMyStatus(pWork->pBattleWork->gamedata))){
-    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DS,WB_NET_IRCBATTLE);
-    _CHANGE_STATE(pWork,_modeCheckStart4);
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMINGNO_DSF, WB_NET_IRCBATTLE);
+    _CHANGE_STATE(pWork,_modeCheckStart33);
   }
 }
 
@@ -701,6 +793,7 @@ static void _modeCheckStart31(IRC_BATTLE_MATCH* pWork)
   case EVENTIRCBTL_ENTRYMODE_DOUBLE:
   case EVENTIRCBTL_ENTRYMODE_TRI:
   case EVENTIRCBTL_ENTRYMODE_ROTATE:
+  case EVENTIRCBTL_ENTRYMODE_FRIEND:
     if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_TYPESEND,
                         sizeof(pWork->selectType), &pWork->selectType)){
       _CHANGE_STATE(pWork,_modeCheckStart3);
@@ -999,15 +1092,16 @@ static void _msgWindowCreate(int* pMsgBuff,IRC_BATTLE_MATCH* pWork)
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
-
-  pWork->buttonWin[i] = GFL_BMPWIN_Create(
-    frame,
-    1, 1, _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT,
-    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  if(pWork->buttonWin[i]==NULL){
+    pWork->buttonWin[i] = GFL_BMPWIN_Create(
+      frame,
+      1, 1, _BUTTON_WIN_WIDTH,_BUTTON_WIN_HEIGHT,
+      _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+    GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
+    BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2), _BUTTON_WIN_PAL );
+  }
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
-  GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
-  GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-  BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2), _BUTTON_WIN_PAL );
+//  GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
 
   GFL_MSG_GetString(  pWork->pMsgData, pMsgBuff[i], pWork->pStrBuf );
   //    GFL_FONTSYS_SetColor( 1, 1, 1 );
@@ -1030,14 +1124,16 @@ static void _friendNumWindowCreate(int msgno,IRC_BATTLE_MATCH* pWork)
   u32 cgx;
   int frame = GFL_BG_FRAME1_S;
 
-  pWork->buttonWin[i] = GFL_BMPWIN_Create(
-    frame,
-    1, 8, 18, 4,
-    _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+  if(pWork->buttonWin[i]==NULL){
+    pWork->buttonWin[i] = GFL_BMPWIN_Create(
+      frame,
+      1, 8, 18, 4,
+      _BUTTON_MSG_PAL, GFL_BMP_CHRAREA_GET_F);
+    GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
+    BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2), _BUTTON_WIN_PAL );
+  }
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), WINCLR_COL(FBMP_COL_WHITE) );
-  GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
-  GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-  BmpWinFrame_Write( pWork->buttonWin[i], WINDOW_TRANS_ON, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2), _BUTTON_WIN_PAL );
+//  GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
 
   GFL_MSG_GetString(  pWork->pMsgData, msgno, pWork->pExStrBuf );
   {
@@ -1709,7 +1805,7 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
   if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND){
     int num1 = WifiList_GetFriendDataNum( GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ); //WIFILIST_FRIEND_MAX
     if(num1==WIFILIST_FRIEND_MAX){
-      pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+      pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
       _CHANGE_STATE(pWork,_waitFinish);        // 終わり()
       pWork->timer = _FULL_TIMER;
       return;
@@ -1939,7 +2035,7 @@ static GFL_PROC_RESULT IrcBattleMatchProcEnd( GFL_PROC * proc, int * seq, void *
 {
   IRC_BATTLE_MATCH* pWork = mywk;
 
-  pWork->pBattleWork->selectType = pWork->selectType;
+//  pWork->pBattleWork->selectType = pWork->selectType;
 
   if(pWork->pAppTask){
     APP_TASKMENU_CloseMenu(pWork->pAppTask);

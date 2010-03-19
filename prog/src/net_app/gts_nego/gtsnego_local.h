@@ -149,6 +149,8 @@ extern void GTSNEGO_DISP_ArrowAnim(GTSNEGO_DISP_WORK* pWork, int i);
 extern void GTSNEGO_DISP_FriendSelectPlateView(GTSNEGO_DISP_WORK* pWork, GAMEDATA* pGameData, int topindex);
 extern void GTSNEGO_DISP_ScrollChipDisp(GTSNEGO_DISP_WORK* pWork,int pos,int max);
 extern void GTSNEGO_DISP_ScrollChipDispMouse(GTSNEGO_DISP_WORK* pWork,int y,int max);
+extern void GTSNEGO_DISP_SearchPeopleDispSet(GTSNEGO_DISP_WORK* pWork);
+extern void GTSNEGO_DISP_SearchPeopleDispMain(GTSNEGO_DISP_WORK* pWork);
 
 
 

@@ -38,6 +38,7 @@
 #include "cg_comm.naix"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 #include "ir_ani_NANR_LBLDEFS.h"
+#include "savedata/battle_box_save.h"
 
 
 #if DEBUG_ONLY_FOR_ohno
@@ -139,6 +140,13 @@ enum _BATTLETYPE_SELECT {
    _SELECTBT_MAX,
 };
 
+enum _TEMOTIORBOXTYPE_SELECT {
+  _SELECTPOKE_TEMOTI = 0,
+  _SELECTPOKE_BOX,
+  _SELECTPOKE_EXIT,
+  _SELECTPOKE_MAX,
+};
+
 
 enum _IBMODE_SELECT {
   _SELECTMODE_BATTLE = 0,
@@ -176,6 +184,7 @@ struct _IRC_BATTLE_MENU {
   StateFunc* state;      ///< ハンドルのプログラム状態
   TouchFunc* touch;
   int selectType;   // 接続タイプ
+  int bBattelBox;  //バトルボックスを選択
   HEAPID heapID;
   GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
   GFL_BUTTON_MAN* pButton;
@@ -211,8 +220,8 @@ struct _IRC_BATTLE_MENU {
   int windowNum;
   BOOL IsIrc;
 
-  GAMEDATA* gamedata;
-  GAMESYS_WORK *gsys;
+//  GAMEDATA* gamedata;
+//  GAMESYS_WORK *gsys;
 
   int anmCnt;  //決定時アニメカウント
   int bttnid;
@@ -241,6 +250,7 @@ static void _modeSelectBattleTypeInit(IRC_BATTLE_MENU* pWork);
 static void _buttonWindowDelete(IRC_BATTLE_MENU* pWork);
 static void _touchScreenChange(IRC_BATTLE_MENU* pWork,int no);
 static void _ReturnButtonStart(IRC_BATTLE_MENU* pWork);
+static void _CreateButtonObj4(IRC_BATTLE_MENU* pWork);
 static void _CreateButtonObj2(IRC_BATTLE_MENU* pWork);
 static void _CreateButtonObj3(IRC_BATTLE_MENU* pWork);
 static void _CreateButtonObj(IRC_BATTLE_MENU* pWork);
@@ -293,7 +303,7 @@ static void _createSubBg(IRC_BATTLE_MENU* pWork)
   {
     int frame = GFL_BG_FRAME0_M;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x512, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000,
       0x8000,
       GX_BG_EXTPLTT_01,
@@ -310,7 +320,7 @@ static void _createSubBg(IRC_BATTLE_MENU* pWork)
     int frame = GFL_BG_FRAME1_M;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000,
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000,
       0x8000,
       GX_BG_EXTPLTT_01,
       2, 0, 0, FALSE
@@ -459,7 +469,7 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork, _W
 {
   int i;
   u32 cgx;
-  int frame = GFL_BG_FRAME1_S;
+  int frame = GFL_BG_FRAME3_S;
 
  // GFL_BG_SetVisible(frame,VISIBLE_OFF);
   GFL_BG_ClearScreen(frame);
@@ -501,7 +511,7 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,IRC_BATTLE_MENU* pWork, _W
   pWork->pButton = NULL;
 //  GFL_BG_LoadScreenV_Req(frame);
   GFL_BG_LoadScreenV_Req(frame);
- // GFL_BG_SetVisible(frame,VISIBLE_ON);
+  GFL_BG_SetVisible(frame,VISIBLE_ON);
 }
 
 //----------------------------------------------------------------------------
@@ -1058,7 +1068,6 @@ static BOOL _modeSelectEntryNumButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 }
 
 
-
 //------------------------------------------------------------------------------
 /**
  * @brief   バトルの種類画面初期化
@@ -1084,17 +1093,145 @@ static void _modeSelectBattleTypeInit(IRC_BATTLE_MENU* pWork)
 }
 
 
-static void _modeSelectBattleTypeButtonCallback2(u32 param, fx32 currentFrame )
+
+
+
+
+
+static void _modeTemotiOrBoxButtonCallback2(u32 param, fx32 currentFrame )
 {
   IRC_BATTLE_MENU* pWork = (IRC_BATTLE_MENU*)param;
 
 
-  if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_EXIT){
+  if(pWork->bBattelBox == _SELECTPOKE_EXIT){
     
-    _CHANGE_STATE(pWork, _modeSelectEntryNumInit);
+    _CHANGE_STATE(pWork, _modeSelectBattleTypeInit);  //人数選択にもどる
   }
   else{
     _CHANGE_STATE(pWork, _modeFadeoutStart);
+  }
+}
+
+
+static void _modeTemotiOrBoxButtonFlash2(IRC_BATTLE_MENU* pWork)
+{
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   モードセレクト画面タッチ処理 タッチした際に画面が点滅
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _modeTemotiOrBoxButtonFlash(IRC_BATTLE_MENU* pWork)
+{
+int i;
+  GFL_CLWK_ANM_CALLBACK cbwk;
+
+  cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
+  cbwk.param = (u32)pWork;          // コールバックワーク
+  cbwk.p_func = _modeTemotiOrBoxButtonCallback2; // コールバック関数
+  GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[pWork->bBattelBox],TRUE);
+  GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[pWork->bBattelBox], &cbwk );
+  GFL_CLACT_WK_StartAnm( pWork->buttonObj[pWork->bBattelBox] );
+  _CHANGE_STATE(pWork,_modeTemotiOrBoxButtonFlash2);
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   手持ちかボックスかをせんたく
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _modeTemotiOrBoxWait(IRC_BATTLE_MENU* pWork)
+{
+
+  GFL_BMN_Main( pWork->pButton );
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   手持ちかボックスかをせんたく
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static BOOL _modeTemotiOrBoxButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
+{
+  BOOL ret=FALSE;
+
+  pWork->bttnid = bttnid;
+    
+  switch(bttnid){
+  case _SELECTPOKE_TEMOTI:
+		PMSND_PlaySystemSE(_SE_DESIDE);
+    pWork->bBattelBox = _SELECTPOKE_TEMOTI;
+    _CHANGE_STATE(pWork,_modeTemotiOrBoxButtonFlash);
+    ret=TRUE;
+    break;
+  case _SELECTPOKE_BOX:
+		PMSND_PlaySystemSE(_SE_DESIDE);
+    pWork->bBattelBox = _SELECTPOKE_BOX;
+    _CHANGE_STATE(pWork,_modeTemotiOrBoxButtonFlash);
+    ret=TRUE;
+    break;
+  case _SELECTPOKE_EXIT:
+    PMSND_PlaySystemSE(_SE_CANCEL);
+    pWork->bBattelBox = _SELECTPOKE_EXIT;
+    _CHANGE_STATE(pWork,_modeTemotiOrBoxButtonFlash); 
+  default:
+    break;
+  }
+  return ret;
+}
+
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   手持ちかボックスかをせんたく
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _modeTemotiOrBoxInit(IRC_BATTLE_MENU* pWork)
+{
+  int aMsgBuff[]={IRCBTL_STR_42,IRCBTL_STR_41};
+
+  _CreateButtonObj4(pWork);
+  _touchScreenChange( pWork, NARC_cg_comm_comm_vs2_btn_NSCR);
+
+  _buttonWindowCreate(2,aMsgBuff,pWork,wind_irvs1);
+
+  pWork->pButton = GFL_BMN_Create( btn_irvs1, _BttnCallBack, pWork,  pWork->heapID );
+  pWork->touch = &_modeTemotiOrBoxButtonCallback;
+
+  _ReturnButtonStart(pWork);
+  
+  _CHANGE_STATE(pWork,_modeTemotiOrBoxWait);
+
+}
+
+
+static void _modeSelectBattleTypeButtonCallback2(u32 param, fx32 currentFrame )
+{
+  IRC_BATTLE_MENU* pWork = (IRC_BATTLE_MENU*)param;
+  BATTLE_BOX_SAVE* bxsv;
+
+  if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_EXIT){
+    
+    _CHANGE_STATE(pWork, _modeSelectEntryNumInit);  //人数選択にもどる
+  }
+  else{
+    bxsv = BATTLE_BOX_SAVE_GetBattleBoxSave(pWork->dbw->ctrl);
+    if(BATTLE_BOX_SAVE_IsIn(bxsv)){
+      _CHANGE_STATE(pWork, _modeTemotiOrBoxInit);
+    }
+    else{
+      _CHANGE_STATE(pWork, _modeFadeoutStart); //BBOXに何もなければ開始
+    }
   }
 }
 
@@ -1369,6 +1506,38 @@ static void _CreateButtonObj3(IRC_BATTLE_MENU* pWork)
 }
 
 
+///手持ちボックスモード選択
+static void _CreateButtonObj4(IRC_BATTLE_MENU* pWork)
+{
+  int i;
+  u8 buffx[]={ 128,    128,     224};
+  u8 buffy[]={ 64+8 , 64+8+40+8 ,  177};
+  u8 buttonno[]={17, 17, 0};
+
+  _RemoveButtonObj(pWork);
+
+  
+  for(i=0;i<_ENTRYNUM_MAX;i++){
+    GFL_CLWK_DATA cellInitData;
+
+    cellInitData.pos_x = buffx[i];
+    cellInitData.pos_y = buffy[i];
+    cellInitData.anmseq = buttonno[i];
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 1;
+    pWork->buttonObj[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                               pWork->cellRes[CHAR_OBJ],
+                                               pWork->cellRes[PLT_OBJ],
+                                               pWork->cellRes[ANM_OBJ],
+                                               &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->buttonObj[i] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->buttonObj[i], TRUE );
+    GFL_CLACT_WK_SetObjMode(pWork->buttonObj[i],GX_OAM_MODE_XLU);
+  }
+}
+
+
+
 static void _CLACT_SetAnim(IRC_BATTLE_MENU* pWork,int x,int y,int no,int anm)
 {  
   if(pWork->curIcon[no]==NULL){
@@ -1567,7 +1736,7 @@ static void _modeReportInit(IRC_BATTLE_MENU* pWork)
 
   GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
 
-  GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_OFF);
+//  GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_OFF);
   
   GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_26, pWork->pStrBuf );
   
@@ -1599,7 +1768,7 @@ static void _modeReporting(IRC_BATTLE_MENU* pWork)
       if( pWork->selectType == EVENTIRCBTL_ENTRYMODE_SINGLE){
         _CHANGE_STATE(pWork,_modeSelectEntryNumInit);
       }
-      else if(( pWork->selectType == EVENTIRCBTL_ENTRYMODE_TRADE) || (pWork->selectType == EVENTIRCBTL_ENTRYMODE_FRIEND)){
+      else{// if(( pWork->selectType == EVENTIRCBTL_ENTRYMODE_TRADE) || (pWork->selectType == EVENTIRCBTL_ENTRYMODE_FRIEND)){
         _CHANGE_STATE(pWork, _modeFadeoutStart);
       }
       pWork->IsIrc = TRUE;  //赤外線接続開始
@@ -1808,6 +1977,7 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
 
   _workEnd(pWork);
   EVENT_IrcBattleSetType(pParentWork, pWork->selectType);
+  pParentWork->bBattelBox = pWork->bBattelBox;
 
   _CLACT_Release(pWork);
 

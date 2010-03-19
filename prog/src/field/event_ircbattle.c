@@ -76,8 +76,8 @@ enum _EVENT_IRCBATTLE {
   _PLAY_EVENT_BGM,
   _CALL_BATTLE,
   _WAIT_BATTLE,
-  _CALL_IRCBATTLE_FRIEND,
-  _WAIT_IRCBATTLE_FRIEND,
+///  _CALL_IRCBATTLE_FRIEND,
+//  _WAIT_IRCBATTLE_FRIEND,
   _CALL_TRADE,
   _WAIT_TRADE,
   _CALL_EVOLUTION,
@@ -96,6 +96,21 @@ enum _EVENT_IRCBATTLE {
   _CALL_IRCCOMMPATIBLE,
   _WAIT_IRCCOMMPATIBLE,
 };
+
+static void _PartySet(BOOL bBattleBox,EVENT_IRCBATTLE_WORK *dbw)
+{
+  BATTLE_BOX_SAVE * bxsv;
+  bxsv = BATTLE_BOX_SAVE_GetBattleBoxSave(dbw->ctrl);
+  
+  if(!bBattleBox){
+    NET_PRINT("てもち\n");
+    PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(dbw->gsys)), dbw->pParty);
+  }
+  else{
+    PokeParty_Copy(BATTLE_BOX_SAVE_MakePokeParty( bxsv, HEAPID_PROC ), dbw->pParty);
+  }
+}
+
 
 static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw);
 
@@ -170,13 +185,11 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       dbw->selectType = dbw->irc_match.selectType;
       switch(dbw->selectType){
       case EVENTIRCBTL_ENTRYMODE_EXIT:
+      case EVENTIRCBTL_ENTRYMODE_FRIEND:
         *seq = _WAIT_NET_END;
         break;
       case EVENTIRCBTL_ENTRYMODE_RETRY:
         *seq = _CALL_IRCBATTLE_MENU;
-        break;
-      case EVENTIRCBTL_ENTRYMODE_FRIEND:
-        *seq = _CALL_IRCBATTLE_FRIEND;
         break;
       case EVENTIRCBTL_ENTRYMODE_TRADE:
         dbw->aPokeTr.ret = POKEMONTRADE_MOVE_START;
@@ -203,13 +216,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     break;
   case _PLAY_EVENT_BGM:
-//    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM( gsys, dbw->para->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE ) );
-   // dbw->push=TRUE;
-//    (*seq) ++;
-//    break;
 
-  //  PMSND_PushBGM();
-
+    _PartySet( dbw->bBattelBox, dbw );
 
     switch(dbw->selectType){
     case EVENTIRCBTL_ENTRYMODE_SINGLE:
@@ -266,19 +274,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       break;
     }
     NET_PRINT("バトル完了 event_ircbattle\n");
-  //  GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-
     GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NONE));
-
-    
-    (*seq) = _CALL_NET_END;
-    break;
-  case _CALL_IRCBATTLE_FRIEND:  //  ともだちコード交換
-    GMEVENT_CallProc( event, FS_OVERLAY_ID(ircbattlematch), &IrcBattleFriendProcData, dbw);
-    (*seq)++;
-    break;
-  case _WAIT_IRCBATTLE_FRIEND:
-    NET_PRINT("ともだちコード交換おわり\n");
     (*seq) = _CALL_NET_END;
     break;
   case _CALL_TRADE:  //  ポケモン交換
@@ -403,7 +399,7 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
 {
   GMEVENT * event = prevevent;
   EVENT_IRCBATTLE_WORK * dbw;
-  BATTLE_BOX_SAVE * bxsv;
+//  BATTLE_BOX_SAVE * bxsv;
 
   if(bCreate){
     event = GMEVENT_Create(gsys, NULL, EVENT_IrcBattleMain, sizeof(EVENT_IRCBATTLE_WORK));
@@ -416,7 +412,7 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
   dbw->gamedata = GAMESYSTEM_GetGameData(gsys);
   dbw->gsys = gsys;
   dbw->para =BATTLE_PARAM_Create(HEAPID_PROC);
-  bxsv = BATTLE_BOX_SAVE_GetBattleBoxSave(dbw->ctrl);
+//  bxsv = BATTLE_BOX_SAVE_GetBattleBoxSave(dbw->ctrl);
 
   {
     int i;
@@ -424,15 +420,8 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
       dbw->pNetParty[i] = PokeParty_AllocPartyWork( HEAPID_PROC );
     }
     dbw->pParty = PokeParty_AllocPartyWork( HEAPID_PROC );
-
-    if(!BATTLE_BOX_SAVE_IsIn(bxsv)){
-      NET_PRINT("てもち\n");
-      PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(gsys)), dbw->pParty);
-    }
-    else{
-      PokeParty_Copy(BATTLE_BOX_SAVE_MakePokeParty( bxsv, HEAPID_PROC ), dbw->pParty);
-    }
   }
+
   return event;
 }
 

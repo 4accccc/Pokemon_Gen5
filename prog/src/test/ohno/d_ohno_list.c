@@ -140,7 +140,8 @@ static const D_MENULIST DebugMenuList[] = {
 		_PokeTradeWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
 	},
-	{//
+#if 0
+  {//
 		DEBUG_OHNO_MSG0018,
     &PokemonTradeGTSSendProcData,
 //		&GtsNego_ProcData,	
@@ -149,7 +150,16 @@ static const D_MENULIST DebugMenuList[] = {
 //		FS_OVERLAY_ID(gts_negotiate)
 		FS_OVERLAY_ID(pokemon_trade)
 	},
+#endif
+
 	{//
+		DEBUG_OHNO_MSG0018,
+		&GtsNego_ProcData,	
+		_PokeTradeGtsNegoCreate,
+		FS_OVERLAY_ID(gts_negotiate)
+	},
+
+  {//
 		DEBUG_OHNO_MSG0019, 
 //		&PokemonTradeDemoProcData,
 //    &PokemonTradeGTSProcData,

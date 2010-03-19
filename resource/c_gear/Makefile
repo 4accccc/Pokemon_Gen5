@@ -77,7 +77,9 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
-$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects)
+$(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) Makefile ./panel/pattern.xls ./panel.rb
+	ruby ../../tools/exceltool/xls2xml/tab_out_direct.rb panel/pattern.xls -s > ./pattern.txt
+	ruby ./panel.rb ./pattern.txt
 	nnsarc -r -l -n -i $(targetname) $^
 	$(NAIXCUT) $(targetname).naix
 	$(DIFFCOPY) c_gear_obj_NANR_LBLDEFS.h  ../../prog/src/field/c_gear/

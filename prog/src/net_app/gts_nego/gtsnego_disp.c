@@ -153,13 +153,15 @@ struct _GTSNEGO_DISP_WORK {
   int bgscrollType;
   int bgscrollPos;
 //  int listmax;
-//  int curpos;
- // int oamlistpos;
+  int SearchScroll;
+  BOOL bSearchScroll;
   GAMEDATA* pGameData;
 
   NNSG2dScreenData* pBGPanelScr;
   void* pBGPanelScrAddr;
   
+  GFL_CLWK* SearchBackOAM;
+  GFL_CLWK* SearchPeopleOAM;
   GFL_CLWK* crossIcon;
   GFL_CLWK* menubarObj;
   GFL_CLWK* pTrOAM;
@@ -287,6 +289,8 @@ void GTSNEGO_DISP_Main(GTSNEGO_DISP_WORK* pWork)
   if(pWork->pBlinkUnder){
     BLINKPALANM_Main(pWork->pBlinkUnder);
   }
+  GTSNEGO_DISP_SearchPeopleDispMain(pWork);
+
 }
 
 void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
@@ -337,10 +341,7 @@ static void settingSubBgControl(GTSNEGO_DISP_WORK* pWork)
   {
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,
-      0x8000,
-      GX_BG_EXTPLTT_01,
-      3, 0, 0, FALSE
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000,  0x8000, GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
       };
     GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_ClearFrame( GFL_BG_FRAME0_M );
@@ -352,14 +353,38 @@ static void settingSubBgControl(GTSNEGO_DISP_WORK* pWork)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
-      2, 0, 0, FALSE
+      0, 0, 0, FALSE
       };
-
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-
     GFL_BG_SetVisible( frame, VISIBLE_ON );
     GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = GFL_BG_FRAME2_M;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      3, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = GFL_BG_FRAME3_M;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      1, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
     GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
@@ -1387,6 +1412,113 @@ void GTSNEGO_DISP_ScrollChipDispMouse(GTSNEGO_DISP_WORK* pWork,int y,int max)
   pos.y = y;
   GFL_CLACT_WK_SetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
 
+}
+
+
+
+static void _SetSearchPeople(GTSNEGO_DISP_WORK* pWork)
+{
+  GFL_CLWK_DATA cellInitData;
+
+  cellInitData.pos_x = 64;
+  cellInitData.pos_y = 128;
+  cellInitData.anmseq =  27;
+  cellInitData.softpri = 2;
+  cellInitData.bgpri = 1;
+  pWork->SearchBackOAM = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                              pWork->cellRes[CHAR_NEGOOBJ],
+                                              pWork->cellRes[PLT_NEGOOBJ],
+                                              pWork->cellRes[ANM_NEGOOBJ],
+                                              &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
+  GFL_CLACT_WK_SetAutoAnmFlag( pWork->SearchBackOAM , TRUE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->SearchBackOAM, TRUE );
+
+  cellInitData.anmseq =  11;
+  cellInitData.softpri = 1;
+  pWork->SearchPeopleOAM = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                              pWork->cellRes[CHAR_NEGOOBJ],
+                                              pWork->cellRes[PLT_NEGOOBJ],
+                                              pWork->cellRes[ANM_NEGOOBJ],
+                                              &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
+  GFL_CLACT_WK_SetAutoAnmFlag( pWork->SearchPeopleOAM , TRUE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->SearchPeopleOAM, TRUE );
+
+  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+}
+
+
+
+static void _RemoveSearchPeople(GTSNEGO_DISP_WORK* pWork)
+{
+  GFL_CLACT_WK_SetDrawEnable( pWork->SearchBackOAM, FALSE );
+  GFL_CLACT_WK_Remove(pWork->SearchBackOAM);
+  GFL_CLACT_WK_SetDrawEnable( pWork->SearchPeopleOAM, FALSE );
+  GFL_CLACT_WK_Remove(pWork->SearchPeopleOAM);
+}
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	サーチ中画面に変更
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_DISP_SearchPeopleDispSet(GTSNEGO_DISP_WORK* pWork)
+{
+  int i;
+  ARCHANDLE* p_handle;
+	{
+    p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
+
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_back_search2_NSCR,
+                                              GFL_BG_FRAME2_M, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
+                                              pWork->heapID);
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_back_search_NSCR,
+                                              GFL_BG_FRAME0_M, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
+                                              pWork->heapID);
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_back_search4_NSCR,
+                                              GFL_BG_FRAME3_M, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
+                                              pWork->heapID);
+
+    GFL_ARC_CloseDataHandle(p_handle);
+
+    _SetSearchPeople( pWork);
+    
+    
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
+    pWork->SearchScroll=0;
+    pWork->bSearchScroll=TRUE;
+    
+	}
+
+ // G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BG3,15,9);
+
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	サーチ中画面に変更
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_DISP_SearchPeopleDispMain(GTSNEGO_DISP_WORK* pWork)
+{
+  if(pWork->bSearchScroll){
+    GFL_BG_SetScroll(GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, pWork->SearchScroll/2 );
+    pWork->SearchScroll++;
+  }
 }
 
 

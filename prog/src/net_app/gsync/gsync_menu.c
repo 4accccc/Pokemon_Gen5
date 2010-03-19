@@ -82,7 +82,7 @@ typedef enum
 #define _BUTTON_WIN_WIDTH (22)    // ウインドウ幅
 #define _BUTTON_WIN_HEIGHT (3)    // ウインドウ高さ
 #define _BUTTON_WIN_PAL   (12)  // ウインドウ
-#define _BUTTON_MSG_PAL   (11)  // メッセージフォント
+#define _BUTTON_MSG_PAL   (13)  // メッセージフォント
 
 //BG面とパレット番号(仮設定
 #define _SUBSCREEN_BGPLANE	(GFL_BG_FRAME1_S)
@@ -200,7 +200,6 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork);
 static void _modeSelectBattleTypeInit(GAMESYNC_MENU* pWork);
 
 static void _buttonWindowDelete(GAMESYNC_MENU* pWork);
-static void _ReturnButtonStart(GAMESYNC_MENU* pWork);
 static void _modeFadeout(GAMESYNC_MENU* pWork);
 static void _modeFadeoutStart(GAMESYNC_MENU* pWork);
 
@@ -314,6 +313,18 @@ static void _createSubBg(GAMESYNC_MENU* pWork)
     GFL_BG_SetVisible( frame, VISIBLE_ON );
     GFL_BG_LoadScreenReq( frame );
   }
+  {
+    int frame = GFL_BG_FRAME3_S;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
+      1, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_LoadScreenReq( frame );
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -376,7 +387,14 @@ static void _modeAppWinFlashCallback(u32 param, fx32 currentFrame )
 {
   GAMESYNC_MENU* pWork = (GAMESYNC_MENU*)param;
   {
-    _CHANGE_STATE(pWork, _modeFadeoutStart);        // 終わり
+//    if((pWork->selectType == GAMESYNC_RETURNMODE_UTIL)||
+//       (pWork->selectType == GAMESYNC_RETURNMODE_SYNC)){
+    if(pWork->selectType == GAMESYNC_RETURNMODE_UTIL){
+      _CHANGE_STATE(pWork, _modeReportInit);
+    }
+    else{
+      _CHANGE_STATE(pWork, _modeFadeoutStart);        // 終わり
+    }
   }
 }
 
@@ -437,12 +455,13 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,GAMESYNC_MENU* pWork, _WIN
 {
   int i;
   u32 cgx;
-  int frame = GFL_BG_FRAME1_S;
+  int frame = GFL_BG_FRAME3_S;
 
   pWork->windowNum = num;
-  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
+  GFL_FONTSYS_SetDefaultColor();
+
+  
   for(i = 0;i < _WINDOW_MAXNUM;i++){
 		if(pWork->buttonWin[i]){
 			GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
@@ -452,17 +471,23 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,GAMESYNC_MENU* pWork, _WIN
     pWork->buttonWin[i] = NULL;
   }
 
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
+
   for(i=0;i < num;i++){
     pWork->buttonWin[i] = GFL_BMPWIN_Create(
       frame,
       pos[i].leftx, pos[i].lefty,
       pos[i].width, pos[i].height,
-      _SUBLIST_NORMAL_PAL,GFL_BMP_CHRAREA_GET_F);
+      _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_F);
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
     // システムウインドウ枠描画
     GFL_MSG_GetString(  pWork->pMsgData, pMsgBuff[i], pWork->pStrBuf );
-    PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0, 0,
-                        pWork->pStrBuf, pWork->pFontHandle, APP_TASKMENU_ITEM_MSGCOLOR);
+
+    GFL_FONTSYS_SetColor(15, 2, 0);
+
+    PRINTSYS_Print(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0, 0,
+                        pWork->pStrBuf, pWork->pFontHandle);
     GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
     GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
   }
@@ -470,7 +495,8 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,GAMESYNC_MENU* pWork, _WIN
 		GFL_BMN_Delete(pWork->pButton);
 	}
   pWork->pButton = NULL;
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+  GFL_BG_LoadScreenReq(frame);
+//  GFL_BG_SetVisible(frame,VISIBLE_ON);
 }
 
 
@@ -548,7 +574,7 @@ static void _CreateButtonObj(GAMESYNC_MENU* pWork)
     cellInitData.pos_y = buffy[i];
     cellInitData.anmseq = buttonno[i];
     cellInitData.softpri = 0;
-    cellInitData.bgpri = 1;
+    cellInitData.bgpri = 2;
     pWork->buttonObj[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                pWork->cellRes[CHAR_OBJ],
                                                pWork->cellRes[PLT_OBJ],
@@ -580,6 +606,8 @@ static void _modeInit(GAMESYNC_MENU* pWork)
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_CG_COMM, pWork->heapID );
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_cg_comm_comm_bg_NCLR,
                                       PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_cg_comm_background_NCLR,
+                                      PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
 
     {
       NNSG2dPaletteData* pPal;
@@ -653,7 +681,6 @@ static void _modeSelectMenuInit(GAMESYNC_MENU* pWork)
 	pWork->pButton = GFL_BMN_Create( btn_wifi, _BttnCallBack, pWork,  pWork->heapID );
 	pWork->touch = &_modeSelectMenuButtonCallback;
 
-  _ReturnButtonStart(pWork);
 
 	_CHANGE_STATE(pWork,_modeSelectMenuWait);
 
@@ -673,7 +700,7 @@ static void _workEnd(GAMESYNC_MENU* pWork)
   GFL_MSG_Delete( pWork->pMsgWiFiData );
   GFL_FONT_Delete(pWork->pFontHandle);
   GFL_STR_DeleteBuffer(pWork->pStrBuf);
-  GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+//  GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
 
 }
 
@@ -864,7 +891,7 @@ static void _modeSelectMenuWait(GAMESYNC_MENU* pWork)
 	if(WIPE_SYS_EndCheck()){
 		GFL_BMN_Main( pWork->pButton );
 	}
-  _UpdatePalletAnime(pWork);
+  //_UpdatePalletAnime(pWork);
 }
 
 
@@ -902,22 +929,6 @@ static void _YesNoStart(GAMESYNC_MENU* pWork)
   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
 }
 
-
-static void _ReturnButtonStart(GAMESYNC_MENU* pWork)
-{
-#if 0
-  int i;
-
-  pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
-  GFL_MSG_GetString(pWork->pMsgData, GAMESYNC_003, pWork->appitem[0].str);
-  pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
-  pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
-
- // pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
-               //                            pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
-  GFL_STR_DeleteBuffer(pWork->appitem[0].str);
-#endif
-}
 
 //------------------------------------------------------------------------------
 /**
@@ -1061,14 +1072,7 @@ static void _modeReporting(GAMESYNC_MENU* pWork)
     
     if(svr == SAVE_RESULT_OK){
       _infoMessageEnd(pWork);
-
-      if(GAMESYNC_RETURNMODE_UTIL == pWork->selectType){
-        GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1);
-        _CHANGE_STATE(pWork,_FadeWait);
-      }
-      else{
-        _CHANGE_STATE(pWork,_modeFadeoutStart);
-      }
+      _CHANGE_STATE(pWork,_modeFadeoutStart);
     }
   }
 }
@@ -1095,7 +1099,7 @@ static void _modeReportWait2(GAMESYNC_MENU* pWork)
       _CHANGE_STATE(pWork,_modeReporting);
     }
     else{
-      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+      GFL_BG_ClearScreen(GFL_BG_FRAME1_S);
       pWork->selectType = GAMESYNC_RETURNMODE_NONE;
       _CHANGE_STATE(pWork,  _modeFadeoutStart );
     }
@@ -1228,7 +1232,7 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
     G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0 , 15, 4 );
 		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_OBJ );
+    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
 		_CHANGE_STATE(pWork,_modeSelectMenuInit);
     pWork->dbw = pwk;
 	}

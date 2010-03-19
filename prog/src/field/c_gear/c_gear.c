@@ -1065,6 +1065,7 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     pWork->cellMoveCreateCount = 0;
     break;
   case 1:
+    PMSND_PlaySE( SEQ_SE_MSCL_07 );
     pWork->bPanelEdit = pWork->bPanelEdit ^ 1;
     _editMarkONOFF(pWork, pWork->bPanelEdit);
     break;
@@ -1078,6 +1079,7 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_SCANRADAR);
     break;
   case 5:
+    PMSND_PlaySE( SEQ_SE_MSCL_07 );
     _arcGearRelease(pWork);
     _gearArcCreate(pWork, pWork->bgno);
     _gearPanelBgCreate(pWork);	// パネル作成
@@ -1196,6 +1198,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
         CGEAR_SV_SetPanelType(pWork->pCGSV,xp,yp,type);
         _gearPanelBgScreenMake(pWork, xp, yp,type, FALSE);
         GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
+        PMSND_PlaySE( SEQ_SE_MSCL_07 );
       }
     }
     else{    ///< ギアメニューを変更
@@ -1603,7 +1606,6 @@ static void _workEnd(C_GEAR_WORK* pWork)
 static void _timeAnimation(C_GEAR_WORK* pWork)
 {
   RTCTime time;
-  BOOL battflg = FALSE;  //バッテリー表示更新フラグ
 
   GFL_RTC_GetTime( &time );
 
@@ -1655,36 +1657,22 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 
     if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
       GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
-      battflg = TRUE;  //一分おきに検査
     }
   }
-  if(battflg){//BATT
+  {
     GFL_CLWK* cp_wk = pWork->cellCursor[NANR_c_gear_obj_CellAnime_batt1];
     if( OS_IsRunOnTwl() ){//DSIなら
-      u16 buf;
-      if( PM_GetBatteryLevel(&buf) == PM_RESULT_SUCCESS )
-      {
-        if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  buf){
-          GFL_CLACT_WK_SetAnmIndex(cp_wk,buf);
-        }
+      if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  GFL_UI_GetBattLevel()){
+        GFL_CLACT_WK_SetAnmIndex(cp_wk, GFL_UI_GetBattLevel());
       }
     }
     else{
-      PMBattery buf;
-      if( PM_GetBattery(&buf) == PM_RESULT_SUCCESS )
-      {
-        int num = (buf==PM_BATTERY_HIGH ? 1:0);
-        if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
-          GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
-        }
+      int num = (GFL_UI_GetBattLevel() == GFL_UI_BATTLEVEL_HI ? 1 : 0);
+      if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
+        GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
       }
     }
   }
-
-
-
-
-
 }
 
 //------------------------------------------------------------------------------
@@ -2011,8 +1999,8 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
         if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){
           if(pWork->bAction){
             FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+            OS_TPrintf("よびだし\n");
             FSND_RequestTVTRingTone( fsnd);
-            //            PMSND_PlaySE( SEQ_SE_SYS_35 );
           }
           st = GAME_COMM_STATUS_WIRELESS_TR;
           _PaletteMake(pWork, PalleteONOFFTbl[st][0], PalleteONOFFTbl[st][1], PalleteONOFFTbl[st][2], 1);
@@ -2033,13 +2021,6 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
           FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
           FSND_StopTVTRingTone( fsnd );
         }
-        //       if(!(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR)){
-        //        if(PMSND_CheckPlayingSEIdx(SEQ_SE_SYS_35)){
-        //         NET_PRINT("-けした-----\n");
-        //       PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
-        //   }
-        //     }
-
       }
     }
   }
