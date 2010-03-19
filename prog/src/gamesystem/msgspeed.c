@@ -25,17 +25,17 @@
  */
 #if( (PM_LANG==LANG_JAPAN) || (PM_LANG==LANG_KOREA) )
 static const s8 WaitFrameTable[] = {
-    8,
-    4,
-    1,
+    7,
+    3,
+    0,
    -2,    // ç≈ë¨
    12,    // ç≈íx
 };
 #else
 static const s8 WaitFrameTable[] = {
-    4,
-    2,
-    0,
+    3,
+    1,
+   -2,
    -4,  // ç≈ë¨
     6,  // ç≈íx
 };
