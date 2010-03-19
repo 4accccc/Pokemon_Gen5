@@ -1748,17 +1748,20 @@ static void Psel_PokeSetExit( PSEL_WORK* work )
   }
 }
 
-static void PokeSetCalcPosScale( GFL_CLACTPOS* pos, GFL_CLSCALE* scale,
+static s16 PokeSetCalcPosScale( GFL_CLACTPOS* pos, GFL_CLSCALE* scale,
                                  u8 pos_s_x, u8 pos_s_y, u8 pos_e_x, u8 pos_e_y,
                                  u8 scale_s, u8 scale_e,
                                  u8 total_frame, u8 jump_y,
                                  u16 count );
-static void PokeSetCalcPosScale( GFL_CLACTPOS* pos, GFL_CLSCALE* scale,
+static s16 PokeSetCalcPosScale( GFL_CLACTPOS* pos, GFL_CLSCALE* scale,
                                  u8 pos_s_x, u8 pos_s_y, u8 pos_e_x, u8 pos_e_y,
                                  u8 scale_s, u8 scale_e,
                                  u8 total_frame, u8 jump_y,
                                  u16 count )
 {
+  // ジャンプさせる前のyの値を返す
+  s16           ret_y;
+
   f32           f_x       = ( (f32)pos_e_x - (f32)pos_s_x ) * (f32)count / (f32)total_frame + (f32)pos_s_x;
   f32           f_y       = ( (f32)pos_e_y - (f32)pos_s_y ) * (f32)count / (f32)total_frame + (f32)pos_s_y;
           
@@ -1781,6 +1784,9 @@ static void PokeSetCalcPosScale( GFL_CLACTPOS* pos, GFL_CLSCALE* scale,
   pos->x    = s_x;
   pos->y    = s_y;
   scale->x  = scale->y  = fx_scale;
+
+  ret_y = (s16)f_y;
+  return ret_y;
 } 
 
 static void Psel_PokeSetMain( PSEL_WORK* work )
@@ -1789,6 +1795,8 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
 
   u8 i;
   u8 j;
+  s16 before_jump_y[TARGET_POKE_MAX];
+  BOOL before_jump_y_get[TARGET_POKE_MAX] = { FALSE, FALSE, FALSE };
 
   for( i=0; i<TARGET_POKE_MAX; i++ )
   {
@@ -1843,11 +1851,12 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
         {
           GFL_CLACTPOS  pos;
           GFL_CLSCALE   scale;
-          PokeSetCalcPosScale( &pos, &scale,
+          before_jump_y[i] = PokeSetCalcPosScale( &pos, &scale,
                                d->p0_x, d->p0_y, d->p1_x, d->p1_y,
                                d->p0_scale, d->p1_scale,
                                d->p0p1_frame, d->p0p1_jump,
                                p->move_step_count );
+          before_jump_y_get[i] = TRUE;
           GFL_CLACT_WK_SetPos( p->clwk[POKE_BIG], &pos, CLSYS_DEFREND_SUB );
           GFL_CLACT_WK_SetScale( p->clwk[POKE_BIG], &scale );
         }
@@ -1913,11 +1922,12 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
         {
           GFL_CLACTPOS  pos;
           GFL_CLSCALE   scale;
-          PokeSetCalcPosScale( &pos, &scale,
+          before_jump_y[i] = PokeSetCalcPosScale( &pos, &scale,
                                d->p1_x, d->p1_y, d->p2_x, d->p2_y,
                                d->p1_scale, d->p2_scale,
                                d->p1p2_frame, d->p1p2_jump,
                                p->move_step_count );
+          before_jump_y_get[i] = TRUE;
           GFL_CLACT_WK_SetPos( p->clwk[POKE_BIG], &pos, CLSYS_DEFREND_SUB );
           GFL_CLACT_WK_SetScale( p->clwk[POKE_BIG], &scale );
         }
@@ -1973,8 +1983,16 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
     GFL_CLACTPOS pos;
     for( i=0; i<TARGET_POKE_MAX; i++ )
     {
-      GFL_CLACT_WK_GetPos( work->poke_set[i].clwk[POKE_BIG], &pos, CLSYS_DEFREND_SUB );
-      y[i] = pos.y;
+      // ジャンプ後の値ではあてにならないので、ジャンプ前の値を用いる
+      if( before_jump_y_get[i] )
+      {
+        y[i] = before_jump_y[i];
+      }
+      else
+      {
+        GFL_CLACT_WK_GetPos( work->poke_set[i].clwk[POKE_BIG], &pos, CLSYS_DEFREND_SUB );
+        y[i] = pos.y;
+      }
     }
     for( i=0; i<TARGET_POKE_MAX; i++ )
     {
