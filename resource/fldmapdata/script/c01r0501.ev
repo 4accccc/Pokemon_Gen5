@@ -87,7 +87,7 @@ _TALK_OBJ_START()
 			_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_02, C01R0501_BOY3_01 ,POS_DL)
 			
 			//分岐・どくけし・まひなおし・ねむけざまし
-			_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 0, LWK_QUESTION_01 )
+			_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LWK_QUESTION_01 )
 		
 			_BMPMENU_MAKE_LIST( msg_c01r0501_quiz_01, 0 )	//どくけし
 			_BMPMENU_MAKE_LIST( msg_c01r0501_quiz_02, 1 )	//まひなおし
@@ -109,7 +109,7 @@ _TALK_OBJ_START()
 				_BALLOONWIN_OBJMSG_POS( msg_c01r0501_boy3_04, C01R0501_BOY3_01 ,POS_DL)
 				
 				//分岐・どくけし・まひなおし・ねむけざまし
-				_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 0, LWK_QUESTION_02 )
+				_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LWK_QUESTION_02 )
 			
 				_BMPMENU_MAKE_LIST( msg_c01r0501_quiz_01, 0 )	//どくけし
 				_BMPMENU_MAKE_LIST( msg_c01r0501_quiz_02, 1 )	//まひなおし
@@ -203,7 +203,7 @@ EVENT_START   ev_bg_c01r0501_board_01
 	DEFINE_LOCAL	LWK_STATE_SELECT
 	
 	//分岐・どく・まひ・ねむり・やけど・こおり・やめる
-	_BMPMENU_INIT_EX( 1, 1, 0, 1, LWK_STATE_SELECT )
+	_BMPMENU_INIT_RIGHT(MENU_X1, MENU_Y1, 0, 1, LWK_STATE_SELECT )
 	
 	_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_01, 0 )	//どく
 	_BMPMENU_MAKE_LIST( msg_c01r0501_board_win_02, 1 )	//まひ

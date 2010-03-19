@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/18 20:42:17
+#save date:2010/03/18 22:42:13
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d20r0501.wms
 #SECTION START:OBJ_EVENT
@@ -723,7 +723,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+1
+#event number: 0
+#Pos Event Label
+POSID_D20R0501_EXIT_01
+#Pos Script Name
+SCRID_POS_D20R0501_EXIT_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1048 48 -936
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -733,25 +750,8 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-5
+4
 #event number: 0
-#Door Event Label
-DOOR_ID_D20R0501_D20R0601_EXIT01
-#Next Zone ID Name
-ZONE_ID_D20R0601
-#Next Door ID Name
-DOOR_ID_D20R0601_D20R0501_EXIT01
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1048 48 -936
-#size
-1 1
-#event number: 1
 #Door Event Label
 DOOR_ID_D20R0501_D20R0301_EXIT01
 #Next Zone ID Name
@@ -768,7 +768,7 @@ EVENTDATA_POSTYPE_GRID
 1128 48 -152
 #size
 3 1
-#event number: 2
+#event number: 1
 #Door Event Label
 DOOR_ID_D20R0501_D20R0101_EXIT01
 #Next Zone ID Name
@@ -785,7 +785,7 @@ EVENTDATA_POSTYPE_GRID
 840 48 -2264
 #size
 3 1
-#event number: 3
+#event number: 2
 #Door Event Label
 DOOR_ID_D20R0501_D20R0201_EXIT01
 #Next Zone ID Name
@@ -802,7 +802,7 @@ EVENTDATA_POSTYPE_GRID
 -168 48 -1256
 #size
 3 1
-#event number: 4
+#event number: 3
 #Door Event Label
 DOOR_ID_D20R0501_D20R0401_EXIT01
 #Next Zone ID Name
