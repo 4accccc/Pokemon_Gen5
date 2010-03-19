@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T16:23:57"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T13:20:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c02r0301_woman2_01" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0301_woman2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ポケモン交換前
 ・はい/いいえの選択肢表示
@@ -311,7 +311,7 @@
 あなたの　[1:01:ポケモン種族名:0]　交換しよ？</language>
 	</row>
 
-	<row id="msg_c02r0301_woman2_02" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0301_woman2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・はい選択
 　ポケモン選択画面で条件を満たすポケモンを選択
@@ -330,7 +330,7 @@
 [1:01:ポケモン種族名:0]　大事にするから！</language>
 	</row>
 
-	<row id="msg_c02r0301_woman2_03" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0301_woman2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ポケモン交換
 ・0＝渡すポケモン</comment>
@@ -341,7 +341,7 @@
 [1:01:ポケモン種族名:0]　なんだけど……</language>
 	</row>
 
-	<row id="msg_c02r0301_woman2_04" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0301_woman2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・いいえ選択
 　もしくはポケモン選択画面で「やめる」を選択</comment>
@@ -354,7 +354,7 @@
 ポケモン交換　しようね！</language>
 	</row>
 
-	<row id="msg_c02r0301_woman2_05" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0301_woman2_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ポケモン交換後</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
@@ -418,7 +418,7 @@
 		<language name="JPN_KANJI" width="256">きゅっきゅ！</language>
 	</row>
 
-	<row id="msg_c02r0301_poke_01w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c02r0301_poke_01w">
 		<comment>ポケモン
 ・BLACKver
 ・あわせて鳴き声SE</comment>

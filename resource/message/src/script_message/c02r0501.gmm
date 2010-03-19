@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T15:14:03"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T13:20:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -318,7 +318,7 @@
 アーティさんは　おれらの　あこがれだよ</language>
 	</row>
 
-	<row id="msg_c02r0501_trainerw_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0501_trainerw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手前
 ・選択肢表示</comment>
@@ -341,7 +341,7 @@
 ポケモンは　なーにー？▼</language>
 	</row>
 
-	<row id="msg_c02r0501_trainerw_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0501_trainerw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ツタージャ(草）選択
 ・アイテム入手処理
@@ -357,7 +357,7 @@
 技の　威力が　あがるんだ！</language>
 	</row>
 
-	<row id="msg_c02r0501_trainerw_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0501_trainerw_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ミジュマル(水）選択
 ・アイテム入手処理
@@ -373,7 +373,7 @@
 技の　威力が　あがるんだ！</language>
 	</row>
 
-	<row id="msg_c02r0501_trainerw_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0501_trainerw_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・ポカブ(炎）選択
 ・アイテム入手処理
@@ -390,7 +390,7 @@
 技の　威力が　あがるんだ！</language>
 	</row>
 
-	<row id="msg_c02r0501_trainerw_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0501_trainerw_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
@@ -406,21 +406,21 @@
 がんばって　ページを　埋めてね！</language>
 	</row>
 
-	<row id="msg_c02r0501_select_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02r0501_select_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>・選ぶとtrainerw_02</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ツタージャ</language>
 		<language name="JPN_KANJI" width="256">ツタージャ</language>
 	</row>
 
-	<row id="msg_c02r0501_select_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02r0501_select_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>・選ぶとtrainerw_03</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ミジュマル</language>
 		<language name="JPN_KANJI" width="256">ミジュマル</language>
 	</row>
 
-	<row id="msg_c02r0501_select_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02r0501_select_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>・選ぶとtrainerw_04</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ポカブ</language>

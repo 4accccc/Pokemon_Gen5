@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-11T13:26:46"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T13:22:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1298" top="116" right="2003" bottom="736" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03p16_cabinguide_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_c03p16_cabinguide_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀（仮）
 ・遊覧船乗り場案内人
 ・はい→cabinguide_01a
@@ -310,7 +310,7 @@
 ご乗船に　なりますか？</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_01a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_c03p16_cabinguide_01a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>説明を受ける選択時
 続いて→cabinguide_02へ</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -323,7 +323,7 @@
 クルーズタイプの　客船　です[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_c03p16_cabinguide_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>時間外の場合</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
@@ -336,7 +336,7 @@
 あらためて　お越しくださいませ</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_01c" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_c03p16_cabinguide_01c" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>お金が足りなかった場合</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
@@ -346,7 +346,7 @@
 またの　お越しを　お待ちしております</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_01d" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_c03p16_cabinguide_01d" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>説明を受けた場合のみに表示</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
@@ -356,7 +356,7 @@
 ご乗船に　なりますか？</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_c03p16_cabinguide_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀（仮）
 ・続けてcabinguide_03
 
@@ -377,7 +377,7 @@
 お知らせ　いたします[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_c03p16_cabinguide_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀（仮）
 ・cabinguide_1dへ</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -398,7 +398,7 @@
 お楽しみ　ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_04" back-color="#404040,,,#404040,,#404040,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
+	<row id="msg_c03p16_cabinguide_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀（仮）
 ・はい→cabinguide05
 ・いいえ→cabinguide06</comment>
@@ -410,7 +410,7 @@
 お乗りに　なられますか？</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_c03p16_cabinguide_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀（仮）
 遊覧船内に入る演出
 C03R0801へマップ移動</comment>
@@ -422,7 +422,7 @@ C03R0801へマップ移動</comment>
 いってらっしゃいませ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_c03p16_cabinguide_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀（仮）
 ・イベント終了</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -433,7 +433,7 @@ C03R0801へマップ移動</comment>
 またの　お越しを　お待ちしております</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_c03p16_cabinguide_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀（仮）
 ・乗船イベント終了後
 このメッセージへ</comment>
@@ -445,7 +445,7 @@ C03R0801へマップ移動</comment>
 またの　お越しを　お待ちしております</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_c03p16_cabinguide_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀（仮）
 ・乗船時間外の場合</comment>
 		<attribute name="キャラ指定">WAITRESS
@@ -457,7 +457,7 @@ C03R0801へマップ移動</comment>
 また　明日　お越しくださいませ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_c03p16_cabinguide_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀（仮）
 ・全抜き時
 何か景品</comment>
@@ -475,7 +475,7 @@ C03R0801へマップ移動</comment>
 お受け取り　くださいませ</language>
 	</row>
 
-	<row id="msg_c03p16_cabinguide_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_c03p16_cabinguide_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ゲームクリア前の場合</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
@@ -492,21 +492,21 @@ C03R0801へマップ移動</comment>
 準備　しています</language>
 	</row>
 
-	<row id="msg_c03p16_cabin_menu_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_c03p16_cabin_menu_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>BMPMENU用</comment>
 		<attribute name="キャラ指定">MENU</attribute>
 		<language name="JPN" width="256">ふねにのる</language>
 		<language name="JPN_KANJI" width="256">船に乗る</language>
 	</row>
 
-	<row id="msg_c03p16_cabin_menu_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_c03p16_cabin_menu_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>BMPMENU用</comment>
 		<attribute name="キャラ指定">MENU</attribute>
 		<language name="JPN" width="256">ふねのせつめい</language>
 		<language name="JPN_KANJI" width="256">船の説明</language>
 	</row>
 
-	<row id="msg_c03p16_cabin_menu_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_c03p16_cabin_menu_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>BMPMENU用</comment>
 		<attribute name="キャラ指定">MENU</attribute>
 		<language name="JPN" width="256">やめる</language>

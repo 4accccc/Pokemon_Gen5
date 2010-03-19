@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T15:37:32"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T13:23:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03p17_assistantm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p17_assistantm_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手前
 ・メッセージ表示後、選択肢表示</comment>
@@ -309,7 +309,7 @@
 進化させて　みたい？▼</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p17_assistantm_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 　No085「リーフのいし」</comment>
@@ -320,7 +320,7 @@
 それじゃあ　リーフのいし　だね▼</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p17_assistantm_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 　No082「ほのおのいし」</comment>
@@ -331,7 +331,7 @@
 それじゃあ　ほのおのいし　だね▼</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p17_assistantm_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 　No084「みずのいし」</comment>
@@ -342,7 +342,7 @@
 それじゃあ　みずのいし　だね▼</language>
 	</row>
 
-	<row id="msg_c03p17_assistantm_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p17_assistantm_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手後
 ・仮メッセージ</comment>
@@ -355,21 +355,21 @@
 いろいろ　あるらしいね</language>
 	</row>
 
-	<row id="msg_c03p17_select_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c03p17_select_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>・続けてassistantm_02</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ブロッコ</language>
 		<language name="JPN_KANJI" width="256">ブロッコ</language>
 	</row>
 
-	<row id="msg_c03p17_select_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c03p17_select_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>・続けてassistantm_03</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">スチック</language>
 		<language name="JPN_KANJI" width="256">スチック</language>
 	</row>
 
-	<row id="msg_c03p17_select_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c03p17_select_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>・続けてassistantm_04</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">ファウン</language>
