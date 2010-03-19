@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-03-18T21:35:06
+	Update:2010-03-19T18:42:02
  *****************************************************************************/
 
 #ifndef NARC_WORLDTRADE_NAIX_
@@ -26,8 +26,8 @@ enum {
 	NARC_worldtrade_search_lz_ncgr = 12,
 	NARC_worldtrade_input_lz_ncgr = 13,
 	NARC_worldtrade_title_lz_ncgr = 14,
-	NARC_worldtrade_traderoom_lz_ncgr = 15,
-	NARC_worldtrade_traderoom_win_lz_ncgr = 16,
+	NARC_worldtrade_traderoom_ncgr = 15,
+	NARC_worldtrade_traderoom_win_ncgr = 16,
 	NARC_worldtrade_wifi_snap_lz_ncgr = 17,
 	NARC_worldtrade_poke_view_lz_ncgr = 18,
 	NARC_worldtrade_worldtrade_obj_lz_ncgr = 19,
@@ -47,9 +47,9 @@ enum {
 	NARC_worldtrade_searchpoke1_lz_nscr = 33,
 	NARC_worldtrade_title_base_lz_nscr = 34,
 	NARC_worldtrade_title_menu_lz_nscr = 35,
-	NARC_worldtrade_traderoom_lz_nscr = 36,
-	NARC_worldtrade_traderoom_win_lz_nscr = 37,
-	NARC_worldtrade_traderoom_win2_lz_nscr = 38,
+	NARC_worldtrade_traderoom_nscr = 36,
+	NARC_worldtrade_traderoom_win_nscr = 37,
+	NARC_worldtrade_traderoom_win2_nscr = 38,
 	NARC_worldtrade_worldtrade_obj_s_lz_ncgr = 39,
 	NARC_worldtrade_worldtrade_obj_s_NCER = 40,
 	NARC_worldtrade_worldtrade_obj_s_NANR = 41,
