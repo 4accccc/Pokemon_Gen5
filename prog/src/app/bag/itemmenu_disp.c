@@ -1451,11 +1451,10 @@ void ITEMDISP_ScrollCursorMove(FIELD_ITEMMENU_WORK* pWork)
 
   if(GFL_UI_TP_GetPointCont(&x, &y) == TRUE){
     GFL_CLACTPOS pos;
-    if(y < _SCROLL_TOP_Y){
-      return;
-    }
-    if(y > _SCROLL_BOTTOM_Y){
-      return;
+    if( y < _SCROLL_TOP_Y ){
+			y = _SCROLL_TOP_Y;
+    }else if( y > _SCROLL_BOTTOM_Y ){
+			y = _SCROLL_BOTTOM_Y;
     }
     GFL_CLACT_WK_GetPos( pWork->clwkScroll , &pos, CLWK_SETSF_NONE );
     pos.y = y;
@@ -1479,16 +1478,26 @@ void ITEMDISP_ScrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num)
     int ymax = _SCROLL_BOTTOM_Y - _SCROLL_TOP_Y;
     int y = ((num * ymax)/length) + _SCROLL_TOP_Y;
 
+    if( y < _SCROLL_TOP_Y ){
+      y = _SCROLL_TOP_Y;
+    }else if( y > _SCROLL_BOTTOM_Y ){
+      y = _SCROLL_BOTTOM_Y;
+    }
+
+		PMSND_PlaySE( SE_BAG_SRIDE );
+
+/*
     if(y < _SCROLL_TOP_Y){
       y=_SCROLL_TOP_Y;
     }
     if(y > _SCROLL_BOTTOM_Y){
       y=_SCROLL_BOTTOM_Y;
     }
-    else
+    else			// ‚±‚ê‰½...??
     {
       PMSND_PlaySE( SE_BAG_SRIDE );
     }
+*/
 
     GFL_CLACT_WK_GetPos( pWork->clwkScroll , &pos, CLWK_SETSF_NONE );
     pos.y = y;

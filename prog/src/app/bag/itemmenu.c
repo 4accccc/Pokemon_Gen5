@@ -556,15 +556,22 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
   if( length >= ITEMMENU_SCROLLBAR_ENABLE_NUM && GFL_UI_TP_GetPointCont(&x, &y) == TRUE )
   {
     // îÕàÕîªíË
+/*
     if((y <= _SCROLL_TOP_Y) || (y >= _SCROLL_BOTTOM_Y))
     {
       return FALSE;
     }
-
+*/
     if((x >= (32*8)) || (x <= (28*8)) )
     {
       return FALSE;
     }
+
+		if( y < _SCROLL_TOP_Y ){
+			y = _SCROLL_TOP_Y;
+		}else if( y > _SCROLL_BOTTOM_Y ){
+			y = _SCROLL_BOTTOM_Y;
+		}
 
     // É^ÉbÉ`èÛë‘
     KTST_SetDraw( pWork, FALSE );

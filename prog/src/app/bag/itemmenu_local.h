@@ -60,8 +60,8 @@ enum
 #define ITEM_LIST_NUM (8)
 #define _CELLUNIT_NUM (34)
 
-#define _SCROLL_TOP_Y  (8+8)  //スクロールバーの最初の位置
-#define _SCROLL_BOTTOM_Y  (8*19)  //スクロールバーの最後の位置
+#define _SCROLL_TOP_Y  (24+2)  //スクロールバーの最初の位置
+#define _SCROLL_BOTTOM_Y  (8*18-2)  //スクロールバーの最後の位置
 
 #define _SUBMENU_LISTMAX (8)
 
