@@ -348,7 +348,7 @@
   DEF_CMD( EvCmdGetPocketID, EV_SEQ_GET_POCKET_ID )
   DEF_CMD( EvCmdGetEffectEncountItem, EV_SEQ_GET_EFFECT_ENCOUNT_ITEM )
 
-  NO_CMD()
+  DEF_CMD( EvCmdGetItemType, EV_SEQ_GET_ITEM_TYPE )
   NO_CMD()
   NO_CMD()
   NO_CMD()
@@ -950,7 +950,7 @@
   DEF_CMD( EvCmdGetResearchTeamRank, EV_SEQ_GET_RESEARCH_TEAM_RANK ) 
   DEF_CMD( EvCmdResearchTeamRankUp, EV_SEQ_RESEARCH_TEAM_RANK_UP ) 
 
-  //配布ポケモンイベント演出関連
+  //配布ポケモンイベントで使用するために用意したコマンド
   DEF_CMD( EvCmdGetEvtPokePos, EV_SEQ_GET_EVT_POKE_POS )
   DEF_CMD( EvCmdMoveBall, EV_SEQ_MOVE_BALL )
   DEF_CMD( EvCmdStartBallAnm, EV_SEQ_START_BALL_ANM )
@@ -959,7 +959,7 @@
   DEF_CMD( EvCmdWaitBallPokeApp, EV_SEQ_WAIT_BALL_POKE_APP )
   DEF_CMD( EvCmdRiseObj, EV_SEQ_EVENT_RISE_OBJ )
   DEF_CMD( EvCmdEventRotateObj, EV_SEQ_EVENT_ROTATE_OBJ )
-  NO_CMD()
+  DEF_CMD( EvCmdDispPokeWin, EV_SEQ_DISP_POKE_WIN )
 
   NO_CMD()
   NO_CMD()

@@ -92,6 +92,7 @@
 #include "scrcmd_sppoke_trio.h"
 #include "scrcmd_sppoke.h"
 #include "scrcmd_symbol.h"
+#include "scrcmd_poke_win.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

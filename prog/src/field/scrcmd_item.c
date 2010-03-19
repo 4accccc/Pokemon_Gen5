@@ -196,6 +196,23 @@ VMCMD_RESULT EvCmdGetPocketID(VMHANDLE * core, void *wk )
 	return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * アイテムの種類を取得
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetItemType(VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+  u16 item_no = SCRCMD_GetVMWorkValue( core, work );
+  u16 *ret_wk = SCRCMD_GetVMWork( core, work );
+  
+  *ret_wk = (u16)ITEM_GetParam( item_no, ITEM_PRM_ITEM_TYPE, heapID );
+	return VMCMD_RESULT_CONTINUE;
+}
 
 //======================================================================
 //  パーツ

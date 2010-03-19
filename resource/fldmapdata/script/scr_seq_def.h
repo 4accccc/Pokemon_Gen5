@@ -3422,6 +3422,26 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_ITEM_TYPE
+ * @brief 指定アイテムの種類を取得する
+ * @param item_no   アイテムナンバー
+ * @param ret_wk    結果を受け取るワーク  itemtype_def.h参照
+ *
+ * item_noで指定したアイテムに対応したアイテムタイプを取得する
+ */
+//--------------------------------------------------------------
+#define _GET_ITEM_TYPE( item_no, ret_wk )   \
+    _ASM_GET_ITEM_TYPE item_no, ret_wk
+
+
+    .macro  _ASM_GET_ITEM_TYPE item_no, ret_wk
+    .short  EV_SEQ_GET_ITEM_TYPE
+    .short  \item_no
+    .short  \ret_wk
+    .endm
+    
+//--------------------------------------------------------------
+/**
  * @def _GET_EFFECT_ENCOUNT_ITEM
  * @brief エフェクトエンカウントアイテムイベント　アイテムNoを取得
  * @param ret_wk    結果を受け取るワーク
@@ -5116,6 +5136,33 @@
   .short \itemno
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _ADD_POKEMON_TO_BOX
+ * @brief ポケモンをボックスに追加する
+ * @param ret_wk 結果を受け取るワーク
+ * @param monsno  モンスターナンバー
+ * @param formno  フォームナンバー
+ * @param tokusei 特性
+ * @param level   レベル
+ * @param itemno  所持アイテム
+ * @param 
+ * @retval BOOL 追加できたらTRUE
+ */
+//--------------------------------------------------------------
+#define _ADD_POKEMON_TO_BOX( ret_wk, monsno, formno, tokusei, level, itemno ) \
+    _ASM_ADD_POKEMON_TO_BOX ret_wk, monsno, formno, tokusei, level, itemno
+
+  .macro _ASM_ADD_POKEMON_TO_BOX ret_wk, monsno, formno, tokusei, level, itemno
+  .short EV_SEQ_ADD_POKEMON_TO_BOX
+  .short \ret_wk
+  .short \monsno
+  .short \formno
+  .short \tokusei
+  .short \level
+  .short \itemno
+  .endm
+  
 //--------------------------------------------------------------
 /**
  * @def _CHECK_POKE_WAZA
@@ -9642,4 +9689,26 @@
   .macro _ASM_EVENT_ROTATE_OBJ obj_id
   .short EV_SEQ_EVENT_ROTATE_OBJ
   .short \obj_id
-  .endm    
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief ポケモンウィンドウを出す（パッチールのブチ非対応）
+ *
+ * @param monsno      モンスターナンバー
+ * @param form        フォルムナンバー
+ * @param sex         性別
+ * @param rare        レアカラー　0：通常　1：レア
+ */
+//--------------------------------------------------------------
+#define _DISP_POKE_WIN( monsno, form, sex, rare ) \
+    _ASM_DISP_POKE_WIN monsno, form, sex, rare
+
+  .macro _ASM_DISP_POKE_WIN monsno, form, sex, rare
+  .short EV_SEQ_DISP_POKE_WIN
+  .short \monsno
+  .short \form
+  .short \sex
+  .short \rare
+  .endm
+

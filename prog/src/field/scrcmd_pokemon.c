@@ -1345,11 +1345,17 @@ VMCMD_RESULT EvCmdAddPokemonToBox( VMHANDLE *core, void *wk )
   u16         itemno = SCRCMD_GetVMWorkValue( core, work );  // コマンド第6引数
   POKEMON_PARAM*  pp = NULL;
 
+  BOX_MANAGER *box = GAMEDATA_GetBoxManager(gdata);
+
   // ボックスがいっぱいなら追加しない
-  if( 0 )
   {
-    *ret_wk = FALSE;
-    return VMCMD_RESULT_CONTINUE;
+    int max = BOX_POKESET_MAX;
+    int now = BOXDAT_GetPokeExistCountTotal( box );
+    if ( max<=now )
+    {
+      *ret_wk = FALSE;
+      return VMCMD_RESULT_CONTINUE;
+    }
   }
 
   // 追加するポケモンを作成
@@ -1375,7 +1381,6 @@ VMCMD_RESULT EvCmdAddPokemonToBox( VMHANDLE *core, void *wk )
   //ボックスに追加
   {
     BOOL rc;
-    BOX_MANAGER *box = GAMEDATA_GetBoxManager(gdata);
     rc = BOXDAT_PutPokemon( box, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp) );
     GF_ASSERT(rc);
   }
