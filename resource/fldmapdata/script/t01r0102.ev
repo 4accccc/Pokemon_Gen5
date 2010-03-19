@@ -259,7 +259,7 @@ ev_first_pkeget:
 	_SYSWIN_CLOSE()
 	
 	//ポケモン追加 【仮】追加ポケモンのラベルが仮。アプリ完成後このラベル自体が削除予定。
-	_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, SCWK_TEMP0, 0, TOKUSYU_NULL, 5, 0 )
+	_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, SCWK_TEMP0, 0, TOKUSYU_NULL, 5, 0, ITEM_MONSUTAABOORU )
 	
 	//初期３体入手フラグ
 	_FLAG_SET( SYS_FLAG_FIRST_POKE_GET )

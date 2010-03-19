@@ -25,7 +25,7 @@ _EVENT_DATA    ev_c03r0401_girl1_01		//映画関連イベントの少女
 _EVENT_DATA    ev_c03r0401_poke22_01	//映画関連イベントのゾロア
 _EVENT_DATA_END
 
-DEFINE_LOCAL poke_pos   //引数で必要なので定義
+DEFINE_LOCAL poke_pos   //手持ちセレビィの位置
 
 /************************************************************/
 /*                      少年１（ゾロア）                    */
@@ -73,6 +73,9 @@ EVENT_START	ev_c03r0401_boy1_01
       //自機を前進
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_front )
       _OBJ_ANIME_WAIT()
+
+      //イベントセレビィお役御免(イベントアフターフラグを立てる)
+      _SET_EVT_POKE_AFT_FLG( MONSNO_SEREBHI, poke_pos )
 
       //ゾロアイベント進行中状態にする
       $WK_SCENE_C03R0401_ZOROA = 1
@@ -253,13 +256,12 @@ add_zoroa:
         _CALL zoroa_ball_in
 
         IF $temoti != 0 THEN        //手持ち
-          _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_ZOROA, 0, TOKUSYU_NULL, 99, 0 )  //@todo レベル指定
+          _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_ZOROA, 0, TOKUSYU_NULL, 99, 0, ret_item )  //@todo レベル指定
 
-          //@todo どこに追加したかをしらべて、捕まえたボールを書き換える
           _SYSWIN_MSG( msg_c03r0401_narrator_02, POS_DOWN )
           _SYSWIN_CLOSE()
         ELSE                        //ボックス
-          _ADD_POKEMON_TO_BOX( SCWK_ANSWER, MONSNO_ZOROA, 0, TOKUSYU_NULL, 99, 0 )//@todo レベル指定+ボール
+          _ADD_POKEMON_TO_BOX( SCWK_ANSWER, MONSNO_ZOROA, 0, TOKUSYU_NULL, 99, 0, ret_item )//@todo レベル指定
           _SYSWIN_MSG( msg_c03r0401_narrator_03, POS_DOWN )
           _SYSWIN_CLOSE()
         ENDIF
@@ -386,8 +388,12 @@ EVENT_START	ev_c03r0401_girl1_01
           SWITCH $player_dir
           CASE DIR_LEFT THEN
             //自機回り込み
-            _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_girl )
+            _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_girl_right )
             _OBJ_ANIME_WAIT()
+          CASE DIR_DOWN THEN
+            //自機回り込み
+            _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_to_girl_up )
+            _OBJ_ANIME_WAIT()  
           ENDSWITCH
         }
 
@@ -481,10 +487,20 @@ _ANIME_LABEL	anm_player_move_front
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//自機　女の子の話を聞くために正面へ
+//自機　女の子の話を聞くために正面へ 女の子の右側にいるとき
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_to_girl
-  _ANIME_DATA	AC_WALK_U_8F,1
+_ANIME_LABEL	anm_player_to_girl_right
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機　女の子の話を聞くために正面へ 女の子の上側にいるとき
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_to_girl_up
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,2
   _ANIME_DATA	AC_WALK_L_8F,1
   _ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0

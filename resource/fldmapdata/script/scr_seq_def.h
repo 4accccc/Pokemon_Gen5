@@ -5121,14 +5121,14 @@
  * @param tokusei 特性
  * @param level   レベル
  * @param itemno  所持アイテム
- * @param 
+ * @param ball    捕獲ボールアイテムナンバー
  * @retval BOOL 追加できたらTRUE
  */
 //--------------------------------------------------------------
-#define _ADD_POKEMON_TO_PARTY( ret_wk, monsno, formno, tokusei, level, itemno ) \
-    _ASM_ADD_POKEMON_TO_PARTY ret_wk, monsno, formno, tokusei, level, itemno
+#define _ADD_POKEMON_TO_PARTY( ret_wk, monsno, formno, tokusei, level, itemno, ball ) \
+    _ASM_ADD_POKEMON_TO_PARTY ret_wk, monsno, formno, tokusei, level, itemno, ball
 
-  .macro _ASM_ADD_POKEMON_TO_PARTY ret_wk, monsno, formno, tokusei, level, itemno
+  .macro _ASM_ADD_POKEMON_TO_PARTY ret_wk, monsno, formno, tokusei, level, itemno, ball
   .short EV_SEQ_ADD_POKEMON_TO_PARTY
   .short \ret_wk
   .short \monsno
@@ -5136,6 +5136,7 @@
   .short \tokusei
   .short \level
   .short \itemno
+  .short \ball
   .endm
 
 //--------------------------------------------------------------
@@ -5148,14 +5149,14 @@
  * @param tokusei 特性
  * @param level   レベル
  * @param itemno  所持アイテム
- * @param 
+ * @param ball    捕獲ボールアイテムナンバー
  * @retval BOOL 追加できたらTRUE
  */
 //--------------------------------------------------------------
-#define _ADD_POKEMON_TO_BOX( ret_wk, monsno, formno, tokusei, level, itemno ) \
-    _ASM_ADD_POKEMON_TO_BOX ret_wk, monsno, formno, tokusei, level, itemno
+#define _ADD_POKEMON_TO_BOX( ret_wk, monsno, formno, tokusei, level, itemno, ball ) \
+    _ASM_ADD_POKEMON_TO_BOX ret_wk, monsno, formno, tokusei, level, itemno, ball
 
-  .macro _ASM_ADD_POKEMON_TO_BOX ret_wk, monsno, formno, tokusei, level, itemno
+  .macro _ASM_ADD_POKEMON_TO_BOX ret_wk, monsno, formno, tokusei, level, itemno, ball
   .short EV_SEQ_ADD_POKEMON_TO_BOX
   .short \ret_wk
   .short \monsno
@@ -5163,6 +5164,7 @@
   .short \tokusei
   .short \level
   .short \itemno
+  .short \ball
   .endm
   
 //--------------------------------------------------------------

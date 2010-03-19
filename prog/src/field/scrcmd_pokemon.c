@@ -43,6 +43,9 @@
 
 #include "waza_tool/wazano_def.h" // for WAZANO_xxxx
 
+#include "item/item.h"    //for ITEM_
+#include "item/itemtype_def.h"    //for ITEMTYPE_BALL
+
 
 //======================================================================
 //  define
@@ -815,6 +818,7 @@ VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk )
   u16        tokusei = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数
   u16          level = SCRCMD_GetVMWorkValue( core, work );  // コマンド第5引数
   u16         itemno = SCRCMD_GetVMWorkValue( core, work );  // コマンド第6引数
+  u16         ball   = SCRCMD_GetVMWorkValue( core, work );  // コマンド第7引数
   POKEMON_PARAM*  pp = NULL;
 
   // 手持ちがいっぱいなら追加しない
@@ -828,6 +832,12 @@ VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk )
   pp = PP_Create( monsno, level, PTL_SETUP_ID_AUTO, heap_id );
   PP_Put( pp, ID_PARA_form_no, formno );    // フォーム
   PP_Put( pp, ID_PARA_item, itemno );       // 所持アイテム
+
+  {
+    //捕獲ボールセット
+    int item_type = ITEM_GetParam( ball, ITEM_PRM_ITEM_TYPE, heap_id );
+    if (item_type == ITEMTYPE_BALL) PP_Put( pp, ID_PARA_get_ball, ball );     // 捕獲ボールセット
+  }
 
   if( tokusei != TOKUSYU_NULL ){
     PP_Put( pp, ID_PARA_speabino, tokusei );  // 特性
@@ -1343,6 +1353,7 @@ VMCMD_RESULT EvCmdAddPokemonToBox( VMHANDLE *core, void *wk )
   u16        tokusei = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数
   u16          level = SCRCMD_GetVMWorkValue( core, work );  // コマンド第5引数
   u16         itemno = SCRCMD_GetVMWorkValue( core, work );  // コマンド第6引数
+  u16         ball   = SCRCMD_GetVMWorkValue( core, work );  // コマンド第7引数
   POKEMON_PARAM*  pp = NULL;
 
   BOX_MANAGER *box = GAMEDATA_GetBoxManager(gdata);
@@ -1362,6 +1373,11 @@ VMCMD_RESULT EvCmdAddPokemonToBox( VMHANDLE *core, void *wk )
   pp = PP_Create( monsno, level, PTL_SETUP_ID_AUTO, heap_id );
   PP_Put( pp, ID_PARA_form_no, formno );    // フォーム
   PP_Put( pp, ID_PARA_item, itemno );       // 所持アイテム
+  {
+    //捕獲ボールセット
+    int item_type = ITEM_GetParam( ball, ITEM_PRM_ITEM_TYPE, heap_id );
+    if (item_type == ITEMTYPE_BALL) PP_Put( pp, ID_PARA_get_ball, ball );     // 捕獲ボールセット
+  }
 
   if( tokusei != TOKUSYU_NULL ){
     PP_Put( pp, ID_PARA_speabino, tokusei );  // 特性
