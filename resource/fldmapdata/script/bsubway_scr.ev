@@ -1858,9 +1858,10 @@ _RET
 sub_receipt_common_select_btl_box:
 {
   DEFINE_LOCAL ret
+  DEFINE_LOCAL sel
   
-  $SCWK_ANSWER = TRUE
-
+  $sel = TRUE
+  
   //バトルボックス、ポケモン居るか
   _BSUBWAY_TOOL( BSWTOOL_CHK_BTL_BOX_IN, BSW_NULL, BSW_NULL, ret )
   
@@ -1880,14 +1881,14 @@ sub_receipt_common_select_btl_box:
     ELSIF $ret == 1 THEN
       _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, TRUE, BSW_NULL, ret )
     ELSE //キャンセル
-      $SCWK_ANSWER = FALSE
+      $sel = FALSE
     ENDIF
   ELSE //バトルボックスポケモン居ない
     _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, FALSE, BSW_NULL, ret )
   ENDIF
   
   //事前レギュレーションチェック
-  IF $SCWK_ANSWER == TRUE THEN 
+  IF $sel == TRUE THEN 
     _BSUBWAY_TOOL( BSWSUB_CHK_REGULATION, BSW_NULL, BSW_NULL, ret )
     
     IF $ret == FALSE THEN //エラーメッセージ
@@ -1900,9 +1901,11 @@ sub_receipt_common_select_btl_box:
       _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( ret )
       _AB_KEYWAIT()
       _MSGWIN_CLOSE()
-      $SCWK_ANSWER = FALSE
+      $sel = FALSE
     ENDIF
   ENDIF
+  
+  $SCWK_ANSWER = $sel
 }
 _RET
 
