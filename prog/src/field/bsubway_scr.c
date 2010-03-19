@@ -1030,7 +1030,7 @@ u16 BSUBWAY_SCRWORK_SetWifiRank(
   
   switch( mode ){
   case BSWAY_SETMODE_get:
-    return ret;
+    return rank;
   case BSWAY_SETMODE_inc:  //Inc
     BSUBWAY_SCOREDATA_SetFlag( score,  //˜A‘±”síƒtƒ‰ƒO‚ğ—‚Æ‚·
       BSWAY_SCOREDATA_FLAG_WIFI_LOSE_F, BSWAY_SETMODE_reset);
