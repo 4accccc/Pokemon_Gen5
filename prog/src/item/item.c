@@ -340,6 +340,8 @@ s32 ITEM_GetBufParam( ITEMDATA * item, u16 param )
     return (s32)item->type;
   case ITEM_PRM_ITEM_SPEND:         // 消費するか
     return (s32)item->spend;
+	case ITEM_PRM_SORT_NUMBER:				// ソート番号
+		return (s32)item->sort;
 
   default:              // 汎用ワーク
     switch( item->work_type ){

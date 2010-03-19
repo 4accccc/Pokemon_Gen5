@@ -2491,7 +2491,8 @@ static void InputNum_ButtonState( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 //==============================================================
 typedef struct {
   ITEM_ST st;
-  s32 type;
+  u16 type;
+	u16	no;
 } ITEM_SORTDATA_TYPE;
 
 //-----------------------------------------------------------------------------
@@ -2504,35 +2505,23 @@ typedef struct {
  *  @retval
  */
 //-----------------------------------------------------------------------------
-static s32 QSort_Type( void* elem1, void* elem2 )
+static s32 QSort_Type( void * elem1, void * elem2 )
 {
-  ITEM_SORTDATA_TYPE* p1 = (ITEM_SORTDATA_TYPE*)elem1;
-  ITEM_SORTDATA_TYPE* p2 = (ITEM_SORTDATA_TYPE*)elem2;
+	ITEM_SORTDATA_TYPE * p1 = (ITEM_SORTDATA_TYPE *)elem1;
+	ITEM_SORTDATA_TYPE * p2 = (ITEM_SORTDATA_TYPE *)elem2;
 
-  if( p1->type == p2->type )
-  {
-    // 種類が一致した場合は純粋なID比較
-    if( p1->st.id == p2->st.id )
-    {
-      return 0;
-    }
-    else if( p1->st.id > p2->st.id )
-    {
-      return 1;
-    }
-    else
-    {
-      return -1;
-    }
+	if( p1->type == p2->type ){
+		if( p1->no == p2->no ){
+			return 0;
+		}else if( p1->no > p2->no ){
+			return 1;
+		}else{
+			return -1;
+		}
+	}else if( p1->type > p2->type ){
+		return 1;
   }
-  else if( p1->type > p2->type )
-  {
-    return 1;
-  }
-  else
-  {
-    return -1;
-  }
+	return -1;
 }
 
 //-----------------------------------------------------------------------------
@@ -2599,7 +2588,9 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
   // ソート用データ生成
 	for( i=0; i<length; i++ ){
 		sort[i].type = ITEM_GetParam( item[i].id, ITEM_PRM_ITEM_TYPE, pWork->heapID );
+		sort[i].no   = ITEM_GetParam( item[i].id, ITEM_PRM_SORT_NUMBER, pWork->heapID );
 		sort[i].st   = item[i];
+		OS_Printf( "id = %d, sort = %d\n", sort[i].st.id, sort[i].no );
 	}
 
 #ifdef PM_DEBUG

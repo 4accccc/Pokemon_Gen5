@@ -35,7 +35,7 @@ struct _ITEM_DATA {
 	u8	type;						// アイテム種類
 	u8	spend;					// 消費するか
 
-	u8	dmy;						// ダミー（余り）
+	u8	sort;						// ソート番号
 
 	u8	work[20];				// 汎用ワーク
 };
