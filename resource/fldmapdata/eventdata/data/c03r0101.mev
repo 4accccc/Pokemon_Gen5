@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/18 17:20:43
+#save date:2010/03/19 18:55:05
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03r0101.wms
 #SECTION START:OBJ_EVENT
@@ -409,7 +409,24 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-0
+1
+#event number: 0
+#Pos Event Label
+POSID_FORCE_QUESTION
+#Pos Script Name
+SCRID_FORCE_QUESTION
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C03R0101_QUESTION
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-152 0 56
+#size
+3 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
