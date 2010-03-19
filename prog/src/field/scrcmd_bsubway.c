@@ -649,7 +649,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       LOCATION loc;
       u32 zone_id = data_PlayModeZoneID[play_mode];
       const VecFx32 *pos = &data_PlayModeRecoverPos[play_mode];
-      LOCATION_SetDirect( &loc, zone_id, DIR_RIGHT, pos->x, pos->y, pos->z );
+      LOCATION_SetDirect( &loc, zone_id, EXIT_DIR_RIGHT,
+          pos->x, pos->y, pos->z );
       GAMEDATA_SetSpecialLocation( gdata, &loc );
       EVENTWORK_SetEventFlag( event, SYS_FLAG_SPEXIT_REQUEST );
     }else{

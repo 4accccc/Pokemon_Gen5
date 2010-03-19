@@ -1895,6 +1895,7 @@ sub_receipt_common_select_btl_box:
       _NUMBER( 0, ret, 1 )
       $SCWK_TEMP0 = msg_bsw_scr_21
       _CALL sub_receipt_common_bwin
+      _MSGWIN_CLOSE()
       _BSUBWAY_TOOL( BSWSUB_GET_REGULATION_TYPE, BSW_NULL, BSW_NULL, ret )
       _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( ret )
       _AB_KEYWAIT()
