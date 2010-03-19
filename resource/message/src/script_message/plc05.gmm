@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-18T15:44:20"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T15:30:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1393" top="195" right="2098" bottom="815" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -302,8 +302,8 @@
 ……でも　ここは　どこ？▼
 かんばんの　したを　くぐったら
 みんな　いなくなっちゃったよ</language>
-		<language name="JPN_KANJI" width="256">街の看板の下に
-よく　デルダマが落ちてるんだ！▽
+		<language name="JPN_KANJI" width="256">街の　看板の　下に
+よく　デルダマが　落ちてるんだ！▽
 ……でも　ここは　どこ？▼
 看板の下を　くぐったら
 みんな　いなくなっちゃったよ</language>
@@ -318,9 +318,9 @@
 だれかを　たすけると
 そのばに　あふれだすって　うわさだよ！</language>
 		<language name="JPN_KANJI" width="256">デルダマは　感謝の気持ちが
-集まった玉なんだって！▼
+集まった玉　なんだって！▼
 だれかを　助けると
-その場にあふれ出すって　うわさだよ！</language>
+その場に　あふれだすって　うわさだよ！</language>
 	</row>
 
 	<row id="plc05_man03_01" back-color="#c0c0c0,,,,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">

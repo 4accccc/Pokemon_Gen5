@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-02-24T20:56:51"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T15:39:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1384" top="217" right="2089" bottom="837" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -438,7 +438,7 @@
 どこへ　きえたのか　なぞじゃったが▽
 つきとめることが　できたのじゃ！▼
 もう　わかるじゃろう…？▼
-そう　この　どうくつの　おくじゃ！▼
+そう　この　ほらあなの　おくじゃ！▼
 この　さきに　すすめば
 アトス　ポルトス　アラミスの　だれかが▽
 おぬしを　でむかえることじゃろう…！</language>
@@ -446,7 +446,7 @@
 どこへ　消えたのか　なぞじゃったが▽
 つきとめることが　できたのじゃ！▼
 もう　わかるじゃろう…？▼
-そう　この　洞くつの　奥じゃ！▼
+そう　この　洞穴の　奥じゃ！▼
 この　さきに　進めば
 アトス　ポルトス　アラミスの　だれかが▽
 おぬしを　出迎えることじゃろう…！</language>
