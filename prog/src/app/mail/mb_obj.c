@@ -709,7 +709,7 @@ static void MailBoxObjResLoad( MAILBOX_APP_WORK * appwk )
   // Pltt
   appwk->clres[RES_PAL][PAL_ID_APP_COMMON] = GFL_CLGRP_PLTT_Register( handle,
                                             APP_COMMON_GetBarIconPltArcIdx(),
-                                            CLSYS_DRAW_MAIN, 2*32, HEAPID_MAILBOX_APP );
+                                            CLSYS_DRAW_MAIN, 4*32, HEAPID_MAILBOX_APP );
   // CellAnm
   appwk->clres[RES_CELANM][CEL_ID_APP_COMMON] = GFL_CLGRP_CELLANIM_Register( handle,
                                             APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_32K),
