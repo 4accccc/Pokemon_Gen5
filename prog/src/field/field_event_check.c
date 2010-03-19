@@ -1356,30 +1356,14 @@ static GMEVENT * checkSpecialEvent( EV_REQUEST * req )
 //--------------------------------------------------------------
 static GMEVENT* checkPosEvent( EV_REQUEST* req )
 {
-  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( req->gsys );
-  FIELD_PLAYER*    player = FIELDMAP_GetFieldPlayer( fieldmap );
-  MAPATTR_VALUE attrval;
-  VecFx32 pos;
-  FIELD_PLAYER_GetPos( player, &pos );  // 自機座標を取得
+  GMEVENT* event;
 
-  // アトリビュートをチェック
-  { 
-    FLDMAPPER* mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
-    MAPATTR attr = MAPATTR_GetAttribute( mapper, &pos );
-    attrval = MAPATTR_GetAttrValue( attr );
+  // 流砂POSイベントチェック
+  event = checkPosEvent_sandstream( req );
+  if( event != NULL ) { 
+    return event;
   }
 
-  // 流砂アトリビュートにいる場合はイレギュラーなPOSイベント判定を行う
-  if( MAPATTR_VALUE_CheckSandStream(attrval) == TRUE )
-  { 
-    // 流砂POSイベントチェック
-    GMEVENT* event = checkPosEvent_sandstream( req );
-    if( event != NULL )
-    { // 流砂POSイベント起動
-      return event;
-    }
-    return NULL;
-  }
   // 通常POSイベントチェック
   return checkPosEvent_core( req, DIR_NOT );
 }
@@ -1550,26 +1534,27 @@ static GMEVENT * checkPosEvent_prefetchDirection( EV_REQUEST * req )
 static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req )
 {
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( req->gsys );
-  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldmap );
-  u16 zone_id = FIELDMAP_GetZoneID( fieldmap );
+  FIELD_PLAYER*  player   = FIELDMAP_GetFieldPlayer( fieldmap );
+  u16            zone_id  = FIELDMAP_GetZoneID( fieldmap );
+
   const POS_EVENT_DATA* pos_event;
   VecFx32 pos;
   FIELD_PLAYER_GetPos( player, &pos );
 
   // アトリビュートをチェック
   {
-		FLDMAPPER* mapper = FIELDMAP_GetFieldG3Dmapper( fieldmap );
-    MAPATTR attr = MAPATTR_GetAttribute( mapper, &pos );
+		FLDMAPPER*    mapper  = FIELDMAP_GetFieldG3Dmapper( fieldmap );
+    MAPATTR       attr    = MAPATTR_GetAttribute( mapper, &pos );
     MAPATTR_VALUE attrval = MAPATTR_GetAttrValue( attr );
-    if( MAPATTR_VALUE_CheckSandStream(attrval) != TRUE ) return NULL; // 流砂アトリビュートじゃない
+    if( MAPATTR_VALUE_CheckSandStream(attrval) != TRUE ) { return NULL; } // 流砂アトリビュートじゃない
   }
 
   // 流砂POSイベントを取得
   {
-    EVENTWORK *evwork = GAMEDATA_GetEventWork( req->gamedata );
+    EVENTWORK* evwork = GAMEDATA_GetEventWork( req->gamedata );
     pos_event = EVENTDATA_GetPosEvent_XZ( req->evdata, evwork, &pos, DIR_NOT );
-    if( !pos_event ) return NULL;   // POSイベントが無い
-    if( pos_event->pos_type != EVENTDATA_POSTYPE_GRID ) return NULL; // グリッド以外のPOSイベント発見
+    if( !pos_event ) { return NULL; } // POSイベントが無い
+    if( pos_event->pos_type != EVENTDATA_POSTYPE_GRID ) { return NULL; } // グリッド以外のPOSイベント発見
   }
 
   // 流砂の中心にいるかどうかチェック
@@ -1579,25 +1564,25 @@ static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req )
     pos_event_gpos = (const POS_EVENT_DATA_GPOS*)pos_event->pos_buf;
     centerGX = pos_event_gpos->gx + pos_event_gpos->sx/2;
     centerGZ = pos_event_gpos->gz + pos_event_gpos->sz/2;
+    // 中心にいたらPOSイベント起動
     if( (centerGX == FX32_TO_GRID(pos.x)) &&
-        (centerGZ == FX32_TO_GRID(pos.z)) )
-    { // 中心にいたらPOSイベント起動
+        (centerGZ == FX32_TO_GRID(pos.z)) ) { 
       GMEVENT* event = SCRIPT_SetEventScript( req->gsys, pos_event->id, NULL, req->heapID );
-        return event;
+      return event;
     }
   }
 
   // 主人公の状態チェック
   {
     PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( player );
-    MMDL* mmdl = FIELD_PLAYER_GetMMdl( player );
-    u16  acmd = MMDL_GetAcmdCode( mmdl );
+    MMDL*            mmdl = FIELD_PLAYER_GetMMdl( player );
+    u16              acmd = MMDL_GetAcmdCode( mmdl );
+    // 歩き以外ならPOSイベント起動
     if( (form != PLAYER_MOVE_FORM_NORMAL) ||
-        (acmd == AC_DASH_U_4F) ||
-        (acmd == AC_DASH_D_4F) ||
-        (acmd == AC_DASH_L_4F) ||
-        (acmd == AC_DASH_R_4F) )
-    { // 歩き以外ならPOSイベント起動
+        (acmd == AC_DASH_U_6F) ||
+        (acmd == AC_DASH_D_6F) ||
+        (acmd == AC_DASH_L_6F) ||
+        (acmd == AC_DASH_R_6F) ) { 
       GMEVENT* event = SCRIPT_SetEventScript( req->gsys, pos_event->id, NULL, req->heapID );
       return event;
     }
