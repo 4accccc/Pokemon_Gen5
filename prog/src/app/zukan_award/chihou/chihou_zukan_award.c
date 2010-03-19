@@ -86,6 +86,7 @@ enum
 {
   SEQ_START          = 0,
   SEQ_FADE_IN,
+  SEQ_SCROLL,
   SEQ_MAIN,
   SEQ_FADE_OUT,
   SEQ_END,
@@ -122,6 +123,11 @@ static const u8 bmpwin_setup[TEXT_MAX][9] =
 // 文字数
 #define TEXT_NAME_LEN_MAX    (32)  // EOMを含めた文字数
 
+// スクロール
+#define SCROLL_START_POS_Y  (64)
+#define SCROLL_WAIT         ( 0)  // 0以上の値。0で毎フレーム移動。1で待ち、移動、待ち、移動。2で待ち、待ち、移動。
+#define SCROLL_VALUE        ( 2)  // 移動するときの移動量。
+
 
 //=============================================================================
 /**
@@ -149,6 +155,9 @@ typedef struct
   GFL_MSGDATA*                msgdata;
   GFL_BMPWIN*                 text_bmpwin[TEXT_MAX];
   BOOL                        text_finish[TEXT_MAX];  // bmpwinの転送が済んでいればTRUE
+
+  // スクロール
+  u8                          scroll_wait_count;
 }
 CHIHOU_ZUKAN_AWARD_WORK;
 
@@ -169,6 +178,11 @@ static void Chihou_Zukan_Award_BgExit( CHIHOU_ZUKAN_AWARD_WORK* work );
 static void Chihou_Zukan_Award_TextInit( CHIHOU_ZUKAN_AWARD_WORK* work );
 static void Chihou_Zukan_Award_TextExit( CHIHOU_ZUKAN_AWARD_WORK* work );
 static void Chihou_Zukan_Award_TextMain( CHIHOU_ZUKAN_AWARD_WORK* work );
+
+// スクロール
+static void Chihou_Zukan_Award_ScrollInit( CHIHOU_ZUKAN_AWARD_WORK* work );
+static void Chihou_Zukan_Award_ScrollMain( CHIHOU_ZUKAN_AWARD_WORK* work );
+static BOOL Chihou_Zukan_Award_ScrollIsEnd( CHIHOU_ZUKAN_AWARD_WORK* work );
 
 
 //=============================================================================
@@ -300,6 +314,13 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcInit( GFL_PROC* proc, int* seq, vo
   APP_NOGEAR_SUBSCREEN_Init();
   APP_NOGEAR_SUBSCREEN_Trans( work->heap_id, work->param->mystatus->sex );  // PM_MALE or PM_FEMALE  // include/pm_version.h
 
+  // スクロール
+  Chihou_Zukan_Award_ScrollInit( work );
+
+  // バックグラウンドカラー
+  GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
+  GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x0000 );
+
   // フェードイン(黒→見える)
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
 
@@ -357,6 +378,15 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, vo
     {
       if( !GFL_FADE_CheckFade() )
       {
+        if( work->param->b_fix ) *seq = SEQ_MAIN;
+        else                     *seq = SEQ_SCROLL;
+      }
+    }
+    break;
+  case SEQ_SCROLL:
+    {
+      if( Chihou_Zukan_Award_ScrollIsEnd( work ) )
+      {
         *seq = SEQ_MAIN;
       }
     }
@@ -403,6 +433,7 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, vo
 
   // メイン
   Chihou_Zukan_Award_TextMain( work );
+  Chihou_Zukan_Award_ScrollMain( work );
 
   // 2D描画
   CHIHOU_ZUKAN_AWARD_GRAPHIC_2D_Draw( work->graphic );
@@ -599,7 +630,8 @@ static void Chihou_Zukan_Award_TextInit( CHIHOU_ZUKAN_AWARD_WORK* work )
     STRBUF*  strbuf       = GFL_MSG_CreateString( work->msgdata, msg_award_04 );
     u16      str_width    = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
     u16      bmp_width    = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_STAFF]) );
-    u16      x            = bmp_width - str_width;  // 右寄せ
+    //u16      x            = bmp_width - str_width;  // 右寄せ
+    u16      x            = 0;  // gmmで右寄せ指定しているので、0でいい。
     PRINTSYS_PrintQueColor(
         work->print_que,
         GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_STAFF]),
@@ -645,5 +677,48 @@ static void Chihou_Zukan_Award_TextMain( CHIHOU_ZUKAN_AWARD_WORK* work )
       }
     }
   }
+}
+
+//-------------------------------------
+/// スクロール
+//=====================================
+static void Chihou_Zukan_Award_ScrollInit( CHIHOU_ZUKAN_AWARD_WORK* work )
+{
+  if( work->param->b_fix ) return;
+
+  GFL_BG_SetScroll( BG_FRAME_M_FRONT, GFL_BG_SCROLL_Y_SET, SCROLL_START_POS_Y );
+  GFL_BG_SetScroll( BG_FRAME_M_TEXT, GFL_BG_SCROLL_Y_SET, SCROLL_START_POS_Y );
+  
+  work->scroll_wait_count = SCROLL_WAIT;
+}
+static void Chihou_Zukan_Award_ScrollMain( CHIHOU_ZUKAN_AWARD_WORK* work )
+{
+  int curr_value;
+
+  if( work->param->b_fix ) return;
+
+  curr_value = GFL_BG_GetScrollY( BG_FRAME_M_FRONT );
+  if( curr_value != 0 )
+  {
+    if( work->scroll_wait_count == 0 )
+    {
+      int value;
+      if( curr_value < SCROLL_VALUE ) value = curr_value;
+      else                            value = SCROLL_VALUE;
+      GFL_BG_SetScrollReq( BG_FRAME_M_FRONT, GFL_BG_SCROLL_Y_DEC, value );
+      GFL_BG_SetScrollReq( BG_FRAME_M_TEXT, GFL_BG_SCROLL_Y_DEC, value );
+      work->scroll_wait_count = SCROLL_WAIT;
+    }
+    else
+    {
+      work->scroll_wait_count--;
+    }
+  }
+}
+static BOOL Chihou_Zukan_Award_ScrollIsEnd( CHIHOU_ZUKAN_AWARD_WORK* work )
+{
+  if( work->param->b_fix ) return TRUE;
+
+  return ( GFL_BG_GetScrollY( BG_FRAME_M_FRONT ) == 0 );
 }
 

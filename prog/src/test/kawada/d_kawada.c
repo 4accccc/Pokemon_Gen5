@@ -688,7 +688,7 @@ static void ChihouZukanAwardInit( KAWADA_MAIN_WORK* wk )
 {
   SAVE_CONTROL_WORK*  sv  = GAMEDATA_GetSaveControlWork( wk->gamedata );
   CONFIG*             cf  = SaveData_GetConfig( sv );
-  BOOL b_fix = FALSE;
+  BOOL b_fix = TRUE;
 
   u8 i;
   u16 name[6] = L"ƒSƒ‚ƒWƒmƒR";
@@ -698,7 +698,7 @@ static void ChihouZukanAwardInit( KAWADA_MAIN_WORK* wk )
 
   CONFIG_SetMojiMode( cf, MOJIMODE_HIRAGANA );
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) CONFIG_SetMojiMode( cf, MOJIMODE_KANJI );
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) b_fix = TRUE;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) b_fix = FALSE;
 
   wk->mystatus = GFL_HEAP_AllocMemory( wk->heapID, MYSTATUS_SAVE_SIZE );
   
@@ -724,7 +724,7 @@ static void ZenkokuZukanAwardInit( KAWADA_MAIN_WORK* wk )
 {
   SAVE_CONTROL_WORK*  sv  = GAMEDATA_GetSaveControlWork( wk->gamedata );
   CONFIG*             cf  = SaveData_GetConfig( sv );
-  BOOL b_fix = FALSE;
+  BOOL b_fix = TRUE;
 
   u8 i;
   u16 name[6] = L"ƒSƒ‚ƒWƒmƒR";
@@ -734,7 +734,7 @@ static void ZenkokuZukanAwardInit( KAWADA_MAIN_WORK* wk )
 
   CONFIG_SetMojiMode( cf, MOJIMODE_HIRAGANA );
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) CONFIG_SetMojiMode( cf, MOJIMODE_KANJI );
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) b_fix = TRUE;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) b_fix = FALSE;
 
   wk->mystatus = GFL_HEAP_AllocMemory( wk->heapID, MYSTATUS_SAVE_SIZE );
   
