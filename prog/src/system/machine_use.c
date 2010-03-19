@@ -202,11 +202,23 @@ static void MachineSystem_MbInitFile(void)
 {
   CARDRomHeader *headerData = (CARDRomHeader*)CARD_GetRomHeader();
   
+#if PM_DEBUG
+  if( STD_CompareString( headerData->game_name , "POKEMON D" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON P" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON PL" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON HG" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON SS" ) == 0 ||
+      STD_CompareString( headerData->game_name , "NINTENDO    NTRJ01" ) == 0 ||
+      STD_CompareString( headerData->game_name , "SKEL" ) == 0 ||
+      STD_CompareString( headerData->game_name , "dlplay" ) == 0 ||
+      STD_CompareString( headerData->game_name , "SYACHI_MB" ) == 0 )
+#else
   if( STD_CompareString( headerData->game_name , "POKEMON D" ) == 0 ||
       STD_CompareString( headerData->game_name , "POKEMON P" ) == 0 ||
       STD_CompareString( headerData->game_name , "POKEMON PL" ) == 0 ||
       STD_CompareString( headerData->game_name , "POKEMON HG" ) == 0 ||
       STD_CompareString( headerData->game_name , "POKEMON SS" ) == 0 )
+#endif
   {
     //マルチブートで子機ROMからファイ(アイコン)を読むための処理
     

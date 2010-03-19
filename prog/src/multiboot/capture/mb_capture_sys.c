@@ -12,7 +12,6 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "print/wordset.h"
-#include "sound/pm_sndsys.h"
 #include "system/wipe.h"
 #include "system/bmp_winframe.h"
 #include "system/net_err.h"

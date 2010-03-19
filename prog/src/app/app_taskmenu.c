@@ -17,7 +17,6 @@
 #include "system/gfl_use.h"
 #include "app/app_menu_common.h"
 #include "print/wordset.h"
-#include "sound/pm_sndsys.h"
 
 #include "arc_def.h"
 
@@ -27,8 +26,10 @@
 #include "app_menu_common.naix"
 #else
 //DLq‹@ˆ—
+#include "multiboot/wb_sound_palpark.sadl"
 #include "app_menu_common_dl.naix"
 #endif //MULTI_BOOT_MAKE
+#include "sound/pm_sndsys.h"
 
 #include "app/app_taskmenu.h"
 

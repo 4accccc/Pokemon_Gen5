@@ -12,16 +12,18 @@
 
 #include "arc_def.h"
 #include "app/app_keycursor.h"
+#include "app/app_printsys_common.h"
 #include "print/printsys.h"
 #include "system/talkmsgwin.h"
 #include "system/time_icon.h"
 
+#include "script_message.naix"
 #include "multiboot/mb_util_msg.h"
 #include "multiboot/mb_local_def.h"
 
 #ifndef MULTI_BOOT_MAKE  //通常時処理
 #include "system/bmp_menu.h"
-
+#include "msg/script/msg_common_scr.h"
   //talkmsgwin用にfieldを読む
   FS_EXTERN_OVERLAY(fieldmap);
 #endif //MULTI_BOOT_MAKE
@@ -46,6 +48,7 @@ struct _MB_MSG_WORK
   u8     frame;
   u8     selFrame;
   MB_MSG_WIN_TYPE type;
+  BOOL      enableKey;
   
   //メッセージ用
   GFL_TCBLSYS     *tcblSys;
@@ -55,6 +58,7 @@ struct _MB_MSG_WORK
   GFL_MSGDATA     *msgHandle;
   STRBUF          *msgStr;
   WORDSET         *wordSet;
+  APP_PRINTSYS_COMMON_WORK printWork;
   
   PRINT_QUE *printQue;
   BOOL      isUpdateQue;
@@ -88,13 +92,14 @@ struct _MB_MSG_WORK
 //--------------------------------------------------------------
 //  メッセージ系 初期化
 //--------------------------------------------------------------
-MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFrame , const u32 datId , const BOOL useTalkWin )
+MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame ,const u8 selFrame , const u32 datId , const BOOL useTalkWin , const BOOL enableKey )
 {
   
   MB_MSG_WORK* msgWork = GFL_HEAP_AllocClearMemory( heapId , sizeof( MB_MSG_WORK ) );
   msgWork->heapId = heapId;
   msgWork->frame = frame;
   msgWork->selFrame = selFrame;
+  msgWork->enableKey = enableKey;
   //メッセージ用処理
   msgWork->msgWin = NULL;
   
@@ -225,7 +230,14 @@ void MB_MSG_MessageMain( MB_MSG_WORK *msgWork )
   GFL_TCBL_Main( msgWork->tcblSys );
   if( msgWork->printHandle != NULL  )
   {
-    if( msgWork->isUseCursor == TRUE )
+    const BOOL ret = APP_PRINTSYS_COMMON_PrintStreamFunc( &msgWork->printWork , msgWork->printHandle );
+    if( ret == TRUE )
+    {
+      PRINTSYS_PrintStreamDelete( msgWork->printHandle );
+      msgWork->printHandle = NULL;
+    }
+    /*
+    //if( msgWork->isUseCursor == TRUE )
     {
       APP_KEYCURSOR_Main( msgWork->cursorWork , msgWork->printHandle , msgWork->msgWin );
     }
@@ -250,6 +262,7 @@ void MB_MSG_MessageMain( MB_MSG_WORK *msgWork )
         PRINTSYS_PrintStreamShortWait( msgWork->printHandle , 0 );
       }
     }
+    */
   }
   PRINTSYS_QUE_Main( msgWork->printQue );
   if( msgWork->isUpdateQue == TRUE &&
@@ -397,6 +410,14 @@ void MB_MSG_MessageDisp( MB_MSG_WORK *msgWork , const u16 msgId , const int msgS
   else
   {
     BmpWinFrame_Write( msgWork->msgWin , WINDOW_TRANS_ON_V , MB_MSG_MSGWIN_CGX , MB_MSG_PLT_MAIN_MSGWIN );
+  }
+  if( msgWork->enableKey == TRUE )
+  {
+    APP_PRINTSYS_COMMON_PrintStreamInit( &msgWork->printWork , APP_PRINTSYS_COMMON_TYPE_BOTH );
+  }
+  else
+  {
+    APP_PRINTSYS_COMMON_PrintStreamInit( &msgWork->printWork , APP_PRINTSYS_COMMON_TYPE_TOUCH );
   }
 }
 
@@ -622,6 +643,39 @@ const MB_MSG_YESNO_RET MB_MSG_UpdateYesNoUpper( MB_MSG_WORK *msgWork )
   }
   return MMYR_NONE;
 }
+
+void MB_MSG_MessageDips_CommDisableError( MB_MSG_WORK *msgWork , const int msgSpeed )
+{
+  GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_SCRIPT_MESSAGE , NARC_script_message_common_scr_dat , msgWork->heapId );
+
+  if( msgWork->printHandle != NULL )
+  {
+    MB_TPrintf( "Message is not finish!!\n" );
+    PRINTSYS_PrintStreamDelete( msgWork->printHandle );
+    msgWork->printHandle = NULL;
+  }
+
+  //一応デフォは消しておく
+  msgWork->isUseCursor = FALSE;
+  msgWork->reqDispTimerIcon = FALSE;
+
+  if( msgWork->msgStr != NULL )
+  {
+    GFL_STR_DeleteBuffer( msgWork->msgStr );
+    msgWork->msgStr = NULL;
+  }
+
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( msgWork->msgWin ) , 0xf );
+  msgWork->msgStr = GFL_MSG_CreateString( msgHandle , msg_common_wireless_off_keywait );
+  
+  msgWork->printHandle = PRINTSYS_PrintStream( msgWork->msgWin , 0,0, msgWork->msgStr ,msgWork->fontHandle ,
+                      msgSpeed , msgWork->tcblSys , 2 , msgWork->heapId , 0xf );
+
+  BmpWinFrame_Write( msgWork->msgWin , WINDOW_TRANS_ON_V , MB_MSG_MSGWIN_CGX , MB_MSG_PLT_MAIN_MSGWIN );
+  
+  GFL_MSG_Delete( msgHandle );
+}
+
 #endif //MULTI_BOOT_MAKE  //通常時処理
 
 //--------------------------------------------------------------------------

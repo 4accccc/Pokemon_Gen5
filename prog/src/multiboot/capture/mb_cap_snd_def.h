@@ -1,58 +1,15 @@
-#include "sound/pm_sndsys.h"
+#pragma once
 
-#ifdef WAVE_SE_WB_KON
-#undef WAVE_SE_WB_KON
-#endif
-#ifdef WAVE_SE_WB_TB_START
-#undef WAVE_SE_WB_TB_START
-#endif
-#ifdef WAVE_SE_WB_MSCL_HUUH
-#undef WAVE_SE_WB_MSCL_HUUH
-#endif
-#ifdef BANK_SE_WB_KON
-#undef BANK_SE_WB_KON
-#endif
-#ifdef BANK_SE_WB_TB_START
-#undef BANK_SE_WB_TB_START
-#endif
-#ifdef BANK_SE_WB_MSCL_05
-#undef BANK_SE_WB_MSCL_05
-#endif
-#ifdef SEQ_SE_KON
-#undef SEQ_SE_KON
-#endif
-#ifdef SEQ_SE_TB_START
-#undef SEQ_SE_TB_START
-#endif
-#ifdef SEQ_SE_MSCL_04
-#undef SEQ_SE_MSCL_04
-#endif
-#ifdef SEQ_SE_WB_SLIDE
-#undef SEQ_SE_WB_SLIDE
-#endif
-#ifdef WAVE_SE_WB_SLIDE
-#undef WAVE_SE_WB_SLIDE
-#endif
-#ifdef SEQ_SE_SYS_06
-#undef SEQ_SE_SYS_06
-#endif
-#ifdef WAVE_SE_WB_SYS_06
-#undef WAVE_SE_WB_SYS_06
-#endif
-#ifdef BANK_SE_WB_SYS_06
-#undef BANK_SE_WB_SYS_06
-#endif
-#ifdef SEQ_SE_DUMMY
-#undef SEQ_SE_DUMMY
-#endif
-#ifdef WAVE_SE_WB_DUMMY
-#undef WAVE_SE_WB_DUMMY
-#endif
-#ifdef BANK_SE_WB_DUMMY
-#undef BANK_SE_WB_DUMMY
+#ifndef MULTI_BOOT_MAKE
+#define FACE_MB_MAKE
+#define MULTI_BOOT_MAKE
 #endif
 #include "multiboot/wb_sound_palpark_game.sadl"
-
+#include "sound/pm_sndsys.h"
+#ifdef FACE_MB_MAKE
+#undef FACE_MB_MAKE
+#undef MULTI_BOOT_MAKE
+#endif
 
 #define MB_SND_BOW_PULL (SEQ_SE_PAL_YUMIHIKI)
 #define MB_SND_BOW_SHOT (SEQ_SE_PAL_HYUN)

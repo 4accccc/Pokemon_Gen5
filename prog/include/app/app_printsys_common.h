@@ -10,7 +10,12 @@
 #pragma once
 
 #include "print/printsys.h"
+#ifndef MULTI_BOOT_MAKE  //’Êíˆ—
 #include "sound/wb_sound_data.sadl"
+#else
+#include "sound/pm_sndsys.h"
+#define SEQ_SE_MESSAGE (SEQ_SE_DECIDE1)
+#endif
 
 //-------------------------------------
 ///	’è‹`

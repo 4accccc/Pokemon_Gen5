@@ -13,14 +13,18 @@
 #include "system/gfl_use.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
-#include "sound/pm_sndsys.h"
 #include "system/wipe.h"
 #include "system/net_err.h"
 #include "poke_tool/pokepara_conv.h"
 #include "poke_tool/poke_memo.h"
+#include "../../net_app/connect_anm.h"
 
 #include "arc_def.h"
 #include "mb_child_gra.naix"
+#include "wifi_login.naix"
+#include "multiboot/wb_sound_palpark.sadl"
+#include "sound/pm_sndsys.h"
+
 
 #include "multiboot/mb_util.h"
 #include "multiboot/mb_util_msg.h"
@@ -36,7 +40,8 @@
 //======================================================================
 #pragma mark [> define
 #define MB_MOVIE_FRAME_MSG (GFL_BG_FRAME1_M)
-#define MB_MOVIE_FRAME_BG  (GFL_BG_FRAME3_M)
+#define MB_MOVIE_FRAME_BG  (GFL_BG_FRAME2_M)
+#define MB_MOVIE_FRAME_BG2 (GFL_BG_FRAME3_M)
 
 #define MB_MOVIE_FRAME_SUB_MSG  (GFL_BG_FRAME1_S)
 #define MB_MOVIE_FRAME_SUB_BG  (GFL_BG_FRAME3_S)
@@ -146,6 +151,8 @@ typedef struct
   BOOL isNetErr;
   BOOL isInitCellSys;
   
+  CONNECT_BG_PALANM bgAnmWork;
+  
 }MB_MOVIE_WORK;
 
 
@@ -158,7 +165,7 @@ static void MB_MOVIE_Init( MB_MOVIE_WORK *work );
 static void MB_MOVIE_Term( MB_MOVIE_WORK *work );
 static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work );
 static void MB_MOVIE_VBlankFunc(GFL_TCB *tcb, void *wk );
-static void MB_MOVIE_VSync( void );
+static void MB_MOVIE_VSyncMovie( void );
 
 static void MB_MOVIE_InitGraphic( MB_MOVIE_WORK *work );
 static void MB_MOVIE_TermGraphic( MB_MOVIE_WORK *work );
@@ -177,6 +184,7 @@ static void MB_MOVIE_SaveInit( MB_MOVIE_WORK *work );
 static void MB_MOVIE_SaveTerm( MB_MOVIE_WORK *work );
 static void MB_MOVIE_SaveMain( MB_MOVIE_WORK *work );
 
+CONNECT_BG_PALANM *staticBgAnmWork;
 
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_A,             // メイン2DエンジンのBG
@@ -206,7 +214,7 @@ static void MB_MOVIE_Init( MB_MOVIE_WORK *work )
 
   MB_MOVIE_InitGraphic( work );
   MB_MOVIE_LoadResource( work );
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_MOVIE_FRAME_SUB_MSG , MB_MOVIE_FRAME_SUB_MSG , FILE_MSGID_MB , TRUE );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_MOVIE_FRAME_MSG , MB_MOVIE_FRAME_MSG , FILE_MSGID_MB , TRUE , FALSE );
   MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   work->commWork = MB_COMM_CreateSystem( work->heapId );
   
@@ -237,9 +245,11 @@ static void MB_MOVIE_Init( MB_MOVIE_WORK *work )
 
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_MOVIE_VBlankFunc , work , 8 );
 
-  GFUser_SetVIntrFunc( MB_MOVIE_VSync );
-
   PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
+
+  GFUser_SetVIntrFunc( MB_MOVIE_VSyncMovie );
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
+  GFL_NET_ReloadIcon();
 }
 
 //--------------------------------------------------------------
@@ -248,8 +258,10 @@ static void MB_MOVIE_Init( MB_MOVIE_WORK *work )
 static void MB_MOVIE_Term( MB_MOVIE_WORK *work )
 {
   u8 i,j;
-  GFUser_ResetVIntrFunc();
   GFL_TCB_DeleteTask( work->vBlankTcb );
+  GFUser_ResetVIntrFunc();
+
+  ConnectBGPalAnm_End( &work->bgAnmWork );
 
   for( i=0;i<MB_POKE_BOX_TRAY;i++ )
   {
@@ -346,7 +358,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     {
       //初期接続タイムアウト
       //MsgSpeedが受信できてない！
-      MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_11 , 1 );
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_07 , 1 );
       MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
       MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
       work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
@@ -413,6 +425,8 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
       if( MB_DATA_GetErrorState( work->dataWork ) == DES_NONE )
       {
         work->state = MCS_DATA_CONV;
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_09 , work->initData->msgSpeed );
       }
       else
       {
@@ -429,7 +443,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     
   case MCS_LOAD_ERROR:
     //読み込み失敗
-    MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_10 , work->initData->msgSpeed );
+    MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_06 , work->initData->msgSpeed );
     MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
     MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
     work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
@@ -601,6 +615,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     }
     else
     {
+      work->state = MCS_SAVE_FINISH_WAIT;
     }
     break;
     
@@ -623,7 +638,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
       {
         //CRCチェック失敗
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
-        MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_12 , work->initData->msgSpeed );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_08 , work->initData->msgSpeed );
         MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
         MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
         work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
@@ -653,11 +668,14 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
   case MCS_SAVE_FINISH_WAIT:
     if( MB_MSG_CheckPrintStreamIsFinish(work->msgWork) == TRUE )
     {
-      MB_MSG_MessageHide( work->msgWork );
-      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
-      MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_07 , work->initData->msgSpeed );
-      MB_COMM_ReqDisconnect( work->commWork );
-      work->state = MCS_WAIT_EXIT_COMM;
+      if( MB_COMM_IsPostMovieFinishMachine( work->commWork ) == TRUE )
+      {
+        MB_MSG_MessageHide( work->msgWork );
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_05 , work->initData->msgSpeed );
+        MB_COMM_ReqDisconnect( work->commWork );
+        work->state = MCS_WAIT_EXIT_COMM;
+      }
     }
     break;
 
@@ -667,7 +685,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     {
       //初期タイムアウトから来るとmsgSpdもらってない。
       const int msgSpd = ( work->initData!= NULL ? work->initData->msgSpeed : 1 );
-      MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_07 , msgSpd );
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_05 , msgSpd );
       MB_COMM_ReqDisconnect( work->commWork );
       work->state = MCS_WAIT_EXIT_COMM;
       //ゲーム後のポケ不足でも来る。その際はエラーじゃないので、ここでステートセットはしない！
@@ -715,22 +733,10 @@ static void MB_MOVIE_VBlankFunc(GFL_TCB *tcb, void *wk )
   }
 }
 
-static void MB_MOVIE_VSync( void )
+static void MB_MOVIE_VSyncMovie( void )
 {
-  static u8 cnt = 0;
-  if( cnt > 1 )
-  {
-    cnt = 0;
-    GFL_BG_SetScroll( MB_MOVIE_FRAME_BG , GFL_BG_SCROLL_X_DEC , 1 );
-    GFL_BG_SetScroll( MB_MOVIE_FRAME_BG , GFL_BG_SCROLL_Y_DEC , 1 );
-    GFL_BG_SetScroll( MB_MOVIE_FRAME_SUB_BG , GFL_BG_SCROLL_X_DEC , 1 );
-    GFL_BG_SetScroll( MB_MOVIE_FRAME_SUB_BG , GFL_BG_SCROLL_Y_DEC , 1 );
-  }
-  else
-  {
-    cnt++;
-  }
-
+  //背景アニメ更新
+  ConnectBGPalAnm_Main( staticBgAnmWork );
 }
 
 //--------------------------------------------------------------
@@ -767,18 +773,18 @@ static void MB_MOVIE_InitGraphic( MB_MOVIE_WORK *work )
       GX_BG_SCRBASE_0x6000, GX_BG_CHARBASE_0x00000,0x6000,
       GX_BG_EXTPLTT_01, 1, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
-    // BG2 MAIN (キャラ
-    //static const GFL_BG_BGCNT_HEADER header_main2 = {
-    //  0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
-    //  GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-    //  GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x10000,0x0C000,
-    //  GX_BG_EXTPLTT_23, 2, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
-    //};
+    // BG2 MAIN (背景(スクロール
+    static const GFL_BG_BGCNT_HEADER header_main2 = {
+      0, 0, 0x1000, 0,  // scrX, scrY, scrbufSize, scrbufofs,
+      GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x08000,0x08000,
+      GX_BG_EXTPLTT_23, 2, 1, 0, FALSE  // pal, pri, areaover, dmy, mosaic
+    };
     // BG3 MAIN (背景
     static const GFL_BG_BGCNT_HEADER header_main3 = {
       0, 0, 0x800, 0,  // scrX, scrY, scrbufSize, scrbufofs,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x7000, GX_BG_CHARBASE_0x18000,0x08000,
+      GX_BG_SCRBASE_0x7800, GX_BG_CHARBASE_0x18000,0x08000,
       GX_BG_EXTPLTT_23, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
 
@@ -799,8 +805,8 @@ static void MB_MOVIE_InitGraphic( MB_MOVIE_WORK *work )
     GFL_BG_SetBGMode( &sys_data );
 
     MB_MOVIE_SetupBgFunc( &header_main1 , MB_MOVIE_FRAME_MSG , GFL_BG_MODE_TEXT );
-    //MB_MOVIE_SetupBgFunc( &header_main2 , LTVT_FRAME_CHARA , GFL_BG_MODE_TEXT );
-    MB_MOVIE_SetupBgFunc( &header_main3 , MB_MOVIE_FRAME_BG , GFL_BG_MODE_TEXT );
+    MB_MOVIE_SetupBgFunc( &header_main2 , MB_MOVIE_FRAME_BG , GFL_BG_MODE_TEXT );
+    MB_MOVIE_SetupBgFunc( &header_main3 , MB_MOVIE_FRAME_BG2 , GFL_BG_MODE_TEXT );
     MB_MOVIE_SetupBgFunc( &header_sub1  , MB_MOVIE_FRAME_SUB_MSG , GFL_BG_MODE_TEXT );
     MB_MOVIE_SetupBgFunc( &header_sub3  , MB_MOVIE_FRAME_SUB_BG , GFL_BG_MODE_TEXT );
     
@@ -819,6 +825,7 @@ static void MB_MOVIE_TermGraphic( MB_MOVIE_WORK *work )
   GFL_CLACT_SYS_Delete();
   GFL_BG_FreeBGControl( MB_MOVIE_FRAME_SUB_MSG );
   GFL_BG_FreeBGControl( MB_MOVIE_FRAME_MSG );
+  GFL_BG_FreeBGControl( MB_MOVIE_FRAME_BG2 );
   GFL_BG_FreeBGControl( MB_MOVIE_FRAME_BG );
   GFL_BG_FreeBGControl( MB_MOVIE_FRAME_SUB_BG );
   GFL_BMPWIN_Exit();
@@ -843,24 +850,31 @@ static void MB_MOVIE_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane
 //--------------------------------------------------------------
 static void MB_MOVIE_LoadResource( MB_MOVIE_WORK *work )
 {
-  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_MB_CHILD , work->heapId );
+  ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_WIFI_LOGIN , work->heapId );
 
   //下画面
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_child_gra_bg_sub_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_wifi_login_connect_win_NCLR , 
                     PALTYPE_SUB_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_child_gra_bg_sub_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_connect_win_NCGR ,
                     MB_MOVIE_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_child_gra_bg_sub_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_connect_win2_d_NSCR , 
                     MB_MOVIE_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
   
   //上画面
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_child_gra_bg_main_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_wifi_login_connect_win_NCLR , 
                     PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_child_gra_bg_main_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_connect_win_NCGR ,
                     MB_MOVIE_FRAME_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_child_gra_bg_main_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_connect_win1_u_NSCR , 
                     MB_MOVIE_FRAME_BG ,  0 , 0, FALSE , work->heapId );
+
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_wifi_login_connect_win_NCGR ,
+                    MB_MOVIE_FRAME_BG2 , 0 , 0, FALSE , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_wifi_login_connect_win2_u_NSCR , 
+                    MB_MOVIE_FRAME_BG2 ,  0 , 0, FALSE , work->heapId );
   
+  ConnectBGPalAnm_InitBg( &work->bgAnmWork , arcHandle , NARC_wifi_login_connect_ani_NCLR , work->heapId , MB_MOVIE_FRAME_BG , MB_MOVIE_FRAME_BG2 );
+  staticBgAnmWork = &work->bgAnmWork;
   GFL_ARC_CloseDataHandle( arcHandle );
 }
 
@@ -1055,7 +1069,7 @@ static void MB_MOVIE_SaveInit( MB_MOVIE_WORK *work )
 {
   MB_DATA_ResetSaveLoad( work->dataWork );
   MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
-  MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_MOVIE_04 );
+  MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_MOVIE_03 );
   MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
 
 }
@@ -1065,8 +1079,7 @@ static void MB_MOVIE_SaveInit( MB_MOVIE_WORK *work )
 //--------------------------------------------------------------
 static void MB_MOVIE_SaveTerm( MB_MOVIE_WORK *work )
 {
-  MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_05 , work->initData->msgSpeed );
-  MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+  MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_04 , work->initData->msgSpeed );
   work->state = MCS_SAVE_FINISH_WAIT;
 }
 

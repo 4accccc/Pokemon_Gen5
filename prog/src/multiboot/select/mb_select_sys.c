@@ -14,7 +14,6 @@
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "print/global_msg.h"
-#include "sound/pm_sndsys.h"
 #include "system/wipe.h"
 #include "system/net_err.h"
 #include "app/app_menu_common.h"
@@ -22,6 +21,20 @@
 
 #include "arc_def.h"
 #include "mb_select_gra.naix"
+
+#ifndef MULTI_BOOT_MAKE
+#define FACE_MB_MAKE
+#define MULTI_BOOT_MAKE
+#endif
+
+#include "multiboot/wb_sound_palpark.sadl"
+#include "sound/pm_sndsys.h"
+
+#ifdef FACE_MB_MAKE
+#undef FACE_MB_MAKE
+#undef MULTI_BOOT_MAKE
+#endif
+
 
 #include "multiboot/mb_select_sys.h"
 #include "multiboot/mb_util_msg.h"
@@ -216,9 +229,9 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
   MB_SELECT_InitCell( work );
   
 #ifndef MULTI_BOOT_MAKE
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , MB_SELECT_FRAME_MSG , NARC_message_multiboot_child_dat , TRUE );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , MB_SELECT_FRAME_MSG , NARC_message_multiboot_child_dat , TRUE , FALSE );
 #else
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , MB_SELECT_FRAME_MSG , NARC_message_dl_multiboot_child_dat , TRUE );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_SELECT_FRAME_MSG , MB_SELECT_FRAME_MSG , NARC_message_dl_multiboot_child_dat , TRUE , FALSE );
 #endif
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_SELECT_VBlankFunc , work , 8 );
 

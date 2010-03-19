@@ -12,6 +12,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/net_err.h"
+#include "system/ds_system.h"
 #include "gamesystem/msgspeed.h"
 #include "net/wih.h"
 #include "net/network_define.h"
@@ -88,8 +89,15 @@ typedef enum
   MPS_SAVE_MAIN,
   MPS_SAVE_TERM,
 
+  //終了時ポケシフター専用
   MPS_SEND_LEAST_BOX,
   MPS_WAIT_NEXT_GAME_CONFIRM,
+  //終了時ポケシフター専用ここまで
+
+  //終了時映画配信専用
+  MPS_MOVIE_WAIT_SAVE_MSG,
+  MPS_MOVIE_WAIT_LAST_MSG,
+  //終了時映画配信専用ここまで
 
   MPS_EXIT_COMM,
   MPS_WAIT_EXIT_COMM,
@@ -99,6 +107,9 @@ typedef enum
   
   //映画ポケ転送更新
   MPS_UPDATE_MOVIE_MODE,
+  
+  //無線OFF時エラー(実質てんそうマシンのみ
+  MPS_COMM_ERROR_WAIT,
 }MB_PARENT_STATE;
 
 typedef enum
@@ -243,7 +254,6 @@ typedef struct
   
 }MB_PARENT_WORK;
 
-
 //======================================================================
 //  proto
 //======================================================================
@@ -270,6 +280,7 @@ static void MB_PARENT_Term( MB_PARENT_WORK *work );
 static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work );
 static void MB_PARENT_VBlankFunc(GFL_TCB *tcb, void *wk );
 static void MB_PARENT_VSync( void );
+static void MB_PARENT_VSyncMovie( void );
 
 static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work );
 static void MB_PARENT_TermGraphic( MB_PARENT_WORK *work );
@@ -291,6 +302,8 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work );
 static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state );
 
 BOOL WhCallBackFlg = FALSE;
+CONNECT_BG_PALANM *staticBgAnmWork;
+
 FS_EXTERN_OVERLAY(dev_wireless);
 
 //--------------------------------------------------------------
@@ -307,11 +320,11 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
 
   if( work->mode == MPM_POKE_SHIFTER )
   {
-    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_SUB_MSG , MB_PARENT_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_SUB_MSG , MB_PARENT_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE , FALSE );
   }
   else
   {
-    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_MSG , MB_PARENT_FRAME_MSG , FILE_MSGID_MB , FALSE );
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_PARENT_FRAME_MSG , MB_PARENT_FRAME_MSG , FILE_MSGID_MB , FALSE , TRUE );
   }
   MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   
@@ -330,10 +343,16 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   if( work->mode == MPM_POKE_SHIFTER )
   {
     GFUser_SetVIntrFunc( MB_PARENT_VSync );
+    GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
+    GFL_NET_ReloadIcon();
+  }
+  else
+  {
+    GFUser_SetVIntrFunc( MB_PARENT_VSyncMovie );
+    GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
+    GFL_NET_ReloadIcon();
   }
 
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
-  GFL_NET_ReloadIcon();
   
   work->isPostMoviePoke = FALSE;
   work->isPostMovieCapsule = FALSE;
@@ -346,11 +365,8 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
 static void MB_PARENT_Term( MB_PARENT_WORK *work )
 {
   GFL_TCB_DeleteTask( work->vBlankTcb );
-  if( work->mode == MPM_POKE_SHIFTER )
-  {
-    GFUser_ResetVIntrFunc();
-  }
-  else
+  GFUser_ResetVIntrFunc();
+  if( work->mode == MPM_MOVIE_TRANS )
   {
     ConnectBGPalAnm_End( &work->bgAnmWork );
   }
@@ -392,7 +408,19 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
   case MPS_WAIT_FADEIN:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      work->state = MPS_SEND_IMAGE_INIT;
+      if( DS_SYSTEM_IsAvailableWireless() == TRUE )
+      {
+        work->state = MPS_SEND_IMAGE_INIT;
+      }
+      else
+      {
+        //MSGが違うので特殊関数
+        MB_MSG_MessageHide( work->msgWork );
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
+        MB_MSG_MessageDips_CommDisableError( work->msgWork , MSGSPEED_GetWait() );
+        MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+        work->state = MPS_COMM_ERROR_WAIT;
+      }
     }
     break;
     
@@ -575,7 +603,8 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     }
     break;
   case MPS_WAIT_CRC_CHECK:
-    if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE )
+    if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE ||
+        work->mode == MPM_MOVIE_TRANS ) //映画の時はポケ送ってないかも。
     {
       if( MB_COMM_GetChildState(work->commWork) == MCCS_CRC_OK )
       {
@@ -585,10 +614,19 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR )
       {
         //CRCチェックエラーが発生した
-        MB_PARENT_SetFinishState( work , PALPARK_FINISH_ERROR );
-        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
-        MB_COMM_ReqDisconnect( work->commWork );
-        work->state = MPS_EXIT_COMM;
+        if( work->mode == MPM_POKE_SHIFTER )
+        {
+          MB_PARENT_SetFinishState( work , PALPARK_FINISH_ERROR );
+          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_09 , MSGSPEED_GetWait() );
+          MB_COMM_ReqDisconnect( work->commWork );
+          work->state = MPS_EXIT_COMM;
+        }
+        else
+        {
+          MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_18 , MSGSPEED_GetWait() );
+          MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+          work->state = MPS_MOVIE_WAIT_LAST_MSG;
+        }
       }
     }
     break;
@@ -606,9 +644,20 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
 
   case MPS_SAVE_TERM:
     MB_PARENT_SaveTerm( work );
-    work->state = MPS_SEND_LEAST_BOX;
+    if( work->mode == MPM_POKE_SHIFTER )
+    {
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_08 , MSGSPEED_GetWait() );
+      work->state = MPS_SEND_LEAST_BOX;
+    }
+    else
+    {
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_19 , MSGSPEED_GetWait() );
+      MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      work->state = MPS_MOVIE_WAIT_SAVE_MSG;
+    }
     break;
 
+  //終了時ポケシフター専用
   case MPS_SEND_LEAST_BOX:
     {
       BOX_MANAGER *boxMng = GAMEDATA_GetBoxManager(work->initWork->gameData);
@@ -641,6 +690,31 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       work->state = MPS_EXIT_COMM;
     }
     break;
+  //終了時ポケシフター専用ここまで
+
+  //終了時映画配信専用
+  case MPS_MOVIE_WAIT_SAVE_MSG:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      if( MB_COMM_Send_Flag( work->commWork , MCFT_MOVIE_FINISH_MACHINE , 0 ) == TRUE )
+      {
+        MB_MSG_MessageHide( work->msgWork );
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_15 , MSGSPEED_GetWait() );
+        MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+        work->state = MPS_MOVIE_WAIT_LAST_MSG;
+      }
+    }
+    break;
+  
+  case MPS_MOVIE_WAIT_LAST_MSG:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      MB_COMM_ReqDisconnect( work->commWork );
+      work->state = MPS_EXIT_COMM;
+    }
+    break;
+  //終了時映画配信専用ここまで
   
   case MPS_EXIT_COMM:
     if( MB_COMM_IsDisconnect( work->commWork ) == TRUE )
@@ -676,6 +750,15 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
   case MPS_UPDATE_MOVIE_MODE:
     MB_PARENT_UpdateMovieMode( work );
     break;
+
+  //無線OFF時エラー(実質てんそうマシンのみ
+  case MPS_COMM_ERROR_WAIT:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      work->state = MPS_FADEOUT;
+    }
+    break;
+
   }
   
   MB_MSG_MessageMain( work->msgWork );
@@ -683,11 +766,6 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
   //OBJの更新
   GFL_CLACT_SYS_Main();
   
-  //背景アニメ更新
-  if( work->mode == MPM_MOVIE_TRANS )
-  {
-    ConnectBGPalAnm_Main( &work->bgAnmWork );
-  }
   
   return FALSE;
 }
@@ -716,6 +794,12 @@ static void MB_PARENT_VSync( void )
   {
     cnt++;
   }
+}
+
+static void MB_PARENT_VSyncMovie( void )
+{
+  //背景アニメ更新
+  ConnectBGPalAnm_Main( staticBgAnmWork );
 }
 
 //--------------------------------------------------------------
@@ -895,7 +979,7 @@ static void MB_PARENT_LoadResource( MB_PARENT_WORK *work )
                       MB_PARENT_FRAME_BG2 ,  0 , 0, FALSE , work->heapId );
     
     ConnectBGPalAnm_InitBg( &work->bgAnmWork , arcHandle , NARC_wifi_login_connect_ani_NCLR , work->heapId , MB_PARENT_FRAME_BG , MB_PARENT_FRAME_BG2 );
-    
+    staticBgAnmWork = &work->bgAnmWork;
     GFL_ARC_CloseDataHandle( arcHandle );
   }
 
@@ -1496,8 +1580,6 @@ static void MB_PARENT_SaveInitPoke( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static void MB_PARENT_SaveTerm( MB_PARENT_WORK *work )
 {
-  SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork(work->initWork->gameData);
-  MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_08 , MSGSPEED_GetWait() );
 }
 
 //--------------------------------------------------------------
@@ -2005,6 +2087,18 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
     if( work->isPostMoviePoke == TRUE || work->isPostMovieCapsule == TRUE )
     {
       work->state = MPS_WAIT_CRC_CHECK;
+    }
+    else
+    {
+      if( MB_COMM_GetMoviePokeNum( work->commWork ) == 0 &&
+          MB_COMM_IsMovieHaveLockCapsule( work->commWork ) == FALSE )
+      {
+        MB_MSG_MessageHide( work->msgWork );
+        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_20 , MSGSPEED_GetWait() );
+        MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      }
+      work->state = MPS_MOVIE_WAIT_SAVE_MSG;
     }
     break;
   }

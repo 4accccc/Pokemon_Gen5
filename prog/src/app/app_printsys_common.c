@@ -8,6 +8,11 @@
 //=============================================================================
 
 #include <gflib.h>
+
+#ifdef MULTI_BOOT_MAKE //’Êíˆ—
+  #include "multiboot/wb_sound_palpark.sadl"
+#endif
+
 #include "sound/pm_sndsys.h"
 #include "app/app_printsys_common.h"
 

@@ -13,13 +13,15 @@
 #include "system/gfl_use.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
-#include "sound/pm_sndsys.h"
 #include "system/wipe.h"
 #include "system/net_err.h"
 #include "poke_tool/pokepara_conv.h"
 
 #include "arc_def.h"
 #include "mb_child_gra.naix"
+#include "multiboot/wb_sound_palpark.sadl"
+#include "sound/pm_sndsys.h"
+
 
 #include "multiboot/mb_child_sys.h"
 #include "multiboot/mb_select_sys.h"
@@ -216,7 +218,7 @@ static void MB_CHILD_Init( MB_CHILD_WORK *work )
 
   MB_CHILD_InitGraphic( work );
   MB_CHILD_LoadResource( work );
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , TRUE );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , TRUE , FALSE );
   MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   work->commWork = MB_COMM_CreateSystem( work->heapId );
   
@@ -513,7 +515,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
 
     MB_CHILD_InitGraphic( work );
     MB_CHILD_LoadResource( work );
-    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE , FALSE );
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
     MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_03 );
     MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
@@ -628,7 +630,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     PMSND_InitMultiBoot( work->sndData );
     MB_CHILD_InitGraphic( work );
     MB_CHILD_LoadResource( work );
-    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE );
+    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE , FALSE );
 
     GFUser_SetVIntrFunc( MB_CHILD_VSync );
     MB_CHILD_ErrCheck( work , TRUE );

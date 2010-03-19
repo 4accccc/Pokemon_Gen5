@@ -5,6 +5,7 @@ SRCS	+= \
 		$(PARENT_SRC)/app/app_menu_common.c \
 		$(PARENT_SRC)/app/app_taskmenu.c \
 		$(PARENT_SRC)/app/app_keycursor.c \
+		$(PARENT_SRC)/app/app_printsys_common.c \
 		$(PARENT_SRC)/net/net_dev.c \
 		$(PARENT_SRC)/net/net_icondata.c \
 		$(PARENT_SRC)/net/net_devwireless.c \

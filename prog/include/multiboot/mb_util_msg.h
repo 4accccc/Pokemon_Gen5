@@ -95,7 +95,7 @@ typedef struct _MB_MSG_WORK MB_MSG_WORK;
 //======================================================================
 #pragma mark [> proto
 
-extern MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame , const u8 selFrame , const u32 datId , const BOOL useTalkWin );
+extern MB_MSG_WORK* MB_MSG_MessageInit( HEAPID heapId , const u8 frame , const u8 selFrame , const u32 datId , const BOOL useTalkWin , const BOOL enableKey );
 extern void MB_MSG_MessageTerm( MB_MSG_WORK *work );
 extern void MB_MSG_MessageMain( MB_MSG_WORK *work );
 extern void MB_MSG_MessageCreateWindow( MB_MSG_WORK *msgWork , MB_MSG_WIN_TYPE type );
@@ -115,6 +115,8 @@ extern const MB_MSG_YESNO_RET MB_MSG_UpdateYesNo( MB_MSG_WORK *msgWork );
 extern void MB_MSG_DispYesNoUpper( MB_MSG_WORK *msgWork , const MB_MSG_YESNO_TYPE type );
 extern void MB_MSG_ClearYesNoUpper( MB_MSG_WORK *msgWork );
 extern const MB_MSG_YESNO_RET MB_MSG_UpdateYesNoUpper( MB_MSG_WORK *msgWork );
+
+extern void MB_MSG_MessageDips_CommDisableError( MB_MSG_WORK *msgWork , const int msgSpeed );
 #endif //MULTI_BOOT_MAKE  //í èÌéûèàóù
 
 extern GFL_MSGDATA* MB_MSG_GetMsgHandle( MB_MSG_WORK *msgWork );
