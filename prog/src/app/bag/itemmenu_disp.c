@@ -335,7 +335,7 @@ static void _load_basebg_d( FIELD_ITEMMENU_WORK* pWork, ARCHANDLE* p_handle )
     GF_ASSERT(0);
   }
 
-  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, nclr, PALTYPE_MAIN_BG, 0, 4*0x20,  pWork->heapID );
+  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, nclr, PALTYPE_MAIN_BG, 0, 0x20,  pWork->heapID );
 
   pWork->mainbg = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, ncgr, GFL_BG_FRAME0_M, 0, 0, pWork->heapID );
 
@@ -2367,7 +2367,8 @@ void ITEMDISP_ChangeActive( FIELD_ITEMMENU_WORK * wk, BOOL flg )
 	// アクティブ
 	if( flg == TRUE ){
 		PaletteFadeReq( wk->pfd, PF_BIT_MAIN_OBJ, _PAL_FADE_OBJ_BIT, 0, 0, 0, 0, GFUser_VIntr_GetTCBSYS() );
-	  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1, 0 );
+		PaletteFadeReq( wk->pfd, PF_BIT_MAIN_BG, 0x0001, 0, 0, 0, 0, GFUser_VIntr_GetTCBSYS() );
+	  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1, 0 );
 
     // ソートボタン
 		ITEMDISP_ChangeSortButton( wk );
@@ -2387,7 +2388,8 @@ void ITEMDISP_ChangeActive( FIELD_ITEMMENU_WORK * wk, BOOL flg )
 	}else{
 		PaletteWorkSet_VramCopy( wk->pfd, FADE_MAIN_OBJ, 0, FADE_PAL_ALL_SIZE );
 		PaletteFadeReq( wk->pfd, PF_BIT_MAIN_OBJ, _PAL_FADE_OBJ_BIT, 0, 8, 8, 0, GFUser_VIntr_GetTCBSYS() );
-	  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1, -8 );
+		PaletteFadeReq( wk->pfd, PF_BIT_MAIN_BG, 0x0001, 0, 8, 8, 0, GFUser_VIntr_GetTCBSYS() );
+	  G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1, -8 );
 
     // ソートボタン
 		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 4 );

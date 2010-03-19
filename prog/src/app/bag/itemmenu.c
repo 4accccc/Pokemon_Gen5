@@ -3903,10 +3903,13 @@ static void InitPaletteAnime( FIELD_ITEMMENU_WORK * wk )
 {
 	wk->pfd = PaletteFadeInit( wk->heapID );
 	PaletteFadeWorkAllocSet( wk->pfd, FADE_MAIN_OBJ, FADE_PAL_ALL_SIZE, wk->heapID );
+	PaletteFadeWorkAllocSet( wk->pfd, FADE_MAIN_BG, FADE_PAL_ONE_SIZE, wk->heapID );
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_MAIN_BG, 0, FADE_PAL_ONE_SIZE );
 }
 
 static void ExitPaletteAnime( FIELD_ITEMMENU_WORK * wk )
 {
+	PaletteFadeWorkAllocFree( wk->pfd, FADE_MAIN_BG );
 	PaletteFadeWorkAllocFree( wk->pfd, FADE_MAIN_OBJ );
 	PaletteFadeFree( wk->pfd );
 }
