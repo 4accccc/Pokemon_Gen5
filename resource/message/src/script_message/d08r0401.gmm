@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T16:56:12"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T14:35:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,13 +312,13 @@
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">たおれている　はしらも
 とおりみち　みたいだね▼
-フィールドわざ　かいりきを　つかえば
-ショートカット　できるけど▼
+かいりきの　わざを　つかえば
+ちかみちが　できるけど▼
 じゃ　プラズマだんを　おいかける
 きみも　いそいでくれ！▼</language>
 		<language name="JPN_KANJI" width="256">倒れている　柱も
 通り道　みたいだね▼
-フィールド技　かいりきを　使えば
+かいりきの　技を　使えば
 ショートカット　できるけど▼
 じゃ　プラズマ団を　追いかける
 きみも　急いでくれ！▼</language>

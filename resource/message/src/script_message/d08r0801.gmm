@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T17:01:46"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T14:37:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -359,7 +359,7 @@
 	</lock>
 
 
-	<row id="msg_d08r0801_demo_01w" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_d08r0801_demo_01w">
 		<comment>演出
 ・WhiteVer
 ・pos（GRIDX=22~24、GRIDZ=13）起動
@@ -375,7 +375,7 @@
 		<language name="JPN_KANJI" width="256">モエルーワ！</language>
 	</row>
 
-	<row id="msg_d08r0801_demo_01b" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_d08r0801_demo_01b">
 		<comment>・BlackVer
 　ムの鳴き声再生
 ・続けてdemo_02</comment>
@@ -384,7 +384,7 @@
 		<language name="JPN_KANJI" width="256">バリバリダー！！</language>
 	</row>
 
-	<row id="msg_d08r0801_demo_02" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_d08r0801_demo_02">
 		<comment>・メッセージ表示、1回のみ</comment>
 		<attribute name="キャラ指定">演出</attribute>
 		<language name="JPN" width="256">なにかが……▼
@@ -395,42 +395,7 @@
 激しく　暴れている……？</language>
 	</row>
 
-	<row id="msg_d08r0801_boss_01" text-color="#ffffff,,,#ffffff,,#ffffff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d08r0801_boss_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d08r0801_boss_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d08r0801_boss_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d08r0801_boss_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_d08r0801_sage2_01" text-color="#000000,,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08r0801_sage2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・GRIDX=13、GRIDZ=16、右向き
 ・pos（GRIDX=14~16、GRIDZ=20）起動
@@ -443,7 +408,7 @@
 Ｎさまが　英雄に　なられる！▼</language>
 	</row>
 
-	<row id="msg_d08r0801_sage2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08r0801_sage2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・下を向いて！マーク表示後にメッセージ
 ・表示後、主人公を
@@ -461,7 +426,7 @@
 こいつを　足止め　せよ！！▼</language>
 	</row>
 
-	<row id="msg_d08r0801_sage2_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08r0801_sage2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてhakaim1_01</comment>
 		<attribute name="キャラ指定">七賢人</attribute>
@@ -473,7 +438,7 @@
 全力で　排除する▼</language>
 	</row>
 
-	<row id="msg_d08r0801_sage2_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08r0801_sage2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・プラズマ団との戦闘後から
 　最上階イベント終了まで</comment>
@@ -484,7 +449,7 @@
 そのためには　まず　破壊である！</language>
 	</row>
 
-	<row id="msg_d08r0801_hakaim1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0801_hakaim1_01">
 		<comment>♂
 ・表示後、トレーナ-戦闘に</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
@@ -494,7 +459,7 @@
 ジャマさせるわけには　いかない！▼</language>
 	</row>
 
-	<row id="msg_d08r0801_hakaim1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0801_hakaim1_02">
 		<comment>♂
 ・戦闘後自動で表示
 ・続けてhakaim2_01</comment>
@@ -509,7 +474,7 @@
 一人では　ないのだ！▼</language>
 	</row>
 
-	<row id="msg_d08r0801_hakaim1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0801_hakaim1_03">
 		<comment>♂
 ・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
@@ -523,7 +488,7 @@
 一人では　ないのだ！</language>
 	</row>
 
-	<row id="msg_d08r0801_hakaim2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_d08r0801_hakaim2_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・表示後、トレーナ-戦闘に</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
@@ -537,7 +502,7 @@
 止めることなど　できない！▼</language>
 	</row>
 
-	<row id="msg_d08r0801_hakaim2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_d08r0801_hakaim2_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・戦闘後自動で表示
 ・続けてhakaiw1_01</comment>
@@ -550,7 +515,7 @@
 おまえの　動きを　封じる！▼</language>
 	</row>
 
-	<row id="msg_d08r0801_hakaim2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0801_hakaim2_03" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
@@ -560,7 +525,7 @@
 こきつかうことに　慣れていやがる</language>
 	</row>
 
-	<row id="msg_d08r0801_hakaiw1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0801_hakaiw1_01">
 		<comment>♀
 ・表示後、トレーナ-戦闘に</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♀</attribute>
@@ -570,7 +535,7 @@
 プラ～ズマ～！！▼</language>
 	</row>
 
-	<row id="msg_d08r0801_hakaiw1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0801_hakaiw1_02">
 		<comment>♀
 ・戦闘後自動で表示
 ・続けてhakaim3_01</comment>
@@ -581,7 +546,7 @@
 新しい　国を　創ります▼</language>
 	</row>
 
-	<row id="msg_d08r0801_hakaiw1_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d08r0801_hakaiw1_03">
 		<comment>♀
 ・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♀</attribute>
@@ -591,7 +556,7 @@
 新しい　国を　創ります</language>
 	</row>
 
-	<row id="msg_d08r0801_hakaim3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_d08r0801_hakaim3_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・表示後、トレーナ-戦闘に</comment>
 		<attribute name="キャラ指定">プラズマ団したっぱ♂</attribute>
@@ -601,7 +566,7 @@
 ４人続けて　相手できるか？▼</language>
 	</row>
 
-	<row id="msg_d08r0801_hakaim3_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_d08r0801_hakaim3_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 ・戦闘後自動で表示
 ・表示後、プラズマ団したっぱが移動

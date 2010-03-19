@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-17T22:19:08"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T14:39:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -359,12 +359,6 @@
 	</lock>
 
 
-	<row id="msg_d08r0901_boss_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
 	<row id="msg_d08r0901_boss_01w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂：WHITEver
 ・NはGRIDX=16、GRIDZ=12に配置
@@ -374,7 +368,8 @@
 ・デモ後、主人公、まっすぐ上
 　GRIDX=16、GRIDZ=14まで移動して
 　このメッセージ表示
-・続けてboss_02w</comment>
+・続けてboss_02w
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]どう　[1:00:トレーナー名:0]▼
 せかいを　みちびく　えいゆうのもと
@@ -388,7 +383,7 @@
 ポケモンの　美しい　姿は！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_01b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d08r0901_boss_01b" back-color="#8080ff,,,,,#8080ff,,,,,,,,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
@@ -423,7 +418,7 @@
 ようやく　実現する[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_02b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d08r0901_boss_02b" back-color="#8080ff,,,,,#8080ff,,,,,,,,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
@@ -439,12 +434,6 @@
 最後の　一手を　うつよ▼
 ポケモンだけの　世界……
 ようやく　実現する[BE:09:速度コントロール:0]▼</language>
-	</row>
-
-	<row id="msg_d08r0901_boss_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_d08r0901_boss_03w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -468,7 +457,7 @@
 ボクたちを　阻止できる！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_03b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d08r0901_boss_03b" back-color="#8080ff,,,,,#8080ff,,,,,,,,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
@@ -513,7 +502,7 @@
 守りたいなら　ムを　探すんだ！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d08r0901_boss_04b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d08r0901_boss_04b" back-color="#8080ff,,,,,#8080ff,,,,,,,,,,,,,">
 		<comment>♂：BLACKver
 ・</comment>
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]さて　どうする？▼
