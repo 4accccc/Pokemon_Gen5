@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-05T21:14:55"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T15:45:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1457" top="190" right="2162" bottom="810" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r07r0105_leader6_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・GRIDX=16、GRIDZ=13、上向き（暫定）</comment>
 		<attribute name="キャラ指定">c06ジムリーダー
@@ -303,14 +303,14 @@
 だけど
 もう　だいじょうぶ！▼
 キズぐすりを　つかってあげたら
-げんきになって　とんでったよ！▼</language>
+げんきになって　とんでいったわ！▼</language>
 		<language name="JPN_KANJI" width="256">フウロ『あっ！▼
 さっき　みえたのって　やっぱり
 傷ついた　ポケモンだったよ▼
 だけど
 もう　大丈夫！▼
 キズぐすりを　使ってあげたら
-元気になって　飛んでったよ！▼</language>
+元気になって　飛んでいったわ！▼</language>
 	</row>
 
 	<row id="msg_r07r0105_leader6_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -392,7 +392,7 @@
 そんな　音色　だよね▼</language>
 	</row>
 
-	<row id="msg_r07r0105_leader6_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後、歩いて退場
 ・画面外に消えると、主人公、操作可能
@@ -403,12 +403,12 @@
 では　あらためて！▼
 じゅんびが　ととのったら
 ジムに　おいでよね！▽
-だいかんげい　しちゃうから！！▼</language>
+だいかんげい　するから！！▼</language>
 		<language name="JPN_KANJI" width="256">さてと……
 では　あらためて！▼
 準備が　整ったら
 ジムに　おいでよね！▽
-熱烈　大歓迎しちゃうから！！▼</language>
+熱烈　大歓迎するから！！▼</language>
 	</row>
 
 	<row id="msg_r07r0105_chime_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

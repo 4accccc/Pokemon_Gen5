@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T20:21:30"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T15:51:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -305,13 +305,13 @@
 だけど　すでに　みつけた　モノだから
 きみに　ゆずってあげるよ▼</language>
 		<language name="JPN_KANJI" width="256">なにを　しているか　だって？▼
-たからさがし　だよ
+宝探し　だよ
 た・か・ら・さ・が・し！▼
-たからさがしは　たのしいよ
-たまに　すなはまに　うまっていてね▽
-さっきも　おたからを　みつけたんだ▼
-だけど　すでに　みつけた　モノだから
-きみに　ゆずってあげるよ▼</language>
+宝探しは　楽しいよ
+たまに　砂浜に　うまっていてね▽
+さっきも　お宝を　みつけたんだ▼
+だけど　すでに　みつけた　ものだから
+君に　ゆずってあげるよ▼</language>
 	</row>
 
 	<row id="msg_r13_salvage_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -321,9 +321,9 @@
 		<language name="JPN" width="256">さっき　おたからを　みつけたんだ▼
 だけど　すでに　みつけた　モノだから
 きみに　ゆずってあげるよ▼</language>
-		<language name="JPN_KANJI" width="256">さっき　おたからを　みつけたんだ
-だけど　すでに　みつけた　モノだから
-きみに　ゆずってあげるよ</language>
+		<language name="JPN_KANJI" width="256">さっき　お宝を　みつけたんだ▼
+だけど　すでに　みつけた　ものだから
+君に　ゆずってあげるよ▼</language>
 	</row>
 
 	<row id="msg_r13_salvage_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -332,9 +332,9 @@
 		<language name="JPN" width="256">あしたも　ここで　たからさがし▼
 なにか　みつかるかも　しれないから
 ヒマなら　くると　いいんじゃないか</language>
-		<language name="JPN_KANJI" width="256">あしたも　ここで　たからさがし
+		<language name="JPN_KANJI" width="256">明日も　ここで　宝探し▼
 なにか　みつかるかも　しれないから
-ヒマなら　くると　いい</language>
+ヒマなら　来ると　いいんじゃないか</language>
 	</row>
 
 	<row id="msg_r13_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

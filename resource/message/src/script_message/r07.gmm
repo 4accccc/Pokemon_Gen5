@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-15T19:55:32"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T15:41:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="63" top="107" right="768" bottom="727" maximized="no" rayout="Vertical2">
+	<dialog left="1361" top="220" right="2066" bottom="840" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,179 +292,90 @@
 	</lock>
 
 
-	<row id="msg_r07_black_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・pos（GRIDX=134、GRIDZ=243~245）起動
-・画面左からライバル登場し
-　隣接してメッセージ表示後に戦闘へ
-・0＝主人公名前</comment>
+	<row id="msg_r07_black_01" text-color="#ffffff,,,#ffffff,,#ffffff,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！▼
-ぼくの　じつりょくが　どれほどか
-たしかめさせて　もらうよ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！▼
-ぼくの　実力が　どれほどか
-確かめさせて　もらうよ▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r07_champion_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・戦闘復帰時にチャンピオン配置済み
-　GRIDX=136、GRIDZ=244
-・戦闘後、フィールドに復帰すると自動で表示
-　このときライバル、主人公の二人、チャンピオン側を向く
-・続けてblack_02</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『ほう！　なかなかの
-ポケモンしょうぶで　あったな！▼
-ふたりとも　トレーナーとして
-そだっておるようで　なにより！▼</language>
-		<language name="JPN_KANJI" width="256">アデク『ほう！　なかなかの
-ポケモン勝負で　あったな！▼
-二人とも　トレーナーとして
-育っておるようで　なにより！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r07_black_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてchampion_02</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……どなたかと　おもえば
-チャンピオンの　アデクさん　ですか▼
-じぶんは　まけたのに
-いい　しょうぶと　いわれれても▽
-しょうじき　こまります▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……どなたかと　おもえば
-チャンピオンの　アデクさん　ですか▼
-自分は　負けたのに
-いい　勝負と　いわれれても▽
-正直　困ります▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r07_champion_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・メッセージ表示前、チャンピオンの動作モデル
-　GRIDX=133、GRIDZ=245付近に移動（ジャンプする?）
-・あわせて主人公、ライバルの向きも変更
-・続けてblack_03</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『……まったく▼
-とげのある　いいかたをせず
-すなおに　よろこべ▼
-それで　まえにも　きいたが
-つよくなって　どうするのかね？▼</language>
-		<language name="JPN_KANJI" width="256">アデク『……まったく▼
-とげのある　いいかたをせず
-素直に　喜べ▼
-それで　前にも　きいたが
-強くなって　どうするのかね？▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r07_black_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・続けてchampion_03</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……つよくなれば▼
-チャンピオンに　なれば　それが
-ぼくの　そんざいりゆうに　なる▽
-ぼくは　いきている　あかしが　ほしい▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……強くなれば▼
-チャンピオンに　なれば　それが
-ぼくの　存在理由に　なる▽
-ぼくは　生きている　証が　ほしい▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r07_champion_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・まずライバルに渡すような演出
-・続けてchampion_04</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『ふむう……
-きみは　レンブに　にておるな▼
-なるほど　たしかに
-なにに　なりたいかは　だいじだ▼
-だが　それいじょうに　だいじなのは
-つよくなり　えた　ちからで▽
-なにを　するのか！　ではないのか？▼
-まあ
-これでも　もっていけ！▼</language>
-		<language name="JPN_KANJI" width="256">アデク『ふむう……
-きみは　レンブに　似ておるな▼
-なるほど　たしかに
-なにに　なりたいかは　大事だ▼
-だが　それ以上に　大事なのは
-強くなり　得た　力で▽
-なにを　するのか！　ではないのか？▼
-まあ
-これでも　持っていけ！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r07_champion_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・主人公と隣接してメッセージ表示
-・アイテム入手処理
-　No328「わざマシン０１」（暫定）
-・続けてchampion_05</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">ほら　おまえさんも▼</language>
-		<language name="JPN_KANJI" width="256">ほら　おまえさんも▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r07_champion_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・表示後、画面左に移動
-・続けてblack_04</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『じゃあな
-わかき　トレーナーたち▼
-ともにあゆむ　ポケモンが
-なにをのぞむか　わすれるなよ！▼</language>
-		<language name="JPN_KANJI" width="256">アデク『じゃあな
-若き　トレーナーたち▼
-ともに歩む　ポケモンが
-なにを望むか　忘れるなよ！▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r07_black_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・画面左を見ながら
-・続けてblack_05</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『なにを　したいか……
-それが　わからないから▽
-つよくなりたいんだよ　ぼくは▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『なにを　したいか……
-それが　わからないから▽
-強くなりたいんだよ　ぼくは▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r07_black_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・主人公と向き合ってメッセージ
-・表示後、画面左に移動
-　画面外に消えると主人公操作可能に
-・0＝主人公名前</comment>
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">……じゃあね　[1:00:トレーナー名:0]
-つぎにあうときは　ぼくがかつよ▼</language>
-		<language name="JPN_KANJI" width="256">……じゃあね　[1:00:トレーナー名:0]
-次に会うときは　ぼくが勝つよ▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_r07_fighterw1_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_r07_fighterw1_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">FIGHTREW
 格闘家♀</attribute>
 		<language name="JPN" width="256">あの　まるたばし……▼
 うえで　じっと　していると
-おちちゃうから　とまらないでね！</language>
-		<language name="JPN_KANJI" width="256">あの　まるたばし……▼
-うえで　じっと　していると
-おちちゃうから　とまらないでね！</language>
+おちちゃうから　たちどまらないでね！</language>
+		<language name="JPN_KANJI" width="256">あの　丸太橋……▼
+上で　じっと　していると
+落ちちゃうから　たちどまらないでね！</language>
 	</row>
 
-	<row id="msg_r07_fighterw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07_fighterw_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・技マシン入手前
 　アイテム入手処理
@@ -483,7 +394,7 @@
 わざマシンを　受け取りなさい！▼</language>
 	</row>
 
-	<row id="msg_r07_fighterw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07_fighterw_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・技マシン入手後</comment>
 		<attribute name="キャラ指定">FIGHTREW
@@ -583,7 +494,7 @@
 		<language name="JPN" width="256">タワーオブヘブン
 ただしき　たましい　ここにねむる</language>
 		<language name="JPN_KANJI" width="256">タワーオブヘブン
-ただしき　たましい　ここにねむる</language>
+正しき　魂　ここに眠る</language>
 	</row>
 
 	<row id="msg_r07_sign3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">

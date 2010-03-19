@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-08T16:47:31"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T15:43:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r07r0103_nurse_01">
+	<row id="msg_r07r0103_nurse_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・戦闘後、フィールドに復帰すると
 　自動でこのメッセージ表示
@@ -305,7 +305,7 @@ nurse_01</attribute>
 始めちゃいます！▼</language>
 	</row>
 
-	<row id="msg_r07r0103_nurse_02">
+	<row id="msg_r07r0103_nurse_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・回復処理後
 ・以降、繰り返し</comment>
