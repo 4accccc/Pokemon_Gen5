@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-08T22:10:11"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T13:35:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1528" top="259" right="2233" bottom="879" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03r0901_musician_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_c03r0901_musician_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,#ffff80,,#ffff80,,,,#ffff80,,">
 		<comment>●メロディアが手持ちにいない場合
 ・繰り返しのセリフ。</comment>
 		<attribute name="キャラ指定">MUSICIAN</attribute>
@@ -308,7 +308,7 @@
 みんなが　落ち込んでしまう……</language>
 	</row>
 
-	<row id="msg_c03r0901_musician_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_c03r0901_musician_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,#ffff80,,#ffff80,,,,#ffff80,,">
 		<comment>●メロディアが手持ちにいて
 ●「いにしえのうた」を覚えていない場合
 
@@ -330,7 +330,7 @@
 聴いてくれるかい…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03r0901_musician_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_c03r0901_musician_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,#ffff80,,#ffff80,,,,#ffff80,,">
 		<comment>・曲を弾き終えたあとのセリフ。</comment>
 		<attribute name="キャラ指定">MUSICIAN</attribute>
 		<language name="JPN" width="256">ボクの　ははが　はなしてくれた…[BE:01:ページ切り替え（クリア）]
@@ -353,7 +353,7 @@
 どこかへ　いっちゃった　とね…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03r0901_musician_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_c03r0901_musician_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,#ffff80,,#ffff80,,,,#ffff80,,">
 		<comment>・話題が移るので、フキダシを出し直し。</comment>
 		<attribute name="キャラ指定">MUSICIAN</attribute>
 		<language name="JPN" width="256">キミが　とびらから　はいってきたとき
@@ -370,7 +370,7 @@
 不思議な　子供だね…</language>
 	</row>
 
-	<row id="msg_c03r0901_musician_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_c03r0901_musician_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,#ffff80,,#ffff80,,,,#ffff80,,">
 		<comment>●「いにしえのうた」を覚えている場合</comment>
 		<attribute name="キャラ指定">MUSICIAN</attribute>
 		<language name="JPN" width="256">いにしえのうた　を　うたわせてごらん[BE:01:ページ切り替え（クリア）]
@@ -383,7 +383,7 @@
 姿を　変えるのさ…</language>
 	</row>
 
-	<row id="msg_c03r0901_narrator_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+	<row id="msg_c03r0901_narrator_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,#ffffff,,#ffffff,,,,#ffffff,,">
 		<comment>0:メロディアのニックネーム</comment>
 		<attribute name="キャラ指定">ナレーション</attribute>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
@@ -392,7 +392,7 @@
 いにしえのうた　を　おもいだした！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03r0901_narrator_02" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03r0901_narrator_02" back-color="#ffffff,,,,,,,,,,#ffffff,,,,,,#ffffff,,">
 		<comment>0:メロディアのニックネーム
 
 ●技スロットに空きがない場合
@@ -411,7 +411,7 @@
 わざを　わすれさせますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03r0901_narrator_03" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+	<row id="msg_c03r0901_narrator_03" back-color="#ffffff,,,,,,,,,,#ffffff,,,,,,#ffffff,,">
 		<comment>0:メロディアのニックネーム
 
 ●「いにしえのうた」を覚えない場合</comment>
@@ -422,7 +422,7 @@
 おもいださなかった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03r0901_waiter_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_c03r0901_waiter_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
 		<comment>♂
 ・メッセージ後、アイテム入手処理
 　No032「ミックスオレ」</comment>
@@ -433,7 +433,7 @@
 これを……▼</language>
 	</row>
 
-	<row id="msg_c03r0901_waiter_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_c03r0901_waiter_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
 		<comment>♂
 ・アイテム入手後、自動で表示</comment>
 		<attribute name="キャラ指定">WAITER</attribute>
@@ -441,7 +441,7 @@
 		<language name="JPN_KANJI" width="256">愛しの　ポケモンに　どうぞ</language>
 	</row>
 
-	<row id="msg_c03r0901_waiter_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+	<row id="msg_c03r0901_waiter_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
 		<comment>♂
 ・waiter_02表示以降、繰り返し</comment>
 		<attribute name="キャラ指定">WAITER</attribute>
@@ -451,7 +451,7 @@
 ごゆっくり……</language>
 	</row>
 
-	<row id="msg_c03r0901_bussinesman_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+	<row id="msg_c03r0901_bussinesman_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,#80ffff,,#80ffff,,,,#80ffff,,">
 		<comment>♂
 ・繰り返しセリフ。</comment>
 		<attribute name="キャラ指定">BUSSINESMAN</attribute>
@@ -461,7 +461,7 @@
 いやすのに　うってつけの　お店です</language>
 	</row>
 
-	<row id="msg_c03r0901_sunglasses_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_c03r0901_sunglasses_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,#80ff80,,#80ff80,,,,#80ff80,,">
 		<comment>♂
 ・繰り返しのセリフ。</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T22:38:02"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T13:31:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03r0501_middlewoman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0501_middlewoman2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・フィーリングチェックのデータがない</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
@@ -308,7 +308,7 @@
 ヒトが　多いんですってね</language>
 	</row>
 
-	<row id="msg_c03r0501_middlewoman2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0501_middlewoman2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・フィーリングチェックのデータがある
 ・はい/いいえの選択肢
@@ -333,7 +333,7 @@
 占ってみる？</language>
 	</row>
 
-	<row id="msg_c03r0501_middlewoman2_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0501_middlewoman2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・はい選択時</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
@@ -345,7 +345,7 @@
 ずばり　[1:00:トレーナー名:0]　ね！</language>
 	</row>
 
-	<row id="msg_c03r0501_middlewoman2_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0501_middlewoman2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
@@ -355,7 +355,7 @@
 タダで　占ってあげるのに</language>
 	</row>
 
-	<row id="msg_c03r0501_middlewoman2_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0501_middlewoman2_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・データが1つしかないとき</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
