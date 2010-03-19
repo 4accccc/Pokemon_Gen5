@@ -479,7 +479,7 @@ BOOL BOXDAT_GetEmptyTrayNumberAndPos( const BOX_MANAGER* box, int* trayNum, int*
 		return TRUE;
 	}
 
-	return BOXDAT_TRAYNUM_ERROR;
+	return FALSE;
 }
 
 //------------------------------------------------------------------
