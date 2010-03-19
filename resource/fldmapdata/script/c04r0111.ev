@@ -545,7 +545,9 @@ EVENT_START ev_c04r0111_home
       //ランクアップ処理
       _BSUBWAY_TOOL( BSWTOOL_UP_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
       
-      IF $ret != 0 THEN //ランクアップした
+      IF $ret == TRUE THEN //ランクアップした
+        _BSUBWAY_TOOL( BSWTOOL_GET_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
+
         _PLAYER_NAME( 0 )
         _NUMBER( 1, ret, 2 )
 

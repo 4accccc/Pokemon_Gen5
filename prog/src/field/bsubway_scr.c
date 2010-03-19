@@ -1022,44 +1022,46 @@ u16 BSUBWAY_SCRWORK_SetWifiRank(
     BSUBWAY_SCOREDATA *score, GAMESYS_WORK *gsys, BSWAY_SETMODE mode )
 {
   u8 ct,rank;
-  static const u8 btower_wifi_rankdown[] = {
+  static const u8 btower_wifi_rankdown[10] = {
    0,5,4,4,3,3,2,2,1,1,
   };
-
+  
+  rank = (u16)BSUBWAY_SCOREDATA_GetWifiRank( score );
+  
   switch( mode ){
   case BSWAY_SETMODE_get:
-    return (u16)BSUBWAY_SCOREDATA_GetWifiRank( score );
+    return ret;
   case BSWAY_SETMODE_inc:  //Inc
     BSUBWAY_SCOREDATA_SetFlag( score,  //連続敗戦フラグを落とす
       BSWAY_SCOREDATA_FLAG_WIFI_LOSE_F, BSWAY_SETMODE_reset);
-    rank = BSUBWAY_SCOREDATA_GetWifiRank( score );
     
     if( rank == 10 ){  
-      return 0;  //もう上がらない
+      return FALSE;  //もう上がらない
     }
     
     //ランクアップ処理
     BSUBWAY_SCOREDATA_IncWifiRank( score );
-    return 1;
+    return TRUE; //ランクアップした
   case BSWAY_SETMODE_dec:  //dec
     //現在の連続敗戦数をカウント
     ct = BSUBWAY_SCOREDATA_SetWifiLoseCount( score, BSWAY_SETMODE_inc );
-    rank = BSUBWAY_SCOREDATA_GetWifiRank( score );
-    
+
     if( rank == 1 ){
-      return 0;
+      return FALSE;
     }
     
     //ランク別敗戦カウントチェック
     if( ct >= btower_wifi_rankdown[rank-1] ){
       BSUBWAY_SCOREDATA_DecWifiRank( score ); //ランクダウン
+      
       //連続敗戦数と連続敗戦フラグをリセット
       BSUBWAY_SCOREDATA_SetWifiLoseCount( score, BSWAY_SETMODE_reset );
       BSUBWAY_SCOREDATA_SetFlag( score,
         BSWAY_SCOREDATA_FLAG_WIFI_LOSE_F, BSWAY_SETMODE_reset );
-      return 1;
+      return TRUE; //ランクダウンした
     }
-    return 0;
+    
+    return FALSE;
   }
   return 0;
 }
