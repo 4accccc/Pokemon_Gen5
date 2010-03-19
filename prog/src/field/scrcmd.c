@@ -93,6 +93,7 @@
 #include "scrcmd_sppoke.h"
 #include "scrcmd_symbol.h"
 #include "scrcmd_poke_win.h"
+#include "scrcmd_item_judge.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

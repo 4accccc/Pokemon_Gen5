@@ -404,3 +404,12 @@
 #define SCR_BALL_ANM_TYPE_IN   (1)
 
 
+//--------------------------------------------------------------
+/// 鑑定士用
+//--------------------------------------------------------------
+#define SCR_ITEM_JUDGE_OBJTYPE_GOURMET      (0)   // グルメ
+#define SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA  (1)   // 石マニア
+#define SCR_ITEM_JUDGE_OBJTYPE_RICH         (2)   // 大富豪
+
+
+

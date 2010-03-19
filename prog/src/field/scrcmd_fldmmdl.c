@@ -867,6 +867,7 @@ VMCMD_RESULT EvCmdPlayerUpDown( VMHANDLE *core, void *wk )
   u16 type = SCRCMD_GetVMWorkValue( core, work );
   u16 frame_param = SCRCMD_GetVMWorkValue( core, work );
   u16 length = SCRCMD_GetVMWorkValue( core, work );
+  u16 way = SCRCMD_GetVMWorkValue( core, work );
   int frame;
   if (type == 0) {
     frame = frame_param;
@@ -874,7 +875,11 @@ VMCMD_RESULT EvCmdPlayerUpDown( VMHANDLE *core, void *wk )
     frame = - frame_param;
   }
 
-  VEC_Set( &vec, 0, (- length) <<FX32_SHIFT, 0 );
+  if(way == 0){
+    VEC_Set( &vec, 0, (- length) <<FX32_SHIFT, 0 );
+  }else{
+    VEC_Set( &vec, 0, (length) <<FX32_SHIFT, 0 );
+  }
   move     = FIELD_TASK_TransDrawOffset( fieldmap, frame, &vec );
   FIELD_TASK_MAN_AddTask( man, move, NULL );
 

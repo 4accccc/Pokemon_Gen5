@@ -1710,19 +1710,21 @@
  * @param type  　動かす種類0の時原点から、1の時逆算した位置から
  * @param frame   動かす時間
  * @param length  移動距離（3D座標単位）
+ * @param way     移動方向 0=↓  1=↑
  *
  * @note
  * 自機の内部情報を操作して戻す処理がないため使用箇所は要注意！
  */
 //--------------------------------------------------------------
-#define _PLAYER_UPDOWN_EFFECT( type, frame, length ) \
-    _ASM_PLAYER_UPDOWN type, frame, length
+#define _PLAYER_UPDOWN_EFFECT( type, frame, length, way ) \
+    _ASM_PLAYER_UPDOWN type, frame, length, way
 
-  .macro  _ASM_PLAYER_UPDOWN type, frame, length
+  .macro  _ASM_PLAYER_UPDOWN type, frame, length, way
   .short  EV_SEQ_PLAYER_UPDOWN
   .short  \type
   .short  \frame
   .short  \length
+  .short  \way
   .endm
 
 //--------------------------------------------------------------
@@ -9329,6 +9331,32 @@
   .short \hint
   .short \ans
   .endm  
+
+//--------------------------------------------------------------
+/**
+ *  _ITEMJUDGE     鑑定士
+ *  @param  item_no   鑑定するアイテム
+ *  @param  obj_type  鑑定する人  
+ *                    SCR_ITEM_JUDGE_OBJTYPE_GOURMET      (0)   // グルメ
+ *                    SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA  (1)   // 石マニア
+ *                    SCR_ITEM_JUDGE_OBJTYPE_RICH         (2)   // 大富豪
+ *  @param  ret_money 金額格納ワーク      
+ *
+ *  ret_moneyが0なら興味なし
+ */
+//--------------------------------------------------------------
+#define _ITEMJUDGE( item_no, obj_type, ret_money ) \
+    _ASM_ITEMJUDGE item_no, obj_type, ret_money
+
+  .macro _ASM_ITEMJUDGE item_no, obj_type, ret_money
+  .short EV_SEQ_ITEMJUDGE_CHECK
+  .short \item_no
+  .short \obj_type
+  .short \ret_money
+  .endm  
+
+
+
 
 //======================================================================
 // すれ違い調査隊関連

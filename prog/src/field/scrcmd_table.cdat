@@ -927,7 +927,9 @@
   DEF_CMD( EvCmdGetQuiz, EV_SEQ_GET_QUIZ )
   NO_CMD()
   NO_CMD()
-  NO_CMD()
+
+  // ä”íËém
+  DEF_CMD( EvCmdItemJudgeCheck, EV_SEQ_ITEMJUDGE_CHECK )
 
   // Ç∑ÇÍà·Ç¢í≤ç∏ë‡ä÷òA
   DEF_CMD( EvCmdStartResearch, EV_SEQ_START_RESEARCH )

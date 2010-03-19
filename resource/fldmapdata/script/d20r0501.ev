@@ -133,7 +133,7 @@ EVENT_START		ev_pos_d20r0501_exit_01
 	IF $SCWK_ANSWER == SCR_YES THEN
 		
 		//ïÇè„ÉAÉjÉÅ
-		_PLAYER_UPDOWN_EFFECT( 1, 40, 64 )
+		_PLAYER_UPDOWN_EFFECT( 0, 40, 64, 1 )
 		
 		_TIME_WAIT( 40 )
 		
