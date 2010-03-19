@@ -324,7 +324,7 @@ sub_receipt_menu_challenge_wifi:
   
   WHILE $loop == TRUE
     _CALL sub_receipt_msg_ask_geton
-    _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+    _BMPMENU_INIT_EX( 1, 8, 0, 1, SCWK_ANSWER )
     
     IF $wifi_data == TRUE THEN //ÉfÅ[É^Ç†ÇË
       _BMPMENU_MAKE_LIST( msg_bsw_scr_39, 0 ) //íßêÌ
