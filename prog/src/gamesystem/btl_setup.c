@@ -275,6 +275,11 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
     dst->playerStatus[i] = NULL;
   }
 
+  dst->shooterBitWork.shooter_use = TRUE;
+  for(i=0; i<NELEMS(dst->shooterBitWork.bit_tbl); ++i){
+    dst->shooterBitWork.bit_tbl[i] = 0xff;
+  }
+
   dst->playerStatus[BTL_CLIENT_PLAYER] = GAMEDATA_GetMyStatus( gameData );
   dst->itemData     = GAMEDATA_GetMyItem( gameData );
   dst->bagCursor    = GAMEDATA_GetBagCursor( gameData );
