@@ -28,6 +28,11 @@ extern BOOL WIFILOGIN_MESSAGE_InfoMessageEndCheck(WIFILOGIN_MESSAGE_WORK* pWork)
 extern void WIFILOGIN_MESSAGE_InfoMessageEnd(WIFILOGIN_MESSAGE_WORK* pWork);
 
 
+//タイトル文字描画
+extern void WIFILOGIN_MESSAGE_TitleDisp(WIFILOGIN_MESSAGE_WORK* pWork, int msgid);
+extern void WIFILOGIN_MESSAGE_TitleEnd(WIFILOGIN_MESSAGE_WORK* pWork);
+
+
 //はい、いいえ選択
 extern WIFILOGIN_YESNO_WORK* WIFILOGIN_MESSAGE_YesNoStart(WIFILOGIN_MESSAGE_WORK* pWork,int type);
 extern void WIFILOGIN_MESSAGE_YesNoEnd( WIFILOGIN_YESNO_WORK* pWork );

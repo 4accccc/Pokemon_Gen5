@@ -91,6 +91,8 @@ struct _WIFILOGIN_DISP_WORK {
   GFL_CLWK* curIcon[_CELL_DISP_NUM];
   MOVESMOKE moveSmoke[_CELL_DISP_NUM];
   int smokeTimer;
+
+  CONNECT_BG_PALANM bgAnmWork;
 };
 
 static GFL_DISP_VRAM _defVBTbl = {
@@ -126,6 +128,7 @@ static void dispOamEnd(WIFILOGIN_DISP_WORK* pWork);
 static void	_VBlank( GFL_TCB *tcb, void *work );
 static void _moveSmoke(WIFILOGIN_DISP_WORK* pWork);
 
+static void settingMainBgControl(WIFILOGIN_DISP_WORK* pWork,int frame);
 static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork,int frame);
 
 
@@ -148,7 +151,7 @@ WIFILOGIN_DISP_WORK* WIFILOGIN_DISP_Init(HEAPID id, WIFILOGIN_BG bg, WIFILOGIN_D
 
   GFL_DISP_SetBank( &_defVBTbl );
   GFL_BG_SetBGMode( &BGsys_data );
-  settingSubBgControl(pWork,GFL_BG_FRAME0_M);
+  settingMainBgControl(pWork,GFL_BG_FRAME0_M);
   settingSubBgControl(pWork,GFL_BG_FRAME0_S);
   switch( pWork->bg ){
   case WIFILOGIN_BG_DREAM_WORLD:
@@ -194,7 +197,88 @@ void WIFILOGIN_DISP_End(WIFILOGIN_DISP_WORK* pWork)
   GFL_HEAP_FreeMemory(pWork);
 
 }
+static void settingMainBgControl(WIFILOGIN_DISP_WORK* pWork,int frameno)
+{
+  /*
+  {
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000,
+      0x8000,
+      GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_ClearFrame( GFL_BG_FRAME0_M );
+    GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
+    GFL_BG_SetPriority( GFL_BG_FRAME0_M, 0 );
+		GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
 
+  }
+  */
+
+
+  
+  {
+    int frame = frameno;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      2, 0, 0, FALSE
+      };
+
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = frameno+1;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
+      1, 0, 0, FALSE
+      };
+
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = frameno+2;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    //GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = frameno+3;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x18000, 0x8000,GX_BG_EXTPLTT_01,
+      3, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+}
 
 static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork,int frameno)
 {
@@ -223,7 +307,7 @@ static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork,int frameno)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-      3, 0, 0, FALSE
+      2, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -236,7 +320,7 @@ static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork,int frameno)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
-      2, 0, 0, FALSE
+      1, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -252,7 +336,7 @@ static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork,int frameno)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
-      1, 0, 0, FALSE
+      0, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -268,7 +352,7 @@ static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork,int frameno)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x18000, 0x8000,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
+      3, 0, 0, FALSE
       };
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -282,37 +366,31 @@ static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork,int frameno)
 static void dispInit(WIFILOGIN_DISP_WORK* pWork)
 {
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFI_LOGIN, pWork->heapID );
-  
-  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifi_login_conect_NCLR,
-                                      PALTYPE_SUB_BG, 0, 0,  pWork->heapID);
-    // サブ画面BG0キャラ転送
-    pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_wifi_login_conect_sub_NCGR,
-                                                                  GFL_BG_FRAME0_S, 0, 0, pWork->heapID);
 
-    // サブ画面BG0スクリーン転送
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_wifi_login_conect_sub_NSCR,
-                                              GFL_BG_FRAME0_S, 0,
-                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-                                              pWork->heapID);
+  //下画面
+  GFL_ARCHDL_UTIL_TransVramPalette( p_handle , NARC_wifi_login_connect_win_NCLR , 
+      PALTYPE_SUB_BG , 0 , 0 , pWork->heapID );
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle , NARC_wifi_login_connect_win_NCGR ,
+      GFL_BG_FRAME0_S , 0 , 0, FALSE , pWork->heapID );
+  GFL_ARCHDL_UTIL_TransVramScreen( p_handle , NARC_wifi_login_connect_win2_d_NSCR , 
+      GFL_BG_FRAME0_S ,  0 , 0, FALSE , pWork->heapID );
 
+  //上画面
+  GFL_ARCHDL_UTIL_TransVramPalette( p_handle , NARC_wifi_login_connect_win_NCLR , 
+      PALTYPE_MAIN_BG , 0 , 0 , pWork->heapID );
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle , NARC_wifi_login_connect_win_NCGR ,
+      GFL_BG_FRAME0_M , 0 , 0, FALSE , pWork->heapID );
+  GFL_ARCHDL_UTIL_TransVramScreen( p_handle , NARC_wifi_login_connect_win1_u_NSCR , 
+      GFL_BG_FRAME0_M,  0 , 0, FALSE , pWork->heapID );
+  //上画面
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle , NARC_wifi_login_connect_win_NCGR ,
+      GFL_BG_FRAME3_M , 0 , 0, FALSE , pWork->heapID );
+  GFL_ARCHDL_UTIL_TransVramScreen( p_handle , NARC_wifi_login_connect_win2_u_NSCR , 
+      GFL_BG_FRAME3_M ,  0 , 0, FALSE , pWork->heapID );
 
-    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifi_login_conect_NCLR,
-                                      PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
-    // サブ画面BG0キャラ転送
-    pWork->mainchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_wifi_login_conect_NCGR,
-                                                                  GFL_BG_FRAME0_M, 0, 0, pWork->heapID);
+  ConnectBGPalAnm_InitBg( &pWork->cbp , p_handle , NARC_wifi_login_connect_ani_NCLR , pWork->heapID , GFL_BG_FRAME0_M , GFL_BG_FRAME3_M );
 
-    // サブ画面BG0スクリーン転送
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_wifi_login_conect_01_NSCR,
-                                              GFL_BG_FRAME0_M, 0,
-                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
-                                              pWork->heapID);
-
-
-    //パレットアニメシステム作成
-    ConnectBGPalAnm_Init(&pWork->cbp, p_handle, NARC_wifi_login_conect_anm_NCLR, pWork->heapID);
-  
-    GFL_ARC_CloseDataHandle(p_handle);
+  GFL_ARC_CloseDataHandle( p_handle );
 }
 
 static void dispInitDream(WIFILOGIN_DISP_WORK* pWork)

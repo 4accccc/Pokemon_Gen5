@@ -475,6 +475,7 @@ static void _errorDisp(WIFILOGIN_WORK* pWork)
   // エラーメッセージを表示しておくシンク数
   pWork->timer = STOP_TIME_;
 
+  WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
   WIFILOGIN_MESSAGE_ErrorMessageDisp(pWork->pMessageWork, msgno, no);
 //  WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, msgno);
   
@@ -516,6 +517,7 @@ static void _saveEndWait(WIFILOGIN_WORK* pWork)
 {
   if(GFL_UI_KEY_GetTrg()  || GFL_UI_TP_GetTrg()){
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+    WIFILOGIN_MESSAGE_TitleDisp(pWork->pMessageWork, dwc_title_0000);
     if(pWork->dbw->pSvl){
       _CHANGE_STATE(pWork, _modeSvlGetStart);  //認証
     }
@@ -536,6 +538,8 @@ static void _connectingCommonWait(WIFILOGIN_WORK* pWork)
 {
   if(GFL_NET_StateIsWifiLoginState()){
     if( pWork->bInitMessage ){     // 初回接続時にはセーブが完了した事を通知
+
+      WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
       WIFILOGIN_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
       WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0004);
       _CHANGE_STATE(pWork, _saveEndWait);
@@ -677,6 +681,7 @@ static void _modeProfileWait2(WIFILOGIN_WORK* pWork)
       _CHANGE_STATE(pWork,_modeFadeStart);
     }
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+    WIFILOGIN_MESSAGE_TitleDisp(pWork->pMessageWork, dwc_title_0000);
     WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
     pWork->pSelectWork=NULL;
     G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
@@ -748,6 +753,7 @@ static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
       _CHANGE_STATE(pWork,_modeFadeStart);
     }
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+    WIFILOGIN_MESSAGE_TitleDisp(pWork->pMessageWork, dwc_title_0000);
     WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
     pWork->pSelectWork=NULL;
   }
@@ -770,12 +776,15 @@ static void _modeDifferDSWait3(WIFILOGIN_WORK* pWork)
 
     if(selectno==0){
       pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
+
+      WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
       WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0007);
       _CHANGE_STATE(pWork,_modeDifferDSWait4);
     }
     else{
       pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
       WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+      WIFILOGIN_MESSAGE_TitleDisp(pWork->pMessageWork, dwc_title_0000);
       _CHANGE_STATE(pWork,_modeFadeStart);
     }
     WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
@@ -797,6 +806,7 @@ static void _modeDifferDSWait2(WIFILOGIN_WORK* pWork)
 static void _modeDifferDSWait(WIFILOGIN_WORK* pWork)
 {
   if(GFL_UI_TP_GetTrg() || GFL_UI_KEY_GetTrg()){
+    WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0006);
     _CHANGE_STATE(pWork,_modeDifferDSWait2);
   }
@@ -811,6 +821,7 @@ static void _modeDifferDSWait(WIFILOGIN_WORK* pWork)
 static void _profileIDCheck(WIFILOGIN_WORK* pWork)
 {
   if(!DS_SYSTEM_IsAgreeEULA()){  ///EULA検査
+    WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0018);
     _CHANGE_STATE(pWork,_exitEnd2);
   }
@@ -818,11 +829,13 @@ static void _profileIDCheck(WIFILOGIN_WORK* pWork)
   else if( !DWC_CheckHasProfile( WifiList_GetMyUserInfo(pWork->pList) ) )
   {
     pWork->bInitMessage=TRUE;
+    WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0003);
     _CHANGE_STATE(pWork,_modeProfileWait);
   }
   else if( !DWC_CheckValidConsole(WifiList_GetMyUserInfo(pWork->pList)) )
   {  //別DSの場合
+    WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0005);
     _CHANGE_STATE(pWork,_modeDifferDSWait);
   }
@@ -966,11 +979,12 @@ static void _modeReporting(WIFILOGIN_WORK* pWork)
 static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   WIFILOGIN_PARAM* pEv=pwk;
+  WIFILOGIN_WORK *pWork;
 	
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFILOGIN, 0x18000 );
 
   {
-    WIFILOGIN_WORK *pWork = GFL_PROC_AllocWork( proc, sizeof( WIFILOGIN_WORK ), HEAPID_WIFILOGIN );
+    pWork = GFL_PROC_AllocWork( proc, sizeof( WIFILOGIN_WORK ), HEAPID_WIFILOGIN );
     GFL_STD_MemClear(pWork, sizeof(WIFILOGIN_WORK));
     pWork->heapID = HEAPID_WIFILOGIN;
     pWork->gamedata = pEv->gamedata;
@@ -998,6 +1012,8 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
 
   if( pEv->bg == WIFILOGIN_BG_NORMAL )
   { 
+    WIFILOGIN_MESSAGE_TitleDisp(pWork->pMessageWork, dwc_title_0000);
+
     PMSND_PlayBGM( SEQ_BGM_WIFI_ACCESS );
     PMSND_FadeInBGM( 8 );
   }
