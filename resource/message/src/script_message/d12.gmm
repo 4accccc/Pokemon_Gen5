@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-03-07T18:13:49"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T14:47:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="122" right="711" bottom="742" maximized="no" rayout="Vertical2">
+	<dialog left="1417" top="178" right="2122" bottom="798" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -304,7 +304,7 @@
 		<language name="JPN" width="256">ヒウンシティに　もどって
 たたかいに　そなえますか？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ヒウンシティに　もどって
-たたかいに　そなえますか？[BE:01:ページ切り替え（クリア）]</language>
+戦いに　備えますか？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d12_mariner_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -316,7 +316,7 @@
 		<attribute name="キャラ指定">船員</attribute>
 		<language name="JPN" width="256">わかりました！　いそいで
 ヒウンシティに　もどりましょう！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">わかりました！　いそいで
+		<language name="JPN_KANJI" width="256">わかりました！　急いで
 ヒウンシティに　もどりましょう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -326,7 +326,7 @@
 		<language name="JPN" width="256">ヒウンシティに　もどりたいときは
 いつでも　こえを　かけて　ください！</language>
 		<language name="JPN_KANJI" width="256">ヒウンシティに　もどりたいときは
-いつでも　こえを　かけて　ください！</language>
+いつでも　声を　かけて　ください！</language>
 	</row>
 
 	<row id="msg_d12_mariner_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
@@ -348,7 +348,7 @@
 		<attribute name="キャラ指定">BACKPACKERM</attribute>
 		<language name="JPN" width="256">プラズマだんの　れんちゅうが…[BE:01:ページ切り替え（クリア）]
 なんて　ひどいことを　するんだ…！</language>
-		<language name="JPN_KANJI" width="256">プラズマだんの　れんちゅうが…[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">プラズマ団の　連中が…[BE:01:ページ切り替え（クリア）]
 なんて　ひどいことを　するんだ…！</language>
 	</row>
 
@@ -356,7 +356,7 @@
 		<comment>●イベント終了後のセリフ</comment>
 		<attribute name="キャラ指定">BACKPACKERM</attribute>
 		<language name="JPN" width="256">うみの　かおりが　ここちいいねー！</language>
-		<language name="JPN_KANJI" width="256">うみの　かおりが　ここちいいねー！</language>
+		<language name="JPN_KANJI" width="256">海の　香りが　ここちいいねー！</language>
 	</row>
 
 	<row id="msg_d12_visitor02_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -375,7 +375,7 @@
 		<attribute name="キャラ指定">BABYBOY1</attribute>
 		<language name="JPN" width="256">おにいちゃんが　わるものを
 やっつけてくれたんだね！</language>
-		<language name="JPN_KANJI" width="256">おにいちゃんが　わるものを
+		<language name="JPN_KANJI" width="256">お兄ちゃんが　悪者を
 やっつけてくれたんだね！</language>
 	</row>
 
@@ -385,7 +385,7 @@
 		<attribute name="キャラ指定">BABYBOY1</attribute>
 		<language name="JPN" width="256">おねえちゃんが　わるものを
 やっつけてくれたんだね！</language>
-		<language name="JPN_KANJI" width="256">おねえちゃんが　わるものを
+		<language name="JPN_KANJI" width="256">お姉ちゃんが　悪者を
 やっつけてくれたんだね！</language>
 	</row>
 
@@ -398,17 +398,17 @@
 		<language name="JPN" width="256">わしの　まごを　なかしおって！
 としよりだと　おもって　なめてたら…[BE:00:ページ切り替え（行送り）]
 フガ　フガ…！</language>
-		<language name="JPN_KANJI" width="256">わしの　まごを　なかしおって！
-としよりだと　おもって　なめてたら…[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">わしの　孫を　泣かしおって！
+年寄りだと　思って　なめてたら…[BE:00:ページ切り替え（行送り）]
 フガ　フガ…！</language>
 	</row>
 
 	<row id="msg_d12_visitor03_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>●イベント終了後のセリフ</comment>
 		<attribute name="キャラ指定">OLDWOMAN1</attribute>
-		<language name="JPN" width="256">まごを　たすけれくれて
+		<language name="JPN" width="256">まごを　たすけてくれて
 ほんとに　ありがとうよ</language>
-		<language name="JPN_KANJI" width="256">まごを　たすけれくれて
+		<language name="JPN_KANJI" width="256">孫を　助けてくれて
 ほんとに　ありがとうよ</language>
 	</row>
 
@@ -423,7 +423,7 @@
 てあらな　ことは　しない！</language>
 		<language name="JPN_KANJI" width="256">ええい　うるさい！[BE:01:ページ切り替え（クリア）]
 ここで　おとなしくしてれば
-てあらな　ことは　しない！</language>
+手荒な　ことは　しない！</language>
 	</row>
 
 	<row id="msg_d12_visitor04_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
@@ -435,9 +435,9 @@
 		<language name="JPN" width="256">しまを　せんきょして
 なにを　しようと　してるんだ…？[BE:00:ページ切り替え（行送り）]
 まったく　アヤシイ　れんちゅうだ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">しまを　せんきょして
+		<language name="JPN_KANJI" width="256">島を　占拠して
 なにを　しようと　してるんだ…？[BE:00:ページ切り替え（行送り）]
-まったく　アヤシイ　れんちゅうだ！[BE:01:ページ切り替え（クリア）]</language>
+まったく　アヤシイ　連中だ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d12_visitor04_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
@@ -447,8 +447,8 @@
 しっていれば　オレさまが…[BE:01:ページ切り替え（クリア）]
 いやいや　なんでも　ない！
 ひとりごと　ひとりごと…！</language>
-		<language name="JPN_KANJI" width="256">しまの　ひみつを　もっと　はやく
-しっていれば　オレさまが…[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">島の　秘密を　もっと　はやく
+知っていれば　オレさまが…[BE:01:ページ切り替え（クリア）]
 いやいや　なんでも　ない！
 ひとりごと　ひとりごと…！</language>
 	</row>
@@ -462,8 +462,8 @@
 		<language name="JPN" width="256">ふるい　とうだいしか　ないような
 きねん　こうえんで[BE:00:ページ切り替え（行送り）]
 なにを　しようと　してるのかしら…？</language>
-		<language name="JPN_KANJI" width="256">ふるい　とうだいしか　ないような
-きねん　こうえんで[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">古い　灯台しか　ないような
+記念公園で[BE:00:ページ切り替え（行送り）]
 なにを　しようと　してるのかしら…？</language>
 	</row>
 
@@ -471,8 +471,8 @@
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">ポケモンを　あくじに　つかうひとが
 おおすぎるのよ…！</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　あくじに　つかうひとが
-おおすぎるのよ…！</language>
+		<language name="JPN_KANJI" width="256">ポケモンを　悪事に　使う人が
+多すぎるのよ…！</language>
 	</row>
 
 	<row id="msg_d12_police01_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -484,9 +484,9 @@
 		<language name="JPN" width="256">ほんかんの　ポケモンでは
 たちうち　できなかった…！[BE:00:ページ切り替え（行送り）]
 プラズマだんの　ヤツラめ！</language>
-		<language name="JPN_KANJI" width="256">ほんかんの　ポケモンでは
-たちうち　できなかった…！[BE:00:ページ切り替え（行送り）]
-プラズマだんの　ヤツラめ！</language>
+		<language name="JPN_KANJI" width="256">本官の　ポケモンでは
+太刀打ち　できなかった…！[BE:00:ページ切り替え（行送り）]
+プラズマ団の　ヤツラめ！</language>
 	</row>
 
 	<row id="msg_d12_police01_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -494,8 +494,8 @@
 		<attribute name="キャラ指定">POLICEMAN</attribute>
 		<language name="JPN" width="256">キミのような　つよい　トレーナーが
 いてくれて　ほんとうに　たすかった！</language>
-		<language name="JPN_KANJI" width="256">キミのような　つよい　トレーナーが
-いてくれて　ほんとうに　たすかった！</language>
+		<language name="JPN_KANJI" width="256">キミのような　強い　トレーナーが
+いてくれて　本当に　助かった！</language>
 	</row>
 
 	<row id="msg_d12_police01_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -503,21 +503,23 @@
 		<attribute name="キャラ指定">POLICEMAN</attribute>
 		<language name="JPN" width="256">さいきんは　かんこうきゃくが
 すくなくなったから　たいくつだ…</language>
-		<language name="JPN_KANJI" width="256">さいきんは　かんこうきゃくが
-すくなくなったから　たいくつだ…</language>
+		<language name="JPN_KANJI" width="256">最近は　観光客が
+少なくなったから　退屈だ…</language>
 	</row>
 
 	<row id="msg_d12_sign_01" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,#ff00ff,,">
 		<attribute name="キャラ指定">看板・桟橋</attribute>
 		<language name="JPN" width="256">…２００ねんまえ
-だいふごうが　しまを　かいとり[BE:00:ページ切り替え（行送り）]
-ひとと　ポケモンが　じゆうに　くらせる[BE:00:ページ切り替え（行送り）]
+だいふごうが　しまを　かいとり[BE:01:ページ切り替え（クリア）]
+ひとと　ポケモンが
+じゆうに　くらせる[BE:00:ページ切り替え（行送り）]
 せかいを　ねがって[BE:00:ページ切り替え（行送り）]
 リバティ　アイランドと　なづけました</language>
-		<language name="JPN_KANJI" width="256">…２００ねんまえ
-だいふごうが　しまを　かいとり[BE:00:ページ切り替え（行送り）]
-ひとと　ポケモンが　じゆうに　くらせる[BE:00:ページ切り替え（行送り）]
-せかいを　ねがって[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">…２００年前
+大富豪が　島を　買い取り[BE:01:ページ切り替え（クリア）]
+人と　ポケモンが
+自由に　暮らせる[BE:00:ページ切り替え（行送り）]
+世界を　願って[BE:00:ページ切り替え（行送り）]
 リバティ　アイランドと　なづけました</language>
 	</row>
 
@@ -526,9 +528,9 @@
 		<language name="JPN" width="256">じゆうの　ひかりを　ともす　とうだい[BE:01:ページ切り替え（クリア）]
 かんけいしゃ　いがいの
 たちいりを　きんし　します</language>
-		<language name="JPN_KANJI" width="256">じゆうの　ひかりを　ともす　とうだい[BE:01:ページ切り替え（クリア）]
-かんけいしゃ　いがいの
-たちいりを　きんし　します</language>
+		<language name="JPN_KANJI" width="256">自由の　光を　ともす　灯台[BE:01:ページ切り替え（クリア）]
+関係者　以外の
+立ち入りを　禁止します</language>
 	</row>
 
 	<row id="msg_d12_police02_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -540,9 +542,9 @@
 		<language name="JPN" width="256">あの　ポケモンは　げんきかい？[BE:01:ページ切り替え（クリア）]
 あの　じけん　いらい
 しまは　しずかな　もんだよ</language>
-		<language name="JPN_KANJI" width="256">あの　ポケモンは　げんきかい？[BE:01:ページ切り替え（クリア）]
-あの　じけん　いらい
-しまは　しずかな　もんだよ</language>
+		<language name="JPN_KANJI" width="256">あの　ポケモンは　元気かい？[BE:01:ページ切り替え（クリア）]
+あの　事件以来
+島は　静かな　もんだよ</language>
 	</row>
 
 	<flowchart-group-list>
