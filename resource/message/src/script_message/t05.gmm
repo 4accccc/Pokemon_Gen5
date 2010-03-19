@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-03-08T19:21:11"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T16:16:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -302,7 +302,7 @@
 フルートの　調べは</language>
 	</row>
 
-	<row id="msg_t05_sign1_01">
+	<row id="msg_t05_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ここは　カナワタウン

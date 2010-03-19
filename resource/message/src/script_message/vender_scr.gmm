@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-09T10:58:29"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T16:17:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -382,7 +382,7 @@
 ・料金不足</comment>
 		<attribute name="キャラ指定">自動販売機</attribute>
 		<language name="JPN" width="256">おかねが　たりない！</language>
-		<language name="JPN_KANJI" width="256">おかねが　たりない！</language>
+		<language name="JPN_KANJI" width="256">お金が　たりない！</language>
 	</row>
 
 	<row id="msg_vender_05">
