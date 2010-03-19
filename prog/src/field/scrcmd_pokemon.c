@@ -627,7 +627,7 @@ VMCMD_RESULT EvCmdGetPartyPokeCountByMonsNo( VMHANDLE * core, void *wk )
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-extern VMCMD_RESULT EvCmdGetBoxPokeCount( VMHANDLE * core, void *wk )
+VMCMD_RESULT EvCmdGetBoxPokeCount( VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK* work = (SCRCMD_WORK*)wk;
   u16*       ret_wk = SCRCMD_GetVMWork( core, work );     // コマンド第1引数
@@ -801,7 +801,7 @@ VMCMD_RESULT EvCmdChkPokeWazaGroup( VMHANDLE *core, void *wk )
  * @retval VMCMD_RESULT
  */
 //--------------------------------------------------------------
-extern VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
@@ -1321,4 +1321,70 @@ VMCMD_RESULT EvCmdGetPartyPokeParameter( VMHANDLE* core, void* wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/**
+ * ポケモンをボックスに追加
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdAddPokemonToBox( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*    gdata = SCRCMD_WORK_GetGameData( work );
+  HEAPID     heap_id = SCRCMD_WORK_GetHeapID( work );
+  POKEPARTY*   party = GAMEDATA_GetMyPokemon( gdata );
+  MYSTATUS*   status = GAMEDATA_GetMyStatus( gdata );
+  u16*        ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  u16         monsno = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+  u16         formno = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数
+  u16        tokusei = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数
+  u16          level = SCRCMD_GetVMWorkValue( core, work );  // コマンド第5引数
+  u16         itemno = SCRCMD_GetVMWorkValue( core, work );  // コマンド第6引数
+  POKEMON_PARAM*  pp = NULL;
+
+  // ボックスがいっぱいなら追加しない
+  if( 0 )
+  {
+    *ret_wk = FALSE;
+    return VMCMD_RESULT_CONTINUE;
+  }
+
+  // 追加するポケモンを作成
+  pp = PP_Create( monsno, level, PTL_SETUP_ID_AUTO, heap_id );
+  PP_Put( pp, ID_PARA_form_no, formno );    // フォーム
+  PP_Put( pp, ID_PARA_item, itemno );       // 所持アイテム
+
+  if( tokusei != TOKUSYU_NULL ){
+    PP_Put( pp, ID_PARA_speabino, tokusei );  // 特性
+  }
+
+  {
+  // 親の名前と性別
+  //PP_Put( pp, ID_PARA_id_no, (u32)MyStatus_GetID(status) );
+  //PP_Put( pp, ID_PARA_oyasex, MyStatus_GetMySex(status) );
+  //PP_Put( pp, ID_PARA_oyaname_raw, (u32)MyStatus_GetMyName(status) );
+    PLAYER_WORK* player_wk = GAMEDATA_GetMyPlayerWork( gdata );
+    POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_SET_CAPTURE, status,
+        ZONEDATA_GetPlaceNameID( PLAYERWORK_getZoneID( player_wk ) ), heap_id );
+  }
+  PP_Renew( pp );
+
+  //ボックスに追加
+  {
+    BOOL rc;
+    BOX_MANAGER *box = GAMEDATA_GetBoxManager(gdata);
+    rc = BOXDAT_PutPokemon( box, (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp) );
+    GF_ASSERT(rc);
+  }
+
+  //一応図鑑登録
+  ZUKANSAVE_SetPokeGet(GAMEDATA_GetZukanSave( gdata ), pp);
+
+  GFL_HEAP_FreeMemory( pp );
+  *ret_wk = TRUE;
+  return VMCMD_RESULT_CONTINUE;
+}
 
