@@ -469,8 +469,10 @@ static void APP_TASKMENU_UpdateKey( APP_TASKMENU_WORK *work )
   const int trg = GFL_UI_KEY_GetTrg();
   const int repeat = GFL_UI_KEY_GetRepeat();
 
+  //Bは直接選ばれる（キーモードへの変換は下記で）
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH && !(trg&PAD_BUTTON_B)   )
   {
+    //左右を使う箇所があるので
     if( trg & (PAD_KEY_UP|PAD_KEY_DOWN|PAD_BUTTON_A|PAD_BUTTON_B) )
     {
       APP_TASKMENU_SetActiveItem( work->menuWin[work->cursorPos], work->res, TRUE );
@@ -527,6 +529,7 @@ static void APP_TASKMENU_UpdateKey( APP_TASKMENU_WORK *work )
       work->cursorPos = work->initWork.itemNum-1;
       work->isDecide = TRUE;
       PMSND_PlaySystemSE( APP_TASKMENU_SND_CANCEL );
+      GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
     }
     
     if( befPos != work->cursorPos )
