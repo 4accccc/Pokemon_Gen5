@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-02T19:42:31"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T14:23:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -396,7 +396,7 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_d04r0101_stop_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d04r0101_stop_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・話しかけたとき</comment>
 		<attribute name="キャラ指定">WORKER
@@ -411,7 +411,7 @@
 砂を　とりのぞくので　待ってくれ！</language>
 	</row>
 
-	<row id="msg_d04r0101_stop_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d04r0101_stop_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・pos（GRIDX=6、GRIDZ=18）を踏んだとき
 ・メッセージ後、主人公を一歩戻す</comment>
@@ -427,7 +427,7 @@
 砂を　とりのぞくので　待ってくれ！▼</language>
 	</row>
 
-	<row id="msg_d04r0101_stop_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d04r0101_stop_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・階下に進めるようになったとき</comment>
 		<attribute name="キャラ指定">WORKER
@@ -438,7 +438,7 @@
 下まで　進めるように　なったぞ！</language>
 	</row>
 
-	<row id="msg_d04r0101_assistantm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d04r0101_assistantm_01">
 		<comment>♂
 ・</comment>
 		<attribute name="キャラ指定">ASSISTANTM

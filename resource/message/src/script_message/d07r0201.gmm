@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-12T14:12:36"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T14:28:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d07r0201_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d07r0201_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ライバル　GRIDX=4、GRIDZ=50、上向き
 　ヤーコン　GRIDX=4、GRIDZ=49、下向き
@@ -307,7 +307,7 @@
 こっちに　来てよ▼</language>
 	</row>
 
-	<row id="msg_d07r0201_leader5_01" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d07r0201_leader5_01">
 		<comment>♂
 ・続けてblack_02</comment>
 		<attribute name="キャラ指定">LEADER5
@@ -322,7 +322,7 @@
 たくましくなった　みたいだな▼</language>
 	</row>
 
-	<row id="msg_d07r0201_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d07r0201_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてleader5_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -330,7 +330,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『……どーも▼</language>
 	</row>
 
-	<row id="msg_d07r0201_leader5_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d07r0201_leader5_02">
 		<comment>♂
 ・続けてleader5_03</comment>
 		<attribute name="キャラ指定">LEADER5
@@ -361,7 +361,7 @@
 旅を　しておれば　いいんだ▼</language>
 	</row>
 
-	<row id="msg_d07r0201_leader5_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d07r0201_leader5_03">
 		<comment>♂
 ・画面右を向いてメッセージ表示
 ・続けて下を向いてleader5_04</comment>
@@ -379,7 +379,7 @@
 実際に　みれば　わかるか▼</language>
 	</row>
 
-	<row id="msg_d07r0201_leader5_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d07r0201_leader5_04">
 		<comment>♂
 ・表示後、主人公たちを押しのけ画面下に移動
 ・主人公、ライバルの向きを移動する
@@ -397,7 +397,7 @@
 トレーナー修行でも　していけ▼</language>
 	</row>
 
-	<row id="msg_d07r0201_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_d07r0201_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・下を向いたままメッセージ表示
 ・表示後、ライバル画面右に移動
