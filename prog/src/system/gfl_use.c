@@ -83,6 +83,7 @@ static void mcsRecv( void );
 
 static GFL_USE_VINTR_FUNC GflUseVintrFunc;
 
+BOOL mcsResidentFlag;
 //=============================================================================================
 //
 //      ä÷êî
@@ -205,6 +206,8 @@ void GFLUser_Init(void)
 	GFUser_ResetVIntrFunc();
 
   GFUser_SetSleepSoundFunc();
+
+	mcsResidentFlag = FALSE;
 }
 
 
