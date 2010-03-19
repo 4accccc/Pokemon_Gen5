@@ -46,7 +46,7 @@ static const GFL_DISP_VRAM sc_vramSetTable[2] =
     GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
     GX_VRAM_OBJ_16_G,					// メイン2DエンジンのOBJ
     GX_VRAM_OBJEXTPLTT_NONE,		// メイン2DエンジンのOBJ拡張パレット
-    GX_VRAM_SUB_OBJ_128_D,	      // サブ2DエンジンのOBJ
+    GX_VRAM_SUB_OBJ_16_I,	      // サブ2DエンジンのOBJ
     GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
     GX_VRAM_TEX_01_AB,						// テクスチャイメージスロット
     GX_VRAM_TEXPLTT_0123_E,				// テクスチャパレットスロット

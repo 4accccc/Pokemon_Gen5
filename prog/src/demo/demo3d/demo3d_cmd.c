@@ -46,10 +46,16 @@
 //=============================================================================
 static void DEMOCMD_SePlay(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_SeStop(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
+static void DEMOCMD_SeVolumeEffectReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
+static void DEMOCMD_SePanEffectReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
+static void DEMOCMD_SePitchEffectReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_BrightnessReq(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_FlashReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_MotionBL_Start(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_MotionBL_End(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
+
+static int sub_ConvFrame( DEMO3D_CMD_WORK* wk, int frame );
+
 
 // DEMO3D_CMD_TYPE と対応
 //--------------------------------------------------------------
@@ -60,6 +66,9 @@ void (*DATA_Demo3D_CmdTable[ DEMO3D_CMD_TYPE_MAX ])() =
   NULL, // null
   DEMOCMD_SePlay,
   DEMOCMD_SeStop,
+  DEMOCMD_SeVolumeEffectReq,
+  DEMOCMD_SePanEffectReq,
+  DEMOCMD_SePitchEffectReq,
   DEMOCMD_BrightnessReq,
   DEMOCMD_FlashReq,
   DEMOCMD_MotionBL_Start,
@@ -125,6 +134,144 @@ static void DEMOCMD_SeStop(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* pa
   PMSND_StopSE_byPlayerID( player_no );
 }
 
+//===================================================================================
+///SEの動的パラメータ変化リクエスト
+//===================================================================================
+typedef struct _TASKWK_SE_EFFECT_REQ{
+  DEMO3D_CMD_WORK* cmd;
+
+  u8  seq;
+  u8  type;
+  u8  playerNo;
+  int frame;
+  int start,end;
+  fx32  now,diff;
+}TASKWK_SE_EFFECT_REQ;
+
+static void taskAdd_SeEffectReq( DEMO3D_CMD_WORK* wk, u8 type, u16 seNo, int start, int end, int frame,int playerNo );
+static void tcb_SeEffectReq( GFL_TCBL *tcb , void* work);
+static void sub_SetSeEffect( DEMO3D_SE_EFFECT type, u8 playerNo, int value );
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  SEのボリューム動的変化リクエスト
+ *
+ *  @param  param[0]  SE_Label
+ *  @param  param[1]  スタートの値(0～127) 
+ *  @param  param[2]  エンドの値(0～127)
+ *  @param  param[3]  スタート～エンドまでのフレーム数(1～)
+ *  @param  param[4]  プレイヤーNo(0～3 デフォルトでいい時はDEMO3D_SE_PARAM_DEFAULT)
+ */
+//-----------------------------------------------------------------------------
+static void DEMOCMD_SeVolumeEffectReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
+{
+  taskAdd_SeEffectReq( wk, DEMO3D_SE_EFF_VOLUME, param[0], param[1], param[2], param[3], param[4] );
+}
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  SEのパン動的変化リクエスト
+ *
+ *  @param  param[0]  SE_Label
+ *  @param  param[1]  スタートの値(-128～127) 
+ *  @param  param[2]  エンドの値(-128～127)
+ *  @param  param[3]  スタート～エンドまでのフレーム数(1～)
+ *  @param  param[4]  プレイヤーNo(0～3 デフォルトでいい時はDEMO3D_SE_PARAM_DEFAULT)
+ */
+//-----------------------------------------------------------------------------
+static void DEMOCMD_SePanEffectReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
+{
+  taskAdd_SeEffectReq( wk, DEMO3D_SE_EFF_PAN, param[0], param[1], param[2], param[3], param[4] );
+}
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  SEのピッチ動的変化リクエスト
+ *
+ *  @param  param[0]  SE_Label
+ *  @param  param[1]  スタートの値(-32768～32767 +/-64で半音) 
+ *  @param  param[2]  エンドの値(-32768～32767 +/-64で半音) 
+ *  @param  param[3]  スタート～エンドまでのフレーム数(1～)
+ *  @param  param[4]  プレイヤーNo(0～3 デフォルトでいい時はDEMO3D_SE_PARAM_DEFAULT)
+ */
+//-----------------------------------------------------------------------------
+static void DEMOCMD_SePitchEffectReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
+{
+  taskAdd_SeEffectReq( wk, DEMO3D_SE_EFF_PITCH, param[0], param[1], param[2], param[3], param[4] );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  SEの動的パラメータ変化タスク追加
+ *
+ *  @param  param[0]  SE_Label
+ *  @param  param[0]  適用する効果 DEMO3D_SE_EFFECT型 
+ *  @param  param[1]  スタートの値 
+ *  @param  param[2]  エンドの値 
+ *  @param  param[3]  スタート～エンドまでのフレーム数(1～)
+ *  @param  param[4]  プレイヤーNo(0～3 デフォルトでいい時はDEMO3D_SE_PARAM_DEFAULT)
+ *
+ *  スタート/エンドの値のmin/maxはtypeによって変わります
+ *	  volume 0～127
+ *	  pan -128～127
+ *	  pitch -32768～32767(+/-64で半音)
+ */
+//-----------------------------------------------------------------------------
+static void taskAdd_SeEffectReq( DEMO3D_CMD_WORK* wk, u8 type, u16 seNo, int start, int end, int frame,int playerNo )
+{
+  GFL_TCBL* tcb;
+  TASKWK_SE_EFFECT_REQ* twk;
+
+  tcb = GFL_TCBL_Create( wk->tcbsys, tcb_SeEffectReq, sizeof(TASKWK_SE_EFFECT_REQ), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_SE_EFFECT_REQ ));
+
+  twk->cmd = wk;
+  twk->type = type;
+  twk->start = start;
+  twk->end = end;
+  twk->frame =  sub_ConvFrame( wk, frame );
+  
+  if( playerNo == DEMO3D_SE_PARAM_DEFAULT ){
+    twk->playerNo = playerNo;
+  }else{
+    twk->playerNo = PMSND_GetSE_DefaultPlayerID( seNo );
+  }
+  
+  twk->now = FX32_CONST(start);
+  twk->diff = FX_Div((FX32_CONST(end)-twk->now),FX32_CONST(frame));
+}
+
+static void tcb_SeEffectReq( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_SE_EFFECT_REQ* twk = (TASKWK_SE_EFFECT_REQ*)tcb_wk;
+
+  if( twk->frame-- > 0 ){
+    sub_SetSeEffect( twk->type, twk->playerNo, FX_Whole(twk->now) );
+    twk->now += twk->diff;
+    return;
+  }
+  sub_SetSeEffect( twk->type, twk->playerNo, twk->end );
+
+  GFL_TCBL_Delete(tcb);
+}
+
+static void sub_SetSeEffect( DEMO3D_SE_EFFECT type, u8 playerNo, int value )
+{
+  switch(type){
+  case DEMO3D_SE_EFF_VOLUME:
+    PMSND_PlayerSetVolume( playerNo, value );
+    break;
+  case DEMO3D_SE_EFF_PAN:
+		PMSND_SetStatusSE_byPlayerID( playerNo, PMSND_NOEFFECT, PMSND_NOEFFECT, value );
+    break;
+  case DEMO3D_SE_EFF_PITCH:
+		PMSND_SetStatusSE_byPlayerID( playerNo, PMSND_NOEFFECT, value, PMSND_NOEFFECT );
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+}
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  マスター輝度を用いたブライトネス 
@@ -140,7 +287,7 @@ static void DEMOCMD_BrightnessReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, 
   if(param[1] == 0){
     SetBrightness( param[2], PLANEMASK_ALL, param[0]);
   }else{
-    ChangeBrightnessRequest( param[1], param[3], param[2],PLANEMASK_ALL, param[0] );
+    ChangeBrightnessRequest( sub_ConvFrame( wk, param[1] ), param[3], param[2],PLANEMASK_ALL, param[0] );
   }
 }
 
@@ -174,7 +321,7 @@ static void tcb_FlashReq( GFL_TCBL *tcb , void* work);
 //-----------------------------------------------------------------------------
 static void DEMOCMD_FlashReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
 {
-  taskAdd_FlashReq( wk, param[0], param[1], param[2], param[3], param[4], param[5] );
+  taskAdd_FlashReq( wk, param[0], param[1], param[2], param[3], sub_ConvFrame( wk, param[4] ), sub_ConvFrame( wk, param[5] ) );
 }
 
 static void taskAdd_FlashReq( DEMO3D_CMD_WORK* wk, u8 lcd_mask, s8 start, s8 max, s8 end, int frame_s, int frame_e )
@@ -218,6 +365,27 @@ static void tcb_FlashReq( GFL_TCBL *tcb , void* tcb_wk)
   GFL_TCBL_Delete(tcb);
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ライトカラー変更 
+ *
+ *	@param	param[0]  light_no(0～3)
+ *	@param  param[1]  light_col_r(0～31)
+ *	@param  param[2]  light_col_g(0～31)
+ *	@param  param[3]  light_col_b(0～31)
+ */
+//-----------------------------------------------------------------------------
+static void DEMOCMD_LightColorSet(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
+{
+#if 0
+  GRAPHIC_G3D_WORK* g3d = &core->graphic->g3d;
+//  GXRgb col = ;
+
+  //ライト再設定
+	GFL_G3D_LIGHT_SetColor( g3d->p_lightset, param[0], (u16*)&f_light->light);
+  GFL_G3D_LIGHT_Switching( g3d->p_lightset );
+#endif
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -248,7 +416,24 @@ static void DEMOCMD_MotionBL_End(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, i
 
 //=============================================================================
 /**
- *								外部公開関数
+ *								その他サブルーチン
  */
 //=============================================================================
+
+//-----------------------------------------------------------------------------
+/*
+ *  @brief  指定のフレーム数を、フレームレートに応じて変換する
+ *
+ *  ※タスク型のコマンドは必ず60fpsで動くので、30fps設定のデモで指定されたフレーム数は
+ *   60fps換算に計算しなおす
+ */
+//-----------------------------------------------------------------------------
+static int sub_ConvFrame( DEMO3D_CMD_WORK* wk, int frame )
+{
+  if(wk->core->scene->frame_rate == DEMO3D_FRAME_RATE_30FPS ){
+    frame *= 2;
+  }
+  return frame;
+}
+
 

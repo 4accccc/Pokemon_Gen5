@@ -26,6 +26,27 @@ $prm_se_play = [
 $prm_se_stop = [
   $_cmd_prm.new( P_FREE, P_FREE, nil ), #SEラベル
 ] 
+$prm_se_volume_effect_req = [
+  $_cmd_prm.new( P_FREE, P_FREE, nil ), #SEラベル
+  $_cmd_prm.new( 0, 127, nil ), #スタート
+  $_cmd_prm.new( 0, 127, nil ), #エンド
+  $_cmd_prm.new( 1, P_FREE, nil ), #フレーム
+  $_cmd_prm.new( 0, 3, $h_se_default ), #プレイヤーNo
+] 
+$prm_se_pan_effect_req = [
+  $_cmd_prm.new( P_FREE, P_FREE, nil ), #SEラベル
+  $_cmd_prm.new( -128, 127, nil ), #スタート
+  $_cmd_prm.new( -128, 127, nil ), #エンド
+  $_cmd_prm.new( 1, P_FREE, nil ), #フレーム
+  $_cmd_prm.new( 0, 3, $h_se_default ), #プレイヤーNo
+] 
+$prm_se_pitch_effect_req = [
+  $_cmd_prm.new( P_FREE, P_FREE, nil ), #SEラベル
+  $_cmd_prm.new( -32768, 32767, nil ), #スタート
+  $_cmd_prm.new( -32768, 32767, nil ), #エンド
+  $_cmd_prm.new( 1, P_FREE, nil ), #フレーム
+  $_cmd_prm.new( 0, 3, $h_se_default ), #プレイヤーNo
+] 
 $prm_brightness_req = [
   $_cmd_prm.new( P_LIST, P_LIST, $h_brightness_disp ), #適用画面
   $_cmd_prm.new( P_FREE, P_FREE, nil ), #フレーム
@@ -48,6 +69,9 @@ $prm_motionbl_start = [
 $cmd_tbl = [
   CDemo3DCmd::new( "SE_PLAY", 5, $prm_se_play),
   CDemo3DCmd::new( "SE_STOP", 1, $prm_se_stop),
+  CDemo3DCmd::new( "SE_VOLUME_EFFECT_REQ", 5, $prm_se_volume_effect_req),
+  CDemo3DCmd::new( "SE_PAN_EFFECT_REQ", 5, $prm_se_pan_effect_req),
+  CDemo3DCmd::new( "SE_PITCH_EFFECT_REQ", 5, $prm_se_pitch_effect_req),
   CDemo3DCmd::new( "BRIGHTNESS_REQ", 4, $prm_brightness_req),
   CDemo3DCmd::new( "FLASH_REQ", 6, $prm_flash_req),
   CDemo3DCmd::new( "MOTIONBL_START", 2, $prm_motionbl_start),

@@ -44,6 +44,45 @@ typedef enum
 
 //======================================================
 /**
+ *	@brief  SEのボリューム動的変化リクエスト
+ *
+ *  @param  param[0]  SE_Label
+ *  @param  param[1]  スタートの値(0～127) 
+ *  @param  param[2]  エンドの値(0～127)
+ *  @param  param[3]  スタート～エンドまでのフレーム数(1～)
+ *  @param  param[4]  プレイヤーNo(0～3 デフォルトでいい時はDEMO3D_SE_PARAM_DEFAULT)
+ */
+//======================================================
+  DEMO3D_CMD_TYPE_SE_VOLUME_EFFECT_REQ,
+
+//======================================================
+/**
+ *	@brief  SEのパン動的変化リクエスト
+ *
+ *  @param  param[0]  SE_Label
+ *  @param  param[1]  スタートの値(-128～127) 
+ *  @param  param[2]  エンドの値(-128～127)
+ *  @param  param[3]  スタート～エンドまでのフレーム数(1～)
+ *  @param  param[4]  プレイヤーNo(0～3 デフォルトでいい時はDEMO3D_SE_PARAM_DEFAULT)
+ */
+//======================================================
+  DEMO3D_CMD_TYPE_SE_PAN_EFFECT_REQ,
+
+//======================================================
+/**
+ *	@brief  SEのピッチ動的変化リクエスト
+ *
+ *  @param  param[0]  SE_Label
+ *  @param  param[1]  スタートの値(-32768～32767 +/-64で半音) 
+ *  @param  param[2]  エンドの値(-32768～32767 +/-64で半音) 
+ *  @param  param[3]  スタート～エンドまでのフレーム数(1～)
+ *  @param  param[4]  プレイヤーNo(0～3 デフォルトでいい時はDEMO3D_SE_PARAM_DEFAULT)
+ */
+//======================================================
+  DEMO3D_CMD_TYPE_SE_PITCH_EFFECT_REQ,
+
+//======================================================
+/**
  *	@brief  マスター輝度を用いたブライトネス 
  *
  *  @param  param[0]  適用する画面 < "main"(1),"sub"(2),"double"(3) >
@@ -97,6 +136,12 @@ typedef enum
 
 //SE_PLAY
 #define DEMO3D_SE_PARAM_DEFAULT (0xFFFFFFFF)
+
+typedef enum{
+  DEMO3D_SE_EFF_VOLUME,
+  DEMO3D_SE_EFF_PAN,
+  DEMO3D_SE_EFF_PITCH,
+}DEMO3D_SE_EFFECT;
 
 //--------------------------------------------------------------
 ///	3Dデモコマンドデータ

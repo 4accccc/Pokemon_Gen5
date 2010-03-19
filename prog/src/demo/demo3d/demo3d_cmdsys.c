@@ -73,6 +73,9 @@ static void cmd_exec( DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, const DEMO3D
 DEMO3D_CMD_WORK* Demo3D_CMD_Init( DEMO3D_ENGINE_WORK* core, HEAPID heapID )
 {
   DEMO3D_CMD_WORK* wk;
+  
+  GF_ASSERT_MSG( GFL_HEAP_CheckHeapSafe( heapID ) == TRUE,"Demo3D HeapError!\n" );
+  GF_ASSERT_MSG( GFL_HEAP_CheckHeapSafe( 0 ) == TRUE,"System HeapError!\n" );
 
   // メインワーク アロケーション
   wk = GFL_HEAP_AllocClearMemory( heapID, sizeof( DEMO3D_CMD_WORK ) );
@@ -127,6 +130,9 @@ void Demo3D_CMD_Exit( DEMO3D_CMD_WORK* wk )
 
   // ヒープ開放
   GFL_HEAP_FreeMemory( wk );
+  
+  GF_ASSERT_MSG( GFL_HEAP_CheckHeapSafe( 0 ) == TRUE,"System HeapError!\n" );
+  GF_ASSERT_MSG( GFL_HEAP_CheckHeapSafe( HEAPID_DEMO3D ) == TRUE,"Demo3D HeapError!\n" );
 }
 
 //-----------------------------------------------------------------------------

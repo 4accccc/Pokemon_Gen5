@@ -89,20 +89,20 @@ static void MotionBlCapture( DEMO3D_MBL_PARAM * p_data );
 //--------------------------------------------------------------------------------------------
 DEMO3D_MBL_WORK * DEMO3D_MotionBlInit( GFL_TCBLSYS* tcbsys, int eva, int evb )
 {
-	DEMO3D_MBL_WORK * wk;
+	DEMO3D_MBL_WORK * wk = NULL;
 
-//	MI_CpuClear32(ret, sizeof(FLD_MOTION_BL_DATA));
-
+#if 0
 	// BG面の描画を廃止
   GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_BG1,VISIBLE_OFF);
   GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_BG2,VISIBLE_OFF);
   GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_BG3,VISIBLE_OFF);
 	GX_ResetBankForBG();
-	
+#endif
+
 	// モーションブラー設定
 	{
 		DEMO3D_MBL_PARAM mb = {
-			GX_DISPMODE_VRAM_C,
+			GX_DISPMODE_VRAM_D,
 			GX_BGMODE_0,
 			GX_BG0_AS_3D,
 			
@@ -110,7 +110,7 @@ DEMO3D_MBL_WORK * DEMO3D_MotionBlInit( GFL_TCBLSYS* tcbsys, int eva, int evb )
 			GX_CAPTURE_MODE_AB,
 			GX_CAPTURE_SRCA_2D3D,
 			GX_CAPTURE_SRCB_VRAM_0x00000,
-			GX_CAPTURE_DEST_VRAM_C_0x00000,
+			GX_CAPTURE_DEST_VRAM_D_0x00000,
 			0,
 			0,
 			HEAPID_DEMO3D
@@ -138,13 +138,13 @@ void DEMO3D_MotionBlExit( DEMO3D_MBL_WORK * mb )
 	// 元に戻す
 	MotionBlDelete( mb, GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BG0_AS_3D );
 
-	GX_SetBankForBG(GX_VRAM_BG_128_C);
+#if 0
+	GX_SetBankForBG(GX_VRAM_BG_128_D);
 
 	// BG面描画
   GFL_DISP_GX_SetVisibleControl(
-//	GF_Disp_GX_VisibleControl(
-			GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3,
-			VISIBLE_ON );
+			GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3, VISIBLE_ON );
+#endif
 }
 
 
@@ -176,7 +176,7 @@ static DEMO3D_MBL_WORK * MotionBlInit( GFL_TCBLSYS* tcbsys, DEMO3D_MBL_PARAM * p
 	// モーションブラータスクをセット
   task = GFL_TCBL_Create( tcbsys, MotionBlTask, sizeof(DEMO3D_MBL_WORK), 5 );
 
-	mb = GFL_TCBL_GetWork( task );
+  mb = GFL_TCBL_GetWork( task );
 	mb->data = *prm;
 	mb->tcb = task;
 	mb->init_flg = FALSE;
@@ -187,7 +187,6 @@ static DEMO3D_MBL_WORK * MotionBlInit( GFL_TCBLSYS* tcbsys, DEMO3D_MBL_PARAM * p
 
 	// LCDCチェンジ
   GFUser_VIntr_CreateTCB( VBlankLCDCChange, mb, 0 );
-
 	return mb;
 }
 
@@ -209,7 +208,7 @@ static void MotionBlDelete( DEMO3D_MBL_WORK * mb, GXDispMode dispMode, GXBGMode 
 	GX_SetGraphicsMode(dispMode, bgMode,bg0_2d3d);
 
 	GX_SetBankForLCDC( mb->lcdc);
-	
+
 	switch( mb->data.dispMode ){
 	case GX_DISPMODE_VRAM_A:
 		MI_CpuClearFast( (void*)HW_LCDC_VRAM_A, HW_VRAM_A_SIZE );
@@ -227,12 +226,8 @@ static void MotionBlDelete( DEMO3D_MBL_WORK * mb, GXDispMode dispMode, GXBGMode 
 		GX_SetBankForLCDC(GX_VRAM_LCDC_NONE);
 		break;
 	}
-
 	// タスク破棄
 	GFL_TCBL_Delete( mb->tcb );
-
-  // ワーク破棄
-  GFL_HEAP_FreeMemory( mb );
 }
 
 //----------------------------------------------------------------------------
@@ -333,7 +328,6 @@ static void MotionBlCapture( DEMO3D_MBL_PARAM * p_data )
 	default:
 		break;
 	}
-
 	GX_SetCapture(
 			p_data->sz,			// キャプチャサイズ
 			p_data->mode,			// キャプチャモード

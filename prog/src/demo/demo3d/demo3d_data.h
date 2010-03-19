@@ -23,6 +23,11 @@
 
 #define DEMO3D_BGM_NONE         (0xFFFF)
 
+typedef enum{
+  DEMO3D_FRAME_RATE_60FPS,
+  DEMO3D_FRAME_RATE_30FPS,
+}DEMO3D_FRAME_RATE;
+
 ///シーンパラメータ
 typedef struct _DEMO3D_SCENE_DATA{
   u16   camera_bin_id;

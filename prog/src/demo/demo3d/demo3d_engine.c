@@ -165,14 +165,6 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
   // 2画面連結フラグを取得
   wk->is_double = Demo3D_DATA_GetDoubleFlag( wk->demo_id );
 
-#ifdef PM_DEBUG
-  //@TODO セレクトを押しながら起動すると二画面フラグ反転
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT )
-  {
-    wk->is_double ^= 1;
-  }
-#endif // PM_DEBUG
-  
   HOSAKA_Printf("is_double=%d\n", wk->is_double );
   
   // 2画面連結設定初期化
