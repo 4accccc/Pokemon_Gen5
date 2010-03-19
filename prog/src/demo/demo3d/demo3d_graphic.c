@@ -39,6 +39,7 @@
 static const GFL_DISP_VRAM sc_vramSetTable[2] =
 {
   // 通常時の設定
+  // モーションブラーのキャプチャにVRAMDを使うことを考慮して外してある。
   {
     GX_VRAM_BG_16_F,						// メイン2DエンジンのBG
     GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
@@ -482,9 +483,11 @@ GFL_CLUNIT * DEMO3D_GRAPHIC_GetClunit( const DEMO3D_GRAPHIC_WORK *cp_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief	デモシーンの3Dパラメータ設定
+ *	@brief	デモシーンの3Dパラメータ初期設定
  *
  *	@param	const GRAPHIC_WORK *cp_wk		ワーク
+ *
+ *	※初期化時はフィールドライト設定を引き継ぐ
  */
 //-----------------------------------------------------------------------------
 void DEMO3D_GRAPHIC_Scene3DParamSet( DEMO3D_GRAPHIC_WORK *p_wk, const FIELD_LIGHT_STATUS* f_light, DEMO3D_3DSCENE_PARAM* prm )
@@ -512,6 +515,40 @@ void DEMO3D_GRAPHIC_Scene3DParamSet( DEMO3D_GRAPHIC_WORK *p_wk, const FIELD_LIGH
 	G3X_EdgeMarking( FALSE );
 #endif
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ライトカラーの再設定
+ *
+ *	@param	const GRAPHIC_WORK *cp_wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+void DEMO3D_GRAPHIC_3DLightColorSet( DEMO3D_GRAPHIC_WORK *p_wk, u8 light_no, GXRgb col)
+{
+  GRAPHIC_G3D_WORK* g3d = &p_wk->g3d;
+
+  //ライト再設定
+	GFL_G3D_LIGHT_SetColor( g3d->p_lightset, light_no, (u16*)&col);
+//  GFL_G3D_LIGHT_Switching( g3d->p_lightset );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ライトベクトルの再設定
+ *
+ *	@param	const GRAPHIC_WORK *cp_wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+void DEMO3D_GRAPHIC_3DLightVectorSet( DEMO3D_GRAPHIC_WORK *p_wk, u8 light_no, VecFx16* src )
+{
+  GRAPHIC_G3D_WORK* g3d = &p_wk->g3d;
+  VecFx16 vec;
+
+  //ライト再設定
+  VEC_Fx16Normalize( src, &vec );
+	GFL_G3D_LIGHT_SetVec( g3d->p_lightset, light_no, &vec );
+}
+
 
 //=============================================================================
 /**

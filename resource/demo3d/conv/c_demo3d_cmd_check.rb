@@ -97,12 +97,12 @@ class CDemo3DCmdCheck
         end
       end
 
-      if prm.min != P_FREE && work[i].to_i < prm.min then
+      if prm.min != P_FREE && work[i].to_f < prm.min then
         print("Error! 不正なパラメータ指定 #{work[i]} -> 最小値 = #{prm.min}\n")
         exit 1
       end
       
-      if prm.max != P_FREE && work[i].to_i > prm.max then
+      if prm.max != P_FREE && work[i].to_f > prm.max then
         print("Error! 不正なパラメータ指定 #{work[i]} -> 最大値 = #{prm.max}\n")
         exit 1
       end

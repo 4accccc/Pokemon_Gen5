@@ -81,3 +81,22 @@ extern GFL_CLUNIT * DEMO3D_GRAPHIC_GetClunit( const DEMO3D_GRAPHIC_WORK *cp_wk )
 //-----------------------------------------------------------------------------
 extern void DEMO3D_GRAPHIC_Scene3DParamSet( DEMO3D_GRAPHIC_WORK *p_wk, const FIELD_LIGHT_STATUS* f_light, DEMO3D_3DSCENE_PARAM* prm );
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ライトカラーの再設定
+ *
+ *	@param	const GRAPHIC_WORK *cp_wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+extern void DEMO3D_GRAPHIC_3DLightColorSet( DEMO3D_GRAPHIC_WORK *p_wk, u8 light_no, GXRgb col);
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ライトベクトルの再設定
+ *
+ *	@param	const GRAPHIC_WORK *cp_wk		ワーク
+ */
+//-----------------------------------------------------------------------------
+extern void DEMO3D_GRAPHIC_3DLightVectorSet( DEMO3D_GRAPHIC_WORK *p_wk, u8 light_no, VecFx16* src );
+
+

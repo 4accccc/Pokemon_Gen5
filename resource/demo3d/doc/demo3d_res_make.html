@@ -1,0 +1,1287 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML xmlns="http://www.w3.org/TR/REC-html40" xmlns:o = 
+"urn:schemas-microsoft-com:office:office" xmlns:w = 
+"urn:schemas-microsoft-com:office:word"><HEAD><TITLE>Demo3D リソース作成環境ドキュメント</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=shift_jis">
+<META content=Word.Document name=ProgId>
+<META content="MSHTML 6.00.2900.5921" name=GENERATOR>
+<META content="Microsoft Word 11" name=Originator><LINK 
+href="demo3d_res_make.files/filelist.xml" rel=File-List><!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Miyuki Iwasawa</o:Author>
+  <o:LastAuthor>Miyuki Iwasawa</o:LastAuthor>
+  <o:Revision>21</o:Revision>
+  <o:TotalTime>97</o:TotalTime>
+  <o:Created>2010-03-19T06:50:00Z</o:Created>
+  <o:LastSaved>2010-03-19T06:57:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>1006</o:Words>
+  <o:Characters>5739</o:Characters>
+  <o:Company>Game Freak Inc.</o:Company>
+  <o:Lines>47</o:Lines>
+  <o:Paragraphs>13</o:Paragraphs>
+  <o:CharactersWithSpaces>6732</o:CharactersWithSpaces>
+  <o:Version>11.9999</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:PunctuationKerning/>
+  <w:DrawingGridVerticalSpacing>14.55 pt</w:DrawingGridVerticalSpacing>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:SpaceForUL/>
+   <w:BalanceSingleByteDoubleByteWidth/>
+   <w:DoNotLeaveBackslashAlone/>
+   <w:ULTrailSpace/>
+   <w:DoNotExpandShiftReturn/>
+   <w:AdjustLineHeightInTable/>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<STYLE>@font-face {
+	font-family: Wingdings;
+}
+@font-face {
+	font-family: MS Mincho;
+}
+@font-face {
+	font-family: MS Gothic;
+}
+@font-face {
+	font-family: Century;
+}
+@font-face {
+	font-family: MS Gothic;
+}
+@font-face {
+	font-family: MS Mincho;
+}
+@page  {mso-page-border-surround-header: no; mso-page-border-surround-footer: no; }
+@page Section1 {size: 595.3pt 841.9pt; margin: 20.0mm 20.0mm 20.0mm 20.0mm; mso-header-margin: 42.55pt; mso-footer-margin: 49.6pt; mso-paper-source: 0; layout-grid: 14.55pt; }
+P.MsoNormal {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; MARGIN: 0mm 0mm 0pt; FONT-FAMILY: Century; TEXT-ALIGN: justify; mso-style-parent: ""; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Mincho"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt
+}
+LI.MsoNormal {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; MARGIN: 0mm 0mm 0pt; FONT-FAMILY: Century; TEXT-ALIGN: justify; mso-style-parent: ""; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Mincho"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt
+}
+DIV.MsoNormal {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; MARGIN: 0mm 0mm 0pt; FONT-FAMILY: Century; TEXT-ALIGN: justify; mso-style-parent: ""; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Mincho"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt
+}
+H1 {
+	FONT-WEIGHT: normal; TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 12pt; MARGIN: 0mm 0mm 0pt; FONT-FAMILY: Arial; TEXT-ALIGN: justify; mso-pagination: none; mso-fareast-font-family: "MS Gothic"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt; mso-style-next: 標準; mso-outline-level: 1
+}
+H2 {
+	FONT-WEIGHT: normal; TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; MARGIN: 0mm 0mm 0pt; FONT-FAMILY: Arial; TEXT-ALIGN: justify; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Gothic"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt; mso-style-next: 標準; mso-outline-level: 2
+}
+P.MsoToc1 {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; MARGIN: 0mm 0mm 0pt; FONT-FAMILY: Century; TEXT-ALIGN: justify; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Mincho"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt; mso-style-next: 標準; mso-style-update: auto; mso-style-noshow: yes
+}
+LI.MsoToc1 {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; MARGIN: 0mm 0mm 0pt; FONT-FAMILY: Century; TEXT-ALIGN: justify; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Mincho"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt; mso-style-next: 標準; mso-style-update: auto; mso-style-noshow: yes
+}
+DIV.MsoToc1 {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; MARGIN: 0mm 0mm 0pt; FONT-FAMILY: Century; TEXT-ALIGN: justify; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Mincho"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt; mso-style-next: 標準; mso-style-update: auto; mso-style-noshow: yes
+}
+P.MsoToc2 {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; MARGIN: 0mm 0mm 0pt 10.5pt; FONT-FAMILY: Century; TEXT-ALIGN: justify; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Mincho"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt; mso-style-next: 標準; mso-style-update: auto; mso-style-noshow: yes; mso-para-margin-top: 0mm; mso-para-margin-right: 0mm; mso-para-margin-bottom: .0001pt; mso-para-margin-left: 1.0gd
+}
+LI.MsoToc2 {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; MARGIN: 0mm 0mm 0pt 10.5pt; FONT-FAMILY: Century; TEXT-ALIGN: justify; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Mincho"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt; mso-style-next: 標準; mso-style-update: auto; mso-style-noshow: yes; mso-para-margin-top: 0mm; mso-para-margin-right: 0mm; mso-para-margin-bottom: .0001pt; mso-para-margin-left: 1.0gd
+}
+DIV.MsoToc2 {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; MARGIN: 0mm 0mm 0pt 10.5pt; FONT-FAMILY: Century; TEXT-ALIGN: justify; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Mincho"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt; mso-style-next: 標準; mso-style-update: auto; mso-style-noshow: yes; mso-para-margin-top: 0mm; mso-para-margin-right: 0mm; mso-para-margin-bottom: .0001pt; mso-para-margin-left: 1.0gd
+}
+P.MsoDate {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; MARGIN: 0mm 0mm 0pt; FONT-FAMILY: Century; TEXT-ALIGN: justify; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Mincho"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt; mso-style-next: 標準
+}
+LI.MsoDate {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; MARGIN: 0mm 0mm 0pt; FONT-FAMILY: Century; TEXT-ALIGN: justify; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Mincho"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt; mso-style-next: 標準
+}
+DIV.MsoDate {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; MARGIN: 0mm 0mm 0pt; FONT-FAMILY: Century; TEXT-ALIGN: justify; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Mincho"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt; mso-style-next: 標準
+}
+A:link {
+	COLOR: blue; TEXT-DECORATION: underline; text-underline: single
+}
+SPAN.MsoHyperlink {
+	COLOR: blue; TEXT-DECORATION: underline; text-underline: single
+}
+A:visited {
+	COLOR: purple; TEXT-DECORATION: underline; text-underline: single
+}
+SPAN.MsoHyperlinkFollowed {
+	COLOR: purple; TEXT-DECORATION: underline; text-underline: single
+}
+P.MsoDocumentMap {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; BACKGROUND: navy; MARGIN: 0mm 0mm 0pt; FONT-FAMILY: Arial; TEXT-ALIGN: justify; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Gothic"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt; mso-style-noshow: yes
+}
+LI.MsoDocumentMap {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; BACKGROUND: navy; MARGIN: 0mm 0mm 0pt; FONT-FAMILY: Arial; TEXT-ALIGN: justify; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Gothic"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt; mso-style-noshow: yes
+}
+DIV.MsoDocumentMap {
+	TEXT-JUSTIFY: inter-ideograph; FONT-SIZE: 10.5pt; BACKGROUND: navy; MARGIN: 0mm 0mm 0pt; FONT-FAMILY: Arial; TEXT-ALIGN: justify; mso-pagination: none; mso-bidi-font-size: 12.0pt; mso-fareast-font-family: "MS Gothic"; mso-bidi-font-family: "Times New Roman"; mso-font-kerning: 1.0pt; mso-style-noshow: yes
+}
+DIV.Section1 {
+	page: Section1
+}
+OL {
+	MARGIN-BOTTOM: 0mm
+}
+UL {
+	MARGIN-BOTTOM: 0mm
+}
+</STYLE>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:\6A19\6E96\306E\8868;
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0mm 5.4pt 0mm 5.4pt;
+	mso-para-margin:0mm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:Century;
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--></HEAD>
+<BODY lang=JA style="TEXT-JUSTIFY-TRIM: punctuation; tab-interval: 42.0pt" 
+vLink=purple link=blue>
+<DIV class=Section1 style="LAYOUT-GRID:  14.55pt none">
+<P class=MsoNormal><A name=_Toc256776587><B 
+style="mso-bidi-font-weight: normal"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">Demo3D </SPAN></B></A><SPAN 
+style="mso-bookmark: _Toc256776587"><B 
+style="mso-bidi-font-weight: normal"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">リソース作成環境ドキュメント</SPAN></B></SPAN><B 
+style="mso-bidi-font-weight: normal"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></B></P>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">2010/03/19<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="TEXT-ALIGN: right" align=right><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">文責　岩澤　幸<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><A name=_Toc256776588><B 
+style="mso-bidi-font-weight: normal"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">目次</SPAN></B></A><B 
+style="mso-bidi-font-weight: normal"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></B></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoToc1 style="tab-stops: right dotted 481.4pt"><!--[if supportFields]><span
+lang=EN-US style='font-size:10.0pt;font-family:"MS Gothic"'><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>TOC \o &quot;1-3&quot; \n \h \z \u <span
+style='mso-element:field-separator'></span></span><![endif]--><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777467"><SPAN 
+lang=EN-US 
+style="FONT-FAMILY: 'MS Mincho'; mso-ascii-font-family: 'MS Gothic'; mso-hansi-font-family: 'MS Gothic'"><SPAN 
+lang=EN-US>◆フォルダ構成</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc1 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777468"><SPAN 
+lang=EN-US 
+style="FONT-FAMILY: 'MS Mincho'; mso-ascii-font-family: 'MS Gothic'; mso-hansi-font-family: 'MS Gothic'"><SPAN 
+lang=EN-US>◆管理表</SPAN></SPAN><SPAN 
+style="FONT-FAMILY: 'MS Gothic'; mso-fareast-font-family: 'MS Mincho'">xls</SPAN><SPAN 
+lang=EN-US 
+style="FONT-FAMILY: 'MS Mincho'; mso-ascii-font-family: 'MS Gothic'; mso-hansi-font-family: 'MS Gothic'"><SPAN 
+lang=EN-US>を扱う際の注意点</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc2 
+style="MARGIN-LEFT: 28.5pt; TEXT-INDENT: -18pt; tab-stops: list 28.5pt right dotted 481.4pt; mso-list: l1 level1 lfo3"><![if !supportLists]><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US 
+style="FONT-FAMILY: 'MS Gothic'; TEXT-DECORATION: none; mso-bidi-font-family: 'MS Gothic'; text-underline: none; mso-no-proof: yes"><SPAN 
+style="mso-list: Ignore">◇<SPAN 
+style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp; 
+</SPAN></SPAN></SPAN></SPAN><![endif]><SPAN class=MsoHyperlink><SPAN lang=EN-US 
+style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777469"><SPAN 
+lang=EN-US style="FONT-FAMILY: 'MS Gothic'"><SPAN 
+lang=EN-US>外部リンクが切れた場合の復旧方法</SPAN></SPAN></A><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoToc1 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777470"><SPAN 
+lang=EN-US 
+style="FONT-FAMILY: 'MS Mincho'; mso-ascii-font-family: 'MS Gothic'; mso-hansi-font-family: 'MS Gothic'"><SPAN 
+lang=EN-US>◆用語説明</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc2 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777471"><SPAN 
+lang=EN-US style="FONT-FAMILY: 'MS Gothic'"><SPAN 
+lang=EN-US>・ユニット</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc2 
+style="MARGIN-LEFT: 28.5pt; TEXT-INDENT: -18pt; tab-stops: list 28.5pt right dotted 481.4pt; mso-list: l2 level1 lfo2"><![if !supportLists]><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US 
+style="FONT-FAMILY: 'MS Gothic'; TEXT-DECORATION: none; mso-bidi-font-family: 'MS Gothic'; text-underline: none; mso-no-proof: yes"><SPAN 
+style="mso-list: Ignore">・<SPAN 
+style="FONT: 7pt 'Times New Roman'">&nbsp;&nbsp;&nbsp;&nbsp; 
+</SPAN></SPAN></SPAN></SPAN><![endif]><SPAN class=MsoHyperlink><SPAN lang=EN-US 
+style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777472"><SPAN 
+lang=EN-US style="FONT-FAMILY: 'MS Gothic'"><SPAN 
+lang=EN-US>シーンID</SPAN></SPAN></A><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoToc1 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777473"><SPAN 
+lang=EN-US 
+style="FONT-FAMILY: 'MS Mincho'; mso-ascii-font-family: Century; mso-hansi-font-family: Century"><SPAN 
+lang=EN-US>◆コマンドリスト</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc2 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777474"><B 
+style="mso-bidi-font-weight: normal"><SPAN 
+style="FONT-FAMILY: 'MS Gothic'; mso-fareast-font-family: 'MS Mincho'">SE_PLAY</SPAN></B><SPAN 
+style="FONT-FAMILY: 'MS Gothic'; mso-fareast-font-family: 'MS Mincho'">, 
+SE</SPAN><SPAN lang=EN-US 
+style="FONT-FAMILY: 'MS Mincho'; mso-ascii-font-family: 'MS Gothic'; mso-hansi-font-family: 'MS Gothic'"><SPAN 
+lang=EN-US>再生コマンド</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc2 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777475"><B 
+style="mso-bidi-font-weight: normal"><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">SE_STOP</SPAN></B><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">, SE</SPAN><SPAN lang=EN-US 
+style="FONT-FAMILY: 'MS Gothic'"><SPAN 
+lang=EN-US>再生停止</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc2 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777476"><B 
+style="mso-bidi-font-weight: normal"><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">SE_VOLUME_EFFECT_REQ</SPAN></B><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">, SE</SPAN><SPAN lang=EN-US 
+style="FONT-FAMILY: 'MS Gothic'"><SPAN 
+lang=EN-US>のボリューム動的変化リクエスト</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc2 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777477"><B 
+style="mso-bidi-font-weight: normal"><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">SE_PAN_EFFECT_REQ</SPAN></B><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">, SE</SPAN><SPAN lang=EN-US 
+style="FONT-FAMILY: 'MS Gothic'"><SPAN 
+lang=EN-US>のパン動的変化リクエスト</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc2 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777478"><B 
+style="mso-bidi-font-weight: normal"><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">SE_PITCH_EFFECT_REQ</SPAN></B><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">, SE</SPAN><SPAN lang=EN-US 
+style="FONT-FAMILY: 'MS Gothic'"><SPAN 
+lang=EN-US>のピッチ動的変化リクエスト</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc2 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777479"><B 
+style="mso-bidi-font-weight: normal"><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">BRIGHTNESS_REQ</SPAN></B><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">, </SPAN><SPAN lang=EN-US 
+style="FONT-FAMILY: 'MS Gothic'"><SPAN 
+lang=EN-US>マスター輝度を用いたブライトネス</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc2 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777480"><B 
+style="mso-bidi-font-weight: normal"><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">FLASH_REQ</SPAN></B><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">, </SPAN><SPAN lang=EN-US 
+style="FONT-FAMILY: 'MS Gothic'"><SPAN 
+lang=EN-US>マスター輝度を用いたフラッシュリクエスト</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc2 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777481"><B 
+style="mso-bidi-font-weight: normal"><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">LIGHT_COLOR_SET</SPAN></B><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">, </SPAN><SPAN lang=EN-US 
+style="FONT-FAMILY: 'MS Gothic'"><SPAN 
+lang=EN-US>ライトカラー変更</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc2 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777482"><B 
+style="mso-bidi-font-weight: normal"><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">LIGHT_VECTOR_SET</SPAN></B><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">, </SPAN><SPAN lang=EN-US 
+style="FONT-FAMILY: 'MS Gothic'"><SPAN 
+lang=EN-US>ライトベクトル変更</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc2 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777483"><B 
+style="mso-bidi-font-weight: normal"><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">MOTIONBL_START</SPAN></B><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">, </SPAN><SPAN lang=EN-US 
+style="FONT-FAMILY: 'MS Gothic'"><SPAN lang=EN-US>モーションブラー</SPAN></SPAN><SPAN 
+lang=EN-US style="FONT-FAMILY: 'MS Gothic'"><SPAN lang=EN-US> 
+</SPAN></SPAN><SPAN lang=EN-US style="FONT-FAMILY: 'MS Gothic'"><SPAN 
+lang=EN-US>開始</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoToc2 style="tab-stops: right dotted 481.4pt"><SPAN 
+class=MsoHyperlink><SPAN lang=EN-US style="mso-no-proof: yes"><A 
+href="mhtml:file://C:\home\pokemon_wb\resource\demo3d\doc\demo3d_res_make.mht#_Toc256777484"><B 
+style="mso-bidi-font-weight: normal"><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">MOTIONBL_END</SPAN></B><SPAN 
+style="FONT-FAMILY: 'MS Gothic'">, </SPAN><SPAN lang=EN-US 
+style="FONT-FAMILY: 'MS Gothic'"><SPAN lang=EN-US>モーションブラー</SPAN></SPAN><SPAN 
+lang=EN-US style="FONT-FAMILY: 'MS Gothic'"><SPAN lang=EN-US> 
+</SPAN></SPAN><SPAN lang=EN-US style="FONT-FAMILY: 'MS Gothic'"><SPAN 
+lang=EN-US>停止</SPAN></SPAN></A></SPAN></SPAN><SPAN lang=EN-US 
+style="mso-no-proof: yes"><o:p></o:p></SPAN></P>
+<P class=MsoNormal><!--[if supportFields]><span lang=EN-US style='font-size:
+10.0pt;font-family:"MS Gothic"'><span style='mso-element:field-end'></span></span><![endif]--><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<H1><A name=_Toc256777467><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">◆フォルダ構成</SPAN></A><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></H1>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　<SPAN 
+lang=EN-US>pokemon_wb/resource/demo3d/<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; COLOR: red; FONT-FAMILY: 'MS Gothic'">　　　<SPAN 
+lang=EN-US>demo_list.txt<SPAN style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp; 
+</SPAN></SPAN>コンバート対象にする<SPAN lang=EN-US>xls</SPAN>ファイルの記述<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; COLOR: red; FONT-FAMILY: 'MS Gothic'">　　　<SPAN 
+lang=EN-US>xxxxx.xls<SPAN 
+style="mso-tab-count: 2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+</SPAN></SPAN>各デモの管理表<SPAN lang=EN-US>xls<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: red; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>-res<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>3D</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: red; FONT-FAMILY: 'MS Gothic'">リソース格納場所<SPAN 
+lang=EN-US>(imd</SPAN>他<SPAN lang=EN-US>)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: red; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>-data<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: red; FONT-FAMILY: 'MS Gothic'">コンバート後のファイルが格納される場所<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>-conv<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">管理表テンプレート等が入っている場所<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="TEXT-INDENT: 30pt; mso-char-indent-count: 3.0"><SPAN 
+lang=EN-US style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">-bin<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>3D</SPAN><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">リソースをコンバートしたバイナリファイルの格納場所<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>-tmp<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">コンバート時に生成される各種中間ファイルの格納場所<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　　　<SPAN 
+style="COLOR: red">＊赤字のものはコミット対象です<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　◇データのコピー先<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　　<SPAN 
+lang=EN-US>pokemon_wb/prog/src/demo/demo3d/data/*.cdat &lt; </SPAN>シーンデータ<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; 
+</SPAN>pokemon_wb/prog/arc/demo3d.narc,naix &lt; 3D</SPAN><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">リソース<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp; 
+</SPAN>pokemon_wb/prog/include/demo/demo3d_demoid.h &lt; </SPAN><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">デモ<SPAN 
+lang=EN-US>ID</SPAN>定義ファイル<SPAN lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<H1><A name=_Toc256777468><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">◆管理表<SPAN 
+lang=EN-US>xls</SPAN>を扱う際の注意点</SPAN></A><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></H1>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal 
+style="MARGIN-LEFT: 21pt; TEXT-INDENT: -21pt; tab-stops: list 21.0pt; mso-list: l0 level1 lfo1"><![if !supportLists]><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'; mso-bidi-font-family: 'MS Gothic'"><SPAN 
+style="mso-list: Ignore">１、</SPAN></SPAN><![endif]><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">管理表を編集する前に一度<SPAN 
+lang=EN-US>xls</SPAN>を立ち上げ、<SPAN lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="TEXT-INDENT: 21pt"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">ツール→オプション→編集タブの<SPAN 
+lang=EN-US>”</SPAN>リンクの自動更新前にメッセージを表示する<SPAN 
+lang=EN-US>”<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="TEXT-INDENT: 21pt"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">チェックボックスを<SPAN 
+lang=EN-US>Off</SPAN>に設定してください<SPAN lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="TEXT-INDENT: 21pt"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　　→<SPAN 
+lang=EN-US>Off</SPAN>にしないと、毎回確認ダイアログが表示されます<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal 
+style="MARGIN-LEFT: 21pt; TEXT-INDENT: -21pt; tab-stops: list 21.0pt; mso-list: l0 level1 lfo1"><![if !supportLists]><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'; mso-bidi-font-family: 'MS Gothic'"><SPAN 
+style="mso-list: Ignore">２、</SPAN></SPAN><![endif]><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">管理表<SPAN 
+lang=EN-US>xls</SPAN>をドラック＆ドロップで他のフォルダに移動させないでください<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN-LEFT: 21pt"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">→<SPAN 
+lang=EN-US>Demo3D</SPAN>のシーン管理表の<SPAN 
+lang=EN-US>xls</SPAN>は「外部リンク」という機能を使い、複数の管理表で<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal 
+style="MARGIN-LEFT: 21pt; TEXT-INDENT: 10pt; mso-para-margin-left: 2.0gd; mso-char-indent-count: 1.0"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">ファイルの設定データを共有しています。<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="MARGIN-LEFT: 21pt"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal 
+style="MARGIN-LEFT: 21pt; TEXT-INDENT: 10pt; mso-para-margin-left: 2.0gd; mso-char-indent-count: 1.0"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">ドラッグ＆ドロップでファイルを移動させてしまうと、このリンクが切れてしまいますので、<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal 
+style="MARGIN-LEFT: 21pt; TEXT-INDENT: 10pt; mso-para-margin-left: 2.0gd; mso-char-indent-count: 1.0"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">移動やコピーを行いたい場合は、エクセルファイルを開き、ファイルメニューから<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal 
+style="MARGIN-LEFT: 21pt; TEXT-INDENT: 10pt; mso-para-margin-left: 2.0gd; mso-char-indent-count: 1.0"><SPAN 
+lang=EN-US style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">“</SPAN><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">名前をつけて保存<SPAN 
+lang=EN-US>”</SPAN>を用いてください<SPAN lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal 
+style="MARGIN-LEFT: 21pt; TEXT-INDENT: -21pt; tab-stops: list 21.0pt; mso-list: l0 level1 lfo1"><![if !supportLists]><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'; mso-bidi-font-family: 'MS Gothic'"><SPAN 
+style="mso-list: Ignore">３、</SPAN></SPAN><![endif]><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">たとえ値が同じでも、セルを異なる項目のセルにコピーしないでください<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="MARGIN-LEFT: 21pt"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal style="MARGIN-LEFT: 21pt"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">→各セルには最小値<SPAN 
+lang=EN-US>/</SPAN>最大値などのチェックのために各種入力制限をかけています。<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="MARGIN-LEFT: 21pt"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　異なる項目のセルをコピーしてしまうと、この入力規則まで上書きされてしまうため<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="MARGIN-LEFT: 21pt"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　各セルが意図した動作をしなくなってしまいます<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal style="mso-outline-level: 2"><A name=_Toc256777469><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">◇外部リンクが切れた場合の復旧方法</SPAN></A><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　　うっかりリンクが切れてしまった場合、<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　　「このブックには更新できないリンクが１つ以上含まれています」というダイアログが出ます。<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　　まず、<SPAN 
+lang=EN-US>”</SPAN>継続<SPAN lang=EN-US>”</SPAN>をクリックし、そのままブックを開きます。<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　　次に、<SPAN 
+lang=EN-US>&lt;command&gt;</SPAN>と<SPAN 
+lang=EN-US>&lt;value&gt;</SPAN>のシート保護をパスワード<SPAN 
+lang=EN-US>“demo3d”</SPAN>で解除してください。<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　　　＊シートの保護を解除するには、エクセルメニュー→ツール→保護→シート保護の解除<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　　ファイルメニューの編集→リンクの設定を選びます。<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　　「リンクの編集」という名前のウィンドウが出るので、<SPAN 
+lang=EN-US>“</SPAN>リンク元の変更<SPAN lang=EN-US>”</SPAN>をクリックしてください。<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　　すると、ファイルを選ぶエクスプローラーが表示されるので、<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　　<SPAN 
+lang=EN-US>pokemon_wb/resource/demo3d/conv/demo3d_cmd.xls </SPAN>を開いてください。<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　　最後に、もう一度<SPAN 
+lang=EN-US>&lt;command&gt;</SPAN>と<SPAN 
+lang=EN-US>&lt;value&gt;</SPAN>のシートに保護をかけて、セーブしてください。<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">　　　＊シートを保護するには、エクセルメニュー→ツール→保護→シートの保護<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<H1><A name=_Toc256777470><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">◆用語説明</SPAN></A><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></H1>
+<P class=MsoNormal style="mso-outline-level: 2"><A name=_Toc256777471><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">・ユニット</SPAN></A><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal style="TEXT-INDENT: 20pt; mso-char-indent-count: 2.0"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">一つの<SPAN 
+lang=EN-US>imd</SPAN>と、それと関連付けられたアニメファイルのセットを「ユニット」と呼んでいます。<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="TEXT-INDENT: 20pt; mso-char-indent-count: 2.0"><SPAN 
+lang=EN-US style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">demo3d</SPAN><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">アプリでは、シーンに配置する<SPAN 
+lang=EN-US>3D</SPAN>のリソースをユニット単位で指定できます。<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal style="TEXT-INDENT: 20pt; mso-char-indent-count: 2.0"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">また、ユニットは　タイムゾーン、プレイヤーの性別、シーン<SPAN 
+lang=EN-US>ID</SPAN>に<SPAN lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="TEXT-INDENT: 20pt; mso-char-indent-count: 2.0"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">よって読み替える指定ができます。<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal style="mso-outline-level: 2"><A name=_Toc256777472><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">・シーン<SPAN 
+lang=EN-US>ID</SPAN></SPAN></A><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal style="TEXT-INDENT: 20pt; mso-char-indent-count: 2.0"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">デモの呼び出し側がデモに対して与えるナンバーです。たとえば、ソフトウェアバージョンや<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="TEXT-INDENT: 20pt; mso-char-indent-count: 2.0"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">観覧車デモのパターンを、呼び出し側がデモに対して引渡し、シーン<SPAN 
+lang=EN-US>ID</SPAN>によってユニットを<SPAN lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="TEXT-INDENT: 20pt; mso-char-indent-count: 2.0"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">読み替えるなどのことが可能です。<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<H1><A name=_Toc256777473><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'; mso-ascii-font-family: Arial; mso-hansi-font-family: Arial">◆コマンドリスト</SPAN></A><SPAN 
+style="mso-bookmark: _Toc256777473"></SPAN><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt"><o:p></o:p></SPAN></H1>
+<P class=MsoNormal><SPAN lang=EN-US><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">/**<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@brief<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>SE</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">再生コマンド<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-tab-count: 1">&nbsp; </SPAN>param[0] SE_Label<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-tab-count: 1">&nbsp; </SPAN>param[1] volume 0</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">～<SPAN 
+lang=EN-US>127 : DEMO3D_SE_PARAM_DEFAULT</SPAN>なら無効<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-tab-count: 1">&nbsp; </SPAN>param[2] pan -128</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">～<SPAN 
+lang=EN-US>127 </SPAN>：<SPAN lang=EN-US>DEMO3D_SE_PARAM_DEFAULT</SPAN>なら無効<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-tab-count: 1">&nbsp; </SPAN>param[3] pitch -32768</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">～<SPAN 
+lang=EN-US>32767(+/-64</SPAN>で半音<SPAN lang=EN-US>)</SPAN>：<SPAN 
+lang=EN-US>DEMO3D_SE_PARAM_DEFAULT</SPAN>なら無効<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-tab-count: 1">&nbsp; </SPAN>param[4] playerNo 0</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">～<SPAN 
+lang=EN-US>3 : DEMO3D_SE_PARAM_DEFAULT</SPAN>なら無効<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*/<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<H2><SPAN lang=EN-US style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN><A name=_Toc256777474><B 
+style="mso-bidi-font-weight: normal">SE_PLAY</B>, SE</A></SPAN><SPAN 
+style="mso-bookmark: _Toc256777474"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">再生コマンド</SPAN></SPAN><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></H2>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">/**<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@brief<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>SE:</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">再生停止<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-tab-count: 1">&nbsp; </SPAN>param[0] SE_Label<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*/<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="mso-outline-level: 2"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN><A name=_Toc256777475><B 
+style="mso-bidi-font-weight: normal">SE_STOP</B>, SE</A></SPAN><SPAN 
+style="mso-bookmark: _Toc256777475"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">再生停止</SPAN></SPAN><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">/**<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@brief<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>SE</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">のボリューム動的変化リクエスト<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[0]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>SE_Label<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[1]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">スタートの値<SPAN 
+lang=EN-US>(0</SPAN>～<SPAN lang=EN-US>127) <o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[2]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">エンドの値<SPAN 
+lang=EN-US>(0</SPAN>～<SPAN lang=EN-US>127)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[3]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">スタート～エンドまでのフレーム数<SPAN 
+lang=EN-US>(1</SPAN>～<SPAN lang=EN-US>)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[4]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">プレイヤー<SPAN 
+lang=EN-US>No(0</SPAN>～<SPAN lang=EN-US>3 </SPAN>デフォルトでいい時は<SPAN 
+lang=EN-US>DEMO3D_SE_PARAM_DEFAULT)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*/<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="mso-outline-level: 2"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN><A name=_Toc256777476><B 
+style="mso-bidi-font-weight: normal">SE_VOLUME_EFFECT_REQ</B>, 
+SE</A></SPAN><SPAN style="mso-bookmark: _Toc256777476"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">のボリューム動的変化リクエスト</SPAN></SPAN><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">/**<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@brief<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>SE</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">のパン動的変化リクエスト<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[0]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>SE_Label<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>* <SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>@param<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>param[1]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">スタートの値<SPAN 
+lang=EN-US>(-128</SPAN>～<SPAN lang=EN-US>127) <o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[2]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">エンドの値<SPAN 
+lang=EN-US>(-128</SPAN>～<SPAN lang=EN-US>127)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[3]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">スタート～エンドまでのフレーム数<SPAN 
+lang=EN-US>(1</SPAN>～<SPAN lang=EN-US>)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[4]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">プレイヤー<SPAN 
+lang=EN-US>No(0</SPAN>～<SPAN lang=EN-US>3 </SPAN>デフォルトでいい時は<SPAN 
+lang=EN-US>DEMO3D_SE_PARAM_DEFAULT)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*/<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="mso-outline-level: 2"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN><A name=_Toc256777477><B 
+style="mso-bidi-font-weight: normal">SE_PAN_EFFECT_REQ</B>, SE</A></SPAN><SPAN 
+style="mso-bookmark: _Toc256777477"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">のパン動的変化リクエスト</SPAN></SPAN><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">/**<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@brief<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>SE</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">のピッチ動的変化リクエスト<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[0]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>SE_Label<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[1]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">スタートの値<SPAN 
+lang=EN-US>(-32768</SPAN>～<SPAN lang=EN-US>32767 +/-64</SPAN>で半音<SPAN 
+lang=EN-US>) <o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[2]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">エンドの値<SPAN 
+lang=EN-US>(-32768</SPAN>～<SPAN lang=EN-US>32767 +/-64</SPAN>で半音<SPAN 
+lang=EN-US>) <o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[3]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">スタート～エンドまでのフレーム数<SPAN 
+lang=EN-US>(1</SPAN>～<SPAN lang=EN-US>)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[4]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">プレイヤー<SPAN 
+lang=EN-US>No(0</SPAN>～<SPAN lang=EN-US>3 </SPAN>デフォルトでいい時は<SPAN 
+lang=EN-US>DEMO3D_SE_PARAM_DEFAULT)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*/<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="mso-outline-level: 2"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN><A name=_Toc256777478><B 
+style="mso-bidi-font-weight: normal">SE_PITCH_EFFECT_REQ</B>, SE</A></SPAN><SPAN 
+style="mso-bookmark: _Toc256777478"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">のピッチ動的変化リクエスト</SPAN></SPAN><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">/**<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@brief<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">マスター輝度を用いたブライトネス<SPAN 
+lang=EN-US> <o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[0]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">適用する画面<SPAN 
+lang=EN-US> &lt; "main"(1),"sub"(2),"double"(3) 
+&gt;<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[1]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">何<SPAN 
+lang=EN-US>frame</SPAN>でフェードするか？<SPAN lang=EN-US> (0</SPAN>は開始時輝度値を即時反映<SPAN 
+lang=EN-US>)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[2]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">フェード開始時の輝度<SPAN 
+lang=EN-US> &lt; -16</SPAN>～<SPAN lang=EN-US>16(</SPAN>黒～白<SPAN lang=EN-US>) 
+&gt;<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[3]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">フェード終了時の輝度<SPAN 
+lang=EN-US> &lt; -16</SPAN>～<SPAN lang=EN-US>16(</SPAN>黒～白<SPAN lang=EN-US>) 
+&gt;<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*/<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="mso-outline-level: 2"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN><B 
+style="mso-bidi-font-weight: normal"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN><A 
+name=_Toc256777479>BRIGHTNESS_REQ</A></B><SPAN 
+style="mso-bookmark: _Toc256777479">, </SPAN></SPAN><SPAN 
+style="mso-bookmark: _Toc256777479"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">マスター輝度を用いたブライトネス</SPAN></SPAN><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">/**<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@brief<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">マスター輝度を用いたフラッシュリクエスト<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[0]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">適用する画面<SPAN 
+lang=EN-US> &lt; "main"(1),"sub"(2),"double"(3) 
+&gt;<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[1]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>start</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">の輝度<SPAN 
+lang=EN-US> &lt; -16</SPAN>～<SPAN lang=EN-US>16(</SPAN>黒～白<SPAN lang=EN-US>) 
+&gt;<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[2]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>max</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">輝度<SPAN 
+lang=EN-US><SPAN style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>&lt; 
+-16</SPAN>～<SPAN lang=EN-US>16(</SPAN>黒～白<SPAN lang=EN-US>) 
+&gt;<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[3]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>end</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">の輝度<SPAN 
+lang=EN-US><SPAN style="mso-spacerun: yes">&nbsp;&nbsp; </SPAN>&lt; 
+-16</SPAN>～<SPAN lang=EN-US>16(</SPAN>黒～白<SPAN lang=EN-US>) 
+&gt;<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[4]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>start</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">から<SPAN 
+lang=EN-US>max</SPAN>までのフレーム<SPAN lang=EN-US> &lt; 1</SPAN>～<SPAN lang=EN-US> 
+&gt;<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN style="mso-spacerun: yes">&nbsp; 
+</SPAN>@param<SPAN style="mso-spacerun: yes">&nbsp; </SPAN>param[5]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>max</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">から<SPAN 
+lang=EN-US>end</SPAN>までのフレーム<SPAN lang=EN-US> &lt; 1</SPAN>～<SPAN lang=EN-US> 
+&gt;<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*/<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="mso-outline-level: 2"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN><A name=_Toc256777480><B 
+style="mso-bidi-font-weight: normal">FLASH_REQ</B>, </A></SPAN><SPAN 
+style="mso-bookmark: _Toc256777480"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">マスター輝度を用いたフラッシュリクエスト</SPAN></SPAN><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">/**<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@brief<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">ライトカラー変更<SPAN 
+lang=EN-US> <o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-tab-count: 1">&nbsp; </SPAN>param[0]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>light_no(0</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">～<SPAN 
+lang=EN-US>3)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>param[1]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>light_col_r(0</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">～<SPAN 
+lang=EN-US>31)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>param[2]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>light_col_g(0</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">～<SPAN 
+lang=EN-US>31)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>param[3]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>light_col_b(0</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">～<SPAN 
+lang=EN-US>31)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*/<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="mso-outline-level: 2"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN><A name=_Toc256777481><B 
+style="mso-bidi-font-weight: normal">LIGHT_COLOR_SET</B>, </A></SPAN><SPAN 
+style="mso-bookmark: _Toc256777481"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">ライトカラー変更</SPAN></SPAN><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">/**<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@brief<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">ライトベクトル変更<SPAN 
+lang=EN-US> <o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-tab-count: 1">&nbsp; </SPAN>param[0]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>light_no(0</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">～<SPAN 
+lang=EN-US>3)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>param[1]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>light_vec_x(fx16 -7.9</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">～<SPAN 
+lang=EN-US>7.9)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>param[2]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>light_vec_y(fx16 -7.9</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">～<SPAN 
+lang=EN-US>7.9)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>param[3]<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN>light_vec_z(fx16 -7.9</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">～<SPAN 
+lang=EN-US>7.9)<o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*/<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="mso-outline-level: 2"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN><A name=_Toc256777482><B 
+style="mso-bidi-font-weight: normal">LIGHT_VECTOR_SET</B>, </A></SPAN><SPAN 
+style="mso-bookmark: _Toc256777482"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">ライトベクトル変更</SPAN></SPAN><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">/**<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@brief<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">モーションブラー開始<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-tab-count: 1">&nbsp; </SPAN>wk<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-tab-count: 1">&nbsp; </SPAN>param[0] </SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">モーションブラー係数新しくブレンドする絵のα係数<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@param<SPAN 
+style="mso-tab-count: 1">&nbsp; </SPAN>param[1] </SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">モーションブラー係数既にバッファされている絵のα係数<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="TEXT-INDENT: 5pt; mso-char-indent-count: .5"><SPAN 
+lang=EN-US style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@com<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: red; FONT-FAMILY: 'MS Gothic'">2</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: red; FONT-FAMILY: 'MS Gothic'">画面モードでは使えません</SPAN><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*/<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="mso-outline-level: 2"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN><A name=_Toc256777483><B 
+style="mso-bidi-font-weight: normal">MOTIONBL_START</B>, </A></SPAN><SPAN 
+style="mso-bookmark: _Toc256777483"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">モーションブラー 開始</SPAN></SPAN><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">/**<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@brief<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">モーションブラー停止<SPAN 
+lang=EN-US><o:p></o:p></SPAN></SPAN></P>
+<P class=MsoNormal style="TEXT-INDENT: 5pt; mso-char-indent-count: .5"><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">*<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="TEXT-INDENT: 5pt; mso-char-indent-count: .5"><SPAN 
+lang=EN-US style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">*<SPAN 
+style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </SPAN>@com<SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN></SPAN><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: red; FONT-FAMILY: 'MS Gothic'">2</SPAN><SPAN 
+style="FONT-SIZE: 10pt; COLOR: red; FONT-FAMILY: 'MS Gothic'">画面モードでは使えません</SPAN><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp;</SPAN>*/<o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; COLOR: teal; FONT-FAMILY: 'MS Gothic'">//======================================================<o:p></o:p></SPAN></P>
+<P class=MsoNormal style="mso-outline-level: 2"><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><SPAN 
+style="mso-spacerun: yes">&nbsp; </SPAN><A name=_Toc256777484><B 
+style="mso-bidi-font-weight: normal">MOTIONBL_END</B>, </A></SPAN><SPAN 
+style="mso-bookmark: _Toc256777484"><SPAN 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'">モーションブラー 停止</SPAN></SPAN><SPAN 
+lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p></o:p></SPAN></P>
+<P class=MsoNormal><SPAN lang=EN-US 
+style="FONT-SIZE: 10pt; FONT-FAMILY: 'MS Gothic'"><o:p>&nbsp;</o:p></SPAN></P></DIV></BODY></HTML>

@@ -549,7 +549,8 @@ class CDemo3DRes
   def get_command_list fp, com, tag, end_cmd_f
     #一行読み飛ばし
     get_line(fp,0,0)
-    
+   
+    ct = 0
     while 1
       work = get_line(fp,1,1)
       if check_tag_block_end(work[0], tag ) == 1 then
@@ -567,7 +568,7 @@ class CDemo3DRes
         if cp.command == "END" then
           cp.frame = "0"
         else
-          print("Error! コマンドのフレームを指定してください->#{work[0]}\n")
+          print("Error! コマンド#{ct} のフレームを指定してください->#{work[0]}\n")
           exit 1
         end
       elsif cp.frame == "INIT" then
@@ -578,6 +579,8 @@ class CDemo3DRes
       cmd = work[2..(CMD_PARAM_END+2)]
 
       cp.param = @c_cmd_check.check( work[0], cmd ).slice(0..CMD_PARAM_END)
+
+      ct += 1
     end 
   end
 
@@ -622,6 +625,8 @@ class CDemo3DRes
   def get_line fp, idx, num
     line = fp.gets
     line.chomp!
+
+    @line_ct += 1
     work = line.split("\t")
     size = work.size()
     if idx > size then
@@ -637,7 +642,7 @@ class CDemo3DRes
       return param
     end
     if param == nil then
-      print("#{work[1]} -> パラメータ数が足りません 0 / #{num}\n")
+      print("#{@line_ct}行目 #{work[1]} -> パラメータ数が足りません 0 / #{num}\n")
       exit 1
     end
 
@@ -647,7 +652,7 @@ class CDemo3DRes
       ct += 1
     end
     if ct < num then
-      print("#{work[1]} -> パラメータ数が足りません #{ct} / #{num}\n")
+      print("#{@line_ct}行目 #{work[1]} -> パラメータ数が足りません #{ct} / #{num}\n")
       exit 1
     end
     return param 
@@ -689,6 +694,7 @@ class CDemo3DRes
   #初期化、オブジェクト作成
   def initialize fpath
 	  @num = 0
+    @line_ct = 0
     @base_name = ""
     @scene_name = ""
 

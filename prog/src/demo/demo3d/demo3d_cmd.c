@@ -51,6 +51,8 @@ static void DEMOCMD_SePanEffectReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core,
 static void DEMOCMD_SePitchEffectReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_BrightnessReq(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_FlashReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
+static void DEMOCMD_LightColorSet(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
+static void DEMOCMD_LightVectorSet(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_MotionBL_Start(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_MotionBL_End(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
 
@@ -71,6 +73,8 @@ void (*DATA_Demo3D_CmdTable[ DEMO3D_CMD_TYPE_MAX ])() =
   DEMOCMD_SePitchEffectReq,
   DEMOCMD_BrightnessReq,
   DEMOCMD_FlashReq,
+  DEMOCMD_LightColorSet,
+  DEMOCMD_LightVectorSet,
   DEMOCMD_MotionBL_Start,
   DEMOCMD_MotionBL_End,
   NULL, // end
@@ -377,14 +381,30 @@ static void tcb_FlashReq( GFL_TCBL *tcb , void* tcb_wk)
 //-----------------------------------------------------------------------------
 static void DEMOCMD_LightColorSet(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
 {
-#if 0
-  GRAPHIC_G3D_WORK* g3d = &core->graphic->g3d;
-//  GXRgb col = ;
+  GXRgb col = GX_RGB(param[1],param[2],param[3]);
 
-  //ƒ‰ƒCƒgÄÝ’è
-	GFL_G3D_LIGHT_SetColor( g3d->p_lightset, param[0], (u16*)&f_light->light);
-  GFL_G3D_LIGHT_Switching( g3d->p_lightset );
-#endif
+  DEMO3D_GRAPHIC_3DLightColorSet( core->graphic, param[0], col );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  ƒ‰ƒCƒgƒxƒNƒgƒ‹•ÏX 
+ *
+ *	@param	param[0]  light_no(0`3)
+ *	@param  param[1]  light_vec_x(fx16 -7.9`7.9)
+ *	@param  param[2]  light_vec_y(fx16 -7.9`7.9)
+ *	@param  param[3]  light_vec_z(fx16 -7.9`7.9)
+ */
+//-----------------------------------------------------------------------------
+static void DEMOCMD_LightVectorSet(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
+{
+  VecFx16 vec;
+  
+  vec.x = FX16_CONST((float)param[1]);
+  vec.y = FX16_CONST((float)param[2]);
+  vec.z = FX16_CONST((float)param[3]);
+
+  DEMO3D_GRAPHIC_3DLightVectorSet( core->graphic, param[0], &vec );
 }
 
 //-----------------------------------------------------------------------------

@@ -61,6 +61,18 @@ $prm_flash_req = [
   $_cmd_prm.new( 1, P_FREE, nil ), #start～maxまでのフレーム
   $_cmd_prm.new( 1, P_FREE, nil ), #max～endまでのフレーム
 ]
+$prm_light_color_set = [
+  $_cmd_prm.new( 0, 3, nil ), #ライトNo
+  $_cmd_prm.new( 0, 31, nil ), #color R
+  $_cmd_prm.new( 0, 31, nil ), #color G
+  $_cmd_prm.new( 0, 31, nil ), #color B
+]
+$prm_light_vector_set = [
+  $_cmd_prm.new( 0, 3, nil ), #ライトNo
+  $_cmd_prm.new( -7.9, 7.9, nil ), #vector X
+  $_cmd_prm.new( -7.9, 7.9, nil ), #vector Y
+  $_cmd_prm.new( -7.9, 7.9, nil ), #vector Z
+]
 $prm_motionbl_start = [
   $_cmd_prm.new( 0, 31, nil ), #新しくブレンドするα
   $_cmd_prm.new( 0, 31, nil ), #バッファリングされているα
@@ -74,6 +86,8 @@ $cmd_tbl = [
   CDemo3DCmd::new( "SE_PITCH_EFFECT_REQ", 5, $prm_se_pitch_effect_req),
   CDemo3DCmd::new( "BRIGHTNESS_REQ", 4, $prm_brightness_req),
   CDemo3DCmd::new( "FLASH_REQ", 6, $prm_flash_req),
+  CDemo3DCmd::new( "LIGHT_COLOR_SET", 4, $prm_light_color_set),
+  CDemo3DCmd::new( "LIGHT_VECTOR_SET", 4, $prm_light_vector_set),
   CDemo3DCmd::new( "MOTIONBL_START", 2, $prm_motionbl_start),
   CDemo3DCmd::new( "MOTIONBL_END", 0, $prm_none),
   CDemo3DCmd::new( "END", 0, $prm_none),
