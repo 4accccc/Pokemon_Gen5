@@ -1786,10 +1786,10 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
                                   FALSE,
                                   wk->heapID);
   //メッセージウインドウキャラ＆パレット読み込み（ウインドウ外側）
-  TalkWinFrame_GraphicSet
-    (EARTH_TEXT_PLANE, EARTH_TALKWINCHR_NUM, EARTH_TALKWIN_PAL, 0, wk->heapID);
   BmpWinFrame_GraphicSet
-    (EARTH_TEXT_PLANE, EARTH_MENUWINCHR_NUM, EARTH_MENUWIN_PAL, 0, wk->heapID);
+    (EARTH_TEXT_PLANE, EARTH_TALKWINCHR_NUM, EARTH_TALKWIN_PAL, MENU_TYPE_SYSTEM, wk->heapID);
+  BmpWinFrame_GraphicSet
+    (EARTH_TEXT_PLANE, EARTH_MENUWINCHR_NUM, EARTH_MENUWIN_PAL, MENU_TYPE_SYSTEM, wk->heapID);
 
   //フォントパレット読み込み
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, 

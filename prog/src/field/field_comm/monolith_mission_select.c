@@ -514,7 +514,7 @@ static void _Setup_BmpWinCreate(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_SETUP *set
   GFL_BMP_DATA *bmp;
 
   BmpWinFrame_CgxSet( GFL_BG_FRAME1_S, BMPWIN_FRAME_START_CGX, MENU_TYPE_SYSTEM, HEAPID_MONOLITH );
-  PaletteWorkSetEx_Arc(setup->pfd, ARCID_FLDMAP_WINFRAME, BmpWinFrame_WinPalArcGet(), 
+  PaletteWorkSetEx_Arc(setup->pfd, ARCID_FLDMAP_WINFRAME, BmpWinFrame_WinPalArcGet(MENU_TYPE_SYSTEM), 
     HEAPID_MONOLITH, FADE_SUB_BG, 0x20, BMPWIN_FRAME_PALNO * 16, 0);
   
 	mmw->bmpwin = GFL_BMPWIN_Create( GFL_BG_FRAME1_S,

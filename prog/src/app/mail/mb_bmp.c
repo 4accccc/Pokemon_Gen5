@@ -707,7 +707,7 @@ void MBBMP_SelectMsgPut( MAILBOX_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void MBBMP_TalkWinPut( MAILBOX_SYS_WORK * syswk )
 {
-  TalkWinFrame_Write( syswk->app->win[MBMAIN_BMPWIN_ID_TALK], WINDOW_TRANS_OFF, 
+  BmpWinFrame_Write( syswk->app->win[MBMAIN_BMPWIN_ID_TALK], WINDOW_TRANS_OFF, 
                       MBMAIN_TALKWIN_CGX_POS, MBMAIN_MBG_PAL_TALKWIN );
 //  BmpTalkWinWrite(
 //    syswk->app->win[MBMAIN_BMPWIN_ID_TALK],
@@ -727,7 +727,7 @@ void MBBMP_TalkWinPut( MAILBOX_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 void MBBMP_TalkWinDel( MAILBOX_SYS_WORK * syswk )
 {
-  TalkWinFrame_Clear( syswk->app->win[MBMAIN_BMPWIN_ID_TALK], WINDOW_TRANS_OFF );
+  BmpWinFrame_Clear( syswk->app->win[MBMAIN_BMPWIN_ID_TALK], WINDOW_TRANS_OFF );
   GFL_BG_LoadScreenV_Req( MBMAIN_BGF_MSG_M );
 }
 

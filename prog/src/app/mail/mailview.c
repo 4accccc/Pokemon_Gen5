@@ -741,7 +741,7 @@ static void print_talk_msg( MAIL_VIEW_DAT *wk, int msgId )
 {
   STRBUF* str = NULL;
 
-  TalkWinFrame_Write( wk->win[WIN_TALK], WINDOW_TRANS_OFF, BMPL_TALK_WIN_CGX, BMPL_TALK_WIN_PAL );
+  BmpWinFrame_Write( wk->win[WIN_TALK], WINDOW_TRANS_OFF, BMPL_TALK_WIN_CGX, BMPL_TALK_WIN_PAL );
   
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[WIN_TALK]), WINCLR_COL(15));
 
@@ -795,7 +795,7 @@ static int MailView_KeyInMsg(MAIL_VIEW_DAT* wk)
     if(!ret){
       return FALSE;
     }
-    TalkWinFrame_Clear( wk->win[WIN_TALK],WINDOW_TRANS_OFF);
+    BmpWinFrame_Clear( wk->win[WIN_TALK],WINDOW_TRANS_OFF);
     GFL_BMPWIN_ClearTransWindow( wk->win[WIN_TALK]);
 
     wk->sub_seq = 0;
@@ -910,7 +910,7 @@ static int MailView_KeyInCancel(MAIL_VIEW_DAT* wk)
     if(ret < 0){
       return FALSE;
     }
-    TalkWinFrame_Clear( wk->win[WIN_TALK],WINDOW_TRANS_OFF);
+    BmpWinFrame_Clear( wk->win[WIN_TALK],WINDOW_TRANS_OFF);
     GFL_BMPWIN_ClearTransWindow( wk->win[WIN_TALK]);
     wk->sub_seq = 0;
 
@@ -1293,9 +1293,9 @@ static void MailView_2DGraInit(MAIL_VIEW_DAT* wk)
   BmpWinFrame_GraphicSet( BMPL_WIN_FRM, BMPL_MENU_WIN_CGX, BMPL_MENU_WIN_PAL,
                           MENU_TYPE_SYSTEM, wk->heapID );
 
-  // 会話ウィンドウセット
-  TalkWinFrame_GraphicSet( BMPL_WIN_FRM, BMPL_TALK_WIN_CGX, BMPL_TALK_WIN_PAL, 
-                           wk->win_type, wk->heapID);
+  // 会話ウィンドウセット(WBでシステムウィンドウになりました)
+  BmpWinFrame_GraphicSet( BMPL_WIN_FRM, BMPL_TALK_WIN_CGX, BMPL_TALK_WIN_PAL, 
+                          MENU_TYPE_SYSTEM, wk->heapID);
 
 
   // BG転送
@@ -1353,10 +1353,10 @@ static void MailView_2DGraInit(MAIL_VIEW_DAT* wk)
   PaletteWorkSet_Arc(wk->palAnm,ARCID_FONT,NARC_font_default_nclr,wk->heapID, 
     FADE_MAIN_BG,FADE_PAL_ONE_SIZE,16*TALK_FONT_PAL);
   // 4列目にメニューウインドウパレット転送
-  PaletteWorkSet_Arc(wk->palAnm,ARCID_FLDMAP_WINFRAME,NARC_winframe_system_NCLR,wk->heapID, 
+  PaletteWorkSet_Arc(wk->palAnm,ARCID_FLDMAP_WINFRAME,BmpWinFrame_WinPalArcGet(MENU_TYPE_SYSTEM),wk->heapID, 
     FADE_MAIN_BG,FADE_PAL_ONE_SIZE,16*BMPL_MENU_WIN_PAL);
   // 6列目に会話ウインドウパレット転送
-  PaletteWorkSet_Arc(wk->palAnm,ARCID_FLDMAP_WINFRAME,NARC_winframe_talk_win00_NCLR + wk->win_type,wk->heapID, 
+  PaletteWorkSet_Arc(wk->palAnm,ARCID_FLDMAP_WINFRAME,BmpWinFrame_WinPalArcGet(MENU_TYPE_TALK),wk->heapID, 
     FADE_MAIN_BG,FADE_PAL_ONE_SIZE,16*BMPL_TALK_WIN_PAL);
 
 

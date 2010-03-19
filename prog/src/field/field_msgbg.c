@@ -4239,7 +4239,7 @@ void FLDKEYWAITCURSOR_Clear(
  * @retval nothing
  */
 //--------------------------------------------------------------
-void FLDKEYWAITCURSOR_WriteCore(
+static void FLDKEYWAITCURSOR_WriteCore(
     FLDKEYWAITCURSOR *work, GFL_BMP_DATA *bmp, u16 n_col )
 {
   u16 x,y;
@@ -4843,7 +4843,7 @@ static void winframe_DeleteBmp( GFL_BMPWIN *bmpwin )
 static void winframe_SetPaletteBlack( u32 heapID )
 {
   u32 pal = PANO_MENU_B;
-  u32 arc = BmpWinFrame_WinPalArcGet();
+  u32 arc = BmpWinFrame_WinPalArcGet(MENU_TYPE_SYSTEM);
   GFL_ARC_UTIL_TransVramPaletteEx(
       ARCID_FLDMAP_WINFRAME,
       arc, PALTYPE_MAIN_BG, 0x20*1, pal*0x20, 0x20, heapID );
@@ -4859,7 +4859,7 @@ static void winframe_SetPaletteBlack( u32 heapID )
 static void winframe_SetPaletteWhith( u32 heapID )
 {
   u32 pal = PANO_MENU_W;
-  u32 arc = BmpWinFrame_WinPalArcGet();
+  u32 arc = BmpWinFrame_WinPalArcGet(MENU_TYPE_SYSTEM);
   GFL_ARC_UTIL_TransVramPaletteEx(
       ARCID_FLDMAP_WINFRAME,
       arc, PALTYPE_MAIN_BG, 0x20*0, pal*0x20, 0x20, heapID );

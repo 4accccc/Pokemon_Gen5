@@ -322,9 +322,9 @@ static void SEL_MODE_InitGraphic( SEL_MODE_WORK *work )
   work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , HEAPID_SEL_MODE );
 
   //WinFrame用グラフィック設定
-  BmpWinFrame_GraphicSet( SEL_MODE_BG_ITEM , SEL_MODE_FRAMECHR1 , SEL_MODE_PLT_SEL  , 1, HEAPID_SEL_MODE);
-  BmpWinFrame_GraphicSet( SEL_MODE_BG_ITEM , SEL_MODE_FRAMECHR2 , SEL_MODE_PLT_NOSEL , 0, HEAPID_SEL_MODE);
-  TalkWinFrame_GraphicSet( SEL_MODE_BG_STR , SEL_MODE_FRAMECHR_TALK , SEL_MODE_PLT_S_TALKWIN , 0 , HEAPID_SEL_MODE);
+  BmpWinFrame_GraphicSet( SEL_MODE_BG_ITEM , SEL_MODE_FRAMECHR1 , SEL_MODE_PLT_SEL  , MENU_TYPE_SYSTEM, HEAPID_SEL_MODE);
+  BmpWinFrame_GraphicSet( SEL_MODE_BG_ITEM , SEL_MODE_FRAMECHR2 , SEL_MODE_PLT_NOSEL , MENU_TYPE_SYSTEM, HEAPID_SEL_MODE);
+  BmpWinFrame_GraphicSet( SEL_MODE_BG_STR , SEL_MODE_FRAMECHR_TALK , SEL_MODE_PLT_S_TALKWIN , MENU_TYPE_SYSTEM, HEAPID_SEL_MODE);
 
   //背景色
   *((u16 *)HW_BG_PLTT) = 0x7d8c;//RGB(12, 12, 31);
@@ -369,7 +369,7 @@ static void SEL_MODE_InitItem( SEL_MODE_WORK *work )
 
     str = GFL_MSG_CreateString( msghandle , QUESTION_STR1 + work->state );
 
-    TalkWinFrame_Write( work->strWin , WINDOW_TRANS_ON ,
+    BmpWinFrame_Write( work->strWin , WINDOW_TRANS_ON ,
                   SEL_MODE_FRAMECHR_TALK ,SEL_MODE_PLT_S_TALKWIN );
 
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->strWin),

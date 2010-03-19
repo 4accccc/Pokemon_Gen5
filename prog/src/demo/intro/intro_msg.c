@@ -132,7 +132,7 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0x20*PLTID_BG_TEXT_M, 0x20, heap_id );
 
   // フレームウィンドウ用のキャラを用意
-  BmpWinFrame_GraphicSet( BG_FRAME_TEXT_M, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M, MENU_TYPE_FIELD, heap_id );
+  BmpWinFrame_GraphicSet( BG_FRAME_TEXT_M, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M, MENU_TYPE_SYSTEM, heap_id );
 
   // フォントを展開
   wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_MEMORY, FALSE, wk->heap_id );
@@ -284,7 +284,7 @@ void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id )
   wk->print_stream = PRINTSYS_PrintStream( win, 4, 0, wk->exp_strbuf, wk->font, msgspeed,
                                            wk->msg_tcblsys, 0xffff, wk->heap_id, clear_color );
 
-  BmpWinFrame_Write( win, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_M );
+  BmpWinFrame_Write( win, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M );
 
   // 転送
   GFL_BMPWIN_TransVramCharacter( win );

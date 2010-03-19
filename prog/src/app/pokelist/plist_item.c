@@ -634,7 +634,7 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
                 PLIST_ITEM_PARAMWIN_LEFT , PLIST_ITEM_PARAMWIN_TOP , 
                 PLIST_ITEM_PARAMWIN_WIDTH , PLIST_ITEM_PARAMWIN_HEIGHT ,
                 PLIST_BG_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
-      TalkWinFrame_Write( work->paramWin , WINDOW_TRANS_ON_V , 
+      BmpWinFrame_Write( work->paramWin , WINDOW_TRANS_ON_V , 
                           PLIST_BG_WINCHAR_TOP , PLIST_BG_PLT_BMPWIN );
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->paramWin ) , 0xf );
       for( i=0;i<6;i++ )
@@ -783,7 +783,7 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
       }
       
     	GFL_BMPWIN_ClearScreen( work->paramWin );
-      TalkWinFrame_Clear( work->paramWin , WINDOW_TRANS_ON_V );
+      BmpWinFrame_Clear( work->paramWin , WINDOW_TRANS_ON_V );
       GFL_BMPWIN_Delete( work->paramWin );
       work->paramWin = NULL;
       

@@ -156,7 +156,7 @@ void CI_pv_disp_CodeRes_Load( CODEIN_WORK* wk )
 	{
 //		int wintype = CONFIG_GetWindowType( wk->cfg );
 //		TalkWinGraphicSet( bgl, GF_BGL_FRAME0_S, 1, ePAL_WIN, wintype, HEAPID_CODEIN );
-		TalkWinFrame_GraphicSet( GFL_BG_FRAME0_S , 1 , ePAL_FRAME , 0 , HEAPID_CODEIN );
+		BmpWinFrame_GraphicSet( GFL_BG_FRAME0_S , 1 , ePAL_FRAME , MENU_TYPE_SYSTEM , HEAPID_CODEIN );
 //		PaletteWorkSet_Arc( pfd, ARC_WINFRAME, TalkWinPalArcGet( wintype ), HEAPID_CODEIN, FADE_SUB_BG, 0x20, ePAL_FRAME * 16 );
 
 		///< ƒtƒHƒ“ƒg
@@ -1118,7 +1118,7 @@ void CI_pv_disp_BMP_WindowAdd( GFL_BMPWIN** win, int frm, int x, int y, int sx, 
 	*win = GFL_BMPWIN_Create( frm , x, y, sx, sy, ePAL_FONT, GFL_BMP_CHRAREA_GET_B );
 					 
 //	BmpTalkWinWrite( win, WINDOW_TRANS_OFF, 1, ePAL_FRAME );
-	TalkWinFrame_Write( *win , WINDOW_TRANS_OFF, 1, ePAL_FRAME );
+	BmpWinFrame_Write( *win , WINDOW_TRANS_OFF, 1, ePAL_FRAME );
 	
 	GFL_BMPWIN_MakeScreen( *win );
 

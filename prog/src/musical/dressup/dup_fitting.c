@@ -763,7 +763,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
         WORDSET_Delete( wordSet );
       }
 
-      TalkWinFrame_Write( work->msgWin , WINDOW_TRANS_ON_V , 
+      BmpWinFrame_Write( work->msgWin , WINDOW_TRANS_ON_V , 
                           FIT_MSGWIN_CHAR_TOP , FIT_PLT_BG_SUB_MSGWIN );
     }
   }

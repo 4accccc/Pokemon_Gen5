@@ -33,140 +33,145 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
- * メニューウィンドウのキャラをセット
- *
- * @param	ini			BGLデータ
- * @param	frmnum		BGフレーム
- * @param	cgx			キャラ転送位置
- * @param	win_num		ウィンドウ番号
- * @param	heap		ヒープID
- *
- * @return	none
- */
-//--------------------------------------------------------------
-void BmpWinFrame_CgxSet( u8 frmnum, u16 cgx, u8 win_num, HEAPID heap )
-{
-	if( win_num == MENU_TYPE_SYSTEM ){
-		GFL_ARC_UTIL_TransVramBgCharacter(
-			ARCID_FLDMAP_WINFRAME, NARC_winframe_system_NCGR,
-			frmnum, cgx, 0, 0, heap );
-	}else{
-		GFL_ARC_UTIL_TransVramBgCharacter(
-			ARCID_FLDMAP_WINFRAME, NARC_winframe_fmenu_NCGR,
-			frmnum, cgx, 0, 0, heap );
-	}
-}
-
-//--------------------------------------------------------------
-/**
- * メニューウィンドウパレットのアーカイブインデックス取得
+ * ウィンドウキャラクタデータのアーカイブインデックス取得
  *
  * @param	none
  *
  * @return	アーカイブインデックス
  */
 //--------------------------------------------------------------
-u32 BmpWinFrame_WinPalArcGet(void)
+u32 BmpWinFrame_CgxArcGet( MENU_TYPE win_type )
 {
-	return ( NARC_winframe_system_NCLR );
+  static const u8 arc_tbl[] = {
+    NARC_winframe_system_NCGR,
+    NARC_winframe_talk_NCGR,
+  };
+  GF_ASSERT(win_type < MENU_TYPE_MAX);
+	return arc_tbl[win_type];
 }
 
 //--------------------------------------------------------------
 /**
- * メニューウィンドウのグラフィックをセット
+ * ウィンドウパレットのアーカイブインデックス取得
  *
- * @param	ini			BGLデータ
+ * @param	none
+ *
+ * @return	アーカイブインデックス
+ */
+//--------------------------------------------------------------
+u32 BmpWinFrame_WinPalArcGet( MENU_TYPE win_type )
+{
+  static const u8 arc_tbl[] = {
+    NARC_winframe_system_NCLR,
+    NARC_winframe_balloonwin_NCLR,  //フィールド会話系ウィンドウballoonwin_ncgと共通のパレット
+  };
+  GF_ASSERT(win_type < MENU_TYPE_MAX);
+	return arc_tbl[win_type];
+}
+
+//--------------------------------------------------------------
+/**
+ * メニューウィンドウのキャラをセット
+ *
  * @param	frmnum		BGフレーム
- * @param	cgx			キャラ転送位置
- * @param	pal			パレット番号
- * @param	win_num		ウィンドウ番号
+ * @param	cgx			  キャラ転送位置
+ * @param	win_type	ウィンドウタイプ号 MENU_TYPE型
+ * @param	heap		  ヒープID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------
+void BmpWinFrame_CgxSet( u8 frmnum, u16 cgx, MENU_TYPE win_type, HEAPID heap )
+{
+  u32 arc = BmpWinFrame_CgxArcGet( win_type );
+
+	GFL_ARC_UTIL_TransVramBgCharacter(
+	  ARCID_FLDMAP_WINFRAME, arc,
+		frmnum, cgx, 0, 0, heap );
+}
+
+//--------------------------------------------------------------
+/**
+ * メニューウィンドウのパレットをセット
+ *
+ * @param	frmnum		BGフレーム
+ * @param	pal			  パレット転送位置(パレット単位)
+ * @param	win_type		ウィンドウタイプ号 MENU_TYPE型
+ * @param	heap		ヒープID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------
+void BmpWinFrame_PalSet( u8 frmnum, u8 pal, MENU_TYPE win_type, HEAPID heap )
+{
+  u32  arc = BmpWinFrame_WinPalArcGet( win_type );
+
+	if( frmnum < GFL_BG_FRAME0_S ){
+		GFL_ARC_UTIL_TransVramPalette( ARCID_FLDMAP_WINFRAME,
+			arc, PALTYPE_MAIN_BG, pal*0x20, 0x20, heap );
+	}else{
+		GFL_ARC_UTIL_TransVramPalette( ARCID_FLDMAP_WINFRAME,
+			arc, PALTYPE_SUB_BG, pal*0x20, 0x20, heap );
+	}
+}
+
+//--------------------------------------------------------------
+/**
+ * ウィンドウフレームのグラフィックをセット
+ *
+ * @param	ini			  BGLデータ
+ * @param	frmnum		BGフレーム
+ * @param	cgx			  キャラ転送位置
+ * @param	pal			  パレット番号
+ * @param	win_type	ウィンドウ番号 MENU_TYPE型
  * @param	heap		ヒープID
  *
  * @return	none
  */
 //--------------------------------------------------------------
 void BmpWinFrame_GraphicSet(
-	u8 frmnum, u16 cgx, u8 pal, u8 win_num, HEAPID heap )
+	u8 frmnum, u16 cgx, u8 pal, MENU_TYPE win_type, HEAPID heap )
 {
-	u32	arc;
-	
 	// キャラ
-	if( win_num == MENU_TYPE_SYSTEM ){
-		arc = NARC_winframe_system_NCGR;
-	}else{
-		arc = NARC_winframe_fmenu_NCGR;
-	}
-
-	GFL_ARC_UTIL_TransVramBgCharacter(
-		ARCID_FLDMAP_WINFRAME, arc, frmnum, cgx, 0, 0, heap );
-	
+  BmpWinFrame_CgxSet( frmnum, cgx, win_type, heap );
 	// パレット
-	if( win_num == MENU_TYPE_UG ){
-//		arc = NARC_winframe_ugmenu_win_NCLR;
-		arc = NARC_winframe_system_NCLR;
-	}else{
-		arc = NARC_winframe_system_NCLR;
-	}
-
-	if( frmnum < GFL_BG_FRAME0_S ){
-		GFL_ARC_UTIL_TransVramPalette( ARCID_FLDMAP_WINFRAME,
-			arc, PALTYPE_MAIN_BG, pal*0x20, 0x20, heap );
-	}else{
-		GFL_ARC_UTIL_TransVramPalette( ARCID_FLDMAP_WINFRAME,
-			arc, PALTYPE_SUB_BG, pal*0x20, 0x20, heap );
-	}
+  BmpWinFrame_PalSet( frmnum, pal, win_type, heap );
 }
 
 
 //--------------------------------------------------------------
 /**
- * エリアマネージャーを使ってメニューウィンドウのグラフィックをセット
+ * エリアマネージャーを使ってウィンドウのグラフィックをセット
  *
- * @param	ini			BGLデータ
+ * @param	ini			  BGLデータ
  * @param	frmnum		BGフレーム
- * @param	pal			パレット番号
- * @param	win_num		ウィンドウ番号
- * @param	heap		ヒープID
+ * @param	pal			  パレット番号
+ * @param	win_type	ウィンドウ番号 MENU_TYPE型
+ * @param	heap		  ヒープID
  *
  * @return	GFL_ARCUTIL_TRANSINFO
  */
 //--------------------------------------------------------------
-GFL_ARCUTIL_TRANSINFO BmpWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 win_num, HEAPID heap )
+GFL_ARCUTIL_TRANSINFO BmpWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, MENU_TYPE win_type, HEAPID heap )
 {
 	u32	arc,pos;
-    GFL_ARCUTIL_TRANSINFO bgchar;
+  GFL_ARCUTIL_TRANSINFO bgchar;
 	
 	// キャラ
-	if( win_num == MENU_TYPE_SYSTEM ){
-		arc = NARC_winframe_system_NCGR;
-	}else{
-		arc = NARC_winframe_fmenu_NCGR;
-	}
+  arc = BmpWinFrame_CgxArcGet( win_type );
 
 	bgchar = GFL_ARC_UTIL_TransVramBgCharacterAreaMan(
         ARCID_FLDMAP_WINFRAME, arc, frmnum, 0, 0, heap );
 	
 	// パレット
-	if( win_num == MENU_TYPE_UG ){
-//		arc = NARC_winframe_ugmenu_win_NCLR;
-		arc = NARC_winframe_system_NCLR;
-	}else{
-		arc = NARC_winframe_system_NCLR;
-	}
-
-	if( frmnum < GFL_BG_FRAME0_S ){
-		GFL_ARC_UTIL_TransVramPalette( ARCID_FLDMAP_WINFRAME,
-			arc, PALTYPE_MAIN_BG, pal*0x20, 0x20, heap );
-	}else{
-		GFL_ARC_UTIL_TransVramPalette( ARCID_FLDMAP_WINFRAME,
-			arc, PALTYPE_SUB_BG, pal*0x20, 0x20, heap );
-	}
-    return bgchar;
+  BmpWinFrame_PalSet( frmnum, pal, win_type, heap );
+  
+  return bgchar;
 }
 
 //--------------------------------------------------------------
 /**
- *	メニューウインドウ描画メイン
+ *	ウインドウ描画メイン
  *
  * @param	frm			BGフレームナンバー(bg_sys)
  * @param	px			Ｘ座標
@@ -195,7 +200,7 @@ static void BmpMenuWinWriteMain(
 
 //--------------------------------------------------------------
 /**
- * メニューウィンドウを描画
+ * ウィンドウを描画
  *
  * @param	win			BMPウィンドウデータ
  * @param	trans_sw	転送スイッチ
@@ -227,7 +232,7 @@ void BmpWinFrame_Write( GFL_BMPWIN *win, u8 trans_sw, u16 win_cgx, u8 pal )
 
 //--------------------------------------------------------------
 /**
- *	メニューウィンドウをクリア
+ *	ウィンドウをクリア
  *
  * @param	win			BMPウィンドウデータ
  * @param	trans_sw	転送スイッチ
@@ -248,7 +253,6 @@ void BmpWinFrame_Clear( GFL_BMPWIN *win, u8 trans_sw )
 		0 );
 
 	if( trans_sw == WINDOW_TRANS_ON ){
-//		GFL_BG_ClearScreen( frm );
 		GFL_BG_LoadScreenReq( frm );
 	}
 	else if(trans_sw == WINDOW_TRANS_ON_V){
@@ -276,144 +280,3 @@ void BmpWinFrame_TransScreen(GFL_BMPWIN *win, u8 trans_sw)
 	}
 }
 
-//--------------------------------------------------------------
-/**
- * 会話ウィンドウのグラフィックをセット
- *
- * @param	ini			BGLデータ
- * @param	frmnum		BGフレーム
- * @param	cgx			キャラ転送位置
- * @param	pal			パレット番号
- * @param	win_num		ウィンドウ番号
- * @param	heap		ヒープID
- *
- * @return	none
- */
-//--------------------------------------------------------------
-void TalkWinFrame_GraphicSet(u8 frmnum, u16 cgx, u8 pal, u8 win_num, HEAPID heap )
-{
-	BmpWinFrame_GraphicSet(frmnum, cgx, pal, 0, heap);
-}
-
-//--------------------------------------------------------------
-/**
- * エリアマネージャーを使って会話ウィンドウのグラフィックをセット
- *
- * @param	ini			BGLデータ
- * @param	frmnum		BGフレーム
- * @param	pal			パレット番号
- * @param	win_num		ウィンドウ番号
- * @param	heap		ヒープID
- *
- * @return	GFL_ARCUTIL_TRANSINFO
- */
-//--------------------------------------------------------------
-GFL_ARCUTIL_TRANSINFO TalkWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 win_num, HEAPID heap )
-{
-	return BmpWinFrame_GraphicSetAreaMan(frmnum, pal, 0, heap);
-}
-
-//--------------------------------------------------------------
-/**
- * 会話ウィンドウを描画
- *
- * @param	win			BMPウィンドウデータ
- * @param	trans_sw	転送スイッチ
- * @param	win_cgx		ウィンドウキャラ位置
- * @param	pal			パレット
- *
- * @return	none
- */
-//--------------------------------------------------------------
-void TalkWinFrame_Write( GFL_BMPWIN *win, u8 trans_sw, u16 win_cgx, u8 pal )
-{
-	BmpWinFrame_Write(win, trans_sw, win_cgx, pal);
-}
-
-//--------------------------------------------------------------
-/**
- *	会話ウィンドウをクリア
- *
- * @param	win			BMPウィンドウデータ
- * @param	trans_sw	転送スイッチ
- *
- * @return	none
- */
-//--------------------------------------------------------------
-void TalkWinFrame_Clear( GFL_BMPWIN *win, u8 trans_sw )
-{
-	BmpWinFrame_Clear(win, trans_sw);
-}
-
-//--------------------------------------------------------------
-/**
- * 看板ウィンドウのグラフィックをセット
- *
- * @param	ini			BGLデータ
- * @param	frmnum		BGフレーム
- * @param	cgx			キャラ転送位置
- * @param	pal			パレット番号
- * @param	type		看板タイプ
- * @param	map			マップ番号（タウンマップ、標識）
- * @param	heap		ヒープID
- *
- * @return	none
- */
-//--------------------------------------------------------------
-void BoardWinFrame_GraphicSet(u8 frmnum, u16 cgx, u8 pal, u8 type, u16 map, HEAPID heap )
-{
-	BmpWinFrame_GraphicSet(frmnum, cgx, pal, 0, heap);
-}
-
-//--------------------------------------------------------------
-/**
- * エリアマネージャーを使って看板ウィンドウのグラフィックをセット
- *
- * @param	ini			BGLデータ
- * @param	frmnum		BGフレーム
- * @param	pal			パレット番号
- * @param	type		看板タイプ
- * @param	map			マップ番号（タウンマップ、標識）
- * @param	heap		ヒープID
- *
- * @return	GFL_ARCUTIL_TRANSINFO
- */
-//--------------------------------------------------------------
-GFL_ARCUTIL_TRANSINFO BoardWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, u8 type, u16 map, HEAPID heap )
-{
-	return BmpWinFrame_GraphicSetAreaMan(frmnum, pal, 0, heap);
-}
-
-//--------------------------------------------------------------
-/**
- * 看板ウィンドウを描画
- *
- * @param	win			BMPウィンドウデータ
- * @param	trans_sw	転送スイッチ
- * @param	win_cgx		ウィンドウキャラ位置
- * @param	pal			パレット
- * @param	type		看板タイプ
- *
- * @return	none
- */
-//--------------------------------------------------------------
-void BoardWinFrame_Write( GFL_BMPWIN *win, u8 trans_sw, u16 win_cgx, u8 pal, u8 type )
-{
-	BmpWinFrame_Write(win, trans_sw, win_cgx, pal);
-}
-
-//--------------------------------------------------------------
-/**
- *	看板ウィンドウをクリア
- *
- * @param	win			BMPウィンドウデータ
- * @param	type		看板タイプ
- * @param	trans_sw	転送スイッチ
- *
- * @return	none
- */
-//--------------------------------------------------------------
-void BoardWinFrame_Clear( GFL_BMPWIN *win, u8 type, u8 trans_sw )
-{
-	BmpWinFrame_Clear(win, trans_sw);
-}

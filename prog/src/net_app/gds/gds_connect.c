@@ -637,10 +637,10 @@ static void BgGraphicSet( GDS_CONNECT_SYS * wk )
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 
 		GDSCONNECT_TALKFONT_PAL*0x20, 0x20, HEAPID_GDS_CONNECT);
 
-	// 会話ウインドウグラフィック転送
-	TalkWinFrame_GraphicSet(	GFL_BG_FRAME0_M, GDSCONNECT_MESFRAME_CHR, 
+	// システムウインドウグラフィック転送
+	BmpWinFrame_GraphicSet(	GFL_BG_FRAME0_M, GDSCONNECT_MESFRAME_CHR, 
 				GDSCONNECT_MESFRAME_PAL,  
-				0, 
+				MENU_TYPE_SYSTEM, 
 				HEAPID_GDS_CONNECT );
 
 	BmpWinFrame_GraphicSet(	GFL_BG_FRAME0_M, GDSCONNECT_MENUFRAME_CHR,
@@ -1001,7 +1001,7 @@ static void Enter_MessagePrint( GDS_CONNECT_SYS *wk, GFL_MSGDATA *msgman, int ms
 	// 会話ウインドウ枠描画
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin),  0x0f0f );
   GFL_BMPWIN_MakeScreen(wk->MsgWin);
-  TalkWinFrame_Write(wk->MsgWin, WINDOW_TRANS_ON, 
+  BmpWinFrame_Write(wk->MsgWin, WINDOW_TRANS_ON, 
     GDSCONNECT_MESFRAME_CHR, GDSCONNECT_MESFRAME_PAL);
 
 	// 文字列描画開始

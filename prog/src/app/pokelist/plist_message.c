@@ -259,7 +259,7 @@ void PLIST_MSG_OpenWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , const PL
               PLIST_BG_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
     break;
   }
-  TalkWinFrame_Write( msgWork->bmpWin , WINDOW_TRANS_ON_V , 
+  BmpWinFrame_Write( msgWork->bmpWin , WINDOW_TRANS_ON_V , 
                       PLIST_BG_WINCHAR_TOP , PLIST_BG_PLT_BMPWIN );
 
   PLIST_MSG_ClearWindow( work , msgWork );
@@ -283,7 +283,7 @@ void PLIST_MSG_CloseWindow( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
     msgWork->timeIcon = NULL;
   }
   
-  TalkWinFrame_Clear( msgWork->bmpWin , WINDOW_TRANS_ON_V );
+  BmpWinFrame_Clear( msgWork->bmpWin , WINDOW_TRANS_ON_V );
   GFL_BMPWIN_Delete( msgWork->bmpWin );
   msgWork->winType = PMT_NONE;
 }

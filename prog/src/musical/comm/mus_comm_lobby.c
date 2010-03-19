@@ -500,7 +500,7 @@ static void MUS_LOBBY_InitUpperStr( MUS_LOBBY_WORK *work )
   work->strWin = GFL_BMPWIN_Create( MUS_LOBBY_BG_STR ,1 , 19 , 30 , 4 ,
                           MUS_LOBBY_FONT_PLT , GFL_BMP_CHRAREA_GET_B );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->strWin ) , 0xF );
-  TalkWinFrame_Write( work->strWin , WINDOW_TRANS_ON ,
+  BmpWinFrame_Write( work->strWin , WINDOW_TRANS_ON ,
               MUS_LOBBY_FRANE_CHR ,MUS_LOBBY_FRAME_PLT );
   GFL_BMPWIN_MakeTransWindow_VBlank( work->strWin );
 }
@@ -568,7 +568,7 @@ static void MUS_LOBBY_DispTopMenu(  MUS_LOBBY_WORK *work )
   GFL_BG_ClearScreen( MUS_LOBBY_BG_BMP );
   for( i=0;i<MLBT_MAX;i++ )
   {
-    TalkWinFrame_Write( work->winArr[i] , WINDOW_TRANS_ON ,
+    BmpWinFrame_Write( work->winArr[i] , WINDOW_TRANS_ON ,
                 MUS_LOBBY_FRANE_CHR ,MUS_LOBBY_FRAME_PLT );
     GFL_BMPWIN_MakeTransWindow_VBlank( work->winArr[i] );
   }
@@ -657,7 +657,7 @@ static void MUS_LOBBY_DispParentMenu( MUS_LOBBY_WORK *work )
   GFL_BG_ClearScreen( MUS_LOBBY_BG_BMP );
   for( i=0;i<MLBP_MAX;i++ )
   {
-    TalkWinFrame_Write( work->winArr[i] , WINDOW_TRANS_ON ,
+    BmpWinFrame_Write( work->winArr[i] , WINDOW_TRANS_ON ,
                 MUS_LOBBY_FRANE_CHR ,MUS_LOBBY_FRAME_PLT );
     GFL_BMPWIN_MakeTransWindow_VBlank( work->winArr[i] );
   }
@@ -764,7 +764,7 @@ static void MUS_LOBBY_DispChildMenu( MUS_LOBBY_WORK *work )
   GFL_BG_ClearScreen( MUS_LOBBY_BG_BMP );
   for( i=0;i<MLBC_MAX;i++ )
   {
-    TalkWinFrame_Write( work->winArr[i] , WINDOW_TRANS_ON ,
+    BmpWinFrame_Write( work->winArr[i] , WINDOW_TRANS_ON ,
                 MUS_LOBBY_FRANE_CHR ,MUS_LOBBY_FRAME_PLT );
     GFL_BMPWIN_MakeTransWindow_VBlank( work->winArr[i] );
   }
