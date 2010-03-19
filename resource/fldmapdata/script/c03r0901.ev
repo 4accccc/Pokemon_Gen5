@@ -96,6 +96,10 @@ EVENT_START		ev_c03r0901_musician_01
 
       //エフェクト再生
 
+      //メロディアきめポーズを通常に戻す（アニメ更新）
+      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_merodhia_normal )
+      _OBJ_ANIME_WAIT()
+
       //対象メロディアのニックネームをタグ０番にセット
       _TEMOTI_NICK_NAME( 0, target_poke_pos )
       //「○○は古の歌をおもいだした」
@@ -258,6 +262,14 @@ _ANIME_LABEL	anm_merodhia
   _ANIME_DATA	AC_MELODYER_SPIN,13
   _ANIME_DATA	AC_MELODYER_SPIN_POSE,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//　メロディア戻し
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_merodhia_normal
+  _ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+  
 
 /**************************************************************/
 /* 			WAITER（アイテム入手）	C03R0901				  */
