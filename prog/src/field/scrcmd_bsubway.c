@@ -55,6 +55,8 @@
 #include "savedata/battle_box_save.h"
 #include "savedata/battle_rec.h"
 
+#include "field/eventdata_type.h"
+
 #include "net_app/irc_match.h"
 FS_EXTERN_OVERLAY(ircbattlematch);
 extern const GFL_PROC_DATA IrcBattleMatchProcData;
@@ -280,19 +282,35 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //ïúãAà íuê›íË
   case BSWTOOL_PUSH_NOW_LOCATION:
     {
+      u16 dir,exit_dir;
       VecFx32 pos;
       LOCATION loc;
       FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
       
+      dir = FIELD_PLAYER_GetDir( fld_player );
       FIELD_PLAYER_GetPos( fld_player, &pos );
       
-      {
-        static const u16 DIR_ROT[DIR_MAX4] = {0,0x8000,0x4000,0xC000};
-        u16 dir = FIELD_PLAYER_GetDir( fld_player );
-        dir = DIR_ROT[dir];
-        LOCATION_SetDirect( &loc, FIELDMAP_GetZoneID(fieldmap),
-            dir, pos.x, pos.y, pos.z );
+      switch( dir ){
+      case DIR_UP:
+        exit_dir = EXIT_DIR_UP;
+        break;
+      case DIR_DOWN:
+        exit_dir = EXIT_DIR_DOWN;
+        break;
+      case DIR_LEFT:
+        exit_dir = EXIT_DIR_LEFT;
+        break;
+      case DIR_RIGHT:
+        exit_dir = EXIT_DIR_RIGHT;
+        break;
+      default:
+        GF_ASSERT( 0 );
+        exit_dir = 0;
+        break;
       }
+      
+      LOCATION_SetDirect( &loc, FIELDMAP_GetZoneID(fieldmap),
+            exit_dir, pos.x, pos.y, pos.z );
       
       GAMEDATA_SetSpecialLocation( gdata, &loc );
       EVENTWORK_SetEventFlag( event, SYS_FLAG_SPEXIT_REQUEST );
