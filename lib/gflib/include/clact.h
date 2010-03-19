@@ -917,7 +917,7 @@ extern BOOL GFL_CLACT_WK_GetDrawEnable( const GFL_CLWK* cp_wk );
  *
  *	@param	p_wk			セルアクターワーク
  *	@param	cp_pos			座標構造体
- *	@param	setsf			サーフェースインデックス
+ *	@param	setsf			サーフェースインデックス( CLSYS_DEFREND_MAIN/CLSYS_DEFREND_SUB )
  */
 //-----------------------------------------------------------------------------
 extern void GFL_CLACT_WK_SetPos( GFL_CLWK* p_wk, const GFL_CLACTPOS* cp_pos, u16 setsf );
@@ -927,7 +927,7 @@ extern void GFL_CLACT_WK_SetPos( GFL_CLWK* p_wk, const GFL_CLACTPOS* cp_pos, u16
  *
  *	@param	cp_wk			セルアクターワーク
  *	@param	p_pos			座標格納先
- *	@param	setsf			サーフェースインデックス
+ *	@param	setsf			サーフェースインデックス( CLSYS_DEFREND_MAIN/CLSYS_DEFREND_SUB )
  */
 //-----------------------------------------------------------------------------
 extern void GFL_CLACT_WK_GetPos( const GFL_CLWK* cp_wk, GFL_CLACTPOS* p_pos, u16 setsf );
@@ -937,7 +937,7 @@ extern void GFL_CLACT_WK_GetPos( const GFL_CLWK* cp_wk, GFL_CLACTPOS* p_pos, u16
  *
  *	@param	p_wk		セルアクターワーク
  *	@param	pos			設定値
- *	@param	setsf		設定サーフェース
+ *	@param	setsf		設定サーフェース( CLSYS_DEFREND_MAIN/CLSYS_DEFREND_SUB )
  *	@param	type		座標タイプ
  */
 //-----------------------------------------------------------------------------
@@ -947,7 +947,7 @@ extern void GFL_CLACT_WK_SetTypePos( GFL_CLWK* p_wk, s16 pos, u16 setsf, CLSYS_M
  *	@brief	サーフェース内相対座標個別取得
  *
  *	@param	cp_wk		セルアクターワーク
- *	@param	setsf		設定サーフェース
+ *	@param	setsf		設定サーフェース( CLSYS_DEFREND_MAIN/CLSYS_DEFREND_SUB )
  *	@param	type		座標タイプ
  *
  *	@return	座標タイプのサーフェース内相対座標
