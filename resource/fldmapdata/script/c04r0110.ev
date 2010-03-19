@@ -361,9 +361,6 @@ sub_train_battle:
   ELSE //勝ち
     _CALL sub_train_battle_win
   ENDIF
-  
-  //戦闘後のワーク開放
-  _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
 }
 _RET
 
@@ -432,6 +429,9 @@ sub_train_battle_win_clear:
 
   //フラグセット
   $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_GAME_CLEAR //クリア状態に
+  
+  //戦闘後のワーク開放
+  _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //マップ遷移
   _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0111, 75, 0, 12, DIR_DOWN )
@@ -593,6 +593,9 @@ sub_train_battle_win_next_menu:
       _MAP_FADE_BLACK_OUT()
       _MAP_FADE_END_CHECK()
       
+      //戦闘後のワーク開放
+      _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
+
       //シーン制御を継続に
       $WK_OTHER_BSUBWAY_TRAIN = BSWAY_SCENE_TRAIN_CONTINUE
       //マップチェンジ
@@ -730,6 +733,10 @@ sub_train_battle_win_next_menu_comm_multi:
         //フェードアウト
         _MAP_FADE_BLACK_OUT()
         _MAP_FADE_END_CHECK()
+        
+        //戦闘後のワーク開放
+        _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
+
         //シーン制御を継続に
         $WK_OTHER_BSUBWAY_TRAIN = BSWAY_SCENE_TRAIN_CONTINUE
         //マップチェンジ
@@ -999,6 +1006,9 @@ sub_common_retmap_lose_retire:
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
   
+  //戦闘後のワーク開放
+  _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
+
   //マップ遷移　受付へ戻る
   _CHG_COMMON_SCR SCRID_BSW_RETMAP_RECEIPT
 }
