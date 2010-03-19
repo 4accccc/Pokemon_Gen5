@@ -10,6 +10,8 @@
 #ifndef ZONE_R16R0201_EVC_H
 #define ZONE_R16R0201_EVC_H
 
+#define R16R0201_WOMAN3_01                 0
+#define R16R0201_BACKPACKERM_01            1
 
 #endif //ZONE_R16R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r16r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -754,8 +754,8 @@
 #define FV_C03R0401_GIRL1_01               730 /* 0x02da ヒウンシティビル：映画関連ゾロアイベントの少女 */
 #define FV_C03R0401_POKE22_01              731 /* 0x02db ヒウンシティビル：映画関連ゾロアイベントのゾロア */
 #define FV_D13R0101_ASSISTANTM_01          732 /* 0x02dc P2ラボ：配布インセクタイベントの研究員 */
-		/* not used   733(0x02dd) */
-		/* not used   734(0x02de) */
+#define FV_R16R0201_BACKPACKERM            733 /* 0x02dd 迷いの森：ゾロアークイベントの青年 */
+#define FV_R16R0201_WOMAN3                 734 /* 0x02de 毎夜の森：ゾロアークイベントの女性（ゾロアーク） */
 		/* not used   735(0x02df) */
 		/* not used   736(0x02e0) */
 		/* not used   737(0x02e1) */

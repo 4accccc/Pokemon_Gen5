@@ -5,6 +5,8 @@
 #define _R16R0201_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_R16R0201 (1)
+#define SCRID_R16R0201_WOMAN3_01 (1)
+#define SCRID_R16R0201_BACKPACKERM_01 (2)
+#define SCRID_POS_R16R0201_WOMAN3_01 (3)
 
 #endif //_R16R0201_DEF_H_
