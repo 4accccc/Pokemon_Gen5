@@ -29,7 +29,9 @@ void GF_MCS_FILE_Init(void)
 }
 
 //----------------------------------------------------------------
+#ifdef PM_DEBUG
 extern BOOL mcsResidentFlag;
+#endif
 //----------------------------------------------------------------
 BOOL GF_MCS_FILE_Read( const char * path, void * buf, u32 buf_size )
 {
@@ -39,8 +41,9 @@ BOOL GF_MCS_FILE_Read( const char * path, void * buf, u32 buf_size )
   u32 readSize;
 
   if ( NNS_McsIsServerConnect() == FALSE) return FALSE;
+#ifdef PM_DEBUG
 	if(mcsResidentFlag == TRUE){ return FALSE; }
-
+#endif
   // 読み込み用オープン
   errCode = NNS_McsOpenFile(
     &infoRead,
@@ -88,8 +91,9 @@ void * GF_MCS_FILE_ReadAlloc( const char * path, HEAPID heapID, u32 buf_size )
   void * buf;
 
   if ( NNS_McsIsServerConnect() == FALSE) return NULL;
+#ifdef PM_DEBUG
 	if(mcsResidentFlag == TRUE){ return FALSE; }
-
+#endif
   // 読み込み用オープン
   errCode = NNS_McsOpenFile(
     &infoRead,

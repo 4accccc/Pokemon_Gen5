@@ -77,13 +77,13 @@ static void GFUser_PublicRandInit(void);
 #ifdef PM_DEBUG
 FS_EXTERN_OVERLAY(mcs_lib);
 BOOL  mcs_recv_auto;
+BOOL mcsResidentFlag;
 
 static void mcsRecv( void );
 #endif
 
 static GFL_USE_VINTR_FUNC GflUseVintrFunc;
 
-BOOL mcsResidentFlag;
 //=============================================================================================
 //
 //      ä÷êî
@@ -201,13 +201,12 @@ void GFLUser_Init(void)
     GFL_OVERLAY_Load( FS_OVERLAY_ID( mcs_lib ) );
   	GFL_MCS_Init();
   }
+	mcsResidentFlag = FALSE;
 #endif //MULTI_BOOT_MAKE
 #endif
 	GFUser_ResetVIntrFunc();
 
   GFUser_SetSleepSoundFunc();
-
-	mcsResidentFlag = FALSE;
 }
 
 
