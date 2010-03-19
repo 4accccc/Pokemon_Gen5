@@ -200,44 +200,53 @@ static FSResult MyRom_ArchiveProc(FSFile *file, FSCommandType cmd)
 
 static void MachineSystem_MbInitFile(void)
 {
-  //マルチブートで子機ROMからファイ(アイコン)を読むための処理
+  CARDRomHeader *headerData = (CARDRomHeader*)CARD_GetRomHeader();
   
-  u32 file_table_size;
-  void* p_table;
-  MBParam *multi_p = (MBParam *)MB_GetMultiBootParam();
-
-  // ROMアクセスを解除する。
-  CARD_Enable(TRUE);
-
-  multi_p->boot_type = MB_TYPE_NORMAL;	/* FS_Init()にROMをenableにさせるため、MULTIBOOTフラグを一瞬OFFにする */
-  OS_EnableIrq();
-  FS_Init(FS_DMA_NUMBER);
-  multi_p->boot_type = MB_TYPE_MULTIBOOT;	/* MULTIBOOTフラグを再セットする */
-
+  if( STD_CompareString( headerData->game_name , "POKEMON D" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON P" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON PL" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON HG" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON SS" ) == 0 )
   {
-    const u32 base = 0;
-    const CARDRomRegion *fnt = &((CARDRomHeader*)CARD_GetRomHeader())->fnt;
-    const CARDRomRegion *fat = &((CARDRomHeader*)CARD_GetRomHeader())->fat;
-    const char *name = "child_rom";
+    //マルチブートで子機ROMからファイ(アイコン)を読むための処理
+    
+    u32 file_table_size;
+    void* p_table;
+    MBParam *multi_p = (MBParam *)MB_GetMultiBootParam();
 
-    static MyRomArchive newRom;
+    // ROMアクセスを解除する。
+    CARD_Enable(TRUE);
 
-    FS_InitArchive(newRom.arc);
-    newRom.default_dma_no = FS_DMA_NUMBER;
-    newRom.card_lock_id = (u32)OS_GetLockID();
-    if (!FS_RegisterArchiveName(newRom.arc, name, (u32)STD_GetStringLength(name)))
+    multi_p->boot_type = MB_TYPE_NORMAL;	/* FS_Init()にROMをenableにさせるため、MULTIBOOTフラグを一瞬OFFにする */
+    OS_EnableIrq();
+    FS_Init(FS_DMA_NUMBER);
+    multi_p->boot_type = MB_TYPE_MULTIBOOT;	/* MULTIBOOTフラグを再セットする */
+
     {
-      OS_TPanic("error! FS_RegisterArchiveName(%s) failed.\n", name);
-    }
-    else
-    {
-      FS_SetArchiveProc(newRom.arc, MyRom_ArchiveProc,
-                        FS_ARCHIVE_PROC_WRITEFILE | FS_ARCHIVE_PROC_ACTIVATE | FS_ARCHIVE_PROC_IDLE);
-      if (!FS_LoadArchive(newRom.arc, base,
-                        fat->offset, fat->length, fnt->offset, fnt->length,
-                        MyRom_ReadCallback, MyRom_WriteDummyCallback))
+      const u32 base = 0;
+      const CARDRomRegion *fnt = &((CARDRomHeader*)CARD_GetRomHeader())->fnt;
+      const CARDRomRegion *fat = &((CARDRomHeader*)CARD_GetRomHeader())->fat;
+      const char *name = "child_rom";
+
+      static MyRomArchive newRom;
+
+      FS_InitArchive(newRom.arc);
+      newRom.default_dma_no = FS_DMA_NUMBER;
+      newRom.card_lock_id = (u32)OS_GetLockID();
+      if (!FS_RegisterArchiveName(newRom.arc, name, (u32)STD_GetStringLength(name)))
       {
-          OS_TPanic("error! FS_LoadArchive() failed.\n");
+        OS_TPanic("error! FS_RegisterArchiveName(%s) failed.\n", name);
+      }
+      else
+      {
+        FS_SetArchiveProc(newRom.arc, MyRom_ArchiveProc,
+                          FS_ARCHIVE_PROC_WRITEFILE | FS_ARCHIVE_PROC_ACTIVATE | FS_ARCHIVE_PROC_IDLE);
+        if (!FS_LoadArchive(newRom.arc, base,
+                          fat->offset, fat->length, fnt->offset, fnt->length,
+                          MyRom_ReadCallback, MyRom_WriteDummyCallback))
+        {
+            OS_TPanic("error! FS_LoadArchive() failed.\n");
+        }
       }
     }
   }

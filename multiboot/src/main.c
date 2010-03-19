@@ -45,6 +45,7 @@ static  void  GameVBlankFunc(void);
 #ifdef PM_DEBUG
 static void DEBUG_StackOverCheck(void);
 #endif
+#include <assert_default.h>
 //------------------------------------------------------------------
 /**
  * @brief メイン処理
@@ -54,6 +55,7 @@ void NitroMain(void)
 {
   // ハード環境システム郡を初期化する関数
   MachineSystem_Init();
+
   // ＧＦＬ初期化
   GFLUser_Init();
 

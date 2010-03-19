@@ -86,7 +86,6 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
     
     MB_DATA_TPrintf("RomName[%s]\n",headerData->game_name);
     
-    //FIX ME:³‚µ‚¢”»•Êˆ—‚ð“ü‚ê‚é
     if( STD_CompareString( headerData->game_name , "POKEMON D" ) == 0 ||
       STD_CompareString( headerData->game_name , "POKEMON P" ) == 0 )
     {

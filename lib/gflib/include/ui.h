@@ -137,10 +137,11 @@ typedef void (GFL_UI_SOFTRESET_CALLBACK)( void *work ); ///<ソフトリセットコール
 /**
  * @brief UI起動処理(UIには初期化がboot時に行うものしかありません)
  * @param   heapID    ヒープ確保を行うID
+ * @param   isMbBoot    マルチブートの子機起動か？(PM系で落ちるので
  * @return  UISYS  workハンドル
  */
 //==============================================================================
-extern void GFL_UI_Boot(const HEAPID heapID);
+extern void GFL_UI_Boot(const HEAPID heapID , const BOOL isMbBoot );
 
 //==============================================================================
 /**

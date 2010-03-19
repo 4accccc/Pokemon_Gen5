@@ -143,7 +143,11 @@ void GFLUser_Init(void)
 #endif //MULTI_BOOT_MAKE
 
   //UIシステム初期化
-  GFL_UI_Boot(GFL_HEAPID_SYSTEM);
+#ifndef MULTI_BOOT_MAKE
+  GFL_UI_Boot(GFL_HEAPID_SYSTEM,FALSE);
+#else
+  GFL_UI_Boot(GFL_HEAPID_SYSTEM,TRUE);
+#endif //MULTI_BOOT_MAKE
 
   // アサート停止関数の設定
   if( OS_GetConsoleType() & (OS_CONSOLE_NITRO|OS_CONSOLE_TWL) ){
@@ -183,7 +187,6 @@ void GFLUser_Init(void)
 
   //システムフォント初期化
   GFL_TEXT_CreateSystem( NULL );
-
   //RTC初期化
   GFL_RTC_Init();
 
