@@ -788,7 +788,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       FIELD_PLACE_NAME_RecoverBG( place_name_sys );
       FIELD_DEBUG_RecoverBgCont( debug );
       {
-        //ＢＧセットアップ    デバッグメニュー設定と同じにする
+        //ＢＧセットアップ
         G2_SetBG2ControlText(
             GX_BG_SCRSIZE_TEXT_256x256,
             FLDBG_MFRM_EFF1_COLORMODE,
