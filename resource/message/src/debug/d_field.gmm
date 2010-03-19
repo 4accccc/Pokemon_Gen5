@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-03-18T16:10:26"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-19T15:54:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="112" top="121" right="817" bottom="749" maximized="no" rayout="Vertical2">
+	<dialog left="167" top="202" right="872" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="752" top="242" right="1280" bottom="764" visible="yes"/>
+		<tag-palette left="752" top="242" right="1280" bottom="764" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -1429,6 +1429,11 @@ free size (0x[2:07:８桁:2])
 allocable (0x[2:07:８桁:3])</language>
 	</row>
 
+	<row id="DEBUG_FIELD_STR69">
+		<language name="JPN" width="160">シンボルポケ</language>
+		<language name="JPN_KANJI" width="160">シンボルポケ</language>
+	</row>
+
 	<row id="DEBUG_FIELD_EVEPOKE01">
 		<language name="JPN" width="160">10えいがセレビィ</language>
 		<language name="JPN_KANJI" width="160">10映画セレビィ</language>
@@ -1482,6 +1487,34 @@ allocable (0x[2:07:８桁:3])</language>
 	<row id="DEBUG_FIELD_EVEPOKE11">
 		<language name="JPN" width="160">はいふシェイミ</language>
 		<language name="JPN_KANJI" width="160">配布シェイミ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_01">
+		<language name="JPN" width="160">ポケモンにゅうりょく
+LR→補完</language>
+		<language name="JPN_KANJI" width="160">ポケモンにゅうりょく
+LR→補完</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_02">
+		<language name="JPN" width="160">わざにゅうりょく
+LR→補完&quot;</language>
+		<language name="JPN_KANJI" width="160">わざにゅうりょく
+LR→補完&quot;</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_03">
+		<language name="JPN" width="160">ポケモン性別
+Y：オス　X：不明　 A：メス</language>
+		<language name="JPN_KANJI" width="160">ポケモン性別
+Y：オス　X：不明　 A：メス</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_04">
+		<language name="JPN" width="240">場所
+Y：キープL　X：キープS　B：フリーL　A：フリーS</language>
+		<language name="JPN_KANJI" width="240">場所
+Y：キープL　X：キープS　B：フリーL　A：フリーS</language>
 	</row>
 
 	<flowchart-group-list>

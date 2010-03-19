@@ -236,6 +236,7 @@ static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllMapCheck( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_RingTone( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_EventPokeCreate( DEBUG_MENU_EVENT_WORK * p_wk );
+static BOOL debugMenuCallProc_SymbolPokeCreate( DEBUG_MENU_EVENT_WORK * p_wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -293,6 +294,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR63, debugMenuCallProc_SetBtlBox },  //不正チェックを通るポケモンを作成
   { DEBUG_FIELD_STR64, debugMenuCallProc_ChangeName },  //主人公名を再設定
   { DEBUG_FIELD_STR67, debugMenuCallProc_EventPokeCreate },  //イベントポケモン作成
+  { DEBUG_FIELD_STR69, debugMenuCallProc_SymbolPokeCreate },  //シンボルポケモン作成
 
   { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_LABEL },       //○つうしん
   { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },      //WIFIクラブ
@@ -6359,5 +6361,311 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
     }
   }
 
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+//シンボルポケモン作成
+//--------------------------------------------------------------
+#include "debug/debug_wordsearch.h"
+typedef struct
+{
+  u8 seq;
+  u32 idx;
+  HEAPID heapId;
+  STRBUF *strBuf;
+  STRBUF *tempBuf;
+  STRBUF *compBuf;
+  GFL_MSGDATA *msgHandle;
+
+  GFL_SKB *skb;
+  GFL_SKB_SETUP setup;
+  
+}DEBUG_SKB_WORK;
+static DEBUG_SKB_WORK* debugMenuInitSkb( const HEAPID heapId , const u32 msgFileId );
+static void debugMenuExitSkb( DEBUG_SKB_WORK* skb );
+static const BOOL debugMenuUpdateSkb( DEBUG_SKB_WORK *work );
+
+#define DEBUG_MENU_SKB_STR_LEN (64)
+
+static DEBUG_SKB_WORK* debugMenuInitSkb( const HEAPID heapId , const u32 msgFileId )
+{
+  DEBUG_SKB_WORK* work = GFL_HEAP_AllocClearMemory( heapId , sizeof(DEBUG_SKB_WORK) );
+  
+  work->seq = 0;
+  work->idx = 0;
+  work->heapId = heapId;
+  work->strBuf = GFL_STR_CreateBuffer(DEBUG_MENU_SKB_STR_LEN,heapId);
+  work->tempBuf = GFL_STR_CreateBuffer(DEBUG_MENU_SKB_STR_LEN,heapId);
+  work->compBuf = GFL_STR_CreateBuffer(DEBUG_MENU_SKB_STR_LEN,heapId);
+  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , msgFileId , heapId );
+
+  work->setup.strlen = 64;
+  work->setup.strtype = GFL_SKB_STRTYPE_STRBUF;
+  work->setup.mode = GFL_SKB_MODE_KATAKANA;
+  work->setup.modeChange = TRUE;
+  work->setup.cancelKey = 0;
+  work->setup.decideKey = 0;
+  work->setup.bgID = GFL_BG_FRAME0_S;
+  work->setup.bgPalID = 1;
+  work->setup.bgPalID_on = 2;
+
+  work->skb = GFL_SKB_Create( (void*)(work->strBuf), &work->setup, work->heapId );
+  GFL_BG_SetVisible(GFL_BG_FRAME1_S,VISIBLE_OFF);
+  GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_OFF);
+  GFL_BG_SetVisible(GFL_BG_FRAME3_S,VISIBLE_OFF);
+  GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_OFF);
+  
+  return work;
+}
+
+static void debugMenuExitSkb( DEBUG_SKB_WORK* work )
+{
+  GFL_SKB_Delete(work->skb);
+
+  GFL_BG_SetVisible(GFL_BG_FRAME0_S,VISIBLE_ON);
+  GFL_BG_SetVisible(GFL_BG_FRAME1_S,VISIBLE_ON);
+  GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_ON);
+  GFL_DISP_GXS_SetVisibleControl(GX_PLANEMASK_OBJ,VISIBLE_ON);
+
+  G2S_SetBlendAlpha( GFL_BG_FRAME2_S|GFL_BG_FRAME0_S, GFL_BG_FRAME1_S , 3, 16 );
+
+  GFL_MSG_Delete( work->msgHandle );
+  GFL_STR_DeleteBuffer( work->compBuf );
+  GFL_STR_DeleteBuffer( work->tempBuf );
+  GFL_STR_DeleteBuffer( work->strBuf );
+  GFL_HEAP_FreeMemory( work );
+}
+
+static const BOOL debugMenuUpdateSkb( DEBUG_SKB_WORK *work )
+{
+  BOOL retVal = FALSE;
+  GflSkbReaction ret = GFL_SKB_Main(work->skb);
+  switch( ret )
+  {
+  case GFL_SKB_REACTION_QUIT:
+    retVal = TRUE;
+  case GFL_SKB_REACTION_INPUT:
+    {
+      GFL_STR_ClearBuffer(work->compBuf);
+      work->idx = 0;
+    }
+    break;
+  case GFL_SKB_REACTION_PAGE:
+    break;
+  }
+  
+  if( GFL_UI_KEY_GetTrg() && (PAD_BUTTON_R|PAD_BUTTON_L) ||
+      (retVal == TRUE && work->idx == 0) )
+  {
+    int idx,dir;
+    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_R)
+    {
+      dir = 1;
+    }
+    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_L)
+    {
+      dir = -1;
+    }
+    if( retVal == TRUE && work->idx == 0 )
+    {
+      dir = 1;
+    }
+
+    if(GFL_STR_GetBufferLength(work->compBuf) == 0)
+    {
+      GFL_SKB_PickStr(work->skb);
+      GFL_STR_CopyBuffer(work->compBuf, work->strBuf);
+      work->idx = 0;
+    }
+    idx = work->idx;
+    if( DEBUG_WORDSEARCH_sub_search(work->msgHandle, work->tempBuf, work->compBuf, dir, &idx) == 1 )
+    {
+      GFL_MSG_GetString( work->msgHandle, idx, work->tempBuf );
+      GFL_SKB_ReloadStr( work->skb, work->tempBuf );
+      work->idx = idx;
+    }
+  }
+
+  return retVal;
+}
+
+static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void *wk );
+typedef struct
+{
+  HEAPID heapId;
+  GAMESYS_WORK *gmSys;
+  GMEVENT *gmEvent;
+  FIELDMAP_WORK *fieldWork;
+  
+  GFL_MSGDATA  *msgHandle;
+  GFL_FONT *fontHandle;
+  GFL_BMPWIN *bmpWin;
+  
+  u16 monsNo;
+  u16 wazaNo;
+  u16 sex;
+  u16 place;
+  
+  DEBUG_SKB_WORK *skbWork;
+  
+}DEBUG_SYMBOL_POKE_CREATE;
+
+static BOOL debugMenuCallProc_SymbolPokeCreate( DEBUG_MENU_EVENT_WORK * wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_SYMBOL_POKE_CREATE *work;
+
+  GMEVENT_Change( event, debugMenuSymbolpokeCreate, sizeof(DEBUG_SYMBOL_POKE_CREATE) );
+
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_SYMBOL_POKE_CREATE) );
+
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->fieldWork = fieldWork;
+  work->heapId = heapID;
+  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_d_field_dat , work->heapId );
+
+  work->bmpWin = GFL_BMPWIN_Create( FLDBG_MFRM_MSG , 1,19,30,4 ,11,GFL_BMP_CHRAREA_GET_B);
+
+  return TRUE;
+
+}
+
+static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_SYMBOL_POKE_CREATE *work = wk;
+
+  switch( *seq )
+  {
+  case 0:
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(work->bmpWin), 0x0f );
+    {
+      STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_01 );
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->bmpWin), 0, 0, str, work->fontHandle);
+      GFL_STR_DeleteBuffer( str );
+    }
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
+    work->skbWork = debugMenuInitSkb( work->heapId , NARC_message_monsname_dat );
+    *seq += 1;
+    break;
+
+  case 1:
+    if( debugMenuUpdateSkb( work->skbWork ) == TRUE )
+    {
+      work->monsNo = work->skbWork->idx;
+      debugMenuExitSkb( work->skbWork );
+      *seq += 1;
+    }
+    break;
+  
+  case 2:
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(work->bmpWin), 0x0f );
+    {
+      STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_02 );
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->bmpWin), 0, 0, str, work->fontHandle);
+      GFL_STR_DeleteBuffer( str );
+    }
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
+    work->skbWork = debugMenuInitSkb( work->heapId , NARC_message_wazaname_dat );
+    *seq += 1;
+    break;
+
+  case 3:
+    if( debugMenuUpdateSkb( work->skbWork ) == TRUE )
+    {
+      work->wazaNo = work->skbWork->idx;
+      debugMenuExitSkb( work->skbWork );
+      *seq += 1;
+    }
+    break;
+  
+  case 4:
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(work->bmpWin), 0x0f );
+    {
+      STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_03 );
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->bmpWin), 0, 0, str, work->fontHandle);
+      GFL_STR_DeleteBuffer( str );
+    }
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
+    *seq += 1;
+    break;
+  
+  case 5:
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      work->sex = PTL_SEX_FEMALE;
+      *seq += 1;
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      work->sex = PTL_SEX_UNKNOWN;
+      *seq += 1;
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+    {
+      work->sex = PTL_SEX_MALE;
+      *seq += 1;
+    }
+    break;
+  
+  case 6:
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(work->bmpWin), 0x0f );
+    {
+      STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_04 );
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->bmpWin), 0, 0, str, work->fontHandle);
+      GFL_STR_DeleteBuffer( str );
+    }
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
+    *seq += 1;
+    break;
+  
+  case 7:
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+    {
+      work->place = SYMBOL_ZONE_TYPE_KEEP_LARGE;
+      *seq += 1;
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+    {
+      work->place = SYMBOL_ZONE_TYPE_KEEP_SMALL;
+      *seq += 1;
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
+    {
+      work->place = SYMBOL_ZONE_TYPE_FREE_LARGE;
+      *seq += 1;
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      work->place = SYMBOL_ZONE_TYPE_FREE_SMALL;
+      *seq += 1;
+    }
+    break;
+
+  case 8:
+    {
+      SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(work->gmSys));
+      SYMBOL_SAVE_WORK *symbolSave = SymbolSave_GetSymbolData(pSave);
+      SymbolSave_SetFreeZone( symbolSave , work->monsNo , work->wazaNo , work->sex , 0 , work->place );
+    }
+    *seq += 1;
+    break;
+  
+  case 9:
+    GFL_BMPWIN_ClearTransWindow_VBlank( work->bmpWin );
+    GFL_BMPWIN_Delete( work->bmpWin );
+    GFL_MSG_Delete( work->msgHandle );
+    GFL_FONT_Delete( work->fontHandle );
+    return GMEVENT_RES_FINISH;
+    break;
+
+  }
+  
   return GMEVENT_RES_CONTINUE;
 }
