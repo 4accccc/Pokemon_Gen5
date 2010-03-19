@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-16T16:18:12"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T14:06:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -322,7 +322,6 @@
 　１ほん
 　１ダース
 　いらない
-
 ・「１ほん」or「1ダース」選択→waitress_02
 ・「１ほん」or「1ダース」選択、バッグがいっぱい→waitress_03
 ・「１ほん」or「1ダース」選択、お金がない→waitress_04
@@ -379,10 +378,12 @@
 		<language name="JPN" width="256">また　こんど
 かってくださいね！[BE:01:ページ切り替え（クリア）]
 ちなみに　うちの　モーモーミルクは
+さんちちょくそう▽
 しぼりたて　しんせん　なんですよ！</language>
 		<language name="JPN_KANJI" width="256">また　今度
 買ってくださいね！[BE:01:ページ切り替え（クリア）]
 ちなみに　うちの　モーモーミルクは
+産地直送▽
 搾りたて　新鮮　なんですよ！</language>
 	</row>
 

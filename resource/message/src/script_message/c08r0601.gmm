@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T22:38:54"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T14:17:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -325,12 +325,12 @@
 ・直接話しかけたとき</comment>
 		<attribute name="キャラ指定">INFORMATIONW
 受付嬢</attribute>
-		<language name="JPN" width="256">さきほど　ＴＶトランシーバーで
+		<language name="JPN" width="256">さきほど　ライブキャスターで
 きいた　はなし　なんですけど▽
 ７ばんどうろで　あらし　ですって！▼
 しかも　しぜんげんしょう　とは
 ちがうみたいなんです！　ふしぎ！！</language>
-		<language name="JPN_KANJI" width="256">さきほど　ＴＶトランシーバーで
+		<language name="JPN_KANJI" width="256">さきほど　ライブキャスターで
 きいた　話なんですけど▽
 ７番道路で　暴風雨　ですって！▼
 しかも　どうやら　自然現象とは

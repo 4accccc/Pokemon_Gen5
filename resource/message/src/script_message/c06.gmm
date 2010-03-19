@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-15T19:28:23"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T14:09:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1567" top="198" right="2272" bottom="826" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -776,9 +776,9 @@
 ・続けてbabygirl_01</comment>
 		<attribute name="キャラクター">BOY2</attribute>
 		<language name="JPN" width="256">あー！　ぼくらの
-たからもの　とったあ！！▼</language>
+たからもの　みつけたんだ！！▼</language>
 		<language name="JPN_KANJI" width="256">あー！　ぼくらの
-たからもの　とったあ！！▼</language>
+たからもの　みつけたんだ！！▼</language>
 	</row>
 
 	<row id="msg_c06_babygirl_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -787,8 +787,8 @@
 　主人公♂→boy2_02
 　主人公♀→boy2_03</comment>
 		<attribute name="キャラクター">BABYGIRL</attribute>
-		<language name="JPN" width="256">とったあ！！▼</language>
-		<language name="JPN_KANJI" width="256">とったあ！！▼</language>
+		<language name="JPN" width="256">みつけたあ！！▼</language>
+		<language name="JPN_KANJI" width="256">みつけたあ！！▼</language>
 	</row>
 
 	<row id="msg_c06_boy2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -804,13 +804,13 @@
 ぼくら　また
 フウロねえちゃんから　もらうから！▼</language>
 		<language name="JPN_KANJI" width="256">なんてね▼
-ぼくら　ポケモン　もってないし
-それまで　その　わざマシンを▽
-かくしておくつもり　だったんだ▼
+ぼくら　ポケモン　持ってないし
+手に入れるまで　その　わざマシンを▽
+隠しておくつもり　だったんだ▼
 だけど　もったいないから
-おにいちゃん　つかって　いいよ▼
+お兄ちゃん　使っていいよ▼
 ぼくら　また
-フウロねえちゃんから　もらうから！▼</language>
+フウロ姉ちゃんから　もらうから！▼</language>
 	</row>
 
 	<row id="msg_c06_boy2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -826,13 +826,13 @@
 ぼくら　また
 フウロねえちゃんから　もらうから！▼</language>
 		<language name="JPN_KANJI" width="256">なんてね▼
-ぼくら　ポケモン　もってないし
-それまで　その　わざマシンを
-かくしておく　つもりだったんだ▼
+ぼくら　ポケモン　持ってないし
+手に入れるまで　その　わざマシンを▽
+隠しておくつもり　だったんだ▼
 だけど　もったいないから
-おねえちゃん　つかって　いいよ▼
+お姉ちゃん　使っていいよ▼
 ぼくら　また
-フウロねえちゃんから　もらうから！▼</language>
+フウロ姉ちゃんから　もらうから！▼</language>
 	</row>
 
 	<row id="msg_c06_babygirl_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
