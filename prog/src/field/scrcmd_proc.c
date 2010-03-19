@@ -578,9 +578,9 @@ VMCMD_RESULT EvCmdCallPsel( VMHANDLE *core, void *wk )
   param->evwk = evwk;
   EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(psel), &PSEL_ProcData, param, NULL, NULL );
   // evwkに選択結果を入れて返す
-  // *evwk == 0  みずタイプ
+  // *evwk == 0  くさタイプ
   // *evwk == 1  ほのおタイプ
-  // *evwk == 2  くさタイプ
+  // *evwk == 2  みずタイプ
   return VMCMD_RESULT_SUSPEND;
 }
 

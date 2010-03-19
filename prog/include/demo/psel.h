@@ -53,7 +53,7 @@ extern const GFL_PROC_DATA    PSEL_ProcData;
 //=====================================
 typedef struct
 {
-  u16*                 evwk;          ///< [in,out] 選択結果(0=みず, 1=ほのお, 2=くさ)
+  u16*                 evwk;          ///< [out] 選択結果(スクリプトの番号 0=くさ, 1=ほのお, 2=みず に一致させる)
   PSEL_RESULT          result;        ///< [out] 選択結果 
 }
 PSEL_PARAM;

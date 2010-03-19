@@ -931,7 +931,7 @@ const GFL_PROC_DATA    PSEL_ProcData =
  *  @brief           パラメータ生成
  *
  *  @param[in]       heap_id       ヒープID
- *  @param[in,out]   evwk          選択結果(0=みず, 1=ほのお, 2=くさ)
+ *  @param[in,out]   evwk          選択結果(スクリプトの番号 0=くさ, 1=ほのお, 2=みず に一致させる)
  *
  *  @retval          PSEL_PARAM
  */
@@ -969,7 +969,7 @@ void            PSEL_FreeParam(
  *  @brief           パラメータを設定する
  *
  *  @param[in,out]   param         PSEL_PARAM
- *  @param[in,out]   evwk          選択結果(0=みず, 1=ほのお, 2=くさ)
+ *  @param[in,out]   evwk          選択結果(スクリプトの番号 0=くさ, 1=ほのお, 2=みず に一致させる)
  *
  *  @retval          
  */
@@ -1063,7 +1063,22 @@ static GFL_PROC_RESULT Psel_ProcExit( GFL_PROC* proc, int* seq, void* pwk, void*
   {
     // 選択結果をパラメータに設定して持ち帰る
     {
-      *(work->param->evwk) = work->select_target_poke;  // PSEL_RESULTとTARGETは同じ並び順
+      // 選択結果(スクリプトの番号 0=くさ, 1=ほのお, 2=みず に一致させる)
+      switch(work->select_target_poke)
+      {
+      case TARGET_MIZU:
+        *(work->param->evwk) = 2;
+        break;
+      case TARGET_HONOO:
+        *(work->param->evwk) = 1;
+        break;
+      case TARGET_KUSA:
+      default:
+        *(work->param->evwk) = 0;
+        break;
+      }
+
+      // 選択結果
       work->param->result  = work->select_target_poke;  // PSEL_RESULTとTARGETは同じ並び順
     }
 
