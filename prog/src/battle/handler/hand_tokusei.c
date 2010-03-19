@@ -5294,7 +5294,7 @@ static void handler_NakamaIsiki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   if( (defPokeID != pokeID)
   &&  BTL_MAINUTIL_IsFriendPokeID(pokeID, defPokeID)
   ){
-    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5f) );
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.75f) );
   }
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_NakamaIsiki( u32* numElems )
