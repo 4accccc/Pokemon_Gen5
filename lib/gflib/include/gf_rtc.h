@@ -46,6 +46,7 @@ extern int GFL_RTC_GetDaysOffset(const RTCDate * date);
 extern void GFL_RTC_DEBUG_StartFakeTime(int rate);
 extern void GFL_RTC_DEBUG_StopFakeTime(void);
 extern void GFL_RTC_DEBUG_StartFakeFixTime(int hour, int minute);
+extern void GFL_RTC_DEBUG_SetDate( const RTCDate * date );
 
 #endif
 

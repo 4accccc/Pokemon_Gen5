@@ -300,8 +300,7 @@ extern u16
 //--------------------------------------------------------------------------------------------
 inline fx32 GFL_G3D_CAMERA_PerspectiveToFrustumTop( fx32 near, fx32 fovySin, fx32 fovyCos )
 {
-//  return near * fovySin / fovyCos;
-  return FX_Div( FX_Mul(near,fovySin),fovyCos);
+  return near * fovySin / fovyCos;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -314,8 +313,7 @@ inline fx32 GFL_G3D_CAMERA_PerspectiveToFrustumTop( fx32 near, fx32 fovySin, fx3
 //--------------------------------------------------------------------------------------------
 inline fx32 GFL_G3D_CAMERA_PerspectiveToFrustumButtom( fx32 near, fx32 fovySin, fx32 fovyCos )
 {
-//  return -(near * fovySin / fovyCos);
-  return -(FX_Div( FX_Mul(near,fovySin),fovyCos));
+  return -(near * fovySin / fovyCos);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -329,8 +327,7 @@ inline fx32 GFL_G3D_CAMERA_PerspectiveToFrustumButtom( fx32 near, fx32 fovySin, 
 //--------------------------------------------------------------------------------------------
 inline fx32 GFL_G3D_CAMERA_PerspectiveToFrustumLeft( fx32 near, fx32 aspect, fx32 fovySin, fx32 fovyCos )
 {
-// return -(near * aspect / FX32_ONE * fovySin / fovyCos);
-  return -( FX_Div( FX_Mul( FX_Div( FX_Mul(near,aspect), FX32_ONE),fovySin),fovyCos));
+  return -(near * aspect / FX32_ONE * fovySin / fovyCos);
 }
 
 //--------------------------------------------------------------------------------------------
@@ -344,8 +341,7 @@ inline fx32 GFL_G3D_CAMERA_PerspectiveToFrustumLeft( fx32 near, fx32 aspect, fx3
 //--------------------------------------------------------------------------------------------
 inline fx32 GFL_G3D_CAMERA_PerspectiveToFrustumRight( fx32 near, fx32 aspect, fx32 fovySin, fx32 fovyCos )
 {
-//  return near * aspect / FX32_ONE * fovySin / fovyCos;
-  return FX_Div( FX_Mul( FX_Div( FX_Mul(near,aspect), FX32_ONE),fovySin),fovyCos);
+  return near * aspect / FX32_ONE * fovySin / fovyCos;
 }
 
 //-----------------------------------------------------------------------------
