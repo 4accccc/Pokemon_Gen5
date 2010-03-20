@@ -23,6 +23,7 @@ endif
 
 
 SUBDIRS	=	wmi \
+			rebattle_trainer \
 			demo3d \
 			tokusei\
 			waza_tbl\
@@ -159,7 +160,6 @@ SUBDIRS	=	wmi \
 			psel \
 			subway_map_gra \
 			item_judge \
-			rebattle_trainer \
 			p_tree
 
 
