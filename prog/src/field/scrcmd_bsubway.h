@@ -39,3 +39,7 @@ extern VMCMD_RESULT EvCmdBSubwayWorkCreate( VMHANDLE* core, void *wk );
 extern VMCMD_RESULT EvCmdBSubwayWorkClear(VMHANDLE* core, void *wk );
 extern VMCMD_RESULT EvCmdBSubwayWorkRelease(VMHANDLE* core, void *wk );
 extern VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk );
+
+#ifdef PM_DEBUG
+extern void BSUBWAY_SCRWORK_DebugCreateWork( GAMESYS_WORK *gsys, u16 mode );
+#endif

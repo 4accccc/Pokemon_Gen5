@@ -282,6 +282,8 @@ extern void BSUBWAY_SCOREDATA_SetWifiScore( BSUBWAY_SCOREDATA *bsw_score, const 
 extern void BSUBWAY_SCOREDATA_ClearWifiScore( BSUBWAY_SCOREDATA *bsw_score );
 extern u16 BSUBWAY_SCOREDATA_GetWifiScore( const BSUBWAY_SCOREDATA *bsw_score );
 extern u8 BSUBWAY_SCOREDATA_GetWifiNum( const BSUBWAY_SCOREDATA *bsw_score );
+extern u8 BSUBWAY_SCOREDATA_DEBUG_GetFlag( const BSUBWAY_SCOREDATA *bsw_score );
+extern void BSUBWAY_SCOREDATA_DEBUG_SetFlag( BSUBWAY_SCOREDATA *bsw_score, u8 flag );
 
 
 

@@ -81,7 +81,8 @@ struct _BSUBWAY_SCOREDATA
   
   //WiFiチャレンジデータ
   u16  wifi_score;  ///<WiFi成績
-  u8  padding[2];
+  u8 debug_flag; ///<デバッグ用フラグ
+  u8 padding;
   
   //WiFiポケモンデータストック
   struct _BSUBWAY_POKEMON  wifi_poke[BSUBWAY_STOCK_WIFI_MEMBER_MAX];
@@ -803,11 +804,37 @@ u8 BSUBWAY_SCOREDATA_GetWifiNum( const BSUBWAY_SCOREDATA *bsw_score )
   return ret;
 }
 
+//--------------------------------------------------------------
+/**
+ * スコアデータ　デバッグ用フラグ取得
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+u8 BSUBWAY_SCOREDATA_DEBUG_GetFlag( const BSUBWAY_SCOREDATA *bsw_score )
+{
+#ifdef PM_DEBUG
+  return( bsw_score->debug_flag );
+#else
+  return( 0 ); //ROM版の際は全てフラグオフ
+#endif
+}
 
-
-
-
-
+//--------------------------------------------------------------
+/**
+ * スコアデータ　デバッグ用フラグセット
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCOREDATA_DEBUG_SetFlag( BSUBWAY_SCOREDATA *bsw_score, u8 flag )
+{
+#ifdef PM_DEBUG
+  bsw_score->debug_flag = flag;
+#else
+  //ROM版の際は無効
+#endif
+}
 
 //======================================================================
 //  BSUBWAY_WIFIDATA

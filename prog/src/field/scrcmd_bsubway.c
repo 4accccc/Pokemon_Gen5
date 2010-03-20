@@ -1610,3 +1610,55 @@ static const HOME_NPC_DATA data_HomeNpcTbl[] =
   {BUSINESSMAN,18,28,0,14,msg_c04r0111_businessman_4},
   {OBJCODEMAX,0,0,0,0,0},
 };
+
+//======================================================================
+//  デバッグ
+//======================================================================
+//----
+#ifdef PM_DEBUG
+//----
+
+#include "../../../resource/fldmapdata/flagwork/work_define.h"
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　ワーク作成、データセット
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_DebugCreateWork( GAMESYS_WORK *gsys, u16 mode )
+{
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  
+  //ワーク作成
+  BSUBWAY_SCRWORK *bsw_scr = BSUBWAY_SCRWORK_CreateWork(
+      gsys, BSWAY_PLAY_NEW, mode );
+  
+  //ポケモンセレクト
+  {
+    int i;
+    for( i = 0;  i < bsw_scr->member_num; i++ ){
+      bsw_scr->pokelist_select_num[i] = i;
+    }
+    bsw_scr->pokelist_return_mode = PL_RET_NORMAL;
+    bsw_scr->pokelist_result_select = PL_SEL_POS_POKE1;
+  }
+  
+  //対戦トレーナー抽選
+  BSUBWAY_SCRWORK_SetBtlTrainerNo( bsw_scr );
+  
+  //フラグ初期化
+  {
+    EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
+    u16 *work = EVENTWORK_GetEventWorkAdrs( ev, WK_OTHER_BSUBWAY_RECEIPT );
+    *work = BSWAY_SCENE_RECEIPT_ERROR;
+    work = EVENTWORK_GetEventWorkAdrs( ev, WK_OTHER_BSUBWAY_TRAIN );
+    *work = BSWAY_SCENE_TRAIN_FIRST;
+    
+    EVENTWORK_SetEventFlag( ev, FV_BSUBWAY_RECEIPT_PARTNER );
+    EVENTWORK_SetEventFlag( ev, FV_C04R0111_PARTNER );
+    EVENTWORK_SetEventFlag( ev, FV_C04R0111_NPC );
+  }
+}
+//----
+#endif
+//----
