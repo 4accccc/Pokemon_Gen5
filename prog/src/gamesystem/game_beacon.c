@@ -360,6 +360,10 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
   if(info->action.action_no == GAMEBEACON_ACTION_NULL || info->action.action_no >= GAMEBEACON_ACTION_MAX){
     return FALSE;
   }
+  if(info->action.action_no == GAMEBEACON_ACTION_THANKYOU
+      && GameBeaconSys->send.info.trainer_id != info->trainer_id){
+    return FALSE;
+  }
   
   if(bsys->start_log <= bsys->end_log){
     for(i = bsys->start_log; i <= bsys->end_log; i++){
@@ -2190,9 +2194,9 @@ void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 targ
   const MISC *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gamedata) );
 
   STRTOOL_Copy(MISC_CrossComm_GetSelfIntroduction(misc), 
-    info->action.thankyou_message, GAMEBEACON_THANKYOU_MESSAGE_LEN);
+    info->action.thanks.thankyou_message, GAMEBEACON_THANKYOU_MESSAGE_LEN);
   info->action.action_no = GAMEBEACON_ACTION_THANKYOU;
-  info->action.target_trainer_id = target_trainer_id;
+  info->action.thanks.target_trainer_id = target_trainer_id;
 }
 
 //==================================================================

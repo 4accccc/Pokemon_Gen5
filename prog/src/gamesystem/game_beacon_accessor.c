@@ -745,7 +745,7 @@ void GAMEBEACON_Get_SelfIntroduction(const GAMEBEACON_INFO *info, STRBUF *dest)
 void GAMEBEACON_Get_ThankyouMessage(const GAMEBEACON_INFO *info, STRBUF *dest)
 {
   GF_ASSERT(info->action.action_no == GAMEBEACON_ACTION_THANKYOU);
-  GFL_STR_SetStringCode( dest, info->action.thankyou_message );
+  GFL_STR_SetStringCode( dest, info->action.thanks.thankyou_message );
 }
 
 //==================================================================

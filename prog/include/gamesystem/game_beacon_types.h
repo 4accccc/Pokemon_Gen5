@@ -74,7 +74,6 @@ typedef struct{
     u16 wazano;                             ///<技番号
     u16 hour;                               ///<時
     u32 thankyou_count;                     ///<お礼を受けた回数
-    u32 target_trainer_id;                  ///<対象相手のトレーナーID
     u32 victory_count;                      ///<連勝数
     u8 trial_house_rank;                    ///<トライアルハウスのランク
     u16 gpower_id;                          ///<GパワーID
@@ -86,7 +85,10 @@ typedef struct{
       u16 itemno;                           ///<アイテム番号
       u32 magic_key;                        ///<マジックキー
     }distribution;
-    STRCODE thankyou_message[GAMEBEACON_THANKYOU_MESSAGE_LEN]; ///お礼メッセージ
+    struct{
+      STRCODE thankyou_message[GAMEBEACON_THANKYOU_MESSAGE_LEN]; ///お礼メッセージ
+      u16 target_trainer_id;                ///<対象相手のトレーナーID(下位16ビット)
+    }thanks;
     STRCODE freeword_message[GAMEBEACON_FREEWORD_MESSAGE_LEN]; ///一言メッセージ
   };
 }GAMEBEACON_INFO_ACTION;
