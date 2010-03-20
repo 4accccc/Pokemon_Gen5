@@ -29,6 +29,7 @@
 #include "savedata/intrude_save.h"
 #include "savedata/my_pms_data.h"
 #include "savedata/zukan_savedata.h"
+#include "gamesystem/game_beacon.h"
 
 //#include "app/mysign.h"
 #include "app/trainer_card.h"
@@ -354,6 +355,7 @@ static int sub_PmsInputWait(TR_CARD_SYS* wk)
     wk->tcp->TrCardData->Pms = *wk->PmsParam.out_pms_data;
 //    TRCSave_SetPmsData( trc_ptr, wk->PmsParam.out_pms_data ); // セーブデータにも反映
     MYPMS_SetPms( p_wk, MYPMS_PMS_TYPE_INTRODUCTION, wk->PmsParam.out_pms_data );
+    GAMEBEACON_SendDataUpdate_TrCardIntroduction( wk->PmsParam.out_pms_data );
   }
   
   return CARD_INIT;

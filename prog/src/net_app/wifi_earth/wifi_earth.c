@@ -31,6 +31,7 @@
 #include "print/wordset.h"
 #include "app/app_keycursor.h"
 #include "app/app_taskmenu.h"
+#include "gamesystem/game_beacon.h"
 
 #include "gamesystem/game_data.h"
 #include "gamesystem\msgspeed.h"
@@ -1139,6 +1140,8 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
         //登録データセーブ
         WIFIHISTORY_SetMyNationArea
           (wk->wifi_sv, wk->mystatus, wk->my_nation_tmp, wk->my_area_tmp);
+        // ビーコンデータにも登録
+        GAMEBEACON_SendDataUpdate_NationArea( wk->my_nation_tmp, wk->my_area_tmp );
 
         wk->my_nation = wk->my_nation_tmp;
         wk->my_area = wk->my_area_tmp;
