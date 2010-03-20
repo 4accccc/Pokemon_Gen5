@@ -2059,7 +2059,7 @@ FS_EXTERN_OVERLAY(battle);
     if( wk->saveData.recMode == DBF_RECMODE_PLAY )
     {
       if( LoadRecord(wk, wk->saveData.recBufID, &wk->setupParam) ){
-        BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyPlayer, BTL_CLIENT_PLAYER );
+//        BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyPlayer, BTL_CLIENT_PLAYER );
         (*seq) = SEQ_BTL_START;
       }else{
         // データが正しくロードできなければBEEPを鳴らしてルートへ戻す
