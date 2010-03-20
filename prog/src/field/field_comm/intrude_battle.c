@@ -97,6 +97,12 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
   switch(*seq){
   case 0:
     BTL_SETUP_Single_Comm(&ibs->para, gamedata, GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, HEAPID_PROC );
+    if(GFL_NET_SystemGetCurrentID() < ibp->target_netid){
+      ibs->para.commPos = 0;
+    }
+    else{
+      ibs->para.commPos = 1;
+    }
     ibs->para.musicDefault = SND_INTRUDE_BATTLE_BGM;
     ibs->para.commNetIDBit = (1 << GFL_NET_SystemGetCurrentID()) | (1 << ibp->target_netid);
     (*seq)++;
