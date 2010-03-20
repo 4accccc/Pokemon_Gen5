@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T18:12:20"/>
+	<create user="matsumiya" host="W00224" date="2010-03-20T15:20:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1076,12 +1076,16 @@
 ……こんなとき　ポケモンのため
 だれかのために　なにか　できるのが▽
 つよさ　なんだ……　きっと▼
+そして　ぼくの　つよさは
+ポケモンが　くれたもの　だった▼
 さあ　アデクさん
 はやく　いきましょう！▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……すこし　わかった▼
 ……こんなとき　ポケモンのため
 だれかのために　なにか　できるのが▽
 強さ　なんだ……　きっと▼
+そして　ぼくの　強さは
+ポケモンが　くれたもの　だった▼
 さあ　アデクさん
 はやく　行きましょう！▼</language>
 	</row>

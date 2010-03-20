@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-18T21:00:31"/>
+	<create user="matsumiya" host="W00224" date="2010-03-20T15:19:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="278" right="1998" bottom="906" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -453,7 +453,7 @@
 その　なも　ム[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08r0101_leader8a_03">
+	<row id="msg_c08r0101_leader8a_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・続けて
 　WHITEならleader8b_03w
@@ -462,7 +462,7 @@
 シャガ</attribute>
 		<language name="JPN" width="256">シャガ『２ひきは　もともと
 どういつの　そんざい　ゆえ[BE:00:ページ切り替え（行送り）]
-あらそいは　はげしく　なるばかりで[BE:01:ページ切り替え（クリア）]
+あらそいは　はげしく　なるばかり[BE:01:ページ切り替え（クリア）]
 どちらが　かつとも　いえず
 ただただ　つかれはてていった……[BE:01:ページ切り替え（クリア）]
 ふたごの　えいゆうも
@@ -471,7 +471,7 @@
 そういって　あらそいを　おさめた……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">シャガ『２匹は　もともと
 同一の　存在ゆえ[BE:00:ページ切り替え（行送り）]
-争いは　激しく　なるばかりで[BE:01:ページ切り替え（クリア）]
+争いは　激しく　なるばかり[BE:01:ページ切り替え（クリア）]
 どちらが　勝つとも　いえず
 ただただ　疲れ果てていった……[BE:01:ページ切り替え（クリア）]
 双子の　英雄も
@@ -480,7 +480,7 @@
 そういって　争いを　おさめた……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08r0101_leader8b_03w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08r0101_leader8b_03w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・WHITEver
 ・続けてleader8a_04</comment>
@@ -504,7 +504,7 @@
 だから　だから……！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08r0101_leader8b_03b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08r0101_leader8b_03b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・BLACKver
 ・続けてleader8a_04</comment>

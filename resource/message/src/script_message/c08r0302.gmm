@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T17:24:11"/>
+	<create user="matsumiya" host="W00224" date="2010-03-19T20:08:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -324,13 +324,17 @@
 		<attribute name="キャラ指定">MAN2
 青年２</attribute>
 		<language name="JPN" width="256">……ここだけの　はなし▼
-オレは　ポケモン　よわいから
+オレは　トレーナーとして
+よわっちいからさ▼
+ポケモンを　にがそうとする
 プラズマだんに　さんせい　なんだ▼
 この　はなしは　へやの
 はんたいがわに　いる▽
 アイツには　ないしょ　だぜ</language>
 		<language name="JPN_KANJI" width="256">……ここだけの　話▼
-オレは　ポケモン　弱いから
+オレは　トレーナーとして
+弱っちいからさ▼
+ポケモンを　逃がそうとする
 プラズマ団に　賛成なんだ▼
 この話は　部屋の　反対側にいる
 アイツには　内緒だぜ</language>
