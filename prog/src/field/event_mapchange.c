@@ -1674,9 +1674,24 @@ GMEVENT* EVENT_ChangeMapPosNoFade( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fiel
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 GMEVENT* EVENT_ChangeMapSorawotobu( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
-                                    u16 zoneID, const VecFx32* pos, u16 dir )
+                                    u16 zoneID, const LOCATION* loc, u16 dir )
 {
-  return EVENT_ChangeMapPosNoFadeCore( gameSystem, fieldmap, EV_MAPCHG_FLYSKY, zoneID, pos, dir );
+//  return EVENT_ChangeMapPosNoFadeCore( gameSystem, fieldmap, EV_MAPCHG_FLYSKY, zoneID, pos, dir );  
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
+
+  event = GMEVENT_Create(gameSystem, NULL, EVENT_MapChangeNoFade, sizeof(MAPCHANGE_WORK));
+  work  = GMEVENT_GetEventWork(event);
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  //ロケーションは用意してあるのでコピーする
+  work->loc_req = *loc;
+  //方向だけセット
+  work->loc_req.dir_id = dir;
+  work->exit_type      = EXIT_TYPE_NONE;
+  work->mapchange_type = EV_MAPCHG_FLYSKY; 
+  return event;
 }
 
 //------------------------------------------------------------------

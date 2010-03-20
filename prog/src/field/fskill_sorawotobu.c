@@ -36,7 +36,8 @@ typedef struct SORAWOTOBU_WORK_tag{
  
   const VecFx32 *Watch;
   int ZoneID;
-  VecFx32 Pos;
+//  VecFx32 Pos;
+  LOCATION  Location;
   int OutCutinNo;
   int InCutinNo;
 }SORAWOTOBU_WORK;
@@ -74,7 +75,8 @@ GMEVENT * EVENT_FieldSkillSorawotobu(
       wk->InCutinNo = FLDCIID_FLY_IN;
     }
   }
-
+  LOCATION_SetDefaultPos(&wk->Location, inZoneID);
+/**
   if( ZONEDATA_IsRailMap(inZoneID) )
   {
     // レール用初期化
@@ -85,7 +87,7 @@ GMEVENT * EVENT_FieldSkillSorawotobu(
     // グリッド用初期化
     ZONEDATA_GetStartPos(inZoneID, &wk->Pos);
   }
-
+*/
 	return event;
 }
 
@@ -178,7 +180,7 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
     {
       GMEVENT *child; 
       child = EVENT_ChangeMapSorawotobu(wk->gsys, fieldWork,
-          wk->ZoneID, &wk->Pos, DIR_DOWN );
+          wk->ZoneID, &wk->Location, DIR_DOWN );
       GMEVENT_CallEvent(event, child);
       (*seq)++;
     }

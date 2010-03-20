@@ -65,14 +65,14 @@ extern GMEVENT* EVENT_ChangeMapPos( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fie
  * @param gameSystem
  * @param fieldmap
  * @param zoneID      遷移先マップのZONE指定
- * @param pos         遷移先マップでの座標指定
+ * @param loc         遷移先マップでのロケーション指定
  * @param dir         遷移先マップでの方向指定
  *
  * @return 生成したマップ遷移イベント
  */
 //------------------------------------------------------------------
 extern GMEVENT* EVENT_ChangeMapSorawotobu( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
-                                           u16 zoneID, const VecFx32* pos, u16 dir );
+                                           u16 zoneID, const LOCATION* loc, u16 dir );
 
 //------------------------------------------------------------------
 /**
