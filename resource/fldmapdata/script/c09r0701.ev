@@ -51,7 +51,6 @@ EVENT_START	ev_c09r0701_warpman_01
 	//ÇmÇÃèÈÇ…çsÇ≠Ç©ÅH
 	_BALLOONWIN_TALKOBJ_MSG( msg_c09r0701_warp_01 )
 	_YES_NO_WIN( SCWK_ANSWER )
-	_MSGWIN_CLOSE()
 	
 	IF $SCWK_ANSWER == SCR_YES THEN
 		//Ç¢ÇØÅI

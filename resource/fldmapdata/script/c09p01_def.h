@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_BG_C09P01_ELEVATOR_01 (1)
+#define SCRID_ZONE_C09P01 (2)
 
 #endif //_C09P01_DEF_H_

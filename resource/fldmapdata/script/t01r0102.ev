@@ -232,38 +232,60 @@ ev_first_pkeget:
 	_SYSWIN_MSG( msg_t01r0102_presentbox_01, POS_DOWN )
 	_MSGWIN_CLOSE()
 
-	//------------【仮】三匹選択アプリを呼び出し-----------//
-	_BLACK_OUT()
+	//---------------三匹選択アプリを呼び出し--------------//
+	{
+	DEFINE_LOCAL	lwk_ret_num
+	DEFINE_LOCAL	lwk_poke_num
+	
+	_MAP_FADE_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
+	
+	_CALL_FIRST_POKE_SELECT( lwk_ret_num )
 	
 	//ライバル＆サポートの向きを変更
 	_OBJ_POS_CHANGE( T01R0102_RIVAL_01, 6, 0, 6, DIR_DOWN )
 	_OBJ_POS_CHANGE( T01R0102_SUPPORT_01, 4, 0, 6, DIR_DOWN )
 	
-	_BLACK_IN()
+	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
+	
+	IF $lwk_ret_num == 0 THEN
+		//草タイプを選んだ
+		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_KUSA
+		$lwk_poke_num = MONSNO_551	//ツタージャをセット
+		_MONS_NAME( 1, MONSNO_551 )	//ポケモン名タグをセット
 
-	//ポケモン名タグをセット
-	_MONS_NAME( 1, MONSNO_551 )
-	//草タイプを選んだ
-	$SCWK_TEMP0 = MONSNO_551	//追加ポケモンのナンバーを格納
+	ELSIF $lwk_ret_num == 1 THEN
+		//炎タイプを選んだ
+		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_HONOO
+		$lwk_poke_num = MONSNO_554	//ポカブをセット
+		_MONS_NAME( 1, MONSNO_554 )	//ポケモン名タグをセット
 
-	_PLAYER_NAME( 0 ) //プレイヤー名を反映
-	_MONS_NAME( 1, SCWK_TEMP0 )
+	ELSE
+		//水タイプを選んだ
+		$WK_SYS_FIRST_POKETYPE = FIRST_POKETYPE_MIZU
+		$lwk_poke_num = MONSNO_557	//ミジュマルをセット
+		_MONS_NAME( 1, MONSNO_557 )	//ポケモン名タグをセット
+
+	ENDIF
+	
+	//～～を手に入れた
+	_PLAYER_NAME( 0 )	 //プレイヤー名を反映
 	_SYSWIN_MSG( msg_t01r0102_ball_get_01, POS_DOWN )
 	
 	//ME鳴らす
 	_ME_PLAY( SEQ_ME_POKEGET )
 	_ME_WAIT()
-	
+	_AB_KEYWAIT_MARK()
 	_SYSWIN_CLOSE()
 	
-	//ポケモン追加 【仮】追加ポケモンのラベルが仮。アプリ完成後このラベル自体が削除予定。
-	_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, SCWK_TEMP0, 0, TOKUSYU_NULL, 5, 0, ITEM_MONSUTAABOORU )
+	//ポケモン追加
+	_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, lwk_poke_num, 0, TOKUSYU_NULL, 5, 0, ITEM_MONSUTAABOORU )
 	
 	//初期３体入手フラグ
 	_FLAG_SET( SYS_FLAG_FIRST_POKE_GET )
 	
+	}
 	//=====================================================//
 
 	//サポート：箱の前へ
