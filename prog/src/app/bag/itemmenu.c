@@ -107,8 +107,8 @@ static void _ItemChangeSingle(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 );
 static void _ItemChange(FIELD_ITEMMENU_WORK* pWork, int no1, int no2 );
 static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int newpocket);
 int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork);
-static BOOL _posplus(FIELD_ITEMMENU_WORK* pWork, int length);
-static BOOL _posminus(FIELD_ITEMMENU_WORK* pWork, int length);
+static BOOL _posplus( FIELD_ITEMMENU_WORK * pWork, int length, BOOL loop );
+static BOOL _posminus( FIELD_ITEMMENU_WORK * pWork, int length, BOOL loop );
 static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork);
 static BOOL _keyChangeItemCheck(FIELD_ITEMMENU_WORK* pWork);
 static BOOL _keyMoveCheck(FIELD_ITEMMENU_WORK* pWork);
@@ -479,27 +479,39 @@ static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int ne
  *  @retval none
  */
 //-----------------------------------------------------------------------------
-static BOOL _posplus(FIELD_ITEMMENU_WORK* pWork, int length)
+static BOOL _posplus( FIELD_ITEMMENU_WORK * pWork, int length, BOOL loop )
 {
-  BOOL bChange = FALSE;
+	int	tmp_cursor, tmp_list;
+
+	// アイテムなし
+	if( length == 0 ){ return FALSE; }
+
+	tmp_cursor = pWork->curpos;
+	tmp_list   = pWork->oamlistpos;
 
   if((pWork->curpos==4) && ((pWork->oamlistpos+7) < length)){
     //カーソルはそのままでリストが移動
     pWork->oamlistpos++;
-    bChange = TRUE;
   }
   else if((pWork->curpos==4) && ((pWork->curpos+1) < length)){
     //リストの終端まで来たのでカーソルが移動
     pWork->curpos++;
-    bChange = TRUE;
   }
   else if((pWork->curpos!=5) && ((pWork->curpos+1) < length)){
     //リストの終端まで来たのでカーソルが移動
     pWork->curpos++;
-    bChange = TRUE;
-  }
+  }else{
+		// ループ
+		if( loop == TRUE ){
+			pWork->oamlistpos = -1;
+			pWork->curpos = 0;
+		}
+	}
 
-  return bChange;
+	if( tmp_cursor != pWork->curpos || tmp_list != pWork->oamlistpos ){
+		return TRUE;
+	}
+  return FALSE;
 }
 
 
@@ -513,26 +525,44 @@ static BOOL _posplus(FIELD_ITEMMENU_WORK* pWork, int length)
  *  @retval none
  */
 //-----------------------------------------------------------------------------
-static BOOL _posminus(FIELD_ITEMMENU_WORK* pWork, int length)
+static BOOL _posminus( FIELD_ITEMMENU_WORK * pWork, int length, BOOL loop )
 {
-  BOOL bChange = FALSE;
+	int	tmp_cursor, tmp_list;
+
+	// アイテムなし
+	if( length == 0 ){ return FALSE; }
+
+	tmp_cursor = pWork->curpos;
+	tmp_list   = pWork->oamlistpos;
 
   if((pWork->curpos==1) && (pWork->oamlistpos!=-1)){
     //カーソルはそのままでリストが移動
     pWork->oamlistpos--;
-    bChange = TRUE;
   }
   else if((pWork->curpos==1)){
     //リストの終端まで来たのでカーソルが移動
     pWork->curpos--;
-    bChange = TRUE;
   }
   else if(pWork->curpos != 0){
     pWork->curpos--;
-    bChange = TRUE;
-  }
+  }else{
+		// ループ
+		if( loop == TRUE ){
+			pWork->oamlistpos = length - 7;
+			if( pWork->oamlistpos < -1 ){
+				pWork->oamlistpos = -1;
+			}
+			pWork->curpos = 5;
+			if( pWork->curpos >= length ){
+				pWork->curpos = length-1;
+			}
+		}
+	}
 
-  return bChange;
+	if( tmp_cursor != pWork->curpos || tmp_list != pWork->oamlistpos ){
+		return TRUE;
+	}
+  return FALSE;
 }
 
 
@@ -588,7 +618,7 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
 
       for(i = 0 ; i < num ; i++)
       {
-        _posplus(pWork, length);
+        _posplus( pWork, length, FALSE );
 //        HOSAKA_Printf( "[%d] curpos=%d \n", i, pWork->curpos );
       }
       
@@ -625,13 +655,13 @@ static BOOL _keyChangeItemCheck(FIELD_ITEMMENU_WORK* pWork)
     int length = ITEMMENU_GetItemPocketNumber( pWork);
 
     if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-      bChange = _posplus(pWork, length);
+      bChange = _posplus( pWork, length, TRUE );
     }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
-      bChange = _posminus(pWork, length);
+      bChange = _posminus( pWork, length, TRUE );
     }else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
 			u32	i;
 			for( i=0; i<6; i++ ){
-				if( _posplus( pWork, length ) == FALSE ){
+				if( _posplus( pWork, length, FALSE ) == FALSE ){
 					break;
 				}
 			}
@@ -639,7 +669,7 @@ static BOOL _keyChangeItemCheck(FIELD_ITEMMENU_WORK* pWork)
     }else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
 			u32	i;
 			for( i=0; i<6; i++ ){
-				if( _posminus( pWork, length ) == FALSE ){
+				if( _posminus( pWork, length, FALSE ) == FALSE ){
 					break;
 				}
 			}
@@ -671,13 +701,13 @@ static BOOL _keyMoveCheck(FIELD_ITEMMENU_WORK* pWork)
     int length = ITEMMENU_GetItemPocketNumber( pWork);
 
     if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
-      bChange = _posplus(pWork, length);
+      bChange = _posplus( pWork, length, TRUE );
     }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
-      bChange = _posminus(pWork, length);
+      bChange = _posminus( pWork, length, TRUE );
     }else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R ){
 			u32	i;
 			for( i=0; i<6; i++ ){
-				if( _posplus( pWork, length ) == FALSE ){
+				if( _posplus( pWork, length, FALSE ) == FALSE ){
 					break;
 				}
 			}
@@ -685,7 +715,7 @@ static BOOL _keyMoveCheck(FIELD_ITEMMENU_WORK* pWork)
     }else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
 			u32	i;
 			for( i=0; i<6; i++ ){
-				if( _posminus( pWork, length ) == FALSE ){
+				if( _posminus( pWork, length, FALSE ) == FALSE ){
 					break;
 				}
 			}
@@ -725,12 +755,12 @@ static BOOL _itemMovePositionTouchItem(FIELD_ITEMMENU_WORK* pWork)
       }
       else if(pWork->curpos < num){
         for(i = pWork->curpos ; i < num; i++){
-          bChange += _posplus(pWork, length);
+          bChange += _posplus( pWork, length, FALSE );
         }
       }
       else{
         for(i = pWork->curpos ; i > num; i--){
-          bChange += _posminus(pWork, length);
+          bChange += _posminus( pWork, length, FALSE );
         }
       }
     }
@@ -744,7 +774,7 @@ static BOOL _itemMovePositionTouchItem(FIELD_ITEMMENU_WORK* pWork)
       pWork->curpos = 0;
       pWork->oamlistpos = -1;
       for(i = 0 ; i < num ; i++){
-        _posplus(pWork, length);
+        _posplus(pWork, length, FALSE);
       }
     }
 #endif
