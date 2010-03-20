@@ -407,6 +407,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/field_comm/game_beacon_search.c \
 				gamesystem/game_beacon_accessor.c \
 				savedata/symbol_save_field.c \
+        field/symbol_map.c \
         field/pleasure_boat_st.c \
         field/scrcmd_pl_boat_init.c \
         field/united_nations_st.c \
