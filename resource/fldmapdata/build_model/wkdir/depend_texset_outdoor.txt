@@ -932,6 +932,8 @@ DEP_TEXSET_IMD_OUTDOOR022 = \
 	$(SRCDIR)/outwarp01.imd \
 	$(SRCDIR)/outwarp02.imd \
 	$(SRCDIR)/outwarp03.imd \
+	$(SRCDIR)/c03_ship_04.imd \
+	$(SRCDIR)/c03_ship_05.imd \
 	$(SRCDIR)/d12_tower_01.imd \
 	$(SRCDIR)/c11_untower_01.imd \
 	$(SRCDIR)/c11_flag_01.imd \
