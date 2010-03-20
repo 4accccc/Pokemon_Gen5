@@ -29,6 +29,7 @@ typedef enum
   FLDEFF_BTRAIN_TYPE_05, //マルチトレイン
   FLDEFF_BTRAIN_TYPE_06, //スーパーマルチトレイン
   FLDEFF_BTRAIN_TYPE_07, //WiFiトレイン
+  FLDEFF_BTRAIN_TYPE_08, //トレインタウン用トレイン
   FLDEFF_BTRAIN_TYPE_MAX,
 }FLDEFF_BTRAIN_TYPE;
 

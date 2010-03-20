@@ -1087,13 +1087,6 @@ void BSUBWAY_SCRWORK_PreparBattleBox( BSUBWAY_SCRWORK *bsw_scr )
     bsw_scr->btl_box_party =
       BATTLE_BOX_SAVE_MakePokeParty( bb_save, HEAPID_PROC );
   }
-  
-  {
-    u16 i;
-    for( i = 0; i < bsw_scr->member_num; i++ ){
-      bsw_scr->pokelist_select_num[i] = i + 1;
-    }
-  }
 }
 
 //--------------------------------------------------------------

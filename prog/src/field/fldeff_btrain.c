@@ -397,6 +397,7 @@ static const u16 data_ArcIdxBTrainMdl[FLDEFF_BTRAIN_TYPE_MAX] =
   NARC_fldeff_b_train05_nsbmd,
   NARC_fldeff_b_train06_nsbmd,
   NARC_fldeff_b_train07_nsbmd,
+  NARC_fldeff_b_train08_nsbmd,
 };
 
 //--------------------------------------------------------------

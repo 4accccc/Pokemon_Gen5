@@ -555,6 +555,24 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       }
     }
     break;
+  //デバッグROMか
+  case BSWTOOL_CHK_DEBUG_ROM:
+    #ifdef PM_DEBUG
+    *ret_wk = TRUE;
+    #else
+    *ret_wk = FALSE;
+    #endif
+    break;
+  //列車配置 トレインタウン専用
+  case BSWTOOL_SET_TTOWN_TRAIN:
+    {
+      const VecFx32 *pos;
+      FLDEFF_BTRAIN_TYPE type;
+      type = FLDEFF_BTRAIN_TYPE_08;
+      pos = &data_TrainPosTbl[0];
+      BSUBWAY_GIMMICK_SetTrain( fieldmap, type, pos );
+    }
+    break;
   //----TOOL Wifi関連
   //Wifiアップロードフラグをセット
   case BSWTOOL_WIFI_SET_UPLOAD_FLAG:
@@ -659,7 +677,13 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //ポケモン選択画面へ
   case BSWSUB_SELECT_POKE:
-    SCRIPT_CallEvent( sc, BSUBWAY_EVENT_SetSelectPokeList(bsw_scr,gsys) );
+    {
+      u8 buf;
+      BSUBWAY_PLAYDATA_SetData( playData,
+          BSWAY_PLAYDATA_ID_use_battle_box, &buf );
+      SCRIPT_CallEvent(
+          sc, BSUBWAY_EVENT_SetSelectPokeList(bsw_scr,gsys,buf) );
+    }
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return VMCMD_RESULT_SUSPEND;
   //選択ポケモン取得

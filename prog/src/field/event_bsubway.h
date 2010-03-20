@@ -27,7 +27,7 @@
 //  extern
 //======================================================================
 extern GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
-    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys );
+    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, BOOL btl_box );
 extern GMEVENT * BSUBWAY_EVENT_TrainerBattle(
     BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap );
 extern GMEVENT * BSUBWAY_EVENT_CommBattle(

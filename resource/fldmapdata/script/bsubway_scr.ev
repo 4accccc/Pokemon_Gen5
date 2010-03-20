@@ -1,6 +1,6 @@
 //======================================================================
 //  bsubway.ev
-//  スクリプトファイル：バトルサブウェイ
+//  スクリプトファイル：バトルサブウェイ　トレインタウンデモ
 //======================================================================
   .text
   
@@ -27,6 +27,8 @@ _EVENT_DATA ev_bsw_report_error
 _EVENT_DATA ev_bsw_game_cancel
 _EVENT_DATA ev_bsw_game_after
 _EVENT_DATA ev_bsw_retmap_receipt
+_EVENT_DATA ev_init_bsw_ttown
+_EVENT_DATA ev_bsw_ttown_receipt_talk
 _EVENT_DATA_END
 
 //======================================================================
@@ -1878,8 +1880,9 @@ sub_receipt_common_select_btl_box:
     
     IF $ret == 0 THEN //手持ち使用
       _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, FALSE, BSW_NULL, ret )
-    ELSIF $ret == 1 THEN
+    ELSIF $ret == 1 THEN //バトルボックス
       _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, TRUE, BSW_NULL, ret )
+      _BSUBWAY_TOOL( BSWSUB_PREPAR_BTL_BOX, BSW_NULL, BSW_NULL, BSW_NULL )
     ELSE //キャンセル
       $sel = FALSE
     ENDIF
@@ -1992,5 +1995,69 @@ ev_bsw_retmap_receipt:
   ENDSWITCH
   
   _CHG_LOCAL_SCR
+}
+_RET
+
+//=====================================================================
+//  トレインタウン用
+//=====================================================================
+//--------------------------------------------------------------
+//  マップ初期化　電車配置
+//--------------------------------------------------------------
+INIT_EVENT_START ev_init_bsw_ttown
+{
+  _BSUBWAY_TOOL( BSWTOOL_SET_TTOWN_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
+}
+INIT_EVENT_END
+
+//--------------------------------------------------------------
+//  トレインタウン受付　話し掛け
+//--------------------------------------------------------------
+EVENT_START ev_bsw_ttown_receipt_talk
+{
+  DEFINE_LOCAL ret
+  DEFINE_LOCAL msg_id
+
+  _TALK_OBJ_START()
+  
+  //戻るか？
+  _BALLOONWIN_TALKOBJ_MSG( 0 )
+  _YES_NO_WIN( ret )
+  
+  IF $ret == SCR_YES THEN
+    $msg_id = 0 //ご乗車下さい
+  ELSE
+    $msg_id = 0 //またお越し下さい
+  ENDIF
+  
+  _BALLOONWIN_TALKOBJ_MSG( msg_id )
+  _MSGWIN_CLOSE()
+  
+  IF $ret == SCR_YES THEN
+    _CALL sub_ttown_demo_start_train
+    _MAP_CHANGE( 0, 0, 0, 0 )
+  ENDIF
+}
+EVENT_END
+
+//--------------------------------------------------------------
+//  トレインタウン　電車発車デモ
+//--------------------------------------------------------------
+sub_ttown_demo_start_train:
+{
+  //自機高さを固定化
+  _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, MMDL_ID_PLAYER, 0, BSW_NULL )
+  
+  //電車へ移動
+  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_receipt_geton_receipt )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_receipt_geton_jiki )
+  
+  //OBJアニメ待ち
+  _OBJ_ANIME_WAIT()
+  
+  //電車移動
+  _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, BTRAIN_ANIME_TYPE_START_HOME, BSW_NULL, BSW_NULL )
+  
+  _TIME_WAIT( 45 ) //アニメを少し見せてフェードアウト
 }
 _RET

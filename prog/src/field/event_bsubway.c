@@ -76,6 +76,8 @@ typedef struct
   u16 *return_mode;
   u16 *result_select;
   u8 *result_num;
+  
+  POKEPARTY *pp_btl_box;
 }EVENT_WORK_POKE_LIST;
 
 //--------------------------------------------------------------
@@ -136,7 +138,7 @@ static GMEVENT_RESULT ev_SelectPokeList( GMEVENT *event, int *seq, void *wk )
  */
 //--------------------------------------------------------------
 GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
-    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys )
+    BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys, BOOL btl_box )
 {
   GMEVENT *event;
   GAMEDATA *gdata;
@@ -145,7 +147,7 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
   EVENT_WORK_POKE_LIST *work;
   
   gdata = GAMESYSTEM_GetGameData( gsys );
-  pp = GAMEDATA_GetMyPokemon( gdata ); //バトルボックスの際はここにこない
+  
   fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   
   event = GMEVENT_Create( gsys, NULL,
@@ -158,6 +160,14 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
   work->result_select = &bsw_scr->pokelist_result_select;
   work->return_mode = &bsw_scr->pokelist_return_mode;
   
+  if( btl_box == FALSE ){
+    pp = GAMEDATA_GetMyPokemon( gdata );
+  }else{
+    pp = bsw_scr->btl_box_party;
+  }
+  
+  GF_ASSERT( pp != NULL );
+
   {
     int reg = REG_SUBWAY_SINGLE;
     int type = PL_TYPE_SINGLE;
