@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/17 17:58:20
+#save date:2010/03/20 18:16:51
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d07r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d07r0101.wms
 #hold event type:
 1
 #hold event number:
-4
+8
 #event number: 0
 #type
 1
@@ -45,21 +45,52 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_WORKER2_15
+TR_ELITEM_19
 #OBJ CODE Number
-WORKMAN2
+TRAINERM
 #MOVE CODE Number
-MV_RND_H
+MV_RT2
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
 0
 #Event Script Name
-SCRID_TRID_WORKER2_15
+SCRID_TRID_ELITEM_19
 #Direction Type Number
-DIR_LEFT
+DIR_UP
 #Parameter 0 Number
-3
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+4
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 -40 -200
+#event number: 2
+#type
+1
+#ID name
+D07R0101_FLD_ITEM_02
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_75
+#Event Script Name
+SCRID_FLD_ITEM_75
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -71,8 +102,70 @@ DIR_LEFT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-296 -136 -264
-#event number: 2
+552 -40 -312
+#event number: 3
+#type
+1
+#ID name
+D07R0101_FLD_ITEM_03
+#OBJ CODE Number
+MONSTERBALL
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+FV_FLD_ITEM_89
+#Event Script Name
+SCRID_FLD_ITEM_89
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+8 -40 -280
+#event number: 4
+#type
+1
+#ID name
+TR_ELITEW_19
+#OBJ CODE Number
+TRAINERW
+#MOVE CODE Number
+MV_RIGHT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_ELITEW_19
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+5
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+456 40 -536
+#event number: 5
 #type
 1
 #ID name
@@ -102,12 +195,43 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 -120 -408
-#event number: 3
+392 40 -536
+#event number: 6
 #type
 1
 #ID name
-D07R0101_FLD_ITEM_02
+TR_WORKER2_15
+#OBJ CODE Number
+WORKMAN2
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_WORKER2_15
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+600 40 -424
+#event number: 7
+#type
+1
+#ID name
+D07R0101_FLD_ITEM_04
 #OBJ CODE Number
 MONSTERBALL
 #MOVE CODE Number
@@ -115,9 +239,9 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_FLD_ITEM_179
 #Event Script Name
-SCRID_FLD_ITEM_75
+SCRID_FLD_ITEM_179
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -133,7 +257,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-552 -40 -312
+72 40 56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
