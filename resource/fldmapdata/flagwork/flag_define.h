@@ -309,10 +309,10 @@
 #define FE_C07PC0101_APPRAISAL_TALK        293 /* 0x0125 セッカシティＰＣ：鉱石鑑定士 */
 #define FE_T04R0101_APPRAISAL_TALK         294 /* 0x0126 サザナミタウン：財宝鑑定士 */
 #define FE_C03R0801_HINT_TALK              295 /* 0x0127 遊覧船内：ヒントおやじ */
-		/* not used   296(0x0128) */
-		/* not used   297(0x0129) */
-		/* not used   298(0x012a) */
-		/* not used   299(0x012b) */
+#define FE_AMUSEMENT_TR01_TALK             296 /* 0x0128 ライモン遊園地：観覧車トレーナー（春）と会話したフラグ */
+#define FE_AMUSEMENT_TR02_TALK             297 /* 0x0129 ライモン遊園地：観覧車トレーナー（夏）と会話したフラグ */
+#define FE_AMUSEMENT_TR03_TALK             298 /* 0x012a ライモン遊園地：観覧車トレーナー（秋）と会話したフラグ */
+#define FE_AMUSEMENT_TR04_TALK             299 /* 0x012b ライモン遊園地：観覧車トレーナー（冬）と会話したフラグ */
 		/* not used   300(0x012c) */
 		/* not used   301(0x012d) */
 		/* not used   302(0x012e) */
@@ -756,7 +756,7 @@
 #define FV_D13R0101_ASSISTANTM_01          732 /* 0x02dc P2ラボ：配布インセクタイベントの研究員 */
 #define FV_R16R0201_BACKPACKERM            733 /* 0x02dd 迷いの森：ゾロアークイベントの青年 */
 #define FV_R16R0201_WOMAN3                 734 /* 0x02de 毎夜の森：ゾロアークイベントの女性（ゾロアーク） */
-		/* not used   735(0x02df) */
+#define FV_AMUSEMENT_TRAINER               735 /* 0x02df ライモン遊園地：観覧車トレーナー */
 		/* not used   736(0x02e0) */
 		/* not used   737(0x02e1) */
 		/* not used   738(0x02e2) */
@@ -2465,9 +2465,9 @@
 #define TMFLG_C07R0201_QUIZ               2741 /* 0x0ab5 セッカシティ民家：クイズ家挑戦フラグ */
 #define TMFLG_R13_TREASURE                2742 /* 0x0ab6 13番道路：海辺のお宝イベント */
 #define TMFLG_C03R0402_BATTLE             2743 /* 0x0ab7 ゲームフリーク：森本さん戦闘フラグ */
-		/* not used  2744(0x0ab8) */
-		/* not used  2745(0x0ab9) */
-		/* not used  2746(0x0aba) */
+#define TMFLG_AMUSEMENT_TR_BTL            2744 /* 0x0ab8 ライモン遊園地：観覧車トレーナー対戦フラグ */
+#define TMFLG_BIGSTADIUM_TR_BTL           2745 /* 0x0ab9 ビッグスタジアム：トレーナー再配置フラグ */
+#define TMFLG_LITTLECOURT_TR_BTL          2746 /* 0x0aba リトルコート：トレーナー再配置フラグ */
 		/* not used  2747(0x0abb) */
 		/* not used  2748(0x0abc) */
 		/* not used  2749(0x0abd) */
