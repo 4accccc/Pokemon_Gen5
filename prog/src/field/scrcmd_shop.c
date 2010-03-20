@@ -1172,10 +1172,14 @@ static void exit_work( SHOP_BUY_APP_WORK *wk )
 //----------------------------------------------------------------------------------
 static void bg_trans( SHOP_BUY_APP_WORK *wk )
 {
+  // 会話ウインドウ半透明OFF
+//  FLDMSGBG_SetBlendAlpha( FALSE );
+  G2_BlendNone();
+  
   // 会話ウインドウがBG1面BG2面両方使用する事になったので、ショップ画面の背景は
   // VRAMの最初に方に入れてある会話ウインドウのリソースを避けて転送する事にした。
   // 会話ウインドウのキャラVRAMはBG1とBG2が同じにしてある。
-  
+    
   // ショップ画面リソース
   {
     ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_SHOP_GRA, wk->heapId );
@@ -1222,6 +1226,9 @@ static void bg_clear( SHOP_BUY_APP_WORK *wk )
 
   // ショップ用に変更していたBG2面のプライオリティを0に戻す
   GFL_BG_SetPriority( GFL_BG_FRAME2_M, 0 );
+
+  // 会話ウインドウ半透明処理復帰
+  FLDMSGBG_SetBlendAlpha( TRUE );
 
 }
 
