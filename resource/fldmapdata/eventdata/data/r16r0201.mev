@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/19 19:03:16
+#save date:2010/03/20 13:33:04
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r16r0201.wms
 #SECTION START:OBJ_EVENT
@@ -100,13 +100,13 @@ SCRID_POS_R16R0201_WOMAN3_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-WK_SCENE_R16R0201
+LOCALWORK0
 #Event Trigger Work Value
 1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-8 0 -40
+-8 0 -216
 #size
 1 1
 #Map Event List Data End
