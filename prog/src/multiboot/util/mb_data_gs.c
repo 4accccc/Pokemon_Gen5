@@ -47,6 +47,7 @@ enum GS_SAVE_TYPE
 
 BOOL  MB_DATA_GS_LoadData( MB_DATA_WORK *dataWork );
 BOOL  MB_DATA_GS_SaveData( MB_DATA_WORK *dataWork );
+void  MB_DATA_GS_SetDataCRC( MB_DATA_WORK *dataWork , void *data , const u32 size );
 
 u32   MB_DATA_GS_GetStartAddress( const GS_GMDATA_ID id );
 static  BOOL MB_DATA_GS_CheckDataCorrect( GS_SAVE_FOOTER **pFooterArr , MB_DATA_WORK *dataWork );
@@ -320,6 +321,11 @@ BOOL  MB_DATA_GS_SaveData( MB_DATA_WORK *dataWork )
         PokePasoParaInit( param );
       }
 #endif
+      //個々のデータのCRC
+      {
+        MB_DATA_GS_SetDataCRC( dataWork , dataWork->pItemData , DLPLAY_GS_SAVESIZETABLE[GS_GMDATA_ID_TEMOTI_ITEM] );
+        MB_DATA_GS_SetDataCRC( dataWork , dataWork->pMysteryData , DLPLAY_GS_SAVESIZETABLE[GS_GMDATA_ID_FUSHIGIDATA] );
+      }
       //footerの加工
       //BOX
       {
@@ -510,6 +516,12 @@ BOOL  MB_DATA_GS_SaveData( MB_DATA_WORK *dataWork )
     break;
   }
   return FALSE;
+}
+
+void MB_DATA_GS_SetDataCRC( MB_DATA_WORK *dataWork , void *data , const u32 size )
+{
+  u32 *crc = (u32*)((u32)data + size-4 );
+  *crc = MATH_CalcCRC16CCITT( &dataWork->crcTable_ , data , size-4 );
 }
 
 //ROMのCRCチェック
@@ -1011,7 +1023,8 @@ const BOOL MB_DATA_GS_CheckLockCapsule( MB_DATA_WORK *dataWork )
   MB_DATA_TPrintf("-----MysteryData-----\n");
   
   if( data->gift_type == GS_MYSTERYGIFT_TYPE_ITEM &&
-      data->data.item.itemNo == ITEM_ROKKUKAPUSERU )
+      data->data.item.itemNo == ITEM_ROKKUKAPUSERU &&
+      data->re_dealed_count == 0 )
   {
     return TRUE;
   }
@@ -1024,5 +1037,6 @@ void MB_DATA_GS_RemoveLockCapsule( MB_DATA_WORK *dataWork )
   GS_GIFT_CARD *data = &mystery->rockcapcard;
   GF_ASSERT( dataWork->pMysteryData != NULL );
   
-  data->gift_type = GS_MYSTERYGIFT_TYPE_NONE;
+  //本来の用途と違うが、これを設定する
+  data->re_dealed_count = 1;
 }

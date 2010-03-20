@@ -36,6 +36,7 @@
 #include "app/mictest.h"
 #include "app/app_keycursor.h"
 #include "gamesystem/msgspeed.h"
+#include "multiboot/mb_parent_sys.h"  //転送マシン
 
 #include "title/title.h"
 #include "title/game_start.h"
@@ -460,6 +461,12 @@ static GFL_PROC_RESULT START_MENU_ProcEnd( GFL_PROC * proc, int * seq, void * pw
 		break;
 
 	case LIST_ITEM_MACHINE:				// 転送マシンを使う
+	  {
+      MB_PARENT_INIT_WORK *initWork = GFL_HEAP_AllocClearMemory( GFL_HEAPID_APP, sizeof(MB_PARENT_INIT_WORK) );
+      initWork->mode = MPM_MOVIE_TRANS;
+      //ゲームデータの確保とワークの開放はモードを見て行う。
+  		GFL_PROC_SysSetNextProc(FS_OVERLAY_ID(multiboot), &MultiBoot_ProcData, initWork);
+  	}
 		break;
 
 	default:		// キャンセル

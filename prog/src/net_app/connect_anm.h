@@ -12,7 +12,13 @@
 #ifndef __CONNECT_ANM_H__
 #define __CONNECT_ANM_H__
 
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 #include "net_app/connect_anm_types.h"
+#else                    //DL子機時処理
+#include "../src/net_app/connect_anm_types.h"
+#endif //MULTI_BOOT_MAKE
+
 #include "system/gfl_use.h"
 #include "system/palanm.h"
 

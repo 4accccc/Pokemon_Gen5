@@ -21,6 +21,7 @@
 //============================================================================================
 void  PPCONV_ConvertPPPFromPokeShifter( POKEMON_PASO_PARAM* ppp )
 { 
+  const BOOL fast = PPP_FastModeOn( ppp );
   //性格を個性乱数から導いてワークに代入
   { 
     u8 seikaku = PPP_Get( ppp, ID_PARA_personal_rnd, NULL ) % 25;
@@ -41,7 +42,7 @@ void  PPCONV_ConvertPPPFromPokeShifter( POKEMON_PASO_PARAM* ppp )
   //シャチになって未使用となった領域を０クリア
   PPP_Put( ppp, ID_PARA_dummy_p2_3, 0 );  //プラチナ new_get_place new_birth_place
   PPP_Put( ppp, ID_PARA_dummy_p4_1, 0 );  //HGSS get_ball humor
-
+  
   //名前変換
   {
     STRCODE monsName[MONS_NAME_SIZE+EOM_SIZE];
@@ -56,7 +57,7 @@ void  PPCONV_ConvertPPPFromPokeShifter( POKEMON_PASO_PARAM* ppp )
     PPCONV_ConvertStr( oyaName , oyaName , SAVELEN_PLAYER_NAME+EOM_SIZE );
     PPP_Put( ppp , ID_PARA_oyaname_raw , (u32)oyaName );
   }
-
+  PPP_FastModeOff( ppp , fast );
 }
 
 

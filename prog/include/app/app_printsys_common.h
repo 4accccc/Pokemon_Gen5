@@ -14,7 +14,6 @@
 #include "sound/wb_sound_data.sadl"
 #else
 #include "sound/pm_sndsys.h"
-#define SEQ_SE_MESSAGE (SEQ_SE_DECIDE1)
 #endif
 
 //-------------------------------------

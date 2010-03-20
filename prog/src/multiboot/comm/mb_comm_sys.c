@@ -118,8 +118,9 @@ struct _MB_COMM_WORK
   u16    isMovieHaveLockCapsule:1;
   u16    isPostMovieTransLockCapsule:1;
   u16    isMovieTransLockCapsule:1;
+  u16    isMoviePostStartSaveCheck:1;
   u16    isMovieFinishMachine:1;
-  u16    pad:11;
+  u16    pad:10;
   
   u8      saveWaitCnt;
   u16     boxLeast;
@@ -329,6 +330,7 @@ void MB_COMM_InitComm( MB_COMM_WORK* commWork )
   commWork->isMovieHaveLockCapsule = FALSE;
   commWork->isPostMovieTransLockCapsule = FALSE;
   commWork->isMovieTransLockCapsule = FALSE;
+  commWork->isMoviePostStartSaveCheck = FALSE;
   commWork->isMovieFinishMachine = FALSE;
   
   commWork->moviePokeConfirm = MCMV_POKETRANS_YES;
@@ -572,6 +574,10 @@ const BOOL MB_COMM_IsMovieTransLockCapsule( const MB_COMM_WORK* commWork )
 {
   return commWork->isMovieTransLockCapsule;
 }
+const BOOL MB_COMM_IsPostMovieStartSaveCheck( const MB_COMM_WORK* commWork )
+{
+  return commWork->isMoviePostStartSaveCheck;
+}
 const BOOL MB_COMM_IsPostMovieFinishMachine( const MB_COMM_WORK* commWork )
 {
   return commWork->isMovieFinishMachine;
@@ -777,6 +783,10 @@ static void MB_COMM_Post_Flag( const int netID, const int size , const void* pDa
     commWork->isMovieTransLockCapsule = pkt->value;
     break;
     
+  case MCFT_MOVIE_START_SAVE_CHECK:
+    commWork->isMoviePostStartSaveCheck = TRUE;
+    break;
+
   case MCFT_MOVIE_FINISH_MACHINE:
     commWork->isMovieFinishMachine = TRUE;
     break;

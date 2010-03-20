@@ -332,11 +332,16 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   work->isSendGameData = FALSE;
   work->gameData = NULL;
   
+  if( work->mode == MPM_POKE_SHIFTER )
   {
     SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( work->initWork->gameData );
     work->miscSave = SaveData_GetMisc( svWork );
     //とりあえずキャンセル(一番低いステート)にしておく
     MISC_SetPalparkFinishState( work->miscSave , PALPARK_FINISH_CANCEL );
+  }
+  else
+  {
+    work->miscSave = NULL;
   }
   
   work->vBlankTcb = GFUser_VIntr_CreateTCB( MB_PARENT_VBlankFunc , work , 8 );
@@ -489,7 +494,10 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     if( MB_COMM_IsSendEnable( work->commWork ) == TRUE )
     {
       work->initData.msgSpeed = MSGSPEED_GetWait();
-      work->initData.highScore = MISC_GetPalparkHighscore(work->miscSave);
+      if( work->mode == MPM_POKE_SHIFTER )
+      {
+        work->initData.highScore = MISC_GetPalparkHighscore(work->miscSave);
+      }
       if( MB_COMM_Send_InitData( work->commWork , &work->initData ) == TRUE )
       {
         if( work->mode == MPM_POKE_SHIFTER )
@@ -1451,60 +1459,65 @@ static BOOL MP_PARENT_WhCallBack( BOOL bResult )
 
 static void MB_PARENT_SetFinishState( MB_PARENT_WORK *work , const u8 state )
 {
-  const u8 nowState = MISC_GetPalparkFinishState( work->miscSave );
-  BOOL isSet = FALSE;
-  MB_TPrintf( "SetFinishState[%d->%d]\n",nowState,state );
-  //連続プレイ時を考慮して、優先度の高いステートを入れる。
-  switch( state )
+  if( work->mode == MPM_POKE_SHIFTER )
   {
-  case PALPARK_FINISH_NORMAL:    // (0)  //捕獲した
-    //ハイスコア・エラー以外
-    if( state != PALPARK_FINISH_HIGHSOCRE && 
-        state != PALPARK_FINISH_ERROR )
-    {
-      isSet = TRUE;
-    }
-    break;
+    const u8 nowState = MISC_GetPalparkFinishState( work->miscSave );
+    BOOL isSet = FALSE;
 
-  case PALPARK_FINISH_HIGHSOCRE: // (1)  //捕獲した＋ハイスコア
-    //エラー以外
-    if( state != PALPARK_FINISH_ERROR )
-    {
-      isSet = TRUE;
-    }
-    break;
 
-  case PALPARK_FINISH_NO_GET:    // (2)  //捕獲できなかった
-    //キャンセルかエラーの時
-    if( state != PALPARK_FINISH_NORMAL &&
-        state != PALPARK_FINISH_HIGHSOCRE && 
-        state != PALPARK_FINISH_ERROR )
+    MB_TPrintf( "SetFinishState[%d->%d]\n",nowState,state );
+    //連続プレイ時を考慮して、優先度の高いステートを入れる。
+    switch( state )
     {
+    case PALPARK_FINISH_NORMAL:    // (0)  //捕獲した
+      //ハイスコア・エラー以外
+      if( state != PALPARK_FINISH_HIGHSOCRE && 
+          state != PALPARK_FINISH_ERROR )
+      {
+        isSet = TRUE;
+      }
+      break;
+
+    case PALPARK_FINISH_HIGHSOCRE: // (1)  //捕獲した＋ハイスコア
+      //エラー以外
+      if( state != PALPARK_FINISH_ERROR )
+      {
+        isSet = TRUE;
+      }
+      break;
+
+    case PALPARK_FINISH_NO_GET:    // (2)  //捕獲できなかった
+      //キャンセルかエラーの時
+      if( state != PALPARK_FINISH_NORMAL &&
+          state != PALPARK_FINISH_HIGHSOCRE && 
+          state != PALPARK_FINISH_ERROR )
+      {
+        isSet = TRUE;
+      }
+      break;
+
+    case PALPARK_FINISH_ERROR:     // (3)  //エラー終了
+      //エラーは絶対
       isSet = TRUE;
+      break;
+
+    case PALPARK_FINISH_CANCEL:    // (4)  //キャンセル終了
+      //一番優先度が低い
+      if( state != PALPARK_FINISH_NO_GET &&
+          state != PALPARK_FINISH_NORMAL &&
+          state != PALPARK_FINISH_HIGHSOCRE && 
+          state != PALPARK_FINISH_ERROR )
+      {
+        isSet = TRUE;
+      }
+      break;
     }
-    break;
-
-  case PALPARK_FINISH_ERROR:     // (3)  //エラー終了
-    //エラーは絶対
-    isSet = TRUE;
-    break;
-
-  case PALPARK_FINISH_CANCEL:    // (4)  //キャンセル終了
-    //一番優先度が低い
-    if( state != PALPARK_FINISH_NO_GET &&
-        state != PALPARK_FINISH_NORMAL &&
-        state != PALPARK_FINISH_HIGHSOCRE && 
-        state != PALPARK_FINISH_ERROR )
+    
+    if( isSet == TRUE )
     {
-      isSet = TRUE;
+      MB_TPrintf( "SetFinishState Set!!![%d->%d]\n",nowState,state );
+      MISC_SetPalparkFinishState( work->miscSave , state );
     }
-    break;
-  }
-  
-  if( isSet == TRUE )
-  {
-    MB_TPrintf( "SetFinishState Set!!![%d->%d]\n",nowState,state );
-    MISC_SetPalparkFinishState( work->miscSave , state );
   }
 }
 
@@ -1521,6 +1534,7 @@ static void MB_PARENT_SaveInit( MB_PARENT_WORK *work )
   
   MB_PARENT_SaveInitPoke( work );
   //スコアチェック
+  if( work->mode == MPM_POKE_SHIFTER )
   {
     const u16 nowScore = MISC_GetPalparkHighscore(work->miscSave);
     const u16 newScore = MB_COMM_GetScore( work->commWork );
@@ -2086,7 +2100,11 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
   case MPMS_CHECK_SAVE:
     if( work->isPostMoviePoke == TRUE || work->isPostMovieCapsule == TRUE )
     {
-      work->state = MPS_WAIT_CRC_CHECK;
+      const BOOL ret = MB_COMM_Send_Flag( work->commWork , MCFT_MOVIE_START_SAVE_CHECK , 0 );
+      if( ret == TRUE )
+      {
+        work->state = MPS_WAIT_CRC_CHECK;
+      }
     }
     else
     {
@@ -2146,13 +2164,19 @@ static GFL_PROC_RESULT MB_PARENT_ProcInit( GFL_PROC * proc, int * seq , void *pw
     {
       MB_TPrintf("Boot mode poke shifter!\n");
       initWork->mode = MPM_POKE_SHIFTER;
+      initWork->gameData = GAMEDATA_Create( HEAPID_MULTIBOOT );
     }
-    initWork->gameData = GAMEDATA_Create( HEAPID_MULTIBOOT );
   }
   else
   {
     initWork = pwk;
   }
+  
+  if( initWork->mode == MPM_MOVIE_TRANS )
+  {
+    initWork->gameData = GAMEDATA_Create( HEAPID_MULTIBOOT );
+  }
+  
   work->heapId = HEAPID_MULTIBOOT;
   work->initWork = initWork;
   work->isNetErr = FALSE;
@@ -2175,6 +2199,14 @@ static GFL_PROC_RESULT MB_PARENT_ProcTerm( GFL_PROC * proc, int * seq , void *pw
   {
     GAMEDATA_Delete( work->initWork->gameData );
     GFL_HEAP_FreeMemory( work->initWork );
+  }
+  else
+  {
+    if( work->initWork->mode == MPM_MOVIE_TRANS )
+    {
+      GAMEDATA_Delete( work->initWork->gameData );
+      GFL_HEAP_FreeMemory( work->initWork );
+    }
   }
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_MULTIBOOT );

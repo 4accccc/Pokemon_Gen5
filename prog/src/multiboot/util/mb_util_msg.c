@@ -231,6 +231,7 @@ void MB_MSG_MessageMain( MB_MSG_WORK *msgWork )
   if( msgWork->printHandle != NULL  )
   {
     const BOOL ret = APP_PRINTSYS_COMMON_PrintStreamFunc( &msgWork->printWork , msgWork->printHandle );
+    APP_KEYCURSOR_Main( msgWork->cursorWork , msgWork->printHandle , msgWork->msgWin );
     if( ret == TRUE )
     {
       PRINTSYS_PrintStreamDelete( msgWork->printHandle );
@@ -239,7 +240,6 @@ void MB_MSG_MessageMain( MB_MSG_WORK *msgWork )
     /*
     //if( msgWork->isUseCursor == TRUE )
     {
-      APP_KEYCURSOR_Main( msgWork->cursorWork , msgWork->printHandle , msgWork->msgWin );
     }
     
     if( PRINTSYS_PrintStreamGetState( msgWork->printHandle ) == PRINTSTREAM_STATE_DONE )

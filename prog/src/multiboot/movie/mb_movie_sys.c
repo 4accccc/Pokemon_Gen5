@@ -107,7 +107,7 @@ typedef enum
   MCSS_SAVE_WAIT_SAVE_INIT,
   MCSS_SAVE_SYNC_SAVE_INIT,
   MCSS_SAVE_INIT,
-  MCSS_SAVE_WAIT_FIRST,
+  MCSS_SAVE_WAIT_FIRST,       //ここ移行のステートでセーブメインが動く
   MCSS_SAVE_WAIT_FIRST_SYNC,
   MCSS_SAVE_FIRST_SAVE_LAST,
   MCSS_SAVE_WAIT_SECOND,
@@ -135,6 +135,7 @@ typedef struct
   u32 moviePokeNum;
   u8  saveWaitCnt;
   u16 timeoutCnt;
+  u16 boxConvCnt;
   
   BOOL isSendPoke;
   BOOL isSendCapsule;
@@ -172,7 +173,8 @@ static void MB_MOVIE_TermGraphic( MB_MOVIE_WORK *work );
 static void MB_MOVIE_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
 static void MB_MOVIE_LoadResource( MB_MOVIE_WORK *work );
 
-static void MB_MOVIE_DataConvert( MB_MOVIE_WORK *work );
+static void MB_MOVIE_DataConvertInit( MB_MOVIE_WORK *work );
+static BOOL MB_MOVIE_DataConvertMain( MB_MOVIE_WORK *work );
 static const u16 MB_MOVIE_GetLeastPoke( MB_MOVIE_WORK *work );
 static const u32 MB_MOVIE_GetMoviePokeNum( MB_MOVIE_WORK *work );
 static const BOOL MB_MOVIE_CheckMoviePoke( POKEMON_PASO_PARAM *ppp );
@@ -427,6 +429,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
         work->state = MCS_DATA_CONV;
         MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_09 , work->initData->msgSpeed );
+        MB_MOVIE_DataConvertInit( work );
       }
       else
       {
@@ -436,9 +439,14 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     break;
 
   case MCS_DATA_CONV:
-    MB_MOVIE_DataConvert( work );
-    work->state = MCS_COUNT_POKE;
-    MB_MOVIE_ErrCheck( work , FALSE );
+    if( MB_MOVIE_ErrCheck( work , FALSE ) == FALSE )
+    {
+      if( MB_MOVIE_DataConvertMain( work ) == TRUE )
+      {
+        work->state = MCS_COUNT_POKE;
+        MB_MOVIE_ErrCheck( work , FALSE );
+      }
+    }
     break;
     
   case MCS_LOAD_ERROR:
@@ -457,6 +465,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     break;
   
   case MCS_SEND_COUNT_POKE:
+    if( MB_MOVIE_ErrCheck( work , FALSE ) == FALSE )
     {
       const BOOL flg = MB_COMM_Send_Flag( work->commWork , MCFT_MOVIE_POKE_NUM , work->moviePokeNum );
       if( flg == TRUE )
@@ -474,6 +483,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     break;
 
   case MCS_WAIT_SEND_POKE_SELECT:
+    if( MB_MOVIE_ErrCheck( work , FALSE ) == FALSE )
     {
       if( MB_COMM_IsPostMoviePokeConfirm( work->commWork ) == TRUE )
       {
@@ -493,6 +503,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
   //--------------------------------------------------------
   //転送・保存フェイズ
   case MCS_TRANS_POKE_INIT:
+    if( MB_MOVIE_ErrCheck( work , FALSE ) == FALSE )
     {
       u8 i,j;
       u8 setNum = 0;
@@ -514,6 +525,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
               }
               MB_COMM_AddSendPokeData( work->commWork , work->boxPoke[i][j] );
               //元データのpppを消す
+              MB_DATA_ClearBoxPPP( work->dataWork , i , j );
               PPP_Clear( work->boxPoke[i][j] );
               setNum++;
               if( setNum >= MB_CAP_POKE_NUM )
@@ -558,13 +570,17 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     break;
     
   case MCS_TRANS_POKE_SEND_WAIT:
-    if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE )
+    if( MB_MOVIE_ErrCheck( work , FALSE ) == FALSE )
     {
-      work->state = MCS_TRANS_POKE_INIT;
+      if( MB_COMM_IsPost_PostPoke( work->commWork ) == TRUE )
+      {
+        work->state = MCS_TRANS_POKE_INIT;
+      }
     }
     break;
     
   case MCS_TRANS_POKE_SEND_FINISH:
+    if( MB_MOVIE_ErrCheck( work , FALSE ) == FALSE )
     {
       const BOOL flg = MB_COMM_Send_Flag( work->commWork , MCFT_MOVIE_FINISH_SEND_POKE , 0 );
       if( flg == TRUE )
@@ -576,6 +592,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     break;
     
   case MCS_CHECK_LOCK_CAPSULE:
+    if( MB_MOVIE_ErrCheck( work , FALSE ) == FALSE )
     {
       const BOOL flg = MB_DATA_CheckLockCapsule( work->dataWork );
       const BOOL ret = MB_COMM_Send_Flag( work->commWork , MCFT_MOVIE_HAVE_LOCK_CAPSULE , flg );
@@ -596,26 +613,35 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     break;
     
   case MCS_POST_TRANS_LOCK_CAPSULE:
-    if( MB_COMM_IsPostMovieTransLockCapsule( work->commWork ) == TRUE )
+    if( MB_MOVIE_ErrCheck( work , FALSE ) == FALSE )
     {
-      if( MB_COMM_IsMovieTransLockCapsule( work->commWork ) == TRUE )
+      if( MB_COMM_IsPostMovieTransLockCapsule( work->commWork ) == TRUE )
       {
-        MB_DATA_RemoveLockCapsule( work->dataWork );
-        work->isSendCapsule = TRUE;
-        MB_TPrintf("MB_Child Remove lock capsule!!\n");
+        if( MB_COMM_IsMovieTransLockCapsule( work->commWork ) == TRUE )
+        {
+          MB_DATA_RemoveLockCapsule( work->dataWork );
+          work->isSendCapsule = TRUE;
+          MB_TPrintf("MB_Child Remove lock capsule!!\n");
+        }
+        work->state = MCS_CHECK_SAVE;
       }
-      work->state = MCS_CHECK_SAVE;
     }
     break;
   
   case MCS_CHECK_SAVE:
-    if( work->isSendPoke == TRUE || work->isSendCapsule == TRUE )
+    if( MB_MOVIE_ErrCheck( work , FALSE ) == FALSE )
     {
-      work->state = MCS_CHECK_ROM_CRC_LOAD;
-    }
-    else
-    {
-      work->state = MCS_SAVE_FINISH_WAIT;
+      if( work->isSendPoke == TRUE || work->isSendCapsule == TRUE )
+      {
+        if( MB_COMM_IsPostMovieStartSaveCheck( work->commWork ) == TRUE )
+        {
+          work->state = MCS_CHECK_ROM_CRC_LOAD;
+        }
+      }
+      else
+      {
+        work->state = MCS_SAVE_FINISH_WAIT;
+      }
     }
     break;
     
@@ -881,18 +907,33 @@ static void MB_MOVIE_LoadResource( MB_MOVIE_WORK *work )
 //--------------------------------------------------------------
 //  データの変換
 //--------------------------------------------------------------
-static void MB_MOVIE_DataConvert( MB_MOVIE_WORK *work )
+static void MB_MOVIE_DataConvertInit( MB_MOVIE_WORK *work )
 {
-  u8 i,j;
-  //PPP
-  for( i=0;i<MB_POKE_BOX_TRAY;i++ )
+  work->boxConvCnt = 0;
+}
+
+static BOOL MB_MOVIE_DataConvertMain( MB_MOVIE_WORK *work )
+{
+  u8 i;
+  for( i=0;i<1;i++ )
   {
-    for( j=0;j<MB_POKE_BOX_POKE;j++ )
+    const u8 tray = (work->boxConvCnt)/MB_POKE_BOX_POKE;
+    const u8 pos  = (work->boxConvCnt)%MB_POKE_BOX_POKE;
+    
+    if( tray >= MB_POKE_BOX_TRAY )
     {
-      void *pppSrc = MB_DATA_GetBoxPPP(work->dataWork,i,j);
-      MB_UTIL_ConvertPPP( pppSrc , work->boxPoke[i][j] , work->cardType );
+      MB_TPrintf("Finish conv!!\n");
+      return TRUE;
+    }
+    else
+    {
+      void *pppSrc = MB_DATA_GetBoxPPP(work->dataWork,tray,pos);
+      MB_UTIL_ConvertPPP( pppSrc , work->boxPoke[tray][pos] , work->cardType );
+      work->boxConvCnt++;
+      MB_TPrintf("[%2d][%2d]\n",tray,pos);
     }
   }
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -1088,7 +1129,10 @@ static void MB_MOVIE_SaveTerm( MB_MOVIE_WORK *work )
 //--------------------------------------------------------------
 static void MB_MOVIE_SaveMain( MB_MOVIE_WORK *work )
 {
-	MB_DATA_SaveData( work->dataWork );
+  if( work->subState >= MCSS_SAVE_WAIT_FIRST )
+  {
+  	MB_DATA_SaveData( work->dataWork );
+  }
 
   switch( work->subState )
   {

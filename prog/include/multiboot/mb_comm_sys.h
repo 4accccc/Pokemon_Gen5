@@ -42,6 +42,7 @@ typedef enum
   //映画用 親→子
   MCFT_MOVIE_POKE_TRANS_CONFIRM,
   MCFT_MOVIE_LOCK_CAPSULE_TRANS_CONFIRM,
+  MCFT_MOVIE_START_SAVE_CHECK,
   MCFT_MOVIE_FINISH_MACHINE,
   
   //映画用 子→親
@@ -147,6 +148,7 @@ extern const BOOL MB_COMM_IsPostMovieHaveLockCapsule( const MB_COMM_WORK* commWo
 extern const BOOL MB_COMM_IsMovieHaveLockCapsule( const MB_COMM_WORK* commWork );
 extern const BOOL MB_COMM_IsPostMovieTransLockCapsule( const MB_COMM_WORK* commWork );
 extern const BOOL MB_COMM_IsMovieTransLockCapsule( const MB_COMM_WORK* commWork );
+extern const BOOL MB_COMM_IsPostMovieStartSaveCheck( const MB_COMM_WORK* commWork );
 extern const BOOL MB_COMM_IsPostMovieFinishMachine( const MB_COMM_WORK* commWork );
 
 extern void MB_COMM_InitSendGameData( MB_COMM_WORK* commWork , void* gameData , u32 size );

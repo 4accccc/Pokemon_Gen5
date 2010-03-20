@@ -118,7 +118,7 @@ typedef enum
   MCSS_SAVE_WAIT_SAVE_INIT,
   MCSS_SAVE_SYNC_SAVE_INIT,
   MCSS_SAVE_INIT,
-  MCSS_SAVE_WAIT_FIRST,
+  MCSS_SAVE_WAIT_FIRST,       //ここ移行のステートでセーブメインが動く
   MCSS_SAVE_WAIT_FIRST_SYNC,
   MCSS_SAVE_FIRST_SAVE_LAST,
   MCSS_SAVE_WAIT_SECOND,
@@ -1145,7 +1145,10 @@ static void MB_CHILD_SaveTerm( MB_CHILD_WORK *work )
 //--------------------------------------------------------------
 static void MB_CHILD_SaveMain( MB_CHILD_WORK *work )
 {
-	MB_DATA_SaveData( work->dataWork );
+  if( work->subState >= MCSS_SAVE_WAIT_FIRST )
+  {
+    MB_DATA_SaveData( work->dataWork );
+  }
 
   switch( work->subState )
   {
