@@ -389,7 +389,7 @@ static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* game
 
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_data));
     
-    LOCATION_DEBUG_SetDefaultPos(&work->loc_req, gameInitWork->mapid);
+    LOCATION_SetDefaultPos(&work->loc_req, gameInitWork->mapid);
 
     GAME_FieldFirstInit( gameSystem );  // フィールド情報の初期化
     break;
@@ -1297,7 +1297,7 @@ GMEVENT* DEBUG_EVENT_ChangeMapDefaultPos( GAMESYS_WORK* gameSystem,
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
-  LOCATION_DEBUG_SetDefaultPos( &(work->loc_req), zoneID );
+  LOCATION_SetDefaultPos( &(work->loc_req), zoneID );
   work->exit_type = EXIT_TYPE_NONE;
 
   return event;
@@ -1322,7 +1322,7 @@ GMEVENT* DEBUG_EVENT_QuickChangeMapDefaultPos( GAMESYS_WORK * gameSystem,
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
-  LOCATION_DEBUG_SetDefaultPos( &(work->loc_req), zoneID );
+  LOCATION_SetDefaultPos( &(work->loc_req), zoneID );
   work->exit_type = EXIT_TYPE_NONE;
 
   return event;
@@ -1430,7 +1430,7 @@ GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK* gameSystem )
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
   WARPDATA_GetWarpLocation( warpID, &(work->loc_req) );
-  LOCATION_DEBUG_SetDefaultPos( &(work->loc_req), work->loc_req.zone_id );
+  LOCATION_SetDefaultPos( &(work->loc_req), work->loc_req.zone_id );
   work->loc_req.type = LOCATION_TYPE_DIRECT;
   work->exit_type    = EXIT_TYPE_NONE;
 
@@ -1882,7 +1882,7 @@ static void MakeNewLocation(const EVENTDATA_SYSTEM * evdata, const LOCATION * lo
   if (!result) {
     //デバッグ用処理：本来は不要なはず
     OS_Printf("connect: debug default position\n");
-    LOCATION_DEBUG_SetDefaultPos(loc_tmp, loc_req->zone_id);
+    LOCATION_SetDefaultPos(loc_tmp, loc_req->zone_id);
   }
 }
 

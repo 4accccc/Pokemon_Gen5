@@ -211,30 +211,12 @@ void LOCATION_SetRailLocation( LOCATION * loc, const RAIL_LOCATION * location )
 
 
 
-#ifdef PM_DEBUG
-//----------------------------------------------------------------------------
-/**
- *	@brief  純粋なレールマップチェック  （ハイブリッドを含まない）
- *	  デバック用のチェックなので、これでOKとする
- */
-//-----------------------------------------------------------------------------
-static BOOL IsRailMap( u16 zone_id )
-{
-  switch( zone_id )
-  {
-  case ZONE_ID_C03:
-  case ZONE_ID_H01:
-  case ZONE_ID_C03P02:
-  case ZONE_ID_D09:
-    return TRUE;
-  }
-
-  return FALSE;
-}
 
 //------------------------------------------------------------------
+// ZONEの基準位置にジャンプ
+// 　空を飛ぶ、テレポートなどで使用
 //------------------------------------------------------------------
-void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
+void LOCATION_SetDefaultPos(LOCATION * loc, u16 zone_id)
 {
   VecFx32 pos;
   
@@ -244,7 +226,7 @@ void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
 	loc->exit_id = DOOR_ID_JUMP_CODE;
 	loc->dir_id = 0;
   loc->exit_ofs = LOCATION_DEFAULT_EXIT_OFS;
-  if( IsRailMap(zone_id) )
+  if( ZONEDATA_IsRailOnlyMap(zone_id) )
   {
     // レール用初期化
     ZONEDATA_GetStartRailPos(zone_id, &pos);
@@ -262,7 +244,6 @@ void LOCATION_DEBUG_SetDefaultPos(LOCATION * loc, u16 zone_id)
     loc->location_pos.pos = pos;
   }
 }
-#endif
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

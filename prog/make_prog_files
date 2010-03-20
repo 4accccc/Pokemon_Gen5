@@ -378,6 +378,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/move_pokemon.c \
         field/field_skill.c \
         field/scrcmd_network.c \
+        field/scrcmd_rebattle_trainer.c \
         field/event_cg_wireless.c \
         field/event_fieldmap_menu.c \
 				field/event_shortcut_menu.c \
