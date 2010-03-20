@@ -9,6 +9,7 @@
 #ifndef ZONE_R05R0101_EVC_H
 #define ZONE_R05R0101_EVC_H
 
+#define R05R0101_MAID_01                   0
 
 #endif //ZONE_R05R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r05r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

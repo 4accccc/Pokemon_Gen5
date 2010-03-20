@@ -1,6 +1,6 @@
 
 //======================================================================
-//                w17.ev
+//                appraisal_scr.ev
 //
 //    スクリプトファイル：w17用
 //
@@ -9,8 +9,8 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "../../message/dst/script/msg_w17.h"
-  //.include  "w17.h"
+  .include  "../../message/dst/script/msg_appraisal_scr.h"
+  .include  "appraisal_scr_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,7 +19,9 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_w17
+_EVENT_DATA		ev_appraisal_maid_01
+_EVENT_DATA		ev_appraisal_gentleman_01
+_EVENT_DATA		ev_appraisal_fighterm_01
 _EVENT_DATA_END
 
 
@@ -30,9 +32,268 @@ _EVENT_DATA_END
 //  _END
 
 /**************************************************************/
-/*                                                            */
+/*			R05R0101 グルメ鑑定士							  */
 /**************************************************************/
-ev_w17:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START		ev_appraisal_maid_01
+_TALK_OBJ_START()
+{
+	DEFINE_LOCAL LWK_ITEM
+	DEFINE_LOCAL LWK_MONEY
+	
+	//初回話しかけ時
+	IF FLAG_OFF( FE_R05R0101_APPRAISAL_TALK) THEN
 
+		//ハアイ！　アタイは　しがないメイド！
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_01 )
+		_MSGWIN_CLOSE()
+		
+		//========================================/
+		
+		//初回話しかけフラグセット
+		_FLAG_SET( FE_R05R0101_APPRAISAL_TALK )
+		
+		//========================================/
+
+	ENDIF
+
+	//なんか　アンタの　バッグから
+	_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_02 )
+	_MSGWIN_CLOSE()
+
+	//バッグからアイテムを選択
+	_MAP_FADE_BLACK_OUT()
+	_MAP_FADE_END_CHECK()
+	_FIELD_CLOSE()
+
+	_CALL_BAG_PROC( SCR_BAG_MODE_SELECT, SCR_PROC_RETMODE_NORMAL, LWK_ITEM )
+
+	_FIELD_OPEN()
+	_MAP_FADE_BLACK_IN()
+	_MAP_FADE_END_CHECK()
+
+	//鑑定
+	_ITEMJUDGE( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_GOURMET, LWK_MONEY )
+
+	//興味無しの場合
+	IF $LWK_MONEY == 0 THEN
+
+		//ウーン　コイツは　ちょっと
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_06 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	//興味ありの場合
+	ELSE
+		
+		//金額・アイテム名を格納
+		_NUMBER( 1, LWK_MONEY, 8 )
+		_ITEM_NAME( 0,LWK_ITEM )
+	
+		//ワーオ！　ナイス　スメル！
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_03 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
+		
+		//譲る場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+			
+			//～を渡して　～円をもらった
+			_SYSWIN_MSG( msg_appraisal_g_04, POS_DOWN )
+			_SYSWIN_CLOSE()
+		
+			//サンキュー！
+			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_05 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		//譲らない場合
+		ELSE
+		
+			//チェ　まあ　しかたないかー
+			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_07 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+	
+	ENDIF
+}
+EVENT_END
+
+/**************************************************************/
+/*			C07PC0101 鉱物鑑定士							  */
+/**************************************************************/
+EVENT_START		ev_appraisal_gentleman_01
+_TALK_OBJ_START()
+{
+	DEFINE_LOCAL LWK_ITEM
+	DEFINE_LOCAL LWK_MONEY
+	
+	//初回話しかけ時
+	IF FLAG_OFF( FE_C07PC0101_APPRAISAL_TALK) THEN
+
+		//ワシ　こうぶつが　だいこうぶつなの
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_01 )
+		_MSGWIN_CLOSE()
+		
+		//========================================/
+		
+		//初回話しかけフラグセット
+		_FLAG_SET( FE_C07PC0101_APPRAISAL_TALK )
+		
+		//========================================/
+
+	ENDIF
+
+	//ワシの　いしを　グラつかせる
+	_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_02 )
+	_MSGWIN_CLOSE()
+
+	//バッグからアイテムを選択
+	_MAP_FADE_BLACK_OUT()
+	_MAP_FADE_END_CHECK()
+	_FIELD_CLOSE()
+
+	_CALL_BAG_PROC( SCR_BAG_MODE_SELECT, SCR_PROC_RETMODE_NORMAL, LWK_ITEM )
+
+	_FIELD_OPEN()
+	_MAP_FADE_BLACK_IN()
+	_MAP_FADE_END_CHECK()
+
+	//鑑定
+	_ITEMJUDGE( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA, LWK_MONEY )
+
+	//興味無しの場合
+	IF $LWK_MONEY == 0 THEN
+
+		//え？　なんじゃこれ？
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_06 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	//興味ありの場合
+	ELSE
+		
+		//金額・アイテム名を格納
+		_NUMBER( 1, LWK_MONEY, 8 )
+		_ITEM_NAME( 0,LWK_ITEM )
+	
+		//グラグラくるの
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_03 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
+		
+		//譲る場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+			
+			//～を渡して　～円をもらった
+			_SYSWIN_MSG( msg_appraisal_m_04, POS_DOWN )
+			_SYSWIN_CLOSE()
+		
+			//こうしょう　せいりつじゃな
+			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_05 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		//譲らない場合
+		ELSE
+		
+			//いつか　ゆずってほしいのー
+			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_07 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+	
+	ENDIF
+}
+EVENT_END
+
+/**************************************************************/
+/*			R05R0101 財宝鑑定士								  */
+/**************************************************************/
+EVENT_START		ev_appraisal_fighterm_01
+_TALK_OBJ_START()
+{
+	DEFINE_LOCAL LWK_ITEM
+	DEFINE_LOCAL LWK_MONEY
+	
+	//初回話しかけ時
+	IF FLAG_OFF( FE_T04R0101_APPRAISAL_TALK) THEN
+
+		//オレ　ごらんのとおりの　リッチな　だいふごう
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_01 )
+		_MSGWIN_CLOSE()
+		
+		//========================================/
+		
+		//初回話しかけフラグセット
+		_FLAG_SET( FE_T04R0101_APPRAISAL_TALK )
+		
+		//========================================/
+
+	ENDIF
+
+	//だいふごうの　オレが
+	_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_02 )
+	_MSGWIN_CLOSE()
+
+	//バッグからアイテムを選択
+	_MAP_FADE_BLACK_OUT()
+	_MAP_FADE_END_CHECK()
+	_FIELD_CLOSE()
+
+	_CALL_BAG_PROC( SCR_BAG_MODE_SELECT, SCR_PROC_RETMODE_NORMAL, LWK_ITEM )
+
+	_FIELD_OPEN()
+	_MAP_FADE_BLACK_IN()
+	_MAP_FADE_END_CHECK()
+
+	//鑑定
+	_ITEMJUDGE( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_RICH, LWK_MONEY )
+
+	//興味無しの場合
+	IF $LWK_MONEY == 0 THEN
+
+		//これは　ちょっと　ちがうなー
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_06 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	//興味ありの場合
+	ELSE
+		
+		//金額・アイテム名を格納
+		_NUMBER( 1, LWK_MONEY, 8 )
+		_ITEM_NAME( 0,LWK_ITEM )
+	
+		//ゆずってくれないかね？　かね？
+		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_03 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		_MSGWIN_CLOSE()
+		
+		//譲る場合
+		IF $SCWK_ANSWER == SCR_YES THEN
+			
+			//～を渡して　～円をもらった
+			_SYSWIN_MSG( msg_appraisal_r_04, POS_DOWN )
+			_SYSWIN_CLOSE()
+		
+			//いいものが　てにはいったよ！
+			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_05 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		//譲らない場合
+		ELSE
+		
+			//そのどうぐ　きがかわったら
+			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_07 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		
+		ENDIF
+	
+	ENDIF
+}
+EVENT_END
