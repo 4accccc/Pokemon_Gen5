@@ -362,27 +362,20 @@
   .endm
 
 //======================================================================
-//  表彰状＆路線図アプリ呼び出し
+//  
 //======================================================================
 //--------------------------------------------------------------
 /**
- * @brief 表彰状＆路線図アプリ呼び出し
+ * @brief 最初の３体選択
  *
- * @param demo_id
- * @param pattern
+ * @param ret_wk
  */
 //--------------------------------------------------------------
   .macro _ASM_FIRST_POKE_SELECT_CALL ret_wk
   
-  _ASM_MAP_FADE_BLACK_OUT
-  _ASM_MAP_FADE_END_CHECK
   _ASM_FIELD_CLOSE
-  
   _ASM_CALL_FIRST_POKE_SELECT \ret_wk
-
   _ASM_FIELD_OPEN
-  _ASM_MAP_FADE_BLACK_IN
-  _ASM_MAP_FADE_END_CHECK
  
   .endm
 
