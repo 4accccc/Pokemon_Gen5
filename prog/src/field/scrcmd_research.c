@@ -94,8 +94,7 @@ VMCMD_RESULT EvCmdResearchTeamRankUp( VMHANDLE *core, void *wk )
   rank = MISC_CrossComm_GetResearchTeamRank( misc );
 
   // すでに最高ランク
-  if( RESEARCH_TEAM_RANK_5 <= rank )
-  {
+  if( RESEARCH_TEAM_RANK_5 <= rank ) {
     GF_ASSERT(0); // これ以上は上がらない
     return VMCMD_RESULT_CONTINUE;
   }
@@ -103,6 +102,9 @@ VMCMD_RESULT EvCmdResearchTeamRankUp( VMHANDLE *core, void *wk )
   // ランクアップ
   rank++;
   MISC_CrossComm_SetResearchTeamRank( misc, rank );
+
+  // ビーコン送信バッファに反映させる
+  GAMEBEACON_SendDataUpdate_ResearchTeamRank( rank );
 
   // DEBUG:
   OS_TFPrintf( 3, "_RESEARCH_TEAM_RANK_UP ==> %d\n", rank );

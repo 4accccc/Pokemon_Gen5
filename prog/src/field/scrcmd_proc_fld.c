@@ -168,13 +168,14 @@ static void CallBackFunc_byHelloMsgIn( void* wk )
 {
   FREE_INPUT_CALLBACK_WORK* work = (FREE_INPUT_CALLBACK_WORK*)wk;
 
-  // 入力結果をセーブデータに反映
+  // 入力結果をセーブデータとビーコン送信データに反映
   if( work->nameInParam.cancel == FALSE )
   {
     SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( work->gameData );
     MISC*              misc = SaveData_GetMisc( save );
 
     MISC_CrossComm_SetSelfIntroduction( misc, work->nameInParam.strbuf );
+    GAMEBEACON_SendDataUpdate_SelfIntroduction();
   }
 
   // 入力を確定したかどうかをワークに返す
