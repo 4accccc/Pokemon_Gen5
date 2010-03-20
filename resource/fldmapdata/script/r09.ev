@@ -23,39 +23,46 @@ _EVENT_DATA		ev_bg_r09_sign1_01
 _EVENT_DATA		ev_bg_r09_sign2_01
 _EVENT_DATA		ev_bg_r09_sign3_01
 _EVENT_DATA		ev_bg_r09_sign4_01
-_EVENT_DATA		ev_r09_badman_01
-_EVENT_DATA		ev_scene_r09_badman_01
+_EVENT_DATA		ev_r09_baseballm_01
+_EVENT_DATA		ev_scene_r09_baseballm_01
+_EVENT_DATA		ev_init_r09
 _EVENT_DATA_END
 
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
 /**************************************************************/
-//ev_r09_flag_change:
-//  _END
+INIT_EVENT_START	ev_init_r09
+	IF $WK_SCENE_R09 == 1 THEN
+		_OBJ_POS_CHANGE(R09_BASEBALLM_01,342, 0,172, DIR_DOWN)
+	ELSE
+	ENDIF		
+INIT_EVENT_END
 /**************************************************************/
 /*  R09 バッドマンがアイテムをくれるイベント                  */
 /**************************************************************/
-EVENT_START   ev_r09_badman_01
+EVENT_START   ev_r09_baseballm_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r09_badman_02)
 EVENT_END
 /**************************************************************/
 /*  R09 バッドマンがアイテムをくれるイベント                  */
 /**************************************************************/
-EVENT_START   ev_scene_r09_badman_01
+EVENT_START   ev_scene_r09_baseballm_01
 	
 	IF FLAG_OFF(FE_R09_ITEMGET_01) THEN
-		_TIME_WAIT(4)
-		_OBJ_ANIME(R09_BADMAN_01,anm_common_gyoe)
+		_TIME_WAIT(8)
+		_OBJ_ANIME(R09_BASEBALLM_01,anm_common_gyoe)
 		_OBJ_ANIME_WAIT()
 		
-		_TIME_WAIT(4)
-		_BALLOONWIN_OBJMSG_POS(msg_r09_badman_01,R09_BADMAN_01,POS_DR)
+		_OBJ_ANIME(R09_BASEBALLM_01,anm_common_turn_l)
+		_OBJ_ANIME_WAIT()
+		
+		_TIME_WAIT(12)
+		_BALLOONWIN_OBJMSG_POS(msg_r09_badman_01,R09_BASEBALLM_01,POS_DR)
 		_MSGWIN_CLOSE()
 		
-		_OBJ_ANIME(R09_BADMAN_01,anm_common_turn_l)
-		_OBJ_ANIME_WAIT()
-		
 		_TIME_WAIT(8)
+		_OBJ_ANIME(R09_BASEBALLM_01,anm_baseballm_shot_01)
+		_TIME_WAIT(20)
 		
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
 		_OBJ_ANIME_WAIT()
@@ -65,12 +72,12 @@ EVENT_START   ev_scene_r09_badman_01
 		
 		_TIME_WAIT(4)
 		
-		_BALLOONWIN_OBJMSG_POS( msg_r09_badman_02, R09_BADMAN_01, POS_DR )
+		_BALLOONWIN_OBJMSG_POS( msg_r09_badman_02, R09_BASEBALLM_01, POS_DR )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
 	ELSE
-		_BALLOONWIN_OBJMSG_POS(msg_r09_badman_02,R09_BADMAN_01,POS_DR)
+		_BALLOONWIN_OBJMSG_POS(msg_r09_badman_02,R09_BASEBALLM_01,POS_DR)
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
@@ -154,3 +161,13 @@ _ANIME_LABEL	anm_common_turn_u
 
 	_ANIME_DATA AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// なげつけるアニメ                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_baseballm_shot_01
+	
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+

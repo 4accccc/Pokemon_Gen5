@@ -21,7 +21,7 @@
 #define R09_FLD_ITEM_01                    6
 #define R09_FLD_ITEM_02                    7
 #define R09_FLD_ITEM_03                    8
-#define R09_BADMAN_01                      9
+#define R09_BASEBALLM_01                   9
 
 #endif //ZONE_R09_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r09.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
