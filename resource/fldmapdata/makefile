@@ -15,8 +15,7 @@ SUBDIRS	= flagwork \
 
 else
 
-SUBDIRS	=	zonetable/zoneindex \
-					flagwork \
+SUBDIRS	=	flagwork \
 					area_data \
 					land_data \
 					land_data_patch \

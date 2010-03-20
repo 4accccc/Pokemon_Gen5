@@ -15,7 +15,7 @@ USERS = kawada_koji
 #Å¶Ç±Ç±Ç…çÏê¨Ç∑ÇÈnarcñºÇèëÇ≠
 #------------------------------------------------------------------------------
 targetname_data    = zukan_data
-gmmname            = zkn_height.gmm zkn_weight.gmm zkn_comment_00.gmm zkn_comment_01.gmm zkn_type.gmm
+gmmname            = zkn_height.gmm zkn_weight.gmm zkn_comment_00.gmm zkn_comment_01.gmm zkn_type.gmm zkn_form.gmm
 targetname_area    = zukan_area
 
 #------------------------------------------------------------------------------
@@ -40,6 +40,9 @@ input_encount             = $(PROJECT_RSCDIR)/encount/encount_wb.csv
 input_monsno              = $(PROJECT_ROOT)tools/hash/monsno_hash.rb
 input_area_list           = zkn_area_file_list.lst
 input_data_sort_aiueo_idx = zkn_sort_aiueo_idx.h
+input_townmap             = $(PROJECT_RSCDIR)/townmap/data/townmap_data.xls
+input_zonetable           = $(PROJECT_RSCDIR)/fldmapdata/zonetable/zonetable.xls
+input_zoned               = $(PROJECT_RSCDIR)/fldmapdata/zonetable/zone_id.h
 
 # àÀë∂Ç∑ÇÈÉtÉ@ÉCÉã
 sources_data        = $(input_personal) \
@@ -80,6 +83,9 @@ $(GMMDIR)/zkn_comment_01.gmm: zkn_comment_01.gmm
 
 $(GMMDIR)/zkn_type.gmm: zkn_type.gmm
 	$(COPY) zkn_type.gmm $(GMMDIR)
+
+$(GMMDIR)/zkn_form.gmm: zkn_form.gmm
+	$(COPY) zkn_form.gmm $(GMMDIR)
 
 $(TARGETDIR)/$(targetname_area).narc: $(targetname_area).narc
 	$(COPY) $(targetname_area).narc $(TARGETDIR)

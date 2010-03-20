@@ -31,6 +31,23 @@ use Encode;
 $encount_csv_file_name   = $ARGV[0];  # ????.csv  # shiftjis
 $personal_rb_file_name   = $ARGV[1];  # ????.rb   # shiftjis
 
+# 複数のゾーンIDをまとめた組(グループgroupと呼ぶことにする)を作成するのに必要なファイル
+# 読み込むファイル
+$excel_converter_file_name      = $ENV{"PROJECT_ROOT"}."/tools/exceltool/ExcelSeetConv.exe";            # Excelコンバータ
+$townmap_xls_file_name          = $ENV{"PROJECT_ROOT"}."/resource/townmap/data/townmap_data.xls";       # タウンマップ
+$zonetable_xls_file_name        = $ENV{"PROJECT_ROOT"}."/resource/fldmapdata/zonetable/zonetable.xls";  # ゾーン
+$zoneid_file_name               = $ENV{"PROJECT_ROOT"}."/resource/fldmapdata/zonetable/zone_id.h";      # ゾーンID  # shiftjis
+# 中間ファイル
+$temp_townmap_xls_file_name             = "townmap_data.xls";  # ExcelSeetConv.exeがパス付きでファイル名を渡すとうまくコンバートして
+$temp_zonetable_xls_file_name           = "zonetable.xls";     # くれなかったので、一旦作業ディレクトリにコピーすることにした。
+$temp_townmap_csv_file_name_shiftjis    = "zkn_encount_make_pl_temp_townmap_shiftjis.csv";     # shiftjis
+$townmap_csv_file_name                  = "zkn_encount_make_pl_temp_townmap.csv";              # utf8
+                   # tempと付いていないけど中間ファイルなので不要になったら削除すること
+$temp_zonetable_csv_file_name_shiftjis  = "zkn_encount_make_pl_temp_zonetable_shiftjis.csv";   # shiftjis
+$zonetable_csv_file_name                = "zkn_encount_make_pl_temp_zonetable.csv";            # utf8
+                   # tempと付いていないけど中間ファイルなので不要になったら削除すること 
+$temp_zoneid_file_name                  = "zkn_encount_make_pl_temp_zoneid.h";                # utf8 
+
 # 定数
 # encount
 #$encount_csv_row_data_start           =   0;  # 最初から最後まで全て読み込むようにし、開始終了の指定はしないことにする。
@@ -84,20 +101,37 @@ $place_bitflag_fishing_sp = 0b01000000;
 
 # その他
 # hash
-%monsno_hash = ();  # ポケモン名からMONSNOを得るためのハッシュ  # 使用しなかった
+%monsno_hash = ();  # ポケモン名からMONSNOを得るためのハッシュ  # %mons_tbl_idx_hashを使用したので、%monsno_hashは使用しなかった
+
+# monsの一つの季節のデータ
+$mons_col_season_data_num;  # = 1 + $zone_num;  # unknown, ゾーン0, ゾーン1, ..., ゾーンzone_num-1  # unknownが0のとき不明でない、1のとき不明
+$mons_col_season_ofs_unknown      = 0;  # その季節がunknownか否か
+$mons_col_season_ofs_zone_start   = 1;  # その季節におけるゾーンごとの生息地情報の開始位置
+
+$mons_col_group_season_data_num;  # = 1 + $lead_zonename_num;  # unknown, グループ0, グループ1, ..., グループlead_zonename_num-1  # unknownが0のとき不明でない、1のとき不明
+$mons_col_group_season_ofs_unknown     = 0;  # その季節がunknownか否か
+$mons_col_group_season_ofs_zone_start  = 1;  # その季節におけるグループごとの生息地情報の開始位置
 
 # mons
 $mons_num;
 @mons_tbl = ();
 $mons_col_monsname       = 0;
 $mons_col_monsno         = 1;
-$mons_col_unknown        = 2;
-$mons_col_year           = 3;
-$mons_col_spring         = 4;
-$mons_col_summer;      # = $mons_col_spring + $zone_num;
-$mons_col_autumn;      # = $mons_col_summer + $zone_num;
-$mons_col_winter;      # = $mons_col_autumn + $zone_num;
-$mons_col_end;         # = $mons_col_winter + $zone_num;
+$mons_col_year           = 2;  # 0のとき一年中同じでない、1のとき一年中同じ(なので春夏秋冬全てに同じデータが入っている)  # これは途中経過なのでyearには値をいれず放置した。mons_col_group_のyearには値を入れた。
+$mons_col_spring         = 3;                                             # これは途中経過なのでunknownには値をいれず放置した。mons_col_group_のunknownには値を入れた。
+$mons_col_summer;      # = $mons_col_spring + $mons_col_season_data_num;  # これは途中経過なのでunknownには値をいれず放置した。mons_col_group_のunknownには値を入れた。
+$mons_col_autumn;      # = $mons_col_summer + $mons_col_season_data_num;  # これは途中経過なのでunknownには値をいれず放置した。mons_col_group_のunknownには値を入れた。
+$mons_col_winter;      # = $mons_col_autumn + $mons_col_season_data_num;  # これは途中経過なのでunknownには値をいれず放置した。mons_col_group_のunknownには値を入れた。
+$mons_col_end;         # = $mons_col_winter + $mons_col_season_data_num;
+
+$mons_col_group_year;     # = $mons_col_end;
+$mons_col_group_start;    # = $mons_col_group_year +1;
+$mons_col_group_spring;   # = $mons_col_group_start;
+$mons_col_group_summer;   # = $mons_col_group_spring + $mons_col_group_season_data_num;
+$mons_col_group_autumn;   # = $mons_col_group_summer + $mons_col_group_season_data_num;
+$mons_col_group_winter;   # = $mons_col_group_autumn + $mons_col_group_season_data_num;
+$mons_col_group_end;      # = $mons_col_group_winter + $mons_col_group_season_data_num;
+
 %mons_tbl_idx_hash = ();  # ポケモン名からmons_tblのインデックスを得るためのハッシュ
 $mons_area_pre_file_name  = "zkn_area_monsno_";  # リトルエンディアンのバイナリ
 $mons_area_post_file_name = ".dat";              # 例：zkn_area_monsno_001.dat
@@ -107,7 +141,7 @@ $debug_mons_file_name = "debug_zkn_encount_make_mons.csv";  # shiftjis
 $zoneseason_num;  # 「ゾーンAの春」「ゾーンAの夏」を別ものとして数えたときの個数
 @zoneseason_tbl = ();
 $zoneseason_col_zonename          = 0;
-$zoneseason_col_zoneid            = 1;  # zone_hashで決めたゾーンID
+$zoneseason_col_zoneid            = 1;  # zone_hashで決めた「このファイル内で決めたゾーンID」の値
 $zoneseason_col_season            = 2;
 $zoneseason_col_ground_l_start    = 3;
 $zoneseason_col_ground_h_start    = $zoneseason_col_ground_l_start     + $encount_csv_col_ground_l_num;
@@ -118,15 +152,30 @@ $zoneseason_col_fishing_start     = $zoneseason_col_water_sp_start     + $encoun
 $zoneseason_col_fishing_sp_start  = $zoneseason_col_fishing_start      + $encount_csv_col_fishing_num;
 $zoneseason_col_end               = $zoneseason_col_fishing_sp_start   + $encount_csv_col_fishing_sp_num; 
 $debug_zoneseason_file_name = "debug_zkn_encount_make_zoneseason.csv";  # shiftjis
-$zone_num;  # 「ゾーンAの春」「ゾーンAの夏」を同じものとして数えたときの個数
-%zone_hash = ();  # ゾーン名からゾーンIDを得るためのハッシュ
-                  # ゾーンIDはこのファイル内で決めたものなので、pokemon_wbのものと値が異なる可能性あり！
-                  # ゾーンIDは@mons_tblのcolumnの個数にも関わっているので、必ず0<=ゾーンID<zone_numを満たすこと！
+$zone_num;  # 「ゾーンAの春」「ゾーンAの夏」を同じものとして数えたときの個数。
+            # encount.csvに出てきたゾーンの個数なので、pokemon_wbに存在する全ゾーンの個数とは異なります。
+%zone_hash = ();  # ゾーン名から「このファイル内で決めたゾーンID」を得るためのハッシュ
+                  # 「このファイル内で決めたゾーンID」はこのファイル内で決めたものなので、pokemon_wbのものと値が異なります。
+                  # 「このファイル内で決めたゾーンID」は@mons_tblのcolumnの個数にも関わっているので、
+                  # 必ず0<=「このファイル内で決めたゾーンID」<zone_numを満たすこと。
 @zoneid_zonename_tbl = ();  # zone_hashを用いて $zoneid_zonename_tbl[ $zone_hash{ ゾーン名 } ] = ゾーン名 となるような配列を作成する
-%zone_hash_for_season = ();  # ゾーンごとの季節を記録しておく  # $zone_numカウント用
+%zone_hash_for_season = ();  # ゾーンごとの季節を記録しておく。$zone_hash_for_seazon{ ゾーン名 } = 季節のビットが立った値  # $zone_numカウント用
 
 # MONSNOごとの分布データのファイルのリスト
 $mons_area_file_list_name = "zkn_area_file_list.lst";  # shiftjis
+
+# pokemon_wbのゾーンID
+%zonename_to_real_zoneid_hash = ();  # ゾーン名から「pokemon_wbで決めたゾーンID」を得るためのハッシュ
+
+# ゾーン名からグループ名を得るためのハッシュ
+%zonename_to_group_hash = ();
+# グループ名からグループの代表ゾーン名を得るためのハッシュ
+%group_to_lead_zonename_hash = ();
+# 代表ゾーン名の個数、配列
+$lead_zonename_num;
+@lead_zonename_tbl = ();
+%lead_zonename_hash = ();  # $lead_zonename_hash{ 代表ゾーン名 } = @lead_zonename_tblの配列添え字 となるようなハッシュ
+
 
 ##=============================================================================
 =pod
@@ -139,6 +188,9 @@ $encount_csv_file_name = $temp_encount_csv_file_name;  # これ以降に使用�
 
 &EncodeFileFromShiftjisToUtf8( $personal_rb_file_name, $temp_personal_rb_file_name );
 $personal_rb_file_name = $temp_personal_rb_file_name;  # これ以降に使用するファイルを差し替えておく
+
+# グループ前処理
+&InitGroup();
 
 # personalファイルを読み込み、ハッシュを作成する
 &ReadPersonalFile();
@@ -155,21 +207,33 @@ $personal_rb_file_name = $temp_personal_rb_file_name;  # これ以降に使用�
 # mons_tblに対して、出現ゾーンチェック入れを行う
 &MakeMonsTblZone();
 
-# ゾーン名を地名ごとにまとめる
+# ゾーン名から「pokemon_wbで決めたゾーンID」を得るためのハッシュや、
+# グループ、代表ゾーン名の情報をまとめる
+&MakeZonenameToRealZoneidHash();
+&MakeZonenameToGroupHash();
+&MakeLeadZonenameTableAndGroupToLeadZonenameHash();
 
+# グループをまとめて代表ゾーン名に集約する
+&InitMonsTblColForGroup();
+&MakeMonsTblLeadZoneForGroup();
 
 # 生息地が不明か
-
-
+&CheckUnknownForGroup();
 # 一年中同じ分布か
-
+&CheckYearForGroup();
 
 # MONSNOごとの分布データをファイルに書き出す
-&WriteMonsAreaFile();
-&DebugWriteMonsAreaFile();  #debug
+#&WriteMonsAreaFile();
+#&DebugWriteMonsAreaFile();  #debug
+
+&WriteMonsAreaFileForGroup();
+&DebugWriteMonsAreaFileForGroup();  #debug
 
 # MONSNOごとの分布データのファイルのリストを書き出す
 &WriteMonsAreaFileList();
+
+# グループ後処理
+&ExitGroup();
 
 # 不要なファイルを削除する
 &DeleteTemp();
@@ -350,19 +414,20 @@ sub ReadEncountFile
     }
 
     my $zone_season_bitflag = $zone_hash_for_season{ $values[$encount_csv_col_zonename] };
-    if( !defined($zone_season_bitflag) )
+    if( !defined($zone_season_bitflag) )  # 初登場のゾーン。だから、「このファイルで決めたゾーンID」をここで決める。
     {
       $zone_hash_for_season{ $values[$encount_csv_col_zonename] } = $season_bitflag_tbl{ $values[$encount_csv_col_season] };
       $zone_hash{ $values[$encount_csv_col_zonename] } = $zone_num;
       $zone_num++;
     }
-    else
+    else  # 2度目(以降)の登場になるゾーン(季節が違う)。だから、「このファイルで決めたゾーンID」は既に決まっているので、ここでは出てきた季節を覚えておくことしかしない。
     {
-      if( $zone_hash_for_season{ $values[$encount_csv_col_zonename] } & $season_bitflag_tbl{ $values[$encount_csv_col_season] } )
+      if( $zone_hash_for_season{ $values[$encount_csv_col_zonename] } & $season_bitflag_tbl{ $values[$encount_csv_col_season] } )  # 出てきた季節を覚える前に、既出の季節でないかチェックする
       {
         # 既出の季節
         die "season overlap \"$values[$encount_csv_col_zonename]\" \"$values[$encount_csv_col_season]\" error, stopped";
       }
+      $zone_hash_for_season{ $values[$encount_csv_col_zonename] } |= $season_bitflag_tbl{ $values[$encount_csv_col_season] };
     }
     $zoneseason_tbl[$zoneseason_num][$zoneseason_col_zoneid] = $zone_hash{ $values[$encount_csv_col_zonename] };
 
@@ -416,18 +481,31 @@ sub InitMonsTblCol
   # $zone_numが確定してから行うこと！
 #debug  print "zone_num = $zone_num\r\n";  # 0D 0A
 
-  $mons_col_summer = $mons_col_spring + $zone_num;
-  $mons_col_autumn = $mons_col_summer + $zone_num;
-  $mons_col_winter = $mons_col_autumn + $zone_num;
-  $mons_col_end    = $mons_col_winter + $zone_num;
+  $mons_col_season_data_num = 1 + $zone_num; 
+
+  $mons_col_summer = $mons_col_spring + $mons_col_season_data_num;
+  $mons_col_autumn = $mons_col_summer + $mons_col_season_data_num;
+  $mons_col_winter = $mons_col_autumn + $mons_col_season_data_num;
+  $mons_col_end    = $mons_col_winter + $mons_col_season_data_num;
 
   for( my $i=0; $i<$mons_num; $i++ )
   {
-    $mons_tbl[$i][$mons_col_unknown] = 0;
+    # year
     $mons_tbl[$i][$mons_col_year] = 0;
-    for( my $j=$mons_col_spring; $j<$mons_col_end; $j++ )
+
+    # unknown
+    $mons_tbl[$i][$mons_col_spring + $mons_col_season_ofs_unknown] = 0;
+    $mons_tbl[$i][$mons_col_summer + $mons_col_season_ofs_unknown] = 0;
+    $mons_tbl[$i][$mons_col_autumn + $mons_col_season_ofs_unknown] = 0;
+    $mons_tbl[$i][$mons_col_winter + $mons_col_season_ofs_unknown] = 0;
+
+    # ゾーンごと
+    for( my $j=0; $j<$zone_num; $j++ )
     {
-      $mons_tbl[$i][$j] = $place_bitflag_none;
+      $mons_tbl[$i][$mons_col_spring + $mons_col_season_ofs_zone_start + $j] = $place_bitflag_none;
+      $mons_tbl[$i][$mons_col_summer + $mons_col_season_ofs_zone_start + $j] = $place_bitflag_none;
+      $mons_tbl[$i][$mons_col_autumn + $mons_col_season_ofs_zone_start + $j] = $place_bitflag_none;
+      $mons_tbl[$i][$mons_col_winter + $mons_col_season_ofs_zone_start + $j] = $place_bitflag_none;
     }
   }
 }
@@ -469,7 +547,7 @@ sub MakeMonsTblZone
           {
             if( $zoneseason_tbl[$i][$zoneseason_col_season] & $$s[0] )
             {
-              $mons_tbl[ $mons_tbl_idx ][ $$s[1] + $zoneseason_tbl[$i][$zoneseason_col_zoneid] ] |= $$ref[2];
+              $mons_tbl[ $mons_tbl_idx ][ $$s[1] + $mons_col_season_ofs_zone_start + $zoneseason_tbl[$i][$zoneseason_col_zoneid] ] |= $$ref[2];
             }
           }
         }
@@ -490,15 +568,15 @@ sub WriteMonsAreaFile
     binmode FH;
 
     my $buf;
-    
-    $buf = pack "v", $mons_tbl[$i][$mons_col_unknown];      # 符号なし16ビット整数。リトルエンディアン。
+   
+    # 一年中同じか否か
+    $buf = pack "C", $mons_tbl[$i][$mons_col_year];         # 符号なし8ビット整数。(u8だからリトルエンディアンとかない)
     print FH "$buf";
-    $buf = pack "v", $mons_tbl[$i][$mons_col_year];         # 符号なし16ビット整数。リトルエンディアン。
-    print FH "$buf";
-    
+   
+    # 春の不明か否かとゾーンごとの生息情報、夏の不明か否かとゾーンごとの生息情報、秋の...
     for( my $j=$mons_col_spring; $j<$mons_col_end; $j++ )
     {
-       $buf = pack "v", $mons_tbl[$i][$j];
+       $buf = pack "C", $mons_tbl[$i][$j];         # 符号なし8ビット整数。(u8だからリトルエンディアンとかない)
        print FH "$buf";
     }
 
@@ -513,7 +591,7 @@ sub DebugWriteMonsAreaFile
 {
   open( FH, ">:encoding(shiftjis)", $debug_mons_file_name );
 
-  print FH "name,monsno,unknown,year,";
+  print FH "name,monsno,year,unknown,";
   for( my $i=0; $i<$zone_num; $i++ )
   {
     print FH "$zoneid_zonename_tbl[$i],";
@@ -527,27 +605,50 @@ sub DebugWriteMonsAreaFile
       print FH "$mons_tbl[$i][$j],";
 #      print FH Encode::encode( 'shiftjis', "$mons_tbl[$i][$j]," );  # これだとdoes not map to shiftjisというエラーが出てしまう！
     }
-    for( my $j=$mons_col_spring; $j<$mons_col_end; $j++ )
+
+    for( my $s=0; $s<4; $s++ )
     {
-      if(    $j==$mons_col_summer
-          || $j==$mons_col_autumn
-          || $j==$mons_col_winter )  # 横に長過ぎるので季節ごとに折り返すことにする
+      my $season_start = 0;
+
+      if( $s == 0 )
       {
-        print FH "\r\n";  # 0D 0A
+        $season_start = $mons_col_spring;
+      }
+      elsif( $s == 1 )
+      {
+        $season_start = $mons_col_summer;
+      }
+      elsif( $s == 2 )
+      {
+        $season_start = $mons_col_autumn;
+      }
+      else
+      {
+        $season_start = $mons_col_winter;
+      }
+
+      if( $s != 0 )
+      {
         for( my $h=0; $h<$mons_col_spring; $h++ )
         {
-          print FH ",";
+          print FH ",";  # 横に長過ぎるので季節ごとに折り返すことにする
         }
       }
-      printf FH "%b,", $mons_tbl[$i][$j];
-#      printf FH Encode::encode( 'shiftjis', "%b,", $mons_tbl[$i][$j] );  # これだとdoes not map to shiftjisというエラーが出てしまう！
-
+      printf FH "$mons_tbl[$i][$season_start + $mons_col_season_ofs_unknown],";
+      for( my $j=0; $j<$zone_num; $j++ )
+      {
+        printf FH "%b,", $mons_tbl[$i][$season_start + $mons_col_season_ofs_zone_start + $j];
+      }
+      print FH "\r\n";  # 0D 0A  # 横に長過ぎるので季節ごとに折り返すことにする
     }
-    print FH "\r\n";  # 0D 0A
-#    print FH Encode::encode( 'shiftjis', "\r\n" );  # 0D 0A  # これだとdoes not map to shiftjisというエラーが出てしまう！
   }
 
   close( FH );
+
+  # 参考までに残しておくエラーが出てしまう記述
+#      printf FH Encode::encode( 'shiftjis', "%b,", $mons_tbl[$i][$j] );  # これだとdoes not map to shiftjisというエラーが出てしまう！
+#    print FH Encode::encode( 'shiftjis', "\r\n" );  # 0D 0A  # これだとdoes not map to shiftjisというエラーが出てしまう！
+
 }
 
 ##-------------------------------------
@@ -561,6 +662,590 @@ sub WriteMonsAreaFileList
   {
     my $mons_area_file_name = sprintf( "%s%03d%s", $mons_area_pre_file_name, $mons_tbl[$i][$mons_col_monsno], $mons_area_post_file_name );
     print FH "\"$mons_area_file_name\"\r\n";  # 0D 0A
+  }
+
+  close( FH );
+}
+
+##-------------------------------------
+### グループ前処理
+##=====================================
+sub InitGroup
+{
+  system( 'cp '.$townmap_xls_file_name.' .' );
+  system( 'cp '.$zonetable_xls_file_name.' .' );
+
+  $townmap_xls_file_name    = $temp_townmap_xls_file_name;    # これ以降に使用するファイルを差し替えておく
+  $zonetable_xls_file_name  = $temp_zonetable_xls_file_name;  # これ以降に使用するファイルを差し替えておく
+
+  &ConvertExcelToCsv( $townmap_xls_file_name, "data", $temp_townmap_csv_file_name_shiftjis );
+  &ConvertExcelToCsv( $zonetable_xls_file_name, "Sheet1", $temp_zonetable_csv_file_name_shiftjis );
+
+  # UTF8だけで作業できるようにする
+  &EncodeFileFromShiftjisToUtf8( $temp_townmap_csv_file_name_shiftjis, $townmap_csv_file_name );
+  &EncodeFileFromShiftjisToUtf8( $temp_zonetable_csv_file_name_shiftjis, $zonetable_csv_file_name );
+
+  &EncodeFileFromShiftjisToUtf8( $zoneid_file_name, $temp_zoneid_file_name );
+  $zoneid_file_name = $temp_zoneid_file_name;  # これ以降に使用するファイルを差し替えておく
+}
+
+##-------------------------------------
+### グループ後処理
+##=====================================
+sub ExitGroup
+{
+  # 不要なファイルを削除する
+  &DeleteTempGroup();
+  &DebugDeleteGroupFile();  #debug
+}
+sub DeleteTempGroup
+{
+  unlink( $temp_townmap_xls_file_name );
+  unlink( $temp_zonetable_xls_file_name );
+  unlink( $temp_townmap_csv_file_name_shiftjis );
+  unlink( $temp_zonetable_csv_file_name_shiftjis );
+  unlink( $townmap_csv_file_name );
+  unlink( $zonetable_csv_file_name );
+  unlink( $temp_zoneid_file_name );
+}
+sub DebugDeleteGroupFile()
+{
+  # ない
+}
+
+##-------------------------------------
+### Excelファイルをcsvファイルにコンバートする
+##=====================================
+sub ConvertExcelToCsv
+{
+  my( $xls_file_name, $xls_sheet_name, $csv_file_name ) = @_;
+  system( $excel_converter_file_name.' -o '.$csv_file_name.' -n '.$xls_sheet_name.' -s csv '.$xls_file_name );
+}
+
+##-------------------------------------
+### ゾーン名から「pokemon_wbで決めたゾーンID」を得るためのハッシュをつくる
+##=====================================
+sub MakeZonenameToRealZoneidHash()
+{
+  open( FH, "<:encoding(utf8)", $zoneid_file_name );
+
+=pid
+ファイルの中身
+#define ZONE_ID_C04R0102         ( 85)
+#define ZONE_ID_C08GYM0101       (144)
+#define ZONE_ID_MAX	(476)
+=cut
+
+  my $pre_word           = "#define ZONE_ID_";
+  my $pre_word_except    = "#define ZONE_ID_MAX";
+  my $space_word         = " ";
+  my $kakko_open_word    = "(";
+  my $kakko_close_word   = ")";
+  my $start_pos = length($pre_word);
+
+  while( my $line = <FH> )
+  {
+    if( index( $line, $pre_word ) == 0 && index( $line, $pre_word_except ) != 0 )
+    {
+      my $end_pos = index( $line, $space_word, $start_pos );  # $start_pos<= <$end_pos
+      my $zonename = substr( $line, $start_pos, $end_pos - $start_pos );
+
+      my $no_end_pos = rindex( $line, $kakko_close_word );  # $no_start_pos<= <$no_end_pos
+      my $no_start_pos_kakko_open = rindex( $line, $kakko_open_word );
+      my $no_start_pos_space      = rindex( $line, $space_word );
+      my $no_start_pos;
+      if( $no_start_pos_kakko_open > $no_start_pos_space )
+      {
+        $no_start_pos = $no_start_pos_kakko_open +1;
+      }
+      else
+      {
+        $no_start_pos = $no_start_pos_space +1;
+      }
+      my $real_zoneid = substr( $line, $no_start_pos, $no_end_pos - $no_start_pos );
+
+      # ゾーン名から「pokemon_wbで決めたゾーンID」を得るためのハッシュ
+      $zonename_to_real_zoneid_hash{ $zonename } = $real_zoneid; 
+    }
+  }
+
+  close( FH );
+
+=pid
+  # 確認
+  my @zonename_to_real_zoneid_hash_key = keys(%zonename_to_real_zoneid_hash);
+  foreach my $k ( @zonename_to_real_zoneid_hash_key )
+  {
+    printf "%s*%d\r\n", $k, $zonename_to_real_zoneid_hash{ $k };
+  }
+=cut
+}
+##-------------------------------------
+### ゾーン名からグループ名を得るためのハッシュをつくる
+##=====================================
+sub MakeZonenameToGroupHash()
+{
+  open( DATA, "<:encoding(utf8)", $zonetable_csv_file_name );
+
+  my $line_no = 0;
+  my $line_end = "END";
+  my $group_col_name = "ZONE_GROUP";
+  my $group_col_no;
+  my $zonename_col_no = 0;
+
+
+  # 値に改行コードを含む CSV形式を扱う
+
+  while (my $line = <DATA>) {
+    $line .= <DATA> while ($line =~ tr/"// % 2 and !eof(DATA));
+
+    $line =~ s/(?:\x0D\x0A|[\x0D\x0A])?$/,/;
+    @values = map {/^"(.*)"$/s ? scalar($_ = $1, s/""/"/g, $_) : $_}
+                  ($line =~ /("[^"]*(?:""[^"]*)*"|[^,]*),/g);
+
+    # @values を処理する
+   
+
+    if( $line_no == 0 )
+    {
+      $group_col_no = 0;
+      foreach my $word ( @values )
+      {
+        if( $group_col_name eq $word )
+        {
+          last;
+        }
+        $group_col_no++;
+      }
+    }
+    elsif( $values[$zonename_col_no] eq $line_end )
+    {
+      last;
+    }
+    else
+    {
+      my $zonename = $values[$zonename_col_no];
+      my $group = $values[$group_col_no];
+      if( !defined( $zonename_to_real_zoneid_hash{ $zonename } ) )
+      {
+        # 存在しないゾーン名
+        die "zonename \"$zonename\" error, stopped";
+      }
+      else
+      {
+        $zonename_to_group_hash{ $zonename } = $group;
+      }
+    }
+    $line_no++;
+  
+
+  }
+
+
+  close( DATA );
+
+
+=pid
+  # 確認
+  my @zonename_to_group_hash_key = keys(%zonename_to_group_hash);
+  foreach my $k ( @zonename_to_group_hash_key )
+  {
+    printf "%s*%s\r\n", $k, $zonename_to_group_hash{ $k };
+  }
+=cut
+}
+##-------------------------------------
+### 代表ゾーン名の個数、配列をつくり、グループ名からグループの代表ゾーン名を得るためのハッシュをつくる
+##=====================================
+sub MakeLeadZonenameTableAndGroupToLeadZonenameHash()
+{
+  open( DATA, "<:encoding(utf8)", $townmap_csv_file_name );
+
+  my $line_start        = "#file_start";
+  my $line_end          = "#file_end";
+  my $zone_col_name     = "#zone";
+  my $zone_col_no;
+  my $step              = 0;  # 0のとき$line_startまで
+                              # 1のときデータ読み込み中で$line_endまで
+                              # 2のとき$line_endから
+  my $pre_zone_word     = "ZONE_ID_";
+  my $start_pos         = length($pre_zone_word);
+  
+  $lead_zonename_num    = 0;  # 代表ゾーン名の個数
+
+
+  # 値に改行コードを含む CSV形式を扱う
+
+  while (my $line = <DATA>) {
+    $line .= <DATA> while ($line =~ tr/"// % 2 and !eof(DATA));
+
+    $line =~ s/(?:\x0D\x0A|[\x0D\x0A])?$/,/;
+    @values = map {/^"(.*)"$/s ? scalar($_ = $1, s/""/"/g, $_) : $_}
+                  ($line =~ /("[^"]*(?:""[^"]*)*"|[^,]*),/g);
+
+    # @values を処理する
+   
+
+    if( $step == 0 )
+    {
+      if( $values[0] eq $line_start )
+      {
+        $zone_col_no = 0;
+        foreach my $word ( @values )
+        {
+          if( $zone_col_name eq $word )
+          {
+            last;
+          }
+          $zone_col_no++;
+        }
+        $step = 1;
+      }
+    }
+    elsif( $step == 1 )
+    {
+      if( $values[0] eq $line_end )
+      {
+        $step = 2;
+      }
+      else
+      {
+        my $zone_word = $values[$zone_col_no];
+        my $zonename = substr( $zone_word, $start_pos, length($zone_word)-$start_pos );
+
+        $lead_zonename_tbl[$lead_zonename_num] = $zonename;  # 代表ゾーン名の配列
+        $lead_zonename_hash{$zonename} = $lead_zonename_num;  # 代表ゾーン名から配列添え字を得るハッシュ
+
+        my $group = $zonename_to_group_hash{ $zonename };
+        if( !defined( $group ) )
+        {
+          # 存在しないゾーン名
+          die "zonename \"$zonename\" error, stopped";
+        }
+        else
+        {
+          if( defined( $group_to_lead_zonename_hash{ $group } ) )
+          {
+            # 既に代表ゾーン名が設定してあるグループ
+#今は見逃す            die "group \"$group\", lead_zonename \"$group_to_lead_zonename_hash{ $group }\", new lead_zonename \"$zonename\",  error, stopped";
+          }
+          else
+          {
+            $group_to_lead_zonename_hash{ $group } = $zonename;
+          }
+        }
+        
+        $lead_zonename_num++;  # 代表ゾーン名の個数
+      }
+    }
+    else  # if( $step == 2 )
+    {
+      last;
+    }
+
+
+  }
+
+
+  close( DATA );
+
+
+=pid
+  # 確認
+  printf "%d\r\n", $lead_zonename_num;
+  my @group_to_lead_zonename_hash_key = keys(%group_to_lead_zonename_hash);
+  foreach my $k ( @group_to_lead_zonename_hash_key )
+  {
+    printf "%s*%s\r\n", $k, $group_to_lead_zonename_hash{ $k };
+  }
+=cut
+}
+
+##-------------------------------------
+### mons_tblのcolumn(横列)のインデックスを確定し初期化する for グループ
+##=====================================
+sub InitMonsTblColForGroup
+{
+  # $lead_zonename_numが確定してから行うこと！
+#debug  print "lead_zonename_num = $lead_zonename_num\r\n";  # 0D 0A
+
+  $mons_col_group_season_data_num = 1 + $lead_zonename_num; 
+
+  $mons_col_group_year      = $mons_col_end;
+  $mons_col_group_start     = $mons_col_group_year +1;
+  $mons_col_group_spring    = $mons_col_group_start;
+  $mons_col_group_summer    = $mons_col_group_spring + $mons_col_group_season_data_num;
+  $mons_col_group_autumn    = $mons_col_group_summer + $mons_col_group_season_data_num;
+  $mons_col_group_winter    = $mons_col_group_autumn + $mons_col_group_season_data_num;
+  $mons_col_group_end       = $mons_col_group_winter + $mons_col_group_season_data_num;
+
+  for( my $i=0; $i<$mons_num; $i++ )
+  {
+    # year
+    $mons_tbl[$i][$mons_col_group_year] = 0;
+
+    # unknown
+    $mons_tbl[$i][$mons_col_group_spring + $mons_col_group_season_ofs_unknown] = 0;
+    $mons_tbl[$i][$mons_col_group_summer + $mons_col_group_season_ofs_unknown] = 0;
+    $mons_tbl[$i][$mons_col_group_autumn + $mons_col_group_season_ofs_unknown] = 0;
+    $mons_tbl[$i][$mons_col_group_winter + $mons_col_group_season_ofs_unknown] = 0;
+
+    # グループごと
+    for( my $j=0; $j<$lead_zonename_num; $j++ )
+    {
+      $mons_tbl[$i][$mons_col_group_spring + $mons_col_group_season_ofs_zone_start + $j] = $place_bitflag_none;
+      $mons_tbl[$i][$mons_col_group_summer + $mons_col_group_season_ofs_zone_start + $j] = $place_bitflag_none;
+      $mons_tbl[$i][$mons_col_group_autumn + $mons_col_group_season_ofs_zone_start + $j] = $place_bitflag_none;
+      $mons_tbl[$i][$mons_col_group_winter + $mons_col_group_season_ofs_zone_start + $j] = $place_bitflag_none;
+    }
+  }
+}
+
+##-------------------------------------
+### mons_tblに対して、グループをまとめて代表ゾーン名に集約し、出現代表ゾーンチェック入れを行う for グループ
+##=====================================
+sub MakeMonsTblLeadZoneForGroup
+{
+  for( my $i=0; $i<$mons_num; $i++ )
+  {
+    for( my $j=0; $j<$zone_num; $j++ )
+    {
+      my $zonename        = $zoneid_zonename_tbl[$j];
+      my $group           = $zonename_to_group_hash{ $zonename };
+      my $lead_zonename   = $group_to_lead_zonename_hash{ $group };
+
+      if( !defined( $lead_zonename ) )
+      {
+        # 代表ゾーン名が不明なゾーン
+        die "There is no lead_zonename of \"$zonename\" error, stopped";
+      }
+      else
+      {
+        my $lead_zone_idx = $lead_zonename_hash{$lead_zonename};
+
+        $mons_tbl[$i][$mons_col_group_spring + $mons_col_group_season_ofs_zone_start + $lead_zone_idx] |= $mons_tbl[$i][$mons_col_spring + $mons_col_season_ofs_zone_start + $j];
+        $mons_tbl[$i][$mons_col_group_summer + $mons_col_group_season_ofs_zone_start + $lead_zone_idx] |= $mons_tbl[$i][$mons_col_summer + $mons_col_season_ofs_zone_start + $j];
+        $mons_tbl[$i][$mons_col_group_autumn + $mons_col_group_season_ofs_zone_start + $lead_zone_idx] |= $mons_tbl[$i][$mons_col_autumn + $mons_col_season_ofs_zone_start + $j];
+        $mons_tbl[$i][$mons_col_group_winter + $mons_col_group_season_ofs_zone_start + $lead_zone_idx] |= $mons_tbl[$i][$mons_col_winter + $mons_col_season_ofs_zone_start + $j];
+      }
+    }
+  }
+}
+
+##-------------------------------------
+### 生息地が不明か for グループ
+##=====================================
+sub CheckUnknownForGroup
+{
+  my @season_tbl = 
+  (
+    [ $mons_col_group_spring + $mons_col_group_season_ofs_unknown, $mons_col_group_spring + $mons_col_group_season_ofs_zone_start ],
+    [ $mons_col_group_summer + $mons_col_group_season_ofs_unknown, $mons_col_group_summer + $mons_col_group_season_ofs_zone_start ],
+    [ $mons_col_group_autumn + $mons_col_group_season_ofs_unknown, $mons_col_group_autumn + $mons_col_group_season_ofs_zone_start ],
+    [ $mons_col_group_winter + $mons_col_group_season_ofs_unknown, $mons_col_group_winter + $mons_col_group_season_ofs_zone_start ],
+  );
+
+  for( my $i=0; $i<$mons_num; $i++ )
+  {
+    foreach my $ref (@season_tbl)
+    {
+      my $unknown = 1;
+      for( my $j=0; $j<$lead_zonename_num; $j++ )
+      {
+        if( $mons_tbl[$i][$$ref[1] + $j] != $place_bitflag_none )
+        {
+          $unknown = 0;
+          last;
+        }
+      }
+      $mons_tbl[$i][$$ref[0]] = $unknown;
+    }
+  }
+}
+
+##-------------------------------------
+### 一年中同じ分布か for グループ
+##=====================================
+sub CheckYearForGroup
+{
+  my @season_tbl = 
+  (
+    [ $mons_col_group_spring + $mons_col_group_season_ofs_unknown, $mons_col_group_spring + $mons_col_group_season_ofs_zone_start ],
+    [ $mons_col_group_summer + $mons_col_group_season_ofs_unknown, $mons_col_group_summer + $mons_col_group_season_ofs_zone_start ],
+    [ $mons_col_group_autumn + $mons_col_group_season_ofs_unknown, $mons_col_group_autumn + $mons_col_group_season_ofs_zone_start ],
+    [ $mons_col_group_winter + $mons_col_group_season_ofs_unknown, $mons_col_group_winter + $mons_col_group_season_ofs_zone_start ],
+  );
+
+=bid
+  # リファレンス版(リファレンス版も変数に代入版もどちらも正しいです)
+  for( my $i=0; $i<$mons_num; $i++ )
+  {
+    my $year = 1;
+    my $base = $season_tbl[0];
+    
+    # unknownの場合
+    if( $mons_tbl[$i][$base->[0]] == 1 )  # リファレンス
+    {
+      for( my $s=1; $s<4; $s++ )
+      {
+        my $ref = $season_tbl[$s];
+        if( $mons_tbl[$i][$ref->[0]] != 1 )  # リファレンス
+        {
+          $year = 0;
+          last;
+        }
+      } 
+    }
+    # unknownでない場合
+    else
+    {
+      for( my $s=1; $s<4; $s++ )
+      {
+        my $ref = $season_tbl[$s];
+        for( my $j=0; $j<$lead_zonename_num; $j++ )
+        {
+          if( $mons_tbl[$i][$base->[1] + $j] != $mons_tbl[$i][$ref->[1] + $j] )  # リファレンス
+          {
+            $year = 0;
+            last;
+          }
+        }
+      }
+    }
+
+    $mons_tbl[$i][$mons_col_group_year] = $year;
+  }
+=cut
+
+  # 変数に代入版(リファレンス版も変数に代入版もどちらも正しいです)
+  for( my $i=0; $i<$mons_num; $i++ )
+  {
+    my $year = 1;
+    my @base = @{$season_tbl[0]};
+    
+    # unknownの場合
+    if( $mons_tbl[$i][$base[0]] == 1 )
+    {
+      for( my $s=1; $s<4; $s++ )
+      {
+        my @ref = @{$season_tbl[$s]};
+        if( $mons_tbl[$i][$ref[0]] != 1 )
+        {
+          $year = 0;
+          last;
+        }
+      } 
+    }
+    # unknownでない場合
+    else
+    {
+      for( my $s=1; $s<4; $s++ )
+      {
+        my @ref = @{$season_tbl[$s]};
+        for( my $j=0; $j<$lead_zonename_num; $j++ )
+        {
+          if( $mons_tbl[$i][$base[1] + $j] != $mons_tbl[$i][$ref[1] + $j] )
+          {
+            $year = 0;
+            last;
+          }
+        }
+      }
+    }
+
+    $mons_tbl[$i][$mons_col_group_year] = $year;
+  }
+
+}
+
+##-------------------------------------
+### MONSNOごとの分布データをファイルに書き出す for グループ
+##=====================================
+sub WriteMonsAreaFileForGroup
+{
+  for( my $i=0; $i<$mons_num; $i++ )
+  {
+    my $mons_area_file_name = sprintf( "%s%03d%s", $mons_area_pre_file_name, $mons_tbl[$i][$mons_col_monsno], $mons_area_post_file_name );
+    open( FH, ">", $mons_area_file_name );
+    binmode FH;
+
+    my $buf;
+   
+    # 一年中同じか否か
+    $buf = pack "C", $mons_tbl[$i][$mons_col_group_year];         # 符号なし8ビット整数。(u8だからリトルエンディアンとかない)
+    print FH "$buf";
+   
+    # 春の不明か否かとゾーンごとの生息情報、夏の不明か否かとゾーンごとの生息情報、秋の...
+    for( my $j=$mons_col_group_start; $j<$mons_col_group_end; $j++ )
+    {
+       $buf = pack "C", $mons_tbl[$i][$j];         # 符号なし8ビット整数。(u8だからリトルエンディアンとかない)
+       print FH "$buf";
+    }
+
+    close( FH );
+  }
+}
+
+##-------------------------------------
+### mons_tblの中身を確認する for グループ
+##=====================================
+sub DebugWriteMonsAreaFileForGroup
+{
+  open( FH, ">:encoding(shiftjis)", $debug_mons_file_name );
+
+  print FH "name,monsno,year,unknown,";
+  for( my $i=0; $i<$lead_zonename_num; $i++ )
+  {
+    print FH "$lead_zonename_tbl[$i],";
+  }
+  print FH "\r\n";  # 0D 0A
+
+  for( my $i=0; $i<$mons_num; $i++ )
+  {
+    for( my $j=0; $j<=$mons_col_monsno; $j++ )  # monsname, monsno
+    {
+      print FH "$mons_tbl[$i][$j],";
+    }
+    print FH "$mons_tbl[$i][$mons_col_group_year],";  # year
+
+    for( my $s=0; $s<4; $s++ )
+    {
+      my $season_start = 0;
+
+      if( $s == 0 )
+      {
+        $season_start = $mons_col_group_spring;
+      }
+      elsif( $s == 1 )
+      {
+        $season_start = $mons_col_group_summer;
+      }
+      elsif( $s == 2 )
+      {
+        $season_start = $mons_col_group_autumn;
+      }
+      else
+      {
+        $season_start = $mons_col_group_winter;
+      }
+
+      if( $s != 0 )
+      {
+        for( my $h=0; $h<=$mons_col_monsno; $h++ )  # monsname, monsno
+        {
+          print FH ",";  # 横に長過ぎるので季節ごとに折り返すことにする
+        }
+        print FH ",";  # 横に長過ぎるので季節ごとに折り返すことにする  # year
+      }
+
+      printf FH "$mons_tbl[$i][$season_start + $mons_col_group_season_ofs_unknown],";
+      
+      for( my $j=0; $j<$lead_zonename_num; $j++ )
+      {
+        printf FH "%b,", $mons_tbl[$i][$season_start + $mons_col_group_season_ofs_zone_start + $j];
+      }
+      print FH "\r\n";  # 0D 0A  # 横に長過ぎるので季節ごとに折り返すことにする
+    }
   }
 
   close( FH );

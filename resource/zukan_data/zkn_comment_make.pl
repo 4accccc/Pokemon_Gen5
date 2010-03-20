@@ -3,6 +3,9 @@
      file   zkn_comment_make.pl
      brief  図鑑の説明テキストのgmmを生成する
             おまけ機能：種族(例：たね(たねポケモン))のgmmを生成する
+            おまけ機能：日本語フォルム名(ここではfjnameと呼ぶことにする)(例：ネガフォルム(チェリム))の
+                        gmmを生成する(MONSNOの順番にフォルム0番だけまず出力し、
+                        その後フォルムが複数存在するものについて残りのフォルムを出力する)
             おまけ機能：形(例：四足型)を出力する(MONSNOの順番にフォルム0番だけまず出力し、
                         その後フォルムが複数存在するものについて残りのフォルムを出力する)
             おまけ機能：次のフォルムのデータの位置を参照できるファイルを出力する
@@ -108,13 +111,14 @@ $zukan_csv_col_w_jpn                   =   4;  # wの説明テキスト。ひら
 $zukan_csv_col_w_jpn_kanji             =   5;  # wの説明テキスト。漢字。
 $zukan_csv_col_b_jpn                   =   6;  # 改行は垂直タブ(0x0B(VT)(^K)(Ctrl+K))
 $zukan_csv_col_b_jpn_kanji             =   7;
+$zukan_csv_col_fjname                  =   8;  # 日本語フォルム名。例：ネガフォルム(チェリム)
 
 $temp_zukan_csv_file_name    = "zkn_comment_make_pl_temp_zukan.csv";   # utf8
 
 # 値なし
 $comment_no_value = " ";
-
 $kind_no_value = "？？？？？ポケモン";
+$fjname_no_value = " ";
 
 # gmm
 $gmm_header_file_name   = "header.file";  # utf8
@@ -128,6 +132,9 @@ $comment_b_file_name   = "zkn_comment_01.gmm";    # utf8
 
 $kind_row_id           = "ZKN_TYPE_";
 $kind_file_name        = "zkn_type.gmm";          # utf8
+
+$fjname_row_id         = "ZKN_FORM_";             # 例：ZKN_FORM_201_002
+$fjname_file_name      = "zkn_form.gmm";          # utf8
 
 $style_file_name       = "zkn_style.dat";         # バイナリ(u8だからリトルエンディアンとかない)
 
@@ -158,7 +165,8 @@ $form_col_offset_w_jpn         =  6;  # 改行を\r\n(0D 0A)に直しておく
 $form_col_offset_w_jpn_kanji   =  7;
 $form_col_offset_b_jpn         =  8;
 $form_col_offset_b_jpn_kanji   =  9;
-$form_col_offset_max           = 10;
+$form_col_offset_fjname        = 10;
+$form_col_offset_max           = 11;
 
 # 0<=$formno<$mons_col_form_numとすると
 # $mons_tbl[ $mons_col_form_start + $form_col_offset_max * $formno + $form_col_offset_form_name  ] = $formnoのフォルム名;
@@ -198,6 +206,9 @@ $zukan_csv_file_name = $temp_zukan_csv_file_name;  # これ以降に使用する
 
 # 種族(例：たね(たねポケモン))のgmmを出力する
 &WriteKindFile();
+
+# 日本語フォルム名(ここではfjnameと呼ぶことにする)(例：ネガフォルム(チェリム))のgmmを出力する
+&WriteFjnameFile();
 
 # 形(例：四足型)を出力する
 &WriteStyleFile();
@@ -427,6 +438,7 @@ sub ReadZukanFile
       $mons_tbl[$idx][$form_col_start + $form_col_offset_w_jpn_kanji     ] = $values[$zukan_csv_col_w_jpn_kanji  ];
       $mons_tbl[$idx][$form_col_start + $form_col_offset_b_jpn           ] = $values[$zukan_csv_col_b_jpn        ];
       $mons_tbl[$idx][$form_col_start + $form_col_offset_b_jpn_kanji     ] = $values[$zukan_csv_col_b_jpn_kanji  ];
+      $mons_tbl[$idx][$form_col_start + $form_col_offset_fjname          ] = $values[$zukan_csv_col_fjname       ];
     }
 
 
@@ -636,6 +648,14 @@ sub WriteCommentFile
 sub WriteKindFile
 {
   &WriteGmmFileMonsno( $kind_file_name, $kind_row_id, $form_col_offset_kind, $form_col_offset_kind, $kind_no_value );
+}
+
+##-------------------------------------
+### 日本語フォルム名(ここではfjnameと呼ぶことにする)(例：ネガフォルム(チェリム))のgmmを出力する
+##=====================================
+sub WriteFjnameFile
+{
+  &WriteGmmFileMonsnoFormno( $fjname_file_name, $fjname_row_id, $form_col_offset_fjname, $form_col_offset_fjname, $fjname_no_value );
 }
 
 ##-------------------------------------

@@ -41,6 +41,7 @@ SUBDIRS	=	wmi \
 			field_weather \
 			field_weather_light \
 			field_light \
+			fldmapdata/zonetable/zoneindex \
 			zukan_data \
 			research_radar \
 			message\
