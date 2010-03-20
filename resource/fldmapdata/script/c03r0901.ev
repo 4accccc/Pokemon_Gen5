@@ -25,13 +25,6 @@ _EVENT_DATA		ev_c03r0901_musician_01
 _EVENT_DATA		ev_c03r0901_waiter_01
 _EVENT_DATA_END
 
-//------------------------------注意--------------------------------//
-//
-//  LOCALWORK14：技を覚えさせる手持ちポケモンの位置
-//	LOCALWORK15：覚えさせる技ナンバー
-//
-//------------------------------------------------------------------//
-
 DEFINE_LOCAL target_poke_pos
 
 /**************************************************************/
@@ -166,9 +159,9 @@ _RET
 //技を覚える処理
 learn_skill:
 {
-  //LOCALWORK14：ポケモン位置　LOCALWORK15：覚えさせる技ＩＤ
-  $LOCALWORK14 = $target_poke_pos
-  $LOCALWORK15 = WAZANO_INISIENOUTA
+  //SCWK_PARAM0：ポケモン位置　SCWK_PARAM1：覚えさせる技ＩＤ
+  $SCWK_PARAM0 = $target_poke_pos
+  $SCWK_PARAM1 = WAZANO_INISIENOUTA
   //技覚えシーケンス SCWK_ANSWER=TRUEで覚えた
   _CHG_COMMON_SCR SCRID_SKILL_LEARN
   //覚えた？

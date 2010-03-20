@@ -512,13 +512,13 @@ sub_skillteacher_wasure_core:
 //
 //======================================================================
 /**************************************************************/
-// IN: LOCALWORK14    手持ちポケモンの位置
-// IN: LOCALWORK15    覚えさせる技ＩＤ
+// IN: SCWK_PARAM0    手持ちポケモンの位置
+// IN: SCWK_PARAM1    覚えさせる技ＩＤ
 // OUT:SCWK_ANSWER    覚えた：TRUE　覚えなかった：FALSE
 /**************************************************************/
 ev_skill_learn:
-  $select_pos = $LOCALWORK14
-  $teach_waza_id = $LOCALWORK15
+  $select_pos = $SCWK_PARAM0
+  $teach_waza_id = $SCWK_PARAM1
   _CALL sub_skillteacher_system
   _CHG_LOCAL_SCR
 _END
