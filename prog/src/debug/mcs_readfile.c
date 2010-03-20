@@ -11,6 +11,7 @@
 
 #include "debug/mcs_readfile.h"
 
+//#define MCS_HOOK
 //============================================================================================
 //============================================================================================
 //----------------------------------------------------------------
@@ -29,7 +30,7 @@ void GF_MCS_FILE_Init(void)
 }
 
 //----------------------------------------------------------------
-#ifdef PM_DEBUG
+#ifdef MCS_HOOK
 extern BOOL mcsResidentFlag;
 #endif
 //----------------------------------------------------------------
@@ -40,10 +41,13 @@ BOOL GF_MCS_FILE_Read( const char * path, void * buf, u32 buf_size )
   u32 fileSize;
   u32 readSize;
 
+  OS_TPrintf("MCS起動確認..");
+
   if ( NNS_McsIsServerConnect() == FALSE) return FALSE;
-#ifdef PM_DEBUG
+#ifdef MCS_HOOK
 	if(mcsResidentFlag == TRUE){ return FALSE; }
 #endif
+  OS_TPrintf("確認OK\n");
   // 読み込み用オープン
   errCode = NNS_McsOpenFile(
     &infoRead,
@@ -91,7 +95,7 @@ void * GF_MCS_FILE_ReadAlloc( const char * path, HEAPID heapID, u32 buf_size )
   void * buf;
 
   if ( NNS_McsIsServerConnect() == FALSE) return NULL;
-#ifdef PM_DEBUG
+#ifdef MCS_HOOK
 	if(mcsResidentFlag == TRUE){ return FALSE; }
 #endif
   // 読み込み用オープン
