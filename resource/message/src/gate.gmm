@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T14:46:09"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-03-20T16:00:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1465,11 +1465,6 @@
 		<language name="JPN_KANJI" width="256">砂あらし</language>
 	</row>
 
-	<row id="msg_gate_spark">
-		<language name="JPN" width="256">かみなり</language>
-		<language name="JPN_KANJI" width="256">雷雨</language>
-	</row>
-
 	<row id="msg_gate_snowstorm">
 		<language name="JPN" width="256">ふぶき</language>
 		<language name="JPN_KANJI" width="256">吹雪</language>
@@ -1480,37 +1475,55 @@
 		<language name="JPN_KANJI" width="256">あられ</language>
 	</row>
 
-	<row id="msg_gate_mirage">
-		<language name="JPN" width="256">しんきろう</language>
-		<language name="JPN_KANJI" width="256">しんきろう</language>
+	<row id="msg_gate_mist">
+		<language name="JPN" width="256">きり</language>
+		<language name="JPN_KANJI" width="256">霧</language>
 	</row>
 
-	<row id="msg_gate_weather">
+	<row id="msg_gate_diamond_dust">
+		<comment>レア天気</comment>
+		<language name="JPN" width="256">ダイアモンドダストが　はっせい</language>
+		<language name="JPN_KANJI" width="256">ダイアモンドダストが　発生</language>
+	</row>
+
+	<row id="msg_gate_raikami">
+		<comment>レア天気</comment>
+		<language name="JPN" width="256">ライカミがいる？</language>
+		<language name="JPN_KANJI" width="256">ライカミがいる！</language>
+	</row>
+
+	<row id="msg_gate_kazakami">
+		<comment>レア天気</comment>
+		<language name="JPN" width="256">カザカミがいる？</language>
+		<language name="JPN_KANJI" width="256">カザカミがいる！</language>
+	</row>
+
+	<row id="msg_gate_weather" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]:[1:00:トレーナー名:1]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]:[1:00:トレーナー名:1]</language>
 	</row>
 
-	<row id="msg_gate_weather_set_1">
+	<row id="msg_gate_weather_set_1" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_gate_weather_set_2">
+	<row id="msg_gate_weather_set_2" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]　　[1:00:トレーナー名:1]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　　[1:00:トレーナー名:1]</language>
 	</row>
 
-	<row id="msg_gate_weather_set_3">
+	<row id="msg_gate_weather_set_3" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]　　[1:00:トレーナー名:1]　　[1:00:トレーナー名:2]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　　[1:00:トレーナー名:1]　　[1:00:トレーナー名:2]</language>
 	</row>
 
-	<row id="msg_gate_weather_set_4">
+	<row id="msg_gate_weather_set_4" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]　　[1:00:トレーナー名:1]　　[1:00:トレーナー名:2]　　[1:00:トレーナー名:3]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]　　[1:00:トレーナー名:1]　　[1:00:トレーナー名:2]　　[1:00:トレーナー名:3]</language>
 	</row>
 
-	<row id="msg_gate_propagation">
+	<row id="msg_gate_propagation" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<language name="JPN" width="256">[1:05:マップ名:0]で　ポケモンが　たいりょうはっせい</language>
 		<language name="JPN_KANJI" width="256">[1:05:マップ名:0]で　ポケモンが　大量発生</language>
 	</row>
