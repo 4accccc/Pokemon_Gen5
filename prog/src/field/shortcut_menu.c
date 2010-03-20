@@ -108,7 +108,7 @@ enum
 #define LISTMOVE_START	(-192)
 #define LISTMOVE_END		(0)
 #define LISTMOVE_DIFF		(LISTMOVE_END-LISTMOVE_START)
-#define LISTMOVE_SYNC		(3)
+#define LISTMOVE_SYNC		(4)
 
 //-------------------------------------
 ///	ÉXÉNÉçÅ[Éã
