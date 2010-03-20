@@ -24,6 +24,7 @@
 #include "field_gimmick_def.h"
 #include "field/zonedata.h"
 #include "field/enc_pokeset.h"  // for ENCPOKE_GetGenerateZone
+#include "move_pokemon.h"
 #include "savedata/gimmickwork.h"
 
 #include "msg/msg_gate.h"
@@ -202,6 +203,7 @@ typedef enum {
   NEWS_TYPE_INFO_C,       // 地域情報C
   NEWS_TYPE_CM,           // 一言CM 
   NEWS_TYPE_SPECIAL,      // 臨時ニュース
+  NEWS_TYPE_CHAMPION,     // チャンピオン情報
   NEWS_TYPE_NUM,
   NEWS_TYPE_MAX = NEWS_TYPE_NUM - 1
 } NEWS_TYPE;
@@ -253,16 +255,20 @@ static char* news_plt_name[NEWS_INDEX_NUM] =
   "gelboard_7_pl",
 };
 // 天気に使用するメッセージ
-u32 str_id_weather[ ] = 
+u32 str_id_weather[ WEATHER_NO_NUM ] = 
 {
-  msg_gate_sunny,     // 晴れ
-  msg_gate_snow,      // 雪
-  msg_gate_rain,      // 雨
-  msg_gate_storm,     // 砂嵐
-  msg_gate_sunny,     // 雷雨
-  msg_gate_snowstorm, // 吹雪
-  msg_gate_arare,     // 霰
-  msg_gate_sunny,     // 蜃気楼
+  msg_gate_sunny,        // 晴れ
+  msg_gate_snow,         // 雪
+  msg_gate_rain,         // 雨
+  msg_gate_storm,        // 砂嵐
+  msg_gate_snowstorm,    // 吹雪
+  msg_gate_arare,        // あられ
+  msg_gate_raikami,      // ライカミ
+  msg_gate_kazakami,     // カザカミ
+  msg_gate_diamond_dust, // ダイアモンドダスト
+  msg_gate_mist,         // 霰
+  msg_gate_mist,         // パレスWhite用 霧
+  msg_gate_mist,         // パレスBlack用 霧
 };
 
 // ジム情報の登録場所
@@ -331,9 +337,11 @@ static u16 monitor_anime[ MONITOR_ANIME_NUM ] =
 //==========================================================================================
 // ■天気ニュースの生成パラメータ
 //==========================================================================================
-typedef struct {
+typedef struct 
+{
   u16 zoneID[ WEATHER_ZONE_NUM ]; // ゾーンID
   u8  weatherNo[ WEATHER_ZONE_NUM ]; // ゾーンの天気
+
 } WEATHER_NEWS_PARAM;
 
 
@@ -342,9 +350,9 @@ typedef struct {
 //==========================================================================================
 typedef struct
 {
-  u8          newsNum;                  // 登録したニュースの数
-  NEWS_TYPE  newsType[NEWS_INDEX_NUM];  // 登録したニュース
-  u32      spNewsFlag[NEWS_INDEX_NUM];  // 登録した臨時ニュースに対応するフラグ
+  u8        newsNum;                    // 登録したニュースの数
+  NEWS_TYPE newsType[NEWS_INDEX_NUM];   // 登録したニュース
+  u32       spNewsFlag[NEWS_INDEX_NUM]; // 登録した臨時ニュースに対応するフラグ
 
 } NEWS_ENTRY_DATA;
 
@@ -385,14 +393,17 @@ typedef struct
 //==========================================================================================
 typedef struct
 { 
-  HEAPID                   heapID;  // 使用するヒープID
-  FIELDMAP_WORK*         fieldmap;  // フィールドマップ
-  GOBJ_ELBOARD*           elboard;  // 電光掲示板管理オブジェクト
-  u32               recoveryFrame;  // 復帰フレーム
-  ELBOARD_ZONE_DATA*     gateData;  // ゲートデータ
-  ELBOARD_SPNEWS_DATA* spNewsData;  // 臨時ニュースデータ
-  u8                spNewsDataNum;  // 臨時ニュースデータ数
-  NEWS_ENTRY_DATA   newsEntryData;  // ニュース登録状況
+  HEAPID         heapID;     // 使用するヒープID
+  FIELDMAP_WORK* fieldmap;   // フィールドマップ
+  GAMEDATA*      gameData;   // ゲームデータ
+  GAMESYS_WORK*  gameSystem; // ゲームシステム
+
+  GOBJ_ELBOARD*        elboard;        // 電光掲示板管理オブジェクト
+  u32                  recoveryFrame;  // 復帰フレーム
+  ELBOARD_ZONE_DATA*   gateData;       // ゲートデータ
+  ELBOARD_SPNEWS_DATA* spNewsData;     // 臨時ニュースデータ
+  u8                   spNewsDataNum;  // 臨時ニュースデータ数
+  NEWS_ENTRY_DATA      newsEntryData;  // ニュース登録状況
 
 } GATEWORK;
 
@@ -415,6 +426,8 @@ static void LoadGateData( GATEWORK* work );
 static void DeleteGateData( GATEWORK* work );
 static void InitMonitor( GATEWORK* work );
 static void SetElboardPos( GATEWORK* work );
+// チャンピオンニュース
+static BOOL CheckChampionNews( const GATEWORK* work ); // チャンピオンニュースがあるかどうかを判定する
 // 臨時ニュース
 static void LoadSpNewsData( GATEWORK* work );
 static void DeleteSpNewsData( GATEWORK* work ); 
@@ -428,6 +441,7 @@ static void EntryNews( GATEWORK* work,
                        const ELBOARD_SPNEWS_DATA* sp_data );
 static void SetupElboardNews( GATEWORK* work );
 static void SetupElboardNews_Normal( GATEWORK* work );
+static void SetupElboardNews_Champion( GATEWORK* work );
 static void SetupElboardNews_Special( GATEWORK* work );
 // 平常ニュース追加
 static void AddNews_DATE( GATEWORK* work );
@@ -437,14 +451,15 @@ static void AddNews_INFO_A( GATEWORK* work );
 static void AddNews_INFO_B( GATEWORK* work );
 static void AddNews_INFO_C( GATEWORK* work );
 static void AddNews_CM( GATEWORK* work );
-static void AddNews_SPECIAL( GATEWORK* work, const ELBOARD_SPNEWS_DATA* news );
+// チャンピオンニュース追加
+static void AddNews_CHAMPION( GATEWORK* work );
 // 臨時ニュース追加
+static void AddNews_SPECIAL( GATEWORK* work, const ELBOARD_SPNEWS_DATA* news );
 static void AddSpNews_DIRECT( GATEWORK* work,
                               const ELBOARD_SPNEWS_DATA* spnews, NEWS_INDEX news_idx );
-static void AddSpNews_CHAMP( GATEWORK* work,
-                             const ELBOARD_SPNEWS_DATA* spnews, NEWS_INDEX news_idx );
 static void AddSpNews_GYM( GATEWORK* work );
 // 天気ニュース
+static int GetValidWeatherNewsNum( WEATHER_NEWS_PARAM* param ); // 有効な天気情報の数を取得する
 static void InitWeatherNewsParam( WEATHER_NEWS_PARAM* param ); // 天気ニュースパラメータを初期化する
 static void GetWeatherNewsParam( const GATEWORK* work, WEATHER_NEWS_PARAM* dest ); // 表示すべき天気ニュースを取得する
 static void GetRareWeather( const GATEWORK* work, WEATHER_NEWS_PARAM* dest ); // 珍しい天気ニュースを取得する
@@ -851,6 +866,7 @@ static void GimmickSave( const GATEWORK* work )
       case NEWS_TYPE_INFO_C:      OBATA_Printf( "INFO_C\n" );      break;
       case NEWS_TYPE_CM:          OBATA_Printf( "CM\n" );          break;
       case NEWS_TYPE_SPECIAL:     OBATA_Printf( "SPECIAL\n" );     break;
+      case NEWS_TYPE_CHAMPION:    OBATA_Printf( "CHAMPION\n" );    break;
       default:                    OBATA_Printf( "UNKNOWN\n" );     break;
       }
     }
@@ -899,6 +915,7 @@ static void GimmickLoad( GATEWORK* work )
       case NEWS_TYPE_INFO_C:      OBATA_Printf( "INFO_C\n" );      break;
       case NEWS_TYPE_CM:          OBATA_Printf( "CM\n" );          break;
       case NEWS_TYPE_SPECIAL:     OBATA_Printf( "SPECIAL\n" );     break;
+      case NEWS_TYPE_CHAMPION:    OBATA_Printf( "CHAMPION\n" );    break;
       default:                    OBATA_Printf( "UNKNOWN\n" );     break;
       }
     }
@@ -920,18 +937,16 @@ static void GimmickLoad( GATEWORK* work )
 static void RecoverSpNewsFlags( GATEWORK* work )
 {
   int i;
-  GAMESYS_WORK* gsys;
-  GAMEDATA* gdata;
   EVENTWORK* evwork;
   SAVEWORK* saveBuf;
   NEWS_ENTRY_DATA* entry_data;
 
   GF_ASSERT( work );
   GF_ASSERT( work->fieldmap );
+  GF_ASSERT( work->gameData );
+  GF_ASSERT( work->gameSystem );
 
-  gsys       = FIELDMAP_GetGameSysWork( work->fieldmap );
-  gdata      = GAMESYSTEM_GetGameData( gsys );
-  evwork     = GAMEDATA_GetEventWork( gdata );
+  evwork     = GAMEDATA_GetEventWork( work->gameData );
   saveBuf    = GetGimmickSaveWork( work->fieldmap );
   entry_data = &saveBuf->newsEntryData;
 
@@ -985,8 +1000,10 @@ static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap )
   GFL_STD_MemClear( work, sizeof(GATEWORK) );
 
   // 初期化
-  work->heapID = heapID;
-  work->fieldmap = fieldmap;
+  work->heapID     = heapID;
+  work->fieldmap   = fieldmap;
+  work->gameSystem = FIELDMAP_GetGameSysWork( fieldmap );
+  work->gameData   = GAMESYSTEM_GetGameData( work->gameSystem );
 
   // 電光掲示板管理ワークを作成
   {
@@ -1147,6 +1164,20 @@ static void SetElboardPos( GATEWORK* work )
 
 //------------------------------------------------------------------------------------------
 /**
+ * @brief チャンピオンニュースの有無を調べる
+ *
+ * @param work
+ * 
+ * @return チャンピオン情報がある場合 TRUE, そうでなければ FALSE
+ */
+//------------------------------------------------------------------------------------------
+static BOOL CheckChampionNews( const GATEWORK* work )
+{
+  return TRUE;
+}
+
+//------------------------------------------------------------------------------------------
+/**
  * @brief 臨時ニュースデータを読み込む
  *
  * @param work 読み込んだデータを保持するワーク
@@ -1159,7 +1190,7 @@ static void LoadSpNewsData( GATEWORK* work )
   // すでに読み込まれている
   if( work->spNewsData ){ return; }
 
-  // 全データを読み込み
+  // 臨時ニュースデータを読み込む
   {
     int data_idx;
     int data_num;
@@ -1211,17 +1242,15 @@ static const ELBOARD_SPNEWS_DATA* SearchTopNews( GATEWORK* work )
 {
   int i;
   u32        zone_id;
-  GAMESYS_WORK* gsys;
-  GAMEDATA*    gdata;
-  EVENTWORK*  evwork;
+  EVENTWORK* evwork;
 
   GF_ASSERT( work );
   GF_ASSERT( work->fieldmap );
+  GF_ASSERT( work->gameData );
+  GF_ASSERT( work->gameSystem );
 
   zone_id = FIELDMAP_GetZoneID( work->fieldmap );
-  gsys    = FIELDMAP_GetGameSysWork( work->fieldmap );
-  gdata   = GAMESYSTEM_GetGameData( gsys );
-  evwork  = GAMEDATA_GetEventWork( gdata );
+  evwork  = GAMEDATA_GetEventWork( work->gameData );
 
   // データを持っていない
   if( !work->spNewsData ){ return NULL; }
@@ -1253,17 +1282,13 @@ static const ELBOARD_SPNEWS_DATA* SearchGymNews( GATEWORK* work )
 {
   int i;
   u32           zone_id;
-  GAMESYS_WORK* gsys;
-  GAMEDATA*     gdata;
   EVENTWORK*    evwork;
 
   GF_ASSERT( work );
   GF_ASSERT( work->fieldmap );
 
   zone_id = FIELDMAP_GetZoneID( work->fieldmap );
-  gsys    = FIELDMAP_GetGameSysWork( work->fieldmap );
-  gdata   = GAMESYSTEM_GetGameData( gsys );
-  evwork  = GAMEDATA_GetEventWork( gdata );
+  evwork  = GAMEDATA_GetEventWork( work->gameData );
 
   // データを持っていない
   if( work->spNewsData == NULL ) { return NULL; }
@@ -1366,9 +1391,7 @@ static void EntryNews( GATEWORK* work,
   if( type == NEWS_TYPE_SPECIAL ) {
     // フラグを落とす
     if( sp_data->flagControl == FLAG_CONTROL_RESET ) { 
-      GAMESYS_WORK* gsys   = FIELDMAP_GetGameSysWork( work->fieldmap );
-      GAMEDATA*     gdata  = GAMESYSTEM_GetGameData( gsys );
-      EVENTWORK*    evwork = GAMEDATA_GetEventWork( gdata ); 
+      EVENTWORK* evwork = GAMEDATA_GetEventWork( work->gameData ); 
       EVENTWORK_ResetEventFlag( evwork, sp_data->flag );
     }
   }
@@ -1385,8 +1408,12 @@ static void SetupElboardNews( GATEWORK* work )
 {
   GF_ASSERT( work );
 
+  // チャンピオンニュースあり
+  if( CheckChampionNews( work ) == TRUE ) {
+    SetupElboardNews_Champion( work ); 
+  }
   // 臨時ニュースあり
-  if( CheckSpecialNews( work ) ) {
+  else if( CheckSpecialNews( work ) ) {
     SetupElboardNews_Special( work ); 
   }
   // 臨時ニュースなし
@@ -1404,29 +1431,50 @@ static void SetupElboardNews( GATEWORK* work )
 //------------------------------------------------------------------------------------------
 static void SetupElboardNews_Normal( GATEWORK* work )
 {
-  GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
-  GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
-
   // すでに他のニュースが登録されている場合
-  {
-    int num = GOBJ_ELBOARD_GetNewsNum( work->elboard );
-    if( num != 0 )
-    {
-      OBATA_Printf( "すでに他のニュースが設定されています。\n" );
-      return;
-    }
-  } 
+  if( GOBJ_ELBOARD_GetNewsNum(work->elboard) != 0 ) {
+    OS_Printf( "すでに他のニュースが設定されています。\n" );
+    GF_ASSERT(0);
+    return;
+  }
   // データを持っていない
   if( !work->gateData ){ return; }
 
   // ニュースを追加
-  AddNews_DATE( work );         // 日付
-  AddNews_WEATHER( work );      // 天気
-  AddNews_PROPAGATION( work );  // 大量発生
-  AddNews_INFO_A( work );       // 地域情報A
-  AddNews_INFO_B( work );       // 地域情報B
-  AddNews_INFO_C( work );       // 地域情報C
-  AddNews_CM( work );           // 一言CM
+  AddNews_DATE( work );        // 日付
+  AddNews_WEATHER( work );     // 天気
+  AddNews_PROPAGATION( work ); // 大量発生
+  AddNews_INFO_A( work );      // 地域情報A
+  AddNews_INFO_B( work );      // 地域情報B
+  AddNews_INFO_C( work );      // 地域情報C
+  AddNews_CM( work );          // 一言CM
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 掲示板に表示する情報を チャンピオンニュースで構成する
+ *
+ * @param work ギミック管理ワーク
+ */
+//------------------------------------------------------------------------------------------
+static void SetupElboardNews_Champion( GATEWORK* work )
+{
+  // すでに他のニュースが登録されている場合
+  if( GOBJ_ELBOARD_GetNewsNum(work->elboard) != 0 ) {
+    OS_Printf( "すでに他のニュースが設定されています。\n" );
+    GF_ASSERT(0);
+    return;
+  }
+
+  // データを持っていない
+  if( !work->gateData ){ return; }
+
+  // ニュースを追加
+  AddNews_DATE( work );        // 日付
+  AddNews_WEATHER( work );     // 天気
+  AddNews_PROPAGATION( work ); // 大量発生
+  AddNews_CHAMPION( work );    // チャンピオン情報
+  AddNews_CM( work );          // 一言CM
 }
 
 //------------------------------------------------------------------------------------------
@@ -1438,17 +1486,13 @@ static void SetupElboardNews_Normal( GATEWORK* work )
 //------------------------------------------------------------------------------------------
 static void SetupElboardNews_Special( GATEWORK* work )
 { 
-  GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->fieldmap );
-  GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
-
   // すでに他のニュースが登録されている場合
-  {
-    int num = GOBJ_ELBOARD_GetNewsNum( work->elboard );
-    if( num != 0 ) {
-      OBATA_Printf( "すでに他のニュースが設定されています。\n" );
-      return;
-    }
-  } 
+  if( GOBJ_ELBOARD_GetNewsNum(work->elboard) != 0 ) {
+    OS_Printf( "すでに他のニュースが設定されています。\n" );
+    GF_ASSERT(0);
+    return;
+  }
+
   // データを持っていない
   if( !work->spNewsData ){ return; }
 
@@ -1510,15 +1554,13 @@ static void AddNews_DATE( GATEWORK* work )
 static void AddNews_WEATHER( GATEWORK* work )
 {
   int i;
+  u32 msgStrID;
   NEWS_PARAM news;
   WORDSET* wordset;
-  u32 zoneID[ WEATHER_ZONE_NUM ];
+  WEATHER_NEWS_PARAM newsParam;
 
-  // 表示するゾーンリストを作成
-  zoneID[0] = work->gateData->zoneID_weather_1;
-  zoneID[1] = work->gateData->zoneID_weather_2;
-  zoneID[2] = work->gateData->zoneID_weather_3;
-  zoneID[3] = work->gateData->zoneID_weather_4;
+  // 天気ニュースパラメータを取得
+  GetWeatherNewsParam( work, &newsParam );
 
   // ワードセットを生成
   wordset = WORDSET_CreateEx( WEATHER_ZONE_NUM, 256, work->heapID );
@@ -1541,20 +1583,22 @@ static void AddNews_WEATHER( GATEWORK* work )
       STRBUF* strbuf_zone;    // 地名
       STRBUF* strbuf_weather; // 天気
       STRBUF* strbuf_set;     // 地名＋天気
+      u16 zoneID;
+      u8 weatherNo;
 
       // ゾーン指定が無効値なら表示しない
-      if( zoneID[i] == ZONE_ID_MAX ) { continue; }
+      if( newsParam.zoneID[i] == ZONE_ID_MAX ) { continue; }
+
+      zoneID = newsParam.zoneID[i];
+      weatherNo = newsParam.weatherNo[i];
 
       // 地名を取得
-      {
-        int str_id = ZONEDATA_GetPlaceNameID( zoneID[i] );
-        strbuf_zone = GFL_MSG_CreateString( msg_place_name, str_id );
-      }
+      strbuf_zone = 
+        GFL_MSG_CreateString( msg_place_name, ZONEDATA_GetPlaceNameID( zoneID ) );
       // 天気を取得
-      {
-        int weather = FIELDMAP_GetZoneWeatherID( work->fieldmap, zoneID[i] );
-        strbuf_weather = GFL_MSG_CreateString( msg_gate, str_id_weather[weather] );
-      }
+      strbuf_weather = 
+        GFL_MSG_CreateString( msg_gate, str_id_weather[ weatherNo ] );
+
       // 地名＋天気のセットを作成
       {
         WORDSET* wordset_expand = WORDSET_CreateEx( 2, 256, work->heapID );
@@ -1579,13 +1623,22 @@ static void AddNews_WEATHER( GATEWORK* work )
     GFL_MSG_Delete( msg_place_name );
   }
 
+  // 表示に使用するメッセージIDを選択
+  switch( GetValidWeatherNewsNum( &newsParam ) ) {
+  case 1: msgStrID = msg_gate_weather_set_1; break;
+  case 2: msgStrID = msg_gate_weather_set_2; break;
+  case 3: msgStrID = msg_gate_weather_set_3; break;
+  case 4: msgStrID = msg_gate_weather_set_4; break;
+  default: GF_ASSERT(0);
+  }
+
   // ニュースパラメータを作成
   news.animeIndex = news_anm_index[ NEWS_INDEX_WEATHER ];
   news.texName    = news_tex_name[ NEWS_INDEX_WEATHER ];
   news.pltName    = news_plt_name[ NEWS_INDEX_WEATHER ];
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
-  news.msgStrID   = work->gateData->msgID_weather;
+  news.msgStrID   = msgStrID;
   news.wordset    = wordset;
 
   // ニュース登録
@@ -1604,16 +1657,12 @@ static void AddNews_WEATHER( GATEWORK* work )
 //------------------------------------------------------------------------------------------
 static void AddNews_PROPAGATION( GATEWORK* work )
 {
-  GAMESYS_WORK* gsys;
-  GAMEDATA* gdata;
   NEWS_PARAM news;
   WORDSET* wordset;
   u16 zoneID;
 
   // 大量発生が起きているゾーンを取得
-  gsys   = FIELDMAP_GetGameSysWork( work->fieldmap );
-  gdata  = GAMESYSTEM_GetGameData( gsys );
-  zoneID = ENCPOKE_GetGenerateZone( gdata ); 
+  zoneID = ENCPOKE_GetGenerateZone( work->gameData ); 
 
   // 大量発生が起きていない
   if( zoneID == 0xFFFF ){ return; }
@@ -1744,8 +1793,7 @@ static void AddNews_INFO_C( GATEWORK* work )
   RTC_GetDate( &date ); 
 
   // 曜日に応じた情報を選択
-  switch( date.week )
-  {
+  switch( date.week ) {
   case RTC_WEEK_SUNDAY:    news.msgStrID = work->gateData->msgID_infoI;  break;
   case RTC_WEEK_MONDAY:    news.msgStrID = work->gateData->msgID_infoF;  break;
   case RTC_WEEK_TUESDAY:   news.msgStrID = work->gateData->msgID_infoC;  break;
@@ -1782,8 +1830,7 @@ static void AddNews_CM( GATEWORK* work )
   RTC_GetDate( &date );
 
   // 曜日に応じたCMを選択
-  switch( date.week )
-  {
+  switch( date.week ) {
   case RTC_WEEK_SUNDAY:    news.msgStrID = work->gateData->msgID_cmSun;  break;
   case RTC_WEEK_MONDAY:    news.msgStrID = work->gateData->msgID_cmMon;  break;
   case RTC_WEEK_TUESDAY:   news.msgStrID = work->gateData->msgID_cmTue;  break;
@@ -1805,6 +1852,50 @@ static void AddNews_CM( GATEWORK* work )
 
 //------------------------------------------------------------------------------------------
 /**
+ * @brief 掲示板のチャンピオンニュースを追加する
+ *
+ * @param work     ギミック管理ワーク
+ * @param news_idx ニュースの追加場所を指定
+ *
+ * @todo ポケモン名を正しくセットする
+ */
+//------------------------------------------------------------------------------------------
+static void AddNews_CHAMPION( GATEWORK* work )
+{
+  HEAPID heap_id; 
+  NEWS_PARAM news;
+  WORDSET* wordset;
+
+  // ワードセット作成
+  heap_id = GOBJ_ELBOARD_GetHeapID( work->elboard );
+  wordset = WORDSET_Create( heap_id );
+
+  // ポケモン名をセット
+  WORDSET_RegisterPokeMonsNameNo( wordset, 0, 1 );
+  WORDSET_RegisterPokeMonsNameNo( wordset, 1, 2 );
+  WORDSET_RegisterPokeMonsNameNo( wordset, 2, 3 );
+  WORDSET_RegisterPokeMonsNameNo( wordset, 3, 4 );
+  WORDSET_RegisterPokeMonsNameNo( wordset, 4, 5 );
+  WORDSET_RegisterPokeMonsNameNo( wordset, 5, 6 );
+
+  // ニュースパラメータを作成
+  news.animeIndex = news_anm_index[NEWS_INDEX_INFO_A];
+  news.texName    = news_tex_name[NEWS_INDEX_INFO_A];
+  news.pltName    = news_plt_name[NEWS_INDEX_INFO_A];
+  news.msgArcID   = ARCID_MESSAGE;
+  news.msgDatID   = NARC_message_gate_dat;
+  news.msgStrID   = msg_gate_champ_6;
+  news.wordset    = wordset;
+
+  // ニュース登録
+  EntryNews( work, &news, NEWS_TYPE_CHAMPION, NULL ); 
+
+  // ワードセット破棄
+  WORDSET_Delete( wordset );
+}
+
+//------------------------------------------------------------------------------------------
+/**
  * @brief 掲示板のニュースを追加する(臨時ニュース)
  * 
  * @param work   ギミック管理ワーク
@@ -1816,8 +1907,8 @@ static void AddNews_SPECIAL( GATEWORK* work, const ELBOARD_SPNEWS_DATA* news )
   // ニュースを追加
   switch( news->newsType ) {
   case SPNEWS_TYPE_DIRECT: AddSpNews_DIRECT( work, news, NEWS_INDEX_INFO_A );  break;
-  case SPNEWS_TYPE_CHAMP:  AddSpNews_CHAMP( work, news, NEWS_INDEX_INFO_A );   break;
   case SPNEWS_TYPE_GYM:    AddSpNews_GYM( work );                              break;
+  default: GF_ASSERT(0);
   }
 } 
 
@@ -1847,51 +1938,6 @@ static void AddSpNews_DIRECT( GATEWORK* work,
   EntryNews( work, &news, NEWS_TYPE_SPECIAL, spnews ); 
 }
 
-//------------------------------------------------------------------------------------------
-/**
- * @brief 掲示板の臨時ニュースを追加する(チャンピオン情報)
- *
- * @param work     ギミック管理ワーク
- * @param spnews   臨時ニュースデータ
- * @param news_idx ニュースの追加場所を指定
- *
- * @todo ポケモン名を正しくセットする
- */
-//------------------------------------------------------------------------------------------
-static void AddSpNews_CHAMP( GATEWORK* work,
-                             const ELBOARD_SPNEWS_DATA* spnews, NEWS_INDEX news_idx )
-{
-  HEAPID heap_id; 
-  NEWS_PARAM news;
-  WORDSET* wordset;
-
-  // ワードセット作成
-  heap_id = GOBJ_ELBOARD_GetHeapID( work->elboard );
-  wordset = WORDSET_Create( heap_id );
-
-  // ポケモン名をセット
-  WORDSET_RegisterPokeMonsNameNo( wordset, 0, 1 );
-  WORDSET_RegisterPokeMonsNameNo( wordset, 1, 2 );
-  WORDSET_RegisterPokeMonsNameNo( wordset, 2, 3 );
-  WORDSET_RegisterPokeMonsNameNo( wordset, 3, 4 );
-  WORDSET_RegisterPokeMonsNameNo( wordset, 4, 5 );
-  WORDSET_RegisterPokeMonsNameNo( wordset, 5, 6 );
-
-  // ニュースパラメータを作成
-  news.animeIndex = news_anm_index[news_idx];
-  news.texName    = news_tex_name[news_idx];
-  news.pltName    = news_plt_name[news_idx];
-  news.msgArcID   = ARCID_MESSAGE;
-  news.msgDatID   = NARC_message_gate_dat;
-  news.msgStrID   = spnews->msgID;
-  news.wordset    = wordset;
-
-  // ニュース登録
-  EntryNews( work, &news, NEWS_TYPE_SPECIAL, spnews ); 
-
-  // ワードセット破棄
-  WORDSET_Delete( wordset );
-}
 
 //------------------------------------------------------------------------------------------
 /**
@@ -1916,6 +1962,33 @@ static void AddSpNews_GYM( GATEWORK* work )
     // 次のジムニュースを取得
     news = SearchGymNews( work );
   } 
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 有効な天気情報の数を取得する
+ *
+ * @param param 天気ニュースパラメータ
+ *
+ * @return 指定した天気ニュースパラメータに含まれる, 有効な天気情報の数
+ */
+//------------------------------------------------------------------------------------------
+static int GetValidWeatherNewsNum( WEATHER_NEWS_PARAM* param )
+{
+  int i;
+  int num = 0;
+
+  for( i=0; i<WEATHER_ZONE_NUM; i++ )
+  {
+    // 有効なデータを発見
+    if( (param->zoneID[i] != ZONE_ID_MAX) &&
+        (param->weatherNo[i] != WEATHER_NO_NONE) )
+    {
+      num++;
+    }
+  }
+
+  return num;
 }
 
 //------------------------------------------------------------------------------------------
@@ -1947,6 +2020,64 @@ static void InitWeatherNewsParam( WEATHER_NEWS_PARAM* param )
 //------------------------------------------------------------------------------------------
 static void GetWeatherNewsParam( const GATEWORK* work, WEATHER_NEWS_PARAM* dest )
 {
+  WEATHER_NEWS_PARAM rareWeather;
+  WEATHER_NEWS_PARAM movePokeWeather;
+  int num = 0;
+  int i;
+
+  InitWeatherNewsParam( dest ); // 初期化
+  GetRareWeather( work, &rareWeather ); // レア天気を取得
+  GetMovePokeWeather( work, &movePokeWeather ); // 移動ポケモン天気を取得
+
+  // 取得した移動ポケモン天気を登録
+  for( i=0; i<WEATHER_ZONE_NUM; i++ )
+  {
+    // 無効データを発見
+    if( (movePokeWeather.zoneID[i] == ZONE_ID_MAX) ||
+        (movePokeWeather.weatherNo[i] == WEATHER_NO_NONE) ) { break; }
+
+    // 特殊天気の同時多発数が多すぎる
+    if( SP_WEATHER_MAX_NUM <= num ) {
+      GF_ASSERT(0);
+      break;
+    }
+
+    // 登録
+    dest->zoneID[num]    = movePokeWeather.zoneID[i];
+    dest->weatherNo[num] = movePokeWeather.weatherNo[i];
+    num++;
+  }
+
+  // 取得した特殊天気を登録
+  for( i=0; i<WEATHER_ZONE_NUM; i++ )
+  {
+    // 無効データを発見
+    if( (rareWeather.zoneID[i] == ZONE_ID_MAX) ||
+        (rareWeather.weatherNo[i] == WEATHER_NO_NONE) ) { break; }
+
+    // 特殊天気の同時多発数が多すぎる
+    if( SP_WEATHER_MAX_NUM <= num ) {
+      GF_ASSERT(0);
+      break;
+    }
+
+    // 登録
+    dest->zoneID[num]    = rareWeather.zoneID[i];
+    dest->weatherNo[num] = rareWeather.weatherNo[i];
+    num++;
+  }
+
+  // 特殊天気がない場合は, 通常の天気を登録する
+  if( num == 0 ) {
+    dest->zoneID[0] = work->gateData->zoneID_weather_1;
+    dest->zoneID[1] = work->gateData->zoneID_weather_2;
+    dest->zoneID[2] = work->gateData->zoneID_weather_3;
+    dest->zoneID[3] = work->gateData->zoneID_weather_4;
+  }
+  for( i=0; i<WEATHER_ZONE_NUM; i++ )
+  {
+    dest->weatherNo[i] = FIELDMAP_GetZoneWeatherID( work->fieldmap, dest->zoneID[i] );
+  } 
 }
 
 //------------------------------------------------------------------------------------------
@@ -1959,7 +2090,6 @@ static void GetWeatherNewsParam( const GATEWORK* work, WEATHER_NEWS_PARAM* dest 
 //------------------------------------------------------------------------------------------
 static void GetRareWeather( const GATEWORK* work, WEATHER_NEWS_PARAM* dest )
 {
-#if 0
   int i, j;
   int num; 
 
@@ -1971,19 +2101,26 @@ static void GetRareWeather( const GATEWORK* work, WEATHER_NEWS_PARAM* dest )
   for( i=0; i<NELEMS(RareWeatherCheckZoneID); i++ )
   {
     // 今日の天気を取得
-    GAMESYS_WORK* gameSystem = FIELDMAP_GetGameSysWork( work->fieldmap );
-    GAMEDATA* gameData = GAMESYSTEM_GetGameData( gameSystem );
-    u8 weather = CALENDER_GetWeather_today( gameData, work->heapID );
+    u16 zoneID = RareWeatherCheckZoneID[i];
+    u8 weather = FIELDMAP_GetZoneWeatherID( work->fieldmap, zoneID );
 
     // レア天気かどうかを判定
     for( j=0; j<NELEMS(RareWeatherNo); j++ )
     {
       // レア天気を発見
       if( weather == RareWeatherNo[j] ) {
+        // レア天気の同時多発数が多すぎる
+        if( WEATHER_ZONE_NUM <= num ) {
+          GF_ASSERT(0);
+          break;
+        }
+        // 天気ニュースパラメータに追加
+        dest->zoneID[ num ] = zoneID;
+        dest->weatherNo[ num ] = weather;
+        num++;
       }
-    } 
+    }
   }
-#endif
 }
 
 //------------------------------------------------------------------------------------------
@@ -1996,6 +2133,39 @@ static void GetRareWeather( const GATEWORK* work, WEATHER_NEWS_PARAM* dest )
 //------------------------------------------------------------------------------------------
 static void GetMovePokeWeather( const GATEWORK* work, WEATHER_NEWS_PARAM* dest )
 {
+  SAVE_CONTROL_WORK* save;
+  ENC_SV_PTR encSave;
+  int movePokeID;
+  u16 zoneID;
+  u8 weatherNo;
+
+  save    = GAMEDATA_GetSaveControlWork( work->gameData );
+  encSave = EncDataSave_GetSaveDataPtr( save );
+
   // データの格納先をクリア
   InitWeatherNewsParam( dest );
+
+  // 移動ポケモンがいない
+  if( MP_CheckMovePoke( encSave ) == FALSE ) { return; }
+
+  // 移動ポケモンIDを決定
+  switch( GetVersion() ) {
+  case VERSION_WHITE: movePokeID = MOVE_POKE_RAIKAMI;  break;
+  case VERSION_BLACK: movePokeID = MOVE_POKE_KAZAKAMI; break;
+  default: GF_ASSERT(0);
+  }
+
+  // 移動ポケモンがいるゾーンIDを取得
+  zoneID = MP_GetMovePokeZoneID( encSave, movePokeID ); 
+
+  // 天気を決定
+  switch( movePokeID ) { 
+  case MOVE_POKE_RAIKAMI:  weatherNo = WEATHER_NO_RAIKAMI; break;
+  case MOVE_POKE_KAZAKAMI: weatherNo = WEATHER_NO_KAZAKAMI; break;
+  default: GF_ASSERT(0);
+  }
+
+  // 天気ニュースデータに追加
+  dest->zoneID[0]    = zoneID;
+  dest->weatherNo[0] = weatherNo;
 }
