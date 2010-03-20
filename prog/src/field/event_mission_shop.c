@@ -68,6 +68,7 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talked( GMEVENT *event, int *seq, voi
 //==============================================================================
 static const struct{
   u16 target_first[TALK_TYPE_MAX];          ///<自分がターゲットで最初の会話
+  u16 target_second[TALK_TYPE_MAX];         ///<自分がターゲットで最初の会話その２
   u16 target_decline[TALK_TYPE_MAX];        ///<自分がターゲットで売買を断った
   u16 target_short_of_money[TALK_TYPE_MAX]; ///<自分がターゲットでお金が足りない
   u16 target_item_full[TALK_TYPE_MAX];      ///<自分がターゲットで道具がいっぱい
@@ -85,6 +86,13 @@ static const struct{
     mis_m06_01_t3,
     mis_m06_01_t4,
     mis_m06_01_t5,
+  },
+  { //自分がターゲットで最初の会話　その２
+    mis_m06_01_t1,
+    mis_m06_01_t2,
+    mis_m06_01_t3,
+    mis_m06_01_t4_2,
+    mis_m06_01_t5_2,
   },
   { //自分がターゲットで売買を断った
     mis_m06_03_t1,
@@ -353,6 +361,7 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
 	enum{
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
+    SEQ_MSG_SECOND,
     SEQ_BATTLE_YESNO_SELECT,
     SEQ_CONCLUDED,
     SEQ_CONCLUDED_MSG,
@@ -393,6 +402,13 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
 		(*seq)++;
 		break;
   case SEQ_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&shop->ccew.iem) == TRUE){
+      IntrudeEventPrint_StartStream(&shop->ccew.iem, 
+        MissionShopMsgID.target_second[MISSION_FIELD_GetTalkType(intcomm, shop->ccew.talk_netid)]);
+      (*seq)++;
+    }
+    break;
+  case SEQ_MSG_SECOND:
     if(IntrudeEventPrint_WaitStream(&shop->ccew.iem) == TRUE){
       IntrudeEventPrint_SetupYesNo(&shop->ccew.iem, gsys);
       (*seq)++;
