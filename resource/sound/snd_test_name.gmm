@@ -8149,13 +8149,13 @@
 		<language name="JPN" width="256">W556-FUUN</language>
 		<language name="JPN_KANJI" width="256">W556-FUUN</language>
 	</row>
-	<row id="msg_seq_se_dmy_274">
-		<language name="JPN" width="256">DMY-274</language>
-		<language name="JPN_KANJI" width="256">DMY-274</language>
+	<row id="msg_seq_se_ndemo_01">
+		<language name="JPN" width="256">NDEMO-01</language>
+		<language name="JPN_KANJI" width="256">NDEMO-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_275">
-		<language name="JPN" width="256">DMY-275</language>
-		<language name="JPN_KANJI" width="256">DMY-275</language>
+	<row id="msg_seq_se_ndemo_02">
+		<language name="JPN" width="256">NDEMO-02</language>
+		<language name="JPN_KANJI" width="256">NDEMO-02</language>
 	</row>
 	<row id="msg_seq_se_dmy_276">
 		<language name="JPN" width="256">DMY-276</language>
