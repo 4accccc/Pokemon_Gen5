@@ -1043,7 +1043,7 @@ BOOL GTSNEGO_DISP_FriendListUpChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* p
  *	@return	none
  */
 //-----------------------------------------------------------------------------
-#if DEBUG_ONLY_FOR_ohno
+#if _DISP_DEBUG
 
 static void _DebugDataCreate(GTSNEGO_DISP_WORK* pWork)
 {

@@ -14,6 +14,7 @@
 #include "net_app/gtsnego.h"
 #include "net/network_define.h"
 #include "net/dwc_rap.h"
+#include "net/dwc_tool.h"
 #include "../../field/event_gtsnego.h"
 
 #include "infowin/infowin.h"
@@ -44,14 +45,6 @@
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 #include "gtsnego_local.h"
 
-
-#if DEBUG_ONLY_FOR_ohno
-#define _NET_DEBUG (1)
-#define _DISP_DEBUG (1)  //表示作りこみ
-#else
-#define _NET_DEBUG (0)
-#define _DISP_DEBUG (1)
-#endif
 
 #define _NO2   (2)
 #define _NO3   (3)
@@ -144,6 +137,7 @@ typedef struct tagGameMatchExtKeys
 
 typedef struct{   //交換するデータの構造体
   PMS_DATA pms;
+  int num;
 } MATCH_DATA;
 
 
@@ -184,7 +178,7 @@ struct _GTSNEGO_WORK {
   CROSSCUR_TYPE key2;  //だれでも用
   CROSSCUR_TYPE key3;  //まちあわせよう
   MATCH_DATA myMatchData;
-  MATCH_DATA MatchData[2];
+  MATCH_DATA MatchData;
   BOOL keyMode;
 };
 
@@ -321,7 +315,10 @@ static void _recvMatchData(const int netID, const int size, const void* pData, v
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
-  GFL_STD_MemCopy(pData,&pWork->MatchData[netID], sizeof(MATCH_DATA));
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return;//自分のは今は受け取らない
+  }
+  GFL_STD_MemCopy(pData,&pWork->MatchData, sizeof(MATCH_DATA));
 }
 
 
@@ -487,10 +484,9 @@ static void _messagePMS( GTSNEGO_WORK *pWork )
     _CHANGE_STATE(pWork, _messageEnd);
 #else
     {
-      int netID = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-
+      GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork, GTSNEGO_040);
       GTSNEGO_MESSAGE_PMSDrawInit(pWork->pMessageWork, pWork->pDispWork);
-      GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, &pWork->MatchData[1-netID].pms );
+      GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, &pWork->MatchData.pms );
       //   GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork,GTSNEGO_040);
       _CHANGE_STATE(pWork, _messageEnd);
     }
@@ -513,24 +509,71 @@ static void _timingCheck2( GTSNEGO_WORK *pWork )
   EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
 
 #if _DISP_DEBUG
-  {
-    EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
-    GTSNEGO_MESSAGE_SetCountry(pWork->pMessageWork, GAMEDATA_GetMyStatus(pEv->gamedata));
-    GTSNEGO_MESSAGE_MainMessageDispCore(pWork->pMessageWork);
-  }
-  _CHANGE_STATE(pWork,_messagePMS);
-#else
+  MYSTATUS* pMy = GAMEDATA_GetMyStatus(pEv->gamedata);
+  int num =2;
   
-  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO3, WB_NET_GTSNEGO)){
-
-    GTSNEGO_MESSAGE_SetCountry(pWork->pMessageWork, pEv->pStatus[1]);
-
-    GTSNEGO_MESSAGE_MainMessageDispCore(pWork->pMessageWork);
-
-    _CHANGE_STATE(pWork,_messagePMS);
-  }
+#else
+  MYSTATUS* pMy = pEv->pStatus[1];
+  int num = pWork->MatchData.num;
+  
+  
 #endif
+
+  GTSNEGO_MESSAGE_FindPlayer(pWork->pMessageWork, pMy, num);
+  GTSNEGO_DISP_SearchEndPeopleDispSet(pWork->pDispWork);
+  _CHANGE_STATE(pWork,_messagePMS);
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	不正文字検査
+ */
+//-----------------------------------------------------------------------------
+
+
+static void _timingCheck4( GTSNEGO_WORK *pWork )
+{
+
+  //@todo 不正文字検査完了
+  //if(DWC_TOOL_BADWORD_Wait){
+    _CHANGE_STATE(pWork,_timingCheck2);
+//  }
+  
+  //@todo 名前置き換え
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	不正文字検査
+ */
+//-----------------------------------------------------------------------------
+
+static void _timingCheck5( GTSNEGO_WORK *pWork )
+{
+  if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO3, WB_NET_GTSNEGO)){
+    return;
+  }
+
+#if 0
+typedef struct 
+{
+  STRCODE   badword_str[ DWC_TOOL_BADWORD_STRL_MAX ];
+  u16       *p_badword_arry[1];
+  char      badword_result[1];
+  int       badword_num;
+} DWC_TOOL_BADWORD_WORK;
+#endif
+  
+  //@todo 不正文字検査
+//    MYSTATUS* pMy = pEv->pStatus[1];
+
+ // DWC_TOOL_BADWORD_Start();
+  
+  _CHANGE_STATE(pWork,_timingCheck4);
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -544,7 +587,7 @@ static void _timingCheck2( GTSNEGO_WORK *pWork )
 static void _statussendCheck( GTSNEGO_WORK *pWork )
 {
   GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO3, WB_NET_GTSNEGO);
-  _CHANGE_STATE(pWork,_timingCheck2);
+  _CHANGE_STATE(pWork,_timingCheck5);
 }
 
 //----------------------------------------------------------------------------
@@ -636,7 +679,7 @@ static void _friendGreeState( GTSNEGO_WORK *pWork )
     pParent->aUser[0].selectLV = pWork->myChageType;
     pParent->aUser[0].selectType = pWork->changeMode;
     WIFI_NEGOTIATION_SV_GetMsg(GAMEDATA_GetWifiNegotiation(pWork->pGameData),&pWork->myMatchData.pms);
-    
+    pWork->myMatchData.num = WIFI_NEGOTIATION_SV_GetChangeCount(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO2, WB_NET_GTSNEGO);
     
     _CHANGE_STATE(pWork,_timingCheck);
@@ -680,7 +723,6 @@ static void _lookatDownState( GTSNEGO_WORK *pWork )
   }
   else{
     pWork->timer = _FRIEND_GREE_DOWN_TIME;
-    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_022);
     if(GFL_NET_SystemGetCurrentID() != GFL_NET_NO_PARENTMACHINE){  // 子機として接続が完了した
       if(GFL_NET_HANDLE_RequestNegotiation()){
         _CHANGE_STATE(pWork,_friendGreeState);
@@ -718,10 +760,9 @@ static void _matchingState( GTSNEGO_WORK *pWork )
     //接続したら表示して交換に
   if(STEPMATCH_SUCCESS == GFL_NET_DWC_GetStepMatchResult()){
 #endif
-
-
     
-    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_021);
+    GTSNEGO_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+    GTSNEGO_MESSAGE_InfoMessageDispLine(pWork->pMessageWork,GTSNEGO_021);
 
     pWork->timer = _FRIEND_LOOKAT_DOWN_TIME;
 
@@ -1216,6 +1257,7 @@ static void _friendSelect( GTSNEGO_WORK *pWork )
   int i;
   BOOL bCursor = TRUE;
   int a = WIFI_NEGOTIATION_SV_GetFriendNum(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
+
   
   if(a==0){
     GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_034);

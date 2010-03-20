@@ -30,6 +30,7 @@ typedef struct _GTSNEGO_DISP_WORK  GTSNEGO_DISP_WORK;
 
 #define _OBJPAL_NEGOOBJ_POS_MAIN (0)
 #define _OBJPAL_NEGOOBJ_NUM_MAIN (8)
+#define _OBJPAL_PMS_POS_MAIN (8)
 
 // はいいいえのタイプ
 #define GTSNEGO_YESNOTYPE_INFO (0)
@@ -154,6 +155,7 @@ extern void GTSNEGO_DISP_ScrollChipDispMouse(GTSNEGO_DISP_WORK* pWork,int y,int 
 extern void GTSNEGO_DISP_SearchPeopleDispSet(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_SearchPeopleDispMain(GTSNEGO_DISP_WORK* pWork);
 extern GFL_CLUNIT* GTSNEGO_DISP_GetCellUtil(GTSNEGO_DISP_WORK* pWork);
+extern void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork);
 
 
 //extern void GTSNEGO_MESSAGE_PlateDisp(GTSNEGO_MESSAGE_WORK* pWork, MYSTATUS* pMyStatus, int index );
@@ -172,7 +174,9 @@ extern void GTSNEGO_MESSAGE_PMSDisp(GTSNEGO_MESSAGE_WORK* pWork,PMS_DATA* pms);
 extern void GTSNEGO_MESSAGE_TitleMessage(GTSNEGO_MESSAGE_WORK* pWork,int msgid);
 extern void GTSNEGO_MESSAGE_CancelButtonCreate(GTSNEGO_MESSAGE_WORK* pWork);
 extern BOOL GTSNEGO_MESSAGE_CancelButtonDelete(GTSNEGO_MESSAGE_WORK* pWork);
-extern void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork);
+extern void GTSNEGO_MESSAGE_InfoMessageDispLine(GTSNEGO_MESSAGE_WORK* pWork,int msgid);
+
+extern void GTSNEGO_MESSAGE_FindPlayer(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMy, int num);
 
 extern MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index);
 
@@ -182,3 +186,12 @@ extern MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index);
 #define SCROLL_HEIGHT_DEFAULT (24+SCROLL_HEIGHT_SINGLE*1) 
 #define SCROLL_PANEL_NUM (6)   ///パネルの数
 #define GTSNEGO_WINDOW_MAXNUM (SCROLL_PANEL_NUM)   //ウインドウのパターン数
+
+
+#if DEBUG_ONLY_FOR_ohno
+#define _NET_DEBUG (1)
+#define _DISP_DEBUG (1)  //表示作りこみ
+#else
+#define _NET_DEBUG (0)
+#define _DISP_DEBUG (1)
+#endif

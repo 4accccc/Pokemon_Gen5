@@ -209,6 +209,42 @@ static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork)
 }
 
 
+static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
+{
+
+  {
+    POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
+
+    STATUS_RCV_PokeParam_RecoverAll(pp); //回復
+    //ポケメモ
+    POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_EGG_TRADE,
+                                pWork->pMy, 
+                                POKE_MEMO_PLACE_HUMAN_TRADE, pWork->heapID );
+    //ずかん
+    ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave( pWork->pGameData ), pp );
+    //交換数かうんと
+    if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
+      WIFI_NEGOTIATION_SV_AddChangeCount(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
+    }
+    //交換する   // 相手のポケを自分の選んでいた場所に入れる
+    if(pWork->selectBoxno == BOXDAT_GetTrayMax(pWork->pBox)){ //てもちの交換の場合
+      POKEPARTY* party = pWork->pMyParty;
+      PokeParty_SetMemberData(party, pWork->selectIndex, pp);
+    }
+    else{
+      if(MONSNO_492 == PP_Get( pp , ID_PARA_monsno ,NULL)){
+        if(FORMNO_492_SKY == PP_Get( pp , ID_PARA_form_no ,NULL)){
+          PP_ChangeFormNo(pp,FORMNO_SHEIMI_LAND);
+        }
+      }
+      BOXDAT_PutPokemonPos(pWork->pBox, pWork->selectBoxno,
+                           pWork->selectIndex,
+                           (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));
+    }
+  }
+}
+
+
 
 
 
@@ -253,6 +289,25 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
     }
   }
 
+
+  // メールがあったらボックスに
+  {
+    POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
+    _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
+    int item = PP_Get( pp , ID_PARA_item ,NULL);
+    if(ITEM_CheckMail(item)){
+      GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_08, pWork->pMessageStrBuf );
+      POKETRADE_MESSAGE_WindowOpen(pWork);
+      _CHANGE_STATE(pWork,_mailBoxStart);
+      return;
+    }
+  }
+  //ポケモンセット
+  _setPokemonData(pWork);
+
+
+
+#if 0
   {
     POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
 //    int id = 1-GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
@@ -263,6 +318,9 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
                                 POKE_MEMO_PLACE_HUMAN_TRADE, pWork->heapID );
 
     ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave( pWork->pGameData ), pp );
+
+    WIFI_NEGOTIATION_SV_AddChangeCount(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
+
 
     //交換する
     // 相手のポケを自分の選んでいた場所に入れる
@@ -292,6 +350,7 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
       }
     }
   }
+#endif
   _CHANGE_STATE(pWork,_saveStart);
 }
 
@@ -400,6 +459,10 @@ void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork)
   //戻ってきたポケモンと入れ替え
   pWork->selectBoxno = pWork->pParentWork->selectBoxno;
   pWork->selectIndex = pWork->pParentWork->selectIndex;
+
+  _setPokemonData(pWork);
+
+#if 0
   {
     POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
     STATUS_RCV_PokeParam_RecoverAll(pp);
@@ -420,7 +483,8 @@ void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork)
     }
     ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave( pWork->pGameData ), pp );
   }
-
+#endif
+  
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
   _CHANGE_STATE(pWork,_changeTimingSaveStart);

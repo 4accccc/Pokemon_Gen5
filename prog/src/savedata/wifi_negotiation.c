@@ -15,6 +15,8 @@
 #include "system/pms_data.h"
 #include "buflen.h"
 
+#define _COUNTMAX  (99999)  ///自分の交換ポケモン数MAX
+
 //----------------------------------------------------------
 /**
  * @brief  構造体定義
@@ -203,6 +205,34 @@ void WIFI_NEGOTIATION_SV_SetMsg(WIFI_NEGOTIATION_SAVEDATA* pSV,const PMS_DATA* s
 void WIFI_NEGOTIATION_SV_GetMsg(WIFI_NEGOTIATION_SAVEDATA* pSV,PMS_DATA* dist)
 {
   PMSDAT_Copy(dist, &pSV->message);
+}
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   交換回数を返す
+ * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
+ * @return	回数
+ */
+//--------------------------------------------------------------------------------------------
+u16 WIFI_NEGOTIATION_SV_GetChangeCount(WIFI_NEGOTIATION_SAVEDATA* pSV)
+{
+  return pSV->num;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   交換回数をインクリメント
+ * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
+ * @return none
+ */
+//--------------------------------------------------------------------------------------------
+void WIFI_NEGOTIATION_SV_AddChangeCount(WIFI_NEGOTIATION_SAVEDATA* pSV)
+{
+  pSV->num++;
+  if(pSV->num > _COUNTMAX){
+    pSV->num = _COUNTMAX;
+  }
 }
 
 

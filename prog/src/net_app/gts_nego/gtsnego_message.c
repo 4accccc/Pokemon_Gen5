@@ -128,6 +128,8 @@ struct _GTSNEGO_MESSAGE_WORK {
 
   GFL_BMPWIN* mainMsgWin;
   GFL_BMPWIN* pmsMsgWin;
+  GFL_BMPWIN* numMsgWin;
+  GFL_BMPWIN* nameMsgWin;
 
   PRINT_STREAM* pStream;
 	GFL_TCBLSYS *pMsgTcblSys;
@@ -199,6 +201,9 @@ void GTSNEGO_MESSAGE_Main(GTSNEGO_MESSAGE_WORK* pWork)
   if(pWork->pAppWin){
     APP_TASKMENU_WIN_Update( pWork->pAppWin );
   }
+  if( pWork->pms_draw_work ){
+    PMS_DRAW_Main( pWork->pms_draw_work );
+  }
 
 }
 
@@ -223,16 +228,29 @@ void GTSNEGO_MESSAGE_End(GTSNEGO_MESSAGE_WORK* pWork)
   GFL_STR_DeleteBuffer(pWork->pStrBufStream);
   GFL_STR_DeleteBuffer(pWork->pExStrBuf);
 
+  
+
   WORDSET_Delete(pWork->pWordSet );
   APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
+  _PMSDrawExit( pWork );
+
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
   }
   if(pWork->mainMsgWin){
     GFL_BMPWIN_Delete(pWork->mainMsgWin);
+  }
+  if(pWork->nameMsgWin){
+    GFL_BMPWIN_Delete(pWork->nameMsgWin);
+  }
+  if(pWork->numMsgWin){
+    GFL_BMPWIN_Delete(pWork->numMsgWin);
+  }
+  if(pWork->pmsMsgWin){
+    GFL_BMPWIN_Delete(pWork->pmsMsgWin);
   }
   if(pWork->systemDispWin){
     GFL_BMPWIN_Delete(pWork->systemDispWin);
@@ -242,7 +260,15 @@ void GTSNEGO_MESSAGE_End(GTSNEGO_MESSAGE_WORK* pWork)
       GFL_BMPWIN_Delete(pWork->mainDispWin[i]);
     }
   }
-  
+  for(i=0;i< SCROLL_PANEL_NUM;i++){
+    if(pWork->MyStatusDispWin[i]){
+      GFL_BMPWIN_Delete(pWork->MyStatusDispWin[i]);
+    }
+  }
+  if(pWork->FriendTitleWin){
+    GFL_BMPWIN_Delete(pWork->FriendTitleWin);
+  }
+
 	GFL_BMPWIN_Exit();
   GFL_HEAP_FreeMemory(pWork);
 }
@@ -282,11 +308,45 @@ void GTSNEGO_MESSAGE_InfoMessageDisp(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
   GFL_BMPWIN_MakeScreen(pwin);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
 
-  if( pWork->pms_draw_work ){
-    PMS_DRAW_Main( pWork->pms_draw_work );
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   説明ウインドウ表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GTSNEGO_MESSAGE_InfoMessageDispLine(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
+{
+  GFL_BMPWIN* pwin;
+
+  GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBufStream );
+  
+  if(pWork->infoDispWin==NULL){
+    pWork->infoDispWin = GFL_BMPWIN_Create(
+      GFL_BG_FRAME1_M ,
+      1 , 21, 30 ,2 ,
+      _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
+  pwin = pWork->infoDispWin;
+
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
+  GFL_FONTSYS_SetColor(1, 2, 15);
+
+  pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBufStream, pWork->pFontHandle,
+                                        MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
+
+  BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar1M), _BUTTON_WIN_PAL );
+
+  GFL_BMPWIN_TransVramCharacter(pwin);
+  GFL_BMPWIN_MakeScreen(pwin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
+
 
 }
+
 
 
 
@@ -318,7 +378,7 @@ void GTSNEGO_MESSAGE_MainMessageDispCore(GTSNEGO_MESSAGE_WORK* pWork)
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0);
   GFL_FONTSYS_SetColor(15, 2, 0);
-  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) ,0,0, pWork->pStrBuf, pWork->pFontHandle );
+  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) , 3, 2, pWork->pStrBuf, pWork->pFontHandle );
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);
   
@@ -380,10 +440,18 @@ BOOL GTSNEGO_MESSAGE_InfoMessageEndCheck(GTSNEGO_MESSAGE_WORK* pWork)
 
 void GTSNEGO_MESSAGE_InfoMessageEnd(GTSNEGO_MESSAGE_WORK* pWork)
 {
-  BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
-  GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
+  if(pWork->infoDispWin){
+    BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
+    GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
+    GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
+    GFL_BMPWIN_Delete(pWork->infoDispWin);
+    pWork->infoDispWin=NULL;
+  }
 }
+
+
+
+
 
 //------------------------------------------------------------------------------
 /**
@@ -775,7 +843,7 @@ APP_TASKMENU_WIN_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* p
 
 
 
-void GTSNEGO_MESSAGE_SetCountry(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMyStatus)
+static void _SetCountry(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMyStatus)
 {
 
   WORDSET_RegisterCountryName( pWork->pWordSet, 0, MyStatus_GetMyNation(pMyStatus));
@@ -1005,7 +1073,7 @@ void GTSNEGO_MESSAGE_PMSDrawInit(GTSNEGO_MESSAGE_WORK* pWork, GTSNEGO_DISP_WORK*
   if(pWork->pms_draw_work==NULL){
     GFL_CLUNIT* cellUnit = GTSNEGO_DISP_GetCellUtil(pDispWork);
     pWork->pms_draw_work = PMS_DRAW_Init( cellUnit, CLSYS_DRAW_MAIN, 
-                                          pWork->SysMsgQue, pWork->pFontHandle, 0, 3, pWork->heapID );
+                                          pWork->SysMsgQue, pWork->pFontHandle, _OBJPAL_PMS_POS_MAIN, 4, pWork->heapID );
   }
 }
 
@@ -1028,7 +1096,7 @@ static void _PMSDrawExit( GTSNEGO_MESSAGE_WORK* pWork )
 
 //------------------------------------------------------------------------------
 /**
- * @brief   説明ウインドウ表示
+ * @brief   説明ウインドウ表示 GTSNEGO_040
  * @retval  none
  */
 //------------------------------------------------------------------------------
@@ -1041,7 +1109,7 @@ void GTSNEGO_MESSAGE_PMSDisp(GTSNEGO_MESSAGE_WORK* pWork,PMS_DATA* pms)
   if(pWork->pmsMsgWin==NULL){
     pWork->pmsMsgWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME1_M ,
-      1 , 12, 30 ,2 ,
+      2 , 16, 28 ,2 ,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   
@@ -1049,6 +1117,9 @@ void GTSNEGO_MESSAGE_PMSDisp(GTSNEGO_MESSAGE_WORK* pWork,PMS_DATA* pms)
     pwin = pWork->pmsMsgWin;
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0);
     GFL_FONTSYS_SetColor(15, 2, 0);
+
+    PMS_DRAW_SetNullColorPallet( pWork->pms_draw_work, 0 );
+    PMS_DRAW_SetPrintColor( pWork->pms_draw_work, PRINTSYS_LSB_Make( 15, 2, 0) );
     
     PMS_DRAW_Print( pWork->pms_draw_work, pwin,  pms, 0 );
     
@@ -1104,7 +1175,7 @@ void GTSNEGO_MESSAGE_CancelButtonCreate(GTSNEGO_MESSAGE_WORK* pWork)
   pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
   pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
-                                           pWork->appitem, 16 - 5, 24, 10, pWork->heapID);
+                                           pWork->appitem, 16 - 5, 24-3, 10, pWork->heapID);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
 }
 
@@ -1124,5 +1195,79 @@ BOOL GTSNEGO_MESSAGE_CancelButtonDelete(GTSNEGO_MESSAGE_WORK* pWork)
   return FALSE;
 }
 
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   システムウインドウ表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _NumMessage(GTSNEGO_MESSAGE_WORK* pWork,int msgid, int no)
+{
+  GFL_BMPWIN* pwin;
+
+
+  WORDSET_RegisterNumber(pWork->pWordSet, 0, no,
+                         5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
+
+  GFL_MSG_GetString( pWork->pMsgData, GTSNEGO_041, pWork->pExStrBuf );
+  WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
+  
+  
+  if(pWork->numMsgWin==NULL){
+    pWork->numMsgWin = GFL_BMPWIN_Create( GFL_BG_FRAME1_M , 0x15 , 4, 10 , 5 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+  }
+  pwin = pWork->numMsgWin;
+
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0);
+  GFL_FONTSYS_SetColor(15, 2, 0);
+
+  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) , 0, 2, pWork->pStrBuf, pWork->pFontHandle );
+
+  GFL_BMPWIN_TransVramCharacter(pwin);
+  GFL_BMPWIN_MakeScreen(pwin);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   システムウインドウ表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _NameMessage(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMy)
+{
+  GFL_BMPWIN* pwin;
+
+  WORDSET_RegisterPlayerName( pWork->pWordSet, 0, pMy );
+  
+  GFL_MSG_GetString( pWork->pMsgData, GTSNEGO_042, pWork->pExStrBuf );
+  WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
+  
+  if(pWork->nameMsgWin==NULL){
+    pWork->nameMsgWin = GFL_BMPWIN_Create( GFL_BG_FRAME1_M , 12 , 10, 10 , 3 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+  }
+  pwin = pWork->nameMsgWin;
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0);
+  GFL_FONTSYS_SetColor(1, 2, 0);
+  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) , 0, 2, pWork->pStrBuf, pWork->pFontHandle );
+  GFL_BMPWIN_TransVramCharacter(pwin);
+  GFL_BMPWIN_MakeScreen(pwin);
+}
+
+
+
+void GTSNEGO_MESSAGE_FindPlayer(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMy, int num)
+{
+
+  _NameMessage(pWork, pMy);
+  _NumMessage(pWork, GTSNEGO_041, num);
+  _SetCountry(pWork, pMy);
+  GTSNEGO_MESSAGE_MainMessageDispCore(pWork);
+  GTSNEGO_MESSAGE_InfoMessageDispLine(pWork,GTSNEGO_022);
+  
+}
 
 
