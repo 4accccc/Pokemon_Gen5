@@ -12,6 +12,9 @@
 #define D10R0101_ROCK_02                   1
 #define D10R0101_ROCK_04                   2
 #define D10R0101_ROCK_03                   3
+#define D10R0101_FLD_ITEM_01               4
+#define D10R0101_FLD_ITEM_02               5
+#define D10R0101_FLD_ITEM_03               6
 
 #endif //ZONE_D10R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d10r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
