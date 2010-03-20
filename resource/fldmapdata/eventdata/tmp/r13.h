@@ -35,5 +35,8 @@
 #ifndef ZONE_R13_EVB_H
 #define ZONE_R13_EVB_H
 
+#define BGID_R13_SIGN2_01                 0
+#define BGID_R13_SIGN1_01                 1
+#define BGID_R13_SIGN3_01                 2
 
 #endif //ZONE_R13_EVB_H

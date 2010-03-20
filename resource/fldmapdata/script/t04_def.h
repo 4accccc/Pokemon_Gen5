@@ -5,6 +5,6 @@
 #define _T04_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_T04 (1)
+#define SCRID_BG_T04_SIGN1_01 (1)
 
 #endif //_T04_DEF_H_

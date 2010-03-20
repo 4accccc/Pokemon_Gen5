@@ -22,5 +22,8 @@
 #ifndef ZONE_R14_EVB_H
 #define ZONE_R14_EVB_H
 
+#define BGID_R14_SIGN1_01                 0
+#define BGID_R14_SIGN2_01                 1
+#define BGID_R14_SIGN3_01                 2
 
 #endif //ZONE_R14_EVB_H

@@ -10,6 +10,8 @@
 #ifndef ZONE_R13R0201_EVC_H
 #define ZONE_R13R0201_EVC_H
 
+#define R13R0201_INFORMATIONW_01           0
+#define R13R0201_DANCER_01                 1
 
 #endif //ZONE_R13R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r13r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

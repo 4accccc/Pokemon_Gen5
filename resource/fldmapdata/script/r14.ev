@@ -20,6 +20,9 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_r14_sage2_01
+_EVENT_DATA		ev_bg_r14_sign1_01
+_EVENT_DATA		ev_bg_r14_sign2_01
+_EVENT_DATA		ev_bg_r14_sign3_01
 _EVENT_DATA_END
 
 
@@ -53,6 +56,9 @@ DEFINE_LOCAL	LWK_DIR
 
 	//ハンサム出現
 	_OBJ_ADD_EX( 721,344,DIR_LEFT,MMDL_ID_EVENTOBJ_00,ICPO,MV_DMY )
+	
+	//BGM開始
+	_START_EVENT_BGM(SEQ_BGM_E_HANDSOME)
 	
 	//ハンサム寄ってくる
 	_PLAYER_DIR_GET( LWK_DIR )
@@ -101,6 +107,8 @@ DEFINE_LOCAL	LWK_DIR
 		_MSGWIN_CLOSE()
 	
 	ENDIF
+	
+	_END_EVENT_BGM()
 	
 	//画面暗転
 	_BLACK_OUT()
@@ -184,3 +192,23 @@ _ANIME_LABEL	anm_up_come2
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+/**************************************************************/
+/*			R14		看板									  */
+/**************************************************************/
+EVENT_START		ev_bg_r14_sign1_01
+	_EASY_BGWIN_MSG( msg_r14_sign1_01, TYPE_ROAD )
+EVENT_END
+
+/**************************************************************/
+/*			R14		看板									  */
+/**************************************************************/
+EVENT_START		ev_bg_r14_sign2_01
+	_EASY_BGWIN_MSG( msg_r14_sign2_01, TYPE_ROAD )
+EVENT_END
+
+/**************************************************************/
+/*			R14		看板									  */
+/**************************************************************/
+EVENT_START		ev_bg_r14_sign3_01
+	_EASY_BGWIN_MSG( msg_r14_sign3_01, TYPE_INFO )
+EVENT_END

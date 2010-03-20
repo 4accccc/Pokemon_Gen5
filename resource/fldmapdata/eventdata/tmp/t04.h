@@ -19,5 +19,6 @@
 #ifndef ZONE_T04_EVB_H
 #define ZONE_T04_EVB_H
 
+#define BGID_T04_SIGN1_01                 0
 
 #endif //ZONE_T04_EVB_H
