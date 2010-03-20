@@ -38,6 +38,7 @@ typedef enum
  *	@brief  SE:再生停止
  *
  *	@param	param[0] SE_Label
+ *	@param	param[1] playerNo 0～3 : DEMO3D_SE_PARAM_DEFAULTなら無効
  */
 //======================================================
   DEMO3D_CMD_TYPE_SE_STOP,
@@ -80,6 +81,18 @@ typedef enum
  */
 //======================================================
   DEMO3D_CMD_TYPE_SE_PITCH_EFFECT_REQ,
+
+//======================================================
+/**
+ *	@brief  BGM変更リクエスト
+ *
+ *  @param  param[0]  BGMラベル
+ *  @param  param[1]  fadeout_frame(0～65535) 
+ *  @param  param[2]  fadein_frame(0～65535)
+ *  @param  param[3]  push_f("change"=0 or "push" = 1 or "pop"=2)
+ */
+//======================================================
+  DEMO3D_CMD_TYPE_BGM_CHANGE_REQ,
 
 //======================================================
 /**
@@ -134,6 +147,22 @@ typedef enum
 
 //======================================================
 /**
+ *	@brief   会話ウィンドウ表示
+ *
+ *	@param	param[0]  メッセージアーカイブID 
+ *	@param	param[1]  メッセージラベル
+ *	@param	param[2]  メッセージセット数( 実際に表示されるメッセージID = param[2]*シーンID+param[1])
+ *	@param	param[3]  ウィンドウを表示するフレーム数(1～)
+ *	@param	param[4]  ウィンドウ左上X座標(1～30) 
+ *	@param	param[5]  ウィンドウ左上Y座標(1～21)
+ *	@param	param[6]  ウィンドウサイズX(2～28)
+ *	@param	param[7]  ウィンドウサイズY(2～22) 
+ */
+//======================================================
+  DEMO3D_CMD_TYPE_TALKWIN_REQ,
+
+//======================================================
+/**
  *	@brief  モーションブラー 開始
  *
  *	@param	wk
@@ -171,6 +200,12 @@ typedef enum{
   DEMO3D_SE_EFF_PAN,
   DEMO3D_SE_EFF_PITCH,
 }DEMO3D_SE_EFFECT;
+
+typedef enum{
+  DEMO3D_BGM_CHANGE,
+  DEMO3D_BGM_PUSH,
+  DEMO3D_BGM_POP,
+}DEMO3D_BGM_PUSHPOP;
 
 //--------------------------------------------------------------
 ///	3Dデモコマンドデータ

@@ -12,6 +12,7 @@
 #include "system/gfl_use.h"
 #include "system/main.h"
 #include "system/brightness.h"
+#include "system/bmp_winframe.h"
 
 // 文字列関連
 #include "font/font.naix"
@@ -49,10 +50,12 @@ static void DEMOCMD_SeStop(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* p
 static void DEMOCMD_SeVolumeEffectReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_SePanEffectReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_SePitchEffectReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
+static void DEMOCMD_BGMChangeReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_BrightnessReq(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_FlashReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_LightColorSet(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_LightVectorSet(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
+static void DEMOCMD_TalkWinReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_MotionBL_Start(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
 static void DEMOCMD_MotionBL_End(DEMO3D_CMD_WORK* wk, DEMO3D_ENGINE_WORK* core, int* param);
 
@@ -71,10 +74,12 @@ void (*DATA_Demo3D_CmdTable[ DEMO3D_CMD_TYPE_MAX ])() =
   DEMOCMD_SeVolumeEffectReq,
   DEMOCMD_SePanEffectReq,
   DEMOCMD_SePitchEffectReq,
+  DEMOCMD_BGMChangeReq,
   DEMOCMD_BrightnessReq,
   DEMOCMD_FlashReq,
   DEMOCMD_LightColorSet,
   DEMOCMD_LightVectorSet,
+  DEMOCMD_TalkWinReq,
   DEMOCMD_MotionBL_Start,
   DEMOCMD_MotionBL_End,
   NULL, // end
@@ -127,14 +132,18 @@ static void DEMOCMD_SePlay(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* pa
  *	@brief  SE:再生停止
  *
  *	@param	param[0] SE_Label
+ *	@param	param[1] playerNo 0～3 : DEMO3D_SE_PARAM_DEFAULTなら無効
  */
 //-----------------------------------------------------------------------------
 static void DEMOCMD_SeStop(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
 {
   SEPLAYER_ID player_no;
 
-  player_no = PMSND_GetSE_DefaultPlayerID( param[0] );
-
+  if( param[1] == DEMO3D_SE_PARAM_DEFAULT){
+    player_no = PMSND_GetSE_DefaultPlayerID( param[0] );
+  }else{
+    player_no = param[1];
+  }
   PMSND_StopSE_byPlayerID( player_no );
 }
 
@@ -276,6 +285,105 @@ static void sub_SetSeEffect( DEMO3D_SE_EFFECT type, u8 playerNo, int value )
   }
 }
 
+//===================================================================================
+///BGM変更リクエスト
+//===================================================================================
+typedef struct _TASKWK_BGM_CHANGE_REQ{
+  DEMO3D_CMD_WORK* cmd;
+  DEMO3D_ENGINE_WORK* core;
+
+  u8  seq;
+  u8  push_f;
+  u8  pop_f;
+  int bgm_no;
+  int fadeout_frame;
+  int fadein_frame;
+
+}TASKWK_BGM_CHANGE_REQ;
+
+static void taskAdd_BGMChangeReq( DEMO3D_CMD_WORK* wk, int bgm_no, int fadeout_frame, int fadein_frame, int push_pop );
+static void tcb_BGMChangeReq( GFL_TCBL *tcb , void* work);
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  BGM変更リクエスト
+ *
+ *  @param  param[0]  BGM-No(0～65535)
+ *  @param  param[1]  fadeout_frame(0～65535) 
+ *  @param  param[2]  fadein_frame(0～65535)
+ *  @param  param[3]  push_f("change"=0 or "push" = 1 or "pop"=2)
+ */
+//-----------------------------------------------------------------------------
+static void DEMOCMD_BGMChangeReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
+{
+  taskAdd_BGMChangeReq( wk, param[0], sub_ConvFrame(wk,param[1]), sub_ConvFrame(wk,param[2]), param[3] );
+}
+
+static void taskAdd_BGMChangeReq( DEMO3D_CMD_WORK* wk, int bgm_no, int fadeout_frame, int fadein_frame, int push_pop )
+{
+  GFL_TCBL* tcb;
+  TASKWK_BGM_CHANGE_REQ* twk;
+
+  tcb = GFL_TCBL_Create( wk->tcbsys, tcb_BGMChangeReq, sizeof(TASKWK_BGM_CHANGE_REQ), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_BGM_CHANGE_REQ ));
+
+  twk->cmd = wk;
+  if( push_pop == 1){
+    twk->push_f = TRUE;
+  }else if(push_pop == 2){
+    twk->pop_f = TRUE;
+  }
+  twk->bgm_no = bgm_no;
+  twk->fadeout_frame = fadeout_frame;
+  twk->fadein_frame = fadein_frame;
+  
+  if( twk->fadeout_frame ){
+    PMSND_FadeOutBGM( twk->fadeout_frame );
+  }else{
+    twk->seq = 1; //フェード待ち処理スキップ
+  }
+}
+
+static void tcb_BGMChangeReq( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_BGM_CHANGE_REQ* twk = (TASKWK_BGM_CHANGE_REQ*)tcb_wk;
+
+  switch(twk->seq){
+  case 0:
+    if( PMSND_CheckFadeOnBGM() == FALSE){
+      twk->seq++;
+    }
+    return;
+  case 1:
+    if( twk->push_f ){
+      if( !twk->cmd->bgm_push_f ){
+        PMSND_PushBGM();
+        twk->cmd->bgm_push_f = TRUE;
+      }else{
+        GF_ASSERT_MSG(0,"BGMのpushは一回までです\nコマンド列を見直してください\n");
+      }
+    }else{
+      PMSND_StopBGM();
+    }
+    if( twk->pop_f ){
+      if( twk->cmd->bgm_push_f ) {
+        PMSND_PopBGM();
+        twk->cmd->bgm_push_f = FALSE;
+      }else{
+        GF_ASSERT_MSG(0,"BGMがpushされずにpopされようとしています\nコマンド列を見直してください\n");
+      }
+    }else{
+      PMSND_PlayBGM( twk->bgm_no );
+    }
+    if( twk->fadein_frame ){
+      PMSND_FadeInBGM( twk->fadein_frame );
+    }
+  }
+  GFL_TCBL_Delete(tcb);
+}
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  マスター輝度を用いたブライトネス 
@@ -400,18 +508,154 @@ static void DEMOCMD_LightVectorSet(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core,
 {
   VecFx16 vec;
   
-  vec.x = FX16_CONST((float)param[1]);
-  vec.y = FX16_CONST((float)param[2]);
-  vec.z = FX16_CONST((float)param[3]);
+  vec.x = (fx16)param[1];
+  vec.y = (fx16)param[2];
+  vec.z = (fx16)param[3];
 
   DEMO3D_GRAPHIC_3DLightVectorSet( core->graphic, param[0], &vec );
+}
+
+//===================================================================================
+///会話ウィンドウ表示
+//===================================================================================
+typedef struct _TASKWK_TALKWIN_REQ{
+  DEMO3D_CMD_WORK* cmd;
+
+  int ct;
+  int sync;
+
+  GFL_ARCUTIL_TRANSINFO tInfo;
+
+  GFL_BMPWIN *win;
+  PRINT_STREAM* printStream;
+  
+}TASKWK_TALKWIN_REQ;
+
+#define TALKWIN_BG_FRM    ( DEMO3D_CMD_FREE_BG_M1 )
+#define TALKWIN_FRAME_CGX (1)
+#define TALKWIN_FRAME_PAL (0)
+#define TALKWIN_FONT_PAL  (1)
+
+static void taskAdd_TalkWinReq( DEMO3D_CMD_WORK* wk, int msg_arc, int msg_id, int sync, u8 px, u8 py, u8 sx, u8 sy );
+static void tcb_TalkWinReq( GFL_TCBL *tcb , void* work);
+static void taskwk_TalkWinReqInit( DEMO3D_CMD_WORK* wk, TASKWK_TALKWIN_REQ* twk,
+    int msg_arc, int msg_id, int sync, u8 px, u8 py, u8 sx, u8 sy );
+static void taskwk_TalkWinReqFree( TASKWK_TALKWIN_REQ* wk );
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief   会話ウィンドウ表示
+ *
+ *	@param	param[0]  メッセージアーカイブID 
+ *	@param	param[1]  メッセージID
+ *	@param	param[2]  メッセージセット数( 実際に表示されるメッセージID = param[2]*シーンID+param[1])
+ *	@param	param[3]  ウィンドウを表示するフレーム数(1～)
+ *	@param	param[4]  ウィンドウ左上X座標(1～30) 
+ *	@param	param[5]  ウィンドウ左上Y座標(1～21)
+ *	@param	param[6]  ウィンドウサイズX(2～28)
+ *	@param	param[7]  ウィンドウサイズY(2～22) 
+ */
+//-----------------------------------------------------------------------------
+static void DEMOCMD_TalkWinReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
+{
+  int msg_id = param[1]+param[2]*core->env.scene_id;
+
+  taskAdd_TalkWinReq( wk, param[0], msg_id, sub_ConvFrame(wk,param[3]) , param[4], param[5], param[6], param[7] );
+}
+
+static void taskAdd_TalkWinReq( DEMO3D_CMD_WORK* wk, int msg_arc, int msg_id, int sync, u8 px, u8 py, u8 sx, u8 sy )
+{
+  GFL_TCBL* tcb;
+  TASKWK_TALKWIN_REQ* twk;
+
+  tcb = GFL_TCBL_Create( wk->tcbsys, tcb_TalkWinReq, sizeof(TASKWK_TALKWIN_REQ), 1 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+
+
+  //BMPウィンドウ&ストリーム生成
+  taskwk_TalkWinReqInit( wk, twk, msg_arc, msg_id, sync, px, py, sx, sy );
+}
+
+static void tcb_TalkWinReq( GFL_TCBL *tcb , void* tcb_wk )
+{
+  TASKWK_TALKWIN_REQ* twk = (TASKWK_TALKWIN_REQ*)tcb_wk;
+  PRINTSTREAM_STATE state;
+
+  state = PRINTSYS_PrintStreamGetState( twk->printStream );
+  
+  //文字列描画終了かシステム終了かタイムアップで自殺
+  if( twk->cmd->cmdsys_end_f ||
+      state == PRINTSTREAM_STATE_DONE ||
+      (twk->ct++ >= twk->sync) ){
+    taskwk_TalkWinReqFree( twk );
+    GFL_TCBL_Delete(tcb);
+  }
+#if 0
+  switch( state ){
+  case PRINTSTREAM_STATE_RUNNING :  // 実行中
+    // メッセージスキップ
+    if( GFL_UI_TP_GetCont() ){
+      PRINTSYS_PrintStreamShortWait( wk->printStream, 0 );
+    }
+    break;
+  }
+#endif
+}
+
+static void taskwk_TalkWinReqInit( DEMO3D_CMD_WORK* wk, TASKWK_TALKWIN_REQ* twk,
+    int msg_arc, int msg_id, int sync, u8 px, u8 py, u8 sx, u8 sy )
+{
+  GFL_MSGDATA *msg_man;
+  STRBUF *str;
+  
+  MI_CpuClear8( twk, sizeof( TASKWK_TALKWIN_REQ ));
+  
+  twk->cmd = wk;
+  twk->sync = sync;
+ 
+  //Bmpウィンドウグラフィックセット
+  twk->tInfo = BmpWinFrame_GraphicSetAreaMan(
+	  TALKWIN_BG_FRM, TALKWIN_FRAME_PAL, MENU_TYPE_TALK, wk->tmpHeapID );
+
+  //フォントパレットセット
+	GFL_ARC_UTIL_TransVramPalette( ARCID_FONT,
+			NARC_font_default_nclr, PALTYPE_MAIN_BG, TALKWIN_FONT_PAL*0x20, 0x20, wk->tmpHeapID );
+  
+  GFL_FONTSYS_SetDefaultColor();
+
+  twk->win = GFL_BMPWIN_Create( TALKWIN_BG_FRM, px, py, sx, sy, TALKWIN_FONT_PAL, GFL_BMP_CHRAREA_GET_F );
+  GFL_BMPWIN_MakeTransWindow( twk->win );
+
+  //ストリーム開始
+  msg_man = GFL_MSG_Create(
+		GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msg_arc, wk->tmpHeapID );
+
+  str = GFL_MSG_CreateString( msg_man, msg_id );
+
+  twk->printStream = PRINTSYS_PrintStream( twk->win, 0, 0,
+      str, wk->fontHandle, wk->msg_spd, wk->tcbsys, 0, wk->heapID, 15 );
+
+  BmpWinFrame_WriteAreaMan( twk->win, WINDOW_TRANS_ON_V, twk->tInfo, TALKWIN_FRAME_PAL );
+
+  GFL_STR_DeleteBuffer( str );
+  GFL_MSG_Delete( msg_man );
+}
+
+static void taskwk_TalkWinReqFree( TASKWK_TALKWIN_REQ* twk )
+{
+  PRINTSYS_PrintStreamDelete( twk->printStream );
+  GFL_BMPWIN_Delete( twk->win );
+ 
+  BmpWinFrame_GraphicFreeAreaMan( TALKWIN_BG_FRM, twk->tInfo );
+
+  MI_CpuClear8( twk, sizeof( TASKWK_TALKWIN_REQ ));
 }
 
 //-----------------------------------------------------------------------------
 /**
  *	@brief  モーションブラー 開始
  *
- *	@param	wk
  *	@param	param[0] モーションブラー係数 新しくブレンドする絵のα係数
  *	@param	param[1] モーションブラー係数 既にバッファされている絵のα係数
  */

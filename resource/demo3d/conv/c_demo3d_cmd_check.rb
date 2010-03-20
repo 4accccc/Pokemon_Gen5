@@ -10,19 +10,25 @@ P_FREE = "0xFFFFFFFF"
 P_LIST = "0xFFFFFFFE"
 
 $_command = Struct.new("Command", :command, :frame, :param )
-$_cmd_prm = Struct.new("CommandParam", :min, :max, :def_key)
+$_cmd_prm = Struct.new("CommandParam", :min, :max, :def_key, :psfix )
+$_psfix_prm = Struct.new("PreSuffixParam", :prefix, :suffix )
 
 class CDemo3DCmd
   attr  :name
   attr  :prm_num
   attr  :prm_tbl
 
-  def initialize name,prm_num,tbl
+  def initialize name,tbl
     @name = name
-    @prm_num = prm_num
 
     @prm_tbl = tbl
-#    print("GetCmdParam = #{name} -> #{tbl.size}\n")
+    if tbl != nil then
+      @prm_num = tbl.size()
+    else
+      @prm_num = 0
+    end
+
+  print("GetCmdParam = #{name} -> #{@prm_num}\n")
   end
 end
 
@@ -42,6 +48,21 @@ class CDemo3DCmdCheck
     print("Error! コマンド名 #{key} は未定義です\n")
     exit 1;
     return nil
+  end
+
+  #プレフィックス・サフィックスチェック
+  def psfix_check prm, key
+    buf = ""
+    if prm.psfix == nil then return key end
+
+    if prm.psfix.prefix != nil then
+      buf += prm.psfix.prefix
+    end
+    buf += key
+    if prm.psfix.suffix != nil then
+      buf += prm.psfix.suffix
+    end
+    return buf
   end
 
   #コマンドパラメータチェック
@@ -108,7 +129,7 @@ class CDemo3DCmdCheck
       end
 
 #     print("buf#{i}= #{work[i]}\n")
-      @buf[i] = work[i]
+      @buf[i] = psfix_check( prm, work[i] )
     end
 
     return @buf

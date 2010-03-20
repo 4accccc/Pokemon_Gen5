@@ -545,6 +545,8 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
       wk->anime_speed = Demo3D_DATA_GetAnimeSpeed( wk->demo_id );
     } else {
       wk->anime_speed = 0;
+      OS_Printf("アニメフレーム %df / %df\n",
+          FX_Whole(ICA_ANIME_GetNowFrame(wk->ica_anime)),ICA_ANIME_GetMaxFrame(wk->ica_anime) );
     }
   }
 #endif

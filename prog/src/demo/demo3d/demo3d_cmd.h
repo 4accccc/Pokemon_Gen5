@@ -19,6 +19,9 @@
 #include "demo3d_cmdsys.h"
 #include "demo3d_engine_local.h"
 
+//コマンドがフリーに使えるBGフレーム定義
+#define DEMO3D_CMD_FREE_BG_M1 (GFL_BG_FRAME1_M)
+
 //--------------------------------------------------------------
 ///	コマンドワーク
 //==============================================================
@@ -30,17 +33,17 @@ struct _DEMO3D_CMD_WORK {
  
   // [PRIVATE]
   BOOL  is_cmd_end;
+  BOOL  cmdsys_end_f; ///<コマンドタスクの自殺用
   int   pre_frame; ///< 1sync=1
   int   cmd_idx;
+  u8    msg_spd;
+  u8    bgm_push_f;
 
   //コマンド制御
   DEMO3D_ENGINE_WORK* core;
 
   GFL_TCBLSYS*  tcbsys;
-
   GFL_FONT *fontHandle;
-  PRINT_QUE *printQue;
-  PRINT_STREAM* printStream;
   
   DEMO3D_MBL_WORK* mb;
 };

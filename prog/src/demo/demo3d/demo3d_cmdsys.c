@@ -126,6 +126,11 @@ void Demo3D_CMD_Exit( DEMO3D_CMD_WORK* wk )
     }
   }
 
+  //ここで残っているタスクを自殺させる
+  wk->cmdsys_end_f = TRUE;
+  GFL_TCBL_Main( wk->tcbsys );
+
+  //システムワークを解放
   cmd_SystemWorkRelease( wk );
 
   // ヒープ開放
@@ -212,9 +217,13 @@ static void cmd_SystemWorkInit( DEMO3D_CMD_WORK* wk )
   // TCB初期化
   wk->tcbsys = GFL_TCBL_Init( wk->heapID, wk->heapID, 16, 128 );
 
-  wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 	wk->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 		GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+
+  //メッセージスピード取得
+  wk->msg_spd  = MSGSPEED_GetWait();
+
+  GFL_BG_FillCharacter( DEMO3D_CMD_FREE_BG_M1, 0, 1, 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -234,18 +243,14 @@ static void cmd_SystemWorkRelease( DEMO3D_CMD_WORK* wk )
   if( wk->mb != NULL ){
     DEMO3D_MotionBlExit( wk->mb );
   }
-  //ストリームが生きていたら削除
-  if( wk->printStream != NULL){
-    PRINTSYS_PrintStreamDelete( wk->printStream );
-    wk->printStream = NULL;
-  }
   //今生きている全てのタスクを削除
   GFL_TCBL_DeleteAll( wk->tcbsys );
 
   ///////////////////////////////////////////////////
   //システムワーク破棄
+  GFL_BG_FillCharacterRelease( DEMO3D_CMD_FREE_BG_M1, 1, 0);
+
   GFL_FONT_Delete(wk->fontHandle);
-  PRINTSYS_QUE_Delete(wk->printQue);
 
   // TCB削除
   GFL_TCBL_Exit( wk->tcbsys );
