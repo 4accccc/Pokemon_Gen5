@@ -758,7 +758,7 @@
 #define FV_R16R0201_WOMAN3                 734 /* 0x02de 毎夜の森：ゾロアークイベントの女性（ゾロアーク） */
 #define FV_AMUSEMENT_TRAINER               735 /* 0x02df ライモン遊園地：観覧車トレーナー */
 #define FV_T01R0101_HANDSOME_MAMA          736 /* 0x02e0 自宅１階：ママの変装をしたハンサム */
-		/* not used   737(0x02e1) */
+#define FV_C08_LEADERB_01                  737 /* 0x02e1 ソウリュウシティ：アイリス */
 		/* not used   738(0x02e2) */
 		/* not used   739(0x02e3) */
 		/* not used   740(0x02e4) */

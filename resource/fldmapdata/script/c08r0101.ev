@@ -91,7 +91,7 @@ EVENT_START   ev_scene_c08r0101_leader8_01
 		//======================================//
 	
 		//C08イベント終了
-		$WK_SCENE_C08 = 2
+		$WK_SCENE_C08 = 4
 		
 		//C08サングラスを消してジム挑戦できるように
 		_FLAG_SET( FV_C08_SUNGLASSES_01 )
@@ -116,7 +116,7 @@ EVENT_START   ev_scene_c08r0101_leader8_01
 		//======================================//
 	
 		//C08イベント終了
-		$WK_SCENE_C08 = 2
+		$WK_SCENE_C08 = 4
 		
 		//C08サングラスを消してジム挑戦できるように
 		_FLAG_SET( FV_C08_SUNGLASSES_01 )

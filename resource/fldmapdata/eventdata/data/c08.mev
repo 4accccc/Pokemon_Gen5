@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/05 19:42:57
+#save date:2010/03/20 20:56:48
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08.wms
 #SECTION START:OBJ_EVENT
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-264 0 -328
+488 0 -344
 #event number: 2
 #type
 1
@@ -239,7 +239,7 @@ MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-FV_C08_SAGE1_01
+FV_C08_LEADERB_01
 #Event Script Name
 SCRID_DUMMY
 #Direction Type Number
@@ -895,7 +895,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+3
 #event number: 0
 #Pos Event Label
 POS_C08_CHAMPIONS_01
@@ -913,6 +913,40 @@ EVENTDATA_POSTYPE_GRID
 -72 0 -472
 #size
 1 5
+#event number: 1
+#Pos Event Label
+POS_POS_C08_LEADERB_LEAD_01
+#Pos Script Name
+SCRID_POS_C08_LEADERB_LEAD_01
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C08
+#Event Trigger Work Value
+1
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+248 0 -376
+#size
+7 1
+#event number: 2
+#Pos Event Label
+POS_C08_LEADERB_LEAD_02
+#Pos Script Name
+SCRID_POS_C08_LEADERB_LEAD_02
+#Pos Check Type
+POS_CHECK_TYPE_NORMAL
+#Event Trigger Work Name
+WK_SCENE_C08
+#Event Trigger Work Value
+2
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+248 0 -296
+#size
+7 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
