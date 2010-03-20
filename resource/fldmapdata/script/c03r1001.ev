@@ -72,7 +72,7 @@ EVENT_START		ev_c03r1001_woman3_01
 				_DISP_FADE_END_CHECK()
 				
 				//ÅyâºÅzMEçƒê∂
-				_ME_PLAY( SEQ_ME_ASA )
+				_ME_PLAY( SEQ_SE_FLD_145 )
 				_ME_WAIT()
 				
 				_BLACK_IN()
