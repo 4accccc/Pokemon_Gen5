@@ -1123,12 +1123,6 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkCur, TRUE );
-
-    // タッチ起動 > カーソルをOFF
-    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
-    {
-      GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, FALSE );
-    }
   }
 
   //セルの作成
@@ -1355,7 +1349,7 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
 
     GFL_CLACTPOS pos;
     int length;
-    BOOL is_cur_draw;
+//    BOOL is_cur_draw;
     BOOL is_scr_draw;
 
 		ITEMDISP_ChangeCursorPosPalette( pWork, 0 );
@@ -1373,14 +1367,14 @@ void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork )
     length = ITEMMENU_GetItemPocketNumber( pWork );
     
     // カーソル条件：ポケット内のアイテムが0個かつキー状態のとき
-    is_cur_draw = (length!=0) && GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY;
+//    is_cur_draw = (length!=0) && GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY;
     // スクロールバー条件：アイテムが7個以上
     is_scr_draw = (length >= ITEMMENU_SCROLLBAR_ENABLE_NUM);
 
     HOSAKA_Printf("length=%d \n", length);
 
     // カーソル／スクロールバー非表示
-    GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, is_cur_draw );
+//    GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, is_cur_draw );
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkScroll, is_scr_draw );
 
     // アニメーションフレームを更新
@@ -2406,5 +2400,36 @@ void ITEMDISP_ChangeSortButton( FIELD_ITEMMENU_WORK * wk )
 		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 4 );
 	}else{
 		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 0 );
+	}
+}
+
+void ITEMDISP_ChangeMoveModeButton( FIELD_ITEMMENU_WORK * wk, BOOL flg )
+{
+	BOOL shortcut = GAMEDATA_GetShortCut( wk->gamedata, ITEMDISP_GetPocketShortcut(wk->pocketno) );
+
+	if( flg == TRUE ){
+    // ソートボタン
+		ITEMDISP_ChangeSortButton( wk );
+    // バーアイコン
+    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_LEFT],  BAR_ICON_ANM_LEFT );
+    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_RIGHT], BAR_ICON_ANM_RIGHT );
+    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_EXIT],  BAR_ICON_ANM_EXIT );
+		if( shortcut == TRUE ){
+	    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_CHECK_BOX], APP_COMMON_BARICON_CHECK_ON );
+		}else{
+	    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_CHECK_BOX], APP_COMMON_BARICON_CHECK_OFF );
+		}
+	}else{
+    // ソートボタン
+		GFL_CLACT_WK_SetAnmSeq( wk->clwkSort, 4 );
+    // バーアイコン各種
+    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_LEFT], BAR_ICON_ANM_LEFT_OFF );
+    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_RIGHT], BAR_ICON_ANM_RIGHT_OFF );
+    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_EXIT], BAR_ICON_ANM_EXIT_OFF );
+		if( shortcut == TRUE ){
+	    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_CHECK_BOX], APP_COMMON_BARICON_CHECK_ON_PASSIVE );
+		}else{
+	    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_CHECK_BOX], APP_COMMON_BARICON_CHECK_OFF_PASSIVE );
+		}
 	}
 }

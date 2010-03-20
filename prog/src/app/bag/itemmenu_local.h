@@ -253,9 +253,10 @@ struct _FIELD_ITEMMENU_PARAM {
 
 	BLINKPALANM_WORK * blwk;
 	PALETTE_FADE_PTR	pfd;
-	BOOL	active;		///< アクティブ/パッシブ
-	u16	tmpSeq;			///< 汎用シーケンス
-	u16	tmpCnt;			///< 汎用カウンタ
+	BOOL	active;				///< アクティブ/パッシブ
+	BOOL	scrollMode;		///< スクロール中かどうか	
+	u16	tmpSeq;					///< 汎用シーケンス
+	u16	tmpCnt;					///< 汎用カウンタ
 	StateFunc * chgState;
 };
 
@@ -429,3 +430,4 @@ extern void ITEMDISP_ChangeCursorPosPalette( FIELD_ITEMMENU_WORK * wk, u32 pal )
 extern void ITEMDISP_ChangeActive( FIELD_ITEMMENU_WORK * wk, BOOL flg );
 extern void ITEMDISP_ChangeRetButtonActive( FIELD_ITEMMENU_WORK * wk, BOOL flg );
 extern void ITEMDISP_ChangeSortButton( FIELD_ITEMMENU_WORK * wk );
+extern void ITEMDISP_ChangeMoveModeButton( FIELD_ITEMMENU_WORK * wk, BOOL flg );

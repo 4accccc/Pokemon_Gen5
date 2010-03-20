@@ -584,6 +584,17 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
 		if( (x >= (32*8)) || (x <= (28*8)) ){
       return FALSE;
     }
+		// 初回チェック
+		if( pWork->scrollMode == FALSE ){
+			if( GFL_UI_TP_GetTrg() == TRUE ){
+				if( y < _SCROLL_TOP_Y || y > _SCROLL_BOTTOM_Y ){
+					return FALSE;
+				}
+				pWork->scrollMode = TRUE;
+			}else{
+				return FALSE;
+			}
+		}
 
 		// Ｙ座標補正
 		if( y < _SCROLL_TOP_Y ){
@@ -652,8 +663,8 @@ static BOOL _keyChangeItemCheck(FIELD_ITEMMENU_WORK* pWork)
   }
   if(bChange){
     int newno = ITEMMENU_GetItemIndex(pWork);
-     PMSND_PlaySE( SE_BAG_CURSOR_MOVE );
-    _ItemChange(pWork, nowno, newno);
+		PMSND_PlaySE( SE_BAG_CURSOR_MOVE );
+		_ItemChange(pWork, nowno, newno);
   }
   return bChange;
 }
@@ -705,62 +716,80 @@ static BOOL _keyMoveCheck(FIELD_ITEMMENU_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
+#define	ITEM_MOVE_LX		( 18*8 )			// アイテム移動タッチ有効範囲：左
+#define	ITEM_MOVE_RX		( 29*8-1 )		// アイテム移動タッチ有効範囲：右
+#define	ITEM_MOVE_UY		( 12 )				// アイテム移動タッチ有効範囲：上
+#define	ITEM_MOVE_DY		( 156-1 )			// アイテム移動タッチ有効範囲：下
+#define	ITEM_MOVE_SY		( 24 )				// リスト１項目サイズ
 
 static BOOL _itemMovePositionTouchItem(FIELD_ITEMMENU_WORK* pWork)
 {
-  int nowno = ITEMMENU_GetItemIndex(pWork);
-  u32 x,y,i;
-  int ymax = _SCROLL_BOTTOM_Y - _SCROLL_TOP_Y;
+	u32	x, y;
 
-  if(GFL_UI_TP_GetPointCont(&x, &y) == TRUE){
-    if((y <= _SCROLL_TOP_Y)  || (y >= _SCROLL_BOTTOM_Y)){
-      return FALSE;
-    }
-    if((x >= (30*8)) || (x <= (18*8)) ){
-      return FALSE;
-    }
-    {
-      int length = ITEMMENU_GetItemPocketNumber( pWork);
-      BOOL bChange = FALSE;
-      int num = (6 * (y-_SCROLL_TOP_Y)) / ymax;  //カーソルを移動させたい量
+	if( GFL_UI_TP_GetPointCont( &x, &y ) == TRUE ){
+		int length;
+		int now_pos, new_pos;
+		u32	tp;
+		u32	cnt;
+		u32	i;
 
-      if(pWork->curpos == num){
-        return FALSE;
-      }
-      else if(pWork->curpos < num){
-        for(i = pWork->curpos ; i < num; i++){
-          bChange += _posplus( pWork, length, FALSE );
-        }
-      }
-      else{
-        for(i = pWork->curpos ; i > num; i--){
-          bChange += _posminus( pWork, length, FALSE );
-        }
-      }
-    }
+		// 範囲チェック
+		if( !( x >= ITEM_MOVE_LX && x <= ITEM_MOVE_RX && y >= ITEM_MOVE_UY && y <= ITEM_MOVE_DY ) ){
+			return FALSE;
+		}
 
-#if 0
-    if(0)
-    {
-      int length = ITEMMENU_GetItemPocketNumber( pWork);
-      int num = (length * (y-_SCROLL_TOP_Y)) / ymax;
+		tp = ( y - ITEM_MOVE_UY ) / ITEM_MOVE_SY;					// タッチ位置
 
-      pWork->curpos = 0;
-      pWork->oamlistpos = -1;
-      for(i = 0 ; i < num ; i++){
-        _posplus(pWork, length, FALSE);
-      }
-    }
-#endif
+		// 現在のカーソル位置
+		if( pWork->curpos == tp ){
+			return FALSE;
+		}
 
-    {
-      int newno = ITEMMENU_GetItemIndex(pWork);
-      _ItemChange(pWork, nowno, newno);
-    }
-    KTST_SetDraw( pWork, FALSE );
-    return TRUE;
-  }
-  return FALSE;
+		length  = ITEMMENU_GetItemPocketNumber( pWork );	// アイテム数
+		now_pos = ITEMMENU_GetItemIndex( pWork );					// 現在のカーソル位置のアイテム
+		cnt     = GFL_STD_Abs( pWork->curpos - tp );			// カーソル移動カウンタ
+
+		// 下へ
+		if( pWork->curpos < tp ){
+			for( i=0; i<cnt; i++ ){
+				if( _posplus( pWork, length, FALSE ) == FALSE ){
+					break;
+				}
+			}
+		// 上へ
+		}else if( pWork->curpos > tp ){
+			for( i=0; i<cnt; i++ ){
+				if( _posminus( pWork, length, FALSE ) == FALSE ){
+					break;
+				}
+			}
+		}
+		// 移動できなかった
+		if( i == 0 ){ return FALSE; }
+
+		new_pos = ITEMMENU_GetItemIndex( pWork );			// 移動後のカーソル位置のアイテム
+		_ItemChange( pWork, now_pos, new_pos );				// アイテム入れ替え
+
+		KTST_SetDraw( pWork, FALSE );
+
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+// アイテム移動のキャンセルチェック
+static BOOL _itemMoveCancelTouchCheck(void)
+{
+	u32	x, y;
+
+	if( GFL_UI_TP_GetPointTrg( &x, &y ) == TRUE ){
+		if( x >= _BAR_CELL_CURSOR_RETURN && x <= (_BAR_CELL_CURSOR_RETURN+TOUCHBAR_ICON_WIDTH-1) &&
+				y >= TOUCHBAR_ICON_Y && y <= (TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1) ){
+			return TRUE;
+		}
+	}
+	return FALSE;
 }
 
 //------------------------------------------------------------------------------
@@ -769,41 +798,84 @@ static BOOL _itemMovePositionTouchItem(FIELD_ITEMMENU_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
+static void _itemMoveCancel(FIELD_ITEMMENU_WORK* pWork)
+{
+	ITEMDISP_ChangeMoveModeButton( pWork, TRUE );
+	_CHANGE_STATE( pWork, _itemKindSelectMenu );
+}
 
 static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
 {
-  BOOL bChange=FALSE;
-  u32 trg = GFL_UI_KEY_GetTrg();
+	int	now_pos, new_pos;
+
+  BLINKPALANM_Main( pWork->blwk );
 
   GFL_UI_KEY_SetRepeatSpeed(1, 6);
 
-  if((trg == PAD_BUTTON_A) || (trg == PAD_BUTTON_SELECT)){  //反映
-    MYITEM_ITEM_STCopy(pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, FALSE);
-  }
-  if((trg == PAD_BUTTON_B) || (trg == PAD_BUTTON_A) || (trg == PAD_BUTTON_SELECT) ){  //戻る
-    GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur , 1 );
-    pWork->moveMode = FALSE;
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
-    _CHANGE_STATE(pWork,_itemKindSelectMenu);
-    return;
-  }
+	// スクロール中フラグクリア
+	if( GFL_UI_TP_GetCont() == FALSE ){
+		if( pWork->scrollMode == TRUE ){
+			pWork->scrollMode = FALSE;
+			MYITEM_ITEM_STCopy(pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, FALSE);
+			GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur, 1 );
+			ITEMDISP_ChangeMoveModeButton( pWork, TRUE );
+			pWork->moveMode = FALSE;
+			KTST_SetDraw( pWork, FALSE );
+			_CHANGE_STATE( pWork, _itemKindSelectMenu );
+			return;
+		}
+	}
 
-  if( _itemScrollCheck(pWork) ){   // スクロールバーの操作
-    ITEMDISP_ScrollCursorMove(pWork);
+	// 決定
+	if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_SELECT) ){
+		PMSND_PlaySE( SE_BAG_DECIDE );
+		MYITEM_ITEM_STCopy(pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, FALSE);
+		GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur, 1 );
+		ITEMDISP_ChangeMoveModeButton( pWork, TRUE );
+		pWork->moveMode = FALSE;
+		KTST_SetDraw( pWork, TRUE );
+		_CHANGE_STATE( pWork, _itemKindSelectMenu );
+		return;
+	}
+	// キャンセル（キー）
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+		PMSND_PlaySE( SE_BAG_CANCEL );
+		GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur, 1 );
+		pWork->moveMode = FALSE;
+		KTST_SetDraw( pWork, TRUE );
+//		_CHANGE_STATE( pWork, _itemMoveCancel );
+		_windowRewrite( pWork );
+		SetEndButtonAnime( pWork, 0, _itemMoveCancel );
+		_CHANGE_STATE( pWork, _endButtonAnime );
+		return;
+	}
+	// キャンセル（タッチ）
+	if( _itemMoveCancelTouchCheck() == TRUE ){
+		PMSND_PlaySE( SE_BAG_CANCEL );
+		GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur, 1 );
+		pWork->moveMode = FALSE;
+		KTST_SetDraw( pWork, FALSE );
+//		_CHANGE_STATE( pWork, _itemMoveCancel );
+		SetEndButtonAnime( pWork, 0, _itemMoveCancel );
+		_CHANGE_STATE( pWork, _endButtonAnime );
+		return;
+	}
 
-    // 負荷軽減のためセルメッセージだけ更新
-//  ITEMDISP_CellMessagePrint(pWork);
-  }
-  else if(_itemMovePositionTouchItem(pWork)){ // アイテム移動モード時のアイテム部分タッチ処理
+	// スクロールバーの操作
+	now_pos = ITEMMENU_GetItemIndex( pWork );
+	if( _itemScrollCheck(pWork) ){
+		new_pos = ITEMMENU_GetItemIndex( pWork );
+		_ItemChange( pWork, now_pos, new_pos );
+		_windowRewrite( pWork );
+	// リストタッチ操作
+	}else if( _itemMovePositionTouchItem(pWork) ){
+		pWork->scrollMode = TRUE;
     ITEMDISP_ScrollCursorChangePos( pWork );
-    bChange = TRUE;
-  }
-  else if(_keyChangeItemCheck(pWork)){   // キーの操作
+		_windowRewrite(pWork);
+	// キー操作
+  }else if( _keyChangeItemCheck(pWork) ){ 
     ITEMDISP_ScrollCursorChangePos( pWork );
-    bChange = TRUE;
-  }
-  if(bChange){
-    _windowRewrite(pWork);
+		_windowRewrite(pWork);
   }
 }
 
@@ -1580,6 +1652,11 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   u32 ret=0;
   BOOL bChange=FALSE;
 
+	// スクロール中フラグクリア
+	if( GFL_UI_TP_GetCont() == FALSE ){
+		pWork->scrollMode = FALSE;
+	}
+
   GFL_UI_KEY_SetRepeatSpeed(1, 6);
 
   GFL_BMN_Main( pWork->pButton );
@@ -1662,8 +1739,8 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     GFL_STD_MemClear( pWork->ScrollItem, sizeof( pWork->ScrollItem ) );
     MYITEM_ITEM_STCopy( pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE );  //取得
     GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur , 2 );
+		ITEMDISP_ChangeMoveModeButton( pWork, FALSE );
     pWork->moveMode = TRUE;
-
     _CHANGE_STATE(pWork,_itemMovePosition);
     return;
   }
@@ -2778,6 +2855,11 @@ static void SORT_Draw( FIELD_ITEMMENU_WORK* pWork )
 //-----------------------------------------------------------------------------
 static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
 {
+	// 移動モード時は強制的にキー操作にする
+	if( pWork->moveMode == TRUE ){
+		on_off = TRUE;
+	}
+
   if( on_off )
   {
     GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
@@ -2793,10 +2875,6 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
     on_off = FALSE;
   }
 
-  // カーソルを消す
-//  GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, on_off );
-
-  GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, FALSE );
   if( on_off == FALSE ){
     ITEMDISP_ChangeCursorPosPalette( pWork, 0 );
   }else{
