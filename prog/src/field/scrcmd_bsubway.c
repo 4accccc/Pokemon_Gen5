@@ -210,6 +210,12 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
         com_id - BSWTOOL_WIFI_START_NO );
   }
   else if(
+      com_id >= BSWTOOL_DEBUG_START_NO && com_id < BSWTOOL_DEBUG_END_NO  )
+  {
+    KAGAYA_Printf( "BSUBWAY_TOOL() cmd type BSWTOOL_DEBUG : cmd No %d\n",
+        com_id - BSWTOOL_DEBUG_START_NO );
+  }
+  else if(
       com_id >= BSWSUB_START_NO && com_id < BSWSUB_END_NO )
   {
     KAGAYA_Printf( "BSUBWAY_TOOL() cmd type BSWSUB : cmd No %d\n",
@@ -659,6 +665,23 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //WiFi DLした歴代情報の部屋番号取得
   case BSWTOOL_WIFI_GET_DL_SCDATA_ROOM:
     *ret_wk = BSUBWAY_WIFIDATA_GetLeaderRoomNo( wifiData );
+    break;
+  //DEBUG フラグチェック
+  case BSWTOOL_DEBUG_CHK_FLAG:
+    {
+      u8 flag = BSUBWAY_SCOREDATA_DEBUG_GetFlag( scoreData );
+      u16 check_flag = param0;
+      
+      *ret_wk = FALSE;
+      
+      if( check_flag && check_flag <= 0xff ){
+        if( (flag & check_flag) ){
+          *ret_wk = TRUE;
+        }
+      }else{
+        GF_ASSERT( 0 );
+      }
+    }
     break;
   //----ワーク依存
   //プレイモード別復帰位置セット
@@ -1657,6 +1680,12 @@ void BSUBWAY_SCRWORK_DebugCreateWork( GAMESYS_WORK *gsys, u16 mode )
     EVENTWORK_SetEventFlag( ev, FV_BSUBWAY_RECEIPT_PARTNER );
     EVENTWORK_SetEventFlag( ev, FV_C04R0111_PARTNER );
     EVENTWORK_SetEventFlag( ev, FV_C04R0111_NPC );
+  }
+  
+  //デバッグフラグ初期化
+  {
+    u8 flag = BSUBWAY_SCOREDATA_DEBUG_GetFlag( bsw_scr->scoreData );
+    flag &= ~BSW_DEBUG_FLAG_AUTO; //オートは切っておく
   }
 }
 //----

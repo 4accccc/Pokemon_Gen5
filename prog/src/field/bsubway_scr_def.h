@@ -196,6 +196,10 @@
 #define BSWTOOL_WIFI_GET_DL_SCDATA_ROOM (BSWTOOL_WIFI_START_NO+13)
 #define BSWTOOL_WIFI_END_NO (BSWTOOL_WIFI_START_NO+14)
 
+#define BSWTOOL_DEBUG_START_NO (80)
+#define BSWTOOL_DEBUG_CHK_FLAG (BSWTOOL_DEBUG_START_NO+0)
+#define BSWTOOL_DEBUG_END_NO (BSWTOOL_DEBUG_START_NO+1)
+
 //--------------------------------------------------------------
 /// バトルサブウェイコマンドツールID
 /// ワーク依存コマンド
@@ -397,5 +401,12 @@
 #define BSW_TRAIN_OBJID_TRAINER_0 (0xe2)
 #define BSW_TRAIN_OBJID_TRAINER_1 (0xe3)
 #define BSW_HOME_OBJID_NPC_FIRST (0x80)
+
+//--------------------------------------------------------------
+//  デバッグ用フラグ
+//--------------------------------------------------------------
+#define BSW_DEBUG_FLAG_REGU_OFF (1<<0) //レギュ無視
+#define BSW_DEBUG_FLAG_AUTO (1<<1) //オート
+#define BSW_DEBUG_FLAG_BTL_SKIP (1<<2) //バトルスキップ
 
 #endif //__SUBWAY_SCR_DEF_H__

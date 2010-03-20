@@ -93,8 +93,12 @@
 #include "gamesystem/pm_weather.h"
 
 #include "debug/debug_mystery_card.h"
+
+#include "bsubway_scr.h"
 #include "event_wifi_bsubway.h"
 #include "event_bsubway.h"
+#include "scrcmd_bsubway.h"
+
 #include "savedata/battle_box_save.h"
 #include "event_geonet.h"
 #include "app/name_input.h"
@@ -1617,7 +1621,7 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
         }
 
         if( key_trg & PAD_BUTTON_X ){
-          move = MV_RT2;
+          move = MV_RND;
         }else if( (key_trg & PAD_KEY_UP )){
           move = MV_UP;
         }else if( key_trg & PAD_KEY_DOWN ){
@@ -1630,7 +1634,6 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
         if( move != 0xFF ){
           MMDL_ChangeMoveCode( work->fmmdl, move );
         }
-
       }
       break;
     }
@@ -5107,32 +5110,70 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuList_BSubway =
 
 enum
 {
-  DEBUG_BSWAY_DEMO_HOME = 0xfff0,
-  DEBUG_BSWAY_DEMO_HOME_LAST,
-
+  DEBUG_BSWAY_ZONE_HOME,
+  DEBUG_BSWAY_ZONE_TRAIN,
+  
   DEBUG_BSWAY_SCDATA_VIEW,
   DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD,
   DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD,
   DEBUG_BSWAY_WIFI_UPLOAD,
+   
+  DEBUG_BSWAY_ZONE_SINGLE,
+  DEBUG_BSWAY_ZONE_DOUBLE,
+  DEBUG_BSWAY_ZONE_MULTI,
+  DEBUG_BSWAY_ZONE_WIFI,
+  DEBUG_BSWAY_ZONE_S_SINGLE,
+  DEBUG_BSWAY_ZONE_S_DOUBLE,
+  DEBUG_BSWAY_ZONE_S_MULTI,
+  DEBUG_BSWAY_AUTO_SINGLE,
+  DEBUG_BSWAY_AUTO_DOUBLE,
+  DEBUG_BSWAY_AUTO_MULTI,
+  DEBUG_BSWAY_AUTO_S_SINGLE,
+  DEBUG_BSWAY_AUTO_S_DOUBLE,
+  DEBUG_BSWAY_AUTO_S_MULTI,
+  DEBUG_BSWAY_BTL_SINGLE_6,
+  DEBUG_BSWAY_BTL_DOUBLE_6,
+  DEBUG_BSWAY_BTL_MULTI_6,
+  DEBUG_BSWAY_BTL_SINGLE_20,
+  DEBUG_BSWAY_BTL_DOUBLE_20,
+  DEBUG_BSWAY_BTL_MULTI_20,
+  DEBUG_BSWAY_SET_REGU_OFF,
+  DEBUG_BSWAY_SET_BTL_SKIP,
 };
 
 static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
 {
-  { DEBUG_FIELD_BSW_01, (void*)ZONE_ID_C04R0102 },
-  { DEBUG_FIELD_BSW_02, (void*)ZONE_ID_C04R0104 },
-  { DEBUG_FIELD_BSW_03, (void*)ZONE_ID_C04R0106 },
-  { DEBUG_FIELD_BSW_04, (void*)ZONE_ID_C04R0108 },
-  { DEBUG_FIELD_BSW_05, (void*)ZONE_ID_C04R0103 },
-  { DEBUG_FIELD_BSW_06, (void*)ZONE_ID_C04R0105 },
-  { DEBUG_FIELD_BSW_07, (void*)ZONE_ID_C04R0107 },
-  { DEBUG_FIELD_BSW_08, (void*)ZONE_ID_C04R0110 },
-  { DEBUG_FIELD_BSW_09, (void*)ZONE_ID_C04R0111 },
-  { DEBUG_FIELD_BSW_09, (void*)DEBUG_BSWAY_DEMO_HOME },
-  { DEBUG_FIELD_BSW_09, (void*)DEBUG_BSWAY_DEMO_HOME_LAST },
+  { DEBUG_FIELD_BSW_01, (void*)DEBUG_BSWAY_ZONE_SINGLE},
+  { DEBUG_FIELD_BSW_02, (void*)DEBUG_BSWAY_ZONE_DOUBLE},
+  { DEBUG_FIELD_BSW_03, (void*)DEBUG_BSWAY_ZONE_MULTI},
+  { DEBUG_FIELD_BSW_04, (void*)DEBUG_BSWAY_ZONE_WIFI},
+  { DEBUG_FIELD_BSW_05, (void*)DEBUG_BSWAY_ZONE_S_SINGLE},
+  { DEBUG_FIELD_BSW_06, (void*)DEBUG_BSWAY_ZONE_S_DOUBLE},
+  { DEBUG_FIELD_BSW_07, (void*)DEBUG_BSWAY_ZONE_S_MULTI},
+  { DEBUG_FIELD_BSW_08, (void*)DEBUG_BSWAY_ZONE_TRAIN},
+  { DEBUG_FIELD_BSW_09, (void*)DEBUG_BSWAY_ZONE_TRAIN},
+  
   { DEBUG_FIELD_BSW_10, (void*)DEBUG_BSWAY_SCDATA_VIEW },
   { DEBUG_FIELD_WIFI_BSW_01, (void*)DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD },
   { DEBUG_FIELD_WIFI_BSW_02, (void*)DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD },
   { DEBUG_FIELD_WIFI_BSW_03, (void*)DEBUG_BSWAY_WIFI_UPLOAD },
+  
+  { DEBUG_FIELD_BSW_26, (void*)DEBUG_BSWAY_SET_REGU_OFF},
+  { DEBUG_FIELD_BSW_23, (void*)DEBUG_BSWAY_SET_BTL_SKIP},
+   
+  { DEBUG_FIELD_BSW_11, (void*)DEBUG_BSWAY_AUTO_SINGLE},
+  { DEBUG_FIELD_BSW_12, (void*)DEBUG_BSWAY_AUTO_DOUBLE},
+  { DEBUG_FIELD_BSW_13, (void*)DEBUG_BSWAY_AUTO_MULTI},
+  { DEBUG_FIELD_BSW_14, (void*)DEBUG_BSWAY_AUTO_S_SINGLE},
+  { DEBUG_FIELD_BSW_15, (void*)DEBUG_BSWAY_AUTO_S_DOUBLE},
+  { DEBUG_FIELD_BSW_16, (void*)DEBUG_BSWAY_AUTO_S_MULTI},
+  { DEBUG_FIELD_BSW_17, (void*)DEBUG_BSWAY_BTL_SINGLE_6},
+  { DEBUG_FIELD_BSW_18, (void*)DEBUG_BSWAY_BTL_DOUBLE_6},
+  { DEBUG_FIELD_BSW_19, (void*)DEBUG_BSWAY_BTL_MULTI_6},
+  { DEBUG_FIELD_BSW_20, (void*)DEBUG_BSWAY_BTL_SINGLE_20},
+  { DEBUG_FIELD_BSW_21, (void*)DEBUG_BSWAY_BTL_DOUBLE_20},
+  { DEBUG_FIELD_BSW_22, (void*)DEBUG_BSWAY_BTL_MULTI_20},
+  { DEBUG_FIELD_BSW_23, (void*)DEBUG_BSWAY_BTL_MULTI_20},
 };
 
 #define DEBUG_BSUBWAY_LIST_MAX ( NELEMS(DATA_BSubwayMenuList) )
@@ -5169,10 +5210,10 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
     break;
   case 1:
     {
-      u32 ret;
-      GMEVENT* next_event;
+      u32 ret,param;
+      GMEVENT *next_event = NULL;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
-
+      
       if( ret == FLDMENUFUNC_NULL ){  //操作無し
         break;
       }
@@ -5184,46 +5225,152 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
       }
 
       switch( ret ){
-      case DEBUG_BSWAY_DEMO_HOME:
-        ret = ZONE_ID_C04R0111;
+      case DEBUG_BSWAY_ZONE_HOME: //ホームへ移動
+        param = ZONE_ID_C04R0111;
         next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, ret );
+          work->gmSys, work->fieldWork, param );
         break;
-      case DEBUG_BSWAY_DEMO_HOME_LAST:
-        ret = ZONE_ID_C04R0111;
+      case DEBUG_BSWAY_ZONE_TRAIN: //車内へ移動
+        param = ZONE_ID_C04R0110;
         next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, ret );
+          work->gmSys, work->fieldWork, param );
         break;
-      default:
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, ret );
-        break;
-
-      // 歴代リーダー表示
-      case DEBUG_BSWAY_SCDATA_VIEW:  
+      case DEBUG_BSWAY_SCDATA_VIEW: //歴代リーダー表示
         next_event = BSUBWAY_EVENT_CallLeaderBoard( work->gmSys );
         break;
-
-
-      // WiFi系イベントの起動
-      case DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD:  // ゲームデータダウンロード
+      case DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD: //wifi データダウンロード
         next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys,
             WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD );
         break;
-
-      case DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD:  // 履歴ダウンロード
+      case DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD:  //wif 履歴ダウンロード
         next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys,
             WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD );
         break;
-
-      case DEBUG_BSWAY_WIFI_UPLOAD: // ゲームデータアップロード
+      case DEBUG_BSWAY_WIFI_UPLOAD: //wifi データアップロード
         next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys,
             WIFI_BSUBWAY_MODE_SCORE_UPLOAD );
         break;
+      case DEBUG_BSWAY_ZONE_SINGLE: //シングル受付へ
+        param = ZONE_ID_C04R0102;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_ZONE_DOUBLE: //ダブル受付へ
+        param = ZONE_ID_C04R0104;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_ZONE_MULTI: //マルチ受付へ
+        param = ZONE_ID_C04R0106;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_ZONE_WIFI: //WiFi受付へ
+        param = ZONE_ID_C04R0108;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_ZONE_S_SINGLE: //Sシングル受付へ
+        param = ZONE_ID_C04R0103;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_ZONE_S_DOUBLE: //Sダブル受付へ
+        param = ZONE_ID_C04R0105;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_ZONE_S_MULTI: //Sマルチ受付へ
+        param = ZONE_ID_C04R0107;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_AUTO_SINGLE: //シングルオート戦闘
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );
+        param = ZONE_ID_C04R0110;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_AUTO_DOUBLE: //ダブルオート戦闘
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_DOUBLE );
+        param = ZONE_ID_C04R0110;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_AUTO_MULTI: //マルチオート戦闘
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_MULTI );
+        param = ZONE_ID_C04R0110;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_AUTO_S_SINGLE: //Sシングルオート戦闘
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_SINGLE );
+        param = ZONE_ID_C04R0110;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_AUTO_S_DOUBLE: //Sダブルオート戦闘
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_DOUBLE );
+        param = ZONE_ID_C04R0110;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_AUTO_S_MULTI: //Sマルチオート戦闘
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_MULTI );
+        param = ZONE_ID_C04R0110;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_BTL_SINGLE_6: //シングル６戦から
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );
+        param = ZONE_ID_C04R0110;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_BTL_DOUBLE_6: //ダブル６戦から
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_DOUBLE );
+        param = ZONE_ID_C04R0110;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_BTL_MULTI_6: //マルチ６戦から
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_MULTI );
+        param = ZONE_ID_C04R0110;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_BTL_SINGLE_20: //シングル２０戦から
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );
+        param = ZONE_ID_C04R0110;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_BTL_DOUBLE_20: //ダブル２０戦から
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_DOUBLE );
+        param = ZONE_ID_C04R0110;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_BTL_MULTI_20: //マルチ２０戦から
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_MULTI );
+        param = ZONE_ID_C04R0110;
+        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
+          work->gmSys, work->fieldWork, param );
+        break;
+      case DEBUG_BSWAY_SET_REGU_OFF: //レギュオフ
+        break;
+      case DEBUG_BSWAY_SET_BTL_SKIP: //バトルスキップ
+        break;
+      default:
+        break;
       }
-
-      GMEVENT_CallEvent( event, next_event );
-      (*seq)++;
+      
+      if( next_event == NULL ){
+        return( GMEVENT_RES_FINISH );
+      }else{
+        GMEVENT_CallEvent( event, next_event );
+        (*seq)++;
+      }
     }
     break;
   case 2:
