@@ -387,8 +387,7 @@ int WorldTrade_Search_End(WORLDTRADE_WORK *wk, int seq)
 	
 	BgExit();
 
-  if( wk->sub_nextprocess==WORLDTRADE_PARTNER
-    || wk->sub_nextprocess==WORLDTRADE_TITLE )
+  if( wk->sub_nextprocess==WORLDTRADE_TITLE )
   { 
     wk->sub_display_continue  = TRUE;
   }

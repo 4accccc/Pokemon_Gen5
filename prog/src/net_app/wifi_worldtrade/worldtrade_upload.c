@@ -289,6 +289,13 @@ int WorldTrade_Upload_Init(WORLDTRADE_WORK *wk, int seq)
 	BgInit(  );
   WorldTrade_SubLcdBgInit(  wk, 0, 0 );
 
+  //ようすを見るときは、サブ画面消去
+  if( wk->sub_process_mode == MODE_SERVER_CHECK )
+  { 
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );	//サブ画面OBJ面OFF
+    GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_OFF );	//サブ画面OBJ面OFF
+  }
+
 	// BGグラフィック転送
 	BgGraphicSet( wk );
 

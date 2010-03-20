@@ -218,6 +218,7 @@ int WorldTrade_Partner_Init(WORLDTRADE_WORK *wk, int seq)
 	OS_Printf( "******************** worldtrade_partner.c [148] M ********************\n" );
 #endif
 	wk->subprocess_seq = SUBSEQ_START;
+  wk->sub_display_continue  = FALSE;
 
 	return SEQ_FADEIN;
 }

@@ -150,10 +150,14 @@ WIFILOGIN_MESSAGE_WORK* WIFILOGIN_MESSAGE_Init(HEAPID id,int msg_dat, WIFILOGIN_
     PALTYPE paltype;
     if( pWork->display == WIFILOGIN_DISPLAY_DOWN )
     { 
+      GFL_NET_WirelessIconEasyXY(GFL_WICON_POSX, GFL_WICON_POSY, TRUE, HEAPID_WORLDTRADE);
+      GFL_NET_WirelessIconEasy_HoldLCD( FALSE, pWork->heapID );
       paltype = PALTYPE_SUB_BG;
     }
     else
     { 
+      GFL_NET_WirelessIconEasyXY(GFL_WICON_POSX, GFL_WICON_POSY, TRUE, HEAPID_WORLDTRADE);
+      GFL_NET_WirelessIconEasy_HoldLCD( TRUE, pWork->heapID );
       paltype = PALTYPE_MAIN_BG;
     }
     GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, paltype,
