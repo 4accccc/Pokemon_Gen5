@@ -123,6 +123,12 @@ musical_scr_def.h: musical_scr.ev
 seatemple_scr_def.h: seatemple_scr.ev
 	$(EV_DEF) seatemple_scr.ev $(SCR_OFFS_ID_H)
 
+appraisal_scr_def.h: appraisal_scr.ev
+	$(EV_DEF) appraisal_scr.ev $(SCR_OFFS_ID_H)
+
+symbol_encount_scr_def.h: symbol_encount_scr.ev
+	$(EV_DEF) symbol_encount_scr.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 
