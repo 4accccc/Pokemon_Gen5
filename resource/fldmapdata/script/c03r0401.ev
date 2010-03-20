@@ -39,8 +39,12 @@ EVENT_START	ev_c03r0401_boy1_01
     //手持ちイベントセレビィがいるか？
     _GET_EVT_POKE_POS( MONSNO_SEREBHI, FALSE, poke_pos, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN  //セレビィいる
+      //ゾロア鳴き声
+      _VOICE_PLAY( MONSNO_ZOROA, 0 )
       //「きゅおー」
       _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy1_02 )
+      _VOICE_WAIT()
+      _AB_KEYWAIT_MARK()
       _BALLOONWIN_CLOSE()
 
       //自機定位置へ
@@ -49,14 +53,22 @@ EVENT_START	ev_c03r0401_boy1_01
       //セレビィ出す
       _CALL ball_out
 
+      //セレビィ鳴き声
+      _VOICE_PLAY( MONSNO_SEREBHI, 0 )
       //「るら」
       _BALLOONWIN_OBJMSG( msg_c03r0401_celebi_01 , MMDL_ID_EVENTOBJ_00 )
+      _VOICE_WAIT()
+      _AB_KEYWAIT_MARK()
       _BALLOONWIN_CLOSE()
 
       _CALL change_zoroa
 
+      //ゾロア鳴き声
+      _VOICE_PLAY( MONSNO_ZOROA, 0 )
       //「きゅおー」
       _BALLOONWIN_OBJMSG_POS( msg_c03r0401_boy1_02 ,C03R0401_POKE22_01, POS_DR  )
+      _VOICE_WAIT()
+      _AB_KEYWAIT_MARK()
       _BALLOONWIN_CLOSE()
 
       //女の子ゾロアのほうを向く+2回はねる
@@ -430,8 +442,12 @@ EVENT_END
 /*                          ゾロア                          */
 /************************************************************/
 EVENT_START	ev_c03r0401_poke22_01
+  //ゾロア鳴き声
+  _VOICE_PLAY( MONSNO_ZOROA, 0 )
   //「きゅおー」
   _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy1_02 )
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
   _BALLOONWIN_CLOSE()
 
   //自機定位置へ
