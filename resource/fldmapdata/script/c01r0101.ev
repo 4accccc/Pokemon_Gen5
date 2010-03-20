@@ -140,7 +140,7 @@ EVENT_START   ev_scene_c01r0101_pdwguide_01
 	_SE_WAIT()
 
 	//mapchangeする
-	_MAP_CHANGE( ZONE_ID_C01R0102, 11, 2, DIR_LEFT )
+	_MAP_CHANGE( ZONE_ID_C01R0102, 11, 2, DIR_RIGHT )
 
 	//=========フラグワーク操作==========//
 

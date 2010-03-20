@@ -10,7 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d20r0701.h"
-  //.include  "d20r0701.h"
+  .include  "d20r0701.h"
+  .include  "d20r0801_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -24,6 +25,8 @@ _EVENT_DATA		ev_bg_d20r0701_bg2_01
 _EVENT_DATA		ev_bg_d20r0701_bg3_01
 _EVENT_DATA		ev_bg_d20r0701_bg4_01
 _EVENT_DATA		ev_bg_d20r0701_bg5_01
+_EVENT_DATA		ev_pos_d20r0701_exit_01
+_EVENT_DATA		ev_reserve_d20r0701_event_01
 _EVENT_DATA_END
 
 
@@ -66,5 +69,82 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_bg_d20r0701_bg5_01
 	_EASY_BGWIN_MSG( msg_d20r0701_bg5_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0701	上昇POS									  */
+/**************************************************************/
+EVENT_START		ev_pos_d20r0701_exit_01
+
+	_SYSWIN_MSG( msg_d20r0701_sys_02 , POS_DOWN )
+	_YES_NO_WIN( SCWK_ANSWER )
+	_SYSWIN_CLOSE()
+
+	IF $SCWK_ANSWER == SCR_YES THEN
+		
+		//浮上アニメ
+		_PLAYER_UPDOWN_EFFECT( 0, 60, 64, 1 )
+		
+		_TIME_WAIT( 10 )
+		
+		//暗転処理
+		_MAP_FADE_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+
+		//予約スクリプト
+		_RESERVE_SCRIPT( SCRID_RESERVE_D20R0801_EVENT_01 )
+
+		//マップチェンジ
+		_MAP_CHANGE_NO_FADE( ZONE_ID_D20R0801, 13, 3, 22, DIR_UP )
+	
+	ELSE
+	
+		DEFINE_LOCAL	LWK_DIR
+		_PLAYER_DIR_GET( LWK_DIR )
+		
+		SWITCH $LWK_DIR
+		CASE DIR_UP THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_up_back )
+			_OBJ_ANIME_WAIT()
+		CASE DIR_DOWN THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_down_back )
+			_OBJ_ANIME_WAIT()
+		CASE DIR_LEFT THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_left_back )
+			_OBJ_ANIME_WAIT()
+		CASE DIR_RIGHT THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_right_back )
+			_OBJ_ANIME_WAIT()
+		ENDSWITCH
+		
+	ENDIF
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//		後退アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_up_back
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_down_back
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_left_back
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_right_back
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*		RESERVE												  */
+/**************************************************************/
+EVENT_START		ev_reserve_d20r0701_event_01
+	_MAP_FADE_BLACK_IN()
+	_DISP_FADE_END_CHECK()
 EVENT_END
 

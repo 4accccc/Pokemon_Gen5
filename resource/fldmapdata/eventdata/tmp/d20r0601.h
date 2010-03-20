@@ -2,8 +2,6 @@
 #ifndef ZONE_D20R0601_EVD_H
 #define ZONE_D20R0601_EVD_H
 
-#define DOOR_ID_D20R0601_D20R0701_EXIT01  0
-#define DOOR_ID_D20R0601_D20R0701_EXIT02  1
 
 #endif //ZONE_D20R0601_EVD_H
 //このファイルは../data/d20r0601.mevから自動生成されました
@@ -11,6 +9,7 @@
 #define ZONE_D20R0601_EVC_H
 
 #define D20R0601_STOPPER_01                0
+#define D20R0601_CUBE_01                   1
 
 #endif //ZONE_D20R0601_EVC_H
 //このファイルは../data/d20r0601.mevから自動生成されました

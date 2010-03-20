@@ -71,6 +71,10 @@ EVENT_END
 /*      ３００歩                                              */
 /**************************************************************/
 EVENT_START ev_seatemple_step_300
+
+	//画面を揺らすデモを入れる
+	_SHAKE_CAMERA(3,0,3,8)
+
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step02 )
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
@@ -80,15 +84,24 @@ EVENT_END
 /*      ４５０歩                                              */
 /**************************************************************/
 EVENT_START ev_seatemple_step_450
+
+	//画面を揺らすデモを入れる
+	_SHAKE_CAMERA(5,0,3,15)
+
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step03 )
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
+	
 EVENT_END
 
 /**************************************************************/
 /*      ５００歩                                              */
 /**************************************************************/
 EVENT_START ev_seatemple_step_500
+
+	//画面を揺らすデモを入れる
+	_SHAKE_CAMERA(8,0,3,15)
+
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step04 )
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
@@ -102,28 +115,38 @@ EVENT_END
 /*      ２Fでなぞを解いた！   or    すでにといている          */
 /**************************************************************/
 EVENT_START ev_seatemple_skill_use_2f
+
+	//画面を揺らすデモを入れる
+	_SHAKE_CAMERA(0,1,3,6)
+
+	//ストッパー移動
+	_OBJ_ANIME( D20R0601_STOPPER_01, anm_up_move )
+	_OBJ_ANIME( D20R0601_CUBE_01, anm_up_move )
+	_OBJ_ANIME_WAIT()
+
 	_PLAINWIN_MSG_DOWN( msg_seatemple_skill_01 )
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
-	
-	//ストッパー移動
-	_OBJ_ANIME( D20R0601_STOPPER_01, anm_up_move )
-	_OBJ_ANIME_WAIT()
-	
+
 EVENT_END
 
 /**************************************************************/
 /*      ３Fでなぞを解いた！   or    すでにといている          */
 /**************************************************************/
 EVENT_START ev_seatemple_skill_use_3f
+
+	//画面を揺らすデモを入れる
+	_SHAKE_CAMERA(0,1,3,6)
+
+	//ストッパー移動
+	_OBJ_ANIME( D20R0701_STOPPER_01, anm_right_move )
+	_OBJ_ANIME( D20R0701_CUBE_01, anm_right_move )
+	_OBJ_ANIME_WAIT()
+	
 	_PLAINWIN_MSG_DOWN( msg_seatemple_skill_01 )
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
-	
-	//ストッパー移動
-	_OBJ_ANIME( D20R0701_STOPPER_01, anm_up_move )
-	_OBJ_ANIME_WAIT()
-	
+
 EVENT_END
 
 //--------------------------------------------------------------------

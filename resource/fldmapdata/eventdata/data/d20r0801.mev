@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/18 20:53:10
+#save date:2010/03/19 19:06:50
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d20r0801.wms
 #SECTION START:OBJ_EVENT
@@ -39,23 +39,6 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d20r0801.wms
 #hold event type:
 1
 #hold event number:
-1
-#event number: 0
-#Door Event Label
-DOOR_ID_D20R0801_D20R0701_EXIT01
-#Next Zone ID Name
-ZONE_ID_NONE
-#Next Door ID Name
-EXIT_ID_NONE
-#Door Direction
-EXIT_DIR_NON
-#Door Type
-EXIT_TYPE_WARP
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--40 48 -120
-#size
-1 1
+0
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

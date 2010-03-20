@@ -36,6 +36,7 @@ _EVENT_DATA		ev_c01_woman2a_01
 _EVENT_DATA		ev_c01_fising_01
 _EVENT_DATA		ev_bg_c01_gymsign_01
 _EVENT_DATA		ev_c01_badman1_01
+_EVENT_DATA		ev_pos_c01_stop1
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -131,18 +132,20 @@ _TALK_OBJ_START()
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 		
-		//おぬし　ジムバッジの　１つも　もっておらぬ　ようじゃが
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01_stop_01 )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_stop_01 )
 
 	//ジムクリア後
 	ELSE
-	
-		//おおう！　ひかりかがやく　ジムバッジ！
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01_stop_03 )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+
+		IF $WK_SCENE_C01 == 2 THEN
+
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_stop_02 )
+
+		ELSE
+
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01_stop_03 )
+
+		ENDIF
 	
 	ENDIF
 
@@ -152,7 +155,7 @@ EVENT_END
 /*  C01 OLDMAN1のストッパー		ＰＯＳ発動                    */
 /**************************************************************/
 EVENT_START   ev_pos_c01_stop
-	
+{
 	//ローカル変数を定義
 	DEFINE_LOCAL	LWK_HERO_X
 	DEFINE_LOCAL	LWK_HERO_Z
@@ -201,7 +204,63 @@ EVENT_START   ev_pos_c01_stop
 		_OBJ_ANIME_WAIT()
 		
 	ENDIF
+}
+EVENT_END
 
+/**************************************************************/
+/*  C01 OLDMAN1のストッパー		ＰＯＳ発動                    */
+/**************************************************************/
+EVENT_START   ev_pos_c01_stop1
+{
+	//ローカル変数を定義
+	DEFINE_LOCAL	LWK_HERO_X
+	DEFINE_LOCAL	LWK_HERO_Z
+
+	//自機の位置取得
+	_PLAYER_POS_GET( LWK_HERO_X,LWK_HERO_Z )
+	
+	//X軸が750の場合
+	IF $LWK_HERO_X == 750 THEN
+		
+		//お爺さん：自機に近づく
+		//自機：お爺さんのほうを見る
+		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_tikaduku750 )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_miru )
+		_OBJ_ANIME_WAIT()
+		
+		//さっき　はつめいかが
+		_BALLOONWIN_OBJMSG( msg_c01_stop_02 , C01_OLDMAN1_01 )
+		_BALLOONWIN_CLOSE()
+		
+		//自機：１歩下がる
+		//お爺さん：持ち場に戻る
+		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_modoru750 )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+		_OBJ_ANIME_WAIT()
+	
+	//X軸が751の場合
+	ELSE
+		//お爺さん：自機に近づく
+		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_tikaduku751 )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_miru )
+		_OBJ_ANIME_WAIT()
+		
+		//さっき　はつめいかが
+		_BALLOONWIN_OBJMSG( msg_c01_stop_02 , C01_OLDMAN1_01 )
+		_BALLOONWIN_CLOSE()
+		
+		//自機：１歩下がる
+		//お爺さん：持ち場に戻る
+		_OBJ_ANIME( C01_OLDMAN1_01, anm_oldman_modoru751 )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
+		_OBJ_ANIME_WAIT()
+		
+	ENDIF
+}
 EVENT_END
 
 //--------------------------------------------------------------

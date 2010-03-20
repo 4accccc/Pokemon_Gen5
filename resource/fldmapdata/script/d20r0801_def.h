@@ -5,6 +5,6 @@
 #define _D20R0801_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_D20R0801 (1)
+#define SCRID_RESERVE_D20R0801_EVENT_01 (1)
 
 #endif //_D20R0801_DEF_H_

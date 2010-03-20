@@ -247,11 +247,34 @@ _TALK_OBJ_START()
 		//セリフ内にを格納
 		_NUMBER( 0, LWK_LEFT, 1 )
 		_NUMBER( 1, LWK_RIGHT, 1 )
-
-		//きょうは　なんにん　いるねー
-		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_hint_01 )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+		
+		//左側の人数が０人かチェック
+		IF $LWK_LEFT == 0 THEN
+		
+			//左側いないVer
+			_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_hint_01a )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		
+		ELSE
+		
+			IF $LWK_RIGHT == 0 THEN
+			
+				//右側いないVer
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_hint_01b )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			
+			ELSE
+			
+				//きょうは　なんにん　いるねー
+				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_hint_01 )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			
+			ENDIF
+		
+		ENDIF
 		
 	//いいえ
 	ELSE
