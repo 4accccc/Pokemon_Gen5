@@ -72,7 +72,7 @@ struct _APPBAR_WORK
 static void AppBar_LoadResource( APPBAR_WORK *p_wk, CLSYS_DRAW_TYPE	clsys_draw_type, PALTYPE bgplttype, APP_COMMON_MAPPING mapping, u8 bg_plt, u8 obj_plt, HEAPID heapID );
 static void AppBar_UnLoadResource( APPBAR_WORK *p_wk );
 //obj
-static void AppBar_CreateObj( APPBAR_WORK *p_wk, GFL_CLUNIT* p_unit, APPBAR_OPTION_MASK mask, CLSYS_DEFREND_TYPE	clsys_def_type, HEAPID heapID );
+static void AppBar_CreateObj( APPBAR_WORK *p_wk, GFL_CLUNIT* p_unit, APPBAR_OPTION_MASK mask, CLSYS_DEFREND_TYPE	clsys_def_type, u8 bg_pri, HEAPID heapID );
 static void AppBar_DeleteObj( APPBAR_WORK *p_wk );
 //etc
 static void ARCHDL_UTIL_TransVramScreenEx( ARCHANDLE *handle, ARCDATID datID, u32 frm, u32 chr_ofs, u8 src_x, u8 src_y, u8 src_w, u8 src_h, u8 dst_x, u8 dst_y, u8 dst_w, u8 dst_h,  u8 plt, BOOL compressedFlag, HEAPID heapID );
@@ -150,7 +150,7 @@ APPBAR_WORK * APPBAR_Init( APPBAR_OPTION_MASK mask, GFL_CLUNIT* p_unit, u8 bar_f
     p_wk->p_menu_res  = APP_TASKMENU_RES_Create( bar_frm, bg_plt, p_font, p_que, heapID );
 
 		//CLWK読み込み
-		AppBar_CreateObj( p_wk, p_unit, mask, clsys_def_type, heapID );
+		AppBar_CreateObj( p_wk, p_unit, mask, clsys_def_type, GFL_BG_GetPriority(bar_frm), heapID );
 
     //ウィンドウ読み込み
     {
@@ -344,7 +344,7 @@ static void AppBar_UnLoadResource( APPBAR_WORK *p_wk )
  *	@param	APPBAR_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void AppBar_CreateObj( APPBAR_WORK *p_wk, GFL_CLUNIT* p_unit, APPBAR_OPTION_MASK mask, CLSYS_DEFREND_TYPE	clsys_def_type, HEAPID heapID )
+static void AppBar_CreateObj( APPBAR_WORK *p_wk, GFL_CLUNIT* p_unit, APPBAR_OPTION_MASK mask, CLSYS_DEFREND_TYPE	clsys_def_type, u8 bg_pri, HEAPID heapID )
 {	
 	//CLWKの作成
 	int i;
@@ -355,7 +355,7 @@ static void AppBar_CreateObj( APPBAR_WORK *p_wk, GFL_CLUNIT* p_unit, APPBAR_OPTI
   cldata.pos_x	= 128;
   cldata.pos_y	= 96;
   cldata.anmseq	= 0;
-  cldata.bgpri  = 1;
+  cldata.bgpri  = bg_pri+1;
   p_wk->p_clwk[0]	= GFL_CLACT_WK_Create( p_unit, 
       p_wk->res[APPBAR_RES_BAR_CHR],
       p_wk->res[APPBAR_RES_BAR_PLT],

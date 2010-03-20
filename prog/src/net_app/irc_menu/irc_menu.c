@@ -943,6 +943,15 @@ static void GRAPHIC_Init( GRAPHIC_WORK* p_wk, HEAPID heapID )
 	//ワーククリア
 	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_WORK) );
 
+	//レジスタ初期化
+	G2_BlendNone();
+	G2S_BlendNone();	
+	GX_SetVisibleWnd( GX_WNDMASK_NONE );
+	GXS_SetVisibleWnd( GX_WNDMASK_NONE );
+
+	//VRAMクリアー
+	GFL_DISP_ClearVRAM( 0 );
+
 	// ディスプレイON
 	GFL_DISP_SetDispSelect( GX_DISP_SELECT_SUB_MAIN );
 	GFL_DISP_SetDispOn();

@@ -2864,7 +2864,7 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
 
   case SEQ_END:
     SEQ_End( p_wk );
-    return; //↓のアサートを通過しないため
+    return;
   }
 
 
