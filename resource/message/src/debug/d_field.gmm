@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-19T15:54:42"/>
+	<create user="kagaya" host="W00143" date="2010-03-20T19:24:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1240,6 +1240,86 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_BSW_10">
 		<language name="JPN" width="160">れきだいリーダーひょうじ</language>
 		<language name="JPN_KANJI" width="160">歴代リーダー表示</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_11">
+		<language name="JPN" width="160">シングルオート</language>
+		<language name="JPN_KANJI" width="160">シングルオート</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_12">
+		<language name="JPN" width="160">ダブルオート</language>
+		<language name="JPN_KANJI" width="160">ダブルオート</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_13">
+		<language name="JPN" width="160">マルチオート</language>
+		<language name="JPN_KANJI" width="160">マルチオート</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_14">
+		<language name="JPN" width="160">Ｓシングルオート</language>
+		<language name="JPN_KANJI" width="160">Ｓシングルオート</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_15">
+		<language name="JPN" width="160">Ｓダブルオート</language>
+		<language name="JPN_KANJI" width="160">Ｓダブルオート</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_16">
+		<language name="JPN" width="160">Ｓマルチオート</language>
+		<language name="JPN_KANJI" width="160">Ｓマルチオート</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_17">
+		<language name="JPN" width="160">シングル６戦から</language>
+		<language name="JPN_KANJI" width="160">シングル６戦から</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_18">
+		<language name="JPN" width="160">ダブル６戦から</language>
+		<language name="JPN_KANJI" width="160">ダブル６戦から</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_19">
+		<language name="JPN" width="160">マルチ６戦から</language>
+		<language name="JPN_KANJI" width="160">マルチ６戦から</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_20">
+		<language name="JPN" width="160">シングル２０戦から</language>
+		<language name="JPN_KANJI" width="160">シングル２０戦から</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_21">
+		<language name="JPN" width="160">ダブル２０戦から</language>
+		<language name="JPN_KANJI" width="160">ダブル２０戦から</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_22">
+		<language name="JPN" width="160">マルチ２０戦から</language>
+		<language name="JPN_KANJI" width="160">マルチ２０戦から</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_23">
+		<language name="JPN" width="160">戦闘飛ばしON</language>
+		<language name="JPN_KANJI" width="160">戦闘飛ばしON</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_24">
+		<language name="JPN" width="160">戦闘飛ばしOFF</language>
+		<language name="JPN_KANJI" width="160">戦闘飛ばしOFF</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_25">
+		<language name="JPN" width="160">レギュON</language>
+		<language name="JPN_KANJI" width="160">レギュON</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_26">
+		<language name="JPN" width="160">レギュOFF</language>
+		<language name="JPN_KANJI" width="160">レギュOFF</language>
 	</row>
 
 	<row id="DEBUG_FIELD_WIFI_BSW_01">
