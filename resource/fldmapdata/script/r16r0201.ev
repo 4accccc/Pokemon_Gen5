@@ -22,7 +22,106 @@
 _EVENT_DATA    ev_r16r0201_woman3_01		//女性（ゾロアーク）
 _EVENT_DATA    ev_r16r0201_backpackerm_01	//青年
 _EVENT_DATA    ev_pos_r16r0201_woman3_01	//女性が出てくるPOSイベント
+_EVENT_DATA    ev_zone_r16r0201
+_EVENT_DATA    ev_recover_r16r0201
 _EVENT_DATA_END
+
+//R16R0201_WOMAN3_01
+//FV_R16R0201_WOMAN3
+//R16R0201_BACKPACKERM_01
+//FV_R16R0201_BACKPACKERM
+//WK_SCENE_R16R0201
+
+DEFINE_LOCAL target_poke_pos
+DEFINE_LOCAL target_monsno
+
+/**************************************************************/
+/*            ZONE_CHANGE_SCRIPT                               */
+/**************************************************************/
+INIT_EVENT_START ev_zone_r16r0201
+  DEFINE_LOCAL map_replace_sw
+  //ローカルワーク0に0をセット(初期化)
+  $LOCALWORK0 = 0
+  //マップ書き換えスイッチ初期化
+  $map_replace_sw = FALSE
+
+  //イベントが完全終了ならばマップを書き換え、トレーラーハウスの入り口を侵入不可の場所へ退避する
+  IF $WK_SCENE_R16R0201 >= 2 THEN    //イベント完全終了
+    //マップ書き換えイベント後のマップ
+    $map_replace_sw = TRUE
+    //自機が入れないようにトレーラーハウス入り口移動
+    _SXY_MOVE_EXIT_EVENT( DOOR_ID_R16R0201_R16R0301_EXIT01, 0, 0, 0 )
+    //ＯＢＪ消す
+    _FLAG_SET( FV_R16R0201_WOMAN3 )
+	  _FLAG_SET( FV_R16R0201_BACKPACKERM )
+  ELSE   //イベント未消化のとき
+  {
+    DEFINE_LOCAL pos
+    DEFINE_LOCAL ret_entei
+    DEFINE_LOCAL ret_raikou
+    DEFINE_LOCAL ret_suikun
+    DEFINE_LOCAL evt_ok
+    //イベント発動チェック(イベントエンテイ・ライコウ・スイクンがいるか？)
+    _GET_EVT_POKE_POS( MONSNO_ENTEI, FALSE, pos, ret_entei )
+    _GET_EVT_POKE_POS( MONSNO_RAIKOU, FALSE, pos, ret_raikou )
+    _GET_EVT_POKE_POS( MONSNO_SUIKUN, FALSE, pos, ret_suikun )
+
+    //判定フラグ初期化
+    $evt_ok = FALSE
+    IF $ret_entei == TRUE THEN          //エンテイいた
+      $evt_ok = TRUE
+    ELSIF $ret_raikou == TRUE THEN      //ライコウいた
+      $evt_ok = TRUE
+    ELSIF $ret_suikun == TRUE THEN      //スイクンいた
+      $evt_ok = TRUE
+    ENDIF
+
+    //イベント発動していいか？
+    IF $evt_ok == TRUE THEN   //発動
+      //ＰＯＳを有効にする(ローカルワーク0に1をセット)
+      $LOCALWORK0 = 1
+      //青年消す
+      _FLAG_SET( FV_R16R0201_BACKPACKERM )
+    ELSE                    //発動しない シーンワークが 0 or 1    
+      //青年と話したことあるか？
+      IF  FLAG_ON( FE_R16R0201_BACKPACKER_TALK ) THEN         //話したことある
+        //青年非表示
+        _FLAG_SET( FV_R16R0201_BACKPACKERM )
+      ELSE            //話したことない
+        //青年を表示
+        _FLAG_RESET( FV_R16R0201_BACKPACKERM )
+      ENDIF      
+    ENDIF
+
+    //シーンワークをクリア  イベント未消化状態
+    $WK_SCENE_R16R0201 = 0
+  }
+  ENDIF
+
+  //マップ即時書き換え
+	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_08, map_replace_sw, TRUE )
+
+  
+INIT_EVENT_END
+
+/********************************************************************/
+/*						FIELD_RECOVER_LABEL                                   */
+/********************************************************************/
+INIT_EVENT_START  ev_recover_r16r0201
+  //コンティニュー時のみ実行
+  _CHECK_CONTINUE_RECOVER( SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+    //マップ書き換えチェック
+    IF $WK_SCENE_R16R0201 != 0 THEN   //ゾロアークとバトル後　OR イベント完全終了
+      //マップをトレーラーハウスがないマップにする
+//      _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_08, TRUE, TRUE )
+      //自機が入れないようにトレーラーハウス入り口移動
+      _SXY_MOVE_EXIT_EVENT( DOOR_ID_R16R0201_R16R0301_EXIT01, 0, 0, 0 )
+    ENDIF
+  ENDIF
+INIT_EVENT_END
+
+
 
 
 /**************************************************************/
@@ -37,7 +136,21 @@ EVENT_END
 /*                            青年                            */
 /**************************************************************/
 EVENT_START	ev_r16r0201_backpackerm_01
+  _TALK_OBJ_START()
+  //メッセージ
+  _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_01, R16R0201_BACKPACKERM_01)
+  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_02, R16R0201_BACKPACKERM_01)
+  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_03, R16R0201_BACKPACKERM_01)
+  _BALLOONWIN_CLOSE()
 
+  //立ち去る    @todo
+
+  _FLAG_SET( FV_R16R0201_BACKPACKERM )
+  _OBJ_DEL(R16R0201_BACKPACKERM_01)
+  //青年と話したフラグＯＮ
+  _FLAG_SET(FE_R16R0201_BACKPACKER_TALK)
 EVENT_END
 
 
@@ -45,7 +158,196 @@ EVENT_END
 /*                    ゾロアークPOSイベント                   */
 /**************************************************************/
 EVENT_START	ev_pos_r16r0201_woman3_01
+  //イベントの対象ポケモン(エンテイ、ライコウ、スイクン)を調べる
+  _CALL search_target
+
+  //自機の移動
+  _CALL move_player
+
+  //女性出して、自機に近づく
+  _FLAG_RESET( FV_R16R0201_WOMAN3 )
+  _OBJ_ADD(R16R0201_WOMAN3_01)
+  _OBJ_ANIME( R16R0201_WOMAN3_01, anm_woman_move)
+  _OBJ_ANIME_WAIT()
+
+  //ゾロアーク鳴き声
+  _VOICE_PLAY( MONSNO_ZOROAAKU, 0 )
+  _BALLOONWIN_OBJMSG( msg_r16r0201_zoro_01, R16R0201_WOMAN3_01)
+  _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
+  _BALLOONWIN_CLOSE()
+
+  //マップ変更リクエスト
+  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_08, TRUE, TRUE )
+  //自機が入れないようにトレーラーハウス入り口移動
+  _SXY_MOVE_EXIT_EVENT( DOOR_ID_R16R0201_R16R0301_EXIT01, 0, 0, 0 )
+  
+  //戦闘
+  _WILD_BTL_SET_LEGEND( MONSNO_ZOROAAKU , 99 ) //ゾロアーク
+
+  //女性を消す
+  _FLAG_SET( FV_R16R0201_WOMAN3 )
+  _OBJ_DEL(R16R0201_WOMAN3_01)
+
+  _WILD_LOSE_CHECK( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
+    _WILD_WIN()
+  ELSE
+     _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+  ENDIF
+
+  _WILD_RETRY_CHECK( SCWK_ANSWER )
+  SWITCH $SCWK_ANSWER
+  CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN //勝利した場合、あるいは逃げた場合
+    //シーンワーク更新 ゾロアークとバトルした（捕獲してない）
+    $WK_SCENE_R16R0201 = 1 
+  CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
+    _CALL backpacker_evt
+    
+    //対象ポケモンお役御免(イベント後フラグをセット)
+    _SET_EVT_POKE_AFT_FLG( target_monsno, target_poke_pos )
+    //シーンワーク更新　イベント完全終了
+    $WK_SCENE_R16R0201 = 2
+  ENDSWITCH
 
 EVENT_END
+
+//自機の移動
+move_player:
+{
+  DEFINE_LOCAL x
+  DEFINE_LOCAL z
+  //自機の座標取得
+  _PLAYER_POS_GET( x, z )
+
+  SWITCH $x
+  CASE 15 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move1 )
+  CASE 16 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move2 )
+  CASE 17 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move3 )
+  CASE 18 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move4 )
+  CASE 19 THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move5 )
+  ENDSWITCH
+  
+  _OBJ_ANIME_WAIT()
+}
+_RET
+
+//イベント対象ポケモン検索
+search_target:
+{
+  DEFINE_LOCAL pos_entei
+  DEFINE_LOCAL pos_raikou
+  DEFINE_LOCAL pos_suikun
+  DEFINE_LOCAL ret_entei
+  DEFINE_LOCAL ret_raikou
+  DEFINE_LOCAL ret_suikun
+
+  //対象検索(イベントエンテイ・ライコウ・スイクンがいるか？)
+  _GET_EVT_POKE_POS( MONSNO_ENTEI, FALSE, pos_entei, ret_entei )
+  _GET_EVT_POKE_POS( MONSNO_RAIKOU, FALSE, pos_raikou, ret_raikou )
+  _GET_EVT_POKE_POS( MONSNO_SUIKUN, FALSE, pos_suikun, ret_suikun )
+
+  //対称位置初期化（手持ち位置0～5以上の値で初期化）
+  $target_poke_pos = 6
+
+  IF $ret_entei == TRUE THEN          //エンテイいた
+    //始めなので必ず対象にエントリー
+    $target_monsno = MONSNO_ENTEI
+    $target_poke_pos = $pos_entei
+  ENDIF
+  IF $ret_raikou == TRUE THEN      //ライコウいた
+    IF $pos_raikou < $target_poke_pos THEN
+      //対象更新
+      $target_monsno = MONSNO_RAIKOU
+      $target_poke_pos = $pos_raikou
+    ENDIF
+  ENDIF
+  IF $ret_suikun == TRUE THEN      //スイクンいた
+    IF $pos_suikun < $target_poke_pos THEN
+      //対象更新
+      $target_monsno = MONSNO_SUIKUN
+      $target_poke_pos = $pos_suikun
+    ENDIF
+  ENDIF
+}
+_RET
+
+//ゾロアーク捕獲後青年イベント
+backpacker_evt:
+  //青年を所定の位置に配置
+
+    //青年自機に近づく
+
+    //青年のメッセージ
+
+    //青年退出
+
+_RET
+
+//--------------------------------------------------------------------
+//自機移動 座標15,29
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move1
+  _ANIME_DATA	AC_WALK_U_8F,4
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機移動  座標16,29
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move2
+  _ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機移動  座標17,29
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move3
+  _ANIME_DATA	AC_WALK_U_8F,4
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機移動  座標18,29
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move4
+  _ANIME_DATA	AC_WALK_U_8F,4
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,2
+
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機移動  座標19,29
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move5
+  _ANIME_DATA	AC_WALK_U_8F,4
+  _ANIME_DATA	AC_WALK_L_8F,3
+  _ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//女性が出てくる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_woman_move
+  _ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//話しかけたときの青年の退出動作
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_talk_backpacker_remove
+  _ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+  
+
 
 
