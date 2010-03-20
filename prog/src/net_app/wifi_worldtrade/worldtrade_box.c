@@ -192,6 +192,8 @@ int WorldTrade_Box_Init(WORLDTRADE_WORK *wk, int seq)
 	
 	// BG設定
 	BgInit();
+  // サブ画面初期化
+  WorldTrade_SubLcdBgInit(wk,0, 0 );
 
 	// BGグラフィック転送
 	BgGraphicSet( wk );
@@ -220,6 +222,7 @@ int WorldTrade_Box_Init(WORLDTRADE_WORK *wk, int seq)
 //	GFL_CLACT_WK_SetDrawEnable( wk->PromptDsActWork, 0 );
    
 	wk->subprocess_seq = SUBSEQ_START;
+  wk->sub_display_continue  = FALSE;
 	
 	return SEQ_FADEIN;
 }
@@ -269,6 +272,8 @@ int WorldTrade_Box_End(WORLDTRADE_WORK *wk, int seq)
 	BmpWinDelete( wk );
 	
 	BgExit();
+	// サブ画面ＢＧ情報解放
+	WorldTrade_SubLcdBgExit( wk );
 
 	// 「DSの下画面をみてねアイコン」非表示
 	GFL_CLACT_WK_SetDrawEnable( wk->PromptDsActWork, 0 );
@@ -348,9 +353,6 @@ static void BgInit( void )
 	}
 
 
-	// サブ画面初期化
-	WorldTrade_SubLcdBgInit(0, 0 );
-
 
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 32, 0, HEAPID_WORLDTRADE );
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME3_M, 32, 0, HEAPID_WORLDTRADE );
@@ -368,8 +370,6 @@ static void BgInit( void )
 static void BgExit( void )
 {
 
-	// サブ画面ＢＧ情報解放
-	WorldTrade_SubLcdBgExit();
 
 	// メイン画面ＢＧ情報解放
 	GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
@@ -395,7 +395,6 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 
 	// 上下画面ＢＧパレット転送
 	GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_worldtrade_mybox_nclr, PALTYPE_MAIN_BG, 0, 16*3*2,  HEAPID_WORLDTRADE);
-	GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_worldtrade_traderoom_nclr, PALTYPE_SUB_BG,  0, 16*8*2,  HEAPID_WORLDTRADE);
 	
 	// 会話フォントパレット転送
 	TalkFontPaletteLoad( PALTYPE_MAIN_BG, WORLDTRADE_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );

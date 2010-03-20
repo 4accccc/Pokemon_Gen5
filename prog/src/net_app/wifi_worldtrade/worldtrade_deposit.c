@@ -420,6 +420,8 @@ int WorldTrade_Deposit_Init(WORLDTRADE_WORK *wk, int seq)
 	
 	// BG設定
 	BgInit( );
+	// サブ画面初期化
+	WorldTrade_SubLcdBgInit( wk, 0, 0 );
 
 	// BGグラフィック転送
 	BgGraphicSet( wk );
@@ -466,7 +468,7 @@ int WorldTrade_Deposit_Init(WORLDTRADE_WORK *wk, int seq)
 
 
 	wk->subprocess_seq = SUBSEQ_START;
-	
+  wk->sub_display_continue  = FALSE;
 	
 	return SEQ_FADEIN;
 }
@@ -516,6 +518,9 @@ int WorldTrade_Deposit_End(WORLDTRADE_WORK *wk, int seq)
 	BmpWinDelete( wk );
 	
 	BgExit();
+
+  // サブ画面ＢＧ情報解放
+	WorldTrade_SubLcdBgExit( wk );
 
 	// 「DSの下画面をみてねアイコン」非表示
 	GFL_CLACT_WK_SetDrawEnable( wk->PromptDsActWork, 0 );
@@ -634,10 +639,6 @@ static void BgInit( void )
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 32, 0, HEAPID_WORLDTRADE );
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME3_M, 32, 0, HEAPID_WORLDTRADE );
 
-	// サブ画面初期化
-	WorldTrade_SubLcdBgInit( 0, 0 );
-
-
 
 }
 
@@ -653,8 +654,6 @@ static void BgInit( void )
 static void BgExit( void )
 {
 
-	// サブ画面ＢＧ情報解放
-	WorldTrade_SubLcdBgExit();
 
 	// メイン画面ＢＧ情報解放
 	GFL_BG_FreeBGControl(GFL_BG_FRAME2_M );

@@ -333,6 +333,10 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
 static void VBlankFunc( GFL_TCB *, void *work )
 {
   WORLDTRADE_WORK *wk = work;
+
+  GFL_BG_VBlankFunc();
+  GFL_CLACT_SYS_VBlankFunc();
+
   // VBlank中転送ファンクション実行
   if(wk->vfunc){
     wk->vfunc(work);
@@ -342,8 +346,6 @@ static void VBlankFunc( GFL_TCB *, void *work )
     wk->vfunc2(work);
   }
 
-  GFL_BG_VBlankFunc();
-  GFL_CLACT_SYS_VBlankFunc();
 
 }
 
@@ -1311,9 +1313,8 @@ void WorldTrade_InitSystem( WORLDTRADE_WORK *wk )
 {
   GFL_DISP_GX_InitVisibleControl();
   GFL_DISP_GXS_InitVisibleControl();
-  GX_SetVisiblePlane( 0 );
-  GXS_SetVisiblePlane( 0 );
-
+  GFL_DISP_GX_SetVisibleControlDirect( 0 );
+  GFL_DISP_GXS_SetVisibleControlDirect( 0 );
 
   InitCLACT( wk );
 

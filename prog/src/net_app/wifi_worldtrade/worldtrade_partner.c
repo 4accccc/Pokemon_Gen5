@@ -147,7 +147,14 @@ int WorldTrade_Partner_Init(WORLDTRADE_WORK *wk, int seq)
 	InitWork( wk );
 	
 	// BG設定
-   	BgInit(  -wk->DrawOffset-32 );
+  BgInit(  -wk->DrawOffset-32 );
+	// サブ画面初期化
+	if(GXS_GetMasterBrightness() == 0){
+    WorldTrade_SubLcdBgInit( wk, -wk->DrawOffset-32, TRUE );
+  }
+  else{
+    WorldTrade_SubLcdBgInit( wk, -wk->DrawOffset-32, FALSE );
+  }
 
 	// BGグラフィック転送
 	BgGraphicSet( wk );
@@ -267,6 +274,9 @@ int WorldTrade_Partner_End(WORLDTRADE_WORK *wk, int seq)
 	
 	BgExit();
 
+	// サブ画面ＢＧ情報解放
+	WorldTrade_SubLcdBgExit( wk );
+
 	// 「DSの下画面をみてねアイコン」非表示
 	GFL_CLACT_WK_SetDrawEnable( wk->PromptDsActWork, 0 );
 	
@@ -321,14 +331,6 @@ static void BgInit( int sub_bg1_offset )
 
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME2_M, 32, 0, HEAPID_WORLDTRADE );
 
-	// サブ画面初期化
-	if(GXS_GetMasterBrightness() == 0){
-    	WorldTrade_SubLcdBgInit( sub_bg1_offset, TRUE );
-    }
-    else{
-    	WorldTrade_SubLcdBgInit( sub_bg1_offset, FALSE );
-    }
-
 	//未使用BGオフ
 	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG3, VISIBLE_OFF );	//メイン画面BG3面OFF
 }
@@ -345,8 +347,6 @@ static void BgInit( int sub_bg1_offset )
 static void BgExit( void )
 {
 
-	// サブ画面ＢＧ情報解放
-	WorldTrade_SubLcdBgExit( );
 
 	// メイン画面ＢＧ情報解放
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );

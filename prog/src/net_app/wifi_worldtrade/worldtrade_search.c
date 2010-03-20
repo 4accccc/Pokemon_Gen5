@@ -51,6 +51,7 @@ static void BmpWinInit( WORLDTRADE_WORK *wk );
 static void BmpWinDelete( WORLDTRADE_WORK *wk );
 static void InitWork( WORLDTRADE_WORK *wk );
 static void FreeWork( WORLDTRADE_WORK *wk );
+
 static  int SubSeq_Start( WORLDTRADE_WORK *wk);
 static  int SubSeq_Main( WORLDTRADE_WORK *wk);
 static  int SubSeq_SearchCheck( WORLDTRADE_WORK *wk );
@@ -108,7 +109,7 @@ static void SlideScreenVFunc( void *p );
 static void BgBlendSet( int rate  );
 
 enum{
-	SUBSEQ_START=0,
+	SUBSEQ_START,
 	SUBSEQ_MAIN,
 	SUBSEQ_END,
 
@@ -154,7 +155,7 @@ enum{
 };
 
 static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
-	SubSeq_Start,				// SUBSEQ_START=0,
+	SubSeq_Start,				// SUBSEQ_START
 	SubSeq_Main,             	// SUBSEQ_MAIN,
 	SubSeq_End,              	// SUBSEQ_END,
 
@@ -231,7 +232,7 @@ enum{
 #define SEARCH_INFO_PRINT_FLAG		(0)	//0:左、1:センタリング、2:右寄せ
 
 ///強制タイムアウトまでの時間
-#define TIMEOUT_TIME			(30*60*2)	//2分
+#define TIMEOUT_TIME			(60*60*2)	//2分
 
 
 //============================================================================================
@@ -253,17 +254,24 @@ int WorldTrade_Search_Init(WORLDTRADE_WORK *wk, int seq)
 	// ワーク初期化
 	InitWork( wk );
 	
+  //メイン画面の処理
 	// BG設定
 	BgInit();
-
 	// BGグラフィック転送
 	BgGraphicSet( wk );
-
 	// BMPWIN確保
 	BmpWinInit( wk );
 
 	// セルアクター登録
 	SetCellActor(wk);
+
+  //サブ画面の処理
+	WorldTrade_SubLcdBgInit( wk, 0, 0 );  
+  WorldTrade_SubLcdWinGraphicSet( wk );   // トレードルームウインドウ転送
+  // サブ画面のGTS説明用BMPWINを確保する
+	WorldTrade_SubLcdExpainPut( wk, EXPLAIN_SAGASU );
+
+  wk->sub_display_continue  = FALSE;
 
 	// 条件入力システム初期化
 	{
@@ -307,7 +315,6 @@ int WorldTrade_Search_Init(WORLDTRADE_WORK *wk, int seq)
 		wk->country_code, SEARCH_INFO_PRINT_FLAG, 0, PRINTSYS_LSB_Make(15,2,0), &wk->print );
 
 	wk->vfunc2 = SlideScreenVFunc;
-	
 	
 	// ２回目以降
 	// ワイプフェード開始（両画面）
@@ -379,6 +386,14 @@ int WorldTrade_Search_End(WORLDTRADE_WORK *wk, int seq)
 	BmpWinDelete( wk );
 	
 	BgExit();
+
+  if( wk->sub_nextprocess==WORLDTRADE_PARTNER
+    || wk->sub_nextprocess==WORLDTRADE_TITLE )
+  { 
+    wk->sub_display_continue  = TRUE;
+  }
+  // サブ画面ＢＧ情報解放
+  WorldTrade_SubLcdBgExit( wk );
 
 	// 「DSの下画面をみてねアイコン」非表示
 	GFL_CLACT_WK_SetDrawEnable( wk->PromptDsActWork, 0 );
@@ -461,12 +476,9 @@ static void BgInit( void )
 		GFL_BG_SetVisible( GFL_BG_FRAME3_M, TRUE );
 	}
 
-	WorldTrade_SubLcdBgInit(  0, 0 );
-
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME2_M, 32, 0, HEAPID_WORLDTRADE );
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 32, 0, HEAPID_WORLDTRADE );
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME3_M, 32, 0, HEAPID_WORLDTRADE );
-
 }
 
 //--------------------------------------------------------------------------------------------
@@ -481,15 +493,11 @@ static void BgInit( void )
 static void BgExit( void )
 {
 
-	// サブ画面ＢＧ情報解放
-	WorldTrade_SubLcdBgExit( );
-
 	// メイン画面ＢＧ情報解放
 	GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
-
 }
 
 
@@ -508,7 +516,6 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 
 	// 上下画面ＢＧパレット転送
 	GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_worldtrade_search_nclr, PALTYPE_MAIN_BG, 0, 16*3*2,  HEAPID_WORLDTRADE);
-	GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_worldtrade_traderoom_nclr, PALTYPE_SUB_BG,  0, 16*8*2,  HEAPID_WORLDTRADE);
 	
 	// 会話フォントパレット転送
 	TalkFontPaletteLoad( PALTYPE_MAIN_BG, WORLDTRADE_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );
@@ -542,11 +549,7 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 	// 会話フォントパレット転送
 	TalkFontPaletteLoad( PALTYPE_SUB_BG, WORLDTRADE_SUB_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );
 
-	WorldTrade_SubLcdWinGraphicSet( wk );   // トレードルームウインドウ転送
-
-
 	GFL_ARC_CloseDataHandle( p_handle );
-
 }
 
 
@@ -778,11 +781,8 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[6+i]), 0x0000 );
 			GFL_BMPWIN_MakeTransWindow( wk->InfoWin[6+i] );
 		}
-
 	}
-	
-	// サブ画面のGTS説明用BMPWINを確保する
-	WorldTrade_SubLcdExpainPut( wk, EXPLAIN_SAGASU );
+
 }	
 
 //------------------------------------------------------------------
@@ -877,7 +877,6 @@ static void FreeWork( WORLDTRADE_WORK *wk )
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
-
 
 
 //------------------------------------------------------------------

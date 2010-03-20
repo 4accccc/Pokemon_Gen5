@@ -135,6 +135,8 @@ int WorldTrade_MyPoke_Init(WORLDTRADE_WORK *wk, int seq)
 	
 	// BG設定
 	BgInit(  );
+	// サブ画面初期化
+	WorldTrade_SubLcdBgInit( wk, 0, 0 );
 
 	// BGグラフィック転送
 	BgGraphicSet( wk );
@@ -184,6 +186,7 @@ int WorldTrade_MyPoke_Init(WORLDTRADE_WORK *wk, int seq)
 	OS_Printf( "******************** worldtrade_mypoke.c [152] M ********************\n" );
 #endif
 	wk->subprocess_seq = SUBSEQ_START;
+  wk->sub_display_continue  = FALSE;
 
 	return SEQ_FADEIN;
 }
@@ -226,6 +229,9 @@ int WorldTrade_MyPoke_End(WORLDTRADE_WORK *wk, int seq)
 	BmpWinDelete( wk );
 
 	BgExit(  );
+
+	// サブ画面ＢＧ情報解放
+	WorldTrade_SubLcdBgExit( wk );
 
 	// 「DSの下画面をみてねアイコン」非表示
 	GFL_CLACT_WK_SetDrawEnable( wk->PromptDsActWork, 0 );
@@ -298,8 +304,6 @@ static void BgInit( void )
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME3_M, 32, 0, HEAPID_WORLDTRADE );
 
 
-	// サブ画面初期化
-	WorldTrade_SubLcdBgInit( 0, 0 );
 
 }
 
@@ -315,8 +319,6 @@ static void BgInit( void )
 static void BgExit( void )
 {
 
-	// サブ画面ＢＧ情報解放
-	WorldTrade_SubLcdBgExit( );
 
 	// メイン画面ＢＧ情報解放
 	GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
@@ -341,7 +343,6 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 
 	// 上下画面ＢＧパレット転送
 	GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_worldtrade_poke_view_nclr, PALTYPE_MAIN_BG, 0, 16*3*2,  HEAPID_WORLDTRADE);
-	GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_worldtrade_traderoom_nclr, PALTYPE_SUB_BG,  0, 16*8*2,  HEAPID_WORLDTRADE);
 	
 	// 会話フォントパレット転送
 	TalkFontPaletteLoad( PALTYPE_MAIN_BG, WORLDTRADE_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );
@@ -362,12 +363,6 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 	// メイン画面BG1スクリーン転送
 	GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_worldtrade_mypoke_lz_nscr,  GFL_BG_FRAME1_M, 0, 32*24*2, 1, HEAPID_WORLDTRADE);
 
-
-	// サブ画面BG1キャラ転送
-	//GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_traderoom_lz_ncgr,  GFL_BG_FRAME1_S, 0, 32*21*0x40, 1, HEAPID_WORLDTRADE);
-
-	// サブ画面BG1スクリーン転送
-	//GFL_ARCHDL_UTIL_TransVramScreen(   p_handle, NARC_worldtrade_traderoom_lz_nscr,  GFL_BG_FRAME1_S, 0, 32*24*2, 1, HEAPID_WORLDTRADE);
 
 	// 会話フォントパレット転送
 	TalkFontPaletteLoad( PALTYPE_SUB_BG, WORLDTRADE_SUB_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );

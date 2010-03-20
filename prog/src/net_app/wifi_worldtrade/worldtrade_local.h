@@ -586,6 +586,9 @@ typedef struct _WORLDTRADE_WORK{
   WIFIWORLDTRATE_EVILCHECK_DATA evilcheck_data; ///<認証コードが入った不正チェックデータ
   DWCSvlResult                  svl;    ///<サービスロケータ
 
+  BOOL  is_sub_graphic_init;
+  BOOL  sub_display_continue; //サブ画面引継フラグ
+
 #ifdef PM_DEBUG
 	int 					frame;									//
 	int						framenum[9][2];							//
@@ -683,8 +686,8 @@ extern int  WorldTrade_Title_End( WORLDTRADE_WORK *wk, int seq);
 extern int  WorldTrade_Title_Main(WORLDTRADE_WORK *wk, int seq);
 extern int  WorldTrade_Title_Init(WORLDTRADE_WORK *wk, int seq);
 extern void WorldTrade_SubLcdBgGraphicSet( WORLDTRADE_WORK *wk );
-extern void WorldTrade_SubLcdBgInit( int sub_bg1_y_offset, BOOL sub_bg2_no_clear );
-extern void WorldTrade_SubLcdBgExit( void );
+extern void WorldTrade_SubLcdBgInit( WORLDTRADE_WORK *wk, int sub_bg1_y_offset, BOOL sub_bg2_no_clear );
+extern void WorldTrade_SubLcdBgExit( WORLDTRADE_WORK *wk );
 
 extern void WorldTrade_SubLcdWinGraphicSet( WORLDTRADE_WORK *wk );
 extern void WorldTrade_SubLcdExpainPut( WORLDTRADE_WORK *wk, int explain );

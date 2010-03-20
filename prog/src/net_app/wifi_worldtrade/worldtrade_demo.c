@@ -149,6 +149,7 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
 #endif
 
 	wk->subprocflag = 1;
+  wk->sub_display_continue  = FALSE;
 
 	return SEQ_FADEIN;
 }

@@ -287,6 +287,7 @@ int WorldTrade_Upload_Init(WORLDTRADE_WORK *wk, int seq)
 	
 	// BG設定
 	BgInit(  );
+  WorldTrade_SubLcdBgInit(  wk, 0, 0 );
 
 	// BGグラフィック転送
 	BgGraphicSet( wk );
@@ -308,6 +309,7 @@ int WorldTrade_Upload_Init(WORLDTRADE_WORK *wk, int seq)
 	wk->subprocess_seq = SUBSEQ_START;
 
 
+  wk->sub_display_continue  = FALSE;
 
 	return SEQ_FADEIN;
 }
@@ -353,6 +355,7 @@ int WorldTrade_Upload_End(WORLDTRADE_WORK *wk, int seq)
 	BmpWinDelete( wk );
 	
 	BgExit(  );
+  WorldTrade_SubLcdBgExit( wk );
 
 	// 次のサブプロセスを設定する
 	WorldTrade_SubProcessUpdate( wk );
@@ -419,39 +422,10 @@ static void BgInit( void )
 	}
 
 
-
-	// サブ画面文字版0
-	{	
-		GFL_BG_BGCNT_HEADER TextBgCntDat = {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
-			0, 0, 0, FALSE
-		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME0_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
-		GFL_BG_ClearScreen( GFL_BG_FRAME0_S );
-		GFL_BG_SetVisible( GFL_BG_FRAME0_S, TRUE );
-
-	}
-
-
-	// サブ画面背景( この面は256色 ->じゃなくなりました )
-	{	
-		GFL_BG_BGCNT_HEADER TextBgCntDat = {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000,GFL_BG_CHRSIZ_256x256, GX_BG_EXTPLTT_01,
-			2, 0, 0, FALSE
-		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &TextBgCntDat, GFL_BG_MODE_TEXT );
-		GFL_BG_SetVisible( GFL_BG_FRAME1_S, TRUE );
-	}
-
-
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 32, 0, HEAPID_WORLDTRADE );
 	GFL_BG_SetClearCharacter( GFL_BG_FRAME1_M, 32, 0, HEAPID_WORLDTRADE );
-	GFL_BG_SetClearCharacter( GFL_BG_FRAME0_S, 32, 0, HEAPID_WORLDTRADE );
 
 	GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_OBJ, VISIBLE_ON );	//メイン画面OBJ面ＯＮ
-	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );	//サブ画面OBJ面ＯＮ
 
 }
 
@@ -467,8 +441,6 @@ static void BgInit( void )
 static void BgExit( void )
 {
 
-	GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
-	GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );

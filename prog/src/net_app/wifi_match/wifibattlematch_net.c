@@ -23,6 +23,7 @@
 #include "net/dwc_error.h"
 #include "net/nhttp_rap.h"
 #include "net/nhttp_rap_evilcheck.h"
+#include "net/dwc_tool.h"
 
 //  セーブデータ
 #include "savedata/system_data.h"
@@ -184,11 +185,6 @@ typedef enum
 #define WIFI_FILE_ATTR3			""
 #define REGULATION_CARD_DATA_SIZE (sizeof(REGULATION_CARDDATA))
 
-//-------------------------------------
-///	  不正文字チェック
-//=====================================
-#define WIFIBATTLEMATCH_BADWORD_STRL_MAX  (10)
-
 //=============================================================================
 /**
  *					構造体宣言
@@ -323,10 +319,7 @@ struct _WIFIBATTLEMATCH_NET_WORK
   s32 now_profileID;
 
   //以下不正文字チェック用
-  STRCODE   badword_str[ WIFIBATTLEMATCH_BADWORD_STRL_MAX ];
-  u16       *p_badword_arry[1];
-  char      badword_result[1];
-  int       badword_num;
+  DWC_TOOL_BADWORD_WORK badword;
 
   //以下デバッグ用データ
   BOOL is_debug;
@@ -3887,42 +3880,7 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
 //-----------------------------------------------------------------------------
 void WIFIBATTLEMATCH_NET_StartBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, const STRCODE *cp_str, u32 str_len )
 { 
-  BOOL ret;
-/*
-  # 文字コードはUnicode（リトルエンディアンUTF16）を使用してください。
-  それ以外の文字コードを使用している場合は、Unicodeに変換してください。
-  # スクリーンネームにUnicode及びIPLフォントにない独自の文字を使用している場合は、スペースに置き換えてください。
-  # 終端は"\0\0"（u16で0x0000）である必要があります。
-  # 配列内の全ての文字列の合計が501文字まで（各文字列の終端を含む）にする必要があります。
-  # 配列内の文字列にNULLを指定することはできません。 
-  */
-  { 
-    int i;
-    GF_ASSERT( str_len < WIFIBATTLEMATCH_BADWORD_STRL_MAX );
-    for( i = 0; i < str_len; i++ )
-    { 
-      if( GFL_STR_GetEOMCode() == cp_str[i] )
-      {
-        p_wk->badword_str[i]  = 0x0000;
-      }
-      else
-      { 
-        p_wk->badword_str[i]  = cp_str[i];
-      }
-    }
-    p_wk->p_badword_arry[0] = p_wk->badword_str;
-  }
-  p_wk->badword_num = 0;
-
-
-  ret = DWC_CheckProfanityExAsync( (const u16 **)p_wk->p_badword_arry,
-                             1,
-                             NULL,
-                             0,
-                             p_wk->badword_result,
-                             &p_wk->badword_num,
-                             DWC_PROF_REGION_ALL );
-  GF_ASSERT( ret );
+  DWC_TOOL_BADWORD_Start( &p_wk->badword, cp_str, str_len );
 }
 //----------------------------------------------------------------------------
 /**
@@ -3936,14 +3894,7 @@ void WIFIBATTLEMATCH_NET_StartBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, const STR
 //-----------------------------------------------------------------------------
 BOOL WIFIBATTLEMATCH_NET_WaitBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL *p_is_bad_word )
 { 
-  BOOL ret;
-  ret = DWC_CheckProfanityProcess() == DWC_PROF_STATE_SUCCESS;
-
-  if( ret == TRUE )
-  { 
-    *p_is_bad_word  = p_wk->badword_num;
-  }
-  return ret;
+  return DWC_TOOL_BADWORD_Wait( &p_wk->badword, p_is_bad_word );
 }
 
 //=============================================================================
