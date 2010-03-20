@@ -29,6 +29,44 @@
 
 //------------------------------------------------------------------
 /**
+ * @brief   伝説ポケモンかどうか
+ * @param   monsno  モンスター番号
+ * @return  合致したらTRUE
+ */
+//------------------------------------------------------------------
+
+BOOL PokeRegulationCheckLegend(u16 monsno)
+{
+  int i;
+  static const u16 cut_check_monsno[] = {
+    MONSNO_151,				// ミュウ
+    MONSNO_251,			// セレビィ
+    MONSNO_385,			// ジラーチ
+    MONSNO_386,		// デオキシス
+    MONSNO_489,				// フィオネ
+    MONSNO_490,			// マナフィ
+    MONSNO_491,		// ダークライ
+    MONSNO_492,			// シェイミ
+    MONSNO_493,		// アルセウス
+		MONSNO_652,	// ツチノカミ
+		MONSNO_653,					// ライ
+		MONSNO_654,	// ダルタニス
+		MONSNO_655,		// メロディア
+		MONSNO_656,		// インセクタ
+		MONSNO_657,			// ビクティ
+  };
+
+  for(i=0;i < elementof(cut_check_monsno) ;i++){
+    if(cut_check_monsno[i] == monsno){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
+//------------------------------------------------------------------
+/**
  * @brief  ポケモンがレギュレーションに適合しているかどうか調べる
  * @param   REGULATION     レギュレーション構造体ポインタ
  * @param   POKEMON_PARAM  ポケパラ

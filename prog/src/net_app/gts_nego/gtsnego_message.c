@@ -40,6 +40,11 @@
 #include "gtsnego_local.h"
 #include "gtsnego.naix"
 #include "msg/msg_gtsnego.h"
+#include "system/pms_draw.h"
+
+
+
+static void _PMSDrawExit( GTSNEGO_MESSAGE_WORK* pWork );
 
 //--------------------------------------------
 // 画面構成定義
@@ -115,11 +120,14 @@ struct _GTSNEGO_MESSAGE_WORK {
   GFL_BMPWIN* infoDispWin;
   GFL_BMPWIN* systemDispWin;
   GFL_BMPWIN* mainDispWin[_BMP_WINDOW_NUM];
+
+  GFL_BMPWIN* titleDispWin;
   
   GFL_BMPWIN* MyStatusDispWin[SCROLL_PANEL_NUM];
   GFL_BMPWIN* FriendTitleWin;
 
   GFL_BMPWIN* mainMsgWin;
+  GFL_BMPWIN* pmsMsgWin;
 
   PRINT_STREAM* pStream;
 	GFL_TCBLSYS *pMsgTcblSys;
@@ -127,9 +135,12 @@ struct _GTSNEGO_MESSAGE_WORK {
 
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
 	APP_TASKMENU_RES* pAppTaskRes;
+  APP_TASKMENU_WIN_WORK* pAppWin;
   
 //  int windowNum;
   HEAPID heapID;
+
+  PMS_DRAW_WORK *pms_draw_work;
   
 };
 
@@ -185,6 +196,9 @@ void GTSNEGO_MESSAGE_Main(GTSNEGO_MESSAGE_WORK* pWork)
   GFL_FONTSYS_SetColor(1, 2, 15);
   GFL_TCBL_Main( pWork->pMsgTcblSys );
   PRINTSYS_QUE_Main(pWork->SysMsgQue);
+  if(pWork->pAppWin){
+    APP_TASKMENU_WIN_Update( pWork->pAppWin );
+  }
 
 }
 
@@ -267,6 +281,11 @@ void GTSNEGO_MESSAGE_InfoMessageDisp(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
   GFL_BMPWIN_TransVramCharacter(pwin);
   GFL_BMPWIN_MakeScreen(pwin);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
+
+  if( pWork->pms_draw_work ){
+    PMS_DRAW_Main( pWork->pms_draw_work );
+  }
+
 }
 
 
@@ -285,15 +304,10 @@ void GTSNEGO_MESSAGE_InfoMessageDisp(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
  */
 //------------------------------------------------------------------------------
 
-void GTSNEGO_MESSAGE_MainMessageDisp(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
+void GTSNEGO_MESSAGE_MainMessageDispCore(GTSNEGO_MESSAGE_WORK* pWork)
 {
   GFL_BMPWIN* pwin;
 
-
-
-
-  GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
-  
   if(pWork->mainMsgWin==NULL){
     pWork->mainMsgWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME1_M ,
@@ -309,6 +323,23 @@ void GTSNEGO_MESSAGE_MainMessageDisp(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
   GFL_BMPWIN_MakeScreen(pwin);
   
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   説明ウインドウ表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GTSNEGO_MESSAGE_MainMessageDisp(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
+{
+  GFL_BMPWIN* pwin;
+
+  GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
+
+  GTSNEGO_MESSAGE_MainMessageDispCore(pWork);
 }
 
 //------------------------------------------------------------------------------
@@ -744,6 +775,18 @@ APP_TASKMENU_WIN_WORK* GTSNEGO_MESSAGE_SearchButtonStart(GTSNEGO_MESSAGE_WORK* p
 
 
 
+void GTSNEGO_MESSAGE_SetCountry(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMyStatus)
+{
+
+  WORDSET_RegisterCountryName( pWork->pWordSet, 0, MyStatus_GetMyNation(pMyStatus));
+  WORDSET_RegisterLocalPlaceName( pWork->pWordSet, 1, MyStatus_GetMyNation(pMyStatus),MyStatus_GetMyArea(pMyStatus));
+
+  GFL_MSG_GetString( pWork->pMsgData, GTSNEGO_039, pWork->pExStrBuf );
+  WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
+
+}
+
+
 
 
 
@@ -954,4 +997,132 @@ void GTSNEGO_MESSAGE_AppMenuClose(APP_TASKMENU_WORK* pAppTask)
     APP_TASKMENU_CloseMenu(pAppTask);
   }
 }
+
+
+
+void GTSNEGO_MESSAGE_PMSDrawInit(GTSNEGO_MESSAGE_WORK* pWork, GTSNEGO_DISP_WORK* pDispWork)
+{
+  if(pWork->pms_draw_work==NULL){
+    GFL_CLUNIT* cellUnit = GTSNEGO_DISP_GetCellUtil(pDispWork);
+    pWork->pms_draw_work = PMS_DRAW_Init( cellUnit, CLSYS_DRAW_MAIN, 
+                                          pWork->SysMsgQue, pWork->pFontHandle, 0, 3, pWork->heapID );
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 簡易会話描画システム解放
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void _PMSDrawExit( GTSNEGO_MESSAGE_WORK* pWork )
+{
+  PMS_DRAW_Exit( pWork->pms_draw_work );
+}
+
+
+
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   説明ウインドウ表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GTSNEGO_MESSAGE_PMSDisp(GTSNEGO_MESSAGE_WORK* pWork,PMS_DATA* pms)
+{
+  GFL_BMPWIN* pwin;
+  int i;
+
+  if(pWork->pmsMsgWin==NULL){
+    pWork->pmsMsgWin = GFL_BMPWIN_Create(
+      GFL_BG_FRAME1_M ,
+      1 , 12, 30 ,2 ,
+      _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+  }
+  
+  {
+    pwin = pWork->pmsMsgWin;
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0);
+    GFL_FONTSYS_SetColor(15, 2, 0);
+    
+    PMS_DRAW_Print( pWork->pms_draw_work, pwin,  pms, 0 );
+    
+//    PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) ,0,0, pWork->pStrBuf, pWork->pFontHandle );
+    GFL_BMPWIN_TransVramCharacter(pwin);
+    GFL_BMPWIN_MakeScreen(pwin);
+  }
+  
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   システムウインドウ表示
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GTSNEGO_MESSAGE_TitleMessage(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
+{
+  GFL_BMPWIN* pwin;
+
+  GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
+  
+  if(pWork->titleDispWin==NULL){
+    pWork->titleDispWin = GFL_BMPWIN_Create( GFL_BG_FRAME1_M , 0 , 0, 14 , 2 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+  }
+  pwin = pWork->titleDispWin;
+
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0);
+  GFL_FONTSYS_SetColor(15, 2, 0);
+
+  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) ,1, 2, pWork->pStrBuf, pWork->pFontHandle );
+
+  GFL_BMPWIN_TransVramCharacter(pwin);
+  GFL_BMPWIN_MakeScreen(pwin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   キャンセルボタンをつくる
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GTSNEGO_MESSAGE_CancelButtonCreate(GTSNEGO_MESSAGE_WORK* pWork)
+{
+  pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+  GFL_MSG_GetString(pWork->pMsgData, GTSNEGO_020, pWork->appitem[0].str);
+  pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+  pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+  pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
+                                           pWork->appitem, 16 - 5, 24, 10, pWork->heapID);
+  GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   キャンセルボタンを消す
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+BOOL GTSNEGO_MESSAGE_CancelButtonDelete(GTSNEGO_MESSAGE_WORK* pWork)
+{
+  if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
+    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
 

@@ -998,7 +998,7 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
 									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
-      pWork->dbw = pwk;
+    pWork->dbw = pwk;
 
     if(GFL_NET_IsInit()){       // Ú‘±’†
       GF_ASSERT(0);

@@ -30,6 +30,9 @@ typedef enum{
     POKE_REG_NO_MASTPOKE,
 } POKE_REG_RETURN_ENUM;
 
+//伝説ポケモンかどうか
+extern BOOL PokeRegulationCheckLegend(u16 monsno);
+
 // ポケモンがレギュレーションに適合しているかどうか調べる  
 extern BOOL PokeRegulationCheckPokePara(const REGULATION* pReg, POKEMON_PARAM* pp);
 // ポケパーティがレギュレーションに完全適合しているかどうか調べる バトル最終チェック用
@@ -92,3 +95,5 @@ typedef struct{
 extern REGULATION_PRINT_MSG * PokeRegulation_CreatePrintMsg(
   const REGULATION* pReg, WORDSET *wordset, HEAPID heap_id, int shooter_type);
 extern void PokeRegulation_DeletePrintMsg(REGULATION_PRINT_MSG *rpm);
+
+

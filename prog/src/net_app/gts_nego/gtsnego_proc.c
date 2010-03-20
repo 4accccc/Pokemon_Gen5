@@ -463,13 +463,36 @@ static void _LevelKeyCallback(BOOL bRight,GTSNEGO_WORK* pWork)
 }
 
 
-static void _messageCountry( GTSNEGO_WORK *pWork )
+
+
+
+
+static void _messageEnd( GTSNEGO_WORK *pWork )
 {
+  if(GFL_UI_TP_GetTrg() || GFL_UI_KEY_GetTrg()){
+    _CHANGE_STATE(pWork, NULL);
+  }
+}
 
-    GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork,GTSNEGO_040);
 
+
+static void _messagePMS( GTSNEGO_WORK *pWork )
+{
+  if(GFL_UI_TP_GetTrg() || GFL_UI_KEY_GetTrg()){  //@todoŽžŠÔ‚É•ÏX
+#if _DISP_DEBUG
+    PMS_DATA data = {1,1,{1,1}};
+    GTSNEGO_MESSAGE_PMSDrawInit(pWork->pMessageWork, pWork->pDispWork);
+    GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, &data);//&pWork->MatchData[netID].pms );
+ //   GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork,GTSNEGO_040);
+    _CHANGE_STATE(pWork, _messageEnd);
+#else
+    GTSNEGO_MESSAGE_PMSDrawInit(pWork->pMessageWork, pWork->pDispWork);
+    GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, &pWork->MatchData[netID].pms );
+ //   GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork,GTSNEGO_040);
+    _CHANGE_STATE(pWork, _messageEnd);
+#endif
+  }
   
-
 }
 
 //----------------------------------------------------------------------------
@@ -483,12 +506,26 @@ static void _messageCountry( GTSNEGO_WORK *pWork )
 
 static void _timingCheck2( GTSNEGO_WORK *pWork )
 {
+  EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+
+#if _DISP_DEBUG
+  {
+    EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+    GTSNEGO_MESSAGE_SetCountry(pWork->pMessageWork, GAMEDATA_GetMyStatus(pEv->gamedata));
+    GTSNEGO_MESSAGE_MainMessageDispCore(pWork->pMessageWork);
+  }
+  _CHANGE_STATE(pWork,_messagePMS);
+#else
+  
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO3, WB_NET_GTSNEGO)){
 
-    GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork,GTSNEGO_039);
+    GTSNEGO_MESSAGE_SetCountry(pWork->pMessageWork, pEv->pStatus[1]);
 
-    _CHANGE_STATE(pWork,_messageCountry);
+    GTSNEGO_MESSAGE_MainMessageDispCore(pWork->pMessageWork);
+
+    _CHANGE_STATE(pWork,_messagePMS);
   }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -553,12 +590,17 @@ static void _pmssendCheck( GTSNEGO_WORK *pWork )
 
 static void _timingCheck( GTSNEGO_WORK *pWork )
 {
+#if _DISP_DEBUG
+    _CHANGE_STATE(pWork,_timingCheck2);
+#else
+
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO2, WB_NET_GTSNEGO)){
     EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
     if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_INFOSEND, sizeof(EVENT_GTSNEGO_USER_DATA),&pEv->aUser[0])){
       _CHANGE_STATE(pWork,_pmssendCheck);
     }
   }
+#endif
 }
 
 
@@ -673,6 +715,8 @@ static void _matchingState( GTSNEGO_WORK *pWork )
   if(STEPMATCH_SUCCESS == GFL_NET_DWC_GetStepMatchResult()){
 #endif
 
+
+    
     GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_021);
 
     pWork->timer = _FRIEND_LOOKAT_DOWN_TIME;
@@ -979,6 +1023,12 @@ static void _friendSelectDecide3( GTSNEGO_WORK *pWork )
     case 0:
       GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_019);
       GTSNEGO_DISP_SearchPeopleDispSet(pWork->pDispWork);
+
+      GTSNEGO_MESSAGE_TitleMessage(pWork->pMessageWork,GTSNEGO_018);
+
+      GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork);
+
+      
       _CHANGE_STATE(pWork,_matchKeyMake);
       break;
     case 1:
@@ -1111,6 +1161,7 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
     PMSND_PlaySystemSE(_SE_DECIDE);
     pWork->selectFriendIndex = pWork->key3;
     _CHANGE_STATE(pWork,_friendSelectDecide);
+    return;
   }
 
 

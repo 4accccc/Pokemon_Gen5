@@ -28,6 +28,8 @@ typedef struct _GTSNEGO_DISP_WORK  GTSNEGO_DISP_WORK;
 #define _OBJPAL_MENUBAR_POS (8)
 #define _OBJPAL_MENUBAR_NUM (1)
 
+#define _OBJPAL_NEGOOBJ_POS_MAIN (0)
+#define _OBJPAL_NEGOOBJ_NUM_MAIN (8)
 
 // ‚Í‚¢‚¢‚¢‚¦‚Ìƒ^ƒCƒv
 #define GTSNEGO_YESNOTYPE_INFO (0)
@@ -151,7 +153,7 @@ extern void GTSNEGO_DISP_ScrollChipDisp(GTSNEGO_DISP_WORK* pWork,int pos,int max
 extern void GTSNEGO_DISP_ScrollChipDispMouse(GTSNEGO_DISP_WORK* pWork,int y,int max);
 extern void GTSNEGO_DISP_SearchPeopleDispSet(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_SearchPeopleDispMain(GTSNEGO_DISP_WORK* pWork);
-
+extern GFL_CLUNIT* GTSNEGO_DISP_GetCellUtil(GTSNEGO_DISP_WORK* pWork);
 
 
 //extern void GTSNEGO_MESSAGE_PlateDisp(GTSNEGO_MESSAGE_WORK* pWork, MYSTATUS* pMyStatus, int index );
@@ -163,6 +165,13 @@ extern void GTSNEGO_MESSAGE_FriendListUpEnd(GTSNEGO_MESSAGE_WORK* pWork);
 extern void GTSNEGO_MESSAGE_AppMenuClose(APP_TASKMENU_WORK* pAppTask);
 extern APP_TASKMENU_WORK* GTSNEGO_MESSAGE_MatchOrReturnStart(GTSNEGO_MESSAGE_WORK* pWork,int type);
 extern void GTSNEGO_MESSAGE_MainMessageDisp(GTSNEGO_MESSAGE_WORK* pWork,int msgid);
+extern void GTSNEGO_MESSAGE_MainMessageDispCore(GTSNEGO_MESSAGE_WORK* pWork);
+extern void GTSNEGO_MESSAGE_SetCountry(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMyStatus);
+extern void GTSNEGO_MESSAGE_PMSDrawInit(GTSNEGO_MESSAGE_WORK* pWork, GTSNEGO_DISP_WORK* pDispWork);
+extern void GTSNEGO_MESSAGE_PMSDisp(GTSNEGO_MESSAGE_WORK* pWork,PMS_DATA* pms);
+extern void GTSNEGO_MESSAGE_TitleMessage(GTSNEGO_MESSAGE_WORK* pWork,int msgid);
+extern void GTSNEGO_MESSAGE_CancelButtonCreate(GTSNEGO_MESSAGE_WORK* pWork);
+extern BOOL GTSNEGO_MESSAGE_CancelButtonDelete(GTSNEGO_MESSAGE_WORK* pWork);
 
 extern MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index);
 

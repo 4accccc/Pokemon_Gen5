@@ -68,16 +68,19 @@ FS_EXTERN_OVERLAY(ui_common);
 #define UNION_TRAINER_NUM  (16)
 
 
-
+#define SEARCH_ANIM_START  (11)
+#define SEARCH_ANIM_END  (26)
 
 
 typedef enum
 {
-  PLT_NEGOOBJ,  
+  PLT_NEGOOBJ,
+  PLT_NEGOOBJ_MAIN,
   PLT_UNION,  
   PLT_MENUBAR,
   PLT_RESOURCE_MAX,
   CHAR_NEGOOBJ = PLT_RESOURCE_MAX,
+  CHAR_NEGOOBJ_MAIN,
   CHAR_UNION,
   CHAR_UNION1,
   CHAR_UNION2,
@@ -97,6 +100,7 @@ typedef enum
   CHAR_MENUBAR,
   CHAR_RESOURCE_MAX,
   ANM_NEGOOBJ = CHAR_RESOURCE_MAX,
+  ANM_NEGOOBJ_MAIN,
   ANM_UNION,
   ANM_UNION1,
   ANM_UNION2,
@@ -302,8 +306,11 @@ void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
 
   _ArrowRelease(pWork);
   GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_NEGOOBJ] );
+  GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_NEGOOBJ_MAIN] );
   GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_NEGOOBJ] );
+  GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_NEGOOBJ_MAIN] );
   GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_NEGOOBJ] );
+  GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_NEGOOBJ_MAIN] );
   GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_MENUBAR] );
   GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_MENUBAR] );
   GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_MENUBAR] );
@@ -331,6 +338,11 @@ void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
   
 
+}
+
+GFL_CLUNIT* GTSNEGO_DISP_GetCellUtil(GTSNEGO_DISP_WORK* pWork)
+{
+  return pWork->cellUnit;
 }
 
 
@@ -527,6 +539,22 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
 
 
     pWork->cellRes[ANM_NEGOOBJ] =
+      GFL_CLGRP_CELLANIM_Register(
+        p_handle , NARC_gtsnego_nego_obj_NCER, NARC_gtsnego_nego_obj_NANR , pWork->heapID  );
+
+
+
+    pWork->cellRes[CHAR_NEGOOBJ_MAIN] =
+      GFL_CLGRP_CGR_Register( p_handle , NARC_gtsnego_nego_obj_NCGR ,
+                              FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
+
+
+    pWork->cellRes[PLT_NEGOOBJ_MAIN] =
+      GFL_CLGRP_PLTT_RegisterEx(
+        p_handle ,NARC_gtsnego_nego_obj_NCLR , CLSYS_DRAW_MAIN , 0x20*_OBJPAL_NEGOOBJ_POS_MAIN, 0, _OBJPAL_NEGOOBJ_NUM_MAIN, pWork->heapID  );
+
+
+    pWork->cellRes[ANM_NEGOOBJ_MAIN] =
       GFL_CLGRP_CELLANIM_Register(
         p_handle , NARC_gtsnego_nego_obj_NCER, NARC_gtsnego_nego_obj_NANR , pWork->heapID  );
 
@@ -1416,19 +1444,35 @@ void GTSNEGO_DISP_ScrollChipDispMouse(GTSNEGO_DISP_WORK* pWork,int y,int max)
 
 
 
+
+static void _modeFlashCallback(u32 param, fx32 currentFrame )
+{
+  GTSNEGO_DISP_WORK* pWork = (GTSNEGO_DISP_WORK*)param;
+  {
+    u16 no = GFL_CLACT_WK_GetAnmSeq(pWork->SearchPeopleOAM);
+    no++;
+    if(no > SEARCH_ANIM_END){
+      no = SEARCH_ANIM_START;
+    }
+    GFL_CLACT_WK_SetAnmSeq(pWork->SearchPeopleOAM, no);
+  }
+}
+
+
+
 static void _SetSearchPeople(GTSNEGO_DISP_WORK* pWork)
 {
   GFL_CLWK_DATA cellInitData;
 
-  cellInitData.pos_x = 64;
-  cellInitData.pos_y = 128;
+  cellInitData.pos_x = 128;
+  cellInitData.pos_y = 64-8-4;
   cellInitData.anmseq =  27;
   cellInitData.softpri = 2;
   cellInitData.bgpri = 1;
   pWork->SearchBackOAM = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                              pWork->cellRes[CHAR_NEGOOBJ],
-                                              pWork->cellRes[PLT_NEGOOBJ],
-                                              pWork->cellRes[ANM_NEGOOBJ],
+                                              pWork->cellRes[CHAR_NEGOOBJ_MAIN],
+                                              pWork->cellRes[PLT_NEGOOBJ_MAIN],
+                                              pWork->cellRes[ANM_NEGOOBJ_MAIN],
                                               &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
   GFL_CLACT_WK_SetAutoAnmFlag( pWork->SearchBackOAM , TRUE );
   GFL_CLACT_WK_SetDrawEnable( pWork->SearchBackOAM, TRUE );
@@ -1436,13 +1480,22 @@ static void _SetSearchPeople(GTSNEGO_DISP_WORK* pWork)
   cellInitData.anmseq =  11;
   cellInitData.softpri = 1;
   pWork->SearchPeopleOAM = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                              pWork->cellRes[CHAR_NEGOOBJ],
-                                              pWork->cellRes[PLT_NEGOOBJ],
-                                              pWork->cellRes[ANM_NEGOOBJ],
+                                              pWork->cellRes[CHAR_NEGOOBJ_MAIN],
+                                              pWork->cellRes[PLT_NEGOOBJ_MAIN],
+                                              pWork->cellRes[ANM_NEGOOBJ_MAIN],
                                               &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
   GFL_CLACT_WK_SetAutoAnmFlag( pWork->SearchPeopleOAM , TRUE );
   GFL_CLACT_WK_SetDrawEnable( pWork->SearchPeopleOAM, TRUE );
 
+  {
+    GFL_CLWK_ANM_CALLBACK cbwk;
+
+    cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
+    cbwk.param = (u32)pWork;          // コールバックワーク
+    cbwk.p_func = _modeFlashCallback; // コールバック関数
+    GFL_CLACT_WK_StartAnmCallBack( pWork->SearchPeopleOAM, &cbwk );
+  }
+  
   GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
 }
 
@@ -1454,6 +1507,45 @@ static void _RemoveSearchPeople(GTSNEGO_DISP_WORK* pWork)
   GFL_CLACT_WK_Remove(pWork->SearchBackOAM);
   GFL_CLACT_WK_SetDrawEnable( pWork->SearchPeopleOAM, FALSE );
   GFL_CLACT_WK_Remove(pWork->SearchPeopleOAM);
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	サーチ完了時に画面に変更
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork)
+{
+  int i;
+  ARCHANDLE* p_handle;
+	{
+    p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
+
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_back_search3_NSCR,
+                                              GFL_BG_FRAME0_M, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
+                                              pWork->heapID);
+
+    GFL_ARC_CloseDataHandle(p_handle);
+
+    _SetSearchPeople( pWork);
+    
+    
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
+    pWork->SearchScroll=0;
+    pWork->bSearchScroll=TRUE;
+    
+	}
+
+ // G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BG3,15,9);
+
 }
 
 
@@ -1516,7 +1608,7 @@ void GTSNEGO_DISP_SearchPeopleDispSet(GTSNEGO_DISP_WORK* pWork)
 void GTSNEGO_DISP_SearchPeopleDispMain(GTSNEGO_DISP_WORK* pWork)
 {
   if(pWork->bSearchScroll){
-    GFL_BG_SetScroll(GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, pWork->SearchScroll/2 );
+    GFL_BG_SetScroll(GFL_BG_FRAME2_M, GFL_BG_SCROLL_Y_SET, pWork->SearchScroll );
     pWork->SearchScroll++;
   }
 }
