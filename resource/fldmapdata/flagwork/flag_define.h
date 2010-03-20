@@ -759,7 +759,7 @@
 #define FV_AMUSEMENT_TRAINER               735 /* 0x02df ライモン遊園地：観覧車トレーナー */
 #define FV_T01R0101_HANDSOME_MAMA          736 /* 0x02e0 自宅１階：ママの変装をしたハンサム */
 #define FV_C08_LEADERB_01                  737 /* 0x02e1 ソウリュウシティ：アイリス */
-		/* not used   738(0x02e2) */
+#define FV_D06R0201_PLASMA                 738 /* 0x02e2 電気洞窟内のプラズマ団したっぱ（視線トレーナー） */
 		/* not used   739(0x02e3) */
 		/* not used   740(0x02e4) */
 		/* not used   741(0x02e5) */
