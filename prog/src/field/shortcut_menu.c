@@ -108,7 +108,7 @@ enum
 #define LISTMOVE_START	(-192)
 #define LISTMOVE_END		(0)
 #define LISTMOVE_DIFF		(LISTMOVE_END-LISTMOVE_START)
-#define LISTMOVE_SYNC		(4)
+#define LISTMOVE_SYNC		(5)
 
 //-------------------------------------
 ///	スクロール
@@ -191,6 +191,8 @@ struct _SHORTCUTMENU_WORK
 	SHORTCUTMENU_INPUT	input;			//実行した入力 4
 	SHORTCUT_ID					shortcutID;	//選んだショートカットID 4
 	SHORTCUT_CURSOR			*p_cursor;	//カーソル 4
+
+  GFL_TCB             *p_scroll_tcb;
 };
 
 //=============================================================================
@@ -209,6 +211,9 @@ static u32 SCROLL_GetInput( const SCROLL_WORK *cp_wk );
 static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_wk, u32 param, u8 mode );
 static void Scroll_CreateList( SCROLL_WORK *p_wk, u16 list_bak, u16 cursor_bak, HEAPID heapID );
 static void Scroll_DeleteList( SCROLL_WORK *p_wk, u16 *p_list_bak, u16 *p_cursor_bak );
+
+
+static void Shortcut_ScrollTask( GFL_TCB *, void *p_wk_adrs );
 
 //=============================================================================
 /**
@@ -466,19 +471,16 @@ void SHORTCUTMENU_Main( SHORTCUTMENU_WORK *p_wk )
 	case MAINSEQ_OPEN_START:		//開く開始
     PMSND_PlaySE( SHORTCUTMENU_SND_SE_POPUP );
 		p_wk->cnt	=	0;
+    p_wk->p_scroll_tcb  = GFUser_VIntr_CreateTCB( Shortcut_ScrollTask, p_wk, 0);
 		p_wk->seq	= MAINSEQ_OPEN_WAIT;
 		break;
 
 	case MAINSEQ_OPEN_WAIT:		//開き待ち
-		{	
-			int scroll_y;
-			scroll_y	=	LISTMOVE_START + LISTMOVE_DIFF * p_wk->cnt / LISTMOVE_SYNC;
-			GFL_BG_SetScroll( BG_FRAME_SCROLL_M, GFL_BG_SCROLL_Y_SET, scroll_y );
-			if( p_wk->cnt ++ >= LISTMOVE_SYNC )
-			{	
-				p_wk->seq	= MAINSEQ_MAIN;
-			}
-		}
+    if( p_wk->cnt >= LISTMOVE_SYNC )
+    {	
+      GFL_TCB_DeleteTask( p_wk->p_scroll_tcb );
+      p_wk->seq	= MAINSEQ_MAIN;
+    }
 		break;
 
 	case MAINSEQ_MAIN:					//メイン
@@ -702,6 +704,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 			Scroll_DeleteList( p_wk, NULL, NULL );
 			Scroll_CreateList( p_wk, list, cursor, p_wk->heapID );
 
+      PMSND_PlaySE( SEQ_SE_SELECT1 );
 			is_loop	= TRUE;
 		}
 		else if( cursor_pos == max-1 && GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
@@ -709,6 +712,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 			Scroll_DeleteList( p_wk, NULL, NULL );
 			Scroll_CreateList( p_wk, 0, 0, p_wk->heapID );
 
+      PMSND_PlaySE( SEQ_SE_SELECT1 );
 			is_loop	= TRUE;
 		}
 	}
@@ -1075,4 +1079,27 @@ static void Scroll_DeleteList( SCROLL_WORK *p_wk, u16 *p_list_bak, u16 *p_cursor
 	{	
 		BmpMenuWork_ListDelete( p_wk->p_data );
 	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクロールTCB
+ *
+ *	@param	GFL_TCB * TCB
+ *	@param	*p_wk_adrs ワークアドレス
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static void Shortcut_ScrollTask( GFL_TCB *, void *p_wk_adrs )
+{ 
+  SHORTCUTMENU_WORK *p_wk = p_wk_adrs;
+
+  int scroll_y;
+  scroll_y	=	LISTMOVE_START + LISTMOVE_DIFF * p_wk->cnt / LISTMOVE_SYNC;
+  if( p_wk->cnt++ >= LISTMOVE_SYNC )
+  { 
+    scroll_y  = LISTMOVE_END;
+  }
+  GFL_BG_SetScroll( BG_FRAME_SCROLL_M, GFL_BG_SCROLL_Y_SET, scroll_y );
 }
