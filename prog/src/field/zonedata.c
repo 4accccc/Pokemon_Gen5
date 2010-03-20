@@ -616,6 +616,7 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
     return NARC_field_rail_setup_C03_bin;
   case ZONE_ID_H01:
     return NARC_field_rail_setup_H01_bin;
+  case ZONE_ID_C03P01:
   case ZONE_ID_C03P02:
     return NARC_field_rail_setup_C03P02_bin;
   case ZONE_ID_D09:
