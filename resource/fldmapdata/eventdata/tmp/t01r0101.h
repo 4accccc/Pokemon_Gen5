@@ -13,6 +13,7 @@
 #define T01R0101_MAMA_01                   0
 #define T01R0101_SUPPORT_01                1
 #define T01R0101_RIVAL_01                  2
+#define T01R0101_HANDSOME_MAMA             3
 
 #endif //ZONE_T01R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t01r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

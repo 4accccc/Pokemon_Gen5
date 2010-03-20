@@ -16,14 +16,29 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_scene_t01r0101_first_01		//ゲーム開始後、初めて１階に下りてきた時のイベント
+_EVENT_DATA    ev_scene_t01r0101_first_01		//ゲーム開始後、１階に下りてきた時のイベント
 _EVENT_DATA    ev_t01r0101_mother_01
-_EVENT_DATA    ev_t01r0101_gameover_recover //ゲームオーバー復帰時
+_EVENT_DATA    ev_t01r0101_gameover_recover		//ゲームオーバー復帰時
+_EVENT_DATA    ev_scene_t01r0101_handsome_01	//ゲームクリア後、１階に下りてきた時のイベント
+_EVENT_DATA    ev_init_t01r0101
 _EVENT_DATA_END
 
 
 //	！！！	イベントで　LOCALWORK15　を使用しています	！！！
 //	！！！	同マップ内での使用を禁止します				！！！
+
+
+/************************************************************/	
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START ev_init_t01r0101
+
+	//クリア後ハンサムイベント有効ならママの初期位置を変更
+	IF $WK_SCENE_T01R0101 == 2 THEN
+		_OBJ_POS_CHANGE( T01R0101_MAMA_01, 6, 0, 5, DIR_DOWN )
+	ENDIF
+
+INIT_EVENT_END
 
 
 /************************************************************/	
@@ -129,7 +144,6 @@ EVENT_START ev_scene_t01r0101_first_01
 
 	//ママ：ポケモンをもらって勝負してたのね
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_02, T01R0101_MAMA_01, POS_DR )
-	_BALLOONWIN_CLOSE()
 
 	//ママ：ポケモンを休ませないと
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_03, T01R0101_MAMA_01, POS_DR )
@@ -192,6 +206,10 @@ _ANIME_LABEL	anm_stay_walk_d
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_stay_walk_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 _ANIME_LABEL	anm_stay_walk_r
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -247,72 +265,70 @@ _ANIME_LABEL	anm_home_mama_walk_01
 EVENT_START ev_t01r0101_mother_01
 	_TALK_OBJ_START()
 	
-	//図鑑入手後かで分岐
-	IF FLAG_ON( SYS_FLAG_ZUKAN_GET ) THEN
-		//通常処理をコール（回復）
-		_CALL		ev_everyday
+	IF $LOCALWORK15 == 999 THEN
+		//回復済みなら一言メッセージ
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_07 )
 	
-	ELSE
-		//図鑑入手するまで
-
-		//アララギ博士によろしくね
-		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_04_01 )
-		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+	ELSIF $LOCALWORK15 == 333 THEN
+		//クリア後のハンサムイベント後なら一言メッセージ
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_end_08 )
 		
+	ELSE
+		//それ以外の時は、図鑑入手後かで分岐
+		IF FLAG_ON( SYS_FLAG_ZUKAN_GET ) && $LOCALWORK15 == 0 THEN
+			//ママの回復イベントへ
+			_CALL		ev_everyday
+		ELSE
+			//図鑑入手するまで
+
+			//アララギ博士によろしくね
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_04_01 )
+			
+		ENDIF
+	
 	ENDIF
 
 
 EVENT_END
 
 
-//ママ：通常処理
+//ママの回復イベント
 ev_everyday:
-	//回復済みチェック　ローカルワーク15を使用
-	IF $LOCALWORK15 == 999 THEN
-		//回復終了後なのでメッセージ表示のみ
-		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_07 )
+	_TALK_OBJ_START()
+
+	//シナリオ進行でメッセージ分岐
+	IF $WK_SCENE_R02 == 0 THEN
+		//ランニングシューズ入手前なら
+
+		//ふう！ お片づけはちょっと休憩
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_05 )
+		_MSGWIN_CLOSE()
+
+		_CALL	ev_kaifuku		//回復処理
+
+		//これであたなもポケモンも元気いっぱい！
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_06 )
 		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+		_MSGWIN_CLOSE()
+
 
 	ELSE
-		//回復処理
-		
-		//シナリオ進行でメッセージ分岐
-		IF $WK_SCENE_R02 == 0 THEN
-			//ランニングシューズ入手前なら
+		//ランニングシューズ入手後
 
-			//ふう！ お片づけはちょっと休憩
-			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_05 )
-			_MSGWIN_CLOSE()
+		//ポケモンは元気？
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_08 )
+		_MSGWIN_CLOSE()
 
-			_CALL	ev_kaifuku		//回復処理
+		_CALL	ev_kaifuku		//回復処理
 
-			//これであたなもポケモンも元気いっぱい！
-			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_06 )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-
-
-		ELSE
-			//ランニングシューズ入手後
-
-			//ポケモンは元気？
-			_PLAYER_NAME( 0 )
-			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_08 )
-			_MSGWIN_CLOSE()
-
-			_CALL	ev_kaifuku		//回復処理
-
-			//ランダムでメッセージ分岐（５パターン）
-			$SCWK_TEMP0 = msg_t01r0101_mama_09a
-			_GET_RND( SCWK_TEMP1, 5 )
-			$SCWK_TEMP0 += SCWK_TEMP1
-			_BALLOONWIN_TALKOBJ_MSG( SCWK_TEMP0 )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-
-		ENDIF
+		//ランダムでメッセージ分岐（５パターン）
+		$SCWK_TEMP0 = msg_t01r0101_mama_09a
+		_GET_RND( SCWK_TEMP1, 5 )
+		$SCWK_TEMP0 += SCWK_TEMP1
+		_BALLOONWIN_TALKOBJ_MSG( SCWK_TEMP0 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
 
 	ENDIF
 
@@ -335,7 +351,7 @@ _RET
 
 
 /************************************************************/	
-/*				ゲームオーバー復帰時	                    				*/
+/*                 ゲームオーバー復帰時                     */
 /************************************************************/
 EVENT_START ev_t01r0101_gameover_recover
 {
@@ -362,4 +378,315 @@ EVENT_START ev_t01r0101_gameover_recover
   _BALLOONWIN_CLOSE()
 }
 EVENT_END
+
+
+/************************************************************/	
+/*				クリア後：ハンサムイベント					*/
+/************************************************************/
+EVENT_START ev_scene_t01r0101_handsome_01
+	
+	//ママ：主人公に気づく
+	_OBJ_ANIME( T01R0101_MAMA_01, anm_clear_mama_look_01 )
+	_OBJ_ANIME_WAIT()
+	
+	_PLAYER_NAME( 0 )
+	_PLAINWIN_MSG_DOWN( msg_t01r0101_mama_end_01 )
+	_MSGWIN_CLOSE()
+	
+	//主人公：ママの前へ
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_clear_player_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//偽ママ：主人公をみて
+	_OBJ_ANIME( T01R0101_HANDSOME_MAMA, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//そうだね
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_01, T01R0101_HANDSOME_MAMA, POS_DR )
+	_MSGWIN_CLOSE()
+	
+	//ママ：偽ママを見て
+	_OBJ_ANIME( T01R0101_MAMA_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	//ああ こちらは…
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_end_02, T01R0101_MAMA_01, POS_UR )
+	_MSGWIN_CLOSE()
+	
+	//おっと へんそうしたまま
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_02, T01R0101_HANDSOME_MAMA, POS_DR )
+	_MSGWIN_CLOSE()
+	
+	//偽ママ：変装をとく
+	_OBJ_ANIME( T01R0101_HANDSOME_MAMA, anm_clear_handsome_change_01 )
+	_TIME_WAIT( 24 )
+	//ハンサム表示
+	_OBJ_ADD_EX( 6, 6, DIR_LEFT, MMDL_ID_EVENTOBJ_00, ICPO, MV_DMY )
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_handsome_change_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//偽ママ消す
+	_OBJ_DEL( T01R0101_HANDSOME_MAMA)
+	
+	_START_EVENT_BGM( SEQ_BGM_E_HANDSOME )	//イベントＢＧＭ開始
+	_TIME_WAIT( 16 )
+	
+	//わたしは 世界を
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ハンサム：一歩下がる
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_handome_move_00 )
+	_OBJ_ANIME_WAIT()
+	
+	//イッシュ地方で
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_04, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ハンサム：主人公をみて
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//ジムリーダーやキミの活躍で
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_05, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ハンサム：うろうろ
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_handome_move_01 )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	//だがしかし！
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_06, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ハンサム：主人公を見て
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+	
+	//そこでだ！
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_07, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	//いいえならループ
+	WHILE $SCWK_ANSWER == SCR_NO
+		//ハンサム：その場歩き
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_u )
+
+		//ゴホン！
+		_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_08, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+		_OBJ_ANIME_WAIT()
+
+		_YES_NO_WIN( SCWK_ANSWER )
+	ENDWHILE
+	
+	//おお！ありがたい！
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_09, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ハンサム：その場歩き
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_handome_move_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//すごいつりざお入手
+	_ITEM_EVENT_KEYWAIT( ITEM_SUGOITURIZAO, 1 )
+	
+	//ママ：その場歩き
+	_OBJ_ANIME( T01R0101_MAMA_01, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//それは…
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_end_03, T01R0101_MAMA_01, POS_UR )
+	_MSGWIN_CLOSE()
+	
+	//ハンサム：ママを見て
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_r )
+	_OBJ_ANIME_WAIT()
+	
+	//ええ！すごいつりざおです！
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_10, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//そのプラズマ団の
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_end_04, T01R0101_MAMA_01, POS_UR )
+	_MSGWIN_CLOSE()
+	
+	//ハンサム：ママの前へ
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_handome_move_03 )
+	_TIME_WAIT( 16 )
+//	_OBJ_ANIME( T01R0101_MAMA_01, anm_stay_walk_d )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
+	_OBJ_ANIME_WAIT()
+	
+	//なるほど
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_11, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//サブ：……
+	_TIME_WAIT( 16 )
+	_SUBWIN_MSG( msg_t01r0101_mama_end_05, 16, 6, 1 )
+	
+	//サブ：……
+	_TIME_WAIT( 16 )
+	_SUBWIN_MSG( msg_t01r0101_mama_end_06, 24, 10, 2 )
+	
+	_TIME_WAIT( 32 )
+	_SUBWIN_CLOSE( 1 )
+	_SUBWIN_CLOSE( 2 )
+	
+	//はあ……
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_mama_end_07, T01R0101_MAMA_01, POS_UR )
+	_MSGWIN_CLOSE()
+	
+	//ハンサム：主人公をみて
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//では～～くん！たのんだよ！
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0101_icpo_end_12, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ハンサム：去る
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_handome_goaway_01 )
+	_TIME_WAIT( 8 )
+	//主人公：見送る
+//	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	//ハンサム消す
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	_SE_WAIT()
+	
+	_END_EVENT_BGM()	//イベントＢＧＭ終了
+	
+	//========================================//
+	//イベント無効
+	$WK_SCENE_T01R0101 = 3
+	
+	//偽ママ非表示
+	_FLAG_SET( FV_T01R0101_HANDSOME_MAMA )
+	
+	//イベント後の会話分岐用
+	$LOCALWORK15 = 333
+	
+	//========================================//
+
+
+EVENT_END
+
+
+//--------------------------------------------------------------------
+//ママ：主人公に気づく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_mama_look_01
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：ママの前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_player_move_01
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//偽ママ：変装をとく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_handsome_change_01
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_WAIT_1F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_VANISH_ON,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_clear_handsome_change_02
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//ハンサム：一歩下へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_handome_move_00
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ハンサム：うろうろ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_handome_move_01
+	_ANIME_DATA	AC_WALK_L_16F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ハンサム：主人公前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_handome_move_02
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ハンサム：ママの前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_handome_move_03
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ママ：後ずさり（未使用）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_mama_move_01
+	_ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ハンサム：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_handome_goaway_01
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
 
