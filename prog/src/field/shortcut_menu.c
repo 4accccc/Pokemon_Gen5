@@ -108,7 +108,7 @@ enum
 #define LISTMOVE_START	(-192)
 #define LISTMOVE_END		(0)
 #define LISTMOVE_DIFF		(LISTMOVE_END-LISTMOVE_START)
-#define LISTMOVE_SYNC		(5)
+#define LISTMOVE_SYNC		(2)
 
 //-------------------------------------
 ///	スクロール
@@ -141,7 +141,7 @@ enum
 ///	ショートカットメニューサウンド
 //=====================================
 #define SHORTCUTMENU_SND_SE_DECIDE  (SEQ_SE_DECIDE1)
-#define SHORTCUTMENU_SND_SE_POPUP  (SEQ_SE_SYS_03)
+#define SHORTCUTMENU_SND_SE_POPUP  (SEQ_SE_DECIDE1)
 
 
 
@@ -371,7 +371,7 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( GAMEDATA *p_gamedata, SHORTCUTMENU_MODE mo
 
 
 	//レジスタ設定
-	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1, GX_BLEND_PLANEMASK_BG0, 14, 8 );
+	G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1, GX_BLEND_PLANEMASK_BG0, 12, 4 );
 
 	//モード別設定
 	switch( mode )
@@ -728,12 +728,14 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 		}
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
 		{
-			//Yはキャンセルになりました
-			//u16 pos;
-			//BmpMenuList_DirectPosGet( p_wk->p_list, &pos );
-			//select	= BmpMenuList_PosParamGet( p_wk->p_list, pos );
-
+			//Yはキャンセルになりました -> 決定に戻りました
+#if 1
+			u16 pos;
+			BmpMenuList_DirectPosGet( p_wk->p_list, &pos );
+			select	= BmpMenuList_PosParamGet( p_wk->p_list, pos );
+#else
 			select	= BMPMENULIST_CANCEL;
+#endif
 		}
 		else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT && p_wk->mode == SCROLL_MOVE_INSERT  )
 		{
