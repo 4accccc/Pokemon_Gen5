@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-19T12:12:52"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-19T18:49:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -345,6 +345,14 @@
 ここで　ひかりを　はなて</language>
 		<language name="JPN_KANJI" width="256">王に　理解を　示すのならば
 ここで　光を　放て</language>
+	</row>
+
+	<row id="msg_d20r0601_sys_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">てんじょうに　あなが　あいている……
+うえの　かいに　すすみますか？</language>
+		<language name="JPN_KANJI" width="256">天井に　穴が　空いている……
+上の階に　進みますか？</language>
 	</row>
 
 	<flowchart-group-list>
