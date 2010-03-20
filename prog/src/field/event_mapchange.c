@@ -1741,6 +1741,8 @@ GMEVENT* DEBUG_EVENT_ChangeToNextMap( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldma
 //=====================================
 typedef struct {
   GAMESYS_WORK * gsys;
+  GAMEDATA * gamedata;
+  LOCATION loc_req;
 } MAPCHANGE_GAMEOVER;
 
 
@@ -1752,13 +1754,16 @@ typedef struct {
 static void MAPCHG_GameOver( GAMESYS_WORK * gsys )
 {
   LOCATION loc_req;
-  GAMEDATA * gamedata = GAMESYSTEM_GetGameData(gsys);
+  GAMEDATA* gamedata = GAMESYSTEM_GetGameData( gsys );
   u16 warp_id = GAMEDATA_GetWarpID( gamedata );
+
   //復活ポイントを取得
   WARPDATA_GetRevivalLocation( warp_id, &loc_req );
+
+  //エスケープポイントを再設定
   {
     LOCATION esc;
-    //エスケープポイントを再設定
+    u16 warp_id = GAMEDATA_GetWarpID( gamedata );
     WARPDATA_GetEscapeLocation( warp_id, &esc );
     GAMEDATA_SetEscapeLocation( gamedata, &esc );
   }
@@ -1800,13 +1805,23 @@ static GMEVENT_RESULT GMEVENT_GameOver(GMEVENT * event, int * seq, void *work)
     (*seq) ++;
     break;
 
+  // BGM 再生開始
+  case 1: 
+    {
+      u32 soundIdx = FSND_GetFieldBGM( p_wk->gamedata, p_wk->loc_req.zone_id );
+      GMEVENT_CallEvent( event, 
+          EVENT_FSND_ChangeBGM( p_wk->gsys, soundIdx, FSND_FADE_NONE, FSND_FADE_SHORT ) );
+    }
+    (*seq) ++;
+    break;
+
   // フィールドマップ開始
-  case 1:
+  case 2:
     GMEVENT_CallEvent( event, EVENT_FieldOpen_FieldProcOnly(p_wk->gsys) );
     (*seq) ++;
     break;
 
-  case 2:
+  case 3:
 		return GMEVENT_RES_FINISH;
   }
 	return GMEVENT_RES_CONTINUE;
@@ -1825,6 +1840,13 @@ GMEVENT * EVENT_CallGameOver( GAMESYS_WORK * gsys )
   event = GMEVENT_Create( gsys, NULL, GMEVENT_GameOver, sizeof(MAPCHANGE_GAMEOVER) );
   p_wk = GMEVENT_GetEventWork( event );
   p_wk->gsys = gsys;
+  p_wk->gamedata = GAMESYSTEM_GetGameData( gsys );
+
+  //復活ポイントを取得
+  {
+    u16 warp_id = GAMEDATA_GetWarpID( p_wk->gamedata );
+    WARPDATA_GetRevivalLocation( warp_id, &p_wk->loc_req );
+  }
 
   return event;
 }

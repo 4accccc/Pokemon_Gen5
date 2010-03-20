@@ -40,6 +40,7 @@ extern GMEVENT* EVENT_FSND_PushPlayNextBGM( GAMESYS_WORK* gameSystem, u32 soundI
 extern GMEVENT* EVENT_FSND_PushPlayJingleBGM( GAMESYS_WORK* gameSystem, u32 soundIdx );
 extern GMEVENT* EVENT_FSND_ChangeBGM( GAMESYS_WORK* gameSystem, u32 soundIdx, 
                                       u16 fadeOutFrame, u16 fadeInFrame );
+extern GMEVENT* EVENT_FSND_ResetBGM( GAMESYS_WORK* gameSystem, u16 fadeOutFrame );
 
 // ÉxÅ[ÉXBGMÇëﬁîÇµ, êÌì¨ã»Ççƒê∂Ç∑ÇÈ
 extern GMEVENT* EVENT_FSND_PushPlayBattleBGM( GAMESYS_WORK* gameSystem, u32 soundIdx ); 

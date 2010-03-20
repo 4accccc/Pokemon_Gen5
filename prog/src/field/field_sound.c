@@ -537,6 +537,69 @@ GMEVENT* EVENT_FSND_ChangeBGM( GAMESYS_WORK* gameSystem, u32 soundIdx,
 
 //---------------------------------------------------------------------------------
 /**
+ * @brief BGM リセット イベント処理関数
+ */
+//---------------------------------------------------------------------------------
+static GMEVENT_RESULT ResetBGMEvent( GMEVENT* event, int* seq, void* wk )
+{
+  FSND_EVWORK* work       = (FSND_EVWORK*)wk;
+  FIELD_SOUND* fieldSound = work->fieldSound;
+
+  switch( *seq ) {
+  // フェードアウトリクエスト発行
+  case 0:
+    FIELD_SOUND_RegisterRequest_FADE_OUT( fieldSound, work->fadeOutFrame );
+    (*seq)++;
+    break;
+
+  // 全リクエストの消化待ち
+  case 1:
+    if( FIELD_SOUND_HaveRequest( fieldSound ) == FALSE ) { (*seq)++; }
+    break;
+
+  // FIELD_SOUNDをリセット
+  case 2:
+    FIELD_SOUND_Reset( fieldSound );
+    (*seq)++;
+    break;
+
+  // イベント終了
+  case 3:
+    return GMEVENT_RES_FINISH;
+  } 
+  return GMEVENT_RES_CONTINUE;
+}
+//--------------------------------------------------------------------------------- 
+/**
+ * @brief BGMを停止し, 退避中の全てのBGMを破棄する
+ *
+ * @param gameSystem
+ * @param fadeOutFrame 再生中のBGMのフェードアウト フレーム数
+ *
+ * @return BGMリセットイベント
+ */
+//--------------------------------------------------------------------------------- 
+GMEVENT* EVENT_FSND_ResetBGM( GAMESYS_WORK* gameSystem, u16 fadeOutFrame )
+{
+  GMEVENT* event;
+  FSND_EVWORK* work;
+  GAMEDATA* gdata;
+
+  gdata = GAMESYSTEM_GetGameData( gameSystem );
+
+  // イベントを生成
+  event = GMEVENT_Create( gameSystem, NULL, ResetBGMEvent, sizeof(FSND_EVWORK) );
+
+  // イベントワークを初期化
+  work = GMEVENT_GetEventWork( event );
+  work->fieldSound   = GAMEDATA_GetFieldSound( gdata );
+  work->fadeOutFrame = fadeOutFrame;
+
+  return event;
+}
+
+//---------------------------------------------------------------------------------
+/**
  * @brief ベースBGM 退避イベント処理関数
  */
 //---------------------------------------------------------------------------------
@@ -610,8 +673,7 @@ static GMEVENT_RESULT PopPlayBGM_fromBattleEvent( GMEVENT* event, int* seq, void
   work = (FSND_EVWORK*)wk;
   fieldSound = work->fieldSound;
 
-  switch( *seq )
-  {
+  switch( *seq ) {
   case 0:  // リクエスト発行
     FIELD_SOUND_RegisterRequest_POP( fieldSound, work->fadeOutFrame, work->fadeInFrame );
     (*seq)++;
@@ -661,8 +723,7 @@ static GMEVENT_RESULT WaitBGMFadeEvent( GMEVENT* event, int* seq, void* wk )
   work = (FSND_EVWORK*)wk;
   fieldSound = work->fieldSound;
 
-  switch( *seq )
-  {
+  switch( *seq ) {
   case 0:  // フェード完了待ち
     if( FIELD_SOUND_IsBGMFade(fieldSound) == FALSE ){ (*seq)++; }
     break;

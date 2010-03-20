@@ -22,8 +22,8 @@ typedef enum {
   FSND_PUSHCOUNT_MAX = FSND_PUSHCOUNT_OVER-1  // 最大退避数
 } FSND_PUSHCOUNT;
 
-// リクエスト
-typedef enum{
+// BGM リクエスト
+typedef enum {
   FSND_BGM_REQUEST_NONE,        // リクエストなし
   FSND_BGM_REQUEST_FADE_IN,     // BGM フェードイン
   FSND_BGM_REQUEST_FADE_OUT,    // BGM フェードアウト
@@ -32,7 +32,7 @@ typedef enum{
   FSND_BGM_REQUEST_CHANGE,      // BGM 変更
   FSND_BGM_REQUEST_STAND_BY,    // BGM 再生準備
   FSND_BGM_REQUEST_FORCE_PLAY,  // 即時再生
-  FSND_BGM_REQUEST_NUM
+  FSND_BGM_REQUEST_NUM          // 総数
 } FSND_BGM_REQUEST;
 
 

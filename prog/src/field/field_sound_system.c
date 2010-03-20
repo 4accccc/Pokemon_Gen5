@@ -260,6 +260,7 @@ FIELD_SOUND* FIELD_SOUND_Create( HEAPID heapID )
   InitFieldSoundSystem( fieldSound );
   fieldSound->playerVolumeFader = PLAYER_VOLUME_FADER_Create( heapID, PLAYER_BGM );
   fieldSound->ringToneSys = RINGTONE_SYS_Create( heapID, fieldSound->playerVolumeFader );
+
   //常駐判定用コールバックを登録
   PMSND_SetPlayableCallBack( checkStaticEntrySE );
 
@@ -795,26 +796,23 @@ static void InitFieldSoundSystem( FIELD_SOUND* fieldSound )
   fieldSound->currentBGM   = BGM_NONE;
   fieldSound->requestBGM   = BGM_NONE;
   fieldSound->loadBGM      = BGM_NONE;
+  fieldSound->loadSeq      = 0;
   fieldSound->fadeInFrame  = 0;
   fieldSound->fadeOutFrame = 0;
   fieldSound->pushCount    = FSND_PUSHCOUNT_NONE;
 
-  for( i=0; i<FSND_PUSHCOUNT_MAX; i++ )
-  {
+  for( i=0; i<FSND_PUSHCOUNT_MAX; i++ ) {
     fieldSound->pushBGM[i] = BGM_NONE; 
   }
 
-  for( i=0; i<REQUEST_QUEUE_SIZE; i++ )
-  {
+  for( i=0; i<REQUEST_QUEUE_SIZE; i++ ) {
     fieldSound->requestData[i].request = FSND_BGM_REQUEST_NONE;
-  }
-
+  } 
   fieldSound->requestHeadPos = 0;
   fieldSound->requestTailPos = 0;
 
   // 環境音SE管理ワークの初期化
-  for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ )
-  {
+  for( i=0; i<FSND_ENVSE_PLAYER_MAX; i++ ) {
     fieldSound->envse.envse_tbl[i] = FSND_ENVSE_NONE;
   }
   fieldSound->envse.pause = FALSE;
@@ -833,6 +831,7 @@ static void ResetFieldSoundSystem( FIELD_SOUND* fieldSound )
   {
     PopBGM( fieldSound );
   }
+  PMSND_StopBGM();
   InitFieldSoundSystem( fieldSound );
 }
 
