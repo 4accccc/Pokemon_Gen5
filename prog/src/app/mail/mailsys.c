@@ -100,6 +100,7 @@ GFL_PROC_RESULT MailSysProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *my
     //無効ナンバーが格納されているので、上位ワークから取得する
     wk->dat->design = param->designNo; //デザインNo適用
   }
+  
   if(wk->dat->design >= MAIL_DESIGN_MAX){
     wk->dat->design = 0;
   }
@@ -188,20 +189,28 @@ GFL_PROC_RESULT MailSysProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *my
     return GFL_PROC_RES_FINISH;
   case WORDCASE_INIT:
     GFL_OVERLAY_Load( FS_OVERLAY_ID(pmsinput));
-//    GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
-    wk->app_wk = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT,
-                                    NULL,TRUE,param->savedata,wk->heapID);
 
-    //初期データセット
-    if(PMSDAT_IsEnabled(&(wk->dat->msg[wk->dat->cntNo]))){
-      //既に入力文がある
+    // 文章固定モード呼び出し
+    if(wk->dat->pms_condition[wk->dat->cntNo]==1){
       PMSDAT_Copy(&(wk->tmpPms),&(wk->dat->msg[wk->dat->cntNo]));
+      wk->app_wk = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT,
+                                      &(wk->tmpPms),TRUE,param->savedata,wk->heapID);
     }else{
-      //まだ空
-      PMSDAT_Init(&(wk->tmpPms),PMS_TYPE_MAIL); 
+      // 自由文章モード呼び出し（分かりにくいが、PARAM_CreateをNULLで行った後に
+      // SetInitializeDataSentenceをすると自由文章に、Createの時にPMSを設定していると固定文章になる
+      wk->app_wk = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT,
+                                      NULL,TRUE,param->savedata,wk->heapID);
+  
+      //初期データセット
+      if(PMSDAT_IsEnabled(&(wk->dat->msg[wk->dat->cntNo]))){
+        //既に入力文がある
+        PMSDAT_Copy(&(wk->tmpPms),&(wk->dat->msg[wk->dat->cntNo]));
+      }else{
+        //まだ空
+        PMSDAT_Init(&(wk->tmpPms),PMS_TYPE_MAIL); 
+      }
+      PMSI_PARAM_SetInitializeDataSentence(wk->app_wk,&(wk->tmpPms));
     }
-    PMSI_PARAM_SetInitializeDataSentence(wk->app_wk,&(wk->tmpPms));
-    
     GFL_PROC_LOCAL_CallProc( wk->localProcSys, NO_OVERLAY_ID, &PMSProcData,  wk->app_wk );
     *seq     = WORDCASE_WAIT;
     break;
@@ -215,8 +224,6 @@ GFL_PROC_RESULT MailSysProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *my
       }
       PMSI_PARAM_Delete(wk->app_wk);
       GFL_OVERLAY_Unload( FS_OVERLAY_ID(pmsinput));
-  //    GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));    
-  
       *seq = MAILCASE_INIT; 
     }
     break;

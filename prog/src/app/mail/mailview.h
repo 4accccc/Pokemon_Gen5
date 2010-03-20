@@ -41,6 +41,7 @@ typedef struct _MAIL_TMP_DATA{
   STRBUF  *name;
   MAIL_ICON icon[MAILDAT_ICONMAX];
   PMS_DATA  msg[MAILDAT_MSGMAX];
+  u8  pms_condition[3];             // 簡易会話入力タイプを指定（0:自由 1:定型文なので文章変更不可 2:入力不可)
 }MAIL_TMP_DATA;
 
 extern GFL_PROC_RESULT MailViewProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk );

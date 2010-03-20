@@ -123,7 +123,7 @@ struct _PROCLINK_WORK
 
   EVENT_PROCLINK_CALL_TYPE  now_type;     //現在選択されているプロセス
   EVENT_PROCLINK_CALL_TYPE  pre_type;     //一つ前の選択されているプロセス（初期ならば↑と同じ）
-  EVENT_PROCLINK_CALL_TYPE  next_type;    //次のロセス
+  EVENT_PROCLINK_CALL_TYPE  next_type;    //次のプロセス
   RETURNFUNC_RESULT         result;       //終了方法
 
   GMEVENT                   *event;       //イベント
@@ -134,11 +134,11 @@ struct _PROCLINK_WORK
   PROCLINK_CALLBACK_WORK    callback; //イベント用にメニューなどを閉じたり開いたりする関数のコールバック構造体
 
   //アプリ間で引継ぎが必要なパラメータ
-  ITEMCHECK_WORK            icwk;     //アイテム使用時に検査する情報が含まれている
-  FLDSKILL_CHECK_WORK       scwk;     //フィールドスキルが使用可能がどうかの情報
-  u8                        sel_poke; //メール画面で引き継げないので用意
-  u8                        item_no;  //メール画面で引き継げないので用意
-  PROCLINK_TAKEOVER_MODE    mode;     //メール画面で引き継げないので用意
+  ITEMCHECK_WORK            icwk;     // アイテム使用時に検査する情報が含まれている
+  FLDSKILL_CHECK_WORK       scwk;     // フィールドスキルが使用可能がどうかの情報
+  u8                        sel_poke; // メール画面で引き継げないので用意
+  u8                        item_no;  // メール画面で引き継げないので用意
+  PROCLINK_TAKEOVER_MODE    mode;     // メール画面で引き継げないので用意
   BOOL                      is_shortcut;  //ポケリスト画面の初期化で設定し、破棄で使用
 };
 
@@ -1248,17 +1248,17 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeStatus(PROCLINK_WORK* wk,void* para
 //----------------------------------------------------------------------------
 static BAG_MODE GetBagMode( GAMESYS_WORK * gsys )
 {
-	u16	zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
+  u16 zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
 
-	// ユニオンルーム
-	if( ZONEDATA_IsUnionRoom(zone_id) == TRUE ){
-		return BAG_MODE_UNION;
-	}
-	// コロシアム
-	if( ZONEDATA_IsColosseum(zone_id) == TRUE ){
-		return BAG_MODE_COLOSSEUM;
-	}
-	return BAG_MODE_FIELD;
+  // ユニオンルーム
+  if( ZONEDATA_IsUnionRoom(zone_id) == TRUE ){
+    return BAG_MODE_UNION;
+  }
+  // コロシアム
+  if( ZONEDATA_IsColosseum(zone_id) == TRUE ){
+    return BAG_MODE_COLOSSEUM;
+  }
+  return BAG_MODE_FIELD;
 }
 
 //----------------------------------------------------------------------------
@@ -1762,11 +1762,12 @@ static void * FMenuCallProc_Mail(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CAL
       OS_TPrintf("MailPos[%d]\n",plistData->ret_sel);
       mailParam = MailSys_GetWorkViewPoke( gmData, PokeParty_GetMemberPointer(party,plistData->ret_sel), HEAPID_PROC );
     }
-
   }else{
+    BAG_PARAM* pBag = (BAG_PARAM*)pre_param_adrs;
+    MORI_Printf("proclink mail design no =%d\ item = %dn",ITEM_GetMailDesign( pBag->ret_item ), pBag->ret_item);
     wk->mode = PROCLINK_MODE_LIST_TO_MAIL_VIEW;
     OS_TPrintf("メールデザイン見るだけ\n");
-    mailParam = MailSys_GetWorkViewPrev( gmData, wk->item_no-ITEM_HAZIMETEMEERU, HEAPID_PROC );
+    mailParam = MailSys_GetWorkViewPrev( gmData, ITEM_GetMailDesign(pBag->ret_item), HEAPID_PROC );
   }
 
   return mailParam;

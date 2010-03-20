@@ -48,7 +48,10 @@
 #include "mailview_def.h"
 #include "arc/mail_gra.naix"
 #include "msg/msg_mailview.h"
+#include "msg/msg_pmss_peculiar.h"
+
 #include "mail_snd_def.h"
+
 
 
 #define MAILD_CHAR_S  (NARC_mail_gra_mail_000_lz_ncgr)
@@ -206,10 +209,131 @@ static void MailView_PmsExit( MAIL_VIEW_DAT *wk );
 static void MailView_PalAnmInit( MAIL_VIEW_DAT *wk );
 
 
+//=================================================
+// 定型文定義
+//=================================================
+
+#define NO_SENETENSE  ( 0xff )  // 文章無し
+#define DENY_INPUT    ( 0xfe )  // 入力禁止
+
+// メールテンプレートテーブル（0xffを文章無しとする）
+static const u8 templete_tbl[][3]={
+
+  // はじめてメール
+  { 
+    pmss_peculiar_01,  // はじめまして
+    pmss_peculiar_02,  // ●●が大好きな　〇〇トレーナーです
+    pmss_peculiar_03,  // こんど●●しようね　これからもよろしく
+  },
+
+  // だいすきメール
+  { 
+    pmss_peculiar_04,  // ●●だいすき
+    pmss_peculiar_05,  // ホントさいこう！　やっぱり●●な
+    pmss_peculiar_06,  // きみのすきな　●●はなに？
+  },
+
+  // おさそいメール
+  { 
+    pmss_peculiar_07,  // どうも！●●ってしってる？
+    pmss_peculiar_08,  // とっても●●で　●●だよ！
+    pmss_peculiar_09,  // こんどいっしょに　●●しようよ！
+  },
+
+  // かんしゃメール
+  { 
+    pmss_peculiar_10,  // ●●してくれて　ありがとう！
+    pmss_peculiar_11,  // また●●しよう！　●●
+    DENY_INPUT,        // 
+  },
+
+  // しつもんメール
+  { 
+    pmss_peculiar_12,  // きみは●●って　どうおもう？
+    pmss_peculiar_13,  // あれは　●●だと　おもうんだよねー
+    pmss_peculiar_14,  // きになるよねー　うーん●●
+  },
+
+  // おすすめメール
+  { 
+    pmss_peculiar_15,  // ●●って　しってますか？
+    pmss_peculiar_16,  // なんとこの●●　●●なんです！
+    pmss_peculiar_17,  // ぜひ　おためしあれ！●●オススメです！
+  },
+
+  // おかえしメール
+  { 
+    pmss_peculiar_18,  // ●●してくれてありがとう！
+    pmss_peculiar_19,  // ●●は　●●だよねー
+    pmss_peculiar_20,  // だから●●です　よろしく！
+  },
+
+  // ブリッジメール１
+  {
+    NO_SENETENSE,
+    NO_SENETENSE,
+    NO_SENETENSE,
+  },
+  // ブリッジメール２
+  {
+    NO_SENETENSE,
+    NO_SENETENSE,
+    NO_SENETENSE,
+  },
+  // ブリッジメール３
+  {
+    NO_SENETENSE,
+    NO_SENETENSE,
+    NO_SENETENSE,
+  },
+  // ブリッジメール４
+  {
+    NO_SENETENSE,
+    NO_SENETENSE,
+    NO_SENETENSE,
+  },
+  // ブリッジメール５
+  {
+    NO_SENETENSE,
+    NO_SENETENSE,
+    NO_SENETENSE,
+  },
+
+};
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 定型文をセットする
+ *
+ * @param   wk    
+ * @param   tp    
+ */
+//----------------------------------------------------------------------------------
+static void _init_pms_word( MAIL_VIEW_DAT *wk, MAIL_TMP_DATA* tp )
+{
+  int i;
+  OS_Printf("メールデザインNO=%d\n", tp->design);
+  for(i=0;i<MAILDAT_MSGMAX;i++){
+    if(PMSDAT_IsEnabled( &tp->msg[i] )==FALSE && templete_tbl[tp->design][i]!=NO_SENETENSE){
+      PMSDAT_InitAndSetSentence( &tp->msg[i], PMS_TYPE_PECULIAR, templete_tbl[tp->design][i] );
+    }
+    
+    // 入力文章タイプを設定
+    switch(templete_tbl[tp->design][i]){
+    case NO_SENETENSE:    // 自由入力
+      tp->pms_condition[i] = 0;
+      break;
+//    case DENY_INPUT:    //入力禁止
+//      break;
+    default:              //定型文
+      tp->pms_condition[i] = 1;
+    }
+  }
+}
 //====================================================================
 //プロセス定義
 //====================================================================
-
 //=============================================================================================
 /**
  * @brief   メール描画呼び出し　初期化
@@ -224,7 +348,6 @@ static void MailView_PalAnmInit( MAIL_VIEW_DAT *wk );
 //=============================================================================================
 GFL_PROC_RESULT MailViewProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
-  MAIL_TMP_DATA* tp;
   MAIL_VIEW_DAT* wk;
 
   //ヒープ作成
@@ -236,14 +359,15 @@ GFL_PROC_RESULT MailViewProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *m
   wk->heapID = HEAPID_MAILVIEW;
 
   //パラメータ引継ぎ
-  wk->dat    = pwk;
-  wk->inMode = wk->mode = wk->dat->val; //描画タイプ
-  wk->line   = wk->dat->cntNo;
-  wk->side   = wk->dat->flags;
-  wk->oldCol = wk->nowCol = wk->line;
+  wk->dat      = pwk;
+  wk->inMode   = wk->mode = wk->dat->val; //描画タイプ
+  wk->line     = wk->dat->cntNo;
+  wk->side     = wk->dat->flags;
+  wk->oldCol   = wk->nowCol = wk->line;
   wk->dat->val = VIEW_END_CANCEL;
-
   wk->msg_spd  = MSGSPEED_GetWait();
+
+  _init_pms_word( wk, wk->dat );
 
   wk->font = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr ,
                                     GFL_FONT_LOADTYPE_FILE , FALSE , wk->heapID );
@@ -386,7 +510,7 @@ static int MailViewMain(MAIL_VIEW_DAT* wk)
   
       if(keyin[wk->mode](wk)==TRUE){
         wk->seq++;
-        PaletteFadeReq( wk->palAnm, PF_BIT_MAIN_ALL, 0xFFFF,3,0,16,0x0000, GFUser_VIntr_GetTCBSYS());
+        PaletteFadeReq( wk->palAnm, PF_BIT_MAIN_ALL, 0xFFFF,-1,0,16,0x0000, GFUser_VIntr_GetTCBSYS());
       }
     }
     PMS_DRAW_Main( wk->pms_draw_work );
@@ -1121,11 +1245,12 @@ static void MailView_PmsInit( MAIL_VIEW_DAT *wk )
   
   wk->pmsPrintque = PRINTSYS_QUE_Create( wk->heapID );
   wk->pmsClunit   = GFL_CLACT_UNIT_Create( PMS_WORD_CLACT_MAX, 1, wk->heapID );
-//  GFL_CLACT_UNIT_SetDefaultRend( wk->clUnit );
 
+  // 簡易会話描画システム初期化
   wk->pms_draw_work = PMS_DRAW_Init( wk->pmsClunit, CLSYS_DRAW_MAIN, 
                                      wk->pmsPrintque, wk->font, 0, 3, wk->heapID );
-  // PMS_DRAW_OBJ_PLTT_NUM
+  // 描画背景色番号変更
+  PMS_DRAW_SetNullColorPallet( wk->pms_draw_work, 0 );
 }
 
 //----------------------------------------------------------------------------------
@@ -1552,7 +1677,7 @@ static void MailView_MsgWrite(MAIL_VIEW_DAT* wk)
     if(!PMSDAT_IsEnabled(&wk->dat->msg[i])){
       continue;
     }
-//  @TODO 新簡易会話ライブラリを使用して描画する
+
     PMS_DRAW_Print( wk->pms_draw_work, wk->win[WIN_M01+i], &wk->dat->msg[i], i );
 
   }
