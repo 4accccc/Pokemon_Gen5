@@ -694,7 +694,6 @@ static BtlWeather btlparam_GetBattleWeather( FIELDMAP_WORK* fieldWork )
     return BTL_WEATHER_SHINE;
   case WEATHER_NO_RAIN:
   case WEATHER_NO_STORM:
-  case WEATHER_NO_SPARK:
     return BTL_WEATHER_RAIN;
   case WEATHER_NO_SNOW:
   case WEATHER_NO_SNOWSTORM:

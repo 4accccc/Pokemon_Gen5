@@ -42,20 +42,16 @@ typedef u16 WEATHER_NO;
 #define		WEATHER_NO_SNOW				(1)				// 雪		
 #define		WEATHER_NO_RAIN				(2)				// 雨		
 #define		WEATHER_NO_STORM			(3)				// 砂嵐		
-#define		WEATHER_NO_SPARK			(4)				// 雷雨
-#define		WEATHER_NO_SNOWSTORM		(5)				// 吹雪
-#define		WEATHER_NO_ARARE			(6)				// 吹雪
-#define		WEATHER_NO_RAIKAMI			(7)				// ライカミ
-#define		WEATHER_NO_KAZAKAMI			(8)				// カザカミ
-#define		WEATHER_NO_DIAMONDDUST	(9)				// ダイヤモンドダスト
-#define		WEATHER_NO_MIST	        (10)		// 霧
-#define		WEATHER_NO_EVENING_RAIN	(11)		// 夕立
-#define		WEATHER_NO_PALACE_WHITE_MIST	(12)		// パレス　White用霧
-#define		WEATHER_NO_PALACE_BLACK_MIST	(13)		// パレス　Black用霧
+#define		WEATHER_NO_SNOWSTORM		(4)				// 吹雪
+#define		WEATHER_NO_ARARE			(5)				// 吹雪
+#define		WEATHER_NO_RAIKAMI			(6)				// ライカミ
+#define		WEATHER_NO_KAZAKAMI			(7)				// カザカミ
+#define		WEATHER_NO_DIAMONDDUST	(8)				// ダイヤモンドダスト
+#define		WEATHER_NO_MIST	        (9)		// 霧
+#define		WEATHER_NO_PALACE_WHITE_MIST	(10)		// パレス　White用霧
+#define		WEATHER_NO_PALACE_BLACK_MIST	(11)		// パレス　Black用霧
 
-#define		WEATHER_NO_MIRAGE			(14)				// 蜃気楼
-
-#define		WEATHER_NO_NUM				(15)			// 天気数
+#define		WEATHER_NO_NUM				(12)			// 天気数
 
 	// 戦闘フィールド状態していよう
 	// バトルファクトリーのルーレット施設で

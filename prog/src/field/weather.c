@@ -199,12 +199,6 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 		FS_OVERLAY_ID(field_weather_storm)
 	},
 
-	// 雷雨
-	{
-		&c_WEATHER_TASK_DATA_SPARKRAIN,
-		FS_OVERLAY_ID(field_weather_rain)
-	},
-
 	// 吹雪
 	{
 		&c_WEATHER_TASK_DATA_SNOWSTORM,
@@ -241,11 +235,6 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 		FS_OVERLAY_ID(field_weather_mist)
 	},
 
-	// 雷雨
-	{
-		&c_WEATHER_TASK_DATA_EVENING_RAIN,
-		FS_OVERLAY_ID(field_weather_rain)
-	},
 
 	// パレスホワイト霧
 	{
@@ -259,11 +248,28 @@ static const FIELD_WEATHER_DATA sc_FIELD_WEATHER_DATA[] = {
 		FS_OVERLAY_ID(field_weather_mist)
 	},
 
+
+
+
+  /*未使用
+	// 夕立
+	{
+		&c_WEATHER_TASK_DATA_EVENING_RAIN,
+		FS_OVERLAY_ID(field_weather_rain)
+	},
+
+	// 雷雨
+	{
+		&c_WEATHER_TASK_DATA_SPARKRAIN,
+		FS_OVERLAY_ID(field_weather_rain)
+	},
+
 	// 蜃気楼
 	{
 		&c_WEATHER_TASK_DATA_MIRAGE,
 		FS_OVERLAY_ID(field_weather_storm)
 	},
+  */
 
 };
 
