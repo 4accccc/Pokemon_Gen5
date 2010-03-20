@@ -3,7 +3,7 @@
  * @file  scr_offset_id.h
  * @bfief  スクリプトIDのオフセット定義
  * @author  tamada GAMEFREAK inc.
- * @date  2010 03/20 (Sat) 17:04
+ * @date  2010 03/20 (Sat) 17:52
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -144,6 +144,9 @@
 
 #define ID_SYMBOL_ENCOUNT_SCR_OFFSET     (10480) //シンボルエンカウント（パレスの森）用スクリプト
 #define ID_SYMBOL_ENCOUNT_SCR_OFFSET_END (10499)
+
+#define ID_WHEEL_SCR_OFFSET              (10500) //観覧車対戦イベントスクリプト
+#define ID_WHEEL_SCR_OFFSET_END          (10509)
 
 #define ID_DEBUG_SCR_OFFSET              (12000) //デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
 #define ID_DEBUG_SCR_OFFSET_END          (12199)

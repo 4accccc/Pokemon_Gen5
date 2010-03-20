@@ -129,6 +129,9 @@ appraisal_scr_def.h: appraisal_scr.ev
 symbol_encount_scr_def.h: symbol_encount_scr.ev
 	$(EV_DEF) symbol_encount_scr.ev $(SCR_OFFS_ID_H)
 
+wheel_scr_def.h: wheel_scr.ev
+	$(EV_DEF) wheel_scr.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 
