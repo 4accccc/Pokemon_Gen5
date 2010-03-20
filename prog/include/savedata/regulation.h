@@ -12,6 +12,7 @@
 #include <gflib.h>
 #include "item/shooter_item.h"
 #include "poke_tool/pokeparty.h" //RegulationView_SetEazy ÇÃÇΩÇﬂÇæÇØÇ…åƒÇÒÇ≈Ç‹Ç∑Åd
+#include "net/dreamworld_netdata.h"
 //============================================================================================
 //============================================================================================
 

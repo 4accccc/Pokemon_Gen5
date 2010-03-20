@@ -30,6 +30,8 @@
 #include "font/font.naix"
 #include "print/str_tool.h"
 
+#include "app/app_printsys_common.h"
+
 #include "system/bmp_menuwork.h"
 #include "system/bmp_winframe.h"
 #include "system/bmp_menulist.h"
@@ -38,6 +40,8 @@
 
 #include "savedata/wifilist.h"
 #include "savedata/system_data.h"
+#include "savedata/regulation.h"
+#include "savedata/battle_box_save.h"
 
 //#include "msg/msg_gtsnego.h"
 #include "msg/msg_wifi_system.h"
@@ -180,7 +184,7 @@ static void _changeStateDebug(WIFILOGIN_WORK* pWork,StateFunc* state, int line);
 static void _profileIDCheck(WIFILOGIN_WORK* pWork);
 static void _modeSvlGetStart(WIFILOGIN_WORK* pWork);
 static void _modeSvlGetMain(WIFILOGIN_WORK* pWork);
-
+static void _modeErrorRetry(WIFILOGIN_WORK* pWork);
 
 
 #if PM_DEBUG
@@ -373,7 +377,7 @@ static void _exitEnd2( WIFILOGIN_WORK* pWork)
   if( !WIFILOGIN_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork) ){
     return;
   }
-  if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)){
+  if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
     _CHANGE_STATE(pWork, _modeFadeStart);
   }
 }
@@ -418,7 +422,8 @@ static void _CheckAndEnd( WIFILOGIN_WORK *pWork )
     pWork->timer--;
     return;
   }
-  if( GFL_UI_KEY_GetTrg() ){
+  if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
+    pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
     WIFILOGIN_MESSAGE_InfoMessageDisp(pWork->pMessageWork, dwc_message_0011);
     _CHANGE_STATE(pWork, _exitExiting);
 
@@ -436,6 +441,15 @@ static void _CheckAndEnd( WIFILOGIN_WORK *pWork )
 
 static void _retryInit(WIFILOGIN_WORK* pWork)
 {
+  if(pWork->timer > 0){
+    pWork->timer--;
+    return;
+  }
+  if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
+    WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
+    WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0019);
+    _CHANGE_STATE(pWork,_modeErrorRetry);
+  }
 }
 
 
@@ -515,7 +529,7 @@ static void _errorDisp(WIFILOGIN_WORK* pWork)
 
 static void _saveEndWait(WIFILOGIN_WORK* pWork)
 {
-  if(GFL_UI_KEY_GetTrg()  || GFL_UI_TP_GetTrg()){
+  if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_TitleDisp(pWork->pMessageWork, dwc_title_0000);
     if(pWork->dbw->pSvl){
@@ -724,6 +738,14 @@ static void _modeProfileWait(WIFILOGIN_WORK* pWork)
   _CHANGE_STATE(pWork,_modeProfileWait2);
 }
 
+static void _modeErrorRetry(WIFILOGIN_WORK* pWork)
+{
+  if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
+    WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
+    pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_INFO);
+    _CHANGE_STATE(pWork,_modeLoginWait2);
+  }
+}
 
 
 static void _modeLoginWait(WIFILOGIN_WORK* pWork)
@@ -735,7 +757,42 @@ static void _modeLoginWait(WIFILOGIN_WORK* pWork)
   _CHANGE_STATE(pWork,_modeLoginWait2);
 }
 
+static void _modeDifferDSWait7(WIFILOGIN_WORK* pWork)
+{
+  if(WIFILOGIN_MESSAGE_YesNoIsFinish(pWork->pSelectWork)){
+    int selectno = WIFILOGIN_MESSAGE_YesNoGetCursorPos(pWork->pSelectWork);
 
+    if(selectno==0){
+
+      REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( GAMEDATA_GetSaveControlWork(pWork->gamedata) );
+      REGULATION_CARDDATA *p_reg_card = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_WIFI );
+      BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( GAMEDATA_GetSaveControlWork(pWork->gamedata) );
+
+      //リタイヤ扱いにしてバトルボックスのロック解除
+      BATTLE_BOX_SAVE_OffLockFlg( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI );
+      Regulation_SetCardParam( p_reg_card, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_RETIRE );
+
+      pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
+      WifiList_Init(pWork->pList);
+      _CHANGE_STATE(pWork,_connectionStart);
+    }
+    else{
+      pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
+      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+      _CHANGE_STATE(pWork,_modeFadeStart);
+    }
+    WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+    WIFILOGIN_MESSAGE_TitleDisp(pWork->pMessageWork, dwc_title_0000);
+    WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
+    pWork->pSelectWork=NULL;
+  }
+}
+
+static void _modeDifferDSWait6(WIFILOGIN_WORK* pWork)
+{
+  pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
+  _CHANGE_STATE(pWork,_modeDifferDSWait7);
+}
 
 static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
 {
@@ -743,9 +800,26 @@ static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
     int selectno = WIFILOGIN_MESSAGE_YesNoGetCursorPos(pWork->pSelectWork);
 
     if(selectno==0){
-      pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
-      WifiList_Init(pWork->pList);
-      _CHANGE_STATE(pWork,_connectionStart);
+
+      REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( GAMEDATA_GetSaveControlWork(pWork->gamedata) );
+      REGULATION_CARDDATA *p_reg_card = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_WIFI );
+      u32 cupNo   = Regulation_GetCardParam( p_reg_card, REGULATION_CARD_CUPNO );
+      u32 status  = Regulation_GetCardParam( p_reg_card, REGULATION_CARD_STATUS );
+
+      if( cupNo != 0 && (status == DREAM_WORLD_MATCHUP_SIGNUP || status ==DREAM_WORLD_MATCHUP_ENTRY ) )
+      { 
+
+        //WIFI大会に参加していたらもう一度確認
+        WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
+        WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0020);
+        _CHANGE_STATE(pWork,_modeDifferDSWait6);
+      }
+      else
+      { 
+        pWork->dbw->result  = WIFILOGIN_RESULT_LOGIN;
+        WifiList_Init(pWork->pList);
+        _CHANGE_STATE(pWork,_connectionStart);
+      }
     }
     else{
       pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
@@ -767,7 +841,6 @@ static void _modeDifferDSWait4(WIFILOGIN_WORK* pWork)
   pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
   _CHANGE_STATE(pWork,_modeDifferDSWait5);
 }
-
 
 static void _modeDifferDSWait3(WIFILOGIN_WORK* pWork)
 {
@@ -805,7 +878,7 @@ static void _modeDifferDSWait2(WIFILOGIN_WORK* pWork)
 
 static void _modeDifferDSWait(WIFILOGIN_WORK* pWork)
 {
-  if(GFL_UI_TP_GetTrg() || GFL_UI_KEY_GetTrg()){
+  if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0006);
     _CHANGE_STATE(pWork,_modeDifferDSWait2);
@@ -820,7 +893,13 @@ static void _modeDifferDSWait(WIFILOGIN_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _profileIDCheck(WIFILOGIN_WORK* pWork)
 {
-  if(!DS_SYSTEM_IsAgreeEULA()){  ///EULA検査
+  if(!DS_SYSTEM_IsAvailableWireless() ) //無線通信不可
+  { 
+    WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
+    WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0021);
+    _CHANGE_STATE(pWork,_exitEnd2);
+  }
+  else if(!DS_SYSTEM_IsAgreeEULA()){  ///EULA検査
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0018);
     _CHANGE_STATE(pWork,_exitEnd2);
@@ -838,6 +917,12 @@ static void _profileIDCheck(WIFILOGIN_WORK* pWork)
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0005);
     _CHANGE_STATE(pWork,_modeDifferDSWait);
+  }
+  else if( pWork->dbw->mode == WIFILOGIN_MODE_ERROR ) //エラーで再びログインへ
+  { 
+    WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
+    WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0019);
+    _CHANGE_STATE(pWork,_modeErrorRetry);
   }
   else  //普通の接続
   {
@@ -968,7 +1053,6 @@ static void _modeReporting(WIFILOGIN_WORK* pWork)
     }
   }
 }
-
 
 //------------------------------------------------------------------------------
 /**
