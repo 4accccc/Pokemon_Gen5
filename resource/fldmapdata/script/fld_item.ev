@@ -190,6 +190,9 @@ _EVENT_DATA ev_fld_item_117
 _EVENT_DATA ev_fld_item_118
 _EVENT_DATA ev_fld_item_119
 _EVENT_DATA ev_fld_item_120
+_EVENT_DATA ev_fld_item_176
+_EVENT_DATA ev_fld_item_177
+_EVENT_DATA ev_fld_item_178
 _EVENT_DATA ev_fld_item_225
 _EVENT_DATA ev_fld_item_226
 _EVENT_DATA ev_fld_item_227
@@ -1446,6 +1449,27 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_120
   _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d10r0101 X=408 Y=120 ITEM=ちいさなキノコ FLAG=176
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_176
+  _FLD_ITEM_EVENT ITEM_TIISANAKINOKO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d10r0101 X=408 Y=120 ITEM=ちいさなキノコ FLAG=177
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_177
+  _FLD_ITEM_EVENT ITEM_TIISANAKINOKO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d10r0101 X=408 Y=120 ITEM=かおるキノコ FLAG=178
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_178
+  _FLD_ITEM_EVENT ITEM_KAORUKINOKO,1
 EVENT_END
 
 //--------------------------------------------------------------
