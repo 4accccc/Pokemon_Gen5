@@ -305,10 +305,10 @@
 #define FE_C03R0401_GIRL2_TALK             289 /* 0x0121 ヒウンシティビル：映画関連ゾロアイベントの少女と会話した */
 #define FE_C04R0501_ITEMGET_01             290 /* 0x0122 ライモンシティ汎用ビル：アイテム入手フラグ（わざマシン：かいりき） */
 #define FE_R16R0201_BACKPACKER_TALK        291 /* 0x0123 まよいの森：ゾロアークイベントの青年と話したフラグ */
-		/* not used   292(0x0124) */
-		/* not used   293(0x0125) */
-		/* not used   294(0x0126) */
-		/* not used   295(0x0127) */
+#define FE_R05R0101_APPRAISAL_TALK         292 /* 0x0124 ５番道路トレーラーハウス：グルメ鑑定士 */
+#define FE_C07PC0101_APPRAISAL_TALK        293 /* 0x0125 セッカシティＰＣ：鉱石鑑定士 */
+#define FE_T04R0101_APPRAISAL_TALK         294 /* 0x0126 サザナミタウン：財宝鑑定士 */
+#define FE_C03R0801_HINT_TALK              295 /* 0x0127 遊覧船内：ヒントおやじ */
 		/* not used   296(0x0128) */
 		/* not used   297(0x0129) */
 		/* not used   298(0x012a) */
