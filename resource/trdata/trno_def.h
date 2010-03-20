@@ -536,7 +536,15 @@
 #define	TRID_VETERANW_07   ( 523 ) 
 #define	TRID_MADAM_05   ( 524 ) 
 #define	TRID_GENTLE_05   ( 525 ) 
-#define TRID_MAX  ( 526 )
+#define	TRID_SCIENTISTM_12   ( 526 ) 
+#define	TRID_BADRIDER_04   ( 527 ) 
+#define	TRID_BACKPACKERM_15   ( 528 ) 
+#define	TRID_SCHOOLB_10   ( 529 ) 
+#define	TRID_CHILDCARE_04   ( 530 ) 
+#define	TRID_RANGERW_10   ( 531 ) 
+#define	TRID_RANGERM_10   ( 532 ) 
+#define	TRID_FISHING_11   ( 533 ) 
+#define TRID_MAX  ( 534 )
 
 #ifndef __ASM_NO_DEF_  //Ç±ÇÍà»ç~ÇÕÉAÉZÉìÉuÉâÇ≈ÇÕñ≥éã
 typedef  int TrainerID;
