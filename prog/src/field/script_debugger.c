@@ -18,6 +18,7 @@
 //#include "debug/mcs_readfile.h"
 
 #ifdef  PM_DEBUG
+#include "debug/mcs_mode.h"
 
 //============================================================================================
 //============================================================================================
@@ -27,7 +28,8 @@ static BOOL checkMCSEnable( void )
 {
   if( OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER) )
   {
-    //if ( GFL_MCS_CheckLink( GFL_MCS_CATEGORY_ID ) == FALSE ) return FALSE;
+    if (MCS_USEMODE_Get() != MCS_USEMODE_SCRDEBUGGER ) return FALSE;
+
     return NNS_McsIsServerConnect();
   }
   return FALSE;

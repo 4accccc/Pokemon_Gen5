@@ -99,6 +99,7 @@ void * GF_MCS_FILE_ReadAlloc( const char * path, HEAPID heapID, u32 buf_size )
 	if(mcsResidentFlag == TRUE){ return FALSE; }
 #endif
   // 読み込み用オープン
+  OS_TPrintf( "ファイル(%s)オープン...\n", path );
   errCode = NNS_McsOpenFile(
     &infoRead,
     path, // ファイル名

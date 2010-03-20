@@ -28,6 +28,7 @@
 #include "sound/pm_sndsys.h"  //PMSND_PlaySystemSE
 
 #include "debug/gf_mcs.h"
+#include "debug/mcs_mode.h"
 //======================================================================
 //  define
 //======================================================================
@@ -178,6 +179,7 @@ static BOOL TESTMODE_ITEM_ChangeRTC( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_ChangeMusicalMenu( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_ConnectMCS( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_ScriptDebugger( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_DebugFight( TESTMODE_WORK *work , const int idx );
 
 //------------------------------------------------------------------------
@@ -213,15 +215,15 @@ static BOOL TESTMODE_ITEM_DebugFight( TESTMODE_WORK *work , const int idx );
 #elif defined DEBUG_ONLY_FOR_sounduser
   #define QuickSelectFunc   TESTMODE_ITEM_SelectFuncSogabe
 #elif defined DEBUG_ONLY_FOR_matsumiya
-  #define QuickSelectFunc   TESTMODE_ITEM_ConnectMCS
+  #define QuickSelectFunc   TESTMODE_ITEM_ScriptDebugger
 #elif defined DEBUG_ONLY_FOR_masafumi_saitou
-  #define QuickSelectFunc   TESTMODE_ITEM_ConnectMCS
+  #define QuickSelectFunc   TESTMODE_ITEM_ScriptDebugger
 #elif defined DEBUG_ONLY_FOR_suginaka_katsunori
-  #define QuickSelectFunc   TESTMODE_ITEM_ConnectMCS
+  #define QuickSelectFunc   TESTMODE_ITEM_ScriptDebugger
 #elif defined DEBUG_ONLY_FOR_mizuguchi_mai || defined DEBUG_ONLY_FOR_mai_ando
-  #define QuickSelectFunc   TESTMODE_ITEM_ConnectMCS
+  #define QuickSelectFunc   TESTMODE_ITEM_ScriptDebugger
 #elif defined DEBUG_ONLY_FOR_murakami_naoto
-  #define QuickSelectFunc   TESTMODE_ITEM_ConnectMCS
+  #define QuickSelectFunc   TESTMODE_ITEM_ScriptDebugger
 
 
 #endif
@@ -242,6 +244,7 @@ static TESTMODE_MENU_LIST topMenu[] =
   {L"SOUND"               ,TESTMODE_ITEM_SelectFuncSound },
   {L"ミュージカル"        ,TESTMODE_ITEM_ChangeMusicalMenu },
   {L"MCS常駐接続"         ,TESTMODE_ITEM_ConnectMCS },
+  {L"スクリプトデバッガ"  ,TESTMODE_ITEM_ScriptDebugger },
   {L"デバッグバトル"      ,TESTMODE_ITEM_DebugFight },
 
   //個人
@@ -1008,16 +1011,18 @@ static BOOL TESTMODE_ITEM_SelectFuncSound( TESTMODE_WORK *work , const int idx )
 }
 
 //MCS接続
-extern void PM_MCS_EnableMcsRecv( void );
-#ifdef PM_DEBUG
-extern BOOL mcsResidentFlag;
-#endif
 static BOOL TESTMODE_ITEM_ConnectMCS( TESTMODE_WORK *work , const int idx )
 {
   GFL_MCS_Open();
-#ifdef PM_DEBUG
-	mcsResidentFlag = TRUE;
-#endif
+  MCS_USEMODE_Set( MCS_USEMODE_RESIDENT );
+  TESTMODE_COMMAND_ChangeMenu( work , topMenu , NELEMS(topMenu) );
+  return TRUE;
+}
+extern BOOL SCRDEBUGGER_Boot();
+static BOOL TESTMODE_ITEM_ScriptDebugger( TESTMODE_WORK *work , const int idx )
+{
+  SCRDEBUGGER_Boot();
+  MCS_USEMODE_Set( MCS_USEMODE_SCRDEBUGGER );
   TESTMODE_COMMAND_ChangeMenu( work , topMenu , NELEMS(topMenu) );
   return TRUE;
 }
