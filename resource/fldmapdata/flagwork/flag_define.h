@@ -304,7 +304,7 @@
 #define FE_AWARD_NATIONAL                  288 /* 0x0120 ディレクター表彰：全国図鑑完成を表彰された */
 #define FE_C03R0401_GIRL2_TALK             289 /* 0x0121 ヒウンシティビル：映画関連ゾロアイベントの少女と会話した */
 #define FE_C04R0501_ITEMGET_01             290 /* 0x0122 ライモンシティ汎用ビル：アイテム入手フラグ（わざマシン：かいりき） */
-		/* not used   291(0x0123) */
+#define FE_R16R0201_BACKPACKER_TALK        291 /* 0x0123 まよいの森：ゾロアークイベントの青年と話したフラグ */
 		/* not used   292(0x0124) */
 		/* not used   293(0x0125) */
 		/* not used   294(0x0126) */
