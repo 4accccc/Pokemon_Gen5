@@ -227,6 +227,12 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     KAGAYA_Printf( "BSUBWAY_TOOL() cmd type BSWSUB_COMM : cmd No %d\n",
         com_id - BSWSUB_COMM_START_NO );
   }
+  else if(
+      com_id >= BSWSUB_DEBUG_START_NO && com_id < BSWSUB_DEBUG_END_NO )
+  {
+    KAGAYA_Printf( "BSUBWAY_TOOL() cmd type BSWSUB_DEBUG : cmd No %d\n",
+        com_id - BSWSUB_DEBUG_START_NO );
+  }
   else
   {
     GF_ASSERT( 0 );
@@ -758,7 +764,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       return VMCMD_RESULT_SUSPEND;
     }
 #endif
-
+    
 #ifndef DEBUG_BSW_BTL_SKIP
     SCRIPT_CallEvent(
         sc, BSUBWAY_EVENT_TrainerBattle(bsw_scr,gsys,fieldmap) );
@@ -1114,6 +1120,24 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     default:
       GF_ASSERT( 0 );
       *ret_wk = BSWAY_COMM_IRC_RESULT_EXIT;
+    }
+    break;
+  //DEBUG 選択ポケモン強制セット
+  case BSWSUB_DEBUG_SET_SELECT_POKE:
+    {
+      u16  i = 0;
+      const POKEPARTY *party;
+      POKEMON_PARAM *pp;
+      party = BSUBWAY_SCRWORK_GetPokePartyUse( bsw_scr );
+    
+      for( i = 0; i < bsw_scr->member_num; i++ ){ //ポケモン選択の手持ちNo
+        bsw_scr->pokelist_select_num[i] = i + 1;
+        bsw_scr->member[i] = bsw_scr->pokelist_select_num[i] - 1;
+        pp = PokeParty_GetMemberPointer(
+            (POKEPARTY*)party, bsw_scr->member[i] );
+        bsw_scr->mem_poke[i] = PP_Get( pp, ID_PARA_monsno, NULL );  
+        bsw_scr->mem_item[i] = PP_Get( pp, ID_PARA_item, NULL );  
+      }
     }
     break;
   //----ERROR
@@ -1660,10 +1684,21 @@ void BSUBWAY_SCRWORK_DebugCreateWork( GAMESYS_WORK *gsys, u16 mode )
   {
     int i;
     for( i = 0;  i < bsw_scr->member_num; i++ ){
-      bsw_scr->pokelist_select_num[i] = i;
+      bsw_scr->pokelist_select_num[i] = i + 1;
     }
     bsw_scr->pokelist_return_mode = PL_RET_NORMAL;
     bsw_scr->pokelist_result_select = PL_SEL_POS_POKE1;
+  }
+  
+  //メンバーロード
+  {
+    BSUBWAY_SCRWORK_GetEntryPoke( bsw_scr, gsys );
+  }
+
+  //aiマルチ
+  if( mode == BSWAY_MODE_MULTI || mode == BSWAY_MODE_S_MULTI ){
+    bsw_scr->partner = 0;
+    BSUBWAY_SCRWORK_ChoiceBtlSeven( bsw_scr );
   }
   
   //対戦トレーナー抽選
@@ -1688,6 +1723,74 @@ void BSUBWAY_SCRWORK_DebugCreateWork( GAMESYS_WORK *gsys, u16 mode )
     flag &= ~BSW_DEBUG_FLAG_AUTO; //オートは切っておく
   }
 }
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　ワーク　7戦状態に
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_DebugFight7( GAMESYS_WORK *gsys )
+{
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
+  GF_ASSERT( bsw_scr != NULL );
+  
+  BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, 6 );
+  BSUBWAY_SCOREDATA_SetStageNo( bsw_scr->scoreData, bsw_scr->play_mode, 0 );
+  BSUBWAY_SCOREDATA_SetRenshou( bsw_scr->scoreData, bsw_scr->play_mode, 6 );
+  
+  //対戦トレーナー抽選
+  BSUBWAY_SCRWORK_SetBtlTrainerNo( bsw_scr );
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　ワーク　２１戦状態に
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_DebugFight21( GAMESYS_WORK *gsys )
+{
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
+  GF_ASSERT( bsw_scr != NULL );
+  
+  BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, 6 );
+  BSUBWAY_SCOREDATA_SetStageNo( bsw_scr->scoreData, bsw_scr->play_mode, 2 );
+  BSUBWAY_SCOREDATA_SetRenshou( bsw_scr->scoreData, bsw_scr->play_mode, (7*2+6) );
+  
+  //対戦トレーナー抽選
+  BSUBWAY_SCRWORK_SetBtlTrainerNo( bsw_scr );
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　フラグ取得
+ */
+//--------------------------------------------------------------
+u8 BSUBWAY_SCRWORK_DebugGetFlag( GAMESYS_WORK *gsys )
+{
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+  BSUBWAY_SCOREDATA *scoreData = SaveControl_DataPtrGet(
+      save, GMDATA_ID_BSUBWAY_SCOREDATA );
+  u8 flag = BSUBWAY_SCOREDATA_DEBUG_GetFlag( scoreData );
+  return( flag );
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　フラグ設定
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_DebugSetFlag( GAMESYS_WORK *gsys, u8 flag )
+{
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+  BSUBWAY_SCOREDATA *scoreData = SaveControl_DataPtrGet(
+      save, GMDATA_ID_BSUBWAY_SCOREDATA );
+  BSUBWAY_SCOREDATA_DEBUG_SetFlag( scoreData, flag );
+}
+
 //----
 #endif
 //----

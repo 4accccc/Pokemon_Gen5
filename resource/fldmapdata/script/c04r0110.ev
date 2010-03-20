@@ -313,9 +313,21 @@ _ANIME_LABEL  anm_player_in_continue_multi2
 //--------------------------------------------------------------
 sub_train_battle:
 {
+  DEFINE_LOCAL debug
   DEFINE_LOCAL play_mode
   DEFINE_LOCAL win_lose
-
+  
+  _BSUBWAY_TOOL( BSWTOOL_DEBUG_CHK_FLAG, BSW_DEBUG_FLAG_BTL_SKIP, BSW_NULL, debug )
+  
+  IF $debug == TRUE THEN
+    _BLACK_OUT()
+    _DISP_FADE_END_CHECK()
+    _BLACK_IN()
+    _DISP_FADE_END_CHECK()
+    _CALL sub_train_battle_win
+    _RET
+  ENDIF
+  
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   //戦闘録画データ存在チェック呼び出し
@@ -495,7 +507,7 @@ _ANIME_LABEL  anm_train_battle_win_clear_multi_trainer0
 
 _ANIME_LABEL  anm_train_battle_win_clear_multi_trainer1
   _ANIME_DATA  AC_WAIT_4F,1
-  _ANIME_DATA  AC_WALK_U_8F,2
+  _ANIME_DATA  AC_WALK_U_8F,1
   _ANIME_DATA  AC_STAY_WALK_D_8F,1
   _ANIME_DATA  ACMD_END,0
   

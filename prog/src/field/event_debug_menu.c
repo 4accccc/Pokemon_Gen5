@@ -5072,6 +5072,8 @@ static GMEVENT_RESULT debugMenuMakeUNData( GMEVENT *p_event, int *p_seq, void *p
 //======================================================================
 //  デバッグメニュー　バトルサブウェイ
 //======================================================================
+#include "../../../resource/fldmapdata/script/bsubway_scr_def.h"
+
 //--------------------------------------------------------------
 /// DEBUG_BSUBWAY_EVENT_WORK
 //--------------------------------------------------------------
@@ -5131,12 +5133,12 @@ enum
   DEBUG_BSWAY_AUTO_S_SINGLE,
   DEBUG_BSWAY_AUTO_S_DOUBLE,
   DEBUG_BSWAY_AUTO_S_MULTI,
-  DEBUG_BSWAY_BTL_SINGLE_6,
-  DEBUG_BSWAY_BTL_DOUBLE_6,
-  DEBUG_BSWAY_BTL_MULTI_6,
-  DEBUG_BSWAY_BTL_SINGLE_20,
-  DEBUG_BSWAY_BTL_DOUBLE_20,
-  DEBUG_BSWAY_BTL_MULTI_20,
+  DEBUG_BSWAY_BTL_SINGLE_7,
+  DEBUG_BSWAY_BTL_DOUBLE_7,
+  DEBUG_BSWAY_BTL_MULTI_7,
+  DEBUG_BSWAY_BTL_SINGLE_21,
+  DEBUG_BSWAY_BTL_DOUBLE_21,
+  DEBUG_BSWAY_BTL_MULTI_21,
   DEBUG_BSWAY_SET_REGU_OFF,
   DEBUG_BSWAY_SET_BTL_SKIP,
 };
@@ -5167,13 +5169,12 @@ static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
   { DEBUG_FIELD_BSW_14, (void*)DEBUG_BSWAY_AUTO_S_SINGLE},
   { DEBUG_FIELD_BSW_15, (void*)DEBUG_BSWAY_AUTO_S_DOUBLE},
   { DEBUG_FIELD_BSW_16, (void*)DEBUG_BSWAY_AUTO_S_MULTI},
-  { DEBUG_FIELD_BSW_17, (void*)DEBUG_BSWAY_BTL_SINGLE_6},
-  { DEBUG_FIELD_BSW_18, (void*)DEBUG_BSWAY_BTL_DOUBLE_6},
-  { DEBUG_FIELD_BSW_19, (void*)DEBUG_BSWAY_BTL_MULTI_6},
-  { DEBUG_FIELD_BSW_20, (void*)DEBUG_BSWAY_BTL_SINGLE_20},
-  { DEBUG_FIELD_BSW_21, (void*)DEBUG_BSWAY_BTL_DOUBLE_20},
-  { DEBUG_FIELD_BSW_22, (void*)DEBUG_BSWAY_BTL_MULTI_20},
-  { DEBUG_FIELD_BSW_23, (void*)DEBUG_BSWAY_BTL_MULTI_20},
+  { DEBUG_FIELD_BSW_17, (void*)DEBUG_BSWAY_BTL_SINGLE_7},
+  { DEBUG_FIELD_BSW_18, (void*)DEBUG_BSWAY_BTL_DOUBLE_7},
+  { DEBUG_FIELD_BSW_19, (void*)DEBUG_BSWAY_BTL_MULTI_7},
+  { DEBUG_FIELD_BSW_20, (void*)DEBUG_BSWAY_BTL_SINGLE_21},
+  { DEBUG_FIELD_BSW_21, (void*)DEBUG_BSWAY_BTL_DOUBLE_21},
+  { DEBUG_FIELD_BSW_22, (void*)DEBUG_BSWAY_BTL_MULTI_21},
 };
 
 #define DEBUG_BSUBWAY_LIST_MAX ( NELEMS(DATA_BSubwayMenuList) )
@@ -5183,10 +5184,17 @@ static const DEBUG_MENU_INITIALIZER DebugBSubwayMenuData = {
   DEBUG_BSUBWAY_LIST_MAX,
   DATA_BSubwayMenuList,
   &DATA_DebugMenuList_BSubway,
-  1, 1, 15, 12,
+  1, 1, 20, 12,
   NULL,
   NULL
 };
+
+static void debug_bsw_SetAuto( GAMESYS_WORK *gsys )
+{
+  u8 flag = BSUBWAY_SCRWORK_DebugGetFlag( gsys );
+  flag |= BSW_DEBUG_FLAG_AUTO;
+  BSUBWAY_SCRWORK_DebugSetFlag( gsys, flag );
+}
 
 //--------------------------------------------------------------
 /**
@@ -5201,7 +5209,7 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
     GMEVENT *event, int *seq, void *wk )
 {
   DEBUG_BSUBWAY_EVENT_WORK  *work = wk;
-
+  
   switch( (*seq) ){
   case 0:
     work->menuFunc = DEBUGFLDMENU_Init(
@@ -5287,84 +5295,94 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
         break;
       case DEBUG_BSWAY_AUTO_SINGLE: //シングルオート戦闘
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );
-        param = ZONE_ID_C04R0110;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
-        break;
+        debug_bsw_SetAuto( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
       case DEBUG_BSWAY_AUTO_DOUBLE: //ダブルオート戦闘
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_DOUBLE );
-        param = ZONE_ID_C04R0110;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
-        break;
+        debug_bsw_SetAuto( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
       case DEBUG_BSWAY_AUTO_MULTI: //マルチオート戦闘
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_MULTI );
-        param = ZONE_ID_C04R0110;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
-        break;
+        debug_bsw_SetAuto( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
       case DEBUG_BSWAY_AUTO_S_SINGLE: //Sシングルオート戦闘
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_SINGLE );
-        param = ZONE_ID_C04R0110;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
-        break;
+        debug_bsw_SetAuto( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
       case DEBUG_BSWAY_AUTO_S_DOUBLE: //Sダブルオート戦闘
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_DOUBLE );
-        param = ZONE_ID_C04R0110;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
-        break;
+        debug_bsw_SetAuto( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
       case DEBUG_BSWAY_AUTO_S_MULTI: //Sマルチオート戦闘
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_MULTI );
-        param = ZONE_ID_C04R0110;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
-        break;
-      case DEBUG_BSWAY_BTL_SINGLE_6: //シングル６戦から
+        debug_bsw_SetAuto( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
+      case DEBUG_BSWAY_BTL_SINGLE_7: //シングル７戦から
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );
-        param = ZONE_ID_C04R0110;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
-        break;
-      case DEBUG_BSWAY_BTL_DOUBLE_6: //ダブル６戦から
+        BSUBWAY_SCRWORK_DebugFight7( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
+      case DEBUG_BSWAY_BTL_DOUBLE_7: //ダブル７戦から
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_DOUBLE );
-        param = ZONE_ID_C04R0110;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
-        break;
-      case DEBUG_BSWAY_BTL_MULTI_6: //マルチ６戦から
+        BSUBWAY_SCRWORK_DebugFight7( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
+      case DEBUG_BSWAY_BTL_MULTI_7: //マルチ７戦から
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_MULTI );
-        param = ZONE_ID_C04R0110;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
-        break;
-      case DEBUG_BSWAY_BTL_SINGLE_20: //シングル２０戦から
+        BSUBWAY_SCRWORK_DebugFight7( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
+      case DEBUG_BSWAY_BTL_SINGLE_21: //シングル２１戦から
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_SINGLE );
-        param = ZONE_ID_C04R0110;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
-        break;
-      case DEBUG_BSWAY_BTL_DOUBLE_20: //ダブル２０戦から
+        BSUBWAY_SCRWORK_DebugFight21( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
+      case DEBUG_BSWAY_BTL_DOUBLE_21: //ダブル２１戦から
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_DOUBLE );
-        param = ZONE_ID_C04R0110;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
-        break;
-      case DEBUG_BSWAY_BTL_MULTI_20: //マルチ２０戦から
+        BSUBWAY_SCRWORK_DebugFight21( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
+      case DEBUG_BSWAY_BTL_MULTI_21: //マルチ２１戦から
         BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_MULTI );
-        param = ZONE_ID_C04R0110;
-        next_event = DEBUG_EVENT_QuickChangeMapDefaultPos(
-          work->gmSys, work->fieldWork, param );
-        break;
+        BSUBWAY_SCRWORK_DebugFight21( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
       case DEBUG_BSWAY_SET_REGU_OFF: //レギュオフ
+        {
+          u8 flag = BSUBWAY_SCRWORK_DebugGetFlag( work->gmSys );
+          flag |= BSW_DEBUG_FLAG_REGU_OFF;
+          BSUBWAY_SCRWORK_DebugSetFlag( work->gmSys, flag );
+        }
         break;
       case DEBUG_BSWAY_SET_BTL_SKIP: //バトルスキップ
+        {
+          u8 flag = BSUBWAY_SCRWORK_DebugGetFlag( work->gmSys );
+          flag |= BSW_DEBUG_FLAG_BTL_SKIP;
+          BSUBWAY_SCRWORK_DebugSetFlag( work->gmSys, flag );
+        }
         break;
       default:
         break;
       }
-      
+
       if( next_event == NULL ){
         return( GMEVENT_RES_FINISH );
       }else{

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-03-20T20:28:28"/>
+	<create user="kagaya" host="W00143" date="2010-03-20T23:01:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1273,33 +1273,33 @@ allocable (0x[2:07:８桁:5])</language>
 	</row>
 
 	<row id="DEBUG_FIELD_BSW_17">
-		<language name="JPN" width="160">シングル６戦から</language>
-		<language name="JPN_KANJI" width="160">シングル６戦から</language>
+		<language name="JPN" width="160">シングル７戦から</language>
+		<language name="JPN_KANJI" width="160">シングル７戦から</language>
 	</row>
 
 	<row id="DEBUG_FIELD_BSW_18">
-		<language name="JPN" width="160">ダブル６戦から</language>
-		<language name="JPN_KANJI" width="160">ダブル６戦から</language>
+		<language name="JPN" width="160">ダブル７戦から</language>
+		<language name="JPN_KANJI" width="160">ダブル７戦から</language>
 	</row>
 
 	<row id="DEBUG_FIELD_BSW_19">
-		<language name="JPN" width="160">マルチ６戦から</language>
-		<language name="JPN_KANJI" width="160">マルチ６戦から</language>
+		<language name="JPN" width="160">マルチ７戦から</language>
+		<language name="JPN_KANJI" width="160">マルチ７戦から</language>
 	</row>
 
 	<row id="DEBUG_FIELD_BSW_20">
-		<language name="JPN" width="160">シングル２０戦から</language>
-		<language name="JPN_KANJI" width="160">シングル２０戦から</language>
+		<language name="JPN" width="160">シングル２１戦から</language>
+		<language name="JPN_KANJI" width="160">シングル２１戦から</language>
 	</row>
 
 	<row id="DEBUG_FIELD_BSW_21">
-		<language name="JPN" width="160">ダブル２０戦から</language>
-		<language name="JPN_KANJI" width="160">ダブル２０戦から</language>
+		<language name="JPN" width="160">ダブル２１戦から</language>
+		<language name="JPN_KANJI" width="160">ダブル２１戦から</language>
 	</row>
 
 	<row id="DEBUG_FIELD_BSW_22">
-		<language name="JPN" width="160">マルチ２０戦から</language>
-		<language name="JPN_KANJI" width="160">マルチ２０戦から</language>
+		<language name="JPN" width="160">マルチ２１戦から</language>
+		<language name="JPN_KANJI" width="160">マルチ２１戦から</language>
 	</row>
 
 	<row id="DEBUG_FIELD_BSW_23">
