@@ -229,10 +229,8 @@ WEATHER_NO GetWeatherNo( const CALENDER* calender, u16 zoneID, u8 month, u8 day 
   annualIndex = GetAnnualWeatherDataIndex( calender, zoneID );
 
   // 登録されていない
-  if( annualIndex == WEATHER_DATA_NONE )
-  {
-    // ゾーンテーブルを参照
-    return ZONEDATA_GetWeatherID( zoneID );
+  if( annualIndex == WEATHER_DATA_NONE ) {
+    return ZONEDATA_GetWeatherID( zoneID ); // ゾーンテーブルを参照
   }
 
   // 指定日の天気データのインデックス

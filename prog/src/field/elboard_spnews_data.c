@@ -53,12 +53,12 @@ BOOL ELBOARD_SPNEWS_DATA_Load( ELBOARD_SPNEWS_DATA* buf, ARCID arc_id, ARCDATID 
 //--------------------------------------------------------------------------------------
 BOOL ELBOARD_SPNEWS_DATA_CheckZoneHit( const ELBOARD_SPNEWS_DATA* news, u32 zone_id )
 {
-  // if(‘S•”–³Œø’l)
+  // ‘S•”–³Œø’l
   if( (news->zoneID_1 == ZONE_ID_MAX) &&  
       (news->zoneID_2 == ZONE_ID_MAX) &&
       (news->zoneID_3 == ZONE_ID_MAX) && 
       (news->zoneID_4 == ZONE_ID_MAX) ){ return TRUE; }
-  // else if(‚Ç‚ê‚©‚Éˆê’v)
+  // ‚Ç‚ê‚©‚Éˆê’v
   else if( (news->zoneID_1 == zone_id) ||  
            (news->zoneID_2 == zone_id) ||
            (news->zoneID_3 == zone_id) || 

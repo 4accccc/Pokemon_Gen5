@@ -16,8 +16,8 @@ typedef struct _CALENDER CALENDER;
 
 // çÏê¨ / îjä¸
 extern CALENDER* CALENDER_Create( GAMEDATA* gameData, HEAPID heapID );
-extern void      CALENDER_Delete( CALENDER* calender );
+extern void CALENDER_Delete( CALENDER* calender );
 
 // ìVãC
-extern WEATHER_NO CALENDER_GetWeather      ( const CALENDER* calender, u16 zoneID, u8 month, u8 day );
+extern WEATHER_NO CALENDER_GetWeather( const CALENDER* calender, u16 zoneID, u8 month, u8 day );
 extern WEATHER_NO CALENDER_GetWeather_today( const CALENDER* calender, u16 zoneID );
