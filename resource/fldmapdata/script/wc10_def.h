@@ -13,7 +13,7 @@
 #define SCRID_WC10_WOMAN1_01 (6)
 #define SCRID_WC10_GIRL3_01 (7)
 #define SCRID_WC10_MIDDLEMAN2_01 (8)
-#define SCRID_WC10_OLDMAN1_01 (9)
+#define SCRID_WC10_OLDWOMAN1_01 (9)
 #define SCRID_WF_NPC (10)
 
 #endif //_WC10_DEF_H_

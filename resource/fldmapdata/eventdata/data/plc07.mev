@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/17 15:32:57
+#save date:2010/03/20 16:41:55
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plc07.wms
 #SECTION START:OBJ_EVENT
@@ -9,76 +9,14 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plc07.wms
 #hold event type:
 1
 #hold event number:
-4
+2
 #event number: 0
-#type
-1
-#ID name
-PLC07_MAN03_01
-#OBJ CODE Number
-MIDDLEWOMAN1
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_PLC07_MAN03_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-3
-#Move Limit Z Number
-3
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-104 48 -136
-#event number: 1
-#type
-1
-#ID name
-PLC07_MAN04_01
-#OBJ CODE Number
-PILOT
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_PLC07_MAN04_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-3
-#Move Limit Z Number
-3
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-40 48 104
-#event number: 2
 #type
 1
 #ID name
 PLC07_MAN02_01
 #OBJ CODE Number
-VETERANW
+MIDDLEWOMAN2
 #MOVE CODE Number
 MV_RND
 #EVENT TYPE Number
@@ -102,14 +40,14 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-536 0 -328
-#event number: 3
+88 48 104
+#event number: 1
 #type
 1
 #ID name
 PLC07_MAN01_01
 #OBJ CODE Number
-WOMAN3
+WAITRESS
 #MOVE CODE Number
 MV_RND
 #EVENT TYPE Number
@@ -133,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-424 48 -344
+40 48 -168
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

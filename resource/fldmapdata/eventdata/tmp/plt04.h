@@ -10,8 +10,6 @@
 
 #define PLT04_MAN01_01                     0
 #define PLT04_MAN02_01                     1
-#define PLT04_MAN03_01                     2
-#define PLT04_MAN04_01                     3
 
 #endif //ZONE_PLT04_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plt04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

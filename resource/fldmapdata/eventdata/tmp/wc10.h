@@ -19,7 +19,7 @@
 #define WC10_WOMAN1_01                     4
 #define WC10_GIRL3_01                      5
 #define WC10_MIDDLEMAN2_01                 6
-#define WC10_OLDMAN1_01                    7
+#define WC10_OLDWOMAN1_01                  7
 
 #endif //ZONE_WC10_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/wc10.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

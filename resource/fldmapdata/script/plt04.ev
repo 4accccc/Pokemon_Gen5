@@ -23,8 +23,6 @@ _EVENT_DATA    ev_init_plt04      //裏フィールド共通処理
 _EVENT_DATA    ev_plt04_minimono  //裏フィールド全てminimonoのイベント位置を同じにする事！！
 _EVENT_DATA    ev_plt04_man01_01
 _EVENT_DATA    ev_plt04_man02_01
-_EVENT_DATA    ev_plt04_man03_01
-_EVENT_DATA    ev_plt04_man04_01
 _EVENT_DATA_END
 
 
@@ -63,16 +61,3 @@ EVENT_START   ev_plt04_man02_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG(plt04_man02_01)
 EVENT_END
 
-/**************************************************************/
-/* NPCその３                                                  */
-/**************************************************************/
-EVENT_START   ev_plt04_man03_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG(plt04_man03_01)
-EVENT_END
-
-/**************************************************************/
-/* NPCその４                                                  */
-/**************************************************************/
-EVENT_START   ev_plt04_man04_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG(plt04_man04_01)
-EVENT_END

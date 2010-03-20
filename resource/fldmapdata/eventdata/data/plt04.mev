@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/17 15:38:42
+#save date:2010/03/20 16:53:32
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plt04.wms
 #SECTION START:OBJ_EVENT
@@ -9,14 +9,14 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plt04.wms
 #hold event type:
 1
 #hold event number:
-4
+2
 #event number: 0
 #type
 1
 #ID name
 PLT04_MAN01_01
 #OBJ CODE Number
-AMBRELLA
+INFORMATIONW
 #MOVE CODE Number
 MV_RND
 #EVENT TYPE Number
@@ -40,14 +40,14 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 32 -8
+-184 -48 8
 #event number: 1
 #type
 1
 #ID name
 PLT04_MAN02_01
 #OBJ CODE Number
-SWIMMERM
+MOUNTMAN
 #MOVE CODE Number
 MV_RND
 #EVENT TYPE Number
@@ -71,69 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-120 0 -136
-#event number: 2
-#type
-1
-#ID name
-PLT04_MAN03_01
-#OBJ CODE Number
-PILOT
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_PLT04_MAN03_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-3
-#Move Limit Z Number
-3
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-280 0 -72
-#event number: 3
-#type
-1
-#ID name
-PLT04_MAN04_01
-#OBJ CODE Number
-OL
-#MOVE CODE Number
-MV_RND
-#EVENT TYPE Number
-EV_TYPE_NORMAL
-#Flag Name
-0
-#Event Script Name
-SCRID_PLT04_MAN04_01
-#Direction Type Number
-DIR_DOWN
-#Parameter 0 Number
-0
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-3
-#Move Limit Z Number
-3
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-440 0 -104
+376 -80 -56
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT

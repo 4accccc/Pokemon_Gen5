@@ -28,7 +28,7 @@ _EVENT_DATA    ev_wc10_man3_01
 _EVENT_DATA    ev_wc10_woman1_01
 _EVENT_DATA    ev_wc10_girl3_01
 _EVENT_DATA    ev_wc10_middleman2_01
-_EVENT_DATA    ev_wc10_oldman1_01
+_EVENT_DATA    ev_wc10_oldwoman1_01
 _EVENT_DATA    ev_wf_npc
 _EVENT_DATA_END
 
@@ -183,14 +183,14 @@ EVENT_END
 /* 人口C：woman1_01                                            */
 /**************************************************************/
 EVENT_START   ev_wc10_woman1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_man3_01 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_woman1_01 )
 EVENT_END
 
 /**************************************************************/
 /* 人口C：girl3_01                                            */
 /**************************************************************/
 EVENT_START   ev_wc10_girl3_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_man3_01 )
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_girl3_01 )
 EVENT_END
 
 /**************************************************************/
@@ -201,9 +201,9 @@ EVENT_START   ev_wc10_middleman2_01
 EVENT_END
 
 /**************************************************************/
-/* 人口E：oldman1_01                                            */
+/* 人口E：oldwoman1_01                                            */
 /**************************************************************/
-EVENT_START   ev_wc10_oldman1_01
+EVENT_START   ev_wc10_oldwoman1_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_wc10_oldwoman1_01 )
 EVENT_END
 
