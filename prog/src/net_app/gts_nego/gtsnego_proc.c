@@ -486,10 +486,14 @@ static void _messagePMS( GTSNEGO_WORK *pWork )
  //   GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork,GTSNEGO_040);
     _CHANGE_STATE(pWork, _messageEnd);
 #else
-    GTSNEGO_MESSAGE_PMSDrawInit(pWork->pMessageWork, pWork->pDispWork);
-    GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, &pWork->MatchData[netID].pms );
- //   GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork,GTSNEGO_040);
-    _CHANGE_STATE(pWork, _messageEnd);
+    {
+      int netID = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+
+      GTSNEGO_MESSAGE_PMSDrawInit(pWork->pMessageWork, pWork->pDispWork);
+      GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, &pWork->MatchData[1-netID].pms );
+      //   GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork,GTSNEGO_040);
+      _CHANGE_STATE(pWork, _messageEnd);
+    }
 #endif
   }
   
