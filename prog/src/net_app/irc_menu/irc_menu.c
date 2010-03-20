@@ -2131,6 +2131,7 @@ static void SEQFUNC_DisConnect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	switch( *p_seq )
 	{	
 	case SEQ_SCENE:
+    MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_005, 0, 0  );
 		COMPATIBLE_IRC_ResetScene( p_wk->p_param->p_irc );
 		*p_seq	= SEQ_NET_DISCONNECT;
 		break;

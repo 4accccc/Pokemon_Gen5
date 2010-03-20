@@ -88,7 +88,7 @@ struct _IRC_COMPATIBLE_MAIN_WORK
 	IRCAURA_RESULT			aura_result;
 	IRCRHYTHM_RESULT		rhythm_result;
 	u8									rhythm_score;
-	u8									rhythm_minus;
+	u8									rhythm_cnt_diff;
 	u8									aura_score;
   u8                  aura_minus;
 	BOOL								is_init;
@@ -139,6 +139,7 @@ static u32 RULE_CalcScore( u32 rhythm_score, u32 aura_score, u32 rhythm_minus, u
 static u32 RULE_CalcNameScore( const STRCODE	*cp_player1_name, const STRCODE	*cp_player2_name );
 static u32 MATH_GetMostOnebit( u32 x, u8 bit );
 static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status );
+static u32 RULE_CalcRhythmMinus( u32 cnt_diff );
 //=============================================================================
 /**
  *					データ
@@ -965,7 +966,7 @@ static void SUBPROC_FREE_Rhythm( void *p_param_adrs, void *p_wk_adrs )
 
 	p_wk->rhythm_result	= p_param->result;
 	p_wk->rhythm_score	= p_param->score;
-  p_wk->rhythm_minus  = p_param->minus;
+  p_wk->rhythm_cnt_diff  = p_param->cnt_diff;
 
 	GFL_HEAP_FreeMemory( p_param );
 }
@@ -1022,10 +1023,16 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
 	{	
 		if( p_wk->rhythm_score != 0 && p_wk->aura_score != 0 )
 		{	
+      u32 rhythm_minus;
       COMPATIBLE_STATUS my_status;
       COMPATIBLE_IRC_GetStatus( p_wk->p_param->p_gamesys, &my_status );
+
+      //リズムのマイナス点を計算
+      rhythm_minus  = RULE_CalcRhythmMinus( p_wk->rhythm_cnt_diff );
+
+      //得点計算
 			p_param->score			= RULE_CalcScore( p_wk->rhythm_score, p_wk->aura_score,
-          p_wk->rhythm_minus, p_wk->aura_minus, &my_status, p_wk->p_you_status,
+          rhythm_minus, p_wk->aura_minus, &my_status, p_wk->p_you_status,
           HEAPID_IRCCOMPATIBLE_SYSTEM );
 		}
 	}
@@ -1304,4 +1311,29 @@ static u32 RULE_CalcBioRhythm( const COMPATIBLE_STATUS *cp_status )
   RTCDate date;
   GFL_RTC_GetDate( &date );
   return Irc_Compatible_SV_CalcBioRhythm( cp_status->barth_month, cp_status->barth_day, &date );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リズムチェックのマイナス点を計算
+ *
+ *	@param	u32 cnt_diff  自分と相手の差
+ *
+ *	@return マイナス点
+ */
+//-----------------------------------------------------------------------------
+static u32 RULE_CalcRhythmMinus( u32 cnt_diff )
+{ 
+  static const sc_minus_tbl[] =
+  { 
+    0,
+    2,
+    4,
+    6,
+    8,
+    10,
+  };
+
+  cnt_diff = MATH_IMin( cnt_diff, NELEMS(sc_minus_tbl) );
+
+  return sc_minus_tbl[ cnt_diff ];
 }

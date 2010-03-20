@@ -43,7 +43,7 @@ typedef struct {
   COMPATIBLE_STATUS		*p_you_status;//[out]通信相手のステータス（バッファを作って渡してください）
 	IRCRHYTHM_RESULT		result;	//[out]PROCが戻ってきたときの内部進行状況
 	u8									score;	//[out]リズムチェックで得た点数
-  u8                  minus;  //[out]減点
+  u32                 cnt_diff;  //[out]自分と相手のリズム差分（マイナス計算にて必要）
 
 #ifdef DEBUG_IRC_COMPATIBLE_ONLYPLAY
 	BOOL								is_only_play;	//[in]デバッグ時専用、一人プレイモード

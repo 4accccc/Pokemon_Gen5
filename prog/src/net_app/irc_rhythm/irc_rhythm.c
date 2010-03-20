@@ -435,7 +435,6 @@ typedef struct
 	RHYTHMSEARCH_DATA	data[RHYTHMSEARCH_DATA_MAX];
 	u32			data_idx;
 	OSTick	start_time;
-  u32     minus;
 } RHYTHMSEARCH_WORK;
 
 //-------------------------------------
@@ -494,6 +493,21 @@ typedef struct
   BOOL              is_start;
   BOOL              is_end;
 } COUNTDOWN_WORK;
+
+//-------------------------------------
+///	パレットフェードワーク
+//=====================================
+#define PLTFADE_MAX (1)
+typedef struct 
+{
+  u16   plt_buff[PLTFADE_MAX];
+  u16   plt_cnt[PLTFADE_MAX];
+  BOOL  plt_start[PLTFADE_MAX];
+  BOOL  plt_flip[PLTFADE_MAX];
+  BOOL  is_start;
+} PLTFADE_WORK;
+
+
 //-------------------------------------
 ///	リズムチェックメインワーク
 //=====================================
@@ -521,6 +535,8 @@ struct _RHYTHM_MAIN_WORK
   //カウントダウン
   COUNTDOWN_WORK  cntdown;
 
+  PLTFADE_WORK    pltfade;
+
 	MSGWND_WORK			msgtitle;	//タイトルメッセージ
 	MSGWND_WORK			msgstart;	//タッチスタート
 
@@ -535,9 +551,9 @@ struct _RHYTHM_MAIN_WORK
 	RHYTHMSEARCH_WORK	search;
 
 	//その他
-	u32								marker_cnt;	//マーカー表示時間
-
-  u32   minus;
+	u32		marker_cnt;	//マーカー表示時間
+  BOOL  is_sub_seq; //サブシーケンス動作開始
+  u16   sub_seq;    //動かしながら相手と接続できるようにするため
 
 	//引数
 	IRC_RHYTHM_PARAM	*p_param;
@@ -628,7 +644,7 @@ static u8* NETRECV_GetBufferAddr(int netID, void* pWork, int size);
 //汎用
 static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg );
 static u8		CalcScore( const RHYTHM_MAIN_WORK *cp_wk );
-static u8		CalcMinus( const RHYTHM_MAIN_WORK *cp_wk );
+static void RHYTHM_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end );
 //BACKOBJ
 static void BACKOBJ_Init( BACKOBJ_WORK *p_wk, const GRAPHIC_WORK *cp_grp, BACKOBJ_MOVE_TYPE type, u32 clwk_ofs, int sf_type );
 static void BACKOBJ_Exit( BACKOBJ_WORK *p_wk );
@@ -639,6 +655,11 @@ static void BACKOBJ_ONE_Init( BACKOBJ_ONE *p_wk, GFL_CLWK *p_clwk, int sf_type )
 static void BACKOBJ_ONE_Main( BACKOBJ_ONE *p_wk );
 static void BACKOBJ_ONE_Start( BACKOBJ_ONE *p_wk, const GFL_POINT *cp_start, const GFL_POINT *cp_end, BACKOBJ_COLOR color, u32 sync );
 static BOOL BACKOBJ_ONE_IsMove( const BACKOBJ_ONE *cp_wk );
+//PLTFADE_WORK
+static void PLTFADE_Init( PLTFADE_WORK *p_wk, HEAPID heapID );
+static void PLTFADE_Exit( PLTFADE_WORK *p_wk );
+static void PLTFADE_Main( PLTFADE_WORK *p_wk );
+static void PLTFADE_Start( PLTFADE_WORK *p_wk );
 
 static STRBUF * DEBUGPRINT_CreateWideChar( const u16 *cp_str, HEAPID heapID );
 static STRBUF * DEBUGPRINT_CreateWideCharNumber( const u16 *cp_str, int number, HEAPID heapID );
@@ -871,6 +892,8 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 	BmpWinFrame_Write( p_wk->msgwnd[MSGWNDID_TEXT].p_bmpwin, WINDOW_TRANS_ON, 
 					GFL_ARCUTIL_TRANSINFO_GetPos(p_wk->grp.bg.frame_char), RHYTHM_BG_PAL_S_06 );
 
+  PLTFADE_Init( &p_wk->pltfade, HEAPID_IRCRHYTHM );
+
   if( p_wk->p_param->p_gamesys )
   {	
     MSGWND_PrintPlayerName( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, 
@@ -970,6 +993,7 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 
   COUNTDOWN_Exit( &p_wk->cntdown );
 
+  PLTFADE_Exit( &p_wk->pltfade );
 	MSGWND_Exit( &p_wk->msgstart );
 	MSGWND_Exit( &p_wk->msgtitle );
 	//モジュール破棄
@@ -1045,13 +1069,7 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Main( GFL_PROC *p_proc, int *p_seq, void 
 			*p_seq	= SEQ_FADEIN_START;
 		}
 
-#if 0
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
-		{	
-			SEQ_Change( p_wk, SEQFUNC_StartGame );
-		}
-#endif
-
+    PLTFADE_Main( &p_wk->pltfade );
 		break;
 
 	case SEQ_FADEIN_START:
@@ -1971,6 +1989,8 @@ static void MSGWND_Clear( MSGWND_WORK* p_wk )
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );	
 	GFL_BMPWIN_TransVramCharacter( p_wk->p_bmpwin );
 }
+
+
 //=============================================================================
 /**
  *				個人結果画面
@@ -2331,6 +2351,7 @@ static void SEQFUNC_CountDown( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
   { 
     G2_BlendNone();
     RHYTHMSEARCH_Start( &p_wk->search );
+    PLTFADE_Start( &p_wk->pltfade );
     SEQ_Change( p_wk, SEQFUNC_MainGame );	
   }
 
@@ -2377,26 +2398,36 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 
 	//計測終了チェック
 	if( RHYTHMSEARCH_IsEnd( p_search ) )
-	{	
-		MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_001, 0, 0 );
-		PMSND_PlaySE( IRCCOMMON_SE_IRC );
-		SEQ_Change( p_wk, SEQFUNC_Result );
-
-	}
-
-
-	if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
 	{
-		PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
-		p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
-		SEQ_End( p_wk );
+    if( p_wk->is_sub_seq == FALSE )
+    { 
+      MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_001, 0, 0 );
+      PMSND_PlaySE( IRCCOMMON_SE_IRC );
+      p_wk->is_sub_seq  = TRUE;
+    }
+
+    if( p_wk->is_sub_seq )
+    { 
+      SEQFUNC_Result( p_wk, &p_wk->sub_seq );
+    }
+
 	}
 
-	//シーンが異なるチェック
-	if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
-	{	
-		SEQ_Change( p_wk, SEQFUNC_SceneError );
-	}
+  if( p_wk->is_sub_seq == FALSE )
+  { 
+    if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
+    {
+      PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
+      p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
+      SEQ_End( p_wk );
+    }
+
+    //シーンが異なるチェック
+    if( COMPATIBLE_IRC_CompScene( p_wk->p_param->p_irc ) != 0 )
+    {	
+      SEQ_Change( p_wk, SEQFUNC_SceneError );
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -2420,16 +2451,6 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_MSG_PRINT_END,
 		SEQ_CALC,
 		SEQ_END,
-#if 0
-		SEQ_FADEIN_START,
-		SEQ_FADEIN_WAIT,
-		SEQ_FADEOUT_START,
-		SEQ_FADEOUT_WAIT,
-		SEQ_ONLYRESULT_INIT,
-		SEQ_ONLYRESULT_MAIN,
-		SEQ_ONLYRESULT_EXIT,
-		SEQ_NEXTPROC,
-#endif
 	};
 
 	switch( *p_seq )
@@ -2455,7 +2476,6 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_SENDRESULT:
-    p_wk->search.minus  = CalcMinus( p_wk );
 		if( RHYTHMNET_SendResultData( &p_wk->net, &p_wk->search ) )
 		{	
 			*p_seq	= SEQ_SCENE;
@@ -2492,67 +2512,15 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
     { 
       RHYTHMSEARCH_WORK you;
       RHYTHMNET_GetResultData( &p_wk->net, &you );
-      p_wk->p_param->minus  = CalcMinus( p_wk ) + you.minus;
+      p_wk->p_param->cnt_diff  = MATH_IAbs( (s32)p_wk->search.data_idx - (s32)you.data_idx );
     }
 		p_wk->p_param->result	= IRCRHYTHM_RESULT_CLEAR;
-	//	*p_seq	= SEQ_FADEIN_START;
 		*p_seq	= SEQ_END;
 		break;
 
 	case SEQ_END:
 		SEQ_End( p_wk );
 		return;	//下記のアサートを通過しないため
-#if 0
-	case SEQ_FADEIN_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
-		*p_seq	= SEQ_FADEIN_WAIT;
-		break;
-
-	case SEQ_FADEIN_WAIT:
-		if( !GFL_FADE_CheckFade() )
-		{	
-			*p_seq	= SEQ_ONLYRESULT_INIT;
-		}
-		break;
-
-	case SEQ_FADEOUT_START:
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
-		*p_seq	= SEQ_FADEOUT_WAIT;
-		break;
-
-	case SEQ_FADEOUT_WAIT:
-		if( !GFL_FADE_CheckFade() )
-		{	
-			*p_seq	= SEQ_ONLYRESULT_MAIN;
-		}
-		break;
-
-	case SEQ_ONLYRESULT_INIT:
-		//画面上のものを消去
-		GFL_BG_SetVisible( sc_bgcnt_frame[GRAPHIC_BG_FRAME_M_BACK], FALSE );
-		MSGWND_Clear( &p_wk->msgwnd[MSGWNDID_TEXT] );
-
-
-		*p_seq	= SEQ_FADEOUT_START;
-		break;
-
-	case SEQ_ONLYRESULT_MAIN:
-		if( RHYTHM_ONLYRESULT_Main( &p_wk->onlyresult ) )
-		{	
-			*p_seq	= SEQ_ONLYRESULT_EXIT;
-		}
-		break;
-
-	case SEQ_ONLYRESULT_EXIT:
-		RHYTHM_ONLYRESULT_Exit( &p_wk->onlyresult );
-		*p_seq	= SEQ_NEXTPROC;
-		break;
-
-	case SEQ_NEXTPROC:
-		p_wk->is_next_proc	= TRUE;
-		SEQ_End( p_wk );
-		break;
-#endif
 	}
 
 	//メッセージ終了待ち
@@ -3189,39 +3157,40 @@ static u8	CalcScore( const RHYTHM_MAIN_WORK *cp_wk )
 	}
 	return (prog_score + (diff_score/9) )/2;
 }
+
 //----------------------------------------------------------------------------
 /**
- *	@brief  減点を計算
+ *	@brief  パレットフェード
  *
- *	@param	const RHYTHM_MAIN_WORK *cp_wk ワーク
- *
- *	@return 減点（＋の値）
+ *	@param	NNS_GFD_DST_TYPE type 転送先
+ *	@param	*p_buff               バッファ
+ *	@param	cnt                   カウント
+ *	@param	plt_num               パレット縦
+ *	@param	plt_col               パレット横
+ *	@param	start                 開始色
+ *	@param	end                   終了色
  */
 //-----------------------------------------------------------------------------
-static u8	CalcMinus( const RHYTHM_MAIN_WORK *cp_wk )
+static void RHYTHM_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end )
 { 
-  static const sc_minus_tbl[] =
-  { 
-    0,
-    2,
-    4,
-    6,
-    8,
-    10,
-  };
+  //0～１に変換
+  const fx16 cos = (FX_CosIdx(cnt)+FX16_ONE)/2;
+  const u8 start_r  = (start & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+  const u8 start_g  = (start & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+  const u8 start_b  = (start & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+  const u8 end_r  = (end & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+  const u8 end_g  = (end & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+  const u8 end_b  = (end & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
 
-  RHYTHMSEARCH_WORK	my;
-	RHYTHMSEARCH_WORK	you;
+  const u8 r = start_r + (((end_r-start_r)*cos)>>FX16_SHIFT);
+  const u8 g = start_g + (((end_g-start_g)*cos)>>FX16_SHIFT);
+  const u8 b = start_b + (((end_b-start_b)*cos)>>FX16_SHIFT);
 
-  u32 dif;
+  *p_buff = GX_RGB(r, g, b);
 
-	my	= cp_wk->search;
-	RHYTHMNET_GetResultData( &cp_wk->net, &you );
-
-  dif = MATH_IAbs( my.data_idx - you.data_idx );
-  dif = MATH_IMin( dif, NELEMS(sc_minus_tbl) );
-
-  return sc_minus_tbl[ dif ];
+  NNS_GfdRegisterNewVramTransferTask( type,
+      plt_num * 32 + plt_col * 2,
+      p_buff, 2 );
 }
 //=============================================================================
 /**
@@ -3518,6 +3487,99 @@ static BOOL BACKOBJ_ONE_IsMove( const BACKOBJ_ONE *cp_wk )
 	return cp_wk->is_req;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットフェード  作成
+ *
+ *	@param	PLTFADE_WORK *p_wk  ワーク
+ *	@param	heapID              ヒープID
+ */
+//-----------------------------------------------------------------------------
+static void PLTFADE_Init( PLTFADE_WORK *p_wk, HEAPID heapID )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(PLTFADE_WORK) );
+  { 
+    int i;
+    for( i = 0; i < PLTFADE_MAX; i++ )
+    {
+      p_wk->plt_start[0]  = TRUE;
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットフェード  終了
+ *
+ *	@param	PLTFADE_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void PLTFADE_Exit( PLTFADE_WORK *p_wk )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(PLTFADE_WORK) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットフェード  メイン処理
+ *
+ *	@param	PLTFADE_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void PLTFADE_Main( PLTFADE_WORK *p_wk )
+{ 
+  if( p_wk->is_start )
+  { 
+    static const int add = 0x400;
+    int i;
+
+    for( i = 0; i < PLTFADE_MAX; i++ )
+    {
+      if( p_wk->plt_start[i] )
+      { 
+        BOOL is_end;
+/*
+        if( p_wk->plt_flip[i] )
+        { 
+          is_end  = p_wk->plt_cnt[i] < 0x10000/2;
+        }
+        else
+        { 
+          is_end  = p_wk->plt_cnt[i] >= 0x10000/2;
+        }
+*/
+//        is_end  = p_wk->plt_cnt[i] + add >= 0x10000;
+
+  /*      if( is_end )
+        { 
+          p_wk->plt_start[i]  = FALSE;
+          p_wk->plt_flip[i] ^= TRUE;
+          p_wk->plt_start[  (i+1) % PLTFADE_MAX  ]  = TRUE;
+        }
+*/
+        if( p_wk->plt_cnt[i] + add >= 0x10000 )
+        {
+          p_wk->plt_cnt[i] = p_wk->plt_cnt[i]+add-0x10000;
+        }
+        else
+        {
+          p_wk->plt_cnt[i] += add;
+        }
+        RHYTHM_MainPltAnm( NNS_GFD_DST_2D_BG_PLTT_MAIN, &p_wk->plt_buff[i], p_wk->plt_cnt[i], 
+            5, 3+i, GX_RGB( 31,22,26 ), GX_RGB( 30,15,21 ) );
+      }
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットフェード  開始
+ *
+ *	@param	PLTFADE_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void PLTFADE_Start( PLTFADE_WORK *p_wk )
+{ 
+  p_wk->is_start  = TRUE;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	Wide文字列をSTRBUFに格納
