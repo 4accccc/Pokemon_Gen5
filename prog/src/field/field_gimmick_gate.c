@@ -253,7 +253,7 @@ static char* news_plt_name[NEWS_INDEX_NUM] =
   "gelboard_7_pl",
 };
 // 天気に使用するメッセージ
-u32 str_id_weather[ WEATHER_NO_NUM ] = 
+u32 str_id_weather[ ] = 
 {
   msg_gate_sunny,     // 晴れ
   msg_gate_snow,      // 雪
@@ -272,6 +272,20 @@ static const NEWS_INDEX gym_news_idx[GYM_NEWS_MAX_NUM] =
   NEWS_INDEX_INFO_A, 
   NEWS_INDEX_INFO_B, 
   NEWS_INDEX_INFO_C
+};
+
+// レア天気一覧
+u8 RareWeatherNo[] = 
+{
+  WEATHER_NO_RAIKAMI,
+  WEATHER_NO_KAZAKAMI,
+  WEATHER_NO_DIAMONDDUST,
+};
+
+// レア天気のチェック対象ゾーン一覧
+u16 RareWeatherCheckZoneID[] = 
+{
+  ZONE_ID_C07,
 };
 
 
@@ -1945,30 +1959,31 @@ static void GetWeatherNewsParam( const GATEWORK* work, WEATHER_NEWS_PARAM* dest 
 //------------------------------------------------------------------------------------------
 static void GetRareWeather( const GATEWORK* work, WEATHER_NEWS_PARAM* dest )
 {
-  int i;
-  int num;
-
-  // チェック対象ゾーン一覧
-  u16 checkZone[] = 
-  {
-    ZONE_ID_C07,
-  };
-  // レア天気一覧
-  u8 rareWeather[] = 
-  {
-    WEATHER_NO_RAIKAMI,
-    WEATHER_NO_KAZAKAMI,
-    WEATHER_NO_DIAMONDDUST,
-  };
+#if 0
+  int i, j;
+  int num; 
 
   // データの格納先をクリア
   InitWeatherNewsParam( dest );
 
-  // チェック対象ゾーンを検索し, レア天気を探す
+  // チェック対象ゾーンについて, レア天気を探す
   num = 0;
-  for( i=0; i<NELEMS(checkZone); i++ )
+  for( i=0; i<NELEMS(RareWeatherCheckZoneID); i++ )
   {
+    // 今日の天気を取得
+    GAMESYS_WORK* gameSystem = FIELDMAP_GetGameSysWork( work->fieldmap );
+    GAMEDATA* gameData = GAMESYSTEM_GetGameData( gameSystem );
+    u8 weather = CALENDER_GetWeather_today( gameData, work->heapID );
+
+    // レア天気かどうかを判定
+    for( j=0; j<NELEMS(RareWeatherNo); j++ )
+    {
+      // レア天気を発見
+      if( weather == RareWeatherNo[j] ) {
+      }
+    } 
   }
+#endif
 }
 
 //------------------------------------------------------------------------------------------
