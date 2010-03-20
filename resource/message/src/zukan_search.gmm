@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-02-23T13:28:52"/>
+	<create user="matsumiya" host="W00224" date="2010-03-20T21:41:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -333,587 +333,587 @@
 	</lock>
 
 
-	<row id="ZKN_SEARCH_INFO_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_INFO_00" back-color="#ffff80,,,#ffff80,,#ffff80,,#ffff80,,,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">『けんさく　モード』</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">『検索モード』</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INFO_01" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">じょうけんを　いれて　ください</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">条件を　入れてください</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_INFO_02" back-color="#ffff80,,,#ffff80,,#ffff80,,#ffff80,,,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">『けんさくの　けっか』</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">『検索の結果』</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_INFO_03" back-color="#ffff80,,,#ffff80,,#ffff80,,#ffff80,,,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">みつかったかず　[2:02:３桁:0]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">見つかった数　[2:02:３桁:0]</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_04" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INFO_04" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ならびじゅんを　いれてください</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">並び順を　入れてください</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_05" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INFO_05" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">なまえの　かしらもじを　いれてください</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">名前の　頭文字を　入れてください</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_06" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INFO_06" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">タイプを　いれてください</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">タイプを　入れてください</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_09" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INFO_09" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">かたちを　いれてください</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">形を　入れてください</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_10" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INFO_10" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">いろを　いれてください</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">色を　入れてください</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_11" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INFO_11" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ポケモンが　みつかりました！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ポケモンが　見つかりました！</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_12" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INFO_12" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ポケモンが　みつかりません……</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ポケモンが　見つかりません……</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INFO_13" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INFO_13" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">けんさく　しています……</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">検索しています……</language>
 	</row>
 
-	<row id="ZKN_SEARCH_10" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_10" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ならび</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">並び</language>
 	</row>
 
-	<row id="ZKN_SEARCH_12" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_12" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">なまえ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">名前</language>
 	</row>
 
-	<row id="ZKN_SEARCH_13" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_13" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">タイプ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">タイプ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_14" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_14" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">いろ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">色</language>
 	</row>
 
-	<row id="ZKN_SEARCH_17" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_17" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">かたち</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">形</language>
 	</row>
 
-	<row id="ZKN_SEARCH_22" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_22" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">イッシュずかん：けんさくモード</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">イッシュ図鑑：検索モード</language>
 	</row>
 
-	<row id="ZKN_SEARCH_23" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_23" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ぜんこくずかん：けんさくモード</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">全国図鑑：検索モード</language>
 	</row>
 
-	<row id="ZKN_SEARCH_24" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_24" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">リセット</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">リセット</language>
 	</row>
 
-	<row id="ZKN_SEARCH_25" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_25" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">スタート</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">スタート</language>
 	</row>
 
-	<row id="ZKN_SEARCH_26" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_26" back-color="#ffff80,,,#ffff80,,#ffff80,,#ffff80,,,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">やめる</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">やめる</language>
 	</row>
 
-	<row id="ZKN_SEARCH_27" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_27" back-color="#ffff80,,,#ffff80,,#ffff80,,#ffff80,,,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">[2:02:３桁:0]．[2:00:１桁:1]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">[2:02:３桁:0]．[2:00:１桁:1]</language>
 	</row>
 
-	<row id="ZKN_SEARCH_30" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_30" back-color="#ffff80,,,#ffff80,,#ffff80,,#ffff80,,,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">けってい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">けってい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">決定</language>
 	</row>
 
-	<row id="ZKN_SEARCH_31" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_31" back-color="#ffff80,,,#ffff80,,#ffff80,,#ffff80,,,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">やめる</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">やめる</language>
 	</row>
 
-	<row id="ZKN_SEARCH_SORT_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_SORT_01" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ばんごうじゅん</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">番号順</language>
 	</row>
 
-	<row id="ZKN_SEARCH_SORT_02" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_SORT_02" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ごじゅうおん</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">五十音</language>
 	</row>
 
-	<row id="ZKN_SEARCH_SORT_03" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_SORT_03" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">おもいじゅん</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">重い順</language>
 	</row>
 
-	<row id="ZKN_SEARCH_SORT_04" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_SORT_04" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">かるいじゅん</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">軽い順</language>
 	</row>
 
-	<row id="ZKN_SEARCH_SORT_05" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_SORT_05" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">たかいじゅん</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">高い順</language>
 	</row>
 
-	<row id="ZKN_SEARCH_SORT_06" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_SORT_06" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ひくいじゅん</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">低い順</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_01" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">あく</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">あく</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_02" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_02" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">いわ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">いわ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_03" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_03" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">エスパー</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">エスパー</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_04" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_04" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">かくとう</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">かくとう</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_05" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_05" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">くさ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">くさ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_06" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_06" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">こおり</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">こおり</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_07" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_07" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ゴースト</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ゴースト</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_08" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_08" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">じめん</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">じめん</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_09" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_09" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">でんき</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">でんき</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_10" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_10" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">どく</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">どく</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_11" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_11" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ドラゴン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ドラゴン</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_12" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_12" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ノーマル</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ノーマル</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_13" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_13" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">はがね</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">はがね</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_14" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_14" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ひこう</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ひこう</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_15" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_15" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ほのお</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ほのお</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_16" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_16" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">みず</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">みず</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_17" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_17" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">むし</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">むし</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_18" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_18" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">――――</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">――――</language>
 	</row>
 
-	<row id="ZKN_SEARCH_TYPE_19" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_TYPE_19" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">／</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">／</language>
 	</row>
 
-	<row id="ZKN_SEARCH_AREA_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
+	<row id="ZKN_SEARCH_AREA_04" back-color="#ffff80,,,#ffff80,,#ffff80,,#ffff80,,,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">――――</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">――――</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_01" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ア</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ア</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_02" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_02" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">イ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">イ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_03" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_03" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ウ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ウ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_04" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_04" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">エ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">エ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_05" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_05" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">オ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">オ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_06" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_06" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">カ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">カ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_07" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_07" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">キ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">キ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_08" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_08" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ク</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ク</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_09" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_09" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ケ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ケ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_10" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_10" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">コ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">コ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_11" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_11" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">サ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">サ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_12" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_12" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">シ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">シ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_13" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_13" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ス</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ス</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_14" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_14" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">セ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">セ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_15" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_15" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ソ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ソ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_16" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_16" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">タ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">タ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_17" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_17" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">チ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">チ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_18" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_18" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ツ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ツ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_19" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_19" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">テ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">テ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_20" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_20" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ト</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ト</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_21" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_21" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ナ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ナ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_22" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_22" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ニ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ニ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_23" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_23" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ヌ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ヌ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_24" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_24" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ネ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ネ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_25" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_25" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ノ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ノ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_26" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_26" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ハ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ハ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_27" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_27" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ヒ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ヒ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_28" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_28" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">フ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">フ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_29" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_29" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ヘ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ヘ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_30" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_30" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ホ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ホ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_31" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_31" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">マ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">マ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_32" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_32" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ミ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ミ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_33" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_33" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ム</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ム</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_34" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_34" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">メ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">メ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_35" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_35" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">モ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">モ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_36" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_36" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ヤ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ヤ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_37" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_37" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ユ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ユ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_38" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_38" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ヨ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ヨ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_39" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_39" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ラ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ラ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_40" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_40" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">リ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">リ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_41" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_41" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ル</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ル</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_42" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_42" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">レ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">レ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_43" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_43" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ロ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ロ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_44" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_44" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ワ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">ワ</language>
 	</row>
 
-	<row id="ZKN_SEARCH_INITIAL_45" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_INITIAL_45" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">―</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">―</language>
 	</row>
 
-	<row id="ZKN_SEARCH_COLOR_00" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_COLOR_00" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">あか</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">赤</language>
 	</row>
 
-	<row id="ZKN_SEARCH_COLOR_01" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_COLOR_01" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">あお</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">青</language>
 	</row>
 
-	<row id="ZKN_SEARCH_COLOR_02" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_COLOR_02" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">き</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">黄</language>
 	</row>
 
-	<row id="ZKN_SEARCH_COLOR_03" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_COLOR_03" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">みどり</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">緑</language>
 	</row>
 
-	<row id="ZKN_SEARCH_COLOR_04" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_COLOR_04" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">くろ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">黒</language>
 	</row>
 
-	<row id="ZKN_SEARCH_COLOR_05" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_COLOR_05" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">ちゃ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">茶</language>
 	</row>
 
-	<row id="ZKN_SEARCH_COLOR_06" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_COLOR_06" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">むらさき</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">紫</language>
 	</row>
 
-	<row id="ZKN_SEARCH_COLOR_07" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_COLOR_07" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">はい</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">灰</language>
 	</row>
 
-	<row id="ZKN_SEARCH_COLOR_08" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_COLOR_08" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">しろ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">白</language>
 	</row>
 
-	<row id="ZKN_SEARCH_COLOR_09" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_COLOR_09" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">もも</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">桃</language>
 	</row>
 
-	<row id="ZKN_SEARCH_COLOR_10" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#ffff80,,#ff0000,#ffff80,#ff0000,#ff0000,,,#ff0000,,">
+	<row id="ZKN_SEARCH_COLOR_10" back-color="#ff0000,,,#ff0000,,#ff0000,,#ffff80,,,#ffff80,#ff0000,,,,#ff0000,,">
 		<language name="JPN" font=" 1:small" width="84">――――</language>
 		<language name="JPN_KANJI" font=" 1:small" width="84">――――</language>
 	</row>
