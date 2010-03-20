@@ -1533,14 +1533,12 @@ void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork)
 
     GFL_ARC_CloseDataHandle(p_handle);
 
-    _SetSearchPeople( pWork);
-    
-    
-  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
-  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
-  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->SearchPeopleOAM , FALSE );
+    GFL_CLACT_WK_SetAnmSeq(pWork->SearchBackOAM, 28);
+
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
     pWork->SearchScroll=0;
-    pWork->bSearchScroll=TRUE;
+    pWork->bSearchScroll=FALSE;
     
 	}
 

@@ -172,6 +172,7 @@ extern void GTSNEGO_MESSAGE_PMSDisp(GTSNEGO_MESSAGE_WORK* pWork,PMS_DATA* pms);
 extern void GTSNEGO_MESSAGE_TitleMessage(GTSNEGO_MESSAGE_WORK* pWork,int msgid);
 extern void GTSNEGO_MESSAGE_CancelButtonCreate(GTSNEGO_MESSAGE_WORK* pWork);
 extern BOOL GTSNEGO_MESSAGE_CancelButtonDelete(GTSNEGO_MESSAGE_WORK* pWork);
+extern void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork);
 
 extern MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index);
 
