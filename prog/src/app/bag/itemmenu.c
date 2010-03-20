@@ -2582,9 +2582,10 @@ static void SORT_Type( FIELD_ITEMMENU_WORK* pWork )
   length = ITEMMENU_GetItemPocketNumber( pWork );
 
   // ソート用データ生成
+	// カテゴリ << 28 + ソート番号 << 16 + アイテム番号
 	for( i=0; i<length; i++ ){
 		void * dat = ITEM_GetItemArcData( item[i].id, ITEM_GET_DATA, pWork->heapID );
-		sort[i].type = ( ITEM_GetBufParam(dat,ITEM_PRM_ITEM_TYPE) << 10 ) + ITEM_GetBufParam(dat,ITEM_PRM_SORT_NUMBER);
+		sort[i].type = (ITEM_GetBufParam(dat,ITEM_PRM_ITEM_TYPE)<<28) + (ITEM_GetBufParam(dat,ITEM_PRM_SORT_NUMBER)<<16) + item[i].id;
 		sort[i].st   = item[i];
 		GFL_HEAP_FreeMemory( dat );
 	}
