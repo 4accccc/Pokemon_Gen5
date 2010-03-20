@@ -125,18 +125,6 @@
 #define ITEM_INAZUMAKASETTO		( 117 )		// イナズマカセット
 #define ITEM_BUREIZUKASETTO		( 118 )		// ブレイズカセット
 #define ITEM_HURIIZUKASETTO		( 119 )		// フリーズカセット
-#define ITEM_GURASUMEERU		( 120 )		// グラスメール
-#define ITEM_HUREIMUMEERU		( 121 )		// フレイムメール
-#define ITEM_BURUUMEERU		( 122 )		// ブルーメール
-#define ITEM_BURUUMUMEERU		( 123 )		// ブルームメール
-#define ITEM_TONNERUMEERU		( 125 )		// トンネルメール
-#define ITEM_SUTIIRUMEERU		( 127 )		// スチールメール
-#define ITEM_RABURABUMEERU		( 128 )		// ラブラブメール
-#define ITEM_BURIZAADOMEERU		( 129 )		// ブリザードメール
-#define ITEM_SUPEESUMEERU		( 130 )		// スペースメール
-#define ITEM_EAMEERU		( 131 )		// エアメール
-#define ITEM_MOZAIKUMEERU		( 132 )		// モザイクメール
-#define ITEM_BURIKKUMEERU		( 133 )		// ブリックメール
 #define ITEM_KONGOUDAMA		( 135 )		// こんごうだま
 #define ITEM_SIRATAMA		( 136 )		// しらたま
 #define ITEM_HAZIMETEMEERU		( 137 )		// はじめてメール
@@ -637,7 +625,7 @@
 
 #define ITEM_DATA_MAX		( 636 )		// アイテム最大数
 
-#define ITEM_MAIL_MAX	( 24 )	// メール数
+#define ITEM_MAIL_MAX	( 12 )	// メール数
 #define ITEM_NUTS_MAX	( 64 )	// きのみ数
 
 #endif // ITEMSYM_H
