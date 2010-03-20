@@ -506,11 +506,11 @@
 
 	<row id="ITEMINFO_042">
 		<language name="JPN" width="256">フエンめいぶつの　せんべい。
-ポケモン　１ひきの　じょうたい
-いじょうを　かいふくする。</language>
+ポケモン　１ひきの　じょうたいの
+いじょうを　すべて　かいふくする。</language>
 		<language name="JPN_KANJI" width="256">フエンめいぶつの　せんべい。
-ポケモン　１ひきの　じょうたい
-いじょうを　かいふくする。</language>
+ポケモン　１ひきの　じょうたいの
+いじょうを　すべて　かいふくする。</language>
 	</row>
 
 	<row id="ITEMINFO_043">
@@ -5185,21 +5185,21 @@
 	</row>
 
 	<row id="ITEMINFO_562">
-		<language name="JPN" width="256">とても　かるい　いし。
-もたせると　ポケモンの
-たいじゅうが　かるくなる。</language>
-		<language name="JPN_KANJI" width="256">とても　かるい　いし。
-もたせると　ポケモンの
-たいじゅうが　かるくなる。</language>
-	</row>
-
-	<row id="ITEMINFO_563">
 		<language name="JPN" width="256">しんかの　ふしぎな　かたまり。
 もたせると　しんかまえ　ポケモンの
 ぼうぎょと　とくぼうが　あがる。</language>
 		<language name="JPN_KANJI" width="256">しんかの　ふしぎな　かたまり。
 もたせると　しんかまえ　ポケモンの
 ぼうぎょと　とくぼうが　あがる。</language>
+	</row>
+
+	<row id="ITEMINFO_563">
+		<language name="JPN" width="256">とても　かるい　いし。
+もたせると　ポケモンの
+たいじゅうが　かるくなる。</language>
+		<language name="JPN_KANJI" width="256">とても　かるい　いし。
+もたせると　ポケモンの
+たいじゅうが　かるくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_564">

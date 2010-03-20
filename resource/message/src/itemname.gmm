@@ -751,53 +751,53 @@
 	</row>
 
 	<row id="ITEMNAME_124">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_125">
 		<language name="JPN" width="256">トンネルメール</language>
 		<language name="JPN_KANJI" width="256">トンネルメール</language>
 	</row>
 
-	<row id="ITEMNAME_125">
+	<row id="ITEMNAME_126">
+		<language name="JPN" width="256">？？？</language>
+		<language name="JPN_KANJI" width="256">？？？</language>
+	</row>
+
+	<row id="ITEMNAME_127">
 		<language name="JPN" width="256">スチールメール</language>
 		<language name="JPN_KANJI" width="256">スチールメール</language>
 	</row>
 
-	<row id="ITEMNAME_126">
+	<row id="ITEMNAME_128">
 		<language name="JPN" width="256">ラブラブメール</language>
 		<language name="JPN_KANJI" width="256">ラブラブメール</language>
 	</row>
 
-	<row id="ITEMNAME_127">
+	<row id="ITEMNAME_129">
 		<language name="JPN" width="256">ブリザードメール</language>
 		<language name="JPN_KANJI" width="256">ブリザードメール</language>
 	</row>
 
-	<row id="ITEMNAME_128">
+	<row id="ITEMNAME_130">
 		<language name="JPN" width="256">スペースメール</language>
 		<language name="JPN_KANJI" width="256">スペースメール</language>
 	</row>
 
-	<row id="ITEMNAME_129">
+	<row id="ITEMNAME_131">
 		<language name="JPN" width="256">エアメール</language>
 		<language name="JPN_KANJI" width="256">エアメール</language>
 	</row>
 
-	<row id="ITEMNAME_130">
+	<row id="ITEMNAME_132">
 		<language name="JPN" width="256">モザイクメール</language>
 		<language name="JPN_KANJI" width="256">モザイクメール</language>
 	</row>
 
-	<row id="ITEMNAME_131">
+	<row id="ITEMNAME_133">
 		<language name="JPN" width="256">ブリックメール</language>
 		<language name="JPN_KANJI" width="256">ブリックメール</language>
-	</row>
-
-	<row id="ITEMNAME_132">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
-	</row>
-
-	<row id="ITEMNAME_133">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
 	</row>
 
 	<row id="ITEMNAME_134">
@@ -2941,13 +2941,13 @@
 	</row>
 
 	<row id="ITEMNAME_562">
-		<language name="JPN" width="256">かるいし</language>
-		<language name="JPN_KANJI" width="256">かるいし</language>
+		<language name="JPN" width="256">しんかのきせき</language>
+		<language name="JPN_KANJI" width="256">しんかのきせき</language>
 	</row>
 
 	<row id="ITEMNAME_563">
-		<language name="JPN" width="256">しんかのきせき</language>
-		<language name="JPN_KANJI" width="256">しんかのきせき</language>
+		<language name="JPN" width="256">かるいし</language>
+		<language name="JPN_KANJI" width="256">かるいし</language>
 	</row>
 
 	<row id="ITEMNAME_564">
