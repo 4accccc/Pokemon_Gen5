@@ -177,12 +177,9 @@ BOOL BOXDAT_PutPokemon( BOX_MANAGER* box, const POKEMON_PASO_PARAM* poke )
 
 		if( BOXDAT_PutPokemonBox( box, b, poke ) )
 		{
-			//SaveData_RequestTotalSave();	//金銀で変更
-//			BOXDAT_SetTrayUseBit( box, b);
 			return TRUE;
 		}
 
-//		if( ++b >= BOX_MAX_TRAY )
 		if( ++b >= boxData->trayMax )
 		{
 			b = 0;
@@ -192,10 +189,9 @@ BOOL BOXDAT_PutPokemon( BOX_MANAGER* box, const POKEMON_PASO_PARAM* poke )
 
 	// 開放されていないトレイをチェック
 	if( boxData->trayMax != BOX_MAX_TRAY ){
-		BOXDAT_PutPokemonBox( box, boxData->trayMax, poke );
-		//SaveData_RequestTotalSave();	//金銀で変更
-//		BOXDAT_SetTrayUseBit( box, boxData->trayMax );
+		b = boxData->trayMax;
 		boxData->trayMax += BOX_MIN_TRAY;
+		BOXDAT_PutPokemonBox( box, b, poke );
 		return TRUE;
 	}
 
