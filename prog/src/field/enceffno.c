@@ -31,7 +31,7 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
   //特定のモンスターかを調べる
   switch (inMonsNo){
   case MONSNO_ZOROAAKU:
-    *outEffNo = ENCEFFID_PACKAGE_POKE;    //@todo
+    *outEffNo = ENCEFFID_WILD_HEIGH;
     *outBgmNo = SEQ_BGM_VS_TSUYOPOKE;
     return;
   //パッケージ
