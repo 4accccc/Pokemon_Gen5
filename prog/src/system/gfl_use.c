@@ -35,6 +35,7 @@
 #include "debug/gf_mcs.h"
 #include "sound/snd_viewer_mcs.h"
 #include "debug/mcs_resident.h"
+#include "debug/mcs_mode.h"
 #endif //PM_DEBUG
 
 //=============================================================================================
@@ -77,7 +78,6 @@ static void GFUser_PublicRandInit(void);
 #ifdef PM_DEBUG
 FS_EXTERN_OVERLAY(mcs_lib);
 BOOL  mcs_recv_auto;
-BOOL mcsResidentFlag;
 
 static void mcsRecv( void );
 #endif
@@ -201,7 +201,7 @@ void GFLUser_Init(void)
     GFL_OVERLAY_Load( FS_OVERLAY_ID( mcs_lib ) );
   	GFL_MCS_Init();
   }
-	mcsResidentFlag = FALSE;
+  MCS_USEMODE_Set( MCS_USEMODE_NONE );
 #endif //MULTI_BOOT_MAKE
 #endif
 	GFUser_ResetVIntrFunc();
@@ -246,7 +246,10 @@ void GFLUser_Main(void)
   {
     GFL_MCS_Main();
     GFL_MCS_SNDVIEWER_Main();
-    GFL_MCS_Resident();
+    if ( MCS_USEMODE_Get() == MCS_USEMODE_RESIDENT )
+    {
+      GFL_MCS_Resident();
+    }
   }
 #endif MULTI_BOOT_MAKE
 #endif

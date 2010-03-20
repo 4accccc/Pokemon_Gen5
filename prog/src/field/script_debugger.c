@@ -13,6 +13,7 @@
 #include "gflib.h"
 #include "script_debugger.h"
 #include <nnsys/mcs.h>
+#include "sound/pm_sndsys.h"
 
 //#include "debug/gf_mcs.h"
 //#include "debug/mcs_readfile.h"
@@ -34,7 +35,15 @@ static BOOL checkMCSEnable( void )
   }
   return FALSE;
 }
-
+//------------------------------------------------------------------
+/** サウンドの分割読み込み終了待ち */
+//------------------------------------------------------------------
+static void waitSoundLoading( void )
+{
+  while ( PMSND_IsLoading() == TRUE ) {
+    OS_Sleep(1);
+  }
+}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 BOOL SCRDEBUGGER_Boot( void )
@@ -53,6 +62,8 @@ void * SCRDEBUGGER_ReadScriptFile( HEAPID heapID, u32 scr_id )
 
   if ( checkMCSEnable() == FALSE ) return NULL;
 
+  waitSoundLoading();
+
   buffer = SCRDEBUGGER_CORE_readScriptAlloc( scr_id, heapID, 0 );
 #if 0
   buffer = GFL_HEAP_AllocClearMemory( heapID, 8000 );
@@ -70,7 +81,7 @@ void * SCRDEBUGGER_ReadScriptFile( HEAPID heapID, u32 scr_id )
 BOOL SCRDEBUGGER_ReadSpecialScriptFile( u32 scr_id, void * buffer, u32 buf_size )
 {
   if ( checkMCSEnable() == FALSE) return FALSE;
-
+  waitSoundLoading();
   return SCRDEBUGGER_CORE_readScript( scr_id, buffer, buf_size );
 }
 
@@ -79,6 +90,7 @@ BOOL SCRDEBUGGER_ReadSpecialScriptFile( u32 scr_id, void * buffer, u32 buf_size 
 BOOL SCRDEBUGGER_ReadEventFile( u32 zone_id, void * buffer, u32 buf_size )
 {
   if ( checkMCSEnable() == FALSE) return FALSE;
+  waitSoundLoading();
   return SCRDEBUGGER_CORE_readEventData( zone_id, buffer, buf_size );
 }
 
