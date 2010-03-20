@@ -50,7 +50,7 @@
 #define _DISP_DEBUG (1)  //ï\é¶çÏÇËÇ±Ç›
 #else
 #define _NET_DEBUG (0)
-#define _DISP_DEBUG (0)
+#define _DISP_DEBUG (1)
 #endif
 
 #define _NO2   (2)
