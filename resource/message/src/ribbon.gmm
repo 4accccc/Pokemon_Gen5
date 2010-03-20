@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-11T22:24:10"/>
+	<create user="matsumiya" host="W00224" date="2010-03-20T21:38:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,15 +315,15 @@
 		</language>
 	</columns>
 
-	<dialog left="84" top="216" right="789" bottom="844" maximized="no" rayout="Vertical2">
+	<dialog left="1606" top="399" right="2312" bottom="1027" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="531"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="556"/>
+		<band id="2" index="3" style="0000" width="557"/>
 		<band id="3" index="4" style="0000" width="139"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="698"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -909,336 +909,336 @@
 ・プラチナで修正</comment>
 		<language name="JPN" font=" 1:small" width="240">べつちほうの　リーグで　かちぬき
 でんどういり　した　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">べつちほうの　リーグで　かちぬき
-でんどういり　した　きねんリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">別地方の　リーグで　勝ち抜き
+殿堂入りした　記念リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_league_002" group=" 5:説明：リーグ" back-color=",,,,,#ff8080,,,,,,,,,,,,">
 		<comment>テキスト名32</comment>
 		<language name="JPN" font=" 1:small" width="240">シンオウで　チャンピオンに　かって
 でんどういり　した　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">シンオウで　チャンピオンに　かって
-でんどういり　した　きねんリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">シンオウで　チャンピオンに　勝利し
+殿堂入りした　記念リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_001" group=" 6:説明：コンテスト">
 		<comment>テキスト名01</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
 ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
-ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　かっこよさコンテスト
+ノーマルランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_002" group=" 6:説明：コンテスト">
 		<comment>テキスト名02</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
 スーパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
-スーパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　かっこよさコンテスト
+スーパーランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_003" group=" 6:説明：コンテスト">
 		<comment>テキスト名03</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
 ハイパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
-ハイパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　かっこよさコンテスト
+ハイパーランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_004" group=" 6:説明：コンテスト">
 		<comment>テキスト名04</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
 マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かっこよさコンテスト
-マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　かっこよさコンテスト
+マスターランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_005" group=" 6:説明：コンテスト">
 		<comment>テキスト名05</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
 ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
-ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　うつくしさコンテスト
+ノーマルランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_006" group=" 6:説明：コンテスト">
 		<comment>テキスト名06</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
 スーパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
-スーパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　うつくしさコンテスト
+スーパーランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_007" group=" 6:説明：コンテスト">
 		<comment>テキスト名07</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
 ハイパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
-ハイパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　うつくしさコンテスト
+ハイパーランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_008" group=" 6:説明：コンテスト">
 		<comment>テキスト名08</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
 マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　うつくしさコンテスト
-マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　うつくしさコンテスト
+マスターランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_009" group=" 6:説明：コンテスト">
 		<comment>テキスト名09</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
 ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
-ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　かわいさコンテスト
+ノーマルランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_010" group=" 6:説明：コンテスト">
 		<comment>テキスト名10</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
 スーパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
-スーパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　かわいさコンテスト
+スーパーランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_011" group=" 6:説明：コンテスト">
 		<comment>テキスト名11</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
 ハイパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
-ハイパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　かわいさコンテスト
+ハイパーランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_012" group=" 6:説明：コンテスト">
 		<comment>テキスト名12</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
 マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かわいさコンテスト
-マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　かわいさコンテスト
+マスターランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_013" group=" 6:説明：コンテスト">
 		<comment>テキスト名13</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
 ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
-ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　かしこさコンテスト
+ノーマルランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_014" group=" 6:説明：コンテスト">
 		<comment>テキスト名14</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
 スーパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
-スーパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　かしこさコンテスト
+スーパーランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_015" group=" 6:説明：コンテスト">
 		<comment>テキスト名15</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
 ハイパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
-ハイパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　かしこさコンテスト
+ハイパーランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_016" group=" 6:説明：コンテスト">
 		<comment>テキスト名16</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
 マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　かしこさコンテスト
-マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　かしこさコンテスト
+マスターランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_017" group=" 6:説明：コンテスト">
 		<comment>テキスト名17</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
 ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
-ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　たくましさコンテスト
+ノーマルランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_018" group=" 6:説明：コンテスト">
 		<comment>テキスト名18</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
 スーパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
-スーパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　たくましさコンテスト
+スーパーランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_019" group=" 6:説明：コンテスト">
 		<comment>テキスト名19</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
 ハイパーランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
-ハイパーランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　たくましさコンテスト
+ハイパーランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_020" group=" 6:説明：コンテスト">
 		<comment>テキスト名20</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
 マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンちほう　たくましさコンテスト
-マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエン地方　たくましさコンテスト
+マスターランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_021" group=" 6:説明：コンテスト">
 		<comment>テキスト名33</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かっこよさ　ぶもん
 ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かっこよさ　ぶもん
-ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かっこよさ部門
+ノーマルランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_022" group=" 6:説明：コンテスト">
 		<comment>テキスト名34</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かっこよさ　ぶもん
 グレートランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かっこよさ　ぶもん
-グレートランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かっこよさ部門
+グレートランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_023" group=" 6:説明：コンテスト">
 		<comment>テキスト名35</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かっこよさ　ぶもん
 ウルトラランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かっこよさ　ぶもん
-ウルトラランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かっこよさ部門
+ウルトラランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_024" group=" 6:説明：コンテスト">
 		<comment>テキスト名36</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かっこよさ　ぶもん
 マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かっこよさ　ぶもん
-マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かっこよさ部門
+マスターランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_025" group=" 6:説明：コンテスト">
 		<comment>テキスト名37</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　うつくしさ　ぶもん
 ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　うつくしさ　ぶもん
-ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　うつくしさ部門
+ノーマルランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_026" group=" 6:説明：コンテスト">
 		<comment>テキスト名38</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　うつくしさ　ぶもん
 グレートランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　うつくしさ　ぶもん
-グレートランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　うつくしさ部門
+グレートランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_027" group=" 6:説明：コンテスト">
 		<comment>テキスト名39</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　うつくしさ　ぶもん
 ウルトラランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　うつくしさ　ぶもん
-ウルトラランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　うつくしさ部門
+ウルトラランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_028" group=" 6:説明：コンテスト">
 		<comment>テキスト名40</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　うつくしさ　ぶもん
 マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　うつくしさ　ぶもん
-マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　うつくしさ部門
+マスターランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_029" group=" 6:説明：コンテスト">
 		<comment>テキスト名41</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かわいさ　ぶもん
 ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かわいさ　ぶもん
-ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かわいさ部門
+ノーマルランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_030" group=" 6:説明：コンテスト">
 		<comment>テキスト名42</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かわいさ　ぶもん
 グレートランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かわいさ　ぶもん
-グレートランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かわいさ部門
+グレートランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_031" group=" 6:説明：コンテスト">
 		<comment>テキスト名43</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かわいさ　ぶもん
 ウルトラランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かわいさ　ぶもん
-ウルトラランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かわいさ部門
+ウルトラランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_032" group=" 6:説明：コンテスト">
 		<comment>テキスト名44</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かわいさ　ぶもん
 マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かわいさ　ぶもん
-マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かわいさ部門
+マスターランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_033" group=" 6:説明：コンテスト">
 		<comment>テキスト名45</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かしこさ　ぶもん
 ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かしこさ　ぶもん
-ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かしこさ部門
+ノーマルランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_034" group=" 6:説明：コンテスト">
 		<comment>テキスト名46</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かしこさ　ぶもん
 グレートランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かしこさ　ぶもん
-グレートランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かしこさ部門
+グレートランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_035" group=" 6:説明：コンテスト">
 		<comment>テキスト名47</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かしこさ　ぶもん
 ウルトラランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かしこさ　ぶもん
-ウルトラランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かしこさ部門
+ウルトラランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_036" group=" 6:説明：コンテスト">
 		<comment>テキスト名48</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　かしこさ　ぶもん
 マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かしこさ　ぶもん
-マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　かしこさ部門
+マスターランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_037" group=" 6:説明：コンテスト">
 		<comment>テキスト名49</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　たくましさ　ぶもん
 ノーマルランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　たくましさ　ぶもん
-ノーマルランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　たくましさ部門
+ノーマルランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_038" group=" 6:説明：コンテスト">
 		<comment>テキスト名50</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　たくましさ　ぶもん
 グレートランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　たくましさ　ぶもん
-グレートランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　たくましさ部門
+グレートランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_039" group=" 6:説明：コンテスト">
 		<comment>テキスト名51</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　たくましさ　ぶもん
 ウルトラランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　たくましさ　ぶもん
-ウルトラランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　たくましさ部門
+ウルトラランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_contest_040" group=" 6:説明：コンテスト">
 		<comment>テキスト名52</comment>
 		<language name="JPN" font=" 1:small" width="240">スーパーコンテスト　たくましさ　ぶもん
 マスターランク　ゆうしょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　たくましさ　ぶもん
-マスターランク　ゆうしょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">スーパーコンテスト　たくましさ部門
+マスターランク　優勝！</language>
 	</row>
 
 	<row id="mes_ribbon_text_tower_001" group=" 7:説明：タワー">
@@ -1246,7 +1246,7 @@
 		<language name="JPN" font=" 1:small" width="240">ホウエンの　バトルタワー　レベル５０を
 かちぬいた　きねんの　リボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンの　バトルタワー　レベル５０を
-かちぬいた　きねんの　リボン</language>
+勝ち抜いた　記念の　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_tower_002" group=" 7:説明：タワー">
@@ -1254,145 +1254,139 @@
 		<language name="JPN" font=" 1:small" width="240">ホウエンの　バトルタワー　レベル１００を
 かちぬいた　きねんの　リボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンの　バトルタワー　レベル１００を
-かちぬいた　きねんの　リボン</language>
+勝ち抜いた　記念の　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_tower_003" group=" 7:説明：タワー" text-color=",,,#0000ff,,,,,,,,,,,,,," back-color=",,,,,#ff8080,,,,,,,,,,,,">
 		<comment>テキスト名53
-
 金銀で修正
 </comment>
 		<language name="JPN" font=" 1:small" width="240">バトルタワーで　タワータイクーンに
 しょうりした　きねんの　リボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">バトルタワーで　タワータイクーンに
-しょうりした　きねんの　リボン</language>
+勝利した　記念の　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_tower_004" group=" 7:説明：タワー" text-color=",,,#0000ff,,,,,,,,,,,,,," back-color=",,,,,#ff8080,,,,,,,,,,,,">
 		<comment>テキスト名53
-
 金銀で修正
 </comment>
 		<language name="JPN" font=" 1:small" width="240">バトルタワーで　タワータイクーンに
 しょうりした　きねんの　リボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">バトルタワーで　タワータイクーンに
-しょうりした　きねんの　リボン</language>
+勝利した　記念の　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_tower_005" group=" 7:説明：タワー" text-color=",,,#0000ff,,,,,,,,,,,,,,">
 		<comment>テキスト名53
-
 金銀で修正
 </comment>
 		<language name="JPN" font=" 1:small" width="240">バトルタワー　ダブルを
 かちぬいた　きねんの　リボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">バトルタワー　ダブルを
-かちぬいた　きねんの　リボン</language>
+勝ち抜いた　記念の　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_tower_006" group=" 7:説明：タワー" text-color=",,,#0000ff,,,,,,,,,,,,,,">
 		<comment>テキスト名53
-
 金銀で修正
 </comment>
 		<language name="JPN" font=" 1:small" width="240">バトルタワー　マルチを
 かちぬいた　きねんの　リボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">バトルタワー　マルチを
-かちぬいた　きねんの　リボン</language>
+勝ち抜いた　記念の　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_tower_007" group=" 7:説明：タワー" text-color=",,,#0000ff,,,,,,,,,,,,,,">
 		<comment>テキスト名53
-
 金銀で修正
 </comment>
 		<language name="JPN" font=" 1:small" width="240">バトルタワー　つうしんマルチを
 かちぬいた　きねんの　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">バトルタワー　つうしんマルチを
-かちぬいた　きねんの　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">バトルタワー　通信マルチを
+勝ち抜いた　記念の　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_tower_008" group=" 7:説明：タワー" text-color=",,,#0000ff,,,,,,,,,,,,,,">
 		<comment>テキスト名53
-
 金銀で修正
 </comment>
 		<language name="JPN" font=" 1:small" width="240">ＷｉーＦｉバトルタワーを
 かちぬいた　きねんの　リボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">ＷｉーＦｉバトルタワーを
-かちぬいた　きねんの　リボン</language>
+勝ち抜いた　記念の　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_memory_001" group=" 8:説明：メモリー" back-color=",,,,,#ff8080,,,,,,,,,,,,">
 		<comment>テキスト名23</comment>
 		<language name="JPN" font=" 1:small" width="240">ホウエンで　ごうかな　にがおえの
 モデルになった　きねんの　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンで　ごうかな　にがおえの
-モデルになった　きねんの　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ホウエンで　豪華な　似顔絵の
+モデルになった　記念の　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_memory_002" group=" 8:説明：メモリー">
 		<comment>テキスト名24</comment>
 		<language name="JPN" font=" 1:small" width="240">たくさん　どりょく　している
 ポケモンに　おくられる　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">たくさん　どりょく　している
-ポケモンに　おくられる　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">たくさん　努力している
+ポケモンに　贈られる　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_memory_003" group=" 8:説明：メモリー">
 		<comment>テキスト名59</comment>
 		<language name="JPN" font=" 1:small" width="240">しゃっきりする　できごとを　おもいだして
 じんせいの　エネルギーとなる　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">しゃっきりする　できごとを　おもいだして
-じんせいの　エネルギーとなる　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">しゃっきりする　できごとを　思い出して
+人生の　エネルギーとなる　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_memory_004" group=" 8:説明：メモリー">
 		<comment>テキスト名60</comment>
 		<language name="JPN" font=" 1:small" width="240">どきどきした　ことがらを　おもいだして
 じんせいを　わくわくさせてくれる　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">どきどきした　ことがらを　おもいだして
-じんせいを　わくわくさせてくれる　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">どきどきした　事柄を　思い出して
+人生を　わくわくさせてくれる　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_memory_005" group=" 8:説明：メモリー">
 		<comment>テキスト名61</comment>
 		<language name="JPN" font=" 1:small" width="240">しょんぼりした　きもちを　おもいだして
 じんせいの　スパイスとなる　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">しょんぼりした　きもちを　おもいだして
-じんせいの　スパイスとなる　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">しょんぼりした　気持ちを　思い出して
+人生の　スパイスとなる　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_memory_006" group=" 8:説明：メモリー">
 		<comment>テキスト名62</comment>
 		<language name="JPN" font=" 1:small" width="240">うっかりした　しっぱいを　おもいだして
 じんせいの　エッセンスとなる　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">うっかりした　しっぱいを　おもいだして
-じんせいの　エッセンスとなる　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">うっかりした　失敗を　思い出して
+人生の　エッセンスとなる　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_memory_007" group=" 8:説明：メモリー">
 		<comment>テキスト名63</comment>
 		<language name="JPN" font=" 1:small" width="240">すっきりした　けいけんを　おもいだして
 じんせいを　リフレッシュさせる　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">すっきりした　けいけんを　おもいだして
-じんせいを　リフレッシュさせる　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">すっきりした　経験を　思い出して
+人生を　リフレッシュさせる　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_memory_008" group=" 8:説明：メモリー">
 		<comment>テキスト名64</comment>
 		<language name="JPN" font=" 1:small" width="240">ぐっすり　ねむったことを　おもいだして
 じんせいの　やすらぎとなる　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ぐっすり　ねむったことを　おもいだして
-じんせいの　やすらぎとなる　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ぐっすり　眠ったことを　思い出して
+人生の　安らぎとなる　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_memory_009" group=" 8:説明：メモリー">
 		<comment>テキスト名65</comment>
 		<language name="JPN" font=" 1:small" width="240">にっこり　ほほえむことを　おもいだして
 じんせいを　ゆたかにしてくれる　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">にっこり　ほほえむことを　おもいだして
-じんせいを　ゆたかにしてくれる　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">にっこり　ほほえむことを　思い出して
+人生を　ゆたかにしてくれる　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_memory_010" group=" 8:説明：メモリー">
@@ -1400,7 +1394,7 @@
 		<language name="JPN" font=" 1:small" width="240">このうえなく　ゴージャスで
 きらびやかな　かんじの　リボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">このうえなく　ゴージャスで
-きらびやかな　かんじの　リボン</language>
+きらびやかな　感じの　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_memory_011" group=" 8:説明：メモリー">
@@ -1408,14 +1402,14 @@
 		<language name="JPN" font=" 1:small" width="240">とてつもなく　ロイヤルで
 けだかい　かんじのする　リボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">とてつもなく　ロイヤルで
-けだかい　かんじのする　リボン</language>
+気高い　感じのする　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_memory_012" group=" 8:説明：メモリー">
 		<comment>テキスト名68</comment>
 		<language name="JPN" font=" 1:small" width="240">これいじょう　すばらしいものは　ない
 ゴージャスで　ロイヤルな　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">これいじょう　すばらしいものは　ない
+		<language name="JPN_KANJI" font=" 1:small" width="240">これ以上　素晴らしいものは　ない
 ゴージャスで　ロイヤルな　リボン</language>
 	</row>
 
@@ -1423,7 +1417,7 @@
 		<comment>テキスト名69</comment>
 		<language name="JPN" font=" 1:small" width="240">さいこうの　あしあとを　もつ
 ポケモンが　もらえる　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">さいこうの　あしあとを　もつ
+		<language name="JPN_KANJI" font=" 1:small" width="240">最高の　あしあとを　持つ
 ポケモンが　もらえる　リボン</language>
 	</row>
 
@@ -1431,16 +1425,16 @@
 		<comment>テキスト名70</comment>
 		<language name="JPN" font=" 1:small" width="240">ものすごい　きろくを　のこした
 きねんの　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ものすごい　きろくを　のこした
-きねんの　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ものすごい　記録を　残した
+記念の　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_memory_015" group=" 8:説明：メモリー">
 		<comment>テキスト名72</comment>
 		<language name="JPN" font=" 1:small" width="240">でんせつてき　きろくを　のこした
 きねんの　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">でんせつてき　きろくを　のこした
-きねんの　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">伝説的　記録を　残した
+記念の　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_001" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1448,23 +1442,23 @@
 		<language name="JPN" font=" 1:small" width="240">ポケモンリーグ
 ゆうしょう　きねんリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンリーグ
-ゆうしょう　きねんリボン</language>
+優勝　記念リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_002" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>テキスト名29</comment>
 		<language name="JPN" font=" 1:small" width="240">すべての　こんなんを
 のりこえた　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">すべての　こんなんを
-のりこえた　きねんリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">すべての　困難を
+乗り越えた　記念リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_003" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>テキスト名30</comment>
 		<language name="JPN" font=" 1:small" width="240">１００にんぬき　たっせい
 きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">１００にんぬき　たっせい
-きねんリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">１００人抜き　達成
+記念リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_004" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1472,59 +1466,59 @@
 		<language name="JPN" font=" 1:small" width="240">ポケモンリーグ
 ゆうしょう　きねんリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンリーグ
-ゆうしょう　きねんリボン</language>
+優勝　記念リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_005" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>テキスト名78</comment>
 		<language name="JPN" font=" 1:small" width="240">ポケモンが　だいすきな　ことを
 しょうめいする　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンが　だいすきな　ことを
-しょうめいする　きねんリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンが　大好きな　ことを
+証明する　記念リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_006" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>テキスト名79</comment>
 		<language name="JPN" font=" 1:small" width="240">きねんび　きねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">きねんび　きねんリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">記念び　記念リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_007" group=" 9:説明：プレゼント">
 		<comment>テキスト名71</comment>
 		<language name="JPN" font=" 1:small" width="240">れきしてき　きろくを　のこした
 きねんの　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">れきしてき　きろくを　のこした
-きねんの　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">歴史的　記録を　残した
+記念の　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_008" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>テキスト名74</comment>
 		<language name="JPN" font=" 1:small" width="240">おたんじょうび　きねん　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">おたんじょうび　きねん　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">お誕生日　記念　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_009" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>テキスト名75</comment>
 		<language name="JPN" font=" 1:small" width="240">とくべつな　ひの　とくべつな　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">とくべつな　ひの　とくべつな　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">特別な　日の　特別な　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_010" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>テキスト名76</comment>
 		<language name="JPN" font=" 1:small" width="240">とくべつな　おもいでを　きねんする　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">とくべつな　おもいでを　きねんする　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">特別な　思い出を　記念する　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_011" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>テキスト名77</comment>
 		<language name="JPN" font=" 1:small" width="240">ねがいが　かなうと　いわれている　リボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">ねがいが　かなうと　いわれている　リボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">願いが　かなうと　いわれている　リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_012" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>テキスト名25</comment>
 		<language name="JPN" font=" 1:small" width="240">バトルたいかい　ゆうしょうきねんリボン</language>
-		<language name="JPN_KANJI" font=" 1:small" width="240">バトルたいかい　ゆうしょうきねんリボン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="240">バトル大会　優勝記念リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_013" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1532,7 +1526,7 @@
 		<language name="JPN" font=" 1:small" width="240">ポケモンワールドチャンピオンシップス
 エリアたいかい　ゆうしょうきねんリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンワールドチャンピオンシップス
-エリアたいかい　ゆうしょうきねんリボン</language>
+エリア大会　優勝記念リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_014" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1540,7 +1534,7 @@
 		<language name="JPN" font=" 1:small" width="240">ポケモンワールドチャンピオンシップス
 こくないたいかい　ゆうしょうきねんリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンワールドチャンピオンシップス
-こくないたいかい　ゆうしょうきねんリボン</language>
+国内大会　優勝記念リボン</language>
 	</row>
 
 	<row id="mes_ribbon_text_present_015" group=" 9:説明：プレゼント" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1548,7 +1542,7 @@
 		<language name="JPN" font=" 1:small" width="240">ポケモンワールドチャンピオンシップス
 せかいたいかい　ゆうしょうきねんリボン</language>
 		<language name="JPN_KANJI" font=" 1:small" width="240">ポケモンワールドチャンピオンシップス
-せかいたいかい　ゆうしょうきねんリボン</language>
+世界大会　優勝記念リボン</language>
 	</row>
 
 	<row id="mes_ribbon_category_01" group="10:カテゴリ">
