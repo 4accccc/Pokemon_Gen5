@@ -322,7 +322,6 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   WIPE_ResetWndMask(WIPE_DISP_MAIN);
   WIPE_ResetWndMask(WIPE_DISP_SUB);
 
-  GFL_UI_KEY_SetRepeatSpeed( 4, 8 );
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TR_CARD, 0x50000 );
 
   wk = GFL_PROC_AllocWork( proc, sizeof(TR_CARD_WORK), HEAPID_TR_CARD );
