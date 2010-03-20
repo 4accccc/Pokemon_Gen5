@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-12T16:15:15"/>
+	<create user="matsumiya" host="W00224" date="2010-03-20T21:02:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1413" top="155" right="2118" bottom="783" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="249" right="1280" bottom="647" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="370"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -305,13 +305,13 @@ MAID</attribute>
 いろんな　いみで　ふとっぱらな
 ウチの　ごしゅじんさまが▼
 ビビッとくるような　グルメな
-しょくざいを　さがしてるのさ！</language>
+しょくざいを　さがしてるのさ！▼</language>
 		<language name="JPN_KANJI" width="256">ハアイ！
 アタイは　しがないメイド！▼
 いろんな　意味で　太っ腹な
 ウチの　ご主人様が▼
 ビビッとくるような　グルメな
-食材を　探してるのさ</language>
+食材を　探してるのさ▼</language>
 	</row>
 
 	<row id="msg_appraisal_g_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -329,13 +329,13 @@ MAID</attribute>
 とっても　グルメな　スメルが▼
 プウンとするなあ……[BE:01:ページ切り替え（クリア）]
 よかったら　そのスメルの　しょうたい
-アタイに　ゆずって　くんないかな？</language>
+アタイに　ゆずって　くんないかな？▼</language>
 		<language name="JPN_KANJI" width="256">クンクン……　クンカ　クンカ……[BE:01:ページ切り替え（クリア）]
 なんか　アンタのバッグから
 とっても　グルメな　スメルが▼
 プウンとするなあ……[BE:01:ページ切り替え（クリア）]
 よかったら　そのスメルの　正体
-アタイに　譲って　くんないかな？</language>
+アタイに　譲って　くんないかな？▼</language>
 	</row>
 
 	<row id="msg_appraisal_g_03" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -425,13 +425,13 @@ GENTLEMAN</attribute>
 あ　これ　わらうところじゃ[BE:01:ページ切り替え（クリア）]
 それは　まあ　ともかく[BE:01:ページ切り替え（クリア）]
 ワシ　めずらしい　こうぶつになら
-おかねは　まるで　おしくないし</language>
+おかねは　まるで　おしくないし▼</language>
 		<language name="JPN_KANJI" width="256">イシシ　イシシ　イシシシ……
 ワシ　鉱物が　大好物なの▼
 あ　これ　笑うところじゃ[BE:01:ページ切り替え（クリア）]
 それは　まあ　ともかく[BE:01:ページ切り替え（クリア）]
 ワシ　珍しい　鉱物になら
-お金は　まるで　惜しくないし</language>
+お金は　まるで　惜しくないし▼</language>
 	</row>
 
 	<row id="msg_appraisal_m_02" text-color="#000000,,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
@@ -446,9 +446,9 @@ GENTLEMAN</attribute>
 		<attribute name="キャラ指定">ジェントルマン
 GENTLEMAN</attribute>
 		<language name="JPN" width="256">ワシの　いしを　グラつかせるような
-せくしいな　いしとか　もってないの？</language>
+せくしいな　いしとか　もってないの？▼</language>
 		<language name="JPN_KANJI" width="256">ワシの意思を　グラつかせるような
-せくしいな石とか　持ってないの？</language>
+せくしいな石とか　持ってないの？▼</language>
 	</row>
 
 	<row id="msg_appraisal_m_03" text-color="#000000,,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
@@ -529,14 +529,16 @@ FIGHTERM</attribute>
 すごーく　リッチな　だいふごう！▼
 で　しゅみは　みてわかるように
 めずらしい　どうぐあつめ！▼
-そんな　オレに　うってもいいような
-すごい　どうぐ　もってないかね？　かね？</language>
-		<language name="JPN_KANJI" width="256">オレ　ごらんのとおり
-すごーく　リッチな　だいふごう！▼
-で　しゅみは　みてわかるように
-めずらしい　どうぐあつめ！▼
-そんな　オレに　うってもいいような
-すごい　どうぐ　もってないかね？　かね？</language>
+ちなみに　この　いしょうも
+すごく　リッチで　めずらしいのが▽
+きみには　わかるかね？　かね？▼</language>
+		<language name="JPN_KANJI" width="256">オレ　ご覧のとおり
+すごーく　リッチな　大富豪！▼
+で　趣味は　みてわかるように
+珍しい　道具集め！▼
+ちなみに　この衣装も
+すごく　リッチで　珍しいのが▽
+きみには　わかるかね？　かね？▼</language>
 	</row>
 
 	<row id="msg_appraisal_r_02" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
@@ -553,11 +555,11 @@ FIGHTERM</attribute>
 		<language name="JPN" width="256">だいふごうの　オレが
 たいきんを　はらってでも　ほしくなる……▼
 そんな　めずらしい　どうぐ
-もってないかね？　かね？</language>
-		<language name="JPN_KANJI" width="256">だいふごうの　オレが
-たいきんを　はらってでも　ほしくなる……▼
-そんな　めずらしい　どうぐ
-もってないかね？　かね？</language>
+もってないかね？　かね？▼</language>
+		<language name="JPN_KANJI" width="256">大富豪の　オレが
+大金を　積んででも　欲しくなる……▼
+そんな　珍しい　道具
+持ってないかね？　かね？▼</language>
 	</row>
 
 	<row id="msg_appraisal_r_03" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
@@ -575,7 +577,7 @@ FIGHTERM</attribute>
 ゆずってくれないかね？　かね？</language>
 	</row>
 
-	<row id="msg_appraisal_r_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
+	<row id="msg_appraisal_r_04" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
 		<comment>●鑑定アイテム：大富豪
 ・メッセージ終了時取得ＳＥ
 ・終了後→msg_appraisal_r_05</comment>
@@ -584,7 +586,7 @@ FIGHTERM</attribute>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]　を　わたして
 [2:07:８桁:1]えんを　もらった！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　を　わたして
-[2:07:８桁:1]えんを　もらった！</language>
+[2:07:８桁:1]円を　もらった！</language>
 	</row>
 
 	<row id="msg_appraisal_r_05" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
@@ -594,8 +596,8 @@ FIGHTERM</attribute>
 FIGHTERM</attribute>
 		<language name="JPN" width="256">いいものが　てにはいったよ！
 すごいと　おもわんかね？　かね？</language>
-		<language name="JPN_KANJI" width="256">いいものが　てにはいったよ！
-すごいとおもわんかね　かね？</language>
+		<language name="JPN_KANJI" width="256">いいものが　入手できたよ！
+すごいと　思わんかね　かね？</language>
 	</row>
 
 	<row id="msg_appraisal_r_06" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
@@ -605,8 +607,8 @@ FIGHTERM</attribute>
 FIGHTERM</attribute>
 		<language name="JPN" width="256">これは　ちょっと　ちがうなー
 きみも　そうおもわんかね？　かね？</language>
-		<language name="JPN_KANJI" width="256">これは　ちょっと　ちがうなー
-きみも　そうおもわんかね　かね？</language>
+		<language name="JPN_KANJI" width="256">これは　ちょっと　違うなー
+きみも　そう思わんかね　かね？</language>
 	</row>
 
 	<row id="msg_appraisal_r_07" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
@@ -616,7 +618,7 @@ FIGHTERM</attribute>
 FIGHTERM</attribute>
 		<language name="JPN" width="256">そのどうぐ　きがかわったら
 ゆずって　くれないかね？　かね？</language>
-		<language name="JPN_KANJI" width="256">そのどうぐ　きがかわったら
+		<language name="JPN_KANJI" width="256">その道具　気が変わったら
 ゆずってくれないかね　かね？</language>
 	</row>
 
