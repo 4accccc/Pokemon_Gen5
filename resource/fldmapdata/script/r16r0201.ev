@@ -10,6 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_r16r0201.h"
+  .include  "msg_r16r0301.h"
   .include  "r16r0201.h"
 
 //--------------------------------------------------------------
@@ -139,13 +140,10 @@ EVENT_START	ev_r16r0201_backpackerm_01
   _TALK_OBJ_START()
   //メッセージ
   _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_01, R16R0201_BACKPACKERM_01)
-  _BALLOONWIN_CLOSE()
   _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_02, R16R0201_BACKPACKERM_01)
   _BALLOONWIN_CLOSE()
-  _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_03, R16R0201_BACKPACKERM_01)
-  _BALLOONWIN_CLOSE()
 
-  //立ち去る    @todo
+  _CALL backpacker_talk_turn
 
   _FLAG_SET( FV_R16R0201_BACKPACKERM )
   _OBJ_DEL(R16R0201_BACKPACKERM_01)
@@ -164,6 +162,12 @@ EVENT_START	ev_pos_r16r0201_woman3_01
   //自機の移動
   _CALL move_player
 
+  //カメラ移動
+  _CAMERA_START()
+  _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	_CAMERA_MOVE(9688,0,970752,1081344,0,1343488,8)
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
   //女性出して、自機に近づく
   _FLAG_RESET( FV_R16R0201_WOMAN3 )
   _OBJ_ADD(R16R0201_WOMAN3_01)
@@ -176,6 +180,15 @@ EVENT_START	ev_pos_r16r0201_woman3_01
   _VOICE_WAIT()
   _AB_KEYWAIT_MARK()
   _BALLOONWIN_CLOSE()
+
+  //女性さらに、自機に近づく
+  _OBJ_ANIME( R16R0201_WOMAN3_01, anm_woman_move2)
+  //カメラ戻し
+  _CAMERA_DEF_MOVE( 8 )
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+  _OBJ_ANIME_WAIT()
 
   //マップ変更リクエスト
   _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_08, TRUE, TRUE )
@@ -193,7 +206,7 @@ EVENT_START	ev_pos_r16r0201_woman3_01
   IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN       //勝った
     _WILD_WIN()
   ELSE
-     _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
+    _WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
   ENDIF
 
   _WILD_RETRY_CHECK( SCWK_ANSWER )
@@ -203,7 +216,8 @@ EVENT_START	ev_pos_r16r0201_woman3_01
     $WK_SCENE_R16R0201 = 1 
   CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
     _CALL backpacker_evt
-    
+    //POSを無効（ローカルワーク0に0をセット)
+    $LOCALWORK0 = 0
     //対象ポケモンお役御免(イベント後フラグをセット)
     _SET_EVT_POKE_AFT_FLG( target_monsno, target_poke_pos )
     //シーンワーク更新　イベント完全終了
@@ -277,15 +291,70 @@ search_target:
 }
 _RET
 
+backpacker_talk_turn:
+{
+  DEFINE_LOCAL player_dir
+  //自機の向きを取得
+  _PLAYER_DIR_GET(player_dir)
+  
+  //自機の向きでアニメ分岐
+  IF $player_dir == DIR_UP THEN
+    _OBJ_ANIME( R16R0201_BACKPACKERM_01, anm_talk_backpacker_remove_plyer_up )
+  ELSE
+    _OBJ_ANIME( R16R0201_BACKPACKERM_01, anm_talk_backpacker_remove )
+  ENDIF
+  _OBJ_ANIME_WAIT()
+
+  _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_03, R16R0201_BACKPACKERM_01)
+  _BALLOONWIN_CLOSE()
+
+  IF $player_dir == DIR_UP THEN
+    _OBJ_ANIME( R16R0201_BACKPACKERM_01, anm_talk_backpacker_remove2_plyer_up )
+  ELSE
+    _OBJ_ANIME( R16R0201_BACKPACKERM_01, anm_talk_backpacker_remove2 )
+  ENDIF
+  _OBJ_ANIME_WAIT()
+}  
+_RET
+
 //ゾロアーク捕獲後青年イベント
 backpacker_evt:
   //青年を所定の位置に配置
+  _OBJ_ADD_EX(16, 30, DIR_UP, MMDL_ID_EVENTOBJ_00, BACKPACKERM, MV_DMY)
+  
+  //青年自機に近づく
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_backpacker_app )
+  _OBJ_ANIME_WAIT()
+ 
+  //「ゾロアのすみか」
+  _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_04, MMDL_ID_EVENTOBJ_00)
+  _BALLOONWIN_CLOSE()
 
-    //青年自機に近づく
+  //自機下向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_down )
+  _OBJ_ANIME_WAIT()
 
-    //青年のメッセージ
+  //青年自機に近づく
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_backpacker_app2 )
+  _OBJ_ANIME_WAIT()
 
-    //青年退出
+  //青年のメッセージ
+  _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_05, MMDL_ID_EVENTOBJ_00)
+  _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_06, MMDL_ID_EVENTOBJ_00)
+  _BALLOONWIN_CLOSE()
+
+  //青年退出
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_backpacker_remove )
+  _OBJ_ANIME_WAIT()
+
+  //「イリュージョン」
+  _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_07, MMDL_ID_EVENTOBJ_00)
+  _BALLOONWIN_CLOSE()
+
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_backpacker_remove2 )
+  _OBJ_ANIME_WAIT()
+
+  _OBJ_DEL(MMDL_ID_EVENTOBJ_00)
 
 _RET
 
@@ -340,13 +409,90 @@ _ANIME_LABEL	anm_woman_move
   _ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//女性がさらに近づく
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_woman_move2
+  _ANIME_DATA	AC_WALK_D_4F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//話しかけたときの青年の退出動作 振り向きつき
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_talk_backpacker_remove
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_WAIT_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //話しかけたときの青年の退出動作
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_talk_backpacker_remove
+_ANIME_LABEL	anm_talk_backpacker_remove2
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,3
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//話しかけたときの青年の退出動作 振り向きつき  自機が上向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_talk_backpacker_remove_plyer_up
+  _ANIME_DATA	AC_WALK_R_8F,1
   _ANIME_DATA	AC_WALK_D_8F,4
+  _ANIME_DATA	AC_WAIT_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//話しかけたときの青年の退出動作            自機が上向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_talk_backpacker_remove2_plyer_up
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	ACMD_END,0
+  
+//--------------------------------------------------------------------
+//捕獲後自機下向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_down
+  _ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//捕獲後の青年登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_backpacker_app
+  _ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//捕獲後の青年登場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_backpacker_app2
+  _ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+  
+
+//--------------------------------------------------------------------
+//捕獲後の青年退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_backpacker_remove
+  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_WAIT_8F,1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//捕獲後の青年退場
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_backpacker_remove2
+  _ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+
   
 
 
