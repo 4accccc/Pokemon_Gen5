@@ -78,7 +78,8 @@ enum{
 };
 
 // メニューウインドウ枠のパレットを転送する位置
-#define MENU_WINDOW_PAL_OFFSET  ( 9 )
+#define MENU_WINDOW_PAL_OFFSET    (   9 )
+#define MENU_WINDOW_CHARA_OFFSET  ( 228 )
 
 // 所持金用バッファの長さ
 #define SHOP_MYGOLD_STR_MAX   ( 10 )
@@ -1171,6 +1172,10 @@ static void exit_work( SHOP_BUY_APP_WORK *wk )
 //----------------------------------------------------------------------------------
 static void bg_trans( SHOP_BUY_APP_WORK *wk )
 {
+  // 会話ウインドウがBG1面BG2面両方使用する事になったので、ショップ画面の背景は
+  // VRAMの最初に方に入れてある会話ウインドウのリソースを避けて転送する事にした。
+  // 会話ウインドウのキャラVRAMはBG1とBG2が同じにしてある。
+  
   // ショップ画面リソース
   {
     ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_SHOP_GRA, wk->heapId );
@@ -1180,16 +1185,16 @@ static void bg_trans( SHOP_BUY_APP_WORK *wk )
                                       0, SHOP_BG_PLTT_NUM, wk->heapId );
     // BG2面Char(背景）
     GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_shop_gra_shop_bg_NCGR, GFL_BG_FRAME2_M, 
-                                      0, 0, 0, wk->heapId);
+                                      100, 0, 0, wk->heapId);
     // BG2面Screen(背景）
-    GFL_ARCHDL_UTIL_TransVramScreen( handle, NARC_shop_gra_shop_bg1_NSCR, GFL_BG_FRAME2_M, 
-                                     0, 0, 0, wk->heapId);
-  
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs( handle, NARC_shop_gra_shop_bg1_NSCR, GFL_BG_FRAME2_M, 
+                                            0, 100, 0, 0, wk->heapId);
     GFL_ARC_CloseDataHandle( handle );
   }
   
   // ウインドウ枠
-  BmpWinFrame_GraphicSet( GFL_BG_FRAME1_M, 1, MENU_WINDOW_PAL_OFFSET, MENU_TYPE_SYSTEM, wk->heapId );
+  BmpWinFrame_GraphicSet( GFL_BG_FRAME1_M, MENU_WINDOW_CHARA_OFFSET, MENU_WINDOW_PAL_OFFSET, 
+                          MENU_TYPE_SYSTEM, wk->heapId );
 
   // テキスト面消去
   GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
@@ -1573,7 +1578,7 @@ static void print_carry_item( SHOP_BUY_APP_WORK *wk, u16 itemno )
 
 
   BmpWinFrame_Write( wk->win[SHOP_BUY_BMPWIN_NUM], WINDOW_TRANS_OFF, 
-                      1, MENU_WINDOW_PAL_OFFSET );
+                     MENU_WINDOW_CHARA_OFFSET, MENU_WINDOW_PAL_OFFSET );
 
   // 個数登録
   WORDSET_RegisterNumber( wk->wordSet, 0, MYITEM_GetItemNum(wk->myitem, itemno, wk->heapId), 
@@ -1643,7 +1648,7 @@ static void print_multiitem_price( SHOP_BUY_APP_WORK *wk, u16 number, int one_pr
 
 
   BmpWinFrame_Write( wk->win[SHOP_BUY_BMPWIN_PRICE], WINDOW_TRANS_OFF, 
-                      1, MENU_WINDOW_PAL_OFFSET );
+                     MENU_WINDOW_CHARA_OFFSET, MENU_WINDOW_PAL_OFFSET );
 
   // 「ｘ？？？」
   WORDSET_RegisterNumber( wk->wordSet, 0, number, 
@@ -1873,7 +1878,7 @@ static void ShopPrintMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno )
 {
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[SHOP_BUY_BMPWIN_TALKMSG]), 15 );
   BmpWinFrame_Write( wk->win[SHOP_BUY_BMPWIN_TALKMSG], WINDOW_TRANS_ON, 
-                    1, MENU_WINDOW_PAL_OFFSET );
+                     MENU_WINDOW_CHARA_OFFSET, MENU_WINDOW_PAL_OFFSET );
 
   WORDSET_RegisterItemName( wk->wordSet, 0, itemno );
   WORDSET_RegisterItemPocketName( wk->wordSet, 1, 
@@ -1926,7 +1931,7 @@ static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 pri
 {
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[SHOP_BUY_BMPWIN_TALKMSG]), 15 );
   BmpWinFrame_Write( wk->win[SHOP_BUY_BMPWIN_TALKMSG], WINDOW_TRANS_ON, 
-                    1, MENU_WINDOW_PAL_OFFSET );
+                     MENU_WINDOW_CHARA_OFFSET, MENU_WINDOW_PAL_OFFSET );
 
   WORDSET_RegisterItemName( wk->wordSet, 0, itemno );
   WORDSET_RegisterNumber( wk->wordSet, 1, num, 
