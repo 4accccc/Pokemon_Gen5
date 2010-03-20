@@ -227,6 +227,9 @@ init_flags:
 	//映画関連ゾロアークイベントの女性（ゾロアーク）。イベント起動で表示。
 	_FLAG_SET( FV_R16R0201_WOMAN3 )
 
+	//観覧車トレーナー
+	_FLAG_SET( FV_AMUSEMENT_TRAINER )
+
 }
 _RET
 

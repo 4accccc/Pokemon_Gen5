@@ -194,6 +194,9 @@ ev_leader4_btl:
 	_TRAINER_FLAG_SET( TRID_PRINCE_01 )
 	_TRAINER_FLAG_SET( TRID_PRINCESS_01 )
 
+	//観覧車トレーナーを表示
+	_FLAG_RESET( FV_AMUSEMENT_TRAINER )
+
 //================================================//
 
 	_RET
