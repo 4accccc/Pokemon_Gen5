@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-20T15:19:20"/>
+	<create user="matsumiya" host="W00224" date="2010-03-20T16:04:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,7 +296,7 @@
 		<comment>♂
 ・WHITEver
 ・初回、家に入ると
-　所定の位置（未定）まで主人公、自動で移動
+　所定の位置まで主人公、自動で移動
 ・所定の位置に到達するとメッセージ表示
 ・続けてmsg_c08r0101_leader8b_01</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -319,7 +319,7 @@
 		<comment>♂
 ・BLACKver
 ・初回、家に入ると
-　所定の位置（未定）まで主人公、自動で移動
+　所定の位置まで主人公、自動で移動
 ・所定の位置に到達するとメッセージ表示
 ・続けてmsg_c08r0101_leader8b_01</comment>
 		<attribute name="キャラ指定">ジムリーダー
@@ -359,7 +359,7 @@
 しあわせな　ひびを　すごしていたんだ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08r0101_leader8a_02w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08r0101_leader8a_02w">
 		<comment>♂
 ・続けて
 　WHITEならleader8b_02w
@@ -391,7 +391,7 @@
 それぞれの　味方を　した……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08r0101_leader8a_02b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08r0101_leader8a_02b">
 		<comment>♂
 ・続けて
 　WHITEならleader8b_02w
@@ -453,7 +453,7 @@
 その　なも　ム[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08r0101_leader8a_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c08r0101_leader8a_03">
 		<comment>♂
 ・続けて
 　WHITEならleader8b_03w
@@ -480,52 +480,72 @@
 そういって　争いを　おさめた……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08r0101_leader8b_03w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08r0101_leader8b_03w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・WHITEver
 ・続けてleader8a_04</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アイリス</attribute>
-		<language name="JPN" width="256">アイリス『だからね！
-いま　２ひきが　であっても[BE:01:ページ切り替え（クリア）]
-せかいを　ほろぼすような
-たたかいに　ならないよ　きっと！！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">アイリス『なのに　なのに……
+えいゆうの　むすこたちが▽
+また　あらそいを　はじめちゃって……▼
+シンと　ムは　イッシュを
+ほのおと　いなずまで　ほろぼし▽
+すがたを　けしちゃったって……▼
+だけどね　ひとが　ポケモンとの
+つきあいかたを　まちがえなければ▽
+せかいを　ほろぼしたり　しないよ▼
 だって　シンも　ムも
-みんなのために　がんばって[BE:00:ページ切り替え（行送り）]
-あたらしい　くにを　つくったんだもん！[BE:01:ページ切り替え（クリア）]
-だから　だから……！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アイリス『だからね！
-いま　２ひきが　であっても[BE:01:ページ切り替え（クリア）]
-せかいを　ほろぼすような
-たたかいに　ならないよ　きっと！！[BE:01:ページ切り替え（クリア）]
+みんなのために　がんばって
+あたらしい　くにを　つくったんだもん！
+だから　だから……！</language>
+		<language name="JPN_KANJI" width="256">アイリス『なのに　なのに……
+えいゆうの　むすこたちが▽
+また　あらそいを　はじめちゃって……▼
+シンと　ムは　イッシュを
+ほのおと　いなずまで　ほろぼし▽
+すがたを　けしちゃったって……▼
+だけどね　ひとが　ポケモンとの
+つきあいかたを　まちがえなければ▽
+せかいを　ほろぼしたり　しないよ▼
 だって　シンも　ムも
-みんなのために　がんばって[BE:00:ページ切り替え（行送り）]
-あたらしい　くにを　つくったんだもん！[BE:01:ページ切り替え（クリア）]
-だから　だから……！[BE:01:ページ切り替え（クリア）]</language>
+みんなのために　がんばって
+あたらしい　くにを　つくったんだもん！
+だから　だから……！</language>
 	</row>
 
-	<row id="msg_c08r0101_leader8b_03b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08r0101_leader8b_03b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・BLACKver
 ・続けてleader8a_04</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アイリス</attribute>
-		<language name="JPN" width="256">アイリス『だからね！
-いま　２ひきが　であっても[BE:01:ページ切り替え（クリア）]
-せかいを　ほろぼすような
-たたかいに　ならないよ　きっと！！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">アイリス『なのに　なのに……
+えいゆうの　むすこたちが▽
+また　あらそいを　はじめちゃって……▼
+ムと　シンは　イッシュを
+いなずまと　ほのおで　ほろぼし▽
+すがたを　けしちゃったって……▼
+だけどね　ひとが　ポケモンとの
+つきあいかたを　まちがえなければ▽
+せかいを　ほろぼしたり　しないよ▼
 だって　ムも　シンも
-みんなのために　がんばって[BE:00:ページ切り替え（行送り）]
-あたらしい　くにを　つくったんだもん！[BE:01:ページ切り替え（クリア）]
-だから　だから……！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アイリス『だからね！
-いま　２ひきが　であっても[BE:01:ページ切り替え（クリア）]
-せかいを　ほろぼすような
-たたかいに　ならないよ　きっと！！[BE:01:ページ切り替え（クリア）]
+みんなのために　がんばって
+あたらしい　くにを　つくったんだもん！
+だから　だから……！</language>
+		<language name="JPN_KANJI" width="256">アイリス『なのに　なのに……
+えいゆうの　むすこたちが▽
+また　あらそいを　はじめちゃって……▼
+ムと　シンは　イッシュを
+いなずまと　ほのおで　ほろぼし▽
+すがたを　けしちゃったって……▼
+だけどね　ひとが　ポケモンとの
+つきあいかたを　まちがえなければ▽
+せかいを　ほろぼしたり　しないよ▼
 だって　ムも　シンも
-みんなのために　がんばって[BE:00:ページ切り替え（行送り）]
-あたらしい　くにを　つくったんだもん！[BE:01:ページ切り替え（クリア）]
-だから　だから……！[BE:01:ページ切り替え（クリア）]</language>
+みんなのために　がんばって
+あたらしい　くにを　つくったんだもん！
+だから　だから……！</language>
 	</row>
 
 	<row id="msg_c08r0101_leader8a_04">
@@ -574,16 +594,58 @@
 ぜったい　ゆるさないんだからッ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08r0101_leader8a_05w">
+	<row id="msg_c08r0101_leader8a_04_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♂
-・WHITEver
-・続けてleader8b_05</comment>
+・メッセージ表示後にウェイト希望
+　（沈黙を表現したい）
+・続けてleader8a_04_02</comment>
 		<attribute name="キャラ指定">ジムリーダー
 シャガ</attribute>
-		<language name="JPN" width="256">シャガ『では　アイリスや[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">シャガ『……すまない
+さいご　はなしが　それてしまったが▼
+わたしたちが
+しっていることは　いじょうだ▼
+ざんねんながら　でんせつの
+ドラゴンポケモンを　めざめさせる▽
+ほうほうは　わからぬ……▼</language>
+		<language name="JPN_KANJI" width="256">シャガ『……すまない
+最後　話が　それてしまったが▼
+わたしたちが
+知っていることは　以上だ▼
+残念ながら　伝説の
+ドラゴンポケモンを　目覚めさせる▽
+方法は　わからぬ……▼</language>
+	</row>
+
+	<row id="msg_c08r0101_leader8a_04_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・続けて
+　WHITEならleader8a_05w
+　BLACKならleader8a_05b</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">シャガ『……さて　アデクとの
+やくそく　だったね▼
+きみは　ソウリュウ　ポケモンジムの
+ジムバッジを　てにいれねば　ならない▼</language>
+		<language name="JPN_KANJI" width="256">シャガ『……さて　アデクとの
+約束だったね▼
+君は　ソウリュウ　ポケモンジムの
+ジムバッジを　てにいれねば　ならない▼</language>
+	</row>
+
+	<row id="msg_c08r0101_leader8a_05w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
+・WHITEver
+　アイリスをみてメッセージ表示
+・続けてleader8b_05
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">ジムリーダー
+シャガ</attribute>
+		<language name="JPN" width="256">では　アイリスや[BE:01:ページ切り替え（クリア）]
 ポケモンジムにて　[1:00:トレーナー名:0]の
 あいてを　してあげなさい[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">シャガ『では　アイリスや[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">では　アイリスや[BE:01:ページ切り替え（クリア）]
 ポケモンジムにて　[1:00:トレーナー名:0]の
 相手を　してあげなさい[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -612,10 +674,10 @@
 ・c08ポケモンジム挑戦可能に</comment>
 		<attribute name="キャラ指定">ジムリーダー
 シャガ</attribute>
-		<language name="JPN" width="256">シャガ『では　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">では　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 ポケモンジムにて
 きみの　ちょうせんを　まつ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">シャガ『では　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">では　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 ポケモンジムにて
 君の　挑戦を　待つ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -661,7 +723,7 @@
 みんな　なかよしで　いいんだよね！</language>
 	</row>
 
-	<row id="msg_c08r0101_veteranw_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08r0101_veteranw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・クリア前</comment>
 		<attribute name="キャラ指定">VETERANW</attribute>
@@ -677,7 +739,7 @@
 あたくしより　強くって……！</language>
 	</row>
 
-	<row id="msg_c08r0101_veteranw_02w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08r0101_veteranw_02w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・クリア後＋WHITEver</comment>
 		<attribute name="キャラ指定">VETERANW</attribute>
@@ -693,7 +755,7 @@
 特攻が　がくっと　下がります</language>
 	</row>
 
-	<row id="msg_c08r0101_veteranw_02b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08r0101_veteranw_02b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・クリア後＋BLACKver</comment>
 		<attribute name="キャラ指定">VETERANW</attribute>
