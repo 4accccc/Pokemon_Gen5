@@ -127,6 +127,16 @@ extern BOOL GFL_NET_COMMAND_SendHugeData(GFL_NETHANDLE* pNet,const NetID sendBit
 //--------------------------------------------------------------
 extern void GFI_NET_COMMAND_CallBack(int netID, int sendID, int command, int size, void* pData,GFL_NETHANDLE* pNetHandle);
 
+
+//--------------------------------------------------------------
+/**
+ * @brief   コマンドを持っているかどうかの検査
+ * @param   command         コマンド
+ * @retval  持ってるならTRUE
+ */
+//--------------------------------------------------------------
+extern BOOL GFL_NET_COMMAND_IsCommandCheck(int command);
+
 //--------------------------------------------------------------
 /**
  * @brief   受信バッファを持っているかどうかの検査
