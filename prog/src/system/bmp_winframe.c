@@ -143,7 +143,6 @@ void BmpWinFrame_GraphicSet(
 /**
  * エリアマネージャーを使ってウィンドウのグラフィックをセット
  *
- * @param	ini			  BGLデータ
  * @param	frmnum		BGフレーム
  * @param	pal			  パレット番号
  * @param	win_type	ウィンドウ番号 MENU_TYPE型
@@ -167,6 +166,21 @@ GFL_ARCUTIL_TRANSINFO BmpWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, MENU_TYP
   BmpWinFrame_PalSet( frmnum, pal, win_type, heap );
   
   return bgchar;
+}
+
+//--------------------------------------------------------------
+/**
+ * エリアマネージャーを使ってセットしたウィンドウのキャラクタ領域を開放
+ *
+ * @param	frmnum		BGフレーム
+ * @param tInfo     GFL_ARCUTIL_TRANSINFO
+ */
+//--------------------------------------------------------------
+void BmpWinFrame_GraphicFreeAreaMan( u8 frmnum, GFL_ARCUTIL_TRANSINFO tInfo )
+{
+  GFL_BG_FreeCharacterArea( frmnum,
+                            GFL_ARCUTIL_TRANSINFO_GetPos(tInfo),
+                            GFL_ARCUTIL_TRANSINFO_GetSize(tInfo));	
 }
 
 //--------------------------------------------------------------
@@ -228,6 +242,23 @@ void BmpWinFrame_Write( GFL_BMPWIN *win, u8 trans_sw, u16 win_cgx, u8 pal )
 	else if(trans_sw == WINDOW_TRANS_ON_V){
 		GFL_BG_LoadScreenV_Req( frm );
 	}
+}
+
+//--------------------------------------------------------------
+/**
+ * ウィンドウを描画(AreaManを使った時用のユーティリティ)
+ *
+ * @param	win			  BMPウィンドウデータ
+ * @param	trans_sw	転送スイッチ
+ * @param	tInfo		  GFL_ARCUTIL_TRANSINFO
+ * @param	pal			  パレット
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------
+void BmpWinFrame_WriteAreaMan( GFL_BMPWIN *win, u8 trans_sw, GFL_ARCUTIL_TRANSINFO tInfo, u8 pal )
+{
+  BmpWinFrame_Write( win, trans_sw, GFL_ARCUTIL_TRANSINFO_GetPos( tInfo ), pal );
 }
 
 //--------------------------------------------------------------

@@ -134,6 +134,16 @@ extern GFL_ARCUTIL_TRANSINFO BmpWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, M
 
 //--------------------------------------------------------------
 /**
+ * エリアマネージャーを使ってセットしたウィンドウのキャラクタ領域を開放
+ *
+ * @param	frmnum		BGフレーム
+ * @param tInfo     GFL_ARCUTIL_TRANSINFO
+ */
+//--------------------------------------------------------------
+extern void BmpWinFrame_GraphicFreeAreaMan( u8 frmnum, GFL_ARCUTIL_TRANSINFO tInfo );
+
+//--------------------------------------------------------------
+/**
  * メニューウィンドウを描画
  *
  * @param	win			BMPウィンドウデータ
@@ -146,6 +156,20 @@ extern GFL_ARCUTIL_TRANSINFO BmpWinFrame_GraphicSetAreaMan( u8 frmnum, u8 pal, M
 //--------------------------------------------------------------
 extern void BmpWinFrame_Write(
 		GFL_BMPWIN *win, u8 trans_sw, u16 win_cgx, u8 pal );
+
+//--------------------------------------------------------------
+/**
+ * ウィンドウを描画(AreaManを使った時用のユーティリティ)
+ *
+ * @param	win			  BMPウィンドウデータ
+ * @param	trans_sw	転送スイッチ
+ * @param	tInfo		  GFL_ARCUTIL_TRANSINFO
+ * @param	pal			  パレット
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------
+extern void BmpWinFrame_WriteAreaMan( GFL_BMPWIN *win, u8 trans_sw, GFL_ARCUTIL_TRANSINFO tInfo, u8 pal );
 
 //--------------------------------------------------------------
 /**
