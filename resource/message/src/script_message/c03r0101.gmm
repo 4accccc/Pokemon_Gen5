@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-03-19T20:26:27"/>
+	<create user="nakamura_akira" host="W00161" date="2010-03-20T16:58:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -360,7 +360,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -596,23 +596,23 @@ assistantm_01_06へ続く
 まだ受けていない場合に表示
 
 このメッセージの表示後、『じかんちょうさ』か
-『にんずうちょうさか』選択肢を表示
-選択肢の選択後、各依頼の一覧が表示される
+『にんずうちょうさか』、『やめる』の選択肢を表示
 
-⇒　choice_02○へ</comment>
+⇒　choice_02○の選択肢を表示</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">ちょうさいらいを　うけるんだな？
-では　ちょうさいらいを　えらんでくれ</language>
-		<language name="JPN_KANJI" width="256">調査依頼を　受けるんだな？
-では　調査依頼を　選んでくれ</language>
+		<language name="JPN" width="256">ちょうさいらいを　うけるんだな？▼
+まずは　ちょうさほうほうを
+えらんでくれ</language>
+		<language name="JPN_KANJI" width="256">調査依頼を　受けるんだな？▼
+まずは　調査方法を　選らんでくれ</language>
 	</row>
 
 	<row id="msg_c03r0101__choice_02a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・選択肢
 依頼を受けるときに経由
 
-『じかんちょうさ』　⇒　choice_03○</comment>
+『じかんちょうさ』　⇒　assistantm_01_34a</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">じかんちょうさ</language>
 		<language name="JPN_KANJI" width="256">時間調査</language>
@@ -622,7 +622,7 @@ assistantm_01_06へ続く
 		<comment>・選択肢
 依頼を受けるときに経由
 
-『にんずうちょうさ』　⇒　choice_03○</comment>
+『にんずうちょうさ』　⇒　assistantm_01_34b</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">にんずうちょうさ</language>
 		<language name="JPN_KANJI" width="256">人数調査</language>
@@ -632,10 +632,55 @@ assistantm_01_06へ続く
 		<comment>・選択肢
 隊長との会話をやめたいときに経由
 
-『やめる』　⇒　　assistantm_01_08へ</comment>
+『やめる』　⇒　assistantm_01_08へ</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_34a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+このメッセージの表示後、『じかんちょうさ』の
+各依頼の一覧が表示される
+
+⇒　assistantm_01_35へ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">じかんちょうさだな？▼
+していされた　じかんないで
+データを　あつめる　ちょうさだ</language>
+		<language name="JPN_KANJI" width="256">時間調査だな？▼
+指定された　時間内で
+データを　集める　調査だ</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_34b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+このメッセージの表示後、『にんずうちょうさ』の
+各依頼の一覧が表示される
+
+⇒　assistantm_01_35へ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">にんずうちょうさだな？▼
+していされた　にんずうぶんの
+データを　あつめる　ちょうさだ</language>
+		<language name="JPN_KANJI" width="256">人数調査だな？▼
+指定された　人数分の
+データを　集める　調査だ</language>
+	</row>
+
+	<row id="msg_c03r0101_assistantm_01_35" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・隊長
+このメッセージの表示後、各依頼の一覧が表示される
+
+⇒　choice_03○へ</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">つぎに　ちょうさを　おこなう
+いらいを　えらんでくれ</language>
+		<language name="JPN_KANJI" width="256">次に　調査を　行う
+依頼を　選んでくれ</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -6550,24 +6595,23 @@ assistantm_01_31へ続く
 	<row id="msg_c03r0101_woman2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・アンケート隊員
 はじめてアンケートを受けるときに表示
-このメッセージの表示後、選択ウインドウを表示
+強制的に初回アンケートは受ける。
 
-『はい』　⇒　woman2__10aへ
-『いいえ』　⇒　woman2_05へ</comment>
+　⇒　woman2_10aへ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">じつは　アナタに　ちょっと
 たのみたいことが　あるの▼
 いま　たいいんの　みんなに
 アンケートを　おねがいしているのよ▼
-よかったら　アナタも　アンケートに
-きょうりょくしてくれない？</language>
+アナタも　アンケートに
+きょうりょくしてね</language>
 		<language name="JPN_KANJI" width="256">じつは　アナタに　ちょっと
 頼みたいことが　あるの▼
 今　隊員の　みんなに
 アンケートを　お願いしているのよ▼
-よかったら　アナタも　アンケートに
-協力してくれない？</language>
+アナタも　アンケートに
+協力してね</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -6765,7 +6809,7 @@ assistantm_01_31へ続く
 
 	<row id="msg_c03r0101_woman2_10a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>・アンケート隊員
-アンケートに協力するで、『はい』を選択、もしくは、答える
+初回会話時、もしくは、答える
 アンケートを選ぶと、アンケートごとのタイトルを表示
 各アンケートの質問メッセージ表示へ
 
@@ -7485,7 +7529,7 @@ woman2_20へ続く</comment>
 		<comment>・アンケート隊員
 全てのアンケートを答えていないと表示
 
-woman2_22へ続く
+woman2_23へ続く
 
 [1桁:1]＝残りの未回答アンケート数</comment>
 		<attribute name="キャラ指定">WOMAN2
@@ -7502,12 +7546,24 @@ woman2_22へ続く
 会話終了</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
-		<language name="JPN" width="256">ちょうさたいの　ためにも
-できるだけ　たくさんの▽
-アンケートに　きょうりょくしてね！</language>
-		<language name="JPN_KANJI" width="256">調査隊の　ためにも　
-できるだけ　たくさんの▽
-アンケートに　協力してね！</language>
+		<language name="JPN" width="256">ほかの　アンケートにも　
+こたえたくなったら　こえをかけてね</language>
+		<language name="JPN_KANJI" width="256">他の　アンケートにも　
+答えたくなったら　声をかけてね</language>
+	</row>
+
+	<row id="msg_c03r0101_woman2_24" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>・アンケート隊員
+このメッセージの表示後、選択ウインドウを表示
+
+『はい』　⇒　woman2_10○へ
+『いいえ』　⇒　woman2_22へ</comment>
+		<attribute name="キャラ指定">WOMAN2
+アンケート隊員</attribute>
+		<language name="JPN" width="256">せっかくだから　このまま
+ほかの　アンケートも　やらない？</language>
+		<language name="JPN_KANJI" width="256">せっかくだから　このまま
+他の　アンケートも　やらない？</language>
 	</row>
 
 	<row id="msg_c03r0101_boy2_01">
@@ -8229,11 +8285,11 @@ girl4_04へ続く
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
 たいいんランク　Ｃランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
-おれい　かいすう 　　　[2:04:５桁:2]かい</language>
+おれい　かいすう　　　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
 隊員ランク　Ｃランク隊員▼
 すれ違い　人数　[2:04:５桁:1]人
-お礼　回数　　　 [2:04:５桁:2]回</language>
+お礼　回数　　　　[2:04:５桁:2]回</language>
 	</row>
 
 	<row id="msg_c03r0101_none_debug_02b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -8250,7 +8306,7 @@ girl4_04へ続く
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
 たいいんランク　Ｂランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
-おれい　かいすう 　　　[2:04:５桁:2]かい</language>
+おれい　かいすう　　　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
 隊員ランク　Ｂランク隊員▼
 すれ違い　人数　[2:04:５桁:1]人
@@ -8271,7 +8327,7 @@ girl4_04へ続く
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
 たいいんランク　Ａランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
-おれい　かいすう 　　　[2:04:５桁:2]かい</language>
+おれい　かいすう　　　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
 隊員ランク　Ａランク隊員▼
 すれ違い　人数　[2:04:５桁:1]人
@@ -8292,7 +8348,7 @@ girl4_04へ続く
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
 たいいんランク　Ｓランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
-おれい　かいすう　 　　[2:04:５桁:2]かい</language>
+おれい　かいすう　　　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
 隊員ランク　Ｓランク隊員▼
 すれ違い　人数　[2:04:５桁:1]人
@@ -8313,7 +8369,7 @@ girl4_04へ続く
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
 たいいんランク　ＳＳランクたいいん▼
 すれちがい　にんずう　[2:04:５桁:1]にん
-おれい　かいすう 　　　[2:04:５桁:2]かい</language>
+おれい　かいすう　　　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
 隊員ランク　ＳＳランク隊員▼
 すれ違い　人数　[2:04:５桁:1]人
