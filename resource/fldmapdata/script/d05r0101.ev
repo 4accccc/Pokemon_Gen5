@@ -54,14 +54,15 @@ EVENT_START   ev_scene_d05r0101_01
 	_BALLOONWIN_OBJMSG(msg_d05r0101_black_02,D05R0101_RIVAL_01)
 	_BALLOONWIN_CLOSE()
 	
+	//去るアニメ
+	_OBJ_ANIME(D05R0101_RIVAL_01,anm_d05r0101_rival_02)
+	
 	//自機にカメラを戻す
 	_CAMERA_RECV_MOVE( 20 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
 	
-	//去るアニメ
-	_OBJ_ANIME(D05R0101_RIVAL_01,anm_d05r0101_rival_02)
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル01消去
@@ -179,6 +180,16 @@ ev_d05r0101_rival_02:
 	
 	//シーン切り替え
 	_MAP_CHANGE( ZONE_ID_D05R0201, 4, 17, DIR_UP )
+	
+	//===========フラグワーク操作===========//
+	
+	//***フラグ操作:D05R0101のPOSイベントをオフに***
+	$WK_SCENE_D05_PLASMA = 2
+	
+	//D05R0101のライバルを非表示にする
+	_FLAG_SET(FV_D05R0101_RIVAL_02)
+	
+	//======================================//
 	
 _RET
 

@@ -21,6 +21,17 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_reserve_d05r0201_vs_plasma
+_EVENT_DATA    ev_d05r0201_sage_02
+_EVENT_DATA    ev_d05r0201_rival_01
+
+_EVENT_DATA    ev_d05r0201_hakaim_01
+_EVENT_DATA    ev_d05r0201_hakaim_02
+_EVENT_DATA    ev_d05r0201_hakaim_03
+_EVENT_DATA    ev_d05r0201_hakaiw_04
+_EVENT_DATA    ev_d05r0201_hakaiw_05
+_EVENT_DATA    ev_d05r0201_hakaim_06
+_EVENT_DATA    ev_d05r0201_hakaim_07
+_EVENT_DATA    ev_d05r0201_hakaim_08
 _EVENT_DATA_END
 
 
@@ -46,8 +57,11 @@ EVENT_START   ev_reserve_d05r0201_vs_plasma
 	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_lookup)
 	_OBJ_ANIME_WAIT()
 	
-	//七賢人曲再生
-	_START_TEMP_EVENT_BGM( SEQ_BGM_E_SAGE )
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	//カメラ操作　サポートの位置にカメラを合わせる
+	_CAMERA_MOVE( 9688,0,970752,294912,0,557056,50 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
 	//七賢人つぶやき
 	_BALLOONWIN_OBJMSG(msg_d05r0201_sage2_01,D05R0201_SAGE_01)
@@ -58,8 +72,8 @@ EVENT_START   ev_reserve_d05r0201_vs_plasma
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d05r0201_rival_goup)
 	_OBJ_ANIME_WAIT()
 	
-	//やれやれ本当に隠れていたとはな
-	_BALLOONWIN_OBJMSG(msg_d05r0201_black_06,D05R0201_RIVAL_01)
+	//やれやれ本当に隠れていたとは
+	_BALLOONWIN_OBJMSG_POS(msg_d05r0201_black_06,D05R0201_RIVAL_01 , POS_UL)
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル達のほうを向いて「おうよりさずかった…」
@@ -68,74 +82,38 @@ EVENT_START   ev_reserve_d05r0201_vs_plasma
 	_BALLOONWIN_OBJMSG(msg_d05r0201_sage2_02,D05R0201_SAGE_01)
 	_BALLOONWIN_CLOSE()
 	
-	//プラズマ団前に一歩出て宣戦布告
-	_BALLOONWIN_OBJMSG(msg_d05r0201_hakaim_01,D05R0201_HAKAIM_01)
+	//プラズマ団宣戦布告して布陣を組む
+	_BALLOONWIN_OBJMSG(msg_d05r0201_hakaim_01,D05R0201_HAKAIM_08)
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME(D05R0201_HAKAIM_01,anm_d05r0201_hakai_01)
-	_OBJ_ANIME(D05R0201_HAKAIM_02,anm_d05r0201_hakai_01)
+	_OBJ_ANIME(D05R0201_HAKAIM_02,anm_d05r0201_hakai_02)
+	_OBJ_ANIME(D05R0201_HAKAIM_03,anm_d05r0201_hakai_03)
+	_OBJ_ANIME(D05R0201_HAKAIW_04,anm_d05r0201_hakai_04)
+	_OBJ_ANIME(D05R0201_HAKAIW_05,anm_d05r0201_hakai_05)
+	_OBJ_ANIME(D05R0201_HAKAIM_06,anm_d05r0201_hakai_06)
+	_OBJ_ANIME(D05R0201_HAKAIM_07,anm_d05r0201_hakai_07)
+	_OBJ_ANIME(D05R0201_HAKAIM_08,anm_d05r0201_hakai_08)
 	_OBJ_ANIME_WAIT()
 	
-	//ひとりずつ片付けるぞ！
-	_BALLOONWIN_OBJMSG(msg_d05r0201_black_07,D05R0201_RIVAL_01)
-	_BALLOONWIN_CLOSE()
-	
-	//主人公プラズマ団の前に移動
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_d05r0201_player_vs)
+	//主人公とライバル向き合う
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05r0201_player_look_rival )
+	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_look_player)
 	_OBJ_ANIME_WAIT()
 	
-	//トレーナー戦呼び出し
-	_TRAINER_BTL_SET( TRID_HAKAIM1_04, 0 )
-	//結果チェック
-	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-		_TRAINER_WIN()
-	ELSE
-		_TRAINER_LOSE()
-	ENDIF
-	
-	//復帰、workman配置
-	_FLAG_RESET(FV_D05R0201_WORKMAN_01)
-	_OBJ_ADD(D05R0201_WORKMAN_01)
-	
-	//勝利後
-	_BALLOONWIN_OBJMSG(msg_d05r0201_hakaim_02,D05R0201_HAKAIM_01)
+	//はんぶんずつ片付けよう！
+	_BALLOONWIN_OBJMSG_POS(msg_d05r0201_black_07,D05R0201_RIVAL_01 , POS_UL)
 	_BALLOONWIN_CLOSE()
-	_OBJ_ANIME(D05R0201_WORKMAN_01,anm_d05r0201_workman_01)
+	
+	//主人公とライバル上を向く
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05r0201_rival_lookup )
+	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_lookup)
 	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(msg_d05r0201_workman_01,D05R0201_WORKMAN_01)
-	_BALLOONWIN_CLOSE()
 	
-	//ライバル主人公のほうを向いて発言
-	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_04)
-	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(msg_d05r0201_black_08,D05R0201_RIVAL_01)
-	_BALLOONWIN_CLOSE()
-
-	//===========フラグワーク操作===========//
-	
-	//***フラグ操作:全てのイベントをオフに***
-	$WK_SCENE_D05_PLASMA = 2
-	//***D05のWORKを操作する***
-	$WK_SCENE_D05 = 2
-	
-	//***D05のバニッシュフラグを操作***
-	_FLAG_RESET(FV_D05_RIVAL_01)
-	_FLAG_SET(FV_D05_WORKMAN_01)
-	
-	//D05R0201のイベントキャラクターを全て非表示にする
-	_FLAG_SET(FV_D05R0201_PLASMA)
-	_FLAG_SET(FV_D05R0201_WORKMAN_01)
-	
-	//D05R0101のライバルを非表示にする
-	_FLAG_SET(FV_D05R0101_RIVAL_02)
-	
-	//======================================//
-	
-	//予約スクリプト
-	_RESERVE_SCRIPT( SCRID_RESERVE_D05_END )
-	
-	//シーン切り替え
-	_MAP_CHANGE( ZONE_ID_D05, 165, 474, DIR_RIGHT )
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (30) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 
 EVENT_END
 
@@ -184,20 +162,74 @@ _ANIME_LABEL	anm_d05r0201_sage_gyoe
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	D05R0201：プラズマ団一歩前に出て宣戦布告
+//	D05R0201：プラズマ団布陣を組む
 //--------------------------------------------------------------
 
 _ANIME_LABEL	anm_d05r0201_hakai_01
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	D05R0201：主人公プラズマ団の前に移動して戦闘
+//	D05R0201：プラズマ団布陣を組む
 //--------------------------------------------------------------
 
-_ANIME_LABEL	anm_d05r0201_player_vs
+_ANIME_LABEL	anm_d05r0201_hakai_02
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：プラズマ団布陣を組む
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai_03
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：プラズマ団布陣を組む
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai_04
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：プラズマ団布陣を組む
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai_05
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：プラズマ団布陣を組む
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai_06
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：プラズマ団布陣を組む
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai_07
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：プラズマ団布陣を組む
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai_08
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -214,4 +246,959 @@ _ANIME_LABEL	anm_d05r0201_workman_01
 
 _ANIME_LABEL	anm_d05r0201_rival_04
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*rival一言メッセージ         */
+/**************************************************************/
+EVENT_START   ev_d05r0201_rival_01
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_black_01 )
+	
+EVENT_END
+
+/**************************************************************/
+/*プラズマ団戦闘処理（3）         */
+/**************************************************************/
+EVENT_START   ev_d05r0201_hakaim_03
+{
+	//戦闘を既に終えていたら一言メッセージ
+	IF FLAG_ON( FE_D05R0201_PLASMA_01 ) THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaim1_02 )
+	
+	//まだ戦闘していなかったら
+	ELSE
+		
+		_TALK_OBJ_START()
+		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim1_01 , D05R0201_HAKAIM_03 )
+		_BALLOONWIN_CLOSE()
+		
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_HAKAIM1_04, 0 )
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			//======================================//
+			
+			//勝利した場合条件を操作
+			$WK_SCENE_D05_PLASMA += 1
+			_FLAG_SET(FE_D05R0201_PLASMA_01)
+			
+			//======================================//
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+		
+		//こんなに寒くて 震えてたら勝てるわけ…
+		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim1_02 , D05R0201_HAKAIM_03 )
+		_BALLOONWIN_CLOSE()
+		
+		//全員に勝利した場合終了イベントをコール
+		IF $WK_SCENE_D05_PLASMA == 6 THEN
+			_CALL ev_d05r0201_vs_plasma_win
+		ENDIF
+		
+	ENDIF
+}
+EVENT_END
+
+/**************************************************************/
+/*プラズマ団戦闘処理（5）         */
+/**************************************************************/
+EVENT_START   ev_d05r0201_hakaiw_05
+{
+	//戦闘を既に終えていたら一言メッセージ
+	IF FLAG_ON( FE_D05R0201_PLASMA_02 ) THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaiw1_02 )
+	
+	//まだ戦闘していなかったら
+	ELSE
+		
+		_TALK_OBJ_START()
+		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaiw1_01 , D05R0201_HAKAIW_05 )
+		_BALLOONWIN_CLOSE()
+		
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_HAKAIW1_04, 0 )
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			//======================================//
+			
+			//勝利した場合条件を操作
+			$WK_SCENE_D05_PLASMA += 1
+			_FLAG_SET(FE_D05R0201_PLASMA_02)
+			
+			//======================================//
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+		
+		//こんなに寒くて 震えてたら勝てるわけ…
+		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaiw1_02 , D05R0201_HAKAIW_05 )
+		_BALLOONWIN_CLOSE()
+		
+		//全員に勝利した場合終了イベントをコール
+		IF $WK_SCENE_D05_PLASMA == 6 THEN
+			_CALL ev_d05r0201_vs_plasma_win
+		ENDIF
+		
+	ENDIF
+}
+EVENT_END
+
+/**************************************************************/
+/*プラズマ団戦闘処理（7）         */
+/**************************************************************/
+EVENT_START   ev_d05r0201_hakaim_07
+{
+	//戦闘を既に終えていたら一言メッセージ
+	IF FLAG_ON( FE_D05R0201_PLASMA_03 ) THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaim3_02 )
+	
+	//まだ戦闘していなかったら
+	ELSE
+		
+		_TALK_OBJ_START()
+		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim3_01 , D05R0201_HAKAIM_07 )
+		_BALLOONWIN_CLOSE()
+		
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_HAKAIM1_09, 0 )
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			//======================================//
+			
+			//勝利した場合条件を操作
+			$WK_SCENE_D05_PLASMA += 1
+			_FLAG_SET(FE_D05R0201_PLASMA_03)
+			
+			//======================================//
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+		
+		//こんなに寒くて 震えてたら勝てるわけ…
+		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim3_02 , D05R0201_HAKAIM_07 )
+		_BALLOONWIN_CLOSE()
+		
+		//全員に勝利した場合終了イベントをコール
+		IF $WK_SCENE_D05_PLASMA == 6 THEN
+			_CALL ev_d05r0201_vs_plasma_win
+		ENDIF
+		
+	ENDIF
+}
+EVENT_END
+
+/**************************************************************/
+/*プラズマ団戦闘処理（8）         */
+/**************************************************************/
+EVENT_START   ev_d05r0201_hakaim_08
+{
+	//戦闘を既に終えていたら一言メッセージ
+	IF FLAG_ON( FE_D05R0201_PLASMA_04 ) THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaim2_02 )
+	
+	//まだ戦闘していなかったら
+	ELSE
+		
+		_TALK_OBJ_START()
+		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim2_01 , D05R0201_HAKAIM_08 )
+		_BALLOONWIN_CLOSE()
+		
+		//戦闘処理
+		_TRAINER_BTL_SET( TRID_HAKAIM1_10, 0 )
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			//======================================//
+			
+			//勝利した場合条件を操作
+			$WK_SCENE_D05_PLASMA += 1
+			_FLAG_SET(FE_D05R0201_PLASMA_04)
+			
+			//======================================//
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()
+		ENDIF
+		
+		//こんなに寒くて 震えてたら勝てるわけ…
+		_BALLOONWIN_OBJMSG( msg_d05r0201_hakaim2_02 , D05R0201_HAKAIM_08 )
+		_BALLOONWIN_CLOSE()
+		
+		//全員に勝利した場合終了イベントをコール
+		IF $WK_SCENE_D05_PLASMA == 6 THEN
+			_CALL ev_d05r0201_vs_plasma_win
+		ENDIF
+		
+	ENDIF
+}
+EVENT_END
+
+/**************************************************************/
+/*CALL：全員に勝利した                             */
+/**************************************************************/
+ev_d05r0201_vs_plasma_win:
+
+	//復帰、workmanとヤーコン配置
+	_FLAG_RESET(FV_D05R0201_WORKMAN_01)
+	_OBJ_ADD(D05R0201_WORKMAN_01)
+	_OBJ_ADD(D05R0201_WORKMAN_02)
+	_OBJ_ADD(D05R0201_WORKMAN_03)
+	_OBJ_ADD(D05R0201_WORKMAN_04)
+	_OBJ_ADD(D05R0201_LEADER5_01)
+	
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	_OBJ_ANIME(D05R0201_LEADER5_01,anm_d05r0201_leader5_come_01)
+	_OBJ_ANIME(D05R0201_WORKMAN_01,anm_d05r0201_workman1_come_01)
+	_OBJ_ANIME(D05R0201_WORKMAN_02,anm_d05r0201_workman1_come_01)
+	_OBJ_ANIME(D05R0201_WORKMAN_03,anm_d05r0201_workman1_come_01)
+	_OBJ_ANIME(D05R0201_WORKMAN_04,anm_d05r0201_workman1_come_01)
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05r0201_player_look_down )
+	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_player_look_down)
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_POS(msg_d05r0201_leader5_01,D05R0201_LEADER5_01 , POS_UR)
+	_BALLOONWIN_CLOSE()
+	
+	//ヤーコン後ろを向いて作業員に呼びかける
+	_OBJ_ANIME(D05R0201_LEADER5_01,anm_d05r0201_leader5_come_02)
+	_OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_POS(msg_d05r0201_leader5_02,D05R0201_LEADER5_01 , POS_UR)
+	_BALLOONWIN_CLOSE()
+	
+	//さぎょういん：ラジャー！
+	_PLAINWIN_MSG_UP( msg_d05r0201_workman_01 )
+	_PLAINWIN_CLOSE() 
+	
+	{
+	//主人公とライバル脇に
+	//自機座標取得
+	DEFINE_LOCAL  LCW_POSX
+    DEFINE_LOCAL  LCW_POSZ
+    _PLAYER_POS_GET( LCW_POSX,LCW_POSZ ) 
+    
+    //プレイヤーが通る4グリッド分を用意
+    SWITCH $LCW_POSX
+	CASE 4 THEN //デフォルト処理
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05r0201_player_side_x4 )
+	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_side)
+	_OBJ_ANIME_WAIT()
+	
+	CASE 5 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05r0201_player_side_x5 )
+	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_side)
+	_OBJ_ANIME_WAIT()
+	
+	CASE 6 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05r0201_player_side_x6 )
+	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_side)
+	_OBJ_ANIME_WAIT()
+	
+	CASE 7 THEN
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05r0201_player_side_x7 )
+	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_side)
+	_OBJ_ANIME_WAIT()
+	
+    DEFAULT
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05r0201_player_side_x7 )
+	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_side)
+	_OBJ_ANIME_WAIT()
+
+    ENDSWITCH
+	
+	}
+	
+	//作業員前に立つ
+	_OBJ_ANIME(D05R0201_WORKMAN_01,anm_d05r0201_workman1_come_02)
+	_OBJ_ANIME(D05R0201_WORKMAN_02,anm_d05r0201_workman2_come_02)
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(D05R0201_WORKMAN_03,anm_d05r0201_workman3_come_02)
+	_OBJ_ANIME(D05R0201_WORKMAN_04,anm_d05r0201_workman4_come_02)
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(D05R0201_WORKMAN_03,anm_d05r0201_workman3_come_03)
+	_OBJ_ANIME(D05R0201_WORKMAN_04,anm_d05r0201_workman4_come_03)
+	_OBJ_ANIME_WAIT()
+	
+	//作業員：ホラホラ
+	_SUBWIN_MSG( msg_d05r0201_workman_02 , 3 , 9 , 1 ) 
+	
+	//第一陣退場
+	_OBJ_ANIME(D05R0201_WORKMAN_02,anm_d05r0201_workman2_bye_01)
+	_OBJ_ANIME(D05R0201_HAKAIM_01,anm_d05r0201_hakai1_bye_01)
+	_OBJ_ANIME(D05R0201_HAKAIM_02,anm_d05r0201_hakai2_bye_01)
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_DEL(D05R0201_WORKMAN_02)
+	_OBJ_DEL(D05R0201_HAKAIM_01)
+	_OBJ_DEL(D05R0201_HAKAIM_02)
+	
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	_SUBWIN_CLOSE( 1 )
+	
+	//プラズマ団：ひー
+	_SUBWIN_MSG( msg_d05r0201_hakaim_02 , 10 , 14 , 2 )
+	
+	//第二陣退場
+	_OBJ_ANIME(D05R0201_WORKMAN_01,anm_d05r0201_workman1_bye_01)
+	_OBJ_ANIME(D05R0201_HAKAIW_04,anm_d05r0201_hakai4_bye_01)
+	_OBJ_ANIME(D05R0201_HAKAIM_06,anm_d05r0201_hakai6_bye_01)
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_DEL(D05R0201_WORKMAN_01)
+	_OBJ_DEL(D05R0201_HAKAIW_04)
+	_OBJ_DEL(D05R0201_HAKAIM_06)
+	
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	_SUBWIN_CLOSE( 2 )
+	
+	_SUBWIN_MSG( msg_d05r0201_hakaim_03 , 20 , 10 , 3 )
+	
+	//第二陣退場
+	_OBJ_ANIME(D05R0201_WORKMAN_03,anm_d05r0201_workman3_bye_01)
+	_OBJ_ANIME(D05R0201_HAKAIM_08,anm_d05r0201_hakai8_bye_01)
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(D05R0201_WORKMAN_03,anm_d05r0201_workman3_bye_02)
+	_OBJ_ANIME(D05R0201_HAKAIM_08,anm_d05r0201_hakai8_bye_02)
+	_OBJ_ANIME(D05R0201_HAKAIW_05,anm_d05r0201_hakai5_bye_01)
+	_OBJ_ANIME(D05R0201_HAKAIM_03,anm_d05r0201_hakai3_bye_01)
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_DEL(D05R0201_WORKMAN_03)
+	_OBJ_DEL(D05R0201_HAKAIM_08)
+	_OBJ_DEL(D05R0201_HAKAIW_05)
+	_OBJ_DEL(D05R0201_HAKAIM_03)
+	
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	_SUBWIN_CLOSE( 3 )
+	
+	//第四陣退場
+	_OBJ_ANIME(D05R0201_WORKMAN_04,anm_d05r0201_workman4_bye_01)
+	_OBJ_ANIME(D05R0201_HAKAIM_07,anm_d05r0201_hakai7_bye_01)
+	_OBJ_ANIME(D05R0201_SAGE_01,anm_d05r0201_sage_bye_01)
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_DEL(D05R0201_WORKMAN_04)
+	_OBJ_DEL(D05R0201_HAKAIM_07)
+	_OBJ_DEL(D05R0201_SAGE_01)
+	
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	//ヤーコンと向き合う
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05r0201_player_look_leader )
+	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_look_leader)
+	_OBJ_ANIME(D05R0201_LEADER5_01,anm_d05r0201_leader_look_player)
+	_OBJ_ANIME_WAIT()
+	
+	//ヤーコン：おまえたち
+	_BALLOONWIN_OBJMSG(msg_d05r0201_leader5_03,D05R0201_LEADER5_01)
+	_BALLOONWIN_CLOSE()
+	
+	//ヤーコン退場
+	_OBJ_ANIME(D05R0201_LEADER5_01,anm_d05r0201_leader_bye_01)
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_DEL(D05R0201_LEADER5_01)
+	
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	//主人公とライバル向き合う
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_d05r0201_player_look_rival )
+	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_look_player)
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル：やれやれ
+	_BALLOONWIN_OBJMSG(msg_d05r0201_black_08,D05R0201_RIVAL_01)
+	_BALLOONWIN_CLOSE()
+	
+	//ライバル退場
+	_OBJ_ANIME(D05R0201_RIVAL_01,anm_d05r0201_rival_goodbye)
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_DEL(D05R0201_RIVAL_01)
+	
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+	
+	//===========フラグワーク操作===========//
+	
+	//***フラグ操作:全てのイベントをオフに***
+	$WK_SCENE_D05_PLASMA = 7
+	
+	//D05R0201のイベントキャラクターを全て非表示にする
+	_FLAG_SET(FV_D05R0201_PLASMA)
+	_FLAG_SET(FV_D05R0201_WORKMAN_01)
+	
+	//======================================//
+_RET
+
+//--------------------------------------------------------------
+//	D05R0201：leader5駆けつける
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_leader5_come_01
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workman駆けつける
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_workman1_come_01
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：leader5作業員に呼びかける
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_leader5_come_02
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workman駆けつける
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_workman1_come_02
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workman駆けつける
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_workman2_come_02
+	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workman駆けつける
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_workman3_come_02
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workman駆けつける
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_workman4_come_02
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workman駆けつける
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_workman3_come_03
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workman駆けつける
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_workman4_come_03
+	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	D05R0201：主人公ヤーコンと向き合う
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_player_look_down
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：主人公脇に01
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_player_side_x4
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：主人公脇に02
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_player_side_x5
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：主人公脇に03
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_player_side_x6
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：主人公脇に04
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_player_side_x7
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：ライバル脇に
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_rival_side
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（２）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_workman2_bye_01
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（２）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai1_bye_01
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（２）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai2_bye_01
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（１）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_workman1_bye_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（１）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai4_bye_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（１）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai6_bye_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（３）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_workman3_bye_01
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（３）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai8_bye_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（３）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_workman3_bye_02
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（３）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai8_bye_02
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（３）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai5_bye_01
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（３）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai3_bye_01
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（４）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_workman4_bye_01
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（４）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_hakai7_bye_01
+	_ANIME_DATA	AC_WALK_D_8F,9
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：workmanプラズマ団を連れて去る（４）
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_sage_bye_01
+	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：主人公ヤーコンと向き合う
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_player_look_leader
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：主人公ヤーコンと向き合う
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_rival_look_leader
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：主人公ヤーコンと向き合う
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_leader_look_player
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：ヤーコン退場
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_leader_bye_01
+	_ANIME_DATA	AC_WALK_D_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：主人公ライバルと向き合う
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_player_look_rival
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：ライバル主人公と向き合う
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_rival_look_player
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	D05R0201：ライバル退場
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05r0201_rival_goodbye
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*プラズマ団一言メッセージ         */
+/**************************************************************/
+EVENT_START   ev_d05r0201_hakaim_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaim5_01 )
+EVENT_END
+
+/**************************************************************/
+/*プラズマ団一言メッセージ         */
+/**************************************************************/
+EVENT_START   ev_d05r0201_hakaim_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaim6_01 )
+EVENT_END
+
+/**************************************************************/
+/*プラズマ団一言メッセージ         */
+/**************************************************************/
+EVENT_START   ev_d05r0201_hakaiw_04
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaiw2_01 )
+EVENT_END
+
+/**************************************************************/
+/*プラズマ団一言メッセージ         */
+/**************************************************************/
+EVENT_START   ev_d05r0201_hakaim_06
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_hakaim6_01)
+EVENT_END
+
+/**************************************************************/
+/*【仮】クリア後イベント：七賢人イベント                     */
+/**************************************************************/
+EVENT_START   ev_d05r0201_sage_02
+	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+
+_TALK_OBJ_START()
+DEFINE_LOCAL	LWK_DIR	
+
+	//七賢人７・セリフ１
+	_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_sage1_end_01 )
+	_MSGWIN_CLOSE()
+	
+	//つめとぎ入手
+	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN01, 1 )
+	
+	//七賢人７・セリフ２
+	_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_sage1_end_02 )
+	_MSGWIN_CLOSE()
+	
+	//階段SE
+	_SE_PLAY( SEQ_SE_KAIDAN )
+	_SE_WAIT()
+
+	//ハンサム出現
+	_OBJ_ADD_EX( 4,17,DIR_UP,MMDL_ID_EVENTOBJ_00,ICPO,MV_DMY )
+	
+	//ハンサム寄ってくる
+	_PLAYER_DIR_GET( LWK_DIR )
+	SWITCH $LWK_DIR
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_left_come )
+		_OBJ_ANIME( D05R0201_SAGE_02, anm_stay_u2 )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_right_come )
+		_OBJ_ANIME( D05R0201_SAGE_02, anm_stay_u2 )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_UP THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_up_come )
+		_OBJ_ANIME( D05R0201_SAGE_02, anm_stay_r2 )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_DOWN THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_down_come )
+		_OBJ_ANIME( D05R0201_SAGE_02, anm_stay_r2 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+
+	//ハンサムセリフ
+	_BALLOONWIN_OBJMSG( msg_d05r0201_icpo_end_01 , MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+
+	//七賢人７・セリフ３
+	_BALLOONWIN_TALKOBJ_MSG( msg_d05r0201_sage1_end_03 )
+	_MSGWIN_CLOSE()
+
+	SWITCH $LWK_DIR
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_left_come2 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_right_come2 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_UP THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_up_come2 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_DOWN THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_down_come2 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+
+	//【仮】全部の七賢人を捕まえている場合
+	IF $LOCALWORK10 == 7 THEN
+		
+		//ハンサムセリフ
+		_BALLOONWIN_OBJMSG( msg_d05r0201_icpo_end_03 , MMDL_ID_EVENTOBJ_00 )
+		_MSGWIN_CLOSE()
+	
+	//まだ捕まえていない場合
+	ELSE
+	
+		//ハンサムセリフ
+		_BALLOONWIN_OBJMSG( msg_d05r0201_icpo_end_02 , MMDL_ID_EVENTOBJ_00 )
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+	
+	//画面暗転
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	_OBJ_DEL( D05R0201_SAGE_02 )
+	
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+
+	//========================================/
+	
+	//バニシュフラグセット
+	_FLAG_SET( FV_D05R0201_SAGE7 )
+	
+	//========================================/
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//共通アニメ：ステイウォーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_u2
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_d2
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_r2
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_l2
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+//	ハンサムアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_left_come
+	_ANIME_DATA	AC_WALK_U_4F,6
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_right_come
+	_ANIME_DATA	AC_WALK_L_4F,6
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_up_come
+	_ANIME_DATA	AC_WALK_L_4F,5
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_down_come
+	_ANIME_DATA	AC_WALK_L_4F,5
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_left_come2
+	_ANIME_DATA	AC_WALK_R_4F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_right_come2
+	_ANIME_DATA	AC_WALK_L_4F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_up_come2
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_down_come2
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
