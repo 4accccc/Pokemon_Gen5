@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-03-19T15:51:05"/>
+	<create user="nakamura_akira" host="W00161" date="2010-03-20T16:28:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -325,15 +325,9 @@
 	<row id="msg_sys_gpower_use01">
 		<comment>0：トレーナー名
 1：デルパワー名</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
-[1:11:特殊状態名:1]を
-つかいました！[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]さんの
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが　はつどうした
 [1:11:特殊状態名:1]を　つかいますか？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが
-[1:11:特殊状態名:1]を
-使いました！[BE:01:ページ切り替え（クリア）]
-[1:00:トレーナー名:0]さんの
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんが　発動した
 [1:11:特殊状態名:1]を　使いますか？</language>
 	</row>
 
