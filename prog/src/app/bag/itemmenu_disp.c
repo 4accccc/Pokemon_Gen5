@@ -1585,6 +1585,9 @@ static const u8 BagAnime[][2] =
 	{ NANR_bag_parts_d_taisetsu1, NANR_bag_parts_d_taisetsu },	// ‚½‚¢‚¹‚Â‚È‚à‚Ì
 };
 
+#define	BAG_OBJ_MOVE_SIZ	( 16 )
+#define	BAG_OBJ_MOVE_CNT	( 4 )
+
 void ITEMDISP_InitPocketCell( FIELD_ITEMMENU_WORK* pWork )
 {
 	GFL_CLWK_DATA dat;
@@ -1593,7 +1596,7 @@ void ITEMDISP_InitPocketCell( FIELD_ITEMMENU_WORK* pWork )
 	for( i=0; i<BAG_POKE_MAX; i++ ){
 		dat.softpri = BagSoftPriority[i];
 		dat.bgpri   = 1;
-		dat.pos_x   = pokectCellPos[i].x;
+		dat.pos_x   = pokectCellPos[i].x-BAG_OBJ_MOVE_SIZ;		// ‰ŠúˆÚ“®•ª‚ð“®‚©‚µ‚Ä‚¨‚­
 		dat.pos_y   = pokectCellPos[i].y;
 		dat.anmseq  = BagAnime[i][1];
 		pWork->clwkBag[i] = GFL_CLACT_WK_Create(
@@ -2432,4 +2435,20 @@ void ITEMDISP_ChangeMoveModeButton( FIELD_ITEMMENU_WORK * wk, BOOL flg )
 	    GFL_CLACT_WK_SetAnmSeq( wk->clwkBarIcon[BAR_ICON_CHECK_BOX], APP_COMMON_BARICON_CHECK_OFF_PASSIVE );
 		}
 	}
+}
+
+BOOL ITEMDISP_InitBagMode( FIELD_ITEMMENU_WORK * wk )
+{
+	GFL_CLACTPOS	pos;
+	u32	i;
+
+	for( i=0; i<BAG_POKE_MAX; i++ ){
+		GFL_CLACT_WK_GetPos( wk->clwkBag[i], &pos, CLWK_SETSF_NONE );
+		if( pos.x == pokectCellPos[i].x ){
+			return FALSE;
+		}
+    pos.x += BAG_OBJ_MOVE_CNT;
+		GFL_CLACT_WK_SetPos( wk->clwkBag[i], &pos, CLWK_SETSF_NONE );
+	}
+	return TRUE;
 }

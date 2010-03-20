@@ -431,3 +431,4 @@ extern void ITEMDISP_ChangeActive( FIELD_ITEMMENU_WORK * wk, BOOL flg );
 extern void ITEMDISP_ChangeRetButtonActive( FIELD_ITEMMENU_WORK * wk, BOOL flg );
 extern void ITEMDISP_ChangeSortButton( FIELD_ITEMMENU_WORK * wk );
 extern void ITEMDISP_ChangeMoveModeButton( FIELD_ITEMMENU_WORK * wk, BOOL flg );
+extern BOOL ITEMDISP_InitBagMode( FIELD_ITEMMENU_WORK * wk );

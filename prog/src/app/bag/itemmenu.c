@@ -3555,7 +3555,12 @@ static void _VBlank( GFL_TCB *tcb, void *work )
 //-----------------------------------------------------------------------------
 static void _startState(FIELD_ITEMMENU_WORK* pWork)
 {
-	if( WIPE_SYS_EndCheck() == TRUE ){
+	BOOL	wipe, obj;
+
+	wipe = WIPE_SYS_EndCheck();
+	obj  = ITEMDISP_InitBagMode( pWork );
+
+	if( wipe == TRUE && obj == FALSE ){
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
     _CHANGE_STATE(pWork, _itemKindSelectMenu);
   }
