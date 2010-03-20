@@ -40,6 +40,7 @@
 #include "savedata/encount_sv.h"
 
 #include "system/main.h"      //GFL_HEAPID_APP参照
+#include "system/scroll_bar.h"
 
 #include "../../field/eventwork.h"  // GAMEDATA_GetEventWork
 #include "../../../resource/fldmapdata/flagwork/work_define.h"  // WK_SYS_N01R0502_ITEMUSE
@@ -464,7 +465,7 @@ static void _pocketCursorChange(FIELD_ITEMMENU_WORK* pWork,int oldpocket, int ne
   MYITEM_FieldBagCursorGet(pWork->pBagCursor, newpocket, &cur, &scr );
   pWork->curpos = cur;
   pWork->oamlistpos = scr - 1;
-  ITEMDISP_ScrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+  ITEMDISP_ScrollCursorChangePos( pWork );
   ITEMDISP_PocketMessage(pWork, newpocket);
   ITEMDISP_ChangePocketCell( pWork,newpocket );
   ITEMDISP_ItemInfoWindowChange(pWork,newpocket);
@@ -575,28 +576,16 @@ static BOOL _posminus( FIELD_ITEMMENU_WORK * pWork, int length, BOOL loop )
 
 static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
 {
-  enum
-  {
-    Y_MAX = _SCROLL_BOTTOM_Y - _SCROLL_TOP_Y,
-  };
-
-  u32 x,y,i;
+  u32 x, y;
   int length = ITEMMENU_GetItemPocketNumber(pWork);
 
-  if( length >= ITEMMENU_SCROLLBAR_ENABLE_NUM && GFL_UI_TP_GetPointCont(&x, &y) == TRUE )
-  {
+	if( length >= ITEMMENU_SCROLLBAR_ENABLE_NUM && GFL_UI_TP_GetPointCont(&x, &y) == TRUE ){
     // 範囲判定
-/*
-    if((y <= _SCROLL_TOP_Y) || (y >= _SCROLL_BOTTOM_Y))
-    {
-      return FALSE;
-    }
-*/
-    if((x >= (32*8)) || (x <= (28*8)) )
-    {
+		if( (x >= (32*8)) || (x <= (28*8)) ){
       return FALSE;
     }
 
+		// Ｙ座標補正
 		if( y < _SCROLL_TOP_Y ){
 			y = _SCROLL_TOP_Y;
 		}else if( y > _SCROLL_BOTTOM_Y ){
@@ -607,33 +596,18 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
     KTST_SetDraw( pWork, FALSE );
 
     {
-      int num = (length * (y-_SCROLL_TOP_Y)) / Y_MAX;
-      int prelistpos = pWork->oamlistpos;
+			int	tmp_scr = pWork->oamlistpos;
 
-      pWork->curpos = 0;
-      pWork->oamlistpos = -1;
+			pWork->oamlistpos = SCROLLBAR_GetCount( length+1-6, y, _SCROLL_TOP_Y, _SCROLL_BOTTOM_Y, 0 ) - 1;
 
-//      HOSAKA_Printf( "===== length=%d num=%d \n", length, num );
-//      OS_Printf( "===== length=%d num=%d \n", length, num );
+			ITEMDISP_ScrollCursorMove( pWork );		// スクロールバーOAM座標を変更
 
-      for(i = 0 ; i < num ; i++)
-      {
-        _posplus( pWork, length, FALSE );
-//        HOSAKA_Printf( "[%d] curpos=%d \n", i, pWork->curpos );
-      }
-      
-      // スクロールバーOAM座標を変更
-      ITEMDISP_ScrollCursorMove(pWork);
-
-      // リストが移動した時のみSE
-      if( prelistpos != pWork->oamlistpos )
-      {
+			if( pWork->oamlistpos != tmp_scr ){
         PMSND_PlaySE( SE_BAG_SRIDE );
         return TRUE;
-      }
+			}
     }
-
-  } // if( length >= ITEMMENU_SCROLLBAR_ENABLE_NUM && GFL_UI_TP_GetPointCont(&x, &y) == TRUE )
+  }
 
   return FALSE;
 }
@@ -821,11 +795,11 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
 //  ITEMDISP_CellMessagePrint(pWork);
   }
   else if(_itemMovePositionTouchItem(pWork)){ // アイテム移動モード時のアイテム部分タッチ処理
-    ITEMDISP_ScrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+    ITEMDISP_ScrollCursorChangePos( pWork );
     bChange = TRUE;
   }
   else if(_keyChangeItemCheck(pWork)){   // キーの操作
-    ITEMDISP_ScrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+    ITEMDISP_ScrollCursorChangePos( pWork );
     bChange = TRUE;
   }
   if(bChange){
@@ -1701,7 +1675,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // キー操作
   else if( _keyMoveCheck(pWork) )
   {
-    ITEMDISP_ScrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+    ITEMDISP_ScrollCursorChangePos( pWork );
     bChange = TRUE;
   }
 
@@ -3429,7 +3403,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
         }
       }
 
-//    ITEMDISP_ScrollCursorChangePos(pWork, ITEMMENU_GetItemIndex(pWork));
+//    ITEMDISP_ScrollCursorChangePos( pWork );
       _ItemChange(pWork, nowno, ITEMMENU_GetItemIndex(pWork));
 
       // タッチ通知

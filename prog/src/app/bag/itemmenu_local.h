@@ -387,7 +387,7 @@ extern void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_CellMessagePrint( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_CellVramTrans( FIELD_ITEMMENU_WORK* pWork );
 extern void ITEMDISP_ScrollCursorMove(FIELD_ITEMMENU_WORK* pWork);
-extern void ITEMDISP_ScrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num);
+extern void ITEMDISP_ScrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork);
 
 extern s32 ITEMMENU_SellPrice( int item_no, int input_num, HEAPID heapID );
 extern int ITEMMENU_GetItemIndex(FIELD_ITEMMENU_WORK* pWork);

@@ -56,6 +56,8 @@
 
 #include "item/itemtype_def.h"
 
+#include "system/scroll_bar.h"
+
 
 #if 0
 #ifdef PM_DEBUG
@@ -1456,9 +1458,9 @@ void ITEMDISP_ScrollCursorMove(FIELD_ITEMMENU_WORK* pWork)
     }else if( y > _SCROLL_BOTTOM_Y ){
 			y = _SCROLL_BOTTOM_Y;
     }
-    GFL_CLACT_WK_GetPos( pWork->clwkScroll , &pos, CLWK_SETSF_NONE );
+    GFL_CLACT_WK_GetPos( pWork->clwkScroll, &pos, CLWK_SETSF_NONE );
     pos.y = y;
-    GFL_CLACT_WK_SetPos( pWork->clwkScroll , &pos, CLWK_SETSF_NONE );
+    GFL_CLACT_WK_SetPos( pWork->clwkScroll, &pos, CLWK_SETSF_NONE );
   }
 }
 
@@ -1468,44 +1470,18 @@ void ITEMDISP_ScrollCursorMove(FIELD_ITEMMENU_WORK* pWork)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-void ITEMDISP_ScrollCursorChangePos(FIELD_ITEMMENU_WORK* pWork, int num)
+void ITEMDISP_ScrollCursorChangePos( FIELD_ITEMMENU_WORK * pWork )
 {
-  u32 x,y;
+	GFL_CLACTPOS pos;
+	int length;
+	
+	length = ITEMMENU_GetItemPocketNumber( pWork );
 
-  {
-    int length = ITEMMENU_GetItemPocketNumber( pWork ) - 1;
-    GFL_CLACTPOS pos;
-    int ymax = _SCROLL_BOTTOM_Y - _SCROLL_TOP_Y;
-    int y = ((num * ymax)/length) + _SCROLL_TOP_Y;
+	GFL_CLACT_WK_GetPos( pWork->clwkScroll, &pos, CLWK_SETSF_NONE );
+	pos.y = SCROLLBAR_GetPosY( length-6, pWork->oamlistpos+1, _SCROLL_TOP_Y, _SCROLL_BOTTOM_Y, 0 );
+	GFL_CLACT_WK_SetPos( pWork->clwkScroll, &pos, CLWK_SETSF_NONE );
 
-    if( y < _SCROLL_TOP_Y ){
-      y = _SCROLL_TOP_Y;
-    }else if( y > _SCROLL_BOTTOM_Y ){
-      y = _SCROLL_BOTTOM_Y;
-    }
-
-		PMSND_PlaySE( SE_BAG_SRIDE );
-
-/*
-    if(y < _SCROLL_TOP_Y){
-      y=_SCROLL_TOP_Y;
-    }
-    if(y > _SCROLL_BOTTOM_Y){
-      y=_SCROLL_BOTTOM_Y;
-    }
-    else			// これ何...??
-    {
-      PMSND_PlaySE( SE_BAG_SRIDE );
-    }
-*/
-
-    GFL_CLACT_WK_GetPos( pWork->clwkScroll , &pos, CLWK_SETSF_NONE );
-    pos.y = y;
-    GFL_CLACT_WK_SetPos( pWork->clwkScroll ,  &pos, CLWK_SETSF_NONE );
-  }
-
-  // カーソルを表示
-//  GFL_CLACT_WK_SetDrawEnable( pWork->clwkCur, TRUE );
+	PMSND_PlaySE( SE_BAG_SRIDE );
 }
 
 //------------------------------------------------------------------------------
