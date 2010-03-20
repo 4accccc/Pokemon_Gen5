@@ -233,3 +233,14 @@ extern FIELD_SAVEANIME * SCRIPT_GetSaveAnimeWork( SCRIPT_WORK * sc );
 //-----------------------------------------------------------------------------
 extern void SCRIPT_SetMovePokeWork( SCRIPT_WORK * sc, EV_MOVEPOKE_WORK * wk );
 extern EV_MOVEPOKE_WORK * SCRIPT_GetMovePokeWork( SCRIPT_WORK * sc ); 
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  再戦トレーナーワークの管理
+ */
+//-----------------------------------------------------------------------------
+extern void SCRIPT_SetReBattleTrainerData( SCRIPT_WORK * sc, void * wk );
+extern void * SCRIPT_GetReBattleTrainerData( SCRIPT_WORK * sc ); 
+
+

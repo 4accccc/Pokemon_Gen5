@@ -562,6 +562,29 @@ BOOL ZONEDATA_DEBUG_IsSampleObjUse(u16 zone_id)
 }
 
 //------------------------------------------------------------------
+// レールオンリーのマップかどうかチェック
+//------------------------------------------------------------------
+BOOL ZONEDATA_IsRailOnlyMap( u16 zone_id )
+{
+  switch(zone_id)
+  {
+  case ZONE_ID_C03:
+  case ZONE_ID_H01:
+  case ZONE_ID_D09:
+  case ZONE_ID_D08R0501:
+  case ZONE_ID_D08R0701:
+  case ZONE_ID_C04R0101:
+  case ZONE_ID_D20R0101:
+  case ZONE_ID_D20R0201:
+  case ZONE_ID_D20R0301:
+  case ZONE_ID_D20R0401:
+  case ZONE_ID_C03P13:
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//------------------------------------------------------------------
 /**
  * @brief レール使用マップかどうかのチェック
  *

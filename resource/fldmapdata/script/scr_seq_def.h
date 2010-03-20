@@ -7143,6 +7143,89 @@
   .short EV_SEQ_GPOWER_USE_EFFECT
   .endm
 
+//-----------------------------------------------------------------------------
+// ビッグスタジアム リトルコート
+//-----------------------------------------------------------------------------
+//--------------------------------------------------------------
+/**
+ * @def _REBATTLE_TRAINER_START
+ * @brief 再戦トレーナー情報を確保
+ */
+//--------------------------------------------------------------
+#define _REBATTLE_TRAINER_START() \
+    _ASM_REBATTLE_TRAINER_START
+  
+  .macro _ASM_REBATTLE_TRAINER_START
+  .short EV_SEQ_REBATTLE_TRAINER_START
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _REBATTLE_TRAINER_END
+ * @brief 再戦トレーナー情報を破棄
+ */
+//--------------------------------------------------------------
+#define _REBATTLE_TRAINER_END() \
+    _ASM_REBATTLE_TRAINER_END
+  
+  .macro _ASM_REBATTLE_TRAINER_END
+  .short EV_SEQ_REBATTLE_TRAINER_END
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _REBATTLE_TRAINER_SETUP_RND_TR
+ * @brief 再戦トレーナー　ランダムトレーナー　設定
+ *
+ * @param objid0         設定するOBJ識別ID  
+ * @param objid1         設定するOBJ識別ID  
+ * @param objid2         設定するOBJ識別ID  
+ */
+//--------------------------------------------------------------
+#define _REBATTLE_TRAINER_SETUP_RND_TR( objid0, objid1, objid2 ) \
+    _ASM_REBATTLE_TRAINER_SETUP_RND_TR objid0, objid1, objid2
+  
+  .macro _ASM_REBATTLE_TRAINER_SETUP_RND_TR objid0, objid1, objid2
+  .short EV_SEQ_REBATTLE_TRAINER_SETUP_RND_TR
+  .short \objid0
+  .short \objid1
+  .short \objid2
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _REBATTLE_TRAINER_SETUP_TRID
+ * @brief 再戦トレーナー　固定トレーナー　設定
+ *
+ * @param rebattle_id   再戦トレーナー種別  (prog/src/field/rebattle_trainer.h)
+ * @param objid         設定するOBJ識別ID  
+ * @param level         段階(1～3)
+ */
+//--------------------------------------------------------------
+#define _REBATTLE_TRAINER_SETUP_TRID( rebattle_id, objid, level ) \
+    _ASM_REBATTLE_TRAINER_SETUP_TRID rebattle_id, objid, level
+  
+  .macro _ASM_REBATTLE_TRAINER_SETUP_TRID rebattle_id, objid, level
+  .short EV_SEQ_REBATTLE_TRAINER_SETUP_TRID
+  .short \rebattle_id
+  .short \objid
+  .short \level
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ * @def _REBATTLE_TRAINER_CLEAR_TR_EVENT_FLAG
+ * @brief 再戦トレーナー　戦闘イベントフラグ　リセット
+ */
+//--------------------------------------------------------------
+#define _REBATTLE_TRAINER_CLEAR_TR_EVENT_FLAG() \
+    _ASM_REBATTLE_TRAINER_CLEAR_TR_EVENT_FLAG
+  
+  .macro _ASM_REBATTLE_TRAINER_CLEAR_TR_EVENT_FLAG
+  .short EV_SEQ_REBATTLE_TRAINER_CLEAR_TR_EVENT_FLAG
+  .endm
+
 
 //======================================================================
 //

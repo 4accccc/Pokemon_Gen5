@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: rebattle_trainer.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_REBATTLE_TRAINER_NAIX_
+#define NARC_REBATTLE_TRAINER_NAIX_
+
+enum {
+	NARC_rebattle_trainer_rebattle_trainer_dat = 0
+};
+
+/* NARC_REBATTLE_TRAINER_NAIX_ */
+#endif

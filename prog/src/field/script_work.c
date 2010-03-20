@@ -116,6 +116,9 @@ struct _TAG_SCRIPT_WORK
   
   EV_MOVEPOKE_WORK* movepoke;
 
+  // 再戦トレーナーテンポラリ
+  void* rebattle_trainer;
+
 };
 
 //============================================================================================
@@ -599,6 +602,29 @@ EV_MOVEPOKE_WORK * SCRIPT_GetMovePokeWork( SCRIPT_WORK * sc )
 {
   return sc->movepoke;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  再戦トレーナーワークの保存
+ */
+//-----------------------------------------------------------------------------
+void SCRIPT_SetReBattleTrainerData( SCRIPT_WORK * sc, void * wk )
+{
+  sc->rebattle_trainer = wk;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  再戦トレーナーワーク取得
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+void * SCRIPT_GetReBattleTrainerData( SCRIPT_WORK * sc )
+{
+  return sc->rebattle_trainer;
+}
+
 
 
 

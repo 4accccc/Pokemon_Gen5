@@ -883,12 +883,13 @@
   NO_CMD()
   NO_CMD()
   NO_CMD()
-  NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
+  // ビッグスタジアム リトルコート
+  DEF_CMD( EvCmdReBattleTrainerStart, EV_SEQ_REBATTLE_TRAINER_START )
+  DEF_CMD( EvCmdReBattleTrainerEnd, EV_SEQ_REBATTLE_TRAINER_END )
+  DEF_CMD( EvCmdReBattleTrainerSetUpTrID, EV_SEQ_REBATTLE_TRAINER_SETUP_TRID )
+  DEF_CMD( EvCmdReBattleTrainerSetUpRndTr, EV_SEQ_REBATTLE_TRAINER_SETUP_RND_TR )
+  DEF_CMD( EvCmdReBattleTrainerClearTrEventFlag, EV_SEQ_REBATTLE_TRAINER_CLEAR_TR_EVENT_FLAG )
 
   //トライアルハウス関連
   DEF_CMD( EvCmdTH_Start, EV_SEQ_TH_START )

@@ -159,6 +159,7 @@ SUBDIRS	=	wmi \
 			psel \
 			subway_map_gra \
 			item_judge \
+			rebattle_trainer \
 			p_tree
 
 
