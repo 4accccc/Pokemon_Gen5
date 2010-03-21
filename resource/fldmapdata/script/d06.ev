@@ -20,7 +20,9 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_d06_stopper_01
-_EVENT_DATA    ev_pos_d06_leader5_01
+
+//_EVENT_DATA    ev_pos_d06_leader5_01
+
 _EVENT_DATA    ev_init_d06
 _EVENT_DATA    ev_recover_d06
 _EVENT_DATA    ev_zone_d06 
@@ -32,7 +34,7 @@ _EVENT_DATA_END
 /**************************************************************/
 INIT_EVENT_START	ev_zone_d06
 
-	IF $WK_SCENE_D06 < 1 THEN  
+	IF $WK_SCENE_D06 < 2 THEN  
 	
 		_SXY_MOVE_EXIT_EVENT( DOOR_ID_D06_D06R0101_EXIT01, 107, 1, 337 )
 	
@@ -45,7 +47,7 @@ INIT_EVENT_END
 /**************************************************************/
 INIT_EVENT_START	ev_init_d06
 
-	IF $WK_SCENE_D06 < 1 THEN  
+	IF $WK_SCENE_D06 < 2 THEN  
 	
 		_SXY_MOVE_EXIT_EVENT( DOOR_ID_D06_D06R0101_EXIT01, 107, 1, 337 )
 	
@@ -58,7 +60,7 @@ INIT_EVENT_END
 /**************************************************************/
 INIT_EVENT_START	ev_recover_d06
 	
-	IF $WK_SCENE_D06 < 1 THEN 
+	IF $WK_SCENE_D06 < 2 THEN 
 	
 		_SXY_MOVE_EXIT_EVENT( DOOR_ID_D06_D06R0101_EXIT01, 107, 1, 337 )
 
@@ -71,211 +73,217 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START    ev_d06_stopper_01
 	
-	_SYSWIN_MSG(msg_d06_stopper_01, POS_DOWN ) 
-	_LAST_KEYWAIT()
-	_SYSWIN_CLOSE() 
-
-EVENT_END
-
-/**************************************************************/
-/*  D06 ヤーコンのPOSイベントスクリプト                   */
-/**************************************************************/
-EVENT_START    ev_pos_d06_leader5_01
-
-//===============フラグ操作===============//
-	//POSを踏むとヤーコンを表示する。
-	_FLAG_RESET(FV_D06_LEADER5_01)
-	_OBJ_ADD( D06_LEADER5_01 )
-//========================================//
-	
-	DEFINE_LOCAL	LWK_HERO_POSX
-	DEFINE_LOCAL	LWK_HERO_POSZ
-	_PLAYER_POS_GET(LWK_HERO_POSX, LWK_HERO_POSZ)
-	
-	//主人公がヤーコンに気づく
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
-	_OBJ_ANIME_WAIT()
-	
-	//主人公が振り向く
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_01)
-	_OBJ_ANIME_WAIT()
-	
-	//ヤーコンがやってくる
-	IF $LWK_HERO_POSX == 105 THEN 
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_kuru_01_a)
+	IF $WK_SCENE_D06 == 0 THEN
+		_SYSWIN_MSG(msg_d06_stopper_01, POS_DOWN ) 
+		_LAST_KEYWAIT()
+		_SYSWIN_CLOSE()
+	ELSE
+		//===============フラグ操作===============//
+		_FLAG_RESET(FV_D06_LEADER5_01)
+		_OBJ_ADD( D06_LEADER5_01 )
+		//========================================//
+		
+		DEFINE_LOCAL	LWK_HERO_POSX
+		DEFINE_LOCAL	LWK_HERO_POSZ
+		_PLAYER_POS_GET(LWK_HERO_POSX, LWK_HERO_POSZ)
+		
+		//ヤーコンが喋る
+		//ヤーコン:またせたな
+		_BALLOONWIN_OBJMSG( msg_d06_leader_01, D06_LEADER5_01)
+		_BALLOONWIN_CLOSE()
+		
+		//主人公がヤーコンに気づく
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
 		_OBJ_ANIME_WAIT()
-	ELSIF $LWK_HERO_POSX == 106 THEN
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_kuru_01_b)
-		_OBJ_ANIME_WAIT()
-	ELSIF $LWK_HERO_POSX == 107 THEN
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_kuru_01_c)
-		_OBJ_ANIME_WAIT()
-	ELSIF $LWK_HERO_POSX == 108 THEN
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_kuru_01_d)
-		_OBJ_ANIME_WAIT()
-	ENDIF
-	
-	//ヤーコンが喋る
-	//ヤーコン:またせたな
-	_BALLOONWIN_OBJMSG( msg_d06_leader_01, D06_LEADER5_01)
-	_BALLOONWIN_CLOSE()
-	
-	//主人公が振り向く
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_03)
-	_OBJ_ANIME_WAIT()
-	
-	_OBJ_ANIME_WAIT()
-
-	//ヤーコンが振り向く
-	IF $LWK_HERO_POSX == 105 THEN 
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01_a)
-		_OBJ_ANIME_WAIT()
-	ELSIF $LWK_HERO_POSX == 106 THEN
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01_b)
-		_OBJ_ANIME_WAIT()
-	ELSIF $LWK_HERO_POSX == 107 THEN
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01_c)
-		_OBJ_ANIME_WAIT()
-	ELSIF $LWK_HERO_POSX == 108 THEN
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01_d)
-		_OBJ_ANIME_WAIT()
-	ENDIF
-	
-	//ヤーコンが喋る
-	//ヤーコン:これは　デンチュラという
-	_BALLOONWIN_OBJMSG( msg_d06_leader_02, D06_LEADER5_01)
-	_BALLOONWIN_CLOSE()
-	
-	//ヤーコンのポケモンが出現
-	_OBJ_ADD_EX( 106, 341, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE20, MV_DMY )
-	
-	//ポケモンが巣に向かう
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_kuru_01)
-	_OBJ_ANIME_WAIT()
-	
-	//ヤーコンが喋る
-	//ヤーコン:ポケモン名！　わざ名！
-	_BALLOONWIN_OBJMSG( msg_d06_leader_03, D06_LEADER5_01)
-	_BALLOONWIN_CLOSE()
-
-	_TIME_WAIT(16)
-	
-	//【仮】スクリプトの動きだけ出来るのか。エフェクトはいるのか
-	//ポケモンがわざを出したような処理
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_waza_01)
-	
-	_TIME_WAIT(8)
-//	_SE_PLAY( SEQ_SE_W011_01 )
-	_TIME_WAIT(38)
-	_SE_PLAY( SEQ_SE_KOUKA_H )
-	//画面を揺らすデモを入れる
-	_SHAKE_CAMERA(0,1,3,6)
-	
-	_OBJ_ANIME_WAIT()
-	_SE_WAIT()
-	
-	_TIME_WAIT(2)
-	
-	_OBJ_ANIME(D06_STOPPER_01,anm_stopper_01_hakai)
-	_TIME_WAIT(8)
-	_SE_PLAY(SEQ_SE_FLD_143)
-	_OBJ_ANIME_WAIT()
-	_OBJ_DEL( D06_STOPPER_01 )
-	_TIME_WAIT(4)
-	_SE_WAIT()
-
-//===============フラグ操作===============//
-//デンチュラの巣を消す
-	_FLAG_SET(FV_D06_STOPPER_01)
-//========================================//
-
-	IF $LWK_HERO_POSX == 105 THEN 
-		//ヤーコンが振り向く
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02_a)
-		_OBJ_ANIME_WAIT()
+		
 		//主人公が振り向く
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02_a)
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_01)
 		_OBJ_ANIME_WAIT()
-	ELSIF $LWK_HERO_POSX == 106 THEN
+		
+		//ヤーコンがやってくる
+		IF $LWK_HERO_POSX == 105 THEN 
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_kuru_01_a)
+		ELSIF $LWK_HERO_POSX == 106 THEN
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_kuru_01_b)
+		ELSIF $LWK_HERO_POSX == 107 THEN
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_kuru_01_c)
+		ELSIF $LWK_HERO_POSX == 108 THEN
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_kuru_01_d)
+		ENDIF
+		
+		_OBJ_ANIME_WAIT()
+		
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_go_01)
+		_OBJ_ANIME_WAIT()
+		
 		//ヤーコンが振り向く
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02_a)
-		_OBJ_ANIME_WAIT()
+		IF $LWK_HERO_POSX == 105 THEN 
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01_a)
+		ELSIF $LWK_HERO_POSX == 106 THEN
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01_b)
+		ELSIF $LWK_HERO_POSX == 107 THEN
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01_c)
+		ELSIF $LWK_HERO_POSX == 108 THEN
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_01_d)
+		ENDIF
+		
 		//主人公が振り向く
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02_a)
-		_OBJ_ANIME_WAIT()
-	ELSIF $LWK_HERO_POSX == 107 THEN
-		//ヤーコンが振り向く
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02_b)
-		_OBJ_ANIME_WAIT()
-		//主人公が振り向く
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02_b)
-		_OBJ_ANIME_WAIT()
-	ELSIF $LWK_HERO_POSX == 108 THEN
-		//ヤーコンが振り向く
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02_b)
-		_OBJ_ANIME_WAIT()
-		//主人公が振り向く
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02_b)
-		_OBJ_ANIME_WAIT()
-	ENDIF
-
-	//ヤーコンが喋る
-	//ヤーコン:ほらよ！　このわざマシンを　くれてやる
-	//ヤーコンがアイテムをくれる
-	_BALLOONWIN_OBJMSG( msg_d06_leader_04, D06_LEADER5_01)
-	_BALLOONWIN_CLOSE()
-	
-	//アイテム入手処理
-	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN78, 1 )
-	
-	//わざマシンの解説
-	//ヤーコン:
-	_BALLOONWIN_OBJMSG( msg_d06_leader_05, D06_LEADER5_01)
-	_BALLOONWIN_CLOSE()
-	
-	//ヤーコンが喋る
-	//ヤーコン:オレには　おまえさんの　さいのうが　どれほどのものか
-	_BALLOONWIN_OBJMSG( msg_d06_leader_06, D06_LEADER5_01)
-	_BALLOONWIN_CLOSE()
-
-	IF $LWK_HERO_POSX == 105 THEN 
-	//ヤーコンが立ち去る
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_a)
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01_a)
-	ELSIF $LWK_HERO_POSX == 106 THEN
-	//ヤーコンが立ち去る
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_b)
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01_b)
-	ELSIF $LWK_HERO_POSX == 107 THEN
-	//ヤーコンが立ち去る
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_c)
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01_c)
-	ELSIF $LWK_HERO_POSX == 108 THEN
-		//ヤーコンが立ち去る
-		_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_d)
-		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01_d)
-	ENDIF
 		_TIME_WAIT(16)
-		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_l)
+		_OBJ_ANIME_WAIT()
+		
+		_TIME_WAIT(8)
+		//主人公が振り向く
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_u)
+		_OBJ_ANIME_WAIT()
+		
+		//ヤーコンが喋る
+		//ヤーコン:これは　デンチュラという
+		_BALLOONWIN_OBJMSG( msg_d06_leader_02, D06_LEADER5_01)
+		_BALLOONWIN_CLOSE()
+		
+		//ヤーコンのポケモンが出現
+		_OBJ_ADD_EX( 106, 341, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE20, MV_DMY )
+		
+		//ポケモンが巣に向かう
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_kuru_01)
+		_OBJ_ANIME_WAIT()
+		
+		//ヤーコンが喋る
+		//ヤーコン:ポケモン名！　わざ名！
+		_BALLOONWIN_OBJMSG( msg_d06_leader_03, D06_LEADER5_01)
+		_BALLOONWIN_CLOSE()
+
+		_TIME_WAIT(16)
+		
+		//【仮】スクリプトの動きだけ出来るのか。エフェクトはいるのか
+		//ポケモンがわざを出したような処理
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_waza_01)
+		
+		_TIME_WAIT(50)
+		_SE_PLAY( SEQ_SE_KOUKA_H )
+		//画面を揺らすデモを入れる
+		_SHAKE_CAMERA(0,1,3,6)
+		_OBJ_ANIME_WAIT()
+		_SE_WAIT()
+		
+		_TIME_WAIT(2)
+		
+		_OBJ_ANIME(D06_STOPPER_01,anm_stopper_01_hakai)
+		_TIME_WAIT(8)
+		_SE_PLAY(SEQ_SE_FLD_143)
+		_OBJ_ANIME_WAIT()
+		_OBJ_DEL( D06_STOPPER_01 )
+		_TIME_WAIT(4)
+		_SE_WAIT()
+
+		//===============フラグ操作===============//
+		//デンチュラの巣を消す
+		_FLAG_SET(FV_D06_STOPPER_01)
+		//========================================//
+
+		IF $LWK_HERO_POSX == 105 THEN 
+			//ヤーコンが振り向く
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02_a)
+			_OBJ_ANIME_WAIT()
+			//主人公が振り向く
+			_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02_a)
+			_OBJ_ANIME_WAIT()
+		ELSIF $LWK_HERO_POSX == 106 THEN
+			//ヤーコンが振り向く
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02_a)
+			_OBJ_ANIME_WAIT()
+			//主人公が振り向く
+			_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02_a)
+			_OBJ_ANIME_WAIT()
+		ELSIF $LWK_HERO_POSX == 107 THEN
+			//ヤーコンが振り向く
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02_b)
+			_OBJ_ANIME_WAIT()
+			//主人公が振り向く
+			_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02_b)
+			_OBJ_ANIME_WAIT()
+		ELSIF $LWK_HERO_POSX == 108 THEN
+			//ヤーコンが振り向く
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02_b)
+			_OBJ_ANIME_WAIT()
+			//主人公が振り向く
+			_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_muku_02_b)
+			_OBJ_ANIME_WAIT()
+		ENDIF
+
+		//ヤーコンが喋る
+		//ヤーコン:ほらよ！　このわざマシンを　くれてやる
+		//ヤーコンがアイテムをくれる
+		_BALLOONWIN_OBJMSG( msg_d06_leader_04, D06_LEADER5_01)
+		_BALLOONWIN_CLOSE()
+		
+		_TIME_WAIT(8)
+		_OBJ_ANIME(D06_LEADER5_01,anm_common_turn_r)
+		_OBJ_ANIME_WAIT()
+		
+		//アイテム入手処理
+		_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN78, 1 )
+		
+		//わざマシンの解説
+		//ヤーコン:
+		_BALLOONWIN_OBJMSG( msg_d06_leader_05, D06_LEADER5_01)
+		_BALLOONWIN_CLOSE()
+		
+		_TIME_WAIT(16)
+		_OBJ_ANIME(D06_LEADER5_01,anm_common_turn_d)
+		_OBJ_ANIME_WAIT()
+		_TIME_WAIT(8)
+		
+		//ヤーコンが喋る
+		//ヤーコン:オレには　おまえさんの　さいのうが　どれほどのものか
+		_BALLOONWIN_OBJMSG( msg_d06_leader_06, D06_LEADER5_01)
+		_BALLOONWIN_CLOSE()
+		
+		_TIME_WAIT(8)		
+		_OBJ_ANIME(D06_LEADER5_01,anm_common_turn_u)
 		_OBJ_ANIME_WAIT()
 
-//===============フラグ操作===============//
-	//【仮】フラグが無い為、仮
-	//POSイベントを無効に
-	$WK_SCENE_D06 = 2
+		_TIME_WAIT(8)
+		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01)
+		_OBJ_ANIME_WAIT()
+		_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+		_TIME_WAIT(16)
+		
+		IF $LWK_HERO_POSX == 105 THEN 
+		//ヤーコンが立ち去る
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_a)
+		ELSIF $LWK_HERO_POSX == 106 THEN
+		//ヤーコンが立ち去る
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_b)
+		ELSIF $LWK_HERO_POSX == 107 THEN
+		//ヤーコンが立ち去る
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_c)
+		ELSIF $LWK_HERO_POSX == 108 THEN
+			//ヤーコンが立ち去る
+			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_d)
+		ENDIF
+			_TIME_WAIT(16)
+			_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_d)
+			_OBJ_ANIME_WAIT()
 
-	//ジムリーダーを消す
-	//ストッパーを消す
-	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-	_OBJ_DEL(  D06_LEADER5_01 )
-	_FLAG_SET( FV_D06_LEADER5_01 )
+		//===============フラグ操作===============//
+		//【仮】フラグが無い為、仮
+		//POSイベントを無効に
+		$WK_SCENE_D06 = 2
 
-//========================================//
+		//ジムリーダーを消す
+		//ストッパーを消す
+		_OBJ_DEL(  D06_LEADER5_01 )
+		_FLAG_SET( FV_D06_LEADER5_01 )
+		_SXY_MOVE_EXIT_EVENT( DOOR_ID_D06_D06R0101_EXIT01, 107, 1, 339 )
 
-//ENDIF
+		//========================================//
+
+	
+	ENDIF
 
 EVENT_END
-
 //--------------------------------------------------------------------
 //デンチュラの巣:壊れる                       
 //--------------------------------------------------------------------
@@ -289,7 +297,13 @@ _ANIME_LABEL	anm_stopper_01_hakai
 _ANIME_LABEL	anm_player_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
-
+//--------------------------------------------------------------------
+// 主人公:ヤーコンを向く1                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_go_01
+	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+	
 //--------------------------------------------------------------------
 // 主人公:ヤーコンを向く1                    
 //--------------------------------------------------------------------
@@ -368,7 +382,7 @@ _ANIME_LABEL	anm_leader5_muku_02_b
 // ヤーコン: やってくるA                   
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader5_kuru_01_a
-	_ANIME_DATA AC_WALK_U_8F,6
+	_ANIME_DATA AC_WALK_U_8F,4
 	_ANIME_DATA AC_WALK_R_8F,2
 	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -377,7 +391,7 @@ _ANIME_LABEL	anm_leader5_kuru_01_a
 // ヤーコン: やってくるB                   
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader5_kuru_01_b
-	_ANIME_DATA AC_WALK_U_8F,6
+	_ANIME_DATA AC_WALK_U_8F,4
 	_ANIME_DATA AC_WALK_R_8F,3
 	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -386,7 +400,7 @@ _ANIME_LABEL	anm_leader5_kuru_01_b
 // ヤーコン: やってくるC                   
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader5_kuru_01_c
-	_ANIME_DATA AC_WALK_U_8F,6
+	_ANIME_DATA AC_WALK_U_8F,4
 	_ANIME_DATA AC_WALK_R_8F,4
 	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -395,7 +409,7 @@ _ANIME_LABEL	anm_leader5_kuru_01_c
 // ヤーコン: やってくるD                  
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader5_kuru_01_d
-	_ANIME_DATA AC_WALK_U_8F,6
+	_ANIME_DATA AC_WALK_U_8F,4
 	_ANIME_DATA AC_WALK_R_8F,5
 	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -461,13 +475,20 @@ _ANIME_LABEL	anm_poke2_waza_01
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
+// ポケモン: 立ち去る                
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke2_saru_01
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
 // ポケモン: 立ち去るA                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_poke2_saru_01_a
 	_ANIME_DATA AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -476,7 +497,7 @@ _ANIME_LABEL	anm_poke2_saru_01_a
 _ANIME_LABEL	anm_poke2_saru_01_b
 	_ANIME_DATA	AC_WALK_D_8F,5
 	_ANIME_DATA AC_WALK_L_8F,3
-	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -486,7 +507,7 @@ _ANIME_LABEL	anm_poke2_saru_01_c
 	_ANIME_DATA AC_WALK_L_8F,1
 	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -495,7 +516,7 @@ _ANIME_LABEL	anm_poke2_saru_01_c
 _ANIME_LABEL	anm_poke2_saru_01_d
 	_ANIME_DATA	AC_WALK_D_8F,5
 	_ANIME_DATA AC_WALK_L_8F,3
-	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
