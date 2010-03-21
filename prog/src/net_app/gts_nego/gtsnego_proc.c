@@ -1148,7 +1148,6 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
   else if( PANEL_DOWNSCROLL_ == scrollType){
     GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
     GTSNEGO_MESSAGE_FriendListDownEnd(pWork->pMessageWork);
-    OS_TPrintf("PANEL_DOWNSCROLL_ %d\n",pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3));
     GTSNEGO_DISP_UnionListDown(pWork->pDispWork, GTSNEGO_GetMyStatus(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3)));
   }
   if(ret != PANEL_NONESCROLL_){
@@ -1280,17 +1279,21 @@ static void _friendSelect( GTSNEGO_WORK *pWork )
 
   GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
 
-  if(a <= 3){
+  if(a < 3){
     bCursor = FALSE;
   }
   
   GTSNEGO_DISP_FriendSelectInit(pWork->pDispWork, bCursor);
   
   GTSNEGO_MESSAGE_FriendListPlateDisp(pWork->pMessageWork,pWork->pGameData);
-  for(i=2;i<SCROLL_PANEL_NUM;i++){
-    MYSTATUS* pMy = GTSNEGO_GetMyStatus(pWork->pGameData, i-2);
-    GTSNEGO_DISP_UnionListDisp(pWork->pDispWork, pMy, i);
-  }
+
+
+  
+//  for(i=2;i<SCROLL_PANEL_NUM;i++){
+//    MYSTATUS* pMy = GTSNEGO_GetMyStatus(pWork->pGameData, i-2);
+//    GTSNEGO_DISP_UnionListDisp(pWork->pDispWork, pMy, i);
+//  }
+  GTSNEGO_DISP_UnionListRenew(pWork->pDispWork,pWork->pGameData, -2);
 
   GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, -2);
   GTSNEGO_DISP_ScrollChipDisp(pWork->pDispWork,
@@ -1474,7 +1477,6 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
     retCode = GFL_PROC_RES_CONTINUE;
   }
 
-  GFL_CLACT_SYS_Main(); // CLSYSƒƒCƒ“
   if(pWork->pAppWin){
     APP_TASKMENU_WIN_Update( pWork->pAppWin );
   }

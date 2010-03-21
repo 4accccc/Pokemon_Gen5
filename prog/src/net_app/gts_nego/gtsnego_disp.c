@@ -1100,7 +1100,10 @@ static void _DeleteScrollBarObj(GTSNEGO_DISP_WORK* pWork)
 {
   int i;
   for(i=0;i< _SCROLLBAR_OAM_NUM;i++){
-    GFL_CLACT_WK_Remove(pWork->scrollbarOAM[i]);
+    if(pWork->scrollbarOAM[i]){
+      GFL_CLACT_WK_Remove(pWork->scrollbarOAM[i]);
+      pWork->scrollbarOAM[i]=NULL;
+    }
   }
 }
 
@@ -1255,9 +1258,10 @@ void GTSNEGO_DISP_UnionListDisp(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy,int workI
 {
   int i=workIndex;
 
-  GTSNEGO_DISP_UnionWkCreate(pWork, i, MyStatus_GetTrainerView(pMy));
-  GTSNEGO_DISP_UnionWkDisp(pWork, i , 8*3, -8*6+i*8*6 );
-
+  if(pMy){
+    GTSNEGO_DISP_UnionWkCreate(pWork, i, MyStatus_GetTrainerView(pMy));
+    GTSNEGO_DISP_UnionWkDisp(pWork, i , 8*3, -8*6+i*8*6 );
+  }
 }
 
 
@@ -1420,9 +1424,11 @@ void GTSNEGO_DISP_ScrollChipDisp(GTSNEGO_DISP_WORK* pWork,int index,int max)
 {
   GFL_CLACTPOS pos;
 
-  GFL_CLACT_WK_GetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
-  pos.y = _getScrollCurPos(pWork,index, max)+SCROLLBAR_TOP;
-  GFL_CLACT_WK_SetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
+  if(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP]){
+    GFL_CLACT_WK_GetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
+    pos.y = _getScrollCurPos(pWork,index, max)+SCROLLBAR_TOP;
+    GFL_CLACT_WK_SetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
+  }
 }
 
 
@@ -1436,13 +1442,15 @@ void GTSNEGO_DISP_ScrollChipDisp(GTSNEGO_DISP_WORK* pWork,int index,int max)
 
 int GTSNEGO_DISP_ScrollChipDispMouse(GTSNEGO_DISP_WORK* pWork,int y,int max)
 {
-  int ret;
+  int ret = 0;
   GFL_CLACTPOS pos;
 
-  GFL_CLACT_WK_GetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
-  pos.y = y;
-  GFL_CLACT_WK_SetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
-  ret = _touchToCurcorPos( pWork, y, max);
+  if(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP]){
+    GFL_CLACT_WK_GetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
+    pos.y = y;
+    GFL_CLACT_WK_SetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
+    ret = _touchToCurcorPos( pWork, y, max);
+  }
   return ret;
 }
 
