@@ -45,6 +45,7 @@ typedef struct{
 //  äOïîä÷êîêÈåæ
 //==============================================================================
 extern NetID IntrudeSymbol_CheckIntrudeNetID(GAME_COMM_SYS_PTR game_comm, GAMEDATA *gamedata);
+extern void IntrudeSymbol_GetPosPalaceForestDoorway(GAME_COMM_SYS_PTR game_comm, GAMEDATA *gamedata, VecFx32 *dest_pos);
 extern BOOL IntrudeSymbol_ReqSymbolData(INTRUDE_COMM_SYS_PTR intcomm, SYMBOL_MAP_ID symbol_map_id);
 extern BOOL IntrudeSymbol_CheckRecvSymbolData(INTRUDE_COMM_SYS_PTR intcomm);
 extern INTRUDE_SYMBOL_WORK * IntrudeSymbol_GetSymbolBuffer(INTRUDE_COMM_SYS_PTR intcomm);
