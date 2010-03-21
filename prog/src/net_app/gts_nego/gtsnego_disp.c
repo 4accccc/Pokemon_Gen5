@@ -1026,7 +1026,7 @@ BOOL GTSNEGO_DISP_FriendListUpChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* p
   if(pCur->curpos > 0){
     pCur->curpos--;
   }
-  else if((pCur->curpos==0) && (pCur->oamlistpos!=-1)){
+  else if((pCur->curpos==0) && (pCur->oamlistpos!=0)){
     //カーソルはそのままでリストが移動
     pCur->oamlistpos--;
     bChange = TRUE;

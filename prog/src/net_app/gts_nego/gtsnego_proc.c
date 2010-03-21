@@ -475,24 +475,18 @@ static void _messageEnd( GTSNEGO_WORK *pWork )
 
 static void _messagePMS( GTSNEGO_WORK *pWork )
 {
-  if(GFL_UI_TP_GetTrg() || GFL_UI_KEY_GetTrg()){  //@todoŽžŠÔ‚É•ÏX
 #if _DISP_DEBUG
-    PMS_DATA data = {1,1,{1,1}};
-    GTSNEGO_MESSAGE_PMSDrawInit(pWork->pMessageWork, pWork->pDispWork);
-    GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, &data);//&pWork->MatchData[netID].pms );
- //   GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork,GTSNEGO_040);
-    _CHANGE_STATE(pWork, _messageEnd);
+  PMS_DATA data = {1,1,{1,1}};
+  PMS_DATA* pPMS = &data;
 #else
-    {
-      GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork, GTSNEGO_040);
-      GTSNEGO_MESSAGE_PMSDrawInit(pWork->pMessageWork, pWork->pDispWork);
-      GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, &pWork->MatchData.pms );
-      //   GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork,GTSNEGO_040);
-      _CHANGE_STATE(pWork, _messageEnd);
-    }
+  PMS_DATA* pPMS=&pWork->MatchData.pms;
 #endif
+  if(GFL_UI_TP_GetTrg() || GFL_UI_KEY_GetTrg()){  //@todoŽžŠÔ‚É•ÏX
+    GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork, GTSNEGO_040);
+    GTSNEGO_MESSAGE_PMSDrawInit(pWork->pMessageWork, pWork->pDispWork);
+    GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, pPMS);
+    _CHANGE_STATE(pWork, _messageEnd);
   }
-  
 }
 
 //----------------------------------------------------------------------------
@@ -1169,9 +1163,9 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
     else{
       if( GTSNEGO_DISP_FriendListUpChk(pWork->pDispWork, &pWork->scrollPanelCursor)){
         GTSNEGO_DISP_PanelScrollStart(pWork->pDispWork,PANEL_UPSCROLL_);
-        if(pWork->scrollPanelCursor.oamlistpos - 2 >= 0){
+        if(pWork->scrollPanelCursor.oamlistpos - 1 >= 0){
           GTSNEGO_MESSAGE_FriendListUpStart(pWork->pMessageWork, pWork->pGameData,
-                                              pWork->scrollPanelCursor.oamlistpos );
+                                              pWork->scrollPanelCursor.oamlistpos-1 );
         }
       }
       else if(pWork->key3 != _CROSSCUR_TYPE_FRIEND1){
