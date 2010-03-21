@@ -15,14 +15,15 @@ require "conv_tool"
 ROW_DATAHEAD = 2  # 実データ開始行
 
 # 列インデックス
-COLUMN_FLAG         = 0  # フラグ 
-COLUMN_FLAG_CONTROL = 1  # フラグ操作
-COLUMN_MSG_ID       = 2  # 表示するニュースのメッセージID
-COLUMN_NEWS_TYPE    = 3  # タイプ
-COLUMN_ZONE_ID_1    = 4  # 表示するゾーン
-COLUMN_ZONE_ID_2    = 5  # 表示するゾーン
-COLUMN_ZONE_ID_3    = 6  # 表示するゾーン
-COLUMN_ZONE_ID_4    = 7  # 表示するゾーン
+COLUMN_VERSION      = 0  # バージョン
+COLUMN_FLAG         = 1  # フラグ 
+COLUMN_FLAG_CONTROL = 2  # フラグ操作
+COLUMN_MSG_ID       = 3  # 表示するニュースのメッセージID
+COLUMN_NEWS_TYPE    = 4  # タイプ
+COLUMN_ZONE_ID_1    = 5  # 表示するゾーン
+COLUMN_ZONE_ID_2    = 6  # 表示するゾーン
+COLUMN_ZONE_ID_3    = 7  # 表示するゾーン
+COLUMN_ZONE_ID_4    = 8  # 表示するゾーン
 
 
 #==========================================================================
@@ -34,6 +35,7 @@ class OutputData
   #-----------------
   def initialize 
     # ラベル
+    @lavel_version
     @lavel_flag
     @lavel_flagControl
     @lavel_msgID
@@ -44,6 +46,7 @@ class OutputData
     @lavel_zoneID_4
     # データ
     @priority    = 0  # プライオリティ
+    @version     = 0  # バージョン
     @flag        = 0  # フラグ 
     @flagControl = 0  # フラグ操作
     @msgID       = 0  # 表示するニュースのメッセージID
@@ -56,9 +59,9 @@ class OutputData
   #------------
   # アクセッサ
   #------------ 
-  attr_accessor :lavel_flag, :lavel_flagControl, :lavel_msgID, :lavel_newsType,
+  attr_accessor :lavel_version, :lavel_flag, :lavel_flagControl, :lavel_msgID, :lavel_newsType,
                 :lavel_zoneID_1, :lavel_zoneID_2, :lavel_zoneID_3, :lavel_zoneID_4,
-                :priority, :flag, :flagControl, :msgID, :newsType,
+                :priority, :version, :flag, :flagControl, :msgID, :newsType,
                 :zoneID_1, :zoneID_2, :zoneID_3, :zoneID_4
   #--------------------
   # 出力ファイル名取得
@@ -74,7 +77,7 @@ class OutputData
     filename = path + "/" + self.GetFilename() + ".bin"
     file = File::open(filename, "wb")
     data = Array.new
-    data << @flag << @flagControl << @msgID << @newsType <<
+    data << @version << @flag << @flagControl << @msgID << @newsType <<
             @zoneID_1 << @zoneID_2 << @zoneID_3 << @zoneID_4
     file.write(data.pack("I*"))
     file.close
@@ -85,6 +88,7 @@ class OutputData
   def DebugOut(path)
     filename = path + "/" + self.GetFilename() + ".txt"
     file = File::open(filename, "w")
+    file.puts("VERSION      = #{@lavel_version}(#{@version})")
     file.puts("FLAG         = #{@lavel_flag}(#{@flag})")
     file.puts("FLAG_CONTROL = #{@lavel_flagControl}(#{@flagControl})")
     file.puts("MSG_ID       = #{@lavel_msgID}(#{@msgID})")
@@ -163,6 +167,7 @@ ROW_DATAHEAD.upto(file_data.size - 1) do |row_idx|
   line_data = file_data[row_idx].split(/\s/)
   news = OutputData::new
   # 文字列として取得
+  news.lavel_version     = line_data[COLUMN_VERSION]
   news.lavel_flag        = line_data[COLUMN_FLAG]
   news.lavel_flagControl = line_data[COLUMN_FLAG_CONTROL]
   news.lavel_msgID       = line_data[COLUMN_MSG_ID]
@@ -178,6 +183,7 @@ ROW_DATAHEAD.upto(file_data.size - 1) do |row_idx|
   if news.lavel_zoneID_4 == "-" then news.lavel_zoneID_4 = "ZONE_ID_MAX" end
   # 数値に変換
   news.priority    = row_idx - ROW_DATAHEAD
+  news.version     = GetVersion( news.lavel_version )
   news.flag        = GetFlagID(news.lavel_flag)
   news.flagControl = GetFlagControlVal(news.lavel_flagControl)
   news.msgID       = GetMsgID("gate", news.lavel_msgID)

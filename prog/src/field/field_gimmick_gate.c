@@ -515,7 +515,7 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   static fx32 animeSpeed = FX32_ONE;
 
 #if 0
-  // TEST:
+  // TEST: 文字送り速度の調整
   {
     int key = GFL_UI_KEY_GetCont();
     int trg = GFL_UI_KEY_GetTrg();
@@ -558,93 +558,6 @@ void GATE_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
     FLD_EXP_OBJ_PlayAnime( exobj_cnt );
   }
-
-#if 0
-  // TEST:
-  {
-    int key = GFL_UI_KEY_GetCont();
-    int trg = GFL_UI_KEY_GetTrg();
-    if( key & PAD_BUTTON_DEBUG )
-    {
-      if( trg & PAD_BUTTON_Y )
-      {
-#if 0
-        FLD_CAM_MV_PARAM moveParam;
-        FIELD_CAMERA* camera;
-        VecFx32 val_target;
-        u16  val_pitch = 0x0ee5;
-        u16  val_yaw   = 0x3fff;
-        fx32 val_len   = 0x0086 << FX32_SHIFT;
-        VEC_Set( &val_target, 0xfff94000, 0x001b<<FX32_SHIFT, 0 );
-        camera = FIELDMAP_GetFieldCamera( fieldmap );
-        moveParam.Chk.Shift = TRUE;
-        moveParam.Chk.Pitch = TRUE;
-        moveParam.Chk.Yaw = TRUE;
-        moveParam.Chk.Dist = TRUE;
-        moveParam.Chk.Fovy = FALSE;
-        moveParam.Chk.Pos = TRUE;
-        moveParam.Core.AnglePitch = val_pitch;
-        moveParam.Core.AngleYaw = val_yaw;
-        moveParam.Core.Distance = val_len;;
-        VEC_Set( &moveParam.Core.Shift, 0xfff94000, 0x001b<<FX32_SHIFT, 0 );
-        FIELD_CAMERA_SetLinerParam( camera, &moveParam, 30 );
-#endif
-#if 1
-        FIELD_CAMERA* camera;
-        VecFx32 val_target;
-        u16  val_pitch = 0x0ee5;
-        u16  val_yaw   = 0x3fff;
-        fx32 val_len   = 0x0086 << FX32_SHIFT;
-        //VEC_Set( &val_target, 0xfff94000, 0x001b<<FX32_SHIFT, 0 );
-        VEC_Set( &val_target, 0, 0x001b<<FX32_SHIFT, 0 );
-        camera = FIELDMAP_GetFieldCamera( fieldmap );
-        FIELD_CAMERA_SetTargetOffset( camera, &val_target );
-        FIELD_CAMERA_SetAnglePitch( camera, val_pitch );
-        FIELD_CAMERA_SetAngleYaw( camera, val_yaw );
-        FIELD_CAMERA_SetAngleLen( camera, val_len );
-#endif
-      }
-      if( trg & PAD_BUTTON_B )
-      {
-#if 0
-        FLD_CAM_MV_PARAM moveParam;
-        FIELD_CAMERA* camera;
-        VecFx32 val_target;
-        u16  val_pitch = 0x0ee5;
-        u16  val_yaw   = 0;
-        fx32 val_len   = 0x0086 << FX32_SHIFT;
-        VEC_Set( &val_target, 0, 0x001b<<FX32_SHIFT, 0xfff94000 );
-        camera = FIELDMAP_GetFieldCamera( fieldmap );
-        moveParam.Chk.Shift = TRUE;
-        moveParam.Chk.Pitch = TRUE;
-        moveParam.Chk.Yaw = TRUE;
-        moveParam.Chk.Dist = TRUE;
-        moveParam.Chk.Fovy = FALSE;
-        moveParam.Chk.Pos = TRUE;
-        moveParam.Core.AnglePitch = val_pitch;
-        moveParam.Core.AngleYaw = val_yaw;
-        moveParam.Core.Distance = val_len;;
-        VEC_Set( &val_target, 0, 0x001b<<FX32_SHIFT, 0xfff94000 );
-        FIELD_CAMERA_SetLinerParam( camera, &moveParam, 30 );
-#endif
-#if 1
-        FIELD_CAMERA* camera;
-        VecFx32 val_target;
-        u16  val_pitch = 0x0ee5;
-        u16  val_yaw   = 0;
-        fx32 val_len   = 0x0086 << FX32_SHIFT;
-        //VEC_Set( &val_target, 0, 0x001b<<FX32_SHIFT, 0xfff94000 );
-        VEC_Set( &val_target, 0, 0x001b<<FX32_SHIFT, 0 );
-        camera = FIELDMAP_GetFieldCamera( fieldmap );
-        FIELD_CAMERA_SetTargetOffset( camera, &val_target );
-        FIELD_CAMERA_SetAnglePitch( camera, val_pitch );
-        FIELD_CAMERA_SetAngleYaw( camera, val_yaw );
-        FIELD_CAMERA_SetAngleLen( camera, val_len );
-#endif
-      }
-    }
-  }
-#endif
 }
 
 
@@ -692,8 +605,7 @@ void GATE_GIMMICK_Camera_LookElboard( FIELDMAP_WORK* fieldmap, u16 frame )
     return;
   }
   // 電光掲示板の向きでカメラの回転を決定
-  switch( work->gateData->dir )
-  {
+  switch( work->gateData->dir ) {
   case DIR_DOWN:
     val_pitch = 0x0ee5;
     val_yaw   = 0;
@@ -1174,7 +1086,7 @@ static void AddNewsEntryData( GATEWORK* work, NEWS_TYPE newsType, u32 spNewsFlag
 //------------------------------------------------------------------------------------------
 static BOOL CheckChampionNews( const GATEWORK* work )
 {
-  return TRUE;
+  return FALSE;
 }
 
 //------------------------------------------------------------------------------------------
@@ -1261,11 +1173,10 @@ static const ELBOARD_SPNEWS_DATA* SearchTopNews( const GATEWORK* work )
   { 
     BOOL flag_hit = EVENTWORK_CheckEventFlag( evwork, work->spNewsData[i].flag );
     BOOL zone_hit = ELBOARD_SPNEWS_DATA_CheckZoneHit( &work->spNewsData[i], zone_id );
+    BOOL version_hit = ELBOARD_SPNEWS_DATA_CheckVersionHit( &work->spNewsData[i] );
 
-    // フラグON and ゾーン一致
-    if( flag_hit && zone_hit )  {
-      return &work->spNewsData[i];
-    }
+    // バージョン一致 and フラグON and ゾーン一致
+    if( version_hit && flag_hit && zone_hit ) { return &work->spNewsData[i]; }
   }
   return NULL;
 }
@@ -1369,7 +1280,7 @@ static BOOL CheckSpecialNews( const GATEWORK* work )
  * ※ニュースの追加は, 必ずこの関数を介して行う。
  *  ①掲示板へニュースを追加
  *  ②ニュース登録状況の更新
- *  ③フラグ操作(臨時ニュースの場合)
+ *  ③フラグ操作 ( 臨時ニュースの場合 )
  */
 //------------------------------------------------------------------------------------------
 static void EntryNews( GATEWORK* work, 

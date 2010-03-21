@@ -27,14 +27,15 @@
 //=======================================================================================
 typedef struct
 {
+  u32 version;      // バージョン ( VERSION_xxxx, 0 ==> 全バージョン )
   u32 flag;         // フラグ
-  u32 flagControl;  // フラグ操作 ( SPNEWS_TYPE_xxxx )
+  u32 flagControl;  // フラグ操作 ( FLAG_CONTROL_xxxx )
   u32 msgID;        // 表示するニュースのメッセージID
-  u32 newsType;     // タイプ( SPNEWS_TYPE_xxxx )
-  u32 zoneID_1;     // 表示するゾーン( ZONE_ID_MAX ==> 全ゾーン )
-  u32 zoneID_2;     // 表示するゾーン( ZONE_ID_MAX ==> 全ゾーン )
-  u32 zoneID_3;     // 表示するゾーン( ZONE_ID_MAX ==> 全ゾーン )
-  u32 zoneID_4;     // 表示するゾーン( ZONE_ID_MAX ==> 全ゾーン )
+  u32 newsType;     // タイプ ( SPNEWS_TYPE_xxxx )
+  u32 zoneID_1;     // 表示するゾーン ( ZONE_ID_MAX ==> 全ゾーン )
+  u32 zoneID_2;     // 表示するゾーン ( ZONE_ID_MAX ==> 全ゾーン )
+  u32 zoneID_3;     // 表示するゾーン ( ZONE_ID_MAX ==> 全ゾーン )
+  u32 zoneID_4;     // 表示するゾーン ( ZONE_ID_MAX ==> 全ゾーン )
 
 } ELBOARD_SPNEWS_DATA;
 
@@ -54,7 +55,7 @@ typedef struct
  * @return 読み込みが正しく行われた場合 TRUE
  */
 //--------------------------------------------------------------------------------------
-BOOL ELBOARD_SPNEWS_DATA_Load( ELBOARD_SPNEWS_DATA* buf, ARCID arc_id, ARCDATID dat_id );
+extern BOOL ELBOARD_SPNEWS_DATA_Load( ELBOARD_SPNEWS_DATA* buf, ARCID arc_id, ARCDATID dat_id );
 
 //--------------------------------------------------------------------------------------
 /**
@@ -66,4 +67,15 @@ BOOL ELBOARD_SPNEWS_DATA_Load( ELBOARD_SPNEWS_DATA* buf, ARCID arc_id, ARCDATID 
  * @return 指定ゾーンに一致する場合 TRUE, そうでなければ FALSE
  */
 //--------------------------------------------------------------------------------------
-BOOL ELBOARD_SPNEWS_DATA_CheckZoneHit( const ELBOARD_SPNEWS_DATA* news, u32 zone_id );
+extern BOOL ELBOARD_SPNEWS_DATA_CheckZoneHit( const ELBOARD_SPNEWS_DATA* news, u32 zone_id );
+
+//--------------------------------------------------------------------------------------
+/**
+ * @brief バージョンが一致するかどうかを判定する
+ *
+ * @param news 臨時ニュース
+ *
+ * @return バージョンが一致する場合 TRUE, そうでなければ FALSE
+ */
+//--------------------------------------------------------------------------------------
+extern BOOL ELBOARD_SPNEWS_DATA_CheckVersionHit( const ELBOARD_SPNEWS_DATA* news );

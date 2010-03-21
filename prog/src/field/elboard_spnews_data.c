@@ -29,6 +29,7 @@ BOOL ELBOARD_SPNEWS_DATA_Load( ELBOARD_SPNEWS_DATA* buf, ARCID arc_id, ARCDATID 
 
   // DEBUG:
   OBATA_Printf( "---------------------------------- ELBOARD_SPNEWS_DATA_Load\n" );
+  OBATA_Printf( "version     = %d\n", buf->version );
   OBATA_Printf( "flag        = %d\n", buf->flag );
   OBATA_Printf( "flagControl = %d\n", buf->flagControl );
   OBATA_Printf( "msgID       = %d\n", buf->msgID );
@@ -63,5 +64,26 @@ BOOL ELBOARD_SPNEWS_DATA_CheckZoneHit( const ELBOARD_SPNEWS_DATA* news, u32 zone
            (news->zoneID_2 == zone_id) ||
            (news->zoneID_3 == zone_id) || 
            (news->zoneID_4 == zone_id) ){ return TRUE; }
+  return FALSE;
+}
+
+//--------------------------------------------------------------------------------------
+/**
+ * @brief バージョンが一致するかどうかを判定する
+ *
+ * @param news 臨時ニュース
+ *
+ * @return バージョンが一致する場合 TRUE, そうでなければ FALSE
+ */
+//--------------------------------------------------------------------------------------
+BOOL ELBOARD_SPNEWS_DATA_CheckVersionHit( const ELBOARD_SPNEWS_DATA* news )
+{
+  // 全バージョン対応
+  if( news->version == 0 ) { return TRUE; }
+
+  // バージョン一致
+  if( news->version == GetVersion() ) { return TRUE; }
+
+  // バージョン不一致
   return FALSE;
 }
