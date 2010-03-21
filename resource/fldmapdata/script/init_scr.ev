@@ -230,6 +230,9 @@ init_flags:
 	//観覧車トレーナー
 	_FLAG_SET( FV_AMUSEMENT_TRAINER )
 
+	//自宅１階：変装ハンサム非表示。クリア後に表示。
+	_FLAG_SET( FV_T01R0101_HANDSOME_MAMA )
+
 }
 _RET
 
@@ -267,12 +270,6 @@ INIT_EVENT_START  ev_init_gameclear_script
     _CALL	ev_first_gameclear  
   ENDIF
   
-  //ゲームクリアフラグをセット
-  _FLAG_SET( SYS_FLAG_GAME_CLEAR )
-
-  //古代の城のマップ変化
-  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE, FALSE )
-
   //全滅時の戻り先を自宅にする
   _SET_WARP_ID( WARP_ID_T01 )
   //復帰時の出現先
@@ -295,15 +292,6 @@ INIT_EVENT_START  ev_init_gameclear_script
       _FLAG_RESET( FV_D02R0201_LEGEND3 )
   ENDIF
 
-  //Ｎの城移動用のワープＮＰＣを非表示
-  _FLAG_SET( FV_C09R0701_WARPMAN )
-
-  //全国図鑑の入手可能フラグをセット
-  _FLAG_SET( FE_ZUKAN_GRADEUP )
-
-  //ボックス壁紙追加
-  _GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER1 )
-
 }
 INIT_EVENT_END
 
@@ -312,6 +300,24 @@ INIT_EVENT_END
 ev_first_gameclear:
   //↓ここにクリア後イベントを起動するためのフラグ/ワーク操作を記述
 
+  //ゲームクリアフラグをセット
+  _FLAG_SET( SYS_FLAG_GAME_CLEAR )
+
+  //クリア後イベント：自宅１階のハンサムイベント有効
+  $WK_SCENE_T01R0101 = 2
+  _FLAG_RESET( FV_T01R0101_HANDSOME_MAMA )	//変装ハンサム表示
+
+  //古代の城のマップ変化
+  _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE, FALSE )
+
+  //Ｎの城移動用のワープＮＰＣを非表示
+  _FLAG_SET( FV_C09R0701_WARPMAN )
+
+  //全国図鑑の入手可能フラグをセット
+  _FLAG_SET( FE_ZUKAN_GRADEUP )
+
+  //ボックス壁紙追加
+  _GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER1 )
 
 _RET
 

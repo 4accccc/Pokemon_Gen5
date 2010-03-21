@@ -566,12 +566,16 @@ EVENT_START ev_scene_t01r0101_handsome_01
 	//========================================//
 	//イベント無効
 	$WK_SCENE_T01R0101 = 3
-	
 	//偽ママ非表示
 	_FLAG_SET( FV_T01R0101_HANDSOME_MAMA )
-	
 	//イベント後の会話分岐用
 	$LOCALWORK15 = 333
+	
+	//T01ライバルとサポートイベント有効
+	$WK_SCENE_T01 = 4
+	//ライバル＆サポート表示
+	_FLAG_RESET( FV_T01_RIVAL )
+	_FLAG_RESET( FV_T01_SUPPORT )
 	
 	//========================================//
 

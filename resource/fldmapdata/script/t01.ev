@@ -30,7 +30,8 @@ _EVENT_DATA   ev_bg_t01_board_04
 _EVENT_DATA   ev_bg_t01_board_05
 _EVENT_DATA   ev_scene_t01_mama_01		//タウンマップ入手イベント
 _EVENT_DATA   ev_init_t01
-_EVENT_DATA   ev_pos_t01_firststep_01
+_EVENT_DATA   ev_pos_t01_firststep_01	//最初の一歩イベント
+_EVENT_DATA   ev_scene_t01_friends_01
 _EVENT_DATA_END //データ終端を指定しています。
 
 
@@ -50,6 +51,15 @@ INIT_EVENT_START   ev_init_t01
 
 		_OBJ_POS_CHANGE( T01_RIVAL_01, 789, 0, 737, DIR_UP )
 		_OBJ_POS_CHANGE( T01_SUPPORT_01, 787, 0, 737, DIR_DOWN )
+
+	ELSIF $WK_SCENE_T01 == 4 THEN
+		//クリア後のハンサムイベント後なら、ライバルとサポートを自宅手前に
+
+		_OBJ_POS_CHANGE( T01_RIVAL_01, 782, 0, 751, DIR_UP )
+		_OBJ_POS_CHANGE( T01_SUPPORT_01, 781, 0, 752, DIR_UP )
+
+		//このイベントの時だけ自宅右側の少女が邪魔になるので位置を変更
+		_OBJ_POS_CHANGE( T01_BABYGIRL1_01, 790, 0, 749, DIR_UP )
 
 	ENDIF
 
@@ -675,6 +685,171 @@ _ANIME_LABEL	anm_1ststep_rival_01
 
 _ANIME_LABEL	anm_1ststep_support_01
 	_ANIME_DATA	AC_WALK_U_8F,11
+	_ANIME_DATA	ACMD_END,0
+
+
+/************************************************************/
+/*					クリア後：友達イベント					*/
+/************************************************************/
+EVENT_START ev_scene_t01_friends_01
+	
+	_TIME_WAIT( 16 )
+	
+	//ライバル：一歩前へ
+	_OBJ_ANIME( T01_RIVAL_01, anm_clear_rival_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//やあ
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_end_01, T01_RIVAL_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//サポート：ゆっくり一歩前へ
+	_OBJ_ANIME( T01_SUPPORT_01, anm_clear_support_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ふたりとも ごめんね
+	_BALLOONWIN_OBJMSG_POS( msg_t01_white_end_01, T01_SUPPORT_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ライバル：サポートを見て
+	_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	//それをいうなら
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_end_02, T01_RIVAL_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//サポート：？マーク
+	_OBJ_ANIME( T01_SUPPORT_01, anm_clear_support_move_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//ゲーチス？
+	_BALLOONWIN_OBJMSG_POS( msg_t01_white_end_02, T01_SUPPORT_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ライバル：サポート横へ
+	_OBJ_ANIME( T01_RIVAL_01, anm_clear_rival_move_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//こんどおしえるよ
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_end_03, T01_RIVAL_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//サポート：
+	_OBJ_ANIME( T01_SUPPORT_01, anm_stay_walk_r )
+	_OBJ_ANIME_WAIT()
+	
+	//あたしね 
+	_BALLOONWIN_OBJMSG_WB( msg_t01_white_end_03w, msg_t01_white_end_03b, T01_SUPPORT_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//ああ ライモンシティから
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_end_04, T01_RIVAL_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//見たことないポケモン？
+	_BALLOONWIN_OBJMSG_POS( msg_t01_white_end_04, T01_SUPPORT_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//サポート：去る
+	_OBJ_ANIME( T01_SUPPORT_01, anm_clear_support_goaway_01 )
+	_TIME_WAIT( 8 )
+	
+	//ライバル：サポートを見送る
+	_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	//サポート消す
+	_OBJ_DEL( T01_SUPPORT_01 )
+	
+	//旅をしても
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_end_05, T01_RIVAL_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ライバル：主人公を見て
+	_OBJ_ANIME( T01_RIVAL_01, anm_clear_rival_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ボクはもう一度
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_end_06, T01_RIVAL_01, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//ライバル：１番道路側へ
+	_OBJ_ANIME( T01_RIVAL_01, anm_clear_rival_goaway_01 )
+	_TIME_WAIT( 12 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバル消す
+	_OBJ_DEL( T01_RIVAL_01 )
+	
+	//========================================//
+	//イベント無効
+	$WK_SCENE_T01 = 5
+	
+	//ライバル＆サポート非表示
+	_FLAG_SET( FV_T01_RIVAL )
+	_FLAG_SET( FV_T01_SUPPORT )
+	
+	//========================================//
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//！マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_mark_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル：一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_rival_move_01
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：ゆっくり一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_support_move_01
+	_ANIME_DATA	AC_WALK_U_16F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：？マーク
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_support_move_02
+	_ANIME_DATA	AC_MARK_HATENA,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル：改めて
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_rival_move_02
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//サポート：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_support_goaway_01
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ライバル：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_rival_goaway_01
+	_ANIME_DATA	AC_WALK_R_6F,6
+	_ANIME_DATA	AC_WALK_U_6F,11
 	_ANIME_DATA	ACMD_END,0
 
 
