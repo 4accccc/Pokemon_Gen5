@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-03-21T14:58:49"/>
+	<create user="shimoyamada" host="W00184" date="2010-03-21T19:56:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -339,46 +339,46 @@
 		<language name="JPN_KANJI" width="120">－－－－－－－－－－</language>
 	</row>
 
-	<row id="MAPNAME_NAIBUTUUSINKOUKAN" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="MAPNAME_NAIBUTUUSINKOUKAN" text-color="#000000,,,#000000,,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>ゲーム内イベント交換</comment>
 		<language name="JPN" width="120">つうしんこうかん</language>
-		<language name="JPN_KANJI" width="120">つうしんこうかん</language>
+		<language name="JPN_KANJI" width="120">通信交換</language>
 	</row>
 
 	<row id="MAPNAME_TUUSINKOUKAN" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>通信交換</comment>
 		<language name="JPN" width="120">つうしんこうかん</language>
-		<language name="JPN_KANJI" width="120">つうしんこうかん</language>
+		<language name="JPN_KANJI" width="120">通信交換</language>
 	</row>
 
 	<row id="MAPNAME_KANTO" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>出身ＲＯＭ：FR／LG</comment>
 		<language name="JPN" width="120">カントーちほう</language>
-		<language name="JPN_KANJI" width="120">カントーちほう</language>
+		<language name="JPN_KANJI" width="120">カントー地方</language>
 	</row>
 
 	<row id="MAPNAME_ZYOTO" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>出身ＲＯＭ：HG／SS</comment>
 		<language name="JPN" width="120">ジョウトちほう</language>
-		<language name="JPN_KANJI" width="120">ジョウトちほう</language>
+		<language name="JPN_KANJI" width="120">ジョウト地方</language>
 	</row>
 
 	<row id="MAPNAME_HOUEN" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>出身ＲＯＭ：R／S／E</comment>
 		<language name="JPN" width="120">ホウエンちほう</language>
-		<language name="JPN_KANJI" width="120">ホウエンちほう</language>
+		<language name="JPN_KANJI" width="120">ホウエン地方</language>
 	</row>
 
 	<row id="MAPNAME_SINOH" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>出身ＲＯＭ：D／P／PL</comment>
 		<language name="JPN" width="120">シンオウちほう</language>
-		<language name="JPN_KANJI" width="120">シンオウちほう</language>
+		<language name="JPN_KANJI" width="120">シンオウ地方</language>
 	</row>
 
 	<row id="MAPNAME_TOOKUHANARETATOTI" text-color="#000000,,,#000000,,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>出身ＲＯＭ：コロシアム、ポケモンＸＤ</comment>
 		<language name="JPN" width="120">とおくはなれたとち</language>
-		<language name="JPN_KANJI" width="120">とおくはなれたとち</language>
+		<language name="JPN_KANJI" width="120">遠くはなれた土地</language>
 	</row>
 
 	<row id="MAPNAME_HUSEINAKOHDO" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
