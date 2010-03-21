@@ -308,12 +308,12 @@ VMCMD_RESULT EvCmdObjAdd( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
-  u16 gx = VMGetU16( core );
-  u16 gz = VMGetU16( core );
-  u16 dir = VMGetU16( core );
-  u16 id = VMGetU16( core );
+  u16 gx = SCRCMD_GetVMWorkValue( core, work );
+  u16 gz = SCRCMD_GetVMWorkValue( core, work );
+  u16 dir = SCRCMD_GetVMWorkValue( core, work );
+  u16 id = SCRCMD_GetVMWorkValue( core, work );
   u16 code = SCRCMD_GetVMWorkValue( core, work );
-  u16 move = VMGetU16( core );
+  u16 move = SCRCMD_GetVMWorkValue( core, work );
   int zone_id = FIELDMAP_GetZoneID( fparam->fieldMap );
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
