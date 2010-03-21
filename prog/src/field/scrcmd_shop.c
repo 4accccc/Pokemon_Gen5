@@ -767,7 +767,6 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     submenu_screen_clear( SCREEN_SUBMENU_AND_INFOWIN );
     GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_LIST] );
     GFL_BMPWIN_MakeScreen( wk->win[SHOP_BUY_BMPWIN_ITEMINFO] );
-    print_mygold( wk );
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_M );
     GFL_CLACT_WK_SetDrawEnable( wk->ClactWork[SHOP_OBJ_ARROW_UPDOWN], FALSE );
     wk->seq = SHOPBUY_SEQ_MAIN;
@@ -794,6 +793,7 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
     ShopPrintMsg( wk, mes_shop_02_04, wk->selectitem );
     // 支払い方法によって引き算する対象を替える
     _sub_payment( wk, wk->price*wk->item_multi );
+    print_mygold( wk );
     MYITEM_AddItem( wk->myitem, wk->selectitem, wk->item_multi, wk->heapId);
     wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
     wk->next = SHOPBUY_SEQ_JUDGE_PREMIER_BALL;
@@ -1244,7 +1244,7 @@ static const GFL_CLWK_DATA shop_obj_param[]={
   { 172,  22, 0, 0, 1 },// カーソル
   { 172,  92, 0, 0, 0 },// 上矢印
   { 172, 132, 1, 0, 0 },// 下矢印
-  { 243, 128, 2, 0, 0 },// 上下カーソル
+  { 224, 128, 2, 0, 0 },// 上下カーソル
   {  22, 172, 0, 0, 1 },// どうぐアイコン
   // ｘ,ｙ座標,アニメーションシーケンス,ソフト優先順位  0>0xff, BG優先順位
 };
