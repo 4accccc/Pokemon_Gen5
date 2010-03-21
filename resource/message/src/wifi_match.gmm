@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-03-14T18:08:25"/>
+	<create user="matsumiya" host="W00224" date="2010-03-21T13:27:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="175" top="562" right="876" bottom="1188" maximized="no" rayout="Vertical2">
+	<dialog left="1569" top="281" right="2270" bottom="896" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="136" right="1024" bottom="534" visible="no"/>
 		<band id="0" index="0" style="0000" width="526"/>
@@ -464,7 +464,7 @@
 		<language name="JPN" width="256">データを　うけとっています……
 しばらく　おまちください</language>
 		<language name="JPN_KANJI" width="256">データを　受け取っています……
-しばらく　おまちください</language>
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="WIFIMATCH_TEXT_001">
@@ -500,7 +500,7 @@
 		<language name="JPN" width="256">ランダムマッチを
 おわりに　しますか？</language>
 		<language name="JPN_KANJI" width="256">ランダムマッチを
-おわりに　しますか？</language>
+終わりに　しますか？</language>
 	</row>
 
 	<row id="WIFIMATCH_TEXT_007">
@@ -545,7 +545,7 @@
 		<language name="JPN" width="256">データを　おくっています……
 しばらく　おまちください</language>
 		<language name="JPN_KANJI" width="256">データを　送っています……
-しばらく　おまちください</language>
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="WIFIMATCH_TEXT_015">
@@ -557,7 +557,7 @@
 		<language name="JPN" width="256">ランダムマッチを
 おわりに　しますか？</language>
 		<language name="JPN_KANJI" width="256">ランダムマッチを
-おわりに　しますか？</language>
+終わりに　しますか？</language>
 	</row>
 
 	<row id="WIFIMATCH_TEXT_017">
@@ -617,10 +617,10 @@
 かくにん　してください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ポケモンバトル　Ｗｉ－Ｆｉ大会は
 ＧＰＦの　ホームページで[BE:00:ページ切り替え（行送り）]
-登録　すると　参加できます[BE:01:ページ切り替え（クリア）]
-大会の　ルールや　開催期間は
+登録すると　参加できます[BE:01:ページ切り替え（クリア）]
+大会のルールや　開催期間は
 ＧＰＦ　ホームページで[BE:00:ページ切り替え（行送り）]
-確認　してください[BE:01:ページ切り替え（クリア）]</language>
+確認してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_03">
@@ -663,13 +663,13 @@
 
 	<row id="WIFIMATCH_WIFI_STR_06">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">さんか　できる　たいかいが
-ありません[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">さんか　できる
+たいかいが　ありません[BE:01:ページ切り替え（クリア）]
 バトルたいかいは　
 いぜん　さんかした　たいかいには[BE:00:ページ切り替え（行送り）]
 さんか　できません[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">参加できる　大会が
-ありません[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">参加できる
+大会が　ありません[BE:01:ページ切り替え（クリア）]
 バトル大会は　
 以前　参加した　大会には[BE:00:ページ切り替え（行送り）]
 参加できません[BE:01:ページ切り替え（クリア）]</language>
@@ -715,7 +715,7 @@
 さんかを　かいじょ　するまで[BE:00:ページ切り替え（行送り）]
 バトルボックスへ　ポケモンを[BE:00:ページ切り替え（行送り）]
 だしいれ　できなくなります[BE:01:ページ切り替え（クリア）]
-ロックしても　よろしい　ですか？</language>
+ロックしても　よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ大会に　参加するため
 デジタル選手証を[BE:00:ページ切り替え（行送り）]
 ロックします[BE:01:ページ切り替え（クリア）]
@@ -724,7 +724,7 @@
 参加を　解除するまで[BE:00:ページ切り替え（行送り）]
 バトルボックスへ　ポケモンを[BE:00:ページ切り替え（行送り）]
 出し入れ　できなくなります[BE:01:ページ切り替え（クリア）]
-ロックしても　よろしい　ですか？</language>
+ロックしても　よろしいですか？</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_11">
