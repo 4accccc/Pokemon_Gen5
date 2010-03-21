@@ -28,6 +28,9 @@
 #include "field_comm/intrude_main.h"
 #include "event_mapchange.h"
 
+#include "field/field_const.h"
+#include "symbol_map.h"
+
 
 //==============================================================================
 //  定数定義
@@ -65,7 +68,6 @@ typedef struct{
   u16 warp_zone_id;
   VecFx32 warp_pos;
   u16 warp_dir;
-  BOOL seasonUpdateEnable;
   u8 symbol_map_id;
   u16 data_recv_result;
   BOOL my_palace;         ///<TRUE:自分のパレスにいる
@@ -313,6 +315,29 @@ static GMEVENT_RESULT EventReqIntrudeSymbolParam( GMEVENT *event, int *seq, void
 //  シンボルマップ遷移
 //
 //==============================================================================
+static void getNewPos( const VecFx32 * now_pos, u16 dir, VecFx32 * next_pos )
+{
+  *next_pos = *now_pos;
+  switch ( dir )
+  {
+  case DIR_UP:
+    next_pos->z = (24 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
+    break;
+  case DIR_DOWN:
+    next_pos->z = (9 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
+    break;
+  case DIR_LEFT:
+    next_pos->x = (5 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
+    break;
+  case DIR_RIGHT:
+    next_pos->x = (26 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
+    break;
+  case DIR_NOT:
+    next_pos->x = (15 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
+    next_pos->z = (24 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
+    break;
+  }
+}
 //==================================================================
 /**
  * シンボルマップ遷移
@@ -323,10 +348,8 @@ static GMEVENT_RESULT EventReqIntrudeSymbolParam( GMEVENT *event, int *seq, void
  * @param   fieldWork		
  * @param   result_ptr		結果代入先  TRUE:正常にデータ受信してマップ遷移した。
  *                                    FALSE:受信出来なかった為マップ遷移もしていない(通信エラー)
- * @param   warp_zone_id		
  * @param   warp_pos		
  * @param   warp_dir    
- * @param   seasonUpdateEnable		
  * @param   symbol_map_id	相手へ要求するシンボルマップID
  *
  * @retval  GMEVENT *		
@@ -334,7 +357,9 @@ static GMEVENT_RESULT EventReqIntrudeSymbolParam( GMEVENT *event, int *seq, void
  * 通信エラーが発生した場合はマップ遷移を行わずにイベント終了します
  */
 //==================================================================
-GMEVENT * EVENT_SymbolMapWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 *result_ptr, u16 warp_zone_id, const VecFx32 *warp_pos, u16 warp_dir, BOOL seasonUpdateEnable, SYMBOL_MAP_ID symbol_map_id)
+GMEVENT * EVENT_SymbolMapWarp(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 *result_ptr,
+    const VecFx32 *warp_pos, u16 warp_dir, SYMBOL_MAP_ID symbol_map_id)
 {
 	GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   EVENT_SYMBOL_MAP_WARP *esmw;
@@ -346,9 +371,8 @@ GMEVENT * EVENT_SymbolMapWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 
 	GFL_STD_MemClear( esmw, sizeof(EVENT_SYMBOL_MAP_WARP) );
 
   esmw->fieldWork = fieldWork;
-  esmw->warp_zone_id = warp_zone_id;
+  esmw->warp_zone_id = SYMBOLMAP_GetZoneID( symbol_map_id );
   esmw->warp_pos = *warp_pos;
-  esmw->seasonUpdateEnable = seasonUpdateEnable;
   esmw->result_ptr = result_ptr;
   esmw->symbol_map_id = symbol_map_id;
   if(IntrudeSymbol_CheckIntrudeNetID(GAMESYSTEM_GetGameCommSysPtr(gsys), gamedata) == INTRUDE_NETID_NULL){
@@ -357,6 +381,21 @@ GMEVENT * EVENT_SymbolMapWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 
 
 	return( event );
 }
+
+GMEVENT * EVENT_SymbolMapWarpEasy( GAMESYS_WORK * gsys, u16 warp_dir, SYMBOL_MAP_ID symbol_map_id )
+{
+  VecFx32 next_pos;
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  {
+    FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+    MMDL * mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+    const VecFx32 * now_pos = MMDL_GetVectorPosAddress( mmdl );
+    getNewPos( now_pos, warp_dir, &next_pos );
+  }
+  return EVENT_SymbolMapWarp( gsys, fieldmap, NULL, &next_pos, warp_dir, symbol_map_id );
+}
+
 
 //--------------------------------------------------------------
 /**
@@ -407,7 +446,7 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
   case _SEQ_CHANGE_MAP:
     GMEVENT_CallEvent(event, 
       EVENT_ChangeMapPos(gsys, esmw->fieldWork, esmw->warp_zone_id, 
-      &esmw->warp_pos, esmw->warp_dir, esmw->seasonUpdateEnable));
+      &esmw->warp_pos, esmw->warp_dir, FALSE));
     (*seq)++;
     break;
   case _SEQ_FINISH:

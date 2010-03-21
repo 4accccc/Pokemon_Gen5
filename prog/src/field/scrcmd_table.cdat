@@ -880,12 +880,12 @@
   DEF_CMD( EvCmdGPowerUseEffect, EV_SEQ_GPOWER_USE_EFFECT )
   NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-
   // ビッグスタジアム リトルコート
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
   DEF_CMD( EvCmdReBattleTrainerStart, EV_SEQ_REBATTLE_TRAINER_START )
+
   DEF_CMD( EvCmdReBattleTrainerEnd, EV_SEQ_REBATTLE_TRAINER_END )
   DEF_CMD( EvCmdReBattleTrainerSetUpTrID, EV_SEQ_REBATTLE_TRAINER_SETUP_TRID )
   DEF_CMD( EvCmdReBattleTrainerSetUpRndTr, EV_SEQ_REBATTLE_TRAINER_SETUP_RND_TR )
@@ -968,6 +968,12 @@
   NO_CMD()
   NO_CMD()
   NO_CMD()
+
+  //
+  DEF_CMD( EvCmdSymbolMapWarp, EV_SEQ_SYMBOL_MAP_WARP )
+  DEF_CMD( EvCmdSymbolMapGetInfo, EV_SEQ_SYMBOL_MAP_GET_INFO )
+  DEF_CMD( EvCmdSymbolMapMovePokemon, EV_SEQ_SYMBOL_MAP_MOVE_POKE )
+  DEF_CMD( EvCmdSymbolMapSetMonsName, EV_SEQ_SYMBOL_MAP_SET_MONS_NAME )
 
   END_CMD
 

@@ -34,6 +34,9 @@
 #include "field/field_comm/intrude_message.h"
 #include "field/field_comm/intrude_field.h"
 
+#include "event_symbol.h"
+#include "symbol_map.h"
+
 #include "message.naix"
 #include "msg/msg_invasion.h"
 #include "msg/msg_mission_msg.h"
@@ -264,24 +267,3 @@ VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
-//==================================================================
-/**
- * シンボルポケモンセッティング
- *
- * @param   core		仮想マシン制御構造体へのポインタ
- * @param   wk		
- *
- * @retval  VMCMD_RESULT		
- */
-//==================================================================
-VMCMD_RESULT EvCmdSymbolPokeSet( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-  
-  DEBUG_INTRUDE_BingoPokeSet(fieldWork);
-  
-  return VMCMD_RESULT_CONTINUE;
-}

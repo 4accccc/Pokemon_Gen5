@@ -9,3 +9,13 @@
 
 #pragma once
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern u16 SYMBOLMAP_GetZoneID( SYMBOL_MAP_ID symmap_id );
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern SYMBOL_MAP_ID SYMBOLMAP_GetNextSymbolMapID( SYMBOL_MAP_ID now_symmap_id, u16 dir_id );
+
+extern BOOL SYMBOLMAP_IsEntranceID( SYMBOL_MAP_ID symmap_id );
+extern BOOL SYMBOLMAP_IsKeepzoneID( SYMBOL_MAP_ID symmap_id );

@@ -13,3 +13,9 @@
 //  äOïîä÷êîêÈåæ
 //==============================================================================
 extern VMCMD_RESULT EvCmdSymbolPokeBattle( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdSymbolPokeSet( VMHANDLE *core, void *wk );
+
+extern VMCMD_RESULT EvCmdSymbolMapWarp( VMHANDLE * core, void *wk );
+extern VMCMD_RESULT EvCmdSymbolMapMovePokemon( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdSymbolMapGetInfo( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdSymbolMapSetMonsName( VMHANDLE * core, void * wk );

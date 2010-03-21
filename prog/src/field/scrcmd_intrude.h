@@ -17,7 +17,6 @@
 extern VMCMD_RESULT EvCmdIntrudeMinimonoSetting( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdIntrudeMissionStart( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdSymbolPokeSet( VMHANDLE *core, void *wk );
 
 //--------------------------------------------------------------
 //  fieldmapオーバーレイに配置

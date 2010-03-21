@@ -7780,15 +7780,86 @@
 //--------------------------------------------------------------
 /**
  * シンボルポケモンバトル
- * @param  バトル結果(TRUE:捕獲した　FALSE:捕獲しなかった)
+ * @param target_obj  対象となるポケモンのOBJID
+ * @param ret_wk      バトル結果(TRUE:捕獲した　FALSE:捕獲しなかった)
  */
 //--------------------------------------------------------------
-#define _SYMBOL_POKE_BATTLE( ret_wk ) _ASM_SYMBOL_POKE_BATTLE ret_wk
+#define _SYMBOL_POKE_BATTLE( target_obj, ret_wk ) \
+    _ASM_SYMBOL_POKE_BATTLE target_obj, ret_wk
 
-  .macro  _ASM_SYMBOL_POKE_BATTLE     ret_wk
+  .macro  _ASM_SYMBOL_POKE_BATTLE     target_obj, ret_wk
   .short  EV_SEQ_SYMBOL_POKE_BATTLE
+  .short  \target_obj
   .short  \ret_wk
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SYMBOL_MAP_MOVE_POKE
+ * @brief シンボルマップ：ポケモンの移動
+ * @param obj_id  対象となるポケモンのOBJID
+ * @param ret_wk  移動できたかどうか？
+ *
+ * 引数にはTARGET_OBJIDを指定すること
+ */
+//--------------------------------------------------------------
+#define _SYMBOL_MAP_MOVE_POKE( obj_id, ret_wk ) \
+    _ASM_SYMBOL_MAP_MOVE_POKE obj_id, ret_wk
+
+    .macro  _ASM_SYMBOL_MAP_MOVE_POKE obj_id, ret_wk
+    .short  EV_SEQ_SYMBOL_MAP_MOVE_POKE
+    .short  \obj_id
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SYMBOL_MAP_GET_INFO
+ * @brief シンボルマップ：情報の問い合せ
+ * @param mode  SCR_SYMMAP_INFO_～（script_def.h参照）
+ * @param ret_wk  戻り値
+ */
+//--------------------------------------------------------------
+#define _SYMBOL_MAP_GET_INFO( mode, ret_wk )  \
+    _ASM_SYMBOL_MAP_GET_INFO mode, ret_wk
+
+    .macro  _ASM_SYMBOL_MAP_GET_INFO mode, ret_wk
+    .short  EV_SEQ_SYMBOL_MAP_GET_INFO
+    .short  \mode
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SYMBOL_MAP_WARP
+ * @brief シンボルマップ：出入口処理
+ * @param dir   進行方向
+ */
+//--------------------------------------------------------------
+#define _SYMBOL_MAP_WARP( dir ) \
+    _ASM_SYMBOL_MAP_WARP dir
+
+    .macro  _ASM_SYMBOL_MAP_WARP dir
+    .short  EV_SEQ_SYMBOL_MAP_WARP
+    .short  \dir
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SYMBOL_MAP_SET_MONS_NAME
+ * @brief シンボルマップ：対象ポケモン名をバッファにセット
+ * @param obj_id  対象となるポケモンのOBJID
+ * @param pos   セットするバッファ位置
+ */
+//--------------------------------------------------------------
+#define _SYMBOL_MAP_SET_MONS_NAME( obj_id, pos )  \
+    _ASM_SYMBOL_MAP_SET_MONS_NAME obj_id, pos
+
+    .macro  _ASM_SYMBOL_MAP_SET_MONS_NAME obj_id, pos
+    .short  EV_SEQ_SYMBOL_MAP_SET_MONS_NAME
+    .short  \obj_id
+    .short  \pos
+    .endm
 
 //======================================================================
 //

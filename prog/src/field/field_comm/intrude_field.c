@@ -590,13 +590,7 @@ GMEVENT * Intrude_CheckPosEvent(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys,
       pos.x = 248 << FX32_SHIFT;
       pos.y = 0;
       pos.z = 360 << FX32_SHIFT;
-      if(IntrudeSymbol_CheckIntrudeNetID(game_comm, GAMESYSTEM_GetGameData(gameSys)) == INTRUDE_NETID_NULL){
-        //自分のROMにいるので通常ワープ
-        return EVENT_ChangeMapPos(gameSys, fieldWork, ZONE_ID_PALACE02, &pos, 0, FALSE);
-      }
-      else{ //侵入先のROMにいるので侵入先のシンボルポケモンを受信してからワープ
-        return EVENT_SymbolMapWarp(gameSys, fieldWork, NULL, ZONE_ID_PALACE02, &pos, 0, FALSE, 5);
-      }
+      return EVENT_SymbolMapWarp(gameSys, fieldWork, NULL, &pos, 0, 5);
     }
   }
   

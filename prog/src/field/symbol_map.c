@@ -9,15 +9,18 @@
 
 #include <gflib.h>
 
-#include "symbol_map.h"
 
 #include "savedata/save_control.h"  //SAVE_CONTROL_WORK
+#include "gamesystem/gamesystem.h"
 #include "savedata/symbol_save.h"
 #include "savedata/intrude_save.h"
 
 #include "arc/fieldmap/zone_id.h"
 #include "field/field_dir.h"
 
+#include "field/intrude_symbol.h"
+
+#include "symbol_map.h"
 //==============================================================================
 //==============================================================================
 //--------------------------------------------------------------
@@ -212,52 +215,70 @@ static u8 map_level7_1[SYMMAP_SIZE] = {
 //==============================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
+static inline SYMBOL_MAP_ID LSIDtoSYMMAPID( u8 lsid )
+{
+  return lsid + 1;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static inline u8 SYMMAPIDtoLSID( SYMBOL_MAP_ID symmap_id )
+{
+  return symmap_id - 1;
+}
+//--------------------------------------------------------------
+/// 左側にマップがあるか？
+//--------------------------------------------------------------
 static inline BOOL hasLeft( const u8 * map, int idx )
 {
   return (idx % SYMMAP_MAX_WIDTH != 0 && idx != SYMMAP_TOP_ID );
 }
 //--------------------------------------------------------------
+/// 右側にマップがあるか？
 //--------------------------------------------------------------
 static inline BOOL hasRight( const u8 * map, int idx )
 {
   return ( idx % SYMMAP_MAX_WIDTH != SYMMAP_MAX_WIDTH - 1 && idx != SYMMAP_TOP_ID );
 }
 //--------------------------------------------------------------
+/// 上側にマップがあるか？
 //--------------------------------------------------------------
 static inline BOOL hasUp( const u8 * map, int idx )
 {
   return (idx - SYMMAP_MAX_WIDTH >= 0 && map[idx - SYMMAP_MAX_WIDTH] != 0 );
 }
 //--------------------------------------------------------------
+/// 下側にマップがあるか？
 //--------------------------------------------------------------
 static inline BOOL hasDown( const u8 * map, int idx )
 {
   return ( idx + SYMMAP_MAX_WIDTH < SYMMAP_SIZE && map[idx + SYMMAP_MAX_WIDTH] != 0 );
 }
 //--------------------------------------------------------------
+//  SIDからマップテーブルへのインデックスを取得する
 //--------------------------------------------------------------
-static inline u8 getIndex( const u8 * map, u8 now_sid )
+static inline u8 getIndex( const u8 * map, u8 now_lsid )
 {
   int i;
   for ( i = 0; i < SYMMAP_SIZE; i ++ )
   {
-    if ( map[i] == now_sid ) return i;
+    if ( map[i] == now_lsid ) return i;
   }
   GF_ASSERT(0);
-  return SYMMAP_TOP_ID;
+  return SYMMAP_ENT_ID;
 }
 
 //--------------------------------------------------------------
+/// SIDから対応するゾーンIDを取得する
 //--------------------------------------------------------------
-u16 getSymbolMapZoneID( const u8 * map, u8 now_sid )
+u16 getSymbolMapZoneID( const u8 * map, u8 now_lsid )
 {
-  int idx = getIndex( map, now_sid );
+  int idx = getIndex( map, now_lsid );
   BOOL left = hasLeft( map, idx );
   BOOL right = hasRight( map, idx );
   BOOL up = hasUp( map, idx );
   BOOL down = hasDown( map, idx );
 
-  if ( now_sid == SYMMAP_TOP_ID ) return ZONE_ID_PALACE03;
+  if ( now_lsid == SYMMAP_TOP_ID ) return ZONE_ID_PALACE03;
 
   if ( left && right )
   { //左右ある時は上下もある！
@@ -285,26 +306,27 @@ u16 getSymbolMapZoneID( const u8 * map, u8 now_sid )
 }
 
 //--------------------------------------------------------------
+/// 現在のSIDと方向から次のマップのSIDを取得する
 //--------------------------------------------------------------
-static u16 getNextMapIndex( const u8 * map, u8 now_sid, u8 dir_id )
+static u16 getNextMapLSID( const u8 * map, u8 now_lsid, u8 dir_id )
 {
   switch ( dir_id )
   {
   case DIR_UP:
-    GF_ASSERT( hasUp( map, now_sid ) );
-    return map[ getIndex( map, now_sid ) - SYMMAP_MAX_WIDTH ];
+    GF_ASSERT( hasUp( map, now_lsid ) );
+    return map[ getIndex( map, now_lsid ) - SYMMAP_MAX_WIDTH ];
   case DIR_DOWN:
-    GF_ASSERT( hasDown( map, now_sid ) );
-    return map[ getIndex( map, now_sid ) + SYMMAP_MAX_WIDTH ];
+    GF_ASSERT( hasDown( map, now_lsid ) );
+    return map[ getIndex( map, now_lsid ) + SYMMAP_MAX_WIDTH ];
   case DIR_LEFT:
-    GF_ASSERT( hasLeft( map, now_sid ) );
-    return map[ getIndex( map, now_sid ) - 1 ];
+    GF_ASSERT( hasLeft( map, now_lsid ) );
+    return map[ getIndex( map, now_lsid ) - 1 ];
   case DIR_RIGHT:
-    GF_ASSERT( hasRight( map, now_sid ) );
-    return map[ getIndex( map, now_sid ) + 1 ];
+    GF_ASSERT( hasRight( map, now_lsid ) );
+    return map[ getIndex( map, now_lsid ) + 1 ];
   }
   GF_ASSERT( 0 );
-  return now_sid;
+  return now_lsid;
 }
 
 //--------------------------------------------------------------
@@ -331,6 +353,46 @@ static const u8 * getMapTable( SYMBOL_MAP_LEVEL_LARGE large_lvl, SYMBOL_MAP_LEVE
   int index = small_lvl + SYMMAP_SMALL_LEVEL_LIMIT * large_lvl;
   GF_ASSERT( index < NELEMS(table) );
   return table[index];
+}
+
+//==============================================================================
+//==============================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+u16 SYMBOLMAP_GetZoneID( SYMBOL_MAP_ID symmap_id )
+{
+  int large_lvl = SYMBOL_MAP_LEVEL_LARGE_NONE;
+  int small_lvl = SYMBOL_MAP_LEVEL_SMALL_1;
+  const u8 * tbl = getMapTable( large_lvl, small_lvl );
+
+  return getSymbolMapZoneID( tbl, SYMMAPIDtoLSID( symmap_id ) );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+SYMBOL_MAP_ID SYMBOLMAP_GetNextSymbolMapID( SYMBOL_MAP_ID now_symmap_id, u16 dir_id )
+{
+  int large_lvl = SYMBOL_MAP_LEVEL_LARGE_NONE;
+  int small_lvl = SYMBOL_MAP_LEVEL_SMALL_1;
+  const u8 * tbl = getMapTable( large_lvl, small_lvl );
+
+  u8 next_lsid;
+  next_lsid = getNextMapLSID( tbl, SYMMAPIDtoLSID(now_symmap_id), dir_id );
+  return LSIDtoSYMMAPID( next_lsid );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+BOOL SYMBOLMAP_IsKeepzoneID( SYMBOL_MAP_ID symmap_id )
+{
+  return SYMMAPIDtoLSID( symmap_id ) == SYMMAP_TOP_ID;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+BOOL SYMBOLMAP_IsEntranceID( SYMBOL_MAP_ID symmap_id )
+{
+  return SYMMAPIDtoLSID( symmap_id ) == SYMMAP_ENT_ID;
 }
 
 

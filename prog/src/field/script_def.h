@@ -413,5 +413,18 @@
 #define SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA  (1)   // 石マニア
 #define SCR_ITEM_JUDGE_OBJTYPE_RICH         (2)   // 大富豪
 
+//--------------------------------------------------------------
+//    シンボルエンカウント：情報取得用
+//--------------------------------------------------------------
+#define SCR_SYMMAP_INFO_IS_MINE         (0)   ///<自分のパレスマップか？
+#define SCR_SYMMAP_INFO_IS_KEEPZONE     (1)   ///<キープゾーンか？
+#define SCR_SYMMAP_INFO_IS_ENTRANCE     (2)   ///<入ったマップか？
+
+
+
+
+
+
+
 
 
