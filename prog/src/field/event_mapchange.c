@@ -1482,6 +1482,7 @@ GMEVENT* EVENT_ChangeMapByWarp( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldma
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem );
+  dir = EXITDIR_fromDIR( dir );
   LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z ); 
   work->exit_type          = EXIT_TYPE_WARP;
   work->seasonUpdateEnable = FALSE;
@@ -1657,6 +1658,7 @@ static GMEVENT* EVENT_ChangeMapPosNoFadeCore( GAMESYS_WORK* gameSystem, FIELDMAP
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
+  dir = EXITDIR_fromDIR( dir );
   LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z );
   work->exit_type      = EXIT_TYPE_NONE;
   work->mapchange_type = type; 
@@ -1717,6 +1719,7 @@ GMEVENT * EVENT_ChangeMapBGMKeep( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* field
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
+  dir = EXITDIR_fromDIR( dir );
   LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z );
   work->exit_type = EXIT_TYPE_NONE;
   

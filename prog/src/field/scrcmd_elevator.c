@@ -199,7 +199,7 @@ VMCMD_RESULT EvCmdElevatorMapChange( VMHANDLE * core, void * wk )
         GRID_TO_FX32(next_z)); 
     //mapchange_event = EVENT_ChangeMapPos( gsys, fieldmap, zone_id, &appear_pos, EXIT_DIR_DOWN, FALSE );
     mapchange_event = EVENT_ChangeMapPosNoFade(
-        gsys, fieldmap, zone_id, &appear_pos, EXIT_DIR_DOWN );
+        gsys, fieldmap, zone_id, &appear_pos, DIR_DOWN );
     SCRIPT_CallEvent( sc, mapchange_event );
   }
 

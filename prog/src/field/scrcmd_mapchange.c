@@ -39,7 +39,6 @@
 //======================================================================
 //  proto
 //======================================================================
-static EXIT_DIR DirToExitDir( u16 dir );
 
 //======================================================================
 //  スクリプトコマンド：
@@ -77,7 +76,7 @@ VMCMD_RESULT EvCmdMapChange( VMHANDLE *core, void *wk )
     
     parent_event = GAMESYSTEM_GetEvent( gsys ); //現在のイベント
     mapchange_event = EVENT_ChangeMapPos( 
-        gsys, fieldmap, zone_id, &appear_pos, DirToExitDir(dir), FALSE );
+        gsys, fieldmap, zone_id, &appear_pos, dir, FALSE );
     GMEVENT_CallEvent( parent_event, mapchange_event );
   }
 
@@ -117,7 +116,7 @@ VMCMD_RESULT EvCmdMapChangeBGMKeep( VMHANDLE *core, void *wk )
     
     parent_event = GAMESYSTEM_GetEvent( gameSystem ); //現在のイベント
     mapchange_event = EVENT_ChangeMapBGMKeep( 
-        gameSystem, fieldmap, zone_id, &appear_pos, DirToExitDir(dir) );
+        gameSystem, fieldmap, zone_id, &appear_pos, dir );
     GMEVENT_CallEvent( parent_event, mapchange_event );
   }
 
@@ -225,7 +224,7 @@ VMCMD_RESULT EvCmdMapChangeByWarp( VMHANDLE *core, void *wk )
     
     parentEvent = GAMESYSTEM_GetEvent( gameSystem ); //現在のイベント
     event = EVENT_ChangeMapByWarp( 
-        gameSystem, fieldmap, zoneID, &appearPos, DirToExitDir(dir) );
+        gameSystem, fieldmap, zoneID, &appearPos, dir );
 
     GMEVENT_CallEvent( parentEvent, event );
   }
@@ -300,7 +299,7 @@ VMCMD_RESULT EvCmdMapChangeNoFade( VMHANDLE *core, void *wk )
     
     parent_event = GAMESYSTEM_GetEvent( gsys ); //現在のイベント
     mapchange_event = EVENT_ChangeMapPosNoFade( gsys, fieldmap,
-         zone_id, &appear_pos, DirToExitDir(dir) );
+         zone_id, &appear_pos, dir );
     GMEVENT_CallEvent( parent_event, mapchange_event );
   }
 
@@ -314,19 +313,4 @@ VMCMD_RESULT EvCmdMapChangeNoFade( VMHANDLE *core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static EXIT_DIR DirToExitDir( u16 dir )
-{
-  switch ( dir )
-  {
-  case DIR_UP:
-    return EXIT_DIR_UP;
-  case DIR_DOWN:
-    return EXIT_DIR_DOWN;
-  case DIR_LEFT:
-    return EXIT_DIR_LEFT;
-  case DIR_RIGHT:
-    return EXIT_DIR_RIGHT;
-  }
-  return EXIT_DIR_DOWN;
-}
 
