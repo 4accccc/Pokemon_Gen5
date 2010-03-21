@@ -896,10 +896,10 @@ static GMEVENT* EVENT_PlayerDirOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fie
   // 自機の向きに応じたイベントを選択
   switch( dir ) {
   default: GF_ASSERT(0);
-  case DIR_LEFT:  return EVENT_SlideLeftOut( gameSystem, fieldmap );
-  case DIR_RIGHT: return EVENT_SlideRightOut( gameSystem, fieldmap );
-  case DIR_UP:    return EVENT_ShutterUpOut( gameSystem, fieldmap );
-  case DIR_DOWN:  return EVENT_ShutterDownOut( gameSystem, fieldmap );
+  case DIR_LEFT:  return EVENT_SlideRightOut( gameSystem, fieldmap );
+  case DIR_RIGHT: return EVENT_SlideLeftOut( gameSystem, fieldmap );
+  case DIR_UP:    return EVENT_ShutterDownOut( gameSystem, fieldmap );
+  case DIR_DOWN:  return EVENT_ShutterUpOut( gameSystem, fieldmap );
   }
 
   GF_ASSERT(0);
@@ -930,10 +930,10 @@ static GMEVENT* EVENT_PlayerDirIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fiel
   // 自機の向きに応じたイベントを選択
   switch( dir ) {
   default: GF_ASSERT(0);
-  case DIR_LEFT:  return EVENT_SlideLeftIn( gameSystem, fieldmap );
-  case DIR_RIGHT: return EVENT_SlideRightIn( gameSystem, fieldmap );
-  case DIR_UP:    return EVENT_ShutterUpIn( gameSystem, fieldmap );
-  case DIR_DOWN:  return EVENT_ShutterDownIn( gameSystem, fieldmap );
+  case DIR_LEFT:  return EVENT_SlideRightIn( gameSystem, fieldmap );
+  case DIR_RIGHT: return EVENT_SlideLeftIn( gameSystem, fieldmap );
+  case DIR_UP:    return EVENT_ShutterDownIn( gameSystem, fieldmap );
+  case DIR_DOWN:  return EVENT_ShutterUpIn( gameSystem, fieldmap );
   }
 
   GF_ASSERT(0);
