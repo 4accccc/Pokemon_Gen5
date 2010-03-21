@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-03-16T19:01:30"/>
+	<create user="matsumiya" host="W00224" date="2010-03-21T14:30:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -462,14 +462,14 @@
 		</language>
 	</columns>
 
-	<dialog left="137" top="327" right="842" bottom="955" maximized="no" rayout="Vertical2">
+	<dialog left="1427" top="310" right="2132" bottom="938" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="637" right="1024" bottom="789" visible="yes"/>
 		<tag-palette left="532" top="179" right="1024" bottom="591" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -500,54 +500,54 @@
 		<comment>おくりものを受け取るときの通信種類選択メッセージ</comment>
 		<language name="JPN" width="216">おくりものの　うけとりかたを
 えらんで　ください</language>
-		<language name="JPN_KANJI">おくりものの　うけとりかたを
-えらんで　ください</language>
+		<language name="JPN_KANJI">おくりものの　受け取り方を
+選んでください</language>
 	</row>
 
 	<row id="mystery_01_003">
 		<comment>ＤＳダイレクト通信を開始するときの確認メッセージ</comment>
 		<language name="JPN" width="216">ＤＳワイヤレスつうしん　を
 かいし　します</language>
-		<language name="JPN_KANJI">ＤＳワイヤレスつうしん　を
-かいし　します</language>
+		<language name="JPN_KANJI">ＤＳワイヤレス通信を
+開始します</language>
 	</row>
 
 	<row id="mystery_01_004">
 		<comment>おくりものの配信ビーコンをサーチ中のメッセージ</comment>
-		<language name="JPN" width="216">おくりもの　を　さがしています
+		<language name="JPN" width="216">おくりものを　さがしています
 しばらく　おまち　ください……</language>
-		<language name="JPN_KANJI">おくりもの　を　さがしています
-しばらく　おまち　ください……</language>
+		<language name="JPN_KANJI">おくりものを　探しています
+しばらく　お待ちください……</language>
 	</row>
 
 	<row id="mystery_01_005">
 		<comment>おくりものを受信するかどうかの確認メッセージ</comment>
-		<language name="JPN" width="216">この　おくりもの　を
+		<language name="JPN" width="216">この　おくりものを
 じゅしん　しますか？</language>
-		<language name="JPN_KANJI">この　おくりもの　を
-じゅしん　しますか？</language>
+		<language name="JPN_KANJI">この　おくりものを
+受信しますか？</language>
 	</row>
 
 	<row id="mystery_01_006">
 		<comment>ほかのおくりもの配信を探すか確認メッセージ</comment>
 		<language name="JPN" width="216">ほかの　おくりものを　さがしますか？</language>
-		<language name="JPN_KANJI">ほかの　おくりものを　さがしますか？</language>
+		<language name="JPN_KANJI">他の　おくりものを　探しますか？</language>
 	</row>
 
 	<row id="mystery_01_007">
 		<comment>おくりものの受信をサーバーに申し込んだメッセージ</comment>
 		<language name="JPN" width="216">もうしこみを　しました
 しばらく　おまち　ください……</language>
-		<language name="JPN_KANJI">もうしこみを　しました
-しばらく　おまち　ください……</language>
+		<language name="JPN_KANJI">申しこみを　しました
+しばらく　お待ちください……</language>
 	</row>
 
 	<row id="mystery_01_008">
 		<comment>おくりものデータ受信中のメッセージ</comment>
-		<language name="JPN" width="216">おくりもの　を　じゅしんちゅう　です
+		<language name="JPN" width="216">おくりものを　じゅしんちゅう　です
 でんげんを　きらないで　ください……</language>
-		<language name="JPN_KANJI">おくりもの　を　じゅしんちゅう　です
-でんげんを　きらないで　ください……</language>
+		<language name="JPN_KANJI">おくりものを　受信中です
+電源を　切らないで　ください……</language>
 	</row>
 
 	<row id="mystery_01_009">
@@ -556,9 +556,9 @@
 		<language name="JPN" width="216">おくりものを　うけとりました！▼
 フレンドリィ　ショップ　で
 はいたついん　から　うけとってね！</language>
-		<language name="JPN_KANJI">おくりものを　うけとりました！▼
-フレンドリィ　ショップ　で
-はいたついん　から　うけとってね！</language>
+		<language name="JPN_KANJI">おくりものを　受け取りました！▼
+フレンドリィ　ショップで
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="mystery_01_010">
@@ -571,11 +571,11 @@
 この　おくりものを
 うけとりますか？</language>
 		<language name="JPN_KANJI">この　おくりものは
-ほかの　ひとからの　おすそわけ　です▼
-この　おくりものを　うけとっても
-ともだちに　くばることは　できません▼
+他の　人からの　おすそわけ　です▼
+この　おくりものを　受け取っても
+友達に　配ることは　できません▼
 この　おくりものを
-うけとりますか？</language>
+受け取りますか？</language>
 	</row>
 
 	<row id="mystery_01_011">
@@ -584,7 +584,7 @@
 		<language name="JPN" width="216">ふしぎなカードが
 １まいも　ありません</language>
 		<language name="JPN_KANJI">ふしぎなカードが
-１まいも　ありません</language>
+１枚も　ありません</language>
 	</row>
 
 	<row id="mystery_01_012">
@@ -592,13 +592,13 @@
 		<language name="JPN" width="216">ポケモンレンジャー
 マナフィのタマゴ　じゅしん</language>
 		<language name="JPN_KANJI">ポケモンレンジャー
-マナフィのタマゴ　じゅしん</language>
+マナフィのタマゴ　受信</language>
 	</row>
 
 	<row id="mystery_menu_001">
 		<comment>選択項目：おくりものの受信を始める</comment>
 		<language name="JPN" width="216">おくりものを　うけとる</language>
-		<language name="JPN_KANJI">おくりものを　うけとる</language>
+		<language name="JPN_KANJI">おくりものを　受け取る</language>
 	</row>
 
 	<row id="mystery_menu_002">
@@ -616,13 +616,13 @@
 	<row id="mystery_menu_004">
 		<comment>選択項目：ふしぎなおくりもの受信の通信種類選択（ダイレクト）</comment>
 		<language name="JPN" width="216">ともだちから　うけとる</language>
-		<language name="JPN_KANJI">ともだちから　うけとる</language>
+		<language name="JPN_KANJI">友達から　受け取る</language>
 	</row>
 
 	<row id="mystery_menu_005">
 		<comment>選択項目：ふしぎなおくりもの受信の通信種類選択（Wi-Fi)</comment>
-		<language name="JPN" width="216">ＷｉーＦｉで　うけとる</language>
-		<language name="JPN_KANJI">ＷｉーＦｉで　うけとる</language>
+		<language name="JPN" width="216">Ｗｉ－Ｆｉで　うけとる</language>
+		<language name="JPN_KANJI">Ｗｉ－Ｆｉで　受け取る</language>
 	</row>
 
 	<row id="mystery_menu_006">
@@ -646,7 +646,7 @@
 	<row id="mystery_menu_009">
 		<comment>選択項目：ふしぎなおくりもの受信の通信種類選択（ビーコン）</comment>
 		<language name="JPN" width="216">ワイヤレスで　うけとる</language>
-		<language name="JPN_KANJI">ワイヤレスで　うけとる</language>
+		<language name="JPN_KANJI">ワイヤレスで　受け取る</language>
 	</row>
 
 	<row id="mystery_err_001">
@@ -656,37 +656,37 @@
 おくりものが　いっぱい　です！▼
 フレンドリィショップに　いって
 おくりもの　を　うけとって　ください</language>
-		<language name="JPN_KANJI">はいたついんが　もっている
-おくりものが　いっぱい　です！▼
+		<language name="JPN_KANJI">配達員が　持っている
+おくりものが　一杯です！▼
 フレンドリィショップに　いって
-おくりもの　を　うけとって　ください</language>
+おくりものを　受け取ってください</language>
 	</row>
 
 	<row id="mystery_err_002">
 		<comment>エラー：2度受け取ることのできないおくりものを
 2度受け取ろうとしたときのエラーメッセージ</comment>
 		<language name="JPN" width="216">この　おくりもの　は
-いちど　うけとった　ことが　あるので▽
-うけとる　ことが　できません！</language>
+いちど　うけとったことが　あるので▽
+うけとることが　できません！</language>
 		<language name="JPN_KANJI">この　おくりもの　は
-いちど　うけとった　ことが　あるので▽
-うけとる　ことが　できません！</language>
+一度　受け取ったことが　あるので▽
+受け取ることが　できません！</language>
 	</row>
 
 	<row id="mystery_err_003">
 		<comment>エラー：おくりものの配信が見つからなかったときの
 エラーメッセージ</comment>
-		<language name="JPN" width="216">おくりもの　が
+		<language name="JPN" width="216">おくりものが
 みつかりません　でした</language>
-		<language name="JPN_KANJI">おくりもの　が
-みつかりません　でした</language>
+		<language name="JPN_KANJI">おくりものが
+見つかりませんでした</language>
 	</row>
 
 	<row id="mystery_err_004">
 		<comment>エラー：配信サーバーへの申し込みが拒否されたときの
 エラーメッセージ</comment>
-		<language name="JPN" width="216">もうしこみ　が　きょひ　されました</language>
-		<language name="JPN_KANJI">もうしこみ　が　きょひ　されました</language>
+		<language name="JPN" width="216">もうしこみが　きょひ　されました</language>
+		<language name="JPN_KANJI">申し込みが　拒否されました</language>
 	</row>
 
 	<row id="mystery_err_005">
@@ -694,10 +694,10 @@
 できないときのエラー</comment>
 		<language name="JPN" width="216">ふしぎなカードが　いっぱい　です！▼
 おくりものを
-うけとる　ことが　できません！</language>
-		<language name="JPN_KANJI">ふしぎなカードが　いっぱい　です！▼
+うけとることが　できません！</language>
+		<language name="JPN_KANJI">ふしぎなカードが　一杯です！▼
 おくりものを
-うけとる　ことが　できません！</language>
+受け取ることが　できません！</language>
 	</row>
 
 	<row id="mystery_err_006">
@@ -707,9 +707,9 @@
 しっぱい　しました▼
 Ａボタンを　おすと
 タイトルに　もどります</language>
-		<language name="JPN_KANJI">おくりものを　うけとるのに
-しっぱい　しました▼
-Ａボタンを　おすと
+		<language name="JPN_KANJI">おくりものを　受け取るのに
+失敗しました▼
+Ａボタンを　押すと
 タイトルに　もどります</language>
 	</row>
 
@@ -719,17 +719,17 @@
 このバージョンでは▽
 うけとることが　できません▽
 Ａボタンで　メニューに　もどります</language>
-		<language name="JPN_KANJI">おくりものを　みつけましたが
+		<language name="JPN_KANJI">おくりものを　見つけましたが
 このバージョンでは▽
-うけとることが　できません▽
+受け取ることが　できません▽
 Ａボタンで　メニューに　もどります</language>
 	</row>
 
 	<row id="mystery_err_008">
 		<language name="JPN" width="216">おすそわけ　してくれる　ひと　との
 つうしんが　せつだん　されました</language>
-		<language name="JPN_KANJI">おすそわけ　してくれる　ひと　との
-つうしんが　せつだん　されました</language>
+		<language name="JPN_KANJI">おすそわけ　してくれる　人との
+通信が　切断されました</language>
 	</row>
 
 	<row id="mystery_test_001" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
@@ -738,14 +738,14 @@
 		<language name="JPN" width="216">ポケモンレンジャーと
 せつぞく　しています</language>
 		<language name="JPN_KANJI">ポケモンレンジャーと
-せつぞく　しています</language>
+接続しています</language>
 	</row>
 
 	<row id="mystery_test_002" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
 		<comment>テスト用メッセージ
 本番では使用されません</comment>
 		<language name="JPN" width="216">Ａボタンを　おして　ください</language>
-		<language name="JPN_KANJI">Ａボタンを　おして　ください</language>
+		<language name="JPN_KANJI">Ａボタンを　押してください</language>
 	</row>
 
 	<row id="mystery_test_003" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
@@ -753,15 +753,15 @@
 本番では使用されません</comment>
 		<language name="JPN" width="216">レポートを　かいています
 しばらく　おまち　ください</language>
-		<language name="JPN_KANJI">レポートを　かいています
-しばらく　おまち　ください</language>
+		<language name="JPN_KANJI">レポートを　書いています
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="mystery_test_004" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
 		<comment>テスト用メッセージ
 本番では使用されません</comment>
 		<language name="JPN" width="216">タマゴを　てんそうちゅう　です</language>
-		<language name="JPN_KANJI">タマゴを　てんそうちゅう　です</language>
+		<language name="JPN_KANJI">タマゴを　転送中です</language>
 	</row>
 
 	<row id="mystery_test_005" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
@@ -769,22 +769,22 @@
 本番では使用されません</comment>
 		<language name="JPN" width="216">タマゴの　じゅしんに
 しっぱい　しました</language>
-		<language name="JPN_KANJI">タマゴの　じゅしんに
-しっぱい　しました</language>
+		<language name="JPN_KANJI">タマゴの　受信に
+失敗しました</language>
 	</row>
 
 	<row id="mystery_test_006">
 		<language name="JPN" width="216">ポケモンレンジャーの　がめんを
-タッチ　してください</language>
-		<language name="JPN_KANJI">ポケモンレンジャーの　がめんを
-タッチ　してください</language>
+タッチしてください</language>
+		<language name="JPN_KANJI">ポケモンレンジャーの　画面を
+タッチしてください</language>
 	</row>
 
 	<row id="mystery_test_007">
 		<language name="JPN" width="216">ポケモンレンジャーの
 じゅんび　まち　です</language>
 		<language name="JPN_KANJI">ポケモンレンジャーの
-じゅんび　まち　です</language>
+準備待ちです</language>
 	</row>
 
 	<row id="mystery_card_001">
@@ -799,47 +799,47 @@
 		<language name="JPN" width="216">フレンドリィショップ　に　いる
 はいたついん　から　うけとってね</language>
 		<language name="JPN_KANJI">フレンドリィショップ　に　いる
-はいたついん　から　うけとってね</language>
+配達員　から　うけとってね</language>
 	</row>
 
 	<row id="mystery_card_003">
 		<comment>受け取るおくりものを、すでに受け取ったあとの
 カード中に記載される「受け取り済み」メッセージ</comment>
-		<language name="JPN" width="216">この　おくりもの　は
+		<language name="JPN" width="216">この　おくりものは
 すでに　うけとりました</language>
-		<language name="JPN_KANJI">この　おくりもの　は
-すでに　うけとりました</language>
+		<language name="JPN_KANJI">この　おくりものは
+すでに　受け取りました</language>
 	</row>
 
 	<row id="mystery_card_004">
 		<comment>受け取るおくりものが、そもそも存在しないときの
 カード中に記載される「おくりものはない」メッセージ</comment>
-		<language name="JPN" width="216">この　カード　には
+		<language name="JPN" width="216">この　カードには
 おくりものが　ありません</language>
-		<language name="JPN_KANJI">この　カード　には
+		<language name="JPN_KANJI">この　カードには
 おくりものが　ありません</language>
 	</row>
 
 	<row id="mystery_card_005">
 		<comment>おくりものの配信データをもらった日付見出し</comment>
 		<language name="JPN" width="216">もらったひづけ</language>
-		<language name="JPN_KANJI">もらったひづけ</language>
+		<language name="JPN_KANJI">もらった日付</language>
 	</row>
 
 	<row id="mystery_card_006">
 		<comment>おくりもののデータを、友達に配ることができるときの
 あと何回くばれますメッセージ</comment>
 		<language name="JPN" width="216">この　おくりものは　[1:34:数字３桁:0]かい
-ともだちに　くばる　ことが　できます</language>
-		<language name="JPN_KANJI">この　おくりものは　[1:34:数字３桁:0]かい
-ともだちに　くばる　ことが　できます</language>
+ともだちに　くばることが　できます</language>
+		<language name="JPN_KANJI">この　おくりものは　[1:34:数字３桁:0]回
+友達に　配ることが　できます</language>
 	</row>
 
 	<row id="mystery_card_007">
 		<comment>カード内メニュー項目１
 カードの裏面の説明を読むための項目</comment>
 		<language name="JPN" width="216">せつめいを　よむ</language>
-		<language name="JPN_KANJI">せつめいを　よむ</language>
+		<language name="JPN_KANJI">説明を読む</language>
 	</row>
 
 	<row id="mystery_card_008">
@@ -901,15 +901,15 @@
 		<comment>おくりもののデータを、何度でも
 友達にくばれますメッセージ</comment>
 		<language name="JPN" width="216">この　おくりものは　なんどでも
-ともだちに　くばる　ことが　できます</language>
-		<language name="JPN_KANJI">この　おくりものは　なんどでも
-ともだちに　くばる　ことが　できます</language>
+ともだちに　くばることが　できます</language>
+		<language name="JPN_KANJI">この　おくりものは　何度でも
+友達に　配ることが　できます</language>
 	</row>
 
 	<row id="mystery_osusowake_001">
 		<comment>孫配信タイトルメッセージ</comment>
 		<language name="JPN" width="216">ともだちはいしん　うけつけちゅう</language>
-		<language name="JPN_KANJI">ともだちはいしん　うけつけちゅう</language>
+		<language name="JPN_KANJI">友達配信　受付中</language>
 	</row>
 
 	<row id="mystery_osusowake_002">
@@ -928,7 +928,7 @@
 		<comment>現在のエントリー数のタイトル</comment>
 		<language name="JPN" width="216">げんざいの
 エントリー</language>
-		<language name="JPN_KANJI">げんざいの
+		<language name="JPN_KANJI">現在の
 エントリー</language>
 	</row>
 
@@ -941,7 +941,7 @@
 	<row id="mystery_osusowake_006">
 		<comment>孫配信受付締め切りメニュー項目</comment>
 		<language name="JPN" width="216">くばる</language>
-		<language name="JPN_KANJI">くばる</language>
+		<language name="JPN_KANJI">配る</language>
 	</row>
 
 	<row id="mystery_osusowake_007">
@@ -952,10 +952,10 @@
 
 	<row id="mystery_osusowake_008">
 		<comment>孫配信作業＋セーブ処理中のメッセージ</comment>
-		<language name="JPN" width="216">おすそわけ　を　しています……
+		<language name="JPN" width="216">おすそわけを　しています……
 でんげんを　きらないで　ください</language>
-		<language name="JPN_KANJI">おすそわけ　を　しています……
-でんげんを　きらないで　ください</language>
+		<language name="JPN_KANJI">おすそわけを　しています……
+電源を　切らないで　ください</language>
 	</row>
 
 	<row id="mystery_osusowake_009">
@@ -969,24 +969,24 @@
 	<row id="mystery_drop_001">
 		<comment>カードを捨てるかどうかの確認メッセージ</comment>
 		<language name="JPN" width="216">この　カードを　すてますか？</language>
-		<language name="JPN_KANJI">この　カードを　すてますか？</language>
+		<language name="JPN_KANJI">この　カードを　捨てますか？</language>
 	</row>
 
 	<row id="mystery_drop_002">
 		<comment>おくりものを受け取っていない状態での
 カードを捨てるかどうか確認メッセージ</comment>
-		<language name="JPN" width="216">おくりもの　を　うけとってませんが
+		<language name="JPN" width="216">おくりものを　うけとってませんが
 この　カードを　すてますか？</language>
-		<language name="JPN_KANJI">おくりもの　を　うけとってませんが
-この　カードを　すてますか？</language>
+		<language name="JPN_KANJI">おくりものを　受け取ってませんが
+この　カードを　捨てますか？</language>
 	</row>
 
 	<row id="mystery_drop_003">
 		<comment>カードを捨てる処理＋セーブ中メッセージ</comment>
-		<language name="JPN" width="216">カードを　すてて　います……
+		<language name="JPN" width="216">カードを　すてています……
 でんげんを　きらないで　ください</language>
-		<language name="JPN_KANJI">カードを　すてて　います……
-でんげんを　きらないで　ください</language>
+		<language name="JPN_KANJI">カードを　捨てています……
+電源を　切らないで　ください</language>
 	</row>
 
 	<row id="mystery_drop_004">
@@ -1016,7 +1016,7 @@
 	<row id="mystery_ranger_003">
 		<comment>ポケモンレンジャーと接続時、もうしこみナンバーを表示</comment>
 		<language name="JPN" width="216">もうしこみナンバー</language>
-		<language name="JPN_KANJI">もうしこみナンバー</language>
+		<language name="JPN_KANJI">申し込みナンバー</language>
 	</row>
 
 	<row id="mystery_ranger_004">
@@ -1028,8 +1028,8 @@
 	<row id="mystery_ranger_005">
 		<language name="JPN" width="216">ポケモンレンジャーの　もうしこみを
 うけつけちゅう　です</language>
-		<language name="JPN_KANJI">ポケモンレンジャーの　もうしこみを
-うけつけちゅう　です</language>
+		<language name="JPN_KANJI">ポケモンレンジャーの
+申し込みを　受付中です</language>
 	</row>
 
 	<row id="mystery_ranger_006">
@@ -1039,7 +1039,7 @@
 		<language name="JPN" width="216">ポケモンレンジャー　からの
 てんそうを　まっています</language>
 		<language name="JPN_KANJI">ポケモンレンジャー　からの
-てんそうを　まっています</language>
+転送を　待っています</language>
 	</row>
 
 	<row id="mystery_ranger_007">
@@ -1048,28 +1048,28 @@
 待機メッセージ</comment>
 		<language name="JPN" width="216">マナフィのタマゴを　うけとっています
 でんげんを　きらないで　ください</language>
-		<language name="JPN_KANJI">マナフィのタマゴを　うけとっています
-でんげんを　きらないで　ください</language>
+		<language name="JPN_KANJI">マナフィのタマゴを　受け取っています
+電源を　きらないで　ください</language>
 	</row>
 
 	<row id="mystery_ranger_008">
 		<language name="JPN" width="216">てんそうが　しゅうりょう　しました
 Ａボタンで　タイトルに　もどります</language>
-		<language name="JPN_KANJI">てんそうが　しゅうりょう　しました
+		<language name="JPN_KANJI">転送が　終了しました
 Ａボタンで　タイトルに　もどります</language>
 	</row>
 
 	<row id="mystery_ranger_009">
 		<language name="JPN" width="216">ポケモンレンジャーとの　つうしんが
 せつだん　されました</language>
-		<language name="JPN_KANJI">ポケモンレンジャーとの　つうしんが
-せつだん　されました</language>
+		<language name="JPN_KANJI">ポケモンレンジャーとの
+通信が　切断されました</language>
 	</row>
 
 	<row id="mystery_ranger_010" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,#c0c0c0,">
 		<language name="JPN" width="216">フィオレちほう　から　おくられてきた
 マナフィのタマゴ　だ！</language>
-		<language name="JPN_KANJI">フィオレちほう　から　おくられてきた
+		<language name="JPN_KANJI">フィオレ地方から　送られてきた
 マナフィのタマゴ　だ！</language>
 	</row>
 
@@ -1081,15 +1081,15 @@
 	<row id="mystery_broadcast_001">
 		<language name="JPN" width="216">ＤＳワイヤレスつうしん　を
 かいし　します</language>
-		<language name="JPN_KANJI">ＤＳワイヤレスつうしん　を
-かいし　します</language>
+		<language name="JPN_KANJI">ＤＳワイヤレス通信を
+開始します</language>
 	</row>
 
 	<row id="mystery_wifi_001">
-		<language name="JPN" width="216">ＷｉーＦｉコネクション　に
+		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクション　に
 せつぞく　しますか？</language>
-		<language name="JPN_KANJI">ＷｉーＦｉコネクション　に
-せつぞく　しますか？</language>
+		<language name="JPN_KANJI">Ｗｉ－Ｆｉコネクション　に
+接続しますか？</language>
 	</row>
 
 	<row id="syachi_mystery_01_001" back-color="#8080ff,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1101,7 +1101,7 @@
 	<row id="syachi_mystery_menu_001" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：おくりものを受け取る</comment>
 		<language name="JPN" width="216">おくりものを　うけとる</language>
-		<language name="JPN_KANJI">おくりものを　うけとる</language>
+		<language name="JPN_KANJI">おくりものを　受け取る</language>
 	</row>
 
 	<row id="syachi_mystery_menu_002" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
@@ -1121,8 +1121,8 @@
 		<language name="JPN" width="216">ふしぎなおくりものを　うけとるため
 つうしんを　かいしします[BE:00:ページ切り替え（行送り）]
 よろしいですか？</language>
-		<language name="JPN_KANJI">ふしぎなおくりものを　うけとるため
-つうしんを　かいしします[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI">ふしぎなおくりものを　受け取るため
+通信を　開始します[BE:00:ページ切り替え（行送り）]
 よろしいですか？</language>
 	</row>
 
@@ -1142,26 +1142,26 @@
 		<comment>通信選択メッセージ</comment>
 		<language name="JPN" width="216">おくりものの　うけとりかたを
 えらんで　ください</language>
-		<language name="JPN_KANJI">おくりものの　うけとりかたを
-えらんで　ください</language>
+		<language name="JPN_KANJI">おくりものの　受け取り方を
+選んでください</language>
 	</row>
 
 	<row id="syachi_mystery_menu_004" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：ビーコン</comment>
 		<language name="JPN" width="216">ワイヤレスで　うけとる</language>
-		<language name="JPN_KANJI">ワイヤレスで　うけとる</language>
+		<language name="JPN_KANJI">ワイヤレスで　受け取る</language>
 	</row>
 
 	<row id="syachi_mystery_menu_005" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：ＷｉーＦｉ</comment>
-		<language name="JPN" width="216">ＷｉーＦｉで　うけとる</language>
-		<language name="JPN_KANJI">ＷｉーＦｉで　うけとる</language>
+		<language name="JPN" width="216">Ｗｉ－Ｆｉで　うけとる</language>
+		<language name="JPN_KANJI">Ｗｉ－Ｆｉで　受け取る</language>
 	</row>
 
 	<row id="syachi_mystery_menu_006" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：赤外線</comment>
 		<language name="JPN" width="216">せきがいせんで　うけとる</language>
-		<language name="JPN_KANJI">せきがいせんで　うけとる</language>
+		<language name="JPN_KANJI">赤外線で　受け取る</language>
 	</row>
 
 	<row id="syachi_mystery_menu_007" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
@@ -1174,16 +1174,16 @@
 		<comment>未使用</comment>
 		<language name="JPN" width="216">おくりものの　うけとりかたを
 えらんで　ください</language>
-		<language name="JPN_KANJI">おくりものの　うけとりかたを
-えらんで　ください</language>
+		<language name="JPN_KANJI">おくりものの　受け取り方を
+選んでください</language>
 	</row>
 
 	<row id="syachi_mystery_01_005" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>カード１枚削除メッセージ</comment>
 		<language name="JPN" width="216">いらないカードを　１まい　えらんで
 すててください</language>
-		<language name="JPN_KANJI">いらないカードを　１まい　えらんで
-すててください</language>
+		<language name="JPN_KANJI">いらないカードを　１枚　選んで
+捨ててください</language>
 	</row>
 
 	<row id="syachi_mystery_01_006" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1191,7 +1191,7 @@
 		<language name="JPN" width="216">カードを　すてないと
 おくりものを　もらえません[BE:00:ページ切り替え（行送り）]
 よろしいですか？</language>
-		<language name="JPN_KANJI">カードを　すてないと
+		<language name="JPN_KANJI">カードを　捨てないと
 おくりものを　もらえません[BE:00:ページ切り替え（行送り）]
 よろしいですか？</language>
 	</row>
@@ -1212,8 +1212,8 @@
 		<comment>通信確立：ビーコン</comment>
 		<language name="JPN" width="216">ＤＳワイヤレスつうしん　を
 かいし　します</language>
-		<language name="JPN_KANJI">ＤＳワイヤレスつうしん　を
-かいし　します</language>
+		<language name="JPN_KANJI">ＤＳワイヤレス通信を
+開始します</language>
 	</row>
 
 	<row id="syachi_mystery_01_007_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
@@ -1230,10 +1230,10 @@
 
 	<row id="syachi_mystery_01_008" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>通信確立：ＷｉーＦｉ</comment>
-		<language name="JPN" width="216">ＷｉーＦｉコネクション　に
+		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクション　に
 せつぞく　しますか？</language>
-		<language name="JPN_KANJI">ＷｉーＦｉコネクション　に
-せつぞく　しますか？</language>
+		<language name="JPN_KANJI">Ｗｉ－Ｆｉコネクション　に
+接続しますか？</language>
 	</row>
 
 	<row id="syachi_mystery_01_008_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
@@ -1252,8 +1252,8 @@
 		<comment>通信確立：赤外線</comment>
 		<language name="JPN" width="216">せきがいせん　つういんを
 かいし　します</language>
-		<language name="JPN_KANJI">せきがいせん　つういんを
-かいし　します</language>
+		<language name="JPN_KANJI">赤外線通信を
+開始します</language>
 	</row>
 
 	<row id="syachi_mystery_01_009_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
@@ -1270,25 +1270,25 @@
 
 	<row id="syachi_mystery_01_010" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>通信確立後、贈り物探索時のメッセージ</comment>
-		<language name="JPN" width="216">おくりもの　を　さがしています
-しばらく　おまち　ください……</language>
-		<language name="JPN_KANJI">おくりもの　を　さがしています
-しばらく　おまち　ください……</language>
+		<language name="JPN" width="216">おくりものを　さがしています
+しばらく　おまちください……</language>
+		<language name="JPN_KANJI">おくりものを　探しています
+しばらく　お待ちください……</language>
 	</row>
 
 	<row id="syachi_mystery_01_011" back-color="#8080ff,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>贈り物受信成功</comment>
 		<language name="JPN" width="216">うけとる　おくりものを
 えらんで　ください</language>
-		<language name="JPN_KANJI">うけとる　おくりものを
-えらんで　ください</language>
+		<language name="JPN_KANJI">受け取る　おくりものを
+選んでください</language>
 	</row>
 
 	<row id="syachi_mystery_01_012" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>贈り物のダウンロードを中止するか確認</comment>
 		<language name="JPN" width="216">おくりものの　うけとりを
 やめますか？</language>
-		<language name="JPN_KANJI">おくりものの　うけとりを
+		<language name="JPN_KANJI">おくりものの　受け取りを
 やめますか？</language>
 	</row>
 
@@ -1306,10 +1306,10 @@
 
 	<row id="syachi_mystery_01_013" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>贈り物をダウンロードするか確認</comment>
-		<language name="JPN" width="216">この　おくりもの　を
+		<language name="JPN" width="216">この　おくりものを
 じゅしん　しますか？</language>
-		<language name="JPN_KANJI">この　おくりもの　を
-じゅしん　しますか？</language>
+		<language name="JPN_KANJI">この　おくりものを
+受信しますか？</language>
 	</row>
 
 	<row id="syachi_mystery_01_013_yes" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
@@ -1326,10 +1326,10 @@
 
 	<row id="syachi_mystery_01_014" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>贈り物データを書き込み中</comment>
-		<language name="JPN" width="216">おくりもの　を　じゅしんちゅう　です
+		<language name="JPN" width="216">おくりものを　じゅしんちゅう　です
 でんげんを　きらないで　ください……</language>
-		<language name="JPN_KANJI">おくりもの　を　じゅしんちゅう　です
-でんげんを　きらないで　ください……</language>
+		<language name="JPN_KANJI">おくりものを　受信中です
+電源を　切らないで　ください……</language>
 	</row>
 
 	<row id="syachi_mystery_01_015" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1337,17 +1337,17 @@
 		<language name="JPN" width="216">おくりものを　うけとりました！[BE:01:ページ切り替え（クリア）]
 ポケモンセンターにいる
 はいたついん　から　うけとってね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI">おくりものを　うけとりました！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI">おくりものを　受け取りました！[BE:01:ページ切り替え（クリア）]
 ポケモンセンターにいる
-はいたついん　から　うけとってね！[BE:01:ページ切り替え（クリア）]</language>
+配達員から　受け取ってね！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_01_016" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>カードアルバムの整理完了後、セーブ処理</comment>
 		<language name="JPN" width="216">アルバムを　ほぞん　しています……
 でんげんを　きらないで　ください</language>
-		<language name="JPN_KANJI">アルバムを　ほぞん　しています……
-でんげんを　きらないで　ください</language>
+		<language name="JPN_KANJI">アルバムを　保存しています……
+電源を　切らないで　ください</language>
 	</row>
 
 	<row id="syachi_mystery_01_017" back-color="#8080ff,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1359,13 +1359,13 @@
 	<row id="syachi_mystery_menu_008" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：入れ替え</comment>
 		<language name="JPN" width="216">いれかえる</language>
-		<language name="JPN_KANJI">いれかえる</language>
+		<language name="JPN_KANJI">入れ替える</language>
 	</row>
 
 	<row id="syachi_mystery_menu_009" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>選択項目：削除</comment>
 		<language name="JPN" width="216">すてる</language>
-		<language name="JPN_KANJI">すてる</language>
+		<language name="JPN_KANJI">捨てる</language>
 	</row>
 
 	<row id="syachi_mystery_menu_010" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
@@ -1379,7 +1379,7 @@
 		<language name="JPN" width="216">おくりものを　もらっていないので
 すてることは　できません！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI">おくりものを　もらっていないので
-すてることは　できません！[BE:01:ページ切り替え（クリア）]</language>
+捨てることは　できません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_01_019" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1391,14 +1391,14 @@
 	<row id="syachi_mystery_01_020" back-color="#8080ff,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>カード選択</comment>
 		<language name="JPN" width="216">いれかえるカードを　えらんでください</language>
-		<language name="JPN_KANJI">いれかえるカードを　えらんでください</language>
+		<language name="JPN_KANJI">入れ替えるカードを　選んでください</language>
 	</row>
 
 	<row id="syachi_mystery_01_021" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>カード削除最終確認</comment>
 		<language name="JPN" width="216">この カードを　すてても
 よろしいですか？</language>
-		<language name="JPN_KANJI">この カードを　すてても
+		<language name="JPN_KANJI">この カードを　捨てても
 よろしいですか？</language>
 	</row>
 
@@ -1417,7 +1417,7 @@
 	<row id="syachi_mystery_01_022" back-color="#8080ff,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>ガイド説明文の選択肢</comment>
 		<language name="JPN" width="216">どの　せつめいを　ききますか？</language>
-		<language name="JPN_KANJI">どの　せつめいを　ききますか？</language>
+		<language name="JPN_KANJI">どの説明を　ききますか？</language>
 	</row>
 
 	<row id="syachi_mystery_menu_011" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
@@ -1435,7 +1435,7 @@
 	<row id="syachi_mystery_menu_013" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>ガイド選択肢</comment>
 		<language name="JPN" width="216">おくりものが　いっぱいのとき</language>
-		<language name="JPN_KANJI">おくりものが　いっぱいのとき</language>
+		<language name="JPN_KANJI">おくりものが　一杯のとき</language>
 	</row>
 
 	<row id="syachi_mystery_menu_014" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
@@ -1447,7 +1447,7 @@
 	<row id="syachi_mystery_menu_015" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>ガイド選択肢</comment>
 		<language name="JPN" width="216">せつめいを　きく</language>
-		<language name="JPN_KANJI">せつめいを　きく</language>
+		<language name="JPN_KANJI">説明を　きく</language>
 	</row>
 
 	<row id="syachi_mystery_01_023" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1466,17 +1466,17 @@
 ポケモンセンターに　いる[BE:00:ページ切り替え（行送り）]
 はいたついんから　もらってください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI">ふしぎな　おくりもの　では
-つうしんを　つかって[BE:00:ページ切り替え（行送り）]
-すてきな　プレゼントを　うけとれます[BE:01:ページ切り替え（クリア）]
-いま　くばられている
-おくりものを　しりたいときは[BE:01:ページ切り替え（クリア）]
+通信を　使って[BE:00:ページ切り替え（行送り）]
+すてきな　プレゼントを　受け取れます[BE:01:ページ切り替え（クリア）]
+今　配られている
+おくりものを　知りたいときは[BE:01:ページ切り替え（クリア）]
 ポケモンだいすきクラブ　
 ホームページで[BE:00:ページ切り替え（行送り）]
-かくにん　してください[BE:01:ページ切り替え（クリア）]
-ぶじ　おくりものを　うけとれたら
-ぼうけんを　さいかいして[BE:00:ページ切り替え（行送り）]
+確認してください[BE:01:ページ切り替え（クリア）]
+無事　おくりものを　受け取れたら
+冒険を　再開して[BE:00:ページ切り替え（行送り）]
 ポケモンセンターに　いる[BE:00:ページ切り替え（行送り）]
-はいたついんから　もらってください[BE:01:ページ切り替え（クリア）]</language>
+配達員から　もらってください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_01_024" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1498,20 +1498,20 @@
 おくりものが　うけとれなく　なるので[BE:00:ページ切り替え（行送り）]
 カードを　せいり　してください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI">カードアルバムには
-ふしぎなおくりものを　うけとった[BE:00:ページ切り替え（行送り）]
-きねんの　しるしに[BE:00:ページ切り替え（行送り）]
-ふしぎカードが　かざられていきます[BE:01:ページ切り替え（クリア）]
+ふしぎなおくりものを　受け取った[BE:00:ページ切り替え（行送り）]
+記念の　印に[BE:00:ページ切り替え（行送り）]
+ふしぎカードが　飾られていきます[BE:01:ページ切り替え（クリア）]
 ポケモンセンターにいる
-はいたついんから[BE:00:ページ切り替え（行送り）]
+配達員から[BE:00:ページ切り替え（行送り）]
 おくりものを　もらった　カードには[BE:00:ページ切り替え（行送り）]
-スタンプが　おされます[BE:01:ページ切り替え（クリア）]
-スタンプが　おされていないものは
-うけとりに　いきましょう[BE:01:ページ切り替え（クリア）]
-アルバムに　ほぞん　できるカードは
-さいだい　１２まい　です[BE:01:ページ切り替え（クリア）]
-１２まい　いっぱいに　なると
-おくりものが　うけとれなく　なるので[BE:00:ページ切り替え（行送り）]
-カードを　せいり　してください[BE:01:ページ切り替え（クリア）]</language>
+スタンプが　押されます[BE:01:ページ切り替え（クリア）]
+スタンプが　押されていないものは
+受け取りに　いきましょう[BE:01:ページ切り替え（クリア）]
+アルバムに　保存できるカードは
+最大　１２枚です[BE:01:ページ切り替え（クリア）]
+１２枚　一杯に　なると
+おくりものが　受け取れなく　なるので[BE:00:ページ切り替え（行送り）]
+カードを　整理してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_01_025" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1520,33 +1520,33 @@
 		<language name="JPN" width="216">おくりものが　うけとれないときは
 カードアルバムを　みてください[BE:01:ページ切り替え（クリア）]
 アルバムが　１２まいの　カードで
-いっぱいのときは[BE:01:ページ切り替え（クリア）]
+いっぱいの　ときは[BE:01:ページ切り替え（クリア）]
 スタンプの　おされている
 カードを　えらんで　Ａボタンを[BE:00:ページ切り替え（行送り）]
 おして　せいり　してください[BE:01:ページ切り替え（クリア）]
 アルバムの　カード　１２まい
 すべてに　スタンプが[BE:00:ページ切り替え（行送り）]
-おされていないときは[BE:01:ページ切り替え（クリア）]
+おされていない　ときは[BE:01:ページ切り替え（クリア）]
 ぼうけんを　さいかいして
 ポケモンセンターに　いる[BE:00:ページ切り替え（行送り）]
 はいたついんから[BE:00:ページ切り替え（行送り）]
 おくりものを　うけとったあとに[BE:00:ページ切り替え（行送り）]
 カードを　せいりしてください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI">おくりものが　うけとれないときは
+		<language name="JPN_KANJI">おくりものが　受け取れないときは
 カードアルバムを　みてください[BE:01:ページ切り替え（クリア）]
-アルバムが　１２まいの　カードで
-いっぱいのときは[BE:01:ページ切り替え（クリア）]
-スタンプの　おされている
-カードを　えらんで　Ａボタンを[BE:00:ページ切り替え（行送り）]
-おして　せいり　してください[BE:01:ページ切り替え（クリア）]
-アルバムの　カード　１２まい
+アルバムが　１２枚の　カードで
+一杯の　ときは[BE:01:ページ切り替え（クリア）]
+スタンプの　押されている
+カードを　選んで　Ａボタンを[BE:00:ページ切り替え（行送り）]
+押して　整理してください[BE:01:ページ切り替え（クリア）]
+アルバムの　カード　１２枚
 すべてに　スタンプが[BE:00:ページ切り替え（行送り）]
-おされていないときは[BE:01:ページ切り替え（クリア）]
-ぼうけんを　さいかいして
+押されていない　ときは[BE:01:ページ切り替え（クリア）]
+冒険を　再開して
 ポケモンセンターに　いる[BE:00:ページ切り替え（行送り）]
-はいたついんから[BE:00:ページ切り替え（行送り）]
-おくりものを　うけとったあとに[BE:00:ページ切り替え（行送り）]
-カードを　せいりしてください[BE:01:ページ切り替え（クリア）]</language>
+配達員から[BE:00:ページ切り替え（行送り）]
+おくりものを　受け取ったあとに[BE:00:ページ切り替え（行送り）]
+カードを　整理してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_err_001" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1557,26 +1557,26 @@
 ぼうけんを　さいかいして
 ポケモンセンターに　いる[BE:00:ページ切り替え（行送り）]
 はいたついんから[BE:00:ページ切り替え（行送り）]
-おくりもの　を　うけとって[BE:00:ページ切り替え（行送り）]
+おくりものを　うけとって[BE:00:ページ切り替え（行送り）]
 レポートを　かいてから　きてください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI">はいたついんが　もっている
-おくりものが　いっぱい　です！[BE:01:ページ切り替え（クリア）]
-ぼうけんを　さいかいして
+		<language name="JPN_KANJI">配達員が　持っている
+おくりものが　一杯です！[BE:01:ページ切り替え（クリア）]
+冒険を　再開して
 ポケモンセンターに　いる[BE:00:ページ切り替え（行送り）]
-はいたついんから[BE:00:ページ切り替え（行送り）]
-おくりもの　を　うけとって[BE:00:ページ切り替え（行送り）]
-レポートを　かいてから　きてください[BE:01:ページ切り替え（クリア）]</language>
+配達員から[BE:00:ページ切り替え（行送り）]
+おくりものを　受け取って[BE:00:ページ切り替え（行送り）]
+レポートを　書いてから　来てください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_err_002" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ＮＧメッセージ
 一度受信済みで再受信ＮＧのもの</comment>
-		<language name="JPN" width="216">この　おくりもの　は
-いちど　うけとった　ことが　あるので[BE:00:ページ切り替え（行送り）]
-うけとる　ことが　できません！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI">この　おくりもの　は
-いちど　うけとった　ことが　あるので[BE:00:ページ切り替え（行送り）]
-うけとる　ことが　できません！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="216">この　おくりものは
+いちど　うけとったことが　あるので[BE:00:ページ切り替え（行送り）]
+うけとることが　できません！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI">この　おくりものは
+一度　受け取ったことが　あるので[BE:00:ページ切り替え（行送り）]
+う受け取ることが　できません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_err_003" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1599,14 +1599,14 @@
 不思議カードが一杯</comment>
 		<language name="JPN" width="216">ふしぎなカードが　いっぱい　です！[BE:01:ページ切り替え（クリア）]
 おくりものを
-うけとる　ことが　できません！[BE:01:ページ切り替え（クリア）]
+うけとることが　できません！[BE:01:ページ切り替え（クリア）]
 ふしぎカードを
-せいりしますか？</language>
-		<language name="JPN_KANJI">ふしぎなカードが　いっぱい　です！[BE:01:ページ切り替え（クリア）]
+せいり　しますか？</language>
+		<language name="JPN_KANJI">ふしぎなカードが　一杯です！[BE:01:ページ切り替え（クリア）]
 おくりものを
-うけとる　ことが　できません！[BE:01:ページ切り替え（クリア）]
+受け取ることが　できません！[BE:01:ページ切り替え（クリア）]
 ふしぎカードを
-せいりしますか？</language>
+整理しますか？</language>
 	</row>
 
 	<row id="syachi_mystery_err_005_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -1624,17 +1624,17 @@
 	<row id="syachi_mystery_err_006" back-color="#ff00ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<language name="JPN" width="216">おくりものを　うけとるのに
 しっぱい　しました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI">おくりものを　うけとるのに
-しっぱい　しました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI">おくりものを　受け取るのに
+失敗しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_err_007" back-color="#ff00ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<language name="JPN" width="216">おくりものを　みつけましたが
-このバージョンでは[BE:00:ページ切り替え（行送り）]
+この　バージョンでは[BE:00:ページ切り替え（行送り）]
 うけとることが　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI">おくりものを　みつけましたが
-このバージョンでは[BE:00:ページ切り替え（行送り）]
-うけとることが　できません[BE:01:ページ切り替え（クリア）]</language>
+この　バージョンでは[BE:00:ページ切り替え（行送り）]
+受け取ることが　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="syachi_mystery_album_001" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -1646,7 +1646,7 @@
 	<row id="syachi_mystery_album_002" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ふしぎカードアルバム　ガイド表示</comment>
 		<language name="JPN" width="88">Ａ：せいりする</language>
-		<language name="JPN_KANJI">Ａ：せいりする</language>
+		<language name="JPN_KANJI">Ａ：整理する</language>
 	</row>
 
 	<row id="syachi_mystery_album_003" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -1677,7 +1677,7 @@
 	<row id="syachi_mystery_album_007" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ふしぎカード　キャプション</comment>
 		<language name="JPN" width="120">もらったひづけ</language>
-		<language name="JPN_KANJI">もらったひづけ</language>
+		<language name="JPN_KANJI">もらった日付</language>
 	</row>
 
 	<row id="syachi_mystery_album_008" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -1690,7 +1690,7 @@
 	<row id="syachi_mystery_album_009" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ふしぎカード　受信時のガイド表示</comment>
 		<language name="JPN" width="80">Ａ：おわる</language>
-		<language name="JPN_KANJI">Ａ：おわる</language>
+		<language name="JPN_KANJI">Ａ：終わる</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_00_00" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -1705,10 +1705,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ポケモンえいがを　みにきてくれて
-ありがとう！
+		<language name="JPN_KANJI">ポケモン映画を
+観に来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -1719,10 +1719,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ポケモンえいが２０１０を　
-みにきてくれて　ありがとう！
+		<language name="JPN_KANJI">ポケモン映画２０１０を　
+観に来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -1733,10 +1733,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ポケモンえいが２０１１を　
-みにきてくれて　ありがとう！
+		<language name="JPN_KANJI">ポケモン映画２０１１を　
+観に来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -1747,10 +1747,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ポケモンえいが２０１２を　
-みにきてくれて　ありがとう！
+		<language name="JPN_KANJI">ポケモン映画２０１２を　
+観に来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -1761,10 +1761,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ポケモンえいが２０１３を　
-みにきてくれて　ありがとう！
+		<language name="JPN_KANJI">ポケモン映画２０１３を　
+観に来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -1775,10 +1775,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ポケモンえいが２０１４を　
-みにきてくれて　ありがとう！
+		<language name="JPN_KANJI">ポケモン映画２０１４を　
+観に来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -1789,10 +1789,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ポケモンえいが２０１５を　
-みにきてくれて　ありがとう！
+		<language name="JPN_KANJI">ポケモン映画２０１５を　
+観に来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -1803,10 +1803,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ポケモンえいが２０１６を　
-みにきてくれて　ありがとう！
+		<language name="JPN_KANJI">ポケモン映画２０１６を　
+観に来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -1817,10 +1817,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ポケモンえいが２０１７を　
-みにきてくれて　ありがとう！
+		<language name="JPN_KANJI">ポケモン映画２０１７を　
+観に来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -1831,10 +1831,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ポケモンえいが２０１８を　
-みにきてくれて　ありがとう！
+		<language name="JPN_KANJI">ポケモン映画２０１８を　
+観に来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -1845,10 +1845,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ポケモンえいが２０１９を　
-みにきてくれて　ありがとう！
+		<language name="JPN_KANJI">ポケモン映画２０１９を　
+観に来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -1859,10 +1859,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ポケモンえいが２０２０を　
-みにきてくれて　ありがとう！
+		<language name="JPN_KANJI">ポケモン映画２０２０を　
+観に来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -1873,10 +1873,10 @@
 ありがとう！
 おくりものは　ゲームのなかの
 はいたついんから　うけとってね！</language>
-		<language name="JPN_KANJI">ポケモンセンターに　きてくれて
+		<language name="JPN_KANJI">ポケモンセンターに　来てくれて
 ありがとう！
-おくりものは　ゲームのなかの
-はいたついんから　うけとってね！</language>
+おくりものは　ゲームの中の
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_13_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -1888,9 +1888,9 @@
 おくりものは　ゲームのなかの
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">ポケモンセンタートウキョーに　
-きてくれて　ありがとう！
-おくりものは　ゲームのなかの
-はいたついんから　うけとってね！</language>
+来てくれて　ありがとう！
+おくりものは　ゲームの中の
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_14_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -1902,9 +1902,9 @@
 おくりものは　ゲームのなかの
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">ポケモンセンターオーサカに　
-きてくれて　ありがとう！
-おくりものは　ゲームのなかの
-はいたついんから　うけとってね！</language>
+来てくれて　ありがとう！
+おくりものは　ゲームの中の
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_15_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -1916,9 +1916,9 @@
 おくりものは　ゲームのなかの
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">ポケモンセンターフクオカに　
-きてくれて　ありがとう！
-おくりものは　ゲームのなかの
-はいたついんから　うけとってね！</language>
+来てくれて　ありがとう！
+おくりものは　ゲームの中の
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_16_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -1930,9 +1930,9 @@
 おくりものは　ゲームのなかの
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">ポケモンセンターナゴヤに　
-きてくれて　ありがとう！
-おくりものは　ゲームのなかの
-はいたついんから　うけとってね！</language>
+来てくれて　ありがとう！
+おくりものは　ゲームの中の
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_17_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -1944,9 +1944,9 @@
 おくりものは　ゲームのなかの
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">ポケモンセンターサッポロに　
-きてくれて　ありがとう！
-おくりものは　ゲームのなかの
-はいたついんから　うけとってね！</language>
+来てくれて　ありがとう！
+おくりものは　ゲームの中の
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_18_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -1958,9 +1958,9 @@
 おくりものは　ゲームのなかの
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">ポケモンセンターヨコハマに　
-きてくれて　ありがとう！
-おくりものは　ゲームのなかの
-はいたついんから　うけとってね！</language>
+来てくれて　ありがとう！
+おくりものは　ゲームの中の
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_19_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -1972,9 +1972,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンワールドチャンピオンシップスに
-さんかしてくれて　ありがとう！
+参加してくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -1986,10 +1986,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＷＣＳ２０１０に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１０に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2001,10 +2001,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＷＣＳ２０１１に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１１に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2016,10 +2016,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＷＣＳ２０１２に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１２に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2031,10 +2031,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＷＣＳ２０１３に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１３に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2046,10 +2046,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＷＣＳ２０１４に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１４に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2061,10 +2061,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＷＣＳ２０１５に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１５に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2076,10 +2076,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＷＣＳ２０１６に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１６に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2091,10 +2091,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＷＣＳ２０１７に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１７に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2106,10 +2106,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＷＣＳ２０１８に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１８に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2121,10 +2121,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＷＣＳ２０１９に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１９に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2136,10 +2136,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＷＣＳ２０２０に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０２０に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2151,10 +2151,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">Ｗｏｒｌｄｓに　きてくれて　
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓに　来てくれて　
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2167,9 +2167,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１０に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2182,9 +2182,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１１に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2197,9 +2197,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１２に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2212,9 +2212,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１３に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2227,9 +2227,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１４に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2242,9 +2242,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１５に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2257,9 +2257,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１６に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2272,9 +2272,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１７に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2287,9 +2287,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１８に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2302,9 +2302,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１９に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2317,9 +2317,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０２０に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2332,9 +2332,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔに
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2347,9 +2347,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１０に　きてくれて　ありがとう！
+２０１０に　来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2362,9 +2362,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１１に　きてくれて　ありがとう！
+２０１１に　来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2377,9 +2377,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１２に　きてくれて　ありがとう！
+２０１２に　来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2392,9 +2392,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１３に　きてくれて　ありがとう！
+２０１３に　来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2407,9 +2407,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１４に　きてくれて　ありがとう！
+２０１４に　来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2422,9 +2422,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１５に　きてくれて　ありがとう！
+２０１５に　来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2437,9 +2437,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１６に　きてくれて　ありがとう！
+２０１６に　来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2452,9 +2452,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１７に　きてくれて　ありがとう！
+２０１７に　来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2467,9 +2467,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１８に　きてくれて　ありがとう！
+２０１８に　来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2482,9 +2482,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１９に　きてくれて　ありがとう！
+２０１９に　来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2497,9 +2497,9 @@
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０２０に　きてくれて　ありがとう！
+２０２０に　来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2511,10 +2511,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＶＧＣ２０１０に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１０に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2526,10 +2526,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＶＧＣ２０１１に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１１に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2541,10 +2541,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＶＧＣ２０１２に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１２に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2556,10 +2556,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＶＧＣ２０１３に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１３に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2571,10 +2571,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＶＧＣ２０１４に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１４に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2586,10 +2586,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＶＧＣ２０１５に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１５に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2601,10 +2601,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＶＧＣ２０１６に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１６に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2616,10 +2616,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＶＧＣ２０１７に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１７に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2631,10 +2631,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＶＧＣ２０１８に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１８に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2646,10 +2646,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＶＧＣ２０１９に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１９に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2661,10 +2661,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ＶＧＣ２０２０に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０２０に　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2676,10 +2676,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">イベントに　きてくれて
+		<language name="JPN_KANJI">イベントに　来てくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -2691,10 +2691,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！！
 </language>
-		<language name="JPN_KANJI">ポケモンの　イベントに　きてくれて
+		<language name="JPN_KANJI">ポケモンの　イベントに　来てくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2705,10 +2705,10 @@
 ありがとう！
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
-		<language name="JPN_KANJI">ポケモンを　あそんでくれて
+		<language name="JPN_KANJI">ポケモンを　遊んでくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_69_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -2717,9 +2717,9 @@
 		<language name="JPN" width="216">おみせに　きてくれて　ありがとう！ 
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
-		<language name="JPN_KANJI">おみせに　きてくれて　ありがとう！ 
+		<language name="JPN_KANJI">お店に　来てくれて　ありがとう！ 
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_70_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -2730,10 +2730,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！！
 </language>
-		<language name="JPN_KANJI">バトルたいかいに　さんかしてくれて　
+		<language name="JPN_KANJI">バトル大会に　参加してくれて　
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2745,10 +2745,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！！
 </language>
-		<language name="JPN_KANJI">ゲームイベントに　さんかしてくれて
+		<language name="JPN_KANJI">ゲームイベントに　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2761,7 +2761,7 @@
 </language>
 		<language name="JPN_KANJI">ゲームイベントからの　プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2775,7 +2775,7 @@
 		<language name="JPN_KANJI">ポケモンだいすきクラブからの
 プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2789,7 +2789,7 @@
 		<language name="JPN_KANJI">ポケモンサンデーを　みてくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2803,7 +2803,7 @@
 		<language name="JPN_KANJI">ポケモンサンデーからの
 プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2814,10 +2814,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！！
 </language>
-		<language name="JPN_KANJI">チャレンジひろばに　さんかしてくれて
+		<language name="JPN_KANJI">チャレンジひろばに　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2829,7 +2829,7 @@
 </language>
 		<language name="JPN_KANJI">チャレンジひろばからの　プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2840,10 +2840,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！！
 </language>
-		<language name="JPN_KANJI">バトルチャレンジに　さんかしてくれて
+		<language name="JPN_KANJI">バトルチャレンジに　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2855,7 +2855,7 @@
 </language>
 		<language name="JPN_KANJI">バトルチャレンジからの　プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2866,10 +2866,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！！
 </language>
-		<language name="JPN_KANJI">トレーナーズコートに　さんかしてくれて
+		<language name="JPN_KANJI">トレーナーズコートに　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2881,7 +2881,7 @@
 </language>
 		<language name="JPN_KANJI">トレーナーズコートからの　プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2892,10 +2892,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！！
 </language>
-		<language name="JPN_KANJI">バトルツアーに　さんかしてくれて
+		<language name="JPN_KANJI">バトルツアーに　参加してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2907,7 +2907,7 @@
 </language>
 		<language name="JPN_KANJI">バトルツアーからの　プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2918,10 +2918,10 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！！
 </language>
-		<language name="JPN_KANJI">ポケモンの　コンサートに　きてくれて
+		<language name="JPN_KANJI">ポケモンの　コンサートに　来てくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -2932,24 +2932,24 @@
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！！
 </language>
-		<language name="JPN_KANJI">ポケモンの　アニメを　みてくれて
+		<language name="JPN_KANJI">ポケモンの　アニメを　観てくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_86_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>Wi-Fi
 Nintendoスポット1</comment>
-		<language name="JPN" width="216">Ｗⅰ－Ｆⅰコネクションを　
+		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクションを　
 あそんでくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
-		<language name="JPN_KANJI">Ｗⅰ－Ｆⅰコネクションを　
-あそんでくれて　ありがとう！
+		<language name="JPN_KANJI">Ｗｉ－Ｆｉコネクションを　
+遊んでくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_87_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -2962,7 +2962,7 @@ Nintendoスポット2</comment>
 		<language name="JPN_KANJI">ダウンロード　してくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_88_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -2971,7 +2971,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_89_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -2980,34 +2980,34 @@ PBR等。</comment>
 ありがとう！
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
-		<language name="JPN_KANJI">ポケモンレンジャーを　あそんでくれて
+		<language name="JPN_KANJI">ポケモンレンジャーを　遊んでくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_90_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンレンジャー2</comment>
-		<language name="JPN" width="216">レンジャーユニオンから　ポケモンほごの
-いらいが　きたぞ！
+		<language name="JPN" width="216">レンジャーユニオンから
+ポケモンほごの　いらいが　きたぞ！
 ポケモンは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
-		<language name="JPN_KANJI">レンジャーユニオンから　ポケモンほごの
-いらいが　きたぞ！
+		<language name="JPN_KANJI">レンジャーユニオンから
+ポケモン保護の　依頼が　来たぞ！
 ポケモンは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_91_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンレンジャー3</comment>
-		<language name="JPN" width="216">レンジャーユニオンから　タマゴほごの
-いらいが　きたぞ！
+		<language name="JPN" width="216">レンジャーユニオンから
+タマゴほごの　いらいが　きたぞ！
 タマゴは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
-		<language name="JPN_KANJI">レンジャーユニオンから　タマゴほごの
-いらいが　きたぞ！
+		<language name="JPN_KANJI">レンジャーユニオンから
+タマゴ保護の　依頼が　来たぞ！
 タマゴは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_92_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -3017,9 +3017,9 @@ PBR等。</comment>
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">ポケモンドリームワールドを　
-あそんでくれて　ありがとう！
+遊んでくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_93_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -3031,7 +3031,7 @@ PBR等。</comment>
 		<language name="JPN_KANJI">ポケモンドリームワールドからの　
 プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_94_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -3040,10 +3040,10 @@ PBR等。</comment>
 ありがとう！
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
-		<language name="JPN_KANJI">ＰＤＷを　あそんでくれて　
+		<language name="JPN_KANJI">ＰＤＷを　遊んでくれて　
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_95_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -3053,7 +3053,7 @@ PBR等。</comment>
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">ＰＤＷからの　プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_96_01" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -3065,9 +3065,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンイベント２０１０に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3080,9 +3080,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンイベント２０１１に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3095,9 +3095,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンイベント２０１２に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3110,9 +3110,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンイベント２０１３に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3125,9 +3125,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンイベント２０１４に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3140,9 +3140,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンイベント２０１５に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3155,9 +3155,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンイベント２０１６に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3170,9 +3170,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンイベント２０１７に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3185,9 +3185,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンイベント２０１８に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3200,9 +3200,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンイベント２０１９に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3215,9 +3215,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンイベント２０２０に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3228,10 +3228,10 @@ PBR等。</comment>
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ポケモンフェスタに　きてくれて　
+		<language name="JPN_KANJI">ポケモンフェスタに　来てくれて　
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3244,9 +3244,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンフェスタ２０１０に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3259,9 +3259,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンフェスタ２０１１に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3274,9 +3274,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンフェスタ２０１２に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3289,9 +3289,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンフェスタ２０１３に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3304,9 +3304,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンフェスタ２０１４に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3319,9 +3319,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンフェスタ２０１５に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3334,9 +3334,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンフェスタ２０１６に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3349,9 +3349,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンフェスタ２０１７に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3364,9 +3364,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンフェスタ２０１８に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3379,9 +3379,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンフェスタ２０１９に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3394,9 +3394,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケモンフェスタ２０２０に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3407,10 +3407,10 @@ PBR等。</comment>
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！
 </language>
-		<language name="JPN_KANJI">ポケパークに　きてくれて　
+		<language name="JPN_KANJI">ポケパークに　来てくれて　
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3422,7 +3422,7 @@ PBR等。</comment>
 </language>
 		<language name="JPN_KANJI">ポケパークからの　プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　受け取ってね！！
 </language>
 	</row>
 
@@ -3435,9 +3435,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケパーク２０１０に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3450,9 +3450,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケパーク２０１１に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3465,9 +3465,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケパーク２０１２に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3480,9 +3480,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケパーク２０１３に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3495,9 +3495,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケパーク２０１４に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3510,9 +3510,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケパーク２０１５に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3525,9 +3525,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケパーク２０１６に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3540,9 +3540,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケパーク２０１７に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3555,9 +3555,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケパーク２０１８に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3570,9 +3570,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケパーク２０１９に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3585,9 +3585,9 @@ PBR等。</comment>
 はいたついんから　うけとってね！
 </language>
 		<language name="JPN_KANJI">ポケパーク２０２０に　
-きてくれて　ありがとう！
+来てくれて　ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！
+配達員から　受け取ってね！
 </language>
 	</row>
 
@@ -3596,7 +3596,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_133_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3604,7 +3604,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_134_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3612,7 +3612,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_135_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3620,7 +3620,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_136_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3628,7 +3628,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_137_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3636,7 +3636,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_138_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3644,7 +3644,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_139_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3652,7 +3652,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_140_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3660,7 +3660,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_141_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3668,7 +3668,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_142_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3676,7 +3676,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_143_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3684,7 +3684,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_144_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3692,7 +3692,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_145_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3700,7 +3700,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_146_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3708,7 +3708,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_147_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3716,7 +3716,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_148_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3724,7 +3724,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_149_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3732,7 +3732,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_150_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3740,7 +3740,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_151_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3748,7 +3748,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_152_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3756,7 +3756,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_153_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3764,7 +3764,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_154_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3772,7 +3772,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_155_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3780,7 +3780,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_156_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3788,7 +3788,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_157_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3796,7 +3796,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_158_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3804,7 +3804,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_159_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3812,7 +3812,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_160_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3820,7 +3820,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_161_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3828,7 +3828,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_162_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3836,7 +3836,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_163_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3844,7 +3844,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_164_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3852,7 +3852,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_165_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3860,7 +3860,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_166_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3868,7 +3868,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_167_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3876,7 +3876,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_168_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3884,7 +3884,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_169_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3892,7 +3892,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_170_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3900,7 +3900,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_171_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3908,7 +3908,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_172_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3916,7 +3916,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_173_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3924,7 +3924,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_174_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3932,7 +3932,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_175_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3940,7 +3940,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_176_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3948,7 +3948,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_177_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3956,7 +3956,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_178_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3964,7 +3964,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_179_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3972,7 +3972,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_180_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3980,7 +3980,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_181_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3988,7 +3988,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_182_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -3996,7 +3996,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_183_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4004,7 +4004,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_184_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4012,7 +4012,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_185_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4020,7 +4020,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_186_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4028,7 +4028,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_187_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4036,7 +4036,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_188_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4044,7 +4044,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_189_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4052,7 +4052,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_190_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4060,7 +4060,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_191_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4068,7 +4068,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_192_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4076,7 +4076,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_193_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4084,7 +4084,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_194_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4092,7 +4092,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_195_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4100,7 +4100,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_196_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4108,7 +4108,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_197_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4116,7 +4116,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_198_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4124,7 +4124,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_199_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4132,7 +4132,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_200_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4140,7 +4140,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_201_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4148,7 +4148,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_202_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4156,7 +4156,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_203_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4164,7 +4164,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_204_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4172,7 +4172,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_205_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4180,7 +4180,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_206_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4188,7 +4188,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_207_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4196,7 +4196,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_208_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4204,7 +4204,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_209_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4212,7 +4212,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_210_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4220,7 +4220,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_211_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4228,7 +4228,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_212_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4236,7 +4236,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_213_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4244,7 +4244,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_214_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4252,7 +4252,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_215_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4260,7 +4260,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_216_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4268,7 +4268,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_217_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4276,7 +4276,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_218_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4284,7 +4284,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_219_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4292,7 +4292,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_220_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4300,7 +4300,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_221_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4308,7 +4308,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_222_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4316,7 +4316,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_223_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4324,7 +4324,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_224_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4332,7 +4332,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_225_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4340,7 +4340,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_226_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4348,7 +4348,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_227_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4356,7 +4356,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_228_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4364,7 +4364,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_229_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4372,7 +4372,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_230_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4380,7 +4380,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_231_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4388,7 +4388,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_232_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4396,7 +4396,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_233_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4404,7 +4404,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_234_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4412,7 +4412,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_235_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4420,7 +4420,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_236_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4428,7 +4428,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_237_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4436,7 +4436,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_238_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4444,7 +4444,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_239_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4452,7 +4452,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_240_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4460,7 +4460,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_241_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4468,7 +4468,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_242_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4476,7 +4476,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_243_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4484,7 +4484,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_244_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4492,7 +4492,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_245_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4500,7 +4500,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_246_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4508,7 +4508,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_247_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4516,7 +4516,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_248_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4524,7 +4524,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_249_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4532,7 +4532,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_250_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4540,7 +4540,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_251_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4548,7 +4548,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_252_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4556,7 +4556,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_253_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4564,7 +4564,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_254_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4572,7 +4572,7 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_255_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">
@@ -4580,19 +4580,19 @@ PBR等。</comment>
 		<language name="JPN" width="216">おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！</language>
 		<language name="JPN_KANJI">おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！</language>
+配達員から　受け取ってね！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_00_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>映画汎用</comment>
-		<language name="JPN" width="216">ポケモンえいがを　みにきてくれて
-ありがとう！
+		<language name="JPN" width="216">ポケモンえいがを
+みにきてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンえいがを　みにきてくれて
-ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモン映画を
+観に来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_01_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4601,10 +4601,10 @@ PBR等。</comment>
 みにきてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンえいが２０１０を　
-みにきてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモン映画２０１０を　
+観に来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_02_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4613,10 +4613,10 @@ PBR等。</comment>
 みにきてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンえいが２０１１を　
-みにきてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモン映画２０１１を　
+観に来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_03_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4625,10 +4625,10 @@ PBR等。</comment>
 みにきてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンえいが２０１２を　
-みにきてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモン映画２０１２を　
+観に来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_04_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4637,10 +4637,10 @@ PBR等。</comment>
 みにきてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンえいが２０１３を　
-みにきてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモン映画２０１３を　
+観に来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_05_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4649,10 +4649,10 @@ PBR等。</comment>
 みにきてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンえいが２０１４を　
-みにきてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモン映画２０１４を　
+観に来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_06_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4661,10 +4661,10 @@ PBR等。</comment>
 みにきてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンえいが２０１５を　
-みにきてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモン映画２０１５を　
+観に来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_07_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4673,10 +4673,10 @@ PBR等。</comment>
 みにきてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンえいが２０１６を　
-みにきてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモン映画２０１６を　
+観に来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_08_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4685,10 +4685,10 @@ PBR等。</comment>
 みにきてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンえいが２０１７を　
-みにきてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモン映画２０１７を　
+観に来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_09_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4697,10 +4697,10 @@ PBR等。</comment>
 みにきてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンえいが２０１８を　
-みにきてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモン映画２０１８を　
+観に来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_10_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4709,10 +4709,10 @@ PBR等。</comment>
 みにきてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンえいが２０１９を　
-みにきてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモン映画２０１９を　
+観に来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_11_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4721,23 +4721,23 @@ PBR等。</comment>
 みにきてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンえいが２０２０を　
-みにきてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモン映画２０２０を　
+観に来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_12_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンセンター
 </comment>
-		<language name="JPN" width="216">ポケモンセンターに　きてくれて
-ありがとう！
+		<language name="JPN" width="216">ポケモンセンターに
+きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンセンターに　きてくれて
-ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンセンターに
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_13_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4749,9 +4749,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">ポケモンセンタートウキョーに　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_14_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4763,9 +4763,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">ポケモンセンターオーサカに　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_15_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4777,9 +4777,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">ポケモンセンターフクオカに　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_16_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4791,9 +4791,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">ポケモンセンターナゴヤに　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_17_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4805,9 +4805,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">ポケモンセンターサッポロに　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_18_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4819,9 +4819,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">ポケモンセンターヨコハマに　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_19_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4832,9 +4832,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">ポケモンワールドチャンピオンシップス
-にさんかしてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+に参加してくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_20_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4844,10 +4844,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＷＣＳ２０１０に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１０に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_21_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4857,10 +4857,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＷＣＳ２０１１に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１１に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_22_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4870,10 +4870,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＷＣＳ２０１２に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１２に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_23_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4883,10 +4883,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＷＣＳ２０１３に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１３に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_24_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4896,10 +4896,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＷＣＳ２０１４に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１４に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_25_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4909,10 +4909,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＷＣＳ２０１５に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１５に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_26_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4922,10 +4922,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＷＣＳ２０１６に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１６に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_27_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4935,10 +4935,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＷＣＳ２０１７に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１７に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_28_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4948,10 +4948,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＷＣＳ２０１８に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１８に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_29_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4961,10 +4961,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＷＣＳ２０１９に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０１９に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_30_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4974,10 +4974,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＷＣＳ２０２０に　さんかしてくれて
+		<language name="JPN_KANJI">ＷＣＳ２０２０に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_31_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -4987,10 +4987,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">Ｗｏｒｌｄｓに　きてくれて　
+		<language name="JPN_KANJI">Ｗｏｒｌｄｓに　来てくれて　
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_32_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5001,9 +5001,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１０に　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_33_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5014,9 +5014,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１１に　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_34_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5027,9 +5027,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１２に　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_35_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5040,9 +5040,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１３に　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_36_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5053,9 +5053,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１４に　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_37_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5066,9 +5066,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１５に　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_38_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5079,9 +5079,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１６に　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_39_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5092,9 +5092,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１７に　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_40_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5105,9 +5105,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１８に　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_41_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5118,9 +5118,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０１９に　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_42_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5131,9 +5131,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｗｏｒｌｄｓ２０２０に　
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_43_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5144,9 +5144,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_44_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5157,9 +5157,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１０に　きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+２０１０に　来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_45_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5170,9 +5170,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１１に　きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+２０１１に　来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_46_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5183,9 +5183,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１２に　きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+２０１２に　来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_47_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5196,9 +5196,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１３に　きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+２０１３に　来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_48_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5209,9 +5209,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１４に　きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+２０１４に　来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_49_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5222,9 +5222,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１５に　きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+２０１５に　来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_50_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5235,9 +5235,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１６に　きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+２０１６に　来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_51_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5248,9 +5248,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１７に　きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+２０１７に　来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_52_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5261,9 +5261,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１８に　きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+２０１８に　来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_53_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5274,9 +5274,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０１９に　きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+２０１９に　来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_54_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5287,9 +5287,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">Ｖｉｄｅｏ Ｇａｍｅ Ｅｖｅｎｔ
-２０２０に　きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+２０２０に　来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_55_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5299,10 +5299,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＶＧＣ２０１０に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１０に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_56_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5312,10 +5312,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＶＧＣ２０１１に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１１に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_57_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5325,10 +5325,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＶＧＣ２０１２に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１２に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_58_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5338,10 +5338,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＶＧＣ２０１３に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１３に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_59_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5351,10 +5351,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＶＧＣ２０１４に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１４に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_60_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5364,10 +5364,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＶＧＣ２０１５に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１５に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_61_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5377,10 +5377,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＶＧＣ２０１６に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１６に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_62_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5390,10 +5390,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＶＧＣ２０１７に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１７に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_63_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5403,10 +5403,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＶＧＣ２０１８に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１８に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_64_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5416,10 +5416,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＶＧＣ２０１９に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０１９に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_65_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5429,10 +5429,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＶＧＣ２０２０に　さんかしてくれて
+		<language name="JPN_KANJI">ＶＧＣ２０２０に　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_66_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5442,10 +5442,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">イベントに　きてくれて
+		<language name="JPN_KANJI">イベントに　来てくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_67_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5455,10 +5455,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンの　イベントに　きてくれて
+		<language name="JPN_KANJI">ポケモンの　イベントに　来てくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_68_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5468,10 +5468,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンを　あそんでくれて
+		<language name="JPN_KANJI">ポケモンを　遊んでくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_69_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5480,9 +5480,9 @@ PBR等。</comment>
 		<language name="JPN" width="216">おみせに　きてくれて　ありがとう！ 
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">おみせに　きてくれて　ありがとう！ 
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">お店に　来てくれて　ありがとう！ 
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_70_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5492,10 +5492,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">バトルたいかいに　さんかしてくれて　
+		<language name="JPN_KANJI">バトル大会に　参加してくれて　
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_71_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5505,10 +5505,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ゲームイベントに　さんかしてくれて
+		<language name="JPN_KANJI">ゲームイベントに　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_72_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5520,7 +5520,7 @@ PBR等。</comment>
 </language>
 		<language name="JPN_KANJI">ゲームイベントからの　プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　うけとってね！！
 </language>
 	</row>
 
@@ -5532,8 +5532,8 @@ PBR等。</comment>
 おわたししました！</language>
 		<language name="JPN_KANJI">ポケモンだいすきクラブからの
 プレゼント！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_74_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5543,10 +5543,10 @@ PBR等。</comment>
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！！
 </language>
-		<language name="JPN_KANJI">ポケモンサンデーを　みてくれて
+		<language name="JPN_KANJI">ポケモンサンデーを　観てくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　うけとってね！！
 </language>
 	</row>
 
@@ -5560,7 +5560,7 @@ PBR等。</comment>
 		<language name="JPN_KANJI">ポケモンサンデーからの
 プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　うけとってね！！
 </language>
 	</row>
 
@@ -5570,10 +5570,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">チャレンジひろばに　さんかしてくれて
+		<language name="JPN_KANJI">チャレンジひろばに　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_77_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5584,7 +5584,7 @@ PBR等。</comment>
 </language>
 		<language name="JPN_KANJI">チャレンジひろばからの　プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　うけとってね！！
 </language>
 	</row>
 
@@ -5594,10 +5594,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">バトルチャレンジに　さんかしてくれて
+		<language name="JPN_KANJI">バトルチャレンジに　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_79_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5608,7 +5608,7 @@ PBR等。</comment>
 </language>
 		<language name="JPN_KANJI">バトルチャレンジからの　プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　うけとってね！！
 </language>
 	</row>
 
@@ -5618,10 +5618,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">トレーナーズコートに　さんかしてくれて
+		<language name="JPN_KANJI">トレーナーズコートに　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_81_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5632,7 +5632,7 @@ PBR等。</comment>
 </language>
 		<language name="JPN_KANJI">トレーナーズコートからの　プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　うけとってね！！
 </language>
 	</row>
 
@@ -5642,10 +5642,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">バトルツアーに　さんかしてくれて
+		<language name="JPN_KANJI">バトルツアーに　参加してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_83_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5656,7 +5656,7 @@ PBR等。</comment>
 </language>
 		<language name="JPN_KANJI">バトルツアーからの　プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　うけとってね！！
 </language>
 	</row>
 
@@ -5666,10 +5666,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンの　コンサートに　きてくれて
+		<language name="JPN_KANJI">ポケモンの　コンサートに　来てくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_85_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5679,24 +5679,24 @@ PBR等。</comment>
 おくりものは　ポケモンセンターにいる
 はいたついんから　うけとってね！！
 </language>
-		<language name="JPN_KANJI">ポケモンの　アニメを　みてくれて
+		<language name="JPN_KANJI">ポケモンの　アニメを　観てくれて
 ありがとう！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　うけとってね！！
 </language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_86_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>Wi-Fi
 Nintendoスポット1</comment>
-		<language name="JPN" width="216">Ｗⅰ－Ｆⅰコネクションを　
+		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクションを　
 あそんでくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">Ｗⅰ－Ｆⅰコネクションを　
-あそんでくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">Ｗｉ－Ｆｉコネクションを　
+遊んでくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_87_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5708,8 +5708,8 @@ Nintendoスポット2</comment>
 おわたししました！</language>
 		<language name="JPN_KANJI">ダウンロード　してくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_88_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5717,8 +5717,8 @@ Nintendoスポット2</comment>
 PBR等。</comment>
 		<language name="JPN" width="216">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_89_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5727,34 +5727,34 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンレンジャーを　あそんでくれて
+		<language name="JPN_KANJI">ポケモンレンジャーを　遊んでくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_90_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンレンジャー2</comment>
-		<language name="JPN" width="216">レンジャーユニオンから　ポケモンほごの
-いらいが　きたぞ！
+		<language name="JPN" width="216">レンジャーユニオンから
+ポケモンほごの　いらいが　きたぞ！
 ポケモンは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">レンジャーユニオンから　ポケモンほごの
-いらいが　きたぞ！
-ポケモンは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">レンジャーユニオンから
+ポケモン保護の　依頼が　きたぞ！
+ポケモンは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_91_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンレンジャー3</comment>
-		<language name="JPN" width="216">レンジャーユニオンから　タマゴほごの
-いらいが　きたぞ！
+		<language name="JPN" width="216">レンジャーユニオンから
+タマゴほごの　いらいが　きたぞ！
 タマゴは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">レンジャーユニオンから　タマゴほごの
-いらいが　きたぞ！
-タマゴは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">レンジャーユニオンから
+タマゴ保護の　依頼が　きたぞ！
+タマゴは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_92_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5764,9 +5764,9 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">ポケモンドリームワールドを　
-あそんでくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+遊んでくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_93_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5777,8 +5777,8 @@ PBR等。</comment>
 おわたししました！</language>
 		<language name="JPN_KANJI">ポケモンドリームワールドからの　
 プレゼント！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_94_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5787,10 +5787,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ＰＤＷを　あそんでくれて　
+		<language name="JPN_KANJI">ＰＤＷを　遊んでくれて　
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_95_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5799,151 +5799,151 @@ PBR等。</comment>
 この　おくりものは　はいたついんが
 おわたししました！</language>
 		<language name="JPN_KANJI">ＰＤＷからの　プレゼント！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_96_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンイベント
 ２０１０</comment>
-		<language name="JPN" width="216">ポケモンイベント２０１０をに
-きてくれて　ありがとう！
+		<language name="JPN" width="216">ポケモンイベント２０１０に
+来てくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンイベント２０１０をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１０に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_97_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンイベント
 ２０１１</comment>
-		<language name="JPN" width="216">ポケモンイベント２０１１をに
+		<language name="JPN" width="216">ポケモンイベント２０１１に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンイベント２０１１をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１１に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_98_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンイベント
 ２０１２</comment>
-		<language name="JPN" width="216">ポケモンイベント２０１２をに
+		<language name="JPN" width="216">ポケモンイベント２０１２に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンイベント２０１２をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１２に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_99_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンイベント
 ２０１３</comment>
-		<language name="JPN" width="216">ポケモンイベント２０１３をに
+		<language name="JPN" width="216">ポケモンイベント２０１３に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンイベント２０１３をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１３に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_100_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンイベント
 ２０１４</comment>
-		<language name="JPN" width="216">ポケモンイベント２０１４をに
+		<language name="JPN" width="216">ポケモンイベント２０１４に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンイベント２０１４をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１４に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_101_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンイベント
 ２０１５</comment>
-		<language name="JPN" width="216">ポケモンイベント２０１５をに
+		<language name="JPN" width="216">ポケモンイベント２０１５に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンイベント２０１５をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１５に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_102_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンイベント
 ２０１６</comment>
-		<language name="JPN" width="216">ポケモンイベント２０１６をに
+		<language name="JPN" width="216">ポケモンイベント２０１６に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンイベント２０１６をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１６に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_103_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンイベント
 ２０１７</comment>
-		<language name="JPN" width="216">ポケモンイベント２０１７をに
+		<language name="JPN" width="216">ポケモンイベント２０１７に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンイベント２０１７をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１７に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_104_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンイベント
 ２０１８</comment>
-		<language name="JPN" width="216">ポケモンイベント２０１８をに
+		<language name="JPN" width="216">ポケモンイベント２０１８に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンイベント２０１８をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１８に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_105_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンイベント
 ２０１９</comment>
-		<language name="JPN" width="216">ポケモンイベント２０１９をに
+		<language name="JPN" width="216">ポケモンイベント２０１９に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンイベント２０１９をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０１９に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_106_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンイベント
 ２０２０</comment>
-		<language name="JPN" width="216">ポケモンイベント２０２０をに
+		<language name="JPN" width="216">ポケモンイベント２０２０に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンイベント２０２０をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンイベント２０２０に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_107_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -5952,153 +5952,153 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンフェスタに　きてくれて
+		<language name="JPN_KANJI">ポケモンフェスタに　来てくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_108_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンフェスタ
 ２０１０</comment>
-		<language name="JPN">ポケモンフェスタ２０１０をに
+		<language name="JPN">ポケモンフェスタ２０１０に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンフェスタ２０１０をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１０に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_109_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンフェスタ
 ２０１１</comment>
-		<language name="JPN">ポケモンフェスタ２０１１をに
+		<language name="JPN">ポケモンフェスタ２０１１に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンフェスタ２０１１をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１１に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_110_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンフェスタ
 ２０１２</comment>
-		<language name="JPN">ポケモンフェスタ２０１２をに
+		<language name="JPN">ポケモンフェスタ２０１２に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンフェスタ２０１２をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１２に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_111_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンフェスタ
 ２０１３</comment>
-		<language name="JPN">ポケモンフェスタ２０１３をに
+		<language name="JPN">ポケモンフェスタ２０１３に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンフェスタ２０１３をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１３に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_112_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンフェスタ
 ２０１４</comment>
-		<language name="JPN">ポケモンフェスタ２０１４をに
+		<language name="JPN">ポケモンフェスタ２０１４に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンフェスタ２０１４をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１４に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_113_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンフェスタ
 ２０１５</comment>
-		<language name="JPN">ポケモンフェスタ２０１５をに
+		<language name="JPN">ポケモンフェスタ２０１５に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンフェスタ２０１５をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１５に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_114_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンフェスタ
 ２０１６</comment>
-		<language name="JPN">ポケモンフェスタ２０１６をに
+		<language name="JPN">ポケモンフェスタ２０１６に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンフェスタ２０１６をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１６に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_115_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンフェスタ
 ２０１７</comment>
-		<language name="JPN">ポケモンフェスタ２０１７をに
+		<language name="JPN">ポケモンフェスタ２０１７に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンフェスタ２０１７をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１７に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_116_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンフェスタ
 ２０１８</comment>
-		<language name="JPN">ポケモンフェスタ２０１８をに
+		<language name="JPN">ポケモンフェスタ２０１８に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンフェスタ２０１８をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１８に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_117_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンフェスタ
 ２０１９</comment>
-		<language name="JPN">ポケモンフェスタ２０１９をに
+		<language name="JPN">ポケモンフェスタ２０１９に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンフェスタ２０１９をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０１９に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_118_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケモンフェスタ
 ２０２０</comment>
-		<language name="JPN">ポケモンフェスタ２０２０をに
+		<language name="JPN">ポケモンフェスタ２０２０に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケモンフェスタ２０２０をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケモンフェスタ２０２０に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_119_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -6107,10 +6107,10 @@ PBR等。</comment>
 ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケパークに　きてくれて
+		<language name="JPN_KANJI">ポケパークに　来てくれて
 ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_120_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
@@ -6121,1143 +6121,1143 @@ PBR等。</comment>
 </language>
 		<language name="JPN_KANJI">ポケパークからの　プレゼント！
 おくりものは　ポケモンセンターにいる
-はいたついんから　うけとってね！！
+配達員から　うけとってね！！
 </language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_121_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケパーク
 ２０１０</comment>
-		<language name="JPN">ポケパーク２０１０をに
+		<language name="JPN">ポケパーク２０１０に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケパーク２０１０をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１０に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_122_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケパーク
 ２０１１</comment>
-		<language name="JPN">ポケパーク２０１１をに
+		<language name="JPN">ポケパーク２０１１に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケパーク２０１１をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１１に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_123_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケパーク
 ２０１２</comment>
-		<language name="JPN">ポケパーク２０１２をに
+		<language name="JPN">ポケパーク２０１２に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケパーク２０１２をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１２に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_124_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケパーク
 ２０１３</comment>
-		<language name="JPN">ポケパーク２０１３をに
+		<language name="JPN">ポケパーク２０１３に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケパーク２０１３をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１３に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_125_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケパーク
 ２０１４</comment>
-		<language name="JPN">ポケパーク２０１４をに
+		<language name="JPN">ポケパーク２０１４に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケパーク２０１４をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１４に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_126_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケパーク
 ２０１５</comment>
-		<language name="JPN">ポケパーク２０１５をに
+		<language name="JPN">ポケパーク２０１５に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケパーク２０１５をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１５に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_127_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケパーク
 ２０１６</comment>
-		<language name="JPN">ポケパーク２０１６をに
+		<language name="JPN">ポケパーク２０１６に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケパーク２０１６をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１６に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_128_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケパーク
 ２０１７</comment>
-		<language name="JPN">ポケパーク２０１７をに
+		<language name="JPN">ポケパーク２０１７に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケパーク２０１７をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１７に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_129_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケパーク
 ２０１８</comment>
-		<language name="JPN">ポケパーク２０１８をに
+		<language name="JPN">ポケパーク２０１８に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケパーク２０１８をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１８に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_130_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケパーク
 ２０１９</comment>
-		<language name="JPN">ポケパーク２０１９をに
+		<language name="JPN">ポケパーク２０１９に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケパーク２０１９をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０１９に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_131_02" back-color="#8080ff,,,,,,,,,,,,,,,,,">
 		<comment>ポケパーク
 ２０２０</comment>
-		<language name="JPN">ポケパーク２０２０をに
+		<language name="JPN">ポケパーク２０２０に
 きてくれて　ありがとう！
 この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">ポケパーク２０２０をに
-きてくれて　ありがとう！
-この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">ポケパーク２０２０に
+来てくれて　ありがとう！
+この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_132_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_133_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_134_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_135_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_136_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_137_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_138_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_139_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_140_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_141_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_142_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_143_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_144_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_145_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_146_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_147_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_148_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_149_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_150_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_151_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_152_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_153_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_154_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_155_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_156_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_157_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_158_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_159_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_160_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_161_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_162_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_163_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_164_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_165_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_166_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_167_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_168_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_169_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_170_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_171_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_172_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_173_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_174_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_175_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_176_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_177_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_178_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_179_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_180_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_181_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_182_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_183_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_184_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_185_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_186_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_187_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_188_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_189_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_190_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_191_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_192_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_193_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_194_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_195_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_196_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_197_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_198_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_199_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_200_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_201_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_202_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_203_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_204_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_205_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_206_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_207_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_208_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_209_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_210_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_211_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_212_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_213_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_214_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_215_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_216_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_217_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_218_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_219_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_220_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_221_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_222_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_223_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_224_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_225_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_226_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_227_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_228_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_229_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_230_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_231_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_232_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_233_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_234_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_235_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_236_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_237_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_238_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_239_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_240_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_241_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_242_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_243_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_244_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_245_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_246_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_247_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_248_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_249_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_250_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_251_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_252_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_253_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_254_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<row id="syachi_mystery_card_txt_255_02" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>ダミー</comment>
 		<language name="JPN">この　おくりものは　はいたついんが
 おわたししました！</language>
-		<language name="JPN_KANJI">この　おくりものは　はいたついんが
-おわたししました！</language>
+		<language name="JPN_KANJI">この　おくりものは　配達員が
+お渡ししました！</language>
 	</row>
 
 	<flowchart-group-list>
