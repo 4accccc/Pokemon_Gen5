@@ -11,8 +11,8 @@
 
 #define C04R0304_TRAINER_02                0
 #define C04R0304_TRAINER_03                1
-#define C04R0304_FANM_01                   2
-#define C04R0304_FANW_01                   3
+#define C04R0304_FAN_01                    2
+#define C04R0304_FAN_02                    3
 #define C04R0304_RANDOM_01                 4
 #define C04R0304_RANDOM_02                 5
 #define C04R0304_RANDOM_03                 6

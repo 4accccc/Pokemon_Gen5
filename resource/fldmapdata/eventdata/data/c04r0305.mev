@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/18 12:30:27
+#save date:2010/03/21 20:39:02
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0305.wms
 #SECTION START:OBJ_EVENT
@@ -386,17 +386,17 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C04R0305_FANM_01
+C04R0305_FAN_01
 #OBJ CODE Number
-MAN1
+WOMAN1
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
-FV_STADIUM_FANM_01
+FV_STADIUM_FAN_01
 #Event Script Name
-SCRID_TRID_FANM_10
+SCRID_TRID_FANW_04
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
@@ -417,17 +417,17 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-C04R0305_FANW_01
+C04R0305_FAN_02
 #OBJ CODE Number
-WOMAN1
+MAN1
 #MOVE CODE Number
 MV_DMY
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
-FV_STADIUM_FANW_01
+FV_STADIUM_FAN_02
 #Event Script Name
-SCRID_TRID_FANW_04
+SCRID_TRID_FANM_10
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number

@@ -10,7 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c04r0303.h"
-  //.include  "c04r0303.h"
+  .include  "c04r0303.h"
+  .include  "../../../prog/src/field/rebattle_trainer.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +20,69 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c04r0303
+_EVENT_DATA    ev_zone_c04r0303
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_c04r0303_flag_change:
-//  _END
+/************************************************************/
+/*					ZONE_CHANGE_SCRIPT						*/
+/************************************************************/
+EVENT_START	ev_zone_c04r0303
+	{
+	DEFINE_LOCAL	lwk_badge_chk
+	
+	//レベル２以降の全トレーナーを非表示にする
+	_FLAG_SET( FV_STADIUM_TRAINER_02 )
+	_FLAG_SET( FV_STADIUM_TRAINER_03 )
+	_FLAG_SET( FV_STADIUM_FAN_01 )
+	_FLAG_SET( FV_STADIUM_FAN_02 )
+	_FLAG_SET( FV_STADIUM_RANDOM_01 )
+	_FLAG_SET( FV_STADIUM_RANDOM_02 )
+	_FLAG_SET( FV_STADIUM_RANDOM_03 )
+	
+	
+//---------シナリオ進行度によってトレーナーを追加表示する------------
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_c04r0303:
-  //とりあえず最初のラベルだけ生成している
-  _END
+	//レベル２
+	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_05 )
+	IF $lwk_badge_chk == TRUE THEN
+		_FLAG_RESET( FV_STADIUM_FAN_01 )		//ファン１人目を追加
+	ENDIF
+	
+	//レベル３
+	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_07 )
+	IF $lwk_badge_chk == TRUE THEN
+		_FLAG_RESET( FV_STADIUM_TRAINER_02 )	//選手２人目を追加
+	ENDIF
+
+	//レベル４（シナリオクリア後なら）
+	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+		_FLAG_RESET( FV_STADIUM_TRAINER_03 )	//選手３人目を追加
+		_FLAG_RESET( FV_STADIUM_FAN_02 )		//ファン２人目を追加
+		_FLAG_RESET( FV_STADIUM_RANDOM_01 )		//ランダム１人目を追加
+		_FLAG_RESET( FV_STADIUM_RANDOM_02 )		//ランダム２人目を追加
+		_FLAG_RESET( FV_STADIUM_RANDOM_03 )		//ランダム３人目を追加
+	ENDIF
+
+
+//--------シナリオ進行度によってトレーナーIDを書き換える--------------
+
+	_REBATTLE_TRAINER_START()	// トレーナ情報を確保
+	
+	//レベル２
+	_GET_BADGE_FLAG( lwk_badge_chk, BADGE_ID_05 )
+	IF $lwk_badge_chk == TRUE THEN
+		_REBATTLE_TRAINER_SETUP_TRID( RB_FOOT1, C04R0303_TRAINER_01, 1 )
+	ENDIF
+	
+	
+	
+	_REBATTLE_TRAINER_END() //トレーナ情報の破棄
+	
+	}
+EVENT_END
+
+
+
+
 

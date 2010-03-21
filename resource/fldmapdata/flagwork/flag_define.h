@@ -743,8 +743,8 @@
 #define FV_STADIUM_TRAINER_01              719 /* 0x02cf ビッグスタジアム／リトルコートの選手トレーナー１人目 */
 #define FV_STADIUM_TRAINER_02              720 /* 0x02d0 ビッグスタジアム／リトルコートの選手トレーナー２人目 */
 #define FV_STADIUM_TRAINER_03              721 /* 0x02d1 ビッグスタジアム／リトルコートの選手トレーナー３人目 */
-#define FV_STADIUM_FANM_01                 722 /* 0x02d2 ビッグスタジアム／リトルコートのファンクラブトレーナー（男性） */
-#define FV_STADIUM_FANW_01                 723 /* 0x02d3 ビッグスタジアム／リトルコートのファンクラブトレーナー（女性） */
+#define FV_STADIUM_FAN_01                  722 /* 0x02d2 ビッグスタジアム／リトルコートのファンクラブトレーナー１人目 */
+#define FV_STADIUM_FAN_02                  723 /* 0x02d3 ビッグスタジアム／リトルコートのファンクラブトレーナー２人目 */
 #define FV_STADIUM_RANDOM_01               724 /* 0x02d4 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
 #define FV_STADIUM_RANDOM_02               725 /* 0x02d5 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */
 #define FV_STADIUM_RANDOM_03               726 /* 0x02d6 ビッグスタジアム／リトルコートのランダム出現トレーナー１人目 */

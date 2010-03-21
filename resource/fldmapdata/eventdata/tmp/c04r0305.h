@@ -21,8 +21,8 @@
 #define C04R0305_TRAINER_01                9
 #define FV_STADIUM_TRAINER_02             10
 #define C04R0305_TRAINER_03               11
-#define C04R0305_FANM_01                  12
-#define C04R0305_FANW_01                  13
+#define C04R0305_FAN_01                   12
+#define C04R0305_FAN_02                   13
 #define C04R0305_RANDOM_01                14
 #define C04R0305_RANDOM_02                15
 #define C04R0305_RANDOM_03                16
