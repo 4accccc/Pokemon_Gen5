@@ -250,8 +250,6 @@ static void MB_MOVIE_Init( MB_MOVIE_WORK *work )
   PMSND_PlayBGM( SEQ_BGM_PALPARK_BOX );
 
   GFUser_SetVIntrFunc( MB_MOVIE_VSyncMovie );
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
-  GFL_NET_ReloadIcon();
 }
 
 //--------------------------------------------------------------
@@ -336,6 +334,8 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
   case MCS_WAIT_COMM_INIT:
     if( MB_COMM_IsInitComm(work->commWork) == TRUE )
     {
+      GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
+      GFL_NET_ReloadIcon();
       //e‹@î•ñ
       if( MB_IsMultiBootChild() == FALSE ||
           GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
@@ -838,8 +838,9 @@ static void MB_MOVIE_InitGraphic( MB_MOVIE_WORK *work )
     
   }
   GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &vramBank ,work->heapId );
-  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
+  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+  //GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
   GFL_NET_ReloadIcon();
   work->isInitCellSys = TRUE;
   

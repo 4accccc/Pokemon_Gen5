@@ -348,14 +348,10 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   if( work->mode == MPM_POKE_SHIFTER )
   {
     GFUser_SetVIntrFunc( MB_PARENT_VSync );
-    GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
-    GFL_NET_ReloadIcon();
   }
   else
   {
     GFUser_SetVIntrFunc( MB_PARENT_VSyncMovie );
-    GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
-    GFL_NET_ReloadIcon();
   }
 
   
@@ -371,6 +367,7 @@ static void MB_PARENT_Term( MB_PARENT_WORK *work )
 {
   GFL_TCB_DeleteTask( work->vBlankTcb );
   GFUser_ResetVIntrFunc();
+  GFL_NET_WirelessIconEasyEnd();
   if( work->mode == MPM_MOVIE_TRANS )
   {
     ConnectBGPalAnm_End( &work->bgAnmWork );
@@ -466,6 +463,17 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       work->state = MPS_SEND_INIT_NET;
       work->timeOutCnt = 0;
       MB_COMM_InitComm( work->commWork );
+
+      if( work->mode == MPM_POKE_SHIFTER )
+      {
+        GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
+        GFL_NET_ReloadIcon();
+      }
+      else
+      {
+        GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
+        GFL_NET_ReloadIcon();
+      }
     }
     else
     {
@@ -793,8 +801,8 @@ static void MB_PARENT_VSync( void )
   if( cnt > 1 )
   {
     cnt = 0;
-    GFL_BG_SetScroll( MB_PARENT_FRAME_BG , GFL_BG_SCROLL_X_DEC , 1 );
-    GFL_BG_SetScroll( MB_PARENT_FRAME_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+    GFL_BG_SetScroll( MB_PARENT_FRAME_BG2 , GFL_BG_SCROLL_X_DEC , 1 );
+    GFL_BG_SetScroll( MB_PARENT_FRAME_BG2 , GFL_BG_SCROLL_Y_DEC , 1 );
     GFL_BG_SetScroll( MB_PARENT_FRAME_SUB_BG , GFL_BG_SCROLL_X_DEC , 1 );
     GFL_BG_SetScroll( MB_PARENT_FRAME_SUB_BG , GFL_BG_SCROLL_Y_DEC , 1 );
   }
@@ -899,6 +907,7 @@ static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work )
     work->cellUnit = GFL_CLACT_UNIT_Create( 8 , 0, work->heapId );
     GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
 
+    GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
   }
   
@@ -954,9 +963,9 @@ static void MB_PARENT_LoadResource( MB_PARENT_WORK *work )
     GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mb_parent_bg_main_NCLR , 
                       PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
     GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mb_parent_bg_main_NCGR ,
-                      MB_PARENT_FRAME_BG , 0 , 0, FALSE , work->heapId );
+                      MB_PARENT_FRAME_BG2 , 0 , 0, FALSE , work->heapId );
     GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mb_parent_bg_main_NSCR , 
-                      MB_PARENT_FRAME_BG ,  0 , 0, FALSE , work->heapId );
+                      MB_PARENT_FRAME_BG2 ,  0 , 0, FALSE , work->heapId );
     
     GFL_ARC_CloseDataHandle( arcHandle );
   }
@@ -1133,6 +1142,17 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
   case MPSS_SEND_IMAGE_INIT_COMM:
     WhCallBackFlg = FALSE;
     WH_Initialize(work->heapId , &MP_PARENT_WhCallBack , FALSE );
+    
+    GFL_NET_WirelessIconEasyXY( 256-16,0,FALSE,work->heapId );
+    if( work->mode == MPM_POKE_SHIFTER )
+    {
+      GFL_NET_WirelessIconEasy_HoldLCD( FALSE,work->heapId );
+    }
+    else
+    {
+      GFL_NET_WirelessIconEasy_HoldLCD( TRUE,work->heapId );
+    }
+    
     work->subState = MPSS_SEND_IMAGE_INIT_COMM_WAIT;
     break;
   case MPSS_SEND_IMAGE_INIT_COMM_WAIT:
@@ -1213,7 +1233,8 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
     break;
     
   }
-  
+  GFL_NET_WirelessIconEasy_SetLevel(3-WM_GetLinkLevel());
+  GFL_NET_WirelessIconEasyFunc();
   return FALSE;
 }
 
