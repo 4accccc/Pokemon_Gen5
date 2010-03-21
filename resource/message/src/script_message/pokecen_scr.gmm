@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T15:32:09"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-20T18:45:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1608" top="624" right="2108" bottom="1252" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="184" right="1280" bottom="582" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="2120" top="577" right="2593" bottom="975" visible="yes"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="370"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -648,44 +648,43 @@
 
 事前にトレーナータイプを触っていた場合は起こさない
 
-・0:トレーナータイプ</comment>
+・0:トレーナータイプ
+
+
+告知が終わると続いてmsg_pc_union_03</comment>
 		<attribute name="キャラ指定">ユニオン受付</attribute>
 		<language name="JPN" width="256">そういえば　おきゃくさま▼
 トレーナーカードに　かいてある
-ごじぶんの　イメージが▼
+ごじぶんの　かたがきが▽
 ポケモントレーナーの　ままですね？▼
-トレーナーカードの　オモテめんで
-じぶんの　イメージを　かえておくと▼
-ひとからみた　おきゃくさまの　すがたが
-その　イメージどおりに　みえますよ▼
-そうですねー
-･･････▼
+かたがきを　かえておくと
+ユニオンルームで　あいさつを▽
+するときに　イメージが▽
+つたわりやすくて　べんりですよ▼
+そうですねー▼
 たとえば　[1:0E:トレーナー種別名:0]
 など　いかがでしょうか？▼
 わたしから　みた　いんしょう　ですが
-まずは　イメージを　かえてみましょう▼
+まずは　かたがきを　かえてみましょう▼
 おきに　めさない　ようでしたら
-トレーナーカードで　イメージを　タッチ！▼
-ユニオンルーム　いがいの　ばしょなら
-イメージは　いつでも　へんこうできます▼</language>
+トレーナーカードで　かたがきを▽
+タッチすれば　へんこうできますよ▼</language>
 		<language name="JPN_KANJI" width="256">そういえば　お客さま▼
 トレーナーカードに　書いてある
-ご自分の　イメージが▼
+ご自分の　かたがきが▽
 ポケモントレーナーの　ままですね？▼
-トレーナーカードの　オモテ面で
-自分の　イメージを　変えておくと▼
-人から見た　お客さまの姿が
-その　イメージ通りに　見えますよ▼
-そうですねー
-･･････▼
+かたがきを　変えておくと
+ユニオンルームで　あいさつを▽
+するときに　イメージが▽
+伝わりやすくて　便利ですよ▼
+そうですねー▼
 たとえば　[1:0E:トレーナー種別名:0]
 など　いかがでしょうか？▼
-私から見た　印象ですが
-まずは　イメージを　変えてみましょう▼
+私から　みた　印象ですが
+まずは　かたがきを　変えてみましょう▼
 お気に召さない　ようでしたら
-トレーナーカードで　イメージを　タッチ！▼
-ユニオンルーム　以外の　場所なら
-イメージは　いつでも　変更できます▼</language>
+トレーナーカードで　かたがきを▽
+タッチすれば　変更できますよ▼</language>
 	</row>
 
 	<flowchart-group-list>
