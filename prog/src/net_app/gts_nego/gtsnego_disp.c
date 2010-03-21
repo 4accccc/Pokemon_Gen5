@@ -277,9 +277,6 @@ GTSNEGO_DISP_WORK* GTSNEGO_DISP_Init(HEAPID id, GAMEDATA* pGameData)
 
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
 
-#if DEBUG_ONLY_FOR_ohno
-  _DebugDataCreate(pWork);
-#endif
   
   return pWork;
 }
@@ -1036,32 +1033,6 @@ BOOL GTSNEGO_DISP_FriendListUpChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* p
 }
 
 
-//----------------------------------------------------------------------------
-/**
- *	@brief	フレンドダミーデータ作成
- *	@param	POKEMON_TRADE_WORK
- *	@return	none
- */
-//-----------------------------------------------------------------------------
-#if _DISP_DEBUG
-
-static void _DebugDataCreate(GTSNEGO_DISP_WORK* pWork)
-{
-  int i;
-
-  for(i = 0; i < WIFI_NEGOTIATION_DATAMAX;i++){
-    MYSTATUS* pMyStatus = MyStatus_AllocWork(pWork->heapID);
-    MyStatus_SetProfileID(pMyStatus,1+i);
-    MyStatus_SetID(pMyStatus,1+i);
-    MyStatus_SetTrainerView(pMyStatus,i%16);
-    MyStatus_SetMyNationArea(pMyStatus,1+i,1);
-    WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData),pMyStatus);
-    GFL_HEAP_FreeMemory(pMyStatus);
-  }
-}
-
-
-#endif
 
 
 static void _CreateMenuBarObj(GTSNEGO_DISP_WORK* pWork)

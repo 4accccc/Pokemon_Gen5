@@ -568,6 +568,29 @@ static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フレンドダミーデータ作成
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+static void _DebugDataCreate(EVENT_GTSNEGO_WORK *pWork)
+{
+  int i;
+
+  for(i = 0; i < WIFI_NEGOTIATION_DATAMAX;i++){
+    MYSTATUS* pMyStatus = MyStatus_AllocWork(GFL_HEAPID_APP);
+    MyStatus_SetProfileID(pMyStatus,1+i);
+    MyStatus_SetID(pMyStatus,1+i);
+    MyStatus_SetTrainerView(pMyStatus,i%16);
+    MyStatus_SetMyNationArea(pMyStatus,1+i,1);
+    WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pWork->gamedata),pMyStatus);
+    GFL_HEAP_FreeMemory(pMyStatus);
+  }
+}
+
 
 
 static void * _PokeTradeGtsNegoCreate(D_OHNO_WORK *wk)
@@ -589,6 +612,8 @@ static void * _PokeTradeGtsNegoCreate(D_OHNO_WORK *wk)
   
   pFriend = GAMEDATA_GetMyStatusPlayer(pWork->gamedata, 1);
   GFL_STD_MemCopy(MyStatus_AllocWork(GFL_HEAPID_APP),pFriend,MyStatus_GetWorkSize() );
+
+  _DebugDataCreate(pWork);
   
   return pWork;
 }
