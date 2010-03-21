@@ -206,8 +206,10 @@ _RET
 // layer 2
 //----------------------------------------------------------------------
 // ■シーケンス
-// ACHIEVE_PRIZE_GET  ◆依頼達成アイテム入手処理
-// COMPLETE_PRIZE_GET ◆全依頼達成アイテム入手処理
+// SELECT_REQUEST_TYPE ◆調査方法の選択
+// SELECT_REQUEST      ◆調査依頼の選択
+// ACHIEVE_PRIZE_GET   ◆依頼達成アイテム入手処理
+// COMPLETE_PRIZE_GET  ◆全依頼達成アイテム入手処理
 // ■取得
 // GET_ACHIEVE_NUM_TO_RANKUP   ◆次のランクアップまでの残り依頼達成回数を取得する
 // GET_RES_REQ_REST_NORM_COUNT ◆受けている依頼について, ノルマ達成までの残り人数を取得する
@@ -219,7 +221,6 @@ _RET
 // SYSTEM_MSG_Rank_up ◆システム「～隊員に任命された」
 // ■隊長の台詞
 // LEADER_SAY_I_appoint_you_as      ◆隊長「今日から君は～隊員だ！」
-// LEADER_SAY_Please_select_request ◆隊長「調査依頼を選んでくれ」
 //----------------------------------------------------------------------
 // layer 1
 //----------------------------------------------------------------------
@@ -262,6 +263,8 @@ _RET
 // LEADER_SAY_Congraturation              ◆隊長「これは私の気持ちだ 受け取ってくれ」
 // LEADER_SAY_I_hope_for_you              ◆隊長「今後も期待しているぞ！」
 // LEADER_SAY_Lets_next_research          ◆隊長「次の調査も期待しているぞ！」
+// LEADER_SAY_It_is_count_research        ◆隊長「人数調査だな？」
+// LEADER_SAY_It_is_time_research         ◆隊長「時間調査だな？」
 
 
 
@@ -428,50 +431,69 @@ _RET
 RES_REQ_SELECT:
 {
   // v5_1 依頼ID
+  // v5_2 調査タイプ
+  // v5_3 ループフラグ
 
-  // 依頼IDの選択
-  _CALL LEADER_SAY_Please_select_request // 隊長「では調査依頼を選んでくれ」
-  $v5_1 = $SCWK_ANSWER                   // 選択した依頼IDを取得
+  $v5_3 = TRUE
 
-  // 調査タイプ選択メニューで『やめる』を選択
-  IF $v5_1 == RESEARCH_REQ_TYPE_DUMMY THEN
-    _CALL LEADER_SAY_Come_again_if_you_want // 隊長「依頼を受けたくなったら また来てくれ」
-    _RET
-  ENDIF
+  // 選択するかキャンセルするまで繰り返す
+  WHILE $v5_3 == TRUE
 
-  // 依頼選択メニューで『やめる』を選択
-  IF $v5_1 == RESEARCH_REQ_ID_NONE THEN
-    _CALL LEADER_SAY_Come_again_if_you_want // 隊長「依頼を受けたくなったら また来てくれ」
-    _RET
-  ENDIF
+    _CALL SELECT_REQUEST_TYPE // 調査タイプを選択
+    $v5_2 = $SCWK_ANSWER      // 選択した調査タイプを取得
 
-  // 依頼選択メニューで『Bキャンセル』
-  IF $v5_1 == EV_WIN_B_CANCEL THEN
-    _CALL LEADER_SAY_Come_again_if_you_want // 隊長「依頼を受けたくなったら また来てくれ」
-    _RET
-  ENDIF
+    // 調査タイプの説明
+    SWITCH $v5_2
+    CASE RESEARCH_REQ_TYPE_COUNT THEN
+      _CALL LEADER_SAY_It_is_count_research   // 隊長「人数調査だな？」
+    CASE RESEARCH_REQ_TYPE_TIME THEN
+      _CALL LEADER_SAY_It_is_time_research    // 隊長「時間調査だな？」
+    DEFAULT
+      _CALL LEADER_SAY_Come_again_if_you_want // 隊長「依頼を受けたくなったら また来てくれ」
+      _RET
+    ENDSWITCH
+  
+    // 調査依頼の選択
+    $SCWK_TEMP0 = $v5_2
+    _CALL SELECT_REQUEST // 調査タイプ・調査依頼を選択
+    $v5_1 = $SCWK_ANSWER // 選択した依頼IDを取得
+  
+    // 依頼選択メニューで『やめる』を選択
+    IF $v5_1 == RESEARCH_REQ_ID_NONE THEN
+      _CALL LEADER_SAY_Come_again_if_you_want // 隊長「依頼を受けたくなったら また来てくれ」
+      _RET
+    ENDIF
+  
+    // 依頼選択メニューで『Bキャンセル』
+    IF $v5_1 == EV_WIN_B_CANCEL THEN
+      _CALL LEADER_SAY_Come_again_if_you_want // 隊長「依頼を受けたくなったら また来てくれ」
+      _RET
+    ENDIF
+  
+    // 選択した依頼の説明と確認
+    $SCWK_TEMP0 = $v5_1                 // 隊長「～依頼内容の説明～」 
+    _CALL LEADER_SAY_This_request_is    //
+    _CALL LEADER_SAY_Is_this_request_ok // 隊長「この調査依頼を受けるのか？」==> 『はい』or『いいえ』
+  
+    //『はい』
+    IF $SCWK_ANSWER == SCR_YES THEN
+      $SCWK_TEMP0 = $v5_1                                         // 依頼受理処理
+      _CALL GET_RES_REQ_QUESTION_ID                               //
+      _START_RESEARCH( v5_1, SCWK_TEMP1, SCWK_TEMP2, SCWK_TEMP3 ) // 調査開始
+      _CALL SYSTEM_MSG_RECEIVE_REQUEST                            // システム「調査依頼を受けた！」
+      _CALL LEADER_SAY_Come_again_if_you_achieve                  // 隊長「調査が終了したら, 報告に来てくれ」
+      _RET                                                        // 依頼選択処理終了
+    ENDIF
+  
+    _CALL LEADER_SAY_Do_you_select_other_request //「では他の依頼を受けるのか？」==> 『はい』or『いいえ』
+  
+    //『いいえ』
+    IF $SCWK_ANSWER == SCR_NO THEN
+      _CALL LEADER_SAY_Come_again_if_you_want // 隊長「依頼を受けたくなったら また来てくれ」
+      _RET
+    ENDIF
 
-  // 選択した依頼の説明と確認
-  $SCWK_TEMP0 = $v5_1                 // 隊長「～依頼内容の説明～」 
-  _CALL LEADER_SAY_This_request_is    //
-  _CALL LEADER_SAY_Is_this_request_ok // 隊長「この調査依頼を受けるのか？」==> 『はい』or『いいえ』
-
-  //『はい』
-  IF $SCWK_ANSWER == SCR_YES THEN
-    $SCWK_TEMP0 = $v5_1                                         // 依頼受理処理
-    _CALL GET_RES_REQ_QUESTION_ID                               //
-    _START_RESEARCH( v5_1, SCWK_TEMP1, SCWK_TEMP2, SCWK_TEMP3 ) // 調査開始
-    _CALL SYSTEM_MSG_RECEIVE_REQUEST                            // システム「調査依頼を受けた！」
-    _CALL LEADER_SAY_Come_again_if_you_achieve                  // 隊長「調査が終了したら, 報告に来てくれ」
-    _RET                                                        // 依頼選択処理終了
-  ENDIF
-
-  _CALL LEADER_SAY_Do_you_select_other_request //「では他の依頼を受けるのか？」==> 『はい』or『いいえ』
-
-  //『いいえ』
-  IF $SCWK_ANSWER == SCR_NO THEN
-    _CALL LEADER_SAY_Come_again_if_you_want // 隊長「依頼を受けたくなったら また来てくれ」
-  ENDIF
+  ENDWHILE
 }
 _RET
 
@@ -2352,43 +2374,63 @@ LEADER_SAY_ByeBye:
   _BALLOONWIN_CLOSE() 
 _RET
 //----------------------------------------------------------------------
-// ◆隊長「調査依頼を選んでくれ」
-// ◇out SCWK_ANSWER 選択した調査依頼のID ( RESEARCH_REQ_ID_xxxx )
-//                   調査タイプ選択で『やめる』を選択した場合, RESEARCH_REQ_TYPE_DUMMY
-//                   依頼選択で『やめる』を選択した場合, RESEARCH_REQ_ID_NONE
+// ◆調査方法の選択
+// ◇out SCWK_ANSWER 選択した調査依頼タイプ ( RESEARCH_REQ_TYPE_xxxx )
 //----------------------------------------------------------------------
-LEADER_SAY_Please_select_request:
+SELECT_REQUEST_TYPE:
 {
-  // v2_1 調査タイプ
-  // v2_2 隊員ランク
-
-  // 隊員ランクを取得
-  _GET_RESEARCH_TEAM_RANK( v2_2 )
-
-  //「調査依頼を選んでくれ」
+  // 隊長「調査方法を選んでくれ」
   _TALK_OBJ_START()
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_07, SCWK_TARGET_OBJID, POS_DL )
 
   // 調査タイプを選択
   _CALL RES_TYPE_MENU 
-  $v2_1 = $SCWK_ANSWER
+
+  // 吹出しを閉じる
+  _BALLOONWIN_CLOSE()
+}
+_RET
+//----------------------------------------------------------------------
+// ◆調査依頼の選択
+// ◇in  SCWK_TEMP0  調査依頼のタイプ ( RESEARCH_REQ_TYPE_xxxx )
+// ◇out SCWK_ANSWER 選択した調査依頼のID ( RESEARCH_REQ_ID_xxxx )
+//                   依頼選択で『やめる』を選択した場合, RESEARCH_REQ_ID_NONE
+//----------------------------------------------------------------------
+SELECT_REQUEST:
+{
+  // v2_1 調査タイプ
+  // v2_2 隊員ランク
+  // v2_3 依頼ID
+
+  $v2_1 = $SCWK_TEMP0             // 調査タイプを取得
+  _GET_RESEARCH_TEAM_RANK( v2_2 ) // 隊員ランクを取得
+
+  // 隊長「調査依頼を選んでくれ」
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_35, SCWK_TARGET_OBJID, POS_DL )
 
   // 依頼を選択
   SWITCH $v2_1
   CASE RESEARCH_REQ_TYPE_COUNT THEN //『にんずうちょうさ』
-    $SCWK_TEMP0 = $v2_1 // 依頼を選択
-    $SCWK_TEMP1 = $v2_2 // 
-    _CALL RES_REQ_MENU  // 
+    $SCWK_TEMP0 = $v2_1  // 依頼を選択
+    $SCWK_TEMP1 = $v2_2  // 
+    _CALL RES_REQ_MENU   // 
+    $v2_3 = $SCWK_ANSWER // 選択した依頼IDを取得
   CASE RESEARCH_REQ_TYPE_TIME THEN //『じかんちょうさ』
-    $SCWK_TEMP0 = $v2_1 // 依頼を選択
-    $SCWK_TEMP1 = $v2_2 // 
-    _CALL RES_REQ_MENU  // 
+    $SCWK_TEMP0 = $v2_1  // 依頼を選択
+    $SCWK_TEMP1 = $v2_2  // 
+    _CALL RES_REQ_MENU   // 
+    $v2_3 = $SCWK_ANSWER // 選択した依頼IDを取得
   DEFAULT
-    $SCWK_ANSWER = RESEARCH_REQ_TYPE_DUMMY
+    $v2_3 = RESEARCH_REQ_TYPE_DUMMY
   ENDSWITCH
 
   // 吹出しを閉じる
   _BALLOONWIN_CLOSE()
+
+  // 選択結果を返す
+  $SCWK_TEMP0  = $v2_1
+  $SCWK_ANSWER = $v2_3
 }
 _RET
 //----------------------------------------------------------------------
@@ -2526,6 +2568,28 @@ LEADER_SAY_Lets_next_research:
   _TALK_OBJ_START()
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_29, SCWK_TARGET_OBJID, POS_DL )
   _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE() 
+}
+_RET
+//----------------------------------------------------------------------
+// ◆隊長「人数調査だな？」
+//----------------------------------------------------------------------
+LEADER_SAY_It_is_count_research:
+{
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_34b, SCWK_TARGET_OBJID, POS_DL )
+  _AB_KEYWAIT()
+  _BALLOONWIN_CLOSE() 
+}
+_RET
+//----------------------------------------------------------------------
+// ◆隊長「時間調査だな？」
+//----------------------------------------------------------------------
+LEADER_SAY_It_is_time_research:
+{
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_34a, SCWK_TARGET_OBJID, POS_DL )
+  _AB_KEYWAIT()
   _BALLOONWIN_CLOSE() 
 }
 _RET
@@ -3071,9 +3135,9 @@ _RET
 //----------------------------------------------------------------------
 // ■シーケンス
 // QUESTIONNAIRE_SELECT ◆回答するアンケートを選択する
-// ANSWER_QUESTION_1 ◆アンケートの質問１に答える
-// ANSWER_QUESTION_2 ◆アンケートの質問２に答える
-// ANSWER_QUESTION_3 ◆アンケートの質問３に答える
+// ANSWER_QUESTION_1    ◆アンケートの質問１に答える
+// ANSWER_QUESTION_2    ◆アンケートの質問２に答える
+// ANSWER_QUESTION_3    ◆アンケートの質問３に答える
 //----------------------------------------------------------------------
 // layer 3
 //----------------------------------------------------------------------
@@ -3126,6 +3190,8 @@ _RET
 // MEMBER_Q_SAY_19 ◆アンケート隊員「これでアンケートは全部おわり」
 // MEMBER_Q_SAY_20 ◆アンケート隊員「アンケートは何度も答えられるから…」
 // MEMBER_Q_SAY_22 ◆アンケート隊員「アンケートに協力してね！」
+// MEMBER_Q_SAY_23 ◆アンケート隊員「ちょっと待って！」
+// MEMBER_Q_SAY_24 ◆アンケート隊員「他のアンケートもやらない？」
 //----------------------------------------------------------------------
 // layer 0
 //----------------------------------------------------------------------
@@ -3148,9 +3214,7 @@ EVENT_START ev_force_question
   _OBJ_ANIME_WAIT()
 
   // アンケート隊員「ちょっと待って！」
-  _BALLOONWIN_OBJMSG_POS( msg_c03r0101_woman2_23, C03R0101_WOMAN2_01, POS_DL )
-  _AB_KEYWAIT()
-  _BALLOONWIN_CLOSE() 
+  _CALL MEMBER_Q_SAY_23
 
   // プレイヤー: 振り向く
   _OBJ_ANIME( MMDL_ID_PLAYER, ANIME_player_turn )
@@ -3182,6 +3246,16 @@ EVENT_END
 //======================================================================
 EVENT_START	ev_member_question
 {
+  _FLAG_CHECK( FE_RES_LEADER_FIRSTTALK, SCWK_ANSWER ) // 隊員になっているか？
+
+  // 隊員になっていない場合
+  IF $SCWK_ANSWER == FALSE THEN
+    _CALL MEMBER_Q_SAY_1 // アンケート隊員「ここはすれ違い調査隊本部よ」
+    EVENT_END            // イベント終了
+  ENDIF
+
+  _CALL MEMBER_Q_SAY_2 // アンケート隊員「おつかれさま」
+
   // アンケート隊員メインシーケンスへ
   _CALL MEMBER_Q_MAIN
 }
@@ -3193,16 +3267,7 @@ EVENT_END
 MEMBER_Q_MAIN:
 {
   // v5_1 アンケートID
-
-  _FLAG_CHECK( FE_RES_LEADER_FIRSTTALK, SCWK_ANSWER ) // 隊員になっているか？
-
-  // 隊員になっていない場合
-  IF $SCWK_ANSWER == FALSE THEN
-    _CALL MEMBER_Q_SAY_1  // アンケート隊員「ここはすれ違い調査隊本部よ」
-    _RET                  // イベント終了
-  ENDIF
-
-  _CALL MEMBER_Q_SAY_2 // アンケート隊員「おつかれさま」
+  // v5_2 ループフラグ
 
   _FLAG_CHECK( FE_RES_QUESTION_FIRSTTALK, SCWK_ANSWER ) // 初回会話かどうか？
 
@@ -3210,63 +3275,74 @@ MEMBER_Q_MAIN:
   IF $SCWK_ANSWER == FALSE THEN
     _FLAG_SET( FE_RES_QUESTION_FIRSTTALK ) // 初回会話フラグを立てる
     _CALL SET_FORCE_QUESTION_EVENT_OFF     // 強制アンケートイベントを無効にする
-    _CALL MEMBER_Q_SAY_3                   // アンケート隊員「そうだアナタに頼みたい事があるの」⇒ 『はい』or『いいえ』
+    _CALL MEMBER_Q_SAY_3                   // アンケート隊員「そうだアナタに頼みたい事があるの」
   // 通常会話
   ELSE
-    _CALL MEMBER_Q_SAY_4  // アンケート隊員「またアナタにアンケートをお願いしたいんだけど…」⇒ 『はい』or『いいえ』
-  ENDIF
-
-  //『いいえ』
-  IF $SCWK_ANSWER == SCR_NO THEN
-    _CALL MEMBER_Q_SAY_5  // アンケート隊員「しょうがないわね」
-    _RET                  // イベント終了
-  ENDIF
-
-  // 回答アンケート選択シーケンス
-  _CALL QUESTIONNAIRE_SELECT
-  $v5_1 = $SCWK_ANSWER
-
-  // アンケート選択 ⇒ キャンセル
-  IF $v5_1 == RESEARCH_QUESTIONNAIRE_ID_DUMMY THEN
-    _CALL MEMBER_Q_SAY_9 // アンケート隊員「回答を変えたくなったら言ってね」
-    _RET                 // イベント終了
+    _CALL MEMBER_Q_SAY_4 // アンケート隊員「またアナタにアンケートをお願いしたいんだけど…」⇒ 『はい』or『いいえ』
+    //『いいえ』
+    IF $SCWK_ANSWER == SCR_NO THEN
+      _CALL MEMBER_Q_SAY_5  // アンケート隊員「しょうがないわね」
+      _RET                  // イベント終了
+    ENDIF
   ENDIF 
 
-  $SCWK_TEMP0 = $v5_1     // アンケート隊員「今回のアンケートは～についてよ」
-  _CALL MEMBER_Q_SAY_10   // 
-  $SCWK_TEMP0 = $v5_1     // 質問１に回答
-  _CALL ANSWER_QUESTION_1 //
-  $SCWK_TEMP0 = $v5_1     // 質問２に回答
-  _CALL ANSWER_QUESTION_2 //
-  $SCWK_TEMP0 = $v5_1     // 質問３に回答 
-  _CALL ANSWER_QUESTION_3 //
-  _CALL MEMBER_Q_SAY_15   // アンケート隊員「はい おしまい」
+  // 全てのアンケートに答えるか, キャンセルするまで繰り返す
+  $v5_2 = TRUE
+  WHILE $v5_2 == TRUE
 
-  // 以前にも答えたことがある
-  $SCWK_TEMP0 = $v5_1
-  _CALL CHECK_QUESTIONNAIRE_FINISH
-  IF $SCWK_ANSWER == TRUE THEN
-    _CALL MEMBER_Q_SAY_20 // アンケート隊員「アンケートは何度も答えられるから…」
-    _RET                  // イベント終了
-  ENDIF
+    _CALL QUESTIONNAIRE_SELECT // 回答するアンケートを選択
+    $v5_1 = $SCWK_ANSWER       // 選択したアンケートIDを取得
+  
+    // アンケート選択 ⇒ キャンセル
+    IF $v5_1 == RESEARCH_QUESTIONNAIRE_ID_DUMMY THEN
+      _CALL MEMBER_Q_SAY_9 // アンケート隊員「回答を変えたくなったら言ってね」
+      _RET                 // イベント終了
+    ENDIF 
+  
+    $SCWK_TEMP0 = $v5_1     // アンケート隊員「今回のアンケートは～についてよ」
+    _CALL MEMBER_Q_SAY_10   // 
+    $SCWK_TEMP0 = $v5_1     // 質問１に回答
+    _CALL ANSWER_QUESTION_1 //
+    $SCWK_TEMP0 = $v5_1     // 質問２に回答
+    _CALL ANSWER_QUESTION_2 //
+    $SCWK_TEMP0 = $v5_1     // 質問３に回答 
+    _CALL ANSWER_QUESTION_3 //
+    _CALL MEMBER_Q_SAY_15   // アンケート隊員「はい おしまい」
+  
+    // 以前にも答えたことがある
+    $SCWK_TEMP0 = $v5_1
+    _CALL CHECK_QUESTIONNAIRE_FINISH
+    IF $SCWK_ANSWER == TRUE THEN
+      _CALL MEMBER_Q_SAY_20 // アンケート隊員「アンケートは何度も答えられるから…」
+      _RET                  // イベント終了
+    ENDIF
+  
+    _CALL MEMBER_Q_SAY_16        // アンケート隊員「このアンケート用紙あげるわ」
+    _CALL SYSTEM_MSG_1           // システム「調査レーダーに～が増えた！」
+    _CALL MEMBER_Q_SAY_18        // アンケート隊員「これはアンケートに答えてくれたお礼よ」
+    $SCWK_TEMP0 = $v5_1          // お礼アイテム入手
+    _CALL QUESTIONNAIRE_ITEM_GET //
+    $SCWK_TEMP0 = $v5_1          // アンケート回答済みフラグをセットする
+    _CALL FINISH_QUESTIONNAIRE   //
+  
+    // 全てのアンケートに回答
+    _CALL CHECK_ALL_QUESTIONNAIRE_FINISH
+    IF $SCWK_ANSWER == TRUE THEN
+      _CALL MEMBER_Q_SAY_19 // アンケート隊員「これでアンケートは全部おわり」
+      _CALL MEMBER_Q_SAY_20 // アンケート隊員「アンケートは何度も答えられるから…」
+      _RET                  // イベント終了
+    ENDIF
+  
+    _CALL MEMBER_Q_SAY_21 // アンケート隊員「これで残りのアンケートは…」
+    _CALL MEMBER_Q_SAY_24 // アンケート隊員「他のアンケートもやらない？」
 
-  _CALL MEMBER_Q_SAY_16        // アンケート隊員「このアンケート用紙あげるわ」
-  _CALL SYSTEM_MSG_1           // システム「調査レーダーに～が増えた！」
-  _CALL MEMBER_Q_SAY_18        // アンケート隊員「これはアンケートに答えてくれたお礼よ」
-  $SCWK_TEMP0 = $v5_1          // お礼アイテム入手
-  _CALL QUESTIONNAIRE_ITEM_GET //
-  $SCWK_TEMP0 = $v5_1          // アンケート回答済みフラグをセットする
-  _CALL FINISH_QUESTIONNAIRE   //
+    //『いいえ』
+    IF $SCWK_ANSWER == SCR_NO THEN
+      $v5_2 = FALSE // ループを抜ける
+    ENDIF
 
-  // 全てのアンケートに回答
-  _CALL CHECK_ALL_QUESTIONNAIRE_FINISH
-  IF $SCWK_ANSWER == TRUE THEN
-    _CALL MEMBER_Q_SAY_19 // アンケート隊員「これでアンケートは全部おわり」
-    _CALL MEMBER_Q_SAY_20 // アンケート隊員「アンケートは何度も答えられるから…」
-    _RET                  // イベント終了
-  ENDIF
+  ENDWHILE
 
-  _CALL MEMBER_Q_SAY_21 // アンケート隊員「これで残りのアンケートは…」
   _CALL MEMBER_Q_SAY_22 // アンケート隊員「アンケートに協力してね！」
 }
 _RET
@@ -3301,6 +3377,12 @@ QUESTIONNAIRE_SELECT:
 
   //『やめる』
   IF $v3_1 == RESEARCH_QUESTIONNAIRE_ID_DUMMY THEN 
+    $SCWK_ANSWER = RESEARCH_QUESTIONNAIRE_ID_DUMMY
+    _RET
+  ENDIF
+
+  //『Bキャンセル』
+  IF $v3_1 == EV_WIN_B_CANCEL THEN 
     $SCWK_ANSWER = RESEARCH_QUESTIONNAIRE_ID_DUMMY
     _RET
   ENDIF
@@ -3914,15 +3996,14 @@ MEMBER_Q_SAY_2:
 _RET
 //----------------------------------------------------------------------
 // ◆アンケート隊員「そうだアナタに頼みたい事があるの」
-// ◇out SCWK_ANSWER 『はい』or『いいえ』の選択結果
 //----------------------------------------------------------------------
 MEMBER_Q_SAY_3:
 {
   //「そうだアナタに頼みたい事があるの」
   _TALK_OBJ_START()
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_woman2_03, C03R0101_WOMAN2_01, POS_DL ) 
-  _YES_NO_WIN( SCWK_ANSWER ) //『はい』or『いいえ』を選択
-  _BALLOONWIN_CLOSE() // 吹出しを閉じる
+  _AB_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 }
 _RET
 //----------------------------------------------------------------------
@@ -4248,6 +4329,28 @@ MEMBER_Q_SAY_22:
   _TALK_OBJ_START()
   _BALLOONWIN_OBJMSG_POS( msg_c03r0101_woman2_22, C03R0101_WOMAN2_01, POS_DL )
   _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE() 
+}
+_RET
+//----------------------------------------------------------------------
+// ◆アンケート隊員「ちょっと待って！」
+//----------------------------------------------------------------------
+MEMBER_Q_SAY_23:
+{
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0101_woman2_23, C03R0101_WOMAN2_01, POS_DL )
+  _AB_KEYWAIT()
+  _BALLOONWIN_CLOSE() 
+}
+_RET
+//----------------------------------------------------------------------
+// ◆アンケート隊員「他のアンケートもやらない？」
+// ◇out SCWK_ANSWER 『はい』『いいえ』の選択結果
+//----------------------------------------------------------------------
+MEMBER_Q_SAY_24:
+{
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0101_woman2_24, C03R0101_WOMAN2_01, POS_DL )
+  _YES_NO_WIN( SCWK_ANSWER )
   _BALLOONWIN_CLOSE() 
 }
 _RET
@@ -4663,7 +4766,7 @@ EVENT_START	ev_paper
   _PLAYER_NAME(0)
   _SURETIGAI_COUNT(1)
   _SURETIGAI_THANKS_RECEIVE_COUNT(2)
-  _SYSWIN_MSG( SCWK_TEMP0, POS_DEFAULT )
+  _SYSWIN_MSG_ALLPUT( SCWK_TEMP0, POS_DEFAULT )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 }
