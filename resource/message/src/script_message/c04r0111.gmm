@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-02-26T17:47:17"/>
+	<create user="matsumiya" host="W00224" date="2010-03-21T18:50:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="551" top="193" right="1244" bottom="809" maximized="no" rayout="Vertical2">
+	<dialog left="1614" top="302" right="2307" bottom="918" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="518"/>
@@ -302,15 +302,15 @@
 	<row id="msg_c04r0111_01">
 		<language name="JPN" width="256">せいせきを　レポートに　かきますので
 おまちください</language>
-		<language name="JPN_KANJI" width="256">せいせきを　レポートに　かきますので
-おまちください</language>
+		<language name="JPN_KANJI" width="256">成績を　レポートに　書きますので
+お待ちください</language>
 	</row>
 
 	<row id="msg_c04r0111_02">
 		<language name="JPN" width="256">ごあんないする　まえに
 レポートを　かきます</language>
-		<language name="JPN_KANJI" width="256">ごあんないする　まえに
-レポートを　かきます</language>
+		<language name="JPN_KANJI" width="256">ご案内する　前に
+レポートを　書きます</language>
 	</row>
 
 	<row id="msg_c04r0111_03">
@@ -319,9 +319,9 @@
 ７にんぬきを　たっせい　しましたので
 バトルポイントを　しんてい　します！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おめでとう　ございます！
-みごと　７にんぬき　たっせいです！[BE:01:ページ切り替え（クリア）]
-７にんぬきを　たっせい　しましたので
-バトルポイントを　しんてい　します！[BE:01:ページ切り替え（クリア）]</language>
+みごと　７人抜き　達成です！[BE:01:ページ切り替え（クリア）]
+７人抜きを　達成しましたので
+バトルポイントを　進呈します！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c04r0111_04">
@@ -331,10 +331,10 @@
 たおしましたので　バトルポイントを[BE:00:ページ切り替え（行送り）]
 しんてい　いたします[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おめでとう　ございます！[BE:01:ページ切り替え（クリア）]
-７れんしょうを　たっせいし
-みごと　サブウェイマスターを[BE:00:ページ切り替え（行送り）]
-たおしましたので　バトルポイントを[BE:00:ページ切り替え（行送り）]
-しんてい　いたします[BE:01:ページ切り替え（クリア）]</language>
+７連勝を　達成し
+みごと　サブウェイマスターに[BE:00:ページ切り替え（行送り）]
+勝利しましたので　バトルポイントを[BE:00:ページ切り替え（行送り）]
+進呈いたします[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c04r0111_05">
@@ -369,33 +369,33 @@
 たおしましたので[BE:01:ページ切り替え（クリア）]
 きねんに　トロフィを　さしあげます
 ごじたくに　おかざり　ください！</language>
-		<language name="JPN_KANJI" width="256">そして　みごと　サブウェイマスターを
-たおしましたので[BE:01:ページ切り替え（クリア）]
-きねんに　トロフィを　さしあげます
-ごじたくに　おかざり　ください！</language>
+		<language name="JPN_KANJI" width="256">そして　みごと　サブウェイマスターに
+勝利しましたので[BE:01:ページ切り替え（クリア）]
+記念に　トロフィを　さしあげます
+ご自宅に　お飾りください！</language>
 	</row>
 
 	<row id="msg_c04r0111_09">
 		<language name="JPN" width="256">それでは　ごゆっくり　どうぞ[BE:01:ページ切り替え（クリア）]
 つつげて　チャレンジしたい　ばあいや
 いったん　ライモンシティに　もどる[BE:00:ページ切り替え（行送り）]
-ばあいは　おこえを　かけて　ください</language>
+ばあいは　おこえを　かけてください</language>
 		<language name="JPN_KANJI" width="256">それでは　ごゆっくり　どうぞ[BE:01:ページ切り替え（クリア）]
-つつげて　チャレンジしたい　ばあいや
+続けて　チャレンジしたい　場合や
 いったん　ライモンシティに　もどる[BE:00:ページ切り替え（行送り）]
-ばあいは　おこえを　かけて　ください</language>
+場合は　お声を　かけてください</language>
 	</row>
 
 	<row id="msg_c04r0111_10">
 		<language name="JPN" width="256">シングルトレインは　ここで
 しゅうてんと　なります[BE:01:ページ切り替え（クリア）]
 ライモンシティに　もどる　ばあいは
-また　おこえを　かけて　ください[BE:01:ページ切り替え（クリア）]
+また　おこえを　かけてください[BE:01:ページ切り替え（クリア）]
 それでは　ごゆっくり　どうぞ</language>
 		<language name="JPN_KANJI" width="256">シングルトレインは　ここで
-しゅうてんと　なります[BE:01:ページ切り替え（クリア）]
-ライモンシティに　もどる　ばあいは
-また　おこえを　かけて　ください[BE:01:ページ切り替え（クリア）]
+終点と　なります[BE:01:ページ切り替え（クリア）]
+ライモンシティに　もどる　場合は
+また　お声を　かけてください[BE:01:ページ切り替え（クリア）]
 それでは　ごゆっくり　どうぞ</language>
 	</row>
 
@@ -403,12 +403,12 @@
 		<language name="JPN" width="256">ダブルトレインは　ここで
 しゅうてんと　なります[BE:01:ページ切り替え（クリア）]
 ライモンシティに　もどる　ばあいは
-また　おこえを　かけて　ください[BE:01:ページ切り替え（クリア）]
+また　おこえを　かけてください[BE:01:ページ切り替え（クリア）]
 それでは　ごゆっくり　どうぞ</language>
 		<language name="JPN_KANJI" width="256">ダブルトレインは　ここで
-しゅうてんと　なります[BE:01:ページ切り替え（クリア）]
-ライモンシティに　もどる　ばあいは
-また　おこえを　かけて　ください[BE:01:ページ切り替え（クリア）]
+終点と　なります[BE:01:ページ切り替え（クリア）]
+ライモンシティに　もどる　場合は
+また　お声を　かけてください[BE:01:ページ切り替え（クリア）]
 それでは　ごゆっくり　どうぞ</language>
 	</row>
 
@@ -416,12 +416,12 @@
 		<language name="JPN" width="256">マルチトレインは　ここで
 しゅうてんと　なります[BE:01:ページ切り替え（クリア）]
 ライモンシティに　もどる　ばあいは
-また　おこえを　かけて　ください[BE:01:ページ切り替え（クリア）]
+また　おこえを　かけてください[BE:01:ページ切り替え（クリア）]
 それでは　ごゆっくり　どうぞ</language>
 		<language name="JPN_KANJI" width="256">マルチトレインは　ここで
-しゅうてんと　なります[BE:01:ページ切り替え（クリア）]
-ライモンシティに　もどる　ばあいは
-また　おこえを　かけて　ください[BE:01:ページ切り替え（クリア）]
+終点と　なります[BE:01:ページ切り替え（クリア）]
+ライモンシティに　もどる　場合は
+また　お声を　かけてください[BE:01:ページ切り替え（クリア）]
 それでは　ごゆっくり　どうぞ</language>
 	</row>
 
@@ -443,7 +443,7 @@
 	<row id="msg_c04r0111_16">
 		<comment>メニュー</comment>
 		<language name="JPN" width="256">つづけてチャレンジ</language>
-		<language name="JPN_KANJI" width="256">つづけてチャレンジ</language>
+		<language name="JPN_KANJI" width="256">続けてチャレンジ</language>
 	</row>
 
 	<row id="msg_c04r0111_17">
@@ -461,7 +461,7 @@
 	<row id="msg_c04r0111_19">
 		<comment>通信マルチ</comment>
 		<language name="JPN" width="256">おともだちの　せんたくを　まっています……</language>
-		<language name="JPN_KANJI" width="256">おともだちの　せんたくを　まっています……</language>
+		<language name="JPN_KANJI" width="256">お友達の　選択を　待っています……</language>
 	</row>
 
 	<row id="msg_c04r0111_20">
@@ -470,8 +470,8 @@
 えらばれたので　ちょうせんを[BE:00:ページ切り替え（行送り）]
 いったん　ちゅうだんします</language>
 		<language name="JPN_KANJI" width="256">ライモンシティにもどるが
-えらばれたので　ちょうせんを[BE:00:ページ切り替え（行送り）]
-いったん　ちゅうだんします</language>
+選ばれたので　挑戦を[BE:00:ページ切り替え（行送り）]
+いったん　中断します</language>
 	</row>
 
 	<row id="msg_c04r0111_21">
@@ -484,10 +484,10 @@
 
 	<row id="msg_c04r0111_22">
 		<comment>WiFi</comment>
-		<language name="JPN" width="256">こんかいの　せいせきを　Ｗｉ-Ｆｉ
+		<language name="JPN" width="256">こんかいの　せいせきを　Ｗｉ－Ｆｉ
 コネクションに　おくりますか？</language>
-		<language name="JPN_KANJI" width="256">こんかいの　せいせきを　Ｗｉ-Ｆｉ
-コネクションに　おくりますか？</language>
+		<language name="JPN_KANJI" width="256">今回の　成績を　Ｗｉ－Ｆｉ
+コネクションに　送りますか？</language>
 	</row>
 
 	<row id="msg_c04r0111_23">
