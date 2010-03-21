@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-16T19:20:23"/>
+	<create user="matsumiya" host="W00224" date="2010-03-21T18:26:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,27 +292,31 @@
 	</lock>
 
 
-	<row id="msg_r10_black_01">
+	<row id="msg_r10_black_00" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♂
 ・全てのジムバッジ取得後に
 　pos（GRIDX=489~493、GRIDZ=113）を踏むとイベント発動
-・画面左からライバル登場
-　遅れてサポートも登場
+・まずメッセージ表示
+　その後にライバル、サポート登場
+・続けてblack_01</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……[1:00:トレーナー名:0]！▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……[1:00:トレーナー名:0]！▼</language>
+	</row>
+
+	<row id="msg_r10_black_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>♂
 ・ライバル、主人公に隣接してメッセージ表示
 ・はい/いいえの選択肢表示
 　はい→black_02
 　いいえ→black_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……[1:00:トレーナー名:0]！▼
-シャガさんたちから　きいたけれど
-アデクさん……▼
-チャンピオンが　Ｎを　おいかけ
-ポケモンリーグに　むかったんだって？</language>
-		<language name="JPN_KANJI" width="256">チェレン『……[1:00:トレーナー名:0]！▼
-シャガさんたちから　聞いたけれど
-アデクさん……▼
-チャンピオンが　Ｎを　追いかけ
-ポケモンリーグに　向かったんだって？</language>
+		<language name="JPN" width="256">シャガさんや　アララギはかせ　から
+おしえて　もらったけれど▽
+ポケモンリーグに　むかうんだね？</language>
+		<language name="JPN_KANJI" width="256">シャガさんや　アララギ博士から
+教えて　もらったけれど▽
+ポケモンリーグに　向かうんだね？</language>
 	</row>
 
 	<row id="msg_r10_black_02">
@@ -320,8 +324,16 @@
 ・はい選択時
 ・続けてblack_04</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……やはり▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……やはり▼</language>
+		<language name="JPN" width="256">チェレン『アデクさんなら
+だいじょうぶと　しんじているけど▼
+さいあくの　ばあい
+きみが　プラズマだんの　ボス▽
+Ｎと　たたかうんだね……▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『アデクさんなら
+大丈夫と　信じているけど▼
+最悪の　場合
+きみが　プラズマ団の　ボス▽
+Ｎと　戦うんだね……▼</language>
 	</row>
 
 	<row id="msg_r10_black_03">
@@ -329,20 +341,28 @@
 ・いいえ選択時
 ・続けてblack_04</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……かくさないでよ▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……隠さないでよ▼</language>
+		<language name="JPN" width="256">チェレン『かくさなくても　いい▼
+さいあくの　ばあい
+きみが　プラズマだんの　ボス▽
+Ｎと　たたかうのは　しっているよ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『隠さなくても　いい▼
+最悪の　場合
+きみが　プラズマ団の　ボス▽
+Ｎと　戦うのは　知っているよ▼</language>
 	</row>
 
 	<row id="msg_r10_black_04">
 		<comment>♀
 ・続けてwhite_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……ぼくは▼
-つよくなりたかった　くせに
-こんなとき　なにもできないのか▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……ぼくは▼
-強くなりたかった　くせに
-こんなとき　なにもできないのか▼</language>
+		<language name="JPN" width="256">いまの　ぼくでは
+[1:00:トレーナー名:0]　きみに　かなわない▼
+それでは　Ｎとの　たたかいで
+なにか　たすけてあげら……▼</language>
+		<language name="JPN_KANJI" width="256">今の　ぼくでは
+[1:00:トレーナー名:0]　きみに　かなわない▼
+それでは　Ｎとの　戦い
+なにか　助けてあげら……▼</language>
 	</row>
 
 	<row id="msg_r10_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -360,8 +380,9 @@
 あたしからは　これ！▼</language>
 	</row>
 
-	<row id="msg_r10_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
+・アイテム入手後に自動で表示
 ・続けてblack_05
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -371,7 +392,7 @@
 みんな　ばらばらで▼</language>
 	</row>
 
-	<row id="msg_r10_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r10_black_05">
 		<comment>♂
 ・続けてwhite_03</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -381,7 +402,7 @@
 こんなときに　きみは……▼</language>
 	</row>
 
-	<row id="msg_r10_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r10_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてblack_06</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -409,10 +430,10 @@
 って　なんか　うれしくなったの▼</language>
 	</row>
 
-	<row id="msg_r10_black_06">
+	<row id="msg_r10_black_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・サポートを向いて
-・続けてblack_07</comment>
+・続けてwhite_06</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……そういうことか▼
 ……たしかに　ぼくたちは　みんな
@@ -424,6 +445,25 @@
 できることを　すれば　いいんだよね▼</language>
 	</row>
 
+	<row id="msg_r10_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・続けてblack_07
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀</attribute>
+		<language name="JPN" width="256">ベル『うん！　ちがうのに
+[1:00:トレーナー名:0]のこと　しんぱいして▼
+アタシも　チェレンも
+いま　ここで　そろってるから▽
+なんだか　おもしろいなって……▼
+ゴメンナサイ▼</language>
+		<language name="JPN_KANJI" width="256">ベル『うん！　違うのに
+[1:00:トレーナー名:0]のこと　心配して▼
+アタシも　チェレンも
+いま　ここで　そろってるから▽
+なんだか　おもしろいなって……▼
+ゴメンナサイ▼</language>
+	</row>
+
 	<row id="msg_r10_black_07">
 		<comment>♂
 ・主人公を向いて
@@ -431,20 +471,36 @@
 ・続けてwhite_04
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]！　ぼくも
-すぐに　つよくなって　おいつく▼
-だから……
-いまは　きみに　たくすよ▼
-アデクさん　ひとりに
-むりを　させないでほしい▽
-たのんだよ！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！　ぼくも
-すぐに　強くなって　追いつく▼
-だから……
-いまは　きみに　たくすよ▼
-アデクさん　１人に
-無理を　させないでほしい▽
-頼んだよ！▼</language>
+		<language name="JPN" width="256">チェレン『そういうことか▼
+みんなに　とっての
+りそうとか　しんじつって▽
+みんなの　かずだけ　あるからね▼
+だけど　だいじな　ときには
+たすけあえるのが　ふつう　なんだ▼
+だから　ひとと　ポケモンは
+いつも　そばに　いるんだって▽
+さいきん　おもうようになった……▼
+[1:00:トレーナー名:0]！
+アデクさんや　きみに▽
+なにか　あったとき▼
+ぼくが　たすけられるように　なる
+そのために　つよくなる▽
+だから　むりしないで▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『そういうことか▼
+みんなに　とっての
+理想とか　真実って▽
+みんなの　数だけ　あるからね▼
+だけど　大事な　ときには
+助け合えるのが　普通なんだ▼
+だから　人と　ポケモンは
+いつも　そばに　いるんだって▽
+最近　思うようになった……▼
+[1:00:トレーナー名:0]！
+アデクさんや　きみに▽
+なにか　あったとき▼
+ぼくが　助けられるように　なる
+そのために　強くなる▽
+だから　無理しないで▼</language>
 	</row>
 
 	<row id="msg_r10_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
