@@ -1,6 +1,8 @@
 //======================================================================
 //          symbol_encount_scr.ev
+//
 //    スクリプトファイル：パレスの森（シンボルエンカウントイベント）
+//
 //======================================================================
 
   .text
@@ -18,7 +20,161 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA ev_symbol_pokemon
+_EVENT_DATA ev_zone_symbol_encount
+_EVENT_DATA ev_init_symbol_encount
+_EVENT_DATA ev_recover_symbol_encount
+_EVENT_DATA ev_pos_symbolmap_entrance_up
+_EVENT_DATA ev_pos_symbolmap_entrance_down
+_EVENT_DATA ev_pos_symbolmap_entrance_left
+_EVENT_DATA ev_pos_symbolmap_entrance_right
+_EVENT_DATA_END
+
 
 /**************************************************************/
 /*：*/
 /**************************************************************/
+INIT_EVENT_START  ev_zone_symbol_encount
+INIT_EVENT_END
+
+
+/**************************************************************/
+/*：*/
+/**************************************************************/
+INIT_EVENT_START  ev_init_symbol_encount
+INIT_EVENT_END
+
+
+/**************************************************************/
+/*：*/
+/**************************************************************/
+INIT_EVENT_START  ev_recover_symbol_encount
+INIT_EVENT_END
+
+
+/**************************************************************/
+/*：*/
+/**************************************************************/
+EVENT_START   ev_symbol_pokemon
+  _CALL   ev_symbol_pokemon_main
+EVENT_END
+
+ev_symbol_pokemon_main:
+  _SYMBOL_MAP_GET_INFO( SCR_SYMMAP_INFO_IS_MINE, SCWK_ANSWER )
+  IF $SCWK_ANSWER == FALSE THEN
+    //人のポケモンの場合
+    _SYMBOL_MAP_SET_MONS_NAME( SCWK_TARGET_OBJID, 0 )
+    _SYSWIN_MSG( msg_symbolmap_poke_01, POS_DEFAULT )
+    _LAST_KEYWAIT()
+    _RET
+  ENDIF
+
+  _GET_PARTY_POKE_COUNT( SCWK_ANSWER, POKECOUNT_MODE_EMPTY )
+  IF $SCWK_ANSWER == 0 THEN
+    _GET_BOX_POKE_COUNT( SCWK_ANSWER, POKECOUNT_MODE_EMPTY )
+    IF $SCWK_ANSWER == 0 THEN
+      //手持ちにもボックスにも空きがない場合
+      _SYMBOL_MAP_SET_MONS_NAME( SCWK_TARGET_OBJID, 0 )
+      _PLAYER_NAME( 1 )
+      _SYSWIN_MSG( msg_symbolmap_poke_02, POS_DEFAULT )
+      _LAST_KEYWAIT()
+      _RET
+    ENDIF
+  ENDIF
+
+  //「なかまに　しますか？」
+  _SYMBOL_MAP_SET_MONS_NAME( SCWK_TARGET_OBJID, 0 )
+  _PLAYER_NAME( 1 )
+  _SYSWIN_MSG( msg_symbolmap_poke_03, POS_DOWN )
+  _YES_NO_WIN( SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_YES THEN
+    _SYMBOL_POKE_BATTLE( SCWK_TARGET_OBJID, SCWK_ANSWER )
+    _RET
+  ENDIF
+
+  _SYMBOL_MAP_GET_INFO( SCR_SYMMAP_INFO_IS_KEEPZONE, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+
+    //通常エリアに移動してもらいますか？
+    _SYMBOL_MAP_SET_MONS_NAME( SCWK_TARGET_OBJID, 0 )
+    _SYSWIN_MSG( msg_symbolmap_poke_07, POS_DOWN )
+    _YES_NO_WIN( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_YES THEN
+      //対象ポケモンを移動
+      _SYMBOL_MAP_MOVE_POKE( SCWK_TARGET_OBJID, SCWK_ANSWER )
+      IF $SCWK_ANSWER == FALSE THEN
+        //通常エリアはいっぱい！
+        _SYMBOL_MAP_SET_MONS_NAME( SCWK_TARGET_OBJID, 0 )
+        _SYSWIN_MSG( msg_symbolmap_poke_08, POS_DOWN )
+        _LAST_KEYWAIT()
+        _RET
+      ELSE
+        //マップに入り直す
+        _SYMBOL_MAP_WARP( DIR_NOT )
+        _RET
+      ENDIF
+    ENDIF
+
+  ELSE
+
+    //キープゾーンに移動してもらいますか？
+    _SYMBOL_MAP_SET_MONS_NAME( SCWK_TARGET_OBJID, 0 )
+    _SYSWIN_MSG( msg_symbolmap_poke_05, POS_DOWN )
+    _YES_NO_WIN( SCWK_ANSWER )
+    IF $SCWK_ANSWER == SCR_YES THEN
+      //対象ポケモンを移動
+      _SYMBOL_MAP_MOVE_POKE( SCWK_TARGET_OBJID, SCWK_ANSWER )
+      IF $SCWK_ANSWER == FALSE THEN
+        //キープゾーンはいっぱい！
+        _SYMBOL_MAP_SET_MONS_NAME( SCWK_TARGET_OBJID, 0 )
+        _SYSWIN_MSG( msg_symbolmap_poke_06, POS_DOWN )
+        _LAST_KEYWAIT()
+        _RET
+      ELSE
+        //マップに入り直す
+        _SYMBOL_MAP_WARP( DIR_NOT )
+        _RET
+      ENDIF
+    ENDIF
+
+  ENDIF
+
+  _RET
+
+
+
+
+//======================================================================
+//
+//
+//
+//======================================================================
+
+/**************************************************************/
+/**/
+/**************************************************************/
+EVENT_START   ev_pos_symbolmap_entrance_up
+  _SYMBOL_MAP_WARP( DIR_UP )
+EVENT_END
+
+/**************************************************************/
+/**/
+/**************************************************************/
+EVENT_START   ev_pos_symbolmap_entrance_down
+  _SYMBOL_MAP_WARP( DIR_DOWN )
+EVENT_END
+
+/**************************************************************/
+/**/
+/**************************************************************/
+EVENT_START   ev_pos_symbolmap_entrance_left
+  _SYMBOL_MAP_WARP( DIR_LEFT )
+EVENT_END
+
+/**************************************************************/
+/**/
+/**************************************************************/
+EVENT_START   ev_pos_symbolmap_entrance_right
+  _SYMBOL_MAP_WARP( DIR_RIGHT )
+EVENT_END
+
