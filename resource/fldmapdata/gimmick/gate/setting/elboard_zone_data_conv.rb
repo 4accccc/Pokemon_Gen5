@@ -57,34 +57,35 @@ GMM_FILENAME = "gate.gmm"
 
 # データインデックス
 ROW_ZONE_ID            = 0   # ゾーンID
-ROW_X                  = 1   # x座標
-ROW_Y                  = 2   # y座標
-ROW_Z                  = 3   # z座標
-ROW_DIR                = 4   # 向き
-ROW_MSG_ID_DATE        = 5   # 日付
-ROW_MSG_ID_WEATHER     = 6   # 天気
-ROW_MSG_ID_PROPAGATION = 7   # 天気
-ROW_MSG_ID_INFO_A      = 8   # 情報A
-ROW_MSG_ID_INFO_B      = 9   # 情報B
-ROW_MSG_ID_INFO_C      = 10  # 情報C
-ROW_MSG_ID_INFO_D      = 11  # 情報D
-ROW_MSG_ID_INFO_E      = 12  # 情報E
-ROW_MSG_ID_INFO_F      = 13  # 情報F
-ROW_MSG_ID_INFO_G      = 14  # 情報G
-ROW_MSG_ID_INFO_H      = 15  # 情報H
-ROW_MSG_ID_INFO_I      = 16  # 情報I
-ROW_MSG_ID_CM_MON      = 17  # CM月
-ROW_MSG_ID_CM_TUE      = 18  # CM火
-ROW_MSG_ID_CM_WED      = 19  # CM水
-ROW_MSG_ID_CM_THU      = 20  # CM木
-ROW_MSG_ID_CM_FRI      = 21  # CM金
-ROW_MSG_ID_CM_SAT      = 22  # CM土
-ROW_MSG_ID_CM_SUN      = 23  # CM日
-ROW_WEATHER_ZONE_1     = 24  # 天気を表示する場所1
-ROW_WEATHER_ZONE_2     = 25  # 天気を表示する場所2
-ROW_WEATHER_ZONE_3     = 26  # 天気を表示する場所3
-ROW_WEATHER_ZONE_4     = 27  # 天気を表示する場所4
-ROW_MONITOR_ANIME_NO   = 28  # モニター・アニメーション番号
+ROW_VERSION            = 1   # バージョン ( WB or W or B )
+ROW_X                  = 2   # x座標
+ROW_Y                  = 3   # y座標
+ROW_Z                  = 4   # z座標
+ROW_DIR                = 5   # 向き
+ROW_MSG_ID_DATE        = 6   # 日付
+ROW_MSG_ID_WEATHER     = 7   # 天気
+ROW_MSG_ID_PROPAGATION = 8   # 天気
+ROW_MSG_ID_INFO_A      = 9   # 情報A
+ROW_MSG_ID_INFO_B      = 10  # 情報B
+ROW_MSG_ID_INFO_C      = 11  # 情報C
+ROW_MSG_ID_INFO_D      = 12  # 情報D
+ROW_MSG_ID_INFO_E      = 13  # 情報E
+ROW_MSG_ID_INFO_F      = 14  # 情報F
+ROW_MSG_ID_INFO_G      = 15  # 情報G
+ROW_MSG_ID_INFO_H      = 16  # 情報H
+ROW_MSG_ID_INFO_I      = 17  # 情報I
+ROW_MSG_ID_CM_MON      = 18  # CM月
+ROW_MSG_ID_CM_TUE      = 19  # CM火
+ROW_MSG_ID_CM_WED      = 20  # CM水
+ROW_MSG_ID_CM_THU      = 21  # CM木
+ROW_MSG_ID_CM_FRI      = 22  # CM金
+ROW_MSG_ID_CM_SAT      = 23  # CM土
+ROW_MSG_ID_CM_SUN      = 24  # CM日
+ROW_WEATHER_ZONE_1     = 25  # 天気を表示する場所1
+ROW_WEATHER_ZONE_2     = 26  # 天気を表示する場所2
+ROW_WEATHER_ZONE_3     = 27  # 天気を表示する場所3
+ROW_WEATHER_ZONE_4     = 28  # 天気を表示する場所4
+ROW_MONITOR_ANIME_NO   = 29  # モニター・アニメーション番号
                      
 # 出力ファイル名のリスト
 bin_file_list = Array.new
@@ -101,6 +102,7 @@ file.close
   in_data = line.split(/\s/)
   out_data = Array.new
   out_data << GetZoneID("ZONE_ID_"+in_data[ROW_ZONE_ID])
+  out_data << GetVersion( in_data[ROW_VERSION] )
   out_data << in_data[ROW_X].to_i
   out_data << in_data[ROW_Y].to_i
   out_data << in_data[ROW_Z].to_i
@@ -130,7 +132,9 @@ file.close
   out_data << GetZoneID("ZONE_ID_"+in_data[ROW_WEATHER_ZONE_4])
   out_data << GetMonitorAnimeNo(in_data[ROW_MONITOR_ANIME_NO])
   # バイナリデータを出力
-  filename = ARGV[1] + "/elboard_zone_data_" + in_data[ROW_ZONE_ID].downcase + ".bin"
+  filename = ARGV[1] + "/elboard_zone_data_" + 
+             in_data[ROW_ZONE_ID].downcase + "_" + 
+             in_data[ROW_VERSION].downcase + ".bin"
   file = File.open( filename, "wb" )
   file.write( out_data.pack("I*") )
   file.close

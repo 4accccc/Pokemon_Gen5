@@ -33,6 +33,42 @@ def GetZoneID( zone )
 end
 
 #-------------------------------------------------------------------------------------
+# @brief バージョンを取得する
+# @param version "WB" or "W" or "B"
+# @return "W"=>VERSION_WHITE, "B"=>VERSION_BLACK, "WB"=>0
+#-------------------------------------------------------------------------------------
+def GetVersion( version )
+
+  # "WB"が指定された
+  if version == "WB" then return 0 end
+
+  # ハッシュテーブル作成
+  hash_table = Hash::new
+  hash_table["W"] = "VERSION_WHITE"
+  hash_table["B"] = "VERSION_BLACK" 
+  # 存在しないキーが指定された
+  if hash_table.has_key?(version) == false then
+    abort("バージョン指定[#{version}]は対応していません")
+  end 
+  # 指定されたバージョンについて, 検索ワードを決定
+  target_word = hash_table[ version ]
+
+  # 定義ファイルを開く
+  filename = ENV["PROJECT_PROGDIR"] + "include/pm_version.h"
+  file = File.open( filename, "r" )
+  file_lines = file.readlines
+  file.close
+
+  # 検索ワードの定義値を取得
+  file_lines.each do |line|
+    if (line =~ /#define\s*#{target_word}\s*(\d+)/) != nil then return $1.to_i end
+  end
+
+  # 指定されたバージョンが定義されていない場合
+  abort("バージョン:#{target_word}は定義されていません")
+end
+
+#-------------------------------------------------------------------------------------
 # @brief メッセージIDを取得する
 # @param gmm_filename gmmファイル名
 # @param msg_id       メッセージIDを表す文字列

@@ -30,7 +30,8 @@ BOOL ELBOARD_ZONE_DATA_Load( ELBOARD_ZONE_DATA* buf, ARCID arc_id, ARCDATID dat_
 
   // DEBUG:
   OBATA_Printf( "------------------------------------ ELBOARD_ZONE_DATA_Load\n" );
-  OBATA_Printf( "zone_id = %d\n", buf->zone_id );
+  OBATA_Printf( "zoneID = %d\n", buf->zoneID );
+  OBATA_Printf( "version = %d\n", buf->version );
   OBATA_Printf( "x = %d\n", buf->x );
   OBATA_Printf( "y = %d\n", buf->y );
   OBATA_Printf( "z = %d\n", buf->z );
