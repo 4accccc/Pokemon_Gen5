@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-20T16:47:28"/>
+	<create user="matsumiya" host="W00224" date="2010-03-21T18:29:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -336,7 +336,7 @@
 	</lock>
 
 
-	<row id="msg_c08_champion_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_champion_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・pos（詳細未定）を踏むと発動
 ・主人公に隣接してメッセージ表示
@@ -349,7 +349,7 @@
 こちらだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08_champion_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_champion_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・所定の位置に移動すると主人公、チャンピオン
 　画面上向きになりメッセージ表示
@@ -366,7 +366,7 @@
 必死に　弁舌を　振るっておる[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08_sage1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_sage1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてcrowd1_01表示</comment>
 		<attribute name="キャラクター">ゲーチス</attribute>
@@ -388,7 +388,7 @@
 英雄の　建国伝説の　再現！</language>
 	</row>
 
-	<row id="msg_c08_crowd1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c08_crowd1_01">
 		<comment>♂
 ・サブウインドウで表示
 ・続けてcrowd2_01表示</comment>
@@ -398,7 +398,7 @@ OLDMAN</attribute>
 		<language name="JPN_KANJI" width="256">英雄？</language>
 	</row>
 
-	<row id="msg_c08_crowd2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c08_crowd2_01">
 		<comment>♂
 ・サブウインドウで表示
 ・続けてcrowd3_01表示</comment>
@@ -408,7 +408,7 @@ MAN３</attribute>
 		<language name="JPN_KANJI" width="256">ドラゴン！？</language>
 	</row>
 
-	<row id="msg_c08_crowd3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c08_crowd3_01">
 		<comment>♀
 ・サブウインドウで表示
 ・続けてsage1_02表示</comment>
@@ -418,7 +418,7 @@ WOMAN2</attribute>
 		<language name="JPN_KANJI" width="256">伝説！</language>
 	</row>
 
-	<row id="msg_c08_sage1_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_sage1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてcrowd1_02表示</comment>
 		<attribute name="キャラクター">ゲーチス</attribute>
@@ -440,7 +440,7 @@ WOMAN2</attribute>
 解放すべき　存在なのです！</language>
 	</row>
 
-	<row id="msg_c08_crowd1_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c08_crowd1_02">
 		<comment>♂
 ・サブウインドウで表示
 ・続けてcrowd3_02表示</comment>
@@ -450,7 +450,7 @@ OLDMAN</attribute>
 		<language name="JPN_KANJI" width="256">解放だと？</language>
 	</row>
 
-	<row id="msg_c08_crowd3_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c08_crowd3_02">
 		<comment>♀
 ・サブウインドウで表示
 ・続けてsage1_03表示</comment>
@@ -460,7 +460,7 @@ WOMAN2</attribute>
 		<language name="JPN_KANJI" width="256">ポケモンを？</language>
 	</row>
 
-	<row id="msg_c08_sage1_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_sage1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてsage1_02表示</comment>
 		<attribute name="キャラクター">ゲーチス</attribute>
@@ -488,7 +488,7 @@ WOMAN2</attribute>
 ご清聴　感謝　いたします</language>
 	</row>
 
-	<row id="msg_c08_crowd1_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c08_crowd1_03">
 		<comment>♂
 ・続けて</comment>
 		<attribute name="キャラクター">聴衆その１
@@ -501,7 +501,7 @@ OLDMAN</attribute>
 苦しめていた　のか……▼</language>
 	</row>
 
-	<row id="msg_c08_crowd2_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c08_crowd2_02">
 		<comment>♂
 ・続けて</comment>
 		<attribute name="キャラクター">聴衆その２
@@ -514,7 +514,7 @@ MAN３</attribute>
 ポケモンを　解き放とうか……▼</language>
 	</row>
 
-	<row id="msg_c08_crowd3_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c08_crowd3_03">
 		<comment>♀
 ・続けて
 ・動作モデルそれぞれ散っていく
@@ -529,7 +529,7 @@ WOMAN2</attribute>
 さみしくて　ダメになっちゃう！▼</language>
 	</row>
 
-	<row id="msg_c08_leader8b_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・群集退場後に表示
 ・続けてleader8a_01</comment>
@@ -541,7 +541,7 @@ WOMAN2</attribute>
 いまの　おはなし　おかしーじゃん！▼</language>
 	</row>
 
-	<row id="msg_c08_leader8a_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_leader8a_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてchampion_00</comment>
 		<attribute name="キャラクター">ジムリーダー
@@ -564,7 +564,7 @@ WOMAN2</attribute>
 気持ちまで　しばることなど　できぬ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08_champion_00" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_champion_00" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・主人公と向き合ってからメッセージ表示
 ・表示後、シャガたちのほうに移動
@@ -576,7 +576,7 @@ WOMAN2</attribute>
 		<language name="JPN_KANJI" width="256">アデク『いこうか　[1:00:トレーナー名:0]▼</language>
 	</row>
 
-	<row id="msg_c08_champion_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_champion_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてleader8b_02</comment>
 		<attribute name="キャラクター">チャンピオン
@@ -587,7 +587,7 @@ WOMAN2</attribute>
 アイリスに　シャガよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08_leader8b_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・続けてleader8a_02</comment>
 		<attribute name="キャラクター">ジムリーダー
@@ -598,7 +598,7 @@ WOMAN2</attribute>
 アデクの　おじーちゃん！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08_leader8a_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_leader8a_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてchampion_04</comment>
 		<attribute name="キャラクター">ジムリーダー
@@ -613,7 +613,7 @@ WOMAN2</attribute>
 いったい　なんの　用だ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08_champion_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_champion_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・WHITEならleader8b_03w
 ・BLACKならleader8a_03b</comment>
@@ -627,7 +627,7 @@ WOMAN2</attribute>
 教えてくれい！▼</language>
 	</row>
 
-	<row id="msg_c08_leader8b_03w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_03w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・WHITEver
 ・続けてleader8a_03w</comment>
@@ -641,7 +641,7 @@ WOMAN2</attribute>
 どーしたの？　いきなり▼</language>
 	</row>
 
-	<row id="msg_c08_leader8b_03b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_03b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・BLACKver
 ・続けてleader8a_03b</comment>
@@ -655,7 +655,7 @@ WOMAN2</attribute>
 どーしたの？　いきなり▼</language>
 	</row>
 
-	<row id="msg_c08_leader8a_03w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_leader8a_03w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・WHITEver
 ・続けてchampion_05</comment>
@@ -673,7 +673,7 @@ WOMAN2</attribute>
 シンを　復活させたと……▼</language>
 	</row>
 
-	<row id="msg_c08_leader8a_03b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_leader8a_03b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・BLACKver
 ・続けてchampion_05</comment>
@@ -691,7 +691,7 @@ WOMAN2</attribute>
 ムを　復活させたと……▼</language>
 	</row>
 
-	<row id="msg_c08_champion_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_champion_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてleader8a_06
 ・0＝主人公名前</comment>
@@ -709,7 +709,7 @@ WOMAN2</attribute>
 探せ！　といったらしいのでな▼</language>
 	</row>
 
-	<row id="msg_c08_leader8a_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_leader8a_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてleader8b_00</comment>
 		<attribute name="キャラクター">ジムリーダー
@@ -724,7 +724,7 @@ WOMAN2</attribute>
 その　Ｎとやらは……？▼</language>
 	</row>
 
-	<row id="msg_c08_leader8b_00" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 （その場ジャンプ後にメッセージ表示？）
 ・続けてchampion_06</comment>
@@ -738,7 +738,7 @@ WOMAN2</attribute>
 もう　なかよし　なんだよー！▼</language>
 	</row>
 
-	<row id="msg_c08_champion_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_champion_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてchampion_07</comment>
 		<attribute name="キャラクター">チャンピオン
@@ -755,7 +755,7 @@ WOMAN2</attribute>
 理解しあうため　だよ▼</language>
 	</row>
 
-	<row id="msg_c08_champion_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_champion_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてchampion_08
 （動作モデルの芝居用に、念のためラベルを分割）</comment>
@@ -795,7 +795,7 @@ WOMAN2</attribute>
 ジムリーダーは　手強いがな！▼</language>
 	</row>
 
-	<row id="msg_c08_champion_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_champion_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・メッセージ表示後、画面右に退場
 　このとき、アイリス、シャガも右を向く
@@ -808,7 +808,7 @@ WOMAN2</attribute>
 シャガ　アイリス！▼</language>
 	</row>
 
-	<row id="msg_c08_leader8b_04" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・シャガと向き合ってメッセージ表示
 ・続けてleader8a_04</comment>
@@ -824,7 +824,7 @@ WOMAN2</attribute>
 なんだか　こわい　かお　してたけど[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08_leader8a_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_leader8a_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイリスと向き合ったままメッセージ表示
 ・続けてleader8a_05</comment>
@@ -840,7 +840,7 @@ WOMAN2</attribute>
 強い　ポケモントレーナー　だからね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08_leader8a_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_leader8a_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・シャガ、アイリスは主人公方向を向く
 ・メッセージ表示後、
@@ -867,7 +867,7 @@ WOMAN2</attribute>
 案内して　あげるんだ▼</language>
 	</row>
 
-	<row id="msg_c08_leader8b_05w" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_05w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・WHITEver
 ・主人公に隣接してメッセージ表示
@@ -883,7 +883,7 @@ WOMAN2</attribute>
 こっち　だよ！▼</language>
 	</row>
 
-	<row id="msg_c08_leader8b_05b" text-color="#000000,,,#ff0000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_05b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・WHITEver
 ・主人公に隣接してメッセージ表示
@@ -899,7 +899,7 @@ WOMAN2</attribute>
 こっち　だよ！▼</language>
 	</row>
 
-	<row id="msg_c08_leader8b_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・GRIDX=418、GRIDZ=175到達で
 　上を向いてメッセージ表示
@@ -910,7 +910,7 @@ WOMAN2</attribute>
 		<language name="JPN_KANJI" width="256">アイリス『あっち　だよ！▼</language>
 	</row>
 
-	<row id="msg_c08_leader8b_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・GRIDX=418、GRIDZ=167、下向き
 ・pos起動（GRIDX=415~421、GRIDZ=168）
@@ -922,7 +922,7 @@ WOMAN2</attribute>
 		<language name="JPN_KANJI" width="256">アイリス『もーすぐ　だよ！！▼</language>
 	</row>
 
-	<row id="msg_c08_leader8b_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・pos起動（GRIDX=417~419、GRIDZ=162）
 ・メッセージ後、家の中に入る</comment>
@@ -932,7 +932,7 @@ WOMAN2</attribute>
 		<language name="JPN_KANJI" width="256">アイリス『ここ　だよ！▼</language>
 	</row>
 
-	<row id="msg_c08_gymstop_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_gymstop_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジム挑戦可能な条件を満たしていないとき
 　詳細未定
@@ -949,7 +949,7 @@ WOMAN2</attribute>
 家に　いらっしゃるよ</language>
 	</row>
 
-	<row id="msg_c08_gentleman_01w" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_gentleman_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・WHITEver</comment>
 		<attribute name="キャラクター">GENTLEMAN</attribute>
@@ -963,7 +963,7 @@ WOMAN2</attribute>
 積み重なって　いるんだよ</language>
 	</row>
 
-	<row id="msg_c08_gentleman_01b" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_gentleman_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・BLACKver</comment>
 		<attribute name="キャラクター">GENTLEMAN</attribute>
@@ -977,7 +977,7 @@ WOMAN2</attribute>
 刻みこめば　いいんだよ</language>
 	</row>
 
-	<row id="msg_c08_fighterm_01w" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c08_fighterm_01w">
 		<comment>♂
 ・WHITEver</comment>
 		<attribute name="キャラクター">FIGHTERM</attribute>
@@ -989,7 +989,7 @@ WOMAN2</attribute>
 あると　思うんだよね</language>
 	</row>
 
-	<row id="msg_c08_fighterm_01b" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c08_fighterm_01b">
 		<comment>♂
 ・BLACKver</comment>
 		<attribute name="キャラクター">FIGHTERM</attribute>
@@ -1001,7 +1001,7 @@ WOMAN2</attribute>
 あると　思うんだよね</language>
 	</row>
 
-	<row id="msg_c08_boy2_01w" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_boy2_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・WHITEver</comment>
 		<attribute name="キャラクター">BOY2</attribute>
@@ -1011,7 +1011,7 @@ WOMAN2</attribute>
 だって　なんだか　落ち着くんだもん！</language>
 	</row>
 
-	<row id="msg_c08_boy2_01b" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_boy2_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・BLACKver</comment>
 		<attribute name="キャラクター">BOY2</attribute>
@@ -1021,7 +1021,7 @@ WOMAN2</attribute>
 だって　かっこいいもん！</language>
 	</row>
 
-	<row id="msg_c08_woman1_01w" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c08_woman1_01w">
 		<comment>♀
 ・WHITEver</comment>
 		<attribute name="キャラクター">WOMAN1</attribute>
@@ -1035,7 +1035,7 @@ WOMAN2</attribute>
 ポケモンと　レスリングなさってるわ！</language>
 	</row>
 
-	<row id="msg_c08_woman1_01b" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c08_woman1_01b">
 		<comment>♀
 ・BLACKver</comment>
 		<attribute name="キャラクター">WOMAN1</attribute>
@@ -1049,7 +1049,7 @@ WOMAN2</attribute>
 認めた　実力者　なの！</language>
 	</row>
 
-	<row id="msg_c08_iss_01w" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_iss_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・WHITEver
 ・仮メッセージ</comment>
@@ -1060,7 +1060,7 @@ WOMAN2</attribute>
 コキュウの　調べは</language>
 	</row>
 
-	<row id="msg_c08_iss_01b" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08_iss_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・BLACKver
 ・仮メッセージ</comment>
@@ -1075,7 +1075,202 @@ WOMAN2</attribute>
 ショルダーキーボードの　ことデス</language>
 	</row>
 
-	<row id="msg_c08_sign1_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c08_hakase2_00w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・WHITEver
+・c08ジムバッジ取得後にジムから出ると
+　メッセージ表示
+・続けてhakase2_01</comment>
+		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<language name="JPN" width="256">アララギ『……ハーイ
+シャガさんは　たくましかった？▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『……ハーイ
+シャガさんは　たくましかった？▼</language>
+	</row>
+
+	<row id="msg_c08_hakase2_00b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・BLACKver
+・c08ジムバッジ取得後にジムから出ると
+　メッセージ表示
+・続けてhakase2_01</comment>
+		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<language name="JPN" width="256">アララギ『……ハーイ
+アイリスちゃんは　どうだった？▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『……ハーイ
+アイリスちゃんは　どうだった？▼</language>
+	</row>
+
+	<row id="msg_c08_hakase2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・主人公に近づいて
+・続けてhakase2_02</comment>
+		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<language name="JPN" width="256">あっ　ドラゴンポケモンを
+ふっかつさせる　ほうほうについての▽
+ほうこくに　きたんだ▼
+ライブキャスターで　つたえるのも
+なんだか　もうしわけないしね▼
+で　けつろんを　いっちゃうと
+まだ　わかってないんです▽
+……ゴメンね▼</language>
+		<language name="JPN_KANJI" width="256">あっ　ドラゴンポケモンを
+復活させる　方法についての▽
+報告に　来たんだ▼
+ライブキャスターで　伝えるのも
+なんだか　申し訳ないしね▼
+で　結論を　いっちゃうと
+まだ　解明できていないの▽
+……ゴメンね▼</language>
+	</row>
+
+	<row id="msg_c08_hakase2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・メッセージ表示後、連れ歩き開始
+・主人公をGRIDX=431、GRIDZ=139辺りまで誘導
+・続けてhakase2_03</comment>
+		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<language name="JPN" width="256">それよりも　すごいじゃない！▼
+ジムバッジを
+８コ　そろえたんでしょ▽
+すごく　たくましくなったよね！▼
+じぶんでは　わからないでしょうけど
+カノコを　でたときとは　おおちがいね▼
+では　ポケモンジムを　めぐり
+おわった　ポケモントレーナーが▼
+つぎは　どこへ　むかうべきか
+アタシが　あんない　するわね▼</language>
+		<language name="JPN_KANJI" width="256">それよりも　すごいじゃない！▼
+ジムバッジを
+８コ　そろえたんでしょ▽
+すごく　たくましくなったよね！▼
+自分では　実感ないかも　しれないけど
+カノコを　でたときとは　大違いね▼
+では　ポケモンジム巡りを
+終えた　ポケモントレーナーが▼
+次は　どこへ　向かうべきか
+アタシが　案内するわね▼</language>
+	</row>
+
+	<row id="msg_c08_hakase2_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・所定posに到達すると
+　上向きでメッセージ表示
+・続けてhakase2_04</comment>
+		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<language name="JPN" width="256">アララギ『あの　ゲートを　くぐり
+１０ばんどうろを　ぬければ▽
+バッジチェックゲート▼
+そのさきに　ある
+チャンピオンロードを　こえて▽
+ようやく　ポケモンリーグよ▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『あの　ゲートを　くぐり
+１０番道路を　抜ければ▽
+バッジチェックゲート▼
+その先に　ある
+チャンピオンロードを　越えて▽
+ようやく　ポケモンリーグよ▼</language>
+	</row>
+
+	<row id="msg_c08_hakase2_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・はい/いいえの選択肢表示
+・はい→hakase2_05
+　いいえ→hakase2_06
+・0＝主人公名前</comment>
+		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<language name="JPN" width="256">カラクサの　ポケモンセンターを
+あんないしたこと　おもいだしちゃった▼
+ねえ　[1:00:トレーナー名:0]
+ポケモンと　いっしょに▽
+たびだったこと　くやんでいる？</language>
+		<language name="JPN_KANJI" width="256">カラクサの　ポケモンセンターを
+案内したこと　おもいだしちゃった▼
+ねえ　[1:00:トレーナー名:0]
+ポケモンと　一緒に▽
+旅立ったこと　後悔している？</language>
+	</row>
+
+	<row id="msg_c08_hakase2_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・はい選択時
+・続けてhakase2_07</comment>
+		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<language name="JPN" width="256">アララギ『あっ！　いいのいいの！
+そういうことは　ぜんぶ　いわなくて▼
+でも　きみたちが
+ポケモンを　えらんでくれたこと▽
+あたし　うれしかったんだ！▼
+だって　また　ひとと　ポケモンの
+ステキな　であいが　うまれたから！▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『あっ！　いいのいいの！
+そういうことは　全部　いわなくて▼
+でも　きみたちが
+ポケモンを　選んでくれたこと▽
+あたし　うれしかったんだ！▼
+だって　また　人と　ポケモンの
+ステキな　出会いが　うまれたから！▼</language>
+	</row>
+
+	<row id="msg_c08_hakase2_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・いいえ選択時
+・続けてhakase2_07</comment>
+		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<language name="JPN" width="256">アララギ『ありがとッ！
+さいこうの　へんじ　よね！▼
+わたしも　きみたちに
+ポケモンを　プレゼントできて▽
+すごく　うれしかったの！▼
+だって　また　ひとと　ポケモンの▽
+ステキな　であいが　うまれたから！▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『ありがとッ！
+最高の　返事　よね！▼
+わたしも　きみたちに
+ポケモンを　プレゼントできて▽
+すごく　うれしかったの！▼
+だって　また　人と　ポケモンの▽
+ステキな　出会いが　うまれたから！▼</language>
+	</row>
+
+	<row id="msg_c08_hakase2_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・アイテム入手処理
+　No001「マスターボール」
+・続けてhakase2_08
+・0＝主人公名前</comment>
+		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]
+これ　プレゼントよ！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
+これ　プレゼントよ！▼</language>
+	</row>
+
+	<row id="msg_c08_hakase2_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♀
+・アイテム入手後、自動で表示
+・メッセージ表示後、画面下に移動
+　画面外に消えると、主人公操作可能</comment>
+		<attribute name="キャラクター">アララギ博士（娘）</attribute>
+		<language name="JPN" width="256">アララギ『その　マスターボールは
+どんな　ポケモンも　ぜったいに▽
+つかまえられる　さいこうの　ボール▼
+こんな　かたちでしか
+おうえん　できないけれど……▼
+[1:00:トレーナー名:0]は　[1:00:トレーナー名:0]
+どんなことが　あっても▽
+まよわずに　ポケモンと　すすんでね！▼</language>
+		<language name="JPN_KANJI" width="256">アララギ『その　マスターボールは
+どんな　ポケモンも　絶対に▽
+捕まえられる　最高の　ボール▼
+こんな　形でしか
+応援できないけれど……▼
+[1:00:トレーナー名:0]は　[1:00:トレーナー名:0]
+どんなことが　あっても▽
+迷わずに　ポケモンと　進んでね！▼</language>
+	</row>
+
+	<row id="msg_c08_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<attribute name="キャラクター">看板：街</attribute>
 		<language name="JPN" width="256">ここは　ソウリュウシティ
 かこと　みらいが　からみあう　まち</language>
@@ -1083,14 +1278,14 @@ WOMAN2</attribute>
 過去と　未来が　絡みあう街</language>
 	</row>
 
-	<row id="msg_c08_sign2_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c08_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>シャガ/アイリスの家</comment>
 		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">シャガの　いえ</language>
 		<language name="JPN_KANJI" width="256">シャガの家</language>
 	</row>
 
-	<row id="msg_c08_sign3_01w" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c08_sign3_01w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>バトル施設
 ・WHITEver</comment>
 		<attribute name="キャラクター">看板</attribute>
@@ -1100,7 +1295,7 @@ WOMAN2</attribute>
 ザ・ローテーションバトル！</language>
 	</row>
 
-	<row id="msg_c08_sign3_01b" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c08_sign3_01b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>バトル施設
 ・BLACKver</comment>
 		<attribute name="キャラクター">看板</attribute>
@@ -1110,7 +1305,7 @@ WOMAN2</attribute>
 ザ・トリプルバトル！</language>
 	</row>
 
-	<row id="msg_c08_sign4_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c08_sign4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>お得な掲示板</comment>
 		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
@@ -1125,7 +1320,7 @@ WOMAN2</attribute>
 詳しくは　シャガ市長の　家で！</language>
 	</row>
 
-	<row id="msg_c08_gymsign_01w" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c08_gymsign_01w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポケモンジム
 ・WHITEver</comment>
 		<attribute name="キャラクター">看板</attribute>
@@ -1137,7 +1332,7 @@ WOMAN2</attribute>
 りゅうの　こころを　しる　むすめ</language>
 	</row>
 
-	<row id="msg_c08_gymsign_01b" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c08_gymsign_01b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ポケモンジム
 ・BLACKver</comment>
 		<attribute name="キャラクター">看板</attribute>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T14:09:15"/>
+	<create user="matsumiya" host="W00224" date="2010-03-21T18:32:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -434,28 +434,16 @@
 パワーアップ！　だな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c06_hakase1_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c06_hakase1_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・アイテム入手処理
-　No001「マスターボール」
 ・続けてleader6_01</comment>
 		<attribute name="キャラクター">博士１（父）</attribute>
 		<language name="JPN" width="256">アララギ『よし！　これで
 みた　ポケモンの　すがたなら[BE:00:ページ切り替え（行送り）]
-いつでも　みられるように　なったぞ！[BE:01:ページ切り替え（クリア）]
-そうだな
-これも　プレゼント　しようかね！▼
-こいつは　マスターボール！▼
-どんな　ポケモンでも
-ぜったいに　つかまえられるんだよ！▼</language>
+いつでも　みられるように　なったぞ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">アララギ『よし！　これで
 みた　ポケモンの　姿なら[BE:00:ページ切り替え（行送り）]
-いつでも　みられるように　なったぞ！[BE:01:ページ切り替え（クリア）]
-そうだな
-これも　プレゼント　しようかね！▼
-こいつは　マスターボール！▼
-どんな　ポケモンでも
-絶対に　捕まえられるんだよ！▼</language>
+いつでも　みられるように　なったぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c06_leader6_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
