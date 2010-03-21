@@ -34,6 +34,8 @@ enum {
   SYMMAP_TOP_ID = 1,    ///<一番奥のID
   SYMMAP_ENT_ID = 6,    ///<入り口のID
 
+  SYMMAP_IDX_TOP = 1,
+
   SYMMAP_SMALL_LEVEL_LIMIT = SYMBOL_MAP_LEVEL_SMALL_MAX + 1,
 };
 
@@ -217,27 +219,27 @@ static u8 map_level7_1[SYMMAP_SIZE] = {
 //--------------------------------------------------------------
 static inline SYMBOL_MAP_ID LSIDtoSYMMAPID( u8 lsid )
 {
-  return lsid + 1;
+  return lsid - 1;
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static inline u8 SYMMAPIDtoLSID( SYMBOL_MAP_ID symmap_id )
 {
-  return symmap_id - 1;
+  return symmap_id + 1;
 }
 //--------------------------------------------------------------
 /// 左側にマップがあるか？
 //--------------------------------------------------------------
 static inline BOOL hasLeft( const u8 * map, int idx )
 {
-  return (idx % SYMMAP_MAX_WIDTH != 0 && idx != SYMMAP_TOP_ID );
+  return ( (idx % SYMMAP_MAX_WIDTH != 0) && idx != SYMMAP_IDX_TOP );
 }
 //--------------------------------------------------------------
 /// 右側にマップがあるか？
 //--------------------------------------------------------------
 static inline BOOL hasRight( const u8 * map, int idx )
 {
-  return ( idx % SYMMAP_MAX_WIDTH != SYMMAP_MAX_WIDTH - 1 && idx != SYMMAP_TOP_ID );
+  return ( (idx % SYMMAP_MAX_WIDTH != SYMMAP_MAX_WIDTH - 1) && idx != SYMMAP_IDX_TOP );
 }
 //--------------------------------------------------------------
 /// 上側にマップがあるか？
@@ -256,15 +258,22 @@ static inline BOOL hasDown( const u8 * map, int idx )
 //--------------------------------------------------------------
 //  SIDからマップテーブルへのインデックスを取得する
 //--------------------------------------------------------------
-static inline u8 getIndex( const u8 * map, u8 now_lsid )
+static u8 getIndex( const u8 * map, u8 now_lsid )
 {
   int i;
+#ifdef  PM_DEBUG
+  for ( i = 0; i < SYMMAP_SIZE; i+=3 )
+  {
+    OS_TPrintf( "%2d %2d %2d\n", map[i+0],map[i+1],map[i+2] );
+  }
+  OS_TPrintf( "search sid == %d\n", now_lsid );
+#endif
   for ( i = 0; i < SYMMAP_SIZE; i ++ )
   {
     if ( map[i] == now_lsid ) return i;
   }
   GF_ASSERT(0);
-  return SYMMAP_ENT_ID;
+  return SYMMAP_IDX_TOP;
 }
 
 //--------------------------------------------------------------
@@ -279,6 +288,7 @@ u16 getSymbolMapZoneID( const u8 * map, u8 now_lsid )
   BOOL down = hasDown( map, idx );
 
   if ( now_lsid == SYMMAP_TOP_ID ) return ZONE_ID_PALACE03;
+  if ( now_lsid == SYMMAP_ENT_ID ) return ZONE_ID_PALACE07;
 
   if ( left && right )
   { //左右ある時は上下もある！
@@ -310,22 +320,24 @@ u16 getSymbolMapZoneID( const u8 * map, u8 now_lsid )
 //--------------------------------------------------------------
 static u16 getNextMapLSID( const u8 * map, u8 now_lsid, u8 dir_id )
 {
+  int index = getIndex( map, now_lsid );
   switch ( dir_id )
   {
   case DIR_UP:
-    GF_ASSERT( hasUp( map, now_lsid ) );
-    return map[ getIndex( map, now_lsid ) - SYMMAP_MAX_WIDTH ];
+    GF_ASSERT( hasUp( map, index ) );
+    return map[ index - SYMMAP_MAX_WIDTH ];
   case DIR_DOWN:
-    GF_ASSERT( hasDown( map, now_lsid ) );
-    return map[ getIndex( map, now_lsid ) + SYMMAP_MAX_WIDTH ];
+    GF_ASSERT( hasDown( map, index ) );
+    return map[ index + SYMMAP_MAX_WIDTH ];
   case DIR_LEFT:
-    GF_ASSERT( hasLeft( map, now_lsid ) );
-    return map[ getIndex( map, now_lsid ) - 1 ];
+    GF_ASSERT( hasLeft( map, index ) );
+    return map[ index - 1 ];
   case DIR_RIGHT:
-    GF_ASSERT( hasRight( map, now_lsid ) );
-    return map[ getIndex( map, now_lsid ) + 1 ];
+    GF_ASSERT( hasRight( map, index ) );
+    return map[ index + 1 ];
+  default:
+    GF_ASSERT( 0 );
   }
-  GF_ASSERT( 0 );
   return now_lsid;
 }
 
@@ -358,6 +370,11 @@ static const u8 * getMapTable( SYMBOL_MAP_LEVEL_LARGE large_lvl, SYMBOL_MAP_LEVE
 //==============================================================================
 //==============================================================================
 //--------------------------------------------------------------
+/**
+ * @brief 対応するゾーンのIDを取得
+ * @param symmap_id   シンボルマップID
+ * @return  u16
+ */
 //--------------------------------------------------------------
 u16 SYMBOLMAP_GetZoneID( SYMBOL_MAP_ID symmap_id )
 {
@@ -369,6 +386,12 @@ u16 SYMBOLMAP_GetZoneID( SYMBOL_MAP_ID symmap_id )
 }
 
 //--------------------------------------------------------------
+/**
+ * @brief 移動先のシンボルマップID取得
+ * @param now_symmap_id   現在のシンボルマップID
+ * @param dir_id          移動先マップのある方向
+ * @return  SYMBOL_MAP_ID 移動先のシンボルマップID
+ */
 //--------------------------------------------------------------
 SYMBOL_MAP_ID SYMBOLMAP_GetNextSymbolMapID( SYMBOL_MAP_ID now_symmap_id, u16 dir_id )
 {
@@ -382,6 +405,11 @@ SYMBOL_MAP_ID SYMBOLMAP_GetNextSymbolMapID( SYMBOL_MAP_ID now_symmap_id, u16 dir
 }
 
 //--------------------------------------------------------------
+/**
+ * @brief キープゾーンか？のチェック
+ * @param symmap_id   シンボルマップID
+ * @return BOOL   TRUEのとき、キープゾーンのマップ
+ */
 //--------------------------------------------------------------
 BOOL SYMBOLMAP_IsKeepzoneID( SYMBOL_MAP_ID symmap_id )
 {
@@ -389,6 +417,11 @@ BOOL SYMBOLMAP_IsKeepzoneID( SYMBOL_MAP_ID symmap_id )
 }
 
 //--------------------------------------------------------------
+/**
+ * @brief   パレスの森の入口マップか？のチェック
+ * @param symmap_id   シンボルマップID
+ * @return BOOL   TRUEの時、パレスの森の入り口マップ
+ */
 //--------------------------------------------------------------
 BOOL SYMBOLMAP_IsEntranceID( SYMBOL_MAP_ID symmap_id )
 {

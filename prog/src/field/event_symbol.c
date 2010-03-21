@@ -323,18 +323,22 @@ static void getNewPos( const VecFx32 * now_pos, u16 dir, VecFx32 * next_pos )
   case DIR_UP:
     next_pos->z = (24 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
     break;
+
   case DIR_DOWN:
     next_pos->z = (9 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
     break;
+
   case DIR_LEFT:
-    next_pos->x = (5 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
-    break;
-  case DIR_RIGHT:
     next_pos->x = (26 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
     break;
+
+  case DIR_RIGHT:
+    next_pos->x = (5 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
+    break;
+
   case DIR_NOT:
-    next_pos->x = (15 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
-    next_pos->z = (24 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
+    //next_pos->x = (15 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
+    //next_pos->z = (24 * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_HALF_SIZE ) << FX32_SHIFT;
     break;
   }
 }
@@ -373,6 +377,7 @@ GMEVENT * EVENT_SymbolMapWarp(
   esmw->fieldWork = fieldWork;
   esmw->warp_zone_id = SYMBOLMAP_GetZoneID( symbol_map_id );
   esmw->warp_pos = *warp_pos;
+  esmw->warp_dir = warp_dir;
   esmw->result_ptr = result_ptr;
   esmw->symbol_map_id = symbol_map_id;
   if(IntrudeSymbol_CheckIntrudeNetID(GAMESYSTEM_GetGameCommSysPtr(gsys), gamedata) == INTRUDE_NETID_NULL){

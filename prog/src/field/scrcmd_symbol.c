@@ -30,6 +30,10 @@
 #include "symbol_map.h"
 
 #include "field_comm/intrude_minimono.h"
+#include "field/intrude_symbol.h"
+//#include "field_comm/intrude_field.h"
+#include "arc/fieldmap/zone_id.h"
+#include "event_mapchange.h"
 
 //==================================================================
 /**
@@ -165,13 +169,25 @@ VMCMD_RESULT EvCmdSymbolMapWarp( VMHANDLE * core, void *wk )
   SYMBOL_MAP_ID sid;
   GMEVENT * new_event;
 
-  if ( warp_dir == DIR_NOT ) {
-    sid = GAMEDATA_GetSymbolMapID( gamedata );
-  } else {
-    sid = SYMBOLMAP_GetNextSymbolMapID( GAMEDATA_GetSymbolMapID( gamedata ), warp_dir );
-  }
+  sid = GAMEDATA_GetSymbolMapID( gamedata );
   OS_TPrintf( "SCRCMD:SYMMAP_WARP:id=%2d, dir=%d\n", sid, warp_dir );
-  new_event = EVENT_SymbolMapWarpEasy( gsys, warp_dir, sid );
+
+  if ( warp_dir == DIR_DOWN && SYMBOLMAP_IsEntranceID(sid) )
+  { //入ったところのマップで下向き→パレスに戻る
+    VecFx32 pos;
+    GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+    IntrudeSymbol_GetPosPalaceForestDoorway( game_comm, gamedata, &pos );
+    new_event = EVENT_ChangeMapPos( gsys, GAMESYSTEM_GetFieldMapWork( gsys ),
+        ZONE_ID_PALACE01, &pos, DIR_DOWN, FALSE );
+  }
+  else
+  { //パレスの森の中を移動
+    if ( warp_dir != DIR_NOT ) {
+      sid = SYMBOLMAP_GetNextSymbolMapID( GAMEDATA_GetSymbolMapID( gamedata ), warp_dir );
+    }
+    new_event = EVENT_SymbolMapWarpEasy( gsys, warp_dir, sid );
+    OS_TPrintf("SCRCMD:SYMMAP_WARP:next id = %d\n", sid );
+  }
   SCRIPT_CallEvent( sc, new_event );
   return VMCMD_RESULT_SUSPEND;
 }
