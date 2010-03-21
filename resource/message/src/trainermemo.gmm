@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-03-12T02:02:13"/>
+	<create user="matsumiya" host="W00224" date="2010-03-21T13:21:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="296" top="129" right="1001" bottom="757" maximized="no" rayout="Vertical2">
+	<dialog left="1477" top="181" right="2182" bottom="809" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1052,14 +1052,14 @@
 うんめいてきな
 であいをした
 まぼろしの　ポケモン。
-ライモンシティに
+ヒウンシティに
 つれていってみよう。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 特別な　場所で
 運命的な
 出会いをした
 まぼろしの　ポケモン。
-ライモンシティに
+ヒウンシティに
 連れて行ってみよう。</language>
 	</row>
 
@@ -1075,14 +1075,14 @@
 		<language name="JPN" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]ねん[2:01:２桁:1]がつ[2:01:２桁:2]にち
 うんめいてきな
 であいをした
-ライモンシティで
+ヒウンシティで
 ゾロアと　であい
 いっしょに　ぼうけんを
 することに　なった。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 運命的な
 出会いをした
-ライモンシティで
+ヒウンシティで
 ゾロアと　出会い
 一緒に　冒険を
 することに　なった。</language>
@@ -1146,7 +1146,7 @@
 ＨＰが一番高い
 個性乱数余り：０</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">たべるのが　だいすき。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">たべるのが　だいすき。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">食べるのが　大好き。</language>
 	</row>
 
 	<row id="trmemo_03_01_01">
@@ -1154,7 +1154,7 @@
 ＨＰが一番高い
 個性乱数余り：１</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">ひるねを　よくする。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ひるねを　よくする。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">昼寝を　よくする。</language>
 	</row>
 
 	<row id="trmemo_03_01_02">
@@ -1162,7 +1162,7 @@
 ＨＰが一番高い
 個性乱数余り：２</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">いねむりが　おおい。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">いねむりが　おおい。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">居眠りが　多い。</language>
 	</row>
 
 	<row id="trmemo_03_01_03">
@@ -1170,7 +1170,7 @@
 ＨＰが一番高い
 個性乱数余り：３</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">ものを　よく　ちらかす。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ものを　よく　ちらかす。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ものを　よく　散らかす。</language>
 	</row>
 
 	<row id="trmemo_03_01_04">
@@ -1178,7 +1178,7 @@
 ＨＰが一番高い
 個性乱数余り：４</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">のんびりするのが　すき。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">のんびりするのが　すき。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">のんびりするのが　好き。</language>
 	</row>
 
 	<row id="trmemo_03_02_00">
@@ -1186,7 +1186,7 @@
 攻撃が一番高い
 個性乱数余り：０</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">ちからが　じまん。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ちからが　じまん。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">力が　自慢。</language>
 	</row>
 
 	<row id="trmemo_03_02_01">
@@ -1194,7 +1194,7 @@
 攻撃が一番高い
 個性乱数余り：１</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">あばれることが　すき。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">あばれることが　すき。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">暴れることが　好き。</language>
 	</row>
 
 	<row id="trmemo_03_02_02">
@@ -1202,7 +1202,7 @@
 攻撃が一番高い
 個性乱数余り：２</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">ちょっと　おこりっぽい。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ちょっと　おこりっぽい。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ちょっと　怒りっぽい。</language>
 	</row>
 
 	<row id="trmemo_03_02_03">
@@ -1210,7 +1210,7 @@
 攻撃が一番高い
 個性乱数余り：３</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">ケンカを　するのが　すき。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ケンカを　するのが　すき。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ケンカを　するのが　好き。</language>
 	</row>
 
 	<row id="trmemo_03_02_04">
@@ -1218,7 +1218,7 @@
 攻撃が一番高い
 個性乱数余り：４</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">ちのけが　おおい。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ちのけが　おおい。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">血の気が　多い。</language>
 	</row>
 
 	<row id="trmemo_03_03_00">
@@ -1226,7 +1226,7 @@
 防御が一番高い
 個性乱数余り：０</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">からだが　じょうぶ。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">からだが　じょうぶ。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">体が　丈夫。</language>
 	</row>
 
 	<row id="trmemo_03_03_01">
@@ -1234,7 +1234,7 @@
 防御が一番高い
 個性乱数余り：１</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">うたれ　づよい。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">うたれ　づよい。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">打たれ強い。</language>
 	</row>
 
 	<row id="trmemo_03_03_02">
@@ -1242,7 +1242,7 @@
 防御が一番高い
 個性乱数余り：２</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">ねばり　づよい。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ねばり　づよい。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">粘り強い。</language>
 	</row>
 
 	<row id="trmemo_03_03_03">
@@ -1250,7 +1250,7 @@
 防御が一番高い
 個性乱数余り：３</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">しんぼう　づよい。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">しんぼう　づよい。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">辛抱強い。</language>
 	</row>
 
 	<row id="trmemo_03_03_04">
@@ -1258,7 +1258,7 @@
 防御が一番高い
 個性乱数余り：４</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">がまん　づよい。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">がまん　づよい。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">我慢強い。</language>
 	</row>
 
 	<row id="trmemo_03_04_00">
@@ -1266,7 +1266,7 @@
 素早さが一番高い
 個性乱数余り：０</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">かけっこが　すき。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">かけっこが　すき。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">駆けっこが　好き。</language>
 	</row>
 
 	<row id="trmemo_03_04_01">
@@ -1274,7 +1274,7 @@
 素早さが一番高い
 個性乱数余り：１</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">ものおとに　びんかん。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ものおとに　びんかん。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">物音に　敏感。</language>
 	</row>
 
 	<row id="trmemo_03_04_02">
@@ -1290,7 +1290,7 @@
 素早さが一番高い
 個性乱数余り：３</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">すこし　おちょうしもの。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">すこし　おちょうしもの。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">すこし　お調子者。</language>
 	</row>
 
 	<row id="trmemo_03_04_04">
@@ -1298,7 +1298,7 @@
 素早さが一番高い
 個性乱数余り：４</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">にげるのが　はやい。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">にげるのが　はやい。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">逃げるのが　早い。</language>
 	</row>
 
 	<row id="trmemo_03_05_00">
@@ -1306,7 +1306,7 @@
 特攻が一番高い
 個性乱数余り：０</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">こうきしんが　つよい。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">こうきしんが　つよい。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">好奇心が　強い。</language>
 	</row>
 
 	<row id="trmemo_03_05_01">
@@ -1314,7 +1314,7 @@
 特攻が一番高い
 個性乱数余り：１</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">イタズラが　すき。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">イタズラが　すき。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">イタズラが　好き。</language>
 	</row>
 
 	<row id="trmemo_03_05_02">
@@ -1322,7 +1322,7 @@
 特攻が一番高い
 個性乱数余り：２</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">ぬけめが　ない。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ぬけめが　ない。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">抜け目が　ない。</language>
 	</row>
 
 	<row id="trmemo_03_05_03">
@@ -1330,7 +1330,7 @@
 特攻一番高い
 個性乱数余り：３</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">かんがえごとが　おおい。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">かんがえごとが　おおい。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">考え事が　多い。</language>
 	</row>
 
 	<row id="trmemo_03_05_04">
@@ -1346,7 +1346,7 @@
 特防が一番高い
 個性乱数余り：０</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">きが　つよい。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">きが　つよい。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">気が　強い。</language>
 	</row>
 
 	<row id="trmemo_03_06_01">
@@ -1354,7 +1354,7 @@
 特防が一番高い
 個性乱数余り：１</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">ちょっぴり　みえっぱり。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ちょっぴり　みえっぱり。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ちょっぴり　見栄っ張り。</language>
 	</row>
 
 	<row id="trmemo_03_06_02">
@@ -1362,7 +1362,7 @@
 特防が一番高い
 個性乱数余り：２</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">まけんきが　つよい。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">まけんきが　つよい。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">負けん気が　強い。</language>
 	</row>
 
 	<row id="trmemo_03_06_03">
@@ -1370,7 +1370,7 @@
 特防一番高い
 個性乱数余り：３</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">まけずぎらい。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">まけずぎらい。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">負けず嫌い。</language>
 	</row>
 
 	<row id="trmemo_03_06_04">
@@ -1378,7 +1378,7 @@
 特防一番高い
 個性乱数余り：４</comment>
 		<language name="JPN" font=" 1:small" width="144" line="5">ちょっぴり　ごうじょう。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ちょっぴり　ごうじょう。</language>
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">ちょっぴり　強情。</language>
 	</row>
 
 	<row id="trmemo_01_T_01_01">
@@ -1400,7 +1400,7 @@
 ポケモンの　タマゴ。</language>
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]から
-もらった　ふしぎな
+もらった　不思議な
 ポケモンの　タマゴ。</language>
 	</row>
 
@@ -1425,7 +1425,7 @@
 </language>
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]年[2:01:２桁:6]月[2:01:２桁:7]日
 [FF:00:色:2][1:05:マップ名:8][FF:00:色:0]で
-手に入れた　ふしぎな
+手に入れた　不思議な
 ポケモンの　タマゴ。
 </language>
 	</row>
@@ -1452,7 +1452,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:0]年[2:01:２桁:1]月[2:01:２桁:2]日
 [FF:00:色:2][1:05:マップ名:4][FF:00:色:0]で
 手に入れた
-ふしぎな　ふしぎな
+不思議な　不思議な
 ポケモンの　タマゴ。</language>
 	</row>
 
@@ -1477,7 +1477,7 @@
 		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">２０[2:01:２桁:5]年[2:01:２桁:6]月[2:01:２桁:7]日
 [FF:00:色:1][1:05:マップ名:8][FF:00:色:0]で
 手に入れた　とっても
-ふしぎな　ふしぎな
+不思議な　不思議な
 ポケモンの　タマゴ。</language>
 	</row>
 
@@ -1488,9 +1488,9 @@
 なかから　おとが
 きこえてくる！
 もうすぐ　うまれそう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">「タマゴのようす」
-なかから　おとが
-きこえてくる！
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">「タマゴの様子」
+中から　音が
+聞こえてくる！
 もうすぐ　うまれそう！</language>
 	</row>
 
@@ -1501,8 +1501,8 @@
 ときどき　うごいている
 みたい。　うまれるまで
 もう　ちょっとかな？</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">「タマゴのようす」
-ときどき　うごいている
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">「タマゴの様子」
+ときどき　動いている
 みたい。　うまれるまで
 もう　ちょっとかな？</language>
 	</row>
@@ -1514,10 +1514,10 @@
 なにが　うまれてくるのかな？
 うまれるまで　まだまだ
 じかんが　かかりそう。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">「タマゴのようす」
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">「タマゴの様子」
 なにが　うまれてくるのかな？
 うまれるまで　まだまだ
-じかんが　かかりそう。</language>
+時間が　かかりそう。</language>
 	</row>
 
 	<row id="trmemo_01_T_02_04">
@@ -1527,10 +1527,10 @@
 この　タマゴは
 うまれるまで　かなり
 じかんが　かかりそう。</language>
-		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">「タマゴのようす」
+		<language name="JPN_KANJI" font=" 1:small" width="144" line="5">「タマゴの様子」
 この　タマゴは
 うまれるまで　かなり
-じかんが　かかりそう。</language>
+時間が　かかりそう。</language>
 	</row>
 
 	<flowchart-group-list>
