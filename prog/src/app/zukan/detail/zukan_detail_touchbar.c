@@ -155,7 +155,7 @@ static const ICON_CONST_SET form_icon_const_set[FORM_ICON_MAX] =
   { ZKND_TBAR_ICON_CUR_L,     { 184, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_L,    },
   { ZKND_TBAR_ICON_CUR_D,     { 160, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_D,    },
   { ZKND_TBAR_ICON_CUR_U,     { 136, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_U,    },
-  { FORM_CUSTOM_EXCHANGE,     {   0, ZKND_TBAR_ICON_Y       },    32,  ZKNDTL_CMD_FORM_EXCHANGE, },
+  { FORM_CUSTOM_EXCHANGE,     {   0, ZKND_TBAR_ICON_Y       },    48,  ZKNDTL_CMD_FORM_EXCHANGE, },
 };
 
 
@@ -870,23 +870,23 @@ static void Zukan_Detail_Touchbar_CreateForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
  
   // リソース読み込み
   {
-    ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_TOWNMAP_GRAPHIC, work->heap_id );
+    ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, work->heap_id );
     work->form_ncl = GFL_CLGRP_PLTT_RegisterEx(
                             handle,
-                            NARC_townmap_gra_tmap_obj_NCLR,
+                            NARC_zukan_gra_info_info_obj_NCLR,
                             draw_type,
-                            OBJ_PAL_POS_M_CUSTOM * 0x20, 2, OBJ_PAL_NUM_M_CUSTOM,
+                            OBJ_PAL_POS_M_CUSTOM * 0x20, 0, OBJ_PAL_NUM_M_CUSTOM,
                             work->heap_id );	
     work->form_ncg = GFL_CLGRP_CGR_Register(
                             handle,
-                            NARC_townmap_gra_tmap_obj_d_NCGR,
+                            NARC_zukan_gra_info_info_obj_NCGR,
                             FALSE,
                             draw_type,
                             work->heap_id );
     work->form_nce = GFL_CLGRP_CELLANIM_Register(
                             handle,
-                            NARC_townmap_gra_tmap_obj_d_NCER,
-                            NARC_townmap_gra_tmap_obj_d_NANR,
+                            NARC_zukan_gra_info_info_obj_NCER,
+                            NARC_zukan_gra_info_info_obj_NANR,
                             work->heap_id );
     GFL_ARC_CloseDataHandle( handle );
   }
@@ -924,9 +924,9 @@ static void Zukan_Detail_Touchbar_CreateForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
         icon_tbl[i].cg_idx            = work->form_ncg;         // キャラリソース
         icon_tbl[i].plt_idx           = work->form_ncl;         // パレットリソース
         icon_tbl[i].cell_idx          = work->form_nce;         // セルリソース
-        icon_tbl[i].active_anmseq     = 8;                         // アクティブのときのアニメ
-        icon_tbl[i].noactive_anmseq   = 12;                        // ノンアクティブのときのアニメ
-        icon_tbl[i].push_anmseq       = 10;                        // 押したときのアニメ（STOPになっていること）
+        icon_tbl[i].active_anmseq     = 14;                         // アクティブのときのアニメ
+        icon_tbl[i].noactive_anmseq   = 14;                        // ノンアクティブのときのアニメ
+        icon_tbl[i].push_anmseq       = 20;                        // 押したときのアニメ（STOPになっていること）
         icon_tbl[i].key               = PAD_BUTTON_A;              // キーで押したときに動作させたいならば、ボタン番号
         icon_tbl[i].se                = SEQ_SE_DECIDE1;            // 押したときにSEならしたいならば、SEの番号
       }
