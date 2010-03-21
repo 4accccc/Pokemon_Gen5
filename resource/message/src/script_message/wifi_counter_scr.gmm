@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-03-17T16:07:04"/>
+	<create user="matsumiya" host="W00224" date="2010-03-21T14:33:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="612" top="442" right="1317" bottom="1070" maximized="no" rayout="Vertical2">
+	<dialog left="1586" top="221" right="2254" bottom="803" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="1419" top="619" right="1802" bottom="1017" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="897" top="619" right="1280" bottom="1017" visible="yes"/>
+		<band id="0" index="1" style="0000" width="493"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="506"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="660"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -518,7 +518,7 @@ C-Gear入手前</comment>
 		<comment>GTSメニュー</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">せつめいを　きく</language>
-		<language name="JPN_KANJI" width="256">説明を　聞く</language>
+		<language name="JPN_KANJI" width="256">説明を聞く</language>
 	</row>
 
 	<row id="msg_gts_normal_win03" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
@@ -546,7 +546,7 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">くわしい　せつめいを
 ごきぼうですか？</language>
-		<language name="JPN_KANJI" width="256">くわしい　説明を
+		<language name="JPN_KANJI" width="256">詳しい　説明を
 ご希望ですか？</language>
 	</row>
 
@@ -609,7 +609,7 @@ C-Gear入手前</comment>
 		<comment>GTS-NEGOメニュー</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">せつめいを　きく</language>
-		<language name="JPN_KANJI" width="256">説明を　聞く</language>
+		<language name="JPN_KANJI" width="256">説明を聞く</language>
 	</row>
 
 	<row id="msg_gts_nego_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -635,7 +635,7 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">くわしい　せつめいを
 ごきぼうですか？</language>
-		<language name="JPN_KANJI" width="256">くわしい　説明を
+		<language name="JPN_KANJI" width="256">詳しい　説明を
 ご希望ですか？</language>
 	</row>
 
@@ -705,7 +705,7 @@ C-Gear入手前</comment>
 		<comment>BtlVideoメニュー</comment>
 		<attribute name="キャラ指定">BtlVideo</attribute>
 		<language name="JPN" width="256">せつめいを　きく</language>
-		<language name="JPN_KANJI" width="256">説明を　聞く</language>
+		<language name="JPN_KANJI" width="256">説明を聞く</language>
 	</row>
 
 	<row id="msg_btlvideo_win03" back-color="#80ffff,,,,,,,#80ffff,,,#80ffff,,,#80ffff,,,#80ffff,,">
@@ -742,7 +742,7 @@ C-Gear入手前</comment>
 		<comment>Musicalメニュー</comment>
 		<attribute name="キャラ指定">Musical</attribute>
 		<language name="JPN" width="256">せつめいを　きく</language>
-		<language name="JPN_KANJI" width="256">説明を　聞く</language>
+		<language name="JPN_KANJI" width="256">説明を聞く</language>
 	</row>
 
 	<row id="msg_musical_win03" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
@@ -772,7 +772,7 @@ C-Gear入手前</comment>
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">せつめいをきく</language>
-		<language name="JPN_KANJI" width="256">説明を　聞く</language>
+		<language name="JPN_KANJI" width="256">説明を聞く</language>
 	</row>
 
 	<row id="msg_rndmatch_01_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
