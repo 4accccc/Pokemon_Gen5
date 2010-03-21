@@ -196,6 +196,7 @@
 #define WK_SCENE_C03R0101_QUESTION       16584 /* 0x40c8 C03R0101：すれ違い調査隊 強制アンケートイベント用ワーク */
 #define WK_SCENE_R16R0201                16585 /* 0x40c9 迷いの森：ゾロアークイベント用ワーク */
 #define WK_SCENE_D13R0101                16586 /* 0x40ca P2研究所：インセクタイベント用ワーク */
+#define WK_SCENE_R08                     16587 /* 0x40cb ８番道路：イベント用ワーク */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

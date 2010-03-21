@@ -313,7 +313,7 @@
 #define FE_AMUSEMENT_TR02_TALK             297 /* 0x0129 ライモン遊園地：観覧車トレーナー（夏）と会話したフラグ */
 #define FE_AMUSEMENT_TR03_TALK             298 /* 0x012a ライモン遊園地：観覧車トレーナー（秋）と会話したフラグ */
 #define FE_AMUSEMENT_TR04_TALK             299 /* 0x012b ライモン遊園地：観覧車トレーナー（冬）と会話したフラグ */
-		/* not used   300(0x012c) */
+#define FE_D08_PACKAGEPOKE_END             300 /* 0x012c リュウラセンの塔：Nとパッケージポケモンのイベントを終えた */
 		/* not used   301(0x012d) */
 		/* not used   302(0x012e) */
 		/* not used   303(0x012f) */
@@ -760,7 +760,7 @@
 #define FV_T01R0101_HANDSOME_MAMA          736 /* 0x02e0 自宅１階：ママの変装をしたハンサム */
 #define FV_C08_LEADERB_01                  737 /* 0x02e1 ソウリュウシティ：アイリス */
 #define FV_D06R0201_PLASMA                 738 /* 0x02e2 電気洞窟内のプラズマ団したっぱ（視線トレーナー） */
-		/* not used   739(0x02e3) */
+#define FV_R08_STOPPER_01                  739 /* 0x02e3 ８番道路のストッパー */
 		/* not used   740(0x02e4) */
 		/* not used   741(0x02e5) */
 		/* not used   742(0x02e6) */
