@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-21T12:59:55"/>
+	<create user="shimoyamada" host="W00184" date="2010-03-21T15:06:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="137" top="327" right="842" bottom="955" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="70" top="18" right="543" bottom="416" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -505,9 +505,9 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">データを送る</language>
 	</row>
 
-	<row id="msg_202">
-		<language name="JPN" font=" 1:small" width="216">さいしん３０こ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">最新３０個</language>
+	<row id="msg_202" back-color=",,,,,#ffff80,,,,,,#ffff80,,,,,,">
+		<language name="JPN" font=" 1:small" width="216">さいしん３０けん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">最新３０件</language>
 	</row>
 
 	<row id="msg_203">
@@ -2199,14 +2199,14 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">記録を　消しました！</language>
 	</row>
 
-	<row id="msg_info_017">
-		<language name="JPN" font=" 1:small" width="216">ドレスアップショットを　おくっています……</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ドレスアップショットを　送っています……</language>
+	<row id="msg_info_017" back-color=",,,,,#ffff80,,,,,,#ffff80,,,,,,">
+		<language name="JPN" font=" 1:small" width="216">ミュージカルショットを　おくっています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ミュージカルショットを　送っています……</language>
 	</row>
 
-	<row id="msg_info_018">
-		<language name="JPN" font=" 1:small" width="216">ドレスアップショットを　うけとっています……</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ドレスアップショットを　受け取っています……</language>
+	<row id="msg_info_018" back-color=",,,,,#ffff80,,,,,,#ffff80,,,,,,">
+		<language name="JPN" font=" 1:small" width="216">ミュージカルショットを　うけとっています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ミュージカルショットを　受け取っています……</language>
 	</row>
 
 	<row id="msg_info_019">
@@ -2219,11 +2219,11 @@
 		<language name="JPN_KANJI" font=" 1:small" width="216">ボックスショットを　受け取っています……</language>
 	</row>
 
-	<row id="msg_info_021">
+	<row id="msg_info_021" back-color=",,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<language name="JPN" font=" 1:small" width="216">おくる　しゃしんが　ありません
-コガネの　ちかつうろで　つくろう</language>
+ポケモンミュージカルに　さんかしよう！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">送る　写真が　ありません
-コガネの　地下通路で　つくろう</language>
+ミュージカルに　参加しよう！</language>
 	</row>
 
 	<row id="msg_info_022">
