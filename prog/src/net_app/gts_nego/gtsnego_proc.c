@@ -1148,7 +1148,8 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
   else if( PANEL_DOWNSCROLL_ == scrollType){
     GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
     GTSNEGO_MESSAGE_FriendListDownEnd(pWork->pMessageWork);
-    GTSNEGO_DISP_UnionListDown(pWork->pDispWork, GTSNEGO_GetMyStatus(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-1)));
+    OS_TPrintf("PANEL_DOWNSCROLL_ %d\n",pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3));
+    GTSNEGO_DISP_UnionListDown(pWork->pDispWork, GTSNEGO_GetMyStatus(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3)));
   }
   if(ret != PANEL_NONESCROLL_){
     return;
@@ -1196,7 +1197,7 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
   }
 
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){  // 決定
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){  // キーでの決定
     PMSND_PlaySystemSE(_SE_DECIDE);
     pWork->selectFriendIndex = pWork->key3;
     _CHANGE_STATE(pWork,_friendSelectDecide);
@@ -1204,7 +1205,7 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
   }
 
 
-  {
+  {  //TPで誰を選んだのか
     int trgindex=GFL_UI_TP_HitTrg(_tp_data2);
     switch(trgindex){
     case 0:
@@ -1219,11 +1220,22 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
       return;
     }
   }
-  if(GFL_UI_TP_HitCont(_tp_data3)==0){
+  if(GFL_UI_TP_HitCont(_tp_data3)==0){   //タッチパネルのスライドバー
     u32 x,y;
     if(GFL_UI_TP_GetPointCont(&x, &y)==TRUE){
-      GTSNEGO_DISP_ScrollChipDispMouse(pWork->pDispWork, y, pWork->scrollPanelCursor.listmax);
+      int no = GTSNEGO_DISP_ScrollChipDispMouse(pWork->pDispWork, y,
+                                                pWork->scrollPanelCursor.listmax);
+      if(pWork->scrollPanelCursor.oamlistpos!=no){
+        pWork->scrollPanelCursor.oamlistpos = no;
+        GTSNEGO_MESSAGE_FriendListRenew(pWork->pMessageWork, pWork->pGameData,
+                                        pWork->scrollPanelCursor.oamlistpos-2 );
+        GTSNEGO_DISP_UnionListRenew(pWork->pDispWork, pWork->pGameData,
+                                    pWork->scrollPanelCursor.oamlistpos-2 );
+        GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData,
+                                           pWork->scrollPanelCursor.oamlistpos-2);
+      }
     }
+    return;
   }
   TOUCHBAR_Main(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));
   switch( TOUCHBAR_GetTrg(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork))){

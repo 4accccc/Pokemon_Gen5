@@ -963,6 +963,35 @@ void GTSNEGO_MESSAGE_FriendListDownEnd(GTSNEGO_MESSAGE_WORK* pWork)
 }
 
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	フレンドリストの全書き換え
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_MESSAGE_FriendListRenew(GTSNEGO_MESSAGE_WORK* pWork,GAMEDATA* pGameData, int no)
+{
+  MYSTATUS* pMyStatus;
+  int i;
+
+  for( i =0;i < SCROLL_PANEL_NUM;i++){
+    int x = i+no;
+    if(x >= 0){
+      pMyStatus = GTSNEGO_GetMyStatus(pGameData, x);
+      if(pMyStatus){
+        _PrintMyStatusDisp(pWork, pMyStatus, i);
+      }
+    }
+  }
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_S);
+}
+
+
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	フレンドリストのアップスタート

@@ -1361,6 +1361,31 @@ void GTSNEGO_DISP_UnionListUp(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy)
   }
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	UNIONアイコン全部更新
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_DISP_UnionListRenew(GTSNEGO_DISP_WORK* pWork,GAMEDATA* pGameData, int no)
+{
+  MYSTATUS* pMyStatus;
+  int i;
+
+  for( i =0;i < SCROLL_PANEL_NUM;i++){
+    int x = i+no;
+    if(x >= 0){
+      pMyStatus = GTSNEGO_GetMyStatus(pGameData, x);
+      if(pMyStatus){
+        GTSNEGO_DISP_UnionListDisp(pWork, pMyStatus, i);
+      }
+    }
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	スクロールカーソルの位置
@@ -1371,14 +1396,18 @@ void GTSNEGO_DISP_UnionListUp(GTSNEGO_DISP_WORK* pWork,MYSTATUS* pMy)
 
 static int _getScrollCurPos(GTSNEGO_DISP_WORK* pWork,int pos,int max)
 {
+  int ret = 0;
+  
   if(pos == 0){
-    return 0;
+    ret = 0;
   }
   else if(pos == (max-1)){
-    return SCROLLBAR_LENGTH;
+    ret = SCROLLBAR_LENGTH;
   }
-  
-  return (SCROLLBAR_LENGTH * pos) / max;
+  else{
+    ret = (SCROLLBAR_LENGTH * pos) / max;
+  }
+  return (ret + _OFFSET_SCROLL);
 }
 
 
@@ -1393,11 +1422,14 @@ static int _getScrollCurPos(GTSNEGO_DISP_WORK* pWork,int pos,int max)
 
 static int _touchToCurcorPos(GTSNEGO_DISP_WORK* pWork,int y,int max)
 {
-  float yf = y - SCROLLBAR_TOP;
+  float yf = y - SCROLLBAR_TOP;// - _OFFSET_SCROLL;
   float length = SCROLLBAR_LENGTH;
   float ansf;
 
-  length = length / max;
+  if(max <= 3){
+    return 0;
+  }
+  length = length / (max-3);
   ansf = yf / length;
 
   return (int)ansf;
@@ -1427,19 +1459,20 @@ void GTSNEGO_DISP_ScrollChipDisp(GTSNEGO_DISP_WORK* pWork,int index,int max)
 /**
  *	@brief	スクロールバーのチップの位置変更
  *	@param	GTSNEGO_DISP_WORK
- *	@return	none
+ *	@return	カーソル位置
  */
 //-----------------------------------------------------------------------------
 
-void GTSNEGO_DISP_ScrollChipDispMouse(GTSNEGO_DISP_WORK* pWork,int y,int max)
+int GTSNEGO_DISP_ScrollChipDispMouse(GTSNEGO_DISP_WORK* pWork,int y,int max)
 {
-
+  int ret;
   GFL_CLACTPOS pos;
 
   GFL_CLACT_WK_GetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
   pos.y = y;
   GFL_CLACT_WK_SetPos(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP], &pos, CLSYS_DRAW_SUB);
-
+  ret = _touchToCurcorPos( pWork, y, max);
+  return ret;
 }
 
 
