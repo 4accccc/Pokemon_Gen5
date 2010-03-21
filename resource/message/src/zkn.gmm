@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-20T21:39:54"/>
+	<create user="matsumiya" host="W00224" date="2010-03-21T13:10:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1704" top="274" right="2409" bottom="902" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -335,12 +335,12 @@
 
 	<row id="ZNK_POKELIST_00" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<language name="JPN" font=" 1:small" width="72">みつけた　かず</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">みつけた　かず</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">見つけた　数</language>
 	</row>
 
 	<row id="ZNK_POKELIST_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<language name="JPN" font=" 1:small" width="84">つかまえた　かず</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">つかまえた　かず</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">捕まえた　数</language>
 	</row>
 
 	<row id="ZNK_POKELIST_10" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
@@ -381,7 +381,7 @@
 
 	<row id="ZNK_POKELIST_16" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<language name="JPN" font=" 1:small" width="84">せつめい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">せつめい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">説明</language>
 	</row>
 
 	<row id="ZNK_POKELIST_17" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
@@ -392,108 +392,108 @@
 
 	<row id="ZNK_POKELIST_19" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<language name="JPN" font=" 1:small" width="84">たかさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">たかさ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">高さ</language>
 	</row>
 
 	<row id="ZNK_POKELIST_20" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<language name="JPN" font=" 1:small" width="84">おもさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">おもさ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">重さ</language>
 	</row>
 
 	<row id="ZNK_SEARCH_INFO_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">『けんさく　モード』</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">『けんさく　モード』</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">『検索モード』</language>
 	</row>
 
 	<row id="ZNK_SEARCH_INFO_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">じょうけんを　いれて　ください</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">じょうけんを　いれて　ください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">条件を　入力してください</language>
 	</row>
 
 	<row id="ZNK_SEARCH_INFO_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">『けんさくの　けっか』</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">『けんさくの　けっか』</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">『検索の　結果』</language>
 	</row>
 
 	<row id="ZNK_SEARCH_INFO_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">みつかったかず　[2:02:３桁:0]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">みつかったかず　[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">見つかった数　[2:02:３桁:0]</language>
 	</row>
 
 	<row id="ZNK_SEARCH_INFO_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ずかんの　ならびを　してい　します</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">ずかんの　ならびを　してい　します</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">図鑑の　並びを　指定します</language>
 	</row>
 
 	<row id="ZNK_SEARCH_INFO_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">なまえの　かしらもじを　してい　します</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">なまえの　かしらもじを　してい　します</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">名前の　頭文字を　指定します</language>
 	</row>
 
 	<row id="ZNK_SEARCH_INFO_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">タイプを　してい　します</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">タイプを　してい　します</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">タイプを　指定します</language>
 	</row>
 
 	<row id="ZNK_SEARCH_INFO_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">おもさの　はんいを　してい　します</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">おもさの　はんいを　してい　します</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">重さの　範囲を　指定します</language>
 	</row>
 
 	<row id="ZNK_SEARCH_INFO_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">たかさの　はんいを　してい　します</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">たかさの　はんいを　してい　します</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">高さの　範囲を　指定します</language>
 	</row>
 
 	<row id="ZNK_SEARCH_INFO_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">かたちを　してい　します</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">かたちを　してい　します</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">形を　指定します</language>
 	</row>
 
 	<row id="ZNK_SEARCH_INFO_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">せいそく　ちいきを　してい　します</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">せいそく　ちいきを　してい　します</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">生息地域を　指定します</language>
 	</row>
 
 	<row id="ZNK_SEARCH_INFO_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">じょうけんを　みたす　ポケモンが</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">じょうけんを　みたす　ポケモンが</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">条件を　満たす　ポケモンが</language>
 	</row>
 
 	<row id="ZNK_SEARCH_INFO_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">みつかりませんでした……</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">みつかりませんでした……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">見つかりませんでした……</language>
 	</row>
 
 	<row id="ZNK_SEARCH_INFO_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">けんさく　しています……</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">けんさく　しています……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">検索しています……</language>
 	</row>
 
 	<row id="ZNK_SEARCH_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ならびじゅん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">ならびじゅん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">並び順</language>
 	</row>
 
 	<row id="ZNK_SEARCH_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">なまえ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">なまえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">名前</language>
 	</row>
 
 	<row id="ZNK_SEARCH_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
@@ -505,25 +505,25 @@
 	<row id="ZNK_SEARCH_14" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">たかさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">たかさ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">高さ</language>
 	</row>
 
 	<row id="ZNK_SEARCH_15" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">おもさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">おもさ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">重さ</language>
 	</row>
 
 	<row id="ZNK_SEARCH_16" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ちいき</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">ちいき</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">地域</language>
 	</row>
 
 	<row id="ZNK_SEARCH_17" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">かたち</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">かたち</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">形</language>
 	</row>
 
 	<row id="ZNK_SEARCH_22" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
@@ -565,7 +565,7 @@
 	<row id="ZNK_SEARCH_30" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">けってい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">けってい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">決定</language>
 	</row>
 
 	<row id="ZNK_SEARCH_31" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
@@ -577,37 +577,37 @@
 	<row id="ZNK_SEARCH_SORT_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ばんごう</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">ばんごう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">番号</language>
 	</row>
 
 	<row id="ZNK_SEARCH_SORT_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ごじゅうおん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">ごじゅうおん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">五十音</language>
 	</row>
 
 	<row id="ZNK_SEARCH_SORT_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">おもい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">おもい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">重い</language>
 	</row>
 
 	<row id="ZNK_SEARCH_SORT_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">かるい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">かるい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">軽い</language>
 	</row>
 
 	<row id="ZNK_SEARCH_SORT_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">たかい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">たかい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">高い</language>
 	</row>
 
 	<row id="ZNK_SEARCH_SORT_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ひくい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">ひくい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">低い</language>
 	</row>
 
 	<row id="ZNK_SEARCH_TYPE_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
@@ -733,7 +733,7 @@
 	<row id="ZNK_SEARCH_AREA_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
 		<comment>検索画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ふめい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">ふめい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">不明</language>
 	</row>
 
 	<row id="ZNK_SEARCH_AREA_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,#ffff80,#ffff80,,,,,,,">
@@ -1026,65 +1026,65 @@
 	<row id="ZNK_ZUKAN_TEXT_00_0" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>異言語図鑑の説明テキスト（ダミー）</comment>
 		<language name="JPN" font=" 1:small" width="72">にほんごのずかん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">にほんごのずかん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">日本語の図鑑</language>
 	</row>
 
 	<row id="ZNK_ZUKAN_TEXT_00" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>異言語図鑑の説明テキスト</comment>
 		<language name="JPN" font=" 1:small" width="108">えいごのずかん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="108">えいごのずかん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="108">英語の図鑑</language>
 	</row>
 
 	<row id="ZNK_ZUKAN_TEXT_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>異言語図鑑の説明テキスト</comment>
 		<language name="JPN" font=" 1:small" width="108">フランスごのずかん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="108">フランスごのずかん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="108">フランス語の図鑑</language>
 	</row>
 
 	<row id="ZNK_ZUKAN_TEXT_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>異言語図鑑の説明テキスト</comment>
 		<language name="JPN" font=" 1:small" width="108">ドイツごのずかん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="108">ドイツごのずかん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="108">ドイツ語の図鑑</language>
 	</row>
 
 	<row id="ZNK_ZUKAN_TEXT_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>異言語図鑑の説明テキスト</comment>
 		<language name="JPN" font=" 1:small" width="108">イタリアごのずかん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="108">イタリアごのずかん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="108">イタリア語の図鑑</language>
 	</row>
 
 	<row id="ZNK_ZUKAN_TEXT_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>異言語図鑑の説明テキスト</comment>
 		<language name="JPN" font=" 1:small" width="108">スペインごのずかん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="108">スペインごのずかん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="108">スペイン語の図鑑</language>
 	</row>
 
 	<row id="ZNK_RANGE_00" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<language name="JPN" font=" 1:small" width="108">せいそくち　ふめい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="108">せいそくち　ふめい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="108">生息地不明</language>
 	</row>
 
 	<row id="ZNK_RANGE_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<comment>時間帯用</comment>
 		<language name="JPN" font=" 1:small" width="48">あさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">あさ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">朝</language>
 	</row>
 
 	<row id="ZNK_RANGE_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<comment>時間帯用</comment>
 		<language name="JPN" font=" 1:small" width="48">ひる</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">ひる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">昼</language>
 	</row>
 
 	<row id="ZNK_RANGE_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<comment>時間帯用</comment>
 		<language name="JPN" font=" 1:small" width="48">よる</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">よる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">夜</language>
 	</row>
 
 	<row id="ZNK_RANGE_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<language name="JPN" font=" 1:small" width="48">きりかえ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">きりかえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">切り替え</language>
 	</row>
 
 	<row id="ZNK_RANGE_06" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
@@ -1096,65 +1096,65 @@
 	<row id="ZNK_RANGE_07" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<comment>分布リストデフォルト</comment>
 		<language name="JPN" font=" 1:small" width="48">すべて　ひょうじ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">すべて　ひょうじ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">すべて表示</language>
 	</row>
 
 	<row id="ZNK_RANGE_08" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<comment>分布リストデフォルト</comment>
 		<language name="JPN" font=" 1:small" width="48">すべて　ひょうじ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">すべて　ひょうじ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">すべて表示</language>
 	</row>
 
 	<row id="ZNK_BIG_00" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<language name="JPN" font=" 1:small" width="72">おおきさ　くらべ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">おおきさ　くらべ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">大きさ比べ</language>
 	</row>
 
 	<row id="ZNK_BIG_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<language name="JPN" font=" 1:small" width="72">おもさ　くらべ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">おもさ　くらべ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">重さ比べ</language>
 	</row>
 
 	<row id="ZNK_HEIGHT_00" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<comment>男の子主人公の身長</comment>
-		<language name="JPN" font=" 1:small" width="84">１．５０ｍ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">１．５０ｍ</language>
+		<language name="JPN" font=" 1:small" width="84">１．６０ｍ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">１．６０ｍ</language>
 	</row>
 
 	<row id="ZNK_HEIGHT_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<comment>女の子主人公の身長</comment>
-		<language name="JPN" font=" 1:small" width="84">１．５２ｍ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">１．５２ｍ</language>
+		<language name="JPN" font=" 1:small" width="84">１．４８ｍ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">１．４８ｍ</language>
 	</row>
 
 	<row id="ZNK_WEIGHT_00" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<comment>男の子主人公の体重</comment>
-		<language name="JPN" font=" 1:small" width="84">４０．０ｋｇ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">４０．０ｋｇ</language>
+		<language name="JPN" font=" 1:small" width="84">４５．０ｋｇ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">４５．０ｋｇ</language>
 	</row>
 
 	<row id="ZNK_WEIGHT_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<comment>女の子主人公の体重</comment>
-		<language name="JPN" font=" 1:small" width="84">４１．０ｋｇ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">４１．０ｋｇ</language>
+		<language name="JPN" font=" 1:small" width="84">３８．０ｋｇ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">３８．０ｋｇ</language>
 	</row>
 
 	<row id="ZNK_TITLE_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<comment>各画面タイトル</comment>
 		<language name="JPN" font=" 1:small" width="48">ぶんぷ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">ぶんぷ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">分布</language>
 	</row>
 
 	<row id="ZNK_TITLE_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,#ff78ff,#ff78ff,,,,,,,">
 		<comment>各画面タイトル</comment>
 		<language name="JPN" font=" 1:small" width="48">おおきさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">おおきさ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">大きさ</language>
 	</row>
 
 	<row id="ZKN_POKEGET_00" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<comment>ポケモン捕獲後の図鑑画面</comment>
 		<language name="JPN" font=" 1:small" width="84">ポケモンずかん　とうろく　かんりょう！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="84">ポケモンずかん　とうろく　かんりょう！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="84">ポケモン図鑑　登録完了！</language>
 	</row>
 
 	<row id="ZKN_DNA_00" back-color="#ffff00,,,,,#ffff00,,,,,,,,,,,,">
@@ -1298,22 +1298,22 @@
 
 	<row id="ZNK_SHAPE_TEXT_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<language name="JPN" font=" 1:small" width="80">みくらべる</language>
-		<language name="JPN_KANJI" font=" 1:small" width="80">みくらべる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="80">見比べる</language>
 	</row>
 
 	<row id="ZNK_SHAPE_TEXT_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<language name="JPN" font=" 1:small" width="148">[1:01:ポケモン種族名:0]を　みくらべる</language>
-		<language name="JPN_KANJI" font=" 1:small" width="148">[1:01:ポケモン種族名:0]を　みくらべる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="148">[1:01:ポケモン種族名:0]を　見比べる</language>
 	</row>
 
 	<row id="ZNK_SHAPE_TEXT_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<language name="JPN" font=" 1:small" width="72">すがた</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">すがた</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">姿</language>
 	</row>
 
 	<row id="ZNK_SHAPE_TEXT_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
 		<language name="JPN" font=" 1:small" width="72">きりかえる</language>
-		<language name="JPN_KANJI" font=" 1:small" width="72">きりかえる</language>
+		<language name="JPN_KANJI" font=" 1:small" width="72">切り替える</language>
 	</row>
 
 	<row id="ZNK_SHAPE_TEXT_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,#ff8080,#ff8080,,,,,,,">
@@ -1337,7 +1337,7 @@
 		<comment>ポケモン捕獲後の図鑑画面</comment>
 		<language name="JPN" font=" 1:small" width="216">つかまえた　[1:01:ポケモン種族名:0]に
 ニックネームを　つけますか？</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">つかまえた　[1:01:ポケモン種族名:0]に
+		<language name="JPN_KANJI" font=" 1:small" width="216">捕まえた　[1:01:ポケモン種族名:0]に
 ニックネームを　つけますか？</language>
 	</row>
 
