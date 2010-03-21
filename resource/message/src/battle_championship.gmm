@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-03-14T15:58:37"/>
+	<create user="matsumiya" host="W00224" date="2010-03-21T13:29:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="157" top="475" right="862" bottom="1103" maximized="no" rayout="Vertical2">
+	<dialog left="1567" top="238" right="2270" bottom="786" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="685" top="9" right="1158" bottom="407" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="528"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="695"/>
+		<band id="3" index="3" style="0000" width="695"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -336,7 +336,7 @@
 	<row id="BC_STR_01">
 		<language name="JPN" width="256">ポケモン　バトルたいかい　へ
 ようこそ！</language>
-		<language name="JPN_KANJI" width="256">ポケモン　バトル大会　へ
+		<language name="JPN_KANJI" width="256">ポケモン　バトル大会へ
 ようこそ！</language>
 	</row>
 
@@ -404,12 +404,13 @@
 	</row>
 
 	<row id="BC_STR_03">
-		<language name="JPN" width="256">Ｗｉ－Ｆｉ大会は
+		<language name="JPN" width="256">Ｗｉ－Ｆｉたいかいは
 ＧＰＦの　ホームページで[BE:00:ページ切り替え（行送り）]
-登録することで　参加できます[BE:01:ページ切り替え（クリア）]
-大会のルールや　開催期間は
-大好きクラブホームページで[BE:00:ページ切り替え（行送り）]
-確認してください[BE:01:ページ切り替え（クリア）]</language>
+とうろく　すると　さんか　できます[BE:01:ページ切り替え（クリア）]
+たいかいの　ルールや
+かいさい　きかんは[BE:00:ページ切り替え（行送り）]
+だいすきクラブ　ホームページで[BE:00:ページ切り替え（行送り）]
+かくにん　してください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ大会は
 ＧＰＦの　ホームページで[BE:00:ページ切り替え（行送り）]
 登録することで　参加できます[BE:01:ページ切り替え（クリア）]
@@ -455,12 +456,14 @@
 	</row>
 
 	<row id="BC_STR_07">
-		<language name="JPN" width="256">ライブ大会は
+		<language name="JPN" width="256">ライブたいかいは
 ＧＰＦの　ホームページで[BE:00:ページ切り替え（行送り）]
-登録することで　参加できます[BE:01:ページ切り替え（クリア）]
-大会のルールや　開催期間は
-大好きクラブホームページで[BE:00:ページ切り替え（行送り）]
-確認してください[BE:01:ページ切り替え（クリア）]</language>
+とうろく　することで[BE:00:ページ切り替え（行送り）]
+さんか　できます[BE:01:ページ切り替え（クリア）]
+たいかいの　ルールや
+かいさい　きかんは[BE:00:ページ切り替え（行送り）]
+だいすきクラブホームページで[BE:00:ページ切り替え（行送り）]
+かくにん　してください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ライブ大会は
 ＧＰＦの　ホームページで[BE:00:ページ切り替え（行送り）]
 登録することで　参加できます[BE:01:ページ切り替え（クリア）]
