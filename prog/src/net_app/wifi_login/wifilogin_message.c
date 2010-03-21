@@ -32,6 +32,8 @@
 #include "sound/pm_sndsys.h"
 #include "../../field/event_ircbattle.h"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
+#include "system/time_icon.h"
+#include "system/gfl_use.h"
 
 #include "wifilogin_local.h"
 #include "wifi_login.naix"
@@ -113,6 +115,8 @@ struct _WIFILOGIN_MESSAGE_WORK {
   WIFILOGIN_DISPLAY display;
 
   WIFILOGIN_YESNO_WORK  yesno_wk;
+
+  TIMEICON_WORK *timeIcon;
 };
 
 
@@ -150,14 +154,10 @@ WIFILOGIN_MESSAGE_WORK* WIFILOGIN_MESSAGE_Init(HEAPID id,int msg_dat, WIFILOGIN_
     PALTYPE paltype;
     if( pWork->display == WIFILOGIN_DISPLAY_DOWN )
     { 
-      GFL_NET_WirelessIconEasyXY(GFL_WICON_POSX, GFL_WICON_POSY, TRUE, HEAPID_WORLDTRADE);
-      GFL_NET_WirelessIconEasy_HoldLCD( FALSE, pWork->heapID );
       paltype = PALTYPE_SUB_BG;
     }
     else
     { 
-      GFL_NET_WirelessIconEasyXY(GFL_WICON_POSX, GFL_WICON_POSY, TRUE, HEAPID_WORLDTRADE);
-      GFL_NET_WirelessIconEasy_HoldLCD( TRUE, pWork->heapID );
       paltype = PALTYPE_MAIN_BG;
     }
     GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, paltype,
@@ -176,6 +176,13 @@ void WIFILOGIN_MESSAGE_Main(WIFILOGIN_MESSAGE_WORK* pWork)
 
 void WIFILOGIN_MESSAGE_End(WIFILOGIN_MESSAGE_WORK* pWork)
 {
+  if( pWork->timeIcon )
+  { 
+    TILEICON_Exit( pWork->timeIcon );
+    pWork->timeIcon = NULL;
+  }
+
+
   WIFILOGIN_MESSAGE_TitleEnd( pWork );
   GFL_BG_FreeCharacterArea(WifiLogin_Message_GetTextFrame( pWork->display ),
       GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
@@ -251,6 +258,22 @@ void WIFILOGIN_MESSAGE_InfoMessageDisp(WIFILOGIN_MESSAGE_WORK* pWork,int msgid)
   GFL_BG_LoadScreenV_Req(WifiLogin_Message_GetTextFrame( pWork->display ));
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   説明ウインドウ表示  タイムアイコン版
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void WIFILOGIN_MESSAGE_InfoMessageDispWaitIcon(WIFILOGIN_MESSAGE_WORK* pWork,int msgid)
+{ 
+  WIFILOGIN_MESSAGE_InfoMessageDisp(pWork,msgid);
+
+  if( pWork->timeIcon == NULL )
+  { 
+    pWork->timeIcon = TIMEICON_Create( GFUser_VIntr_GetTCBSYS(), pWork->infoDispWin, 15, TIMEICON_DEFAULT_WAIT, pWork->heapID );
+  }
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -290,6 +313,12 @@ BOOL WIFILOGIN_MESSAGE_InfoMessageEndCheck(WIFILOGIN_MESSAGE_WORK* pWork)
 
 void WIFILOGIN_MESSAGE_InfoMessageEnd(WIFILOGIN_MESSAGE_WORK* pWork)
 {
+  if( pWork->timeIcon )
+  { 
+    TILEICON_Exit( pWork->timeIcon );
+    pWork->timeIcon = NULL;
+  }
+
   BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
   GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
   GFL_BG_LoadScreenV_Req(WifiLogin_Message_GetTextFrame( pWork->display ));

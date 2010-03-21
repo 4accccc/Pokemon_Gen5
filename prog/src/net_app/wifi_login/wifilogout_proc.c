@@ -164,8 +164,21 @@ static GFL_PROC_RESULT WIFILOGOUT_PROC_Init
   
   if( p_param->bg == WIFILOGIN_BG_NORMAL )
   { 
+    WIFILOGIN_MESSAGE_TitleDisp( p_wk->p_message, dwc_title_0001);
     PMSND_PlayBGM( SEQ_BGM_WIFI_ACCESS );
   }
+
+  GFL_NET_ReloadIcon();
+
+  if( p_param->display == WIFILOGIN_DISPLAY_DOWN )
+  { 
+    GFL_NET_WirelessIconEasy_HoldLCD(FALSE, p_wk->heapID);
+  }
+  else
+  { 
+    GFL_NET_WirelessIconEasy_HoldLCD(TRUE, p_wk->heapID);
+  }
+  GFL_NET_ReloadIcon();
 
   return GFL_PROC_RES_FINISH;
 }
@@ -185,8 +198,13 @@ static GFL_PROC_RESULT WIFILOGOUT_PROC_Exit
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 { 
   WIFILOGOUT_WORK   *p_wk     = p_wk_adrs;
+  WIFILOGOUT_PARAM  *p_param  = p_param_adrs;
 
   //ƒ‚ƒWƒ…[ƒ‹”jŠü
+  if( p_param->bg == WIFILOGIN_BG_NORMAL )
+  { 
+    WIFILOGIN_MESSAGE_TitleEnd(p_wk->p_message);
+  }
   WIFILOGIN_MESSAGE_End( p_wk->p_message );
   WIFILOGIN_DISP_End( p_wk->p_display );
 
@@ -340,7 +358,7 @@ static void SEQFUNCTION_WaitFadeIn( WIFILOGOUT_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SEQFUNCTION_StartDisConnectMessage( WIFILOGOUT_WORK *p_wk )
 { 
-  WIFILOGIN_MESSAGE_InfoMessageDisp( p_wk->p_message, dwc_message_0011 );
+  WIFILOGIN_MESSAGE_InfoMessageDispWaitIcon( p_wk->p_message, dwc_message_0011 );
   SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_WaitDisConnectMessage );
 }
 

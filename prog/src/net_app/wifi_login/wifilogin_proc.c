@@ -630,7 +630,7 @@ static void _connectingWait(WIFILOGIN_WORK* pWork)
     return;
   }
   if( GFL_NET_DWC_GetSaving() && pWork->bSaving==FALSE) {  //セーブの必要が生じた
-    WIFILOGIN_MESSAGE_InfoMessageDisp(pWork->pMessageWork, dwc_message_0015);
+    WIFILOGIN_MESSAGE_InfoMessageDispWaitIcon(pWork->pMessageWork, dwc_message_0015);
     _CHANGE_STATE(pWork, _saveingStart);
   }
   else{
@@ -663,10 +663,18 @@ static void _connectionStart(WIFILOGIN_WORK* pWork)
   GFL_NET_Init(&aGFLNetInit, NULL, pWork);	//通信初期化
   GFL_NET_StateWifiEnterLogin();
   GFL_NET_ReloadIcon();
-  GFL_NET_WirelessIconEasy_HoldLCD(TRUE, pWork->heapID);
+
+  if( pWork->dbw->display == WIFILOGIN_DISPLAY_DOWN )
+  { 
+    GFL_NET_WirelessIconEasy_HoldLCD(FALSE, pWork->heapID);
+  }
+  else
+  { 
+    GFL_NET_WirelessIconEasy_HoldLCD(TRUE, pWork->heapID);
+  }
   GFL_NET_ReloadIcon();
 
-  WIFILOGIN_MESSAGE_InfoMessageDisp(pWork->pMessageWork, dwc_message_0008);
+  WIFILOGIN_MESSAGE_InfoMessageDispWaitIcon(pWork->pMessageWork, dwc_message_0008);
 
   WIFILOGIN_DISP_StartSmoke(pWork->pDispWork);
 

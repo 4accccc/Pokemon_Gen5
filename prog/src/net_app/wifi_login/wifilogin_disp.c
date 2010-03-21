@@ -237,7 +237,7 @@ static void settingMainBgControl(WIFILOGIN_DISP_WORK* pWork,int frameno)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
-      1, 0, 0, FALSE
+      0, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -253,7 +253,7 @@ static void settingMainBgControl(WIFILOGIN_DISP_WORK* pWork,int frameno)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
+      1, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -320,7 +320,7 @@ static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork,int frameno)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
-      1, 0, 0, FALSE
+      0, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -336,7 +336,7 @@ static void settingSubBgControl(WIFILOGIN_DISP_WORK* pWork,int frameno)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
+      1, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
