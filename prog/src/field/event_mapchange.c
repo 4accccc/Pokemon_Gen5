@@ -1251,6 +1251,7 @@ GMEVENT* EVENT_ChangeMapPos( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem );
+  dir = EXITDIR_fromDIR( dir );
   LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z ); 
   work->exit_type          = EXIT_TYPE_NONE;
   work->seasonUpdateEnable = seasonUpdateEnable;

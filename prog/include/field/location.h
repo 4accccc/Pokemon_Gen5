@@ -12,6 +12,7 @@
 #pragma once
 
 #include "field/rail_location.h"
+#include "field/eventdata_type.h" //EXIT_DIR
 
 //=============================================================================
 //=============================================================================
@@ -147,5 +148,8 @@ extern void LOCATION_Get3DPos( const LOCATION * loc, VecFx32 * pos );
 extern void LOCATION_SetRailLocation( LOCATION * loc, const RAIL_LOCATION * location );
 extern void LOCATION_GetRailLocation( const LOCATION * loc, RAIL_LOCATION * location );
 
+
+extern u16 EXITDIR_toDIR( EXIT_DIR exit_dir );
+extern EXIT_DIR EXITDIR_fromDIR( u16 dir );
 
 

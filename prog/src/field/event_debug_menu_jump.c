@@ -364,18 +364,11 @@ static GMEVENT_RESULT debugMenuSeasonSelectEvent(
         PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
         const VecFx32 *pos = PLAYERWORK_getPosition( player );
         const RAIL_LOCATION *location = PLAYERWORK_getRailPosition( player );
-        u16 dir = PLAYERWORK_getDirection( player );
         ZONEID zone_id = PLAYERWORK_getZoneID(player);
-        
-        if( (dir>0x2000) && (dir<0x6000) ){
-          dir = EXIT_DIR_LEFT;
-        }else if( (dir >= 0x6000) && (dir <= 0xa000) ){
-          dir = EXIT_DIR_DOWN;
-        }else if( (dir > 0xa000) && (dir < 0xe000) ){
-          dir = EXIT_DIR_RIGHT;
-        }else{
-          dir = EXIT_DIR_UP;
-        }
+        u16 dir;
+        FIELD_PLAYER * field_player = FIELDMAP_GetFieldPlayer( work->fieldWork );
+        MMDL *fmmdl = FIELD_PLAYER_GetMMdl( field_player );
+        dir = MMDL_GetDirDisp( fmmdl );
 
         { //DS‚Ì•Û‚µ‚Ä‚¢‚éRTC‚ğ’¼ÚG‚Á‚Ä‚¢‚é
           RTCDate date;

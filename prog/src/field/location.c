@@ -103,7 +103,7 @@ void LOCATION_SetRail(LOCATION * loc, int zone, s16 door, s16 dir, LOC_EXIT_OFS 
 	loc->location_pos.railpos.rail_index  = rail_index;
 	loc->location_pos.railpos.line_grid   = line_grid;
 	loc->location_pos.railpos.width_grid  = width_grid;
-  loc->location_pos.railpos.key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( getExitDir_Dir(dir) );
+  loc->location_pos.railpos.key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( EXITDIR_toDIR(dir) );
 }
 
 //--------------------------------------------------------------
@@ -150,7 +150,7 @@ void LOCATION_SetDirectRail(LOCATION * loc, int zone, s16 dir, u16 rail_index, u
 	loc->location_pos.railpos.rail_index  = rail_index;
 	loc->location_pos.railpos.line_grid   = line_grid;
 	loc->location_pos.railpos.width_grid  = width_grid;
-  loc->location_pos.railpos.key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( getExitDir_Dir(dir) );
+  loc->location_pos.railpos.key         = FIELD_RAIL_TOOL_ConvertDirToRailKey( EXITDIR_toDIR(dir) );
 }
 
 //----------------------------------------------------------------------------
@@ -290,14 +290,12 @@ enum {
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  exit_dir‚Ì•ûŒü‚ðŽæ“¾
- *
+ *	@brief  exit_dir --> dir‚Ö‚Ì•ÏŠ·
  *	@param	exit_dir 
- *
- *	@return
+ *	@return u16
  */
 //-----------------------------------------------------------------------------
-static u16 getExitDir_Dir( EXIT_DIR exit_dir )
+u16 EXITDIR_toDIR( EXIT_DIR exit_dir )
 {
   u16 normal_dir;
 
@@ -317,9 +315,36 @@ static u16 getExitDir_Dir( EXIT_DIR exit_dir )
     normal_dir = DIR_RIGHT;
     break;
   default:
+    GF_ASSERT( 0 );
+  case EXIT_DIR_NON:
     normal_dir = DIR_DOWN;
     break;
   }
   return normal_dir;
 }
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief dir --> exit_dir‚Ö‚Ì•ÏŠ·
+ * @param dir
+ * @return  EXIT_DIR
+ */
+//-----------------------------------------------------------------------------
+EXIT_DIR EXITDIR_fromDIR( u16 dir )
+{
+  switch ( dir )
+  {
+  case DIR_UP:
+    return EXIT_DIR_UP;
+  case DIR_DOWN:
+    return EXIT_DIR_DOWN;
+  case DIR_LEFT:
+    return EXIT_DIR_LEFT;
+  case DIR_RIGHT:
+    return EXIT_DIR_RIGHT;
+  default:
+    return EXIT_DIR_DOWN;
+  }
+}
+
 
