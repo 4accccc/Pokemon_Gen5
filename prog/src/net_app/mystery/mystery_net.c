@@ -132,7 +132,7 @@ struct _MYSTERY_NET_WORK
   MYSTERY_ERROR_WORK    error;
 
   char              buffer[MYSTERY_DOWNLOAD_GIFT_DATA_SIZE];
-  BOOL              is_recv;
+  MYSTERY_NET_RECV_STATUS recv_status;
 } ;
 
 //-------------------------------------
@@ -464,17 +464,17 @@ GAME_COMM_STATUS_BIT MYSTERY_NET_GetCommStatus( const MYSTERY_NET_WORK *cp_wk )
  *	@param	*p_data     データ
  *	@param	size        サイズ
  *
- *	@return TRUEでダウンロードしている  FALSEでしていない
+ *	@return MYSTERY_NET_RECV_STATUS列挙
  */
 //-----------------------------------------------------------------------------
-BOOL MYSTERY_NET_GetDownloadData( const MYSTERY_NET_WORK *cp_wk, void *p_data, u32 size )
+MYSTERY_NET_RECV_STATUS MYSTERY_NET_GetDownloadData( const MYSTERY_NET_WORK *cp_wk, void *p_data, u32 size )
 { 
-  if( cp_wk->is_recv )
+  if( cp_wk->recv_status == MYSTERY_NET_RECV_STATUS_SUCCESS )
   { 
     GFL_STD_MemCopy( cp_wk->buffer, p_data, size );
-    return TRUE;
+    return MYSTERY_NET_RECV_STATUS_SUCCESS;
   }
-  return FALSE;
+  return cp_wk->recv_status;
 }
 //----------------------------------------------------------------------------
 /**
@@ -782,13 +782,17 @@ static void SEQFUNC_InitBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_w
       DELIVERY_BEACON_INIT  belivery_beacon_init;
       GFL_STD_MemClear( &belivery_beacon_init, sizeof(DELIVERY_BEACON_INIT) );
       belivery_beacon_init.NetDevID     = WB_NET_MYSTERY;
-      belivery_beacon_init.datasize     = sizeof( DOWNLOAD_GIFT_DATA );
-      belivery_beacon_init.pData        = (void*)p_wk->buffer;
+      belivery_beacon_init.data[0].datasize = sizeof( DOWNLOAD_GIFT_DATA );  //データ全体サイズ
+      belivery_beacon_init.data[0].pData = (void*)p_wk->buffer;     // 受信バッファデータ
+      belivery_beacon_init.data[0].LangCode  = CasetteLanguage;     // 受け取る言語コード
+      belivery_beacon_init.data[0].version   = 1<<GET_VERSION();     // 受け取るバージョンのビット
+      belivery_beacon_init.dataNum = 1;  //受け取り側は１
       belivery_beacon_init.ConfusionID  = 0;
       belivery_beacon_init.heapID       = p_wk->heapID;
       p_wk->p_beacon  = DELIVERY_BEACON_Init( &belivery_beacon_init );
       DELIVERY_BEACON_RecvStart( p_wk->p_beacon );
     }
+    p_wk->recv_status = MYSTERY_NET_RECV_STATUS_NONE;
     *p_seq = SEQ_INIT_WAIT;
     break;
 
@@ -870,7 +874,7 @@ static void SEQFUNC_MainBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   if( DELIVERY_BEACON_RecvCheck(p_wk->p_beacon) )
   { 
     OS_TFPrintf( 3, "ビーコン受け取り\n" );
-    p_wk->is_recv = TRUE;
+    p_wk->recv_status = MYSTERY_NET_RECV_STATUS_SUCCESS;
     SEQ_SetNext( p_seqwk, SEQFUNC_ExitBeaconDownload );
   }
 }
@@ -911,6 +915,7 @@ static void SEQFUNC_InitIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       p_wk->p_irc  = DELIVERY_IRC_Init( &belivery_irc_init );
       DELIVERY_IRC_RecvStart( p_wk->p_irc );
     }
+    p_wk->recv_status = MYSTERY_NET_RECV_STATUS_NONE;
     *p_seq = SEQ_INIT_WAIT;
     break;
 
@@ -983,13 +988,26 @@ static void SEQFUNC_ExitIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 static void SEQFUNC_MainIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   MYSTERY_NET_WORK *p_wk  = p_wk_adrs;
+  int ret;
 
   DELIVERY_IRC_Main( p_wk->p_irc );
 
-  if( DELIVERY_IRC_RecvCheck( p_wk->p_irc ) )
+  ret = DELIVERY_IRC_RecvCheck( p_wk->p_irc );
+  if( DELIVERY_IRC_FUNC != ret  )
   { 
-    OS_TFPrintf( 3, "赤外線受け取り\n" );
-    p_wk->is_recv = TRUE;
+    OS_TFPrintf( 3, "赤外線受け取り %d\n",ret );
+
+    switch( ret )
+    { 
+    case DELIVERY_IRC_SUCCESS:
+      p_wk->recv_status = MYSTERY_NET_RECV_STATUS_SUCCESS;
+      break;
+    case DELIVERY_IRC_FAILED:
+    case DELIVERY_IRC_NOTDATA:
+      p_wk->recv_status = MYSTERY_NET_RECV_STATUS_FAILED;
+      break;
+    }
+
     SEQ_SetNext( p_seqwk, SEQFUNC_ExitIrcDownload );
   }
 }
@@ -1053,6 +1071,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     p_nd_data->wifi_cancel  = FALSE;
     p_nd_data->target = 0;
     p_nd_data->p_buffer     = p_wk->buffer;
+    p_wk->recv_status = MYSTERY_NET_RECV_STATUS_NONE;
 
     if( DWC_NdInitAsync( NdCallback, GF_DWC_ND_LOGIN, WIFI_ND_LOGIN_PASSWD ) == FALSE )
     {
@@ -1176,7 +1195,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         }
       }
     }
-    else
+    else if( p_nd_data->recv_filenum > 1 )
     {
       //自分が取得できるファイルが複数あるときは、
       //自分のIDから取得すべきファイルを決めて、それを落とす
@@ -1208,6 +1227,11 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
       p_nd_data->target = i;
       OS_TPrintf( "重複しているので、プレイヤーごとの固定値でとるよ ID%d index%d cnt%d\n", index, p_nd_data->target, cnt );
+    }
+    else
+    { 
+      //ありえないが念のため。ファイルがないときは終了
+      WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_NOT_FOUND_FILES, p_seq, SEQ_DOWNLOAD_COMPLETE, SEQ_DOWNLOAD_COMPLETE ); 
     }
 
     *p_seq  = SEQ_GET_FILE;
@@ -1263,10 +1287,11 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       if(p_nd_data->wifi_cancel == FALSE)
       {
         // ファイル読み込み終了
-        p_wk->is_recv  = TRUE;
+        p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_SUCCESS;
         WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data, ND_RESULT_COMPLETE, p_seq, SEQ_DOWNLOAD_COMPLETE, SEQ_DOWNLOAD_COMPLETE ); 
       } else {
         // ダウンロードキャンセル
+        p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
         WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data, ND_RESULT_DOWNLOAD_CANCEL, p_seq, SEQ_DOWNLOAD_COMPLETE, SEQ_DOWNLOAD_COMPLETE ); 
       }
     }
@@ -1295,7 +1320,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_DOWNLOAD_COMPLETE:
     *p_seq  = SEQ_END;
     break;
-
+    
   case SEQ_END:
     SEQ_SetNext( p_seqwk, SEQFUNC_Wait );
     break;

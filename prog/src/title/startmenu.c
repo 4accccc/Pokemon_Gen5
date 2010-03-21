@@ -2469,13 +2469,18 @@ static void SetYesNoMenu( START_MENU_WORK * wk )
 static void InitHushigiCheck( START_MENU_WORK * wk )
 {
 	if( MISC_GetStartMenuFlag( wk->misc, MISC_STARTMENU_TYPE_HUSHIGI ) == 0 ){
-		DELIVERY_BEACON_INIT init = {
-			WB_NET_MYSTERY,			// 通信種類
-			0,									// データ全体サイズ
-			NULL,								// データ
-			0,									// 混戦しないためのＩＤ
-			HEAPID_STARTMENU		// HEAPID
-		};
+		DELIVERY_BEACON_INIT init;
+    GFL_STD_MemClear( &init, sizeof(DELIVERY_BEACON_INIT) );
+    init.NetDevID = WB_NET_MYSTERY;   // //通信種類
+    init.data[0].datasize = 0;  //データ全体サイズ
+    init.data[0].pData = NULL;     // 受信バッファデータ
+    init.data[0].LangCode  = CasetteLanguage;     // 受け取る言語コード
+    init.data[0].version   = 1<<GET_VERSION();     // 受け取るバージョンのビット
+    init.dataNum = 1;  //受け取り側は１
+    init.ConfusionID = 0;   //混線しないためのID
+    init.heapID = HEAPID_STARTMENU;
+
+
 		wk->bwk = DELIVERY_BEACON_Init( &init );
 		DELIVERY_BEACON_RecvStart( wk->bwk );
 		wk->hushigiFlag = TRUE;

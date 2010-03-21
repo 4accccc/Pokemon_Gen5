@@ -1830,9 +1830,9 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     { 
       if( MYSTERY_NET_GetState( p_wk->p_net)  == MYSTERY_NET_STATE_WAIT )
       {
-        BOOL ret;
+        MYSTERY_NET_RECV_STATUS ret;
         ret = MYSTERY_NET_GetDownloadData( p_wk->p_net, &p_wk->data, sizeof(DOWNLOAD_GIFT_DATA) );
-        if( ret )
+        if( ret == MYSTERY_NET_RECV_STATUS_SUCCESS )
         { 
           u32 dirty;
 

@@ -702,40 +702,58 @@ const GFL_PROC_DATA NetFourChildProcData = {
 //不思議な贈り物のデータをセット
 static void _fushigiDataSet(DEBUG_OHNO_CONTROL * pDOC)
 {
+  static const int sc_debug_data_max  = 2;
+
   DOWNLOAD_GIFT_DATA* pDG;
+
+  static const int sc_lang_tbl[sc_debug_data_max]  =
+  { 
+    LANG_JAPAN,
+    LANG_ENGLISH,
+  };
+
+  static const u32 sc_version_tbl[sc_debug_data_max]  =
+  { 
+    1<<VERSION_BLACK,
+    1<<VERSION_WHITE,
+  };
+  int i;
 
   
   pDOC->aInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
-  pDOC->aInit.datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
-  pDOC->aInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.datasize);     // データ
+
+  pDOC->aInit.dataNum = sc_debug_data_max;
   pDOC->aInit.ConfusionID = 12;
   pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
 
-  pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aInit.pData;
+  for( i = 0; i <sc_debug_data_max; i++ )
+  { 
+    pDOC->aInit.data[i].datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
+    pDOC->aInit.data[i].pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.data[i].datasize);     // データ
+    pDOC->aInit.data[i].LangCode  = sc_lang_tbl[ i ];
+    pDOC->aInit.data[i].version   = sc_version_tbl[ i ];
+    pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aInit.data[i].pData;
 
-  DEBUG_MYSTERY_SetGiftPokeData(&pDG->data);
-  DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
-  pDG->version = 0;  //０なので全員受信できる
-  pDG->event_text[0] = L'て';
-  pDG->event_text[1] = L'す';
-  pDG->event_text[2] = L'と';
-  pDG->event_text[3] = 0xffff;
+    DEBUG_MYSTERY_SetGiftPokeData(&pDG->data);
+    DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
+    pDG->LangCode = pDOC->aInit.data[i].LangCode;
+    pDG->version  = pDOC->aInit.data[i].version;
+    pDG->event_text[0] = L'て';
+    pDG->event_text[1] = L'す';
+    pDG->event_text[2] = L'と';
+    pDG->event_text[3] = 0xffff;
 
-
-  {
-    int i,j;
-    for(j=0;j<pDOC->aInit.datasize;){
-      for(i=0;i<16;i++){
-        OS_TPrintf("%x ",pDOC->aInit.pData[j]);
-        j++;
+    {
+      int k,j;
+      for(j=0;j<pDOC->aInit.data[0].datasize;){
+        for(k=0;k<16;k++){
+          OS_TPrintf("%x ",pDOC->aInit.data[0].pData[j]);
+          j++;
+        }
+        OS_TPrintf("\n");
       }
-      OS_TPrintf("\n");
     }
   }
-
-
-
-  
 }
 
 //親機なのでビーコン送信を行っているだけ
@@ -774,12 +792,15 @@ static void _debug_bsubDataMain(DEBUG_OHNO_CONTROL * pDOC)
 
   
   pDOC->aInit.NetDevID = WB_NET_BATTLE_EXAMINATION;   // //通信種類
-  pDOC->aInit.datasize = sizeof(BATTLE_EXAMINATION_SAVEDATA);   //データ全体サイズ
-  pDOC->aInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.datasize);     // データ
+  pDOC->aInit.data[0].datasize = sizeof(BATTLE_EXAMINATION_SAVEDATA);   //データ全体サイズ
+  pDOC->aInit.data[0].pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.data[0].datasize);     // データ
+  pDOC->aInit.data[0].LangCode  = CasetteLanguage;
+  pDOC->aInit.data[0].version   = 1<<GET_VERSION();
+  pDOC->aInit.dataNum = 1;
   pDOC->aInit.ConfusionID = 12;
   pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
 
-  pDG = (BATTLE_EXAMINATION_SAVEDATA* )pDOC->aInit.pData;
+  pDG = (BATTLE_EXAMINATION_SAVEDATA* )pDOC->aInit.data[0].pData;
 
   pDG->bActive = BATTLE_EXAMINATION_MAGIC_KEY;
   _debug_bsubData( &pDG->trainer[0] );
@@ -790,7 +811,7 @@ static void _debug_bsubDataMain(DEBUG_OHNO_CONTROL * pDOC)
   pDG->titleName[0] = L'て';
   pDG->titleName[1] = L'す';
   pDG->titleName[2] = 0xffff;
-  pDG->crc = GFL_STD_CrcCalc(pDOC->aInit.pData, pDOC->aInit.datasize-2);
+  pDG->crc = GFL_STD_CrcCalc(pDOC->aInit.data[0].pData, pDOC->aInit.data[0].datasize-2);
 
 }
 
@@ -839,9 +860,9 @@ static BOOL _getTime(void* pCtl)
   if(DELIVERY_BEACON_RecvCheck(pDOC->pDBWork) ){  // もう通信している場合終了処理
     OS_TPrintf("受信完了 %d\n",pDOC->counter);
 
-    for(j=0;j<pDOC->aInit.datasize;){
+    for(j=0;j<pDOC->aInit.data[0].datasize;){
       for(i=0;i<16;i++){
-        OS_TPrintf("%x ",pDOC->aInit.pData[j]);
+        OS_TPrintf("%x ",pDOC->aInit.data[0].pData[j]);
         j++;
       }
       OS_TPrintf("\n");
@@ -858,8 +879,11 @@ static void _fushigiDataRecv(DEBUG_OHNO_CONTROL * pDOC)
   DOWNLOAD_GIFT_DATA* pDG;
 
   pDOC->aInit.NetDevID = WB_NET_MYSTERY;   // //通信種類
-  pDOC->aInit.datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
-  pDOC->aInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.datasize);     // データ
+  pDOC->aInit.data[0].datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
+  pDOC->aInit.data[0].pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.data[0].datasize);     // データ
+  pDOC->aInit.data[0].LangCode  = CasetteLanguage;
+  pDOC->aInit.data[0].version   = 1<<GET_VERSION();
+  pDOC->aInit.dataNum = 1;
   pDOC->aInit.ConfusionID = 12;
   pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
 
@@ -871,8 +895,11 @@ static void _traialDataRecv(DEBUG_OHNO_CONTROL * pDOC)
   DOWNLOAD_GIFT_DATA* pDG;
 
   pDOC->aInit.NetDevID = WB_NET_BATTLE_EXAMINATION;   // //通信種類
-  pDOC->aInit.datasize = sizeof(BATTLE_EXAMINATION_SAVEDATA);   //データ全体サイズ
-  pDOC->aInit.pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.datasize);     // データ
+  pDOC->aInit.data[0].datasize = sizeof(BATTLE_EXAMINATION_SAVEDATA);   //データ全体サイズ
+  pDOC->aInit.data[0].pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aInit.data[0].datasize);     // データ
+  pDOC->aInit.data[0].LangCode  = CasetteLanguage;
+  pDOC->aInit.data[0].version   = 1<<GET_VERSION();
+  pDOC->aInit.dataNum = 1;
   pDOC->aInit.ConfusionID = 12;
   pDOC->aInit.heapID = HEAPID_OHNO_DEBUG;
 
@@ -950,7 +977,7 @@ static BOOL _getIRCTime(void* pCtl)
   
   pDOC->counter++;
   k = DELIVERY_IRC_RecvCheck(pDOC->pIRCWork);
-  if( k ){  // もう通信している場合終了処理
+  if( k != DELIVERY_IRC_FUNC ){  // もう通信している場合終了処理
     OS_TPrintf("受信完了 %d %d\n",pDOC->counter,k);
 
     for(j=0;j<pDOC->aIRCInit.data[0].datasize;){
@@ -977,7 +1004,8 @@ static void _fushigiDataIRCRecv(DEBUG_OHNO_CONTROL * pDOC)
   //受信側は１つのバッファでOK
   pDOC->aIRCInit.data[0].datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
   pDOC->aIRCInit.data[0].pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aIRCInit.data[0].datasize);     // データ
-  pDOC->aIRCInit.data[0].LangCode = LANG_JAPAN;   //言語コード
+  pDOC->aIRCInit.data[0].LangCode = CasetteLanguage;   //言語コード
+  pDOC->aIRCInit.data[0].version  = 1<<VERSION_WHITE;   //バージョンのビット
 
   pDOC->aIRCInit.ConfusionID = 12;
   pDOC->aIRCInit.heapID = HEAPID_OHNO_DEBUG;
@@ -1014,13 +1042,24 @@ static void _fushigiDataIRCSet(DEBUG_OHNO_CONTROL * pDOC)
 {
   static const int sc_lang_tbl[7]  =
   { 
-    LANG_JAPAN		,
-    LANG_ENGLISH	,
-    LANG_FRANCE		,
-    LANG_ITALY		,
-    LANG_GERMANY	,
-    LANG_SPAIN		,
-    LANG_KOREA		,
+    LANG_JAPAN,
+    LANG_ENGLISH,
+    LANG_FRANCE,
+    LANG_ITALY,
+    LANG_GERMANY,
+    LANG_SPAIN,
+    LANG_KOREA,
+  };
+
+  static const u32 sc_version_tbl[7]  =
+  { 
+    1<<VERSION_WHITE,
+    1<<VERSION_WHITE,
+    1<<VERSION_WHITE,
+    1<<VERSION_WHITE,
+    1<<VERSION_BLACK,
+    1<<VERSION_BLACK,
+    1<<VERSION_BLACK,
   };
 
   int i;
@@ -1037,19 +1076,20 @@ static void _fushigiDataIRCSet(DEBUG_OHNO_CONTROL * pDOC)
     pDOC->aIRCInit.data[i].datasize = sizeof(DOWNLOAD_GIFT_DATA);   //データ全体サイズ
     pDOC->aIRCInit.data[i].pData = GFL_HEAP_AllocClearMemory(HEAPID_OHNO_DEBUG,pDOC->aIRCInit.data[0].datasize);     // データ
     pDOC->aIRCInit.data[i].LangCode = sc_lang_tbl[i];
+    pDOC->aIRCInit.data[i].version  = sc_version_tbl[i];
 
     pDG = (DOWNLOAD_GIFT_DATA* )pDOC->aIRCInit.data[i].pData;
 
     DEBUG_MYSTERY_SetGiftPokeData(&pDG->data);
     DEBUG_MYSTERY_SetGiftCommonData( &pDG->data, 12, FALSE );
-    pDG->version = 0;
+    pDG->version = sc_version_tbl[i];
     pDG->LangCode = sc_lang_tbl[i];
     pDG->event_text[0] = L'で';
     pDG->event_text[1] = L'ば';
     pDG->event_text[2] = L'ぐ';
     pDG->event_text[3] = 0xffff;
 
-    OS_TPrintf("%dつ目スタート：言語＝%d\n", i, pDOC->aIRCInit.data[i].LangCode);
+    OS_TPrintf("%dつ目スタート：言語＝%d バージョン0x%x\n", i, pDOC->aIRCInit.data[i].LangCode, pDOC->aIRCInit.data[i].version);
     {
       int j,k;
       for(j=0;j<pDOC->aIRCInit.data[i].datasize;){

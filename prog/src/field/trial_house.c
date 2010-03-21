@@ -379,8 +379,11 @@ GMEVENT *TRIAL_HOUSE_CreateBeaconSearchEvt( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK
     DELIVERY_BEACON_INIT *init;
     init = &evt_wk->BeaconInit;
     init->NetDevID = WB_NET_BATTLE_EXAMINATION;   // //通信種類
-    init->datasize = BATTLE_EXAMINATION_SAVE_GetWorkSize();  //データ全体サイズ
-    init->pData = ptr->CommBuf;     // 受信バッファデータ
+    init->data[0].datasize = BATTLE_EXAMINATION_SAVE_GetWorkSize();  //データ全体サイズ
+    init->data[0].pData = ptr->CommBuf;     // 受信バッファデータ
+    init->data[0].LangCode  = CasetteLanguage;     // 受け取る言語コード
+    init->data[0].version   = 1<<GET_VERSION();     // 受け取るバージョンのビット
+    init->dataNum = 1;  //受け取り側は１
     init->ConfusionID = 0;   //混線しないためのID
     init->heapID = HEAPID_APP_CONTROL;
   }

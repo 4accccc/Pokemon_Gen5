@@ -47,6 +47,17 @@ typedef enum
 
 } MYSTERY_NET_STATE;
 
+//-------------------------------------
+///	受信状態
+//=====================================
+typedef enum
+{
+  MYSTERY_NET_RECV_STATUS_NONE,     //何も受信していない
+  MYSTERY_NET_RECV_STATUS_SUCCESS,  //受信成功
+  MYSTERY_NET_RECV_STATUS_FAILED,   //失敗
+} MYSTERY_NET_RECV_STATUS;
+
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -75,7 +86,7 @@ extern MYSTERY_NET_STATE MYSTERY_NET_GetState( const MYSTERY_NET_WORK *cp_wk );
 extern GAME_COMM_STATUS_BIT MYSTERY_NET_GetCommStatus( const MYSTERY_NET_WORK *cp_wk );
 
 //ダウンロードしたデータうけとり
-extern BOOL MYSTERY_NET_GetDownloadData( const MYSTERY_NET_WORK *cp_wk, void *p_data, u32 size );
+extern MYSTERY_NET_RECV_STATUS MYSTERY_NET_GetDownloadData( const MYSTERY_NET_WORK *cp_wk, void *p_data, u32 size );
 
 //エラー修復戻り先
 typedef enum

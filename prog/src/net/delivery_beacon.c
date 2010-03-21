@@ -27,10 +27,12 @@
 typedef struct 
 {
   u16 crc16;      // CRC16-CCITT 生成多項式 0x1021 初期値0xffff出力XORなし 左送り  このCRCはビーコン単体用
-  u16 ConfusionID;         // 何の配信なのか  同時配信時にかぶらせないように
   u8 data[DELIVERY_BEACON_ONCE_NUM];   // 全体のデータでRC4がかかっている
   u8 count;       //何回目のビーコンか
   u8 countMax;       //いくつ連結するのか
+  u8 ConfusionID;         // 何の配信なのか  同時配信時にかぶらせないように
+  u8 LangCode;     //言語コード
+  u32 version;      //バージョンのビット
 } DELIVERY_BEACON;
 
 
@@ -39,7 +41,7 @@ typedef void (StateFunc)(DELIVERY_BEACON_WORK* pState);
 //ローカルワーク
 struct _DELIVERY_BEACON_LOCALWORK{
   DELIVERY_BEACON_INIT aInit;   //初期化構造体のコピー
-  DELIVERY_BEACON aSendRecv[DELIVERY_BEACON_MAX_NUM];  //配信する、受け取る構造体
+  DELIVERY_BEACON aSendRecv[DELIVERY_IRC_SEND_DATA_MAX][DELIVERY_BEACON_MAX_NUM];  //配信する、受け取る構造体
   int nowCount;
   StateFunc* state;      ///< ハンドルのプログラム状態
 };
@@ -134,8 +136,16 @@ static void _endCallBack(void* pWork)
 static void* _netBeaconGetFunc(void* pWk)
 {
   DELIVERY_BEACON_WORK* pWork=pWk;
-  int no = pWork->nowCount%DELIVERY_BEACON_MAX_NUM;
-  return &pWork->aSendRecv[no];
+  int no  = pWork->nowCount%DELIVERY_BEACON_MAX_NUM;
+  int num = pWork->nowCount/DELIVERY_BEACON_MAX_NUM;
+
+  if( num >= pWork->aInit.dataNum )
+  { 
+    pWork->nowCount = 0;
+    num = 0;
+  }
+
+  return &pWork->aSendRecv[num][no];
 }
 
 ///< ビーコンデータサイズ取得関数
@@ -190,29 +200,36 @@ static void _changeStateDebug(DELIVERY_BEACON_WORK* pWork,StateFunc state, int l
 //データをビーコンの形に分解
 static void _beaconDataDiv(DELIVERY_BEACON_WORK* pWork)
 {
-  int i;
-  int max = (pWork->aInit.datasize/DELIVERY_BEACON_ONCE_NUM)+1;
+  int i, j;
+  int max;
 
-  OS_TPrintf("%d %d\n",pWork->aInit.datasize , (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
-  GF_ASSERT(pWork->aInit.datasize < (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
+  for(j = 0; j < pWork->aInit.dataNum ; j++){
+    max = (pWork->aInit.data[j].datasize/DELIVERY_BEACON_ONCE_NUM)+1;
+    GF_ASSERT(pWork->aInit.data[j].datasize < (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
+    OS_TPrintf("%d %d\n",pWork->aInit.data[j].datasize, (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
+    for(i = 0; i < DELIVERY_BEACON_MAX_NUM ; i++){
+      DELIVERY_BEACON* pBeacon;
+      DELIVERY_BEACON_INIT* pInit;
+      DELIVERY_DATA *pInitData;
+      u8* pData;
+      u16 crc;
 
-  for(i = 0; i < DELIVERY_BEACON_MAX_NUM ; i++){
-    DELIVERY_BEACON* pBeacon;
-    DELIVERY_BEACON_INIT* pInit;
-    u8* pData;
-    u16 crc;
+      pInit = &pWork->aInit;
+      pBeacon = &pWork->aSendRecv[j][i];
+      pInitData   = &pInit->data[j];
 
-    pInit = &pWork->aInit;
-    pBeacon = &pWork->aSendRecv[i];
-    GFL_STD_MemCopy( &pWork->aInit.pData[DELIVERY_BEACON_ONCE_NUM*i] , pBeacon->data,  DELIVERY_BEACON_ONCE_NUM);
-    pBeacon->count = i+1;
-    pBeacon->countMax = max;
-    pBeacon->ConfusionID = pInit->ConfusionID;
+      GFL_STD_MemCopy( &pInitData->pData[DELIVERY_BEACON_ONCE_NUM*i] , pBeacon->data,  DELIVERY_BEACON_ONCE_NUM);
+      pBeacon->count = i+1;
+      pBeacon->countMax = max;
+      pBeacon->ConfusionID = pInit->ConfusionID;
 
-    pData = (u8*)pBeacon;
-    
-    crc = GFL_STD_CrcCalc( &pData[2], DELIVERY_BEACON_ONCE_NUM-2);
-    pBeacon->crc16 = crc;
+      pData = (u8*)pBeacon->data;
+
+      crc = GFL_STD_CrcCalc( pData, DELIVERY_BEACON_ONCE_NUM);
+      pBeacon->crc16 = crc;
+      pBeacon->version  = pInitData->version;
+      pBeacon->LangCode = pInitData->LangCode;
+    }
   }
 
 }
@@ -287,10 +304,10 @@ BOOL DELIVERY_BEACON_SendStart(DELIVERY_BEACON_WORK* pWork)
 //格納場所作成
 static void _beaconAlloc(DELIVERY_BEACON_WORK* pWork)
 {
-  if(pWork->aInit.datasize){
-    int max = (pWork->aInit.datasize/DELIVERY_BEACON_ONCE_NUM)+1;
-    OS_TPrintf("%d %d\n",pWork->aInit.datasize , (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
-    GF_ASSERT(pWork->aInit.datasize < (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
+  if(pWork->aInit.data[0].datasize){
+    int max = (pWork->aInit.data[0].datasize/DELIVERY_BEACON_ONCE_NUM)+1;
+    OS_TPrintf("%d %d\n",pWork->aInit.data[0].datasize , (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
+    GF_ASSERT(pWork->aInit.data[0].datasize < (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
   }
 }
 
@@ -299,14 +316,14 @@ static void _beaconAlloc(DELIVERY_BEACON_WORK* pWork)
 static BOOL  _recvCheck(DELIVERY_BEACON_WORK* pWork)
 {
   int i;
-  int max = pWork->aSendRecv[0].countMax;
-  int ConfusionID = pWork->aSendRecv[0].ConfusionID;  //0のビーコン情報と同じ物をそろえる
+  int max = pWork->aSendRecv[0][0].countMax;
+  u8 ConfusionID = pWork->aSendRecv[0][0].ConfusionID;  //0のビーコン情報と同じ物をそろえる
 
   if(max == 0){
     return FALSE;
   }
   for(i = 0;i < max;i++){
-    DELIVERY_BEACON* pBeacon = &pWork->aSendRecv[i];
+    DELIVERY_BEACON* pBeacon = &pWork->aSendRecv[0][i];
     if(max != pBeacon->countMax){
       return  FALSE;
     }
@@ -336,16 +353,29 @@ static void  _recvLoop(DELIVERY_BEACON_WORK* pWork)
     if(pBeacon==NULL){
       continue;
     }
+  
+    //言語チェック
+    if( (pBeacon->LangCode != pWork->aInit.data[0].LangCode) )
+    { 
+      continue;
+    }
+
+    //バージョンチェック
+    if( (pBeacon->version & pWork->aInit.data[0].version) == 0 )
+    { 
+      continue;
+    }
+
     index = pBeacon->count - 1;
     if(index >= DELIVERY_BEACON_MAX_NUM){
       OS_TPrintf("DELIVERY_BEACON_MAX_NUM\n");
       continue;
     }
-    if(pWork->aSendRecv[index].count != 0){
+    if(pWork->aSendRecv[0][index].count != 0){
       continue;  //もう拾っている
     }
-    pData = (u8*)pBeacon;
-    crc = GFL_STD_CrcCalc( &pData[2], DELIVERY_BEACON_ONCE_NUM-2);
+    pData = (u8*)pBeacon->data;
+    crc = GFL_STD_CrcCalc( pData, DELIVERY_BEACON_ONCE_NUM);
     if(crc != pBeacon->crc16){
       OS_TPrintf("間違ったデータ\n");
       continue; //間違ったデータ
@@ -355,7 +385,7 @@ static void  _recvLoop(DELIVERY_BEACON_WORK* pWork)
 
     GFL_NET_WLFIXScan( i ); //スキャンを限定する
 
-    GFL_STD_MemCopy( pBeacon, &pWork->aSendRecv[index],  sizeof(DELIVERY_BEACON));
+    GFL_STD_MemCopy( pBeacon, &pWork->aSendRecv[0][index],  sizeof(DELIVERY_BEACON));
   }
 
 }
@@ -371,13 +401,13 @@ static void _CreateRecvData(DELIVERY_BEACON_WORK* pWork)
     u16 block = i*DELIVERY_BEACON_ONCE_NUM;
 
     pInit = &pWork->aInit;
-    pBeacon = &pWork->aSendRecv[i];
+    pBeacon = &pWork->aSendRecv[0][i];
 
-    if(pInit->datasize > (block + DELIVERY_BEACON_ONCE_NUM)){
-      GFL_STD_MemCopy( pBeacon->data , &pInit->pData[i*DELIVERY_BEACON_ONCE_NUM],  DELIVERY_BEACON_ONCE_NUM);
+    if(pInit->data[0].datasize > (block + DELIVERY_BEACON_ONCE_NUM)){
+      GFL_STD_MemCopy( pBeacon->data, &pInit->data[0].pData[i*DELIVERY_BEACON_ONCE_NUM],  DELIVERY_BEACON_ONCE_NUM);
     }
     else{
-      GFL_STD_MemCopy( pBeacon->data , &pInit->pData[i*DELIVERY_BEACON_ONCE_NUM],  (pInit->datasize - block));
+      GFL_STD_MemCopy( pBeacon->data , &pInit->data[0].pData[i*DELIVERY_BEACON_ONCE_NUM],  (pInit->data[0].datasize - block));
     }
   }
 }
@@ -430,7 +460,7 @@ BOOL DELIVERY_BEACON_RecvSingleCheck(DELIVERY_BEACON_WORK* pWork)
   int i;
 
   for(i = 0;i < DELIVERY_BEACON_MAX_NUM;i++){
-    DELIVERY_BEACON* pBeacon = &pWork->aSendRecv[i];
+    DELIVERY_BEACON* pBeacon = &pWork->aSendRecv[0][i];
     if(0 != pBeacon->countMax){
       return TRUE;
     }

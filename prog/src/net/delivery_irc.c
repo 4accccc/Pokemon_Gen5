@@ -20,10 +20,15 @@
 
 typedef enum
 {
-  DELIVERY_IRC_FLAG_NONE,     //なにもない
-  DELIVERY_IRC_FLAG_NO_LANG,  //対応する言語コードがない
+  DELIVERY_IRC_FLAG_NONE,       //なにもない
+  DELIVERY_IRC_FLAG_NO_REQUEST_DATA,    //リクエストに対応するファイルがない
 } DELIVERY_IRC_FLAG;
 
+typedef struct 
+{
+  u32 LangCode;
+  u32 version;
+} DELIVERY_IRC_REQUEST ;
 
 
 //ビーコン単体の中身
@@ -39,15 +44,16 @@ typedef void (StateFunc)(DELIVERY_IRC_WORK* pState);
 struct _DELIVERY_IRC_LOCALWORK{
   DELIVERY_IRC_INIT aInit;   //初期化構造体のコピー
   DELIVERY_IRC aRecv;  //配信する、受け取る構造体
-  u32 targetLangCode;
   u32 recvFlag;
   u16 bNego;
   u16 crc;
   u8 end;
   u8 bSend;
-  u8 bNoLang;
+  u8 bRequestExist;     ///<　リクエストされたデータが存在したかどうか
   u8 dataIdx;
   StateFunc* state;      ///< ハンドルのプログラム状態
+
+  DELIVERY_IRC_REQUEST  request;  ///<データ受信側は、リクエスト送信バッファ　データ送信側はリクエスト受信バッファ
 };
 
 #define _BCON_GET_NUM (16)
@@ -59,7 +65,7 @@ struct _DELIVERY_IRC_LOCALWORK{
 static void _RecvDeliveryData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static u8* _getDeliveryData(int netID, void* pWk, int size);
 static void _Recvcrc16Data(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
-static void _LangData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _RequestData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _RecvFlag(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 #define _NET_CMD(x) (x<<8)  //ネットワークサービスIDからコマンドへの変換マクロ
@@ -67,14 +73,14 @@ static void _RecvFlag(const int netID, const int size, const void* pData, void* 
 enum{
   _DELIVERY_DATA, //この値に上記マクロを足す
   _CRCCCTI_DATA,
-  _LANG_DATA,
+  _REQUEST_DATA,
   _FLAG,
 };
 
 static const NetRecvFuncTable _CommPacketTbl[] = {
   {_RecvDeliveryData,         _getDeliveryData},    ///受信データ
   {_Recvcrc16Data,         NULL},    ///受信データ
-  {_LangData,         NULL},    ///言語コード
+  {_RequestData,         NULL},    ///言語コード
   {_RecvFlag,         NULL},    ///フラグ
 };
 
@@ -155,12 +161,12 @@ static void _Recvcrc16Data(const int netID, const int size, const void* pData, v
 
 
 
-static void _LangData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+static void _RequestData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  const u32* pU32 = pData;
+  const DELIVERY_IRC_REQUEST * pRequest = pData;
   DELIVERY_IRC_WORK *pWork = pWk;
   
-  pWork->targetLangCode = pU32[0];
+  pWork->request = *pRequest;
 }
 
 static void _RecvFlag(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
@@ -195,10 +201,10 @@ static void _sendInit7(DELIVERY_IRC_WORK* pWork)
   if( GFL_NET_IsInit() == FALSE ){
     if(!pWork->bSend){
 
-      if( pWork->recvFlag == DELIVERY_IRC_FLAG_NO_LANG )
+      if( pWork->recvFlag == DELIVERY_IRC_FLAG_NO_REQUEST_DATA )
       { 
         //対応する言語がなかった
-        pWork->end = DELIVERY_IRC_NOTLANG;
+        pWork->end = DELIVERY_IRC_NOTDATA;
       }
       else
       { 
@@ -213,13 +219,13 @@ static void _sendInit7(DELIVERY_IRC_WORK* pWork)
       }
     }
     else{
-      if( pWork->bNoLang == FALSE )
+      if( pWork->bRequestExist == TRUE )
       { 
         pWork->end = DELIVERY_IRC_SUCCESS;
       }
       else
       { 
-        pWork->end = DELIVERY_IRC_NOTLANG;
+        pWork->end = DELIVERY_IRC_NOTDATA;
       }
     }
     _CHANGE_STATE(_nop);
@@ -270,9 +276,9 @@ static void _sendInit3(DELIVERY_IRC_WORK* pWork)
 {
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_START2, pWork->aInit.NetDevID) ){
     if(pWork->bSend){
-      if( pWork->bNoLang == FALSE )
+      if( pWork->bRequestExist == TRUE )
       { 
-        DELIVERY_IRC_DATA *pData = &pWork->aInit.data[pWork->dataIdx];
+        DELIVERY_DATA *pData = &pWork->aInit.data[pWork->dataIdx];
         if( GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle() , GFL_NET_SENDID_ALLUSER ,
               _DELIVERY_DATA + _NET_CMD( pWork->aInit.NetDevID ), pData->datasize ,
               pData->pData , FALSE , FALSE , TRUE )){
@@ -300,27 +306,28 @@ static void _sendInit25(DELIVERY_IRC_WORK* pWork)
       //もしない場合はないよというフラグを渡す
 
       u16 crc=0;
-      DELIVERY_IRC_DATA *pData  = NULL;
+      DELIVERY_DATA *pData  = NULL;
 
-      OS_TPrintf( "子機から言語コードうけとり　%d\n", pWork->targetLangCode );
+      OS_TPrintf( "子機からリクエストうけとり　言語%d ver%d\n", pWork->request.LangCode, pWork->request.version );
       //対応する言語コードをサーチ
       { 
         int i;
-        pWork->bNoLang = TRUE;
+        pWork->bRequestExist = FALSE;
         for( i = 0; i < pWork->aInit.dataNum; i++ )
         { 
           pData = &pWork->aInit.data[i];
-          if( pData->LangCode == pWork->targetLangCode )
+          if( (pData->LangCode == pWork->request.LangCode )
+              && (pData->version & pWork->request.version) )  
           { 
             pWork->dataIdx  = i;
-            pWork->bNoLang = FALSE;
+            pWork->bRequestExist = TRUE;
             break;
           }
         }
       }
 
       //言語コードがあったのでCRCを送る
-      if( pWork->bNoLang == FALSE )
+      if( pWork->bRequestExist == TRUE )
       { 
         OS_TPrintf( "子機へ渡すデータは%d番です\n", pWork->dataIdx );
         crc = GFL_STD_CrcCalc( pData->pData, pData->datasize);
@@ -334,7 +341,7 @@ static void _sendInit25(DELIVERY_IRC_WORK* pWork)
       { 
         OS_TPrintf( "子機へ渡すデータがなかった\n" );
         //なかったのでないよフラグを渡す
-        pWork->recvFlag = DELIVERY_IRC_FLAG_NO_LANG;
+        pWork->recvFlag = DELIVERY_IRC_FLAG_NO_REQUEST_DATA;
         if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle() ,
               _FLAG + _NET_CMD( pWork->aInit.NetDevID ),
                           sizeof(u32) ,  &pWork->recvFlag )){
@@ -353,13 +360,15 @@ static void _sendInit25(DELIVERY_IRC_WORK* pWork)
 }
 
 
-//子機が親機に欲しい言語を送る
+//子機が親機に欲しいファイルのリクエストを送る
 static void _sendInitLang(DELIVERY_IRC_WORK* pWork)
 {
   if( !pWork->bSend ){
+    pWork->request.LangCode = pWork->aInit.data[0].LangCode;
+    pWork->request.version  = pWork->aInit.data[0].version;
     if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle() ,
-                          _LANG_DATA + _NET_CMD( pWork->aInit.NetDevID ),
-                          sizeof(u32) ,  &pWork->aInit.data[0].LangCode )){
+                          _REQUEST_DATA + _NET_CMD( pWork->aInit.NetDevID ),
+                          sizeof(DELIVERY_IRC_REQUEST) ,  &pWork->request )){
       _CHANGE_STATE(_sendInit25);
     }
   }
@@ -475,9 +484,9 @@ BOOL DELIVERY_IRC_SendStart(DELIVERY_IRC_WORK* pWork)
 {
   BOOL bRet = _initNet(pWork);
   pWork->bSend=TRUE;
-  pWork->bNoLang  = 0;
-  pWork->dataIdx  = 0;
-  pWork->recvFlag  = 0;
+  pWork->bRequestExist  = 0;
+  pWork->dataIdx        = 0;
+  pWork->recvFlag       = 0;
   _CHANGE_STATE(_sendInit);
   return bRet;
 
@@ -496,9 +505,9 @@ BOOL DELIVERY_IRC_RecvStart(DELIVERY_IRC_WORK* pWork)
 
   BOOL bRet = _initNet(pWork);
   pWork->bSend = FALSE;
-  pWork->bNoLang  = 0;
-  pWork->dataIdx  = 0;
-  pWork->recvFlag  = 0;
+  pWork->bRequestExist  = 0;
+  pWork->dataIdx        = 0;
+  pWork->recvFlag       = 0;
   _CHANGE_STATE(_sendInit);
   return bRet;
 }
