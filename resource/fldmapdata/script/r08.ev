@@ -23,24 +23,336 @@ _EVENT_DATA    ev_r08_ambrella_01
 _EVENT_DATA		ev_bg_r08_sign1_01
 _EVENT_DATA		ev_bg_r08_sign2_01
 _EVENT_DATA		ev_bg_r08_sign3_01
+_EVENT_DATA    ev_r08_hakaim_01
+_EVENT_DATA    ev_r08_hakaim_02
+_EVENT_DATA		ev_pos_r08_support_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*  R02 サポートのイベントスクリプト*/
 /**************************************************************/
-//ev_r08_flag_change:
-//  _END
+EVENT_START   ev_pos_r08_support_01
 
+{
+    DEFINE_LOCAL  LWK_PLAYER_POSX   
+    DEFINE_LOCAL  LWK_PLAYER_POSZ
+       
+    _PLAYER_POS_GET( LWK_PLAYER_POSX  ,LWK_PLAYER_POSZ ) //自機座標取得
+    
+	//サポートを出現させる
+	_OBJ_ADD_EX(234,180,DIR_RIGHT,MMDL_ID_EVENTOBJ_00,SUPPORT,MV_DMY)
+	
+	//プレイヤーの名前を格納する
+	_PLAYER_NAME(0)
+	
+	//サポートが呼びかける
+	_PLAINWIN_MSG_DOWN(msg_r08_white_01)
+	_MSGWIN_CLOSE()
+	
+	//プレイヤーがビックリする
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
+	_OBJ_ANIME_WAIT()
+
+	//プレイヤーが振り向く
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
+    _OBJ_ANIME_WAIT()
+	
+	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+	_TIME_WAIT(8)
+	 
+  	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01)	
+	_OBJ_ANIME_WAIT()
+		
+/*     
+    SWITCH $LWK_PLAYER_POSX
+    CASE 784 THEN
+ 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x784)	
+		_TIME_WAIT(32)
+    CASE 785 THEN
+ 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x785)	
+		_TIME_WAIT(48)
+    CASE 786 THEN
+ 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x786)	
+		_TIME_WAIT(60)
+    CASE 787THEN
+ 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x787)	
+		_TIME_WAIT(70)
+    CASE 788THEN
+ 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x788)
+		_TIME_WAIT(82)
+    CASE 789THEN
+ 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_01_x789)	
+		_TIME_WAIT(94)
+    DEFAULT  
+    ENDSWITCH
+*/   
+    
+    _TIME_WAIT(16)
+	//ねえねえ！　ポケモンしょうぶしようよ
+	_BALLOONWIN_OBJMSG_POS( msg_r08_white_02, MMDL_ID_EVENTOBJ_00, POS_DL )
+	_MSGWIN_CLOSE()
+
+	//足踏み
+	_TIME_WAIT(8)
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_common_turn_r)
+    _OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(8)
+	//サポートとのバトル処理
+	_CALL		ev_support_btl
+	
+	_TIME_WAIT(8)
+	//ふわあ　やっぱり
+	_BALLOONWIN_OBJMSG_POS( msg_r08_white_03, MMDL_ID_EVENTOBJ_00, POS_DL )
+	_MSGWIN_CLOSE()
+	
+	_TIME_WAIT(8)
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_02)
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(8)
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_common_turn_r)
+    _OBJ_ANIME_WAIT()
+    _ITEM_EVENT_KEYWAIT(ITEM_KAIHUKUNOKUSURI,1)
+    
+	_TIME_WAIT(8)
+	
+//	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_come_03)
+	_BALLOONWIN_OBJMSG_POS( msg_r08_white_04, MMDL_ID_EVENTOBJ_00, POS_DL )
+	_MSGWIN_CLOSE()
+//	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(4)
+	//サポート退場処理
+	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_support_back_01)
+    _OBJ_ANIME_WAIT()
+  
+	_END_EVENT_BGM()
+	
+	//==============フラグワーク操作==============//
+	//サポートを消す
+	_OBJ_DEL(MMDL_ID_EVENTOBJ_00)
+	
+	//サポートとの対戦POSイベントを無効にする
+	$WK_SCENE_R08 = 1
+	
+	//============================================//
+}
+EVENT_END
+
+ev_support_btl:
+
+//戦闘処理
+
+	//サポート戦闘呼び出し　最初の３匹によって分岐
+	//草タイプを選択している場合
+	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+		//戦闘処理
+		_TRAINER_BTL_SET ( TRID_SUPPORT_07, 0 )
+
+	//炎タイプを選択している場合
+	ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+
+		//戦闘処理
+		_TRAINER_BTL_SET ( TRID_SUPPORT_08, 0 )
+
+	//水タイプを選択している場合
+	ELSE
+		//戦闘処理
+		_TRAINER_BTL_SET ( TRID_SUPPORT_09, 0 )
+	ENDIF
+	
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+		
+_RET
+
+//--------------------------------------------------------------------
+// サポート：やってくる                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_support_come_01
+
+	_ANIME_DATA AC_WALK_R_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_support_come_02
+
+	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_support_come_03
+	
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA AC_WAIT_8F,1
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+/*
+_ANIME_LABEL	anm_support_come_01_x784
+
+	_ANIME_DATA AC_WALK_R_8F,7
+	_ANIME_DATA AC_WALK_U_8F,2
+//	_ANIME_DATA AC_WALK_L_8F,1
+//	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_support_come_01_x785
+
+	_ANIME_DATA AC_WALK_R_8F,8
+	_ANIME_DATA AC_WALK_U_8F,2
+//	_ANIME_DATA AC_WALK_L_8F,1
+//	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_support_come_01_x786
+
+	_ANIME_DATA AC_WALK_R_8F,9
+	_ANIME_DATA AC_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_support_come_01_x787
+
+	_ANIME_DATA AC_WALK_R_8F,10
+	_ANIME_DATA AC_WALK_U_8F,2
+//	_ANIME_DATA AC_WALK_R_8F,1
+//	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_support_come_01_x788
+
+	_ANIME_DATA AC_WALK_R_8F,11
+	_ANIME_DATA AC_WALK_U_8F,2
+//	_ANIME_DATA AC_WALK_R_8F,2
+//	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+		
+_ANIME_LABEL	anm_support_come_01_x789
+
+	_ANIME_DATA AC_WALK_R_8F,12
+	_ANIME_DATA AC_WALK_U_8F,2
+//	_ANIME_DATA AC_WALK_R_8F,3
+//	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+*/
+//--------------------------------------------------------------------
+// サポート：退場する                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_support_back_01
+
+	_ANIME_DATA AC_WALK_L_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+/*	
+_ANIME_LABEL	anm_support_back_01_x784
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_support_back_01_x785
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+
+_ANIME_LABEL	anm_support_back_01_x786
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_support_back_01_x787
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_support_back_01_x788
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_support_back_01_x789
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+*/	
+//--------------------------------------------------------------------
+// 共通アニメ：びっくりする                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：右振り向き                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 /**************************************************************/
-/*  R08 パラソルの会話用イベントスクリプト                      */
+/*  R08 プラズマ団１会話用イベントスクリプト                  */
+/**************************************************************/
+EVENT_START   ev_r08_hakaim_01
+	IF FLAG_ON(FE_D08_PACKAGEPOKE_END) THEN
+		_BALLOONWIN_OBJMSG_POS( msg_r08_stop1_02, R08_HAKAIM_01, POS_DEFAULT )
+	ELSE
+		_BALLOONWIN_OBJMSG_POS( msg_r08_stop1_01, R08_HAKAIM_01, POS_DEFAULT )
+	ENDIF
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+/**************************************************************/
+/*  R08 プラズマ団２会話用イベントスクリプト                  */
+/**************************************************************/
+EVENT_START   ev_r08_hakaim_02
+	IF FLAG_ON(FH_01) THEN
+		_BALLOONWIN_OBJMSG_POS( msg_r08_stop2_02, R08_HAKAIM_02, POS_DEFAULT )
+	ELSE
+		_BALLOONWIN_OBJMSG_POS( msg_r08_stop2_01, R08_HAKAIM_02, POS_DEFAULT )
+	ENDIF
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+/**************************************************************/
+/*  R08 パラソルの会話用イベントスクリプト                    */
 /**************************************************************/
 EVENT_START   ev_r08_ambrella_01
 	_EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN42,1,FE_R08_ITEMGET_01,msg_r08_ambrella_01,msg_r08_ambrella_02,msg_r08_ambrella_02)
 EVENT_END
 
 /**************************************************************/
-/*  R08 看板のイベントスクリプト                      */
+/*  R08 看板のイベントスクリプト                     		  */
 /**************************************************************/
 EVENT_START   ev_bg_r08_sign1_01
 
@@ -49,7 +361,7 @@ EVENT_START   ev_bg_r08_sign1_01
 EVENT_END
 
 /**************************************************************/
-/*  R08 看板のイベントスクリプト                      */
+/*  R08 看板のイベントスクリプト                      		  */
 /**************************************************************/
 EVENT_START   ev_bg_r08_sign2_01
 
@@ -58,7 +370,7 @@ EVENT_START   ev_bg_r08_sign2_01
 EVENT_END
 
 /**************************************************************/
-/*  R08 看板のイベントスクリプト                      */
+/*  R08 看板のイベントスクリプト                      		  */
 /**************************************************************/
 EVENT_START   ev_bg_r08_sign3_01
 

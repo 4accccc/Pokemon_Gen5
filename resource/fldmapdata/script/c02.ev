@@ -1108,10 +1108,17 @@ EVENT_START   ev_pos_c02_stone_01
 	_OBJ_DEL( C02_HAKASE1_01 )
 	_OBJ_DEL( C02_HAKASE2_01 )
 	
+	//博士1、2、チャンピオンのフラグを落とす
 	_FLAG_SET(FV_C02_STONEEVENT_01)
-	_FLAG_SET( FV_MUSEUM_STONE )
-	$WK_SCENE_C02 = 7
 	
+	//博物館内の石を消す
+	_FLAG_SET( FV_MUSEUM_STONE )
+
+	//イベントを無効に
+	$WK_SCENE_C02 = 7
+
+	//D08のストッパーを消す
+	_FLAG_SET(FV_R08_STOPPER_01)
 	//============================================//
 		
 EVENT_END

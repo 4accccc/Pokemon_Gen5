@@ -19,6 +19,8 @@
 #define R08_FLD_ITEM_01                    6
 #define R08_FLD_ITEM_02                    7
 #define R08_FLD_ITEM_03                    8
+#define R08_HAKAIM_01                      9
+#define R08_HAKAIM_02                     10
 
 #endif //ZONE_R08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
