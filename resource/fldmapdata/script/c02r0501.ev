@@ -19,22 +19,112 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c02r0501_woman2_01
 _EVENT_DATA    ev_c02r0501_man2_01
+_EVENT_DATA    ev_c02r0501_trainerw_01
 _EVENT_DATA_END
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*  C02R0501 TRAINERWの会話用イベントスクリプト*/
 /**************************************************************/
-//ev_c02r0501_flag_change:
-//  _END
+EVENT_START   ev_c02r0501_trainerw_01
 
+	_TALK_OBJ_START()
+	IF FLAG_OFF(FE_C02R0501_ITEMGET_01)THEN
+		_BALLOONWIN_TALKOBJ_MSG(msg_c02r0501_trainerw_01)
+		
+		//購入本数の選択画面を作成
+//	  	_BMPMENU_INIT_EX( MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER  )
+	  	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER  )
+		
+		_BMPMENU_MAKE_LIST( msg_c02r0501_select_01, 0 )	//ツタージャ
+		_BMPMENU_MAKE_LIST( msg_c02r0501_select_02, 1 )	//ミジュマル
+		_BMPMENU_MAKE_LIST( msg_c02r0501_select_03, 2 )	//ポカブ
+		
+		_BMPMENU_START()
+		_MSGWIN_CLOSE()
+		
+		//ツタージャ
+		IF $SCWK_ANSWER   == 0 THEN
+			_BALLOONWIN_TALKOBJ_MSG(msg_c02r0501_trainerw_02)
+			_MSGWIN_CLOSE()
+			_TIME_WAIT(8) 
+			_ITEM_EVENT_KEYWAIT(ITEM_KISEKINOTANE,1)
+		//ミジュマル
+		ELSIF $SCWK_ANSWER   == 1 THEN
+			_BALLOONWIN_TALKOBJ_MSG(msg_c02r0501_trainerw_03)
+			_MSGWIN_CLOSE() 
+			_TIME_WAIT(8)
+			_ITEM_EVENT_KEYWAIT(ITEM_SINPINOSIZUKU,1)				
+		//ポカブ
+		ELSIF $SCWK_ANSWER   == 2 THEN
+			_BALLOONWIN_TALKOBJ_MSG(msg_c02r0501_trainerw_04)
+			_MSGWIN_CLOSE() 
+			_TIME_WAIT(8)
+			_ITEM_EVENT_KEYWAIT(ITEM_MOKUTAN,1)
+		ENDIF
+		_FLAG_SET(FE_C02R0501_ITEMGET_01)
+
+	ELSE
+		_BALLOONWIN_TALKOBJ_MSG(msg_c02r0501_trainerw_05)
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE() 
+		
+	ENDIF
+
+EVENT_END
+//--------------------------------------------------------------------
+// 共通アニメ：びっくりする                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：右振り向き                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// サポートが振り向くアニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_support_turn_l
+	
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
 /**************************************************************/
 /*  C02R0501 WOMAN2の会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c02r0501_woman2_01
-
-	
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02r0501_woman2_01)
-
 EVENT_END
 
 /**************************************************************/
@@ -42,8 +132,6 @@ EVENT_END
 /**************************************************************/
 
 EVENT_START   ev_c02r0501_man2_01
-	
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c02r0501_man2_01)
-		
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c02r0501_man2_01)	
 EVENT_END
 
