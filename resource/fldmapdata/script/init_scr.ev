@@ -233,6 +233,9 @@ init_flags:
 	//自宅１階：変装ハンサム非表示。クリア後に表示。
 	_FLAG_SET( FV_T01R0101_HANDSOME_MAMA )
 
+	//クリア後：18番道路の七賢人その６
+	_FLAG_SET( FV_R18_SAGE )
+
 }
 _RET
 
@@ -303,10 +306,6 @@ ev_first_gameclear:
   //ゲームクリアフラグをセット
   _FLAG_SET( SYS_FLAG_GAME_CLEAR )
 
-  //クリア後イベント：自宅１階のハンサムイベント有効
-  $WK_SCENE_T01R0101 = 2
-  _FLAG_RESET( FV_T01R0101_HANDSOME_MAMA )	//変装ハンサム表示
-
   //古代の城のマップ変化
   _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_06, TRUE, FALSE )
 
@@ -318,6 +317,17 @@ ev_first_gameclear:
 
   //ボックス壁紙追加
   _GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER1 )
+
+
+
+  //クリア後イベント：自宅１階のハンサムイベント有効
+  $WK_SCENE_T01R0101 = 2
+  _FLAG_RESET( FV_T01R0101_HANDSOME_MAMA )	//変装ハンサム表示
+
+  //クリア後イベント：１８番道路の七賢人その６を表示
+  _FLAG_RESET( FV_R18_SAGE )
+
+
 
 _RET
 

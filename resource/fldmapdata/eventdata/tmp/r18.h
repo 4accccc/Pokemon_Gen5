@@ -18,6 +18,7 @@
 #define TR_BACKPACKERW_10                  6
 #define R18_FLD_ITEM_01                    7
 #define R18_FLD_ITEM_02                    8
+#define R18_SAGE6_01                       9
 
 #endif //ZONE_R18_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r18.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

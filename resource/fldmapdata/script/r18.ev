@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_r18.h"
-  //.include  "r18.h"
+  .include  "r18.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,181 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r18
+_EVENT_DATA    ev_r18_sage6_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_r18_flag_change:
-//  _END
+/************************************************************/
+/*					クリア後：七賢人						*/
+/************************************************************/
+EVENT_START	ev_r18_sage6_01
+	_TALK_OBJ_START()
+	
+	_BALLOONWIN_OBJMSG( msg_r18_sage6_end_01, R18_SAGE6_01 )
+	_MSGWIN_CLOSE()
+	
+	//わざマシン（かげぶんしん）入手
+	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN32, 1 )
+	
+	_BALLOONWIN_OBJMSG( msg_r18_sage6_end_02, R18_SAGE6_01 )
+	_MSGWIN_CLOSE()
+	
+	//イベントBGM開始
+	_START_EVENT_BGM( SEQ_BGM_E_HANDSOME )
+	
+	{
+	DEFINE_LOCAL	lwk_ply_dir
+	_PLAYER_DIR_GET( lwk_ply_dir )
+	
+	//ハンサム出現（話しかけ位置で分岐）
+	IF $lwk_ply_dir == DIR_DOWN || $lwk_ply_dir == DIR_UP THEN
+		_OBJ_ADD_EX( 617, 747, DIR_DOWN, MMDL_ID_EVENTOBJ_00, ICPO, MV_DMY )
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_r18:
-  //とりあえず最初のラベルだけ生成している
-  _END
+	ELSE
+		//主人公と七賢人が横を向いているなら
+		_OBJ_ADD_EX( 616, 747, DIR_DOWN, MMDL_ID_EVENTOBJ_00, ICPO, MV_DMY )
+
+	ENDIF
+	
+	//ハンサム：七賢人の横へ
+	IF $lwk_ply_dir == DIR_DOWN || $lwk_ply_dir == DIR_UP THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_handsome_come_01a )
+	ELSE
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_handsome_come_01b )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//さてと
+	_BALLOONWIN_OBJMSG( msg_r18_icpo_end_01, MMDL_ID_EVENTOBJ_00 )
+	_MSGWIN_CLOSE()
+	
+	//七賢人：ハンサムをみて
+	IF $lwk_ply_dir == DIR_DOWN || $lwk_ply_dir == DIR_UP THEN
+		_OBJ_ANIME( R18_SAGE6_01, anm_stay_walk_r )
+	ELSE
+		_OBJ_ANIME( R18_SAGE6_01, anm_stay_walk_u )
+	ENDIF
+	
+	//かまわんよ
+	_BALLOONWIN_OBJMSG( msg_r18_sage6_end_03, R18_SAGE6_01 )
+	_MSGWIN_CLOSE()
+	
+	//ハンサム：主人公の横へ
+	//主人公：ハンサムを見て
+	IF $lwk_ply_dir == DIR_DOWN THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_handsome_move_01d )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
+
+	ELSIF $lwk_ply_dir == DIR_UP THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_handsome_move_01u )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_r )
+
+	ELSIF $lwk_ply_dir == DIR_LEFT THEN
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_handsome_move_01l )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_u )
+
+	ELSE
+		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_handsome_move_01r )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_u )
+
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	//他の七賢人(５人)を探していたら分岐
+	IF $WK_SCENE_AFTER_SAGE == 5 THEN
+		//全員探している
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_OBJMSG( msg_r18_icpo_end_03, MMDL_ID_EVENTOBJ_00 )
+	ELSE
+		//探していない
+		_BALLOONWIN_OBJMSG( msg_r18_icpo_end_02, MMDL_ID_EVENTOBJ_00 )
+	ENDIF
+	_MSGWIN_CLOSE()
+	
+	_END_EVENT_BGM()		//イベントBGM停止
+	
+	//画面暗転----------------------------
+	_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	_OBJ_DEL( R18_SAGE6_01 )
+	
+	_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	//暗転復帰---------------------------
+	
+	}
+	
+	//========================================//
+	//クリア後七賢人用ワークを加算
+	$WK_SCENE_AFTER_SAGE += 1
+	
+	//七賢人非表示
+	_FLAG_SET( FV_R18_SAGE )
+	
+	//========================================//
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//その場歩き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_stay_walk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ハンサム：七賢人の横へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_handsome_come_01a
+	_ANIME_DATA	AC_WALK_D_8F,11
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_handsome_come_01b
+	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ハンサム：主人公の横へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_handsome_move_01d
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_handsome_move_01u
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_handsome_move_01r
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_handsome_move_01l
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+
 
