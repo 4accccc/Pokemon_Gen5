@@ -53,7 +53,7 @@ static GMEVENT* EVENT_BrightIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldma
 static GMEVENT* EVENT_CrossOut( GAMESYS_WORK *gameSystem, FIELDMAP_WORK * fieldmap ); // クロスフェードアウト
 static GMEVENT* EVENT_CrossIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap ); // クロスフェードイン
 static GMEVENT* EVENT_SeasonIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, u8 startSeason, u8 endSeason ); // 季節フェードイン
-static GMEVENT* EVENT_WipeOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap ); // ワイプアウト
+static GMEVENT* EVENT_HoleOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap ); // ホールアウト
 static GMEVENT* EVENT_ShutterDownOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap ); // シャッターアウト(↓)
 static GMEVENT* EVENT_ShutterDownIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap ); // シャッターイン(↓)
 static GMEVENT* EVENT_ShutterUpOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap ); // シャッターアウト(↑)
@@ -72,7 +72,7 @@ static GMEVENT_RESULT BrightInEvent( GMEVENT* event, int* seq, void* wk ); // 輝
 static GMEVENT_RESULT CrossOutEvent( GMEVENT* event, int* seq, void* wk ); // クロスフェードアウト
 static GMEVENT_RESULT CrossInEvent( GMEVENT* event, int* seq, void* wk ); // クロスフェードイン
 static GMEVENT_RESULT SeasonInEvent( GMEVENT* event, int* seq, void* wk ); // 季節フェードイン
-static GMEVENT_RESULT WipeOutEvent( GMEVENT* event, int* seq, void* wk ); // ワイプアウト
+static GMEVENT_RESULT HoleOutEvent( GMEVENT* event, int* seq, void* wk ); // ホールアウト
 static GMEVENT_RESULT ShutterDownOutEvent( GMEVENT* event, int* seq, void* wk ); // シャッターアウト(↓)
 static GMEVENT_RESULT ShutterDownInEvent( GMEVENT* event, int* seq, void* wk ); // シャッターイン(↓)
 static GMEVENT_RESULT ShutterUpOutEvent( GMEVENT* event, int* seq, void* wk ); // シャッターアウト(↑)
@@ -196,7 +196,7 @@ GMEVENT* EVENT_FieldFadeOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
     event = EVENT_BrightOut( gameSystem, fieldmap, fadeType, fadeFinishWaitFlag );
     break;
   case FIELD_FADE_HOLE: // ホールアウト
-    event = EVENT_WipeOut( gameSystem, fieldmap );
+    event = EVENT_HoleOut( gameSystem, fieldmap );
     break;
   case FIELD_FADE_SHUTTER_DOWN: // シャッターアウト(↓)
     event = EVENT_ShutterDownOut( gameSystem, fieldmap );
@@ -408,6 +408,16 @@ static int GetBrightFadeMode( FIELD_FADE_TYPE fadeType )
   case FIELD_FADE_WHITE: // 輝度フェード(ホワイト)
     brightFadeMode = GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN | GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB;
     break;
+  case FIELD_FADE_CROSS: // クロスフェード
+  case FIELD_FADE_SEASON: // 季節フェード
+  case FIELD_FADE_HOLE: // ワイプフェード ( ホール )
+  case FIELD_FADE_SHUTTER_DOWN: // ワイプフェード ( シャッター ↓ )
+  case FIELD_FADE_SHUTTER_UP: // ワイプフェード ( シャッター ↑ )
+  case FIELD_FADE_SLIDE_RIGHT: // ワイプフェード ( スライト → )
+  case FIELD_FADE_SLIDE_LEFT: // ワイプフェード ( スライト ← )
+  case FIELD_FADE_PLAYER_DIR: // 自機の向きに依存したフェード
+    brightFadeMode = GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB;
+    break;
   }
 
   return brightFadeMode;
@@ -429,9 +439,9 @@ static FIELD_FADE_TYPE GetFadeOutType_byMapChangeType( MC_TYPE prevMapChangeType
   const FIELD_FADE_TYPE fadeType[ MC_TYPE_NUM ][MC_TYPE_NUM ] =
   {
                 /* FIELD                  ROOM                   GATE                   DUNGEON                BRIDGE                 OTHER            */
-    /* FIELD   */{ FIELD_FADE_PLAYER_DIR, FIELD_FADE_CROSS,      FIELD_FADE_PLAYER_DIR, FIELD_FADE_HOLE ,      FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK },
-    /* ROOM    */{ FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_HOLE ,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK }, 
-    /* GATE    */{ FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK,      FIELD_FADE_CROSS,      FIELD_FADE_BLACK,      FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK },
+    /* FIELD   */{ FIELD_FADE_PLAYER_DIR, FIELD_FADE_CROSS,      FIELD_FADE_PLAYER_DIR, FIELD_FADE_HOLE,       FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK },
+    /* ROOM    */{ FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_HOLE,       FIELD_FADE_BLACK,      FIELD_FADE_BLACK }, 
+    /* GATE    */{ FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_CROSS,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK },
     /* DUNGEON */{ FIELD_FADE_WHITE,      FIELD_FADE_WHITE,      FIELD_FADE_WHITE,      FIELD_FADE_BLACK,      FIELD_FADE_WHITE,      FIELD_FADE_BLACK },
     /* BRIDGE  */{ FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK,      FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK,      FIELD_FADE_CROSS,      FIELD_FADE_BLACK },
     /* OTHER   */{ FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK },
@@ -460,11 +470,11 @@ static FIELD_FADE_TYPE GetFadeInType_byMapChangeType( MC_TYPE prevMapChangeType,
   const FIELD_FADE_TYPE fadeType[ MC_TYPE_NUM ][ MC_TYPE_NUM ] =
   {
                 /* FIELD                  ROOM                   GATE                   DUNGEON                BRIDGE                 OTHER            */
-    /* FIELD   */{ FIELD_FADE_PLAYER_DIR, FIELD_FADE_CROSS,      FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK,      FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK },
+    /* FIELD   */{ FIELD_FADE_PLAYER_DIR, FIELD_FADE_CROSS,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK },
     /* ROOM    */{ FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK },
     /* GATE    */{ FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK,      FIELD_FADE_CROSS,      FIELD_FADE_BLACK,      FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK },
     /* DUNGEON */{ FIELD_FADE_WHITE,      FIELD_FADE_WHITE,      FIELD_FADE_WHITE,      FIELD_FADE_BLACK,      FIELD_FADE_WHITE,      FIELD_FADE_BLACK },
-    /* BRIDGE  */{ FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK,      FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK,      FIELD_FADE_CROSS,      FIELD_FADE_BLACK },
+    /* BRIDGE  */{ FIELD_FADE_PLAYER_DIR, FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_CROSS,      FIELD_FADE_BLACK },
     /* OTHER   */{ FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK,      FIELD_FADE_BLACK },
   };
 
@@ -570,6 +580,7 @@ static GMEVENT* EVENT_CrossOut( GAMESYS_WORK *gameSystem, FIELDMAP_WORK * fieldm
   work->gameSystem = gameSystem;
   work->fieldmap   = fieldmap;
   work->fadeType   = FIELD_FADE_CROSS;
+  work->brightFadeMode = GetBrightFadeMode( work->fadeType );
 
 	return event;
 }
@@ -595,6 +606,7 @@ static GMEVENT* EVENT_CrossIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap
   work->gameSystem = gameSystem;
   work->fieldmap   = fieldmap;
   work->fadeType   = FIELD_FADE_CROSS;
+  work->brightFadeMode = GetBrightFadeMode( work->fadeType );
 
 	return event;
 }
@@ -626,13 +638,14 @@ static GMEVENT* EVENT_SeasonIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldma
 	work->fadeType    = FIELD_FADE_SEASON;
   work->startSeason = startSeason;
   work->endSeason   = endSeason;
+  work->brightFadeMode = GetBrightFadeMode( work->fadeType );
 
 	return event;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief ワイプアウト イベント生成
+ * @brief ホールアウト イベント生成
  *
  * @param gameSystem
  * @param fieldmap
@@ -640,18 +653,19 @@ static GMEVENT* EVENT_SeasonIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldma
  * @return 生成したイベント
  */
 //--------------------------------------------------------------------------------------------
-static GMEVENT* EVENT_WipeOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap )
+static GMEVENT* EVENT_HoleOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap )
 {
 	GMEVENT* event;
 	FADE_EVENT_WORK* work;
 
-	event = GMEVENT_Create( gameSystem, NULL, WipeOutEvent, sizeof(FADE_EVENT_WORK) );
+	event = GMEVENT_Create( gameSystem, NULL, HoleOutEvent, sizeof(FADE_EVENT_WORK) );
 	work  = GMEVENT_GetEventWork(event);
 
   // イベントワーク初期化
   work->gameSystem = gameSystem;
   work->fieldmap   = fieldmap;
 	work->fadeType   = FIELD_FADE_HOLE;
+  work->brightFadeMode = GetBrightFadeMode( work->fadeType );
 
 	return event;
 }
@@ -679,6 +693,7 @@ static GMEVENT* EVENT_ShutterDownOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* f
   work->gameSystem = gameSystem;
   work->fieldmap   = fieldmap;
 	work->fadeType   = FIELD_FADE_SHUTTER_DOWN;
+  work->brightFadeMode = GetBrightFadeMode( work->fadeType );
 
 	return event;
 }
@@ -706,6 +721,7 @@ static GMEVENT* EVENT_ShutterDownIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fi
   work->gameSystem = gameSystem;
   work->fieldmap   = fieldmap;
 	work->fadeType   = FIELD_FADE_SHUTTER_DOWN;
+  work->brightFadeMode = GetBrightFadeMode( work->fadeType );
 
 	return event;
 }
@@ -733,6 +749,7 @@ static GMEVENT* EVENT_ShutterUpOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fie
   work->gameSystem = gameSystem;
   work->fieldmap   = fieldmap;
 	work->fadeType   = FIELD_FADE_SHUTTER_UP;
+  work->brightFadeMode = GetBrightFadeMode( work->fadeType );
 
 	return event;
 }
@@ -760,6 +777,7 @@ static GMEVENT* EVENT_ShutterUpIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fiel
   work->gameSystem = gameSystem;
   work->fieldmap   = fieldmap;
 	work->fadeType   = FIELD_FADE_SHUTTER_UP;
+  work->brightFadeMode = GetBrightFadeMode( work->fadeType );
 
 	return event;
 }
@@ -787,6 +805,7 @@ static GMEVENT* EVENT_SlideRightOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fi
   work->gameSystem = gameSystem;
   work->fieldmap   = fieldmap;
 	work->fadeType   = FIELD_FADE_SLIDE_RIGHT;
+  work->brightFadeMode = GetBrightFadeMode( work->fadeType );
 
 	return event;
 }
@@ -814,6 +833,7 @@ static GMEVENT* EVENT_SlideRightIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fie
   work->gameSystem = gameSystem;
   work->fieldmap   = fieldmap;
 	work->fadeType   = FIELD_FADE_SLIDE_RIGHT;
+  work->brightFadeMode = GetBrightFadeMode( work->fadeType );
 
 	return event;
 }
@@ -841,6 +861,7 @@ static GMEVENT* EVENT_SlideLeftOut( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fie
   work->gameSystem = gameSystem;
   work->fieldmap   = fieldmap;
 	work->fadeType   = FIELD_FADE_SLIDE_LEFT;
+  work->brightFadeMode = GetBrightFadeMode( work->fadeType );
 
 	return event;
 }
@@ -868,6 +889,7 @@ static GMEVENT* EVENT_SlideLeftIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fiel
   work->gameSystem = gameSystem;
   work->fieldmap   = fieldmap;
 	work->fadeType   = FIELD_FADE_SLIDE_LEFT;
+  work->brightFadeMode = GetBrightFadeMode( work->fadeType );
 
 	return event;
 }
@@ -1010,8 +1032,8 @@ static GMEVENT_RESULT CrossOutEvent( GMEVENT* event, int* seq, void* wk )
 
 	switch( *seq ) {
 	case 0:
-		// サブ画面だけブラックアウト
-		GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 0, 16, -8);
+    // フェード開始
+    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, 0 );
 
 		// 画面キャプチャ→VRAM_D
 		GX_SetBankForLCDC(GX_VRAM_LCDC_D);
@@ -1078,8 +1100,8 @@ static GMEVENT_RESULT CrossInEvent( GMEVENT* event, int* seq, void* wk )
     GFL_BG_SetVisible( FLDBG_MFRM_3D, VISIBLE_ON );
     G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0, work->alphaWork, 0 );
 
-		// サブ画面輝度復帰
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, -2);
+    // フェード開始
+    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, 0 );
     (*seq)++;
     break;
 
@@ -1145,32 +1167,36 @@ static GMEVENT_RESULT SeasonInEvent( GMEVENT* event, int* seq, void* wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief ワイプアウト イベント
+ * @brief ホールアウト イベント
  */
 //--------------------------------------------------------------------------------------------
-static GMEVENT_RESULT WipeOutEvent( GMEVENT* event, int* seq, void* wk )
+static GMEVENT_RESULT HoleOutEvent( GMEVENT* event, int* seq, void* wk )
 {
 	FADE_EVENT_WORK* work       = wk;
   GAMESYS_WORK*    gameSystem = work->gameSystem;
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
 	switch( *seq ) {
+  // フェード開始
+  case 0:
+    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, 0 );
+		(*seq)++;
+		break;
+
   // ワイプアウト開始
-	case 0: 
+	case 1: 
     WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_HOLEOUT, WIPE_TYPE_HOLEOUT, 
         0x0000, WIPE_DEF_DIV, WIPE_DEF_SYNC, FIELDMAP_GetHeapID(fieldmap) );
     (*seq)++;
 		break;
 
   // ワイプアウト完了待ち
-  case 1:
-    if( WIPE_SYS_EndCheck() ) {
-      (*seq)++;
-    }
+  case 2:
+    if( WIPE_SYS_EndCheck() ) { (*seq)++; }
     break;
 
   // イベント終了
-  case 2:
+  case 3:
     return GMEVENT_RES_FINISH;
 	} 
 	return GMEVENT_RES_CONTINUE;
@@ -1188,22 +1214,28 @@ static GMEVENT_RESULT ShutterDownOutEvent( GMEVENT* event, int* seq, void* wk )
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
 	switch( *seq ) {
+  // フェード開始
+  case 0:
+    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, 0 );
+		(*seq)++;
+		break;
+
   // シャッターアウト開始
-	case 0: 
+	case 1: 
     WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_SHUTTEROUT_DOWN, WIPE_TYPE_SHUTTEROUT_DOWN, 
         0x0000, WIPE_DEF_DIV, WIPE_DEF_SYNC, FIELDMAP_GetHeapID(fieldmap) );
     (*seq)++;
 		break;
 
   // ワイプアウト完了待ち
-  case 1:
+  case 2:
     if( WIPE_SYS_EndCheck() ) {
       (*seq)++;
     }
     break;
 
   // イベント終了
-  case 2:
+  case 3:
     return GMEVENT_RES_FINISH;
 	} 
 	return GMEVENT_RES_CONTINUE;
@@ -1221,22 +1253,26 @@ static GMEVENT_RESULT ShutterUpOutEvent( GMEVENT* event, int* seq, void* wk )
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
 	switch( *seq ) {
+  // フェード開始
+  case 0:
+    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, 0 );
+		(*seq)++;
+		break;
+
   // シャッターアウト開始
-	case 0: 
+	case 1: 
     WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_SHUTTEROUT_UP, WIPE_TYPE_SHUTTEROUT_UP, 
         0x0000, WIPE_DEF_DIV, WIPE_DEF_SYNC, FIELDMAP_GetHeapID(fieldmap) );
     (*seq)++;
 		break;
 
   // ワイプアウト完了待ち
-  case 1:
-    if( WIPE_SYS_EndCheck() ) {
-      (*seq)++;
-    }
+  case 2:
+    if( WIPE_SYS_EndCheck() ) { (*seq)++; }
     break;
 
   // イベント終了
-  case 2:
+  case 3:
     return GMEVENT_RES_FINISH;
 	} 
 	return GMEVENT_RES_CONTINUE;
@@ -1254,22 +1290,26 @@ static GMEVENT_RESULT SlideRightOutEvent( GMEVENT* event, int* seq, void* wk )
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
 	switch( *seq ) {
+  // フェード開始
+  case 0:
+    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, 0 );
+		(*seq)++;
+		break;
+
   // シャッターアウト開始
-	case 0: 
+	case 1: 
     WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_SLIDEOUT_LR, WIPE_TYPE_SLIDEOUT_LR, 
         0x0000, WIPE_DEF_DIV, WIPE_DEF_SYNC, FIELDMAP_GetHeapID(fieldmap) );
     (*seq)++;
 		break;
 
   // ワイプアウト完了待ち
-  case 1:
-    if( WIPE_SYS_EndCheck() ) {
-      (*seq)++;
-    }
+  case 2:
+    if( WIPE_SYS_EndCheck() ) { (*seq)++; }
     break;
 
   // イベント終了
-  case 2:
+  case 3:
     return GMEVENT_RES_FINISH;
 	} 
 	return GMEVENT_RES_CONTINUE;
@@ -1287,22 +1327,28 @@ static GMEVENT_RESULT SlideLeftOutEvent( GMEVENT* event, int* seq, void* wk )
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
 	switch( *seq ) {
+  // フェード開始
+  case 0:
+    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 0, 16, 0 );
+		(*seq)++;
+		break;
+
   // シャッターアウト開始
-	case 0: 
+	case 1: 
     WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_SLIDEOUT, WIPE_TYPE_SLIDEOUT, 
         0x0000, WIPE_DEF_DIV, WIPE_DEF_SYNC, FIELDMAP_GetHeapID(fieldmap) );
     (*seq)++;
 		break;
 
   // ワイプアウト完了待ち
-  case 1:
+  case 2:
     if( WIPE_SYS_EndCheck() ) {
       (*seq)++;
     }
     break;
 
   // イベント終了
-  case 2:
+  case 3:
     return GMEVENT_RES_FINISH;
 	} 
 	return GMEVENT_RES_CONTINUE;
@@ -1320,22 +1366,26 @@ static GMEVENT_RESULT ShutterDownInEvent( GMEVENT* event, int* seq, void* wk )
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
 	switch( *seq ) {
+  // フェード開始
+  case 0:
+    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, 0 );
+		(*seq)++;
+		break;
+
   // シャッターイン開始
-	case 0: 
+	case 1: 
     WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_SHUTTERIN_DOWN, WIPE_TYPE_SHUTTERIN_DOWN, 
         0x0000, WIPE_DEF_DIV, WIPE_DEF_SYNC, FIELDMAP_GetHeapID(fieldmap) );
     (*seq)++;
 		break;
 
   // ワイプイン完了待ち
-  case 1:
-    if( WIPE_SYS_EndCheck() ) {
-      (*seq)++;
-    }
+  case 2:
+    if( WIPE_SYS_EndCheck() ) { (*seq)++; }
     break;
 
   // イベント終了
-  case 2:
+  case 3:
     // フィールドBG復元
     ResetFieldBG( work->fieldmap );
     InitFieldBG( work->fieldmap );
@@ -1356,22 +1406,26 @@ static GMEVENT_RESULT ShutterUpInEvent( GMEVENT* event, int* seq, void* wk )
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
 	switch( *seq ) {
+  // フェード開始
+  case 0:
+    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, 0 );
+		(*seq)++;
+		break;
+
   // シャッターイン開始
-	case 0: 
+	case 1: 
     WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_SHUTTERIN_UP, WIPE_TYPE_SHUTTERIN_UP, 
         0x0000, WIPE_DEF_DIV, WIPE_DEF_SYNC, FIELDMAP_GetHeapID(fieldmap) );
     (*seq)++;
 		break;
 
   // ワイプイン完了待ち
-  case 1:
-    if( WIPE_SYS_EndCheck() ) {
-      (*seq)++;
-    }
+  case 2:
+    if( WIPE_SYS_EndCheck() ) { (*seq)++; }
     break;
 
   // イベント終了
-  case 2:
+  case 3:
     // フィールドBG復元
     ResetFieldBG( work->fieldmap );
     InitFieldBG( work->fieldmap );
@@ -1392,22 +1446,26 @@ static GMEVENT_RESULT SlideRightInEvent( GMEVENT* event, int* seq, void* wk )
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
 	switch( *seq ) {
+  // フェード開始
+  case 0:
+    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, 0 );
+		(*seq)++;
+		break;
+
   // シャッターイン開始
-	case 0: 
+	case 1: 
     WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_SLIDEIN, WIPE_TYPE_SLIDEIN, 
         0x0000, WIPE_DEF_DIV, WIPE_DEF_SYNC, FIELDMAP_GetHeapID(fieldmap) );
     (*seq)++;
 		break;
 
   // ワイプイン完了待ち
-  case 1:
-    if( WIPE_SYS_EndCheck() ) {
-      (*seq)++;
-    }
+  case 2:
+    if( WIPE_SYS_EndCheck() ) { (*seq)++; }
     break;
 
   // イベント終了
-  case 2:
+  case 3:
     // フィールドBG復元
     ResetFieldBG( work->fieldmap );
     InitFieldBG( work->fieldmap );
@@ -1428,22 +1486,26 @@ static GMEVENT_RESULT SlideLeftInEvent( GMEVENT* event, int* seq, void* wk )
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
 	switch( *seq ) {
+  // フェード開始
+  case 0:
+    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, 0 );
+		(*seq)++;
+		break;
+
   // シャッターイン開始
-	case 0: 
+	case 1: 
     WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_SLIDEIN_LR, WIPE_TYPE_SLIDEIN_LR, 
         0x0000, WIPE_DEF_DIV, WIPE_DEF_SYNC, FIELDMAP_GetHeapID(fieldmap) );
     (*seq)++;
 		break;
 
   // ワイプイン完了待ち
-  case 1:
-    if( WIPE_SYS_EndCheck() ) {
-      (*seq)++;
-    }
+  case 2:
+    if( WIPE_SYS_EndCheck() ) { (*seq)++; }
     break;
 
   // イベント終了
-  case 2:
+  case 3:
     // フィールドBG復元
     ResetFieldBG( work->fieldmap );
     InitFieldBG( work->fieldmap );
