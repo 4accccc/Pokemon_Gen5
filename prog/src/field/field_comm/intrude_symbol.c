@@ -12,6 +12,16 @@
 #include "intrude_comm_command.h"
 #include "intrude_types.h"
 #include "field/intrude_symbol.h"
+#include "intrude_main.h"
+#include "field/fieldmap.h"
+#include "intrude_field.h"
+
+
+//==============================================================================
+//  データ
+//==============================================================================
+///パレスと森の出入り口座標(パレス側)
+static const VecFx32 PalaceForestDoorwayPos = {FX32_CONST(504), FX32_CONST(32), FX32_CONST(376)};
 
 
 
@@ -43,6 +53,35 @@ NetID IntrudeSymbol_CheckIntrudeNetID(GAME_COMM_SYS_PTR game_comm, GAMEDATA *gam
   else{
     return INTRUDE_NETID_NULL;
   }
+}
+
+//==================================================================
+/**
+ * パレスと森の出入り口座標を取得(パレス側)
+ *
+ * @param   game_comm		
+ * @param   gamedata		
+ * @param   dest_pos		座標代入先
+ */
+//==================================================================
+void IntrudeSymbol_GetPosPalaceForestDoorway(GAME_COMM_SYS_PTR game_comm, GAMEDATA *gamedata, VecFx32 *dest_pos)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  int map_offset;
+  
+  if(intcomm == NULL 
+      || intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
+    map_offset = 0;
+  }
+  else{
+    map_offset = intcomm->intrude_status_mine.palace_area - GAMEDATA_GetIntrudeMyID(gamedata);
+    if(map_offset < 0){
+      map_offset = intcomm->member_num + map_offset;
+    }
+  }
+  
+  *dest_pos = PalaceForestDoorwayPos;
+  dest_pos->x += PALACE_MAP_LEN * map_offset;
 }
 
 //==================================================================
