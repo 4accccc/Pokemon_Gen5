@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-03-14T15:00:52"/>
+	<create user="matsumiya" host="W00224" date="2010-03-21T13:24:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -346,9 +346,9 @@
 		</language>
 	</columns>
 
-	<dialog left="145" top="494" right="850" bottom="1122" maximized="no" rayout="Vertical2">
+	<dialog left="1567" top="247" right="2272" bottom="777" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="1151" top="368" right="1624" bottom="766" visible="yes"/>
+		<tag-palette left="807" top="368" right="1280" bottom="766" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -417,9 +417,9 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 こんかいの　たいかいは
 とうろく　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">一度　大会に　登録して
-解除　しています[BE:01:ページ切り替え（クリア）]
+解除しています[BE:01:ページ切り替え（クリア）]
 今回の　大会は
-登録　できません[BE:01:ページ切り替え（クリア）]</language>
+登録できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_STR_05">
@@ -430,7 +430,7 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 		<language name="JPN_KANJI" width="256">この　大会に　参加して
 対戦を　終えています[BE:01:ページ切り替え（クリア）]
 一度　参加した　大会は
-登録　できません[BE:01:ページ切り替え（クリア）]</language>
+登録できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_STR_06">
@@ -489,7 +489,7 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 大会の　参加を
 解除するまで[BE:00:ページ切り替え（行送り）]
 バトルボックスの　ポケモンは[BE:00:ページ切り替え（行送り）]
-かえられなく　なります[BE:01:ページ切り替え（クリア）]</language>
+変えられなく　なります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_STR_11">
@@ -518,7 +518,7 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 		<language name="JPN" width="256">さいごの　たいせんの　きろくを
 さいせい　します[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">最後の　対戦の　記録を
-再生　します[BE:01:ページ切り替え（クリア）]</language>
+再生します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_STR_13">
@@ -541,7 +541,7 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 		<language name="JPN" width="256">ポケモンの　ロックを
 かいじょ　しました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　ロックを
-解除　しました[BE:01:ページ切り替え（クリア）]</language>
+解除しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_STR_16">
@@ -572,7 +572,7 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 大会が　違います[BE:01:ページ切り替え（クリア）]
 デジタル　選手証を
 確認して　係員の[BE:00:ページ切り替え（行送り）]
-指示に　従って　ください[BE:01:ページ切り替え（クリア）]</language>
+指示に　従ってください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_STR_19">
@@ -595,7 +595,7 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 ロックを　かいじょ　しました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">対戦が　終わりましたので
 バトルボックスの　ポケモンの[BE:00:ページ切り替え（行送り）]
-ロックを　解除　しました[BE:01:ページ切り替え（クリア）]</language>
+ロックを　解除しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_STR_22_1">
@@ -603,7 +603,7 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 		<language name="JPN" width="256">せんしゅしょうの　じゅしんに　
 しっぱい　しました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">選手証の　受信に
-失敗　しました[BE:01:ページ切り替え（クリア）]</language>
+失敗しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_STR_22_2">
@@ -611,7 +611,7 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 		<language name="JPN" width="256">せんしゅしょうの　じゅしんに　
 しっぱい　しました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">選手証の　受信に
-失敗　しました[BE:01:ページ切り替え（クリア）]</language>
+失敗しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_STR_22_3">
@@ -626,14 +626,14 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 
 	<row id="LIVE_SELECT_05">
 		<language name="JPN" width="256">おわる</language>
-		<language name="JPN_KANJI" width="256">おわる</language>
+		<language name="JPN_KANJI" width="256">終わる</language>
 	</row>
 
 	<row id="LIVE_STR_24">
 		<language name="JPN" width="256">たいかいを　しゅうりょうします
 おつかれさまでした[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">大会を　終了します
-お疲れさまでした[BE:01:ページ切り替え（クリア）]</language>
+おつかれさまでした[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_ERR_01">
