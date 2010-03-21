@@ -943,6 +943,7 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_LOCK_BTLBOX:      //バトルボックスをロック
     { 
       //バトルボックスのロックと、ロック時のポケモン情報をセーブする
+      //開催状態を参加中にしてからセーブ
       SAVE_CONTROL_WORK   *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
       { 
         BATTLE_BOX_SAVE     *p_btlbox_sv  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv_ctrl ); 
@@ -952,6 +953,7 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
         BATTLE_BOX_SAVE_OnLockFlg( p_btlbox_sv, BATTLE_BOX_LOCK_BIT_LIVE );
 
+        Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_ENTRY );
 
         RegulationView_SetEazy( p_view_sv, p_party );
 
@@ -968,8 +970,6 @@ static void SEQFUNC_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE ); 
     break;
   case SEQ_START_SAVE:
-    //開催状態を参加中にしてからセーブ
-    Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_ENTRY );
     GAMEDATA_SaveAsyncStart(p_wk->param.p_gamedata);
     *p_seq  = SEQ_WAIT_SAVE;
     break;

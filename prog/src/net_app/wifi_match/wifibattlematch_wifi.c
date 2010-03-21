@@ -62,7 +62,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 
 
 #if defined(DEBUG_ONLY_FOR_toru_nagihashi)||defined(DEBUG_ONLY_FOR_shimoyamada)
-#define GPF_FLAG_ON             //GPFフラグを強制ONにする
+//#define GPF_FLAG_ON             //GPFフラグを強制ONにする
 #endif
 
 //#define MYPOKE_SELFCHECK        //自分のポケモンを送ったとき、サケとチェックし署名も証明させる
@@ -215,7 +215,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Main
 ///	WIFI大会シーケンス関数
 //=====================================
 static void WbmWifiSeq_Init( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void WbmWifiSeq_Join( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );  //以前はメニューはここでしていましたが、
+//static void WbmWifiSeq_Join( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );  //以前はメニューはここでしていましたが、
                                                                                     //battle_championshipの中でおこなうことになりました念のため消してはいませんがWbmWifiSeq_Joinはつながっていません。
 static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -575,6 +575,7 @@ static void WbmWifiSeq_Init( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     break;
   }
 }
+#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief  WIFI大会  参加選択処理
@@ -676,6 +677,7 @@ static void WbmWifiSeq_Join( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
     break;
   }
 }
+#endif
 //----------------------------------------------------------------------------
 /**
  *	@brief  WIFI大会  サーバ上のデジタル選手証データをダウンロード処理
@@ -714,7 +716,6 @@ static void WbmWifiSeq_RecvDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_WIFI_STR_04, WBM_TEXT_TYPE_STREAM );
     *p_seq  = SEQ_CHECK_GPF;
     break;
-    
 
     //-------------------------------------
     ///	GPF登録チェック
@@ -1839,10 +1840,25 @@ static void WbmWifiSeq_Register( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_LOCK_POKE:
+    //バトルボックスのロックと
+    //レギュレーションへの見た目登録
+    //開催状態を参加中に
     { 
       SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
       BATTLE_BOX_SAVE   *p_bbox_save  = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+      REGULATION_SAVEDATA *p_reg_sv   = SaveData_GetRegulationSaveData( p_sv );
+      REGULATION_VIEWDATA *p_reg_view　= RegulationSaveData_GetRegulationView( p_reg_sv, REGULATION_CARD_TYPE_WIFI );
+      REGULATION_CARDDATA *p_reg_card = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_WIFI );
+      POKEPARTY *p_party  = BATTLE_BOX_SAVE_MakePokeParty( p_bbox_save, GFL_HEAP_LOWID(HEAPID_WIFIBATTLEMATCH_SYS) );
+
       BATTLE_BOX_SAVE_OnLockFlg( p_bbox_save, BATTLE_BOX_LOCK_BIT_WIFI );
+
+      RegulationView_SetEazy( p_reg_view, p_party );
+
+      Regulation_SetCardParam( p_reg_card, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_ENTRY );
+
+      GFL_HEAP_FreeMemory( p_party );
+
       *p_seq  = SEQ_START_SAVE;
     }
     break;

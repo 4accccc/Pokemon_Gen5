@@ -50,6 +50,7 @@ typedef enum
 {
   WIFIBATTLEMATCH_CORE_RETMODE_RATE,  //レーティングモード
   WIFIBATTLEMATCH_CORE_RETMODE_FREE,  //フリーモード
+  WIFIBATTLEMATCH_CORE_RETMODE_WIFI,  //WIFI大会
 } WIFIBATTLEMATCH_CORE_RETMODE;
 
 //=============================================================================

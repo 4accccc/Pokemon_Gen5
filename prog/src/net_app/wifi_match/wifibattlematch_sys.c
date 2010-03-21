@@ -709,8 +709,8 @@ static BOOL WBM_CORE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_ad
   case WIFIBATTLEMATCH_CORE_RETMODE_FREE:  //フリーモード
     p_wk->type  = WIFIBATTLEMATCH_TYPE_RNDFREE;
     break;
-  default:
-    GF_ASSERT( 0 );
+  case WIFIBATTLEMATCH_CORE_RETMODE_WIFI: //WIFI大会
+    break;
   }
 
   //次への行き先
