@@ -170,7 +170,7 @@ VMCMD_RESULT EvCmdSymbolMapWarp( VMHANDLE * core, void *wk )
   } else {
     sid = SYMBOLMAP_GetNextSymbolMapID( GAMEDATA_GetSymbolMapID( gamedata ), warp_dir );
   }
-  OS_TPrintf( "SCRCMD:SYMMAP_WARP:id=%2d, dir=%d\n", sid, warp_id );
+  OS_TPrintf( "SCRCMD:SYMMAP_WARP:id=%2d, dir=%d\n", sid, warp_dir );
   new_event = EVENT_SymbolMapWarpEasy( gsys, warp_dir, sid );
   SCRIPT_CallEvent( sc, new_event );
   return VMCMD_RESULT_SUSPEND;
