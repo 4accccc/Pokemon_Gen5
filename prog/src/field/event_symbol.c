@@ -68,6 +68,7 @@ typedef struct{
   BOOL seasonUpdateEnable;
   u8 symbol_map_id;
   u16 data_recv_result;
+  BOOL my_palace;         ///<TRUE:Ž©•ª‚ÌƒpƒŒƒX‚É‚¢‚é
 }EVENT_SYMBOL_MAP_WARP;
 
 //==============================================================================
@@ -350,6 +351,9 @@ GMEVENT * EVENT_SymbolMapWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 
   esmw->seasonUpdateEnable = seasonUpdateEnable;
   esmw->result_ptr = result_ptr;
   esmw->symbol_map_id = symbol_map_id;
+  if(IntrudeSymbol_CheckIntrudeNetID(GAMESYSTEM_GetGameCommSysPtr(gsys), gamedata) == INTRUDE_NETID_NULL){
+    esmw->my_palace = TRUE;
+  }
 
 	return( event );
 }
@@ -373,28 +377,40 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
 	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
-	
+	enum{
+    _SEQ_INIT,
+    _SEQ_REQ_WAIT,
+    _SEQ_CHANGE_MAP,
+    _SEQ_FINISH,
+  };
+  
 	switch( *seq ){
-	case 0:
-	  GMEVENT_CallEvent(event, 
-	    EVENT_ReqIntrudeSymbolParam(gsys, &esmw->data_recv_result, esmw->symbol_map_id));
-    (*seq)++;
+	case _SEQ_INIT:
+  	if(esmw->my_palace == TRUE){
+      *seq = _SEQ_CHANGE_MAP;
+    }
+    else{
+  	  GMEVENT_CallEvent(event, 
+  	    EVENT_ReqIntrudeSymbolParam(gsys, &esmw->data_recv_result, esmw->symbol_map_id));
+      (*seq)++;
+    }
     break;
-  case 1:
+  case _SEQ_REQ_WAIT:
     if(esmw->data_recv_result == FALSE){
       if(esmw->result_ptr != NULL){
         *(esmw->result_ptr) = FALSE;
       }
       return GMEVENT_RES_FINISH;
     }
-
+    (*seq)++;
+    break;
+  case _SEQ_CHANGE_MAP:
     GMEVENT_CallEvent(event, 
       EVENT_ChangeMapPos(gsys, esmw->fieldWork, esmw->warp_zone_id, 
       &esmw->warp_pos, esmw->warp_dir, esmw->seasonUpdateEnable));
-    
     (*seq)++;
     break;
-  case 2:
+  case _SEQ_FINISH:
     GAMEDATA_SetSymbolMapID(gamedata, esmw->symbol_map_id);
     if(esmw->result_ptr != NULL){
       *(esmw->result_ptr) = TRUE;
