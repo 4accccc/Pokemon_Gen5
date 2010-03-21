@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-03-05T19:56:21"/>
+	<create user="shimoyamada" host="W00184" date="2010-03-21T14:06:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1168" top="362" right="1873" bottom="990" maximized="no" rayout="Vertical2">
+	<dialog left="203" top="414" right="908" bottom="1042" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -333,10 +333,10 @@
 	</lock>
 
 
-	<row id="MAPNAME_POKESIHUTAH" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="MAPNAME_POKESIHUTAH" text-color="#000000,,,#000000,,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>ポケシフター入手用</comment>
-		<language name="JPN" width="120">――――――――――</language>
-		<language name="JPN_KANJI" width="120">――――――――――</language>
+		<language name="JPN" width="120">－－－－－－－－－－</language>
+		<language name="JPN_KANJI" width="120">－－－－－－－－－－</language>
 	</row>
 
 	<row id="MAPNAME_NAIBUTUUSINKOUKAN" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
@@ -383,32 +383,32 @@
 
 	<row id="MAPNAME_HUSEINAKOHDO" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>不正なＲＯＭコード</comment>
-		<language name="JPN" width="120">――――――――――</language>
-		<language name="JPN_KANJI" width="120">――――――――――</language>
+		<language name="JPN" width="120">－－－－－－－－－－</language>
+		<language name="JPN_KANJI" width="120">－－－－－－－－－－</language>
 	</row>
 
 	<row id="MAPNAME_2010HAIHU_EV1_01" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>2010映画配信セレビィのイベント発動前</comment>
-		<language name="JPN" width="120">――――――――――</language>
-		<language name="JPN_KANJI" width="120">――――――――――</language>
+		<language name="JPN" width="120">－－－－－－－－－－</language>
+		<language name="JPN_KANJI" width="120">－－－－－－－－－－</language>
 	</row>
 
 	<row id="MAPNAME_2010HAIHU_EV1_02" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>2010映画配信セレビィのイベント発動後</comment>
-		<language name="JPN" width="120">――――――――――</language>
-		<language name="JPN_KANJI" width="120">――――――――――</language>
+		<language name="JPN" width="120">－－－－－－－－－－</language>
+		<language name="JPN_KANJI" width="120">－－－－－－－－－－</language>
 	</row>
 
 	<row id="MAPNAME_2010HAIHU_EV2_01" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>2010映画配信エンテイ／スイクン／ライコウのイベント発動前</comment>
-		<language name="JPN" width="120">――――――――――</language>
-		<language name="JPN_KANJI" width="120">――――――――――</language>
+		<language name="JPN" width="120">－－－－－－－－－－</language>
+		<language name="JPN_KANJI" width="120">－－－－－－－－－－</language>
 	</row>
 
 	<row id="MAPNAME_2010HAIHU_EV2_02" text-color="#000000,,,#000000,,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>2011映画配信エンテイ／スイクン／ライコウのイベント発動後</comment>
-		<language name="JPN" width="120">――――――――――</language>
-		<language name="JPN_KANJI" width="120">――――――――――</language>
+		<language name="JPN" width="120">－－－－－－－－－－</language>
+		<language name="JPN_KANJI" width="120">－－－－－－－－－－</language>
 	</row>
 
 	<row id="MAPNAME_PARESUKYOUTUU" text-color="#000000,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
