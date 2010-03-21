@@ -527,7 +527,7 @@ const u8 IconPalAtr[] = {
 	0x00,		// 517 : poke_icon_516_m
 	0x00,		// 518 : poke_icon_514_m
 	0x00,		// 519 : poke_icon_518_m
-	0x10,		// 520 : poke_icon_512_m
+	0x00,		// 520 : poke_icon_512_m
 	0x22,		// 521 : poke_icon_570_m
 	0x22,		// 522 : poke_icon_515_m
 	0x00,		// 523 : poke_icon_600_m
@@ -580,9 +580,9 @@ const u8 IconPalAtr[] = {
 	0x00,		// 570 : poke_icon_530_m
 	0x00,		// 571 : poke_icon_533_m
 	0x00,		// 572 : poke_icon_534_m
-	0x00,		// 573 : poke_icon_606_m
-	0x00,		// 574 : poke_icon_607_m
-	0x00,		// 575 : poke_icon_608_m
+	0x22,		// 573 : poke_icon_606_m
+	0x22,		// 574 : poke_icon_607_m
+	0x22,		// 575 : poke_icon_608_m
 	0x11,		// 576 : poke_icon_583_m
 	0x11,		// 577 : poke_icon_584_m
 	0x11,		// 578 : poke_icon_585_m
@@ -598,8 +598,8 @@ const u8 IconPalAtr[] = {
 	0x00,		// 588 : poke_icon_572_m
 	0x22,		// 589 : poke_icon_580_m
 	0x11,		// 590 : poke_icon_581_m
-	0x00,		// 591 : poke_icon_513_m
-	0x00,		// 592 : poke_icon_536_m
+	0x10,		// 591 : poke_icon_513_m
+	0x10,		// 592 : poke_icon_536_m
 	0x00,		// 593 : poke_icon_501_m
 	0x00,		// 594 : poke_icon_577_m
 	0x00,		// 595 : poke_icon_578_m
@@ -623,7 +623,7 @@ const u8 IconPalAtr[] = {
 	0x00,		// 613 : poke_icon_532_m
 	0x00,		// 614 : poke_icon_621_m
 	0x00,		// 615 : poke_icon_561_m
-	0x00,		// 616 : poke_icon_562_m
+	0x11,		// 616 : poke_icon_562_m
 	0x22,		// 617 : poke_icon_589_m
 	0x00,		// 618 : poke_icon_630_m
 	0x00,		// 619 : poke_icon_631_m
@@ -652,7 +652,7 @@ const u8 IconPalAtr[] = {
 	0x00,		// 642 : poke_icon_650_m
 	0x00,		// 643 : poke_icon_651_m
 	0x00,		// 644 : poke_icon_652_m
-	0x00,		// 645 : poke_icon_653_m
+	0x00,		// 645 : poke_icon_653_a_m
 	0x00,		// 646 : poke_icon_657_m
 	0x00,		// 647 : poke_icon_654_m
 	0x00,		// 648 : poke_icon_655_voice_m
@@ -714,9 +714,11 @@ const u8 IconPalAtr[] = {
 	0x11,		// 704 : poke_icon_527_summer_m
 	0x00,		// 705 : poke_icon_527_autumn_m
 	0x11,		// 706 : poke_icon_527_winter_m
-	0x00,		// 707 : poke_icon_655_step_m
-	0x00,		// 708 : poke_icon_656_aqua_m
-	0x00,		// 709 : poke_icon_656_inazuma_m
-	0x00,		// 710 : poke_icon_656_blaze_m
-	0x00,		// 711 : poke_icon_656_freeze_m
+	0x00,		// 707 : poke_icon_653_b_m
+	0x00,		// 708 : poke_icon_653_c_m
+	0x00,		// 709 : poke_icon_655_step_m
+	0x00,		// 710 : poke_icon_656_aqua_m
+	0x00,		// 711 : poke_icon_656_inazuma_m
+	0x00,		// 712 : poke_icon_656_blaze_m
+	0x00,		// 713 : poke_icon_656_freeze_m
 };
