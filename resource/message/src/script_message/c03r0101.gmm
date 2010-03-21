@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-03-21T17:37:04"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-03-21T20:49:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -352,7 +352,7 @@
 		</language>
 	</columns>
 
-	<dialog left="273" top="335" right="978" bottom="963" maximized="no" rayout="Vertical2">
+	<dialog left="125" top="259" right="830" bottom="887" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="163" right="1280" bottom="561" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -8285,11 +8285,11 @@ girl4_04へ続く
 		<attribute name="キャラ指定">NONE
 壁の円グラフ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
-たいいんランク　Ｃランクたいいん▼
+たいいんランク　Ｃランクたいいん
 すれちがい　にんずう　[2:04:５桁:1]にん
 おれい　かいすう　　　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
-隊員ランク　Ｃランク隊員▼
+隊員ランク　Ｃランク隊員
 すれ違い　人数　[2:04:５桁:1]人
 お礼　回数　　　　[2:04:５桁:2]回</language>
 	</row>
@@ -8306,11 +8306,11 @@ girl4_04へ続く
 		<attribute name="キャラ指定">NONE
 壁の円グラフ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
-たいいんランク　Ｂランクたいいん▼
+たいいんランク　Ｂランクたいいん
 すれちがい　にんずう　[2:04:５桁:1]にん
 おれい　かいすう　　　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
-隊員ランク　Ｂランク隊員▼
+隊員ランク　Ｂランク隊員
 すれ違い　人数　[2:04:５桁:1]人
 お礼　回数　 　　[2:04:５桁:2]回</language>
 	</row>
@@ -8327,11 +8327,11 @@ girl4_04へ続く
 		<attribute name="キャラ指定">NONE
 壁の円グラフ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
-たいいんランク　Ａランクたいいん▼
+たいいんランク　Ａランクたいいん
 すれちがい　にんずう　[2:04:５桁:1]にん
 おれい　かいすう　　　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
-隊員ランク　Ａランク隊員▼
+隊員ランク　Ａランク隊員
 すれ違い　人数　[2:04:５桁:1]人
 お礼　回数　 　　[2:04:５桁:2]回</language>
 	</row>
@@ -8348,11 +8348,11 @@ girl4_04へ続く
 		<attribute name="キャラ指定">NONE
 壁の円グラフ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
-たいいんランク　Ｓランクたいいん▼
+たいいんランク　Ｓランクたいいん
 すれちがい　にんずう　[2:04:５桁:1]にん
 おれい　かいすう　　　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
-隊員ランク　Ｓランク隊員▼
+隊員ランク　Ｓランク隊員
 すれ違い　人数　[2:04:５桁:1]人
 お礼　回数　 　　[2:04:５桁:2]回</language>
 	</row>
@@ -8369,11 +8369,11 @@ girl4_04へ続く
 		<attribute name="キャラ指定">NONE
 壁の円グラフ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
-たいいんランク　ＳＳランクたいいん▼
+たいいんランク　ＳＳランクたいいん
 すれちがい　にんずう　[2:04:５桁:1]にん
 おれい　かいすう　　　[2:04:５桁:2]かい</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
-隊員ランク　ＳＳランク隊員▼
+隊員ランク　ＳＳランク隊員
 すれ違い　人数　[2:04:５桁:1]人
 お礼　回数　 　　[2:04:５桁:2]回</language>
 	</row>

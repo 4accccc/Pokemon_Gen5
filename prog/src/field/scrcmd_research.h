@@ -8,8 +8,6 @@
 ////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-extern VMCMD_RESULT EvCmdDebugPrint( VMHANDLE *core, void *wk ); 
-
 extern VMCMD_RESULT EvCmdGetResearchTeamRank( VMHANDLE *core, void *wk ); 
 extern VMCMD_RESULT EvCmdResearchTeamRankUp( VMHANDLE *core, void *wk ); 
 extern VMCMD_RESULT EvCmdGetResearchRequestID( VMHANDLE *core, void *wk ); 
@@ -23,3 +21,4 @@ extern VMCMD_RESULT EvCmdGetMajorityAnswerOfQuestion( VMHANDLE *core, void *wk )
 extern VMCMD_RESULT EvCmdGetThanksReceiveCount( VMHANDLE *core, void *wk ); 
 extern VMCMD_RESULT EvCmdGetSuretigaiCount( VMHANDLE *core, void *wk ); 
 extern VMCMD_RESULT EvCmdSetMyAnswer( VMHANDLE *core, void *wk ); 
+extern VMCMD_RESULT EvCmdDispResearchTeamInfo( VMHANDLE *core, void *wk );

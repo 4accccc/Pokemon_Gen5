@@ -949,7 +949,7 @@
   DEF_CMD( EvCmdSuretigaiThanksReceiveCount, EV_SEQ_SURETIGAI_THANKS_RECEIVE_COUNT ) 
 
   DEF_CMD( EvCmdSetMyAnswer, EV_SEQ_SET_MY_ANSWER ) 
-  DEF_CMD( EvCmdDebugPrint, EV_SEQ_DEBUG_PRINT ) 
+  DEF_CMD( EvCmdDispResearchTeamInfo, EV_SEQ_DISP_RESEARCH_TEAM_INFO ) 
   DEF_CMD( EvCmdGetResearchTeamRank, EV_SEQ_GET_RESEARCH_TEAM_RANK ) 
   DEF_CMD( EvCmdResearchTeamRankUp, EV_SEQ_RESEARCH_TEAM_RANK_UP ) 
 

@@ -9702,19 +9702,14 @@
 
 //--------------------------------------------------------------
 /**
- * @brief ワークの値を出力する
- *
- * @param print_no [in] 出力No.
- * @param value    [in] 出力するワーク
+ * @brief 隊員情報を表示する
  */
 //--------------------------------------------------------------
-#define _DEBUG_PRINT( print_no, value ) \
-    _ASM_DEBUG_PRINT print_no, value
+#define _DISP_RESEARCH_TEAM_INFO() \
+    _ASM_DISP_RESEARCH_TEAM_INFO
 
-  .macro _ASM_DEBUG_PRINT print_no, value
-  .short EV_SEQ_DEBUG_PRINT
-  .short \print_no
-  .short \value
+  .macro _ASM_DISP_RESEARCH_TEAM_INFO
+  .short EV_SEQ_DISP_RESEARCH_TEAM_INFO
   .endm
 
 //--------------------------------------------------------------

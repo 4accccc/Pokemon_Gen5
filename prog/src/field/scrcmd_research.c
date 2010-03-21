@@ -13,6 +13,7 @@
 #include "scrcmd_work.h"
 #include "script_local.h"
 #include "scrcmd.h"
+#include "event_research_team.h"
 
 #include "field/research_team_def.h"
 #include "savedata/misc.h" 
@@ -23,27 +24,6 @@
 #include "../../../resource/research_radar/data/answer_num_question.cdat" // for AnswerNum_question[]
 #include "../../../resource/research_radar/data/answer_id_question.cdat"  // for AnswerID_question[][]
 
-
-//-----------------------------------------------------------------------------
-/**
- * @brief ワークの内容を表示する
- * @param  core
- * @param  wk
- * @retval VMCMD_RESULT
- */
-//-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdDebugPrint( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK* work = (SCRCMD_WORK*)wk;
-  u16 key, value;
-  
-  key   = SCRCMD_GetVMWorkValue( core, work ); // 第一引数: 出力 No.
-  value = SCRCMD_GetVMWorkValue( core, work ); // 第二引数: 出力するワークの値
-
-  OS_TFPrintf( 3, "%d: %d\n", key, value );
-
-  return VMCMD_RESULT_CONTINUE;
-}
 
 //-----------------------------------------------------------------------------
 /**
@@ -505,4 +485,22 @@ VMCMD_RESULT EvCmdSetMyAnswer( VMHANDLE *core, void *wk )
   GAMEBEACON_SendDataUpdate_Questionnaire( myAnswer );
 
   return VMCMD_RESULT_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief  プレイヤーの隊員情報を表示する
+ * @param  core
+ * @param  wk
+ * @retval VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdDispResearchTeamInfo( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work     = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*  script   = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gameSystem = SCRCMD_WORK_GetGameSysWork( work );
+
+  SCRIPT_CallEvent( script, EVENT_DispResearchTeamInfo( gameSystem ) );
+  return VMCMD_RESULT_SUSPEND;
 }

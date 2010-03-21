@@ -420,6 +420,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_weather.c \
         debug/debug_mystery_card.c \
         field/event_research_radar.c \
+        field/event_research_team.c \
         app/research_radar/questionnaire_index.c \
 				savedata/symbol_save_notwifi.c \
         field/bsubway_comm.c \

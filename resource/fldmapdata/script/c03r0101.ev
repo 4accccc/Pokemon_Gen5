@@ -4740,35 +4740,7 @@ EVENT_END
 //======================================================================
 EVENT_START	ev_paper
 {
-  // 隊員になっていない
-  _FLAG_CHECK( FE_RES_LEADER_FIRSTTALK, SCWK_ANSWER )
-  IF $SCWK_ANSWER == FALSE THEN
-    _SYSWIN_MSG( msg_c03r0101_none_debug_01, POS_DEFAULT )
-    _LAST_KEYWAIT()
-    _SYSWIN_CLOSE()
-    EVENT_END
-  ENDIF
-
-  // 隊員ランクを取得
-  _GET_RESEARCH_TEAM_RANK( SCWK_ANSWER )
-
-  // メッセージを選択 ==> SCWK_TEMP0
-  SWITCH $SCWK_ANSWER
-  CASE RESEARCH_TEAM_RANK_1 THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02a
-  CASE RESEARCH_TEAM_RANK_2 THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02b
-  CASE RESEARCH_TEAM_RANK_3 THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02c
-  CASE RESEARCH_TEAM_RANK_4 THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02d
-  CASE RESEARCH_TEAM_RANK_5 THEN $SCWK_TEMP0 = msg_c03r0101_none_debug_02e
-  DEFAULT                        $SCWK_TEMP0 = msg_c03r0101_none_debug_01
-  ENDSWITCH
-
-  // メッセージを表示
-  _PLAYER_NAME(0)
-  _SURETIGAI_COUNT(1)
-  _SURETIGAI_THANKS_RECEIVE_COUNT(2)
-  _SYSWIN_MSG_ALLPUT( SCWK_TEMP0, POS_DEFAULT )
-  _LAST_KEYWAIT()
-  _SYSWIN_CLOSE()
+  _DISP_RESEARCH_TEAM_INFO()
 }
 EVENT_END
 
