@@ -314,7 +314,7 @@
 #define FE_AMUSEMENT_TR03_TALK             298 /* 0x012a ライモン遊園地：観覧車トレーナー（秋）と会話したフラグ */
 #define FE_AMUSEMENT_TR04_TALK             299 /* 0x012b ライモン遊園地：観覧車トレーナー（冬）と会話したフラグ */
 #define FE_D08_PACKAGEPOKE_END             300 /* 0x012c リュウラセンの塔：Nとパッケージポケモンのイベントを終えた */
-		/* not used   301(0x012d) */
+#define FE_C02R0501_ITEMGET_01             301 /* 0x012d シッポウ倉庫：アイテム入手フラグ（初期３匹タイプの威力upアイテム） */
 		/* not used   302(0x012e) */
 		/* not used   303(0x012f) */
 		/* not used   304(0x0130) */
