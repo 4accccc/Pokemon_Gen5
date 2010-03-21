@@ -30,6 +30,9 @@
 #include "field/zonedata.h"
 #include "app/townmap_data_sys.h"
 
+#include "../../../../../resource/fldmapdata/zonetable/zone_id.h"
+#include "../../../../../resource/zukan_data/zkn_area_zone_group.cdat"
+
 #include "zukan_detail_def.h"
 #include "zukan_detail_common.h"
 #include "zukan_detail_graphic.h"
@@ -41,6 +44,7 @@
 #include "message.naix"
 #include "msg/msg_zkn.h"
 #include "townmap_gra.naix"
+#include "zukan_area.naix"
 #include "zukan_gra.naix"
 
 // サウンド
@@ -361,6 +365,13 @@ enum
   OBJ_MAX             = OBJ_TM_END,
 };
 
+// obj_existのアルファアニメーションsin使うので0～0xFFFFのループ
+#define OBJ_EXIST_ALPHA_ANIME_COUNT_ADD (0x400)    // cos使うので0～0xFFFFのループ
+#define OBJ_EXIST_ALPHA_ANIME_COUNT_MAX (0x10000)  // 含まない
+#define OBJ_EXIST_ALPHA_MIN  ( 1)  // 0<= <=16
+#define OBJ_EXIST_ALPHA_MAX  (15)  // OBJ_EXIST_ALPHA_MIN <= <= OBJ_EXIST_ALPHA_MAX
+
+
 // 各ポケモンの情報
 // 一年中か季節ごとか
 typedef enum
@@ -478,9 +489,18 @@ typedef struct
   u32                         obj_res[OBJ_RES_MAX];
   GFL_CLWK*                   obj_clwk[OBJ_MAX];
   GFL_CLWK*                   obj_exist_clwk[TOWNMAP_DATA_MAX];
+  GFL_CLUNIT*                 usual_clunit;  // 不必要だったかも、途中でテストを止めたので最終結論までは出していない。
+  GFL_CLSYS_REND*             usual_rend;    // レンダラー全体に対して半透明設定が反映されると思っていてつくったもの。
+  int                         obj_exist_ev1;
+  u16                         obj_exist_alpha_anime_count;
 
   // タウンマップデータ
   TOWNMAP_DATA*               townmap_data;
+
+  // タウンマップデータのインデックスからzkn_area_monsno_???.dat中のインデックスを得る配列
+  u8 townmap_data_idx_to_zkn_area_idx[TOWNMAP_DATA_MAX];
+  // zukan_area.narcのハンドルを保持しておく
+  ARCHANDLE* area_handle;
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
@@ -503,6 +523,9 @@ ZUKAN_DETAIL_MAP_WORK;
 // VBlank関数
 static void Zukan_Detail_Map_VBlankFunc( GFL_TCB* tcb, void* wk );
 
+// タウンマップデータのインデックスからzkn_area_monsno_???.dat中のインデックスを得る配列を作成する
+static void Zukan_Detail_Map_TownmapDataIdxToZknAreaIdxArrayMake( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
 // アフィン拡張BG
 static void Zukan_Detail_Map_AffineExBGInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_AffineExBGExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -512,6 +535,11 @@ static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAI
 static void Zukan_Detail_Map_ObjExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_ObjExistInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_ObjExistExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+// obj_existのアルファアニメーション
+static void Zukan_Detail_Map_ObjExistAlphaInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_ObjExistAlphaExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_ObjExistAlphaMain( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_ObjExistAlphaReset( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 // メッセージとテキスト
 static void Zukan_Detail_Map_MsgTextInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -570,7 +598,7 @@ static void Zukan_Detail_Map_ChangePlace( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
 static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 // 分布データ
-static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id );
+static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARCHANDLE* handle );
 static void Zukan_Detail_Map_AreaDataUnload( AREA_DATA* area_data );
 
 // 何度も出てくる処理
@@ -679,6 +707,11 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcInit( ZKNDTL_PROC* proc, int* seq
   // タウンマップデータ
   work->townmap_data = TOWNMAP_DATA_Alloc( param->heap_id );
 
+  // タウンマップデータのインデックスからzkn_area_monsno_???.dat中のインデックスを得る配列を作成する
+  Zukan_Detail_Map_TownmapDataIdxToZknAreaIdxArrayMake( param, work, cmn );
+  // zukan_area.narcのハンドルを保持しておく
+  work->area_handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_AREA, param->heap_id );
+
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Zukan_Detail_Map_VBlankFunc, work, 1 );
 
@@ -734,6 +767,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcExit( ZKNDTL_PROC* proc, int* seq
 
   // VBlank中TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
+
+  // 保持していたzukan_area.narcのハンドル
+  GFL_ARC_CloseDataHandle( work->area_handle );
 
   // タウンマップデータ
   TOWNMAP_DATA_Free( work->townmap_data );
@@ -877,6 +913,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
       {
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
 
+        Zukan_Detail_Map_ObjExistAlphaInit( param, work, cmn );
+
         *seq = SEQ_MAIN;
       }
     }
@@ -885,6 +923,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
     {
       if( work->end_cmd != END_CMD_NONE )
       {
+        Zukan_Detail_Map_ObjExistAlphaExit( param, work, cmn );
+
         *seq = SEQ_FADE_OUT;
 
         // フェード
@@ -902,6 +942,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
       }
       else
       {
+        Zukan_Detail_Map_ObjExistAlphaMain( param, work, cmn );
+
         // 操作
         Zukan_Detail_Map_Input( param, work, cmn );
       }
@@ -970,7 +1012,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
   ZKNDTL_COMMON_FadeMain( work->fade_wk_m, work->fade_wk_s );
 
 
-#if 1
+#if 0 
   {
     // 生息する場所に置くOBJのアニメ指定、位置指定
     if(    *seq >= SEQ_PREPARE
@@ -1165,6 +1207,45 @@ static void Zukan_Detail_Map_VBlankFunc( GFL_TCB* tcb, void* wk )
 }
 
 //-------------------------------------
+/// タウンマップデータのインデックスからzkn_area_monsno_???.dat中のインデックスを得る配列を作成する
+//=====================================
+static void Zukan_Detail_Map_TownmapDataIdxToZknAreaIdxArrayMake( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u8 i;
+  u8 j;
+
+  // 1度だけ作成すればよい
+
+  // 使い方
+  // u8 zkn_area_idx = townmap_data_idx_to_zkn_area_idx[townmap_data_idx];
+  // townmap_data_idxはTOWNMAP_DATA_GetParamに渡すidxと同じ。
+  // zkn_area_idxはzkn_area_monsno_???.dat中の何番目のデータかを表す。
+  // 即ち、AREA_SEASON_DATAでplace_bitflag[zkn_area_idx]という風に使える。
+  // タウンマップデータとzkn_area_monsno_???.datが同じ並びをしているなら
+  // u8 townmap_data_idx_to_zkn_area_idx[TOWNMAP_DATA_MAX] = { 0, 1, 2, 3, ... , TOWNMAP_DATA_MAX-1 };
+  // となる。
+  // おそらく同じ並びだろうが、念のためこのような配列を間にはさむことにした。
+
+  GF_ASSERT_MSG( TOWNMAP_DATA_MAX == ZKN_AREA_ZONE_GROUP_MAX, "ZUKAN_DETAIL_MAP : タウンマップと図鑑データで拠点の数が異なります。\n" );
+
+  for( i=0; i<TOWNMAP_DATA_MAX; i++ )
+  {
+    BOOL exist   = FALSE;
+    u16  zone_id = TOWNMAP_DATA_GetParam( work->townmap_data, i, TOWNMAP_DATA_PARAM_ZONE_ID );
+    for( j=0; j<ZKN_AREA_ZONE_GROUP_MAX; j++ )
+    {
+      if( zone_id == zkn_area_zone_group[j] )
+      {
+        work->townmap_data_idx_to_zkn_area_idx[i] = j;
+        exist = TRUE;
+        break;
+      }
+    }
+    GF_ASSERT_MSG( exist, "ZUKAN_DETAIL_MAP : タウンマップにある拠点が図鑑データにありません。\n" );
+  }
+}
+
+//-------------------------------------
 /// アフィン拡張BG
 //=====================================
 static void Zukan_Detail_Map_AffineExBGInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
@@ -1201,6 +1282,23 @@ static void Zukan_Detail_Map_AffineExBGExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKA
 //-------------------------------------
 static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  // レンダラーシステム、セルアクターユニット作成
+  {
+    const GFL_REND_SURFACE_INIT surface_init    = { 0, 0, 256, 192, CLSYS_DRAW_MAIN };
+    const u16                   clunit_work_num = 16; 
+    
+    // レンダラーシステム
+    work->usual_rend = GFL_CLACT_USERREND_Create( &surface_init, 1, param->heap_id );
+
+    // セルアクターユニット
+  	work->usual_clunit	= GFL_CLACT_UNIT_Create( clunit_work_num, 0, param->heap_id );
+  	GFL_CLACT_UNIT_SetUserRend( work->usual_clunit, work->usual_rend );
+    
+    // CLSYS_DEFREND_MAINと同じ0番しかつくっていないので
+    // GFL_CLACT_WK_SetPos( work->obj_clwk[i], &pos, CLSYS_DEFREND_MAIN );
+    // は、CLSYS_DEFREND_MAINのまま変更しなくて済んでいる。
+  }
+
   // リソース読み込み
   {
     ARCHANDLE* handle;
@@ -1321,7 +1419,7 @@ static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAI
     for( i=OBJ_TM_START; i<OBJ_TM_END; i++ )
     {	
       work->obj_clwk[i] = GFL_CLACT_WK_Create(
-                             work->clunit,
+                             work->usual_clunit,
                              work->obj_res[OBJ_RES_TM_NCG], work->obj_res[OBJ_RES_TM_NCL], work->obj_res[OBJ_RES_TM_NCE],
                              &cldata, CLSYS_DEFREND_MAIN, param->heap_id );
     }
@@ -1329,7 +1427,7 @@ static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAI
     for( i=OBJ_ZUKAN_START; i<OBJ_ZUKAN_END; i++ )
     {	
       work->obj_clwk[i] = GFL_CLACT_WK_Create(
-                             work->clunit,
+                             work->usual_clunit,
                              work->obj_res[OBJ_RES_ZUKAN_NCG], work->obj_res[OBJ_RES_ZUKAN_NCL], work->obj_res[OBJ_RES_ZUKAN_NCE],
                              &cldata, CLSYS_DEFREND_MAIN, param->heap_id );
     }
@@ -1376,6 +1474,15 @@ static void Zukan_Detail_Map_ObjExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAI
     GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_RES_TM_NCE] );
     GFL_CLGRP_CGR_Release( work->obj_res[OBJ_RES_TM_NCG] );
     GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_RES_TM_NCL] );
+  }
+
+  // レンダラーシステム、セルアクターユニット破棄
+  {
+    // セルアクターユニット
+	  GFL_CLACT_UNIT_Delete( work->usual_clunit );
+  	
+    // レンダラーシステム
+    GFL_CLACT_USERREND_Delete( work->usual_rend );
   }
 }
 
@@ -2291,7 +2398,7 @@ static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DE
   u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
 
   Zukan_Detail_Map_AreaDataUnload( work->area_data );
-  work->area_data = Zukan_Detail_Map_AreaDataLoad( monsno, param->heap_id );
+  work->area_data = Zukan_Detail_Map_AreaDataLoad( monsno, param->heap_id, work->area_handle );
 
   work->appear_rule  = ( work->area_data->year == 0 )?( APPEAR_RULE_SEASON ):( APPEAR_RULE_YEAR );
   if( work->appear_rule == APPEAR_RULE_YEAR )
@@ -2464,14 +2571,14 @@ static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
 //-------------------------------------
 /// 分布データ
 //=====================================
-static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id )
+static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARCHANDLE* handle )
 {
-#if 0
   u32 size;
-  AREA_DATA* area_data = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_AREA, NARC_zukan_area_zkn_area_monsno_001_dat + monsno -1, FALSE, heap_id, &size );
+  AREA_DATA* area_data = GFL_ARCHDL_UTIL_LoadEx( handle, NARC_zukan_area_zkn_area_monsno_001_dat + monsno -1, FALSE, heap_id, &size );
   GF_ASSERT_MSG( sizeof(AREA_DATA) == size, "ZUKAN_DETAIL_MAP : AREA_DATAのサイズが異なります。\n" );
   return area_data;
-#elif 0
+
+#if 0
   // 仮データ
   AREA_DATA* area_data = GFL_HEAP_AllocClearMemory( heap_id, sizeof(AREA_DATA) );
   s32 case_no = monsno %3;
@@ -2516,7 +2623,7 @@ static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id )
     break;
   }
   return area_data;
-#else
+#elif 0
   // 生息する場所に置くOBJのアニメ指定、位置指定用のデータ
   AREA_DATA* area_data = GFL_HEAP_AllocClearMemory( heap_id, sizeof(AREA_DATA) );
   u8 i;
@@ -2603,7 +2710,8 @@ static void Zukan_Detail_Map_UtilDrawSeasonArea( ZUKAN_DETAIL_MAP_PARAM* param, 
     // 生息場所にOBJを表示する
     for( i=0; i<TOWNMAP_DATA_MAX; i++ )
     {
-      if( work->area_data->season_data[season_id].place_bitflag[i] != PLACE_BITFLAG_NONE )
+      u8 zkn_area_idx = work->townmap_data_idx_to_zkn_area_idx[i];
+      if( work->area_data->season_data[season_id].place_bitflag[zkn_area_idx] != PLACE_BITFLAG_NONE )
       {
         GFL_CLACT_WK_SetDrawEnable( work->obj_exist_clwk[i], TRUE );
       }
@@ -2624,16 +2732,17 @@ static void Zukan_Detail_Map_UtilBrightenPlaceIcon( ZUKAN_DETAIL_MAP_PARAM* para
     if( work->select_data_idx != DATA_IDX_NONE )
     {
       u8 season_id = ( work->appear_rule == APPEAR_RULE_YEAR )?(PMSEASON_SPRING):(work->season_id);  // 一年中同じときは春のデータしか見ない
-    
-      if( work->area_data->season_data[season_id].place_bitflag[work->select_data_idx] & PLACE_BITFLAG_GROUND_ALL )
+      u8 zkn_area_idx = work->townmap_data_idx_to_zkn_area_idx[work->select_data_idx];
+      
+      if( work->area_data->season_data[season_id].place_bitflag[zkn_area_idx] & PLACE_BITFLAG_GROUND_ALL )
       {
         brighten[PLACE_ICON_GROUND] = 1;
       }
-      if( work->area_data->season_data[season_id].place_bitflag[work->select_data_idx] & PLACE_BITFLAG_WATER_ALL )
+      if( work->area_data->season_data[season_id].place_bitflag[zkn_area_idx] & PLACE_BITFLAG_WATER_ALL )
       {
         brighten[PLACE_ICON_WATER] = 1;
       }
-      if( work->area_data->season_data[season_id].place_bitflag[work->select_data_idx] & PLACE_BITFLAG_FISHING_ALL )
+      if( work->area_data->season_data[season_id].place_bitflag[zkn_area_idx] & PLACE_BITFLAG_FISHING_ALL )
       {
         brighten[PLACE_ICON_FISHING] = 1;
       }
@@ -2654,3 +2763,91 @@ static void Zukan_Detail_Map_UtilBrightenPlaceIcon( ZUKAN_DETAIL_MAP_PARAM* para
 
   GFL_BG_LoadScreenV_Req( BG_FRAME_S_PLACE );
 }
+
+//-------------------------------------
+/// obj_existのアルファアニメーション
+//=====================================
+static void Zukan_Detail_Map_ObjExistAlphaInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u8 i;
+
+  // 半透明にしないがwndに入ってしまうOBJの設定を変更する
+  for( i=0; i<OBJ_MAX; i++ )
+  {
+    GFL_CLACT_WK_SetObjMode( work->obj_clwk[i], GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
+  }
+
+  // wnd
+  GX_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
+  G2_SetWnd0Position( SEASON_PANEL_POS_X, 0, SEASON_PANEL_POS_X+SEASON_PANEL_SIZE_X, 168 );
+  G2_SetWnd1Position( SEASON_PANEL_POS_X+SEASON_PANEL_SIZE_X, 0, 0/*256*/, 168 );
+
+  G2_SetWnd0InsidePlane(
+    GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ,
+    TRUE );
+  G2_SetWnd1InsidePlane(
+    GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ,
+    TRUE );
+  G2_SetWndOutsidePlane(
+    GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ,
+    FALSE );
+
+  Zukan_Detail_Map_ObjExistAlphaReset( param, work, cmn );
+}
+static void Zukan_Detail_Map_ObjExistAlphaExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u8 i;
+
+  // wnd
+  GX_SetVisibleWnd( GX_WNDMASK_NONE );
+
+  // 半透明にしないがwndに入ってしまうOBJの設定を元に戻す
+  for( i=0; i<OBJ_MAX; i++ )
+  {
+    GFL_CLACT_WK_SetObjMode( work->obj_clwk[i], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+  }
+
+  // 一部分フェードの設定を元に戻す
+  ZKNDTL_COMMON_FadeSetPlaneDefault( work->fade_wk_m );
+}
+static void Zukan_Detail_Map_ObjExistAlphaMain( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 更新
+  {
+    G2_SetBlendAlpha(
+        GX_BLEND_PLANEMASK_NONE,/*GX_BLEND_PLANEMASK_OBJ,*/
+        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+        work->obj_exist_ev1,
+        16 - work->obj_exist_ev1 );
+  }
+
+  // カウントを進める
+  if( (u32)work->obj_exist_alpha_anime_count + OBJ_EXIST_ALPHA_ANIME_COUNT_ADD >= OBJ_EXIST_ALPHA_ANIME_COUNT_MAX )
+  {
+    work->obj_exist_alpha_anime_count = (u16)( (u32)work->obj_exist_alpha_anime_count + OBJ_EXIST_ALPHA_ANIME_COUNT_ADD - OBJ_EXIST_ALPHA_ANIME_COUNT_MAX );
+  }
+  else
+  {
+    work->obj_exist_alpha_anime_count += OBJ_EXIST_ALPHA_ANIME_COUNT_ADD;
+  }
+
+  // ev1を求める 
+  {
+    // 1～0に変換
+    fx16 cos = ( FX_CosIdx(work->obj_exist_alpha_anime_count) + FX16_ONE ) /2;
+    work->obj_exist_ev1 = OBJ_EXIST_ALPHA_MIN + ( ( (OBJ_EXIST_ALPHA_MAX - OBJ_EXIST_ALPHA_MIN) * cos ) >>FX16_SHIFT );
+  }
+
+// TWLプログラミングマニュアル
+// 第 1 対象面でOBJ=1 の場合は、OBJ の種類に関わらずすべてのOBJに対して処理が実行されます。
+// OBJ=0 の場合は、半透明OBJ、ビットマップOBJ、3D 面を描画したBG0 面の場合のみ処理が実行されます。
+//
+// つまり、GX_BLEND_PLANEMASK_OBJにしてしまうと、GX_OAM_MODE_NORMALも半透明になってしまう。
+// GX_BLEND_PLANEMASK_NONEにしておけば、GX_OAM_MODE_XLUだけが半透明になる。
+}
+static void Zukan_Detail_Map_ObjExistAlphaReset( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  work->obj_exist_ev1                  = OBJ_EXIST_ALPHA_MIN;
+  work->obj_exist_alpha_anime_count    = OBJ_EXIST_ALPHA_ANIME_COUNT_MAX / 2;  // cosで1～0にしているので
+}
+

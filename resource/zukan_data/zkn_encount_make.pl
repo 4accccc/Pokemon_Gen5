@@ -166,6 +166,10 @@ $mons_area_file_list_name = "zkn_area_file_list.lst";  # shiftjis
 
 # pokemon_wbのゾーンID
 %zonename_to_real_zoneid_hash = ();  # ゾーン名から「pokemon_wbで決めたゾーンID」を得るためのハッシュ
+                                     # %zonename_to_real_zoneid_hashはエラーの検出にしか使っていないので、
+                                     # "/resource/fldmapdata/zonetable/zone_id.h"を読み込むことなく
+                                     # 図鑑データを生成することもできた。
+                                     # ゾーンIDの数値を一切使わず、ゾーン名(R03R0301など)で済ませられるので。
 
 # ゾーン名からグループ名を得るためのハッシュ
 %zonename_to_group_hash = ();
@@ -175,6 +179,10 @@ $mons_area_file_list_name = "zkn_area_file_list.lst";  # shiftjis
 $lead_zonename_num;
 @lead_zonename_tbl = ();
 %lead_zonename_hash = ();  # $lead_zonename_hash{ 代表ゾーン名 } = @lead_zonename_tblの配列添え字 となるようなハッシュ
+
+$lead_real_zoneid_file_name = "zkn_area_zone_group.cdat";  # zkn_area_monsno_???.datに書かれているゾーンを順番通りにCソースファイルに列挙しておく
+                                                        # townmap_data.xlsと同じ個数同じ並びになっている
+$lead_real_zoneid_prefix = "ZONE_ID_";  # pokemon_wbのゾーンIDの数値をそのまま書かずに、ZONE_ID_で始まるdefine名を書いておく
 
 
 ##=============================================================================
@@ -231,6 +239,9 @@ $personal_rb_file_name = $temp_personal_rb_file_name;  # これ以降に使用�
 
 # MONSNOごとの分布データのファイルのリストを書き出す
 &WriteMonsAreaFileList();
+
+# ゾーンを順番通りにCソースファイルに列挙する
+&WriteLeadRealZoneidFile();
 
 # グループ後処理
 &ExitGroup();
@@ -1247,6 +1258,49 @@ sub DebugWriteMonsAreaFileForGroup
       print FH "\r\n";  # 0D 0A  # 横に長過ぎるので季節ごとに折り返すことにする
     }
   }
+
+  close( FH );
+}
+
+##-------------------------------------
+### ゾーンを順番通りにCソースファイルに列挙する
+##=====================================
+sub WriteLeadRealZoneidFile
+{
+  my $max_name = "ZKN_AREA_ZONE_GROUP_MAX";
+
+  open( FH, ">:encoding(shiftjis)", $lead_real_zoneid_file_name );
+
+  # 説明
+  printf FH "//============================================================================\r\n";
+  printf FH "/**\r\n";
+  printf FH " *  \@file   %s\r\n", $lead_real_zoneid_file_name;
+  printf FH " *  \@brief  zkn_area_monsno_???.datに書かれているゾーンを書かれている順番通りに列挙しておく\r\n";
+  printf FH " *  \@author zkn_encount_make.pl\r\n";
+  printf FH " *  \@data   \r\n";
+  printf FH " *  \@note   zkn_encount_make.plで生成されました。\r\n";
+  printf FH " *           Cソースファイルにインクルードして使用して下さい。\r\n";
+  printf FH " *\r\n";
+  printf FH " *  モジュール名：\r\n";
+  printf FH " */\r\n";
+  printf FH "//============================================================================\r\n";
+  printf FH "#pragma once\r\n";
+  printf FH "\r\n";  # 0D 0A
+
+  # 個数
+  printf FH "#define %s (%d)\r\n", $max_name, $lead_zonename_num;
+  printf FH "\r\n";  # 0D 0A
+
+  # 配列
+  printf FH "static const u16 zkn_area_zone_group[%s] =\r\n", $max_name;
+  printf FH "{\r\n";
+
+  for( my $i=0; $i<$lead_zonename_num; $i++ )
+  {
+    printf FH "  %s%s,  // %d\r\n", $lead_real_zoneid_prefix, $lead_zonename_tbl[$i], $zonename_to_real_zoneid_hash{ $lead_zonename_tbl[$i] };
+  }
+
+  printf FH "};\r\n";
 
   close( FH );
 }

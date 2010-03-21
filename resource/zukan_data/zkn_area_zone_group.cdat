@@ -1,0 +1,80 @@
+//============================================================================
+/**
+ *  @file   zkn_area_zone_group.cdat
+ *  @brief  zkn_area_monsno_???.datに書かれているゾーンを書かれている順番通りに列挙しておく
+ *  @author zkn_encount_make.pl
+ *  @data   
+ *  @note   zkn_encount_make.plで生成されました。
+ *           Cソースファイルにインクルードして使用して下さい。
+ *
+ *  モジュール名：
+ */
+//============================================================================
+#pragma once
+
+#define ZKN_AREA_ZONE_GROUP_MAX (61)
+
+static const u16 zkn_area_zone_group[ZKN_AREA_ZONE_GROUP_MAX] =
+{
+  ZONE_ID_T01,  // 436
+  ZONE_ID_T02,  // 444
+  ZONE_ID_C01,  // 9
+  ZONE_ID_C02,  // 21
+  ZONE_ID_C03,  // 35
+  ZONE_ID_C04,  // 80
+  ZONE_ID_C05,  // 116
+  ZONE_ID_C06,  // 127
+  ZONE_ID_C07,  // 136
+  ZONE_ID_C08,  // 143
+  ZONE_ID_C09,  // 160
+  ZONE_ID_T03,  // 453
+  ZONE_ID_T04,  // 459
+  ZONE_ID_T05,  // 466
+  ZONE_ID_BC10,  // 0
+  ZONE_ID_C11,  // 171
+  ZONE_ID_PALACETEST,  // 328
+  ZONE_ID_R15R0301,  // 428
+  ZONE_ID_D01,  // 176
+  ZONE_ID_D02,  // 179
+  ZONE_ID_D03,  // 182
+  ZONE_ID_D04R0101,  // 185
+  ZONE_ID_D05,  // 218
+  ZONE_ID_D06,  // 221
+  ZONE_ID_D07,  // 225
+  ZONE_ID_D08,  // 233
+  ZONE_ID_D09,  // 244
+  ZONE_ID_D10R0101,  // 261
+  ZONE_ID_D12,  // 270
+  ZONE_ID_D13,  // 274
+  ZONE_ID_R03R0301,  // 365
+  ZONE_ID_R06R0201,  // 375
+  ZONE_ID_R09R0301,  // 395
+  ZONE_ID_R07R0101,  // 380
+  ZONE_ID_R08R0101,  // 388
+  ZONE_ID_R14R0201,  // 422
+  ZONE_ID_D20,  // 276
+  ZONE_ID_R16R0201,  // 432
+  ZONE_ID_R01,  // 358
+  ZONE_ID_R02,  // 360
+  ZONE_ID_R03,  // 362
+  ZONE_ID_R04,  // 368
+  ZONE_ID_R05,  // 372
+  ZONE_ID_R06,  // 373
+  ZONE_ID_R07,  // 379
+  ZONE_ID_R08,  // 387
+  ZONE_ID_R09,  // 391
+  ZONE_ID_R10,  // 398
+  ZONE_ID_R11,  // 408
+  ZONE_ID_R12,  // 411
+  ZONE_ID_R13,  // 414
+  ZONE_ID_R14,  // 420
+  ZONE_ID_R15,  // 425
+  ZONE_ID_R16,  // 430
+  ZONE_ID_W17,  // 471
+  ZONE_ID_R18,  // 434
+  ZONE_ID_H01,  // 288
+  ZONE_ID_H02,  // 292
+  ZONE_ID_H03,  // 293
+  ZONE_ID_H04,  // 294
+  ZONE_ID_H05,  // 302
+};
