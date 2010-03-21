@@ -111,7 +111,7 @@ EVENT_START	ev_c04gym0101_leader4_01
 
 	ELSE
 		//バッジ入手後、H02の開通フラグで分岐
-		IF FLAG_ON( FH_01) THEN
+		IF $WK_SCENE_R05 >= 3 THEN
 			//開通後、一言メッセージ
 			_BALLOONWIN_TALKOBJ_MSG( msg_c04gym0101_leader_07 )
 			_LAST_KEYWAIT()
