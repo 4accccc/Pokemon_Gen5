@@ -22,6 +22,8 @@
 //アーカイブ
 #include "arc_def.h"
 #include "msg/msg_battle_rec.h"
+#include "wifi_unionobj_plt.cdat" //ユニオンOBJのパレット位置
+#include "wifi_unionobj.naix"
 
 //外部公開
 #include "br_util.h"
@@ -1154,6 +1156,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
           }
           else
           { 
+            PMS_DRAW_SetNullColorPallet( p_wk->p_pms, 0 );
             PMS_DRAW_SetPrintColor( p_wk->p_pms, BR_PRINT_COL_NORMAL );
             PMS_DRAW_Print( p_wk->p_pms, p_wk->p_msgwin[i]->p_bmpwin, &pms, 0 ); 
             is_msg  = FALSE;
@@ -1213,19 +1216,19 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
 
   //自分のみため
   { 
-    //@todo
-    const int self  = 1 + GDS_Profile_GetTrainerView(cp_profile);
+    const int self  = GDS_Profile_GetTrainerView(cp_profile);
     { 
       ARCHANDLE *p_handle;
-      p_handle  = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), GFL_HEAP_LOWID(heapID) );
-      p_wk->res_self_plt  = GFL_CLGRP_PLTT_Register( p_handle, 
-                          APP_COMMON_GetNull4x4PltArcIdx(),
-                          CLSYS_DRAW_MAIN, PLT_OBJ_M_POKEICON*0x20, heapID );
+      p_handle  = GFL_ARC_OpenDataHandle( ARCID_WIFIUNIONCHAR, GFL_HEAP_LOWID(heapID) );
+      p_wk->res_self_plt  = GFL_CLGRP_PLTT_RegisterEx( p_handle, 
+                          NARC_wifi_unionobj_wifi_union_obj_NCLR,
+                          CLSYS_DRAW_MAIN, PLT_OBJ_M_POKEICON*0x20, 
+                          sc_wifi_unionobj_plt[self], 1, heapID );
       p_wk->res_self_cel = GFL_CLGRP_CELLANIM_Register( p_handle,
-          APP_COMMON_GetNull4x4CellArcIdx( APP_COMMON_MAPPING_128K ), 
-          APP_COMMON_GetNull4x4AnimeArcIdx( APP_COMMON_MAPPING_128K ), heapID );
+          NARC_wifi_unionobj_front00_NCER, 
+          NARC_wifi_unionobj_front00_NANR, heapID );
       p_wk->res_self_chr  = GFL_CLGRP_CGR_Register( p_handle,
-          APP_COMMON_GetNull4x4CharArcIdx(),
+          NARC_wifi_unionobj_front00_NCGR + self,
           FALSE, CLSYS_DRAW_MAIN, heapID );
       GFL_ARC_CloseDataHandle( p_handle );
     }
@@ -1237,7 +1240,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
       p_wk->p_selficon  = GFL_CLACT_WK_Create( p_unit,
           p_wk->res_self_chr,p_wk->res_self_plt,p_wk->res_self_cel,
             &data, CLSYS_DEFREND_MAIN, heapID );
-      CLWK_TransNSBTX( p_wk->p_selficon, ARCID_MMDL_RES, self, 3, NSBTX_DEF_SX, NSBTX_DEF_SY, 0, CLSYS_DRAW_MAIN, heapID );
+      GFL_CLACT_WK_SetPlttOffs( p_wk->p_selficon, 0, CLWK_PLTTOFFS_MODE_PLTT_TOP );
     }
   }
 

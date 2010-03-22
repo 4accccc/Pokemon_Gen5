@@ -69,7 +69,8 @@ typedef enum
 //管理スタック数
 #define BR_BTN_SYS_STACK_MAX	(3)
 //上画面にボタンがいったときの座標
-#define TAG_INIT_POS_UP( n )		( 25 + ( ( 36 ) * ( 4-n ) ) )
+//#define TAG_INIT_POS_UP( n )		( 25 + ( ( 36 ) * ( 4-n ) ) )
+#define TAG_INIT_POS_UP( n )		( 169 - n * 16 )
 
 //=============================================================================
 /**
@@ -182,10 +183,11 @@ static void SEQ_End( SEQ_WORK *p_wk );
 //-------------------------------------
 ///	SEQFUNC
 //    次のボタンへいくとき
-//      Touch -> HideBtn -> ChangePage -> AppearBtn -> UpTag
+//      Touch -> HideBtn -> ChangePage -> UpTag -> AppearBtn
 //
 //    戻るとき
 //      Touch -> DownTag -> HideBtn2 -> ChangePage -> AppearBtn 
+//      Touch -> LeaveBtn -> DownTag -> ChangePage -> AppearBtn
 //
 //    次のPROCへいくとき
 //      Touch -> HideBtn -> ChangePage -> UpTag
@@ -197,6 +199,7 @@ static void SEQFUNC_HideBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_HideBtn2( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_ChangePage( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_AppearBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_LeaveBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_UpTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_DownTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_Input( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -243,6 +246,7 @@ static const GFL_POINT  sc_tag_pos[]  =
   { 
     BR_BTN_POS_X, TAG_INIT_POS_UP(2)
   },
+  //一番上
   { 
     BR_BTN_POS_X, TAG_INIT_POS_UP(3)
   },
@@ -485,8 +489,17 @@ static void Br_Btn_Sys_PushStack( BR_BTN_SYS_WORK *p_wk, BR_BTNEX_WORK *p_btn, C
 
 	//積む
 	BR_BTNEX_Copy( p_wk, &p_wk->p_btn_stack[p_wk->btn_stack_num], p_btn, display );
-	
 	p_wk->btn_stack_num++;
+
+  //優先度を設定
+  {
+    int i;
+    for( i = 0; i < p_wk->btn_stack_num; i++ )
+    { 
+      //内部でOBJと文字OAMの両方に設定しているので i*2+1
+      BR_BTNEX_SetSoftPriority( &p_wk->p_btn_stack[i], (p_wk->btn_stack_num-i)*2+1 );
+    }
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -751,7 +764,7 @@ static void SEQFUNC_Touch( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       break;
 
     case BR_BTN_TYPE_RETURN:
-      SEQ_SetNext( p_seqwk, SEQFUNC_DownTag );
+      SEQ_SetNext( p_seqwk, SEQFUNC_LeaveBtn );
       break;
 
     case BR_BTN_TYPE_SELECT:
@@ -945,10 +958,10 @@ static void SEQFUNC_ChangePage( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 
     //他のボタンを読み変える
     pos.x = x;
-    pos.y = y;
+    pos.y = -32;
     Br_Btn_Sys_ReLoadBtn( p_wk, nextID, &pos );
 
-    SEQ_SetNext( p_seqwk, SEQFUNC_AppearBtn );
+    SEQ_SetNext( p_seqwk, SEQFUNC_UpTag );
   }
   else if( p_wk->next_type == BR_BTN_TYPE_RETURN )
   { 
@@ -1065,6 +1078,9 @@ static void SEQFUNC_AppearBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     switch( p_wk->next_type )
     {
     case BR_BTN_TYPE_SELECT:
+      SEQ_SetNext( p_seqwk, SEQFUNC_Input );
+      break;
+
     case BR_BTN_TYPE_CHANGESEQ:
       SEQ_SetNext( p_seqwk, SEQFUNC_UpTag ); 
       break;
@@ -1073,6 +1089,68 @@ static void SEQFUNC_AppearBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       SEQ_SetNext( p_seqwk, SEQFUNC_Input );
       break;
     }
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタンが下へ去る
+ *
+ *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_LeaveBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_LEAVE_START,   //ボタンがさっていく開始
+    SEQ_LEAVE_WAIT,    //ボタンがさっていく待機
+    SEQ_END,
+  };
+  BR_BTN_SYS_WORK *p_wk = p_wk_adrs;
+
+ switch( *p_seq )
+  { 
+  case SEQ_LEAVE_START:
+    //ボタンが去る動作開始
+    { 
+      int i;
+      s16 x;
+      GFL_POINT pos;
+      pos.y = 192 + 32;
+      for( i = 0; i < p_wk->btn_now_num; i++ )
+      {	
+        BR_BTNEX_GetPos( &p_wk->p_btn_now[i], &x, NULL );
+        pos.x = x;
+        BR_BTNEX_StartMove( &p_wk->p_btn_now[i], BR_BTN_MOVE_NEXT_TARGET, &pos );
+      }
+    }
+    *p_seq  = SEQ_LEAVE_WAIT;
+    break;
+  
+  case SEQ_LEAVE_WAIT:
+    //ボタンが去るまでの動作
+		{	
+			int i;
+			BOOL is_end	= TRUE;
+
+			for( i = 0; i < p_wk->btn_now_num; i++ )
+			{	
+				is_end	&= BR_BTNEX_MainMove( &p_wk->p_btn_now[i] );
+			}
+
+			if( is_end )
+			{
+        *p_seq  = SEQ_END;
+			}
+		}
+    break;
+
+  case SEQ_END:
+
+    SEQ_SetNext( p_seqwk, SEQFUNC_DownTag );
     break;
   }
 }
@@ -1136,7 +1214,14 @@ static void SEQFUNC_UpTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     break;
     
   case SEQ_END:
-    SEQ_SetNext( p_seqwk, SEQFUNC_Input ); 
+    switch( p_wk->next_type )
+    {
+    case BR_BTN_TYPE_SELECT:
+      SEQ_SetNext( p_seqwk, SEQFUNC_AppearBtn ); 
+      break;
+    default:
+      SEQ_SetNext( p_seqwk, SEQFUNC_Input ); 
+    }
     break;
   }
 }
@@ -1213,7 +1298,7 @@ static void SEQFUNC_DownTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     break;
     
   case SEQ_END:
-    SEQ_SetNext( p_seqwk, SEQFUNC_HideBtn2 ); 
+    SEQ_SetNext( p_seqwk, SEQFUNC_ChangePage ); 
     break;
   }
 }

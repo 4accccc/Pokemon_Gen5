@@ -415,7 +415,6 @@ static GFL_PROC_RESULT BR_CORE_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
 
 	case SEQ_MAIN:
 		{
-			BOOL is_end;
       //フェードプロセス処理
       BR_FADE_Main( p_wk->p_fade );
 
@@ -428,19 +427,9 @@ static GFL_PROC_RESULT BR_CORE_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
       //描画
       BR_GRAPHIC_2D_Draw( p_wk->p_graphic );
 
-			is_end	= BR_PROC_SYS_IsEnd( p_wk->p_procsys );
-
-      //戦闘にいくときのみフェード
-			if( is_end )
+			if( BR_PROC_SYS_IsEnd( p_wk->p_procsys ) )
 			{	
-        if( p_wk->p_param->ret == BR_CORE_RETURN_BTLREC )
-        { 
-          *p_seq	= SEQ_FADEOUT;
-        }
-        else
-        { 
-          *p_seq  = SEQ_EXIT;
-        }
+        *p_seq	= SEQ_FADEOUT;
 			}
 		}
 		break;

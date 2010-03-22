@@ -20,6 +20,8 @@
 //プロセス
 #include "gamesystem/btl_setup.h"
 #include "battle/battle.h"
+#include "net_app/wifi_login.h"
+#include "net_app/wifi_logout.h"
 
 //自分のモジュール
 #include "br_core.h"
@@ -112,10 +114,19 @@ static void SUBPROC_CallProc( SUBPROC_WORK *p_wk, u32 procID );
 //-------------------------------------
 /// サブプロセス用引数の解放、破棄関数
 //=====================================
+//バトルレコーダーコア
 static void *BR_CORE_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID );
 static void BR_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
+//戦闘
 static void *BR_BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID );
 static void BR_BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
+//WIFIログイン
+static void *LOGIN_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID );
+static void LOGIN_FreeParam( void *p_param_adrs, void *p_wk_adrs );
+//WIFIログアウト
+static void *LOGOUT_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID );
+static void LOGOUT_FreeParam( void *p_param_adrs, void *p_wk_adrs );
+
 //=============================================================================
 /**
  *          データ
@@ -128,6 +139,8 @@ typedef enum
 {
   SUBPROCID_CORE,
   SUBPROCID_BTLREC,
+  SUBPROCID_LOGIN,
+  SUBPROCID_LOGOUT,
 
   SUBPROCID_MAX
 } SUBPROC_ID;
@@ -146,6 +159,20 @@ static const SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]  =
     &BtlProcData,
     BR_BATTLE_AllocParam,
     BR_BATTLE_FreeParam,
+  },
+  //SUBPROCID_LOGIN
+  { 
+    FS_OVERLAY_ID( wifi_login ),
+    &WiFiLogin_ProcData,
+    LOGIN_AllocParam,
+    LOGIN_FreeParam,
+  },
+  //SUBPROCID_LOGOUT,
+  { 
+    FS_OVERLAY_ID( wifi_login ),
+    &WiFiLogout_ProcData,
+    LOGOUT_AllocParam,
+    LOGOUT_FreeParam,
   },
 };
 
@@ -198,6 +225,17 @@ static GFL_PROC_RESULT BR_SYS_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 
   //モジュール作成
   SUBPROC_Init( &p_wk->subproc, sc_subproc_data, p_wk, HEAPID_BATTLE_RECORDER_SYS );
+
+  //ブラウザモードは通常起動
+  //それ以外はWIFI接続
+  if( p_wk->p_param->mode == BR_MODE_BROWSE )
+  { 
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
+  }
+  else
+  { 
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LOGIN );
+  }
 
 #ifdef PM_DEBUG
   if( p_wk->p_param->p_gamedata== NULL )
@@ -264,11 +302,7 @@ static GFL_PROC_RESULT BR_SYS_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_p
   enum
   {
     BR_SYS_SEQ_INIT,
-    BR_SYS_SEQ_FADEIN,
-    BR_SYS_SEQ_FADEIN_WAIT,
     BR_SYS_SEQ_MAIN,
-    BR_SYS_SEQ_FADEOUT,
-    BR_SYS_SEQ_FADEOUT_WAIT,
     BR_SYS_SEQ_EXIT,
   };
 
@@ -277,19 +311,7 @@ static GFL_PROC_RESULT BR_SYS_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_p
   switch( *p_seq )
   {
   case BR_SYS_SEQ_INIT:
-    *p_seq  = BR_SYS_SEQ_FADEIN;
-    break;
-
-  case BR_SYS_SEQ_FADEIN:
- //   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 0 );
-    *p_seq  = BR_SYS_SEQ_FADEIN_WAIT;
-    break;
-
-  case BR_SYS_SEQ_FADEIN_WAIT:
-   // if( !GFL_FADE_CheckFade() )
-    {
-      *p_seq  = BR_SYS_SEQ_MAIN;
-    }
+    *p_seq  = BR_SYS_SEQ_MAIN;
     break;
 
   case BR_SYS_SEQ_MAIN:
@@ -299,20 +321,8 @@ static GFL_PROC_RESULT BR_SYS_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_p
 
       if( is_end )
       {
-        *p_seq  = BR_SYS_SEQ_FADEOUT;
+        *p_seq  = BR_SYS_SEQ_EXIT;
       }
-    }
-    break;
-
-  case BR_SYS_SEQ_FADEOUT:
-   // GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
-    *p_seq  = BR_SYS_SEQ_FADEOUT_WAIT;
-    break;
-
-  case BR_SYS_SEQ_FADEOUT_WAIT:
- //   if( !GFL_FADE_CheckFade() )
-    {
-      *p_seq  = BR_SYS_SEQ_EXIT;
     }
     break;
 
@@ -511,9 +521,22 @@ static void BR_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   BR_CORE_PARAM *p_param  = p_param_adrs;
   BR_SYS_WORK   *p_wk     = p_wk_adrs;
 
-  if( p_param->ret == BR_CORE_RETURN_BTLREC )
+  switch( p_param->ret )
   {
+  case BR_CORE_RETURN_BTLREC:
     SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_BTLREC );
+    break;
+
+  case BR_CORE_RETURN_FINISH:
+    if( p_wk->p_param->mode == BR_MODE_BROWSE )
+    {
+      /*  */
+    }
+    else
+    { 
+      SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_LOGOUT );
+    }
+    break;
   }
 
   GFL_HEAP_FreeMemory( p_param );
@@ -563,4 +586,95 @@ static void BR_BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   GFL_HEAP_FreeMemory( p_param );
 
   SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WIFIログインの引数	作成
+ *
+ *	@param	HEAPID heapID			ヒープID
+ *	@param	*p_wk_adrs				ワーク
+ *
+ *	@return	引数
+ */
+//-----------------------------------------------------------------------------
+static void *LOGIN_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID )
+{ 
+  WIFILOGIN_PARAM *p_param;
+  BR_SYS_WORK         *p_wk     = p_wk_adrs;
+  p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(WIFILOGIN_PARAM) );
+	GFL_STD_MemClear( p_param, sizeof(WIFILOGIN_PARAM) );
+
+  p_param->gamedata = p_wk->p_param->p_gamedata;
+  p_param->bg       = WIFILOGIN_BG_NORMAL;
+  p_param->display  = WIFILOGIN_DISPLAY_UP;
+  p_param->mode     = WIFILOGIN_MODE_NORMAL;
+  p_param->pSvl     = NULL;
+  p_param->nsid     = WB_NET_WIFIMATCH;
+
+  return p_param;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ログインの引数	破棄
+ *
+ *	@param	void *p_param_adrs				引数
+ *	@param	*p_wk_adrs								ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LOGIN_FreeParam( void *p_param_adrs, void *p_wk_adrs )
+{ 
+  BR_SYS_WORK       *p_wk       = p_wk_adrs;
+  WIFILOGIN_PARAM  *p_param     = p_param_adrs;
+  WIFILOGIN_RESULT  result      = p_param->result;
+
+  GFL_HEAP_FreeMemory( p_param );
+
+  switch( result )
+  { 
+  case WIFILOGIN_RESULT_LOGIN:
+    SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
+    break;
+
+  case WIFILOGIN_RESULT_CANCEL:
+    break;
+  }
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WIFIログアウトプロセスの引数	破棄
+ *
+ *	@param	void *p_param_adrs				引数
+ *	@param	*p_wk_adrs								ワーク
+ */
+//-----------------------------------------------------------------------------
+static void *LOGOUT_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID )
+{ 
+  BR_SYS_WORK         *p_wk     = p_wk_adrs;
+  WIFILOGOUT_PARAM    *p_param;
+
+  p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(WIFILOGOUT_PARAM) );
+	GFL_STD_MemClear( p_param, sizeof(WIFILOGOUT_PARAM) );
+
+  p_param->gamedata = p_wk->p_param->p_gamedata;
+  p_param->bg       = WIFILOGIN_BG_NORMAL;
+  p_param->display  = WIFILOGIN_DISPLAY_UP;
+
+  return p_param;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	WIFIログアウトプロセスの引数	破棄
+ *
+ *	@param	void *p_param_adrs				引数
+ *	@param	*p_wk_adrs								ワーク
+ */
+//-----------------------------------------------------------------------------
+static void LOGOUT_FreeParam( void *p_param_adrs, void *p_wk_adrs )
+{ 
+  BR_SYS_WORK         *p_wk     = p_wk_adrs;
+  WIFILOGOUT_PARAM    *p_param  = p_param_adrs;
+
+  GFL_HEAP_FreeMemory( p_param );
 }
