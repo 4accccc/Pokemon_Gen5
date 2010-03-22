@@ -2400,26 +2400,6 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
         work->selectState = PSSEL_SELECT;
       }
     }
-    else if( trg & PAD_BUTTON_B )
-    {
-      if( (PLIST_UTIL_IsBattleMenu( work ) == FALSE || 
-           PLIST_UTIL_IsBattleMenu_CanReturn( work ) == TRUE) &&
-          PLIST_UTIL_CanReturn( work ) == TRUE )
-      {
-        work->selectState = PSSEL_RETURN;
-        work->clwkExitButton = work->clwkBarIcon[PBT_RETURN];
-        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
-      }
-    }
-    else if( trg & PAD_BUTTON_X )
-    {
-      if( work->canExit == TRUE )
-      {
-        work->selectState = PSSEL_EXIT;
-        work->clwkExitButton = work->clwkBarIcon[PBT_EXIT];
-        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
-      }
-    }
     
     //\ŽšƒL[ˆÚ“®ˆ—
     if( moveVal != 0 )
@@ -2522,6 +2502,29 @@ static void PLIST_SelectPokeUpdateKey( PLIST_WORK *work )
       }
 
       PMSND_PlaySystemSE( PLIST_SND_CURSOR );
+    }
+  }
+  //B‚ÆX‚ÍktstsŠÖŒW‚È‚­“®‚­
+  if( trg & PAD_BUTTON_B )
+  {
+    if( (PLIST_UTIL_IsBattleMenu( work ) == FALSE || 
+         PLIST_UTIL_IsBattleMenu_CanReturn( work ) == TRUE) &&
+        PLIST_UTIL_CanReturn( work ) == TRUE )
+    {
+      work->selectState = PSSEL_RETURN;
+      work->clwkExitButton = work->clwkBarIcon[PBT_RETURN];
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
+      work->ktst = GFL_APP_KTST_KEY;
+    }
+  }
+  else if( trg & PAD_BUTTON_X )
+  {
+    if( work->canExit == TRUE )
+    {
+      work->selectState = PSSEL_EXIT;
+      work->clwkExitButton = work->clwkBarIcon[PBT_EXIT];
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[PBT_EXIT] , APP_COMMON_BARICON_EXIT_ON );
+      work->ktst = GFL_APP_KTST_KEY;
     }
   }
 }
