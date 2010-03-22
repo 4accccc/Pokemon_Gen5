@@ -34,6 +34,14 @@ _EVENT_DATA_END
 // ■ローカル変数
 //======================================================================
 //----------------------------------------------------------------------
+// layer 7
+//----------------------------------------------------------------------
+DEFINE_LOCAL v7_1
+//----------------------------------------------------------------------
+// layer 6
+//----------------------------------------------------------------------
+DEFINE_LOCAL v6_1
+//----------------------------------------------------------------------
 // layer 5
 //----------------------------------------------------------------------
 DEFINE_LOCAL v5_1
@@ -172,9 +180,20 @@ _RET
 // ■隊長サブルーチンリスト
 //======================================================================
 //----------------------------------------------------------------------
+// layer 7
+//----------------------------------------------------------------------
+// ■シーケンス
+// LEADER_MAIN ◆隊長メイン
+//----------------------------------------------------------------------
+// layer 6
+//----------------------------------------------------------------------
+// ■シーケンス
+// RECEIVE_REQUEST ◆『依頼を受ける』
+// REPORT_REQUEST  ◆『依頼の報告』
+//----------------------------------------------------------------------
 // layer 5
 //----------------------------------------------------------------------
-// ■メインシーケンス
+// ■シーケンス
 // RES_REQ_REPORT ◆調査結果を報告シーケンス
 // RES_REQ_CANCEL ◆依頼キャンセルシーケンス
 // RES_REQ_SELECT ◆依頼選択シーケンス
@@ -269,7 +288,7 @@ _RET
 
 
 //======================================================================
-// ■調査隊隊長メイン
+// ■調査隊隊長
 //======================================================================
 EVENT_START ev_leader
 { 
@@ -293,65 +312,113 @@ EVENT_START ev_leader
     ENDIF
   ENDIF
 
-  // 隊長「今日はどうする？」
-  // メインメニューを表示
-  _CALL LEADER_SAY_May_I_help_you
+  // 隊長メインシーケンスへ
+  _CALL LEADER_MAIN
+}
+EVENT_END 
+
+//----------------------------------------------------------------------
+// ◆隊長メイン
+//----------------------------------------------------------------------
+LEADER_MAIN:
+{
+  // v7_1 ループフラグ
+
+  $v7_1 = TRUE
+  WHILE $v7_1 == TRUE
+
+    // 隊長「今日はどうする？」
+    // メインメニューを表示
+    _CALL LEADER_SAY_May_I_help_you
+    
+    // 選択結果で分岐
+    SWITCH $SCWK_ANSWER
+    CASE msg_c03r0101__choice_01a THEN //『依頼を受ける』
+      _CALL RECEIVE_REQUEST
+      _RET
   
-  // 選択結果で分岐
-  SWITCH $SCWK_ANSWER
-  CASE msg_c03r0101__choice_01a THEN //『いらいをうける』
-    _CALL CHECK_RES_REQ_EXIST // 依頼を受けているかどうかをチェック
-    // 依頼を受けている
+    CASE msg_c03r0101__choice_01b THEN //『依頼の報告』
+      _CALL REPORT_REQUEST
+      _RET
+
+    CASE msg_c03r0101__choice_01d THEN //『依頼の確認』
+      _CALL LEADER_SAY_Your_request_is           // 隊長「～依頼内容の確認～」
+      _CALL LEADER_SAY_Come_again_if_you_achieve // 隊長「調査が終了したら, 報告に来てくれ」
+  
+    CASE msg_c03r0101__choice_01c THEN //『なんでもないです』
+      _CALL LEADER_SAY_ByeBye // 隊長「そうか……」
+      _RET
+  
+    CASE EV_WIN_B_CANCEL THEN //『B ボタン』
+      _CALL LEADER_SAY_ByeBye // 隊長「そうか……」
+      _RET
+    DEFAULT
+      _RET
+    ENDSWITCH
+
+  ENDWHILE
+}
+_RET
+
+//----------------------------------------------------------------------
+// ◆『依頼を受ける』
+//----------------------------------------------------------------------
+RECEIVE_REQUEST:
+{
+  _CALL CHECK_RES_REQ_EXIST // 依頼を受けているかどうかをチェック
+
+  // 依頼を受けている
+  IF $SCWK_ANSWER == TRUE THEN
+    _CALL LEADER_SAY_Do_you_cancel_request // 隊長「キャンセルするか？」⇒『はい』or『いいえ』
+    //『いいえ』
+    IF $SCWK_ANSWER == SCR_NO THEN 
+      _CALL LEADER_SAY_Continue_research // 隊長「では引き続き, 調査を続けてくれ」
+      _RET
+    ENDIF
+
+    _CALL RES_REQ_CANCEL // キャンセル処理
+
+  // 依頼を受けていない
+  ELSE
+    _CALL RES_REQ_SELECT // 依頼選択処理
+  ENDIF
+}
+_RET
+
+//----------------------------------------------------------------------
+// ◆『依頼の報告』
+//----------------------------------------------------------------------
+REPORT_REQUEST:
+{
+  _CALL CHECK_RES_REQ_EXIST // 依頼を受けているかどうかをチェック
+
+  // 依頼を受けていない
+  IF $SCWK_ANSWER == FALSE THEN
+    _CALL LEADER_SAY_You_dont_have_request // 隊長「ちょうさいらいは　うけていないようだ」
+
+  // 依頼を受けている
+  ELSE
+    _CALL CHECK_RES_REQ_ACHIEVE // 調査中の依頼を達成しているかどうかをチェック
+
+    // 依頼を達成している
     IF $SCWK_ANSWER == TRUE THEN
-      _CALL LEADER_SAY_Do_you_cancel_request // 隊長「キャンセルするか？」⇒『はい』or『いいえ』
+      _CALL RES_REQ_REPORT // 報告処理
+      _RET
+    // 依頼を達成していない
+    ELSE
+      _CALL LEADER_SAY_You_dont_archieve // 隊長「まだ調査が終わっていないぞ？」⇒『はい』or『いいえ』
+
       //『いいえ』
       IF $SCWK_ANSWER == SCR_NO THEN 
         _CALL LEADER_SAY_Continue_research // 隊長「では引き続き, 調査を続けてくれ」
-        EVENT_END                          // イベント終了
+        _RET
       ENDIF
+
       _CALL RES_REQ_CANCEL // キャンセル処理
-    // 依頼を受けていない
-    ELSE
-      _CALL RES_REQ_SELECT // 依頼選択処理
     ENDIF
-
-  CASE msg_c03r0101__choice_01d THEN //『いらいのかくにん』
-    _CALL LEADER_SAY_Your_request_is           // 隊長「～依頼内容の確認～」
-    _CALL LEADER_SAY_Come_again_if_you_achieve // 隊長「調査が終了したら, 報告に来てくれ」
-    EVENT_END                                  // イベント終了
-
-  CASE msg_c03r0101__choice_01b THEN //『いらいのほうこく』
-    _CALL CHECK_RES_REQ_EXIST // 依頼を受けているかどうかをチェック
-    // 依頼を受けていない
-    IF $SCWK_ANSWER == FALSE THEN
-      _CALL LEADER_SAY_You_dont_have_request // 隊長「ちょうさいらいは　うけていないようだ」
-    // 依頼を受けている
-    ELSE
-      _CALL CHECK_RES_REQ_ACHIEVE // 調査中の依頼を達成しているかどうかをチェック
-      // 依頼を達成している
-      IF $SCWK_ANSWER == TRUE THEN
-        _CALL RES_REQ_REPORT // 報告処理
-      // 依頼を達成していない
-      ELSE
-        _CALL LEADER_SAY_You_dont_archieve // 隊長「まだ調査が終わっていないぞ？」⇒『はい』or『いいえ』
-        //『いいえ』
-        IF $SCWK_ANSWER == SCR_NO THEN 
-          _CALL LEADER_SAY_Continue_research // 隊長「では引き続き, 調査を続けてくれ」
-          EVENT_END                          // イベント終了
-        ENDIF
-        _CALL RES_REQ_CANCEL // キャンセル処理
-      ENDIF
-    ENDIF
-
-  CASE msg_c03r0101__choice_01c THEN //『なんでもないです』
-    _CALL LEADER_SAY_ByeBye // 隊長「そうか……」
-
-  CASE EV_WIN_B_CANCEL THEN //『B ボタン』
-    _CALL LEADER_SAY_ByeBye // 隊長「そうか……」
-  DEFAULT
-  ENDSWITCH
+  ENDIF
 }
-EVENT_END 
+_RET
 
 //----------------------------------------------------------------------
 // ◆調査結果を報告する
@@ -377,6 +444,7 @@ RES_REQ_REPORT:
     _CALL LEADER_SAY_Congraturation // 隊長「これは私の気持ちだ 受け取ってくれ」
     _CALL ACHIEVE_PRIZE_GET         // 全依頼達成アイテムの入手処理
     _CALL LEADER_SAY_I_hope_for_you // 隊長「今後も期待しているぞ！」
+
   // 未達成の依頼が残っている
   ELSE
     _GET_RESEARCH_TEAM_RANK( v5_2 ) // 報告後の隊員ランクを取得
