@@ -16,6 +16,9 @@
 #define TR_ELITEM_16                       3
 #define TR_ELITEW_16                       4
 #define R14_SAGE2_01                       5
+#define R14_FLD_ITEM_01                    6
+#define R14_FLD_ITEM_02                    7
+#define R14_FLD_ITEM_03                    8
 
 #endif //ZONE_R14_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r14.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

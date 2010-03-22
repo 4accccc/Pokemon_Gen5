@@ -19,6 +19,9 @@
 #define TR_RANGERM_08                      4
 #define TR_MOUNT_10                        5
 #define TR_DAISUKIM_03                     6
+#define R15_FLD_ITEM_01                    7
+#define R15_FLD_ITEM_02                    8
+#define R15_FLD_ITEM_03                    9
 
 #endif //ZONE_R15_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r15.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
