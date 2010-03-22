@@ -42,7 +42,9 @@
 #include "pdwacc_local.h"
 #include "msg/msg_gtsnego.h"
 //#include "pdwacc.naix"
-#include "gsync.naix"  //@todo ‘fÞ‚ðŽØ—p
+//#include "gsync.naix"  //@todo ‘fÞ‚ðŽØ—p
+#include "wifi_login.naix"
+#include "net_app/connect_anm.h"
 
 
 #include "box_gra.naix"
@@ -112,6 +114,7 @@ typedef enum  //‚¨ŒÝ‚¢‚ÌƒZƒ‹‚Ì•\Ž¦‡˜
 struct _PDWACC_DISP_WORK {
 	u32 subchar;
   u32 mainchar;
+  CONNECT_BG_PALANM cbp;
   TOUCHBAR_WORK* pTouchWork;
   GFL_CLUNIT	*cellUnit;
   GFL_TCB *g3dVintr; //3D—pvIntrTaskƒnƒ“ƒhƒ‹
@@ -121,7 +124,7 @@ struct _PDWACC_DISP_WORK {
   GFL_CLWK* curIcon[_CELL_DISP_NUM];
   HEAPID heapID;
 
-  s16 scroll_index;
+//  s16 scroll_index;
   s16 scroll[192];
 
   fx32 blendCount;
@@ -184,7 +187,7 @@ static GFL_BG_SYS_HEADER BGsys_data = {
 };
 
 static void dispInit(PDWACC_DISP_WORK* pWork);
-static void settingSubBgControl(PDWACC_DISP_WORK* pWork);
+static void settingBgControl(PDWACC_DISP_WORK* pWork);
 static void _TOUCHBAR_Init(PDWACC_DISP_WORK* pWork);
 static void	_VBlank( GFL_TCB *tcb, void *work );
 static void _SetHand(PDWACC_DISP_WORK* pWork,int x,int y);
@@ -216,7 +219,7 @@ PDWACC_DISP_WORK* PDWACC_DISP_Init(HEAPID id)
 
   GFL_DISP_SetBank( &_defVBTbl );
   GFL_BG_SetBGMode( &BGsys_data );
-  settingSubBgControl(pWork);
+  settingBgControl(pWork);
   dispInit(pWork);
 
   pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
@@ -233,11 +236,9 @@ PDWACC_DISP_WORK* PDWACC_DISP_Init(HEAPID id)
 
 void PDWACC_DISP_Main(PDWACC_DISP_WORK* pWork)
 {
-  pWork->scroll_index++;
-  if(pWork->scroll_index>=192){
-    pWork->scroll_index=0;
-  }
   GFL_CLACT_SYS_Main();
+  ConnectBGPalAnm_Main(&pWork->cbp);
+
 }
 
 void PDWACC_DISP_End(PDWACC_DISP_WORK* pWork)
@@ -281,43 +282,15 @@ void PDWACC_DISP_End(PDWACC_DISP_WORK* pWork)
 }
 
 
-static void settingSubBgControl(PDWACC_DISP_WORK* pWork)
+static void settingBgControl(PDWACC_DISP_WORK* pWork)
 {
-
-  // ”wŒi–Ê
+  int frameno = GFL_BG_FRAME0_M;
   {
-    int frame = GFL_BG_FRAME0_M;
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
-      3, 0, 0, FALSE
-      };
-    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_ClearFrame( frame );
-    GFL_BG_LoadScreenReq( frame );
-		GFL_BG_SetVisible( frame, VISIBLE_ON );
-  }
-  {
-    int frame = GFL_BG_FRAME1_M;
+    int frame = frameno;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
-      2, 0, 0, FALSE
-      };
-
-    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_SetVisible( frame, VISIBLE_ON );
-    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 64, 24, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_LoadScreenReq( frame );
-  }
-
-  {
-    int frame = GFL_BG_FRAME0_S;
-    GFL_BG_BGCNT_HEADER TextBgCntDat = {
-      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-      3, 0, 0, FALSE
+      2, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -326,30 +299,76 @@ static void settingSubBgControl(PDWACC_DISP_WORK* pWork)
     GFL_BG_LoadScreenReq( frame );
   }
   {
-    int frame = GFL_BG_FRAME1_S;
+    int frame = frameno+1;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
       1, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
     GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
     GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_SetVisible( frame, VISIBLE_ON );
     GFL_BG_LoadScreenReq( frame );
   }
   {
-    int frame = GFL_BG_FRAME2_S;
+    int frame = frameno+2;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    //GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = frameno+3;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x18000, 0x8000,GX_BG_EXTPLTT_01,
+      3, 0, 0, FALSE
+      };
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+
+  frameno=GFL_BG_FRAME0_S;
+  {
+    int frame = frameno;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
       2, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = frameno+1;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x08000, 0x8000,GX_BG_EXTPLTT_01,
+      1, 0, 0, FALSE
+      };
+
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
 
     GFL_BG_SetVisible( frame, VISIBLE_ON );
     GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
@@ -357,15 +376,33 @@ static void settingSubBgControl(PDWACC_DISP_WORK* pWork)
     GFL_BG_LoadScreenReq( frame );
   }
   {
-    int frame = GFL_BG_FRAME3_S;
+    int frame = frameno+2;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
+      };
+
+    GFL_BG_SetBGControl(
+      frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = frameno+3;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x18000, 0x8000,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
+      3, 0, 0, FALSE
       };
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
 }
@@ -388,7 +425,7 @@ static void	_VBlank( GFL_TCB *tcb, void *work )
 
 static void dispInit(PDWACC_DISP_WORK* pWork)
 {
-#if 1
+#if 0
 	{
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GSYNC, pWork->heapID );
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gsync_gsync_bg_NCLR,
@@ -419,6 +456,32 @@ static void dispInit(PDWACC_DISP_WORK* pWork)
     GFL_ARC_CloseDataHandle(p_handle);
 	}
 #endif
+  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFI_LOGIN, pWork->heapID );
+
+  //‰º‰æ–Ê
+  GFL_ARCHDL_UTIL_TransVramPalette( p_handle , NARC_wifi_login_connect_win_NCLR , 
+      PALTYPE_SUB_BG , 0 , 0 , pWork->heapID );
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle , NARC_wifi_login_connect_win_NCGR ,
+      GFL_BG_FRAME0_S , 0 , 0, FALSE , pWork->heapID );
+  GFL_ARCHDL_UTIL_TransVramScreen( p_handle , NARC_wifi_login_connect_win2_d_NSCR , 
+      GFL_BG_FRAME0_S ,  0 , 0, FALSE , pWork->heapID );
+
+  //ã‰æ–Ê
+  GFL_ARCHDL_UTIL_TransVramPalette( p_handle , NARC_wifi_login_connect_win_NCLR , 
+      PALTYPE_MAIN_BG , 0 , 0 , pWork->heapID );
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle , NARC_wifi_login_connect_win_NCGR ,
+      GFL_BG_FRAME0_M , 0 , 0, FALSE , pWork->heapID );
+  GFL_ARCHDL_UTIL_TransVramScreen( p_handle , NARC_wifi_login_connect_win1_u_NSCR , 
+      GFL_BG_FRAME0_M,  0 , 0, FALSE , pWork->heapID );
+  //ã‰æ–Ê
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle , NARC_wifi_login_connect_win_NCGR ,
+      GFL_BG_FRAME3_M , 0 , 0, FALSE , pWork->heapID );
+  GFL_ARCHDL_UTIL_TransVramScreen( p_handle , NARC_wifi_login_connect_win2_u_NSCR , 
+      GFL_BG_FRAME3_M ,  0 , 0, FALSE , pWork->heapID );
+
+  ConnectBGPalAnm_InitBg( &pWork->cbp , p_handle , NARC_wifi_login_connect_ani_NCLR , pWork->heapID , GFL_BG_FRAME0_M , GFL_BG_FRAME3_M );
+
+  GFL_ARC_CloseDataHandle( p_handle );
   
 }
 
@@ -651,26 +714,6 @@ void PDWACC_DISP_PokemonIconJump(PDWACC_DISP_WORK* pWork)
   GFL_CLACT_WK_SetAnmSeq( pWork->curIcon[CELL_CUR_POKE_PLAYER] , 1 );
   GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_CUR_POKE_PLAYER] , TRUE );
 }
-
-
-
-
-static void dreamSmoke_HBlank( GFL_TCB* p_tcb, void* p_work )
-{
-	PDWACC_DISP_WORK* pWork = p_work;
-	int v_c;
-
-  v_c = GX_GetVCount();
-
-  v_c += (pWork->scroll_index + 1);
-  v_c %= 192;
-
-	if( GX_IsHBlank() ){
-		G2_SetBG3Offset( pWork->scroll[v_c], 0 );
-	}
-}
-
-
 
 
 

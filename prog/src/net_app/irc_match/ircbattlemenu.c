@@ -35,7 +35,7 @@
 #include "msg/msg_ircbattle.h"
 #include "../../field/event_ircbattle.h"
 #include "ircbattle.naix"
-#include "ircbattlecommon.h"
+//#include "ircbattlecommon.h"
 #include "cg_comm.naix"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 #include "ir_ani_NANR_LBLDEFS.h"
@@ -182,7 +182,7 @@ typedef BOOL (TouchFunc)(int no, IRC_BATTLE_MENU* pState);
 
 
 struct _IRC_BATTLE_MENU {
-  IRC_BG_WORK aIrcBgWork;
+//  IRC_BG_WORK aIrcBgWork;
   StateFunc* state;      ///< ハンドルのプログラム状態
   TouchFunc* touch;
   int selectType;   // 接続タイプ
@@ -663,6 +663,8 @@ static void _modeInit(IRC_BATTLE_MENU* pWork)
       GFL_HEAP_FreeMemory(pData);
     }
 
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_cg_comm_background_NCLR,
+                                      PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
 
     // サブ画面BG0キャラ転送
     pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_cg_comm_comm_bg_NCGR,
@@ -1372,18 +1374,19 @@ static void _CLACT_SetResource(IRC_BATTLE_MENU* pWork)
 {
   int i=0;
   {
-  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_IRCBATTLE, pWork->heapID );
-
-  pWork->cellRes[CHAR_DS] =
-    GFL_CLGRP_CGR_Register( p_handle , NARC_ircbattle_ir_demo_ani_NCGR ,
-                            FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
-  pWork->cellRes[PLT_DS] =
-    GFL_CLGRP_PLTT_RegisterEx(
-      p_handle ,NARC_ircbattle_ir_demo_obj_NCLR , CLSYS_DRAW_MAIN, 0, 0, 3, pWork->heapID  );
-  pWork->cellRes[ANM_DS] =
-    GFL_CLGRP_CELLANIM_Register(
-      p_handle , NARC_ircbattle_ir_ani_NCER, NARC_ircbattle_ir_ani_NANR , pWork->heapID  );
-  GFL_ARC_CloseDataHandle(p_handle);
+/*   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_IRCBATTLE, pWork->heapID );
+ * 
+ *   pWork->cellRes[CHAR_DS] =
+ *     GFL_CLGRP_CGR_Register( p_handle , NARC_ircbattle_ir_demo_ani_NCGR ,
+ *                             FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
+ *   pWork->cellRes[PLT_DS] =
+ *     GFL_CLGRP_PLTT_RegisterEx(
+ *       p_handle ,NARC_ircbattle_ir_demo_obj_NCLR , CLSYS_DRAW_MAIN, 0, 0, 3, pWork->heapID  );
+ *   pWork->cellRes[ANM_DS] =
+ *     GFL_CLGRP_CELLANIM_Register(
+ *       p_handle , NARC_ircbattle_ir_ani_NCER, NARC_ircbattle_ir_ani_NANR , pWork->heapID  );
+ *   GFL_ARC_CloseDataHandle(p_handle);
+ */
   }
 
   {
@@ -1542,24 +1545,25 @@ static void _CreateButtonObj4(IRC_BATTLE_MENU* pWork)
 
 static void _CLACT_SetAnim(IRC_BATTLE_MENU* pWork,int x,int y,int no,int anm)
 {  
-  if(pWork->curIcon[no]==NULL){
-    GFL_CLWK_DATA cellInitData;
-
-    cellInitData.pos_x = x;
-    cellInitData.pos_y = y;
-    cellInitData.anmseq = anm;
-    cellInitData.softpri = 0;
-    cellInitData.bgpri = 1;
-    pWork->curIcon[no] = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                         pWork->cellRes[CHAR_DS],
-                                                         pWork->cellRes[PLT_DS],
-                                                         pWork->cellRes[ANM_DS],
-                                                         &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[no] , TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[no], TRUE );
-    GFL_CLACT_WK_SetAffineParam(pWork->curIcon[no], CLSYS_AFFINETYPE_DOUBLE);
-
-  }
+/*   if(pWork->curIcon[no]==NULL){
+ *     GFL_CLWK_DATA cellInitData;
+ * 
+ *     cellInitData.pos_x = x;
+ *     cellInitData.pos_y = y;
+ *     cellInitData.anmseq = anm;
+ *     cellInitData.softpri = 0;
+ *     cellInitData.bgpri = 1;
+ *     pWork->curIcon[no] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+ *                                                          pWork->cellRes[CHAR_DS],
+ *                                                          pWork->cellRes[PLT_DS],
+ *                                                          pWork->cellRes[ANM_DS],
+ *                                                          &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
+ *     GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[no] , TRUE );
+ *     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[no], TRUE );
+ *     GFL_CLACT_WK_SetAffineParam(pWork->curIcon[no], CLSYS_AFFINETYPE_DOUBLE);
+ * 
+ *   }
+ */
 }
 
 //----------------------------------------------------------------------------
@@ -1922,9 +1926,9 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
     G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0 , 15, 4 );
 
     
-    pWork->aIrcBgWork.heapID = pWork->heapID;
+//    pWork->aIrcBgWork.heapID = pWork->heapID;
 
-    ircBGAnimInit(&pWork->aIrcBgWork);
+//    ircBGAnimInit(&pWork->aIrcBgWork);
     
 
   }
@@ -1949,7 +1953,7 @@ static GFL_PROC_RESULT IrcBattleMenuProcMain( GFL_PROC * proc, int * seq, void *
   GFL_PROC_RESULT retCode = GFL_PROC_RES_FINISH;
   StateFunc* state = pWork->state;
 
-  ircBGAnimMain(&pWork->aIrcBgWork);
+//  ircBGAnimMain(&pWork->aIrcBgWork);
 
   if(state != NULL){
     state(pWork);
