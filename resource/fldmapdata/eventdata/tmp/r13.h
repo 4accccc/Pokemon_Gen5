@@ -29,6 +29,11 @@
 #define TR_FISHING_09                     15
 #define TR_FISHING_10                     16
 #define R13_TREASURE_01                   17
+#define R13_FLD_ITEM_01                   18
+#define R13_FLD_ITEM_03                   19
+#define R13_FLD_ITEM_02                   20
+#define R13_FLD_ITEM_04                   21
+#define R13_FLD_ITEM_05                   22
 
 #endif //ZONE_R13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
