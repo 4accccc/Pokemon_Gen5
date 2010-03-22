@@ -170,12 +170,6 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_pos_c09_firstvisit
 	
-	//========================================//
-	//初回会話フ1ラグセット
-	_FLAG_SET( FE_C09_GUIDE_TALK )
-	
-	//========================================//
-
 	//ベテラン（中央）：！マーク
 	_OBJ_ANIME( C09_VETERANM_01, anm_gyoe )
 	_OBJ_ANIME_WAIT()
@@ -188,10 +182,16 @@ EVENT_START	ev_pos_c09_firstvisit
 	ENDIF
 	
 	//ポケモンリーグの説明→準備はいいか？
-	IF FLAG_OFF( FH_01 ) THEN
+	IF FLAG_OFF( FE_C09_GUIDE_TALK ) THEN
 		//初回
 		_BALLOONWIN_OBJMSG_POS( msg_c09_veteranm1_01, C09_VETERANM_01, POS_UR )
+		
+		//========================================//
+		//初回会話フ1ラグセット
+		_FLAG_SET( FE_C09_GUIDE_TALK )
+		//========================================//
 	
+	ELSE
 		//一度「いいえ」を選択して再度ＰＯＳをふんだ場合
 		_BALLOONWIN_OBJMSG_POS( msg_c09_veteranm1_02, C09_VETERANM_01, POS_UR )
 	
