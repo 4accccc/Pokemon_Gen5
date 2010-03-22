@@ -15,6 +15,9 @@
 #define TR_SCHOOLG_06                      3
 #define TR_BREEDERM_03                     4
 #define TR_BREEDERW_03                     5
+#define R12_FLD_ITEM_01                    6
+#define R12_FLD_ITEM_02                    7
+#define R12_FLD_ITEM_03                    8
 
 #endif //ZONE_R12_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r12.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
