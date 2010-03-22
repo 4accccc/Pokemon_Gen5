@@ -177,7 +177,7 @@ ZUKAN_INFO_STEP;
 #define ZUKAN_INFO_Y_OFFSET      (-8*3)      // 図鑑の説明画面として下のディスプレイ(メイン)に表示するとき
 
 // 外国語図鑑
-#define FOREIGN_MONSNO_MAX  (493)  // 0はポケモンではないがデータあり、1がフシギダネ、493がまで存在する、494から存在しない
+#define FOREIGN_MONSNO_MAX  (493)  // 0はポケモンではないがデータあり、1がフシギダネ、493がアルセウスまで存在する、イッシュから追加された494から存在しない
 
 static const u16 narc_msg_explain[ZUKAN_INFO_LANG_MAX] =
 {
@@ -199,9 +199,13 @@ struct _ZUKAN_INFO_WORK
 {
   // 引数
   HEAPID                  heap_id;         // 他のところのを覚えているだけで生成や破棄はしない。
+  BOOL                    zenkoku_flag;
   BOOL                    get_flag;
   u16                     monsno;
-  u16                     formno;
+  u16                     formno;          // 0<=formno<POKETOOL_GetPersonalParam( monsno, 0, POKEPER_ID_form_max )
+  u16                     sex;             // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWN
+  u16                     rare;            // 0(レアじゃない)か1(レア)  // PP_CheckRare( pp ) 
+  u32                     personal_rnd;    // ?  // personal_rndはmonsno==MONSNO_PATTIIRUのときは必須
   ZUKAN_INFO_LAUNCH       launch;
   ZUKAN_INFO_DISP         disp;
   u8                      bg_priority;
@@ -233,9 +237,6 @@ struct _ZUKAN_INFO_WORK
 
   // WND
   int wnd_down_y;  // ウィンドウの右下Y座標
-
-  // ポケモン
-  u32     monsno_msg;    // データの揃っていないポケモンのときは、こちらのポケモンで代用する
 
   //MSG系
   GFL_BMPWIN*  bmpwin[ZUKAN_INFO_MSG_MAX];
@@ -318,35 +319,48 @@ static void Zukan_Info_UpdatePaletteAnime( ZUKAN_INFO_WORK* work );
 /**
  *  @brief     初期化処理
  *
- *  @param[in] a_heap_id     ヒープID
- *  @param[in] a_pp          ポケモンパラメータ
- *  @param[in] a_get_flag    ゲットしていたらTRUE
- *  @param[in] a_launch      起動方法
- *  @param[in] a_disp        表示面
- *  @param[in] a_bg_priority 0か1(0のときは012,1のときは123というプライオリティになる)
- *  @param[in] a_clunit      セルアクターユニット
- *  @param[in] a_font        フォント
- *  @param[in] a_print_que   プリントキュー
+ *  @param[in] a_heap_id         ヒープID
+ *  @param[in] a_pp              ポケモンパラメータ
+ *  @param[in] a_zenkoku_flag    全国図鑑になっていたらTRUE
+ *  @param[in] a_get_flag        ゲットしていたらTRUE
+ *  @param[in] a_launch          起動方法
+ *  @param[in] a_disp            表示面
+ *  @param[in] a_bg_priority     0か1(0のときは012,1のときは123というプライオリティになる)
+ *  @param[in] a_clunit          セルアクターユニット
+ *  @param[in] a_font            フォント
+ *  @param[in] a_print_que       プリントキュー
  *
  *  @retval    生成したワーク
  */
 //-----------------------------------------------------------------------------
-ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id,
-                                  const POKEMON_PARAM* a_pp,
-                                  BOOL a_get_flag,
-                                  ZUKAN_INFO_LAUNCH a_launch,
-                                  ZUKAN_INFO_DISP a_disp, u8 a_bg_priority,
-                                  GFL_CLUNIT* a_clunit,
-                                  GFL_FONT* a_font,
-                                  PRINT_QUE* a_print_que )
+ZUKAN_INFO_WORK* ZUKAN_INFO_Init(
+                     HEAPID                   a_heap_id,
+                     const POKEMON_PARAM*     a_pp,
+                     BOOL                     a_zenkoku_flag,
+                     BOOL                     a_get_flag,
+                     ZUKAN_INFO_LAUNCH        a_launch,
+                     ZUKAN_INFO_DISP          a_disp,
+                     u8                       a_bg_priority,
+                     GFL_CLUNIT*              a_clunit,
+                     GFL_FONT*                a_font,
+                     PRINT_QUE*               a_print_que )
 {
-  u16 monsno = (u16)PP_Get( a_pp, ID_PARA_monsno, NULL );
-  u16 formno = (u16)PP_Get( a_pp, ID_PARA_form_no, NULL );
- 
+  //BOOL fast         = PP_FastModeOn( a_pp );  // 高速化モードはconstはずさないといけないので、止めた
+  u16  monsno       = (u16)PP_Get( a_pp, ID_PARA_monsno, NULL );
+  u16  formno       = (u16)PP_Get( a_pp, ID_PARA_form_no, NULL );
+  u16  sex          = PP_GetSex( a_pp );
+  u16  rare         = PP_CheckRare( a_pp );
+  u32  personal_rnd = (u16)PP_Get( a_pp, ID_PARA_personal_rnd, NULL );
+  //if( fast ) PP_FastModeOff( a_pp, fast );
+
   return ZUKAN_INFO_InitFromMonsno(
              a_heap_id,
              monsno,
              formno,
+             sex,
+             rare,
+             personal_rnd,
+             a_zenkoku_flag,
              a_get_flag,
              a_launch,
              a_disp,
@@ -359,7 +373,11 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id,
 ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
                             HEAPID                 a_heap_id,
                             u16                    a_monsno,
-                            u16                    a_formno,
+                            u16                    a_formno,        // 0<=formno<POKETOOL_GetPersonalParam( monsno, 0, POKEPER_ID_form_max )
+                            u16                    a_sex,           // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWN
+                            u16                    a_rare,          // 0(レアじゃない)か1(レア)  // PP_CheckRare( pp ) 
+                            u32                    a_personal_rnd,  // ?  // personal_rndはmonsno==MONSNO_PATTIIRUのときは必須
+                            BOOL                   a_zenkoku_flag,
                             BOOL                   a_get_flag,
                             ZUKAN_INFO_LAUNCH      a_launch,
                             ZUKAN_INFO_DISP        a_disp,
@@ -379,16 +397,20 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
 
   // 引数
   {
-    work->heap_id = a_heap_id;
-    work->monsno = a_monsno;
-    work->formno = a_formno;
-    work->get_flag = a_get_flag;
-    work->launch = a_launch;
-    work->disp = a_disp;
-    work->bg_priority = a_bg_priority;
-    work->clunit = a_clunit;
-    work->font = a_font;
-    work->print_que = a_print_que;
+    work->heap_id             = a_heap_id;
+    work->monsno              = a_monsno;
+    work->formno              = a_formno;
+    work->sex                 = a_sex;   
+    work->rare                = a_rare; 
+    work->personal_rnd        = a_personal_rnd;
+    work->zenkoku_flag        = a_zenkoku_flag;
+    work->get_flag            = a_get_flag;
+    work->launch              = a_launch;
+    work->disp                = a_disp;
+    work->bg_priority         = a_bg_priority;
+    work->clunit              = a_clunit;
+    work->font                = a_font;
+    work->print_que           = a_print_que;
   }
 
   // 初期化
@@ -415,16 +437,6 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
     work->fore_bg_update = ZUKAN_INFO_BG_UPDATE_BIT_RESET;
     work->back_bg_update = ZUKAN_INFO_BG_UPDATE_BIT_RESET;
  
-    // ポケモン
-    if( work->monsno > 493 )
-    {
-      work->monsno_msg = 1;
-    }
-    else
-    {
-      work->monsno_msg = work->monsno;
-    }
-
     // ステップやタイミング
     // 起動方法
     switch( work->launch )
@@ -839,8 +851,14 @@ void ZUKAN_INFO_Start( ZUKAN_INFO_WORK* work )
 //-------------------------------------
 /// ポケモンを変更する
 //=====================================
-void ZUKAN_INFO_ChangePoke( ZUKAN_INFO_WORK* work,
-                u16 monsno, u16 formno, BOOL get_flag )
+void ZUKAN_INFO_ChangePoke(
+                ZUKAN_INFO_WORK* work,
+                u16              monsno,
+                u16              formno,
+                u16              sex,
+                u16              rare,
+                u32              personal_rnd,
+                BOOL             get_flag )
 {
   // 前のを削除する
   // ポケモン2D
@@ -850,17 +868,12 @@ void ZUKAN_INFO_ChangePoke( ZUKAN_INFO_WORK* work,
   ZUKAN_INFO_DeleteOthers( work );
 
   // 次のを生成する
-  work->monsno = monsno;
-  if( work->monsno > 493 )
-  {
-    work->monsno_msg = 1;
-  }
-  else
-  {
-    work->monsno_msg = work->monsno;
-  }
-  work->formno = formno;
-  work->get_flag = get_flag;
+  work->monsno         = monsno;
+  work->formno         = formno;
+  work->sex            = sex;   
+  work->rare           = rare; 
+  work->personal_rnd   = personal_rnd;
+  work->get_flag       = get_flag;
 
   // ポケモン2D以外
   Zukan_Info_CreateOthers( work );
@@ -904,11 +917,17 @@ void ZUKAN_INFO_ChangeLang( ZUKAN_INFO_WORK* work,
 //-------------------------------------
 /// ポケモンと言語を変更する
 //=====================================
-void ZUKAN_INFO_ChangePokeAndLang( ZUKAN_INFO_WORK* work,
-                u16 monsno, u16 formno, BOOL get_flag,
-                ZUKAN_INFO_LANG lang )
+void ZUKAN_INFO_ChangePokeAndLang(
+                ZUKAN_INFO_WORK* work,
+                u16              monsno,
+                u16              formno,
+                u16              sex,
+                u16              rare,
+                u32              personal_rnd,
+                BOOL             get_flag,
+                ZUKAN_INFO_LANG  lang )
 {
-  ZUKAN_INFO_ChangePoke( work, monsno, formno, get_flag );
+  ZUKAN_INFO_ChangePoke( work, monsno, formno, sex, rare, personal_rnd, get_flag );
   ZUKAN_INFO_ChangeLang( work, lang );
 }
 
@@ -1444,6 +1463,8 @@ static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno )
   UI_EASY_CLWK_RES_PARAM prm;
   CLSYS_DRAW_TYPE draw_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
 
+  if( monsno > MONSNO_ARUSEUSU ) monsno = 1;  // 開発中だけの処理
+
   prm.draw_type = draw_type;
   prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NCGR;  // NCLR非圧縮、NCGR圧縮、NCER非圧縮、NANR非圧縮
   prm.arc_id    = PokeFootArcFileGet();
@@ -1500,7 +1521,7 @@ static void Zukan_Info_CreateOthers( ZUKAN_INFO_WORK* work )
 
   // ポケモンの足跡
   {
-    Zukan_Info_CreatePokefoot( work, work->monsno_msg );
+    Zukan_Info_CreatePokefoot( work, work->monsno );
   }
 }
 

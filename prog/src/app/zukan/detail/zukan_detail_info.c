@@ -171,6 +171,17 @@ static void Zukan_Detail_Info_MainLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZU
 static void Zukan_Detail_Info_SetupLangButtonDrawEnable( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn,
                 BOOL e, BOOL fra, BOOL ger, BOOL ita, BOOL spa, BOOL kor );
 
+// 現在表示するポケモンの情報を得る
+static void Zukan_Detail_Info_GetCurrPokeInfo(
+                ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                u16*  a_monsno,
+                u16*  a_formno,
+                u16*  a_sex,
+                u16*  a_rare,
+                u32*  a_personal_rnd,
+                BOOL* a_b_get_flag,
+                BOOL* a_lang_exist );  // a_lang_exist[ZUKAN_INFO_LANG_MAX]
+
 
 //=============================================================================
 /**
@@ -347,18 +358,39 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
       {
         ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( ZKNDTL_COMMON_GetGamedata(cmn) );
         GFL_CLUNIT*     clunit = ZUKAN_DETAIL_GRAPHIC_GetClunit( ZKNDTL_COMMON_GetGraphic(cmn) );
-        u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
-        u16 formno = 0;
-        BOOL b_get = ZUKANSAVE_GetPokeGetFlag( zkn_sv, monsno );
-        BOOL lang_exist[ZUKAN_INFO_LANG_MAX] = { 1, 1, 1, 0, 1, 1 };
-  
+        
+        BOOL b_zenkoku_flag = ZUKANSAVE_GetZukanMode( zkn_sv );  // TRUEのとき全国図鑑
+        
+        u16  monsno;
+        u16  formno;
+        u16  sex;
+        u16  rare;
+        u32  personal_rnd;
+        BOOL b_get_flag;
+        BOOL lang_exist[ZUKAN_INFO_LANG_MAX];
+
+        // 現在表示するポケモンの情報を得る
+        Zukan_Detail_Info_GetCurrPokeInfo(
+                param, work, cmn,
+                &monsno,
+                &formno,
+                &sex,
+                &rare,
+                &personal_rnd,
+                &b_get_flag,
+                lang_exist );
+        
         // 図鑑情報
         {
           work->info_wk_m = ZUKAN_INFO_InitFromMonsno(
                         param->heap_id,
                         monsno,
                         formno,
-                        b_get,
+                        sex,
+                        rare,
+                        personal_rnd,
+                        b_zenkoku_flag,
+                        b_get_flag,
                         ZUKAN_INFO_LAUNCH_LIST,
                         ZUKAN_INFO_DISP_M,
                         1,
@@ -370,7 +402,11 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
                         param->heap_id,
                         monsno,
                         formno,
-                        b_get,
+                        sex,
+                        rare,
+                        personal_rnd,
+                        b_zenkoku_flag,
+                        b_get_flag,
                         ZUKAN_INFO_LAUNCH_LIST,
                         ZUKAN_INFO_DISP_S,
                         1,
@@ -631,55 +667,29 @@ static void Zukan_Detail_Info_TouchLangButton( ZUKAN_DETAIL_INFO_PARAM* param, Z
 //=====================================
 static void Zukan_Detail_Info_ChangePoke( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
-  ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( ZKNDTL_COMMON_GetGamedata(cmn) );
-  u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
-
-  u32  formno;
-  u32  sex;
-  BOOL rare;
-  u32  personal_rnd = 0;
-
-  BOOL b_get;
+  u16  monsno;
+  u16  formno;
+  u16  sex;
+  u16  rare;
+  u32  personal_rnd;
+  BOOL b_get_flag;
   BOOL lang_exist[ZUKAN_INFO_LANG_MAX];
-  BOOL b_zenkoku;  // TRUEのとき全国図鑑
 
-  // 現在表示する姿
-  ZUKANSAVE_GetDrawData(  zkn_sv, monsno, &sex, &rare, &formno, param->heap_id );
-  if( monsno == MONSNO_PATTIIRU )  // personal_rndはmons_no==MONSNO_PATTIIRUのときのみ使用する
-  {
-    personal_rnd = ZUKANSAVE_GetPokeRandomFlag( zkn_sv, ZUKANSAVE_RANDOM_PACHI );
-  }
-
-  // このポケモンの情報
-  b_get = ZUKANSAVE_GetPokeGetFlag( zkn_sv, monsno );
-
-  {
-    // カントリーコードはどこに定義されている？
-    lang_exist[ZUKAN_INFO_LANG_E]   = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 1 );
-    lang_exist[ZUKAN_INFO_LANG_FRA] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 2 );
-    lang_exist[ZUKAN_INFO_LANG_GER] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 3 );
-    lang_exist[ZUKAN_INFO_LANG_ITA] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 4 );
-    lang_exist[ZUKAN_INFO_LANG_SPA] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 5 );
-    lang_exist[ZUKAN_INFO_LANG_KOR] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 7 );
-  }
-
-  b_zenkoku = ZUKANSAVE_GetZukanMode( zkn_sv );
-  
-#if 1
-  // 全言語チェック用
-  {
-    u8 i;
-    for( i=0; i<ZUKAN_INFO_LANG_MAX; i++ )
-    {
-      lang_exist[i] = TRUE;
-    }
-  }
-#endif
+  // 現在表示するポケモンの情報を得る
+  Zukan_Detail_Info_GetCurrPokeInfo(
+                param, work, cmn,
+                &monsno,
+                &formno,
+                &sex,
+                &rare,
+                &personal_rnd,
+                &b_get_flag,
+                lang_exist );
 
   // 図鑑情報
   {
     BOOL b_sub_off = TRUE;
-    ZUKAN_INFO_ChangePoke( work->info_wk_m, monsno, formno, b_get );
+    ZUKAN_INFO_ChangePoke( work->info_wk_m, monsno, formno, sex, rare, personal_rnd, b_get_flag );
 
     if( work->lang != ZUKAN_INFO_LANG_NONE )
     {
@@ -695,15 +705,14 @@ static void Zukan_Detail_Info_ChangePoke( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
 
     if( b_sub_off )
     {
-      ZUKAN_INFO_ChangePoke( work->info_wk_s, monsno, formno, b_get );
+      ZUKAN_INFO_ChangePoke( work->info_wk_s, monsno, formno, sex, rare, personal_rnd, b_get_flag );
 
       // 直ちに黒にする
       ZKNDTL_COMMON_FadeSetBlackImmediately( ZKNDTL_COMMON_FADE_DISP_S, work->fade_wk_s );
     }
     else
     {
-      ZUKAN_INFO_ChangePokeAndLang( work->info_wk_s, monsno, formno, b_get,
-                work->lang );
+      ZUKAN_INFO_ChangePokeAndLang( work->info_wk_s, monsno, formno, sex, rare, personal_rnd, b_get_flag, work->lang );
     }
   }
 
@@ -867,3 +876,72 @@ static void Zukan_Detail_Info_SetupLangButtonDrawEnable( ZUKAN_DETAIL_INFO_PARAM
   }
 }
 
+//-------------------------------------
+/// 現在表示するポケモンの情報を得る
+//=====================================
+static void Zukan_Detail_Info_GetCurrPokeInfo(
+                ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                u16*  a_monsno,
+                u16*  a_formno,
+                u16*  a_sex,
+                u16*  a_rare,
+                u32*  a_personal_rnd,
+                BOOL* a_b_get_flag,
+                BOOL* a_lang_exist )  // a_lang_exist[ZUKAN_INFO_LANG_MAX]
+{
+  ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( ZKNDTL_COMMON_GetGamedata(cmn) );
+
+  u16  monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
+
+  u32  formno;
+  u32  sex;
+  BOOL rare;
+  u32  personal_rnd = 0;
+
+  BOOL b_get_flag;
+  BOOL lang_exist[ZUKAN_INFO_LANG_MAX];
+
+  // 現在表示する姿
+  ZUKANSAVE_GetDrawData(  zkn_sv, monsno, &sex, &rare, &formno, param->heap_id );
+  if( monsno == MONSNO_PATTIIRU )  // personal_rndはmonsno==MONSNO_PATTIIRUのときのみ使用する
+  {
+    personal_rnd = ZUKANSAVE_GetPokeRandomFlag( zkn_sv, ZUKANSAVE_RANDOM_PACHI );
+  }
+
+  b_get_flag = ZUKANSAVE_GetPokeGetFlag( zkn_sv, monsno );
+
+  {
+    // カントリーコードはどこに定義されている？
+    lang_exist[ZUKAN_INFO_LANG_E]   = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 1 );
+    lang_exist[ZUKAN_INFO_LANG_FRA] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 2 );
+    lang_exist[ZUKAN_INFO_LANG_GER] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 3 );
+    lang_exist[ZUKAN_INFO_LANG_ITA] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 4 );
+    lang_exist[ZUKAN_INFO_LANG_SPA] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 5 );
+    lang_exist[ZUKAN_INFO_LANG_KOR] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 7 );
+  }
+ 
+#if 1
+  // 全言語チェック用
+  {
+    u8 i;
+    for( i=0; i<ZUKAN_INFO_LANG_MAX; i++ )
+    {
+      lang_exist[i] = TRUE;
+    }
+  }
+#endif
+
+  *a_monsno        = monsno;
+  *a_formno        = (u16)formno;
+  *a_sex           = (u16)sex;
+  *a_rare          = (u16)rare;
+  *a_personal_rnd  = personal_rnd;
+  *a_b_get_flag      = b_get_flag;
+  {
+    u8 i;
+    for( i=0; i<ZUKAN_INFO_LANG_MAX; i++ )
+    {
+      a_lang_exist[i] = lang_exist[i];
+    }
+  }
+}

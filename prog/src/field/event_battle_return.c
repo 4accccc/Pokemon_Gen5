@@ -177,6 +177,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
       // •ßŠl‚µ‚½
       if( param->btlResult->result == BTL_RESULT_CAPTURE )
       {
+        BOOL zenkoku_flag = FALSE;  // ‘S‘}ŠÓ‚Ì‚Æ‚«TRUE
         BOOL get_first = FALSE;  // ‰•ßŠl‚Ì‚Æ‚«TRUE
 
         wk->pp = PokeParty_GetMemberPointer(
@@ -221,6 +222,9 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
               wk->heapID );
         }
 
+        // ‘S‘}ŠÓ‚©”Û‚©
+        zenkoku_flag = ZUKANSAVE_GetZukanMode( zukan_savedata );  // TRUE‚Ì‚Æ‚«‘S‘}ŠÓ
+
         // }ŠÓ“o˜^‰æ–Ê or ƒjƒbƒNƒl[ƒ€–½–¼Šm”F‰æ–Ê ‚Ö
         GFL_OVERLAY_Load( FS_OVERLAY_ID(zukan_toroku) );
         get_first = !ZUKANSAVE_GetPokeGetFlag( zukan_savedata, (u16)( PP_Get(wk->pp, ID_PARA_monsno, NULL) ) );
@@ -231,11 +235,11 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         }
         if( get_first )
         {
-          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_TOROKU, wk->pp, wk->box_strbuf, boxman, wk->box_tray );
+          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_TOROKU, wk->pp, zenkoku_flag, wk->box_strbuf, boxman, wk->box_tray );
         }
         else
         {
-          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_NICKNAME, wk->pp, wk->box_strbuf, boxman, wk->box_tray );
+          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_NICKNAME, wk->pp, zenkoku_flag, wk->box_strbuf, boxman, wk->box_tray );
         }
         // ƒ[ƒJƒ‹PROCŒÄ‚Ño‚µ
         GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ZUKAN_TOROKU_ProcData, &(wk->zukan_toroku_param) );

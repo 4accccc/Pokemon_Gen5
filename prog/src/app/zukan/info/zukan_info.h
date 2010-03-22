@@ -84,19 +84,26 @@ typedef struct _ZUKAN_INFO_WORK ZUKAN_INFO_WORK;
 //-------------------------------------
 /// 初期化処理
 //=====================================
-extern ZUKAN_INFO_WORK* ZUKAN_INFO_Init( HEAPID a_heap_id,
-                                         const POKEMON_PARAM* a_pp,
-                                         BOOL a_get_flag,
-                                         ZUKAN_INFO_LAUNCH a_launch,
-                                         ZUKAN_INFO_DISP a_disp, u8 a_bg_priority,
-                                         GFL_CLUNIT* a_clunit,
-                                         GFL_FONT* a_font,
-                                         PRINT_QUE* a_print_que );
+extern ZUKAN_INFO_WORK* ZUKAN_INFO_Init(
+                            HEAPID                  a_heap_id,
+                            const POKEMON_PARAM*    a_pp,
+                            BOOL                    a_zenkoku_flag,
+                            BOOL                    a_get_flag,
+                            ZUKAN_INFO_LAUNCH       a_launch,
+                            ZUKAN_INFO_DISP         a_disp,
+                            u8                      a_bg_priority,
+                            GFL_CLUNIT*             a_clunit,
+                            GFL_FONT*               a_font,
+                            PRINT_QUE*              a_print_que );
 
 extern ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
                             HEAPID                 a_heap_id,
                             u16                    a_monsno,
                             u16                    a_formno,
+                            u16                    a_sex,
+                            u16                    a_rare,
+                            u32                    a_personal_rnd,
+                            BOOL                   a_zenkoku_flag,
                             BOOL                   a_get_flag,
                             ZUKAN_INFO_LAUNCH      a_launch,
                             ZUKAN_INFO_DISP        a_disp,
@@ -149,19 +156,32 @@ extern void ZUKAN_INFO_Start( ZUKAN_INFO_WORK* work );
 //-------------------------------------
 /// ポケモンを変更する
 //=====================================
-extern void ZUKAN_INFO_ChangePoke( ZUKAN_INFO_WORK* work,
-                u16 monsno, u16 formno, BOOL get_flag );
+extern void ZUKAN_INFO_ChangePoke(
+                ZUKAN_INFO_WORK* work,
+                u16              monsno,
+                u16              formno,
+                u16              sex,
+                u16              rare,
+                u32              personal_rnd,
+                BOOL             get_flag );
 
 //-------------------------------------
 /// 言語を変更する
 //=====================================
-extern void ZUKAN_INFO_ChangeLang( ZUKAN_INFO_WORK* work,
+extern void ZUKAN_INFO_ChangeLang(
+                ZUKAN_INFO_WORK* work,
                 ZUKAN_INFO_LANG lang );
 
 //-------------------------------------
 /// ポケモンと言語を変更する
 //=====================================
-extern void ZUKAN_INFO_ChangePokeAndLang( ZUKAN_INFO_WORK* work,
-                u16 monsno, u16 formno, BOOL get_flag,
-                ZUKAN_INFO_LANG lang );
+extern void ZUKAN_INFO_ChangePokeAndLang(
+                ZUKAN_INFO_WORK* work,
+                u16              monsno,
+                u16              formno,
+                u16              sex,
+                u16              rare,
+                u32              personal_rnd,
+                BOOL             get_flag,
+                ZUKAN_INFO_LANG  lang );
 

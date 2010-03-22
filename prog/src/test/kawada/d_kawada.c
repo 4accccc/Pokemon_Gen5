@@ -604,6 +604,7 @@ static void ZukanTorokuInit( KAWADA_MAIN_WORK* wk )
         wk->heapID,
         ZUKAN_TOROKU_LAUNCH_TOROKU,
         wk->pp,
+        FALSE,
         NULL,
         NULL,
         0 );
