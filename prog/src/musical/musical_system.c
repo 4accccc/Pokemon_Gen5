@@ -130,7 +130,7 @@ const BOOL  MUSICAL_SYSTEM_CheckEntryMusicalPokeNo( const u16 mons_no )
     }
     i++;
   }
-  return TRUE;    //仮 FIXME
+  //return TRUE;    //仮 FIXME
   return FALSE;
 }
 
@@ -311,373 +311,79 @@ void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , SAVE
   ARI_TPrintf("MusicalSystem LoadMidiData[%d][%d][%d].\n",pMidiSizeHeader->seqSize,pMidiSizeHeader->bankSize,pMidiSizeHeader->waveSize);
 }
 
-#pragma mark [>proc 
-/*
-static GFL_PROC_RESULT MusicalProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
+#if PM_DEBUG
+const BOOL MUSICAL_SAVE_CreateDummyData( MUSICAL_SHOT_DATA* shotData , const u16 monsNo , const HEAPID heapId )
 {
-  MUSICAL_INIT_WORK *initWork = pwk;
-  MUSICAL_PROC_WORK *work;
-  
-  GFL_OVERLAY_Load(FS_OVERLAY_ID(musical));
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STRM|HEAPDIR_MASK, 0x80000 );
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_PROC|HEAPDIR_MASK, 0x8000 );
+  u8 i;
+  RTCDate date;
+  POKEMON_PERSONAL_DATA *perData;
 
-  work = GFL_PROC_AllocWork( proc, sizeof(MUSICAL_PROC_WORK), HEAPID_MUSICAL_PROC );
-  work->musPoke = MUSICAL_SYSTEM_InitMusPoke( initWork->pokePara , HEAPID_MUSICAL_PROC );
-  work->dupInitWork = NULL;
-  work->actInitWork = NULL;
-  work->distData = MUSICAL_SYSTEM_InitDistributeData( HEAPID_MUSICAL_PROC );
+  if( MUSICAL_SYSTEM_CheckEntryMusicalPokeNo(monsNo) == FALSE )
+  {
+    return FALSE;
+  }
+  perData = POKE_PERSONAL_OpenHandle( monsNo , 0 ,heapId );
 
-  work->procSys = GFL_PROC_LOCAL_boot( HEAPID_MUSICAL_PROC );
+  GFL_RTC_GetDate( &date );
+  shotData->bgNo = 0;
+  shotData->year = date.year;
+  shotData->month = date.month;
+  shotData->day = date.day;
+  shotData->title[0] = L'ダ';
+  shotData->title[1] = L'ミ';
+  shotData->title[2] = L'ー';
+  shotData->title[3] = L'シ';
+  shotData->title[4] = L'ョ';
+  shotData->title[5] = L'ッ';
+  shotData->title[6] = L'ト';
+  shotData->title[7] = L'デ';
+  shotData->title[8] = L'ー';
+  shotData->title[9] = L'タ';
+  shotData->title[10] = GFL_STR_GetEOMCode();
+  shotData->player = 0;
   
-  if( initWork->isComm == TRUE )
-  {
-    //distDataは親子確定後に初期化する
-    work->state = MPS_INIT_LOBBY;
-    work->commWork = MUS_COMM_CreateWork( HEAPID_MUSICAL_PROC , initWork->gameComm , initWork->saveCtrl , work->distData );
-  }
-  else
-  {
-    MUSICAL_SYSTEM_LoadDistributeData( work->distData , 0 , HEAPID_MUSICAL_STRM );
-    work->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_PROC , work->distData );
-    work->state = MPS_INIT_DRESSUP;
-    work->commWork = NULL;
-  }
-  return GFL_PROC_RES_FINISH;
+  shotData->musVer = MUSICAL_VERSION;
+  shotData->pmVersion = VERSION_BLACK;
+  shotData->pmLang = LANG_JAPAN;
+  shotData->spotBit = 1;
   
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    u8 j;
+    shotData->shotPoke[i].monsno = monsNo;
+    switch( POKE_PERSONAL_GetParam(perData,POKEPER_ID_sex) )
+    {
+    case POKEPER_SEX_MALE:
+      shotData->shotPoke[i].sex = PTL_SEX_MALE;
+      break;
+    case POKEPER_SEX_FEMALE:
+      shotData->shotPoke[i].sex = PTL_SEX_FEMALE;
+      break;
+    case POKEPER_SEX_UNKNOWN:
+      shotData->shotPoke[i].sex = PTL_SEX_UNKNOWN;
+      break;
+    default:
+      shotData->shotPoke[i].sex = PTL_SEX_MALE;
+      break;
+    }
+    shotData->shotPoke[i].rare = 0;
+    shotData->shotPoke[i].form = 0;
+    shotData->shotPoke[i].trainerName[0] = L'ト';
+    shotData->shotPoke[i].trainerName[1] = L'レ';
+    shotData->shotPoke[i].trainerName[2] = L'ー';
+    shotData->shotPoke[i].trainerName[3] = L'ナ';
+    shotData->shotPoke[i].trainerName[4] = L'１'+i;
+    shotData->shotPoke[i].trainerName[5] = 0;
+    //装備箇所の初期化
+    for( j=0;j<MUSICAL_ITEM_EQUIP_MAX;j++ )
+    {
+      shotData->shotPoke[i].equip[j].itemNo = MUSICAL_ITEM_INVALID;
+      shotData->shotPoke[i].equip[j].angle = 0;
+      shotData->shotPoke[i].equip[j].equipPos = MUS_POKE_EQU_INVALID;
+    }
+  }
+  
+  POKE_PERSONAL_CloseHandle( perData );
+  return TRUE;
 }
-
-static GFL_PROC_RESULT MusicalProc_Term( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
-{
-  MUSICAL_INIT_WORK *initWork = pwk;
-  MUSICAL_PROC_WORK *work = mywk;
-  
-  if( work->commWork != NULL )
-  {
-    MUS_COMM_DeleteWork( work->commWork );
-    work->commWork = NULL;
-  }
-  
-  if( GFL_NET_IsExit() == FALSE )
-  {
-    return GFL_PROC_RES_CONTINUE;
-  }
-  
-  if( work->dupInitWork != NULL )
-  {
-    MUSICAL_DRESSUP_DeleteInitWork( work->dupInitWork );
-  }
-  if( work->actInitWork != NULL )
-  {
-    MUSICAL_STAGE_DeleteStageWork( work->actInitWork );
-  }
-  GFL_PROC_LOCAL_Exit( work->procSys );
-
-  MUSICAL_SYSTEM_TermDistributeData( work->distData );
-  GFL_HEAP_FreeMemory( work->musPoke );
-  
-  MUSICAL_PROGRAM_TermProgramData( work->progWork );
-  
-  GFL_PROC_FreeWork( proc );
-  GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STRM );
-  GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_PROC );
-  
-  if( initWork->isDebug == TRUE )
-  {
-    GFL_HEAP_FreeMemory( initWork->pokePara );
-    GFL_HEAP_FreeMemory( initWork );
-  }
-
-
-  GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical));
-  
-  return GFL_PROC_RES_FINISH;
-}
-
-static GFL_PROC_RESULT MusicalProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
-{
-  MUSICAL_INIT_WORK *initWork = pwk;
-  MUSICAL_PROC_WORK *work = mywk;
-  
-  const GFL_PROC_MAIN_STATUS isActiveProc = GFL_PROC_LOCAL_Main( work->procSys );
-  
-  switch( work->state )
-  {
-  case MPS_INIT_LOBBY:
-    GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &MUS_LOBBY_ProcData, work->commWork );
-    work->state = MPS_TERM_LOBBY;
-    break;
-    
-  case MPS_TERM_LOBBY:
-    if( isActiveProc == GFL_PROC_MAIN_NULL )
-    {
-      switch( MUS_COMM_GetMode( work->commWork ) )
-      {
-      case MCM_NONE:
-        work->state = MPS_FINISH;
-        break;
-      
-      case MCM_PARENT:  //仮
-        MUSICAL_SYSTEM_LoadDistributeData( work->distData , 0 , HEAPID_MUSICAL_STRM );
-        work->state = MPS_INIT_DRESSUP_SEND_MUSICAL_IDX;
-        break;
-
-      case MCM_CHILD:  //仮
-        work->state = MPS_WAIT_SEND_PROGRAM_DATA;
-        break;
-      }
-    }
-    break;
-    
-  case MPS_INIT_DRESSUP_SEND_MUSICAL_IDX:
-    if( MUS_COMM_Send_MusicalIndex( work->commWork ) == TRUE )
-    {
-      work->state = MPS_SEND_PROGRAM_SIZE;
-    }
-    break;
-    
-  //開始前同期データ
-  case MPS_SEND_PROGRAM_SIZE:
-    if( MUS_COMM_Send_ProgramSize( work->commWork ) == TRUE )
-    {
-      work->state = MPS_WAIT_SEND_PROGRAM_SIZE;
-    }
-    break;
-
-  case MPS_WAIT_SEND_PROGRAM_SIZE:
-    if( MUS_COMM_IsPostProgramSize( work->commWork ) == TRUE )
-    {
-      if( MUS_COMM_Send_ProgramData( work->commWork ) == TRUE )
-      {
-        work->state = MPS_WAIT_SEND_PROGRAM_DATA;
-      }
-    }
-    break;
-
-  case MPS_WAIT_SEND_PROGRAM_DATA:
-    if( MUS_COMM_IsPostProgramData( work->commWork ) == TRUE )
-    {
-      if( MUS_COMM_GetMode( work->commWork ) == MCM_PARENT )
-      {
-        if( MUS_COMM_Send_MessageSize( work->commWork ) == TRUE )
-        {
-          work->state = MPS_WAIT_SEND_MESSAGE_SIZE;
-        }
-      }
-      else
-      {
-        work->state = MPS_WAIT_SEND_MESSAGE_DATA;
-      }
-    }
-    break;
-
-  case MPS_WAIT_SEND_MESSAGE_SIZE:
-    if( MUS_COMM_IsPostMessageSize( work->commWork ) == TRUE )
-    {
-      if( MUS_COMM_Send_MessageData( work->commWork ) == TRUE )
-      {
-        work->state = MPS_WAIT_SEND_MESSAGE_DATA;
-      }
-    }
-    break;
-
-  case MPS_WAIT_SEND_MESSAGE_DATA:
-    if( MUS_COMM_IsPostMessageData( work->commWork ) == TRUE )
-    {
-      if( MUS_COMM_GetMode( work->commWork ) == MCM_PARENT )
-      {
-        if( MUS_COMM_Send_ScriptSize( work->commWork ) == TRUE )
-        {
-          work->state = MPS_WAIT_SEND_SCRIPT_SIZE;
-        }
-      }
-      else
-      {
-        work->state = MPS_WAIT_SEND_SCRIPT_DATA;
-      }
-    }
-    break;
-
-  case MPS_WAIT_SEND_SCRIPT_SIZE:
-    if( MUS_COMM_IsPostScriptSize( work->commWork ) == TRUE )
-    {
-      if( MUS_COMM_Send_ScriptData( work->commWork ) == TRUE )
-      {
-        work->state = MPS_WAIT_SEND_SCRIPT_DATA;
-      }
-    }
-    break;
-
-  case MPS_WAIT_SEND_SCRIPT_DATA:
-    if( MUS_COMM_IsPostScriptData( work->commWork ) == TRUE )
-    {
-      work->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_PROC , work->distData );
-      if( MUS_COMM_GetMode( work->commWork ) == MCM_PARENT )
-      {
-        work->state = MPS_INIT_DRESSUP_SEND_STRM;
-      }
-      else
-      {
-        work->state = MPS_INIT_DRESSUP;
-      }
-    }
-    break;
-
-  case MPS_INIT_DRESSUP_SEND_STRM:
-    MUS_COMM_Start_SendStrmData( work->commWork );
-    work->state = MPS_INIT_DRESSUP;
-    break;
-
-  case MPS_INIT_DRESSUP:
-    work->dupInitWork = MUSICAL_DRESSUP_CreateInitWork( HEAPID_MUSICAL_PROC , work->musPoke , initWork->saveCtrl );
-    work->dupInitWork->commWork = work->commWork;
-    GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &DressUp_ProcData, work->dupInitWork );
-    work->state = MPS_TERM_DRESSUP;
-    break;
-
-  case MPS_TERM_DRESSUP:
-    if( isActiveProc == GFL_PROC_MAIN_NULL )
-    {
-      if( initWork->isComm == TRUE )
-      {
-        if( MUS_COMM_SetCommGameState( work->commWork , MCGS_WAIT_DRESSUP ) == TRUE )
-        {
-          work->state = MPS_WAIT_MEMBER_DRESSUP;
-          MUS_COMM_SendTimingCommand( work->commWork , MUS_COMM_TIMMING_DRESSUP_WAIT );
-        }
-      }
-      else
-      {
-        work->state = MPS_INIT_ACTING;
-      }
-    }
-    break;
-  
-    //メンバー待ち
-  case MPS_WAIT_MEMBER_DRESSUP:
-    if( MUS_COMM_CheckTimingCommand( work->commWork , MUS_COMM_TIMMING_DRESSUP_WAIT ) == TRUE )
-    {
-      work->state = MPS_SEND_MUS_POKE;
-    }
-    break;
-    
-    //MusPokeを送る
-  case MPS_SEND_MUS_POKE:
-    if( MUS_COMM_Send_MusPokeData( work->commWork , work->musPoke ) == TRUE )
-    {
-      if( MUS_COMM_GetMode( work->commWork ) == MCM_PARENT )
-      {
-        work->state = MPS_POST_WAIT_MUS_POKE;
-      }
-      else
-      {
-        work->state = MPS_POST_WAIT_ALL_MUS_POKE;
-      }
-    }
-    break;
-
-    //全員分もらうのを待つ
-  case MPS_POST_WAIT_MUS_POKE:
-    if( MUS_COMM_CheckAllPostPokeData( work->commWork ) == TRUE )
-    {
-      const BOOL ret = MUS_COMM_Send_AllMusPokeData( work->commWork );
-      if( ret == TRUE )
-      {
-        work->state = MPS_POST_WAIT_ALL_MUS_POKE;
-      }
-    }
-    break;
-  
-    //親が全員へ送るのを待つ
-  case MPS_POST_WAIT_ALL_MUS_POKE:
-    if( MUS_COMM_CheckAllPostPokeData( work->commWork ) == TRUE )
-    {
-      MUS_COMM_SendTimingCommand( work->commWork , MUS_COMM_TIMMING_START_ACTING );
-      work->state = MPS_POST_WAIT_START_ACTING;
-    }
-    break;
-  
-    //全員そろうのを待つ
-  case MPS_POST_WAIT_START_ACTING:
-    if( MUS_COMM_CheckTimingCommand( work->commWork , MUS_COMM_TIMMING_START_ACTING ) == TRUE )
-    {
-      work->state = MPS_INIT_ACTING_COMM;
-    }
-    break;
-
-  case MPS_INIT_ACTING:
-    {
-      u8 ePos,i;
-      ARI_TPrintf("FreeHeap:[%x][%x]\n", 
-          GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ) ,
-          GFI_HEAP_GetHeapAllocatableSize( GFL_HEAPID_APP ) );
-      work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_PROC , work->commWork );
-      MUSICAL_STAGE_SetData_Player( work->actInitWork , 1 , work->musPoke );
-      MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_ONOKKUSU , HEAPID_MUSICAL_PROC );
-      MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_PIKATYUU  , HEAPID_MUSICAL_PROC );
-      MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_WARUBIARU , HEAPID_MUSICAL_PROC );
-
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_EAR_L , 7 , 0 , 0 );
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HEAD  ,15 , 0 , 1 );
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HAND_L,13 , 0 , 2 );
-
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_EAR_R  ,  2 , 0 , 0 );
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_EYE    , 11 , 0 , 1 );
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 2 , MUS_POKE_EQU_BODY   , 27 , 0 , 2 );
-
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_FACE   , 21 , 0 , 0 );
-      MUSICAL_STAGE_SetEquip( work->actInitWork , 3 , MUS_POKE_EQU_HAND_R , 30 , 0 , 1 );
-    }
-    work->actInitWork->distData = work->distData;
-    work->actInitWork->progWork = work->progWork;
-    MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_PROC , work->progWork , work->actInitWork );
-    GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &MusicalStage_ProcData, work->actInitWork );
-    work->state = MPS_TERM_ACTING;
-    break;
-
-  case MPS_INIT_ACTING_COMM:
-    {
-      u8 i;
-      work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_PROC , work->commWork );
-      for( i=0;i<MUSICAL_POKE_MAX;i++ )
-      {
-        MUSICAL_POKE_PARAM *musPoke = MUS_COMM_GetMusPokeParam( work->commWork , i );
-        if( musPoke != NULL )
-        {
-          MUSICAL_STAGE_SetData_Comm( work->actInitWork , i , musPoke );
-        }
-        else
-        {
-          MUSICAL_STAGE_SetData_NPC( work->actInitWork , i , MONSNO_PIKATYUU  , HEAPID_MUSICAL_PROC );
-        }
-      }
-      work->actInitWork->distData = work->distData;
-      work->actInitWork->progWork = work->progWork;
-      MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_PROC , work->progWork , work->actInitWork );
-      GFL_PROC_LOCAL_CallProc( work->procSys , NO_OVERLAY_ID, &MusicalStage_ProcData, work->actInitWork );
-      work->state = MPS_TERM_ACTING;
-    }
-    
-    break;
-
-  case MPS_TERM_ACTING:
-    if( isActiveProc == GFL_PROC_MAIN_NULL )
-    {
-      work->state = MPS_FINISH;
-    }
-    break;
-    
-  case MPS_FINISH:
-    return GFL_PROC_RES_FINISH;
-    break;
-  }
-  
-  if( work->commWork != NULL )
-  {
-    MUS_COMM_UpdateComm( work->commWork );
-  }
-  
-  return GFL_PROC_RES_CONTINUE;
-}
-
-*/
+#endif

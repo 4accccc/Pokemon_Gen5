@@ -676,6 +676,7 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
     {
       u8 j;
       MUSICAL_POKE_PARAM *musPoke = evWork->actInitWork->musPoke[i];
+      //FIXME «•Ê‚Æ‚©
       shotData->shotPoke[i].monsno = musPoke->mcssParam.monsno;
       shotData->shotPoke[i].trainerName[0] = L'ƒg';
       shotData->shotPoke[i].trainerName[1] = L'ƒŒ';
