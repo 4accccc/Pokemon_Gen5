@@ -576,7 +576,7 @@ sub DebugWriteMonsFormOrderFile
     if( $form_num > $formno +1 )
     {
       $next_form_raw = $mons_end_raw + $other_form_total_num;  # その行に次にフォルムが書かれている(行は先頭0行からの行数)
-      $other_form_total_num += $form_num;
+      $other_form_total_num += $form_num -1;  # フォルム0番はここで書いたので、それ以外のフォルムが後で書かれる
     }
     print FH "$next_form_raw,";
 
@@ -1134,7 +1134,7 @@ sub WriteNextFormPosFile
     if( $form_num > $formno +1 )
     {
       $next_form_raw = $mons_end_raw + $other_form_total_num;  # その行に次にフォルムが書かれている(行は先頭0行からの行数)
-      $other_form_total_num += $form_num;
+      $other_form_total_num += $form_num -1;  # フォルム0番はここで書いたので、それ以外のフォルムが後で書かれる
     }
     $next_form_pos = $next_form_raw;
     $buf = pack "v", $next_form_pos;  # 符号なし16ビット整数。リトルエンディアン。

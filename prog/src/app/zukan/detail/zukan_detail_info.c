@@ -75,16 +75,28 @@ typedef enum
 END_CMD;
 
 // 言語ボタン
-static const u8 lang_button_rect[ZUKAN_INFO_LANG_MAX][5] =
+#define LEFT_SPACE (2)
+static const u8 lang_button_rect[ZUKAN_INFO_LANG_MAX][8] =
 {
-  //  x        y        w    h  anmseq
-  {   0 - 0, 115 -24,  24,  16,   8 },
-  {  24 - 2, 115 -24,  24,  16,   9 },
-  {  48 - 4, 115 -24,  24,  16,  10 },
-  {  72 - 6, 115 -24,  24,  16,  11 },
-  {  96 - 8, 115 -24,  24,  16,  12 },
-  { 120 -10, 115 -24,  24,  16,  13 },
+  // place_x,         place_y, touch_x,         touch_y, touch_w, touch_h, active_anmseq, push_anmseq
+  {  LEFT_SPACE+   0,      91, LEFT_SPACE+   0,      91,      16,      15,             8,          15 },
+  {  LEFT_SPACE+  15,      91, LEFT_SPACE+  17,      91,      20,      15,             9,          16 },
+  {  LEFT_SPACE+  36,      91, LEFT_SPACE+  38,      91,      20,      15,            10,          16 },
+  {  LEFT_SPACE+  57,      91, LEFT_SPACE+  59,      91,      20,      15,            11,          17 },
+  {  LEFT_SPACE+  78,      91, LEFT_SPACE+  80,      91,      20,      15,            12,          18 },
+  {  LEFT_SPACE+  99,      91, LEFT_SPACE+ 101,      91,      20,      15,            13,          19 },
 };
+#undef LEFT_SPACE
+
+// 言語ボタンの状態
+typedef enum
+{
+  LANG_BTN_STATE_ACTIVE,      // 押すことができる
+  LANG_BTN_STATE_PUSH_START,  // 押した瞬間(1フレーム)
+  LANG_BTN_STATE_PUSH_ANIME,  // 押したアニメ中
+  LANG_BTN_STATE_PUSH_END,    // 押したアニメが終了した瞬間(1フレーム)
+}
+LANG_BUTTON_STATE;
 
 
 //=============================================================================
@@ -95,12 +107,14 @@ static const u8 lang_button_rect[ZUKAN_INFO_LANG_MAX][5] =
 // 言語ボタン
 typedef struct
 {
-  GFL_CLWK*   clwk;
-  u8          x;
-  u8          y;
-  u8          w;
-  u8          h;
-  u16         anmseq;
+  GFL_CLWK*           clwk;
+  u8                  x;  // touch座標
+  u8                  y;
+  u8                  w;  // touchサイズ
+  u8                  h;
+  u16                 active_anmseq;
+  u16                 push_anmseq;
+  LANG_BUTTON_STATE   state;
 }
 LANG_BUTTON;
 
@@ -153,7 +167,8 @@ static void Zukan_Detail_Info_ChangeLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
 // 言語ボタン
 static void Zukan_Detail_Info_CreateLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Info_DeleteLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
-static void Zukan_Detail_Info_SetLangButtonDrawEnable( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+static void Zukan_Detail_Info_MainLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Info_SetupLangButtonDrawEnable( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn,
                 BOOL e, BOOL fra, BOOL ger, BOOL ita, BOOL spa, BOOL kor );
 
 
@@ -366,7 +381,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
       
         // 言語ボタンの表示非表示切り替え
         {
-          Zukan_Detail_Info_SetLangButtonDrawEnable( param, work, cmn,
+          Zukan_Detail_Info_SetupLangButtonDrawEnable( param, work, cmn,
               lang_exist[0], lang_exist[1], lang_exist[2], lang_exist[3], lang_exist[4], lang_exist[5] );
         }
       }
@@ -471,6 +486,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
 
   if( *seq >= SEQ_FADE_IN )
   {
+    // 言語ボタン
+    Zukan_Detail_Info_MainLangButton( param, work, cmn );
+   
     // 図鑑情報
     ZUKAN_INFO_Main( work->info_wk_m );
     ZUKAN_INFO_Main( work->info_wk_s );
@@ -594,6 +612,8 @@ static void Zukan_Detail_Info_TouchLangButton( ZUKAN_DETAIL_INFO_PARAM* param, Z
         {
           if( work->lang != i )
           {
+            work->lang_btn[i].state = LANG_BTN_STATE_PUSH_START;
+            GFL_CLACT_WK_SetAnmSeq( work->lang_btn[i].clwk, work->lang_btn[i].push_anmseq );
             PMSND_PlaySE( SEQ_SE_DECIDE1 );
 
             // 言語を変更する
@@ -613,17 +633,48 @@ static void Zukan_Detail_Info_ChangePoke( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
 {
   ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( ZKNDTL_COMMON_GetGamedata(cmn) );
   u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
-  u16 formno = 0;
-  BOOL b_get = ZUKANSAVE_GetPokeGetFlag( zkn_sv, monsno );
-  BOOL lang_exist[ZUKAN_INFO_LANG_MAX] = { 1, 1, 1, 0, 1, 1 };
-  { 
-    lang_exist[0] = (monsno%3   )%2;
-    lang_exist[1] = (monsno%3 +1)%2;
-    lang_exist[2] = (monsno%3 +1)%2;
-    lang_exist[3] = (monsno%3   )%2;
-    lang_exist[4] = (monsno%3 +1)%2;
-    lang_exist[5] = (monsno%3   )%2;
+
+  u32  formno;
+  u32  sex;
+  BOOL rare;
+  u32  personal_rnd = 0;
+
+  BOOL b_get;
+  BOOL lang_exist[ZUKAN_INFO_LANG_MAX];
+  BOOL b_zenkoku;  // TRUEのとき全国図鑑
+
+  // 現在表示する姿
+  ZUKANSAVE_GetDrawData(  zkn_sv, monsno, &sex, &rare, &formno, param->heap_id );
+  if( monsno == MONSNO_PATTIIRU )  // personal_rndはmons_no==MONSNO_PATTIIRUのときのみ使用する
+  {
+    personal_rnd = ZUKANSAVE_GetPokeRandomFlag( zkn_sv, ZUKANSAVE_RANDOM_PACHI );
   }
+
+  // このポケモンの情報
+  b_get = ZUKANSAVE_GetPokeGetFlag( zkn_sv, monsno );
+
+  {
+    // カントリーコードはどこに定義されている？
+    lang_exist[ZUKAN_INFO_LANG_E]   = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 1 );
+    lang_exist[ZUKAN_INFO_LANG_FRA] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 2 );
+    lang_exist[ZUKAN_INFO_LANG_GER] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 3 );
+    lang_exist[ZUKAN_INFO_LANG_ITA] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 4 );
+    lang_exist[ZUKAN_INFO_LANG_SPA] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 5 );
+    lang_exist[ZUKAN_INFO_LANG_KOR] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 7 );
+  }
+
+  b_zenkoku = ZUKANSAVE_GetZukanMode( zkn_sv );
+  
+#if 1
+  // 全言語チェック用
+  {
+    u8 i;
+    for( i=0; i<ZUKAN_INFO_LANG_MAX; i++ )
+    {
+      lang_exist[i] = TRUE;
+    }
+  }
+#endif
 
   // 図鑑情報
   {
@@ -658,7 +709,7 @@ static void Zukan_Detail_Info_ChangePoke( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
 
   // 言語ボタンの表示非表示切り替え
   {
-    Zukan_Detail_Info_SetLangButtonDrawEnable( param, work, cmn,
+    Zukan_Detail_Info_SetupLangButtonDrawEnable( param, work, cmn,
         lang_exist[0], lang_exist[1], lang_exist[2], lang_exist[3], lang_exist[4], lang_exist[5] );
   }
 }
@@ -680,11 +731,6 @@ static void Zukan_Detail_Info_ChangeLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
   }
 
   work->lang = lang;
-
-  if( work->lang != ZUKAN_INFO_LANG_NONE )
-  {
-    // 選択中アニメ  // もう一箇所あるのでまとめてやって
-  }
 }
 
 //-------------------------------------
@@ -730,15 +776,17 @@ static void Zukan_Detail_Info_CreateLangButton( ZUKAN_DETAIL_INFO_PARAM* param, 
       GFL_CLWK_DATA   cldata;
 		  GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
       
-      work->lang_btn[i].x = lang_button_rect[i][0];
-      work->lang_btn[i].y = lang_button_rect[i][1];
-      work->lang_btn[i].w = lang_button_rect[i][2];
-      work->lang_btn[i].h = lang_button_rect[i][3];
-      work->lang_btn[i].anmseq = lang_button_rect[i][4];
-     
-      cldata.pos_x = work->lang_btn[i].x;
-      cldata.pos_y = work->lang_btn[i].y;
-      cldata.anmseq = work->lang_btn[i].anmseq;
+      work->lang_btn[i].x             = lang_button_rect[i][2];
+      work->lang_btn[i].y             = lang_button_rect[i][3];
+      work->lang_btn[i].w             = lang_button_rect[i][4];
+      work->lang_btn[i].h             = lang_button_rect[i][5];
+      work->lang_btn[i].active_anmseq = lang_button_rect[i][6];
+      work->lang_btn[i].push_anmseq   = lang_button_rect[i][7];
+      work->lang_btn[i].state         = LANG_BTN_STATE_ACTIVE;
+
+      cldata.pos_x = lang_button_rect[i][0];
+      cldata.pos_y = lang_button_rect[i][1];
+      cldata.anmseq = work->lang_btn[i].active_anmseq;
 
 		  work->lang_btn[i].clwk = GFL_CLACT_WK_Create( clunit,
                              work->lang_ncg, work->lang_ncl, work->lang_nce,
@@ -766,9 +814,45 @@ static void Zukan_Detail_Info_DeleteLangButton( ZUKAN_DETAIL_INFO_PARAM* param, 
     GFL_CLGRP_CELLANIM_Release( work->lang_nce );
   }
 }
-static void Zukan_Detail_Info_SetLangButtonDrawEnable( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+static void Zukan_Detail_Info_MainLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u8 i;
+  for( i=0; i<ZUKAN_INFO_LANG_MAX; i++ )
+  {
+    switch( work->lang_btn[i].state )
+    {
+    case LANG_BTN_STATE_ACTIVE:
+      {
+        // 何もしない
+      }
+      break;
+    case LANG_BTN_STATE_PUSH_START:  // この関数の呼び出し位置によっては、この状態には1フレームもなっていないかも。
+      {
+        work->lang_btn[i].state = LANG_BTN_STATE_PUSH_ANIME;
+      }
+      break;
+    case LANG_BTN_STATE_PUSH_ANIME:
+      {
+        if( !GFL_CLACT_WK_CheckAnmActive( work->lang_btn[i].clwk ) )
+        {
+          work->lang_btn[i].state = LANG_BTN_STATE_PUSH_END;
+        } 
+      }
+      break;
+    case LANG_BTN_STATE_PUSH_END:
+      {
+        GFL_CLACT_WK_SetAnmSeq( work->lang_btn[i].clwk, work->lang_btn[i].active_anmseq );
+        work->lang_btn[i].state = LANG_BTN_STATE_ACTIVE;
+      }
+      break;
+    }
+  }
+}
+static void Zukan_Detail_Info_SetupLangButtonDrawEnable( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn,
                 BOOL e, BOOL fra, BOOL ger, BOOL ita, BOOL spa, BOOL kor )
 {
+  u8 i;
+
   GFL_CLACT_WK_SetDrawEnable( work->lang_btn[ZUKAN_INFO_LANG_E].clwk,   e   );
   GFL_CLACT_WK_SetDrawEnable( work->lang_btn[ZUKAN_INFO_LANG_FRA].clwk, fra );
   GFL_CLACT_WK_SetDrawEnable( work->lang_btn[ZUKAN_INFO_LANG_GER].clwk, ger );
@@ -776,9 +860,10 @@ static void Zukan_Detail_Info_SetLangButtonDrawEnable( ZUKAN_DETAIL_INFO_PARAM* 
   GFL_CLACT_WK_SetDrawEnable( work->lang_btn[ZUKAN_INFO_LANG_SPA].clwk, spa );
   GFL_CLACT_WK_SetDrawEnable( work->lang_btn[ZUKAN_INFO_LANG_KOR].clwk, kor );
 
-  if( work->lang != ZUKAN_INFO_LANG_NONE )
+  for( i=0; i<ZUKAN_INFO_LANG_MAX; i++ )
   {
-    // 選択中アニメ  // もう一箇所あるのでまとめてやって
+    work->lang_btn[i].state         = LANG_BTN_STATE_ACTIVE;
+    GFL_CLACT_WK_SetAnmSeq( work->lang_btn[i].clwk, work->lang_btn[i].active_anmseq );
   }
 }
 

@@ -40,7 +40,9 @@
 #include "font/font.naix"
 #include "message.naix"
 #include "msg/msg_zkn.h"
+#include "msg/msg_zkn_form.h"
 #include "zukan_gra.naix"
+#include "zukan_data.naix"
 
 // サウンド
 
@@ -381,9 +383,14 @@ typedef struct
 {
   LOOKS_DIFF looks_diff;
   COLOR_DIFF color_diff;
-  u16        other_diff;  // LOOKS_DIFF_ONEのとき、使用しない
-                          // LOOKS_DIFF_SEXのとき、SEX_MALE or SEX_FEMALE
-                          // LOOKS_DIFF_FORMのとき、formno
+  u16        other_diff;   // LOOKS_DIFF_ONEのとき、使用しない
+                           // LOOKS_DIFF_SEXのとき、SEX_MALE or SEX_FEMALE
+                           // LOOKS_DIFF_FORMのとき、formno
+
+  // ZUKANSAVE_CheckPokeSeeFormに与えた引数
+  u8         sex;          // PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWN  // prog/include/poke_tool/poke_tool.h
+  u8         rare;
+  u16        form;
 }
 DIFF_INFO;
 
@@ -416,6 +423,9 @@ typedef struct
 
   GFL_BMPWIN*                 text_bmpwin[TEXT_MAX];
   GFL_MSGDATA*                text_msgdata;
+
+  u16*                        next_form_pos_list;  // 次のフォルムデータの位置を参照できるリスト
+  GFL_MSGDATA*                form_msgdata;
 
   GFL_ARCUTIL_TRANSINFO       panel_s_tinfo;
 
@@ -474,7 +484,9 @@ static void Zukan_Detail_Form_ObjFieldSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
 static void Zukan_Detail_Form_McssSysInit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Form_McssSysExit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static MCSS_WORK* PokeInit( MCSS_SYS_WORK* mcss_sys_wk,
-                      int mons_no, int form_no, int sex, int rare, BOOL egg, int dir );
+                      int mons_no, int form_no, int sex, int rare, BOOL egg, int dir,
+                      u32 personal_rnd );  // personal_rndはmons_no==MONSNO_PATTIIRUのときのみ使用される
+
 static void PokeExit( MCSS_SYS_WORK* mcss_sys_wk, MCSS_WORK* poke_wk );
 // マクロ
 #define BLOCK_POKE_EXIT(sys,wk)                     \
@@ -488,7 +500,8 @@ static void PokeGetCompareRelativePosition( MCSS_WORK* poke_wk, VecFx32* pos );
 
 static void PokeMcssWorkInit( POKE_MCSS_WORK* poke_mcss_wk, HEAPID heap_id,
                               MCSS_SYS_WORK* mcss_sys_wk,
-                              int mons_no, int form_no, int sex, int rare, BOOL egg, int dir );
+                              int mons_no, int form_no, int sex, int rare, BOOL egg, int dir,
+                              u32 personal_rnd );  // personal_rndはmons_no==MONSNO_PATTIIRUのときのみ使用される
 static void PokeMcssWorkExit( POKE_MCSS_WORK* poke_mcss_wk, MCSS_SYS_WORK* mcss_sys_wk );
 static void PokeMcssCallBackDataInit( POKE_MCSS_CALL_BACK_DATA* poke_mcss_call_back_data,
                                       POKE_INDEX poke_idx, ZUKAN_DETAIL_FORM_WORK* work );
@@ -1235,6 +1248,32 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
 
           // テキストに合わせて、フォルム名の背面フィールドを用意する
           Zukan_Detail_Form_ObjFieldSetup( param, work, cmn );
+
+          // 図鑑セーブデータに閲覧中データ設定
+          {
+            u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
+
+            GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+            ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( gamedata );
+
+            u32  sex  = work->diff_info_list[work->diff_curr_no].sex;
+            BOOL rare = (work->diff_info_list[work->diff_curr_no].rare==0)?FALSE:TRUE;
+            u32  form = work->diff_info_list[work->diff_curr_no].form;
+
+            ZUKANSAVE_SetDrawData(  zkn_sv, monsno, sex, rare, form );
+
+#ifdef DEBUG_KAWADA
+            {
+              OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, diff_no=%d, f=%d, s=%d, r=%d\n", monsno, work->diff_curr_no, form, sex, rare );
+            }
+#endif
+#ifdef DEBUG_KAWADA
+            {
+              ZUKANSAVE_GetDrawData(  zkn_sv, monsno, &sex, &rare, &form, param->heap_id );
+              OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, ZUKANSAVE_GetDrawData, f=%d, s=%d, r=%d\n", monsno, form, sex, rare );
+            }
+#endif
+          }
         }
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
@@ -1325,7 +1364,20 @@ static void Zukan_Detail_Form_GetPokeTextStrbufFromDiffInfo( ZUKAN_DETAIL_FORM_P
     {
       u16 form_no = work->diff_info_list[diff_no].other_diff;
 
-      strbuf0 = GFL_MSG_CreateString( work->text_msgdata, ZNK_ZUKAN_GRAPH_07 );
+      // 次のフォルムデータの位置を参照できるリストを利用して、フォルムデータの位置を得る
+      u16 pos = monsno;
+      {
+        u16 formno_count = 0;
+        while( formno_count != form_no )
+        {
+          pos = work->next_form_pos_list[pos];
+          if( pos == 0 ) break;
+          formno_count++;
+        }
+        GF_ASSERT_MSG( pos > 0, "ZUKAN_DETAIL_FORM : フォルム番号が異常です。\n" );
+      }
+
+      strbuf0 = GFL_MSG_CreateString( work->form_msgdata, pos );
     }
     break;
   }
@@ -1402,6 +1454,21 @@ static void Zukan_Detail_Form_CreateTextBase( ZUKAN_DETAIL_FORM_PARAM* param, ZU
   work->text_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
                            ARCID_MESSAGE, NARC_message_zkn_dat,
                            param->heap_id );
+
+  work->form_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+                           ARCID_MESSAGE, NARC_message_zkn_form_dat,
+                           param->heap_id );
+
+  // 次のフォルムデータの位置を参照できるリスト
+  {
+    u32 size;
+    u16 next_form_pos_num;
+
+    work->next_form_pos_list = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_next_form_pos_dat, FALSE, param->heap_id, &size );
+    next_form_pos_num = (u16)( size / sizeof(u16) );
+
+    GF_ASSERT_MSG( next_form_pos_num > MONSNO_END+1+1, "ZUKAN_DETAIL_FORM : 次のフォルムのデータの位置を参照できる列の個数が足りません。\n" );
+  }
 }
 static void Zukan_Detail_Form_DeleteTextBase( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
@@ -1412,6 +1479,13 @@ static void Zukan_Detail_Form_DeleteTextBase( ZUKAN_DETAIL_FORM_PARAM* param, ZU
   }
 
   GFL_MSG_Delete( work->text_msgdata );
+
+  GFL_MSG_Delete( work->form_msgdata );
+
+  // 次のフォルムデータの位置を参照できるリスト
+  {
+    GFL_HEAP_FreeMemory( work->next_form_pos_list );
+  }
 }
 static void Zukan_Detail_Form_WriteUpText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
@@ -1633,7 +1707,8 @@ static void Zukan_Detail_Form_McssSysExit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
 }
 
 static MCSS_WORK* PokeInit( MCSS_SYS_WORK* mcss_sys_wk,
-                      int mons_no, int form_no, int sex, int rare, BOOL egg, int dir )
+                      int mons_no, int form_no, int sex, int rare, BOOL egg, int dir,
+                      u32 personal_rnd )  // personal_rndはmons_no==MONSNO_PATTIIRUのときのみ使用される
 {
   VecFx32 scale =
   {
@@ -1645,6 +1720,10 @@ static MCSS_WORK* PokeInit( MCSS_SYS_WORK* mcss_sys_wk,
   MCSS_ADD_WORK add_wk;
   MCSS_WORK*    poke_wk;
 
+  if( mons_no == MONSNO_PATTIIRU )  // MCSS_TOOL_AddPokeMcssの中身に合わせてある
+  {
+    MCSS_TOOL_SetMakeBuchiCallback( mcss_sys_wk, personal_rnd );
+  }
   MCSS_TOOL_MakeMAWParam( mons_no, form_no, sex, rare, egg, &add_wk, dir );
   poke_wk = MCSS_Add( mcss_sys_wk, 0, 0, 0, &add_wk );
   
@@ -1682,10 +1761,12 @@ static void PokeGetCompareRelativePosition( MCSS_WORK* poke_wk, VecFx32* pos )
 
 static void PokeMcssWorkInit( POKE_MCSS_WORK* poke_mcss_wk, HEAPID heap_id,
                               MCSS_SYS_WORK* mcss_sys_wk,
-                              int mons_no, int form_no, int sex, int rare, BOOL egg, int dir )
+                              int mons_no, int form_no, int sex, int rare, BOOL egg, int dir,
+                              u32 personal_rnd )  // personal_rndはmons_no==MONSNO_PATTIIRUのときのみ使用される
 {
   poke_mcss_wk->poke_wk = PokeInit( mcss_sys_wk,
-                                    mons_no, form_no, sex, rare, egg, dir );
+                                    mons_no, form_no, sex, rare, egg, dir,
+                                    personal_rnd );
   poke_mcss_wk->poke_call_back_data = GFL_HEAP_AllocClearMemory( heap_id, sizeof(POKE_MCSS_CALL_BACK_DATA) );
 
   {
@@ -1830,83 +1911,335 @@ static void PokeiconExit( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk )
 //=====================================
 static void Zukan_Detail_Form_GetDiffInfo( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  const u8 sex_tbl_max = 3;
+  const u32 sex_tbl[sex_tbl_max] =
+  {
+    PTL_SEX_MALE,
+    PTL_SEX_FEMALE,
+    PTL_SEX_UNKNOWN,
+  };
+  const u8 rare_tbl_max = 2;
+  const BOOL rare_tbl[rare_tbl_max] =
+  {
+    FALSE,
+    TRUE,
+  };
+
   u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
 
   GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
   ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( gamedata );
 
-  // 今だけのダミーデータ作成
+  // ポケモンパーソナルデータの情報
+  u32 ppd_form_num;  // フォルム数
+  u32 ppd_sex_vec;   // 性別ベクトル
+
+  // 現在表示する姿
+  u32  curr_sex;
+  BOOL curr_rare;
+  u32  curr_form;
+
+  // ポケモンパーソナルデータの情報
   {
-    u16 diff_count = 0;
-    
     POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle( monsno, 0, param->heap_id );
-    u16 form_max = (u16)POKE_PERSONAL_GetParam( ppd, POKEPER_ID_form_max );
-    u32 sex      = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
+    ppd_form_num = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_form_max );  // 別フォルムなしのときは1
+    ppd_sex_vec  = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );  // POKEPER_SEX_MALE, 1～253, POKEPER_SEX_FEMALE, POKEPER_SEX_UNKNOWN  // prog/include/poke_tool/poke_personal.h
     POKE_PERSONAL_CloseHandle( ppd );
 
-    if( monsno == 151 )
+#ifdef DEBUG_KAWADA
     {
-      work->diff_info_list[diff_count].looks_diff = LOOKS_DIFF_ONE;
-      work->diff_info_list[diff_count].color_diff = COLOR_DIFF_NONE;
-      diff_count++;
+      OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, ppd f=%d s=%d\n", monsno, ppd_form_num, ppd_sex_vec );
     }
-    else
+#endif
+  }
+
+  // 現在表示する姿
+  {
+    ZUKANSAVE_GetDrawData(  zkn_sv, monsno, &curr_sex, &curr_rare, &curr_form, param->heap_id );
+
+#ifdef DEBUG_KAWADA
     {
-      if( form_max <= 1 && sex != 0 )
+      OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, curr f=%d, s=%d, r=%d\n", monsno, curr_form, curr_sex, curr_rare );
+    }
+#endif
+  }
+
+  // プレイヤーが入手した情報
+  {
+    u16 diff_num = 0;
+    u16 diff_curr_no = 0;
+
+    u32  sex;
+    BOOL rare;
+    u32  form;
+
+    u8 sex_tbl_idx;
+    u8 rare_tbl_idx;
+
+#if 0
+    性別がいい加減でも情報を取れてしまうので、性別の扱いを別フォルムありとなしで分けていたが、
+    どうやら図鑑にはきちんとした性別で登録されているようなので、
+    この部分はコメントアウトし、処理を分岐なしの1本化にする
+
+    // 別フォルムあり
+    if( ppd_form_num >= 2 )
+    {
+      for( form=0; form<ppd_form_num; form++ )
       {
-        work->diff_info_list[diff_count].looks_diff = LOOKS_DIFF_SEX;
-        work->diff_info_list[diff_count].color_diff = COLOR_DIFF_NORMAL;
-        work->diff_info_list[diff_count].other_diff = SEX_MALE;
-        diff_count++;
-
-        work->diff_info_list[diff_count].looks_diff = LOOKS_DIFF_SEX;
-        work->diff_info_list[diff_count].color_diff = COLOR_DIFF_SPECIAL;
-        work->diff_info_list[diff_count].other_diff = SEX_MALE;
-        diff_count++;
-
-        work->diff_info_list[diff_count].looks_diff = LOOKS_DIFF_SEX;
-        work->diff_info_list[diff_count].color_diff = COLOR_DIFF_NORMAL;
-        work->diff_info_list[diff_count].other_diff = SEX_FEMALE;
-        diff_count++;
-
-        work->diff_info_list[diff_count].looks_diff = LOOKS_DIFF_SEX;
-        work->diff_info_list[diff_count].color_diff = COLOR_DIFF_SPECIAL;
-        work->diff_info_list[diff_count].other_diff = SEX_FEMALE;
-        diff_count++;
-      }
-      else if( form_max > 1 )
-      {
-        u16 i;
-        for( i=0; i<form_max; i++ )
+        BOOL b_rare_finish_tbl[rare_tbl_max] =  // フォルム違いがあるときは、オスメスはあろうとなかろうと、無視する
+        {                                       // ために、ノーマル/レアそれぞれがどれかの性別で登録されていたら、
+          FALSE,                                // もう登録しないようにするためのフラグ
+          FALSE,
+        };
+        for( sex_tbl_idx=0; sex_tbl_idx<sex_tbl_max; sex_tbl_idx++ )
         {
-          GF_ASSERT_MSG( diff_count < DIFF_MAX,  "ZUKAN_DETAIL_FORM : 違う姿の数が多いです。\n" );
-  
-          work->diff_info_list[diff_count].looks_diff = LOOKS_DIFF_FORM;
-          work->diff_info_list[diff_count].color_diff = COLOR_DIFF_NORMAL;
-          work->diff_info_list[diff_count].other_diff = i;
-          diff_count++;
+          sex = sex_tbl[sex_tbl_idx];
+          for( rare_tbl_idx=0; rare_tbl_idx<rare_tbl_max; rare_tbl_idx++ )
+          {
+            BOOL b_regist = FALSE;
+            rare = rare_tbl[rare_tbl_idx];
+            if( curr_form == form && curr_rare == rare && curr_sex == sex )  // 現在表示する姿
+            {
+              diff_curr_no = diff_num;
+              b_regist = TRUE;
+            }
+            else if( curr_form == form && curr_rare == rare )  // フォルム違いがあるときは、オスメスはあろうとなかろうと、無視する
+            {
+              // 何もしない
+            }
+            else
+            {
+              if( ZUKANSAVE_CheckPokeSeeForm( zkn_sv, monsno, (int)sex, (int)rare, (int)form ) )
+              {
+                b_regist = TRUE;
+              }
+            }
 
-          work->diff_info_list[diff_count].looks_diff = LOOKS_DIFF_FORM;
-          work->diff_info_list[diff_count].color_diff = COLOR_DIFF_SPECIAL;
-          work->diff_info_list[diff_count].other_diff = i;
-          diff_count++;
+            if( b_regist )
+            {
+              if( !b_rare_finish_tbl[rare_tbl_idx] )  // まだこのノーマル/レアがどの性別でも登録されていないとき
+              {
+                GF_ASSERT_MSG( diff_num < DIFF_MAX,  "ZUKAN_DETAIL_FORM : 違う姿の数が多いです。\n" );
+                
+                b_rare_finish_tbl[rare_tbl_idx] = TRUE;
+                work->diff_info_list[diff_num].looks_diff = LOOKS_DIFF_FORM;
+                work->diff_info_list[diff_num].color_diff = rare?COLOR_DIFF_SPECIAL:COLOR_DIFF_NORMAL;
+                work->diff_info_list[diff_num].other_diff = (u16)form;
+                work->diff_info_list[diff_num].sex        = (u8)sex;
+                work->diff_info_list[diff_num].rare       = (u8)rare;
+                work->diff_info_list[diff_num].form       = (u16)form;
+
+#ifdef DEBUG_KAWADA
+                {
+                  OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, diff_no=%d, f=%d, s=%d, r=%d\n", monsno, diff_num, form, sex, rare );
+                }
+#endif
+
+                diff_num++;
+              }
+            }
+          }
         }
       }
-      else
+    }
+    // 別フォルムなし
+    else
+    {
+      // 性別でチェックするしないを分ける
+      BOOL b_sex_check_tbl[sex_tbl_max] =
       {
-        work->diff_info_list[diff_count].looks_diff = LOOKS_DIFF_ONE;
-        work->diff_info_list[diff_count].color_diff = COLOR_DIFF_NORMAL;
-        diff_count++;
+        FALSE,
+        FALSE,
+        FALSE,
+      };
+      switch( ppd_sex_vec )
+      {
+        // 性別あり(オスのみ)
+      case POKEPER_SEX_MALE:
+        {
+          b_sex_check_tbl[0] = TRUE;
+        }
+        break;
+        // 性別あり(メスのみ)
+      case POKEPER_SEX_FEMALE:
+        {
+          b_sex_check_tbl[1] = TRUE;
+        }
+        break;
+        // 性別なし
+      case POKEPER_SEX_UNKNOWN:
+        {
+          b_sex_check_tbl[2] = TRUE;
+        }
+        break;
+        // 性別あり(オスメス)
+      default:  // 1～253
+        {
+          b_sex_check_tbl[0] = TRUE;
+          b_sex_check_tbl[1] = TRUE;
+        }
+        break;
+      }
 
-        work->diff_info_list[diff_count].looks_diff = LOOKS_DIFF_ONE;
-        work->diff_info_list[diff_count].color_diff = COLOR_DIFF_SPECIAL;
-        diff_count++;
+      form = 0;
+      for( sex_tbl_idx=0; sex_tbl_idx<sex_tbl_max; sex_tbl_idx++ )
+      {
+        if( !b_sex_check_tbl[sex_tbl_idx] ) continue;
+        sex = sex_tbl[sex_tbl_idx];
+        for( rare_tbl_idx=0; rare_tbl_idx<rare_tbl_max; rare_tbl_idx++ )
+        {
+          BOOL b_regist = FALSE;
+          rare = rare_tbl[rare_tbl_idx];
+          if( curr_form == form && curr_rare == rare && curr_sex == sex )  // 現在表示する姿
+          {
+            diff_curr_no = diff_num;
+            b_regist = TRUE;
+          }
+          else
+          {
+            if( ZUKANSAVE_CheckPokeSeeForm( zkn_sv, monsno, (int)sex, (int)rare, (int)form ) )
+            {
+              b_regist = TRUE;
+            }
+          }
+
+          if( b_regist )
+          {
+            GF_ASSERT_MSG( diff_num < DIFF_MAX,  "ZUKAN_DETAIL_FORM : 違う姿の数が多いです。\n" );
+            
+            work->diff_info_list[diff_num].looks_diff = (ppd_sex_vec==POKEPER_SEX_UNKNOWN)?LOOKS_DIFF_ONE:LOOKS_DIFF_SEX;
+            work->diff_info_list[diff_num].color_diff = rare?COLOR_DIFF_SPECIAL:COLOR_DIFF_NORMAL;
+            work->diff_info_list[diff_num].other_diff = (sex==PTL_SEX_FEMALE)?SEX_FEMALE:SEX_MALE;  // LOOKS_DIFF_ONEのときは使用されないので、何が入っていてもいい
+            work->diff_info_list[diff_num].sex        = (u8)sex;
+            work->diff_info_list[diff_num].rare       = (u8)rare;
+            work->diff_info_list[diff_num].form       = (u16)form;
+
+#ifdef DEBUG_KAWADA
+            {
+              OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, diff_no=%d, f=%d, s=%d, r=%d\n", monsno, diff_num, form, sex, rare );
+            }
+#endif
+            
+            diff_num++;
+          }
+        } 
       }
     }
+#else
+    {
+      // 性別でチェックするしないを分ける
+      BOOL b_sex_check_tbl[sex_tbl_max] =
+      {
+        FALSE,
+        FALSE,
+        FALSE,
+      };
+      switch( ppd_sex_vec )
+      {
+        // 性別あり(オスのみ)
+      case POKEPER_SEX_MALE:
+        {
+          b_sex_check_tbl[0] = TRUE;
+        }
+        break;
+        // 性別あり(メスのみ)
+      case POKEPER_SEX_FEMALE:
+        {
+          b_sex_check_tbl[1] = TRUE;
+        }
+        break;
+        // 性別なし
+      case POKEPER_SEX_UNKNOWN:
+        {
+          b_sex_check_tbl[2] = TRUE;
+        }
+        break;
+        // 性別あり(オスメス)
+      default:  // 1～253
+        {
+          b_sex_check_tbl[0] = TRUE;
+          b_sex_check_tbl[1] = TRUE;
+        }
+        break;
+      }
 
-    work->diff_num = diff_count;
-    work->diff_curr_no = 0;
-    work->diff_comp_no = 1 % diff_count;
+      for( form=0; form<ppd_form_num; form++ )
+      {
+        BOOL b_rare_finish_tbl[rare_tbl_max] =  // フォルム違いがあるときは、オスメスはあろうとなかろうと、無視する
+        {                                       // ために、ノーマル/レアそれぞれがどれかの性別で登録されていたら、
+          FALSE,                                // もう登録しないようにするためのフラグ
+          FALSE,
+        };
+        for( sex_tbl_idx=0; sex_tbl_idx<sex_tbl_max; sex_tbl_idx++ )
+        {
+          if( !b_sex_check_tbl[sex_tbl_idx] ) continue;
+          sex = sex_tbl[sex_tbl_idx];
+          for( rare_tbl_idx=0; rare_tbl_idx<rare_tbl_max; rare_tbl_idx++ )
+          {
+            BOOL b_regist = FALSE;
+            rare = rare_tbl[rare_tbl_idx];
+            if( curr_form == form && curr_rare == rare && curr_sex == sex )  // 現在表示する姿
+            {
+              diff_curr_no = diff_num;
+              b_regist = TRUE;
+            }
+            else if( ( ppd_form_num >= 2 ) && curr_form == form && curr_rare == rare )  // フォルム違いがあるときは、オスメスはあろうとなかろうと、無視する
+            {
+              // 何もしない
+            }
+            else
+            {
+              if( ZUKANSAVE_CheckPokeSeeForm( zkn_sv, monsno, (int)sex, (int)rare, (int)form ) )
+              {
+                b_regist = TRUE;
+              }
+            }
+
+            if( b_regist )
+            {
+              if(    ( ( ppd_form_num >= 2 ) && ( !b_rare_finish_tbl[rare_tbl_idx] ) )    // フォルム違いがあるときは、まだこのノーマル/レアがどの性別でも登録されていないとき
+                  || ( ( ppd_form_num <  2 )                                         ) )  // フォルム違いがないときは、いつでも真
+              {
+                GF_ASSERT_MSG( diff_num < DIFF_MAX,  "ZUKAN_DETAIL_FORM : 違う姿の数が多いです。\n" );
+                
+                b_rare_finish_tbl[rare_tbl_idx] = TRUE;
+
+                if( ppd_form_num >= 2 )
+                {
+                  work->diff_info_list[diff_num].looks_diff = LOOKS_DIFF_FORM;
+                  work->diff_info_list[diff_num].color_diff = rare?COLOR_DIFF_SPECIAL:COLOR_DIFF_NORMAL;
+                  work->diff_info_list[diff_num].other_diff = (u16)form;
+                }
+                else
+                {
+                  work->diff_info_list[diff_num].looks_diff = (ppd_sex_vec==POKEPER_SEX_UNKNOWN)?LOOKS_DIFF_ONE:LOOKS_DIFF_SEX;
+                  work->diff_info_list[diff_num].color_diff = rare?COLOR_DIFF_SPECIAL:COLOR_DIFF_NORMAL;
+                  work->diff_info_list[diff_num].other_diff = (sex==PTL_SEX_FEMALE)?SEX_FEMALE:SEX_MALE;  // LOOKS_DIFF_ONEのときは使用されないので、何が入っていてもいい
+                }
+                work->diff_info_list[diff_num].sex        = (u8)sex;
+                work->diff_info_list[diff_num].rare       = (u8)rare;
+                work->diff_info_list[diff_num].form       = (u16)form;
+
+#ifdef DEBUG_KAWADA
+                {
+                  OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, diff_no=%d, f=%d, s=%d, r=%d\n", monsno, diff_num, form, sex, rare );
+                }
+#endif
+
+                diff_num++;
+              }
+            }
+          }
+        }
+      }
+    }
+#endif
+
+    GF_ASSERT_MSG( diff_num > 0,  "ZUKAN_DETAIL_FORM : 姿が何もありません。\n" );
+
+    work->diff_num = diff_num;
+    work->diff_curr_no = diff_curr_no;
+    work->diff_comp_no = (diff_curr_no!=0)?(0):(1%diff_num);
   }
 
   // 姿の数、色違いの数
@@ -1938,64 +2271,19 @@ static void Zukan_Detail_Form_PokeInitFromDiffInfo( ZUKAN_DETAIL_FORM_PARAM* par
   int form_no;
   int sex;
   int rare;
+  u32 personal_rnd = 0;
 
   mons_no = ZKNDTL_COMMON_GetCurrPoke(cmn);
 
-  switch( work->diff_info_list[diff_no].looks_diff )
+  form_no = work->diff_info_list[diff_no].form;
+  sex = work->diff_info_list[diff_no].sex;
+  rare = work->diff_info_list[diff_no].rare;
+
+  if( mons_no == MONSNO_PATTIIRU )  // personal_rndはmons_no==MONSNO_PATTIIRUのときのみ使用される
   {
-  case LOOKS_DIFF_ONE:
-    {
-      form_no = 0;
-      sex = 0;
-    }
-    break;
-  case LOOKS_DIFF_SEX:
-    {
-      form_no = 0;
-
-      switch( work->diff_info_list[diff_no].other_diff )
-      {
-      case SEX_MALE:
-        {
-          sex = 0;
-        }
-        break;
-      case SEX_FEMALE:
-        {
-          //sex = 1;
-          sex = 0;
-        }
-        break;
-      }
-    }
-    break;
-  case LOOKS_DIFF_FORM:
-    {
-      sex = 0;
-
-      form_no = work->diff_info_list[diff_no].other_diff;
-    }
-    break;
-  }
-
-  switch( work->diff_info_list[diff_no].color_diff )
-  {
-  case COLOR_DIFF_NONE:
-    {
-      rare = 0;
-    }
-    break;
-  case COLOR_DIFF_NORMAL:
-    {
-      rare = 0;
-    }
-    break;
-  case COLOR_DIFF_SPECIAL:
-    {
-      //rare = 1;
-      rare = 0;
-    }
-    break;
+    GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+    ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( gamedata );
+    personal_rnd = ZUKANSAVE_GetPokeRandomFlag( zkn_sv, ZUKANSAVE_RANDOM_PACHI );
   }
 
   //work->poke_mcss_wk[poke_f].poke_wk = PokeInit( work->mcss_sys_wk,
@@ -2004,10 +2292,12 @@ static void Zukan_Detail_Form_PokeInitFromDiffInfo( ZUKAN_DETAIL_FORM_PARAM* par
   //                            mons_no, form_no, sex, rare, FALSE, MCSS_DIR_BACK );
   PokeMcssWorkInit( &work->poke_mcss_wk[poke_f], param->heap_id,
                     work->mcss_sys_wk,
-                    mons_no, form_no, sex, rare, FALSE, MCSS_DIR_FRONT );
+                    mons_no, form_no, sex, rare, FALSE, MCSS_DIR_FRONT,
+                    personal_rnd );
   PokeMcssWorkInit( &work->poke_mcss_wk[poke_b], param->heap_id,
                     work->mcss_sys_wk,
-                    mons_no, form_no, sex, rare, FALSE, MCSS_DIR_BACK );
+                    mons_no, form_no, sex, rare, FALSE, MCSS_DIR_BACK,
+                    personal_rnd );
 
   {
     VecFx32 p;
@@ -2037,28 +2327,12 @@ static void Zukan_Detail_Form_PokeiconInitFromDiffInfo( ZUKAN_DETAIL_FORM_PARAM*
 {
   u32 mons;
   u32 form_no;
-  u32 sex = 0;  //@todo 後ほど正しい値を取得
+  u32 sex;
 
   mons = ZKNDTL_COMMON_GetCurrPoke(cmn);
 
-  switch( work->diff_info_list[diff_no].looks_diff )
-  {
-  case LOOKS_DIFF_ONE:
-    {
-      form_no = 0;
-    }
-    break;
-  case LOOKS_DIFF_SEX:
-    {
-      form_no = 0;
-    }
-    break;
-  case LOOKS_DIFF_FORM:
-    {
-      form_no = work->diff_info_list[diff_no].other_diff;
-    }
-    break;
-  }
+  form_no = work->diff_info_list[diff_no].form;
+  sex = work->diff_info_list[diff_no].sex;
 
   work->pokeicon_clwk = PokeiconInit( &work->pokeicon_res, work->clunit, param->heap_id, mons, form_no, sex, 0 );
 }
