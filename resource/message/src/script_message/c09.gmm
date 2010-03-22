@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-08T22:14:09"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-03-22T18:23:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,20 +294,14 @@
 
 	<row id="msg_c09_veteranm1_01">
 		<comment>♂
-・GRIDX=30、GRIDZ=54（仮）
-・初めてここに来たとき
-　一歩でも動けばメッセージ表示
-　（戻ってマップ切り替えたとき以外）
-・続けてveteranm1_02</comment>
-		<attribute name="キャラ指定">VETERANM</attribute>
-		<language name="JPN" width="256">かいせつ　しよう！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">解説しよう！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
+・GRIDX=31～33、GRIDZ=48
+・初めて挑戦するときPOSイベント
+はい/いいえ表示
 
-	<row id="msg_c09_veteranm1_02">
-		<comment>♂
-・続けてveteranm2_01
-・このメッセージ表示以降、veteranm1_03繰り返し</comment>
+はい→veteranm1_03
+いいえ→veteranm1_04
+
+</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">ポケモンリーグは
 ４にんいる　してんのう[BE:00:ページ切り替え（行送り）]
@@ -328,8 +322,42 @@
 敗北するまで　でられないぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
+	<row id="msg_c09_veteranm1_02">
+		<comment>♂
+・GRIDX=31～33、GRIDZ=48
+・初めて挑戦するときPOSイベント
+※一度いいえで断った後
+はい/いいえ表示
+
+はい→veteranm1_03
+いいえ→veteranm1_04
+
+</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">いちど　ちょうせんを　はじめたなら[BE:00:ページ切り替え（行送り）]
+かちぬくか[BE:00:ページ切り替え（行送り）]
+はいぼく　するまで　でられないぞ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">一度　挑戦を　はじめたなら[BE:00:ページ切り替え（行送り）]
+勝ち抜くか[BE:00:ページ切り替え（行送り）]
+敗北するまで　でられないぞ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
 	<row id="msg_c09_veteranm1_03">
 		<comment>♂</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">では　すすむべし！▼</language>
+		<language name="JPN_KANJI" width="256">では　すすむべし！▼</language>
+	</row>
+
+	<row id="msg_c09_veteranm1_04">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">じゅんびを　おこたるな！▼</language>
+		<language name="JPN_KANJI" width="256">じゅんびを　おこたるな！▼</language>
+	</row>
+
+	<row id="msg_c09_veteranm1_05">
+		<comment>♂話しかけ</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">ポケモンリーグは
 ４にんいる　してんのう[BE:00:ページ切り替え（行送り）]
@@ -372,16 +400,15 @@
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">こちらで　じゅんびを　しておくがいい[BE:01:ページ切り替え（クリア）]
 いちどでも　まけると
-さいしょから　やりなおし　だからな！</language>
+さいしょから　やりなおし　だからな！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">こちらで　準備を　しておくがいい[BE:01:ページ切り替え（クリア）]
 一度でも　負けると
-最初から　やりなおし　だからな！</language>
+最初から　やりなおし　だからな！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c09_veteranm2_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・veteranm2_02表示以降
-　このメッセージを繰り返し表示</comment>
+	<row id="msg_c09_veteranm2_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+		<comment>未使用になりました。
+スクリプト参照してません。削除ＯＫ</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">ポケモンリーグは
 すべての　トレーナーに　とって[BE:00:ページ切り替え（行送り）]
