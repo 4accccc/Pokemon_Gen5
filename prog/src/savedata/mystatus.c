@@ -181,7 +181,7 @@ const STRCODE * MyStatus_GetMyName(const MYSTATUS * my)
 
 //----------------------------------------------------------
 /**
- * @brief 自分の名前取得（STRBUFにコピー）
+ * @brief 自分の名前取得（STRCODEにコピー）
  * @param my    自分状態保持ワークへのポインタ
  * @param buf   コピーする先のSTRCODEへのポインタ（各自で内容は確保してある事が前提）
  * @return  none

@@ -65,6 +65,7 @@ enum _EVENT_GTSNEGO {
 //=====================================
 typedef struct 
 {
+  DWCSvlResult aSVL;
   GAMESYS_WORK        *gsys;
   FIELDMAP_WORK       *fieldmap;
   EVENT_GTSNEGO_WORK  gts;
@@ -97,6 +98,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     }
     break;
   case _CALL_WIFILOGIN:
+    dbw->login.pSvl = &dbw->aSVL;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->login);
     (*seq)++;
     break;
@@ -127,6 +129,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
   case _CALL_TRADE:
     dbw->aPokeTr.gamedata=gamedata;
     dbw->aPokeTr.pNego = &dbw->gts;
+    dbw->aPokeTr.pSvl = &dbw->aSVL;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(pokemon_trade), &PokemonTradeWiFiProcData, &dbw->aPokeTr);
     (*seq)++;
     break;

@@ -412,7 +412,7 @@ void NHTTP_RAP_PokemonEvilCheckCreate(NHTTP_RAP_WORK* pWork, HEAPID heapID, int 
 
 
 
-void NHTTP_RAP_PokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork, void* pData, int size)
+void NHTTP_RAP_PokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork, const void* pData, int size)
 {
   GFL_STD_MemCopy(pData, &pWork->pData[pWork->length], size);
   pWork->length += size;

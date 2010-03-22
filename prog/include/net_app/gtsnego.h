@@ -14,6 +14,9 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 
+#define EVENT_GTSNEGO_RECONNECT_NUM (100)
+
+
 //êeÉèÅ[ÉN
 typedef struct {
   int selectLV;
@@ -24,6 +27,8 @@ typedef struct {
   GAMEDATA * gamedata;
   EVENT_GTSNEGO_USER_DATA aUser[2];
   MYSTATUS* pStatus[2];
+  u32 profileID[EVENT_GTSNEGO_RECONNECT_NUM];
+  int count;
 } EVENT_GTSNEGO_WORK;
 
 typedef struct _GTSNEGO_WORK  GTSNEGO_WORK;

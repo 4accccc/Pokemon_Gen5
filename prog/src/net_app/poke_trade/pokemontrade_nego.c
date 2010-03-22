@@ -17,6 +17,7 @@
 
 #include "arc_def.h"
 #include "net/network_define.h"
+#include "net/nhttp_rap_evilcheck.h"
 
 #include "net_app/pokemontrade.h"
 #include "system/main.h"
@@ -51,10 +52,17 @@
 #include "pokemontrade_local.h"
 #include "app_menu_common.naix"
 
+#include "net_app/gts_tool.h"
+#include "poke_tool/poke_regulation.h"
+
 #define _GTSINFO03_WAIT (60*2)
 #define _GTSINFO04_WAIT (60*2)
 #define _GTSINFO12_WAIT (60*2)
 #define _GTSINFO13_WAIT (60*2)
+#define _GTSINFO11_WAIT (60*2)
+#define _GTSINFO10_WAIT (60*2)
+#define _GTSINFO16_WAIT (60*2)
+#define _GTSINFO14_WAIT (60*2)
 
 
 //static void _pokeNickNameMsgDisp(POKEMON_PARAM* pp,GFL_BMPWIN* pWin,int x,int y,BOOL bEgg,POKEMON_TRADE_WORK* pWork);
@@ -83,6 +91,24 @@ static void _rapTimingStart(GFL_NETHANDLE* pNet, const u8 no,POKEMON_TRADE_WORK*
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_NET_HANDLE_TimeSyncStart( pNet,no,WB_NET_TRADE_SERVICEID );
   }
+}
+
+
+
+//GTSNEGOで交換してはいけないポケモン
+BOOL POKE_GTS_BanPokeCheck(POKEMON_TRADE_WORK* pWork, POKEMON_PASO_PARAM* ppp)
+{
+  int no = PPP_Get( ppp, ID_PARA_monsno, NULL  );
+  
+  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
+    if( GTS_TOOL_IsForbidRibbonPPP( ppp )){
+      return TRUE;
+    }
+    if( PokeRegulationCheckLegend(no) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 
@@ -686,9 +712,11 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   }
   else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_END){
     msgno = gtsnego_info_14;
+    pWork->NegoWaitTime = _GTSINFO14_WAIT;
   }
   else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_END){
     msgno = gtsnego_info_16;
+    pWork->NegoWaitTime = _GTSINFO16_WAIT;
   }
   GFL_MSG_GetString( pWork->pMsgData, msgno, pWork->pMessageStrBuf );
   POKETRADE_MESSAGE_WindowOpen(pWork);
@@ -1021,6 +1049,9 @@ static void _NEGO_Select6CancelWait3(POKEMON_TRADE_WORK* pWork)
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
+  if(!CheckNegoWaitTimer(pWork)){
+    return;
+  }
 
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
@@ -1333,7 +1364,113 @@ void POKE_GTS_Select6Init(POKEMON_TRADE_WORK* pWork)
 ///---------------------------------********************************************
 
 
+/*
+１．認証キーを任天堂サーバから貰う
+NHTTP_RAP_SvlGetTokenStart
+NHTTP_RAP_SvlGetTokenMain
 
+２．ポケモンデータを送る
+NHTTP_RAP_PokemonEvilCheckCreate                  送る領域確保  ポケモン*数+367バイト くらい必要です
+NHTTP_RAP_PokemonEvilCheckAdd                       ポケモン追加
+NHTTP_RAP_PokemonEvilCheckConectionCreate    送信開始
+
+NHTTP_RAP_Processでレスポンスを受ける
+
+*/
+
+#if 1
+
+static void _PokeEvilChkEnd2(POKEMON_TRADE_WORK* pWork)
+{
+  if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_EVIL, WB_NET_TRADE_SERVICEID)){
+    return;
+  }
+  if((pWork->evilCheck[0] == 0 ) && (pWork->evilCheck[1] == 0 )){
+    _CHANGE_STATE(pWork, POKE_GTS_Select6Init);
+  }
+  else if(pWork->evilCheck[1]){
+    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_11, pWork->pMessageStrBuf );
+    POKETRADE_MESSAGE_WindowOpen(pWork);
+    pWork->NegoWaitTime = _GTSINFO11_WAIT;
+    _CHANGE_STATE(pWork,_NEGO_Select6CancelWait3);
+  }
+  else{
+    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_10, pWork->pMessageStrBuf );
+    POKETRADE_MESSAGE_WindowOpen(pWork);
+    pWork->NegoWaitTime = _GTSINFO10_WAIT;
+    _CHANGE_STATE(pWork,_NEGO_Select6CancelWait3);
+  }
+}
+
+
+//ポケモン不正検査
+static void _PokeEvilChkEnd(POKEMON_TRADE_WORK* pWork)
+{
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+
+  if( GFL_NET_SendData(pNet, _NETCMD_EVILCHECK,1,&pWork->evilCheck[0])){
+    GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_EVIL,WB_NET_TRADE_SERVICEID );
+    _CHANGE_STATE(pWork, _PokeEvilChkEnd2);
+  }
+}
+
+
+//ポケモン不正検査
+static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+  int num=0;
+  {
+    NHTTPError error;
+    error = NHTTP_RAP_Process( pWork->pNHTTP );
+    if( NHTTP_ERROR_NONE == error )
+    {
+      void* p_buff  = NHTTP_RAP_GetRecvBuffer(pWork->pNHTTP);
+      pWork->evilCheck[0] = NHTTP_RAP_EVILCHECK_GetStatusCode( p_buff );
+      _CHANGE_STATE(pWork, _PokeEvilChkEnd);
+    }
+    else if( NHTTP_ERROR_BUSY != error )
+    { 
+//      WIFIBATTLEMATCH_NETERR_SetNhttpError( &p_wk->error, error );
+    }
+    NHTTP_RAP_PokemonEvilCheckDelete(pWork->pNHTTP);
+    if(pWork->pNHTTP)
+    {
+      NHTTP_RAP_End(pWork->pNHTTP);
+      pWork->pNHTTP  = NULL;
+    }
+  }
+  _CHANGE_STATE(pWork, _PokeEvilChkEnd);
+
+}
+
+
+
+//ポケモン不正検査
+static void _PokeEvilChk(POKEMON_TRADE_WORK* pWork)
+{
+  int i,num=0;
+  pWork->pNHTTP = NHTTP_RAP_Init(pWork->heapID,
+                                 MyStatus_GetProfileID(pWork->pMy), pWork->pParentWork->pSvl);
+
+  for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
+    if(pWork->GTSSelectPP[1][i]){
+      num++;
+    }
+  }
+  NHTTP_RAP_PokemonEvilCheckCreate(pWork->pNHTTP, pWork->heapID,
+                                   POKETOOL_GetPPPWorkSize() * num, NHTTP_POKECHK_GTSNEGO);
+  for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
+    if(pWork->GTSSelectPP[1][i]){
+      NHTTP_RAP_PokemonEvilCheckAdd(pWork->pNHTTP, PP_GetPPPPointerConst(pWork->GTSSelectPP[1][i]), POKETOOL_GetPPPWorkSize());
+    }
+  }
+  NHTTP_RAP_PokemonEvilCheckConectionCreate(pWork->pNHTTP);
+
+  _CHANGE_STATE(pWork, _PokeEvilChk2);
+}
+
+#endif
 
 
 static void _Select6MessageInit8(POKEMON_TRADE_WORK* pWork)
@@ -1351,8 +1488,16 @@ static void _Select6MessageInit8(POKEMON_TRADE_WORK* pWork)
   }
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_SELECT) &&
      (pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_SELECT)){
-    //@todo  不正検査    GTSネゴは今度なので今は書かない
-    _CHANGE_STATE(pWork, POKE_GTS_Select6Init);
+
+
+
+    if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
+      _CHANGE_STATE(pWork, _PokeEvilChk);
+//      _CHANGE_STATE(pWork, POKE_GTS_Select6Init);
+    }
+    else{
+      _CHANGE_STATE(pWork, POKE_GTS_Select6Init);
+    }
     return;
   }
   else if((pWork->changeFactor[myID]==POKETRADE_FACTOR_END) &&

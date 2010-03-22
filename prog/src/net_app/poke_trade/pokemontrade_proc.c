@@ -106,7 +106,7 @@ static void _recvSeqNegoNo(const int netID, const int size, const void* pData, v
 static void _gtsFirstMsgState(POKEMON_TRADE_WORK* pWork);
 static void _recvFriendBoxNum(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvChangeFactor(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
-
+static void _recvEvilCheck(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 ///通信コマンドテーブル
 static const NetRecvFuncTable _PacketTbl[] = {
@@ -128,6 +128,7 @@ static const NetRecvFuncTable _PacketTbl[] = {
   {_recvPokemonColor, _setPokemonColorBuffer},//_NETCMD_POKEMONCOLOR
   {_recvSeqNegoNo,   NULL},    ///_NETCMD_GTSSEQNO
   {_recvFriendBoxNum,   NULL},   ///_NETCMD_FRIENDBOXNUM
+  {_recvEvilCheck,   NULL},    ///_NETCMD_EVILCHECK
 
 };
 
@@ -689,6 +690,25 @@ static void _recvFriendBoxNum(const int netID, const int size, const void* pData
   }
   pWork->friendBoxNum = pRecvData[0];
 }
+
+
+//_NETCMD_EVILCHECK
+static void _recvEvilCheck(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  POKEMON_TRADE_WORK *pWork = pWk;
+  const u8* pRecvData = pData;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return;//自分のは今は受け取らない
+  }
+  pWork->evilCheck[1] = pRecvData[0];
+}
+
+
+
 
 //_NETCMD_CHANGEFACTOR
 static void _recvChangeFactor(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
@@ -1401,6 +1421,14 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
           IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->workBoxno, pWork->workPokeIndex,pWork);
         _CatchPokemonPositionRewind(pWork);          //今のつかんでる物を元の位置に戻す
         if(ppp && PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) != 0 ){
+
+          if(POKE_GTS_BanPokeCheck(pWork,ppp)){
+            
+            GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_09, pWork->pMessageStrBuf );
+            POKETRADE_MESSAGE_WindowOpen(pWork);
+            
+          }
+          else{
           line=POKETRADE_Line2RingLineIconGet(line);
           _CatchPokemonPositionActive(pWork,pCL, line, index, ppp);
 
@@ -1413,6 +1441,7 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
           _PokemonIconRenew(pWork);
           bChange = TRUE;
 //          pWork->bTouch=TRUE;
+          }
         }
       }
     }
@@ -2785,8 +2814,9 @@ static void _gtsFirstMsgState(POKEMON_TRADE_WORK* pWork)
 
     POKETRADE_MESSAGE_WindowClear(pWork);
     POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
-    GFL_NET_SetWifiBothNet(FALSE);
-
+    if(GFL_NET_IsInit()){
+      GFL_NET_SetWifiBothNet(FALSE);
+    }
    // _CHANGE_STATE(pWork, _touchState_BeforeTimeing1);
     _CHANGE_STATE(pWork,_touchState);
 
@@ -3008,7 +3038,7 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData,BOOL
           u16 oyaName[5] = {L'デ',L'バ',L'ッ',L'グ',0xFFFF};
           POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle(MONSNO_364+i, 0, GFL_HEAPID_APP);
           u32 ret = POKE_PERSONAL_GetParam(ppd,POKEPER_ID_sex);
-          int monsno = GFUser_GetPublicRand(10)+100;
+          int monsno = GFUser_GetPublicRand(10)+MONSNO_386;
           PP_SetupEx(pp, monsno, i+j, 123456,PTL_SETUP_POW_AUTO, ret);
           PP_Put( pp , ID_PARA_oyaname_raw , (u32)oyaName );
           PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex(  pWork->pMy ) );

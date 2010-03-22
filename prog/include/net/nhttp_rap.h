@@ -85,7 +85,7 @@ extern void NHTTP_RAP_PokemonEvilCheckCreate(NHTTP_RAP_WORK* pWork, HEAPID heapI
  * @retval  none
  */
 //------------------------------------------------------------------------------
-extern void NHTTP_RAP_PokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork,void* pData, int size);
+extern void NHTTP_RAP_PokemonEvilCheckAdd(NHTTP_RAP_WORK* pWork,const void* pData, int size);
 //------------------------------------------------------------------------------
 /**
  * @brief   ポケモン不正検査 コネクション作成

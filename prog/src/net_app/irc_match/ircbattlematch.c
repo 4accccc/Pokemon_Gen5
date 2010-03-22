@@ -1404,6 +1404,8 @@ static void _modeInit(IRC_BATTLE_MATCH* pWork)
     _CLACT_SetAnim(pWork,  55,  38,CELL_IRDS4,NANR_ir_ani_CellAnime5); //P4
     _CLACT_SetAnim(pWork, 152,  146,CELL_IRWAVE3,NANR_ir_ani_CellAnime0);
     _CLACT_SetAnim(pWork, 103,  146,CELL_IRWAVE4,NANR_ir_ani_CellAnime1);
+    _CLACT_SetAnim(pWork, 152,  46,CELL_IRWAVE1,NANR_ir_ani_CellAnime0);
+    _CLACT_SetAnim(pWork, 103,  46,CELL_IRWAVE2,NANR_ir_ani_CellAnime1);
   }
 
 
@@ -1934,6 +1936,10 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
       pWork->curIcon[CELL_IRWAVE3]=NULL;
       GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE4]);
       pWork->curIcon[CELL_IRWAVE4]=NULL;
+      GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE1]);
+      pWork->curIcon[CELL_IRWAVE1]=NULL;
+      GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE2]);
+      pWork->curIcon[CELL_IRWAVE2]=NULL;
       GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRDS2]);
       pWork->curIcon[CELL_IRDS2]=NULL;
       GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRDS4]);

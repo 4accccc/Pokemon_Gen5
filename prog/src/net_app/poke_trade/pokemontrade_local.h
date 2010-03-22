@@ -41,6 +41,7 @@
 
 #include "app/app_printsys_common.h"
 #include "net/net_save.h"
+#include "net/nhttp_rap.h"
 #include "pm_define.h"
 
 ///3Dモデルのタイプ
@@ -85,6 +86,7 @@ typedef enum
   _TIMING_POKECOLOR,
   _TIMING_RETURN,     //あいてが交換したがっていて、相手がやめたい時は同期をとって元のシーケンスに戻る
   _TIMING_RETURN2,
+  _TIMING_EVIL,
 
   POKETRADE_FACTOR_TIMING_A,   ///->初期状態POKETRADE_FACTOR_NONEにするタイミング
   POKETRADE_FACTOR_TIMING_B,   ///->POKETRADE_FACTOR_SINGLECHANGE かPOKETRADE_FACTOR_TRI_SELECTか POKETRADE_FACTOR_ENDのタイミング
@@ -473,6 +475,7 @@ typedef struct
 
 
 struct _POKEMON_TRADE_WORK{
+  NHTTP_RAP_WORK* pNHTTP;
   PENMOVE_WORK aPanWork;
   POKEMONTRADE_PARAM* pParentWork;
   POKEMONTRADE_DEMO_WORK* pPokemonTradeDemo;
@@ -671,6 +674,7 @@ struct _POKEMON_TRADE_WORK{
   u8 changeFactor[2];
   u8 SlideWindowTimer[2];
   u8 timerErupted[2]; //顔文字消去タイマー
+  u8 evilCheck[2];
   u8 BGClearFlg;
   u8 DemoBGClearFlg;
   u8 bByebyeMessageEach;  //送り先IDと送信ポケモン一致
@@ -682,8 +686,6 @@ struct _POKEMON_TRADE_WORK{
   u8 pokemonGTSSeqSend;  //送るGTSシーケンス番号
   u8 friendBoxNum;  //ともだちのボックス番号
   u8 statusModeOn;  //
-  u8 dummy1;
-  u8 dummy2;
   u8 dummy3;
 } ;
 
@@ -786,6 +788,8 @@ extern void POKMEONTRADE2D_IconGray(POKEMON_TRADE_WORK* pWork, GFL_CLWK* pCL ,BO
 extern void IRC_POKETRADE_PosChangeSubStatusIcon(POKEMON_TRADE_WORK* pWork,int sel,BOOL bReset);
 extern void POKEMONTRADE_VisibleFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo, BOOL bVisible);
 extern void POKE_GTS_VisibleFaceIcon(POKEMON_TRADE_WORK* pWork,BOOL bVisible);
+extern BOOL POKE_GTS_BanPokeCheck(POKEMON_TRADE_WORK* pWork, POKEMON_PASO_PARAM* ppp);
+
 extern void POKEMON_TRADE_MaskCommon(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKE_GTS_IsMyIn(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_WindowOpenXY(POKEMON_TRADE_WORK* pWork,BOOL bFast,int x,int y,int xm,int ym);
@@ -884,7 +888,7 @@ typedef enum {
   _NETCMD_POKEMONCOLOR,
   _NETCMD_GTSSEQNO,
   _NETCMD_FRIENDBOXNUM,
-  _NETCMD_TRIOK,
+  _NETCMD_EVILCHECK,
 } _POKEMON_TRADE_SENDCMD;
 
 

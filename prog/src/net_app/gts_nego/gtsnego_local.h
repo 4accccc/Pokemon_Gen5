@@ -157,6 +157,8 @@ extern void GTSNEGO_DISP_SearchPeopleDispMain(GTSNEGO_DISP_WORK* pWork);
 extern GFL_CLUNIT* GTSNEGO_DISP_GetCellUtil(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_UnionListRenew(GTSNEGO_DISP_WORK* pWork,GAMEDATA* pGameData, int no);
+extern BOOL GTSNEGO_DISP_CrossIconFlash(GTSNEGO_DISP_WORK* pWork, CROSSCUR_TYPE type);
+extern BOOL GTSNEGO_DISP_CrossIconFlashEnd(GTSNEGO_DISP_WORK* pWork);
 
 //extern void GTSNEGO_MESSAGE_PlateDisp(GTSNEGO_MESSAGE_WORK* pWork, MYSTATUS* pMyStatus, int index );
 extern void GTSNEGO_MESSAGE_FriendListPlateDisp(GTSNEGO_MESSAGE_WORK* pWork,GAMEDATA* pGameData);
@@ -190,8 +192,8 @@ extern MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index);
 
 #if DEBUG_ONLY_FOR_ohno
 #define _NET_DEBUG (1)
-#define _DISP_DEBUG (1)  //ï\é¶çÏÇËÇ±Ç›
+#define _DISP_DEBUG (0)  //ï\é¶çÏÇËÇ±Ç›
 #else
 #define _NET_DEBUG (0)
-#define _DISP_DEBUG (1)
+#define _DISP_DEBUG (0)
 #endif

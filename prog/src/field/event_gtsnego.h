@@ -15,6 +15,7 @@
 #include "net_app/gtsnego.h"
 
 
+
 extern GMEVENT* EVENT_GTSNego( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
 extern void EVENT_GTSNegoChange(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event);
 

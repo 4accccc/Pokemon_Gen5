@@ -175,9 +175,10 @@ struct _GTSNEGO_DISP_WORK {
 
 
 typedef struct{
-  u16 no;
+  u8 no;
   u8 x;
   u8 y;
+  u8 flash;
 } CROSSCUR_STRUCT;
 
 
@@ -745,18 +746,20 @@ static void _CreateCrossIcon(GTSNEGO_DISP_WORK* pWork)
 }
 
 
+#define _FLASH_ANIM_NO (29)
+
 static CROSSCUR_STRUCT crosspos[]=
 {
-  5, 128, 64,
-  5, 128, 64+6*8,
-  6, 128+8*5, 8*7,
-  7, 128+8*5, 8*12,
-  7, 128+8*5, 8*17,
-  0,0,0,
-  8, 128, 8*6,
-  8, 128, 8*6*2,
-  8, 128, 8*6*3,
-  0,0,0,
+  5, 128, 64,   29,
+  5, 128, 64+6*8,  29,
+  6, 128+8*5, 8*7,   30,
+  7, 128+8*5, 8*12,  31,
+  7, 128+8*5, 8*17,   31,
+  0,0,0, 0,
+  8, 128, 8*6,     32,
+  8, 128, 8*6*2,    32,
+  8, 128, 8*6*3,    32,
+  0,0,0, 0,
 };
 
 
@@ -793,6 +796,29 @@ void GTSNEGO_DISP_CrossIconDisp(GTSNEGO_DISP_WORK* pWork,APP_TASKMENU_WIN_WORK* 
     }
     break;
   }
+}
+
+BOOL GTSNEGO_DISP_CrossIconFlash(GTSNEGO_DISP_WORK* pWork, CROSSCUR_TYPE type)
+{
+  if(pWork->crossIcon==NULL){
+    return FALSE;
+  }
+  if(GFL_CLACT_WK_GetAnmSeq(pWork->crossIcon) >= _FLASH_ANIM_NO){
+    return FALSE;
+  }
+  GFL_CLACT_WK_SetAnmSeq(pWork->crossIcon, crosspos[type].flash);
+  return TRUE;
+}
+
+BOOL GTSNEGO_DISP_CrossIconFlashEnd(GTSNEGO_DISP_WORK* pWork)
+{
+  if(pWork->crossIcon==NULL){
+    return FALSE;
+  }
+  if(GFL_CLACT_WK_GetAnmSeq(pWork->crossIcon) >= _FLASH_ANIM_NO){
+    return !GFL_CLACT_WK_CheckAnmActive(pWork->crossIcon);
+  }
+  return FALSE;
 }
 
 

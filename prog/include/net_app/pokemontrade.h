@@ -58,6 +58,7 @@ typedef struct{
   u16 selectIndex;
   BOOL bDebug;
   SHINKA_DEMO_PARAM* shinka_param;
+  DWCSvlResult* pSvl;         //[in ]任天堂SVL認証構造体 DWCSvlResultは自前で確保してください
 } POKEMONTRADE_PARAM;
 
 

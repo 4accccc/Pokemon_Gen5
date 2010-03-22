@@ -21,6 +21,7 @@
 #include "system/main.h"
 #include "system/wipe.h"
 #include "gamesystem/msgspeed.h" // MSGSPEED_GetWait
+#include "msg/msg_namein.h"   //デフォルト名取
 
 #include "message.naix"
 #include "print/printsys.h"
@@ -180,6 +181,7 @@ struct _GTSNEGO_WORK {
   MATCH_DATA myMatchData;
   MATCH_DATA MatchData;
   BOOL keyMode;
+  DWC_TOOL_BADWORD_WORK aBadWork;
 };
 
 
@@ -210,6 +212,8 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork );
 
 static void _levelSelect( GTSNEGO_WORK *pWork );
 static void _friendSelect( GTSNEGO_WORK *pWork );
+static int _buttonDecide(GTSNEGO_WORK* pWork, int key);
+static void _modeSelectMenuFlash(GTSNEGO_WORK* pWork);
 
 static void _recvInfomationData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvMystatusData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
@@ -332,10 +336,15 @@ static BOOL _AnyoneOrFriendButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
 {
   pWork->changeMode = bttnid;
   if(bttnid==0){
-    _CHANGE_STATE(pWork, _levelSelect);
+    pWork->key1 = _CROSSCUR_TYPE_MAINUP;
+    _buttonDecide(pWork, pWork->key1);
+    _CHANGE_STATE(pWork,_modeSelectMenuFlash);
+
   }
   else{
-    _CHANGE_STATE(pWork, _friendSelect);
+    pWork->key1 = _CROSSCUR_TYPE_MAINDOWN;
+    _buttonDecide(pWork, pWork->key1);
+    _CHANGE_STATE(pWork,_modeSelectMenuFlash);
   }
   return TRUE;
 }
@@ -481,7 +490,9 @@ static void _messagePMS( GTSNEGO_WORK *pWork )
 #else
   PMS_DATA* pPMS=&pWork->MatchData.pms;
 #endif
-  if(GFL_UI_TP_GetTrg() || GFL_UI_KEY_GetTrg()){  //@todo時間に変更
+
+  pWork->timer--;
+  if(pWork->timer==0){
     GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork, GTSNEGO_040);
     GTSNEGO_MESSAGE_PMSDrawInit(pWork->pMessageWork, pWork->pDispWork);
     GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, pPMS);
@@ -501,6 +512,7 @@ static void _messagePMS( GTSNEGO_WORK *pWork )
 static void _timingCheck2( GTSNEGO_WORK *pWork )
 {
   EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+  int i;
 
 #if _DISP_DEBUG
   MYSTATUS* pMy = GAMEDATA_GetMyStatus(pEv->gamedata);
@@ -509,12 +521,17 @@ static void _timingCheck2( GTSNEGO_WORK *pWork )
 #else
   MYSTATUS* pMy = pEv->pStatus[1];
   int num = pWork->MatchData.num;
-  
-  
+
+  pEv->profileID[pEv->count] = MyStatus_GetProfileID( pMy );
+  pEv->count++;
+  if(pEv->count >= EVENT_GTSNEGO_RECONNECT_NUM){
+    pEv->count = 0;
+  }
 #endif
 
   GTSNEGO_MESSAGE_FindPlayer(pWork->pMessageWork, pMy, num);
   GTSNEGO_DISP_SearchEndPeopleDispSet(pWork->pDispWork);
+  pWork->timer = _FRIEND_GREE_DOWN_TIME;
   _CHANGE_STATE(pWork,_messagePMS);
 }
 
@@ -528,13 +545,28 @@ static void _timingCheck2( GTSNEGO_WORK *pWork )
 
 static void _timingCheck4( GTSNEGO_WORK *pWork )
 {
+  EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+  MYSTATUS* pMy = pEv->pStatus[1];
+  BOOL res;   // 不正文字検査完了
+#if (PM_VERSION==VERSION_WHITE)
+  int msg = NAMEIN_DEF_NAME_000;
+#else
+  int msg = NAMEIN_DEF_NAME_001;
+#endif
 
-  //@todo 不正文字検査完了
-  //if(DWC_TOOL_BADWORD_Wait){
-    _CHANGE_STATE(pWork,_timingCheck2);
-//  }
   
-  //@todo 名前置き換え
+
+  if(DWC_TOOL_BADWORD_Wait( &pWork->aBadWork, &res)){
+    if(res){  //不正の場合
+      GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_namein_dat, pWork->heapID );
+      STRBUF  *pStrBuff = GFL_MSG_CreateString( p_msg, msg );
+      MyStatus_SetMyNameFromString(pMy, pStrBuff);
+      GFL_STR_DeleteBuffer(pStrBuff);
+      GFL_MSG_Delete(p_msg);
+    }
+    _CHANGE_STATE(pWork,_timingCheck2);
+  }
+  
 }
 
 
@@ -546,24 +578,15 @@ static void _timingCheck4( GTSNEGO_WORK *pWork )
 
 static void _timingCheck5( GTSNEGO_WORK *pWork )
 {
+  EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+  MYSTATUS* pMy = pEv->pStatus[1];
+  
   if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO3, WB_NET_GTSNEGO)){
     return;
   }
 
-#if 0
-typedef struct 
-{
-  STRCODE   badword_str[ DWC_TOOL_BADWORD_STRL_MAX ];
-  u16       *p_badword_arry[1];
-  char      badword_result[1];
-  int       badword_num;
-} DWC_TOOL_BADWORD_WORK;
-#endif
-  
-  //@todo 不正文字検査
-//    MYSTATUS* pMy = pEv->pStatus[1];
-
- // DWC_TOOL_BADWORD_Start();
+  // 不正文字検査
+  DWC_TOOL_BADWORD_Start( &pWork->aBadWork, MyStatus_GetMyName(pMy), PERSON_NAME_SIZE);
   
   _CHANGE_STATE(pWork,_timingCheck4);
 }
@@ -752,7 +775,9 @@ static void _matchingState( GTSNEGO_WORK *pWork )
   if(1){
 #else
     //接続したら表示して交換に
-  if(STEPMATCH_SUCCESS == GFL_NET_DWC_GetStepMatchResult()){
+//  if(STEPMATCH_SUCCESS == GFL_NET_DWC_GetStepMatchResult()){
+  if(GFL_NET_STATE_MATCHED == GFL_NET_StateGetWifiStatus()){
+
 #endif
     
     GTSNEGO_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
@@ -776,8 +801,10 @@ static void _matchingState( GTSNEGO_WORK *pWork )
 static int _evalcallback(int index, void* param)
 {
   GTSNEGO_WORK *pWork=param;
+  EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
   int value = -1;
   int targetlv,targetfriend,targetmy,profile;
+  int i;
 
   targetlv = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_LEVEL].keyStr,-1);
   targetfriend = DWC_GetMatchIntValue(index,pWork->aMatchKey[_MATCHKEY_IMAGE_FRIEND].keyStr,-1);
@@ -797,8 +824,12 @@ static int _evalcallback(int index, void* param)
       if(pWork->friendChageType==targetmy){
         value+=10;
       }
-      //@todoすでに交換したかをチェック
-      
+      for(i=0;i<EVENT_GTSNEGO_RECONNECT_NUM;i++){
+        if(profile == pEv->profileID[i]){
+          value = 0;
+          break;
+        }
+      }
     }
   }
   OS_TPrintf("評価コールバック %d %d %d %d %d\n",value,pWork->changeMode,targetlv,targetmy,targetfriend);
@@ -862,7 +893,7 @@ static void _matchKeyMake( GTSNEGO_WORK *pWork )
     _CHANGE_STATE(pWork,_matchingState);
   }
   else{
-    //@todo
+    _CHANGE_STATE(pWork,NULL);  //エラー表示
   }
 
 }
@@ -895,6 +926,23 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     break;
   }
 }
+
+
+
+static void _levelSelectDecide( GTSNEGO_WORK *pWork )
+{
+  APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+  pWork->pAppWin = NULL;
+
+  GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_019);
+  GTSNEGO_DISP_SearchPeopleDispSet(pWork->pDispWork);
+  GTSNEGO_MESSAGE_TitleMessage(pWork->pMessageWork,GTSNEGO_018);
+
+  GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork);
+//  pWork->pAppWin = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork,GTSNEGO_020);
+  _CHANGE_STATE(pWork, _matchKeyMake);
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -956,8 +1004,8 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
     if(pWork->key2 == _CROSSCUR_TYPE_ANY4){
       PMSND_PlaySystemSE(_SE_DECIDE);
-      _CHANGE_STATE(pWork, _matchKeyMake);
-      return ;
+      _CHANGE_STATE(pWork, _levelSelectDecide);
+      return;
     }
   }
 
@@ -969,7 +1017,7 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
   switch(GFL_UI_TP_HitTrg(_tp_data)){
   case 0:
     PMSND_PlaySystemSE(_SE_DECIDE);
-    _CHANGE_STATE(pWork, _matchKeyMake);
+    _CHANGE_STATE(pWork, _levelSelectDecide);
     return;
     break;
   }
@@ -1204,6 +1252,9 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
 
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){  // キーでの決定
     PMSND_PlaySystemSE(_SE_DECIDE);
+
+    GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork , pWork->key3);
+
     pWork->selectFriendIndex = pWork->scrollPanelCursor.oamlistpos + pWork->key3  - _CROSSCUR_TYPE_FRIEND1;
     OS_TPrintf("選んだ番号 %d\n", pWork->selectFriendIndex);
     _CHANGE_STATE(pWork,_friendSelectDecide);
@@ -1351,13 +1402,66 @@ static void _modeSelectMenuInit(GTSNEGO_WORK* pWork)
   }
   GTSNEGO_MESSAGE_DispAnyoneOrFriend(pWork->pMessageWork, &_BttnCallBack, pWork);
   pWork->touch = &_AnyoneOrFriendButtonCallback;
-//  GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_024);
 
   GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_037);
 
 
 
   _CHANGE_STATE(pWork,_modeSelectMenuWait);
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ボタンのフラッシュを行い、決定を返す
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static int _buttonDecide(GTSNEGO_WORK* pWork, int key)
+{
+  if(GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork, key)){
+    PMSND_PlaySystemSE(_SE_DECIDE);
+    return key;
+  }
+  return _CROSSCUR_TYPE_NONE;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ボタンのフラッシュを行い、決定を返す
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static int _buttonCheck(GTSNEGO_WORK* pWork, int key)
+{
+  if(GTSNEGO_DISP_CrossIconFlashEnd(pWork->pDispWork) ){
+    return key;
+  }
+  return _CROSSCUR_TYPE_NONE;
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   モードセレクト画面待機
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _modeSelectMenuFlash(GTSNEGO_WORK* pWork)
+{
+  int buttonNo = _buttonCheck(pWork, pWork->key1);
+  if(buttonNo==_CROSSCUR_TYPE_MAINUP){
+    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key2);
+    _CHANGE_STATE(pWork,_levelSelect);
+    return;
+  }
+  if(buttonNo==_CROSSCUR_TYPE_MAINDOWN){
+    _CHANGE_STATE(pWork,_friendSelect);
+    return;
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -1369,22 +1473,24 @@ static void _modeSelectMenuInit(GTSNEGO_WORK* pWork)
 static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
 {
   BOOL bHit = FALSE;
+  int buttonNo;
   
   if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
 
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
-    PMSND_PlaySystemSE(_SE_DECIDE);
-    if(pWork->key1==_CROSSCUR_TYPE_MAINUP){
-      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key2);
-      _CHANGE_STATE(pWork,_levelSelect);
+    if(!pWork->keyMode){
+      pWork->keyMode=TRUE;
     }
     else{
-      _CHANGE_STATE(pWork,_friendSelect);
+      _buttonDecide(pWork, pWork->key1);
+      _CHANGE_STATE(pWork,_modeSelectMenuFlash);
+      return;
     }
-    return;
   }
+
+  
   if(GFL_UI_KEY_GetTrg() == PAD_KEY_UP){
     bHit=TRUE;
     PMSND_PlaySystemSE(_SE_CUR);
