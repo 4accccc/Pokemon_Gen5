@@ -33,7 +33,7 @@
 #define MYDWC_HEAPSIZE		0x20000
 
 ///GDSプロック制御が使用するヒープサイズ
-#define GDSPROC_HEAP_SIZE		(MYDWC_HEAPSIZE + 0x8000)
+#define GDSPROC_HEAP_SIZE		(0x800)  //(MYDWC_HEAPSIZE + 0x8000)
 
 //==============================================================================
 //	グローバル変数
@@ -97,6 +97,8 @@ static GFL_PROC_RESULT GdsMainProc_Init( GFL_PROC * proc, int * seq, void * pwk,
 	gmw = GFL_PROC_AllocWork(proc, sizeof(GDSPROC_MAIN_WORK), HEAPID_GDS_MAIN );
 	GFL_STD_MemClear(gmw, sizeof(GDSPROC_MAIN_WORK));
 	gmw->proc_param = pwk;
+	
+  gmw->proc_sys = GFL_PROC_LOCAL_boot(HEAPID_GDS_MAIN);
 
 	PMSND_PlayBGM(SEQ_BGM_WIN1);
 
@@ -131,14 +133,19 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 		
 		SEQ_END,
 	};
+  GFL_PROC_MAIN_STATUS proc_status;
+  
+  proc_status = GFL_PROC_LOCAL_Main(gmw->proc_sys);
 	
 	switch(*seq){
 	case SEQ_INIT_DPW:	//通信ライブラリ初期化
+	#if GDS_FIX
 		GdsMain_CommInitialize(gmw);
+	#endif
 		*seq = SEQ_INIT_DPW_WAIT;
 		break;
 	case SEQ_INIT_DPW_WAIT:
-		if(gmw->net_init == TRUE){//if(CommIsVRAMDInitialize()){
+		if(1){//gmw->net_init == TRUE){//if(CommIsVRAMDInitialize()){
 		#if GDS_FIX
 			_wtHeapHandle = gmw->heapHandle;
 	  #endif
@@ -152,13 +159,24 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 		break;
 		
 	case SEQ_WIFI_CONNECT:	//WIFI接続
-    gmw->proc_sys = GFL_PROC_LOCAL_boot(HEAPID_GDS_MAIN);
+	#if GDS_FIX
 		GFL_PROC_LOCAL_CallProc(gmw->proc_sys, NO_OVERLAY_ID, &GdsConnectProcData, gmw);
+	#else
+	  {
+      gmw->login_param.gamedata = gmw->proc_param->gamedata;
+      gmw->login_param.bg       = WIFILOGIN_BG_NORMAL;
+      gmw->login_param.display  = WIFILOGIN_DISPLAY_UP;
+      gmw->login_param.pSvl = &gmw->aSVL;
+      gmw->login_param.mode = WIFILOGIN_MODE_NORMAL;
+      GFL_PROC_LOCAL_CallProc(
+        gmw->proc_sys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &gmw->login_param);
+    }
+	#endif
 		(*seq)++;
 		break;
 	case SEQ_WIFI_CONNECT_MAIN:
-    if(GFL_PROC_LOCAL_Main(gmw->proc_sys) == GFL_PROC_MAIN_NULL){
-			if(gmw->ret_connect == TRUE){
+    if(proc_status == GFL_PROC_MAIN_NULL){
+      if(gmw->login_param.result == WIFILOGIN_RESULT_LOGIN){
 				gmw->connect_success = TRUE;
 				(*seq)++;
 			}
@@ -180,30 +198,37 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 		}
 		break;
 	case SEQ_BATTLE_RECORDER_MAIN:
-    if(GFL_PROC_LOCAL_Main(gmw->proc_sys) == GFL_PROC_MAIN_NULL){
+    if(proc_status == GFL_PROC_MAIN_NULL){
 			(*seq)++;
 		}
 		break;
 	
 	case SEQ_WIFI_CLEANUP:		//WIFI切断
+	#if GDS_FIX
 		GFL_PROC_LOCAL_CallProc(gmw->proc_sys, NO_OVERLAY_ID, &GdsConnectProcData, gmw);
+	#else
+	  {
+      gmw->logout_param.gamedata = gmw->proc_param->gamedata;
+      gmw->logout_param.bg = WIFILOGIN_BG_NORMAL;
+      gmw->logout_param.display = WIFILOGIN_DISPLAY_UP;
+      GFL_PROC_LOCAL_CallProc(
+        gmw->proc_sys, FS_OVERLAY_ID(wifi_login), &WiFiLogout_ProcData, &gmw->logout_param);
+    }
+	#endif
 		(*seq)++;
 		break;
 	case SEQ_WIFI_CLEANUP_MAIN:
-    if(GFL_PROC_LOCAL_Main(gmw->proc_sys) == GFL_PROC_MAIN_NULL){
+    if(proc_status == GFL_PROC_MAIN_NULL){
 			gmw->connect_success = FALSE;
 			(*seq)++;
 		}
 		break;
 
 	case SEQ_END:
-	  if(gmw->proc_sys != NULL){
-      GFL_PROC_LOCAL_Exit(gmw->proc_sys);
-    }
 		return GFL_PROC_RES_FINISH;
 	}
 
-	if(gmw->comm_initialize_ok == TRUE && gmw->connect_success == TRUE && gmw->ret_connect == TRUE){
+	if(gmw->connect_success == TRUE){
 		// 受信強度リンクを反映させる
 		DWC_UpdateConnection();
 
@@ -228,8 +253,12 @@ static GFL_PROC_RESULT GdsMainProc_End( GFL_PROC * proc, int * seq, void * pwk, 
 {
 	GDSPROC_MAIN_WORK * gmw  = mywk;
 
+  GFL_PROC_LOCAL_Exit(gmw->proc_sys);
+
+#if GDS_FIX
 	GdsMain_CommFree(gmw);
-	
+#endif
+
 	//GDSプロック呼び出しパラメータ解放
 	GFL_HEAP_FreeMemory(gmw->proc_param);
 	

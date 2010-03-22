@@ -3231,7 +3231,7 @@ static BOOL debugMenuCallProc_GDS( DEBUG_MENU_EVENT_WORK *p_wk )
   GMEVENT       *p_event    = p_wk->gmEvent;
   DEBUG_GDS_EVENT_WORK *p_gds;
 
-  if( WifiList_CheckMyGSID(GAMEDATA_GetWiFiList(p_gamedata) ) )
+  if( 1)//WifiList_CheckMyGSID(GAMEDATA_GetWiFiList(p_gamedata) ) )
   {
     //ƒCƒ”ƒFƒ“ƒg
     GMEVENT_Change( p_event, debugMenuGDS, sizeof(DEBUG_GDS_EVENT_WORK) );

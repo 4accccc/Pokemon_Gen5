@@ -9,6 +9,9 @@
 #ifndef __GDS_MAIN_H__
 #define __GDS_MAIN_H__
 
+#include "net_app/wifi_login.h"
+#include "net_app/wifi_logout.h"
+
 
 //==============================================================================
 //	構造体定義
@@ -39,6 +42,12 @@ typedef struct{
 	
 	//Wifi接続画面の結果を受け取る
 	BOOL ret_connect;				///<TRUE:Wifi接続行った。　FALSE:接続しなかった
+	
+	DWCSvlResult aSVL;
+	union{
+    WIFILOGIN_PARAM login_param;
+    WIFILOGOUT_PARAM logout_param;
+  };
 }GDSPROC_MAIN_WORK;
 
 

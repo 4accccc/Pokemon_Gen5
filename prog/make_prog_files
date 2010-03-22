@@ -1363,7 +1363,7 @@ SRCS_OVERLAY_PDW_ACC   = net_app/pdw_account/pdwacc_message.c \
 
 
 #GDS’ÊM§Œä
-#===> SRCS_OVERLAY_DPW_COMMON
+#===> SRCS_OVERLAY_WIFI_LOGIN
 #LIB=>					libgds.$HYB.a
 SRCS_OVERLAY_GDS_COMM =	net_app/gds/gds_rap.c \
 								net_app/gds/gds_rap_response.c \
