@@ -132,6 +132,7 @@ enum{
   MODE_CONNECT,       ///< GTSサーバー接続をする
   MODE_DISCONNECT,   ///< GTSサーバー切断をする
   MODE_WIFILOGOUT,    ///< WIFIログアウト
+  MODE_WIFILOGIN_ERR, ///< WIFIログイン エラー
 };
 
 ///< CLACTで定義しているセルが大きすぎてサブ画面に影響がでてしまうので離してみる
@@ -659,7 +660,6 @@ extern void WorldTrade_ClearPassive(void);
 
 extern void WorldTrade_InitSystem( WORLDTRADE_WORK *wk );
 extern void WorldTrade_ExitSystem( WORLDTRADE_WORK *wk );
-
 
 
 // worldtrade_sublcd.c

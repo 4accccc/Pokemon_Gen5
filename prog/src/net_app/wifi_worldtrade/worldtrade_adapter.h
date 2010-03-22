@@ -140,21 +140,6 @@ static inline void WirelessIconEasyEnd( void )
 }
 
 
-//í êMÉGÉâÅ[
-static inline void CommStateSetError( int error )
-{	
-  GFL_NET_StateSetError( error );
-	NetErr_ErrorSet();
-}
-static inline void CommFatalErrorFunc_NoNumber( void )
-{
-	NetErr_ErrorSet();
-}
-static inline void ComErrorWarningResetCall( int heapID, int type, int code )
-{
-  //@todo
-	NetErr_ErrorSet();
-}
 static inline void Comm_WifiHistoryDataSet( WIFI_HISTORY *wifiHistory, int Nation, int Area, int langCode )
 {
 #if (PM_LANG == LANG_JAPAN)

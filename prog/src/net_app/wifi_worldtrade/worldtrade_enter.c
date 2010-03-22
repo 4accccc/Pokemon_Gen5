@@ -218,6 +218,7 @@ int WorldTrade_Enter_Init(WORLDTRADE_WORK *wk, int seq)
   switch( wk->sub_process_mode )
   { 
   case MODE_WIFILOGIN:     ///< WIFIログイン
+  case MODE_WIFILOGIN_ERR:
     wk->subprocess_seq = ENTER_WIFILOGIN_PROC_START;
     break;
   case MODE_CONNECT:       ///< GTSサーバー接続をする
@@ -757,7 +758,7 @@ static int Enter_WifiConnectionLoginWait( WORLDTRADE_WORK *wk )
 				//break;
 			case DWC_ETYPE_FATAL:
 				// 強制ふっとばし
-				CommFatalErrorFunc_NoNumber();
+        NetErr_DispCallFatal();
 				break;
 			}
 
@@ -893,7 +894,7 @@ static int Enter_ServerResult( WORLDTRADE_WORK *wk )
 		default:
 			// 即ふっとばし
 			WorldTrade_TimeIconDel(wk);
-			CommFatalErrorFunc_NoNumber();
+      NetErr_DispCallFatal();
 			break;
 
 		}
@@ -902,7 +903,7 @@ static int Enter_ServerResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-			CommFatalErrorFunc_NoNumber();	//強制ふっとばし
+      NetErr_DispCallFatal();
 		}
 	}
 	return SEQ_MAIN;
@@ -978,7 +979,7 @@ static int Enter_ProfileResult( WORLDTRADE_WORK *wk )
 					wk->subprocess_seq = ENTER_SERVER_SERVICE_ERROR;
 					break;
 				default:	//ありえないけど一応。強制ふっとばし
-					CommFatalErrorFunc_NoNumber();
+          NetErr_DispCallFatal();
 					break;
 				}
 				break;
@@ -996,7 +997,7 @@ static int Enter_ProfileResult( WORLDTRADE_WORK *wk )
 				// 即ふっとばし
 				OS_TPrintf("default error !\n");
 				WorldTrade_TimeIconDel(wk);
-				CommFatalErrorFunc_NoNumber();
+        NetErr_DispCallFatal();
 				break;
 			}
 			break;
@@ -1034,7 +1035,7 @@ static int Enter_ProfileResult( WORLDTRADE_WORK *wk )
 		default:
 			// 即ふっとばし
 			WorldTrade_TimeIconDel(wk);
-			CommFatalErrorFunc_NoNumber();
+      NetErr_DispCallFatal();
 			break;
 		}
 		
@@ -1042,7 +1043,7 @@ static int Enter_ProfileResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-			CommFatalErrorFunc_NoNumber();	//強制ふっとばし
+      NetErr_DispCallFatal();
 		}
 	}
 	return SEQ_MAIN;
@@ -1115,6 +1116,14 @@ static int Enter_Wifilogin_start( WORLDTRADE_WORK *wk )
   param->display      = WIFILOGIN_DISPLAY_UP;
   param->pSvl         = &wk->svl;
   param->nsid         = WB_NET_WIFIGTS;
+  if( wk->sub_process_mode == MODE_WIFILOGIN_ERR )
+  { 
+    param->mode         = WIFILOGIN_MODE_ERROR;
+  }
+  else
+  { 
+    param->mode         = WIFILOGIN_MODE_NORMAL;
+  }
 
   GAMESYSTEM_CallProc( wk->param->gamesys,
 		FS_OVERLAY_ID(wifi_login), 

@@ -1368,4 +1368,3 @@ void WorldTrade_ExitSystem( WORLDTRADE_WORK *wk )
 
 
 }
-

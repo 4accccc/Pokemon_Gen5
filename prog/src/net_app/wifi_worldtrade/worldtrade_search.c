@@ -1416,7 +1416,7 @@ static int SubSeq_ServerResult( WORLDTRADE_WORK *wk )
 			break;
 		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
 			// 即ふっとばし
-			CommFatalErrorFunc_NoNumber();
+      NetErr_DispCallFatal();
 			break;
 	// -----------------------------------------
 
@@ -1434,7 +1434,7 @@ static int SubSeq_ServerResult( WORLDTRADE_WORK *wk )
 	else{
 		wk->timeout_count++;
 		if(wk->timeout_count == TIMEOUT_TIME){
-			CommFatalErrorFunc_NoNumber();	//強制ふっとばし
+      NetErr_DispCallFatal();
 		}
 	}
 	return SEQ_MAIN;
