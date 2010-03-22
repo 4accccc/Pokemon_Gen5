@@ -83,11 +83,11 @@ typedef enum {
   RES_MONITOR_NSBTP_C05,  // モニター・テクスチャパターン・アニメーション ( モニタ情報C05 )
   RES_MONITOR_NSBTP_C08W, // モニター・テクスチャパターン・アニメーション ( モニタ情報C08W )
   RES_MONITOR_NSBTP_C08B, // モニター・テクスチャパターン・アニメーション ( モニタ情報C08B )
-  RES_MONITOR_NSBTP_D03,  // モニター・テクスチャパターン・アニメーション ( モニタ情報D03 )
   RES_MONITOR_NSBTP_TG,   // モニター・テクスチャパターン・アニメーション ( モニタ情報TG )
   RES_MONITOR_NSBTP_ST,   // モニター・テクスチャパターン・アニメーション ( モニタ情報ST )
   RES_MONITOR_NSBTP_WF,   // モニター・テクスチャパターン・アニメーション ( モニタ情報WF )
   RES_MONITOR_NSBTP_BC,   // モニター・テクスチャパターン・アニメーション ( モニタ情報BC )
+  RES_MONITOR_NSBTP_D03,  // モニター・テクスチャパターン・アニメーション ( モニタ情報D03 )
   RES_NUM                 // 総数
 } RES_INDEX;
 static const GFL_G3D_UTIL_RES res_table[ RES_NUM ] = 
@@ -108,11 +108,11 @@ static const GFL_G3D_UTIL_RES res_table[ RES_NUM ] =
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv05_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報C05 )
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv08_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報C08W )
   { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv09_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報C08B )
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv10_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報D03 )
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv11_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報TG )
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv12_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報ST )
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv13_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報WF )
-  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv14_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報BC )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv10_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報TG )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv11_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報ST )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv12_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報WF )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv13_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報BC )
+  { ARCID_GATE_GIMMICK, NARC_gate_gelboard01_tv14_nsbtp, GFL_G3D_UTIL_RESARC }, // モニター・テクスチャパターン・アニメーション ( モニタ情報D03 )
 };
 
 // アニメインデックス
@@ -131,11 +131,11 @@ typedef enum {
   ANM_MONITOR_C05,          // モニター・テクスチャ・アニメーション ( モニタ情報C05 )
   ANM_MONITOR_C08W,         // モニター・テクスチャ・アニメーション ( モニタ情報C08W )
   ANM_MONITOR_C08B,         // モニター・テクスチャ・アニメーション ( モニタ情報C08B )
-  ANM_MONITOR_D03,          // モニター・テクスチャ・アニメーション ( モニタ情報D03 )
   ANM_MONITOR_TG,           // モニター・テクスチャ・アニメーション ( モニタ情報TG )
   ANM_MONITOR_ST,           // モニター・テクスチャ・アニメーション ( モニタ情報ST )
   ANM_MONITOR_WF,           // モニター・テクスチャ・アニメーション ( モニタ情報WF )
   ANM_MONITOR_BC,           // モニター・テクスチャ・アニメーション ( モニタ情報BC )
+  ANM_MONITOR_D03,          // モニター・テクスチャ・アニメーション ( モニタ情報D03 )
   ANM_NUM                   // 総数
 } ANM_INDEX;
 static const GFL_G3D_UTIL_ANM anm_table[ ANM_NUM ] = 
@@ -155,11 +155,11 @@ static const GFL_G3D_UTIL_ANM anm_table[ ANM_NUM ] =
   { RES_MONITOR_NSBTP_C05, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報C05 )
   { RES_MONITOR_NSBTP_C08W, 0 },  // モニター・テクスチャ・アニメーション ( モニタ情報C08W )
   { RES_MONITOR_NSBTP_C08B, 0 },  // モニター・テクスチャ・アニメーション ( モニタ情報C08B )
-  { RES_MONITOR_NSBTP_D03, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報D03 )
   { RES_MONITOR_NSBTP_TG, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報TG )
   { RES_MONITOR_NSBTP_ST, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報ST )
   { RES_MONITOR_NSBTP_WF, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報WF )
   { RES_MONITOR_NSBTP_BC, 0 },    // モニター・テクスチャ・アニメーション ( モニタ情報BC )
+  { RES_MONITOR_NSBTP_D03, 0 },   // モニター・テクスチャ・アニメーション ( モニタ情報D03 )
 };
 
 // オブジェクトインデックス
@@ -306,11 +306,11 @@ typedef enum {
   MONITOR_ANIME_C05,  // ( モニタ情報C05 )
   MONITOR_ANIME_C08W, // ( モニタ情報C08W )
   MONITOR_ANIME_C08B, // ( モニタ情報C08B )
-  MONITOR_ANIME_D03,  // ( モニタ情報D03 )
   MONITOR_ANIME_TG,   // ( モニタ情報TG )
   MONITOR_ANIME_ST,   // ( モニタ情報ST )
   MONITOR_ANIME_WF,   // ( モニタ情報WF )
   MONITOR_ANIME_BC,   // ( モニタ情報BC )
+  MONITOR_ANIME_D03,  // ( モニタ情報D03 )
   MONITOR_ANIME_NUM,  // 総数
   MONITOR_ANIME_MAX = MONITOR_ANIME_NUM - 1
 } MONITOR_ANIME_INDEX;
@@ -325,11 +325,11 @@ static u16 monitor_anime[ MONITOR_ANIME_NUM ] =
   ANM_MONITOR_C05,  // ( モニタ情報C05 )
   ANM_MONITOR_C08W, // ( モニタ情報C08W )
   ANM_MONITOR_C08B, // ( モニタ情報C08B )
-  ANM_MONITOR_D03,  // ( モニタ情報D03 )
   ANM_MONITOR_TG,   // ( モニタ情報TG )
   ANM_MONITOR_ST,   // ( モニタ情報ST )
   ANM_MONITOR_WF,   // ( モニタ情報WF )
   ANM_MONITOR_BC,   // ( モニタ情報BC )
+  ANM_MONITOR_D03,  // ( モニタ情報D03 )
 };
 
 
@@ -1293,10 +1293,11 @@ static void EntryNews( GATEWORK* work,
   GOBJ_ELBOARD_AddNews( work->elboard, news );
 
   // 登録状況を更新
-  {
-    u32 flag = 0;
-    if( type == NEWS_TYPE_SPECIAL ) { flag = sp_data->flag; }
-    AddNewsEntryData( work, type, flag );
+  if( type == NEWS_TYPE_SPECIAL ) { 
+    AddNewsEntryData( work, type, sp_data->flag );
+  }
+  else {
+    AddNewsEntryData( work, type, 0 );
   }
 
   // フラグ操作
@@ -1625,8 +1626,7 @@ static void AddNews_INFO_A( GATEWORK* work )
   RTC_GetDate( &date ); 
 
   // 曜日に応じた情報を選択
-  switch( date.week )
-  {
+  switch( date.week ) {
   case RTC_WEEK_SUNDAY:    news.msgStrID = work->gateData->msgID_infoG;  break;
   case RTC_WEEK_MONDAY:    news.msgStrID = work->gateData->msgID_infoD;  break;
   case RTC_WEEK_TUESDAY:   news.msgStrID = work->gateData->msgID_infoA;  break;
@@ -1663,8 +1663,7 @@ static void AddNews_INFO_B( GATEWORK* work )
   RTC_GetDate( &date ); 
 
   // 曜日に応じた情報を選択
-  switch( date.week )
-  {
+  switch( date.week ) {
   case RTC_WEEK_SUNDAY:    news.msgStrID = work->gateData->msgID_infoH;  break;
   case RTC_WEEK_MONDAY:    news.msgStrID = work->gateData->msgID_infoE;  break;
   case RTC_WEEK_TUESDAY:   news.msgStrID = work->gateData->msgID_infoB;  break;
@@ -1896,10 +1895,7 @@ static int GetValidWeatherNewsNum( WEATHER_NEWS_PARAM* param )
   {
     // 有効なデータを発見
     if( (param->zoneID[i] != ZONE_ID_MAX) &&
-        (param->weatherNo[i] != WEATHER_NO_NONE) )
-    {
-      num++;
-    }
+        (param->weatherNo[i] != WEATHER_NO_NONE) ) { num++; }
   }
 
   return num;

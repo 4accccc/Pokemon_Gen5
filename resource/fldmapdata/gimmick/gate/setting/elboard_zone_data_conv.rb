@@ -17,25 +17,25 @@ def GetMonitorAnimeNo( no_str )
 
   # ハッシュテーブル作成
   hash_table = Hash::new
-  hash_table["T02"]   = 0 #dummy
   hash_table["C01"]   = 0
   hash_table["C02"]   = 1
   hash_table["C03"]   = 2
   hash_table["C04"]   = 3
   hash_table["C05"]   = 4
-  hash_table["C06"]   = 0 #dummy
-  hash_table["C07"]   = 0 #dummy
   hash_table["C08_W"] = 5
   hash_table["C08_B"] = 6
-  hash_table["TG"]    = 8
-  hash_table["ST"]    = 9
-  hash_table["WF"]    = 10
-  hash_table["BC"]    = 11
-  hash_table["D03"]   = 7
+  hash_table["TG"]    = 7
+  hash_table["ST"]    = 8
+  hash_table["WF"]    = 9
+  hash_table["BC"]    = 10
+  hash_table["D03"]   = 11 
+  hash_table["C06"]   = 0 #dummy
+  hash_table["C07"]   = 0 #dummy
   hash_table["D08"]   = 0 #dummy
   hash_table["D10"]   = 0 #dummy
   hash_table["D12"]   = 0 #dummy
   hash_table["D13"]   = 0 #dummy
+  hash_table["T02"]   = 0 #dummy
 
   # 存在しないキーが指定されたらコンバートを止める
   if hash_table.has_key?(no_str) != true then
