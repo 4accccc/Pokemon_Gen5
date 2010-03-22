@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-01-20T18:45:42"/>
+	<create user="fuchino" host="W00152" date="2010-03-22T20:32:24"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -1211,16 +1211,16 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="kusa_ec1_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex/kusa_ec1.tga"
+		path="C:/home/wb_data3d/field/out00/chip/tex_autumn/kusa_ec1.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0000 2000 0022 0000
-			2000 5222 2257 0002 7200 325c 3235 0027
-			1200 1595 b313 027c 0000 3831 9731 0213
-			0000 3113 1333 0001 3000 3869 5783 0003
-			c300 616a c953 003a a300 631c 5136 0019
-			6100 6115 1117 0015 5100 c101 001c 0011
-			1100 4100 0016 0000 0000 1000 0014 0000
+			2000 6222 2268 0002 8200 326c 3236 0028
+			2200 1696 b313 028c 0000 3732 9831 0223
+			0000 3123 1333 0002 3000 3759 6873 0003
+			c300 515a c963 003a a300 531c 6135 0019
+			5100 5226 1228 0016 6100 c202 002c 0011
+			2200 4100 0025 0000 0000 1000 0014 0000
 			0000 0000 0011 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
@@ -1229,17 +1229,17 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="kusa_ec1s_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex/kusa_ec1s.tga"
+		path="C:/home/wb_data3d/field/out00/chip/tex_autumn/kusa_ec1s.tga"
 	>
 		<bitmap size="64">
-			1000 0111 0000 0000 1000 19a4 0000 1111
-			3211 feb1 1111 1a93 9a41 e225 e319 13ef
-			e510 25cf c928 0127 3200 5a65 3735 0002
-			1000 7331 1333 0001 1000 3213 9a53 0015
-			c100 33a8 c334 01df fd10 482c 3583 18c7
-			d920 8932 2d73 2a52 25a1 4f92 3f72 2222
-			0242 49f2 9d22 0002 0022 24f2 a720 0002
-			0000 0282 5200 0002 0000 0022 2000 0002
+			1000 0111 0000 0000 1000 4973 0000 1111
+			2411 db74 4111 1792 9731 b246 b219 12bd
+			b610 26ad a948 0145 2100 6766 2526 0001
+			1000 5224 4222 0001 1000 2442 9762 0016
+			a100 2278 a223 04cd dc10 384a 2682 48a5
+			c940 8924 4c52 4761 1674 3d91 2d54 4411
+			0134 39d1 9c11 0001 0044 43d1 7510 0004
+			0000 0481 6400 0004 0000 0044 4000 0004
 		</bitmap>
 	</tex_image>
 	<tex_image index="35" name="kusa_ec2"
@@ -1247,17 +1247,17 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="kusa_ec2_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex/kusa_ec2.tga"
+		path="C:/home/wb_data3d/field/out00/chip/tex_autumn/kusa_ec2.tga"
 	>
 		<bitmap size="64">
-			0000 1000 1444 0000 0000 4111 4111 0001
-			4410 1444 4111 0144 6341 1411 3411 1436
-			3614 4111 1141 4263 4444 1111 1111 4441
-			4110 1144 4411 0114 1410 1111 1111 0143
-			1341 1141 1141 1431 3634 4114 1411 4331
-			4525 4111 4111 4633 4155 4113 4311 4365
-			5110 1436 4634 4251 5100 1563 5365 5511
-			5100 1152 5251 0111 5000 0115 5510 0001
+			0000 1000 1555 0000 0000 5111 5111 0001
+			5510 1555 5111 0155 6351 1511 3511 1536
+			3615 5111 1151 5263 5555 1111 1111 5131
+			5110 1155 5511 5555 1510 1111 1111 0153
+			1351 1151 1151 1531 3635 5115 1511 5331
+			5424 5111 5111 5633 5144 5113 5311 5364
+			4110 1536 5635 5241 4100 1463 4364 4411
+			4100 1142 4241 0111 4000 0114 4410 0001
 		</bitmap>
 	</tex_image>
 	<tex_image index="36" name="kusa_ec2s"
@@ -1265,17 +1265,17 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="kusa_ec2s_pl"
-		path="C:/home/wb_data3d/field/out00/chip/tex/kusa_ec2s.tga"
+		path="C:/home/wb_data3d/field/out00/chip/tex_autumn/kusa_ec2s.tga"
 	>
 		<bitmap size="64">
-			2200 0022 8550 0021 1888 2222 7228 0228
-			2664 8188 4622 8885 2664 2122 6462 8666
-			2482 2222 6262 2876 4220 6562 6666 2216
-			2200 5271 4226 0224 6120 5622 5485 0028
-			6682 6526 2225 0212 6661 5952 2425 0266
-			6998 5624 4222 2866 8844 4665 4665 1964
-			4222 4466 8666 8542 1220 2869 1964 4822
-			1200 2249 8982 0222 8200 0028 8120 0002
+			1100 0011 2440 0012 2222 1111 4332 0112
+			4332 2222 2333 2224 3342 4243 4233 2333
+			4221 4443 3444 1243 2110 4444 3444 1124
+			1100 4442 2444 0112 3210 4444 4444 0012
+			3321 4444 4444 0123 3332 4444 3244 0133
+			3552 4442 2444 1233 2222 2334 2334 2532
+			2111 2233 2333 2421 2110 1235 2532 2211
+			2100 1125 2521 0111 2100 0012 2210 0001
 		</bitmap>
 	</tex_image>
 	<tex_image index="37" name="kusa_ec3"
@@ -2249,19 +2249,18 @@
 		7bde 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="33" name="kusa_ec1_pl" color_size="16">
-		7c1f 1dc6 21c7 2227 2248 2269 2acb 2eec
-		2aab 2acc 2f0f 3310 3331 7fff 7fff 7fff
+		7c09 19ca 1568 1e2d 224f 2ad3 2271 2ab3
+		2ef5 2ad5 2f18 3318 3319 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="34" name="kusa_ec1s_pl" color_size="16">
-		409b 2126 2987 3208 3629 3229 3a6b 3a6a
-		3e8c 42ad 3e8b 364a 3a8c 3acd 3ece 3eee
+		7c0e 1d46 2208 2629 1d87 2a6b 262a 2e8c
+		328d 36ae 328e 3ad1 36d1 3af2 7fff 7fff
 	</tex_palette>
 	<tex_palette index="35" name="kusa_ec2_pl" color_size="8">
-		7c1f 2625 2227 2268 19c7 1587 2acf 7fff
+		7c09 1629 1e2d 2270 158b 19cd 2ab6 7fff
 	</tex_palette>
-	<tex_palette index="36" name="kusa_ec2s_pl" color_size="16">
-		487c 2524 3e06 35c6 2d86 3608 3a49 2e08
-		2586 36ab 7fff 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="36" name="kusa_ec2s_pl" color_size="8">
+		7c0e 2606 1d86 2649 2208 2eae 7fff 7fff
 	</tex_palette>
 	<tex_palette index="37" name="kusa_ec3_pl" color_size="8">
 		2108 7fff 7fff 7fff 7fff 7fff 7fff 7fff
@@ -5866,10 +5865,10 @@
 		<ex_tex_image index="30" disp_pos="-300.000000 300.000000"/>
 		<ex_tex_image index="31" disp_pos="-180.000000 300.000000"/>
 		<ex_tex_image index="32" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="33" disp_pos="60.000000 300.000000"/>
-		<ex_tex_image index="34" disp_pos="180.000000 300.000000"/>
-		<ex_tex_image index="35" disp_pos="420.000000 300.000000"/>
-		<ex_tex_image index="36" disp_pos="300.000000 300.000000"/>
+		<ex_tex_image index="33" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="34" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="35" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="36" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="37" disp_pos="540.000000 300.000000"/>
 		<ex_tex_image index="38" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="39" disp_pos="0.000000 0.000000"/>
@@ -5934,10 +5933,10 @@
 		<ex_tex_palette index="30" disp_pos="-300.000000 360.000000"/>
 		<ex_tex_palette index="31" disp_pos="-180.000000 360.000000"/>
 		<ex_tex_palette index="32" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="33" disp_pos="60.000000 360.000000"/>
-		<ex_tex_palette index="34" disp_pos="180.000000 360.000000"/>
-		<ex_tex_palette index="35" disp_pos="420.000000 360.000000"/>
-		<ex_tex_palette index="36" disp_pos="300.000000 360.000000"/>
+		<ex_tex_palette index="33" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="34" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="35" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="36" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="37" disp_pos="540.000000 360.000000"/>
 		<ex_tex_palette index="38" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="39" disp_pos="0.000000 0.000000"/>
