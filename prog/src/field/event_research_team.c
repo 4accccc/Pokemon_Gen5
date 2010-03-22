@@ -32,7 +32,10 @@
 #define WINPOS_X   (1) // ウィンドウの表示x座標 ( キャラ単位 )
 #define WINPOS_Y   (1) // ウィンドウの表示y座標 ( キャラ単位 )
 #define WINSIZE_X (30) // ウィンドウの表示xサイズ ( キャラ単位 )
-#define WINSIZE_Y (10) // ウィンドウの表示yサイズ ( キャラ単位 )
+#define WINSIZE_Y  (8) // ウィンドウの表示yサイズ ( キャラ単位 )
+#define WINSIZE_Y_SMALL (4) // ウィンドウの表示yサイズ ( キャラ単位 )
+#define MSGPOS_X  (8) // ウィンドウ内メッセージ表示x座標 ( ドット単位 )
+#define MSGPOS_Y  (0) // ウィンドウ内メッセージ表示y座標 ( ドット単位 )
 
 
 //===========================================================================
@@ -205,13 +208,39 @@ static void DeleteMsgData( EVENT_WORK* work )
 //---------------------------------------------------------------------------
 static void CreateFldMsgWin( EVENT_WORK* work )
 {
+  int winPosX, winPosY;
+  int winSizeX, winSizeY;
+
   GF_ASSERT( work );
   GF_ASSERT( work->msgData );
   GF_ASSERT( work->fieldMsgBG );
   GF_ASSERT( work->fieldMsgWin == NULL );
 
+  // ウィンドウパラメータを決定
+  switch( GetResearchTeamRank(work) ) {
+  // 隊員になっていない場合
+  case RESEARCH_TEAM_RANK_0: 
+    winPosX  = WINPOS_X;
+    winPosY  = WINPOS_Y;
+    winSizeX = WINSIZE_X;
+    winSizeY = WINSIZE_Y_SMALL;
+    break;
+  // 隊員になっている場合
+  case RESEARCH_TEAM_RANK_1: 
+  case RESEARCH_TEAM_RANK_2: 
+  case RESEARCH_TEAM_RANK_3: 
+  case RESEARCH_TEAM_RANK_4: 
+  case RESEARCH_TEAM_RANK_5: 
+    winPosX  = WINPOS_X;
+    winPosY  = WINPOS_Y;
+    winSizeX = WINSIZE_X;
+    winSizeY = WINSIZE_Y;
+    break;
+  default: GF_ASSERT(0);
+  }
+
   work->fieldMsgWin = FLDMSGWIN_Add( work->fieldMsgBG, work->msgData, 
-                                     WINPOS_X, WINPOS_Y, WINSIZE_X, WINSIZE_Y );
+                                     winPosX, winPosY, winSizeX, winSizeY );
 }
 
 //---------------------------------------------------------------------------
@@ -308,7 +337,7 @@ static void SetupWinMsg( EVENT_WORK* work )
   }
 
   // 作成した文字列を表示
-  FLDMSGWIN_PrintStrBuf( work->fieldMsgWin, 1, 0, strbuf_ex );
+  FLDMSGWIN_PrintStrBuf( work->fieldMsgWin, MSGPOS_X, MSGPOS_Y, strbuf_ex );
   GFL_BG_LoadScreenReq( 
       GFL_BMPWIN_GetFrame( FLDMSGWIN_GetBmpWin( work->fieldMsgWin ) ) );
 
