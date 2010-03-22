@@ -54,6 +54,7 @@ $SYSFLAG_FILENAME		= "../../fldmapdata/flagwork/flag_define.h";
 @DATA_WARP_X				= ();		#到着X
 @DATA_WARP_Y				= ();		#到着Y
 @DATA_ARRIVE_FLAG		= ();		#到着フラグ
+@DATA_HIDE_FLAG		  = ();		#隠しフラグ
 @DATA_GUIDE					= ();		#ガイドID
 @DATA_PLACE1				= ();		#名所１ID
 @DATA_PLACE2				= ();		#名所２ID
@@ -162,7 +163,7 @@ foreach $line ( @TOWNMAP_XLS_HEADER )
 	{
 		if( $line_cnt >= 1 ) 
 		{
-			#print "$word[1]"."\n";
+			print "$word[1]"."\n";
 			push( @TYPE_BUFF, $word[1] );
 		}
 	}
@@ -328,6 +329,20 @@ foreach $line ( @TOWNMAP_XLS_DATA )
 				}
 				push( @DATA_ARRIVE_FLAG, $val );
 			}
+			#隠しマップフラグ
+			elsif( $tag eq "#hide_flag" )
+			{
+				my $val;
+				if( $w eq "" )
+				{
+					$val	= $DATA_ERROR_VALUE;
+				}
+				else
+				{
+					$val	= &GetFlagNumber( $w );
+				}
+				push( @DATA_HIDE_FLAG, $val );
+			}
 			#ガイド文字
 			elsif( $tag eq "#guide" )
 			{
@@ -466,7 +481,7 @@ for( my $i = 0; $i < $DATA_LENGTH; $i++ )
 #-------------------------------------
 #	デバッグプリント
 #=====================================
-if(0)
+if(1)
 {
 	print( "DEBUG_PRINT_START\n" );
 	for( my $i = 0; $i < $DATA_LENGTH; $i++ )
@@ -488,6 +503,7 @@ if(0)
 		print( "warX=".$DATA_WARP_X[$i]."\n" );
 		print( "warY=".$DATA_WARP_Y[$i]."\n" );
 		print( "arrf=".$DATA_ARRIVE_FLAG[$i]."\n" );
+    print( "hidf=".$DATA_HIDE_FLAG[$i]."\n" );
 		print( "guid=".$DATA_GUIDE[$i]."\n" );
 		print( "pla1=".$DATA_PLACE1[$i]."\n" );
 		print( "pla2=".$DATA_PLACE2[$i]."\n" );
@@ -551,6 +567,7 @@ for( my $i = 0; $i < $DATA_LENGTH; $i++ )
 	print( FILEOUT pack( "S", $DATA_WARP_X[$i] ) );
 	print( FILEOUT pack( "S", $DATA_WARP_Y[$i] ) );
 	print( FILEOUT pack( "S", $DATA_ARRIVE_FLAG[$i] ) );
+	print( FILEOUT pack( "S", $DATA_HIDE_FLAG[$i] ) );
 	print( FILEOUT pack( "S", $DATA_GUIDE[$i] ) );
 	print( FILEOUT pack( "S", $DATA_PLACE1[$i] ) );
 	print( FILEOUT pack( "S", $DATA_PLACE2[$i] ) );
