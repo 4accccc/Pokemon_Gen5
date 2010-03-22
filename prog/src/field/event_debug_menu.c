@@ -3261,10 +3261,22 @@ static BOOL debugMenuCallProc_GDS( DEBUG_MENU_EVENT_WORK *p_wk )
 static GMEVENT_RESULT debugMenuGDS( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
 {
   DEBUG_GDS_EVENT_WORK  *p_gds  = p_wk_adrs;
-
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(p_gds->gsys);
+  
   switch(*p_seq )
   {
   case 0:
+    if(GameCommSys_BootCheck(game_comm) != GAME_COMM_STATUS_NULL){
+      GameCommSys_ExitReq(game_comm);
+    }
+    (*p_seq)++;
+    break;
+  case 1:
+    if(GameCommSys_BootCheck(game_comm) == GAME_COMM_STATUS_NULL){
+      (*p_seq)++;
+    }
+    break;
+  case 2:
     {
       GDSPROC_PARAM *gds_param;
 
@@ -3280,7 +3292,7 @@ static GMEVENT_RESULT debugMenuGDS( GMEVENT *p_event, int *p_seq, void *p_wk_adr
     }
     break;
 
-  case 1:
+  case 3:
     return GMEVENT_RES_FINISH;
   }
 

@@ -26,6 +26,8 @@
 #include "net\network_define.h"
 #include "sound/pm_sndsys.h"
 
+#include "gds_test.h"
+
 
 //==============================================================================
 //	定数定義
@@ -65,6 +67,12 @@ const GFL_PROC_DATA GdsMainProcData = {
 	GdsMainProc_Main,
 	GdsMainProc_End,
 };
+
+//--------------------------------------------------------------
+//  デバッグ
+//--------------------------------------------------------------
+FS_EXTERN_OVERLAY(gds_debug);
+
 
 
 //--------------------------------------------------------------
@@ -193,6 +201,9 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 			
 			br_proc = BattleRecoder_ProcDataGet(gmw->proc_param->gds_mode);
   		GFL_PROC_LOCAL_CallProc(gmw->proc_sys, NO_OVERLAY_ID, &br_proc, gmw->proc_param->fsys);
+		#else
+		  GFL_PROC_LOCAL_CallProc(
+		    gmw->proc_sys, FS_OVERLAY_ID(gds_debug), &GdsTestProcData, gmw->proc_param->gamedata);
 		#endif
 			(*seq)++;
 		}

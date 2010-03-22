@@ -169,11 +169,6 @@ typedef struct _GDS_RAP_WORK{
 	GAMEDATA *gamedata;
 	SAVE_CONTROL_WORK *savedata;
 	
-	//アプリから渡されるワークポインタ
-	///エラーメッセージ描画用のコールバック関数
-	GDSRAP_ERROR_WIDE_MSG_FUNC callback_error_msg_wide;
-	void *callback_work;	///<コールバック関数呼び出し時、引数として渡す
-	
 	//アプリから渡される重要データ
 	POKE_NET_REQUESTCOMMON_AUTH pokenet_auth;
 	int heap_id;
@@ -224,13 +219,8 @@ typedef struct{
 	
 	int heap_id;
 	GAMEDATA *gamedata;
-	SAVE_CONTROL_WORK *savedata;
 	
 	GDS_RAP_RESPONSE_CALLBACK response_callback;	///データ受信時のコールバック関数
-	
-	///エラーメッセージ描画用のコールバック関数
-	GDSRAP_ERROR_WIDE_MSG_FUNC callback_error_msg_wide;
-	void *callback_work;	///<コールバック関数呼び出し時、引数として渡す
 }GDSRAP_INIT_DATA;
 
 

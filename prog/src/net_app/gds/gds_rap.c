@@ -27,6 +27,7 @@
 #include "arc_def.h"
 
 #include "battle/btl_net.h"
+#include "gamesystem/game_data.h"
 
 
 //==============================================================================
@@ -106,10 +107,7 @@ int GDSRAP_Init(GDS_RAP_WORK *gdsrap, const GDSRAP_INIT_DATA *init_data)
 	GFL_STD_MemClear(gdsrap, sizeof(GDS_RAP_WORK));
 	gdsrap->heap_id = init_data->heap_id;
 	gdsrap->gamedata = init_data->gamedata;
-	gdsrap->savedata = init_data->savedata;
 	gdsrap->response_callback = init_data->response_callback;
-	gdsrap->callback_work = init_data->callback_work;
-	gdsrap->callback_error_msg_wide = init_data->callback_error_msg_wide;
 	gdsrap->laststat = -1;
 	gdsrap->send_req = POKE_NET_GDS_REQCODE_LAST;
 	gdsrap->recv_wait_req = POKE_NET_GDS_REQCODE_LAST;
@@ -249,7 +247,7 @@ int GDSRAP_Tool_Send_BattleVideoUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp
 	//録画データは巨大な為、コピーせずに、そのままbrsのデータを送信する
 	gdsrap->send_buf.battle_rec_send_ptr = (BATTLE_REC_SEND *)BattleRec_RecWorkAdrsGet();
 	//brsに展開されている録画データ本体は復号化されているので、送信する前に再度暗号化する
-	BattleRec_GDS_SendData_Conv(gdsrap->savedata);
+	BattleRec_GDS_SendData_Conv(GAMEDATA_GetSaveControlWork(gdsrap->gamedata));
 	
 	//GDSプロフィールのみ、最新のを適用する為、上書きする
 	profile_ptr = BattleRec_GDSProfilePtrGet();
@@ -269,7 +267,7 @@ void DEBUG_GDSRAP_SendVideoProfileFreeWordSet(GDS_RAP_WORK *gdsrap, u16 *set_cod
 	profile_ptr = BattleRec_GDSProfilePtrGet();
 	GFL_STD_MemCopy16(set_code, profile_ptr->event_self_introduction, EVENT_SELF_INTRO*2);
 	profile_ptr->message_flag = 1;
-	DEBUG_BattleRec_SecureFlagSet(gdsrap->savedata);
+	DEBUG_BattleRec_SecureFlagSet(GAMEDATA_GetSaveControlWork(gdsrap->gamedata));
 #endif
 }
 
@@ -690,7 +688,7 @@ static BOOL RecvSubProccess_DataNumberSetSave(void *work_gdsrap, void *work_recv
 	res = POKE_NET_GDS_GetResponse();
 	param = (POKE_NET_GDS_RESPONSE_BATTLEDATA_REGIST *)(res->Param);
 	ret = BattleRec_GDS_MySendData_DataNumberSetSave(
-		gdsrap->savedata, param->Code, 
+		GAMEDATA_GetSaveControlWork(gdsrap->gamedata), param->Code, 
 		&recv_sub_work->recv_save_seq0, &recv_sub_work->recv_save_seq1);
 	if(ret == SAVE_RESULT_OK || ret == SAVE_RESULT_NG){
 		OS_TPrintf("外部セーブ完了\n");

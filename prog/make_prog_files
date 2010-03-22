@@ -1370,6 +1370,10 @@ SRCS_OVERLAY_GDS_COMM =	net_app/gds/gds_rap.c \
 								net_app/gds/gds_connect.c \
 								savedata/battle_rec_ov.c
 
+#===> SRCS_OVERLAY_GDS_COMM
+SRCS_OVERLAY_GDS_DEBUG =	net_app/gds/gds_test.c \
+													musical/musical_debug.c
+
 
 # WIFI2DMAP
 #####===> SRCS_OVERLAY_WIFILOBBY_ROOM

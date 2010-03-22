@@ -237,7 +237,12 @@ static BOOL _BattleRec_LoadCommon(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *wk
   //wk_brsに展開されたのでセーブシステムは破棄
   SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
 
-  if(*result != LOAD_RESULT_OK){
+  if(*result == LOAD_RESULT_NULL){
+    OS_TPrintf("録画データが存在しません\n");
+    *result = RECLOAD_RESULT_NULL;  //初期化データの為、データなし
+    return TRUE;
+  }
+  else if(*result != LOAD_RESULT_OK){
     *result = RECLOAD_RESULT_ERROR;
     return TRUE;
   }
@@ -250,7 +255,6 @@ static BOOL _BattleRec_LoadCommon(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *wk
     rec->crc.crc16ccitt_hash + ((rec->crc.crc16ccitt_hash ^ 0xffff) << 16));
 
   //読み出したデータに録画データが入っているかチェック
-  #if 1
   if(BattleRec_DataInitializeCheck(sv, wk_brs) == TRUE){
     OS_TPrintf("録画データが初期状態のものです\n");
     *result = RECLOAD_RESULT_NULL;  //初期化データの為、データなし
@@ -265,7 +269,6 @@ static BOOL _BattleRec_LoadCommon(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *wk
     *result = RECLOAD_RESULT_NG;
     return TRUE;
   }
-  #endif
 
   #if 0
   //読み出しデータをBATTLE_PARAMにセット
@@ -349,7 +352,12 @@ BOOL BattleRec_DataOccCheck(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *res
 
   *result = SaveControl_Extra_Load(sv, SAVE_EXTRA_ID_REC_MINE + num, heapID);
   all = SaveControl_Extra_DataPtrGet(sv, SAVE_EXTRA_ID_REC_MINE + num, 0);
-  if(*result != LOAD_RESULT_OK){
+  if(*result == LOAD_RESULT_NULL){
+    *result = RECLOAD_RESULT_NULL;  //初期化データの為、データなし
+    SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
+    return FALSE;
+  }
+  else if(*result != LOAD_RESULT_OK){
     *result = RECLOAD_RESULT_ERROR;
     SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
     return FALSE;
@@ -601,12 +609,6 @@ static BOOL BattleRec_DataInitializeCheck(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVE
 {
   BATTLE_REC_WORK *rec = &src->rec;
   BATTLE_REC_HEADER *head = &src->head;
-
-#if 0 //※check　外部セーブデータの初期化チェックが未作成 2009.11.18(水)
-  if(SaveData_GetExtraInitFlag(sv) == FALSE){
-    return TRUE;  //外部セーブデータが初期化されていないのでデータ無しと判定する
-  }
-#endif
 
   if(rec->magic_key != REC_OCC_MAGIC_KEY || head->magic_key != REC_OCC_MAGIC_KEY){
     return TRUE;
