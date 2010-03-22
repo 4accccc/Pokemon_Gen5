@@ -162,7 +162,7 @@ u32 RIBBON_DataGet( u8 dat_id, u8 prm_id )
  * @return  リボン説明メッセージインデックス
  */
 //--------------------------------------------------------------------------------------------
-u32 RIBBON_InfoGet( u8 dat_id , u8 * sv )
+u32 RIBBON_InfoGet( u8 dat_id )
 {
   /*
   if( RibbonTable[dat_id].info & MSG_SP_RIBBON ){

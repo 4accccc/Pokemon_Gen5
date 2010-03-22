@@ -28,6 +28,7 @@
 #include "p_sta_skill.h"
 #include "p_sta_ribbon.h"
 #include "p_sta_snd_def.h"
+#include "ribbon.h"
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -95,6 +96,7 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work );
 
 static void PSTATUS_PALANIM_UpdatePalletAnime( PSTATUS_WORK *work );
 static const BOOL PSTATUS_UTIL_CanUseExitButton( PSTATUS_WORK *work );
+static const BOOL PSTATUS_UTIL_CheckHaveAnyRibbon( PSTATUS_WORK *work , const POKEMON_PASO_PARAM *ppp );
 
 #if PM_DEBUG
 void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work );
@@ -1051,7 +1053,12 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
   else
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
   {
-    if( work->page < PPT_RIBBON &&
+    u8 maxPage = PPT_RIBBON;
+    if( work->isHaveRibbon == FALSE )
+    {
+      maxPage = PPT_SKILL;
+    }
+    if( work->page < maxPage &&
         work->isEgg == FALSE )
     {
       work->page++;
@@ -1124,7 +1131,12 @@ static const BOOL PSTATUS_UpdateKey_Page( PSTATUS_WORK *work )
 {
   if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
   {
-    if( work->page < PPT_RIBBON &&
+    u8 maxPage = PPT_RIBBON;
+    if( work->isHaveRibbon == FALSE )
+    {
+      maxPage = PPT_SKILL;
+    }
+    if( work->page < maxPage &&
         work->isEgg == FALSE )
     {
       work->page++;
@@ -1175,7 +1187,8 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
     break;
   case SBT_PAGE3:
     if( work->page != PPT_RIBBON &&
-        work->isEgg == FALSE )
+        work->isEgg == FALSE &&
+        work->isHaveRibbon == TRUE )
     {
       work->page = PPT_RIBBON;
       PSTATUS_RefreshDisp( work );
@@ -1477,6 +1490,12 @@ static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder )
           //タマゴの時はInfo以外見れない
         }
         else
+        if( work->page == PPT_RIBBON &&
+            PSTATUS_UTIL_CheckHaveAnyRibbon( work , ppp ) == FALSE )
+        {
+          //リボンは持ってるやつだけ
+        }
+        else
         {
           isFinish = TRUE;
           isChange = TRUE;
@@ -1514,11 +1533,13 @@ static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder )
 static void PSTATUS_RefreshData( PSTATUS_WORK *work )
 {
   POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP(work);
+  const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP(work);
   //PPP暗号解除
   PSTATUS_UTIL_SetCurrentPPPFast( work , TRUE );
   
   work->isEgg = PP_Get( pp , ID_PARA_tamago_flag , NULL );
   work->friend = PP_Get( pp , ID_PARA_friend , NULL );
+  work->isHaveRibbon = PSTATUS_UTIL_CheckHaveAnyRibbon( work , ppp );
   
   //PPP暗号化
   PSTATUS_UTIL_SetCurrentPPPFast( work , FALSE );
@@ -1686,10 +1707,19 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
         work->psData->mode != PST_MODE_WAZAADD )
     {
       GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE2] , TRUE );
-      GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE3] , TRUE );
+      if( work->isHaveRibbon == FALSE )
+      {
+        //リボン持ってなければ出さない
+        GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE3] , FALSE );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE3] , TRUE );
+      }
     }
     else
     {
+      //技モードとタマゴの時は出さない
       GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE2] , FALSE );
       GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE3] , FALSE );
     }
@@ -1974,6 +2004,30 @@ static const BOOL PSTATUS_UTIL_CanUseExitButton( PSTATUS_WORK *work )
   if( work->psData->canExitButton == TRUE )
   {
     return TRUE;
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+//	何かリボンを持っているか？
+//--------------------------------------------------------------
+static const BOOL PSTATUS_UTIL_CheckHaveAnyRibbon( PSTATUS_WORK *work , const POKEMON_PASO_PARAM *ppp )
+{
+  u8 i;
+#if PM_DEBUG
+  if( work->isDevRibbon == TRUE )
+  {
+    return TRUE;
+  }
+#endif
+  for( i=0;i<RIBBON_MAX;i++ )
+  {
+    const u32 checkId = RIBBON_DataGet( i , RIBBON_PARA_POKEPARA );
+    const u32 isHave = PPP_Get( ppp , checkId , NULL );
+    if( isHave == TRUE )
+    {
+      return TRUE;
+    }
   }
   return FALSE;
 }

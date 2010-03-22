@@ -79,6 +79,8 @@
 #define PSTATUS_SUB_TOUCH_BOTTOM ( 120+32)
 #define PSTATUS_SUB_TOUCH_LEFT ( 152-32)
 #define PSTATUS_SUB_TOUCH_RIGHT ( 255)
+//トリガのときだけ狭く(リボン操作とかと被るから
+#define PSTATUS_SUB_TRG_LEFT ( 160)
 
 //タッチペン判定でこれ以上動いたら動いたとみなす
 #define PSTATUS_SUB_TP_MOVE_LENGTH ( 16 )
@@ -181,6 +183,8 @@ struct _PSTATUS_SUB_WORK
   PSTATUS_SUB_STATE state;
 
   BOOL  isDispFront;
+  BOOL  isGround; //ジャンプ不可(ディグダ
+  u32   weight;   //10で1kg
   
   GFL_BMPWIN  *bmpWinUpper;
   GFL_BMPWIN  *bmpWinDown;
@@ -507,6 +511,23 @@ void PSTATUS_SUB_DispPage( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
   {
     subWork->isDispFront = TRUE;
   }
+  
+  {
+    const u32 monsno = PPP_Get( ppp , ID_PARA_monsno , NULL );
+    const u32 formno = PPP_Get( ppp , ID_PARA_form_no , NULL );
+    POKEMON_PERSONAL_DATA *personalData = POKE_PERSONAL_OpenHandle( monsno , formno ,work->heapId );
+    if( POKE_PERSONAL_GetParam( personalData ,  POKEPER_ID_no_jump ) == TRUE )
+    {
+      subWork->isGround = TRUE;
+    }
+    else
+    {
+      subWork->isGround = FALSE;
+    }
+    subWork->weight = POKE_PERSONAL_GetParam( personalData ,  POKEPER_ID_weight );
+    POKE_PERSONAL_CloseHandle( personalData );
+  }
+
 
 //  PSTATUS_SUB_PokeCreateMcss( work , subWork , ppp );
 
@@ -904,12 +925,18 @@ static const BOOL PSTATUS_SUB_SubActionUpdateStep( PSTATUS_WORK *work , PSTATUS_
   VecFx32 pos = {PSTATUS_MCSS_POS_X,PSTATUS_MCSS_POS_Y,0};
   VecFx32 ofs = {0,0,0};
   
+  if( subWork->isGround == FALSE )
   {
     //高さ
     const u16 rad = subWork->subActCount*0x8000/PSTATUS_SUB_STEP_TIME;
     const fx32 sin = FX_SinIdx( rad );
     ofs.y = (sin*PSTATUS_SUB_STEP_HEIGHT+FX32_CONST(work->friend/64))/16;
     PSTATUS_SUB_SetShadowHeight( work , subWork , ofs.y );
+  }
+  else
+  {
+    ofs.y = 0;
+    PSTATUS_SUB_SetShadowHeight( work , subWork , 0 );
   }
   {
     //横位置
@@ -960,6 +987,7 @@ static const BOOL PSTATUS_SUB_SubActionUpdateJump( PSTATUS_WORK *work , PSTATUS_
 {
   VecFx32 ofs = {0,0,0};
   
+  if( subWork->isGround == FALSE )
   {
     //高さ
     const u16 rad = subWork->subActCount*0x8000/PSTATUS_SUB_JUMP_TIME;
@@ -995,6 +1023,11 @@ static const BOOL PSTATUS_SUB_SubActionUpdateFloat( PSTATUS_WORK *work , PSTATUS
   //Count = 現在高さ
   VecFx32 ofs = {0,0,0};
   u32 aveSpeed = 0;
+  if( subWork->isGround == TRUE )
+  {
+    return TRUE;
+  }
+
   if( isUpdate == TRUE )
   {
     u8 i;
@@ -1080,8 +1113,9 @@ static void PSTATUS_SUB_UpdateTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork
 {
   u32 tpx,tpy;
   //当たり判定作成
-  GFL_UI_TP_HITTBL hitTbl[2] =
+  GFL_UI_TP_HITTBL hitTbl[3] =
   {
+    { PSTATUS_SUB_TOUCH_TOP , PSTATUS_SUB_TOUCH_BOTTOM , PSTATUS_SUB_TRG_LEFT , PSTATUS_SUB_TOUCH_RIGHT },
     { PSTATUS_SUB_TOUCH_TOP , PSTATUS_SUB_TOUCH_BOTTOM , PSTATUS_SUB_TOUCH_LEFT , PSTATUS_SUB_TOUCH_RIGHT },
     { GFL_UI_TP_HIT_END ,0,0,0 },
   };
@@ -1094,7 +1128,8 @@ static void PSTATUS_SUB_UpdateTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork
     const int  retCont = GFL_UI_TP_HitCont( hitTbl );
     if( subWork->state == PSS_DISP_FRONT )
     {
-      if( retCont == 0 )
+      if( retCont == 0 ||
+         (retCont == 1 && isTrg == FALSE) )
       {
         if( isTrg == TRUE )
         {
@@ -1142,7 +1177,8 @@ static void PSTATUS_SUB_UpdateTP( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork
     if( subWork->state == PSS_DISP_BACK )
     {
       //離して振り向き
-      if( retCont == 0 )
+      if( retCont == 0 ||
+         (retCont == 1 && isTrg == FALSE) )
       {
         if( isTrg == TRUE )
         {
