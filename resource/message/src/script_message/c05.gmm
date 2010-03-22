@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-14T15:11:49"/>
+	<create user="matsumiya" host="W00224" date="2010-03-22T18:16:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -565,13 +565,15 @@
 　プラズマ団のOBJ削除</comment>
 		<attribute name="キャラクター">七賢人
 ゲーチス</attribute>
-		<language name="JPN" width="256">ゲーチス『よいのです
-ともに　おうのため　はたらく　なかま……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ゲーチス『よいのです▼
+ともに　おうのため　はたらく　なかま……
+おなじ　しちけんじん　ではないですか▼
 それでは　みなさん
-また　いつのひか[BE:00:ページ切り替え（行送り）]
-おあいすることも　あるでしょう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ゲーチス『よいのです
-共に　王のため　働く仲間……[BE:01:ページ切り替え（クリア）]
+また　いつの　ひか▽
+おあいすることも　あるでしょう▼</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『よいのです▼
+共に　王のため　働く　同志……
+同じ　七賢人ではないですか▼
 それでは　みなさん
 また　いつの日か[BE:00:ページ切り替え（行送り）]
 お会いすることも　あるでしょう[BE:01:ページ切り替え（クリア）]</language>
