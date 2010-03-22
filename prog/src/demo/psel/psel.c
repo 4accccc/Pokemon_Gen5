@@ -94,12 +94,14 @@ enum
 };
 
 // サブBGフレーム
-#define BG_FRAME_S_INSIDE_BALL (GFL_BG_FRAME0_S)
-#define BG_FRAME_S_WIN         (GFL_BG_FRAME1_S)  // BG_FRAME_S_WINとBG_FRAME_S_TEXTは共通のキャラ領域を使用
-#define BG_FRAME_S_TEXT        (GFL_BG_FRAME2_S)  // BG_FRAME_S_WINとBG_FRAME_S_TEXTは共通のキャラ領域を使用
+#define BG_FRAME_S_INSIDE_BALL (GFL_BG_FRAME0_S)  // BG_FRAME_S_INSIDE_BALLとBG_FRAME_S_SPOTは共通のキャラ領域を使用
+#define BG_FRAME_S_SPOT        (GFL_BG_FRAME1_S)  // BG_FRAME_S_SPOTの表示非表示はBG_FRAME_S_WINとBG_FRAME_S_TEXTに合わせる
+#define BG_FRAME_S_WIN         (GFL_BG_FRAME2_S)  // BG_FRAME_S_WINとBG_FRAME_S_TEXTは共通のキャラ領域を使用しようかと思ったが、別々にした
+#define BG_FRAME_S_TEXT        (GFL_BG_FRAME3_S)  // (S_WINは前から、S_TEXTは後ろから取るつもりだった)
 
 // サブBGフレームのプライオリティ
-#define BG_FRAME_PRI_S_INSIDE_BALL    (2)
+#define BG_FRAME_PRI_S_INSIDE_BALL    (3)
+#define BG_FRAME_PRI_S_SPOT           (2)
 #define BG_FRAME_PRI_S_WIN            (1)
 #define BG_FRAME_PRI_S_TEXT           (0)
 
@@ -109,7 +111,7 @@ enum
 {
   BG_PAL_NUM_S_WIN                    =  1,
   BG_PAL_NUM_S_TEXT                   =  1,
-  BG_PAL_NUM_S_INSIDE_BALL            =  8,
+  BG_PAL_NUM_S_INSIDE_BALL            =  8,  // BG_FRAME_S_INSIDE_BALLとBG_FRAME_S_SPOTは共通のパレット領域を使用
 };
 // 位置
 enum
@@ -233,8 +235,9 @@ enum
   TWO_OBJ_RES_FILE_MAX,
 };
 
-#define OBJ_BG_PRI_S_POKE     (BG_FRAME_PRI_S_INSIDE_BALL)
-#define OBJ_BG_PRI_M_FINGER   (BG_FRAME_PRI_M_THREE)
+#define OBJ_BG_PRI_S_POKE          (BG_FRAME_PRI_S_INSIDE_BALL)
+#define OBJ_BG_PRI_S_POKE_SPOT     (BG_FRAME_PRI_S_SPOT)
+#define OBJ_BG_PRI_M_FINGER        (BG_FRAME_PRI_M_THREE)
 
 
 // 選択対象
@@ -1171,12 +1174,14 @@ static void Psel_VBlankFunc( GFL_TCB* tcb, void* wk )
   {
     GFL_BG_SetVisible( BG_FRAME_S_TEXT, VISIBLE_ON );
     GFL_BG_SetVisible( BG_FRAME_S_WIN, VISIBLE_ON );
+    GFL_BG_SetVisible( BG_FRAME_S_SPOT, VISIBLE_ON );
   }
 
   if( work->vblank_req & VBLANK_REQ_S02_TEXT_WIN_S_VISIBLE_OFF )
   {
     GFL_BG_SetVisible( BG_FRAME_S_TEXT, VISIBLE_OFF );
     GFL_BG_SetVisible( BG_FRAME_S_WIN, VISIBLE_OFF );
+    GFL_BG_SetVisible( BG_FRAME_S_SPOT, VISIBLE_OFF );
   }
 
   if( work->vblank_req & VBLANK_REQ_S02_TEXT_M_VISIBLE_ON )
@@ -1982,6 +1987,7 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
         
         if( count_add < 0 )
         {
+          GFL_CLACT_WK_SetBgPri( p->clwk[POKE_BIG], OBJ_BG_PRI_S_POKE );  // bgpri
           p->move_step_count = d->p1p2_frame -1;
           p->move_step = POKE_MOVE_STEP_P1_TO_P2;
         }
@@ -1989,6 +1995,7 @@ static void Psel_PokeSetMain( PSEL_WORK* work )
         {
           if( p->move_req == POKE_MOVE_REQ_P0_TO_P2 )
           {
+            GFL_CLACT_WK_SetBgPri( p->clwk[POKE_BIG], OBJ_BG_PRI_S_POKE_SPOT );  // bgpri
             p->move_req = POKE_MOVE_REQ_NONE;
             work->poke_info_print = TRUE;  // ポケモンのタイプと種族名を書く
           }
@@ -2388,9 +2395,19 @@ static void Psel_InsideBallInit( PSEL_WORK* work )
       FALSE,
       work->heap_id );
 
+  GFL_ARCHDL_UTIL_TransVramScreen(
+      handle,
+      NARC_psel_psel_bg02a_NSCR,
+      BG_FRAME_S_SPOT,
+      0,
+      0,  // 全転送
+      FALSE,
+      work->heap_id );
+
   GFL_ARC_CloseDataHandle( handle );
 
   GFL_BG_LoadScreenReq( BG_FRAME_S_INSIDE_BALL );
+  GFL_BG_LoadScreenReq( BG_FRAME_S_SPOT );
 }
 static void Psel_InsideBallExit( PSEL_WORK* work )
 {
@@ -3165,6 +3182,7 @@ static int Psel_Load( PSEL_WORK* work, int* seq )
   
   // サブBG
   GFL_BG_SetPriority( BG_FRAME_S_INSIDE_BALL,     BG_FRAME_PRI_S_INSIDE_BALL );
+  GFL_BG_SetPriority( BG_FRAME_S_SPOT,            BG_FRAME_PRI_S_SPOT );
   GFL_BG_SetPriority( BG_FRAME_S_WIN,             BG_FRAME_PRI_S_WIN );
   GFL_BG_SetPriority( BG_FRAME_S_TEXT,            BG_FRAME_PRI_S_TEXT );
 
@@ -3445,7 +3463,7 @@ static int Psel_S02Init    ( PSEL_WORK* work, int* seq )
   // ev1とev2は使われない  // TWLプログラミングマニュアル「2D面とのαブレンディング」参考
 
   G2S_SetBlendAlpha(
-      GX_BLEND_PLANEMASK_BG1/* | GX_BLEND_PLANEMASK_BG2*/,
+      GX_BLEND_PLANEMASK_BG2/* | GX_BLEND_PLANEMASK_BG3*/,
       GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
       8, 8 );
 
