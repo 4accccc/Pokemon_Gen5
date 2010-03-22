@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-16T15:08:20"/>
+	<create user="ohmori" host="W00223" date="2010-03-22T16:40:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="368" right="1920" bottom="996" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="605"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="289"/>
+		<band id="3" index="4" style="0000" width="147"/>
+		<band id="4" index="0" style="0000" width="605"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c02gym0101_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02gym0101_glasses_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手前
 ・ジムに入ると
@@ -312,27 +312,27 @@
 これを　さしあげるっす！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c02gym0101_glasses_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02gym0101_glasses_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
 ・ジムバッジ取得まで繰り返し</comment>
 		<language name="JPN" width="256">この　ジムはですね
-えらばれた　５さつの　ほんを▽
-よんでいくと　さきに　すすめます▼
+ほんにかくされた　もんだいを▽
+といていくと　さきに　すすめます▼
 ちなみに　さいしょの　ほんは
 「はじめまして　ポケモンちゃん」です▼
 ほんの　ばしょが　わからないときは
-みんなに　きくと　いいっすよ！</language>
+みんなに　きくと　いいっすよ！▼</language>
 		<language name="JPN_KANJI" width="256">この　ジムはですね
 選ばれた　５冊の　本を▽
 読んでいくと　先に　進めます▼
 ちなみに　最初の　本は
 「はじめまして　ポケモンちゃん」です▼
 本の　場所が　わからないときは
-みんなに　聞くと　いいっすよ！</language>
+みんなに　聞くと　いいっすよ！▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_glasses_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02gym0101_glasses_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得後
 ・盗難事件クリアまでは
@@ -347,7 +347,7 @@
 見比べるのが　好きなんすよね</language>
 	</row>
 
-	<row id="msg_c02gym0101_glasses_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02gym0101_glasses_04" back-color="#ffff00,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・盗難事件の間
 ・メッセージ表示後、うろうろさせる？</comment>
@@ -365,7 +365,7 @@
 ああ　どうしましょう！？</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_statue_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・ジムバッジ取得前</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
@@ -377,7 +377,7 @@
 認定　トレーナー！</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_statue_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
@@ -391,7 +391,7 @@
 [1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_statue_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・h01到達時</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
@@ -409,39 +409,114 @@
 ベル</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_01">
+	<row id="msg_c02gym0101_girl3_01" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
 		<comment>♀：トレーナー「じゅくがえり」
 ・フラグ成立前（本棚を向いている）</comment>
-		<attribute name="キャラ指定">本棚ストッパー１</attribute>
-		<language name="JPN" width="256">「はじめまして　ポケモンちゃん」は
-いりぐちに　ちかい　ほんだなよ▼
-さがす　ほんが　あれば
-また　ききに　きてね</language>
+		<attribute name="キャラ指定">本棚ストッパー１
+問題１</attribute>
+		<language name="JPN" width="256">あら？
+ほんを　さがしてるの？▼
+……えーと　たしか
+「はじめまして　ポケモンちゃん」は▽
+いりぐちに　ちかい　ほんだなよ</language>
 		<language name="JPN_KANJI" width="256">「はじめまして　ポケモンちゃん」は
 入り口に　近い　本棚よ▼
 探す本が　あれば
 また　聞きに　きてね</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_02">
+	<row id="msg_c02gym0101_girl3_02" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
 		<comment>♀：トレーナー
-・フラグ成立後＝戦闘前（画面下を向いている）</comment>
-		<attribute name="キャラ指定">本棚ストッパー１</attribute>
-		<language name="JPN" width="256">「ミネズミの　せいたい」ね▼
-ポケモンの　ほんは
-この　れつの　どこかに　あるはずよ</language>
+・フラグ成立後＝戦闘前（画面下を向いている）
+この後、はい・いいえ
+
+「はい」　→msg_c02gym0101_girl3_02_1
+「いいえ」→msg_c02gym0101_girl3_02_2
+回答後→msg_c02gym0101_girl3_02_3
+
+「Ｑ，このジムで　はじめてであった
+ポケモンは　なんだったでしょう？」</comment>
+		<attribute name="キャラ指定">本棚ストッパー１
+問題２</attribute>
+		<language name="JPN" width="256">こんにちは　トレーナーさん！▼
+さっそく　メモをみつけて
+ポケモンの　ほんを　さがしてるのね？▼
+うふふ！　じつは　わたしも
+ポケモンの　ほんを　よんでるのよ▼
+……えーと
+このほんは　「ポカブ」の　ほんね▼
+あなたが　このジムで　はじめて
+であったのは　ポカブだった　かしら？</language>
 		<language name="JPN_KANJI" width="256">「ミネズミの　生態」ね▼
 ポケモンの　本は
 この列の　どこかに　あるはずよ</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_03">
-		<attribute name="キャラ指定">本棚ストッパー１</attribute>
-		<language name="JPN" width="256">「こどもを　げんきに　そだてる」ね▼
-しゃかいコーナー　だから
-いちばん　おくの　ほんだなね▼
-よむひとが　おおい　ほんね
-たちよみを　している　ひとも　いたわ</language>
+	<row id="msg_c02gym0101_girl3_02_1" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<comment>終了</comment>
+		<attribute name="キャラ指定">本棚ストッパー１
+問題２・はい</attribute>
+		<language name="JPN" width="256">うふふ！　ざんねん！▼
+あなたが　ジムで　はじめて　であった
+ポケモンは　ポカブでは　ありませーん！▼
+ジムの　いりぐちで　たたかった
+ポケモンを　おもいだしてみて▽
+ヒントは　ここから　ひだりの　ほんだなよ！</language>
+		<language name="JPN_KANJI" width="256">うふふ！　ざんねん！▼
+あなたが　ジムで　はじめて　であった
+ポケモンは　ポカブでは　ありませーん！▼
+ジムの　いりぐちで　たたかった
+ポケモンを　おもいだしてみて▽
+ヒントは　ここから　ひだりの　ほんだなよ！</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_02_2" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<comment>終了</comment>
+		<attribute name="キャラ指定">本棚ストッパー１
+問題２・いいえ</attribute>
+		<language name="JPN" width="256">うふふ！　そうね！▼
+ジムの　いりぐちで　たたかった
+ポケモンは　なんだったかしら？▽
+ヒントは　ここから　ひだりの　ほんだなよ！</language>
+		<language name="JPN_KANJI" width="256">うふふ！　そうね！▼
+ジムの　いりぐちで　たたかった
+ポケモンは　なんだったかしら？▽
+ヒントは　ここから　ひだりの　ほんだなよ！</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_02_3" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<comment>終了</comment>
+		<attribute name="キャラ指定">本棚ストッパー１
+問題２・回答後</attribute>
+		<language name="JPN" width="256">このジムで　はじめて　であった
+ポケモンは　わかったかしら？▽
+ヒントは　ここから　ひだりの　ほんだなよ！</language>
+		<language name="JPN_KANJI" width="256">このジムで　はじめて　であった
+ポケモンは　わかったかしら？▽
+ヒントは　ここから　ひだりの　ほんだなよ！</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_03" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<comment>♀：トレーナー
+・フラグ成立後＝戦闘前（画面下を向いている）
+この後、はい・いいえ
+
+「はい」　→msg_c02gym0101_girl3_03_1
+「いいえ」→msg_c02gym0101_girl3_03_2
+回答後→msg_c02gym0101_girl3_03_3
+
+「Ｑ，たいないで　ほのおが　もえあがり
+あたまから　けむりをだして　はしりだす」</comment>
+		<attribute name="キャラ指定">本棚ストッパー１
+問題3</attribute>
+		<language name="JPN" width="256">２つめの　メモを　みつけて
+ほんを　さがしてるのね？▽
+……メモには　なんて　かいてるの？▼
+「たいないで　ほのおが　もえあがり
+あたまから　けむりをだして　はしりだす」▼
+わたしが　よんでるのは
+「ポカブ」についての　ほんだけど▽
+このほんが　せいかい　かしら？</language>
 		<language name="JPN_KANJI" width="256">「子供を　元気に　育てる」ね▼
 社会コーナー　だから
 一番　奥の　本棚ね▼
@@ -449,13 +524,99 @@
 立ち読みを　している人も　いたわ</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_04">
-		<attribute name="キャラ指定">本棚ストッパー１</attribute>
-		<language name="JPN" width="256">えほんを　さがしているの？▼
-この　ちかくには　ないわね
-えほんなら　じどうしょコーナーね▼
-みつからない　ほんが　あれば
-また　きてね</language>
+	<row id="msg_c02gym0101_girl3_03_1" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">本棚ストッパー１
+問題3・はい</attribute>
+		<language name="JPN" width="256">うふふ！　ざんねん！▼
+わたしの　みてる
+ポカブの　ほんには▼
+「はなのあなから　ほのおを　はきだす
+げんきがないと　けむりしか　だせない」▽
+って　かいてあるわ▼
+「あたまから　けむりをだして　はしりだす」
+とは　ちょっと　ちがうわね▼
+……このメモの　こたえは　もしかしたら
+いきものでは　ないかも　しれないわね！▽
+うふふ！</language>
+		<language name="JPN_KANJI" width="256">うふふ！　ざんねん！▼
+わたしの　みてる
+ポカブの　ほんには▼
+「げんきがないと　けむりしか　だせない」
+って　かいてあるわ▼
+「げんきに　けむりをだして　はしりだす！」
+とは　ちょっと　ちがうわね▼
+……うーん　もしかしたら
+いきものでは　ないかも　しれないわね！▽
+うふふ！</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_03_2" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">本棚ストッパー１
+問題3・いいえ</attribute>
+		<language name="JPN" width="256">わ！　すごい！
+そのとおりよ！▼
+わたしの　みてる
+ポカブの　ほんには▼
+「はなのあなから　ほのおを　はきだす
+げんきがないと　けむりしか　だせない」▽
+って　かいてあるわ▼
+「あたまから　けむりをだして　はしりだす」
+とは　ちょっと　ちがうわ▼
+……このメモの　こたえは　もしかしたら
+いきものでは　ないかも　しれないわね！▽
+うふふ！</language>
+		<language name="JPN_KANJI" width="256">わ！　すごい！
+そのとおりよ！▼
+わたしの　みてる
+ポカブの　ほんには▼
+「げんきがないと　けむりしか　だせない」
+って　かいてあるわ▼
+「げんきに　けむりをだして　はしりだす！」
+とは　ちょっと　ちがうわ▼
+……うーん　もしかしたら
+いきものでは　ないかも　しれないわね！▽
+うふふ！</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_03_3" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">本棚ストッパー１
+問題3・回答後</attribute>
+		<language name="JPN" width="256">「はなのあなから　ほのおを　はきだす
+げんきがないと　けむりしか　だせない」▽
+この　もんだいは　とけたかしら？▼
+……このメモの　こたえは　もしかしたら
+いきものでは　ないかも　しれないわね！▽
+うふふ！</language>
+		<language name="JPN_KANJI" width="256">「はなのあなから　ほのおを　はきだす
+げんきがないと　けむりしか　だせない」▽
+この　もんだいは　とけたかしら？▼
+……このメモの　こたえは　もしかしたら
+いきものでは　ないかも　しれないわね！▽
+うふふ！</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_04" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<comment>♀：トレーナー
+・フラグ成立後＝戦闘前（画面下を向いている）
+この後、はい・いいえ
+
+「はい」　→msg_c02gym0101_girl3_04_1
+「いいえ」→msg_c02gym0101_girl3_04_2
+回答後→msg_c02gym0101_girl3_04_3
+
+「Ｑ，おなべで　ぐつぐつ　あっためて
+たべると　おいしいもの　なんだ？」</comment>
+		<attribute name="キャラ指定">本棚ストッパー１
+問題4</attribute>
+		<language name="JPN" width="256">もう　３つめの　メモを　みつけたの？
+なかなか　すごいわね！▽
+……で　メモには　なんて　かいてるの？▼
+「おなべで　ぐつぐつ　あっためて
+たべると　おいしいもの　なんだ？」▼
+わたしが　よんでるのは
+「ポカブ」についての　ほんだけど……▼
+え？　もしかして
+この「ポカブ」のほんが　こたえなの！？</language>
 		<language name="JPN_KANJI" width="256">絵本を　探しているの?▼
 この　近くには　ないわね
 絵本なら　児童書コーナーね▼
@@ -463,33 +624,118 @@
 また　来てね</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_05">
-		<attribute name="キャラ指定">本棚ストッパー１</attribute>
-		<language name="JPN" width="256">なぞなぞから　ほんを　さがして
-ここに　たどりついたのでしょ？▼
-いいわ！　わたしに　かてたら
-ほんだなを　しらべさせて　あげる▼</language>
+	<row id="msg_c02gym0101_girl3_04_1" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">本棚ストッパー１
+問題4・はい</attribute>
+		<language name="JPN" width="256">もう！
+じょうだん　ばっかり！▼
+……そういえば　むかし
+きのみを　ぐつぐつ　あっためてつくる▽
+おかしを　みたことが　あるわ▽
+なんて　なまえ　だったかしら？</language>
+		<language name="JPN_KANJI" width="256">もう！
+じょうだん　ばっかり！▼
+……そういえば　むかし
+きのみを　ぐつぐつ　あっためてつくる▽
+ポケモンの　おかしを　みたことがあるわ▽
+なんて　なまえ　だったかしら？</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_04_2" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">本棚ストッパー１
+問題4・いいえ</attribute>
+		<language name="JPN" width="256">そ　そうよね……
+ほっとしたわ▼
+……そういえば　むかし
+きのみを　ぐつぐつ　あっためてつくる▽
+おかしを　みたことが　あるわ▽
+なんて　なまえ　だったかしら？</language>
+		<language name="JPN_KANJI" width="256">そ　そうよね……
+ほっとしたわ▼
+……そういえば　むかし
+きのみを　ぐつぐつ　あっためてつくる▽
+ポケモンの　おかしを　みたことがあるわ▽
+なんて　なまえ　だったかしら？</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_04_3" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<attribute name="キャラ指定">本棚ストッパー１
+問題4・回答後</attribute>
+		<language name="JPN" width="256">むかし　きのみを
+ぐつぐつ　あっためてつくる▽
+おかしを　みたことが　あるわ▽
+なんて　なまえ　だったかしら？</language>
+		<language name="JPN_KANJI" width="256">むかし　きのみを
+ぐつぐつ　あっためてつくる▽
+ポケモンの　おかしを　みたことがあるわ▽
+なんて　なまえ　だったかしら？</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_05" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<comment>♀：トレーナー
+・フラグ成立後＝戦闘前（画面下を向いている）
+この後、はい・いいえ
+
+「はい」　→msg_c02gym0101_girl3_05_1
+「いいえ」→msg_c02gym0101_girl3_05_2
+
+
+「Ｑ，この　ほんだなから……
+うえに２つ　みぎに１つ　したに２つ▽
+ひだりに１つ　うえに１つ　さて　どこだ？」</comment>
+		<attribute name="キャラ指定">本棚ストッパー１
+問題5</attribute>
+		<language name="JPN" width="256">……もしかして　さいごのメモをみて
+わたしの　ところに　やってきたのね！▽
+じゃあ　わたしから　さいごの　もんだいね！▼
+「Ｑ，わたしと　たたかって　かてたら
+ジムリーダーのところへ　いけるでしょうか？」</language>
 		<language name="JPN_KANJI" width="256">なぞなぞから　本を　探して
 ここに　たどり着いたのでしょ？▼
 いいわ！　私に　勝てたら
 本棚を　調べさせて　あげる▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_06">
+	<row id="msg_c02gym0101_girl3_05_1" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<comment>トレーナー戦へ</comment>
+		<attribute name="キャラ指定">本棚ストッパー１
+問題5・はい</attribute>
+		<language name="JPN" width="256">うふふ！　せいかい！▼
+じゃあ　いくわよ
+トレーナーさん！▼</language>
+		<language name="JPN_KANJI" width="256">うふふ！　せいかい！▼
+じゃあ　いくわよ
+トレーナーさん！</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_05_2" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<comment>どちらにしてもトレーナー戦へ</comment>
+		<attribute name="キャラ指定">本棚ストッパー１
+問題5・いいえ</attribute>
+		<language name="JPN" width="256">うーん！
+ざんねん！▼
+こたえは　わたしに　かてたら
+おしえてあげるわ！▼</language>
+		<language name="JPN_KANJI" width="256">うーん！
+ざんねん！▼
+こたえは　わたしに　かてたら
+おしえてあげるわ！</language>
+	</row>
+
+	<row id="msg_c02gym0101_girl3_06" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
 		<comment>♀：トレーナー
 ・戦闘後</comment>
 		<attribute name="キャラ指定">本棚ストッパー１</attribute>
 		<language name="JPN" width="256">もうすぐ　ジムリーダーに　あえるわ
-ここが　さいごの　ほんなの▼
-さいごのほんを　よんだとき
-なにが　おきるか　たのしみにしてね</language>
+ここが　さいごの　ほんなの▽
+さあ！　さいごの　ほんを　よんでみて！</language>
 		<language name="JPN_KANJI" width="256">もうすぐ　ジムリーダーに　会えるわ
 ここが　最後の　本なの▼
 最後の本を　読んだとき
 なにが　起きるか　楽しみにしてね</language>
 	</row>
 
-	<row id="msg_c02gym0101_girl3_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c02gym0101_girl3_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff00,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">本棚ストッパー１</attribute>
@@ -503,12 +749,14 @@
 研究熱心な　トレーナーね</language>
 	</row>
 
-	<row id="msg_c02gym0101_assitantw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_assitantw_01" back-color="#ffff00,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：トレーナー「けんきゅういん♀」
 ・フラグ成立前（本棚を向いている）</comment>
 		<attribute name="キャラ指定">本棚ストッパー２</attribute>
-		<language name="JPN" width="256">いま　よんでいるのは
-「こどもを　げんきに　そだてる」よ▼
+		<language name="JPN" width="256">……ふむふむ
+なるほど▼
+おっと！　いま　よんでいるのは
+「きかんしゃの　こうぞう」よ▼
 このほんを　よみたくなったら
 わたしに　いってね</language>
 		<language name="JPN_KANJI" width="256">今　読んでいるのは
@@ -517,21 +765,74 @@
 私に　いってね</language>
 	</row>
 
-	<row id="msg_c02gym0101_assitantw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_assitantw_02" back-color="#ffff00,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：トレーナー
-・フラグ成立後＝戦闘前（画面下を向いている）</comment>
+・フラグ成立後＝戦闘前（画面下を向いている）
+この後、はい・いいえ
+
+「はい」　→msg_c02gym0101_assitantw_02_1
+「いいえ」→msg_c02gym0101_assitantw_02_2
+
+
+「Ｑ，たいないで　ほのおが　もえあがり
+あたまから　けむりをだして　はしりだす」</comment>
 		<attribute name="キャラ指定">本棚ストッパー２</attribute>
-		<language name="JPN" width="256">ここの　ほんを　よみたいの？[BE:01:ページ切り替え（クリア）]
-いいわよ！　ただ　そのまえに……[BE:01:ページ切り替え（クリア）]
-ポケモンしょうぶを　してもらえると
-けんきゅうできて　ありがたいな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">……ふむふむ
+なるほど▼
+おっと！　メモをみつけて
+このほんを　さがしにきたの？▽
+メモには　なんて　かいてあった？▼
+「たいないで　ほのおが　もえあがり
+あたまから　けむりをだして　はしりだす」▼
+わたしが　よんでるのは
+「きかんしゃの　こうぞう」よ▽
+このほんが　せいかい　かしらね？</language>
 		<language name="JPN_KANJI" width="256">ここの本を　読みたいの？[BE:01:ページ切り替え（クリア）]
 いいわよ！　ただ　その前に……[BE:01:ページ切り替え（クリア）]
 ポケモン勝負を　してもらえると
 いろいろ研究できて　ありがたいな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c02gym0101_assitantw_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02gym0101_assitantw_02_1" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<comment>トレーナー戦へ</comment>
+		<attribute name="キャラ指定">本棚ストッパー２</attribute>
+		<language name="JPN" width="256">おー！
+せいかい！▼
+「たいないで　ほのおが　もえあがり
+あたまから　けむりをだして　はしりだす」▼
+これは　まさに
+きかんしゃの　ことね！▽
+じゃあ　ここほんを　よませてあげるわ▽
+ただ　そのまえに……▼
+ポケモンしょうぶを　してもらえると
+けんきゅうできて　ありがたいな▼</language>
+		<language name="JPN_KANJI" width="256">ここの本を　読みたいの？[BE:01:ページ切り替え（クリア）]
+いいわよ！　ただ　その前に……[BE:01:ページ切り替え（クリア）]
+ポケモン勝負を　してもらえると
+いろいろ研究できて　ありがたいな[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c02gym0101_assitantw_02_2" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
+		<comment>どちらにしてもトレーナー戦へ</comment>
+		<attribute name="キャラ指定">本棚ストッパー２</attribute>
+		<language name="JPN" width="256">うーん
+ざんねん！▼
+「たいないで　ほのおが　もえあがり
+あたまから　けむりをだして　はしりだす」▼
+これは　まさに
+きかんしゃの　ことね！▼
+……まあ　おまけで　このほんを
+よませてあげるわ▽
+ただ　そのまえに……▼
+ポケモンしょうぶを　してもらえると
+けんきゅうできて　ありがたいな▼</language>
+		<language name="JPN_KANJI" width="256">ここの本を　読みたいの？[BE:01:ページ切り替え（クリア）]
+いいわよ！　ただ　その前に……[BE:01:ページ切り替え（クリア）]
+ポケモン勝負を　してもらえると
+いろいろ研究できて　ありがたいな[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c02gym0101_assitantw_03" back-color="#ffff00,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：トレーナー
 ・戦闘後</comment>
 		<attribute name="キャラ指定">本棚ストッパー２</attribute>
@@ -541,39 +842,54 @@
 本を　読むときの　ルールよね</language>
 	</row>
 
-	<row id="msg_c02gym0101_category_01">
+	<row id="msg_c02gym0101_assitantw_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c02gym0101_assitantw_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c02gym0101_assitantw_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
+	</row>
+
+	<row id="msg_c02gym0101_category_01" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
 		<comment>続けてウインドウ表示</comment>
 		<attribute name="キャラ指定">ジャンル</attribute>
 		<language name="JPN" width="256">「しゃかい」の　ほんだな[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">「社会」の　本棚[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c02gym0101_category_02">
+	<row id="msg_c02gym0101_category_02" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">「ポケモン」の　ほんだな[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">「ポケモン」の　本棚[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c02gym0101_category_03">
+	<row id="msg_c02gym0101_category_03" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">「じどうしょ」の　ほんだな[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">「児童書」の　本棚[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c02gym0101_category_04" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_category_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_category_05" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_category_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_category_06" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_category_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_01" back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_headline_01" back-color="#ffff00,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>選択ウインドウ用
 ・地の色が違うのは、村上君の記述</comment>
 		<attribute name="キャラ指定">本のタイトル</attribute>
@@ -583,259 +899,272 @@
 この本を　読みますか?</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_02" back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
-		<language name="JPN" width="256">「こどもを　げんきに　そだてる」
+	<row id="msg_c02gym0101_headline_02" back-color="#ffff00,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
+		<attribute name="キャラ指定">３番の正解</attribute>
+		<language name="JPN" width="256">「きかんしゃの　こうぞう」
 この　ほんを　よみますか？</language>
 		<language name="JPN_KANJI" width="256">「子供を　元気に　育てる」
 この本を　読みますか?</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_03" back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_headline_03" back-color="#ffff00,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">「ポケモンしょうぶの　ぎじゅつ」
 この　ほんを　よみますか？</language>
 		<language name="JPN_KANJI" width="256">「ポケモン勝負の　技術」
 この本を　読みますか?</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_04" back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_headline_04" back-color="#ffff00,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">「ポケモンセンターの　しくみ」
 この　ほんを　よみますか？</language>
 		<language name="JPN_KANJI" width="256">「ポケモンセンターの　仕組み」
 この本を　読みますか?</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_headline_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff00,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">「ミネズミの　せいたい」
 この　ほんを　よみますか？</language>
 		<language name="JPN_KANJI" width="256">「ミネズミの　生態」
 この本を　読みますか?</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_headline_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff00,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">「ツタージャの　せいたい」
 この　ほんを　よみますか？</language>
 		<language name="JPN_KANJI" width="256">「ツタージャの　生態」
 この本を　読みますか?</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_headline_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff00,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">「ミジュマルの　せいたい」
 この　ほんを　よみますか？</language>
 		<language name="JPN_KANJI" width="256">「ミジュマルの　生態」
 この本を　読みますか?</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_headline_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff00,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">「ポカブの　せいたい」
 この　ほんを　よみますか？</language>
 		<language name="JPN_KANJI" width="256">「ポカブの　生態」
 この本を　読みますか?</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_09" back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_headline_09" back-color="#ffff00,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">「ポケモン　えかきうた」
 この　ほんを　よみますか？</language>
 		<language name="JPN_KANJI" width="256">「ポケモン　えかきうた」
 この本を　読みますか?</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_10" back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_headline_10" back-color="#ffff00,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">「はじめまして　ポケモンちゃん」
 この　ほんを　よみますか？</language>
 		<language name="JPN_KANJI" width="256">「はじめまして　ポケモンちゃん」
 この本を　読みますか?</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_11" back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_headline_11" back-color="#ffff00,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">「３ばんどうろの　ぼうけん」
 この　ほんを　よみますか？</language>
 		<language name="JPN_KANJI" width="256">「３ばんどうろの　ぼうけん」
 この本を　読みますか?</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_12" back-color="#80ff80,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
-		<language name="JPN" width="256">「ポケモン　なぞなぞ　えほん」
+	<row id="msg_c02gym0101_headline_12" back-color="#ffff00,,,#80ff80,,#80ff80,#ff8080,,,,,,#ff8080,,,,,,">
+		<attribute name="キャラ指定">４番の正解</attribute>
+		<language name="JPN" width="256">「ポケモンの　おかし」
 この　ほんを　よみますか？</language>
 		<language name="JPN_KANJI" width="256">「ポケモン　なぞなぞ　えほん」
 この本を　読みますか?</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_13" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_13" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_14" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_14" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_15" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_15" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_16" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_16" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_17" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_17" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_18" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_18" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_19" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_19" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_20" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_20" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_21" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_21" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_22" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_22" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_23" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_23" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_24" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_24" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_25" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_25" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_26" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_26" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_27" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_27" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_28" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_28" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_29" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_29" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_30" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_30" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_31" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_31" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_32" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_32" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_33" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_33" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_34" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_34" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_35" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_35" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_36" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_36" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_headline_37" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_headline_37" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_01" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_01" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「キズぐすりって　すごい！」
 この　ほんを　よみますか？</comment>
 		<attribute name="キャラ指定">本の内容</attribute>
-		<language name="JPN" width="256">キズぐすりに　ついて
-いがくてきに　せつめいした　ほんだ</language>
+		<language name="JPN" width="256">キズぐすりの　こうぞうや
+ただしいつかいかた　について　かいてある▼
+やんちゃなポケモンへの
+つかいかたの　コツも　かいてある</language>
 		<language name="JPN_KANJI" width="256">キズぐすりに　ついて
 医学的に　説明した　本だ</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_02" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>「こどもを　げんきに　そだてる」
+	<row id="msg_c02gym0101_book_02" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>「きかんしゃの　こうぞう」
 この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">こどもを　げんきに　そだてる
-アドバイスが　しるされている</language>
+		<attribute name="キャラ指定">３番の正解</attribute>
+		<language name="JPN" width="256">きかんしゃに　ついて
+かかれている　ほんだ▼
+からだのなかで　ほのおを　もやし
+その　じょうきの　ちからで▽
+けむりを　だしながら　はしっていく！</language>
 		<language name="JPN_KANJI" width="256">子供を　元気に　育てる
 アドバイスが　記されている</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_03" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_03" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「ポケモンしょうぶの　ぎじゅつ」
 この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">ポケモンしょうぶに　かんする
-ぎじゅつが　かかれている</language>
+		<language name="JPN" width="256">ポケモンを　いれかえるときの
+タイミングについて　かかれている▼
+「あぶないと　おもうまえには
+いれかえろ！」</language>
 		<language name="JPN_KANJI" width="256">ポケモン勝負に　関する
 技術が　書かれている</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_04" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_04" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「ポケモンセンターの　しくみ」
 この　ほんを　よみますか？</comment>
 		<language name="JPN" width="256">ポケモンセンターの
-しくみに　ついて　まとめてある</language>
+しくみに　ついて　まとめてある▼
+はたらく　おねえさんの　１にちも
+くわしく　かかれている</language>
 		<language name="JPN_KANJI" width="256">ポケモンセンターの
 仕組みについて　まとめてある</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>「ポケモンの　きょういく」
+	<row id="msg_c02gym0101_book_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>「ミネズミの　せいたい」
 この　ほんを　よみますか？</comment>
+		<attribute name="キャラ指定">２番の正解</attribute>
 		<language name="JPN" width="256">ミネズミの　せいたいが　かいてある▼
 しっぽの　うごきで　れんらくしあう
 しっぽを　たてる　うごきは▽
-てきを　はっけんしたときの　さいんだ</language>
+てきを　はっけんしたときの　サインだ</language>
 		<language name="JPN_KANJI" width="256">ミネズミの　生態が　書いてある▼
 しっぽの　動きで　連絡しあう
 しっぽを　立てる　動きは▽
 敵を　発見したときの　サインだ</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「ツタージャの　せいたい」
 この　ほんを　よみますか？</comment>
 		<language name="JPN" width="256">ツタージャの　せいたいが　かいてある▼
@@ -848,7 +1177,7 @@
 光合成の　最中だ</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「ミジュマルの　せいたい」
 この　ほんを　よみますか？</comment>
 		<language name="JPN" width="256">ミジュマルの　せいたいが　かいてある▼
@@ -861,7 +1190,7 @@
 とても硬く　道具として　使う</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_08" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_08" back-color="#ffff00,,,,,#ffff00,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「ポカブの　せいたい」
 この　ほんを　よみますか？</comment>
 		<language name="JPN" width="256">ポカブの　せいたいが　かいてある▼
@@ -874,51 +1203,66 @@
 元気がないと　煙しか　だせない</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_09" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>「はじめての　ポケモン」
+	<row id="msg_c02gym0101_book_09" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>「ポケモン　えかきうた」
 この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">えかきうたが
-たくさん　のっている</language>
+		<language name="JPN" width="256">ポケモンの　えかきうたが
+たくさん　のっている▼
+どれも　よくにてて
+かきやすそう</language>
 		<language name="JPN_KANJI" width="256">絵描き歌が
 たくさん　載っている</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_10" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>「ポケモン　えかきうた」
+	<row id="msg_c02gym0101_book_10" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>「はじめまして　ポケモンちゃん」
 この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">はじめて　ポケモンを
-つかまえた　おんなのこの　どうわだ</language>
-		<language name="JPN_KANJI" width="256">初めて　ポケモンを
-捕まえた　女の子の　童話だ</language>
+		<attribute name="キャラ指定">１番の正解</attribute>
+		<language name="JPN" width="256">うまれて　はじめて　ポケモンとであった
+おとこのこの　どうわだ▼
+ちゃいろい　ちいさな
+ポケモンを　つれている　</language>
+		<language name="JPN_KANJI" width="256">生まれて初めて　ポケモンと出会った
+男の子の　童話だ</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_11" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_11" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「３ばんどうろの　ぼうけん」
 この　ほんを　よみますか？</comment>
 		<language name="JPN" width="256">ポケモンを　つれた　しょうねんが　
-だいぼうけんする　ものがたりだ</language>
+だいぼうけんする　ものがたりだ▼
+ふたりの　おとこのこと　おんなのこが
+いっしょに　ぼうけんを　している</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　連れた
 少年が　大冒険する　物語だ</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_12" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<comment>「ポケモン　なぞなぞ　えほん」
+	<row id="msg_c02gym0101_book_12" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>「きのみでつくる　おかし」
 この　ほんを　よみますか？</comment>
-		<language name="JPN" width="256">ポケモンに　かんする
-なぞなぞが　たくさん　ある</language>
+		<attribute name="キャラ指定">４番の正解</attribute>
+		<language name="JPN" width="256">きのみを　おなべにいれ　あっためてつくる
+おいしい　おやつが　のっている▼
+とおい　シンオウちほう　には
+きのみから　つくる▽
+「ポフィン」と　よばる　おやつがあり▽
+ポケモンたちの　だいこうぶつです</language>
 		<language name="JPN_KANJI" width="256">ポケモンに　関する
 なぞなぞが　たくさん　ある</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_13" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_13" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>msg_c02gym0101_book_02の後。</comment>
+		<attribute name="キャラ指定">３番の正解と
+４番のヒント</attribute>
 		<language name="JPN" width="256">うらひょうしに　メモが　ある……！▼
-よる　ねつきが　わるいときは
-ポケモンと　いっしょに▽
-ふとんに　はいって▽
-[FF:00:色:1]えほん[FF:00:色:0]を　よんであげると　いいです▼
-さて　つぎに　おすすめする　ほんは
-[FF:00:色:1]よんで　かんがえる　えほん[FF:00:色:0]です▽
-あとがきに　メモが　あります</language>
+『よく　ここが　わかったね！
+さすが　わたしにいどむだけの　ことはある▽
+さて　３もんめの　もんだいだよ！▼
+[FF:00:色:1]「Ｑ，おなべで　ぐつぐつ　あっためて
+たべると　おいしいもの　なんだ？」▼[FF:00:色:0]
+ヒントは　ここより
+いりぐちに　ちかい　ほんだよ！</language>
 		<language name="JPN_KANJI" width="256">裏表紙に　メモが　挟んである……！▼
 夜　寝つきが　悪いときは
 ポケモンと　一緒に▽
@@ -929,15 +1273,19 @@
 あとがきに　メモが　あります</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_14" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_14" back-color="#ffff00,,,,,#ffff00,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>msg_c02gym0101_book_05の後。</comment>
+		<attribute name="キャラ指定">２番の正解と
+３番のヒント</attribute>
 		<language name="JPN" width="256">さいごの　ページに　メモが　ある……！▼
-ポケモンの　けんきゅうを　していますが
-なぞ　ばかりです▼
-さて　つぎは　いちれつ　おくにある
-しゃかい　ジャンルです▼
-おすすめする　ほんは
-[FF:00:色:1]こそだてに　やくだつ　ほん[FF:00:色:0]です▽
-うらひょうしに　メモが　あります</language>
+『うふふ！　さすがに
+もんだいが　かんたんだったね▽
+さて　２もんめの　もんだいだよ！▼
+[FF:00:色:1]「Ｑ，たいないで　ほのおが　もえあがり
+あたまから　けむりをだして　はしりだす」▽[FF:00:色:0]
+さて　このほんは　なんでしょう！？▼
+ヒントは……
+だれかが　よんでいる　かもね！？</language>
 		<language name="JPN_KANJI" width="256">最後の　ページに　メモが　ある……！▼
 ポケモンの　研究を　していますが
 なぞ　ばかりです▼
@@ -948,13 +1296,15 @@
 裏表紙に　メモが　あります</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_15" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_15" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>msg_c02gym0101_book_08の後。</comment>
+		<attribute name="キャラ指定">５番の正解</attribute>
 		<language name="JPN" width="256">ほんに　てがみが　はさんである……！▼
-せいかい　です
-ここが　さいごの　ほんです▼
-いまから　あなたに　
-あえることが　とても　たのしみです▽
-ジムリーダー　アロエ</language>
+『よくここまで　これたね！
+つよさ　だけではなく　ちえも　もっているね！▼
+これから　たたかえることを
+たのしみに　してるよ！▽
+ジムリーダー　アロエ▼</language>
 		<language name="JPN_KANJI" width="256">本に　手紙が　挟んである……！▼
 正解です
 ここが　最後の　本です▼
@@ -963,17 +1313,22 @@
 ジムリーダー　アロエ</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_16" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_16" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>msg_c02gym0101_book_10の後。</comment>
+		<attribute name="キャラ指定">１番はじめの正解と
+２番のヒント</attribute>
 		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
-ジムリーダーの　アロエです▼
-この　としょかんに　ある
-５さつの　ほんに　メモを　かくしました▼
-メモには　つぎの　
-ほんへの　ヒントが　あります▼
-つぎの　ほんは　ちゅうおうの　れつ
-ポケモンの　ジャンルに　ある▼
-「[FF:00:色:1]ミネズミの　せいたい[FF:00:色:0]」です
-さいごの　ページに　メモが　あります</language>
+『ポケモントレーナーの　しょくん！
+ジムリーダーの　アロエだよ！▼
+この　としょかんに　もんだいを　かいた
+メモを　４つ　かくしました▼
+その　もんだいを　といて
+わたしのところまで　これるかな！？▽
+さあ　はじめの　もんだいだ！▼
+[FF:00:色:1]「Ｑ，このジムで　はじめてであった
+ポケモンは　なんだったでしょう？」▼[FF:00:色:0]
+ヒントは　ちゅうおうの　れつの　ほんだな！
+さあ　さがしてごらん！</language>
 		<language name="JPN_KANJI" width="256">本に　メモが　挟んである･･････!▼
 ジムリーダーの　アロエです▼
 この　図書館に　ある
@@ -986,14 +1341,19 @@
 最後の　ページに　メモが　あります</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_17" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_book_17" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>msg_c02gym0101_book_12の後。</comment>
+		<attribute name="キャラ指定">４番の正解と
+５番のヒント</attribute>
 		<language name="JPN" width="256">あとがきに　メモが　ある……！▼
-なぞなぞ　です▼
-たいないでは　ほのおが　もえあがり
-はなのあなから　ほのおを　はきだす▽
-げんきがないと　けむりしか　だせない▼
-さて　この　なぞなぞが　しめす
-さいごの　ほんは　なんでしょう？</language>
+『もんだいに　ひっかからないで
+ここまで　これたかい？▽
+さあ　さいごの　もんだいだよ！▼
+[FF:00:色:1]「Ｑ，この　ほんだなから……
+うえに２つ　みぎに１つ　したに２つ▽
+ひだりに１つ　うえに１つ　さて　どこだ？」▼[FF:00:色:0]
+ヒントは　……
+じぶんの　ちからで　さがしてごらん！</language>
 		<language name="JPN_KANJI" width="256">あとがきに　メモが　ある……！▼
 なぞなぞ　です▼
 体内では　炎が　燃え上がり
@@ -1003,102 +1363,102 @@
 最後の　本は　なんでしょう？</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_18" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_18" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_19" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_19" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_20" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_20" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_21" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_21" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_22" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_22" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_23" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_23" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_24" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_24" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_25" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_25" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_26" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_26" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_27" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_27" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_28" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_28" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_29" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_29" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_30" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_30" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_31" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_31" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_32" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_32" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_33" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_33" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_34" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_34" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_35" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_35" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_36" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
+	<row id="msg_c02gym0101_book_36" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c02gym0101_switch_01" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_switch_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">カチッ！▼
 ほんの　したに　スイッチがある！
 ほんを　とったので▽
@@ -1111,7 +1471,7 @@
 どこかのカギが　１つ　はずれた！</language>
 	</row>
 
-	<row id="msg_c02gym0101_switch_02" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02gym0101_switch_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">カチッ！▼
 ほんの　したに　スイッチが　ある！
 ……が　なにも　おきなかった！▽
@@ -1122,16 +1482,16 @@
 スイッチには　順番が　あるみたい</language>
 	</row>
 
-	<row id="msg_c02gym0101_switch_03" back-color=",,,,,,#ff8080,,,,,,#ff8080,,,,,,">
-		<language name="JPN" width="256">「ポカブの　せいたい」を　よむために
-とろうとしたら　ほんについている[BE:00:ページ切り替え（行送り）]
-ヒモを　ひっぱってしまった！[BE:01:ページ切り替え（クリア）]</language>
+	<row id="msg_c02gym0101_switch_03" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
+		<language name="JPN" width="256">カチッ！▼
+ほんの　したに
+スイッチが　あった！</language>
 		<language name="JPN_KANJI" width="256">「ポカブの　生態」を　読むために
 取ろうとしたら　本についている[BE:00:ページ切り替え（行送り）]
 ヒモを　引っ張ってしまった！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c02gym0101_switch_04">
+	<row id="msg_c02gym0101_switch_04" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">なんと！
 かいだんが　あらわれたっ！</language>
 		<language name="JPN_KANJI" width="256">なんと！
