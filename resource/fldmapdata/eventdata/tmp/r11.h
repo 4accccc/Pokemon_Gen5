@@ -15,6 +15,9 @@
 #define TR_BACKPACKERW_08                  1
 #define TR_RANGERM_07                      2
 #define TR_RANGERW_07                      3
+#define R11_FLD_ITEM_01                    4
+#define R11_FLD_ITEM_02                    5
+#define R11_FLD_ITEM_03                    6
 
 #endif //ZONE_R11_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r11.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
