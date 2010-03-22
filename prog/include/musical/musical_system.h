@@ -36,7 +36,3 @@ const u16 MUSICAL_SYSTEM_GetMusicalPokemonRandom( void );
 //ミュージカル用パラメータの初期化
 MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPoke( POKEMON_PARAM *pokePara , HEAPID heapId );
 MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPokeParam( u16 monsno , u8 sex , u8 form , u8 rare , HEAPID heapId );
-
-#if PM_DEBUG
-const BOOL MUSICAL_SAVE_CreateDummyData( MUSICAL_SHOT_DATA* shotData , const u16 monsNo , const HEAPID heapId );
-#endif

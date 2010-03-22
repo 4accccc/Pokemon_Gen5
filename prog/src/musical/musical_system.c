@@ -31,6 +31,8 @@
 #include "test/ariizumi/ari_debug.h"
 #include "poke_tool/monsno_def.h"
 
+#include "musical_entry.cdat"
+
 //======================================================================
 //  define
 //======================================================================
@@ -108,23 +110,13 @@ GFL_PROC_DATA Musical_ProcData =
 };
 */
 
-static const u16 musPokeArr[]=
-{
-  MONSNO_PIKATYUU,
-  MONSNO_PIKUSII,
-  MONSNO_WARUBIARU,
-  MONSNO_509,
-  MONSNO_PURUNSU,
-  MONSNO_MUNNA,  
-  0xFFFF,
-};
 //ミュージカルの参加資格があるか調べる(仮)
 const BOOL  MUSICAL_SYSTEM_CheckEntryMusicalPokeNo( const u16 mons_no )
 {
   u16 i=0;
-  while( 0xFFFF != musPokeArr[i] )
+  while( 0xFFFF != MUSICAL_ENTRY_ARR[i] )
   {
-    if( mons_no == musPokeArr[i] )
+    if( mons_no == MUSICAL_ENTRY_ARR[i] )
     {
       return TRUE;
     }
@@ -146,9 +138,9 @@ const u16 MUSICAL_SYSTEM_ChangeMusicalPokeNumber( const u16 mons_no )
 {
   u16 i=0;
 
-  while( 0xFFFF != musPokeArr[i] )
+  while( 0xFFFF != MUSICAL_ENTRY_ARR[i] )
   {
-    if( mons_no == musPokeArr[i] )
+    if( mons_no == MUSICAL_ENTRY_ARR[i] )
     {
       return i;
     }
@@ -163,11 +155,11 @@ const u16 MUSICAL_SYSTEM_GetMusicalPokemonRandom( void )
 {
   u16 i=0;
 
-  while( 0xFFFF != musPokeArr[i] )
+  while( 0xFFFF != MUSICAL_ENTRY_ARR[i] )
   {
     i++;
   }
-  return musPokeArr[ GFUser_GetPublicRand0(i) ];
+  return MUSICAL_ENTRY_ARR[ GFUser_GetPublicRand0(i) ];
 }
 
 //ミュージカル用パラメータの初期化
@@ -310,80 +302,3 @@ void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , SAVE
 
   ARI_TPrintf("MusicalSystem LoadMidiData[%d][%d][%d].\n",pMidiSizeHeader->seqSize,pMidiSizeHeader->bankSize,pMidiSizeHeader->waveSize);
 }
-
-#if PM_DEBUG
-const BOOL MUSICAL_SAVE_CreateDummyData( MUSICAL_SHOT_DATA* shotData , const u16 monsNo , const HEAPID heapId )
-{
-  u8 i;
-  RTCDate date;
-  POKEMON_PERSONAL_DATA *perData;
-
-  if( MUSICAL_SYSTEM_CheckEntryMusicalPokeNo(monsNo) == FALSE )
-  {
-    return FALSE;
-  }
-  perData = POKE_PERSONAL_OpenHandle( monsNo , 0 ,heapId );
-
-  GFL_RTC_GetDate( &date );
-  shotData->bgNo = 0;
-  shotData->year = date.year;
-  shotData->month = date.month;
-  shotData->day = date.day;
-  shotData->title[0] = L'ダ';
-  shotData->title[1] = L'ミ';
-  shotData->title[2] = L'ー';
-  shotData->title[3] = L'シ';
-  shotData->title[4] = L'ョ';
-  shotData->title[5] = L'ッ';
-  shotData->title[6] = L'ト';
-  shotData->title[7] = L'デ';
-  shotData->title[8] = L'ー';
-  shotData->title[9] = L'タ';
-  shotData->title[10] = GFL_STR_GetEOMCode();
-  shotData->player = 0;
-  
-  shotData->musVer = MUSICAL_VERSION;
-  shotData->pmVersion = VERSION_BLACK;
-  shotData->pmLang = LANG_JAPAN;
-  shotData->spotBit = 1;
-  
-  for( i=0;i<MUSICAL_POKE_MAX;i++ )
-  {
-    u8 j;
-    shotData->shotPoke[i].monsno = monsNo;
-    switch( POKE_PERSONAL_GetParam(perData,POKEPER_ID_sex) )
-    {
-    case POKEPER_SEX_MALE:
-      shotData->shotPoke[i].sex = PTL_SEX_MALE;
-      break;
-    case POKEPER_SEX_FEMALE:
-      shotData->shotPoke[i].sex = PTL_SEX_FEMALE;
-      break;
-    case POKEPER_SEX_UNKNOWN:
-      shotData->shotPoke[i].sex = PTL_SEX_UNKNOWN;
-      break;
-    default:
-      shotData->shotPoke[i].sex = PTL_SEX_MALE;
-      break;
-    }
-    shotData->shotPoke[i].rare = 0;
-    shotData->shotPoke[i].form = 0;
-    shotData->shotPoke[i].trainerName[0] = L'ト';
-    shotData->shotPoke[i].trainerName[1] = L'レ';
-    shotData->shotPoke[i].trainerName[2] = L'ー';
-    shotData->shotPoke[i].trainerName[3] = L'ナ';
-    shotData->shotPoke[i].trainerName[4] = L'１'+i;
-    shotData->shotPoke[i].trainerName[5] = 0;
-    //装備箇所の初期化
-    for( j=0;j<MUSICAL_ITEM_EQUIP_MAX;j++ )
-    {
-      shotData->shotPoke[i].equip[j].itemNo = MUSICAL_ITEM_INVALID;
-      shotData->shotPoke[i].equip[j].angle = 0;
-      shotData->shotPoke[i].equip[j].equipPos = MUS_POKE_EQU_INVALID;
-    }
-  }
-  
-  POKE_PERSONAL_CloseHandle( perData );
-  return TRUE;
-}
-#endif
