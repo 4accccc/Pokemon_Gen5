@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T12:32:32"/>
+	<create user="matsumiya" host="W00224" date="2010-03-22T17:54:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1292" top="392" right="1997" bottom="1020" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r08_white_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r08_white_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・下記ストッパーが削除されるとイベント起動条件ON
 ・pos起動（GRIDX=240、GRIDZ=175~185）仮
@@ -302,20 +302,38 @@
 		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]！！▼</language>
 	</row>
 
-	<row id="msg_r08_white_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r08_white_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公に隣接してメッセージ表示
 ・続けてトレーナー戦闘に</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">はあ　おいついた▼
-ねえねえ！　いきなりだけど
-あたしと　しょうぶ　して！▼</language>
-		<language name="JPN_KANJI" width="256">はあ　追いついた▼
-ねえねえ！　いきなりだけど
-あたしと　勝負して！▼</language>
+		<language name="JPN" width="256">さいきんね　あたし
+いろいろ　かんがえるんだ▼
+たびにでて　じぶんが　なにができるか
+なにを　やりたいか　なんだけどお▼
+カミツレさんの　ような
+ステキな　モデルも　あこがれるし▼
+アララギはかせの　ように
+ポケモンけんきゅう　とかも▽
+してみたいな　って　おもうし……▼
+でも　それには　やっぱり
+ポケモンに　くわしくないとね▽
+というわけで　しょうぶ　して▼</language>
+		<language name="JPN_KANJI" width="256">最近ね　あたし
+いろいろ　考えるんだ▼
+旅をして　自分が　なにができるか
+なにをやりたいか　なんだけどお▼
+カミツレさんの　ような
+ステキな　モデルも　あこがれるし▼
+アララギ博士の　ように
+ポケモン研究　とかも▽
+してみたいな　って　思うし……▼
+でも　それには　やっぱり
+ポケモンに　詳しくないとね▽
+というわけで　勝負して▼</language>
 	</row>
 
-	<row id="msg_r08_white_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r08_white_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・戦闘後、フィールド復帰時に自動で表示
 ・アイテム入手処理
@@ -333,29 +351,29 @@
 感動したから　これ　あげるね▼</language>
 	</row>
 
-	<row id="msg_r08_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r08_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・その後画面左へ移動
 　画面外に消えると主人公、操作可能に
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]なら
-なにがあっても　だいじょうぶだよ！▽
+なにをするのも　だいじょうぶだよ！▽
 あたしが　ほしょう　してあげる！▼
 だから……　えーっと……
 こういうとき　なにいうんだろ？▼
 まあいいや
-バイバイ！　[1:00:トレーナー名:0]！！▼</language>
+バイバーイ！　[1:00:トレーナー名:0]！！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]なら
-なにがあっても　大丈夫だよ！▽
+なにをするのも　大丈夫だよ！▽
 あたしが　保証してあげる！▼
 だから……　えーっと……
 こういうとき　なにいうんだろ？▼
 まあいいや
-バイバイ！　[1:00:トレーナー名:0]！！▼</language>
+バイバーイ！　[1:00:トレーナー名:0]！！▼</language>
 	</row>
 
-	<row id="msg_r08_stop1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r08_stop1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ストッパー
 ・GRIDX=243、GRIDZ=179、下向き（仮
@@ -370,7 +388,7 @@
 仲間が　活動中らしいな</language>
 	</row>
 
-	<row id="msg_r08_stop1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r08_stop1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ストッパー
 ・リュウラセンの塔イベント後からc02でストーン入手まで
@@ -385,7 +403,7 @@
 仲間が　活動中らしいな</language>
 	</row>
 
-	<row id="msg_r08_stop2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r08_stop2_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ストッパー
 ・GRIDX=243、GRIDZ=180、上向き（仮
@@ -400,7 +418,7 @@
 仲間が　活動中らしいぞ</language>
 	</row>
 
-	<row id="msg_r08_stop2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_r08_stop2_02" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ストッパー
 ・リュウラセンの塔イベント後からc02でストーン入手まで
@@ -415,7 +433,7 @@
 仲間が　活動中らしいぞ</language>
 	</row>
 
-	<row id="msg_r08_ambrella_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r08_ambrella_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・アイテム入手処理
 　No369「からげんき」</comment>
@@ -429,7 +447,7 @@
 あなたも　おひとつ　いかが？▼</language>
 	</row>
 
-	<row id="msg_r08_ambrella_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r08_ambrella_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">AMBRELLA
@@ -473,7 +491,7 @@
 ポチッとな！</language>
 	</row>
 
-	<row id="msg_r08_sign4_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r08_sign4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">シリンダーブリッジ
 イッシュじまんの　てつどうきょう</language>
