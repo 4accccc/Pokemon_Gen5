@@ -580,7 +580,8 @@ static void _DebugDataCreate(EVENT_GTSNEGO_WORK *pWork)
 {
   int i;
 
-  for(i = 0; i < WIFI_NEGOTIATION_DATAMAX;i++){
+//  for(i = 0; i < WIFI_NEGOTIATION_DATAMAX;i++){
+  for(i = 0; i < 4;i++){
     MYSTATUS* pMyStatus = MyStatus_AllocWork(GFL_HEAPID_APP);
     MyStatus_SetProfileID(pMyStatus,1+i);
     MyStatus_SetID(pMyStatus,1+i);

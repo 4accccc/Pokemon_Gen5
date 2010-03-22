@@ -814,6 +814,7 @@ static void _itemInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_D
   
   for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
     DREAMWORLD_SV_SetItem(pDreamSave, i,   pDream->itemID[i], pDream->itemNum[i]);
+    NET_PRINT("DREAMWORLD_SV_SetItem %d %d %d\n",i,pDream->itemID[i], pDream->itemNum[i]);
   }
 }
 
@@ -854,6 +855,10 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
     _itemInSaveArea(pDreamSave, pDream);
     //          _CHANGE_STATE();  //セーブに行く?
   }
+  else{
+    NET_PRINT("取得しなかった%d %d=%d\n",pDream->bGet, pDream->uploadCount,DREAMWORLD_SV_GetUploadCount(pDreamSave));
+  }
+  
   _downloadcheck(pWork);
 }
 

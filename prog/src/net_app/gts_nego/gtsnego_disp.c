@@ -1382,7 +1382,7 @@ static int _getScrollCurPos(GTSNEGO_DISP_WORK* pWork,int pos,int max)
   else{
     ret = (SCROLLBAR_LENGTH * pos) / max;
   }
-  return (ret + _OFFSET_SCROLL);
+  return (ret );//+ _OFFSET_SCROLL);
 }
 
 
@@ -1404,6 +1404,7 @@ static int _touchToCurcorPos(GTSNEGO_DISP_WORK* pWork,int y,int max)
   if(max <= 3){
     return 0;
   }
+
   length = length / (max-3);
   ansf = yf / length;
 

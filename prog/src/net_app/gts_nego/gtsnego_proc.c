@@ -1143,11 +1143,17 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
   if( PANEL_UPSCROLL_ == scrollType){
     GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
     GTSNEGO_MESSAGE_FriendListUpEnd(pWork->pMessageWork);
-    GTSNEGO_DISP_UnionListUp(pWork->pDispWork, GTSNEGO_GetMyStatus(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos));
+
+    OS_TPrintf("GTSNEGO_DISP_UnionListUp %d\n",pWork->scrollPanelCursor.oamlistpos-2);
+
+    
+    GTSNEGO_DISP_UnionListUp(pWork->pDispWork, GTSNEGO_GetMyStatus(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos-2));
   }
   else if( PANEL_DOWNSCROLL_ == scrollType){
     GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, pWork->scrollPanelCursor.oamlistpos-2);
     GTSNEGO_MESSAGE_FriendListDownEnd(pWork->pMessageWork);
+    OS_TPrintf("GTSNEGO_DISP_UnionListDown %d\n",pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3));
+
     GTSNEGO_DISP_UnionListDown(pWork->pDispWork, GTSNEGO_GetMyStatus(pWork->pGameData ,pWork->scrollPanelCursor.oamlistpos + (SCROLL_PANEL_NUM-3)));
   }
   if(ret != PANEL_NONESCROLL_){
@@ -1191,14 +1197,15 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
     }
   }
   if(bHit){
-    GTSNEGO_DISP_ScrollChipDisp(pWork->pDispWork,pWork->scrollPanelCursor.oamlistpos+pWork->key3,
+    GTSNEGO_DISP_ScrollChipDisp(pWork->pDispWork,pWork->scrollPanelCursor.oamlistpos + pWork->key3 - _CROSSCUR_TYPE_FRIEND1,
                                 pWork->scrollPanelCursor.listmax );
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
   }
 
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){  // キーでの決定
     PMSND_PlaySystemSE(_SE_DECIDE);
-    pWork->selectFriendIndex = pWork->key3;
+    pWork->selectFriendIndex = pWork->scrollPanelCursor.oamlistpos + pWork->key3  - _CROSSCUR_TYPE_FRIEND1;
+    OS_TPrintf("選んだ番号 %d\n", pWork->selectFriendIndex);
     _CHANGE_STATE(pWork,_friendSelectDecide);
     return;
   }
@@ -1210,10 +1217,11 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
     case 0:
     case 1:
     case 2:
-      pWork->key3 = trgindex;
+      pWork->key3 = trgindex  + _CROSSCUR_TYPE_FRIEND1;
       GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
-
-      pWork->selectFriendIndex = trgindex;
+      pWork->selectFriendIndex = pWork->scrollPanelCursor.oamlistpos + pWork->key3  - _CROSSCUR_TYPE_FRIEND1;
+      OS_TPrintf("選んだ番号 %d\n", pWork->selectFriendIndex);
+//      pWork->selectFriendIndex = trgindex;
       PMSND_PlaySystemSE(_SE_DECIDE);
       _CHANGE_STATE(pWork,_friendSelectDecide);
       return;
@@ -1297,7 +1305,7 @@ static void _friendSelect( GTSNEGO_WORK *pWork )
 
   GTSNEGO_DISP_FriendSelectPlateView(pWork->pDispWork,pWork->pGameData, -2);
   GTSNEGO_DISP_ScrollChipDisp(pWork->pDispWork,
-                              pWork->scrollPanelCursor.oamlistpos + pWork->key3,
+                              pWork->scrollPanelCursor.oamlistpos + pWork->key3 - _CROSSCUR_TYPE_FRIEND1,
                               pWork->scrollPanelCursor.listmax );
 
   _CHANGE_STATE(pWork,_friendSelectWait);

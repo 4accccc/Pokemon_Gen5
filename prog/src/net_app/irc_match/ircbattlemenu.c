@@ -35,6 +35,7 @@
 #include "msg/msg_ircbattle.h"
 #include "../../field/event_ircbattle.h"
 #include "ircbattle.naix"
+#include "ircbattlecommon.h"
 #include "cg_comm.naix"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
 #include "ir_ani_NANR_LBLDEFS.h"
@@ -181,6 +182,7 @@ typedef BOOL (TouchFunc)(int no, IRC_BATTLE_MENU* pState);
 
 
 struct _IRC_BATTLE_MENU {
+  IRC_BG_WORK aIrcBgWork;
   StateFunc* state;      ///< ハンドルのプログラム状態
   TouchFunc* touch;
   int selectType;   // 接続タイプ
@@ -637,7 +639,7 @@ static void _modeInit(IRC_BATTLE_MENU* pWork)
 
     // サブ画面BG0スクリーン転送
 
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_ircbattle_ir_demo2_NSCR,
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_ircbattle_ir_demo1_NSCR,
                                               GFL_BG_FRAME0_M, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
                                               pWork->heapID);
@@ -1377,7 +1379,7 @@ static void _CLACT_SetResource(IRC_BATTLE_MENU* pWork)
                             FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
   pWork->cellRes[PLT_DS] =
     GFL_CLGRP_PLTT_RegisterEx(
-      p_handle ,NARC_ircbattle_ir_demo_NCLR , CLSYS_DRAW_MAIN, 0, 0, 3, pWork->heapID  );
+      p_handle ,NARC_ircbattle_ir_demo_obj_NCLR , CLSYS_DRAW_MAIN, 0, 0, 3, pWork->heapID  );
   pWork->cellRes[ANM_DS] =
     GFL_CLGRP_CELLANIM_Register(
       p_handle , NARC_ircbattle_ir_ani_NCER, NARC_ircbattle_ir_ani_NANR , pWork->heapID  );
@@ -1555,6 +1557,7 @@ static void _CLACT_SetAnim(IRC_BATTLE_MENU* pWork,int x,int y,int no,int anm)
                                                          &cellInitData ,CLSYS_DRAW_MAIN , pWork->heapID );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[no] , TRUE );
     GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[no], TRUE );
+    GFL_CLACT_WK_SetAffineParam(pWork->curIcon[no], CLSYS_AFFINETYPE_DOUBLE);
 
   }
 }
@@ -1907,8 +1910,8 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
 
     _CLACT_SetResource(pWork);
 
-    _CLACT_SetAnim(pWork,88,72,CELL_IRWAVE1,NANR_ir_ani_CellAnime3);
-    _CLACT_SetAnim(pWork,168,110,CELL_IRWAVE2,NANR_ir_ani_CellAnime2);
+    _CLACT_SetAnim(pWork,57,154,CELL_IRWAVE1,NANR_ir_ani_CellAnime10);
+    _CLACT_SetAnim(pWork,200,38,CELL_IRWAVE2,NANR_ir_ani_CellAnime11);
 
       
 		WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
@@ -1918,10 +1921,16 @@ static GFL_PROC_RESULT IrcBattleMenuProcInit( GFL_PROC * proc, int * seq, void *
 
     G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0 , 15, 4 );
 
+    
+    pWork->aIrcBgWork.heapID = pWork->heapID;
+
+    ircBGAnimInit(&pWork->aIrcBgWork);
+    
 
   }
   GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_OBJ );
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_OBJ );
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_OBJ,  GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG0, 9, 14);
 
   GFL_NET_ReloadIcon();
   
@@ -1938,8 +1947,10 @@ static GFL_PROC_RESULT IrcBattleMenuProcMain( GFL_PROC * proc, int * seq, void *
 {
   IRC_BATTLE_MENU* pWork = mywk;
   GFL_PROC_RESULT retCode = GFL_PROC_RES_FINISH;
-
   StateFunc* state = pWork->state;
+
+  ircBGAnimMain(&pWork->aIrcBgWork);
+
   if(state != NULL){
     state(pWork);
     retCode = GFL_PROC_RES_CONTINUE;
