@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T14:21:43"/>
+	<create user="matsumiya" host="W00224" date="2010-03-22T18:13:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -585,17 +585,19 @@
 なに　してるの！？▼</language>
 	</row>
 
-	<row id="msg_d01r0101_hakaim_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d01r0101_hakaim_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてhakaiw_02</comment>
 		<attribute name="キャラ指定">プラズマ団♂</attribute>
 		<language name="JPN" width="256">？？？『わたしたちの　ことか？▼
 わたしたち　プラズマだんは
+おろかな　ひとびとから▽
 ポケモンを　かいほう　するため▽
 にちや　たたかって　いるのだ▼</language>
 		<language name="JPN_KANJI" width="256">？？？『我々か？▼
 我々　プラズマ団は
-ポケモンを　解放　するため▽
+愚かな　人々から▽
+ポケモンを　解放するため▽
 日夜　闘って　いるのだ▼</language>
 	</row>
 
@@ -646,50 +648,56 @@
 あなたたちも　トレーナーなんでしょ？▼</language>
 	</row>
 
-	<row id="msg_d01r0101_hakaiw_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_hakaiw_03" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,,,#80ffff,,,,,,,,,,,,,">
 		<comment>♀
 ・続けてhakaim_04</comment>
 		<attribute name="キャラ指定">プラズマ団♀</attribute>
-		<language name="JPN" width="256">プラズマだん『ワタシたちを
-くだらない　トレーナーなどと▽
-いっしょに　するな！▼
-ポケモンを　つかうのは
-おろかな　トレーナーどもに▽
-ポケモンの　すごさを　おしえるため！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『ワタシたちを
-くだらない　トレーナーなどと▽
-いっしょに　するな！▼
-ポケモンを　使うのは
-愚かな　トレーナーどもに▽
-ポケモンの　すごさを　教えるため！▼</language>
+		<language name="JPN" width="256">プラズマだん『そうよ
+わたしたちも　ポケモントレーナー▼
+だけど　たたかう　りゆうは
+あなたたちと　ちがって▽
+ポケモンを　じゆうに　するため！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマ団『そうよ
+わたしたちも　ポケモントレーナー▼
+だけど　戦う　理由は
+あなたたちと　違って▽
+ポケモンを　自由に　するため！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_hakaim_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d01r0101_hakaim_04" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・続けてwhite_07</comment>
 		<attribute name="キャラ指定">プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『そして　力づくで
-ポケモンを　奪うほうが　早い▼
+		<language name="JPN" width="256">プラズマだん『そして
+ポケモンを　じゆうに　するとは！▼
+しょうぶに　かち　ちからづくで
+ポケモンを　うばうこと！▽
+それが　プラズマだん！▼
 というわけで
 おまえたちの　ポケモン▽
-私たちが　救い出そう！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『そして　力づくで
-ポケモンを　奪うほうが　早い▼
+わたしたちが　すくいだしてやる！▼</language>
+		<language name="JPN_KANJI" width="256">プラズマだん『そして
+ポケモンを　自由に　するとは！▼
+勝負に　勝ち　力づくで
+ポケモンを　奪うこと！▽
+それが　プラズマ団！▼
 というわけで
 おまえたちの　ポケモン▽
-私たちが　救い出そう！▼</language>
+わたしたちが　救い出してやる！▼</language>
 	</row>
 
-	<row id="msg_d01r0101_white_07" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d01r0101_white_07" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・メッセージ表示後、hakaimと戦闘に
 ・勝利するとフィールドに戻りhakaiw_04表示
 ・0＝主人公名</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ベル『えええ！
-ちょっと　[1:00:トレーナー名:0]！▼</language>
+ちょっと　[1:00:トレーナー名:0]！▽
+あたし　よわいから　おねがい！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『えええ！
-ちょっと　[1:00:トレーナー名:0]！▼</language>
+ちょっと　[1:00:トレーナー名:0]！▽
+あたし　弱いから　お願い！▼</language>
 	</row>
 
 	<row id="msg_d01r0101_hakaiw_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
