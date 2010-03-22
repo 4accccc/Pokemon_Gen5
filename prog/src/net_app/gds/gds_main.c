@@ -38,25 +38,11 @@
 #define GDSPROC_HEAP_SIZE		(0x800)  //(MYDWC_HEAPSIZE + 0x8000)
 
 //==============================================================================
-//	グローバル変数
-//==============================================================================
-#if GDS_FIX
-static NNSFndHeapHandle _wtHeapHandle;
-#endif
-
-//==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
 static GFL_PROC_RESULT GdsMainProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT GdsMainProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
-static void GdsMain_CommInitialize(GDSPROC_MAIN_WORK *gmw);
-static void GdsMain_CommFree(GDSPROC_MAIN_WORK *gmw);
-#if GDS_FIX
-static void *AllocFunc( DWCAllocType name, u32   size, int align );
-static void FreeFunc(DWCAllocType name, void* ptr,  u32 size);
-#endif
-static void _NetInitCallback( void *work );
 
 //==============================================================================
 //	データ
@@ -128,7 +114,6 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 	GDSPROC_MAIN_WORK * gmw  = mywk;
 	enum{
 		SEQ_INIT_DPW,
-		SEQ_INIT_DPW_WAIT,
 		
 		SEQ_WIFI_CONNECT,
 		SEQ_WIFI_CONNECT_MAIN,
@@ -147,29 +132,10 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 	
 	switch(*seq){
 	case SEQ_INIT_DPW:	//通信ライブラリ初期化
-	#if GDS_FIX
-		GdsMain_CommInitialize(gmw);
-	#endif
-		*seq = SEQ_INIT_DPW_WAIT;
-		break;
-	case SEQ_INIT_DPW_WAIT:
-		if(1){//gmw->net_init == TRUE){//if(CommIsVRAMDInitialize()){
-		#if GDS_FIX
-			_wtHeapHandle = gmw->heapHandle;
-	  #endif
-	  
-			// wifiメモリ管理関数呼び出し
-			//DWC_SetMemFunc( AllocFunc, FreeFunc );
-			
-			gmw->comm_initialize_ok = TRUE;
-			(*seq)++;
-		}
+		(*seq)++;
 		break;
 		
 	case SEQ_WIFI_CONNECT:	//WIFI接続
-	#if GDS_FIX
-		GFL_PROC_LOCAL_CallProc(gmw->proc_sys, NO_OVERLAY_ID, &GdsConnectProcData, gmw);
-	#else
 	  {
       gmw->login_param.gamedata = gmw->proc_param->gamedata;
       gmw->login_param.bg       = WIFILOGIN_BG_NORMAL;
@@ -179,7 +145,6 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
       GFL_PROC_LOCAL_CallProc(
         gmw->proc_sys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &gmw->login_param);
     }
-	#endif
 		(*seq)++;
 		break;
 	case SEQ_WIFI_CONNECT_MAIN:
@@ -215,9 +180,6 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 		break;
 	
 	case SEQ_WIFI_CLEANUP:		//WIFI切断
-	#if GDS_FIX
-		GFL_PROC_LOCAL_CallProc(gmw->proc_sys, NO_OVERLAY_ID, &GdsConnectProcData, gmw);
-	#else
 	  {
       gmw->logout_param.gamedata = gmw->proc_param->gamedata;
       gmw->logout_param.bg = WIFILOGIN_BG_NORMAL;
@@ -225,12 +187,11 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
       GFL_PROC_LOCAL_CallProc(
         gmw->proc_sys, FS_OVERLAY_ID(wifi_login), &WiFiLogout_ProcData, &gmw->logout_param);
     }
-	#endif
+  	gmw->connect_success = FALSE;
 		(*seq)++;
 		break;
 	case SEQ_WIFI_CLEANUP_MAIN:
     if(proc_status == GFL_PROC_MAIN_NULL){
-			gmw->connect_success = FALSE;
 			(*seq)++;
 		}
 		break;
@@ -242,7 +203,6 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 	if(gmw->connect_success == TRUE){
 		// 受信強度リンクを反映させる
 		DWC_UpdateConnection();
-
 		// Dpw_Tr_Main() だけは例外的にいつでも呼べる
 	//	Dpw_Tr_Main();
 	}
@@ -266,10 +226,6 @@ static GFL_PROC_RESULT GdsMainProc_End( GFL_PROC * proc, int * seq, void * pwk, 
 
   GFL_PROC_LOCAL_Exit(gmw->proc_sys);
 
-#if GDS_FIX
-	GdsMain_CommFree(gmw);
-#endif
-
 	//GDSプロック呼び出しパラメータ解放
 	GFL_HEAP_FreeMemory(gmw->proc_param);
 	
@@ -279,169 +235,4 @@ static GFL_PROC_RESULT GdsMainProc_End( GFL_PROC * proc, int * seq, void * pwk, 
 
 	return GFL_PROC_RES_FINISH;
 }
-
-
-//--------------------------------------------------------------
-/**
- * @brief   通信ライブラリ関連の初期化処理
- *
- * @param   gmw		
- */
-//--------------------------------------------------------------
-static void GdsMain_CommInitialize(GDSPROC_MAIN_WORK *gmw)
-{
-	if(gmw->comm_initialize_ok == FALSE){
-		OS_TPrintf("Comm初期化開始\n");
-		
-		//世界交換のWifi通信命令を使用するためオーバーレイを読み出す(dpw_tr.c等)
-//		Overlay_Load(FS_OVERLAY_ID(worldtrade), OVERLAY_LOAD_NOT_SYNCHRONIZE);
-
-#if GDS_FIX
-		// DWCライブラリ（Wifi）に渡すためのワーク領域を確保
-		gmw->heapPtr    = GFL_HEAP_AllocMemory(HEAPID_GDS_MAIN, MYDWC_HEAPSIZE + 32);
-		gmw->heapHandle = NNS_FndCreateExpHeap( (void *)( ((u32)gmw->heapPtr + 31) / 32 * 32 ), MYDWC_HEAPSIZE);
-#endif
-
-	#if 0
-		//DWCオーバーレイ読み込み
-		DwcOverlayStart();
-		DpwCommonOverlayStart();
-		// イクニューモン転送
-		CommVRAMDInitialize();
-  #else
-    {
-      //WIFIのオーバーレイを起動させるだけなので、
-      //ほぼデータなし
-      static const GFLNetInitializeStruct net_init =
-      {
-        NULL,
-        0,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-#if GFL_NET_WIFI
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        NULL,
-        MYDWC_HEAPSIZE,
-        TRUE,         //デバッグ用サーバにつなぐかどうか
-#endif  //GFL_NET_WIFI
-        SYASHI_NETWORK_GGID,  //ggid  
-        GFL_HEAPID_APP,
-        HEAPID_NETWORK,
-        HEAPID_WIFI,
-        HEAPID_IRC,
-        GFL_WICON_POSX,GFL_WICON_POSY,        // 通信アイコンXY位置
-        2,     // 最大接続人数
-        32,  //最大送信バイト数
-        4,    // 最大ビーコン収集数
-        TRUE,
-        FALSE,
-        GFL_NET_TYPE_WIFI_GTS,
-        TRUE,
-        WB_NET_GDS,
-#if GFL_NET_IRC
-        IRC_TIMEOUT_STANDARD,
-#endif  //GFL_NET_IRC
-        0,//MP親最大サイズ 512まで
-        0,//dummy
-      };
-      GFL_NET_Init( &net_init, _NetInitCallback, gmw );
-    }
-  #endif
-  
-		OS_TPrintf("Comm初期化終了\n");
-	}
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   通信ライブラリ関連の解放処理
- *
- * @param   gmw		
- */
-//--------------------------------------------------------------
-static void GdsMain_CommFree(GDSPROC_MAIN_WORK *gmw)
-{
-	if(gmw->comm_initialize_ok == TRUE){
-		OS_TPrintf("Comm解放開始\n");
-		
-#if GDS_FIX
-		NNS_FndDestroyExpHeap(gmw->heapHandle);
-		GFL_HEAP_FreeMemory( gmw->heapPtr );
-#endif
-	#if 0
-		DpwCommonOverlayEnd();
-		DwcOverlayEnd();
-
-		// イクニューモン解放
-		CommVRAMDFinalize();
-  #else
-    GFL_NET_Exit(NULL); //WiFiのオーバーレイ解放
-    gmw->net_init = FALSE;
-  #endif
-  
-//		Overlay_UnloadID(FS_OVERLAY_ID(worldtrade));
-		
-		gmw->comm_initialize_ok = FALSE;
-
-		OS_TPrintf("Comm解放完了\n");
-	}
-}
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  netの初期化終了コールバック
- *
- *  @param  void *wk_adrs   ワークアドレス
- */
-//-----------------------------------------------------------------------------
-static void _NetInitCallback( void *work )
-{
-  GDSPROC_MAIN_WORK *gmw = work;
-  gmw->net_init = TRUE;
-}
-
-#if GDS_FIX
-/*---------------------------------------------------------------------------*
-  メモリ確保関数
- *---------------------------------------------------------------------------*/
-static void *AllocFunc( DWCAllocType name, u32   size, int align )
-{
-#pragma unused( name )
-    void * ptr;
-    OSIntrMode old;
-    old = OS_DisableInterrupts();
-    ptr = NNS_FndAllocFromExpHeapEx( _wtHeapHandle, size, align );
-    OS_RestoreInterrupts( old );
-    if(ptr == NULL){
-	}
-	
-    return ptr;
-}
-
-/*---------------------------------------------------------------------------*
-  メモリ開放関数
- *---------------------------------------------------------------------------*/
-static void FreeFunc(DWCAllocType name, void* ptr,  u32 size)
-{
-#pragma unused( name, size )
-    OSIntrMode old;
-
-    if ( !ptr ) return;
-    old = OS_DisableInterrupts();
-    NNS_FndFreeToExpHeap( _wtHeapHandle, ptr );
-    OS_RestoreInterrupts( old );
-}
-#endif
 
