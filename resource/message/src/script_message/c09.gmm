@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-03-22T18:23:39"/>
+	<create user="matsumiya" host="W00224" date="2010-03-22T19:39:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,11 +296,9 @@
 		<comment>♂
 ・GRIDX=31～33、GRIDZ=48
 ・初めて挑戦するときPOSイベント
-はい/いいえ表示
-
-はい→veteranm1_03
-いいえ→veteranm1_04
-
+・はい/いいえ表示
+・はい→veteranm1_03
+　いいえ→veteranm1_04
 </comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">ポケモンリーグは
@@ -311,7 +309,7 @@
 ただし！　ただしである
 いちど　ちょうせんを　はじめたなら[BE:00:ページ切り替え（行送り）]
 かちぬくか[BE:00:ページ切り替え（行送り）]
-はいぼく　するまで　でられないぞ！[BE:01:ページ切り替え（クリア）]</language>
+まけるまで　でられないぞ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ポケモンリーグは　４人いる
 四天王　だれからでも　挑戦できる[BE:01:ページ切り替え（クリア）]
 そして　四天王全員に　勝てば
@@ -326,34 +324,39 @@
 		<comment>♂
 ・GRIDX=31～33、GRIDZ=48
 ・初めて挑戦するときPOSイベント
-※一度いいえで断った後
-はい/いいえ表示
-
-はい→veteranm1_03
-いいえ→veteranm1_04
-
-</comment>
+・一度いいえで断った後
+・はい/いいえ表示
+・はい→veteranm1_03
+　いいえ→veteranm1_04</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">いちど　ちょうせんを　はじめたなら[BE:00:ページ切り替え（行送り）]
 かちぬくか[BE:00:ページ切り替え（行送り）]
-はいぼく　するまで　でられないぞ！[BE:01:ページ切り替え（クリア）]</language>
+まけるまで　でられないぞ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">一度　挑戦を　はじめたなら[BE:00:ページ切り替え（行送り）]
 勝ち抜くか[BE:00:ページ切り替え（行送り）]
 敗北するまで　でられないぞ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c09_veteranm1_03">
-		<comment>♂</comment>
+		<comment>♂
+・はい選択時</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">では　すすむべし！▼</language>
-		<language name="JPN_KANJI" width="256">では　すすむべし！▼</language>
+		<language name="JPN_KANJI" width="256">では　進むべし！▼</language>
 	</row>
 
 	<row id="msg_c09_veteranm1_04">
-		<comment>♂</comment>
+		<comment>♂
+・いいえ選択時</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
-		<language name="JPN" width="256">じゅんびを　おこたるな！▼</language>
-		<language name="JPN_KANJI" width="256">じゅんびを　おこたるな！▼</language>
+		<language name="JPN" width="256">じゅんびを　おこたるな！▼
+あちらの　いりぐちを　ぬけて
+ポケモンの　かいふくなど▽
+できるかぎりの　よういを　するのだ！</language>
+		<language name="JPN_KANJI" width="256">準備を　怠るな！▼
+あちらの　入り口を　ぬけて
+ポケモンの　回復など▽
+できるかぎりの　用意を　するのだ！</language>
 	</row>
 
 	<row id="msg_c09_veteranm1_05">
@@ -367,7 +370,7 @@
 ただし！　ただしである
 いちど　ちょうせんを　はじめたなら[BE:00:ページ切り替え（行送り）]
 かちぬくか[BE:00:ページ切り替え（行送り）]
-はいぼく　するまで　でられないぞ！</language>
+まけるまで　でられないぞ！</language>
 		<language name="JPN_KANJI" width="256">ポケモンリーグは　４人いる
 四天王　だれからでも　挑戦できる[BE:01:ページ切り替え（クリア）]
 そして　四天王全員に　勝てば
@@ -404,24 +407,6 @@
 		<language name="JPN_KANJI" width="256">こちらで　準備を　しておくがいい[BE:01:ページ切り替え（クリア）]
 一度でも　負けると
 最初から　やりなおし　だからな！[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="msg_c09_veteranm2_03" back-color="#808080,,,#808080,,#808080,#808080,,,,,,#808080,,,,,,">
-		<comment>未使用になりました。
-スクリプト参照してません。削除ＯＫ</comment>
-		<attribute name="キャラ指定">VETERANM</attribute>
-		<language name="JPN" width="256">ポケモンリーグは
-すべての　トレーナーに　とって[BE:00:ページ切り替え（行送り）]
-さいだいの　なんかん！[BE:01:ページ切り替え（クリア）]
-こちらで　じゅんびを　しておくがいい[BE:01:ページ切り替え（クリア）]
-いちどでも　まけると
-さいしょから　やりなおし　だからな！</language>
-		<language name="JPN_KANJI" width="256">ポケモンリーグは
-全ての　トレーナーに　とって[BE:00:ページ切り替え（行送り）]
-最大の　難関！[BE:01:ページ切り替え（クリア）]
-こちらで　準備を　しておくがいい[BE:01:ページ切り替え（クリア）]
-一度でも　負けると
-最初から　やりなおし　だからな！</language>
 	</row>
 
 	<row id="msg_c09_veteranm1_stop" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
