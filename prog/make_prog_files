@@ -1367,7 +1367,6 @@ SRCS_OVERLAY_PDW_ACC   = net_app/pdw_account/pdwacc_message.c \
 #LIB=>					libgds.$HYB.a
 SRCS_OVERLAY_GDS_COMM =	net_app/gds/gds_rap.c \
 								net_app/gds/gds_rap_response.c \
-								net_app/gds/gds_connect.c \
 								savedata/battle_rec_ov.c
 
 #===> SRCS_OVERLAY_GDS_COMM
