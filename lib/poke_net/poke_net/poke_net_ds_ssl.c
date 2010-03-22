@@ -187,7 +187,8 @@ void SslCreateConnection(const char* servername, SOCSslConnection* connection)
     MI_CpuCopy8(g_psslCon, connection, sizeof(SOCSslConnection));
     if (servername)
     {
-        connection->server_name = OS_Alloc((u32) STD_StrLen(servername) + 1);
+        //connection->server_name = OS_Alloc((u32) STD_StrLen(servername) + 1);
+        connection->server_name = DWC_Alloc((DWCAllocType)0 ,(unsigned long)STD_StrLen(servername) + 1);
         (void)STD_CopyString(connection->server_name, servername);
     }
 }
@@ -205,7 +206,8 @@ void SslDestroyConnection(SOCSslConnection* con)
 {
     if (con->server_name)
     {
-        OS_Free(con->server_name);
+        //OS_Free(con->server_name);
+        DWC_Free((DWCAllocType)0 ,con->server_name ,0);
         con->server_name = NULL;
     }
 }
