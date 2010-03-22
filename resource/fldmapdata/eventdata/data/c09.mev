@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/06 19:15:45
+#save date:2010/03/22 18:01:26
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c09.wms
 #SECTION START:OBJ_EVENT
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 -360
+-40 0 -264
 #event number: 1
 #type
 1
@@ -71,7 +71,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--136 0 -344
+-136 0 -248
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -106,9 +106,9 @@ WK_SCENE_C09
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 0 -392
+-8 0 -264
 #size
-5 2
+3 1
 #event number: 1
 #Pos Event Label
 POS_C09_FORBIDDEN
@@ -123,7 +123,7 @@ LOCALWORK10
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -360
+-8 0 -264
 #size
 3 1
 #Map Event List Data End
@@ -150,9 +150,9 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -440
+-56 0 -424
 #size
-3 1
+9 1
 #event number: 1
 #Door Event Label
 DOOR_ID_C09_C09P01_EXIT01
@@ -167,7 +167,7 @@ EXIT_TYPE_NONE
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 32 -312
+-8 8 -216
 #size
 3 1
 #event number: 2
@@ -184,8 +184,8 @@ EXIT_TYPE_MAT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--232 0 -264
+-232 0 -248
 #size
-1 1
+3 1
 #Map Event List Data End
 #SECTION End:DOOR_EVENT

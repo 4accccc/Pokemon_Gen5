@@ -11,5 +11,7 @@
 #define SCRID_ZONE_C09 (4)
 #define SCRID_POS_C09_FORBIDDEN (5)
 #define SCRID_RESERVE_C09_ENTRY (6)
+#define SCRID_INIT_C09 (7)
+#define SCRID_RECOVER_C09 (8)
 
 #endif //_C09_DEF_H_

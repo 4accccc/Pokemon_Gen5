@@ -25,6 +25,8 @@ _EVENT_DATA    ev_pos_c09_firstvisit
 _EVENT_DATA    ev_zone_c09
 _EVENT_DATA    ev_pos_c09_forbidden
 _EVENT_DATA    ev_reserve_c09_entry		//D09(チャンピオンロード)からきた際のカメラ演出
+_EVENT_DATA    ev_init_c09
+_EVENT_DATA    ev_recover_c09
 _EVENT_DATA_END
 
 
@@ -51,6 +53,30 @@ INIT_EVENT_START	ev_zone_c09
 	IF FLAG_ON( FE_C09_FORBIDDEN ) THEN
 		$LOCALWORK10 = 111	//POSイベントを有効にする
 	ENDIF
+	
+INIT_EVENT_END
+
+
+/************************************************************/
+/*				フィールド初期化スクリプト					*/
+/************************************************************/
+INIT_EVENT_START	ev_init_c09
+	
+	//初回解説イベントを終えていなければ、ガードマンを階段中央に配置
+	IF $WK_SCENE_C09 == 0 THEN
+		_OBJ_POS_CHANGE( C09_VETERANM_01, 32, 1, 46, DIR_DOWN )
+	ENDIF
+	
+	
+INIT_EVENT_END
+
+INIT_EVENT_START	ev_recover_c09
+	
+	//初回解説イベントを終えていなければ、ガードマンを階段中央に配置
+	IF $WK_SCENE_C09 == 0 THEN
+		_OBJ_POS_CHANGE( C09_VETERANM_01, 32, 1, 46, DIR_DOWN )
+	ENDIF
+	
 	
 INIT_EVENT_END
 
@@ -108,7 +134,7 @@ _ANIME_LABEL	anm_player_move_01
 EVENT_START	ev_c09_veteranm_01
 	_TALK_OBJ_START()
 	
-	_PLAINWIN_MSG_UP( msg_c09_veteranm1_03 )
+	_BALLOONWIN_OBJMSG_POS( msg_c09_veteranm1_05, C09_VETERANM_01, POS_DEFAULT )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
@@ -121,9 +147,20 @@ EVENT_END
 EVENT_START	ev_c09_veteranm_02
 	_TALK_OBJ_START()
 	
-	_PLAINWIN_MSG_UP( msg_c09_veteranm2_03 )
-	_LAST_KEYWAIT()
+	_BALLOONWIN_OBJMSG_POS( msg_c09_veteranm2_01, C09_VETERANM_02, POS_DEFAULT )
+	
+	_PLAYER_DIR_GET( SCWK_TEMP0 )
+	IF $SCWK_TEMP0 != DIR_RIGHT THEN
+		_MSGWIN_CLOSE()
+		_OBJ_ANIME( C09_VETERANM_02, anm_stay_walk_l )
+		_OBJ_ANIME_WAIT()
+	ENDIF
+	
+	_BALLOONWIN_OBJMSG_POS( msg_c09_veteranm2_02, C09_VETERANM_02, POS_DEFAULT )
 	_MSGWIN_CLOSE()
+	
+	_OBJ_ANIME( C09_VETERANM_02, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
 	
 EVENT_END
 
@@ -133,52 +170,69 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_pos_c09_firstvisit
 	
+	//========================================//
+	//初回会話フ1ラグセット
+	_FLAG_SET( FE_C09_GUIDE_TALK )
+	
+	//========================================//
+
 	//ベテラン（中央）：！マーク
 	_OBJ_ANIME( C09_VETERANM_01, anm_gyoe )
 	_OBJ_ANIME_WAIT()
 	
-	//解説しよう!
-	_PLAINWIN_MSG_UP( msg_c09_veteranm1_01 )
-	_MSGWIN_CLOSE()
+	//主人公：正面を向く（POSに横から進入した場合）
+	_PLAYER_DIR_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER != DIR_UP THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_u )
+		_OBJ_ANIME_WAIT()
+	ENDIF
 	
-	//ポケモンリーグは…
-	_PLAINWIN_MSG_UP( msg_c09_veteranm1_02 )
-	_MSGWIN_CLOSE()
+	//ポケモンリーグの説明→準備はいいか？
+	IF FLAG_OFF( FH_01 ) THEN
+		//初回
+		_BALLOONWIN_OBJMSG_POS( msg_c09_veteranm1_01, C09_VETERANM_01, POS_UR )
 	
-	//ベテラン（左側）：右を向く
-	_OBJ_ANIME( C09_VETERANM_02, anm_staywalk_r )
-	_OBJ_ANIME_WAIT()
+		//一度「いいえ」を選択して再度ＰＯＳをふんだ場合
+		_BALLOONWIN_OBJMSG_POS( msg_c09_veteranm1_02, C09_VETERANM_01, POS_UR )
 	
-	_CAMERA_START()				//カメラ操作開始---------------------------▽
-	_CAMERA_PURGE()				//対象物とカメラのバインドを解く
-	_CAMERA_MOVE( 4454,0,2109440,1277952,0,3244032,30 )	//カメラを動かす
+	ENDIF
+	_YES_NO_WIN( SCWK_ANSWER )
 	
-	//全てのトレーナーにとって
-	_PLAINWIN_MSG_UP( msg_c09_veteranm2_01 )
-	_MSGWIN_CLOSE()
+	_PLAYER_POS_GET( SCWK_TEMP0, SCWK_TEMP1 )
 	
-	_CAMERA_WAIT_MOVE()			//カメラ移動待ち
+	IF $SCWK_ANSWER == SCR_YES THEN
+		//はい
+		_BALLOONWIN_OBJMSG_POS( msg_c09_veteranm1_03, C09_VETERANM_01, POS_UR )
+		_MSGWIN_CLOSE()
+		
+		//ベテラン：道をあける
+		IF $SCWK_TEMP0 == 31 THEN
+			_OBJ_ANIME( C09_VETERANM_01, anm_visit_veteran_move_01a )
+		ELSIF $SCWK_TEMP0 == 32 THEN
+			_OBJ_ANIME( C09_VETERANM_01, anm_visit_veteran_move_01b )
+		ELSE
+			_OBJ_ANIME( C09_VETERANM_01, anm_visit_veteran_move_01c )
+		ENDIF
+		_OBJ_ANIME_WAIT()
+		
+		//========================================//
+		
+		//POS無効
+		$WK_SCENE_C09 = 1
+		
+		//========================================//
+		
 	
-	//ベテラン（左側）：左を向く
-	_OBJ_ANIME( C09_VETERANM_02, anm_staywalk_l )
-	_OBJ_ANIME_WAIT()
-	
-	//こちらで準備をしておくがいい
-	_PLAINWIN_MSG_UP( msg_c09_veteranm2_02 )
-	_MSGWIN_CLOSE()
-	
-	_CAMERA_RECV_MOVE( 15 )		//カメラを主人公位置に戻す
-	_CAMERA_WAIT_MOVE()			//カメラ移動待ち
-	_CAMERA_BIND()				//カメラバインド
-	_CAMERA_END()				//カメラ操作終了----------------------------△
-	
-	
-	//========================================//
-	
-	//POS無効
-	$WK_SCENE_C09 = 1
-	
-	//========================================//
+	ELSE
+		//いいえ
+		_BALLOONWIN_OBJMSG_POS( msg_c09_veteranm1_04, C09_VETERANM_01, POS_UR )
+		_MSGWIN_CLOSE()
+		
+		//主人公：一歩さがる
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_visit_player_move_01 )
+		_OBJ_ANIME_WAIT()
+
+	ENDIF
 	
 	
 EVENT_END
@@ -193,12 +247,49 @@ _ANIME_LABEL	anm_gyoe
 //--------------------------------------------------------------------
 //方向転換
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_staywalk_l
+_ANIME_LABEL	anm_stay_walk_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_stay_walk_l
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-_ANIME_LABEL	anm_staywalk_r
+_ANIME_LABEL	anm_stay_walk_r
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//ベテラン：道をあける
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_visit_veteran_move_01a
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_visit_veteran_move_01b
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_visit_veteran_move_01c
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,2
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//主人公：一歩さがる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_visit_player_move_01
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 
@@ -211,14 +302,16 @@ EVENT_START	ev_pos_c09_forbidden
 	_OBJ_ANIME_WAIT()
 	
 	//ベテラン：主人公を見る
-	_OBJ_ANIME( C09_VETERANM_01, anm_staywalk_r )
+	_OBJ_ANIME( C09_VETERANM_01, anm_stay_walk_r )
 	_OBJ_ANIME_WAIT()
 	
-	_PLAINWIN_MSG_UP( msg_c09_veteranm1_stop )
+	_BALLOONWIN_OBJMSG_POS( msg_c09_veteranm1_stop, C09_VETERANM_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
 	//主人公：一歩下がる
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back_01 )
+	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME( C09_VETERANM_01, anm_stay_walk_d )
 	_OBJ_ANIME_WAIT()
 	
 EVENT_END
