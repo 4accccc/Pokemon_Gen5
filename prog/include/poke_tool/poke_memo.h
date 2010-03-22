@@ -20,7 +20,7 @@
 #define POKE_MEMO_PLACE_SHINOU       (30007)  //シンオウ
 #define POKE_MEMO_PLACE_FAR_PLACE    (30008)  //とおいとち(XD・コロシアム
 #define POKE_MEMO_PLACE_UNKNOWN      (30009)  //----------(不明
-#define POKE_MEMO_PERSON_SODATEYA    (60001)  //育て屋夫婦
+#define POKE_MEMO_PERSON_SODATEYA    (60002)  //育て屋夫婦
 
 #define POKE_MEMO_PLACE_SEREBIXI_BEFORE  (30010)   //セレビィ転送時
 #define POKE_MEMO_PLACE_SEREBIXI_AFTER   (30011)   //セレビィイベント後
