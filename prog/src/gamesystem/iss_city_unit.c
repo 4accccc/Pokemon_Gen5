@@ -15,7 +15,7 @@
 //=========================================================================================
 // ■定数
 //=========================================================================================
-//#define DEBUG_PRINT_ON        // デバッグ出力スイッチ
+#define DEBUG_PRINT_ON        // デバッグ出力スイッチ
 #define PRINT_DEST       (1)  // デバッグ情報の出力先
 #define VOLUME_SPACE_NUM (6)  // 1つの街ISSユニットが持つ音量空間の数
 
@@ -54,9 +54,9 @@ struct _ISS_C_UNIT
 	u16 zoneID;
 
 	// 座標[grid]]
-	u16 xGrid;
-	u16 yGrid;
-	u16 zGrid;
+	int xGrid;
+	int yGrid;
+	int zGrid;
 
 	// 音量空間
   u8  volume[ VOLUME_SPACE_NUM ];  // [0,127]
