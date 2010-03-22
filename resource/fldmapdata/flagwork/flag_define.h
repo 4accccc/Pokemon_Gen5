@@ -315,10 +315,10 @@
 #define FE_AMUSEMENT_TR04_TALK             299 /* 0x012b ライモン遊園地：観覧車トレーナー（冬）と会話したフラグ */
 #define FE_D08_PACKAGEPOKE_END             300 /* 0x012c リュウラセンの塔：Nとパッケージポケモンのイベントを終えた */
 #define FE_C02R0501_ITEMGET_01             301 /* 0x012d シッポウ倉庫：アイテム入手フラグ（初期３匹タイプの威力upアイテム） */
-		/* not used   302(0x012e) */
-		/* not used   303(0x012f) */
-		/* not used   304(0x0130) */
-		/* not used   305(0x0131) */
+#define FE_C09_GUIDE_TALK                  302 /* 0x012e 初回挑戦時の解説イベントをみた（ｐｏｓイベント） */
+#define FE_C02GYM_QUESTION_02              303 /* 0x012f シッポウジムの問題２の回答フラグ。1＝正解している */
+#define FE_C02GYM_QUESTION_03              304 /* 0x0130 シッポウジムの問題３の回答フラグ。1＝正解している */
+#define FE_C02GYM_QUESTION_04              305 /* 0x0131 シッポウジムの問題４の回答フラグ。1＝正解している */
 		/* not used   306(0x0132) */
 		/* not used   307(0x0133) */
 		/* not used   308(0x0134) */
