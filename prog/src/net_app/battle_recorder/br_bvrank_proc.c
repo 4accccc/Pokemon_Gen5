@@ -562,8 +562,8 @@ static void Br_Rank_CreatePokeIcon( BR_RANK_WORK *p_wk, GFL_CLUNIT *p_unit, HEAP
       for( k = 0; k < TEMOTI_POKEMAX; k++ )
       { 
         monsno  = p_wk->cp_data->data[ i ].head.monsno[ k ];
-        formno  = p_wk->cp_data->data[ i ].head.form_no_and_sex[ k ] & GT_HEADER_FORM_NO_MASK;
-        gender  = ( p_wk->cp_data->data[ i ].head.form_no_and_sex[ k ] & GT_HEADER_GENDER_MASK ) >> GT_HEADER_GENDER_SHIFT;
+        formno  = p_wk->cp_data->data[ i ].head.form_no_and_sex[ k ] & HEADER_FORM_NO_MASK;
+        gender  = ( p_wk->cp_data->data[ i ].head.form_no_and_sex[ k ] & HEADER_GENDER_MASK ) >> HEADER_GENDER_SHIFT;
         if( monsno == 0 )
         { 
           continue;
@@ -663,8 +663,8 @@ static void Br_Rank_ScrollPokeIcon( BR_RANK_WORK *p_wk, u32 list, s8 dir, HEAPID
       for( k = 0; k < TEMOTI_POKEMAX; k++ )
       { 
         monsno  = p_wk->cp_data->data[ i + list ].head.monsno[ k ];
-        formno  = p_wk->cp_data->data[ i + list ].head.form_no_and_sex[ k ] & GT_HEADER_FORM_NO_MASK;
-        gender  = ( p_wk->cp_data->data[ i + list ].head.form_no_and_sex[ k ] & GT_HEADER_GENDER_MASK ) >> GT_HEADER_GENDER_SHIFT;
+        formno  = p_wk->cp_data->data[ i + list ].head.form_no_and_sex[ k ] & HEADER_FORM_NO_MASK;
+        gender  = ( p_wk->cp_data->data[ i + list ].head.form_no_and_sex[ k ] & HEADER_GENDER_MASK ) >> HEADER_GENDER_SHIFT;
         if( monsno == 0 )
         { 
           continue;
@@ -744,8 +744,8 @@ static void Br_Rank_ScrollPokeIcon( BR_RANK_WORK *p_wk, u32 list, s8 dir, HEAPID
       for( k = 0; k < TEMOTI_POKEMAX; k++ )
       { 
         monsno  = p_wk->cp_data->data[ i + list ].head.monsno[ k ];
-        formno  = p_wk->cp_data->data[ i + list ].head.form_no_and_sex[ k ] & GT_HEADER_FORM_NO_MASK;
-        gender  = ( p_wk->cp_data->data[ i + list ].head.form_no_and_sex[ k ] & GT_HEADER_GENDER_MASK ) >> GT_HEADER_GENDER_SHIFT;
+        formno  = p_wk->cp_data->data[ i + list ].head.form_no_and_sex[ k ] & HEADER_FORM_NO_MASK;
+        gender  = ( p_wk->cp_data->data[ i + list ].head.form_no_and_sex[ k ] & HEADER_GENDER_MASK ) >> HEADER_GENDER_SHIFT;
         if( monsno == 0 )
         { 
           continue;

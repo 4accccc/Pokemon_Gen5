@@ -1,6 +1,6 @@
 //==============================================================================
 /**
- * @file	gds_rap.h
+ * @file	gds_rap.c
  * @brief	GDSライブラリをラッパーしたもの
  * @author	matsuda
  * @date	2008.01.09(水)
@@ -10,55 +10,22 @@
 #include <dwc.h>
 #include "net/dwc_rap.h"
 #include "savedata\save_control.h"
-#include "pm_define.h"
-#include "poke_tool/poke_tool.h"
-#include "poke_tool/poke_tool_def.h"
-#include "savedata/gds_profile.h"
-#include "net_app/gds/gds_profile_local.h"
-#include "battle/btl_common.h"
-#include "savedata\battle_rec.h"
-#include "savedata\battle_rec_local.h"
-#include "gds_battle_rec.h"
-#include "gds_ranking.h"
-#include "gds_boxshot.h"
-#include "gds_dressup.h"
-
-#include "poke_tool/monsno_def.h"
-//#include "gflib/strbuf_family.h"
-#include "savedata/gds_profile.h"
-#include "savedata/gds_profile_types.h"
 
 #include <arc_tool.h>
 #include "print/wordset.h"
 #include "message.naix"
-//#include "system/fontproc.h"
-//#include "gflib/strbuf_family.h"
-
-//#include "communication\comm_system.h"
-//#include "communication\comm_state.h"
-//#include "communication\comm_def.h"
-//#include "communication/wm_icon.h"
-//#include "communication\communication.h"
-
-#include "gds_battle_rec.h"
-#include "gds_ranking.h"
-#include "gds_boxshot.h"
-#include "gds_dressup.h"
 
 #include "gds_rap.h"
 #include "gds_rap_response.h"
-#include "gds_data_conv.h"
+#include "savedata/gds_profile.h"
 
 #include "msg/msg_wifi_system.h"
 #include "savedata/playtime.h"
-#include "savedata/battle_rec.h"
-
-//#include "battle/battle_common.h"
 
 #include "message.naix"
 #include "msg/msg_battle_rec.h"
 #include "arc_def.h"
-#include "battle/btl_common.h"
+
 #include "battle/btl_net.h"
 
 
@@ -91,63 +58,29 @@ typedef int (*SUBPROCESS_FUNC)(GDS_RAP_WORK *, GDS_RAP_SUB_PROCCESS_WORK *sub_wo
 
 
 //==============================================================================
+//  データ
+//==============================================================================
+#include "gds_video_bit.cdat"
+
+
+//==============================================================================
 //	プロトタイプ宣言
 //==============================================================================
-static int GDSRAP_SEQ_GDS_Release(GDS_RAP_WORK *gdsrap, GDS_RAP_SUB_PROCCESS_WORK *sub_work);
-static int GDSRAP_SEQ_Error_Cleanup(GDS_RAP_WORK *gdsrap, GDS_RAP_SUB_PROCCESS_WORK *sub_work);
-static int GDSRAP_SEQ_Error_DWC_Message(GDS_RAP_WORK *gdsrap, GDS_RAP_SUB_PROCCESS_WORK *sub_work);
-static int GDSRAP_SEQ_Error_DWC_MessageWait(GDS_RAP_WORK *gdsrap, GDS_RAP_SUB_PROCCESS_WORK *sub_work);
-
 static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap);
 static int GDSRAP_MAIN_Recv(GDS_RAP_WORK *gdsrap);
-static int GDSRAP_ProccessCheck(GDS_RAP_WORK *gdsrap);
-
-static void _systemMessagePrint(GDS_RAP_WORK *gdsrap, STRBUF *str_buf);
-static void errorDisp(GDS_RAP_WORK *gdsrap, int type, int code);
 
 static int Local_GetResponse(GDS_RAP_WORK *gdsrap);
 
-static void * LIB_Heap_Init(int heap_id);
+static void LIB_Heap_Init(int heap_id);
 static void LIB_Heap_Exit(void);
 
 static BOOL RecvSubProccess_Normal(void *work_gdsrap, void *work_recv_sub_work);
-static BOOL RecvSubProccess_VideoSendFlagResetSave(void *work_gdsrap, void *work_recv_sub_work);
 static BOOL RecvSubProccess_DataNumberSetSave(void *work_gdsrap, void *work_recv_sub_work);
-static BOOL RecvSubProccess_DressSendFlagResetSave(void *work_gdsrap, void *work_recv_sub_work);
-static BOOL RecvSubProccess_BoxSendFlagResetSave(void *work_gdsrap, void *work_recv_sub_work);
 static BOOL RecvSubProccess_SystemError(void *work_gdsrap, void *work_recv_sub_work);
 
-//==============================================================================
-//	シーケンステーブル
-//==============================================================================
-///Wifi接続エラー発生時の強制切断処理
-static const SUBPROCESS_FUNC SubSeq_WifiError[] = {
-	GDSRAP_SEQ_Error_Cleanup,
-	GDSRAP_SEQ_GDS_Release,
-	GDSRAP_SEQ_Error_DWC_Message,
-	GDSRAP_SEQ_Error_DWC_MessageWait,
-	NULL,	//終端
-};
+static void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align );
+static void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  );
 
-///サーバーサービスエラー発生時の強制切断処理(ネットは接続出来ているが、サーバーが止まっている場合)
-static const SUBPROCESS_FUNC SubSeq_ServerServiceError[] = {
-//	GDSRAP_SEQ_Error_ServerService_Message,
-//	GDSRAP_SEQ_Error_ServerService_MessageWait,
-	NULL,	//終端
-};
-
-//--------------------------------------------------------------
-//	サブプロセステーブル
-//--------------------------------------------------------------
-///サブプロセステーブル
-///		※GDSRAP_PROCESS_REQと並びを同じにしておくこと！！
-static const SUBPROCESS_FUNC * const GDSRapSeqTbl[] = {
-	NULL,
-	
-	//以下、システム内部でのみ呼び出し
-	SubSeq_WifiError,			//GDSRAP_PROCESS_REQ_WIFI_ERROR
-	SubSeq_ServerServiceError,	//GDSRAP_PROCESS_REQ_SERVER_ERROR
-};
 
 
 
@@ -172,6 +105,7 @@ int GDSRAP_Init(GDS_RAP_WORK *gdsrap, const GDSRAP_INIT_DATA *init_data)
 	
 	GFL_STD_MemClear(gdsrap, sizeof(GDS_RAP_WORK));
 	gdsrap->heap_id = init_data->heap_id;
+	gdsrap->gamedata = init_data->gamedata;
 	gdsrap->savedata = init_data->savedata;
 	gdsrap->response_callback = init_data->response_callback;
 	gdsrap->callback_work = init_data->callback_work;
@@ -191,12 +125,13 @@ int GDSRAP_Init(GDS_RAP_WORK *gdsrap, const GDSRAP_INIT_DATA *init_data)
 	gdsrap->ErrorString = GFL_STR_CreateBuffer(DWC_ERROR_BUF_NUM, init_data->heap_id);
 	
 	//※check　暫定ヒープ作成
-	gdsrap->areanaLo = LIB_Heap_Init(init_data->heap_id);
+//	gdsrap->areanaLo = LIB_Heap_Init(init_data->heap_id);
+	LIB_Heap_Init(init_data->heap_id);
 
 	gdsrap->pokenet_auth.PID = init_data->gs_profile_id;
 	gdsrap->pokenet_auth.ROMCode = PM_VERSION;
 	gdsrap->pokenet_auth.LangCode = PM_LANG;
-	ret = POKE_NET_GDS_Initialize(&gdsrap->pokenet_auth);
+	ret = POKE_NET_GDS_Initialize(&gdsrap->pokenet_auth, SYACHI_SERVER_URL, SYACHI_SERVER_PORT);
 	GF_ASSERT(ret == TRUE);		//初期化に失敗する事はありえないはず
 	gdsrap->gdslib_initialize = TRUE;
 
@@ -227,95 +162,7 @@ void GDSRAP_Exit(GDS_RAP_WORK *gdsrap)
 
 	//※check　暫定ヒープ解放
 	LIB_Heap_Exit();
-	GFL_HEAP_FreeMemory(gdsrap->areanaLo);
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   ポケモンWifiGDSライブラリの解放を行います
- *
- * @param   gdsrap		
- *
- * @retval  
- *
- *
- */
-//--------------------------------------------------------------
-static int GDSRAP_SEQ_GDS_Release(GDS_RAP_WORK *gdsrap, GDS_RAP_SUB_PROCCESS_WORK *sub_work)
-{
-	POKE_NET_GDS_Release();
-	
-	gdsrap->gdslib_initialize = FALSE;
-	
-	return SUBSEQ_NEXT;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   Wifi接続エラーが発生した時の切断処理を行います
- *
- * @param   gdsrap		
- *
- * @retval  
- */
-//--------------------------------------------------------------
-static int GDSRAP_SEQ_Error_Cleanup(GDS_RAP_WORK *gdsrap, GDS_RAP_SUB_PROCCESS_WORK *sub_work)
-{
-	OS_TPrintf("----エラーの為、WIFI強制切断\n");
-	
-	DWC_ClearError();
-	DWC_CleanupInet();
-//	CommStateWifiDPWEnd();
-	
-#if 0	//GDSではそもそもDpw_Tr_Initを使っていないので無効
-	//画面を抜けずに2度連続で「Eメール設定」をしてWifiに繋げようとすると
-	//"dpw_tr.c:150 Panic:dpw tr is already initialized."
-	//のエラーが出るのできちんとこの終了関数を呼ぶようにする 2007.10.26(金) matsuda
-	Dpw_Tr_End();
-#endif
-
-	gdsrap->connect_success = FALSE;
-
-	return SUBSEQ_NEXT;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   Wifi接続エラーメッセージ表示処理
- *
- * @param   gdsrap		
- *
- * @retval  
- */
-//--------------------------------------------------------------
-static int GDSRAP_SEQ_Error_DWC_Message(GDS_RAP_WORK *gdsrap, GDS_RAP_SUB_PROCCESS_WORK *sub_work)
-{
-	int type, msgno;
-	
-    type =  GFL_NET_DWC_ErrorType(-gdsrap->ErrorCode, gdsrap->ErrorType);
-	OS_Printf("error code = %d, type = %d\n", gdsrap->ErrorCode, type);
-
-    errorDisp(gdsrap, type, -gdsrap->ErrorCode);
-	
-	return SUBSEQ_NEXT;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   Wifi接続エラーメッセージ表示：決定キーでの終了待ち
- *
- * @param   gdsrap		
- *
- * @retval  
- */
-//--------------------------------------------------------------
-static int GDSRAP_SEQ_Error_DWC_MessageWait(GDS_RAP_WORK *gdsrap, GDS_RAP_SUB_PROCCESS_WORK *sub_work)
-{
-	if((GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE) || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL)){
-		_systemMessagePrint(gdsrap, NULL);
-		return SUBSEQ_NEXT;
-	}
-	return SUBSEQ_CONTINUE;
+	//GFL_HEAP_FreeMemory(gdsrap->areanaLo);
 }
 
 
@@ -325,39 +172,35 @@ static int GDSRAP_SEQ_Error_DWC_MessageWait(GDS_RAP_WORK *gdsrap, GDS_RAP_SUB_PR
 //	
 //
 //==============================================================================
-#if GDS_FIX
 //--------------------------------------------------------------
 /**
- * @brief   送信リクエスト：ドレスアップショット登録
+ * @brief   送信リクエスト：ミュージカルショット登録
  *
  * @param   gdsrap			
- * @param   gt_profile		
- * @param   gt_dress		
+ * @param   profile		
+ * @param   dress		
  *
  * @retval  TRUE：リクエストを受け付けた
  * @retval  FALSE：受け付けられなかった
  */
 //--------------------------------------------------------------
-int GDSRAP_Tool_Send_DressupUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp, IMC_TELEVISION_SAVEDATA * dress)
+int GDSRAP_Tool_Send_MusicalShotUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp, const MUSICAL_SHOT_DATA *musshot)
 {
 	if(GDSRAP_MoveStatusAllCheck(gdsrap) == FALSE){
 		return FALSE;
 	}
-
-	//GDSプロフィールをGT_GDSプロフィールへ変換
-	GDS_CONV_GDSProfile_to_GTGDSProfile(
-		gdsrap->savedata, gpp, &gdsrap->send_buf.gt_dress_send.profile);
-	//GDSドレスをGT_GDSドレスへ変換
-	GDS_CONV_Dress_to_GTDress(gdsrap->savedata, dress, &gdsrap->send_buf.gt_dress_send.dressup);
+  
+  gdsrap->send_buf.mus_send.profile = *gpp;
+  gdsrap->send_buf.mus_send.mus_shot = *musshot;
 	
 	gdsrap->send_before_wait = GDS_SEND_BEFORE_WAIT;
-	gdsrap->send_req = POKE_NET_GDS_REQCODE_DRESSUPSHOT_REGIST;
+	gdsrap->send_req = POKE_NET_GDS_REQCODE_MUSICALSHOT_REGIST;
 	return TRUE;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief   送信リクエスト：ドレスアップショット ダウンロード
+ * @brief   送信リクエスト：ミュージカルショット ダウンロード
  *
  * @param   gdsrap			
  * @param   monsno			受信するポケモン番号
@@ -366,138 +209,17 @@ int GDSRAP_Tool_Send_DressupUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp, IM
  * @retval  FALSE：受け付けられなかった
  */
 //--------------------------------------------------------------
-int GDSRAP_Tool_Send_DressupDownload(GDS_RAP_WORK *gdsrap, int monsno)
+int GDSRAP_Tool_Send_MusicalShotDownload(GDS_RAP_WORK *gdsrap, int monsno)
 {
 	if(GDSRAP_MoveStatusAllCheck(gdsrap) == FALSE){
 		return FALSE;
 	}
 
-	gdsrap->send_buf.sub_para.dressup.recv_monsno = monsno;
+	gdsrap->send_buf.sub_para.musical.recv_monsno = monsno;
 	
-	gdsrap->send_req = POKE_NET_GDS_REQCODE_DRESSUPSHOT_GET;
+	gdsrap->send_req = POKE_NET_GDS_REQCODE_MUSICALSHOT_GET;
 	return TRUE;
 }
-
-//--------------------------------------------------------------
-/**
- * @brief   送信リクエスト：ボックスショット アップロード
- *
- * @param   gdsrap		
- * @param   category_no		登録するカテゴリー番号
- * @param   gpp				GDSプロフィールへのポインタ
- * @param   boxdata			ボックスデータへのポインタ
- * @param   tray_number		ボックスのトレイ番号
- *
- * @retval  TRUE：リクエストを受け付けた
- * @retval  FALSE：受け付けられなかった
- */
-//--------------------------------------------------------------
-int GDSRAP_Tool_Send_BoxshotUpload(GDS_RAP_WORK *gdsrap, int category_no, GDS_PROFILE_PTR gpp, const BOX_DATA *boxdata, int tray_number)
-{
-	if(GDSRAP_MoveStatusAllCheck(gdsrap) == FALSE){
-		return FALSE;
-	}
-
-	gdsrap->send_buf.sub_para.box.category_no = category_no;
-	gdsrap->send_buf.sub_para.box.tray_number = tray_number;	//送信済みフラグを戻す為必要
-
-	//GDSプロフィールをGT_GDSプロフィールへ変換
-	GDS_CONV_GDSProfile_to_GTGDSProfile(
-		gdsrap->savedata, gpp, &gdsrap->send_buf.gt_box_send.profile);
-	//ボックスデータをGTボックスデータへ変換
-	GDS_CONV_Box_to_GTBox(gdsrap->savedata, boxdata, tray_number, 
-		&gdsrap->send_buf.gt_box_send.box_shot, gdsrap->heap_id);
-	
-	//GTボックスデータにカテゴリー番号をセット
-	GDS_GTBoxShot_SetCategoryNo(gdsrap->savedata, 
-		&gdsrap->send_buf.gt_box_send.box_shot, category_no);
-	
-	gdsrap->send_before_wait = GDS_SEND_BEFORE_WAIT;
-	gdsrap->send_req = POKE_NET_GDS_REQCODE_BOXSHOT_REGIST;
-	return TRUE;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   送信リクエスト：ボックスショット ダウンロード
- *
- * @param   gdsrap			
- * @param   category_no		受信するカテゴリー番号
- *
- * @retval  TRUE：リクエストを受け付けた
- * @retval  FALSE：受け付けられなかった
- */
-//--------------------------------------------------------------
-int GDSRAP_Tool_Send_BoxshotDownload(GDS_RAP_WORK *gdsrap, int category_no)
-{
-	if(GDSRAP_MoveStatusAllCheck(gdsrap) == FALSE){
-		return FALSE;
-	}
-
-	gdsrap->send_buf.sub_para.box.category_no = category_no;
-	
-	gdsrap->send_req = POKE_NET_GDS_REQCODE_BOXSHOT_GET;
-	return TRUE;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   送信リクエスト：開催中のランキングタイプ　ダウンロード
- *
- * @param   gdsrap		
- *
- * @retval  TRUE：リクエストを受け付けた
- * @retval  FALSE：受け付けられなかった
- */
-//--------------------------------------------------------------
-int GDSRAP_Tool_Send_RankingTypeDownload(GDS_RAP_WORK *gdsrap)
-{
-	if(GDSRAP_MoveStatusAllCheck(gdsrap) == FALSE){
-		return FALSE;
-	}
-	
-	gdsrap->send_req = POKE_NET_GDS_REQCODE_RANKING_GETTYPE;
-	return TRUE;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   送信リクエスト：ランキング更新(自分のデータ送信＆結果受信)
- *
- * @param   gdsrap		
- * @param   gpp						GDSプロフィールへのポインタ
- * @param   ranking_mydata[]		自分のランキングデータ(配列へのポインタ)
- *
- * @retval  TRUE：リクエストを受け付けた
- * @retval  FALSE：受け付けられなかった
- */
-//--------------------------------------------------------------
-int GDSRAP_Tool_Send_RankingUpdate(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp, GT_RANKING_MYDATA ranking_mydata[])
-{
-	PLAYTIME *playtime;
-	int i;
-	
-	if(GDSRAP_MoveStatusAllCheck(gdsrap) == FALSE){
-		return FALSE;
-	}
-
-	//プレイ時間セット
-	playtime = SaveData_GetPlayTime(gdsrap->savedata);
-	GFL_STD_MemCopy(playtime, &gdsrap->send_buf.gt_ranking_mydata_send.playtime, sizeof(GT_PLAYTIME));
-
-	//GDSプロフィールをランキングプロフィールへ変換
-	GDS_CONV_GDSProfile_to_GTRankingProfile(gdsrap->savedata, gpp, 
-		&gdsrap->send_buf.gt_ranking_mydata_send.profile);
-	
-	//ランキングデータ
-	for(i = 0; i < GT_RANKING_WEEK_NUM; i++){
-		gdsrap->send_buf.gt_ranking_mydata_send.my_data[i] = ranking_mydata[i];
-	}
-
-	gdsrap->send_req = POKE_NET_GDS_REQCODE_RANKING_UPDATE;
-	return TRUE;
-}
-#endif  //GDS_FIX
 
 //--------------------------------------------------------------
 /**
@@ -524,17 +246,14 @@ int GDSRAP_Tool_Send_BattleVideoUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp
 		return FALSE;
 	}
 
-	//録画データとGDSプロフィールはGT系と全く同じ型のはず
-	GF_ASSERT(sizeof(GT_GDS_PROFILE) == sizeof(GDS_PROFILE));
-
 	//録画データは巨大な為、コピーせずに、そのままbrsのデータを送信する
-	gdsrap->send_buf.gt_battle_rec_send_ptr = (GT_BATTLE_REC_SEND *)BattleRec_RecWorkAdrsGet();
+	gdsrap->send_buf.battle_rec_send_ptr = (BATTLE_REC_SEND *)BattleRec_RecWorkAdrsGet();
 	//brsに展開されている録画データ本体は復号化されているので、送信する前に再度暗号化する
 	BattleRec_GDS_SendData_Conv(gdsrap->savedata);
 	
 	//GDSプロフィールのみ、最新のを適用する為、上書きする
 	profile_ptr = BattleRec_GDSProfilePtrGet();
-	GFL_STD_MemCopy(gpp, profile_ptr, sizeof(GT_GDS_PROFILE));
+	GFL_STD_MemCopy(gpp, profile_ptr, sizeof(GDS_PROFILE));
 	
 	gdsrap->send_before_wait = GDS_SEND_BEFORE_WAIT;
 	gdsrap->send_req = POKE_NET_GDS_REQCODE_BATTLEDATA_REGIST;
@@ -548,7 +267,7 @@ void DEBUG_GDSRAP_SendVideoProfileFreeWordSet(GDS_RAP_WORK *gdsrap, u16 *set_cod
 	GDS_PROFILE_PTR profile_ptr;
 
 	profile_ptr = BattleRec_GDSProfilePtrGet();
-	GFL_STD_MemCopy16(set_code, profile_ptr->event_self_introduction, GT_EVENT_SELF_INTRO*2);
+	GFL_STD_MemCopy16(set_code, profile_ptr->event_self_introduction, EVENT_SELF_INTRO*2);
 	profile_ptr->message_flag = 1;
 	DEBUG_BattleRec_SecureFlagSet(gdsrap->savedata);
 #endif
@@ -559,56 +278,30 @@ void DEBUG_GDSRAP_SendVideoProfileFreeWordSet(GDS_RAP_WORK *gdsrap, u16 *set_cod
  * @brief   送信リクエスト：バトルビデオダウンロード(詳細検索)
  *
  * @param   gdsrap		
- * @param   monsno			ポケモン番号(指定なし：GT_BATTLE_REC_SEARCH_MONSNO_NONE)
- * @param   battle_mode		検索施設(指定なし：クリア前=GT_BATTLE_MODE_EXCLUSION_FRONTIER
- * 											   クリア後=GT_BATTLE_REC_SEARCH_BATTLE_MODE_NONE)
- * @param   country_code	国コード(指定なし：GT_BATTLE_REC_SEARCH_COUNTRY_CODE_NONE)
- * @param   local_code		地方コード(指定なし：GT_BATTLE_REC_SEARCH_LOCAL_CODE_NONE)
+ * @param   monsno			ポケモン番号(指定なし：BATTLE_REC_SEARCH_MONSNO_NONE)
+ * @param   battle_mode_no	検索施設(GDS_BATTLE_MODE_NO)
+ * @param   country_code	国コード(指定なし：BATTLE_REC_SEARCH_COUNTRY_CODE_NONE)
+ * @param   local_code		地方コード(指定なし：BATTLE_REC_SEARCH_LOCAL_CODE_NONE)
  *
  * @retval  TRUE：リクエストを受け付けた
  * @retval  FALSE：受け付けられなかった
  */
 //--------------------------------------------------------------
-int GDSRAP_Tool_Send_BattleVideoSearchDownload(GDS_RAP_WORK *gdsrap, u16 monsno, u8 battle_mode, u8 country_code, u8 local_code)
+int GDSRAP_Tool_Send_BattleVideoSearchDownload(GDS_RAP_WORK *gdsrap, u16 monsno, GDS_BATTLE_MODE_NO battle_mode_no, u8 country_code, u8 local_code)
 {
 	if(GDSRAP_MoveStatusAllCheck(gdsrap) == FALSE){
 		return FALSE;
 	}
-
-	GFL_STD_MemClear(&gdsrap->send_buf.gt_battle_rec_search, sizeof(GT_BATTLE_REC_SEARCH_SEND));
-	gdsrap->send_buf.gt_battle_rec_search.monsno = monsno;
-	gdsrap->send_buf.gt_battle_rec_search.battle_mode = battle_mode;
-	gdsrap->send_buf.gt_battle_rec_search.country_code = country_code;
-	gdsrap->send_buf.gt_battle_rec_search.local_code = local_code;
-	gdsrap->send_buf.gt_battle_rec_search.server_version = BTL_NET_SERVER_VERSION;
-
-	gdsrap->send_req_option = POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_CONDITION;
-	gdsrap->send_req = POKE_NET_GDS_REQCODE_BATTLEDATA_SEARCH;
-	return TRUE;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   送信リクエスト：バトルビデオダウンロード(最新30件:コロシアムのみ)
- *
- * @param   gdsrap		
- *
- * @retval  TRUE：リクエストを受け付けた
- * @retval  FALSE：受け付けられなかった
- */
-//--------------------------------------------------------------
-int GDSRAP_Tool_Send_BattleVideoNewDownload_ColosseumOnly(GDS_RAP_WORK *gdsrap)
-{
-	if(GDSRAP_MoveStatusAllCheck(gdsrap) == FALSE){
-		return FALSE;
-	}
-
-	GFL_STD_MemClear(&gdsrap->send_buf.gt_battle_rec_search, sizeof(GT_BATTLE_REC_SEARCH_SEND));
-	gdsrap->send_buf.gt_battle_rec_search.monsno = GT_BATTLE_REC_SEARCH_MONSNO_NONE;
-	gdsrap->send_buf.gt_battle_rec_search.battle_mode = GT_BATTLE_MODE_EXCLUSION_FRONTIER;
-	gdsrap->send_buf.gt_battle_rec_search.country_code = GT_BATTLE_REC_SEARCH_COUNTRY_CODE_NONE;
-	gdsrap->send_buf.gt_battle_rec_search.local_code = GT_BATTLE_REC_SEARCH_LOCAL_CODE_NONE;
-	gdsrap->send_buf.gt_battle_rec_search.server_version = BTL_NET_SERVER_VERSION;
+  
+  GF_ASSERT(battle_mode_no < NELEMS(BattleModeBitTbl));
+  
+	GFL_STD_MemClear(&gdsrap->send_buf.battle_rec_search, sizeof(BATTLE_REC_SEARCH_SEND));
+	gdsrap->send_buf.battle_rec_search.monsno = monsno;
+	gdsrap->send_buf.battle_rec_search.battle_mode = BattleModeBitTbl[battle_mode_no].mode;
+	gdsrap->send_buf.battle_rec_search.battle_mode_bit_mask = BattleModeBitTbl[battle_mode_no].bit_mask;
+	gdsrap->send_buf.battle_rec_search.country_code = country_code;
+	gdsrap->send_buf.battle_rec_search.local_code = local_code;
+	gdsrap->send_buf.battle_rec_search.server_version = BTL_NET_SERVER_VERSION;
 
 	gdsrap->send_req_option = POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_CONDITION;
 	gdsrap->send_req = POKE_NET_GDS_REQCODE_BATTLEDATA_SEARCH;
@@ -631,21 +324,14 @@ int GDSRAP_Tool_Send_BattleVideoNewDownload(GDS_RAP_WORK *gdsrap)
 		return FALSE;
 	}
 
-	GFL_STD_MemClear(&gdsrap->send_buf.gt_battle_rec_search, sizeof(GT_BATTLE_REC_SEARCH_SEND));
-	gdsrap->send_buf.gt_battle_rec_search.monsno = GT_BATTLE_REC_SEARCH_MONSNO_NONE;
-	gdsrap->send_buf.gt_battle_rec_search.battle_mode = GT_BATTLE_REC_SEARCH_BATTLE_MODE_NONE;
-	gdsrap->send_buf.gt_battle_rec_search.country_code = GT_BATTLE_REC_SEARCH_COUNTRY_CODE_NONE;
-	gdsrap->send_buf.gt_battle_rec_search.local_code = GT_BATTLE_REC_SEARCH_LOCAL_CODE_NONE;
-	gdsrap->send_buf.gt_battle_rec_search.server_version = BTL_NET_SERVER_VERSION;
-
-	gdsrap->send_req_option = POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_CONDITION;
+	gdsrap->send_req_option = POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_RANKING_LATEST;
 	gdsrap->send_req = POKE_NET_GDS_REQCODE_BATTLEDATA_SEARCH;
 	return TRUE;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief   送信リクエスト：バトルビデオダウンロード(コロシアムお気に入りランキング上位30件)
+ * @brief   送信リクエスト：バトルビデオダウンロード(バトルサブウェイランキング)
  *
  * @param   gdsrap		
  *
@@ -653,24 +339,20 @@ int GDSRAP_Tool_Send_BattleVideoNewDownload(GDS_RAP_WORK *gdsrap)
  * @retval  FALSE：受け付けられなかった
  */
 //--------------------------------------------------------------
-int GDSRAP_Tool_Send_BattleVideoFavoriteDownload_Colosseum(GDS_RAP_WORK *gdsrap)
+int GDSRAP_Tool_Send_BattleVideoSubwayDownload(GDS_RAP_WORK *gdsrap)
 {
 	if(GDSRAP_MoveStatusAllCheck(gdsrap) == FALSE){
 		return FALSE;
 	}
 
-	GFL_STD_MemClear(&gdsrap->send_buf.gt_battle_rec_ranking_search, 
-		sizeof(GT_BATTLE_REC_RANKING_SEARCH_SEND));
-	gdsrap->send_buf.gt_battle_rec_ranking_search.server_version = BTL_NET_SERVER_VERSION;
-
-	gdsrap->send_req_option = POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_RANKING;
+	gdsrap->send_req_option = POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_RANKING_SUBWAY;
 	gdsrap->send_req = POKE_NET_GDS_REQCODE_BATTLEDATA_SEARCH;
 	return TRUE;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief   送信リクエスト：バトルビデオダウンロード(フロンティアお気に入りランキング上位30件)
+ * @brief   送信リクエスト：バトルビデオダウンロード(通信対戦ランキング)
  *
  * @param   gdsrap		
  *
@@ -678,17 +360,13 @@ int GDSRAP_Tool_Send_BattleVideoFavoriteDownload_Colosseum(GDS_RAP_WORK *gdsrap)
  * @retval  FALSE：受け付けられなかった
  */
 //--------------------------------------------------------------
-int GDSRAP_Tool_Send_BattleVideoFavoriteDownload_Frontier(GDS_RAP_WORK *gdsrap)
+int GDSRAP_Tool_Send_BattleVideoCommDownload(GDS_RAP_WORK *gdsrap)
 {
 	if(GDSRAP_MoveStatusAllCheck(gdsrap) == FALSE){
 		return FALSE;
 	}
 
-	GFL_STD_MemClear(&gdsrap->send_buf.gt_battle_rec_ranking_search, 
-		sizeof(GT_BATTLE_REC_RANKING_SEARCH_SEND));
-	gdsrap->send_buf.gt_battle_rec_ranking_search.server_version = BTL_NET_SERVER_VERSION;
-
-	gdsrap->send_req_option = POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_EXRANKING;
+	gdsrap->send_req_option = POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_RANKING_COMM;
 	gdsrap->send_req = POKE_NET_GDS_REQCODE_BATTLEDATA_SEARCH;
 	return TRUE;
 }
@@ -817,29 +495,6 @@ int GDSRAP_Main(GDS_RAP_WORK *gdsrap)
 		}
 	}
 	
-	//サブシーケンス実行
-	if(GDSRapSeqTbl[gdsrap->proccess_tblno] != NULL){
-		int sub_ret;
-		
-		sub_ret = GDSRapSeqTbl[gdsrap->proccess_tblno][gdsrap->proccess_seqno](gdsrap, &gdsrap->sub_work);
-		switch(sub_ret){
-		case SUBSEQ_CONTINUE:
-			break;
-		case SUBSEQ_NEXT:
-			GFL_STD_MemClear(&gdsrap->sub_work, sizeof(GDS_RAP_SUB_PROCCESS_WORK));
-			gdsrap->proccess_seqno++;
-			GFL_STD_MemClear(&gdsrap->sub_work, sizeof(GDS_RAP_SUB_PROCCESS_WORK));
-			if(GDSRapSeqTbl[gdsrap->proccess_tblno][gdsrap->proccess_seqno] == NULL){
-				gdsrap->proccess_seqno = 0;
-				gdsrap->proccess_tblno = GDSRAP_PROCESS_REQ_NULL;
-			}
-			break;
-		case SUBSEQ_PROCCESS_CHANGE:
-			GFL_STD_MemClear(&gdsrap->sub_work, sizeof(GDS_RAP_SUB_PROCCESS_WORK));
-			gdsrap->proccess_seqno = 0;
-			break;
-		}
-	}
 	return TRUE;
 }
 
@@ -859,41 +514,15 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
 	
 	//リクエストにデータが貯まっていれば送信
 	switch(gdsrap->send_req){
-	case POKE_NET_GDS_REQCODE_DRESSUPSHOT_REGIST:	// ドレスアップショット登録
-		ret = POKE_NET_GDS_DressupShotRegist(&gdsrap->send_buf.gt_dress_send, gdsrap->response);
+	case POKE_NET_GDS_REQCODE_MUSICALSHOT_REGIST:	// ミュージカルショット登録
+		ret = POKE_NET_GDS_MusicalShotRegist(&gdsrap->send_buf.mus_send, gdsrap->response);
 		break;
-	case POKE_NET_GDS_REQCODE_DRESSUPSHOT_GET:		// ドレスアップショット取得
-		ret = POKE_NET_GDS_DressupShotGet(gdsrap->send_buf.sub_para.dressup.recv_monsno, 
+	case POKE_NET_GDS_REQCODE_MUSICALSHOT_GET:		// ミュージカルショット取得
+		ret = POKE_NET_GDS_MusicalShotGet(gdsrap->send_buf.sub_para.musical.recv_monsno, 
 			gdsrap->response);
-		break;
-	case POKE_NET_GDS_REQCODE_BOXSHOT_REGIST:		// ボックスショット登録
-		ret = POKE_NET_GDS_BoxShotRegist(gdsrap->send_buf.sub_para.box.category_no, 
-			&gdsrap->send_buf.gt_box_send ,gdsrap->response);
-		if(ret == TRUE){
-			OS_TPrintf("box shot登録リクエスト完了 category = %d\n", gdsrap->send_buf.sub_para.box.category_no);
-		}
-		break;
-	case POKE_NET_GDS_REQCODE_BOXSHOT_GET:			// ボックスショット取得
-		ret = POKE_NET_GDS_BoxShotGet(gdsrap->send_buf.sub_para.box.category_no ,gdsrap->response);
-		if(ret == TRUE){
-			OS_TPrintf("box shot取得リクエスト完了 category = %d\n", gdsrap->send_buf.sub_para.box.category_no);
-		}
-		break;
-	case POKE_NET_GDS_REQCODE_RANKING_GETTYPE:		// 開催しているランキングのタイプを取得
-		ret = POKE_NET_GDS_RankingGetType(gdsrap->response);
-		if(ret == TRUE){
-			OS_TPrintf("ranking type 取得リクエスト完了\n");
-		}
-		break;
-	case POKE_NET_GDS_REQCODE_RANKING_UPDATE:		// ランキングの更新
-		ret = POKE_NET_GDS_RankingUpdate(&gdsrap->send_buf.gt_ranking_mydata_send, 
-			gdsrap->response);
-		if(ret == TRUE){
-			OS_TPrintf("ranking更新リクエスト完了\n");
-		}
 		break;
 	case POKE_NET_GDS_REQCODE_BATTLEDATA_REGIST:	// バトルビデオ登録
-		ret = POKE_NET_GDS_BattleDataRegist(gdsrap->send_buf.gt_battle_rec_send_ptr, 
+		ret = POKE_NET_GDS_BattleDataRegist(gdsrap->send_buf.battle_rec_send_ptr, 
 			gdsrap->response);
 		if(ret == TRUE){
 			OS_TPrintf("バトルビデオ登録リクエスト完了\n");
@@ -902,17 +531,18 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
 	case POKE_NET_GDS_REQCODE_BATTLEDATA_SEARCH:	// バトルビデオ検索
 		switch(gdsrap->send_req_option){
 		case POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_CONDITION:	//詳細検索
-			ret = POKE_NET_GDS_BattleDataSearchCondition(&gdsrap->send_buf.gt_battle_rec_search,
+			ret = POKE_NET_GDS_BattleDataSearchCondition(&gdsrap->send_buf.battle_rec_search,
 				gdsrap->response);
 			break;
-		case POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_RANKING:	//最新30件
-			ret = POKE_NET_GDS_BattleDataSearchRanking(
-				&gdsrap->send_buf.gt_battle_rec_ranking_search, gdsrap->response);
+		case POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_RANKING_LATEST:	//最新30件
+		  ret = POKE_NET_GDS_BattleDataSearchRankingLatest(BTL_NET_SERVER_VERSION, gdsrap->response);
 			break;
-		case POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_EXRANKING:	//お気に入り上位30件
-			ret = POKE_NET_GDS_BattleDataSearchExRanking(
-				&gdsrap->send_buf.gt_battle_rec_ranking_search, gdsrap->response);
+		case POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_RANKING_SUBWAY:	//地下鉄ランキング
+			ret = POKE_NET_GDS_BattleDataSearchRankingSubway(BTL_NET_SERVER_VERSION, gdsrap->response);
 			break;
+	  case POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_RANKING_COMM:   //通信対戦ランキング
+	    ret = POKE_NET_GDS_BattleDataSearchRankingComm(BTL_NET_SERVER_VERSION, gdsrap->response);
+	    break;
 		}
 		if(ret == TRUE){
 			OS_TPrintf("バトルビデオ検索リクエスト完了\n");
@@ -1041,21 +671,6 @@ static BOOL RecvSubProccess_Normal(void *work_gdsrap, void *work_recv_sub_work)
 
 //--------------------------------------------------------------
 /**
- * @brief   データ受信後のサブプロセス：ビデオ送信済みフラグをリセットしてセーブする
- *
- * @param   gdsrap		
- *
- * @retval  
- */
-//--------------------------------------------------------------
-static BOOL RecvSubProccess_VideoSendFlagResetSave(void *work_gdsrap, void *work_recv_sub_work)
-{
-	//送信前のセーブは無くなったし、ローカルでの送信済みチェックも無くなったので何もする必要無し
-	return TRUE;
-}
-
-//--------------------------------------------------------------
-/**
  * @brief   データ受信後のサブプロセス：録画データにデータナンバーをセットしてセーブする
  *
  * @param   gdsrap		
@@ -1082,36 +697,6 @@ static BOOL RecvSubProccess_DataNumberSetSave(void *work_gdsrap, void *work_recv
 		return TRUE;
 	}
 	return FALSE;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   データ受信後のサブプロセス：ドレス送信済みフラグをリセットしてセーブする
- *
- * @param   gdsrap		
- *
- * @retval  
- */
-//--------------------------------------------------------------
-static BOOL RecvSubProccess_DressSendFlagResetSave(void *work_gdsrap, void *work_recv_sub_work)
-{
-	//送信前のセーブは無くなったし、ローカルでの送信済みチェックも無くなったので何もする必要無し
-	return TRUE;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   データ受信後のサブプロセス：ボックス送信済みフラグをリセットしてセーブする
- *
- * @param   gdsrap		
- *
- * @retval  
- */
-//--------------------------------------------------------------
-static BOOL RecvSubProccess_BoxSendFlagResetSave(void *work_gdsrap, void *work_recv_sub_work)
-{
-	//送信前のセーブは無くなったし、ローカルでの送信済みチェックも無くなったので何もする必要無し
-	return TRUE;
 }
 
 //--------------------------------------------------------------
@@ -1159,50 +744,21 @@ static int Local_GetResponse(GDS_RAP_WORK *gdsrap)
 	
 	// == ここでそれぞれのレスポンスに対する処理を行う ==
 	switch(res->ReqCode){
-	case POKE_NET_GDS_REQCODE_DRESSUPSHOT_REGIST:		// ドレスアップショット登録
-		OS_TPrintf("受信：ドレスアップショットアップロード\n");
-		result = GDS_RAP_RESPONSE_DressupShot_Upload(gdsrap, res);
-		gdsrap->recv_sub_work.user_callback_func = gdsrap->response_callback.func_dressupshot_regist;
-		if(result == FALSE){	//送信済みフラグを戻して再セーブ
-			gdsrap->recv_sub_work.recv_sub_proccess = RecvSubProccess_DressSendFlagResetSave;
-		}
+	case POKE_NET_GDS_REQCODE_MUSICALSHOT_REGIST:		// ミュージカルショット登録
+		OS_TPrintf("受信：ミュージカルショットアップロード\n");
+		result = GDS_RAP_RESPONSE_MusicalShot_Upload(gdsrap, res);
+		gdsrap->recv_sub_work.user_callback_func = gdsrap->response_callback.func_musicalshot_regist;
 		break;
-	case POKE_NET_GDS_REQCODE_DRESSUPSHOT_GET:			// ドレスアップショット取得
-		OS_TPrintf("受信：ドレスアップショット取得\n");
-		result = GDS_RAP_RESPONSE_DressupShot_Download(gdsrap, res);
-		gdsrap->recv_sub_work.user_callback_func = gdsrap->response_callback.func_dressupshot_get;
-		break;
-	case POKE_NET_GDS_REQCODE_BOXSHOT_REGIST:			// ボックスショット登録
-		OS_TPrintf("受信：ボックスショット登録\n");
-		result = GDS_RAP_RESPONSE_Boxshot_Upload(gdsrap, res);
-		gdsrap->recv_sub_work.user_callback_func = gdsrap->response_callback.func_boxshot_regist;
-		if(result == FALSE){	//送信済みフラグを戻して再セーブ
-			gdsrap->recv_sub_work.recv_sub_proccess = RecvSubProccess_BoxSendFlagResetSave;
-		}
-		break;
-	case POKE_NET_GDS_REQCODE_BOXSHOT_GET:				// ボックスショット取得
-		OS_TPrintf("受信：ボックスショット取得\n");
-		result = GDS_RAP_RESPONSE_Boxshot_Download(gdsrap, res);
-		gdsrap->recv_sub_work.user_callback_func = gdsrap->response_callback.func_boxshot_get;
-		break;
-	case POKE_NET_GDS_REQCODE_RANKING_GETTYPE:			// ランキングタイプ取得
-		OS_TPrintf("受信：ランキングタイプ取得\n");
-		result = GDS_RAP_RESPONSE_RankingType_Download(gdsrap, res);
-		gdsrap->recv_sub_work.user_callback_func = gdsrap->response_callback.func_ranking_type_get;
-		break;
-	case POKE_NET_GDS_REQCODE_RANKING_UPDATE:			// ランキング更新
-		OS_TPrintf("受信：ランキング更新取得\n");
-		result = GDS_RAP_RESPONSE_RankingUpdate_Download(gdsrap, res);
-		gdsrap->recv_sub_work.user_callback_func = gdsrap->response_callback.func_ranking_update_get;
+	case POKE_NET_GDS_REQCODE_MUSICALSHOT_GET:			// ミュージカルショット取得
+		OS_TPrintf("受信：ミュージカルショット取得\n");
+		result = GDS_RAP_RESPONSE_MusicalShot_Download(gdsrap, res);
+		gdsrap->recv_sub_work.user_callback_func = gdsrap->response_callback.func_musicalshot_get;
 		break;
 	case POKE_NET_GDS_REQCODE_BATTLEDATA_REGIST:		// バトルビデオ登録
 		OS_TPrintf("受信：バトルビデオ登録\n");
 		result = GDS_RAP_RESPONSE_BattleVideo_Upload(gdsrap, res);
 		gdsrap->recv_sub_work.user_callback_func = gdsrap->response_callback.func_battle_video_regist;
-		if(result == FALSE){	//送信済みフラグを戻して再セーブ
-			gdsrap->recv_sub_work.recv_sub_proccess = RecvSubProccess_VideoSendFlagResetSave;
-		}
-		else{
+		if(result == TRUE){
 			//登録コードを自分のデータに入れて、外部セーブ実行
 			gdsrap->recv_sub_work.recv_sub_proccess = RecvSubProccess_DataNumberSetSave;
 		}
@@ -1272,53 +828,6 @@ void GDSRAP_ErrorInfoClear(GDS_RAP_WORK *gdsrap)
 	GFL_STD_MemClear(&gdsrap->error_info, sizeof(GDS_RAP_ERROR_INFO));
 }
 
-//------------------------------------------------------------------
-/**
- * @brief   WIFIエラーメッセージ：ワイド表示コールバック呼び出し
- *
- * @param   wk		
- * @param   msgno		
- *
- * @retval  none		
- */
-//------------------------------------------------------------------
-static void _systemMessagePrint(GDS_RAP_WORK *gdsrap, STRBUF *str_buf)
-{
-	gdsrap->callback_error_msg_wide(gdsrap->callback_work, str_buf);
-}
-
-//------------------------------------------------------------------
-/**
- * @brief   Wifiコネクションエラーの表示
- *
- * @param   gdsrap		
- * @param   type	
- *
- * @retval  none		
- */
-//------------------------------------------------------------------
-static void errorDisp(GDS_RAP_WORK *gdsrap, int type, int code)
-{
-    int msgno;
-	STRBUF *tempstr;
-
-    if(type != -1){
-        msgno = dwc_error_0001 + type;
-    }
-    else{
-        msgno = dwc_error_0012;
-    }
-    
-    WORDSET_RegisterNumber(gdsrap->wordset, 0, code,
-                           5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
-
-	tempstr = GFL_MSG_CreateString( gdsrap->msgman_wifisys, msgno );
-	WORDSET_ExpandStr( gdsrap->wordset, gdsrap->ErrorString, tempstr );
-	GFL_STR_DeleteBuffer(tempstr);
-
-    _systemMessagePrint(gdsrap, gdsrap->ErrorString);
-}
-
 //--------------------------------------------------------------
 /**
  * @brief   GDSRAPが何らかの動作を実行、又は受付、待ち中、などをしているか確認する
@@ -1331,48 +840,13 @@ static void errorDisp(GDS_RAP_WORK *gdsrap, int type, int code)
 //--------------------------------------------------------------
 BOOL GDSRAP_MoveStatusAllCheck(GDS_RAP_WORK *gdsrap)
 {
-	if(GDSRAP_ProccessCheck(gdsrap) == GDSRAP_PROCESS_REQ_NULL
-			&& gdsrap->send_req == POKE_NET_GDS_REQCODE_LAST
+	if(gdsrap->send_req == POKE_NET_GDS_REQCODE_LAST
 			&& gdsrap->recv_wait_req == POKE_NET_GDS_REQCODE_LAST){
 		return TRUE;
 	}
 	return FALSE;
 }
 
-//--------------------------------------------------------------
-/**
- * @brief   GDSRAPが実行中のプロセス番号を取得する
- *
- * @param   gdsrap		
- *
- * @retval  GDSRAP_PROCESS_REQ_???(実行中の処理がない場合はGDSRAP_PROCESS_REQ_NULL)
- */
-//--------------------------------------------------------------
-static int GDSRAP_ProccessCheck(GDS_RAP_WORK *gdsrap)
-{
-	return gdsrap->proccess_tblno;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   GDSRAPに対して処理のリクエストを行う
- *
- * @param   gdsrap				
- * @param   proccess_req		GDSRAP_PROCESS_REQ_???
- *
- * @retval  TRUE:リクエスト受付成功
- * @retval  FALSE:リクエスト受付失敗
- */
-//--------------------------------------------------------------
-BOOL GDSRAP_ProccessReq(GDS_RAP_WORK *gdsrap, GDSRAP_PROCESS_REQ proccess_req)
-{
-  GF_ASSERT(0); //プラチナで一切使用しなかった為この関数は無効 2009.11.10(火)
-  
-	gdsrap->proccess_tblno = proccess_req;
-	OS_TPrintf("サブプロセスリクエスト：tblno = %d\n", proccess_req);
-	
-	return TRUE;
-}
 
 
 //==============================================================================
@@ -1398,18 +872,23 @@ void DEBUG_GDSRAP_SaveFlagReset(GDS_RAP_WORK *gdsrap)
 //				一時的にヒープを作成する
 //
 //==============================================================================
+#if 0 //WBで変更 2010.03.20(土)
 #define ROUND(n, a)		(((u32)(n)+(a)-1) & ~((a)-1))
 static OSHeapHandle sHandle;
+#else
+static HEAPID GdsHeapID;
+#endif
 
-static void * LIB_Heap_Init(int heap_id)
+static void LIB_Heap_Init(int heap_id)
 {
+#if 0 //WBで変更 2010.03.20(土)
 	void*    arenaLo;
 	void*    arenaHi;
 	void*	alloc_ptr;
 	
 	int heap_size = 0x2000;
 	
-	arenaLo = GFL_HEAP_AllocMemory(heap_id, heap_size);
+	arenaLo = sys_AllocMemory(heap_id, heap_size);
 	alloc_ptr = arenaLo;
 	arenaHi = (void*)((u32)arenaLo + heap_size);
 	
@@ -1428,9 +907,46 @@ static void * LIB_Heap_Init(int heap_id)
 //    OS_SetArenaLo(OS_ARENA_MAIN, arenaHi);
 
 	return alloc_ptr;
+#else
+  GdsHeapID = heap_id;
+//  DWC_SetMemFunc( mydwc_AllocFunc, mydwc_FreeFunc );
+#endif
 }
 
 static void LIB_Heap_Exit(void)
 {
-	OS_ClearAlloc(OS_ARENA_MAIN);
+	;
+}
+
+/*---------------------------------------------------------------------------*
+  メモリ確保関数
+ *---------------------------------------------------------------------------*/
+static void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align )
+{
+#pragma unused( name )
+  void * ptr;
+  OSIntrMode old;
+
+  GF_ASSERT(align <= 32);  // これをこえたら再対応
+  old = OS_DisableInterrupts();
+  ptr = GFL_NET_Align32Alloc(GdsHeapID, size);
+  OS_RestoreInterrupts( old );
+
+  return ptr;
+}
+
+/*---------------------------------------------------------------------------*
+  メモリ開放関数
+ *---------------------------------------------------------------------------*/
+static void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  )
+{
+#pragma unused( name, size )
+  OSIntrMode old;
+
+  if ( !ptr ){
+    return;  //NULL開放を認める
+  }
+  old = OS_DisableInterrupts();
+  GFL_NET_Align32Free(ptr);
+  OS_RestoreInterrupts( old );
 }

@@ -7,58 +7,25 @@
  */
 //==============================================================================
 #include <gflib.h>
-#include <dwc.h>
 #include <ghttp/dwci_ghttp.h>
 #include "net/dwc_rap.h"
 #include "system/main.h"
 #include <dpw_tr.h>
-#include "net/dwc_rap.h"
 #include "savedata\save_control.h"
-#include "pm_define.h"
-#include "poke_tool/poke_tool.h"
-#include "poke_tool/poke_tool_def.h"
 #include "savedata/gds_profile.h"
 #include "net_app/gds/gds_profile_local.h"
-#include "battle/btl_common.h"
-#include "savedata\battle_rec.h"
-#include "savedata\battle_rec_local.h"
-#include "gds_battle_rec.h"
-#include "gds_ranking.h"
-#include "gds_boxshot.h"
-#include "gds_dressup.h"
 
 #include "gamesystem/game_data.h"
-#include "poke_tool/monsno_def.h"
-//#include "gflib/strbuf_family.h"
 #include "savedata/gds_profile.h"
 
 #include <arc_tool.h>
-#include "print/wordset.h"
 #include "message.naix"
-//#include "system/fontproc.h"
-//#include "gflib/strbuf_family.h"
-
-//#include "communication\comm_system.h"
-//#include "communication\comm_state.h"
-//#include "communication\comm_def.h"
-//#include "communication/wm_icon.h"
-//#include "communication\communication.h"
-
-#include "gds_battle_rec.h"
-#include "gds_ranking.h"
-#include "gds_boxshot.h"
-#include "gds_dressup.h"
 
 #include "gds_rap.h"
 #include "gds_rap_response.h"
-#include "gds_data_conv.h"
 
 #include "msg/msg_wifi_system.h"
 
-#include "savedata/config.h"
-#include "savedata\system_data.h"
-#include "system/bmp_menu.h"
-#include <procsys.h>
 #include "system/wipe.h"
 
 #include "msg/msg_wifi_lobby.h"
@@ -76,6 +43,8 @@
 #include "net/network_define.h"
 #include "system/net_err.h"
 #include "app/app_printsys_common.h"
+#include "system\bmp_menu.h"
+#include "savedata\system_data.h"
 
 
 //==============================================================================

@@ -24,7 +24,7 @@
 #include "../poke_tool/poke_tool_def.h"
 
 #include "mystatus_local.h"
-#include "gds_profile_types.h"
+#include "net_app/gds/gds_profile_local.h"
 
 #include "pm_define.h"
 #include "poke_tool/poke_tool.h"

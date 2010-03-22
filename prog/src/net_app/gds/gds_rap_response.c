@@ -10,45 +10,20 @@
 #include <dwc.h>
 #include "net/dwc_rap.h"
 #include "savedata\save_control.h"
-#include "pm_define.h"
-#include "poke_tool/poke_tool.h"
-#include "poke_tool/poke_tool_def.h"
 #include "savedata/gds_profile.h"
 #include "net_app/gds/gds_profile_local.h"
 #include "battle/btl_common.h"
-#include "savedata\battle_rec.h"
-#include "savedata\battle_rec_local.h"
-#include "gds_battle_rec.h"
-#include "gds_ranking.h"
-#include "gds_boxshot.h"
-#include "gds_dressup.h"
 
-#include "poke_tool/monsno_def.h"
-//#include "gflib/strbuf_family.h"
 #include "savedata/gds_profile.h"
 
 #include <arc_tool.h>
 #include "print/wordset.h"
 #include "message.naix"
-//#include "system/fontproc.h"
-//#include "gflib/strbuf_family.h"
-
-//#include "communication\comm_system.h"
-//#include "communication\comm_state.h"
-//#include "communication\comm_def.h"
-//#include "communication/wm_icon.h"
-
-#include "gds_battle_rec.h"
-#include "gds_ranking.h"
-#include "gds_boxshot.h"
-#include "gds_dressup.h"
 
 #include "gds_rap.h"
 #include "gds_rap_response.h"
-#include "gds_data_conv.h"
 
 #include "msg/msg_wifi_system.h"
-#include "savedata/battle_rec.h"
 
 
 
@@ -63,43 +38,48 @@
  * @retval  FALSE:何らかのエラーが発生(内容はres->Result参照)
  */
 //--------------------------------------------------------------
-int GDS_RAP_RESPONSE_DressupShot_Upload(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE *res)
+int GDS_RAP_RESPONSE_MusicalShot_Upload(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE *res)
 {
-	POKE_NET_GDS_RESPONSE_DRESSUPSHOT_REGIST *param;
+	POKE_NET_GDS_RESPONSE_MUSICALSHOT_REGIST *param;
 	int ret = FALSE;
 	
 	switch(res->Result){
 	//!< 登録成功
-	case POKE_NET_GDS_RESPONSE_RESULT_DRESSUPSHOT_REGIST_SUCCESS:
-		param = (POKE_NET_GDS_RESPONSE_DRESSUPSHOT_REGIST *)(res->Param);
-		OS_TPrintf("ドレスアップショットアップロード成功。登録コード = %d\n", param->Code);
+	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_SUCCESS:
+		param = (POKE_NET_GDS_RESPONSE_MUSICALSHOT_REGIST *)(res->Param);
+		OS_TPrintf("ミュージカルショットアップロード成功。登録コード = %d\n", param->Code);
 		ret = TRUE;
 		break;
 	//!< ユーザー認証エラー
-	case POKE_NET_GDS_RESPONSE_RESULT_DRESSUPSHOT_REGIST_ERROR_AUTH:
+	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_ERROR_AUTH:
 		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ドレスアップショット登録エラー！:ユーザー認証エラー\n");
+		OS_TPrintf("ミュージカルショット登録エラー！:ユーザー認証エラー\n");
 		break;
 	//!< すでに登録されている
-	case POKE_NET_GDS_RESPONSE_RESULT_DRESSUPSHOT_REGIST_ERROR_ALREADY:
+	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_ERROR_ALREADY:
 		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ドレスアップショット登録エラー！:既に登録されている\n");
+		OS_TPrintf("ミュージカルショット登録エラー！:既に登録されている\n");
 		break;
 	//!< 不正なデータ
-	case POKE_NET_GDS_RESPONSE_RESULT_DRESSUPSHOT_REGIST_ERROR_ILLEGAL:
+	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_ERROR_ILLEGAL:
 		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ドレスアップショット登録エラー！:不正データ\n");
+		OS_TPrintf("ミュージカルショット登録エラー！:不正データ\n");
+		break;
+	//!< 不正なポケモン番号
+  case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_ERROR_ILLEGALPOKEMON:
+		//※check　エラーごとに専用のケアとメッセージを入れる
+		OS_TPrintf("ミュージカルショット登録エラー！:不正なポケモン番号\n");
 		break;
 	//!< 不正なユーザープロフィール
-	case POKE_NET_GDS_RESPONSE_RESULT_DRESSUPSHOT_REGIST_ERROR_ILLEGALPROFILE:
+	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_ERROR_ILLEGALPROFILE:
 		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ドレスアップショット登録エラー！:不正プロフィール\n");
+		OS_TPrintf("ミュージカルショット登録エラー！:不正プロフィール\n");
 		break;
 	//!< その他エラー
-	case POKE_NET_GDS_RESPONSE_RESULT_DRESSUPSHOT_REGIST_ERROR_UNKNOWN:
+	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_ERROR_UNKNOWN:
 	default:
 		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ドレスアップショット登録エラー！:その他のエラー\n");
+		OS_TPrintf("ミュージカルショット登録エラー！:その他のエラー\n");
 		break;
 	}
 	
@@ -108,7 +88,7 @@ int GDS_RAP_RESPONSE_DressupShot_Upload(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE 
 
 //--------------------------------------------------------------
 /**
- * @brief   レスポンスデータ解釈：ドレスアップショット ダウンロード
+ * @brief   レスポンスデータ解釈：ミュージカルショット ダウンロード
  *
  * @param   gdsrap		
  * @param   res		
@@ -117,33 +97,33 @@ int GDS_RAP_RESPONSE_DressupShot_Upload(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE 
  * @retval  FALSE:何らかのエラーが発生(内容はres->Result参照)
  */
 //--------------------------------------------------------------
-int GDS_RAP_RESPONSE_DressupShot_Download(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE *res)
+int GDS_RAP_RESPONSE_MusicalShot_Download(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE *res)
 {
-	POKE_NET_GDS_RESPONSE_DRESSUPSHOT_GET *param;
+	POKE_NET_GDS_RESPONSE_MUSICALSHOT_GET *param;
 	int ret = FALSE;
 	
 	switch(res->Result){
 	//!< 取得成功
-	case POKE_NET_GDS_RESPONSE_RESULT_DRESSUPSHOT_GET_SUCCESS:
-		param = (POKE_NET_GDS_RESPONSE_DRESSUPSHOT_GET *)(res->Param);
-		OS_TPrintf("ドレスアップショット受信成功。ヒット件数 = %d\n", param->HitCount);
+	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_GET_SUCCESS:
+		param = (POKE_NET_GDS_RESPONSE_MUSICALSHOT_GET *)(res->Param);
+		OS_TPrintf("ミュージカルショット受信成功。ヒット件数 = %d\n", param->HitCount);
 		ret = TRUE;
 		break;
 	//!< ユーザー認証エラー
-	case POKE_NET_GDS_RESPONSE_RESULT_DRESSUPSHOT_GET_ERROR_AUTH:
+	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_GET_ERROR_AUTH:
 		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ドレスアップショット受信エラー！:ユーザー認証エラー\n");
+		OS_TPrintf("ミュージカルショット受信エラー！:ユーザー認証エラー\n");
 		break;
 	//!< ポケモン番号エラー
-	case POKE_NET_GDS_RESPONSE_RESULT_DRESSUPSHOT_GET_ERROR_ILLEGALPOKEMON:
+	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_GET_ERROR_ILLEGALPOKEMON:
 		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ドレスアップショット受信エラー！:ポケモン番号エラー\n");
+		OS_TPrintf("ミュージカルショット受信エラー！:ポケモン番号エラー\n");
 		break;
 	//!< その他エラー
-	case POKE_NET_GDS_RESPONSE_RESULT_DRESSUPSHOT_GET_ERROR_UNKNOWN:
+	case POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_GET_ERROR_UNKNOWN:
 	default:
 		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ドレスアップショット受信エラー！:その他のエラー\n");
+		OS_TPrintf("ミュージカルショット受信エラー！:その他のエラー\n");
 		break;
 	}
 	
@@ -152,26 +132,26 @@ int GDS_RAP_RESPONSE_DressupShot_Download(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONS
 
 //--------------------------------------------------------------
 /**
- * @brief   受信バッファからデータが入っている部分のポインタを取得：ドレスアップショット
+ * @brief   受信バッファからデータが入っている部分のポインタを取得：ミュージカルショット
  *
  * @param   gdsrap		
- * @param   dress_array		ポインタをセットする配列データ
- * @param   array_max		dress_arrayの配列要素数
+ * @param   mus_array		ポインタをセットする配列データ
+ * @param   array_max		mus_arrayの配列要素数
  *
  * @retval  受信件数
  *
- * dress_array[0] ～ dress_array[x] まで受信データへのポインタがセットされます
+ * mus_array[0] ～ mus_array[x] まで受信データへのポインタがセットされます
  */
 //--------------------------------------------------------------
-int GDS_RAP_RESPONSE_DressupShot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GT_GDS_DRESS_RECV **dress_array, int array_max)
+int GDS_RAP_RESPONSE_MusicalShot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, MUSICAL_SHOT_RECV **mus_array, int array_max)
 {
 	POKE_NET_RESPONSE *res;
-	POKE_NET_GDS_RESPONSE_DRESSUPSHOT_GET *param;
-	POKE_NET_GDS_RESPONSE_DRESSUPSHOT_RECVDATA *dress_recv;
+	POKE_NET_GDS_RESPONSE_MUSICALSHOT_GET *param;
+	POKE_NET_GDS_RESPONSE_MUSICALSHOT_RECVDATA *mus_recv;
 	int i, hit_count;
 	
 	res = POKE_NET_GDS_GetResponse();
-	param = (POKE_NET_GDS_RESPONSE_DRESSUPSHOT_GET *)(res->Param);
+	param = (POKE_NET_GDS_RESPONSE_MUSICALSHOT_GET *)(res->Param);
 	
 	hit_count = param->HitCount;
 	if(hit_count > array_max){
@@ -179,287 +159,15 @@ int GDS_RAP_RESPONSE_DressupShot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GT_G
 	//	GF_ASSERT(0);	//用意しているバッファよりも受信件数が多い
 	}
 
-	dress_recv = (POKE_NET_GDS_RESPONSE_DRESSUPSHOT_RECVDATA *)(param->Data);
+	mus_recv = (POKE_NET_GDS_RESPONSE_MUSICALSHOT_RECVDATA *)(param->Data);
 	for(i = 0; i < hit_count; i++){
-		dress_array[i] = &dress_recv[i].Data;
+		mus_array[i] = &mus_recv[i].Data;
 	}
 	for( ; i < array_max; i++){
-		dress_array[i] = NULL;
+		mus_array[i] = NULL;
 	}
 
 	return hit_count;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   レスポンスデータ解釈：ボックスショット アップロード
- *
- * @param   gdsrap		
- * @param   res		
- *
- * @retval  TRUE:成功
- * @retval  FALSE:何らかのエラーが発生(内容はres->Result参照)
- */
-//--------------------------------------------------------------
-int GDS_RAP_RESPONSE_Boxshot_Upload(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE *res)
-{
-	POKE_NET_GDS_RESPONSE_BOXSHOT_REGIST *param;
-	int ret = FALSE;
-	
-	switch(res->Result){
-	//!< 登録成功
-	case POKE_NET_GDS_RESPONSE_RESULT_BOXSHOT_REGIST_SUCCESS:
-		param = (POKE_NET_GDS_RESPONSE_BOXSHOT_REGIST *)(res->Param);
-		OS_TPrintf("ボックスショットアップロード成功。登録コード = %d\n", param->Code);
-		ret = TRUE;
-		break;
-	//!< ユーザー認証エラー
-	case POKE_NET_GDS_RESPONSE_RESULT_BOXSHOT_REGIST_ERROR_AUTH:
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ボックスショット登録エラー！:ユーザー認証エラー\n");
-		break;
-	//!< すでに登録されている
-	case POKE_NET_GDS_RESPONSE_RESULT_BOXSHOT_REGIST_ERROR_ALREADY:
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ボックスショット登録エラー！:既に登録されている\n");
-		break;
-	//!< 不正なデータ
-	case POKE_NET_GDS_RESPONSE_RESULT_BOXSHOT_REGIST_ERROR_ILLEGAL:
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ボックスショット登録エラー！:不正なデータ\n");
-		break;
-	//!< 不正なユーザープロフィール
-	case POKE_NET_GDS_RESPONSE_RESULT_BOXSHOT_REGIST_ERROR_ILLEGALPROFILE:
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ボックスショット登録エラー！:不正プロフィール\n");
-		break;
-	//!< 不正なグループ番号
-	case POKE_NET_GDS_RESPONSE_RESULT_BOXSHOT_REGIST_ERROR_ILLEGALGROUP:
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ボックスショット登録エラー！:不正グループ番号\n");
-		break;
-	//!< その他エラー
-	case POKE_NET_GDS_RESPONSE_RESULT_BOXSHOT_REGIST_ERROR_UNKNOWN:
-	default:
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ボックスショット登録エラー！:その他エラー\n");
-		break;
-	}
-	
-	return ret;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   レスポンスデータ解釈：ボックスショット ダウンロード
- *
- * @param   gdsrap		
- * @param   res		
- *
- * @retval  TRUE:成功
- * @retval  FALSE:何らかのエラーが発生(内容はres->Result参照)
- */
-//--------------------------------------------------------------
-int GDS_RAP_RESPONSE_Boxshot_Download(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE *res)
-{
-	POKE_NET_GDS_RESPONSE_BOXSHOT_GET *param;
-	int ret = FALSE;
-	
-	switch(res->Result){
-	case POKE_NET_GDS_RESPONSE_RESULT_BOXSHOT_GET_SUCCESS:				//!< 取得成功
-		param = (POKE_NET_GDS_RESPONSE_BOXSHOT_GET *)(res->Param);
-		OS_TPrintf("ボックスショット受信成功。ヒット件数 = %d\n", param->HitCount);
-		ret = TRUE;
-		break;
-	case POKE_NET_GDS_RESPONSE_RESULT_BOXSHOT_GET_ERROR_AUTH:			//!< ユーザー認証エラー
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ボックスショット受信エラー！:ユーザー認証エラー\n");
-		break;
-	case POKE_NET_GDS_RESPONSE_RESULT_BOXSHOT_GET_ERROR_ILLEGALGROUP:	//!< グループ番号エラー
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ボックスショット受信エラー！グループ番号エラー\n");
-		break;
-	case POKE_NET_GDS_RESPONSE_RESULT_BOXSHOT_GET_ERROR_UNKNOWN:		//!< その他エラー
-	default:
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ボックスショット受信エラー！:その他エラー\n");
-		break;
-	}
-	
-	return ret;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   受信バッファからデータが入っている部分のポインタを取得：ボックスショット
- *
- * @param   gdsrap		
- * @param   box_array		ポインタをセットする配列データ
- * @param   array_max		dress_arrayの配列要素数
- *
- * @retval  受信件数
- *
- * box_array[0] ～ box_array[x] まで受信データへのポインタがセットされます
- */
-//--------------------------------------------------------------
-int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GT_BOX_SHOT_RECV **box_array, int array_max)
-{
-	POKE_NET_RESPONSE *res;
-	POKE_NET_GDS_RESPONSE_BOXSHOT_GET *param;
-	POKE_NET_GDS_RESPONSE_BOXSHOT_RECVDATA *box_recv;
-	int i, hit_count;
-	
-	res = POKE_NET_GDS_GetResponse();
-	param = (POKE_NET_GDS_RESPONSE_BOXSHOT_GET *)(res->Param);
-	
-	hit_count = param->HitCount;
-	if(hit_count > array_max){
-		hit_count = array_max;
-		GF_ASSERT(0);	//用意しているバッファよりも受信件数が多い
-	}
-
-	box_recv = (POKE_NET_GDS_RESPONSE_BOXSHOT_RECVDATA *)(param->Data);
-	for(i = 0; i < hit_count; i++){
-		box_array[i] = &box_recv[i].Data;
-	}
-	for( ; i < array_max; i++){
-		box_array[i] = NULL;
-	}
-	
-	return hit_count;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   レスポンスデータ解釈：ランキングタイプ ダウンロード
- *
- * @param   gdsrap		
- * @param   res		
- *
- * @retval  TRUE:成功
- * @retval  FALSE:何らかのエラーが発生(内容はres->Result参照)
- */
-//--------------------------------------------------------------
-int GDS_RAP_RESPONSE_RankingType_Download(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE *res)
-{
-	POKE_NET_GDS_RESPONSE_RANKING_GETTYPE *param;
-	int ret = FALSE;
-	
-	switch(res->Result){
-	case POKE_NET_GDS_RESPONSE_RESULT_RANKING_GETTYPE_SUCCESS:				//!< 取得成功
-		param = (POKE_NET_GDS_RESPONSE_RANKING_GETTYPE *)(res->Param);
-		OS_TPrintf("ランキングタイプ受信成功。\n");
-		ret = TRUE;
-	#if 0
-		{
-			int i;
-			GT_RANKING_TYPE_RECV *recv = &param->Data;
-			for(i = 0; i < GT_RANKING_WEEK_NUM; i++){
-				OS_TPrintf("開催中のタイプ その%d = %d\n", i, recv->ranking_type[i]);
-			}
-		}
-	#endif
-		break;
-	case POKE_NET_GDS_RESPONSE_RESULT_RANKING_GETTYPE_ERROR_AUTH:			//!< ユーザー認証エラー
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ランキングタイプ受信エラー！:ユーザー認証エラー\n");
-		break;
-	case POKE_NET_GDS_RESPONSE_RESULT_RANKING_GETTYPE_ERROR_UNKNOWN:		//!< その他エラー
-	default:
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ランキングタイプ受信エラー！:その他のエラー\n");
-		break;
-	}
-	
-	return ret;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   受信バッファからデータが入っている部分のポインタを取得：開催中のランキングタイプ
- *
- * @param   gdsrap		
- * @param   ranking_type_recv		受信データへのポインタ代入先
- */
-//--------------------------------------------------------------
-void GDS_RAP_RESPONSE_RankingType_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GT_RANKING_TYPE_RECV **ranking_type_recv)
-{
-	POKE_NET_RESPONSE *res;
-	POKE_NET_GDS_RESPONSE_RANKING_GETTYPE *param;
-	
-	res = POKE_NET_GDS_GetResponse();
-	param = (POKE_NET_GDS_RESPONSE_RANKING_GETTYPE *)(res->Param);
-	
-	*ranking_type_recv = &param->Data;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   レスポンスデータ解釈：ランキング更新 ダウンロード
- *
- * @param   gdsrap		
- * @param   res		
- *
- * @retval  TRUE:成功
- * @retval  FALSE:何らかのエラーが発生(内容はres->Result参照)
- */
-//--------------------------------------------------------------
-int GDS_RAP_RESPONSE_RankingUpdate_Download(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE *res)
-{
-	POKE_NET_GDS_RESPONSE_RANKING_UPDATE *param;
-	int ret = FALSE;
-	
-	switch(res->Result){
-	case POKE_NET_GDS_RESPONSE_RESULT_RANKING_UPDATE_SUCCESS:			//!< 更新成功
-		param = (POKE_NET_GDS_RESPONSE_RANKING_UPDATE *)(res->Param);
-		OS_TPrintf("ランキング更新受信成功\n");
-		ret = TRUE;
-		break;
-	case POKE_NET_GDS_RESPONSE_RESULT_RANKING_UPDATE_ERROR_AUTH:		//!< ユーザー認証エラー
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ランキング更新受信エラー！:ユーザー認証エラー\n");
-		break;
-	case POKE_NET_GDS_RESPONSE_RESULT_RANKING_UPDATE_ERROR_ILLEGALTYPE:	//!< ランキングタイプエラー
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ランキング更新受信エラー！:ランキングタイプエラー\n");
-		break;
-	case POKE_NET_GDS_RESPONSE_RESULT_RANKING_UPDATE_ERROR_ILLEGALDATA:	//!< 不正なデータエラー
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ランキング更新受信エラー！:不正なデータ\n");
-		break;
-	case POKE_NET_GDS_RESPONSE_RESULT_RANKING_UPDATE_ERROR_ILLEGALPROFILE:	//!< 不正なプロフィール
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ランキング更新受信エラー！:不正なプロフィール\n");
-		break;
-	case POKE_NET_GDS_RESPONSE_RESULT_RANKING_UPDATE_ERROR_UNKNOWN:			//!< その他エラー
-	default:
-		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("ランキング更新受信エラー！:その他のエラー\n");
-		break;
-	}
-
-	return ret;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   受信バッファからデータが入っている部分のポインタを取得：ランキング更新(先週と今週の結果)
- *
- * @param   gdsrap		
- * @param   last_week		先週の結果へのポインタ代入先
- * @param   this_week		今週の結果へのポインタ代入先
- */
-//--------------------------------------------------------------
-void GDS_RAP_RESPONSE_RankingUpdate_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GT_LAST_WEEK_RANKING_ALL_RECV **last_week, GT_THIS_WEEK_RANKING_DATA_ALL_RECV **this_week)
-{
-	POKE_NET_RESPONSE *res;
-	POKE_NET_GDS_RESPONSE_RANKING_UPDATE *param;
-	
-	res = POKE_NET_GDS_GetResponse();
-	param = (POKE_NET_GDS_RESPONSE_RANKING_UPDATE *)(res->Param);
-	
-	*last_week = &param->LastWeek;
-	*this_week = &param->ThisWeek;
 }
 
 //--------------------------------------------------------------
@@ -565,6 +273,10 @@ int GDS_RAP_RESPONSE_BattleVideo_Search_Download(GDS_RAP_WORK *gdsrap, POKE_NET_
 		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオ検索受信エラー！:検索パラメータエラー\n");
 		break;
+  case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_SEARCH_ERROR_ILLEGALRANKINGTYPE: //!< 検索パラメータエラー(ランキング種別が不正)
+		//※check　エラーごとに専用のケアとメッセージを入れる
+		OS_TPrintf("バトルビデオ検索受信エラー！:ランキング種別エラー\n");
+		break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_SEARCH_ERROR_UNKNOWN:	//!< その他エラー
 	default:
 		//※check　エラーごとに専用のケアとメッセージを入れる
@@ -588,7 +300,7 @@ int GDS_RAP_RESPONSE_BattleVideo_Search_Download(GDS_RAP_WORK *gdsrap, POKE_NET_
  * outline_array[0] ～ outline_array[x] まで受信データへのポインタがセットされます
  */
 //--------------------------------------------------------------
-int GDS_RAP_RESPONSE_BattleVideoSearch_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GT_BATTLE_REC_OUTLINE_RECV **outline_array, int array_max)
+int GDS_RAP_RESPONSE_BattleVideoSearch_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, BATTLE_REC_OUTLINE_RECV **outline_array, int array_max)
 {
 	POKE_NET_RESPONSE *res;
 	POKE_NET_GDS_RESPONSE_BATTLEDATA_SEARCH *param;
@@ -613,7 +325,7 @@ int GDS_RAP_RESPONSE_BattleVideoSearch_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap
 			//CRC作成
 			outline_array[i]->head.crc.crc16ccitt_hash = GFL_STD_CrcCalc(
 				&outline_array[i]->head, 
-				sizeof(GT_BATTLE_REC_HEADER) - GT_GDS_CRC_SIZE - sizeof(outline_recv[i].Code));
+				sizeof(BATTLE_REC_HEADER) - GDS_CRC_SIZE - sizeof(outline_recv[i].Code));
 		}
 	}
 	for( ; i < array_max; i++){
@@ -636,7 +348,7 @@ int GDS_RAP_RESPONSE_BattleVideoSearch_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap
  * outline_array[0] ～ outline_array[x] まで受信データへのポインタがセットされます
  */
 //--------------------------------------------------------------
-int GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy(GDS_RAP_WORK *gdsrap, GT_BATTLE_REC_OUTLINE_RECV *outline_array, int array_max)
+int GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy(GDS_RAP_WORK *gdsrap, BATTLE_REC_OUTLINE_RECV *outline_array, int array_max)
 {
 	POKE_NET_RESPONSE *res;
 	POKE_NET_GDS_RESPONSE_BATTLEDATA_SEARCH *param;
@@ -652,7 +364,7 @@ int GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy(GDS_RAP_WORK *gdsrap, G
 		GF_ASSERT(0);	//用意しているバッファよりも受信件数が多い
 	}
 
-	GFL_STD_MemClear(outline_array, sizeof(GT_BATTLE_REC_OUTLINE_RECV) * array_max);
+	GFL_STD_MemClear(outline_array, sizeof(BATTLE_REC_OUTLINE_RECV) * array_max);
 	outline_recv = (POKE_NET_GDS_RESPONSE_BATTLEDATA_SEARCH_RECVDATA *)(param->Data);
 	for(i = 0; i < hit_count; i++){
 		if(outline_recv[i].Code != outline_recv[i].Data.head.data_number){
@@ -661,7 +373,7 @@ int GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy(GDS_RAP_WORK *gdsrap, G
 			//CRC作成
 			outline_recv[i].Data.head.crc.crc16ccitt_hash = GFL_STD_CrcCalc(
 				&outline_recv[i].Data.head, 
-				sizeof(GT_BATTLE_REC_HEADER) - GT_GDS_CRC_SIZE - sizeof(outline_recv[i].Code));
+				sizeof(BATTLE_REC_HEADER) - GDS_CRC_SIZE - sizeof(outline_recv[i].Code));
 		}
 		outline_array[i] = outline_recv[i].Data;
 	}
@@ -719,7 +431,7 @@ int GDS_RAP_RESPONSE_BattleVideo_Data_Download(GDS_RAP_WORK *gdsrap, POKE_NET_RE
  * @retval  登録コード
  */
 //--------------------------------------------------------------
-int GDS_RAP_RESPONSE_BattleVideoData_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GT_BATTLE_REC_RECV **rec)
+int GDS_RAP_RESPONSE_BattleVideoData_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, BATTLE_REC_RECV **rec)
 {
 	POKE_NET_RESPONSE *res;
 	POKE_NET_GDS_RESPONSE_BATTLEDATA_GET *param;
@@ -733,7 +445,7 @@ int GDS_RAP_RESPONSE_BattleVideoData_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, 
 		param->Data.head.data_number = param->Code;
 		//CRC作成
 		(*rec)->head.crc.crc16ccitt_hash = GFL_STD_CrcCalc(&(*rec)->head, 
-			sizeof(GT_BATTLE_REC_HEADER) - GT_GDS_CRC_SIZE - sizeof(param->Code));
+			sizeof(BATTLE_REC_HEADER) - GDS_CRC_SIZE - sizeof(param->Code));
 	}
 	
 	return param->Code;

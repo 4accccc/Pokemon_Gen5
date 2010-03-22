@@ -17,7 +17,7 @@
 #include "gds_local_common.h"
 #include "savedata\battle_rec.h"
 #include "waza_tool/wazano_def.h"
-#include "gds_profile_types.h"
+#include "net_app/gds/gds_profile_local.h"
 #include "savedata/gds_profile.h"
 
 #include "pm_define.h"
@@ -29,7 +29,6 @@
 #include "savedata\battle_rec.h"
 #include "savedata\battle_rec_local.h"
 
-#include "net_app/gds/gds_battle_rec.h"
 #include "savedata/misc.h"
 
 
@@ -159,7 +158,7 @@ static void ErrorNameSet(STRBUF *dest_str, int heap_id)
  * @brief   GDSで受信したデータをセーブする
  *
  * @param   sv				セーブデータへのポインタ
- * @param   recv_data		GT_BATTLE_REC_RECV構造体
+ * @param   recv_data		BATTLE_REC_RECV構造体
  * @param   num				LOADDATA_MYREC、LOADDATA_DOWNLOAD0、LOADDATA_DOWNLOAD1…
  * @param   secure		視聴済みフラグ(TRUE:視聴済みにしてセーブする。
  * 						FALSE:フラグ操作しない(サーバーでsecureを立てているなら立ったままになる)

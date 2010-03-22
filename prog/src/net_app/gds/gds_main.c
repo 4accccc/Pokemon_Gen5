@@ -15,51 +15,16 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/poke_tool_def.h"
 #include "savedata/gds_profile.h"
-#include "net_app/gds/gds_profile_local.h"
-#include "battle/btl_common.h"
-#include "savedata\battle_rec.h"
-#include "savedata\battle_rec_local.h"
-#include "gds_battle_rec.h"
-#include "gds_ranking.h"
-#include "gds_boxshot.h"
-#include "gds_dressup.h"
 
-//#include "savedata/imageclip_data.h"
-#include "savedata/box_savedata.h"
-#include "poke_tool/monsno_def.h"
-
-#include <arc_tool.h>
-#include "print/wordset.h"
 #include "message.naix"
-//#include "system/fontproc.h"
-//#include "gflib/strbuf_family.h"
-
-//#include "communication\comm_system.h"
-//#include "communication\comm_state.h"
-//#include "communication\comm_def.h"
-//#include "communication/wm_icon.h"
-//#include "communication\communication.h"
-
-#include "gds_battle_rec.h"
-#include "gds_ranking.h"
-#include "gds_boxshot.h"
-#include "gds_dressup.h"
 
 #include "gds_rap.h"
 #include "gds_rap_response.h"
-#include "gds_data_conv.h"
-
-#include "savedata/config.h"
-#include "savedata\system_data.h"
-#include "system/bmp_menu.h"
-#include <procsys.h>
-#include "system/wipe.h"
 
 #include "net_app/gds_main.h"
-//#include "application/br_sys.h"
 
-#include "sound/pm_sndsys.h"
 #include "net\network_define.h"
+#include "sound/pm_sndsys.h"
 
 
 //==============================================================================
@@ -73,7 +38,9 @@
 //==============================================================================
 //	グローバル変数
 //==============================================================================
+#if GDS_FIX
 static NNSFndHeapHandle _wtHeapHandle;
+#endif
 
 //==============================================================================
 //	プロトタイプ宣言
@@ -83,8 +50,10 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 static GFL_PROC_RESULT GdsMainProc_End( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static void GdsMain_CommInitialize(GDSPROC_MAIN_WORK *gmw);
 static void GdsMain_CommFree(GDSPROC_MAIN_WORK *gmw);
+#if GDS_FIX
 static void *AllocFunc( DWCAllocType name, u32   size, int align );
 static void FreeFunc(DWCAllocType name, void* ptr,  u32 size);
+#endif
 static void _NetInitCallback( void *work );
 
 //==============================================================================
@@ -170,8 +139,10 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 		break;
 	case SEQ_INIT_DPW_WAIT:
 		if(gmw->net_init == TRUE){//if(CommIsVRAMDInitialize()){
+		#if GDS_FIX
 			_wtHeapHandle = gmw->heapHandle;
-	
+	  #endif
+	  
 			// wifiメモリ管理関数呼び出し
 			//DWC_SetMemFunc( AllocFunc, FreeFunc );
 			
@@ -285,9 +256,11 @@ static void GdsMain_CommInitialize(GDSPROC_MAIN_WORK *gmw)
 		//世界交換のWifi通信命令を使用するためオーバーレイを読み出す(dpw_tr.c等)
 //		Overlay_Load(FS_OVERLAY_ID(worldtrade), OVERLAY_LOAD_NOT_SYNCHRONIZE);
 
+#if GDS_FIX
 		// DWCライブラリ（Wifi）に渡すためのワーク領域を確保
 		gmw->heapPtr    = GFL_HEAP_AllocMemory(HEAPID_GDS_MAIN, MYDWC_HEAPSIZE + 32);
 		gmw->heapHandle = NNS_FndCreateExpHeap( (void *)( ((u32)gmw->heapPtr + 31) / 32 * 32 ), MYDWC_HEAPSIZE);
+#endif
 
 	#if 0
 		//DWCオーバーレイ読み込み
@@ -363,8 +336,10 @@ static void GdsMain_CommFree(GDSPROC_MAIN_WORK *gmw)
 	if(gmw->comm_initialize_ok == TRUE){
 		OS_TPrintf("Comm解放開始\n");
 		
+#if GDS_FIX
 		NNS_FndDestroyExpHeap(gmw->heapHandle);
 		GFL_HEAP_FreeMemory( gmw->heapPtr );
+#endif
 	#if 0
 		DpwCommonOverlayEnd();
 		DwcOverlayEnd();
@@ -397,6 +372,7 @@ static void _NetInitCallback( void *work )
   gmw->net_init = TRUE;
 }
 
+#if GDS_FIX
 /*---------------------------------------------------------------------------*
   メモリ確保関数
  *---------------------------------------------------------------------------*/
@@ -427,3 +403,5 @@ static void FreeFunc(DWCAllocType name, void* ptr,  u32 size)
     NNS_FndFreeToExpHeap( _wtHeapHandle, ptr );
     OS_RestoreInterrupts( old );
 }
+#endif
+

@@ -18,7 +18,8 @@
 #include "savedata/misc.h"
 #include "savedata/my_pms_data.h"
 
-#include "gds_profile_types.h"
+#include "savedata/gds_local_common.h"
+#include "net_app/gds/gds_profile_local.h"
 
 #include "net_app/union/union_beacon_tool.h"
 
@@ -38,7 +39,6 @@
 #include "msg\msg_pms_word12.h"
 
 #include "net_app/wifi_country.h"
-#include "net_app/gds/gds_min_max.h"
 
 
 // あいさつの「よろしく」を選んでおく
@@ -94,13 +94,13 @@ void GDS_Profile_MyDataSet(GDS_PROFILE_PTR gpp, SAVE_CONTROL_WORK *sv)
 	WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
 	const MISC * misc = SaveData_GetMiscConst(sv);
   const MYPMS_DATA * mypms  = SaveData_GetMyPmsDataConst(sv);
-	int monsno, form_no, egg_flag, sex;
+	int monsno, form_no, egg_flag, mons_sex;
 	int i;
 	OSOwnerInfo info;
 
 	OS_GetOwnerInfo(&info);
 	
-	MISC_GetFavoriteMonsno(misc, &monsno, &form_no, &egg_flag, &sex );
+	MISC_GetFavoriteMonsno(misc, &monsno, &form_no, &egg_flag, &mons_sex );
 
 	GFL_STD_MemClear(gpp, sizeof(GDS_PROFILE));
 
@@ -111,7 +111,7 @@ void GDS_Profile_MyDataSet(GDS_PROFILE_PTR gpp, SAVE_CONTROL_WORK *sv)
 	gpp->monsno = monsno;
 	gpp->form_no = form_no;
 	gpp->egg_flag = egg_flag;
-  gpp->sex  = sex;
+  gpp->mons_sex  = mons_sex;
 	gpp->country_code = MyStatus_GetMyNation(my);
 	gpp->local_code = MyStatus_GetMyArea(my);
 	
@@ -179,10 +179,10 @@ int GDS_Profile_GetFormNo(const GDS_PROFILE_PTR gpp)
 
 int GDS_Profile_GetPokeSex(const GDS_PROFILE_PTR gpp)
 {
-	if(gpp->sex != PM_MALE && gpp->sex != PM_FEMALE){
+	if(gpp->mons_sex != PM_MALE && gpp->mons_sex != PM_FEMALE){
 		return PM_MALE;	//エラー処理
 	}
-	return gpp->sex;
+	return gpp->mons_sex;
 }
 
 int GDS_Profile_GetEggFlag(const GDS_PROFILE_PTR gpp)
@@ -292,7 +292,7 @@ int GDS_Profile_GetMonthBirthday(const GDS_PROFILE_PTR gpp)
 
 int GDS_Profile_GetTrainerView(const GDS_PROFILE_PTR gpp)
 {
-	if(gpp->trainer_view > GT_RANKING_PROFILE_TRAINER_VIEW_MAX){	//ランキングのと一緒なので
+	if(gpp->trainer_view > UNION_VIEW_INDEX_MAX){	//ランキングのと一緒なので
 		return 0;
 	}
 	return gpp->trainer_view;

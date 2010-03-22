@@ -11,13 +11,15 @@
 
 #include "system/pms_data.h"
 #include "savedata/save_control.h"
+#include "savedata/gds_local_common.h"
+#include "net_app/gds/gds_profile_local.h"
 
 
 //==============================================================================
 //	型定義
 //==============================================================================
 ///GDSプロフィールの不定形ポインタ
-typedef struct _GDS_PROFILE * GDS_PROFILE_PTR;
+typedef GDS_PROFILE * GDS_PROFILE_PTR;
 
 
 //==============================================================================

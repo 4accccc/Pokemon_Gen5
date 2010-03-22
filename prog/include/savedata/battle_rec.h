@@ -8,6 +8,7 @@
 //==============================================================================
 #pragma once
 
+#include "savedata/gds_local_common.h"
 #include "savedata/gds_profile.h" //GDS_PROFILE_PTR’è‹`
 #include "battle/battle.h"
 

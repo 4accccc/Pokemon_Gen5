@@ -43,6 +43,15 @@ LLIBRARY_DIRS	+=	$(LIBDPW_DIR)/dpw_bt/lib/$(NITRO_BUILDTYPE) $(LIBDPW_DIR)/dpw_t
 ##ライブラリ結合は make_prog_filesに
 ###LLIBRARIES		+=  gflib.a
 
+#----------------------------------------------------------------------------
+# LIBDPW-Library
+#----------------------------------------------------------------------------
+LIBGDS_DIR		=	../lib/poke_net/
+LINCLUDES		+= 	$(LIBGDS_DIR)/poke_net
+LLIBRARY_DIRS	+=	$(LIBGDS_DIR)/poke_net/lib/$(NITRO_BUILDTYPE)
+##ライブラリ結合は make_prog_filesに
+###LLIBRARIES		+=  libgds.a
+
 
 # wifiをオーバーレイで使用する場合のLibrary定義
 LDEPENDS_NEF += $(TWLDWC_LIB_DEPENDS)

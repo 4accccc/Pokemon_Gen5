@@ -13,11 +13,6 @@
 #include "system/pms_data.h"
 #include "system/pm_str.h"
 
-#include "gds_battle_rec.h"
-#include "gds_ranking.h"
-#include "gds_boxshot.h"
-#include "gds_dressup.h"
-
 #include "savedata/gds_profile.h"
 #include "savedata/imageclip_data.h"
 #include "poketool/boxdata.h"
@@ -113,7 +108,7 @@ typedef struct _GDS_TEST_SYS{
   int seq;
 
   //受信データ
-  int ranking_type[GT_RANKING_WEEK_NUM];
+  int ranking_type[RANKING_WEEK_NUM];
   u64 data_number;
 
   //ドレスアップ全アップ用ワーク
@@ -759,10 +754,10 @@ static int GdsTest_Main(GDS_TEST_SYS *testsys)
 
     case SEQ_RANKING_UPDATE:  //
       {
-        GT_RANKING_MYDATA mydata[GT_RANKING_WEEK_NUM];
+        RANKING_MYDATA mydata[RANKING_WEEK_NUM];
         int i;
 
-        for(i = 0; i < GT_RANKING_WEEK_NUM; i++){ //自分のデータでっちあげ
+        for(i = 0; i < RANKING_WEEK_NUM; i++){ //自分のデータでっちあげ
           mydata[i].ranking_type = testsys->ranking_type[i];
           mydata[i].score = gf_rand();
         }
@@ -1037,7 +1032,7 @@ static void Response_DressGet(void *work, const GDS_RAP_ERROR_INFO *error_info)
     //正常時ならば受信バッファからデータ取得などを行う
     //アップロードの場合は特に必要なし
 
-  //  GDS_RAP_RESPONSE_DressupShot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GT_GDS_DRESS_RECV **dress_array, int array_max);
+  //  GDS_RAP_RESPONSE_DressupShot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GDS_DRESS_RECV **dress_array, int array_max);
   }
 }
 
@@ -1083,7 +1078,7 @@ static void Response_BoxGet(void *work, const GDS_RAP_ERROR_INFO *error_info)
     //正常時ならば受信バッファからデータ取得などを行う
     //アップロードの場合は特に必要なし
 
-  //  int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GT_BOX_SHOT_RECV **box_array, int array_max);
+  //  int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, BOX_SHOT_RECV **box_array, int array_max);
   }
 }
 
@@ -1105,11 +1100,11 @@ static void Response_RankingType(void *work, const GDS_RAP_ERROR_INFO *error_inf
   }
   else{
     //正常時ならば受信バッファからデータ取得などを行う
-    GT_RANKING_TYPE_RECV *recv_type;
+    RANKING_TYPE_RECV *recv_type;
     int i;
 
     GDS_RAP_RESPONSE_RankingType_Download_RecvPtr_Set(&testsys->gdsrap, &recv_type);
-    for(i = 0; i < GT_RANKING_WEEK_NUM; i++){
+    for(i = 0; i < RANKING_WEEK_NUM; i++){
       OS_TPrintf("開催中のタイプ その%d = %d\n", i, recv_type->ranking_type[i]);
       testsys->ranking_type[i] = recv_type->ranking_type[i];
     }
@@ -1134,16 +1129,16 @@ static void Response_RankingUpdate(void *work, const GDS_RAP_ERROR_INFO *error_i
   }
   else{
     //正常時ならば受信バッファからデータ取得などを行う
-    GT_LAST_WEEK_RANKING_ALL_RECV *last_week;
-    GT_THIS_WEEK_RANKING_DATA_ALL_RECV *this_week;
+    LAST_WEEK_RANKING_ALL_RECV *last_week;
+    THIS_WEEK_RANKING_DATA_ALL_RECV *this_week;
     int i;
 
     GDS_RAP_RESPONSE_RankingUpdate_Download_RecvPtr_Set(
       &testsys->gdsrap, &last_week, &this_week);
-    for(i = 0; i < GT_RANKING_WEEK_NUM; i++){
+    for(i = 0; i < RANKING_WEEK_NUM; i++){
       OS_TPrintf("先週のランキングタイプ その%d=%d", i, last_week->ranking_data[i].ranking_type);
     }
-    for(i = 0; i < GT_RANKING_WEEK_NUM; i++){
+    for(i = 0; i < RANKING_WEEK_NUM; i++){
       OS_TPrintf("今週のランキングタイプ その%d=%d", i, this_week->ranking_data[i].ranking_type);
     }
   }
@@ -1208,7 +1203,7 @@ static void Response_BattleVideoSearch(void *work, const GDS_RAP_ERROR_INFO *err
     //正常時ならば受信バッファからデータ取得などを行う
     //アップロードの場合は特に必要なし
 
-  //  int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GT_BOX_SHOT_RECV **box_array, int array_max);
+  //  int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, BOX_SHOT_RECV **box_array, int array_max);
   }
 }
 
@@ -1232,7 +1227,7 @@ static void Response_BattleVideoDataGet(void *work, const GDS_RAP_ERROR_INFO *er
     //正常時ならば受信バッファからデータ取得などを行う
     //アップロードの場合は特に必要なし
 
-  //  int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GT_BOX_SHOT_RECV **box_array, int array_max);
+  //  int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, BOX_SHOT_RECV **box_array, int array_max);
   }
 }
 
@@ -1256,7 +1251,7 @@ static void Response_BattleVideoFavorite(void *work, const GDS_RAP_ERROR_INFO *e
     //正常時ならば受信バッファからデータ取得などを行う
     //アップロードの場合は特に必要なし
 
-  //  int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GT_BOX_SHOT_RECV **box_array, int array_max);
+  //  int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, BOX_SHOT_RECV **box_array, int array_max);
   }
 }
 

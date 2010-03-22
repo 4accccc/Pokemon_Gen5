@@ -9,6 +9,8 @@
 #ifndef __BATTLE_REC_LOCAL_H__
 #define __BATTLE_REC_LOCAL_H__
 
+#pragma once
+
 
 //----------------------------------------------------------------------
 //  includes
@@ -41,7 +43,6 @@ typedef struct{
   *  バトル画面セットアップパラメータの録画データ用サブセット
  */
 struct _BTLREC_SETUP_SUBSET {
-
   GFL_STD_RandContext   randomContext;    ///< 乱数のタネ
   BTL_FIELD_SITUATION   fieldSituation;   ///< 背景・お盆などの構築用情報
   CONFIG                config;           ///< ユーザーコンフィグ
@@ -52,8 +53,6 @@ struct _BTLREC_SETUP_SUBSET {
   u8   myCommPos  : 3;          ///< 通信対戦時の自分の立ち位置（マルチの時、0,2 vs 1,3 になり、0,1が左側／2,3が右側になる）
   u8   rule       : 7;          ///< ルール（シングル・ダブル・トリプル・ローテ）-> enum BtlRule @ battle/battle.h
   u8   fMultiMode :1;           ///< マルチバトルフラグ（ルールは必ずダブル）
-
-
 };
 
 /**
@@ -144,7 +143,7 @@ typedef struct _BATTLE_REC_HEADER{
  */
 //--------------------------------------------------------------
 struct _BATTLE_REC_SAVEDATA{
-  GT_GDS_PROFILE profile;      ///<GDSプロフィール
+  GDS_PROFILE profile;      ///<GDSプロフィール
   BATTLE_REC_HEADER head;     ///<戦闘録画ヘッダ
   BATTLE_REC_WORK rec;      ///<戦闘録画本体
 };
