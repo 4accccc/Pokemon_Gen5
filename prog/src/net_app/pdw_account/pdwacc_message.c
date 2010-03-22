@@ -610,11 +610,11 @@ void PDWACC_MESSAGE_NoMessageDisp(PDWACC_MESSAGE_WORK* pWork,u64 code)
   if(pWork->noTitleDispWin==NULL){
     pWork->noTitleDispWin = GFL_BMPWIN_Create(
       _MESSAGE_NO_FRAME ,
-      3 , 5, 26 , 2,
+      3 , 3, 16 , 2,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->noTitleDispWin;
-  GFL_FONTSYS_SetColor(15, 14, 0);
+  GFL_FONTSYS_SetColor(1, 2, 0);
   GFL_MSG_GetString( pWork->pMsgData, PDWACC_009, pWork->pStrBuf );
   PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) ,0,0, pWork->pStrBuf, pWork->pFontHandle);
   GFL_BMPWIN_TransVramCharacter(pwin);

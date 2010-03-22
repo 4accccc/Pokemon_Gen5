@@ -229,7 +229,7 @@ PDWACC_DISP_WORK* PDWACC_DISP_Init(HEAPID id)
   //_TOUCHBAR_Init(pWork);
 
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
-  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_OBJ );
+  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
   
   return pWork;
 }
@@ -245,6 +245,7 @@ void PDWACC_DISP_End(PDWACC_DISP_WORK* pWork)
 {
   int i;
   _HandRelease(pWork);
+  ConnectBGPalAnm_End(&pWork->cbp);
 
   for(i=0;i<PLT_RESOURCE_MAX;i++){
     if(pWork->cellRes[i] ){
