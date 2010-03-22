@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-21T14:33:42"/>
+	<create user="matsumiya" host="W00224" date="2010-03-22T18:22:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1586" top="221" right="2254" bottom="803" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="897" top="619" right="1280" bottom="1017" visible="yes"/>
-		<band id="0" index="1" style="0000" width="493"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="506"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="660"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -443,7 +443,7 @@ C-Gear入手前</comment>
 		<comment>msg_wifi_club_01_01での選択肢</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
 		<language name="JPN" width="256">せつめいを　きく</language>
-		<language name="JPN_KANJI" width="256">説明を　聞く</language>
+		<language name="JPN_KANJI" width="256">説明を聞く</language>
 	</row>
 
 	<row id="msg_wifi_counter_win06" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -488,7 +488,7 @@ C-Gear入手前</comment>
 		<comment>GTSメインメニュー</comment>
 		<attribute name="キャラ指定">グローバルターミナル</attribute>
 		<language name="JPN" width="256">せつめいを　きく</language>
-		<language name="JPN_KANJI" width="256">説明を　聞く</language>
+		<language name="JPN_KANJI" width="256">説明を聞く</language>
 	</row>
 
 	<row id="msg_gts_win04" back-color="#ff78ff,,,,,,,#ff78ff,,,#ff78ff,,,#ff78ff,,,#ff78ff,,">
@@ -1018,7 +1018,7 @@ C-Gear入手前</comment>
 		<comment>ランダムマッチメニュー</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ルールを　きく</language>
-		<language name="JPN_KANJI" width="256">ルールを　聞く</language>
+		<language name="JPN_KANJI" width="256">ルールを聞く</language>
 	</row>
 
 	<row id="msg_rndmatch_04_win03" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
