@@ -114,6 +114,7 @@ ev_symbol_pokemon_main:
     _SYMBOL_MAP_SET_MONS_NAME( SCWK_TARGET_OBJID, 0 )
     _SYSWIN_MSG( msg_symbolmap_poke_07, POS_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
+    _SYSWIN_CLOSE()
     IF $SCWK_ANSWER == SCR_YES THEN
       //対象ポケモンを移動
       _SYMBOL_MAP_MOVE_POKE( SCWK_TARGET_OBJID, SCWK_ANSWER )
@@ -137,6 +138,7 @@ ev_symbol_pokemon_main:
     _SYMBOL_MAP_SET_MONS_NAME( SCWK_TARGET_OBJID, 0 )
     _SYSWIN_MSG( msg_symbolmap_poke_05, POS_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
+    _SYSWIN_CLOSE()
     IF $SCWK_ANSWER == SCR_YES THEN
       //対象ポケモンを移動
       _SYMBOL_MAP_MOVE_POKE( SCWK_TARGET_OBJID, SCWK_ANSWER )
