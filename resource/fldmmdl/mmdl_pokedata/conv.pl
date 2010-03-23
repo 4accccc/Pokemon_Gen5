@@ -149,10 +149,9 @@ foreach $one ( @EXCEL_FILE )
 }
 
 #モンスターナンバー u16
-#性別               u8
-#フォルムナンバー   u8
+#性別               u16
+#フォルムナンバー   u16
 #オブジェコード     u16
-#大きさ             u16
 #
 #のテーブルを作成
 
@@ -169,10 +168,9 @@ for( $i=0; $i<$DATA_NUM; $i++ ){
   &DEBUG_print( "mmdlsize = ".$DATA_SIZE[$i]."\n" );
   
   print( FILEOUT pack( "S", $DATA_MONSNO[$i] ) );
-  print( FILEOUT pack( "C", &getSex( $DATA_SEX[$i] ) ) );
-  print( FILEOUT pack( "C", $DATA_FORM[$i] ) );
+  print( FILEOUT pack( "S", &getSex( $DATA_SEX[$i] ) ) );
+  print( FILEOUT pack( "S", $DATA_FORM[$i] ) );
   print( FILEOUT pack( "S", &getObjCode( $DATA_OBJCODE[$i] ) ) );
-  print( FILEOUT pack( "S", &getMMdlSize( $DATA_SIZE[$i] ) ) );
 
 }
 

@@ -7229,7 +7229,7 @@
  *
  * @param rebattle_id   再戦トレーナー種別  (prog/src/field/rebattle_trainer.h)
  * @param objid         設定するOBJ識別ID  
- * @param level         段階(1～3)
+ * @param level         段階(1～4)
  */
 //--------------------------------------------------------------
 #define _REBATTLE_TRAINER_SETUP_TRID( rebattle_id, objid, level ) \

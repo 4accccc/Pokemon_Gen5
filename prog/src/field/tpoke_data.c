@@ -37,10 +37,9 @@
 //=====================================
 typedef struct {
   u16 monsno;     // モンスターナンバー
-  u8  sex;        // 性別
-  u8  formno;     // フォルムナンバー
+  u16 sex;        // 性別
+  u16 formno;     // フォルムナンバー
   u16 objcode;    // オブジェコード
-  u16 mdlsize;    // モデルサイズ
 } TPOKE_DAT;
 
 
@@ -121,6 +120,7 @@ u16 TPOKE_DATA_GetObjCode( const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 for
 /**
  *	@brief  モデル大きさチェック  大きいサイズか？
  *
+ *  @param  cp_gdataゲームデータ
  *	@param	cp_wk   ワーク
  *	@param	monsno  モンスターナンバー
  *	@param	sex     性別
@@ -130,19 +130,25 @@ u16 TPOKE_DATA_GetObjCode( const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 for
  *	@retval FALSE   通常の大きさ 
  */
 //-----------------------------------------------------------------------------
-BOOL TPOKE_DATA_IsSizeBig( const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 formno )
+BOOL TPOKE_DATA_IsSizeBig( const GAMEDATA* cp_gdata, const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 formno )
 {
   int index;
-  index = TPokeData_GetIndex( cp_wk, monsno, sex, formno );
+  const MMDLSYS* cp_mmdlsys = GAMEDATA_GetMMdlSys( (GAMEDATA*)cp_gdata );
+  const OBJCODE_PARAM * cp_objcode_para;
   
-  if( cp_wk->p_data[ index ].mdlsize == MMDL_BLACT_MDLSIZE_64x64 ){
+  
+  index = TPokeData_GetIndex( cp_wk, monsno, sex, formno );
+
+  cp_objcode_para = MMDLSYS_GetOBJCodeParam( cp_mmdlsys, cp_wk->p_data[ index ].objcode );
+  
+  if( cp_objcode_para->mdl_size == MMDL_BLACT_MDLSIZE_64x64 ){
     return TRUE;
   }
 
 #ifdef PM_DEBUG
   // CHECK 16x16
-  if( cp_wk->p_data[ index ].mdlsize == MMDL_BLACT_MDLSIZE_16x16 ){
-    GF_ASSERT( cp_wk->p_data[ index ].mdlsize != MMDL_BLACT_MDLSIZE_16x16 );
+  if( cp_objcode_para->mdl_size == MMDL_BLACT_MDLSIZE_16x16 ){
+    GF_ASSERT( cp_objcode_para->mdl_size != MMDL_BLACT_MDLSIZE_16x16 );
     return FALSE;
   }
 #endif
@@ -163,19 +169,25 @@ BOOL TPOKE_DATA_IsSizeBig( const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 for
  *	@retval FALSE   大きい
  */
 //-----------------------------------------------------------------------------
-BOOL TPOKE_DATA_IsSizeNormal( const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 formno )
+BOOL TPOKE_DATA_IsSizeNormal( const GAMEDATA* cp_gdata, const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 formno )
 {
   int index;
-  index = TPokeData_GetIndex( cp_wk, monsno, sex, formno );
+  const MMDLSYS* cp_mmdlsys = GAMEDATA_GetMMdlSys( (GAMEDATA*)cp_gdata );
+  const OBJCODE_PARAM * cp_objcode_para;
   
-  if( cp_wk->p_data[ index ].mdlsize == MMDL_BLACT_MDLSIZE_32x32 ){
+  
+  index = TPokeData_GetIndex( cp_wk, monsno, sex, formno );
+
+  cp_objcode_para = MMDLSYS_GetOBJCodeParam( cp_mmdlsys, cp_wk->p_data[ index ].objcode );
+  
+  if( cp_objcode_para->mdl_size == MMDL_BLACT_MDLSIZE_32x32 ){
     return TRUE;
   }
 
 #ifdef PM_DEBUG
   // CHECK 16x16
-  if( cp_wk->p_data[ index ].mdlsize == MMDL_BLACT_MDLSIZE_16x16 ){
-    GF_ASSERT( cp_wk->p_data[ index ].mdlsize != MMDL_BLACT_MDLSIZE_16x16 );
+  if( cp_objcode_para->mdl_size == MMDL_BLACT_MDLSIZE_16x16 ){
+    GF_ASSERT( cp_objcode_para->mdl_size != MMDL_BLACT_MDLSIZE_16x16 );
     return FALSE;
   }
 #endif
