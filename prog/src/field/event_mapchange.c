@@ -1829,7 +1829,7 @@ static GMEVENT_RESULT GMEVENT_GameOver(GMEVENT * event, int * seq, void *work)
     {
       u32 soundIdx = FSND_GetFieldBGM( p_wk->gamedata, p_wk->loc_req.zone_id );
       GMEVENT_CallEvent( event, 
-          EVENT_FSND_ChangeBGM( p_wk->gsys, soundIdx, FSND_FADE_NONE, FSND_FADE_SHORT ) );
+          EVENT_FSND_ChangeBGM( p_wk->gsys, soundIdx, FSND_FADE_NONE, FSND_FADE_NORMAL ) );
     }
     (*seq) ++;
     break;
