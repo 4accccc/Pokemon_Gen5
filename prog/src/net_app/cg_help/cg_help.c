@@ -26,6 +26,8 @@
 #include "font/font.naix"
 #include "msg/msg_cg_help.h"
 
+#include "net_app/cg_help.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -62,6 +64,7 @@ typedef enum
 typedef struct
 {
   HEAPID heapId;
+  CG_HELP_INIT_WORK *initWork;
 
   BOOL isNetErr;
   CG_HELP_STATE state;
@@ -355,6 +358,13 @@ static void CG_HELP_LoadResource( CG_HELP_WORK *work )
                     CG_HELP_FRAME_BG2 ,  0 , 0, FALSE , work->heapId );
   
   GFL_ARC_CloseDataHandle( arcHandle );
+  
+  //OBJ
+  {
+    arcHandle = GFL_ARC_OpenDataHandle( ARCID_CG_COMM , work->heapId );
+
+    GFL_ARC_CloseDataHandle( arcHandle );
+  }
 }
 
 static void CG_HELP_ReleaseResource( CG_HELP_WORK *work )
@@ -508,9 +518,26 @@ GFL_PROC_DATA CGearHelp_ProcData =
 //--------------------------------------------------------------
 static GFL_PROC_RESULT CG_HELP_ProcInit( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
+  CG_HELP_INIT_WORK *initWork = pwk;
   CG_HELP_WORK *work;
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP , HEAPID_CG_HELP, 0x60000 );
   work = GFL_PROC_AllocWork( proc, sizeof(CG_HELP_WORK), HEAPID_CG_HELP );
+  
+  if( pwk == NULL )
+  {
+    initWork = GFL_HEAP_AllocClearMemory( HEAPID_CG_HELP , sizeof(CG_HELP_INIT_WORK) );
+    initWork->myStatus = MyStatus_AllocWork( HEAPID_CG_HELP );
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+    {
+      MyStatus_SetMySex( initWork->myStatus , PM_FEMALE );
+    }
+    else
+    {
+      MyStatus_SetMySex( initWork->myStatus , PM_MALE );
+    }
+  }
+  
+  work->initWork = initWork;
   work->heapId = HEAPID_CG_HELP;
   CG_HELP_Init( work );
   
@@ -526,6 +553,11 @@ static GFL_PROC_RESULT CG_HELP_ProcTerm( GFL_PROC * proc, int * seq , void *pwk,
   
   CG_HELP_Term( work );
 
+  if( pwk == NULL )
+  {
+    GFL_HEAP_FreeMemory( work->initWork->myStatus );
+    GFL_HEAP_FreeMemory( work->initWork );
+  }
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_CG_HELP );
 
