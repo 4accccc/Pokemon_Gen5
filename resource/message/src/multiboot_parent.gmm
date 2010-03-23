@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-19T18:26:27"/>
+	<create user="matsumiya" host="W00224" date="2010-03-23T11:30:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1424" top="226" right="2129" bottom="854" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="113" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -341,7 +341,7 @@
 
 
 	<row id="MSG_MB_PAERNT_01">
-		<language name="JPN" width="208">もうひとつの　ＤＳに
+		<language name="JPN" width="208">もう１つの　ＤＳに
 ポケットモンスターの
 ダイヤモンド・パール・プラチナ・
 ハートゴールド・ソウルシルバー
@@ -349,7 +349,7 @@
 『ＤＳダウンロードプレイ』から
 『ポケシフター　[1:00:トレーナー名:0]』を
 えらんでください</language>
-		<language name="JPN_KANJI" width="208">もうひとつの　ＤＳに
+		<language name="JPN_KANJI" width="208">もう１つの　ＤＳに
 ポケットモンスターの
 ダイヤモンド・パール・プラチナ・
 ハートゴールド・ソウルシルバー
@@ -360,14 +360,14 @@
 	</row>
 
 	<row id="MSG_MB_PAERNT_02">
-		<language name="JPN" width="208">もうひとつの　ＤＳに
+		<language name="JPN" width="208">もう１つの　ＤＳに
 データを　おくっています</language>
-		<language name="JPN_KANJI" width="208">もう一つの　ＤＳに
+		<language name="JPN_KANJI" width="208">もう１つの　ＤＳに
 データを　送っています</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_03">
-		<language name="JPN" width="208">もうひとつの　ＤＳで
+		<language name="JPN" width="208">もう１つの　ＤＳで
 ポケモンを　せんたくしてください</language>
 		<language name="JPN_KANJI" width="208">もう１つの　ＤＳで
 ポケモンを　選択してください</language>
@@ -392,7 +392,7 @@
 
 	<row id="MSG_MB_PAERNT_07">
 		<language name="JPN" width="208">レポートに　かきこんでいます
-でんげんをきらないでください</language>
+でんげんを　きらないでください</language>
 		<language name="JPN_KANJI" width="208">レポートに　書き込んでいます
 電源を　切らないでください</language>
 	</row>
@@ -415,18 +415,18 @@
 	<row id="MSG_MB_PAERNT_11">
 		<comment>初回接続時、子機落ち
 (ROM転送後・NET接続前)</comment>
-		<language name="JPN" width="208">もうひとつの　ＤＳの
+		<language name="JPN" width="208">もう１つの　ＤＳの
 せつぞくに　しっぱい　しました▼</language>
-		<language name="JPN_KANJI" width="208">もうひとつの　ＤＳの
+		<language name="JPN_KANJI" width="208">もう１つの　ＤＳの
 接続に　失敗しました▼</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_12" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>Ari100224追加
 子機のリトライ選択時</comment>
-		<language name="JPN" width="208">もうひとつの　ＤＳの
+		<language name="JPN" width="208">もう１つの　ＤＳの
 けっていを　まっています</language>
-		<language name="JPN_KANJI" width="208">もうひとつの　ＤＳの
+		<language name="JPN_KANJI" width="208">もう１つの　ＤＳの
 決定を　待っています</language>
 	</row>
 
@@ -490,46 +490,46 @@ DSシステムフォントなので
 『ＤＳダウンロードプレイ』から
 『てんそうマシン　[1:00:トレーナー名:0]』を
 えらんでください</language>
-		<language name="JPN_KANJI" width="208">もうひとつの　ＤＳに
+		<language name="JPN_KANJI" width="208">もう１つの　ＤＳに
 ポケットモンスターの
 ダイヤモンド・パール・プラチナ・
 ハートゴールド・ソウルシルバー
 いずれかの　ソフトを　セットし
 『ＤＳダウンロードプレイ』から
-『てんそうマシン　[1:00:トレーナー名:0]』を
-えらんでください</language>
+『転送マシン　[1:00:トレーナー名:0]』を
+選んでください</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_02">
 		<language name="JPN" width="208">てんそうマシン　きどうちゅう！
 しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="208">てんそうマシン　きどうちゅう！
-しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="208">転送マシン　起動中！
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_03">
 		<language name="JPN" width="208">えいがのポケモンが　[2:02:３桁:0]ひき　います
-[2:02:３桁:0]ひき　ぜんぶを　シャチに▽
+[2:02:３桁:0]ひき　すべてを　シャチに▽
 つれてきますが　よろしいですか？</language>
-		<language name="JPN_KANJI" width="208">えいがのポケモンが　[2:02:３桁:0]ひき　います
-[2:02:３桁:0]ひき　ぜんぶを　シャチに▽
-つれてきますが　よろしいですか？</language>
+		<language name="JPN_KANJI" width="208">映画のポケモンが　[2:02:３桁:0]匹　います
+[2:02:３桁:0]匹　すべてを　シャチに▽
+連れてきますが　よろしいですか？</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_04">
 		<language name="JPN" width="208">ボックスに　あきが　ありません！
 ボックスを　せいりしてください！</language>
-		<language name="JPN_KANJI" width="208">ボックスに　あきが　ありません！
-ボックスを　せいりしてください！</language>
+		<language name="JPN_KANJI" width="208">ボックスに　空きが　ありません！
+ボックスを　整理してください！</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_05">
 		<language name="JPN" width="208">てんそうマシンで
 ポケモンを　てんそうちゅうです！
 しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="208">てんそうマシンで
-ポケモンを　てんそうちゅうです！
-しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="208">転送マシンで
+ポケモンを　転送中です！
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_06">
@@ -553,77 +553,78 @@ multiboot_childと一緒</comment>
 	<row id="MSG_MB_PAERNT_MOVIE_08">
 		<language name="JPN" width="208">てんそうマシンで　ポケモンを
 つれてくるのを　ちゅうし　しますか？</language>
-		<language name="JPN_KANJI" width="208">てんそうマシンで　ポケモンを
-つれてくるのを　ちゅうし　しますか？</language>
+		<language name="JPN_KANJI" width="208">転送マシンで　ポケモンを
+連れてくるのを　中止しますか？</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_09">
 		<language name="JPN" width="208">ポケモンの　てんそうを
 ちゅうし　します！▼</language>
-		<language name="JPN_KANJI" width="208">ポケモンの　てんそうを
-ちゅうし　します！▼</language>
+		<language name="JPN_KANJI" width="208">ポケモンの　転送を
+中止します！▼</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_10">
 		<language name="JPN" width="208">えいがの　ポケモンを　[2:02:３桁:0]ひき
 ぶじに　てんそうできました！▼</language>
-		<language name="JPN_KANJI" width="208">えいがの　ポケモンを　[2:02:３桁:0]ひき
-ぶじに　てんそうできました！▼</language>
+		<language name="JPN_KANJI" width="208">映画の　ポケモンを　[2:02:３桁:0]匹
+無事に　転送できました！▼</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_11">
 		<language name="JPN" width="208">ロックカプセルが　みつかりました。
 ロックカプセルを　ひきとりますか？</language>
 		<language name="JPN_KANJI" width="208">ロックカプセルが　みつかりました。
-ロックカプセルを　ひきとりますか？</language>
+ロックカプセルを　引き取りますか？</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_12">
 		<language name="JPN" width="208">てんそうマシンで
 ロックカプセルを　てんそうちゅうです！
 しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="208">てんそうマシンで
-ロックカプセルを　てんそうちゅうです！
-しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="208">転送マシンで
+ロックカプセルを　転送中です！
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_13">
 		<language name="JPN" width="208">ロックカプセルを
 ぶじに　てんそうできました！▼</language>
 		<language name="JPN_KANJI" width="208">ロックカプセルを
-ぶじに　てんそうできました！▼</language>
+無事に　転送できました！▼</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_14">
-		<language name="JPN" width="208">ポケモンレポートに　かきこんでいます
+		<language name="JPN" width="208">レポートに　かきこんでいます
 でんげんを　きらないでください</language>
-		<language name="JPN_KANJI" width="208">ポケモンレポートに　かきこんでいます
-でんげんを　きらないでください</language>
+		<language name="JPN_KANJI" width="208">レポートに　書き込んでいます
+電源を　切らないでください</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_15">
-		<language name="JPN" width="208">てんそうマシンの　さぎょうが　
-おわりました。
-もう１だいの　ＤＳの　でんげんを
-きってください▼</language>
-		<language name="JPN_KANJI" width="208">てんそうマシンの　さぎょうが　
-おわりました。
-もう１だいの　ＤＳの　でんげんを
-きってください▼</language>
+		<language name="JPN" width="208">てんそうマシンの
+さぎょうが　おわりました。
+もう１つの　ＤＳの
+でんげんを　きってください▼</language>
+		<language name="JPN_KANJI" width="208">転送マシンの
+作業が　終わりました。
+もう１つの　ＤＳの
+電源を　切ってください▼</language>
 	</row>
 
-	<row id="MSG_MB_PAERNT_MOVIE_16">
+	<row id="MSG_MB_PAERNT_MOVIE_16" text-color=",,,#ff0000,,,,,,,,,,,,,,">
+		<comment>※今回、ゲーム内で
+　秘伝技という表記はない</comment>
 		<language name="JPN" width="208">ひでんわざを　おぼえている
 ポケモンを　てんそうマシンで
 つれてくる　ことが　できません！▼
 おぼえていない　ポケモンを
-[2:02:３桁:0]ひき　つれてきます！▼
-</language>
-		<language name="JPN_KANJI" width="208">ひでんわざを　おぼえている
-ポケモンを　てんそうマシンで
-つれてくる　ことが　できません！▼
-おぼえていない　ポケモンを
 [2:02:３桁:0]ひき　つれてきます！▼</language>
+		<language name="JPN_KANJI" width="208">秘伝技を　覚えている
+ポケモンを　転送マシンで
+連れてくることが　できません！▼
+覚えていない　ポケモンを
+[2:02:３桁:0]匹　連れてきます！▼</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_17">
@@ -631,8 +632,8 @@ multiboot_childと一緒</comment>
 技マシン101をもう持ってる</comment>
 		<language name="JPN" width="208">ロックカプセルは　すでに
 うけとっています▼</language>
-		<language name="JPN_KANJI" width="208">ロックカプセルは　すでに
-うけとっています▼</language>
+		<language name="JPN_KANJI" width="208">ロックカプセルは
+すでに　受け取っています▼</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_18">
@@ -652,7 +653,7 @@ multiboot_childと一緒</comment>
 		<comment>ポケモンもカプセルも無い！</comment>
 		<language name="JPN" width="208">てんそうできる　ものが　
 ありませんでした▼</language>
-		<language name="JPN_KANJI" width="208">てんそうできる　ものが　
+		<language name="JPN_KANJI" width="208">転送できる　ものが　
 ありませんでした▼</language>
 	</row>
 
