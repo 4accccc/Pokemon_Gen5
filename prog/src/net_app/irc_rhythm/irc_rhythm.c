@@ -3499,11 +3499,12 @@ static void PLTFADE_Init( PLTFADE_WORK *p_wk, HEAPID heapID )
 { 
   GFL_STD_MemClear( p_wk, sizeof(PLTFADE_WORK) );
   { 
-    int i;
+/*    int i;
     for( i = 0; i < PLTFADE_MAX; i++ )
     {
       p_wk->plt_start[0]  = TRUE;
     }
+ */   p_wk->plt_start[0]  = TRUE;
   }
 }
 //----------------------------------------------------------------------------
