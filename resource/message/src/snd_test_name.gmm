@@ -8157,33 +8157,33 @@
 		<language name="JPN" width="256">NDEMO-02</language>
 		<language name="JPN_KANJI" width="256">NDEMO-02</language>
 	</row>
-	<row id="msg_seq_se_dmy_276">
-		<language name="JPN" width="256">DMY-276</language>
-		<language name="JPN_KANJI" width="256">DMY-276</language>
+	<row id="msg_seq_se_w556_kaze">
+		<language name="JPN" width="256">W556-KAZE</language>
+		<language name="JPN_KANJI" width="256">W556-KAZE</language>
 	</row>
-	<row id="msg_seq_se_dmy_277">
-		<language name="JPN" width="256">DMY-277</language>
-		<language name="JPN_KANJI" width="256">DMY-277</language>
+	<row id="msg_seq_se_ddemo_01">
+		<language name="JPN" width="256">DDEMO-01</language>
+		<language name="JPN_KANJI" width="256">DDEMO-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_278">
-		<language name="JPN" width="256">DMY-278</language>
-		<language name="JPN_KANJI" width="256">DMY-278</language>
+	<row id="msg_seq_se_ddemo_02a">
+		<language name="JPN" width="256">DDEMO-02A</language>
+		<language name="JPN_KANJI" width="256">DDEMO-02A</language>
 	</row>
-	<row id="msg_seq_se_dmy_279">
-		<language name="JPN" width="256">DMY-279</language>
-		<language name="JPN_KANJI" width="256">DMY-279</language>
+	<row id="msg_seq_se_ddemo_02b">
+		<language name="JPN" width="256">DDEMO-02B</language>
+		<language name="JPN_KANJI" width="256">DDEMO-02B</language>
 	</row>
-	<row id="msg_seq_se_dmy_280">
-		<language name="JPN" width="256">DMY-280</language>
-		<language name="JPN_KANJI" width="256">DMY-280</language>
+	<row id="msg_seq_se_ddemo_03">
+		<language name="JPN" width="256">DDEMO-03</language>
+		<language name="JPN_KANJI" width="256">DDEMO-03</language>
 	</row>
-	<row id="msg_seq_se_dmy_281">
-		<language name="JPN" width="256">DMY-281</language>
-		<language name="JPN_KANJI" width="256">DMY-281</language>
+	<row id="msg_seq_se_ddemo_04">
+		<language name="JPN" width="256">DDEMO-04</language>
+		<language name="JPN_KANJI" width="256">DDEMO-04</language>
 	</row>
-	<row id="msg_seq_se_dmy_282">
-		<language name="JPN" width="256">DMY-282</language>
-		<language name="JPN_KANJI" width="256">DMY-282</language>
+	<row id="msg_seq_se_sys_90">
+		<language name="JPN" width="256">SYS-90</language>
+		<language name="JPN_KANJI" width="256">SYS-90</language>
 	</row>
 	<row id="msg_seq_se_dmy_283">
 		<language name="JPN" width="256">DMY-283</language>
