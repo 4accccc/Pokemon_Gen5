@@ -33,7 +33,7 @@ extern "C"{
  */
 //-----------------------------------------------------------------------------
 extern GMEVENT * WIFI_BSUBWAY_EVENT_Start(
-    GAMESYS_WORK *gsys, WIFI_BSUBWAY_MODE mode );
+    GAMESYS_WORK *gsys, WIFI_BSUBWAY_MODE mode, u16* ret_wk );
 
 
 #ifdef _cplusplus

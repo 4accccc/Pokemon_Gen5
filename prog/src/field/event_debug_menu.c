@@ -5349,6 +5349,7 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
   case 1:
     {
       u32 ret,param;
+      u16 dummy_ret;
       GMEVENT *next_event = NULL;
       ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
       
@@ -5378,15 +5379,15 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
         break;
       case DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD: //wifi データダウンロード
         next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys,
-            WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD );
+            WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD, &dummy_ret );
         break;
       case DEBUG_BSWAY_WIFI_RIREKI_DOWNLOAD:  //wif 履歴ダウンロード
         next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys,
-            WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD );
+            WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD, &dummy_ret );
         break;
       case DEBUG_BSWAY_WIFI_UPLOAD: //wifi データアップロード
         next_event = WIFI_BSUBWAY_EVENT_Start( work->gmSys,
-            WIFI_BSUBWAY_MODE_SCORE_UPLOAD );
+            WIFI_BSUBWAY_MODE_SCORE_UPLOAD, &dummy_ret );
         break;
       case DEBUG_BSWAY_ZONE_SINGLE: //シングル受付へ
         param = ZONE_ID_C04R0102;

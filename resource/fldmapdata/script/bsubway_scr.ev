@@ -203,6 +203,7 @@ _RET
 sub_bsw_receipt_guide_wifi_upload:
 {
   DEFINE_LOCAL ret
+  DEFINE_LOCAL upload_ret
   
   $SCWK_TEMP0 = msg_bsw_scr_50
   _CALL sub_receipt_common_bwin
@@ -227,7 +228,7 @@ sub_bsw_receipt_guide_wifi_upload:
       _AB_KEYWAIT()
       _MSGWIN_CLOSE()
     ELSE
-      _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
+      _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, upload_ret )
       _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, ret )
     ENDIF
   ENDIF
@@ -242,6 +243,7 @@ _RET
 sub_receipt_rekidai_download:
 {
   DEFINE_LOCAL ret
+  DEFINE_LOCAL download_ret
   
   $SCWK_TEMP0 = msg_bsw_scr_33
   _CALL sub_receipt_common_bwin
@@ -266,7 +268,7 @@ sub_receipt_rekidai_download:
       _AB_KEYWAIT()
       _MSGWIN_CLOSE()
     ELSE
-      _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_SCDATA, BSW_NULL, BSW_NULL, BSW_NULL )
+      _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_SCDATA, BSW_NULL, BSW_NULL, download_ret )
       //○○の歴代情報をダウンロードしました
       _BSUBWAY_TOOL(BSWTOOL_WIFI_GET_DL_SCDATA_RANK, BSW_NULL, BSW_NULL, ret )
       _NUMBER( 0, ret, 2 )
@@ -847,6 +849,7 @@ sub_receipt_challenge_wifi:
 {
   DEFINE_LOCAL dl_play
   DEFINE_LOCAL ret
+  DEFINE_LOCAL download_ret
 
   //wifi接続フラグをワークがクリアされる前に取得
   _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_SEL_DL_BTL, BSW_NULL, BSW_NULL, dl_play )
@@ -883,7 +886,7 @@ sub_receipt_challenge_wifi:
   
   //wifi接続
   IF $dl_play == TRUE THEN
-    _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_GAMEDATA, BSW_NULL, BSW_NULL, BSW_NULL )
+    _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_GAMEDATA, BSW_NULL, BSW_NULL, download_ret )
     _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_DL_DATA, BSW_NULL, BSW_NULL, ret )
     
     IF $ret == FALSE THEN

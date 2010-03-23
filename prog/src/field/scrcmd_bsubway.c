@@ -613,19 +613,19 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //WiFi 前回の記録をアップロード
   case BSWTOOL_WIFI_UPLOAD_SCORE:
     SCRIPT_CallEvent( sc, WIFI_BSUBWAY_EVENT_Start(
-          gsys,WIFI_BSUBWAY_MODE_SCORE_UPLOAD) );
+          gsys,WIFI_BSUBWAY_MODE_SCORE_UPLOAD, ret_wk) );
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //WiFi ゲーム情報をダウンロード
   case BSWTOOL_WIFI_DOWNLOAD_GAMEDATA:
     SCRIPT_CallEvent( sc, WIFI_BSUBWAY_EVENT_Start(
-          gsys,WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD) );
+          gsys,WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD, ret_wk) );
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //WiFi 歴代情報をダウンロード
   case BSWTOOL_WIFI_DOWNLOAD_SCDATA:
     SCRIPT_CallEvent( sc, WIFI_BSUBWAY_EVENT_Start(
-          gsys,WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD) );
+          gsys,WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD, ret_wk) );
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
   //WiFi ランク取得

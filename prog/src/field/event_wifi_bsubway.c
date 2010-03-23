@@ -49,6 +49,7 @@ enum {
 //=====================================
 typedef struct {
   WIFI_BSUBWAY_PARAM  param;
+  u16* ret_wk;
 } WIFI_BSUBWAY_EVENT_WORK;
 
 //-----------------------------------------------------------------------------
@@ -65,11 +66,12 @@ static GMEVENT_RESULT EV_WIFIBSUBWAY_Proc( GMEVENT *event, int *seq, void *wk );
  *
  *	@param	gsys    ゲームシステム
  *	@param	mode    起動モード
+ *	@param  ret_wk  戻り値格納先
  *
  *	@return イベント
  */
 //-----------------------------------------------------------------------------
-GMEVENT * WIFI_BSUBWAY_EVENT_Start( GAMESYS_WORK *gsys, WIFI_BSUBWAY_MODE mode )
+GMEVENT * WIFI_BSUBWAY_EVENT_Start( GAMESYS_WORK *gsys, WIFI_BSUBWAY_MODE mode, u16* ret_wk )
 {
   GMEVENT * p_event;
   GAMEDATA * p_gdata;
@@ -85,6 +87,7 @@ GMEVENT * WIFI_BSUBWAY_EVENT_Start( GAMESYS_WORK *gsys, WIFI_BSUBWAY_MODE mode )
   p_wk = GMEVENT_GetEventWork( p_event );
   p_wk->param.mode = mode;
   p_wk->param.p_gamesystem = gsys;
+  p_wk->ret_wk = ret_wk;
 
   if(GAME_COMM_NO_NULL!= GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys))){
     GameCommSys_ExitReq(GAMESYSTEM_GetGameCommSysPtr(gsys));
@@ -134,7 +137,13 @@ static GMEVENT_RESULT EV_WIFIBSUBWAY_Proc( GMEVENT *event, int *seq, void *wk )
 
   case SEQ_CALL_BSUBWAY_WAIT:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      TOMOYA_Printf( "WiFi bsubway Result %d\n", work->param.result );
+
+      GF_ASSERT( work->ret_wk );
+      if( work->param.result == WIFI_BSUBWAY_RESULT_OK ){
+        *work->ret_wk = TRUE; // 処理成功
+      }else{
+        *work->ret_wk = FALSE;  // 処理失敗
+      }
       (*seq) ++;
     }
     break;
