@@ -782,15 +782,15 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
     placeStr1 = PSTATUS_INFO_GetPlaceStr( work , infoWork , place1 );
     placeStr2 = PSTATUS_INFO_GetPlaceStr( work , infoWork , place2 );
     
-    WORDSET_RegisterNumber( wordSet , 0 , year1 , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wordSet , 1 , month1 , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wordSet , 2 , day1 , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 0 , year2 , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 1 , month2 , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 2 , day2 , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
     WORDSET_RegisterNumber( wordSet , 3 , level , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterWord( wordSet , 4 , placeStr1 , 0,TRUE,PM_LANG );
-    WORDSET_RegisterNumber( wordSet , 5 , year2 , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wordSet , 6 , month2 , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterNumber( wordSet , 7 , day2 , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-    WORDSET_RegisterWord( wordSet , 8 , placeStr2 , 0,TRUE,PM_LANG );
+    WORDSET_RegisterWord(   wordSet , 4 , placeStr2 , 0,TRUE,PM_LANG );
+    WORDSET_RegisterNumber( wordSet , 5 , year1 , 2 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 6 , month1 , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordSet , 7 , day1 , 2 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterWord(   wordSet , 8 , placeStr1 , 0,TRUE,PM_LANG );
 
     srcStr = GFL_MSG_CreateString( infoWork->msgMemo , memoId ); 
     WORDSET_ExpandStr( wordSet , dstStr , srcStr );

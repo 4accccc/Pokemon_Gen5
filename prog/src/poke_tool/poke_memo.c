@@ -67,8 +67,8 @@ void POKE_MEMO_SetTrainerMemoPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_SET_
   switch( type )
   {
   case POKE_MEMO_SET_CAPTURE:  //•ßŠl
-    POKE_MEMO_ClearPlaceTime( ppp , PMDT_2 );
-    POKE_MEMO_SetPlaceTime( ppp , place , PMDT_1 );
+    POKE_MEMO_ClearPlaceTime( ppp , PMDT_1 );
+    POKE_MEMO_SetPlaceTime( ppp , place , PMDT_2 );
     POKE_MEMO_SetMyStatus( ppp , my , heapId );
     POKE_MEMO_SetGetLevel( ppp );
     POKE_MEMO_SetRomVersion( ppp );
