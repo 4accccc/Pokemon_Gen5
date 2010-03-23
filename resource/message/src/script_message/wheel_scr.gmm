@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-03-20T17:12:32"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-03-23T23:03:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,14 +330,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1355" top="339" right="2060" bottom="959" maximized="no" rayout="Vertical2">
+	<dialog left="1355" top="339" right="1600" bottom="959" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
-		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="0" index="1" style="0000" width="445"/>
+		<band id="1" index="2" style="0000" width="237"/>
+		<band id="2" index="3" style="0000" width="237"/>
+		<band id="3" index="4" style="0000" width="237"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -364,7 +364,9 @@
 ・はい/いいえ
 　はい→spring_m_02
 　いいえ→spring_m_03</comment>
-		<attribute name="キャラ指定">GIRL4</attribute>
+		<attribute name="キャラ指定">GIRL2
+
+ミニスカート</attribute>
 		<language name="JPN" width="256">あなたが　あたしに
 ポケモンしょうぶで　かてたら▽
 いっしょに　のってあげる！▽
@@ -379,7 +381,9 @@
 		<comment>春：主人公性別が♂
 ・はい選択時
 ・トレーナー戦闘へ</comment>
-		<attribute name="キャラ指定">GIRL4</attribute>
+		<attribute name="キャラ指定">GIRL2
+
+ミニスカート</attribute>
 		<language name="JPN" width="256">じゃあ　ポケモンしょうぶよ！▼</language>
 		<language name="JPN_KANJI" width="256">じゃあ　ポケモンしょうぶよ！▼</language>
 	</row>
@@ -388,7 +392,9 @@
 		<comment>春：主人公性別が♂
 ・いいえ選択時
 ・再度話しかけると01から</comment>
-		<attribute name="キャラ指定">GIRL4</attribute>
+		<attribute name="キャラ指定">GIRL2
+
+ミニスカート</attribute>
 		<language name="JPN" width="256">なっ　なによ！</language>
 		<language name="JPN_KANJI" width="256">なっ　なによ！</language>
 	</row>
@@ -397,7 +403,9 @@
 		<comment>春：主人公性別が♂
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">GIRL4</attribute>
+		<attribute name="キャラ指定">GIRL2
+
+ミニスカート</attribute>
 		<language name="JPN" width="256">まけちゃった！▼
 オーケー！　それじゃあ
 いっしょに　のってあげるね▼</language>
@@ -410,11 +418,95 @@
 		<comment>春：主人公性別が♂
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
-		<attribute name="キャラ指定">GIRL4</attribute>
+		<attribute name="キャラ指定">GIRL2
+
+ミニスカート</attribute>
 		<language name="JPN" width="256">ああ　たのしかった！
 また　いっしょに　のってあげてもいいよ</language>
 		<language name="JPN_KANJI" width="256">ああ　たのしかった！
 また　いっしょに　のってあげてもいいよ</language>
+	</row>
+
+	<row id="msg_wheel_spring_f_06" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+		<comment>春：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+・はい/いいえ
+　はい→spring_f_07
+　いいえ→spring_f_08</comment>
+		<attribute name="キャラ指定">GIRL2
+
+ミニスカート</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_spring_f_07" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+		<comment>春：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+・はい選択時
+・トレーナー戦闘へ</comment>
+		<attribute name="キャラ指定">GIRL2
+
+ミニスカート</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_spring_f_08" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+		<comment>春：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+
+・いいえ選択時
+・再度話しかけるとmsg_wheel_spring_f_06から</comment>
+		<attribute name="キャラ指定">GIRL2
+
+ミニスカート</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_spring_f_09" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+		<comment>春：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+・トレーナー戦に勝利
+・メッセージ表示後、観覧車に乗りデモへ</comment>
+		<attribute name="キャラ指定">GIRL2
+
+ミニスカート</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_spring_f_10" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
+		<comment>春：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+・観覧車デモ終了後
+　日付が変わるまで繰り返し</comment>
+		<attribute name="キャラ指定">GIRL2
+
+ミニスカート</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
 	</row>
 
 	<row id="msg_wheel_spring_m_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -422,7 +514,9 @@
 ・はい/いいえ
 　はい→spring_f_02
 　いいえ→spring_f_03</comment>
-		<attribute name="キャラ指定">BOY4</attribute>
+		<attribute name="キャラ指定">DANCER
+
+ダンサー</attribute>
 		<language name="JPN" width="256">やあ！　きみも
 かんらんしゃに　のりたそうだね▼
 うーん……　そうだね　ぼくに
@@ -439,7 +533,9 @@
 		<comment>春：主人公性別が♀
 ・はい選択時
 ・トレーナー戦闘へ</comment>
-		<attribute name="キャラ指定">BOY4</attribute>
+		<attribute name="キャラ指定">DANCER
+
+ダンサー</attribute>
 		<language name="JPN" width="256">それじゃ
 ポケモンしょうぶ！▼</language>
 		<language name="JPN_KANJI" width="256">それじゃ
@@ -450,7 +546,9 @@
 		<comment>春：主人公性別が♀
 ・いいえ選択時
 ・再度話しかけると01から</comment>
-		<attribute name="キャラ指定">BOY4</attribute>
+		<attribute name="キャラ指定">DANCER
+
+ダンサー</attribute>
 		<language name="JPN" width="256">ちょっと！
 どうして　ことわるのさ</language>
 		<language name="JPN_KANJI" width="256">ちょっと！
@@ -461,7 +559,9 @@
 		<comment>春：主人公性別が♀
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">BOY4</attribute>
+		<attribute name="キャラ指定">DANCER
+
+ダンサー</attribute>
 		<language name="JPN" width="256">きみ　つよいね！▼
 りょうかい！
 いっしょに　のろうよ▼</language>
@@ -474,11 +574,95 @@
 		<comment>春：主人公性別が♀
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
-		<attribute name="キャラ指定">BOY4</attribute>
+		<attribute name="キャラ指定">DANCER
+
+ダンサー</attribute>
 		<language name="JPN" width="256">かんらんしゃって　いいよね
 またいっしょに　のってあげても　いいよ</language>
 		<language name="JPN_KANJI" width="256">かんらんしゃって　いいよね
 またいっしょに　のってあげても　いいよ</language>
+	</row>
+
+	<row id="msg_wheel_spring_m_06" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>春：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・はい/いいえ
+　はい→spring_m_07
+　いいえ→spring_m_08</comment>
+		<attribute name="キャラ指定">DANCER
+
+ダンサー</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_spring_m_07" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>春：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・はい選択時
+・トレーナー戦闘へ</comment>
+		<attribute name="キャラ指定">DANCER
+
+ダンサー</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_spring_m_08" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>春：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+
+・いいえ選択時
+・再度話しかけるとmsg_wheel_spring_m_06から</comment>
+		<attribute name="キャラ指定">DANCER
+
+ダンサー</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_spring_m_09" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>春：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・トレーナー戦に勝利
+・メッセージ表示後、観覧車に乗りデモへ</comment>
+		<attribute name="キャラ指定">DANCER
+
+ダンサー</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_spring_m_10" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>春：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・観覧車デモ終了後
+　日付が変わるまで繰り返し</comment>
+		<attribute name="キャラ指定">DANCER
+
+ダンサー</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
 	</row>
 
 	<row id="msg_wheel_summer_f_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -486,7 +670,9 @@
 ・はい/いいえ
 　はい→summer_m_02
 　いいえ→summer_m_03</comment>
-		<attribute name="キャラ指定">GIRL2</attribute>
+		<attribute name="キャラ指定">MOUNTMAN
+
+山男</attribute>
 		<language name="JPN" width="256">あなたが　あたしに
 ポケモンしょうぶで　かてたら▽
 いっしょに　のってあげる！▽
@@ -501,7 +687,9 @@
 		<comment>夏：主人公性別が♂
 ・はい選択時
 ・トレーナー戦闘へ</comment>
-		<attribute name="キャラ指定">GIRL2</attribute>
+		<attribute name="キャラ指定">MOUNTMAN
+
+山男</attribute>
 		<language name="JPN" width="256">じゃあ　ポケモンしょうぶよ！▼</language>
 		<language name="JPN_KANJI" width="256">じゃあ　ポケモンしょうぶよ！▼</language>
 	</row>
@@ -510,7 +698,9 @@
 		<comment>夏：主人公性別が♂
 ・いいえ選択時
 ・再度話しかけると01から</comment>
-		<attribute name="キャラ指定">GIRL2</attribute>
+		<attribute name="キャラ指定">MOUNTMAN
+
+山男</attribute>
 		<language name="JPN" width="256">なっ　なによ！</language>
 		<language name="JPN_KANJI" width="256">なっ　なによ！</language>
 	</row>
@@ -519,7 +709,9 @@
 		<comment>夏：主人公性別が♂
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">GIRL2</attribute>
+		<attribute name="キャラ指定">MOUNTMAN
+
+山男</attribute>
 		<language name="JPN" width="256">まけちゃった！▼
 オーケー！　それじゃあ
 いっしょに　のってあげるね▼</language>
@@ -532,11 +724,94 @@
 		<comment>夏：主人公性別が♂
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
-		<attribute name="キャラ指定">GIRL2</attribute>
+		<attribute name="キャラ指定">MOUNTMAN
+
+山男</attribute>
 		<language name="JPN" width="256">ああ　たのしかった！
 また　いっしょに　のってあげてもいいよ</language>
 		<language name="JPN_KANJI" width="256">ああ　たのしかった！
 また　いっしょに　のってあげてもいいよ</language>
+	</row>
+
+	<row id="msg_wheel_summer_f_06" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>夏：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+・はい/いいえ
+　はい→summer_ｆ_07
+　いいえ→summer_ｆ_08</comment>
+		<attribute name="キャラ指定">MOUNTMAN
+
+山男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_summer_f_07" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>夏：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+・いいえ選択時
+・再度話しかけると06から</comment>
+		<attribute name="キャラ指定">MOUNTMAN
+
+山男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_summer_f_08" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>夏：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+・トレーナー戦に勝利
+・メッセージ表示後、観覧車に乗りデモへ</comment>
+		<attribute name="キャラ指定">MOUNTMAN
+
+山男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_summer_f_09" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>夏：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+・観覧車デモ終了後
+　日付が変わるまで繰り返し</comment>
+		<attribute name="キャラ指定">MOUNTMAN
+
+山男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_summer_f_10" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>春：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+・観覧車デモ終了後
+　日付が変わるまで繰り返し</comment>
+		<attribute name="キャラ指定">MOUNTMAN
+
+山男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
 	</row>
 
 	<row id="msg_wheel_summer_m_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -544,7 +819,9 @@
 ・はい/いいえ
 　はい→summer_f_02
 　いいえ→summer_f_03</comment>
-		<attribute name="キャラ指定">WAITER</attribute>
+		<attribute name="キャラ指定">TRAINERM
+
+エリートトレーナー男</attribute>
 		<language name="JPN" width="256">やあ！　きみも
 かんらんしゃに　のりたそうだね▼
 うーん……　そうだね　ぼくに
@@ -561,7 +838,9 @@
 		<comment>夏：主人公性別が♀
 ・はい選択時
 ・トレーナー戦闘へ</comment>
-		<attribute name="キャラ指定">WAITER</attribute>
+		<attribute name="キャラ指定">TRAINERM
+
+エリートトレーナー男</attribute>
 		<language name="JPN" width="256">それじゃ
 ポケモンしょうぶ！▼</language>
 		<language name="JPN_KANJI" width="256">それじゃ
@@ -572,7 +851,9 @@
 		<comment>夏：主人公性別が♀
 ・いいえ選択時
 ・再度話しかけると01から</comment>
-		<attribute name="キャラ指定">WAITER</attribute>
+		<attribute name="キャラ指定">TRAINERM
+
+エリートトレーナー男</attribute>
 		<language name="JPN" width="256">ちょっと！
 どうして　ことわるのさ</language>
 		<language name="JPN_KANJI" width="256">ちょっと！
@@ -583,7 +864,9 @@
 		<comment>夏：主人公性別が♀
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">WAITER</attribute>
+		<attribute name="キャラ指定">TRAINERM
+
+エリートトレーナー男</attribute>
 		<language name="JPN" width="256">きみ　つよいね！▼
 りょうかい！
 いっしょに　のろうよ▼</language>
@@ -596,11 +879,94 @@
 		<comment>夏：主人公性別が♀
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
-		<attribute name="キャラ指定">WAITER</attribute>
+		<attribute name="キャラ指定">TRAINERM
+
+エリートトレーナー男</attribute>
 		<language name="JPN" width="256">かんらんしゃって　いいよね
 またいっしょに　のってあげても　いいよ</language>
 		<language name="JPN_KANJI" width="256">かんらんしゃって　いいよね
 またいっしょに　のってあげても　いいよ</language>
+	</row>
+
+	<row id="msg_wheel_summer_m_06" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>夏：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・はい/いいえ
+　はい→summer_m_07
+　いいえ→summer_m_08</comment>
+		<attribute name="キャラ指定">TRAINERM
+
+エリートトレーナー男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_summer_m_07" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>夏：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・いいえ選択時
+・再度話しかけると06から</comment>
+		<attribute name="キャラ指定">TRAINERM
+
+エリートトレーナー男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_summer_m_08" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>夏：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・トレーナー戦に勝利
+・メッセージ表示後、観覧車に乗りデモへ</comment>
+		<attribute name="キャラ指定">TRAINERM
+
+エリートトレーナー男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_summer_m_09" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>夏：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・観覧車デモ終了後
+　日付が変わるまで繰り返し</comment>
+		<attribute name="キャラ指定">TRAINERM
+
+エリートトレーナー男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_summer_m_10" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>春：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・観覧車デモ終了後
+　日付が変わるまで繰り返し</comment>
+		<attribute name="キャラ指定">TRAINERM
+
+エリートトレーナー男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
 	</row>
 
 	<row id="msg_wheel_fall_f_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -608,7 +974,9 @@
 ・はい/いいえ
 　はい→fall_m_02
 　いいえ→fall_m_03</comment>
-		<attribute name="キャラ指定">OL</attribute>
+		<attribute name="キャラ指定">OL
+
+OL</attribute>
 		<language name="JPN" width="256">あなたが　あたしに
 ポケモンしょうぶで　かてたら▽
 いっしょに　のってあげる！▽
@@ -623,7 +991,9 @@
 		<comment>秋：主人公性別が♂
 ・はい選択時
 ・トレーナー戦闘へ</comment>
-		<attribute name="キャラ指定">OL</attribute>
+		<attribute name="キャラ指定">OL
+
+OL</attribute>
 		<language name="JPN" width="256">じゃあ　ポケモンしょうぶよ！▼</language>
 		<language name="JPN_KANJI" width="256">じゃあ　ポケモンしょうぶよ！▼</language>
 	</row>
@@ -632,7 +1002,9 @@
 		<comment>秋：主人公性別が♂
 ・いいえ選択時
 ・再度話しかけると01から</comment>
-		<attribute name="キャラ指定">OL</attribute>
+		<attribute name="キャラ指定">OL
+
+OL</attribute>
 		<language name="JPN" width="256">なっ　なによ！</language>
 		<language name="JPN_KANJI" width="256">なっ　なによ！</language>
 	</row>
@@ -641,7 +1013,9 @@
 		<comment>秋：主人公性別が♂
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">OL</attribute>
+		<attribute name="キャラ指定">OL
+
+OL</attribute>
 		<language name="JPN" width="256">まけちゃった！▼
 オーケー！　それじゃあ
 いっしょに　のってあげるね▼</language>
@@ -654,11 +1028,79 @@
 		<comment>秋：主人公性別が♂
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
-		<attribute name="キャラ指定">OL</attribute>
+		<attribute name="キャラ指定">OL
+
+OL</attribute>
 		<language name="JPN" width="256">ああ　たのしかった！
 また　いっしょに　のってあげてもいいよ</language>
 		<language name="JPN_KANJI" width="256">ああ　たのしかった！
 また　いっしょに　のってあげてもいいよ</language>
+	</row>
+
+	<row id="msg_wheel_fall_f_06" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<comment>秋 ：主人公性別が♂
+・はい/いいえ
+　はい→fall_f_07
+　いいえ→fall_f_08</comment>
+		<attribute name="キャラ指定">OL
+
+OL</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_fall_f_07" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<comment>秋：主人公性別が♂
+・はい選択時
+・トレーナー戦闘へ</comment>
+		<attribute name="キャラ指定">OL
+
+OL</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_fall_f_08" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<comment>秋：主人公性別が♂
+・いいえ選択時
+・再度話しかけると06から</comment>
+		<attribute name="キャラ指定">OL
+
+OL</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_fall_f_09" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<comment>秋：主人公性別が♂
+・トレーナー戦に勝利
+・メッセージ表示後、観覧車に乗りデモへ</comment>
+		<attribute name="キャラ指定">OL
+
+OL</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_fall_f_10" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<comment>秋：主人公性別が♂
+・観覧車デモ終了後
+　日付が変わるまで繰り返し</comment>
+		<attribute name="キャラ指定">OL
+
+OL</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
 	</row>
 
 	<row id="msg_wheel_fall_m_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -666,7 +1108,9 @@
 ・はい/いいえ
 　はい→fall_f_02
 　いいえ→fall_f_03</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<attribute name="キャラ指定">WAITRESS
+
+ウェイトレス</attribute>
 		<language name="JPN" width="256">やあ！　きみも
 かんらんしゃに　のりたそうだね▼
 うーん……　そうだね　ぼくに
@@ -683,7 +1127,9 @@
 		<comment>秋：主人公性別が♀
 ・はい選択時
 ・トレーナー戦闘へ</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<attribute name="キャラ指定">WAITRESS
+
+ウェイトレス</attribute>
 		<language name="JPN" width="256">それじゃ
 ポケモンしょうぶ！▼</language>
 		<language name="JPN_KANJI" width="256">それじゃ
@@ -694,7 +1140,9 @@
 		<comment>秋：主人公性別が♀
 ・いいえ選択時
 ・再度話しかけると01から</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<attribute name="キャラ指定">WAITRESS
+
+ウェイトレス</attribute>
 		<language name="JPN" width="256">ちょっと！
 どうして　ことわるのさ</language>
 		<language name="JPN_KANJI" width="256">ちょっと！
@@ -705,7 +1153,9 @@
 		<comment>秋：主人公性別が♀
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<attribute name="キャラ指定">WAITRESS
+
+ウェイトレス</attribute>
 		<language name="JPN" width="256">きみ　つよいね！▼
 りょうかい！
 いっしょに　のろうよ▼</language>
@@ -718,11 +1168,95 @@
 		<comment>秋：主人公性別が♀
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<attribute name="キャラ指定">WAITRESS
+
+ウェイトレス</attribute>
 		<language name="JPN" width="256">かんらんしゃって　いいよね
 またいっしょに　のってあげても　いいよ</language>
 		<language name="JPN_KANJI" width="256">かんらんしゃって　いいよね
 またいっしょに　のってあげても　いいよ</language>
+	</row>
+
+	<row id="msg_wheel_fall_m_06" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>秋：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+
+・はい/いいえ
+　はい→fall_m_07
+　いいえ→fall_m_08</comment>
+		<attribute name="キャラ指定">WAITRESS
+
+ウェイトレス</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_fall_m_07" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>秋：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・はい選択時
+・トレーナー戦闘へ</comment>
+		<attribute name="キャラ指定">WAITRESS
+
+ウェイトレス</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_fall_m_08" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>秋：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・いいえ選択時
+・再度話しかけると06から</comment>
+		<attribute name="キャラ指定">WAITRESS
+
+ウェイトレス</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_fall_m_09" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>秋：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・トレーナー戦に勝利
+・メッセージ表示後、観覧車に乗りデモへ</comment>
+		<attribute name="キャラ指定">WAITRESS
+
+ウェイトレス</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_fall_m_10" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>秋：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・観覧車デモ終了後
+　日付が変わるまで繰り返し</comment>
+		<attribute name="キャラ指定">WAITRESS
+
+ウェイトレス</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
 	</row>
 
 	<row id="msg_wheel_winter_f_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -730,7 +1264,9 @@
 ・はい/いいえ
 　はい→winter_m_02
 　いいえ→winter_m_03</comment>
-		<attribute name="キャラ指定">TRAINERW</attribute>
+		<attribute name="キャラ指定">BABYGIRL2
+
+幼稚園♀</attribute>
 		<language name="JPN" width="256">あなたが　あたしに
 ポケモンしょうぶで　かてたら▽
 いっしょに　のってあげる！▽
@@ -745,7 +1281,9 @@
 		<comment>冬：主人公性別が♂
 ・はい選択時
 ・トレーナー戦闘へ</comment>
-		<attribute name="キャラ指定">TRAINERW</attribute>
+		<attribute name="キャラ指定">BABYGIRL2
+
+幼稚園♀</attribute>
 		<language name="JPN" width="256">じゃあ　ポケモンしょうぶよ！▼</language>
 		<language name="JPN_KANJI" width="256">じゃあ　ポケモンしょうぶよ！▼</language>
 	</row>
@@ -754,7 +1292,9 @@
 		<comment>冬：主人公性別が♂
 ・いいえ選択時
 ・再度話しかけると01から</comment>
-		<attribute name="キャラ指定">TRAINERW</attribute>
+		<attribute name="キャラ指定">BABYGIRL2
+
+幼稚園♀</attribute>
 		<language name="JPN" width="256">なっ　なによ！</language>
 		<language name="JPN_KANJI" width="256">なっ　なによ！</language>
 	</row>
@@ -763,7 +1303,9 @@
 		<comment>冬：主人公性別が♂
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">TRAINERW</attribute>
+		<attribute name="キャラ指定">BABYGIRL2
+
+幼稚園♀</attribute>
 		<language name="JPN" width="256">まけちゃった！▼
 オーケー！　それじゃあ
 いっしょに　のってあげるね▼</language>
@@ -776,11 +1318,94 @@
 		<comment>冬：主人公性別が♂
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
-		<attribute name="キャラ指定">TRAINERW</attribute>
+		<attribute name="キャラ指定">BABYGIRL2
+
+幼稚園♀</attribute>
 		<language name="JPN" width="256">ああ　たのしかった！
 また　いっしょに　のってあげてもいいよ</language>
 		<language name="JPN_KANJI" width="256">ああ　たのしかった！
 また　いっしょに　のってあげてもいいよ</language>
+	</row>
+
+	<row id="msg_wheel_winter_f_06" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>冬：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+・はい/いいえ
+　はい→winter_m_07
+　いいえ→winter_m_08</comment>
+		<attribute name="キャラ指定">BABYGIRL2
+
+幼稚園♀</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_winter_f_07" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>冬：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+・はい選択時
+・トレーナー戦闘へ</comment>
+		<attribute name="キャラ指定">BABYGIRL2
+
+幼稚園♀</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_winter_f_08" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>冬：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+・いいえ選択時
+・再度話しかけると06から</comment>
+		<attribute name="キャラ指定">BABYGIRL2
+
+幼稚園♀</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_winter_f_09" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>冬：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+・トレーナー戦に勝利
+・メッセージ表示後、観覧車に乗りデモへ</comment>
+		<attribute name="キャラ指定">BABYGIRL2
+
+幼稚園♀</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_winter_f_10" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>冬：主人公性別が♂
+
+※１度観覧車に乗って以降
+
+・観覧車デモ終了後
+　日付が変わるまで繰り返し</comment>
+		<attribute name="キャラ指定">BABYGIRL2
+
+幼稚園♀</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
 	</row>
 
 	<row id="msg_wheel_winter_m_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -788,7 +1413,9 @@
 ・はい/いいえ
 　はい→winter_f_02
 　いいえ→winter_f_03</comment>
-		<attribute name="キャラ指定">TRAINERM</attribute>
+		<attribute name="キャラ指定">ESPM
+
+サイキッカー男</attribute>
 		<language name="JPN" width="256">やあ！　きみも
 かんらんしゃに　のりたそうだね▼
 うーん……　そうだね　ぼくに
@@ -805,7 +1432,9 @@
 		<comment>冬：主人公性別が♀
 ・はい選択時
 ・トレーナー戦闘へ</comment>
-		<attribute name="キャラ指定">TRAINERM</attribute>
+		<attribute name="キャラ指定">ESPM
+
+サイキッカー男</attribute>
 		<language name="JPN" width="256">それじゃ
 ポケモンしょうぶ！▼</language>
 		<language name="JPN_KANJI" width="256">それじゃ
@@ -816,7 +1445,9 @@
 		<comment>冬：主人公性別が♀
 ・いいえ選択時
 ・再度話しかけると01から</comment>
-		<attribute name="キャラ指定">TRAINERM</attribute>
+		<attribute name="キャラ指定">ESPM
+
+サイキッカー男</attribute>
 		<language name="JPN" width="256">ちょっと！
 どうして　ことわるのさ</language>
 		<language name="JPN_KANJI" width="256">ちょっと！
@@ -827,7 +1458,9 @@
 		<comment>冬：主人公性別が♀
 ・トレーナー戦に勝利
 ・メッセージ表示後、観覧車に乗りデモへ</comment>
-		<attribute name="キャラ指定">TRAINERM</attribute>
+		<attribute name="キャラ指定">ESPM
+
+サイキッカー男</attribute>
 		<language name="JPN" width="256">きみ　つよいね！▼
 りょうかい！
 いっしょに　のろうよ▼</language>
@@ -840,11 +1473,94 @@
 		<comment>冬：主人公性別が♀
 ・観覧車デモ終了後
 　日付が変わるまで繰り返し</comment>
-		<attribute name="キャラ指定">TRAINERM</attribute>
+		<attribute name="キャラ指定">ESPM
+
+サイキッカー男</attribute>
 		<language name="JPN" width="256">かんらんしゃって　いいよね
 またいっしょに　のってあげても　いいよ</language>
 		<language name="JPN_KANJI" width="256">かんらんしゃって　いいよね
 またいっしょに　のってあげても　いいよ</language>
+	</row>
+
+	<row id="msg_wheel_winter_m_06" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>冬：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・はい/いいえ
+　はい→winter_m_07
+　いいえ→winter_f_08</comment>
+		<attribute name="キャラ指定">ESPM
+
+サイキッカー男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_winter_m_07" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>冬：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・はい選択時
+・トレーナー戦闘へ</comment>
+		<attribute name="キャラ指定">ESPM
+
+サイキッカー男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_winter_m_08" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>冬：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・いいえ選択時
+・再度話しかけると06から</comment>
+		<attribute name="キャラ指定">ESPM
+
+サイキッカー男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_winter_m_09" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>冬：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・トレーナー戦に勝利
+・メッセージ表示後、観覧車に乗りデモへ</comment>
+		<attribute name="キャラ指定">ESPM
+
+サイキッカー男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+	</row>
+
+	<row id="msg_wheel_winter_m_10" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>冬：主人公性別が♀
+
+※１度観覧車に乗って以降
+
+・観覧車デモ終了後
+　日付が変わるまで繰り返し</comment>
+		<attribute name="キャラ指定">ESPM
+
+サイキッカー男</attribute>
+		<language name="JPN" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
+		<language name="JPN_KANJI" width="256">○○○○○○○○○○○○○○○○○○
+○○○○○○○○○○○○○○○○○○</language>
 	</row>
 
 	<flowchart-group-list>
