@@ -163,7 +163,7 @@ EVENT_START    ev_d06_stopper_01
 		_TIME_WAIT(50)
 		_SE_PLAY( SEQ_SE_KOUKA_H )
 		//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
-		_SHAKE_CAMERA(0,1,3,6)
+		_SHAKE_CAMERA(0,1,3,6,0,0,0,0)
 		_OBJ_ANIME_WAIT()
 		_SE_WAIT()
 		

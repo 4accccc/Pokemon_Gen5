@@ -7634,21 +7634,33 @@
  * @param h   縦揺れ幅
  * @param sync    1周期にかけるシンク数　1以上
  * @param time    振動回数
+ * @param sw   横振れ減算幅
+ * @param sh   縦揺れ減算幅
+ * @param smargine    減算間隔
+ * @param stime    幅減算開始回数（timeよりも少ない数のはず）
  * 
  * @note w,hは同時に値をセットして動かすことができますが、どちらもサインカーブ変化しますので、
  * wに値を入れた場合はh=0
  * hに値を入れた場合はw=0
  *でセットすることが多くなると思います。（つまり、縦横同時揺れはないだろうということです）
+ * 
+ * @note stimeが0のときは、幅減算処理を行いません 
  */
 //--------------------------------------------------------------
-#define _SHAKE_CAMERA(w, h, sync, time) _ASM_SHAKE_CAMERA w, h, sync, time
+#define _SHAKE_CAMERA(w, h, sync, time, sw, sh, smargine, stime) \
+          _ASM_SHAKE_CAMERA w, h, sync, time, sw, sh, smargine, stime
   
-  .macro _ASM_SHAKE_CAMERA w, h, sync, time
+  .macro _ASM_SHAKE_CAMERA w, h, sync, time, sw, sh, smargine, stime
   .short EV_SEQ_SHAKE_CAMERA
   .short \w
   .short \h
   .short \sync
   .short \time
+  .short \sw
+  .short \sh
+  .short \smargine
+  .short \stime
+
   .endm
   
 

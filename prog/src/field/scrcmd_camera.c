@@ -46,11 +46,16 @@ typedef struct CAM_PARAM_tag
 
 typedef struct CAM_SHAKE_WORK_tag
 {
-  u16 Width;
-  u16 Height;
-  u16 Sync;
+  s16 Width;
+  s16 Height;
   u16 Time;
+  u16 SubW;
+  u16 SubH;
+  u16 SubStartTime;
+  u16 SubMargineCount;
+  u16 SubMargine;
 
+  u32 Sync;
   u32 NowSync;
 
   const VecFx32 *WatchTarget;
@@ -370,6 +375,11 @@ VMCMD_RESULT EvCmdCamera_Shake( VMHANDLE *core, void *wk )
   u16 sync = SCRCMD_GetVMWorkValue( core, work );
   u16 time = SCRCMD_GetVMWorkValue( core, work );
 
+  u16 subW = SCRCMD_GetVMWorkValue( core, work );
+  u16 subH = SCRCMD_GetVMWorkValue( core, work );
+  u16 sub_start_time = SCRCMD_GetVMWorkValue( core, work );
+  u16 sub_nargine = SCRCMD_GetVMWorkValue( core, work );
+
   //カメラ揺らすイベントをコール
   {
     GMEVENT *call_event;
@@ -385,6 +395,11 @@ VMCMD_RESULT EvCmdCamera_Shake( VMHANDLE *core, void *wk )
     wk->Sync = sync;
     wk->Time = time;
     wk->NowSync = 0;
+    wk->SubW = subW;
+    wk->SubH = subH;
+    wk->SubStartTime = sub_start_time;
+    wk->SubMargineCount = 0;
+    wk->SubMargine = sub_nargine;
 
     OS_Printf("w= %x h= %x\n",FX32_CONST(width), FX32_CONST(height));
 
@@ -521,6 +536,23 @@ static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* work )
       wk->NowSync++;
       tmp = (wk->NowSync * 0x10000) / wk->Sync;
       rad = tmp;
+
+      if ( wk->SubStartTime != 0)
+      {
+        if ( wk->Time <= wk->SubStartTime )
+        {
+          wk->SubMargineCount++;
+          if (wk->SubMargineCount>=wk->SubMargine)
+          {
+            wk->SubMargineCount = 0;
+            wk->Height -= wk->SubH;
+            wk->Width -= wk->SubW;
+            if (wk->Height <= 0) wk->Height = 1;
+            if (wk->Width <= 0) wk->Width = 1;
+          }
+        }
+      }
+
       if (wk->NowSync >= wk->Sync)
       {
         wk->Time--;
@@ -573,10 +605,11 @@ static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* work )
   return GMEVENT_RES_CONTINUE;
 
 }
-#if 0
+#if 1
 #ifdef PM_DEBUG
 
-void DEBUG_CreateCamShakeEvt(GAMESYS_WORK *gsys, u16 width, u16 height, u16 sync, u16 time)
+void DEBUG_CreateCamShakeEvt(GAMESYS_WORK *gsys, u16 width, u16 height, u16 sync, u16 time,
+    u16 swidth, u16 sheight, u16 smargine, u16 sstart)
 {
   GMEVENT *event;
   //カメラ揺らすイベントをコール
@@ -591,6 +624,12 @@ void DEBUG_CreateCamShakeEvt(GAMESYS_WORK *gsys, u16 width, u16 height, u16 sync
     wk->Sync = sync;
     wk->Time = time;
     wk->NowSync = 0;
+    wk->SubW = swidth;
+    wk->SubH = sheight;
+    wk->SubStartTime = sstart;
+    wk->SubMargineCount = 0;
+    wk->SubMargine = smargine;
+
   }
 
   GAMESYSTEM_SetEvent(gsys, event);

@@ -37,7 +37,7 @@ EVENT_START	ev_pos_d08r0301_demo_01
 	_SE_PLAY(SEQ_SE_FLD_144)
 	_TIME_WAIT(2)
 	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
-	_SHAKE_CAMERA(0,1,3,12)
+	_SHAKE_CAMERA(0,1,3,12,0,0,0,0)
 //	_TIME_WAIT(16)
 	_SE_WAIT()
 	
