@@ -2004,8 +2004,10 @@ void  PP_SetTokusei3( POKEMON_PARAM* pp, int mons_no, int form_no )
 void  PPP_SetTokusei3( POKEMON_PASO_PARAM* ppp, int mons_no, int form_no )
 { 
   u32 tokusei = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_speabi3 );
-  PPP_Put( ppp, ID_PARA_speabino, tokusei );
-  PPP_Put( ppp, ID_PARA_tokusei_3_flag, 1 );
+  if(tokusei){  //@todo Å¶check ë]â‰ïîÇ≥ÇÒÇ…óvämîF
+    PPP_Put( ppp, ID_PARA_speabino, tokusei );
+    PPP_Put( ppp, ID_PARA_tokusei_3_flag, 1 );
+  }
 }
 
 //--------------------------------------------------------------------------
