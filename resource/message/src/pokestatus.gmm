@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-02-21T16:24:12"/>
+	<create user="matsumiya" host="W00224" date="2010-03-23T15:56:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="164" top="129" right="869" bottom="757" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -363,7 +363,7 @@
 	<row id="mes_status_01_05">
 		<comment>項目名：もちもの</comment>
 		<language name="JPN" font=" 1:small" width="48">もちもの</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">もちもの</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">持ち物</language>
 	</row>
 
 	<row id="mes_status_01_06">
@@ -388,7 +388,7 @@
 	<row id="mes_status_02_02">
 		<comment>ポケモン情報ページの項目名</comment>
 		<language name="JPN" font=" 1:small" width="66">ずかんＮｏ．</language>
-		<language name="JPN_KANJI" font=" 1:small" width="66">ずかんＮｏ．</language>
+		<language name="JPN_KANJI" font=" 1:small" width="66">図鑑Ｎｏ．</language>
 	</row>
 
 	<row id="mes_status_02_03">
@@ -401,7 +401,7 @@
 	<row id="mes_status_02_04">
 		<comment>ポケモン情報ページの項目名</comment>
 		<language name="JPN" font=" 1:small" width="66">なまえ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="66">なまえ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="66">名前</language>
 	</row>
 
 	<row id="mes_status_02_05">
@@ -420,7 +420,7 @@
 	<row id="mes_status_02_07">
 		<comment>ポケモン情報ページの項目名</comment>
 		<language name="JPN" font=" 1:small" width="36">おや</language>
-		<language name="JPN_KANJI" font=" 1:small" width="36">おや</language>
+		<language name="JPN_KANJI" font=" 1:small" width="36">親</language>
 	</row>
 
 	<row id="mes_status_02_08">
@@ -446,7 +446,7 @@
 	<row id="mes_status_02_11">
 		<comment>ポケモン情報ページの項目名</comment>
 		<language name="JPN" font=" 1:small" width="120">げんざいの　けいけんち</language>
-		<language name="JPN_KANJI" font=" 1:small" width="120">げんざいの　けいけんち</language>
+		<language name="JPN_KANJI" font=" 1:small" width="120">現在の　経験値</language>
 	</row>
 
 	<row id="mes_status_02_12">
@@ -459,7 +459,7 @@
 	<row id="mes_status_02_13">
 		<comment>ポケモン情報ページの項目名</comment>
 		<language name="JPN" font=" 1:small" width="96">つぎのレベルまで</language>
-		<language name="JPN_KANJI" font=" 1:small" width="96">つぎのレベルまで</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">次のレベルまで</language>
 	</row>
 
 	<row id="mes_status_02_14">
@@ -1718,19 +1718,19 @@
 	<row id="mes_status_06_20">
 		<comment>戦う技ページの技入れ替え処理の項目名</comment>
 		<language name="JPN" font=" 1:small" width="48">いりょく</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">いりょく</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">威力</language>
 	</row>
 
 	<row id="mes_status_06_21">
 		<comment>戦う技ページの技入れ替え処理の項目名</comment>
 		<language name="JPN" font=" 1:small" width="48">めいちゅう</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">めいちゅう</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">命中</language>
 	</row>
 
 	<row id="mes_status_06_22">
 		<comment>戦う技ページの技入れ替え処理の項目名</comment>
 		<language name="JPN" font=" 1:small" width="48">ぶんるい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">ぶんるい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">分類</language>
 	</row>
 
 	<row id="mes_status_06_23">
@@ -1769,7 +1769,7 @@
 		<comment>戦う技ページ
 技忘れ時のガイドメッセージ</comment>
 		<language name="JPN" font=" 1:small" width="48">けってい</language>
-		<language name="JPN_KANJI" font=" 1:small" width="48">けってい</language>
+		<language name="JPN_KANJI" font=" 1:small" width="48">決定</language>
 	</row>
 
 	<row id="mes_status_06_30" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
@@ -1938,7 +1938,7 @@
 		<comment>記念リボンページの項目名
 </comment>
 		<language name="JPN" width="84">きねんリボン</language>
-		<language name="JPN_KANJI" width="84">きねんリボン</language>
+		<language name="JPN_KANJI" width="84">記念リボン</language>
 	</row>
 
 	<row id="mes_status_10_02" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
@@ -1961,7 +1961,7 @@
 リボン数の見出し
 </comment>
 		<language name="JPN" width="84">もっているかず</language>
-		<language name="JPN_KANJI" width="84">もっているかず</language>
+		<language name="JPN_KANJI" width="84">持っている数</language>
 	</row>
 
 	<row id="mes_status_10_05" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
@@ -2033,7 +2033,7 @@
 
 	<row id="mes_status_13" back-color=",,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
 		<language name="JPN" width="68">わすれさせる！</language>
-		<language name="JPN_KANJI" width="68">わすれさせる！</language>
+		<language name="JPN_KANJI" width="68">忘れさせる！</language>
 	</row>
 
 	<row id="mes_status_14" back-color=",,,,,,#ffff00,#ffff00,,#ffff00,#ffff00,,,,,,,">
