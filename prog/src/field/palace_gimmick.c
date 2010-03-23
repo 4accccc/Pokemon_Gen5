@@ -11,6 +11,7 @@
 #include "savedata/gimmickwork.h"
 #include "gmk_tmp_wk.h"
 #include "p_tree.naix"
+#include "palace_effect.naix"
 #include "field/field_comm/intrude_field.h"
 #include "field/field_comm/intrude_work.h"
 
@@ -32,7 +33,8 @@
 typedef struct
 {
   u8 tree_palace_area;          ///<木を表示しているパレスエリア
-  u8 padding[3];
+  u8 barrier_effect;            ///<barrierエフェクト
+  u8 padding[2];
 }PALACE_GMK_WORK;
 
 
@@ -42,13 +44,33 @@ typedef struct
 // リソースインデックス
 typedef enum {
   RES_TREE_ALL,           // パレスの木全種
+  RES_BARRIER_MDL,        // バリア演出
+  RES_BARRIER_ANM0,       // バリア演出
+  RES_BARRIER_ANM1,       // バリア演出
   
   RES_NUM
 } RES_INDEX;
 static const GFL_G3D_UTIL_RES res_table[ RES_NUM ] = 
 {
   { ARCID_PALACE_TREE, NARC_p_tree_p_tree_all_nsbmd, GFL_G3D_UTIL_RESARC },     // パレスの木全種
+  { ARCID_PALACE_EFFECT, NARC_palace_effect_p_barrier_nsbmd, GFL_G3D_UTIL_RESARC },     // バリア演出
+  { ARCID_PALACE_EFFECT, NARC_palace_effect_p_barrier_nsbca, GFL_G3D_UTIL_RESARC },     // バリア演出
+  { ARCID_PALACE_EFFECT, NARC_palace_effect_p_barrier_nsbta, GFL_G3D_UTIL_RESARC },     // バリア演出
 };
+
+// アニメーションオブジェ
+typedef enum{
+  ANM_BARRIER_ANM0,   // BARRIER　00
+  ANM_BARRIER_ANM1,   // BARRIER  01
+  
+  ANM_BARRIER_NUM
+} ANM_BARRIER_INDEX;
+static const GFL_G3D_UTIL_ANM anm_barrier_table[ ANM_BARRIER_NUM ] = 
+{
+  { RES_BARRIER_ANM0, 0 }, // BARRIER　00
+  { RES_BARRIER_ANM1, 0 }, // BARRIER　01
+};
+
 
 // オブジェクトインデックス
 typedef enum {
@@ -73,6 +95,9 @@ typedef enum {
   OBJ_TREE_B_8,
   OBJ_TREE_B_9,
   OBJ_TREE_B_10,
+
+
+  OBJ_BARRIER,
 
   OBJ_NUM
 } OBJ_INDEX;
@@ -106,6 +131,9 @@ static const GFL_G3D_UTIL_OBJ obj_table[ OBJ_NUM ] =
   { RES_TREE_ALL, 7+10, RES_TREE_ALL, NULL, 0 },
   { RES_TREE_ALL, 8+10, RES_TREE_ALL, NULL, 0 },
   { RES_TREE_ALL, 9+10, RES_TREE_ALL, NULL, 0 },
+
+  // BARRIER
+  { RES_BARRIER_MDL, 0, RES_BARRIER_MDL, anm_barrier_table, ANM_BARRIER_NUM },
 };
 
 static const GFL_G3D_UTIL_SETUP setup = { res_table, RES_NUM, obj_table, OBJ_NUM };
@@ -120,6 +148,11 @@ static int _GetTreeLevel(int wb_level);
 static u8 _TreeEnable(GAMEDATA *gamedata, FLD_EXP_OBJ_CNT_PTR exobj_cnt, INTRUDE_COMM_SYS_PTR intcomm);
 static INTRUDE_COMM_SYS_PTR _GetIntrudeComm(GAME_COMM_SYS_PTR game_comm);
 
+
+// barrier演出
+static void Barrier_Init( PALACE_GMK_WORK* work, FLD_EXP_OBJ_CNT_PTR exobj_cnt );
+static void Barrier_Start( PALACE_GMK_WORK* work, FLD_EXP_OBJ_CNT_PTR exobj_cnt, const VecFx32* cp_pos );
+static void Barrier_Main( PALACE_GMK_WORK* work, FLD_EXP_OBJ_CNT_PTR exobj_cnt );
 
 
 //==============================================================================
@@ -204,7 +237,52 @@ void PALACE_GMK_Move(FIELDMAP_WORK *fieldWork)
     _AllVanish(exobj_cnt);
     work->tree_palace_area = _TreeEnable(gdata, exobj_cnt, intcomm);
   }
+
+
+
+  // バリアエフェクトメイン
+  if( work->barrier_effect ){
+
+    // バリアエフェクトメイン
+    Barrier_Main( work, exobj_cnt );
+  }
+
+  // アニメーション管理
+  FLD_EXP_OBJ_PlayAnime( exobj_cnt );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  barrierエフェクトを開始
+ *
+ *	@param	fieldWork     ワーク
+ */
+//-----------------------------------------------------------------------------
+void PALACE_GMK_StartBarrierEffect( FIELDMAP_WORK *fieldWork, const VecFx32* cp_pos )
+{
+  PALACE_GMK_WORK* work = GMK_TMP_WK_GetWork((FIELDMAP_WORK*)fieldWork, GIMMICK_WORK_ASSIGN_ID);
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldWork );
+
+  //　開始
+  Barrier_Start( work, exobj_cnt, cp_pos );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  barrierエフェクト　実行チェック
+ *
+ *	@param	fieldWork   FIELDMAPワーク
+ *
+ *	@retval TRUE    実行中
+ *	@retval FALSE   終了
+ */
+//-----------------------------------------------------------------------------
+BOOL PALACE_GMK_IsBarrierEffect( const FIELDMAP_WORK * fieldWork )
+{
+  const PALACE_GMK_WORK* work = GMK_TMP_WK_GetWork((FIELDMAP_WORK*)fieldWork, GIMMICK_WORK_ASSIGN_ID);
+  return work->barrier_effect;
+}
+
 
 
 //==============================================================================
@@ -353,6 +431,124 @@ static INTRUDE_COMM_SYS_PTR _GetIntrudeComm(GAME_COMM_SYS_PTR game_comm)
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  barrierエフェクトの初期化
+ *	
+ *	@param	work        ワーク
+ *	@param	exobj_cnt   ３Dオブジェクト管理システム
+ */
+//-----------------------------------------------------------------------------
+static void Barrier_Init( PALACE_GMK_WORK* work, FLD_EXP_OBJ_CNT_PTR exobj_cnt )
+{
+  // 表示OFF
+  FLD_EXP_OBJ_SetVanish(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BARRIER, TRUE);
+  
+  // アニメ反映
+  {
+    int i;
+    EXP_OBJ_ANM_CNT_PTR anm_cnt;
+
+    for( i=0; i<ANM_BARRIER_NUM; i++ ){
+      FLD_EXP_OBJ_ValidCntAnm(
+          exobj_cnt,
+          EXPOBJ_UNIT_IDX,
+          OBJ_BARRIER,
+          i,
+          TRUE);
+
+      anm_cnt = FLD_EXP_OBJ_GetAnmCnt(
+          exobj_cnt,
+          EXPOBJ_UNIT_IDX,
+          OBJ_BARRIER,
+          i );
+
+      // ループアニメOFF
+      FLD_EXP_OBJ_ChgAnmLoopFlg( anm_cnt, FALSE );
+    }
+  }
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  barrier演出開始
+ *
+ *	@param	work    ワーク
+ *	@param  cp_pos  ポジション
+ */
+//-----------------------------------------------------------------------------
+static void Barrier_Start( PALACE_GMK_WORK* work, FLD_EXP_OBJ_CNT_PTR exobj_cnt, const VecFx32* cp_pos )
+{
+  // 表示ON
+  FLD_EXP_OBJ_SetVanish(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BARRIER, FALSE);
+  
+  // アニメーションリセット
+  {
+    int i;
+
+    for( i=0; i<ANM_BARRIER_NUM; i++ ){
+      
+      FLD_EXP_OBJ_SetObjAnmFrm(
+          exobj_cnt,
+          EXPOBJ_UNIT_IDX,
+          OBJ_BARRIER,
+          i,
+          0);
+      
+    }
+  }
+
+  // 位置を設定
+  {
+    GFL_G3D_OBJSTATUS* status;
+
+    status = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BARRIER );
+
+    status->trans = *cp_pos;
+  }
+
+
+  work->barrier_effect = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  barrier演出メイン
+ *
+ *	@param	work  ワーク
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static void Barrier_Main( PALACE_GMK_WORK* work, FLD_EXP_OBJ_CNT_PTR exobj_cnt )
+{
+  
+  
+  if( work->barrier_effect == FALSE ){
+    return;
+  }
+
+  
+  {
+    int i;
+    EXP_OBJ_ANM_CNT_PTR anm_cnt; 
+
+    anm_cnt = FLD_EXP_OBJ_GetAnmCnt(
+        exobj_cnt,
+        EXPOBJ_UNIT_IDX,
+        OBJ_BARRIER, 0);
+
+
+    // 終了チェック
+    if( FLD_EXP_OBJ_ChkAnmEnd(anm_cnt) ){
+      // 表示OFF
+      FLD_EXP_OBJ_SetVanish(exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BARRIER, TRUE);
+      work->barrier_effect = FALSE;
+    }
+  }
+}
 
 
 

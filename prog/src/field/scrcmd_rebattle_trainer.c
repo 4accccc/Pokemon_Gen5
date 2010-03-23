@@ -154,7 +154,6 @@ VMCMD_RESULT EvCmdReBattleTrainerSetUpRndTr( VMHANDLE *core, void *wk )
   MMDL *mmdl0;
   MMDL *mmdl1;
   MMDL *mmdl2;
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   u16 objid0 = SCRCMD_GetVMWorkValue( core, work );
   u16 objid1 = SCRCMD_GetVMWorkValue( core, work );
   u16 objid2 = SCRCMD_GetVMWorkValue( core, work );

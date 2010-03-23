@@ -364,6 +364,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/map_replace.c \
         field/warpdata.c \
         field/event_poke_status.c \
+        field/script_trainer.c \
         field/scrcmd_work.c \
         field/scrcmd_enviroments.c \
         field/scrcmd_sxy.c \
@@ -591,7 +592,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_iwakudaki.c \
         field/fldeff_fishing.c \
         field/event_trainer_eye.c \
-        field/script_trainer.c \
         field/scrcmd_trainer.c \
         field/scrcmd_sound.c \
         field/scrcmd_item.c \
