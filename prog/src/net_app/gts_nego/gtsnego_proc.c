@@ -217,6 +217,7 @@ static void _modeSelectMenuFlash(GTSNEGO_WORK* pWork);
 
 static void _recvInfomationData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvMystatusData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _cancelButtonCallback(u32 bttnid, u32 event,void* p_work);
 
 ///通信コマンドテーブル
 static const NetRecvFuncTable _PacketTbl[] = {
@@ -774,7 +775,10 @@ static void _matchingState( GTSNEGO_WORK *pWork )
   
   if(1){
 #else
-    //接続したら表示して交換に
+
+  GTSNEGO_MESSAGE_ButtonWindowMain(pWork->pMessageWork);
+
+  //接続したら表示して交換に
 //  if(STEPMATCH_SUCCESS == GFL_NET_DWC_GetStepMatchResult()){
   if(GFL_NET_STATE_MATCHED == GFL_NET_StateGetWifiStatus()){
 
@@ -938,7 +942,8 @@ static void _levelSelectDecide( GTSNEGO_WORK *pWork )
   GTSNEGO_DISP_SearchPeopleDispSet(pWork->pDispWork);
   GTSNEGO_MESSAGE_TitleMessage(pWork->pMessageWork,GTSNEGO_018);
 
-  GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork);
+  GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork, &_cancelButtonCallback, pWork );
+//  GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork);
 //  pWork->pAppWin = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork,GTSNEGO_020);
   _CHANGE_STATE(pWork, _matchKeyMake);
 }
@@ -1099,6 +1104,76 @@ MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index)
 }
 
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   キャンセルボタンの処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _MatchingCancelState2(GTSNEGO_WORK* pWork)
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    GTSNEGO_MESSAGE_AppMenuClose(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, TRUE);
+    switch(selectno){
+    case 0:
+      GFL_NET_StateWifiMatchEnd(TRUE);
+      GTSNEGO_DISP_ResetDispSet(pWork->pDispWork);
+      GTSNEGO_MESSAGE_ResetDispSet(pWork->pMessageWork);
+      _CHANGE_STATE(pWork,_modeSelectMenuInit);
+      break;
+    case 1:
+      GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork, &_cancelButtonCallback, pWork );
+      
+      _CHANGE_STATE(pWork,_matchingState);
+    }
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   キャンセルボタンの処理
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _MatchingCancelState(GTSNEGO_WORK* pWork)
+{
+  if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, FALSE);
+  pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_INFO);
+  _CHANGE_STATE(pWork,_MatchingCancelState2);
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   キャンセルボタンのコールバック
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _cancelButtonCallback(u32 bttnid, u32 event,void* p_work)
+{
+  GTSNEGO_WORK *pWork = p_work;
+  
+  switch( event ){
+  case GFL_BMN_EVENT_TOUCH:		///< 触れた瞬間
+    //マッチング中だけ実行
+    if(pWork->state == &_matchingState){
+      GTSNEGO_MESSAGE_CancelButtonDelete(pWork->pMessageWork);
+      GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_043);
+      _CHANGE_STATE(pWork , _MatchingCancelState);
+    }
+    break;
+  }
+}
+
+
+
+
 static void _friendSelectDecide3( GTSNEGO_WORK *pWork )
 {
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
@@ -1113,9 +1188,9 @@ static void _friendSelectDecide3( GTSNEGO_WORK *pWork )
 
       GTSNEGO_MESSAGE_TitleMessage(pWork->pMessageWork,GTSNEGO_018);
 
-      GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork);
+//      GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork);
+      GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork, &_cancelButtonCallback, pWork );
 
-      
       _CHANGE_STATE(pWork,_matchKeyMake);
       break;
     case 1:

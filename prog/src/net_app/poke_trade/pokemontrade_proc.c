@@ -3383,6 +3383,34 @@ static GFL_PROC_RESULT PokemonTradeGTSDemoRecvProcInit( GFL_PROC * proc, int * s
   return ret;
 }
 
+
+
+//GTSƒfƒ‚‚Ì‚Ý•\Ž¦
+static GFL_PROC_RESULT PokemonTradeGTSDemoMidProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
+{
+  GFL_PROC_RESULT ret;
+  POKEMONTRADE_DEMO_PARAM* pParent=pwk;
+  POKEMON_TRADE_WORK *pWork;
+  int i;
+  
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, HEAPSIZE_POKETRADE_DEMO );
+  pWork = GFL_PROC_AllocWork( proc, sizeof( POKEMON_TRADE_WORK ), HEAPID_IRCBATTLE );
+  GFL_STD_MemClear(pWork, sizeof(POKEMON_TRADE_WORK));
+
+  pParent->aParam.gamedata = pParent->gamedata;
+  ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_GTSMID);
+
+  _commonFunc(pParent, pWork);
+  _CHANGE_STATE(pWork,POKMEONTRADE_DEMO_GTSMID_ChangeDemo);
+  
+  return ret;
+}
+
+
+
+
+
+
 static GFL_PROC_RESULT PokemonTradeGTSDemoSendProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   GFL_PROC_RESULT ret;
@@ -3635,4 +3663,14 @@ const GFL_PROC_DATA PokemonTradeGTSRecvProcData = {
   PokemonTradeProcMain,
   PokemonTradeProcEnd,
 };
+
+//GTSMid—p
+const GFL_PROC_DATA PokemonTradeGTSMidProcData = {
+  PokemonTradeGTSDemoMidProcInit,
+  PokemonTradeProcMain,
+  PokemonTradeProcEnd,
+};
+
+
+
 

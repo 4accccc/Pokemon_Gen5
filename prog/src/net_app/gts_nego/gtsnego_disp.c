@@ -1651,3 +1651,30 @@ void GTSNEGO_DISP_SearchPeopleDispMain(GTSNEGO_DISP_WORK* pWork)
 }
 
 
+void GTSNEGO_DISP_ResetDispSet(GTSNEGO_DISP_WORK* pWork)
+{
+  int i;
+  ARCHANDLE* p_handle;
+	{
+    p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
+
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_back_NSCR,
+                                              GFL_BG_FRAME0_M, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
+                                              pWork->heapID);
+    GFL_ARC_CloseDataHandle(p_handle);
+
+    GTSNEGO_DISP_FriendSelectFree(pWork);
+    _RemoveSearchPeople(pWork);
+    
+    GFL_BG_SetVisible( GFL_BG_FRAME2_M,FALSE );
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M,FALSE );
+    pWork->SearchScroll=0;
+    pWork->bSearchScroll=FALSE;
+    
+	}
+
+ // G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BG3,15,9);
+
+}

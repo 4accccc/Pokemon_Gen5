@@ -164,7 +164,8 @@ static const D_MENULIST DebugMenuList[] = {
 //		&PokemonTradeDemoProcData,
 //    &PokemonTradeGTSProcData,
 //    &PokemonTradeGTSSendProcData,
-    &PokemonTradeGTSRecvProcData,
+//    &PokemonTradeGTSRecvProcData,
+    &PokemonTradeGTSMidProcData,
     _PokeTradeDemoWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
 	},

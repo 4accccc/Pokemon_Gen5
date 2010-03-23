@@ -26,6 +26,7 @@ typedef enum{
   POKEMONTRADE_TYPE_GTS = POKEMONTRADE_TYPE_VISUAL, ///< GTS
   POKEMONTRADE_TYPE_GTSUP,   ///< GTSあずける
   POKEMONTRADE_TYPE_GTSDOWN,  ///< GTSひきとる
+  POKEMONTRADE_TYPE_GTSMID,  ///< GTS真ん中
   POKEMONTRADE_TYPE_EVENT,  ///< イベント用
   POKEMONTRADE_TYPE_MAX,
 } POKEMONTRADE_TYPE;
@@ -81,6 +82,7 @@ extern const GFL_PROC_DATA PokemonTradeClubProcData;
 extern const GFL_PROC_DATA PokemonTradeGTSProcData;
 extern const GFL_PROC_DATA PokemonTradeGTSSendProcData;
 extern const GFL_PROC_DATA PokemonTradeGTSRecvProcData;
+extern const GFL_PROC_DATA PokemonTradeGTSMidProcData;
 
 
 

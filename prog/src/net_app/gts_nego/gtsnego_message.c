@@ -1190,6 +1190,22 @@ void GTSNEGO_MESSAGE_TitleMessage(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
 }
 
+
+
+
+
+
+static const GFL_UI_TP_HITTBL _CancelBtnTbl[] = {
+  {	192-32,   192 ,
+    128-32,  128+32  },
+
+  {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
+};
+
+
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   キャンセルボタンをつくる
@@ -1197,8 +1213,10 @@ void GTSNEGO_MESSAGE_TitleMessage(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
  */
 //------------------------------------------------------------------------------
 
-void GTSNEGO_MESSAGE_CancelButtonCreate(GTSNEGO_MESSAGE_WORK* pWork)
+void GTSNEGO_MESSAGE_CancelButtonCreate(GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBackFunc callback,void* pParentWork )
 {
+
+  
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, GTSNEGO_020, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
@@ -1206,6 +1224,10 @@ void GTSNEGO_MESSAGE_CancelButtonCreate(GTSNEGO_MESSAGE_WORK* pWork)
   pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
                                            pWork->appitem, 16 - 5, 24-3, 10, pWork->heapID);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+
+  _ButtonSafeDelete(pWork);
+	pWork->pButton = GFL_BMN_Create( _CancelBtnTbl, callback, pParentWork,  pWork->heapID );
+
 }
 
 //------------------------------------------------------------------------------
@@ -1219,6 +1241,7 @@ BOOL GTSNEGO_MESSAGE_CancelButtonDelete(GTSNEGO_MESSAGE_WORK* pWork)
 {
   if(APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
     APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+    pWork->pAppWin = NULL;
     return TRUE;
   }
   return FALSE;
@@ -1298,5 +1321,38 @@ void GTSNEGO_MESSAGE_FindPlayer(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMy, int n
   GTSNEGO_MESSAGE_InfoMessageDispLine(pWork,GTSNEGO_022);
   
 }
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   説明ウインドウ消去
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GTSNEGO_MESSAGE_ResetDispSet(GTSNEGO_MESSAGE_WORK* pWork)
+{
+  if(pWork->titleDispWin){
+    BmpWinFrame_Clear(pWork->titleDispWin, WINDOW_TRANS_OFF);
+    GFL_BMPWIN_ClearScreen(pWork->titleDispWin);
+    GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
+    GFL_BMPWIN_Delete(pWork->titleDispWin);
+    pWork->titleDispWin=NULL;
+  }
+  if(pWork->pAppWin){
+    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+    pWork->pAppWin = NULL;
+  }
+  GTSNEGO_MESSAGE_DispClear(pWork);
+  GTSNEGO_MESSAGE_DispInit(pWork);
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+  G2S_BlendNone();
+
+}
+
+
 
 

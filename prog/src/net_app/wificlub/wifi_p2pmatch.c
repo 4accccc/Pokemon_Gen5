@@ -1920,39 +1920,8 @@ static void BgGraphicSet( WIFIP2PMATCH_WORK * wk, ARCHANDLE* p_handle )
   WifiP2PMatchFriendListIconLoad(  &wk->icon, p_handle, HEAPID_WIFIP2PMATCH );
 
   
-  // 上下画面ＢＧパレット転送
- // GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_wifip2pmatch_conect_NCLR, PALTYPE_MAIN_BG, 0, 0,  HEAPID_WIFIP2PMATCH);
- // GFL_ARCHDL_UTIL_TransVramPalette(    p_handle, NARC_wifip2pmatch_conect_NCLR, PALTYPE_SUB_BG,  0, 0,  HEAPID_WIFIP2PMATCH);
-
-  // 会話フォントパレット転送
-  //    TalkFontPaletteLoad( PALTYPE_MAIN_BG, _NUKI_FONT_PALNO*0x20, HEAPID_WIFIP2PMATCH );
-  //    TalkFontPaletteLoad( PALTYPE_MAIN_BG, COMM_MESFONT_PAL*0x20, HEAPID_WIFIP2PMATCH );
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_MAIN_BG , MCV_SYSFONT_PAL*0x20, 16*2, HEAPID_WIFIP2PMATCH );
 
-/*
-  // メイン画面BG2キャラ転送
-  {
-    u32 scr = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_wifip2pmatch_conect_NCGR,
-                                                           GFL_BG_FRAME0_M, 0, 0, HEAPID_WIFIP2PMATCH);
-
-    // メイン画面BG2スクリーン転送
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_wifip2pmatch_conect_01_NSCR,
-                                              GFL_BG_FRAME0_M, 0,
-                                              GFL_ARCUTIL_TRANSINFO_GetPos(scr), 0, 0, HEAPID_WIFIP2PMATCH);
-  }
-
-  // サブ画面BG0キャラ転送
-  {
-    u32 scr = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle,
-                                                           NARC_wifip2pmatch_conect_sub_NCGR,
-                                                           GFL_BG_FRAME0_S, 0, 0, HEAPID_WIFIP2PMATCH);
-
-    // サブ画面BG0スクリーン転送
-    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_wifip2pmatch_conect_sub_NSCR,
-                                              GFL_BG_FRAME0_S, 0,
-                                              GFL_ARCUTIL_TRANSINFO_GetPos(scr),0, 0, HEAPID_WIFIP2PMATCH);
-  }
-   */
   {
     wk->talkwin_m2 = BmpWinFrame_GraphicSetAreaMan(
       GFL_BG_FRAME2_M,  COMM_MESFRAME_PAL,  MENU_TYPE_SYSTEM, HEAPID_WIFIP2PMATCH );

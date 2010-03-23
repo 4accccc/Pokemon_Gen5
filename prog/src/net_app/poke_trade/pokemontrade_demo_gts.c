@@ -1,6 +1,6 @@
 //=============================================================================
 /**
- * @file	  pokemontrade_demo_up.c
+ * @file	  pokemontrade_demo_gts.c
  * @bfief	  ポケモン交換アニメーション  上に行く部分
  * @author  ohno_katsumi@gamefreak.co.jp
  * @date	  09/09/27
