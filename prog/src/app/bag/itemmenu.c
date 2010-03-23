@@ -854,8 +854,10 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
 
 	// スクロール中フラグクリア
 	if( GFL_UI_TP_GetCont() == FALSE ){
-		if( pWork->scrollMode == TRUE ){
-			pWork->scrollMode = FALSE;
+		pWork->scrollMode = FALSE;
+		if( pWork->moveDrag == TRUE ){
+			PMSND_PlaySE( SE_BAG_DECIDE );
+			pWork->moveDrag = FALSE;
 			MYITEM_ITEM_STCopy(pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, FALSE);
 			GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur, 1 );
 			ITEMDISP_ChangeMoveModeButton( pWork, TRUE );
@@ -911,7 +913,7 @@ static void _itemMovePosition(FIELD_ITEMMENU_WORK* pWork)
 		_windowRewrite( pWork );
 	// リストタッチ操作
 	}else if( _itemMovePositionTouchItem(pWork) ){
-		pWork->scrollMode = TRUE;
+		pWork->moveDrag = TRUE;
     ITEMDISP_ScrollCursorChangePos( pWork );
 		_windowRewrite(pWork);
 	// キー操作

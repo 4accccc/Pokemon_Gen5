@@ -255,7 +255,8 @@ struct _FIELD_ITEMMENU_PARAM {
 	BLINKPALANM_WORK * blwk;
 	PALETTE_FADE_PTR	pfd;
 	BOOL	active;				///< アクティブ/パッシブ
-	BOOL	scrollMode;		///< スクロール中かどうか	
+	BOOL	scrollMode;		///< スクロール中かどうか
+	BOOL	moveDrag;			///< アイテムをドラッグで移動
 	u16	tmpSeq;					///< 汎用シーケンス
 	u16	tmpCnt;					///< 汎用カウンタ
 	StateFunc * chgState;
