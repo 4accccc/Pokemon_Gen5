@@ -7731,10 +7731,10 @@
  * 侵入コマンド　シンボルポケモンセッティング
  */
 //--------------------------------------------------------------
-#define _SYMBOL_POKE_SET() _ASM_SYMBOL_POKE_SET
+#define _SYMBOL_MAP_POKE_SET() _ASM_SYMBOL_MAP_POKE_SET
 
-  .macro  _ASM_SYMBOL_POKE_SET
-  .short  EV_SEQ_SYMBOL_POKE_SET
+  .macro  _ASM_SYMBOL_MAP_POKE_SET
+  .short  EV_SEQ_SYMBOL_MAP_POKE_SET
   .endm
 
 //--------------------------------------------------------------
@@ -7872,6 +7872,21 @@
     .short  \obj_id
     .short  \pos
     .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SYMBOL_POKE_GET
+ * @brief シンボルエンカウント：ポケモンを捕まえる
+ * @param obj_id  対象となるポケモンのOBJID
+ */
+//--------------------------------------------------------------
+#define _SYMBOL_POKE_GET( obj_id )  \
+      _ASM_SYMBOL_POKE_GET obj_id
+
+      .macro  _ASM_SYMBOL_POKE_GET obj_id
+      .short  EV_SEQ_SYMBOL_POKE_GET
+      .short  \obj_id
+      .endm
 
 //======================================================================
 //

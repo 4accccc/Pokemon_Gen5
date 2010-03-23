@@ -648,7 +648,7 @@
   DEF_CMD( EvCmdCallMonolithProc, EV_SEQ_CALL_MONOLITH_PROC )
   
   DEF_CMD( EvCmdIntrudeMissionChoiceListReq, EV_SEQ_INTRUDE_MISSION_CHOICE_LIST_REQ )
-  DEF_CMD( EvCmdSymbolPokeSet, EV_SEQ_SYMBOL_POKE_SET )
+  NO_CMD()
   DEF_CMD( EvCmdPalaceInDisguise, EV_SEQ_PALACE_IN_DISGUISE )
   DEF_CMD( EvCmdGetDisguiseCode, EV_SEQ_GET_DISGUISE_CODE )
 
@@ -753,7 +753,7 @@
   //êNì¸ä÷òAÇªÇÃÇQ
   DEF_CMD( EvCmdGetMissionEntry, EV_SEQ_GET_MISSION_ENTRY )
   DEF_CMD( EvCmdIntrudeMissionStartWait, EV_SEQ_MISSION_START_WAIT_EVENT )
-  DEF_CMD( EvCmdSymbolPokeBattle, EV_SEQ_SYMBOL_POKE_BATTLE )
+  NO_CMD()
   NO_CMD()
 
   //à⁄ìÆÉ|ÉPÉÇÉì
@@ -974,6 +974,11 @@
   DEF_CMD( EvCmdSymbolMapGetInfo, EV_SEQ_SYMBOL_MAP_GET_INFO )
   DEF_CMD( EvCmdSymbolMapMovePokemon, EV_SEQ_SYMBOL_MAP_MOVE_POKE )
   DEF_CMD( EvCmdSymbolMapSetMonsName, EV_SEQ_SYMBOL_MAP_SET_MONS_NAME )
+
+  DEF_CMD( EvCmdSymbolMapPokeSet, EV_SEQ_SYMBOL_MAP_POKE_SET )
+  DEF_CMD( EvCmdSymbolPokeBattle, EV_SEQ_SYMBOL_POKE_BATTLE )
+  DEF_CMD( EvCmdSymbolPokeGet, EV_SEQ_SYMBOL_POKE_GET )
+  NO_CMD()
 
   END_CMD
 

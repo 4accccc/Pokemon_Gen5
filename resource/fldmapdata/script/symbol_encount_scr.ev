@@ -42,7 +42,7 @@ INIT_EVENT_END
 /*：*/
 /**************************************************************/
 INIT_EVENT_START  ev_init_symbol_encount
-  _SYMBOL_POKE_SET()
+  _SYMBOL_MAP_POKE_SET()
 INIT_EVENT_END
 
 
@@ -57,6 +57,7 @@ INIT_EVENT_END
 /**/
 /**************************************************************/
 EVENT_START   ev_symbol_pokemon
+  _TALK_OBJ_START()
   _CALL   ev_symbol_pokemon_main
 EVENT_END
 
@@ -95,8 +96,13 @@ ev_symbol_pokemon_main:
   IF $SCWK_ANSWER == SCR_YES THEN
     _SYMBOL_POKE_BATTLE( SCWK_TARGET_OBJID, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN
+        _SYMBOL_POKE_GET( SCWK_TARGET_OBJID )
+        _OBJ_DEL( SCWK_TARGET_OBJID )
+        _WILD_WIN() //フィールド復帰
         //マップに入り直す
         _SYMBOL_MAP_WARP( DIR_NOT )
+    ELSE
+        _WILD_WIN() //フィールド復帰
     ENDIF
     _RET
   ENDIF

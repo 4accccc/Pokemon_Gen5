@@ -40,36 +40,42 @@
 ///シンボルポケモン用エンカウントエフェクトID
 #define SYMBOL_ENCEFF_ID        (ENCEFFID_WILD_NORMAL)
 
-///シンボルポケモンのレベル
-#define SYMBOL_POKE_LEVEL       (30)
-
 
 //==============================================================================
 //  構造体定義
 //==============================================================================
+//--------------------------------------------------------------
+/// シンボルエンカウント：バトルイベント制御用ワーク定義
+//--------------------------------------------------------------
 typedef struct{
   FIELDMAP_WORK *fieldWork;
   PDC_SETUP_PARAM *pdc_setup;
   POKEMON_PARAM *pp;
   BTL_FIELD_SITUATION bfs;
   HEAPID heap_id;
-  u16 *result_ptr;
+  u16 *result_ptr;    ///<捕まえたかどうかを返すためのポインタ
 }EVENT_SYMBOL_BATTLE;
 
+//--------------------------------------------------------------
+///   シンボルマップ：ポケモンデータの通信取得イベント制御ワーク
+//--------------------------------------------------------------
 typedef struct{
-  u16 *result_ptr;
-  u8 symbol_map_id;
+  u16 *result_ptr;      ///<取得結果（成功かどうか）を返すためのポインタ
+  u8 symbol_map_id;     ///<リクエストするシンボルマップID
   u8 padding[2];
 }EVENT_REQ_SYMBOL_PARAM;
 
+//--------------------------------------------------------------
+/// シンボルマップ：パレスの森マップ遷移イベント制御ワーク
+//--------------------------------------------------------------
 typedef struct{
-  u16 *result_ptr;
+  u16 *result_ptr;        ///<遷移できたかどうかの結果を返すためのポインタ
   FIELDMAP_WORK *fieldWork;
-  u16 warp_zone_id;
-  VecFx32 warp_pos;
-  u16 warp_dir;
-  u8 symbol_map_id;
-  u16 data_recv_result;
+  u16 warp_zone_id;       ///<遷移先ゾーンID
+  VecFx32 warp_pos;       ///<遷移先でのマップ位置
+  u16 warp_dir;           ///<遷移先での向き
+  u8 symbol_map_id;       ///<リクエストするシンボルマップID
+  u16 data_recv_result;   ///<下位イベントからの結果を受け取るためのワーク
   BOOL my_palace;         ///<TRUE:自分のパレスにいる
 }EVENT_SYMBOL_MAP_WARP;
 
@@ -95,7 +101,8 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk );
  * @retval  GMEVENT *		
  */
 //==================================================================
-GMEVENT * EVENT_SymbolPokeBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const SYMBOL_POKEMON *spoke, u16 *result_ptr, HEAPID heap_id)
+GMEVENT * EVENT_SymbolPokeBattle(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, POKEMON_PARAM *pp, u16 *result_ptr, HEAPID heap_id)
 {
 	GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   EVENT_SYMBOL_BATTLE *esb;
@@ -111,17 +118,7 @@ GMEVENT * EVENT_SymbolPokeBattle(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, c
   esb->result_ptr = result_ptr;
   esb->heap_id = heap_id;
   
-  { //シンボルポケモンをPokemonParamとして生成
-    u32 personal_rnd, id;
-    
-    id = MyStatus_GetID( GAMEDATA_GetMyStatus(gamedata) );
-    
-    esb->pp = PP_Create( spoke->monsno, SYMBOL_POKE_LEVEL, id, heap_id );
-    personal_rnd = POKETOOL_CalcPersonalRandEx( 
-      id, spoke->monsno, spoke->form_no, spoke->sex, 0, FALSE );
-    PP_SetupEx( esb->pp, spoke->monsno, SYMBOL_POKE_LEVEL, id, PTL_SETUP_POW_AUTO, personal_rnd );
-    PP_SetTokusei3( esb->pp, spoke->monsno, spoke->form_no );
-  }
+  esb->pp = pp;
 
   BTL_FIELD_SITUATION_SetFromFieldStatus( &esb->bfs, gamedata, fieldWork );
 
@@ -148,9 +145,9 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
     SEQ_FIELD_CLOSE,
     SEQ_BATTLE,
     SEQ_RESULT,
-    SEQ_FIELD_OPEN,
-    SEQ_FADEIN,
     SEQ_BGMPOP,
+    SEQ_FIELD_OPEN,
+    //SEQ_FADEIN,
   };
 	
 	switch( *seq ){
@@ -201,10 +198,17 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(pdc) );
     (*seq)++;
     break;
+	case SEQ_BGMPOP:
+	  // フィールドBGM復帰
+    GMEVENT_CallEvent(event, EVENT_FSND_PopPlayBGM_fromBattle(gsys));
+    (*seq)++;
+    break;
   case SEQ_FIELD_OPEN:
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq)++;
     break;
+#if 0
+    フェードイン処理はスクリプト側でおこなう
   case SEQ_FADEIN:
     { // フェードイン
       GMEVENT* fade_event;
@@ -213,11 +217,7 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
     }
 		(*seq) ++;
 		break;
-	case SEQ_BGMPOP:
-	  // フィールドBGM復帰
-    GMEVENT_CallEvent(event, EVENT_FSND_PopPlayBGM_fromBattle(gsys));
-    (*seq)++;
-    break;
+#endif
 
   default:
     GFL_HEAP_FreeMemory(esb->pp);
@@ -315,6 +315,8 @@ static GMEVENT_RESULT EventReqIntrudeSymbolParam( GMEVENT *event, int *seq, void
 //  シンボルマップ遷移
 //
 //==============================================================================
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 static void getNewPos( const VecFx32 * now_pos, u16 dir, VecFx32 * next_pos )
 {
   *next_pos = *now_pos;
@@ -387,6 +389,8 @@ GMEVENT * EVENT_SymbolMapWarp(
 	return( event );
 }
 
+//==================================================================
+//==================================================================
 GMEVENT * EVENT_SymbolMapWarpEasy( GAMESYS_WORK * gsys, u16 warp_dir, SYMBOL_MAP_ID symbol_map_id )
 {
   VecFx32 next_pos;
@@ -449,13 +453,13 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
     (*seq)++;
     break;
   case _SEQ_CHANGE_MAP:
+    GAMEDATA_SetSymbolMapID(gamedata, esmw->symbol_map_id);
     GMEVENT_CallEvent(event, 
       EVENT_ChangeMapPos(gsys, esmw->fieldWork, esmw->warp_zone_id, 
       &esmw->warp_pos, esmw->warp_dir, FALSE));
     (*seq)++;
     break;
   case _SEQ_FINISH:
-    GAMEDATA_SetSymbolMapID(gamedata, esmw->symbol_map_id);
     if(esmw->result_ptr != NULL){
       *(esmw->result_ptr) = TRUE;
     }

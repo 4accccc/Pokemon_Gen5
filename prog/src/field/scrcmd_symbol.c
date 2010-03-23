@@ -28,6 +28,7 @@
 #include "event_symbol.h"
 
 #include "symbol_map.h"
+#include "symbol_pokemon.h"
 
 #include "field_comm/intrude_minimono.h"
 #include "field/intrude_symbol.h"
@@ -55,16 +56,14 @@ VMCMD_RESULT EvCmdSymbolPokeBattle( VMHANDLE *core, void *wk )
 
   SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  MMDL *mmdl = SCRIPT_GetTargetObj( scw );  //話しかけ時のみ有効
-  u16 obj_code = MMDL_GetOBJCode( mmdl );
-  ZONEID zone_id = SCRCMD_WORK_GetZoneID( work );
-  static SYMBOL_POKEMON test_symbol_poke = {
-    10, 20, 0, 0, 
-  };
-  
-  SCRIPT_CallEvent( scw, 
-    EVENT_SymbolPokeBattle(gsys, fieldWork, &test_symbol_poke, ret_wk, HEAPID_PROC) );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+  //MMDL *mmdl = SCRIPT_GetTargetObj( scw );  //話しかけ時のみ有効
+  //u16 obj_code = MMDL_GetOBJCode( mmdl );
+  //ZONEID zone_id = SCRCMD_WORK_GetZoneID( work );
+  POKEMON_PARAM * pp = SYMBOLPOKE_PP_CreateByObjID( HEAPID_PROC, gsys, obj_id );
+  GMEVENT * event = EVENT_SymbolPokeBattle( gsys, fieldmap, pp, ret_wk, HEAPID_PROC );
+
+  SCRIPT_CallEvent( scw, event );
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -78,15 +77,29 @@ VMCMD_RESULT EvCmdSymbolPokeBattle( VMHANDLE *core, void *wk )
  * @retval  VMCMD_RESULT		
  */
 //==================================================================
-VMCMD_RESULT EvCmdSymbolPokeSet( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdSymbolMapPokeSet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+  HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
+  INTRUDE_SYMBOL_WORK * isw;
   
-  DEBUG_INTRUDE_BingoPokeSet(fieldWork);
+  isw = SYMBOLMAP_AllocSymbolWork( heapID, gsys );
+  SYMBOLPOKE_Add( fieldmap, isw->spoke_array, isw->num );
+  GFL_HEAP_FreeMemory( isw );
   
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//==================================================================
+//==================================================================
+VMCMD_RESULT EvCmdSymbolPokeGet( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
+  u16 obj_id = SCRCMD_GetVMWorkValue(core,work);
+
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -97,15 +110,32 @@ VMCMD_RESULT EvCmdSymbolPokeSet( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdSymbolMapMovePokemon( VMHANDLE * core, void * wk )
 {
   u16 obj_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+
   return VMCMD_RESULT_CONTINUE;
 }
+
 //==================================================================
 /**
  */
 //==================================================================
 VMCMD_RESULT EvCmdSymbolMapSetMonsName( VMHANDLE * core, void * wk )
 {
+  SCRCMD_WORK *work = wk;
   u16 obj_id = SCRCMD_GetVMWorkValue( core, wk );
+  u16 idx = SCRCMD_GetVMWorkValue( core, wk );
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( wk );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
+  HEAPID     heap_id = SCRCMD_WORK_GetHeapID( work );
+
+  POKEMON_PARAM * pp = SYMBOLPOKE_PP_CreateByObjID( heap_id, gsys, obj_id );
+  if ( pp )
+  {
+    WORDSET_RegisterPokeMonsName( wordset, idx, pp );
+    GFL_HEAP_FreeMemory( pp );
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -128,16 +158,12 @@ VMCMD_RESULT EvCmdSymbolMapGetInfo( VMHANDLE * core, void * wk )
   switch ( mode )
   {
   case SCR_SYMMAP_INFO_IS_MINE:
-#if 0
-    {
-      //@todo 松田くん作成のチェック関数で判定
-      if ( IntrudeSymbol_CheckIntrudeNetID( game_comm, gamedata ) == INTRUDE_NETID_NULL ) {
-        *ret_wk = TRUE;
-      } else {
-        *ret_wk = FALSE;
-      }
+    //※下記関数で通信時も非通信時も自分かどうかの判定ができる
+    if ( IntrudeSymbol_CheckIntrudeNetID( game_comm, gamedata ) == INTRUDE_NETID_NULL ) {
+      *ret_wk = TRUE;
+    } else {
+      *ret_wk = FALSE;
     }
-#endif
     break;
   case SCR_SYMMAP_INFO_IS_KEEPZONE:
     {
