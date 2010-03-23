@@ -3,7 +3,7 @@
 <ica version="1.6.0">
 
 <head>
-	<create user="tanoue_reiko" host="W00192" date="2009-12-14T21:21:34" source="door_h05_cl.mb"/>
+	<create user="tanoue_reiko" host="W00192" date="2010-03-23T18:05:29" source="door_h05_cl.mb"/>
 	<title>Character Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,27 +11,28 @@
 <body>
 
 <node_anm_info
-	frame_size="11"
+	frame_size="16"
 	scaling_rule="standard"
 	magnify="1.000000"
-	tool_start_frame="0"
-	tool_end_frame="10"
+	tool_start_frame="1"
+	tool_end_frame="16"
 	interpolation="frame"
-	compress_node="none" node_size="3 3"
+	compress_node="merge" node_size="3 3"
 	frame_step_mode="1"
 	tolerance_scale="0.100000"
 	tolerance_rotate="0.100000"
-	tolerance_translate="0.100000"
+	tolerance_translate="0.010000"
 />
 
 <node_scale_data size="1">
 	1.000000
 </node_scale_data>
 
-<node_rotate_data size="23">
-	0.000000 -34.000000 -30.600098 -27.199951 -23.800049 -20.399902 -17.000000 -13.600098 -10.199951 -6.800049
-	-3.399902 0.000000 34.000000 30.600098 27.199951 23.800049 20.399902 17.000000 13.600098 10.199951
-	6.800049 3.399902 0.000000
+<node_rotate_data size="33">
+	0.000000 -34.000000 -31.733398 -29.466553 -27.199951 -24.933350 -22.666748 -20.399902 -18.133301 -15.866699
+	-13.600098 -11.333252 -9.066650 -6.800049 -4.533447 -2.266602 0.000000 34.000000 31.733398 29.466553
+	27.199951 24.933350 22.666748 20.399902 18.133301 15.866699 13.600098 11.333252 9.066650 6.800049
+	4.533447 2.266602 0.000000
 </node_rotate_data>
 
 <node_translate_data size="1">
@@ -55,7 +56,7 @@
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
 		<scale_z frame_step="1" data_size="1" data_head="0"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
-		<rotate_y frame_step="1" data_size="11" data_head="1"/>
+		<rotate_y frame_step="1" data_size="16" data_head="1"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
 		<translate_x frame_step="1" data_size="1" data_head="0"/>
 		<translate_y frame_step="1" data_size="1" data_head="0"/>
@@ -66,7 +67,7 @@
 		<scale_y frame_step="1" data_size="1" data_head="0"/>
 		<scale_z frame_step="1" data_size="1" data_head="0"/>
 		<rotate_x frame_step="1" data_size="1" data_head="0"/>
-		<rotate_y frame_step="1" data_size="11" data_head="12"/>
+		<rotate_y frame_step="1" data_size="16" data_head="17"/>
 		<rotate_z frame_step="1" data_size="1" data_head="0"/>
 		<translate_x frame_step="1" data_size="1" data_head="0"/>
 		<translate_y frame_step="1" data_size="1" data_head="0"/>
