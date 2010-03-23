@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/09 19:30:17
+#save date:2010/03/23 13:02:15
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r01.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r01.wms
 #hold event type:
 1
 #hold event number:
-7
+10
 #event number: 0
 #type
 1
@@ -227,6 +227,99 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 616 0 184
+#event number: 7
+#type
+1
+#ID name
+TR_RANGERW_10
+#OBJ CODE Number
+RANGERW
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_RANGERW_10
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+5
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+216 0 -568
+#event number: 8
+#type
+1
+#ID name
+TR_FISHING_11
+#OBJ CODE Number
+FISHING
+#MOVE CODE Number
+MV_LEFT
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_FISHING_11
+#Direction Type Number
+DIR_LEFT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-88 0 -712
+#event number: 9
+#type
+1
+#ID name
+TR_RANGERM_10
+#OBJ CODE Number
+RANGERM
+#MOVE CODE Number
+MV_DOWN
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_RANGERM_10
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+2
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 -968
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
