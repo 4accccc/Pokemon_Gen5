@@ -16,6 +16,9 @@
 #define R01_HAKASE2_01                     4
 #define R01_RIVEL_02                       5
 #define R01_SUPPORT_02                     6
+#define TR_RANGERW_10                      7
+#define TR_FISHING_11                      8
+#define TR_RANGERM_10                      9
 
 #endif //ZONE_R01_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r01.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
