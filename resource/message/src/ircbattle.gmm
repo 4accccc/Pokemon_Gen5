@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-16T12:11:16"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-23T20:05:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -582,24 +582,24 @@
 	</row>
 
 	<row id="IRCBTL_STR_38">
-		<language name="JPN" width="256">グループ　ぜんいんと
+		<language name="JPN" width="256">さんかする　ぜんいんと
 せきがいせんつうしんを　してください</language>
-		<language name="JPN_KANJI" width="256">グループ　全員と
+		<language name="JPN_KANJI" width="256">参加する　全員と
 赤外線通信を　してください</language>
 	</row>
 
 	<row id="IRCBTL_STR_39">
-		<language name="JPN" width="256">リーダーと
+		<language name="JPN" width="256">えんもくを　きめたひとと
 せきがいせんつうしんを　してください</language>
-		<language name="JPN_KANJI" width="256">リーダーと
+		<language name="JPN_KANJI" width="256">演目を　決めた人と
 赤外線通信を　してください</language>
 	</row>
 
 	<row id="IRCBTL_STR_40">
 		<language name="JPN" width="256">[2:00:１桁:0]にんと　つうしんちゅう
-すすむで　はじまります</language>
+すすむで　さんかを　しめきります</language>
 		<language name="JPN_KANJI" width="256">[2:00:１桁:0]人と　通信中
-すすむで　はじまります</language>
+すすむで　参加を　締め切ります</language>
 	</row>
 
 	<row id="IRCBTL_STR_41">
