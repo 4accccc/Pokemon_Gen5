@@ -2020,11 +2020,13 @@ static void _itemTrashWait(FIELD_ITEMMENU_WORK* pWork)
   ret = CheckNumSelTouch();
   if( ret == GFL_UI_TP_HIT_NONE ){
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
       ret = 0;
     }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
       ret = 1;
     }
-  }
+	}
 
   // Œˆ’è
   if( ret == 0 ){
@@ -2068,6 +2070,9 @@ static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
 {
 //  InputNum_ButtonState( pWork, FALSE );
 
+	GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, FALSE );
+	ITEMDISP_ChangeActive( pWork, FALSE );
+
   // ”ƒ‚¦‚È‚¢‚à‚Ì”»’è
   {
     s32 val;
@@ -2084,6 +2089,8 @@ static void _itemSellInit( FIELD_ITEMMENU_WORK* pWork )
       ITEMMENU_WordsetItemName( pWork, 0,  pWork->ret_item );
       WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf );
       ITEMDISP_ItemInfoWindowDisp( pWork );
+
+			ITEMDISP_ChangeRetButtonActive( pWork, FALSE );
 
       _CHANGE_STATE( pWork, _itemSellEndMsgWait );
       return;
@@ -2148,8 +2155,10 @@ static void _itemSellInputWait( FIELD_ITEMMENU_WORK* pWork )
   ret = CheckNumSelTouch();
   if( ret == GFL_UI_TP_HIT_NONE ){
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
       ret = 0;
     }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
       ret = 1;
     }
   }
@@ -3953,8 +3962,12 @@ static int CheckNumSelTouch(void)
     { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, _BAR_CELL_CURSOR_RETURN, _BAR_CELL_CURSOR_RETURN+TOUCHBAR_ICON_WIDTH-1 },  //ƒŠƒ^[ƒ“
     { GFL_UI_TP_HIT_END, 0, 0, 0 },
   };
+	int	ret = GFL_UI_TP_HitTrg( tbl );
 
-  return GFL_UI_TP_HitTrg( tbl );
+  if( ret != GFL_UI_TP_HIT_NONE ){
+		GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+	}
+	return ret;
 }
 
 
@@ -3972,6 +3985,7 @@ static void _itemTrashCancel( FIELD_ITEMMENU_WORK * wk )
 
   GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkScroll, TRUE );
 	ITEMDISP_ChangeActive( wk, TRUE );
+	KTST_SetDraw( wk, GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY );
   _CHANGE_STATE( wk, _itemKindSelectMenu );
 }
 
@@ -3984,6 +3998,11 @@ static void _itemTrashCancel( FIELD_ITEMMENU_WORK * wk )
 static void _itemSellInputCancel( FIELD_ITEMMENU_WORK * wk )
 {
   InputNum_Exit( wk );
+
+  GFL_CLACT_WK_SetAutoAnmFlag( wk->clwkScroll, TRUE );
+	ITEMDISP_ChangeActive( wk, TRUE );
+	KTST_SetDraw( wk, GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY );
+
   _CHANGE_STATE( wk, _itemSellExit );
 }
 
