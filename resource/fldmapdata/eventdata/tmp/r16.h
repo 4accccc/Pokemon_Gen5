@@ -20,11 +20,14 @@
 #define TR_POLICE_02                       6
 #define R16_FLD_ITEM_01                    7
 #define R16_FLD_ITEM_02                    8
+#define R16_STOPPER_01                     9
 
 #endif //ZONE_R16_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r16.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_R16_EVB_H
 #define ZONE_R16_EVB_H
 
+#define BG_R16_BOARD_01                   0
+#define BG_R16_BOARD_02                   1
 
 #endif //ZONE_R16_EVB_H

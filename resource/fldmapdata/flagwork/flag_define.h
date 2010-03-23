@@ -761,7 +761,7 @@
 #define FV_C08_LEADERB_01                  737 /* 0x02e1 ソウリュウシティ：アイリス */
 #define FV_D06R0201_PLASMA                 738 /* 0x02e2 電気洞窟内のプラズマ団したっぱ（視線トレーナー） */
 #define FV_R08_STOPPER_01                  739 /* 0x02e3 ８番道路のストッパー */
-		/* not used   740(0x02e4) */
+#define FV_R16_STOPPER_01                  740 /* 0x02e4 ワンダーブリッジ前ストッパー */
 		/* not used   741(0x02e5) */
 		/* not used   742(0x02e6) */
 		/* not used   743(0x02e7) */

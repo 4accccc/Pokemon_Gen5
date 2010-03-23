@@ -19,5 +19,6 @@
 #ifndef ZONE_T03_EVB_H
 #define ZONE_T03_EVB_H
 
+#define BG_T03_BOARD_01                   0
 
 #endif //ZONE_T03_EVB_H
