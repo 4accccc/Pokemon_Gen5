@@ -54,6 +54,7 @@ typedef enum
   POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_AFT,   //2010映画エンテイ・ライコウ・スイクン(イベント後
   POKE_MEMO_EVENT_DARUTANISU,           //配布ダルタニス
   POKE_MEMO_EVENT_MERODHIA,             //配布メロディア
+  POKE_MEMO_EVENT_INSEKUTA,             //配布インセクタ
 
 }POKE_MEMO_EVENT_TYPE;
 

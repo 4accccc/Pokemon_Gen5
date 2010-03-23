@@ -6513,6 +6513,7 @@ static const FLDMENUFUNC_LIST DATA_EventPokeCreate[] =
   { DEBUG_FIELD_EVEPOKE09, (void*)8 },
   { DEBUG_FIELD_EVEPOKE10, (void*)9 },
   { DEBUG_FIELD_EVEPOKE11, (void*)10 },
+  { DEBUG_FIELD_EVEPOKE12, (void*)11 },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugEventPokeCreateMenu = {
@@ -6628,14 +6629,18 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
           PP_Put( pp , ID_PARA_event_get_flag , TRUE );
           break;
         case 8: //メロディア
-          pp = PP_Create( MONSNO_MERODHIA , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+          pp = PP_Create( MONSNO_655 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
           PP_Put( pp , ID_PARA_event_get_flag , TRUE );
           break;
         case 9: //ダルタニス
-          pp = PP_Create( MONSNO_DARUTANISU , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+          pp = PP_Create( MONSNO_654 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
           PP_Put( pp , ID_PARA_event_get_flag , TRUE );
           break;
-        case 10: //はいふシェイミ
+        case 10: //インセクタ
+          pp = PP_Create( MONSNO_656 , 50 , PTL_SETUP_RND_AUTO , work->heapId );
+          PP_Put( pp , ID_PARA_event_get_flag , TRUE );
+          break;
+        case 11: //はいふシェイミ
           pp = PP_Create( MONSNO_SHEIMI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
           PP_Put( pp , ID_PARA_event_get_flag , TRUE );
           break;

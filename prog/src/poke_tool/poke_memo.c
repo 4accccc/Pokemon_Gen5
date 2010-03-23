@@ -301,7 +301,7 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
 
   case POKE_MEMO_EVENT_DARUTANISU:
     //配布ダルタニス
-    if( monsNo == MONSNO_DARUTANISU &&
+    if( monsNo == MONSNO_654 &&
         isEvent == 1 )
     {
       return TRUE;
@@ -310,7 +310,16 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
 
   case POKE_MEMO_EVENT_MERODHIA:
     //配布メロディア
-    if( monsNo == MONSNO_MERODHIA &&
+    if( monsNo == MONSNO_655 &&
+        isEvent == 1 )
+    {
+      return TRUE;
+    }
+    break;
+
+  case POKE_MEMO_EVENT_INSEKUTA:
+    //配布インセクタ
+    if( monsNo == MONSNO_656 &&
         isEvent == 1 )
     {
       return TRUE;
