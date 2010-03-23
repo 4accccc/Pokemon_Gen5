@@ -2758,6 +2758,7 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
 
   {
     int i,j,k=1;
+		int	monsno=1;
     BOX_MANAGER* pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(gameSys));
 
     if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
@@ -2767,9 +2768,6 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
 		BOXDAT_AddTrayMax( pBox );
     for(i=0;i < k;i++){
       for(j=0;j < 30;j++){
-//        int monsno =GFUser_GetPublicRand(MONSNO_END-1)+1;
-//        int monsno = i+10;
-        int monsno = GFUser_GetPublicRand(300)+1;
         OS_TPrintf("%d  %d %dì¬\n",monsno, i, j);
         PP_Setup(pp,  monsno , 100, MyStatus_GetID( myStatus ));
 
@@ -2778,6 +2776,11 @@ static BOOL debugMenuCallProc_BoxMax( DEBUG_MENU_EVENT_WORK *wk )
         PPP_Put( ppp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 
         BOXDAT_PutPokemonBox(pBox, i, ppp);
+
+				monsno++;
+				if( monsno > MONSNO_END ){
+					monsno = 1;
+				}
       }
     }
   }
