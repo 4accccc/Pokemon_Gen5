@@ -34,7 +34,6 @@ _EVENT_DATA    ev_pos_r03_support_03
 _EVENT_DATA    ev_bg_r03_board_01
 _EVENT_DATA    ev_bg_r03_board_02
 _EVENT_DATA    ev_bg_r03_board_03
-_EVENT_DATA    ev_init_r03
 _EVENT_DATA    ev_pos_r03_futago_01
 _EVENT_DATA    ev_r03_rival_03
 _EVENT_DATA    ev_pos_r03_sodateya_egg		//タマゴ発見を教えてくれるPOSイベント
@@ -61,32 +60,25 @@ INIT_EVENT_START	ev_zone_r03
 		$OBJCHRWORK0 = POKE18
 	ENDIF
 }
-INIT_EVENT_END
-
-/************************************************************/
-/*					FIELD_INIT_LABEL						*/
-/************************************************************/
-INIT_EVENT_START	ev_init_r03
-	
 
 	//誘拐イベントワークの値によってサポートの位置を変更する
 	
 	//クリア時
 	IF $WK_SCENE_R03_PLASMA == 4 THEN
-		_OBJ_POS_CHANGE( R03_SUPPORT_01, 715, 0, 566, DIR_RIGHT )
-		_OBJ_POS_CHANGE( R03_BABYGIRL_02, 717, 0, 566, DIR_LEFT )
+		_SXY_MOVE_NPC_POS( R03_SUPPORT_01, DIR_RIGHT, 715, 0, 566 )
+		_SXY_MOVE_NPC_POS( R03_BABYGIRL_02,DIR_LEFT, 717, 0, 566 )
 	
 	//初期状態
 	ELSIF $WK_SCENE_R03_PLASMA == 0 THEN
 		
 	//発生後
 	ELSIF $WK_SCENE_R03_PLASMA < 4 THEN
-		_OBJ_POS_CHANGE( R03_SUPPORT_01, 719, 0, 563, DIR_LEFT )
-		_OBJ_POS_CHANGE( R03_BABYGIRL_02, 719, 0, 564, DIR_UP )
+		_SXY_MOVE_NPC_POS( R03_SUPPORT_01,DIR_LEFT, 719, 0, 563  )
+		_SXY_MOVE_NPC_POS( R03_BABYGIRL_02,DIR_UP, 719, 0, 564  )
 	ELSE
 	
 	ENDIF
-
+	
 INIT_EVENT_END
 
 /**************************************************************/
@@ -1314,6 +1306,7 @@ _ANIME_LABEL	anm_player_02
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_kusa_rival_02_01
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	AC_WALK_L_8F,5
 	_ANIME_DATA	ACMD_END,0
