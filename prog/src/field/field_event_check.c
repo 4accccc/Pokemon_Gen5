@@ -2234,21 +2234,24 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
       
       if( form == PLAYER_MOVE_FORM_SWIM )
       {
-        MAPATTR_VALUE attr_value = MAPATTR_GetAttrValue( attr );
-        
-        if( MAPATTR_VALUE_CheckWaterFall(attr_value) == TRUE )
+        if( checkPokeWazaGroup(req->gamedata,WAZANO_TAKINOBORI) != 6 )
         {
-          fx32 t_height;
-          VecFx32 t_pos = front_pos;
-          MMDL *mmdl = FIELD_PLAYER_GetMMdl( req->field_player );
-          MMDL_TOOL_AddDirVector( req->player_dir, &t_pos, GRID_FX32 );
-          
-          if( MMDL_GetMapPosHeight(mmdl,&t_pos,&t_height) == TRUE )
+          MAPATTR_VALUE attr_value = MAPATTR_GetAttrValue( attr );
+        
+          if( MAPATTR_VALUE_CheckWaterFall(attr_value) == TRUE )
           {
-            if( front_pos.y > t_height ) //下りなら滝下りイベント
+            fx32 t_height;
+            VecFx32 t_pos = front_pos;
+            MMDL *mmdl = FIELD_PLAYER_GetMMdl( req->field_player );
+            MMDL_TOOL_AddDirVector( req->player_dir, &t_pos, GRID_FX32 );
+          
+            if( MMDL_GetMapPosHeight(mmdl,&t_pos,&t_height) == TRUE )
             {
-              return SCRIPT_SetEventScript(
-                  req->gsys, SCRID_HIDEN_TAKIKUDARI, NULL, req->heapID );
+              if( front_pos.y > t_height ) //下りなら滝下りイベント
+              {
+                return SCRIPT_SetEventScript(
+                    req->gsys, SCRID_HIDEN_TAKIKUDARI, NULL, req->heapID );
+              }
             }
           }
         }
