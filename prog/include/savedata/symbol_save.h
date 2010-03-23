@@ -19,9 +19,6 @@ typedef struct _SYMBOL_SAVE_WORK SYMBOL_SAVE_WORK;
 //==============================================================================
 //  定数定義
 //==============================================================================
-///シンボルポケモン最大数
-#define SYMBOL_POKE_MAX           (530)
-
 ///配置No
 enum{
   SYMBOL_NO_START_KEEP_LARGE = 0,                             ///<キープゾーン(64x64)開始No
@@ -33,6 +30,8 @@ enum{
   SYMBOL_NO_END_FREE_LARGE = SYMBOL_NO_START_FREE_LARGE + 30, ///<フリーゾーン(64x64)終了No
   SYMBOL_NO_START_FREE_SMALL = SYMBOL_NO_END_FREE_LARGE,      ///<フリーゾーン(32x32)開始No
   SYMBOL_NO_END_FREE_SMALL = SYMBOL_NO_START_FREE_SMALL + 480,///<フリーゾーン(32x32)終了No
+
+  SYMBOL_POKE_MAX         = SYMBOL_NO_END_FREE_SMALL,         ///<シンボルポケモン最大数
 };
 
 /// ※SymbolZoneTypeDataNoと並びを同じにしておくこと！
@@ -121,9 +120,15 @@ extern SYMBOL_SAVE_WORK* SymbolSave_GetSymbolData(SAVE_CONTROL_WORK* pSave);
 //--------------------------------------------------------------
 //  アクセス関数
 //--------------------------------------------------------------
+extern const SYMBOL_POKEMON * SymbolSave_GetSymbolPokemon(SYMBOL_SAVE_WORK *symbol_save, u32 no);
 extern u32 SymbolSave_CheckFreeZoneSpace(SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type);
 extern void SymbolSave_DataShift(SYMBOL_SAVE_WORK *symbol_save, u32 no);
 extern void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save, u16 monsno, u16 wazano, u8 sex, u8 form_no, SYMBOL_ZONE_TYPE zone_type);
+
+//--------------------------------------------------------------
+//  ツール関数
+//--------------------------------------------------------------
+extern SYMBOL_ZONE_TYPE SYMBOLZONE_GetZoneTypeFromNumber(u32 no);
 
 //==============================================================================
 //  外部データ

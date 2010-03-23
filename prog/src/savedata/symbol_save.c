@@ -90,6 +90,19 @@ SYMBOL_SAVE_WORK* SymbolSave_GetSymbolData(SAVE_CONTROL_WORK* pSave)
 }
 
 
+//==================================================================
+/**
+ * @brief シンボルポケモンデータを取得
+ * @param   symbol_save
+ * @param   no		配置No
+ * @return  SYMBOL_POKEMON  シンボルポケモンデータへのポインタ
+ */
+//==================================================================
+const SYMBOL_POKEMON * SymbolSave_GetSymbolPokemon(SYMBOL_SAVE_WORK *symbol_save, u32 no)
+{
+  GF_ASSERT( no < SYMBOL_POKE_MAX );
+  return &symbol_save->symbol_poke[ no ];
+}
 
 //==================================================================
 /**
@@ -129,7 +142,7 @@ u32 SymbolSave_CheckFreeZoneSpace(SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYP
  * @retval  SYMBOL_ZONE_TYPE		
  */
 //--------------------------------------------------------------
-static SYMBOL_ZONE_TYPE _Get_No_to_ZoneType(u32 no)
+SYMBOL_ZONE_TYPE SYMBOLZONE_GetZoneTypeFromNumber(u32 no)
 {
   SYMBOL_ZONE_TYPE zone_type;
   
@@ -158,7 +171,7 @@ void SymbolSave_DataShift(SYMBOL_SAVE_WORK *symbol_save, u32 no)
   SYMBOL_ZONE_TYPE zone_type;
   u32 start, end;
   
-  zone_type = _Get_No_to_ZoneType(no);
+  zone_type = SYMBOLZONE_GetZoneTypeFromNumber(no);
   start = no;
   end = SymbolZoneTypeDataNo[zone_type].end;
 
