@@ -611,6 +611,8 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
 			GFL_BG_SetVisible( sc_bgsetup[i].frame, sc_bgsetup[i].is_visible );
 		}
 	}
+  //NULLƒLƒƒƒ‰—ÌˆæŠm•Û
+  GFL_BG_FillCharacter( GFL_BG_FRAME1_M, 0, 1, 0 );
 }
 //----------------------------------------------------------------------------
 /**
@@ -621,7 +623,10 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, HEAPID heapID )
  */
 //-----------------------------------------------------------------------------
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk )
-{	
+{
+  //NULLƒLƒƒƒ‰—Ìˆæ‰ð•ú
+  GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_M, 1, 0);
+
 	//BG–Ê”jŠü
 	{	
 		int i;

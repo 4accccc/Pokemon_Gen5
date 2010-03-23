@@ -222,8 +222,6 @@ static void cmd_SystemWorkInit( DEMO3D_CMD_WORK* wk )
 
   //メッセージスピード取得
   wk->msg_spd  = MSGSPEED_GetWait();
-
-  GFL_BG_FillCharacter( DEMO3D_CMD_FREE_BG_M1, 0, 1, 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -248,8 +246,6 @@ static void cmd_SystemWorkRelease( DEMO3D_CMD_WORK* wk )
 
   ///////////////////////////////////////////////////
   //システムワーク破棄
-  GFL_BG_FillCharacterRelease( DEMO3D_CMD_FREE_BG_M1, 1, 0);
-
   GFL_FONT_Delete(wk->fontHandle);
 
   // TCB削除
