@@ -345,6 +345,17 @@ BOOL BTL_NET_ImServer( void )
   return ( Sys->serverNetID == Sys->myNetID );
 }
 
+// サーバになるマシンのサーババージョンを取得
+u8 BTL_NET_GetServerVersion( void )
+{
+  if( Sys != NULL ){
+    SVVER_WORK* swk = (SVVER_WORK*)(&Sys->svverWork);
+    return swk->maxVersion;
+  }
+  return BTL_NET_SERVER_VERSION;
+}
+
+
 /**
  *  clientID -> netID 変換
  */

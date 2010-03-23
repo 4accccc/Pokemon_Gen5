@@ -1209,6 +1209,7 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
     {
       wk->sendClientID = 0;
       wk->ImServer = BTL_NET_ImServer();
+      wk->setupParam->commServerVer = BTL_NET_GetServerVersion();
 
       if( BTL_NET_ImServer() )
       {

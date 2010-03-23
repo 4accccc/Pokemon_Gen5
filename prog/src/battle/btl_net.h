@@ -73,6 +73,7 @@ extern BOOL BTL_NET_DetermineServer( u8 clientID );
 
 extern BOOL BTL_NET_IsServerDetermained( void );
 extern BOOL BTL_NET_ImServer( void );
+extern u8 BTL_NET_GetServerVersion( void );
 extern BOOL BTL_NET_NotifyServerParam( const BTLNET_SERVER_NOTIFY_PARAM* sendParam );
 extern BOOL BTL_NET_IsServerParamReceived( BTLNET_SERVER_NOTIFY_PARAM* dst );
 extern BOOL BTL_NET_StartNotifyPartyData( const POKEPARTY* party );
