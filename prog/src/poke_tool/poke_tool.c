@@ -1356,7 +1356,6 @@ void  PP_SetWazaPos( POKEMON_PARAM *pp, u16 wazano, u8 pos )
 void  PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
 {
   GF_ASSERT(pos<PTL_WAZA_MAX);
-
   {
     u8 maxPP = 0;
 
@@ -1368,6 +1367,119 @@ void  PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
     }
 
     PPP_Put( ppp, ID_PARA_pp1 + pos, maxPP );
+  }
+}
+
+//============================================================================================
+/**
+ *  場所を指定して技をセットする。  PP引継版
+ *
+ * @param[in] ppp   セットするポケモンパラメータ構造体のポインタ
+ * @param[in] wazano  セットする技ナンバー
+ */
+//============================================================================================
+u16  PP_SetWazaPPCont( POKEMON_PARAM *pp, u16 wazano )
+{ 
+  return PPP_SetWazaPPCont( &pp->ppp, wazano );
+}
+
+//============================================================================================
+/**
+ *  あいている場所に技を追加する。あいていない場合はその旨を返す。  PP引継版
+ *
+ *  @param[in]  ppp   セットするポケモンパラメータ構造体のポインタ
+ *  @param[in]  wazano  セットする技ナンバー
+ *
+ *  @retvl  wazano      正常終了
+ *      POKETOOL_WAZASET_SAME すでに覚えている技と同じ技を覚えようとした
+ *      POKETOOL_WAZASET_FAIL   場所が空いていない
+ */
+//============================================================================================
+u16  PPP_SetWazaPPCont( POKEMON_PASO_PARAM *ppp, u16 wazano )
+{ 
+  int i;
+  u8  pp;
+  u16 waza;
+  u16 ret;
+  BOOL  flag;
+
+  ret = PTL_WAZASET_FAIL;
+
+  flag = PPP_FastModeOn( ppp );
+
+  for( i = 0 ; i < PTL_WAZA_MAX ; i++ ){
+    if( ( waza = PPP_Get( ppp, ID_PARA_waza1 + i, NULL ) ) == 0 ){
+      PPP_SetWazaPosPPCont( ppp, wazano, i );
+      ret = wazano;
+      break;
+    }
+    else{
+      //同じ技を覚えちゃだめ
+      if( waza == wazano ){
+        ret = PTL_WAZASET_SAME;
+        break;
+      }
+    }
+  }
+
+  PPP_FastModeOff( ppp, flag );
+
+  return  ret;
+}
+//============================================================================================
+/**
+ *  場所を指定して技をセットする。  PP引継版
+ *
+ * @param[in] pp   セットするポケモンパラメータ構造体のポインタ
+ * @param[in] wazano  セットする技ナンバー
+ * @param[in] pos   技をセットする場所
+ */
+//============================================================================================
+void  PP_SetWazaPosPPCont( POKEMON_PARAM *pp, u16 wazano, u8 pos )
+{ 
+  PPP_SetWazaPosPPCont( &pp->ppp, wazano, pos );
+}
+
+//============================================================================================
+/**
+ *  場所を指定して技をセットする。  PP引継版
+ *
+ * @param[in] ppp   セットするポケモンパラメータ構造体のポインタ
+ * @param[in] wazano  セットする技ナンバー
+ * @param[in] pos   技をセットする場所
+ */
+//============================================================================================
+void  PPP_SetWazaPosPPCont( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos )
+{ 
+  //今回、わざマシンを何回も使えるので、
+  //わざマシンを使い続けることで、PPの回復ができてしまう
+  //そのため以前のPPを引き継ぐ　2010/3/23 nagihashi
+  GF_ASSERT(pos<PTL_WAZA_MAX);
+  {
+    u8 srcPP  = 0;
+    u8 dstPP  = 0;
+    BOOL is_exits;
+
+    //以前の技情報取得
+    is_exits  = PPP_Get( ppp, ID_PARA_waza1 + pos, NULL ) != WAZANO_NULL;
+    srcPP     = PPP_Get( ppp, ID_PARA_pp1 + pos, NULL );
+
+    //新規の技設定
+    PPP_Put( ppp, ID_PARA_waza1 + pos, wazano );
+    PPP_Put( ppp, ID_PARA_pp_count1 + pos, 0 );
+
+    //PP再設定処理
+    if( wazano != WAZANO_NULL ){
+      dstPP = WAZADATA_GetMaxPP( wazano, 0 );
+
+      //技を上書きしていた場合、PPを引き継ぐ
+      if( is_exits )
+      { 
+        dstPP = MATH_CLAMP( dstPP, 0, srcPP );
+      }
+    }
+
+    PPP_Put( ppp, ID_PARA_pp1 + pos, dstPP );
   }
 }
 

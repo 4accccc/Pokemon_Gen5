@@ -651,6 +651,12 @@ extern  void  PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos );
 extern  void  PP_RecoverWazaPPAll( POKEMON_PARAM* pp );
 extern  WazaID  PP_CheckWazaOboe( POKEMON_PARAM *pp, int* index, HEAPID  heapID );
 
+// パラメータ設定系（ワザ 技ポイント引継版）
+extern  u16   PP_SetWazaPPCont( POKEMON_PARAM *pp, u16 wazano );
+extern  u16   PPP_SetWazaPPCont( POKEMON_PASO_PARAM *ppp, u16 wazano );
+extern  void  PP_SetWazaPosPPCont( POKEMON_PARAM *pp, u16 wazano, u8 pos );
+extern  void  PPP_SetWazaPosPPCont( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos );
+
 // パラメータ設定系（その他）
 extern  void  PP_SetSick( POKEMON_PARAM* pp, PokeSick sick );
 extern  void  PP_SetSeikaku( POKEMON_PARAM *pp, u8 chr );
