@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-23T13:06:04"/>
+	<create user="tamada" host="W00139" date="2010-03-24T00:48:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,12 +307,12 @@
 
 	<dialog left="35" top="202" right="740" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="752" top="242" right="1280" bottom="764" visible="no"/>
+		<tag-palette left="752" top="242" right="1280" bottom="764" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1600,6 +1600,43 @@ Y：オス　X：不明　 A：メス</language>
 Y：キープL　X：キープS　B：フリーL　A：フリーS</language>
 		<language name="JPN_KANJI" width="240">場所
 Y：キープL　X：キープS　B：フリーL　A：フリーS</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_05">
+		<language name="JPN" width="240">キープＬまんたん</language>
+		<language name="JPN_KANJI" width="240">キープＬまんたん</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_06">
+		<language name="JPN" width="240">キープＳまんたん</language>
+		<language name="JPN_KANJI" width="240">キープＳまんたん</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_07">
+		<language name="JPN" width="240">フリーＬまんたん</language>
+		<language name="JPN_KANJI" width="240">フリーＬまんたん</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_08">
+		<language name="JPN" width="240">フリーＳまんたん</language>
+		<language name="JPN_KANJI" width="240">フリーＳまんたん</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_09">
+		<language name="JPN" width="240">かぞえあげ</language>
+		<language name="JPN_KANJI" width="240">かぞえあげ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_10">
+		<language name="JPN" width="240">キープＬ[2:02:３桁:0]　キープＳ[2:02:３桁:1]
+フリーＬ[2:02:３桁:2]　フリーＳ[2:02:３桁:3]</language>
+		<language name="JPN_KANJI" width="240">キープＬ[2:02:３桁:0]　キープＳ[2:02:３桁:1]
+フリーＬ[2:02:３桁:2]　フリーＳ[2:02:３桁:3]</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_11">
+		<language name="JPN" width="240">単独追加</language>
+		<language name="JPN_KANJI" width="240">単独追加</language>
 	</row>
 
 	<flowchart-group-list>
