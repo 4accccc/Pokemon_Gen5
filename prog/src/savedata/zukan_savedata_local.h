@@ -43,7 +43,7 @@ enum {
 	FORM_MAX_BANBIINA = 4,				// バンビーナ ※新規
 	FORM_MAX_SIKIZIKA = 4,				// シキジカ ※新規
 	FORM_MAX_MERODHIA = 2,				// メロディア ※新規
-	FORM_MAX_HIHIDARUMA = 2,			// シキジカ ※新規
+	FORM_MAX_HIHIDARUMA = 2,			// ヒヒダルマ ※新規
 	FORM_MAX_BASURAO = 2,					// バスラオ ※新規
 	/* 合計: 72 */
 

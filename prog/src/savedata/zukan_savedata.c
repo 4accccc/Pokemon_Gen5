@@ -52,7 +52,7 @@ static const u16 FormTable[][2] =
 	{ MONSNO_BANBIINA, FORM_MAX_BANBIINA },				// バンビーナ ※新規
 	{ MONSNO_SIKIZIKA, FORM_MAX_SIKIZIKA },				// シキジカ ※新規
 	{ MONSNO_MERODHIA, FORM_MAX_MERODHIA },				// メロディア ※新規
-	{ MONSNO_HIHIDARUMA, FORM_MAX_HIHIDARUMA },		// シキジカ ※新規
+	{ MONSNO_HIHIDARUMA, FORM_MAX_HIHIDARUMA },		// ヒヒダルマ ※新規
 	{ MONSNO_BASURAO, FORM_MAX_BASURAO },					// バスラオ ※新規
 
 	{ 0, 0 },
@@ -1001,16 +1001,27 @@ static void SetFormSeeFlag( ZUKAN_SAVEDATA * zw, u32 mons, u32 sex, BOOL rare, u
 	if( pos != -1 ){
 		u16	max;
 		u16	i;
-		// ポワルンとチェリムは全てのフォルムをONにする
+		// 一部のポケモンは全てのフォルムをONにする
+		// ポワルン
 		if( mons == MONSNO_POWARUN ){
 			form = 0;
 			max  = FORM_MAX_POWARUN;
+		// チェリム
 		}else if( mons == MONSNO_THERIMU ){
 			form = 0;
 			max  = FORM_MAX_THERIMU;
+		// ヒヒダルマ
+		}else if( mons == MONSNO_HIHIDARUMA ){
+			form = 0;
+			max  = FORM_MAX_HIHIDARUMA;
+		// メロディア
+		}else if( mons == MONSNO_MERODHIA ){
+			form = 0;
+			max  = FORM_MAX_MERODHIA;
 		}else{
 			max  = 1;
 		}
+
 		if( rare == TRUE ){
 			for( i=0; i<max; i++ ){
 				set_bit( zw->form_flag[COLOR_RARE], pos+form+i );
