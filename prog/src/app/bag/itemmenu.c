@@ -581,7 +581,7 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
 
 	if( length >= ITEMMENU_SCROLLBAR_ENABLE_NUM && GFL_UI_TP_GetPointCont(&x, &y) == TRUE ){
     // 範囲判定
-		if( (x >= (32*8)) || (x <= (28*8)) ){
+		if( (x >= (32*8)) || (x <= (30*8)) ){
       return FALSE;
     }
 		// 初回チェック
@@ -2808,10 +2808,7 @@ static void SORT_Button( FIELD_ITEMMENU_WORK* pWork )
 
 static void SORT_Main( FIELD_ITEMMENU_WORK* pWork )
 {
-	// @TODO ソート改造中 2010/03/18 by nakahiro
-	if( pWork->pocketno != BAG_POKE_EVENT ){
-		SORT_Type( pWork );
-	}
+	SORT_Type( pWork );
   // 再描画
   _windowRewrite( pWork );
 }
