@@ -2652,6 +2652,23 @@
 
 //--------------------------------------------------------------
 /**
+ *  @def  _GET_FISHING_ENCOUNT_MONSNO
+ *  @brief  釣りエンカウトするポケモンの中からランダムで1種を選んでモンスターNoを返す
+ *  @param ret_wk 結果格納先
+ *  
+ *  @retval モンスターNo
+ */
+//--------------------------------------------------------------
+#define _GET_FISHING_ENCOUNT_MONSNO( ret_wk ) \
+    _ASM_GET_FISHING_ENCOUNT_MONSNO ret_wk
+
+  .macro  _ASM_GET_FISHING_ENCOUNT_MONSNO ret_wk
+  .short  EV_SEQ_GET_FISHING_ENCOUNT_MONSNO
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
  *  @def _LOOK_ELBOARD
  *  @brief 電光掲示板を見る
  *  @param frame カメラ移動に要するフレーム数

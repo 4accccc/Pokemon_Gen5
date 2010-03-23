@@ -375,6 +375,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_sodateya.c \
         field/scrcmd_musical.c \
         field/scrcmd_dreamworld.c \
+        field/encount_data.c \
         field/field_encount_st.c \
         field/move_pokemon.c \
         field/field_skill.c \

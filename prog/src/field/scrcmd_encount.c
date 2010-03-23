@@ -26,9 +26,11 @@
 
 #include "move_pokemon.h"
 #include "field/zonedata.h"
+#include "arc/fieldmap/zone_id.h"
 
 #include "scrcmd_encount.h"
 #include "effect_encount.h"
+#include "encount_data.h"
 
 #include "event_field_fade.h" //EVENT_FieldFadeIn_Black
 
@@ -211,6 +213,84 @@ VMCMD_RESULT EvCmdGetMovePokemonStatus( VMHANDLE* core, void* wk )
   u16* ret_wk = SCRCMD_GetVMWork( core, work );
 	
   *ret_wk = EncDataSave_GetMovePokeState( enc_sv, move_poke );
+
+	return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------------
+/**
+ * @brief 釣りエンカウントするポケモンNoを抽選で取得する 
+ *
+ * @param	core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT
+ *
+ * MVPOKE_STATE_NONE他
+ */
+//--------------------------------------------------------------------
+#define FISHING_ENC_POKE_ZONE_MAX  (5)
+#define FISHING_ENC_POKE_MAX  (FISHING_ENC_POKE_ZONE_MAX*(ENC_MONS_NUM_FISHING+ENC_MONS_NUM_FISHING_SP))
+
+/*
+ *  @brief  指定のモンスターNoが既に登録済みかチェック
+ */
+static u16 sub_EntryFishingEncMonsNo( u16* ary, u16 num, u16 monsno)
+{
+  int i;
+
+  for(i = 0;i < num;i++){
+    if( ary[i] == monsno ){
+      return 0;
+    }
+  }
+  ary[num] = monsno;
+  
+  return (num+1);
+}
+
+VMCMD_RESULT EvCmdGetFishingEncountMonsNo( VMHANDLE* core, void* wk )
+{
+  u8                season;
+  u16               *tbl, i,j,count = 0;
+  ENCOUNT_DATA      data;
+  ARCHANDLE*        handle;
+  SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+
+  static const u16 zone_tbl[FISHING_ENC_POKE_ZONE_MAX] = {
+    ZONE_ID_H04,
+    ZONE_ID_R01,
+    ZONE_ID_R03R0301,
+    ZONE_ID_R13,
+    ZONE_ID_W17
+  };
+
+  u16* ret_wk = SCRCMD_GetVMWork( core, work );
+
+  season = GAMEDATA_GetSeasonID( gdata );
+  handle = GFL_ARC_OpenDataHandle( ARCID_ENCOUNT, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
+  tbl = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(HEAPID_FIELDMAP), sizeof(u16)*FISHING_ENC_POKE_MAX);
+
+  for(i = 0;i < NELEMS(zone_tbl);i++){
+    if( ENCOUNT_DATA_Load( &data, handle, zone_tbl[i], season ) == FALSE ){
+      continue;
+    }
+    if( data.probFishing > 0 ){
+      for(j = 0;j < ENC_MONS_NUM_FISHING;j++){
+        count = sub_EntryFishingEncMonsNo( tbl, count, data.fishingMons[j].monsNo);
+      }
+    }
+    if( data.probFishingSp > 0 ){
+      for(j = 0;j < ENC_MONS_NUM_FISHING_SP;j++){
+        count = sub_EntryFishingEncMonsNo( tbl, count, data.fishingSpMons[j].monsNo);
+      }
+    }
+  }
+  *ret_wk = tbl[ GFUser_GetPublicRand0( count ) ];
+
+  GFL_HEAP_FreeMemory(tbl);
+  GFL_ARC_CloseDataHandle( handle );
 
 	return VMCMD_RESULT_CONTINUE;
 }

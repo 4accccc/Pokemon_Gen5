@@ -980,6 +980,12 @@
   DEF_CMD( EvCmdSymbolPokeGet, EV_SEQ_SYMBOL_POKE_GET )
   NO_CMD()
 
+  //エンカウントデータ参照イベント関連
+  DEF_CMD( EvCmdGetFishingEncountMonsNo, EV_SEQ_GET_FISHING_ENCOUNT_MONSNO )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
 
   //スクリプトコマンドテーブル終了

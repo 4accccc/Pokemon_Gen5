@@ -92,4 +92,18 @@ typedef struct _ENCOUNT_TABLE{
   ENCOUNT_DATA  enc_tbl[4];
 }ENCOUNT_TABLE;
 
+//------------------------------------------------------------------
+/*
+ *  @brief  ゾーンエンカウントデータロード
+ *
+ *  @param  data    エンカウントデータをロードするワークアドレス
+ *  @param  handel  エンカウントデータアーカイブハンドル
+ *  @param  zone_id ゾーンID
+ *  @param  season_id 季節ID
+ *  @retval true  エンカウントデータ取得に成功
+ *  @retval false 指定ゾーンにはエンカウントデータがない
+ */
+//------------------------------------------------------------------
+extern BOOL ENCOUNT_DATA_Load( ENCOUNT_DATA *data, ARCHANDLE* handle, u16 zone_id, u8 season_id );
+
 #endif  //__H_ENCOUNT_DATA_H__

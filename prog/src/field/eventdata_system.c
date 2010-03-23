@@ -732,30 +732,7 @@ static void loadEventDataTableExact(EVENTDATA_SYSTEM * evdata, u16 zone_id, u16 
 //------------------------------------------------------------------
 static void loadEncountDataTable(EVENTDATA_SYSTEM* evdata, u16 zone_id, u8 season_id )
 {
-  u32 size;
-  u16 id,season;
-  MI_CpuClear8(&evdata->encount_work,sizeof(ENCOUNT_DATA));
-
-  id = ZONEDATA_GetEncountDataID(zone_id);
-  if(id == ENC_DATA_INVALID_ID){
-    return;
-  }
-  //データの個数を取得
-  size = GFL_ARC_GetDataSizeByHandle( evdata->encountHandle, id ) / sizeof(ENCOUNT_DATA);
-  if(size != 1 && size != 4){
-    GF_ASSERT(0);
-    return;
-  }
-  //季節を取得
-  if(size == 1){
-    season = 0;
-  }else{
-    season = season_id;
-  }
-  //ロード
-  GFL_ARC_LoadDataOfsByHandle(evdata->encountHandle, id,
-      season*sizeof(ENCOUNT_DATA), sizeof(ENCOUNT_DATA), &evdata->encount_work);
-  evdata->encount_work.enable_f = TRUE;
+  ENCOUNT_DATA_Load( &evdata->encount_work, evdata->encountHandle, zone_id, season_id );
 }
 
 //----------------------------------------------------------------------------
