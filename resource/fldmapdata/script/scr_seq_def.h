@@ -2358,7 +2358,9 @@
  *  @brief  トレーナー戦闘呼び出し（特殊指定あり）
  *  @param tr_id_0 トレーナーID0
  *  @param tr_id_1 トレーナーID1
- *  @note 戦闘後は必ず「勝利」で戻ってきます。戦闘後に_TRAINER_WIN()は必要になります。
+ *
+ *  @note flagsにSCR_BATTLE_MODE_NOLOSEを指定した場合、戦闘後は必ず「勝利」で戻ってきます。
+ *      　この場合も戦闘後に_TRAINER_WIN()は必要になります。
  */
 //--------------------------------------------------------------
 #define _TRAINER_BTL_SP_SET( tr_id0, tr_id1, flags ) \
@@ -2548,6 +2550,17 @@
 //--------------------------------------------------------------
 #define _WILD_BTL_SET_LEGEND( mons_no, mons_lv ) \
     _ASM_WILD_BTL_SET mons_no, mons_lv, SCR_WILD_BTL_FLAG_LEGEND
+
+//--------------------------------------------------------------
+/**
+ * _WILD_BTL_SET_EX  野生戦呼び出し(フラグを自前で全部セットするバージョン)
+ * @param mons_no エンカウントさせたいモンスターNo 
+ * @param mons_lv エンカウントさせたいモンスターレベル
+ * @param flags   SCR_WILD_BTL_FLAG_NONE他 script_def.hに定義
+ */
+//--------------------------------------------------------------
+#define _WILD_BTL_SET_EX( mons_no, mons_lv, flags ) \
+    _ASM_WILD_BTL_SET mons_no, mons_lv, flags
 
   .macro  _ASM_WILD_BTL_SET mons_no, mons_lv, flags
   .short  EV_SEQ_WILD_BTL_SET

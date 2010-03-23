@@ -437,10 +437,7 @@ void ENCPOKE_PPSetup(POKEMON_PARAM* pp,const ENCPOKE_FLD_PARAM* efp, const ENC_P
 
   //第3特性強制セット
   if( poke->spabi_3rd ){
-    u8 abi = POKE_PERSONAL_GetParam( personal, POKEPER_ID_speabi3 );
-    if( abi ){  //第3特性がない場合は再設定しない
-      PP_Put( pp, ID_PARA_speabino, abi); 
-    }
+    PP_SetTokusei3( pp, poke->monsNo, poke->form);
   }
 
   //アイテムセット
