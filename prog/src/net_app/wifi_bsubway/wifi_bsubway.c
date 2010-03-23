@@ -214,6 +214,7 @@ enum
 {
   VIEW_FRAME_SUB_BACKGROUND = GFL_BG_FRAME0_S,
   VIEW_FRAME_MAIN_BACKGROUND = GFL_BG_FRAME0_M,
+  VIEW_FRAME_MAIN_BACKGROUND_BASE = GFL_BG_FRAME3_M,
   VIEW_FRAME_MAIN_WIN = GFL_BG_FRAME1_M,
   VIEW_FRAME_MAIN_YESNO = GFL_BG_FRAME2_M,
 };
@@ -2709,34 +2710,44 @@ static void VIEW_InitResource( WIFI_BSUBWAY_VIEW* p_wk, HEAPID heapID )
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFI_LOGIN, heapID );
   u32 char_ofs;
   
-  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifi_login_conect_NCLR,
+  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifi_login_connect_win_NCLR,
                                       PALTYPE_SUB_BG, 0, 0,  heapID);
   // サブ画面BG0キャラ転送
-  char_ofs = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_wifi_login_conect_sub_NCGR,
+  char_ofs = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_wifi_login_connect_win_NCGR,
                                                                 VIEW_FRAME_SUB_BACKGROUND, 0, 0, heapID);
 
   // サブ画面BG0スクリーン転送
-  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_wifi_login_conect_sub_NSCR,
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_wifi_login_connect_win2_d_NSCR,
                                             VIEW_FRAME_SUB_BACKGROUND, 0,
                                             GFL_ARCUTIL_TRANSINFO_GetPos(char_ofs), 0, 0,
                                             heapID);
 
 
-  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifi_login_conect_NCLR,
+  GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_wifi_login_connect_win_NCLR,
                                     PALTYPE_MAIN_BG, 0, 0,  heapID);
   // メイン画面BG0キャラ転送
-  char_ofs = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_wifi_login_conect_NCGR,
+  char_ofs = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_wifi_login_connect_win_NCGR,
                                                                 VIEW_FRAME_MAIN_BACKGROUND, 0, 0, heapID);
 
   // メイン画面BG0スクリーン転送
-  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_wifi_login_conect_01_NSCR,
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_wifi_login_connect_win1_u_NSCR,
                                             VIEW_FRAME_MAIN_BACKGROUND, 0,
+                                            GFL_ARCUTIL_TRANSINFO_GetPos(char_ofs), 0, 0,
+                                            heapID);
+
+  // メイン画面BG3キャラ転送
+  char_ofs = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_wifi_login_connect_win_NCGR,
+                                                                VIEW_FRAME_MAIN_BACKGROUND_BASE, 0, 0, heapID);
+
+  // メイン画面BG3スクリーン転送
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_wifi_login_connect_win2_u_NSCR,
+                                            VIEW_FRAME_MAIN_BACKGROUND_BASE, 0,
                                             GFL_ARCUTIL_TRANSINFO_GetPos(char_ofs), 0, 0,
                                             heapID);
 
 
   //パレットアニメシステム作成
-  ConnectBGPalAnm_Init(&p_wk->bg_palanm, p_handle, NARC_wifi_login_conect_anm_NCLR, heapID);
+  ConnectBGPalAnm_InitBg(&p_wk->bg_palanm, p_handle, NARC_wifi_login_connect_ani_NCLR, heapID, VIEW_FRAME_MAIN_BACKGROUND, VIEW_FRAME_MAIN_BACKGROUND_BASE );
 
   GFL_ARC_CloseDataHandle(p_handle);
 
@@ -2769,6 +2780,7 @@ static void VIEW_ExitResource( WIFI_BSUBWAY_VIEW* p_wk )
       GFL_ARCUTIL_TRANSINFO_GetSize(p_wk->frame_bgchar_sys));
 
   ConnectBGPalAnm_End( &p_wk->bg_palanm );
+  G2_BlendNone();
 
 }
 
