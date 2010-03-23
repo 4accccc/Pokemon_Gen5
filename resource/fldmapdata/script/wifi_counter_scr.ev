@@ -149,14 +149,21 @@ _RET
 sub_wifi_counter_main_menu:
 {
   DEFINE_LOCAL  i_ret
-
+  
   //分岐・ランダムマッチ/GTS/説明を聞く/やめる
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
 		
 	_BMPMENU_MAKE_LIST( msg_wifi_counter_win01, SEQ_RANDOM_MATCH )	  //ランダムマッチ
 	_BMPMENU_MAKE_LIST( msg_wifi_counter_win02, SEQ_GTS )	            //GTS
-	_BMPMENU_MAKE_LIST( msg_wifi_counter_win03, SEQ_MUSICAL )	        //ミュージカルショット
-	_BMPMENU_MAKE_LIST( msg_wifi_counter_win04, SEQ_BTL_VIDEO )	      //バトルビデオ
+
+  _ITEM_CHK( ITEM_GUZZUKEESU, 1, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+	  _BMPMENU_MAKE_LIST( msg_wifi_counter_win03, SEQ_MUSICAL )	        //ミュージカルショット
+  ENDIF
+  _ITEM_CHK( ITEM_BATORUREKOODAA, 1, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+	  _BMPMENU_MAKE_LIST( msg_wifi_counter_win04, SEQ_BTL_VIDEO )	      //バトルビデオ
+  ENDIF
 	_BMPMENU_MAKE_LIST( msg_wifi_counter_win05, SEQ_COUNTER_EXP )	    //説明を聞く
 	_BMPMENU_MAKE_LIST( msg_wifi_counter_win06, SEQ_GOODBYE )        	//やめる
 		
