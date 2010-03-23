@@ -179,7 +179,7 @@ typedef enum{
 //--------------------------------------------------------------
 enum { 
   ///テクスチャ使用サイズ指定
-  FIELD_3D_VRAM_SIZE    =   GFL_G3D_TEX256K,
+  FIELD_3D_VRAM_SIZE    =   GFL_G3D_TEX384K,  // 256Kから384Kに変更 tomoya
 
   ///パレット使用サイズ指定
   FIELD_3D_PLTT_SIZE    =   GFL_G3D_PLT64K,
