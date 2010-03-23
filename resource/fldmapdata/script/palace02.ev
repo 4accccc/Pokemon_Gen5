@@ -20,8 +20,6 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_palace02
-_EVENT_DATA    ev_init_palace02
-_EVENT_DATA    ev_palace02_symbol_poke
 _EVENT_DATA_END
 
 
@@ -34,10 +32,6 @@ _EVENT_DATA_END
 /**************************************************************/
 /*            FIELD_INIT_LABEL                              　 */
 /**************************************************************/
-INIT_EVENT_START	ev_init_palace02
-  //シンボルポケモン登録
-  _SYMBOL_POKE_SET()
-INIT_EVENT_END
 
 /**************************************************************/
 /*                                                            */
@@ -45,12 +39,4 @@ INIT_EVENT_END
 ev_palace02:
   //とりあえず最初のラベルだけ生成している
   _END
-
-/**************************************************************/
-/*  シンボルポケモンに話しかけた時                            */
-/**************************************************************/
-EVENT_START ev_palace02_symbol_poke
-  _EASY_MSG( msg_symbol_000 )
-  _SYMBOL_POKE_BATTLE( SCWK_TARGET_OBJID, SCWK_ANSWER )
-EVENT_END
 
