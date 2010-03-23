@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00176" date="2009-07-06T16:06:44"/>
+	<create user="matsumiya" host="W00224" date="2010-03-23T11:41:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1629" top="203" right="2334" bottom="823" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -336,16 +336,16 @@
 	<row id="msg_battle_room_01_01">
 		<comment>対戦部屋にいるお姉さんのメッセージ。</comment>
 		<language name="JPN" width="216" line="2">しょていの　いちに　ついて
-たいせんを　はじめて　ください</language>
-		<language name="JPN_KANJI" width="216" line="2">しょていの　いちに　ついて
-たいせんを　はじめて　ください</language>
+たいせんを　はじめてください</language>
+		<language name="JPN_KANJI" width="216" line="2">所定の　位置に　ついて
+対戦を　はじめてください</language>
 	</row>
 
 	<row id="msg_battle_room_02_01">
 		<comment>所定の位置について、待機待ち状態になっているときのメッセージ。</comment>
-		<language name="JPN" width="216" line="2">しょうしょう　おまち　ください
+		<language name="JPN" width="216" line="2">しばらく　おまちください
 ……Ｂボタン　キャンセル</language>
-		<language name="JPN_KANJI" width="216" line="2">しょうしょう　おまち　ください
+		<language name="JPN_KANJI" width="216" line="2">しばらく　お待ちください
 ……Ｂボタン　キャンセル</language>
 	</row>
 
@@ -354,8 +354,8 @@
 シングルバトルのスタンダード</comment>
 		<language name="JPN" width="216" line="2">それでは　さんかする　ポケモンを
 ３ひき　えらんで　ください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216" line="2">それでは　さんかする　ポケモンを
-３ひき　えらんで　ください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">それでは　参加する　ポケモンを
+３匹　選んでください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_battle_room_03_02">
@@ -363,8 +363,8 @@
 ダブルバトルのスタンダード</comment>
 		<language name="JPN" width="216" line="2">それでは　さんかする　ポケモンを
 ４ひき　えらんで　ください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216" line="2">それでは　さんかする　ポケモンを
-４ひき　えらんで　ください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">それでは　参加する　ポケモンを
+４匹　選んでください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_battle_room_03_03">
@@ -372,8 +372,8 @@
 トリプルバトルのスタンダード、ローテーションバトルのスタンダード</comment>
 		<language name="JPN" width="216" line="2">それでは　さんかする　ポケモンを
 ６ひき　えらんで　ください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216" line="2">それでは　さんかする　ポケモンを
-６ひき　えらんで　ください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">それでは　参加する　ポケモンを
+６匹　選んでください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_battle_room_04_01">
@@ -384,7 +384,7 @@
 「いいえ」：ウィンドウを閉じます。</comment>
 		<language name="JPN" width="216" line="2">たいせんを　しゅうりょう　しますが
 よろしいですか？</language>
-		<language name="JPN_KANJI" width="216" line="2">たいせんを　しゅうりょう　しますが
+		<language name="JPN_KANJI" width="216" line="2">対戦を　終了しますが
 よろしいですか？</language>
 	</row>
 
@@ -392,8 +392,8 @@
 		<comment>通信終了時のメッセージ。</comment>
 		<language name="JPN" width="216" line="2">たいせんを　しゅうりょう　します
 しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="216" line="2">たいせんを　しゅうりょう　します
-しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="216" line="2">対戦を　終了します
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="msg_battle_room_05_01">

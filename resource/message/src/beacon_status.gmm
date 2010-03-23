@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-03-20T16:28:47"/>
+	<create user="matsumiya" host="W00224" date="2010-03-23T11:42:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,14 +260,14 @@
 		</language>
 	</columns>
 
-	<dialog left="111" top="342" right="650" bottom="970" maximized="no" rayout="Vertical2">
+	<dialog left="1410" top="263" right="1949" bottom="891" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="220" right="1280" bottom="844" visible="yes"/>
 		<band id="0" index="0" style="0000" width="531"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="364"/>
 		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -346,7 +346,7 @@
 デルダマが　たりません
 ひつよう　[2:02:３桁:2]こ／もってる[2:02:３桁:3]こ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">デルパワーを　使うには
-デルダマが　足りません
+デルダマが　不足しています
 必要　[2:02:３桁:2]個／持ってる　[2:02:３桁:3]個[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -624,7 +624,7 @@ msg_sys_gpower_use00～02が
 きゅうしょに　あたりました！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さんの
 [1:02:ポケモンニックネーム:2]の　攻撃が
-急所に　あたりました！</language>
+急所に　当たりました！</language>
 	</row>
 
 	<row id="msg_beacon_029" back-color="#ffff80,,,,,,,,,,,,,,,,,">
