@@ -195,6 +195,63 @@ _EVENT_DATA ev_fld_item_120
 _EVENT_DATA ev_fld_item_176
 _EVENT_DATA ev_fld_item_177
 _EVENT_DATA ev_fld_item_178
+_EVENT_DATA ev_fld_item_180
+_EVENT_DATA ev_fld_item_181
+_EVENT_DATA ev_fld_item_182
+_EVENT_DATA ev_fld_item_183
+_EVENT_DATA ev_fld_item_184
+_EVENT_DATA ev_fld_item_185
+_EVENT_DATA ev_fld_item_186
+_EVENT_DATA ev_fld_item_187
+_EVENT_DATA ev_fld_item_188
+_EVENT_DATA ev_fld_item_189
+_EVENT_DATA ev_fld_item_190
+_EVENT_DATA ev_fld_item_191
+_EVENT_DATA ev_fld_item_192
+_EVENT_DATA ev_fld_item_193
+_EVENT_DATA ev_fld_item_194
+_EVENT_DATA ev_fld_item_195
+_EVENT_DATA ev_fld_item_196
+_EVENT_DATA ev_fld_item_197
+_EVENT_DATA ev_fld_item_198
+_EVENT_DATA ev_fld_item_199
+_EVENT_DATA ev_fld_item_200
+_EVENT_DATA ev_fld_item_201
+_EVENT_DATA ev_fld_item_202
+_EVENT_DATA ev_fld_item_203
+_EVENT_DATA ev_fld_item_204
+_EVENT_DATA ev_fld_item_205
+_EVENT_DATA ev_fld_item_206
+_EVENT_DATA ev_fld_item_207
+_EVENT_DATA ev_fld_item_208
+_EVENT_DATA ev_fld_item_209
+_EVENT_DATA ev_fld_item_210
+_EVENT_DATA ev_fld_item_211
+_EVENT_DATA ev_fld_item_212
+_EVENT_DATA ev_fld_item_213
+_EVENT_DATA ev_fld_item_214
+_EVENT_DATA ev_fld_item_215
+_EVENT_DATA ev_fld_item_216
+_EVENT_DATA ev_fld_item_217
+_EVENT_DATA ev_fld_item_218
+_EVENT_DATA ev_fld_item_219
+_EVENT_DATA ev_fld_item_220
+_EVENT_DATA ev_fld_item_221
+_EVENT_DATA ev_fld_item_222
+_EVENT_DATA ev_fld_item_223
+_EVENT_DATA ev_fld_item_224
+_EVENT_DATA ev_fld_item_255
+_EVENT_DATA ev_fld_item_256
+_EVENT_DATA ev_fld_item_257
+_EVENT_DATA ev_fld_item_258
+_EVENT_DATA ev_fld_item_259
+_EVENT_DATA ev_fld_item_260
+_EVENT_DATA ev_fld_item_261
+_EVENT_DATA ev_fld_item_262
+_EVENT_DATA ev_fld_item_263
+_EVENT_DATA ev_fld_item_264
+_EVENT_DATA ev_fld_item_265
+_EVENT_DATA ev_fld_item_266
 _EVENT_DATA ev_fld_item_225
 _EVENT_DATA ev_fld_item_226
 _EVENT_DATA ev_fld_item_227
@@ -1486,6 +1543,405 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_178
   _FLD_ITEM_EVENT ITEM_KAORUKINOKO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=ひのたまプレート FLAG=180
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_180
+  _FLD_ITEM_EVENT ITEM_HINOTAMAPUREETO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=いかずちプレート FLAG=181
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_181
+  _FLD_ITEM_EVENT ITEM_IKAZUTIPUREETO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=みどりのプレート FLAG=182
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_182
+  _FLD_ITEM_EVENT ITEM_MIDORINOPUREETO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=つららのプレート FLAG=183
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_183
+  _FLD_ITEM_EVENT ITEM_TURARANOPUREETO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こぶしのプレート FLAG=184
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_184
+  _FLD_ITEM_EVENT ITEM_KOBUSINOPUREETO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=もうどくプレート FLAG=185
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_185
+  _FLD_ITEM_EVENT ITEM_MOUDOKUPUREETO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=だいちのプレート FLAG=186
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_186
+  _FLD_ITEM_EVENT ITEM_DAITINOPUREETO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=あおぞらプレート FLAG=187
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_187
+  _FLD_ITEM_EVENT ITEM_AOZORAPUREETO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=ふしぎのプレート FLAG=188
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_188
+  _FLD_ITEM_EVENT ITEM_HUSIGINOPUREETO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=たまむしプレート FLAG=189
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_189
+  _FLD_ITEM_EVENT ITEM_TAMAMUSIPUREETO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=がんせきプレート FLAG=190
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_190
+  _FLD_ITEM_EVENT ITEM_GANSEKIPUREETO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=もののけプレート FLAG=191
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_191
+  _FLD_ITEM_EVENT ITEM_MONONOKEPUREETO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こわもてプレート FLAG=192
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_192
+  _FLD_ITEM_EVENT ITEM_KOWAMOTEPUREETO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こうてつプレート FLAG=193
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_193
+  _FLD_ITEM_EVENT ITEM_KOUTETUPUREETO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのどうか FLAG=194
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_194
+  _FLD_ITEM_EVENT ITEM_KODAINODOUKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのどうか FLAG=195
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_195
+  _FLD_ITEM_EVENT ITEM_KODAINODOUKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのどうか FLAG=196
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_196
+  _FLD_ITEM_EVENT ITEM_KODAINODOUKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのどうか FLAG=197
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_197
+  _FLD_ITEM_EVENT ITEM_KODAINODOUKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのどうか FLAG=198
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_198
+  _FLD_ITEM_EVENT ITEM_KODAINODOUKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのぎんか FLAG=199
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_199
+  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのぎんか FLAG=200
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_200
+  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのぎんか FLAG=201
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_201
+  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのぎんか FLAG=202
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_202
+  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのぎんか FLAG=203
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_203
+  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのきんか FLAG=204
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_204
+  _FLD_ITEM_EVENT ITEM_KODAINOKINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのきんか FLAG=205
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_205
+  _FLD_ITEM_EVENT ITEM_KODAINOKINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのきんか FLAG=206
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_206
+  _FLD_ITEM_EVENT ITEM_KODAINOKINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのきんか FLAG=207
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_207
+  _FLD_ITEM_EVENT ITEM_KODAINOKINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのツボ FLAG=208
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_208
+  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのうでわ FLAG=209
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_209
+  _FLD_ITEM_EVENT ITEM_KODAINOUDEWA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0501 X=408 Y=120 ITEM=こだいのせきぞう FLAG=210
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_210
+  _FLD_ITEM_EVENT ITEM_KODAINOSEKIZOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのどうか FLAG=211
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_211
+  _FLD_ITEM_EVENT ITEM_KODAINODOUKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのどうか FLAG=212
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_212
+  _FLD_ITEM_EVENT ITEM_KODAINODOUKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのどうか FLAG=213
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_213
+  _FLD_ITEM_EVENT ITEM_KODAINODOUKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのぎんか FLAG=214
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_214
+  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのぎんか FLAG=215
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_215
+  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのぎんか FLAG=216
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_216
+  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのきんか FLAG=217
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_217
+  _FLD_ITEM_EVENT ITEM_KODAINOKINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのきんか FLAG=218
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_218
+  _FLD_ITEM_EVENT ITEM_KODAINOKINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのきんか FLAG=219
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_219
+  _FLD_ITEM_EVENT ITEM_KODAINOKINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのツボ FLAG=220
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_220
+  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのツボ FLAG=221
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_221
+  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのツボ FLAG=222
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_222
+  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのうでわ FLAG=223
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_223
+  _FLD_ITEM_EVENT ITEM_KODAINOUDEWA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのうでわ FLAG=224
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_224
+  _FLD_ITEM_EVENT ITEM_KODAINOUDEWA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのせきぞう FLAG=255
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_255
+  _FLD_ITEM_EVENT ITEM_KODAINOSEKIZOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのどうか FLAG=256
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_256
+  _FLD_ITEM_EVENT ITEM_KODAINODOUKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのぎんか FLAG=257
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_257
+  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのきんか FLAG=258
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_258
+  _FLD_ITEM_EVENT ITEM_KODAINOKINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのツボ FLAG=259
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_259
+  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのツボ FLAG=260
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_260
+  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのツボ FLAG=261
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_261
+  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのうでわ FLAG=262
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_262
+  _FLD_ITEM_EVENT ITEM_KODAINOUDEWA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのうでわ FLAG=263
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_263
+  _FLD_ITEM_EVENT ITEM_KODAINOUDEWA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのうでわ FLAG=264
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_264
+  _FLD_ITEM_EVENT ITEM_KODAINOUDEWA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのせきぞう FLAG=265
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_265
+  _FLD_ITEM_EVENT ITEM_KODAINOSEKIZOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0801 X=408 Y=120 ITEM=こだいのおうかん FLAG=266
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_266
+  _FLD_ITEM_EVENT ITEM_KODAINOOUKAN,1
 EVENT_END
 
 //--------------------------------------------------------------
