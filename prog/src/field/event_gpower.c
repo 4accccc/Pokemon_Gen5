@@ -109,7 +109,7 @@ static GMEVENT_RESULT event_GPowerUseEffectMain(GMEVENT * event, int *  seq, voi
 
   switch (*seq) {
   case 0:
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, 1);
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 10, 16, 4);
     PMSND_PlaySE( SE_POWER_USE );
     (*seq)++;
     break;
@@ -117,7 +117,7 @@ static GMEVENT_RESULT event_GPowerUseEffectMain(GMEVENT * event, int *  seq, voi
 		if( GFL_FADE_CheckFade() ){
       break;
     }
-    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, 15);
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, 8);
     (*seq)++;
   case 2:
 		if( GFL_FADE_CheckFade() ){
