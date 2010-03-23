@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-23T21:21:32"/>
+	<create user="murakami_naoto" host="W00228" date="2010-03-24T01:36:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="117" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1675" top="168" right="2380" bottom="796" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -322,14 +322,14 @@
 ちなみに　さいしょの　ほんは
 「はじめまして　ポケモンちゃん」です▼
 ほんの　ばしょが　わからないときは
-みんなに　きくと　いいっすよ！▼</language>
+みんなに　きくと　いいっすよ！</language>
 		<language name="JPN_KANJI" width="256">この　ジムはですね
-選ばれた　５冊の　本を▽
-読んでいくと　先に　進めます▼
+本に隠された　問題を▽
+解いていくと　先に　進めます▼
 ちなみに　最初の　本は
 「はじめまして　ポケモンちゃん」です▼
 本の　場所が　わからないときは
-みんなに　聞くと　いいっすよ！▼</language>
+みんなに　聞くと　いいっすよ！</language>
 	</row>
 
 	<row id="msg_c02gym0101_glasses_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1158,11 +1158,11 @@
 ただしい　つかいかたに▽
 ついて　かいてある▼
 やんちゃな　ポケモンへの
-つかいかたの　コツも　かかれている</language>
+つかいかたの　コツも　かかれている▼</language>
 		<language name="JPN_KANJI" width="256">キズぐすりの　構造や
 正しい　使い方について　書いてある▼
 やんちゃな　ポケモンへの
-使い方の　コツも　書かれている</language>
+使い方の　コツも　書かれている▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_02" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1173,12 +1173,12 @@
 かかれている　ほんだ▼
 からだのなかで　ほのおを　もやし
 その　じょうきの　ちからで▽
-けむりを　だしながら　はしっていく！</language>
+けむりを　だしながら　はしっていく！▼</language>
 		<language name="JPN_KANJI" width="256">機関車に　ついて
 書かれている　本だ▼
 体の中で　炎を　燃やし
 その　蒸気の　力で▽
-煙を　出しながら　走っていく！</language>
+煙を　出しながら　走っていく！▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_03" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1187,11 +1187,11 @@
 		<language name="JPN" width="256">ポケモンを　いれかえるときの
 タイミングについて　かかれている▼
 「あぶないと　おもう　まえには
-　いれかえろ！」</language>
+　いれかえろ！」▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　入れ替えるときの
 タイミングについて　書かれている▼
 「危ないと　思う前には
-　入れ替えろ！」</language>
+　入れ替えろ！」▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_04" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1200,11 +1200,11 @@
 		<language name="JPN" width="256">ポケモンセンターの
 しくみに　ついて　まとめてある▼
 はたらく　おねえさんの　１にちも
-くわしく　かかれている</language>
+くわしく　かかれている▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンセンターの
 仕組みに　ついて　まとめてある▼
 働く　お姉さんの　1日も
-詳しく　書かれている</language>
+詳しく　書かれている▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1214,11 +1214,11 @@
 		<language name="JPN" width="256">ミネズミの　せいたいが　かいてある▼
 しっぽの　うごきで　れんらくしあう
 しっぽを　たてる　うごきは▽
-てきを　はっけんしたときの　サインだ</language>
+てきを　はっけんしたときの　サインだ▼</language>
 		<language name="JPN_KANJI" width="256">ミネズミの　生態が　書いてある▼
 しっぽの　動きで　連絡しあう
 しっぽを　立てる　動きは▽
-敵を　発見したときの　サインだ</language>
+敵を　発見したときの　サインだ▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1227,11 +1227,11 @@
 		<language name="JPN" width="256">ツタージャの　せいたいが　かいてある▼
 ひあたりのよい　ばしょで
 たいように　しっぽを　むけていたなら▽
-こうごうせいの　さいちゅうだ</language>
+こうごうせいの　さいちゅうだ▼</language>
 		<language name="JPN_KANJI" width="256">ツタージャの　生態が　書いてある▼
 日当たりの良い　場所で
 太陽に　しっぽを　向けていたなら▽
-光合成の　最中だ</language>
+光合成の　最中だ▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1240,11 +1240,11 @@
 		<language name="JPN" width="256">ミジュマルの　せいたいが　かいてある▼
 おなかにある　ホタチは　とてもかたく
 おへそから　つくられている▽
-ミジュマルは　どうぐとして　つかう</language>
+ミジュマルは　どうぐとして　つかう▼</language>
 		<language name="JPN_KANJI" width="256">ミジュマルの　生態が　書いてある▼
 お腹にある　ホタチは　とても硬く
 おへそから　作られている▽
-ミジュマルは　道具として　使う</language>
+ミジュマルは　道具として　使う▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_08" back-color="#ffff00,,,,,#ffff00,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1253,11 +1253,11 @@
 		<language name="JPN" width="256">ポカブの　せいたいが　かいてある▼
 たいないでは　ほのおが　もえあがり
 はなのあなから　ほのおを　はきだす▽
-げんきがないと　けむりしか　だせない</language>
+げんきがないと　けむりしか　だせない▼</language>
 		<language name="JPN_KANJI" width="256">ポカブの　生態が　書いてある▼
 体内では　炎が　燃え上がり
 鼻の穴から　炎を　吐き出す▽
-元気がないと　煙しか　出せない</language>
+元気がないと　煙しか　出せない▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_09" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1265,10 +1265,10 @@
 この　ほんを　よみますか？</comment>
 		<language name="JPN" width="256">ポケモンの　えかきうたが
 たくさん　のっている▼
-どれも　よくにてて　かきやすそう</language>
+どれも　よくにてて　かきやすそう▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　絵描き歌が
 たくさん　載っている▼
-どれも　よく似てて　書きやすそう</language>
+どれも　よく似てて　書きやすそう▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_10" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1278,11 +1278,11 @@
 		<language name="JPN" width="256">うまれて　はじめて　ポケモンとであった
 おとこのこの　どうわだ▼
 ちゃいろい　ちいさな
-ポケモンを　つれている　</language>
+ポケモンを　つれている▼</language>
 		<language name="JPN_KANJI" width="256">生まれて　初めて　ポケモンと出会った
 男の子の　童話だ▼
 茶色い　小さな
-ポケモンを　連れている　</language>
+ポケモンを　連れている▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_11" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1291,11 +1291,11 @@
 		<language name="JPN" width="256">ポケモンを　つれた　しょうねんが　
 だいぼうけんする　ものがたりだ▼
 ふたりの　おとこのこと　おんなのこが
-いっしょに　ぼうけんを　している</language>
+いっしょに　ぼうけんを　している▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　連れた　少年が　
 大冒険する　物語だ▼
 二人の　男の子と　女の子が
-一緒に　冒険を　している</language>
+一緒に　冒険を　している▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_12" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1307,13 +1307,13 @@
 とおい　シンオウちほう　には
 きのみから　つくる▽
 「ポフィン」と　よばれる　おかしがあり▽
-ポケモンたちの　だいこうぶつです</language>
+ポケモンたちの　だいこうぶつです▼</language>
 		<language name="JPN_KANJI" width="256">木の実を　おなべに入れ　温めて作る
 おいしい　お菓子が　載っている▼
 遠い　シンオウ地方　には
 木の実から　作る▽
 「ポフィン」と　呼ばれる　お菓子があり▽
-ポケモンたちの　大好物です</language>
+ポケモンたちの　大好物です▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_13" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1328,7 +1328,7 @@
 　たべると　おいしいもの　なんだ？」▼[FF:00:色:0]
 ヒントは　ここより
 いりぐちに　ちかい　ほんだよ！</language>
-		<language name="JPN_KANJI" width="256">うらひょうしに　メモが　ある……！▼
+		<language name="JPN_KANJI" width="256">裏表紙に　メモが　ある……！▼
 『よく　ここが　わかったね！
 さすが　私に挑むだけの　ことはある▽
 さて　３問目の　問題だよ！▼
@@ -1438,9 +1438,11 @@
 自分の　力で　探してごらん！</language>
 	</row>
 
-	<row id="msg_c02gym0101_book_18" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
+	<row id="msg_c02gym0101_book_18" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<language name="JPN" width="256">……▼
+さがしている　ほんと　ちがうみたい</language>
+		<language name="JPN_KANJI" width="256">……▼
+探している　本と　違うみたい</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_19" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -1560,10 +1562,10 @@
 	<row id="msg_c02gym0101_switch_03" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<language name="JPN" width="256">カチッ！▼
 ほんの　したに
-スイッチが　あった！</language>
+スイッチが　あった！▼</language>
 		<language name="JPN_KANJI" width="256">カチッ！▼
 本の　下に
-スイッチが　あった！</language>
+スイッチが　あった！▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_switch_04" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
