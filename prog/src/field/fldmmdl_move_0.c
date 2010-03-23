@@ -310,7 +310,8 @@ static u16 get_DashAlterNextDir( u16 mv_code, u16 dir );
 
 static void MvRndWorkInit( MMDL * mmdl, int ac, int id, int check );
 
-static BOOL checkDashButton( void );
+static BOOL checkDashButtonCont( void );
+static BOOL checkDashButtonTrg( void );
 static int TblNumGet( const int *tbl, int end );
 static int TblRndGet( const int *tbl, int end );
 static int TblIDRndGet( int id, int end );
@@ -566,7 +567,7 @@ void MMDL_MoveDirRnd_Move( MMDL * mmdl )
   if( type == EV_TYPE_TRAINER_DASH_ALTER )
   {
     if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
-      if( checkDashButton() == TRUE ){
+      if( checkDashButtonTrg() == TRUE ){
         u16 dir = MMDL_GetDirDisp( mmdl );
         dir = get_DashAlterNextDir( MMDL_GetMoveCode(mmdl), dir );
         
@@ -1151,7 +1152,7 @@ static int MvSpinMove_Wait( MMDL * mmdl, MV_SPIN_DIR_WORK *work )
       return( FALSE );
     }
     
-    if( checkDashButton() == FALSE ){
+    if( checkDashButtonCont() == FALSE ){
       return( FALSE );
     }
     
@@ -1498,7 +1499,7 @@ static int MvRt2_MoveSet( MMDL * mmdl, MV_RT2_WORK *work )
     ac = AC_WALK_U_8F;
     
     if( checkMMdlEventTypeDashAccel(mmdl) ){
-      if( checkDashButton() == TRUE ){
+      if( checkDashButtonCont() == TRUE ){
         if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
           ac = AC_WALK_U_4F;
         }
@@ -1864,7 +1865,7 @@ static int MvRt3Move_MoveDirSet( MMDL * mmdl, MV_RT3_WORK *work )
     ac = AC_WALK_U_8F;
     
     if( checkMMdlEventTypeDashAccel(mmdl) ){
-      if( checkDashButton() == TRUE ){
+      if( checkDashButtonCont() == TRUE ){
         if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
           ac = AC_WALK_U_4F;
         }
@@ -2265,7 +2266,7 @@ static int MvRt4Move_MoveDirSet( MMDL * mmdl, MV_RT4_WORK *work )
     ac = AC_WALK_U_8F;
 
     if( checkMMdlEventTypeDashAccel(mmdl) ){
-      if( checkDashButton() == TRUE ){
+      if( checkDashButtonCont() == TRUE ){
         if( MMDL_CheckPlayerDispSizeRect(mmdl) == TRUE ){
           ac = AC_WALK_U_4F;
         }
@@ -2333,9 +2334,24 @@ static int (* const DATA_MvRt4MoveTbl[])( MMDL * mmdl, MV_RT4_WORK *work ) =
  * @retval BOOL TRUE=押されている
  */
 //--------------------------------------------------------------
-static BOOL checkDashButton( void )
+static BOOL checkDashButtonCont( void )
 {
   if( (GFL_UI_KEY_GetCont() & BTN_DASH) ){
+    return( TRUE );
+  }
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * ダッシュボタンが押されたか
+ * @param nothing
+ * @retval BOOL TRUE=押されている
+ */
+//--------------------------------------------------------------
+static BOOL checkDashButtonTrg( void )
+{
+  if( (GFL_UI_KEY_GetTrg() & BTN_DASH) ){
     return( TRUE );
   }
   return( FALSE );
@@ -2427,7 +2443,7 @@ static int TrJikiDashSearch( MMDL * mmdl )
     return( DIR_NOT );
   }
 #else
-  if( checkDashButton() == FALSE ){
+  if( checkDashButtonCont() == FALSE ){
     return( DIR_NOT );
   }
 #endif
@@ -2568,7 +2584,7 @@ static BOOL checkEvTypeDashReact( const MMDL *mmdl, u8 *count )
       return( FALSE );
     }
       
-    if( checkDashButton() == FALSE ){
+    if( checkDashButtonCont() == FALSE ){
       return( FALSE );
     }
       

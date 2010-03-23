@@ -34,9 +34,8 @@ typedef struct _TAG_FLDEFF_SPLASH FLDEFF_SPLASH;
 struct _TAG_FLDEFF_SPLASH
 {
 	FLDEFF_CTRL *fectrl;
-  
-  GFL_G3D_RES *g3d_res_mdl;
-  GFL_G3D_RES *g3d_res_anm;
+  FLD_G3DOBJ_RESIDX res_idx_splash;
+  FLD_G3DOBJ_RESIDX res_idx_shoal;
 };
 
 //--------------------------------------------------------------
@@ -57,10 +56,7 @@ typedef struct
   int seq_no;
   TASKHEADER_SPLASH head;
   MMDL_CHECKSAME_DATA samedata;
-  
-  GFL_G3D_OBJ *obj;
-  GFL_G3D_ANM *obj_anm;
-  GFL_G3D_RND *obj_rnd;
+  FLD_G3DOBJ_OBJIDX obj_idx;
 }TASKWORK_SPLASH;
 
 //======================================================================
@@ -121,16 +117,31 @@ void FLDEFF_SPLASH_Delete( FLDEFF_CTRL *fectrl, void *work )
 static void splash_InitResource( FLDEFF_SPLASH *splash )
 {
   ARCHANDLE *handle;
+  FLD_G3DOBJ_CTRL *obj_ctrl;
+  FLD_G3DOBJ_RES_HEADER head;
   
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( splash->fectrl );
   handle = FLDEFF_CTRL_GetArcHandleEffect( splash->fectrl );
   
-  splash->g3d_res_mdl	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_shibuki_nsbmd );
+  FLD_G3DOBJ_RES_HEADER_Init( &head );
+  FLD_G3DOBJ_RES_HEADER_SetMdl(
+        &head, handle, NARC_fldeff_shibuki_nsbmd );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+      &head, NARC_fldeff_shibuki_nsbtp );
   
-  GFL_G3D_TransVramTexture( splash->g3d_res_mdl );
+  splash->res_idx_splash = 
+      FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
 
-  splash->g3d_res_anm	=
-    GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_shibuki_nsbtp );
+  FLD_G3DOBJ_RES_HEADER_Init( &head );
+  FLD_G3DOBJ_RES_HEADER_SetMdl(
+        &head, handle, NARC_fldeff_shibuki02_nsbmd );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcHandle( &head, handle );
+  FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
+      &head, NARC_fldeff_shibuki02_nsbtp );
+  
+  splash->res_idx_shoal = 
+      FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
 }
 
 //--------------------------------------------------------------
@@ -142,8 +153,11 @@ static void splash_InitResource( FLDEFF_SPLASH *splash )
 //--------------------------------------------------------------
 static void splash_DeleteResource( FLDEFF_SPLASH *splash )
 {
- 	GFL_G3D_DeleteResource( splash->g3d_res_anm );
- 	GFL_G3D_DeleteResource( splash->g3d_res_mdl );
+  FLD_G3DOBJ_CTRL *obj_ctrl;
+  
+  obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( splash->fectrl );
+  FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, splash->res_idx_splash );
+  FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, splash->res_idx_shoal );
 }
 
 //======================================================================
@@ -191,26 +205,27 @@ static void splashTask_Init( FLDEFF_TASK *task, void *wk )
   if( work->head.joint == TRUE ){
     MMDL_InitCheckSameData( work->head.mmdl, &work->samedata );
   }
-  
-  work->obj_rnd =
-    GFL_G3D_RENDER_Create(
-        work->head.eff_splash->g3d_res_mdl, 0,
-        work->head.eff_splash->g3d_res_mdl );
-  
-  work->obj_anm =
-    GFL_G3D_ANIME_Create(
-        work->obj_rnd, work->head.eff_splash->g3d_res_anm, 0 );
-  
-  work->obj = GFL_G3D_OBJECT_Create(
-      work->obj_rnd, &work->obj_anm, 1 );
-  GFL_G3D_OBJECT_EnableAnime( work->obj, 0 );
 
   {
     VecFx32 pos;
     MMDL_GetVectorPos( work->head.mmdl, &pos );
     pos.z += SPLASH_DRAW_Z_OFFSET;
     FLDEFF_TASK_SetPos( task, &pos );
+ 
+    {
+      FLDEFF_SPLASH *splash = work->head.eff_splash;
+      FLD_G3DOBJ_CTRL *obj_ctrl =
+        FLDEFF_CTRL_GetFldG3dOBJCtrl( splash->fectrl );
+      u16 idx = splash->res_idx_splash;
+
+      if( work->head.joint == TRUE ){
+        idx = splash->res_idx_shoal;
+      }
+      
+      work->obj_idx = FLD_G3DOBJ_CTRL_AddObject( obj_ctrl, idx, 0, &pos );
+    }
   }
+  
 //即反映すると親がjointフラグがセットされていない状態。
 //  FLDEFF_TASK_CallUpdate( task );
 }
@@ -226,9 +241,10 @@ static void splashTask_Init( FLDEFF_TASK *task, void *wk )
 static void splashTask_Delete( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_SPLASH *work = wk;
-  GFL_G3D_ANIME_Delete( work->obj_anm );
-  GFL_G3D_OBJECT_Delete( work->obj );
-	GFL_G3D_RENDER_Delete( work->obj_rnd );
+  FLDEFF_SPLASH *splash = work->head.eff_splash;
+  FLD_G3DOBJ_CTRL *obj_ctrl =
+    FLDEFF_CTRL_GetFldG3dOBJCtrl( splash->fectrl );
+  FLD_G3DOBJ_CTRL_DeleteObject( obj_ctrl, work->obj_idx );
 }
 
 //--------------------------------------------------------------
@@ -256,19 +272,29 @@ static void splashTask_Update( FLDEFF_TASK *task, void *wk )
       return;
     }
   }
-  
-  if( GFL_G3D_OBJECT_LoopAnimeFrame(work->obj,0,FX32_ONE) == FALSE ){
-    if( work->head.joint == FALSE ){
-      FLDEFF_TASK_CallDelete( task );
-      return;
+
+  {
+    FLDEFF_SPLASH *splash = work->head.eff_splash;
+    FLD_G3DOBJ_CTRL *obj_ctrl =
+      FLDEFF_CTRL_GetFldG3dOBJCtrl( splash->fectrl );
+    
+    if( FLD_G3DOBJ_CTRL_LoopAnimeObject(
+          obj_ctrl,work->obj_idx,FX32_ONE) == FALSE ){
+      if( work->head.joint == FALSE ){
+        FLDEFF_TASK_CallDelete( task );
+        return;
+      }
     }
-  }
   
-  if( work->head.joint == TRUE ){
-    VecFx32 pos;
-    MMDL_GetVectorPos( work->head.mmdl, &pos );
-    pos.z += SPLASH_DRAW_Z_OFFSET;
-    FLDEFF_TASK_SetPos( task, &pos );
+    if( work->head.joint == TRUE ){
+      VecFx32 pos;
+      GFL_G3D_OBJSTATUS *st = FLD_G3DOBJ_CTRL_GetObjStatus(
+          obj_ctrl, work->obj_idx );
+      MMDL_GetVectorPos( work->head.mmdl, &pos );
+      pos.z += SPLASH_DRAW_Z_OFFSET;
+      FLDEFF_TASK_SetPos( task, &pos );
+      st->trans = pos;
+    }
   }
 }
 
@@ -282,6 +308,7 @@ static void splashTask_Update( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void splashTask_Draw( FLDEFF_TASK *task, void *wk )
 {
+#if 0 //FLD_G3DOBJに任せる
   VecFx32 pos;
   TASKWORK_SPLASH *work = wk;
   GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
@@ -289,6 +316,7 @@ static void splashTask_Draw( FLDEFF_TASK *task, void *wk )
   MTX_Identity33( &status.rotate );
   FLDEFF_TASK_GetPos( task, &status.trans );
   GFL_G3D_DRAW_DrawObjectCullingON( work->obj, &status );
+#endif
 }
 
 //--------------------------------------------------------------

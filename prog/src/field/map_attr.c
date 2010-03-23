@@ -141,7 +141,10 @@ BOOL MAPATTR_GetHitchFlag( const MAPATTR attr )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckLongGrass( const MAPATTR_VALUE val )
 {
-  return (val == MATTR_E_LGRASS_LOW || val == MATTR_E_LGRASS_HIGH);
+  if(val == MATTR_E_LGRASS_LOW || val == MATTR_E_LGRASS_HIGH ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -653,7 +656,12 @@ BOOL MAPATTR_VALUE_CheckSand( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckDesert( const MAPATTR_VALUE val )
 {
-  return( val == MATTR_E_DESERT_01 || val == MATTR_DESERT_01 );
+  if( val == MATTR_E_DESERT_01 ||
+      val == MATTR_DESERT_01 ||
+      val == MATTR_E_DESERT_02 ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -680,8 +688,9 @@ BOOL MAPATTR_VALUE_CheckSandType( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckWaterType( const MAPATTR_VALUE val )
 {
-  if( (val == MATTR_WATER_01) || (val == MATTR_WATER_S01)
-      || (val == MATTR_SEA_01) || (val == MATTR_DEEP_MARSH_01) || (val == MATTR_DEEP_SEA_01) ) {
+  if( (val == MATTR_WATER_01) || (val == MATTR_WATER_S01) ||
+      (val == MATTR_SEA_01) || (val == MATTR_DEEP_MARSH_01) ||
+      (val == MATTR_DEEP_SEA_01) ) {
     return( TRUE );
   }
   return( FALSE );
@@ -875,7 +884,8 @@ BOOL MAPATTR_VALUE_CheckUpDownFloor( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckNotMoveUp( const MAPATTR_VALUE val )
 {
-  if( val == MATTR_NMOVE_UP || val == MATTR_NMOVE_LU || val == MATTR_NMOVE_RU ){
+  if( val == MATTR_NMOVE_UP || val == MATTR_NMOVE_LU ||
+      val == MATTR_NMOVE_RU ){
     return( TRUE );
   }
   return( FALSE );
@@ -890,7 +900,8 @@ BOOL MAPATTR_VALUE_CheckNotMoveUp( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckNotMoveDown( const MAPATTR_VALUE val )
 {
-  if( val == MATTR_NMOVE_DOWN || val == MATTR_NMOVE_LD || val == MATTR_NMOVE_RD ){
+  if( val == MATTR_NMOVE_DOWN || val == MATTR_NMOVE_LD ||
+      val == MATTR_NMOVE_RD ){
     return( TRUE );
   }
   return( FALSE );
@@ -905,7 +916,8 @@ BOOL MAPATTR_VALUE_CheckNotMoveDown( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckNotMoveLeft( const MAPATTR_VALUE val )
 {
-  if( val == MATTR_NMOVE_LEFT || val == MATTR_NMOVE_LU || val == MATTR_NMOVE_LD ){
+  if( val == MATTR_NMOVE_LEFT || val == MATTR_NMOVE_LU ||
+      val == MATTR_NMOVE_LD ){
     return( TRUE );
   }
   return( FALSE );
@@ -920,7 +932,8 @@ BOOL MAPATTR_VALUE_CheckNotMoveLeft( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckNotMoveRight( const MAPATTR_VALUE val )
 {
-  if( val == MATTR_NMOVE_RIGHT || val == MATTR_NMOVE_RU || val == MATTR_NMOVE_RD ){
+  if( val == MATTR_NMOVE_RIGHT || val == MATTR_NMOVE_RU ||
+      val == MATTR_NMOVE_RD ){
     return( TRUE );
   }
   return( FALSE );
@@ -998,3 +1011,17 @@ BtlBgAttr MAPATTR_GetBattleAttrID( MAPATTR_VALUE value )
   return BATTLE_BG_ATTR_LAWN; //標準
 }
 
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　四季変化無し草むら
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckGrassAllYear( const MAPATTR_VALUE val )
+{
+  if( val == MATTR_E_GRASS_HIGH_02 || val == MATTR_E_GRASS_LOW_02 ){
+    return TRUE;
+  }
+  return FALSE;
+}

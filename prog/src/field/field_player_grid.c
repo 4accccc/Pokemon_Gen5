@@ -24,6 +24,8 @@
 
 #include "fldeff_kemuri.h"
 
+#include "include/gamesystem/pm_season.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -525,9 +527,11 @@ static BOOL gjiki_CheckMoveStart( FIELD_PLAYER_GRID *gjiki, u16 dir )
 typedef struct
 {
   BOOL (*check)(const MAPATTR_VALUE);
-  u32 se;
-  s16 dash_count;
-  s16 cycle_count;
+  u16 se;
+  s8 dash_count;
+  s8 cycle_count;
+  u8 season;
+  u8 padding[3];
 }ATTR_VALUE_SE;
 
 typedef struct
@@ -541,21 +545,23 @@ typedef struct
 //now value
 static const ATTR_VALUE_SE data_PlaySE_NowValue[] =
 {
-  {NULL,0,0,0}, //end
+  {NULL,0,0,0,PMSEASON_TOTAL}, //end
 };
 
 //next value
 static const ATTR_VALUE_SE data_PlaySE_NextValue[] =
 {
-  {MAPATTR_VALUE_CheckLongGrass,SEQ_SE_FLD_08,2,4},
-  {MAPATTR_VALUE_CheckSnow,SEQ_SE_FLD_11,2,4},
-  {MAPATTR_VALUE_CheckSnowNotCycle,SEQ_SE_FLD_11,2,4},
-  {MAPATTR_VALUE_CheckShoal,SEQ_SE_FLD_13,2,4},
-  {MAPATTR_VALUE_CheckPool,SEQ_SE_FLD_13,2,4},
-  {MAPATTR_VALUE_CheckMarsh,SEQ_SE_FLD_13,2,4},
-  {MAPATTR_VALUE_CheckDesertDeep,SEQ_SE_FLD_91,2,4},
-  {MAPATTR_VALUE_CheckSandType,SEQ_SE_FLD_14,2,4},
-  {NULL,0,0,0}, //end
+  {MAPATTR_VALUE_CheckLongGrass,SEQ_SE_FLD_08,2,4,PMSEASON_TOTAL},
+  {MAPATTR_VALUE_CheckSnow,SEQ_SE_FLD_11,2,4,PMSEASON_TOTAL},
+  {MAPATTR_VALUE_CheckSnowNotCycle,SEQ_SE_FLD_11,2,4,PMSEASON_TOTAL},
+  {MAPATTR_VALUE_CheckShoal,SEQ_SE_FLD_13,2,4,PMSEASON_TOTAL},
+  {MAPATTR_VALUE_CheckPool,SEQ_SE_FLD_13,2,4,PMSEASON_TOTAL},
+  {MAPATTR_VALUE_CheckMarsh,SEQ_SE_FLD_13,2,4,PMSEASON_TOTAL},
+  {MAPATTR_VALUE_CheckDesertDeep,SEQ_SE_FLD_91,2,4,PMSEASON_TOTAL},
+  {MAPATTR_VALUE_CheckSandType,SEQ_SE_FLD_14,2,4,PMSEASON_TOTAL},
+  {MAPATTR_VALUE_CheckSeasonGround1,SEQ_SE_FLD_11,2,4,PMSEASON_WINTER},
+  {MAPATTR_VALUE_CheckSeasonGround2,SEQ_SE_FLD_11,2,4,PMSEASON_WINTER},
+  {NULL,0,0,0,PMSEASON_TOTAL}, //end
 };
 
 //now flag
@@ -583,7 +589,7 @@ static const ATTR_FLAG_SE data_PlaySE_NextFlag[] =
 //--------------------------------------------------------------
 static BOOL gjiki_PlaySECore(
     FIELD_PLAYER_GRID *gjiki, JIKI_MOVEORDER set,
-    const VecFx32 *pos, BOOL next )
+    const VecFx32 *pos, BOOL next, u8 season )
 {
   int dash_count;
   u32 se,dash_flag,init_flag;
@@ -645,14 +651,16 @@ static BOOL gjiki_PlaySECore(
       
       for( ; p1->check != NULL; p1++ ){
         if( p1->check(attr) == TRUE ){
-          se = p1->se;
+          if( p1->season == PMSEASON_TOTAL || p1->season == season ){
+            se = p1->se;
           
-          if( dash_flag == 1 ){
-            dash_count = p1->dash_count;
-          }else if( dash_flag == 2 ){
-            dash_count = p1->cycle_count;
+            if( dash_flag == 1 ){
+              dash_count = p1->dash_count;
+            }else if( dash_flag == 2 ){
+              dash_count = p1->cycle_count;
+            }
+            break;
           }
-          break;
         }
       }
     }
@@ -707,11 +715,16 @@ static void gjiki_PlaySE(
     VecFx32 pos;
     MMDL *mmdl = FIELD_PLAYER_CORE_GetMMdl( gjiki->player_core );
     
-    MMDL_GetVectorPos( mmdl, &pos );
+    {
+      GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( gjiki->fieldWork );
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      u8 season = GAMEDATA_GetSeasonID( gdata );
+      MMDL_GetVectorPos( mmdl, &pos );
     
-    if( gjiki_PlaySECore(gjiki,set,&pos,FALSE) == FALSE ){
-      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-      gjiki_PlaySECore( gjiki, set, &pos, TRUE );
+      if( gjiki_PlaySECore(gjiki,set,&pos,FALSE,season) == FALSE ){
+        MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+        gjiki_PlaySECore( gjiki, set, &pos, TRUE, season );
+      }
     }
   }
 }
@@ -1402,7 +1415,8 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Walk(
     
     if( hit == MMDL_MOVEHITBIT_NON )
     {
-      if( MAPATTR_VALUE_CheckSnowNotCycle(val) == FALSE ){
+      if( (flag & MAPATTR_FLAGBIT_WATER) ||
+          MAPATTR_VALUE_CheckSnowNotCycle(val) == FALSE ){
         return( JIKI_MOVEORDER_WALK );
       }
     }

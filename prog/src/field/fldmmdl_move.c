@@ -593,6 +593,8 @@ static FLDEFF_GRASSTYPE getGrassType( MAPATTR_VALUE val )
     type = FLDEFF_GRASS_SNOW;
   }else if( MAPATTR_VALUE_CheckSnowGrassHigh(val) ){
     type = FLDEFF_GRASS_SNOW2;
+  }else if( MAPATTR_VALUE_CheckGrassAllYear(val) ){
+    type = FLDEFF_GRASS_ALLYEAR;
   }
   
   return( type );

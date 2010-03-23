@@ -198,6 +198,11 @@ void FLDEFF_GRASS_SetMMdl( FLDEFF_CTRL *fectrl,
   FLDEFF_GRASS *grass;
   TASKHEADER_GRASS head;
   
+  if( type >= FLDEFF_GRASS_MAX ){
+    GF_ASSERT( 0 );
+    return;
+  }
+
   grass = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_GRASS );
   head.eff_grass = grass;
   head.obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( fectrl );
@@ -388,5 +393,11 @@ static const GRASS_ARCIDX data_ArcIdxTbl[FLDEFF_GRASS_MAX][PMSEASON_TOTAL] =
     { NARC_fldeff_kusaeff_sn2_nsbmd, NARC_fldeff_kusaeff_sn2_nsbtp },
     { NARC_fldeff_kusaeff_sn2_nsbmd, NARC_fldeff_kusaeff_sn2_nsbtp },
     { NARC_fldeff_kusaeff_sn2_nsbmd, NARC_fldeff_kusaeff_sn2_nsbtp },
+  },
+  { //élãGïœâªÇ»Çµëê
+    { NARC_fldeff_kusaeff_sp_nsbmd, NARC_fldeff_kusaeff_sp_nsbtp },
+    { NARC_fldeff_kusaeff_sp_nsbmd, NARC_fldeff_kusaeff_sp_nsbtp },
+    { NARC_fldeff_kusaeff_sp_nsbmd, NARC_fldeff_kusaeff_sp_nsbtp },
+    { NARC_fldeff_kusaeff_sp_nsbmd, NARC_fldeff_kusaeff_sp_nsbtp },
   },
 };
