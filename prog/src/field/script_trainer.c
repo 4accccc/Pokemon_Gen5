@@ -130,17 +130,42 @@ BOOL SCRIPT_CheckTrainer2vs2Type( u16 tr_id )
   u32 rule = TT_TrainerDataParaGet( tr_id, ID_TD_fight_type );
   
   //OS_Printf( "check 2v2 TRID=%d, type = %d\n", tr_id, rule );
+  return (rule == BTL_RULE_DOUBLE );
+}
 
+//--------------------------------------------------------------
+/**
+ * トレーナーIDから、トリプル/ローテバトルタイプか取得
+ *
+ * @param   tr_id		トレーナーID
+ *
+ * @retval  0 2vs2以下
+ * @retval  1 3vs3
+ */
+//--------------------------------------------------------------
+BOOL SCRIPT_CheckTrainer3vs3Type( u16 tr_id )
+{
+  u32 rule = TT_TrainerDataParaGet( tr_id, ID_TD_fight_type );
+  
   switch( rule ){
-  case BTL_RULE_SINGLE:
-    return( 0 );
-  case BTL_RULE_DOUBLE:
-  case BTL_RULE_TRIPLE: //kari
+  case BTL_RULE_TRIPLE:
+  case BTL_RULE_ROTATION:
     return( 1 );
   }
   
-//  GF_ASSERT( 0 );
-  return( 1 );
+  return( 0 );
+}
+
+//--------------------------------------------------------------
+/**
+ * トレーナーIDからバトルルールを取得
+ * @param   tr_id		トレーナーID
+ * @retval  BtlRule型 BTL_RULE_SINGLE他 
+ */
+//--------------------------------------------------------------
+u8 SCRIPT_GetTrainerBtlRule( u16 tr_id )
+{
+  return TT_TrainerDataParaGet( tr_id, ID_TD_fight_type );
 }
 
 //------------------------------------------------------------------

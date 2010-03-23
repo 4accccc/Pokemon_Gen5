@@ -30,7 +30,8 @@ typedef struct _ENC_POKE_PARAM
   u16 item;
   u8  level;
   u8  form;
-  u8  rare;
+  u8  rare;       //‹­§ƒŒƒA
+  u8  spabi_3rd;  //‘æ3“Á«“K—p
   u16 waza[4];
 }ENC_POKE_PARAM;
 

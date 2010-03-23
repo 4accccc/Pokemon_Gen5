@@ -334,10 +334,10 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
 	u16 tr_id_0 = SCRCMD_GetVMWorkValue( core, work );
 	u16 tr_id_1 = SCRCMD_GetVMWorkValue( core, work );
   u16 flags = SCRCMD_GetVMWorkValue( core, work );
-	u16 partner_id;
-  
-	partner_id = 0;
-	
+  u8 rule;
+
+  rule = SCRIPT_GetTrainerBtlRule( tr_id_0 );
+
   //　話しかけからダブルバトルへの対応
   // tr_id_0 == tr_id_1のとき、ダブルバトルが成立する
   if (tr_id_1 == 0 && SCRIPT_CheckTrainer2vs2Type( tr_id_0 ) == 1 )
@@ -348,7 +348,7 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
     GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
     SCRIPT_FLDPARAM * fparam = SCRIPT_GetFieldParam( sc );
     GMEVENT *ev_battle =
-      EVENT_TrainerBattle( gsys, fparam->fieldMap, TRID_NULL, tr_id_0, tr_id_1, flags );
+      EVENT_TrainerBattle( gsys, fparam->fieldMap, rule, TRID_NULL, tr_id_0, tr_id_1, flags );
     SCRIPT_CallEvent( sc, ev_battle );
   }
 	return VMCMD_RESULT_SUSPEND;
@@ -373,7 +373,7 @@ VMCMD_RESULT EvCmdTrainerMultiBattleSet( VMHANDLE *core, void *wk )
     GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
     SCRIPT_FLDPARAM * fparam = SCRIPT_GetFieldParam( sc );
     GMEVENT *ev_battle =
-      EVENT_TrainerBattle( gsys, fparam->fieldMap, partner_id, tr_id_0, tr_id_1, flags );
+      EVENT_TrainerBattle( gsys, fparam->fieldMap, BTL_RULE_DOUBLE, partner_id, tr_id_0, tr_id_1, flags );
     SCRIPT_CallEvent( sc, ev_battle );
   }
 	return VMCMD_RESULT_SUSPEND;

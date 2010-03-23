@@ -59,7 +59,7 @@ extern void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE
 extern void* FIELD_ENCOUNT_CheckWfbcEncount( FIELD_ENCOUNT *enc, const FIELD_WFBC* cp_wfbcdata );
 
 extern void FIELD_ENCOUNT_SetTrainerBattleParam(
-    FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int partner_id, int tr_id0, int tr_id1, HEAPID heapID );
+    FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *setup, int rule, int partner_id, int tr_id0, int tr_id1, HEAPID heapID );
 
 extern void BTL_FIELD_SITUATION_SetFromFieldStatus( BTL_FIELD_SITUATION* sit, GAMEDATA* gdata, FIELDMAP_WORK* fieldWork );
 

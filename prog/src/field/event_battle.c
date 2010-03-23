@@ -327,13 +327,14 @@ GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BAT
  * フィールドトレーナーバトルイベント
  * @param gsys  GAMESYS_WORK
  * @param fieldmap FIELDMAP_WORK
+ * @param BtlRule
  * @param tr_id
  * @param flags
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
 GMEVENT * EVENT_TrainerBattle(
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, int partner_id, int tr_id0, int tr_id1, u32 flags )
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, int rule, int partner_id, int tr_id0, int tr_id1, u32 flags )
 {
   GMEVENT * event;
   BATTLE_EVENT_WORK * bew;
@@ -348,7 +349,7 @@ GMEVENT * EVENT_TrainerBattle(
     FIELD_ENCOUNT* enc = FIELDMAP_GetEncount(fieldmap);
 
     bp = BATTLE_PARAM_Create(HEAPID_PROC);
-    FIELD_ENCOUNT_SetTrainerBattleParam( enc, bp, partner_id, tr_id0, tr_id1, HEAPID_PROC );
+    FIELD_ENCOUNT_SetTrainerBattleParam( enc, bp, rule, partner_id, tr_id0, tr_id1, HEAPID_PROC );
 
     BeaconReq_BtlTrainer( tr_id0, BTL_BEACON_ST_START );
 

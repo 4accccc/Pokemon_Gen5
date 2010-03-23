@@ -247,6 +247,9 @@ void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv,
     if( flags & SCR_WILD_BTL_FLAG_RARE ){
       poke->rare = TRUE;
     }
+    if( flags & SCR_WILD_BTL_FLAG_SPEABI3 ){
+      poke->spabi_3rd = TRUE;
+    }
   }
 
   //バトルパラメータセット
@@ -653,12 +656,13 @@ static void enc_CreateBattleParamMovePoke( FIELD_ENCOUNT *enc, const ENCPOKE_FLD
 /**
  * フィールドエンカウント　トレーナー用BATTLE_SETUP_PARAM*作成
  * @param enc FIELD_ENCOUNT*
+ * @parm  rule  BtlRule
  * @param tr_id トレーナーID
  * @retval nothing
  */
 //--------------------------------------------------------------
 void FIELD_ENCOUNT_SetTrainerBattleParam(
-    FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *bp, int partner_id, int tr_id0, int tr_id1, HEAPID heapID )
+    FIELD_ENCOUNT *enc, BATTLE_SETUP_PARAM *bp, int rule, int partner_id, int tr_id0, int tr_id1, HEAPID heapID )
 {
   GAMESYS_WORK *gsys = enc->gsys;
   GAMEDATA *gdata = enc->gdata;
@@ -668,18 +672,35 @@ void FIELD_ENCOUNT_SetTrainerBattleParam(
 
   BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, enc->gdata, enc->fwork );
 
-  if( partner_id != TRID_NULL )
-  { //AIマルチ
-    BTL_SETUP_AIMulti_Trainer( bp, gdata, &sit, partner_id, tr_id0, tr_id1, heapID );
-  }else if( (tr_id1 != TRID_NULL) && tr_id0 != tr_id1 )
-  { //タッグ
-    BTL_SETUP_Tag_Trainer( bp, gdata, &sit, tr_id0, tr_id1, heapID );
-  }else if( tr_id0 == tr_id1 )
-  { //ダブル
-    BTL_SETUP_Double_Trainer( bp, gdata, &sit, tr_id0, heapID );
-  }else
-  { //シングル
-    BTL_SETUP_Single_Trainer( bp, gdata, &sit, tr_id0, heapID );
+  switch(rule){
+  case BTL_RULE_DOUBLE:
+    if( partner_id != TRID_NULL )
+    { //AIマルチ
+      BTL_SETUP_AIMulti_Trainer( bp, gdata, &sit, partner_id, tr_id0, tr_id1, heapID );
+    }else
+    { //ダブル
+      BTL_SETUP_Double_Trainer( bp, gdata, &sit, tr_id0, heapID );
+    }
+    break;
+  case BTL_RULE_SINGLE:
+    if( tr_id1 != TRID_NULL )
+    { //タッグ
+      BTL_SETUP_Tag_Trainer( bp, gdata, &sit, tr_id0, tr_id1, heapID );
+    }else
+    { //シングル
+      BTL_SETUP_Single_Trainer( bp, gdata, &sit, tr_id0, heapID );
+    }
+    break;
+  case BTL_RULE_TRIPLE:
+    //トリプル
+    BTL_SETUP_Triple_Trainer( bp, gdata, &sit, tr_id0, heapID );
+    break;
+  case BTL_RULE_ROTATION:
+    //ローテーション
+    BTL_SETUP_Rotation_Trainer( bp, gdata, &sit, tr_id0, heapID );
+    break;
+  default:
+    GF_ASSERT(0);
   }
 }
 
