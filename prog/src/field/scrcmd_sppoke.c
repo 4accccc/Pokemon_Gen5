@@ -214,8 +214,12 @@ VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
     evt_flg = POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_BEF;
     skill_no = WAZANO_NULL;
     break;
+/**    
+  case MONSNO_656:
+    evt_flg = POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_BEF;
+    skill_no = WAZANO_NULL;
+*/    
   default:
-    GF_ASSERT(0);
     *ret = FALSE;
     return VMCMD_RESULT_CONTINUE;
   }
