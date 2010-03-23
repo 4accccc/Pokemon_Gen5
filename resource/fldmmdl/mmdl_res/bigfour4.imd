@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2009-08-31T19:17:18' host='W00154A' user='lee_hyunjung' source='accordion.mb'/>
+	<create date='2010-03-15T15:51:22' host='W00154A' user='lee_hyunjung' source='ncg4x4nflipact.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2009-08-31T19:17:18' host='W00154A' user='lee_hyunjung' source='accordion.mb'/>
+<original_create date='2010-03-15T15:51:22' host='W00154A' user='lee_hyunjung' source='ncg4x4nflipact.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
-<model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
+<model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='merge' material_size='1 1' vertex_style='direct' compress_material='on' output_texture='used' node_size='2 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
 
 <box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='3'/>
 
-<tex_image_array size='12'>
-	<tex_image name='accordion.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.1.tga' palette_name='accordion' width='32' color0_mode='transparency'>
+<tex_image_array size='15'>
+	<tex_image name='32_anmimd.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.1.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -52,7 +52,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='accordion.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.2.tga' palette_name='accordion' width='32' color0_mode='transparency'>
+	<tex_image name='32_anmimd.10' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.10.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -88,7 +88,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='accordion.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.3.tga' palette_name='accordion' width='32' color0_mode='transparency'>
+	<tex_image name='32_anmimd.11' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.11.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -124,7 +124,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='accordion.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.4.tga' palette_name='accordion' width='32' color0_mode='transparency'>
+	<tex_image name='32_anmimd.12' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.12.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -160,305 +160,50 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='accordion.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.5.tga' palette_name='accordion' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 eeee eeee 0000 0000 0000 
-			0000 0000 ee00 bbbb bbbb 00ee 0000 0000 
-			0000 0000 bbe0 bccc cccb 0ebb 0000 0000 
-			0000 0000 bbbe cbbb bbbc ebbb 2000 0000 
-			0000 0002 bbcf bccc cccb fcbb 0000 0000 
-			0000 0000 cccf bbbc cbbb fccc 0000 0000 
-			2000 0000 ccdf cccc cccc fdcc 0000 0002 
-			3200 0002 ccf0 cccc cccc 0fcc 2000 0023 
-			2000 0000 cdf6 cccc cccc 6fdc 0000 0002 
-			0000 6000 ef77 cccd dccc 77fe 0006 0000 
-			2000 5602 7777 eee6 6eee 7777 2065 0002 
-			2000 5623 7865 8777 7778 5687 3265 0002 
-			2220 7723 5587 9867 7689 7855 3277 0222 
-			3320 7722 7576 994c c499 6757 2277 0233 
-			2200 7772 a778 aafb bfaa 877a 2777 0022 
-			7800 f755 f777 aaaa aaaa 777f 557f 0087 
-			5780 6877 6f78 9a98 89a9 87f6 7786 0875 
-			7780 6687 68ff 8ffe eff8 ff86 7866 0877 
-			7800 6668 6666 9bc2 2cb9 6666 8666 0087 
-			7800 666f 2666 bcdc bdcb 6666 f666 0087 
-			f780 6666 9866 dbec bebd 6662 6666 087f 
-			8ff0 8666 af66 bcce becb 6662 6668 0ff8 
-			f000 6868 f666 bcbd becb 668a 8686 000f 
-			0000 68f8 8668 bbbb 9bbb 86fa 8f86 0000 
-			0000 f000 686f 2bb1 8bb2 f68f 000f 0000 
-			0000 0000 80f0 222f f122 0f08 0000 0000 
-			0000 0000 0000 2210 0fff 0000 0000 0000 
-			0000 0000 0000 f1f0 0000 0000 0000 0000 
-			0000 0000 0000 0ff0 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-		</bitmap>
+	<tex_image name='32_anmimd.13' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.13.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
+		<bitmap size='256'/>
 	</tex_image>
-	<tex_image name='accordion.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.6.tga' palette_name='accordion' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 eeee eeee 0000 0000 0000 
-			0000 0000 ee00 bbbb bbbb 00ee 0000 0000 
-			0000 0000 bbe0 bccc cccb 0ebb 0000 0000 
-			0000 0000 bbbe cbbb bbbc ebbb 0000 0000 
-			0000 0000 bbcf bccc cccb fcbb 0000 0000 
-			0000 0000 cccf bbbc cbbb fccc 2000 0000 
-			0000 0002 ccdf cccc cccc fdcc 0000 0000 
-			0000 0000 ccf0 cccc cccc 0fcc 0000 0000 
-			2000 0000 cdf6 cccc cccc 6fdc 0000 0002 
-			3200 6002 ef77 cccd dccc 77fe 2006 0023 
-			2000 5600 7777 eee6 6eee 7777 0065 0002 
-			0000 5600 7865 8777 7778 5687 0065 0000 
-			0000 7600 5587 9867 7689 7855 0067 0000 
-			2000 7762 7576 994c c499 6757 2677 0002 
-			2000 7723 a778 aafb bfaa 877a 3277 0002 
-			2220 f723 f777 aaaa aaaa 777f 327f 0222 
-			3320 f722 6f78 9a98 89a9 87f6 227f 0233 
-			2200 6852 68f6 8ffe eff8 6f86 2586 0022 
-			7800 6855 6666 9bc2 2cb9 6666 5586 0087 
-			5780 6687 6666 bcdb cdcb 6662 7866 0875 
-			7780 6687 2666 dbeb cebd 6689 7866 0877 
-			7800 6668 2666 bceb eccb 66fa 8666 0087 
-			7800 666f a866 bceb dbcb 666f f666 0087 
-			f780 8666 af66 bbb9 bbbb 6668 6668 087f 
-			8ff0 6868 f868 2bb8 1bb2 8686 8686 0ff8 
-			0000 6888 686f 221f f222 f686 8886 0000 
-			0000 f000 80f0 fff8 8122 0f08 000f 0000 
-			0000 0000 0000 0000 0f1f 0000 0000 0000 
-			0000 0000 0000 0000 0ff0 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-		</bitmap>
+	<tex_image name='32_anmimd.14' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.14.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
+		<bitmap size='256'/>
 	</tex_image>
-	<tex_image name='accordion.7' format='palette16' original_width='32' original_height='32' index='6' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.7.tga' palette_name='accordion' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 eee0 eeee 000e 0000 0000 0000 
-			0000 e000 bbbe bbbb 0eeb 0000 0000 0000 
-			0000 be00 cccb ccbb ebbc 0000 0000 0000 
-			0000 bbe0 bbbb bbcc bbbb 000e 0200 0000 
-			0000 bcf0 cccb ccbb cbbc 000f 0000 0000 
-			0000 ccf0 bbcc bbbb cccc 000f 0000 0000 
-			0000 cdf0 cccc cccc dccc 000f 2000 0000 
-			0000 cf00 cccc cccc fccc 0066 3200 0002 
-			0000 df00 cccc cccc fdcc 0677 2000 0000 
-			0000 f600 ccde cccc 6fed 0657 0000 0000 
-			0000 7f00 ee67 eeee 6776 6555 0000 0000 
-			0000 f800 7777 7777 5777 6756 0000 0000 
-			0000 9800 5768 7777 7557 7776 0066 0000 
-			0000 a800 7c49 5675 7555 7776 0677 0000 
-			0000 a800 7bfa 5855 6775 7267 6777 0000 
-			0000 a900 8aaa 8557 7677 2327 8577 0000 
-			0000 8000 8aa9 8777 7227 7277 8557 0000 
-			0000 0000 7ff0 7877 7232 6557 0855 0000 
-			0000 0000 8800 76f7 2232 6552 0877 0000 
-			0000 0000 fe00 762f 3322 7652 8777 0000 
-			0000 0000 bde0 823d 2225 7678 7767 0008 
-			0000 0000 dbe0 823b 8557 7676 7677 0008 
-			0000 0000 8de0 2329 8778 6777 7f77 0008 
-			0000 0000 fbbe 229a 77f8 7778 f878 0000 
-			0000 0000 cb2e 1c8f ff00 f7f8 0080 0000 
-			0000 0000 21e0 f112 0000 0f80 0000 0000 
-			0000 0000 fe00 0f11 0000 0000 0000 0000 
-			0000 0000 f000 00ff 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-		</bitmap>
+	<tex_image name='32_anmimd.15' format='palette16' original_width='32' original_height='32' index='6' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.15.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
+		<bitmap size='256'/>
 	</tex_image>
-	<tex_image name='accordion.8' format='palette16' original_width='32' original_height='32' index='7' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.8.tga' palette_name='accordion' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 eee0 eeee 000e 0000 0000 0000 
-			0000 e000 bbbe bbbb 0eeb 0000 0000 0000 
-			0000 be00 cccb ccbb ebbc 0000 0000 0000 
-			0000 bbe0 bbbb bbcc bbbb 000e 0000 0000 
-			0000 bcf0 cccb ccbb cbbc 000f 0000 0000 
-			0000 ccf0 bbcc bbbb cccc 000f 0200 0000 
-			0000 cdf0 cccc cccc dccc 000f 0000 0000 
-			0000 cf00 cccc cccc fccc 0066 0000 0000 
-			0000 df00 cccc cccc fdcc 0677 2000 0000 
-			0000 f600 ccde cccc 6fed 0657 3200 0002 
-			0000 7f00 ee67 eeee 6776 6555 2000 0000 
-			0000 f800 7777 7777 5777 6756 0000 0000 
-			0000 9800 5768 7777 7557 7776 0666 0000 
-			0000 a800 7c49 5675 6755 7267 6777 0000 
-			0000 a800 7bfa 5855 7675 2327 8577 0000 
-			0000 a900 8aaa 8557 7227 7277 8557 0000 
-			0000 8000 8aa9 8777 7232 6557 0855 0000 
-			0000 0000 7ff0 7877 2232 6552 0877 0000 
-			0000 0000 8800 76f7 3322 7652 8777 0000 
-			0000 0000 fe00 762f 2225 7678 7767 0008 
-			0000 0000 bde0 823d 8557 7676 7677 0008 
-			0000 0000 dbe0 823b 8777 6777 7f77 0008 
-			0000 0000 cde0 2298 7778 7778 f878 0000 
-			0000 0000 bbbe 29af fff8 f7f8 0080 0000 
-			0000 0000 bb2e 18fc 0000 0f80 0000 0000 
-			0000 0000 21e0 1112 000e 0000 0000 0000 
-			0000 0000 ee10 ee11 000f 0000 0000 0000 
-			0000 0000 111f ff0f 0000 0000 0000 0000 
-			0000 0000 fff0 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-		</bitmap>
+	<tex_image name='32_anmimd.2' format='palette16' original_width='32' original_height='32' index='7' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.2.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
+		<bitmap size='256'/>
 	</tex_image>
-	<tex_image name='accordion.9' format='palette16' original_width='32' original_height='32' index='8' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.9.tga' palette_name='accordion' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 eee0 eeee 000e 0000 0000 0000 
-			0000 e000 bbbe bbbb 0eeb 0000 0000 0000 
-			0000 be00 cccb ccbb ebbc 0000 0000 0000 
-			0000 bbe0 bbbb bbcc bbbb 000e 0200 0000 
-			0000 bcf0 cccb ccbb cbbc 000f 0000 0000 
-			0000 ccf0 bbcc bbbb cccc 000f 0000 0000 
-			0000 cdf0 cccc cccc dccc 000f 2000 0000 
-			0000 cf00 cccc cccc fccc 0066 3200 0002 
-			0000 df00 cccc cccc fdcc 0677 2000 0000 
-			0000 f600 ccde cccc 6fed 0657 0000 0000 
-			0000 7f00 ee67 eeee 6776 6555 0000 0000 
-			0000 f800 7777 7777 6777 6755 0000 0000 
-			0000 9800 5768 7777 5557 6756 0000 0000 
-			0000 a800 7c49 5675 7555 7776 0066 0000 
-			0000 a800 7bfa 5855 7775 7776 0677 0000 
-			0000 a900 8aaa 8557 7677 7767 0677 0000 
-			0000 8000 8aa9 8777 6777 7267 6777 0000 
-			0000 0000 7ff0 7877 7777 2327 8577 0000 
-			0000 0000 8800 76f7 7227 7277 8557 0000 
-			0000 0000 fe00 762f 7232 6557 0855 0000 
-			0000 0000 bde0 823d 2232 6552 0877 0000 
-			0000 0000 dbe0 823b 3322 7652 8777 0000 
-			0000 0000 98e0 2332 2225 7678 7767 0008 
-			0000 0000 afbe 2239 87f8 7676 7677 0008 
-			0000 0000 fc2e 1c28 8f00 6777 7f77 0008 
-			0000 0000 21e0 f112 7000 7778 f878 0000 
-			0000 0000 eeef 1111 f000 f7f8 0080 0000 
-			0000 0000 0ff0 11fe 000f 0f80 0000 0000 
-			0000 0000 0000 fff0 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-		</bitmap>
+	<tex_image name='32_anmimd.3' format='palette16' original_width='32' original_height='32' index='8' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.3.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
+		<bitmap size='256'/>
 	</tex_image>
-	<tex_image name='accordion.10' format='palette16' original_width='32' original_height='32' index='9' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.10.tga' palette_name='accordion' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 e000 eeee 0eee 0000 0000 
-			0000 0000 0000 bee0 bbbb ebbb 000e 0000 
-			0000 0000 0000 cbbe bbcc bccc 00eb 0000 
-			0000 0020 e000 bbbb ccbb bbbb 0ebb 0000 
-			0000 0000 f000 cbbc bbcc bccc 0fcb 0000 
-			0000 0000 f000 cccc bbbb ccbb 0fcc 0000 
-			0000 0002 f000 cccd cccc cccc 0fdc 0000 
-			2000 0023 6600 cccf cccc cccc 00fc 0000 
-			0000 0002 7760 ccdf cccc cccc 00fd 0000 
-			0000 0000 7560 def6 cccc edcc 006f 0000 
-			0000 0000 5556 6776 eeee 76ee 00f7 0000 
-			0000 0000 6576 7775 7777 7777 008f 0000 
-			0000 6600 6777 7557 7777 8675 0089 0000 
-			0000 7760 6777 5557 5765 94c7 008a 0000 
-			0000 7776 7627 5776 5585 afb7 008a 0000 
-			0000 7758 7232 7767 7558 aaa8 009a 0000 
-			0000 7558 7727 7227 7778 9aa8 0008 0000 
-			0000 5580 7556 2327 7787 0ff7 0000 0000 
-			0000 7780 2556 2322 7f67 0088 0000 0000 
-			0000 7778 2567 2233 f267 00ef 0000 0000 
-			8000 7677 8767 5222 d328 0edb 0000 0000 
-			8000 7767 6767 7558 b328 0ebd 0000 0000 
-			8000 77f7 7776 8778 9232 0ed8 0000 0000 
-			0000 878f 8777 8f77 a922 ebbf 0000 0000 
-			0000 0800 8f7f 00ff f8c1 e2bc 0000 0000 
-			0000 0000 08f0 0000 211f 0e12 0000 0000 
-			0000 0000 0000 0000 11f0 00ef 0000 0000 
-			0000 0000 0000 0000 ff00 000f 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-		</bitmap>
+	<tex_image name='32_anmimd.4' format='palette16' original_width='32' original_height='32' index='9' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.4.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
+		<bitmap size='256'/>
 	</tex_image>
-	<tex_image name='accordion.11' format='palette16' original_width='32' original_height='32' index='10' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.11.tga' palette_name='accordion' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 e000 eeee 0eee 0000 0000 
-			0000 0000 0000 bee0 bbbb ebbb 000e 0000 
-			0000 0000 0000 cbbe bbcc bccc 00eb 0000 
-			0000 0000 e000 bbbb ccbb bbbb 0ebb 0000 
-			0000 0000 f000 cbbc bbcc bccc 0fcb 0000 
-			0000 0020 f000 cccc bbbb ccbb 0fcc 0000 
-			0000 0000 f000 cccd cccc cccc 0fdc 0000 
-			0000 0000 6600 cccf cccc cccc 00fc 0000 
-			0000 0002 7760 ccdf cccc cccc 00fd 0000 
-			2000 0023 7560 def6 cccc edcc 006f 0000 
-			0000 0002 5556 6776 eeee 76ee 00f7 0000 
-			0000 0000 6576 7775 7777 7777 008f 0000 
-			0000 6660 6777 7557 7777 8675 0089 0000 
-			0000 7776 7627 5576 5765 94c7 008a 0000 
-			0000 7758 7232 5767 5585 afb7 008a 0000 
-			0000 7558 7727 7227 7558 aaa8 009a 0000 
-			0000 5580 7556 2327 7778 9aa8 0008 0000 
-			0000 7780 2556 2322 7787 0ff7 0000 0000 
-			0000 7778 2567 2233 7f67 0088 0000 0000 
-			8000 7677 8767 5222 f267 00ef 0000 0000 
-			8000 7767 6767 7558 d328 0edb 0000 0000 
-			8000 77f7 7776 7778 b328 0ebd 0000 0000 
-			0000 878f 8777 8777 8922 0edc 0000 0000 
-			0000 0800 8f7f 8fff fa92 ebbb 0000 0000 
-			0000 0000 08f0 0000 cf81 e2bb 0000 0000 
-			0000 0000 0000 e000 2111 0e12 0000 0000 
-			0000 0000 0000 f000 11ee 01ee 0000 0000 
-			0000 0000 0000 0000 f0ff f111 0000 0000 
-			0000 0000 0000 0000 0000 0fff 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-		</bitmap>
+	<tex_image name='32_anmimd.5' format='palette16' original_width='32' original_height='32' index='10' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.5.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
+		<bitmap size='256'/>
 	</tex_image>
-	<tex_image name='accordion.12' format='palette16' original_width='32' original_height='32' index='11' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.12.tga' palette_name='accordion' width='32' color0_mode='transparency'>
-		<bitmap size='256'>
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 e000 eeee 0eee 0000 0000 
-			0000 0000 0000 bee0 bbbb ebbb 000e 0000 
-			0000 0000 0000 cbbe bbcc bccc 00eb 0000 
-			0000 0020 e000 bbbb ccbb bbbb 0ebb 0000 
-			0000 0000 f000 cbbc bbcc bccc 0fcb 0000 
-			0000 0000 f000 cccc bbbb ccbb 0fcc 0000 
-			0000 0002 f000 cccd cccc cccc 0fdc 0000 
-			2000 0023 6600 cccf cccc cccc 00fc 0000 
-			0000 0002 7760 ccdf cccc cccc 00fd 0000 
-			0000 0000 7560 def6 cccc edcc 006f 0000 
-			0000 0000 5556 6776 eeee 76ee 00f7 0000 
-			0000 0000 5576 7776 7777 7777 008f 0000 
-			0000 0000 6576 7555 7777 8675 0089 0000 
-			0000 6600 6777 5557 5765 94c7 008a 0000 
-			0000 7760 6777 5777 5585 afb7 008a 0000 
-			0000 7760 7677 7767 7558 aaa8 009a 0000 
-			0000 7776 7627 7776 7778 9aa8 0008 0000 
-			0000 7758 7232 7777 7787 0ff7 0000 0000 
-			0000 7558 7727 7227 7f67 0088 0000 0000 
-			0000 5580 7556 2327 f267 00ef 0000 0000 
-			0000 7780 2556 2322 d328 0edb 0000 0000 
-			0000 7778 2567 2233 b328 0ebd 0000 0000 
-			8000 7677 8767 5222 2332 0e89 0000 0000 
-			8000 7767 6767 8f78 9322 ebfa 0000 0000 
-			8000 77f7 7776 00f8 82c1 e2cf 0000 0000 
-			0000 878f 8777 0007 211f 0e12 0000 0000 
-			0000 0800 8f7f 000f 1111 feee 0000 0000 
-			0000 0000 08f0 f000 ef11 0ff0 0000 0000 
-			0000 0000 0000 0000 0fff 0000 0000 0000 
-			0000 0000 0000 0000 0000 0000 0000 0000 
-		</bitmap>
+	<tex_image name='32_anmimd.6' format='palette16' original_width='32' original_height='32' index='11' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.6.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
+		<bitmap size='256'/>
+	</tex_image>
+	<tex_image name='32_anmimd.7' format='palette16' original_width='32' original_height='32' index='12' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.7.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
+		<bitmap size='256'/>
+	</tex_image>
+	<tex_image name='32_anmimd.8' format='palette16' original_width='32' original_height='32' index='13' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.8.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
+		<bitmap size='256'/>
+	</tex_image>
+	<tex_image name='32_anmimd.9' format='palette16' original_width='32' original_height='32' index='14' height='32' path='C:/home/wb_data3d/field/fldobj/32_anmimd.9.tga' palette_name='32_anmimd' width='32' color0_mode='color'>
+		<bitmap size='256'/>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size='1'>
-	<tex_palette name='accordion' color_size='16' index='0'>
+	<tex_palette name='32_anmimd' color_size='16' index='0'>
 		6f17 4115 51dc 66bd 3e61 36fb 19d4 1a78 
 		192f 3a7a 5f5f 7fff 7338 5672 39ac 0000 
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size='1'>
-	<material name='obj' tex_translate='0.000000 0.000000' tex_image_idx='0' tex_gen_mode='none' polygon_id='0' tex_palette_idx='0' light0='on' fog_flag='off' render_1_pixel='off' diffuse='0 0 0' shininess_table_flag='off' light1='off' specular='0 0 0' tex_tiling='clamp clamp' light2='off' ambient='31 31 31' index='0' light3='off' emission='0 0 0' polygon_mode='modulate' depth_test_decal='off' tex_rotate='0.000000' face='front' wire_mode='off' tex_scale='1.000000 1.000000' alpha='31' translucent_update_depth='off' far_clipping='off'/>
+	<material name='anmimd_1' tex_translate='0.000000 0.000000' tex_image_idx='0' tex_gen_mode='none' polygon_id='0' tex_palette_idx='0' light0='on' fog_flag='on' render_1_pixel='off' diffuse='25 25 25' shininess_table_flag='off' light1='off' specular='0 0 0' tex_tiling='repeat repeat' light2='off' ambient='31 31 31' index='0' light3='off' emission='0 0 0' polygon_mode='modulate' depth_test_decal='off' tex_rotate='0.000000' face='front' wire_mode='off' tex_scale='1.000000 1.000000' alpha='31' translucent_update_depth='off' far_clipping='off'/>
 </material_array>
 
 <matrix_array size='1'>

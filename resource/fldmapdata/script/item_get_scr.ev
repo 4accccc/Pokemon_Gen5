@@ -20,7 +20,7 @@ _EVENT_DATA   ev_item_event_keywait
 _EVENT_DATA   ev_item_event_nowait
 _EVENT_DATA   ev_item_event_field
 _EVENT_DATA   ev_pocket_me_set
-_EVENT_DATA   ev_item_get_player_form_set
+_EVENT_DATA   ev_item_get_player_form_anime_set
 _EVENT_DATA   ev_item_get_player_form_return
 _EVENT_DATA   ev_item_event_hideitem
 _EVENT_DATA   ev_item_event_intrude_secret
@@ -201,11 +201,12 @@ ev_item_event_field_core:
 
   _CALL sub_pocket_me_set
   _TIME_WAIT( ITEM_GET_FORM_TIMING )
-  _CALL sub_item_get_player_form_set
+  _CALL sub_item_get_player_form_anime_set
 
   _ADD_ITEM_CHK( SCWK_PARAM0, SCWK_PARAM1, i_get)
   _CALL sub_item_event_get_field_msg
   _ME_WAIT()
+  _OBJ_ANIME_WAIT()
   _CALL sub_item_get_player_form_return
 
   _DEBUG_PRINT_WK( i_get )
@@ -433,10 +434,10 @@ sub_pocket_me_set:
 _RET
 
 //====================================================================
-//自機アニメーションセット：アイテム取得
+//  自機アニメーションセット：アイテム取得
 //====================================================================
-ev_item_get_player_form_set:
-  _CALL sub_item_get_player_form_set
+ev_item_get_player_form_anime_set:
+  _CALL sub_item_get_player_form_anime_set
 _CHG_LOCAL_SCR
 _END
 
@@ -450,11 +451,11 @@ _END
 
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
-sub_item_get_player_form_set:
+sub_item_get_player_form_anime_set:
 {
   _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_ITEMGET )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_itemget )
-  _OBJ_ANIME_WAIT()
+//_OBJ_ANIME_WAIT() //100323 ゲットポーズと同時にメッセージ表示に変更
 }
 _RET
 
@@ -489,11 +490,12 @@ EVENT_START ev_item_event_intrude_secret
 
   _CALL sub_pocket_me_set
   _TIME_WAIT( ITEM_GET_FORM_TIMING )
-  _CALL sub_item_get_player_form_set
+  _CALL sub_item_get_player_form_anime_set
 
 //  メッセージ「～をみつけた！」
   _CALL sub_item_event_get_field_msg
   _ME_WAIT()
+  _OBJ_ANIME_WAIT()
   _CALL sub_item_get_player_form_return
 
   _ADD_ITEM_CHK( SCWK_PARAM0, 1, i_get)
