@@ -1000,6 +1000,8 @@ u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
     return NARC_grid_camera_scene_camera_scene_T05_dat;
   case ZONE_ID_R04:
     return NARC_grid_camera_scene_camera_scene_R04_dat;
+  case ZONE_ID_H04:
+    return NARC_grid_camera_scene_camera_scene_H04_dat;
   }
   return ZONEDATA_NO_SCENEAREA_ID;
 }

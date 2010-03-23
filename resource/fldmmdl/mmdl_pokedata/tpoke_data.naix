@@ -1,0 +1,18 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: tpoke_data.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_TPOKE_DATA_NAIX_
+#define NARC_TPOKE_DATA_NAIX_
+
+enum {
+	NARC_tpoke_data_tpoke_dat = 0
+};
+
+/* NARC_TPOKE_DATA_NAIX_ */
+#endif

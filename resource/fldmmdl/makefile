@@ -10,6 +10,9 @@ MKFILE_NCGIMD = mkfile_ncgimd
 MKFILE_RESARC = mkfile_resarc
 MKFILE_MDLLIST = mkfile_mdllist
 
+
+SUBDIRS	= mmdl_pokedata
+
 .PHONY: do-build clean
 
 do-build:
@@ -19,6 +22,7 @@ ifeq	($(CONVERTUSER),true) #CONVERTUSER
 endif
 	$(MAKE) -f $(MKFILE_RESARC)
 	$(MAKE) -f $(MKFILE_MDLLIST)
+	@$(MAKE_SUBDIR)
 
 clean:
 	$(MAKE) -f $(MKFILE_MDLLIST) clean
@@ -27,6 +31,7 @@ ifeq	($(CONVERTUSER),true) #CONVERTUSER
 	$(MAKE) -f $(MKFILE_NCGIMD) clean
 	$(MAKE) -f $(MKFILE_RESLIST) clean
 endif
+	@$(MAKE_SUBDIR)
 
 dmyres:
 ifeq	($(CONVERTUSER),true) #CONVERTUSER
