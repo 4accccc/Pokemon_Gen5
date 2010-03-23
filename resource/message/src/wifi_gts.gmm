@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-03-16T23:40:07"/>
+	<create user="matsumiya" host="W00224" date="2010-03-23T12:59:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="-1133" top="98" right="-428" bottom="726" maximized="no" rayout="Vertical2">
+	<dialog left="1737" top="208" right="2442" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -344,8 +344,8 @@
 メッセージ</comment>
 		<language name="JPN" width="216">あずけていた　ポケモンの
 こうかんが　せいりつ　しました！</language>
-		<language name="JPN_KANJI" width="216">あずけていた　ポケモンの
-こうかんが　せいりつ　しました！</language>
+		<language name="JPN_KANJI" width="216">預けていた　ポケモンの
+交換が　成立しました！</language>
 	</row>
 
 	<row id="msg_gtc_01_003">
@@ -355,7 +355,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 こうかん　されませんでした[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-こうかん　されませんでした[BE:01:ページ切り替え（クリア）]</language>
+交換されませんでした[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_01_004">
@@ -365,13 +365,13 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 にげてしまった　みたい……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-にげてしまった　みたい……[BE:01:ページ切り替え（クリア）]</language>
+逃げてしまった　みたい……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_01_005">
 		<comment>端末メニューの選択メッセージ</comment>
 		<language name="JPN" width="216">おさがし　ですか？　おあずけ　ですか？</language>
-		<language name="JPN_KANJI" width="216">おさがし　ですか？　おあずけ　ですか？</language>
+		<language name="JPN_KANJI" width="216">お探しですか？　お預けですか？</language>
 	</row>
 
 	<row id="msg_gtc_01_006">
@@ -385,53 +385,53 @@
 		<comment>預けているポケモンを引き取るかどうかの
 確認メッセージ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]を　ひきとりますか？</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]を　ひきとりますか？</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]を　引き取りますか？</language>
 	</row>
 
 	<row id="msg_gtc_01_008">
 		<comment>ＧＴＣから抜けるときのメッセージ</comment>
 		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクション　から
-せつだん　しても　よろしい　ですか？</language>
+せつだん　しても　よろしいですか？</language>
 		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクション　から
-せつだん　しても　よろしい　ですか？</language>
+切断しても　よろしいですか？</language>
 	</row>
 
 	<row id="msg_gtc_01_009">
 		<comment>ポケモンを探すときのメッセージ</comment>
 		<language name="JPN" width="216">どんな　ポケモンを　さがしますか？</language>
-		<language name="JPN_KANJI" width="216">どんな　ポケモンを　さがしますか？</language>
+		<language name="JPN_KANJI" width="216">どんな　ポケモンを　探しますか？</language>
 	</row>
 
 	<row id="msg_gtc_01_010">
 		<comment>ほしいポケモンを選択するときのメッセージ</comment>
 		<language name="JPN" width="216">ほしい　ポケモンを　えらんでください</language>
-		<language name="JPN_KANJI" width="216">ほしい　ポケモンを　えらんでください</language>
+		<language name="JPN_KANJI" width="216">ほしい　ポケモンを　選んでください</language>
 	</row>
 
 	<row id="msg_gtc_01_011">
 		<comment>ほしい性別を選択するときのメッセージ</comment>
 		<language name="JPN" width="216">せいべつを　えらんでください</language>
-		<language name="JPN_KANJI" width="216">せいべつを　えらんでください</language>
+		<language name="JPN_KANJI" width="216">性別を　選んでください</language>
 	</row>
 
 	<row id="msg_gtc_01_012">
 		<comment>ほしいポケモンのレベルを選択するときの
 メッセージ</comment>
 		<language name="JPN" width="216">ポケモンのレベルを　きめてください</language>
-		<language name="JPN_KANJI" width="216">ポケモンのレベルを　きめてください</language>
+		<language name="JPN_KANJI" width="216">ポケモンのレベルを　決めてください</language>
 	</row>
 
 	<row id="msg_gtc_01_013">
 		<comment>探すポケモンを指定せずに、「さがす」を
 選択したとき</comment>
 		<language name="JPN" width="216">さがすポケモンを　えらんでください！</language>
-		<language name="JPN_KANJI" width="216">さがすポケモンを　えらんでください！</language>
+		<language name="JPN_KANJI" width="216">探すポケモンを　選んでください！</language>
 	</row>
 
 	<row id="msg_gtc_01_014">
 		<comment>サーバーに検索をかけているときのメッセージ</comment>
-		<language name="JPN" width="216">ポケモンを　さがしています　……</language>
-		<language name="JPN_KANJI" width="216">ポケモンを　さがしています　……</language>
+		<language name="JPN" width="216">ポケモンを　さがしています……</language>
+		<language name="JPN_KANJI" width="216">ポケモンを　探しています……</language>
 	</row>
 
 	<row id="msg_gtc_01_015">
@@ -444,7 +444,7 @@
 	<row id="msg_gtc_01_016">
 		<comment>さがすモードから抜けるときのメッセージ</comment>
 		<language name="JPN" width="216">さがすのを　やめますか？</language>
-		<language name="JPN_KANJI" width="216">さがすのを　やめますか？</language>
+		<language name="JPN_KANJI" width="216">探すのを　やめますか？</language>
 	</row>
 
 	<row id="msg_gtc_01_017" back-color=",,,,,,#00ff00,,,,,,,,,,,">
@@ -453,14 +453,14 @@
 		<language name="JPN" width="216">このトレーナーの　ポケモンと
 こうかん　しますか？</language>
 		<language name="JPN_KANJI" width="216">このトレーナーの　ポケモンと
-こうかん　しますか？</language>
+交換しますか？</language>
 	</row>
 
 	<row id="msg_gtc_01_018">
 		<comment>替わりにあげるポケモンを選択するときの
 メッセージ</comment>
 		<language name="JPN" width="216">かわりのポケモンを　えらんでください</language>
-		<language name="JPN_KANJI" width="216">かわりのポケモンを　えらんでください</language>
+		<language name="JPN_KANJI" width="216">代わりのポケモンを　選んでください</language>
 	</row>
 
 	<row id="msg_gtc_01_019">
@@ -474,33 +474,33 @@
 		<comment>交換しようとしたポケモンが、ほかの誰かに
 交換されていたときのメッセージ</comment>
 		<language name="JPN" width="216">すでに　こうかん　されちゃった……</language>
-		<language name="JPN_KANJI" width="216">すでに　こうかん　されちゃった……</language>
+		<language name="JPN_KANJI" width="216">すでに　交換されちゃった……</language>
 	</row>
 
 	<row id="msg_gtc_01_021">
 		<comment>替わりに選んだポケモンが、相手のほしいポケモンと
 一致しなかったときのメッセージ</comment>
 		<language name="JPN" width="216">していのポケモンと　ちがいますよ！</language>
-		<language name="JPN_KANJI" width="216">していのポケモンと　ちがいますよ！</language>
+		<language name="JPN_KANJI" width="216">指定のポケモンと　違いますよ！</language>
 	</row>
 
 	<row id="msg_gtc_01_022">
 		<comment>預けるポケモンを選択するときのメッセージ</comment>
 		<language name="JPN" width="216">あずけるポケモンを　えらんでください</language>
-		<language name="JPN_KANJI" width="216">あずけるポケモンを　えらんでください</language>
+		<language name="JPN_KANJI" width="216">預けるポケモンを　選んでください</language>
 	</row>
 
 	<row id="msg_gtc_01_023">
 		<comment>そのポケモンを預けるかどうかの確認メッセージ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]を　あずけますか？</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]を　あずけますか？</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]を　預けますか？</language>
 	</row>
 
 	<row id="msg_gtc_01_024">
 		<comment>ほしいポケモンを指定したあとの
 条件確認メッセージ</comment>
 		<language name="JPN" width="216">この　じょうけんで　よろしいですか？</language>
-		<language name="JPN_KANJI" width="216">この　じょうけんで　よろしいですか？</language>
+		<language name="JPN_KANJI" width="216">この条件で　よろしいですか？</language>
 	</row>
 
 	<row id="msg_gtc_01_025">
@@ -509,8 +509,8 @@
 メッセージ</comment>
 		<language name="JPN" width="216">ＧＴＳの　じょうたいを
 かくにんちゅう　です……</language>
-		<language name="JPN_KANJI" width="216">ＧＴＳの　じょうたいを
-かくにんちゅう　です……</language>
+		<language name="JPN_KANJI" width="216">ＧＴＳの　状態を
+確認中です……</language>
 	</row>
 
 	<row id="msg_gtc_01_026">
@@ -531,7 +531,7 @@
 		<language name="JPN" width="216">このポケモンを
 こうかんに　だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">このポケモンを
-こうかんに　だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
+交換に　だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_01_028">
@@ -539,7 +539,7 @@
 警告メッセージ</comment>
 		<language name="JPN" width="216">タマゴを　こうかんに
 だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">タマゴを　こうかんに
+		<language name="JPN_KANJI" width="216">タマゴを　交換に
 だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -548,9 +548,9 @@
 ポケモンを受け取ることができない
 警告メッセージ</comment>
 		<language name="JPN" width="216">てもちが　いっぱいで　ポケモンを
-うけとる　ことが　できません！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">てもちが　いっぱいで　ポケモンを
-うけとる　ことが　できません！[BE:01:ページ切り替え（クリア）]</language>
+うけとることが　できません！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">手持ちが　一杯で　ポケモンを
+受け取ることが　できません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_01_030">
@@ -558,40 +558,40 @@
 ポケモンを受け取ることができない
 警告メッセージ</comment>
 		<language name="JPN" width="216">ボックスが　いっぱいで　ポケモンを
-うけとる　ことが　できません！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">ボックスが　いっぱいで　ポケモンを
-うけとる　ことが　できません！[BE:01:ページ切り替え（クリア）]</language>
+うけとることが　できません！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">ボックスが　一杯で　ポケモンを
+受け取ることが　できません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_01_031" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,#ff8000,,,,,,">
 		<comment>探しているポケモンが見つかったときの
 メッセージ→1秒ウエイトで自動送り→msg_gtc_01_033</comment>
 		<language name="JPN" width="216">こうかん　あいてが　みつかりました！</language>
-		<language name="JPN_KANJI" width="216">こうかん　あいてが　みつかりました！</language>
+		<language name="JPN_KANJI" width="216">交換相手が　みつかりました！</language>
 	</row>
 
 	<row id="msg_gtc_01_032">
 		<comment>ＧＴＳに接続するときのタイトル</comment>
 		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクションに　せつぞく</language>
-		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクションに　せつぞく</language>
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクションに　接続</language>
 	</row>
 
 	<row id="msg_gtc_01_033" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,#ff8000,,,,,,">
 		<comment>探した相手をタッチするガイドメッセージ</comment>
 		<language name="JPN" width="216">『えらぶ』で　あいてを　きめてください</language>
-		<language name="JPN_KANJI" width="216">『えらぶ』で　あいてを　きめてください</language>
+		<language name="JPN_KANJI" width="216">『えらぶ』で　相手を　決めてください</language>
 	</row>
 
 	<row id="msg_gtc_01_034" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,#ff8000,,,,,,">
 		<comment>前と同じ条件で、探すを押したときのメッセージ</comment>
 		<language name="JPN" width="216">じょうけんを　かえて　ください</language>
-		<language name="JPN_KANJI" width="216">じょうけんを　かえて　ください</language>
+		<language name="JPN_KANJI" width="216">条件を　変えてください</language>
 	</row>
 
 	<row id="msg_gtc_01_035" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,#ff8000,,,,,,">
 		<comment>預けたポケモンの「ようすをみる」ロックアウト時のメッセージ</comment>
 		<language name="JPN" width="216">しばらく　じかんを　おいてください</language>
-		<language name="JPN_KANJI" width="216">しばらく　じかんを　おいてください</language>
+		<language name="JPN_KANJI" width="216">しばらく　時間を　おいてください</language>
 	</row>
 
 	<row id="msg_gtc_01_036" back-color="#ff8000,,,,,,,#ff8000,,,#ff8000,#ff8000,,,,,,">
@@ -601,14 +601,14 @@
 		<language name="JPN" width="216">てもちが　いっぱいで
 メールを　もっている　ポケモンを[BE:00:ページ切り替え（行送り）]
 うけとることが　できません！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">てもちが　いっぱいで
-メールを　もっている　ポケモンを[BE:00:ページ切り替え（行送り）]
-うけとることが　できません！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">手持ちが　一杯で
+メールを　持っている　ポケモンを[BE:00:ページ切り替え（行送り）]
+受け取ることが　できません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_01_037" back-color="#ff8000,,,,,,,#ff8000,,,#ff8000,#ff8000,,,,,,">
 		<language name="JPN" width="216">てもちが　いっぱいで　うけとれません</language>
-		<language name="JPN_KANJI" width="216">てもちが　いっぱいで　うけとれません</language>
+		<language name="JPN_KANJI" width="216">手持ちが　一杯で　受け取れません</language>
 	</row>
 
 	<row id="msg_gtc_01_038" back-color="#ff8000,,,,,,,#ff8000,,,#ff8000,#ff8000,,,,,,">
@@ -617,14 +617,14 @@
 警告メッセージ</comment>
 		<language name="JPN" width="216">とくべつな　リボンが　ついているので
 こうかんに　だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">とくべつな　リボンが　ついているので
-こうかんに　だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">特別な　リボンが　ついているので
+交換に　だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_01_039" back-color="#ff8000,,,,,,,#ff8000,,,#ff8000,#ff8000,,,,,,">
 		<comment>ＧＴＳ確認タイムアウトメッセージ</comment>
 		<language name="JPN" width="216">ＧＴＳの　かくにんに　しっぱいしました</language>
-		<language name="JPN_KANJI" width="216">ＧＴＳの　かくにんに　しっぱいしました</language>
+		<language name="JPN_KANJI" width="216">ＧＴＳの　確認に　失敗しました</language>
 	</row>
 
 	<row id="msg_gtc_02_001">
@@ -1312,62 +1312,62 @@
 		<language name="JPN" font=" 1:small" width="216">ポケモンを　ＧＴＳに
 おくりだして　います</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンを　ＧＴＳに
-おくりだして　います</language>
+送りだして　います</language>
 	</row>
 
 	<row id="msg_gtc_13_002">
 		<language name="JPN" font=" 1:small" width="216">ＧＴＳに　ポケモンが
-とうろくされました！[BE:01:ページ切り替え（クリア）]</language>
+とうろく　されました！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳに　ポケモンが
-とうろくされました！[BE:01:ページ切り替え（クリア）]</language>
+登録されました！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_14_001">
 		<language name="JPN" font=" 1:small" width="216">ポケモンを　ＧＴＳから
-うけとって　います</language>
+うけとっています</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンを　ＧＴＳから
-うけとって　います</language>
+受け取っています</language>
 	</row>
 
 	<row id="msg_gtc_14_002">
 		<language name="JPN" font=" 1:small" width="216">ＧＴＳから　ポケモンを
 ひきとりました！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳから　ポケモンを
-ひきとりました！[BE:01:ページ切り替え（クリア）]</language>
+引き取りました！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_15_001">
 		<language name="JPN" font=" 1:small" width="216">ＧＴＳと　ポケモンを　
-こうかんしています！</language>
+こうかん　しています！</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳと　ポケモンを　
-こうかんしています！</language>
+交換しています！</language>
 	</row>
 
 	<row id="msg_gtc_15_002">
 		<language name="JPN" font=" 1:small" width="216">ポケモンの　こうかんが
 せいりつ　しました！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンの　こうかんが
-せいりつ　しました！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンの　交換が
+成立しました！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_15_003">
 		<language name="JPN" font=" 1:small" width="216">ざんねんですが　ほかのひとと
 こうかん　されていました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ざんねんですが　ほかのひとと
-こうかん　されていました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">残念ですが　他の人と
+交換されていました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_15_004">
 		<language name="JPN" font=" 1:small" width="216">ポケモンレポートに　かきこんでいます
 でんげんを　きらないでください</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンレポートに　かきこんでいます
-でんげんを　きらないでください</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ポケモンレポートに　書きこんでいます
+電源を　切らないでください</language>
 	</row>
 
 	<row id="msg_gtc_15_005">
 		<language name="JPN" font=" 1:small" width="216">ただいま　ＧＴＳと　つうしんを
 おこなっています……</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ただいま　ＧＴＳと　つうしんを
+		<language name="JPN_KANJI" font=" 1:small" width="216">ただいま　ＧＴＳと　通信を
 おこなっています……</language>
 	</row>
 
@@ -1375,13 +1375,11 @@
 		<language name="JPN" font=" 1:small" width="216">ＧＴＳは
 げんざい　メンテナンスちゅう　です[BE:01:ページ切り替え（クリア）]
 しばらく　おまちいただいたのち　
-ごりようください[BE:01:ページ切り替え（クリア）]
-</language>
+ごりようください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳは
-げんざい　メンテナンスちゅう　です[BE:01:ページ切り替え（クリア）]
-しばらく　おまちいただいたのち　
-ごりようください[BE:01:ページ切り替え（クリア）]
-</language>
+現在　メンテナンス中　です[BE:01:ページ切り替え（クリア）]
+しばらく　お待ちいただいたのち　
+ご利用ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_error_002">
@@ -1390,54 +1388,54 @@
 しばらく　おまちいただいたのち
 ごりようください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳは
-げんざい　こみあって　おります[BE:01:ページ切り替え（クリア）]
-しばらく　おまちいただいたのち
-ごりようください[BE:01:ページ切り替え（クリア）]</language>
+現在　混み合っております[BE:01:ページ切り替え（クリア）]
+しばらく　お待ちいただいたのち
+ご利用ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_error_003">
-		<language name="JPN" font=" 1:small" width="216">けんさく　できません　でした…</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">けんさく　できません　でした…</language>
+		<language name="JPN" font=" 1:small" width="216">けんさく　できませんでした……</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">検索できませんでした……</language>
 	</row>
 
 	<row id="msg_gtc_error_004">
 		<comment>ポケモン検索画面でエラーが発生した時用。１行ウインドウに表示する</comment>
 		<language name="JPN" font=" 1:small" width="216">つうしんエラーが　はっせいしました</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">つうしんエラーが　はっせいしました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが　発生しました</language>
 	</row>
 
 	<row id="msg_gtc_error_004_01">
 		<comment>サーバー確認画面で表示する際に使用するキー待ちつきのエラーテキスト</comment>
 		<language name="JPN" font=" 1:small" width="216">つうしんエラーが　はっせいしました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">つうしんエラーが　はっせいしました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが　発生しました</language>
 	</row>
 
 	<row id="msg_gtc_error_005">
 		<language name="JPN" font=" 1:small" width="216">ＧＴＳに　せつぞく
 できませんでした[BE:01:ページ切り替え（クリア）]
-うけつけにもどります[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳに　せつぞく
+うけつけに　もどります[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳに　接続
 できませんでした[BE:01:ページ切り替え（クリア）]
-うけつけにもどります[BE:01:ページ切り替え（クリア）]</language>
+受付に　もどります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_error_006">
 		<language name="JPN" font=" 1:small" width="216">ＧＴＳとの　つうしんが
 せつだん　されました[BE:01:ページ切り替え（クリア）]
 うけつけに　もどります[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳとの　つうしんが
-せつだん　されました[BE:01:ページ切り替え（クリア）]
-うけつけに　もどります[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳとの　通信が
+切断されました[BE:01:ページ切り替え（クリア）]
+受付に　もどります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_error_006_01">
 		<language name="JPN" font=" 1:small" width="216">ＧＴＳとの　つうしんが　せつだん　されました</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳとの　つうしんが　せつだん　されました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳとの　通信が　切断されました</language>
 	</row>
 
 	<row id="msg_gtc_error_006_02">
 		<language name="JPN" font=" 1:small" width="216">うけつけに　もどります</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">うけつけに　もどります</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">受付に　もどります</language>
 	</row>
 
 	<row id="msg_gtc_search_001">
@@ -1563,7 +1561,7 @@
 	<row id="msg_gtc_country_000">
 		<comment>ほしいポケモンの国を選択するときのメッセージ　※プラチナで追加</comment>
 		<language name="JPN" width="216">あいての　ちいきを　きめてください</language>
-		<language name="JPN_KANJI" width="216">あいての　ちいきを　きめてください</language>
+		<language name="JPN_KANJI" width="216">相手の　地域を　決めてください</language>
 	</row>
 
 	<row id="msg_gtc_new_form">
@@ -1572,14 +1570,14 @@
 		<language name="JPN" width="216">このフォルムの　ポケモンは
 こうかんに　だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">このフォルムの　ポケモンは
-こうかんに　だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
+交換に　だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_new_form_002">
 		<language name="JPN" width="216">ギザみみピチューは　
 こうかんに　だせません[2:07:８桁:]</language>
 		<language name="JPN_KANJI" width="216">ギザみみピチューは　
-こうかんに　だせません[2:07:８桁:]</language>
+交換に　だせません[2:07:８桁:]</language>
 	</row>
 
 	<row id="msg_gtc_new_item">
@@ -1587,8 +1585,8 @@
 ※プラチナで追加</comment>
 		<language name="JPN" width="216">このどうぐを　もっている　ポケモンは
 こうかんに　だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">このどうぐを　もっている　ポケモンは
-こうかんに　だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">この道具を　持っている　ポケモンは
+交換に　だすことは　できません！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_pl_oya">
@@ -1602,15 +1600,15 @@
 eメールエラー</comment>
 		<language name="JPN" font=" 1:small" width="216">にんしょうメールの　そうしんに
 しっぱいしました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">にんしょうメールの　そうしんに
-しっぱいしました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">認証メールの　送信に
+失敗しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_email_error_001">
 		<comment>※プラチナで追加
 eメールエラー</comment>
 		<language name="JPN" font=" 1:small" width="216">つうしんエラーが　はっせいしました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">つうしんエラーが　はっせいしました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信エラーが　発生しました</language>
 	</row>
 
 	<row id="msg_gtc_email_error_002">
@@ -1625,10 +1623,10 @@ eメールエラー</comment>
 	<row id="msg_gtc_email_error_003">
 		<comment>※プラチナで追加
 eメールエラー</comment>
-		<language name="JPN" font=" 1:small" width="216">サーバーが　メンテナンスちゅうです
+		<language name="JPN" font=" 1:small" width="216">サーバーが　メンテナンスちゅう　です
 しばらく　まって　せつぞくしてください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーが　メンテナンスちゅうです
-しばらく　まって　せつぞくしてください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">サーバーが　メンテナンス中　です
+しばらく待って　接続してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_email_error_004">
@@ -1636,16 +1634,16 @@ eメールエラー</comment>
 eメールエラー</comment>
 		<language name="JPN" font=" 1:small" width="216">ｅメールの　にんしょうに
 しっぱいしました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ｅメールの　にんしょうに
-しっぱいしました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ｅメールの　認証に
+失敗しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_cleanup_000">
 		<comment>※プラチナで追加</comment>
 		<language name="JPN" font=" 1:small" width="216">Ｗｉ－Ｆｉコネクション　から
-せつだんしています</language>
+せつだん　しています</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">Ｗｉ－Ｆｉコネクション　から
-せつだんしています</language>
+切断しています</language>
 	</row>
 
 	<row id="msg_gtc_cleanup_001">
@@ -1653,7 +1651,7 @@ eメールエラー</comment>
 		<language name="JPN" font=" 1:small" width="216">Ｗｉ－Ｆｉコネクション　から
 せつだん　しました</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">Ｗｉ－Ｆｉコネクション　から
-せつだん　しました</language>
+切断しました</language>
 	</row>
 
 	<row id="msg_gts_word_001">
