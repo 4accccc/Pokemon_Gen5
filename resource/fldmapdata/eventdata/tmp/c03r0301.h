@@ -11,6 +11,7 @@
 
 #define C03R0301_INFOMATIONW_01            0
 #define C03R0301_CLEANINGM_01              1
+#define C03R0301_BUSINESSMAN_01            2
 
 #endif //ZONE_C03R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

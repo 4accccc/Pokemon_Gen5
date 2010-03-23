@@ -42,8 +42,8 @@ EVENT_START ev_c07pc0101_fix_shop
 EVENT_END
 
 /**************************************************************/
-/* ÅyâºÅzÉvÉåÉ[ÉìÉgÇ≠ÇÍÇÈÇ®ÇŒÇ†Ç≥ÇÒ                           */
+/* ÉvÉåÉ[ÉìÉgÇ≠ÇÍÇÈÇ®ÇŒÇ†Ç≥ÇÒ                           */
 /**************************************************************/
 EVENT_START   ev_c07pc0101_oldwoman1_01
-  _EASY_TALK_ITEM_EVENT(ITEM_KIZUGUSURI, 1, FE_C07PC0101_ITEM_01, msg_c07pc0101_oldwoman1_01, msg_c07pc0101_oldwoman1_02, msg_c07pc0101_oldwoman1_02 )
+  _EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN31, 1, FE_C07PC0101_ITEM_01, msg_c07pc0101_oldwoman1_01, msg_c07pc0101_oldwoman1_02, msg_c07pc0101_oldwoman1_02 )
 EVENT_END
