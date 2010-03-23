@@ -154,6 +154,9 @@ EVENT_START  ev_pos_d07_rival_01
 	//主人公アテグの方を見る
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_d07_player_look_champion )
 	_OBJ_ANIME_WAIT()
+	
+	//アテグ専用曲
+	_START_EVENT_BGM( SEQ_BGM_E_CHAMPION )
 
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
@@ -227,6 +230,8 @@ EVENT_START  ev_pos_d07_rival_01
 	_OBJ_ANIME( D07_RIVAL_01,anm_d07_rival_look_champion02 )
 	_OBJ_ANIME_WAIT()
 	
+	//アテグ専用曲停止
+	_END_EVENT_BGM()
 	
 	//ライバル：なにが したいか…
 	_BALLOONWIN_OBJMSG_POS(msg_d07_black_04,D07_RIVAL_01 , POS_DR )

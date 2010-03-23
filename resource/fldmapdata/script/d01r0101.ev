@@ -505,6 +505,8 @@ EVENT_START   ev_pos_d01r0101_support_04
 	
 	//プラズマ男ムンナを蹴る
 	_OBJ_ANIME(D01R0101_HAKAIM_01,anm_d01r0101_hakaim_kick)
+	_SE_PLAY( SEQ_SE_FLD_04 ) 
+	_SE_WAIT() 
 	_OBJ_ANIME_WAIT()
 	
 	//プラズマ男：おっ！夢のけむり回収！
