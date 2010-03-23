@@ -94,7 +94,7 @@ ev_symbol_pokemon_main:
   _SYSWIN_CLOSE()
   IF $SCWK_ANSWER == SCR_YES THEN
     _SYMBOL_POKE_BATTLE( SCWK_TARGET_OBJID, SCWK_ANSWER )
-    IF $SCWK_ANSWER == TRUE
+    IF $SCWK_ANSWER == TRUE THEN
         //ƒ}ƒbƒv‚É“ü‚è’¼‚·
         _SYMBOL_MAP_WARP( DIR_NOT )
     ENDIF
