@@ -73,7 +73,7 @@ EVENT_END
 EVENT_START ev_seatemple_step_300
 
 	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
-	_SHAKE_CAMERA(3,0,3,8)
+	_SHAKE_CAMERA(0,5,3,8)
 
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step02 )
 	_LAST_KEYWAIT()
@@ -86,7 +86,7 @@ EVENT_END
 EVENT_START ev_seatemple_step_450
 
 	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
-	_SHAKE_CAMERA(5,0,3,15)
+	_SHAKE_CAMERA(0,8,3,15)
 
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step03 )
 	_LAST_KEYWAIT()
@@ -100,7 +100,7 @@ EVENT_END
 EVENT_START ev_seatemple_step_500
 
 	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
-	_SHAKE_CAMERA(8,0,3,15)
+	_SHAKE_CAMERA(0,10,3,15)
 
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step04 )
 	_LAST_KEYWAIT()
