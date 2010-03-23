@@ -8,7 +8,9 @@
 //==============================================================================
 
 #pragma once
-
+#include <gflib.h>
+#include "field/intrude_symbol.h"
+#include "gamesystem/gamesystem.h"
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 extern u16 SYMBOLMAP_GetZoneID( SYMBOL_MAP_ID symmap_id );
@@ -24,3 +26,8 @@ extern BOOL SYMBOLMAP_IsEntranceID( SYMBOL_MAP_ID symmap_id );
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 extern BOOL SYMBOLMAP_IsKeepzoneID( SYMBOL_MAP_ID symmap_id );
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern INTRUDE_SYMBOL_WORK * SYMBOLMAP_AllocSymbolWork( HEAPID heapID, GAMESYS_WORK * gsys );
+

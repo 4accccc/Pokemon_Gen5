@@ -12,15 +12,18 @@
 
 #include "savedata/save_control.h"  //SAVE_CONTROL_WORK
 #include "gamesystem/gamesystem.h"
-#include "savedata/symbol_save.h"
+#include "savedata/symbol_save.h"   //SYMBOL_POKEMON
 #include "savedata/intrude_save.h"
+#include "savedata/symbol_save_notwifi.h"
 
 #include "arc/fieldmap/zone_id.h"
 #include "field/field_dir.h"
 
 #include "field/intrude_symbol.h"
+#include "field_comm/intrude_main.h"  //Intrude_Check_CommConnect
 
 #include "symbol_map.h"
+#include "system/main.h"
 //==============================================================================
 //==============================================================================
 //--------------------------------------------------------------
@@ -42,8 +45,9 @@ enum {
 //==============================================================================
 //==============================================================================
 //--------------------------------------------------------------
+//  各段階でのマップ構成
 //--------------------------------------------------------------
-static u8 map_level1_0[SYMMAP_SIZE] = {
+static const u8 map_level1_0[SYMMAP_SIZE] = {
   0,  1,  0,
   8,  9,  10,
   5,  6,  7,
@@ -55,7 +59,7 @@ static u8 map_level1_0[SYMMAP_SIZE] = {
   0,  0,  0,
   0,  0,  0,
 };
-static u8 map_level2_0[SYMMAP_SIZE] = {
+static const u8 map_level2_0[SYMMAP_SIZE] = {
   0,  1,  0,
   11, 12, 13,
   8,  9,  10,
@@ -67,7 +71,7 @@ static u8 map_level2_0[SYMMAP_SIZE] = {
   0,  0,  0,
   0,  0,  0,
 };
-static u8 map_level3_0[SYMMAP_SIZE] = {
+static const u8 map_level3_0[SYMMAP_SIZE] = {
   0,  1,  0,
   14, 15, 16,
   11, 12, 13,
@@ -79,7 +83,7 @@ static u8 map_level3_0[SYMMAP_SIZE] = {
   0,  0,  0,
   0,  0,  0,
 };
-static u8 map_level4_0[SYMMAP_SIZE] = {
+static const u8 map_level4_0[SYMMAP_SIZE] = {
   0,  1,  0,
   17, 18, 19,
   14, 15, 16,
@@ -91,7 +95,7 @@ static u8 map_level4_0[SYMMAP_SIZE] = {
   0,  0,  0,
   0,  0,  0,
 };
-static u8 map_level5_0[SYMMAP_SIZE] = {
+static const u8 map_level5_0[SYMMAP_SIZE] = {
   0,  1,  0,
   20, 21, 22,
   17, 18, 19,
@@ -103,7 +107,7 @@ static u8 map_level5_0[SYMMAP_SIZE] = {
   0,  0,  0,
   0,  0,  0,
 };
-static u8 map_level6_0[SYMMAP_SIZE] = {
+static const u8 map_level6_0[SYMMAP_SIZE] = {
   0,  1,  0,
   23, 24, 25,
   20, 21, 22,
@@ -115,7 +119,7 @@ static u8 map_level6_0[SYMMAP_SIZE] = {
   0,  0,  0,
   0,  0,  0,
 };
-static u8 map_level7_0[SYMMAP_SIZE] = {
+static const u8 map_level7_0[SYMMAP_SIZE] = {
   0,  1,  0,
   26, 27, 28,
   23, 24, 25,
@@ -128,7 +132,7 @@ static u8 map_level7_0[SYMMAP_SIZE] = {
   0,  0,  0,
 };
 
-static u8 map_level1_1[SYMMAP_SIZE] = {
+static const u8 map_level1_1[SYMMAP_SIZE] = {
   0,  1,  0,
   2,  3,  4,
   8,  9,  10,
@@ -140,7 +144,7 @@ static u8 map_level1_1[SYMMAP_SIZE] = {
   0,  0,  0,
   0,  0,  0,
 };
-static u8 map_level2_1[SYMMAP_SIZE] = {
+static const u8 map_level2_1[SYMMAP_SIZE] = {
   0,  1,  0,
   2,  3,  4,
   11, 12, 13,
@@ -152,7 +156,7 @@ static u8 map_level2_1[SYMMAP_SIZE] = {
   0,  0,  0,
   0,  0,  0,
 };
-static u8 map_level3_1[SYMMAP_SIZE] = {
+static const u8 map_level3_1[SYMMAP_SIZE] = {
   0,  1,  0,
   2,  3,  4,
   14, 15, 16,
@@ -164,7 +168,7 @@ static u8 map_level3_1[SYMMAP_SIZE] = {
   0,  0,  0,
   0,  0,  0,
 };
-static u8 map_level4_1[SYMMAP_SIZE] = {
+static const u8 map_level4_1[SYMMAP_SIZE] = {
   0,  1,  0,
   2,  3,  4,
   17, 18, 19,
@@ -176,7 +180,7 @@ static u8 map_level4_1[SYMMAP_SIZE] = {
   0,  0,  0,
   0,  0,  0,
 };
-static u8 map_level5_1[SYMMAP_SIZE] = {
+static const u8 map_level5_1[SYMMAP_SIZE] = {
   0,  1,  0,
   2,  3,  4,
   20, 21, 22,
@@ -188,7 +192,7 @@ static u8 map_level5_1[SYMMAP_SIZE] = {
   0,  0,  0,
   0,  0,  0,
 };
-static u8 map_level6_1[SYMMAP_SIZE] = {
+static const u8 map_level6_1[SYMMAP_SIZE] = {
   0,  1,  0,
   2,  3,  4,
   23, 24, 25,
@@ -200,7 +204,7 @@ static u8 map_level6_1[SYMMAP_SIZE] = {
   5,  6,  7,
   0,  0,  0,
 };
-static u8 map_level7_1[SYMMAP_SIZE] = {
+static const u8 map_level7_1[SYMMAP_SIZE] = {
   0,  1,  0,
   2,  3,  4,
   26, 27, 28,
@@ -212,6 +216,27 @@ static u8 map_level7_1[SYMMAP_SIZE] = {
   8,  9,  10,
   5,  6,  7,
 };
+
+static const u8 * const symmap_tables[] = {
+  map_level1_0,
+  map_level2_0,
+  map_level3_0,
+  map_level4_0,
+  map_level5_0,
+  map_level6_0,
+  map_level7_0,
+
+  map_level1_1,
+  map_level2_1,
+  map_level3_1,
+  map_level4_1,
+  map_level5_1,
+  map_level6_1,
+  map_level7_1,
+};
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 
 //==============================================================================
 //==============================================================================
@@ -279,7 +304,7 @@ static u8 getIndex( const u8 * map, u8 now_lsid )
 //--------------------------------------------------------------
 /// SIDから対応するゾーンIDを取得する
 //--------------------------------------------------------------
-u16 getSymbolMapZoneID( const u8 * map, u8 now_lsid )
+static u16 getSymbolMapZoneID( const u8 * map, u8 now_lsid )
 {
   int idx = getIndex( map, now_lsid );
   BOOL left = hasLeft( map, idx );
@@ -345,26 +370,99 @@ static u16 getNextMapLSID( const u8 * map, u8 now_lsid, u8 dir_id )
 //--------------------------------------------------------------
 static const u8 * getMapTable( SYMBOL_MAP_LEVEL_LARGE large_lvl, SYMBOL_MAP_LEVEL_SMALL small_lvl )
 {
-  static const u8 * table[] = {
-    map_level1_0,
-    map_level2_0,
-    map_level3_0,
-    map_level4_0,
-    map_level5_0,
-    map_level6_0,
-    map_level7_0,
-
-    map_level1_1,
-    map_level2_1,
-    map_level3_1,
-    map_level4_1,
-    map_level5_1,
-    map_level6_1,
-    map_level7_1,
-  };
   int index = small_lvl + SYMMAP_SMALL_LEVEL_LIMIT * large_lvl;
-  GF_ASSERT( index < NELEMS(table) );
-  return table[index];
+  GF_ASSERT( index < NELEMS(symmap_tables) );
+  return symmap_tables[index];
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static SYMBOL_MAP_LEVEL_SMALL getSmallLevel( GAMESYS_WORK * gsys )
+{
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(gamedata);
+  SYMBOL_SAVE_WORK *symbol_save = SymbolSave_GetSymbolData(sv_ctrl);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr( gsys );
+
+  if ( IntrudeSymbol_CheckIntrudeNetID( game_comm, gamedata ) == INTRUDE_NETID_NULL )
+  { //自分のマップ
+    return SymbolSave_GetMapLevelSmall( symbol_save );
+  }
+  else
+  { //通信相手のマップ
+    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect( game_comm );
+    INTRUDE_SYMBOL_WORK * isw;
+    if ( intcomm == NULL )
+    {
+      return SYMBOL_MAP_LEVEL_SMALL_1; //通信エラーなので、とりあえず
+    }
+    isw = IntrudeSymbol_GetSymbolBuffer( intcomm );
+    return isw->map_level_small;
+  }
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static SYMBOL_MAP_LEVEL_LARGE getLargeLevel( GAMESYS_WORK * gsys )
+{
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(gamedata);
+  SYMBOL_SAVE_WORK *symbol_save = SymbolSave_GetSymbolData(sv_ctrl);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr( gsys );
+
+  if ( IntrudeSymbol_CheckIntrudeNetID( game_comm, gamedata ) == INTRUDE_NETID_NULL )
+  { //自分のマップ
+    return SymbolSave_GetMapLevelLarge( symbol_save );
+  }
+  else
+  { //通信相手のマップ
+    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect( game_comm );
+    INTRUDE_SYMBOL_WORK * isw;
+    if ( intcomm == NULL )
+    {
+      return SYMBOL_MAP_LEVEL_LARGE_NONE; //通信エラーなので、とりあえず
+    }
+    isw = IntrudeSymbol_GetSymbolBuffer( intcomm );
+    return isw->map_level_large;
+  }
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+INTRUDE_SYMBOL_WORK * SYMBOLMAP_AllocSymbolWork( HEAPID heapID, GAMESYS_WORK * gsys )
+{
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(gamedata);
+  SYMBOL_SAVE_WORK *symbol_save = SymbolSave_GetSymbolData(sv_ctrl);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr( gsys );
+
+  if ( IntrudeSymbol_CheckIntrudeNetID( game_comm, gamedata ) == INTRUDE_NETID_NULL )
+  { //自分のマップ
+    SYMBOL_MAP_ID symmap_id = GAMEDATA_GetSymbolMapID( gamedata );
+    u8 occ_num;
+    INTRUDE_SYMBOL_WORK * isw = GFL_HEAP_AllocClearMemory( heapID, sizeof(INTRUDE_SYMBOL_WORK) );
+    SymbolSave_GetMapIDSymbolPokemon( symbol_save,
+        isw->spoke_array, SYMBOL_MAP_STOCK_MAX, symmap_id, &occ_num );
+    isw->num = occ_num;
+    isw->map_level_small = SymbolSave_GetMapLevelSmall( symbol_save );
+    isw->map_level_large = SymbolSave_GetMapLevelLarge( symbol_save );
+    isw->net_id = INTRUDE_NETID_NULL;
+    isw->symbol_map_id = symmap_id;
+    return isw;
+  }
+  else
+  { //通信相手のマップ
+    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect( game_comm );
+    if ( intcomm == NULL )
+    {
+      return NULL; //通信エラー
+    }
+    else
+    {
+      INTRUDE_SYMBOL_WORK * isw = GFL_HEAP_AllocClearMemory( heapID, sizeof(INTRUDE_SYMBOL_WORK) );
+      GFL_STD_MemCopy( IntrudeSymbol_GetSymbolBuffer( intcomm ), isw, sizeof( INTRUDE_SYMBOL_WORK ) );
+      return isw;
+    }
+  }
 }
 
 //==============================================================================
@@ -373,7 +471,7 @@ static const u8 * getMapTable( SYMBOL_MAP_LEVEL_LARGE large_lvl, SYMBOL_MAP_LEVE
 /**
  * @brief 対応するゾーンのIDを取得
  * @param symmap_id   シンボルマップID
- * @return  u16
+ * @return  u16   ゾーンID
  */
 //--------------------------------------------------------------
 u16 SYMBOLMAP_GetZoneID( SYMBOL_MAP_ID symmap_id )
