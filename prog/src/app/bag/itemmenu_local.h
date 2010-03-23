@@ -259,6 +259,8 @@ struct _FIELD_ITEMMENU_PARAM {
 	u16	tmpSeq;					///< 汎用シーケンス
 	u16	tmpCnt;					///< 汎用カウンタ
 	StateFunc * chgState;
+	int	key_repeat_speed;
+	int	key_repeat_wait;
 };
 
 #define _OBJPLT_SUB_POKE_TYPE (4) //サブ画面技タイプアイコンパレット位置
