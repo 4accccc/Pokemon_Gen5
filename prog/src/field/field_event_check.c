@@ -115,6 +115,9 @@
 #include "field_diving_data.h"  //DIVINGSPOT_Check
 #include "poke_tool/natsuki.h"  //NATSUKI_CalcTsurearuki
 
+#include "net_app/cg_help.h"  //CGHELP呼び出し
+#include "event_fieldmap_control.h"  //CGHELP呼び出し
+
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
 extern BOOL MapFadeReqFlg;    //マップフェードリクエストフラグ  宣言元　script.c
@@ -2495,6 +2498,13 @@ static GMEVENT * checkSubScreenEvent(
     break;
   case FIELD_SUBSCREEN_ACTION_SCANRADAR:
     event = EVENT_ResearchRadar( gsys, fieldWork );
+    break;
+  case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
+    {
+      CG_HELP_INIT_WORK *initWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC,sizeof(CG_HELP_INIT_WORK) );
+      initWork->myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
+      event = EVENT_FieldSubProc_Callback(gsys, fieldWork, FS_OVERLAY_ID(cg_help),&CGearHelp_ProcData,initWork,NULL,initWork);
+    }
     break;
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR:
     event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_NORMAL);

@@ -144,9 +144,9 @@ typedef struct {
 // タイプ
 #define _CLACT_TYPE_MAX (3)
 
-#define POS_HELPMARK_X    (188)
+#define POS_HELPMARK_X    (198)
 #define POS_HELPMARK_Y    (POS_SCANRADAR_Y)
-#define POS_EDITMARK_X    (218)
+#define POS_EDITMARK_X    (222)
 #define POS_EDITMARK_Y    (POS_SCANRADAR_Y)
 
 
@@ -156,7 +156,7 @@ static const GFL_UI_TP_HITTBL bttndata[] = {  //上下左右
   {	PANEL_Y2 * 8,  PANEL_Y2 * 8 + (PANEL_SIZEXY * 8 * PANEL_HEIGHT2), 0,32*8-1 },   //タッチパネル全部
   { (POS_EDITMARK_Y-8), (POS_EDITMARK_Y+8), (POS_EDITMARK_X-8), (POS_EDITMARK_X+8) },        //こうさく
   { (POS_HELPMARK_Y-8), (POS_HELPMARK_Y+8), (POS_HELPMARK_X-8), (POS_HELPMARK_X+8) },   //HELP
-  { 160, 160+24, 100, 146 },                //SURECHIGAI
+  { 160, 160+24, 128-32, 128+32 },                //SURECHIGAI
   { (POS_SCANRADAR_Y-12), (POS_SCANRADAR_Y+12), (POS_SCANRADAR_X-16), (POS_SCANRADAR_X+16) }, //RADAR
   { 16, (16+8), 96, (96+(7*8)) },    //CGEARLOGO
   {GFL_UI_TP_HIT_END,0,0,0},		 //終了データ
@@ -1088,6 +1088,7 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     _editMarkONOFF(pWork, pWork->bPanelEdit);
     break;
   case 2:
+    FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_CGEAR_HELP);
     //help
     break;
   case 3:
@@ -1397,7 +1398,7 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
     GFL_CLWK_DATA cellInitData;
     //セルの生成
 
-    cellInitData.pos_x = 128-(8*_CLACT_CROSS_MAX/2) + 8*i;
+    cellInitData.pos_x = 128-(8*_CLACT_CROSS_MAX/2) + 8*i + 8;
     cellInitData.pos_y = 180;
     cellInitData.anmseq = NANR_c_gear_obj_CellAnime_sure01;
     cellInitData.softpri = 0;
@@ -1409,7 +1410,8 @@ static void _gearCrossObjCreate(C_GEAR_WORK* pWork)
                                                &cellInitData ,
                                                CLSYS_DEFREND_SUB,
                                                pWork->heapID );
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellCross[i], FALSE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->cellCross[i], TRUE );
+    GFL_CLACT_WK_SetAnmIndex( pWork->cellCross[i], 16);
     //pWork->crossColor[i]=i+1;
   }
 
@@ -1466,7 +1468,8 @@ static void _gearCrossObjMain(C_GEAR_WORK* pWork)
       //    }
     }
     else{
-      GFL_CLACT_WK_SetDrawEnable( cp_wk, FALSE );
+      GFL_CLACT_WK_SetAnmIndex( cp_wk, 16);
+//      GFL_CLACT_WK_SetDrawEnable( cp_wk, FALSE );
     }
   }
 }
