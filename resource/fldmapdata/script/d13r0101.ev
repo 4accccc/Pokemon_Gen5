@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_d13r0101.h"
-  //.include  "d13r0101.h"
+  .include  "d13r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,22 +21,282 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_d13r0101_assistantm_01
 _EVENT_DATA    ev_bg_d13r0101_pc_01
+_EVENT_DATA    ev_zone_d13r0101     //ゾーンチェンジスクリプト
+_EVENT_DATA    ev_scene_d13r0101   //シーンスクリプト
+_EVENT_DATA    ev_init_d13r0101     //フィールドイニットスクリプト
 _EVENT_DATA_END
+
+/**************************************************************/
+/*            ZONE_CHANGE_SCRIPT                               */
+/**************************************************************/
+INIT_EVENT_START ev_zone_d13r0101
+  //研究員表示初期化
+  _FLAG_RESET( FV_D13R0101_ASSISTANTM_01 )
+  //シーンワークチェック
+  IF $WK_SCENE_D13R0101 == 0 THEN   //イベントまだ
+  {
+    DEFINE_LOCAL pos      //引数で使用するので定義
+    //インセクタチェック
+    _GET_EVT_POKE_POS( MONSNO_656, FALSE, pos, SCWK_ANSWER )
+    $SCWK_ANSWER = TRUE   //todo
+
+    IF $SCWK_ANSWER == TRUE THEN    //インセクタいる
+      //シーンワーク更新(シーンスクリプト有効)
+      $WK_SCENE_D13R0101 = 1
+    ELSE
+      //研究員を非表示
+      _FLAG_SET( FV_D13R0101_ASSISTANTM_01 )
+    ENDIF
+  }  
+  ENDIF
+  
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d13r0101
+  IF $WK_SCENE_D13R0101 == 2 THEN  //研究員とバトルで勝ってない
+    //研究員バトルポジションに表示
+    _OBJ_POS_CHANGE( D13R0101_ASSISTANTM_01, 6, 0, 5, DIR_DOWN )
+  ENDIF
+INIT_EVENT_END
+
+/**************************************************************/
+/*            SCENE_SCRIPT                               */
+/**************************************************************/
+EVENT_START ev_scene_d13r0101
+  //シーンワーク更新
+  $WK_SCENE_D13R0101 = 2
+
+  _CALL doc_first_evt
+  //戦う？
+  _SYSWIN_MSG( msg_d13r0101_narrator_01, POS_DOWN )
+  _YES_NO_WIN( SCWK_ANSWER )
+  _SYSWIN_CLOSE()
+  _CALL doc_battle
+
+EVENT_END
 
 
 /**************************************************************/
 /*                         研究員                             */
 /**************************************************************/
 EVENT_START	ev_d13r0101_assistantm_01
+  _TALK_OBJ_START()
+  //研究員との戦闘イベント状態で分岐
+  SWITCH $WK_SCENE_D13R0101
+  CASE 2 THEN //研究員と話したことがあり、まだ戦闘済でない
+    //「戦うか？」
+    _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_14, D13R0101_ASSISTANTM_01, POS_DR )
+    _YES_NO_WIN( SCWK_ANSWER )
+    _BALLOONWIN_CLOSE()
 
+    _CALL doc_battle
+
+  CASE 2 THEN //戦闘済
+    //「技のタイプが変わる」
+    _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_15, D13R0101_ASSISTANTM_01, POS_DR )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDSWITCH
 EVENT_END
+
+doc_first_evt:
+  //カメラ移動
+  _CAMERA_START()
+  _CAMERA_PURGE()		//対象物とカメラのバインドを解く
+	_CAMERA_MOVE(9688,0,970752,425984,0,425984,8)
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+
+  _OBJ_ANIME( D13R0101_ASSISTANTM_01, anm_doc_turn )
+  _OBJ_ANIME_WAIT()
+  //「こどもか」
+  _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_01, D13R0101_ASSISTANTM_01, POS_DR )
+  _BALLOONWIN_CLOSE()
+
+  //部屋中央に移動
+  _OBJ_ANIME( D13R0101_ASSISTANTM_01, anm_doc_move )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
+  _OBJ_ANIME_WAIT()
+
+  //カメラ戻し
+  _CAMERA_DEF_MOVE( 8 )
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド
+	_CAMERA_END()		//カメラ操作終了
+
+  //「まさか」
+  _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_02, D13R0101_ASSISTANTM_01, POS_DR )
+  _BALLOONWIN_CLOSE()
+  _OBJ_ANIME( D13R0101_ASSISTANTM_01, anm_doc_down )
+  _OBJ_ANIME_WAIT()
+  //「インセクタ」  
+  _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_03, D13R0101_ASSISTANTM_01, POS_DR )
+  _BALLOONWIN_CLOSE()
+  //☆「最強」
+  _GIZAWIN_OBJMSG_POS( msg_d13r0101_assistm_04, D13R0101_ASSISTANTM_01, POS_DR )
+  _GIZAWIN_CLOSE()
+
+  _OBJ_ANIME( D13R0101_ASSISTANTM_01, anm_doc_down )
+  _OBJ_ANIME_WAIT()
+  //「しかし」
+  _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_05, D13R0101_ASSISTANTM_01, POS_DR )
+  _BALLOONWIN_CLOSE()
+
+  //☆「傷つけた」
+  _GIZAWIN_OBJMSG_POS( msg_d13r0101_assistm_06, D13R0101_ASSISTANTM_01, POS_DR )
+  _GIZAWIN_CLOSE()
+  //「研究中止」
+  _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_07, D13R0101_ASSISTANTM_01, POS_DR )
+  _BALLOONWIN_CLOSE()
+
+  //☆「しかし」
+  _GIZAWIN_OBJMSG_POS( msg_d13r0101_assistm_08, D13R0101_ASSISTANTM_01, POS_DR )
+  _GIZAWIN_CLOSE()
+_RET
+
+// 研究員と戦闘 input: SCWK_ANSWER
+doc_battle:
+  IF $SCWK_ANSWER == 0 THEN       //戦う
+    //戦闘
+   _TRAINER_BTL_SET( TRID_SCIENTISTM_12, 0 )
+
+   _CALL set_btl_after_pos
+
+		//結果チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()
+		ELSE
+			_TRAINER_LOSE()   //スクリプト終わり
+		ENDIF
+
+    //ここから勝ったときの処理
+
+    {
+      DEFINE_LOCAL  version
+      DEFINE_LOCAL  item1
+      DEFINE_LOCAL  item2
+      _GET_ROM_VERSION ( version )
+      IF $version == VERSION_BLACK THEN   //ブラック
+        $item1 = ITEM_INAZUMAKASETTO
+        $item2 = ITEM_BUREIZUKASETTO
+      ELSE                                //ホワイト
+        $item1 = ITEM_AKUAKASETTO
+        $item2 = ITEM_HURIIZUKASETTO
+      ENDIF
+
+      _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_09, D13R0101_ASSISTANTM_01, POS_DR )
+      _BALLOONWIN_CLOSE()
+      _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_10, D13R0101_ASSISTANTM_01, POS_DR )
+      _BALLOONWIN_CLOSE()
+      
+      _ITEM_EVENT_KEYWAIT(item1, 1)
+
+      //「テクノバスター」
+      _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_12, D13R0101_ASSISTANTM_01, POS_DR )
+      _BALLOONWIN_CLOSE()
+
+      //もどりかけて・・・！
+      _OBJ_ANIME( D13R0101_ASSISTANTM_01, anm_doc_up_gyoe )
+      _OBJ_ANIME_WAIT()
+
+      //「もう一個」
+      _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_11, D13R0101_ASSISTANTM_01, POS_DR )
+      _BALLOONWIN_CLOSE()
+
+      _ITEM_EVENT_KEYWAIT(item2, 1)
+
+      //研究員戻る
+      _OBJ_ANIME( D13R0101_ASSISTANTM_01, anm_doc_return )
+      _OBJ_ANIME_WAIT()
+
+      //シーンワーク更新　イベント完全終了
+      $WK_SCENE_D13R0101 = 3
+    }
+  ELSE                            //戦わない
+    //「こしぬけ」
+    _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_13, D13R0101_ASSISTANTM_01, POS_DR )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF  
+_RET
+
+set_btl_after_pos:
+  _OBJ_POS_CHANGE( D13R0101_ASSISTANTM_01, 6, 0, 5, DIR_DOWN )
+  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 6, 0, 6, DIR_UP )
+_RET
 
 /**************************************************************/
 /*                         パソコン                           */
 /**************************************************************/
 EVENT_START	ev_bg_d13r0101_pc_01
+  //読む？
+  _SYSWIN_MSG( msg_d13r0101_pc_01, POS_DOWN )
+  _YES_NO_WIN( SCWK_ANSWER )
+  _SYSWIN_CLOSE()
 
+  IF $SCWK_ANSWER == 0 THEN
+    _SYSWIN_MSG( msg_d13r0101_pc_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+  ENDIF  
 EVENT_END
+
+//--------------------------------------------------------------------
+//自機移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move
+  _ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//研究員
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_doc_turn
+  _ANIME_DATA	AC_MARK_GYOE ,1
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+ 
+//--------------------------------------------------------------------
+//研究員
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_doc_move
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//研究員
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_doc_down
+  _ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//研究員
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_doc_up_gyoe
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_MARK_GYOE,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+  
+
+//--------------------------------------------------------------------
+//研究員
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_doc_return
+  _ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+  
+
+
+
 
 
 
