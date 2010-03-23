@@ -128,10 +128,12 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   int i, my_net_id;
   BOOL update_ret;
 
+#if 0
   //※check　デバッグ
   if(ZONEDATA_IsBingo(FIELDMAP_GetZoneID(fieldWork)) && (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT)){
     DEBUG_INTRUDE_Pokemon_Add(fieldWork);
   }
+#endif
 
   //パレス通信自動起動ON/OFF処理
   _PalaceMapCommBootCheck(fieldWork, gameSys, game_comm, pcActor);

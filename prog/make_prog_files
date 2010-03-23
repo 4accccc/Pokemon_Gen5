@@ -473,8 +473,8 @@ SRCS_OVERLAY_WIFI_UTIL  = net/dwc_raputil.c
 #===> SRCS_OVERLAY_DEV_IRC
 #GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_FIELD_INTRUDE = field/field_comm/intrude_field.c \
-				field/field_comm/intrude_minimono.c \
 				field/field_comm/intrude_monolith.c \
+        field/symbol_pokemon.c \
 				field/event_intrude.c \
 				field/event_intrude_subscreen.c \
         field/scrcmd_intrude.c \
