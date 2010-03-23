@@ -241,6 +241,12 @@ static BOOL debugMenuCallProc_AllMapCheck( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_RingTone( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_EventPokeCreate( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_SymbolPokeCreate( DEBUG_MENU_EVENT_WORK * p_wk );
+static BOOL debugMenuCallProc_SymbolPokeList( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_SymbolPokeKeepLargeFull( DEBUG_MENU_EVENT_WORK * wk );
+static BOOL debugMenuCallProc_SymbolPokeKeepSmallFull( DEBUG_MENU_EVENT_WORK * wk );
+static BOOL debugMenuCallProc_SymbolPokeFreeLargeFull( DEBUG_MENU_EVENT_WORK * wk );
+static BOOL debugMenuCallProc_SymbolPokeFreeSmallFull( DEBUG_MENU_EVENT_WORK * wk );
+static BOOL debugMenuCallProc_SymbolPokeCountup( DEBUG_MENU_EVENT_WORK * wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -298,7 +304,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR63, debugMenuCallProc_SetBtlBox },  //不正チェックを通るポケモンを作成
   { DEBUG_FIELD_STR64, debugMenuCallProc_ChangeName },  //主人公名を再設定
   { DEBUG_FIELD_STR67, debugMenuCallProc_EventPokeCreate },  //イベントポケモン作成
-  { DEBUG_FIELD_STR69, debugMenuCallProc_SymbolPokeCreate },  //シンボルポケモン作成
+  //{ DEBUG_FIELD_STR69, debugMenuCallProc_SymbolPokeCreate },  //シンボルポケモン作成
+  { DEBUG_FIELD_STR69, debugMenuCallProc_SymbolPokeList },  //シンボルポケモン作成
 
   { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_LABEL },       //○つうしん
   { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },      //WIFIクラブ
@@ -6665,6 +6672,208 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
 
   return GMEVENT_RES_CONTINUE;
 }
+
+
+//======================================================================
+//======================================================================
+//--------------------------------------------------------------
+/// proto
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuSymbolPokeListEvent(GMEVENT *event, int *seq, void *wk );
+
+static const FLDMENUFUNC_LIST DATA_SubSymbolPokeList[] =
+{
+  { DEBUG_FIELD_SYMBOL_11, debugMenuCallProc_SymbolPokeCreate },
+  { DEBUG_FIELD_SYMBOL_05, debugMenuCallProc_SymbolPokeKeepLargeFull },
+  { DEBUG_FIELD_SYMBOL_06, debugMenuCallProc_SymbolPokeKeepSmallFull },
+  { DEBUG_FIELD_SYMBOL_07, debugMenuCallProc_SymbolPokeFreeLargeFull },
+  { DEBUG_FIELD_SYMBOL_08, debugMenuCallProc_SymbolPokeFreeSmallFull },
+  { DEBUG_FIELD_SYMBOL_09, debugMenuCallProc_SymbolPokeCountup },
+};
+
+static const DEBUG_MENU_INITIALIZER DebugSubSymbolPokeListSelectData = {
+  NARC_message_d_field_dat,
+  NELEMS(DATA_SubSymbolPokeList),
+  DATA_SubSymbolPokeList,
+  &DATA_DebugMenuList_Default, //流用
+  1, 1, 16, 17,
+  NULL,
+  NULL
+};
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　シンボルポケモン作成リスト
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_SymbolPokeList( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT *event = wk->gmEvent;
+  DEBUG_MENU_EVENT_WORK   temp  = *wk;
+  DEBUG_MENU_EVENT_WORK   *work;
+
+  GMEVENT_Change( event,
+    debugMenuSymbolPokeListEvent, sizeof(DEBUG_MENU_EVENT_WORK) );
+
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_MENU_EVENT_WORK) );
+
+  *work  = temp;
+  work->call_proc = NULL;
+
+  work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugSubSymbolPokeListSelectData );
+
+  return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：シンボルポケモン作成リスト
+ * @param event GMEVENT
+ * @param seq   シーケンス
+ * @param wk    event work
+ * @retval  GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuSymbolPokeListEvent(GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_MENU_EVENT_WORK *work = wk;
+
+  switch( (*seq) ){
+  case 0:
+    (*seq)++;
+    break;
+  case 1:
+    {
+      u32 ret;
+      ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+
+      if( ret == FLDMENUFUNC_NULL ){  //操作無し
+        break;
+      }else if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
+        work->call_proc = NULL;
+        (*seq)++;
+      }else if( ret != FLDMENUFUNC_CANCEL ){  //決定
+        work->call_proc = (DEBUG_MENU_CALLPROC)ret;
+        (*seq)++;
+      }
+    }
+    break;
+
+  case 2:
+    {
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+
+      if( work->call_proc != NULL ){
+        if( work->call_proc(work) == TRUE ){
+          return( GMEVENT_RES_CONTINUE );
+        }
+      }
+
+      return( GMEVENT_RES_FINISH );
+    }
+    break;
+  }
+
+  return( GMEVENT_RES_CONTINUE );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void addSymbolPokemons( GAMESYS_WORK * gsys, SYMBOL_ZONE_TYPE zone_type )
+{
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK * svctrl = GAMEDATA_GetSaveControlWork( gamedata );
+  SYMBOL_SAVE_WORK * symbol_save = SymbolSave_GetSymbolData( svctrl );
+  
+  while ( SymbolSave_CheckSpace( symbol_save, zone_type ) != SYMBOL_SPACE_NONE )
+  {
+    u16 monsno = GFUser_GetPublicRand0( 451 );
+    u8 sex = POKETOOL_GetSex( monsno, 0, 0 );
+    SymbolSave_SetFreeZone( symbol_save, monsno, 0, sex, 0, zone_type );
+  }
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static GMEVENT_RESULT symbolPokeCountupEvent( GMEVENT * event, int *seq, void *work )
+{
+  GAMESYS_WORK * gsys = ((DEBUG_MENU_EVENT_WORK *)work)->gmSys;
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK * svctrl = GAMEDATA_GetSaveControlWork( gamedata );
+  SYMBOL_SAVE_WORK * symbol_save = SymbolSave_GetSymbolData( svctrl );
+  u32 num;
+  int i;
+  switch (*seq)
+  {
+  case 0:
+    for ( i = 0; i < SYMBOL_POKE_MAX; i ++)
+    {
+      const SYMBOL_POKEMON * sympoke = SymbolSave_GetSymbolPokemon( symbol_save, i );
+      OS_Printf("%03d: monsno=%03d sex(%d) form(%d) waza(%d)\n", i,
+          sympoke->monsno, sympoke->sex, sympoke->form_no, sympoke->wazano );
+    }
+    num = SymbolSave_CheckSpace( symbol_save, SYMBOL_ZONE_TYPE_KEEP_LARGE );
+    if ( num == SYMBOL_SPACE_NONE ) num = SYMBOL_NO_END_KEEP_LARGE;
+    OS_Printf("KEEP LARGE: %3d\n", SYMBOL_NO_END_KEEP_LARGE - num );
+
+    num = SymbolSave_CheckSpace( symbol_save, SYMBOL_ZONE_TYPE_KEEP_SMALL );
+    if ( num == SYMBOL_SPACE_NONE ) num = SYMBOL_NO_END_KEEP_SMALL;
+    OS_Printf("KEEP SMALL: %3d\n", SYMBOL_NO_END_KEEP_SMALL - num );
+
+    num = SymbolSave_CheckSpace( symbol_save, SYMBOL_ZONE_TYPE_FREE_LARGE );
+    if ( num == SYMBOL_SPACE_NONE ) num = SYMBOL_NO_END_FREE_LARGE;
+    OS_Printf("FREE LARGE: %3d\n", SYMBOL_NO_END_FREE_LARGE - num );
+
+    num = SymbolSave_CheckSpace( symbol_save, SYMBOL_ZONE_TYPE_FREE_SMALL );
+    if ( num == SYMBOL_SPACE_NONE ) num = SYMBOL_NO_END_FREE_SMALL;
+    OS_Printf("FREE SMALL: %3d\n", SYMBOL_NO_END_FREE_SMALL - num );
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_SymbolPokeKeepLargeFull( DEBUG_MENU_EVENT_WORK * wk )
+{
+  addSymbolPokemons( wk->gmSys, SYMBOL_ZONE_TYPE_KEEP_LARGE );
+  return FALSE;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_SymbolPokeKeepSmallFull( DEBUG_MENU_EVENT_WORK * wk )
+{
+  addSymbolPokemons( wk->gmSys, SYMBOL_ZONE_TYPE_KEEP_SMALL );
+  return FALSE;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_SymbolPokeFreeLargeFull( DEBUG_MENU_EVENT_WORK * wk )
+{
+  addSymbolPokemons( wk->gmSys, SYMBOL_ZONE_TYPE_FREE_LARGE );
+  return FALSE;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_SymbolPokeFreeSmallFull( DEBUG_MENU_EVENT_WORK * wk )
+{
+  addSymbolPokemons( wk->gmSys, SYMBOL_ZONE_TYPE_FREE_SMALL );
+  return FALSE;
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_SymbolPokeCountup( DEBUG_MENU_EVENT_WORK * wk )
+{
+  GMEVENT * new_event;
+  DEBUG_MENU_EVENT_WORK * new_wk;
+  new_event = GMEVENT_Create( wk->gmSys, NULL, symbolPokeCountupEvent, sizeof(DEBUG_MENU_EVENT_WORK) );
+  new_wk = GMEVENT_GetEventWork( new_event );
+  *new_wk = *wk;
+  GMEVENT_ChangeEvent( wk->gmEvent, new_event );
+  return TRUE;
+}
+
 
 //--------------------------------------------------------------
 //シンボルポケモン作成
