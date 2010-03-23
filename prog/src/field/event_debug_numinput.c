@@ -104,7 +104,8 @@ static GMEVENT * DEBUG_EVENT_FLDMENU_FlagWork(
 //======================================================================
 static u32 DebugGetGold(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetGold(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
-
+static u32 DebugGetQuiz(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetQuiz(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 #include "debug_numinput.cdat"
 
 static const DEBUG_NUMINPUT_PARAM DNUM_DATA_EventFlag;
@@ -339,6 +340,12 @@ static const DEBUG_MENU_INITIALIZER DATA_DNumInput_ListMenuInitializer = {
   NULL/*DEBUG_SetMenuWorkZoneID_SelectZone*/,
   NULL,
 };
+
+#ifdef PM_DEBUG
+//デバッグ用クイズ番号　実体はmisc.c
+extern int DebugQuizNo = 0;
+#endif
+
 
 //======================================================================
 //
@@ -938,5 +945,26 @@ static void DebugSetGold(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u3
   misc = SaveData_GetMisc( sv );
   MISC_SetGold(misc, value);
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief クイズ番号ゲット
+ */
+//--------------------------------------------------------------
+static u32 DebugGetQuiz(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return DebugQuizNo;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief クイズ番号セット
+ */
+//--------------------------------------------------------------
+static void DebugSetQuiz(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  DebugQuizNo = value;
+}
+
 
 
