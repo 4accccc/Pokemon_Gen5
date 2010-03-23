@@ -286,4 +286,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/ptree_w10.nsbmd \
 	$(RESDIR)/pwarp_01.nsbmd \
 	$(RESDIR)/h04_ligth.nsbmd \
+	$(RESDIR)/door_c6_ctower.nsbmd \
 

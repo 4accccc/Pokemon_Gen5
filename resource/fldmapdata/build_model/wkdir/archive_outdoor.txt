@@ -285,3 +285,4 @@
 "nsbmdfiles/ptree_w10.nsbmd"
 "nsbmdfiles/pwarp_01.nsbmd"
 "nsbmdfiles/h04_ligth.nsbmd"
+"nsbmdfiles/door_c6_ctower.nsbmd"
