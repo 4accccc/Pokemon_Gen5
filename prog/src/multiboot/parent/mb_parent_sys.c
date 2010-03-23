@@ -2096,10 +2096,13 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
       {
         if( flg == TRUE )
         {
+          MYITEM_PTR myItem = GAMEDATA_GetMyItem( work->initWork->gameData );
           MB_MSG_MessageHide( work->msgWork );
           MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
           MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_13 , MSGSPEED_GetWait() );
           MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+          
+          MYITEM_AddItem( myItem , ITEM_ROKKUKAPUSERU , 1 , work->heapId );
           work->isPostMovieCapsule = TRUE;
           work->movieState = MPMS_CONFIRM_LOCK_CAPSULE_SEND_YESNO_WAIT;
         }
