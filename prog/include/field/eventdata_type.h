@@ -119,6 +119,8 @@ typedef enum {
   POS_CHECK_TYPE_RIGHT,
 
   POS_CHECK_TYPE_MAX,
+
+  POS_CHECK_TYPE_DUMMY,  // まったく反応しないダミーイベント
 }POS_CHECK_TYPE;
 
 

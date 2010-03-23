@@ -188,27 +188,4 @@ VMCMD_RESULT EvCmdDiving( VMHANDLE * core, void *wk )
 }
 
 
-//--------------------------------------------------------------
-/**
- * @brief ダイビングでのマップ遷移
- *
- * 
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdDivingUp( VMHANDLE * core, void *wk )
-{
-  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
-  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  SCRIPT_WORK* scriptWork = SCRCMD_WORK_GetScriptWork( work );
-  GMEVENT * event;
-
-
-  event = EVENT_SeaTemple_GetDivingUpEvent( gsys, fieldmap );
-  SCRIPT_CallEvent( scriptWork, event );
-
-  return VMCMD_RESULT_SUSPEND;
-}
-
-
 

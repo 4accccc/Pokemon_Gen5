@@ -32,6 +32,7 @@
 #include "field_gimmick_r04d03.h"
 #include "sp_poke_gimmick.h"
 #include "palace_gimmick.h"
+#include "palace_map_gimmick.h"
 
 extern void GYM_SetupTest(FIELDMAP_WORK *fieldWork);
 extern void GYM_EndTest(FIELDMAP_WORK *fieldWork);
@@ -105,6 +106,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(sppoke_gimmick),  // R08R0101
   FS_OVERLAY_ID(sppoke_gimmick),  // C03R0901
   FS_OVERLAY_ID(palace_gimmick),  //
+  NULL,                           // PLCゾーンのマップ
 };
 
 const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
@@ -158,6 +160,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   SPPOKE_GMK_SetupTrio,    //R08R0101
   SPPOKE_GMK_SetupMerodhia,    //C03R0901
   PALACE_GMK_Setup,    //
+  PALACE_MAP_GMK_Setup,    //パレスゾーンのマップ
 };
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
@@ -211,7 +214,8 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   SPPOKE_GMK_EndTrio,     //R08R0101
   SPPOKE_GMK_EndMerodhia,    //C03R0901
   PALACE_GMK_End,    //
-  };
+  PALACE_MAP_GMK_End,    //パレスゾーンのマップ
+};
 
 const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
 	NULL,					//0:無し
@@ -264,6 +268,7 @@ const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   SPPOKE_GMK_MoveTrio,    //R08R0101
   SPPOKE_GMK_MoveMerodhia,    //C03R0901
   PALACE_GMK_Move,    //
+  PALACE_MAP_GMK_Move,    //パレスゾーンのマップ
 };
 
 //---------------------------------------------------------------------------

@@ -514,6 +514,43 @@ void EVENTDATA_SYS_DelConnectEventIdx( EVENTDATA_SYSTEM * evdata, u16 idx )
 
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダミーPOSイベントとの当たり判定
+ *
+ *	@param	evdata      イベントデータ
+ *	@param	pos         位置情報
+ *
+ *	@retval TRUE    ダミーPOSイベントとヒット
+ *	@retval FALSE   ダミーPOSイベントとヒットなし
+ */
+//-----------------------------------------------------------------------------
+BOOL EVENTDATA_SYS_CheckPosDummyEvent( const EVENTDATA_SYSTEM *evdata, const VecFx32* pos )
+{
+  const POS_EVENT_DATA *data = evdata->pos_data;
+  
+  if( data != NULL )
+  {
+    u16 i = 0;
+    u16 max = evdata->pos_count;
+
+    for( ; i < max; i++, data++ )
+    {
+      if( !PosEventData_GPOS_IsHit(data, pos) )
+      {
+        continue;
+      }
+      if ( data->check_type == POS_CHECK_TYPE_DUMMY )
+      {
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+
+
+
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

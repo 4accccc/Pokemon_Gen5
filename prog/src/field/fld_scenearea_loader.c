@@ -19,6 +19,8 @@
 #include "field/field_const.h"
 #include "fldmmdl.h"
 
+#include "fieldmap.h"
+
 #include "fld_scenearea_loader_func.h"
 #include "fld_scenearea_loader.h"
 
@@ -432,6 +434,13 @@ static BOOL SCENEAREA_CheckGridRect( const FLD_SCENEAREA* cp_sys, const FLD_SCEN
   const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM* cp_param = (const FLD_SCENEAREA_GRIDCHANGEANGLE_PARAM*)cp_data->area;
   u16 grid_x, grid_z, grid_sizx, grid_sizz;
   VecFx32 local_pos;
+  const FIELDMAP_WORK* cp_fieldmap = FLD_SCENEAREA_GetFieldMapWork( cp_sys );
+
+  // ベースシステムがグリッドマップかチェック
+  // グリッドの上でしか動作しない。
+  if( FIELDMAP_GetBaseSystemType( cp_fieldmap ) == FLDMAP_BASESYS_RAIL ){
+    return FALSE;
+  }
 
   local_pos = *cp_pos;
   local_pos.x -= MMDL_VEC_X_GRID_OFFS_FX32;

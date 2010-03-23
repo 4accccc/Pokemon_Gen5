@@ -153,3 +153,7 @@ extern void EVENTDATA_SYS_DelConnectEvent( EVENTDATA_SYSTEM * evdata, u16 link_z
 extern void EVENTDATA_SYS_DelConnectEventIdx( EVENTDATA_SYSTEM * evdata, u16 idx );
 
 
+//------------------------------------------------------------------
+//  ダミーPOSイベントのチェック
+//------------------------------------------------------------------
+extern BOOL EVENTDATA_SYS_CheckPosDummyEvent( const EVENTDATA_SYSTEM *evdata, const VecFx32* pos );

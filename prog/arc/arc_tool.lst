@@ -288,5 +288,6 @@
   ARCID_PALACE_TREE "p_tree.narc"  # パレスの木
   ARCID_ITEM_JUDGE "fieldmap/item_judge.narc"  # 鑑定士情報
   ARCID_REBATTLE_TRAINER "fieldmap/rebattle_trainer.narc"  # 再戦トレーナー情報
+  ARCID_PALACE_EFFECT "palace_effect.narc"  # palace演出関連
 
 

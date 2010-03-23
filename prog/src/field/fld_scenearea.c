@@ -32,6 +32,9 @@
 struct _FLD_SCENEAREA {
   // カメラ
   FIELD_CAMERA* p_camera;
+
+  // マップワーク
+  FIELDMAP_WORK* p_fieldmap;
   
   // データ
   const FLD_SCENEAREA_DATA* cp_data;
@@ -66,17 +69,19 @@ static void FUNC_CallUpdateFunc( const FLD_SCENEAREA_FUNC* cp_func, u32 id, cons
  *
  *	@param	heapID      ヒープID
  *	@param	p_camera    カメラワーク
+ *	@param	p_fieldmap  フィールドマップワーク
  *
  *	@return シーンエリア管理システム
  */
 //-----------------------------------------------------------------------------
-FLD_SCENEAREA* FLD_SCENEAREA_Create( u32 heapID, FIELD_CAMERA * p_camera )
+FLD_SCENEAREA* FLD_SCENEAREA_Create( u32 heapID, FIELD_CAMERA * p_camera, FIELDMAP_WORK* p_fieldmap )
 {
   FLD_SCENEAREA* p_sys;
 
   p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLD_SCENEAREA) );
 
-  p_sys->p_camera = p_camera;
+  p_sys->p_camera   = p_camera;
+  p_sys->p_fieldmap = p_fieldmap;
 
   // アクティブ領域なし
   p_sys->active_area = FLD_SCENEAREA_ACTIVE_NONE;
@@ -311,6 +316,20 @@ BOOL FLD_SCENEAREA_GetActiveFlag( const FLD_SCENEAREA* cp_sys )
 FIELD_CAMERA* FLD_SCENEAREA_GetFieldCamera( const FLD_SCENEAREA* cp_sys )
 {
   return cp_sys->p_camera;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィールドマップワークの取得
+ *
+ *	@param	cp_sys    システム
+ *  
+ *	@return フィールドマップワークの取得
+ */
+//-----------------------------------------------------------------------------
+FIELDMAP_WORK* FLD_SCENEAREA_GetFieldMapWork( const FLD_SCENEAREA* cp_sys )
+{
+  return cp_sys->p_fieldmap;
 }
 
 

@@ -20,6 +20,8 @@ extern "C"{
 #include "gflib.h"
 #include "field_camera.h"
 
+#include "field/fieldmap_proc.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					íËêîêÈåæ
@@ -88,7 +90,7 @@ typedef struct
 */
 //-----------------------------------------------------------------------------
 
-extern FLD_SCENEAREA* FLD_SCENEAREA_Create( u32 heapID, FIELD_CAMERA * p_camera );
+extern FLD_SCENEAREA* FLD_SCENEAREA_Create( u32 heapID, FIELD_CAMERA * p_camera, FIELDMAP_WORK* p_fieldmap );
 extern void FLD_SCENEAREA_Delete( FLD_SCENEAREA* p_sys );
 
 extern void FLD_SCENEAREA_Load( FLD_SCENEAREA* p_sys, const FLD_SCENEAREA_DATA* cp_data, u32 datanum, const FLD_SCENEAREA_FUNC* cp_func );
@@ -105,6 +107,7 @@ extern BOOL FLD_SCENEAREA_GetActiveFlag( const FLD_SCENEAREA* cp_sys );
 
 // äeéÌèÓïÒÇÃéÛÇØìnÇµ
 extern FIELD_CAMERA* FLD_SCENEAREA_GetFieldCamera( const FLD_SCENEAREA* cp_sys );
+extern FIELDMAP_WORK* FLD_SCENEAREA_GetFieldMapWork( const FLD_SCENEAREA* cp_sys );
 
 #ifdef _cplusplus
 }	// extern "C"{

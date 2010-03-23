@@ -430,6 +430,7 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/ev_time.c \
         field/field_g3d_map.c \
 		    field/report_event.c \
+		    field/palace_map_gimmick.c \
         field/sheimi_normalform.c \
         field/scrcmd_trial_house.c \
         field/scrcmd_sppoke_trio.c \

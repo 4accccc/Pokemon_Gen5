@@ -1,0 +1,19 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: palace_effect.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_PALACE_EFFECT_NAIX_
+#define NARC_PALACE_EFFECT_NAIX_
+
+enum {
+	NARC_palace_effect_block_nsbma = 0,
+	NARC_palace_effect_block_nsbmd = 1
+};
+
+/* NARC_PALACE_EFFECT_NAIX_ */
+#endif
