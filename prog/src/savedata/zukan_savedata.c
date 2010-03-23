@@ -30,6 +30,34 @@
 //============================================================================================
 #include "zukan_savedata_local.h"   //自分状態データ型やPOKEZUKAN_ARRAY_LENなど内部定義
 
+// フォルムテーブル
+static const u16 FormTable[][2] =
+{
+	// ポケモン番号, フォルム数
+	{ MONSNO_ANNOON, FORM_MAX_ANNOON },						// アンノーン
+
+	{ MONSNO_DEOKISISU, FORM_MAX_DEOKISISU },			// デオキシス
+
+	{ MONSNO_SHEIMI, FORM_MAX_SHEIMI },						// シェイミ
+	{ MONSNO_GIRATHINA, FORM_MAX_GIRATHINA },			// ギラティナ
+	{ MONSNO_ROTOMU, FORM_MAX_ROTOMU },						// ロトム
+	{ MONSNO_KARANAKUSI, FORM_MAX_KARANAKUSI },		// カラナクシ
+	{ MONSNO_TORITODON, FORM_MAX_TORITODON },			// トリトドン
+	{ MONSNO_MINOMUTTI, FORM_MAX_MINOMUTTI },			// ミノムッチ
+	{ MONSNO_MINOMADAMU, FORM_MAX_MINOMADAMU },		// ミノマダム
+
+	{ MONSNO_POWARUN, FORM_MAX_POWARUN },					// ポワルン ※特殊
+	{ MONSNO_THERIMU, FORM_MAX_THERIMU },					// チェリム ※特殊
+
+	{ MONSNO_BANBIINA, FORM_MAX_BANBIINA },				// バンビーナ ※新規
+	{ MONSNO_SIKIZIKA, FORM_MAX_SIKIZIKA },				// シキジカ ※新規
+	{ MONSNO_MERODHIA, FORM_MAX_MERODHIA },				// メロディア ※新規
+	{ MONSNO_HIHIDARUMA, FORM_MAX_HIHIDARUMA },		// シキジカ ※新規
+	{ MONSNO_BASURAO, FORM_MAX_BASURAO },					// バスラオ ※新規
+
+	{ 0, 0 },
+};
+
 
 //============================================================================================
 //============================================================================================
@@ -700,7 +728,7 @@ static s32 GetPokeFormBit( u16 mons )
 	s32	cnt = 0;
 	s32	i = 0;
 
-	while( FormTable[i][0] == 0 ){
+	while( FormTable[i][0] != 0 ){
 		if( FormTable[i][0] == mons ){
 			return cnt;
 		}
@@ -724,7 +752,7 @@ static s32 GetPokeFormTablePos( u16 mons )
 {
 	s32	i = 0;
 
-	while( FormTable[i][0] == 0 ){
+	while( FormTable[i][0] != 0 ){
 		if( FormTable[i][0] == mons ){
 			return i;
 		}
@@ -1058,7 +1086,7 @@ void ZUKANSAVE_SetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 sex, BOOL rare, u
 		s32	cnt = 0;
 		s32	i = 0;
 
-		while( FormTable[i][0] == 0 ){
+		while( FormTable[i][0] != 0 ){
 			if( FormTable[i][0] == mons ){
 				u32	j;
 				for( j=0; j<FormTable[i][1]; j++ ){
@@ -1067,8 +1095,10 @@ void ZUKANSAVE_SetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 sex, BOOL rare, u
 				}
 				if( rare == TRUE ){
 					set_bit( (u8 *)zw->draw_form[COLOR_RARE], cnt+form );
+					OS_Printf( "レアセット\n" );
 				}else{
 					set_bit( (u8 *)zw->draw_form[COLOR_NORMAL], cnt+form );
+					OS_Printf( "通常セット\n" );
 				}
 				return;
 			}

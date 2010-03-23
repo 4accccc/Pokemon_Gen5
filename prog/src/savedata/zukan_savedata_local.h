@@ -57,33 +57,6 @@ enum {
 	TEXTVER_ARRAY_LEN = 370,		///< 言語フラグ
 };
 
-static const u16 FormTable[][2] =
-{
-	// ポケモン番号, フォルム数
-	{ MONSNO_ANNOON, FORM_MAX_ANNOON },						// アンノーン
-
-	{ MONSNO_DEOKISISU, FORM_MAX_DEOKISISU },			// デオキシス
-
-	{ MONSNO_SHEIMI, FORM_MAX_SHEIMI },						// シェイミ
-	{ MONSNO_GIRATHINA, FORM_MAX_GIRATHINA },			// ギラティナ
-	{ MONSNO_ROTOMU, FORM_MAX_ROTOMU },						// ロトム
-	{ MONSNO_KARANAKUSI, FORM_MAX_KARANAKUSI },		// カラナクシ
-	{ MONSNO_TORITODON, FORM_MAX_TORITODON },			// トリトドン
-	{ MONSNO_MINOMUTTI, FORM_MAX_MINOMUTTI },			// ミノムッチ
-	{ MONSNO_MINOMADAMU, FORM_MAX_MINOMADAMU },		// ミノマダム
-
-	{ MONSNO_POWARUN, FORM_MAX_POWARUN },					// ポワルン ※特殊
-	{ MONSNO_THERIMU, FORM_MAX_THERIMU },					// チェリム ※特殊
-
-	{ MONSNO_BANBIINA, FORM_MAX_BANBIINA },				// バンビーナ ※新規
-	{ MONSNO_SIKIZIKA, FORM_MAX_SIKIZIKA },				// シキジカ ※新規
-	{ MONSNO_MERODHIA, FORM_MAX_MERODHIA },				// メロディア ※新規
-	{ MONSNO_HIHIDARUMA, FORM_MAX_HIHIDARUMA },		// シキジカ ※新規
-	{ MONSNO_BASURAO, FORM_MAX_BASURAO },					// バスラオ ※新規
-
-	{ 0, 0 },
-};
-
 
 //----------------------------------------------------------
 /**
