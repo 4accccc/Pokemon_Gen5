@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-05T20:08:07"/>
+	<create user="matsumiya" host="W00224" date="2010-03-23T11:44:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -317,7 +317,7 @@
 		</language>
 	</columns>
 
-	<dialog left="295" top="129" right="1000" bottom="749" maximized="no" rayout="Vertical2">
+	<dialog left="1585" top="234" right="2290" bottom="854" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -510,9 +510,9 @@
 
 	<row id="COMM_TVT_SYS_01">
 		<comment>システムメッセージ</comment>
-		<language name="JPN">ＴＶトランシーバーを
+		<language name="JPN">ライブキャスターを
 しゅうりょう　しますか？</language>
-		<language name="JPN_KANJI">ＴＶトランシーバーを
+		<language name="JPN_KANJI">ライブキャスターを
 終了しますか？</language>
 	</row>
 
