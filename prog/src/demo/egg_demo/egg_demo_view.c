@@ -488,7 +488,7 @@ void EGG_DEMO_VIEW_Hatch( EGG_DEMO_VIEW_WORK* work, const POKEMON_PARAM* pp )
 BOOL EGG_DEMO_VIEW_IsReady( EGG_DEMO_VIEW_WORK* work )
 {
   // リソースのロードが完了するまでフェードは始まらないので、それを利用してリソース読み込み完了を待つ
-  return MCSS_CheckExecutePaletteFade( work->mcss_wk );
+  return !MCSS_CheckExecutePaletteFade( work->mcss_wk );
 }
 
 //-----------------------------------------------------------------------------
