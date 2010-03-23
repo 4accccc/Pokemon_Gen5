@@ -30,10 +30,16 @@ _EVENT_DATA_END
 /*   C08：チャンピオン石解説イベント                           */
 /**************************************************************/
 EVENT_START   ev_scene_c08r0101_leader8_01
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()
+	_CAMERA_MOVE( 9688,0,970752,622592,0,430080,50 )
 	
 	//主人公チャンピオンの前に移動
-	_OBJ_ANIME( MMDL_ID_PLAYER , anm_c08_9player_work )
+	_OBJ_ANIME( MMDL_ID_PLAYER , anm_c08_player_walk )
 	_OBJ_ANIME_WAIT()
+	
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//シャガWB分岐メッセージ（１）「君が持つストーンは」
 	_BALLOONWIN_OBJMSG_WB( msg_c08r0101_leader8a_01w , msg_c08r0101_leader8a_01b , C08R0101_LEADER8A_01 , POS_DEFAULT)
@@ -55,18 +61,28 @@ EVENT_START   ev_scene_c08r0101_leader8_01
 	_BALLOONWIN_OBJMSG( msg_c08r0101_leader8a_03 , C08R0101_LEADER8A_01)
 	_BALLOONWIN_CLOSE()
 	
-	//アイリスWB分岐メッセージ（４）「だからね！いま２匹が出会っても」
+	//アイリスWB分岐メッセージ：なのに
 	_BALLOONWIN_OBJMSG_WB( msg_c08r0101_leader8b_03w , msg_c08r0101_leader8b_03b , C08R0101_LEADER8B_01 , POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
 	
-	//シャガ相槌
+	//シャガ相槌：たしかに
 	_BALLOONWIN_OBJMSG( msg_c08r0101_leader8a_04 , C08R0101_LEADER8A_01)
 	_BALLOONWIN_CLOSE()
 	
-	//アイリス相槌
+	//アイリス:そーなのッ
 	_BALLOONWIN_OBJMSG( msg_c08r0101_leader8b_04 , C08R0101_LEADER8B_01)
 	_BALLOONWIN_CLOSE()
 	
+	//シャガ：…すまない
+	_BALLOONWIN_OBJMSG( msg_c08r0101_leader8a_04_01 , C08R0101_LEADER8A_01)
+	_BALLOONWIN_CLOSE()
+	
+	//沈黙を表現するためウエイト
+	_TIME_WAIT( 40 )
+	
+	//シャガ：…すまない／さて、アテグとの約束だったね
+	_BALLOONWIN_OBJMSG( msg_c08r0101_leader8a_04_02 , C08R0101_LEADER8A_01)
+	_BALLOONWIN_CLOSE()
 	
 	//バージョンチェック
 	DEFINE_LOCAL LCW_VERSION
@@ -74,15 +90,24 @@ EVENT_START   ev_scene_c08r0101_leader8_01
 	
 	//whiteVER（アイリスがジムリーダー）
 	IF $LCW_VERSION == VERSION_WHITE THEN
-	
+		
+		//シャガ、アイリスを見る
+		_OBJ_ANIME( C08R0101_LEADER8A_01 , anm_c08_leadera_look_b )
+		_OBJ_ANIME_WAIT()
+		
 		//シャガアイリスを促す
-		_BALLOONWIN_OBJMSG( msg_c08r0101_leader8a_04 , C08R0101_LEADER8A_01)
+		_BALLOONWIN_OBJMSG( msg_c08r0101_leader8a_05w , C08R0101_LEADER8A_01)
 		_BALLOONWIN_CLOSE()
+		//アイリスジャンプ
+		_OBJ_ANIME( C08R0101_LEADER8B_01 , anm_c08_leadersb_jump_d1 )
+		_OBJ_ANIME_WAIT()
 		//アイリス相槌
-		_BALLOONWIN_OBJMSG( msg_c08r0101_leader8b_04 , C08R0101_LEADER8B_01)
+		_BALLOONWIN_OBJMSG( msg_c08r0101_leader8b_05 , C08R0101_LEADER8B_01)
 		_BALLOONWIN_CLOSE()
 		//アイリス退場
 		_OBJ_ANIME( C08R0101_LEADER8B_01 , anm_c08_leader_exit )
+		_OBJ_ANIME( C08R0101_LEADER8A_01 , anm_c08_stay_walk_down )
+		_OBJ_ANIME( MMDL_ID_PLAYER , anm_c08_stay_walk_down )
 		_OBJ_ANIME_WAIT()
 		
 		//アイリスOBJ消去
@@ -108,6 +133,7 @@ EVENT_START   ev_scene_c08r0101_leader8_01
 		_BALLOONWIN_CLOSE()
 		//シャガ退場
 		_OBJ_ANIME( C08R0101_LEADER8A_01 , anm_c08_leader_exit )
+		_OBJ_ANIME( MMDL_ID_PLAYER , anm_c08_stay_walk_down )
 		_OBJ_ANIME_WAIT()
 		
 		//シャガOBJ消去
@@ -126,6 +152,12 @@ EVENT_START   ev_scene_c08r0101_leader8_01
 		//======================================//
 	
 	ENDIF
+	
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (30) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
 	
 EVENT_END
 
@@ -181,8 +213,22 @@ EVENT_END
 //--------------------------------------------------------------
 //	C08	歴史解説イベント：主人公二人の前へ
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_c08_9player_work
+_ANIME_LABEL	anm_c08_player_walk
 	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C08	歴史解説イベント：シャガ、アイリスを見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_leadera_look_b
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C08	歴史解説イベント：アイリスジャンプして返事
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_leadersb_jump_d1
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -190,4 +236,12 @@ _ANIME_LABEL	anm_c08_9player_work
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_leader_exit
 	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	C08	歴史解説イベント：主人公ジムリーダーを見送る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_stay_walk_down
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0

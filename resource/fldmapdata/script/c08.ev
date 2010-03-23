@@ -35,13 +35,14 @@ _EVENT_DATA    ev_bg_c08_board_05
 _EVENT_DATA    ev_pos_c08_leaderb_lead_01
 _EVENT_DATA    ev_pos_c08_leaderb_lead_02
 _EVENT_DATA    ev_init_c08
+_EVENT_DATA    ev_scene_c08_gymclear_01
 _EVENT_DATA_END
 
 /************************************************************/
-/*			ISSOBJをバージョンで分岐						*/
+/*			ZONE_CHANGE_LABEL						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_c08
-	
+	{
 	//バージョンを取得してOBJを変化させる
 	_GET_ROM_VERSION( SCWK_ANSWER )
 	
@@ -53,7 +54,8 @@ INIT_EVENT_START	ev_zone_c08
 	ELSE
 		$OBJCHRWORK0 = FIDDLE
 	ENDIF
-
+	}
+	
 INIT_EVENT_END
 
 /************************************************************/
@@ -77,6 +79,11 @@ INIT_EVENT_START	ev_init_c08
 	
 	ELSE
 	
+	ENDIF
+	
+	//ジムクリア後にアララギ娘を配置
+	IF$WK_SCENE_C08_GYMCLEAR == 1 THEN
+		_OBJ_ADD_EX( 405, 150, DIR_UP, MMDL_ID_EVENTOBJ_00, HAKASE2, MV_DMY )
 	ENDIF
 
 INIT_EVENT_END
@@ -471,15 +478,15 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_CLOSE()
 	
 	//シャガ退場
+	//アイリス主人公に隣接
 	_OBJ_ANIME( C08_LEADER8A_01,anm_c08_leadera_goodbye_01 )
+	_OBJ_ANIME( C08_LEADER8B_01,anm_c08_leaderb_to_player_01 )
 	_OBJ_ANIME_WAIT()
 	
 	//退場OBJ削除
 	_OBJ_DEL( C08_LEADER8A_01 )
 	_OBJ_DEL( C08_CHAMPION_01 )
 	
-	//アイリス主人公に隣接
-	_OBJ_ANIME( C08_LEADER8B_01,anm_c08_leaderb_to_player_01 )
 	_OBJ_ANIME_WAIT()
 
 	//アイリス：white発言
@@ -956,6 +963,170 @@ _ANIME_LABEL	anm_c08_leaderb_lead_04
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_leaderb_lead_05
 	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/* ジムクリア後：アララギ娘誘導イベント                        */
+/**************************************************************/
+EVENT_START   ev_scene_c08_gymclear_01
+
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+	//カメラ操作
+	_CAMERA_MOVE( 9672,0,964335,26574848,0,9666560,30 )
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//アララギ娘「！」
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c08_hakase2_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//アララギ娘分岐メッセージ：…ハーイ
+	_BALLOONWIN_OBJMSG_WB( msg_c08_hakase2_00w , msg_c08_hakase2_00b , MMDL_ID_EVENTOBJ_00 , POS_DEFAULT)
+	_BALLOONWIN_CLOSE()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_c08_player_to_hakase2_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//自機にカメラを戻す
+	_CAMERA_DEF_MOVE (10) 
+	_CAMERA_WAIT_MOVE()
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
+	//アララギ娘：あっ （伝説）を／それよりも すごいじゃない
+	_BALLOONWIN_OBJMSG_WB( msg_c08_hakase2_01w , msg_c08_hakase2_01b , MMDL_ID_EVENTOBJ_00 , POS_DEFAULT)
+	_BALLOONWIN_OBJMSG(msg_c08_hakase2_02,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//アララギ娘隣接
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c08_hakase2_lead_01 )
+	
+	_OBJ_ANIME_WAIT()
+	
+	//主人公アララギを見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_c08_player_look_hakase2_r )
+	_OBJ_ANIME_WAIT()
+	
+	//連れ歩き開始
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c08_hakase2_lead_02 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_c08_hakase2_lead_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//アララギ娘：あのゲートをくぐり
+	_BALLOONWIN_OBJMSG(msg_c08_hakase2_03,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//アララギと主人公向き合う
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c08_hakase2_look_player_l )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_c08_player_look_hakase2_r )
+	_OBJ_ANIME_WAIT()
+	
+	//アララギ：ポケモンと一緒に旅立った事、後悔してる？
+	_BALLOONWIN_OBJMSG(msg_c08_hakase2_04,MMDL_ID_EVENTOBJ_00)
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	{
+	//はい
+	IF $SCWK_ANSWER == SCR_YES THEN
+		_BALLOONWIN_OBJMSG(msg_c08_hakase2_05,MMDL_ID_EVENTOBJ_00)
+	//いいえ
+	ELSE
+		_BALLOONWIN_OBJMSG(msg_c08_hakase2_06,MMDL_ID_EVENTOBJ_00)
+	ENDIF
+	}
+	
+	//アララギ：これ プレゼントよ！
+	_BALLOONWIN_OBJMSG(msg_c08_hakase2_07,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c08_hakase2_look_player_l )
+	_OBJ_ANIME_WAIT()
+	
+	//マスターボール入手
+	_ITEM_EVENT_KEYWAIT ( ITEM_MASUTAABOORU , 1  )
+	
+	//アララギ：そのマスターボールは
+	_BALLOONWIN_OBJMSG(msg_c08_hakase2_08,MMDL_ID_EVENTOBJ_00)
+	_BALLOONWIN_CLOSE()
+	
+	//アララギ退場
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_c08_hakase2_goodbye_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_c08_player_look_hakase_d )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	//========================================//
+
+	//C08R0601案内嬢POSイベント起動
+	$WK_SCENE_C08_GYMCLEAR = 2
+	
+	//========================================//
+
+EVENT_END
+
+//--------------------------------------------------------------
+//	アララギ娘誘導イベント：アララギ娘「！」
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakase2_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	アララギ娘誘導イベント：主人公二歩前へ
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_to_hakase2_01
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	アララギ娘誘導イベント：アララギ娘隣接
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakase2_lead_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	アララギ娘誘導イベント：主人公右を見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_look_hakase2_r
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	アララギ娘誘導イベント：連れ歩き開始
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakase2_lead_02
+	_ANIME_DATA	AC_WALK_R_8F,25
+	_ANIME_DATA	AC_WALK_U_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	アララギ娘誘導イベント：アララギ左を見る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakase2_look_player_l
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	アララギ娘誘導イベント：アララギ退場
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_hakase2_goodbye_01
+	_ANIME_DATA	AC_WALK_D_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	アララギ娘誘導イベント：主人公アララギを見送る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_player_look_hakase_d
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/

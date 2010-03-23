@@ -71,7 +71,7 @@ EVENT_START		ev_c03r1001_woman3_01
 				_BLACK_OUT()
 				_DISP_FADE_END_CHECK()
 				
-				//ÅyâºÅzMEçƒê∂
+				//MEçƒê∂
 				_ME_PLAY( SEQ_SE_FLD_145 )
 				_ME_WAIT()
 				

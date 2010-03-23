@@ -17,6 +17,13 @@
 //--------------------------------------------------------------
 _ZONE_CHANGE_LABEL		SCRID_ZONE_C08
 _FIELD_INIT_LABEL		SCRID_INIT_C08
+_SCENE_CHANGE_LABEL		sp_c08_tbl
 _SP_EVENT_DATA_END
 
 
+//テーブル定義
+sp_c08_tbl:
+
+	//【仮】渡すワークは仮
+	_SCENE_CHANGE_DATA		WK_SCENE_C08_GYMCLEAR,1,SCRID_SCENE_C08_GYMCLEAR_01
+	_SCENE_CHANGE_END
