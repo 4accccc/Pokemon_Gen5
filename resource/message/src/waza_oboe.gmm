@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-17T19:47:29"/>
+	<create user="matsumiya" host="W00224" date="2010-03-23T12:41:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="191" top="128" right="896" bottom="748" maximized="no" rayout="Vertical2">
+	<dialog left="1783" top="176" right="2485" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="173" right="1280" bottom="571" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="527"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="694"/>
+		<band id="3" index="3" style="0000" width="694"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -341,7 +341,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]に
 どのわざを　おぼえさせる？</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に
-どのわざを　おぼえさせる？</language>
+どの技を　覚えさせる？</language>
 	</row>
 
 	<row id="msg_waza_oboe_02" back-color="#80ff80,,,,,,,,,,,,,,,,,">
@@ -355,7 +355,7 @@
 		<language name="JPN" width="216">[1:07:わざ名:1]　を
 おぼえさせますか？</language>
 		<language name="JPN_KANJI" width="216">[1:07:わざ名:1]　を
-おぼえさせますか？</language>
+覚えさせますか？</language>
 	</row>
 
 	<row id="msg_waza_oboe_03" back-color="#80ff80,,,,,,,,,,,,,,,,,">
@@ -366,8 +366,8 @@
 </comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]に　わざを
 おぼえさせるのを　あきらめますか？</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に　わざを
-おぼえさせるのを　あきらめますか？</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に　技を
+覚えさせるのを　あきらめますか？</language>
 	</row>
 
 	<row id="msg_waza_oboe_04" back-color="#80ff80,,,,,,,,,,,,,,,,,">
@@ -377,8 +377,8 @@ msg_waza_oboe_10へ
 </comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あたらしく
 [1:07:わざ名:1]を　おぼえた！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　あたらしく
-[1:07:わざ名:1]を　おぼえた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　新しく
+[1:07:わざ名:1]を　覚えた！</language>
 	</row>
 
 	<row id="msg_waza_oboe_05" back-color="#80ff80,,,,,,,,,,,,,,,,,">
@@ -392,12 +392,12 @@ msg_waza_oboe_10へ
 おぼえるので　せいいっぱいだ！▼
 [1:07:わざ名:1]の　かわりに
 ほかの　わざを　わすれさせますか？</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　あたらしく
-[1:07:わざ名:1]を　おぼえたい……▼
-しかし　[1:02:ポケモンニックネーム:0]は　わざを　４つ
-おぼえるので　せいいっぱいだ！▼
-[1:07:わざ名:1]の　かわりに
-ほかの　わざを　わすれさせますか？</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　新しく
+[1:07:わざ名:1]を　覚えたい……▼
+しかし　[1:02:ポケモンニックネーム:0]は　技を　４つ
+覚えるので　せいいっぱいだ！▼
+[1:07:わざ名:1]の　代わりに
+他の　技を　忘れさせますか？</language>
 	</row>
 
 	<row id="msg_waza_oboe_06" back-color="#80ff80,,,,,,,,,,,,,,,,,">
@@ -408,7 +408,7 @@ msg_waza_oboe_10へ
 そして……！▼</language>
 		<language name="JPN_KANJI" width="216">１[BE:02:ウェイト変更（単発）:20]　２の[BE:02:ウェイト変更（単発）:20]…[BE:02:ウェイト変更（単発）:20]…[BE:02:ウェイト変更（単発）:20]　ポカン！[BE:05:コールバック引数変更（単発）:3][BE:05:コールバック引数変更（単発）:5]▼
 [1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
-つかいかたを　きれいにわすれた！▼
+使い方を　きれいに忘れた！▼
 そして……！▼</language>
 	</row>
 
@@ -416,8 +416,8 @@ msg_waza_oboe_10へ
 		<comment>Ｍ１６（ステータス画面なので、そっちを使用？）</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あたらしく
 [1:07:わざ名:1]を　おぼえた！▼</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　あたらしく
-[1:07:わざ名:1]を　おぼえた！▼</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　新しく
+[1:07:わざ名:1]を　覚えた！▼</language>
 	</row>
 
 	<row id="msg_waza_oboe_08" back-color="#80ff80,,,,,,,,,,,,,,,,,">
@@ -428,7 +428,7 @@ msg_waza_oboe_10へ
 		<language name="JPN" width="216">それでは……　[1:07:わざ名:1]を
 おぼえるのを　あきらめますか？</language>
 		<language name="JPN_KANJI" width="216">それでは……　[1:07:わざ名:1]を
-おぼえるのを　あきらめますか？</language>
+覚えるのを　あきらめますか？</language>
 	</row>
 
 	<row id="msg_waza_oboe_09" back-color="#80ff80,,,,,,,,,,,,,,,,,">
@@ -439,7 +439,7 @@ msg_waza_oboe_01へ
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]を
 おぼえずに　おわった！▼</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]を
-おぼえずに　おわった！▼</language>
+覚えずに　おわった！▼</language>
 	</row>
 
 	<row id="msg_waza_oboe_10" back-color="#80ff80,,,,,,,,,,,,,,,,,">
@@ -447,15 +447,15 @@ msg_waza_oboe_01へ
 フィールドへ</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:2]は　おれいに
 ハートのウロコを　１まい　あげた！[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:2]は　おれいに
-ハートのウロコを　１まい　あげた！[2:07:８桁:]</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:2]は　お礼に
+ハートのウロコを　１枚　あげた！[2:07:８桁:]</language>
 	</row>
 
 	<row id="msg_waza_oboe_11" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="216">[1:07:わざ名:0]を
 わすれさせて　よろしいですね？</language>
 		<language name="JPN_KANJI" width="216">[1:07:わざ名:0]を
-わすれさせて　よろしいですね？</language>
+忘れさせて　よろしいですね？</language>
 	</row>
 
 	<row id="msg_waza_omoi_01" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -466,7 +466,7 @@ msg_waza_oboe_01へ
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]に
 どのわざを　おもいださせる？</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に
-どのわざを　おもいださせる？</language>
+どの技を　思い出させる？</language>
 	</row>
 
 	<row id="msg_waza_omoi_02" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -480,7 +480,7 @@ msg_waza_oboe_01へ
 		<language name="JPN" width="216">[1:07:わざ名:1]　を
 おもいだしますか？</language>
 		<language name="JPN_KANJI" width="216">[1:07:わざ名:1]　を
-おもいだしますか？</language>
+思い出しますか？</language>
 	</row>
 
 	<row id="msg_waza_omoi_03" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -491,8 +491,8 @@ msg_waza_oboe_01へ
 </comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]に　わざを
 おもいださせるのを　あきらめますか？</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に　わざを
-おもいださせるのを　あきらめますか？</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]に　技を
+思い出させるのを　あきらめますか？</language>
 	</row>
 
 	<row id="msg_waza_omoi_04" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -502,8 +502,8 @@ msg_waza_omoi_10へ
 </comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　わすれていた
 [1:07:わざ名:1]を　おもいだした！[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　わすれていた
-[1:07:わざ名:1]を　おもいだした！[2:07:８桁:]</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　忘れていた
+[1:07:わざ名:1]を　思い出した！[2:07:８桁:]</language>
 	</row>
 
 	<row id="msg_waza_omoi_05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -518,24 +518,24 @@ msg_waza_omoi_10へ
 [1:07:わざ名:1]の　かわりに
 ほかの　わざを　わすれさせますか？</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:07:わざ名:1]を　おもいだしたい……[2:07:８桁:]
-しかし　[1:02:ポケモンニックネーム:0]は　わざを　４つ
-おぼえるので　せいいっぱいだ！[2:07:８桁:]
-[1:07:わざ名:1]の　かわりに
-ほかの　わざを　わすれさせますか？</language>
+[1:07:わざ名:1]を　思い出したい……[2:07:８桁:]
+しかし　[1:02:ポケモンニックネーム:0]は　技を　４つ
+覚えるので　せいいっぱいだ！[2:07:８桁:]
+[1:07:わざ名:1]の　代わりに
+他の　技を　忘れさせますか？</language>
 	</row>
 
 	<row id="msg_waza_omoi_06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>Ｍ１６
 思い出した用のせりふ</comment>
-		<language name="JPN" width="216">１\[190:02:ウェイト変更（単発）:20\]　２の\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]　ポカン！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:5\]\[2:07:８桁:\]
-\[1:02:ポケモンニックネーム:0\]は　\[1:07:わざ名:1\]の
-つかいかたを　きれいにわすれた！\[2:07:８桁:\]
-そして……！\[2:07:８桁:\]</language>
-		<language name="JPN_KANJI" width="216">１\[190:02:ウェイト変更（単発）:20\]　２の\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]…\[190:02:ウェイト変更（単発）:20\]　ポカン！\[190:05:コールバック引数変更（単発）:3\]\[190:05:コールバック引数変更（単発）:5\]\[2:07:８桁:\]
-\[1:02:ポケモンニックネーム:0\]は　\[1:07:わざ名:1\]の
-つかいかたを　きれいにわすれた！\[2:07:８桁:\]
-そして……！\[2:07:８桁:\]</language>
+		<language name="JPN" width="216">１[BE:02:ウェイト変更（単発）:20]　２の[BE:02:ウェイト変更（単発）:20]…[BE:02:ウェイト変更（単発）:20]…[BE:02:ウェイト変更（単発）:20]　ポカン！[BE:05:コールバック引数変更（単発）:3][BE:05:コールバック引数変更（単発）:5]▼
+[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
+つかいかたを　きれいにわすれた！▼
+そして……！▼</language>
+		<language name="JPN_KANJI" width="216">１[BE:02:ウェイト変更（単発）:20]　２の[BE:02:ウェイト変更（単発）:20]…[BE:02:ウェイト変更（単発）:20]…[BE:02:ウェイト変更（単発）:20]　ポカン！[BE:05:コールバック引数変更（単発）:3][BE:05:コールバック引数変更（単発）:5]▼
+[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
+使い方を　きれいに忘れた！▼
+そして……！▼</language>
 	</row>
 
 	<row id="msg_waza_omoi_07" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -555,7 +555,7 @@ msg_waza_omoi_10へ
 		<language name="JPN" width="216">それでは……　[1:07:わざ名:1]を
 おもいだすのを　あきらめますか？</language>
 		<language name="JPN_KANJI" width="216">それでは……　[1:07:わざ名:1]を
-おもいだすのを　あきらめますか？</language>
+思い出すのを　あきらめますか？</language>
 	</row>
 
 	<row id="msg_waza_omoi_09" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -566,7 +566,7 @@ msg_waza_omoi_01へ
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]を
 おもいださずに　おわった！[2:07:８桁:]</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]を
-おもいださずに　おわった！[2:07:８桁:]</language>
+思い出さずに　おわった！[2:07:８桁:]</language>
 	</row>
 
 	<row id="msg_waza_omoi_10" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -574,15 +574,15 @@ msg_waza_omoi_01へ
 フィールドへ</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:2]は　おれいに
 ハートのウロコを　１まい　あげた！[2:07:８桁:]</language>
-		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:2]は　おれいに
-ハートのウロコを　１まい　あげた！[2:07:８桁:]</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:2]は　お礼に
+ハートのウロコを　１枚　あげた！[2:07:８桁:]</language>
 	</row>
 
 	<row id="msg_waza_omoi_11" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="216">[1:07:わざ名:0]を
 わすれさせて　よろしいですね？</language>
 		<language name="JPN_KANJI" width="216">[1:07:わざ名:0]を
-わすれさせて　よろしいですね？</language>
+忘れさせて　よろしいですね？</language>
 	</row>
 
 	<row id="msg_waza_oboe_01_01" back-color="#80ffff,,,,,,,,,,,,,,,,,">

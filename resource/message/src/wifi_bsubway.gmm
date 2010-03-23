@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-26T16:29:33"/>
+	<create user="matsumiya" host="W00224" date="2010-03-23T12:45:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1534" top="222" right="2239" bottom="842" maximized="no" rayout="Vertical2">
+	<dialog left="1671" top="215" right="2376" bottom="843" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="419" right="1280" bottom="817" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -341,8 +341,8 @@
 </comment>
 		<language name="JPN" width="216">バトルルームの　ばんごうを
 いれてください（０１ー[2:02:３桁:0]）[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">バトルルームの　ばんごうを
-いれてください（０１ー[2:02:３桁:0]）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">バトルルームの　番号を
+入力してください（０１ー[2:02:３桁:0]）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_002">
@@ -351,29 +351,29 @@
 		<language name="JPN" width="216">ランク[2:01:２桁:1]　ルーム[2:02:３桁:0]の　データを
 うけとっています……</language>
 		<language name="JPN_KANJI" width="216">ランク[2:01:２桁:1]　ルーム[2:02:３桁:0]の　データを
-うけとっています……</language>
+受け取っています……</language>
 	</row>
 
 	<row id="msg_wifi_bt_003">
 		<comment>●ルームデータダウンロード</comment>
 		<language name="JPN" width="216">そのバトルルームは　つぎの
 こうしんまで　ちょうせん　できません[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">そのバトルルームは　つぎの
-こうしんまで　ちょうせん　できません[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">そのバトルルームは　次の
+更新まで　挑戦できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_004">
 		<comment>●ルームデータダウンロード
 プラチナでメッセージ変更。</comment>
 		<language name="JPN" width="216">データを　うけとりました！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">データを　うけとりました！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">データを　受け取りました！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_005">
 		<comment>●ルームデータダウンロード
 ●歴代リーダーデータダウンロード</comment>
 		<language name="JPN" width="216">ちょうせんを　ちゅうし　しますか？</language>
-		<language name="JPN_KANJI" width="216">ちょうせんを　ちゅうし　しますか？</language>
+		<language name="JPN_KANJI" width="216">挑戦を　中止しますか？</language>
 	</row>
 
 	<row id="msg_wifi_bt_006">
@@ -381,7 +381,7 @@
 		<language name="JPN" width="216">バトルルームの　ランクを
 いれてください（０１ー１０）[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">バトルルームの　ランクを
-いれてください（０１ー１０）[BE:01:ページ切り替え（クリア）]</language>
+入力してください（０１ー１０）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_007">
@@ -390,22 +390,22 @@
 部屋番号：２桁</comment>
 		<language name="JPN" width="216">バトルルームの　ばんごうを
 いれてください（０１ー[2:02:３桁:0]）[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">バトルルームの　ばんごうを
-いれてください（０１ー[2:02:３桁:0]）[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">バトルルームの　番号を
+入力してください（０１ー[2:02:３桁:0]）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_008">
 		<comment>●成績アップロード
 プラチナでメッセージ変更。</comment>
 		<language name="JPN" width="216">せいせきデータを　おくっています……</language>
-		<language name="JPN_KANJI" width="216">せいせきデータを　おくっています……</language>
+		<language name="JPN_KANJI" width="216">成績データを　送っています……</language>
 	</row>
 
 	<row id="msg_wifi_bt_009">
 		<comment>●歴代リーダーデータアップロード
 プラチナでメッセージ変更。</comment>
 		<language name="JPN" width="216">データを　おくりました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216">データを　おくりました[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216">データを　送りました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_010">
@@ -414,8 +414,8 @@
 プラチナでメッセージ変更。</comment>
 		<language name="JPN" width="216">うけとるのを
 ちゅうし　しますか？</language>
-		<language name="JPN_KANJI" width="216">うけとるのを
-ちゅうし　しますか？</language>
+		<language name="JPN_KANJI" width="216">受け取るのを
+中止しますか？</language>
 	</row>
 
 	<row id="msg_wifi_bt_011">
@@ -424,8 +424,8 @@
 部屋番号：３桁</comment>
 		<language name="JPN" width="216">バトルルームの　ばんごうを
 いれてください（００１ー[2:02:３桁:0]）</language>
-		<language name="JPN_KANJI" width="216">バトルルームの　ばんごうを
-いれてください（００１ー[2:02:３桁:0]）</language>
+		<language name="JPN_KANJI" width="216">バトルルームの　番号を
+入力してください（００１ー[2:02:３桁:0]）</language>
 	</row>
 
 	<row id="msg_wifi_bt_012">
@@ -434,14 +434,14 @@
 部屋番号：３桁</comment>
 		<language name="JPN" width="216">バトルルームの　ばんごうを
 いれてください（００１ー[2:02:３桁:0]）</language>
-		<language name="JPN_KANJI" width="216">バトルルームの　ばんごうを
-いれてください（００１ー[2:02:３桁:0]）</language>
+		<language name="JPN_KANJI" width="216">バトルルームの　番号を
+入力してください（００１ー[2:02:３桁:0]）</language>
 	</row>
 
 	<row id="msg_wifi_bt_title_001">
 		<comment>背景に描画するタイトル文字列</comment>
 		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクションに　せつぞく</language>
-		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクションに　せつぞく</language>
+		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクションに　接続</language>
 	</row>
 
 	<row id="msg_wifi_bt_error_001">
@@ -451,9 +451,9 @@
 しばらく　おまちいただいたのち　
 ごりようください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉバトルタワーは
-げんざい　メンテナンスちゅう　です[BE:01:ページ切り替え（クリア）]
-しばらく　おまちいただいたのち　
-ごりようください[BE:01:ページ切り替え（クリア）]</language>
+現在　メンテナンス中　です[BE:01:ページ切り替え（クリア）]
+しばらく　お待ちいただいたのち　
+ご利用ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_error_002">
@@ -463,19 +463,19 @@
 しばらく　おまちいただいたのち
 ごりようください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉバトルタワーは
-げんざい　こみあって　おります[BE:01:ページ切り替え（クリア）]
-しばらく　おまちいただいたのち
-ごりようください[BE:01:ページ切り替え（クリア）]</language>
+現在　混み合っております[BE:01:ページ切り替え（クリア）]
+しばらく　お待ちいただいたのち
+ご利用ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_error_003">
 		<comment>サーバーログインに失敗した</comment>
 		<language name="JPN" width="216">Ｗｉ－Ｆｉバトルタワーに
 せつぞく　できませんでした[BE:01:ページ切り替え（クリア）]
-うけつけにもどります[BE:01:ページ切り替え（クリア）]</language>
+うけつけに　もどります[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉバトルタワーに
-せつぞく　できませんでした[BE:01:ページ切り替え（クリア）]
-うけつけにもどります[BE:01:ページ切り替え（クリア）]</language>
+接続できませんでした[BE:01:ページ切り替え（クリア）]
+受付に　もどります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_error_004" back-color=",,,,,,#00ff00,,,,,,,,,,,">
@@ -484,8 +484,8 @@
 つうしんが　せつだん　されました[BE:01:ページ切り替え（クリア）]
 うけつけに　もどります[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉバトルタワーとの　
-つうしんが　せつだん　されました[BE:01:ページ切り替え（クリア）]
-うけつけに　もどります[BE:01:ページ切り替え（クリア）]</language>
+通信が　切断されました[BE:01:ページ切り替え（クリア）]
+受付に　もどります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_error_005">
@@ -493,15 +493,15 @@
 		<language name="JPN" width="216">Ｗｉ－Ｆｉバトルタワーに
 してい　できない　すうじです[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉバトルタワーに
-してい　できない　すうじです[BE:01:ページ切り替え（クリア）]</language>
+指定できない　数字です[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_wifi_bt_cleanup_000">
 		<comment>サーバーログインに失敗した</comment>
 		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクション　から
-せつだんしています</language>
+せつだん　しています</language>
 		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクション　から
-せつだんしています</language>
+切断しています</language>
 	</row>
 
 	<row id="msg_wifi_bt_cleanup_001">
@@ -509,7 +509,7 @@
 		<language name="JPN" width="216">Ｗｉ－Ｆｉコネクション　から
 せつだん　しました</language>
 		<language name="JPN_KANJI" width="216">Ｗｉ－Ｆｉコネクション　から
-せつだん　しました</language>
+切断しました</language>
 	</row>
 
 	<flowchart-group-list>
