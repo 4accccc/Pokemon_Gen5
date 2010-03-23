@@ -131,6 +131,8 @@ _EVENT_DATA ev_fld_item_76
 _EVENT_DATA ev_fld_item_77
 _EVENT_DATA ev_fld_item_160
 _EVENT_DATA ev_fld_item_161
+_EVENT_DATA ev_fld_item_89
+_EVENT_DATA ev_fld_item_179
 _EVENT_DATA ev_fld_item_79
 _EVENT_DATA ev_fld_item_80
 _EVENT_DATA ev_fld_item_162
@@ -193,8 +195,6 @@ _EVENT_DATA ev_fld_item_120
 _EVENT_DATA ev_fld_item_176
 _EVENT_DATA ev_fld_item_177
 _EVENT_DATA ev_fld_item_178
-_EVENT_DATA ev_fld_item_89
-_EVENT_DATA ev_fld_item_179
 _EVENT_DATA ev_fld_item_225
 _EVENT_DATA ev_fld_item_226
 _EVENT_DATA ev_fld_item_227
@@ -1041,6 +1041,20 @@ EVENT_START ev_fld_item_161
 EVENT_END
 
 //--------------------------------------------------------------
+// MAP=d07r0101 X=408 Y=120 ITEM=ピーピーエイド FLAG=89
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_89
+  _FLD_ITEM_EVENT ITEM_PIIPIIEIDO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d07r0101 X=408 Y=120 ITEM=ふしぎなアメ FLAG=179
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_179
+  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
+EVENT_END
+
+//--------------------------------------------------------------
 // MAP=r08 X=408 Y=120 ITEM=ブロムヘキシン FLAG=79
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_79
@@ -1174,31 +1188,31 @@ EVENT_START ev_fld_item_174
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r10 X=408 Y=120 ITEM=ピーピーマックス FLAG=83
+// MAP=r10 X=408 Y=120 ITEM=わざマシン０５ FLAG=83
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_83
-  _FLD_ITEM_EVENT ITEM_PIIPIIMAKKUSU,1
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN05,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r10 X=408 Y=120 ITEM=やみのいし FLAG=84
+// MAP=r10 X=408 Y=120 ITEM=めざめいし FLAG=84
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_84
-  _FLD_ITEM_EVENT ITEM_YAMINOISI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r10 X=408 Y=120 ITEM=めざめいし FLAG=85
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_85
   _FLD_ITEM_EVENT ITEM_MEZAMEISI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r10 X=408 Y=120 ITEM=わざマシン０５ FLAG=175
+// MAP=r10 X=408 Y=120 ITEM=ピーピーマックス FLAG=85
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_85
+  _FLD_ITEM_EVENT ITEM_PIIPIIMAKKUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r10 X=408 Y=120 ITEM=かいふくのくすり FLAG=175
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_175
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN05,1
+  _FLD_ITEM_EVENT ITEM_KAIHUKUNOKUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1405,49 +1419,49 @@ EVENT_START ev_fld_item_113
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=w17 X=408 Y=120 ITEM=キズぐすり FLAG=114
+// MAP=w17 X=710 Y=747 ITEM=キズぐすり FLAG=114
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_114
   _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=w17 X=408 Y=120 ITEM=ひでんマシン０７ FLAG=115
+// MAP=w17 X=691 Y=748 ITEM=ひでんマシン０７ FLAG=115
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_115
   _FLD_ITEM_EVENT ITEM_HIDENMASIN07,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d13 X=408 Y=120 ITEM=キズぐすり FLAG=116
+// MAP=d13 X=715 Y=727 ITEM=キズぐすり FLAG=116
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_116
   _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r18 X=408 Y=120 ITEM=わざマシン０６ FLAG=117
+// MAP=r18 X=634 Y=710 ITEM=わざマシン０６ FLAG=117
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_117
   _FLD_ITEM_EVENT ITEM_WAZAMASIN06,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r18 X=408 Y=120 ITEM=わざマシン１９ FLAG=118
+// MAP=r18 X=642 Y=741 ITEM=わざマシン１９ FLAG=118
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_118
   _FLD_ITEM_EVENT ITEM_WAZAMASIN19,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r18 X=408 Y=120 ITEM=キズぐすり FLAG=119
+// MAP=r18 X=642 Y=761 ITEM=キズぐすり FLAG=119
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_119
   _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r18 X=408 Y=120 ITEM=キズぐすり FLAG=120
+// MAP=r18 X=613 Y=753 ITEM=キズぐすり FLAG=120
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_120
   _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
@@ -1472,20 +1486,6 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_178
   _FLD_ITEM_EVENT ITEM_KAORUKINOKO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d07r0101 X=408 Y=120 ITEM=ピーピーエイド FLAG=89
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_89
-  _FLD_ITEM_EVENT ITEM_PIIPIIEIDO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d07r0101 X=408 Y=120 ITEM=ふしぎなアメ FLAG=179
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_179
-  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
 EVENT_END
 
 //--------------------------------------------------------------
