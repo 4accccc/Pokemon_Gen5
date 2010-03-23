@@ -3963,13 +3963,34 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
 //新しく技を覚える(空きあり
 static void PLIST_LearnSkillEmpty( PLIST_WORK *work , POKEMON_PARAM *pp )
 {
-  PP_SetWaza( pp , work->plData->waza );
+  if( work->plData->mode == PL_MODE_ITEMUSE ||
+      work->plData->mode == PL_MODE_LVUPWAZASET_RET )
+  {
+    //不思議なアメ
+    PP_SetWaza( pp , work->plData->waza );
+  }
+  else
+  {
+    //技マシンならば技ポイント引継　
+    PP_SetWazaPPCont( pp , work->plData->waza );
+  }
+
 }
 
 //新しく技を覚える(空き無し
 static void PLIST_LearnSkillFull( PLIST_WORK *work  , POKEMON_PARAM *pp , u8 pos )
 {
-  PP_SetWazaPos( pp , work->plData->waza , pos );
+  if( work->plData->mode == PL_MODE_ITEMUSE ||
+      work->plData->mode == PL_MODE_LVUPWAZASET_RET )
+  {
+    //不思議なアメ
+    PP_SetWazaPos( pp , work->plData->waza , pos );
+  }
+  else
+  {
+    //わざマシンならば技ポイント引継
+    PP_SetWazaPosPPCont( pp , work->plData->waza , pos );
+  }
 }
 
 //アイテムを持たせる処理
