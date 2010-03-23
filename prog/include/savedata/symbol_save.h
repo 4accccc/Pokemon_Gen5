@@ -121,9 +121,13 @@ extern SYMBOL_SAVE_WORK* SymbolSave_GetSymbolData(SAVE_CONTROL_WORK* pSave);
 //  アクセス関数
 //--------------------------------------------------------------
 extern const SYMBOL_POKEMON * SymbolSave_GetSymbolPokemon(SYMBOL_SAVE_WORK *symbol_save, u32 no);
-extern u32 SymbolSave_CheckFreeZoneSpace(SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type);
+extern u32 SymbolSave_CheckSpace(SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type);
 extern void SymbolSave_DataShift(SYMBOL_SAVE_WORK *symbol_save, u32 no);
 extern void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save, u16 monsno, u16 wazano, u8 sex, u8 form_no, SYMBOL_ZONE_TYPE zone_type);
+
+static inline u32 SymbolSave_CheckFreeZoneSpace(
+    SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type)
+{ return SymbolSave_CheckSpace( symbol_save, zone_type ); }
 
 //--------------------------------------------------------------
 //  ツール関数

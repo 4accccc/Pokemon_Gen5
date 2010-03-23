@@ -58,7 +58,7 @@ static u8 SymbolSave_GetArraySymbolPokemon(SYMBOL_SAVE_WORK *symbol_save, SYMBOL
 {
   int i;
   
-  GF_ASSERT(array_num <= copy_num);
+  GF_ASSERT_MSG(array_num >= copy_num, " array(%d) < copy(%d)\n", array_num, copy_num);
   GFL_STD_MemClear(dest_array, sizeof(struct _SYMBOL_POKEMON) * array_num);
   GFL_STD_MemCopy(&symbol_save->symbol_poke[no], dest_array, sizeof(struct _SYMBOL_POKEMON) * copy_num);
   for(i = 0; i < copy_num; i++){
@@ -170,10 +170,12 @@ u16 SymbolSave_GetMapIDSymbolPokemon(SYMBOL_SAVE_WORK *symbol_save, SYMBOL_POKEM
   u8 occ_num_ex;
   
   occ_num_ex = 0;
+  GFL_STD_MemClear( dest_array, sizeof(SYMBOL_POKEMON) * array_num );
   if(map_id == SYMBOL_MAP_ID_KEEP){
     no = SymbolSave_GetKeepLargeSymbolPokemon(symbol_save, dest_array, array_num, occ_num);
     no_ex = SymbolSave_GetKeepSmallSymbolPokemon(
-      symbol_save, &dest_array[*occ_num], array_num - (*occ_num), &occ_num_ex);
+      symbol_save, &dest_array[SYMBOL_MAP_STOCK_LARGE],
+      array_num - SYMBOL_MAP_STOCK_LARGE, &occ_num_ex);
     *occ_num += occ_num_ex;
   }
   else if(map_id >= SYMBOL_MAP_ID_FREE_LARGE_START && map_id < SYMBOL_MAP_ID_FREE_SMALL_START){

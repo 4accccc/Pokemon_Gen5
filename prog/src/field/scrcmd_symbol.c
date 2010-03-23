@@ -2,7 +2,7 @@
 /**
  * @file    scrcmd_symbol.c
  * @brief   侵入：シンボルポケモン
- * @author  matsuda
+ * @author  matsuda --> tamada
  * @date    2010.03.16(火)
  */
 //==============================================================================
@@ -25,6 +25,7 @@
 
 #include "scrcmd_symbol.h"
 #include "savedata/symbol_save.h"
+#include "savedata/symbol_save_field.h"
 #include "event_symbol.h"
 
 #include "symbol_map.h"
@@ -36,6 +37,14 @@
 #include "arc/fieldmap/zone_id.h"
 #include "event_mapchange.h"
 
+//==============================================================================
+//==============================================================================
+static MMDL * getPokeMMdl( SCRCMD_WORK * work, u16 obj_id );
+static POKEMON_PARAM * createPokemon( SCRCMD_WORK * work, MMDL * mmdl, HEAPID heapID );
+
+
+//==============================================================================
+//==============================================================================
 //==================================================================
 /**
  * シンボルポケモンバトル
@@ -54,16 +63,21 @@ VMCMD_RESULT EvCmdSymbolPokeBattle( VMHANDLE *core, void *wk )
   u16 obj_id = SCRCMD_GetVMWorkValue(core,work);
   u16* ret_wk = SCRCMD_GetVMWork(core,work);  //結果を返すワーク
 
-  SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
-  //MMDL *mmdl = SCRIPT_GetTargetObj( scw );  //話しかけ時のみ有効
-  //u16 obj_code = MMDL_GetOBJCode( mmdl );
-  //ZONEID zone_id = SCRCMD_WORK_GetZoneID( work );
-  POKEMON_PARAM * pp = SYMBOLPOKE_PP_CreateByObjID( HEAPID_PROC, gsys, obj_id );
-  GMEVENT * event = EVENT_SymbolPokeBattle( gsys, fieldmap, pp, ret_wk, HEAPID_PROC );
 
-  SCRIPT_CallEvent( scw, event );
+  MMDL * mmdl = getPokeMMdl( work, obj_id );
+  if ( mmdl )
+  {
+    POKEMON_PARAM * pp = createPokemon( work, mmdl, HEAPID_PROC );
+    if ( pp )
+    {
+      SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
+      GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+      FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
+      GMEVENT * event = EVENT_SymbolPokeBattle( gsys, fieldmap, pp, ret_wk, HEAPID_PROC );
+      SCRIPT_CallEvent( scw, event );
+    }
+  }
+
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -85,38 +99,69 @@ VMCMD_RESULT EvCmdSymbolMapPokeSet( VMHANDLE *core, void *wk )
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
   INTRUDE_SYMBOL_WORK * isw;
+  u32 start_no;
   
-  isw = SYMBOLMAP_AllocSymbolWork( heapID, gsys );
-  SYMBOLPOKE_Add( fieldmap, isw->spoke_array, isw->num );
+  isw = SYMBOLMAP_AllocSymbolWork( heapID, gsys, &start_no );
+  SYMBOLPOKE_Add( fieldmap, start_no, isw->spoke_array, isw->num );
   GFL_HEAP_FreeMemory( isw );
   
   return VMCMD_RESULT_CONTINUE;
 }
 
 //==================================================================
+/**
+ * @brief シンボルポケモンを入手する
+ */
 //==================================================================
 VMCMD_RESULT EvCmdSymbolPokeGet( VMHANDLE * core, void *wk )
 {
   SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
   u16 obj_id = SCRCMD_GetVMWorkValue(core,work);
 
+  GAMEDATA *  gamedata = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(gamedata);
+  SYMBOL_SAVE_WORK *symbol_save = SymbolSave_GetSymbolData(sv_ctrl);
+
+  MMDL * mmdl = getPokeMMdl( work, obj_id );
+
+  if ( mmdl ) {
+    u32 no = SYMBOLPOKE_GetSymbolNo( mmdl );
+    SymbolSave_DataShift( symbol_save, no );
+  }
+
   return VMCMD_RESULT_CONTINUE;
 }
 
 //==================================================================
 /**
+ * @brief シンボルポケモンを移動する
  */
 //==================================================================
 VMCMD_RESULT EvCmdSymbolMapMovePokemon( VMHANDLE * core, void * wk )
 {
+  SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
   u16 obj_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 *ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  GAMEDATA *  gamedata = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(gamedata);
+  SYMBOL_SAVE_WORK *symbol_save = SymbolSave_GetSymbolData(sv_ctrl);
+
+  MMDL * mmdl = getPokeMMdl( work, obj_id );
+
+  if ( mmdl ) {
+    u32 no = SYMBOLPOKE_GetSymbolNo( mmdl );
+    *ret_wk = SymbolSave_Field_MoveAuto( symbol_save, no );
+  } else {
+    *ret_wk = FALSE;
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
 
 //==================================================================
 /**
+ * @brief シンボルエンカウント：対象ポケモンの名前をセット
  */
 //==================================================================
 VMCMD_RESULT EvCmdSymbolMapSetMonsName( VMHANDLE * core, void * wk )
@@ -124,23 +169,28 @@ VMCMD_RESULT EvCmdSymbolMapSetMonsName( VMHANDLE * core, void * wk )
   SCRCMD_WORK *work = wk;
   u16 obj_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 idx = SCRCMD_GetVMWorkValue( core, wk );
-  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( wk );
-  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET *wordset    = SCRIPT_GetWordSet( sc );
-  HEAPID     heap_id = SCRCMD_WORK_GetHeapID( work );
 
-  POKEMON_PARAM * pp = SYMBOLPOKE_PP_CreateByObjID( heap_id, gsys, obj_id );
-  if ( pp )
+  MMDL * mmdl = getPokeMMdl( work, obj_id );
+
+  if ( mmdl )
   {
-    WORDSET_RegisterPokeMonsName( wordset, idx, pp );
-    GFL_HEAP_FreeMemory( pp );
+    HEAPID     heap_id = SCRCMD_WORK_GetHeapID( work );
+    POKEMON_PARAM * pp = createPokemon( work, mmdl, heap_id );
+    if ( pp )
+    {
+      SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+      WORDSET *wordset    = SCRIPT_GetWordSet( sc );
+
+      WORDSET_RegisterPokeMonsName( wordset, idx, pp );
+      GFL_HEAP_FreeMemory( pp );
+    }
   }
   return VMCMD_RESULT_CONTINUE;
 }
 
 //==================================================================
 /**
+ * @brief シンボルエンカウントマップ：情報取得
  */
 //==================================================================
 VMCMD_RESULT EvCmdSymbolMapGetInfo( VMHANDLE * core, void * wk )
@@ -180,8 +230,10 @@ VMCMD_RESULT EvCmdSymbolMapGetInfo( VMHANDLE * core, void * wk )
   }
   return VMCMD_RESULT_CONTINUE;
 }
+
 //==================================================================
 /**
+ * @brief シンボルエンカウントマップ：マップ遷移
  */
 //==================================================================
 VMCMD_RESULT EvCmdSymbolMapWarp( VMHANDLE * core, void *wk )
@@ -209,7 +261,7 @@ VMCMD_RESULT EvCmdSymbolMapWarp( VMHANDLE * core, void *wk )
   else
   { //パレスの森の中を移動
     if ( warp_dir != DIR_NOT ) {
-      sid = SYMBOLMAP_GetNextSymbolMapID( GAMEDATA_GetSymbolMapID( gamedata ), warp_dir );
+      sid = SYMBOLMAP_GetNextSymbolMapID( gsys, GAMEDATA_GetSymbolMapID( gamedata ), warp_dir );
     }
     new_event = EVENT_SymbolMapWarpEasy( gsys, warp_dir, sid );
     OS_TPrintf("SCRCMD:SYMMAP_WARP:next id = %d\n", sid );
@@ -219,4 +271,36 @@ VMCMD_RESULT EvCmdSymbolMapWarp( VMHANDLE * core, void *wk )
 }
 
 
+//==============================================================================
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief 話しかけ対象のポケモン動作モデル取得
+ */
+//--------------------------------------------------------------
+static MMDL * getPokeMMdl( SCRCMD_WORK * work, u16 obj_id )
+{
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+  MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+  GF_ASSERT( mmdl != NULL );
+  return mmdl;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief シンボルポケモンデータからポケモン生成
+ */
+//--------------------------------------------------------------
+static POKEMON_PARAM * createPokemon( SCRCMD_WORK * work, MMDL * mmdl, HEAPID heapID )
+{
+    GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+    SYMBOL_POKEMON sympoke;
+    POKEMON_PARAM * pp;
+    SYMBOLPOKE_GetParam( &sympoke, mmdl );
+    pp = SYMBOLPOKE_PP_Create( HEAPID_PROC, gamedata, &sympoke );
+    return pp;
+}
 

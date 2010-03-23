@@ -377,7 +377,7 @@ GMEVENT * EVENT_SymbolMapWarp(
 	GFL_STD_MemClear( esmw, sizeof(EVENT_SYMBOL_MAP_WARP) );
 
   esmw->fieldWork = fieldWork;
-  esmw->warp_zone_id = SYMBOLMAP_GetZoneID( symbol_map_id );
+  esmw->warp_zone_id = SYMBOLMAP_GetZoneID( gsys, symbol_map_id );
   esmw->warp_pos = *warp_pos;
   esmw->warp_dir = warp_dir;
   esmw->result_ptr = result_ptr;

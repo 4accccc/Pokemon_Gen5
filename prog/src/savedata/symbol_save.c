@@ -115,11 +115,12 @@ const SYMBOL_POKEMON * SymbolSave_GetSymbolPokemon(SYMBOL_SAVE_WORK *symbol_save
  * @retval  u32           ãÛÇ´Ç™ñ≥Ç¢èÍçáÅFSYMBOL_SPACE_NONE
  */
 //==================================================================
-u32 SymbolSave_CheckFreeZoneSpace(SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type)
+u32 SymbolSave_CheckSpace(SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type)
 {
   u32 i, start,end;
   SYMBOL_POKEMON *spoke;
   
+  GF_ASSERT( zone_type < SYMBOL_ZONE_TYPE_KEEP_ALL );
   start = SymbolZoneTypeDataNo[zone_type].start;
   end = SymbolZoneTypeDataNo[zone_type].end;
   
@@ -133,7 +134,7 @@ u32 SymbolSave_CheckFreeZoneSpace(SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYP
   return SYMBOL_SPACE_NONE;
 }
 
-//--------------------------------------------------------------
+//==================================================================
 /**
  * îzíuNoÇ©ÇÁSYMBOL_ZONE_TYPEÇéÊìæÇµÇ‹Ç∑
  *
@@ -141,7 +142,7 @@ u32 SymbolSave_CheckFreeZoneSpace(SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYP
  *
  * @retval  SYMBOL_ZONE_TYPE		
  */
-//--------------------------------------------------------------
+//==================================================================
 SYMBOL_ZONE_TYPE SYMBOLZONE_GetZoneTypeFromNumber(u32 no)
 {
   SYMBOL_ZONE_TYPE zone_type;
@@ -175,8 +176,10 @@ void SymbolSave_DataShift(SYMBOL_SAVE_WORK *symbol_save, u32 no)
   start = no;
   end = SymbolZoneTypeDataNo[zone_type].end;
 
-  GFL_STD_MemCopy(&symbol_save->symbol_poke[start + 1], &symbol_save->symbol_poke[start], 
-    sizeof(struct _SYMBOL_POKEMON) * (end - (start + 1)));
+  if ( start < end ) {
+    GFL_STD_MemCopy(&symbol_save->symbol_poke[start + 1], &symbol_save->symbol_poke[start], 
+      sizeof(struct _SYMBOL_POKEMON) * (end - (start + 1)));
+  }
   symbol_save->symbol_poke[end - 1].monsno = 0;
 }
 
@@ -202,7 +205,7 @@ void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save, u16 monsno, u16 wazan
   start = SymbolZoneTypeDataNo[zone_type].start;
   end = SymbolZoneTypeDataNo[zone_type].end;
   
-  no = SymbolSave_CheckFreeZoneSpace(symbol_save, zone_type);
+  no = SymbolSave_CheckSpace(symbol_save, zone_type);
   if(no == SYMBOL_SPACE_NONE){
     SymbolSave_DataShift(symbol_save, start);
     spoke = &symbol_save->symbol_poke[end - 1];
@@ -221,8 +224,9 @@ void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save, u16 monsno, u16 wazan
       symbol_save->map_level_large++;
     }
   }
-  else if(no != SYMBOL_SPACE_NONE){
-    symbol_save->map_level_small = (no - SYMBOL_NO_START_FREE_SMALL) / SMALL_MAP_EXPAND_NUM;
+  else if(zone_type == SYMBOL_ZONE_TYPE_FREE_SMALL)
+    if (no != SYMBOL_SPACE_NONE && no > SYMBOL_NO_START_FREE_SMALL + SMALL_MAP_EXPAND_NUM * 2){
+    symbol_save->map_level_small = (no - SYMBOL_NO_START_FREE_SMALL) / SMALL_MAP_EXPAND_NUM - 1;
     if(symbol_save->map_level_small > SYMBOL_MAP_LEVEL_SMALL_MAX){
       symbol_save->map_level_small = SYMBOL_MAP_LEVEL_SMALL_MAX;  //àÍâû
       GF_ASSERT_MSG(0, "no=%d", no - SYMBOL_NO_START_FREE_SMALL);

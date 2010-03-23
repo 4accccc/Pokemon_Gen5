@@ -21,16 +21,22 @@
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-extern void SYMBOLPOKE_Add(FIELDMAP_WORK *fieldmap, const SYMBOL_POKEMON * sympoke, int poke_num );
+extern void SYMBOLPOKE_Add(
+    FIELDMAP_WORK *fieldmap, u32 start_no, const SYMBOL_POKEMON * sympoke, int poke_num );
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-extern POKEMON_PARAM * SYMBOLPOKE_PP_CreateByObjID( HEAPID heapID, GAMESYS_WORK * gsys, u16 obj_id );
+extern POKEMON_PARAM * SYMBOLPOKE_PP_Create(
+    HEAPID heapID, GAMEDATA * gamedata, const SYMBOL_POKEMON * sympoke );
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-extern u16 SYMBOLPOKE_GetMonsno( FIELDMAP_WORK * fieldmap, u16 obj_id );
-extern u16 SYMBOLPOKE_GetFormno( FIELDMAP_WORK * fieldmap, u16 obj_id );
-extern u16 SYMBOLPOKE_GetSex( FIELDMAP_WORK * fieldmap, u16 obj_id );
-extern u16 SYMBOLPOKE_GetWaza( FIELDMAP_WORK * fieldmap, u16 obj_id );
+extern void SYMBOLPOKE_GetParam( SYMBOL_POKEMON * sympoke, const MMDL * mmdl );
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern u32 SYMBOLPOKE_GetSymbolNo( const MMDL * mmdl );
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 

@@ -377,7 +377,7 @@ static const u8 * getMapTable( SYMBOL_MAP_LEVEL_LARGE large_lvl, SYMBOL_MAP_LEVE
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
-static SYMBOL_MAP_LEVEL_SMALL getSmallLevel( GAMESYS_WORK * gsys )
+static BOOL getMapLevel( GAMESYS_WORK * gsys, SYMBOL_MAP_LEVEL_SMALL * small, SYMBOL_MAP_LEVEL_LARGE * large )
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(gamedata);
@@ -386,7 +386,9 @@ static SYMBOL_MAP_LEVEL_SMALL getSmallLevel( GAMESYS_WORK * gsys )
 
   if ( IntrudeSymbol_CheckIntrudeNetID( game_comm, gamedata ) == INTRUDE_NETID_NULL )
   { //自分のマップ
-    return SymbolSave_GetMapLevelSmall( symbol_save );
+    *small = SymbolSave_GetMapLevelSmall( symbol_save );
+    *large = SymbolSave_GetMapLevelLarge( symbol_save );
+    return TRUE;
   }
   else
   { //通信相手のマップ
@@ -394,41 +396,30 @@ static SYMBOL_MAP_LEVEL_SMALL getSmallLevel( GAMESYS_WORK * gsys )
     INTRUDE_SYMBOL_WORK * isw;
     if ( intcomm == NULL )
     {
-      return SYMBOL_MAP_LEVEL_SMALL_1; //通信エラーなので、とりあえず
+      //通信エラーなので、とりあえず
+      *small = SYMBOL_MAP_LEVEL_SMALL_1;
+      *large = SYMBOL_MAP_LEVEL_LARGE_NONE;
+      return FALSE;
     }
     isw = IntrudeSymbol_GetSymbolBuffer( intcomm );
-    return isw->map_level_small;
-  }
-}
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static SYMBOL_MAP_LEVEL_LARGE getLargeLevel( GAMESYS_WORK * gsys )
-{
-  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
-  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(gamedata);
-  SYMBOL_SAVE_WORK *symbol_save = SymbolSave_GetSymbolData(sv_ctrl);
-	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr( gsys );
-
-  if ( IntrudeSymbol_CheckIntrudeNetID( game_comm, gamedata ) == INTRUDE_NETID_NULL )
-  { //自分のマップ
-    return SymbolSave_GetMapLevelLarge( symbol_save );
-  }
-  else
-  { //通信相手のマップ
-    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect( game_comm );
-    INTRUDE_SYMBOL_WORK * isw;
-    if ( intcomm == NULL )
-    {
-      return SYMBOL_MAP_LEVEL_LARGE_NONE; //通信エラーなので、とりあえず
-    }
-    isw = IntrudeSymbol_GetSymbolBuffer( intcomm );
-    return isw->map_level_large;
+    *small = isw->map_level_small;
+    *large = isw->map_level_large;
+    return TRUE;
   }
 }
 
 //--------------------------------------------------------------
+/**
+ * @brief
+ * @param heapID
+ * @param gsys
+ * @param no
+ * @return  INTRUDE_SYMBOL_WORK
+ *
+ * @todo  拡張性などを考えるとINTRUDE_SYMBOL_WORKではなく、独自の構造体を返すべき
+ */
 //--------------------------------------------------------------
-INTRUDE_SYMBOL_WORK * SYMBOLMAP_AllocSymbolWork( HEAPID heapID, GAMESYS_WORK * gsys )
+INTRUDE_SYMBOL_WORK * SYMBOLMAP_AllocSymbolWork( HEAPID heapID, GAMESYS_WORK * gsys, u32 * no )
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(gamedata);
@@ -440,7 +431,7 @@ INTRUDE_SYMBOL_WORK * SYMBOLMAP_AllocSymbolWork( HEAPID heapID, GAMESYS_WORK * g
     SYMBOL_MAP_ID symmap_id = GAMEDATA_GetSymbolMapID( gamedata );
     u8 occ_num;
     INTRUDE_SYMBOL_WORK * isw = GFL_HEAP_AllocClearMemory( heapID, sizeof(INTRUDE_SYMBOL_WORK) );
-    SymbolSave_GetMapIDSymbolPokemon( symbol_save,
+    *no = SymbolSave_GetMapIDSymbolPokemon( symbol_save,
         isw->spoke_array, SYMBOL_MAP_STOCK_MAX, symmap_id, &occ_num );
     isw->num = occ_num;
     isw->map_level_small = SymbolSave_GetMapLevelSmall( symbol_save );
@@ -460,6 +451,7 @@ INTRUDE_SYMBOL_WORK * SYMBOLMAP_AllocSymbolWork( HEAPID heapID, GAMESYS_WORK * g
     {
       INTRUDE_SYMBOL_WORK * isw = GFL_HEAP_AllocClearMemory( heapID, sizeof(INTRUDE_SYMBOL_WORK) );
       GFL_STD_MemCopy( IntrudeSymbol_GetSymbolBuffer( intcomm ), isw, sizeof( INTRUDE_SYMBOL_WORK ) );
+      *no = SYMBOL_POKE_MAX;
       return isw;
     }
   }
@@ -474,11 +466,13 @@ INTRUDE_SYMBOL_WORK * SYMBOLMAP_AllocSymbolWork( HEAPID heapID, GAMESYS_WORK * g
  * @return  u16   ゾーンID
  */
 //--------------------------------------------------------------
-u16 SYMBOLMAP_GetZoneID( SYMBOL_MAP_ID symmap_id )
+u16 SYMBOLMAP_GetZoneID( GAMESYS_WORK * gsys, SYMBOL_MAP_ID symmap_id )
 {
-  int large_lvl = SYMBOL_MAP_LEVEL_LARGE_NONE;
-  int small_lvl = SYMBOL_MAP_LEVEL_SMALL_1;
-  const u8 * tbl = getMapTable( large_lvl, small_lvl );
+  SYMBOL_MAP_LEVEL_LARGE large_lvl;
+  SYMBOL_MAP_LEVEL_SMALL small_lvl;
+  const u8 * tbl;
+  getMapLevel( gsys, &small_lvl, &large_lvl );
+  tbl = getMapTable( large_lvl, small_lvl );
 
   return getSymbolMapZoneID( tbl, SYMMAPIDtoLSID( symmap_id ) );
 }
@@ -491,13 +485,17 @@ u16 SYMBOLMAP_GetZoneID( SYMBOL_MAP_ID symmap_id )
  * @return  SYMBOL_MAP_ID 移動先のシンボルマップID
  */
 //--------------------------------------------------------------
-SYMBOL_MAP_ID SYMBOLMAP_GetNextSymbolMapID( SYMBOL_MAP_ID now_symmap_id, u16 dir_id )
+SYMBOL_MAP_ID SYMBOLMAP_GetNextSymbolMapID(
+    GAMESYS_WORK * gsys, SYMBOL_MAP_ID now_symmap_id, u16 dir_id )
 {
-  int large_lvl = SYMBOL_MAP_LEVEL_LARGE_NONE;
-  int small_lvl = SYMBOL_MAP_LEVEL_SMALL_1;
-  const u8 * tbl = getMapTable( large_lvl, small_lvl );
-
+  SYMBOL_MAP_LEVEL_LARGE large_lvl;
+  SYMBOL_MAP_LEVEL_SMALL small_lvl;
+  const u8 * tbl;
   u8 next_lsid;
+
+  getMapLevel( gsys, &small_lvl, &large_lvl );
+  tbl = getMapTable( large_lvl, small_lvl );
+
   next_lsid = getNextMapLSID( tbl, SYMMAPIDtoLSID(now_symmap_id), dir_id );
   return LSIDtoSYMMAPID( next_lsid );
 }
@@ -525,6 +523,4 @@ BOOL SYMBOLMAP_IsEntranceID( SYMBOL_MAP_ID symmap_id )
 {
   return SYMMAPIDtoLSID( symmap_id ) == SYMMAP_ENT_ID;
 }
-
-
 
