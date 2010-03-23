@@ -712,66 +712,66 @@
 	</row>
 
 	<row id="ITEMINFO_065">
-		<language name="JPN" width="256">ガラスせいの　あおい　ふえ。
-
-</language>
-		<language name="JPN_KANJI" width="256">ガラスせいの　あおい　ふえ。
-
-</language>
+		<language name="JPN" width="256">あおい　ガラスで　できている
+おもちゃの　ふえ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">あおい　ガラスで　できている
+おもちゃの　ふえ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_066">
-		<language name="JPN" width="256">ガラスせいの　きいろい　ふえ。
-
-</language>
-		<language name="JPN_KANJI" width="256">ガラスせいの　きいろい　ふえ。
-
-</language>
+		<language name="JPN" width="256">きいろい　ガラスで　できている
+おもちゃの　ふえ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">きいろい　ガラスで　できている
+おもちゃの　ふえ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_067">
-		<language name="JPN" width="256">ガラスせいの　あかい　ふえ。
-
-</language>
-		<language name="JPN_KANJI" width="256">ガラスせいの　あかい　ふえ。
-
-</language>
+		<language name="JPN" width="256">あかい　ガラスで　できている
+おもちゃの　ふえ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">あかい　ガラスで　できている
+おもちゃの　ふえ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_068">
-		<language name="JPN" width="256">ガラスせいの　くろい　ふえ。
-
-</language>
-		<language name="JPN_KANJI" width="256">ガラスせいの　くろい　ふえ。
-
-</language>
+		<language name="JPN" width="256">くろい　ガラスで　できている
+おもちゃの　ふえ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">くろい　ガラスで　できている
+おもちゃの　ふえ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_069">
-		<language name="JPN" width="256">ガラスせいの　しろい　ふえ。
-
-</language>
-		<language name="JPN_KANJI" width="256">ガラスせいの　しろい　ふえ。
-
-</language>
+		<language name="JPN" width="256">しろい　ガラスで　できている
+おもちゃの　ふえ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">しろい　ガラスで　できている
+おもちゃの　ふえ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_070">
-		<language name="JPN" width="256">あさせのほらあなの　なかで
-みつけた　きれいな　しお。
-ものすごく　しょっぱい。</language>
-		<language name="JPN_KANJI" width="256">あさせのほらあなの　なかで
-みつけた　きれいな　しお。
-ものすごく　しょっぱい。</language>
+		<language name="JPN" width="256">あさせのほらあな　という　ばしょで
+みつかる　きれいな　しお。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">あさせのほらあな　という　ばしょで
+みつかる　きれいな　しお。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_071">
-		<language name="JPN" width="256">あさせのほらあなの　なかで
-みつけた　きれいな　かいがら。
-あおと　しろの　しまもよう。</language>
-		<language name="JPN_KANJI" width="256">あさせのほらあなの　なかで
-みつけた　きれいな　かいがら。
-あおと　しろの　しまもよう。</language>
+		<language name="JPN" width="256">あさせのほらあな　という　ばしょで
+みつかる　きれいな　かいがら。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">あさせのほらあな　という　ばしょで
+みつかる　きれいな　かいがら。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_072">
@@ -982,39 +982,39 @@
 	</row>
 
 	<row id="ITEMINFO_095">
-		<language name="JPN" width="256">ふかふかのつちに　まいて　つかう。
-つちの　かわきが　はやくなるが
-きのみの　そだちも　はやくなる。</language>
-		<language name="JPN_KANJI" width="256">ふかふかのつちに　まいて　つかう。
-つちの　かわきが　はやくなるが
-きのみの　そだちも　はやくなる。</language>
+		<language name="JPN" width="256">きのみを　そだてる　ちほうでは
+ふかふかのつちに　まいて　つかう。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">きのみを　そだてる　ちほうでは
+ふかふかのつちに　まいて　つかう。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_096">
-		<language name="JPN" width="256">ふかふかのつちに　まいて　つかう。
-つちの　かわきが　おそくなるが
-きのみの　そだちも　おそくなる。</language>
-		<language name="JPN_KANJI" width="256">ふかふかのつちに　まいて　つかう。
-つちの　かわきが　おそくなるが
-きのみの　そだちも　おそくなる。</language>
+		<language name="JPN" width="256">きのみを　そだてる　ちほうでは
+ふかふかのつちに　まいて　つかう。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">きのみを　そだてる　ちほうでは
+ふかふかのつちに　まいて　つかう。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_097">
-		<language name="JPN" width="256">ふかふかのつちに　まいて　つかう。
-きのみが　おちるまでの　じかんが
-ふだんより　ながくなる。</language>
-		<language name="JPN_KANJI" width="256">ふかふかのつちに　まいて　つかう。
-きのみが　おちるまでの　じかんが
-ふだんより　ながくなる。</language>
+		<language name="JPN" width="256">きのみを　そだてる　ちほうでは
+ふかふかのつちに　まいて　つかう。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">きのみを　そだてる　ちほうでは
+ふかふかのつちに　まいて　つかう。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_098">
-		<language name="JPN" width="256">ふかふかのつちに　まいて　つかう。
-かれたあとに　あたらしい　めが
-でてくる　かいすうが　ふえる。</language>
-		<language name="JPN_KANJI" width="256">ふかふかのつちに　まいて　つかう。
-かれたあとに　あたらしい　めが
-でてくる　かいすうが　ふえる。</language>
+		<language name="JPN" width="256">きのみを　そだてる　ちほうでは
+ふかふかのつちに　まいて　つかう。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">きのみを　そだてる　ちほうでは
+ふかふかのつちに　まいて　つかう。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_099">
@@ -1171,39 +1171,39 @@
 	</row>
 
 	<row id="ITEMINFO_116">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">インセクタに　もたせると
+テクノバスターという　わざが
+みずタイプになる　カセット。</language>
+		<language name="JPN_KANJI" width="256">インセクタに　もたせると
+テクノバスターという　わざが
+みずタイプになる　カセット。</language>
 	</row>
 
 	<row id="ITEMINFO_117">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">インセクタに　もたせると
+テクノバスターという　わざが
+でんきタイプになる　カセット。</language>
+		<language name="JPN_KANJI" width="256">インセクタに　もたせると
+テクノバスターという　わざが
+でんきタイプになる　カセット。</language>
 	</row>
 
 	<row id="ITEMINFO_118">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">インセクタに　もたせると
+テクノバスターという　わざが
+ほのおタイプになる　カセット。</language>
+		<language name="JPN_KANJI" width="256">インセクタに　もたせると
+テクノバスターという　わざが
+ほのおタイプになる　カセット。</language>
 	</row>
 
 	<row id="ITEMINFO_119">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">インセクタに　もたせると
+テクノバスターという　わざが
+こおりタイプになる　カセット。</language>
+		<language name="JPN_KANJI" width="256">インセクタに　もたせると
+テクノバスターという　わざが
+こおりタイプになる　カセット。</language>
 	</row>
 
 	<row id="ITEMINFO_120">
@@ -1603,48 +1603,48 @@
 	</row>
 
 	<row id="ITEMINFO_164">
-		<language name="JPN" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
+		<language name="JPN" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_165">
-		<language name="JPN" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
+		<language name="JPN" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_166">
-		<language name="JPN" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
+		<language name="JPN" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_167">
-		<language name="JPN" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
+		<language name="JPN" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_168">
-		<language name="JPN" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
+		<language name="JPN" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_169">
@@ -1702,84 +1702,84 @@
 	</row>
 
 	<row id="ITEMINFO_175">
-		<language name="JPN" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
+		<language name="JPN" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_176">
-		<language name="JPN" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
+		<language name="JPN" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_177">
-		<language name="JPN" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
+		<language name="JPN" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_178">
-		<language name="JPN" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
+		<language name="JPN" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_179">
-		<language name="JPN" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
+		<language name="JPN" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_180">
-		<language name="JPN" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
+		<language name="JPN" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_181">
-		<language name="JPN" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
+		<language name="JPN" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_182">
-		<language name="JPN" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
+		<language name="JPN" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_183">
-		<language name="JPN" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうでは　ポフィン　という
-ポケモンに　あげる　おかしの
-ざいりょうとして　ゆうめい。</language>
+		<language name="JPN" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
+めずらしい　きのみ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_184">
@@ -4969,219 +4969,219 @@
 	</row>
 
 	<row id="ITEMINFO_538">
-		<language name="JPN" width="256">クリティカル＋２。
-
-</language>
-		<language name="JPN_KANJI" width="256">クリティカル＋２。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+こうげきが　きゅうしょに　あたる
+かくりつが　すこし　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+こうげきが　きゅうしょに　あたる
+かくりつが　すこし　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_539">
-		<language name="JPN" width="256">すばやさ＋２。
-
-</language>
-		<language name="JPN_KANJI" width="256">すばやさ＋２。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　すばやさが
+すこし　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　すばやさが
+すこし　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_540">
-		<language name="JPN" width="256">とうこう＋２。
-
-</language>
-		<language name="JPN_KANJI" width="256">とうこう＋２。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　とくこうが
+すこし　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　とくこうが
+すこし　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_541">
-		<language name="JPN" width="256">とくぼう＋２。
-
-</language>
-		<language name="JPN_KANJI" width="256">とくぼう＋２。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　とくぼうが
+すこし　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　とくぼうが
+すこし　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_542">
-		<language name="JPN" width="256">ぼうぎょ＋２。
-
-</language>
-		<language name="JPN_KANJI" width="256">ぼうぎょ＋２。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　ぼうぎょが
+すこし　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　ぼうぎょが
+すこし　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_543">
-		<language name="JPN" width="256">こうげき＋２。
-
-</language>
-		<language name="JPN_KANJI" width="256">こうげき＋２。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　こうげきが
+すこし　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　こうげきが
+すこし　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_544">
-		<language name="JPN" width="256">めいちゅう＋２。
-
-</language>
-		<language name="JPN_KANJI" width="256">めいちゅう＋２。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　こうげきの
+めいちゅうりつが　すこし　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　こうげきの
+めいちゅうりつが　すこし　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_545">
-		<language name="JPN" width="256">すばやさ＋３。
-
-</language>
-		<language name="JPN_KANJI" width="256">すばやさ＋３。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　すばやさが
+かなり　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　すばやさが
+かなり　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_546">
-		<language name="JPN" width="256">とうこう＋３。
-
-</language>
-		<language name="JPN_KANJI" width="256">とうこう＋３。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　とくこうが
+かなり　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　とくこうが
+かなり　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_547">
-		<language name="JPN" width="256">とくぼう＋３。
-
-</language>
-		<language name="JPN_KANJI" width="256">とくぼう＋３。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　とくぼうが
+かなり　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　とくぼうが
+かなり　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_548">
-		<language name="JPN" width="256">ぼうぎょ＋３。
-
-</language>
-		<language name="JPN_KANJI" width="256">ぼうぎょ＋３。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　ぼうぎょが
+かなり　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　ぼうぎょが
+かなり　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_549">
-		<language name="JPN" width="256">こうげき＋３。
-
-</language>
-		<language name="JPN_KANJI" width="256">こうげき＋３。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　こうげきが
+かなり　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　こうげきが
+かなり　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_550">
-		<language name="JPN" width="256">めいちゅう＋３。
-
-</language>
-		<language name="JPN_KANJI" width="256">めいちゅう＋３。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　こうげきの
+めいちゅうりつが　かなり　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　こうげきの
+めいちゅうりつが　かなり　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_551">
-		<language name="JPN" width="256">すばやさ＋６。
-
-</language>
-		<language name="JPN_KANJI" width="256">すばやさ＋６。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　すばやさが
+さいこうまで　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　すばやさが
+さいこうまで　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_552">
-		<language name="JPN" width="256">とうこう＋６。
-
-</language>
-		<language name="JPN_KANJI" width="256">とうこう＋６。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　とくこうが
+さいこうまで　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　とくこうが
+さいこうまで　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_553">
-		<language name="JPN" width="256">とくぼう＋６。
-
-</language>
-		<language name="JPN_KANJI" width="256">とくぼう＋６。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　とくぼうが
+さいこうまで　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　とくぼうが
+さいこうまで　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_554">
-		<language name="JPN" width="256">ぼうぎょ＋６。
-
-</language>
-		<language name="JPN_KANJI" width="256">ぼうぎょ＋６。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　ぼうぎょが
+さいこうまで　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　ぼうぎょが
+さいこうまで　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_555">
-		<language name="JPN" width="256">こうげき＋６。
-
-</language>
-		<language name="JPN_KANJI" width="256">こうげき＋６。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　こうげきが
+さいこうまで　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+ポケモンの　こうげきが
+さいこうまで　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_556">
-		<language name="JPN" width="256">めいちゅう＋６。
-
-</language>
-		<language name="JPN_KANJI" width="256">めいちゅう＋６。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+みかたポケモンの　めいちゅうりつが
+さいこうまで　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+みかたポケモンの　めいちゅうりつが
+さいこうまで　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_557">
-		<language name="JPN" width="256">とくせいを　はつどう　させる。
-
-</language>
-		<language name="JPN_KANJI" width="256">とくせいを　はつどう　させる。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+つかうと　みかたの　ポケモンの
+とくせいを　はつどう　させる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+つかうと　みかたの　ポケモンの
+とくせいを　はつどう　させる。</language>
 	</row>
 
 	<row id="ITEMINFO_558">
-		<language name="JPN" width="256">もっている　どうぐを　なくす。
-
-</language>
-		<language name="JPN_KANJI" width="256">もっている　どうぐを　なくす。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+つかうと　みかたの　ポケモンが
+もっている　どうぐを　なくす。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+つかうと　みかたの　ポケモンが
+もっている　どうぐを　なくす。</language>
 	</row>
 
 	<row id="ITEMINFO_559">
-		<language name="JPN" width="256">もっている　どうぐを　つかう。
-
-</language>
-		<language name="JPN_KANJI" width="256">もっている　どうぐを　つかう。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+つかうと　みかたの　ポケモンが
+もっている　どうぐを　つかう。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+つかうと　みかたの　ポケモンが
+もっている　どうぐを　つかう。</language>
 	</row>
 
 	<row id="ITEMINFO_560">
-		<language name="JPN" width="256">のうりょく　へんかが　もとに　もどる。
-
-</language>
-		<language name="JPN_KANJI" width="256">のうりょく　へんかが　もとに　もどる。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+つかうと　みかたの　ポケモンの
+のうりょく　へんかが　もとにもどる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+つかうと　みかたの　ポケモンの
+のうりょく　へんかが　もとにもどる。</language>
 	</row>
 
 	<row id="ITEMINFO_561">
-		<language name="JPN" width="256">クリティカル＋３。
-
-</language>
-		<language name="JPN_KANJI" width="256">クリティカル＋３。
-
-</language>
+		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
+こうげきが　きゅうしょに　あたる
+かくりつが　かなり　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+こうげきが　きゅうしょに　あたる
+かくりつが　かなり　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_562">
@@ -5484,46 +5484,46 @@
 	<row id="ITEMINFO_595">
 		<language name="JPN" width="256">きれいな　ハートの　かたちの
 とても　めずらしい　ハネ。
-</language>
+とても　うすく　かるい。</language>
 		<language name="JPN_KANJI" width="256">きれいな　ハートの　かたちの
 とても　めずらしい　ハネ。
-</language>
+とても　うすく　かるい。</language>
 	</row>
 
 	<row id="ITEMINFO_596">
-		<language name="JPN" width="256">ポケモンの　カセキ。
-
-</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　カセキ。
-
-</language>
+		<language name="JPN" width="256">おおむかし　うみに　すんでいた
+こだい　ポケモンの　カセキ。
+せなかの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">おおむかし　うみに　すんでいた
+こだい　ポケモンの　カセキ。
+せなかの　いちぶ　らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_597">
-		<language name="JPN" width="256">ポケモンの　カセキ。
-
-</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　カセキ。
-
-</language>
+		<language name="JPN" width="256">おおむかしの　そらを　とんでいた
+こだい　ポケモンの　カセキ。
+つばさの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">おおむかしの　そらを　とんでいた
+こだい　ポケモンの　カセキ。
+つばさの　いちぶ　らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_598">
-		<language name="JPN" width="256">イベントが　はっせいします。
-
-</language>
-		<language name="JPN_KANJI" width="256">イベントが　はっせいします。
-
-</language>
+		<language name="JPN" width="256">シンの　にくたいが　ほろび
+へんかした　すがた。えいゆうの
+とうじょうを　まっていると　される。</language>
+		<language name="JPN_KANJI" width="256">シンの　にくたいが　ほろび
+へんかした　すがた。えいゆうの
+とうじょうを　まっていると　される。</language>
 	</row>
 
 	<row id="ITEMINFO_599">
-		<language name="JPN" width="256">イベントが　はっせいします。
-
-</language>
-		<language name="JPN_KANJI" width="256">イベントが　はっせいします。
-
-</language>
+		<language name="JPN" width="256">ムの　にくたいが　ほろび
+へんかした　すがた。えいゆうの
+とうじょうを　まっていると　される。</language>
+		<language name="JPN_KANJI" width="256">ムの　にくたいが　ほろび
+へんかした　すがた。えいゆうの
+とうじょうを　まっていると　される。</language>
 	</row>
 
 	<row id="ITEMINFO_600">
@@ -5617,30 +5617,30 @@
 	</row>
 
 	<row id="ITEMINFO_610">
-		<language name="JPN" width="256">イベントが　はっせいします。
+		<language name="JPN" width="256">まぼろしの　いし。
 
 </language>
-		<language name="JPN_KANJI" width="256">イベントが　はっせいします。
+		<language name="JPN_KANJI" width="256">まぼろしの　いし。
 
 </language>
 	</row>
 
 	<row id="ITEMINFO_611">
-		<language name="JPN" width="256">イベントが　はっせいします。
-
-</language>
-		<language name="JPN_KANJI" width="256">イベントが　はっせいします。
-
-</language>
+		<language name="JPN" width="256">リバティガーデンとうに　いくための
+とくべつな　チケット。
+ヒウンシティから　ふねに　のれる。</language>
+		<language name="JPN_KANJI" width="256">リバティガーデンとうに　いくための
+とくべつな　チケット。
+ヒウンシティから　ふねに　のれる。</language>
 	</row>
 
 	<row id="ITEMINFO_612">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">デルパワーを　はっせいさせる
+ときにつかう　イッシュの　パワーが
+とじこめられた　ふしぎな　たま。</language>
+		<language name="JPN_KANJI" width="256">デルパワーを　はっせいさせる
+ときにつかう　イッシュの　パワーが
+とじこめられた　ふしぎな　たま。</language>
 	</row>
 
 	<row id="ITEMINFO_613">
@@ -5680,21 +5680,21 @@
 	</row>
 
 	<row id="ITEMINFO_617">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">ある　とくていの　ポケモンを
+しんかさせる　ふしぎな　ウロコ。
+にじいろに　かがやいている。</language>
+		<language name="JPN_KANJI" width="256">ある　とくていの　ポケモンを
+しんかさせる　ふしぎな　ウロコ。
+にじいろに　かがやいている。</language>
 	</row>
 
 	<row id="ITEMINFO_618">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">ポケモンの　きを　ひかせる　どうぐ。
+やせいポケモンとの　せんとうから
+ぜったいに　にげられる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　きを　ひかせる　どうぐ。
+やせいポケモンとの　せんとうから
+ぜったいに　にげられる。</language>
 	</row>
 
 	<row id="ITEMINFO_619">
@@ -5752,111 +5752,111 @@
 	</row>
 
 	<row id="ITEMINFO_625">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">あたりいったいに　いい　かおりが
+ひろがる　めずらしい　キノコ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">あたりいったいに　いい　かおりが
+ひろがる　めずらしい　キノコ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_626">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">キラキラと　きんいろに　ひかる
+じゅんきんせいの　おおきな　たま。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">キラキラと　きんいろに　ひかる
+じゅんきんせいの　おおきな　たま。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_627">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">きれいな　ぎんいろに　ひかる
+とても　おおつぶの　しんじゅ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">きれいな　ぎんいろに　ひかる
+とても　おおつぶの　しんじゅ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_628">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">すいせいが　ちかづいたとき
+ちひょうに　おちた　かけら。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">すいせいが　ちかづいたとき
+ちひょうに　おちた　かけら。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_629">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">３０００ねんほど　むかしの
+ぶんめいで　つかわれた　どうか。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">３０００ねんほど　むかしの
+ぶんめいで　つかわれた　どうか。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_630">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">３０００ねんほど　むかしの
+ぶんめいで　つかわれた　ぎんか。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">３０００ねんほど　むかしの
+ぶんめいで　つかわれた　ぎんか。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_631">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">３０００ねんほど　むかしの
+ぶんめいで　つかわれた　きんか。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">３０００ねんほど　むかしの
+ぶんめいで　つかわれた　きんか。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_632">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">３０００ねんほど　むかしの
+ぶんめいで　つくられた　つぼ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">３０００ねんほど　むかしの
+ぶんめいで　つくられた　つぼ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_633">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">３０００ねんほど　むかしの
+ぶんめいで　つくられた　うでわ。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">３０００ねんほど　むかしの
+ぶんめいで　つくられた　うでわ。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_634">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">３０００ねんほど　むかしの
+ぶんめいで　つくられた　せきぞう。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">３０００ねんほど　むかしの
+ぶんめいで　つくられた　せきぞう。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_635">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">３０００ねんほど　むかしの
+ぶんめいで　つくられた　おうかん。
+マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">３０００ねんほど　むかしの
+ぶんめいで　つくられた　おうかん。
+マニアが　たかく　かってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_636">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">ヒウンシティの　めいぶつアイス。
+ポケモン　１ひきの　じょうたいの
+いじょうを　すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ヒウンシティの　めいぶつアイス。
+ポケモン　１ひきの　じょうたいの
+いじょうを　すべて　かいふくする。</language>
 	</row>
 
 	<row id="ITEMINFO_637">
