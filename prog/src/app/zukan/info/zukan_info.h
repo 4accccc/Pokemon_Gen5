@@ -185,3 +185,12 @@ extern void ZUKAN_INFO_ChangePokeAndLang(
                 BOOL             get_flag,
                 ZUKAN_INFO_LANG  lang );
 
+//-------------------------------------
+/// 何も表示しないとき用の背景のみを表示する
+//=====================================
+extern void ZUKAN_INFO_DisplayBackNone( ZUKAN_INFO_WORK* work );
+//-------------------------------------
+/// 通常の表示にする
+//=====================================
+extern void ZUKAN_INFO_DisplayNormal( ZUKAN_INFO_WORK* work );
+

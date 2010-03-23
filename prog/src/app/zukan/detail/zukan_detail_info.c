@@ -414,7 +414,10 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
                         ZKNDTL_COMMON_GetFont(cmn),
                         ZKNDTL_COMMON_GetPrintQue(cmn) );
         }
-      
+     
+        // 直ちに何も表示しないとき用の背景のみを表示する
+        ZUKAN_INFO_DisplayBackNone( work->info_wk_s );
+
         // 言語ボタンの表示非表示切り替え
         {
           Zukan_Detail_Info_SetupLangButtonDrawEnable( param, work, cmn,
@@ -429,6 +432,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
 
       // フェード
       ZKNDTL_COMMON_FadeSetBlackToColorless( work->fade_wk_m );
+      ZKNDTL_COMMON_FadeSetBlackToColorless( work->fade_wk_s );  // 何も表示しないとき用の背景のみを表示するモードを用意したので
       
       // タッチバー
       if( ZUKAN_DETAIL_TOUCHBAR_GetState( touchbar ) != ZUKAN_DETAIL_TOUCHBAR_STATE_APPEAR )
@@ -471,10 +475,11 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
         {
           ZKNDTL_COMMON_FadeSetColorlessToBlack( work->fade_wk_m );
 
-          if( ZKNDTL_COMMON_FadeIsColorless( work->fade_wk_s ) )
-          {
-            ZKNDTL_COMMON_FadeSetColorlessToBlack( work->fade_wk_s );
-          }
+          //if( ZKNDTL_COMMON_FadeIsColorless( work->fade_wk_s ) )
+          //{
+          //  ZKNDTL_COMMON_FadeSetColorlessToBlack( work->fade_wk_s );
+          //}
+          ZKNDTL_COMMON_FadeSetColorlessToBlack( work->fade_wk_s );  // 何も表示しないとき用の背景のみを表示するモードを用意したので
         } 
         
         // タイトルバー
@@ -707,8 +712,10 @@ static void Zukan_Detail_Info_ChangePoke( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
     {
       ZUKAN_INFO_ChangePoke( work->info_wk_s, monsno, formno, sex, rare, personal_rnd, b_get_flag );
 
-      // 直ちに黒にする
-      ZKNDTL_COMMON_FadeSetBlackImmediately( ZKNDTL_COMMON_FADE_DISP_S, work->fade_wk_s );
+      //// 直ちに黒にする
+      //ZKNDTL_COMMON_FadeSetBlackImmediately( ZKNDTL_COMMON_FADE_DISP_S, work->fade_wk_s );
+      // 直ちに何も表示しないとき用の背景のみを表示する
+      ZUKAN_INFO_DisplayBackNone( work->info_wk_s );
     }
     else
     {
@@ -735,8 +742,10 @@ static void Zukan_Detail_Info_ChangeLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
 
   if( work->lang == ZUKAN_INFO_LANG_NONE )
   {
-    // 直ちに見えるようにする
-    ZKNDTL_COMMON_FadeSetColorlessImmediately( ZKNDTL_COMMON_FADE_DISP_S, work->fade_wk_s );
+    //// 直ちに見えるようにする
+    //ZKNDTL_COMMON_FadeSetColorlessImmediately( ZKNDTL_COMMON_FADE_DISP_S, work->fade_wk_s );
+    // 直ちに通常の表示にする
+    ZUKAN_INFO_DisplayNormal( work->info_wk_s );
   }
 
   work->lang = lang;

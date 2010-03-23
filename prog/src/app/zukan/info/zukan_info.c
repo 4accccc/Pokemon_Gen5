@@ -66,13 +66,15 @@ enum
 {
   ZUKAN_INFO_BG_PAL_NUM_FORE_BACK    =  3,
   ZUKAN_INFO_BG_PAL_NUM_MSG          =  1,
+  ZUKAN_INFO_BG_PAL_NUM_BACK_NONE    =  2,  // 何も表示しないとき用の背景
 };
 // 位置
 enum
 {
   ZUKAN_INFO_BG_PAL_POS_FORE_BACK    = 0,
   ZUKAN_INFO_BG_PAL_POS_MSG          = ZUKAN_INFO_BG_PAL_POS_FORE_BACK   + ZUKAN_INFO_BG_PAL_NUM_FORE_BACK   ,  // 3
-  ZUKAN_INFO_BG_PAL_POS_MAX          = ZUKAN_INFO_BG_PAL_POS_MSG         + ZUKAN_INFO_BG_PAL_NUM_MSG         ,  // 4  // ここから空き
+  ZUKAN_INFO_BG_PAL_POS_BACK_NONE    = ZUKAN_INFO_BG_PAL_POS_MSG         + ZUKAN_INFO_BG_PAL_NUM_MSG         ,  // 4
+  ZUKAN_INFO_BG_PAL_POS_MAX          = ZUKAN_INFO_BG_PAL_POS_BACK_NONE   + ZUKAN_INFO_BG_PAL_NUM_BACK_NONE   ,  // 6  // ここから空き
 };
 
 // OBJパレット
@@ -219,7 +221,12 @@ struct _ZUKAN_INFO_WORK
   GFL_ARCUTIL_TRANSINFO     back_bg_chara_info;    ///< backのBGキャラ領域
   u8                        fore_bg_update;        ///< foreのBG更新ビットフラグ
   u8                        back_bg_update;        ///< backのBG更新ビットフラグ
- 
+
+  // 何も表示しないとき用の背景
+  GFL_ARCUTIL_TRANSINFO     back_none_bg_chara_info;    // 何も表示しないとき用の背景のBGキャラ領域
+  BOOL                      back_none_bg_need_free;     // 読み込んでいたらTRUE
+  BOOL                      back_none_bg_display_mode;  // 何も表示しないとき用の背景のみを表示しているモードのときTRUE
+
   PALTYPE    bg_paltype;
   u8         msg_bg_frame;
   u8         fore_bg_frame;
@@ -309,6 +316,10 @@ static void Zukan_Info_CreateOthers( ZUKAN_INFO_WORK* work );
 
 // パレットアニメーション
 static void Zukan_Info_UpdatePaletteAnime( ZUKAN_INFO_WORK* work );
+
+// 全OBJの表示/非表示を設定する
+void ZUKAN_INFO_SetDrawEnableAllObj( ZUKAN_INFO_WORK* work, BOOL on_off );
+
 
 //=============================================================================
 /**
@@ -508,6 +519,61 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
     GFL_ARC_CloseDataHandle( handle );
   }
 
+  // 背景の加工
+  {
+    // 初期化
+    work->back_none_bg_need_free = FALSE;
+    work->back_none_bg_display_mode = FALSE;
+    
+    if( work->launch == ZUKAN_INFO_LAUNCH_LIST && work->disp == ZUKAN_INFO_DISP_S )
+    {
+      // ポケモンずかん　とうろく　かんりょう！
+      // の場所を消す
+      GFL_BG_FillScreen( work->fore_bg_frame, 0, 0, 0, 32, 3, GFL_BG_SCRWRT_PALIN );
+
+      // 背景を追加する
+      {
+        // 何も表示しないとき用の背景
+        ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, work->heap_id );
+
+        GFL_ARCHDL_UTIL_TransVramPaletteEx(
+            handle,
+            NARC_zukan_gra_info_info_bgu_NCLR,
+            work->bg_paltype,
+            0 * 0x20,
+            ZUKAN_INFO_BG_PAL_POS_BACK_NONE * 0x20,
+            ZUKAN_INFO_BG_PAL_NUM_BACK_NONE * 0x20,
+            work->heap_id );
+
+        work->back_none_bg_chara_info = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan(
+                                            handle,
+                                            NARC_zukan_gra_info_info_bgu_NCGR,
+                                            work->back_bg_frame,
+                                            32 * 8 * GFL_BG_1CHRDATASIZ,
+                                            FALSE,
+                                            work->heap_id );
+        GF_ASSERT_MSG( work->back_none_bg_chara_info != GFL_ARCUTIL_TRANSINFO_FAIL, "ZUKAN_INFO : BGキャラ領域が足りませんでした。\n" );
+
+        work->back_none_bg_need_free = TRUE;
+
+        GFL_ARCHDL_UTIL_TransVramScreenCharOfs(
+            handle,
+            NARC_zukan_gra_info_infobase_bgu_NSCR,
+            work->back_bg_frame,
+            32 * 32,
+            GFL_ARCUTIL_TRANSINFO_GetPos( work->back_none_bg_chara_info ),
+            32 * 32 * GFL_BG_1SCRDATASIZ,
+            FALSE,
+            work->heap_id );
+
+        GFL_BG_ChangeScreenPalette( work->back_bg_frame, 0,    32, 32, 21, ZUKAN_INFO_BG_PAL_POS_BACK_NONE    );
+        GFL_BG_ChangeScreenPalette( work->back_bg_frame, 0, 32+21, 32,  3, ZUKAN_INFO_BG_PAL_POS_BACK_NONE +1 );
+
+        GFL_ARC_CloseDataHandle( handle );
+      }
+    }
+  }
+
   // パレットアニメーション
   {
     NNSG2dPaletteData* pal_data;
@@ -604,6 +670,13 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
 //-----------------------------------------------------------------------------
 void ZUKAN_INFO_Exit( ZUKAN_INFO_WORK* work )
 {
+  // 何も表示しないとき用の背景
+  {
+    // 何も表示しないとき用の背景から通常の表示にしておく
+    ZUKAN_INFO_DisplayNormal( work );
+    work->back_none_bg_display_mode = FALSE;
+  }
+
   // ポケモン2D
   Zukan_Info_Poke2dDeleteCLWK( work );
   Zukan_Info_Poke2dUnloadResourceObj( work );
@@ -622,6 +695,14 @@ void ZUKAN_INFO_Exit( ZUKAN_INFO_WORK* work )
 
   // 読み込んだリソースの破棄
   {
+    // 何も表示しないとき用の背景
+    if( work->back_none_bg_need_free )
+    {
+      GFL_BG_FreeCharacterArea( work->back_bg_frame, GFL_ARCUTIL_TRANSINFO_GetPos( work->back_none_bg_chara_info ),
+                                GFL_ARCUTIL_TRANSINFO_GetSize( work->back_none_bg_chara_info ) );
+      work->back_none_bg_need_free = FALSE;
+    }
+
     // back
     GFL_BG_FreeCharacterArea( work->back_bg_frame, GFL_ARCUTIL_TRANSINFO_GetPos( work->back_bg_chara_info ),
                               GFL_ARCUTIL_TRANSINFO_GetSize( work->back_bg_chara_info ) );
@@ -899,6 +980,9 @@ void ZUKAN_INFO_ChangePoke(
     Zukan_Info_Poke2dLoadResourceObj( work );
     Zukan_Info_Poke2dCreateCLWK( work, pos_x, (u16)( pos_y + work->y_offset ) );
   }
+
+  // 全OBJの表示/非表示を設定する
+  ZUKAN_INFO_SetDrawEnableAllObj( work, !work->back_none_bg_display_mode );
 }
 
 //-------------------------------------
@@ -929,6 +1013,48 @@ void ZUKAN_INFO_ChangePokeAndLang(
 {
   ZUKAN_INFO_ChangePoke( work, monsno, formno, sex, rare, personal_rnd, get_flag );
   ZUKAN_INFO_ChangeLang( work, lang );
+}
+
+//-------------------------------------
+/// 何も表示しないとき用の背景のみを表示する
+//=====================================
+void ZUKAN_INFO_DisplayBackNone( ZUKAN_INFO_WORK* work )
+{
+  u8 i;
+  
+  if( work->back_none_bg_display_mode ) return;  // 既に、何も表示しないとき用の背景のみを表示している
+
+  work->back_none_bg_display_mode = TRUE;
+
+  // BG
+  GFL_BG_SetVisible( work->msg_bg_frame,  VISIBLE_OFF );
+  GFL_BG_SetVisible( work->fore_bg_frame, VISIBLE_OFF );
+
+  GFL_BG_SetScrollReq( work->back_bg_frame, GFL_BG_SCROLL_Y_SET, -32*8 );
+
+  // 全OBJの表示/非表示を設定する
+  ZUKAN_INFO_SetDrawEnableAllObj( work, !work->back_none_bg_display_mode );
+}
+
+//-------------------------------------
+/// 通常の表示にする
+//=====================================
+void ZUKAN_INFO_DisplayNormal( ZUKAN_INFO_WORK* work )
+{
+  u8 i;
+  
+  if( !(work->back_none_bg_display_mode) ) return;  // 既に、通常の表示
+
+  work->back_none_bg_display_mode = FALSE;
+  
+  // BG
+  GFL_BG_SetVisible( work->msg_bg_frame,  VISIBLE_ON );
+  GFL_BG_SetVisible( work->fore_bg_frame, VISIBLE_ON );
+
+  GFL_BG_SetScrollReq( work->back_bg_frame, GFL_BG_SCROLL_Y_SET, - work->y_offset );
+
+  // 全OBJの表示/非表示を設定する
+  ZUKAN_INFO_SetDrawEnableAllObj( work, !work->back_none_bg_display_mode );
 }
 
 
@@ -1047,16 +1173,26 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
 
     for( i=0; i<ZUKAN_INFO_MSG_MAX; i++ )
     {
-      // bmpwinのビットマップを透明色で塗り潰しておいたほうがいい？
+      // bmpwinのビットマップを透明色で塗り潰しておいたほうがいい？→GFL_BMP_Clearすることにした
       work->bmpwin[i] = GFL_BMPWIN_Create( work->msg_bg_frame,
                                            pos_siz[i][0], pos_siz[i][1], pos_siz[i][2], pos_siz[i][3],
                                            ZUKAN_INFO_BG_PAL_POS_MSG, GFL_BMP_CHRAREA_GET_B );
+      // クリア
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->bmpwin[i] ), 0 );
     }
 
-    // ポケモンずかん　とうろく　かんりょう！
-    Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_TOROKU], msgdata_common,
-                        work->print_que, work->font,
-                        ZKN_POKEGET_00, 0, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_CENTER, NULL );
+    if( work->launch == ZUKAN_INFO_LAUNCH_LIST && work->disp == ZUKAN_INFO_DISP_S )
+    {
+      // ポケモンずかん　とうろく　かんりょう！
+      // の場所に何も書かないようにする
+    }
+    else
+    {
+      // ポケモンずかん　とうろく　かんりょう！
+      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_TOROKU], msgdata_common,
+                          work->print_que, work->font,
+                          ZKN_POKEGET_00, 0, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_CENTER, NULL );
+    }
 
     // 025(ポケモンの番号)
     {
@@ -1100,7 +1236,7 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
     // 例：かたい　きのみも　でんげきで
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_EXPLAIN], msgdata_explain, work->print_que, work->font,
                         ZKN_COMMENT_00_000_000 + work->monsno, 4, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
-    
+
     for( i=0; i<ZUKAN_INFO_MSG_MAX; i++ )
     {
       GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpwin[i] );
@@ -1155,16 +1291,26 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
 
     for( i=0; i<ZUKAN_INFO_MSG_MAX; i++ )
     {
-      // bmpwinのビットマップを透明色で塗り潰しておいたほうがいい？
+      // bmpwinのビットマップを透明色で塗り潰しておいたほうがいい？→GFL_BMP_Clearすることにした
       work->bmpwin[i] = GFL_BMPWIN_Create( work->msg_bg_frame,
                                            pos_siz[i][0], pos_siz[i][1], pos_siz[i][2], pos_siz[i][3],
                                            ZUKAN_INFO_BG_PAL_POS_MSG, GFL_BMP_CHRAREA_GET_B );
+      // クリア
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->bmpwin[i] ), 0 );
     }
 
-    // ポケモンずかん　とうろく　かんりょう！
-    Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_TOROKU], msgdata_common,
-                        work->print_que, work->font,
-                        ZKN_POKEGET_00, 0, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_CENTER, NULL );
+    if( work->launch == ZUKAN_INFO_LAUNCH_LIST && work->disp == ZUKAN_INFO_DISP_S )
+    {
+      // ポケモンずかん　とうろく　かんりょう！
+      // の場所に何も書かないようにする
+    }
+    else
+    {
+      // ポケモンずかん　とうろく　かんりょう！
+      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_TOROKU], msgdata_common,
+                          work->print_que, work->font,
+                          ZKN_POKEGET_00, 0, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_CENTER, NULL );
+    }
 
     // 025(ポケモンの番号)
     {
@@ -1576,3 +1722,26 @@ static void Zukan_Info_UpdatePaletteAnime( ZUKAN_INFO_WORK* work )
   }
 }
 
+//-------------------------------------
+/// 全OBJの表示/非表示を設定する
+//=====================================
+void ZUKAN_INFO_SetDrawEnableAllObj( ZUKAN_INFO_WORK* work, BOOL on_off )
+{
+  u8 i;
+
+  // ポケモン2D
+  GFL_CLACT_WK_SetDrawEnable( work->clwk_poke2d, on_off );
+  
+  // タイプアイコン
+  GFL_CLACT_WK_SetDrawEnable( work->clwk_pokefoot, on_off );
+ 
+  // ポケモンの足跡
+  for( i=0; i<2; i++ )
+  {
+    if( work->typeicon_cg_idx[i] == GFL_CLGRP_REGISTER_FAILED )
+    {
+      continue;
+    }
+    GFL_CLACT_WK_SetDrawEnable( work->typeicon_clwk[i], on_off );
+  }
+}
