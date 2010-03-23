@@ -277,7 +277,7 @@ void DEBUG_GDSRAP_SendVideoProfileFreeWordSet(GDS_RAP_WORK *gdsrap, u16 *set_cod
  *
  * @param   gdsrap		
  * @param   monsno			ポケモン番号(指定なし：BATTLE_REC_SEARCH_MONSNO_NONE)
- * @param   battle_mode_no	検索施設(GDS_BATTLE_MODE_NO)
+ * @param   search_mode_no	検索施設(BATTLEMODE_SEARCH_NO)
  * @param   country_code	国コード(指定なし：BATTLE_REC_SEARCH_COUNTRY_CODE_NONE)
  * @param   local_code		地方コード(指定なし：BATTLE_REC_SEARCH_LOCAL_CODE_NONE)
  *
@@ -285,18 +285,18 @@ void DEBUG_GDSRAP_SendVideoProfileFreeWordSet(GDS_RAP_WORK *gdsrap, u16 *set_cod
  * @retval  FALSE：受け付けられなかった
  */
 //--------------------------------------------------------------
-int GDSRAP_Tool_Send_BattleVideoSearchDownload(GDS_RAP_WORK *gdsrap, u16 monsno, GDS_BATTLE_MODE_NO battle_mode_no, u8 country_code, u8 local_code)
+int GDSRAP_Tool_Send_BattleVideoSearchDownload(GDS_RAP_WORK *gdsrap, u16 monsno, BATTLEMODE_SEARCH_NO search_mode_no, u8 country_code, u8 local_code)
 {
 	if(GDSRAP_MoveStatusAllCheck(gdsrap) == FALSE){
 		return FALSE;
 	}
   
-  GF_ASSERT(battle_mode_no < NELEMS(BattleModeBitTbl));
+  GF_ASSERT(search_mode_no < NELEMS(BattleModeBitTbl));
   
 	GFL_STD_MemClear(&gdsrap->send_buf.battle_rec_search, sizeof(BATTLE_REC_SEARCH_SEND));
 	gdsrap->send_buf.battle_rec_search.monsno = monsno;
-	gdsrap->send_buf.battle_rec_search.battle_mode = BattleModeBitTbl[battle_mode_no].mode;
-	gdsrap->send_buf.battle_rec_search.battle_mode_bit_mask = BattleModeBitTbl[battle_mode_no].bit_mask;
+	gdsrap->send_buf.battle_rec_search.battle_mode = BattleModeBitTbl[search_mode_no].mode;
+	gdsrap->send_buf.battle_rec_search.battle_mode_bit_mask = BattleModeBitTbl[search_mode_no].bit_mask;
 	gdsrap->send_buf.battle_rec_search.country_code = country_code;
 	gdsrap->send_buf.battle_rec_search.local_code = local_code;
 	gdsrap->send_buf.battle_rec_search.server_version = BTL_NET_SERVER_VERSION;

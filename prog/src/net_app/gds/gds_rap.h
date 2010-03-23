@@ -52,26 +52,26 @@ enum{
 
 ///バトルモードNo   ※BattleModeBitTblと並びを同じにしておくこと！！
 typedef enum{
-  BATTLE_MODE_NO_COLOSSEUM_SINGLE_NOSHOOTER,    ///<コロシアム シングル シューター無し
-  BATTLE_MODE_NO_COLOSSEUM_SINGLE_SHOOTER,      ///<コロシアム シングル シューターあり
-  BATTLE_MODE_NO_COLOSSEUM_DOUBLE_NOSHOOTER,    ///<コロシアム ダブル シューター無し
-  BATTLE_MODE_NO_COLOSSEUM_DOUBLE_SHOOTER,      ///<コロシアム ダブル シューターあり
-  BATTLE_MODE_NO_COLOSSEUM_TRIPLE_NOSHOOTER,    ///<コロシアム トリプル シューター無し
-  BATTLE_MODE_NO_COLOSSEUM_TRIPLE_SHOOTER,      ///<コロシアム トリプル シューターあり
-  BATTLE_MODE_NO_COLOSSEUM_ROTATION_NOSHOOTER,  ///<コロシアム ローテーション シューター無し
-  BATTLE_MODE_NO_COLOSSEUM_ROTATION_SHOOTER,    ///<コロシアム ローテーション シューターあり
-  BATTLE_MODE_NO_COLOSSEUM_MULTI_NOSHOOTER,     ///<コロシアム マルチ シューター無し
-  BATTLE_MODE_NO_COLOSSEUM_MULTI_SHOOTER,       ///<コロシアム マルチ シューターあり
-  BATTLE_MODE_NO_SUBWAY_SINGLE,                 ///<地下鉄 シングル
-  BATTLE_MODE_NO_SUBWAY_DOUBLE,                 ///<地下鉄 ダブル
-  BATTLE_MODE_NO_SUBWAY_MULTI,                  ///<地下鉄 マルチ
-  BATTLE_MODE_NO_RANDOM_SINGLE,                 ///<ランダムマッチ シングル
-  BATTLE_MODE_NO_RANDOM_DOUBLE,                 ///<ランダムマッチ ダブル
-  BATTLE_MODE_NO_RANDOM_TRIPLE,                 ///<ランダムマッチ トリプル
-  BATTLE_MODE_NO_RANDOM_ROTATION,               ///<ランダムマッチ ローテーション
-  BATTLE_MODE_NO_RANDOM_SHOOTER,                ///<ランダムマッチ シューターバトル
-  BATTLE_MODE_NO_CONTEST,                       ///<バトル大会
-}GDS_BATTLE_MODE_NO;
+  BATTLEMODE_SEARCH_NO_COLOSSEUM_SINGLE_NOSHOOTER,    ///<コロシアム シングル シューター無し
+  BATTLEMODE_SEARCH_NO_COLOSSEUM_SINGLE_SHOOTER,      ///<コロシアム シングル シューターあり
+  BATTLEMODE_SEARCH_NO_COLOSSEUM_DOUBLE_NOSHOOTER,    ///<コロシアム ダブル シューター無し
+  BATTLEMODE_SEARCH_NO_COLOSSEUM_DOUBLE_SHOOTER,      ///<コロシアム ダブル シューターあり
+  BATTLEMODE_SEARCH_NO_COLOSSEUM_TRIPLE_NOSHOOTER,    ///<コロシアム トリプル シューター無し
+  BATTLEMODE_SEARCH_NO_COLOSSEUM_TRIPLE_SHOOTER,      ///<コロシアム トリプル シューターあり
+  BATTLEMODE_SEARCH_NO_COLOSSEUM_ROTATION_NOSHOOTER,  ///<コロシアム ローテーション シューター無し
+  BATTLEMODE_SEARCH_NO_COLOSSEUM_ROTATION_SHOOTER,    ///<コロシアム ローテーション シューターあり
+  BATTLEMODE_SEARCH_NO_COLOSSEUM_MULTI_NOSHOOTER,     ///<コロシアム マルチ シューター無し
+  BATTLEMODE_SEARCH_NO_COLOSSEUM_MULTI_SHOOTER,       ///<コロシアム マルチ シューターあり
+  BATTLEMODE_SEARCH_NO_SUBWAY_SINGLE,                 ///<地下鉄 シングル
+  BATTLEMODE_SEARCH_NO_SUBWAY_DOUBLE,                 ///<地下鉄 ダブル
+  BATTLEMODE_SEARCH_NO_SUBWAY_MULTI,                  ///<地下鉄 マルチ
+  BATTLEMODE_SEARCH_NO_RANDOM_SINGLE,                 ///<ランダムマッチ シングル
+  BATTLEMODE_SEARCH_NO_RANDOM_DOUBLE,                 ///<ランダムマッチ ダブル
+  BATTLEMODE_SEARCH_NO_RANDOM_TRIPLE,                 ///<ランダムマッチ トリプル
+  BATTLEMODE_SEARCH_NO_RANDOM_ROTATION,               ///<ランダムマッチ ローテーション
+  BATTLEMODE_SEARCH_NO_RANDOM_SHOOTER,                ///<ランダムマッチ シューターバトル
+  BATTLEMODE_SEARCH_NO_CONTEST,                       ///<バトル大会
+}BATTLEMODE_SEARCH_NO;
 
 
 //==============================================================================
@@ -238,7 +238,7 @@ extern void GDSRAP_Exit(GDS_RAP_WORK *gdsrap);
 extern int GDSRAP_Tool_Send_MusicalShotUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp, const MUSICAL_SHOT_DATA *musshot);
 extern int GDSRAP_Tool_Send_MusicalShotDownload(GDS_RAP_WORK *gdsrap, int monsno);
 extern int GDSRAP_Tool_Send_BattleVideoUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp);
-extern int GDSRAP_Tool_Send_BattleVideoSearchDownload(GDS_RAP_WORK *gdsrap, u16 monsno, GDS_BATTLE_MODE_NO battle_mode_no, u8 country_code, u8 local_code);
+extern int GDSRAP_Tool_Send_BattleVideoSearchDownload(GDS_RAP_WORK *gdsrap, u16 monsno, BATTLEMODE_SEARCH_NO battle_mode_no, u8 country_code, u8 local_code);
 extern int GDSRAP_Tool_Send_BattleVideoNewDownload(GDS_RAP_WORK *gdsrap);
 extern int GDSRAP_Tool_Send_BattleVideoSubwayDownload(GDS_RAP_WORK *gdsrap);
 extern int GDSRAP_Tool_Send_BattleVideoCommDownload(GDS_RAP_WORK *gdsrap);

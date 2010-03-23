@@ -3400,8 +3400,6 @@ static GMEVENT_RESULT debugMenuGDS( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 
       gds_param = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(GDSPROC_PARAM));
       gds_param->gamedata = GAMESYSTEM_GetGameData(p_gds->gsys);
-      gds_param->savedata = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(p_gds->gsys));
-      gds_param->connect = 0;
       gds_param->gds_mode = 0;
 
       GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_gds->gsys, p_gds->fieldWork,
