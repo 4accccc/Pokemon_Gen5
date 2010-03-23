@@ -1351,6 +1351,15 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
   //バーアイコン処理
   if( isActive == FALSE )
   {
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE1] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE2] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE3] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_CHECK] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_CURSOR_UP] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_CURSOR_DOWN] , FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_EXIT] , FALSE );
+    
+/*
     if( work->page != PPT_INFO )
     {
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE1] , SBA_PAGE1_OFF );
@@ -1377,14 +1386,11 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
     {
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT_OFF );
     }
-    //技モードではリターン暗くならない
-    if( work->psData->mode != PST_MODE_WAZAADD )
-    {
-//    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_OFF );
-    }
+*/
   }
   else
   {
+/*
     if( work->page != PPT_INFO )
     {
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_PAGE1] , SBA_PAGE1_NORMAL );
@@ -1413,6 +1419,20 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_EXIT] , APP_COMMON_BARICON_EXIT );
     }
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN );
+*/
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE1] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE2] , TRUE );
+    if( work->isHaveRibbon == TRUE )
+    {
+      GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE3] , TRUE );
+    }
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_CHECK] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_CURSOR_UP] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_CURSOR_DOWN] , TRUE );
+    if( PSTATUS_UTIL_CanUseExitButton(work) == TRUE )
+    {
+      GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_EXIT] , TRUE );
+    }
   }
 }
 
