@@ -155,9 +155,10 @@ void BeaconDetail_InitialDraw( BEACON_DETAIL_WORK* wk )
 int BeaconDetail_InputCheck( BEACON_DETAIL_WORK* wk )
 {
   TOUCHBAR_ICON icon = TOUCHBAR_GetTrg( wk->touchbar );
-	
-  if( icon == TOUCHBAR_ICON_RETURN || icon == TOUCHBAR_ICON_CLOSE ){
-    wk->param->ret_mode = ( icon == TOUCHBAR_ICON_CLOSE );
+  int trg = GFL_UI_KEY_GetTrg();
+  
+  if( icon == TOUCHBAR_ICON_RETURN ){
+    wk->param->ret_mode = 0;  //1にするとCギアトップに直接戻れる。が、×がなくなったのでこのモードでは戻らないことになった10.03.20
     return SEQ_FADEOUT;
   }
   if( icon == TOUCHBAR_ICON_CUR_U && wk->list_top > 0 ){
@@ -170,7 +171,7 @@ int BeaconDetail_InputCheck( BEACON_DETAIL_WORK* wk )
   }
 
   //キャラアイコンあたり判定
-  if( input_CheckHitTrIcon(wk) ){
+  if( input_CheckHitTrIcon(wk) || (trg & PAD_BUTTON_A)){
     sub_PlaySE( BDETAIL_SE_DECIDE );
     effReq_PopupMsg( wk );
     return SEQ_EFF_WAIT; 

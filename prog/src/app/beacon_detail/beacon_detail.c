@@ -611,16 +611,12 @@ static TOUCHBAR_WORK * _sub_TouchBarInit( GFL_CLUNIT *clunit, HEAPID heapID )
 			{	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
 		},
 		{	
-			TOUCHBAR_ICON_CLOSE,
+	    TOUCHBAR_ICON_CUR_D,	//↓ボタン
 			{	TOUCHBAR_ICON_X_06, TOUCHBAR_ICON_Y },
 		},
 		{	
-	    TOUCHBAR_ICON_CUR_D,	//↓ボタン
-			{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y },
-		},
-		{	
 	    TOUCHBAR_ICON_CUR_U,	//↓ボタン
-			{	TOUCHBAR_ICON_X_04, TOUCHBAR_ICON_Y },
+			{	TOUCHBAR_ICON_X_05, TOUCHBAR_ICON_Y },
 		},
 	};
 
