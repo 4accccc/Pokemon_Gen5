@@ -2195,13 +2195,15 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
 static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
 		GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 {
-	VecFx32 front_pos;
   int idx;
-
+	VecFx32 front_pos;
+  
   setFrontPos(req, &front_pos);
-
-  //ギミックが割り当てられているかを調べて、ジムソースのオーバレイがなされていることを確認する
-  if ( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_GYM_INSECT) ){
+  
+  //ギミックが割り当てられているかを調べて、
+  //ジムソースのオーバレイがなされていることを確認する
+  if ( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_GYM_INSECT) )
+  {
     //虫ジム
     int x,z;
     x =front_pos.x / FIELD_CONST_GRID_FX32_SIZE;
@@ -2212,36 +2214,67 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
   //D06電気洞窟
   if( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_D06R0101) ||
       FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_D06R0201) ||
-      FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_D06R0301) ){
+      FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_D06R0301) )
+  {
     return( D06_GIMMICK_CheckPushEvent(fieldWork,req->player_dir) );
   }
-#if 1
-  {
-		FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(fieldWork);
-    MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( MAPATTR_GetAttribute(g3Dmapper, &front_pos) );
-    //MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( MAPATTR_GetAttribute(g3Dmapper, &now_pos) );
-    if (!(flag & MAPATTR_FLAGBIT_HITCH))
+  
+  { //進入禁止アトリビュートがあるか
+    FLDMAPPER *g3Dmapper = FIELDMAP_GetFieldG3Dmapper(fieldWork);
+    MAPATTR attr = MAPATTR_GetAttribute( g3Dmapper, &front_pos );
+    MAPATTR_FLAG attr_flag =  MAPATTR_GetAttrFlag( attr );
+    
+    if( !(attr_flag & MAPATTR_FLAGBIT_HITCH) )
     {
-      return NULL;
+      return NULL; //前方進入禁止アトリビュート無し
     }
-  }
-#endif
-
-  //目の前チェック
-  idx = getConnectID(req, &front_pos);
-  if (idx == EXIT_ID_NONE) {
+    
+    { //波乗り状態での滝下りチェック
+      PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( req->field_player );
+      
+      if( form == PLAYER_MOVE_FORM_SWIM )
+      {
+        MAPATTR_VALUE attr_value = MAPATTR_GetAttrValue( attr );
+        
+        if( MAPATTR_VALUE_CheckWaterFall(attr_value) == TRUE )
+        {
+          fx32 t_height;
+          VecFx32 t_pos = front_pos;
+          MMDL *mmdl = FIELD_PLAYER_GetMMdl( req->field_player );
+          MMDL_TOOL_AddDirVector( req->player_dir, &t_pos, GRID_FX32 );
+          
+          if( MMDL_GetMapPosHeight(mmdl,&t_pos,&t_height) == TRUE )
+          {
+            if( front_pos.y > t_height ) //下りなら滝下りイベント
+            {
+              return SCRIPT_SetEventScript(
+                  req->gsys, SCRID_HIDEN_TAKIKUDARI, NULL, req->heapID );
+            }
+          }
+        }
+      }
+    }
+    
     //壁の場合、電気ジムかを調べる
-    //ギミックが割り当てられているかを調べて、ジムソースのオーバレイがなされていることを確認する
-    if ( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_GYM_ELEC) ){  
-      //電気ジム
-      return GYM_ELEC_CreateMoveEvt(gsys);
-    }else if( FLDGMK_GimmickCodeCheck(fieldWork, FLD_GIMMICK_GYM_FLY) ){
-      //飛行ジム
-      return GYM_FLY_CreateShotEvt(gsys);
+    //ギミックが割り当てられているかを調べて、
+    //ジムソースのオーバレイがなされていることを確認する
+    {
+      idx = getConnectID(req, &front_pos);
+      
+      if( idx == EXIT_ID_NONE )
+      {
+        if( FLDGMK_GimmickCodeCheck(fieldWork,FLD_GIMMICK_GYM_ELEC) )
+        { //電気ジム
+          return GYM_ELEC_CreateMoveEvt(gsys);
+        }
+        else if( FLDGMK_GimmickCodeCheck(fieldWork,FLD_GIMMICK_GYM_FLY) )
+        { //飛行ジム
+          return GYM_FLY_CreateShotEvt(gsys);
+        }
+      }
     }
-    return NULL;
   }
-
+  
   return NULL;
 }
 

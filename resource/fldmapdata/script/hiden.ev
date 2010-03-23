@@ -36,6 +36,7 @@ _EVENT_DATA ev_hiden_diving
 _EVENT_DATA ev_hiden_diving_menu
 _EVENT_DATA ev_hiden_seatemple_2f
 _EVENT_DATA ev_hiden_seatemple_3f
+_EVENT_DATA ev_hiden_takikudari
 _EVENT_DATA_END
 
 
@@ -395,6 +396,10 @@ EVENT_START ev_hiden_takinobori_menu
 //	_FNOTE_DATA_MAKE	FNOTE_ID_TAKINOBORI,SCWK_TEMP0,0,0,0
 EVENT_END
 
+//たきくだり
+EVENT_START ev_hiden_takikudari
+	_TAKINOBORI( 0 ) //引数　ポケモンNoだったが現在使われていない
+EVENT_END
 
 /**************************************************************/
 /*							フラッシュ								*/

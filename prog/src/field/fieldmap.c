@@ -796,15 +796,24 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       PLAYER_WORK *pw = GAMESYSTEM_GetMyPlayerWork(gsys);
       const u16 dir = PLAYERWORK_getDirection_Type( pw );
       const VecFx32 *pos = &pw->position;
-
+      
       //Ž©‹@ì¬
       {
-        MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
-        int sex = MyStatus_GetMySex( mystatus );
-        fieldWork->field_player = FIELD_PLAYER_Create(
-            pw, fieldWork, pos, sex, fieldWork->heapID );
+        //Ž©“]ŽÔ‹ÖŽ~‚ÈêŠ‚Å‚ ‚ê‚ÎŽ–‘O‚ÉŽ©“]ŽÔŒ`‘Ô‚ð‰ðœ
+        if( PLAYERWORK_GetMoveForm(pw) == PLAYER_MOVE_FORM_CYCLE ){
+          if( ZONEDATA_BicycleEnable(fieldWork->map_id) == FALSE ){
+            PLAYERWORK_SetMoveForm(pw,PLAYER_MOVE_FORM_NORMAL);
+          }
+        }
+        
+        {
+          MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
+          int sex = MyStatus_GetMySex( mystatus );
+          fieldWork->field_player = FIELD_PLAYER_Create(
+              pw, fieldWork, pos, sex, fieldWork->heapID );
+        }
       }
-
+      
       //“o˜^ƒe[ƒuƒ‹‚²‚Æ‚ÉŒÂ•Ê‚Ì‰Šú‰»ˆ—‚ðŒÄ‚Ño‚µ
       fieldWork->now_pos = *pos;
       fieldWork->func_tbl->create_func(fieldWork, &fieldWork->now_pos, dir);

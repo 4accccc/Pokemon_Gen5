@@ -174,14 +174,14 @@ FIELD_PLAYER_CORE * FIELD_PLAYER_CORE_Create(
     
     if( fixcode == OBJCODEMAX )
     {
-      head.obj_code = FIELD_PLAYER_GetMoveFormToOBJCode(
-          sex, PLAYER_MOVE_FORM_NORMAL ); 
+      PLAYER_MOVE_FORM form = FIELD_PLAYER_CORE_GetMoveForm( player_core );
+      head.obj_code = FIELD_PLAYER_GetMoveFormToOBJCode( sex, form );
     }
     else
     {
       head.obj_code = fixcode;
     }
-
+    
 		player_core->fldmmdl = MMDLSYS_AddMMdl( fmmdlsys, &head, 0 );
 	}
 	else //•œ‹A

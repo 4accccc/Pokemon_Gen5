@@ -130,7 +130,7 @@ static void splash_InitResource( FLDEFF_SPLASH *splash )
   FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
       &head, NARC_fldeff_shibuki_nsbtp );
   
-  splash->res_idx_splash = 
+  splash->res_idx_shoal = 
       FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
 
   FLD_G3DOBJ_RES_HEADER_Init( &head );
@@ -140,7 +140,7 @@ static void splash_InitResource( FLDEFF_SPLASH *splash )
   FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx(
       &head, NARC_fldeff_shibuki02_nsbtp );
   
-  splash->res_idx_shoal = 
+  splash->res_idx_splash = 
       FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
 }
 
@@ -217,7 +217,7 @@ static void splashTask_Init( FLDEFF_TASK *task, void *wk )
       FLD_G3DOBJ_CTRL *obj_ctrl =
         FLDEFF_CTRL_GetFldG3dOBJCtrl( splash->fectrl );
       u16 idx = splash->res_idx_splash;
-
+      
       if( work->head.joint == TRUE ){
         idx = splash->res_idx_shoal;
       }
