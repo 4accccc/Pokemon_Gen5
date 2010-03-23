@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-14T15:38:00"/>
+	<create user="matsumiya" host="W00224" date="2010-03-23T15:28:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,14 +312,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1492" top="422" right="2197" bottom="1042" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -367,17 +367,17 @@
 
 	<row id="msg_menu01">
 		<language name="JPN" font=" 1:small">メールを　よむ</language>
-		<language name="JPN_KANJI" font=" 1:small">メールを　よむ</language>
+		<language name="JPN_KANJI" font=" 1:small">メールを読む</language>
 	</row>
 
 	<row id="msg_menu02">
 		<language name="JPN" font=" 1:small">メールを　けす</language>
-		<language name="JPN_KANJI" font=" 1:small">メールを　けす</language>
+		<language name="JPN_KANJI" font=" 1:small">メールを消す</language>
 	</row>
 
 	<row id="msg_menu03">
 		<language name="JPN" font=" 1:small">もたせる</language>
-		<language name="JPN_KANJI" font=" 1:small">もたせる</language>
+		<language name="JPN_KANJI" font=" 1:small">持たせる</language>
 	</row>
 
 	<row id="msg_menu04">
@@ -394,33 +394,33 @@
 
 	<row id="msg_message02">
 		<language name="JPN" font=" 1:small">ないようは　きえて　しまいますが
-よろしい　ですか？</language>
-		<language name="JPN_KANJI" font=" 1:small">ないようは　きえて　しまいますが
-よろしい　ですか？</language>
+よろしいですか？</language>
+		<language name="JPN_KANJI" font=" 1:small">内容は　消えてしまいますが
+よろしいですか？</language>
 	</row>
 
 	<row id="msg_message03">
 		<language name="JPN" font=" 1:small">ないようを　けしました</language>
-		<language name="JPN_KANJI" font=" 1:small">ないようを　けしました</language>
+		<language name="JPN_KANJI" font=" 1:small">内容を　消しました</language>
 	</row>
 
 	<row id="msg_message04">
 		<language name="JPN" font=" 1:small">ポケモンに　もたせますか？</language>
-		<language name="JPN_KANJI" font=" 1:small">ポケモンに　もたせますか？</language>
+		<language name="JPN_KANJI" font=" 1:small">ポケモンに　持たせますか？</language>
 	</row>
 
 	<row id="msg_message05">
 		<language name="JPN" font=" 1:small">ないようを　けした　メールを
 バッグに　しまいました</language>
-		<language name="JPN_KANJI" font=" 1:small">ないようを　けした　メールを
+		<language name="JPN_KANJI" font=" 1:small">内容を　消した　メールを
 バッグに　しまいました</language>
 	</row>
 
 	<row id="msg_message06">
 		<language name="JPN" font=" 1:small">バッグが　いっぱいです……
 メールを　すてました</language>
-		<language name="JPN_KANJI" font=" 1:small">バッグが　いっぱいです……
-メールを　すてました</language>
+		<language name="JPN_KANJI" font=" 1:small">バッグが　一杯です……
+メールを　捨てました</language>
 	</row>
 
 	<row id="msg_mailbox_yes">
