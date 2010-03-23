@@ -10,12 +10,12 @@
   .text
 
   .include  "scr_seq_def.h"
-  .include  "palace02_def.h"
+  .include  "symbol_encount_scr_def.h"
 
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
-_FIELD_INIT_LABEL		SCRID_INIT_PALACE02
+_FIELD_INIT_LABEL     SCRID_INIT_SYMBOL_ENCOUNT
 _SP_EVENT_DATA_END
 
 
