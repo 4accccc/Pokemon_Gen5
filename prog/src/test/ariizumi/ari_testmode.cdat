@@ -50,6 +50,7 @@ static BOOL TESTMODE_ITEM_SelectFuncShot( TESTMODE_WORK *work , const int idx )
 #include "multiboot/mb_select_sys.h"
 #include "multiboot/mb_capture_sys.h"
 #include "net_app/comm_tvt_sys.h"
+#include "net_app/cg_help.h"
 FS_EXTERN_OVERLAY(pmsinput);
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
@@ -72,6 +73,7 @@ static BOOL TESTMODE_ITEM_SelectDebLocalTvt( TESTMODE_WORK *work , const int idx
 static BOOL TESTMODE_ITEM_SelectDebMultiBoot( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebMultiBootBox( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectDebMultiBootCapture( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectDebCGHelp( TESTMODE_WORK *work , const int idx );
 
 static TESTMODE_MENU_LIST menuAriizumi[] = 
 {
@@ -82,11 +84,12 @@ static TESTMODE_MENU_LIST menuAriizumi[] =
 #if USE_MUSICAL_EDIT
 	{L"ミュージカルデバッグ"	,TESTMODE_ITEM_SelectMusicalEditor },
 #endif //USE_MUSICAL_EDIT
-	{L"テスト"	        ,TESTMODE_ITEM_SelectDebDebugAriizumi },
-	{L"友達手帳"				,TESTMODE_ITEM_SelectDebWifiNote },
-	{L"数値入力"			  ,TESTMODE_ITEM_SelectDebCodeIn },
-	{L"かんい文入力"			,TESTMODE_ITEM_SelectDebPmsInput },
-	{L"LocalTVT"			,TESTMODE_ITEM_SelectDebLocalTvt },
+	{L"テスト"	      ,TESTMODE_ITEM_SelectDebDebugAriizumi },
+	{L"友達手帳"			,TESTMODE_ITEM_SelectDebWifiNote },
+	{L"数値入力"			,TESTMODE_ITEM_SelectDebCodeIn },
+	{L"かんい文入力"	,TESTMODE_ITEM_SelectDebPmsInput },
+	{L"LocalTVT"			,TESTMODE_ITEM_SelectDebCGHelp },
+	{L"CG_HELP"	      ,TESTMODE_ITEM_SelectDebCGHelp },
 	{L"MB_BOX"	      ,TESTMODE_ITEM_SelectDebMultiBootBox },
 	{L"MB_CAP"	      ,TESTMODE_ITEM_SelectDebMultiBootCapture },
 	{L"マルチブート"	,TESTMODE_ITEM_SelectDebMultiBoot },
@@ -152,6 +155,11 @@ static BOOL TESTMODE_ITEM_SelectDebCameraTest( TESTMODE_WORK *work , const int i
 static BOOL TESTMODE_ITEM_SelectDebLocalTvt( TESTMODE_WORK *work , const int idx )
 {
   TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(local_tvt), &LocalTvt_ProcData, NULL);
+  return TRUE;
+}
+static BOOL TESTMODE_ITEM_SelectDebCGHelp( TESTMODE_WORK *work , const int idx )
+{
+  TESTMODE_COMMAND_ChangeProc(work,FS_OVERLAY_ID(cg_help), &CGearHelp_ProcData, NULL);
   return TRUE;
 }
 

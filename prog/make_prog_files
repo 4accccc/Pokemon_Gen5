@@ -1355,6 +1355,11 @@ SRCS_OVERLAY_GAMESYNC   = net_app/gsync/gsync_menu.c \
 									net_app/gsync/gsync_state.c
 
 
+# CGEAR HELP
+#===> SRCS_OVERLAY_DPW_COMMON
+SRCS_OVERLAY_CG_HELP   = net_app/cg_help/cg_help.c
+
+
 # PokemonDreamWorld ACCOUNT“o˜^
 #===> SRCS_OVERLAY_DPW_COMMON
 SRCS_OVERLAY_PDW_ACC   = net_app/pdw_account/pdwacc_message.c \
