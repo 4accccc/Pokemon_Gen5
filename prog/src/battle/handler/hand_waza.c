@@ -8716,17 +8716,17 @@ static void handler_HeavyBomber( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
 
-    int weight_diff = BPP_GetWeight(bpp) - BPP_GetWeight(target);
+    int weight_ratio = BPP_GetWeight(bpp) / BPP_GetWeight(target);
     u32 pow;
 
     // ‘ŠŽè‚æ‚èd‚¢‚Ù‚ÇˆÐ—Í‚ª‚‚¢
-    if( weight_diff >= 200 ){
+    if( weight_ratio >= 5 ){
       pow = 120;
-    }else if( weight_diff >= 150 ){
+    }else if( weight_ratio == 4 ){
       pow = 100;
-    }else if( weight_diff >= 100 ){
+    }else if( weight_ratio == 3 ){
       pow = 80;
-    }else if( weight_diff >= 50 ){
+    }else if( weight_ratio == 2 ){
       pow = 60;
     }else{
       pow = 40;
