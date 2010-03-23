@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-12T14:42:33"/>
+	<create user="matsumiya" host="W00224" date="2010-03-23T11:55:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="842" top="288" right="1547" bottom="908" maximized="no" rayout="Vertical2">
+	<dialog left="1701" top="202" right="2139" bottom="822" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="532" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="445"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
+		<band id="2" index="2" style="0000" width="263"/>
+		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1028,8 +1028,8 @@
 ※ネゴでは、ウエイト60フレーム</comment>
 		<language name="JPN" width="256">あいてに　さしだすポケモンを
 ３ひき　えらんでください</language>
-		<language name="JPN_KANJI" width="256">相手に差し出すポケモンを
-３匹選んでください</language>
+		<language name="JPN_KANJI" width="256">相手に　差し出す　ポケモンを
+３匹　選んでください</language>
 	</row>
 
 	<row id="gtsnego_info_02" back-color="#ffff80,,,#80ff80,,,,,,,,,,,,,,">
@@ -1038,7 +1038,7 @@
 はい・いいえ</comment>
 		<language name="JPN" width="256">あいてに　さしだすポケモンは
 これで　いいですか？</language>
-		<language name="JPN_KANJI" width="256">相手に差し出すポケモンは
+		<language name="JPN_KANJI" width="256">相手に　差し出す　ポケモンは
 これで　いいですか？</language>
 	</row>
 
@@ -1050,8 +1050,8 @@
 </comment>
 		<language name="JPN" width="256">あいての　せんたくを　まっています
 しばらく　おまちください……</language>
-		<language name="JPN_KANJI" width="256">相手の選択を待っています
-しばらくお待ちください……</language>
+		<language name="JPN_KANJI" width="256">相手の　選択を　待っています
+しばらく　お待ちください……</language>
 	</row>
 
 	<row id="gtsnego_info_04" back-color="#ffff80,,,#80ff80,,,,,,,,,,,,,,">
@@ -1059,7 +1059,7 @@
 相手と自分の選択が終わり、最終判断
 はい・いいえ</comment>
 		<language name="JPN" width="256">これらのポケモンで　こうかんを
-かいしします　よろしいですか？</language>
+かいししても　よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">これらのポケモンで　交換を開始します
 よろしいですか？</language>
 	</row>
@@ -1071,7 +1071,7 @@
 ※ネゴでは、ウエイト60フレーム</comment>
 		<language name="JPN" width="256">あいてが　こうかんを
 キャンセルしました</language>
-		<language name="JPN_KANJI" width="256">相手が交換を
+		<language name="JPN_KANJI" width="256">相手が　交換を
 キャンセルしました</language>
 	</row>
 
@@ -1088,8 +1088,8 @@
 		<comment>「BOXからさしだす画面」
 交換を終了する場合
 はい・いいえ</comment>
-		<language name="JPN" width="256">こうかんを　しゅうりょう
-しますか？</language>
+		<language name="JPN" width="256">こうかんを
+しゅうりょう　しますか？</language>
 		<language name="JPN_KANJI" width="256">交換を終了しますか？</language>
 	</row>
 
@@ -1098,7 +1098,8 @@
 「BOXからさしだす画面」
 交換を終了した場合
 ※ネゴでは、ウエイト60フレーム</comment>
-		<language name="JPN" width="256">こうかんを　しゅうりょう　しました</language>
+		<language name="JPN" width="256">こうかんを
+しゅうりょう　しました</language>
 		<language name="JPN_KANJI" width="256">交換を終了しました</language>
 	</row>
 
@@ -1143,7 +1144,7 @@
 		<language name="JPN" width="256">ほしいポケモンを　あいてのポケモンから
 １ひき　えらんでください</language>
 		<language name="JPN_KANJI" width="256">欲しいポケモンを　相手のポケモンから
-１匹選んでください</language>
+１匹　選んでください</language>
 	</row>
 
 	<row id="gtsnego_info_13" back-color="#ffff00,,,#80ff80,,,,,,,,,,,,,,">
@@ -1162,7 +1163,7 @@
 ※ネゴでは、ウエイト60フレームずつ</comment>
 		<language name="JPN" width="256">あいてが　こうかんを　キャンセルしました
 もういちど　えらびなおしてください</language>
-		<language name="JPN_KANJI" width="256">相手が交換をキャンセルしました
+		<language name="JPN_KANJI" width="256">相手が　交換を　キャンセルしました
 もう一度　選び直してください</language>
 	</row>
 
@@ -1182,7 +1183,7 @@
 ※ネゴでは、ウエイト60フレームずつ</comment>
 		<language name="JPN" width="256">こうかんを　キャンセルしました
 もういちど　えらびなおしてください</language>
-		<language name="JPN_KANJI" width="256">交換をキャンセルしました
+		<language name="JPN_KANJI" width="256">交換を　キャンセルしました
 もう一度　選び直してください</language>
 	</row>
 
@@ -1194,8 +1195,8 @@
 ※ネゴでは、ウエイト60フレーム</comment>
 		<language name="JPN" width="256">こうかんを　キャンセルしました
 もういちど　１ひき　えらびなおしてください</language>
-		<language name="JPN_KANJI" width="256">交換をキャンセルしました
-もう一度　１匹選び直してください</language>
+		<language name="JPN_KANJI" width="256">交換を　キャンセルしました
+もう一度　１匹　選び直してください</language>
 	</row>
 
 	<row id="gtsnego_info_18" back-color="#ffff00,,,#ff8080,,,,,,,,,,,,,,">
@@ -1206,8 +1207,8 @@
 ※ネゴでは、ウエイト60フレーム</comment>
 		<language name="JPN" width="256">あいてが　こうかんを　キャンセルしました
 もういちど　１ひき　えらびなおしてください</language>
-		<language name="JPN_KANJI" width="256">相手が交換をキャンセルしました
-もう一度　１匹選び直してください</language>
+		<language name="JPN_KANJI" width="256">相手が　交換を　キャンセルしました
+もう一度　１匹　選び直してください</language>
 	</row>
 
 	<flowchart-group-list>
