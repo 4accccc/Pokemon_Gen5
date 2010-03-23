@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/25 23:38:03
+#save date:2010/03/23 22:22:40
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d06r0201.wms
 #SECTION START:OBJ_EVENT
@@ -111,7 +111,7 @@ TR_HAKAIW1_08
 #OBJ CODE Number
 HAKAIW
 #MOVE CODE Number
-MV_DIR_RND
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -152,9 +152,9 @@ SCRID_TRID_HAKAIW1_07
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
-3
+2
 #Parameter 1 Number
-1
+0
 #Parameter 2 Number
 0
 #Move Limit X Number
@@ -204,7 +204,7 @@ TR_HAKAIM1_18
 #OBJ CODE Number
 HAKAIM
 #MOVE CODE Number
-MV_DMY
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -235,7 +235,7 @@ TR_HAKAIM1_19
 #OBJ CODE Number
 HAKAIM
 #MOVE CODE Number
-MV_DMY
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -266,7 +266,7 @@ TR_HAKAIM1_20
 #OBJ CODE Number
 HAKAIM
 #MOVE CODE Number
-MV_DIR_RND
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
