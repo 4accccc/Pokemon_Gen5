@@ -123,3 +123,54 @@ void SymbolSave_Field_Move_KeepToFree(SYMBOL_SAVE_WORK *symbol_save, u32 keep_no
   }
   symbol_save->symbol_poke[end - 1].monsno = 0;
 }
+
+//==================================================================
+/**
+ * シンボルポケモンの移動
+ *
+ * @param   symbol_save
+ * @param   no          移動対象ポケモンの配置No.
+ *
+ * 配置No.から現在のゾーンタイプを自動判別し、適切な移動を行う
+ */
+//==================================================================
+BOOL SymbolSave_Field_MoveAuto( SYMBOL_SAVE_WORK *symbol_save, u32 no )
+{
+  BOOL result = FALSE;
+  switch ( SYMBOLZONE_GetZoneTypeFromNumber( no ) )
+  {
+  case SYMBOL_ZONE_TYPE_KEEP_LARGE:
+    //キープゾーン（大）→フリーゾーン（大）
+    if(SymbolSave_CheckFreeZoneSpace(symbol_save, SYMBOL_ZONE_TYPE_FREE_LARGE) != SYMBOL_SPACE_NONE) {
+      SymbolSave_Field_Move_KeepToFree( symbol_save, no );
+      result = TRUE;
+    }
+    break;
+  case SYMBOL_ZONE_TYPE_KEEP_SMALL:
+    //キープゾーン（小）→フリーゾーン（小）
+    if(SymbolSave_CheckFreeZoneSpace(symbol_save, SYMBOL_ZONE_TYPE_FREE_SMALL) != SYMBOL_SPACE_NONE) {
+      SymbolSave_Field_Move_KeepToFree( symbol_save, no );
+      result = TRUE;
+    }
+    break;
+  case SYMBOL_ZONE_TYPE_FREE_LARGE:
+    //フリーゾーン（大）→キープゾーン（大）
+    if(SymbolSave_Field_CheckKeepZoneSpace(symbol_save, SYMBOL_ZONE_TYPE_KEEP_LARGE)
+        != SYMBOL_SPACE_NONE) {
+      SymbolSave_Field_Move_FreeToKeep( symbol_save, no );
+      result = TRUE;
+    }
+    break;
+  case SYMBOL_ZONE_TYPE_FREE_SMALL:
+    //フリーゾーン（小）→キープゾーン（小）
+    if(SymbolSave_Field_CheckKeepZoneSpace(symbol_save, SYMBOL_ZONE_TYPE_KEEP_SMALL)
+        != SYMBOL_SPACE_NONE) {
+      SymbolSave_Field_Move_FreeToKeep( symbol_save, no );
+      result = TRUE;
+    }
+    break;
+  default: GF_ASSERT( 0 );
+  }
+  return result;
+}
+
