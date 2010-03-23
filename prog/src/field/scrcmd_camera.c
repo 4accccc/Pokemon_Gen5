@@ -48,12 +48,13 @@ typedef struct CAM_SHAKE_WORK_tag
 {
   s16 Width;
   s16 Height;
-  u16 Time;
   u16 SubW;
   u16 SubH;
   u16 SubStartTime;
   u16 SubMargineCount;
   u16 SubMargine;
+  u8  TimeMax;
+  u8  Time;
 
   u32 Sync;
   u32 NowSync;
@@ -394,6 +395,7 @@ VMCMD_RESULT EvCmdCamera_Shake( VMHANDLE *core, void *wk )
     wk->Height = height;
     wk->Sync = sync;
     wk->Time = time;
+    wk->TimeMax = time;
     wk->NowSync = 0;
     wk->SubW = subW;
     wk->SubH = subH;
@@ -539,7 +541,7 @@ static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* work )
 
       if ( wk->SubStartTime != 0)
       {
-        if ( wk->Time <= wk->SubStartTime )
+        if ( wk->TimeMax-wk->Time >= wk->SubStartTime )
         {
           wk->SubMargineCount++;
           if (wk->SubMargineCount>=wk->SubMargine)
@@ -623,6 +625,7 @@ void DEBUG_CreateCamShakeEvt(GAMESYS_WORK *gsys, u16 width, u16 height, u16 sync
     wk->Height = height;
     wk->Sync = sync;
     wk->Time = time;
+    wk->TimeMax = time;
     wk->NowSync = 0;
     wk->SubW = swidth;
     wk->SubH = sheight;
