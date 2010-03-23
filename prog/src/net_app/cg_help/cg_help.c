@@ -22,6 +22,7 @@
 
 #include "arc_def.h"
 #include "cg_comm.naix"
+#include "c_gear.naix"
 #include "message.naix"
 #include "font/font.naix"
 #include "msg/msg_cg_help.h"
@@ -38,9 +39,10 @@
 #define CG_HELP_FRAME_BG1  (GFL_BG_FRAME2_S)
 #define CG_HELP_FRAME_BG2  (GFL_BG_FRAME3_S)
 
+#define CG_HELP_PLT_MAIN_ICONBASE (10)  
 #define CG_HELP_PLT_MAIN_TASKMENU (11)  //2本
-#define CG_HELP_PLT_MAIN_MSGWIN (13)
-#define CG_HELP_PLT_MAIN_FONT   (14)
+#define CG_HELP_PLT_MAIN_MSGWIN (13)    //2本
+#define CG_HELP_PLT_MAIN_FONT   (15)
 #define CG_HELP_MSGWIN_CGX    (1)
 
 #define CG_HELP_PAGE_MAX  (7)
@@ -56,6 +58,15 @@ typedef enum
   CHS_FADEOUT_WAIT,
   CHS_MAIN,
 }CG_HELP_STATE;
+
+typedef enum
+{
+  CHCR_CGEAR_PLT,
+  CHCR_CGEAR_NCG,
+  CHCR_CGEAR_ANM,
+  
+  CHCR_MAX
+}CG_HELP_CELL_RES;
 
 //======================================================================
 //	typedef struct
@@ -75,14 +86,20 @@ typedef struct
   BOOL            isUpdateMsg;
   GFL_BMPWIN      *msgWin;
   GFL_BMPWIN      *infoWin;
+  GFL_BMPWIN      *iconWin;
   GFL_FONT        *fontHandle;
   GFL_MSGDATA     *msgHandle;
   PRINT_QUE       *printQue;
   APP_TASKMENU_RES  *takmenures;
   APP_TASKMENU_WIN_WORK *nextButton;
   APP_TASKMENU_WIN_WORK *endButton;
+  
+  void *commIconPltRes;
+  NNSG2dPaletteData *commIconPlt;
 
   GFL_CLUNIT  *cellUnit;
+  u32         cellResIdx[CHCR_MAX];
+  GFL_CLWK    *clwkIcon;
 
 }CG_HELP_WORK;
 
@@ -107,6 +124,7 @@ static void CG_HELP_TermMessage( CG_HELP_WORK *work );
 static void CG_HELP_UpdateUI( CG_HELP_WORK *work );
 
 static void CG_HELP_DispPage( CG_HELP_WORK *work , const u8 page);
+static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page);
 
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_A,             // メイン2DエンジンのBG
@@ -119,8 +137,8 @@ static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
   GX_VRAM_TEX_NONE,             // テクスチャイメージスロット
   GX_VRAM_TEXPLTT_NONE,         // テクスチャパレットスロット
-  GX_OBJVRAMMODE_CHAR_1D_128K,
-  GX_OBJVRAMMODE_CHAR_1D_128K
+  GX_OBJVRAMMODE_CHAR_1D_32K,
+  GX_OBJVRAMMODE_CHAR_1D_32K
 };
 
 //--------------------------------------------------------------
@@ -209,6 +227,7 @@ static const BOOL CG_HELP_Main( CG_HELP_WORK *work )
       GFL_BMPWIN_TransVramCharacter( work->msgWin );
       GFL_BMPWIN_TransVramCharacter( work->infoWin );
       work->isUpdateMsg = FALSE;
+      CG_HELP_DispPageIcon( work , work->page );
       if( work->page == CG_HELP_PAGE_MAX-1 )
       {
         APP_TASKMENU_WIN_Delete( work->nextButton );
@@ -356,20 +375,63 @@ static void CG_HELP_LoadResource( CG_HELP_WORK *work )
                     CG_HELP_FRAME_BG2 , 0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_cg_comm_comm_base_NSCR , 
                     CG_HELP_FRAME_BG2 ,  0 , 0, FALSE , work->heapId );
-  
+
   GFL_ARC_CloseDataHandle( arcHandle );
   
   //OBJ
   {
-    arcHandle = GFL_ARC_OpenDataHandle( ARCID_CG_COMM , work->heapId );
+    arcHandle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR , work->heapId );
 
+    if( MyStatus_GetMySex( work->initWork->myStatus ) == PM_MALE )
+    {
+      work->cellResIdx[CHCR_CGEAR_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , 
+            NARC_c_gear_c_gear_obj_NCLR , CLSYS_DRAW_SUB , 
+            0 , 0 , 15 , work->heapId  );
+    }
+    else
+    {
+      work->cellResIdx[CHCR_CGEAR_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , 
+            NARC_c_gear_c_gear2_obj_NCLR , CLSYS_DRAW_SUB , 
+            0 , 0 , 15 , work->heapId  );
+    }
+    work->cellResIdx[CHCR_CGEAR_NCG] = GFL_CLGRP_CGR_Register( arcHandle , 
+          NARC_c_gear_c_gear_obj_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
+    work->cellResIdx[CHCR_CGEAR_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
+          NARC_c_gear_c_gear_obj_NCER , NARC_c_gear_c_gear_obj_NANR, work->heapId  );
+    
+    //通信マーク用背景キャラ
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_c_gear_c_gear_NCGR ,
+                      CG_HELP_FRAME_ICON , 0 , 0, FALSE , work->heapId );
+    work->commIconPltRes = GFL_ARCHDL_UTIL_LoadPalette( arcHandle , NARC_c_gear_c_gear_NCLR , &work->commIconPlt , work->heapId );
     GFL_ARC_CloseDataHandle( arcHandle );
+  }
+  //OBJ初期化
+  {
+    GFL_CLWK_DATA cellInitData;
+    cellInitData.pos_x = 4*8;
+    cellInitData.pos_y = 6*8;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+  
+    work->clwkIcon = GFL_CLACT_WK_Create( work->cellUnit ,
+              work->cellResIdx[CHCR_CGEAR_PLT],
+              work->cellResIdx[CHCR_CGEAR_NCG],
+              work->cellResIdx[CHCR_CGEAR_ANM],
+              &cellInitData ,CLSYS_DRAW_SUB , work->heapId );
+
+    GFL_CLACT_WK_SetDrawEnable( work->clwkIcon , FALSE );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkIcon , TRUE );
   }
 }
 
 static void CG_HELP_ReleaseResource( CG_HELP_WORK *work )
 {
-
+  GFL_HEAP_FreeMemory( work->commIconPltRes );
+  GFL_CLACT_WK_Remove( work->clwkIcon );
+  GFL_CLGRP_PLTT_Release( work->cellResIdx[CHCR_CGEAR_PLT] );
+  GFL_CLGRP_CGR_Release( work->cellResIdx[CHCR_CGEAR_NCG] );
+  GFL_CLGRP_CELLANIM_Release( work->cellResIdx[CHCR_CGEAR_ANM] );
 }
 
 static void CG_HELP_InitMessage( CG_HELP_WORK *work )
@@ -381,17 +443,28 @@ static void CG_HELP_InitMessage( CG_HELP_WORK *work )
   work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_cg_help_dat , work->heapId );
 
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , CG_HELP_PLT_MAIN_FONT*0x20, 16*2, work->heapId );
+  
+  //BmpWin パレットを2本で読み直す
   BmpWinFrame_GraphicSet( CG_HELP_FRAME_MSG , CG_HELP_MSGWIN_CGX , CG_HELP_PLT_MAIN_MSGWIN , 0 , work->heapId );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FLDMAP_WINFRAME , BmpWinFrame_WinPalArcGet( 0 ) , PALTYPE_SUB_BG , CG_HELP_PLT_MAIN_MSGWIN*0x20 , 16*2*2 , work->heapId );
+
   GFL_FONTSYS_SetDefaultColor();
   
   work->printQue = PRINTSYS_QUE_Create( work->heapId );
   work->takmenures  = APP_TASKMENU_RES_Create( CG_HELP_FRAME_ICON, CG_HELP_PLT_MAIN_TASKMENU, work->fontHandle, work->printQue, work->heapId );
 
   //説明Win
-  work->infoWin = GFL_BMPWIN_Create( CG_HELP_FRAME_MSG , 
+  work->iconWin = GFL_BMPWIN_Create( CG_HELP_FRAME_MSG , 
                                     2 , 
                                     4 ,
-                                    28 , 
+                                    10 , 
+                                    4 , 
+                                    1 , //黒色を使うため
+                                    GFL_BMP_CHRAREA_GET_B );
+  work->infoWin = GFL_BMPWIN_Create( CG_HELP_FRAME_MSG , 
+                                    14 , 
+                                    4 ,
+                                    16 , 
                                     4 , 
                                     CG_HELP_PLT_MAIN_FONT ,
                                     GFL_BMP_CHRAREA_GET_B );
@@ -403,14 +476,20 @@ static void CG_HELP_InitMessage( CG_HELP_WORK *work )
                                     CG_HELP_PLT_MAIN_FONT ,
                                     GFL_BMP_CHRAREA_GET_B );
   
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->iconWin ) , 1 );
+  GFL_BMPWIN_TransVramCharacter( work->iconWin );
+  GFL_BMPWIN_MakeScreen( work->iconWin );
+  BmpWinFrame_Write( work->iconWin , WINDOW_TRANS_ON_V , CG_HELP_MSGWIN_CGX , CG_HELP_PLT_MAIN_MSGWIN+1 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->infoWin ) , 0x0f );
   GFL_BMPWIN_TransVramCharacter( work->infoWin );
   GFL_BMPWIN_MakeScreen( work->infoWin );
   BmpWinFrame_Write( work->infoWin , WINDOW_TRANS_ON_V , CG_HELP_MSGWIN_CGX , CG_HELP_PLT_MAIN_MSGWIN );
+
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0x0 );
   GFL_BMPWIN_TransVramCharacter( work->msgWin );
   GFL_BMPWIN_MakeScreen( work->msgWin );
   GFL_BG_LoadScreenReq(CG_HELP_FRAME_MSG);
+  GFL_BG_LoadScreenReq(CG_HELP_FRAME_ICON);
   
   work->isUpdateMsg = FALSE;
   
@@ -443,6 +522,7 @@ static void CG_HELP_TermMessage( CG_HELP_WORK *work )
   PRINTSYS_QUE_Delete( work->printQue );
   GFL_BMPWIN_Delete( work->msgWin );
   GFL_BMPWIN_Delete( work->infoWin );
+  GFL_BMPWIN_Delete( work->iconWin );
   GFL_MSG_Delete( work->msgHandle );
   GFL_FONT_Delete( work->fontHandle );
 }
@@ -490,15 +570,71 @@ static void CG_HELP_DispPage( CG_HELP_WORK *work , const u8 page)
   
   str = GFL_MSG_CreateString( work->msgHandle , CG_HELP_INFO_01 + page );
   PRINTSYS_PrintQue( work->printQue , GFL_BMPWIN_GetBmp( work->infoWin ) , 
-          0 , 0 , str , work->fontHandle );
+          0 , 8 , str , work->fontHandle );
   GFL_STR_DeleteBuffer( str );
 
   str = GFL_MSG_CreateString( work->msgHandle , CG_HELP_MSG_01 + page );
-  PRINTSYS_PrintQue( work->printQue , GFL_BMPWIN_GetBmp( work->msgWin ) , 
-          0 , 0 , str , work->fontHandle );
+  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( work->msgWin ) , 
+          0 , 0 , str , work->fontHandle , PRINTSYS_MACRO_LSB(0xf, 2, 0) );
   GFL_STR_DeleteBuffer( str );
 
   work->isUpdateMsg = TRUE;
+}
+
+static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
+{
+  static const anmArr[CG_HELP_PAGE_MAX] = {8,9,10,0,17,14,38};
+  GFL_CLACT_WK_SetAnmSeq( work->clwkIcon , anmArr[page] );
+  GFL_CLACT_WK_SetDrawEnable( work->clwkIcon , TRUE );
+  
+  //BMP設定
+  if( page <= 2 )
+  {
+    void *transBase = (void*)((u32)work->commIconPlt->pRawData + 32*(1+page));
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
+                                        CG_HELP_PLT_MAIN_ICONBASE * 32 ,
+                                        transBase , 32 );
+    {
+      u8 x,y;
+      u16 *transBuf = GFL_HEAP_AllocClearMemory( work->heapId , 2*4*4 );
+      for( y=0;y<4;y++ )
+      {
+        for( x=0;x<4;x++ )
+        {
+          transBuf[y*4+x] = 0x0c+x + 0x20*y + (CG_HELP_PLT_MAIN_ICONBASE<<12);
+        }
+      }
+      
+      GFL_BG_WriteScreen( CG_HELP_FRAME_ICON , transBuf , 2 , 4 , 4 , 4 );
+      GFL_HEAP_FreeMemory( transBuf );
+    }
+  }
+  else
+  {
+    u16 *transBuf = GFL_HEAP_AllocClearMemory( work->heapId , 2*4*4 );
+    GFL_BG_WriteScreen( CG_HELP_FRAME_ICON , transBuf , 2 , 4 , 4 , 4 );
+    GFL_HEAP_FreeMemory( transBuf );
+  }
+  GFL_BG_LoadScreenReq(CG_HELP_FRAME_ICON);
+
+  //特殊なセル設定
+  if( page == 5 )
+  {
+    //設定
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkIcon , FALSE );
+    GFL_CLACT_WK_SetAnmIndex( work->clwkIcon , 0 );
+  }
+  else
+  if( page == 6 )
+  {
+    //HELP
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkIcon , FALSE );
+    GFL_CLACT_WK_SetAnmIndex( work->clwkIcon , 0 );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetAutoAnmFlag( work->clwkIcon , TRUE );
+  }
 }
 
 #pragma mark [>proc func
