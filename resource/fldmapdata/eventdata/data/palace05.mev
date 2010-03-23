@@ -1,10 +1,10 @@
 #event data
-#save date:2009/10/13 21:30:10
+#save date:2010/03/21 18:59:54
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\palace05.wms
 #SECTION START:OBJ_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -14,7 +14,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\palace05.wms
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
@@ -24,17 +24,51 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\palace05.wms
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
 #hold event number:
+2
+#event number: 0
+#Pos Event Label
+POS_PALACE05_ENT_DOWN
+#Pos Script Name
+SCRID_POS_SYMBOLMAP_ENTRANCE_DOWN
+#Pos Check Type
+POS_CHECK_TYPE_DOWN
+#Event Trigger Work Name
+WK_OTHER_SYMMAP_POS
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 -136
+#size
+2 1
+#event number: 1
+#Pos Event Label
+POS_PALACE05_ENT_LEFT
+#Pos Script Name
+SCRID_POS_SYMBOLMAP_ENTRANCE_LEFT
+#Pos Check Type
+POS_CHECK_TYPE_LEFT
+#Event Trigger Work Name
+WK_OTHER_SYMMAP_POS
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 0 -8
+#size
+1 3
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
 #Map Event List data
-#save date:2009/10/13 21:30:10
+#save date:
 2
 #hold event type:
 1
