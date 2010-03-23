@@ -1115,7 +1115,8 @@ static void changeVStatus(int vpIdx, u8 pan, int vofs, int sofs)
 
 	PMV_SetPan(vpIdx, pan);
 	PMV_SetVolume(vpIdx, volume);
-	PMV_SetSpeed(vpIdx, speed);
+	//PMV_SetSpeed(vpIdx, speed);
+	PMV_SetSpeed(vpIdx, sofs);
 }
 
 //------------------------------------------------------------------
