@@ -8135,7 +8135,7 @@
 /**
  * @def _ADD_MOVE_POKEMON
  * @brief 移動ポケモン追加
- * @param move_poke    結果を受け取るワーク
+ * @param move_poke    移動ポケモンID
  */
 //--------------------------------------------------------------
 #define _ADD_MOVE_POKEMON( move_poke )   \
@@ -8144,6 +8144,23 @@
     .macro  _ASM_ADD_MOVE_POKEMON move_poke
     .short  EV_SEQ_ADD_MOVE_POKEMON
     .short  \move_poke
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_MOVE_POKEMON_STATUS
+ * @brief 移動ポケモンステータス取得
+ * @param move_poke    移動ポケモンID
+ * @param ret_wk      結果を受け取るワーク
+ */
+//--------------------------------------------------------------
+#define _GET_MOVE_POKEMON_STATUS( move_poke, ret_wk )   \
+    _ASM_GET_MOVE_POKEMON_STATUS move_poke, ret_wk
+
+    .macro  _ASM_GET_MOVE_POKEMON_STATUS move_poke, ret_wk
+    .short  EV_SEQ_GET_MOVE_POKEMON_STATUS
+    .short  \move_poke
+    .short  \ret_wk
     .endm
 
 //======================================================================

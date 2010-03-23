@@ -758,7 +758,7 @@
 
   //ˆÚ“®ƒ|ƒPƒ‚ƒ“
   DEF_CMD( EvCmdAddMovePokemon, EV_SEQ_ADD_MOVE_POKEMON )
-  NO_CMD()
+  DEF_CMD( EvCmdGetMovePokemonStatus, EV_SEQ_GET_MOVE_POKEMON_STATUS )
   NO_CMD()
   NO_CMD()
 

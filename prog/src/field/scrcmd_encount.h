@@ -14,4 +14,5 @@ extern VMCMD_RESULT EvCmdCaptureDemoBattleSet( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdGetEffectEncountItem( VMHANDLE* core, void* wk );
 extern VMCMD_RESULT EvCmdAddMovePokemon( VMHANDLE* core, void* wk );
+extern VMCMD_RESULT EvCmdGetMovePokemonStatus( VMHANDLE* core, void* wk );
 

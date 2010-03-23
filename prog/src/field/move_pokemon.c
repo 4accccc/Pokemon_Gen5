@@ -14,6 +14,7 @@
 #include "arc/fieldmap/zone_id.h"
 #include "savedata/encount_sv.h"
 #include "savedata/mystatus.h"
+#include "savedata/zukan_savedata.h"
 #include "poke_tool/pokeparty.h"
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
@@ -129,7 +130,7 @@ static inline u16 GetZoneID( u8 zone_idx );
 static u8 MonsNoToMovePokeID(u16 monsno);
 
 static void JumpMovePokeLocation(	ENC_SV_PTR data, const u8 inTargetPoke, const int inPlayerOldZone);
-static void JumpMovePokeTimeLocation( ENC_SV_PTR data, const u8 inTargetPoke );
+static void JumpMovePokeTimeLocation( ENC_SV_PTR data, u8 season, const u8 inTargetPoke );
 
 static void MovePokeLocation(ENC_SV_PTR data, const u8 inTargetPoke, const int inPlayerOldZone);
 static void UpdateData(	ENC_SV_PTR data,
@@ -142,12 +143,13 @@ static MPD_PTR GetMovePokeDataByMonsNo(ENC_SV_PTR inEncData, const int inMonsNo)
  * 移動ポケモンジャンプ
  *
  * @param	inEncData		エンカウント関連セーブデータポインタ
+ * @param season      季節
  * @param	inTarget		移動対象
  *
  * @return
  */
 //--------------------------------------------------------------------------------------------
-void MP_JumpMovePokemon(ENC_SV_PTR inEncData, const u8 inTarget)
+void MP_JumpMovePokemon(ENC_SV_PTR inEncData, u8 season, const u8 inTarget)
 {
   MPD_PTR	mpd = EncDataSave_GetMovePokeDataPtr( inEncData, inTarget );
 
@@ -157,7 +159,7 @@ void MP_JumpMovePokemon(ENC_SV_PTR inEncData, const u8 inTarget)
 	  player_old_zone = EncDataSave_GetPlayerOldZone(inEncData);
 	  JumpMovePokeLocation(inEncData, inTarget, player_old_zone);
   }else{
-    JumpMovePokeTimeLocation( inEncData, inTarget );
+    JumpMovePokeTimeLocation( inEncData, season, inTarget );
   }
 }
 
@@ -170,14 +172,17 @@ void MP_JumpMovePokemon(ENC_SV_PTR inEncData, const u8 inTarget)
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void MP_JumpMovePokemonAll(ENC_SV_PTR inEncData)
+void MP_JumpMovePokemonAll( GAMEDATA* gdata )
 {
-	u8 i;
-	for(i=0;i<MOVE_POKE_MAX;i++){
+	u8 i,season;
+  ENC_SV_PTR enc_sv = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
+  season = GAMEDATA_GetSeasonID( gdata );
+
+  for(i=0;i<MOVE_POKE_MAX;i++){
 		//移動中か？
-		if ( EncDataSave_IsMovePokeValid(inEncData, i) ){
+		if ( EncDataSave_IsMovePokeValid(enc_sv, i) ){
 			//ジャンプ
-			MP_JumpMovePokemon(inEncData, i);
+			MP_JumpMovePokemon(enc_sv, season, i);
 		}
 	}
 }
@@ -191,14 +196,16 @@ void MP_JumpMovePokemonAll(ENC_SV_PTR inEncData)
  * @return	none
  */
 //-----------------------------------------------------------------------------
-void MP_MovePokemonNeighboring(ENC_SV_PTR inEncData)
+void MP_MovePokemonNeighboring( GAMEDATA* gdata )
 {
-	u8 i;
+	u8 i, season;
+  ENC_SV_PTR enc_sv = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
+  season = GAMEDATA_GetSeasonID( gdata );
 	
   for(i=0;i<MOVE_POKE_MAX;i++){
-    MPD_PTR	mpd = EncDataSave_GetMovePokeDataPtr( inEncData, i );
+    MPD_PTR	mpd = EncDataSave_GetMovePokeDataPtr( enc_sv, i );
 		//移動中か？
-		if ( EncDataSave_IsMovePokeValid(inEncData, i) == FALSE ){
+		if ( EncDataSave_IsMovePokeValid(enc_sv, i) == FALSE ){
       continue;
     }
 
@@ -207,11 +214,11 @@ void MP_MovePokemonNeighboring(ENC_SV_PTR inEncData)
 		    GFUser_GetPublicRand0(16) == 0){
 			IWASAWA_Printf("%d:ジャンプします\n",i);
 			//ジャンプ
-			MP_JumpMovePokemon(inEncData, i);
+			MP_JumpMovePokemon(enc_sv, season, i);
 		}else{
 			IWASAWA_Printf("%d:隣接移動します\n",i);
 			//隣接移動
-			MovePokeLocation(inEncData, i, EncDataSave_GetPlayerOldZone(inEncData) );
+			MovePokeLocation(enc_sv, i, EncDataSave_GetPlayerOldZone(enc_sv) );
 		}
 	}
 }
@@ -300,11 +307,13 @@ void MP_AddMovePoke( GAMEDATA* gdata, const u8 inTargetPoke)
 	MPD_PTR	 mpd;
 	ENC_SV_PTR enc;
 	MYSTATUS * my_st;
+  SAVE_CONTROL_WORK* save;
 
 	int monsno;
 	u8 lv,move_type;
-	
-	enc = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
+  
+  save = GAMEDATA_GetSaveControlWork( gdata );
+	enc = EncDataSave_GetSaveDataPtr( save );
 	mpd = EncDataSave_GetMovePokeDataPtr(enc, inTargetPoke);
 	
 	switch(inTargetPoke){
@@ -346,10 +355,16 @@ void MP_AddMovePoke( GAMEDATA* gdata, const u8 inTargetPoke)
 	EncDataSave_SetMovePokeDataParam(mpd, MP_PARAM_HP,
 											PP_Get( poke_param, ID_PARA_hpmax, NULL ));
 
+  //見たフラグセット
+  ZUKANSAVE_SetPokeSee( ZUKAN_SAVEDATA_GetZukanSave( save ), poke_param );
+
 	GFL_HEAP_FreeMemory(poke_param);
 
 	//初回移動ポケモン出現場所決定
-  MP_JumpMovePokemon( enc, inTargetPoke);
+  MP_JumpMovePokemon( enc, GAMEDATA_GetSeasonID( gdata ), inTargetPoke);
+  
+  //ステータス更新
+  EncDataSave_SetMovePokeState( enc, inTargetPoke, MVPOKE_STATE_MOVE );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -370,7 +385,6 @@ void MP_RecoverMovePoke( GAMEDATA* gdata )
   for( i = 0;i < MOVE_POKE_MAX;i++){
     if( EncDataSave_GetMovePokeState( enc_sv, i) == MVPOKE_STATE_DOWN ){
       MP_AddMovePoke( gdata, i);
-      EncDataSave_SetMovePokeState( enc_sv, i, MVPOKE_STATE_NONE );
     }
   }
 }
@@ -419,7 +433,7 @@ void MP_SetAfterBattle(GAMEDATA * gdata, BATTLE_SETUP_PARAM *bsp)
 	if(mpd == NULL){			//野生ポケモンとエンカウント
 		//30％の確率で、3匹の移動ポケモンのジャンプ
 		if ( GFUser_GetPublicRand0( 100 ) < 30 ){
-      MP_JumpMovePokemonAll( enc_sv );
+      MP_JumpMovePokemonAll( gdata );
 		}
     return;
   }
@@ -450,7 +464,7 @@ void MP_SetAfterBattle(GAMEDATA * gdata, BATTLE_SETUP_PARAM *bsp)
 	  EncDataSave_SetMovePokeDataParam(mpd, MP_PARAM_COND, cond);
 
     //移動ポケモンのジャンプ
-    MP_JumpMovePokemonAll( enc_sv );
+    MP_JumpMovePokemonAll( gdata );
   }
 }
 
@@ -557,27 +571,28 @@ static void JumpMovePokeLocation(ENC_SV_PTR data, const u8 inTargetPoke, const i
  * 移動ポケモン出現場所抽選(カミシリーズ)
  *
  * @param	data			エンカウント関連セーブデータ
+ * @param	season		季節
  * @param	inTargetPoke	対象移動ポケモンインデックス
- * @param	inPlayerZone	旧ゾーン
  *
  * @return
  */
 //--------------------------------------------------------------------------------------------
-static void JumpMovePokeTimeLocation( ENC_SV_PTR data, const u8 inTargetPoke )
+static void JumpMovePokeTimeLocation( ENC_SV_PTR data, u8 season, const u8 inTargetPoke )
 {
-	u16 move_poke_now_zone;
+	u16 move_poke_now_zone, timezone;
   const MP_TIME_LOC_DATA* loc;
 
 	//今自分がいる場所は対象外とする
 	move_poke_now_zone = GetZoneID( EncDataSave_GetMovePokeZoneIdx(data,inTargetPoke) );
   //タイムローケーション取得
-  loc = &DATA_TimeLocation[GFL_RTC_GetTimeZone()];
+  timezone = PM_RTC_GetTimeZone( season );
+  loc = &DATA_TimeLocation[timezone];
 
   if( move_poke_now_zone != MVPOKE_ZONE_NULL &&
       GFUser_GetPublicRand0(100) < 20){
     //隠れる
 		UpdateData(	data, inTargetPoke, ZONE_IDX_HIDE, GetZoneID(ZONE_IDX_HIDE));
-		IWASAWA_Printf("隠れた %d TimeZone:%d\n", MVPOKE_ZONE_NULL,GFL_RTC_GetTimeZone());
+		IWASAWA_Printf("隠れた %d TimeZone:%d\n", MVPOKE_ZONE_NULL, timezone);
 		return;
   }
 
@@ -587,7 +602,7 @@ static void JumpMovePokeTimeLocation( ENC_SV_PTR data, const u8 inTargetPoke )
 
 		if( zone != move_poke_now_zone ){
 			UpdateData(	data, inTargetPoke, zone_idx, zone);
-			IWASAWA_Printf("%dへジャンプ TimeZone:%d\n",zone,GFL_RTC_GetTimeZone());
+			IWASAWA_Printf("%dへジャンプ TimeZone:%d\n",zone, timezone );
 			break;
 		}
 	}

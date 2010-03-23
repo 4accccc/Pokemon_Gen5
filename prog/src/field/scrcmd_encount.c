@@ -189,3 +189,29 @@ VMCMD_RESULT EvCmdAddMovePokemon( VMHANDLE* core, void* wk )
 	return VMCMD_RESULT_CONTINUE;
 }
 
+//--------------------------------------------------------------------
+/**
+ * @brief 移動ポケモンのステータスを取得
+ *
+ * @param	core 仮想マシン制御構造体へのポインタ
+ * @param wk   SCRCMD_WORKへのポインタ
+ *
+ * @retval VMCMD_RESULT
+ *
+ * MVPOKE_STATE_NONE他
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdGetMovePokemonStatus( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*      work = (SCRCMD_WORK*)wk;
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+	ENC_SV_PTR enc_sv = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
+	
+  u8 move_poke = (u8)SCRCMD_GetVMWorkValue( core, work );
+  u16* ret_wk = SCRCMD_GetVMWork( core, work );
+	
+  *ret_wk = EncDataSave_GetMovePokeState( enc_sv, move_poke );
+
+	return VMCMD_RESULT_CONTINUE;
+}
+

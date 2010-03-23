@@ -22,8 +22,9 @@
 #define MVPOKE_TYPE_TIME    (1) //タイムゾーン依存
 
 ///移動ポケモン状態
-#define MVPOKE_STATE_NONE (0)
-#define MVPOKE_STATE_DOWN (1) //倒しちゃった
-#define MVPOKE_STATE_GET  (2) //捕まえた
+#define MVPOKE_STATE_NONE (0) //いない
+#define MVPOKE_STATE_MOVE (1) //移動中
+#define MVPOKE_STATE_DOWN (2) //倒しちゃった
+#define MVPOKE_STATE_GET  (3) //捕まえた
 
 #endif	 //__MOVE_POKEMON_DEF_H__

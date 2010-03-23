@@ -13,9 +13,9 @@
 #include "savedata/encount_sv.h"
 #include "field/move_pokemon_def.h"
 
-extern void MP_JumpMovePokemonAll(ENC_SV_PTR inEncData);
-extern void MP_JumpMovePokemon(ENC_SV_PTR inEncData, const u8 inTarget);
-extern void MP_MovePokemonNeighboring(ENC_SV_PTR inEncData);
+extern void MP_JumpMovePokemonAll( GAMEDATA* gdata );
+extern void MP_JumpMovePokemon(ENC_SV_PTR inEncData, u8 season, const u8 inTarget);
+extern void MP_MovePokemonNeighboring( GAMEDATA* gdata );
 extern void MP_AddMovePoke( GAMEDATA* gdata, const u8 inTargetPoke);
 extern void MP_RecoverMovePoke( GAMEDATA* gdata );
 extern u16 MP_GetMovePokeZoneID( ENC_SV_PTR inEncData, const u8 inTarget);
