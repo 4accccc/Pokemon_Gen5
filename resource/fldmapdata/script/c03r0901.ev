@@ -45,6 +45,9 @@ EVENT_START		ev_c03r0901_musician_01
       _BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_02 )
       _BALLOONWIN_CLOSE()
 
+      //BGM停止
+      _START_EVENT_BGM( SEQ_BGM_SILENCE_FIELD )
+
       //自機を定位置に移動
       _CALL player_move
 
@@ -111,9 +114,6 @@ EVENT_START		ev_c03r0901_musician_01
       //技を覚えさせる処理
       _CALL learn_skill
 
-      //ボールに戻るアニメ
-      _CALL ball_in
-
     ELSE
       _CALL last_message
     ENDIF
@@ -168,6 +168,26 @@ learn_skill:
   IF $SCWK_ANSWER == TRUE THEN
     //覚えた場合、イベント消化フラグＯＮ
     _FLAG_SET( FE_C03R0901_MELODY )
+  ENDIF
+
+  //ボールに戻るアニメ
+  _CALL ball_in
+
+  //覚えた後の子芝居
+  IF $SCWK_ANSWER == TRUE THEN
+    //自機２歩前
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_front )
+    _OBJ_ANIME_WAIT()
+
+    //ギタリストメッセージ
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_03 )
+    _BALLOONWIN_CLOSE()
+    //メッセージ間ウェイト
+    _TIME_WAIT( 8 )
+    //ギタリストメッセージ
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0901_musician_04 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
   ENDIF
 }
 _RET
@@ -261,6 +281,13 @@ _ANIME_LABEL	anm_merodhia
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_merodhia_normal
   _ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機定位置へ　左から話しかけたとき
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_front
+  _ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
   
 

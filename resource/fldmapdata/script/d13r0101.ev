@@ -94,7 +94,7 @@ EVENT_START	ev_d13r0101_assistantm_01
 
     _CALL doc_battle
 
-  CASE 2 THEN //戦闘済
+  CASE 3 THEN //戦闘済
     //「技のタイプが変わる」
     _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_15, D13R0101_ASSISTANTM_01, POS_DR )
     _LAST_KEYWAIT()
@@ -256,7 +256,9 @@ _ANIME_LABEL	anm_player_move
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_doc_turn
   _ANIME_DATA	AC_MARK_GYOE ,1
+  _ANIME_DATA AC_WAIT_4F,1
   _ANIME_DATA	AC_STAY_WALK_D_8F,1
+  _ANIME_DATA AC_WAIT_8F,1
 	_ANIME_DATA	ACMD_END,0
  
 //--------------------------------------------------------------------
@@ -279,11 +281,11 @@ _ANIME_LABEL	anm_doc_down
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_doc_up_gyoe
   _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA AC_WAIT_8F,1
   _ANIME_DATA	AC_MARK_GYOE,1
   _ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
   
-
 //--------------------------------------------------------------------
 //研究員
 //--------------------------------------------------------------------
