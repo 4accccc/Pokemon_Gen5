@@ -1958,3 +1958,10 @@ SRCS_OVERLAY_SUBWAY_MAP = app/subway_map/subway_map.c \
 #===> SRCS_OVERLAY_SUBWAY_MAP
 SRCS_OVERLAY_KAWADA_DEBUG = test/kawada/d_kawada.c
 
+# ポケモンドリームキャッチからフィールドへの復帰管理
+#===> SRCS_OVERLAY_TAYA_DEBUG
+#===> SRCS_OVERLAY_SOGABE_DEBUG
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_PDC_RETURN =	field/event_pdc_return.c
+
