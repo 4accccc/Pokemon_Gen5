@@ -15,6 +15,14 @@
 //--------------------------------------------------------------
 //              特殊スクリプト
 //--------------------------------------------------------------
+_SCENE_CHANGE_LABEL sp_d13r0101_tbl
+_ZONE_CHANGE_LABEL 		SCRID_ZONE_D13R0101
+_FIELD_INIT_LABEL 		SCRID_INIT_D13R0101
 _SP_EVENT_DATA_END
+
+sp_d13r0101_tbl:
+  _SCENE_CHANGE_DATA WK_SCENE_D13R0101, 1, SCRID_SCENE_D13R0101
+  _SCENE_CHANGE_END
+
 
 
