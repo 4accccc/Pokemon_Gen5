@@ -242,7 +242,8 @@ struct _FIELD_ITEMMENU_PARAM {
   int submenuList[BAG_MENUTBL_MAX];  //サブメニューの項目
   u32 bgchar;
   BOOL bChange;   ///< CELL更新フラグ
-  BOOL bDispUpReq; ///< 上画面DISP切替(VBLANK中に判定、処理)
+//  BOOL bDispUpReq; ///< 上画面DISP切替(VBLANK中に判定、処理)
+  u32 bDispUpReq; ///< 上画面DISP切替(VBLANK中に判定、処理 1=表示, 2=非表示)
 
   enum BAG_NEXTPROC_ENUM ret_code;  //バッグメニューを終わる際の次の動作
   int ret_code2;
@@ -376,6 +377,7 @@ enum
 extern void _createSubBg(void);
 extern void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageSetDispVBlank( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
+extern void ITEMDISP_ItemInfoVanishSet( FIELD_ITEMMENU_WORK* pWork, BOOL on_off );
 extern void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageClean(FIELD_ITEMMENU_WORK* pWork);
 extern void ITEMDISP_upMessageDelete(FIELD_ITEMMENU_WORK* pWork);

@@ -645,11 +645,25 @@ void ITEMDISP_upMessageSetDispVBlank( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
   GFL_BG_SetVisible( ITEMWIN_FRAME, on_off );
   GFL_BG_SetVisible( ITEMREPORT_FRAME, on_off );
 
+/*
   if( pWork->cellicon != NULL )
   {
     // アイテムOAMアイコン
     GFL_CLACT_WK_SetDrawEnable( pWork->cellicon, on_off );
   }
+*/
+}
+void ITEMDISP_ItemInfoVanishSet( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
+{
+	if( on_off == TRUE ){
+    pWork->bDispUpReq = 1;
+	}else{
+    pWork->bDispUpReq = 2;
+	}
+
+	if( pWork->cellicon != NULL ){
+		GFL_CLACT_WK_SetDrawEnable( pWork->cellicon, on_off );
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -687,13 +701,13 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
   if( (item==NULL) || (item->id==ITEM_DUMMY_DATA) )
   {
     // 上画面表示OFF
-    pWork->bDispUpReq = VISIBLE_OFF;
+		ITEMDISP_ItemInfoVanishSet( pWork, FALSE );
     // 抜ける
     return;
   }
   
   // 上画面表示ON
-  pWork->bDispUpReq = VISIBLE_ON;
+	ITEMDISP_ItemInfoVanishSet( pWork, TRUE );
 
   // メッセージのCGXを消去
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->winItemName), 0 );
@@ -758,7 +772,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 void ITEMDISP_upMessageClean(FIELD_ITEMMENU_WORK* pWork)
 {
   // 上画面表示OFF
-  pWork->bDispUpReq = VISIBLE_OFF;
+	ITEMDISP_ItemInfoVanishSet( pWork, FALSE );
     
   // わざマシン用の説明文を非表示
   GFL_BMPWIN_ClearScreen(pWork->winWaza);

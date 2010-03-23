@@ -2888,8 +2888,8 @@ static void KTST_SetDraw( FIELD_ITEMMENU_WORK* pWork, BOOL on_off )
     BLINKPALANM_InitAnimeCount( pWork->blwk );
   }
 
-  // 上画面を消す
-  pWork->bDispUpReq = on_off;
+  // 上画面表示切り替え
+	ITEMDISP_ItemInfoVanishSet( pWork, on_off );
 }
 
 //-----------------------------------------------------------------------------
@@ -3534,7 +3534,13 @@ static void _VBlank( GFL_TCB *tcb, void *work )
   FIELD_ITEMMENU_WORK* pWork = work;
   
   // 上画面、表示非表示切替
-  ITEMDISP_upMessageSetDispVBlank( pWork, pWork->bDispUpReq );
+	if( pWork->bDispUpReq == 1 ){
+		ITEMDISP_upMessageSetDispVBlank( pWork, TRUE );
+		pWork->bDispUpReq = 0;
+	}else if( pWork->bDispUpReq == 2 ){
+		ITEMDISP_upMessageSetDispVBlank( pWork, FALSE );
+		pWork->bDispUpReq = 0;
+	}
 
 	PaletteFadeTrans( pWork->pfd );
 
