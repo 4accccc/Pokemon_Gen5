@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-22T18:16:10"/>
+	<create user="matsumiya" host="W00224" date="2010-03-23T22:49:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1419" top="258" right="2124" bottom="886" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -481,12 +481,10 @@
 ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『おや　ごかいが　あるようで[BE:01:ページ切り替え（クリア）]
 わたしどもは　ポケモンを
-かいほう　こそすれ[BE:01:ページ切り替え（クリア）]
-ひとの　ポケモンを
-うばったり　しませんよ[BE:01:ページ切り替え（クリア）]</language>
+かいほう　しているだけですよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『おや　誤解があるようで[BE:01:ページ切り替え（クリア）]
-私どもは　ポケモンを　解放こそすれ
-人のポケモンを　奪ったりしませんよ[BE:01:ページ切り替え（クリア）]</language>
+私どもは　ポケモンを
+解放している　だけですよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c05_leader_05" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
