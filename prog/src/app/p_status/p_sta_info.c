@@ -17,6 +17,7 @@
 #include "print/global_msg.h"
 #include "poke_tool/poke_memo.h"
 #include "app/app_menu_common.h"
+#include "field/zonedata.h"
 
 #include "arc_def.h"
 #include "message.naix"
@@ -700,9 +701,9 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
         //‚»‚Ì‘¼
         if( isEvent == FALSE )
         {
-          if( place2 == 0 )
+          if( place1 == 0 )
           {
-            if( place1 == POKE_MEMO_PLACE_GAME_TRADE )
+            if( place2 == POKE_MEMO_PLACE_GAME_TRADE )
             {
               //ƒQ[ƒ€“àŒðŠ·
               memoId = trmemo_02_02_01;
@@ -895,6 +896,11 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
 //’n–¼•ÏŠ·
 static STRBUF* PSTATUS_INFO_GetPlaceStr( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWork , const u32 place )
 {
+  if( ZONEDATA_CheckPlaceNameID_IsPalace( place ) == TRUE )
+  {
+    return GFL_MSG_CreateString( infoWork->msgPlaceSp , POKE_MEMO_PLACE_PALACE-30001 );
+  }
+  else
   if( place <= 30000 )
   {
     if( place >= msg_place_name_max )

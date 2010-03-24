@@ -26,6 +26,7 @@
 #define POKE_MEMO_PLACE_SEREBIXI_AFTER   (30011)   //セレビィイベント後
 #define POKE_MEMO_PLACE_ENRAISUI_BEFORE  (30012)   //エンテイ・ライコウ・スイクン転送時
 #define POKE_MEMO_PLACE_ENRAISUI_AFTER   (30013)   //エンテイ・ライコウ・スイクン後
+#define POKE_MEMO_PLACE_PALACE           (30014)   //パレス
 
 //DPPtHGSSでの特殊な地名(映画セレビィ・エンライスイ
 #define POKE_MEMO_2010_MOVIE   (3008)

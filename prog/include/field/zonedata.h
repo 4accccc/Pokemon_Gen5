@@ -303,3 +303,8 @@ extern BOOL ZONEDATA_IsSeaTempleDungeon( u16 zone_id );
 extern BOOL ZONEDATA_IsSeaTempleDungeon2F( u16 zone_id );
 extern BOOL ZONEDATA_IsSeaTempleDungeon3F( u16 zone_id );
 
+//------------------------------------------------------------------
+// 地名IDがパレスのものか？
+//------------------------------------------------------------------
+extern const BOOL ZONEDATA_CheckPlaceNameID_IsPalace(const u16 planeNameId);
+

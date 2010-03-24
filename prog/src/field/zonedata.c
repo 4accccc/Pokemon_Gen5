@@ -27,6 +27,7 @@
 #include "fieldmap/field_fog_table.naix"
 #include "fieldmap/field_zone_light.naix"
 #include "fieldmap/fieldskill_mapeff.naix"
+#include "msg/msg_place_name.h"  // for MAPNAME_xxxx
 
 #include "field/field_zonefog.h"
 #include "field/fieldskill_mapeff.h"
@@ -1056,6 +1057,23 @@ BOOL ZONEDATA_IsSeaTempleDungeon3F( u16 zone_id )
   return FALSE;
 }
 
+
+//------------------------------------------------------------------
+/**
+ * @brief  地名ID(ZoneIDではなくPlaceNameId)がパレスのものか？
+ * @param  PlaceNameId 地名ID
+ * @return パレスかどうか？
+ */
+//------------------------------------------------------------------
+const BOOL ZONEDATA_CheckPlaceNameID_IsPalace(const u16 planeNameId)
+{
+  if( planeNameId >= MAPNAME_P_C4RAIMON &&
+      planeNameId < msg_place_name_max )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
 
 
 //============================================================================================
