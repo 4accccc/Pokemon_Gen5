@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-18T20:06:28"/>
+	<create user="ohmori" host="W00223" date="2010-03-24T15:14:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -763,17 +763,19 @@
 	</row>
 
 	<row id="plc_connect_03" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
-		<comment>通信接続メッセージ：自分のパレスにもどる</comment>
-		<language name="JPN" width="256">じぶんの　せかいに　もどった！</language>
-		<language name="JPN_KANJI" width="256">じぶんの　せかいに　もどった！</language>
+		<comment>ミッション中なので、他のパレスにいけないメッセージ</comment>
+		<language name="JPN" width="256">ミッションちゅう　なので
+パレスから　でられない！</language>
+		<language name="JPN_KANJI" width="256">ミッションちゅう　なので
+パレスから　でられない！</language>
 	</row>
 
 	<row id="plc_connect_04" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
-		<comment>通信接続メッセージ：侵入成功</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　せかいに
-はいりこんだ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　せかいに
-はいりこんだ！</language>
+		<comment>ミッション中なので、他のパレスにいけないメッセージ</comment>
+		<language name="JPN" width="256">ミッションちゅう　なので
+パレスから　でられない！</language>
+		<language name="JPN_KANJI" width="256">ミッションちゅう　なので
+パレスから　でられない！</language>
 	</row>
 
 	<row id="plc_connect_05" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
