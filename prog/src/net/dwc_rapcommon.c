@@ -109,7 +109,7 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
     OSIntrMode  enable = OS_DisableInterrupts();
     ptr = NNS_FndAllocFromExpHeapEx( pDwcRapWork->headHandleSub, size, align );
     (void)OS_RestoreInterrupts(enable);
-    NET_MEMORY_PRINT( "sub alloc memory size=%d rest=%d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandleSub) );
+    NET_MEMORY_PRINT( "sub alloc memory size=%d rest=%d %d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandleSub),name );
   }
   else
   { 
@@ -117,7 +117,7 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
     ptr = NNS_FndAllocFromExpHeapEx( pDwcRapWork->headHandle, size, align );
     (void)OS_RestoreInterrupts(enable);
 
-    NET_MEMORY_PRINT( "main alloc memory size=%d rest=%d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle) );
+    NET_MEMORY_PRINT( "main alloc memory size=%d rest=%d %d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle),name );
   }
 
   //NAGI_Printf( "[>name%d size%d align%d\n", name, size, align );

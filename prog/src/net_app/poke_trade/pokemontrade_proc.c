@@ -3645,8 +3645,8 @@ const GFL_PROC_DATA PokemonTradeProcData = {
 //IR—p
 const GFL_PROC_DATA PokemonTradeIrcProcData = {
 #if DEBUG_ONLY_FOR_ohno
-//  PokemonTradeUnionNegoProcInit,
-  PokemonTradeIrcProcInit,
+  PokemonTradeUnionNegoProcInit,
+//  PokemonTradeIrcProcInit,
 #else
   PokemonTradeIrcProcInit,
 #endif

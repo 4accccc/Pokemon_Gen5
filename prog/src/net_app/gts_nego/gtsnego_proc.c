@@ -561,19 +561,12 @@ static void _timingCheck4( GTSNEGO_WORK *pWork )
   MYSTATUS* pTargetSt;
   MYSTATUS* pMy = pEv->pStatus[1];
   BOOL res;   // •s³•¶ŽšŒŸ¸Š®—¹
-#if (PM_VERSION==VERSION_WHITE)
-  int msg = NAMEIN_DEF_NAME_000;
-#else
-  int msg = NAMEIN_DEF_NAME_001;
-#endif
-
-  
 
   if(DWC_TOOL_BADWORD_Wait( &pWork->aBadWork, &res)){
     if(res){  //•s³‚Ìê‡
-      MyStatus_SetMyNameFromString(pMy, pWork->wordCheck);
-      GFL_STR_DeleteBuffer(pWork->wordCheck);
+      MyStatus_SetMyNameFromString(pMy, pWork->wordCheck);  //OK‚È‚à‚Ì‚ð‚¢‚ê‚é
     }
+    GFL_STR_DeleteBuffer(pWork->wordCheck);
     pTargetSt = GAMEDATA_GetMyStatusPlayer(pWork->pGameData, 1-GFL_NET_SystemGetCurrentID());
     MyStatus_Copy(pMy,pTargetSt);
 

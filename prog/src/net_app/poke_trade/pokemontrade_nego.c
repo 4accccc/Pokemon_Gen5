@@ -18,6 +18,7 @@
 #include "arc_def.h"
 #include "net/network_define.h"
 #include "net/nhttp_rap_evilcheck.h"
+#include "net/dwc_rapcommon.h"
 
 #include "net_app/pokemontrade.h"
 #include "system/main.h"
@@ -1444,6 +1445,8 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
       NHTTP_RAP_End(pWork->pNHTTP);
       pWork->pNHTTP  = NULL;
     }
+    DWC_RAPCOMMON_ResetSubHeapID();
+    
   }
 
 }
@@ -1454,6 +1457,9 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
 static void _PokeEvilChk(POKEMON_TRADE_WORK* pWork)
 {
   int i,num=0;
+
+  DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_NHTTP, 0x10000, pWork->heapID );
+  
   pWork->pNHTTP = NHTTP_RAP_Init(pWork->heapID,
                                  MyStatus_GetProfileID(pWork->pMy), pWork->pParentWork->pSvl);
 
@@ -1475,6 +1481,15 @@ static void _PokeEvilChk(POKEMON_TRADE_WORK* pWork)
 
   
   _CHANGE_STATE(pWork, _PokeEvilChk2);
+}
+
+
+//ポケモンプレ不正検査
+static void _PokeEvilChkPre(POKEMON_TRADE_WORK* pWork)
+{
+  IRC_POKETRADE_AllDeletePokeIconResource(pWork);
+  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG2 );
+  _CHANGE_STATE(pWork, _PokeEvilChk);
 }
 
 #endif
@@ -1499,8 +1514,8 @@ static void _Select6MessageInit8(POKEMON_TRADE_WORK* pWork)
 
 
     if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
-      _CHANGE_STATE(pWork, _PokeEvilChk);
 //      _CHANGE_STATE(pWork, POKE_GTS_Select6Init);
+      _CHANGE_STATE(pWork, _PokeEvilChkPre);  //@todoヒープが足りない
     }
     else{
       _CHANGE_STATE(pWork, POKE_GTS_Select6Init);

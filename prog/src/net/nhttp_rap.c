@@ -116,12 +116,12 @@ struct _NHTTP_RAP_WORK {
 
 static void* AllocForNhttp(u32 size, int alignment)
 {
-  return DWC_RAPCOMMON_Alloc(0,size,alignment);
+  return DWC_RAPCOMMON_Alloc(DWC_ALLOCTYPE_NHTTP,size,alignment);
 }
 
 static void FreeForNhttp(void* ptr)
 {
-  DWC_RAPCOMMON_Free(0,ptr,0);
+  DWC_RAPCOMMON_Free(DWC_ALLOCTYPE_NHTTP,ptr,0);
 }
 
 
