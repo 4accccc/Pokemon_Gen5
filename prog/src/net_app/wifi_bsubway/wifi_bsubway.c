@@ -1,13 +1,13 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
- *	GAME FREAK inc.
+ *  GAME FREAK inc.
  *
- *	@file		wifi_bsubway.c
- *	@brief  Wi-Fiバトルサブウェイ
- *	@author	tomoya takahashi
- *	@date		2010.02.17
+ *  @file   wifi_bsubway.c
+ *  @brief  Wi-Fiバトルサブウェイ
+ *  @author tomoya takahashi
+ *  @date   2010.02.17
  *
- *	モジュール名：WIFI_BSUBWAY
+ *  モジュール名：WIFI_BSUBWAY
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
@@ -80,11 +80,11 @@ FS_EXTERN_OVERLAY( dpw_common );
 
 //-----------------------------------------------------------------------------
 /**
- *					定数宣言
+ *          定数宣言
 */
 //-----------------------------------------------------------------------------
 //-------------------------------------
-///	メインシーケンス
+/// メインシーケンス
 //=====================================
 enum {
 
@@ -112,7 +112,7 @@ enum {
 
 
 //-------------------------------------
-///	サブシーケンス
+/// サブシーケンス
 //=====================================
 enum{
   // 記録のアップロード
@@ -177,7 +177,7 @@ enum{
 };
 
 //-------------------------------------
-///	メイン処理　戻り値
+/// メイン処理　戻り値
 //=====================================
 typedef enum {
   BSUBWAY_MAIN_RESULT_CONTINUE,
@@ -190,7 +190,7 @@ typedef enum {
 
 
 //-------------------------------------
-///	NHTTPのエラー分岐
+/// NHTTPのエラー分岐
 //=====================================
 typedef enum{
   BSUBWAY_NHTTP_ERROR_NONE,
@@ -202,12 +202,12 @@ typedef enum{
 
 
 ///強制タイムアウトまでの時間
-#define BSUBWAY_TIMEOUT_TIME			(30*60*2)	//2分
+#define BSUBWAY_TIMEOUT_TIME      (30*60*2) //2分
 
 
 
 //-------------------------------------
-///	描画関係
+/// 描画関係
 //=====================================
 // 描画フレーム
 enum
@@ -236,19 +236,19 @@ enum
 
 //-----------------------------------------------------------------------------
 /**
- *					構造体宣言
+ *          構造体宣言
 */
 //-----------------------------------------------------------------------------
 
 //-------------------------------------
-///	PersonalData
+/// PersonalData
 //=====================================
 typedef struct 
 {
   BOOL setup;
-	Dpw_Common_Profile			  dc_profile;					// 自分の情報登録用構造体
-	Dpw_Common_ProfileResult	dc_profile_result;	// 自分の情報登録レスポンス用構造体
-	Dpw_Bt_Player	bt_player;							// 勝ち抜いた自分のデータ
+  Dpw_Common_Profile        dc_profile;         // 自分の情報登録用構造体
+  Dpw_Common_ProfileResult  dc_profile_result;  // 自分の情報登録レスポンス用構造体
+  Dpw_Bt_Player bt_player;              // 勝ち抜いた自分のデータ
   const MYSTATUS* cp_mystatus;
   const BSUBWAY_WIFI_DATA* cp_bsubway_wifi; // バトルサブウェイ　WiFiセーブ情報
   const BSUBWAY_SCOREDATA* cp_bsubway_score; // バトルサブウェイ　WiFiセーブ情報
@@ -263,7 +263,7 @@ typedef struct
 
 
 //-------------------------------------
-///	RoomData
+/// RoomData
 //=====================================
 typedef struct 
 {
@@ -274,13 +274,13 @@ typedef struct
   u16 room_no;
   u16 room_num;
 
-	Dpw_Bt_Room 	bt_roomdata;						// ダウンロード部屋情報
+  Dpw_Bt_Room   bt_roomdata;            // ダウンロード部屋情報
 
 
 } WIFI_BSUBWAY_ROOM;
 
 //-------------------------------------
-///	dpw_bt Error
+/// dpw_bt Error
 //=====================================
 typedef struct {
   DpwBtError          error_code;
@@ -293,7 +293,7 @@ typedef struct {
 } WIFI_BSUBWAY_ERROR;
 
 //-------------------------------------
-///	描画管理ワーク
+/// 描画管理ワーク
 //=====================================
 typedef struct {
   BOOL setup;
@@ -327,7 +327,7 @@ typedef struct {
 
 
 //-------------------------------------
-///	バトルサブウェイ　WiFi部分ワーク
+/// バトルサブウェイ　WiFi部分ワーク
 //=====================================
 typedef struct 
 {
@@ -368,9 +368,9 @@ typedef struct
 
   // 各種情報
   GAMEDATA*     p_gamedata;
-	SYSTEMDATA*   p_systemdata;		// システムセーブデータ（DPWライブラリ用ともだちコードを保存）
-	WIFI_LIST*    p_wifilist;			// ともだち手帳
-	MYSTATUS*     p_mystatus;			// トレーナー情報
+  SYSTEMDATA*   p_systemdata;   // システムセーブデータ（DPWライブラリ用ともだちコードを保存）
+  WIFI_LIST*    p_wifilist;     // ともだち手帳
+  MYSTATUS*     p_mystatus;     // トレーナー情報
   BSUBWAY_WIFI_DATA* p_bsubway_wifi; // バトルサブウェイ　WiFiセーブ情報
   BSUBWAY_SCOREDATA* p_bsubway_score; // バトルサブウェイ　スコアセーブ情報
   
@@ -378,12 +378,12 @@ typedef struct
 
 //-----------------------------------------------------------------------------
 /**
- *					プロトタイプ宣言
+ *          プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
 
 //-------------------------------------
-///	process
+/// process
 //=====================================
 static GFL_PROC_RESULT WiFiBsubway_ProcInit( GFL_PROC * p_proc, int * p_seq, void * p_param, void * p_work );
 static GFL_PROC_RESULT WiFiBsubway_ProcMain( GFL_PROC * p_proc, int * p_seq, void * p_param, void * p_work );
@@ -393,7 +393,7 @@ static BOOL WiFiBsubway_IsErrorCheck( const WIFI_BSUBWAY* cp_wk, int seq );
 
 
 //-------------------------------------
-///	RoomData 
+/// RoomData 
 //=====================================
 // 初期化
 static void ROOM_DATA_Init( WIFI_BSUBWAY_ROOM* p_wk );
@@ -417,7 +417,7 @@ static void ROOM_DATA_SaveLeaderData( const WIFI_BSUBWAY_ROOM* cp_wk, BSUBWAY_WI
 
 
 //-------------------------------------
-///	PersonalData
+/// PersonalData
 //=====================================
 static void PERSONAL_DATA_Init( WIFI_BSUBWAY_PERSONAL* p_wk );
 static void PERSONAL_DATA_Exit( WIFI_BSUBWAY_PERSONAL* p_wk );
@@ -435,7 +435,7 @@ static void PERSONAL_DATA_UploadPersonalData( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_
 static BOOL PERSONAL_DATA_UploadPersonalDataWait( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error  );
 
 //-------------------------------------
-///	ErrorData
+/// ErrorData
 //=====================================
 static void ERROR_DATA_Init( WIFI_BSUBWAY_ERROR* p_wk );
 static void ERROR_DATA_GetAsyncStart( WIFI_BSUBWAY_ERROR* p_wk );
@@ -449,7 +449,7 @@ static void ERROR_DATA_OnlyTimeOutCount( WIFI_BSUBWAY_ERROR* p_wk );
 
 
 //-------------------------------------
-///	CodeIn
+/// CodeIn
 //=====================================
 static void CODEIN_StartRoomNoProc( WIFI_BSUBWAY* p_wk, HEAPID heapID );
 static void CODEIN_StartRankProc( WIFI_BSUBWAY* p_wk, HEAPID heapID );
@@ -458,20 +458,20 @@ static void CODEIN_GetString( const WIFI_BSUBWAY* cp_wk, STRBUF* p_str );
 static int CODEIN_GetCode( const WIFI_BSUBWAY* cp_wk );
 
 //-------------------------------------
-///	Login
+/// Login
 //=====================================
 static void LOGIN_StartProc( WIFI_BSUBWAY* p_wk );
 static void LOGIN_EndProc( WIFI_BSUBWAY* p_wk );
 static WIFILOGIN_RESULT LOGIN_GetResult( const WIFI_BSUBWAY* cp_wk );
 
 //-------------------------------------
-///	Logout
+/// Logout
 //=====================================
 static void LOGOUT_StartProc( WIFI_BSUBWAY* p_wk );
 static void LOGOUT_EndProc( WIFI_BSUBWAY* p_wk );
 
 //-------------------------------------
-///	メイン処理処理
+/// メイン処理処理
 //=====================================
 static BSUBWAY_MAIN_RESULT WiFiBsubway_Main( WIFI_BSUBWAY* p_wk, HEAPID heapID );
 static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_ScoreUpload( WIFI_BSUBWAY* p_wk, HEAPID heapID );
@@ -480,7 +480,7 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
 
 
 //-------------------------------------
-///	接続・切断・エラー
+/// 接続・切断・エラー
 //=====================================
 static void WiFiBsubway_Connect( WIFI_BSUBWAY* p_wk );
 static BOOL WiFiBsubway_ConnectWait( WIFI_BSUBWAY* p_wk );
@@ -492,7 +492,7 @@ static BOOL WiFiBsubway_ErrorWait( WIFI_BSUBWAY* p_wk );
 
 
 //-------------------------------------
-///	View
+/// View
 //=====================================
 static void VIEW_Init( WIFI_BSUBWAY_VIEW* p_wk, HEAPID heapID );
 static void VIEW_Exit( WIFI_BSUBWAY_VIEW* p_wk );
@@ -515,7 +515,7 @@ static u32 VIEW_MainYesNo( WIFI_BSUBWAY_VIEW* p_wk );
 
 
 //-------------------------------------
-///	Save
+/// Save
 //=====================================
 static void SAVE_Start( WIFI_BSUBWAY* p_wk );
 static BOOL SAVE_Main( WIFI_BSUBWAY* p_wk );
@@ -546,15 +546,15 @@ const GFL_PROC_DATA WIFI_BSUBWAY_Proc = {
 //-----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
 /**
- *	@brief  バトルサブウェイ  process 初期化
+ *  @brief  バトルサブウェイ  process 初期化
  *
- *	@param	p_proc      processワーク
- *	@param	p_seq       シーケンス
- *	@param	p_param     パラメータ
- *	@param	p_work      ワーク
+ *  @param  p_proc      processワーク
+ *  @param  p_seq       シーケンス
+ *  @param  p_param     パラメータ
+ *  @param  p_work      ワーク
  *
- *	@retval GFL_PROC_RES_CONTINUE = 0,		///<動作継続中
- *	@retval GFL_PROC_RES_FINISH				    ///<動作終了
+ *  @retval GFL_PROC_RES_CONTINUE = 0,    ///<動作継続中
+ *  @retval GFL_PROC_RES_FINISH           ///<動作終了
  */
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT WiFiBsubway_ProcInit( GFL_PROC * p_proc, int * p_seq, void * p_param, void * p_work )
@@ -604,15 +604,15 @@ static GFL_PROC_RESULT WiFiBsubway_ProcInit( GFL_PROC * p_proc, int * p_seq, voi
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  バトルサブウェイ  process メイン
+ *  @brief  バトルサブウェイ  process メイン
  *
- *	@param	p_proc      processワーク
- *	@param	p_seq       シーケンス
- *	@param	p_param     パラメータ
- *	@param	p_work      ワーク
+ *  @param  p_proc      processワーク
+ *  @param  p_seq       シーケンス
+ *  @param  p_param     パラメータ
+ *  @param  p_work      ワーク
  *
- *	@retval GFL_PROC_RES_CONTINUE = 0,		///<動作継続中
- *	@retval GFL_PROC_RES_FINISH				    ///<動作終了
+ *  @retval GFL_PROC_RES_CONTINUE = 0,    ///<動作継続中
+ *  @retval GFL_PROC_RES_FINISH           ///<動作終了
  */
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT WiFiBsubway_ProcMain( GFL_PROC * p_proc, int * p_seq, void * p_param, void * p_work )
@@ -768,15 +768,15 @@ static GFL_PROC_RESULT WiFiBsubway_ProcMain( GFL_PROC * p_proc, int * p_seq, voi
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  バトルサブウェイ  process 破棄
+ *  @brief  バトルサブウェイ  process 破棄
  *
- *	@param	p_proc      processワーク
- *	@param	p_seq       シーケンス
- *	@param	p_param     パラメータ
- *	@param	p_work      ワーク
+ *  @param  p_proc      processワーク
+ *  @param  p_seq       シーケンス
+ *  @param  p_param     パラメータ
+ *  @param  p_work      ワーク
  *
- *	@retval GFL_PROC_RES_CONTINUE = 0,		///<動作継続中
- *	@retval GFL_PROC_RES_FINISH				    ///<動作終了
+ *  @retval GFL_PROC_RES_CONTINUE = 0,    ///<動作継続中
+ *  @retval GFL_PROC_RES_FINISH           ///<動作終了
  */
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT WiFiBsubway_ProcEnd( GFL_PROC * p_proc, int * p_seq, void * p_param, void * p_work )
@@ -807,7 +807,7 @@ static GFL_PROC_RESULT WiFiBsubway_ProcEnd( GFL_PROC * p_proc, int * p_seq, void
 
 
 //-------------------------------------
-///	Errorチェック　を行うか？
+/// Errorチェック　を行うか？
 //=====================================
 static BOOL WiFiBsubway_IsErrorCheck( const WIFI_BSUBWAY* cp_wk, int seq )
 {
@@ -819,11 +819,11 @@ static BOOL WiFiBsubway_IsErrorCheck( const WIFI_BSUBWAY* cp_wk, int seq )
 
 
 //-------------------------------------
-///	RoomData 
+/// RoomData 
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief　RoomData初期化
+ *  @brief　RoomData初期化
  */
 //-----------------------------------------------------------------------------
 static void ROOM_DATA_Init( WIFI_BSUBWAY_ROOM* p_wk )
@@ -833,10 +833,10 @@ static void ROOM_DATA_Init( WIFI_BSUBWAY_ROOM* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  RoomData  Rankの部屋情報をセットアップ
+ *  @brief  RoomData  Rankの部屋情報をセットアップ
  *
- *	@param	p_wk    ワーク
- *	@param	rank    ランク
+ *  @param  p_wk    ワーク
+ *  @param  rank    ランク
  */
 //-----------------------------------------------------------------------------
 static void ROOM_DATA_SetUp( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ERROR* p_error, u16 rank )
@@ -855,12 +855,12 @@ static void ROOM_DATA_SetUp( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ERROR* p_erro
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  RoomData Rankの部屋情報セットアップ待ち
+ *  @brief  RoomData Rankの部屋情報セットアップ待ち
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  *
- *	@retval TRUE    完了
- *	@retval FALSE   途中
+ *  @retval TRUE    完了
+ *  @retval FALSE   途中
  */
 //-----------------------------------------------------------------------------
 static BOOL ROOM_DATA_SetUpWait( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ERROR* p_error )
@@ -870,7 +870,7 @@ static BOOL ROOM_DATA_SetUpWait( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ERROR* p_
   GF_ASSERT( p_wk->in_roomdata == FALSE );
 
   // 受信完了待ち
-	if( ERROR_DATA_GetAsyncResult( p_error, &result ) ){
+  if( ERROR_DATA_GetAsyncResult( p_error, &result ) ){
     
     // エラー終了でなければ完了
     if( !ERROR_DATA_IsError( p_error ) ){
@@ -888,10 +888,10 @@ static BOOL ROOM_DATA_SetUpWait( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ERROR* p_
 // ルーム情報の取得処理
 //----------------------------------------------------------------------------
 /**
- *	@brief  RoomData 部屋情報の取得処理 
+ *  @brief  RoomData 部屋情報の取得処理 
  *
- *	@param	p_wk      ワーク
- *	@param	room_no   部屋ナンバー
+ *  @param  p_wk      ワーク
+ *  @param  room_no   部屋ナンバー
  */
 //-----------------------------------------------------------------------------
 static void ROOM_DATA_LoadRoomData( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ERROR* p_error, u16 room_no )
@@ -903,18 +903,18 @@ static void ROOM_DATA_LoadRoomData( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ERROR*
 
   p_wk->room_no = room_no;
   GF_ASSERT( p_wk->room_no <= p_wk->room_num );
-	Dpw_Bt_DownloadRoomAsync( p_wk->rank, p_wk->room_no, &p_wk->bt_roomdata );
+  Dpw_Bt_DownloadRoomAsync( p_wk->rank, p_wk->room_no, &p_wk->bt_roomdata );
   ERROR_DATA_GetAsyncStart( p_error );
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  RoomData 部屋情報　取得ウエイト
+ *  @brief  RoomData 部屋情報　取得ウエイト
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  *
- *	@retval TRUE    完了
- *	@retval FALSE   途中
+ *  @retval TRUE    完了
+ *  @retval FALSE   途中
  */
 //-----------------------------------------------------------------------------
 static BOOL ROOM_DATA_LoadRoomDataWait( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ERROR* p_error )
@@ -928,7 +928,7 @@ static BOOL ROOM_DATA_LoadRoomDataWait( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ER
   }
 
   // 受信完了待ち
-	if( ERROR_DATA_GetAsyncResult( p_error, &result ) ){
+  if( ERROR_DATA_GetAsyncResult( p_error, &result ) ){
     
     // エラー終了でなければ完了
     if( !ERROR_DATA_IsError( p_error ) ){
@@ -943,7 +943,7 @@ static BOOL ROOM_DATA_LoadRoomDataWait( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ER
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  RoomData  rankの取得
+ *  @brief  RoomData  rankの取得
  */
 //-----------------------------------------------------------------------------
 static u16 ROOM_DATA_GetRank( const WIFI_BSUBWAY_ROOM* cp_wk )
@@ -953,7 +953,7 @@ static u16 ROOM_DATA_GetRank( const WIFI_BSUBWAY_ROOM* cp_wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  RoomData roomNoの取得
+ *  @brief  RoomData roomNoの取得
  */
 //-----------------------------------------------------------------------------
 static u16 ROOM_DATA_GetRoomNo( const WIFI_BSUBWAY_ROOM* cp_wk )
@@ -964,7 +964,7 @@ static u16 ROOM_DATA_GetRoomNo( const WIFI_BSUBWAY_ROOM* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  RoomData roomNumの取得
+ *  @brief  RoomData roomNumの取得
  */
 //-----------------------------------------------------------------------------
 static u16 ROOM_DATA_GetRoomNum( const WIFI_BSUBWAY_ROOM* cp_wk )
@@ -976,7 +976,7 @@ static u16 ROOM_DATA_GetRoomNum( const WIFI_BSUBWAY_ROOM* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  RoomData 部屋情報の取得
+ *  @brief  RoomData 部屋情報の取得
  */
 //-----------------------------------------------------------------------------
 static const Dpw_Bt_Room* ROOM_DATA_GetRoomData( const WIFI_BSUBWAY_ROOM* cp_wk )
@@ -989,10 +989,10 @@ static const Dpw_Bt_Room* ROOM_DATA_GetRoomData( const WIFI_BSUBWAY_ROOM* cp_wk 
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  プレイヤー情報のセーブ
+ *  @brief  プレイヤー情報のセーブ
  *
- *	@param	cp_wk
- *	@param	p_save 
+ *  @param  cp_wk
+ *  @param  p_save 
  */
 //-----------------------------------------------------------------------------
 static void ROOM_DATA_SavePlayerData( const WIFI_BSUBWAY_ROOM* cp_wk, BSUBWAY_WIFI_DATA* p_save )
@@ -1012,10 +1012,10 @@ static void ROOM_DATA_SavePlayerData( const WIFI_BSUBWAY_ROOM* cp_wk, BSUBWAY_WI
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  リーダー履歴のセーブ
+ *  @brief  リーダー履歴のセーブ
  *
- *	@param	cp_wk
- *	@param	p_save 
+ *  @param  cp_wk
+ *  @param  p_save 
  */
 //-----------------------------------------------------------------------------
 static void ROOM_DATA_SaveLeaderData( const WIFI_BSUBWAY_ROOM* cp_wk, BSUBWAY_WIFI_DATA* p_save )
@@ -1029,11 +1029,11 @@ static void ROOM_DATA_SaveLeaderData( const WIFI_BSUBWAY_ROOM* cp_wk, BSUBWAY_WI
 
 
 //-------------------------------------
-///	PersonalData
+/// PersonalData
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  PersonalData  初期化
+ *  @brief  PersonalData  初期化
  */
 //-----------------------------------------------------------------------------
 static void PERSONAL_DATA_Init( WIFI_BSUBWAY_PERSONAL* p_wk )
@@ -1043,7 +1043,7 @@ static void PERSONAL_DATA_Init( WIFI_BSUBWAY_PERSONAL* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  PersonalData  破棄
+ *  @brief  PersonalData  破棄
  */
 //-----------------------------------------------------------------------------
 static void PERSONAL_DATA_Exit( WIFI_BSUBWAY_PERSONAL* p_wk )
@@ -1058,11 +1058,11 @@ static void PERSONAL_DATA_Exit( WIFI_BSUBWAY_PERSONAL* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  PersonalData  プロフィールセットアップ
+ *  @brief  PersonalData  プロフィールセットアップ
  *
- *	@param	p_wk        ワーク
- *	@param	p_gamedata  ゲームData
- *	@param	p_error     エラーワーク
+ *  @param  p_wk        ワーク
+ *  @param  p_gamedata  ゲームData
+ *  @param  p_error     エラーワーク
  */
 //-----------------------------------------------------------------------------
 static void PERSONAL_DATA_SetUpProfile( WIFI_BSUBWAY_PERSONAL* p_wk, GAMEDATA* p_gamedata, WIFI_BSUBWAY_ERROR* p_error )
@@ -1078,7 +1078,7 @@ static void PERSONAL_DATA_SetUpProfile( WIFI_BSUBWAY_PERSONAL* p_wk, GAMEDATA* p
   DPW_RAP_CreateProfile( &p_wk->dc_profile, p_mystatus );
   
   // 認証
-	Dpw_Bt_SetProfileAsync( &p_wk->dc_profile, &p_wk->dc_profile_result );
+  Dpw_Bt_SetProfileAsync( &p_wk->dc_profile, &p_wk->dc_profile_result );
   ERROR_DATA_GetAsyncStart( p_error );
 
   
@@ -1091,18 +1091,18 @@ static void PERSONAL_DATA_SetUpProfile( WIFI_BSUBWAY_PERSONAL* p_wk, GAMEDATA* p
   p_wk->cp_bsubway_score  = p_bsubway_score;
 
 
-	WIFI_BSUBWAY_Printf("Dpw Bsubway Email 認証\n");
+  WIFI_BSUBWAY_Printf("Dpw Bsubway Email 認証\n");
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  PersonalData  プロフィールセットアップ完了待ち
+ *  @brief  PersonalData  プロフィールセットアップ完了待ち
  *
- *	@param	p_wk      ワーク
- *	@param	p_error   エラーワーク
+ *  @param  p_wk      ワーク
+ *  @param  p_error   エラーワーク
  *
- *	@retval TRUE    完了
- *	@retval FALSE   途中
+ *  @retval TRUE    完了
+ *  @retval FALSE   途中
  */
 //-----------------------------------------------------------------------------
 static BOOL PERSONAL_DATA_SetUpProfileWait( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error )
@@ -1112,7 +1112,7 @@ static BOOL PERSONAL_DATA_SetUpProfileWait( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BS
   GF_ASSERT( p_wk->setup == FALSE );
 
   // 受信完了待ち
-	if( ERROR_DATA_GetAsyncResult( p_error, &result ) ){
+  if( ERROR_DATA_GetAsyncResult( p_error, &result ) ){
     
     // エラー終了でなければ完了
     if( !ERROR_DATA_IsError( p_error ) ){
@@ -1127,10 +1127,10 @@ static BOOL PERSONAL_DATA_SetUpProfileWait( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BS
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  Dpw_Bt_Player情報の生成
+ *  @brief  Dpw_Bt_Player情報の生成
  *
- *	@param	p_player  情報格納先
- *	@param	p_gamedata  ゲームデータ
+ *  @param  p_player  情報格納先
+ *  @param  p_gamedata  ゲームデータ
  */
 //-----------------------------------------------------------------------------
 static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* p_gamedata )
@@ -1141,35 +1141,35 @@ static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* 
   WIFI_LIST* p_wifilist         = GAMEDATA_GetWiFiList( p_gamedata );
   BSUBWAY_SCOREDATA* p_score    = GAMEDATA_GetBSubwayScoreData( p_gamedata );
 
-	GFL_STD_MemClear( p_player, sizeof(Dpw_Bt_Player) );
+  GFL_STD_MemClear( p_player, sizeof(Dpw_Bt_Player) );
 
-	//name
-	GFL_STD_MemCopy( MyStatus_GetMyName( p_mystatus ), p_player->playerName, 8*2 );
-	//playerid
-	*((u32*)p_player->playerId) = MyStatus_GetID( p_mystatus );
-	//version
-	p_player->versionCode = CasetteVersion;
-	//language
-	p_player->langCode = CasetteLanguage;
-	//countryCode
-	p_player->countryCode = (u8)MyStatus_GetMyNation( p_mystatus );
-	//localCode
-	p_player->localCode = (u8)MyStatus_GetMyArea( p_mystatus );
-	//gender
-	p_player->gender = MyStatus_GetMySex( p_mystatus );
-	//tr_type
-	p_player->trainerType = MyStatus_GetTrainerView( p_mystatus );
+  //name
+  GFL_STD_MemCopy( MyStatus_GetMyName( p_mystatus ), p_player->playerName, 8*2 );
+  //playerid
+  *((u32*)p_player->playerId) = MyStatus_GetID( p_mystatus );
+  //version
+  p_player->versionCode = CasetteVersion;
+  //language
+  p_player->langCode = CasetteLanguage;
+  //countryCode
+  p_player->countryCode = (u8)MyStatus_GetMyNation( p_mystatus );
+  //localCode
+  p_player->localCode = (u8)MyStatus_GetMyArea( p_mystatus );
+  //gender
+  p_player->gender = MyStatus_GetMySex( p_mystatus );
+  //tr_type
+  p_player->trainerType = MyStatus_GetTrainerView( p_mystatus );
  
-	//メッセージデータ取得
+  //メッセージデータ取得
   //@TODO メッセージを格納
   /*
-	for(i = 0;i < 3;i++){
-		GFL_STD_MemCopy(TowerPlayerMsg_Get(sv,BTWR_MSG_PLAYER_READY+i),&(p_player->message[8*i]),8);
-	}
-	GFL_STD_MemCopy(TowerPlayerMsg_Get(sv,BTWR_MSG_LEADER),p_player->leaderMessage,8);
+  for(i = 0;i < 3;i++){
+    GFL_STD_MemCopy(TowerPlayerMsg_Get(sv,BTWR_MSG_PLAYER_READY+i),&(p_player->message[8*i]),8);
+  }
+  GFL_STD_MemCopy(TowerPlayerMsg_Get(sv,BTWR_MSG_LEADER),p_player->leaderMessage,8);
   */
 
-	//タワーセーブデータ取得
+  //タワーセーブデータ取得
   p_player->result =  BSUBWAY_SCOREDATA_GetWifiScore( p_score );
   //ポケモンデータ取得
   BSUBWAY_SCOREDATA_GetUsePokeData( p_score, BSWAY_SCORE_POKE_WIFI, (BSUBWAY_POKEMON*)p_player->pokemon );
@@ -1180,11 +1180,11 @@ static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* 
 // ポケモン認証
 //----------------------------------------------------------------------------
 /**
- *	@brief  ポケモン認証　
+ *  @brief  ポケモン認証　
  *
- *	@param	p_wk      ワーク
- *	@param  p_error
- *	@param	heapID    ヒープID
+ *  @param  p_wk      ワーク
+ *  @param  p_error
+ *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
 static void PERSONAL_DATA_SetUpNhttpPokemon( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error, DWCSvlResult* p_svl_result, HEAPID heapID )
@@ -1232,13 +1232,13 @@ static void PERSONAL_DATA_SetUpNhttpPokemon( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_B
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ポケモン認証　完了待ち
+ *  @brief  ポケモン認証　完了待ち
  *
- *	@param	p_wk      ワーク
- *	@param  p_error
+ *  @param  p_wk      ワーク
+ *  @param  p_error
  *
- *	@retval TRUE    完了
- *	@retval FALSE   途中
+ *  @retval TRUE    完了
+ *  @retval FALSE   途中
  */
 //-----------------------------------------------------------------------------
 static BOOL PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error )
@@ -1314,7 +1314,7 @@ static BOOL PERSONAL_DATA_SetUpNhttpPokemonWait( WIFI_BSUBWAY_PERSONAL* p_wk, WI
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  Personal Data アップデート
+ *  @brief  Personal Data アップデート
  */
 //-----------------------------------------------------------------------------
 static void PERSONAL_DATA_UploadPersonalData( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error  )
@@ -1330,7 +1330,7 @@ static void PERSONAL_DATA_UploadPersonalData( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_
     room_no = BSUBWAY_WIFIDATA_GetPlayerRoomNo( p_wk->cp_bsubway_wifi );
     win = BSUBWAY_SCOREDATA_GetWifiNum( p_wk->cp_bsubway_score );
 
-  	Dpw_Bt_UploadPlayerAsync(  rank,  room_no,  win, &p_wk->bt_player, p_wk->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
+    Dpw_Bt_UploadPlayerAsync(  rank,  room_no,  win, &p_wk->bt_player, p_wk->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
     WIFI_BSUBWAY_Printf( "Start\n" );
     ERROR_DATA_GetAsyncStart( p_error );
   }
@@ -1338,13 +1338,13 @@ static void PERSONAL_DATA_UploadPersonalData( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  Personal Data アップデート完了待ち
+ *  @brief  Personal Data アップデート完了待ち
  *
- *	@param	p_wk      ワーク
- *	@param	p_error   エラーワーク
+ *  @param  p_wk      ワーク
+ *  @param  p_error   エラーワーク
  *
- *	@retval TRUE    完了
- *	@retval FALSE   途中
+ *  @retval TRUE    完了
+ *  @retval FALSE   途中
  */
 //-----------------------------------------------------------------------------
 static BOOL PERSONAL_DATA_UploadPersonalDataWait( WIFI_BSUBWAY_PERSONAL* p_wk, WIFI_BSUBWAY_ERROR* p_error  )
@@ -1352,7 +1352,7 @@ static BOOL PERSONAL_DATA_UploadPersonalDataWait( WIFI_BSUBWAY_PERSONAL* p_wk, W
   s32 result;
 
   // 受信完了待ち
-	if( ERROR_DATA_GetAsyncResult( p_error, &result ) ){
+  if( ERROR_DATA_GetAsyncResult( p_error, &result ) ){
     
     // エラー終了でなければ完了
     if( !ERROR_DATA_IsError( p_error ) ){
@@ -1369,11 +1369,11 @@ static BOOL PERSONAL_DATA_UploadPersonalDataWait( WIFI_BSUBWAY_PERSONAL* p_wk, W
 
 
 //-------------------------------------
-///	ErrorData
+/// ErrorData
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  ErrorData初期化
+ *  @brief  ErrorData初期化
  */
 //-----------------------------------------------------------------------------
 static void ERROR_DATA_Init( WIFI_BSUBWAY_ERROR* p_wk )
@@ -1383,9 +1383,9 @@ static void ERROR_DATA_Init( WIFI_BSUBWAY_ERROR* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  Erro検知機能つき　情報受信処理開始
+ *  @brief  Erro検知機能つき　情報受信処理開始
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void ERROR_DATA_GetAsyncStart( WIFI_BSUBWAY_ERROR* p_wk )
@@ -1396,12 +1396,12 @@ static void ERROR_DATA_GetAsyncStart( WIFI_BSUBWAY_ERROR* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  Error検知機能つき SERVERSTATUS　受信処理
+ *  @brief  Error検知機能つき SERVERSTATUS　受信処理
  *
- *	@param	p_wk  エラーワーク
+ *  @param  p_wk  エラーワーク
  *
- *	@retval TRUE    受信完了
- *	@retval FALSE   受信中
+ *  @retval TRUE    受信完了
+ *  @retval FALSE   受信中
  */
 //-----------------------------------------------------------------------------
 static BOOL ERROR_DATA_GetAsyncServerResult( WIFI_BSUBWAY_ERROR* p_wk )
@@ -1409,12 +1409,12 @@ static BOOL ERROR_DATA_GetAsyncServerResult( WIFI_BSUBWAY_ERROR* p_wk )
   s32 result = 0;
   BOOL complete = FALSE;
   
-	if( !Dpw_Bt_IsAsyncEnd() ){
+  if( !Dpw_Bt_IsAsyncEnd() ){
     // タイムアウトチェック
     p_wk->timeout ++;
     if( p_wk->timeout == BSUBWAY_TIMEOUT_TIME ){
       // 過去策↓
-			// CommFatalErrorFunc_NoNumber();	//強制ふっとばし
+      // CommFatalErrorFunc_NoNumber(); //強制ふっとばし
       // @TODO ふっとばし　SERVERタイムアウトと同様の処理を行う。
       // キャンセルコール
       Dpw_Bt_CancelAsync();
@@ -1423,34 +1423,34 @@ static BOOL ERROR_DATA_GetAsyncServerResult( WIFI_BSUBWAY_ERROR* p_wk )
       p_wk->timeout_flag = TRUE;
     }
   }else{
-		result    = Dpw_Bt_GetAsyncResult();
+    result    = Dpw_Bt_GetAsyncResult();
     complete  = TRUE;
-		switch (result){
-		case DPW_TR_STATUS_SERVER_OK:		// 正常に動作している
-			WIFI_BSUBWAY_Printf(" server ok\n");
+    switch (result){
+    case DPW_TR_STATUS_SERVER_OK:   // 正常に動作している
+      WIFI_BSUBWAY_Printf(" server ok\n");
       p_wk->server_status = result;
-			break;
-		case DPW_TR_STATUS_SERVER_STOP_SERVICE:	// サービス停止中
-		case DPW_TR_STATUS_SERVER_FULL:			// サーバーが満杯
-			WIFI_BSUBWAY_Printf(" server ng\n");
+      break;
+    case DPW_TR_STATUS_SERVER_STOP_SERVICE: // サービス停止中
+    case DPW_TR_STATUS_SERVER_FULL:     // サーバーが満杯
+      WIFI_BSUBWAY_Printf(" server ng\n");
       p_wk->server_status = result;
       break;
 
-		case DPW_TR_ERROR_SERVER_FULL:
-		case DPW_TR_ERROR_CANCEL:
-		case DPW_TR_ERROR_FAILURE:
-		case DPW_TR_ERROR_SERVER_TIMEOUT:
-		case DPW_TR_ERROR_DISCONNECTED:	
+    case DPW_TR_ERROR_SERVER_FULL:
+    case DPW_TR_ERROR_CANCEL:
+    case DPW_TR_ERROR_FAILURE:
+    case DPW_TR_ERROR_SERVER_TIMEOUT:
+    case DPW_TR_ERROR_DISCONNECTED: 
     case DPW_BT_ERROR_ILLIGAL_REQUEST:
-			WIFI_BSUBWAY_Printf(" server ng\n");
+      WIFI_BSUBWAY_Printf(" server ng\n");
       p_wk->error_code = result;
       break;
 
-		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
-		default:
+    case DPW_TR_ERROR_FATAL:      //!< 通信致命的エラー。電源の再投入が必要です
+    default:
       NetErr_DispCall(TRUE);
-			break;
-		}
+      break;
+    }
   }
 
   return complete;
@@ -1459,13 +1459,13 @@ static BOOL ERROR_DATA_GetAsyncServerResult( WIFI_BSUBWAY_ERROR* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  Error検知機能つき　情報受信処理
+ *  @brief  Error検知機能つき　情報受信処理
  *
- *	@param  p_wk        ワーク
- *	@param  p_result    結果格納先
+ *  @param  p_wk        ワーク
+ *  @param  p_result    結果格納先
  *
- *	@retval TRUE    受信完了
- *	@retval FALSE   受信中
+ *  @retval TRUE    受信完了
+ *  @retval FALSE   受信中
  */
 //-----------------------------------------------------------------------------
 static BOOL ERROR_DATA_GetAsyncResult( WIFI_BSUBWAY_ERROR* p_wk, s32* p_result )
@@ -1473,12 +1473,12 @@ static BOOL ERROR_DATA_GetAsyncResult( WIFI_BSUBWAY_ERROR* p_wk, s32* p_result )
   s32 result = 0;
   BOOL complete = FALSE;
   
-	if( !Dpw_Bt_IsAsyncEnd() ){
+  if( !Dpw_Bt_IsAsyncEnd() ){
     // タイムアウトチェック
     p_wk->timeout ++;
     if( p_wk->timeout == BSUBWAY_TIMEOUT_TIME ){
       // 過去策↓
-			// CommFatalErrorFunc_NoNumber();	//強制ふっとばし
+      // CommFatalErrorFunc_NoNumber(); //強制ふっとばし
       // @TODO ふっとばし　SERVERタイムアウトと同様の処理を行う。
       // キャンセルコール
       Dpw_Bt_CancelAsync();
@@ -1487,27 +1487,27 @@ static BOOL ERROR_DATA_GetAsyncResult( WIFI_BSUBWAY_ERROR* p_wk, s32* p_result )
       p_wk->timeout_flag = TRUE;
     }
   }else{
-		result    = Dpw_Bt_GetAsyncResult();
+    result    = Dpw_Bt_GetAsyncResult();
     complete  = TRUE;
-		switch (result){
-		case DPW_TR_ERROR_SERVER_FULL:
-		case DPW_TR_ERROR_CANCEL:
-		case DPW_TR_ERROR_FAILURE:
-		case DPW_TR_ERROR_SERVER_TIMEOUT:
-		case DPW_TR_ERROR_DISCONNECTED:	
+    switch (result){
+    case DPW_TR_ERROR_SERVER_FULL:
+    case DPW_TR_ERROR_CANCEL:
+    case DPW_TR_ERROR_FAILURE:
+    case DPW_TR_ERROR_SERVER_TIMEOUT:
+    case DPW_TR_ERROR_DISCONNECTED: 
     case DPW_BT_ERROR_ILLIGAL_REQUEST:
-			WIFI_BSUBWAY_Printf(" recv ng\n");
+      WIFI_BSUBWAY_Printf(" recv ng\n");
       p_wk->error_code = result;
       break;
 
-		case DPW_TR_ERROR_FATAL:			//!< 通信致命的エラー。電源の再投入が必要です
+    case DPW_TR_ERROR_FATAL:      //!< 通信致命的エラー。電源の再投入が必要です
       NetErr_DispCall(TRUE);
       break;
 
-		default:
+    default:
       if( result >= 0 )
       {
-  			WIFI_BSUBWAY_Printf(" recv ok\n");
+        WIFI_BSUBWAY_Printf(" recv ok\n");
         *p_result = result;
       }
       else
@@ -1515,8 +1515,8 @@ static BOOL ERROR_DATA_GetAsyncResult( WIFI_BSUBWAY_ERROR* p_wk, s32* p_result )
         // マイナスはError
         NetErr_DispCall(TRUE);
       }
-			break;
-		}
+      break;
+    }
   }
 
   return complete;
@@ -1524,12 +1524,12 @@ static BOOL ERROR_DATA_GetAsyncResult( WIFI_BSUBWAY_ERROR* p_wk, s32* p_result )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  Dpw Btのエラー状態チェック
+ *  @brief  Dpw Btのエラー状態チェック
  *
- *	@param	cp_wk   ワーク
+ *  @param  cp_wk   ワーク
  *
- *	@retval TRUE    エラー状態
- *	@retval FALSE   エラー状態ではない
+ *  @retval TRUE    エラー状態
+ *  @retval FALSE   エラー状態ではない
  */
 //-----------------------------------------------------------------------------
 static BOOL ERROR_DATA_IsError( const WIFI_BSUBWAY_ERROR* cp_wk )
@@ -1556,16 +1556,16 @@ static BOOL ERROR_DATA_IsError( const WIFI_BSUBWAY_ERROR* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ErrorData Dpw BTのエラーメッセージ取得
+ *  @brief  ErrorData Dpw BTのエラーメッセージ取得
  *
- *	@param	cp_wk   ワーク
+ *  @param  cp_wk   ワーク
  *    
- *	@return エラーメッセージID
+ *  @return エラーメッセージID
  */
 //-----------------------------------------------------------------------------
 static s32 ERROR_DATA_GetPrintMessageID( const WIFI_BSUBWAY_ERROR* cp_wk )
 {
-	int msgno =0;
+  int msgno =0;
 
   // @TODO エラーメッセージ仮です。
   //
@@ -1634,10 +1634,10 @@ static s32 ERROR_DATA_GetPrintMessageID( const WIFI_BSUBWAY_ERROR* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  NhttpError  設定
+ *  @brief  NhttpError  設定
  *
- *	@param	p_wk    ワーク
- *	@param	error   エラータイプ
+ *  @param  p_wk    ワーク
+ *  @param  error   エラータイプ
  */
 //-----------------------------------------------------------------------------
 static void ERROR_DATA_SetNhttpError( WIFI_BSUBWAY_ERROR* p_wk, BSUBWAY_NHTTP_ERROR error )
@@ -1648,9 +1648,9 @@ static void ERROR_DATA_SetNhttpError( WIFI_BSUBWAY_ERROR* p_wk, BSUBWAY_NHTTP_ER
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  タイムアウトを開始
+ *  @brief  タイムアウトを開始
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void ERROR_DATA_StartOnlyTimeOut( WIFI_BSUBWAY_ERROR* p_wk )
@@ -1661,11 +1661,11 @@ static void ERROR_DATA_StartOnlyTimeOut( WIFI_BSUBWAY_ERROR* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  タイムアウトカウント
+ *  @brief  タイムアウトカウント
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  *
- *	タイムアウトになったら自動でエラー処理へ行きます。
+ *  タイムアウトになったら自動でエラー処理へ行きます。
  */
 //-----------------------------------------------------------------------------
 static void ERROR_DATA_OnlyTimeOutCount( WIFI_BSUBWAY_ERROR* p_wk )
@@ -1679,14 +1679,14 @@ static void ERROR_DATA_OnlyTimeOutCount( WIFI_BSUBWAY_ERROR* p_wk )
 
 
 //-------------------------------------
-///	CodeIn
+/// CodeIn
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@briefCodeIn開始
+ *  @briefCodeIn開始
  *
- *	@param	p_wk      ワーク
- *	@param	heapID    ヒープID
+ *  @param  p_wk      ワーク
+ *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
 static void CODEIN_StartRoomNoProc( WIFI_BSUBWAY* p_wk, HEAPID heapID )
@@ -1697,7 +1697,7 @@ static void CODEIN_StartRoomNoProc( WIFI_BSUBWAY* p_wk, HEAPID heapID )
     0,
   };
 
-  p_wk->p_codein = CodeInput_ParamCreate( heapID, VIEW_NUMBER_KETA_ROOM_NO, s_CODEIN_BLOCK );
+  p_wk->p_codein = CodeInput_ParamCreate( heapID, CODEIN_MODE_TRAIN_NO, VIEW_NUMBER_KETA_ROOM_NO, s_CODEIN_BLOCK );
   
   // プロックコール
   GAMESYSTEM_CallProc( p_wk->p_param->p_gamesystem, FS_OVERLAY_ID(codein), &CodeInput_ProcData, p_wk->p_codein );
@@ -1705,10 +1705,10 @@ static void CODEIN_StartRoomNoProc( WIFI_BSUBWAY* p_wk, HEAPID heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@briefCodeIn開始
+ *  @briefCodeIn開始
  *
- *	@param	p_wk      ワーク
- *	@param	heapID    ヒープID
+ *  @param  p_wk      ワーク
+ *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
 static void CODEIN_StartRankProc( WIFI_BSUBWAY* p_wk, HEAPID heapID )
@@ -1719,7 +1719,7 @@ static void CODEIN_StartRankProc( WIFI_BSUBWAY* p_wk, HEAPID heapID )
     0,
   };
 
-  p_wk->p_codein = CodeInput_ParamCreate( heapID, VIEW_NUMBER_KETA_RANK, s_CODEIN_BLOCK );
+  p_wk->p_codein = CodeInput_ParamCreate( heapID, CODEIN_MODE_RANK, VIEW_NUMBER_KETA_RANK, s_CODEIN_BLOCK );
   
   // プロックコール
   GAMESYSTEM_CallProc( p_wk->p_param->p_gamesystem, FS_OVERLAY_ID(codein), &CodeInput_ProcData, p_wk->p_codein );
@@ -1727,9 +1727,9 @@ static void CODEIN_StartRankProc( WIFI_BSUBWAY* p_wk, HEAPID heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  CodeIn終了
+ *  @brief  CodeIn終了
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void CODEIN_EndProc( WIFI_BSUBWAY* p_wk )
@@ -1745,10 +1745,10 @@ static void CODEIN_EndProc( WIFI_BSUBWAY* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  CodeIn　入力文字列取得
+ *  @brief  CodeIn　入力文字列取得
  *
- *	@param	cp_wk   ワーク
- *	@param  p_str 　格納バッファ
+ *  @param  cp_wk   ワーク
+ *  @param  p_str 　格納バッファ
  */
 //-----------------------------------------------------------------------------
 static void CODEIN_GetString( const WIFI_BSUBWAY* cp_wk, STRBUF* p_str )
@@ -1760,9 +1760,9 @@ static void CODEIN_GetString( const WIFI_BSUBWAY* cp_wk, STRBUF* p_str )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  入力数値を取得
+ *  @brief  入力数値を取得
  *
- *	@param	cp_wk 
+ *  @param  cp_wk 
  */
 //-----------------------------------------------------------------------------
 static int CODEIN_GetCode( const WIFI_BSUBWAY* cp_wk )
@@ -1810,14 +1810,14 @@ static int CODEIN_GetCode( const WIFI_BSUBWAY* cp_wk )
 
 
 //-------------------------------------
-///	Login
+/// Login
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  Login処理 開始
+ *  @brief  Login処理 開始
  *
- *	@param	p_wk      ワーク  
- *	@param	heapID    ヒープID
+ *  @param  p_wk      ワーク  
+ *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
 static void LOGIN_StartProc( WIFI_BSUBWAY* p_wk )
@@ -1835,9 +1835,9 @@ static void LOGIN_StartProc( WIFI_BSUBWAY* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  Login処理 後始末
+ *  @brief  Login処理 後始末
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void LOGIN_EndProc( WIFI_BSUBWAY* p_wk )
@@ -1846,12 +1846,12 @@ static void LOGIN_EndProc( WIFI_BSUBWAY* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  Login処理 結果
+ *  @brief  Login処理 結果
  *
- *	@param	cp_wk   ワーク
+ *  @param  cp_wk   ワーク
  *
- *	@retval WIFILOGIN_RESULT_LOGIN, //ログインした
- *	@retval WIFILOGIN_RESULT_CANCEL,//キャンセルした
+ *  @retval WIFILOGIN_RESULT_LOGIN, //ログインした
+ *  @retval WIFILOGIN_RESULT_CANCEL,//キャンセルした
  */
 //-----------------------------------------------------------------------------
 static WIFILOGIN_RESULT LOGIN_GetResult( const WIFI_BSUBWAY* cp_wk )
@@ -1862,14 +1862,14 @@ static WIFILOGIN_RESULT LOGIN_GetResult( const WIFI_BSUBWAY* cp_wk )
 
 
 //-------------------------------------
-///	Logout
+/// Logout
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  Logout処理　開始
+ *  @brief  Logout処理　開始
  *
- *	@param	p_wk      ワーク
- *	@param	heapID    ヒープID
+ *  @param  p_wk      ワーク
+ *  @param  heapID    ヒープID
  *
  */
 //-----------------------------------------------------------------------------
@@ -1885,9 +1885,9 @@ static void LOGOUT_StartProc( WIFI_BSUBWAY* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  Logout処理  終了
+ *  @brief  Logout処理  終了
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void LOGOUT_EndProc( WIFI_BSUBWAY* p_wk )
@@ -1898,17 +1898,17 @@ static void LOGOUT_EndProc( WIFI_BSUBWAY* p_wk )
 
 
 //-------------------------------------
-///	メイン処理処理
+/// メイン処理処理
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  バトルサブウェイ　メイン処理
+ *  @brief  バトルサブウェイ　メイン処理
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  *
- *	@retval WIFI_BSUBWAY_RESULT_OK,                   //アップデート・ダウンロード成功
- *	@retval WIFI_BSUBWAY_RESULT_NG,                   //失敗
- *	@retval WIFI_BSUBWAY_RESULT_CANCEL,               //キャンセルした
+ *  @retval WIFI_BSUBWAY_RESULT_OK,                   //アップデート・ダウンロード成功
+ *  @retval WIFI_BSUBWAY_RESULT_NG,                   //失敗
+ *  @retval WIFI_BSUBWAY_RESULT_CANCEL,               //キャンセルした
  */
 //-----------------------------------------------------------------------------
 static BSUBWAY_MAIN_RESULT WiFiBsubway_Main( WIFI_BSUBWAY* p_wk, HEAPID heapID )
@@ -1926,9 +1926,9 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main( WIFI_BSUBWAY* p_wk, HEAPID heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  前回情報のアップロード
+ *  @brief  前回情報のアップロード
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_ScoreUpload( WIFI_BSUBWAY* p_wk, HEAPID heapID )
@@ -1996,9 +1996,9 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_ScoreUpload( WIFI_BSUBWAY* p_wk, HEA
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ゲーム情報のダウンロード
+ *  @brief  ゲーム情報のダウンロード
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk, HEAPID heapID )
@@ -2070,28 +2070,28 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
   case SCORE_UPLOAD_SEQ_GAMEDATA_CODEIN_FADEIN_WAIT:
     if( GFL_FADE_CheckFade() == FALSE )
     {
-			RTCTime time;
-			RTCDate date;
+      RTCTime time;
+      RTCDate date;
       u32 rank = ROOM_DATA_GetRank( &p_wk->roomdata );
       u32 roomno = p_wk->code_input;
       u32 roomnum = ROOM_DATA_GetRoomNum( &p_wk->roomdata );
 
 
-			// GameSpyサーバー時間・日付を取得
-			DWC_GetDateTime( &date, &time);
+      // GameSpyサーバー時間・日付を取得
+      DWC_GetDateTime( &date, &time);
 
       // 情報は範囲内か？
       if( (roomno < 1) || (roomno > roomnum) ){
         
-				p_wk->seq = SCORE_UPLOAD_SEQ_GAMEDATA_CHALLENGE_END_YESNO_MSG;
+        p_wk->seq = SCORE_UPLOAD_SEQ_GAMEDATA_CHALLENGE_END_YESNO_MSG;
 
       }
-			// 今日は既にダウンロードしているか？
+      // 今日は既にダウンロードしているか？
       else if( BSUBWAY_WIFIDATA_CheckRoomDataFlag( p_wk->p_bsubway_wifi, rank, roomno, &date )){
         
-				p_wk->seq = SCORE_UPLOAD_SEQ_GAMEDATA_ROOM_DOWNLOADED_MSG;
+        p_wk->seq = SCORE_UPLOAD_SEQ_GAMEDATA_ROOM_DOWNLOADED_MSG;
         
-			}else{
+      }else{
         
         // 入れる。
         ROOM_DATA_LoadRoomData( &p_wk->roomdata, &p_wk->bt_error, p_wk->code_input );
@@ -2102,7 +2102,7 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
         VIEW_PrintStream( &p_wk->view, msg_wifi_bt_002 );
 
         p_wk->seq++;
-			}
+      }
     }
     break;
 
@@ -2193,9 +2193,9 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  歴代情報のダウンロード
+ *  @brief  歴代情報のダウンロード
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p_wk, HEAPID heapID )
@@ -2402,53 +2402,53 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
 
   
 //-------------------------------------
-///	接続・切断・エラー
+/// 接続・切断・エラー
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  接続開始
+ *  @brief  接続開始
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void WiFiBsubway_Connect( WIFI_BSUBWAY* p_wk )
 {
-	// 世界交換接続初期化
-	DWCUserData* p_userdata;		// 認証済みのDWCUSERデータしかこないはず
-	s32 profileId;
+  // 世界交換接続初期化
+  DWCUserData* p_userdata;    // 認証済みのDWCUSERデータしかこないはず
+  s32 profileId;
 
   WIFI_BSUBWAY_Printf( "Connect Bsuway Start\n" );
 
-	// DWCUser構造体取得
-	p_userdata = WifiList_GetMyUserInfo( p_wk->p_wifilist );
+  // DWCUser構造体取得
+  p_userdata = WifiList_GetMyUserInfo( p_wk->p_wifilist );
 
-	MyStatus_SetProfileID( p_wk->p_mystatus, WifiList_GetMyGSID( p_wk->p_wifilist ) );
+  MyStatus_SetProfileID( p_wk->p_mystatus, WifiList_GetMyGSID( p_wk->p_wifilist ) );
 
-	// 正式なデータを取得
-	profileId = MyStatus_GetProfileID( p_wk->p_mystatus );
-	WIFI_BSUBWAY_Printf("Dpwサーバーログイン情報 profileId=%08x\n", profileId);
+  // 正式なデータを取得
+  profileId = MyStatus_GetProfileID( p_wk->p_mystatus );
+  WIFI_BSUBWAY_Printf("Dpwサーバーログイン情報 profileId=%08x\n", profileId);
 
-	// DPW_BT初期化
-	Dpw_Bt_Init( profileId, DWC_CreateFriendKey( p_userdata ),LIBDPW_SERVER_TYPE );
+  // DPW_BT初期化
+  Dpw_Bt_Init( profileId, DWC_CreateFriendKey( p_userdata ),LIBDPW_SERVER_TYPE );
 
-	WIFI_BSUBWAY_Printf("Dpw Bsubway 初期化\n");
+  WIFI_BSUBWAY_Printf("Dpw Bsubway 初期化\n");
 
-	Dpw_Bt_GetServerStateAsync();
+  Dpw_Bt_GetServerStateAsync();
   ERROR_DATA_GetAsyncStart( &p_wk->bt_error );
 
-	WIFI_BSUBWAY_Printf("Dpw Bsubway サーバー状態取得開始\n");
+  WIFI_BSUBWAY_Printf("Dpw Bsubway サーバー状態取得開始\n");
 
   p_wk->dpw_main_do = TRUE;
 }
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  接続ウエイト
+ *  @brief  接続ウエイト
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  *
- *	@retval TRUE    接続完了
- *	@retval FALSE   接続途中
+ *  @retval TRUE    接続完了
+ *  @retval FALSE   接続途中
  */
 //-----------------------------------------------------------------------------
 static BOOL WiFiBsubway_ConnectWait( WIFI_BSUBWAY* p_wk )
@@ -2459,16 +2459,16 @@ static BOOL WiFiBsubway_ConnectWait( WIFI_BSUBWAY* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  切断開始
+ *  @brief  切断開始
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void WiFiBsubway_Disconnect( WIFI_BSUBWAY* p_wk )
 {
   if( Dpw_Bt_IsAsyncEnd() == FALSE ){
 
-	  WIFI_BSUBWAY_Printf("Dpw Bsubway 切断\n");
+    WIFI_BSUBWAY_Printf("Dpw Bsubway 切断\n");
     // キャンセルコール
     Dpw_Bt_CancelAsync();
     ERROR_DATA_GetAsyncStart( &p_wk->bt_error );
@@ -2477,12 +2477,12 @@ static void WiFiBsubway_Disconnect( WIFI_BSUBWAY* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  切断ウエイト
+ *  @brief  切断ウエイト
  *  
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  *
- *	@retval TRUE    完了
- *	@retval FALSE   途中
+ *  @retval TRUE    完了
+ *  @retval FALSE   途中
  */
 //-----------------------------------------------------------------------------
 static BOOL WiFiBsubway_DisconnectWait( WIFI_BSUBWAY* p_wk )
@@ -2506,11 +2506,11 @@ static BOOL WiFiBsubway_DisconnectWait( WIFI_BSUBWAY* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  エラー処理
+ *  @brief  エラー処理
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  *
- *	@retval BOOL  ErrorWaitの有無
+ *  @retval BOOL  ErrorWaitの有無
  */
 //-----------------------------------------------------------------------------
 static BOOL WiFiBsubway_Error( WIFI_BSUBWAY* p_wk )
@@ -2560,12 +2560,12 @@ static BOOL WiFiBsubway_Error( WIFI_BSUBWAY* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  エラー処理　ウエイト
+ *  @brief  エラー処理　ウエイト
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  *
- *	@retval TRUE    完了
- *	@retval FALSE   途中
+ *  @retval TRUE    完了
+ *  @retval FALSE   途中
  */
 //-----------------------------------------------------------------------------
 static BOOL WiFiBsubway_ErrorWait( WIFI_BSUBWAY* p_wk )
@@ -2578,14 +2578,14 @@ static BOOL WiFiBsubway_ErrorWait( WIFI_BSUBWAY* p_wk )
 
 
 //-------------------------------------
-///	View
+/// View
 //=====================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  描画処理  初期化
+ *  @brief  描画処理  初期化
  *
- *	@param	p_wk      ワーク
- *	@param	heapID    ヒープID
+ *  @param  p_wk      ワーク
+ *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
 static void VIEW_Init( WIFI_BSUBWAY_VIEW* p_wk, HEAPID heapID )
@@ -2627,8 +2627,8 @@ static void VIEW_Init( WIFI_BSUBWAY_VIEW* p_wk, HEAPID heapID )
   p_wk->setup = TRUE;
 
   // OAM面の表示ON
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
   // 通信アイコンON
   GFL_NET_ReloadIcon();
@@ -2637,9 +2637,9 @@ static void VIEW_Init( WIFI_BSUBWAY_VIEW* p_wk, HEAPID heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  描画処理  破棄
+ *  @brief  描画処理  破棄
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void VIEW_Exit( WIFI_BSUBWAY_VIEW* p_wk )
@@ -2681,9 +2681,9 @@ static void VIEW_Exit( WIFI_BSUBWAY_VIEW* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  描画処理  メイン
+ *  @brief  描画処理  メイン
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void VIEW_Main( WIFI_BSUBWAY_VIEW* p_wk )
@@ -2699,10 +2699,10 @@ static void VIEW_Main( WIFI_BSUBWAY_VIEW* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  グラフィックResourceのセットアップ
+ *  @brief  グラフィックResourceのセットアップ
  *
- *	@param	p_wk      ワーク
- *	@param	heapID    ヒープID
+ *  @param  p_wk      ワーク
+ *  @param  heapID    ヒープID
  */
 //-----------------------------------------------------------------------------
 static void VIEW_InitResource( WIFI_BSUBWAY_VIEW* p_wk, HEAPID heapID )
@@ -2766,7 +2766,7 @@ static void VIEW_InitResource( WIFI_BSUBWAY_VIEW* p_wk, HEAPID heapID )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  Resource破棄
+ *  @brief  Resource破棄
  */
 //-----------------------------------------------------------------------------
 static void VIEW_ExitResource( WIFI_BSUBWAY_VIEW* p_wk )
@@ -2789,10 +2789,10 @@ static void VIEW_ExitResource( WIFI_BSUBWAY_VIEW* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ描画開始
+ *  @brief  メッセージ描画開始
  *
- *	@param	p_wk    ワーク
- *	@param	msg_id  メッセージID
+ *  @param  p_wk    ワーク
+ *  @param  msg_id  メッセージID
  */
 //-----------------------------------------------------------------------------
 static void VIEW_PrintStream( WIFI_BSUBWAY_VIEW* p_wk, u32 msg_id )
@@ -2819,12 +2819,12 @@ static void VIEW_PrintStream( WIFI_BSUBWAY_VIEW* p_wk, u32 msg_id )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ描画完了待ち
+ *  @brief  メッセージ描画完了待ち
  *
- *	@param	cp_wk   ワーク
+ *  @param  cp_wk   ワーク
  *
- *	@retval TRUE  完了
- *	@retval FALSE 途中
+ *  @retval TRUE  完了
+ *  @retval FALSE 途中
  */
 //-----------------------------------------------------------------------------
 static BOOL VIEW_PrintMain( WIFI_BSUBWAY_VIEW* p_wk )
@@ -2854,13 +2854,13 @@ static BOOL VIEW_PrintMain( WIFI_BSUBWAY_VIEW* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ワードセットに数値を設定
+ *  @brief  ワードセットに数値を設定
  *
- *	@param	p_wk      ワーク
- *	@param	idx       インデックス
- *	@param	number    ナンバー
- *	@param  keta      桁
- *	@param  dispType  表示タイプ
+ *  @param  p_wk      ワーク
+ *  @param  idx       インデックス
+ *  @param  number    ナンバー
+ *  @param  keta      桁
+ *  @param  dispType  表示タイプ
  */
 //-----------------------------------------------------------------------------
 static void VIEW_SetWordNumber( WIFI_BSUBWAY_VIEW* p_wk, u32 idx, u32 number, u32 keta )
@@ -2870,9 +2870,9 @@ static void VIEW_SetWordNumber( WIFI_BSUBWAY_VIEW* p_wk, u32 idx, u32 number, u3
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  YES NOウィンドウの表示 ON
+ *  @brief  YES NOウィンドウの表示 ON
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void VIEW_StartYesNo( WIFI_BSUBWAY_VIEW* p_wk )
@@ -2894,9 +2894,9 @@ static void VIEW_StartYesNo( WIFI_BSUBWAY_VIEW* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  YesNoまち
+ *  @brief  YesNoまち
  *
- *	@param	p_wk 
+ *  @param  p_wk 
  *
  * @retval  "BMPMENU_NULL 選択されていない"
  * @retval  "0        はいを選択"
@@ -2922,9 +2922,9 @@ static u32 VIEW_MainYesNo( WIFI_BSUBWAY_VIEW* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  セーブ開始
+ *  @brief  セーブ開始
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  */
 //-----------------------------------------------------------------------------
 static void SAVE_Start( WIFI_BSUBWAY* p_wk )
@@ -2936,12 +2936,12 @@ static void SAVE_Start( WIFI_BSUBWAY* p_wk )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  セーブメイン
+ *  @brief  セーブメイン
  *
- *	@param	p_wk  ワーク
+ *  @param  p_wk  ワーク
  *
- *	@retval TRUE  完了
- *	@retval FALSE 途中
+ *  @retval TRUE  完了
+ *  @retval FALSE 途中
  */
 //-----------------------------------------------------------------------------
 static BOOL SAVE_Main( WIFI_BSUBWAY* p_wk )
