@@ -3079,34 +3079,32 @@
 	</row>
 
 	<row id="TRID_ELITEW_03_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">はるか　おおむかし……▼
-でんせつの　ドラゴンの　ために▽
-つくられた　リュウラセンのとう▼
-この　ばしょに　ふさわしい
-たたかいを　しようでは　ないか！▼</language>
-		<language name="JPN_KANJI" width="216">はるか　大昔……▼
-伝説の　ドラゴンの　ために
-造られた　リュウラセンの塔▼
-その由緒に　相応しい
-戦いを　しようでは　ないか！▼</language>
+		<language name="JPN" width="216">じぶんと　パートナーの　ポケモンを
+きたえるためなら　でんき　ながれる▽
+この　ほらあなにも　くるのです！▼</language>
+		<language name="JPN_KANJI" width="216">自分と　パートナーの　ポケモンを
+鍛えるためなら　電気　流れる▽
+この洞穴にも　赴くのです！▼</language>
 	</row>
 
 	<row id="TRID_ELITEW_03_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">たしかに……
-ふさわしい　たたかい　だった</language>
-		<language name="JPN_KANJI" width="216">たしかに……
-相応しい　戦い　だった</language>
+		<language name="JPN" width="216">はしる　でんげき……
+くずれおちる　わたし……！</language>
+		<language name="JPN_KANJI" width="216">走る　電撃……
+崩れ落ちる　わたし……！</language>
 	</row>
 
 	<row id="TRID_ELITEW_03_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">この　まけに　くじけず
-でんせつの　ドラゴンを▽
-つかいこなせるほど▽
-すぐれた　トレーナーに　なる！！</language>
-		<language name="JPN_KANJI" width="216">この負けに　屈せず
-伝説の　ドラゴンを▽
-使いこなせるほど▽
-優れた　トレーナーに　なる！！</language>
+		<language name="JPN" width="216">でんきが　ながれる
+この　ほらあなを　このんで▽
+くらす　ポケモンたち……▼
+ひとは　はいらないほうが
+いいのかも　って　おもったりしない？</language>
+		<language name="JPN_KANJI" width="216">電気が　流れる
+この　洞穴を　好んで▽
+暮らす　ポケモンたち……▼
+人は　入らないほうが
+いいのかも　って　思ったりしない？</language>
 	</row>
 
 	<row id="TRID_ELITEW_04_TRMSG_FIGHT_START">
