@@ -39,6 +39,12 @@ XLSFILE = $(wildcard *.xls)
 #CSV
 CSV_FILE	= $(XLSFILE:.xls=.csv)
 
+#TIMEZONE
+TIMEZONE_FILE = light_timezone.lst
+
+#ダミー
+DUMMYFILE = dummy.txt
+
 LIST_FILE 	= list.txt
 
 
@@ -60,10 +66,10 @@ ifeq	($(CONVERTUSER),true)
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*_02.csv -p 2 -s csv $<
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*_03.csv -p 3 -s csv $<
 
-	perl conv.pl $*_00.csv $*_00.dat
-	perl conv.pl $*_01.csv $*_01.dat
-	perl conv.pl $*_02.csv $*_02.dat
-	perl conv.pl $*_03.csv $*_03.dat
+	perl conv.pl $*_00.csv $*_00.dat $(TIMEZONE_FILE)
+	perl conv.pl $*_01.csv $*_01.dat $(TIMEZONE_FILE)
+	perl conv.pl $*_02.csv $*_02.dat $(TIMEZONE_FILE)
+	perl conv.pl $*_03.csv $*_03.dat $(TIMEZONE_FILE)
 
 endif
 
@@ -74,10 +80,11 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(DUMMYFILE) $(TARGETDIR)/$(targetname).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
+
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
@@ -87,6 +94,12 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
+
+$(DUMMYFILE):$(TIMEZONE_FILE)
+	-ls dummy > $(DUMMYFILE)
+	rm -f *.dat
+	rm -f *.csv
+
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(CSV_FILE) $(TXTFILE)
 	-ls *.dat > $(LIST_FILE)
@@ -94,6 +107,12 @@ $(targetname).narc: $(CSV_FILE) $(TXTFILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
 	-rm	$(LIST_FILE)
+
+else
+
+$(DUMMYFILE):$(TIMEZONE_FILE)
+	-ls dummy > $(DUMMYFILE)
+
 endif
 
 #------------------------------------------------------------------------------

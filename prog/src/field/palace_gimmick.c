@@ -242,6 +242,8 @@ void PALACE_GMK_Move(FIELDMAP_WORK *fieldWork)
   }
 
 
+  // アニメーション管理
+  FLD_EXP_OBJ_PlayAnime( exobj_cnt );
 
   // バリアエフェクトメイン
   if( work->barrier_effect ){
@@ -249,9 +251,6 @@ void PALACE_GMK_Move(FIELDMAP_WORK *fieldWork)
     // バリアエフェクトメイン
     Barrier_Main( work, exobj_cnt );
   }
-
-  // アニメーション管理
-  FLD_EXP_OBJ_PlayAnime( exobj_cnt );
 }
 
 //----------------------------------------------------------------------------
@@ -468,6 +467,7 @@ static void Barrier_Init( PALACE_GMK_WORK* work, FLD_EXP_OBJ_CNT_PTR exobj_cnt )
 
       // ループアニメOFF
       FLD_EXP_OBJ_ChgAnmLoopFlg( anm_cnt, FALSE );
+      FLD_EXP_OBJ_ChgAnmStopFlg( anm_cnt, FALSE );
     }
   }
 }
@@ -499,7 +499,7 @@ static void Barrier_Start( PALACE_GMK_WORK* work, FLD_EXP_OBJ_CNT_PTR exobj_cnt,
           OBJ_BARRIER,
           i,
           0);
-      
+
     }
   }
 

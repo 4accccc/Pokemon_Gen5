@@ -414,9 +414,10 @@ static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *w
 
       // barrierエフェクト開始
       {
+        FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( barrier->fieldWork );
         VecFx32 pos;
 
-        MMDL_GetVectorPos( barrier->player_mmdl, &pos );
+        FIELD_PLAYER_GetDirPos( p_player, FIELD_PLAYER_GetDir(p_player), &pos );
         
         PALACE_GMK_StartBarrierEffect( barrier->fieldWork, &pos );
       }

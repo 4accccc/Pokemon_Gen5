@@ -2,15 +2,15 @@
 #
 #	CSV形式のライトデータをBinaryにして出力
 #
-#	conv.pl	csvfile
+#	conv.pl	csvfile outputfile timezone.lst
 #
 ################################################
 
 
 #引数をチェック
-if( @ARGV < 2 ){
+if( @ARGV < 3 ){
 	print( "need 2 param\n" );
-	print( "conv.pl	csvfile outputfile\n" );
+	print( "conv.pl	csvfile outputfile resource/field_light/timezone.lst\n" );
 	exit(1);
 }
 
@@ -18,6 +18,11 @@ if( @ARGV < 2 ){
 #ファイル読み込み
 open( FILE, $ARGV[0] );
 @CSVFILE = <FILE>;
+close( FILE );
+
+#タイムゾーンリスト取得
+open( FILE, $ARGV[2] );
+@TIMEZONE_FILE = <FILE>;
 close( FILE );
 
 @TIMEZONE_DEF = ( "朝", "昼", "夕方", "夜", "深夜" );
@@ -75,6 +80,30 @@ $FRAME_NUM		= 0;		#フレーム数
 @BG_G			= undef;	#背面カラー
 @BG_B			= undef;	#背面カラー
 
+#TimeZoneと分の情報を取得
+$datacount = 0;
+foreach $one ( @TIMEZONE_FILE )
+{
+  $one =~ s/\n/\s/g;
+
+  @line = split( /\s/, $one );
+
+  if( $datacount == 0 ){
+    #データ数調査
+    while( &IsTimeZone( $line[ $FRAME_NUM ]) ){
+      $TIMEZONE[ $FRAME_NUM ] = $line[ $FRAME_NUM ];
+      $FRAME_NUM++;
+    }
+    $datacount = 1;
+  }elsif ( $datacount == 1 ){
+
+    for( $i=0; $i<$FRAME_NUM; $i++ ){
+      $FRAME[ $i ] = $line[ $i ];
+    }
+    $datacount = 2;
+  }
+}
+
 
 #データ取得
 $inputdata = 0;
@@ -87,24 +116,10 @@ foreach $one ( @CSVFILE ){
   
 	@line = split( /,/, $one );
 	if( $inputdata == 0 ){
-		if( "".$line[ 0 ] eq "timezone" ){
+		if( "".$line[ 0 ] eq "分" ){
 			$inputdata = 1;
-
-      #データ数調査
-      while( &IsTimeZone( $line[ $FRAME_NUM+1 ]) ){
-        $TIMEZONE[ $FRAME_NUM ] = $line[ $FRAME_NUM+1 ];
-        $FRAME_NUM++;
-      }
-
 		}
   }elsif( $inputdata == 1 ){
-
-    for( $i=0; $i<$FRAME_NUM; $i++ ){
-      $FRAME[ $i ] = $line[ $i+1 ];
-    }
-    
-    $inputdata = 2;
-	}elsif( $inputdata == 2 ){
 
 		if( $datacount == 0 ){
 			

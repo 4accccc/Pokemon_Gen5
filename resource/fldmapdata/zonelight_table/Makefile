@@ -46,6 +46,12 @@ XLSFILE = $(wildcard zone_*.xls)
 LISTXLSFILE = light_list.xls
 LISTCSVFILE = light_list.csv
 
+#TIMEZONE
+TIMEZONE_FILE = ../../field_light/light_timezone.lst
+
+#ダミー
+DUMMYFILE = dummy.txt
+
 ZONE_HADER = ../zonetable/zone_id.h
 
 ##########################################
@@ -118,7 +124,7 @@ ifeq	($(CONVERTUSER),true)
 #light
 .xls.dat:
 	$(PROJECT_ROOT)tools/exceltool/ExcelSeetConv.exe -o $*.csv -p 0 -s csv $<
-	perl ../../field_light/conv.pl $*.csv $@
+	perl ../../field_light/conv.pl $*.csv $@ $(TIMEZONE_FILE)
 
 endif
 
@@ -129,7 +135,7 @@ endif
 #------------------------------------------------------------------------------
 #	make do-build ルール
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/$(targetname).narc
+do-build:	subdir $(DUMMYFILE) $(TARGETDIR)/$(targetname).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
@@ -142,6 +148,13 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	
+
+$(DUMMYFILE):$(TIMEZONE_FILE)
+	-ls dummy > $(DUMMYFILE)
+	rm -f *.dat
+	rm -f *.csv
+
+
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(OBJ_FILE) $(TXTFILE)
 	-ls *.dat > $(LIST_FILE)
@@ -156,6 +169,13 @@ $(targetname).narc: $(OBJ_FILE) $(TXTFILE)
 	nnsarc -c -l -n -i $(targetname) -S $(LIST_FILE)
 	$(NAIXCUT) $(targetname).naix
 	-rm	$(LIST_FILE)
+
+
+else
+
+$(DUMMYFILE):$(TIMEZONE_FILE)
+	-ls dummy > $(DUMMYFILE)
+
 endif
 
 #------------------------------------------------------------------------------
