@@ -1069,13 +1069,6 @@ static GMEVENT_RESULT CrossOutEvent( GMEVENT* event, int* seq, void* wk )
 			(GX_BG_SCRSIZE_DCBMP_256x256, GX_BG_AREAOVER_XLU, GX_BG_BMPSCRBASE_0x00000);
 		GX_SetBankForBG(GX_VRAM_BG_128_D);
 
-    // BGのスケールを初期化
-    {
-      MtxFx22 matrix;
-      MTX_Identity22( &matrix );
-      G2_SetBG2Affine( &matrix, 0, 0, 0, 0 );
-    }
-
 		//アルファブレンド
 		//G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE, GX_BLEND_PLANEMASK_BG2, 0,0);
 		GFL_BG_SetPriority(BG_FRAME_CROSS_FADE, 0);
