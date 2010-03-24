@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-24T18:20:31"/>
+	<create user="iwasawa" host="W00157" date="2010-03-24T21:10:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,7 +337,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="113" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="261" top="246" right="734" bottom="644" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -717,44 +717,44 @@
 	</row>
 
 	<row id="msg_trialhouse_str15" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">マスターランク</language>
-		<language name="JPN_KANJI" width="256">マスターランク</language>
+		<comment>ポイントの数値</comment>
+		<language name="JPN" width="256">[2:03:４桁:0]</language>
+		<language name="JPN_KANJI" width="256">[2:03:４桁:0]</language>
 	</row>
 
-	<row id="msg_trialhouse_str16" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">エリートランク</language>
-		<language name="JPN_KANJI" width="256">エリートランク</language>
-	</row>
-
-	<row id="msg_trialhouse_str17" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">ハイパーランク</language>
-		<language name="JPN_KANJI" width="256">ハイパーランク</language>
-	</row>
-
-	<row id="msg_trialhouse_str18" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">スーパーランク</language>
-		<language name="JPN_KANJI" width="256">スーパーランク</language>
-	</row>
-
-	<row id="msg_trialhouse_str19" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">ノーマルランク</language>
-		<language name="JPN_KANJI" width="256">ノーマルランク</language>
-	</row>
-
-	<row id="msg_trialhouse_str20" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
-		<language name="JPN" width="256">ノービスランク</language>
-		<language name="JPN_KANJI" width="256">ノービスランク</language>
-	</row>
-
-	<row id="msg_trialhouse_str21" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="msg_trialhouse_rank0" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<language name="JPN" width="256">ビギナーランク</language>
 		<language name="JPN_KANJI" width="256">ビギナーランク</language>
 	</row>
 
-	<row id="msg_trialhouse_str22" back-color="#80ff80,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
-		<comment>ポイントの数値</comment>
-		<language name="JPN" width="256">[2:03:４桁:0]</language>
-		<language name="JPN_KANJI" width="256">[2:03:４桁:0]</language>
+	<row id="msg_trialhouse_rank1" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">ノービスランク</language>
+		<language name="JPN_KANJI" width="256">ノービスランク</language>
+	</row>
+
+	<row id="msg_trialhouse_rank2" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">ノーマルランク</language>
+		<language name="JPN_KANJI" width="256">ノーマルランク</language>
+	</row>
+
+	<row id="msg_trialhouse_rank3" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">スーパーランク</language>
+		<language name="JPN_KANJI" width="256">スーパーランク</language>
+	</row>
+
+	<row id="msg_trialhouse_rank4" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">ハイパーランク</language>
+		<language name="JPN_KANJI" width="256">ハイパーランク</language>
+	</row>
+
+	<row id="msg_trialhouse_rank5" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">エリートランク</language>
+		<language name="JPN_KANJI" width="256">エリートランク</language>
+	</row>
+
+	<row id="msg_trialhouse_rank6" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">マスターランク</language>
+		<language name="JPN_KANJI" width="256">マスターランク</language>
 	</row>
 
 	<flowchart-group-list>

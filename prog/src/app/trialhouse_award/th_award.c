@@ -208,13 +208,13 @@ typedef struct
 RANK_INFO;
 static const RANK_INFO rank_info_tbl[RANK_MAX] =
 {
-  { msg_trialhouse_str15, 7, TH_RANK_MASTER   },  //             6000, POINT_NUMBER_MAX },
-  { msg_trialhouse_str16, 6, TH_RANK_ELITE    },  //             5000,             5999 },
-  { msg_trialhouse_str17, 5, TH_RANK_HYPER    },  //             4000,             4999 },
-  { msg_trialhouse_str18, 4, TH_RANK_SUPER    },  //             3000,             3999 },
-  { msg_trialhouse_str19, 3, TH_RANK_NORMAL   },  //             2000,             2999 },
-  { msg_trialhouse_str20, 2, TH_RANK_NOVICE   },  //             1000,             1999 },
-  { msg_trialhouse_str21, 1, TH_RANK_BEGINNER },  // POINT_NUMBER_MIN,              999 },
+  { msg_trialhouse_rank6, 7, TH_RANK_MASTER   },  //             6000, POINT_NUMBER_MAX },
+  { msg_trialhouse_rank5, 6, TH_RANK_ELITE    },  //             5000,             5999 },
+  { msg_trialhouse_rank4, 5, TH_RANK_HYPER    },  //             4000,             4999 },
+  { msg_trialhouse_rank3, 4, TH_RANK_SUPER    },  //             3000,             3999 },
+  { msg_trialhouse_rank2, 3, TH_RANK_NORMAL   },  //             2000,             2999 },
+  { msg_trialhouse_rank1, 2, TH_RANK_NOVICE   },  //             1000,             1999 },
+  { msg_trialhouse_rank0, 1, TH_RANK_BEGINNER },  // POINT_NUMBER_MIN,              999 },
 };
 
 
@@ -1023,7 +1023,7 @@ static void Th_Award_TextInit( TH_AWARD_WORK* work )
     u16 point_x;
 
     wordset             = WORDSET_Create( work->heap_id );
-    number_src_strbuf   = GFL_MSG_CreateString( work->msgdata, msg_trialhouse_str22 );
+    number_src_strbuf   = GFL_MSG_CreateString( work->msgdata, msg_trialhouse_str15 );
     number_strbuf       = GFL_STR_CreateBuffer( TEXT_POINT_NUMBER_LEN_MAX, work->heap_id );
     WORDSET_RegisterNumber( wordset, 0, (s32)point, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     WORDSET_ExpandStr( wordset, number_strbuf, number_src_strbuf );

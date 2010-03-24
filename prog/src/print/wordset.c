@@ -13,12 +13,15 @@
 #include "print/global_msg.h"
 #include "str_tool_local.h"
 #include "tr_tool/trtype_def.h" // for TRTYPE_xxxx
+#include "savedata/th_rank_def.h" // for TH_RANK_xxxx
 #include "../../../resource/research_radar/data/hobby_id.h"  // for HOBBY_ID_xxxx
 #include "../../../resource/research_radar/data/job_id.h"  // for JOB_ID_xxxx
 #include "../../../resource/research_radar/data/answer_id.h"  // for ANSWER_ID_xxxx
+#include "msg/script/msg_trialhouse.h"
 
 #include "arc_def.h"
 #include "message.naix"
+#include "script_message.naix"
 
 
 /*----------------------------------*/
@@ -902,6 +905,37 @@ void WORDSET_RegisterJobName( WORDSET* wordset, u32 bufID, u8 jobID )
     GFL_MSG_Delete( msg );
   }
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief 指定バッファにトライアルハウスランク名を展開
+ *
+ * @param bufID   バッファID
+ * @param rank    トライアルハウスのランク
+ */
+//------------------------------------------------------------------
+void WORDSET_RegisterTrialHouseRank( WORDSET* wordset, u32 bufID, u8 rank )
+{
+  GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+      ARCID_SCRIPT_MESSAGE, NARC_script_message_trialhouse_dat, wordset->heapID );
+
+  ClearBuffer( wordset, bufID );
+
+  // ランクエラー
+  if( TH_RANK_MASTER < rank )
+  {
+    GF_ASSERT(0);
+    return;
+  }
+
+  if( msg )
+  {
+    GFL_MSG_GetString( msg, rank+msg_trialhouse_rank0, wordset->tmpBuf );
+    RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+    GFL_MSG_Delete( msg );
+  }
+}
+
 
 
 
