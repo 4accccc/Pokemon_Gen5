@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-02-22T16:18:18" source="in09_local_texset.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-03-24T15:46:33" source="in09_local_texset.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2010-02-22T16:18:18" source="in09_local_texset.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2010-03-24T15:46:33" source="in09_local_texset.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -21,15 +21,15 @@
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
-	compress_material="on" material_size="20 20"
+	compress_material="on" material_size="22 22"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="5" xyz="-0.250000 0.000000 0.250000" whd="4.000000 0.000000 1.500000"/>
+<box_test pos_scale="5" xyz="-0.250000 0.000000 0.250000" whd="4.000000 0.000000 2.000000"/>
 
-<tex_image_array size="20">
+<tex_image_array size="22">
 	<tex_image index="0" name="ifloor0_01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette4"
@@ -1246,9 +1246,45 @@
 			e2e1 e2e3 e3e1 e3e2 e2e3 e2e1 e3e3 e1e2
 		</bitmap>
 	</tex_image>
+	<tex_image index="20" name="kusa_ec1s"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="kusa_ec1s_pl"
+		path="C:/home/wb_data3d/field/in09/chip/tex/kusa_ec1s.tga"
+	>
+		<bitmap size="64">
+			1000 0111 0000 0000 1000 19a4 0000 1111
+			3211 feb1 1111 1a93 9a41 e225 e319 13ef
+			e510 25cf c928 0127 3200 5a65 3735 0002
+			1000 7331 1333 0001 1000 3213 9a53 0015
+			c100 33a8 c334 01df fd10 482c 3583 18c7
+			d920 8932 2d73 2a52 25a1 4f92 3f72 2222
+			0242 49f2 9d22 0002 0022 24f2 a720 0002
+			0000 0282 5200 0002 0000 0022 2000 0002
+		</bitmap>
+	</tex_image>
+	<tex_image index="21" name="kusa_ec2s"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="kusa_ec2s_pl"
+		path="C:/home/wb_data3d/field/in09/chip/tex/kusa_ec2s.tga"
+	>
+		<bitmap size="64">
+			2200 0022 8550 0021 1888 2222 7228 0228
+			2664 8188 4622 8885 2664 2122 6462 8666
+			2482 2222 6262 2876 4220 6562 6666 2216
+			2200 5271 4226 0224 6120 5622 5485 0028
+			6682 6526 2225 0212 6661 5952 2425 0266
+			6998 5624 4222 2866 8844 4665 4665 1964
+			4222 4466 8666 8542 1220 2869 1964 4822
+			1200 2249 8982 0222 8200 0028 8120 0002
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="20">
+<tex_palette_array size="22">
 	<tex_palette index="0" name="ifloor0_01_pl" color_size="4">
 		6f7b 739c 77bd 7fff
 	</tex_palette>
@@ -1320,9 +1356,17 @@
 	<tex_palette index="19" name="kusa02b_pl" color_size="8">
 		2d1e 3949 4a2a 4e8b 7fff 7fff 7fff 7fff
 	</tex_palette>
+	<tex_palette index="20" name="kusa_ec1s_pl" color_size="16">
+		409b 2126 2987 3208 3629 3229 3a6b 3a6a
+		3e8c 42ad 3e8b 364a 3a8c 3acd 3ece 3eee
+	</tex_palette>
+	<tex_palette index="21" name="kusa_ec2s_pl" color_size="16">
+		487c 2524 3e06 35c6 2d86 3608 3a49 2e08
+		2586 36ab 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
 </tex_palette_array>
 
-<material_array size="20">
+<material_array size="22">
 	<material index="0" name="ifloor0_01"
 		light0="on" light1="off" light2="off" light3="off"
 		face="front"
@@ -1803,13 +1847,61 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
+	<material index="20" name="kusa_ec1s"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="20" tex_palette_idx="20"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="21" name="kusa_ec2s"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="21" tex_palette_idx="21"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
 </material_array>
 
 <matrix_array size="1">
 	<matrix index="0" mtx_weight="1" node_idx="0"/>
 </matrix_array>
 
-<polygon_array size="20">
+<polygon_array size="22">
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
@@ -2350,6 +2442,60 @@
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
+	<polygon index="20" name="polygon20"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 0.000000 3.500000"
+		volume_max="0.500000 0.000000 4.500000"
+		volume_r="4.527588"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="-0.500000 0.000000 4.500000"/>
+					<tex st="16.000000 16.000000"/>
+					<pos_xy xy="0.500000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="0.500000 3.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="21" name="polygon21"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="0.500000 0.000000 3.500000"
+		volume_max="1.500000 0.000000 4.500000"
+		volume_r="4.743408"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 16.000000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_s xyz="0.500000 0.000000 4.500000"/>
+					<tex st="16.000000 16.000000"/>
+					<pos_xy xy="1.500000 0.000000"/>
+					<tex st="16.000000 0.000000"/>
+					<pos_xz xz="1.500000 3.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="0.500000 0.000000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
 </polygon_array>
 
 <node_array size="1">
@@ -2364,11 +2510,11 @@
 		rotate="0.000000 0.000000 0.000000"
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
-		display_size="20"
-		vertex_size="80" polygon_size="20"
-		triangle_size="0" quad_size="20"
+		display_size="22"
+		vertex_size="88" polygon_size="22"
+		triangle_size="0" quad_size="22"
 		volume_min="-0.500000 0.000000 0.500000"
-		volume_max="7.500000 0.000000 3.500000"
+		volume_max="7.500000 0.000000 4.500000"
 		volume_r="8.276367"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
@@ -2391,11 +2537,13 @@
 		<display index="17" material="17" polygon="17" priority="0"/>
 		<display index="18" material="18" polygon="18" priority="0"/>
 		<display index="19" material="19" polygon="19" priority="0"/>
+		<display index="20" material="20" polygon="20" priority="0"/>
+		<display index="21" material="21" polygon="21" priority="0"/>
 	</node>
 </node_array>
 
-<output_info vertex_size="80" polygon_size="20"
-	triangle_size="0" quad_size="20"/>
+<output_info vertex_size="88" polygon_size="22"
+	triangle_size="0" quad_size="22"/>
 
 </body>
 
