@@ -33,7 +33,8 @@
 
 #include "field_comm/intrude_minimono.h"
 #include "field/intrude_symbol.h"
-//#include "field_comm/intrude_field.h"
+#include "field_comm/intrude_main.h"    //Intrude_Check_CommConnect
+
 #include "arc/fieldmap/zone_id.h"
 #include "event_mapchange.h"
 
@@ -41,6 +42,7 @@
 //==============================================================================
 static MMDL * getPokeMMdl( SCRCMD_WORK * work, u16 obj_id );
 static POKEMON_PARAM * createPokemon( SCRCMD_WORK * work, MMDL * mmdl, HEAPID heapID );
+static void sendDataChange( SCRCMD_WORK * work );
 
 
 //==============================================================================
@@ -127,6 +129,7 @@ VMCMD_RESULT EvCmdSymbolPokeGet( VMHANDLE * core, void *wk )
   if ( mmdl ) {
     u32 no = SYMBOLPOKE_GetSymbolNo( mmdl );
     SymbolSave_DataShift( symbol_save, no );
+    sendDataChange( work ); //シンボルポケモンの更新を通信で通知する
   }
 
   return VMCMD_RESULT_CONTINUE;
@@ -152,6 +155,7 @@ VMCMD_RESULT EvCmdSymbolMapMovePokemon( VMHANDLE * core, void * wk )
   if ( mmdl ) {
     u32 no = SYMBOLPOKE_GetSymbolNo( mmdl );
     *ret_wk = SymbolSave_Field_MoveAuto( symbol_save, no );
+    sendDataChange( work ); //シンボルポケモンの更新を通信で通知する
   } else {
     *ret_wk = FALSE;
   }
@@ -303,4 +307,33 @@ static POKEMON_PARAM * createPokemon( SCRCMD_WORK * work, MMDL * mmdl, HEAPID he
     pp = SYMBOLPOKE_PP_Create( HEAPID_PROC, gamedata, &sympoke );
     return pp;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief シンボルポケモンの状況が更新されたことを通知する
+ */
+//--------------------------------------------------------------
+static void sendDataChange( SCRCMD_WORK * work )
+{
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(gamedata);
+  SYMBOL_SAVE_WORK *symbol_save = SymbolSave_GetSymbolData(sv_ctrl);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr( gsys );
+
+  if ( IntrudeSymbol_CheckIntrudeNetID( game_comm, gamedata ) != INTRUDE_NETID_NULL )
+  {
+    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect( game_comm );
+    if ( intcomm == NULL )
+    { //通信エラー
+      return;
+    }
+    IntrudeSymbol_SendSymbolDataChange( intcomm, GAMEDATA_GetSymbolMapID( gamedata ) );
+    OS_TPrintf( "送信リクエスト：シンボルポケモン更新\n" );
+  }
+}
+
+
+
+
 
