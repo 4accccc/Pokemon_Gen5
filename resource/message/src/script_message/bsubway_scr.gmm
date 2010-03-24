@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-03-20T13:18:43"/>
+	<create user="matsumiya" host="W00224" date="2010-03-24T17:55:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="111" top="155" right="816" bottom="775" maximized="no" rayout="Vertical2">
+	<dialog left="1343" top="167" right="2048" bottom="785" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="753" top="172" right="1226" bottom="570" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -303,7 +303,7 @@
 じょうしゃを　ごあんない　しております</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
 こちらでは　シングルトレインの
-じょうしゃを　ごあんない　しております</language>
+乗車を　ご案内して　おります</language>
 	</row>
 
 	<row id="msg_bsw_scr_01">
@@ -312,7 +312,7 @@
 じょうしゃを　ごあんない　しております</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
 こちらでは　ダブルトレインの
-じょうしゃを　ごあんない　しております</language>
+乗車を　ご案内して　おります</language>
 	</row>
 
 	<row id="msg_bsw_scr_02">
@@ -321,7 +321,7 @@
 じょうしゃを　ごあんない　しております</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
 こちらでは　マルチトレインの
-じょうしゃを　ごあんない　しております</language>
+乗車を　ご案内して　おります</language>
 	</row>
 
 	<row id="msg_bsw_scr_03">
@@ -330,7 +330,7 @@
 じょうしゃを　ごあんない　しております</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
 こちらでは　Wifiトレインの
-じょうしゃを　ごあんない　しております</language>
+乗車を　ご案内して　おります</language>
 	</row>
 
 	<row id="msg_bsw_scr_04">
@@ -339,7 +339,7 @@
 じょうしゃを　ごあんない　しております</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
 こちらでは　スーパーシングルトレインの
-じょうしゃを　ごあんない　しております</language>
+乗車を　ご案内して　おります</language>
 	</row>
 
 	<row id="msg_bsw_scr_04_01">
@@ -350,9 +350,9 @@
 ごあんない　しております</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
 こちら　スーパーシングルトレインは
-シングルトレインを　かちぬいた▽
-かたのみ　じょうしゃを▽
-ごあんない　しております</language>
+シングルトレインを▽
+勝ち抜いた　方のみ▽
+乗車を　ご案内して　おります</language>
 	</row>
 
 	<row id="msg_bsw_scr_05">
@@ -361,7 +361,7 @@
 じょうしゃを　ごあんない　しております</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
 こちらでは　スーパーダブルトレインの
-じょうしゃを　ごあんない　しております</language>
+乗車を　ご案内して　おります</language>
 	</row>
 
 	<row id="msg_bsw_scr_05_01">
@@ -372,9 +372,9 @@
 ごあんない　しております</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
 こちら　スーパーダブルトレインは
-ダブルトレインを　かちぬいた▽
-かたのみ　じょうしゃを▽
-ごあんない　しております</language>
+ダブルトレインを▽
+勝ち抜いた　方のみ▽
+乗車を　ご案内して　おります</language>
 	</row>
 
 	<row id="msg_bsw_scr_06">
@@ -383,7 +383,7 @@
 じょうしゃを　ごあんない　しております</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
 こちらでは　スーパーマルチトレインの
-じょうしゃを　ごあんない　しております</language>
+乗車を　ご案内して　おります</language>
 	</row>
 
 	<row id="msg_bsw_scr_06_01">
@@ -394,9 +394,9 @@
 ごあんない　しております</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイに　ようこそ！[BE:01:ページ切り替え（クリア）]
 こちら　スーパーマルチトレインは
-マルチトレインを　かちぬいた▽
-かたのみ　じょうしゃを▽
-ごあんない　しております</language>
+マルチトレインを▽
+勝ち抜いた　方のみ▽
+乗車を　ご案内して　おります</language>
 	</row>
 
 	<row id="msg_bsw_scr_07">
@@ -408,8 +408,8 @@
 		<comment>連勝中</comment>
 		<language name="JPN" width="256">げんざい　[1:00:トレーナー名:0]さまは
 [2:02:３桁:1]れんしょうちゅう　です</language>
-		<language name="JPN_KANJI" width="256">げんざい　[1:00:トレーナー名:0]さまは
-[2:02:３桁:1]れんしょうちゅう　です</language>
+		<language name="JPN_KANJI" width="256">現在　[1:00:トレーナー名:0]さまは
+[2:02:３桁:1]連勝中　です</language>
 	</row>
 
 	<row id="msg_bsw_scr_09">
@@ -1035,66 +1035,66 @@
 	<row id="msg_bsw_scr_63">
 		<comment>マルチ　メニュー</comment>
 		<language name="JPN" width="256">こうげきじゅうし</language>
-		<language name="JPN_KANJI" width="256">こうげきじゅうし</language>
+		<language name="JPN_KANJI" width="256">攻撃重視</language>
 	</row>
 
 	<row id="msg_bsw_scr_64">
 		<comment>マルチ　メニュー</comment>
 		<language name="JPN" width="256">ぼうぎょじゅうし</language>
-		<language name="JPN_KANJI" width="256">ぼうぎょじゅうし</language>
+		<language name="JPN_KANJI" width="256">防御重視</language>
 	</row>
 
 	<row id="msg_bsw_scr_65">
 		<comment>マルチ　メニュー</comment>
 		<language name="JPN" width="256">バランスじゅうし</language>
-		<language name="JPN_KANJI" width="256">バランスじゅうし</language>
+		<language name="JPN_KANJI" width="256">バランス重視</language>
 	</row>
 
 	<row id="msg_bsw_scr_66">
 		<comment>マルチ　パートナー男</comment>
-		<language name="JPN" width="256">わかった　こうげきじゅうしだね！
+		<language name="JPN" width="256">わかった　こうげきじゅうし　だね！
 じゃ　はじめよう！</language>
-		<language name="JPN_KANJI" width="256">わかった　こうげきじゅうしだね！
+		<language name="JPN_KANJI" width="256">わかった　攻撃重視だね！
 じゃ　はじめよう！</language>
 	</row>
 
 	<row id="msg_bsw_scr_67">
 		<comment>マルチ　パートナー男</comment>
-		<language name="JPN" width="256">わかった　ぼうぎょじゅうしだね！
+		<language name="JPN" width="256">わかった　ぼうぎょじゅうし　だね！
 じゃ　はじめよう！</language>
-		<language name="JPN_KANJI" width="256">わかった　ぼうぎょじゅうしだね！
+		<language name="JPN_KANJI" width="256">わかった　防御重視だね！
 じゃ　はじめよう！</language>
 	</row>
 
 	<row id="msg_bsw_scr_68">
 		<comment>マルチ　パートナー男</comment>
-		<language name="JPN" width="256">わかった　バランスじゅうしだね！
+		<language name="JPN" width="256">わかった　バランスじゅうし　だね！
 じゃ　はじめよう！</language>
-		<language name="JPN_KANJI" width="256">わかった　バランスじゅうしだね！
+		<language name="JPN_KANJI" width="256">わかった　バランス重視だね！
 じゃ　はじめよう！</language>
 	</row>
 
 	<row id="msg_bsw_scr_69">
 		<comment>マルチ　パートナー女</comment>
-		<language name="JPN" width="256">わかったわ　こうげきじゅうしね！
+		<language name="JPN" width="256">わかったわ　こうげきじゅうし　ね！
 じゃ　はじめましょ！</language>
-		<language name="JPN_KANJI" width="256">わかったわ　こうげきじゅうしね！
+		<language name="JPN_KANJI" width="256">わかったわ　攻撃重視ね！
 じゃ　はじめましょ！</language>
 	</row>
 
 	<row id="msg_bsw_scr_70">
 		<comment>マルチ　パートナー女</comment>
-		<language name="JPN" width="256">わかったわ　ぼうぎょじゅうしね！
+		<language name="JPN" width="256">わかったわ　ぼうぎょじゅうし　ね！
 じゃ　はじめましょ！</language>
-		<language name="JPN_KANJI" width="256">わかったわ　ぼうぎょじゅうしね！
+		<language name="JPN_KANJI" width="256">わかったわ　防御重視ね！
 じゃ　はじめましょ！</language>
 	</row>
 
 	<row id="msg_bsw_scr_71">
 		<comment>マルチ　パートナー女</comment>
-		<language name="JPN" width="256">わかったわ　バランスじゅうしね！
+		<language name="JPN" width="256">わかったわ　バランスじゅうし　ね！
 じゃ　はじめましょ！</language>
-		<language name="JPN_KANJI" width="256">わかったわ　バランスじゅうしね！
+		<language name="JPN_KANJI" width="256">わかったわ　バランス重視ね！
 じゃ　はじめましょ！</language>
 	</row>
 
@@ -1129,15 +1129,15 @@
 	<row id="msg_bsw_scr_76">
 		<language name="JPN" width="256">ワイヤレスつうしん　を
 かいし　しますか？</language>
-		<language name="JPN_KANJI" width="256">ワイヤレスつうしん　を
-かいし　しますか？</language>
+		<language name="JPN_KANJI" width="256">ワイヤレス通信を
+開始しますか？</language>
 	</row>
 
 	<row id="msg_bsw_scr_77">
 		<language name="JPN" width="256">つうしんの　せつだんに
-しっぱいしました</language>
-		<language name="JPN_KANJI" width="256">つうしんの　せつだんに
-しっぱいしました</language>
+しっぱい　しました</language>
+		<language name="JPN_KANJI" width="256">通信の　切断に
+失敗しました</language>
 	</row>
 
 	<row id="msg_bsw_scr_78">
@@ -1149,21 +1149,21 @@
 		<comment>WiFi</comment>
 		<language name="JPN" width="256">ざんねんながら　こんかい　ランクが
 [2:01:２桁:0]に　さがって　しまいました……</language>
-		<language name="JPN_KANJI" width="256">ざんねんながら　こんかい　ランクが
+		<language name="JPN_KANJI" width="256">残念ながら　今回　ランクが
 [2:01:２桁:0]に　さがって　しまいました……</language>
 	</row>
 
 	<row id="msg_bsw_scr_87">
 		<language name="JPN" width="256">せきがいせん　つうしんと　ワイヤレス
 つうしん　どちらに　されますか？</language>
-		<language name="JPN_KANJI" width="256">せきがいせん　つうしんと　ワイヤレス
-つうしん　どちらに　されますか？</language>
+		<language name="JPN_KANJI" width="256">赤外線通信と　ワイヤレス通信
+どちらに　されますか？</language>
 	</row>
 
 	<row id="msg_bsw_scr_88">
 		<comment>通信選択メニュー</comment>
 		<language name="JPN" width="256">せきがいせん</language>
-		<language name="JPN_KANJI" width="256">せきがいせん</language>
+		<language name="JPN_KANJI" width="256">赤外線</language>
 	</row>
 
 	<row id="msg_bsw_scr_89">
@@ -1175,8 +1175,8 @@
 	<row id="msg_bsw_scr_90">
 		<language name="JPN" width="256">せきがいせん　つうしんを
 かいし　しますか？</language>
-		<language name="JPN_KANJI" width="256">せきがいせん　つうしんを
-かいし　しますか？</language>
+		<language name="JPN_KANJI" width="256">赤外線通信を
+開始しますか？</language>
 	</row>
 
 	<row id="msg_bsw_scr_91">
