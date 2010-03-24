@@ -117,6 +117,12 @@ enum {
   PLUS_RESULT      //”äŠrŒ‹‰Ê‚ªƒvƒ‰ƒX
 };
 
+#ifdef  DEBUG_ONLY_FOR_tamada
+#define TAMADA_FPrintf( ... ) \
+  OS_TFPrintf( 3, __VA_ARGS__ )
+#else
+#define TAMADA_FPrintf( ... ) ((void)0) /* do nothing */
+#endif
 
 //======================================================================
 //  proto
@@ -665,7 +671,7 @@ static VMCMD_RESULT EvCmdPushValue( VMHANDLE *core, void *wk )
   u32 value;
   value = VMGetU16(core);
   VMCMD_Push( core, value );
-  TAMADA_Printf("SCRCMD:PUSH_VALUE:%d\n", value);
+  TAMADA_FPrintf("SCRCMD:PUSH_VALUE:%d\n", value);
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -679,7 +685,7 @@ static VMCMD_RESULT EvCmdPushWork( VMHANDLE *core, void *wk )
   u32 work_value;
   work_value = SCRCMD_GetVMWorkValue( core, wk );
   VMCMD_Push( core, work_value );
-  TAMADA_Printf("SCRCMD:PUSH_WORK:%d\n", work_value);
+  TAMADA_FPrintf("SCRCMD:PUSH_WORK:%d\n", work_value);
   return VMCMD_RESULT_CONTINUE;
 }
 //--------------------------------------------------------------
@@ -694,7 +700,7 @@ static VMCMD_RESULT EvCmdPopWork( VMHANDLE *core, void *wk )
   value = VMCMD_Pop( core );
   work = SCRCMD_GetVMWork( core, wk );
   *work = value;
-  TAMADA_Printf("SCRCMD:POP_WORK:%d\n", value);
+  TAMADA_FPrintf("SCRCMD:POP_WORK:%d\n", value);
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -707,7 +713,7 @@ static VMCMD_RESULT EvCmdPopWork( VMHANDLE *core, void *wk )
 static VMCMD_RESULT EvCmdPop( VMHANDLE *core, void *wk )
 {
   VMCMD_Pop( core );
-  TAMADA_Printf("SCRCMD:POP\n");
+  TAMADA_FPrintf("SCRCMD:POP\n");
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -766,7 +772,7 @@ static VMCMD_RESULT EvCmdPushFlagValue( VMHANDLE * core, void *wk )
   u16 flag = SCRCMD_GetVMWorkValue( core, work );
   BOOL value  = EVENTWORK_CheckEventFlag( evwork, flag );
   VMCMD_Push( core, value );
-  TAMADA_Printf("SCRCMD:Push Flag Value(id=%d, value=%d)\n", flag, value );
+  TAMADA_FPrintf("SCRCMD:Push Flag Value(id=%d, value=%d)\n", flag, value );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -816,7 +822,7 @@ static VMCMD_RESULT EvCmdCmpStack( VMHANDLE * core, void *wk )
     result = 0;
   }
   VMCMD_Push( core, result );
-  TAMADA_Printf("SCRCMD:CMP_STACK:v1(%08x),v2(%08x),cond(%d),result(%d)\n",
+  TAMADA_FPrintf("SCRCMD:CMP_STACK:v1(%08x),v2(%08x),cond(%d),result(%d)\n",
       val1, val2, cond, result);
   return VMCMD_RESULT_CONTINUE;
 }
@@ -1512,7 +1518,7 @@ u16 * SCRCMD_GetVMWork( VMHANDLE *core, SCRCMD_WORK *work )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   u16 work_id = VMGetU16(core);
-  TAMADA_Printf("WORKID:%04x\n", work_id);
+  TAMADA_FPrintf("WORKID:%04x\n", work_id);
   return SCRIPT_GetEventWork( sc, gdata, work_id );
 }
 
@@ -1530,7 +1536,7 @@ u16 SCRCMD_GetVMWorkValue( VMHANDLE * core, SCRCMD_WORK *work )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   u16 work_id = VMGetU16(core);
-  TAMADA_Printf("WORKID:%04x\n", work_id);
+  TAMADA_FPrintf("WORKID:%04x\n", work_id);
   return SCRIPT_GetEventWorkValue( sc, gdata, work_id );
 }
 
