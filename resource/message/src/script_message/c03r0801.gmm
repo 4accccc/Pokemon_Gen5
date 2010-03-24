@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-20T15:14:24"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-24T15:53:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1167,6 +1167,18 @@ msg_c03r0801_hint_02</comment>
 お倒しに　なられたの　ですね！[BE:01:ページ切り替え（クリア）]
 船は　出港　していますが
 船から　お降りに　なられますか？</language>
+	</row>
+
+	<row id="msg_c03r0801_sys_02" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+		<comment>全てのトレーナーを倒した際に
+表示されます</comment>
+		<attribute name="キャラ指定">システムメッセージ</attribute>
+		<language name="JPN" width="256">ごじょうせん　ありがとうございました▼
+とう　ゆうらんせんは　まもなく
+ヒウンシティに　とうちゃくいたします</language>
+		<language name="JPN_KANJI" width="256">ご乗船　ありがとうございました▼
+当　遊覧船は　まもなく
+ヒウンシティに　到着いたします</language>
 	</row>
 
 	<flowchart-group-list>
