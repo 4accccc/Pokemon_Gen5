@@ -1360,111 +1360,111 @@
 	</row>
 
 	<row id="ITEMINFO_137">
-		<language name="JPN" width="256">かりメッセージ１
-はじめてメール
-なまえをかえると　エラーになる</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-はじめてメール
-なまえをかえると　エラーになる</language>
+		<language name="JPN" width="256">はじめましての　あいさつが
+かきやすい　びんせん。
+ポケモンに　もたせて　つかう。</language>
+		<language name="JPN_KANJI" width="256">はじめましての　あいさつが
+かきやすい　びんせん。
+ポケモンに　もたせて　つかう。</language>
 	</row>
 
 	<row id="ITEMINFO_138">
-		<language name="JPN" width="256">かりメッセージ１
-だいすきメール
-なまえをかえると　エラーになる</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-だいすきメール
-なまえをかえると　エラーになる</language>
+		<language name="JPN" width="256">すきなものを　つたえる　メールが
+かきやすい　びんせん。
+ポケモンに　もたせて　つかう。</language>
+		<language name="JPN_KANJI" width="256">すきなものを　つたえる　メールが
+かきやすい　びんせん。
+ポケモンに　もたせて　つかう。</language>
 	</row>
 
 	<row id="ITEMINFO_139">
-		<language name="JPN" width="256">かりメッセージ１
-おさそいメール
-なまえをかえると　エラーになる</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-おさそいメール
-なまえをかえると　エラーになる</language>
+		<language name="JPN" width="256">あいてを　おさそいする　メールが
+かきやすい　びんせん。
+ポケモンに　もたせて　つかう。</language>
+		<language name="JPN_KANJI" width="256">あいてを　おさそいする　メールが
+かきやすい　びんせん。
+ポケモンに　もたせて　つかう。</language>
 	</row>
 
 	<row id="ITEMINFO_140">
-		<language name="JPN" width="256">かりメッセージ１
-かんしゃメール
-なまえをかえると　エラーになる</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-かんしゃメール
-なまえをかえると　エラーになる</language>
+		<language name="JPN" width="256">かんしゃを　つたえる　メールが
+かきやすい　びんせん。
+ポケモンに　もたせて　つかう。</language>
+		<language name="JPN_KANJI" width="256">かんしゃを　つたえる　メールが
+かきやすい　びんせん。
+ポケモンに　もたせて　つかう。</language>
 	</row>
 
 	<row id="ITEMINFO_141">
-		<language name="JPN" width="256">かりメッセージ１
-しつもんメール
-なまえをかえると　エラーになる</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-しつもんメール
-なまえをかえると　エラーになる</language>
+		<language name="JPN" width="256">あいてへの　しつもんの　メールが
+かきやすい　びんせん。
+ポケモンに　もたせて　つかう。</language>
+		<language name="JPN_KANJI" width="256">あいてへの　しつもんの　メールが
+かきやすい　びんせん。
+ポケモンに　もたせて　つかう。</language>
 	</row>
 
 	<row id="ITEMINFO_142">
-		<language name="JPN" width="256">かりメッセージ１
-おすすめメール
-なまえをかえると　エラーになる</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-おすすめメール
-なまえをかえると　エラーになる</language>
+		<language name="JPN" width="256">なにかを　おすすめする　メールが
+かきやすい　びんせん。
+ポケモンに　もたせて　つかう。</language>
+		<language name="JPN_KANJI" width="256">なにかを　おすすめする　メールが
+かきやすい　びんせん。
+ポケモンに　もたせて　つかう。</language>
 	</row>
 
 	<row id="ITEMINFO_143">
-		<language name="JPN" width="256">かりメッセージ１
-おかえしメール
-なまえをかえると　エラーになる</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-おかえしメール
-なまえをかえると　エラーになる</language>
+		<language name="JPN" width="256">もらった　メールへの　おかえしが
+かきやすい　びんせん。
+ポケモンに　もたせて　つかう。</language>
+		<language name="JPN_KANJI" width="256">もらった　メールへの　おかえしが
+かきやすい　びんせん。
+ポケモンに　もたせて　つかう。</language>
 	</row>
 
 	<row id="ITEMINFO_144">
-		<language name="JPN" width="256">かりメッセージ１
-ブリッジメールＳ
-なまえをかえると　エラーになる</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-ブリッジメールＳ
-なまえをかえると　エラーになる</language>
+		<language name="JPN" width="256">そらを　つらぬく　はしの　えがらが
+プリントされた　びんせん。
+ポケモンに　もたせて　つかう。</language>
+		<language name="JPN_KANJI" width="256">そらを　つらぬく　はしの　えがらが
+プリントされた　びんせん。
+ポケモンに　もたせて　つかう。</language>
 	</row>
 
 	<row id="ITEMINFO_145">
-		<language name="JPN" width="256">かりメッセージ１
-ブリッジメールＨ
-なまえをかえると　エラーになる</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-ブリッジメールＨ
-なまえをかえると　エラーになる</language>
+		<language name="JPN" width="256">まっかな　はねばしの　えがらが
+プリントされた　びんせん。
+ポケモンに　もたせて　つかう。</language>
+		<language name="JPN_KANJI" width="256">まっかな　はねばしの　えがらが
+プリントされた　びんせん。
+ポケモンに　もたせて　つかう。</language>
 	</row>
 
 	<row id="ITEMINFO_146">
-		<language name="JPN" width="256">かりメッセージ１
-ブリッジメールＣ
-なまえをかえると　エラーになる</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-ブリッジメールＣ
-なまえをかえると　エラーになる</language>
+		<language name="JPN" width="256">こうてつの　つりばしの　えがらが
+プリントされた　びんせん。
+ポケモンに　もたせて　つかう。</language>
+		<language name="JPN_KANJI" width="256">こうてつの　つりばしの　えがらが
+プリントされた　びんせん。
+ポケモンに　もたせて　つかう。</language>
 	</row>
 
 	<row id="ITEMINFO_147">
-		<language name="JPN" width="256">かりメッセージ１
-ブリッジメール１
-なまえをかえると　エラーになる</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-ブリッジメール１
-なまえをかえると　エラーになる</language>
+		<language name="JPN" width="256">レンガづくりの　はしの　えがらが
+プリントされた　びんせん。
+ポケモンに　もたせて　つかう。</language>
+		<language name="JPN_KANJI" width="256">レンガづくりの　はしの　えがらが
+プリントされた　びんせん。
+ポケモンに　もたせて　つかう。</language>
 	</row>
 
 	<row id="ITEMINFO_148">
-		<language name="JPN" width="256">かりメッセージ１
-ブリッジメール２
-なまえをかえると　エラーになる</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-ブリッジメール２
-なまえをかえると　エラーになる</language>
+		<language name="JPN" width="256">アーチを　えがいた　はしの　えがらが
+プリントされた　びんせん。
+ポケモンに　もたせて　つかう。</language>
+		<language name="JPN_KANJI" width="256">アーチを　えがいた　はしの　えがらが
+プリントされた　びんせん。
+ポケモンに　もたせて　つかう。</language>
 	</row>
 
 	<row id="ITEMINFO_149">
@@ -5671,12 +5671,12 @@
 	</row>
 
 	<row id="ITEMINFO_616">
-		<language name="JPN" width="256">かりメッセージ１
-
-</language>
-		<language name="JPN_KANJI" width="256">かりメッセージ１
-
-</language>
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
 	</row>
 
 	<row id="ITEMINFO_617">
