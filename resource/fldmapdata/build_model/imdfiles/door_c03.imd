@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-01-26T17:42:26"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-03-24T15:00:26" source="door_c03.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2009-12-16T11:32:19" source="door_c03.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-03-24T15:00:26" source="door_c03.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -18,11 +18,11 @@
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="0"
+	tool_start_frame="1"
 	tex_matrix_mode="maya"
 	compress_node="none" node_size="2 2"
 	compress_material="off" material_size="2 2"
-	output_texture="all"
+	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
@@ -80,10 +80,10 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="31 31 31"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
-		tex_tiling="repeat repeat"
+		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
@@ -104,10 +104,10 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="31 31 31"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
-		tex_tiling="repeat repeat"
+		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
@@ -216,28 +216,6 @@
 
 <output_info vertex_size="8" polygon_size="2"
 	triangle_size="0" quad_size="2"/>
-
-<ex_nns_3dme>
-	<ex_model_info scene_name="V‹KƒV[" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="1">
-		<ex_tex_image index="0" disp_pos="-60.000000 360.000000"/>
-	</ex_tex_image_array>
-	<ex_tex_palette_array size="1">
-		<ex_tex_palette index="0" disp_pos="-60.000000 420.000000"/>
-	</ex_tex_palette_array>
-	<ex_material_array size="2">
-		<ex_material index="0" disp_pos="-60.000000 300.000000"/>
-		<ex_material index="1" disp_pos="60.000000 300.000000"/>
-	</ex_material_array>
-	<ex_polygon_array size="2">
-		<ex_polygon index="0" disp_pos="-60.000000 240.000000"/>
-		<ex_polygon index="1" disp_pos="60.000000 240.000000"/>
-	</ex_polygon_array>
-	<ex_node_array size="2">
-		<ex_node index="0" disp_pos="0.000000 120.000000"/>
-		<ex_node index="1" disp_pos="0.000000 180.000000"/>
-	</ex_node_array>
-</ex_nns_3dme>
 
 </body>
 
