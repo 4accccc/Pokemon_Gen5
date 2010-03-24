@@ -24,5 +24,7 @@
 #ifndef ZONE_R11_EVB_H
 #define ZONE_R11_EVB_H
 
+#define BG_R11_SIGN_01                    0
+#define BG_R11_SIGN_02                    1
 
 #endif //ZONE_R11_EVB_H

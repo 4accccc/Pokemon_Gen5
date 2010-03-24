@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-21T14:59:47"/>
+	<create user="murakami_naoto" host="W00228" date="2010-03-24T13:44:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1322" top="187" right="2027" bottom="807" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="190" right="1985" bottom="818" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -354,7 +354,7 @@
 		<language name="JPN_KANJI" width="256">◇新チャンピオン　誕生！　……</language>
 	</row>
 
-	<row id="msg_gate_common_03_01">
+	<row id="msg_gate_common_03_01" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
 		<comment>各ゲート共通メッセージ
 ・臨時ニュース/プラズマ団情報１</comment>
 		<language name="JPN" width="256">◇なぞの　しゅうだんが　シッポウシティ　はくぶつかんの　かせきを　ぬすみだす！</language>
@@ -704,7 +704,7 @@
 	<row id="msg_gate_c5_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c5についての地域情報3</comment>
 		<language name="JPN" width="256">◇ホドモエは　かもつとりひきと　ぎょぎょうで　はってんしたまちです</language>
-		<language name="JPN_KANJI" width="256">◇ホドモエは　貨物取引と　漁業で　発展しました街です</language>
+		<language name="JPN_KANJI" width="256">◇ホドモエは　貨物取引と　漁業で　発展した街です</language>
 	</row>
 
 	<row id="msg_gate_c5_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1220,7 +1220,7 @@
 	<row id="msg_gate_d3_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>d3についての地域情報8</comment>
 		<language name="JPN" width="256">◇さばくは　ひろく　かこくです　じゅんびをととのえて　おこしください</language>
-		<language name="JPN_KANJI" width="256">◇砂漠は　広く　過酷です　準備のを整えて　お越しください</language>
+		<language name="JPN_KANJI" width="256">◇砂漠は　広く　過酷です　準備を整えて　お越しください</language>
 	</row>
 
 	<row id="msg_gate_d3_09" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
