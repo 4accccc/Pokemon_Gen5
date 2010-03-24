@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-24T17:40:03"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-03-24T21:13:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -379,38 +379,38 @@
 
 	<row id="CG_HELP_INFO_01">
 		<comment>見出し</comment>
-		<language name="JPN" width="184">ＩＲについて</language>
-		<language name="JPN_KANJI" width="184">ＩＲについて</language>
+		<language name="JPN" width="184">「ＩＲ」について</language>
+		<language name="JPN_KANJI" width="184">「ＩＲ」について</language>
 	</row>
 
 	<row id="CG_HELP_INFO_02">
-		<language name="JPN" width="184">ワイヤレスについて</language>
-		<language name="JPN_KANJI" width="184">ワイヤレスについて</language>
+		<language name="JPN" width="184">「ワイヤレス」について</language>
+		<language name="JPN_KANJI" width="184">「ワイヤレス」について</language>
 	</row>
 
 	<row id="CG_HELP_INFO_03">
-		<language name="JPN" width="184">Ｗｉ－Ｆｉについて</language>
-		<language name="JPN_KANJI" width="184">Ｗｉ－Ｆｉについて</language>
+		<language name="JPN" width="184">「Ｗｉ－Ｆｉ」について</language>
+		<language name="JPN_KANJI" width="184">「Ｗｉ－Ｆｉ」について</language>
 	</row>
 
 	<row id="CG_HELP_INFO_04">
-		<language name="JPN" width="184">すれちがいについて</language>
-		<language name="JPN_KANJI" width="184">すれ違いについて</language>
+		<language name="JPN" width="184">「すれちがいログ」について</language>
+		<language name="JPN_KANJI" width="184">「すれ違いログ」について</language>
 	</row>
 
 	<row id="CG_HELP_INFO_05">
-		<language name="JPN" width="184">ちょうさレーダーについて</language>
-		<language name="JPN_KANJI" width="184">調査レーダーについて</language>
+		<language name="JPN" width="184">「ちょうさたんちき」について</language>
+		<language name="JPN_KANJI" width="184">「調査探知機」について</language>
 	</row>
 
 	<row id="CG_HELP_INFO_06">
-		<language name="JPN" width="184">カスタムについて</language>
-		<language name="JPN_KANJI" width="184">カスタムについて</language>
+		<language name="JPN" width="184">「カスタム」について</language>
+		<language name="JPN_KANJI" width="184">「カスタム」について</language>
 	</row>
 
 	<row id="CG_HELP_INFO_07">
-		<language name="JPN" width="184">ヘルプについて</language>
-		<language name="JPN_KANJI" width="184">ヘルプについて</language>
+		<language name="JPN" width="184">「ヘルプ」について</language>
+		<language name="JPN_KANJI" width="184">「ヘルプ」について</language>
 	</row>
 
 	<row id="CG_HELP_MSG_01">
