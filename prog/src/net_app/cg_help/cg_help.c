@@ -19,6 +19,7 @@
 #include "print/gf_font.h"
 #include "app/app_taskmenu.h"
 
+#include "sound/pm_sndsys.h"
 
 #include "arc_def.h"
 #include "cg_comm.naix"
@@ -45,7 +46,6 @@
 #define CG_HELP_PLT_MAIN_FONT   (15)
 #define CG_HELP_MSGWIN_CGX    (1)
 
-#define CG_HELP_PAGE_MAX  (7)
 //======================================================================
 //	enum
 //======================================================================
@@ -68,6 +68,19 @@ typedef enum
   CHCR_MAX
 }CG_HELP_CELL_RES;
 
+typedef enum
+{
+  CG_HELP_PAGE_IR,
+  CG_HELP_PAGE_WIRELESS,
+  CG_HELP_PAGE_WIFI,
+  CG_HELP_PAGE_SURETIGAI,
+  CG_HELP_PAGE_RESARCH,
+  CG_HELP_PAGE_CUSTOM,
+  CG_HELP_PAGE_HELP,
+
+  CG_HELP_PAGE_MAX,
+}CG_HELP_PAGE_TYPE;
+
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -86,7 +99,7 @@ typedef struct
   BOOL            isUpdateMsg;
   GFL_BMPWIN      *msgWin;
   GFL_BMPWIN      *infoWin;
-  GFL_BMPWIN      *iconWin;
+  //GFL_BMPWIN      *iconWin;
   GFL_FONT        *fontHandle;
   GFL_MSGDATA     *msgHandle;
   PRINT_QUE       *printQue;
@@ -454,17 +467,10 @@ static void CG_HELP_InitMessage( CG_HELP_WORK *work )
   work->takmenures  = APP_TASKMENU_RES_Create( CG_HELP_FRAME_ICON, CG_HELP_PLT_MAIN_TASKMENU, work->fontHandle, work->printQue, work->heapId );
 
   //説明Win
-  work->iconWin = GFL_BMPWIN_Create( CG_HELP_FRAME_MSG , 
+  work->infoWin = GFL_BMPWIN_Create( CG_HELP_FRAME_MSG , 
                                     2 , 
                                     4 ,
-                                    10 , 
-                                    4 , 
-                                    1 , //黒色を使うため
-                                    GFL_BMP_CHRAREA_GET_B );
-  work->infoWin = GFL_BMPWIN_Create( CG_HELP_FRAME_MSG , 
-                                    14 , 
-                                    4 ,
-                                    16 , 
+                                    28 , 
                                     4 , 
                                     CG_HELP_PLT_MAIN_FONT ,
                                     GFL_BMP_CHRAREA_GET_B );
@@ -476,14 +482,10 @@ static void CG_HELP_InitMessage( CG_HELP_WORK *work )
                                     CG_HELP_PLT_MAIN_FONT ,
                                     GFL_BMP_CHRAREA_GET_B );
   
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->iconWin ) , 1 );
-  GFL_BMPWIN_TransVramCharacter( work->iconWin );
-  GFL_BMPWIN_MakeScreen( work->iconWin );
-  BmpWinFrame_Write( work->iconWin , WINDOW_TRANS_ON_V , CG_HELP_MSGWIN_CGX , CG_HELP_PLT_MAIN_MSGWIN+1 );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->infoWin ) , 0x0f );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->infoWin ) , 1 );
   GFL_BMPWIN_TransVramCharacter( work->infoWin );
   GFL_BMPWIN_MakeScreen( work->infoWin );
-  BmpWinFrame_Write( work->infoWin , WINDOW_TRANS_ON_V , CG_HELP_MSGWIN_CGX , CG_HELP_PLT_MAIN_MSGWIN );
+  BmpWinFrame_Write( work->infoWin , WINDOW_TRANS_ON_V , CG_HELP_MSGWIN_CGX , CG_HELP_PLT_MAIN_MSGWIN+1 );
 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0x0 );
   GFL_BMPWIN_TransVramCharacter( work->msgWin );
@@ -509,6 +511,8 @@ static void CG_HELP_InitMessage( CG_HELP_WORK *work )
                                         32-APP_TASKMENU_PLATE_WIDTH , 21 , APP_TASKMENU_PLATE_WIDTH , work->heapId );
     GFL_STR_DeleteBuffer( initWork.str );
   }
+  
+  *(u16*)(HW_DB_BG_PLTT+CG_HELP_PLT_MAIN_FONT*32+2) = 0;
 }
 
 static void CG_HELP_TermMessage( CG_HELP_WORK *work )
@@ -522,7 +526,6 @@ static void CG_HELP_TermMessage( CG_HELP_WORK *work )
   PRINTSYS_QUE_Delete( work->printQue );
   GFL_BMPWIN_Delete( work->msgWin );
   GFL_BMPWIN_Delete( work->infoWin );
-  GFL_BMPWIN_Delete( work->iconWin );
   GFL_MSG_Delete( work->msgHandle );
   GFL_FONT_Delete( work->fontHandle );
 }
@@ -552,11 +555,13 @@ static void CG_HELP_UpdateUI( CG_HELP_WORK *work )
       work->page++;
       CG_HELP_DispPage( work , work->page );
       APP_TASKMENU_WIN_SetDecide( work->nextButton , TRUE );
+      PMSND_PlaySystemSE( SEQ_SE_DECIDE1 );
     }
     break;
   case 1:
     APP_TASKMENU_WIN_SetDecide( work->endButton , TRUE );
     work->state = CHS_FADEOUT;
+    PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
     break;
   }
 }
@@ -565,12 +570,12 @@ static void CG_HELP_UpdateUI( CG_HELP_WORK *work )
 static void CG_HELP_DispPage( CG_HELP_WORK *work , const u8 page)
 {
   STRBUF *str;
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->infoWin ) , 0xf );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->infoWin ) , 1 );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0x0 );
   
   str = GFL_MSG_CreateString( work->msgHandle , CG_HELP_INFO_01 + page );
-  PRINTSYS_PrintQue( work->printQue , GFL_BMPWIN_GetBmp( work->infoWin ) , 
-          0 , 8 , str , work->fontHandle );
+  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( work->infoWin ) , 
+          40 , 8 , str , work->fontHandle , PRINTSYS_MACRO_LSB(0xf, 2, 0) );
   GFL_STR_DeleteBuffer( str );
 
   str = GFL_MSG_CreateString( work->msgHandle , CG_HELP_MSG_01 + page );
@@ -588,7 +593,7 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
   GFL_CLACT_WK_SetDrawEnable( work->clwkIcon , TRUE );
   
   //BMP設定
-  if( page <= 2 )
+  if( page <= CG_HELP_PAGE_WIFI )
   {
     void *transBase = (void*)((u32)work->commIconPlt->pRawData + 32*(1+page));
     NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
@@ -617,15 +622,27 @@ static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
   }
   GFL_BG_LoadScreenReq(CG_HELP_FRAME_ICON);
 
+  //BMP設定座標設定
+  if( page == CG_HELP_PAGE_RESARCH )
+  {
+    GFL_CLACTPOS pos = {4*8+4,6*8+3};
+    GFL_CLACT_WK_SetPos( work->clwkIcon , &pos , CLSYS_DRAW_SUB );
+  }
+  else
+  {
+    GFL_CLACTPOS pos = {4*8,6*8};
+    GFL_CLACT_WK_SetPos( work->clwkIcon , &pos , CLSYS_DRAW_SUB );
+  }
+
   //特殊なセル設定
-  if( page == 5 )
+  if( page == CG_HELP_PAGE_CUSTOM )
   {
     //設定
     GFL_CLACT_WK_SetAutoAnmFlag( work->clwkIcon , FALSE );
     GFL_CLACT_WK_SetAnmIndex( work->clwkIcon , 0 );
   }
   else
-  if( page == 6 )
+  if( page == CG_HELP_PAGE_HELP )
   {
     //HELP
     GFL_CLACT_WK_SetAutoAnmFlag( work->clwkIcon , FALSE );
