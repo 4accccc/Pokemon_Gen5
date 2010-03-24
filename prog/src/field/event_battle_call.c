@@ -26,6 +26,8 @@
 #include "battle/battle.h"
 #include "poke_tool/monsno_def.h"
 
+#include "../battle/btl_net.h"
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 #include "poke_tool/pokeparty.h"
@@ -269,19 +271,17 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
         b_rec = FALSE;
       }
       else
-      { 
-        // 通信相手と自分のROMのサーバーバージョンを比較する
-        u8 trainer_num = ( bcw->btl_setup_prm->multiMode == 0 ) ? (2) : (4);
-        u8 my_version = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_A].server_version;
-        int i; 
-        for( i=COMM_BTL_DEMO_TRDATA_B; i<trainer_num; i++ )
+      {
+        // 通信対戦時のサーババーション
+        if( bcw->btl_setup_prm->commServerVer >= BTL_NET_SERVER_VERSION )
         {
-          u8 other_version = bcw->demo_prm->trainer_data[i].server_version;
-          if( other_version > my_version )
-          {
-            b_rec = FALSE;
-            break;
-          }
+          // 自分と同じサーバーバージョン OR 自分が一番高いならば録画可能
+          b_rec = TRUE;
+        }
+        else
+        {
+          // 自分よりも高いサーバーバージョンがいるので録画不可
+          b_rec = FALSE;
         }
       }
       // 通信対戦後の録画選択画面へ移行(録画しない人も移行します)
