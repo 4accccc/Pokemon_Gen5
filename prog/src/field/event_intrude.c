@@ -413,12 +413,17 @@ BOOL IntrudeEvent_Sub_BarrierDisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *ied
       }
 
       // BARRIER演出ON
-      FIELD_PLAYER_GetDirPos( player, iedw->dir, &pos );
+      FIELD_PLAYER_GetPos( player, &pos );
+      if( iedw->dir == DIR_RIGHT ){
+        pos.x += FIELD_CONST_GRID_HALF_FX32_SIZE;
+      }else{
+        pos.x -= FIELD_CONST_GRID_HALF_FX32_SIZE;
+      }
       PALACE_GMK_StartBarrierEffect( iedw->fieldWork, &pos );
     }
 
     // サウンドはいる？
-    PMSND_PlaySE( SEQ_SE_FLD_103 );
+    PMSND_PlaySE( SEQ_SE_FLD_132 );
     
     iedw->seq++;
     break;
