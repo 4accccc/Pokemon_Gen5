@@ -578,14 +578,12 @@ static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, cons
 
   n = 0;
   
-  OS_TPrintf("aaa client_max = %d, temoti_max = %d\n", client_max, temoti_max);
   for(client = 0; client < client_max; client++){
     for(temoti = 0; temoti < temoti_max; temoti++){
       para = &(rec->rec_party[client].member[temoti]);
       if(para->tamago_flag == 0 && para->fusei_tamago_flag == 0){
         head->monsno[n] = para->monsno;
         head->form_no_and_sex[n] = ( para->form_no & HEADER_FORM_NO_MASK ) | ( para->sex << HEADER_GENDER_MASK );
-        OS_TPrintf("client %d temoti %d n %d\n", client, temoti, n);
       }
       n++;
     }
@@ -593,6 +591,7 @@ static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, cons
 
   head->battle_counter = counter;
   head->mode = rec_mode;
+  head->server_vesion = BTL_NET_SERVER_VERSION;
 }
 
 //--------------------------------------------------------------
@@ -627,7 +626,6 @@ static BOOL BattleRec_DataInitializeCheck(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVE
 //--------------------------------------------------------------
 static  BOOL BattleRecordCheckData(SAVE_CONTROL_WORK *sv, const BATTLE_REC_SAVEDATA * src)
 {
-#if 0 //※check　未作成　録画データの仕様が決まってから 2009.11.18(水)
   const BATTLE_REC_WORK *rec = &src->rec;
   const BATTLE_REC_HEADER *head = &src->head;
   u16 hash;
@@ -656,52 +654,7 @@ static  BOOL BattleRecordCheckData(SAVE_CONTROL_WORK *sv, const BATTLE_REC_SAVED
     return FALSE;
   }
 
-  //ポケモンパラメータの不正チェック
-  {
-    int client, temoti, wazano;
-    const REC_POKEPARA *para;
-
-    for(client = 0; client < BTL_CLIENT_MAX; client++){
-      for(temoti = 0; temoti < TEMOTI_POKEMAX; temoti++){
-        para = &(rec->rec_party[client].member[temoti]);
-      #if 0
-        //ダメタマゴ
-        if(para->fusei_tamago_flag == 1){
-          OS_TPrintf("ダメタマゴが混じっている\n");
-          return FALSE;
-        }
-      #endif
-        //不正なポケモン番号
-        if(para->monsno > MONSNO_MAX){
-        #ifdef OSP_REC_ON
-          OS_TPrintf("不正なポケモン番号\n");
-        #endif
-          return FALSE;
-        }
-        //不正なアイテム番号
-        if(para->item > ITEM_DATA_MAX){
-        #ifdef OSP_REC_ON
-          OS_TPrintf("不正なアイテム番号\n");
-        #endif
-          return FALSE;
-        }
-        //不正な技番号
-        for(wazano = 0; wazano < WAZA_TEMOTI_MAX; wazano++){
-          if(para->waza[wazano] > WAZANO_MAX){
-          #ifdef OSP_REC_ON
-            OS_TPrintf("不正な技番号\n");
-          #endif
-            return FALSE;
-          }
-        }
-      }
-    }
-  }
-
   return TRUE;
-#else
-  return TRUE;
-#endif
 }
 
 //============================================================================================
@@ -730,72 +683,6 @@ void  BattleRec_Coded(void *data,u32 size,u32 code)
 static  void  BattleRec_Decoded(void *data,u32 size,u32 code)
 {
   GFL_STD_CODED_Decoded(data,size,code);
-}
-
-
-//============================================================================================
-/**
- *  BATTLE_PARAM構造体保存処理
- *
- * @param[in] bp      BATTLE_PARAM構造体へのポインタ
- */
-//============================================================================================
-void BattleRec_BattleParamRec(BATTLE_PARAM *bp)
-{
-#if 0 //※check　未作成　録画データの仕様が決まってから 2009.11.18(水)
-  int i;
-  BATTLE_REC_WORK *rec;
-  REC_BATTLE_PARAM *rbp;
-
-  if(brs==NULL){
-    return;
-  }
-
-  rec = &brs->rec;
-  rbp = &rec->rbp;
-
-  rbp->fight_type = bp->fight_type;
-  rbp->win_lose_flag = bp->win_lose_flag;
-//  rbp->btr = bp->btr;
-  rbp->bg_id = bp->bg_id;
-  rbp->ground_id = bp->ground_id;
-  rbp->place_id = bp->place_id;
-  rbp->zone_id = bp->zone_id;
-  rbp->time_zone = bp->time_zone;
-  rbp->shinka_place_mode = bp->shinka_place_mode;
-  rbp->contest_see_flag = bp->contest_see_flag;
-  rbp->mizuki_flag = bp->mizuki_flag;
-  rbp->get_pokemon_client = bp->get_pokemon_client;
-  rbp->weather = bp->weather;
-  rbp->level_up_flag = bp->level_up_flag;
-  rbp->battle_status_flag = bp->battle_status_flag;
-  rbp->safari_ball = bp->safari_ball;
-  rbp->regulation_flag = bp->regulation_flag;
-  rbp->rand = bp->rand;
-  rbp->comm_id = bp->comm_id;
-  rbp->dummy = bp->dummy;
-  rbp->total_turn = bp->total_turn;
-  for(i = 0; i < BTL_CLIENT_MAX; i++){
-    rbp->trainer_id[i] = bp->trainer_id[i];
-    rbp->trainer_data[i] = bp->trainer_data[i];
-    if(bp->server_version[i] == 0){
-      rbp->server_version[i] = BTL_NET_SERVER_VERSION;
-    }
-    else{
-      rbp->server_version[i] = bp->server_version[i];
-    }
-    rbp->comm_stand_no[i] = bp->comm_stand_no[i];
-    rbp->voice_waza_param[i] = bp->voice_waza_param[i];
-  }
-
-  //-- REC_BATTLE_PARAMではない場所に保存するデータをセット --//
-  for(i=0;i<BTL_CLIENT_MAX;i++){
-    PokeParty_to_RecPokeParty(bp->poke_party[i], &rec->rec_party[i]);
-    MyStatus_Copy(bp->my_status[i],&rec->my_status[i]);
-    rbp->voice_waza_param[i]=Snd_PerapVoiceWazaParamGet(bp->poke_voice[i]);
-  }
-  CONFIG_Copy(bp->config,&rec->config);
-#endif
 }
 
 //--------------------------------------------------------------
@@ -852,64 +739,6 @@ BOOL BattleRec_ServerVersionCheck(void)
   return TRUE;
 #else
   return TRUE;
-#endif
-}
-
-//============================================================================================
-/**
- *  BATTLE_PARAM構造体生成処理
- *
- * @param[in] bp      BATTLE_PARAM構造体へのポインタ
- * @param[in] sv      セーブ領域へのポインタ
- */
-//============================================================================================
-void BattleRec_BattleParamCreate(BATTLE_PARAM *bp,SAVE_CONTROL_WORK *sv)
-{
-  int i;
-  BATTLE_REC_WORK *rec = &brs->rec;
-
-#if 0 //※check　未作成　録画データの仕様が決まってから 2009.11.18(水)
-  bp->fight_type      = rec->rbp.fight_type;
-//  bp->win_lose_flag   = rec->rbp.win_lose_flag;
-//  bp->btr         = rec->rbp.btr;
-  bp->bg_id       = rec->rbp.bg_id;
-  bp->ground_id     = rec->rbp.ground_id;
-  bp->place_id      = rec->rbp.place_id;
-  bp->zone_id       = rec->rbp.zone_id;
-  bp->time_zone     = rec->rbp.time_zone;
-  bp->shinka_place_mode = rec->rbp.shinka_place_mode;
-  bp->contest_see_flag  = rec->rbp.contest_see_flag;
-  bp->mizuki_flag     = rec->rbp.mizuki_flag;
-  bp->get_pokemon_client  = rec->rbp.get_pokemon_client;
-  bp->weather       = rec->rbp.weather;
-//  bp->level_up_flag   = rec->rbp.level_up_flag;
-  bp->battle_status_flag  = rec->rbp.battle_status_flag|BATTLE_STATUS_FLAG_REC_BATTLE;
-  bp->safari_ball     = rec->rbp.safari_ball;
-  bp->regulation_flag   = rec->rbp.regulation_flag;
-  bp->rand        = rec->rbp.rand;
-  bp->comm_id       = rec->rbp.comm_id;
-//  bp->total_turn      = rec->rbp.total_turn;
-
-  bp->win_lose_flag   = 0;
-  bp->level_up_flag   = 0;
-
-  ZukanWork_Copy(SaveData_GetZukanWork(sv),bp->zw);
-
-  for(i=0;i<BTL_CLIENT_MAX;i++){
-    bp->trainer_id[i]=rec->rbp.trainer_id[i];
-    bp->trainer_data[i]=rec->rbp.trainer_data[i];
-    bp->server_version[i]=rec->rbp.server_version[i];
-    bp->comm_stand_no[i]=rec->rbp.comm_stand_no[i];
-    RecPokeParty_to_PokeParty(&rec->rec_party[i], bp->poke_party[i]);
-    MyStatus_Copy(&rec->my_status[i],bp->my_status[i]);
-    bp->voice_waza_param[i]=rec->rbp.voice_waza_param[i];
-  }
-//  CONFIG_Copy(&rec->config,bp->config);
-  CONFIG_Copy(SaveData_GetConfig(sv), bp->config);
-  bp->config->window_type = rec->config.window_type;
-  if(bp->config->window_type >= TALK_WINDOW_MAX){
-    bp->config->window_type = 0;  //金銀で会話ウィンドウが増える事を考えてケアを入れておく
-  }
 #endif
 }
 
@@ -1114,13 +943,12 @@ BATTLE_REC_HEADER_PTR BattleRec_HeaderPtrGetWork(BATTLE_REC_SAVEDATA *wk_brs)
  * @param   gpp     GDSプロフィール
  * @param   head    録画ヘッダ
  * @param   rec     録画本体
- * @param bp      そのまま再生する場合はBATTLE_PARAM構造体へのポインタを渡す
  * @param   sv      セーブデータへのポインタ
  *
  * BattleRec_Loadを使用してデータをロードしている必要があります。
  */
 //--------------------------------------------------------------
-void BattleRec_DataSet(GDS_PROFILE_PTR gpp, BATTLE_REC_HEADER_PTR head, BATTLE_REC_WORK_PTR rec, BATTLE_PARAM *bp, SAVE_CONTROL_WORK *sv)
+void BattleRec_DataSet(GDS_PROFILE_PTR gpp, BATTLE_REC_HEADER_PTR head, BATTLE_REC_WORK_PTR rec, SAVE_CONTROL_WORK *sv)
 {
   GF_ASSERT(brs != NULL);
   GFL_STD_MemCopy(head, &brs->head, sizeof(BATTLE_REC_HEADER));
@@ -1130,10 +958,6 @@ void BattleRec_DataSet(GDS_PROFILE_PTR gpp, BATTLE_REC_HEADER_PTR head, BATTLE_R
   //復号
   BattleRec_Decoded(&brs->rec, sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE,
     brs->rec.crc.crc16ccitt_hash + ((brs->rec.crc.crc16ccitt_hash ^ 0xffff) << 16));
-
-  if(bp != NULL){
-    BattleRec_BattleParamCreate(bp,sv);
-  }
 }
 
 //--------------------------------------------------------------
