@@ -22,7 +22,7 @@
 #define TR_HAKAIM1_22                      9
 #define TR_HAKAIM1_23                     10
 #define TR_HAKAIW1_09                     11
-#define TR_HAKAIM1_24                     12
+#define TR_HAKAIM1_21                     12
 
 #endif //ZONE_D08R0601_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d08r0601.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

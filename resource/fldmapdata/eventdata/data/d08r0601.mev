@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/04 11:22:32
+#save date:2010/03/24 22:13:32
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08r0601.wms
 #SECTION START:OBJ_EVENT
@@ -350,7 +350,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 208 -152
+-88 208 -136
 #event number: 11
 #type
 1
@@ -386,7 +386,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-TR_HAKAIM1_24
+TR_HAKAIM1_21
 #OBJ CODE Number
 HAKAIM
 #MOVE CODE Number
@@ -396,7 +396,7 @@ EV_TYPE_TRAINER
 #Flag Name
 FV_D08R0601_EVENT_01
 #Event Script Name
-SCRID_TRID_HAKAIM1_24
+SCRID_TRID_HAKAIM1_21
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
