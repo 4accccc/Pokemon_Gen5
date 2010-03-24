@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-24T13:00:15"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-03-24T17:40:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -333,7 +333,7 @@
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
-			<width position="6" width="70"/>
+			<width position="6" width="64"/>
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
@@ -344,19 +344,19 @@
 			</font>
 			<size position="-1" width="100"/>
 			<space position="-1" width="100"/>
-			<width position="7" width="75"/>
+			<width position="7" width="85"/>
 			<line position="-1" width="100"/>
 		</language>
 	</columns>
 
-	<dialog left="1358" top="208" right="2063" bottom="836" maximized="no" rayout="Vertical2">
+	<dialog left="57" top="151" right="762" bottom="778" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -379,74 +379,144 @@
 
 	<row id="CG_HELP_INFO_01">
 		<comment>見出し</comment>
-		<language name="JPN" width="184">ＩＲ</language>
-		<language name="JPN_KANJI" width="16">ＩＲ</language>
+		<language name="JPN" width="184">ＩＲについて</language>
+		<language name="JPN_KANJI" width="184">ＩＲについて</language>
 	</row>
 
 	<row id="CG_HELP_INFO_02">
-		<language name="JPN" width="184">ワイヤレス</language>
-		<language name="JPN_KANJI" width="16">ワイヤレス</language>
+		<language name="JPN" width="184">ワイヤレスについて</language>
+		<language name="JPN_KANJI" width="184">ワイヤレスについて</language>
 	</row>
 
 	<row id="CG_HELP_INFO_03">
-		<language name="JPN" width="184">Ｗｉ－Ｆｉ</language>
-		<language name="JPN_KANJI" width="16">Ｗｉ－Ｆｉ</language>
+		<language name="JPN" width="184">Ｗｉ－Ｆｉについて</language>
+		<language name="JPN_KANJI" width="184">Ｗｉ－Ｆｉについて</language>
 	</row>
 
 	<row id="CG_HELP_INFO_04">
-		<language name="JPN" width="184">すれちがい</language>
-		<language name="JPN_KANJI" width="16">すれ違い</language>
+		<language name="JPN" width="184">すれちがいについて</language>
+		<language name="JPN_KANJI" width="184">すれ違いについて</language>
 	</row>
 
 	<row id="CG_HELP_INFO_05">
-		<language name="JPN" width="184">ちょうさレーダー</language>
-		<language name="JPN_KANJI" width="16">調査レーダー</language>
+		<language name="JPN" width="184">ちょうさレーダーについて</language>
+		<language name="JPN_KANJI" width="184">調査レーダーについて</language>
 	</row>
 
 	<row id="CG_HELP_INFO_06">
-		<language name="JPN" width="184">カスタム</language>
-		<language name="JPN_KANJI" width="16">カスタム</language>
+		<language name="JPN" width="184">カスタムについて</language>
+		<language name="JPN_KANJI" width="184">カスタムについて</language>
 	</row>
 
 	<row id="CG_HELP_INFO_07">
-		<language name="JPN" width="184">ヘルプ</language>
-		<language name="JPN_KANJI" width="16">ヘルプ</language>
+		<language name="JPN" width="184">ヘルプについて</language>
+		<language name="JPN_KANJI" width="184">ヘルプについて</language>
 	</row>
 
 	<row id="CG_HELP_MSG_01">
 		<comment>説明文</comment>
-		<language name="JPN" width="224">ＩＲ</language>
-		<language name="JPN_KANJI" width="96">ＩＲ</language>
+		<language name="JPN" width="224">ダミーメッセージ１
+ダミーメッセージ２
+ダミーメッセージ３
+ダミーメッセージ４
+ダミーメッセージ５
+ダミーメッセージ６</language>
+		<language name="JPN_KANJI" width="224">ダミーメッセージ１
+ダミーメッセージ２
+ダミーメッセージ３
+ダミーメッセージ４
+ダミーメッセージ５
+ダミーメッセージ６</language>
 	</row>
 
 	<row id="CG_HELP_MSG_02">
-		<language name="JPN" width="224">ワイヤレス</language>
-		<language name="JPN_KANJI" width="96">ワイヤレス</language>
+		<language name="JPN" width="224">ダミーメッセージ１
+ダミーメッセージ２
+ダミーメッセージ３
+ダミーメッセージ４
+ダミーメッセージ５
+ダミーメッセージ６</language>
+		<language name="JPN_KANJI" width="224">ダミーメッセージ１
+ダミーメッセージ２
+ダミーメッセージ３
+ダミーメッセージ４
+ダミーメッセージ５
+ダミーメッセージ６</language>
 	</row>
 
 	<row id="CG_HELP_MSG_03">
-		<language name="JPN" width="224">Ｗｉ－Ｆｉ</language>
-		<language name="JPN_KANJI" width="96">Ｗｉ－Ｆｉ</language>
+		<language name="JPN" width="224">ダミーメッセージ１
+ダミーメッセージ２
+ダミーメッセージ３
+ダミーメッセージ４
+ダミーメッセージ５
+ダミーメッセージ６</language>
+		<language name="JPN_KANJI" width="224">ダミーメッセージ１
+ダミーメッセージ２
+ダミーメッセージ３
+ダミーメッセージ４
+ダミーメッセージ５
+ダミーメッセージ６</language>
 	</row>
 
 	<row id="CG_HELP_MSG_04">
-		<language name="JPN" width="224">すれちがい</language>
-		<language name="JPN_KANJI" width="96">すれ違い</language>
+		<language name="JPN" width="224">ダミーメッセージ１
+ダミーメッセージ２
+ダミーメッセージ３
+ダミーメッセージ４
+ダミーメッセージ５
+ダミーメッセージ６</language>
+		<language name="JPN_KANJI" width="224">ダミーメッセージ１
+ダミーメッセージ２
+ダミーメッセージ３
+ダミーメッセージ４
+ダミーメッセージ５
+ダミーメッセージ６</language>
 	</row>
 
 	<row id="CG_HELP_MSG_05">
-		<language name="JPN" width="224">ちょうさレーダー</language>
-		<language name="JPN_KANJI" width="96">調査レーダー</language>
+		<language name="JPN" width="224">ダミーメッセージ１
+ダミーメッセージ２
+ダミーメッセージ３
+ダミーメッセージ４
+ダミーメッセージ５
+ダミーメッセージ６</language>
+		<language name="JPN_KANJI" width="224">ダミーメッセージ１
+ダミーメッセージ２
+ダミーメッセージ３
+ダミーメッセージ４
+ダミーメッセージ５
+ダミーメッセージ６</language>
 	</row>
 
 	<row id="CG_HELP_MSG_06">
-		<language name="JPN" width="224">カスタム</language>
-		<language name="JPN_KANJI" width="96">カスタム</language>
+		<language name="JPN" width="224">ダミーメッセージ１
+ダミーメッセージ２
+ダミーメッセージ３
+ダミーメッセージ４
+ダミーメッセージ５
+ダミーメッセージ６</language>
+		<language name="JPN_KANJI" width="224">ダミーメッセージ１
+ダミーメッセージ２
+ダミーメッセージ３
+ダミーメッセージ４
+ダミーメッセージ５
+ダミーメッセージ６</language>
 	</row>
 
 	<row id="CG_HELP_MSG_07">
-		<language name="JPN" width="224">ヘルプ</language>
-		<language name="JPN_KANJI" width="96">ヘルプ</language>
+		<language name="JPN" width="224">ダミーメッセージ１
+ダミーメッセージ２
+ダミーメッセージ３
+ダミーメッセージ４
+ダミーメッセージ５
+ダミーメッセージ６</language>
+		<language name="JPN_KANJI" width="224">ダミーメッセージ１
+ダミーメッセージ２
+ダミーメッセージ３
+ダミーメッセージ４
+ダミーメッセージ５
+ダミーメッセージ６</language>
 	</row>
 
 	<row id="CG_HELP_SYS_01">
