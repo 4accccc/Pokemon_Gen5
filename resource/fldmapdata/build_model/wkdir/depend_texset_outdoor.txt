@@ -941,7 +941,8 @@ DEP_TEXSET_IMD_OUTDOOR022 = \
 	$(SRCDIR)/rock_02.imd \
 	$(SRCDIR)/door_normal01.imd \
 	$(SRCDIR)/door_normal02.imd \
-	$(SRCDIR)/door_normal03.imd
+	$(SRCDIR)/door_normal03.imd \
+	$(SRCDIR)/door_untower.imd
 
 texset/outdoor022.imd: $(DEP_TEXSET_IMD_OUTDOOR022) texset/tmp/outdoor022.list
 	$(TEXMAG) -q -n -o $@ -S texset/tmp/outdoor022.list
