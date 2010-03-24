@@ -2008,6 +2008,8 @@ static void ReTransToGra( FLD3D_CI_PTR ptr,
  *	@param	ptr         管理ポインタ
  *	@return BOOL        TRUEでシーケンス移行を許可
  *
+ *	@note カットインエンカウントエフェクトは20100324の時点でブラックアウトフェードのみ
+ *
  */
 //-----------------------------------------------------------------------------
 static BOOL EncFadeMain(GMEVENT* event, FLD3D_CI_PTR ptr)
@@ -2017,11 +2019,11 @@ static BOOL EncFadeMain(GMEVENT* event, FLD3D_CI_PTR ptr)
     if (ptr->PtclEnd&&ptr->MdlAnm1End&&ptr->MdlAnm2End) ptr->SubSeq++;
     break;
   case 1:
-    //ホワイトアウト開始
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, -1 );  //両画面フェードアウト
+    //ブラックアウトアウト開始
+    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, -1 );  //両画面フェードアウト
     ptr->SubSeq++;
   case 2:
-    //ホワイトアウト待ち
+    //ブラックアウトアウト待ち
     if ( GFL_FADE_CheckFade() != FALSE ) break;
     return TRUE;
   }
