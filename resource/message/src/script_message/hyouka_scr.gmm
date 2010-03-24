@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T19:23:32"/>
+	<create user="matsumiya" host="W00224" date="2010-03-24T21:51:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="221"/>
+		<comment position="4" width="274"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -307,14 +307,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="383" right="1998" bottom="1012" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1984" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="523"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="536"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="690"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -339,8 +339,9 @@
 	<row id="msg_hyouka_hakase2_01" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>アララギ博士：娘
 ・はい/いいえの選択肢
-　はい　→hakase_02
-　いいえ→hakase_03</comment>
+　はい　→hakase2_02
+　　　　　→hakase2_02a
+　いいえ→hakase2_03</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
 		<language name="JPN" width="256">ポケモンずかんの　ようすを
 わたしが　チェック　しましょうか？</language>
@@ -362,16 +363,33 @@
 ポケモンの　数は　[2:02:３桁:0]　ね▼</language>
 	</row>
 
+	<row id="msg_hyouka_hakase2_02a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>アララギ博士：娘
+※msg_hyouka_i09表示後
+・はい選択時
+・つかまえた匹数に応じてメッセージ分岐
+・0＝３桁の数字（001～150）</comment>
+		<attribute name="キャラ指定">アララギ博士：娘</attribute>
+		<language name="JPN" width="256">どれどれ……▼
+イッシュちほうで　つかまえた
+ポケモンの　かずは　[2:02:３桁:0]　ね▼</language>
+		<language name="JPN_KANJI" width="256">どれどれ……▼
+イッシュ地方で　捕まえた
+ポケモンの　数は　[2:02:３桁:0]　ね▼</language>
+	</row>
+
 	<row id="msg_hyouka_hakase2_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>アララギ博士：娘
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">アララギ博士：娘</attribute>
 		<language name="JPN" width="256">あら？　どうしたの？▼
 もしかして　わたしに　みせるほど
-ポケモンを　つかまえて　いないとか？</language>
+ポケモンと　であったり▽
+つかまえて　いないとか？</language>
 		<language name="JPN_KANJI" width="256">あら？　どうしたの？▼
 もしかして　わたしに　みせるほど
-ポケモンを　捕まえていないとか？</language>
+ポケモンと　出会ったり▽
+捕まえていない　とか？</language>
 	</row>
 
 	<row id="msg_hyouka_i00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -495,11 +513,104 @@
 		<language name="JPN" width="256">すごい！　すごいわ！▼
 イッシュちほうにいる　すべての
 ポケモンと　であったのね！▼
-ほんとうに　おめでとう！！</language>
+ほんとうに　おめでとう！！▼
+じゃあ　つぎからは
+イッシュちほうの　ポケモンを▽
+どれだけ　つかまえたか▽
+ひょうか　していくわね！！</language>
 		<language name="JPN_KANJI" width="256">すごい！　すごいわ！▼
 イッシュ地方にいる　すべての
 ポケモンと　出会ったのね！▼
-本当に　おめでとう！！</language>
+本当に　おめでとう！！▼
+じゃあ　次からは
+イッシュ地方の　ポケモンを▽
+どれだけ　捕まえたか▽
+評価していくわね！！</language>
+	</row>
+
+	<row id="msg_hyouka_hakase2_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>図鑑評価後
+・アイテムもらえるとき
+・見つけた数が２５匹
+　→hakase2_05（No381「みねうち」）
+　見つけた数が６０匹
+　→hakase2_06（No344「まもる」）
+　見つけた数が１１５匹
+　→hakase2_07（No337「めざめるパワー」）</comment>
+		<attribute name="キャラ指定">アララギ博士：娘</attribute>
+		<language name="JPN" width="256">なんだか　いい　かんじで
+ポケモンと　であっているわね！▼
+その　がんばりを　おうえんして
+これを　プレゼントするわ！▼</language>
+		<language name="JPN_KANJI" width="256">なんだか　いい　感じで
+ポケモンと　出会っているわね！▼
+その　がんばりを　応援して
+これを　プレゼントするわ！▼</language>
+	</row>
+
+	<row id="msg_hyouka_hakase2_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>図鑑評価後
+・No381「みねうち」入手後
+・さらにもらえる場合は→hakase2_08
+　もらえない場合は→hakase2_09</comment>
+		<attribute name="キャラ指定">アララギ博士：娘</attribute>
+		<language name="JPN" width="256">みねうちは　てかげんして
+こうげきする　わざ　なの▼
+ポケモンを　つかまえるのに
+やくだつこと　まちがいなし　よ！▼</language>
+		<language name="JPN_KANJI" width="256">みねうちは　手加減して
+攻撃する　技なの▼
+ポケモンを　捕まえるのに
+役立つこと　間違いなし　よ！▼</language>
+	</row>
+
+	<row id="msg_hyouka_hakase2_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>図鑑評価後
+・No337「めざめるパワー」入手後
+・さらにもらえる場合は→hakase2_08
+　もらえない場合は→hakase2_09</comment>
+		<attribute name="キャラ指定">アララギ博士：娘</attribute>
+		<language name="JPN" width="256">まもるは　あいての　こうげきを
+まったく　うけつけない　わざなの！▼
+……ただしく　いうと　ゆいいつ
+フェイントって　わざは　あたるけどね▼</language>
+		<language name="JPN_KANJI" width="256">まもるは　相手の　攻撃を
+まったく　受け付けない　技なの！▼
+……正しく　いうと　唯一
+フェイントって　技は　当たるけどね▼</language>
+	</row>
+
+	<row id="msg_hyouka_hakase2_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>図鑑評価後
+・No344「まもる」入手後
+・続けてhakase2_09</comment>
+		<attribute name="キャラ指定">アララギ博士：娘</attribute>
+		<language name="JPN" width="256">めざめるパワーは　おぼえる
+ポケモンに　よって　タイプや▽
+いりょくが　かわる　わざ　なの！▼</language>
+		<language name="JPN_KANJI" width="256">めざめるパワーは　覚える
+ポケモンに　よって　タイプや▽
+威力が　変わる　技なの！▼</language>
+	</row>
+
+	<row id="msg_hyouka_hakase2_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>図鑑評価後
+・さらにもらえる場合
+　見つけた数が６０匹
+　→hakase2_06（No344「まもる」）
+　見つけた数が１１５匹
+　→hakase2_07（No337「めざめるパワー」）</comment>
+		<attribute name="キャラ指定">アララギ博士：娘</attribute>
+		<language name="JPN" width="256">これも　つかってみて！▼</language>
+		<language name="JPN_KANJI" width="256">これも　使ってみて！▼</language>
+	</row>
+
+	<row id="msg_hyouka_hakase2_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>図鑑評価後
+・もらえない場合</comment>
+		<attribute name="キャラ指定">アララギ博士：娘</attribute>
+		<language name="JPN" width="256">これからも　よろしくね！</language>
+		<language name="JPN_KANJI" width="256">これからも　よろしくね！</language>
 	</row>
 
 	<row id="msg_hyouka_i10" back-color="#00ff00,,,,,#00ff00,,,,,,,,,,,,,">
