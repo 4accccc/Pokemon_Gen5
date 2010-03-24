@@ -723,7 +723,7 @@ EVENT_START		ev_pos_d02r0101_event_05
     _OBJ_ANIME( D02R0101_HAKAIM3_01, anm_down_walk )
     _OBJ_ANIME_WAIT()
 
-	//【仮】戦闘処理
+	//戦闘処理
 	_TRAINER_BTL_SET( TRID_HAKAIM1_16, 0 )
 	//結果チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )

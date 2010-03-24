@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/04 21:52:55
+#save date:2010/03/24 16:54:56
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c08r0802.wms
 #SECTION START:OBJ_EVENT
@@ -48,7 +48,7 @@ ZONE_ID_C08R0801
 #Next Door ID Name
 DOOR_ID_C08R0801_C08R0802_EXIT01
 #Door Direction
-EXIT_DIR_LEFT
+EXIT_DIR_RIGHT
 #Door Type
 EXIT_TYPE_STAIRS
 #Pos Type

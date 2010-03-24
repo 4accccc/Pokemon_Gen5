@@ -94,7 +94,7 @@ EVENT_START	ev_pos_c09r0501_n_01
 	_MAP_FADE_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
 	
-	//【仮】Ｎ城出現デモ=============================
+	//Ｎ城出現デモ=============================
 	
 	//マップマトリクスの差し替えフラグをON Ｎ城への通路が突き刺さる【仮】クリア時にフラグリセットするイベントが未実装
 	_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_02, TRUE, TRUE )
@@ -102,7 +102,7 @@ EVENT_START	ev_pos_c09r0501_n_01
 	//ここでコール
 	_CALL_3D_DEMO( DEMO3D_ID_N_CASTLE )
 	
-	//【仮】Ｎ城出現デモ=============================
+	//Ｎ城出現デモ=============================
 
 	_CAMERA_START()		//カメラ操作開始
     _CAMERA_PURGE()		//対象物とカメラのバインドを解く
@@ -146,11 +146,9 @@ EVENT_START	ev_pos_c09r0501_n_01
 	_BALLOONWIN_OBJMSG( msg_c09r0501_champion_02, C09R0501_CHAMPION_01 )
 	_MSGWIN_CLOSE()
 	
-	
 	//まあな ポケモンリーグを勝ち抜いたよ
 	_BALLOONWIN_OBJMSG( msg_c09r0501_black_02, C09R0501_RIVAL_01 )
 	_MSGWIN_CLOSE()
-	
 	
 	//やるではないか
 	_BALLOONWIN_OBJMSG( msg_c09r0501_champion_03, C09R0501_CHAMPION_01 )
@@ -311,7 +309,6 @@ EVENT_START	ev_pos_c09r0501_champion_02
 	_OBJ_ANIME( C09R0501_CHAMPION_02, anm_vs_champion_champ_to_player_01 )
 	_OBJ_ANIME_WAIT()
 	
-	/*
 	//【仮】戦闘処理
 	_TRAINER_BTL_SET( TRID_CHAMPION_01, 0 )
 	//結果チェック
@@ -321,7 +318,6 @@ EVENT_START	ev_pos_c09r0501_champion_02
 	ELSE
 		_TRAINER_LOSE()
 	ENDIF
-	*/
 	
 	//チャンピオン：あっぱれ！まさにてんかむそうなり！
 	_BALLOONWIN_OBJMSG( msg_c09r0501_champion_12, C09R0501_CHAMPION_02 )

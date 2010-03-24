@@ -256,7 +256,7 @@ ev_leader3_btl:
 	//R04ライバルイベント開始
 	$WK_SCENE_R04 = 1
 	
-	//【仮】C03R0601
+	//C03R0601
 	$WK_SCENE_C03R0601 = 1
 
 	//ワークの値を１にし、イベント終了
@@ -498,7 +498,7 @@ EVENT_END
 EVENT_START	ev_prg_c03gym0101_tr1_btl
 	//対戦済みかチェック
 	IF FLAG_OFF( FE_C03GYM_TRBTL1 ) THEN
-		//対戦前の処理【仮】
+		//対戦前の処理
 		
 		_SE_WAIT()
 		
@@ -577,7 +577,7 @@ EVENT_END
 EVENT_START	ev_prg_c03gym0101_tr2_btl
 	//対戦済みかチェック
 	IF FLAG_OFF( FE_C03GYM_TRBTL2 ) THEN
-		//対戦前の処理【仮】
+		//対戦前の処理
 		_SE_WAIT()
 
 		_FLAG_SET( FE_C03GYM_TRBTL2 )

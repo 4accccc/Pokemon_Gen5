@@ -177,6 +177,13 @@ _TALK_OBJ_START()
 			_OBJ_ANIME_WAIT()
 		ENDSWITCH
 
+		//Cギア入手イベント演出
+		_CGEAR_ON_DEMO()
+		
+		//Cギア入手SE再生
+		_SE_PLAY( SEQ_SE_DECIDE3 )
+		_SE_WAIT()
+
 		//ほら！　Ｃギアがきどうして
 		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_11 )
 		_MSGWIN_CLOSE()
@@ -245,6 +252,9 @@ _TALK_OBJ_START()
 		
 		//ストッパー解除
 		$WK_SCENE_C01 = 3
+
+		//Cギア入手フラグ
+		_FLAG_SET( FE_CGEAR_GET )
 		
 		//========================================/
 	ELSE
