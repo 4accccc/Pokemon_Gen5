@@ -2376,7 +2376,7 @@ static  VMCMD_RESULT  AI_IF_TOTTEOKI( VMHANDLE* vmh, void* context_work )
   const BTL_POKEPARAM* bpp = get_bpp( taw, pos );
 
   //‚Á‚Ä‚¢‚é‹Z‚ğo‚µØ‚Á‚Ä‚¢‚È‚¢‚©A‚Á‚Ä‚¢‚é‹Z‚ª2ˆÈã‚È‚¢ê‡‚Í¸”s
-  if( ( BPP_WAZA_GetUsedCount( bpp ) >= BPP_WAZA_GetCount( bpp ) ) && (BPP_WAZA_GetCount( bpp ) > 1) )
+  if( ( BPP_WAZA_GetUsedCountInAlive( bpp ) >= BPP_WAZA_GetCount( bpp ) ) && (BPP_WAZA_GetCount( bpp ) > 1) )
   {
     VMCMD_Jump( vmh, vmh->adrs + adrs );
   }

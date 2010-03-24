@@ -234,6 +234,7 @@ extern const POKEMON_PARAM* BPP_GetSrcData( const BTL_POKEPARAM* bpp );
 extern void BPP_SetViewSrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* fakePP );
 extern const POKEMON_PARAM* BPP_GetViewSrcData( const BTL_POKEPARAM* bpp );
 
+extern u8 BPP_WAZA_GetUsedCountInAlive( const BTL_POKEPARAM* pp );
 extern u8 BPP_WAZA_GetCount( const BTL_POKEPARAM* pp );
 extern u8 BPP_WAZA_GetUsedCount( const BTL_POKEPARAM* pp );
 extern u8 BPP_WAZA_GetUsableCount( const BTL_POKEPARAM* bpp );

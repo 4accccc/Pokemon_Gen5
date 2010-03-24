@@ -108,7 +108,8 @@ typedef struct {
   u16  recoverNumber;     ///< バトル中にワザが書き換わった時に、巻き戻し用に前のワザを保存
   u8   pp;                ///< PP値
   u8   ppMax;             ///< PP最大値
-  u8   usedFlag;          ///< 使用したフラグ
+  u8   usedFlag;          ///< 使用したフラグ（死亡・入れ替えなどでクリア）
+  u8   usedFlagFix;       ///< 使用したフラグ（死亡・入れ替えなどでも保持）
 }BPP_WAZA;
 
 
@@ -128,6 +129,7 @@ struct _BTL_POKEPARAM {
   u8  wazaCnt;
   u8  formNo;
   u8  criticalRank;
+  u8  usedWazaCount;
 
   u16 turnCount;        ///< 継続して戦闘に出ているカウンタ
   u16 appearedTurn;     ///< 戦闘に出たターンを記録
@@ -282,9 +284,11 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
       bpp->waza[i].ppMax = 0;
     }
     bpp->waza[i].usedFlag = FALSE;
+    bpp->waza[i].usedFlagFix = FALSE;
     bpp->waza[i].recoverNumber = bpp->waza[i].number;
   }
 
+  bpp->usedWazaCount = 0;
   bpp->tokusei = PP_Get( srcPP, ID_PARA_speabino, 0 );
   bpp->formNo = PP_Get( srcPP, ID_PARA_form_no, 0 );
   bpp->coreParam.exp = PP_Get( srcPP, ID_PARA_exp, NULL );
@@ -441,13 +445,17 @@ u16 BPP_GetMonsNo( const BTL_POKEPARAM* bpp )
 {
   return bpp->coreParam.monsno;
 }
-
+/**
+ *  ワザ所持数を返す
+ */
 u8 BPP_WAZA_GetCount( const BTL_POKEPARAM* bpp )
 {
   return bpp->wazaCnt;
 }
-
-u8 BPP_WAZA_GetUsedCount( const BTL_POKEPARAM* bpp )
+/**
+ *  生きている間に使ったワザの数を返す（死んだらリセットされる）
+ */
+u8 BPP_WAZA_GetUsedCountInAlive( const BTL_POKEPARAM* bpp )
 {
   u8 cnt, i;
   for(i=0, cnt=0; i<bpp->wazaCnt; ++i)
@@ -457,6 +465,13 @@ u8 BPP_WAZA_GetUsedCount( const BTL_POKEPARAM* bpp )
     }
   }
   return cnt;
+}
+/**
+ *  使ったワザの数を返す（死んでもカウントアップ）
+ */
+u8 BPP_WAZA_GetUsedCount( const BTL_POKEPARAM* bpp )
+{
+  return bpp->usedWazaCount;
 }
 
 u8 BPP_WAZA_GetUsableCount( const BTL_POKEPARAM* bpp )
@@ -1381,9 +1396,15 @@ void BPP_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
  * @param   wazaIdx
  */
 //=============================================================================================
-void BPP_WAZA_SetUsedFlag( BTL_POKEPARAM* pp, u8 wazaIdx )
+void BPP_WAZA_SetUsedFlag( BTL_POKEPARAM* bpp, u8 wazaIdx )
 {
-  pp->waza[ wazaIdx ].usedFlag = TRUE;
+  BPP_WAZA* pWaza = &bpp->waza[ wazaIdx ];
+
+  if( pWaza->usedFlagFix == FALSE ){
+    pWaza->usedFlagFix = TRUE;
+    bpp->usedWazaCount++;
+  }
+  pWaza->usedFlag = TRUE;
 }
 //=============================================================================================
 /**
@@ -1407,6 +1428,7 @@ void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BO
   }
   pWaza->number = waza;
   pWaza->usedFlag = FALSE;
+  pWaza->usedFlagFix = FALSE;
   pWaza->ppMax = WAZADATA_GetMaxPP( waza, 0 );
 
   if( (ppMax != 0)

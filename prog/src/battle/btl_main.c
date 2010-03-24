@@ -20,6 +20,7 @@
 
 #include "btl_common.h"
 #include "btl_server.h"
+#include "btl_server_flow.h"
 #include "btl_field.h"
 #include "btl_client.h"
 #include "btl_adapter.h"
@@ -205,6 +206,8 @@ static void Bspstore_Party( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* p
 static void Bspstore_PlayerStatus( BTL_MAIN_MODULE* wk, u8 clientID, const MYSTATUS* playerStatus );
 static void Bspstore_RecordData( BTL_MAIN_MODULE* wk );
 static u8 CommClientRelation( u8 myClientID, u8 targetClientID );
+static void Kentei_ClearField( BATTLE_SETUP_PARAM* sp );
+static void Bspstore_KenteiData( BTL_MAIN_MODULE* wk );
 
 
 //--------------------------------------------------------------
@@ -248,6 +251,8 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->fBonusMoneyFixed = FALSE;
       wk->fCommError = FALSE;
       wk->MultiAIClientNum = 0;
+
+      Kentei_ClearField( wk->setupParam );
 
       wk->bonusMoney = calcBonusMoneyBase( setup_param );
       wk->ppIllusionZoroArc = NULL;
@@ -310,6 +315,7 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
   {
     checkWinner( wk );
     Bspstore_RecordData( wk );
+    Bspstore_KenteiData( wk );
     reflectPartyData( wk );
     wk->setupParam->getMoney = wk->bonusMoney;
     OS_TPrintf("BTL_PROC_MaIN Finish\n");
@@ -4370,4 +4376,71 @@ BTL_SVFLOW_WORK* BTL_MAIN_GetSVFWorkForAI( const BTL_MAIN_MODULE* wk )
   GF_ASSERT(wk->server);
   return BTL_SERVER_GetFlowWork( wk->server );
 }
+
+//----------------------------------------------------------------------------------------------
+// バトル検定データ処理
+//----------------------------------------------------------------------------------------------
+static void Kentei_ClearField( BATTLE_SETUP_PARAM* sp )
+{
+  sp->TurnNum = 0;       //かかったターン数
+  sp->PokeChgNum = 0;    //交代回数
+
+  sp->VoidAtcNum = 0;    //効果がない技を出した回数
+  sp->WeakAtcNum = 0;    //ばつぐんの技を出した回数
+  sp->ResistAtcNum = 0;  //いまひとつの技を出した回数
+  sp->VoidNum = 0;       //効果がない技を受けた回数
+  sp->ResistNum = 0;     //いまひとつの技を受けた回数
+
+  sp->WinTrainerNum = 0; //倒したトレーナー数
+  sp->WinPokeNum = 0;    //倒したポケモン数
+  sp->LosePokeNum = 0;   //倒されたポケモン数
+  sp->UseWazaNum = 0;    //使用した技の数
+}
+static void Bspstore_KenteiData( BTL_MAIN_MODULE* wk )
+{
+  if( wk->server )
+  {
+    BTL_SVFLOW_WORK* svf = BTL_SERVER_GetFlowWork( wk->server );
+    BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
+    sp->TurnNum    = BTL_SVFTOOL_GetTurnCount( svf );
+    sp->PokeChgNum = BTL_SVFTOOL_GetPokeChangeCount( svf, BTL_CLIENT_PLAYER );
+
+    sp->VoidAtcNum   = BTL_SVF_GetTypeAffCnt_PutVoid( svf );
+    sp->WeakAtcNum   = BTL_SVF_GetTypeAffCnt_PutAdvantage( svf );
+    sp->ResistAtcNum = BTL_SVF_GetTypeAffCnt_PutDisadvantage( svf );
+    sp->VoidNum      = BTL_SVF_GetTypeAffCnt_RecvVoid( svf );
+    sp->ResistNum    = BTL_SVF_GetTypeAffCnt_RecvDisadvantage( svf );
+
+    if( sp->result == BTL_RESULT_WIN ){
+      sp->WinTrainerNum = 1;
+    }
+
+    {
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( &wk->pokeconForServer, BTL_CLIENT_PLAYER );
+      u32 memberCnt = BTL_PARTY_GetMemberCount( party );
+      u32 aliveCnt = BTL_PARTY_GetAliveMemberCount( party );
+      u32 i;
+      for(i=0; i<memberCnt; ++i){
+        BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberData( party, i );
+        sp->UseWazaNum += BPP_WAZA_GetUsedCount( bpp );
+      }
+      sp->LosePokeNum = (memberCnt - aliveCnt);
+
+      party = BTL_POKECON_GetPartyData( &wk->pokeconForServer, BTL_CLIENT_ENEMY1 );
+      memberCnt = BTL_PARTY_GetMemberCount( party );
+      aliveCnt = BTL_PARTY_GetAliveMemberCount( party );
+      sp->WinPokeNum = (memberCnt - aliveCnt);
+
+      party = BTL_POKECON_GetPartyData( &wk->pokeconForServer, BTL_CLIENT_ENEMY2 );
+      if( party )
+      {
+        memberCnt = BTL_PARTY_GetMemberCount( party );
+        aliveCnt = BTL_PARTY_GetAliveMemberCount( party );
+        sp->WinPokeNum += (memberCnt - aliveCnt);
+      }
+    }
+  }
+}
+
 

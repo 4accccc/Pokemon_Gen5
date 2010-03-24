@@ -50,6 +50,8 @@
 enum {
   HANDLER_EXHIBISION_WORK_TOTALSIZE = 512,    ///< ハンドラ反応情報を格納するワークのトータルサイズ
   NIGERU_COUNT_MAX = 30,                      ///< 「にげる」選択回数カウンタの最大値
+  MEMBER_CHANGE_COUNT_MAX = 255,              ///< 入れ替えカウンタ最大値（バトル検定用）
+  AFFCOUNTER_MAX = 9999,                      ///< 相性カウンタ最大値（バトル検定用）
 };
 
 //--------------------------------------------------------
@@ -206,6 +208,18 @@ typedef struct {
   u8  targetPos;    ///< 対象位置（位置が明確でないワザは BTL_POS_NULL ）
 }WAZAEFF_CTRL;
 
+/**
+ *  ワザ相性カウンタ（バトル検定用）
+ */
+typedef struct {
+  u16 putVoid;          ///< 「効果なし」を出した
+  u16 putAdvantage;     ///< 「効果ばつぐん」を出した
+  u16 putDisadvantage;  ///< 「効果いまいち」を出した
+  u16 recvVoid;         ///< 「効果無し」を受けた
+  u16 recvAdvantage;    ///< 「効果ばつぐん」を受けた
+  u16 recvDisadvantage; ///< 「効果いまいち」を受けた
+}WAZA_AFF_COUNTER;
+
 
 /**
  *  HandEx 戻り値
@@ -248,6 +262,7 @@ struct _BTL_SVFLOW_WORK {
   u8      relivedPokeID[ BTL_POKEID_MAX ];
   u8      pokeDeadFlag[ BTL_POKEID_MAX ];
   u8      pokeInFlag [ BTL_POKEID_MAX ];
+  u8      memberChangeCount[ BTL_CLIENT_MAX ];
 
   ACTION_ORDER_WORK   actOrder[ BTL_POS_MAX ];
   ACTION_ORDER_WORK   actOrderTmp;
@@ -270,6 +285,7 @@ struct _BTL_SVFLOW_WORK {
   BPP_WAZADMG_REC             wazaDamageRec;
   WazaID                      prevExeWaza;
   SabotageType                currentSabotageType;
+  WAZA_AFF_COUNTER            affCounter;
 
   u8          flowFlags[ FLOWFLG_BYTE_MAX ];
   u8          handlerTmpWork[ EVENT_HANDLER_TMP_WORK_SIZE ];
@@ -687,6 +703,8 @@ static void scEvent_ItemSetFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp 
 static void scEvent_ChangeTokuseiBefore( BTL_SVFLOW_WORK* wk, u8 pokeID, u16 tokuseiID );
 static void scEvent_ChangeTokuseiAfter( BTL_SVFLOW_WORK* wk, u8 pokeID );
 static void scEvent_CheckSideEffectParam( BTL_SVFLOW_WORK* wk, BtlSideEffect effect, BtlSide side, BPP_SICK_CONT* cont );
+static void AffCounter_Clear( WAZA_AFF_COUNTER* cnt );
+static void AffCounter_CountUp( WAZA_AFF_COUNTER* cnt, BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BtlTypeAff affinity );
 static void Hem_Init( HANDLER_EXHIBISION_MANAGER* wk );
 static u32 Hem_PushState( HANDLER_EXHIBISION_MANAGER* wk );
 static void Hem_PopState( HANDLER_EXHIBISION_MANAGER* wk, u32 state );
@@ -806,6 +824,10 @@ static void clearWorks( BTL_SVFLOW_WORK* wk )
 
   GFL_STD_MemClear( wk->pokeDeadFlag, sizeof(wk->pokeDeadFlag) );
   GFL_STD_MemClear( wk->pokeInFlag, sizeof(wk->pokeInFlag) );
+  GFL_STD_MemClear( wk->memberChangeCount, sizeof(wk->memberChangeCount) );
+
+  AffCounter_Clear( &wk->affCounter );
+
 
   Hem_Init( &wk->HEManager );
   eventWork_Init( &wk->eventWork );
@@ -3449,6 +3471,10 @@ static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8
     pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, outPokeID );
     BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, pos, &clientID, &posIdx );
 
+    if( wk->memberChangeCount[clientID] < MEMBER_CHANGE_COUNT_MAX ){
+      wk->memberChangeCount[clientID]++;
+    }
+
     scproc_MemberInForChange( wk, clientID, posIdx, nextPokeIdx, TRUE );
   }
 }
@@ -5583,6 +5609,7 @@ static u32 scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
     {
       scput_WazaNoEffect( wk, bpp );
       BTL_POKESET_Remove( targets, bpp );
+      AffCounter_CountUp( &wk->affCounter, wk, attacker, bpp, BTL_TYPEAFF_0 );
     }
     else{
       ++poke_cnt;
@@ -5633,6 +5660,9 @@ static u32 scproc_Fight_damage_side_plural( BTL_SVFLOW_WORK* wk,
     dmg[i] = MarumeDamage( bpp[i], dmg[i] );
     koraeru_cause[i] = scEvent_CheckKoraeru( wk, attacker, bpp[i], &dmg[i] );
     dmg_sum += dmg[i];
+    if( dmg[i] ){
+      AffCounter_CountUp( &wk->affCounter, wk, attacker, bpp[i], affAry[i] );
+    }
   }
 
   // ワザエフェクト生成
@@ -9783,7 +9813,7 @@ static BOOL scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
   for(i=0; i<wk->numActOrder; ++i)
   {
     if( wk->actOrder[i].fIntr)
-    {
+     {
       WazaID waza = ActOrder_GetWazaID( &wk->actOrder[i] );
       if( waza != WAZANO_NULL ){
         BTL_HANDLER_Waza_RemoveForce( wk->actOrder[i].bpp, waza );
@@ -11476,6 +11506,119 @@ static void scEvent_CheckSideEffectParam( BTL_SVFLOW_WORK* wk, BtlSideEffect eff
   BTL_EVENTVAR_Pop();
 }
 
+//----------------------------------------------------------------------------------------------------------
+// 相性ヒットカウンタ
+//----------------------------------------------------------------------------------------------------------
+
+/**
+ *  クリア
+ */
+static void AffCounter_Clear( WAZA_AFF_COUNTER* cnt )
+{
+  GFL_STD_MemClear( cnt, sizeof(WAZA_AFF_COUNTER) );
+}
+
+static void AffCounter_CountUp( WAZA_AFF_COUNTER* cnt, BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BtlTypeAff affinity )
+{
+  u8 atkPokeID = BPP_GetID( attacker );
+  u8 defPokeID = BPP_GetID( defender );
+
+  u8 atkClientID = BTL_MAINUTIL_PokeIDtoClientID( atkPokeID );
+  u8 defClientID = BTL_MAINUTIL_PokeIDtoClientID( defPokeID );
+
+  u8 fEnemyAttack = !BTL_MAINUTIL_IsFriendPokeID( atkPokeID, defPokeID );
+
+  u16* pCnt = NULL;
+
+  // プレイヤーが攻撃側
+  if( atkClientID == BTL_CLIENT_PLAYER )
+  {
+    if( fEnemyAttack )
+    {
+      if( affinity == BTL_TYPEAFF_0 )
+      {
+        pCnt = &(cnt->putVoid);
+      }
+      else if( affinity > BTL_TYPEAFF_100 )
+      {
+        pCnt = &(cnt->putAdvantage);
+      }
+      else if( affinity < BTL_TYPEAFF_100 )
+      {
+        pCnt = &(cnt->putDisadvantage);
+      }
+    }
+  }
+  // プレイヤーが防御側
+  else if( defClientID == BTL_CLIENT_PLAYER )
+  {
+    if( fEnemyAttack )
+    {
+      if( affinity == BTL_TYPEAFF_0 )
+      {
+        pCnt = &(cnt->recvVoid);
+      }
+      else if( affinity > BTL_TYPEAFF_100 )
+      {
+        pCnt = &(cnt->recvAdvantage);
+      }
+      else if( affinity < BTL_TYPEAFF_100 )
+      {
+        pCnt = &(cnt->recvDisadvantage);
+      }
+    }
+  }
+
+  if( pCnt != NULL )
+  {
+    if( (*pCnt) < AFFCOUNTER_MAX ){
+      ++(*pCnt);
+    }
+  }
+}
+/**
+ *  攻撃相性カウンタ：「効果がなかった」ワザを出した回数
+ */
+u16 BTL_SVF_GetTypeAffCnt_PutVoid( const BTL_SVFLOW_WORK* wk )
+{
+  return wk->affCounter.putVoid;
+}
+/**
+ *  攻撃相性カウンタ：「効果はバツグン」ワザを出した回数
+ */
+u16 BTL_SVF_GetTypeAffCnt_PutAdvantage( const BTL_SVFLOW_WORK* wk )
+{
+  return wk->affCounter.putAdvantage;
+}
+/**
+ *  攻撃相性カウンタ：「効果はいまひとつ」ワザを出した回数
+ */
+u16 BTL_SVF_GetTypeAffCnt_PutDisadvantage( const BTL_SVFLOW_WORK* wk )
+{
+  return wk->affCounter.putDisadvantage;
+}
+/**
+ *  攻撃相性カウンタ：「効果がなかった」ワザを受けた回数
+ */
+u16 BTL_SVF_GetTypeAffCnt_RecvVoid( const BTL_SVFLOW_WORK* wk )
+{
+  return wk->affCounter.recvVoid;
+}
+/**
+ *  攻撃相性カウンタ：「効果はバツグン」ワザを受けた回数
+ */
+u16 BTL_SVF_GetTypeAffCnt_RecvAdvantage( const BTL_SVFLOW_WORK* wk )
+{
+  return wk->affCounter.recvAdvantage;
+}
+/**
+ *  攻撃相性カウンタ：「効果はいまひとつ」ワザを受けた回数
+ */
+u16 BTL_SVF_GetTypeAffCnt_RecvDisadvantage( const BTL_SVFLOW_WORK* wk )
+{
+  return wk->affCounter.recvDisadvantage;
+}
+
 
 //----------------------------------------------------------------------------------------------------------
 // 以下、ハンドラからの応答受信関数とユーティリティ群
@@ -11911,6 +12054,21 @@ u16 BTL_SVFTOOL_GetTurnCount( BTL_SVFLOW_WORK* wk )
 {
   return wk->turnCount;
 }
+//--------------------------------------------------------------------------------------
+/**
+ * メンバー交替カウンタの値を取得
+ *
+ * @param   wk
+ * @param   clientID
+ *
+ * @retval  u8
+ */
+//--------------------------------------------------------------------------------------
+u8 BTL_SVFTOOL_GetPokeChangeCount( BTL_SVFLOW_WORK* wk, u8 clientID )
+{
+  return wk->memberChangeCount[ clientID ];
+}
+
 //--------------------------------------------------------------------------------------
 /**
  * [ハンドラ用ツール] バトルルール取得

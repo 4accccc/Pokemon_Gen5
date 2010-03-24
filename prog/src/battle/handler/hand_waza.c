@@ -2808,7 +2808,7 @@ static void handler_Totteoki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u8 wazaCnt = BPP_WAZA_GetCount( bpp );
     if( (wazaCnt < 2)
-    ||  (BPP_WAZA_GetUsedCount(bpp) < (wazaCnt-1) )
+    ||  (BPP_WAZA_GetUsedCountInAlive(bpp) < (wazaCnt-1) )
     ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
     }
