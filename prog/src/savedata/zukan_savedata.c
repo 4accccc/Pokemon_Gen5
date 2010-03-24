@@ -1120,26 +1120,26 @@ void ZUKANSAVE_SetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 sex, BOOL rare, u
 		u32	i;
 
 		for( i=0; i<SEE_FLAG_MAX; i++ ){
-			reset_bit( (u8 *)zw->draw_sex[i], mons );
+			reset_bit_mons( (u8 *)zw->draw_sex[i], mons );
 		}
 		if( sex == PTL_SEX_MALE ){
 			if( rare == TRUE ){
-				set_bit( (u8 *)zw->draw_sex[SEE_FLAG_M_RARE], mons );
+				set_bit_mons( (u8 *)zw->draw_sex[SEE_FLAG_M_RARE], mons );
 			}else{
-				set_bit( (u8 *)zw->draw_sex[SEE_FLAG_MALE], mons );
+				set_bit_mons( (u8 *)zw->draw_sex[SEE_FLAG_MALE], mons );
 			}
 		}else if( sex == PTL_SEX_FEMALE ){
 			if( rare == TRUE ){
-				set_bit( (u8 *)zw->draw_sex[SEE_FLAG_F_RARE], mons );
+				set_bit_mons( (u8 *)zw->draw_sex[SEE_FLAG_F_RARE], mons );
 			}else{
-				set_bit( (u8 *)zw->draw_sex[SEE_FLAG_FEMALE], mons );
+				set_bit_mons( (u8 *)zw->draw_sex[SEE_FLAG_FEMALE], mons );
 			}
 		}else{
 			// «•Ê‚ª‚È‚¢ê‡‚Í‰‚Ìƒtƒ‰ƒO‚ð—§‚Ä‚é
 			if( rare == TRUE ){
-				set_bit( (u8 *)zw->draw_sex[SEE_FLAG_M_RARE], mons );
+				set_bit_mons( (u8 *)zw->draw_sex[SEE_FLAG_M_RARE], mons );
 			}else{
-				set_bit( (u8 *)zw->draw_sex[SEE_FLAG_MALE], mons );
+				set_bit_mons( (u8 *)zw->draw_sex[SEE_FLAG_MALE], mons );
 			}
 		}
 	}
