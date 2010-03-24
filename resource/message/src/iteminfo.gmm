@@ -1207,30 +1207,30 @@
 	</row>
 
 	<row id="ITEMINFO_120">
-		<language name="JPN" width="256">ー
-ー
-ー</language>
-		<language name="JPN_KANJI" width="256">ー
-ー
-ー</language>
+		<language name="JPN" width="256">おおむかし　うみに　すんでいた
+こだい　ポケモンの　カセキ。
+せなかの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">大昔　海に　すんでいた
+古代ポケモンの　カセキ。
+せなかの　一部らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_121">
-		<language name="JPN" width="256">ー
-ー
-ー</language>
-		<language name="JPN_KANJI" width="256">ー
-ー
-ー</language>
+		<language name="JPN" width="256">おおむかしの　そらを　とんでいた
+こだい　ポケモンの　カセキ。
+つばさの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">大昔の　空を　とんでいた
+古代ポケモンの　カセキ。
+つばさの　一部らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_122">
-		<language name="JPN" width="256">ー
-ー
-ー</language>
-		<language name="JPN_KANJI" width="256">ー
-ー
-ー</language>
+		<language name="JPN" width="256">せんとうちゅう　きゅうしょに
+あたりやすくなる　どうぐ。
+ひっこめると　もとに　もどる。</language>
+		<language name="JPN_KANJI" width="256">戦闘中　急所に
+あたりやすくなる　道具。
+ひっこめると　もとに　もどる。</language>
 	</row>
 
 	<row id="ITEMINFO_123">

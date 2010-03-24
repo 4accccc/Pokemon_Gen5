@@ -411,8 +411,8 @@
 	</row>
 
 	<row id="ITEMNAME_056">
-		<language name="JPN" width="256">クリティカッター</language>
-		<language name="JPN_KANJI" width="256">クリティカッター</language>
+		<language name="JPN" width="256">クリティカット</language>
+		<language name="JPN_KANJI" width="256">クリティカット</language>
 	</row>
 
 	<row id="ITEMNAME_057">
@@ -731,18 +731,18 @@
 	</row>
 
 	<row id="ITEMNAME_120">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+		<language name="JPN" width="256">かめのカセキ</language>
+		<language name="JPN_KANJI" width="256">かめのカセキ</language>
 	</row>
 
 	<row id="ITEMNAME_121">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+		<language name="JPN" width="256">とりのカセキ</language>
+		<language name="JPN_KANJI" width="256">とりのカセキ</language>
 	</row>
 
 	<row id="ITEMNAME_122">
-		<language name="JPN" width="256">？？？</language>
-		<language name="JPN_KANJI" width="256">？？？</language>
+		<language name="JPN" width="256">クリティカッター</language>
+		<language name="JPN_KANJI" width="256">クリティカッター</language>
 	</row>
 
 	<row id="ITEMNAME_123">
@@ -3111,13 +3111,13 @@
 	</row>
 
 	<row id="ITEMNAME_596">
-		<language name="JPN" width="256">かめのカセキ</language>
-		<language name="JPN_KANJI" width="256">かめのカセキ</language>
+		<language name="JPN" width="256">ふたのカセキ</language>
+		<language name="JPN_KANJI" width="256">ふたのカセキ</language>
 	</row>
 
 	<row id="ITEMNAME_597">
-		<language name="JPN" width="256">とりのカセキ</language>
-		<language name="JPN_KANJI" width="256">とりのカセキ</language>
+		<language name="JPN" width="256">はねのカセキ</language>
+		<language name="JPN_KANJI" width="256">はねのカセキ</language>
 	</row>
 
 	<row id="ITEMNAME_598">
@@ -3216,8 +3216,8 @@
 	</row>
 
 	<row id="ITEMNAME_617">
-		<language name="JPN" width="256">きれいないし</language>
-		<language name="JPN_KANJI" width="256">きれいないし</language>
+		<language name="JPN" width="256">キレイなウロコ</language>
+		<language name="JPN_KANJI" width="256">キレイなウロコ</language>
 	</row>
 
 	<row id="ITEMNAME_618">

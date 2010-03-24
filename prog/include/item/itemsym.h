@@ -64,7 +64,7 @@
 #define ITEM_POINTOMAKKUSU		( 53 )		// ポイントマックス
 #define ITEM_MORINOYOUKAN		( 54 )		// もりのヨウカン
 #define ITEM_EFEKUTOGAADO		( 55 )		// エフェクトガード
-#define ITEM_KURITHIKATTAA		( 56 )		// クリティカッター
+#define ITEM_KURITHIKATTO		( 56 )		// クリティカット
 #define ITEM_PURASUPAWAA		( 57 )		// プラスパワー
 #define ITEM_DHIFENDAA		( 58 )		// ディフェンダー
 #define ITEM_SUPIIDAA		( 59 )		// スピーダー
@@ -125,6 +125,9 @@
 #define ITEM_INAZUMAKASETTO		( 117 )		// イナズマカセット
 #define ITEM_BUREIZUKASETTO		( 118 )		// ブレイズカセット
 #define ITEM_HURIIZUKASETTO		( 119 )		// フリーズカセット
+#define ITEM_KAMENOKASEKI		( 120 )		// かめのカセキ
+#define ITEM_TORINOKASEKI		( 121 )		// とりのカセキ
+#define ITEM_KURITHIKATTAA		( 122 )		// クリティカッター
 #define ITEM_KONGOUDAMA		( 135 )		// こんごうだま
 #define ITEM_SIRATAMA		( 136 )		// しらたま
 #define ITEM_HAZIMETEMEERU		( 137 )		// はじめてメール
@@ -585,8 +588,8 @@
 #define ITEM_SEISINNOHANE		( 593 )		// せいしんのハネ
 #define ITEM_SYUNPATUNOHANE		( 594 )		// しゅんぱつのハネ
 #define ITEM_HAATONOHANE		( 595 )		// ハートのハネ
-#define ITEM_KAMENOKASEKI		( 596 )		// かめのカセキ
-#define ITEM_TORINOKASEKI		( 597 )		// とりのカセキ
+#define ITEM_HUTANOKASEKI		( 596 )		// ふたのカセキ
+#define ITEM_HANENOKASEKI		( 597 )		// はねのカセキ
 #define ITEM_RAITOSUTOON		( 598 )		// ライトストーン
 #define ITEM_DAAKUSUTOON		( 599 )		// ダークストーン
 #define ITEM_WAZAMASIN93		( 600 )		// わざマシン９３
@@ -603,7 +606,7 @@
 #define ITEM_RIBATHITIKETTO		( 611 )		// リバティチケット
 #define ITEM_DERUDAMA		( 612 )		// デルダマ
 #define ITEM_PARESUBOORU		( 616 )		// パレスボール
-#define ITEM_KIREINAISI		( 617 )		// きれいないし
+#define ITEM_KIREINAUROKO		( 617 )		// キレイなウロコ
 #define ITEM_POKEZYARASI		( 618 )		// ポケじゃらし
 #define ITEM_GUZZUKEESU		( 619 )		// グッズケース
 #define ITEM_HAITATUBUTU1		( 621 )		// はいたつぶつ１
