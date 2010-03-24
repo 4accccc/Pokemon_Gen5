@@ -23,6 +23,7 @@
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
 #include "app/pdc.h"
+#include "event_pdc_return.h"
 #include "poke_tool/poke_tool.h"
 #include "sound/pm_sndsys.h"
 #include "field_comm/intrude_main.h"
@@ -50,6 +51,7 @@
 typedef struct{
   FIELDMAP_WORK *fieldWork;
   PDC_SETUP_PARAM *pdc_setup;
+  PDCRET_PARAM *pdcret;
   POKEMON_PARAM *pp;
   BTL_FIELD_SITUATION bfs;
   HEAPID heap_id;
@@ -188,17 +190,29 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
 		(*seq) ++;
 		break;
   case SEQ_RESULT:
-    //PDC_RESULTの結果取得
-    if(PDC_GetResult( esb->pdc_setup ) == PDC_RESULT_CAPTURE){
-      *(esb->result_ptr) = TRUE;
+    {
+      //PDC_RESULTの結果取得
+      PDC_RESULT pdc_result = PDC_GetResult( esb->pdc_setup );
+      if(pdc_result == PDC_RESULT_CAPTURE){
+        *(esb->result_ptr) = TRUE;
+      }
+      else{
+        *(esb->result_ptr) = FALSE;
+      }
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(pdc) );
+      { // サブプロセス呼び出しイベント
+        GFL_OVERLAY_Load( FS_OVERLAY_ID(pdc_return) );
+        esb->pdcret = PDCRET_AllocParam( gamedata, pdc_result, esb->pp, esb->heap_id );
+        GMEVENT_CallProc( event, NO_OVERLAY_ID, &PDCRET_ProcData, esb->pdcret );
+      }
     }
-    else{
-      *(esb->result_ptr) = FALSE;
-    }
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(pdc) );
     (*seq)++;
     break;
 	case SEQ_BGMPOP:
+    {
+      PDCRET_FreeParam( esb->pdcret );
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(pdc_return) );
+    }
 	  // フィールドBGM復帰
     GMEVENT_CallEvent(event, EVENT_FSND_PopPlayBGM_fromBattle(gsys));
     (*seq)++;

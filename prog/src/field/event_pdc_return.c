@@ -65,11 +65,47 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
 /*--------------------------------------------------------------------------*/
 /* Proc Table                                                               */
 /*--------------------------------------------------------------------------*/
-const GFL_PROC_DATA   PdcRet_ProcData = {
+const GFL_PROC_DATA   PDCRET_ProcData = {
   PdcRet_ProcInit,
   PdcRet_ProcMain,
   PdcRet_ProcQuit,
 };
+
+
+//--------------------------------------------------------------------------
+/**
+ * @brief PDCRET_PARAM生成
+ *
+ * @param[in] gameData  GAMEDATA
+ * @param[in] result    PDC_RESULT
+ * @param[in] pp        POKEMON_PARAM
+ * @param[in] heapID    ヒープID
+ *
+ * @retval  PDCRET_PARAM
+ */
+//--------------------------------------------------------------------------
+PDCRET_PARAM*  PDCRET_AllocParam( GAMEDATA* gameData, PDC_RESULT result, POKEMON_PARAM* pp,
+                                  HEAPID heapID )
+{
+  PDCRET_PARAM* param = GFL_HEAP_AllocMemory( heapID, sizeof( PDCRET_PARAM ) );
+  param->gameData = gameData;
+  param->result   = result;
+  param->pp       = pp;
+  return param;
+}
+//--------------------------------------------------------------------------
+/**
+ * @brief PDCRET_PARAM破棄
+ *
+ * @param[in,out] param  PDCRET_PARAM
+ *
+ * @retval  
+ */
+//--------------------------------------------------------------------------
+void  PDCRET_FreeParam( PDCRET_PARAM* param )
+{
+  GFL_HEAP_FreeMemory( param );
+}
 
 
 //--------------------------------------------------------------------------
@@ -137,22 +173,20 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
   switch( *seq ){
   case 0:
     {
-      MYSTATUS*         myStatus        = PDC_GetMyStatus( param->pdcResult );
-      ZUKAN_SAVEDATA*   zukan_savedata  = PDC_GetZukanWork( param->pdcResult );
-      POKEMON_PARAM*    pp              = PDC_GetPP( param->pdcResult );
-
       POKEPARTY* party    = GAMEDATA_GetMyPokemon( param->gameData );
+      MYSTATUS*  myStatus = GAMEDATA_GetMyStatus( param->gameData );
+      ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( param->gameData );
       BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( param->gameData );
 
       // 捕獲した
-      if( PDC_GetResult( param->pdcResult ) == PDC_RESULT_CAPTURE )
+      if( param->result == PDC_RESULT_CAPTURE )
       {
         BOOL zenkoku_flag = FALSE;  // 全国図鑑のときTRUE
         BOOL get_first = FALSE;  // 初捕獲のときTRUE
 
         // 親名セットしてるけど、本来はエンカウント前にフィールド側で設定すべき？
         MyStatus_CopyNameString( myStatus, wk->strbuf );
-        PP_Put( pp, ID_PARA_oyaname, (u32)(wk->strbuf) );
+        PP_Put( param->pp, ID_PARA_oyaname, (u32)(wk->strbuf) );
 
         // 手持ちかボックスに置くか
         if( !( PokeParty_GetPokeCount(party) < PokeParty_GetPokeCountMax(party) ) )
@@ -182,7 +216,7 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         {
           PLAYER_WORK* player_wk = GAMEDATA_GetMyPlayerWork( param->gameData );
           POKE_MEMO_SetTrainerMemoPP(
-              pp,
+              param->pp,
               POKE_MEMO_SET_CAPTURE,
               myStatus,
               ZONEDATA_GetPlaceNameID( PLAYERWORK_getZoneID( player_wk ) ),
@@ -194,19 +228,19 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
 
         // 図鑑登録画面 or ニックネーム命名確認画面 へ
         GFL_OVERLAY_Load( FS_OVERLAY_ID(zukan_toroku) );
-        get_first = !ZUKANSAVE_GetPokeGetFlag( zukan_savedata, (u16)( PP_Get(pp, ID_PARA_monsno, NULL) ) );
+        get_first = !ZUKANSAVE_GetPokeGetFlag( zukan_savedata, (u16)( PP_Get(param->pp, ID_PARA_monsno, NULL) ) );
         // 図鑑登録（捕まえた）
         {
-          ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
-          ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
+          ZUKANSAVE_SetPokeSee( zukan_savedata, param->pp );  // 見た  // 図鑑フラグをセットする
+          ZUKANSAVE_SetPokeGet( zukan_savedata, param->pp );  // 捕まえた  // 図鑑フラグをセットする
         }
         if( get_first )
         {
-          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_TOROKU, pp, zenkoku_flag, wk->box_strbuf, boxman, wk->box_tray );
+          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_TOROKU, param->pp, zenkoku_flag, wk->box_strbuf, boxman, wk->box_tray );
         }
         else
         {
-          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_NICKNAME, pp, zenkoku_flag, wk->box_strbuf, boxman, wk->box_tray );
+          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_NICKNAME, param->pp, zenkoku_flag, wk->box_strbuf, boxman, wk->box_tray );
         }
         // ローカルPROC呼び出し
         GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ZUKAN_TOROKU_ProcData, &(wk->zukan_toroku_param) );
@@ -222,8 +256,6 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
       // ローカルPROCが終了するのを待つ  // このMainの最初でGFL_PROC_MAIN_VALIDならreturnしているので、ここでは判定しなくてもよいが念のため
       if( local_proc_status != GFL_PROC_MAIN_VALID )
       {
-        POKEMON_PARAM*    pp              = PDC_GetPP( param->pdcResult );
-        
         BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( param->gameData );
 
         BOOL nickname = FALSE;
@@ -238,7 +270,7 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
           MISC *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(param->gameData) );
           // 名前入力画面へ
           GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
-          wk->nameinParam = NAMEIN_AllocParamPokemonCapture( wk->heapID, pp, NAMEIN_POKEMON_LENGTH, NULL,
+          wk->nameinParam = NAMEIN_AllocParamPokemonCapture( wk->heapID, param->pp, NAMEIN_POKEMON_LENGTH, NULL,
                                                            wk->box_strbuf, boxman, wk->box_tray,  misc );
 
           // ローカルPROC呼び出し
@@ -261,11 +293,9 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
     // ローカルPROCが終了するのを待つ  // このMainの最初でGFL_PROC_MAIN_VALIDならreturnしているので、ここでは判定しなくてもよいが念のため
     if( local_proc_status != GFL_PROC_MAIN_VALID )
     {
-      POKEMON_PARAM*    pp              = PDC_GetPP( param->pdcResult );
-      
       if( !NAMEIN_IsCancel(wk->nameinParam) ){
         NAMEIN_CopyStr( wk->nameinParam, wk->strbuf );
-        PP_Put( pp, ID_PARA_nickname, (u32)(wk->strbuf) );
+        PP_Put( param->pp, ID_PARA_nickname, (u32)(wk->strbuf) );
       }
       NAMEIN_FreeParam( wk->nameinParam );
       GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
@@ -280,15 +310,13 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
 
   case 3:
     {
-      POKEMON_PARAM*    pp              = PDC_GetPP( param->pdcResult );
-      
       POKEPARTY* party    = GAMEDATA_GetMyPokemon( param->gameData );
 
       if( wk->box_strbuf == NULL ){
-        PokeParty_Add( party, pp );
+        PokeParty_Add( party, param->pp );
       }else{
         BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( param->gameData );
-        BOXDAT_PutPokemon( boxman, PP_GetPPPPointer(pp) );
+        BOXDAT_PutPokemon( boxman, PP_GetPPPPointer(param->pp) );
       }
     }
     (*seq)++;

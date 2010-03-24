@@ -482,7 +482,7 @@ static  PDC_RESULT  PDC_SEQ_Capture( PDC_MAIN_WORK* pmw )
         ( --pmw->wait == 0 ) )
     { 
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, BTLIN_STD_FADE_WAIT );
-      PMSND_FadeOutBGM( 8 );
+      //PMSND_FadeOutBGM( 8 );  // •ßŠl‚µ‚½‚Æ‚«‚ÍA}ŠÓ“o˜^‚â–¼‘O“ü—Í‚Ö‘JˆÚ‚·‚é‚Ì‚ÅABGM‚Í‚»‚Ì‚Ü‚Ü‚É‚·‚é
       pmw->seq_no++;
     }
     break;
