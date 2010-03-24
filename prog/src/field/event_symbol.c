@@ -391,7 +391,6 @@ GMEVENT * EVENT_SymbolMapWarp(
 	GFL_STD_MemClear( esmw, sizeof(EVENT_SYMBOL_MAP_WARP) );
 
   esmw->fieldWork = fieldWork;
-  esmw->warp_zone_id = SYMBOLMAP_GetZoneID( gsys, symbol_map_id );
   esmw->warp_pos = *warp_pos;
   esmw->warp_dir = warp_dir;
   esmw->result_ptr = result_ptr;
@@ -467,6 +466,7 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
     (*seq)++;
     break;
   case _SEQ_CHANGE_MAP:
+    esmw->warp_zone_id = SYMBOLMAP_GetZoneID( gsys, esmw->symbol_map_id );
     GAMEDATA_SetSymbolMapID(gamedata, esmw->symbol_map_id);
     GMEVENT_CallEvent(event, 
       EVENT_ChangeMapPos(gsys, esmw->fieldWork, esmw->warp_zone_id, 
