@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-25T14:30:20"/>
+	<create user="matsumiya" host="W00224" date="2010-03-24T11:48:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -298,9 +298,11 @@
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">なにか　あたらしい　ビジネス
-はじめたいと　かんがえてるが……</language>
+はじめたいと　かんがえてるが……▽
+なかなか　むずかしいなあ</language>
 		<language name="JPN_KANJI" width="256">なにか　新しい　ビジネス
-始めたいと　考えてるが……</language>
+始めたいと　考えてるが……▽
+なかなか　難しいなあ</language>
 	</row>
 
 	<row id="msg_c03r1201_businessman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -310,12 +312,12 @@
 ビジネスマン</attribute>
 		<language name="JPN" width="256">がいこくから　きて　おもうけど
 みんな　たにんに　あわせてるよね▼
-まあ　じぶんの　いいたいことを　いうと
+じぶんの　いいたいことだけ　いうと
 あらそって　ばかり　だもんな▽
 ひとの　ことも　かんがえないとね</language>
 		<language name="JPN_KANJI" width="256">外国から　来て　思うけど
 みんな　他人に　あわせてるよね▼
-まあ　自分の　いいたいことを　いうと
+自分の　いいたいことだけ　いうと
 争ってばかり　だもんな▽
 他人の　ことも　考えないとね</language>
 	</row>
