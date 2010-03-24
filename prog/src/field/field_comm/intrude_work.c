@@ -317,3 +317,42 @@ u8 Intrude_GetSeasonID(GAME_COMM_SYS_PTR game_comm)
 #endif
 }
 
+//==================================================================
+/**
+ * 隣のパレスが自分のパレスかを調べる
+ *
+ * @param   game_comm		
+ * @param   gamedata		
+ * @param   dir		      調べる隣の向き(DIR_LEFT or DIR_RIGHT)
+ *
+ * @retval  BOOL		    TRUE：自分のパレス　FALSE:自分ではない人のパレス
+ */
+//==================================================================
+BOOL Intrude_CheckNextPalaceAreaMine(GAME_COMM_SYS_PTR game_comm, const GAMEDATA *gamedata, u16 dir)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  int palace_area;
+  
+  if(intcomm == NULL){
+    return TRUE;
+  }
+  
+  palace_area = intcomm->intrude_status_mine.palace_area;
+  if(dir == DIR_LEFT){
+    palace_area--;
+    if(palace_area < 0){
+      palace_area = intcomm->member_num - 1;
+    }
+  }
+  else{
+    palace_area++;
+    if(palace_area >= intcomm->member_num){
+      palace_area = 0;
+    }
+  }
+  
+  if(palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
+    return TRUE;
+  }
+  return FALSE;
+}
