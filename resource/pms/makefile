@@ -4,7 +4,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= genya_hosaka kawada_koji satou
+USERS	= genya_hosaka kawada_koji satou iwao_kazumasa
 
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
