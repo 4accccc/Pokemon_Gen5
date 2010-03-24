@@ -54,7 +54,7 @@ INIT_EVENT_END
 
 
 /**************************************************************/
-/**/
+/*  シンボルポケモン　*/
 /**************************************************************/
 EVENT_START   ev_symbol_pokemon
   _TALK_OBJ_START()
@@ -170,30 +170,54 @@ ev_symbol_pokemon_main:
 //======================================================================
 
 /**************************************************************/
-/**/
+/*  POSイベント：上側出入口 */
 /**************************************************************/
 EVENT_START   ev_pos_symbolmap_entrance_up
+  _OBJ_ANIME( MMDL_ID_PLAYER, to_up_anime )
+  _OBJ_ANIME_WAIT()
   _SYMBOL_MAP_WARP( DIR_UP )
 EVENT_END
 
+_ANIME_LABEL  to_up_anime
+  _ANIME_DATA AC_DIR_U, 1
+  _ANIME_DATA ACMD_END, 0
+
 /**************************************************************/
-/**/
+/*  POSイベント：下側出入口 */
 /**************************************************************/
 EVENT_START   ev_pos_symbolmap_entrance_down
+  _OBJ_ANIME( MMDL_ID_PLAYER, to_down_anime )
+  _OBJ_ANIME_WAIT()
   _SYMBOL_MAP_WARP( DIR_DOWN )
 EVENT_END
 
+_ANIME_LABEL  to_down_anime
+  _ANIME_DATA AC_DIR_D, 1
+  _ANIME_DATA ACMD_END, 0
+
 /**************************************************************/
-/**/
+/*  POSイベント：左側出入口 */
 /**************************************************************/
 EVENT_START   ev_pos_symbolmap_entrance_left
+  _OBJ_ANIME( MMDL_ID_PLAYER, to_left_anime )
+  _OBJ_ANIME_WAIT()
   _SYMBOL_MAP_WARP( DIR_LEFT )
 EVENT_END
 
+_ANIME_LABEL  to_left_anime
+  _ANIME_DATA AC_DIR_L, 1
+  _ANIME_DATA ACMD_END, 0
+
 /**************************************************************/
-/**/
+/*  POSイベント：右側出入口 */
 /**************************************************************/
 EVENT_START   ev_pos_symbolmap_entrance_right
+  _OBJ_ANIME( MMDL_ID_PLAYER, to_right_anime )
+  _OBJ_ANIME_WAIT()
   _SYMBOL_MAP_WARP( DIR_RIGHT )
 EVENT_END
+
+_ANIME_LABEL  to_right_anime
+  _ANIME_DATA AC_DIR_R, 1
+  _ANIME_DATA ACMD_END, 0
 
