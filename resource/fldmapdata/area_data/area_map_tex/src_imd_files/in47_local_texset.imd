@@ -3,9 +3,9 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-10-15T14:52:36" source="gate_01.mb"/>
+	<create user="fuchino" host="W00152" date="2010-03-24T16:18:17"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
@@ -22,12 +22,237 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="1 1"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
+
+<tex_image_array size="7">
+	<tex_image index="0" name="tg_h01"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="tg_h01_pl"
+		path="C:/home/wb_data3d/field/in47/chip/tg_h01.tga"
+	>
+		<bitmap size="64">
+			1111 1111 1111 1111 3333 2333 3333 3333
+			3333 2333 3333 3333 3333 2333 3333 3333
+			3333 2333 3333 3333 3333 2333 3333 3333
+			4444 3444 4444 4444 4444 3444 4444 4444
+			3333 2333 3333 3333 0000 0000 0000 0000
+			1111 1111 1111 0111 1111 1111 1111 0111
+			1111 1111 1111 0111 1111 1111 1111 0111
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="tg_h02"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="tg_h02_pl"
+		path="C:/home/wb_data3d/field/in47/chip/tg_h02.tga"
+	>
+		<bitmap size="64">
+			0111 3333 3333 1110 2011 0023 3200 1102
+			3011 1102 3011 1103 3201 1110 3011 1023
+			3320 0110 3200 0233 3333 2002 3333 3333
+			3333 2333 2000 3333 3333 0002 0111 3320
+			2333 1110 1111 3201 0333 1111 1111 3011
+			0333 1111 1111 3011 0333 1111 1111 3201
+			2333 1110 1111 3320 3200 1102 0001 0022
+			2011 0033 3320 1102 0111 3332 2333 1110
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="tg_h03"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="tg_h03_pl"
+		path="C:/home/wb_data3d/field/in47/chip/tg_h03.tga"
+	>
+		<bitmap size="64">
+			0111 3333 3333 1110 2011 0023 3200 1102
+			3011 1102 3011 1103 3201 1110 3011 1023
+			3320 0110 3200 0233 3333 2002 3333 3333
+			3333 2333 2000 3333 3333 0002 0111 3320
+			2333 1110 1111 3201 0333 1111 1111 3011
+			0333 1111 1111 3011 0333 1111 1111 3201
+			2333 1110 1111 3320 3200 1102 0001 0022
+			2011 0033 3320 1102 0111 3332 2333 1110
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="tg_h04"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="tg_h04_pl"
+		path="C:/home/wb_data3d/field/in47/chip/tg_h04.tga"
+	>
+		<bitmap size="64">
+			0111 2222 2222 1110 1011 0012 2100 1101
+			2011 1101 2011 1102 2101 1110 2011 1012
+			2210 0110 2100 0122 2222 1001 2222 2222
+			2222 1222 1000 2222 2222 0001 0111 2210
+			1222 1110 1111 2101 0222 1111 1111 2011
+			0222 1111 1111 2011 0222 1111 1111 2101
+			1222 1110 1111 2210 2100 1101 0001 0011
+			1011 0022 2210 1101 0111 2221 1222 1110
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="tg_h_kabe"
+		width="32" height="64" original_width="32" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="tg_h_kabe_pl"
+		path="C:/home/wb_data3d/field/in47/chip/tg_h_kabe.tga"
+	>
+		<bitmap size="512">
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			5555 5555 5555 5555 5555 5555 5555 5555
+			2222 2222 2222 2222 2222 2222 2222 2222
+			1111 1111 1111 1111 1111 1111 1111 1111
+			5555 5555 5555 5555 5555 5555 5555 5555
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 5777 5555 4555 7777
+			7777 7777 7777 7777 5777 5555 4555 7777
+			7777 7777 7777 7777 5777 5555 4555 7777
+			7777 7777 7777 7777 4777 4444 4444 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 5777 5555 7455
+			7777 7777 7777 7777 7777 5777 5555 7455
+			7777 7777 7777 7777 7777 5777 5555 7455
+			7777 7777 7777 7777 7777 4777 4444 7444
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 5557 5555 7745 7777
+			7777 7777 7777 7777 5557 5555 7745 7777
+			7777 7777 7777 7777 5557 5555 7745 7777
+			7777 7777 7777 7777 4447 4444 7744 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 5777 5555 7455
+			7777 7777 7777 7777 7777 5777 5555 7455
+			7777 7777 7777 7777 7777 5777 5555 7455
+			7777 7777 7777 7777 7777 4777 4444 7444
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			4445 4444 4554 4444 4444 4554 4444 5444
+			4445 4444 4554 4444 4444 4554 4444 5444
+			4445 4444 4554 4444 4444 4554 4444 5444
+			4445 4444 4554 4444 4444 4554 4444 5444
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			4444 4554 4444 5444 4445 4444 5544 4444
+			4444 4554 4444 5444 4445 4444 5544 4444
+			4444 4554 4444 5444 4445 4444 5544 4444
+			4444 4554 4444 5444 4445 4444 5544 4444
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			1111 1111 1111 1111 1111 1111 1111 1111
+			6666 6666 6666 6666 6666 6666 6666 6666
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 3333 3333
+			3333 3333 3333 3333 3333 3333 3333 3333
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="5" name="tg_h_matto"
+		width="32" height="16" original_width="32" original_height="16"
+		format="palette16"
+		color0_mode="color"
+		palette_name="tg_h_matto_pl"
+		path="C:/home/wb_data3d/field/in47/chip/tg_h_matto.tga"
+	>
+		<bitmap size="128">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			1110 1111 1111 1111 1111 1111 1111 0111
+			3310 2122 2222 2222 2222 2222 2212 0133
+			3310 2122 2222 2222 2222 2222 2212 0133
+			2210 2133 2222 2222 2222 2222 3312 0122
+			2210 2133 2222 2222 2222 2222 3312 0122
+			3310 2122 2222 2222 2222 2222 2212 0133
+			3310 2122 2222 2222 2222 2222 2212 0133
+			2210 2133 2222 2222 2222 2222 3312 0122
+			2210 2133 2222 2222 2222 2222 3312 0122
+			3310 2122 2222 2222 2222 2222 2212 0133
+			3310 2122 2222 2222 2222 2222 2212 0133
+			2210 2133 2222 2222 2222 2222 3312 0122
+			2210 2133 2222 2222 2222 2222 3312 0122
+			1110 1111 1111 1111 1111 1111 1111 0111
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="tg_h_tukue"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="tg_h_tukue_pl"
+		path="C:/home/wb_data3d/field/in47/chip/tg_h_tukue.tga"
+	>
+		<bitmap size="128">
+			5555 5555 5555 5555 6666 6666 6666 6666
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 7777 7777 7777 7777
+			7777 7777 7777 7777 6666 6666 6666 6666
+			5555 5555 5555 5555 5555 5555 5555 5555
+			5555 5555 5555 5555 5555 5555 5555 5555
+			4444 4444 4444 4444 3333 3333 3333 3333
+			0000 0000 0000 0000 0000 0000 0000 0000
+			1111 1111 1111 1111 2222 2222 2222 2222
+			1112 2111 1112 2111 1112 2111 1112 2111
+			1112 2111 1112 2111 1112 2111 1112 2111
+			2222 2222 2222 2222 2211 1111 1111 1122
+			2211 1111 1111 1122 2211 1111 1111 1122
+			2211 1111 1111 1122 2222 2222 2222 2222
+			1111 1111 1111 1111 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="7">
+	<tex_palette index="0" name="tg_h01_pl" color_size="8">
+		5ad2 5ef3 6735 6b56 6f77 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="tg_h02_pl" color_size="8">
+		4ab5 4ad6 4ef7 52f9 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="tg_h03_pl" color_size="8">
+		4a52 4e73 5294 5ad6 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="3" name="tg_h04_pl" color_size="8">
+		6f78 7399 77ba 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="4" name="tg_h_kabe_pl" color_size="8">
+		5200 5acf 5ef1 6220 6311 6733 6e60 6f75
+	</tex_palette>
+	<tex_palette index="5" name="tg_h_matto_pl" color_size="8">
+		6a83 7709 7b2b 7b50 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="6" name="tg_h_tukue_pl" color_size="8">
+		462e 4e6f 5291 5ad2 6735 6f77 7399 7bdb
+	</tex_palette>
+</tex_palette_array>
 
 <material_array size="1">
 	<material index="0" name="lambert1"
@@ -131,6 +356,37 @@
 
 <output_info vertex_size="24" polygon_size="6"
 	triangle_size="0" quad_size="6"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="7">
+		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="7">
+		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="6" disp_pos="0.000000 0.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="1">
+		<ex_material index="0" disp_pos="0.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="1">
+		<ex_polygon index="0" disp_pos="0.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
