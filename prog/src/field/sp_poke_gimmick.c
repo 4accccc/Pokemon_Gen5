@@ -422,13 +422,15 @@ void SPPOKE_GMK_StartBallAnm( GAMESYS_WORK *gsys, const BALL_ANM_TYPE inType, co
   if ( inType == BALL_ANM_TYPE_OUT )
   {
     obj = OBJ_BALL_OUT;
+    se = SPPOKE_GMK_BALL_OUT;
   }
   else
   {
     obj = OBJ_BALL_IN;
     se = SPPOKE_GMK_BALL_IN;
-    PMSND_PlaySE(se);
   }
+  //SE再生
+  PMSND_PlaySE(se);
 
   //ボール座標時セット
   {

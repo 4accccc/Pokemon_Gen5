@@ -8,4 +8,5 @@
 //======================================================================
 #pragma once
 
+#define SPPOKE_GMK_BALL_OUT  (SEQ_SE_BOWA2)  //ボールから出す
 #define SPPOKE_GMK_BALL_IN  (SEQ_SE_FLD_146)  //ボールに入る
