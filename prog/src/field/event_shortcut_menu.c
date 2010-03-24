@@ -87,6 +87,7 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
 //ショートカットIDとプロセスの対応
 static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCUT_ID shortcutID );
+static BOOL GetItemCheckEnable( SHORTCUT_ID shortcutID, ITEMCHECK_ENABLE * enable );
 
 //メニュー作成
 static void ShortCutMenu_Init( SHORTCUTMENU_MODE mode, EVENT_SHORTCUTMENU_WORK *p_wk );
@@ -230,6 +231,7 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 		SEQ_EVENT_RETURN,
 
 		SEQ_ITEM_CALL,
+		SEQ_ITEM_ERROR,
 		SEQ_ITEM_RETURN,
 	};
 
@@ -265,15 +267,30 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 			SHORTCUTMENU_Main( p_wk->p_menu );
 			input	= SHORTCUTMENU_GetInput( p_wk->p_menu, &shortcutID );
 			if( input == SHORTCUTMENU_INPUT_SELECT )
-			{	
-				switch( ShortCutMenu_SetCallType( p_wk->p_link, shortcutID ) )
-				{	
-				case CALLTYPE_PROC:
-					*p_seq	= SEQ_EVENT_CALL;
-					break;
-				case CALLTYPE_ITEM:
-					*p_seq	= SEQ_ITEM_CALL;
-					break;
+			{	// 起動チェック
+				ITEMCHECK_ENABLE	enable;
+				BOOL	err = FALSE;
+				if( GetItemCheckEnable( shortcutID, &enable ) == TRUE ){
+					ITEMCHECK_WORK	icwk;
+					ITEMUSE_InitCheckWork( &icwk, p_wk->p_gamesys, p_wk->p_fieldmap );
+					if( ITEMUSE_GetItemUseCheck( &icwk, enable ) == FALSE ){
+						err = TRUE;
+					}
+				}
+				// 起動エラー
+				if( err == TRUE ){
+					*p_seq = SEQ_ITEM_ERROR;
+				// 起動
+				}else{
+					switch( ShortCutMenu_SetCallType( p_wk->p_link, shortcutID ) )
+					{	
+					case CALLTYPE_PROC:
+						*p_seq	= SEQ_EVENT_CALL;
+						break;
+					case CALLTYPE_ITEM:
+						*p_seq	= SEQ_ITEM_CALL;
+						break;
+					}
 				}
 			}
 			else if( input == SHORTCUTMENU_INPUT_CANCEL )
@@ -362,9 +379,38 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 			GFL_HEAP_FreeMemory( p_wk->p_link );
 			p_wk->p_link	= NULL;
 
-			//アイテムコール
-			//GFL_OVERLAY_Load( FS_OVERLAY_ID(itemuse) );
+			// アイテムコール
 			p_item_event	= EVENT_FieldItemUse( item, p_wk->p_gamesys, p_wk->p_fieldmap );
+			GMEVENT_CallEvent(p_event, p_item_event );
+
+			*p_seq	= SEQ_ITEM_RETURN;
+		}
+		break;
+
+	case SEQ_ITEM_ERROR:
+		{	
+			GMEVENT *p_item_event;
+			u32 item;
+
+			//MENU破棄
+			ShortCutMenu_Exit( p_wk );
+
+			//メモリ解放まえに情報を受け取る
+			item	= p_wk->p_link->select_param;
+			GFL_HEAP_FreeMemory( p_wk->p_link );
+			p_wk->p_link	= NULL;
+
+			// アイテムコール
+			if( item == EVENT_ITEMUSE_CALL_CYCLE ){
+				PLAYER_WORK * plwk = GAMEDATA_GetMyPlayerWork( GAMESYSTEM_GetGameData(p_wk->p_gamesys) );
+				if( PLAYERWORK_GetMoveForm( plwk ) == PLAYER_MOVE_FORM_CYCLE ){
+					p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 1 );
+				}else{
+					p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 0 );
+				}
+			}else{
+				p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 0 );
+			}
 			GMEVENT_CallEvent(p_event, p_item_event );
 
 			*p_seq	= SEQ_ITEM_RETURN;
@@ -405,6 +451,7 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 		SEQ_EVENT_RETURN,
 
 		SEQ_ITEM_CALL,
+		SEQ_ITEM_ERROR,
 		SEQ_ITEM_RETURN,
 	};
 
@@ -425,14 +472,31 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 			cp_shortcut	= SaveData_GetShortCutConst( p_sv );
 	
 			shortcutID	= SHORTCUT_GetType( cp_shortcut, 0 );
-			switch( ShortCutMenu_SetCallType( p_wk->p_link, shortcutID ) )
-			{	
-			case CALLTYPE_PROC:
-				*p_seq	= SEQ_EVENT_CALL;
-				break;
-			case CALLTYPE_ITEM:
-				*p_seq	= SEQ_ITEM_CALL;
-				break;
+			{	// 起動チェック
+				ITEMCHECK_ENABLE	enable;
+				BOOL	err = FALSE;
+				if( GetItemCheckEnable( shortcutID, &enable ) == TRUE ){
+					ITEMCHECK_WORK	icwk;
+					ITEMUSE_InitCheckWork( &icwk, p_wk->p_gamesys, p_wk->p_fieldmap );
+					if( ITEMUSE_GetItemUseCheck( &icwk, enable ) == FALSE ){
+						err = TRUE;
+					}
+				}
+				// 起動エラー
+				if( err == TRUE ){
+					*p_seq = SEQ_ITEM_ERROR;
+				// 起動
+				}else{
+					switch( ShortCutMenu_SetCallType( p_wk->p_link, shortcutID ) )
+					{	
+					case CALLTYPE_PROC:
+						*p_seq	= SEQ_EVENT_CALL;
+						break;
+					case CALLTYPE_ITEM:
+						*p_seq	= SEQ_ITEM_CALL;
+						break;
+					}
+				}
 			}
 		}
 		break;
@@ -487,9 +551,35 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 			GFL_HEAP_FreeMemory( p_wk->p_link );
 			p_wk->p_link	= NULL;
 
-			//アイテムコール
-			//GFL_OVERLAY_Load( FS_OVERLAY_ID(itemuse) );
+			// アイテムコール
 			p_item_event	= EVENT_FieldItemUse( item, p_wk->p_gamesys, p_wk->p_fieldmap );
+			GMEVENT_CallEvent(p_event, p_item_event );
+
+			*p_seq	= SEQ_ITEM_RETURN;
+		}
+		break;
+
+	case SEQ_ITEM_ERROR:
+		{	
+			GMEVENT *p_item_event;
+			u32 item;
+
+			//メモリ解放まえに情報を受け取る
+			item	= p_wk->p_link->select_param;
+			GFL_HEAP_FreeMemory( p_wk->p_link );
+			p_wk->p_link	= NULL;
+
+			// アイテムコール
+			if( item == EVENT_ITEMUSE_CALL_CYCLE ){
+				PLAYER_WORK * plwk = GAMEDATA_GetMyPlayerWork( GAMESYSTEM_GetGameData(p_wk->p_gamesys) );
+				if( PLAYERWORK_GetMoveForm( plwk ) == PLAYER_MOVE_FORM_CYCLE ){
+					p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 1 );
+				}else{
+					p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 0 );
+				}
+			}else{
+				p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 0 );
+			}
 			GMEVENT_CallEvent(p_event, p_item_event );
 
 			*p_seq	= SEQ_ITEM_RETURN;
@@ -621,8 +711,46 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 		p_param->call = EVENT_PROCLINK_CALL_ZUKAN;
 		return CALLTYPE_PROC;
 	}
-
 }
+
+static BOOL GetItemCheckEnable( SHORTCUT_ID shortcutID, ITEMCHECK_ENABLE * enable )
+{
+	switch( shortcutID ){
+	case SHORTCUT_ID_ZITENSYA:				// 自転車
+		*enable = ITEMCHECK_CYCLE;
+		return TRUE;
+
+	case SHORTCUT_ID_TOWNMAP:					// タウンマップ
+		*enable = ITEMCHECK_TOWNMAP;
+		return TRUE;
+
+	case SHORTCUT_ID_PALACEGO:				// パレスへゴー
+		return FALSE;
+
+	case SHORTCUT_ID_BTLRECORDER:			// バトルレコーダー
+		*enable = ITEMCHECK_BATTLE_RECORDER;
+		return TRUE;
+
+	case SHORTCUT_ID_FRIENDNOTE:			// 友達手賞
+		*enable = ITEMCHECK_WIFINOTE;
+		return TRUE;
+
+	case SHORTCUT_ID_TURIZAO:					// つりざお
+		*enable = ITEMCHECK_TURIZAO;
+		return TRUE;
+
+	case SHORTCUT_ID_DOWSINGMACHINE:	// ダウジングマシン
+		*enable = ITEMCHECK_DOWSINGMACHINE;
+		return TRUE;
+
+	case SHORTCUT_ID_GURASHIDEA:			// グラシデアの花
+		return FALSE;
+	}
+
+	return FALSE;
+}
+
+
 //=============================================================================
 /**
  *	メニュー作成破棄
