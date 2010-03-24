@@ -20,6 +20,7 @@
 #define MUS_SAVE_ITEM_BIT_MAX (MUS_SAVE_ITEM_MAX/8)
 #define MUS_SAVE_ENTRY_NUM_MAX (65535)
 #define MUS_SAVE_FAN_NUM (10)
+#define MUS_SAVE_SUM_POINT_MAX (65535)
 
 //======================================================================
 //	typedef struct
@@ -95,4 +96,7 @@ extern const BOOL MUSICAL_SAVE_IsEnableDistributData( const MUSICAL_SAVE *musSav
 extern void MUSICAL_SAVE_SetEnableDistributData( MUSICAL_SAVE *musSave , const BOOL isEnable );
 extern STRCODE* MUSICAL_SAVE_GetDistributTitle( MUSICAL_SAVE *musSave );
 
+extern void MUSICAL_SAVE_ResetSumPoint( MUSICAL_SAVE *musSave );
+extern void MUSICAL_SAVE_AddSumPoint( MUSICAL_SAVE *musSave , const u16 val );
+extern const u16 MUSICAL_SAVE_GetSumPoint( MUSICAL_SAVE *musSave );
 

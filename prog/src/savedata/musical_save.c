@@ -277,3 +277,23 @@ STRCODE* MUSICAL_SAVE_GetDistributTitle( MUSICAL_SAVE *musSave )
   return musSave->distTitle;
 }
 
+void MUSICAL_SAVE_ResetSumPoint( MUSICAL_SAVE *musSave )
+{
+  musSave->sumPoint = 0;
+}
+void MUSICAL_SAVE_AddSumPoint( MUSICAL_SAVE *musSave , const u16 val )
+{
+  if( musSave->sumPoint + val < MUS_SAVE_SUM_POINT_MAX )
+  {
+    musSave->sumPoint += val;
+  }
+  else
+  {
+    musSave->sumPoint = MUS_SAVE_SUM_POINT_MAX;
+  }
+}
+const u16 MUSICAL_SAVE_GetSumPoint( MUSICAL_SAVE *musSave )
+{
+  return musSave->sumPoint;
+}
+

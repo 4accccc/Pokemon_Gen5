@@ -210,6 +210,7 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
     //通信時は別で行ったものを取得する
     {
       u8 i,j;
+      const u16 sumPoint = MUSICAL_SAVE_GetSumPoint(evWork->musSave);
       for( i=0;i<MUSICAL_POKE_MAX;i++ )
       {
         evWork->musicalIndex[i] = i;
@@ -228,7 +229,7 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
       evWork->selfIdx = evWork->musicalIndex[0];
       
       //マップ遷移前に演目のデータだけ必要(NPCキャラを出すため
-      evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
+      evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData , sumPoint );
 
     }
     evWork->state = MES_ENTER_WAITROOM_FIRST;
@@ -265,7 +266,8 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
       u32 conPointArr = 0;
       if( MUS_COMM_GetMode( evWork->scriptWork->commWork ) == MCM_PARENT )
       {
-        evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
+        const u16 sumPoint = MUSICAL_SAVE_GetSumPoint(evWork->musSave);
+        evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData , sumPoint );
         conPointArr = MUSICAL_PROGRAM_GetConditionPointArr( evWork->progWork );
       }
       MUS_COMM_StartSendProgram_Data( evWork->scriptWork->commWork , conPointArr );
@@ -1211,6 +1213,6 @@ void MUSICAL_EVENT_SetPosCharaName_Wordset( MUSICAL_EVENT_WORK *evWork , const u
 void MUSICAL_EVENT_CalcProgramData( MUSICAL_EVENT_WORK *evWork )
 {
   u32 conPointArr = MUS_COMM_GetConditionPointArr( evWork->commWork );
-  evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData );
+  evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData , 0 );
   MUSICAL_PROGRAM_SetConditionPointArr( evWork->progWork , conPointArr );
 }

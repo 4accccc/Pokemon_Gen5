@@ -38,7 +38,7 @@ typedef struct _MUSICAL_PROGRAM_WORK MUSICAL_PROGRAM_WORK;
 //	proto
 //======================================================================
 #pragma mark [> proto
-extern MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_InitProgramData( HEAPID heapId , MUSICAL_DISTRIBUTE_DATA *distData );
+extern MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_InitProgramData( HEAPID heapId , MUSICAL_DISTRIBUTE_DATA *distData  , const u16 sumPoint );
 extern void MUSICAL_PROGRAM_TermProgramData( MUSICAL_PROGRAM_WORK *progWork );
 extern void MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID heapId , MUSICAL_PROGRAM_WORK* progWork , STAGE_INIT_WORK *actInitWork );
 extern const u8 MUSICAL_PROGRAM_GetConditionPoint( MUSICAL_PROGRAM_WORK* progWork , MUSICAL_CONDITION_TYPE conType );

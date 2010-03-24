@@ -24,7 +24,7 @@
 //======================================================================
 #pragma mark [> define
 #define MUS_PROG_DATA_EQUIP_NUM (8)
-#define MUS_PROG_DATA_POKE_NUM (3)
+#define MUS_PROG_DATA_POKE_NUM (6)
 
 #define MUS_PROG_DATA_EQUIP_NONE (511)
 #define MUS_PROG_DATA_EQUIP_RANDOM (510)
@@ -53,6 +53,9 @@ typedef struct
   u16 monsno;
   u8  trainerType;
   u8  trainerName;
+  u8  appealType;
+  u8  pad;
+  u16 openPoint;  //登場ポイント
   MUSICAL_PROGRAM_EQUIP_DATA equipData[MUS_PROG_DATA_EQUIP_NUM];
 }MUSICAL_PROGRAM_POKE_DATA;
 
@@ -73,6 +76,7 @@ struct _MUSICAL_PROGRAM_WORK
 {
   u8 condition[MCT_MAX];
   u8 conOnePoint[MCT_MAX];  //コンディションを総個数で割った値(アピールボーナスに必要
+  u8 npcArr[3];             //抽選されたNPCの数
   
   MUSICAL_PROGRAM_DATA *progData;
 };
@@ -85,7 +89,7 @@ struct _MUSICAL_PROGRAM_WORK
 //--------------------------------------------------------------
 //	ミュージカルデータの読み込み
 //--------------------------------------------------------------
-MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_InitProgramData( HEAPID heapId , MUSICAL_DISTRIBUTE_DATA *distData )
+MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_InitProgramData( HEAPID heapId , MUSICAL_DISTRIBUTE_DATA *distData , const u16 sumPoint )
 {
   u8 i;
   MUSICAL_PROGRAM_WORK *progWork = GFL_HEAP_AllocMemory( heapId , sizeof( MUSICAL_PROGRAM_WORK ) );
@@ -133,7 +137,40 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_InitProgramData( HEAPID heapId , MUSICAL_D
   ARI_TPrintf("Elegant[%3d]\n",progWork->condition[2]);
   ARI_TPrintf("Unique [%3d]\n",progWork->condition[3]);
   ARI_TPrintf("--FinalCondition--\n");
-
+  
+  
+  //NPCの抽選
+  {
+    u8 dataArr[6];
+    u8 dataNum = 0;
+    //条件を満たすものを抽出
+    for( i=0;i<MUS_PROG_DATA_POKE_NUM;i++ )
+    {
+      if( progWork->progData->pokeData[i].openPoint <= sumPoint )
+      {
+        dataArr[dataNum] = i;
+        dataNum++;
+      }
+    }
+    //混ぜる
+    for( i=0;i<30;i++ )
+    {
+      const u8 trg1 = GFL_STD_MtRand(dataNum);
+      const u8 trg2 = GFL_STD_MtRand(dataNum);
+      const u8 temp = dataArr[trg1];
+      dataArr[trg1] = dataArr[trg2];
+      dataArr[trg2] = temp;
+    }
+    //コピー
+    
+    ARI_TPrintf("--NPC Arr--\n");
+    for( i=0;i<3;i++ )
+    {
+      ARI_TPrintf("[%d][%d]\n",i,dataArr[i]);
+      progWork->npcArr[i] = dataArr[i];
+    }
+    ARI_TPrintf("--NPC Arr--\n");
+  }
   return progWork;
 }
 
@@ -217,17 +254,23 @@ const u8 MUSICAL_PROGRAM_GetConditionPoint( MUSICAL_PROGRAM_WORK* progWork , MUS
 u32 MUSICAL_PROGRAM_GetConditionPointArr( MUSICAL_PROGRAM_WORK* progWork )
 {
   u32 pointArr = progWork->condition[0] + 
-                 (progWork->condition[1]<<8) + 
-                 (progWork->condition[2]<<16) + 
-                 (progWork->condition[3]<<24);
+                 (progWork->condition[1]<<4) + 
+                 (progWork->condition[2]<<8) + 
+                 (progWork->condition[3]<<12)+ 
+                 (progWork->npcArr[0]<<16)+ 
+                 (progWork->npcArr[1]<<20)+ 
+                 (progWork->npcArr[2]<<24);
   return pointArr;
 }
 void MUSICAL_PROGRAM_SetConditionPointArr( MUSICAL_PROGRAM_WORK* progWork , const u32 pointArr )
 {
-  progWork->condition[0] = (pointArr&0x000000FF);
-  progWork->condition[1] = (pointArr&0x0000FF00)>>8;
-  progWork->condition[2] = (pointArr&0x00FF0000)>>16;
-  progWork->condition[3] = (pointArr&0xFF000000)>>24;
+  progWork->condition[0] = (pointArr&0x0000000F);
+  progWork->condition[1] = (pointArr&0x000000F0)>>4;
+  progWork->condition[2] = (pointArr&0x00000F00)>>8;
+  progWork->condition[3] = (pointArr&0x0000F000)>>12;
+  progWork->npcArr[0]    = (pointArr&0x000F0000)>>16;
+  progWork->npcArr[1]    = (pointArr&0x00F00000)>>20;
+  progWork->npcArr[2]    = (pointArr&0x0F000000)>>24;
 
   ARI_TPrintf("--FinalCondition(CommSync!)--\n");
   ARI_TPrintf("Cool   [%3d]\n",progWork->condition[0]);
@@ -235,6 +278,11 @@ void MUSICAL_PROGRAM_SetConditionPointArr( MUSICAL_PROGRAM_WORK* progWork , cons
   ARI_TPrintf("Elegant[%3d]\n",progWork->condition[2]);
   ARI_TPrintf("Unique [%3d]\n",progWork->condition[3]);
   ARI_TPrintf("--FinalCondition(CommSync!)--\n");
+  ARI_TPrintf("--NPC Arr--\n");
+  ARI_TPrintf("[%d][%d]\n",0,progWork->npcArr[0]);
+  ARI_TPrintf("[%d][%d]\n",1,progWork->npcArr[1]);
+  ARI_TPrintf("[%d][%d]\n",2,progWork->npcArr[2]);
+  ARI_TPrintf("--NPC Arr--\n");
 }
 
 //--------------------------------------------------------------
@@ -262,7 +310,7 @@ const u8 MUSICAL_PROGRAM_GetMaxConditionType( MUSICAL_PROGRAM_WORK* progWork )
 void MUSICAL_PROGRAM_SetData_NPC( MUSICAL_PROGRAM_WORK* progWork , STAGE_INIT_WORK *actInitWork , const u8 musicalIdx , const u8 NPCIdx , HEAPID heapId )
 {
   u8 i;
-  const MUSICAL_PROGRAM_POKE_DATA *pokeData = &progWork->progData->pokeData[NPCIdx];
+  const MUSICAL_PROGRAM_POKE_DATA *pokeData = &progWork->progData->pokeData[progWork->npcArr[NPCIdx]];
   if( pokeData->monsno == MUS_PROG_DATA_POKE_RANDOM )
   {
     const u16 monsno = MUSICAL_SYSTEM_GetMusicalPokemonRandom();
@@ -298,7 +346,7 @@ const u8 MUSICAL_PROGRAM_GetBgNo( MUSICAL_PROGRAM_WORK* progWork )
 //--------------------------------------------------------------
 const u8 MUSICAL_PROGRAM_GetNpcObjId( MUSICAL_PROGRAM_WORK* progWork , const u8 NPCIdx )
 {
-  return progWork->progData->pokeData[NPCIdx].trainerType;
+  return progWork->progData->pokeData[ progWork->npcArr[NPCIdx] ].trainerType;
 }
 
 //--------------------------------------------------------------
@@ -306,7 +354,7 @@ const u8 MUSICAL_PROGRAM_GetNpcObjId( MUSICAL_PROGRAM_WORK* progWork , const u8 
 //--------------------------------------------------------------
 const u8 MUSICAL_PROGRAM_GetNpcNameIdx( MUSICAL_PROGRAM_WORK* progWork , const u8 NPCIdx )
 {
-  return progWork->progData->pokeData[NPCIdx].trainerName;
+  return progWork->progData->pokeData[ progWork->npcArr[NPCIdx] ].trainerName;
 }
 
 //--------------------------------------------------------------
