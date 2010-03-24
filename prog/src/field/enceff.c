@@ -83,6 +83,8 @@ static const ENCEFF_TBL EncEffTbl[] = {
   {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //移動ポケ
   {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //三銃士ポケ
 
+  {ENCEFF_WAV_Create2, ENCEFF_WAV_Draw, FS_OVERLAY_ID(enceff_wav)},    //パレスワープ（エンカウントには使用しない）
+
 };
 
 

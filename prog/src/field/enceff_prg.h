@@ -22,6 +22,12 @@ extern GMEVENT *ENCEFF_PRG_Create(
     CREATE_FUNC createFunc,
     DRAW_FUNC drawFunc);
 
+extern GMEVENT *ENCEFF_PRG_CreateNoFlash(
+    GAMESYS_WORK *gsys,
+    const VecFx32 *inCamPos,
+    CREATE_FUNC createFunc,
+    DRAW_FUNC drawFunc);
+
 extern void ENCEFF_PRG_Draw(ENCEFF_PRG_PTR ptr);
 
 
