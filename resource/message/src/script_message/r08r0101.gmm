@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-03-24T14:00:23"/>
+	<create user="matsumiya" host="W00224" date="2010-03-24T19:05:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,13 +263,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1646" top="171" right="2351" bottom="791" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="848" top="543" right="1269" bottom="810" visible="yes"/>
 		<tag-palette left="861" top="145" right="1270" bottom="543" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="548"/>
-		<band id="3" index="4" style="0000" width="147"/>
+		<band id="2" index="3" style="0000" width="543"/>
+		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
@@ -602,9 +602,9 @@
 		<language name="JPN" width="256">ダルタニスに　わざを　おしえるときは
 アトス●●　ポルトス●　アラミス●の[BE:00:ページ切り替え（行送り）]
 ３ひきも　つれてくるのじゃ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ダルタニスに　わざを　おしえるときは
+		<language name="JPN_KANJI" width="256">ダルタニスに　技を　教えるときは
 アトス●●　ポルトス●　アラミス●の[BE:00:ページ切り替え（行送り）]
-３ひきも　つれてくるのじゃ[BE:01:ページ切り替え（クリア）]</language>
+３匹も　つれてくるのじゃ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r08r0101_guide_11">
