@@ -1975,8 +1975,12 @@ static void SEQFUNC_DecideScore( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 		
 	case SEQ_END_MSG:
-		MSGWND_PrintNumber( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, RESULT_STR_001,
-				p_wk->p_param->score, 2 );
+    {
+      u8  msgID = RESULT_STR_001 + (p_wk->p_param->score / 10 );
+      msgID = MATH_CLAMP( msgID, RESULT_STR_001, RESULT_STR_010 );
+      MSGWND_PrintNumber( &p_wk->msgwnd[MSGWNDID_SUB], &p_wk->msg, msgID,
+          p_wk->p_param->score, 2 );
+    }
     *p_seq  = SEQ_WAIT;
     break;
 

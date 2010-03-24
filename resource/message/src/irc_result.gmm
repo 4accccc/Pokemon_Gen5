@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-01-15T18:55:14"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-03-24T15:44:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -340,14 +340,89 @@
 気になる　フィーリングは……</language>
 	</row>
 
-	<row id="RESULT_STR_001">
-		<language name="JPN" width="256">[2:02:３桁:2]てん　です！</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！</language>
-	</row>
-
 	<row id="RESULT_TITLE_000">
 		<language name="JPN" width="256">けっかはっぴょう</language>
 		<language name="JPN_KANJI" width="256">結果発表</language>
+	</row>
+
+	<row id="RESULT_STR_001">
+		<comment>一番ひくい</comment>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
+１</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
+１</language>
+	</row>
+
+	<row id="RESULT_STR_002">
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
+２</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
+２</language>
+	</row>
+
+	<row id="RESULT_STR_003">
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
+３</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
+３</language>
+	</row>
+
+	<row id="RESULT_STR_004">
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
+４</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
+４</language>
+	</row>
+
+	<row id="RESULT_STR_005">
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
+５</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
+５</language>
+	</row>
+
+	<row id="RESULT_STR_006">
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
+６</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
+６</language>
+	</row>
+
+	<row id="RESULT_STR_007">
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
+７</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
+７</language>
+	</row>
+
+	<row id="RESULT_STR_008">
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
+８</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
+８</language>
+	</row>
+
+	<row id="RESULT_STR_009">
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
+９</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
+９</language>
+	</row>
+
+	<row id="RESULT_STR_010">
+		<comment>９９点以下</comment>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
+１０</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
+１０</language>
+	</row>
+
+	<row id="RESULT_STR_011">
+		<comment>１００点のとき</comment>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
+すごい</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
+すごい</language>
 	</row>
 
 	<flowchart-group-list>

@@ -413,6 +413,8 @@ typedef struct _IRC_RANKING_WORK
   GFL_FONT      *p_font;
   PRINT_QUE     *p_que;
 
+  GAMEDATA      *p_gamedata;
+
 	//データ
 	RANKING_DATA	*p_rank_data;
 
@@ -454,7 +456,7 @@ static void SEQFUNC_MoveNew( SEQ_WORK *p_seqwk, int *p_seq, void *p_param );
 //-------------------------------------
 ///	BG
 //=====================================
-static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAMESYS_WORK *p_gamesys, HEAPID heapID );
+static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAMEDATA  *p_gamedata, HEAPID heapID );
 static void GRAPHIC_BG_Exit( GRAPHIC_BG_WORK *p_wk );
 static void GRAPHIC_BG_VBlankFunction( GRAPHIC_BG_WORK *p_wk );
 static GFL_ARCUTIL_TRANSINFO GRAPHIC_BG_GetTransInfo( const GRAPHIC_BG_WORK *cp_wk, BOOL is_m );
@@ -470,7 +472,7 @@ static GFL_CLUNIT * GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk );
 //-------------------------------------
 ///	GRAPHIC
 //=====================================
-static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, GAMESYS_WORK*	p_gamesys, HEAPID heapID );
+static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, GAMEDATA  *p_gamedata, HEAPID heapID );
 static void GRAPHIC_Exit( GRAPHIC_WORK *p_wk );
 static void GRAPHIC_Draw( GRAPHIC_WORK *p_wk );
 static const GRAPHIC_BG_WORK *GRAPHIC_GetBgWorkConst( const GRAPHIC_WORK *cp_wk );
@@ -678,7 +680,8 @@ const GFL_PROC_DATA	IrcRanking_ProcData	=
 static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param, void *p_work )
 {	
 	IRC_RANKING_WORK	*p_wk;
-	IRC_RANKING_PARAM	*p_rank_param	;
+	IRC_RANKING_PARAM	*p_rank_param	= p_param;
+
 
 	//ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCRANKING, 0x40000 );
@@ -687,17 +690,27 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(IRC_RANKING_WORK), HEAPID_IRCRANKING );
 	GFL_STD_MemClear( p_wk, sizeof(IRC_RANKING_WORK) );
 
+
+  if( p_rank_param->p_gamesys )
+  { 
+    p_wk->p_gamedata  = GAMESYSTEM_GetGameData(p_rank_param->p_gamesys);
+  }
+  else
+  { 
+    p_wk->p_gamedata  = GAMEDATA_Create( GFL_HEAPID_APP );
+
+  }
+
 	//パラメータうけとり
-	p_rank_param	= p_param;
   p_wk->p_que   = PRINTSYS_QUE_Create( HEAPID_IRCRANKING );
   p_wk->p_font  = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, 
 				GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_IRCRANKING ); 
 
 	//データ作成
-	p_wk->p_rank_data	= RANKING_DATA_Create( GAMESYSTEM_GetGameData(p_rank_param->p_gamesys), HEAPID_IRCRANKING );
+	p_wk->p_rank_data	= RANKING_DATA_Create( p_wk->p_gamedata, HEAPID_IRCRANKING );
 
 	//モジュール初期化
-	GRAPHIC_Init( &p_wk->grp, p_rank_param->p_gamesys, HEAPID_IRCRANKING );
+	GRAPHIC_Init( &p_wk->grp, p_wk->p_gamedata, HEAPID_IRCRANKING );
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeOut );
 	UI_Init( &p_wk->ui, HEAPID_IRCRANKING );
 	ACLR_Init( &p_wk->aclr );
@@ -708,7 +721,7 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 			GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_FONT_S),
 			GRAPHIC_GetBgWorkConst(&p_wk->grp),
 			p_wk->p_rank_data,
-			RANKING_DATA_GetRankNum(GAMESYSTEM_GetGameData(p_rank_param->p_gamesys)),
+			RANKING_DATA_GetRankNum(p_wk->p_gamedata),
 			HEAPID_IRCRANKING
 			);
 
@@ -743,16 +756,22 @@ static GFL_PROC_RESULT IRC_RANKING_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void
 	GRAPHIC_Exit( &p_wk->grp );
 
 	//データ破棄
-	RANKING_DATA_Delete( p_wk->p_rank_data, GAMESYSTEM_GetGameData(p_rank_param->p_gamesys) );
+	RANKING_DATA_Delete( p_wk->p_rank_data, p_wk->p_gamedata );
 
   GFL_FONT_Delete( p_wk->p_font );
   PRINTSYS_QUE_Delete( p_wk->p_que );
+
+  if( p_rank_param->p_gamesys == NULL )
+  { 
+    GAMEDATA_Delete( p_wk->p_gamedata );
+  }
 
 	//ワーク破棄
 	GFL_PROC_FreeWork( p_proc );
 
 	//ヒープ破棄
 	GFL_HEAP_DeleteHeap(HEAPID_IRCRANKING );
+
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -1152,7 +1171,7 @@ static void SEQFUNC_MoveNew( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
  *
  */
 //-----------------------------------------------------------------------------
-static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAMESYS_WORK *p_gamesys, HEAPID heapID )
+static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAMEDATA  *p_gamedata, HEAPID heapID )
 {	
 	//クリア
 	GFL_STD_MemClear( p_wk, sizeof(GRAPHIC_BG_WORK) );
@@ -1267,11 +1286,8 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAMESYS_WORK *p_gamesys, HEA
 		//文字描画
 		p_strbuf	= GFL_MSG_CreateString( p_msg, RANKING_TITLE_000 );
     { 
-      GAMEDATA  *p_gamedata = NULL;
       MYSTATUS  *p_mystatus = NULL;
-      if( p_gamesys )
       { 
-        p_gamedata = GAMESYSTEM_GetGameData(p_gamesys);
         p_mystatus =GAMEDATA_GetMyStatus(p_gamedata);
       }
       PRINT_PrintNameCenter( p_wk->p_bmpwin[BMPWIN_ID_TITLE], p_strbuf, p_mystatus, p_font );
@@ -1306,7 +1322,7 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAMESYS_WORK *p_gamesys, HEA
 		}
 		GFL_BG_LoadScreenReq(GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TOP_M) );
 	}
-
+#if 0
   { 
     GAME_COMM_SYS_PTR p_gamecomm  = NULL;
     if( p_gamesys )
@@ -1315,7 +1331,7 @@ static void GRAPHIC_BG_Init( GRAPHIC_BG_WORK *p_wk, GAMESYS_WORK *p_gamesys, HEA
     }
     //INFOWIN_Init( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_INFO_S), RANKING_BG_PAL_S_15, p_gamecomm, HEAPID_IRCRANKING );
   }
-
+#endif
 
 }
 //----------------------------------------------------------------------------
@@ -1567,7 +1583,7 @@ static GFL_CLUNIT * GRAPHIC_OBJ_GetUnit( const GRAPHIC_OBJ_WORK *cp_wk )
  *
  */
 //-----------------------------------------------------------------------------
-static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, GAMESYS_WORK*	p_gamesys, HEAPID heapID )
+static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, GAMEDATA  *p_gamedata, HEAPID heapID )
 {	
 	static const GFL_DISP_VRAM sc_vramSetTable =
 	{
@@ -1611,7 +1627,7 @@ static void GRAPHIC_Init( GRAPHIC_WORK *p_wk, GAMESYS_WORK*	p_gamesys, HEAPID he
 	GFL_FONTSYS_Init();
 
 	//	モジュール初期化
-	GRAPHIC_BG_Init( &p_wk->bg, p_gamesys, heapID );
+	GRAPHIC_BG_Init( &p_wk->bg, p_gamedata, heapID );
 	GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
 
 	//VBlankTask登録
