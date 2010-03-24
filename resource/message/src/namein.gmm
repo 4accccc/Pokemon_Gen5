@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-03-05T18:47:16"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-03-24T13:22:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -407,6 +407,20 @@
 		<comment>すれ違い「お礼」のデフォルト→現在使ってません</comment>
 		<language name="JPN" width="256">ありがとう！</language>
 		<language name="JPN_KANJI" width="256">ありがとう！</language>
+	</row>
+
+	<row id="NAMEIN_DEF_NAME_004">
+		<comment>不正な名前だったときの名前
+ホワイトバージョンの場合</comment>
+		<language name="JPN" width="256">ホワイト．</language>
+		<language name="JPN_KANJI" width="256">ホワイト．</language>
+	</row>
+
+	<row id="NAMEIN_DEF_NAME_005">
+		<comment>不正な名前だったときの名前
+ブラックバージョンの場合</comment>
+		<language name="JPN" width="256">ブラック．</language>
+		<language name="JPN_KANJI" width="256">ブラック．</language>
 	</row>
 
 	<flowchart-group-list>
