@@ -305,9 +305,9 @@
 #define FE_C03R0401_GIRL2_TALK             289 /* 0x0121 ヒウンシティビル：映画関連ゾロアイベントの少女と会話した */
 #define FE_C04R0501_ITEMGET_01             290 /* 0x0122 ライモンシティ汎用ビル：アイテム入手フラグ（わざマシン：かいりき） */
 #define FE_R16R0201_BACKPACKER_TALK        291 /* 0x0123 まよいの森：ゾロアークイベントの青年と話したフラグ */
-#define FE_R05R0101_APPRAISAL_TALK         292 /* 0x0124 ５番道路トレーラーハウス：グルメ鑑定士 */
-#define FE_C07PC0101_APPRAISAL_TALK        293 /* 0x0125 セッカシティＰＣ：鉱石鑑定士 */
-#define FE_T04R0101_APPRAISAL_TALK         294 /* 0x0126 サザナミタウン：財宝鑑定士 */
+#define FE_R05R0101_APPRAISAL_TALK         292 /* 0x0124 ５番道路トレーラーハウス：グルメ鑑定士と話した */
+#define FE_C07PC0101_APPRAISAL_TALK        293 /* 0x0125 セッカシティＰＣ：鉱石鑑定士と話した */
+#define FE_T04R0101_APPRAISAL_TALK         294 /* 0x0126 サザナミタウン：財宝鑑定士と話した */
 #define FE_C03R0801_HINT_TALK              295 /* 0x0127 遊覧船内：ヒントおやじ */
 #define FE_AMUSEMENT_TR01_TALK             296 /* 0x0128 ライモン遊園地：観覧車トレーナー（春）と会話したフラグ */
 #define FE_AMUSEMENT_TR02_TALK             297 /* 0x0129 ライモン遊園地：観覧車トレーナー（夏）と会話したフラグ */
@@ -319,7 +319,7 @@
 #define FE_C02GYM_QUESTION_02              303 /* 0x012f シッポウジムの問題２の回答フラグ。1＝正解している */
 #define FE_C02GYM_QUESTION_03              304 /* 0x0130 シッポウジムの問題３の回答フラグ。1＝正解している */
 #define FE_C02GYM_QUESTION_04              305 /* 0x0131 シッポウジムの問題４の回答フラグ。1＝正解している */
-		/* not used   306(0x0132) */
+#define FE_T04R0101_APPRAISAL_CROWN        306 /* 0x0132 サザナミタウン：財宝鑑定士に古代の王冠について話した */
 		/* not used   307(0x0133) */
 		/* not used   308(0x0134) */
 		/* not used   309(0x0135) */
@@ -2459,8 +2459,8 @@
 #define SYS_FLAG_ARRIVE_C09               2491 /* 0x09bb 到着フラグ：C09 */
 #define SYS_FLAG_ARRIVE_C10               2492 /* 0x09bc 到着フラグ：C10 */
 #define SYS_FLAG_ARRIVE_T04               2493 /* 0x09bd 到着フラグ：T04 */
-#define SYS_FLAG_ARRIVE_C11               2494 /* 0x09be 到着フラグ：C01（国連） */
-		/* not used  2495(0x09bf) */
+#define SYS_FLAG_ARRIVE_C11               2494 /* 0x09be 到着フラグ：C11（国連） */
+#define SYS_FLAG_ARRIVE_D09               2495 /* 0x09bf 到着フラグ：チャンピオンロード */
 		/* not used  2496(0x09c0) */
 		/* not used  2497(0x09c1) */
 		/* not used  2498(0x09c2) */
