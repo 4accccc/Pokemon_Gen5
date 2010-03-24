@@ -684,7 +684,7 @@ MMDL_HEADER* FIELD_WFBC_CORE_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE* cp_w
 
   FIELD_WFBC_PEOPLE_POS_Delete( p_pos );
 
-  GFL_HEAP_FreeMemory( p_people_loader );
+  FIELD_WFBC_PEOPLE_DATA_Delete( p_people_loader );
 
   return p_buff;
 }
@@ -1254,6 +1254,9 @@ MMDL_HEADER* FIELD_WFBC_CORE_ITEM_MMDLHeaderCreateHeapLo( const FIELD_WFBC_CORE_
       item_index ++;
     }
   }
+
+  FIELD_WFBC_PEOPLE_POS_Delete( p_pos );
+  FIELD_WFBC_PEOPLE_DATA_Delete( p_people_loader );
 
   return p_buff;
 }

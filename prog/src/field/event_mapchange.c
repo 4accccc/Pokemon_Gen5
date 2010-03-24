@@ -2051,6 +2051,8 @@ static void MAPCHG_loadMMdlWFBC( GAMEDATA * gamedata, const LOCATION *loc )
       {
         TOMOYA_Printf( "WFBC MMDL SetUp\n" );
         MMDLSYS_SetMMdl( fmmdlsys, p_header, loc->zone_id, count, evwork );
+      }
+      if( p_header ){
         GFL_HEAP_FreeMemory( p_header );
       }
     }
@@ -2072,6 +2074,8 @@ static void MAPCHG_loadMMdlWFBC( GAMEDATA * gamedata, const LOCATION *loc )
       {
         TOMOYA_Printf( "WFBC ITEM SetUp\n" );
         MMDLSYS_SetMMdl( fmmdlsys, p_header, loc->zone_id, count, evwork );
+      }
+      if( p_header ){
         GFL_HEAP_FreeMemory( p_header );
       }
     }

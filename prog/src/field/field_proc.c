@@ -65,6 +65,12 @@ static GFL_PROC_RESULT FieldMapProcInit
 
   switch(*seq){
   case 0:
+#ifdef PM_DEBUG
+    
+    // ŠJ•ú‚µ‚Ä‚¢‚È‚¢ƒƒ‚ƒŠ‚ğ•\¦
+    OS_TPrintf( "FieldProc Init GFL_HEAPID_APP ƒƒ‚ƒŠó‹µ\n" );
+    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( GFL_HEAPID_APP );
+#endif
     {
       u16 zone_id = PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) );
       if (ZONEDATA_IsUnionRoom(zone_id) || ZONEDATA_IsColosseum(zone_id) )
