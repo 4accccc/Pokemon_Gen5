@@ -435,7 +435,7 @@ const PLIST_ITEM_USE_TYPE PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work )
     break;
 
   case ITEM_TYPE_NEMURI_RCV:   // ñ∞ÇËâÒïú
-    GF_ASSERT_MSG( 0,"égÇ¡ÇƒÇ»Ç¢ÇÕÇ∏ÅB\n");
+    PLIST_ITEM_UTIL_ItemUseMessageCommon( work , mes_pokelist_04_35 );
     break;
 
   case ITEM_TYPE_DOKU_RCV:     // ì≈âÒïú
