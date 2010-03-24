@@ -19,6 +19,22 @@
 ///仕事指定無し
 #define GAMEBEACON_DETAILS_JOB_NULL     (0xff)
 
+//ビーコンアイコン種類定義
+enum{
+ BEACON_ICON_HELLO,
+ BEACON_ICON_BTL_START,
+ BEACON_ICON_BTL_WIN,
+ BEACON_ICON_POKE_GET,
+ BEACON_ICON_POKE_LVUP,
+ BEACON_ICON_POKE_SHINKA,
+ BEACON_ICON_GPOWER,
+ BEACON_ICON_ITEM_GET,
+ BEACON_ICON_SPECIAL,
+ BEACON_ICON_UNION,
+ BEACON_ICON_THANKS,
+ BEACON_ICON_INFO,
+ BEACON_ICON_MAX,
+};
 
 //==============================================================================
 //  外部関数宣言
@@ -80,9 +96,11 @@ extern void GAMEBEACON_Get_Action_Nickname(const GAMEBEACON_INFO *info, STRBUF *
 extern u16 GAMEBEACON_Get_Action_TrNo(const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_Action_ThankyouCount(const GAMEBEACON_INFO *info);
 extern u32 GAMEBEACON_Get_Action_Hour(const GAMEBEACON_INFO *info);
-extern u32 GAMEBEACON_Get_Action_VictoriCount(const GAMEBEACON_INFO *info);
+extern u32 GAMEBEACON_Get_Action_VictoryCount(const GAMEBEACON_INFO *info);
 extern u8 GAMEBEACON_Get_Action_TrialHouseRank(const GAMEBEACON_INFO *info);
 extern u16 GAMEBEACON_Get_Action_GPowerID(const GAMEBEACON_INFO *info);
 
-void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID temp_heap_id);
+extern u8 GAMEBEACON_GetActionDataType( GAMEBEACON_ACTION action );
+extern u8 GAMEBEACON_GetActionDataIconType( GAMEBEACON_ACTION action );
+extern void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPID temp_heap_id);
 

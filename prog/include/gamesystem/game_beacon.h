@@ -82,7 +82,7 @@ typedef enum{
   GAMEBEACON_ACTION_SHOPING,                  ///<買い物中                              39
   GAMEBEACON_ACTION_SUBWAY,                   ///<バトルサブウェイ挑戦中                40
   GAMEBEACON_ACTION_SUBWAY_STRAIGHT_VICTORIES,  ///<バトルサブウェイ連勝中              41
-  GAMEBEACON_ACTION_SUBWAY_VICTORIES_ACHIEVE,   ///<バトルサブウェイ連勝が規定回数を達成  42
+  GAMEBEACON_ACTION_SUBWAY_TROPHY_GET,          ///<バトルサブウェイトロフィーゲット    42
   GAMEBEACON_ACTION_TRIALHOUSE,               ///<トライアルハウスに挑戦中              43
   GAMEBEACON_ACTION_TRIALHOUSE_RANK,          ///<トライアルハウスでランク確定          44
   GAMEBEACON_ACTION_FERRIS_WHEEL,             ///<観覧車に乗った                        45
@@ -177,7 +177,7 @@ extern void GAMEBEACON_Set_EggHatch(const STRBUF *nickname);
 extern void GAMEBEACON_Set_Shoping(void);
 extern void GAMEBEACON_Set_Subway(void);
 extern void GAMEBEACON_Set_SubwayStraightVictories(u32 victory_count);
-extern void GAMEBEACON_Set_SubwayVictoriesAchieve(u32 victory_count);
+extern void GAMEBEACON_Set_SubwayTrophyGet(void);
 extern void GAMEBEACON_Set_TrialHouse(void);
 extern void GAMEBEACON_Set_TrialHouseRank(u8 rank);
 extern void GAMEBEACON_Set_FerrisWheel(void);

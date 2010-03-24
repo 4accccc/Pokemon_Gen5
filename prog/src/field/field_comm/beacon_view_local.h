@@ -202,7 +202,7 @@ typedef struct _BEACON_VIEW{
 
 
   //ÉäÉ\Å[ÉX
-  RES2D_CHAR  resCharIcon[ICON_MAX];
+  RES2D_CHAR  resCharIcon[BEACON_ICON_MAX];
   RES2D_CHAR  resCharUnion[UNION_CHAR_MAX];
   RES2D_PLTT  resPlttUnion;
   RES2D_PLTT  resPlttPanel;

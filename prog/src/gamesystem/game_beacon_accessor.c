@@ -19,22 +19,28 @@
 #include "app/townmap_data.h"
 #include "arc/fieldmap/zone_id.h"
 #include "tr_tool/trno_def.h"
+#include "waza_tool/wazano_def.h"
 #include "poke_tool/monsno_def.h"
 #include "item/itemsym.h"
 #include "app/research_radar/question_id.h"
 #include "field/research_team_def.h"
 
 enum{
- BEACON_WSET_DEFAULT,   //デフォルト(トレーナー名)  
- BEACON_WSET_TRNAME,    //対戦相手名
- BEACON_WSET_MONSNAME,  //ポケモン種族名
- BEACON_WSET_NICKNAME,  //ポケモンニックネーム
- BEACON_WSET_POKE_W,  //ポケモンニックネーム
- BEACON_WSET_ITEM,      //アイテム名
- BEACON_WSET_PTIME,     //プレイタイム
- BEACON_WSET_THANKS,    //御礼回数
- BEACON_WSET_HAIHU_MONS, //配布モンスター名
- BEACON_WSET_HAIHU_ITEM, //配布アイテム名
+ BEACON_WSET_DEFAULT,     //デフォルト(トレーナー名)  
+ BEACON_WSET_TRNAME,      //対戦相手名
+ BEACON_WSET_MONSNAME,    //ポケモン種族名
+ BEACON_WSET_NICKNAME,    //ポケモンニックネーム
+ BEACON_WSET_POKE_W,      //ポケモンニックネーム
+ BEACON_WSET_ITEM,        //アイテム名
+ BEACON_WSET_PTIME,       //プレイタイム
+ BEACON_WSET_THANKS,      //御礼回数
+ BEACON_WSET_HAIHU_MONS,  //配布モンスター名
+ BEACON_WSET_HAIHU_ITEM,  //配布アイテム名
+ BEACON_WSET_WAZA,        //技名
+ BEACON_WSET_VICTORY,    //サブウェイ挑戦中の連勝数1-7
+ BEACON_WSET_TRIAL_RANK,  //トライアルハウスランク
+ BEACON_WSET_GPOWER,      //Gパワー名
+ BEACON_WSET_FREEWORD,    //フリーワード8文字
  BEACON_WSET_MAX,
 };
 
@@ -44,36 +50,58 @@ enum{
 /*
  *  @brief  GAMEBEACON_ACTION型の並びと同一である必要があります
  */
-static const u8 DATA_BeaconWordsetType[GAMEBEACON_ACTION_MAX] = {
-  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_NULL,                     ///<データ無し
-  
-  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_SEARCH,                   ///<「ｘｘｘさんをサーチしました！」      1
-  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_BATTLE_WILD_POKE_START,   ///<野生のポケモンと対戦を開始しました！  2
-  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_BATTLE_WILD_POKE_VICTORY, ///<野生のポケモンに勝利しました！        3
-  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_BATTLE_SP_POKE_START,     ///<特別なポケモンと対戦を開始しました！  4
-  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_BATTLE_SP_POKE_VICTORY,   ///<特別なポケモンに勝利しました！        5
-  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_TRAINER_START,     ///<トレーナーと対戦を開始しました！      6
-  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_TRAINER_VICTORY,   ///<トレーナーに勝利しました！            7
-  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_LEADER_START,      ///<ジムリーダーと対戦を開始しました！    8
-  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY,    ///<ジムリーダーに勝利しました！          9
-  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_BIGFOUR_START,     ///<四天王と対戦を開始しました！          10
-  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_BIGFOUR_VICTORY,   ///<四天王に勝利しました！                11
-  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_CHAMPION_START,    ///<チャンピオンと対戦を開始しました！    12
-  BEACON_WSET_TRNAME,	///<GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY,  ///<チャンピオンに勝利しました！          13
-  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_POKE_GET,                 ///<ポケモン捕獲                          14
-  BEACON_WSET_MONSNAME,	///<GAMEBEACON_ACTION_SP_POKE_GET,              ///<特別なポケモン捕獲                    15
-  BEACON_WSET_NICKNAME,	///<GAMEBEACON_ACTION_POKE_LVUP,                ///<ポケモンレベルアップ                  16
-  BEACON_WSET_POKE_W,	///<GAMEBEACON_ACTION_POKE_EVOLUTION,           ///<ポケモン進化                          17
-  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_GPOWER,                   ///<Gパワー発動                           18
-  BEACON_WSET_ITEM,	  ///<GAMEBEACON_ACTION_SP_ITEM_GET,              ///<貴重品ゲット                          19
-  BEACON_WSET_PTIME,	///<GAMEBEACON_ACTION_PLAYTIME,                 ///<一定のプレイ時間を越えた              20
-  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_ZUKAN_COMPLETE,           ///<図鑑完成                              21
-  BEACON_WSET_THANKS,	///<GAMEBEACON_ACTION_THANKYOU_OVER,            ///<お礼を受けた回数が規定数を超えた      22
-  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_UNION_IN,                 ///<ユニオンルームに入った                23
-  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_THANKYOU,                 ///<「ありがとう！」                      24
-  BEACON_WSET_HAIHU_MONS,	///<GAMEBEACON_ACTION_DISTRIBUTION_POKE,        ///<ポケモン配布中                        25
-  BEACON_WSET_HAIHU_ITEM,	///<GAMEBEACON_ACTION_DISTRIBUTION_ITEM,        ///<アイテム配布中                        26
-  BEACON_WSET_DEFAULT,	///<GAMEBEACON_ACTION_DISTRIBUTION_ETC,         ///<その他配布中                          27
+static const u8 DATA_BeaconDataType[GAMEBEACON_ACTION_MAX][2] = {
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_HELLO,	    ///<GAMEBEACON_ACTION_NULL  ///<データ無し 0
+  		
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_HELLO,	    ///<SEARCH, XXさんをサーチしました！ 1
+  BEACON_WSET_MONSNAME,	  BEACON_ICON_BTL_START,	///<BATTLE_WILD_POKE_START 野生のポケモンと対戦を開始しました！2
+  BEACON_WSET_MONSNAME,	  BEACON_ICON_BTL_WIN,	  ///<BATTLE_WILD_POKE_VICTORY 野生のポケモンに勝利しました！3
+  BEACON_WSET_MONSNAME,	  BEACON_ICON_BTL_START,	///<BATTLE_SP_POKE_START 特別なポケモンと対戦を開始しました！ 4
+  BEACON_WSET_MONSNAME,	  BEACON_ICON_BTL_WIN,	  ///<BATTLE_SP_POKE_VICTORY 特別なポケモンに勝利しました！5
+  BEACON_WSET_TRNAME,	    BEACON_ICON_BTL_START,	///<BATTLE_TRAINER_START トレーナーと対戦を開始しました！6
+  BEACON_WSET_TRNAME,	    BEACON_ICON_BTL_WIN,	  ///<BATTLE_TRAINER_VICTORY トレーナーに勝利しました！7
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_START,	///<BATTLE_LEADER_START  ジムリーダーと対戦を開始しました！ 8
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_WIN,	  ///<BATTLE_LEADER_VICTORY ジムリーダーに勝利しました！9
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_START,	///<BATTLE_BIGFOUR_START  四天王と対戦を開始しました！10
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_WIN,	  ///<BATTLE_BIGFOUR_VICTORY 四天王に勝利しました！11
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_START,	///<BATTLE_CHAMPION_START チャンピオンと対戦を開始しました！12
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_WIN,	  ///<BATTLE_CHAMPION_VICTORY チャンピオンに勝利しました！13
+  BEACON_WSET_MONSNAME,	  BEACON_ICON_POKE_GET,	  ///<POKE_GET ポケモン捕獲 14
+  BEACON_WSET_MONSNAME,	  BEACON_ICON_POKE_GET,	  ///<SP_POKE_GET 特別なポケモン捕獲 15
+  BEACON_WSET_NICKNAME,	  BEACON_ICON_POKE_LVUP,	///<POKE_LVUP ポケモンレベルアップ 16
+  BEACON_WSET_POKE_W, 	  BEACON_ICON_POKE_SHINKA,///<POKE_EVOLUTION ポケモン進化 17
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_GPOWER,	    ///<GPOWER Gパワー発動 18
+  BEACON_WSET_ITEM,	      BEACON_ICON_ITEM_GET,	  ///<SP_ITEM_GET 貴重品ゲット 19
+  BEACON_WSET_PTIME,	    BEACON_ICON_SPECIAL,	  ///<PLAYTIME  一定のプレイ時間を越えた 20
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_SPECIAL,	  ///<ZUKAN_COMPLETE 図鑑完成 21
+  BEACON_WSET_THANKS,	    BEACON_ICON_SPECIAL,	  ///<THANKYOU_OVER お礼を受けた回数が規定数を超えた 22
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_UNION,	    ///<UNION_IN ユニオンルームに入った 23
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_THANKS,	    ///<THANKYOU ありがとう！24
+  BEACON_WSET_HAIHU_MONS,	BEACON_ICON_INFO,	      ///<DISTRIBUTION_POKE ポケモン配布中 25
+  BEACON_WSET_HAIHU_ITEM,	BEACON_ICON_INFO,	      ///<DISTRIBUTION_ITEM アイテム配布中 26
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<DISTRIBUTION_ETC  その他配布中 27
+  BEACON_WSET_NICKNAME,	  BEACON_ICON_BTL_START,	///<CRITICAL_HIT 急所に攻撃をあてた 28
+  BEACON_WSET_NICKNAME,	  BEACON_ICON_BTL_START,	///<CRITICAL_DAMAGE 急所に攻撃を受けた 29
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_WIN,	  ///<ESCAPE 戦闘から逃げ出した 30
+  BEACON_WSET_NICKNAME,	  BEACON_ICON_BTL_WIN,	  ///<HP_LITTLE HPが残り少ない 31
+  BEACON_WSET_NICKNAME,	  BEACON_ICON_BTL_WIN,	  ///<PP_LITTLE PPが残り少ない 32
+  BEACON_WSET_NICKNAME,	  BEACON_ICON_BTL_WIN,	  ///<DYING 先頭のポケモンが瀕死 33
+  BEACON_WSET_NICKNAME,	  BEACON_ICON_BTL_WIN,	  ///<STATE_IS_ABNORMAL 先頭のポケモンが状態異常 34
+  BEACON_WSET_ITEM,	      BEACON_ICON_ITEM_GET,	  ///<USE_ITEM アイテムを使用 35
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FIELD_SKILL フィールド技を使用 36
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<SODATEYA_EGG 育て屋から卵を引き取った 37
+  BEACON_WSET_MONSNAME,	  BEACON_ICON_INFO,	      ///<EGG_HATCH タマゴが孵化した 38
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<SHOPING 買い物中 39
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_START,	///<SUBWAY バトルサブウェイ挑戦中 40
+  BEACON_WSET_VICTORY,	  BEACON_ICON_BTL_WIN,	  ///<SUBWAY_STRAIGHT_VICTORIES バトルサブウェイ連勝中 41
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_WIN,	  ///<SUBWAY_TROPHY_GET バトルサブウェイトロフィーを貰った 42
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_START,	///<TRIALHOUSE トライアルハウスに挑戦中 43
+  BEACON_WSET_TRIAL_RANK,	BEACON_ICON_BTL_WIN,	  ///<TRIALHOUSE_RANK トライアルハウスでランク確定 44
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FERRIS_WHEEL 観覧車に乗った 45
+  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<POKESHIFTER ポケシフターに入った 46
+  BEACON_WSET_NICKNAME,	  BEACON_ICON_INFO,	      ///<MUSICAL ミュージカル挑戦中 47
+  BEACON_WSET_GPOWER,	    BEACON_ICON_GPOWER,	    ///<OTHER_GPOWER_USE 他人のGパワーを使用 48
+  BEACON_WSET_FREEWORD,	  BEACON_ICON_HELLO,	    ///<FREEWORD 一言メッセージ 49
 };
 
 typedef BOOL (*BEACON_INFO_ERROR_CHECK_FUNC)(const GAMEBEACON_INFO* info );
@@ -88,6 +116,10 @@ static BOOL errchk_action_playtime(const GAMEBEACON_INFO* info );
 static BOOL errchk_action_thanks_count(const GAMEBEACON_INFO* info );
 static BOOL errchk_action_haifu_mons(const GAMEBEACON_INFO* info );
 static BOOL errchk_action_haifu_item(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_waza(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_victory(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_trial_rank(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_gpower(const GAMEBEACON_INFO* info );
 
 static const BEACON_INFO_ERROR_CHECK_FUNC DATA_ErrorCheckFuncTbl[BEACON_WSET_MAX] = {
   errchk_action_default,
@@ -100,6 +132,11 @@ static const BEACON_INFO_ERROR_CHECK_FUNC DATA_ErrorCheckFuncTbl[BEACON_WSET_MAX
   errchk_action_thanks_count,
   errchk_action_haifu_mons,
   errchk_action_haifu_item,
+  errchk_action_waza,
+  errchk_action_victory,
+  errchk_action_trial_rank,
+  errchk_action_gpower,
+  errchk_action_default,
 };
 
 //==============================================================================
@@ -453,10 +490,10 @@ BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info)
     return TRUE;
   }
   //アクション詳細データチェック
-  if( (DATA_ErrorCheckFuncTbl[DATA_BeaconWordsetType[ info->action.action_no ]])(info) ){
+  if( (DATA_ErrorCheckFuncTbl[GAMEBEACON_GetActionDataType(info->action.action_no )])(info) ){
     return TRUE;
   }
-  return FALSE; //@todo なにがしかの条件でNPC判定をする
+  return FALSE;
 }
 
 
@@ -1012,11 +1049,10 @@ u32 GAMEBEACON_Get_Action_Hour(const GAMEBEACON_INFO *info)
  * @retval  u32		経過時間(時)
  */
 //==================================================================
-u32 GAMEBEACON_Get_Action_VictoriCount(const GAMEBEACON_INFO *info)
+u32 GAMEBEACON_Get_Action_VictoryCount(const GAMEBEACON_INFO *info)
 {
   switch(info->action.action_no){
   case GAMEBEACON_ACTION_SUBWAY_STRAIGHT_VICTORIES:
-  case GAMEBEACON_ACTION_SUBWAY_VICTORIES_ACHIEVE:
     return info->action.victory_count;
   }
   GF_ASSERT(0);
@@ -1059,6 +1095,29 @@ u16 GAMEBEACON_Get_Action_GPowerID(const GAMEBEACON_INFO *info)
 
 //==================================================================
 /**
+ * ビーコン情報のデータタイプを取得
+ *
+ * @param   action          ビーコンのアクションNo
+ */
+//==================================================================
+u8 GAMEBEACON_GetActionDataType( GAMEBEACON_ACTION action )
+{
+  return DATA_BeaconDataType[action][0];
+}
+//==================================================================
+/**
+ * ビーコン情報のアイコンデータタイプを取得
+ *
+ * @param   action          ビーコンのアクションNo
+ */
+//==================================================================
+u8 GAMEBEACON_GetActionDataIconType( GAMEBEACON_ACTION action )
+{
+  return DATA_BeaconDataType[action][1];
+}
+
+//==================================================================
+/**
  * ビーコン情報の内容をWORDSETする
  *
  * @param   info		        対象のビーコン情報へのポインタ
@@ -1077,7 +1136,7 @@ void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPI
 
   {
     GAMEBEACON_ACTION action = GAMEBEACON_Get_Action_ActionNo(info);
-    type = DATA_BeaconWordsetType[ action ];
+    type = GAMEBEACON_GetActionDataType( action );
   }
 
   switch( type ){
@@ -1109,6 +1168,22 @@ void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPI
     break;
   case BEACON_WSET_HAIHU_ITEM:
     WORDSET_RegisterItemName( wordset, 1, GAMEBEACON_Get_Action_DistributionItemNo(info));
+    break;
+  case BEACON_WSET_WAZA:
+    WORDSET_RegisterWazaName( wordset, 1, GAMEBEACON_Get_Action_WazaNo(info));
+    break;
+  case BEACON_WSET_VICTORY:
+    WORDSET_RegisterNumber( wordset, 1, GAMEBEACON_Get_Action_VictoryCount(info), 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    break;
+  case BEACON_WSET_TRIAL_RANK:
+    WORDSET_RegisterNumber( wordset, 1, GAMEBEACON_Get_Action_TrialHouseRank(info), 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    break;
+  case BEACON_WSET_GPOWER:
+    WORDSET_RegisterGPowerName( wordset, 1, GAMEBEACON_Get_Action_GPowerID(info) );
+    break;
+  case BEACON_WSET_FREEWORD:
+    GAMEBEACON_Get_FreeWordMessage( info, strbuf );
+    WORDSET_RegisterWord( wordset, 1, strbuf, GAMEBEACON_Get_Sex(info), TRUE, PM_LANG);
     break;
   }
   GFL_STR_DeleteBuffer(strbuf);
@@ -1202,6 +1277,44 @@ static BOOL errchk_action_haifu_item(const GAMEBEACON_INFO* info )
 {
   if( info->action.distribution.itemno  == ITEM_DUMMY_DATA ||
       info->action.distribution.itemno > ITEM_DATA_MAX ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック 技名タイプ
+static BOOL errchk_action_waza(const GAMEBEACON_INFO* info )
+{
+  if( info->action.wazano  == WAZANO_NULL ||
+      info->action.wazano >= WAZANO_MAX ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック サブウェイ連勝数タイプ 
+static BOOL errchk_action_victory(const GAMEBEACON_INFO* info )
+{
+  if( info->action.victory_count == 0 ||
+      info->action.victory_count > 7 ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック トライアルハウスランクタイプ 
+static BOOL errchk_action_trial_rank(const GAMEBEACON_INFO* info )
+{
+  if( info->action.trial_house_rank ){
+    GF_ASSERT(0);
+    return TRUE;
+  }
+  return FALSE;
+}
+//エラーチェック GパワーIDタイプ 
+static BOOL errchk_action_gpower(const GAMEBEACON_INFO* info )
+{
+  if( info->action.gpower_id >= GPOWER_ID_MAX ){
     GF_ASSERT(0);
     return TRUE;
   }

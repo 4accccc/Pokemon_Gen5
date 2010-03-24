@@ -129,7 +129,7 @@ void BEACONINFO_Set_EggHatch(GAMEBEACON_INFO *info, const STRBUF *nickname);
 void BEACONINFO_Set_Shoping(GAMEBEACON_INFO *info);
 void BEACONINFO_Set_Subway(GAMEBEACON_INFO *info);
 void BEACONINFO_Set_SubwayStraightVictories(GAMEBEACON_INFO *info, u32 victory_count);
-void BEACONINFO_Set_SubwayVictoriesAchieve(GAMEBEACON_INFO *info, u32 victory_count);
+void BEACONINFO_Set_SubwayTrophyGet(GAMEBEACON_INFO *info);
 void BEACONINFO_Set_TrialHouse(GAMEBEACON_INFO *info);
 void BEACONINFO_Set_TrialHouseRank(GAMEBEACON_INFO *info, u8 rank);
 void BEACONINFO_Set_FerrisWheel(GAMEBEACON_INFO *info);
@@ -1978,35 +1978,28 @@ void BEACONINFO_Set_SubwayStraightVictories(GAMEBEACON_INFO *info, u32 victory_c
 
 //==================================================================
 /**
- * 送信ビーコンセット：バトルサブウェイで規定数勝利
+ * 送信ビーコンセット：バトルサブウェイでトロフィー取得
  *
  * @param   victory_count		連勝数
  */
 //==================================================================
-void GAMEBEACON_Set_SubwayVictoriesAchieve(u32 victory_count)
+void GAMEBEACON_Set_SubwayTrophyGet( void )
 {
-  static const u16 counter[] = {50, 100, 1000};
-  int i;
-  
-  for(i = 0; i < NELEMS(counter); i++){
-    if(counter[i] == victory_count){
-      BEACONINFO_Set_SubwayVictoriesAchieve(&GameBeaconSys->send.info, victory_count);
-      SendBeacon_SetCommon(&GameBeaconSys->send);
-    }
-  }
+  BEACONINFO_Set_SubwayTrophyGet(&GameBeaconSys->send.info);
+  SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
 //==================================================================
 /**
- * ビーコンセット：バトルサブウェイで規定数勝利
+ * ビーコンセット：バトルサブウェイでトロフィーゲット
  *
  * @param   victory_count		連勝数
  */
 //==================================================================
-void BEACONINFO_Set_SubwayVictoriesAchieve(GAMEBEACON_INFO *info, u32 victory_count)
+void BEACONINFO_Set_SubwayTrophyGet( GAMEBEACON_INFO *info )
 {
-  info->action.action_no = GAMEBEACON_ACTION_SUBWAY_VICTORIES_ACHIEVE;
-  info->action.victory_count = victory_count;
+  info->action.action_no = GAMEBEACON_ACTION_SUBWAY_TROPHY_GET;
+  info->action.victory_count = 0;
   
   BEACONINFO_Set_Details_Walk(info);
 }

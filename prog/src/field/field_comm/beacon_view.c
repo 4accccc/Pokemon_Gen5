@@ -809,7 +809,7 @@ static void _sub_ActorResourceLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle)
                               wk->heap_sID );
     NNS_G2dGetUnpackedCharacterData( wk->resCharUnion[i].buf, &wk->resCharUnion[i].p_char );
   }
-  for(i = 0;i < ICON_MAX;i++){
+  for(i = 0;i < BEACON_ICON_MAX;i++){
     wk->resCharIcon[i].buf = GFL_ARC_LoadDataAllocByHandle( handle,
                           NARC_beacon_status_bstatus_icon01_ncgr+i,
                           wk->heap_sID );
@@ -830,7 +830,7 @@ static void _sub_ActorResourceLoad( BEACON_VIEW_PTR wk, ARCHANDLE *handle)
 static void _sub_ActorResourceUnload( BEACON_VIEW_PTR wk )
 {
   int i;
-  for( i = 0;i < ICON_MAX;i++){
+  for( i = 0;i < BEACON_ICON_MAX;i++){
     GFL_HEAP_FreeMemory( wk->resCharIcon[i].buf );
   }
   for( i = 0;i < UNION_CHAR_MAX;i++){

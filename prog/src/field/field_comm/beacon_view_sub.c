@@ -36,39 +36,6 @@ typedef struct _TRIANGLE{
   POINT p[3];
 }TRIANGLE;
 
-static const u8 DATA_ActionIconTable[GAMEBEACON_ACTION_MAX] = {
-
-  ICON_HELLO,    ///<データ無し
-  
-  ICON_HELLO,     ///<「ｘｘｘさんをサーチしました！」      1
-  ICON_BTL_START, ///<野生のポケモンと対戦を開始しました！  2
-  ICON_BTL_WIN,   ///<野生のポケモンに勝利しました！        3
-  ICON_BTL_START, ///<特別なポケモンと対戦を開始しました！  4
-  ICON_BTL_WIN,   ///<特別なポケモンに勝利しました！        5
-  ICON_BTL_START, ///<トレーナーと対戦を開始しました！      6
-  ICON_BTL_WIN,   ///<トレーナーに勝利しました！            7
-  ICON_BTL_START, ///<ジムリーダーと対戦を開始しました！    8
-  ICON_BTL_WIN,   ///<ジムリーダーに勝利しました！          9
-  ICON_BTL_START, ///<四天王と対戦を開始しました！          10
-  ICON_BTL_WIN,   ///<四天王に勝利しました！                11
-  ICON_BTL_START, ///<チャンピオンと対戦を開始しました！    12
-  ICON_BTL_WIN,   ///<チャンピオンに勝利しました！          13
-  ICON_POKE_GET,  ///<ポケモン捕獲                          14
-  ICON_POKE_GET,  ///<特別なポケモン捕獲                    15
-  ICON_POKE_LVUP, ///<ポケモンレベルアップ                  16
-  ICON_POKE_SHINKA,   ///<ポケモン進化                          17
-  ICON_GPOWER,    ///<Gパワー発動                           18
-  ICON_ITEM_GET,  ///<貴重品ゲット                          19
-  ICON_SPECIAL,   ///<一定のプレイ時間を越えた              20
-  ICON_SPECIAL,   ///<図鑑完成                              21
-  ICON_SPECIAL,   ///<お礼を受けた回数が規定数を超えた      22
-  ICON_UNION,     ///<ユニオンルームに入った                23
-  ICON_THANKS,    ///<「ありがとう！」                      24
-  ICON_INFO,      ///<ポケモン配布中                        25
-  ICON_INFO,      ///<アイテム配布中                        26
-  ICON_INFO,      ///<その他配布中                          27
-};
-
 //////////////////////////////////////////////////////////////////
 static int calc_Cross( POINT* a, POINT* b ) ;
 static void calc_PointMinus( POINT* a, POINT* b, POINT* out );
@@ -1737,7 +1704,7 @@ static void taskAdd_IconEffect( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_I
     GAMEBEACON_Get_ThankyouMessage(info, wk->str_tmp );
     panel_MsgPrint( wk, pp, wk->str_tmp ); 
   }
-  panel_IconObjUpdate( wk, pp, DATA_ActionIconTable[twk->action] );
+  panel_IconObjUpdate( wk, pp, GAMEBEACON_GetActionDataIconType( twk->action ) );
   panel_IconVisibleSet( pp, TRUE );
 }
 
