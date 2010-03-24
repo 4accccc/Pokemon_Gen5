@@ -1183,9 +1183,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		NARC_camera_scroll_original_C03_bin, // camera_area
 		0, // padding
-		0,
-		0,
-		0,
+		3,
+		7,
+		9,
 	},
 	{//ZONE_ID_C03GYM0101 = 36
 		RSC_GRID_DEFAULT,
@@ -5396,7 +5396,7 @@ static const ZONEDATA ZoneData[] = {
 		MAPNAME_C09,
 		1,
 		WEATHER_NO_SUNNY,
-		21,
+		0,
 		MC_TYPE_FIELD,
 		2,
 		FALSE,
@@ -8080,9 +8080,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		camera_area_dummy, // camera_area
 		0, // padding
-		7,
 		0,
-		0,
+		5,
+		3,
 	},
 	{//ZONE_ID_D09R0101 = 245
 		RSC_GRID_NOSCROLL,
