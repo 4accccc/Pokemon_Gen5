@@ -839,7 +839,7 @@ void MBMAIN_MailGraphcLoad( MAILBOX_SYS_WORK * syswk )
   GFL_ARC_CloseDataHandle( ah );
 }
 
-#define PMS_WORD_CLACT_MAX    ( 6 )
+#define PMS_WORD_CLACT_MAX    ( 8 )
 
 //=============================================================================================
 /**
@@ -854,7 +854,9 @@ void MBMAIN_PmsDrawInit( MAILBOX_SYS_WORK * syswk )
   syswk->app->pmsClunit   = GFL_CLACT_UNIT_Create( PMS_WORD_CLACT_MAX, 2, HEAPID_MAILBOX_APP );
   syswk->app->pms_draw_work = PMS_DRAW_Init( syswk->app->pmsClunit, CLSYS_DRAW_SUB, 
                                            syswk->app->pmsPrintque, syswk->font, 
-                                           4, 3, HEAPID_MAILBOX_APP );
+                                           4, 4, HEAPID_MAILBOX_APP );
+  // 背景カラーを透明色指定に変更
+  PMS_DRAW_SetNullColorPallet( syswk->app->pms_draw_work, 0 );
 }
 
 

@@ -1089,9 +1089,10 @@ static void SubDispMailWrite( MAILBOX_SYS_WORK * syswk )
 {
   MBMAIN_MailGraphcLoad( syswk );
   MBBMP_MailMesPut( syswk );
-  MBOBJ_PokeIconPut( syswk );
+//  MBOBJ_PokeIconPut( syswk );
 }
 
+#define MAIL_PMS_NUM  ( 4 )
 //--------------------------------------------------------------------------------------------
 /**
  * ƒ[ƒ‹”ñ•\Ž¦
@@ -1103,12 +1104,10 @@ static void SubDispMailWrite( MAILBOX_SYS_WORK * syswk )
 //--------------------------------------------------------------------------------------------
 static void SubDispMailClear( MAILBOX_SYS_WORK * syswk )
 {
-//  MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_POKEICON1, FALSE );
-//  MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_POKEICON2, FALSE );
-//  MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_POKEICON3, FALSE );
-  PMS_DRAW_Clear( syswk->app->pms_draw_work, 0, FALSE );
-  PMS_DRAW_Clear( syswk->app->pms_draw_work, 1, FALSE );
-  PMS_DRAW_Clear( syswk->app->pms_draw_work, 2, FALSE );
+  int i;
+  for(i=0;i<MAIL_PMS_NUM;i++){
+    PMS_DRAW_Clear( syswk->app->pms_draw_work, i, FALSE );
+  }
   GFL_BG_ClearScreen( MBMAIN_BGF_MAILMES_S );
   GFL_BG_ClearScreen( MBMAIN_BGF_MAIL_S );
 }

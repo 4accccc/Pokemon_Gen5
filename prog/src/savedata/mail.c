@@ -44,16 +44,16 @@
 //  パディングを行っています
 //=============================================================
 typedef struct _MAIL_DATA{
-  u32 writerID; //<トレーナーID 4
-  u8  sex;      //<主人公の性別 1
-  u8  region;   //<国コード 1
-  u8  version;  //<カセットバージョン 1
-  u8  design;   //<デザインナンバー 1
-  STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];  // 16
-  MAIL_ICON icon[MAILDAT_ICONMAX];          //<アイコンNO格納場所[]
-  u16 form_bit;                             //padding領域をプラチナから3体のポケモンの
+  u32 writerID; //<トレーナーID 4                         4
+  u8  sex;      //<主人公の性別 1                         5
+  u8  region;   //<国コード 1                             6
+  u8  version;  //<カセットバージョン 1                   7
+  u8  design;   //<デザインナンバー 1                     8
+  STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];  // 16        24
+  MAIL_ICON icon[MAILDAT_ICONMAX];          //<アイコンNO格納場所[]   30
+  u16 form_bit;                             //padding領域をプラチナから3体のポケモンの    32
                                             // フォルム番号として使用(5bit単位)
-  PMS_DATA  msg[MAILDAT_MSGMAX];            //<文章データ
+  PMS_DATA  msg[MAILDAT_MSGMAX];            //<文章データ 56
 }_MAIL_DATA;
 
 
@@ -143,8 +143,8 @@ void MailData_Clear(MAIL_DATA* dat)
   
   dat->writerID = 0;
   dat->sex = PM_MALE;
-  //dat->region = CasetteLanguage;    //@todo定義が無い
-//  dat->version = CasetteVersion; //@todo定義が無い
+//  dat->region = CasetteLanguage;  //@todo定義が無い
+//  dat->version = CasetteVersion;  //@todo定義が無い
   dat->design = MAIL_DESIGN_NULL;
 
   GFL_STD_MemFill16(dat->name, GFL_STR_GetEOMCode(),sizeof(dat->name));
@@ -244,18 +244,12 @@ BOOL MailData_Compare(MAIL_DATA* src1,MAIL_DATA* src2)
  */
 void MAILDATA_CreateFromSaveData(MAIL_DATA* dat,u8 design_no,u8 pos, GAMEDATA* gamedata)
 {
-  u8  i,ct,pal=0,s;
-  u16 monsno;
-  u32 icon,egg,form;
   MYSTATUS  *my;
-  POKEPARTY *party;
-  POKEMON_PARAM* pp;
   
   MailData_Clear(dat);
   dat->design = design_no;
 
   //セーブデータから
-  party = GAMEDATA_GetMyPokemon( gamedata );
   my    = GAMEDATA_GetMyStatus( gamedata );
 
   //自機の名前
@@ -265,37 +259,6 @@ void MAILDATA_CreateFromSaveData(MAIL_DATA* dat,u8 design_no,u8 pos, GAMEDATA* g
   //トレーナーID
   dat->writerID = MyStatus_GetID(my);
 
-  //ポケモンアイコン取得
-  dat->form_bit = 0;
-  for(i=pos,ct = 0;i < PokeParty_GetPokeCount(party);i++){
-    pp = PokeParty_GetMemberPointer(party,i);
-    monsno = PP_Get(pp,ID_PARA_monsno,NULL);
-    egg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
-    form = PP_Get(pp,ID_PARA_form_no,NULL);
-    //icon = PokeIconCgxArcIndexGetByPP(pp);
-    icon = POKEICON_GetCgxArcIndex( PP_GetPPPPointerConst(pp) );
-//    pal = PokeIconPaletteNumberGet(monsno,egg);
-//    pal = PokeIconPalNumGet(monsno,form,egg);   //@todo  移植できてない
-    
-    dat->icon[ct].cgxID = (u16)icon;
-    dat->icon[ct].palID = pal;
-#if 0 //@todo 移植できてない
-    //プラチナ以降で追加されたアイコンの場合のノーマルフォルム変換(フォルム番号は別領域へ退避)
-    for(s = 0; s < NELEMS(MailIcon_CgxID_ConvTbl); s++){
-      if(MailIcon_CgxID_ConvTbl[s].form_cgx_id == dat->icon[ct].cgxID && 
-          MailIcon_CgxID_ConvTbl[s].form_no == form){
-        dat->icon[ct].cgxID = MailIcon_CgxID_ConvTbl[s].normal_cgx_id;
-        dat->icon[ct].palID = PokeIconPalNumGet( monsno, 0, egg );  //フォルム0のパレット
-        dat->form_bit |= MailIcon_CgxID_ConvTbl[s].form_no << (ct*5);
-        break;
-      }
-    }
-#endif
-    ct++;
-    if(ct >= MAILDAT_ICONMAX){
-      break;
-    }
-  }
 }
 
 /**
@@ -337,24 +300,6 @@ MAIL_DATA* MailData_MailEventDataMake(POKEMON_PARAM* pp,
   PMSDAT_SetSentence( &dat->msg[2], 2, 1 );
   PMSDAT_SetWord( &dat->msg[2], 0, 41 );
   PMSDAT_SetWord( &dat->msg[2], 1, PMS_WORD_NULL );
-  
-  //ポケモンアイコン取得
-  dat->form_bit = 0;
-  {
-    u8  pal=0;
-    u16 monsno;
-    u32 icon,egg,form;
-
-    monsno = PP_Get(pp,ID_PARA_monsno,NULL);
-    egg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
-    form = PP_Get(pp,ID_PARA_form_no,NULL);
-//    icon = PokeIconCgxArcIndexGetByPP(pp);
-    icon = POKEICON_GetCgxArcIndex( PP_GetPPPPointerConst(pp) );
-//    pal = PokeIconPalNumGet(monsno,form,egg);   @todo移植できてない
-    
-    dat->icon[0].cgxID = (u16)icon;
-    dat->icon[0].palID = pal;
-  }
   
   return dat;
 }
@@ -504,6 +449,11 @@ u16 MailData_GetIconParamByIndex(const MAIL_DATA* dat,u8 index,u8 mode, u16 form
 u16 MailData_GetFormBit(const MAIL_DATA* dat)
 {
   return dat->form_bit;
+}
+
+void MailData_SetFormBit( MAIL_DATA* dat, u16 word )
+{
+  dat->form_bit = word;
 }
 
 /**

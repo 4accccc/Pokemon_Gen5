@@ -23,11 +23,14 @@ const GFL_PROC_DATA MailBoxProcData = {
 };
 
 
+#ifdef PM_DEBUG
 static PMS_DATA debug_pms[3]={
   {1,1,{1,1} },{2,2,{2,2} },{2,2,{2,2} },
 };
 static const STRCODE mailtestname[16]={ 0x3084,0x3081, 0xffff };
-
+// 有効にするとテストデータをセットする
+//#define DEBUG_DATA_SET
+#endif
 //--------------------------------------------------------------------------------------------
 /**
  * プロセス関数：初期化
@@ -58,7 +61,7 @@ GFL_PROC_RESULT MailBoxProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *my
   syswk->mbProcSys = GFL_PROC_LOCAL_boot( HEAPID_MAILBOX_SYS );
 
   // テスト用にメールデータを追加
-#ifdef PM_DEBUG
+#ifdef DEBUG_DATA_SET
   {
     int i;
     MAIL_DATA *mail = MailData_CreateWork(HEAPID_MAILBOX_SYS);

@@ -14,6 +14,7 @@
 #include "arc/message.naix"
 #include "gamesystem/msgspeed.h"
 #include "msg/msg_mailbox.h"
+#include "msg/msg_pmss_system.h"
 
 #include "mb_main.h"
 #include "mb_bmp.h"
@@ -115,10 +116,17 @@
 // メールの内容３
 #define BMPWIN_MAILMSG3_PY  ( 13 )
 #define BMPWIN_MAILMSG3_CGX ( BMPWIN_MAILMSG2_CGX + BMPWIN_MAILMSG_SX * BMPWIN_MAILMSG_SY )
+
+// 簡易単語
+#define BMPWIN_PMSWORD_PX   ( 10 )
+#define BMPWIN_PMSWORD_PY   ( 19 )
+#define BMPWIN_PMSWORD_SX   (  9 )
+#define BMPWIN_PMSWORD_SY   (  2 )
+
 // 作成者名
 #define BMPWIN_NAME_FRM   ( MBMAIN_BGF_MAILMES_S )
 #define BMPWIN_NAME_PX    ( 21 )
-#define BMPWIN_NAME_PY    ( 20 )
+#define BMPWIN_NAME_PY    ( 19 )
 #define BMPWIN_NAME_SX    ( 8 )
 #define BMPWIN_NAME_SY    ( 2 )
 #define BMPWIN_NAME_PAL   ( MBMAIN_SBG_PAL_MAILMSE )
@@ -284,6 +292,10 @@ static const BMPWIN_DAT BmpWinData[] =
     BMPWIN_MAILMSG_FRM, BMPWIN_MAILMSG_PX, BMPWIN_MAILMSG3_PY,
     BMPWIN_MAILMSG_SX, BMPWIN_MAILMSG_SY, BMPWIN_MAILMSG_PAL, BMPWIN_MAILMSG3_CGX
   },
+  { // 簡易単語
+    BMPWIN_NAME_FRM,   BMPWIN_PMSWORD_PX, BMPWIN_PMSWORD_PY,
+    BMPWIN_PMSWORD_SX, BMPWIN_PMSWORD_SY, BMPWIN_NAME_PAL, BMPWIN_NAME_CGX
+  },
   { // 作成者名
     BMPWIN_NAME_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
     BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_PAL, BMPWIN_NAME_CGX
@@ -316,7 +328,6 @@ void MBBMP_Init( MAILBOX_SYS_WORK * syswk )
   syswk->app->printQue    = PRINTSYS_QUE_Create( HEAPID_MAILBOX_APP );
 
   for( i=0; i<MBMAIN_BMPWIN_ID_MAX; i++ ){
-//    GF_BGL_BmpWinAddEx( syswk->app->bgl, &syswk->app->win[i], &BmpWinData[i] );
       win = &BmpWinData[i];
       syswk->app->win[i] = GFL_BMPWIN_Create( win->frame, win->x, win->y, win->w, win->h, 
                                               win->pal, GFL_BMP_CHRAREA_GET_B );
@@ -778,6 +789,7 @@ void MBBMP_MailMesPut( MAILBOX_SYS_WORK * syswk )
   u32 i;
   PMS_DATA * pms;
 
+  // 簡易会話文章表示
   for(i=0;i<3;i++){
     pms = MailData_GetMsgByIndex( syswk->app->mail[syswk->lst_pos], i );
     PMS_DRAW_Print( syswk->app->pms_draw_work, 
@@ -785,14 +797,16 @@ void MBBMP_MailMesPut( MAILBOX_SYS_WORK * syswk )
     GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_MAILMSG1+i] );
   }
 
-/*
-  for( i=0; i<MAILDAT_MSGMAX; i++ ){
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[MBMAIN_BMPWIN_ID_MAILMSG1+i]), 0 );
-    MailMesPut( syswk, MBMAIN_BMPWIN_ID_MAILMSG1+i, i );
-    GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_MAILMSG1+i] );
-  }
-*/
-
+  // 簡易単語表示
+  syswk->app->tmpPms.sentence_type = PMS_TYPE_SYSTEM;
+  syswk->app->tmpPms.sentence_id   = pmss_system_01;
+  syswk->app->tmpPms.word[0]       = MailData_GetFormBit( syswk->app->mail[syswk->lst_pos] );
+  PMS_DRAW_Print( syswk->app->pms_draw_work, 
+                  syswk->app->win[MBMAIN_BMPWIN_ID_PMSWORD], 
+                  &syswk->app->tmpPms, 3 );
+  
+  
+  // 名前表示
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[MBMAIN_BMPWIN_ID_NAME]), 0 );
   GFL_STR_SetStringCode(
     syswk->app->expbuf,

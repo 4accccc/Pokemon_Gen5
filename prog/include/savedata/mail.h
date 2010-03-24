@@ -126,6 +126,7 @@ extern u16  MailData_GetIconParamByIndex(const MAIL_DATA* dat,u8 index,u8 mode, 
  *  @brief  メールデータ　form_bit取得
  */
 extern u16  MailData_GetFormBit(const MAIL_DATA* dat);
+extern void MailData_SetFormBit( MAIL_DATA* dat, u16 word );
 
 /**
  *  @brief  メールデータ　簡易文取得(インデックス指定版)

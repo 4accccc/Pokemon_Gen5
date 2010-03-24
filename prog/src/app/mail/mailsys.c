@@ -22,6 +22,7 @@
 #include "mailview.h"
 #include "app/pms_input.h"
 #include "mail_snd_def.h"
+#include "msg/msg_pmss_system.h"
 
 //オーバーレイプロセス定義データ
 const GFL_PROC_DATA MailSysProcData = {
@@ -65,6 +66,7 @@ typedef struct _MAIL_MAIN_DAT{
 static MAIL_TMP_DATA* MailSys_AllocTmpData(const MAIL_DATA* org,int heapID);
 static void MailSys_ReleaseTmpData(MAIL_TMP_DATA* tmp);
 static void MailSys_SetTmpData(MAIL_DATA* org,MAIL_TMP_DATA* tmp);
+static void _set_pmsinput_mode( MAIL_MAIN_DAT* wk, MAIL_PARAM* param );
 
 
 //=============================================================================================
@@ -179,8 +181,7 @@ GFL_PROC_RESULT MailSysProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *my
       if( wk->dat->val == VIEW_END_DECIDE){
         MailSys_SetTmpData(param->pDat,wk->dat);  //メールデータを書き換え
         //スコア加算処理
-//        RECORD_Score_Add(SaveData_GetRecord(param->savedata),SCORE_ID_WRITE_MAIL);
-//        RECORD_Inc(SaveData_GetRecord(param->savedata), RECID_MAIL_WRITE );
+        RECORD_Inc(SaveData_GetRecord(param->savedata), RECID_MAIL_WRITE );
         param->ret_val = 1; //戻り値設定
       }else{
         param->ret_val = 0; //戻り値設定
@@ -189,28 +190,10 @@ GFL_PROC_RESULT MailSysProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *my
     return GFL_PROC_RES_FINISH;
   case WORDCASE_INIT:
     GFL_OVERLAY_Load( FS_OVERLAY_ID(pmsinput));
-
-    // 文章固定モード呼び出し
-    if(wk->dat->pms_condition[wk->dat->cntNo]==1){
-      PMSDAT_Copy(&(wk->tmpPms),&(wk->dat->msg[wk->dat->cntNo]));
-      wk->app_wk = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT,
-                                      &(wk->tmpPms),TRUE,param->savedata,wk->heapID);
-    }else{
-      // 自由文章モード呼び出し（分かりにくいが、PARAM_CreateをNULLで行った後に
-      // SetInitializeDataSentenceをすると自由文章に、Createの時にPMSを設定していると固定文章になる
-      wk->app_wk = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT,
-                                      NULL,TRUE,param->savedata,wk->heapID);
-  
-      //初期データセット
-      if(PMSDAT_IsEnabled(&(wk->dat->msg[wk->dat->cntNo]))){
-        //既に入力文がある
-        PMSDAT_Copy(&(wk->tmpPms),&(wk->dat->msg[wk->dat->cntNo]));
-      }else{
-        //まだ空
-        PMSDAT_Init(&(wk->tmpPms),PMS_TYPE_MAIL); 
-      }
-      PMSI_PARAM_SetInitializeDataSentence(wk->app_wk,&(wk->tmpPms));
-    }
+    OS_TPrintf("pms cntNo = %d\n", wk->dat->cntNo);
+    // 簡易会話入力モード設定
+    _set_pmsinput_mode(wk, param);
+    // 簡易会話呼び出し
     GFL_PROC_LOCAL_CallProc( wk->localProcSys, NO_OVERLAY_ID, &PMSProcData,  wk->app_wk );
     *seq     = WORDCASE_WAIT;
     break;
@@ -220,7 +203,12 @@ GFL_PROC_RESULT MailSysProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *my
       if( PMSI_PARAM_CheckCanceled(wk->app_wk) == FALSE)
       {
         //変更があれば書き戻し
-        PMSI_PARAM_GetInputDataSentence( wk->app_wk,  &(wk->dat->msg[wk->dat->cntNo]));
+        if(wk->dat->cntNo<3){
+          PMSI_PARAM_GetInputDataSentence( wk->app_wk,  &(wk->dat->msg[wk->dat->cntNo]));
+        }else{
+          wk->dat->pmsword = PMSI_PARAM_GetInputDataSingle( wk->app_wk );
+          OS_TPrintf("簡易単語 %dをセット\n", wk->dat->pmsword);
+        }
       }
       PMSI_PARAM_Delete(wk->app_wk);
       GFL_OVERLAY_Unload( FS_OVERLAY_ID(pmsinput));
@@ -252,6 +240,57 @@ GFL_PROC_RESULT MailSysProc_End( GFL_PROC * proc, int *seq, void *pwk, void *myw
   GFL_HEAP_DeleteHeap(wk->heapID);
 
   return GFL_PROC_RES_FINISH;
+}
+
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 簡易会話入力画面呼び出し時のモード設定
+ *
+ * @param   wk    
+ * @param   param   
+ */
+//----------------------------------------------------------------------------------
+static void _set_pmsinput_mode( MAIL_MAIN_DAT* wk, MAIL_PARAM* param )
+{
+  // 簡易会話入力モード２つ（定型文・自由入力文）
+  // 簡易会話１単語入力モード１つ（文章無し）の分岐を行う
+  
+  // 単語入力のみ
+  if( wk->dat->cntNo == 3 ){
+    // 文章固定モード呼び出し
+    PMSDAT_Clear( &wk->tmpPms );
+    wk->tmpPms.sentence_type = PMS_TYPE_SYSTEM;
+    wk->tmpPms.sentence_id   = pmss_system_01;
+    wk->tmpPms.word[0]       = wk->dat->pmsword;
+    wk->app_wk = PMSI_PARAM_Create( PMSI_MODE_SINGLE, PMSI_GUIDANCE_DEFAULT,
+                                    NULL,TRUE,param->savedata,wk->heapID);
+    PMSI_PARAM_SetInitializeDataSingle( wk->app_wk, wk->dat->pmsword );
+  // 文章入力
+  }else{
+    // 文章固定モード呼び出し
+    if(wk->dat->pms_condition[wk->dat->cntNo]==1){
+      PMSDAT_Copy(&(wk->tmpPms),&(wk->dat->msg[wk->dat->cntNo]));
+      wk->app_wk = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT,
+                                      &(wk->tmpPms),TRUE,param->savedata,wk->heapID);
+    }else{
+      // 自由文章モード呼び出し（分かりにくいが、PARAM_CreateをNULLで行った後に
+      // SetInitializeDataSentenceをすると自由文章に、Createの時にPMSを設定していると固定文章になる
+      wk->app_wk = PMSI_PARAM_Create( PMSI_MODE_SENTENCE, PMSI_GUIDANCE_DEFAULT,
+                                      NULL,TRUE,param->savedata,wk->heapID);
+  
+      //初期データセット
+      if(PMSDAT_IsEnabled(&(wk->dat->msg[wk->dat->cntNo]))){
+        //既に入力文がある
+        PMSDAT_Copy(&(wk->tmpPms),&(wk->dat->msg[wk->dat->cntNo]));
+      }else{
+        //まだ空
+        PMSDAT_Init(&(wk->tmpPms),PMS_TYPE_MAIL); 
+      }
+      PMSI_PARAM_SetInitializeDataSentence(wk->app_wk,&(wk->tmpPms));
+    }
+  }
 }
 
 /**
@@ -287,13 +326,11 @@ static MAIL_TMP_DATA* MailSys_AllocTmpData(const MAIL_DATA* org,int heapID)
   tmp->writerID = MailData_GetWriterID(org);
   tmp->name = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heapID );
   GFL_STR_SetStringCode( tmp->name, MailData_GetWriterName((MAIL_DATA*)org) );
-  tmp->design = MailData_GetDesignNo(org);
-  tmp->lang   = MailData_GetCountryCode(org);
-  tmp->ver    = MailData_GetCasetteVersion(org);
+  tmp->design  = MailData_GetDesignNo(org);
+  tmp->lang    = MailData_GetCountryCode(org);
+  tmp->ver     = MailData_GetCasetteVersion(org);
+  tmp->pmsword = MailData_GetFormBit(org);
 
-  for(i = 0;i < MAILDAT_ICONMAX;i++){
-    tmp->icon[i].dat = MailData_GetIconParamByIndex( org, i, MAIL_ICONPRM_ALL, MailData_GetFormBit(org));
-  }
   for(i = 0;i < MAILDAT_MSGMAX;i++){
     PMSDAT_Copy( &tmp->msg[i], MailData_GetMsgByIndex((MAIL_DATA*)org, i) );
   }
@@ -334,6 +371,9 @@ static void MailSys_SetTmpData( MAIL_DATA* org, MAIL_TMP_DATA* tmp )
   for(i = 0;i < MAILDAT_MSGMAX;i++){
     MailData_SetMsgByIndex(org,&tmp->msg[i],i);
   }
+
+  // 簡易単語コピー
+  MailData_SetFormBit( org, tmp->pmsword );
 
   //データを有効化するためにデザインNOを設定
   MailData_SetDesignNo(org,tmp->design);

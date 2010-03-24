@@ -97,11 +97,12 @@ enum {
 
   MBMAIN_BMPWIN_ID_TALK,      // 会話メッセージ
 
-  MBMAIN_BMPWIN_ID_TITLE,     //「メールボックス」
-  MBMAIN_BMPWIN_ID_MAILMSG1,    // メールの内容１
-  MBMAIN_BMPWIN_ID_MAILMSG2,    // メールの内容２
-  MBMAIN_BMPWIN_ID_MAILMSG3,    // メールの内容３
-  MBMAIN_BMPWIN_ID_NAME,      // 作成者名
+  MBMAIN_BMPWIN_ID_TITLE,      //「メールボックス」
+  MBMAIN_BMPWIN_ID_MAILMSG1,   // メールの内容１
+  MBMAIN_BMPWIN_ID_MAILMSG2,   // メールの内容２
+  MBMAIN_BMPWIN_ID_MAILMSG3,   // メールの内容３
+  MBMAIN_BMPWIN_ID_PMSWORD,    // 簡易単語
+  MBMAIN_BMPWIN_ID_NAME,       // 作成者名
 
   MBMAIN_BMPWIN_ID_MAX,
 };
@@ -202,6 +203,7 @@ typedef struct {
 
   // 簡易会話描画用ワーク
   PMS_DRAW_WORK     *pms_draw_work;
+  PMS_DATA          tmpPms;         // 簡易単語表示用
   GFL_CLUNIT        *pmsClunit;
   PRINT_QUE         *pmsPrintque;
 

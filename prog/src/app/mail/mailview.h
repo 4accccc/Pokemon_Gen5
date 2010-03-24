@@ -21,6 +21,7 @@ enum{
  VIEW_END_LINE0 = 0,
  VIEW_END_LINE1,
  VIEW_END_LINE2,
+ VIEW_END_WORD,
  VIEW_END_DECIDE,
  VIEW_END_CANCEL = 0xffff,
 };
@@ -41,7 +42,8 @@ typedef struct _MAIL_TMP_DATA{
   STRBUF  *name;
   MAIL_ICON icon[MAILDAT_ICONMAX];
   PMS_DATA  msg[MAILDAT_MSGMAX];
-  u8  pms_condition[3];             // 簡易会話入力タイプを指定（0:自由 1:定型文なので文章変更不可 2:入力不可)
+  u8  pms_condition[4];             // 簡易会話入力タイプを指定（0:自由 1:定型文なので文章変更不可 2:入力不可)
+  PMS_WORD  pmsword;
 }MAIL_TMP_DATA;
 
 extern GFL_PROC_RESULT MailViewProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *mywk );

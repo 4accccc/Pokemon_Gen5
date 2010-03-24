@@ -37,9 +37,11 @@
 #include "mail_snd_def.h"
 #include "buflen.h"
 #include "system/wipe.h"
-#include "poke_icon.naix"
-
 #include "pokeicon/pokeicon.h"
+#include "poke_icon.naix"
+#include "msg/msg_pmss_system.h"
+
+
 #include "poke_tool/monsno_def.h"
 
 #include "savedata/mail.h"
@@ -82,6 +84,7 @@ enum{
  WIN_M01,
  WIN_M02,
  WIN_M03,
+ WIN_PMS,
  WIN_NAME,
  WIN_TALK,
  WIN_MAX,
@@ -91,7 +94,7 @@ enum{
  VIEW_SIDE_CANCEL,
 };
 
-#define VIEW_LINE_MAX (5)
+#define VIEW_LINE_MAX (6)
 #define VIEW_BUFLEN_MSG (19*2*2)
 #define VIEW_TALK_FCOL  (PRINTSYS_LSB_Make( 1,2,15))
 #define VIEW_NRM_FCOL   (PRINTSYS_LSB_Make( 1,2, 0))
@@ -122,13 +125,13 @@ struct _MAIL_VIEW_DATA{
   u8  msgIdx;
 
   u8  msg_spd;
-  u8  line; ///<選択ライン
-  u8  side; ///<サイド選択
-  u8  canm_f; ///<アニメフックフラグ
-  u8  colEvy;
-  u8  colDir;
-  u8  nowCol;
-  u8  oldCol;
+  u8  line;     ///< 選択ライン
+  u8  side;     ///< サイド選択
+  u8  canm_f;   ///< アニメフックフラグ
+  u8  colEvy;   ///< フェード度合い
+  u8  colDir;   ///< フェード向き（ 0 or 1 )
+  u8  nowCol;   ///< フェード対象パレット番号
+  u8  oldCol;   ///< 
 
   MAIL_TMP_DATA *dat;
   GFL_MSGDATA*  pMsgData;
@@ -148,8 +151,8 @@ struct _MAIL_VIEW_DATA{
 
   // セルアクター
   GFL_CLUNIT   *clUnit;
-  GFL_CLWK     *clwk[MAILDAT_ICONMAX];
-  u32          clres[4][MAILDAT_ICONMAX];  // セルアクターリソース用インデックス
+  GFL_CLWK     *clwk[MAILDAT_ICONMAX+1];
+  u32          clres[4][MAILDAT_ICONMAX+1];  // セルアクターリソース用インデックス
   
   void*        *TcbWorkArea;
   GFL_TCBSYS   *TcbSys;
@@ -167,6 +170,7 @@ struct _MAIL_VIEW_DATA{
   APP_TASKMENU_ITEMWORK menuitem[2];
 
   PMS_DRAW_WORK *pms_draw_work;
+  PMS_DATA      tmpPms;         // 簡易単語表示用にテンポラリ用のワークを用意
   GFL_CLUNIT    *pmsClunit;
   PRINT_QUE     *pmsPrintque;
 
@@ -201,20 +205,20 @@ static void MailView_BmpWinRelease(MAIL_VIEW_DAT* wk);
 static void MailView_MsgWrite(MAIL_VIEW_DAT* wk);
 static void MailView_MenuMake( MAIL_VIEW_DAT* wk );
 
-static void MailView_PokeIconInit(MAIL_VIEW_DAT* wk);
-static void MailView_PokeIconRelease(MAIL_VIEW_DAT* wk);
+static void MailView_ClactInit(MAIL_VIEW_DAT* wk);
+static void MailView_ClactRelease(MAIL_VIEW_DAT* wk);
 
 static void MailView_PmsInit( MAIL_VIEW_DAT *wk );
 static void MailView_PmsExit( MAIL_VIEW_DAT *wk );
 static void MailView_PalAnmInit( MAIL_VIEW_DAT *wk );
 
 
-//=================================================
+//==============================================================
 // 定型文定義
-//=================================================
+//==============================================================
 
-#define NO_SENETENSE  ( 0xff )  // 文章無し
-#define DENY_INPUT    ( 0xfe )  // 入力禁止
+#define NO_SENTENSE  ( 0xff )  ///< 文章無し
+#define DENY_INPUT    ( 0xfe )  ///< 入力禁止
 
 // メールテンプレートテーブル（0xffを文章無しとする）
 static const u8 templete_tbl[][3]={
@@ -244,7 +248,7 @@ static const u8 templete_tbl[][3]={
   { 
     pmss_peculiar_10,  // ●●してくれて　ありがとう！
     pmss_peculiar_11,  // また●●しよう！　●●
-    DENY_INPUT,        // 
+    NO_SENTENSE,       // DENY_INPUT,        // 入力禁止
   },
 
   // しつもんメール
@@ -270,33 +274,33 @@ static const u8 templete_tbl[][3]={
 
   // ブリッジメール１
   {
-    NO_SENETENSE,
-    NO_SENETENSE,
-    NO_SENETENSE,
+    NO_SENTENSE,
+    NO_SENTENSE,
+    NO_SENTENSE,
   },
   // ブリッジメール２
   {
-    NO_SENETENSE,
-    NO_SENETENSE,
-    NO_SENETENSE,
+    NO_SENTENSE,
+    NO_SENTENSE,
+    NO_SENTENSE,
   },
   // ブリッジメール３
   {
-    NO_SENETENSE,
-    NO_SENETENSE,
-    NO_SENETENSE,
+    NO_SENTENSE,
+    NO_SENTENSE,
+    NO_SENTENSE,
   },
   // ブリッジメール４
   {
-    NO_SENETENSE,
-    NO_SENETENSE,
-    NO_SENETENSE,
+    NO_SENTENSE,
+    NO_SENTENSE,
+    NO_SENTENSE,
   },
   // ブリッジメール５
   {
-    NO_SENETENSE,
-    NO_SENETENSE,
-    NO_SENETENSE,
+    NO_SENTENSE,
+    NO_SENTENSE,
+    NO_SENTENSE,
   },
 
 };
@@ -315,16 +319,17 @@ static void _init_pms_word( MAIL_VIEW_DAT *wk, MAIL_TMP_DATA* tp )
   int i;
   OS_Printf("メールデザインNO=%d\n", tp->design);
   for(i=0;i<MAILDAT_MSGMAX;i++){
-    if(PMSDAT_IsEnabled( &tp->msg[i] )==FALSE && templete_tbl[tp->design][i]!=NO_SENETENSE){
+    if(PMSDAT_IsEnabled( &tp->msg[i] )==FALSE && templete_tbl[tp->design][i]!=NO_SENTENSE){
       PMSDAT_InitAndSetSentence( &tp->msg[i], PMS_TYPE_PECULIAR, templete_tbl[tp->design][i] );
     }
     
     // 入力文章タイプを設定
     switch(templete_tbl[tp->design][i]){
-    case NO_SENETENSE:    // 自由入力
+    case NO_SENTENSE:    // 自由入力
       tp->pms_condition[i] = 0;
       break;
 //    case DENY_INPUT:    //入力禁止
+//      tp->pms_condition[i] = 0;
 //      break;
     default:              //定型文
       tp->pms_condition[i] = 1;
@@ -556,7 +561,7 @@ static int MailViewMain(MAIL_VIEW_DAT* wk)
 
 //----------------------------------------------------------------------------------
 /**
- * @brief   会話文が全文空かどうかチェック
+ * @brief   メールが出せるかチェック（定型文全て埋まっている or 簡易会話が1つでも埋まっている）
  *
  * @param   wk    
  *
@@ -566,13 +571,41 @@ static int MailViewMain(MAIL_VIEW_DAT* wk)
 static BOOL MailView_IsWordNull(MAIL_VIEW_DAT* wk)
 {
   int i = 0;
-
+  int free_pms=1,form_pms=0, free_research=0,form_research=0;
+  
+  // 定型文の数を数える
   for(i = 0;i < MAILDAT_MSGMAX;i++){
-    if(PMSDAT_IsEnabled(&wk->dat->msg[i])){
-      return FALSE;
+    if(templete_tbl[wk->dat->design][i]!=NO_SENTENSE){
+      form_pms++;
     }
   }
-  return TRUE;
+  // 定型文が３つの時は自由会話は０個でいい
+  if(form_pms==3){
+    free_pms = 0;
+  }
+  
+  OS_TPrintf("free_check=%d, form_check=%d\n", free_pms, form_pms);
+  
+  // 簡易会話の入力状況を取得
+  for(i = 0;i < MAILDAT_MSGMAX;i++){
+    if(templete_tbl[wk->dat->design][i]!=NO_SENTENSE){
+      if(PMSDAT_IsComplete(&wk->dat->msg[i], HEAPID_MAILVIEW) ){
+        form_research++;
+      }
+    }else{
+      if(PMSDAT_IsEnabled( &wk->dat->msg[i] )){
+        free_research++;
+      }
+    }
+  }
+  
+  OS_TPrintf("free_research=%d, form_research=%d\n", free_research, form_research);
+  // 定型・自由ともに条件より下回っているときはメールはだせない
+  if(free_research<free_pms || form_research < form_pms){
+    return TRUE;
+  }
+  
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------------
@@ -696,7 +729,7 @@ static int input_key_create(MAIL_VIEW_DAT* wk)
   
   if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE)){
     if(wk->line == VIEW_END_DECIDE){
-      //会話文が空かどうかチェック
+      //メールを出せるかチェック
       if(MailView_IsWordNull(wk)){
         PMSND_PlaySE(SND_MAIL_CANCEL);
         wk->mode = KEYIN_NOMSG;
@@ -708,7 +741,7 @@ static int input_key_create(MAIL_VIEW_DAT* wk)
         wk->dat->flags = 0;
         return TRUE;
       }
-    }else if(wk->line == 4){
+    }else if(wk->line == 5){
       PMSND_PlaySE(SND_MAIL_CANCEL);
       wk->mode = KEYIN_CANCEL;
       return FALSE;
@@ -732,9 +765,11 @@ static int input_key_create(MAIL_VIEW_DAT* wk)
     se_play = 1;
   }else if(GFL_UI_KEY_GetTrg() & (PAD_KEY_DOWN)){
     wk->line = (wk->line + 1)%VIEW_LINE_MAX;
+    OS_Printf("line=%d\n", wk->line);
     se_play = 1;
   }else if(GFL_UI_KEY_GetTrg() & (PAD_KEY_UP)){
     wk->line = (wk->line+VIEW_LINE_MAX-1)%VIEW_LINE_MAX;
+    OS_Printf("line=%d\n", wk->line);
     se_play = 1;
   }else{
     return FALSE;
@@ -746,7 +781,7 @@ static int input_key_create(MAIL_VIEW_DAT* wk)
   //選択ライン描画変更
   PMSND_PlaySE(SND_MAIL_SELECT);
 
-  if(wk->line<3)
+  if(wk->line<4)
   {
     APP_TASKMENU_WIN_SetActive( wk->menuwork[0], FALSE );
     APP_TASKMENU_WIN_SetActive( wk->menuwork[1], FALSE );
@@ -756,7 +791,7 @@ static int input_key_create(MAIL_VIEW_DAT* wk)
     APP_TASKMENU_WIN_SetActive( wk->menuwork[0], TRUE );
     APP_TASKMENU_WIN_SetActive( wk->menuwork[1], FALSE );
   }
-  else if(wk->line==4)
+  else if(wk->line==5)
   {
     APP_TASKMENU_WIN_SetActive( wk->menuwork[0], FALSE );
     APP_TASKMENU_WIN_SetActive( wk->menuwork[1], TRUE );
@@ -783,11 +818,12 @@ static int input_touch_create(MAIL_VIEW_DAT* wk)
   u16 pat;
   static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
 //    {0,191,0,255}, ty,by,lx,rx
-    {TPMSG_DPY01,TPMSG_DPY01+TPMSG_DSY,TPMSG_DPX,TPMSG_DPX+TPMSG_DSX},
-    {TPMSG_DPY02,TPMSG_DPY02+TPMSG_DSY,TPMSG_DPX,TPMSG_DPX+TPMSG_DSX},
-    {TPMSG_DPY03,TPMSG_DPY03+TPMSG_DSY,TPMSG_DPX,TPMSG_DPX+TPMSG_DSX},
-    {TPSW_CANCEL_Y,TPSW_CANCEL_Y+TPSW_CANCEL_H,TPSW_CANCEL_X,TPSW_CANCEL_X+TPSW_CANCEL_W},
-    {TPSW_DECIDE_Y,TPSW_DECIDE_Y+TPSW_DECIDE_H,TPSW_DECIDE_X,TPSW_DECIDE_X+TPSW_DECIDE_W},
+    {  TPMSG_DPY01,      TPMSG_DPY01+TPMSG_DSY,    TPMSG_DPX,        TPMSG_DPX+TPMSG_DSX},  // 簡易会話１
+    {  TPMSG_DPY02,      TPMSG_DPY02+TPMSG_DSY,    TPMSG_DPX,        TPMSG_DPX+TPMSG_DSX},  // 簡易会話２
+    {  TPMSG_DPY03,      TPMSG_DPY03+TPMSG_DSY,    TPMSG_DPX,        TPMSG_DPX+TPMSG_DSX},  // 簡易会話３
+    {  TPMSG_PMS_Y,    TPMSG_PMS_Y+TPMSG_PMS_H,  TPMSG_PMS_X,    TPMSG_PMS_X+TPMSG_PMS_W},  // 簡易会話ワード
+    {TPSW_CANCEL_Y,TPSW_CANCEL_Y+TPSW_CANCEL_H,TPSW_CANCEL_X,TPSW_CANCEL_X+TPSW_CANCEL_W},  // やめる
+    {TPSW_DECIDE_Y,TPSW_DECIDE_Y+TPSW_DECIDE_H,TPSW_DECIDE_X,TPSW_DECIDE_X+TPSW_DECIDE_W},  // けってい
     {GFL_UI_TP_HIT_END,0,0,0}
   };
   ret = GFL_UI_TP_HitTrg( Btn_TpRect );
@@ -799,12 +835,12 @@ static int input_touch_create(MAIL_VIEW_DAT* wk)
 //    return FALSE;
 //  }
 
-  if(ret == 3){ //キャンセル
+  if(ret == 4){ //キャンセル
     PMSND_PlaySE(SND_MAIL_CANCEL);
     wk->mode = KEYIN_CANCEL;
     return FALSE;
   }
-  if(ret < 3){  //文字入力
+  if(ret < 4){  //文字入力
     wk->dat->val = wk->dat->cntNo = ret;
     wk->dat->flags = wk->side;
     PMSND_PlaySE(SND_MAIL_DECIDE);
@@ -812,7 +848,7 @@ static int input_touch_create(MAIL_VIEW_DAT* wk)
   }
   //決定のとき
 
-  //会話文が空かどうかチェック
+  //メールを出せる状態かチェック
   if(MailView_IsWordNull(wk)){
     PMSND_PlaySE(SND_MAIL_CANCEL);
     wk->mode = KEYIN_NOMSG;
@@ -905,28 +941,27 @@ static int MailView_KeyInMsg(MAIL_VIEW_DAT* wk)
   case 0:
     //空はダメメッセージ描画開始
     print_talk_msg( wk, msg_mail_nozero );
+    wk->sub_seq = 1;
     break;
   case 1:
-    //キー待ち
-    if((GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL))){
-      ret = TRUE;
-      wk->key_mode = APP_KTST_KEY;
-    }else if(GFL_UI_TP_GetTrg()){
-      ret = TRUE;
-      wk->key_mode = APP_KTST_TOUCH;
-      palanm_reset(wk);
+    //描画終了待ち
+    if(PRINTSYS_PrintStreamGetState( wk->printStream )==PRINTSTREAM_STATE_DONE)
+    {
+      if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
+        PRINTSYS_PrintStreamDelete( wk->printStream );
+        wk->sub_seq = 2;
+      }
     }
-    if(!ret){
-      return FALSE;
-    }
+    break;
+
+  case 2:
     BmpWinFrame_Clear( wk->win[WIN_TALK],WINDOW_TRANS_OFF);
     GFL_BMPWIN_ClearTransWindow( wk->win[WIN_TALK]);
-
+    palanm_reset(wk);
     wk->sub_seq = 0;
     wk->mode = wk->inMode;  //モードを元に戻す 
-    return FALSE;
+    break;
   }
-  wk->sub_seq++;
   return FALSE;
 }
 
@@ -1128,13 +1163,13 @@ static void MailView_PltAnime( GFL_TCB *tcb, void* work )
     palanm_reset(wk);
     wk->oldCol = wk->nowCol;
   }
-  SoftFadePfd(wk->palAnm,FADE_MAIN_BG,PALANM_STARTPAL+wk->nowCol,1,wk->colEvy,0x7FFF);
+  SoftFadePfd(wk->palAnm,FADE_MAIN_BG,PALANM_STARTPAL+wk->nowCol,1,wk->colEvy/2,0x7FFF);
   if(wk->colDir){
     if(wk->colEvy-- == 1){
       wk->colDir ^= 1;
     }
   }else{
-    if(wk->colEvy++ == 12){
+    if(wk->colEvy++ == 24){
       wk->colDir ^= 1;
     }
   }
@@ -1166,7 +1201,7 @@ static int MailViewResInit(MAIL_VIEW_DAT* wk)
     MailView_BmpWinInit(wk);
     break;
   case 3:
-    MailView_PokeIconInit(wk);
+    MailView_ClactInit(wk);
     wk->menures = APP_TASKMENU_RES_Create( GFL_BG_FRAME0_M, 8, wk->font, wk->printQue, wk->heapID );
     wk->sub_seq = 0;
     MailView_PmsInit(wk);
@@ -1193,7 +1228,7 @@ static void MailView_PalAnmInit( MAIL_VIEW_DAT *wk )
 {
   //初期パレットを塗りつぶす
   SoftFadePfd(wk->palAnm,FADE_MAIN_BG, 0,16*MAILVIEW_PALMAX,16,0x0000);
-  SoftFadePfd(wk->palAnm,FADE_MAIN_OBJ,0,16*3,16,0x0000);
+//  SoftFadePfd(wk->palAnm,FADE_MAIN_OBJ,0,16*3,16,0x0000);
   PaletteTrans_AutoSet(wk->palAnm,TRUE);
   PaletteFadeTrans( wk->palAnm );
 
@@ -1219,7 +1254,7 @@ static void MailView_PalAnmInit( MAIL_VIEW_DAT *wk )
 static int MailViewResRelease(MAIL_VIEW_DAT* wk)
 {
   MailView_PmsExit(wk);
-  MailView_PokeIconRelease(wk);
+  MailView_ClactRelease(wk);
   if(wk->pMsg != NULL){
     GFL_MSG_Delete( wk->pMsgData );
   }
@@ -1231,7 +1266,8 @@ static int MailViewResRelease(MAIL_VIEW_DAT* wk)
   return TRUE;
 }
 
-#define PMS_WORD_CLACT_MAX    ( 6 )
+#define PMS_DRAW_MAIL_MAX     ( 4 )
+#define PMS_WORD_CLACT_MAX    ( PMS_DRAW_MAIL_MAX*2 )
 
 //----------------------------------------------------------------------------------
 /**
@@ -1248,7 +1284,8 @@ static void MailView_PmsInit( MAIL_VIEW_DAT *wk )
 
   // 簡易会話描画システム初期化
   wk->pms_draw_work = PMS_DRAW_Init( wk->pmsClunit, CLSYS_DRAW_MAIN, 
-                                     wk->pmsPrintque, wk->font, 0, 3, wk->heapID );
+                                     wk->pmsPrintque, wk->font, 0, PMS_DRAW_MAIL_MAX, 
+                                     wk->heapID );
   // 描画背景色番号変更
   PMS_DRAW_SetNullColorPallet( wk->pms_draw_work, 0 );
 }
@@ -1459,16 +1496,14 @@ static void MailView_2DGraInit(MAIL_VIEW_DAT* wk)
   // MAIN BGパレット6列確保
   PaletteFadeWorkAllocSet( wk->palAnm, FADE_MAIN_BG,  FADE_PAL_ONE_SIZE*MAILVIEW_PALMAX, wk->heapID);
   // MAIN OBJパレット3列確保
-  PaletteFadeWorkAllocSet( wk->palAnm, FADE_MAIN_OBJ, FADE_PAL_ONE_SIZE*3,wk->heapID);
-  // MAIN OBJパレット3列確保
+//  PaletteFadeWorkAllocSet( wk->palAnm, FADE_MAIN_OBJ, FADE_PAL_ONE_SIZE*3,wk->heapID);
+  // MAIN BGパレット読み込み
   PaletteWorkSet_ArcHandle( wk->palAnm, handle, plttID, wk->heapID, FADE_MAIN_BG,FADE_PAL_ONE_SIZE*3,0 );
 
 //  if(wk->mode == MAIL_MODE_CREATE){
 //    //ウィンドウフォントパレットを入れ替え(3列目のデータを1列目にコピー）
 //    PaletteWorkCopy( wk->palAnm, FADE_MAIN_BG, 16*3, FADE_MAIN_BG, 16, 32 );
 //  }
-  // ポケモンアイコン用パレット転送( 0列目から3列転送
-  PaletteWorkSet_Arc(wk->palAnm,ARCID_POKEICON,0,wk->heapID, FADE_MAIN_OBJ, FADE_PAL_ONE_SIZE*3,0);
 
   //フォント＆ウィンドウ用パレットセット
   // 3列目にシステムウインドウパレット転送
@@ -1527,7 +1562,7 @@ static void MailView_2DGraRelease(MAIL_VIEW_DAT* wk)
 {
 
   // パレットフェード開放
-  PaletteFadeWorkAllocFree( wk->palAnm, FADE_MAIN_OBJ );
+//  PaletteFadeWorkAllocFree( wk->palAnm, FADE_MAIN_OBJ );
   PaletteFadeWorkAllocFree( wk->palAnm, FADE_MAIN_BG );
 
   //パレットフェードシステム開放
@@ -1574,10 +1609,15 @@ static void MailView_BmpWinInit(MAIL_VIEW_DAT* wk)
                                        BMPL_MSG_SX, BMPL_MSG_SY, BMPL_MSG_PAL,
                                        GFL_BMP_CHRAREA_GET_F );
 
+  // １言簡易会話ワード
+  wk->win[WIN_PMS] = GFL_BMPWIN_Create( BMPL_MSG_FRM, BMPL_PMS_PX, BMPL_PMS_PY, 
+                                       BMPL_PMS_SX, BMPL_PMS_SY, BMPL_MSG_PAL,
+                                       GFL_BMP_CHRAREA_GET_F );
+
   // メール持ち主
-  wk->win[WIN_NAME] = GFL_BMPWIN_Create( BMPL_MSG_FRM, BMPL_YN_PX, BMPL_YN02_PY,
-                                        BMPL_YN_SX, BMPL_YN_SY, BMPL_YN_PAL,
-                                        GFL_BMP_CHRAREA_GET_F );
+  wk->win[WIN_NAME] = GFL_BMPWIN_Create( BMPL_MSG_FRM, BMPL_NAME_PX, BMPL_NAME_PY,
+                                         BMPL_NAME_SX, BMPL_NAME_SY, BMPL_YN_PAL,
+                                         GFL_BMP_CHRAREA_GET_F );
 
   // 会話ウインドウ
   wk->win[WIN_TALK] = GFL_BMPWIN_Create( BMPL_TALK_FRM, BMPL_TALK_PX, BMPL_TALK_PY, 
@@ -1681,6 +1721,14 @@ static void MailView_MsgWrite(MAIL_VIEW_DAT* wk)
     PMS_DRAW_Print( wk->pms_draw_work, wk->win[WIN_M01+i], &wk->dat->msg[i], i );
 
   }
+  
+  // 簡易単語を描画
+  if(wk->dat->pmsword!=0){
+    wk->tmpPms.sentence_type = PMS_TYPE_SYSTEM;
+    wk->tmpPms.sentence_id   = pmss_system_01;
+    wk->tmpPms.word[0]       = wk->dat->pmsword;
+    PMS_DRAW_Print( wk->pms_draw_work, wk->win[WIN_PMS], &wk->tmpPms, 3 );
+  }
 
   //メール描画
   if(wk->mode == MAIL_MODE_VIEW){ //メール閲覧
@@ -1691,19 +1739,6 @@ static void MailView_MsgWrite(MAIL_VIEW_DAT* wk)
 }
 
 
-enum{
-  OBJ_POKEICON_PAL=0,
-};
-enum{
-  OBJ_POKEICON0_CGR=0,
-  OBJ_POKEICON1_CGR,
-  OBJ_POKEICON2_CGR,
-  OBJ_PMSOBJ_CGR,
-  OBJ_POKEICON_MAX,
-};
-enum{
-  OBJ_POKEICON_CEL=0,
-};
 
 enum{
   RES_CGR=0,
@@ -1718,7 +1753,7 @@ enum{
  * @param   wk    
  */
 //----------------------------------------------------------------------------------
-static void MailView_PokeIconInit(MAIL_VIEW_DAT* wk)
+static void MailView_ClactInit(MAIL_VIEW_DAT* wk)
 {
   int i = 0;
   ARCHANDLE *i_handle;
@@ -1728,21 +1763,9 @@ static void MailView_PokeIconInit(MAIL_VIEW_DAT* wk)
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE, wk->heapID); //通信アイコン
   
   {
-    static const GFL_CLSYS_INIT clsys_init  =
-    {
-      0, 0,   //メインサーフェースの左上X,Y座標
-      0, 512, //サブサーフェースの左上X,Y座標
-      4, 40,  //メインOAM管理開始～終了 （通信アイコン用に開始は4以上に、またすべて4の倍数いしてください）
-      4, 40,  //差bOAM管理開始～終了  （通信アイコン用に開始は4以上に、またすべて4の倍数いしてください）
-      0,      //セルVram転送管理数
-      OBJ_POKEICON_MAX, OBJ_POKEICON_MAX, OBJ_POKEICON_MAX, 32,
-      16, 16,       //メイン、サブのCGRVRAM管理領域開始オフセット（通信アイコン用に16以上にしてください）
-    };
-  
-  
     //システム作成
-    GFL_CLACT_SYS_Create( &clsys_init, &vramSetTable, wk->heapID );
-    wk->clUnit = GFL_CLACT_UNIT_Create( MAILDAT_ICONMAX, 0, wk->heapID );
+    GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &vramSetTable, wk->heapID );
+    wk->clUnit = GFL_CLACT_UNIT_Create( MAILDAT_ICONMAX+1, 0, wk->heapID );
     GFL_CLACT_UNIT_SetDefaultRend( wk->clUnit );
   
     GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
@@ -1751,61 +1774,8 @@ static void MailView_PokeIconInit(MAIL_VIEW_DAT* wk)
 
   //----------リソース追加-------------
 
-  // ポケモンアイコン用アーカイブハンドルオープン
-  i_handle = GFL_ARC_OpenDataHandle( ARCID_POKEICON, wk->heapID );
-
-
-  // Pltt
-  wk->clres[RES_PAL][OBJ_POKEICON_PAL] = GFL_CLGRP_PLTT_RegisterComp(
-                                i_handle, POKEICON_GetPalArcIndex(),
-                                CLSYS_DRAW_MAIN, 0, wk->heapID );
-  // CellAnm
-  wk->clres[RES_CELANM][OBJ_POKEICON_CEL] = GFL_CLGRP_CELLANIM_Register(
-                                      i_handle, POKEICON_GetCellArcIndex(),
-                                      POKEICON_GetAnmArcIndex(), wk->heapID );
-  // Char
-  for(i = 0;i < MAILDAT_ICONMAX;i++){
-    if(wk->dat->icon[i].dat == MAIL_ICON_NULL)
-    { // アイコン無い場合は登録しない
-      break;
-    }
-    wk->clres[RES_CGR][OBJ_POKEICON0_CGR+i] = GFL_CLGRP_CGR_Register( i_handle,
-                                    wk->dat->icon[i].cgxID, 0,
-                                    CLSYS_DRAW_MAIN, wk->heapID );
-
-  }
-  GFL_ARC_CloseDataHandle( i_handle );
-
   // ----------セルアクター登録-------------
 
-  for(i=0;i<MAILDAT_ICONMAX;i++){
-    GFL_CLWK_DATA dat;
-    if(wk->dat->icon[i].dat == MAIL_ICON_NULL){ // アイコン無い場合は登録しない
-      break;
-    }
-    dat.pos_x   = ICONVIEW_PX-(ICONVIEW_WIDTH*i); ///< [ X ] 座標
-    dat.pos_y   = ICONVIEW_PY;                    ///< [ Y ] 座標
-    dat.anmseq  = 0;                  ///< アニメ番号
-    dat.softpri = 0;
-    dat.bgpri   = MAILVIEW_ICON_PRI;
-
-    wk->clwk[i] = GFL_CLACT_WK_Create( wk->clUnit, wk->clres[RES_CGR][OBJ_POKEICON0_CGR+i], 
-                                               wk->clres[RES_PAL][OBJ_POKEICON_PAL],
-                                               wk->clres[RES_CELANM][OBJ_POKEICON_CEL], &dat, 
-                                               CLSYS_DEFREND_MAIN, wk->heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[i], FALSE);
-
-
-    // メール作成モードではポケモンアイコンを表示させない
-    // (CLACT初期化共通化のため設定はしている)
-    if( wk->mode == MAIL_MODE_VIEW && wk->dat->icon[i].cgxID!=NARC_poke_icon_poke_icon_000_m_NCGR){
-      GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], TRUE );
-    }else{
-      GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], FALSE );
-    }
-    
-    OS_Printf("icon = %d\n", wk->dat->icon[i].cgxID);
-  }
 
 
 }
@@ -1817,20 +1787,8 @@ static void MailView_PokeIconInit(MAIL_VIEW_DAT* wk)
  * @param   wk    
  */
 //----------------------------------------------------------------------------------
-static void MailView_PokeIconRelease(MAIL_VIEW_DAT* wk)
+static void MailView_ClactRelease(MAIL_VIEW_DAT* wk)
 {
-  int i;
-
-  // 閲覧モードのみ表示しているので
-  for(i=0; i<MAILDAT_ICONMAX; i++){
-      if(wk->clwk[i] != NULL){
-        GFL_CLACT_WK_Remove( wk->clwk[i] );
-        GFL_CLGRP_CGR_Release( wk->clres[RES_CGR][OBJ_POKEICON0_CGR+i] );
-      }
-  }
-  GFL_CLGRP_CELLANIM_Release( wk->clres[RES_PAL][OBJ_POKEICON_PAL]);
-  GFL_CLGRP_PLTT_Release( wk->clres[RES_CELANM][OBJ_POKEICON_CEL] );
- 
   //システム破棄
   GFL_CLACT_UNIT_Delete( wk->clUnit );
   GFL_CLACT_SYS_Delete();
