@@ -37,6 +37,7 @@ extern "C"{
 extern void PALACE_MAP_GMK_Setup(FIELDMAP_WORK *fieldWork);
 extern void PALACE_MAP_GMK_End(FIELDMAP_WORK *fieldWork);
 extern void PALACE_MAP_GMK_Move(FIELDMAP_WORK *fieldWork);
+extern void PALACE_MAP_GMK_ZoneChange(FIELDMAP_WORK *fieldWork);
 
 
 #ifdef _cplusplus

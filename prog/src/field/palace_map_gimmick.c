@@ -139,6 +139,8 @@ typedef struct {
   BOOL on;
 
   GFL_G3D_OBJSTATUS* objstatus;
+
+  u32 last_zoneid;
   
 } PALACE_MAP_GMK_WORK;
 
@@ -149,6 +151,7 @@ typedef struct {
 //-----------------------------------------------------------------------------
 static BOOL IsHit( PALACE_MAP_GMK_WORK* wk, const FIELD_PLAYER* player );
 
+static void WARP_OBJ_SetUp( PALACE_MAP_GMK_WORK* wk, FIELDMAP_WORK* fieldWork );
 
 
 
@@ -195,54 +198,8 @@ void PALACE_MAP_GMK_Setup(FIELDMAP_WORK *fieldWork)
 
 
   // ワープ
-  {
-    GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( fieldWork );
-    GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
-    EVENTDATA_SYSTEM* evdata = GAMEDATA_GetEventData( gdata );
-    int connect_num = EVENTDATA_GetConnectEventNum( evdata );
-    int i;
-    const CONNECT_DATA * cp_connect;
-    EXIT_TYPE exit_type;
-    VecFx32 pos;
-    int warp_num = 0;
-    GFL_G3D_OBJSTATUS* p_trans;
-    
-    for( i=0; i<connect_num; i++ ){
-      
-      cp_connect = EVENTDATA_GetConnectByID( evdata, i );
-      if( cp_connect ){
-
-        //　進入用で入り口の場所にワープを表示
-        exit_type = CONNECTDATA_GetExitType( cp_connect );
-        if( exit_type == EXIT_TYPE_INTRUDE ){
-          // 位置を生成
-          EVENTDATA_GetConnectCenterPos( cp_connect, &pos );
-
-          GF_ASSERT( warp_num < MAP_OBJ_WARP_MAX );
-
-          // ギミックを表示ON
-          {
-            // 表示ON
-            FLD_EXP_OBJ_SetVanish( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_WARP00+i, FALSE );
-
-            // OBJSTATUSに座標を設定
-            p_trans = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_WARP00+i );
-            p_trans->trans = pos;
-
-            // アニメON
-            {
-              EXP_OBJ_ANM_CNT_PTR anime = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, 
-                  EXPOBJ_UNIT_IDX, MAP_OBJ_WARP00+i, MAP_ANM_CUBE_ANIME );
-              FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_WARP00+i, MAP_ANM_WARP_ANIME, TRUE );
-            }
-          }
-
-        }
-      }
-    }
-  
-    
-  }
+  WARP_OBJ_SetUp( wk, fieldWork );
+  wk->last_zoneid = FIELDMAP_GetZoneID( fieldWork );
 }
 
 //----------------------------------------------------------------------------
@@ -282,6 +239,15 @@ void PALACE_MAP_GMK_Move(FIELDMAP_WORK *fieldWork)
 
   // ワーク取得
   wk = GMK_TMP_WK_GetWork( fieldWork, GIMMICK_WORK_ASSIGN_ID );
+
+  // ワープの再配置
+  {
+    u16 now_zoneid = FIELDMAP_GetZoneID( fieldWork );
+    if( wk->last_zoneid != now_zoneid ){
+      WARP_OBJ_SetUp( wk, fieldWork );
+      wk->last_zoneid = now_zoneid;
+    }
+  }
 
   // アニメーションコントローラー取得
   anime = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, 
@@ -328,6 +294,24 @@ void PALACE_MAP_GMK_Move(FIELDMAP_WORK *fieldWork)
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゾーンチェンジ　コールバック
+ *
+ *	@param	fieldWork フィールドワーク
+ */
+//-----------------------------------------------------------------------------
+void PALACE_MAP_GMK_ZoneChange(FIELDMAP_WORK *fieldWork)
+{
+  PALACE_MAP_GMK_WORK* wk;  //
+
+  // ワーク取得
+  wk = GMK_TMP_WK_GetWork( fieldWork, GIMMICK_WORK_ASSIGN_ID );
+
+  // ワープ
+  WARP_OBJ_SetUp( wk, fieldWork );
+}
+
 
 
 
@@ -362,3 +346,70 @@ static BOOL IsHit( PALACE_MAP_GMK_WORK* wk, const FIELD_PLAYER* player )
   }
   return FALSE;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ワープオブジェを設定
+ *
+ *	@param	wk
+ *	@param	fieldWork 
+ */
+//-----------------------------------------------------------------------------
+static void WARP_OBJ_SetUp( PALACE_MAP_GMK_WORK* wk, FIELDMAP_WORK* fieldWork )
+{
+  GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( fieldWork );
+  GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+  EVENTDATA_SYSTEM* evdata = GAMEDATA_GetEventData( gdata );
+  int connect_num = EVENTDATA_GetConnectEventNum( evdata );
+  int i;
+  const CONNECT_DATA * cp_connect;
+  EXIT_TYPE exit_type;
+  VecFx32 pos;
+  int warp_num = 0;
+  GFL_G3D_OBJSTATUS* p_trans;
+  HEAPID                heapID = FIELDMAP_GetHeapID( fieldWork );
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldWork );
+
+  // 全オブジェの表示をOFF
+  for( i=0; i<MAP_OBJ_WARP_MAX; i++ ){
+    // 表示OFF
+    FLD_EXP_OBJ_SetVanish( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_WARP00+i, TRUE );
+  }
+  
+  for( i=0; i<connect_num; i++ ){
+    
+    cp_connect = EVENTDATA_GetConnectByID( evdata, i );
+    if( cp_connect ){
+
+      //　進入用で入り口の場所にワープを表示
+      exit_type = CONNECTDATA_GetExitType( cp_connect );
+      if( exit_type == EXIT_TYPE_INTRUDE ){
+        // 位置を生成
+        EVENTDATA_GetConnectCenterPos( cp_connect, &pos );
+
+        GF_ASSERT( warp_num < MAP_OBJ_WARP_MAX );
+
+        // ギミックを表示ON
+        {
+          // 表示ON
+          FLD_EXP_OBJ_SetVanish( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_WARP00+i, FALSE );
+
+          // OBJSTATUSに座標を設定
+          p_trans = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_WARP00+i );
+          p_trans->trans = pos;
+
+          // アニメON
+          {
+            EXP_OBJ_ANM_CNT_PTR anime = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, 
+                EXPOBJ_UNIT_IDX, MAP_OBJ_WARP00+i, MAP_ANM_CUBE_ANIME );
+            FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_WARP00+i, MAP_ANM_WARP_ANIME, TRUE );
+          }
+        }
+
+      }
+    }
+  }
+}
+
+
