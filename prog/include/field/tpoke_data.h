@@ -23,6 +23,9 @@ extern "C"{
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
+enum {
+  TPOKE_DATA_INDEX_NG = 0xffff, ///<見つからない場合
+};
 
 //-----------------------------------------------------------------------------
 /**
@@ -49,6 +52,8 @@ extern u16 TPOKE_DATA_GetObjCode( const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, 
 // 多きさ取得
 extern BOOL TPOKE_DATA_IsSizeBig( const GAMEDATA* cp_gdata, const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 formno );
 extern BOOL TPOKE_DATA_IsSizeNormal( const GAMEDATA* cp_gdata, const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 formno );
+// インデックス取得（見つからない場合、TPOKE_DATA_INDEX_NGを返す）
+extern int TPOKE_DATA_GetIndex( const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 formno );
 
 
 #ifdef _cplusplus

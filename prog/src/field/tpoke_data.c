@@ -195,16 +195,6 @@ BOOL TPOKE_DATA_IsSizeNormal( const GAMEDATA* cp_gdata, const TPOKE_DATA* cp_wk,
   return FALSE;
 }
 
-
-
-
-
-//-----------------------------------------------------------------------------
-/**
- *      private関数
- */
-//-----------------------------------------------------------------------------
-
 //----------------------------------------------------------------------------
 /**
  *	@brief  データインデックスを取得
@@ -217,7 +207,7 @@ BOOL TPOKE_DATA_IsSizeNormal( const GAMEDATA* cp_gdata, const TPOKE_DATA* cp_wk,
  *	@return データインデックス
  */
 //-----------------------------------------------------------------------------
-static int TPokeData_GetIndex( const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 formno )
+int TPOKE_DATA_GetIndex( const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 formno )
 {
   int i;
 
@@ -244,10 +234,36 @@ static int TPokeData_GetIndex( const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16
   }
 
   // みつからない・・・
-  GF_ASSERT( 0 );
-  return 0; // フリーズ回避
+  return TPOKE_DATA_INDEX_NG;
 }
 
+
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *      private関数
+ */
+//-----------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------
+/**
+ * TPOKE_DATA_GetIndexのラッパー関数
+ *
+ * ※製品版において、インデックスが見つからない場合に0を返してエラーを回避する
+ */
+//-----------------------------------------------------------------------------
+static int TPokeData_GetIndex( const TPOKE_DATA* cp_wk, u16 monsno, u16 sex, u16 formno )
+{
+  int index = TPOKE_DATA_GetIndex( cp_wk, monsno, sex, formno );
+  if (index < 0 )
+  {
+    GF_ASSERT( 0 );
+    return 0; // フリーズ回避
+  }
+  return index;
+}
 
 
 
