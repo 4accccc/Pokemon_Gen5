@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-04T12:53:50"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-03-24T21:57:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -386,13 +386,9 @@
 
 	<row id="msg_pc_window_05" back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,">
 		<comment>■選択肢ウインドウ
-・殿堂入り
-・ゲームクリアすると表示される
-・データが
-　正常なら殿堂入り画面表示後にmsg_pc_on_02
-　異常ならmsg_pc_on_04</comment>
-		<language name="JPN" width="256">でんどういり</language>
-		<language name="JPN_KANJI" width="256">殿堂入り</language>
+・ゲームクリアすると表示される</comment>
+		<language name="JPN" width="256">きろくをみる</language>
+		<language name="JPN_KANJI" width="256">きろくをみる</language>
 	</row>
 
 	<row id="msg_pc_window_06" back-color="#80ffff,,,#80ffff,,,,,,,,,,,,,,">
@@ -569,6 +565,58 @@
 		<language name="JPN" width="256">じぶんのパソコン　への
 つうしんを　せつだん　します</language>
 		<language name="JPN_KANJI" width="256">じぶんのパソコン　への
+通信を　切断します</language>
+	</row>
+
+	<row id="msg_pc_kiroku_window_01" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>■選択肢ウインドウ
+・msg_pc_kiroku_01表示</comment>
+		<language name="JPN" width="256">はじめてのクリア</language>
+		<language name="JPN_KANJI" width="256">初めてのクリア</language>
+	</row>
+
+	<row id="msg_pc_kiroku_window_02" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>■選択肢ウインドウ
+・殿堂入りデータがあると表示される
+　msg_pc_kiroku_02表示
+・データが
+　正常なら殿堂入り画面へ
+　異常ならmsg_pc_on_04</comment>
+		<language name="JPN" width="256">でんどういり</language>
+		<language name="JPN_KANJI" width="256">殿堂入り</language>
+	</row>
+
+	<row id="msg_pc_kiroku_window_03" back-color="#ff8080,,,,,,,,,,,,,,,,,">
+		<comment>■選択肢ウインドウ
+・msg_pc_kiroku_03表示</comment>
+		<language name="JPN" width="256">せつぞくを　きる</language>
+		<language name="JPN_KANJI" width="256">接続を　きる</language>
+	</row>
+
+	<row id="msg_pc_kiroku_01">
+		<comment>■「はじめてのクリア」にカーソルがあっているとき
+・決定すると、初めての記録画面の処理へ</comment>
+		<language name="JPN" width="256">はじめて　クリア　したときの
+メンバーを　みることが　できます</language>
+		<language name="JPN_KANJI" width="256">初めて　クリア　したときの
+メンバーを　みることが　できます</language>
+	</row>
+
+	<row id="msg_pc_kiroku_02">
+		<comment>■「殿堂入り」にカーソルがあっているとき
+・決定すると、殿堂入り画面の処理へ</comment>
+		<language name="JPN" width="256">でんどういり　したときの
+メンバーを　みることが　できます</language>
+		<language name="JPN_KANJI" width="256">殿堂入り　したときの
+メンバーを　みることが　できます</language>
+	</row>
+
+	<row id="msg_pc_kiroku_03">
+		<comment>■「せつぞくを　きる」にカーソルがあっているとき
+・決定するとmsg_pc_on_02</comment>
+		<language name="JPN" width="256">きろくシステム　への
+つうしんを　せつだん　します</language>
+		<language name="JPN_KANJI" width="256">記録システム　への
 通信を　切断します</language>
 	</row>
 
