@@ -4432,12 +4432,15 @@ static void Bspstore_KenteiData( BTL_MAIN_MODULE* wk )
       aliveCnt = BTL_PARTY_GetAliveMemberCount( party );
       sp->WinPokeNum = (memberCnt - aliveCnt);
 
-      party = BTL_POKECON_GetPartyData( &wk->pokeconForServer, BTL_CLIENT_ENEMY2 );
-      if( party )
+      if( BTL_MAIN_IsExistClient(wk, BTL_CLIENT_ENEMY2) )
       {
-        memberCnt = BTL_PARTY_GetMemberCount( party );
-        aliveCnt = BTL_PARTY_GetAliveMemberCount( party );
-        sp->WinPokeNum += (memberCnt - aliveCnt);
+        party = BTL_POKECON_GetPartyData( &wk->pokeconForServer, BTL_CLIENT_ENEMY2 );
+        if( party )
+        {
+          memberCnt = BTL_PARTY_GetMemberCount( party );
+          aliveCnt = BTL_PARTY_GetAliveMemberCount( party );
+          sp->WinPokeNum += (memberCnt - aliveCnt);
+        }
       }
     }
   }
