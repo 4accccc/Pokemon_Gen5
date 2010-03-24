@@ -313,7 +313,7 @@ static u16 getSymbolMapZoneID( const u8 * map, u8 now_lsid )
   BOOL down = hasDown( map, idx );
 
   if ( now_lsid == SYMMAP_TOP_ID ) return ZONE_ID_PALACE03;
-  if ( now_lsid == SYMMAP_ENT_ID ) return ZONE_ID_PALACE07;
+  if ( now_lsid == SYMMAP_ENT_ID ) return ZONE_ID_PALACE02;
 
   if ( left && right )
   { //ç∂âEÇ†ÇÈéûÇÕè„â∫Ç‡Ç†ÇÈÅI
