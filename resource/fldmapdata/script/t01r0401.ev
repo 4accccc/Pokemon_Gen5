@@ -95,7 +95,7 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	_BALLOONWIN_OBJMSG( msg_t01r0401_black_03,T01R0401_RIVAL_01 )  //ライバル
 	_BALLOONWIN_CLOSE()
 
-	//サポート：ライバルを見る【仮】？マークを出す予定
+	//サポート：ライバルを見る
 	_OBJ_ANIME( T01R0401_SUPPORT_01, anm_zukan_support_look_01 )
 	//ずかん？
 	_BALLOONWIN_OBJMSG( msg_t01r0401_white_02,T01R0401_SUPPORT_01 ) //サポート
@@ -481,9 +481,9 @@ EVENT_START   ev_t01r0401_hakase1_01
 			_OBJ_ANIME( T01R0401_HAKASE1_01, anm_stay_walk_l )
 			_OBJ_ANIME_WAIT()
 			
-			//全国版にバージョンアップした！【仮】上下自動認識に変える
+			//全国版にバージョンアップした！
 			_ME_PLAY( SEQ_ME_KEYITEM )
-			_SYSWIN_MSG( msg_t01r0401_hakase1_03, POS_DOWN  )
+			_SYSWIN_MSG( msg_t01r0401_hakase1_03, POS_DEFAULT  )
 			_ME_WAIT()
 			_MSGWIN_CLOSE()
 			

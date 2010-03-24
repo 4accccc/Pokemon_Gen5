@@ -225,8 +225,6 @@ EVENT_END
 
 //三匹選択イベントへ
 ev_first_pkeget:
-	//【仮】三匹選択アプリが未実装。草ポケモンを選択したことにする
-
 	//プレゼントボックスをあけた！
 	_PLAYER_NAME( 0 )
 	_SYSWIN_MSG( msg_t01r0102_presentbox_01, POS_DOWN )
@@ -313,7 +311,7 @@ ev_first_pkeget:
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_black_05, T01R0102_RIVAL_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 
-	//【仮】暗転を挟んで主人公たちを部屋の中央へ移動-----------
+	//暗転を挟んで主人公たちを部屋の中央へ移動------------------
 	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
 
