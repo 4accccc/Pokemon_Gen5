@@ -1106,12 +1106,10 @@ void ZUKANSAVE_SetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 sex, BOOL rare, u
 				}
 				if( rare == TRUE ){
 					set_bit( (u8 *)zw->draw_form[COLOR_RARE], cnt+form );
-					OS_Printf( "レアセット\n" );
 				}else{
 					set_bit( (u8 *)zw->draw_form[COLOR_NORMAL], cnt+form );
-					OS_Printf( "通常セット\n" );
 				}
-				return;
+				break;
 			}
 			cnt += FormTable[i][1];
 			i++;
@@ -1255,21 +1253,29 @@ void ZUKANSAVE_GetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 * sex, BOOL * rar
 				break;
 			}
 		}
+		if( check_bit_mons( (const u8 *)zw->draw_sex[SEE_FLAG_MALE], mons ) ||
+				check_bit_mons( (const u8 *)zw->draw_sex[SEE_FLAG_M_RARE], mons ) ){
+			*sex  = PTL_SEX_MALE;
+		}
+		if( check_bit_mons( (const u8 *)zw->draw_sex[SEE_FLAG_FEMALE], mons ) ||
+				check_bit_mons( (const u8 *)zw->draw_sex[SEE_FLAG_F_RARE], mons ) ){
+			*sex  = PTL_SEX_FEMALE;
+		}
 	}else{
 		*form = 0;
-		if( check_bit_mons( (const u8 *)zw->sex_flag[SEE_FLAG_MALE], mons ) ){
+		if( check_bit_mons( (const u8 *)zw->draw_sex[SEE_FLAG_MALE], mons ) ){
 			*sex  = PTL_SEX_MALE;
 			*rare = FALSE;
 		}
-		if( check_bit_mons( (const u8 *)zw->sex_flag[SEE_FLAG_FEMALE], mons ) ){
+		if( check_bit_mons( (const u8 *)zw->draw_sex[SEE_FLAG_FEMALE], mons ) ){
 			*sex  = PTL_SEX_FEMALE;
 			*rare = FALSE;
 		}
-		if( check_bit_mons( (const u8 *)zw->sex_flag[SEE_FLAG_M_RARE], mons ) ){
+		if( check_bit_mons( (const u8 *)zw->draw_sex[SEE_FLAG_M_RARE], mons ) ){
 			*sex  = PTL_SEX_MALE;
 			*rare = TRUE;
 		}
-		if( check_bit_mons( (const u8 *)zw->sex_flag[SEE_FLAG_F_RARE], mons ) ){
+		if( check_bit_mons( (const u8 *)zw->draw_sex[SEE_FLAG_F_RARE], mons ) ){
 			*sex  = PTL_SEX_FEMALE;
 			*rare = TRUE;
 		}
