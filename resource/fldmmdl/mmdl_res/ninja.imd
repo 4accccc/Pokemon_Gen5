@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2009-08-07T20:01:31' host='W00154A' user='lee_hyunjung' source='woman1.mb'/>
+	<create date='2009-08-31T19:17:18' host='W00154A' user='lee_hyunjung' source='accordion.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2009-08-07T20:01:31' host='W00154A' user='lee_hyunjung' source='woman1.mb'/>
+<original_create date='2009-08-31T19:17:18' host='W00154A' user='lee_hyunjung' source='accordion.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
 <model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
 
 <box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='3'/>
 
-<tex_image_array size='7'>
-	<tex_image name='woman1.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.1.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+<tex_image_array size='12'>
+	<tex_image name='accordion.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.1.tga' palette_name='accordion' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -52,7 +52,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.2.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='accordion.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.2.tga' palette_name='accordion' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -88,7 +88,7 @@
 			0000 0000 0000 0990 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.3.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='accordion.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.3.tga' palette_name='accordion' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -124,7 +124,7 @@
 			0000 0000 0000 0000 0990 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.4.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='accordion.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.4.tga' palette_name='accordion' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -160,7 +160,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.5.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='accordion.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.5.tga' palette_name='accordion' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -196,7 +196,7 @@
 			0000 0000 0000 0990 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.6.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='accordion.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.6.tga' palette_name='accordion' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -232,7 +232,7 @@
 			0000 0000 0000 0000 0990 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='woman1.7' format='palette16' original_width='32' original_height='32' index='6' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/woman1/woman1.7.tga' palette_name='woman1' width='32' color0_mode='transparency'>
+	<tex_image name='accordion.7' format='palette16' original_width='32' original_height='32' index='6' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.7.tga' palette_name='accordion' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -268,10 +268,190 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
+	<tex_image name='accordion.8' format='palette16' original_width='32' original_height='32' index='7' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.8.tga' palette_name='accordion' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 bbb0 00bb 0000 0000 0000 
+			0000 0000 b000 fffb bbff 0000 0000 0000 
+			0000 0000 fb00 ffff ffff 000b 0000 0000 
+			0000 0000 feb0 ffff ffff 00cf 0000 0000 
+			0000 0000 ffdc ffff ffff 0cff 0000 0000 
+			0000 0000 fffc dfff ffff 0cff 0000 0000 
+			0000 c000 fdfe fdff ffff bfff 0000 0000 
+			0000 c000 ffae ffcf ffff bfff 0000 0000 
+			0000 ec00 fffa dffc bfff bdef 0000 0000 
+			0000 cc00 fffa fbcc dbff 0bcd 0000 0000 
+			0000 a000 fffe ffbd bbff abbb 0000 0000 
+			0000 a000 ffec ffbe bbdf abbb 0000 0000 
+			0000 0000 eeda fdbd babf 76bb 0000 0000 
+			0000 0000 ddda fadd bdbf 7866 0000 0000 
+			0000 0000 dcda d9dd 669f 0788 0000 0000 
+			0000 0000 dc90 a9cd bb9f 09bb 0000 0000 
+			0000 0000 c900 aa9d 9aa9 0099 0000 0000 
+			0000 0000 a000 aa9c 099a 0000 0000 0000 
+			0000 0000 0000 6aa9 0097 0000 0000 0000 
+			0000 0000 0000 64a9 0076 0000 0000 0000 
+			0000 0000 9000 64aa 0007 0000 0000 0000 
+			0000 0000 9000 6799 000a 0000 0000 0000 
+			0000 0000 a900 b99a 000a 0000 0000 0000 
+			0000 0000 a900 69aa 0007 0000 0000 0000 
+			0000 0000 9a90 667a 0097 0000 0000 0000 
+			0000 0000 aa90 99a9 009a 0000 0000 0000 
+			0000 0000 9900 aa99 009a 0000 0000 0000 
+			0000 0000 9000 9900 0009 0000 0000 0000 
+			0000 0000 0000 9000 0099 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='accordion.9' format='palette16' original_width='32' original_height='32' index='8' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.9.tga' palette_name='accordion' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 bbb0 00bb 0000 0000 0000 
+			0000 0000 b000 fffb bbff 0000 0000 0000 
+			0000 0000 fb00 ffff ffff 000b 0000 0000 
+			0000 0000 feb0 ffff ffff 00cf 0000 0000 
+			0000 0000 ffdc ffff ffff 0cff 0000 0000 
+			0000 0000 fffc dfff ffff 0cff 0000 0000 
+			0000 c000 fdfe fdff ffff bfff 0000 0000 
+			0000 c000 ffae ffcf ffff bfff 0000 0000 
+			0000 ec00 fffa dffc bfff bdef 0000 0000 
+			0000 cc00 fffa fbcc dbff 0bcd 0000 0000 
+			0000 a000 fffe ffbd bbff abbb 0000 0000 
+			0000 a000 ffec ffbe bbdf abbb 0000 0000 
+			0000 0000 eeda fdbd babf 76bb 0000 0000 
+			0000 0000 ddda fadd bdbf 7866 0000 0000 
+			0000 0000 dcda d9dd 669f 0788 0000 0000 
+			0000 0000 dc90 a9cd bb9f 09bb 0000 0000 
+			0000 0000 c900 aa9d 9aa9 0099 0000 0000 
+			0000 0000 a000 aa9c 099a 0000 0000 0000 
+			0000 0000 0000 6aa9 0097 0000 0000 0000 
+			0000 0000 0000 64a9 0076 0000 0000 0000 
+			0000 0000 9000 64aa 0007 0000 0000 0000 
+			0000 0000 a900 6799 000a 0000 0000 0000 
+			0000 0000 a900 b99a 000a 0000 0000 0000 
+			0000 0000 aa90 69aa 0007 0000 0000 0000 
+			0000 0000 aa90 667a 0007 0000 0000 0000 
+			0000 0000 aa90 99aa 009a 0000 0000 0000 
+			0000 0000 a900 999a 0009 0000 0000 0000 
+			0000 0000 9900 0009 0000 0000 0000 0000 
+			0000 0000 9000 0099 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='accordion.10' format='palette16' original_width='32' original_height='32' index='9' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.10.tga' palette_name='accordion' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 bb00 0bbb 0000 0000 0000 
+			0000 0000 0000 ffbb bfff 000b 0000 0000 
+			0000 0000 b000 ffff ffff 00bf 0000 0000 
+			0000 0000 fc00 ffff ffff 0bef 0000 0000 
+			0000 0000 ffc0 ffff ffff cdff 0000 0000 
+			0000 0000 ffc0 ffff fffd cfff 0000 0000 
+			0000 0000 fffb ffff ffdf efdf 000c 0000 
+			0000 0000 fffb ffff fcff eaff 000c 0000 
+			0000 0000 fedb fffb cffd afff 00ce 0000 
+			0000 0000 dcb0 ffbd ccbf afff 00cc 0000 
+			0000 0000 bbba ffbb dbff efff 000a 0000 
+			0000 0000 bbba fdbb ebff ceff 000a 0000 
+			0000 0000 bb67 fbab dbdf adee 0000 0000 
+			0000 0000 6687 fbdb ddaf addd 0000 0000 
+			0000 0000 8870 f966 dd9d adcd 0000 0000 
+			0000 0000 bb90 f9bb dc9a 09cd 0000 0000 
+			0000 0000 9900 9aa9 d9aa 009c 0000 0000 
+			0000 0000 0000 a990 c9aa 000a 0000 0000 
+			0000 0000 0000 7900 9aa6 0000 0000 0000 
+			0000 0000 0000 6700 9a46 0000 0000 0000 
+			0000 0000 0000 7000 aa46 0009 0000 0000 
+			0000 0000 0000 a000 9976 0009 0000 0000 
+			0000 0000 0000 a000 a99b 009a 0000 0000 
+			0000 0000 0000 7000 aa96 009a 0000 0000 
+			0000 0000 0000 7000 a766 009a 0000 0000 
+			0000 0000 0000 0000 aa99 0099 0000 0000 
+			0000 0000 0000 0000 9aa9 0009 0000 0000 
+			0000 0000 0000 0000 9990 0009 0000 0000 
+			0000 0000 0000 0000 0999 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='accordion.11' format='palette16' original_width='32' original_height='32' index='10' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.11.tga' palette_name='accordion' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 bb00 0bbb 0000 0000 0000 
+			0000 0000 0000 ffbb bfff 000b 0000 0000 
+			0000 0000 b000 ffff ffff 00bf 0000 0000 
+			0000 0000 fc00 ffff ffff 0bef 0000 0000 
+			0000 0000 ffc0 ffff ffff cdff 0000 0000 
+			0000 0000 ffc0 ffff fffd cfff 0000 0000 
+			0000 0000 fffb ffff ffdf efdf 000c 0000 
+			0000 0000 fffb ffff fcff eaff 000c 0000 
+			0000 0000 fedb fffb cffd afff 00ce 0000 
+			0000 0000 dcb0 ffbd ccbf afff 00cc 0000 
+			0000 0000 bbba ffbb dbff efff 000a 0000 
+			0000 0000 bbba fdbb ebff ceff 000a 0000 
+			0000 0000 bb67 fbab dbdf adee 0000 0000 
+			0000 0000 6687 fbdb ddaf addd 0000 0000 
+			0000 0000 8870 f966 dd9d adcd 0000 0000 
+			0000 0000 bb90 f9bb dc9a 09cd 0000 0000 
+			0000 0000 9900 9aa9 d9aa 009c 0000 0000 
+			0000 0000 0000 a990 c9aa 000a 0000 0000 
+			0000 0000 0000 7900 9aa6 0000 0000 0000 
+			0000 0000 0000 6700 9a46 0000 0000 0000 
+			0000 0000 0000 7000 aa46 0009 0000 0000 
+			0000 0000 0000 a000 9976 0009 0000 0000 
+			0000 0000 0000 a000 a99b 009a 0000 0000 
+			0000 0000 0000 7000 aa96 009a 0000 0000 
+			0000 0000 0000 7900 a766 09a9 0000 0000 
+			0000 0000 0000 a900 9a99 09aa 0000 0000 
+			0000 0000 0000 a900 99aa 0099 0000 0000 
+			0000 0000 0000 9000 0099 0009 0000 0000 
+			0000 0000 0000 9900 0009 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='accordion.12' format='palette16' original_width='32' original_height='32' index='11' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.12.tga' palette_name='accordion' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 bb00 0bbb 0000 0000 0000 
+			0000 0000 0000 ffbb bfff 000b 0000 0000 
+			0000 0000 b000 ffff ffff 00bf 0000 0000 
+			0000 0000 fc00 ffff ffff 0bef 0000 0000 
+			0000 0000 ffc0 ffff ffff cdff 0000 0000 
+			0000 0000 ffc0 ffff fffd cfff 0000 0000 
+			0000 0000 fffb ffff ffdf efdf 000c 0000 
+			0000 0000 fffb ffff fcff eaff 000c 0000 
+			0000 0000 fedb fffb cffd afff 00ce 0000 
+			0000 0000 dcb0 ffbd ccbf afff 00cc 0000 
+			0000 0000 bbba ffbb dbff efff 000a 0000 
+			0000 0000 bbba fdbb ebff ceff 000a 0000 
+			0000 0000 bb67 fbab dbdf adee 0000 0000 
+			0000 0000 6687 fbdb ddaf addd 0000 0000 
+			0000 0000 8870 f966 dd9d adcd 0000 0000 
+			0000 0000 bb90 f9bb dc9a 09cd 0000 0000 
+			0000 0000 9900 9aa9 d9aa 009c 0000 0000 
+			0000 0000 0000 a990 c9aa 000a 0000 0000 
+			0000 0000 0000 7900 9aa6 0000 0000 0000 
+			0000 0000 0000 6700 9a46 0000 0000 0000 
+			0000 0000 0000 7000 aa46 0009 0000 0000 
+			0000 0000 0000 a000 9976 009a 0000 0000 
+			0000 0000 0000 a000 a99b 009a 0000 0000 
+			0000 0000 0000 7000 aa96 09aa 0000 0000 
+			0000 0000 0000 7000 a766 09aa 0000 0000 
+			0000 0000 0000 a900 aa99 09aa 0000 0000 
+			0000 0000 0000 9000 a999 009a 0000 0000 
+			0000 0000 0000 0000 9000 0099 0000 0000 
+			0000 0000 0000 0000 9900 0009 0000 0000 
+		</bitmap>
+	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size='1'>
-	<tex_palette name='woman1' color_size='16' index='0'>
+	<tex_palette name='accordion' color_size='16' index='0'>
 		5674 1a2a 3ad1 06bf 31d2 256e 3e79 1d2c 
 		5f5f 0000 20c3 2906 4a0d 66f4 737a 7fff 
 	</tex_palette>
