@@ -84,7 +84,6 @@ EVENT_START    ev_pos_d08r0801_demo_01
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
 	_OBJ_ANIME_WAIT()
 	
-	//【仮】ポケモンの鳴き声のウィンドウを仮
 	//ROMによって、ポケモンの鳴き声が違う
 	IF $LCWK_VERSION == VERSION_WHITE THEN
 		_GIZAPLAINWIN_MSG_POS( msg_d08r0801_demo_01w, POS_UP )
@@ -205,7 +204,6 @@ EVENT_START    ev_pos_d08r0801_hakai_01
 	_BALLOONWIN_OBJMSG(msg_d08r0801_sage2_03,D08R0801_SAGE2_01)
 	_BALLOONWIN_CLOSE()
 	
-	//【仮】トレーナーデータ、全体的に仮
 	//足踏みで話すやつを分かりやすく
 	_OBJ_ANIME(D08R0801_HAKAIM_01,anm_common_turn_l)
 	_OBJ_ANIME_WAIT()

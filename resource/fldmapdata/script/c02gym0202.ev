@@ -84,8 +84,6 @@ EVENT_START	ev_c02gym0202_leader2_01
 //============================================//
 
 	ELSE
-	
-	//【仮】盗難イベントの解決後
 	//わざマシンを　もらったあと
 	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_06 )
 	_LAST_KEYWAIT()
@@ -139,7 +137,6 @@ ev_leader2_btl:
 	_BALLOONWIN_TALKOBJ_MSG( msg_c02gym0202_leader_04 )
 	_BALLOONWIN_CLOSE()
 
-	//【仮】わざマシン入手処理　入手わざマシンが未定
 	_ITEM_EVENT_KEYWAIT( ITEM_WAZAMASIN67, 1 )
 
 	//リーダー：わざマシンの解説

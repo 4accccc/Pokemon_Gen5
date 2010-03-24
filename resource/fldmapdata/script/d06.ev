@@ -155,8 +155,7 @@ EVENT_START    ev_d06_stopper_01
 		_BALLOONWIN_CLOSE()
 
 		_TIME_WAIT(16)
-		
-		//【仮】スクリプトの動きだけ出来るのか。エフェクトはいるのか
+
 		//ポケモンがわざを出したような処理
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_waza_01)
 		
@@ -268,7 +267,6 @@ EVENT_START    ev_d06_stopper_01
 			_OBJ_ANIME_WAIT()
 
 		//===============フラグ操作===============//
-		//【仮】フラグが無い為、仮
 		//POSイベントを無効に
 		$WK_SCENE_D06 = 2
 

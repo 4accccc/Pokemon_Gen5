@@ -73,7 +73,6 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_c06r0201_veteranw_01
 	
-	//ÅyâºÅzì¸éËÇÌÇ¥É}ÉVÉìÇ…Ç¬Ç¢Çƒâº
 	_EASY_TALK_ITEM_EVENT( ITEM_SURUDOIKUTIBASI, 1, FE_C06R0101_ITEMGET_01, msg_c06r0201_veteranw_01, msg_c06r0201_veteranw_02, msg_c06r0201_veteranw_02)
 	
 EVENT_END

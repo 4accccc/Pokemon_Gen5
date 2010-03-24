@@ -191,7 +191,6 @@ EVENT_START    ev_pos_d06r0101_n_01
     _END_EVENT_BGM()
 
 //===============フラグ操作===============//
-//【仮】ワークが無い為、仮
 	//POSイベントを無効に
 	$WK_SCENE_D06R0101 = 1
 	
@@ -382,7 +381,6 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	_END_EVENT_BGM()
 	
 //===============フラグ操作===============//
-//【仮】ワークが無い為、仮
 	//POSイベントを無効に
 	$WK_SCENE_D06R0101 = 2
 //========================================//
@@ -481,7 +479,6 @@ EVENT_START    ev_pos_d06r0101_denki_02
 	_BALLOONWIN_CLOSE()
 	
 //===============フラグ操作===============//
-//【仮】ワークが無い為、仮
 	//POSイベントを無効に
 	$WK_SCENE_D06R0101 = 3
 //========================================//
@@ -579,7 +576,6 @@ EVENT_START    ev_pos_d06r0101_denki_03
 	_OBJ_DEL(D06R0101_NINJA_03)
 	
 //===============フラグ操作===============//
-//【仮】ワークが無い為、仮
 	//POSイベントを無効に
 	$WK_SCENE_D06R0101 = 4
 //========================================//
@@ -643,14 +639,17 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	IF $SCWK_ANSWER ==  SCR_YES THEN
 		//はい
 		//Nが喋る
-		//Ｎ『……さてと　ポケモンではなく　じぶんの　ちからで
 		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_boss_02, D06R0101_BOSS_01, POS_DEFAULT )
 		_MSGWIN_CLOSE()
+		
+		//==============フラグワーク操作==============//
+    	//Nイベントのワークをインクリメント
+    	$WK_OTHER_N_COUNT += 1
+		//============================================//
 	
 	ELSE
 		//いいえ
 		//Nが喋る
-		//Ｎ『……さてと　ポケモンではなく　じぶんの　ちからで
 		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_boss_03, D06R0101_BOSS_01, POS_DEFAULT )
 		_MSGWIN_CLOSE()
 	
@@ -790,13 +789,14 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	_OBJ_DEL( D06R0101_HAKASE2_01 )
 	
 //===============フラグ操作===============//
-//【仮】フラグが無い為、仮
 	//POSイベントを無効にする
 	$WK_SCENE_D06R0101 = 5
 	
 	//博士とホワイト、Nを消す
 	_FLAG_SET(FV_D06R0101_FRIENDS)
 	_FLAG_SET(FV_D06R0201_BOSS_01)
+	
+	_FLAG_SET(FV_D06R0201_PLASMA)	
 //========================================//
 
 EVENT_END
@@ -805,8 +805,7 @@ EVENT_END
 ev_boss_btl:
 
 	//トレーナー戦呼び出し
-	//【仮】Nとの4回目の戦闘のデータが無いみたい
-	_TRAINER_BTL_SET( TRID_BOSS_03, 0 )
+	_TRAINER_BTL_SET( TRID_BOSS_04, 0 )
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN

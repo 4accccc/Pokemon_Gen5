@@ -168,7 +168,6 @@ EVENT_START		ev_pos_c02gym0201_danpei_01
 	_BALLOONWIN_OBJMSG( msg_c02gym0101_glasses_01,C02GYM0201_DANPEI_01)
 	_BALLOONWIN_CLOSE()
 	
-	//【仮】おいしい水をくれる　MEなし
 	_ITEM_EVENT_KEYWAIT(ITEM_OISIIMIZU, 1)
 	
 	// ジムリーダーの　アロエさんは　ノーマルタイプの　ポケモンを　つかう
