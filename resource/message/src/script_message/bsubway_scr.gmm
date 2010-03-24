@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-24T17:55:28"/>
+	<create user="matsumiya" host="W00224" date="2010-03-24T18:18:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="170"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1343" top="167" right="2048" bottom="785" maximized="no" rayout="Vertical2">
+	<dialog left="1381" top="97" right="2086" bottom="791" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="753" top="172" right="1226" bottom="570" visible="no"/>
+		<tag-palette left="753" top="172" right="1226" bottom="570" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -425,15 +425,15 @@
 ７にんの　トレーナーと
 たたかうことに　なります[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">シングルトレインでは　ポケモン
-３ひきで　バトルを　おこないます[BE:01:ページ切り替え（クリア）]
-ポケモンは　３ひき　すべて
-ちがう　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
-もたせる　どうぐも　すべてちがう
-どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
-たたかいのば　となる　れっしゃは
-７りょう　へんせいと　なっており[BE:01:ページ切り替え（クリア）]
-７にんの　トレーナーと
-たたかうことに　なります[BE:01:ページ切り替え（クリア）]</language>
+３匹で　バトルを　おこないます[BE:01:ページ切り替え（クリア）]
+ポケモンは　３匹　すべて
+違う　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
+持たせる　道具も　すべて違う
+道具で　なくては　なりません[BE:01:ページ切り替え（クリア）]
+戦いの場　となる　列車は
+７両　編成と　なっており[BE:01:ページ切り替え（クリア）]
+７人の　トレーナーと
+戦うことに　なります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_bsw_scr_09_1">
@@ -448,16 +448,16 @@
 おわらせないと　ちょうせんが[BE:00:ページ切り替え（行送り）]
 むこうに　なるので　じゅうぶんに[BE:00:ページ切り替え（行送り）]
 ちゅうい　してください！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI">みごと　７にんを　たおせたら
-えきに　とうちゃくし　バトルポイントを[BE:00:ページ切り替え（行送り）]
-かくとく　することが　できますので[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI">見事　７人を　倒せたら
+駅に　到着し　バトルポイントを[BE:00:ページ切り替え（行送り）]
+獲得することが　できますので[BE:00:ページ切り替え（行送り）]
 がんばって　ください！[BE:01:ページ切り替え（クリア）]
-なお　とちゅうで　ちょうせんを
-ちゅうだん　したい　ばあいは[BE:00:ページ切り替え（行送り）]
-しっかりと　レポートを　かいて[BE:00:ページ切り替え（行送り）]
-おわらせないと　ちょうせんが[BE:00:ページ切り替え（行送り）]
-むこうに　なるので　じゅうぶんに[BE:00:ページ切り替え（行送り）]
-ちゅうい　してください！[BE:01:ページ切り替え（クリア）]</language>
+なお　途中で　挑戦を
+中断したい　場合は[BE:00:ページ切り替え（行送り）]
+しっかりと　レポートを　書いて[BE:00:ページ切り替え（行送り）]
+終わらせないと　挑戦が[BE:00:ページ切り替え（行送り）]
+無効に　なるので　充分に[BE:00:ページ切り替え（行送り）]
+注意してください！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_bsw_scr_10">
@@ -473,15 +473,15 @@
 ７にんの　トレーナーと
 たたかうことに　なります[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ダブルトレインでは　ポケモン
-３ひきで　バトルを　おこないます[BE:01:ページ切り替え（クリア）]
-ポケモンは　３ひき　すべて
-ちがう　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
-もたせる　どうぐも　すべてちがう
-どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
-たたかいのば　となる　れっしゃは
-７りょう　へんせいと　なっており[BE:01:ページ切り替え（クリア）]
-７にんの　トレーナーと
-たたかうことに　なります[BE:01:ページ切り替え（クリア）]</language>
+３匹で　バトルを　おこないます[BE:01:ページ切り替え（クリア）]
+ポケモンは　３匹　すべて
+違う　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
+持たせる　道具も　すべて違う
+道具で　なくては　なりません[BE:01:ページ切り替え（クリア）]
+戦いの場　となる　列車は
+７両　編成と　なっており[BE:01:ページ切り替え（クリア）]
+７人の　トレーナーと
+戦うことに　なります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_bsw_scr_10_1">
@@ -496,16 +496,16 @@
 おわらせないと　ちょうせんが[BE:00:ページ切り替え（行送り）]
 むこうに　なるので　じゅうぶんに[BE:00:ページ切り替え（行送り）]
 ちゅうい　してください！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">みごと　７にんを　たおせたら
-えきに　とうちゃくし　バトルポイントを[BE:00:ページ切り替え（行送り）]
-かくとく　することが　できますので[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">見事　７人を　倒せたら
+駅に　到着し　バトルポイントを[BE:00:ページ切り替え（行送り）]
+獲得することが　できますので[BE:00:ページ切り替え（行送り）]
 がんばって　ください！[BE:01:ページ切り替え（クリア）]
-なお　とちゅうで　ちょうせんを
-ちゅうだん　したい　ばあいは[BE:00:ページ切り替え（行送り）]
-しっかりと　レポートを　かいて[BE:00:ページ切り替え（行送り）]
-おわらせないと　ちょうせんが[BE:00:ページ切り替え（行送り）]
-むこうに　なるので　じゅうぶんに[BE:00:ページ切り替え（行送り）]
-ちゅうい　してください！[BE:01:ページ切り替え（クリア）]</language>
+なお　途中で　挑戦を
+中断したい　場合は[BE:00:ページ切り替え（行送り）]
+しっかりと　レポートを　書いて[BE:00:ページ切り替え（行送り）]
+終わらせないと　挑戦が[BE:00:ページ切り替え（行送り）]
+無効に　なるので　充分に[BE:00:ページ切り替え（行送り）]
+注意してください！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_bsw_scr_11">
@@ -523,17 +523,17 @@
 ７くみの　トレーナーと
 たたかうことに　なります[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">マルチトレインでは　トレーナー
-ふたりで　ポケモンを　２ひきずつ[BE:00:ページ切り替え（行送り）]
-もちより　きょうりょくして[BE:00:ページ切り替え（行送り）]
-マルチバトルで　たたかいます[BE:01:ページ切り替え（クリア）]
-ポケモンは　４ひき　すべて
-ちがう　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
-ひとりのポケモン　２ひきに　おなじ
-どうぐを　もたせることは　できません[BE:01:ページ切り替え（クリア）]
-たたかいのば　となる　れっしゃは
-７りょう　へんせいと　なっており[BE:01:ページ切り替え（クリア）]
-７くみの　トレーナーと
-たたかうことに　なります[BE:01:ページ切り替え（クリア）]</language>
+２人で　ポケモンを　２匹ずつ[BE:00:ページ切り替え（行送り）]
+持ち寄り　協力して[BE:00:ページ切り替え（行送り）]
+マルチバトルで　戦います[BE:01:ページ切り替え（クリア）]
+ポケモンは　４匹　すべて
+違う　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
+１人のポケモン　２匹に　同じ
+道具を　持たせることは　できません[BE:01:ページ切り替え（クリア）]
+戦いの場となる　列車は
+７両編成と　なっており[BE:01:ページ切り替え（クリア）]
+７組の　トレーナーと
+戦うことに　なります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_bsw_scr_11_1">
@@ -551,22 +551,22 @@
 ７くみの　トレーナーと
 たたかうことに　なります[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">マルチトレインでは　トレーナー
-ふたりで　ポケモンを　２ひきずつ[BE:00:ページ切り替え（行送り）]
-もちより　きょうりょくして[BE:00:ページ切り替え（行送り）]
-マルチバトルで　たたかいます[BE:01:ページ切り替え（クリア）]
-ポケモンは　４ひき　すべて
-ちがう　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
-ひとりのポケモン　２ひきに　おなじ
-どうぐを　もたせることは　できません[BE:01:ページ切り替え（クリア）]
-たたかいのば　となる　れっしゃは
-７りょう　へんせいと　なっており[BE:01:ページ切り替え（クリア）]
-７くみの　トレーナーと
-たたかうことに　なります[BE:01:ページ切り替え（クリア）]</language>
+２人で　ポケモンを　２匹ずつ[BE:00:ページ切り替え（行送り）]
+持ち寄り　協力して[BE:00:ページ切り替え（行送り）]
+マルチバトルで　戦います[BE:01:ページ切り替え（クリア）]
+ポケモンは　４匹　すべて
+違う　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
+１人のポケモン　２匹に　同じ
+道具を　持たせることは　できません[BE:01:ページ切り替え（クリア）]
+戦いの場となる　列車は
+７両編成と　なっており[BE:01:ページ切り替え（クリア）]
+７組の　トレーナーと
+戦うことに　なります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_bsw_scr_12">
 		<comment>WiFi説明その１</comment>
-		<language name="JPN" width="256">Ｗｉ‐Ｆｉトレインでは　ポケモン
+		<language name="JPN" width="256">Ｗｉ－Ｆｉトレインでは　ポケモン
 ３ひきで　バトルを　おこないます[BE:01:ページ切り替え（クリア）]
 ポケモンは　３ひき　すべて
 ちがう　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
@@ -576,21 +576,21 @@
 ７りょう　へんせいと　なっており[BE:01:ページ切り替え（クリア）]
 ７にんの　トレーナーと
 たたかうことに　なります[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">Ｗｉ‐Ｆｉトレインでは　ポケモン
-３ひきで　バトルを　おこないます[BE:01:ページ切り替え（クリア）]
-ポケモンは　３ひき　すべて
-ちがう　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
-もたせる　どうぐも　すべてちがう
-どうぐで　なくては　なりません[BE:01:ページ切り替え（クリア）]
-たたかいのば　となる　れっしゃは
-７りょう　へんせいと　なっており[BE:01:ページ切り替え（クリア）]
-７にんの　トレーナーと
-たたかうことに　なります[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉトレインでは　ポケモン
+３匹で　バトルを　おこないます[BE:01:ページ切り替え（クリア）]
+ポケモンは　３匹　すべて
+違う　ポケモンで　なくてはならず[BE:01:ページ切り替え（クリア）]
+持たせる　道具も　すべて違う
+道具で　なくては　なりません[BE:01:ページ切り替え（クリア）]
+戦いの場　となる　列車は
+７両　編成と　なっており[BE:01:ページ切り替え（クリア）]
+７人の　トレーナーと
+戦うことに　なります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_bsw_scr_12_1">
 		<comment>WiFi説明その２</comment>
-		<language name="JPN" width="256">たいせんあいては　Ｗｉ‐Ｆｉから
+		<language name="JPN" width="256">たいせんあいては　Ｗｉ－Ｆｉから
 ぜんこくの　つわものが　やってきます[BE:01:ページ切り替え（クリア）]
 みごと　７にんを　たおせたら
 えきに　とうちゃくし　バトルポイントを[BE:00:ページ切り替え（行送り）]
@@ -599,7 +599,7 @@
 そして　もしかすると　あなたが
 そのれっしゃに　とうじょう[BE:00:ページ切り替え（行送り）]
 できるかも　しれません！[BE:01:ページ切り替え（クリア）]
-また　Ｗｉ‐Ｆｉバトルタワーでは
+また　Ｗｉ－Ｆｉバトルタワーでは
 ランクシステムを　さいようしています[BE:01:ページ切り替え（クリア）]
 かちつづけると　あなたの　ランクは
 あがり　まけていくと　さがります[BE:01:ページ切り替え（クリア）]
@@ -611,62 +611,76 @@
 おわらせないと　ちょうせんが[BE:00:ページ切り替え（行送り）]
 むこうに　なるので　じゅうぶんに[BE:00:ページ切り替え（行送り）]
 ちゅうい　してください！</language>
-		<language name="JPN_KANJI" width="256">たいせんあいては　Ｗｉ‐Ｆｉから
-ぜんこくの　つわものが　やってきます[BE:01:ページ切り替え（クリア）]
-みごと　７にんを　たおせたら
-えきに　とうちゃくし　バトルポイントを[BE:00:ページ切り替え（行送り）]
-かくとく　することが　できますので[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">対戦相手は　Ｗｉ－Ｆｉから
+全国の　ツワモノが　やってきます[BE:01:ページ切り替え（クリア）]
+見事　７人を　倒せたら
+駅に　到着し　バトルポイントを[BE:00:ページ切り替え（行送り）]
+獲得することが　できますので[BE:00:ページ切り替え（行送り）]
 がんばって　ください！[BE:01:ページ切り替え（クリア）]
 そして　もしかすると　あなたが
-そのれっしゃに　とうじょう[BE:00:ページ切り替え（行送り）]
+その列車に　登場[BE:00:ページ切り替え（行送り）]
 できるかも　しれません！[BE:01:ページ切り替え（クリア）]
-また　Ｗｉ‐Ｆｉバトルタワーでは
-ランクシステムを　さいようしています[BE:01:ページ切り替え（クリア）]
-かちつづけると　あなたの　ランクは
-あがり　まけていくと　さがります[BE:01:ページ切り替え（クリア）]
-かちつづけて　より　つよい　あいてと
-たたかって　ください[BE:01:ページ切り替え（クリア）]
-なお　とちゅうで　ちょうせんを
-ちゅうだん　したい　ばあいは[BE:00:ページ切り替え（行送り）]
-しっかりと　レポートを　かいて[BE:00:ページ切り替え（行送り）]
-おわらせないと　ちょうせんが[BE:00:ページ切り替え（行送り）]
-むこうに　なるので　じゅうぶんに[BE:00:ページ切り替え（行送り）]
-ちゅうい　してください！</language>
+また　Ｗｉ－Ｆｉバトルタワーでは
+ランクシステムを　採用しています[BE:01:ページ切り替え（クリア）]
+勝ち続けると　あなたの　ランクは
+あがり　負けていくと　さがります[BE:01:ページ切り替え（クリア）]
+勝ち続けて　より　強い相手と
+戦ってください[BE:01:ページ切り替え（クリア）]
+なお　途中で　挑戦を
+中断したい　場合は[BE:00:ページ切り替え（行送り）]
+しっかりと　レポートを　書いて[BE:00:ページ切り替え（行送り）]
+終わらせないと　挑戦が[BE:00:ページ切り替え（行送り）]
+無効に　なるので　充分に[BE:00:ページ切り替え（行送り）]
+注意してください！</language>
 	</row>
 
 	<row id="msg_bsw_scr_13">
-		<language name="JPN" width="256">シングルトレインにじょうしゃしますか</language>
-		<language name="JPN_KANJI" width="256">シングルトレインにじょうしゃしますか</language>
+		<language name="JPN" width="256">シングルトレインに
+じょうしゃ　しますか</language>
+		<language name="JPN_KANJI" width="256">シングルトレインに
+乗車しますか</language>
 	</row>
 
 	<row id="msg_bsw_scr_14">
-		<language name="JPN" width="256">ダブルトレインにじょうしゃしますか</language>
-		<language name="JPN_KANJI" width="256">ダブルトレインにじょうしゃしますか</language>
+		<language name="JPN" width="256">ダブルトレインに
+じょうしゃ　しますか</language>
+		<language name="JPN_KANJI" width="256">ダブルトレインに
+乗車しますか</language>
 	</row>
 
 	<row id="msg_bsw_scr_15">
-		<language name="JPN" width="256">マルチトレインにじょうしゃしますか</language>
-		<language name="JPN_KANJI" width="256">マルチトレインにじょうしゃしますか</language>
+		<language name="JPN" width="256">マルチトレインに
+じょうしゃ　しますか</language>
+		<language name="JPN_KANJI" width="256">マルチトレインに
+乗車しますか</language>
 	</row>
 
 	<row id="msg_bsw_scr_16">
-		<language name="JPN" width="256">Wifiトレインにじょうしゃしますか</language>
-		<language name="JPN_KANJI" width="256">Wifiトレインにじょうしゃしますか</language>
+		<language name="JPN" width="256">Ｗｉ－Ｆｉトレインに
+じょうしゃ　しますか</language>
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉトレインに
+乗車しますか</language>
 	</row>
 
 	<row id="msg_bsw_scr_17">
-		<language name="JPN" width="256">スーパーシングルトレインにじょうしゃしますか</language>
-		<language name="JPN_KANJI" width="256">スーパーシングルトレインにじょうしゃしますか</language>
+		<language name="JPN" width="256">スーパーシングルトレインに
+じょうしゃ　しますか</language>
+		<language name="JPN_KANJI" width="256">スーパーシングルトレインに
+乗車しますか</language>
 	</row>
 
 	<row id="msg_bsw_scr_18">
-		<language name="JPN" width="256">スーパーダブルトレインにじょうしゃしますか</language>
-		<language name="JPN_KANJI" width="256">スーパーダブルトレインにじょうしゃしますか</language>
+		<language name="JPN" width="256">スーパーダブルトレインに
+じょうしゃ　しますか</language>
+		<language name="JPN_KANJI" width="256">スーパーダブルトレインに
+乗車しますか</language>
 	</row>
 
 	<row id="msg_bsw_scr_19">
-		<language name="JPN" width="256">スーパーマルチトレインにじょうしゃしますか</language>
-		<language name="JPN_KANJI" width="256">スーパーマルチトレインにじょうしゃしますか</language>
+		<language name="JPN" width="256">スーパーマルチトレインに
+じょうしゃ　しますか</language>
+		<language name="JPN_KANJI" width="256">スーパーマルチトレインに
+乗車しますか</language>
 	</row>
 
 	<row id="msg_bsw_scr_20">
@@ -682,12 +696,12 @@
 さんかするには　しゅるいが　ちがう
 ポケモンを　[2:00:１桁:0]ひき　よういし[BE:00:ページ切り替え（行送り）]
 ちがう　どうぐに　してください</language>
-		<language name="JPN_KANJI" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
-さんかできる　ポケモンが
-[2:00:１桁:0]ひき　いません[BE:01:ページ切り替え（クリア）]
-さんかするには　しゅるいが　ちがう
-ポケモンを　[2:00:１桁:0]ひき　よういし[BE:00:ページ切り替え（行送り）]
-ちがう　どうぐに　してください</language>
+		<language name="JPN_KANJI" width="256">お客さま！[BE:01:ページ切り替え（クリア）]
+参加できる　ポケモンが
+[2:00:１桁:0]匹　いません[BE:01:ページ切り替え（クリア）]
+参加するには　種類が　違う
+ポケモンを　[2:00:１桁:0]匹　用意し[BE:00:ページ切り替え（行送り）]
+違う　道具に　してください</language>
 	</row>
 
 	<row id="msg_bsw_scr_22">
@@ -698,57 +712,57 @@
 	<row id="msg_bsw_scr_23">
 		<language name="JPN" width="256">それでは　さんかする　ポケモンを
 えらんで　ください</language>
-		<language name="JPN_KANJI" width="256">それでは　さんかする　ポケモンを
-えらんで　ください</language>
+		<language name="JPN_KANJI" width="256">それでは　参加する
+ポケモンを　選んでください</language>
 	</row>
 
 	<row id="msg_bsw_scr_24">
 		<language name="JPN" width="256">それでは　シングルトレインへ
 ごじょうしゃ　ください！</language>
 		<language name="JPN_KANJI" width="256">それでは　シングルトレインへ
-ごじょうしゃ　ください！</language>
+ご乗車ください！</language>
 	</row>
 
 	<row id="msg_bsw_scr_25">
 		<language name="JPN" width="256">それでは　ダブルトレインへ
 ごじょうしゃ　ください！</language>
 		<language name="JPN_KANJI" width="256">それでは　ダブルトレインへ
-ごじょうしゃ　ください！</language>
+ご乗車ください！</language>
 	</row>
 
 	<row id="msg_bsw_scr_26">
 		<language name="JPN" width="256">それでは　マルチトレインへ
 ごじょうしゃ　ください！</language>
 		<language name="JPN_KANJI" width="256">それでは　マルチトレインへ
-ごじょうしゃ　ください！</language>
+ご乗車ください！</language>
 	</row>
 
 	<row id="msg_bsw_scr_27">
-		<language name="JPN" width="256">それでは　Wifiトレインへ
+		<language name="JPN" width="256">それでは　Ｗｉ－Ｆｉトレインへ
 ごじょうしゃ　ください！</language>
-		<language name="JPN_KANJI" width="256">それでは　Wifiトレインへ
-ごじょうしゃ　ください！</language>
+		<language name="JPN_KANJI" width="256">それでは　Ｗｉ－Ｆｉトレインへ
+ご乗車ください！</language>
 	</row>
 
 	<row id="msg_bsw_scr_28">
 		<language name="JPN" width="256">それでは　スーパーシングルトレインへ
 ごじょうしゃ　ください！</language>
 		<language name="JPN_KANJI" width="256">それでは　スーパーシングルトレインへ
-ごじょうしゃ　ください！</language>
+ご乗車ください！</language>
 	</row>
 
 	<row id="msg_bsw_scr_29">
 		<language name="JPN" width="256">それでは　スーパーダブルトレインへ
 ごじょうしゃ　ください！</language>
 		<language name="JPN_KANJI" width="256">それでは　スーパーダブルトレインへ
-ごじょうしゃ　ください！</language>
+ご乗車ください！</language>
 	</row>
 
 	<row id="msg_bsw_scr_30">
 		<language name="JPN" width="256">それでは　スーパーマルチトレインへ
 ごじょうしゃ　ください！</language>
 		<language name="JPN_KANJI" width="256">それでは　スーパーマルチトレインへ
-ごじょうしゃ　ください！</language>
+ご乗車ください！</language>
 	</row>
 
 	<row id="msg_bsw_scr_31">
@@ -758,25 +772,25 @@
 
 	<row id="msg_bsw_scr_32">
 		<language name="JPN" width="256">おまちしておりました[BE:01:ページ切り替え（クリア）]
-バトルサブウェイへのチャレンジを
+バトルサブウェイへの　チャレンジを
 さいかい　しますか？</language>
-		<language name="JPN_KANJI" width="256">おまちしておりました[BE:01:ページ切り替え（クリア）]
-バトルサブウェイへのチャレンジを
-さいかい　しますか？</language>
+		<language name="JPN_KANJI" width="256">お待ちしておりました[BE:01:ページ切り替え（クリア）]
+バトルサブウェイへの　チャレンジを
+再開しますか？</language>
 	</row>
 
 	<row id="msg_bsw_scr_33">
 		<language name="JPN" width="256">ごあんないする　まえに
 レポートを　かきます</language>
-		<language name="JPN_KANJI" width="256">ごあんないする　まえに
-レポートを　かきます</language>
+		<language name="JPN_KANJI" width="256">ご案内する　前に
+レポートを　書きます</language>
 	</row>
 
 	<row id="msg_bsw_scr_34">
 		<language name="JPN" width="256">それでは　ちゅうだんした　ところまで
 ごあんない　いたします</language>
-		<language name="JPN_KANJI" width="256">それでは　ちゅうだんした　ところまで
-ごあんない　いたします</language>
+		<language name="JPN_KANJI" width="256">それでは　中断した　ところまで
+ご案内いたします</language>
 	</row>
 
 	<row id="msg_bsw_scr_35">
@@ -784,15 +798,15 @@
 つづきを　チャレンジする　ばあいは
 また　おこし　ください</language>
 		<language name="JPN_KANJI" width="256">おつかれさまでした！[BE:01:ページ切り替え（クリア）]
-つづきを　チャレンジする　ばあいは
-また　おこし　ください</language>
+続きを　チャレンジする　場合は
+また　お越しください</language>
 	</row>
 
 	<row id="msg_bsw_scr_36">
 		<language name="JPN" width="256">せいせきを　レポートに　かきこんでいます
 しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="256">せいせきを　レポートに　かきこんでいます
-しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">成績を　レポートに　書きこんでいます
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="msg_bsw_scr_37">
@@ -801,28 +815,28 @@
 しゅうりょう　しませんでしたね？[BE:01:ページ切り替え（クリア）]
 もうしわけ　ありませんが　そのばあい
 ちょうせんは　むこうと　なります</language>
-		<language name="JPN_KANJI" width="256">おきゃくさま！[BE:01:ページ切り替え（クリア）]
-ぜんかい　ちゃんと　レポートを　かいて
-しゅうりょう　しませんでしたね？[BE:01:ページ切り替え（クリア）]
-もうしわけ　ありませんが　そのばあい
-ちょうせんは　むこうと　なります</language>
+		<language name="JPN_KANJI" width="256">お客さま！[BE:01:ページ切り替え（クリア）]
+前回　ちゃんと　レポートを　書いて
+終了しませんでしたね？[BE:01:ページ切り替え（クリア）]
+申し訳ありませんが　その場合
+挑戦は　無効と　なります</language>
 	</row>
 
 	<row id="msg_bsw_scr_38">
 		<language name="JPN" width="256">それでは　またの　ごりようを
 おまちして　おります！</language>
-		<language name="JPN_KANJI" width="256">それでは　またの　ごりようを
-おまちして　おります！</language>
+		<language name="JPN_KANJI" width="256">それでは　またの　ご利用を
+お待ちして　おります！</language>
 	</row>
 
 	<row id="msg_bsw_scr_39">
 		<language name="JPN" width="256">じょうしゃする</language>
-		<language name="JPN_KANJI" width="256">じょうしゃする</language>
+		<language name="JPN_KANJI" width="256">乗車する</language>
 	</row>
 
 	<row id="msg_bsw_scr_40">
 		<language name="JPN" width="256">せつめいをきく</language>
-		<language name="JPN_KANJI" width="256">せつめいをきく</language>
+		<language name="JPN_KANJI" width="256">説明を聞く</language>
 	</row>
 
 	<row id="msg_bsw_scr_41">
@@ -833,25 +847,25 @@
 	<row id="msg_bsw_scr_42">
 		<comment>wifi メニュー</comment>
 		<language name="JPN" width="256">れきだいのきろく</language>
-		<language name="JPN_KANJI" width="256">れきだいのきろく</language>
+		<language name="JPN_KANJI" width="256">歴代の記録</language>
 	</row>
 
 	<row id="msg_bsw_scr_43">
 		<comment>wifi　メニュー</comment>
 		<language name="JPN" width="256">まえのトレイン</language>
-		<language name="JPN_KANJI" width="256">まえのトレイン</language>
+		<language name="JPN_KANJI" width="256">前のトレイン</language>
 	</row>
 
 	<row id="msg_bsw_scr_44">
 		<language name="JPN" width="256">てもちか　バトルボックスの
 どちらを　つかうか　えらんでください</language>
-		<language name="JPN_KANJI" width="256">てもちか　バトルボックスの
-どちらを　つかうか　えらんでください</language>
+		<language name="JPN_KANJI" width="256">手持ちか　バトルボックスの
+どちらを　使うか　選んでください</language>
 	</row>
 
 	<row id="msg_bsw_scr_45">
 		<language name="JPN" width="256">てもち</language>
-		<language name="JPN_KANJI" width="256">てもち</language>
+		<language name="JPN_KANJI" width="256">手持ち</language>
 	</row>
 
 	<row id="msg_bsw_scr_46">
@@ -868,48 +882,51 @@
 		<comment>マルチ</comment>
 		<language name="JPN" width="256">つうしんで　おともだちと
 いっしょに　ちょうせん　しますか？</language>
-		<language name="JPN_KANJI" width="256">つうしんで　おともだちと
-いっしょに　ちょうせん　しますか？</language>
+		<language name="JPN_KANJI" width="256">通信で　お友達と
+一緒に　挑戦しますか？</language>
 	</row>
 
 	<row id="msg_bsw_scr_49">
 		<comment>wifi</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]さまはの　げんざいの　ランクは
+		<language name="JPN" width="256">[1:00:トレーナー名:0]さまの　げんざいの　ランクは
 [2:01:２桁:1]　です</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さまはの　げんざいの　ランクは
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]さまの　現在の　ランクは
 [2:01:２桁:1]　です</language>
 	</row>
 
 	<row id="msg_bsw_scr_50">
 		<comment>wifi</comment>
 		<language name="JPN" width="256">おまちしておりました！[BE:01:ページ切り替え（クリア）]
-ぜんかいの　せいせきを　Ｗｉ-Ｆｉ
-コネクションに　おくって　いませんが[BE:00:ページ切り替え（行送り）]
+ぜんかいの　せいせきを
+Ｗｉ-Ｆｉコネクションに[BE:00:ページ切り替え（行送り）]
+おくって　いませんが[BE:00:ページ切り替え（行送り）]
 これから　おくりますか？</language>
-		<language name="JPN_KANJI" width="256">おまちしておりました！[BE:01:ページ切り替え（クリア）]
-ぜんかいの　せいせきを　Ｗｉ-Ｆｉ
-コネクションに　おくって　いませんが[BE:00:ページ切り替え（行送り）]
-これから　おくりますか？</language>
+		<language name="JPN_KANJI" width="256">お待ちしておりました！[BE:01:ページ切り替え（クリア）]
+前回の　成績を
+Ｗｉ－Ｆｉコネクションに[BE:00:ページ切り替え（行送り）]
+送っていませんが[BE:00:ページ切り替え（行送り）]
+これから　送りますか？</language>
 	</row>
 
 	<row id="msg_bsw_scr_51">
 		<comment>wifi</comment>
-		<language name="JPN" width="256">せいせきを　Ｗｉ-Ｆｉコネクションに
+		<language name="JPN" width="256">せいせきを　Ｗｉ－Ｆｉコネクションに
 おくりました！</language>
-		<language name="JPN_KANJI" width="256">せいせきを　Ｗｉ-Ｆｉコネクションに
-おくりました！</language>
+		<language name="JPN_KANJI" width="256">成績を　Ｗｉ－Ｆｉコネクションに
+送りました！</language>
 	</row>
 
 	<row id="msg_bsw_scr_52">
 		<comment>wifi</comment>
 		<language name="JPN" width="256">ランク[2:01:２桁:0]　バトルルーム[2:02:３桁:1]の
 れきだいの　きろくを　うけとりました[BE:01:ページ切り替え（クリア）]
-おもてに　せっちされた　せいせき
-モニターで　ごかくにん　ください</language>
+おもてに　せっちされた
+せいせきモニターで[BE:00:ページ切り替え（行送り）]
+ごかくにん　ください</language>
 		<language name="JPN_KANJI" width="256">ランク[2:01:２桁:0]　バトルルーム[2:02:３桁:1]の
-れきだいの　きろくを　うけとりました[BE:01:ページ切り替え（クリア）]
-おもてに　せっちされた　せいせき
-モニターで　ごかくにん　ください</language>
+歴代の　記録を　受け取りました[BE:01:ページ切り替え（クリア）]
+表に　設置された
+成績モニターで　ご確認ください</language>
 	</row>
 
 	<row id="msg_bsw_scr_53">
@@ -918,10 +935,10 @@
 リーダーになる　を　えらび[BE:01:ページ切り替え（クリア）]
 もう　ひとりは　グループにはいる　を
 えらんでください</language>
-		<language name="JPN_KANJI" width="256">ふたりの　うち　ひとりが
-リーダーになる　を　えらび[BE:01:ページ切り替え（クリア）]
-もう　ひとりは　グループにはいる　を
-えらんでください</language>
+		<language name="JPN_KANJI" width="256">２人の　うち　１人が
+リーダーになる　を　選び[BE:01:ページ切り替え（クリア）]
+もう１人は　グループにはいる　を
+選んでください</language>
 	</row>
 
 	<row id="msg_bsw_scr_54">
@@ -930,10 +947,10 @@
 [1:01:ポケモン種族名:0]を　えらんで　います！▼[BE:01:ページ切り替え（クリア）]
 おともだちと　そうだん　してから
 また　おこし　ください</language>
-		<language name="JPN_KANJI" width="256">おともだちと　おなじ
-[1:01:ポケモン種族名:0]を　えらんで　います！▼[BE:01:ページ切り替え（クリア）]
-おともだちと　そうだん　してから
-また　おこし　ください</language>
+		<language name="JPN_KANJI" width="256">お友達と　同じ
+[1:01:ポケモン種族名:0]を　選んでいます！▼[BE:01:ページ切り替え（クリア）]
+お友達と　相談してから
+また　お越しください</language>
 	</row>
 
 	<row id="msg_bsw_scr_55">
@@ -942,10 +959,10 @@
 [1:01:ポケモン種族名:1]を　えらんで　います！[BE:01:ページ切り替え（クリア）]
 おともだちと　そうだん　してから
 また　おこし　ください</language>
-		<language name="JPN_KANJI" width="256">おともだちと　おなじ　[1:01:ポケモン種族名:0]や
-[1:01:ポケモン種族名:1]を　えらんで　います！[BE:01:ページ切り替え（クリア）]
-おともだちと　そうだん　してから
-また　おこし　ください</language>
+		<language name="JPN_KANJI" width="256">お友達と　同じ　[1:01:ポケモン種族名:0]や
+[1:01:ポケモン種族名:1]を　選んでいます！[BE:01:ページ切り替え（クリア）]
+お友達と　相談してから
+また　お越しください</language>
 	</row>
 
 	<row id="msg_bsw_scr_56">
@@ -954,10 +971,10 @@
 トレインが　ちがって　います！[BE:01:ページ切り替え（クリア）]
 おともだちと　そうだん　してから
 また　おこし　ください</language>
-		<language name="JPN_KANJI" width="256">おともだちと　えらんだ
-トレインが　ちがって　います！[BE:01:ページ切り替え（クリア）]
-おともだちと　そうだん　してから
-また　おこし　ください</language>
+		<language name="JPN_KANJI" width="256">お友達と　選んだ
+トレインが　違っています！[BE:01:ページ切り替え（クリア）]
+お友達と　相談してから
+また　お越しください</language>
 	</row>
 
 	<row id="msg_bsw_scr_57">
@@ -969,9 +986,9 @@
 パートナーが　ひつようなんだ</language>
 		<language name="JPN_KANJI" width="256">こんにちは！　ぼく　トウヤ！[BE:01:ページ切り替え（クリア）]
 きみ　マルチトレインに
-ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
-マルチトレインに　ちょうせんするには
-パートナーが　ひつようなんだ</language>
+挑戦するの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
+マルチトレインに　挑戦するには
+パートナーが　必要なんだ</language>
 	</row>
 
 	<row id="msg_bsw_scr_58">
@@ -983,25 +1000,27 @@
 パートナーが　ひつようなのよ</language>
 		<language name="JPN_KANJI" width="256">こんにちは！　わたし　トウコ！[BE:01:ページ切り替え（クリア）]
 あなた　マルチトレインに
-ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
-マルチトレインに　ちょうせんするには
-パートナーが　ひつようなのよ</language>
+挑戦するの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
+マルチトレインに　挑戦するには
+パートナーが　必要なのよ</language>
 	</row>
 
-	<row id="msg_bsw_scr_59">
-		<comment>マルチ　パートナー男</comment>
-		<language name="JPN" width="256">こんにちは！　○○○○○ちゃん！
+	<row id="msg_bsw_scr_59" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>マルチ　パートナー男
+・0＝主人公名前</comment>
+		<language name="JPN" width="256">こんにちは！　[1:00:トレーナー名:0]ちゃん！
 また　あったね！</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　○○○○○ちゃん！
-また　あったね！</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　[1:00:トレーナー名:0]ちゃん！
+また　会ったね！</language>
 	</row>
 
-	<row id="msg_bsw_scr_60">
-		<comment>マルチ　パートナー女</comment>
-		<language name="JPN" width="256">こんにちは！　○○○○○くん！
+	<row id="msg_bsw_scr_60" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>マルチ　パートナー女
+・0＝主人公名前</comment>
+		<language name="JPN" width="256">こんにちは！　[1:00:トレーナー名:0]くん！
 また　あったわね！</language>
-		<language name="JPN_KANJI" width="256">こんにちは！　○○○○○くん！
-また　あったわね！</language>
+		<language name="JPN_KANJI" width="256">こんにちは！　[1:00:トレーナー名:0]くん！
+また　会ったわね！</language>
 	</row>
 
 	<row id="msg_bsw_scr_61">
@@ -1011,11 +1030,11 @@
 くもうよ！　うん　うん　それがいい[BE:01:ページ切り替え（クリア）]
 じゃ　ぼくは　どんな　ポケモンを
 さんか　させればいい？</language>
-		<language name="JPN_KANJI" width="256">もしかして　きょうはひとり？？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">もしかして　きょうは1人？？[BE:01:ページ切り替え（クリア）]
 だったら　ぼくと　パートナーを
-くもうよ！　うん　うん　それがいい[BE:01:ページ切り替え（クリア）]
+組もうよ！　うん　うん　それがいい[BE:01:ページ切り替え（クリア）]
 じゃ　ぼくは　どんな　ポケモンを
-さんか　させればいい？</language>
+参加させればいい？</language>
 	</row>
 
 	<row id="msg_bsw_scr_62">
@@ -1025,11 +1044,11 @@
 くもうよ！　うん　うん　それがいいわ[BE:01:ページ切り替え（クリア）]
 じゃ　わたしは　どんな　ポケモンを
 さんか　させればいい？</language>
-		<language name="JPN_KANJI" width="256">もしかして　きょうはひとり？？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">もしかして　きょうは1人？？[BE:01:ページ切り替え（クリア）]
 だったら　わたしと　パートナーを
-くもうよ！　うん　うん　それがいいわ[BE:01:ページ切り替え（クリア）]
+組もうよ！　うん　うん　それがいいわ[BE:01:ページ切り替え（クリア）]
 じゃ　わたしは　どんな　ポケモンを
-さんか　させればいい？</language>
+参加させればいい？</language>
 	</row>
 
 	<row id="msg_bsw_scr_63">
@@ -1102,7 +1121,7 @@
 		<comment>マルチ　パートナー男</comment>
 		<language name="JPN" width="256">えー　ぼくと　くむき　ないの？[BE:01:ページ切り替え（クリア）]
 さよなら……</language>
-		<language name="JPN_KANJI" width="256">えー　ぼくと　くむき　ないの？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">えー　ぼくと　組む気ないの？[BE:01:ページ切り替え（クリア）]
 さよなら……</language>
 	</row>
 
@@ -1110,7 +1129,7 @@
 		<comment>マルチ　パートナー女</comment>
 		<language name="JPN" width="256">えー　わたしと　くむき　ないの？[BE:01:ページ切り替え（クリア）]
 さよなら……</language>
-		<language name="JPN_KANJI" width="256">えー　わたしと　くむき　ないの？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN_KANJI" width="256">えー　わたしと　組む気ないの？[BE:01:ページ切り替え（クリア）]
 さよなら……</language>
 	</row>
 
