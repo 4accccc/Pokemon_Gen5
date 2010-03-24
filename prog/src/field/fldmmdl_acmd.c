@@ -4288,7 +4288,7 @@ static int AC_SpiderRemove_1( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_ShinMuHoeru( MMDL * mmdl )
 {
-	MMDL_SetDrawStatus( mmdl, DRAW_STA_SHIN_MU_HOERU );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_SHINMU_B_HOERU );
 	MMDL_IncAcmdSeq( mmdl );
 	
 	return( TRUE );
@@ -4306,7 +4306,7 @@ static int AC_ShinMuFlyLeft0( MMDL * mmdl )
 	AC_WALK_WORK *work;
 	
 	work = MMDL_InitMoveCmdWork( mmdl, AC_WALK_WORK_SIZE );
-	work->draw_state = DRAW_STA_SHIN_MU_FLY;
+	work->draw_state = DRAW_STA_SHINMU_A_FLY;
 	work->wait = GRID_FRAME_4;
 	work->dir = DIR_LEFT;
 	work->val = GRID_VALUE_SPEED_4;
@@ -4368,7 +4368,7 @@ static int AC_ShinMuFlyUpper0( MMDL * mmdl )
   work = MMDL_InitMoveCmdWork( mmdl, AC_SHIN_MU_FLY_UPPPER_WORK_SIZE );
   work->value = FX32_ONE * 2;
 	
-  MMDL_SetDrawStatus( mmdl, DRAW_STA_SHIN_MU_FLY_UP );
+  MMDL_SetDrawStatus( mmdl, DRAW_STA_SHINMU_A_FLY_UP );
 	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
@@ -4414,7 +4414,7 @@ static int AC_ShinMuFlyUpper1( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_ShinMuGutari( MMDL * mmdl )
 {
-	MMDL_SetDrawStatus( mmdl, DRAW_STA_SHIN_MU_GUTARI );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_SHINMU_A_GUTARI );
 	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
@@ -4428,7 +4428,7 @@ static int AC_ShinMuGutari( MMDL * mmdl )
 //--------------------------------------------------------------
 static int AC_ShinMuTurn( MMDL * mmdl )
 {
-	MMDL_SetDrawStatus( mmdl, DRAW_STA_SHIN_MU_TURN );
+	MMDL_SetDrawStatus( mmdl, DRAW_STA_SHINMU_B_TURN );
 	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }

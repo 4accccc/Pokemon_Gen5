@@ -390,14 +390,28 @@
 //--------------------------------------------------------------
 ///  フィールド動作モデル シン・ム描画ステータス
 //--------------------------------------------------------------
-#define DRAW_STA_SHIN_MU_STOP 0x00
-#define DRAW_STA_SHIN_MU_STOP_MAX (DRAW_STA_SHIN_MU_STOP+4)
-#define DRAW_STA_SHIN_MU_HOERU  (DRAW_STA_SHIN_MU_STOP_MAX)
-#define DRAW_STA_SHIN_MU_FLY (DRAW_STA_SHIN_MU_STOP_MAX+1)
-#define DRAW_STA_SHIN_MU_FLY_UP (DRAW_STA_SHIN_MU_STOP_MAX+2)
-#define DRAW_STA_SHIN_MU_GUTARI (DRAW_STA_SHIN_MU_STOP_MAX+3)
-#define DRAW_STA_SHIN_MU_TURN (DRAW_STA_SHIN_MU_STOP_MAX+4)
-#define DRAW_STA_SHIN_MU_MAX (DRAW_STA_SHIN_MU_STOP_MAX+5)
+#define DRAW_STA_SHINMU_A_STOP_DOWN 0x00
+#define DRAW_STA_SHINMU_A_GUTARI (DRAW_STA_MAX)
+#define DRAW_STA_SHINMU_A_FLY_UP (DRAW_STA_MAX+1)
+#define DRAW_STA_SHINMU_A_FLY (DRAW_STA_MAX+2)
+#define DRAW_STA_SHINMU_A_MAX (DRAW_STA_MAX+3)
+
+#define DRAW_STA_SHINMU_A_ANMNO_STOP   0x00
+#define DRAW_STA_SHINMU_A_ANMNO_GUTARI 0x01
+#define DRAW_STA_SHINMU_A_ANMNO_FLY_UP 0x02
+#define DRAW_STA_SHINMU_A_ANMNO_FLY    0x03
+#define DRAW_STA_SHINMU_A_ANMNO_MAX    0x04
+
+#define DRAW_STA_SHINMU_B_STOP 0x00
+#define DRAW_STA_SHINMU_B_HOERU     (DRAW_STA_MAX)
+#define DRAW_STA_SHINMU_B_TURN      (DRAW_STA_MAX+1)
+#define DRAW_STA_SHINMU_B_MAX (DRAW_STA_MAX+2)
+
+#define DRAW_STA_SHINMU_B_ANMNO_STOP_U   0x00
+#define DRAW_STA_SHINMU_B_ANMNO_STOP_D   0x01
+#define DRAW_STA_SHINMU_B_ANMNO_HOERU    0x02
+#define DRAW_STA_SHINMU_B_ANMNO_TURN     0x03
+#define DRAW_STA_SHINMU_B_ANMNO_MAX      0x04
 
 //--------------------------------------------------------------
 ///  フィールド動作モデル くもの巣専用描画ステータス

@@ -1449,51 +1449,76 @@ static void DrawBlActShinMu_Delete( MMDL *mmdl )
 //--------------------------------------------------------------
 static void DrawBlActShinMu_Draw( MMDL *mmdl )
 {
-  u16 status,anm_id,dir;
-  u16 init_flag = FALSE;
+  u16 status,code;
   VecFx32 pos;
+  u16 init_flag = FALSE;
   DRAW_BLACT_WORK *work;
   GFL_BBDACT_SYS *actSys;
-  COMMAN_ANMCTRL_WORK *anmcnt;
   
   work = MMDL_GetDrawProcWork( mmdl );
-  anmcnt = &work->anmcnt; 
 
-  work = MMDL_GetDrawProcWork( mmdl );
-  
   if( work->actID == MMDL_BLACTID_NULL ){ //–¢“o˜^
     return;
   }
   
   actSys = MMDL_BLACTCONT_GetBbdActSys( MMDL_GetBlActCont(mmdl) );
+  
+  code = MMDL_GetOBJCode( mmdl );
   status = MMDL_GetDrawStatus( mmdl );
-  dir = blact_GetDrawDir( mmdl );
   
-  if( status >= DRAW_STA_SHIN_MU_MAX ){
-    OS_Printf( "MMDL ƒVƒ“ƒ€ ‘Î‰žo—ˆ‚È‚¢•`‰æƒXƒe[ƒ^ƒX‚ª—ˆ‚Ä‚¢‚Ü‚·\n" );
-    status = DRAW_STA_SHIN_MU_STOP;
-  }
-  
-  if( status != anmcnt->set_anm_status ){
-    anmcnt->set_anm_dir = dir;
-    anmcnt->set_anm_status = status;
-    anm_id = status;
+  if( code == SHIN_A || code == MU_A ){
+    u16 anm_idx = DRAW_STA_SHINMU_A_ANMNO_STOP;
     
-    if( status == DRAW_STA_SHIN_MU_STOP ){ //’âŽ~Œn‚Í•ûŒüØ‚è‘Ö‚¦
-      anm_id = status + dir;
-    }
-    
-    GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
-    GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
-    init_flag = TRUE;
-  }else if( dir != anmcnt->set_anm_dir ){
-    anmcnt->set_anm_dir = dir;
+    if( status != work->anmcnt.set_anm_status ){
+      switch( status ){
+      case DRAW_STA_SHINMU_A_GUTARI:
+        anm_idx = DRAW_STA_SHINMU_A_ANMNO_GUTARI;
+        break;
+      case DRAW_STA_SHINMU_A_FLY_UP:
+        anm_idx = DRAW_STA_SHINMU_A_ANMNO_FLY_UP;
+        break;
+      case DRAW_STA_SHINMU_A_FLY:
+        anm_idx = DRAW_STA_SHINMU_A_ANMNO_FLY;
+        break;
+      }
 
-    if( anmcnt->set_anm_status == DRAW_STA_SHIN_MU_STOP ){ //’âŽ~Œn
-      anm_id = status + dir;
-      GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
-      GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, 0 );
+      work->anmcnt.set_anm_status = status;
+      GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
       init_flag = TRUE;
+    }
+  }else{ //B
+    u16 dir = blact_GetDrawDir( mmdl );
+    u16 anm_idx = DRAW_STA_SHINMU_B_ANMNO_STOP_U;
+    
+    if( status < DRAW_STA_MAX ){ //Šî–{Œ`
+      if( dir != work->anmcnt.set_anm_dir ||
+          status != work->anmcnt.set_anm_status ){
+        if( dir == DIR_UP ){
+          anm_idx = DRAW_STA_SHINMU_B_ANMNO_STOP_U;
+        }else if( dir == DIR_DOWN ){
+          anm_idx = DRAW_STA_SHINMU_B_ANMNO_STOP_D;
+        }
+        
+        work->anmcnt.set_anm_dir = dir;
+        work->anmcnt.set_anm_status = status;
+        GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
+        init_flag = TRUE;
+      }
+    }else{
+      if( status != work->anmcnt.set_anm_status ){
+        switch( status ){
+        case DRAW_STA_SHINMU_B_HOERU:
+          anm_idx = DRAW_STA_SHINMU_B_ANMNO_HOERU;
+          break;
+        case DRAW_STA_SHINMU_B_TURN:
+          anm_idx = DRAW_STA_SHINMU_B_ANMNO_TURN;
+          break;
+        }
+
+        work->anmcnt.set_anm_status = status;
+        GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
+        init_flag = TRUE;
+      }
     }
   }
   
@@ -1502,7 +1527,7 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
   MMDL_GetDrawVectorPos( mmdl, &pos );
   blact_SetCommonOffsPos( &pos );
   GFL_BBD_SetObjectTrans(
-    GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
+  GFL_BBDACT_GetBBDSystem(actSys), work->actID, &pos );
 }
 
 //--------------------------------------------------------------
