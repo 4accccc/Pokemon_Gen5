@@ -1431,7 +1431,7 @@ static void WFBC_DRAW_PARAM_SetUp( WFBC_DRAW_PARAM* p_wk, const FIELD_WFBC_CORE*
  *	@param	p_mapdata マップ情報
  */
 //-----------------------------------------------------------------------------
-#ifdef FIELD_WFBC_MAKE_MAPDATA_DEBUG
+#ifdef PM_DEBUG
 extern s16 DEBUG_FIELD_WFBC_MAKE_score;
 extern u16 DEBUG_FIELD_WFBC_MAKE_flag;
 #endif
@@ -1456,7 +1456,14 @@ static void WFBC_DRAW_PARAM_MakeMapData( WFBC_DRAW_PARAM* p_wk, const FIELD_WFBC
       if( block_tag.block_no != FIELD_WFBC_BLOCK_NONE )
       {
         // ブロックのスコアを計算
-        // ブロックの左上で計算
+        // ブロックの左上のみ計算
+        if( (block_tag.pos_x != 0) || (block_tag.pos_z != 0) )
+        {
+          // 左上ブロックの情報をそのまま保存
+          WFBC_NOW_MAPDATA_SetData( p_mapdata, j, i, block_tag, 
+              p_mapdata->map_now[i - block_tag.pos_z][j - block_tag.pos_x].block_id );
+        }
+        else
         {
           u32 block_lefttop_x, block_lefttop_z;
           block_lefttop_x = j - block_tag.pos_x;
@@ -1479,32 +1486,30 @@ static void WFBC_DRAW_PARAM_MakeMapData( WFBC_DRAW_PARAM* p_wk, const FIELD_WFBC
           }
           
           score += tbl_index*(FIELD_WFBC_BLOCK_PATCH_MAX/2);
-        }
-
         
-        
-        GF_ASSERT( score < FIELD_WFBC_BLOCK_PATCH_MAX );
+          GF_ASSERT( score < FIELD_WFBC_BLOCK_PATCH_MAX );
 
-        // 設定
-        cp_patch_data = &cp_block->patch[ block_tag.block_no ];
-        land_data_patch_id = cp_patch_data->patch[ score ];
+          // 設定
+          cp_patch_data = &cp_block->patch[ block_tag.block_no ];
+          land_data_patch_id = cp_patch_data->patch[ score ];
 
 #ifdef FIELD_WFBC_MAKE_MAPDATA_DEBUG
-        if( DEBUG_FIELD_WFBC_MAKE_flag )
-        {
-          int i;
-          for( i=0; i<FIELD_WFBC_BLOCK_PATCH_MAX; i++ )
+          if( DEBUG_FIELD_WFBC_MAKE_flag )
           {
-            if( cp_patch_data->patch[ i ] == DEBUG_FIELD_WFBC_MAKE_score )
+            int i;
+            for( i=0; i<FIELD_WFBC_BLOCK_PATCH_MAX; i++ )
             {
-              land_data_patch_id = DEBUG_FIELD_WFBC_MAKE_score;
+              if( cp_patch_data->patch[ i ] == DEBUG_FIELD_WFBC_MAKE_score )
+              {
+                land_data_patch_id = DEBUG_FIELD_WFBC_MAKE_score;
+              }
             }
           }
-        }
 #endif
 
-        // 情報の保存
-        WFBC_NOW_MAPDATA_SetData( p_mapdata, j, i, block_tag, land_data_patch_id );
+          // 情報の保存
+          WFBC_NOW_MAPDATA_SetData( p_mapdata, j, i, block_tag, land_data_patch_id );
+        }
       }
 
     }
@@ -1531,10 +1536,6 @@ static void DEBWIN_Update_WFPokeGet( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_WFPokeGet( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Update_WFBCBlockCheck( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_WFBCBlockCheck( void* userWork , DEBUGWIN_ITEM* item );
-
-// WFBC生成でバックチェック ONOFF
-extern u16 DEBUG_FIELD_WFBC_MAKE_flag;
-extern s16 DEBUG_FIELD_WFBC_MAKE_score;
 
 
 void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId, void* p_gdata )
@@ -1591,7 +1592,7 @@ static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item )
     {
       if( p_wk->back_people[i].data_in == FALSE )
       {
-        FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->people[i] );
+        FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->back_people[i] );
         p_wk->back_people[i].npc_id  = FIELD_WFBC_CORE_DEBUG_GetRandomNpcID( p_wk );
         p_wk->back_people[i].mood  = 0;
         p_wk->back_people[i].one_day_msk  = FIELD_WFBC_ONEDAY_MSK_INIT;
