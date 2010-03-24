@@ -46,7 +46,7 @@
 #include "msg/msg_gsync.h"
 #include "gsync.naix"
 #include "savedata/c_gear_picture.h"
-
+#include "field/tpoke_data.h"
 
 /*
 ■BGM■
@@ -843,10 +843,22 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
       pWork->msgBit = pWork->msgBit | 0x04;
     }
 
-    //ポケモンシンボルエンカウント
-    SymbolSave_SetFreeZone(SymbolSave_GetSymbolData(pWork->pSaveData), pDream->findPokemon,
-                   pDream->findPokemonTecnique, pDream->findPokemonSex, pDream->findPokemonForm,
-                   SYMBOL_ZONE_TYPE_FREE_SMALL);  //@todo ※check ポケモンNOからSMALL,LARGE判別を加える
+
+
+    {// データ読み込み・破棄
+       TPOKE_DATA* pTP =TPOKE_DATA_Create( pWork->heapID );
+      int size = SYMBOL_ZONE_TYPE_FREE_SMALL;
+      if(TPOKE_DATA_IsSizeBig( pTP, pDream->findPokemon, pDream->findPokemonSex,
+                               pDream->findPokemonForm )){
+        size = SYMBOL_ZONE_TYPE_FREE_LARGE;
+      }
+      //ポケモンシンボルエンカウント格納
+      SymbolSave_SetFreeZone(SymbolSave_GetSymbolData(pWork->pSaveData), pDream->findPokemon,
+                             pDream->findPokemonTecnique, pDream->findPokemonSex, pDream->findPokemonForm,
+                             size);
+      TPOKE_DATA_Delete( pTP );
+    }
+      
     //サインイン
     DREAMWORLD_SV_SetSignin(pDreamSave,pDream->signin);
     // 家具
