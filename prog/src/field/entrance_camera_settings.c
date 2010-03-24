@@ -62,6 +62,26 @@ void ENTRANCE_CAMERA_SETTINGS_LoadData( ENTRANCE_CAMERA_SETTINGS* dest, EXIT_TYP
     NARC_entrance_camera_exit_type_sp28_bin,   // EXIT_TYPE_SP28
     NARC_entrance_camera_exit_type_sp29_bin,   // EXIT_TYPE_SP29
     NARC_entrance_camera_exit_type_sp30_bin,   // EXIT_TYPE_SP30
+    NARC_entrance_camera_exit_type_sp31_bin,   // EXIT_TYPE_SP31
+    NARC_entrance_camera_exit_type_sp32_bin,   // EXIT_TYPE_SP32
+    NARC_entrance_camera_exit_type_sp33_bin,   // EXIT_TYPE_SP33
+    NARC_entrance_camera_exit_type_sp34_bin,   // EXIT_TYPE_SP34
+    NARC_entrance_camera_exit_type_sp35_bin,   // EXIT_TYPE_SP35
+    NARC_entrance_camera_exit_type_sp36_bin,   // EXIT_TYPE_SP36
+    NARC_entrance_camera_exit_type_sp37_bin,   // EXIT_TYPE_SP37
+    NARC_entrance_camera_exit_type_sp38_bin,   // EXIT_TYPE_SP38
+    NARC_entrance_camera_exit_type_sp39_bin,   // EXIT_TYPE_SP39
+    NARC_entrance_camera_exit_type_sp40_bin,   // EXIT_TYPE_SP40
+    NARC_entrance_camera_exit_type_sp41_bin,   // EXIT_TYPE_SP41
+    NARC_entrance_camera_exit_type_sp42_bin,   // EXIT_TYPE_SP42
+    NARC_entrance_camera_exit_type_sp43_bin,   // EXIT_TYPE_SP43
+    NARC_entrance_camera_exit_type_sp44_bin,   // EXIT_TYPE_SP44
+    NARC_entrance_camera_exit_type_sp45_bin,   // EXIT_TYPE_SP45
+    NARC_entrance_camera_exit_type_sp46_bin,   // EXIT_TYPE_SP46
+    NARC_entrance_camera_exit_type_sp47_bin,   // EXIT_TYPE_SP47
+    NARC_entrance_camera_exit_type_sp48_bin,   // EXIT_TYPE_SP48
+    NARC_entrance_camera_exit_type_sp49_bin,   // EXIT_TYPE_SP49
+    NARC_entrance_camera_exit_type_sp50_bin,   // EXIT_TYPE_SP50
   };
 
   // à¯êîÉGÉâÅ[
