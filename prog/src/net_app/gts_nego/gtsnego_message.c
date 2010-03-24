@@ -124,7 +124,6 @@ struct _GTSNEGO_MESSAGE_WORK {
   GFL_BMPWIN* titleDispWin;
   
   GFL_BMPWIN* MyStatusDispWin[SCROLL_PANEL_NUM];
-  GFL_BMPWIN* FriendTitleWin;
 
   GFL_BMPWIN* mainMsgWin;
   GFL_BMPWIN* pmsMsgWin;
@@ -227,15 +226,25 @@ void GTSNEGO_MESSAGE_End(GTSNEGO_MESSAGE_WORK* pWork)
   GFL_STR_DeleteBuffer(pWork->pStrBuf);
   GFL_STR_DeleteBuffer(pWork->pStrBufStream);
   GFL_STR_DeleteBuffer(pWork->pExStrBuf);
-
   
+  _PMSDrawExit( pWork );
 
+  if(pWork->pStream){
+    PRINTSYS_PrintStreamDelete( pWork->pStream );
+    pWork->pStream = NULL;
+  }
+  
   WORDSET_Delete(pWork->pWordSet );
+
+  if(pWork->pAppWin){
+    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+    pWork->pAppWin = NULL;
+  }
+  
   APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
-  _PMSDrawExit( pWork );
 
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
@@ -255,6 +264,11 @@ void GTSNEGO_MESSAGE_End(GTSNEGO_MESSAGE_WORK* pWork)
   if(pWork->systemDispWin){
     GFL_BMPWIN_Delete(pWork->systemDispWin);
   }
+  if(pWork->titleDispWin){
+    GFL_BMPWIN_Delete(pWork->titleDispWin);
+  }
+
+
   for(i=0;i< _BMP_WINDOW_NUM;i++){
     if(pWork->mainDispWin[i]){
       GFL_BMPWIN_Delete(pWork->mainDispWin[i]);
@@ -264,9 +278,6 @@ void GTSNEGO_MESSAGE_End(GTSNEGO_MESSAGE_WORK* pWork)
     if(pWork->MyStatusDispWin[i]){
       GFL_BMPWIN_Delete(pWork->MyStatusDispWin[i]);
     }
-  }
-  if(pWork->FriendTitleWin){
-    GFL_BMPWIN_Delete(pWork->FriendTitleWin);
   }
 
 	GFL_BMPWIN_Exit();
@@ -1115,7 +1126,10 @@ void GTSNEGO_MESSAGE_PMSDrawInit(GTSNEGO_MESSAGE_WORK* pWork, GTSNEGO_DISP_WORK*
 //----------------------------------------------------------------------------------
 static void _PMSDrawExit( GTSNEGO_MESSAGE_WORK* pWork )
 {
-  PMS_DRAW_Exit( pWork->pms_draw_work );
+  if(pWork->pms_draw_work){
+    PMS_DRAW_Exit( pWork->pms_draw_work );
+    pWork->pms_draw_work =NULL;
+  }
 }
 
 
@@ -1221,6 +1235,8 @@ void GTSNEGO_MESSAGE_CancelButtonCreate(GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBack
   GFL_MSG_GetString(pWork->pMsgData, GTSNEGO_020, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+
+  GF_ASSERT(pWork->pAppWin==NULL);
   pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
                                            pWork->appitem, 16 - 5, 24-3, 10, pWork->heapID);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);

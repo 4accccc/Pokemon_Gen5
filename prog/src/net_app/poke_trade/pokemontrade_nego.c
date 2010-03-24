@@ -1426,12 +1426,17 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
     if( NHTTP_ERROR_NONE == error )
     {
       void* p_buff  = NHTTP_RAP_GetRecvBuffer(pWork->pNHTTP);
-      pWork->evilCheck[0] = NHTTP_RAP_EVILCHECK_GetStatusCode( p_buff );
+      pWork->evilCheck[0] = NHTTP_RAP_EVILCHECK_GetStatusCode( p_buff );  //ŒŸ¸Œ‹‰ÊŠi”[
       _CHANGE_STATE(pWork, _PokeEvilChkEnd);
     }
     else if( NHTTP_ERROR_BUSY != error )
-    { 
+    {
+      //@todoƒGƒ‰[‚ð”­¶‚³‚¹‚é
 //      WIFIBATTLEMATCH_NETERR_SetNhttpError( &p_wk->error, error );
+      _CHANGE_STATE(pWork, NULL);
+    }
+    else{
+      return;
     }
     NHTTP_RAP_PokemonEvilCheckDelete(pWork->pNHTTP);
     if(pWork->pNHTTP)
@@ -1440,7 +1445,6 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
       pWork->pNHTTP  = NULL;
     }
   }
-  _CHANGE_STATE(pWork, _PokeEvilChkEnd);
 
 }
 
@@ -1467,6 +1471,9 @@ static void _PokeEvilChk(POKEMON_TRADE_WORK* pWork)
   }
   NHTTP_RAP_PokemonEvilCheckConectionCreate(pWork->pNHTTP);
 
+  NHTTP_RAP_StartConnect(pWork->pNHTTP);
+
+  
   _CHANGE_STATE(pWork, _PokeEvilChk2);
 }
 

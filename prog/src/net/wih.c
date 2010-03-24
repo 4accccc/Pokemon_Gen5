@@ -1934,11 +1934,8 @@ static void WH_StateOutStartChild(void *arg)
 		// でしょうが、ここではとりあえずエラーの一種としておいて
 		// メイン側で対応します。
 
-#ifdef PM_DEBUG
-		if(cb->reason==0x8003){
-			GF_ASSERT_MSG(0,"Disconnect reason %d\n", cb->reason);
-		}
-#endif
+    //以前 0x8003が多く出るといわれたので PRINTだけ残す事に  基本エラー
+    NET_PRINT("Disconnect reason %d\n", cb->reason);
 		WH_TRACE("Disconnected from Parent\n");
 		WH_SetError(WH_ERRCODE_DISCONNECTED);
 		WH_ChangeSysState(WH_SYSSTATE_ERROR);

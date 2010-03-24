@@ -398,7 +398,7 @@ static int _playerDirectSub2( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUBSTARTCALL);
   }
   else{  // いいえを選択した場合
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_ENDCALL);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_ENDCALL2);
   }
   EndMessageWindowOff(wk);
 
@@ -446,6 +446,26 @@ static int _playerDirectEndCall( WIFIP2PMATCH_WORK *wk, int seq )
 }
 
 
+//------------------------------------------------------------------
+/**
+ * @brief   親機が何をするか選択 WIFIP2PMATCH_PLAYERDIRECT_ENDCALL2
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectEndCall2( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  u8 command;
+  
+  command = WIFIP2PMATCH_PLAYERDIRECT_END2;
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND, 1, &command)){
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+  }
+  return seq;
+}
+
+
 
 
 //------------------------------------------------------------------
@@ -485,6 +505,7 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
   case WIFIP2PMATCH_PLAYERDIRECT_VCT:
     {
       _vctcheckCommon(wk);
+      _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_VCT);  // VCT中になる
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT);
     }
     break;
@@ -1400,6 +1421,32 @@ static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1016, FALSE);
+  }
+  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
+  return seq;
+}
+
+
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   指定モード終了2 WIFIP2PMATCH_PLAYERDIRECT_END2
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectEnd2( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
+  GFL_NET_StateWifiMatchEnd(TRUE);
+
+  if(GFL_NET_IsParentMachine()){
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1038, FALSE);
+  }
+  else{
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1010, FALSE);
   }
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
   return seq;

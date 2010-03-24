@@ -159,7 +159,7 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   G2S_BlendNone();
 
   G2_BlendNone();
-  IRC_POKETRADEDEMO_SetModel( pWork, TRADEDOWN_OBJECT);  //ダウン用モデル
+  IRC_POKETRADEDEMO_SetModel( pWork, TRADEMIDDLE_OBJECT);  //ダウン用モデル
   
   IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1),TRUE );  //相手裏
   IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0),TRUE );  //みかた裏
@@ -169,7 +169,7 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   MCSS_SetVanishFlag( pWork->pokeMcss[2] );
   MCSS_SetVanishFlag( pWork->pokeMcss[3] );
   POKEMONTRADE_DEMO_PTC_Init(pWork->pPokemonTradeDemo);
-  POKEMONTRADE_DEMO_ICA_Init(pWork->pPokemonTradeDemo,_DEMO_TYPE_DOWN);  //ICAダウン用
+  POKEMONTRADE_DEMO_ICA_Init(pWork->pPokemonTradeDemo,_DEMO_TYPE_MIDDLE);  //ICA MIDDLE用
 
 
   _setNextAnim(pWork, _POKEUP_WHITEIN_START);

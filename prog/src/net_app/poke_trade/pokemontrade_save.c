@@ -283,10 +283,10 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
     pWork->pParentWork->selectBoxno = pWork->selectBoxno;
     pWork->pParentWork->selectIndex = pWork->selectIndex;
 
-    if(pWork->pParentWork->pParty){
-      PokeParty_Init( pWork->pParentWork->pParty, TEMOTI_POKEMAX );
-      PokeParty_Add( pWork->pParentWork->pParty, pp );
-    }
+    GF_ASSERT(pWork->pParentWork->pParty);
+    
+    PokeParty_Init( pWork->pParentWork->pParty, TEMOTI_POKEMAX );
+    PokeParty_Add( pWork->pParentWork->pParty, pp );
   }
 
 

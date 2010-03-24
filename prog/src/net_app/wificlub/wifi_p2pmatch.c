@@ -385,7 +385,7 @@ enum{
 #define _COL_N_WHITE  ( GFL_FONTSYS_SetColor( 15, 2, 0 ) )   // フォントカラー：白
 #define _COL_N_RED      ( GFL_FONTSYS_SetColor( 3, 4, 0 ) )   // フォントカラー：青
 #define _COL_N_BLUE     ( GFL_FONTSYS_SetColor( 5, 6, 0 ) )   // フォントカラー：赤
-#define _COL_N_GRAY   ( GFL_FONTSYS_SetColor( 2, 14, 0 ) )    // フォントカラー：灰
+#define _COL_N_GRAY   ( GFL_FONTSYS_SetColor( 1, 2, 0 ) )    // フォントカラー：灰
 
 // 名前表示BMP（上画面）
 #define WIFIP2PMATCH_NAME_BMP_W  ( 16 )
@@ -989,6 +989,10 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectVCTChange5,  //WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE5
   _playerDirectVCTChange6,  //WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE6
   _parentModeSelectMenuInit2, //WIFIP2PMATCH_MODE_SELECT_INIT2
+  _playerDirectEnd2, //WIFIP2PMATCH_PLAYERDIRECT_END2,
+  _playerDirectEndCall2, //WIFIP2PMATCH_PLAYERDIRECT_ENDCALL2,
+
+  
 };
 
 #define _MAXNUM   (2)         // 最大接続人数
@@ -3551,6 +3555,9 @@ static int WifiP2PMatch_VCTConnectWait( WIFIP2PMATCH_WORK *wk, int seq )        
     if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
       EndMessageWindowOff(wk);
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_1015, FALSE);
+
+      _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_VCT);  // VCT中になる
+
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT);
     }
     else{
@@ -3575,7 +3582,7 @@ static int WifiP2PMatch_VCTConnect( WIFIP2PMATCH_WORK *wk, int seq )
 
   // 通信リセットされるとindexが0より小さくなる
   // そしたら切断
-  if( GFL_NET_DWC_GetFriendIndex() < 0 ){
+  if( (GFL_NET_DWC_GetFriendIndex() < 0 ) || (GFL_NET_DWC_IsDisconnect()) ){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_016, FALSE);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
     return seq;
@@ -5668,15 +5675,16 @@ static void _myStatusChange(WIFIP2PMATCH_WORK *wk, int status,int gamemode)
 //-----------------------------------------------------------------------------
 static void _myStatusChange_not_send(WIFIP2PMATCH_WORK *wk, int status,int gamemode)
 {
-  int org_status;
+  int org_status,org_mode;
 
   if(wk->pMatch==NULL){  //0707
     return;
   }
 
   org_status = _WifiMyStatusGet( wk, wk->pMatch );
+  org_mode = _WifiMyGameModeGet(wk, wk->pMatch);
 
-  if(org_status != status){
+  if((org_status != status) || (org_mode != gamemode)){
     _commStateChange(wk,status,gamemode);
 
     WIFI_STATUS_SetWifiStatus(wk->pMatch,status);
@@ -5961,6 +5969,7 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
   if( wk->view.user_disp == MCV_USERDISP_INIT ){
     wk->view.user_disp = MCV_USERDISP_ON;
     //    wk->view.user_dispno = WF_USERDISPTYPE_NRML;
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     MCVSys_UserDispDraw( wk, heapID );
   }
 
@@ -6056,9 +6065,12 @@ static BOOL MCVSys_UserDispEndCheck( WIFIP2PMATCH_WORK *wk  )
     }
   }
   //  移動はcontボタンはトリガー
-  if( (GFL_UI_KEY_GetCont() & (PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_KEY_UP|PAD_KEY_DOWN)) ||
-      (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B|PAD_BUTTON_X)) 
-      ){
+//  if( (GFL_UI_KEY_GetCont() & (PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_KEY_UP|PAD_KEY_DOWN)) ||
+//      (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B|PAD_BUTTON_X)) 
+//      ){
+
+  if( (GFL_UI_KEY_GetCont() & (PAD_KEY_LEFT|PAD_KEY_RIGHT|PAD_KEY_UP|PAD_KEY_DOWN)) ){
+
     return TRUE;
   }
 

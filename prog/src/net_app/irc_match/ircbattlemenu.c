@@ -142,8 +142,8 @@ enum _BATTLETYPE_SELECT {
 };
 
 enum _TEMOTIORBOXTYPE_SELECT {
-  _SELECTPOKE_TEMOTI = 0,
-  _SELECTPOKE_BOX,
+  _SELECTPOKE_BOX = 0,
+  _SELECTPOKE_TEMOTI,
   _SELECTPOKE_EXIT,
   _SELECTPOKE_MAX,
 };
@@ -1171,13 +1171,13 @@ static BOOL _modeTemotiOrBoxButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
   switch(bttnid){
   case _SELECTPOKE_TEMOTI:
 		PMSND_PlaySystemSE(_SE_DESIDE);
-    pWork->bBattelBox = _SELECTPOKE_TEMOTI;
+    pWork->bBattelBox = 0;
     _CHANGE_STATE(pWork,_modeTemotiOrBoxButtonFlash);
     ret=TRUE;
     break;
   case _SELECTPOKE_BOX:
 		PMSND_PlaySystemSE(_SE_DESIDE);
-    pWork->bBattelBox = _SELECTPOKE_BOX;
+    pWork->bBattelBox = 1;
     _CHANGE_STATE(pWork,_modeTemotiOrBoxButtonFlash);
     ret=TRUE;
     break;
@@ -1202,7 +1202,7 @@ static BOOL _modeTemotiOrBoxButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeTemotiOrBoxInit(IRC_BATTLE_MENU* pWork)
 {
-  int aMsgBuff[]={IRCBTL_STR_42,IRCBTL_STR_41};
+  int aMsgBuff[]={IRCBTL_STR_41,IRCBTL_STR_42};
 
   _CreateButtonObj4(pWork);
   _touchScreenChange( pWork, NARC_cg_comm_comm_vs2_btn_NSCR);

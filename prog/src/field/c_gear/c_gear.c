@@ -1088,13 +1088,16 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     _editMarkONOFF(pWork, pWork->bPanelEdit);
     break;
   case 2:
+    PMSND_PlaySE( SEQ_SE_MSCL_07 );
     FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_CGEAR_HELP);
     //help
     break;
   case 3:
+    PMSND_PlaySE( SEQ_SE_MSCL_07 );
     FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW);
     break;
   case 4:
+    PMSND_PlaySE( SEQ_SE_MSCL_07 );
     FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_SCANRADAR);
     break;
   case 5:

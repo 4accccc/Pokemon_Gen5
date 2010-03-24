@@ -244,6 +244,7 @@ static void _CreateScrollBarObj(GTSNEGO_DISP_WORK* pWork, BOOL bCursor);
 static void _DeleteScrollBarObj(GTSNEGO_DISP_WORK* pWork);
 static void GTSNEGO_DISP_UnionWkScroll(GTSNEGO_DISP_WORK* pWork,int workIndex, int move);
 static void _paletteModeChange(GTSNEGO_DISP_WORK* pWork, int mode);
+static void _BGPanelFree(GTSNEGO_DISP_WORK* pWork);
 
 
 
@@ -301,6 +302,8 @@ void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
   GFL_CLACT_WK_Remove(pWork->crossIcon);
 
   _RemoveMenuBarObj(pWork);
+  _BGPanelFree(pWork);
+
 
   _ArrowRelease(pWork);
   GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_NEGOOBJ] );
@@ -897,6 +900,14 @@ void GTSNEGO_DISP_FriendSelectInit(GTSNEGO_DISP_WORK* pWork, BOOL bCursor)
   pWork->bgscrollRenew=TRUE;
 }
 
+static void _BGPanelFree(GTSNEGO_DISP_WORK* pWork)
+{
+  if(pWork->pBGPanelScrAddr){
+    GFL_HEAP_FreeMemory(pWork->pBGPanelScrAddr);
+    pWork->pBGPanelScrAddr=NULL;
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	フレンド選択パネルを書く
@@ -985,11 +996,7 @@ void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork)
       pWork->unionOAM[i]=NULL;
     }
   }
-
-  if(pWork->pBGPanelScrAddr){
-    GFL_HEAP_FreeMemory(pWork->pBGPanelScrAddr);
-    pWork->pBGPanelScrAddr=NULL;
-  }
+  _BGPanelFree(pWork);
 
   
   _DeleteScrollBarObj(pWork);
@@ -1664,7 +1671,7 @@ void GTSNEGO_DISP_ResetDispSet(GTSNEGO_DISP_WORK* pWork)
                                               pWork->heapID);
     GFL_ARC_CloseDataHandle(p_handle);
 
-    GTSNEGO_DISP_FriendSelectFree(pWork);
+    _BGPanelFree(pWork);
     _RemoveSearchPeople(pWork);
     
     GFL_BG_SetVisible( GFL_BG_FRAME2_M,FALSE );

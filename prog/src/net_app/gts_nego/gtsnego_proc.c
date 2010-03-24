@@ -471,14 +471,21 @@ static void _LevelKeyCallback(BOOL bRight,GTSNEGO_WORK* pWork)
 }
 
 
-
-
+static void _wipeEnd( GTSNEGO_WORK *pWork )
+{
+  if(WIPE_SYS_EndCheck()){
+    _CHANGE_STATE(pWork, NULL);        // I‚í‚è
+  }
+}
 
 
 static void _messageEnd( GTSNEGO_WORK *pWork )
 {
-  if(GFL_UI_TP_GetTrg() || GFL_UI_KEY_GetTrg()){
-    _CHANGE_STATE(pWork, NULL);
+  pWork->timer--;
+  if(pWork->timer==0){
+    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    _CHANGE_STATE(pWork, _wipeEnd);
   }
 }
 
@@ -495,6 +502,9 @@ static void _messagePMS( GTSNEGO_WORK *pWork )
 
   pWork->timer--;
   if(pWork->timer==0){
+    EVENT_GTSNEGO_WORK *pParent = pWork->dbw;
+    pParent->result = TRUE;
+    pWork->timer = _FRIEND_GREE_DOWN_TIME;
     GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork, GTSNEGO_040);
     GTSNEGO_MESSAGE_PMSDrawInit(pWork->pMessageWork, pWork->pDispWork);
     GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, pPMS);
@@ -548,6 +558,7 @@ static void _timingCheck2( GTSNEGO_WORK *pWork )
 static void _timingCheck4( GTSNEGO_WORK *pWork )
 {
   EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+  MYSTATUS* pTargetSt;
   MYSTATUS* pMy = pEv->pStatus[1];
   BOOL res;   // •s³•¶ŽšŒŸ¸Š®—¹
 #if (PM_VERSION==VERSION_WHITE)
@@ -563,6 +574,9 @@ static void _timingCheck4( GTSNEGO_WORK *pWork )
       MyStatus_SetMyNameFromString(pMy, pWork->wordCheck);
       GFL_STR_DeleteBuffer(pWork->wordCheck);
     }
+    pTargetSt = GAMEDATA_GetMyStatusPlayer(pWork->pGameData, 1-GFL_NET_SystemGetCurrentID());
+    MyStatus_Copy(pMy,pTargetSt);
+
     _CHANGE_STATE(pWork,_timingCheck2);
   }
 }
@@ -681,25 +695,23 @@ static void _friendGreeState( GTSNEGO_WORK *pWork )
   if(!GTSNEGO_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
+#if _DISP_DEBUG
+  _CHANGE_STATE(pWork,_timingCheck);
+#else
 
   if(pWork->timer>0){
     pWork->timer--;
   }
-  else{
-#if _DISP_DEBUG
-    _CHANGE_STATE(pWork,_timingCheck);
-#else
+  else if(GFL_NET_HANDLE_GetNumNegotiation()==2){
     EVENT_GTSNEGO_WORK *pParent = pWork->dbw;
-
     pParent->aUser[0].selectLV = pWork->myChageType;
     pParent->aUser[0].selectType = pWork->changeMode;
     WIFI_NEGOTIATION_SV_GetMsg(GAMEDATA_GetWifiNegotiation(pWork->pGameData),&pWork->myMatchData.pms);
     pWork->myMatchData.num = WIFI_NEGOTIATION_SV_GetChangeCount(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO2, WB_NET_GTSNEGO);
-    
     _CHANGE_STATE(pWork,_timingCheck);
-#endif
   }
+#endif
 }
 
 
@@ -1055,6 +1067,9 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
 
 static void _levelSelect( GTSNEGO_WORK *pWork )
 {
+  pWork->changeMode = 0;
+
+
   GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
   GTSNEGO_DISP_LevelInputInit(pWork->pDispWork);
   pWork->touch = &_LevelButtonCallback;
@@ -1062,7 +1077,8 @@ static void _levelSelect( GTSNEGO_WORK *pWork )
   GTSNEGO_MESSAGE_DispLevel(pWork->pMessageWork, &_BttnCallBack, pWork);
 
   GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_025);
-  
+
+  GF_ASSERT(pWork->pAppWin==NULL);
   pWork->pAppWin = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork,GTSNEGO_023);
 
   _CHANGE_STATE(pWork,_levelSelectWait);
@@ -1185,7 +1201,6 @@ static void _friendSelectDecide3( GTSNEGO_WORK *pWork )
 
       GTSNEGO_MESSAGE_TitleMessage(pWork->pMessageWork,GTSNEGO_018);
 
-//      GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork);
       GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork, &_cancelButtonCallback, pWork );
 
       _CHANGE_STATE(pWork,_matchKeyMake);
@@ -1223,9 +1238,6 @@ static void _friendSelectDecide( GTSNEGO_WORK *pWork )
 
   
   _CHANGE_STATE(pWork,_friendSelectDecide2);
-
-
-  //_CHANGE_STATE(pWork,_matchKeyMake);
 }
 
 
@@ -1394,6 +1406,9 @@ static void _friendSelect( GTSNEGO_WORK *pWork )
   BOOL bCursor = TRUE;
   int a = WIFI_NEGOTIATION_SV_GetFriendNum(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
 
+  pWork->changeMode = 1;
+
+  
   
   if(a==0){
     GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_034);
@@ -1431,6 +1446,8 @@ static void _friendSelect( GTSNEGO_WORK *pWork )
                               pWork->scrollPanelCursor.oamlistpos + pWork->key3 - _CROSSCUR_TYPE_FRIEND1,
                               pWork->scrollPanelCursor.listmax );
 
+
+  
   _CHANGE_STATE(pWork,_friendSelectWait);
 }
 
@@ -1592,16 +1609,14 @@ static void _modeSelectMenuWait(GTSNEGO_WORK* pWork)
   TOUCHBAR_Main(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));
   switch( TOUCHBAR_GetTrg(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork))){
   case TOUCHBAR_ICON_RETURN:
-    _CHANGE_STATE(pWork,NULL);
+    pWork->timer=1;
+    GFL_NET_Exit(NULL);
+    _CHANGE_STATE(pWork, _messageEnd);
     break;
   default:
     break;
   }
-
-
 }
-
-
 
 //------------------------------------------------------------------------------
 /**
@@ -1640,7 +1655,8 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
 
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
-  
+  PMSND_PlayBGM(SEQ_BGM_GTS);
+
   _CHANGE_STATE(pWork, _modeSelectMenuInit);
 
   return GFL_PROC_RES_FINISH;
@@ -1694,6 +1710,9 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
 
   if(pWork->pAppWin){
     APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+  }
+  if(pWork->pAppTask){
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
   }
 
   GTSNEGO_MESSAGE_End(pWork->pMessageWork);

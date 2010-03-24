@@ -114,12 +114,13 @@ typedef struct
   u8 bHeapError;  // HEAP確保失敗の場合
   u8 pausevchat; //vchat一時停止
   u8 blockClient;   // クライアントを接続禁止にする
-
   u8 closedflag;		// ConnectionClosedCallback でホスト数が1になったら切断処理に遷移するのか　TRUEで切断処理に遷移　080602 tomoya
   u8 saveing;  //セーブ中に1
   u8 bFriendSave;  //ともだちコードセーブ中に更新がかからないようにするフラグ
   u8 bWiFiFriendGroup;  ///< 友達と行うサービスかどうか
   u8 bConnectEnable;  ///< 接続許可と禁止を行う
+  u8 sendFinish;  //ack
+  u8 sendAck;     //ack
 } MYDWC_WORK;
 
 // 親機のAID
@@ -139,10 +140,12 @@ enum  _blockStatus{
 #define MYDWC_PACKET_SEQNO_POS 2
 
 #define MYDWC_GAME_PACKET 0x0001
-
 // タイムアウト処理を防ぐため、一定時間送信がない場合、
 // からのデータを送る。そのときの数字
 #define MYDWC_KEEPALIVE_PACKET 0x0002
+
+#define MYDWC_CHECK_PACKET 0x0003
+
 
 enum{
   MDSTATE_INIT,
@@ -205,6 +208,8 @@ static void _DWC_StartVChat(int heapID);
 static void* mydwc_AllocFunc( DWCAllocType name, u32   size, int align );
 static void mydwc_FreeFunc( DWCAllocType name, void* ptr,  u32 size  );
 static void _FuncNonSave(void);
+static void _sendAckMain(void);
+static int _SendToAck(void *data, int size);
 
 
 #if DEBUGPRINT_ON
@@ -778,6 +783,9 @@ static void finishcancel()
 
 int GFL_NET_DWC_stepmatch( int isCancel )
 {
+  _sendAckMain();
+
+  
   switch ( _dWork->state ){
   case MDSTATE_INIT:
   case MDSTATE_CONNECTING:
@@ -925,7 +933,10 @@ int GFL_NET_DWC_sendToServer(void *data, int size)
   if(FALSE == GFL_NET_DWC_canSendToServer()){
     return 0;
   }
-
+  if(!_dWork->sendFinish){
+    return 0;
+  }
+  
   MYDWC_DEBUGPRINT("mydwc_sendToServer(data=%d)\n", *((u32*)data));
 
   if( DWC_GetMyAID() == 0 )
@@ -960,6 +971,9 @@ int GFL_NET_DWC_sendToServer(void *data, int size)
 
     // 親機に向けてのみ送信
     DWC_SendReliableBitmap( 0x01, &(_dWork->sendBuffer[0]), size + 4);
+
+    _dWork->sendFinish=FALSE;
+
     //		MYDWC_DEBUGPRINT("-");
     //OHNO_PRINT("-");
     return 1;
@@ -993,6 +1007,9 @@ int GFL_NET_DWC_sendToClient(void *data, int size)
       // 送信バッファがいっぱいなどで送れない。
       return 0;
     }
+    if(!_dWork->sendFinish){
+      return 0;
+    }
 
     // 送信バッファにコピー
     *((u32*)&(_dWork->sendBuffer[0])) = MYDWC_GAME_PACKET | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);
@@ -1008,6 +1025,7 @@ int GFL_NET_DWC_sendToClient(void *data, int size)
       _dWork->sendbufflag = 0;
       return 0;
     }
+    _dWork->sendFinish=FALSE;
     //		MYDWC_DEBUGPRINT("-");
     //OHNO_PRINT(".");
   }
@@ -1029,33 +1047,33 @@ int GFL_NET_DWC_sendToClient(void *data, int size)
 }
 
 
+
+
+
 //==============================================================================
 /**
- * 他の相手に送信を行う関数
+ * @brief    送信を行う関数 ベース
  * @param   data - 送信するデータへのポインタ。size - 送信するデータのサイズ
  * @retval  1 - 成功　 0 - 失敗（送信バッファが詰まっている等）
  */
 //==============================================================================
-int GFL_NET_DWC_SendToOther(void *data, int size)
+static int _SendToBase(void *data, int size, int header)  
 {
   u16 bitmap;
 
   if( !(size < SIZE_SEND_BUFFER) ){
     return 0;
   }
-
-
   {
     // 相手に対してデータ送信。
-    if( _dWork->sendbufflag || !_isSendableReliable() ) // 送信バッファをチェック。
+ //   if( _dWork->sendbufflag || !_isSendableReliable() ) // 送信バッファをチェック。
+    if( _dWork->sendbufflag ) // 送信フラグをチェック。
     {
-      //            MYDWC_DEBUGPRINT("wifi failed %d %d\n",_dWork->sendbufflag,_isSendableReliable());
-      // 送信バッファがいっぱいなどで送れない。
       return 0;
     }
 
     // 送信バッファにコピー
-    *((u32*)&(_dWork->sendBuffer[0])) = MYDWC_GAME_PACKET | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);
+    *((u32*)&(_dWork->sendBuffer[0])) = header | (_dWork->myvchaton << MYDWC_PACKET_VCHAT_SHIFT);
     _dWork->sendBuffer[MYDWC_PACKET_SEQNO_POS] = ++_dWork->myseqno;
     MI_CpuCopy8( data, &(_dWork->sendBuffer[4]), size );
     _dWork->sendbufflag = 1;
@@ -1067,14 +1085,70 @@ int GFL_NET_DWC_SendToOther(void *data, int size)
       _dWork->sendbufflag = 0;
       return 0;
     }
+    
   }
+  return 1;
+}
 
+
+//==============================================================================
+/**
+ * 他の相手に送信を行う関数
+ * @param   data - 送信するデータへのポインタ。size - 送信するデータのサイズ
+ * @retval  1 - 成功　 0 - 失敗（送信バッファが詰まっている等）
+ */
+//==============================================================================
+static int _SendToAck(void *data, int size)
+{
+  u16 bitmap;
+
+  if(0==_SendToBase(data, size, MYDWC_CHECK_PACKET)){
+    return 0;
+  }
+  return 1;
+}
+
+
+//==============================================================================
+/**
+ * 他の相手に送信を行う関数
+ * @param   data - 送信するデータへのポインタ。size - 送信するデータのサイズ
+ * @retval  1 - 成功　 0 - 失敗（送信バッファが詰まっている等）
+ */
+//==============================================================================
+int GFL_NET_DWC_SendToOther(void *data, int size)
+{
+  if(!_dWork->sendFinish){
+    OS_TPrintf("sendFinish NONE\n");
+    return 0;
+  }
+  if(0==_SendToBase(data, size, MYDWC_GAME_PACKET)){
+    return 0;
+  }
+  OS_TPrintf("++send data\n");
+  _dWork->sendFinish=FALSE;
   // 自分自身の受信コールバックを呼び出す。
-
   if( _dWork->clientCallback != NULL ){
     _dWork->clientCallback(DWC_GetMyAID() , data, size);
   }
   return 1;
+}
+
+
+
+
+/*---------------------------------------------------------------------------*
+  
+ *---------------------------------------------------------------------------*/
+static void _sendAckMain(void)
+{
+  if(_dWork->sendAck){
+    int data=0;
+    if( _SendToAck(&data, 4)){
+      OS_TPrintf("++sendAck \n");
+      _dWork->sendAck = FALSE;
+    }
+  }
 }
 
 /*---------------------------------------------------------------------------*
@@ -1348,13 +1422,19 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
   if( (topcode & MYDWC_PACKETYPE_MASK) == MYDWC_GAME_PACKET ){
     _setOpVchat( topcode );
     _dWork->opseqno = buffer[MYDWC_PACKET_SEQNO_POS];
+    _dWork->sendAck = TRUE;
+    OS_TPrintf("++recv command\n");
+
+  }
+  else if( (topcode & MYDWC_PACKETYPE_MASK) == MYDWC_CHECK_PACKET ){  //arc returnコマンド
+    OS_TPrintf("++recv ack\n");
+    _dWork->sendFinish = TRUE;
+    return;
   }
   else {
-
     if( myvct_checkData( aid, buffer,size ) ) return;
-
     // 無意味な情報（コネクションを保持するためのものと思われる）
-    _setOpVchat( topcode );
+//    _setOpVchat( topcode );
     return;
   }
   //	MYDWC_DEBUGPRINT( "受信(%d)\n",*((s32*)buffer) );
@@ -2794,6 +2874,7 @@ void mydwc_releaseRecvBuffAll(void)
   for(i = 0 ; i < _WIFI_NUM_MAX ; i++){
     mydwc_releaseRecvBuff(i);
   }
+  _dWork->sendFinish = TRUE;
 
 }
 
@@ -2942,7 +3023,21 @@ void GFL_NET_DWC_SetCconnectionUserData(u32 data)
 
 
 
-
+//==============================================================================
+/**
+ * @brief   通信が切断したかどうか
+ * @retval  1 = 切断。0 =それ以外。
+ */
+//==============================================================================
+BOOL GFL_NET_DWC_IsDisconnect(void)
+{
+  if( _dWork->state == MDSTATE_DISCONNECT ||
+      _dWork->state == MDSTATE_ERROR_DISCONNECT ||
+      _dWork->state == MDSTATE_TIMEOUT ){
+    return TRUE;
+  }
+  return FALSE;
+}
 
 
 #endif //GFL_NET_WIFI

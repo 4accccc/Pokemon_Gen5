@@ -29,6 +29,7 @@ typedef struct {
   MYSTATUS* pStatus[2];
   u32 profileID[EVENT_GTSNEGO_RECONNECT_NUM];
   int count;
+  int result;
 } EVENT_GTSNEGO_WORK;
 
 typedef struct _GTSNEGO_WORK  GTSNEGO_WORK;

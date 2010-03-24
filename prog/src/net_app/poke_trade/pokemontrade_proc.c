@@ -1770,18 +1770,38 @@ static void _touchState_BeforeTimeing1Send(POKEMON_TRADE_WORK* pWork)
 
 
 
+static void _touchState_BeforeTimeing11Send(POKEMON_TRADE_WORK* pWork)
+{
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_FIRSTBOTH,WB_NET_TRADE_SERVICEID)){
+    GFL_NET_SetAutoErrorCheck(TRUE);
+    GFL_NET_SetNoChildErrorCheck(TRUE);
+ //   GFL_NET_SetWifiBothNet(TRUE);
+    _CHANGE_STATE(pWork,_touchState_BeforeTimeing1Send);
+  }
+}
+
+
 static void _touchState_BeforeTimeing1(POKEMON_TRADE_WORK* pWork)
 {
+
+  
 //  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
 //  POKETRADE_MESSAGE_WindowOpen(pWork);
   //メッセージ時計アイコン  @todo   エリアマネージャーにしかられる
 //  POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
 
-  WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
+  WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG2 );
 
-  _CHANGE_STATE(pWork,_touchState_BeforeTimeing1Send);
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_FIRSTBOTH, WB_NET_TRADE_SERVICEID );
+  
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    _CHANGE_STATE(pWork,_touchState_BeforeTimeing11Send);
+  }
+  else{
+    _CHANGE_STATE(pWork,_touchState_BeforeTimeing1Send);
+  }
   
 }
 
@@ -2815,7 +2835,7 @@ static void _gtsFirstMsgState(POKEMON_TRADE_WORK* pWork)
     POKETRADE_MESSAGE_WindowClear(pWork);
     POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
     if(GFL_NET_IsInit()){
-      GFL_NET_SetWifiBothNet(FALSE);
+//      GFL_NET_SetWifiBothNet(FALSE);
     }
    // _CHANGE_STATE(pWork, _touchState_BeforeTimeing1);
     _CHANGE_STATE(pWork,_touchState);
@@ -3169,6 +3189,8 @@ void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork)
 
 FS_EXTERN_OVERLAY(ui_common);
 FS_EXTERN_OVERLAY(app_mail);
+FS_EXTERN_OVERLAY(dpw_common);
+
 
 //------------------------------------------------------------------------------
 /**
@@ -3183,14 +3205,11 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   POKEMONTRADE_PARAM* pParentWork = pwk;
   POKEMON_TRADE_WORK *pWork = mywk;
 
-  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    GFL_NET_SetAutoErrorCheck(TRUE);
-    GFL_NET_SetNoChildErrorCheck(TRUE);
-    GFL_NET_SetWifiBothNet(TRUE);
-  }
   //オーバーレイ読み込み
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
   GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
+
   GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
 
   pWork->heapID = HEAPID_IRCBATTLE;
@@ -3304,6 +3323,9 @@ static GFL_PROC_RESULT PokemonTradeGTSNegoProcInit( GFL_PROC * proc, int * seq, 
   POKEMON_TRADE_WORK *pWork;
   int i;
 
+
+
+  
   pGTS = pParent->pNego;
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, HEAPSIZE_POKETRADE );
   pWork = GFL_PROC_AllocWork( proc, sizeof( POKEMON_TRADE_WORK ), HEAPID_IRCBATTLE );
@@ -3554,6 +3576,9 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
   int i;
   POKEMON_TRADE_WORK* pWork = mywk;
 
+
+
+  
   POKMEONTRADE_RemoveCoreResource(pWork);
 
   if(GFL_NET_IsInit()){
@@ -3588,6 +3613,7 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
 #endif// PM_DEBUG
   GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
   //オーバーレイ破棄
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
 
