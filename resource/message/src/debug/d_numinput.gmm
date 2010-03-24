@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="saitou" host="W00158" date="2010-03-23T16:03:03"/>
+	<create user="matsuda" host="W00142" date="2010-03-24T13:26:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -464,6 +464,21 @@
 		<comment>クイズ問題番号</comment>
 		<language name="JPN" width="240">クイズ</language>
 		<language name="JPN_KANJI" width="240">クイズ</language>
+	</row>
+
+	<row id="dni_palace_level" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="240">パレスレベル</language>
+		<language name="JPN_KANJI" width="240">パレスレベル</language>
+	</row>
+
+	<row id="dni_palace_level_white" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="240">しろレベル</language>
+		<language name="JPN_KANJI" width="240">白レベル</language>
+	</row>
+
+	<row id="dni_palace_level_black" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+		<language name="JPN" width="240">くろレベル</language>
+		<language name="JPN_KANJI" width="240">黒レベル</language>
 	</row>
 
 	<row id="dni_research_team" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">

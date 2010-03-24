@@ -42,6 +42,7 @@
 #include "effect_encount.h"
 
 #include "united_nations.h" 
+#include "savedata/intrude_save.h"
 
 //======================================================================
 //======================================================================
@@ -106,6 +107,10 @@ static u32 DebugGetGold(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetGold(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetQuiz(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetQuiz(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetWhiteLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetWhiteLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetBlackLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetBlackLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 #include "debug_numinput.cdat"
 
 static const DEBUG_NUMINPUT_PARAM DNUM_DATA_EventFlag;
@@ -152,6 +157,9 @@ static  const DEBUG_NUMINPUT_INITIALIZER DATA_united = {
 
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_Fortune = { 
   D_NINPUT_DATA_LIST,   NELEMS( DNI_FortuneList ), DNI_FortuneList, };
+
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_PalaceLevel = { 
+  D_NINPUT_DATA_LIST,   NELEMS( DNI_PalaceLevelList ), DNI_PalaceLevelList, };
 
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_researchTeam = { 
   D_NINPUT_DATA_LIST,   NELEMS(NumInputList_researchTeam), NumInputList_researchTeam, };
@@ -256,6 +264,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_top_scenario, (void*)NULL },
   { dni_top_united_nations, (void*)&DATA_united },
   { dni_top_fortune, (void*)&DATA_Fortune },
+  { dni_palace_level, (void*)&DATA_PalaceLevel },
   { dni_research_team, (void*)&DATA_researchTeam },
   { dni_q_today, (void*)&DATA_Q_today },
   { dni_q_total, (void*)&DATA_Q_total },
@@ -966,5 +975,46 @@ static void DebugSetQuiz(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u3
   DebugQuizNo = value;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief パレス白レベルゲット
+ */
+//--------------------------------------------------------------
+static u32 DebugGetWhiteLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return OccupyInfo_GetWhiteLevel( GAMEDATA_GetMyOccupyInfo(gamedata) );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief パレス白レベルセット
+ */
+//--------------------------------------------------------------
+static void DebugSetWhiteLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  occupy->white_level = value;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief パレス黒レベルゲット
+ */
+//--------------------------------------------------------------
+static u32 DebugGetBlackLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return OccupyInfo_GetBlackLevel( GAMEDATA_GetMyOccupyInfo(gamedata) );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief パレス黒レベルセット
+ */
+//--------------------------------------------------------------
+static void DebugSetBlackLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  occupy->black_level = value;
+}
 
 

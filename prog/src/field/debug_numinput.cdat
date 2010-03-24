@@ -52,6 +52,19 @@ static const DEBUG_NUMINPUT_LIST DNI_FortuneList[] = {
 #endif  //PM_DEBUG
 
 
+static const DEBUG_NUMINPUT_PARAM white_level_param = {
+ 0, OCCUPY_LEVEL_MAX, DebugGetWhiteLevel, DebugSetWhiteLevel,
+};
+static const DEBUG_NUMINPUT_PARAM black_level_param = {
+ 0, OCCUPY_LEVEL_MAX, DebugGetBlackLevel, DebugSetBlackLevel,
+};
+static const DEBUG_NUMINPUT_LIST DNI_PalaceLevelList[] = {
+  //gmm_id, param, dni_param
+  { dni_palace_level_white, 0, &white_level_param },
+  { dni_palace_level_black, 0, &black_level_param },
+
+};
+
 
 
 #include "debug_numinput_research.h"
