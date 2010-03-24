@@ -210,6 +210,8 @@ void PALACE_MAP_GMK_Move(FIELDMAP_WORK *fieldWork)
   if(  IsHit(wk, player) ){
     // 位置チェック
     FIELD_PLAYER_GetDirPos( player, FIELD_PLAYER_GetDir(player), &pos );
+    pos.x -= MMDL_VEC_X_GRID_OFFS_FX32;
+    pos.z -= MMDL_VEC_Z_GRID_OFFS_FX32;
 
     if( EVENTDATA_SYS_CheckPosDummyEvent( evsys, &pos ) ){
       wk->on        = TRUE;
