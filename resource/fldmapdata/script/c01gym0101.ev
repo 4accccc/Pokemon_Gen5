@@ -608,6 +608,9 @@ EVENT_START		ev_c01gym0101_leader1b_01
 			//トレーナーフラグセット
 			_TRAINER_FLAG_SET( TRID_WAITER_01 )
 			_TRAINER_FLAG_SET( TRID_WAITRESS_01 )
+			
+			//電光掲示板フラグセット
+			_FLAG_SET( SYS_FLAG_ELBOARD_C01GYMWIN )
 
 			//========================================//
 
@@ -736,6 +739,9 @@ EVENT_START		ev_c01gym0101_leader1a_01
 			_TRAINER_FLAG_SET( TRID_WAITER_01 )
 			_TRAINER_FLAG_SET( TRID_WAITRESS_01 )
 			
+			//電光掲示板フラグセット
+			_FLAG_SET( SYS_FLAG_ELBOARD_C01GYMWIN )
+			
 			//========================================//
 			
 
@@ -862,6 +868,9 @@ EVENT_START		ev_c01gym0101_leader1c_01
 			//トレーナーフラグセット
 			_TRAINER_FLAG_SET( TRID_WAITER_01 )
 			_TRAINER_FLAG_SET( TRID_WAITRESS_01 )
+
+			//電光掲示板フラグセット
+			_FLAG_SET( SYS_FLAG_ELBOARD_C01GYMWIN )
 
 			//========================================//
 

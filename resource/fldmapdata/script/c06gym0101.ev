@@ -225,7 +225,10 @@ _TALK_OBJ_START()
 
 		//D07POSイベント起動
 		$WK_SCENE_D07_RIVAL_01 = 1
-		
+
+		//電光掲示板フラグセット
+		_FLAG_SET( SYS_FLAG_ELBOARD_C06GYMWIN )
+
 		//========================================/
 
 	//ジムバッジを取得している場合

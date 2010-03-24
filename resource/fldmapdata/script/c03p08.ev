@@ -20,6 +20,9 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_init_c03p08
+_EVENT_DATA		ev_c03p08_businessman_01
+_EVENT_DATA		ev_c03p08_trainerw_01
+_EVENT_DATA		ev_bg_c03p08_sign_01
 _EVENT_DATA_END
 
 
@@ -43,3 +46,23 @@ INIT_EVENT_START	ev_init_c03p08
 
 INIT_EVENT_END
 
+/**************************************************************/
+/*		C03P08		BUSINESSMAN								  */
+/**************************************************************/
+EVENT_START		ev_c03p08_businessman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p08_bussinesman_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C03P08		TRAINERW								  */
+/**************************************************************/
+EVENT_START		ev_c03p08_trainerw_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03p08_trainerw_01 )
+EVENT_END
+
+/**************************************************************/
+/*		C03P08		SIGN									  */
+/**************************************************************/
+EVENT_START		ev_bg_c03p08_sign_01
+	_EASY_BGWIN_MSG( msg_c03p08_sign_01, TYPE_ROAD )
+EVENT_END

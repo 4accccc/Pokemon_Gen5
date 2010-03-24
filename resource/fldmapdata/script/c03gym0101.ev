@@ -269,6 +269,9 @@ ev_leader3_btl:
 	_TRAINER_FLAG_SET( TRID_JUGGLING_02 )
 	_TRAINER_FLAG_SET( TRID_JUGGLING_04 )
 
+	//電光掲示板フラグセット
+	_FLAG_SET( SYS_FLAG_ELBOARD_C03GYMWIN )
+
 	//================================================//
 
 	

@@ -29,7 +29,6 @@ _EVENT_DATA		ev_pos_d04r0101_stop_01
 _EVENT_DATA		ev_init_d04r0101
 _EVENT_DATA_END
 
-
 /**************************************************************/
 /*            FLAG_CHANGE_LABEL                               */
 /**************************************************************/
@@ -104,7 +103,7 @@ _TALK_OBJ_START()
 				_BALLOONWIN_CLOSE()
 			
 				//カセキその１入手処理
-				_ITEM_EVENT_KEYWAIT( ITEM_KAMENOKASEKI, 1 )
+				_ITEM_EVENT_KEYWAIT( ITEM_HUTANOKASEKI, 1 )
 
 				//========================================//
 				
@@ -122,7 +121,7 @@ _TALK_OBJ_START()
 				_BALLOONWIN_CLOSE()
 			
 				//カセキその２入手処理
-				_ITEM_EVENT_KEYWAIT( ITEM_TORINOKASEKI, 1 )
+				_ITEM_EVENT_KEYWAIT( ITEM_HANENOKASEKI, 1 )
 				
 				//========================================//
 				
@@ -174,7 +173,7 @@ _TALK_OBJ_START()
 				_BALLOONWIN_CLOSE()
 			
 				//カセキその１入手処理
-				_ITEM_EVENT_KEYWAIT( ITEM_KAMENOKASEKI, 1 )
+				_ITEM_EVENT_KEYWAIT( ITEM_HUTANOKASEKI, 1 )
 
 				//========================================//
 				
@@ -192,7 +191,7 @@ _TALK_OBJ_START()
 				_BALLOONWIN_CLOSE()
 			
 				//カセキその２入手処理
-				_ITEM_EVENT_KEYWAIT( ITEM_TORINOKASEKI, 1 )
+				_ITEM_EVENT_KEYWAIT( ITEM_HANENOKASEKI, 1 )
 
 				//========================================//
 				
