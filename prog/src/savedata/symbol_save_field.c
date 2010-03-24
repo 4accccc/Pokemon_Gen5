@@ -19,6 +19,46 @@
 
 //==================================================================
 /**
+ * シンボルポケモンを登録
+ *
+ * @param   symbol_save		シンボルセーブ領域へのポインタ
+ * @param   monsno        ポケモン番号
+ * @param   wazano		    技番号
+ * @param   sex		        性別(PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWN)
+ * @param   form_no		    フォルム番号
+ * @param   zone_type     SYMBOL_ZONE_TYPE
+ * @return  BOOL          TRUEのとき、登録できた
+ */
+//==================================================================
+BOOL SymbolSave_Field_Set( SYMBOL_SAVE_WORK *symbol_save,
+    u16 monsno, u16 wazano, u8 sex, u8 form_no, SYMBOL_ZONE_TYPE zone_type )
+{
+  if ( zone_type == SYMBOL_ZONE_TYPE_FREE_LARGE || zone_type == SYMBOL_ZONE_TYPE_FREE_SMALL )
+  {
+    //マップ拡張チェックなども含めてまかせてしまう
+    SymbolSave_SetFreeZone( symbol_save, monsno, wazano, sex, form_no, zone_type );
+  }
+  else
+  {
+    u32 no, start, end;
+    no = SymbolSave_CheckSpace( symbol_save, zone_type );
+    if ( no == SYMBOL_SPACE_NONE ) return FALSE;
+#if 0
+    if ( no == SYMBOL_SPACE_NONE ) {
+      SymbolSave_DataShift( symbol_save, start );
+      no = end - 1;
+    }
+#endif
+    symbol_save->symbol_poke[ no ].monsno = monsno;
+    symbol_save->symbol_poke[ no ].wazano = wazano;
+    symbol_save->symbol_poke[ no ].sex = sex;
+    symbol_save->symbol_poke[ no ].form_no = form_no;
+  }
+  return TRUE;
+}
+
+//==================================================================
+/**
  * シンボルポケモンの移動
  *
  * @param   symbol_save

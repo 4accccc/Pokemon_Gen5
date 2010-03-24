@@ -19,22 +19,27 @@ typedef struct _SYMBOL_SAVE_WORK SYMBOL_SAVE_WORK;
 //==============================================================================
 //  定数定義
 //==============================================================================
-///配置No
-enum{
-  SYMBOL_NO_START_KEEP_LARGE = 0,                             ///<キープゾーン(64x64)開始No
-  SYMBOL_NO_END_KEEP_LARGE = SYMBOL_NO_START_KEEP_LARGE + 10, ///<キープゾーン(64x64)終了No
-  SYMBOL_NO_START_KEEP_SMALL = SYMBOL_NO_END_KEEP_LARGE,      ///<キープゾーン(32x32)開始No
-  SYMBOL_NO_END_KEEP_SMALL = SYMBOL_NO_START_KEEP_SMALL + 10, ///<キープゾーン(32x32)終了No
-  
-  SYMBOL_NO_START_FREE_LARGE = SYMBOL_NO_END_KEEP_SMALL,      ///<フリーゾーン(64x64)開始No
-  SYMBOL_NO_END_FREE_LARGE = SYMBOL_NO_START_FREE_LARGE + 30, ///<フリーゾーン(64x64)終了No
-  SYMBOL_NO_START_FREE_SMALL = SYMBOL_NO_END_FREE_LARGE,      ///<フリーゾーン(32x32)開始No
-  SYMBOL_NO_END_FREE_SMALL = SYMBOL_NO_START_FREE_SMALL + 480,///<フリーゾーン(32x32)終了No
+enum {
+  SYMBOL_POKE_MAX         = 530,         ///<シンボルポケモン最大数
 
-  SYMBOL_POKE_MAX         = SYMBOL_NO_END_FREE_SMALL,         ///<シンボルポケモン最大数
+  SYMBOL_SPACE_NONE       = (0xffff),     ///<対象ゾーンに空きが無い事を示す値
 };
 
-/// ※SymbolZoneTypeDataNoと並びを同じにしておくこと！
+///1マップ(32x32)でのストック数
+#define SYMBOL_MAP_STOCK_SMALL    (20)
+///1マップ(64x64)でのストック数
+#define SYMBOL_MAP_STOCK_LARGE    (10)
+///キープゾーン、フリーゾーンの中で最も1マップ中、多くストック出来る数
+#define SYMBOL_MAP_STOCK_MAX      (SYMBOL_MAP_STOCK_SMALL)
+
+
+//--------------------------------------------------------------
+/**
+ * @brief シンボルポケモン保持領域指定IDの定義
+ *
+ * ※SymbolZoneTypeDataNoと並びを同じにしておくこと！
+ */
+//--------------------------------------------------------------
 typedef enum{
   SYMBOL_ZONE_TYPE_KEEP_LARGE,      ///<キープゾーン(64x64)専用エリア
   SYMBOL_ZONE_TYPE_KEEP_SMALL,      ///<キープゾーン(32x32)専用エリア
@@ -44,7 +49,9 @@ typedef enum{
   SYMBOL_ZONE_TYPE_KEEP_ALL,        ///<キープゾーンLARGEとSMALL両方
 }SYMBOL_ZONE_TYPE;
 
+//--------------------------------------------------------------
 ///マップ番号
+//--------------------------------------------------------------
 typedef enum{
   SYMBOL_MAP_ID_KEEP,               ///<MAP ID キープエリア(LARGE & SMALL)
   
@@ -54,10 +61,9 @@ typedef enum{
   SYMBOL_MAP_ID_FREE_SMALL_START = SYMBOL_MAP_ID_FREE_LARGE_END,  ///<MAP ID フリー(32x32)開始No
 }SYMBOL_MAP_ID;
 
-///対象ゾーンに空きが無い事を示す値
-#define SYMBOL_SPACE_NONE        (0xffff)
-
+//--------------------------------------------------------------
 ///シンボルマップ(64x64)のマップレベル(数字が大きいほど広い)
+//--------------------------------------------------------------
 typedef enum{
   SYMBOL_MAP_LEVEL_LARGE_NONE,      ///<マップが存在しない
   SYMBOL_MAP_LEVEL_LARGE_LEVEL_1,
@@ -65,7 +71,9 @@ typedef enum{
   SYMBOL_MAP_LEVEL_LARGE_MAX = SYMBOL_MAP_LEVEL_LARGE_LEVEL_1,
 }SYMBOL_MAP_LEVEL_LARGE;
 
+//--------------------------------------------------------------
 ///シンボルマップ(32x32)のマップレベル(数字が大きいほど広い)
+//--------------------------------------------------------------
 typedef enum{
   SYMBOL_MAP_LEVEL_SMALL_1,
   SYMBOL_MAP_LEVEL_SMALL_2,
@@ -78,18 +86,13 @@ typedef enum{
   SYMBOL_MAP_LEVEL_SMALL_MAX = SYMBOL_MAP_LEVEL_SMALL_7,
 }SYMBOL_MAP_LEVEL_SMALL;
 
-///1マップ(32x32)でのストック数
-#define SYMBOL_MAP_STOCK_SMALL    (20)
-///1マップ(64x64)でのストック数
-#define SYMBOL_MAP_STOCK_LARGE    (10)
-///キープゾーン、フリーゾーンの中で最も1マップ中、多くストック出来る数
-#define SYMBOL_MAP_STOCK_MAX      (SYMBOL_MAP_STOCK_SMALL)
-
 
 //==============================================================================
 //  構造体定義
 //==============================================================================
+//--------------------------------------------------------------
 ///シンボルエンカウント1匹分のセーブ
+//--------------------------------------------------------------
 typedef struct _SYMBOL_POKEMON{
   u32 monsno:11;        ///<ポケモン番号
   u32 wazano:10;        ///<技番号
@@ -99,7 +102,9 @@ typedef struct _SYMBOL_POKEMON{
 }SYMBOL_POKEMON;
 
 
+//--------------------------------------------------------------
 ///SYMBOL_ZONE_TYPE毎の配置Noの開始位置と終端位置を管理する構造体
+//--------------------------------------------------------------
 typedef struct{
   u16 start;
   u16 end;
@@ -109,24 +114,26 @@ typedef struct{
 //==============================================================================
 //  外部関数宣言
 //==============================================================================
-extern u32 SymbolSave_GetWorkSize( void );
-extern void SymbolSave_WorkInit(void *work);
-
 //----------------------------------------------------------
 //	セーブデータ取得のための関数
 //----------------------------------------------------------
 extern SYMBOL_SAVE_WORK* SymbolSave_GetSymbolData(SAVE_CONTROL_WORK* pSave);
+extern u32 SymbolSave_GetWorkSize( void );
+extern void SymbolSave_WorkInit(void *work);
+
 
 //--------------------------------------------------------------
 //  アクセス関数
 //--------------------------------------------------------------
-extern const SYMBOL_POKEMON * SymbolSave_GetSymbolPokemon(SYMBOL_SAVE_WORK *symbol_save, u32 no);
-extern u32 SymbolSave_CheckSpace(SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type);
+extern const SYMBOL_POKEMON * SymbolSave_GetSymbolPokemon(
+    const SYMBOL_SAVE_WORK *symbol_save, u32 no);
+extern u32 SymbolSave_CheckSpace(
+    const SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type);
 extern void SymbolSave_DataShift(SYMBOL_SAVE_WORK *symbol_save, u32 no);
 extern void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save, u16 monsno, u16 wazano, u8 sex, u8 form_no, SYMBOL_ZONE_TYPE zone_type);
 
 static inline u32 SymbolSave_CheckFreeZoneSpace(
-    SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type)
+    const SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type)
 { return SymbolSave_CheckSpace( symbol_save, zone_type ); }
 
 //--------------------------------------------------------------
@@ -138,3 +145,38 @@ extern SYMBOL_ZONE_TYPE SYMBOLZONE_GetZoneTypeFromNumber(u32 no);
 //  外部データ
 //==============================================================================
 extern const SYMBOL_ZONE_TYPE_DATA_NO SymbolZoneTypeDataNo[];
+
+
+
+//==============================================================================
+//  外部データアクセスのためのインライン関数
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * SYMBOL_ZONE_TYPEごとの保持データ最大数を取得
+ * @param zone_type
+ * @return  u16     保持データ最大数
+ */
+//--------------------------------------------------------------
+static inline u16 SYMBOLZONE_GetStockMax( SYMBOL_ZONE_TYPE zone_type )
+{
+  return SymbolZoneTypeDataNo[zone_type].end - SymbolZoneTypeDataNo[zone_type].start;
+}
+
+//--------------------------------------------------------------
+/// SYMBOL_ZONE_TYPEごとの保持データ開始ナンバーを取得
+//--------------------------------------------------------------
+static inline u16 SYMBOLZONE_GetStartNo( SYMBOL_ZONE_TYPE zone_type )
+{
+  return SymbolZoneTypeDataNo[zone_type].start;
+}
+
+//--------------------------------------------------------------
+/// SYMBOL_ZONE_TYPEごとの保持データ終了ナンバーを取得
+//--------------------------------------------------------------
+static inline u16 SYMBOLZONE_GetEndNo( SYMBOL_ZONE_TYPE zone_type )
+{
+  return SymbolZoneTypeDataNo[zone_type].end;
+}
+
+

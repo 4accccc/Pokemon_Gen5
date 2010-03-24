@@ -23,3 +23,21 @@ struct _SYMBOL_SAVE_WORK{
   u16 cipher_code;      ///<暗号化コード
 };
 
+//==============================================================================
+//  定数定義
+//==============================================================================
+//--------------------------------------------------------------
+///配置No
+//--------------------------------------------------------------
+enum{
+  SYMBOL_NO_START_KEEP_LARGE = 0,                             ///<キープゾーン(64x64)開始No
+  SYMBOL_NO_END_KEEP_LARGE = SYMBOL_NO_START_KEEP_LARGE + 10, ///<キープゾーン(64x64)終了No
+  SYMBOL_NO_START_KEEP_SMALL = SYMBOL_NO_END_KEEP_LARGE,      ///<キープゾーン(32x32)開始No
+  SYMBOL_NO_END_KEEP_SMALL = SYMBOL_NO_START_KEEP_SMALL + 10, ///<キープゾーン(32x32)終了No
+  
+  SYMBOL_NO_START_FREE_LARGE = SYMBOL_NO_END_KEEP_SMALL,      ///<フリーゾーン(64x64)開始No
+  SYMBOL_NO_END_FREE_LARGE = SYMBOL_NO_START_FREE_LARGE + 30, ///<フリーゾーン(64x64)終了No
+  SYMBOL_NO_START_FREE_SMALL = SYMBOL_NO_END_FREE_LARGE,      ///<フリーゾーン(32x32)開始No
+  SYMBOL_NO_END_FREE_SMALL = SYMBOL_NO_START_FREE_SMALL + 480,///<フリーゾーン(32x32)終了No
+};
+

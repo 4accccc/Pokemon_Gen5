@@ -98,7 +98,7 @@ SYMBOL_SAVE_WORK* SymbolSave_GetSymbolData(SAVE_CONTROL_WORK* pSave)
  * @return  SYMBOL_POKEMON  シンボルポケモンデータへのポインタ
  */
 //==================================================================
-const SYMBOL_POKEMON * SymbolSave_GetSymbolPokemon(SYMBOL_SAVE_WORK *symbol_save, u32 no)
+const SYMBOL_POKEMON * SymbolSave_GetSymbolPokemon(const SYMBOL_SAVE_WORK *symbol_save, u32 no)
 {
   GF_ASSERT( no < SYMBOL_POKE_MAX );
   return &symbol_save->symbol_poke[ no ];
@@ -115,10 +115,10 @@ const SYMBOL_POKEMON * SymbolSave_GetSymbolPokemon(SYMBOL_SAVE_WORK *symbol_save
  * @retval  u32           空きが無い場合：SYMBOL_SPACE_NONE
  */
 //==================================================================
-u32 SymbolSave_CheckSpace(SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type)
+u32 SymbolSave_CheckSpace(const SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type)
 {
   u32 i, start,end;
-  SYMBOL_POKEMON *spoke;
+  const SYMBOL_POKEMON *spoke;
   
   GF_ASSERT( zone_type < SYMBOL_ZONE_TYPE_KEEP_ALL );
   start = SymbolZoneTypeDataNo[zone_type].start;
@@ -201,6 +201,8 @@ void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save, u16 monsno, u16 wazan
 {
   u32 no, start, end;
   SYMBOL_POKEMON *spoke;
+
+  GF_ASSERT( zone_type == SYMBOL_ZONE_TYPE_FREE_LARGE || zone_type == SYMBOL_ZONE_TYPE_FREE_SMALL );
 
   start = SymbolZoneTypeDataNo[zone_type].start;
   end = SymbolZoneTypeDataNo[zone_type].end;

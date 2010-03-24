@@ -104,6 +104,10 @@
 #include "app/name_input.h"
 #include "waza_tool\wazano_def.h"
 
+#include "savedata/symbol_save.h"
+#include "savedata/symbol_save_notwifi.h"
+#include "savedata/symbol_save_field.h"
+
 FS_EXTERN_OVERLAY( d_iwasawa );
 
 //======================================================================
@@ -6780,22 +6784,62 @@ static GMEVENT_RESULT debugMenuSymbolPokeListEvent(GMEVENT *event, int *seq, voi
   return( GMEVENT_RES_CONTINUE );
 }
 
+#include "field/tpoke_data.h"
 //--------------------------------------------------------------
+/**
+ * @brief シンボルポケモンを満タンにする
+ */
 //--------------------------------------------------------------
 static void addSymbolPokemons( GAMESYS_WORK * gsys, SYMBOL_ZONE_TYPE zone_type )
 {
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   SAVE_CONTROL_WORK * svctrl = GAMEDATA_GetSaveControlWork( gamedata );
   SYMBOL_SAVE_WORK * symbol_save = SymbolSave_GetSymbolData( svctrl );
+  TPOKE_DATA * tpdata = TPOKE_DATA_Create( HEAPID_FIELDMAP );
+  BOOL need_large;
+
+  if ( zone_type == SYMBOL_ZONE_TYPE_KEEP_LARGE || zone_type == SYMBOL_ZONE_TYPE_FREE_LARGE ) {
+    need_large = TRUE;
+  } else {
+    need_large = FALSE;
+  }
   
   while ( SymbolSave_CheckSpace( symbol_save, zone_type ) != SYMBOL_SPACE_NONE )
   {
-    u16 monsno = GFUser_GetPublicRand0( 451 );
-    u8 sex = POKETOOL_GetSex( monsno, 0, 0 );
-    SymbolSave_SetFreeZone( symbol_save, monsno, 0, sex, 0, zone_type );
+    u16 monsno;
+    u8 sex;
+    do {
+      monsno = GFUser_GetPublicRand0( 492 ) + 1;
+      sex = POKETOOL_GetSex( monsno, 0, 0 );
+    } while ( need_large != TPOKE_DATA_IsSizeBig( gamedata, tpdata, monsno, sex, 0 ) );
+    SymbolSave_Field_Set( symbol_save, monsno, 0, sex, 0, zone_type );
   }
+  TPOKE_DATA_Delete( tpdata );
 }
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+static void countSymbolPoke( SYMBOL_SAVE_WORK * symbol_save, SYMBOL_ZONE_TYPE zone_type )
+{
+  u32 start, end, max, num;
+
+  start = SYMBOLZONE_GetStartNo( zone_type );
+  end = SYMBOLZONE_GetEndNo( zone_type );
+  max = end - start;
+  num = SymbolSave_CheckSpace( symbol_save, zone_type );
+  if ( num == SYMBOL_SPACE_NONE ) num = end;
+  switch ( zone_type ) {
+  case SYMBOL_ZONE_TYPE_KEEP_LARGE: OS_PutString("KEEP LARGE"); break;
+  case SYMBOL_ZONE_TYPE_KEEP_SMALL: OS_PutString("KEEP SMALL"); break;
+  case SYMBOL_ZONE_TYPE_FREE_LARGE: OS_PutString("FREE LARGE"); break;
+  case SYMBOL_ZONE_TYPE_FREE_SMALL: OS_PutString("FREE SMALL"); break;
+  }
+  OS_TPrintf(": %3d/%3d\n", num - start, max );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief シンボルポケモンの数え上げ
+ */
 //--------------------------------------------------------------
 static GMEVENT_RESULT symbolPokeCountupEvent( GMEVENT * event, int *seq, void *work )
 {
@@ -6814,21 +6858,11 @@ static GMEVENT_RESULT symbolPokeCountupEvent( GMEVENT * event, int *seq, void *w
       OS_Printf("%03d: monsno=%03d sex(%d) form(%d) waza(%d)\n", i,
           sympoke->monsno, sympoke->sex, sympoke->form_no, sympoke->wazano );
     }
-    num = SymbolSave_CheckSpace( symbol_save, SYMBOL_ZONE_TYPE_KEEP_LARGE );
-    if ( num == SYMBOL_SPACE_NONE ) num = SYMBOL_NO_END_KEEP_LARGE;
-    OS_Printf("KEEP LARGE: %3d\n", SYMBOL_NO_END_KEEP_LARGE - num );
+    countSymbolPoke( symbol_save, SYMBOL_ZONE_TYPE_KEEP_LARGE );
+    countSymbolPoke( symbol_save, SYMBOL_ZONE_TYPE_KEEP_SMALL );
+    countSymbolPoke( symbol_save, SYMBOL_ZONE_TYPE_FREE_LARGE );
+    countSymbolPoke( symbol_save, SYMBOL_ZONE_TYPE_FREE_SMALL );
 
-    num = SymbolSave_CheckSpace( symbol_save, SYMBOL_ZONE_TYPE_KEEP_SMALL );
-    if ( num == SYMBOL_SPACE_NONE ) num = SYMBOL_NO_END_KEEP_SMALL;
-    OS_Printf("KEEP SMALL: %3d\n", SYMBOL_NO_END_KEEP_SMALL - num );
-
-    num = SymbolSave_CheckSpace( symbol_save, SYMBOL_ZONE_TYPE_FREE_LARGE );
-    if ( num == SYMBOL_SPACE_NONE ) num = SYMBOL_NO_END_FREE_LARGE;
-    OS_Printf("FREE LARGE: %3d\n", SYMBOL_NO_END_FREE_LARGE - num );
-
-    num = SymbolSave_CheckSpace( symbol_save, SYMBOL_ZONE_TYPE_FREE_SMALL );
-    if ( num == SYMBOL_SPACE_NONE ) num = SYMBOL_NO_END_FREE_SMALL;
-    OS_Printf("FREE SMALL: %3d\n", SYMBOL_NO_END_FREE_SMALL - num );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -7163,7 +7197,7 @@ static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void 
     {
       SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(work->gmSys));
       SYMBOL_SAVE_WORK *symbolSave = SymbolSave_GetSymbolData(pSave);
-      SymbolSave_SetFreeZone( symbolSave , work->monsNo , work->wazaNo , work->sex , 0 , work->place );
+      SymbolSave_Field_Set( symbolSave , work->monsNo , work->wazaNo , work->sex , 0 , work->place );
     }
     *seq += 1;
     break;
