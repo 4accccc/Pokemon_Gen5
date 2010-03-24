@@ -410,11 +410,8 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
   
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
-    pos.x = posXArr[i];
     work->pokeWork[i] = STA_POKE_CreatePoke( work->pokeSys , work->musPoke[i] );
-    STA_POKE_SetPosition( work->pokeSys , work->pokeWork[i] , &pos );
 
-    pos.z -= FX32_CONST(30.0f); //‚Ð‚ÆƒLƒƒƒ‰‚ÌŒú‚Ý‚Í30‚ÆŒ©‚é
     STA_POKE_StopAnime( work->pokeSys , work->pokeWork[i] );
     STA_POKE_SetDrawItem( work->pokeSys , work->pokeWork[i] , TRUE );
   }
@@ -423,16 +420,28 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
   work->lightSys = STA_LIGHT_InitSystem(work->heapId , NULL );
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
+    lightpos.x = posXArr[i];
+
     if( work->shotData->spotBit & bit )
     {
-      lightpos.x = posXArr[i];
-      work->lightWork[i] = STA_LIGHT_CreateObject( work->lightSys , ALT_CIRCLE );
-      STA_LIGHT_SetPosition( work->lightSys , work->lightWork[i] , &lightpos );
+      pos.x = posXArr[i];
+      pos.y = FX32_CONST(120.0f);
+      pos.z -= FX32_CONST(30.0f); //‚Ð‚ÆƒLƒƒƒ‰‚ÌŒú‚Ý‚Í30‚ÆŒ©‚é
+      STA_POKE_SetPosition( work->pokeSys , work->pokeWork[i] , &pos );
+      lightpos.y = FX32_CONST(88.0f);
+      
     }
     else
     {
-      work->lightWork[i] = NULL;
+      pos.x = posXArr[i];
+      pos.y = FX32_CONST(160.0f);
+      pos.z -= FX32_CONST(30.0f); //‚Ð‚ÆƒLƒƒƒ‰‚ÌŒú‚Ý‚Í30‚ÆŒ©‚é
+      STA_POKE_SetPosition( work->pokeSys , work->pokeWork[i] , &pos );
+      lightpos.y = FX32_CONST(128.0f);
+      
     }
+    work->lightWork[i] = STA_LIGHT_CreateObject( work->lightSys , ALT_CIRCLE );
+    STA_LIGHT_SetPosition( work->lightSys , work->lightWork[i] , &lightpos );
     bit = bit<<1;
   }
 

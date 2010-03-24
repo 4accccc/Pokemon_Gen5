@@ -21,6 +21,7 @@
 #include "musical/musical_system.h"
 #include "sound/pm_sndsys.h"
 #include "savedata/mystatus.h"
+#include "musical/stage/sta_snd_def.h"  //拍手音の定義
 
 #include "test/ariizumi/ari_debug.h"
 
@@ -180,7 +181,7 @@ struct _MUS_COMM_WORK
   //親機専用
   BOOL isReqSendState;
   BOOL isReqSendAppealBonus;
-  u16  sendAppealBonusData[MUS_COMM_SEND_APPEALBONUS_BUFF]; // 
+  u32  sendAppealBonusData[MUS_COMM_SEND_APPEALBONUS_BUFF]; // 
 };
 
 //======================================================================
@@ -1125,8 +1126,9 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
   case MCFT_APPEAL_BONUS:
     {
       u8 i;
-      const u8 idx = (pkt->value>>8);
-      const u8 pos = (pkt->value&0x0F);
+      const u8 seType = ((pkt->value&0x00FF0000)>>16);
+      const u8 idx    = ((pkt->value&0x0000FF00)>>8);
+      const u8 pos    = ((pkt->value&0x000000FF));
       for( i=0;i<MUS_COMM_APPEALBONUS_NUM;i++ )
       {
         if( work->userData[idx].apeerPointBonus[i] == MUS_COMM_APPEALBONUS_INVALID )
@@ -1135,8 +1137,16 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
           break;
         }
       }
-      PMSND_PlaySE( SEQ_SE_MSCL_09 );
-      ARI_TPrintf("PostAppealBonus:[%d][%d]\n",idx,pos);
+      if( seType == 1 )
+      {
+        PMSND_PlaySE( STA_SE_CLAP_1 );
+      }
+      else
+      if( seType == 2 )
+      {
+        PMSND_PlaySE( STA_SE_CLAP_2 );
+      }
+      ARI_TPrintf("PostAppealBonus:[%d][%d][%d]\n",seType,idx,pos);
     }
     break;
   }
@@ -1801,14 +1811,14 @@ void MUS_COMM_ResetUseButtonAttention( MUS_COMM_WORK* work )
   work->useButtonAttentionPoke = MUSICAL_COMM_MEMBER_NUM;
 }
 
-void MUS_COMM_ReqSendAppealBonusPoke( MUS_COMM_WORK* work , const u8 idx , const u8 pos )
+void MUS_COMM_ReqSendAppealBonusPoke( MUS_COMM_WORK* work , const u8 idx , const u8 pos , const u8 seType)
 {
   u8 i;
   for( i=0;i<MUS_COMM_SEND_APPEALBONUS_BUFF;i++ )
   {
     if( work->sendAppealBonusData[i] == 0xFFFF )
     {
-      work->sendAppealBonusData[i] = (idx<<8) + pos;
+      work->sendAppealBonusData[i] = (seType<<16) + (idx<<8) + pos;
       work->isReqSendAppealBonus = TRUE;
       return;
     }

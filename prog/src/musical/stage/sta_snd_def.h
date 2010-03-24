@@ -21,4 +21,8 @@
 
 #define STA_SE_CLOSE_CURTAIN (SEQ_SE_MSCL_09)
 
+#define STA_SE_CLAP_3 (SEQ_SE_MSCL_09)  //”Žè‘å
+#define STA_SE_CLAP_2 (SEQ_SE_MSCL_10)  //”Žè’†
+#define STA_SE_CLAP_1 (SEQ_SE_MSCL_11)  //”Žè¬
+
 //  PMSND_PlaySE(  );

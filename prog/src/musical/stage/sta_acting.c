@@ -168,6 +168,7 @@ struct _ACTING_WORK
   u8      useItemPoke;  //一発逆転中ポケ
   u8      useItemPokePos;   //一発逆転中ポケ(使用箇所
   u16     useItemCnt;
+  BOOL    isUseItemSolo;  //ボーナス被り無しチェック
   
   //通信時に送るリクエスト
   BOOL    useItemReq;
@@ -212,6 +213,7 @@ static void STA_ACT_StartScript( ACTING_WORK *work );
 static void STA_ACT_UpdateAttention( ACTING_WORK *work );
 
 static void STA_ACT_UpdateUseItem( ACTING_WORK *work );
+static u32 STA_ACT_GetUseItemSe( ACTING_WORK *work , const u8 usePoke , const u8 usePos );
 
 static void STA_ACT_InitTransEffect( ACTING_WORK *work );
 static void STA_ACT_TermTransEffect( ACTING_WORK *work );
@@ -1452,6 +1454,15 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
     }
     if( usePokeNum > 0 )
     {
+      //すでにアイテム使ってるやつがいればFALSE
+      if( work->useItemPoke == MUSICAL_POKE_MAX )
+      {
+        work->isUseItemSolo = TRUE;
+      }
+      else
+      {
+        work->isUseItemSolo = FALSE;
+      }
       work->useItemCnt = ACT_USEITEM_EFF_TIME;
       work->useItemPoke = usePokeArr[ GFUser_GetPublicRand0(usePokeNum)];
       work->useItemPokePos = work->useItemPos[work->useItemPoke];
@@ -1465,6 +1476,15 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
       const u8 AttentionIdx = MUS_COMM_GetUseButtonAttention( work->initWork->commWork );
       if( AttentionIdx < MUSICAL_POKE_MAX )
       {
+        //すでにアイテム使ってるやつがいればFALSE
+        if( work->useItemPoke == MUSICAL_POKE_MAX )
+        {
+          work->isUseItemSolo = TRUE;
+        }
+        else
+        {
+          work->isUseItemSolo = FALSE;
+        }
         work->useItemCnt = ACT_USEITEM_EFF_TIME;
         work->useItemPoke = AttentionIdx;
         work->useItemPokePos = MUS_COMM_GetUseButtonPos( work->initWork->commWork , AttentionIdx );
@@ -1490,24 +1510,57 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
     work->useItemCnt--;
     if( work->useItemCnt == 0 )
     {
-      ARI_TPrintf("<ItemBonus!!Player[%d][%d]>\n",work->useItemPoke,work->useItemPokePos);
-      if( work->initWork->commWork == NULL )
+      //単独アピールに成功！
+      if( work->isUseItemSolo == TRUE )
       {
-        work->initWork->musPoke[work->useItemPoke]->isApeerBonus[work->useItemPokePos] = TRUE;
-        PMSND_PlaySE( SEQ_SE_MSCL_09 );
-      }
-      else
-      {
-        if( GFL_NET_IsParentMachine() == TRUE )
+        ARI_TPrintf("<ItemBonus!!Player[%d][%d]>\n",work->useItemPoke,work->useItemPokePos);
+        if( work->initWork->commWork == NULL )
         {
-          //親の状態でアイテム使用を評価
-          MUS_COMM_ReqSendAppealBonusPoke( work->initWork->commWork , work->useItemPoke , work->useItemPokePos );
+          const u32 seNo = STA_ACT_GetUseItemSe( work , work->useItemPoke , work->useItemPokePos );
+          work->initWork->musPoke[work->useItemPoke]->isApeerBonus[work->useItemPokePos] = TRUE;
+          PMSND_PlaySE( seNo );
         }
+        else
+        {
+          if( GFL_NET_IsParentMachine() == TRUE )
+          {
+            //親の状態でアイテム使用を評価
+            //SEは送り先でチェックしない
+            const u32 seNo = STA_ACT_GetUseItemSe( work , work->useItemPoke , work->useItemPokePos );
+            if( seNo == STA_SE_CLAP_1 )
+            {
+              MUS_COMM_ReqSendAppealBonusPoke( work->initWork->commWork , work->useItemPoke , work->useItemPokePos , 1 );
+            }
+            else
+            {
+              MUS_COMM_ReqSendAppealBonusPoke( work->initWork->commWork , work->useItemPoke , work->useItemPokePos , 2 );
+            }
+          }
+        }
+
       }
       work->useItemPoke = MUSICAL_POKE_MAX;
       work->isUpdateAttention = TRUE;
       
     }
+  }
+}
+
+//アピールが成功(被り無し)した時にSEを鳴らす
+static u32 STA_ACT_GetUseItemSe( ACTING_WORK *work , const u8 usePoke , const u8 usePos )
+{
+  MUS_ITEM_DATA_SYS *itemDataSys = STA_ACT_GetItemDataSys( work );
+  const u16 itemNo = work->initWork->musPoke[usePoke]->equip[usePos].itemNo;
+  const MUSICAL_CONDITION_TYPE conType = MUS_ITEM_DATA_GetItemConditionType( itemDataSys , itemNo );
+  const u8 conPoint = MUSICAL_PROGRAM_GetConOnePoint( work->initWork->progWork , conType );
+  
+  if( conPoint >= 7 )
+  {
+    return STA_SE_CLAP_2;
+  }
+  else
+  {
+    return STA_SE_CLAP_1;
   }
 }
 
