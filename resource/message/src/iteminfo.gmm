@@ -139,9 +139,9 @@
 		<language name="JPN" width="256">やせいの　ポケモンを　かならず
 つかまえることが　できる
 さいこう　せいのうの　ボール。</language>
-		<language name="JPN_KANJI" width="256">やせいの　ポケモンを　かならず
-つかまえることが　できる
-さいこう　せいのうの　ボール。</language>
+		<language name="JPN_KANJI" width="256">野生の　ポケモンを　必ず
+捕まえることが　できる
+最高　性能の　ボール。</language>
 	</row>
 
 	<row id="ITEMINFO_002">
@@ -149,8 +149,8 @@
 ポケモンを　つかまえやすくなった
 すごく　せいのうのいい　ボール。</language>
 		<language name="JPN_KANJI" width="256">スーパーボールよりも　さらに
-ポケモンを　つかまえやすくなった
-すごく　せいのうのいい　ボール。</language>
+ポケモンを　捕まえやすくなった
+すごく　性能のいい　ボール。</language>
 	</row>
 
 	<row id="ITEMINFO_003">
@@ -158,26 +158,26 @@
 ポケモンを　つかまえやすくなった
 すこし　せいのうのいい　ボール。</language>
 		<language name="JPN_KANJI" width="256">モンスターボールよりも　さらに
-ポケモンを　つかまえやすくなった
-すこし　せいのうのいい　ボール。</language>
+ポケモンを　捕まえやすくなった
+すこし　性能のいい　ボール。</language>
 	</row>
 
 	<row id="ITEMINFO_004">
 		<language name="JPN" width="256">やせいの　ポケモンに　なげて
 つかまえる　ための　ボール。
 カプセルしきに　なっている。</language>
-		<language name="JPN_KANJI" width="256">やせいの　ポケモンに　なげて
-つかまえる　ための　ボール。
-カプセルしきに　なっている。</language>
+		<language name="JPN_KANJI" width="256">野生の　ポケモンに　投げて
+捕まえるための　ボール。
+カプセル式に　なっている。</language>
 	</row>
 
 	<row id="ITEMINFO_005">
 		<language name="JPN" width="256">だいしつげんの　なか　だけで
 つかう　とくべつな　ボール。
 めいさいがらに　なっている。</language>
-		<language name="JPN_KANJI" width="256">だいしつげんの　なか　だけで
-つかう　とくべつな　ボール。
-めいさいがらに　なっている。</language>
+		<language name="JPN_KANJI" width="256">大湿原の　中だけで
+使う　特別な　ボール。
+迷彩柄に　なっている。</language>
 	</row>
 
 	<row id="ITEMINFO_006">
@@ -185,51 +185,51 @@
 ポケモンが　つかまえやすくなる
 ちょっと　かわった　ボール。</language>
 		<language name="JPN_KANJI" width="256">みずタイプと　むしタイプの
-ポケモンが　つかまえやすくなる
-ちょっと　かわった　ボール。</language>
+ポケモンが　捕まえやすくなる
+ちょっと　変わった　ボール。</language>
 	</row>
 
 	<row id="ITEMINFO_007">
 		<language name="JPN" width="256">みずの　せかいで　くらしている
 ポケモンが　つかまえやすくなる
 ちょっと　かわった　ボール。</language>
-		<language name="JPN_KANJI" width="256">みずの　せかいで　くらしている
-ポケモンが　つかまえやすくなる
-ちょっと　かわった　ボール。</language>
+		<language name="JPN_KANJI" width="256">水の　世界で　暮らしている
+ポケモンが　捕まえやすくなる
+ちょっと　変わった　ボール。</language>
 	</row>
 
 	<row id="ITEMINFO_008">
 		<language name="JPN" width="256">つかまえる　やせいの　ポケモンが
 よわいほど　つかまえやすくなる
 ちょっと　かわった　ボール。</language>
-		<language name="JPN_KANJI" width="256">つかまえる　やせいの　ポケモンが
-よわいほど　つかまえやすくなる
-ちょっと　かわった　ボール。</language>
+		<language name="JPN_KANJI" width="256">捕まえる　野生の　ポケモンが
+弱いほど　捕まえやすくなる
+ちょっと　変わった　ボール。</language>
 	</row>
 
 	<row id="ITEMINFO_009">
 		<language name="JPN" width="256">つかまえたことの　ある
 ポケモンが　つかまえやすくなる
 ちょっと　かわった　ボール。</language>
-		<language name="JPN_KANJI" width="256">つかまえたことの　ある
-ポケモンが　つかまえやすくなる
-ちょっと　かわった　ボール。</language>
+		<language name="JPN_KANJI" width="256">捕まえたことの　ある
+ポケモンが　捕まえやすくなる
+ちょっと　変わった　ボール。</language>
 	</row>
 
 	<row id="ITEMINFO_010">
 		<language name="JPN" width="256">ターンすうが　かかれば　かかるほど
 ポケモンが　つかまえやすくなる
 ちょっと　かわった　ボール。</language>
-		<language name="JPN_KANJI" width="256">ターンすうが　かかれば　かかるほど
-ポケモンが　つかまえやすくなる
-ちょっと　かわった　ボール。</language>
+		<language name="JPN_KANJI" width="256">ターン数が　かかれば　かかるほど
+ポケモンが　捕まえやすくなる
+ちょっと　変わった　ボール。</language>
 	</row>
 
 	<row id="ITEMINFO_011">
 		<language name="JPN" width="256">つかまえた　やせいポケモンが
 とても　なつきやすくなる
 いごこちの　いい　ボール。</language>
-		<language name="JPN_KANJI" width="256">つかまえた　やせいポケモンが
+		<language name="JPN_KANJI" width="256">捕まえた　野生ポケモンが
 とても　なつきやすくなる
 いごこちの　いい　ボール。</language>
 	</row>
@@ -238,26 +238,26 @@
 		<language name="JPN" width="256">なにかの　きねんの　しなとして
 とくべつに　つくられた
 ちょっと　めずらしい　ボール。</language>
-		<language name="JPN_KANJI" width="256">なにかの　きねんの　しなとして
-とくべつに　つくられた
-ちょっと　めずらしい　ボール。</language>
+		<language name="JPN_KANJI" width="256">なにかの　記念の　品として
+特別に　つくられた
+ちょっと　珍しい　ボール。</language>
 	</row>
 
 	<row id="ITEMINFO_013">
 		<language name="JPN" width="256">よるや　どうくつなど　くらいところで
 ポケモンが　つかまえやすくなる
 ちょっと　かわった　ボール。</language>
-		<language name="JPN_KANJI" width="256">よるや　どうくつなど　くらいところで
-ポケモンが　つかまえやすくなる
-ちょっと　かわった　ボール。</language>
+		<language name="JPN_KANJI" width="256">夜や　どうくつなど　暗いところで
+ポケモンが　捕まえやすくなる
+ちょっと　変わった　ボール。</language>
 	</row>
 
 	<row id="ITEMINFO_014">
 		<language name="JPN" width="256">つかまえた　ポケモンの　ＨＰと
 じょうたい　いじょうを　かいふくする
 ちょっと　やさしい　ボール。</language>
-		<language name="JPN_KANJI" width="256">つかまえた　ポケモンの　ＨＰと
-じょうたい　いじょうを　かいふくする
+		<language name="JPN_KANJI" width="256">捕まえた　ポケモンの　ＨＰと
+状態異常を　回復する
 ちょっと　やさしい　ボール。</language>
 	</row>
 
@@ -265,117 +265,117 @@
 		<language name="JPN" width="256">せんとうが　はじまって　すぐに
 つかうと　つかまえやすくなる
 ちょっと　かわった　ボール。</language>
-		<language name="JPN_KANJI" width="256">せんとうが　はじまって　すぐに
-つかうと　つかまえやすくなる
-ちょっと　かわった　ボール。</language>
+		<language name="JPN_KANJI" width="256">戦闘が　はじまって　すぐに
+使うと　捕まえやすくなる
+ちょっと　変わった　ボール。</language>
 	</row>
 
 	<row id="ITEMINFO_016">
 		<language name="JPN" width="256">なにかの　きねんの　しなとして
 とくべつに　つくられた
 かなり　めずらしい　ボール。</language>
-		<language name="JPN_KANJI" width="256">なにかの　きねんの　しなとして
-とくべつに　つくられた
-かなり　めずらしい　ボール。</language>
+		<language name="JPN_KANJI" width="256">なにかの　記念の　品として
+特別に　つくられた
+かなり　珍しい　ボール。</language>
 	</row>
 
 	<row id="ITEMINFO_017">
 		<language name="JPN" width="256">スプレーしきの　キズぐすり。
 ポケモン　１ひきの　ＨＰを
 ２０だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレーしきの　キズぐすり。
-ポケモン　１ひきの　ＨＰを
-２０だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　キズぐすり。
+ポケモン　１匹の　ＨＰを
+２０だけ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_018">
 		<language name="JPN" width="256">スプレーしきの　くすり。
 ポケモン　１ひきの　どくの
 じょうたいを　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレーしきの　くすり。
-ポケモン　１ひきの　どくの
-じょうたいを　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　くすり。
+ポケモン　１匹の　どくの
+状態を　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_019">
 		<language name="JPN" width="256">スプレーしきの　くすり。
 ポケモン　１ひきの　やけどの
 じょうたいを　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレーしきの　くすり。
-ポケモン　１ひきの　やけどの
-じょうたいを　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　くすり。
+ポケモン　１匹の　やけどの
+状態を　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_020">
 		<language name="JPN" width="256">スプレーしきの　くすり。
 ポケモン　１ひきの　こおりの
 じょうたいを　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレーしきの　くすり。
-ポケモン　１ひきの　こおりの
-じょうたいを　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　くすり。
+ポケモン　１匹の　こおりの
+状態を　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_021">
 		<language name="JPN" width="256">スプレーしきの　くすり。
 ポケモン　１ひきの　ねむりの
 じょうたいを　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレーしきの　くすり。
-ポケモン　１ひきの　ねむりの
-じょうたいを　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　くすり。
+ポケモン　１匹の　ねむりの
+状態を　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_022">
 		<language name="JPN" width="256">スプレーしきの　くすり。
 ポケモン　１ひきの　まひの
 じょうたいを　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレーしきの　くすり。
-ポケモン　１ひきの　まひの
-じょうたいを　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　くすり。
+ポケモン　１匹の　まひの
+状態を　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_023">
 		<language name="JPN" width="256">ポケモン　１ひきの　ＨＰと
 じょうたい　いじょうを　すべて
 かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ポケモン　１ひきの　ＨＰと
-じょうたい　いじょうを　すべて
-かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ポケモン　１匹の　ＨＰと
+状態異常を　すべて
+回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_024">
 		<language name="JPN" width="256">スプレーしきの　キズぐすり。
 ポケモン　１ひきの　ＨＰを
 すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレーしきの　キズぐすり。
-ポケモン　１ひきの　ＨＰを
-すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　キズぐすり。
+ポケモン　１匹の　ＨＰを
+すべて　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_025">
 		<language name="JPN" width="256">スプレーしきの　キズぐすり。
 ポケモン　１ひきの　ＨＰを
 ２００だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレーしきの　キズぐすり。
-ポケモン　１ひきの　ＨＰを
-２００だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　キズぐすり。
+ポケモン　１匹の　ＨＰを
+２００だけ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_026">
 		<language name="JPN" width="256">スプレーしきの　キズぐすり。
 ポケモン　１ひきの　ＨＰを
 ５０だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレーしきの　キズぐすり。
-ポケモン　１ひきの　ＨＰを
-５０だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　キズぐすり。
+ポケモン　１匹の　ＨＰを
+５０だけ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_027">
 		<language name="JPN" width="256">スプレーしきの　くすり。
 ポケモン　１ひきの　じょうたいの
 いじょうを　すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">スプレーしきの　くすり。
-ポケモン　１ひきの　じょうたいの
-いじょうを　すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">スプレー式の　くすり。
+ポケモン　１匹の　状態の
+異常を　すべて　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_028">
@@ -383,8 +383,8 @@
 ポケモン　１ひきの　ＨＰを
 はんぶんまで　かいふくする。</language>
 		<language name="JPN_KANJI" width="256">ひんしに　なってしまった
-ポケモン　１ひきの　ＨＰを
-はんぶんまで　かいふくする。</language>
+ポケモン　１匹の　ＨＰを
+半分まで　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_029">
@@ -392,8 +392,8 @@
 ポケモン　１ひきの　ＨＰを
 すべて　かいふくする。</language>
 		<language name="JPN_KANJI" width="256">ひんしに　なってしまった
-ポケモン　１ひきの　ＨＰを
-すべて　かいふくする。</language>
+ポケモン　１匹の　ＨＰを
+すべて　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_030">
@@ -401,8 +401,8 @@
 ポケモン　１ひきの　ＨＰを
 ５０だけ　かいふくする。</language>
 		<language name="JPN_KANJI" width="256">ミネラル　たっぷりの　みず。
-ポケモン　１ひきの　ＨＰを
-５０だけ　かいふくする。</language>
+ポケモン　１匹の　ＨＰを
+５０だけ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_031">
@@ -410,8 +410,8 @@
 ポケモン　１ひきの　ＨＰを
 ６０だけ　かいふくする。</language>
 		<language name="JPN_KANJI" width="256">シュワっと　はじける　ソーダ。
-ポケモン　１ひきの　ＨＰを
-６０だけ　かいふくする。</language>
+ポケモン　１匹の　ＨＰを
+６０だけ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_032">
@@ -419,17 +419,17 @@
 ポケモン　１ひきの　ＨＰを
 ８０だけ　かいふくする。</language>
 		<language name="JPN_KANJI" width="256">とても　あまい　ジュース。
-ポケモン　１ひきの　ＨＰを
-８０だけ　かいふくする。</language>
+ポケモン　１匹の　ＨＰを
+８０だけ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_033">
 		<language name="JPN" width="256">えいよう　まんてんの　ミルク。
 ポケモン　１ひきの　ＨＰを
 １００だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">えいよう　まんてんの　ミルク。
-ポケモン　１ひきの　ＨＰを
-１００だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">栄養満点の　ミルク。
+ポケモン　１匹の　ＨＰを
+１００だけ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_034">
@@ -437,8 +437,8 @@
 ポケモン　１ひきの　ＨＰを
 ５０だけ　かいふくする。</language>
 		<language name="JPN_KANJI" width="256">とても　にがい　こなぐすり。
-ポケモン　１ひきの　ＨＰを
-５０だけ　かいふくする。</language>
+ポケモン　１匹の　ＨＰを
+５０だけ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_035">
@@ -446,8 +446,8 @@
 ポケモン　１ひきの　ＨＰを
 ２００だけ　かいふくする。</language>
 		<language name="JPN_KANJI" width="256">とても　にがい　ねっこ。
-ポケモン　１ひきの　ＨＰを
-２００だけ　かいふくする。</language>
+ポケモン　１匹の　ＨＰを
+２００だけ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_036">
@@ -455,8 +455,8 @@
 ポケモン　１ひきの　じょうたいの
 いじょうを　すべて　かいふくする。</language>
 		<language name="JPN_KANJI" width="256">とても　にがい　こなぐすり。
-ポケモン　１ひきの　じょうたいの
-いじょうを　すべて　かいふくする。</language>
+ポケモン　１匹の　状態の
+異常を　すべて　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_037">
@@ -464,53 +464,53 @@
 ひんしの　ポケモン　１ひきの
 ＨＰを　すべて　かいふくする。</language>
 		<language name="JPN_KANJI" width="256">とても　にがい　やくそう。
-ひんしの　ポケモン　１ひきの
-ＨＰを　すべて　かいふくする。</language>
+ひんしの　ポケモン　１匹の
+ＨＰを　すべて　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_038">
 		<language name="JPN" width="256">ポケモンが　おぼえている
 わざのうち　１つの　ＰＰを
 １０だけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ポケモンが　おぼえている
-わざのうち　１つの　ＰＰを
-１０だけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
+技のうち　１つの　ＰＰを
+１０だけ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_039">
 		<language name="JPN" width="256">ポケモンが　おぼえている
 わざのうち　１つの　ＰＰを
 すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ポケモンが　おぼえている
-わざのうち　１つの　ＰＰを
-すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
+技のうち　１つの　ＰＰを
+すべて　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_040">
 		<language name="JPN" width="256">ポケモンが　おぼえている
 ４つの　わざの　ＰＰを
 １０ずつ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ポケモンが　おぼえている
-４つの　わざの　ＰＰを
-１０ずつ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
+４つの　技の　ＰＰを
+１０ずつ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_041">
 		<language name="JPN" width="256">ポケモンが　おぼえている
 ４つの　わざの　ＰＰを
 すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ポケモンが　おぼえている
-４つの　わざの　ＰＰを
-すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
+４つの　技の　ＰＰを
+すべて　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_042">
 		<language name="JPN" width="256">フエンめいぶつの　せんべい。
 ポケモン　１ひきの　じょうたいの
 いじょうを　すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">フエンめいぶつの　せんべい。
-ポケモン　１ひきの　じょうたいの
-いじょうを　すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">フエン名物の　せんべい。
+ポケモン　１匹の　状態の
+異常を　すべて　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_043">
@@ -518,8 +518,8 @@
 ポケモン　１ひきの　ＨＰを
 ２０だけ　かいふくする。</language>
 		<language name="JPN_KANJI" width="256">きのみ　１００％の　ジュース。
-ポケモン　１ひきの　ＨＰを
-２０だけ　かいふくする。</language>
+ポケモン　１匹の　ＨＰを
+２０だけ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_044">
@@ -527,53 +527,53 @@
 ポケモン　ぜんいんの　ＨＰを
 すべて　かいふくする。</language>
 		<language name="JPN_KANJI" width="256">ひんしに　なってしまった
-ポケモン　ぜんいんの　ＨＰを
-すべて　かいふくする。</language>
+ポケモン　全員の　ＨＰを
+すべて　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_045">
 		<language name="JPN" width="256">ポケモンの　えいようドリンク。
 ポケモン　１ひきの　ＨＰの
 きそポイントを　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　えいようドリンク。
-ポケモン　１ひきの　ＨＰの
-きそポイントを　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　栄養ドリンク。
+ポケモン　１匹の　ＨＰの
+基礎ポイントを　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_046">
 		<language name="JPN" width="256">ポケモンの　えいようドリンク。
 ポケモン　１ひきの　こうげきの
 きそポイントを　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　えいようドリンク。
-ポケモン　１ひきの　こうげきの
-きそポイントを　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　栄養ドリンク。
+ポケモン　１匹の　攻撃の
+基礎ポイントを　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_047">
 		<language name="JPN" width="256">ポケモンの　えいようドリンク。
 ポケモン　１ひきの　ぼうぎょの
 きそポイントを　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　えいようドリンク。
-ポケモン　１ひきの　ぼうぎょの
-きそポイントを　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　栄養ドリンク。
+ポケモン　１匹の　防御の
+基礎ポイントを　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_048">
 		<language name="JPN" width="256">ポケモンの　えいようドリンク。
 ポケモン　１ひきの　すばやさの
 きそポイントを　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　えいようドリンク。
-ポケモン　１ひきの　すばやさの
-きそポイントを　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　栄養ドリンク。
+ポケモン　１匹の　すばやさの
+基礎ポイントを　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_049">
 		<language name="JPN" width="256">ポケモンの　えいようドリンク。
 ポケモン　１ひきの　とくこうの
 きそポイントを　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　えいようドリンク。
-ポケモン　１ひきの　とくこうの
-きそポイントを　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　栄養ドリンク。
+ポケモン　１匹の　特攻の
+基礎ポイントを　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_050">
@@ -581,7 +581,7 @@
 あたえると　ポケモン　１ひきの
 レベルが　１だけ　あがる。</language>
 		<language name="JPN_KANJI" width="256">エネルギーの　つまった　アメ。
-あたえると　ポケモン　１ひきの
+あたえると　ポケモン　１匹の
 レベルが　１だけ　あがる。</language>
 	</row>
 
@@ -589,53 +589,53 @@
 		<language name="JPN" width="256">ポケモンが　おぼえている
 わざのうち　１つの　ＰＰの
 さいだいちを　すこし　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンが　おぼえている
-わざのうち　１つの　ＰＰの
-さいだいちを　すこし　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンが　覚えている
+技のうち　１つの　ＰＰの
+最大値を　すこし　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_052">
 		<language name="JPN" width="256">ポケモンの　えいようドリンク。
 ポケモン　１ひきの　とくぼうの
 きそポイントを　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　えいようドリンク。
-ポケモン　１ひきの　とくぼうの
-きそポイントを　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　栄養ドリンク。
+ポケモン　１匹の　特防の
+基礎ポイントを　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_053">
 		<language name="JPN" width="256">おぼえている　わざのうち
 １つの　ＰＰの　さいだいちを
 さいこうまで　あげる。</language>
-		<language name="JPN_KANJI" width="256">おぼえている　わざのうち
-１つの　ＰＰの　さいだいちを
-さいこうまで　あげる。</language>
+		<language name="JPN_KANJI" width="256">覚えている　技のうち
+１つの　ＰＰの　最大値を
+最高まで　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_054">
 		<language name="JPN" width="256">ハクタイの　かくれた　めいぶつ。
 ポケモン　１ひきの　じょうたいの
 いじょうを　すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ハクタイの　かくれた　めいぶつ。
-ポケモン　１ひきの　じょうたいの
-いじょうを　すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ハクタイの　隠れた　名物。
+ポケモン　１匹の　状態の
+異常を　すべて　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_055">
 		<language name="JPN" width="256">せんとうちゅう　５ターンの　あいだ
 みかたの　のうりょくを
 さげられなくする　どうぐ。</language>
-		<language name="JPN_KANJI" width="256">せんとうちゅう　５ターンの　あいだ
-みかたの　のうりょくを
-さげられなくする　どうぐ。</language>
+		<language name="JPN_KANJI" width="256">戦闘中　５ターンの　あいだ
+味方の　能力を
+さげられなくする　道具。</language>
 	</row>
 
 	<row id="ITEMINFO_056">
 		<language name="JPN" width="256">せんとうちゅう　きゅうしょに
 あたりやすくなる　どうぐ。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">せんとうちゅう　きゅうしょに
-あたりやすくなる　どうぐ。
+		<language name="JPN_KANJI" width="256">戦闘中　急所に
+あたりやすくなる　道具。
 ひっこめると　もとに　もどる。</language>
 	</row>
 
@@ -643,8 +643,8 @@
 		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
 こうげきを　あげる　どうぐ。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">せんとうちゅうの　ポケモンの
-こうげきを　あげる　どうぐ。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+攻撃を　あげる　道具。
 ひっこめると　もとに　もどる。</language>
 	</row>
 
@@ -652,8 +652,8 @@
 		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
 ぼうぎょを　あげる　どうぐ。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">せんとうちゅうの　ポケモンの
-ぼうぎょを　あげる　どうぐ。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+防御を　あげる　道具。
 ひっこめると　もとに　もどる。</language>
 	</row>
 
@@ -661,8 +661,8 @@
 		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
 すばやさを　あげる　どうぐ。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">せんとうちゅうの　ポケモンの
-すばやさを　あげる　どうぐ。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+すばやさを　あげる　道具。
 ひっこめると　もとに　もどる。</language>
 	</row>
 
@@ -670,8 +670,8 @@
 		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
 めいちゅうを　あげる　どうぐ。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">せんとうちゅうの　ポケモンの
-めいちゅうを　あげる　どうぐ。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+命中を　あげる　道具。
 ひっこめると　もとに　もどる。</language>
 	</row>
 
@@ -679,8 +679,8 @@
 		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
 とくこうを　あげる　どうぐ。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">せんとうちゅうの　ポケモンの
-とくこうを　あげる　どうぐ。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+特攻を　あげる　道具。
 ひっこめると　もとに　もどる。</language>
 	</row>
 
@@ -688,8 +688,8 @@
 		<language name="JPN" width="256">せんとうちゅうの　ポケモンの
 とくぼうを　あげる　どうぐ。
 ひっこめると　もとに　もどる。</language>
-		<language name="JPN_KANJI" width="256">せんとうちゅうの　ポケモンの
-とくぼうを　あげる　どうぐ。
+		<language name="JPN_KANJI" width="256">戦闘中の　ポケモンの
+特防を　あげる　道具。
 ひっこめると　もとに　もどる。</language>
 	</row>
 
@@ -697,18 +697,18 @@
 		<language name="JPN" width="256">ポケモンの　きを　ひかせる　どうぐ。
 やせいポケモンとの　せんとうから
 ぜったいに　にげられる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　きを　ひかせる　どうぐ。
-やせいポケモンとの　せんとうから
-ぜったいに　にげられる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　気を　ひかせる　道具。
+野生ポケモンとの　戦闘から
+絶対に　逃げられる。</language>
 	</row>
 
 	<row id="ITEMINFO_064">
 		<language name="JPN" width="256">ポケモンの　きを　ひかせる　どうぐ。
 やせいポケモンとの　せんとうから
 ぜったいに　にげられる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　きを　ひかせる　どうぐ。
-やせいポケモンとの　せんとうから
-ぜったいに　にげられる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　気を　ひかせる　道具。
+野生ポケモンとの　戦闘から
+絶対に　逃げられる。</language>
 	</row>
 
 	<row id="ITEMINFO_065">
@@ -716,8 +716,8 @@
 おもちゃの　ふえ。
 マニアが　たかく　かってくれる。</language>
 		<language name="JPN_KANJI" width="256">あおい　ガラスで　できている
-おもちゃの　ふえ。
-マニアが　たかく　かってくれる。</language>
+おもちゃの　笛。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_066">
@@ -725,8 +725,8 @@
 おもちゃの　ふえ。
 マニアが　たかく　かってくれる。</language>
 		<language name="JPN_KANJI" width="256">きいろい　ガラスで　できている
-おもちゃの　ふえ。
-マニアが　たかく　かってくれる。</language>
+おもちゃの　笛。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_067">
@@ -734,8 +734,8 @@
 おもちゃの　ふえ。
 マニアが　たかく　かってくれる。</language>
 		<language name="JPN_KANJI" width="256">あかい　ガラスで　できている
-おもちゃの　ふえ。
-マニアが　たかく　かってくれる。</language>
+おもちゃの　笛。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_068">
@@ -743,8 +743,8 @@
 おもちゃの　ふえ。
 マニアが　たかく　かってくれる。</language>
 		<language name="JPN_KANJI" width="256">くろい　ガラスで　できている
-おもちゃの　ふえ。
-マニアが　たかく　かってくれる。</language>
+おもちゃの　笛。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_069">
@@ -752,70 +752,70 @@
 おもちゃの　ふえ。
 マニアが　たかく　かってくれる。</language>
 		<language name="JPN_KANJI" width="256">しろい　ガラスで　できている
-おもちゃの　ふえ。
-マニアが　たかく　かってくれる。</language>
+おもちゃの　笛。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_070">
 		<language name="JPN" width="256">あさせのほらあな　という　ばしょで
 みつかる　きれいな　しお。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">あさせのほらあな　という　ばしょで
+		<language name="JPN_KANJI" width="256">浅瀬の洞穴という　場所で
 みつかる　きれいな　しお。
-マニアが　たかく　かってくれる。</language>
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_071">
 		<language name="JPN" width="256">あさせのほらあな　という　ばしょで
 みつかる　きれいな　かいがら。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">あさせのほらあな　という　ばしょで
+		<language name="JPN_KANJI" width="256">浅瀬の洞穴という　場所で
 みつかる　きれいな　かいがら。
-マニアが　たかく　かってくれる。</language>
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_072">
 		<language name="JPN" width="256">あかい　ちいさな　かけら。
 むかしに　つくられた　なにかの
 どうぐの　いちぶ　らしい。</language>
-		<language name="JPN_KANJI" width="256">あかい　ちいさな　かけら。
-むかしに　つくられた　なにかの
-どうぐの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">あかい　小さな　かけら。
+昔に　つくられた　なにかの
+道具の　一部らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_073">
 		<language name="JPN" width="256">あおい　ちいさな　かけら。
 むかしに　つくられた　なにかの
 どうぐの　いちぶ　らしい。</language>
-		<language name="JPN_KANJI" width="256">あおい　ちいさな　かけら。
-むかしに　つくられた　なにかの
-どうぐの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">あおい　小さな　かけら。
+昔に　つくられた　なにかの
+道具の　一部らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_074">
 		<language name="JPN" width="256">きいろい　ちいさな　かけら。
 むかしに　つくられた　なにかの
 どうぐの　いちぶ　らしい。</language>
-		<language name="JPN_KANJI" width="256">きいろい　ちいさな　かけら。
-むかしに　つくられた　なにかの
-どうぐの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">きいろい　小さな　かけら。
+昔に　つくられた　なにかの
+道具の　一部らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_075">
 		<language name="JPN" width="256">みどりの　ちいさな　かけら。
 むかしに　つくられた　なにかの
 どうぐの　いちぶ　らしい。</language>
-		<language name="JPN_KANJI" width="256">みどりの　ちいさな　かけら。
-むかしに　つくられた　なにかの
-どうぐの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">みどりの　小さな　かけら。
+昔に　つくられた　なにかの
+道具の　一部らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_076">
 		<language name="JPN" width="256">２００ぽ　すすむ　あいだ
 よわい　やせいの　ポケモンが
 まったく　でて　こなくなる。</language>
-		<language name="JPN_KANJI" width="256">２００ぽ　すすむ　あいだ
-よわい　やせいの　ポケモンが
+		<language name="JPN_KANJI" width="256">２００歩　進む　あいだ
+弱い　野生の　ポケモンが
 まったく　でて　こなくなる。</language>
 	</row>
 
@@ -823,8 +823,8 @@
 		<language name="JPN" width="256">２５０ぽ　すすむ　あいだ
 よわい　やせいの　ポケモンが
 まったく　でて　こなくなる。</language>
-		<language name="JPN_KANJI" width="256">２５０ぽ　すすむ　あいだ
-よわい　やせいの　ポケモンが
+		<language name="JPN_KANJI" width="256">２５０歩　進む　あいだ
+弱い　野生の　ポケモンが
 まったく　でて　こなくなる。</language>
 	</row>
 
@@ -832,7 +832,7 @@
 		<language name="JPN" width="256">ながくて　じょうぶな　ヒモ。
 どうくつや　ダンジョンから
 ぬけだすことが　できる。</language>
-		<language name="JPN_KANJI" width="256">ながくて　じょうぶな　ヒモ。
+		<language name="JPN_KANJI" width="256">長くて　丈夫な　ヒモ。
 どうくつや　ダンジョンから
 ぬけだすことが　できる。</language>
 	</row>
@@ -841,8 +841,8 @@
 		<language name="JPN" width="256">１００ぽ　すすむ　あいだ
 よわい　やせいの　ポケモンが
 まったく　でて　こなくなる。</language>
-		<language name="JPN_KANJI" width="256">１００ぽ　すすむ　あいだ
-よわい　やせいの　ポケモンが
+		<language name="JPN_KANJI" width="256">１００歩　進む　あいだ
+弱い　野生の　ポケモンが
 まったく　でて　こなくなる。</language>
 	</row>
 
@@ -850,26 +850,26 @@
 		<language name="JPN" width="256">ある　とくていの　ポケモンを
 しんかさせる　ふしぎな　いし。
 たいようのように　あかい。</language>
-		<language name="JPN_KANJI" width="256">ある　とくていの　ポケモンを
-しんかさせる　ふしぎな　いし。
-たいようのように　あかい。</language>
+		<language name="JPN_KANJI" width="256">ある　特定の　ポケモンを
+進化させる　不思議な　石。
+太陽のように　赤い。</language>
 	</row>
 
 	<row id="ITEMINFO_081">
 		<language name="JPN" width="256">ある　とくていの　ポケモンを
 しんかさせる　ふしぎな　いし。
 よぞらのように　くろい。</language>
-		<language name="JPN_KANJI" width="256">ある　とくていの　ポケモンを
-しんかさせる　ふしぎな　いし。
-よぞらのように　くろい。</language>
+		<language name="JPN_KANJI" width="256">ある　特定の　ポケモンを
+進化させる　不思議な　石。
+夜空のように　黒い。</language>
 	</row>
 
 	<row id="ITEMINFO_082">
 		<language name="JPN" width="256">ある　とくていの　ポケモンを
 しんかさせる　ふしぎな　いし。
 だいだいいろを　している。</language>
-		<language name="JPN_KANJI" width="256">ある　とくていの　ポケモンを
-しんかさせる　ふしぎな　いし。
+		<language name="JPN_KANJI" width="256">ある　特定の　ポケモンを
+進化させる　不思議な　石。
 だいだいいろを　している。</language>
 	</row>
 
@@ -877,63 +877,63 @@
 		<language name="JPN" width="256">ある　とくていの　ポケモンを
 しんかさせる　ふしぎな　いし。
 いなずまの　もようが　ある。</language>
-		<language name="JPN_KANJI" width="256">ある　とくていの　ポケモンを
-しんかさせる　ふしぎな　いし。
-いなずまの　もようが　ある。</language>
+		<language name="JPN_KANJI" width="256">ある　特定の　ポケモンを
+進化させる　不思議な　石。
+稲妻の　模様が　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_084">
 		<language name="JPN" width="256">ある　とくていの　ポケモンを
 しんかさせる　ふしぎな　いし。
 すんだ　みずいろを　している。</language>
-		<language name="JPN_KANJI" width="256">ある　とくていの　ポケモンを
-しんかさせる　ふしぎな　いし。
-すんだ　みずいろを　している。</language>
+		<language name="JPN_KANJI" width="256">ある　特定の　ポケモンを
+進化させる　不思議な　石。
+すんだ　水色を　している。</language>
 	</row>
 
 	<row id="ITEMINFO_085">
 		<language name="JPN" width="256">ある　とくていの　ポケモンを
 しんかさせる　ふしぎな　いし。
 はっぱの　もようが　ある。</language>
-		<language name="JPN_KANJI" width="256">ある　とくていの　ポケモンを
-しんかさせる　ふしぎな　いし。
-はっぱの　もようが　ある。</language>
+		<language name="JPN_KANJI" width="256">ある　特定の　ポケモンを
+進化させる　不思議な　石。
+はっぱの　模様が　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_086">
 		<language name="JPN" width="256">ちいさな　めずらしい　キノコ。
 いちぶの　マニアの　あいだでは
 けっこう　にんきが　たかい。</language>
-		<language name="JPN_KANJI" width="256">ちいさな　めずらしい　キノコ。
-いちぶの　マニアの　あいだでは
-けっこう　にんきが　たかい。</language>
+		<language name="JPN_KANJI" width="256">ちいさな　珍しい　キノコ。
+一部の　マニアの　あいだでは
+けっこう　人気が　高い。</language>
 	</row>
 
 	<row id="ITEMINFO_087">
 		<language name="JPN" width="256">おおきな　めずらしい　キノコ。
 いちぶの　マニアの　あいだでは
 とても　にんきが　たかい。</language>
-		<language name="JPN_KANJI" width="256">おおきな　めずらしい　キノコ。
-いちぶの　マニアの　あいだでは
-とても　にんきが　たかい。</language>
+		<language name="JPN_KANJI" width="256">おおきな　珍しい　キノコ。
+一部の　マニアの　あいだでは
+とても　人気が　高い。</language>
 	</row>
 
 	<row id="ITEMINFO_088">
 		<language name="JPN" width="256">きれいな　ぎんいろに　ひかる
 すこし　ちいさめの　しんじゅ。
 ショップで　やすく　うれる。</language>
-		<language name="JPN_KANJI" width="256">きれいな　ぎんいろに　ひかる
+		<language name="JPN_KANJI" width="256">きれいな　銀色に　光る
 すこし　ちいさめの　しんじゅ。
-ショップで　やすく　うれる。</language>
+ショップで　安く　売れる。</language>
 	</row>
 
 	<row id="ITEMINFO_089">
 		<language name="JPN" width="256">きれいな　ぎんいろに　ひかる
 かなり　おおつぶの　しんじゅ。
 ショップで　たかく　うれる。</language>
-		<language name="JPN_KANJI" width="256">きれいな　ぎんいろに　ひかる
-かなり　おおつぶの　しんじゅ。
-ショップで　たかく　うれる。</language>
+		<language name="JPN_KANJI" width="256">きれいな　銀色に　光る
+かなり　大粒の　しんじゅ。
+ショップで　高く　売れる。</language>
 	</row>
 
 	<row id="ITEMINFO_090">
@@ -941,123 +941,123 @@
 あかくて　きれいな　すな。
 ショップで　たかく　うれる。</language>
 		<language name="JPN_KANJI" width="256">てざわりが　サラサラの
-あかくて　きれいな　すな。
-ショップで　たかく　うれる。</language>
+赤くて　きれいな　すな。
+ショップで　高く　売れる。</language>
 	</row>
 
 	<row id="ITEMINFO_091">
 		<language name="JPN" width="256">キラキラと　あかく　ひかる
 きれいな　ほうせきの　かけら。
 ショップで　たかく　うれる。</language>
-		<language name="JPN_KANJI" width="256">キラキラと　あかく　ひかる
-きれいな　ほうせきの　かけら。
-ショップで　たかく　うれる。</language>
+		<language name="JPN_KANJI" width="256">キラキラと　赤く　光る
+きれいな　宝石の　かけら。
+ショップで　高く　売れる。</language>
 	</row>
 
 	<row id="ITEMINFO_092">
 		<language name="JPN" width="256">キラキラと　きんいろに　ひかる
 じゅんきん　せいの　たま。
 ショップで　たかく　うれる。</language>
-		<language name="JPN_KANJI" width="256">キラキラと　きんいろに　ひかる
-じゅんきん　せいの　たま。
-ショップで　たかく　うれる。</language>
+		<language name="JPN_KANJI" width="256">キラキラと　金色に　光る
+純金製の　たま。
+ショップで　高く　売れる。</language>
 	</row>
 
 	<row id="ITEMINFO_093">
 		<language name="JPN" width="256">きれいな　ハートの　かたちの
 とても　めずらしい　ウロコ。
 にじいろに　うすく　かがやく。</language>
-		<language name="JPN_KANJI" width="256">きれいな　ハートの　かたちの
-とても　めずらしい　ウロコ。
-にじいろに　うすく　かがやく。</language>
+		<language name="JPN_KANJI" width="256">きれいな　ハートの　形の
+とても　珍しい　ウロコ。
+にじいろに　うすく　輝く。</language>
 	</row>
 
 	<row id="ITEMINFO_094">
 		<language name="JPN" width="256">くさむらや　どうくつ　などで
 つかうと　あまいにおいに　さそわれて
 やせいポケモンが　あらわれる。</language>
-		<language name="JPN_KANJI" width="256">くさむらや　どうくつ　などで
-つかうと　あまいにおいに　さそわれて
-やせいポケモンが　あらわれる。</language>
+		<language name="JPN_KANJI" width="256">草むらや　どうくつ　などで
+使うと　あまいにおいに　誘われて
+野生ポケモンが　あらわれる。</language>
 	</row>
 
 	<row id="ITEMINFO_095">
 		<language name="JPN" width="256">きのみを　そだてる　ちほうでは
 ふかふかのつちに　まいて　つかう。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">きのみを　そだてる　ちほうでは
-ふかふかのつちに　まいて　つかう。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">きのみを　育てる　地方では
+ふかふかのつちに　まいて　使う。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_096">
 		<language name="JPN" width="256">きのみを　そだてる　ちほうでは
 ふかふかのつちに　まいて　つかう。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">きのみを　そだてる　ちほうでは
-ふかふかのつちに　まいて　つかう。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">きのみを　育てる　地方では
+ふかふかのつちに　まいて　使う。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_097">
 		<language name="JPN" width="256">きのみを　そだてる　ちほうでは
 ふかふかのつちに　まいて　つかう。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">きのみを　そだてる　ちほうでは
-ふかふかのつちに　まいて　つかう。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">きのみを　育てる　地方では
+ふかふかのつちに　まいて　使う。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_098">
 		<language name="JPN" width="256">きのみを　そだてる　ちほうでは
 ふかふかのつちに　まいて　つかう。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">きのみを　そだてる　ちほうでは
-ふかふかのつちに　まいて　つかう。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">きのみを　育てる　地方では
+ふかふかのつちに　まいて　使う。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_099">
 		<language name="JPN" width="256">おおむかし　うみに　すんでいた
 こだい　ポケモンの　カセキ。
 ねっこの　いちぶ　らしい。</language>
-		<language name="JPN_KANJI" width="256">おおむかし　うみに　すんでいた
-こだい　ポケモンの　カセキ。
-ねっこの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">大昔　海に　すんでいた
+古代ポケモンの　カセキ。
+ねっこの　一部らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_100">
 		<language name="JPN" width="256">おおむかし　うみに　すんでいた
 こだい　ポケモンの　カセキ。
 ツメの　いちぶ　らしい。</language>
-		<language name="JPN_KANJI" width="256">おおむかし　うみに　すんでいた
-こだい　ポケモンの　カセキ。
-ツメの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">大昔　海に　すんでいた
+古代ポケモンの　カセキ。
+ツメの　一部らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_101">
 		<language name="JPN" width="256">おおむかし　うみに　すんでいた
 こだい　ポケモンの　カセキ。
 かいがらの　いちぶ　らしい。</language>
-		<language name="JPN_KANJI" width="256">おおむかし　うみに　すんでいた
-こだい　ポケモンの　カセキ。
-かいがらの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">大昔　海に　すんでいた
+古代ポケモンの　カセキ。
+かいがらの　一部らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_102">
 		<language name="JPN" width="256">おおむかし　うみに　すんでいた
 こだい　ポケモンの　カセキ。
 こうらの　いちぶ　らしい。</language>
-		<language name="JPN_KANJI" width="256">おおむかし　うみに　すんでいた
-こだい　ポケモンの　カセキ。
-こうらの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">大昔　海に　すんでいた
+古代ポケモンの　カセキ。
+こうらの　一部らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_103">
 		<language name="JPN" width="256">こだい　ポケモンの　いでんしが
 とじこめられている　コハク。
 あかみを　おびて　すけている。</language>
-		<language name="JPN_KANJI" width="256">こだい　ポケモンの　いでんしが
+		<language name="JPN_KANJI" width="256">古代ポケモンの　遺伝子が
 とじこめられている　コハク。
 あかみを　おびて　すけている。</language>
 	</row>
@@ -1066,35 +1066,35 @@
 		<language name="JPN" width="256">おおむかし　ちじょうで　くらした
 こだい　ポケモンの　カセキ。
 えりかざりの　いちぶ　らしい。</language>
-		<language name="JPN_KANJI" width="256">おおむかし　ちじょうで　くらした
-こだい　ポケモンの　カセキ。
-えりかざりの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">大昔　地上で　暮らした
+古代ポケモンの　カセキ。
+えりかざりの　一部らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_105">
 		<language name="JPN" width="256">おおむかし　ちじょうで　くらした
 こだい　ポケモンの　カセキ。
 あたまの　いちぶ　らしい。</language>
-		<language name="JPN_KANJI" width="256">おおむかし　ちじょうで　くらした
-こだい　ポケモンの　カセキ。
-あたまの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">大昔　地上で　暮らした
+古代ポケモンの　カセキ。
+頭の　一部らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_106">
 		<language name="JPN" width="256">ポケモンこうこがくの　うえで
 とても　きちょうな　ホネ。
 ショップで　たかく　うれる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンこうこがくの　うえで
+		<language name="JPN_KANJI" width="256">ポケモン考古学の　うえで
 とても　きちょうな　ホネ。
-ショップで　たかく　うれる。</language>
+ショップで　高く　売れる。</language>
 	</row>
 
 	<row id="ITEMINFO_107">
 		<language name="JPN" width="256">ある　とくていの　ポケモンを
 しんかさせる　ふしぎな　いし。
 ひかりのように　まぶしい。</language>
-		<language name="JPN_KANJI" width="256">ある　とくていの　ポケモンを
-しんかさせる　ふしぎな　いし。
+		<language name="JPN_KANJI" width="256">ある　特定の　ポケモンを
+進化させる　不思議な　いし。
 ひかりのように　まぶしい。</language>
 	</row>
 
@@ -1102,17 +1102,17 @@
 		<language name="JPN" width="256">ある　とくていの　ポケモンを
 しんかさせる　ふしぎな　いし。
 やみのように　くらい。</language>
-		<language name="JPN_KANJI" width="256">ある　とくていの　ポケモンを
-しんかさせる　ふしぎな　いし。
-やみのように　くらい。</language>
+		<language name="JPN_KANJI" width="256">ある　特定の　ポケモンを
+進化させる　不思議な　いし。
+やみのように　暗い。</language>
 	</row>
 
 	<row id="ITEMINFO_109">
 		<language name="JPN" width="256">ある　とくていの　ポケモンを
 しんかさせる　ふしぎな　いし。
 ひとみのように　まばゆい。</language>
-		<language name="JPN_KANJI" width="256">ある　とくていの　ポケモンを
-しんかさせる　ふしぎな　いし。
+		<language name="JPN_KANJI" width="256">ある　特定の　ポケモンを
+進化させる　不思議な　いし。
 ひとみのように　まばゆい。</language>
 	</row>
 
@@ -1120,8 +1120,8 @@
 		<language name="JPN" width="256">ある　とくていの　ポケモンを
 しんかさせる　ふしぎな　いし。
 たまのように　まるい。</language>
-		<language name="JPN_KANJI" width="256">ある　とくていの　ポケモンを
-しんかさせる　ふしぎな　いし。
+		<language name="JPN_KANJI" width="256">ある　特定の　ポケモンを
+進化させる　不思議な　いし。
 たまのように　まるい。</language>
 	</row>
 
@@ -1129,17 +1129,17 @@
 		<language name="JPN" width="256">これがないと　いしのとうが
 くずれてしまう　だいじないし。
 ときどき　いしから　こえがきこえる。</language>
-		<language name="JPN_KANJI" width="256">これがないと　いしのとうが
-くずれてしまう　だいじないし。
-ときどき　いしから　こえがきこえる。</language>
+		<language name="JPN_KANJI" width="256">これがないと　石の塔が
+崩れてしまう　大事ないし。
+ときどき　いしから　声が聞こえる。</language>
 	</row>
 
 	<row id="ITEMINFO_112">
 		<language name="JPN" width="256">ギラティナに　もたせると　ドラゴンと
 ゴーストタイプの　わざの　いりょくが
 あがる　ひかり　かがやく　たま。</language>
-		<language name="JPN_KANJI" width="256">ギラティナに　もたせると　ドラゴンと
-ゴーストタイプの　わざの　いりょくが
+		<language name="JPN_KANJI" width="256">ギラティナに　持たせると　ドラゴンと
+ゴーストタイプの　技の　威力が
 あがる　ひかり　かがやく　たま。</language>
 	</row>
 
@@ -1174,8 +1174,8 @@
 		<language name="JPN" width="256">インセクタに　もたせると
 テクノバスターという　わざが
 みずタイプになる　カセット。</language>
-		<language name="JPN_KANJI" width="256">インセクタに　もたせると
-テクノバスターという　わざが
+		<language name="JPN_KANJI" width="256">インセクタに　持たせると
+テクノバスターという　技が
 みずタイプになる　カセット。</language>
 	</row>
 
@@ -1183,8 +1183,8 @@
 		<language name="JPN" width="256">インセクタに　もたせると
 テクノバスターという　わざが
 でんきタイプになる　カセット。</language>
-		<language name="JPN_KANJI" width="256">インセクタに　もたせると
-テクノバスターという　わざが
+		<language name="JPN_KANJI" width="256">インセクタに　持たせると
+テクノバスターという　技が
 でんきタイプになる　カセット。</language>
 	</row>
 
@@ -1192,8 +1192,8 @@
 		<language name="JPN" width="256">インセクタに　もたせると
 テクノバスターという　わざが
 ほのおタイプになる　カセット。</language>
-		<language name="JPN_KANJI" width="256">インセクタに　もたせると
-テクノバスターという　わざが
+		<language name="JPN_KANJI" width="256">インセクタに　持たせると
+テクノバスターという　技が
 ほのおタイプになる　カセット。</language>
 	</row>
 
@@ -1201,8 +1201,8 @@
 		<language name="JPN" width="256">インセクタに　もたせると
 テクノバスターという　わざが
 こおりタイプになる　カセット。</language>
-		<language name="JPN_KANJI" width="256">インセクタに　もたせると
-テクノバスターという　わざが
+		<language name="JPN_KANJI" width="256">インセクタに　持たせると
+テクノバスターという　技が
 こおりタイプになる　カセット。</language>
 	</row>
 
@@ -1345,18 +1345,18 @@
 		<language name="JPN" width="256">ディアルガに　もたせると　ドラゴンと
 はがねタイプの　わざの　いりょくが
 あがる　ひかり　かがやく　たま。</language>
-		<language name="JPN_KANJI" width="256">ディアルガに　もたせると　ドラゴンと
-はがねタイプの　わざの　いりょくが
-あがる　ひかり　かがやく　たま。</language>
+		<language name="JPN_KANJI" width="256">ディアルガに　持たせると　ドラゴンと
+はがねタイプの　技の　威力が
+あがる　光り　輝く　たま。</language>
 	</row>
 
 	<row id="ITEMINFO_136">
 		<language name="JPN" width="256">パルキアに　もたせると　ドラゴンと
 みずタイプの　わざの　いりょくが
 あがる　うつくしく　かがやく　たま。</language>
-		<language name="JPN_KANJI" width="256">パルキアに　もたせると　ドラゴンと
-みずタイプの　わざの　いりょくが
-あがる　うつくしく　かがやく　たま。</language>
+		<language name="JPN_KANJI" width="256">パルキアに　持たせると　ドラゴンと
+みずタイプの　技の　威力が
+あがる　美しく　輝く　たま。</language>
 	</row>
 
 	<row id="ITEMINFO_137">
@@ -1471,8 +1471,8 @@
 		<language name="JPN" width="256">ポケモンに　もたせると
 まひを　かいふくする。
 </language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-まひを　かいふくする。
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+まひを　回復する。
 </language>
 	</row>
 
@@ -1480,8 +1480,8 @@
 		<language name="JPN" width="256">ポケモンに　もたせると
 ねむりを　かいふくする。
 </language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ねむりを　かいふくする。
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ねむりを　回復する。
 </language>
 	</row>
 
@@ -1489,8 +1489,8 @@
 		<language name="JPN" width="256">ポケモンに　もたせると
 どくを　かいふくする。
 </language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-どくを　かいふくする。
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+どくを　回復する。
 </language>
 	</row>
 
@@ -1498,8 +1498,8 @@
 		<language name="JPN" width="256">ポケモンに　もたせると
 やけどを　かいふくする。
 </language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-やけどを　かいふくする。
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+やけどを　回復する。
 </language>
 	</row>
 
@@ -1507,8 +1507,8 @@
 		<language name="JPN" width="256">ポケモンに　もたせると
 こおりを　かいふくする。
 </language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こおりを　かいふくする。
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こおりを　回復する。
 </language>
 	</row>
 
@@ -1516,8 +1516,8 @@
 		<language name="JPN" width="256">ポケモンに　もたせると
 ＰＰを　１０だけ　かいふくする。
 </language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ＰＰを　１０だけ　かいふくする。
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ＰＰを　１０だけ　回復する。
 </language>
 	</row>
 
@@ -1525,8 +1525,8 @@
 		<language name="JPN" width="256">ポケモンに　もたせると
 ＨＰを　１０だけ　かいふくする。
 </language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ＨＰを　１０だけ　かいふくする。
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ＨＰを　１０だけ　回復する。
 </language>
 	</row>
 
@@ -1534,8 +1534,8 @@
 		<language name="JPN" width="256">ポケモンに　もたせると
 こんらんを　かいふくする。
 </language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こんらんを　かいふくする。
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こんらんを　回復する。
 </language>
 	</row>
 
@@ -1543,17 +1543,17 @@
 		<language name="JPN" width="256">ポケモンに　もたせると
 すべての　じょうたい　いじょうを
 かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-すべての　じょうたい　いじょうを
-かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+すべての　状態異常を
+回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_158">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ＨＰを　すこしだけ　かいふくする。
 </language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ＨＰを　すこしだけ　かいふくする。
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ＨＰを　すこしだけ　回復する。
 </language>
 	</row>
 
@@ -1561,90 +1561,90 @@
 		<language name="JPN" width="256">ポケモンに　もたせると
 ピンチのとき　ＨＰを　かいふくする。
 きらいな　あじだと　こんらん　する。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ピンチのとき　ＨＰを　かいふくする。
-きらいな　あじだと　こんらん　する。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ピンチのとき　ＨＰを　回復する。
+きらいな味だと　こんらん　する。</language>
 	</row>
 
 	<row id="ITEMINFO_160">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ピンチのとき　ＨＰを　かいふくする。
 きらいな　あじだと　こんらん　する。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ピンチのとき　ＨＰを　かいふくする。
-きらいな　あじだと　こんらん　する。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ピンチのとき　ＨＰを　回復する。
+きらいな味だと　こんらん　する。</language>
 	</row>
 
 	<row id="ITEMINFO_161">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ピンチのとき　ＨＰを　かいふくする。
 きらいな　あじだと　こんらん　する。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ピンチのとき　ＨＰを　かいふくする。
-きらいな　あじだと　こんらん　する。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ピンチのとき　ＨＰを　回復する。
+きらいな味だと　こんらん　する。</language>
 	</row>
 
 	<row id="ITEMINFO_162">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ピンチのとき　ＨＰを　かいふくする。
 きらいな　あじだと　こんらん　する。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ピンチのとき　ＨＰを　かいふくする。
-きらいな　あじだと　こんらん　する。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ピンチのとき　ＨＰを　回復する。
+きらいな味だと　こんらん　する。</language>
 	</row>
 
 	<row id="ITEMINFO_163">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ピンチのとき　ＨＰを　かいふくする。
 きらいな　あじだと　こんらん　する。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ピンチのとき　ＨＰを　かいふくする。
-きらいな　あじだと　こんらん　する。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ピンチのとき　ＨＰを　回復する。
+きらいな味だと　こんらん　する。</language>
 	</row>
 
 	<row id="ITEMINFO_164">
 		<language name="JPN" width="256">イッシュちほうでは　とても
 めずらしい　きのみ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
-めずらしい　きのみ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方では　とても
+珍しい　きのみ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_165">
 		<language name="JPN" width="256">イッシュちほうでは　とても
 めずらしい　きのみ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
-めずらしい　きのみ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方では　とても
+珍しい　きのみ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_166">
 		<language name="JPN" width="256">イッシュちほうでは　とても
 めずらしい　きのみ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
-めずらしい　きのみ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方では　とても
+珍しい　きのみ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_167">
 		<language name="JPN" width="256">イッシュちほうでは　とても
 めずらしい　きのみ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
-めずらしい　きのみ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方では　とても
+珍しい　きのみ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_168">
 		<language name="JPN" width="256">イッシュちほうでは　とても
 めずらしい　きのみ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
-めずらしい　きのみ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方では　とても
+珍しい　きのみ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_169">
@@ -1653,7 +1653,7 @@
 ＨＰの　きそポイントは　さがる。</language>
 		<language name="JPN_KANJI" width="256">ポケモンに　あげると
 とても　なつき　やすくなるが
-ＨＰの　きそポイントは　さがる。</language>
+ＨＰの　基礎ポイントは　さがる。</language>
 	</row>
 
 	<row id="ITEMINFO_170">
@@ -1662,7 +1662,7 @@
 こうげきの　きそポイントは　さがる。</language>
 		<language name="JPN_KANJI" width="256">ポケモンに　あげると
 とても　なつき　やすくなるが
-こうげきの　きそポイントは　さがる。</language>
+攻撃の　基礎ポイントは　さがる。</language>
 	</row>
 
 	<row id="ITEMINFO_171">
@@ -1671,7 +1671,7 @@
 ぼうぎょの　きそポイントは　さがる。</language>
 		<language name="JPN_KANJI" width="256">ポケモンに　あげると
 とても　なつき　やすくなるが
-ぼうぎょの　きそポイントは　さがる。</language>
+防御の　基礎ポイントは　さがる。</language>
 	</row>
 
 	<row id="ITEMINFO_172">
@@ -1680,7 +1680,7 @@
 とくこうの　きそポイントは　さがる。</language>
 		<language name="JPN_KANJI" width="256">ポケモンに　あげると
 とても　なつき　やすくなるが
-とくこうの　きそポイントは　さがる。</language>
+特攻の　基礎ポイントは　さがる。</language>
 	</row>
 
 	<row id="ITEMINFO_173">
@@ -1689,7 +1689,7 @@
 とくぼうの　きそポイントは　さがる。</language>
 		<language name="JPN_KANJI" width="256">ポケモンに　あげると
 とても　なつき　やすくなるが
-とくぼうの　きそポイントは　さがる。</language>
+特防の　基礎ポイントは　さがる。</language>
 	</row>
 
 	<row id="ITEMINFO_174">
@@ -1698,267 +1698,267 @@
 すばやさの　きそポイントは　さがる。</language>
 		<language name="JPN_KANJI" width="256">ポケモンに　あげると
 とても　なつき　やすくなるが
-すばやさの　きそポイントは　さがる。</language>
+すばやさの　基礎ポイントは　さがる。</language>
 	</row>
 
 	<row id="ITEMINFO_175">
 		<language name="JPN" width="256">イッシュちほうでは　とても
 めずらしい　きのみ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
-めずらしい　きのみ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方では　とても
+珍しい　きのみ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_176">
 		<language name="JPN" width="256">イッシュちほうでは　とても
 めずらしい　きのみ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
-めずらしい　きのみ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方では　とても
+珍しい　きのみ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_177">
 		<language name="JPN" width="256">イッシュちほうでは　とても
 めずらしい　きのみ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
-めずらしい　きのみ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方では　とても
+珍しい　きのみ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_178">
 		<language name="JPN" width="256">イッシュちほうでは　とても
 めずらしい　きのみ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
-めずらしい　きのみ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方では　とても
+珍しい　きのみ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_179">
 		<language name="JPN" width="256">イッシュちほうでは　とても
 めずらしい　きのみ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
-めずらしい　きのみ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方では　とても
+珍しい　きのみ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_180">
 		<language name="JPN" width="256">イッシュちほうでは　とても
 めずらしい　きのみ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
-めずらしい　きのみ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方では　とても
+珍しい　きのみ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_181">
 		<language name="JPN" width="256">イッシュちほうでは　とても
 めずらしい　きのみ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
-めずらしい　きのみ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方では　とても
+珍しい　きのみ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_182">
 		<language name="JPN" width="256">イッシュちほうでは　とても
 めずらしい　きのみ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
-めずらしい　きのみ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方では　とても
+珍しい　きのみ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_183">
 		<language name="JPN" width="256">イッシュちほうでは　とても
 めずらしい　きのみ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">イッシュちほうでは　とても
-めずらしい　きのみ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方では　とても
+珍しい　きのみ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_184">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　ほのお　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　ほのお　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　ほのお技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_185">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　みず　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　みず　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　みず技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_186">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　でんき　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　でんき　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　でんき技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_187">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　くさ　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　くさ　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　くさ技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_188">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　こおり　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　こおり　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　こおり技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_189">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　かくとう　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　かくとう　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　かくとう技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_190">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　どく　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　どく　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　どく技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_191">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　じめん　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　じめん　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　じめん技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_192">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　ひこう　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　ひこう　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　ひこう技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_193">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　エスパー　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　エスパー　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　エスパー技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_194">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　むし　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　むし　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　むし技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_195">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　いわ　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　いわ　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　いわ技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_196">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　ゴースト　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　ゴースト　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　ゴースト技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_197">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　ドラゴン　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　ドラゴン　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　ドラゴン技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_198">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　あく　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　あく　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　あく技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_199">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　はがね　わざを
 うけたとき　いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　はがね　わざを
-うけたとき　いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　はがね技を
+受けたとき　威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_200">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ノーマル　わざを　うけたとき
 いりょくが　よわまる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ノーマル　わざを　うけたとき
-いりょくが　よわまる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ノーマル技を　受けたとき
+威力が　弱まる。</language>
 	</row>
 
 	<row id="ITEMINFO_201">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ピンチのとき　じぶんの
 こうげきが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ピンチのとき　じぶんの
-こうげきが　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ピンチのとき　自分の
+攻撃が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_202">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ピンチのとき　じぶんの
 ぼうぎょが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ピンチのとき　じぶんの
-ぼうぎょが　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ピンチのとき　自分の
+防御が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_203">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ピンチのとき　じぶんの
 すばやさが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ピンチのとき　じぶんの
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ピンチのとき　自分の
 すばやさが　あがる。</language>
 	</row>
 
@@ -1966,134 +1966,134 @@
 		<language name="JPN" width="256">ポケモンに　もたせると
 ピンチのとき　じぶんの
 とくこうが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ピンチのとき　じぶんの
-とくこうが　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ピンチのとき　自分の
+特攻が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_205">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ピンチのとき　じぶんの
 とくぼうが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ピンチのとき　じぶんの
-とくぼうが　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ピンチのとき　自分の
+特防が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_206">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ピンチのとき　こうげきが
 きゅうしょに　あたりやすくなる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ピンチのとき　こうげきが
-きゅうしょに　あたりやすくなる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ピンチのとき　攻撃が
+急所に　当たりやすくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_207">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ピンチのとき　どれか　１つの
 のうりょくが　ぐーんと　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
 ピンチのとき　どれか　１つの
-のうりょくが　ぐーんと　あがる。</language>
+能力が　ぐーんと　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_208">
 		<language name="JPN" width="256">ポケモンに　もたせると
 こうかばつぐんの　わざを
 うけたとき　ＨＰを　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-こうかばつぐんの　わざを
-うけたとき　ＨＰを　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+こうかばつぐんの　技を
+受けたとき　ＨＰを　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_209">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ピンチのとき　いちどだけ
 わざの　めいちゅうりつが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ピンチのとき　いちどだけ
-わざの　めいちゅうりつが　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ピンチのとき　１度だけ
+技の　命中率が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_210">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ピンチのとき　いちどだけ
 こうどうが　はやくなる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ピンチのとき　いちどだけ
-こうどうが　はやくなる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ピンチのとき　１度だけ
+行動が　早くなる。</language>
 	</row>
 
 	<row id="ITEMINFO_211">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ぶつりわざを　うけたとき
 あいてにも　ダメージを　あたえる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ぶつりわざを　うけたとき
-あいてにも　ダメージを　あたえる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+物理技を　受けたとき
+相手にも　ダメージを　あたえる。</language>
 	</row>
 
 	<row id="ITEMINFO_212">
 		<language name="JPN" width="256">ポケモンに　もたせると
 とくしゅわざを　うけたとき
 あいてにも　ダメージを　あたえる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-とくしゅわざを　うけたとき
-あいてにも　ダメージを　あたえる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+特殊技を　受けたとき
+相手にも　ダメージを　あたえる。</language>
 	</row>
 
 	<row id="ITEMINFO_213">
 		<language name="JPN" width="256">キラキラ　ひかるこな。　もたせると
 ひかりが　あいてを　まどわして
 わざが　めいちゅう　しにくくなる。</language>
-		<language name="JPN_KANJI" width="256">キラキラ　ひかるこな。　もたせると
-ひかりが　あいてを　まどわして
-わざが　めいちゅう　しにくくなる。</language>
+		<language name="JPN_KANJI" width="256">キラキラ　ひかるこな。　持たせると
+光が　相手を　まどわして
+技が　命中しにくくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_214">
 		<language name="JPN" width="256">もたせた　ポケモンの　のうりょくが
 さがったとき　いちどだけ　もとの
 じょうたいに　もどす。</language>
-		<language name="JPN_KANJI" width="256">もたせた　ポケモンの　のうりょくが
-さがったとき　いちどだけ　もとの
-じょうたいに　もどす。</language>
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンの　能力が
+さがったとき　１度だけ　もとの
+状態に　もどす。</language>
 	</row>
 
 	<row id="ITEMINFO_215">
 		<language name="JPN" width="256">かたくて　おもい　ギプス。
 もたせると　すばやさは　さがるが
 ふつうより　つよく　そだちやすい。</language>
-		<language name="JPN_KANJI" width="256">かたくて　おもい　ギプス。
-もたせると　すばやさは　さがるが
-ふつうより　つよく　そだちやすい。</language>
+		<language name="JPN_KANJI" width="256">硬くて　重い　ギプス。
+持たせると　すばやさは　さがるが
+ふつうより　強く　育ちやすい。</language>
 	</row>
 
 	<row id="ITEMINFO_216">
 		<language name="JPN" width="256">もたせた　ポケモンは　せんとうに
 でなくても　けいけんちを
 わけてもらえる　べんりな　そうち。</language>
-		<language name="JPN_KANJI" width="256">もたせた　ポケモンは　せんとうに
-でなくても　けいけんちを
-わけてもらえる　べんりな　そうち。</language>
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンは　戦闘に
+でなくても　経験値を
+わけてもらえる　便利な　装置。</language>
 	</row>
 
 	<row id="ITEMINFO_217">
 		<language name="JPN" width="256">かるくて　するどい　ツメ。
 もたせると　あいてより　さきに
 こうどう　できることが　ある。</language>
-		<language name="JPN_KANJI" width="256">かるくて　するどい　ツメ。
-もたせると　あいてより　さきに
-こうどう　できることが　ある。</language>
+		<language name="JPN_KANJI" width="256">軽くて　するどい　ツメ。
+持たせると　相手より　先に
+行動できることが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_218">
 		<language name="JPN" width="256">ここちよい　ねいろの　すず。
 もたせた　ポケモンは　こころが
 やすらぎ　なつきやすくなる。</language>
-		<language name="JPN_KANJI" width="256">ここちよい　ねいろの　すず。
-もたせた　ポケモンは　こころが
+		<language name="JPN_KANJI" width="256">ここちよい　音色の　すず。
+持たせた　ポケモンは　こころが
 やすらぎ　なつきやすくなる。</language>
 	</row>
 
@@ -2101,9 +2101,9 @@
 		<language name="JPN" width="256">もたせた　ポケモンが　メロメロの
 じょうたいに　なったときに
 いちどだけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">もたせた　ポケモンが　メロメロの
-じょうたいに　なったときに
-いちどだけ　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンが　メロメロの
+状態に　なったときに
+１度だけ　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_220">
@@ -2111,43 +2111,43 @@
 もたせると　こうげきは　あがるが
 おなじ　わざしか　だせなくなる。</language>
 		<language name="JPN_KANJI" width="256">ちょっと　こだわった　ハチマキ。
-もたせると　こうげきは　あがるが
-おなじ　わざしか　だせなくなる。</language>
+持たせると　攻撃は　あがるが
+同じ　技しか　だせなくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_221">
 		<language name="JPN" width="256">もたせると　こうげきして
 ダメージを　あたえたときに
 あいてを　　ひるませることが　ある。</language>
-		<language name="JPN_KANJI" width="256">もたせると　こうげきして
+		<language name="JPN_KANJI" width="256">持たせると　攻撃して
 ダメージを　あたえたときに
-あいてを　　ひるませることが　ある。</language>
+相手を　ひるませることが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_222">
 		<language name="JPN" width="256">ぎんいろに　かがやく　こな。
 もたせると　むしタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ぎんいろに　かがやく　こな。
-もたせると　むしタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">ぎんいろに　輝く　こな。
+持たせると　むしタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_223">
 		<language name="JPN" width="256">もたせた　ポケモンが　いちどでも
 せんとうに　かおを　だすと
 おかねが　２ばい　もらえる。</language>
-		<language name="JPN_KANJI" width="256">もたせた　ポケモンが　いちどでも
-せんとうに　かおを　だすと
-おかねが　２ばい　もらえる。</language>
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンが　１度でも
+戦闘に　かおを　だすと
+お金が　２倍　もらえる。</language>
 	</row>
 
 	<row id="ITEMINFO_224">
 		<language name="JPN" width="256">いちばん　まえの　ポケモンに
 もたせると　やせいポケモンが
 でて　きにくくなる。</language>
-		<language name="JPN_KANJI" width="256">いちばん　まえの　ポケモンに
-もたせると　やせいポケモンが
+		<language name="JPN_KANJI" width="256">一番　前の　ポケモンに
+持たせると　野生ポケモンが
 でて　きにくくなる。</language>
 	</row>
 
@@ -2156,53 +2156,53 @@
 もたせると　とくこうと　とくぼうが
 あがる　ふしぎな　たま。</language>
 		<language name="JPN_KANJI" width="256">ラティオス　または　ラティアスに
-もたせると　とくこうと　とくぼうが
-あがる　ふしぎな　たま。</language>
+持たせると　特攻と　特防が
+あがる　不思議な　たま。</language>
 	</row>
 
 	<row id="ITEMINFO_226">
 		<language name="JPN" width="256">パールルに　もたせると
 とくこうが　あがる　キバ。
 するどく　ぎんいろに　ひかる。</language>
-		<language name="JPN_KANJI" width="256">パールルに　もたせると
-とくこうが　あがる　キバ。
-するどく　ぎんいろに　ひかる。</language>
+		<language name="JPN_KANJI" width="256">パールルに　持たせると
+特攻が　あがる　キバ。
+するどく　銀色に　ひかる。</language>
 	</row>
 
 	<row id="ITEMINFO_227">
 		<language name="JPN" width="256">パールルに　もたせると
 とくぼうが　あがる　ウロコ。
 うすい　ピンクいろに　ひかる。</language>
-		<language name="JPN_KANJI" width="256">パールルに　もたせると
-とくぼうが　あがる　ウロコ。
-うすい　ピンクいろに　ひかる。</language>
+		<language name="JPN_KANJI" width="256">パールルに　持たせると
+特防が　あがる　ウロコ。
+うすい　ピンク色に　ひかる。</language>
 	</row>
 
 	<row id="ITEMINFO_228">
 		<language name="JPN" width="256">もたせた　ポケモンは　やせいの
 ポケモンとの　せんとうから
 ぜったいに　にげられる。</language>
-		<language name="JPN_KANJI" width="256">もたせた　ポケモンは　やせいの
-ポケモンとの　せんとうから
-ぜったいに　にげられる。</language>
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンは　野生の
+ポケモンとの　戦闘から
+絶対に　逃げられる。</language>
 	</row>
 
 	<row id="ITEMINFO_229">
 		<language name="JPN" width="256">ポケモンに　もたせると
 そのあいだ　しんか　しなくなる
 ふしぎな　いし。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-そのあいだ　しんか　しなくなる
-ふしぎな　いし。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+そのあいだ　進化しなくなる
+不思議な　いし。</language>
 	</row>
 
 	<row id="ITEMINFO_230">
 		<language name="JPN" width="256">もたせると　ひんしに　なりそうな
 わざを　うけても　ＨＰを　１だけ
 のこして　たえることが　ある。</language>
-		<language name="JPN_KANJI" width="256">もたせると　ひんしに　なりそうな
-わざを　うけても　ＨＰを　１だけ
-のこして　たえることが　ある。</language>
+		<language name="JPN_KANJI" width="256">持たせると　ひんしに　なりそうな
+技を　受けても　ＨＰを　１だけ
+残して　耐えることが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_231">
@@ -2210,53 +2210,53 @@
 もたせた　ポケモンは　もらえる
 けいけんちが　すこし　ふえる。</language>
 		<language name="JPN_KANJI" width="256">しあわせが　つまった　タマゴ。
-もたせた　ポケモンは　もらえる
-けいけんちが　すこし　ふえる。</language>
+持たせた　ポケモンは　もらえる
+経験値が　すこし　ふえる。</language>
 	</row>
 
 	<row id="ITEMINFO_232">
 		<language name="JPN" width="256">じゃくてんが　みえる　レンズ。
 もたせた　ポケモンの　わざが
 きゅうしょに　あたりやすくなる。</language>
-		<language name="JPN_KANJI" width="256">じゃくてんが　みえる　レンズ。
-もたせた　ポケモンの　わざが
-きゅうしょに　あたりやすくなる。</language>
+		<language name="JPN_KANJI" width="256">弱点が　みえる　レンズ。
+持たせた　ポケモンの　技が
+急所に　当たりやすくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_233">
 		<language name="JPN" width="256">とくしゅな　きんぞくの　まく。
 もたせると　はがねタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">とくしゅな　きんぞくの　まく。
-もたせると　はがねタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">特殊な　金属の　まく。
+持たせると　はがねタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_234">
 		<language name="JPN" width="256">もたせると　ポケモンの　ＨＰが
 せんとうの　あいだ　すこしずつ
 かいふくする。</language>
-		<language name="JPN_KANJI" width="256">もたせると　ポケモンの　ＨＰが
-せんとうの　あいだ　すこしずつ
-かいふくする。</language>
+		<language name="JPN_KANJI" width="256">持たせると　ポケモンの　ＨＰが
+戦闘の　あいだ　すこしずつ
+回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_235">
 		<language name="JPN" width="256">かたくて　じょうぶな　ウロコ。
 ドラゴンタイプの　ポケモンが
 もっていることが　ある。</language>
-		<language name="JPN_KANJI" width="256">かたくて　じょうぶな　ウロコ。
+		<language name="JPN_KANJI" width="256">硬くて　丈夫な　ウロコ。
 ドラゴンタイプの　ポケモンが
-もっていることが　ある。</language>
+持っていることが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_236">
 		<language name="JPN" width="256">ピカチュウに　もたせると
 こうげきと　とくこうの　いりょくが
 あがる　ふしぎな　たま。</language>
-		<language name="JPN_KANJI" width="256">ピカチュウに　もたせると
-こうげきと　とくこうの　いりょくが
-あがる　ふしぎな　たま。</language>
+		<language name="JPN_KANJI" width="256">ピカチュウに　持たせると
+攻撃と　特攻の　威力が
+あがる　不思議な　たま。</language>
 	</row>
 
 	<row id="ITEMINFO_237">
@@ -2264,71 +2264,71 @@
 もたせると　じめんタイプの
 わざの　いりょくが　あがる。</language>
 		<language name="JPN_KANJI" width="256">さわると　サラサラする　すな。
-もたせると　じめんタイプの
-わざの　いりょくが　あがる。</language>
+持たせると　じめんタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_238">
 		<language name="JPN" width="256">ぜったいに　われない　いし。
 もたせると　いわタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ぜったいに　われない　いし。
-もたせると　いわタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">絶対に　割れない　いし。
+持たせると　いわタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_239">
 		<language name="JPN" width="256">せいめいが　やどる　タネ。
 もたせると　くさタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">せいめいが　やどる　タネ。
-もたせると　くさタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">生命が　宿る　タネ。
+持たせると　くさタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_240">
 		<language name="JPN" width="256">あやしく　みえる　メガネ。
 もたせると　あくタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">あやしく　みえる　メガネ。
-もたせると　あくタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">怪しく　みえる　メガネ。
+持たせると　あくタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_241">
 		<language name="JPN" width="256">きが　ひきしまる　おび。
 もたせると　かくとうタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">きが　ひきしまる　おび。
-もたせると　かくとうタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">気が　ひきしまる　おび。
+持たせると　かくとうタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_242">
 		<language name="JPN" width="256">きょうりょくな　じしゃく。
 もたせると　でんきタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">きょうりょくな　じしゃく。
-もたせると　でんきタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">強力な　じしゃく。
+持たせると　でんきタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_243">
 		<language name="JPN" width="256">しずくの　かたちの　ほうせき。
 もたせると　みずタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">しずくの　かたちの　ほうせき。
-もたせると　みずタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">しずくの　形の　宝石。
+持たせると　みずタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_244">
 		<language name="JPN" width="256">ながく　とがった　くちばし。
 もたせると　ひこうタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ながく　とがった　くちばし。
-もたせると　ひこうタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">長く　とがった　くちばし。
+持たせると　ひこうタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_245">
@@ -2336,53 +2336,53 @@
 もたせると　どくタイプの
 わざの　いりょくが　あがる。</language>
 		<language name="JPN_KANJI" width="256">どくのある　ちいさな　ハリ。
-もたせると　どくタイプの
-わざの　いりょくが　あがる。</language>
+持たせると　どくタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_246">
 		<language name="JPN" width="256">ねつを　よせつけない　こおり。
 もたせると　こおりタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ねつを　よせつけない　こおり。
-もたせると　こおりタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">熱を　よせつけない　こおり。
+持たせると　こおりタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_247">
 		<language name="JPN" width="256">あやしくて　ぶきみな　おふだ。
 もたせると　ゴーストタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">あやしくて　ぶきみな　おふだ。
-もたせると　ゴーストタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">怪しくて　不気味な　おふだ。
+持たせると　ゴーストタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_248">
 		<language name="JPN" width="256">ねんりきを　こめた　スプーン。
 もたせると　エスパータイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ねんりきを　こめた　スプーン。
-もたせると　エスパータイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">念力を　こめた　スプーン。
+持たせると　エスパータイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_249">
 		<language name="JPN" width="256">ものを　もやす　ねんりょう。
 もたせると　ほのおタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ものを　もやす　ねんりょう。
-もたせると　ほのおタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">ものを　燃やす　燃料。
+持たせると　ほのおタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_250">
 		<language name="JPN" width="256">かたくて　するどい　キバ。
 もたせると　ドラゴンタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">かたくて　するどい　キバ。
-もたせると　ドラゴンタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">硬くて　するどい　キバ。
+持たせると　ドラゴンタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_251">
@@ -2390,87 +2390,87 @@
 もたせると　ノーマルタイプの
 わざの　いりょくが　あがる。</language>
 		<language name="JPN_KANJI" width="256">はだざわりの　よい　スカーフ。
-もたせると　ノーマルタイプの
-わざの　いりょくが　あがる。</language>
+持たせると　ノーマルタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_252">
 		<language name="JPN" width="256">なかに　いろんな　じょうほうが
 つまった　とうめいの　きかい。
 シルフ　カンパニーせい。</language>
-		<language name="JPN_KANJI" width="256">なかに　いろんな　じょうほうが
-つまった　とうめいの　きかい。
-シルフ　カンパニーせい。</language>
+		<language name="JPN_KANJI" width="256">中に　いろんな　情報が
+つまった　透明の　機械。
+シルフ　カンパニー製。</language>
 	</row>
 
 	<row id="ITEMINFO_253">
 		<language name="JPN" width="256">もたせた　ポケモンが　こうげきして
 あいてに　ダメージを　あたえたとき
 ＨＰを　すこし　かいふく　できる。</language>
-		<language name="JPN_KANJI" width="256">もたせた　ポケモンが　こうげきして
-あいてに　ダメージを　あたえたとき
-ＨＰを　すこし　かいふく　できる。</language>
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンが　攻撃して
+相手に　ダメージを　あたえたとき
+ＨＰを　すこし　回復できる。</language>
 	</row>
 
 	<row id="ITEMINFO_254">
 		<language name="JPN" width="256">ふしぎな　かおりの　おこう。
 もたせると　みずタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ふしぎな　かおりの　おこう。
-もたせると　みずタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">不思議な　かおりの　おこう。
+持たせると　みずタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_255">
 		<language name="JPN" width="256">もたせると　おこうの　ふしぎな
 かおりが　あいてを　まどわせて
 わざが　めいちゅう　しにくくなる。</language>
-		<language name="JPN_KANJI" width="256">もたせると　おこうの　ふしぎな
-かおりが　あいてを　まどわせて
-わざが　めいちゅう　しにくくなる。</language>
+		<language name="JPN_KANJI" width="256">持たせると　おこうの　不思議な
+かおりが　相手を　まどわせて
+技が　命中　しにくくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_256">
 		<language name="JPN" width="256">こううんを　よぶ　グローブ。
 ラッキーに　もたせると　わざが
 きゅうしょに　あたりやすくなる。</language>
-		<language name="JPN_KANJI" width="256">こううんを　よぶ　グローブ。
-ラッキーに　もたせると　わざが
-きゅうしょに　あたりやすくなる。</language>
+		<language name="JPN_KANJI" width="256">幸運を　よぶ　グローブ。
+ラッキーに　持たせると　技が
+急所に　当たりやすくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_257">
 		<language name="JPN" width="256">メタモンに　もたせると　ぼうぎょが
 あがる　ふしぎなこな。
 とても　こまかくて　かたい。</language>
-		<language name="JPN_KANJI" width="256">メタモンに　もたせると　ぼうぎょが
-あがる　ふしぎなこな。
-とても　こまかくて　かたい。</language>
+		<language name="JPN_KANJI" width="256">メタモンに　持たせると　防御が
+あがる　不思議なこな。
+とても　こまかくて　硬い。</language>
 	</row>
 
 	<row id="ITEMINFO_258">
 		<language name="JPN" width="256">なにかの　かたい　ホネ。
 カラカラ　または　ガラガラに
 もたせると　こうげきが　あがる。</language>
-		<language name="JPN_KANJI" width="256">なにかの　かたい　ホネ。
+		<language name="JPN_KANJI" width="256">なにかの　硬い　ホネ。
 カラカラ　または　ガラガラに
-もたせると　こうげきが　あがる。</language>
+持たせると　攻撃が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_259">
 		<language name="JPN" width="256">とても　ながくて　かたい　クキ。
 カモネギに　もたせると　わざが
 きゅうしょに　あたりやすくなる。</language>
-		<language name="JPN_KANJI" width="256">とても　ながくて　かたい　クキ。
-カモネギに　もたせると　わざが
-きゅうしょに　あたりやすくなる。</language>
+		<language name="JPN_KANJI" width="256">とても　ながくて　硬い　クキ。
+カモネギに　持たせると　技が
+急所に　当たりやすくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_260">
 		<language name="JPN" width="256">もたせて　コンテストに　さんかすると
 その　ポケモンは　いつもより
 かっこよく　みられる。</language>
-		<language name="JPN_KANJI" width="256">もたせて　コンテストに　さんかすると
+		<language name="JPN_KANJI" width="256">持たせて　コンテストに　参加すると
 その　ポケモンは　いつもより
 かっこよく　みられる。</language>
 	</row>
@@ -2479,7 +2479,7 @@
 		<language name="JPN" width="256">もたせて　コンテストに　さんかすると
 その　ポケモンは　いつもより
 うつくしく　みられる。</language>
-		<language name="JPN_KANJI" width="256">もたせて　コンテストに　さんかすると
+		<language name="JPN_KANJI" width="256">持たせて　コンテストに　参加すると
 その　ポケモンは　いつもより
 うつくしく　みられる。</language>
 	</row>
@@ -2488,7 +2488,7 @@
 		<language name="JPN" width="256">もたせて　コンテストに　さんかすると
 その　ポケモンは　いつもより
 かわいく　みられる。</language>
-		<language name="JPN_KANJI" width="256">もたせて　コンテストに　さんかすると
+		<language name="JPN_KANJI" width="256">持たせて　コンテストに　参加すると
 その　ポケモンは　いつもより
 かわいく　みられる。</language>
 	</row>
@@ -2497,7 +2497,7 @@
 		<language name="JPN" width="256">もたせて　コンテストに　さんかすると
 その　ポケモンは　いつもより
 かしこく　みられる。</language>
-		<language name="JPN_KANJI" width="256">もたせて　コンテストに　さんかすると
+		<language name="JPN_KANJI" width="256">持たせて　コンテストに　参加すると
 その　ポケモンは　いつもより
 かしこく　みられる。</language>
 	</row>
@@ -2506,7 +2506,7 @@
 		<language name="JPN" width="256">もたせて　コンテストに　さんかすると
 その　ポケモンは　いつもより
 たくましく　みられる。</language>
-		<language name="JPN_KANJI" width="256">もたせて　コンテストに　さんかすると
+		<language name="JPN_KANJI" width="256">持たせて　コンテストに　参加すると
 その　ポケモンは　いつもより
 たくましく　みられる。</language>
 	</row>
@@ -2516,7 +2516,7 @@
 もたせると　わざの　めいちゅうりつが
 すこし　あがる。</language>
 		<language name="JPN_KANJI" width="256">ものが　おおきく　みえる　レンズ。
-もたせると　わざの　めいちゅうりつが
+持たせると　技の　命中率が
 すこし　あがる。</language>
 	</row>
 
@@ -2525,8 +2525,8 @@
 もたせると　ぶつりわざの
 いりょくが　すこし　あがる。</language>
 		<language name="JPN_KANJI" width="256">ちからが　わいてくる　ハチマキ。
-もたせると　ぶつりわざの
-いりょくが　すこし　あがる。</language>
+持たせると　物理技の
+威力が　すこし　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_267">
@@ -2534,115 +2534,115 @@
 もたせると　とくしゅわざの
 いりょくが　すこし　あがる。</language>
 		<language name="JPN_KANJI" width="256">ぶあつい　レンズの　ついた　メガネ。
-もたせると　とくしゅわざの
-いりょくが　すこし　あがる。</language>
+持たせると　特殊技の
+威力が　すこし　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_268">
 		<language name="JPN" width="256">つかいこまれた　くろい　おび。
 もたせると　こうかばつぐんの　とき
 わざの　いりょくが　すこし　あがる。</language>
-		<language name="JPN_KANJI" width="256">つかいこまれた　くろい　おび。
-もたせると　こうかばつぐんの　とき
-わざの　いりょくが　すこし　あがる。</language>
+		<language name="JPN_KANJI" width="256">使いこまれた　くろい　おび。
+持たせると　こうかばつぐんの　とき
+技の　威力が　すこし　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_269">
 		<language name="JPN" width="256">もたせた　ポケモンが　ひかりのかべや
 リフレクターを　つかったとき
 いつもよりも　ながく　のこる。</language>
-		<language name="JPN_KANJI" width="256">もたせた　ポケモンが　ひかりのかべや
-リフレクターを　つかったとき
-いつもよりも　ながく　のこる。</language>
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンが　ひかりのかべや
+リフレクターを　使ったとき
+いつもよりも　長く　残る。</language>
 	</row>
 
 	<row id="ITEMINFO_270">
 		<language name="JPN" width="256">もたせると　こうげきする　たびに
 ＨＰが　すこし　へってしまうが
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">もたせると　こうげきする　たびに
-ＨＰが　すこし　へってしまうが
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">持たせると　攻撃する　たびに
+ＨＰが　すこし　減ってしまうが
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_271">
 		<language name="JPN" width="256">もたせた　ポケモンは　いちどだけ
 １ターンめに　ちからを　ためるわざを
 すぐに　つかうことが　できる。</language>
-		<language name="JPN_KANJI" width="256">もたせた　ポケモンは　いちどだけ
-１ターンめに　ちからを　ためるわざを
-すぐに　つかうことが　できる。</language>
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンは　１度だけ
+１ターンめに　ちからを　ためる技を
+すぐに　使うことが　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_272">
 		<language name="JPN" width="256">さわると　どくをだす　ふしぎなたま。
 もたせると　せんとうちゅうに
 もうどくの　じょうたいに　なる。</language>
-		<language name="JPN_KANJI" width="256">さわると　どくをだす　ふしぎなたま。
-もたせると　せんとうちゅうに
-もうどくの　じょうたいに　なる。</language>
+		<language name="JPN_KANJI" width="256">触ると　どくをだす　不思議なたま。
+持たせると　戦闘中に
+もうどくの　状態に　なる。</language>
 	</row>
 
 	<row id="ITEMINFO_273">
 		<language name="JPN" width="256">さわると　ねつをだす　ふしぎなたま。
 もたせると　せんとうちゅうに
 やけどの　じょうたいに　なる。</language>
-		<language name="JPN_KANJI" width="256">さわると　ねつをだす　ふしぎなたま。
-もたせると　せんとうちゅうに
-やけどの　じょうたいに　なる。</language>
+		<language name="JPN_KANJI" width="256">触ると　ねつをだす　不思議なたま。
+持たせると　戦闘中に
+やけどの　状態に　なる。</language>
 	</row>
 
 	<row id="ITEMINFO_274">
 		<language name="JPN" width="256">メタモンに　もたせると　すばやさが
 あがる　ふしぎなこな。
 とても　こまかくて　かたい。</language>
-		<language name="JPN_KANJI" width="256">メタモンに　もたせると　すばやさが
-あがる　ふしぎなこな。
-とても　こまかくて　かたい。</language>
+		<language name="JPN_KANJI" width="256">メタモンに　持たせると　すばやさが
+あがる　不思議なこな。
+とても　こまかくて　硬い。</language>
 	</row>
 
 	<row id="ITEMINFO_275">
 		<language name="JPN" width="256">もたせると　ＨＰが　まんたんのとき
 ひんしになりそうな　わざを　うけても　
 ＨＰ１で　いちどだけ　たえる。</language>
-		<language name="JPN_KANJI" width="256">もたせると　ＨＰが　まんたんのとき
-ひんしになりそうな　わざを　うけても　
-ＨＰ１で　いちどだけ　たえる。</language>
+		<language name="JPN_KANJI" width="256">持たせると　ＨＰが　まんたんのとき
+ひんしになりそうな　技を　受けても
+ＨＰ１で　１度だけ　耐える。</language>
 	</row>
 
 	<row id="ITEMINFO_276">
 		<language name="JPN" width="256">もたせた　ポケモンが　あいてよりも
 こうどうするのが　おそいとき
 わざが　めいちゅう　しやすくなる。</language>
-		<language name="JPN_KANJI" width="256">もたせた　ポケモンが　あいてよりも
-こうどうするのが　おそいとき
-わざが　めいちゅう　しやすくなる。</language>
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンが　相手よりも
+行動するのが　遅いとき
+技が　命中しやすくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_277">
 		<language name="JPN" width="256">もたせると　おなじわざを　れんぞくで
 つかったとき　いりょくが　あがる。
 やめると　いりょくは　もどる。</language>
-		<language name="JPN_KANJI" width="256">もたせると　おなじわざを　れんぞくで
-つかったとき　いりょくが　あがる。
-やめると　いりょくは　もどる。</language>
+		<language name="JPN_KANJI" width="256">持たせると　同じ技を　連続で
+使ったとき　威力が　あがる。
+やめると　威力は　もどる。</language>
 	</row>
 
 	<row id="ITEMINFO_278">
 		<language name="JPN" width="256">もたせると　すばやさが　さがる。
 ひこうタイプや　ふゆう　ポケモンは
 じめんわざが　あたって　しまう。</language>
-		<language name="JPN_KANJI" width="256">もたせると　すばやさが　さがる。
+		<language name="JPN_KANJI" width="256">持たせると　すばやさが　さがる。
 ひこうタイプや　ふゆう　ポケモンは
-じめんわざが　あたって　しまう。</language>
+じめん技が　当たってしまう。</language>
 	</row>
 
 	<row id="ITEMINFO_279">
 		<language name="JPN" width="256">とても　おもたい　なにかの　しっぽ。
 もたせると　いつもより　こうどうが
 おそくなる。</language>
-		<language name="JPN_KANJI" width="256">とても　おもたい　なにかの　しっぽ。
-もたせると　いつもより　こうどうが
+		<language name="JPN_KANJI" width="256">とても　重たい　なにかの　しっぽ。
+持たせると　いつもより　こうどうが
 おそくなる。</language>
 	</row>
 
@@ -2650,63 +2650,63 @@
 		<language name="JPN" width="256">ほそくて　ながい　まっかな　いと。
 もたせると　メロメロに　なったとき
 あいても　メロメロに　できる。</language>
-		<language name="JPN_KANJI" width="256">ほそくて　ながい　まっかな　いと。
-もたせると　メロメロに　なったとき
-あいても　メロメロに　できる。</language>
+		<language name="JPN_KANJI" width="256">細くて　長い　まっかな　いと。
+持たせると　メロメロに　なったとき
+相手も　メロメロに　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_281">
 		<language name="JPN" width="256">もたせると　どくタイプの　ポケモンは
 すこしずつ　ＨＰを　かいふくする。
 それいがいは　ＨＰが　へってしまう。</language>
-		<language name="JPN_KANJI" width="256">もたせると　どくタイプの　ポケモンは
-すこしずつ　ＨＰを　かいふくする。
-それいがいは　ＨＰが　へってしまう。</language>
+		<language name="JPN_KANJI" width="256">持たせると　どくタイプの　ポケモンは
+すこしずつ　ＨＰを　回復する。
+それ以外は　ＨＰが　減ってしまう。</language>
 	</row>
 
 	<row id="ITEMINFO_282">
 		<language name="JPN" width="256">もたせた　ポケモンが　あられを
 つかうと　いつもより　あられの
 じかんが　ながくなる。</language>
-		<language name="JPN_KANJI" width="256">もたせた　ポケモンが　あられを
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンが　あられを
 つかうと　いつもより　あられの
-じかんが　ながくなる。</language>
+時間が　長くなる。</language>
 	</row>
 
 	<row id="ITEMINFO_283">
 		<language name="JPN" width="256">もたせた　ポケモンが　すなあらしを
 つかうと　いつもより　すなあらしの
 じかんが　ながくなる。</language>
-		<language name="JPN_KANJI" width="256">もたせた　ポケモンが　すなあらしを
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンが　すなあらしを
 つかうと　いつもより　すなあらしの
-じかんが　ながくなる。</language>
+時間が　長くなる。</language>
 	</row>
 
 	<row id="ITEMINFO_284">
 		<language name="JPN" width="256">もたせた　ポケモンが　にほんばれを
 つかうと　いつもより　はれの
 じかんが　ながくなる。</language>
-		<language name="JPN_KANJI" width="256">もたせた　ポケモンが　にほんばれを
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンが　にほんばれを
 つかうと　いつもより　はれの
-じかんが　ながくなる。</language>
+時間が　長くなる。</language>
 	</row>
 
 	<row id="ITEMINFO_285">
 		<language name="JPN" width="256">もたせた　ポケモンが　あまごいを
 つかうと　いつもより　あめの
 じかんが　ながくなる。</language>
-		<language name="JPN_KANJI" width="256">もたせた　ポケモンが　あまごいを
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンが　あまごいを
 つかうと　いつもより　あめの
-じかんが　ながくなる。</language>
+時間が　長くなる。</language>
 	</row>
 
 	<row id="ITEMINFO_286">
 		<language name="JPN" width="256">もたせると　しめつける　まきつくなど
 ダメージを　あたえつづける　わざの
 ターンすうが　ふえる。</language>
-		<language name="JPN_KANJI" width="256">もたせると　しめつける　まきつくなど
-ダメージを　あたえつづける　わざの
-ターンすうが　ふえる。</language>
+		<language name="JPN_KANJI" width="256">持たせると　しめつける　まきつくなど
+ダメージを　あたえつづける　技の
+ターン数が　増える。</language>
 	</row>
 
 	<row id="ITEMINFO_287">
@@ -2714,79 +2714,79 @@
 もたせると　すばやさは　あがるが
 おなじ　わざしか　だせなくなる。</language>
 		<language name="JPN_KANJI" width="256">ちょっと　こだわった　スカーフ。
-もたせると　すばやさは　あがるが
-おなじ　わざしか　だせなくなる。</language>
+持たせると　すばやさは　あがるが
+同じ　技しか　だせなくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_288">
 		<language name="JPN" width="256">もたせると　まいターン　ダメージを
 うける。　じぶんに　ふれてきた
 あいてに　くっつく　ことも　ある。</language>
-		<language name="JPN_KANJI" width="256">もたせると　まいターン　ダメージを
-うける。　じぶんに　ふれてきた
-あいてに　くっつく　ことも　ある。</language>
+		<language name="JPN_KANJI" width="256">持たせると　毎ターン　ダメージを
+受ける。　自分に　ふれてきた
+相手に　くっつくことも　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_289">
 		<language name="JPN" width="256">もたせると　すばやさが　さがるが
 ふつうよりも　ポケモンの　こうげきが
 たかく　そだちやすい。</language>
-		<language name="JPN_KANJI" width="256">もたせると　すばやさが　さがるが
-ふつうよりも　ポケモンの　こうげきが
-たかく　そだちやすい。</language>
+		<language name="JPN_KANJI" width="256">持たせると　すばやさが　さがるが
+ふつうよりも　ポケモンの　攻撃が
+たかく　育ちやすい。</language>
 	</row>
 
 	<row id="ITEMINFO_290">
 		<language name="JPN" width="256">もたせると　すばやさが　さがるが
 ふつうよりも　ポケモンの　ぼうぎょが
 たかく　そだちやすい。</language>
-		<language name="JPN_KANJI" width="256">もたせると　すばやさが　さがるが
-ふつうよりも　ポケモンの　ぼうぎょが
-たかく　そだちやすい。</language>
+		<language name="JPN_KANJI" width="256">持たせると　すばやさが　さがるが
+ふつうよりも　ポケモンの　防御が
+たかく　育ちやすい。</language>
 	</row>
 
 	<row id="ITEMINFO_291">
 		<language name="JPN" width="256">もたせると　すばやさが　さがるが
 ふつうよりも　ポケモンの　とくこうが
 たかく　そだちやすい。</language>
-		<language name="JPN_KANJI" width="256">もたせると　すばやさが　さがるが
-ふつうよりも　ポケモンの　とくこうが
-たかく　そだちやすい。</language>
+		<language name="JPN_KANJI" width="256">持たせると　すばやさが　さがるが
+ふつうよりも　ポケモンの　特攻が
+たかく　育ちやすい。</language>
 	</row>
 
 	<row id="ITEMINFO_292">
 		<language name="JPN" width="256">もたせると　すばやさが　さがるが
 ふつうよりも　ポケモンの　とくぼうが
 たかく　そだちやすい。</language>
-		<language name="JPN_KANJI" width="256">もたせると　すばやさが　さがるが
-ふつうよりも　ポケモンの　とくぼうが
-たかく　そだちやすい。</language>
+		<language name="JPN_KANJI" width="256">持たせると　すばやさが　さがるが
+ふつうよりも　ポケモンの　特防が
+たかく　育ちやすい。</language>
 	</row>
 
 	<row id="ITEMINFO_293">
 		<language name="JPN" width="256">もたせると　すばやさが　さがるが
 ふつうよりも　ポケモンの　すばやさが
 たかく　そだちやすい。</language>
-		<language name="JPN_KANJI" width="256">もたせると　すばやさが　さがるが
+		<language name="JPN_KANJI" width="256">持たせると　すばやさが　さがるが
 ふつうよりも　ポケモンの　すばやさが
-たかく　そだちやすい。</language>
+たかく　育ちやすい。</language>
 	</row>
 
 	<row id="ITEMINFO_294">
 		<language name="JPN" width="256">もたせると　すばやさが　さがるが
 ふつうよりも　ポケモンの　ＨＰが
 たかく　そだちやすい。</language>
-		<language name="JPN_KANJI" width="256">もたせると　すばやさが　さがるが
+		<language name="JPN_KANJI" width="256">持たせると　すばやさが　さがるが
 ふつうよりも　ポケモンの　ＨＰが
-たかく　そだちやすい。</language>
+たかく　育ちやすい。</language>
 	</row>
 
 	<row id="ITEMINFO_295">
 		<language name="JPN" width="256">じょうぶで　かたい　ぬけがら。
 もたせた　ポケモンは　ひかえの
 ポケモンと　かならず　いれかわれる。</language>
-		<language name="JPN_KANJI" width="256">じょうぶで　かたい　ぬけがら。
-もたせた　ポケモンは　ひかえの
+		<language name="JPN_KANJI" width="256">丈夫で　硬い　ぬけがら。
+持たせた　ポケモンは　控えの
 ポケモンと　かならず　いれかわれる。</language>
 	</row>
 
@@ -2794,9 +2794,9 @@
 		<language name="JPN" width="256">もたせると　ＨＰを　すいとる　わざで
 いつもより　おおく　じぶんの　ＨＰを
 かいふくできる。</language>
-		<language name="JPN_KANJI" width="256">もたせると　ＨＰを　すいとる　わざで
-いつもより　おおく　じぶんの　ＨＰを
-かいふくできる。</language>
+		<language name="JPN_KANJI" width="256">持たせると　ＨＰを　すいとる　技で
+いつもより　おおく　自分の　ＨＰを
+回復できる。</language>
 	</row>
 
 	<row id="ITEMINFO_297">
@@ -2804,214 +2804,214 @@
 もたせると　とくこうは　あがるが
 おなじ　わざしか　だせなくなる。</language>
 		<language name="JPN_KANJI" width="256">ちょっと　こだわった　メガネ。
-もたせると　とくこうは　あがるが
-おなじ　わざしか　だせなくなる。</language>
+持たせると　特攻は　あがるが
+同じ　技しか　だせなくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_298">
 		<language name="JPN" width="256">ほのおの　タイプの　せきばん。
 もたせると　ほのおタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">ほのおの　タイプの　せきばん。
-もたせると　ほのおタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">ほのおの　タイプの　石盤。
+持たせると　ほのおタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_299">
 		<language name="JPN" width="256">みずの　タイプの　せきばん。
 もたせると　みずタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">みずの　タイプの　せきばん。
-もたせると　みずタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">みずの　タイプの　石盤。
+持たせると　みずタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_300">
 		<language name="JPN" width="256">でんきの　タイプの　せきばん。
 もたせると　でんきタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">でんきの　タイプの　せきばん。
-もたせると　でんきタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">でんきの　タイプの　石盤。
+持たせると　でんきタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_301">
 		<language name="JPN" width="256">くさの　タイプの　せきばん。
 もたせると　くさタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">くさの　タイプの　せきばん。
-もたせると　くさタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">くさの　タイプの　石盤。
+持たせると　くさタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_302">
 		<language name="JPN" width="256">こおりの　タイプの　せきばん。
 もたせると　こおりタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">こおりの　タイプの　せきばん。
-もたせると　こおりタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">こおりの　タイプの　石盤。
+持たせると　こおりタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_303">
 		<language name="JPN" width="256">かくとうの　タイプの　せきばん。
 もたせると　かくとうタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">かくとうの　タイプの　せきばん。
-もたせると　かくとうタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">かくとうの　タイプの　石盤。
+持たせると　かくとうタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_304">
 		<language name="JPN" width="256">どくの　タイプの　せきばん。
 もたせると　どくタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">どくの　タイプの　せきばん。
-もたせると　どくタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">どくの　タイプの　石盤。
+持たせると　どくタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_305">
 		<language name="JPN" width="256">じめんの　タイプの　せきばん。
 もたせると　じめんタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">じめんの　タイプの　せきばん。
-もたせると　じめんタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">じめんの　タイプの　石盤。
+持たせると　じめんタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_306">
 		<language name="JPN" width="256">ひこうの　タイプの　せきばん。
 もたせると　ひこうタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">ひこうの　タイプの　せきばん。
-もたせると　ひこうタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">ひこうの　タイプの　石盤。
+持たせると　ひこうタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_307">
 		<language name="JPN" width="256">エスパーの　タイプの　せきばん。
 もたせると　エスパータイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">エスパーの　タイプの　せきばん。
-もたせると　エスパータイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">エスパーの　タイプの　石盤。
+持たせると　エスパータイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_308">
 		<language name="JPN" width="256">むしの　タイプの　せきばん。
 もたせると　むしタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">むしの　タイプの　せきばん。
-もたせると　むしタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">むしの　タイプの　石盤。
+持たせると　むしタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_309">
 		<language name="JPN" width="256">いわの　タイプの　せきばん。
 もたせると　いわタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">いわの　タイプの　せきばん。
-もたせると　いわタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">いわの　タイプの　石盤。
+持たせると　いわタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_310">
 		<language name="JPN" width="256">ゴーストの　タイプの　せきばん。
 もたせると　ゴーストタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">ゴーストの　タイプの　せきばん。
-もたせると　ゴーストタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">ゴーストの　タイプの　石盤。
+持たせると　ゴーストタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_311">
 		<language name="JPN" width="256">ドラゴンの　タイプの　せきばん。
 もたせると　ドラゴンタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">ドラゴンの　タイプの　せきばん。
-もたせると　ドラゴンタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">ドラゴンの　タイプの　石盤。
+持たせると　ドラゴンタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_312">
 		<language name="JPN" width="256">あくの　タイプの　せきばん。
 もたせると　あくタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">あくの　タイプの　せきばん。
-もたせると　あくタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">あくの　タイプの　石盤。
+持たせると　あくタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_313">
 		<language name="JPN" width="256">はがねの　タイプの　せきばん。
 もたせると　はがねタイプの
 わざの　いりょくが　つよまる。</language>
-		<language name="JPN_KANJI" width="256">はがねの　タイプの　せきばん。
-もたせると　はがねタイプの
-わざの　いりょくが　つよまる。</language>
+		<language name="JPN_KANJI" width="256">はがねの　タイプの　石盤。
+持たせると　はがねタイプの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_314">
 		<language name="JPN" width="256">ふしぎな　かおりの　おこう。
 もたせると　エスパータイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ふしぎな　かおりの　おこう。
-もたせると　エスパータイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">不思議な　かおりの　おこう。
+持たせると　エスパータイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_315">
 		<language name="JPN" width="256">ふしぎな　かおりの　おこう。
 もたせると　いわタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ふしぎな　かおりの　おこう。
-もたせると　いわタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">不思議な　かおりの　おこう。
+持たせると　いわタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_316">
 		<language name="JPN" width="256">ふしぎな　かおりの　おこう。
 もたせた　ポケモンは　いつもより
 こうどうが　おそくなる。</language>
-		<language name="JPN_KANJI" width="256">ふしぎな　かおりの　おこう。
-もたせた　ポケモンは　いつもより
-こうどうが　おそくなる。</language>
+		<language name="JPN_KANJI" width="256">不思議な　かおりの　おこう。
+持たせた　ポケモンは　いつもより
+行動が　遅くなる。</language>
 	</row>
 
 	<row id="ITEMINFO_317">
 		<language name="JPN" width="256">ふしぎな　かおりの　おこう。
 もたせると　みずタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ふしぎな　かおりの　おこう。
-もたせると　みずタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">不思議な　かおりの　おこう。
+持たせると　みずタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_318">
 		<language name="JPN" width="256">ふしぎな　かおりの　おこう。
 もたせると　くさタイプの
 わざの　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">ふしぎな　かおりの　おこう。
-もたせると　くさタイプの
-わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">不思議な　かおりの　おこう。
+持たせると　くさタイプの
+技の　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_319">
 		<language name="JPN" width="256">もたせた　ポケモンが　いちどでも
 せんとうに　かおを　だすと
 おかねが　２ばい　もらえる。</language>
-		<language name="JPN_KANJI" width="256">もたせた　ポケモンが　いちどでも
-せんとうに　かおを　だすと
-おかねが　２ばい　もらえる。</language>
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンが　１度でも
+戦闘に　かおを　だすと
+お金が　２倍　もらえる。</language>
 	</row>
 
 	<row id="ITEMINFO_320">
 		<language name="JPN" width="256">いちばん　まえの　ポケモンに
 もたせると　やせいポケモンが
 でて　きにくくなる。</language>
-		<language name="JPN_KANJI" width="256">いちばん　まえの　ポケモンに
-もたせると　やせいポケモンが
+		<language name="JPN_KANJI" width="256">１番　前の　ポケモンに
+持たせると　野生ポケモンが
 でて　きにくくなる。</language>
 	</row>
 
@@ -3020,8 +3020,8 @@
 とても　かたくて　おもい。
 ある　ポケモンが　このんでいる。</language>
 		<language name="JPN_KANJI" width="256">なにかの　プロテクター。
-とても　かたくて　おもい。
-ある　ポケモンが　このんでいる。</language>
+とても　硬くて　重い。
+ある　ポケモンが　好んでいる。</language>
 	</row>
 
 	<row id="ITEMINFO_322">
@@ -3029,8 +3029,8 @@
 たくわえられている　はこ。
 ある　ポケモンが　このんでいる。</language>
 		<language name="JPN_KANJI" width="256">とてつもない　でんきの　エネルギーが
-たくわえられている　はこ。
-ある　ポケモンが　このんでいる。</language>
+たくわえられている　箱。
+ある　ポケモンが　好んでいる。</language>
 	</row>
 
 	<row id="ITEMINFO_323">
@@ -3038,26 +3038,26 @@
 たくわえられている　はこ。
 ある　ポケモンが　このんでいる。</language>
 		<language name="JPN_KANJI" width="256">とてつもない　マグマの　エネルギーが
-たくわえられている　はこ。
-ある　ポケモンが　このんでいる。</language>
+たくわえられている　箱。
+ある　ポケモンが　好んでいる。</language>
 	</row>
 
 	<row id="ITEMINFO_324">
 		<language name="JPN" width="256">なかに　あやしい　じょうほうが
 つまった　とうめいな　きかい。
 せいさくしゃは　ふめい。</language>
-		<language name="JPN_KANJI" width="256">なかに　あやしい　じょうほうが
-つまった　とうめいな　きかい。
-せいさくしゃは　ふめい。</language>
+		<language name="JPN_KANJI" width="256">なかに　怪しい　情報が
+つまった　透明な　機械。
+製作者は　不明。</language>
 	</row>
 
 	<row id="ITEMINFO_325">
 		<language name="JPN" width="256">おそろしく　つよい　れいりょくが
 こめられている　ぬの。
 ある　ポケモンが　このんでいる。</language>
-		<language name="JPN_KANJI" width="256">おそろしく　つよい　れいりょくが
+		<language name="JPN_KANJI" width="256">おそろしく　強い　霊力が
 こめられている　ぬの。
-ある　ポケモンが　このんでいる。</language>
+ある　ポケモンが　好んでいる。</language>
 	</row>
 
 	<row id="ITEMINFO_326">
@@ -3065,8 +3065,8 @@
 もたせると　わざが　きゅうしょに
 あたりやすくなる。</language>
 		<language name="JPN_KANJI" width="256">するどく　とがった　ツメ。
-もたせると　わざが　きゅうしょに
-あたりやすくなる。</language>
+持たせると　技が　急所に
+当たりやすくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_327">
@@ -3074,7 +3074,7 @@
 もたせると　ダメージを　あたえたとき
 ひるませることが　ある。</language>
 		<language name="JPN_KANJI" width="256">するどく　とがった　キバ。
-もたせると　ダメージを　あたえたとき
+持たせると　ダメージを　あたえたとき
 ひるませることが　ある。</language>
 	</row>
 
@@ -3083,16 +3083,16 @@
 じぶんの　こうげきと　
 めいちゅうりつを　あげる。</language>
 		<language name="JPN_KANJI" width="256">つめを　みがいて　するどく　する。
-じぶんの　こうげきと　
-めいちゅうりつを　あげる。</language>
+自分の　攻撃と　
+命中率を　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_329">
 		<language name="JPN" width="256">するどく　とがった　きょだいな
 ツメで　ひっかいて　こうげきする。
 </language>
-		<language name="JPN_KANJI" width="256">するどく　とがった　きょだいな
-ツメで　ひっかいて　こうげきする。
+		<language name="JPN_KANJI" width="256">するどく　とがった　巨大な
+ツメで　ひっかいて　攻撃する。
 </language>
 	</row>
 
@@ -3100,36 +3100,36 @@
 		<language name="JPN" width="256">ふしぎな　ねんぱを　じったいかして
 あいてを　こうげきする。
 ねんぱは　ぶつりこうげきに　なる。</language>
-		<language name="JPN_KANJI" width="256">ふしぎな　ねんぱを　じったいかして
-あいてを　こうげきする。
-ねんぱは　ぶつりこうげきに　なる。</language>
+		<language name="JPN_KANJI" width="256">不思議な　念波を　実体化して
+相手を　攻撃する。
+念波は　物理攻撃に　なる。</language>
 	</row>
 
 	<row id="ITEMINFO_331">
 		<language name="JPN" width="256">しずかに　せいしんを　とういつして
 こころを　しずめることで　じぶんの
 とくこうと　とくぼうを　あげる。</language>
-		<language name="JPN_KANJI" width="256">しずかに　せいしんを　とういつして
-こころを　しずめることで　じぶんの
-とくこうと　とくぼうを　あげる。</language>
+		<language name="JPN_KANJI" width="256">静かに　精神を　統一して
+こころを　鎮めることで　自分の
+特攻と　特防を　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_332">
 		<language name="JPN" width="256">あいてを　にがして　ひかえポケモンを
 ひきずりだす。　やせいポケモンなら
 せんとうは　おわる。</language>
-		<language name="JPN_KANJI" width="256">あいてを　にがして　ひかえポケモンを
-ひきずりだす。　やせいポケモンなら
-せんとうは　おわる。</language>
+		<language name="JPN_KANJI" width="256">相手を　逃がして　控えポケモンを
+ひきずりだす。　野生ポケモンなら
+戦闘は　終わる。</language>
 	</row>
 
 	<row id="ITEMINFO_333">
 		<language name="JPN" width="256">もうどくの　じょうたいに　する。
 ターンすうが　すすむほど　どくの
 ダメージりょうは　ふえる。</language>
-		<language name="JPN_KANJI" width="256">もうどくの　じょうたいに　する。
-ターンすうが　すすむほど　どくの
-ダメージりょうは　ふえる。</language>
+		<language name="JPN_KANJI" width="256">もうどくの　状態に　する。
+ターン数が　進むほど　どくの
+ダメージ量は　増える。</language>
 	</row>
 
 	<row id="ITEMINFO_334">
@@ -3137,7 +3137,7 @@
 ふらして　こおりタイプ　いがいの
 ポケモンに　ダメージを　あたえる。</language>
 		<language name="JPN_KANJI" width="256">５ターンの　あいだ　あられを
-ふらして　こおりタイプ　いがいの
+降らして　こおりタイプ　以外の
 ポケモンに　ダメージを　あたえる。</language>
 	</row>
 
@@ -3145,27 +3145,27 @@
 		<language name="JPN" width="256">ちからを　こめて　きんにくを
 あつくする　ことで　じぶんの
 こうげきと　ぼうぎょを　あげる。</language>
-		<language name="JPN_KANJI" width="256">ちからを　こめて　きんにくを
-あつくする　ことで　じぶんの
-こうげきと　ぼうぎょを　あげる。</language>
+		<language name="JPN_KANJI" width="256">ちからを　こめて　筋肉を
+厚くする　ことで　自分の
+攻撃と　防御を　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_336">
 		<language name="JPN" width="256">とくしゅな　どくえきを　あびせる。
 どく　じょうたいの　あいてには
 いりょくが　２ばいに　なる。</language>
-		<language name="JPN_KANJI" width="256">とくしゅな　どくえきを　あびせかける。
-どく　じょうたいの　あいてには
-いりょくが　２ばいに　なる。</language>
+		<language name="JPN_KANJI" width="256">特殊な　どくえきを　あびせかける。
+どく状態の　相手には
+威力が　２倍に　なる。</language>
 	</row>
 
 	<row id="ITEMINFO_337">
 		<language name="JPN" width="256">おぼえる　ポケモンの　かくされた
 のうりょくで　わざの　タイプと
 いりょくが　　かわる。</language>
-		<language name="JPN_KANJI" width="256">おぼえる　ポケモンの　かくされた
-のうりょくで　わざの　タイプと
-いりょくが　　かわる。</language>
+		<language name="JPN_KANJI" width="256">覚える　ポケモンの　隠された
+能力で　技の　タイプと
+威力が　かわる。</language>
 	</row>
 
 	<row id="ITEMINFO_338">
@@ -3173,26 +3173,26 @@
 つよくして　ほのおタイプの
 わざの　いりょくを　あげる。</language>
 		<language name="JPN_KANJI" width="256">５ターンの　あいだ　ひざしを
-つよくして　ほのおタイプの
-わざの　いりょくを　あげる。</language>
+強くして　ほのおタイプの
+技の　威力を　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_339">
 		<language name="JPN" width="256">あいてを　おこらせて　２ー４ターンの
 あいだ　ダメージを　あたえるわざ
 いがい　だせない　ようにする。</language>
-		<language name="JPN_KANJI" width="256">あいてを　おこらせて　２ー４ターンの
-あいだ　ダメージを　あたえるわざ
-いがい　だせない　ようにする。</language>
+		<language name="JPN_KANJI" width="256">相手を　おこらせて　２ー４ターンの
+あいだ　ダメージを　あたえる技
+以外　だせない　ようにする。</language>
 	</row>
 
 	<row id="ITEMINFO_340">
 		<language name="JPN" width="256">れいきの　ビームを　はっしゃして
 こうげきする。　あいてを　こおりの
 じょうたいに　することが　ある。</language>
-		<language name="JPN_KANJI" width="256">れいきの　ビームを　はっしゃして
-こうげきする。　あいてを　こおりの
-じょうたいに　することが　ある。</language>
+		<language name="JPN_KANJI" width="256">れいきの　ビームを　発射して
+攻撃する。　相手を　こおりの
+状態に　することが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_341">
@@ -3200,43 +3200,43 @@
 こうげきする。　あいてを　こおりの
 じょうたいに　することが　ある。</language>
 		<language name="JPN_KANJI" width="256">はげしい　ふぶきを　ぶつけて
-こうげきする。　あいてを　こおりの
-じょうたいに　することが　ある。</language>
+攻撃する。　相手を　こおりの
+状態に　することが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_342">
 		<language name="JPN" width="256">つよい　こうせんを　はっしゃする。
 つかった　つぎのターンは　はんどうで
 うごけなくなる。</language>
-		<language name="JPN_KANJI" width="256">つよい　こうせんを　はっしゃする。
-つかった　つぎのターンは　はんどうで
-うごけなくなる。</language>
+		<language name="JPN_KANJI" width="256">つよい　こうせんを　発射する。
+つかった　次のターンは　反動で
+動けなくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_343">
 		<language name="JPN" width="256">５ターンの　あいだ　ふしぎな　かべで
 あいてから　うける　とくしゅわざの
 ダメージを　よわめる。</language>
-		<language name="JPN_KANJI" width="256">５ターンの　あいだ　ふしぎな　かべで
-あいてから　うける　とくしゅわざの
-ダメージを　よわめる。</language>
+		<language name="JPN_KANJI" width="256">５ターンの　あいだ　不思議な　かべで
+相手から　受ける　特殊技の
+ダメージを　弱める。</language>
 	</row>
 
 	<row id="ITEMINFO_344">
 		<language name="JPN" width="256">こうげきを　まったく　うけない。
 わざを　れんぞくで　だすと　しっぱい
 しやすくなる。</language>
-		<language name="JPN_KANJI" width="256">こうげきを　まったく　うけない。
-わざを　れんぞくで　だすと　しっぱい
-しやすくなる。</language>
+		<language name="JPN_KANJI" width="256">攻撃を　まったく　受けない。
+技を　連続で　だすと
+失敗しやすくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_345">
 		<language name="JPN" width="256">５ターンの　あいだ　あめを　ふらして
 みずタイプの　わざの　いりょくを
 あげる。</language>
-		<language name="JPN_KANJI" width="256">５ターンの　あいだ　あめを　ふらして
-みずタイプの　わざの　いりょくを
+		<language name="JPN_KANJI" width="256">５ターンの　あいだ　あめを　降らして
+みずタイプの　技の　威力を
 あげる。</language>
 	</row>
 
@@ -3244,36 +3244,36 @@
 		<language name="JPN" width="256">あいてを　うかせて　３ターンの
 あいだ　こうげきが　かならず
 あいてに　あたるように　する。</language>
-		<language name="JPN_KANJI" width="256">あいてを　うかせて　３ターンの
-あいだ　こうげきが　かならず
-あいてに　あたるように　する。</language>
+		<language name="JPN_KANJI" width="256">相手を　浮かせて　３ターンの
+あいだ　攻撃が　必ず
+相手に　あたるように　する。</language>
 	</row>
 
 	<row id="ITEMINFO_347">
 		<language name="JPN" width="256">ふしぎな　ちからに　まもられて
 どく　まひ　やけど　ねむりなどの
 じょうたい　いじょうに　ならない。</language>
-		<language name="JPN_KANJI" width="256">ふしぎな　ちからに　まもられて
+		<language name="JPN_KANJI" width="256">不思議な　ちからに　まもられて
 どく　まひ　やけど　ねむりなどの
-じょうたい　いじょうに　ならない。</language>
+状態異常に　ならない。</language>
 	</row>
 
 	<row id="ITEMINFO_348">
 		<language name="JPN" width="256">ふまんを　はらすために　ぜんりょくで
 こうげきする。　なついて　いないほど
 いりょくは　あがる。</language>
-		<language name="JPN_KANJI" width="256">ふまんを　はらすために　ぜんりょくで
-こうげきする。　なついて　いないほど
-いりょくは　あがる。</language>
+		<language name="JPN_KANJI" width="256">不満を　はらすために　全力で
+攻撃する。　なついて　いないほど
+威力は　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_349">
 		<language name="JPN" width="256">１ターンめに　ひかりを　あつめて
 ２ターンめに　ひかりの　こうせんを
 はっしゃして　こうげきする。</language>
-		<language name="JPN_KANJI" width="256">１ターンめに　ひかりを　あつめて
-２ターンめに　ひかりの　こうせんを
-はっしゃして　こうげきする。</language>
+		<language name="JPN_KANJI" width="256">１ターンめに　ひかりを　集めて
+２ターンめに　ひかりの　光線を
+発射して　攻撃する。</language>
 	</row>
 
 	<row id="ITEMINFO_350">
@@ -3281,7 +3281,7 @@
 あいてを　こうげきする。あいては
 うちおとされて　じめんに　おちる。</language>
 		<language name="JPN_KANJI" width="256">いしや　たまを　なげて　とんでいる
-あいてを　こうげきする。あいては
+相手を　攻撃する。相手は
 うちおとされて　じめんに　おちる。</language>
 	</row>
 
@@ -3289,36 +3289,36 @@
 		<language name="JPN" width="256">つよい　でんげきを　あびせて
 こうげきする。　あいてを　まひの
 じょうたいに　することが　ある。</language>
-		<language name="JPN_KANJI" width="256">つよい　でんげきを　あびせて
-こうげきする。　あいてを　まひの
-じょうたいに　することが　ある。</language>
+		<language name="JPN_KANJI" width="256">強い　でんげきを　浴びせて
+攻撃する。　相手を　まひの
+状態に　することが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_352">
 		<language name="JPN" width="256">はげしい　かみなりを　おとして
 こうげきする。　あいてを　まひの
 じょうたいに　することが　ある。</language>
-		<language name="JPN_KANJI" width="256">はげしい　かみなりを　おとして
-こうげきする。　あいてを　まひの
-じょうたいに　することが　ある。</language>
+		<language name="JPN_KANJI" width="256">激しい　かみなりを　落として
+攻撃する。　相手を　まひの
+状態に　することが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_353">
 		<language name="JPN" width="256">たたかっている　ポケモン　すべてに
 じしんの　しょうげきを　あたえて
 こうげきする。</language>
-		<language name="JPN_KANJI" width="256">たたかっている　ポケモン　すべてに
-じしんの　しょうげきを　あたえて
-こうげきする。</language>
+		<language name="JPN_KANJI" width="256">戦っている　ポケモン　すべてに
+じしんの　衝撃を　あたえて
+攻撃する。</language>
 	</row>
 
 	<row id="ITEMINFO_354">
 		<language name="JPN" width="256">トレーナーのために　ぜんりょくで
 こうげきする。　なついて　いるほど
 いりょくは　あがる。</language>
-		<language name="JPN_KANJI" width="256">トレーナーのために　ぜんりょくで
-こうげきする。　なついて　いるほど
-いりょくは　あがる。</language>
+		<language name="JPN_KANJI" width="256">トレーナーのために　全力で
+攻撃する。　なついて　いるほど
+威力は　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_355">
@@ -3326,16 +3326,16 @@
 こうげきする。　どうくつで　つかうと
 そとに　だっしゅつ　できる。</language>
 		<language name="JPN_KANJI" width="256">１ターンめに　もぐり　２ターンめで
-こうげきする。　どうくつで　つかうと
-そとに　だっしゅつ　できる。</language>
+攻撃する。　どうくつで　使うと
+外に　脱出できる。</language>
 	</row>
 
 	<row id="ITEMINFO_356">
 		<language name="JPN" width="256">つよい　ねんりきを　おくって
 こうげきする。　あいての　とくぼうを
 さげることが　ある。</language>
-		<language name="JPN_KANJI" width="256">つよい　ねんりきを　おくって
-こうげきする。　あいての　とくぼうを
+		<language name="JPN_KANJI" width="256">強い　念力を　おくって
+攻撃する。　相手の　特防を
 さげることが　ある。</language>
 	</row>
 
@@ -3344,7 +3344,7 @@
 こうげきする。　あいての　とくぼうを
 さげることが　ある。</language>
 		<language name="JPN_KANJI" width="256">くろいかげの　かたまりを　なげて
-こうげきする。　あいての　とくぼうを
+攻撃する。　相手の　特防を
 さげることが　ある。</language>
 	</row>
 
@@ -3352,27 +3352,27 @@
 		<language name="JPN" width="256">こぶしなどで　こうげきする。
 ひかりのかべや　リフレクターも
 はかいできる。</language>
-		<language name="JPN_KANJI" width="256">こぶしなどで　こうげきする。
+		<language name="JPN_KANJI" width="256">こぶしなどで　攻撃する。
 ひかりのかべや　リフレクターも
-はかいできる。</language>
+破壊できる。</language>
 	</row>
 
 	<row id="ITEMINFO_359">
 		<language name="JPN" width="256">すばやい　うごきで　ぶんしんを
 つくる。　あいてを　まどわせることで
 かいひりつを　あげる。</language>
-		<language name="JPN_KANJI" width="256">すばやい　うごきで　ぶんしんを
-つくる。　あいてを　まどわせることで
-かいひりつを　あげる。</language>
+		<language name="JPN_KANJI" width="256">すばやい　動きで　ぶんしんを
+つくる。　相手を　まどわせることで
+回避率を　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_360">
 		<language name="JPN" width="256">５ターンの　あいだ　ふしぎな　かべで
 あいてから　うける　ぶつりわざの
 ダメージを　よわめる。</language>
-		<language name="JPN_KANJI" width="256">５ターンの　あいだ　ふしぎな　かべで
-あいてから　うける　ぶつりわざの
-ダメージを　よわめる。</language>
+		<language name="JPN_KANJI" width="256">５ターンの　あいだ　不思議な　かべで
+相手から　受ける　物理技の
+ダメージを　弱める。</language>
 	</row>
 
 	<row id="ITEMINFO_361">
@@ -3380,25 +3380,25 @@
 いるものを　すべて　こうげきする。
 どくに　することが　ある。</language>
 		<language name="JPN_KANJI" width="256">ヘドロの　なみで　まわりに
-いるものを　すべて　こうげきする。
-どく　じょうたいに　することがある。</language>
+いるものを　すべて　攻撃する。
+どく状態に　することがある。</language>
 	</row>
 
 	<row id="ITEMINFO_362">
 		<language name="JPN" width="256">はげしい　ほのおを　はっしゃして
 こうげきする。　あいてを　やけどの
 じょうたいに　することが　ある。</language>
-		<language name="JPN_KANJI" width="256">はげしい　ほのおを　はっしゃして
-こうげきする。　あいてを　やけどの
-じょうたいに　することが　ある。</language>
+		<language name="JPN_KANJI" width="256">激しい　ほのおを　発射して
+攻撃する。　相手を　やけどの
+状態に　することが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_363">
 		<language name="JPN" width="256">きたない　ヘドロを　なげつける。
 あいてを　どくの　じょうたいに
 することが　ある。</language>
-		<language name="JPN_KANJI" width="256">きたない　ヘドロを　なげつける。
-あいてを　どくの　じょうたいに
+		<language name="JPN_KANJI" width="256">汚い　ヘドロを　なげつける。
+相手を　どくの　状態に
 することが　ある。</language>
 	</row>
 
@@ -3407,7 +3407,7 @@
 じめん　いわ　はがね　タイプいがいに
 ダメージを　あたえる。</language>
 		<language name="JPN_KANJI" width="256">５ターンの　あいだ　すなあらしで
-じめん　いわ　はがね　タイプいがいに
+じめん　いわ　はがね　タイプ以外に
 ダメージを　あたえる。</language>
 	</row>
 
@@ -3416,34 +3416,34 @@
 やきつくす。　あいてを　やけどの
 じょうたいに　することが　ある。</language>
 		<language name="JPN_KANJI" width="256">だいのじの　ほのおで　すべてを
-やきつくす。　あいてを　やけどの
-じょうたいに　することが　ある。</language>
+やきつくす。　相手を　やけどの
+状態に　することが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_366">
 		<language name="JPN" width="256">いわを　なげつけ　こうげきする。
 おちた　いわが　うごきを　ふうじて
 あいての　すばやさを　さげる。</language>
-		<language name="JPN_KANJI" width="256">いわを　なげつけ　こうげきする。
-おちた　いわが　うごきを　ふうじて
-あいての　すばやさを　さげる。</language>
+		<language name="JPN_KANJI" width="256">いわを　なげつけ　攻撃する。
+おちた　いわが　動きを　ふうじて
+相手の　すばやさを　さげる。</language>
 	</row>
 
 	<row id="ITEMINFO_367">
 		<language name="JPN" width="256">すばやい　うごきで　ほんろうする。
 こうげきは　かならず　あいてに
 めいちゅうする。</language>
-		<language name="JPN_KANJI" width="256">すばやい　うごきで　ほんろうする。
-こうげきは　かならず　あいてに
-めいちゅうする。</language>
+		<language name="JPN_KANJI" width="256">すばやい　動きで　ほんろうする。
+攻撃は　かならず　相手に
+命中する。</language>
 	</row>
 
 	<row id="ITEMINFO_368">
 		<language name="JPN" width="256">いちゃもんを　つけて　おなじわざを
 れんぞくで　だせない　ようにする。
 </language>
-		<language name="JPN_KANJI" width="256">いちゃもんを　つけて　おなじわざを
-れんぞくで　だせない　ようにする。
+		<language name="JPN_KANJI" width="256">いちゃもんを　つけて　同じ技を
+連続で　だせない　ようにする。
 </language>
 	</row>
 
@@ -3451,17 +3451,17 @@
 		<language name="JPN" width="256">どく　まひ　やけど　のじょうたいで
 わざを　だすと　２ばいの　いりょくで
 こうげき　できる。</language>
-		<language name="JPN_KANJI" width="256">どく　まひ　やけど　のじょうたいで
-わざを　だすと　２ばいの　いりょくで
-こうげき　できる。</language>
+		<language name="JPN_KANJI" width="256">どく　まひ　やけど　の状態で
+技を　だすと　２倍の　威力で
+攻撃　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_370">
 		<language name="JPN" width="256">ほのおを　まとい　あいてを
 こうげきする。じぶんの
 すばやさを　あげることが　ある。</language>
-		<language name="JPN_KANJI" width="256">ほのおを　まとい　あいてを
-こうげきする。じぶんの
+		<language name="JPN_KANJI" width="256">ほのおを　まとい　相手を
+攻撃する。　自分の
 すばやさを　あげることが　ある。</language>
 	</row>
 
@@ -3470,8 +3470,8 @@
 ＨＰと　からだの　いじょうを
 すべて　かいふくする。</language>
 		<language name="JPN_KANJI" width="256">２ターンの　あいだ　ねむりつづける。
-ＨＰと　からだの　いじょうを
-すべて　かいふくする。</language>
+ＨＰと　体の　異常を
+すべて　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_372">
@@ -3480,51 +3480,51 @@
 あいては　わざが　だしにくくなる。</language>
 		<language name="JPN_KANJI" width="256">♂なら♀を　♀なら♂を　ゆうわくして
 メロメロにする。　メロメロに　なった
-あいては　わざが　だしにくくなる。</language>
+相手は　技が　だしにくくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_373">
 		<language name="JPN" width="256">こうげきと　どうじに　もちものを
 ぬすむ。　じぶんに　もちものが
 あると　しっぱいする。</language>
-		<language name="JPN_KANJI" width="256">こうげきと　どうじに　もちものを
-ぬすむ。　じぶんに　もちものが
-あると　しっぱいする。</language>
+		<language name="JPN_KANJI" width="256">攻撃と　同時に　もちものを
+ぬすむ。　自分に　もちものが
+あると　失敗する。</language>
 	</row>
 
 	<row id="ITEMINFO_374">
 		<language name="JPN" width="256">すばやい　うごきで　あいての　あしを
 ねらって　こうげきする。
 あいての　すばやさを　さげる。</language>
-		<language name="JPN_KANJI" width="256">すばやい　うごきで　あいての　あしを
-ねらって　こうげきする。
-あいての　すばやさを　さげる。</language>
+		<language name="JPN_KANJI" width="256">すばやい　動きで　相手の　あしを
+ねらって　攻撃する。
+相手の　すばやさを　さげる。</language>
 	</row>
 
 	<row id="ITEMINFO_375">
 		<language name="JPN" width="256">うたで　あいてを　こうげきする。
 みんなで　つかうと　れんぞくで
 だせて　いりょくも　あがる。</language>
-		<language name="JPN_KANJI" width="256">うたで　あいてを　こうげきする。
-みんなで　つかうと　れんぞくで
-だせて　いりょくも　あがる。</language>
+		<language name="JPN_KANJI" width="256">うたで　相手を　攻撃する。
+みんなで　使うと　連続で
+だせて　威力も　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_376">
 		<language name="JPN" width="256">こえで　あいてを　こうげきする。
 まいターン　じぶんや　みかたが
 つかうと　いりょくが　あがる。</language>
-		<language name="JPN_KANJI" width="256">こえで　あいてを　こうげきする。
-まいターン　じぶんや　みかたが
-つかうと　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="256">こえで　相手を　攻撃する。
+毎ターン　自分や　味方が
+使うと　威力が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_377">
 		<language name="JPN" width="256">フルパワーで　ほのおの　こうげき。
 つかったあと　じぶんの　とくこうは
 がくっと　さがる。</language>
-		<language name="JPN_KANJI" width="256">フルパワーで　ほのおの　こうげき。
-つかったあと　じぶんの　とくこうは
+		<language name="JPN_KANJI" width="256">フルパワーで　ほのおの　攻撃。
+使ったあと　自分の　特攻は
 がくっと　さがる。</language>
 	</row>
 
@@ -3532,8 +3532,8 @@
 		<language name="JPN" width="256">ふしぎな　ちからで　テレポートして
 じぶんと　みかたの　いばしょを
 いれかえる。</language>
-		<language name="JPN_KANJI" width="256">ふしぎな　ちからで　テレポートして
-じぶんと　みかたの　いばしょを
+		<language name="JPN_KANJI" width="256">不思議な　ちからで　テレポートして
+自分と　味方の　居場所を
 いれかえる。</language>
 	</row>
 
@@ -3541,8 +3541,8 @@
 		<language name="JPN" width="256">こんしんの　ちからで　こうげきする。
 あたった　あいての　とくぼうを
 さげることが　ある。</language>
-		<language name="JPN_KANJI" width="256">こんしんの　ちからで　こうげきする。
-あたった　あいての　とくぼうを
+		<language name="JPN_KANJI" width="256">こんしんの　ちからで　攻撃する。
+当たった　相手の　特防を
 さげることが　ある。</language>
 	</row>
 
@@ -3550,18 +3550,18 @@
 		<language name="JPN" width="256">いのちの　ちからを　あつめて　
 こうげきする。　あたった　あいての
 とくぼうを　さげることが　ある。</language>
-		<language name="JPN_KANJI" width="256">いのちの　ちからを　あつめて　
-こうげきする。　あたった　あいての
-とくぼうを　さげることが　ある。</language>
+		<language name="JPN_KANJI" width="256">命の　ちからを　集めて
+攻撃する。　当たった　相手の
+特防を　さげることが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_381">
 		<language name="JPN" width="256">てかげんして　こうげきする。
 こうげきした　あいての　ＨＰは
 かならず　１のこる。</language>
-		<language name="JPN_KANJI" width="256">てかげんして　こうげきする。
-こうげきした　あいての　ＨＰは
-かならず　１のこる。</language>
+		<language name="JPN_KANJI" width="256">手加減して　攻撃する。
+攻撃した　相手の　ＨＰは
+必ず　１　残る。</language>
 	</row>
 
 	<row id="ITEMINFO_382">
@@ -3569,7 +3569,7 @@
 はっしゃして　こうげきする。
 やけどに　することが　ある。</language>
 		<language name="JPN_KANJI" width="256">あつく　にえたぎる　みずを
-はっしゃして　こうげきする。
+発射して　攻撃する。
 やけどに　することが　ある。</language>
 	</row>
 
@@ -3577,62 +3577,62 @@
 		<language name="JPN" width="256">どうぐを　なげつけて　こうげきする。
 なげる　もちものに　よって　わざの
 いりょくと　こうかは　かわる。</language>
-		<language name="JPN_KANJI" width="256">どうぐを　なげつけて　こうげきする。
-なげる　もちものに　よって　わざの
-いりょくと　こうかは　かわる。</language>
+		<language name="JPN_KANJI" width="256">道具を　なげつけて　攻撃する。
+なげる　持ち物に　よって　技の
+威力と　効果は　変わる。</language>
 	</row>
 
 	<row id="ITEMINFO_384">
 		<language name="JPN" width="256">でんげきを　あびせて　こうげきする。
 のこった　でんきを　ためて　じぶんの
 とくこうを　あげることが　ある。</language>
-		<language name="JPN_KANJI" width="256">でんげきを　あびせて　こうげきする。
-のこった　でんきを　ためて　じぶんの
-とくこうを　あげることが　ある。</language>
+		<language name="JPN_KANJI" width="256">でんげきを　浴びせて　攻撃する。
+残った　でんきを　ためて　自分の
+特攻を　あげることが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_385">
 		<language name="JPN" width="256">あいてを　そらへ　つれさり
 そらから　おとして　こうげきする。
 つれさられた　あいては　うごけない。</language>
-		<language name="JPN_KANJI" width="256">あいてを　そらへ　つれさり
-そらから　おとして　こうげきする。
-つれさられた　あいては　うごけない。</language>
+		<language name="JPN_KANJI" width="256">相手を　空へ　つれさり
+空から　落として　攻撃する。
+つれさられた　相手は　動けない。</language>
 	</row>
 
 	<row id="ITEMINFO_386">
 		<language name="JPN" width="256">ほのおで　あいてを　こうげきする。
 あいてが　きのみを　もっている　とき
 もやして　つかえなく　する。</language>
-		<language name="JPN_KANJI" width="256">ほのおで　あいてを　こうげきする。
-あいてが　きのみを　もっている　とき
-もやして　つかえなく　する。</language>
+		<language name="JPN_KANJI" width="256">ほのおで　相手を　攻撃する。
+相手が　きのみを　持っている　とき
+もやして　使えなく　する。</language>
 	</row>
 
 	<row id="ITEMINFO_387">
 		<language name="JPN" width="256">あいてを　おさえつけて
 こうどうの　じゅんばんを
 さいごに　する。</language>
-		<language name="JPN_KANJI" width="256">あいてを　おさえつけて
-こうどうの　じゅんばんを
-さいごに　する。</language>
+		<language name="JPN_KANJI" width="256">相手を　おさえつけて
+行動の　順番を
+最後に　する。</language>
 	</row>
 
 	<row id="ITEMINFO_388">
 		<language name="JPN" width="256">あおじろく　もえる　あやしげな
 ほのおを　はなつ。　あいてを
 やけどの　じょうたいに　する。</language>
-		<language name="JPN_KANJI" width="256">あおじろく　もえる　あやしげな
-ほのおを　はなつ。　あいてを
-やけどの　じょうたいに　する。</language>
+		<language name="JPN_KANJI" width="256">青白く　燃える　怪しげな
+ほのおを　はなつ。　相手を
+やけどの　状態に　する。</language>
 	</row>
 
 	<row id="ITEMINFO_389">
 		<language name="JPN" width="256">かろやかに　あいてを　こうげきする。
 じぶんが　どうぐを　もっていないと
 おおきな　ダメージを　あたえる。　</language>
-		<language name="JPN_KANJI" width="256">かろやかに　あいてを　こうげきする。
-じぶんが　どうぐを　もっていないと
+		<language name="JPN_KANJI" width="256">かろやかに　相手を　攻撃する。
+自分が　道具を　持っていないと
 おおきな　ダメージを　あたえる。　</language>
 	</row>
 
@@ -3640,9 +3640,9 @@
 		<language name="JPN" width="256">もたせた　どうぐを　つかえなくする。
 トレーナーも　その　ポケモンには
 どうぐを　つかうことが　できない。</language>
-		<language name="JPN_KANJI" width="256">もたせた　どうぐを　つかえなくする。
+		<language name="JPN_KANJI" width="256">持たせた　道具を　使えなくする。
 トレーナーも　その　ポケモンには
-どうぐを　つかうことが　できない。</language>
+道具を　使うことが　できない。</language>
 	</row>
 
 	<row id="ITEMINFO_391">
@@ -3650,52 +3650,52 @@
 まわりを　まきこみ　こうげきする。
 つかったあと　ひんしに　なる。</language>
 		<language name="JPN_KANJI" width="256">おおきな　ばくはつを　おこして
-まわりを　まきこみ　こうげきする。
-つかったあと　ひんしに　なる。</language>
+周りを　まきこみ　攻撃する。
+使ったあと　ひんしに　なる。</language>
 	</row>
 
 	<row id="ITEMINFO_392">
 		<language name="JPN" width="256">かげで　つくった　するどいツメで
 きりさいて　こうげきする。
 きゅうしょに　あたりやすい。</language>
-		<language name="JPN_KANJI" width="256">かげで　つくった　するどいツメで
-きりさいて　こうげきする。
-きゅうしょに　あたりやすい。</language>
+		<language name="JPN_KANJI" width="256">影で　つくった　するどいツメで
+きりさいて　攻撃する。
+急所に　当たりやすい。</language>
 	</row>
 
 	<row id="ITEMINFO_393">
 		<language name="JPN" width="256">ちからを　ためこみ　こうげきする。
 あいてより　あとに　だせると
 わざの　いりょくは　２ばいに　なる。</language>
-		<language name="JPN_KANJI" width="256">ちからを　ためこみ　こうげきする。
-あいてより　あとに　だせると
-わざの　いりょくは　２ばいに　なる。</language>
+		<language name="JPN_KANJI" width="256">ちからを　ためこみ　攻撃する。
+相手より　あとに　だせると
+技の　威力は　２倍に　なる。</language>
 	</row>
 
 	<row id="ITEMINFO_394">
 		<language name="JPN" width="256">たおれた　みかたの　かたきを　うつ。
 まえの　ターンに　たおされて
 いると　いりょくが　あがる。　</language>
-		<language name="JPN_KANJI" width="256">たおれた　みかたの　かたきを　うつ。
-まえの　ターンに　たおされて
-いると　いりょくが　あがる。　</language>
+		<language name="JPN_KANJI" width="256">たおれた　味方の　かたきを　うつ。
+前の　ターンに　たおされて
+いると　威力が　あがる。　</language>
 	</row>
 
 	<row id="ITEMINFO_395">
 		<language name="JPN" width="256">もてる　ちからの　すべてを　あつめて
 とつげきする。　つぎの　ターン
 はんどうで　うごけなくなる。</language>
-		<language name="JPN_KANJI" width="256">もてる　ちからの　すべてを　あつめて
-とつげきする。　つぎの　ターン
-はんどうで　うごけなくなる。</language>
+		<language name="JPN_KANJI" width="256">持てる　ちからの　すべてを　集めて
+突撃する。　次の　ターン
+反動で　動けなくなる。</language>
 	</row>
 
 	<row id="ITEMINFO_396">
 		<language name="JPN" width="256">からだを　みがきあげて　くうきの
 ていこうを　すくなくする。
 すばやさを　ぐーんと　あげる。</language>
-		<language name="JPN_KANJI" width="256">からだを　みがきあげて　くうきの
-ていこうを　すくなくする。
+		<language name="JPN_KANJI" width="256">体を　磨きあげて　空気の
+抵抗を　すくなくする。
 すばやさを　ぐーんと　あげる。</language>
 	</row>
 
@@ -3703,35 +3703,35 @@
 		<language name="JPN" width="256">あいての　めいちゅうりつを　さげる。
 くらい　どうくつを　あかるく
 てらすことも　できる。</language>
-		<language name="JPN_KANJI" width="256">あいての　めいちゅうりつを　さげる。
-くらい　どうくつを　あかるく
-てらすことも　できる。</language>
+		<language name="JPN_KANJI" width="256">相手の　命中率を　さげる。
+暗い　どうくつを　明るく
+照らすことも　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_398">
 		<language name="JPN" width="256">とがった　がんせきを　したから
 つきさして　こうげきする。
 きゅうしょに　あたりやすい。</language>
-		<language name="JPN_KANJI" width="256">とがった　がんせきを　したから
-つきさして　こうげきする。
-きゅうしょに　あたりやすい。</language>
+		<language name="JPN_KANJI" width="256">とがった　岩石を　したから
+つきさして　攻撃する。
+急所に　当たりやすい。</language>
 	</row>
 
 	<row id="ITEMINFO_399">
 		<language name="JPN" width="256">こうげき　したあと
 ものすごい　スピードで　もどってきて
 ひかえ　ポケモンと　いれかわる。</language>
-		<language name="JPN_KANJI" width="256">こうげき　したあと
+		<language name="JPN_KANJI" width="256">攻撃したあと
 ものすごい　スピードで　もどってきて
-ひかえ　ポケモンと　いれかわる。</language>
+控え　ポケモンと　いれかわる。</language>
 	</row>
 
 	<row id="ITEMINFO_400">
 		<language name="JPN" width="256">よわい　でんきを　あびせることで
 あいてを　まひじょうたいに　する。
 </language>
-		<language name="JPN_KANJI" width="256">よわい　でんきを　あびせることで
-あいてを　まひじょうたいに　する。
+		<language name="JPN_KANJI" width="256">弱い　でんきを　浴びせることで
+相手を　まひ状態に　する。
 </language>
 	</row>
 
@@ -3739,18 +3739,18 @@
 		<language name="JPN" width="256">からだを　こうそくに　かいてん
 させて　たいあたりする。　あいてより
 おそいほど　いりょくは　あがる。</language>
-		<language name="JPN_KANJI" width="256">からだを　こうそくに　かいてん
-させて　たいあたりする。　あいてより
-おそいほど　いりょくは　あがる。</language>
+		<language name="JPN_KANJI" width="256">体を　高速に　回転させ
+たいあたりする。　相手より
+遅いほど　威力は　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_402">
 		<language name="JPN" width="256">たたかいのまいを　はげしく　おどり
 きあいを　たかめる。　じぶんの
 こうげきを　ぐーんと　あげる。</language>
-		<language name="JPN_KANJI" width="256">たたかいのまいを　はげしく　おどり
-きあいを　たかめる。　じぶんの
-こうげきを　ぐーんと　あげる。</language>
+		<language name="JPN_KANJI" width="256">たたかいのまいを　激しく　踊り
+きあいを　たかめる。　自分の
+攻撃を　ぐーんと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_403">
@@ -3758,26 +3758,26 @@
 あいてを　こうげきする。
 あいての　とくこうを　さげる。</language>
 		<language name="JPN_KANJI" width="256">ていこう　して
-あいてを　こうげきする。
-あいての　とくこうを　さげる。</language>
+相手を　攻撃する。
+相手の　特攻を　さげる。</language>
 	</row>
 
 	<row id="ITEMINFO_404">
 		<language name="JPN" width="256">じぶんに　あんじを　かけることで
 のうりょく　へんかの　じょうたいを
 あいてと　おなじにする。</language>
-		<language name="JPN_KANJI" width="256">じぶんに　あんじを　かけることで
-のうりょく　へんかの　じょうたいを
-あいてと　おなじにする。</language>
+		<language name="JPN_KANJI" width="256">自分に　あんじを　かけることで
+能力　変化の　状態を
+相手と　同じにする。</language>
 	</row>
 
 	<row id="ITEMINFO_405">
 		<language name="JPN" width="256">じめんを　ふみならして　まわりに
 いるものを　すべて　こうげきする。
 あいての　すばやさを　さげる。</language>
-		<language name="JPN_KANJI" width="256">じめんを　ふみならして　まわりに
-いるものを　すべて　こうげきする。
-あいての　すばやさを　さげる。</language>
+		<language name="JPN_KANJI" width="256">じめんを　ふみならして　周りに
+いるものを　すべて　攻撃する。
+相手の　すばやさを　さげる。</language>
 	</row>
 
 	<row id="ITEMINFO_406">
@@ -3785,17 +3785,17 @@
 あいてに　ふきつけて　こうげきする。
 かならず　きゅうしょに　あたる。</language>
 		<language name="JPN_KANJI" width="256">つめたい　いきを
-あいてに　ふきつけて　こうげきする。
-かならず　きゅうしょに　あたる。</language>
+相手に　ふきつけて　攻撃する。
+必ず　急所に　当たる。</language>
 	</row>
 
 	<row id="ITEMINFO_407">
 		<language name="JPN" width="256">おおきな　がんせきを　なげつけて
 こうげきする。
 あいてを　ひるませることが　ある。</language>
-		<language name="JPN_KANJI" width="256">おおきな　がんせきを　なげつけて
-こうげきする。
-あいてを　ひるませることが　ある。</language>
+		<language name="JPN_KANJI" width="256">おおきな　岩石を　なげつけて
+攻撃する。
+相手を　ひるませることが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_408">
@@ -3803,25 +3803,25 @@
 こうさ　させながら　きりさいて
 こうげきする。</language>
 		<language name="JPN_KANJI" width="256">カマや　ツメを　ハサミのように
-こうさ　させながら　きりさいて
-こうげきする。</language>
+交差させながら　きりさいて
+攻撃する。</language>
 	</row>
 
 	<row id="ITEMINFO_409">
 		<language name="JPN" width="256">あいてを　はじきとばして
 ひかえの　ポケモンを　ひきずりだす。
 やせいなら　せんとうが　おわる。</language>
-		<language name="JPN_KANJI" width="256">あいてを　はじきとばして
-ひかえの　ポケモンを　ひきずりだす。
-やせいなら　せんとうが　おわる。</language>
+		<language name="JPN_KANJI" width="256">相手を　はじきとばして
+控えの　ポケモンを　ひきずりだす。
+野生なら　戦闘が　終わる。</language>
 	</row>
 
 	<row id="ITEMINFO_410">
 		<language name="JPN" width="256">じぶんを　ふるいたてて
 こうげきと　とくこうを　あげる。
 </language>
-		<language name="JPN_KANJI" width="256">じぶんを　ふるいたてて
-こうげきと　とくこうを　あげる。
+		<language name="JPN_KANJI" width="256">自分を　ふるいたてて
+攻撃と　特攻を　あげる。
 </language>
 	</row>
 
@@ -3829,18 +3829,18 @@
 		<language name="JPN" width="256">どくに　そまった　しょくしゅや
 うでで　こうげきする。どくの
 じょうたいに　することが　ある。</language>
-		<language name="JPN_KANJI" width="256">どくに　そまった　しょくしゅや
-うでで　こうげきする。どくの
-じょうたいに　することが　ある。</language>
+		<language name="JPN_KANJI" width="256">どくに　そまった　触手や
+腕で　攻撃する。どくの
+状態に　することが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_412">
 		<language name="JPN" width="256">ねている　あいての　ゆめを　たべて
 こうげきする。　あたえた　ダメージの
 はんぶん　ＨＰを　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ねている　あいての　ゆめを　たべて
-こうげきする。　あたえた　ダメージの
-はんぶん　ＨＰを　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ねている　相手の　ゆめを　たべて
+攻撃する。　あたえた　ダメージの
+半分　ＨＰを　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_413">
@@ -3848,8 +3848,8 @@
 あいてが　おもいほど　わざの
 いりょくは　あがる。</language>
 		<language name="JPN_KANJI" width="256">くさを　からませて　ころばせる。
-あいてが　おもいほど　わざの
-いりょくは　あがる。</language>
+相手が　重いほど　技の
+威力は　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_414">
@@ -3857,7 +3857,7 @@
 いかりで　あいての　こうげきは
 ぐーんと　あがってしまう。</language>
 		<language name="JPN_KANJI" width="256">おこらせて　こんらんさせる。
-いかりで　あいての　こうげきは
+いかりで　相手の　攻撃は
 ぐーんと　あがってしまう。</language>
 	</row>
 
@@ -3865,17 +3865,17 @@
 		<language name="JPN" width="256">くちばしで　こうげきする。
 あいてが　きのみを　もっているとき
 ついばんで　こうかを　うけられる。</language>
-		<language name="JPN_KANJI" width="256">くちばしで　こうげきする。
-あいてが　きのみを　もっているとき
-ついばんで　こうかを　うけられる。</language>
+		<language name="JPN_KANJI" width="256">くちばしで　攻撃する。
+相手が　きのみを　持っているとき
+ついばんで　効果を　受けられる。</language>
 	</row>
 
 	<row id="ITEMINFO_416">
 		<language name="JPN" width="256">あいてを　こうげきした　あとに
 ひかえの　ポケモンと　いれかわる。
 </language>
-		<language name="JPN_KANJI" width="256">あいてを　こうげきした　あとに
-ひかえの　ポケモンと　いれかわる。
+		<language name="JPN_KANJI" width="256">相手を　攻撃した　あとに
+控えの　ポケモンと　いれかわる。
 </language>
 	</row>
 
@@ -3883,27 +3883,27 @@
 		<language name="JPN" width="256">じぶんの　ＨＰを　すこし　けずって
 ぶんしんを　だす。　じぶんの
 かわりに　こうげきを　うける。</language>
-		<language name="JPN_KANJI" width="256">じぶんの　ＨＰを　すこし　けずって
-ぶんしんを　だす。　じぶんの
-かわりに　こうげきを　うける。</language>
+		<language name="JPN_KANJI" width="256">自分の　ＨＰを　すこし　けずって
+ぶんしんを　だす。　自分の
+代わりに　攻撃を　受ける。</language>
 	</row>
 
 	<row id="ITEMINFO_418">
 		<language name="JPN" width="256">からだの　ひかりを　いってんに
 あつめ　ひかりを　はなつ。　あいての
 とくぼうを　さげることがある。</language>
-		<language name="JPN_KANJI" width="256">からだの　ひかりを　いってんに
-あつめ　ひかりを　はなつ。　あいての
-とくぼうを　さげることがある。</language>
+		<language name="JPN_KANJI" width="256">体の　光を　一点に
+集め　光を　放つ。　相手の
+特防を　さげることがある。</language>
 	</row>
 
 	<row id="ITEMINFO_419">
 		<language name="JPN" width="256">まかふしぎな　くうかんを　つくる。
 ５ターンの　あいだ　うごきの　おそい
 ポケモンから　こうげきできる。</language>
-		<language name="JPN_KANJI" width="256">まかふしぎな　くうかんを　つくる。
+		<language name="JPN_KANJI" width="256">まか不思議な　空間を　つくる。
 ５ターンの　あいだ　うごきの　おそい
-ポケモンから　こうげきできる。</language>
+ポケモンから　攻撃できる。</language>
 	</row>
 
 	<row id="ITEMINFO_420">
@@ -3911,8 +3911,8 @@
 きりつけて　こうげきする。
 ほそいきを　きることも　できる。</language>
 		<language name="JPN_KANJI" width="256">カマや　ツメなどの　するどいもので
-きりつけて　こうげきする。
-ほそいきを　きることも　できる。</language>
+きりつけて　攻撃する。
+細い木を　きることも　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_421">
@@ -3920,8 +3920,8 @@
 ２ターンめで　こうげきする。
 しっているまちに　いどうも　できる。</language>
 		<language name="JPN_KANJI" width="256">１ターンめで　そらへ　とびあがって
-２ターンめで　こうげきする。
-しっているまちに　いどうも　できる。</language>
+２ターンめで　攻撃する。
+知っている街に　移動も　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_422">
@@ -3929,15 +3929,15 @@
 すべての　ポケモンを　こうげきする。
 みずのうえを　すすむことも　できる。</language>
 		<language name="JPN_KANJI" width="256">おおきな　なみを　おこして
-すべての　ポケモンを　こうげきする。
-みずのうえを　すすむことも　できる。</language>
+すべての　ポケモンを　攻撃する。
+水の上を　進むことも　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_423">
 		<language name="JPN" width="256">こんしんの　ちからで　こうげきする。
 おもいいわを　おすことも　できる。
 </language>
-		<language name="JPN_KANJI" width="256">こんしんの　ちからで　こうげきする。
+		<language name="JPN_KANJI" width="256">こんしんの　ちからで　攻撃する。
 おもいいわを　おすことも　できる。
 </language>
 	</row>
@@ -3947,8 +3947,8 @@
 あいてを　とじこめて　こうげきする。
 うずのうえを　とおることも　できる。</language>
 		<language name="JPN_KANJI" width="256">はげしく　うずまく　みずの　なかに
-あいてを　とじこめて　こうげきする。
-うずのうえを　とおることも　できる。</language>
+相手を　とじこめて　攻撃する。
+渦の上を　通ることも　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_425">
@@ -3956,8 +3956,8 @@
 こうげきする。　ひびわれた　いわを
 こわすことも　できる。</language>
 		<language name="JPN_KANJI" width="256">いわを　くだくような　パンチで
-こうげきする。　ひびわれた　いわを
-こわすことも　できる。</language>
+攻撃する。　ひびわれた　いわを
+壊すことも　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_426">
@@ -3965,7 +3965,7 @@
 いきおいで　とっしん　こうげきする。
 たきを　のぼることも　できる。</language>
 		<language name="JPN_KANJI" width="256">たきを　さかのぼるような　すさまじい
-いきおいで　とっしん　こうげきする。
+いきおいで　とっしん　攻撃する。
 たきを　のぼることも　できる。</language>
 	</row>
 
@@ -3973,7 +3973,7 @@
 		<language name="JPN" width="256">とっしん　こうげきで　こんらん
 させることが　ある。　ごつごつした
 いわを　のぼることも　できる。</language>
-		<language name="JPN_KANJI" width="256">とっしん　こうげきで　こんらん
+		<language name="JPN_KANJI" width="256">とっしん　攻撃で　こんらん
 させることが　ある。　ごつごつした
 いわを　のぼることも　できる。</language>
 	</row>
@@ -3982,43 +3982,43 @@
 		<language name="JPN" width="256">たんけんに　やくだつ　べんりな
 どうぐが　はいった　ふくろ。
 ちかつうろに　はいれる。</language>
-		<language name="JPN_KANJI" width="256">たんけんに　やくだつ　べんりな
-どうぐが　はいった　ふくろ。
-ちかつうろに　はいれる。</language>
+		<language name="JPN_KANJI" width="256">探検に　役立つ　便利な
+道具が　はいった　ふくろ。
+地下通路に　はいれる。</language>
 	</row>
 
 	<row id="ITEMINFO_429">
 		<language name="JPN" width="256">たんこうで　てにいれた
 たからものを　しまっておける
 おおきくて　じょうぶな　ふくろ。</language>
-		<language name="JPN_KANJI" width="256">たんこうで　てにいれた
-たからものを　しまっておける
-おおきくて　じょうぶな　ふくろ。</language>
+		<language name="JPN_KANJI" width="256">炭鉱で　てにいれた
+宝物を　しまっておける
+おおきくて　丈夫な　ふくろ。</language>
 	</row>
 
 	<row id="ITEMINFO_430">
 		<language name="JPN" width="256">たいせんの　ルールが　かかれている。
 つうしんたいせん　するとき
 ルールを　えらぶことが　できる。</language>
-		<language name="JPN_KANJI" width="256">たいせんの　ルールが　かかれている。
-つうしんたいせん　するとき
-ルールを　えらぶことが　できる。</language>
+		<language name="JPN_KANJI" width="256">対戦の　ルールが　かかれている。
+通信対戦するとき
+ルールを　選ぶことが　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_431">
 		<language name="JPN" width="256">くさむらに　かくれている　ポケモンを
 さがしだせる　どうぐ。
 あるくと　でんちが　たまる。</language>
-		<language name="JPN_KANJI" width="256">くさむらに　かくれている　ポケモンを
-さがしだせる　どうぐ。
-あるくと　でんちが　たまる。</language>
+		<language name="JPN_KANJI" width="256">くさむらに　隠れている　ポケモンを
+探しだせる　道具。
+歩くと　電池が　たまる。</language>
 	</row>
 
 	<row id="ITEMINFO_432">
 		<language name="JPN" width="256">かちとった　バトルポイントの　かずを
 みることが　できる　カード。
 </language>
-		<language name="JPN_KANJI" width="256">かちとった　バトルポイントの　かずを
+		<language name="JPN_KANJI" width="256">勝ち取った　バトルポイントの　数を
 みることが　できる　カード。
 </language>
 	</row>
@@ -4027,8 +4027,8 @@
 		<language name="JPN" width="256">これまでの　ぼうけんの　ようすが
 きろく　されている　ノート。
 </language>
-		<language name="JPN_KANJI" width="256">これまでの　ぼうけんの　ようすが
-きろく　されている　ノート。
+		<language name="JPN_KANJI" width="256">これまでの　冒険の　様子が
+記録　されている　ノート。
 </language>
 	</row>
 
@@ -4054,7 +4054,7 @@
 		<language name="JPN" width="256">シールが　１０まい　いれられる
 ちっちゃな　ふくろ。
 </language>
-		<language name="JPN_KANJI" width="256">シールが　１０まい　いれられる
+		<language name="JPN_KANJI" width="256">シールが　１０枚　いれられる
 ちっちゃな　ふくろ。
 </language>
 	</row>
@@ -4063,26 +4063,26 @@
 		<language name="JPN" width="256">ともだちを　とうろくしたり
 あそんだ　ことを　きろくする
 べんりな　てちょう。</language>
-		<language name="JPN_KANJI" width="256">ともだちを　とうろくしたり
-あそんだ　ことを　きろくする
-べんりな　てちょう。</language>
+		<language name="JPN_KANJI" width="256">ともだちを　登録したり
+遊んだことを　記録する
+便利な　てちょう。</language>
 	</row>
 
 	<row id="ITEMINFO_438">
 		<language name="JPN" width="256">たにまのはつでんしょの　とびらを
 あけしめする　おおきな　カギ。
 なぜか　ギンガだんが　もっていた。</language>
-		<language name="JPN_KANJI" width="256">たにまのはつでんしょの　とびらを
+		<language name="JPN_KANJI" width="256">谷間の発電所の　扉を
 あけしめする　おおきな　カギ。
-なぜか　ギンガだんが　もっていた。</language>
+なぜか　ギンガ団が　持っていた。</language>
 	</row>
 
 	<row id="ITEMINFO_439">
 		<language name="JPN" width="256">カンナギタウンの　ちょうろうに
 とどける　おおむかしの　おまもり。
 ポケモンの　ホネで　つくられている。</language>
-		<language name="JPN_KANJI" width="256">カンナギタウンの　ちょうろうに
-とどける　おおむかしの　おまもり。
+		<language name="JPN_KANJI" width="256">カンナギタウンの　長老に
+届ける　大昔の　おまもり。
 ポケモンの　ホネで　つくられている。</language>
 	</row>
 
@@ -4090,8 +4090,8 @@
 		<language name="JPN" width="256">ギンガだんアジトの　セキュリティを
 かいじょ　するための　カードキー。
 なくすと　おしおき　されるらしい。</language>
-		<language name="JPN_KANJI" width="256">ギンガだんアジトの　セキュリティを
-かいじょ　するための　カードキー。
+		<language name="JPN_KANJI" width="256">ギンガ団アジトの　セキュリティを
+解除するための　カードキー。
 なくすと　おしおき　されるらしい。</language>
 	</row>
 
@@ -4099,27 +4099,27 @@
 		<language name="JPN" width="256">シンオウちほうを　うみだした
 でんせつの　ポケモンを　つなぐと
 いわれる　しんわの　どうぐ。</language>
-		<language name="JPN_KANJI" width="256">シンオウちほうを　うみだした
-でんせつの　ポケモンを　つなぐと
-いわれる　しんわの　どうぐ。</language>
+		<language name="JPN_KANJI" width="256">シンオウ地方を　うみだした
+伝説の　ポケモンを　つなぐと
+いわれる　神話の　道具。</language>
 	</row>
 
 	<row id="ITEMINFO_442">
 		<language name="JPN" width="256">いつでも　てがるに　みることが
 できる　べんりな　ちず。
 じぶんの　ばしょも　わかる。</language>
-		<language name="JPN_KANJI" width="256">いつでも　てがるに　みることが
-できる　べんりな　ちず。
-じぶんの　ばしょも　わかる。</language>
+		<language name="JPN_KANJI" width="256">いつでも　手軽に　みることが
+できる　便利な　地図。
+自分の　場所も　わかる。</language>
 	</row>
 
 	<row id="ITEMINFO_443">
 		<language name="JPN" width="256">たたかいたい　トレーナーを
 おしえてくれる　きかい。
 あるくと　でんちが　たまる。</language>
-		<language name="JPN_KANJI" width="256">たたかいたい　トレーナーを
-おしえてくれる　きかい。
-あるくと　でんちが　たまる。</language>
+		<language name="JPN_KANJI" width="256">戦いいたい　トレーナーを
+教えてくれる　機械。
+歩くと　電池が　たまる。</language>
 	</row>
 
 	<row id="ITEMINFO_444">
@@ -4127,7 +4127,7 @@
 コインを　５００００まい　まで
 いれることが　できる　ケース。</language>
 		<language name="JPN_KANJI" width="256">ゲームコーナーで　てにいれた
-コインを　５００００まい　まで
+コインを　５００００枚まで
 いれることが　できる　ケース。</language>
 	</row>
 
@@ -4136,7 +4136,7 @@
 みずの　ある　ばしょで　つかうと
 ポケモンが　つれる。</language>
 		<language name="JPN_KANJI" width="256">ふるくて　ボロい　つりざお。
-みずの　ある　ばしょで　つかうと
+水の　ある　場所で　使うと
 ポケモンが　つれる。</language>
 	</row>
 
@@ -4145,7 +4145,7 @@
 みずの　ある　ばしょで　つかうと
 ポケモンが　つれる。</language>
 		<language name="JPN_KANJI" width="256">あたらしくて　いい　つりざお。
-みずの　ある　ばしょで　つかうと
+水の　ある　場所で　使うと
 ポケモンが　つれる。</language>
 	</row>
 
@@ -4153,8 +4153,8 @@
 		<language name="JPN" width="256">さいしんの　すごい　つりざお。
 みずの　ある　ばしょで　つかうと
 ポケモンが　つれる。</language>
-		<language name="JPN_KANJI" width="256">さいしんの　すごい　つりざお。
-みずの　ある　ばしょで　つかうと
+		<language name="JPN_KANJI" width="256">最新の　すごい　つりざお。
+水の　ある　場所で　使うと
 ポケモンが　つれる。</language>
 	</row>
 
@@ -4162,17 +4162,17 @@
 		<language name="JPN" width="256">みずを　かける　どうぐ。
 ふかふかのつちに　うめた　きのみを
 すくすく　そだてる。</language>
-		<language name="JPN_KANJI" width="256">みずを　かける　どうぐ。
-ふかふかのつちに　うめた　きのみを
-すくすく　そだてる。</language>
+		<language name="JPN_KANJI" width="256">水を　かける　道具。
+ふかふかのつちに　埋めた　きのみを
+すくすく　育てる。</language>
 	</row>
 
 	<row id="ITEMINFO_449">
 		<language name="JPN" width="256">おりょうりで　つくった　ポフィンを
 ほぞんする　いれもの。
 </language>
-		<language name="JPN_KANJI" width="256">おりょうりで　つくった　ポフィンを
-ほぞんする　いれもの。
+		<language name="JPN_KANJI" width="256">お料理で　つくった　ポフィンを
+保存する　いれもの。
 </language>
 	</row>
 
@@ -4181,16 +4181,16 @@
 はやく　はしることが　できる
 おりたたみしきの　じてんしゃ。</language>
 		<language name="JPN_KANJI" width="256">ランニングシューズ　よりも
-はやく　はしることが　できる
-おりたたみしきの　じてんしゃ。</language>
+速く　走ることが　できる
+折りたたみ式の　じてんしゃ。</language>
 	</row>
 
 	<row id="ITEMINFO_451">
 		<language name="JPN" width="256">みずうみの　ほとりにある
 こうきゅうホテルの　ルームキー。
 なぜか　よく　なくなってしまう。</language>
-		<language name="JPN_KANJI" width="256">みずうみの　ほとりにある
-こうきゅうホテルの　ルームキー。
+		<language name="JPN_KANJI" width="256">湖の　ほとりにある
+高級ホテルの　ルームキー。
 なぜか　よく　なくなってしまう。</language>
 	</row>
 
@@ -4198,35 +4198,35 @@
 		<language name="JPN" width="256">オーキドはかせ　からの　てがみ。
 なかには　２２４ばんどうろに
 きてほしいと　かかれている。</language>
-		<language name="JPN_KANJI" width="256">オーキドはかせ　からの　てがみ。
-なかには　２２４ばんどうろに
-きてほしいと　かかれている。</language>
+		<language name="JPN_KANJI" width="256">オーキド博士からの　手紙。
+中には　２２４番道路に
+来てほしいと　書かれている。</language>
 	</row>
 
 	<row id="ITEMINFO_453">
 		<language name="JPN" width="256">つきのような　かがやきを　はなつ
 はね。　あくむを　ふりはらう　ちからを
 ひめていると　つたえられている。</language>
-		<language name="JPN_KANJI" width="256">つきのような　かがやきを　はなつ
-はね。　あくむを　ふりはらう　ちからを
-ひめていると　つたえられている。</language>
+		<language name="JPN_KANJI" width="256">つきのような　輝きを　はなつ
+はね。　悪夢を　ふりはらう　力を
+秘めていると　伝えられている。</language>
 	</row>
 
 	<row id="ITEMINFO_454">
 		<language name="JPN" width="256">ミオシティの　やどやに　はいれる
 カード。　なぜか　５０ねんほどまえの
 ひづけが　きざまれている。</language>
-		<language name="JPN_KANJI" width="256">ミオシティの　やどやに　はいれる
-カード。　なぜか　５０ねんほどまえの
-ひづけが　きざまれている。</language>
+		<language name="JPN_KANJI" width="256">ミオシティの　宿屋に　はいれる
+カード。　なぜか　５０年ほど前の
+日付が　刻まれている。</language>
 	</row>
 
 	<row id="ITEMINFO_455">
 		<language name="JPN" width="256">このよの　ものとは　おもえない
 ねいろが　なりひびく　ふえ。　いつ
 だれが　つくったのか　わからない。</language>
-		<language name="JPN_KANJI" width="256">このよの　ものとは　おもえない
-ねいろが　なりひびく　ふえ。　いつ
+		<language name="JPN_KANJI" width="256">この世の　ものとは　おもえない
+音色が　なりひびく　ふえ。　いつ
 だれが　つくったのか　わからない。</language>
 	</row>
 
@@ -4234,36 +4234,36 @@
 		<language name="JPN" width="256">こうそくせん　アクアごうに　のるとき
 ひつような　ふねの　チケット。
 ふねの　えが　かかれている。</language>
-		<language name="JPN_KANJI" width="256">こうそくせん　アクアごうに　のるとき
-ひつような　ふねの　チケット。
-ふねの　えが　かかれている。</language>
+		<language name="JPN_KANJI" width="256">高速船アクア号に　乗るとき
+必要な　船の　チケット。
+船の　絵が　描かれている。</language>
 	</row>
 
 	<row id="ITEMINFO_457">
 		<language name="JPN" width="256">もっていれば　ポケモンコンテストに
 さんか　することが　できる。
 きねんリボンが　かかれている。</language>
-		<language name="JPN_KANJI" width="256">もっていれば　ポケモンコンテストに
-さんか　することが　できる。
-きねんリボンが　かかれている。</language>
+		<language name="JPN_KANJI" width="256">持っていれば　ポケモンコンテストに
+参加することが　できる。
+記念リボンが　描かれている。</language>
 	</row>
 
 	<row id="ITEMINFO_458">
 		<language name="JPN" width="256">しゃくねつの　マグマの　ねつでとけた
 がんせきが　かたまって　できたもの。
 なかに　マグマが　のこっている。</language>
-		<language name="JPN_KANJI" width="256">しゃくねつの　マグマの　ねつでとけた
-がんせきが　かたまって　できたもの。
-なかに　マグマが　のこっている。</language>
+		<language name="JPN_KANJI" width="256">しゃくねつの　マグマの　熱でとけた
+岩石が　固まって　できたもの。
+中に　マグマが　残っている。</language>
 	</row>
 
 	<row id="ITEMINFO_459">
 		<language name="JPN" width="256">フタバタウンから　たびだった
 おさななじみに　わたすように
 たのまれた　おとどけもの。</language>
-		<language name="JPN_KANJI" width="256">フタバタウンから　たびだった
-おさななじみに　わたすように
-たのまれた　おとどけもの。</language>
+		<language name="JPN_KANJI" width="256">フタバタウンから　旅立った
+幼なじみに　渡すように
+頼まれた　おとどけもの。</language>
 	</row>
 
 	<row id="ITEMINFO_460">
@@ -4271,8 +4271,8 @@
 ポケッチを　もらうために　ひつような
 ひきかえけん。　３まい　ひつよう。</language>
 		<language name="JPN_KANJI" width="256">ポケモンウォッチ　ちぢめて
-ポケッチを　もらうために　ひつような
-ひきかえけん。　３まい　ひつよう。</language>
+ポケッチを　もらうために　必要な
+ひきかえけん。　３枚必要。</language>
 	</row>
 
 	<row id="ITEMINFO_461">
@@ -4280,8 +4280,8 @@
 ポケッチを　もらうために　ひつような
 ひきかえけん。　３まい　ひつよう。</language>
 		<language name="JPN_KANJI" width="256">ポケモンウォッチ　ちぢめて
-ポケッチを　もらうために　ひつような
-ひきかえけん。　３まい　ひつよう。</language>
+ポケッチを　もらうために　必要な
+ひきかえけん。　３枚必要。</language>
 	</row>
 
 	<row id="ITEMINFO_462">
@@ -4289,8 +4289,8 @@
 ポケッチを　もらうために　ひつような
 ひきかえけん。　３まい　ひつよう。</language>
 		<language name="JPN_KANJI" width="256">ポケモンウォッチ　ちぢめて
-ポケッチを　もらうために　ひつような
-ひきかえけん。　３まい　ひつよう。</language>
+ポケッチを　もらうために　必要な
+ひきかえけん。　３枚必要。</language>
 	</row>
 
 	<row id="ITEMINFO_463">
@@ -4298,15 +4298,15 @@
 ギンガだんの　あやしい
 そうこに　はいるための　カギ。</language>
 		<language name="JPN_KANJI" width="256">トバリシティの　はずれにある
-ギンガだんの　あやしい
-そうこに　はいるための　カギ。</language>
+ギンガ団の　怪しい
+倉庫に　はいるための　カギ。</language>
 	</row>
 
 	<row id="ITEMINFO_464">
 		<language name="JPN" width="256">タンバシティの　くすりやで　もらった
 どんな　ポケモンでも　たちまち
 げんきになる　すごい　くすり。</language>
-		<language name="JPN_KANJI" width="256">タンバシティの　くすりやで　もらった
+		<language name="JPN_KANJI" width="256">タンバシティの　薬屋で　もらった
 どんな　ポケモンでも　たちまち
 げんきになる　すごい　くすり。</language>
 	</row>
@@ -4315,35 +4315,35 @@
 		<language name="JPN" width="256">ともだち　との　しょうぶや
 とくしゅな　しせつでの　しょうぶを
 きろくできる　かっこいい　きかい。</language>
-		<language name="JPN_KANJI" width="256">ともだち　との　しょうぶや
-とくしゅな　しせつでの　しょうぶを
-きろくできる　かっこいい　きかい。</language>
+		<language name="JPN_KANJI" width="256">ともだち　との　勝負や
+特殊な　施設での　勝負を
+記録できる　かっこいい　機械。</language>
 	</row>
 
 	<row id="ITEMINFO_466">
 		<language name="JPN" width="256">たんじょうびや　きねんび　などに
 かんしゃの　きもちを　つたえるため
 ブーケにして　おくることが　ある。</language>
-		<language name="JPN_KANJI" width="256">たんじょうびや　きねんび　などに
-かんしゃの　きもちを　つたえるため
-ブーケにして　おくることが　ある。</language>
+		<language name="JPN_KANJI" width="256">誕生日や　記念日などに
+感謝の　気持ちを　伝えるため
+ブーケにして　贈ることが　ある。</language>
 	</row>
 
 	<row id="ITEMINFO_467">
 		<language name="JPN" width="256">きまった　ばしょで　つかうことで
 とくしゅな　でんきしんごうを　だして
 とびらを　あける　ハイテクな　カギ。</language>
-		<language name="JPN_KANJI" width="256">きまった　ばしょで　つかうことで
-とくしゅな　でんきしんごうを　だして
-とびらを　あける　ハイテクな　カギ。</language>
+		<language name="JPN_KANJI" width="256">決まった　場所で　使うことで
+特殊な　電気信号を　だして
+扉を　開ける　ハイテクな　カギ。</language>
 	</row>
 
 	<row id="ITEMINFO_468">
 		<language name="JPN" width="256">ぼんぐりを　９９こ　ほぞん　できる
 べんりな　いれもの。
 </language>
-		<language name="JPN_KANJI" width="256">ぼんぐりを　９９こ　ほぞん　できる
-べんりな　いれもの。
+		<language name="JPN_KANJI" width="256">ぼんぐりを　９９こ　保存できる
+便利な　いれもの。
 </language>
 	</row>
 
@@ -4352,7 +4352,7 @@
 きろく　されている　ノート。
 </language>
 		<language name="JPN_KANJI" width="256">みつけた　アンノーンの　ようすが
-きろく　されている　ノート。
+記録されている　ノート。
 </language>
 	</row>
 
@@ -4360,26 +4360,26 @@
 		<language name="JPN" width="256">いつでも　てがるに　きのみを
 そだてられる　けいたいしきの
 さいばい　ようき。</language>
-		<language name="JPN_KANJI" width="256">いつでも　てがるに　きのみを
-そだてられる　けいたいしきの
-さいばい　ようき。</language>
+		<language name="JPN_KANJI" width="256">いつでも　手軽に　きのみを
+育てられる　携帯式の
+栽培容器。</language>
 	</row>
 
 	<row id="ITEMINFO_471">
 		<language name="JPN" width="256">みえない　どうぐに　はんのうして
 おとと　ひかりで　おしえて　くれる
 さいしんの　きかい。</language>
-		<language name="JPN_KANJI" width="256">みえない　どうぐに　はんのうして
-おとと　ひかりで　おしえて　くれる
-さいしんの　きかい。</language>
+		<language name="JPN_KANJI" width="256">みえない　道具に　反応して
+音と　光で　教えてくれる
+最新の　機械。</language>
 	</row>
 
 	<row id="ITEMINFO_472">
 		<language name="JPN" width="256">「アオイのあいことば」　ばんぐみの
 ポイントを　ためる　カード。
 </language>
-		<language name="JPN_KANJI" width="256">「アオイのあいことば」　ばんぐみの
-ポイントを　ためる　カード。
+		<language name="JPN_KANJI" width="256">「アオイのあいことば」　番組の
+ポイントを　貯める　カード。
 </language>
 	</row>
 
@@ -4388,7 +4388,7 @@
 ショップで　たかく　うれる。
 </language>
 		<language name="JPN_KANJI" width="256">とても　おいしい　なにかの　しっぽ。
-ショップで　たかく　うれる。
+ショップで　高く　売れる。
 </language>
 	</row>
 
@@ -4396,7 +4396,7 @@
 		<language name="JPN" width="256">こころ　やすまる　ねいろが　きける
 とても　ふるめかしい　スズ。
 </language>
-		<language name="JPN_KANJI" width="256">こころ　やすまる　ねいろが　きける
+		<language name="JPN_KANJI" width="256">こころ　やすまる　音色が　きける
 とても　ふるめかしい　スズ。
 </language>
 	</row>
@@ -4405,8 +4405,8 @@
 		<language name="JPN" width="256">ラジオきょくの　シャッターを　あける
 カードしきの　カギ。
 </language>
-		<language name="JPN_KANJI" width="256">ラジオきょくの　シャッターを　あける
-カードしきの　カギ。
+		<language name="JPN_KANJI" width="256">ラジオ局の　シャッターを　開ける
+カード式の　カギ。
 </language>
 	</row>
 
@@ -4414,8 +4414,8 @@
 		<language name="JPN" width="256">コガネちかどうに　ある　とびらを
 あける　カギ。
 </language>
-		<language name="JPN_KANJI" width="256">コガネちかどうに　ある　とびらを
-あける　カギ。
+		<language name="JPN_KANJI" width="256">コガネ地下道に　ある　扉を
+空ける　カギ。
 </language>
 	</row>
 
@@ -4423,16 +4423,16 @@
 		<language name="JPN" width="256">みずを　かける　どうぐ。
 きのみプランターの　きのみを
 すくすく　そだてる。</language>
-		<language name="JPN_KANJI" width="256">みずを　かける　どうぐ。
+		<language name="JPN_KANJI" width="256">みずを　かける　道具。
 きのみプランターの　きのみを
-すくすく　そだてる。</language>
+すくすく　育てる。</language>
 	</row>
 
 	<row id="ITEMINFO_478">
 		<language name="JPN" width="256">いかりのみずうみに　あらわれた
 あかい　ギャラドスの　ウロコ。
 ほのおのように　あかく　かがやく。</language>
-		<language name="JPN_KANJI" width="256">いかりのみずうみに　あらわれた
+		<language name="JPN_KANJI" width="256">怒りの湖に　あらわれた
 あかい　ギャラドスの　ウロコ。
 ほのおのように　あかく　かがやく。</language>
 	</row>
@@ -4441,8 +4441,8 @@
 		<language name="JPN" width="256">モノマネむすめが　なくした
 マネネの　にんぎょう。
 </language>
-		<language name="JPN_KANJI" width="256">モノマネむすめが　なくした
-マネネの　にんぎょう。
+		<language name="JPN_KANJI" width="256">モノマネ娘が　なくした
+マネネの　人形。
 </language>
 	</row>
 
@@ -4450,8 +4450,8 @@
 		<language name="JPN" width="256">リニアカーに　のるときに　ひつような
 チケット。　いつでも　のりほうだい。
 </language>
-		<language name="JPN_KANJI" width="256">リニアカーに　のるときに　ひつような
-チケット。　いつでも　のりほうだい。
+		<language name="JPN_KANJI" width="256">リニアカーに　乗るときに　必要な
+チケット。　いつでも　乗り放題。
 </language>
 	</row>
 
@@ -4459,8 +4459,8 @@
 		<language name="JPN" width="256">はつでんしょから　ぬすまれた
 はつでんきの　たいせつな　ぶひん。
 </language>
-		<language name="JPN_KANJI" width="256">はつでんしょから　ぬすまれた
-はつでんきの　たいせつな　ぶひん。
+		<language name="JPN_KANJI" width="256">発電所から　ぬすまれた
+発電機の　たいせつな　部品。
 </language>
 	</row>
 
@@ -4469,7 +4469,7 @@
 ふしぎな　はね。
 </language>
 		<language name="JPN_KANJI" width="256">ぎんいろに　ひかり　かがやく
-ふしぎな　はね。
+不思議な　はね。
 </language>
 	</row>
 
@@ -4478,7 +4478,7 @@
 ふしぎな　はね。
 </language>
 		<language name="JPN_KANJI" width="256">にじいろに　ひかり　かがやく
-ふしぎな　はね。
+不思議な　はね。
 </language>
 	</row>
 
@@ -4486,8 +4486,8 @@
 		<language name="JPN" width="256">ポケモンじいさんから　あずかった
 ふしぎな　もようの　タマゴ。
 なんの　タマゴか　わからない。</language>
-		<language name="JPN_KANJI" width="256">ポケモンじいさんから　あずかった
-ふしぎな　もようの　タマゴ。
+		<language name="JPN_KANJI" width="256">ポケモンじい参加ら　あずかった
+不思議な　もようの　タマゴ。
 なんの　タマゴか　わからない。</language>
 	</row>
 
@@ -4523,7 +4523,7 @@
 ふしぎと　こおばしい　かおりがする。
 </language>
 		<language name="JPN_KANJI" width="256">みどりの　ぼんぐり。
-ふしぎと　こおばしい　かおりがする。
+不思議と　こおばしい　かおりがする。
 </language>
 	</row>
 
@@ -4559,17 +4559,17 @@
 つかまえやすくなる
 ちょっと　かわった　ボール。　</language>
 		<language name="JPN_KANJI" width="256">にげあしの　はやい　ポケモンが
-つかまえやすくなる
-ちょっと　かわった　ボール。　</language>
+捕まえやすくなる
+ちょっと　変わった　ボール。　</language>
 	</row>
 
 	<row id="ITEMINFO_493">
 		<language name="JPN" width="256">じぶんの　ポケモンより　レベルが
 ひくいほど　つかまえやすくなる
 ちょっと　かわった　ボール。　</language>
-		<language name="JPN_KANJI" width="256">じぶんの　ポケモンより　レベルが
-ひくいほど　つかまえやすくなる
-ちょっと　かわった　ボール。　</language>
+		<language name="JPN_KANJI" width="256">自分の　ポケモンより　レベルが
+低いほど　捕まえやすくなる
+ちょっと　変わった　ボール。　</language>
 	</row>
 
 	<row id="ITEMINFO_494">
@@ -4577,52 +4577,52 @@
 つかまえやすくなる
 ちょっと　かわった　ボール。　</language>
 		<language name="JPN_KANJI" width="256">つりざおで　つりあげた　ポケモンだと
-つかまえやすくなる
-ちょっと　かわった　ボール。　</language>
+捕まえやすくなる
+ちょっと　変わった　ボール。　</language>
 	</row>
 
 	<row id="ITEMINFO_495">
 		<language name="JPN" width="256">たいじゅうの　おもい　ポケモンが
 つかまえやすくなる
 ちょっと　かわった　ボール。　</language>
-		<language name="JPN_KANJI" width="256">たいじゅうの　おもい　ポケモンが
-つかまえやすくなる
-ちょっと　かわった　ボール。　</language>
+		<language name="JPN_KANJI" width="256">体重の　重い　ポケモンが
+捕まえやすくなる
+ちょっと　変わった　ボール。　</language>
 	</row>
 
 	<row id="ITEMINFO_496">
 		<language name="JPN" width="256">じぶんの　ポケモンと　せいべつが
 ちがうと　つかまえやすくなる
 ちょっと　かわった　ボール。　</language>
-		<language name="JPN_KANJI" width="256">じぶんの　ポケモンと　せいべつが
-ちがうと　つかまえやすくなる
-ちょっと　かわった　ボール。　</language>
+		<language name="JPN_KANJI" width="256">自分の　ポケモンと　性別が
+違うと　捕まえやすくなる
+ちょっと　変わった　ボール。　</language>
 	</row>
 
 	<row id="ITEMINFO_497">
 		<language name="JPN" width="256">つかまえた　やせいポケモンが
 すぐに　なついて　くれる
 ちょっと　かわった　ボール。　</language>
-		<language name="JPN_KANJI" width="256">つかまえた　やせいポケモンが
+		<language name="JPN_KANJI" width="256">捕まえた　野生ポケモンが
 すぐに　なついて　くれる
-ちょっと　かわった　ボール。　</language>
+ちょっと　変わった　ボール。　</language>
 	</row>
 
 	<row id="ITEMINFO_498">
 		<language name="JPN" width="256">つきのいしで　しんかする　ポケモンが
 つかまえやすくなる
 ちょっと　かわった　ボール。　</language>
-		<language name="JPN_KANJI" width="256">つきのいしで　しんかする　ポケモンが
-つかまえやすくなる
-ちょっと　かわった　ボール。　</language>
+		<language name="JPN_KANJI" width="256">つきのいしで　進化する　ポケモンが
+捕まえやすくなる
+ちょっと　変わった　ボール。　</language>
 	</row>
 
 	<row id="ITEMINFO_499">
 		<language name="JPN" width="256">むしとりたいかいの　なかで
 つかう　とくべつな　ボール。　
 </language>
-		<language name="JPN_KANJI" width="256">むしとりたいかいの　なかで
-つかう　とくべつな　ボール。　
+		<language name="JPN_KANJI" width="256">虫捕り大会の　なかで
+使う　特別な　ボール。　
 </language>
 	</row>
 
@@ -4631,7 +4631,7 @@
 つかう　とくべつな　ボール。　
 </language>
 		<language name="JPN_KANJI" width="256">パルパークの　なかで
-つかう　とくべつな　ボール。　
+使う　特別な　ボール。　
 </language>
 	</row>
 
@@ -4639,8 +4639,8 @@
 		<language name="JPN" width="256">ぼうけんちゅうに　さつえいした
 きねんしゃしんを　かざる　アルバム。
 </language>
-		<language name="JPN_KANJI" width="256">ぼうけんちゅうに　さつえいした
-きねんしゃしんを　かざる　アルバム。
+		<language name="JPN_KANJI" width="256">冒険中に　撮影した
+記念写真を　飾る　アルバム。
 </language>
 	</row>
 
@@ -4648,7 +4648,7 @@
 		<language name="JPN" width="256">なつかしい　きょくが　きける
 おんがく　プレイヤー。
 スイッチ　ひとつで　きりかえられる。</language>
-		<language name="JPN_KANJI" width="256">なつかしい　きょくが　きける
+		<language name="JPN_KANJI" width="256">なつかしい　曲が　きける
 おんがく　プレイヤー。
 スイッチ　ひとつで　きりかえられる。</language>
 	</row>
@@ -4666,8 +4666,8 @@
 		<language name="JPN" width="256">チョウジめいぶつの　まんじゅう。
 おおみやげひん　として　ゆうめい。
 </language>
-		<language name="JPN_KANJI" width="256">チョウジめいぶつの　まんじゅう。
-おおみやげひん　として　ゆうめい。
+		<language name="JPN_KANJI" width="256">チョウジ名物の　まんじゅう。
+お土産品として　有名。
 </language>
 	</row>
 
@@ -4675,251 +4675,251 @@
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ゆうしょう　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ゆうしょう　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+優勝　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_506">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ビリになった　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ビリになった　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+ビリになった　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_507">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ポケモンの　ダッシュした　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ポケモンの　ダッシュした　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+ポケモンの　ダッシュした　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_508">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ポケモンの　ジャンプした　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ポケモンの　ジャンプした　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+ポケモンの　ジャンプした　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_509">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ダッシュハードル　１い　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ダッシュハードル　１い　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+ダッシュハードル　１位　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_510">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 チェンジリレー　１い　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-チェンジリレー　１い　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+チェンジリレー　１位　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_511">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 スティールフラッグ　１い　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-スティールフラッグ　１い　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+スティールフラッグ　１位　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_512">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ブレイクブロック　１い　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ブレイクブロック　１い　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+ブレイクブロック　１位　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_513">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 キャッチソーサー　１い　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-キャッチソーサー　１い　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+キャッチソーサー　１位　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_514">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 シューティングスノー　１い
 かいすうが　きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-シューティングスノー　１い
-かいすうが　きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+シューティングスノー　１位
+回数が　記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_515">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ポケモンの　かくとく　ポイントが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ポケモンの　かくとく　ポイントが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+ポケモンの　獲得ポイントが
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_516">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ポケモンの　しっぱいした　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ポケモンの　しっぱいした　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+ポケモンの　失敗した　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_517">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ポケモンの　じめつした　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ポケモンの　じめつした　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+ポケモンの　自滅した　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_518">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ポケモンの　たいあたり　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ポケモンの　たいあたり　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+ポケモンの　たいあたり　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_519">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ポケモンの　おちた　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ポケモンの　おちた　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+ポケモンの　落ちた　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_520">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 リングアウトファイト　１い
 かいすうが　きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-リングアウトファイト　１い
-かいすうが　きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+リングアウトファイト　１位
+回数が　記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_521">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ゲットトランポリン　１い　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ゲットトランポリン　１い　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+ゲットトランポリン　１位　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_522">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 プッシュサークル　１い　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-プッシュサークル　１い　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+プッシュサークル　１位　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_523">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 つうしん　ポケスロンの　ゆうしょう
 かいすうが　きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-つうしん　ポケスロンの　ゆうしょう
-かいすうが　きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+通信ポケスロンの　優勝
+回数が　記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_524">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 つうしん　ポケスロンの　ビリになった
 かいすうが　きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-つうしん　ポケスロンの　ビリになった
-かいすうが　きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+通信ポケスロンの　ビリになった
+回数が　記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_525">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 きょうぎで　１い　になった
 かいすうが　きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-きょうぎで　１い　になった
-かいすうが　きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+競技で　１位　になった
+回数が　記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_526">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 きょうぎで　ビリになった
 かいすうが　きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-きょうぎで　ビリになった
-かいすうが　きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+競技で　ビリになった
+回数が　記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_527">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ポケモンの　こうたい　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ポケモンの　こうたい　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+ポケモンの　交代　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_528">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 スマッシュゴール　１い　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-スマッシュゴール　１い　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+スマッシュゴール　１位　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_529">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 こじんしょう　かくとく　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-こじんしょう　かくとく　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+個人賞　獲得　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_530">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ポケモンを　タッチした　かいすうが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ポケモンを　タッチした　かいすうが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+ポケモンを　タッチした　回数が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_531">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ポケスロンで　あそんだ　じかんが
 きろくされた　カード。</language>
-		<language name="JPN_KANJI" width="256">ポケスロンの　きろくが　はいっている。
-ポケスロンで　あそんだ　じかんが
-きろくされた　カード。</language>
+		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
+ポケスロンで　遊んだ　時間が
+記録された　カード。</language>
 	</row>
 
 	<row id="ITEMINFO_532">
 		<language name="JPN" width="256">ホウエンちほうの　でんせつと
 ふかい　かかわりが　あると　いわれる
 みどりいろに　かがやく　たま。</language>
-		<language name="JPN_KANJI" width="256">ホウエンちほうの　でんせつと
-ふかい　かかわりが　あると　いわれる
+		<language name="JPN_KANJI" width="256">ホウエン地方の　伝説と
+深い　関わりが　あると　いわれる
 みどりいろに　かがやく　たま。</language>
 	</row>
 
@@ -4927,8 +4927,8 @@
 		<language name="JPN" width="256">とくしゅな　カギで　あけられる
 がんじょうな　カプセル。
 </language>
-		<language name="JPN_KANJI" width="256">とくしゅな　カギで　あけられる
-がんじょうな　カプセル。
+		<language name="JPN_KANJI" width="256">特殊な　カギで　あけられる
+頑丈な　カプセル。
 </language>
 	</row>
 
@@ -4936,8 +4936,8 @@
 		<language name="JPN" width="256">ホウエンちほうの　でんせつと
 ふかい　かかわりが　あると　いわれる
 あかく　かがやく　たま。</language>
-		<language name="JPN_KANJI" width="256">ホウエンちほうの　でんせつと
-ふかい　かかわりが　あると　いわれる
+		<language name="JPN_KANJI" width="256">ホウエン地方の　伝説と
+深い　関わりが　あると　いわれる
 あかく　かがやく　たま。</language>
 	</row>
 
@@ -4945,8 +4945,8 @@
 		<language name="JPN" width="256">ホウエンちほうの　でんせつと
 ふかい　かかわりが　あると　いわれる
 あおく　かがやく　たま。</language>
-		<language name="JPN_KANJI" width="256">ホウエンちほうの　でんせつと
-ふかい　かかわりが　あると　いわれる
+		<language name="JPN_KANJI" width="256">ホウエン地方の　伝説と
+深い　関わりが　あると　いわれる
 あおく　かがやく　たま。</language>
 	</row>
 
@@ -4954,7 +4954,7 @@
 		<language name="JPN" width="256">じめんから　ほりだされた
 すいしょうだま。いわと　つちで
 おおわれているが　とても　きれい。</language>
-		<language name="JPN_KANJI" width="256">じめんから　ほりだされた
+		<language name="JPN_KANJI" width="256">地面から　掘りだされた
 すいしょうだま。いわと　つちで
 おおわれているが　とても　きれい。</language>
 	</row>
@@ -4972,16 +4972,16 @@
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 こうげきが　きゅうしょに　あたる
 かくりつが　すこし　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-こうげきが　きゅうしょに　あたる
-かくりつが　すこし　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+攻撃が　急所に　当たる
+確率が　すこし　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_539">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　すばやさが
 すこし　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
 ポケモンの　すばやさが
 すこし　あがる。</language>
 	</row>
@@ -4990,8 +4990,8 @@
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　とくこうが
 すこし　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-ポケモンの　とくこうが
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+ポケモンの　特攻が
 すこし　あがる。</language>
 	</row>
 
@@ -4999,8 +4999,8 @@
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　とくぼうが
 すこし　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-ポケモンの　とくぼうが
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+ポケモンの　特防が
 すこし　あがる。</language>
 	</row>
 
@@ -5008,8 +5008,8 @@
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　ぼうぎょが
 すこし　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-ポケモンの　ぼうぎょが
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+ポケモンの　防御が
 すこし　あがる。</language>
 	</row>
 
@@ -5017,8 +5017,8 @@
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　こうげきが
 すこし　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-ポケモンの　こうげきが
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+ポケモンの　攻撃が
 すこし　あがる。</language>
 	</row>
 
@@ -5026,16 +5026,16 @@
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　こうげきの
 めいちゅうりつが　すこし　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-ポケモンの　こうげきの
-めいちゅうりつが　すこし　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+ポケモンの　攻撃の
+命中率が　すこし　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_545">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　すばやさが
 かなり　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
 ポケモンの　すばやさが
 かなり　あがる。</language>
 	</row>
@@ -5044,8 +5044,8 @@
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　とくこうが
 かなり　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-ポケモンの　とくこうが
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+ポケモンの　特攻が
 かなり　あがる。</language>
 	</row>
 
@@ -5053,8 +5053,8 @@
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　とくぼうが
 かなり　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-ポケモンの　とくぼうが
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+ポケモンの　特防が
 かなり　あがる。</language>
 	</row>
 
@@ -5062,8 +5062,8 @@
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　ぼうぎょが
 かなり　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-ポケモンの　ぼうぎょが
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+ポケモンの　防御が
 かなり　あがる。</language>
 	</row>
 
@@ -5071,8 +5071,8 @@
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　こうげきが
 かなり　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-ポケモンの　こうげきが
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+ポケモンの　攻撃が
 かなり　あがる。</language>
 	</row>
 
@@ -5080,117 +5080,117 @@
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　こうげきの
 めいちゅうりつが　かなり　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-ポケモンの　こうげきの
-めいちゅうりつが　かなり　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+ポケモンの　攻撃の
+命中率が　かなり　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_551">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　すばやさが
 さいこうまで　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
 ポケモンの　すばやさが
-さいこうまで　あがる。</language>
+最高まで　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_552">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　とくこうが
 さいこうまで　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-ポケモンの　とくこうが
-さいこうまで　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+ポケモンの　特攻が
+最高まで　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_553">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　とくぼうが
 さいこうまで　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-ポケモンの　とくぼうが
-さいこうまで　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+ポケモンの　特防が
+最高まで　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_554">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　ぼうぎょが
 さいこうまで　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-ポケモンの　ぼうぎょが
-さいこうまで　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+ポケモンの　防御が
+最高まで　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_555">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　こうげきが
 さいこうまで　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-ポケモンの　こうげきが
-さいこうまで　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+ポケモンの　攻撃が
+最高まで　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_556">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 みかたポケモンの　めいちゅうりつが
 さいこうまで　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-みかたポケモンの　めいちゅうりつが
-さいこうまで　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+味方ポケモンの　命中率が
+最高まで　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_557">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 つかうと　みかたの　ポケモンの
 とくせいを　はつどう　させる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-つかうと　みかたの　ポケモンの
-とくせいを　はつどう　させる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+使うと　味方の　ポケモンの
+とくせいを　発動させる。</language>
 	</row>
 
 	<row id="ITEMINFO_558">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 つかうと　みかたの　ポケモンが
 もっている　どうぐを　なくす。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-つかうと　みかたの　ポケモンが
-もっている　どうぐを　なくす。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+使うと　味方の　ポケモンが
+持っている　道具を　なくす。</language>
 	</row>
 
 	<row id="ITEMINFO_559">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 つかうと　みかたの　ポケモンが
 もっている　どうぐを　つかう。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-つかうと　みかたの　ポケモンが
-もっている　どうぐを　つかう。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+使うと　味方の　ポケモンが
+持っている　道具を　すぐ使う。</language>
 	</row>
 
 	<row id="ITEMINFO_560">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 つかうと　みかたの　ポケモンの
 のうりょく　へんかが　もとにもどる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-つかうと　みかたの　ポケモンの
-のうりょく　へんかが　もとにもどる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+使うと　味方の　ポケモンの
+能力変化が　もとにもどる。</language>
 	</row>
 
 	<row id="ITEMINFO_561">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 こうげきが　きゅうしょに　あたる
 かくりつが　かなり　あがる。</language>
-		<language name="JPN_KANJI" width="256">ポケシューター　せんようの　どうぐ。
-こうげきが　きゅうしょに　あたる
-かくりつが　かなり　あがる。</language>
+		<language name="JPN_KANJI" width="256">ポケシューター専用の　道具。
+攻撃が　急所に　あたる
+確率が　かなり　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_562">
 		<language name="JPN" width="256">しんかの　ふしぎな　かたまり。
 もたせると　しんかまえ　ポケモンの
 ぼうぎょと　とくぼうが　あがる。</language>
-		<language name="JPN_KANJI" width="256">しんかの　ふしぎな　かたまり。
-もたせると　しんかまえ　ポケモンの
-ぼうぎょと　とくぼうが　あがる。</language>
+		<language name="JPN_KANJI" width="256">進化の　不思議な　かたまり。
+持たせると　進化前　ポケモンの
+防御と　特防が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_563">
@@ -5198,80 +5198,80 @@
 もたせると　ポケモンの
 たいじゅうが　かるくなる。</language>
 		<language name="JPN_KANJI" width="256">とても　かるい　いし。
-もたせると　ポケモンの
-たいじゅうが　かるくなる。</language>
+持たせると　ポケモンの
+体重が　軽くなる。</language>
 	</row>
 
 	<row id="ITEMINFO_564">
 		<language name="JPN" width="256">ポケモンに　もたせると
 だげきわざを　うけたとき
 あいてにも　ダメージを　あたえる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-だげきわざを　うけたとき
-あいてにも　ダメージを　あたえる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+打撃技を　受けたとき
+相手にも　ダメージを　あたえる。</language>
 	</row>
 
 	<row id="ITEMINFO_565">
 		<language name="JPN" width="256">ポケモンに　もたせると
 ポケモンが　ちゅうに　うく。
 こうげきを　うけると　われてしまう。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　もたせると
-ポケモンが　ちゅうに　うく。
-こうげきを　うけると　われてしまう。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　持たせると
+ポケモンが　宙に　浮く。
+攻撃を　受けると　割れてしまう。</language>
 	</row>
 
 	<row id="ITEMINFO_566">
 		<language name="JPN" width="256">ふしぎな　ちからのある　カード。
 もたせると　わざをうけた　あいてを
 たいじょう　させることが　できる。</language>
-		<language name="JPN_KANJI" width="256">ふしぎな　ちからのある　カード。
-もたせると　わざをうけた　あいてを
-たいじょう　させることが　できる。</language>
+		<language name="JPN_KANJI" width="256">不思議な　ちからのある　カード。
+持たせると　技を受けた　相手を
+退場させることが　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_567">
 		<language name="JPN" width="256">あいてから　ねらわれやすくなる　まと。
 もたせると　こうかがない　わざが
 あたるように　なってしまう。</language>
-		<language name="JPN_KANJI" width="256">あいてから　ねらわれやすくなる　まと。
-もたせると　こうかがない　わざが
-あたるように　なってしまう。</language>
+		<language name="JPN_KANJI" width="256">相手から　ねらわれやすくなる　まと。
+持たせると　効果がない　技が
+当たるように　なってしまう。</language>
 	</row>
 
 	<row id="ITEMINFO_568">
 		<language name="JPN" width="256">しめつけるわざを　ほじょする　バンド。
 もたせると　しめつけるわざの
 いりょくが　つよく　なる。</language>
-		<language name="JPN_KANJI" width="256">しめつけるわざを　ほじょする　バンド。
-もたせると　しめつけるわざの
-いりょくが　つよく　なる。</language>
+		<language name="JPN_KANJI" width="256">しめつける技を　補助する　バンド。
+持たせると　しめつける技の
+威力が　強くなる。</language>
 	</row>
 
 	<row id="ITEMINFO_569">
 		<language name="JPN" width="256">つかいすての　きゅうこん。
 もたせて　みずの　わざを　うけると
 とくこうが　あがる。</language>
-		<language name="JPN_KANJI" width="256">つかいすての　きゅうこん。
-もたせて　みずの　わざを　うけると
-とくこうが　あがる。</language>
+		<language name="JPN_KANJI" width="256">使い捨ての　きゅうこん。
+持たせて　みずの　技を　受けると
+特攻が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_570">
 		<language name="JPN" width="256">つかいすての　じゅうでんち。
 もたせて　でんきの　わざを　うけると
 こうげきが　あがる。</language>
-		<language name="JPN_KANJI" width="256">つかいすての　じゅうでんち。
-もたせて　でんきの　わざを　うけると
-こうげきが　あがる。</language>
+		<language name="JPN_KANJI" width="256">使い捨ての　じゅうでんち。
+持たせて　でんきの　技を　受けると
+攻撃が　あがる。</language>
 	</row>
 
 	<row id="ITEMINFO_571">
 		<language name="JPN" width="256">もたせて　わざを　うけると
 せんとうから　だっしゅつして
 てもちと　いれかわる　ことができる。</language>
-		<language name="JPN_KANJI" width="256">もたせて　わざを　うけると
-せんとうから　だっしゅつして
-てもちと　いれかわる　ことができる。</language>
+		<language name="JPN_KANJI" width="256">持たせて　技を　受けると
+戦闘から　脱出して
+手持ちと　いれかわる　ことができる。</language>
 	</row>
 
 	<row id="ITEMINFO_572">
@@ -5279,8 +5279,8 @@
 もたせると　いちどだけ　ほのおの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">ほのおの　タイプの　ジュエル。
-もたせると　いちどだけ　ほのおの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　ほのおの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_573">
@@ -5288,8 +5288,8 @@
 もたせると　いちどだけ　みずの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">みずの　タイプの　ジュエル。
-もたせると　いちどだけ　みずの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　みずの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_574">
@@ -5297,8 +5297,8 @@
 もたせると　いちどだけ　でんきの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">でんきの　タイプの　ジュエル。
-もたせると　いちどだけ　でんきの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　でんきの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_575">
@@ -5306,8 +5306,8 @@
 もたせると　いちどだけ　くさの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">くさの　タイプの　ジュエル。
-もたせると　いちどだけ　くさの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　くさの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_576">
@@ -5315,8 +5315,8 @@
 もたせると　いちどだけ　こおりの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">こおりの　タイプの　ジュエル。
-もたせると　いちどだけ　こおりの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　こおりの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_577">
@@ -5324,8 +5324,8 @@
 もたせると　いちどだけ　かくとうの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">かくとうの　タイプの　ジュエル。
-もたせると　いちどだけ　かくとうの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　かくとうの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_578">
@@ -5333,8 +5333,8 @@
 もたせると　いちどだけ　どくの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">どくの　タイプの　ジュエル。
-もたせると　いちどだけ　どくの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　どくの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_579">
@@ -5342,8 +5342,8 @@
 もたせると　いちどだけ　じめんの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">じめんの　タイプの　ジュエル。
-もたせると　いちどだけ　じめんの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　じめんの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_580">
@@ -5351,8 +5351,8 @@
 もたせると　いちどだけ　ひこうの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">ひこうの　タイプの　ジュエル。
-もたせると　いちどだけ　ひこうの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　ひこうの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_581">
@@ -5360,8 +5360,8 @@
 もたせると　いちどだけ　エスパーの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">エスパーの　タイプの　ジュエル。
-もたせると　いちどだけ　エスパーの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　エスパーの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_582">
@@ -5369,8 +5369,8 @@
 もたせると　いちどだけ　むしの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">むしの　タイプの　ジュエル。
-もたせると　いちどだけ　むしの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　むしの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_583">
@@ -5378,8 +5378,8 @@
 もたせると　いちどだけ　いわの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">いわの　タイプの　ジュエル。
-もたせると　いちどだけ　いわの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　いわの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_584">
@@ -5387,8 +5387,8 @@
 もたせると　いちどだけ　ゴーストの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">ゴーストの　タイプの　ジュエル。
-もたせると　いちどだけ　ゴーストの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　ゴーストの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_585">
@@ -5396,8 +5396,8 @@
 もたせると　いちどだけ　ドラゴンの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">ドラゴンの　タイプの　ジュエル。
-もたせると　いちどだけ　ドラゴンの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　ドラゴンの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_586">
@@ -5405,8 +5405,8 @@
 もたせると　いちどだけ　あくの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">あくの　タイプの　ジュエル。
-もたせると　いちどだけ　あくの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　あくの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_587">
@@ -5414,8 +5414,8 @@
 もたせると　いちどだけ　はがねの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">はがねの　タイプの　ジュエル。
-もたせると　いちどだけ　はがねの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　はがねの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_588">
@@ -5423,70 +5423,70 @@
 もたせると　いちどだけ　ノーマルの
 わざの　いりょくが　つよまる。</language>
 		<language name="JPN_KANJI" width="256">ノーマルの　タイプの　ジュエル。
-もたせると　いちどだけ　ノーマルの
-わざの　いりょくが　つよまる。</language>
+持たせると　１度だけ　ノーマルの
+技の　威力が　強まる。</language>
 	</row>
 
 	<row id="ITEMINFO_589">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　ＨＰの
 きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　つかう　どうぐ。
-ポケモン　１ひきの　ＨＰの
-きそポイントを　ちょっと　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
+ポケモン　１匹の　ＨＰの
+基礎ポイントを　ちょっと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_590">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　こうげきの
 きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　つかう　どうぐ。
-ポケモン　１ひきの　こうげきの
-きそポイントを　ちょっと　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
+ポケモン　１匹の　攻撃の
+基礎ポイントを　ちょっと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_591">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　ぼうぎょの
 きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　つかう　どうぐ。
-ポケモン　１ひきの　ぼうぎょの
-きそポイントを　ちょっと　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
+ポケモン　１匹の　防御の
+基礎ポイントを　ちょっと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_592">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　すばやさの
 きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　つかう　どうぐ。
-ポケモン　１ひきの　すばやさの
-きそポイントを　ちょっと　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
+ポケモン　１匹の　すばやさの
+基礎ポイントを　ちょっと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_593">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　とくこうの
 きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　つかう　どうぐ。
-ポケモン　１ひきの　とくこうの
-きそポイントを　ちょっと　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
+ポケモン　１匹の　特攻の
+基礎ポイントを　ちょっと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_594">
 		<language name="JPN" width="256">ポケモンに　つかう　どうぐ。
 ポケモン　１ひきの　とくぼうの
 きそポイントを　ちょっと　あげる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　つかう　どうぐ。
-ポケモン　１ひきの　とくぼうの
-きそポイントを　ちょっと　あげる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　使う　道具。
+ポケモン　１匹の　特防の
+基礎ポイントを　ちょっと　あげる。</language>
 	</row>
 
 	<row id="ITEMINFO_595">
 		<language name="JPN" width="256">きれいな　ハートの　かたちの
 とても　めずらしい　ハネ。
 とても　うすく　かるい。</language>
-		<language name="JPN_KANJI" width="256">きれいな　ハートの　かたちの
-とても　めずらしい　ハネ。
+		<language name="JPN_KANJI" width="256">きれいな　ハートの　形の
+とても　珍しい　ハネ。
 とても　うすく　かるい。</language>
 	</row>
 
@@ -5494,36 +5494,36 @@
 		<language name="JPN" width="256">おおむかし　うみに　すんでいた
 こだい　ポケモンの　カセキ。
 せなかの　いちぶ　らしい。</language>
-		<language name="JPN_KANJI" width="256">おおむかし　うみに　すんでいた
-こだい　ポケモンの　カセキ。
-せなかの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">大昔　海に　すんでいた
+古代ポケモンの　カセキ。
+せなかの　一部らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_597">
 		<language name="JPN" width="256">おおむかしの　そらを　とんでいた
 こだい　ポケモンの　カセキ。
 つばさの　いちぶ　らしい。</language>
-		<language name="JPN_KANJI" width="256">おおむかしの　そらを　とんでいた
-こだい　ポケモンの　カセキ。
-つばさの　いちぶ　らしい。</language>
+		<language name="JPN_KANJI" width="256">大昔の　空を　とんでいた
+古代ポケモンの　カセキ。
+つばさの　一部らしい。</language>
 	</row>
 
 	<row id="ITEMINFO_598">
 		<language name="JPN" width="256">シンの　にくたいが　ほろび
 へんかした　すがた。えいゆうの
 とうじょうを　まっていると　される。</language>
-		<language name="JPN_KANJI" width="256">シンの　にくたいが　ほろび
-へんかした　すがた。えいゆうの
-とうじょうを　まっていると　される。</language>
+		<language name="JPN_KANJI" width="256">シンの　肉体が　滅び
+変化した　姿。　英雄の
+登場を　待っていると　される。</language>
 	</row>
 
 	<row id="ITEMINFO_599">
 		<language name="JPN" width="256">ムの　にくたいが　ほろび
 へんかした　すがた。えいゆうの
 とうじょうを　まっていると　される。</language>
-		<language name="JPN_KANJI" width="256">ムの　にくたいが　ほろび
-へんかした　すがた。えいゆうの
-とうじょうを　まっていると　される。</language>
+		<language name="JPN_KANJI" width="256">ムの　肉体が　滅び
+変化した　姿。　英雄の
+登場を　待っていると　される。</language>
 	</row>
 
 	<row id="ITEMINFO_600">
@@ -5531,8 +5531,8 @@
 あいてに　ぶつかって　こうげきする。
 じぶんも　ダメージを　うける。</language>
 		<language name="JPN_KANJI" width="256">でんきを　まとって
-あいてに　ぶつかって　こうげきする。
-じぶんも　ダメージを　うける。</language>
+相手に　ぶつかって　攻撃する。
+自分も　ダメージを　受ける。</language>
 	</row>
 
 	<row id="ITEMINFO_601">
@@ -5540,16 +5540,16 @@
 きりつけて　こうげきする。
 ほそいきを　きることも　できる。</language>
 		<language name="JPN_KANJI" width="256">カマや　ツメなどの　するどいもので
-きりつけて　こうげきする。
-ほそいきを　きることも　できる。</language>
+きりつけて　攻撃する。
+細い木を　きることも　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_602">
 		<language name="JPN" width="256">こんしんの　ちからで　こうげきする。
 おもいいわを　おすことも　できる。
 </language>
-		<language name="JPN_KANJI" width="256">こんしんの　ちからで　こうげきする。
-おもいいわを　おすことも　できる。
+		<language name="JPN_KANJI" width="256">こんしんの　ちからで　攻撃する。
+重い岩を　押すことも　できる。
 </language>
 	</row>
 
@@ -5558,8 +5558,8 @@
 すべての　ポケモンを　こうげきする。
 みずのうえを　すすむことも　できる。</language>
 		<language name="JPN_KANJI" width="256">おおきな　なみを　おこして
-すべての　ポケモンを　こうげきする。
-みずのうえを　すすむことも　できる。</language>
+すべての　ポケモンを　攻撃する。
+水の上を　進むことも　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_604">
@@ -5567,8 +5567,8 @@
 ２ターンめで　こうげきする。
 しっているまちに　いどうも　できる。</language>
 		<language name="JPN_KANJI" width="256">１ターンめで　そらへ　とびあがって
-２ターンめで　こうげきする。
-しっているまちに　いどうも　できる。</language>
+２ターンめで　攻撃する。
+知っている街に　移動も　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_605">
@@ -5576,8 +5576,8 @@
 うきあがって　こうげきする。うみの
 なかに　もぐる　ことも　できる。</language>
 		<language name="JPN_KANJI" width="256">１ターンめで　もぐり　２ターンめに
-うきあがって　こうげきする。うみの
-なかに　もぐる　ことも　できる。</language>
+うきあがって　攻撃する。海の
+中に　もぐる　ことも　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_606">
@@ -5585,7 +5585,7 @@
 いきおいで　とっしん　こうげきする。
 たきを　のぼることも　できる。</language>
 		<language name="JPN_KANJI" width="256">たきを　さかのぼるような　すさまじい
-いきおいで　とっしん　こうげきする。
+いきおいで　とっしん　攻撃する。
 たきを　のぼることも　できる。</language>
 	</row>
 
@@ -5594,8 +5594,8 @@
 こうげきする。　ひびわれた　いわを
 こわすことも　できる。</language>
 		<language name="JPN_KANJI" width="256">いわを　くだくような　パンチで
-こうげきする。　ひびわれた　いわを
-こわすことも　できる。</language>
+攻撃する。　ひびわれた　いわを
+壊すことも　できる。</language>
 	</row>
 
 	<row id="ITEMINFO_608">
@@ -5603,7 +5603,7 @@
 あいての　とくこうを　さげる。
 </language>
 		<language name="JPN_KANJI" width="256">まくしたてる　ように　どなりつけて
-あいての　とくこうを　さげる。
+相手の　特攻を　さげる。
 </language>
 	</row>
 
@@ -5611,16 +5611,16 @@
 		<language name="JPN" width="256">さいだい　４にんで　つうわができる
 テレビきのうつきの
 さいしんがた　トランシーバー。</language>
-		<language name="JPN_KANJI" width="256">さいだい　４にんで　つうわができる
-テレビきのうつきの
-さいしんがた　トランシーバー。</language>
+		<language name="JPN_KANJI" width="256">最大４人で　通話ができる
+テレビ機能つきの
+最新型トランシーバー。</language>
 	</row>
 
 	<row id="ITEMINFO_610">
 		<language name="JPN" width="256">まぼろしの　いし。
 
 </language>
-		<language name="JPN_KANJI" width="256">まぼろしの　いし。
+		<language name="JPN_KANJI" width="256">幻の　石。
 
 </language>
 	</row>
@@ -5629,18 +5629,18 @@
 		<language name="JPN" width="256">リバティガーデンとうに　いくための
 とくべつな　チケット。
 ヒウンシティから　ふねに　のれる。</language>
-		<language name="JPN_KANJI" width="256">リバティガーデンとうに　いくための
-とくべつな　チケット。
-ヒウンシティから　ふねに　のれる。</language>
+		<language name="JPN_KANJI" width="256">リバティガーデン島に　いくための
+特別な　チケット。
+ヒウンシティから　船に　乗れる。</language>
 	</row>
 
 	<row id="ITEMINFO_612">
 		<language name="JPN" width="256">デルパワーを　はっせいさせる
 ときにつかう　イッシュの　パワーが
 とじこめられた　ふしぎな　たま。</language>
-		<language name="JPN_KANJI" width="256">デルパワーを　はっせいさせる
-ときにつかう　イッシュの　パワーが
-とじこめられた　ふしぎな　たま。</language>
+		<language name="JPN_KANJI" width="256">デルパワーを　発生させる
+ときに使う　イッシュの　パワーが
+とじこめられた　不思議な　たま。</language>
 	</row>
 
 	<row id="ITEMINFO_613">
@@ -5683,8 +5683,8 @@
 		<language name="JPN" width="256">ある　とくていの　ポケモンを
 しんかさせる　ふしぎな　ウロコ。
 にじいろに　かがやいている。</language>
-		<language name="JPN_KANJI" width="256">ある　とくていの　ポケモンを
-しんかさせる　ふしぎな　ウロコ。
+		<language name="JPN_KANJI" width="256">ある　特定の　ポケモンを
+進化させる　不思議な　ウロコ。
 にじいろに　かがやいている。</language>
 	</row>
 
@@ -5692,9 +5692,9 @@
 		<language name="JPN" width="256">ポケモンの　きを　ひかせる　どうぐ。
 やせいポケモンとの　せんとうから
 ぜったいに　にげられる。</language>
-		<language name="JPN_KANJI" width="256">ポケモンの　きを　ひかせる　どうぐ。
-やせいポケモンとの　せんとうから
-ぜったいに　にげられる。</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　きを　ひかせる　道具。
+野生ポケモンとの　戦闘から
+絶対に　逃げられる。</language>
 	</row>
 
 	<row id="ITEMINFO_619">
@@ -5719,8 +5719,8 @@
 		<language name="JPN" width="256">キャモメが　はいたつ　している
 たいせつな　てがみ。
 </language>
-		<language name="JPN_KANJI" width="256">キャモメが　はいたつ　している
-たいせつな　てがみ。
+		<language name="JPN_KANJI" width="256">キャモメが　配達している
+たいせつな　手紙。
 </language>
 	</row>
 
@@ -5728,8 +5728,8 @@
 		<language name="JPN" width="256">キャモメが　はいたつ　している
 たいせつな　てがみ。
 </language>
-		<language name="JPN_KANJI" width="256">キャモメが　はいたつ　している
-たいせつな　てがみ。
+		<language name="JPN_KANJI" width="256">キャモメが　配達している
+たいせつな　手紙。
 </language>
 	</row>
 
@@ -5737,8 +5737,8 @@
 		<language name="JPN" width="256">キャモメが　はいたつ　している
 たいせつな　てがみ。
 </language>
-		<language name="JPN_KANJI" width="256">キャモメが　はいたつ　している
-たいせつな　てがみ。
+		<language name="JPN_KANJI" width="256">キャモメが　配達している
+たいせつな　手紙。
 </language>
 	</row>
 
@@ -5746,9 +5746,9 @@
 		<language name="JPN" width="256">あれくるう　うみを　ものともせず
 じゆうに　とびまわっていたと　される
 ポケモンの　あたまの　ホネ。</language>
-		<language name="JPN_KANJI" width="256">あれくるう　うみを　ものともせず
-じゆうに　とびまわっていたと　される
-ポケモンの　あたまの　ホネ。</language>
+		<language name="JPN_KANJI" width="256">荒れ狂う　海を　ものともせず
+自由に　とびまわっていたと　される
+ポケモンの　頭の　ホネ。</language>
 	</row>
 
 	<row id="ITEMINFO_625">
@@ -5756,107 +5756,107 @@
 ひろがる　めずらしい　キノコ。
 マニアが　たかく　かってくれる。</language>
 		<language name="JPN_KANJI" width="256">あたりいったいに　いい　かおりが
-ひろがる　めずらしい　キノコ。
-マニアが　たかく　かってくれる。</language>
+ひろがる　珍しい　キノコ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_626">
 		<language name="JPN" width="256">キラキラと　きんいろに　ひかる
 じゅんきんせいの　おおきな　たま。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">キラキラと　きんいろに　ひかる
-じゅんきんせいの　おおきな　たま。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">キラキラと　金色に　光る
+純金製の　おおきな　たま。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_627">
 		<language name="JPN" width="256">きれいな　ぎんいろに　ひかる
 とても　おおつぶの　しんじゅ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">きれいな　ぎんいろに　ひかる
+		<language name="JPN_KANJI" width="256">きれいな　銀色に　光る
 とても　おおつぶの　しんじゅ。
-マニアが　たかく　かってくれる。</language>
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_628">
 		<language name="JPN" width="256">すいせいが　ちかづいたとき
 ちひょうに　おちた　かけら。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">すいせいが　ちかづいたとき
-ちひょうに　おちた　かけら。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">すいせいが　近づいたとき
+地表に　落ちた　かけら。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_629">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
 ぶんめいで　つかわれた　どうか。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">３０００ねんほど　むかしの
-ぶんめいで　つかわれた　どうか。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">３０００年ほど　昔の
+文明で　使われた　どうか。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_630">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
 ぶんめいで　つかわれた　ぎんか。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">３０００ねんほど　むかしの
-ぶんめいで　つかわれた　ぎんか。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">３０００年ほど　昔の
+文明で　使われた　ぎんか。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_631">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
 ぶんめいで　つかわれた　きんか。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">３０００ねんほど　むかしの
-ぶんめいで　つかわれた　きんか。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">３０００年ほど　昔の
+文明で　使われた　きんか。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_632">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
 ぶんめいで　つくられた　つぼ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">３０００ねんほど　むかしの
-ぶんめいで　つくられた　つぼ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">３０００年ほど　昔の
+文明で　つくられた　つぼ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_633">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
 ぶんめいで　つくられた　うでわ。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">３０００ねんほど　むかしの
-ぶんめいで　つくられた　うでわ。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">３０００年ほど　昔の
+文明で　つくられた　うでわ。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_634">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
 ぶんめいで　つくられた　せきぞう。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">３０００ねんほど　むかしの
-ぶんめいで　つくられた　せきぞう。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">３０００年ほど　昔の
+文明で　つくられた　せきぞう。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_635">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
 ぶんめいで　つくられた　おうかん。
 マニアが　たかく　かってくれる。</language>
-		<language name="JPN_KANJI" width="256">３０００ねんほど　むかしの
-ぶんめいで　つくられた　おうかん。
-マニアが　たかく　かってくれる。</language>
+		<language name="JPN_KANJI" width="256">３０００年ほど　昔の
+文明で　つくられた　おうかん。
+マニアが　高く　買ってくれる。</language>
 	</row>
 
 	<row id="ITEMINFO_636">
 		<language name="JPN" width="256">ヒウンシティの　めいぶつアイス。
 ポケモン　１ひきの　じょうたいの
 いじょうを　すべて　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">ヒウンシティの　めいぶつアイス。
-ポケモン　１ひきの　じょうたいの
-いじょうを　すべて　かいふくする。</language>
+		<language name="JPN_KANJI" width="256">ヒウンシティの　名物アイス。
+ポケモン　１匹の　状態の
+異常を　すべて　回復する。</language>
 	</row>
 
 	<row id="ITEMINFO_637">
