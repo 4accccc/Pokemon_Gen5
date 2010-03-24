@@ -126,11 +126,12 @@
 //======================================================================
 #ifdef PM_DEBUG
 
-#define DEBUG_FIELDMAP_SPEED_CHECK
+//#define DEBUG_FIELDMAP_SPEED_CHECK
 
-#define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK    // フィールドマップ描画にかかる処理時間を求める
+//#define DEBUG_FIELDMAP_INOUT_SPEED_CHECK
+//#define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK    // フィールドマップ描画にかかる処理時間を求める
 
-#define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
+//#define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
 
 
 #endif
@@ -511,7 +512,7 @@ static void PUT_CHECK( void )
 
 #define INIT_CHECK()  /* DO NOTHING */
 #define SET_CHECK(word)   /* DO NOTHING */
-#define TAIL_CHECK()  /* DO NOTHING */
+#define TAIL_CHECK()  0/* DO NOTHING */
 #define PUT_CHECK()   /* DO NOTHING */
 
 #endif
@@ -921,11 +922,13 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   fieldWork->subseq ++;
 
   SET_CHECK("setup: tail");  //デバッグ：処理負荷計測
+#ifdef  PM_DEBUG
   {
     OSTick _end_tick = TAIL_CHECK();
     OS_Printf("mainSeqFunc_setup:total %ld\n", OS_TicksToMicroSeconds( _end_tick ) );
     PUT_CHECK();
   }
+#endif
   
   //3Ｄ描画モードは通常でセットアップ
   fieldWork->Draw3DMode = DRAW3DMODE_NORMAL;
@@ -1396,7 +1399,7 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
 
   MAINSEQ_RESULT result;
   FIELDMAP_MAIN_FUNC func;
-#ifdef  PM_DEBUG
+#ifdef  PDEBUNOUT_SPEED_CHECKM_DEBUG
   OSTick debug_tick = OS_GetTick(); 
 #endif
 
@@ -1409,7 +1412,7 @@ BOOL FIELDMAP_Main( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
   {
     result = func(gsys, fieldWork);
   }
-#ifdef  PM_DEBUG
+#ifdef  DEBUG_FIELDMAP_INOUT_SPEED_CHECK
   if ( fieldWork->seq != FLDMAPSEQ_UPDATE )
   {
     debug_tick = OS_GetTick() - debug_tick;
