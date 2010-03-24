@@ -894,6 +894,9 @@ static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
     if(POKEMONTRADE_IsInPokemonRecvPoke(IRC_POKEMONTRADE_GetRecvPP(pWork, 1))){
       POKE_MAIN_Pokemonset(pWork, 1, IRC_POKEMONTRADE_GetRecvPP(pWork, 1));
     }
+    if(POKEMONTRADE_IsInPokemonRecvPoke(IRC_POKEMONTRADE_GetRecvPP(pWork, 0))){
+      POKE_MAIN_Pokemonset(pWork, 0, IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
+    }
     if(pWork->pokemonselectno/GTS_NEGO_POKESLT_MAX){
       _CHANGE_STATE(pWork, _menuFriendPokemonStart); //ŒðŠ·ŠÜ‚Ü‚È‚¢
     }

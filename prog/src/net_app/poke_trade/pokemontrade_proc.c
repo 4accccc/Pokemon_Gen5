@@ -3508,10 +3508,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
       POKE_MAIN_Pokemonset(pWork, 1, pWork->recvPoke[pWork->pokemonsetCall-1] );
       pWork->pokemonsetCall=0;
     }
-    else{
-      OS_TPrintf("‚æ‚Ý‚±‚Ý‚Ü‚¹‚ñ----------------------------------------------------------\n");
-    }
-    
+    //“Ç‚Ýž‚ÞŽ–‚ª‚Å‚«‚È‚¢ê‡‚Í‘‚©‚È‚¢
   }
 
   GFL_CLACT_SYS_Main(); // CLSYSƒƒCƒ“
