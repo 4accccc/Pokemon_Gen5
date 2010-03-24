@@ -985,6 +985,12 @@
   NO_CMD()
   NO_CMD()
   NO_CMD()
+  
+  //観覧車トレーナー対戦関連
+  DEF_CMD( EvCmdGetWheelTrainerObjID, EV_SEQ_GET_WHEEL_TRAINER_OBJ_ID )
+  DEF_CMD( EvCmdGetWheelTrainerTrID, EV_SEQ_GET_WHEEL_TRAINER_TR_ID )
+  NO_CMD()
+  NO_CMD()
 
   END_CMD
 

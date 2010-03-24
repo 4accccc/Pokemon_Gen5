@@ -27,6 +27,8 @@
 #include "event_trainer_eye.h"
 
 #include "tr_tool/tr_tool.h"		//TT_TrainerMessageGet
+#include "tr_tool/trno_def.h"
+#include "arc/fieldmap/fldmmdl_objcode.h"
 
 #include "event_battle.h"
 
@@ -614,5 +616,53 @@ VMCMD_RESULT EvCmdBattleResultGet( VMHANDLE *core, void *wk )
   
 	*ret_wk = 0;
 	OS_Printf( "*ret_wk = %d\n", *ret_wk );
+	return VMCMD_RESULT_CONTINUE;
+}
+
+
+//--------------------------------------------------------------
+/**
+ * 観覧車トレーナーのOBJIDを返す
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetWheelTrainerObjID( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16  id	= SCRCMD_GetVMWorkValue( core, work );
+	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
+ 
+  static const u16 obj_tbl[] = {
+    GIRL4, BOY4,
+    GIRL2, WAITER,
+    OL, BUSINESSMAN,
+    TRAINERW, TRAINERM,
+  };
+	*ret_wk = obj_tbl[id];
+	return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 観覧車トレーナーのトレーナーIDを返す
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @return	"0"
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdGetWheelTrainerTrID( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16  id	= SCRCMD_GetVMWorkValue( core, work );
+	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
+  
+  static const u16 trid_tbl[] = {
+    TRID_PRINCESS_05, TRID_PRINCE_05,
+    TRID_MINI_06, TRID_WAITER_03,
+    TRID_OL_04, TRID_BUSINESS1_06,
+    TRID_ELITEW_14,TRID_ELITEM_14,
+  };
+
+	*ret_wk = trid_tbl[id];
 	return VMCMD_RESULT_CONTINUE;
 }

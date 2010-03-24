@@ -299,14 +299,10 @@
  * @brief 3Dデモ簡易呼び出し
  */
 //--------------------------------------------------------------
-  .macro  _ASM_CALL_3D_DEMO demo_no
-  //_ASM_MAP_FADE_BLACK_OUT
-  //_ASM_MAP_FADE_END_CHECK
+  .macro  _ASM_CALL_3D_DEMO demo_no, scene_id
   _ASM_FIELD_CLOSE
-  _ASM_DEMO_SCENE \demo_no
+  _ASM_DEMO_SCENE \demo_no, \scene_id
   _ASM_FIELD_OPEN
-  //_ASM_MAP_FADE_BLACK_IN
-  //_ASM_MAP_FADE_END_CHECK
   .endm
 
 //--------------------------------------------------------------
@@ -377,5 +373,60 @@
   _ASM_CALL_FIRST_POKE_SELECT \ret_wk
   _ASM_FIELD_OPEN
  
+  .endm
+
+//======================================================================
+//観覧車トレーナー関連  
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @brief 観覧車トレーナー 登録ID取得(0～7の登録ID tr_idとは別)
+ *
+ * @param ret_wk
+ */
+//--------------------------------------------------------------
+  .macro _ASM_GET_WHEEL_TRAINER_ENTRY_ID ret_wk
+  
+  _PUSH_WORK  SCWK_PARAM0
+  _PUSH_WORK  SCWK_PARAM1
+  
+  _GET_SEASON_ID( SCWK_PARAM0 )
+  _GET_MY_SEX( SCWK_PARAM1 )
+
+  _ASM_LDWKVAL  \ret_wk, SCWK_PARAM0
+  _ASM_MUL_WK   \ret_wk,2
+  _ASM_ADD_WK   \ret_wk,SCWK_PARAM1
+  
+  _POP_WORK  SCWK_PARAM1
+  _POP_WORK  SCWK_PARAM0
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 観覧車トレーナーメッセージ
+ *
+ * @param ret_wk
+ */
+//--------------------------------------------------------------
+  .macro _ASM_WHEEL_TRAINER_MSG msg_id, id, f_2nd
+  
+  _PUSH_WORK  SCWK_PARAM0
+  _PUSH_WORK  SCWK_PARAM1
+  _PUSH_WORK  SCWK_PARAM2
+
+  _ASM_LDWKVAL  SCWK_PARAM0, \msg_id
+  _ASM_LDWKVAL  SCWK_PARAM1, \id
+  _ASM_LDWKVAL  SCWK_PARAM2, \f_2nd
+  
+  _ASM_MUL_WK SCWK_PARAM1,10
+  _ASM_MUL_WK SCWK_PARAM2,5
+  _ASM_ADD_WK SCWK_PARAM0,SCWK_PARAM1
+  _ASM_ADD_WK SCWK_PARAM0,SCWK_PARAM2
+  
+  _ASM_BALLOONWIN_TALKOBJ_MSG SCWK_PARAM0
+ 
+  _POP_WORK  SCWK_PARAM2
+  _POP_WORK  SCWK_PARAM1
+  _POP_WORK  SCWK_PARAM0
   .endm
 

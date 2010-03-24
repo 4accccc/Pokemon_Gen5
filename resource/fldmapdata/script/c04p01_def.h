@@ -11,5 +11,6 @@
 #define SCRID_C04P01_GIRL1_01 (4)
 #define SCRID_POS_C04P01_BOSS_01 (5)
 #define SCRID_BG_C04P01_SIGN_01 (6)
+#define SCRID_ZONE_C04P01 (7)
 
 #endif //_C04P01_DEF_H_

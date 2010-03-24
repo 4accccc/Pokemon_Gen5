@@ -39,6 +39,10 @@ extern VMCMD_RESULT EvCmdBattleResultGet(VMHANDLE *core,void *wk);
 extern VMCMD_RESULT EvCmdSeacretPokeRetryCheck(VMHANDLE *core,void *wk);
 extern VMCMD_RESULT EvCmdHaifuPokeRetryCheck(VMHANDLE *core,void *wk);
 extern VMCMD_RESULT EvCmdWildLoseCheck( VMHANDLE *core, void *wk );
+
+extern VMCMD_RESULT EvCmdGetWheelTrainerObjID( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdGetWheelTrainerTrID( VMHANDLE *core, void *wk );
+
 #endif	/* __ASM_NO_DEF_ */
 
 #endif	/* SCR_TRAINER_H */

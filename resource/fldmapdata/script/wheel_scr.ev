@@ -25,7 +25,11 @@ _EVENT_DATA_END
 DEFINE_LOCAL  reg_return
 
 { //WHEEL_RIDE
-DEFINE_LOCAL  lwk_return 
+DEFINE_LOCAL  lwk_entry_id
+DEFINE_LOCAL  lwk_tr_id
+DEFINE_LOCAL  lwk_flag_id
+DEFINE_LOCAL  lwk_1st_f
+DEFINE_LOCAL  lwk_2nd_f
 
 //==============================================================
 /// 
@@ -36,7 +40,24 @@ DEFINE_LOCAL  lwk_return
 //==============================================================
 EVENT_START   ev_wheel_ride
 {
-//  _TALK_OBJ_START()
+  DEFINE_LOCAL  i_season
+
+  //登録ID取得
+  _GET_WHEEL_TRAINER_ENTRY_ID( lwk_entry_id )
+
+  //トレーナーID取得
+  _GET_WHEEL_TRAINER_TR_ID( lwk_entry_id, lwk_tr_id )
+
+  //初回終了フラグチェック
+  _TRAINER_FLAG_CHECK( lwk_tr_id, lwk_1st_f )
+  
+  //2回目以降かのフラグチェック
+  _GET_SEASON_ID( i_season )
+  $lwk_flag_id = FE_AMUSEMENT_TR01_TALK
+  $lwk_flag_id += $i_season
+  _FLAG_CHECK( lwk_flag_id, lwk_2nd_f )
+
+  _TALK_OBJ_START()
   _CALL sub_wheel_ride_main
 }
 EVENT_END
@@ -47,8 +68,83 @@ EVENT_END
 sub_wheel_ride_main:
 {
   DEFINE_LOCAL  i_ret
-  DEFINE_LOCAL  i_seq
-  DEFINE_LOCAL  i_loop
+  DEFINE_LOCAL  i_scene_id
+  
+  _DEBUG_PRINT_WK( lwk_entry_id )
+  _DEBUG_PRINT_WK( lwk_1st_f )
+  _DEBUG_PRINT_WK( lwk_2nd_f )
+
+  //一日一回フラグチェック
+  _FLAG_CHECK( TMFLG_AMUSEMENT_TR_BTL, i_ret )
+  IF $i_ret == TRUE THEN
+    //またね
+    _WHEEL_TRAINER_MSG( msg_wheel_spring_f_05, lwk_entry_id, lwk_2nd_f )  
+    _LAST_KEYWAIT()
+	  _BALLOONWIN_CLOSE()
+    _RET
+  ENDIF
+  
+  //勝負に勝てたら一緒に乗ってあげる
+	_WHEEL_TRAINER_MSG( msg_wheel_spring_f_01, lwk_entry_id, lwk_1st_f )
+	_YES_NO_WIN( i_ret )
+
+  IF $i_ret == SCR_NO THEN
+    //断った
+    _WHEEL_TRAINER_MSG( msg_wheel_spring_f_03, lwk_entry_id, lwk_1st_f )  
+    _LAST_KEYWAIT()
+	  _BALLOONWIN_CLOSE()
+    _RET
+  ENDIF
+
+  //じゃあ、勝負しよう
+  _WHEEL_TRAINER_MSG( msg_wheel_spring_f_02, lwk_entry_id, lwk_1st_f )  
+  _BALLOONWIN_CLOSE()
+
+  //バトル呼び出し
+ 	_TRAINER_BTL_SET( lwk_tr_id, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( i_ret )
+	IF $i_ret == SCR_BATTLE_RESULT_LOSE THEN
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+    _RET
+  ELSE
+    _TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ENDIF
+  
+  //負けたから一緒に乗ってあげる
+  _WHEEL_TRAINER_MSG( msg_wheel_spring_f_04, lwk_entry_id, lwk_1st_f )  
+  _BALLOONWIN_CLOSE()
+
+  //デモ再生
+  $i_scene_id = $lwk_entry_id
+  $i_scene_id += 1
+	
+  _MAP_FADE_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+  _CALL_3D_DEMO_EX( DEMO3D_ID_F_WHEEL, i_scene_id )
+	_MAP_FADE_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+
+  //また一緒に乗ろうね
+  _WHEEL_TRAINER_MSG( msg_wheel_spring_f_05, lwk_entry_id, lwk_1st_f )  
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  
+  ////////////////////////////////////////////////
+  //フラグセット
+  
+  //一日一回フラグを立てる
+  _FLAG_SET( TMFLG_AMUSEMENT_TR_BTL )
+  
+  //対戦済みフラグチェック
+  _TRAINER_FLAG_CHECK( lwk_tr_id, i_ret )
+  IF $i_ret == TRUE THEN
+    //2回目の対戦終了フラグ
+    _FLAG_SET( lwk_flag_id )
+  ELSE
+    //対戦済みフラグを立てる
+    _TRAINER_FLAG_SET( lwk_tr_id )
+  ENDIF
 }
 _RET
 

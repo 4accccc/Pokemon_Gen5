@@ -25,8 +25,23 @@ _EVENT_DATA    ev_c04p01_middlewoman2_01
 _EVENT_DATA    ev_c04p01_girl1_01
 _EVENT_DATA    ev_pos_c04p01_boss_01
 _EVENT_DATA    ev_bg_c04p01_sign_01
+_EVENT_DATA    ev_zone_c04p01
 _EVENT_DATA_END
 
+/************************************************************/
+/*			FIELD_INIT_LABEL		*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_c04p01
+{
+  {
+    //観覧車トレーナーの見た目を決定
+    DEFINE_LOCAL  i_wheel_trainer
+    _GET_WHEEL_TRAINER_ENTRY_ID( i_wheel_trainer )
+    _GET_WHEEL_TRAINER_OBJ_ID( i_wheel_trainer, SCWK_ANSWER )
+    $OBJCHRWORK0 = $SCWK_ANSWER
+  }
+}
+INIT_EVENT_END
 
 /************************************************************/
 /*						ピエロ１							*/

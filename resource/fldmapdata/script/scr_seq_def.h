@@ -7527,6 +7527,59 @@
 #define _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( regulation )  \
     _ASM_BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL  regulation
 
+//======================================================================
+//    観覧車トレーナー対戦関連
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * @def   _GET_WHEEL_TRAINER_ENTRY_ID
+ * @brief 簡易イベントコマンド：
+ *        観覧車トレーナーのID取得(0～7の登録ID tr_idとは別)
+ */
+//--------------------------------------------------------------
+#define _GET_WHEEL_TRAINER_ENTRY_ID( ret_wk )  \
+    _ASM_GET_WHEEL_TRAINER_ENTRY_ID ret_wk
+
+//--------------------------------------------------------------
+/**
+ * @def _WHEEL_TRAINER_MSG
+ * @brief 簡易イベントコマンド：
+ *        観覧車トレーナーのメッセージ表示
+ */
+//--------------------------------------------------------------
+#define _WHEEL_TRAINER_MSG( msg_id, id, f_2nd )  \
+    _ASM_WHEEL_TRAINER_MSG msg_id, id, f_2nd
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_WHEEL_TRAINER_OBJ_ID
+ * @brief 観覧車トレーナーのOBJ_IDを取得
+ */
+//--------------------------------------------------------------
+#define _GET_WHEEL_TRAINER_OBJ_ID( id, ret_wk )  \
+    _ASM_GET_WHEEL_TRAINER_OBJ_ID id, ret_wk
+
+  .macro  _ASM_GET_WHEEL_TRAINER_OBJ_ID id, ret_wk
+  .short  EV_SEQ_GET_WHEEL_TRAINER_OBJ_ID
+  .short  \id
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _GET_WHEEL_TRAINER_TR_ID
+ * @brief 観覧車トレーナーのTrIDを取得
+ */
+//--------------------------------------------------------------
+#define _GET_WHEEL_TRAINER_TR_ID( id, ret_wk )  \
+    _ASM_GET_WHEEL_TRAINER_TR_ID id, ret_wk
+
+  .macro  _ASM_GET_WHEEL_TRAINER_TR_ID id, ret_wk
+  .short  EV_SEQ_GET_WHEEL_TRAINER_TR_ID
+  .short  \id
+  .short  \ret_wk
+  .endm
+
 
 //======================================================================
 //
@@ -8159,11 +8212,15 @@
  */
 //--------------------------------------------------------------
 #define _CALL_3D_DEMO( demo_no )  \
-    _ASM_CALL_3D_DEMO demo_no
+    _ASM_CALL_3D_DEMO demo_no, 0
 
-  .macro  _ASM_DEMO_SCENE demo_no
+#define _CALL_3D_DEMO_EX( demo_no, scene_id )  \
+    _ASM_CALL_3D_DEMO demo_no, scene_id
+
+  .macro  _ASM_DEMO_SCENE demo_no, scene_id
   .short  EV_SEQ_DEMO_SCENE
   .short  \demo_no
+  .short  \scene_id
   .endm
   
 //======================================================================
