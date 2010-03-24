@@ -162,6 +162,7 @@ static LIGHT_DATA* LIGHT_STATUS_LoadData( u32 arcID, u32 dataIdx, u32* p_num, HE
   
   size = GFL_ARC_GetDataSize( arcID, dataIdx );
   data_num = size / sizeof(LIGHT_DATA);
+  *p_num = data_num;
 
   p_buff = GFL_ARC_LoadDataAlloc( arcID, dataIdx, heapID );
 
