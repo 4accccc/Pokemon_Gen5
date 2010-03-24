@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-02-18T12:27:14"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-23T23:07:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,8 +334,8 @@
 
 
 	<row id="AURA_STR_000">
-		<language name="JPN" width="256">つづいて　シンクロチェックを　します
-ガイドに　ひだりておやゆびを　のせましょう</language>
+		<language name="JPN" width="256">シンクロチェックを　します　ガイドに
+ひだりておやゆびを　のせましょう！</language>
 		<language name="JPN_KANJI" width="256">続いて　シンクロチェックを　します[FF:00:色:2]
 [FF:00:色:0]ガイドに　左手親指を　乗せましょう！</language>
 	</row>
@@ -349,13 +349,13 @@
 
 	<row id="AURA_STR_002">
 		<language name="JPN" width="256">ひだりておやゆびを　そのままに
-みぎがわの　ガイドに　ゆびをのせましょう！</language>
+みぎておやゆびを　ガイドに　タッチ！</language>
 		<language name="JPN_KANJI" width="256">左手親指を　そのままに
 右側の　ガイドにそって　指を乗せましょう！</language>
 	</row>
 
 	<row id="AURA_STR_003">
-		<language name="JPN" width="256">チェックが　おわりました
+		<language name="JPN" width="256">チェックが　おわりました　あいてに
 せきがいせんを　むけてください</language>
 		<language name="JPN_KANJI" width="256">チェックが　終わりました
 相手に　赤外線を　向けてください</language>
