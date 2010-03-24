@@ -165,7 +165,6 @@ ROW_HEAD_DATA.upto( fileData.size - 1 ) do |rowIdx|
   cameraData.exitType       = GetExitTypeValue( rowItem[ COLUMN_EXIT_TYPE ] )
   cameraData.pitch          = ConvertToNumber( "0x" + rowItem[ COLUMN_PITCH ] )
   cameraData.yaw            = ConvertToNumber( "0x" + rowItem[ COLUMN_YAW ] )
-  puts cameraData.yaw
   cameraData.length         = ConvertToNumber( "0x" + rowItem[ COLUMN_LENGTH ] )
   cameraData.offsetX        = ConvertToNumber( "0x" + rowItem[ COLUMN_OFFSET_X ] )
   cameraData.offsetY        = ConvertToNumber( "0x" + rowItem[ COLUMN_OFFSET_Y ] )
