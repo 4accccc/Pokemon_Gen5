@@ -844,7 +844,7 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
     }
 
 
-
+/*
     {// データ読み込み・破棄
        TPOKE_DATA* pTP =TPOKE_DATA_Create( pWork->heapID );
       int size = SYMBOL_ZONE_TYPE_FREE_SMALL;
@@ -858,6 +858,7 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
                              size);
       TPOKE_DATA_Delete( pTP );
     }
+   */
       
     //サインイン
     DREAMWORLD_SV_SetSignin(pDreamSave,pDream->signin);
