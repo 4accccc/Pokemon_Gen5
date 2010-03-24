@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-14T14:05:34"/>
+	<create user="matsumiya" host="W00224" date="2010-03-24T22:17:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="167"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="212"/>
+		<comment position="4" width="304"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -291,6 +291,83 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
+
+	<row id="msg_c03p14_infomationw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・話しかけた時のgmm
+・はい/いいえ/なにそれ？の選択肢表示
+　はい→infomationw_02
+　はい、だけど行けない→infomationw_03
+　いいえ→infomationw_04
+　なにそれ？→infomationw_05</comment>
+		<attribute name="キャラ指定">INFORMATIONW</attribute>
+		<language name="JPN" width="256">ハロー！
+ユナイテッドタワーに　ごようですか？</language>
+		<language name="JPN_KANJI" width="256">ハロー！
+ユナイテッドタワーに　ご用ですか？</language>
+	</row>
+
+	<row id="msg_c03p14_infomationw_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・はい、だけど行けない</comment>
+		<attribute name="キャラ指定">INFORMATIONW</attribute>
+		<language name="JPN" width="256">ユナイテッドタワーは
+せかいじゅうの　ひとと　ポケモンを▽
+こうかん　したほうが　たのしめますよ▼
+ぜひ　がいこくの　ひとと
+ポケモンを　こうかんしてから▽
+また　おこしください！</language>
+		<language name="JPN_KANJI" width="256">ユナイテッドタワーは
+世界中の　人と　ポケモンを▽
+交換した方が　楽しめますよ！▼
+ぜひ　外国の人と
+ポケモンを　交換してから▽
+また　お越しください！</language>
+	</row>
+
+	<row id="msg_c03p14_infomationw_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・はい選択時
+・メッセージの後に道をあけて、主人公が船に乗り込む</comment>
+		<attribute name="キャラ指定">INFORMATIONW</attribute>
+		<language name="JPN" width="256">おひとりさま　ごあんない　でーす！
+どうぞ　ふねに　おのりください！▼</language>
+		<language name="JPN_KANJI" width="256">お一人様　ご案内でーす！
+どうぞ　ご乗船ください！▼</language>
+	</row>
+
+	<row id="msg_c03p14_infomationw_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・なにそれ？選択時
+・この後0001に戻る</comment>
+		<attribute name="キャラ指定">INFORMATIONW</attribute>
+		<language name="JPN" width="256">ユナイテッドタワーは
+せかいじゅうから　トレーナーが▽
+あつまってくる　ばしょです！▼
+もし　おきゃくさまに　がいこくの
+おしりあいが　いらっしゃれば▼
+きっと　ユナイテッドタワーで
+あえることでしょう！▼
+くにを　こえた　こうりゅうを
+ぜひ　おたのしみ　ください！▼</language>
+		<language name="JPN_KANJI" width="256">ユナイテッドタワーは
+世界中から　トレーナーが▽
+集まってくる　場所です！▼
+もしお客様に　外国の
+お知り合いが　いらっしゃれば▼
+きっと　ユナイテッドタワーで
+会えることでしょう！▼
+国を　越えた　交流を
+どうぞ　お楽しみください！▼</language>
+	</row>
+
+	<row id="msg_c03p14_infomationw_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">INFORMATIONW</attribute>
+		<language name="JPN" width="256">またの　おこしを　おまちしてますね！</language>
+		<language name="JPN_KANJI" width="256">またの　お越しを　お待ちしてますね！</language>
+	</row>
 
 	<row id="msg_c03p14_girl4_01">
 		<comment>♀
