@@ -880,28 +880,18 @@ static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
     pWork->statusModeOn = FALSE;
 
-    
-   // G2_BlendNone();
-
-/*
-    if(POKEMONTRADE_IsInPokemonRecvPoke(IRC_POKEMONTRADE_GetRecvPP(pWork, 0))){
-      POKE_MAIN_Pokemonset(pWork, 0, IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
-
-      //pWork,pWork->pokemonselectno
-    }
-*/
-
     if(POKEMONTRADE_IsInPokemonRecvPoke(IRC_POKEMONTRADE_GetRecvPP(pWork, 1))){
       POKE_MAIN_Pokemonset(pWork, 1, IRC_POKEMONTRADE_GetRecvPP(pWork, 1));
     }
     if(POKEMONTRADE_IsInPokemonRecvPoke(IRC_POKEMONTRADE_GetRecvPP(pWork, 0))){
       POKE_MAIN_Pokemonset(pWork, 0, IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
     }
+    OS_TPrintf("pokemonselectno %d\n",pWork->pokemonselectno);
     if(pWork->pokemonselectno/GTS_NEGO_POKESLT_MAX){
-      _CHANGE_STATE(pWork, _menuFriendPokemonStart); //ŒðŠ·ŠÜ‚Ü‚È‚¢
+      _CHANGE_STATE(pWork, _menuMyPokemonMenu); //ŒðŠ·ŠÜ‚Þ
     }
     else{
-      _CHANGE_STATE(pWork, _menuMyPokemonMenu); //ŒðŠ·ŠÜ‚Þ
+      _CHANGE_STATE(pWork, _menuFriendPokemonStart); //ŒðŠ·ŠÜ‚Ü‚È‚¢
     }
     
   }

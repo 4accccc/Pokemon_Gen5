@@ -277,14 +277,16 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
       pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
       pWork->pParentWork->selectBoxno = pWork->GTSSelectBoxno[0][no];
       pWork->pParentWork->selectIndex = pWork->GTSSelectIndex[0][no];
+      NET_PRINT("ポケモンNO%d BOX%d INDEX%d SEL%d\n",
+                PP_Get(pp,ID_PARA_monsno,NULL),
+                pWork->pParentWork->selectBoxno,
+                pWork->pParentWork->selectIndex,pWork->pokemonselectno);
     }
     else{
       pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
       pWork->pParentWork->selectBoxno = pWork->selectBoxno;
       pWork->pParentWork->selectIndex = pWork->selectIndex;
     }
-    NET_PRINT("ポケモンNO%d BOX%d INDEX%d\n",PP_Get(pp,ID_PARA_monsno,NULL),  pWork->pParentWork->selectBoxno, pWork->pParentWork->selectIndex);
-
 
     GF_ASSERT(pWork->pParentWork->pParty);
     

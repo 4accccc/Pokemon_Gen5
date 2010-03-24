@@ -1822,6 +1822,9 @@ void IRC_POKMEONTRADE_ChangeFinish(POKEMON_TRADE_WORK* pWork)
   if(POKEMONTRADEPROC_IsTriSelect(pWork)){
     POKE_GTS_InitWork(pWork);
   }
+
+  GFL_STD_MemClear(pWork->recvPoke[0],POKETOOL_GetWorkSize());
+  GFL_STD_MemClear(pWork->recvPoke[1],POKETOOL_GetWorkSize());
   
   {
     int i;
