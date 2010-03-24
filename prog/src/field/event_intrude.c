@@ -38,6 +38,8 @@
 
 #include "poke_tool/status_rcv.h"
 
+#include "palace_gimmick.h"
+
 
 //==============================================================================
 //  定数定義
@@ -45,6 +47,8 @@
 enum{
   DISGUISE_ANM_WAIT_MIN = 1,
   DISGUISE_ANM_WAIT_MAX = 15,
+
+  DISGUISE_ANM_WAIT_BARRIER_MAX = 15,
 };
 
 
@@ -307,6 +311,161 @@ BOOL IntrudeEvent_Sub_DisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *iedw, INTR
   
   return FALSE;
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Barrierヘンシン セットアップ
+ *
+ * @param   iedw		
+ * @param   fieldWork		
+ * @param   disguise_code		変装するOBJCODE
+ *                  (DISGUISE_NO_NULLの場合は通常の姿、DISGUISE_NO_NORMALの場合はパレス時の標準姿)
+ * @param   disguise_type   変装タイプ(TALK_TYPE_xxx)
+ * @param   disguise_sex    変装後の性別
+ * @param   move_dir        移動方向
+ * @param   change          変身の有無
+ */
+//-----------------------------------------------------------------------------
+void IntrudeEvent_Sub_BarrierDisguiseEffectSetup(INTRUDE_EVENT_DISGUISE_WORK *iedw, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm, u16 disguise_code, u8 disguise_type, u8 disguise_sex, u16 move_dir, BOOL change )
+{
+  static MMDL_HEADER TMP_MDL_HEADER = {
+    0,
+    0,
+    MV_DMY,
+    0,
+    0,
+    0,
+    DIR_DOWN,
+    0,0,0,
+    0,0,
+    MMDL_HEADER_POSTYPE_GRID,
+  };
+  
+  GFL_STD_MemClear(iedw, sizeof(INTRUDE_EVENT_DISGUISE_WORK));
+  iedw->gsys = gsys;
+  iedw->fieldWork = fieldWork;
+  iedw->disguise_code =disguise_code;
+  iedw->disguise_type =disguise_type;
+  iedw->disguise_sex =disguise_sex;
+  iedw->wait_max = DISGUISE_ANM_WAIT_BARRIER_MAX;
+  iedw->wait = iedw->wait_max;
+  iedw->dir = move_dir;
+
+  // ダミーモデル生成
+  if( change ){
+    GAMEDATA* gamedata = GAMESYSTEM_GetGameData(gsys);
+    MMDLSYS* mmdlsys = GAMEDATA_GetMMdlSys( gamedata );
+    FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldWork );
+    MMDL* fldmmdl = FIELD_PLAYER_GetMMdl( player );
+    u16 zone_id = FIELDMAP_GetZoneID( fieldWork );
+    
+    // 見た目と位置を設定
+    TMP_MDL_HEADER.obj_code = MMDL_GetOBJCode( fldmmdl );
+    TMP_MDL_HEADER.dir      = move_dir;
+    MMDLHEADER_SetGridPos( &TMP_MDL_HEADER, 
+        MMDL_GetGridPosX(fldmmdl), MMDL_GetGridPosZ(fldmmdl), MMDL_GetVectorPosY(fldmmdl) );
+    iedw->tmp_mdl = MMDLSYS_AddMMdl( mmdlsys, &TMP_MDL_HEADER, zone_id );
+
+    // 自機の絵変更
+    IntrudeField_PlayerDisguise(intcomm, iedw->gsys, 
+      iedw->disguise_code, iedw->disguise_type, iedw->disguise_sex);
+
+    // 主人公とスイッチ。
+    MMDL_SetStatusBitVanish( fldmmdl, TRUE );
+    MMDL_SetStatusBitVanish( iedw->tmp_mdl, FALSE );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Barrierヘンシン処理
+ *
+ * @param   iedw		
+ * @param   intcomm 内部でNULLチェックはする為、NULLであってもこの関数を呼び続けてください
+ *
+ * @retval  BOOL		TRUE:シーケンス終了　FALSE:シーケンス継続中
+ */
+//-----------------------------------------------------------------------------
+BOOL IntrudeEvent_Sub_BarrierDisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *iedw, INTRUDE_COMM_SYS_PTR intcomm)
+{
+  enum{
+    _SEQ_INIT,
+    _SEQ_CHANGE,
+    _SEQ_WAIT,
+    _SEQ_FINISH,
+  };
+  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( iedw->fieldWork );
+  MMDL* fldmmdl = FIELD_PLAYER_GetMMdl( player );
+  
+  
+  switch(iedw->seq){
+  case _SEQ_INIT:
+    {
+      u16 code = (iedw->dir == DIR_RIGHT) ? AC_WALK_R_32F : AC_WALK_L_32F;
+      VecFx32 pos;
+      
+      // 移動開始
+      MMDL_SetAcmd(fldmmdl, code);
+      if(iedw->tmp_mdl){
+        MMDL_SetAcmd(iedw->tmp_mdl, code);
+      }
+
+      // BARRIER演出ON
+      FIELD_PLAYER_GetDirPos( player, iedw->dir, &pos );
+      PALACE_GMK_StartBarrierEffect( iedw->fieldWork, &pos );
+    }
+
+    // サウンドはいる？
+    
+    iedw->seq++;
+    break;
+  case _SEQ_CHANGE:
+    iedw->wait_max --;
+    if( iedw->wait_max <= 0 ){
+
+      TOMOYA_Printf( "change \n" );
+
+      // ヘンシン
+      if( iedw->tmp_mdl ){
+        MMDL_SetStatusBitVanish( fldmmdl, FALSE );
+        MMDL_SetStatusBitVanish( iedw->tmp_mdl, TRUE );
+      }
+      iedw->seq++;
+    }
+    break;
+
+  case _SEQ_WAIT:
+
+    // BARRIER演出とモデル移動の終了待ち
+    if( PALACE_GMK_IsBarrierEffect( iedw->fieldWork ) ){
+      break;
+    }
+    
+    if(MMDL_CheckEndAcmd( fldmmdl ) == TRUE){
+
+      MMDL_EndAcmd( fldmmdl );
+      if( iedw->tmp_mdl ){
+        MMDL_EndAcmd( iedw->tmp_mdl );
+      }
+      iedw->seq++;
+    }
+    break;
+
+  case _SEQ_FINISH:
+    if( iedw->tmp_mdl ){
+      
+      // オブジェ破棄
+      MMDL_Delete( iedw->tmp_mdl );
+      iedw->tmp_mdl = NULL;
+    }
+    return TRUE;
+  }
+  
+  return FALSE;
+}
+
 
 
 //==============================================================================

@@ -43,7 +43,10 @@ typedef struct{
   u8 seq;
 	u8 anm_no;
 	u8 loop;
-	u8 padding;
+
+  // バリア演出専用
+	u8 dir;
+  MMDL* tmp_mdl;
 }INTRUDE_EVENT_DISGUISE_WORK;
 
 
@@ -56,8 +59,14 @@ extern GMEVENT * EVENT_Disguise(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 //--------------------------------------------------------------
 //  変装演出シーケンス
 //--------------------------------------------------------------
+// くるくる
 extern void IntrudeEvent_Sub_DisguiseEffectSetup(INTRUDE_EVENT_DISGUISE_WORK *iedw, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 disguise_code, u8 disguise_type, u8 disguise_sex);
 extern BOOL IntrudeEvent_Sub_DisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *iedw, INTRUDE_COMM_SYS_PTR intcomm);
+// Barrierヘンシン
+extern void IntrudeEvent_Sub_BarrierDisguiseEffectSetup(INTRUDE_EVENT_DISGUISE_WORK *iedw, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm, u16 disguise_code, u8 disguise_type, u8 disguise_sex, u16 move_dir, BOOL change );
+extern BOOL IntrudeEvent_Sub_BarrierDisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *iedw, INTRUDE_COMM_SYS_PTR intcomm);
+
+
 
 //--------------------------------------------------------------
 //  

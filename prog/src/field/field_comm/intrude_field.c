@@ -19,6 +19,7 @@
 #include "fieldmap/zone_id.h"
 #include "field/event_mapchange.h"
 #include "intrude_types.h"
+#include "intrude_work.h"
 #include "intrude_field.h"
 #include "field/intrude_comm.h"
 #include "intrude_comm_command.h"
@@ -40,7 +41,6 @@
 #include "savedata/symbol_save.h"
 #include "field/event_symbol.h"
 
-#include "field/palace_gimmick.h"
 
 
 //==============================================================================
@@ -398,8 +398,6 @@ static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *w
   enum{
     _SEQ_INIT,
     _SEQ_INIT_WAIT,
-    _SEQ_DISGUISE_INIT,
-    _SEQ_DISGUISE_WAIT,
     _SEQ_MSG_INIT,
     _SEQ_MSG_WAIT,
     _SEQ_MSG_LASTKEY_WAIT,
@@ -408,64 +406,47 @@ static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *w
   
   switch(*seq){
   case _SEQ_INIT:
-    if(MMDL_CheckPossibleAcmd(barrier->player_mmdl) == TRUE){
-      u16 code = (barrier->dir == DIR_RIGHT) ? AC_WALK_R_32F : AC_WALK_L_32F;
-      MMDL_SetAcmd(barrier->player_mmdl, code);
-
-      // barrierエフェクト開始
-      {
-        FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( barrier->fieldWork );
-        VecFx32 pos;
-
-        FIELD_PLAYER_GetDirPos( p_player, FIELD_PLAYER_GetDir(p_player), &pos );
-        
-        PALACE_GMK_StartBarrierEffect( barrier->fieldWork, &pos );
-      }
-      
-      (*seq)++;
+    if(MMDL_CheckPossibleAcmd(barrier->player_mmdl) == FALSE){
+      break;  
     }
-    break;
-  case _SEQ_INIT_WAIT:
 
-    // バリア終了まち
-    if( PALACE_GMK_IsBarrierEffect( barrier->fieldWork ) ){
-      break;
-    }
-    
-    if(MMDL_CheckEndAcmd(barrier->player_mmdl) == TRUE){
-      MMDL_EndAcmd(barrier->player_mmdl);
-      (*seq)++;
-    }
-    
-    break;
-  case _SEQ_DISGUISE_INIT:
     if(intcomm == NULL){  //変身前にエラーチェック：通信切断状態ならばここで終了
       *seq = _SEQ_FINISH;
       break;
     }
-    
-    if(MISSION_GetMissionPlay(&intcomm->mission) == TRUE){
-      barrier->no_change = TRUE;
-      (*seq) = _SEQ_MSG_INIT;
-      break;
-    }
 
-    if(intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
-      IntrudeEvent_Sub_DisguiseEffectSetup(
-        &barrier->ev_diswork, gsys, barrier->fieldWork, DISGUISE_NO_NULL, 0, 0);
+    // ミッション用の見た目
+    if(MISSION_GetMissionPlay(&intcomm->mission) == TRUE)
+    {  
+      barrier->no_change = TRUE;
+
+      // 変身なし演出
+      IntrudeEvent_Sub_BarrierDisguiseEffectSetup(
+        &barrier->ev_diswork, gsys, barrier->fieldWork, intcomm, DISGUISE_NO_NULL, 0, 0, barrier->dir, FALSE); //<-FALSEで変身なし
     }
+    // 自分のエリアへ戻る
+    else if( Intrude_CheckNextPalaceAreaMine( game_comm, gamedata, barrier->dir ) == TRUE ){ // 移動先が自分のエリアか？
+      
+      IntrudeEvent_Sub_BarrierDisguiseEffectSetup(
+        &barrier->ev_diswork, gsys, barrier->fieldWork, intcomm, DISGUISE_NO_NULL, 0, 0, barrier->dir, TRUE);
+    }
+    // 通常進入
     else{
+
       u16 disguise_code;
       u8 disguise_type, disguise_sex;
       Intrude_GetNormalDisguiseObjCode(
         GAMEDATA_GetMyStatus(gamedata), &disguise_code, &disguise_type, &disguise_sex);
-      IntrudeEvent_Sub_DisguiseEffectSetup(&barrier->ev_diswork, gsys, barrier->fieldWork, 
-        disguise_code, disguise_type, disguise_sex);
+
+      IntrudeEvent_Sub_BarrierDisguiseEffectSetup(&barrier->ev_diswork, gsys, barrier->fieldWork, intcomm,
+        disguise_code, disguise_type, disguise_sex, barrier->dir, TRUE);
     }
     (*seq)++;
     break;
-  case _SEQ_DISGUISE_WAIT:
-    if(IntrudeEvent_Sub_DisguiseEffectMain(&barrier->ev_diswork, intcomm) == TRUE){
+
+  case _SEQ_INIT_WAIT:
+    // BARRIER見た目変更処理
+    if(IntrudeEvent_Sub_BarrierDisguiseEffectMain(&barrier->ev_diswork, intcomm) == TRUE){
       (*seq)++;
     }
     break;
