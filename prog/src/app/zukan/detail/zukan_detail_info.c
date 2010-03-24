@@ -76,15 +76,15 @@ END_CMD;
 
 // 言語ボタン
 #define LEFT_SPACE (2)
-static const u8 lang_button_rect[ZUKAN_INFO_LANG_MAX][8] =
+static const u8 lang_button_rect[ZUKAN_INFO_LANG_MAX][9] =
 {
-  // place_x,         place_y, touch_x,         touch_y, touch_w, touch_h, active_anmseq, push_anmseq
-  {  LEFT_SPACE+   0,      91, LEFT_SPACE+   0,      91,      16,      15,             8,          15 },
-  {  LEFT_SPACE+  15,      91, LEFT_SPACE+  17,      91,      20,      15,             9,          16 },
-  {  LEFT_SPACE+  36,      91, LEFT_SPACE+  38,      91,      20,      15,            10,          16 },
-  {  LEFT_SPACE+  57,      91, LEFT_SPACE+  59,      91,      20,      15,            11,          17 },
-  {  LEFT_SPACE+  78,      91, LEFT_SPACE+  80,      91,      20,      15,            12,          18 },
-  {  LEFT_SPACE+  99,      91, LEFT_SPACE+ 101,      91,      20,      15,            13,          19 },
+  // place_x,         place_y, touch_x,         touch_y, touch_w, touch_h, active_anmseq, push_anmseq, lang_code
+  {  LEFT_SPACE+   0,      91, LEFT_SPACE+   0,      91,      16,      15,             8,          15, LANG_ENGLISH  },
+  {  LEFT_SPACE+  15,      91, LEFT_SPACE+  17,      91,      20,      15,             9,          16, LANG_FRANCE   },
+  {  LEFT_SPACE+  36,      91, LEFT_SPACE+  38,      91,      20,      15,            10,          27, LANG_GERMANY  },
+  {  LEFT_SPACE+  57,      91, LEFT_SPACE+  59,      91,      20,      15,            11,          17, LANG_ITALY    },
+  {  LEFT_SPACE+  78,      91, LEFT_SPACE+  80,      91,      20,      15,            12,          18, LANG_SPAIN    },
+  {  LEFT_SPACE+  99,      91, LEFT_SPACE+ 101,      91,      20,      15,            13,          19, LANG_KOREA    },
 };
 #undef LEFT_SPACE
 
@@ -114,6 +114,7 @@ typedef struct
   u8                  h;
   u16                 active_anmseq;
   u16                 push_anmseq;
+  u8                  lang_code;  // 言語コード(カントリーコード、国コードと呼んでいるところもある)  // pm_version.hのLANG_ENGLISH, LANG_FRANCEなど
   LANG_BUTTON_STATE   state;
 }
 LANG_BUTTON;
@@ -800,6 +801,7 @@ static void Zukan_Detail_Info_CreateLangButton( ZUKAN_DETAIL_INFO_PARAM* param, 
       work->lang_btn[i].h             = lang_button_rect[i][5];
       work->lang_btn[i].active_anmseq = lang_button_rect[i][6];
       work->lang_btn[i].push_anmseq   = lang_button_rect[i][7];
+      work->lang_btn[i].lang_code     = lang_button_rect[i][8];
       work->lang_btn[i].state         = LANG_BTN_STATE_ACTIVE;
 
       cldata.pos_x = lang_button_rect[i][0];
@@ -920,13 +922,11 @@ static void Zukan_Detail_Info_GetCurrPokeInfo(
   b_get_flag = ZUKANSAVE_GetPokeGetFlag( zkn_sv, monsno );
 
   {
-    // カントリーコードはどこに定義されている？
-    lang_exist[ZUKAN_INFO_LANG_E]   = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 1 );
-    lang_exist[ZUKAN_INFO_LANG_FRA] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 2 );
-    lang_exist[ZUKAN_INFO_LANG_GER] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 3 );
-    lang_exist[ZUKAN_INFO_LANG_ITA] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 4 );
-    lang_exist[ZUKAN_INFO_LANG_SPA] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 5 );
-    lang_exist[ZUKAN_INFO_LANG_KOR] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, 7 );
+    u8 i;
+    for( i=0; i<ZUKAN_INFO_LANG_MAX; i++ )
+    {
+      lang_exist[i] = ZUKANSAVE_GetTextVersionUpFlag( zkn_sv, monsno, work->lang_btn[i].lang_code );  // カントリーコードはpm_version.hのLANG_JAPAN, LANG_ENGLISHなどの言語コード指定の値
+    }
   }
  
 #if 1

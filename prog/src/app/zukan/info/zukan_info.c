@@ -191,6 +191,53 @@ static const u16 narc_msg_explain[ZUKAN_INFO_LANG_MAX] =
   NARC_message_zkn_comment_kor_dat,
 };
 
+// 外国語のタイプアイコン
+typedef struct
+{
+  u8 tate;  // 6個なので0<= <6
+  u8 yoko;  // 4個なので0<= <4
+}
+TYPEICON_POS;
+static const TYPEICON_POS typeicon_pos_tbl[POKETYPE_MAX] =  // include/poke_tool/poketype_def.h
+{
+  // { tate, yoko }
+  { 0, 0 },  // POKETYPE_NORMAL 
+  { 2, 1 },  // POKETYPE_KAKUTOU
+  { 2, 0 },  // POKETYPE_HIKOU  
+  { 3, 0 },  // POKETYPE_DOKU   
+  { 1, 2 },  // POKETYPE_JIMEN  
+  { 1, 1 },  // POKETYPE_IWA    
+  { 2, 3 },  // POKETYPE_MUSHI  
+  { 2, 2 },  // POKETYPE_GHOST  
+  { 3, 2 },  // POKETYPE_HAGANE 
+  { 0, 1 },  // POKETYPE_HONOO  
+  { 0, 2 },  // POKETYPE_MIZU   
+  { 0, 3 },  // POKETYPE_KUSA   
+  { 1, 0 },  // POKETYPE_DENKI  
+  { 3, 1 },  // POKETYPE_ESPER  
+  { 1, 3 },  // POKETYPE_KOORI  
+  { 4, 0 },  // POKETYPE_DRAGON 
+  { 3, 3 },  // POKETYPE_AKU    
+/*
+  { 4, 1 },  // ???    
+  { 4, 2 },  // COOL    
+  { 4, 3 },  // BEAUTY
+  { 5, 0 },  // CUTE
+  { 5, 1 },  // SMART    
+  { 5, 2 },  // TOUGH    
+*/
+};
+
+static const u16 typeicon_ncg_data_id_tbl[ZUKAN_INFO_LANG_MAX] =
+{
+  NARC_zukan_gra_info_st_type_eng_NCGR,
+  NARC_zukan_gra_info_st_type_fra_NCGR,
+  NARC_zukan_gra_info_st_type_ger_NCGR,
+  NARC_zukan_gra_info_st_type_ita_NCGR,
+  NARC_zukan_gra_info_st_type_spa_NCGR,
+  NARC_zukan_gra_info_st_type_kor_NCGR,
+};
+
 
 //=============================================================================
 /**
@@ -304,7 +351,9 @@ static void Zukan_Info_Poke2dCreateCLWK( ZUKAN_INFO_WORK* work, u16 pos_x, u16 p
 static void Zukan_Info_Poke2dDeleteCLWK( ZUKAN_INFO_WORK* work );
 
 // タイプアイコン
+static void Zukan_Info_CreateMultiLangTypeicon( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LANG lang );
 static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2 );
+static void Zukan_Info_CreateForeignTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2, ZUKAN_INFO_LANG lang );
 static void Zukan_Info_DeleteTypeicon( ZUKAN_INFO_WORK* work );
 
 // ポケモンの足跡
@@ -992,10 +1041,12 @@ void ZUKAN_INFO_ChangeLang( ZUKAN_INFO_WORK* work,
                 ZUKAN_INFO_LANG lang )
 {
   // 前のを削除する
+  Zukan_Info_DeleteTypeicon( work );
   Zukan_Info_DeleteMessage( work );
   
   // 次のを生成する
   Zukan_Info_CreateForeignMessage( work, lang );
+  Zukan_Info_CreateMultiLangTypeicon( work, lang );
 }
 
 //-------------------------------------
@@ -1502,6 +1553,32 @@ static void Zukan_Info_Poke2dDeleteCLWK( ZUKAN_INFO_WORK* work )
 //-------------------------------------
 /// タイプアイコンOBJを生成する
 //=====================================
+static void Zukan_Info_CreateMultiLangTypeicon( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LANG lang )
+{
+  // タイプアイコン
+
+    //PokeType type1 = (PokeType)( PP_Get( work->pp, ID_PARA_type1, NULL ) );
+    //PokeType type2 = (PokeType)( PP_Get( work->pp, ID_PARA_type2, NULL ) );
+    
+    POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle( work->monsno, work->formno, work->heap_id );
+    PokeType type1 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_type1 );
+    PokeType type2 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_type2 );
+    POKE_PERSONAL_CloseHandle( ppd );
+
+    if( type1 == type2 )
+    {
+      type2 = POKETYPE_NULL;
+    }
+
+  if( lang == ZUKAN_INFO_LANG_NONE )  // 日本語
+  {
+    Zukan_Info_CreateTypeicon( work, type1, type2 );
+  }
+  else
+  {
+    Zukan_Info_CreateForeignTypeicon( work, type1, type2, lang );
+  }
+}
 static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2 )
 {
   s32 i;
@@ -1570,6 +1647,92 @@ static void Zukan_Info_CreateTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, Po
     }
   }
 }
+
+static void Zukan_Info_CreateForeignTypeicon( ZUKAN_INFO_WORK* work, PokeType type1, PokeType type2, ZUKAN_INFO_LANG lang )
+{
+  s32 i;
+  PokeType type[2];
+  GFL_CLWK_DATA data[2] = { 0 };
+  
+  CLSYS_DRAW_TYPE draw_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
+  CLSYS_DEFREND_TYPE defrend_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DEFREND_MAIN):(CLSYS_DEFREND_SUB);
+
+  type[0] = type1;
+  type[1] = type2;
+
+  data[0].pos_x = 8*21;
+  data[0].pos_y = 8*11 -4 + work->y_offset;
+  data[1].pos_x = 8*26;
+  data[1].pos_y = 8*11 -4 + work->y_offset;
+  
+  // リソース読み込み
+  {
+    ARCHANDLE* handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), work->heap_id );
+
+    // BG用キャラとしてバイナリ変換してあるキャラデータを読み込む
+    NNSG2dCharacterData* chara_data;
+    void* buf = GFL_ARC_UTIL_LoadBGCharacter( ARCID_ZUKAN_GRA, typeicon_ncg_data_id_tbl[lang], FALSE, &chara_data, work->heap_id );
+    // g2dcvtrマニュアル
+    // 6.1 ncg（キャラクタデータ）ファイルの変換
+    // ncg単独変換を行う場合は、ncgファイルがBG用キャラクタデータであることを-bg オプションで明示してください。入力されたncgファイルが常に２Dマッピングモードであるものとして、変換を実行します。
+    u8* chara_raw_data = chara_data->pRawData;  // 32キャラx32キャラ
+
+    for( i=0; i<2; i++ )
+    {
+      work->typeicon_cg_idx[i] = GFL_CLGRP_REGISTER_FAILED;
+      if( type[i] == POKETYPE_NULL )
+      {
+        continue;
+      }
+      work->typeicon_cg_idx[i] = GFL_CLGRP_CGR_Register( handle,
+                                                         APP_COMMON_GetPokeTypeCharArcIdx(type[i]),
+                                                         FALSE, draw_type, work->heap_id );
+      {
+        u8 yoko = typeicon_pos_tbl[ type[i] ].yoko;
+        u8 tate = typeicon_pos_tbl[ type[i] ].tate;
+        GFL_CLGRP_CGR_ReplaceEx( work->typeicon_cg_idx[i], &chara_raw_data[32*32*2 *tate + 32*4 *yoko], 32*4, 0, draw_type );  // 上段
+        GFL_CLGRP_CGR_ReplaceEx( work->typeicon_cg_idx[i], &chara_raw_data[32*32*2 *tate + 32*32 + 32*4 *yoko], 32*4, 32*4, draw_type );  // 下段
+      }
+    }
+
+    work->typeicon_cl_idx = GFL_CLGRP_PLTT_RegisterEx( handle,
+                                                       APP_COMMON_GetPokeTypePltArcIdx(),
+                                                       draw_type,
+                                                       ZUKAN_INFO_OBJ_PAL_POS_TYPEICON * ZUKAN_INFO_PAL_LINE_SIZE,
+                                                       0, ZUKAN_INFO_OBJ_PAL_NUM_TYPEICON, work->heap_id );
+
+    work->typeicon_cean_idx = GFL_CLGRP_CELLANIM_Register( handle,
+                                                           APP_COMMON_GetPokeTypeCellArcIdx( APP_COMMON_MAPPING_128K ),
+                                                           APP_COMMON_GetPokeTypeAnimeArcIdx( APP_COMMON_MAPPING_128K ),
+                                                           work->heap_id );
+  
+    GFL_ARC_CloseDataHandle( handle );
+
+    GFL_HEAP_FreeMemory( buf );
+  }
+
+  // CLWK作成
+  {
+    for( i=0; i<2; i++ )
+    {
+      if( work->typeicon_cg_idx[i] == GFL_CLGRP_REGISTER_FAILED )
+      {
+        continue;
+      }
+      work->typeicon_clwk[i] = GFL_CLACT_WK_Create( work->clunit,
+                                                    work->typeicon_cg_idx[i],
+                                                    work->typeicon_cl_idx,
+                                                    work->typeicon_cean_idx,
+                                                    &(data[i]),
+                                                    defrend_type, work->heap_id );
+      GFL_CLACT_WK_SetPlttOffs( work->typeicon_clwk[i], APP_COMMON_GetPokeTypePltOffset(type[i]),
+                                CLWK_PLTTOFFS_MODE_PLTT_TOP );
+      GFL_CLACT_WK_SetSoftPri( work->typeicon_clwk[i], 2 );  // 手前 > ポケモン2D > 足跡 > 属性アイコン > 奥
+      GFL_CLACT_WK_SetObjMode( work->typeicon_clwk[i], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+    }
+  }
+}
+
 
 //-------------------------------------
 /// タイプアイコンOBJを破棄する
@@ -1649,21 +1812,7 @@ static void Zukan_Info_CreateOthers( ZUKAN_INFO_WORK* work )
   Zukan_Info_CreateMessage( work );
 
   // タイプアイコン
-  {
-    //PokeType type1 = (PokeType)( PP_Get( work->pp, ID_PARA_type1, NULL ) );
-    //PokeType type2 = (PokeType)( PP_Get( work->pp, ID_PARA_type2, NULL ) );
-    
-    POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle( work->monsno, work->formno, work->heap_id );
-    PokeType type1 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_type1 );
-    PokeType type2 = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_type2 );
-    POKE_PERSONAL_CloseHandle( ppd );
-
-    if( type1 == type2 )
-    {
-      type2 = POKETYPE_NULL;
-    }
-    Zukan_Info_CreateTypeicon( work, type1, type2 );
-  }
+  Zukan_Info_CreateMultiLangTypeicon( work, ZUKAN_INFO_LANG_NONE );
 
   // ポケモンの足跡
   {
