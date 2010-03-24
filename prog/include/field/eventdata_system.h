@@ -60,5 +60,7 @@ extern void EVENTDATA_MoveBGData(
     EVENTDATA_SYSTEM * evdata, u16 bg_id, u16 gx, u16 gy, u16 gz );
 extern void EVENTDATA_MoveNPCData(
     EVENTDATA_SYSTEM * evdata, u16 npc_id, u16 dir, u16 gx, s32 y, u16 gz );
+extern void EVENTDATA_ChangeNPCObjCode( EVENTDATA_SYSTEM * evdata, u16 npc_id, u16 objcode );
+extern void EVENTDATA_ChangeNPCEventID( EVENTDATA_SYSTEM * evdata, u16 npc_id, u16 eventID );
 
 

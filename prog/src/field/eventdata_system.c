@@ -1120,8 +1120,10 @@ u16 EVENTDATA_GetNpcCount( const EVENTDATA_SYSTEM *evdata )
 //------------------------------------------------------------------
 void EVENTDATA_MoveNPCData( EVENTDATA_SYSTEM * evdata, u16 npc_id, u16 dir, u16 gx, s32 y, u16 gz )
 {
+  GF_ASSERT( npc_id < evdata->npc_count );
   if ( npc_id < evdata->npc_count )
   {
+    GF_ASSERT( evdata->npc_data[npc_id].pos_type == MMDL_HEADER_POSTYPE_GRID );
     if ( evdata->npc_data[npc_id].pos_type == MMDL_HEADER_POSTYPE_GRID )
     {
       MMDL_HEADER_GRIDPOS * pos = (MMDL_HEADER_GRIDPOS *)(evdata->npc_data[npc_id].pos_buf);
@@ -1132,6 +1134,46 @@ void EVENTDATA_MoveNPCData( EVENTDATA_SYSTEM * evdata, u16 npc_id, u16 dir, u16 
     }
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  動作モデルの見た目変更
+ *
+ *	@param	evdata      イベントデータ
+ *	@param	npc_id      NPCID
+ *	@param	objcode     オブジェコード
+ */
+//-----------------------------------------------------------------------------
+void EVENTDATA_ChangeNPCObjCode( EVENTDATA_SYSTEM * evdata, u16 npc_id, u16 objcode )
+{
+  GF_ASSERT( npc_id < evdata->npc_count );
+  if ( npc_id < evdata->npc_count )
+  {
+    MMDL_HEADER* npcheader = (MMDL_HEADER*)&evdata->npc_data[npc_id];
+    npcheader->obj_code = objcode;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  動作モデルのイベント変更
+ *
+ *	@param	evdata    イベントデータ
+ *	@param	npc_id    NPCID
+ *	@param	eventID   イベントID
+ */
+//-----------------------------------------------------------------------------
+void EVENTDATA_ChangeNPCEventID( EVENTDATA_SYSTEM * evdata, u16 npc_id, u16 eventID )
+{
+  GF_ASSERT( npc_id < evdata->npc_count );
+  if ( npc_id < evdata->npc_count )
+  {
+    MMDL_HEADER* npcheader = (MMDL_HEADER*)&evdata->npc_data[npc_id];
+    npcheader->event_id = eventID;
+  }
+}
+
+
 //============================================================================================
 //  POSイベント関連
 //============================================================================================

@@ -117,26 +117,22 @@ VMCMD_RESULT EvCmdReBattleTrainerSetUpTrID( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   u16 rebattle_id = SCRCMD_GetVMWorkValue( core, work );
   u16 objid = SCRCMD_GetVMWorkValue( core, work );
   u16 badge = SCRCMD_GetVMWorkValue( core, work );
   u16 index;
-  MMDL* mmdl;
+  EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData( SCRCMD_WORK_GetGameData(work) );
   const REBATTLE_TRAINER_DATA* cp_data = SCRIPT_GetReBattleTrainerData(sc);
 
   GF_ASSERT( cp_data );
 
   index = ReBattle_SearchData( cp_data, rebattle_id, badge );
 
-  mmdl = MMDLSYS_SearchOBJID( mmdlsys, objid );
-  GF_ASSERT( mmdl != NULL && "SCRCMD GET MOVECODE NON OBJ" );
-
 
   TOMOYA_Printf( "設定情報　TrainerID[%d]\n", cp_data[index].trainer_id );
 
   // トレーナーIDの視線スクリプト設定
-  MMDL_SetEventID( mmdl, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[index].trainer_id ) );
+  EVENTDATA_ChangeNPCEventID( evdata, objid, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[index].trainer_id ) );
 
 	return VMCMD_RESULT_CONTINUE;
 }
@@ -150,10 +146,6 @@ VMCMD_RESULT EvCmdReBattleTrainerSetUpRndTr( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
-  MMDL *mmdl0;
-  MMDL *mmdl1;
-  MMDL *mmdl2;
   u16 objid0 = SCRCMD_GetVMWorkValue( core, work );
   u16 objid1 = SCRCMD_GetVMWorkValue( core, work );
   u16 objid2 = SCRCMD_GetVMWorkValue( core, work );
@@ -162,6 +154,7 @@ VMCMD_RESULT EvCmdReBattleTrainerSetUpRndTr( VMHANDLE *core, void *wk )
   u16 index2;
   u16 random_max;
   int i;
+  EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData( SCRCMD_WORK_GetGameData(work) );
   const REBATTLE_TRAINER_DATA* cp_data = SCRIPT_GetReBattleTrainerData(sc);
 
   GF_ASSERT( cp_data );
@@ -170,13 +163,6 @@ VMCMD_RESULT EvCmdReBattleTrainerSetUpRndTr( VMHANDLE *core, void *wk )
   random_max = RB_DATA_TBL_MAX - RB_RANDOM_START;
 
 
-  mmdl0 = MMDLSYS_SearchOBJID( mmdlsys, objid0 );
-  GF_ASSERT( mmdl0 != NULL && "SCRCMD GET MOVECODE NON OBJ" );
-  mmdl1 = MMDLSYS_SearchOBJID( mmdlsys, objid1 );
-  GF_ASSERT( mmdl1 != NULL && "SCRCMD GET MOVECODE NON OBJ" );
-  mmdl2 = MMDLSYS_SearchOBJID( mmdlsys, objid2 );
-  GF_ASSERT( mmdl2 != NULL && "SCRCMD GET MOVECODE NON OBJ" );
-  
   // 3つ抽選
   index0 = GFUser_GetPublicRand( random_max );
   index1 = GFUser_GetPublicRand( random_max );
@@ -198,14 +184,14 @@ VMCMD_RESULT EvCmdReBattleTrainerSetUpRndTr( VMHANDLE *core, void *wk )
   TOMOYA_Printf( "設定情報 2　OBJCode[%d] TrainerID[%d]\n", cp_data[ RB_RANDOM_START+index2 ].code, cp_data[ RB_RANDOM_START+index2 ].trainer_id );
 
   // 見た目設定
-  MMDL_ChangeOBJCode( mmdl0, cp_data[ RB_RANDOM_START+index0 ].code );
-  MMDL_ChangeOBJCode( mmdl1, cp_data[ RB_RANDOM_START+index1 ].code );
-  MMDL_ChangeOBJCode( mmdl2, cp_data[ RB_RANDOM_START+index2 ].code );
+  EVENTDATA_ChangeNPCObjCode( evdata, objid0, cp_data[ RB_RANDOM_START+index0 ].code );
+  EVENTDATA_ChangeNPCObjCode( evdata, objid1, cp_data[ RB_RANDOM_START+index1 ].code );
+  EVENTDATA_ChangeNPCObjCode( evdata, objid2, cp_data[ RB_RANDOM_START+index2 ].code );
   
   // トレーナーIDを設定
-  MMDL_SetEventID( mmdl0, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[ RB_RANDOM_START+index0 ].trainer_id ) );
-  MMDL_SetEventID( mmdl1, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[ RB_RANDOM_START+index1 ].trainer_id ) );
-  MMDL_SetEventID( mmdl2, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[ RB_RANDOM_START+index2 ].trainer_id ) );
+  EVENTDATA_ChangeNPCEventID( evdata, objid0, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[ RB_RANDOM_START+index0 ].trainer_id ) );
+  EVENTDATA_ChangeNPCEventID( evdata, objid1, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[ RB_RANDOM_START+index1 ].trainer_id ) );
+  EVENTDATA_ChangeNPCEventID( evdata, objid2, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[ RB_RANDOM_START+index2 ].trainer_id ) );
 
 	return VMCMD_RESULT_CONTINUE;
 }
