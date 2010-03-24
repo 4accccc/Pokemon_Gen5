@@ -528,18 +528,18 @@
 	</row>
 
 	<row id="search_abc_30">
-		<language name="JPN" width="216">ふしきなこいん（かり）</language>
-		<language name="JPN_KANJI" width="216">ふしきなこいん（かり）</language>
-	</row>
-
-	<row id="search_abc_31">
 		<language name="JPN" width="216">ふしきなまもり</language>
 		<language name="JPN_KANJI" width="216">ふしきなまもり</language>
 	</row>
 
-	<row id="search_abc_32">
+	<row id="search_abc_31">
 		<language name="JPN" width="216">ふしきはな</language>
 		<language name="JPN_KANJI" width="216">ふしきはな</language>
+	</row>
+
+	<row id="search_abc_32">
+		<language name="JPN" width="216">ふして</language>
+		<language name="JPN_KANJI" width="216">ふして</language>
 	</row>
 
 	<row id="search_abc_33">

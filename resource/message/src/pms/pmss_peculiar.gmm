@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-02-26T16:41:51"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-24T19:03:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="797" top="398" right="1502" bottom="1018" maximized="no" rayout="Vertical2">
+	<dialog left="940" top="413" right="1645" bottom="1033" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="1086" top="106" right="1559" bottom="504" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -335,9 +335,9 @@
 
 	<row id="pmss_peculiar_01">
 		<language name="JPN" width="216">はじめまして！
-</language>
+[1:1C:簡易会話単語:0]　です！</language>
 		<language name="JPN_KANJI" width="216">はじめまして！
-</language>
+[1:1C:簡易会話単語:0]　です！</language>
 	</row>
 
 	<row id="pmss_peculiar_02">
@@ -404,10 +404,10 @@
 	</row>
 
 	<row id="pmss_peculiar_11">
-		<language name="JPN" width="216">また　[1:1C:簡易会話単語:0]　しようね！
-[1:1C:簡易会話単語:1]</language>
-		<language name="JPN_KANJI" width="216">また　[1:1C:簡易会話単語:0]　しようね！
-[1:1C:簡易会話単語:1]</language>
+		<language name="JPN" width="216">[1:1C:簡易会話単語:0]　で
+とっても　よかったです！</language>
+		<language name="JPN_KANJI" width="216">[1:1C:簡易会話単語:0]　で
+とっても　よかったです！</language>
 	</row>
 
 	<row id="pmss_peculiar_12">
@@ -471,6 +471,15 @@
 よろしく！</language>
 		<language name="JPN_KANJI" width="216">だから　[1:1C:簡易会話単語:0]　です
 よろしく！</language>
+	</row>
+
+	<row id="pmss_peculiar_21">
+		<comment>感謝メールの３項目
+（追加しました）</comment>
+		<language name="JPN" width="216">また　[1:1C:簡易会話単語:0]　しようね！
+[1:1C:簡易会話単語:1]</language>
+		<language name="JPN_KANJI" width="216">また　[1:1C:簡易会話単語:0]　しようね！
+[1:1C:簡易会話単語:1]</language>
 	</row>
 
 	<flowchart-group-list>
