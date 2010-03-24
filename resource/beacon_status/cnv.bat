@@ -38,7 +38,6 @@ g2dcvtr bstatus_icon09.nce -br
 g2dcvtr bstatus_icon10.nce -br
 g2dcvtr bstatus_icon11.nce -br
 g2dcvtr bstatus_icon12.nce -br
-g2dcvtr bstatus_icon13.nce -br
 
 g2dcvtr bstatus_panel.ncl
 

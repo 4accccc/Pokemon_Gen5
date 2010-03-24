@@ -17,7 +17,6 @@
 "bstatus_icon10.ncgr"
 "bstatus_icon11.ncgr"
 "bstatus_icon12.ncgr"
-"bstatus_icon13.ncgr"
 "bstatus_bg.nclr"
 "bstatus_bg_lz.ncgr"
 "bstatus_bg01_lz.nscr"
