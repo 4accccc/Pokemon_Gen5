@@ -2029,6 +2029,17 @@ void FIELDMAP_InitBGMode( void )
  */
 void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork )
 {
+  /**
+  //アフィン初期化
+  //@note 
+  //アプリケーション等で、ＢＧ２面でアフィンを使用した場合フィールドに戻ってきてもパラメータが残っており、
+  //引き続きＢＧ２面を使用する、カットインやクロスフェード処理で表示の不具合が発生するためここで初期化をします。
+  */
+  {
+    MtxFx22 mtx;
+    GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE, FX32_ONE, GFL_CALC2D_AFFINE_MAX_NORMAL );
+    G2_SetBG2Affine( &mtx, 0, 0, 0, 0 );
+  }
 	//ＢＧコントロール設定
 	GFL_BG_SetBGControl3D( FLDBG_MFRM_3D_PRI );
 
@@ -3167,6 +3178,7 @@ static void Draw3DNormalMode_top( FIELDMAP_WORK * fieldWork )
 
 	FLDMAPPER_Draw( fieldWork->g3Dmapper, fieldWork->g3Dcamera, FLDMAPPER_DRAW_TOP );
 }
+
 //　tailフレームでの描画処理
 static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
 {
@@ -3238,8 +3250,11 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
 #if 0    
     if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
+        DEBUG_CreateCamShakeEvt(fieldWork->gsys, 0, 10, 3, 10, 0,1,0,5);
 //      FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 0);
-    }else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
+    }
+/**    
+    else if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT){
       FLD3D_CI_CallEncCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr);
     }else if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_R){
       FLD3D_CI_FlySkyCameraDebug(
@@ -3247,6 +3262,7 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
           FIELDMAP_GetFieldPlayer(fieldWork),
           FIELDMAP_GetFldNoGridMapper( fieldWork ) );
     }
+*/    
 #endif    
   }
 #endif  //PM_DEBUG  
