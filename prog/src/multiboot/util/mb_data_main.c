@@ -10,10 +10,12 @@
 //======================================================================
 #include <gflib.h>
 #include <string.h>
+#include <nnsys.h>
 #include <backup_system.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "savedata_def.h"
+#include "system\machine_use.h"
 
 #include "multiboot/mb_data_main.h"
 #include "./mb_data_pt.h"
@@ -36,6 +38,7 @@
 //======================================================================
 
 MB_DATA_WORK* MB_DATA_InitSystem( int heapID );
+static void MB_DATA_InitCardSystem( MB_DATA_WORK *dataWork );
 void        MB_DATA_TermSystem( MB_DATA_WORK *dataWork );
 
 BOOL  MB_DATA_LoadDataFirst( MB_DATA_WORK *dataWork );
@@ -72,7 +75,9 @@ MB_DATA_WORK* MB_DATA_InitSystem( int heapID )
   dataWork->permitLastSaveSecond = FALSE;
   dataWork->isDummyCard = FALSE;
   MATH_CRC16CCITTInitTable( &dataWork->crcTable_ ); //CRC初期化
-
+  
+  MB_DATA_InitCardSystem( dataWork );
+  
   {
     //ROMの識別を行う
     CARDRomHeader *headerData;
@@ -445,3 +450,128 @@ void  MB_DATA_PermitLastSaveSecond( MB_DATA_WORK *dataWork )
   dataWork->permitLastSaveSecond = TRUE;
 }
 
+#pragma mark [>CardInit
+
+// 複製 ROM アーカイブ構造体。
+typedef struct MyRomArchive
+{
+    FSArchive   arc[1];
+    u32         default_dma_no;
+    u32         card_lock_id;
+}
+MyRomArchive;
+
+// 非同期のROM読み込みが完了したときの処理。
+static void MyRom_OnReadDone(void *arc)
+{
+    // アーカイブへ完了通知。
+    FS_NotifyArchiveAsyncEnd((FSArchive *)arc, FS_RESULT_SUCCESS);
+}
+
+// FSからアーカイブへのリードアクセスコールバック。
+static FSResult MyRom_ReadCallback(FSArchive *arc, void *dst, u32 src, u32 len)
+{
+    MyRomArchive *const p_rom = (MyRomArchive *)arc;
+    CARD_ReadRomAsync(p_rom->default_dma_no,
+                      (const void *)(FS_GetArchiveBase(arc) + src), dst, len,
+                      MyRom_OnReadDone, arc);
+    return FS_RESULT_PROC_ASYNC;
+}
+
+// FSからアーカイブへのライトコールバック。
+// ユーザプロシージャでFS_RESULT_UNSUPPORTEDを返すので呼ばれない。
+static FSResult MyRom_WriteDummyCallback(FSArchive *arc, const void *src, u32 dst, u32 len)
+{
+    (void)arc;
+    (void)src;
+    (void)dst;
+    (void)len;
+    return FS_RESULT_FAILURE;
+}
+
+// ユーザプロシージャ。
+// 最初のコマンド開始前から最後のコマンド完了後までROMをロック。
+// ライト操作はサポート外として応答する。
+// それ以外はデフォルトの動作。
+static FSResult MyRom_ArchiveProc(FSFile *file, FSCommandType cmd)
+{
+    MyRomArchive *const p_rom = (MyRomArchive *) FS_GetAttachedArchive(file);
+    switch (cmd)
+    {
+    case FS_COMMAND_ACTIVATE:
+        CARD_LockRom((u16)p_rom->card_lock_id);
+        return FS_RESULT_SUCCESS;
+    case FS_COMMAND_IDLE:
+        CARD_UnlockRom((u16)p_rom->card_lock_id);
+        return FS_RESULT_SUCCESS;
+    case FS_COMMAND_WRITEFILE:
+        return FS_RESULT_UNSUPPORTED;
+    default:
+        return FS_RESULT_PROC_UNKNOWN;
+    }
+}
+
+static void MB_DATA_InitCardSystem( MB_DATA_WORK *dataWork )
+{
+  CARDRomHeader *headerData = (CARDRomHeader*)CARD_GetRomHeader();
+#if PM_DEBUG
+  if( STD_CompareString( headerData->game_name , "POKEMON D" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON P" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON PL" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON HG" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON SS" ) == 0 ||
+      STD_CompareString( headerData->game_name , "NINTENDO    NTRJ01" ) == 0 ||
+      STD_CompareString( headerData->game_name , "SKEL" ) == 0 ||
+      STD_CompareString( headerData->game_name , "dlplay" ) == 0 ||
+      STD_CompareString( headerData->game_name , "SYACHI_MB" ) == 0 )
+#else
+  if( STD_CompareString( headerData->game_name , "POKEMON D" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON P" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON PL" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON HG" ) == 0 ||
+      STD_CompareString( headerData->game_name , "POKEMON SS" ) == 0 )
+#endif
+  {
+    //マルチブートで子機ROMからファイ(アイコン)を読むための処理
+    
+    u32 file_table_size;
+    void* p_table;
+    MBParam *multi_p = (MBParam *)MB_GetMultiBootParam();
+
+    // ROMアクセスを解除する。
+    CARD_Enable(TRUE);
+
+    multi_p->boot_type = MB_TYPE_NORMAL;	/* FS_Init()にROMをenableにさせるため、MULTIBOOTフラグを一瞬OFFにする */
+    OS_EnableIrq();
+    FS_Init(GFL_DMA_FS_NO);
+    multi_p->boot_type = MB_TYPE_MULTIBOOT;	/* MULTIBOOTフラグを再セットする */
+
+    {
+      const u32 base = 0;
+      const CARDRomRegion *fnt = &((CARDRomHeader*)CARD_GetRomHeader())->fnt;
+      const CARDRomRegion *fat = &((CARDRomHeader*)CARD_GetRomHeader())->fat;
+      const char *name = "child_rom";
+
+      static MyRomArchive newRom;
+
+      FS_InitArchive(newRom.arc);
+      newRom.default_dma_no = GFL_DMA_FS_NO;
+      newRom.card_lock_id = (u32)OS_GetLockID();
+      if (!FS_RegisterArchiveName(newRom.arc, name, (u32)STD_GetStringLength(name)))
+      {
+        OS_TPanic("error! FS_RegisterArchiveName(%s) failed.\n", name);
+      }
+      else
+      {
+        FS_SetArchiveProc(newRom.arc, MyRom_ArchiveProc,
+                          FS_ARCHIVE_PROC_WRITEFILE | FS_ARCHIVE_PROC_ACTIVATE | FS_ARCHIVE_PROC_IDLE);
+        if (!FS_LoadArchive(newRom.arc, base,
+                          fat->offset, fat->length, fnt->offset, fnt->length,
+                          MyRom_ReadCallback, MyRom_WriteDummyCallback))
+        {
+            OS_TPanic("error! FS_LoadArchive() failed.\n");
+        }
+      }
+    }
+  }  
+}

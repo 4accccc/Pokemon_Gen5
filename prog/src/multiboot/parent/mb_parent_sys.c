@@ -1434,7 +1434,15 @@ static void MP_PARENT_SendImage_MBPMain( MB_PARENT_WORK *work )
   case MPCS_INIT:
     MB_MSG_MessageHide( work->msgWork );
     MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE_UP );
-    MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_10 , MSGSPEED_GetWait() );
+
+    if( work->mode == MPM_POKE_SHIFTER )
+    {
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_10 , MSGSPEED_GetWait() );
+    }
+    else
+    {
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_22 , MSGSPEED_GetWait() );
+    }
     work->confirmState = MPCS_WAIT_MSG;
     break;
   case MPCS_WAIT_MSG:
@@ -1737,6 +1745,14 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
   {
   //子機のポケ集計待ち
   case MPMS_WAIT_COUNT_POKE:
+    if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR )
+    {
+      //読み込みエラーが発生した
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_21 , MSGSPEED_GetWait() );
+      MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      MB_COMM_ReqDisconnect( work->commWork );
+      work->state = MPS_MOVIE_WAIT_LAST_MSG;
+    }
     if( MB_COMM_IsPostMoviePokeNum( work->commWork ) == TRUE )
     {
       const u16 num = MB_COMM_GetMoviePokeNum( work->commWork );

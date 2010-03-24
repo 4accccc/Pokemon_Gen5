@@ -200,8 +200,9 @@ static FSResult MyRom_ArchiveProc(FSFile *file, FSCommandType cmd)
 
 static void MachineSystem_MbInitFile(void)
 {
+  //ここでは処理しない
+#if 0
   CARDRomHeader *headerData = (CARDRomHeader*)CARD_GetRomHeader();
-  
 #if PM_DEBUG
   if( STD_CompareString( headerData->game_name , "POKEMON D" ) == 0 ||
       STD_CompareString( headerData->game_name , "POKEMON P" ) == 0 ||
@@ -262,24 +263,5 @@ static void MachineSystem_MbInitFile(void)
       }
     }
   }
-
-  {
-    //実験
-    //OSBootInfo *bootInfo = ((OSBootInfo *)HW_WM_BOOT_BUF);
-    //bootInfo->boot_type = OS_BOOTTYPE_ROM;
-  }
-/*  
-  // ファイル管理テーブルをRAMへ載せる→ファイルへの高速アクセスが可能
-  file_table_size = FS_GetTableSize();
-  p_table = OS_AllocFromMainArenaLo(file_table_size, 4);
-
-  SDK_ASSERT(p_table != NULL);
-
-
-  (void)FS_LoadTable(p_table, file_table_size);
-
-  OS_TPrintf("FileTable Size     = 0x%08x bytes.\n", file_table_size);
-  OS_TPrintf("remains of MainRAM = 0x%08x bytes.\n", 
-              (u32)(OS_GetMainArenaHi())-(u32)(OS_GetMainArenaLo()));
-*/
+#endif
 }

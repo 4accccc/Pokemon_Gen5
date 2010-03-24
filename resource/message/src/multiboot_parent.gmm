@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-23T11:30:01"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-24T15:31:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="113" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1358" top="208" right="2063" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -655,6 +655,24 @@ multiboot_childと一緒</comment>
 ありませんでした▼</language>
 		<language name="JPN_KANJI" width="208">転送できる　ものが　
 ありませんでした▼</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_21" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>100224Ariizumi 追加
+子機に正しいソフトが刺さっていない</comment>
+		<language name="JPN" width="208">ただしいソフトが　
+セットされていません
+てんそうマシンを　しゅうりょうします▼</language>
+		<language name="JPN_KANJI" width="208">ただしいソフトが　
+セットされていません
+てんそうマシンを　しゅうりょうします▼</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_22" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>100224Ariizumi 追加
+キャンセル確認</comment>
+		<language name="JPN" width="208">てんそうマシンを　ちゅうししますか？</language>
+		<language name="JPN_KANJI" width="208">転送マシンを　中止しますか？</language>
 	</row>
 
 	<flowchart-group-list>
