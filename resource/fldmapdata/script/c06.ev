@@ -38,12 +38,12 @@ _EVENT_DATA_END
 /**************************************************************/
 
 /**************************************************************/
-/*  C06 BOY2とGIRL1のなみのり入手イベントスクリプト           */
+/*  C06 BOY2とGIRL1のつばめがえし入手イベントスクリプト           */
 /**************************************************************/
 EVENT_START   ev_c06_monsterball_01
 
 	//===============フラグ操作===============//
-	//なみのりを隠している、少年と少女を出現させる
+	//つばめがえしを隠している、少年と少女を出現させる
 	_FLAG_RESET( FV_C06_GIRLBOY_01 )
 	_OBJ_ADD(C06_BOY2_01)
 	_OBJ_ADD(C06_BABYGIRL1_01)
@@ -51,7 +51,7 @@ EVENT_START   ev_c06_monsterball_01
 	
 	//アイテム入手処理
 	_OBJ_DEL(C06_MONSTERBALL_01)
- 	_ITEM_EVENT_FIELD(ITEM_WAZAMASIN96,1)
+ 	_ITEM_EVENT_FIELD(ITEM_WAZAMASIN40,1)
  	_FLAG_SET(FV_C06_MONSTERBALL)
  	_FLAG_SET(FE_C06_ITEMGET_1)
   	
@@ -98,7 +98,7 @@ EVENT_START   ev_c06_monsterball_01
   	_OBJ_ANIME_WAIT()
   
  	//===============フラグ操作===============//
- 	//なみのりを隠している、少年と少女を消す
+ 	//つばめがえしを隠している、少年と少女を消す
   	_OBJ_DEL(C06_BABYGIRL1_01)
   	_OBJ_DEL(C06_BOY2_01)
   	_FLAG_SET( FV_C06_GIRLBOY_01 )
@@ -247,11 +247,6 @@ EVENT_START    ev_pos_c06_hakase1_01
 	//博士:アララギ『よし！　これで　ポケモンの　みた　すがたなら
 	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_07, C06_HAKASE1_01,POS_DR)
 	_BALLOONWIN_CLOSE()
-	_TIME_WAIT(16)
-	_OBJ_ANIME( C06_HAKASE1_01,anm_common_turn_d)
-	_OBJ_ANIME_WAIT()
-	
-	_ITEM_EVENT_KEYWAIT(ITEM_MASUTAABOORU,1)
 	
 	//ジムリーダーが主人公に隣接
 	IF $LWK_PLY_X == 100 THEN
@@ -673,7 +668,7 @@ _ANIME_LABEL	anm_hakase1_muku_02
 // フウロ:立ち去る                      
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader06_saru_01
-	_ANIME_DATA AC_WALK_U_8F,4
+	_ANIME_DATA AC_WALK_U_8F,3
 	_ANIME_DATA AC_WALK_R_8F,7
 	_ANIME_DATA	ACMD_END,0
 
