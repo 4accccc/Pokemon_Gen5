@@ -232,12 +232,12 @@ static const u8 battle_mode_info_tbl[BATTLE_MODE_MAX][2] =  // include/savedata/
   { msg_record_title33, 0 },  // BATTLE_MODE_RANDOM_RATING_SHOOTER,
                               // //‘å‰ï
   { msg_record_title34, 0 },  // BATTLE_MODE_COMPETITION_SINGLE,
-  { msg_record_title36, 0 },  // BATTLE_MODE_COMPETITION_DOUBLE,
-  { msg_record_title38, 0 },  // BATTLE_MODE_COMPETITION_TRIPLE,
-  { msg_record_title40, 0 },  // BATTLE_MODE_COMPETITION_ROTATION,
   { msg_record_title35, 0 },  // BATTLE_MODE_COMPETITION_SINGLE_SHOOTER,
+  { msg_record_title36, 0 },  // BATTLE_MODE_COMPETITION_DOUBLE,
   { msg_record_title37, 0 },  // BATTLE_MODE_COMPETITION_DOUBLE_SHOOTER,
+  { msg_record_title38, 0 },  // BATTLE_MODE_COMPETITION_TRIPLE,
   { msg_record_title39, 0 },  // BATTLE_MODE_COMPETITION_TRIPLE_SHOOTER,
+  { msg_record_title40, 0 },  // BATTLE_MODE_COMPETITION_ROTATION,
   { msg_record_title41, 0 },  // BATTLE_MODE_COMPETITION_ROTATION_SHOOTER,
 };
 

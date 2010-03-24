@@ -92,34 +92,13 @@ typedef enum{
   BATTLE_MODE_RANDOM_RATING_SHOOTER,
   //大会
   BATTLE_MODE_COMPETITION_SINGLE,
-  BATTLE_MODE_COMPETITION_DOUBLE,
-  BATTLE_MODE_COMPETITION_TRIPLE,
-  BATTLE_MODE_COMPETITION_ROTATION,
   BATTLE_MODE_COMPETITION_SINGLE_SHOOTER,
+  BATTLE_MODE_COMPETITION_DOUBLE,
   BATTLE_MODE_COMPETITION_DOUBLE_SHOOTER,
+  BATTLE_MODE_COMPETITION_TRIPLE,
   BATTLE_MODE_COMPETITION_TRIPLE_SHOOTER,
+  BATTLE_MODE_COMPETITION_ROTATION,
   BATTLE_MODE_COMPETITION_ROTATION_SHOOTER,
-
-  //--------------------------------------------------------------
-  //  複数検索
-  //--------------------------------------------------------------
-  BATTLE_MODE_COLOSSEUM_SINGLE_NO_SHOOTER = 0xef,    //コロシアム/シングル　シューター無し
-  BATTLE_MODE_COLOSSEUM_SINGLE_SHOOTER = 0xf0,       //コロシアム/シングル　シューター有
-  BATTLE_MODE_COLOSSEUM_DOUBLE_NO_SHOOTER = 0xf1,    //コロシアム/ダブル　シューター無し
-  BATTLE_MODE_COLOSSEUM_DOUBLE_SHOOTER = 0xf2,       //コロシアム/ダブル　シューター有
-  BATTLE_MODE_COLOSSEUM_TRIPLE_NO_SHOOTER = 0xf3,    //コロシアム/トリプル　シューター無し
-  BATTLE_MODE_COLOSSEUM_TRIPLE_SHOOTER = 0xf4,       //コロシアム/トリプル　シューター有
-  BATTLE_MODE_COLOSSEUM_ROTATION_NO_SHOOTER = 0xf5,  //コロシアム/ローテーション　シューター無し
-  BATTLE_MODE_COLOSSEUM_ROTATION_SHOOTER = 0xf6,     //コロシアム/ローテーション　シューター有
-  BATTLE_MODE_COLOSSEUM_MULTI_NO_SHOOTER = 0xf7,     //コロシアム/ローテーション　シューター無し
-  BATTLE_MODE_COLOSSEUM_MULTI_SHOOTER = 0xf8,        //コロシアム/ローテーション　シューター有
-  BATTLE_MODE_RANDOM_SINGLE = 0xf9,                  //ランダムマッチ/シングル
-  BATTLE_MODE_RANDOM_DOUBLE = 0xfa,                  //ランダムマッチ/ダブル
-  BATTLE_MODE_RANDOM_TRIPLE = 0xfb,                  //ランダムマッチ/トリプル
-  BATTLE_MODE_RANDOM_ROTATION = 0xfc,                //ランダムマッチ/ローテーション
-  BATTLE_MODE_RANDOM_SHOOTER = 0xfd,                 //ランダムマッチ/シューター
-  BATTLE_MODE_COMPETITION = 0xfe,                    //バトル大会
-  BATTLE_MODE_NONE = 0xff,                           //指定なし
 }BATTLE_MODE;
 
 //終端
@@ -222,7 +201,6 @@ extern void BattleRec_ClientTemotiGet(BATTLE_MODE rec_mode, int *client_max, int
 extern void BattleRec_BattleParamRec(BATTLE_PARAM *bp);
 extern void BattleRec_ServerVersionUpdate(int id_no, u32 server_version);
 extern BOOL BattleRec_ServerVersionCheck(void);
-extern void BattleRec_BattleParamCreate(BATTLE_PARAM *bp,SAVE_CONTROL_WORK *sv);
 extern BATTLE_REC_HEADER_PTR BattleRec_HeaderAllocCopy(HEAPID heap_id);
 extern GDS_PROFILE_PTR BattleRec_GDSProfileAllocCopy(HEAPID heap_id);
 extern GDS_PROFILE_PTR BattleRec_GDSProfilePtrGet(void);
@@ -235,7 +213,7 @@ extern void BattleRec_ExitWork(BATTLE_REC_SAVEDATA *wk_brs);
 extern BATTLE_REC_SAVEDATA * BattleRec_LoadAlloc( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *result, int num );
 extern BATTLE_REC_HEADER_PTR BattleRec_HeaderPtrGetWork(BATTLE_REC_SAVEDATA *wk_brs);
 
-extern void BattleRec_DataSet(GDS_PROFILE_PTR gpp, BATTLE_REC_HEADER_PTR head, BATTLE_REC_WORK_PTR rec, BATTLE_PARAM *bp, SAVE_CONTROL_WORK *sv);
+extern void BattleRec_DataSet(GDS_PROFILE_PTR gpp, BATTLE_REC_HEADER_PTR head, BATTLE_REC_WORK_PTR rec, SAVE_CONTROL_WORK *sv);
 extern u64 RecHeader_ParamGet(BATTLE_REC_HEADER_PTR head, int index, int param);
 extern BATTLE_REC_HEADER_PTR BattleRec_Header_AllocMemory(HEAPID heap_id);
 extern void BattleRec_Header_FreeMemory(BATTLE_REC_HEADER_PTR brhp);
