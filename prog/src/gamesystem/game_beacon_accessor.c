@@ -22,6 +22,7 @@
 #include "waza_tool/wazano_def.h"
 #include "poke_tool/monsno_def.h"
 #include "item/itemsym.h"
+#include "savedata/th_rank_def.h"
 #include "app/research_radar/question_id.h"
 #include "field/research_team_def.h"
 
@@ -38,7 +39,7 @@ enum{
  BEACON_WSET_HAIHU_ITEM,  //配布アイテム名
  BEACON_WSET_WAZA,        //技名
  BEACON_WSET_VICTORY,    //サブウェイ挑戦中の連勝数1-7
- BEACON_WSET_TRIAL_RANK,  //トライアルハウスランク
+ BEACON_WSET_TH_RANK,  //トライアルハウスランク
  BEACON_WSET_GPOWER,      //Gパワー名
  BEACON_WSET_FREEWORD,    //フリーワード8文字
  BEACON_WSET_MAX,
@@ -96,7 +97,7 @@ static const u8 DATA_BeaconDataType[GAMEBEACON_ACTION_MAX][2] = {
   BEACON_WSET_VICTORY,	  BEACON_ICON_BTL_WIN,	  ///<SUBWAY_STRAIGHT_VICTORIES バトルサブウェイ連勝中 41
   BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_WIN,	  ///<SUBWAY_TROPHY_GET バトルサブウェイトロフィーを貰った 42
   BEACON_WSET_DEFAULT,	  BEACON_ICON_BTL_START,	///<TRIALHOUSE トライアルハウスに挑戦中 43
-  BEACON_WSET_TRIAL_RANK,	BEACON_ICON_BTL_WIN,	  ///<TRIALHOUSE_RANK トライアルハウスでランク確定 44
+  BEACON_WSET_TH_RANK,	BEACON_ICON_BTL_WIN,	  ///<TRIALHOUSE_RANK トライアルハウスでランク確定 44
   BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FERRIS_WHEEL 観覧車に乗った 45
   BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<POKESHIFTER ポケシフターに入った 46
   BEACON_WSET_NICKNAME,	  BEACON_ICON_INFO,	      ///<MUSICAL ミュージカル挑戦中 47
@@ -118,7 +119,7 @@ static BOOL errchk_action_haifu_mons(const GAMEBEACON_INFO* info );
 static BOOL errchk_action_haifu_item(const GAMEBEACON_INFO* info );
 static BOOL errchk_action_waza(const GAMEBEACON_INFO* info );
 static BOOL errchk_action_victory(const GAMEBEACON_INFO* info );
-static BOOL errchk_action_trial_rank(const GAMEBEACON_INFO* info );
+static BOOL errchk_action_th_rank(const GAMEBEACON_INFO* info );
 static BOOL errchk_action_gpower(const GAMEBEACON_INFO* info );
 
 static const BEACON_INFO_ERROR_CHECK_FUNC DATA_ErrorCheckFuncTbl[BEACON_WSET_MAX] = {
@@ -134,7 +135,7 @@ static const BEACON_INFO_ERROR_CHECK_FUNC DATA_ErrorCheckFuncTbl[BEACON_WSET_MAX
   errchk_action_haifu_item,
   errchk_action_waza,
   errchk_action_victory,
-  errchk_action_trial_rank,
+  errchk_action_th_rank,
   errchk_action_gpower,
   errchk_action_default,
 };
@@ -1175,8 +1176,8 @@ void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPI
   case BEACON_WSET_VICTORY:
     WORDSET_RegisterNumber( wordset, 1, GAMEBEACON_Get_Action_VictoryCount(info), 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     break;
-  case BEACON_WSET_TRIAL_RANK:
-    WORDSET_RegisterNumber( wordset, 1, GAMEBEACON_Get_Action_TrialHouseRank(info), 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+  case BEACON_WSET_TH_RANK:
+    WORDSET_RegisterTrialHouseRank( wordset, 1, GAMEBEACON_Get_Action_TrialHouseRank(info) );
     break;
   case BEACON_WSET_GPOWER:
     WORDSET_RegisterGPowerName( wordset, 1, GAMEBEACON_Get_Action_GPowerID(info) );
@@ -1303,9 +1304,9 @@ static BOOL errchk_action_victory(const GAMEBEACON_INFO* info )
   return FALSE;
 }
 //エラーチェック トライアルハウスランクタイプ 
-static BOOL errchk_action_trial_rank(const GAMEBEACON_INFO* info )
+static BOOL errchk_action_th_rank(const GAMEBEACON_INFO* info )
 {
-  if( info->action.trial_house_rank ){
+  if( info->action.trial_house_rank > TH_RANK_MASTER){
     GF_ASSERT(0);
     return TRUE;
   }
