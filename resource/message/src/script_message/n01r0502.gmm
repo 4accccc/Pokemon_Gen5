@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T15:28:09"/>
+	<create user="matsumiya" host="W00224" date="2010-03-24T19:51:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1456" top="140" right="2161" bottom="769" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="113" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1550,98 +1550,124 @@
 ・0＝主人公名前
 ・続けてboss_last_01~08表示
 ・WHITEverで、はいと答えた回数
-　1回→last_01
-　2回→last_02
-　3回→last_03
-　4回→last_04
+　0回→last_01
+　1回→last_02
+　2回→last_03
+　3回→last_04
+　4回→last_05
 ・BLACKverで、はいと答えた回数
-　1回→last_05
-　2回→last_06
-　3回→last_07
-　4回→last_08</comment>
+　0回→last_06
+　1回→last_07
+　2回→last_08
+　3回→last_09
+　4回→last_10</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！！▼</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・カットイン終了し
+　城の外に飛びだす
+・続けてエンディングに</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">しんじつを　みつけだせ！</language>
+		<language name="JPN_KANJI" width="256">真実を　みつけだせ！</language>
+	</row>
+
+	<row id="msg_n01r0502_boss_last_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・カットイン終了し
+　城の外に飛びだす
+・続けてエンディングに</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">しんじつを　たいせつにするんだ！</language>
+		<language name="JPN_KANJI" width="256">真実を　大切にするんだ！</language>
+	</row>
+
+	<row id="msg_n01r0502_boss_last_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・カットイン終了し
+　城の外に飛びだす
+・続けてエンディングに</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">しんじつの　ゆめを　かなえろ！</language>
+		<language name="JPN_KANJI" width="256">真実の　夢を　かなえろ！</language>
+	</row>
+
+	<row id="msg_n01r0502_boss_last_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・カットイン終了し
 　城の外に飛びだす
 ・続けてエンディングに</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
 		<language name="JPN" width="256">キミの　しんじた　みちを　ゆけ！</language>
-		<language name="JPN_KANJI" width="256">キミの　信じた　道を　ゆけ！</language>
+		<language name="JPN_KANJI" width="256">キミの　信じた道を　ゆけ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・カットイン終了し
 　城の外に飛びだす
 ・続けてエンディングに</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎの　さいごの　ことば　その２</language>
-		<language name="JPN_KANJI" width="256">Ｎの　さいごの　ことば　その２</language>
+		<language name="JPN" width="256">キミの　しんじつを
+せかいに　しらせろ！</language>
+		<language name="JPN_KANJI" width="256">キミの　真実を
+世界に　知らせろ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・カットイン終了し
 　城の外に飛びだす
 ・続けてエンディングに</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎの　さいごの　ことば　その３</language>
-		<language name="JPN_KANJI" width="256">Ｎの　さいごの　ことば　その３</language>
+		<language name="JPN" width="256">りそうを　みつけだせ！</language>
+		<language name="JPN_KANJI" width="256">理想を　みつけだせ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・カットイン終了し
 　城の外に飛びだす
 ・続けてエンディングに</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎの　さいごの　ことば　その４</language>
-		<language name="JPN_KANJI" width="256">Ｎの　さいごの　ことば　その４</language>
+		<language name="JPN" width="256">りそうを　たいせつにするんだ！</language>
+		<language name="JPN_KANJI" width="256">理想を　大切にするんだ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・カットイン終了し
 　城の外に飛びだす
 ・続けてエンディングに</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">キミは　りそうを　おいもとめろ！</language>
-		<language name="JPN_KANJI" width="256">キミは　理想を　追い求めろ！</language>
+		<language name="JPN" width="256">りそうの　ゆめを　かなえろ！</language>
+		<language name="JPN_KANJI" width="256">理想の　夢を　かなえろ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_06" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_09" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・カットイン終了し
 　城の外に飛びだす
 ・続けてエンディングに</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎの　さいごの　ことば　その６</language>
-		<language name="JPN_KANJI" width="256">Ｎの　さいごの　ことば　その６</language>
+		<language name="JPN" width="256">キミの　りそうを　おいもとめろ！</language>
+		<language name="JPN_KANJI" width="256">キミの　理想を　追い求めろ！</language>
 	</row>
 
-	<row id="msg_n01r0502_boss_last_07" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_boss_last_10" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・カットイン終了し
 　城の外に飛びだす
 ・続けてエンディングに</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎの　さいごの　ことば　その７</language>
-		<language name="JPN_KANJI" width="256">Ｎの　さいごの　ことば　その７</language>
-	</row>
-
-	<row id="msg_n01r0502_boss_last_08" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
-		<comment>♂
-・カットイン終了し
-　城の外に飛びだす
-・続けてエンディングに</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎの　さいごの　ことば　その８</language>
-		<language name="JPN_KANJI" width="256">Ｎの　さいごの　ことば　その８</language>
+		<language name="JPN" width="256">キミの　りそうを
+せかいと　わかちあえ！</language>
+		<language name="JPN_KANJI" width="256">キミの　理想を
+世界と　分かち合え！</language>
 	</row>
 
 	<flowchart-group-list>
