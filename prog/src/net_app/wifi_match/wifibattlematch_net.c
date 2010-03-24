@@ -3874,13 +3874,13 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
  *	@brief  不正文字チェックをスタート
  *
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
- *	@param	STRCODE *cp_str                 チェックするSTRCODE
- *	@param	str_len                         STRCODEの長さ
+ *	@param	STRBUF *p_str                   チェックするSTRBUF
+ *	@param	HEAPID                          ヒープID
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_NET_StartBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, const STRCODE *cp_str, u32 str_len )
+void WIFIBATTLEMATCH_NET_StartBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, STRBUF *p_str, HEAPID heapID )
 { 
-  DWC_TOOL_BADWORD_Start( &p_wk->badword, cp_str, str_len );
+  DWC_TOOL_BADWORD_Start( &p_wk->badword, p_str, heapID );
 }
 //----------------------------------------------------------------------------
 /**

@@ -182,6 +182,7 @@ struct _GTSNEGO_WORK {
   MATCH_DATA MatchData;
   BOOL keyMode;
   DWC_TOOL_BADWORD_WORK aBadWork;
+  STRBUF  *wordCheck;
 };
 
 
@@ -559,17 +560,12 @@ static void _timingCheck4( GTSNEGO_WORK *pWork )
 
   if(DWC_TOOL_BADWORD_Wait( &pWork->aBadWork, &res)){
     if(res){  //•s³‚Ìê‡
-      GFL_MSGDATA *p_msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_namein_dat, pWork->heapID );
-      STRBUF  *pStrBuff = GFL_MSG_CreateString( p_msg, msg );
-      MyStatus_SetMyNameFromString(pMy, pStrBuff);
-      GFL_STR_DeleteBuffer(pStrBuff);
-      GFL_MSG_Delete(p_msg);
+      MyStatus_SetMyNameFromString(pMy, pWork->wordCheck);
+      GFL_STR_DeleteBuffer(pWork->wordCheck);
     }
     _CHANGE_STATE(pWork,_timingCheck2);
   }
-  
 }
-
 
 //----------------------------------------------------------------------------
 /**
@@ -587,7 +583,8 @@ static void _timingCheck5( GTSNEGO_WORK *pWork )
   }
 
   // •s³•¶ŽšŒŸ¸
-  DWC_TOOL_BADWORD_Start( &pWork->aBadWork, MyStatus_GetMyName(pMy), PERSON_NAME_SIZE);
+  pWork->wordCheck  = MyStatus_CreateNameString( pMy, HEAPID_IRCBATTLE );
+  DWC_TOOL_BADWORD_Start( &pWork->aBadWork, pWork->wordCheck,  HEAPID_IRCBATTLE );
   
   _CHANGE_STATE(pWork,_timingCheck4);
 }
