@@ -46,8 +46,8 @@ EVENT_START ev_scene_r08r0101
   IF $SCWK_ANSWER == TRUE THEN
     _CALL common_root
   ENDIF
-  //イベント終了 ローカルワーク0に0をセット
-  $LOCALWORK0 = 0
+  //シーンイベント消化
+  $WK_SCENE_R08R0101_LEG = 1
 EVENT_END
 
 //技覚えるまでの共通ルーチン
@@ -96,6 +96,8 @@ common_root:
       _BALLOONWIN_CLOSE()
       //じいさん25,38へ移動上向き
       _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_move2 )
+      //自機上向き
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
       _OBJ_ANIME_WAIT()
       //「ひとが　はじめた　いくさ」
       _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_02 , R08R0101_OLDMAN1_01, POS_DR )
@@ -109,9 +111,15 @@ common_root:
       //自機の隣に戻って左向き
       _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_move3 )
       _OBJ_ANIME_WAIT()
+      //自機右向き
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_right )
+      _OBJ_ANIME_WAIT()
       //「わかものは　むてっぽう」
       _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_04 , R08R0101_OLDMAN1_01, POS_DR )
       _BALLOONWIN_CLOSE()
+      //自機上向き
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
+      //
     ENDIF
 
     //三銃士ポケモンそろっているか？
@@ -148,6 +156,9 @@ common_root:
     ELSE                                //３匹いない
     {
       DEFINE_LOCAL msg
+      //じいさん自機のほうを向く
+      _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_left )
+      _OBJ_ANIME_WAIT()
       //一度でも技覚えた？
       IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
         //「ポケモン探してる」
@@ -186,17 +197,13 @@ INIT_EVENT_START ev_zone_r08r0101
 	_FLAG_SET( FV_R08R0101_POKE5 )
 	_FLAG_SET( FV_R08R0101_POKE6 )
 	_FLAG_SET( FV_R08R0101_POKE11 )
-  _FLAG_SET( FV_R08R0101_OLDMAN1 )
 
-  //ローカルワーク初期化（シーンイベント無効）
-  $LOCALWORK0 = 0
-  //イベント条件判定
-  _GET_EVT_POKE_POS( MONSNO_654, TRUE, pos, SCWK_ANSWER )
-  IF $SCWK_ANSWER == TRUE THEN
-    //イベントが完全に白紙の場合はシーンイベントを有効にする
-    IF $SCWK_ANSWER == TRUE THEN      //todo
-      //ローカルワーク0に1をセット  イベント有効
-      $LOCALWORK0 = 1
+  IF $WK_SCENE_R08R0101_LEG == 0 THEN
+    //イベント条件判定
+    _GET_EVT_POKE_POS( MONSNO_654, TRUE, pos, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
+      //爺さん非表示
+      _FLAG_SET( FV_R08R0101_OLDMAN1 )
     ENDIF  
   ENDIF
 INIT_EVENT_END
@@ -279,6 +286,12 @@ sp_poke_main_event:
     $TrgtObj = R08R0101_POKE6_01
     _CALL ball_out
   }
+  //一度でも技覚えた？
+  IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
+    //じいさん上向き
+    _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_player_up )
+    _OBJ_ANIME_WAIT()
+  ENDIF
 
   //ポケ小芝居
   _CALL poke_jump
@@ -288,7 +301,6 @@ sp_poke_main_event:
     //「なにかを伝えようとしている」
     _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_05 , R08R0101_OLDMAN1_01, POS_DR )
     _BALLOONWIN_CLOSE()
-  ELSE
   ENDIF
 
   //それぞれダルタニスに近づく
@@ -323,6 +335,9 @@ sp_poke_main_event:
   IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
   {
     DEFINE_LOCAL oldman_last_msg
+    //爺さん左向き
+    _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_left )
+    _OBJ_ANIME_WAIT()
     //覚えなかったとき
     IF $skill_learn == FALSE THEN
       //「おぬししだい」
@@ -403,11 +418,11 @@ player_talk_move:
   CASE DIR_RIGHT THEN
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_move1 )
   CASE DIR_DOWN THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_move1 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_move2 )
   CASE DIR_LEFT THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_move1 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_move3 )
   CASE DIR_UP THEN
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_move1 )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_move4 )
   ENDSWITCH
   
   _OBJ_ANIME_WAIT()
@@ -450,6 +465,13 @@ _ANIME_LABEL	anm_player_right
   _ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------------
+//自機上向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_up
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+  
 //--------------------------------------------------------------------
 //自機所定位置に移動
 //--------------------------------------------------------------------
