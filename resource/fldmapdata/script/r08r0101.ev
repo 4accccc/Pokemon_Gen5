@@ -20,13 +20,14 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_zone_r08r0101     //ゾーンチェンジスクリプト
-_EVENT_DATA    ev_scene_r08r0101   //シーンスクリプト
+_EVENT_DATA   ev_zone_r08r0101     //ゾーンチェンジスクリプト
+_EVENT_DATA   ev_scene_r08r0101   //シーンスクリプト
+_EVENT_DATA   ev_r08r0101_oldman1_01
 _EVENT_DATA_END
 
 //イベント対象となるダルタニスの手持ち位置
 DEFINE_LOCAL target_poke_pos
-
+DEFINE_LOCAL is_scene_evt
 DEFINE_LOCAL AnmX
 DEFINE_LOCAL AnmZ
 DEFINE_LOCAL FV
@@ -36,118 +37,144 @@ DEFINE_LOCAL TrgtObj
 /*            SCENE_SCRIPT                               */
 /**************************************************************/
 EVENT_START ev_scene_r08r0101
+  $is_scene_evt = TRUE    //シーンイベント起動フラグ
   //自機所定の位置へ移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
   _OBJ_ANIME_WAIT()
   //条件を満たしたダルタニスが手持ちから検索して今回の対象ポケモンにする
   _GET_EVT_POKE_POS( MONSNO_654, TRUE, target_poke_pos, SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN
-    //対象ダルタニスのニックネームをタグ０番にセット
-    _TEMOTI_NICK_NAME( 0, target_poke_pos )
-    //「○○ボールからだす？」
-    _SYSWIN_MSG( msg_r08r0101_narrator_01, POS_DOWN )
-    _YES_NO_WIN( SCWK_ANSWER )
-    _SYSWIN_CLOSE()
-
-    IF $SCWK_ANSWER == 0 THEN
-      //ボール投げるアニメ
-      {
-        $AnmX = 24
-        $AnmZ = 38
-        $FV = FV_R08R0101_POKE11
-        $TrgtObj = R08R0101_POKE11_01
-        _CALL ball_out
-      }
-      //対象ダルタニスのニックネームをタグ０番にセット
-      _TEMOTI_NICK_NAME( 0, target_poke_pos )
-      //「○○はとびだした」
-      _SYSWIN_MSG( msg_r08r0101_narrator_03, POS_DOWN )
-      _SYSWIN_CLOSE()
-      //一度でも技覚えた？
-      IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
-        //おじさん登場
-        _FLAG_RESET( FV_R08R0101_OLDMAN1 )
-        _OBJ_ADD(R08R0101_OLDMAN1_01)
-        _OBJ_POS_CHANGE( R08R0101_OLDMAN1_01, 25, 0, 47, DIR_UP )
-        _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_move )
-        _OBJ_ANIME_WAIT()
-        
-        _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_01 , R08R0101_OLDMAN1_01, POS_DR )
-        _BALLOONWIN_CLOSE()
-        _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_02 , R08R0101_OLDMAN1_01, POS_DR )
-        _BALLOONWIN_CLOSE()
-        _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_03 , R08R0101_OLDMAN1_01, POS_DR )
-        _BALLOONWIN_CLOSE()
-        _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_04 , R08R0101_OLDMAN1_01, POS_DR )
-        _BALLOONWIN_CLOSE()
-        
-      ENDIF
-      //三銃士ポケモンそろっているか？
-      {
-        DEFINE_LOCAL find_pos  //引数として必要なので用意してるだけ
-        DEFINE_LOCAL find_num
-        //検索数初期化
-        $find_num = 0
-        //アトスいるか？
-        _GET_PARTY_POS( MONSNO_645, SCWK_ANSWER, find_pos )
-        IF $SCWK_ANSWER == TRUE THEN
-          $find_num+=1
-        ENDIF
-        //ポルトスいるか？
-        _GET_PARTY_POS( MONSNO_646, SCWK_ANSWER, find_pos )
-        IF $SCWK_ANSWER == TRUE THEN
-          $find_num+=1
-        ENDIF
-        //アラミスいるか？
-        _GET_PARTY_POS( MONSNO_647, SCWK_ANSWER, find_pos )
-        IF $SCWK_ANSWER == TRUE THEN
-          $find_num+=1
-        ENDIF
-        //三匹そろってるか？
-        IF $find_num >= 3 THEN
-          $SCWK_ANSWER = TRUE       //条件満たした
-        ELSE
-          $SCWK_ANSWER = FALSE      //条件満たしてない
-        ENDIF
-      }
-      IF $SCWK_ANSWER == TRUE THEN
-        //イベント続行
-        _CALL sp_poke_main_event
-      ELSE
-        //一度でも技覚えた？
-        IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
-          //「ポケモン探してる」
-          _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_07 , R08R0101_OLDMAN1_01, POS_DR )
-          _BALLOONWIN_CLOSE()
-          //おじさん退出
-          _CALL oldman_bye
-        ELSE
-          //ダルタニス戻る
-          {
-            $AnmX = 24
-            $AnmZ = 39
-            $TrgtObj = R08R0101_POKE11_01
-            _CALL ball_in
-          }
-          //対象ダルタニスのニックネームをタグ０番にセット
-          _TEMOTI_NICK_NAME( 0, target_poke_pos )
-          //○○はボールに戻った
-          _SYSWIN_MSG( msg_r08r0101_narrator_07, POS_DOWN )
-          _SYSWIN_CLOSE()
-          //終了
-        ENDIF
-      ENDIF
-    ELSE
-      //「ボールにとどまった」＞＞終了
-      _SYSWIN_MSG( msg_r08r0101_narrator_02, POS_DOWN )
-      _LAST_KEYWAIT()
-      _SYSWIN_CLOSE()
-    ENDIF
+    _CALL common_root
   ENDIF
-
   //イベント終了 ローカルワーク0に0をセット
   $LOCALWORK0 = 0
 EVENT_END
+
+//技覚えるまでの共通ルーチン
+common_root:
+  //対象ダルタニスのニックネームをタグ０番にセット
+  _TEMOTI_NICK_NAME( 0, target_poke_pos )
+  //「○○ボールからだす？」
+  _SYSWIN_MSG( msg_r08r0101_narrator_01, POS_DOWN )
+  _YES_NO_WIN( SCWK_ANSWER )
+  _SYSWIN_CLOSE()
+
+  IF $SCWK_ANSWER == 0 THEN
+    //対象ダルタニスのニックネームをタグ０番にセット
+    _TEMOTI_NICK_NAME( 0, target_poke_pos )
+    //「○○はとびだした」
+    _SYSWIN_MSG( msg_r08r0101_narrator_03, POS_DOWN )
+    _SYSWIN_CLOSE()
+    //ボール投げるアニメ
+    {
+      $AnmX = 24
+      $AnmZ = 38
+      $FV = FV_R08R0101_POKE11
+      $TrgtObj = R08R0101_POKE11_01
+      _CALL ball_out
+    }
+    //シーンイベント？
+    IF $is_scene_evt == TRUE THEN   //シーンイベント
+      //おじさん登場
+      _FLAG_RESET( FV_R08R0101_OLDMAN1 )
+      _OBJ_ADD(R08R0101_OLDMAN1_01)
+      _OBJ_POS_CHANGE( R08R0101_OLDMAN1_01, 25, 0, 47, DIR_UP )
+      //じいさん上向き
+      _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_move )
+      _OBJ_ANIME_WAIT()
+      //自機右向き
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_right )
+      _OBJ_ANIME_WAIT()
+      //「おおう」 
+      _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_01 , R08R0101_OLDMAN1_01, POS_DR )
+      _BALLOONWIN_CLOSE()
+      //じいさん自機のほうを向く
+      _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_left )
+      _OBJ_ANIME_WAIT()
+      //「この　もりは」
+      _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_09 , R08R0101_OLDMAN1_01, POS_DR )
+      _BALLOONWIN_CLOSE()
+      //じいさん25,38へ移動上向き
+      _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_move2 )
+      _OBJ_ANIME_WAIT()
+      //「ひとが　はじめた　いくさ」
+      _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_02 , R08R0101_OLDMAN1_01, POS_DR )
+      _BALLOONWIN_CLOSE()
+      //じいさん左向く
+      _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_left )
+      _OBJ_ANIME_WAIT()
+      //「おやがわり」
+      _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_03 , R08R0101_OLDMAN1_01, POS_DR )
+      _BALLOONWIN_CLOSE()
+      //自機の隣に戻って左向き
+      _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_move3 )
+      _OBJ_ANIME_WAIT()
+      //「わかものは　むてっぽう」
+      _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_04 , R08R0101_OLDMAN1_01, POS_DR )
+      _BALLOONWIN_CLOSE()
+    ENDIF
+
+    //三銃士ポケモンそろっているか？
+    {
+      DEFINE_LOCAL find_pos  //引数として必要なので用意してるだけ
+      DEFINE_LOCAL find_num
+      //検索数初期化
+      $find_num = 0
+      //アトスいるか？
+      _GET_PARTY_POS( MONSNO_645, SCWK_ANSWER, find_pos )
+      IF $SCWK_ANSWER == TRUE THEN
+        $find_num+=1
+      ENDIF
+      //ポルトスいるか？
+      _GET_PARTY_POS( MONSNO_646, SCWK_ANSWER, find_pos )
+      IF $SCWK_ANSWER == TRUE THEN
+        $find_num+=1
+      ENDIF
+      //アラミスいるか？
+      _GET_PARTY_POS( MONSNO_647, SCWK_ANSWER, find_pos )
+      IF $SCWK_ANSWER == TRUE THEN
+        $find_num+=1
+      ENDIF
+      //三匹そろってるか？
+      IF $find_num >= 3 THEN
+        $SCWK_ANSWER = TRUE       //条件満たした
+      ELSE
+        $SCWK_ANSWER = FALSE      //条件満たしてない
+      ENDIF
+    }
+    IF $SCWK_ANSWER == TRUE THEN        //３匹いる
+      //イベント続行
+      _CALL sp_poke_main_event
+    ELSE                                //３匹いない
+    {
+      DEFINE_LOCAL msg
+      //一度でも技覚えた？
+      IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
+        //「ポケモン探してる」
+        $msg = msg_r08r0101_guide_07
+      ELSE
+        //「３引き連れて来い」
+        $msg = msg_r08r0101_guide_10
+      ENDIF
+      //メッセージ
+      _BALLOONWIN_OBJMSG_POS( msg , R08R0101_OLDMAN1_01, POS_DR )
+      _BALLOONWIN_CLOSE()
+      //ダルタニス戻す
+      {
+        $AnmX = 24
+        $AnmZ = 39
+        $TrgtObj = R08R0101_POKE11_01
+        _CALL ball_in
+      }
+    }  
+    ENDIF
+  ELSE
+    //「ボールにとどまった」＞＞終了
+    _SYSWIN_MSG( msg_r08r0101_narrator_02, POS_DOWN )
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+  ENDIF
+_RET
 
 /**************************************************************/
 /*            ZONE_CHANGE_SCRIPT                               */
@@ -160,16 +187,72 @@ INIT_EVENT_START ev_zone_r08r0101
 	_FLAG_SET( FV_R08R0101_POKE6 )
 	_FLAG_SET( FV_R08R0101_POKE11 )
   _FLAG_SET( FV_R08R0101_OLDMAN1 )
+
+  //ローカルワーク初期化（シーンイベント無効）
+  $LOCALWORK0 = 0
   //イベント条件判定
   _GET_EVT_POKE_POS( MONSNO_654, TRUE, pos, SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN
-    //ローカルワーク0に1をセット  イベント有効
-    $LOCALWORK0 = 1
-  ELSE
-    //ローカルワーク0に0をセット　イベント無効
-    $LOCALWORK0 = 0
+    //イベントが完全に白紙の場合はシーンイベントを有効にする
+    IF $SCWK_ANSWER == TRUE THEN      //todo
+      //ローカルワーク0に1をセット  イベント有効
+      $LOCALWORK0 = 1
+    ENDIF  
   ENDIF
 INIT_EVENT_END
+
+/**************************************************************/
+/* 			oldman								  */
+/**************************************************************/
+EVENT_START ev_r08r0101_oldman1_01
+  DEFINE_LOCAL last_msg_flg
+
+  _TALK_OBJ_START()
+
+  $is_scene_evt = FALSE    //シーンイベント起動フラグオフ
+  $last_msg_flg = TRUE
+  
+  //条件を満たしたダルタニスが手持ちから検索して今回の対象ポケモンにする
+  _GET_EVT_POKE_POS( MONSNO_654, TRUE, target_poke_pos, SCWK_ANSWER )
+
+  //技習得したことがある？
+  IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
+    //手持ちダルタニスチェック
+    IF $SCWK_ANSWER == TRUE THEN    //いる
+      $last_msg_flg = FALSE
+      //「やりのこし」
+      _BALLOONWIN_OBJMSG( msg_r08r0101_guide_13 , R08R0101_OLDMAN1_01 )
+      _BALLOONWIN_CLOSE()
+
+      //自機の移動
+      _CALL player_talk_move
+      //共通ルーチンコール
+      _CALL common_root
+    ENDIF
+  ELSE                                    //覚えたことある
+    //手持ちダルタニスチェック
+    IF $SCWK_ANSWER == TRUE THEN    //いる
+      //「技をもう一度おぼえる？」
+      _BALLOONWIN_OBJMSG( msg_r08r0101_guide_12 , R08R0101_OLDMAN1_01 )
+      _YES_NO_WIN( SCWK_ANSWER )
+      _BALLOONWIN_CLOSE()
+      IF $SCWK_ANSWER == 0 THEN
+        $last_msg_flg = FALSE
+        //自機移動
+        _CALL player_talk_move
+        //共通ルーチンコール
+        _CALL common_root
+      ENDIF
+    ENDIF
+  ENDIF
+
+  IF $last_msg_flg == TRUE THEN
+    //「たいせつに」
+    _BALLOONWIN_OBJMSG( msg_r08r0101_guide_11 , R08R0101_OLDMAN1_01 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
+EVENT_END
 
 //イベント中核
 sp_poke_main_event:
@@ -236,6 +319,30 @@ sp_poke_main_event:
     $skill_learn = FALSE
   ENDIF
 
+  //一度でも技覚えた？
+  IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
+  {
+    DEFINE_LOCAL oldman_last_msg
+    //覚えなかったとき
+    IF $skill_learn == FALSE THEN
+      //「おぬししだい」
+      $oldman_last_msg = msg_r08r0101_guide_08
+    ELSE
+      //「おぬしのおかげ」
+      $oldman_last_msg = msg_r08r0101_guide_06
+    ENDIF
+    //おじさんメッセージ
+    _BALLOONWIN_OBJMSG_POS( oldman_last_msg, R08R0101_OLDMAN1_01, POS_DR )
+    _BALLOONWIN_CLOSE()
+    
+  }
+  ENDIF
+
+  IF $skill_learn == TRUE THEN
+    //技を覚えたのでイベント消化フラグＯＮ
+    _FLAG_SET( FE_R08R0101_LEG_FIRST )
+  ENDIF
+
   //三匹戻る
   {
     $AnmX = 24
@@ -256,31 +363,6 @@ sp_poke_main_event:
     _CALL ball_in
   }
 
-  {
-    DEFINE_LOCAL oldman_last_msg
-    //覚えなかったとき
-    IF $skill_learn == FALSE THEN
-      //「おぬししだい」
-      $oldman_last_msg = msg_r08r0101_guide_08
-    ELSE
-      //「おぬしのおかげ」
-      $oldman_last_msg = msg_r08r0101_guide_06
-    ENDIF
-    //一度でも技覚えた？
-    IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
-      //おじさんメッセージ
-      _BALLOONWIN_OBJMSG_POS( oldman_last_msg, R08R0101_OLDMAN1_01, POS_DR )
-      _BALLOONWIN_CLOSE()
-      //おじさん退出
-      _CALL oldman_bye
-    ENDIF
-
-    IF $skill_learn == TRUE THEN
-      //技を覚えたのでイベント消化フラグＯＮ
-      _FLAG_SET( FE_R08R0101_LEG_FIRST )
-    ENDIF
-  }
-
   //ダルタニス戻る
   {
     $AnmX = 24
@@ -289,13 +371,6 @@ sp_poke_main_event:
     _CALL ball_in
   }
 
-_RET
-
-//おじさん退場
-oldman_bye:
-  _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_bye )
-  _OBJ_ANIME_WAIT()
-  _OBJ_DEL(R08R0101_OLDMAN1_01)
 _RET
 
 //ポケ小芝居
@@ -319,21 +394,62 @@ poke_jump:
   _OBJ_ANIME_WAIT()
 _RET
 
+//プレーヤーはなしかけ後移動
+player_talk_move:
+{
+  DEFINE_LOCAL dir
+  _PLAYER_DIR_GET( dir )
+  SWITCH $dir
+  CASE DIR_RIGHT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_move1 )
+  CASE DIR_DOWN THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_move1 )
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_move1 )
+  CASE DIR_UP THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_talk_move1 )
+  ENDSWITCH
+  
+  _OBJ_ANIME_WAIT()
+}  
+_RET
+
 //--------------------------------------------------------------------
-//おじさん所定位置に移動
+//じいさん所定位置に移動
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_oldman_move
   _ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//じいさん左向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman_left
   _ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//おじさん退場
+//じいさん移動
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_oldman_bye
-  _ANIME_DATA	AC_WALK_D_8F,7
+_ANIME_LABEL	anm_oldman_move2
+  _ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
-  
+
+//--------------------------------------------------------------------
+//じいさん移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_oldman_move3
+  _ANIME_DATA	AC_WALK_D_8F,2
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機右向き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_right
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 //--------------------------------------------------------------------
 //自機所定位置に移動
 //--------------------------------------------------------------------
@@ -341,6 +457,40 @@ _ANIME_LABEL	anm_player_move
   _ANIME_DATA	AC_WALK_U_8F,1
   _ANIME_DATA	AC_WALK_L_8F,6
   _ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機所定位置に移動  じいさんに左から話しかけた
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_talk_move1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機所定位置に移動  じいさんに上から話しかけた
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_talk_move2
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機所定位置に移動  じいさんに右から話しかけた
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_talk_move3
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,2
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+  
+//--------------------------------------------------------------------
+//自機所定位置に移動  じいさんに下から話しかけた
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_talk_move4
+  _ANIME_DATA	AC_WALK_L_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
