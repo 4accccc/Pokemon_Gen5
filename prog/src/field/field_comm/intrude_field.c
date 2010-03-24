@@ -40,6 +40,8 @@
 #include "savedata/symbol_save.h"
 #include "field/event_symbol.h"
 
+#include "field/palace_gimmick.h"
+
 
 //==============================================================================
 //  構造体定義
@@ -409,14 +411,31 @@ static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *w
     if(MMDL_CheckPossibleAcmd(barrier->player_mmdl) == TRUE){
       u16 code = (barrier->dir == DIR_RIGHT) ? AC_WALK_R_32F : AC_WALK_L_32F;
       MMDL_SetAcmd(barrier->player_mmdl, code);
+
+      // barrierエフェクト開始
+      {
+        VecFx32 pos;
+
+        MMDL_GetVectorPos( barrier->player_mmdl, &pos );
+        
+        PALACE_GMK_StartBarrierEffect( barrier->fieldWork, &pos );
+      }
+      
       (*seq)++;
     }
     break;
   case _SEQ_INIT_WAIT:
+
+    // バリア終了まち
+    if( PALACE_GMK_IsBarrierEffect( barrier->fieldWork ) ){
+      break;
+    }
+    
     if(MMDL_CheckEndAcmd(barrier->player_mmdl) == TRUE){
       MMDL_EndAcmd(barrier->player_mmdl);
       (*seq)++;
     }
+    
     break;
   case _SEQ_DISGUISE_INIT:
     if(intcomm == NULL){  //変身前にエラーチェック：通信切断状態ならばここで終了

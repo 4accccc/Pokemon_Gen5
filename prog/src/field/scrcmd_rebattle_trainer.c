@@ -13,6 +13,8 @@
 
 #include <gflib.h>
 
+#include "system/main.h"
+
 #include "arc/arc_def.h"
 #include "arc/fieldmap/rebattle_trainer.naix"
 
@@ -69,12 +71,12 @@ VMCMD_RESULT EvCmdReBattleTrainerStart( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
-  HEAPID heapID = FIELDMAP_GetHeapID( fparam->fieldMap );
+  HEAPID heapID = HEAPID_PROC;  // ÉeÉìÉ|ÉâÉä
   void* p_data;
 
   p_data = GFL_ARC_UTIL_Load( ARCID_REBATTLE_TRAINER, 0, FALSE, GFL_HEAP_LOWID(heapID) );
 
+  // ÇPÇ¬ëOÇ≈çÌèúÇµÇƒÇ¢Ç»Ç¢
   GF_ASSERT( SCRIPT_GetReBattleTrainerData(sc) == NULL );
   SCRIPT_SetReBattleTrainerData( sc, p_data );
 
@@ -92,7 +94,6 @@ VMCMD_RESULT EvCmdReBattleTrainerEnd( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   void* p_data;
 
   p_data = SCRIPT_GetReBattleTrainerData(sc);
@@ -116,7 +117,6 @@ VMCMD_RESULT EvCmdReBattleTrainerSetUpTrID( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
   MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
   u16 rebattle_id = SCRCMD_GetVMWorkValue( core, work );
   u16 objid = SCRCMD_GetVMWorkValue( core, work );

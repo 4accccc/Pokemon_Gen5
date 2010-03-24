@@ -186,6 +186,9 @@ void PALACE_GMK_Setup(FIELDMAP_WORK *fieldWork)
 
   // ギミック管理ワークを初期化 
   InitWork( work, fieldWork, gdata, intcomm );
+
+  // バリア演出初期化
+  Barrier_Init( work, exobj_cnt );
 }
 
 //--------------------------------------------------------------
