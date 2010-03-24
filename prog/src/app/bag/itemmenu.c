@@ -1868,6 +1868,12 @@ static void _itemTecniqueUseYesNo(FIELD_ITEMMENU_WORK* pWork)
       GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
       GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
 			ITEMDISP_ChangeActive( pWork, TRUE );
+			if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH ) {
+				ITEMDISP_upMessageClean( pWork );
+				KTST_SetDraw( pWork, FALSE );
+      }else{
+				KTST_SetDraw( pWork, TRUE );
+			}
 //      _CHANGE_STATE(pWork,_itemKindSelectMenu);
 			ChangeStateItemKindSelectItemMenu( pWork );
     }
@@ -2002,6 +2008,7 @@ static void _itemTrashYesNoWait(FIELD_ITEMMENU_WORK* pWork)
 //      InputNum_ButtonState( pWork, TRUE );
       GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
 			ITEMDISP_ChangeActive( pWork, TRUE );
+			KTST_SetDraw( pWork, GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY );
 //      _CHANGE_STATE(pWork,_itemKindSelectMenu);
 			ChangeStateItemKindSelectItemMenu( pWork );
     }
@@ -2321,6 +2328,7 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
 
       case 1 :
         // NO
+				KTST_SetDraw( pWork, GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY );
         _CHANGE_STATE( pWork, _itemSellExit );
         break;
 
@@ -2346,8 +2354,11 @@ static void _itemSellEndMsgWait( FIELD_ITEMMENU_WORK* pWork )
   }
 
   // “ü—Í‘Ò‚¿
-  if( ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) || GFL_UI_TP_GetTrg() )
-  {
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+		KTST_SetDraw( pWork, TRUE );
+    _CHANGE_STATE( pWork, _itemSellExit );
+	}else if( GFL_UI_TP_GetTrg() ){
+		KTST_SetDraw( pWork, FALSE );
     _CHANGE_STATE( pWork, _itemSellExit );
   }
 }

@@ -54,6 +54,7 @@ enum
   SE_BAG_SPRAY        = SEQ_SE_DECIDE1,   ///< スプレー使用音
   SE_BAG_RAITOSUTOON  = SEQ_SE_DECIDE2,   ///< ライトストーン・ダークストーン
 	SE_BAG_SLIDE_IN			= SEQ_SE_SYS_90,		///< 開始時のバッグスライドイン
+	SE_BAG_MESSAGE			= SEQ_SE_MESSAGE,		///< メッセージ送り
 };
 
 #define ITEMMENU_SCROLLBAR_ENABLE_NUM (7) // スクロールバーが有効になるアイテム数
@@ -168,6 +169,7 @@ struct _FIELD_ITEMMENU_PARAM {
   PRINT_UTIL  SysMsgPrintUtil;      ///< システムウインドウPrintUtil
   PRINT_QUE*  SysMsgQue;
   PRINT_STREAM* pStream;
+	BOOL stream_clear_flg;
   APP_KEYCURSOR_WORK *MsgCursorWork;///< メッセージキー待ちカーソル表示ワーク
   GFL_MSGDATA* MsgManager;          ///< 名前入力メッセージデータマネージャー
   GFL_MSGDATA* MsgManagerItemInfo;  ///< 名前入力メッセージデータマネージャー

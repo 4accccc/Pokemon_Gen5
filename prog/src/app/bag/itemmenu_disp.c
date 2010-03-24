@@ -1961,12 +1961,16 @@ BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
     case PRINTSTREAM_STATE_DONE: // I—¹
       PRINTSYS_PrintStreamDelete( pWork->pStream );
       pWork->pStream = NULL;
+			pWork->stream_clear_flg = FALSE;
       break;
 
     case PRINTSTREAM_STATE_PAUSE: // ˆêŽž’âŽ~’†
-      if( ( GFL_UI_KEY_GetTrg() & MSG_SKIP_BTN ) || GFL_UI_TP_GetTrg() )
-      {
-        PRINTSYS_PrintStreamReleasePause( pWork->pStream );
+			if( pWork->stream_clear_flg == FALSE ){
+				if( ( GFL_UI_KEY_GetTrg() & MSG_SKIP_BTN ) || GFL_UI_TP_GetTrg() ){
+	        PMSND_PlaySystemSE( SE_BAG_MESSAGE );
+	        PRINTSYS_PrintStreamReleasePause( pWork->pStream );
+					pWork->stream_clear_flg = TRUE;
+				}
       }
       break;
     case PRINTSTREAM_STATE_RUNNING :  // ŽÀs’†
@@ -1975,6 +1979,7 @@ BOOL ITEMDISP_MessageEndCheck(FIELD_ITEMMENU_WORK* pWork)
       {
         PRINTSYS_PrintStreamShortWait( pWork->pStream, 0 );
       }
+			pWork->stream_clear_flg = FALSE;
       break;
     default:
       GF_ASSERT(0);
