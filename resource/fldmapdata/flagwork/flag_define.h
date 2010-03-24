@@ -164,8 +164,8 @@
 #define FE_C02R0301_POKETRADE              148 /* 0x0094 C02R0301のゲーム内交換フラグ */
 #define FE_PALPARK_FIRSTTALK               149 /* 0x0095 パルパーク受付の初回会話フラグ（説明有り） */
 #define FE_REMIND_FIRSTTALK                150 /* 0x0096 技思い出しオヤジの初回会話フラグ（説明有り） */
-#define FE_ELBOARD_TOUNAN                  151 /* 0x0097 電光掲示板用フラグ：Ｃ02博物館の盗難イベント発生ニュース */
-#define FE_ELBOARD_C02GYMWIN               152 /* 0x0098 電光掲示板用フラグ：Ｃ02ジムリーダー勝利フラグ */
+#define FE_ELBOARD_TOUNAN                  151 /* 0x0097 未使用　※参照されなくなったら削除 */
+#define FE_ELBOARD_C02GYMWIN               152 /* 0x0098 未使用　※参照されなくなったら削除 */
 #define FE_SODATEYAOLDMAN_OPEN             153 /* 0x0099 育て屋にじいさんが戻ってくる（２匹預けられるようになる） */
 #define FE_BC10R0401_BOSS                  154 /* 0x009a ブラックシティ：ボス初回会話チェック */
 #define FE_WC10R0101_OLDMAN                155 /* 0x009b ホワイトシティ：村長初回会話チェック */
@@ -2382,16 +2382,16 @@
 #define SYS_FLAG_ZENKOKU_GET              2414 /* 0x096e 全国図鑑入手フラグ */
 #define SYS_FLAG_WEATHER_R07              2415 /* 0x096f 移動ポケモン用天候フラグ：イベント中R07の天気が大荒れになる */
 #define SYS_FLAG_BGM_TOUNAN               2416 /* 0x0970 BGM変更フラグ：盗難イベント中にゾーンBGMを変更する */
-		/* not used  2417(0x0971) */
-		/* not used  2418(0x0972) */
-		/* not used  2419(0x0973) */
-		/* not used  2420(0x0974) */
-		/* not used  2421(0x0975) */
-		/* not used  2422(0x0976) */
-		/* not used  2423(0x0977) */
-		/* not used  2424(0x0978) */
-		/* not used  2425(0x0979) */
-		/* not used  2426(0x097a) */
+#define SYS_FLAG_ELBOARD_C01GYMWIN        2417 /* 0x0971 電光掲示板用フラグ：臨時ニュースC01ジムクリア */
+#define SYS_FLAG_ELBOARD_C02GYMWIN        2418 /* 0x0972 電光掲示板用フラグ：臨時ニュースC02ジムクリア */
+#define SYS_FLAG_ELBOARD_C03GYMWIN        2419 /* 0x0973 電光掲示板用フラグ：臨時ニュースC03ジムクリア */
+#define SYS_FLAG_ELBOARD_C04GYMWIN        2420 /* 0x0974 電光掲示板用フラグ：臨時ニュースC04ジムクリア */
+#define SYS_FLAG_ELBOARD_C05GYMWIN        2421 /* 0x0975 電光掲示板用フラグ：臨時ニュースC05ジムクリア */
+#define SYS_FLAG_ELBOARD_C06GYMWIN        2422 /* 0x0976 電光掲示板用フラグ：臨時ニュースC06ジムクリア */
+#define SYS_FLAG_ELBOARD_C07GYMWIN        2423 /* 0x0977 電光掲示板用フラグ：臨時ニュースC07ジムクリア */
+#define SYS_FLAG_ELBOARD_C08WGYMWIN       2424 /* 0x0978 電光掲示板用フラグ：臨時ニュースC08ジムクリア（verホワイト） */
+#define SYS_FLAG_ELBOARD_C08BGYMWIN       2425 /* 0x0979 電光掲示板用フラグ：臨時ニュースC08ジムクリア（verブラック） */
+#define SYS_FLAG_ELBOARD_CHAMPWIN         2426 /* 0x097a 電光掲示板用フラグ：臨時ニュースチャンピオンに勝利 */
 		/* not used  2427(0x097b) */
 		/* not used  2428(0x097c) */
 		/* not used  2429(0x097d) */
