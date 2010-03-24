@@ -844,11 +844,11 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
     }
 
 
-/*
+
     {// データ読み込み・破棄
        TPOKE_DATA* pTP =TPOKE_DATA_Create( pWork->heapID );
       int size = SYMBOL_ZONE_TYPE_FREE_SMALL;
-      if(TPOKE_DATA_IsSizeBig( pTP, pDream->findPokemon, pDream->findPokemonSex,
+      if(TPOKE_DATA_IsSizeBig(pWork->pGameData, pTP, pDream->findPokemon, pDream->findPokemonSex,
                                pDream->findPokemonForm )){
         size = SYMBOL_ZONE_TYPE_FREE_LARGE;
       }
@@ -858,7 +858,6 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
                              size);
       TPOKE_DATA_Delete( pTP );
     }
-   */
       
     //サインイン
     DREAMWORLD_SV_SetSignin(pDreamSave,pDream->signin);
