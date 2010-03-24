@@ -336,7 +336,7 @@ EVENT_END
 /*  R08 プラズマ団２会話用イベントスクリプト                  */
 /**************************************************************/
 EVENT_START   ev_r08_hakaim_02
-	IF FLAG_ON(FH_01) THEN
+	IF FLAG_ON(FE_D08_PACKAGEPOKE_END) THEN
 		_BALLOONWIN_OBJMSG_POS( msg_r08_stop2_02, R08_HAKAIM_02, POS_DEFAULT )
 	ELSE
 		_BALLOONWIN_OBJMSG_POS( msg_r08_stop2_01, R08_HAKAIM_02, POS_DEFAULT )

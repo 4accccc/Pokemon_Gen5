@@ -52,7 +52,7 @@ EVENT_START    ev_pos_d08r0801_demo_01
 	
 	DEFINE_LOCAL	LCWK_VERSION
 	_GET_ROM_VERSION(LCWK_VERSION)
-
+/*
 	_SE_PLAY(SEQ_SE_FLD_144)
 //	_TIME_WAIT(2)
 	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
@@ -61,10 +61,16 @@ EVENT_START    ev_pos_d08r0801_demo_01
 	_SE_WAIT()
 	
 //	_TIME_WAIT(8)
+*/
+
+	_SE_PLAY(SEQ_SE_FLD_144)
+	_TIME_WAIT(2)
+	//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
+	_SHAKE_CAMERA(0,4,4,12,0,1,1,3)
+	_TIME_WAIT(16)
+	_SE_WAIT()
 	
-	//‚Ñ‚Á‚­‚è‚·‚é
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
-	_OBJ_ANIME_WAIT()
+	_TIME_WAIT(8)	
 	
 	//¶‰E‚ð‚«‚å‚ë‚«‚å‚ëŒ©‚é
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)

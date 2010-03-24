@@ -164,6 +164,9 @@ EVENT_START	ev_reserve_d08_hakase1_01
 	//リゾートデザートのライバル出現
 	_FLAG_RESET( FV_D03R0101_RIVAL_01 )
 	
+	//リュウラセンの塔のイベント終了フラグ	
+	_FLAG_SET(FE_D08_PACKAGEPOKE_END)
+
 	//========================================//
 	
 EVENT_END
