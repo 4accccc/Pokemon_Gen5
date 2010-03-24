@@ -1457,7 +1457,7 @@ typedef struct
   MMDLSYS *fldmmdlsys;
 
   u16 obj_code;
-  u16 res_add;
+  u8 padding[2];
   MMDL *fmmdl;
 }DEBUG_MMDLLIST_EVENT_WORK;
 
@@ -1571,17 +1571,13 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
       }
 
       work->obj_code = ret;
-#if 0 //要らない
-      work->res_add = MMDL_BLACTCONT_AddOBJCodeRes(
-          work->fldmmdlsys, work->obj_code );
-#endif
+      
       {
-        //VecFx32 pos;
         MMDL *jiki;
         MMDL_HEADER head = {
           0,  ///<識別ID
           0,  ///<表示するOBJコード
-          MV_DOWN, ///<動作コード
+          MV_DMY, ///<動作コード
           0,  ///<イベントタイプ
           0,  ///<イベントフラグ
           0,  ///<イベントID
@@ -1595,18 +1591,19 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
           0,  ///<グリッドZ
           0,  ///<Y値 fx32型
         };
-        MMDL_HEADER_GRIDPOS *gridpos;
-
 
         jiki = MMDLSYS_SearchOBJID(
           work->fldmmdlsys, MMDL_ID_PLAYER );
-
+        
         head.id = 250;
+        
         MMDLHEADER_SetGridPos( &head,
             MMDL_GetGridPosX( jiki ) + 2,
             MMDL_GetGridPosZ( jiki ),
             MMDL_GetVectorPosY( jiki ) );
+        
         head.obj_code = work->obj_code;
+        
         work->fmmdl = MMDLSYS_AddMMdl(
           work->fldmmdlsys, &head, 0 );
       }
@@ -1615,41 +1612,66 @@ static GMEVENT_RESULT debugMenuMMdlListEvent(
       break;
     case 2:
       {
-        int key_trg = GFL_UI_KEY_GetTrg();
-        u8  move = 0xFF;
-        MMDL_UpdateMoveProc( work->fmmdl );
-
-        if( (key_trg & PAD_BUTTON_B) ){
-          MMDL_Delete( work->fmmdl );
-
-          if( work->res_add == TRUE ){
-            MMDL_BLACTCONT_DeleteOBJCodeRes(
-                work->fldmmdlsys, work->obj_code );
+        MMDL *mmdl = work->fmmdl;
+        int key_cont = GFL_UI_KEY_GetCont();
+        u16 code = MMDL_GetOBJCode( mmdl );
+        u16 ac = ACMD_NOT;
+        
+//        MMDL_UpdateMoveProc( work->fmmdl );
+        
+        if( MMDL_CheckPossibleAcmd(mmdl) == TRUE ){
+          if( (key_cont & PAD_BUTTON_B) ){
+            MMDL_Delete( work->fmmdl );
+            (*seq) = 1;
+            return GMEVENT_RES_CONTINUE;
           }
-
-          (*seq) = 1;
-          return GMEVENT_RES_CONTINUE;
-        }
-
-        if( key_trg & PAD_BUTTON_X ){
-          move = MV_RND;
-        }else if( (key_trg & PAD_KEY_UP )){
-          move = MV_UP;
-        }else if( key_trg & PAD_KEY_DOWN ){
-          move = MV_DOWN;
-        }else if( key_trg & PAD_KEY_LEFT ){
-          move = MV_LEFT;
-        }else if( key_trg & PAD_KEY_RIGHT ){
-          move = MV_RIGHT;
-        }
-        if( move != 0xFF ){
-          MMDL_ChangeMoveCode( work->fmmdl, move );
+          
+          if( code == SHIN_A || code == MU_A ){
+            if( key_cont & PAD_KEY_UP ){
+              ac = AC_SHIN_MU_FLY_L;
+            }else if( key_cont & PAD_KEY_DOWN ){
+              ac = AC_DIR_D;
+            }else if( key_cont & PAD_KEY_LEFT ){
+              ac = AC_SHIN_MU_GUTARI;
+            }else if( key_cont & PAD_KEY_RIGHT ){
+              ac = AC_SHIN_MU_FLY_UPPER;
+            }
+            
+            if( ac != ACMD_NOT ){
+              VecFx32 offs = {0,0,0};
+		          MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
+            }
+          }else if( code == SHIN_B || code == MU_B ){
+            if( key_cont & PAD_KEY_UP ){
+              ac = AC_DIR_U;
+            }else if( key_cont & PAD_KEY_DOWN ){
+              ac = AC_DIR_D;
+            }else if( key_cont & PAD_KEY_LEFT ){
+              ac = AC_SHIN_MU_HOERU;
+            }else if( key_cont & PAD_KEY_RIGHT ){
+              ac = AC_SHIN_MU_TURN;
+            }
+          }else{
+            if( key_cont & PAD_KEY_UP ){
+              ac = AC_STAY_WALK_U_32F;
+            }else if( key_cont & PAD_KEY_DOWN ){
+              ac = AC_STAY_WALK_D_32F;
+            }else if( key_cont & PAD_KEY_LEFT ){
+              ac = AC_STAY_WALK_L_32F;
+            }else if( key_cont & PAD_KEY_RIGHT ){
+              ac = AC_STAY_WALK_R_32F;
+            }
+          }
+          
+          if( ac != ACMD_NOT ){
+            MMDL_SetAcmd( mmdl, ac );
+          }
         }
       }
       break;
     }
   }
-
+  
   return( GMEVENT_RES_CONTINUE );
 }
 
