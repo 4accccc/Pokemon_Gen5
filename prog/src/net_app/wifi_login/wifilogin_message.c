@@ -268,10 +268,13 @@ void WIFILOGIN_MESSAGE_InfoMessageDispWaitIcon(WIFILOGIN_MESSAGE_WORK* pWork,int
 { 
   WIFILOGIN_MESSAGE_InfoMessageDisp(pWork,msgid);
 
-  if( pWork->timeIcon == NULL )
+  if( pWork->timeIcon )
   { 
-    pWork->timeIcon = TIMEICON_Create( GFUser_VIntr_GetTCBSYS(), pWork->infoDispWin, 15, TIMEICON_DEFAULT_WAIT, pWork->heapID );
+    TILEICON_Exit( pWork->timeIcon );
+    pWork->timeIcon = NULL;
   }
+
+  pWork->timeIcon = TIMEICON_Create( GFUser_VIntr_GetTCBSYS(), pWork->infoDispWin, 15, TIMEICON_DEFAULT_WAIT, pWork->heapID );
 }
 
 
