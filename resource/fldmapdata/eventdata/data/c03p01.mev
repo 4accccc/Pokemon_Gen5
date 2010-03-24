@@ -137,7 +137,7 @@ LOCALWORK10
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-200 0 -72
+232 0 24
 #size
 1 8
 #event number: 1
@@ -171,7 +171,7 @@ LOCALWORK10
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--200 0 -56
+-232 0 8
 #size
 1 8
 #event number: 3
