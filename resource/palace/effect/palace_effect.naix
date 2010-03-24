@@ -15,7 +15,9 @@ enum {
 	NARC_palace_effect_block_nsbmd = 1,
 	NARC_palace_effect_p_barrier_nsbca = 2,
 	NARC_palace_effect_p_barrier_nsbmd = 3,
-	NARC_palace_effect_p_barrier_nsbta = 4
+	NARC_palace_effect_p_barrier_nsbta = 4,
+	NARC_palace_effect_warp01_nsbmd = 5,
+	NARC_palace_effect_warp01_nsbta = 6
 };
 
 /* NARC_PALACE_EFFECT_NAIX_ */

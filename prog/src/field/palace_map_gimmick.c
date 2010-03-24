@@ -22,6 +22,8 @@
 #include "field/field_comm/intrude_work.h"
 
 #include "eventdata_local.h"
+#include "field/eventdata_sxy.h"
+#include "field/eventdata_system.h"
 
 //-----------------------------------------------------------------------------
 /**
@@ -35,7 +37,6 @@
 // ギミックワークのアサインID
 #define GIMMICK_WORK_ASSIGN_ID (0)
 
-
 //-------------------------------------
 ///	ギミックワーク
 //=====================================
@@ -43,6 +44,9 @@
 enum {
   MAP_RES_CUBE,           // 
   MAP_RES_CUBE_ANIME,     // 
+
+  MAP_RES_WARP,           // 
+  MAP_RES_WARP_ANIME,     // 
   
   MAP_RES_NUM
 } ;
@@ -50,24 +54,49 @@ static const GFL_G3D_UTIL_RES map_res_tbl[ MAP_RES_NUM ] =
 {
   { ARCID_PALACE_EFFECT, NARC_palace_effect_block_nsbmd, GFL_G3D_UTIL_RESARC },     // 
   { ARCID_PALACE_EFFECT, NARC_palace_effect_block_nsbma, GFL_G3D_UTIL_RESARC },     // 
+
+  { ARCID_PALACE_EFFECT, NARC_palace_effect_warp01_nsbmd, GFL_G3D_UTIL_RESARC },     // 
+  { ARCID_PALACE_EFFECT, NARC_palace_effect_warp01_nsbta, GFL_G3D_UTIL_RESARC },     // 
 };
 
 // アニメーションインデックス
 enum{
   MAP_ANM_CUBE_ANIME,
-
   MAP_ANM_CUBE_NUM,
+
+  MAP_ANM_WARP_ANIME = 0,
+  MAP_ANM_WARP_NUM,
 } ;
 static const GFL_G3D_UTIL_ANM map_res_cube_anm_tbl[ MAP_ANM_CUBE_NUM ] = 
 {
   { MAP_RES_CUBE_ANIME, 0 },
 };
 
+static const GFL_G3D_UTIL_ANM map_res_warp_anm_tbl[ MAP_ANM_WARP_NUM ] = 
+{
+  { MAP_RES_WARP_ANIME, 0 },
+};
+
 // オブジェクトインデックス
 enum {
+  // キューブ
   MAP_OBJ_CUBE,
 
-  MAP_OBJ_NUM
+  // ワープ
+  MAP_OBJ_WARP00,
+  MAP_OBJ_WARP01,
+  MAP_OBJ_WARP02,
+  MAP_OBJ_WARP03,
+  MAP_OBJ_WARP04,
+  MAP_OBJ_WARP05,
+  MAP_OBJ_WARP06,
+  MAP_OBJ_WARP07,
+
+  MAP_OBJ_NUM,
+
+    
+  // ワープオブジェ数
+  MAP_OBJ_WARP_MAX = 8,
 } ;
 static const GFL_G3D_UTIL_OBJ map_obj_table[ MAP_OBJ_NUM ] = 
 {
@@ -77,8 +106,18 @@ static const GFL_G3D_UTIL_OBJ map_obj_table[ MAP_OBJ_NUM ] =
   // アニメテーブル, 
   // アニメリソース数
   
-  //白
-  { MAP_OBJ_CUBE, 0, MAP_RES_CUBE, map_res_cube_anm_tbl, MAP_ANM_CUBE_NUM },
+  // キューブ
+  { MAP_RES_CUBE, 0, MAP_RES_CUBE, map_res_cube_anm_tbl, MAP_ANM_CUBE_NUM },
+  
+  // ワープ
+  { MAP_RES_WARP, 0, MAP_RES_WARP, map_res_warp_anm_tbl, MAP_ANM_WARP_NUM },
+  { MAP_RES_WARP, 0, MAP_RES_WARP, map_res_warp_anm_tbl, MAP_ANM_WARP_NUM },
+  { MAP_RES_WARP, 0, MAP_RES_WARP, map_res_warp_anm_tbl, MAP_ANM_WARP_NUM },
+  { MAP_RES_WARP, 0, MAP_RES_WARP, map_res_warp_anm_tbl, MAP_ANM_WARP_NUM },
+  { MAP_RES_WARP, 0, MAP_RES_WARP, map_res_warp_anm_tbl, MAP_ANM_WARP_NUM },
+  { MAP_RES_WARP, 0, MAP_RES_WARP, map_res_warp_anm_tbl, MAP_ANM_WARP_NUM },
+  { MAP_RES_WARP, 0, MAP_RES_WARP, map_res_warp_anm_tbl, MAP_ANM_WARP_NUM },
+  { MAP_RES_WARP, 0, MAP_RES_WARP, map_res_warp_anm_tbl, MAP_ANM_WARP_NUM },
 };
 
 static const GFL_G3D_UTIL_SETUP map_setup = { map_res_tbl, MAP_RES_NUM, map_obj_table, MAP_OBJ_NUM };
@@ -125,6 +164,7 @@ void PALACE_MAP_GMK_Setup(FIELDMAP_WORK *fieldWork)
   PALACE_MAP_GMK_WORK* wk;  //
   HEAPID                heapID = FIELDMAP_GetHeapID( fieldWork );
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldWork );
+  int i;
 
   //汎用ワーク確保
   wk = GMK_TMP_WK_AllocWork
@@ -132,19 +172,76 @@ void PALACE_MAP_GMK_Setup(FIELDMAP_WORK *fieldWork)
   // 拡張オブジェクトのユニットを追加
   FLD_EXP_OBJ_AddUnit( exobj_cnt, &map_setup, EXPOBJ_UNIT_IDX );
 
-  // 表示OFF
-  FLD_EXP_OBJ_SetVanish( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, TRUE );
+  // 全オブジェの表示をOFF
+  for( i=0; i<MAP_OBJ_NUM; i++ ){
+    // 表示OFF
+    FLD_EXP_OBJ_SetVanish( exobj_cnt, EXPOBJ_UNIT_IDX, i, TRUE );
+  }
 
-  // OBJSTATUS取得
-  wk->objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE );
-
-  // アニメOFF
+  // キューブ
   {
-    EXP_OBJ_ANM_CNT_PTR anime = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, 
-        EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, MAP_ANM_CUBE_ANIME );
-    FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, MAP_ANM_CUBE_ANIME, TRUE );
-    FLD_EXP_OBJ_ChgAnmStopFlg( anime, TRUE );
-    FLD_EXP_OBJ_ChgAnmLoopFlg( anime, FALSE );
+    // OBJSTATUS取得
+    wk->objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE );
+
+    // アニメOFF
+    {
+      EXP_OBJ_ANM_CNT_PTR anime = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, 
+          EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, MAP_ANM_CUBE_ANIME );
+      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, MAP_ANM_CUBE_ANIME, TRUE );
+      FLD_EXP_OBJ_ChgAnmStopFlg( anime, TRUE );
+      FLD_EXP_OBJ_ChgAnmLoopFlg( anime, FALSE );
+    }
+  }
+
+
+  // ワープ
+  {
+    GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( fieldWork );
+    GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+    EVENTDATA_SYSTEM* evdata = GAMEDATA_GetEventData( gdata );
+    int connect_num = EVENTDATA_GetConnectEventNum( evdata );
+    int i;
+    const CONNECT_DATA * cp_connect;
+    EXIT_TYPE exit_type;
+    VecFx32 pos;
+    int warp_num = 0;
+    GFL_G3D_OBJSTATUS* p_trans;
+    
+    for( i=0; i<connect_num; i++ ){
+      
+      cp_connect = EVENTDATA_GetConnectByID( evdata, i );
+      if( cp_connect ){
+
+        //　進入用で入り口の場所にワープを表示
+        exit_type = CONNECTDATA_GetExitType( cp_connect );
+        if( exit_type == EXIT_TYPE_INTRUDE ){
+          // 位置を生成
+          EVENTDATA_GetConnectCenterPos( cp_connect, &pos );
+
+          GF_ASSERT( warp_num < MAP_OBJ_WARP_MAX );
+
+          // ギミックを表示ON
+          {
+            // 表示ON
+            FLD_EXP_OBJ_SetVanish( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_WARP00+i, FALSE );
+
+            // OBJSTATUSに座標を設定
+            p_trans = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_WARP00+i );
+            p_trans->trans = pos;
+
+            // アニメON
+            {
+              EXP_OBJ_ANM_CNT_PTR anime = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, 
+                  EXPOBJ_UNIT_IDX, MAP_OBJ_WARP00+i, MAP_ANM_CUBE_ANIME );
+              FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_WARP00+i, MAP_ANM_WARP_ANIME, TRUE );
+            }
+          }
+
+        }
+      }
+    }
+  
+    
   }
 }
 
@@ -189,11 +286,13 @@ void PALACE_MAP_GMK_Move(FIELDMAP_WORK *fieldWork)
   // アニメーションコントローラー取得
   anime = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, 
       EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, MAP_ANM_CUBE_ANIME );
+
+  // アニメメイン
+  FLD_EXP_OBJ_PlayAnime( exobj_cnt );
   
   // 表示キューブOFF
   if( wk->on ){
 
-    FLD_EXP_OBJ_PlayAnime( exobj_cnt );
     
     if( FLD_EXP_OBJ_ChkAnmEnd(anime) ){
       // OFF
@@ -215,7 +314,6 @@ void PALACE_MAP_GMK_Move(FIELDMAP_WORK *fieldWork)
 
     if( EVENTDATA_SYS_CheckPosDummyEvent( evsys, &pos ) ){
       wk->on        = TRUE;
-      
 
       // 表示ON
       FLD_EXP_OBJ_SetVanish( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, FALSE );

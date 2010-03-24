@@ -192,7 +192,6 @@ extern const POS_EVENT_DATA * EVENTDATA_GetPosEventRailLocation(
  */
 //-----------------------------------------------------------------------------
 extern void EVENTDATA_GetConnectCenterPos( const CONNECT_DATA * data, VecFx32* pos );
-extern void EVENTDATA_GetConnectCenterRailLocation( const CONNECT_DATA * data, RAIL_LOCATION* location );
 
 //----------------------------------------------------------------------------
 /**

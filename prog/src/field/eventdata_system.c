@@ -113,6 +113,7 @@ static void clearEventDataTable( EVENTDATA_SYSTEM* evdata );
 // CONNECT_DATA ポジション
 //============================================================================================
 static void ConnectData_GPOS_GetPos( const CONNECT_DATA* cp_data, LOC_EXIT_OFS exit_ofs, VecFx32* p_pos );
+static void ConnectData_GPOS_GetPosCenter( const CONNECT_DATA* cp_data, VecFx32* p_pos );
 static BOOL ConnectData_GPOS_IsHit( const CONNECT_DATA* cp_data, const VecFx32* cp_pos );
 static void ConnectData_RPOS_GetLocation( const CONNECT_DATA* cp_data, LOC_EXIT_OFS exit_ofs, RAIL_LOCATION* p_location );
 static BOOL ConnectData_RPOS_IsHit( const CONNECT_DATA* cp_data, const RAIL_LOCATION* cp_location );
@@ -1575,7 +1576,6 @@ u16 EVENTDATA_CheckTalkBoardEventRailLocation(
 
 
 
-#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief  出入り口イベント　中心３D座標を取得
@@ -1588,15 +1588,8 @@ void EVENTDATA_GetConnectCenterPos( const CONNECT_DATA * data, VecFx32* pos )
 {
   GF_ASSERT( data );
   GF_ASSERT( pos );
-  ConnectData_GPOS_GetPos( data, LOCATION_DEFAULT_EXIT_OFS, pos );
+  ConnectData_GPOS_GetPosCenter( data, pos );
 }
-void EVENTDATA_GetConnectCenterRailLocation( const CONNECT_DATA * data, RAIL_LOCATION* location )
-{
-  GF_ASSERT( data );
-  GF_ASSERT( location );
-  ConnectData_RPOS_GetLocation( data, location );
-}
-#endif
 
 //----------------------------------------------------------------------------
 /**
@@ -1856,7 +1849,7 @@ static LOC_EXIT_OFS ConnectData_RPOS_GetExitOfs( const CONNECT_DATA * cp_data, c
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  中心　３D座標の取得
+ *	@brief  ３D座標の取得
  *
  *	@param	cp_data   データ
  *	@param  exit_ofs  出入口オフセット
@@ -1895,6 +1888,43 @@ static void ConnectData_GPOS_GetPos( const CONNECT_DATA* cp_data, LOC_EXIT_OFS e
     p_pos->z += ret_ofs * FIELD_CONST_GRID_FX32_SIZE;
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  中心　３D座標の取得
+ *
+ *	@param	cp_data   データ
+ *	@param  exit_ofs  出入口オフセット
+ *	@param	p_pos     座標格納先
+ */
+//-----------------------------------------------------------------------------
+static void ConnectData_GPOS_GetPosCenter( const CONNECT_DATA* cp_data, VecFx32* p_pos )
+{
+  const CONNECT_DATA_GPOS * cp_pos;
+  
+  GF_ASSERT( cp_data );
+  GF_ASSERT( cp_data->pos_type == EVENTDATA_POSTYPE_GRID );
+
+  cp_pos = (const CONNECT_DATA_GPOS *)cp_data->pos_buf;
+
+  p_pos->x = (cp_pos->x + CONNECT_POS_OFS_X)<<FX32_SHIFT;
+  p_pos->y = (cp_pos->y + CONNECT_POS_OFS_Y)<<FX32_SHIFT;
+  p_pos->z = (cp_pos->z + CONNECT_POS_OFS_Z)<<FX32_SHIFT;
+
+  // 両方のサイズが1以上ならアサート
+  GF_ASSERT( !((cp_pos->sizex > 1) && (cp_pos->sizez > 1)) );
+
+  //exit_ofsを加えた座標を返す
+  if (cp_pos->sizex > 1 )
+  {
+    p_pos->x += (cp_pos->sizex/2) * FIELD_CONST_GRID_FX32_SIZE;
+  }
+  else if (cp_pos->sizez > 1 )
+  {
+    p_pos->z += (cp_pos->sizez/2) * FIELD_CONST_GRID_FX32_SIZE;
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  グリッド座標と３D座標の判定
