@@ -32,10 +32,11 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk );
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateRival(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateRival(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_RIVAL );
@@ -47,10 +48,11 @@ GMEVENT *ENCEFF_CI_CreateRival(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateSupport(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateSupport(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_SUPPORT );
@@ -62,10 +64,11 @@ GMEVENT *ENCEFF_CI_CreateSupport(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateGym01A(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateGym01A(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM1A );
@@ -77,10 +80,11 @@ GMEVENT *ENCEFF_CI_CreateGym01A(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateGym01B(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateGym01B(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM1B );
@@ -92,10 +96,11 @@ GMEVENT *ENCEFF_CI_CreateGym01B(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateGym01C(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateGym01C(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM1C );
@@ -107,10 +112,11 @@ GMEVENT *ENCEFF_CI_CreateGym01C(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateGym02(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateGym02(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM2 );
@@ -122,10 +128,11 @@ GMEVENT *ENCEFF_CI_CreateGym02(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateGym03(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateGym03(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM3 );
@@ -137,10 +144,11 @@ GMEVENT *ENCEFF_CI_CreateGym03(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateGym04(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateGym04(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM4 );
@@ -152,10 +160,11 @@ GMEVENT *ENCEFF_CI_CreateGym04(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateGym05(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateGym05(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM5 );
@@ -167,10 +176,11 @@ GMEVENT *ENCEFF_CI_CreateGym05(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateGym06(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateGym06(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM6 );
@@ -182,10 +192,11 @@ GMEVENT *ENCEFF_CI_CreateGym06(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateGym07(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateGym07(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM7 );
@@ -197,10 +208,11 @@ GMEVENT *ENCEFF_CI_CreateGym07(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateGym08A(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateGym08A(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM8A );
@@ -212,10 +224,11 @@ GMEVENT *ENCEFF_CI_CreateGym08A(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateGym08B(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateGym08B(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_GYM8B );
@@ -227,10 +240,11 @@ GMEVENT *ENCEFF_CI_CreateGym08B(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateBigFour1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateBigFour1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR1 );
@@ -242,10 +256,11 @@ GMEVENT *ENCEFF_CI_CreateBigFour1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateBigFour2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateBigFour2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR2 );
@@ -257,10 +272,11 @@ GMEVENT *ENCEFF_CI_CreateBigFour2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateBigFour3(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateBigFour3(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR3 );
@@ -272,10 +288,11 @@ GMEVENT *ENCEFF_CI_CreateBigFour3(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateBigFour4(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateBigFour4(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BIGFOUR4 );
@@ -287,10 +304,11 @@ GMEVENT *ENCEFF_CI_CreateBigFour4(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateChamp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateChamp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_CHAMP );
@@ -302,10 +320,11 @@ GMEVENT *ENCEFF_CI_CreateChamp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateBoss(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateBoss(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_BOSS );
@@ -317,10 +336,11 @@ GMEVENT *ENCEFF_CI_CreateBoss(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreateSage(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreateSage(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_SAGE );
@@ -332,10 +352,11 @@ GMEVENT *ENCEFF_CI_CreateSage(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  * イベント作成
  * @param gsys  GAMESYS_WORK
  * @param fieldWork FIELDMAP_WORK
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_CI_CreatePlasma(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_CI_CreatePlasma(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork, ENC_CUTIN_PLASMA );

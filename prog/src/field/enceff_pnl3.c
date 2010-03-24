@@ -45,12 +45,13 @@ static void ReferenceEntry(PNL_EFF_WORK *work);
  * イベント作成
  *
  * @param   gsys        ゲームシステムポインタ
- * @param   fieldWork   フィールドワークポインタ  
+ * @param   fieldWork   フィールドワークポインタ
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  *
  * @return	event       イベントポインタ
  */
 //--------------------------------------------------------------------------------------------
-GMEVENT *ENCEFF_PNL3_Create(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_PNL3_Create(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   ENCEFF_CNT_PTR eff_cnt_ptr;
   GMEVENT * event;
@@ -85,7 +86,7 @@ static GMEVENT *CreateEffMainEvt(GAMESYS_WORK *gsys)
   param.StartFunc = StartFunc;
   param.MoveFunc = MoveFunc;
 
-  event = ENCEFF_PNL_CreateEffMainEvt(gsys, &param);
+  event = ENCEFF_PNL_CreateEffMainEvt(gsys, &param, TRUE);
 
   return event;
 }

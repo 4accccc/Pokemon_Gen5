@@ -28,6 +28,8 @@ typedef struct ENCEFF_PNL_WORK_tag
 */  
   PNL_EFF_WORK PnlEffWork;
   PANEL_START_FUNC StartFunc;
+  int Fade;
+  int Color;
 }ENCEFF_PNL_WORK;
 
 static GMEVENT_RESULT EffMainEvt( GMEVENT* event, int* seq, void* work );
@@ -40,11 +42,13 @@ static BOOL MoveMain(ENCEFF_PNL_WORK *evt_work);
  * イベント作成
  *
  * @param   gsys        ゲームシステムポインタ
+ * @param   param       パラメータポインタ
+ * @param   inIsWhiteFade エフェクト終了はホワイトアウトか？
  *
  * @return	event       イベントポインタ
  */
 //--------------------------------------------------------------------------------------------
-GMEVENT *ENCEFF_PNL_CreateEffMainEvt(GAMESYS_WORK *gsys, PNL_EFF_PARAM *param)
+GMEVENT *ENCEFF_PNL_CreateEffMainEvt(GAMESYS_WORK *gsys, PNL_EFF_PARAM *param, const BOOL inIsWhiteFade)
 {
   GMEVENT * event;
   ENCEFF_PNL_WORK *work;
@@ -123,6 +127,17 @@ GMEVENT *ENCEFF_PNL_CreateEffMainEvt(GAMESYS_WORK *gsys, PNL_EFF_PARAM *param)
     if ( param->InitFunc != NULL ) param->InitFunc(&work->PnlEffWork);
 
   }
+
+  if (inIsWhiteFade)
+  {
+    work->Fade = GFL_FADE_MASTER_BRIGHT_WHITEOUT;
+    work->Color = GX_RGB(31,31,31);
+  }
+  else
+  {
+    work->Fade = GFL_FADE_MASTER_BRIGHT_BLACKOUT;
+    work->Color = GX_RGB(0,0,0);
+  }
   return event;
 }
 
@@ -157,14 +172,14 @@ static GMEVENT_RESULT EffMainEvt( GMEVENT* event, int* seq, void* work )
       rc = MoveMain(evt_work);      
       if (rc)
       {
-        //ホワイトアウト開始
-        GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 0 );  //両画面フェードアウト
+        //フェードアウト開始
+        GFL_FADE_SetMasterBrightReq(evt_work->Fade, 0, 16, 0 );  //両画面フェードアウト
         (*seq)++;
       }
     }
     break;
   case 1:
-    //ホワイトアウト待ち
+    //フェードアウト待ち
     if ( GFL_FADE_CheckFade() != FALSE ) break;
     return( GMEVENT_RES_FINISH );
   }
@@ -239,10 +254,13 @@ static BOOL MoveMain(ENCEFF_PNL_WORK *evt_work)
 //--------------------------------------------------------------------------------------------
 void ENCEFF_PNL_Draw( ENCEFF_CNT_PTR ptr )
 {
+  ENCEFF_PNL_WORK *evt_work;
   void *wk = ENCEFF_GetWork(ptr);
   ENCEFF_PRG_PTR prg_ptr = (ENCEFF_PRG_PTR)wk;
+  
+  evt_work = ENCEFF_GetUserWorkPtr(ptr);
 
-  G3X_SetClearColor(GX_RGB(31,31,31),31,0x7fff,0,FALSE);
+  G3X_SetClearColor(evt_work->Color,31,0x7fff,0,FALSE);
   ENCEFF_PRG_Draw(prg_ptr);
 }
 

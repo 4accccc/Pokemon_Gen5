@@ -32,6 +32,7 @@ typedef struct
 	GFL_G3D_OBJ*				g3DobjEff;
   int MdlArcIdx;
   int AnmArcIdx;
+  int Fade;
 }ENCEFF_MDL_WORK;
 
 //======================================================================
@@ -40,7 +41,7 @@ typedef struct
 static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk );
 
 static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
-                                  const int inMdl, const int inAnm  );
+                                  const int inMdl, const int inAnm, const BOOL inIsFadeWhite  );
 
 
 //--------------------------------------------------------------
@@ -51,12 +52,13 @@ static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-GMEVENT *ENCEFF_MDL_Create1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_MDL_Create1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   GMEVENT *event;
   event = CreateEffCommon( gsys, fieldWork,
                            NARC_texViewTest_effect1_nsbmd,
-                           NARC_texViewTest_effect1_nsbca  );
+                           NARC_texViewTest_effect1_nsbca,
+                           inIsFadeWhite );
   return( event );
 }
 
@@ -72,7 +74,7 @@ GMEVENT *ENCEFF_MDL_Create1(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  */
 //--------------------------------------------------------------
 static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
-                                  const int inMdl, const int inAnm  )
+                                  const int inMdl, const int inAnm, const BOOL inIsFadeWhite  )
 {
   ENCEFF_CNT_PTR cnt_ptr;
   GMEVENT *event;
@@ -93,6 +95,8 @@ static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
   work->fieldWork = fieldWork;
   work->MdlArcIdx = inMdl;
   work->AnmArcIdx = inAnm;
+  if (inIsFadeWhite) work->Fade = GFL_FADE_MASTER_BRIGHT_WHITEOUT;
+  else work->Fade = GFL_FADE_MASTER_BRIGHT_BLACKOUT;
 
   return( event );
 
@@ -101,7 +105,7 @@ static GMEVENT *CreateEffCommon(  GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 //--------------------------------------------------------------
 /**
  * 描画関数
- * @param 
+ * @param     ptr   エフェクトポインタ
  * @retval none
  */
 //--------------------------------------------------------------
@@ -192,7 +196,7 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
 		work->dMode = FIELDMAP_GetDraw3DMode(work->fieldWork);
 		FIELDMAP_SetDraw3DMode(work->fieldWork, DRAW3DMODE_ENCEFF);
 
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 3 );  //両画面フェードアウト
+    GFL_FADE_SetMasterBrightReq(work->Fade, 0, 16, 3 );  //両画面フェードアウト
     (*seq)++;
     break;
 	case 4:

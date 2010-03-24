@@ -42,6 +42,7 @@ typedef struct
   u16 WaveAfterWait;
 
   fx32 Height;
+  int Fade;
 }ENCEFF_WAV_WORK;
 
 static void DrawMesh(void *wk);
@@ -57,11 +58,12 @@ static GMEVENT *CreateEffMainEvt2(GAMESYS_WORK *gsys);
  *
  * @param   gsys        ゲームシステムポインタ
  * @param   fieldWork   フィールドマップポインタ
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  *
  * @return	event       イベントポインタ
  */
 //--------------------------------------------------------------------------------------------
-GMEVENT *ENCEFF_WAV_Create(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_WAV_Create(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   ENCEFF_CNT_PTR eff_cnt_ptr;
   GMEVENT * event;
@@ -81,11 +83,12 @@ GMEVENT *ENCEFF_WAV_Create(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
  *
  * @param   gsys        ゲームシステムポインタ
  * @param   fieldWork   フィールドマップポインタ
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
  *
  * @return	event       イベントポインタ
  */
 //--------------------------------------------------------------------------------------------
-GMEVENT *ENCEFF_WAV_Create2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+GMEVENT *ENCEFF_WAV_Create2(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   ENCEFF_CNT_PTR eff_cnt_ptr;
   GMEVENT * event;
@@ -149,6 +152,7 @@ static GMEVENT *CreateEffMainEvt(GAMESYS_WORK *gsys)
       vec->z = 0;
     }
   }
+  work->Fade = GFL_FADE_MASTER_BRIGHT_WHITEOUT;
   return event;
 }
 
@@ -183,7 +187,7 @@ static GMEVENT_RESULT EffMainEvt( GMEVENT* event, int* seq, void* work )
       if (rc)
       {
         //ホワイトアウト開始
-        GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 0 ); //両画面フェードアウト
+        GFL_FADE_SetMasterBrightReq(evt_work->Fade, 0, 16, 0 ); //両画面フェードアウト
         evt_work->WaveWait = EFF_AFTER_WAIT;
         (*seq)++;
       }
@@ -615,5 +619,6 @@ static GMEVENT *CreateEffMainEvt2(GAMESYS_WORK *gsys)
       vec->z = 0;
     }
   }
+  work->Fade = GFL_FADE_MASTER_BRIGHT_BLACKOUT;
   return event;
 }

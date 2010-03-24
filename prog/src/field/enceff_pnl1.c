@@ -21,8 +21,18 @@ static GMEVENT *CreateEffMainEvt(GAMESYS_WORK *gsys);
 static BOOL MoveFunc(PANEL_WK *panel);
 static void StartFunc(PNL_EFF_WORK *work);
 
-
-GMEVENT *ENCEFF_PNL1_Create(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork)
+//--------------------------------------------------------------------------------------------
+/**
+ * イベント作成
+ *
+ * @param   gsys        ゲームシステムポインタ
+ * @param   fieldWork   フィールドマップポインタ
+ * @param   inIsFadeWhite エフェクト終了はホワイトアウトか？
+ *
+ * @return	event       イベントポインタ
+ */
+//--------------------------------------------------------------------------------------------
+GMEVENT *ENCEFF_PNL1_Create(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, const BOOL inIsFadeWhite)
 {
   ENCEFF_CNT_PTR eff_cnt_ptr;
   GMEVENT * event;
@@ -57,11 +67,20 @@ static GMEVENT *CreateEffMainEvt(GAMESYS_WORK *gsys)
   param.StartFunc = StartFunc;
   param.MoveFunc = MoveFunc;
 
-  event = ENCEFF_PNL_CreateEffMainEvt(gsys, &param);
+  event = ENCEFF_PNL_CreateEffMainEvt(gsys, &param, FALSE);
 
   return event;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * ファンクションスタート
+ *
+ * @param   work        ワークポインタ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void StartFunc(PNL_EFF_WORK *work)
 {
   MOVE_START_PRM *prm = &work->StartPrm;
@@ -84,6 +103,15 @@ static void StartFunc(PNL_EFF_WORK *work)
   }
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * 動作関数
+ *
+ * @param   panel   パネルワークポインタ
+ *
+ * @return	BOOL    TRUEで終了セット
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL MoveFunc(PANEL_WK *panel)
 {
   if ( panel->Count < ROT_NUM )

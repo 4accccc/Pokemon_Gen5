@@ -13,7 +13,7 @@
 #define OVERLAY_STACK_MAX (3)
 #define OVERLAY_NONE  (-1)
 
-typedef GMEVENT* (*CREATE_FUNC)(GAMESYS_WORK *, FIELDMAP_WORK *);
+typedef GMEVENT* (*CREATE_FUNC)(GAMESYS_WORK *, FIELDMAP_WORK *, const BOOL);
 typedef void (*DRAW_FUNC)(ENCEFF_CNT_PTR);
 
 FS_EXTERN_OVERLAY(enceff_ci);
@@ -39,51 +39,51 @@ typedef struct {
   CREATE_FUNC CreateFunc;
   DRAW_FUNC DrawFunc;
   FSOverlayID OverlayID;
+  BOOL IsFadeWhite;
 }ENCEFF_TBL;
 
 //※ enceffno_def.h と並びを同じにすること
 static const ENCEFF_TBL EncEffTbl[] = {
-  {ENCEFF_MDL_Create1, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl)},     //野生　通常
-  {ENCEFF_MDL_Create1, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl)},     //野生　強
-  {ENCEFF_WAV_Create, ENCEFF_WAV_Draw, FS_OVERLAY_ID(enceff_wav)},      //野生　水上 釣り
-  {ENCEFF_MDL_Create1, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl)},     //野生　屋内
-  {ENCEFF_MDL_Create1, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl)},     //野生　砂地
-  {ENCEFF_MDL_Create1, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl)},     //トレーナー　通常
-  {ENCEFF_WAV_Create, ENCEFF_WAV_Draw, FS_OVERLAY_ID(enceff_wav)},      //トレーナー　水上
-  {ENCEFF_PNL1_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl1)},    //トレーナー　屋内
-//  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    
-  {ENCEFF_PNL3_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl3)},    //トレーナー　砂地
+  {ENCEFF_MDL_Create1, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE},     //野生　通常
+  {ENCEFF_MDL_Create1, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE},     //野生　強
+  {ENCEFF_WAV_Create, ENCEFF_WAV_Draw, FS_OVERLAY_ID(enceff_wav), TRUE},      //野生　水上 釣り
+  {ENCEFF_MDL_Create1, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), FALSE},     //野生　屋内
+  {ENCEFF_MDL_Create1, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE},     //野生　砂地
+  {ENCEFF_MDL_Create1, ENCEFF_MDL_Draw, FS_OVERLAY_ID(enceff_mdl), TRUE},     //トレーナー　通常
+  {ENCEFF_WAV_Create, ENCEFF_WAV_Draw, FS_OVERLAY_ID(enceff_wav), TRUE},      //トレーナー　水上
+  {ENCEFF_PNL1_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl1), FALSE},    //トレーナー　屋内
+  {ENCEFF_PNL3_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl3), TRUE},    //トレーナー　砂地
 
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //バトルサブウェイ
+  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2), TRUE},    //バトルサブウェイ
 
-  {ENCEFF_CI_CreateRival, NULL, FS_OVERLAY_ID(enceff_ci)},    //ライバル
-  {ENCEFF_CI_CreateSupport, NULL, FS_OVERLAY_ID(enceff_ci)},    //サポーター
-  {ENCEFF_CI_CreateGym01A, NULL, FS_OVERLAY_ID(enceff_ci)},    //C1ジムリーダーＡ
-  {ENCEFF_CI_CreateGym01B, NULL, FS_OVERLAY_ID(enceff_ci)},    //C1ジムリーダーＢ
-  {ENCEFF_CI_CreateGym01C, NULL, FS_OVERLAY_ID(enceff_ci)},    //C1ジムリーダーＣ
-  {ENCEFF_CI_CreateGym02, NULL, FS_OVERLAY_ID(enceff_ci)},    //C2ジムリーダー
-  {ENCEFF_CI_CreateGym03, NULL, FS_OVERLAY_ID(enceff_ci)},    //C3ジムリーダー
-  {ENCEFF_CI_CreateGym04, NULL, FS_OVERLAY_ID(enceff_ci)},    //C4ジムリーダー
-  {ENCEFF_CI_CreateGym05, NULL, FS_OVERLAY_ID(enceff_ci)},    //C5ジムリーダー
-  {ENCEFF_CI_CreateGym06, NULL, FS_OVERLAY_ID(enceff_ci)},    //C6ジムリーダー
-  {ENCEFF_CI_CreateGym07, NULL, FS_OVERLAY_ID(enceff_ci)},    //C7ジムリーダー
-  {ENCEFF_CI_CreateGym08A, NULL, FS_OVERLAY_ID(enceff_ci)},    //C8ジムリーダーＡ
-  {ENCEFF_CI_CreateGym08B, NULL, FS_OVERLAY_ID(enceff_ci)},    //C8ジムリーダーＢ
-  {ENCEFF_CI_CreateBigFour1, NULL, FS_OVERLAY_ID(enceff_ci)},    //四天王1
-  {ENCEFF_CI_CreateBigFour2, NULL, FS_OVERLAY_ID(enceff_ci)},    //四天王2
-  {ENCEFF_CI_CreateBigFour3, NULL, FS_OVERLAY_ID(enceff_ci)},    //四天王3
-  {ENCEFF_CI_CreateBigFour4, NULL, FS_OVERLAY_ID(enceff_ci)},    //四天王4
-  {ENCEFF_CI_CreateChamp, NULL, FS_OVERLAY_ID(enceff_ci)},    //チャンプ
-  {ENCEFF_CI_CreateBoss, NULL, FS_OVERLAY_ID(enceff_ci)},    //N
-  {ENCEFF_CI_CreateSage, NULL, FS_OVERLAY_ID(enceff_ci)},    //ゲーツィス
-  {ENCEFF_CI_CreatePlasma, NULL, FS_OVERLAY_ID(enceff_ci)},    //プラズマ団
+  {ENCEFF_CI_CreateRival, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //ライバル
+  {ENCEFF_CI_CreateSupport, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //サポーター
+  {ENCEFF_CI_CreateGym01A, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //C1ジムリーダーＡ
+  {ENCEFF_CI_CreateGym01B, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //C1ジムリーダーＢ
+  {ENCEFF_CI_CreateGym01C, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //C1ジムリーダーＣ
+  {ENCEFF_CI_CreateGym02, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //C2ジムリーダー
+  {ENCEFF_CI_CreateGym03, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //C3ジムリーダー
+  {ENCEFF_CI_CreateGym04, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //C4ジムリーダー
+  {ENCEFF_CI_CreateGym05, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //C5ジムリーダー
+  {ENCEFF_CI_CreateGym06, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //C6ジムリーダー
+  {ENCEFF_CI_CreateGym07, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //C7ジムリーダー
+  {ENCEFF_CI_CreateGym08A, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //C8ジムリーダーＡ
+  {ENCEFF_CI_CreateGym08B, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //C8ジムリーダーＢ
+  {ENCEFF_CI_CreateBigFour1, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //四天王1
+  {ENCEFF_CI_CreateBigFour2, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //四天王2
+  {ENCEFF_CI_CreateBigFour3, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //四天王3
+  {ENCEFF_CI_CreateBigFour4, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //四天王4
+  {ENCEFF_CI_CreateChamp, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //チャンプ
+  {ENCEFF_CI_CreateBoss, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //N
+  {ENCEFF_CI_CreateSage, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //ゲーツィス
+  {ENCEFF_CI_CreatePlasma, NULL, FS_OVERLAY_ID(enceff_ci), FALSE},    //プラズマ団
 
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //エフェクト
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //パッケージポケ
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //移動ポケ
-  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2)},    //三銃士ポケ
+  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2), TRUE},    //エフェクト
+  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2), TRUE},    //パッケージポケ
+  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2), TRUE},    //移動ポケ
+  {ENCEFF_PNL2_Create, ENCEFF_PNL_Draw, FS_OVERLAY_ID(enceff_pnl2), TRUE},    //三銃士ポケ
 
-  {ENCEFF_WAV_Create2, ENCEFF_WAV_Draw, FS_OVERLAY_ID(enceff_wav)},    //パレスワープ（エンカウントには使用しない）
+  {ENCEFF_WAV_Create2, ENCEFF_WAV_Draw, FS_OVERLAY_ID(enceff_wav), FALSE},    //パレスワープ（エンカウントには使用しない）
 
 };
 
@@ -157,7 +157,7 @@ void ENCEFF_SetEncEff(ENCEFF_CNT_PTR ptr, GMEVENT * event, const ENCEFF_ID inID)
     LoadOverlay(ptr, EncEffTbl[no].OverlayID);
   }
 
-  call_event = EncEffTbl[no].CreateFunc(gsys,fieldmap);
+  call_event = EncEffTbl[no].CreateFunc(gsys, fieldmap, EncEffTbl[no].IsFadeWhite);
   //イベントコール
   GMEVENT_CallEvent( event, call_event );
   //ワークポインタセット

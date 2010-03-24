@@ -65,5 +65,5 @@ typedef struct PNL_EFF_PARAM_tag
 }PNL_EFF_PARAM;
 
 
-extern GMEVENT * ENCEFF_PNL_CreateEffMainEvt(GAMESYS_WORK *gsys, PNL_EFF_PARAM *param);
+extern GMEVENT * ENCEFF_PNL_CreateEffMainEvt(GAMESYS_WORK *gsys, PNL_EFF_PARAM *param, const BOOL inIsWhiteFade);
 extern void ENCEFF_PNL_DrawMesh(void *wk);
