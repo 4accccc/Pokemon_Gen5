@@ -23,6 +23,7 @@
 #include "field_gimmick_league_front02.h"  // for EVENT_LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent
 #include "eventwork.h"  // for EVENTWORK_
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  // for SYS_FLAG_BIGFOUR_xxxx
+#include "sound/pm_sndsys.h" // for PMSND_xxxx
 
 
 //==========================================================================================
@@ -565,6 +566,8 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       work->liftAnime = ICA_ANIME_CreateAlloc( heap_id, ARCID, 
                                                NARC_league_front_pl_ele_00_ica_bin );
     }
+    // エレベータ稼動音開始
+    PMSND_PlaySEVolume( SEQ_SE_FLD_57, 90 );
     ++(*seq);
     OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;

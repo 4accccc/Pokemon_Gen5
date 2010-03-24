@@ -364,6 +364,8 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
     break;
   // 自機が飲み込まれるアニメーション開始
   case SEQ_PLAYER_SALLOW_ANIME_START:
+    // SE再生
+    PMSND_PlaySE( SEQ_SE_FLD_147 );
     // 影を消す
     MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
     // タスク登録

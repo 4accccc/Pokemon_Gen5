@@ -19,6 +19,7 @@
 #include "arc/league_front.naix"  // for NARC_xxxx
 #include "field/field_const.h"  // for FIELD_CONST_GRID_SIZE
 #include "event_fieldmap_control.h"  // for EVENT_FieldBrightIn
+#include "sound/pm_sndsys.h" // for PMSND_xxxx
 
 
 //==========================================================================================
@@ -542,6 +543,8 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       // アニメ終了判定
       if( anime_end )
       { 
+        PMSND_StopSE(); // エレベータ稼動音を停止
+        PMSND_PlaySE( SEQ_SE_FLD_94 ); // エレベータ到着音
         ICA_ANIME_Delete( work->liftAnime );
         (*seq)++;
         OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
