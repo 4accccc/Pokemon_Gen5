@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-03-24T17:43:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="251"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1448" top="178" right="2153" bottom="798" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,41 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c08r0802_babyboy1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">BABYBOY1</attribute>
+		<language name="JPN" width="256">ぼく　おもうんだけど
+ポケモンが　いっしょに　いるから▽
+かったり　まけたり　できるんだよね</language>
+		<language name="JPN_KANJI" width="256">ぼく　おもうんだけど
+ポケモンが　いっしょに　いるから▽
+かったり　まけたり　できるんだよね</language>
+	</row>
+
+	<row id="msg_c08r0802_veteranm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・仮メッセージ</comment>
+		<attribute name="キャラ指定">VETERANM</attribute>
+		<language name="JPN" width="256">ポケモンリーグに　いどむには
+８つの　ジムバッジが　ひつよう！▼
+だが　それだけの　じつりょくでも
+ポケモンリーグで　まちかまえる▽
+してんのうに　かつのは　たいへん！</language>
+		<language name="JPN_KANJI" width="256">ポケモンリーグに　挑むには
+８つの　ジムバッジが　必要！▼
+だが　それだけの　実力でも
+ポケモンリーグで　待ち構える▽
+四天王に　勝つのは　大変！</language>
+	</row>
+
+	<row id="msg_c08r0802_poke_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>ポケモン
+・メッセージ表示にあわせ鳴き声再生</comment>
+		<attribute name="キャラ指定">ポケモン
+ワルビル</attribute>
+		<language name="JPN" width="256">ぐほー！！</language>
+		<language name="JPN_KANJI" width="256">ぐほー！！</language>
 	</row>
 
 	<flowchart-group-list>
