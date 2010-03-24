@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-03-23T12:34:20"/>
+	<create user="nakamura_akira" host="W00161" date="2010-03-24T16:11:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -360,7 +360,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -7337,7 +7337,8 @@ woman2_17○へ続く（それぞれ対応したものへ）</comment>
 メッセージの表示後、調査レーダーに
 対応アンケート追加処理
 
-woman2_18へ続く</comment>
+全てのアンケートに答えた　⇒　woman2_19へ
+答えていないアンケートがある　⇒　woman2_21へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">ちょうさレーダーに
@@ -7353,7 +7354,8 @@ woman2_18へ続く</comment>
 メッセージの表示後、調査レーダーに
 対応アンケート追加処理
 
-woman2_18へ続く</comment>
+全てのアンケートに答えた　⇒　woman2_19へ
+答えていないアンケートがある　⇒　woman2_21へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">ちょうさレーダーに
@@ -7369,7 +7371,8 @@ woman2_18へ続く</comment>
 メッセージの表示後、調査レーダーに
 対応アンケート追加処理
 
-woman2_18へ続く</comment>
+全てのアンケートに答えた　⇒　woman2_19へ
+答えていないアンケートがある　⇒　woman2_21へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">ちょうさレーダーに
@@ -7385,7 +7388,8 @@ woman2_18へ続く</comment>
 メッセージの表示後、調査レーダーに
 対応アンケート追加処理
 
-woman2_18へ続く</comment>
+全てのアンケートに答えた　⇒　woman2_19へ
+答えていないアンケートがある　⇒　woman2_21へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">ちょうさレーダーに
@@ -7400,7 +7404,8 @@ woman2_18へ続く</comment>
 メッセージの表示後、調査レーダーに
 対応アンケート追加処理
 
-woman2_18へ続く</comment>
+全てのアンケートに答えた　⇒　woman2_19へ
+答えていないアンケートがある　⇒　woman2_21へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">ちょうさレーダーに
@@ -7416,7 +7421,8 @@ woman2_18へ続く</comment>
 メッセージの表示後、調査レーダーに
 対応アンケート追加処理
 
-woman2_18へ続く</comment>
+全てのアンケートに答えた　⇒　woman2_19へ
+答えていないアンケートがある　⇒　woman2_21へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">ちょうさレーダーに
@@ -7432,7 +7438,8 @@ woman2_18へ続く</comment>
 メッセージの表示後、調査レーダーに
 対応アンケート追加処理
 
-woman2_18へ続く</comment>
+全てのアンケートに答えた　⇒　woman2_19へ
+答えていないアンケートがある　⇒　woman2_21へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">ちょうさレーダーに
@@ -7447,7 +7454,8 @@ woman2_18へ続く</comment>
 メッセージの表示後、調査レーダーに
 対応アンケート追加処理
 
-woman2_18へ続く</comment>
+全てのアンケートに答えた　⇒　woman2_19へ
+答えていないアンケートがある　⇒　woman2_21へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">ちょうさレーダーに
@@ -7463,7 +7471,8 @@ woman2_18へ続く</comment>
 メッセージの表示後、調査レーダーに
 対応アンケート追加処理
 
-woman2_18へ続く</comment>
+全てのアンケートに答えた　⇒　woman2_19へ
+答えていないアンケートがある　⇒　woman2_21へ</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">ちょうさレーダーに
@@ -7479,9 +7488,7 @@ woman2_18へ続く</comment>
 メッセージの表示後、報酬アイテム入手
 アイテム入手処理
 
-アイテムの入手処理後、分岐
-全てのアンケートに答えた　⇒　woman2_19へ
-答えていないアンケートがある　⇒　woman2_21へ</comment>
+アイテムの入手処理後、woman2_20へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">それと……　これは　アンケートに
@@ -7494,28 +7501,22 @@ woman2_18へ続く</comment>
 		<comment>・アンケート隊員
 全てのアンケートを答えると表示
 
-woman2_20へ続く</comment>
+woman2_18へ続く</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">これで　アンケートは
 ぜんぶ　おわり▼
 アナタのことが　わかって
-たのしかったわ▼
-こんどは　ちょうさレーダーを
-つかって　アナタが▽
-いろいろ　ちょうさを　してみてね</language>
+たのしかったわ</language>
 		<language name="JPN_KANJI" width="256">これで　アンケートは
 全部　終わり▼
 アナタのことが　わかって
-楽しかったわ▼
-今度は　調査レーダーを　使って
-アナタが　いろいろ▽
-調査を　してみてね</language>
+楽しかったわ</language>
 	</row>
 
 	<row id="msg_c03r0101_woman2_20" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・アンケート隊員
-全てのアンケートを答えると表示
+全アンケート回答後の報酬アイテム入手処理後に表示
 会話終了</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
