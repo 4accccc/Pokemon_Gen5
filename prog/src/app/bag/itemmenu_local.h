@@ -48,11 +48,12 @@ enum
   SE_BAG_TRASH        = SEQ_SE_SYS_08,  ///< 捨てる音
   SE_BAG_CURSOR_MOVE  = SEQ_SE_SELECT1, ///< バッグカーソル移動(上下キー)
   SE_BAG_POCKET_MOVE  = SEQ_SE_SELECT4, ///< バッグポケット選択(左右キー)
-  SE_BAG_SRIDE        = SEQ_SE_SELECT1, ///< スライドバー
+  SE_BAG_SLIDE        = SEQ_SE_SELECT1, ///< スライドバー
   SE_BAG_WAZA         = SEQ_SE_PC_LOGIN,  ///< ワザマシン起動音
   SE_BAG_SORT         = SEQ_SE_SYS_36,    ///< ソート音
   SE_BAG_SPRAY        = SEQ_SE_DECIDE1,   ///< スプレー使用音
   SE_BAG_RAITOSUTOON  = SEQ_SE_DECIDE2,   ///< ライトストーン・ダークストーン
+	SE_BAG_SLIDE_IN			= SEQ_SE_SYS_90,		///< 開始時のバッグスライドイン
 };
 
 #define ITEMMENU_SCROLLBAR_ENABLE_NUM (7) // スクロールバーが有効になるアイテム数

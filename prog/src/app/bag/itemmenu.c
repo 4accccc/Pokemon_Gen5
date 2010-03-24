@@ -653,7 +653,7 @@ static BOOL _itemScrollCheck(FIELD_ITEMMENU_WORK* pWork)
 			ITEMDISP_ScrollCursorMove( pWork );		// スクロールバーOAM座標を変更
 
 			if( pWork->oamlistpos != tmp_scr ){
-        PMSND_PlaySE( SE_BAG_SRIDE );
+        PMSND_PlaySE( SE_BAG_SLIDE );
         return TRUE;
 			}
     }
@@ -3759,6 +3759,7 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   
   ITEMDISP_SetVisible();
 
+	PMSND_PlaySE( SE_BAG_SLIDE_IN );
   _CHANGE_STATE(pWork, _startState);
   return GFL_PROC_RES_FINISH;
 }
