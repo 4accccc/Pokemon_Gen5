@@ -1,10 +1,11 @@
 //======================================================================
 /**
  *
- * @file  event_debug_menu.c
- * @brief フィールドデバッグメニューの制御イベント
- * @author  kagaya
- * @date  2008.11.13
+ * @file  event_debug_menu_symbol.c
+ * @brief フィールドデバッグメニュー：シンボルポケ
+ * @author  tamada
+ * @date  2010.03.24
+ *
  */
 //======================================================================
 #include <gflib.h>
@@ -19,90 +20,18 @@
 #include "msg/msg_d_field.h"
 
 #include "fieldmap.h"
-#include "field/zonedata.h"
-#include "arc/fieldmap/zone_id.h"
-#include "field/eventdata_sxy.h"
 
 #include "event_debug_menu.h"
-#include "event_mapchange.h"
-#include "event_gamestart.h"
 
-#include "net_app/irc_match/ircbattlemenu.h"
-#include "event_ircbattle.h"
-#include "event_wificlub.h"
-#include "event_gtsnego.h"
-#include "field_subscreen.h"
 #include "sound/pm_sndsys.h"
 
 #include "font/font.naix"
 
-#include  "field/weather_no.h"
-#include  "weather.h"
-#include  "msg/msg_d_tomoya.h"
-
-#include "field_debug.h"
-
-#include "field_event_check.h"
-#include "event_debug_item.h" //EVENT_DebugItemMake
 #include "event_debug_numinput.h"
 #include "savedata/box_savedata.h"  //デバッグアイテム生成用
-#include  "item/itemsym.h"  //ITEM_DATA_MAX
-#include  "item/item.h"  //ITEM_CheckEnable
-#include "app/townmap.h"
-#include "net_app/worldtrade.h"
-#include "../ui/debug/ui_template.h"
-#include "savedata/shortcut.h"
-#include "event_debug_beacon.h"
-#include "app/waza_oshie.h"
-
-#include "field_buildmodel.h"
-
-#include "field_sound.h"
-
-#include "script.h" //SCRIPT_ChangeScript
-#include "../../../resource/fldmapdata/script/debug_scr_def.h"  //SCRID_DEBUG_COMMON
-#include "../../../resource/fldmapdata/script/hiden_def.h"  //SCRID_HIDEN_DIVING
-
-#include "eventwork.h"
-#include "../../../resource/fldmapdata/flagwork/flag_define.h"
-
-#include "event_wifibattlematch.h"
-
-#include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
-
-//CGEAR PICTURE
-#include "c_gear.naix"
-#include "./c_gear/c_gear.h"
-#include "./c_gear/event_cgearget.h"
-#include "savedata/save_tbl.h"
-#include "savedata/c_gear_picture.h"
 
 #include "event_debug_local.h"
 
-#include "event_debug_season_display.h" // for DEBUG_EVENT_FLDMENU_SeasonDispSelect
-#include "event_debug_demo3d.h" // for DEBUG_EVENT_FLDMENU_Demo3DSelect
-#include "event_debug_menu_make_egg.h"  // for DEBUG_EVENT_FLDMENU_MakeEgg
-
-#include "debug/debug_str_conv.h" // for DEB_STR_CONV_SJIStoStrcode
-
-#include "event_debug_wifimatch.h"
-#include "event_battlerecorder.h"
-#include "event_debug_mvpoke.h"
-#include "field_bbd_color.h"
-
-#include "gamesystem/pm_weather.h"
-
-#include "debug/debug_mystery_card.h"
-
-#include "bsubway_scr.h"
-#include "event_wifi_bsubway.h"
-#include "event_bsubway.h"
-#include "scrcmd_bsubway.h"
-
-#include "savedata/battle_box_save.h"
-#include "event_geonet.h"
-#include "app/name_input.h"
-#include "waza_tool\wazano_def.h"
 
 #include "savedata/symbol_save.h"
 #include "savedata/symbol_save_notwifi.h"
