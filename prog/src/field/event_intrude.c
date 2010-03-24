@@ -418,6 +418,7 @@ BOOL IntrudeEvent_Sub_BarrierDisguiseEffectMain(INTRUDE_EVENT_DISGUISE_WORK *ied
     }
 
     // サウンドはいる？
+    PMSND_PlaySE( SEQ_SE_FLD_103 );
     
     iedw->seq++;
     break;
