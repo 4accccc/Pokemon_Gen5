@@ -1089,7 +1089,20 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
   }
 #endif
   if(intcomm->connect_map_count < use_num){
-    MAP_MATRIX *mmatrix = MAP_MATRIX_Create( HEAPID_FIELDMAP );
+    MAP_MATRIX *mmatrix;
+    
+    //隣接するマップが見えている場合は連結処理はしない
+    {
+      VecFx32 player_pos;
+      FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+      FIELD_PLAYER_GetPos( fld_player, &player_pos );
+      player_pos.x %= PALACE_MAP_LEN;
+      if(_PlayerPosCheck_PalaceBridge(&player_pos) == TRUE){
+        return;
+      }
+    }
+
+    mmatrix = MAP_MATRIX_Create( HEAPID_FIELDMAP );
     MAP_MATRIX_Init(mmatrix, NARC_map_matrix_palace02_mat_bin, ZONE_ID_PALACE01);
 
     do{
