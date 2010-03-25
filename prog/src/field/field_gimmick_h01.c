@@ -152,6 +152,9 @@ void H01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   // ロード
   LoadGimmick( work, fieldmap );
 
+  // 橋ISSのマスターボリュームを復帰
+  ISS_3DS_SYS_SetMasterVolume( work->iss3dsSys, 127 );
+
   // DEBUG:
   OBATA_Printf( "GIMMICK-H01: set up\n" );
 }
@@ -167,6 +170,9 @@ void H01_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 {
   int i;
   H01WORK* work = (H01WORK*)GMK_TMP_WK_GetWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
+
+  // 橋ISSのマスターボリュームを絞る
+  ISS_3DS_SYS_SetMasterVolume( work->iss3dsSys, 0 );
 
   // 風を止める
   PMSND_ChangeBGMVolume( work->wind_data.trackBit, 0 );

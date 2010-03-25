@@ -120,6 +120,9 @@ void H03_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
 
   // ロード
   LoadGimmick( work, fieldmap );
+
+  // 橋ISSのマスターボリュームを復帰
+  ISS_3DS_SYS_SetMasterVolume( work->iss3dsSys, 127 );
 }
 
 //------------------------------------------------------------------------------------------
@@ -133,6 +136,9 @@ void H03_GIMMICK_End( FIELDMAP_WORK* fieldmap )
 {
   int i;
   H03WORK* work = (H03WORK*)GMK_TMP_WK_GetWork( fieldmap, GIMMICK_WORK_ASSIGN_ID );
+
+  // 橋ISSのマスターボリュームを絞る
+  ISS_3DS_SYS_SetMasterVolume( work->iss3dsSys, 0 );
 
   // セーブ
   SaveGimmick( work, fieldmap );
