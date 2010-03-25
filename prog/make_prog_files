@@ -443,7 +443,8 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         field/scrcmd_symbol.c \
         field/event_symbol.c \
         field/scrcmd_research.c \
-        field/scrcmd_sppoke.c
+        field/scrcmd_sppoke.c \
+        field/evt_lock.c
 
 # wifiƒvƒƒOƒ‰ƒ€
 #===> SRCS_OVERLAY_DEV_WIFILIB
