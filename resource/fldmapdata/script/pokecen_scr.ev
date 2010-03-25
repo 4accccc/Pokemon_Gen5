@@ -295,6 +295,7 @@ EVENT_START ev_union
     SWITCH $ret 
     CASE msg_pc_union_menu_yes THEN //-------『はい』
      $room_in = TRUE
+     _BEACON_SET_REQ_UNION_COUNTER()
     CASE msg_pc_union_menu_no THEN //--------『いいえ』
       $room_in = FALSE
     CASE msg_pc_union_menu_explain THEN //---『せつめいをきく』

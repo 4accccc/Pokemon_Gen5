@@ -532,6 +532,10 @@ VMCMD_RESULT EvCmdCallZukanAward( VMHANDLE *core, void *wk )
   u16 demo_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 patern  = SCRCMD_GetVMWorkValue( core, wk );
 
+  if( demo_id != SCR_ZUKAN_AWARD_SUBWAY_ROUTE_MAP ){
+    GAMEBEACON_Set_ZukanComplete ();
+  }
+
   // コマンドが０なら地方図鑑賞状。１なら全国図鑑賞状
   switch(demo_id){
   case SCR_ZUKAN_AWARD_CHIHOU:

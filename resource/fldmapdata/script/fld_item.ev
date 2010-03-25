@@ -2190,6 +2190,8 @@ _RET
 //--------------------------------------------------------------------
 ev_itemget_flditem_true:
 {
+  _BEACON_SET_REQ_ITEM_GET( SCWK_TEMP0 ) 
+
   _CHG_COMMON_SCR SCRID_POCKET_ME_SET //MEƒZƒbƒg
   
   _TIME_WAIT( ITEM_GET_FORM_TIMING )
