@@ -19,6 +19,7 @@
 #include "..\btl_field.h"
 #include "..\btl_client.h"
 #include "..\btl_event_factor.h"
+#include "..\btlv\btlv_effect.h"
 
 #include "hand_common.h"
 #include "hand_side.h"
@@ -2869,6 +2870,7 @@ static void handler_Ibiki_CheckFail_2( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     }
   }
 }
+
 //----------------------------------------------------------------------------------
 /**
  * ‚ ‚­‚Þ

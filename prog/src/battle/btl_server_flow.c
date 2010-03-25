@@ -5097,7 +5097,7 @@ static void scproc_TameStartTurn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza )
 {
   SV_WazaFailCause  cause = SV_WAZAFAIL_NULL;
-  PokeSick sick;
+  PokeSick sick = POKESICK_NULL;
 
   do {
 
@@ -5171,6 +5171,13 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
     BTL_N_Printf( DBGSTR_SVFL_WazaExeFail_1, BPP_GetID(attacker), cause);
     scproc_WazaExecuteFailed( wk, attacker, waza, cause );
     return TRUE;
+  }else{
+    // 眠ってるのに失敗せず->眠りエフェクトだけ表示する
+    if( sick == POKESICK_NEMURI ){
+      scPut_EffectByPokePos( wk, attacker, BTLEFF_NEMURI );
+      scPut_WazaExecuteFailMsg( wk, attacker, waza, SV_WAZAFAIL_NEMURI );
+//      SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NemuriAct, pokeID );
+    }
   }
   return FALSE;
 }
