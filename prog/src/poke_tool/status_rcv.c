@@ -32,8 +32,9 @@
 
 #define PP_RCV_ALL    ( 127 )   // PP全回復
 
-#define PRMEXP_MAX    ( 510 )   // 努力値の合計の最大値
-#define ITEM_PRMEXP_MAX ( 100 )   // 道具でアップする努力値の最大値
+#define PRMEXP_ONE_MAX	( 255 )   // 努力値の最大値
+#define PRMEXP_MAX			( 510 )   // 努力値の合計の最大値
+#define ITEM_PRMEXP_MAX	( 100 )   // 道具でアップする努力値の最大値
 
 //============================================================================================
 //  プロトタイプ宣言
@@ -190,6 +191,7 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
       OS_Printf( "HP EXP : now = %d, prm = %d\n", tmp[0], tmp[6] );
       if( tmp[6] > 0 ){
         if( !( tmp[0] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+						tmp[0] < PRMEXP_ONE_MAX &&
 						(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
           GFL_HEAP_FreeMemory( dat );
           return TRUE;
@@ -211,6 +213,7 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_POWER_EXP_POINT );
     if( tmp[6] > 0 ){
 			if( !( tmp[1] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+					tmp[1] < PRMEXP_ONE_MAX &&
 					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
@@ -231,6 +234,7 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_DEFENCE_EXP_POINT );
     if( tmp[6] > 0 ){
 			if( !( tmp[2] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+					tmp[2] < PRMEXP_ONE_MAX &&
 					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
@@ -251,6 +255,7 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_AGILITY_EXP_POINT );
     if( tmp[6] > 0 ){
 			if( !( tmp[3] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+					tmp[3] < PRMEXP_ONE_MAX &&
 					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
@@ -271,6 +276,7 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_SP_ATTACK_EXP_POINT );
     if( tmp[6] > 0 ){
 			if( !( tmp[4] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+					tmp[4] < PRMEXP_ONE_MAX &&
 					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
@@ -291,6 +297,7 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_SP_DEFENCE_EXP_POINT );
     if( tmp[6] > 0 ){
 			if( !( tmp[5] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+					tmp[5] < PRMEXP_ONE_MAX &&
 					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
@@ -797,6 +804,9 @@ static s32 PrmExp_Up( s32 exp, s32 other, s32 up, s32 limit )
   if( exp == 0 && up < 0 ){
     return -1;
   }
+	if( exp == PRMEXP_ONE_MAX && up > 0 ){
+		return -1;
+	}
   if( exp >= ITEM_PRMEXP_MAX && limit == 0 && up > 0 ){
     return -1;
   }
