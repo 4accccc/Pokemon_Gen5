@@ -44,6 +44,7 @@ extern void GPOWER_Set_Finish(GPOWER_ID gpower_id, const POWER_CONV_DATA *powerd
 extern POWER_CONV_DATA * GPOWER_PowerData_LoadAlloc(HEAPID heap_id);
 extern void GPOWER_PowerData_Unload(POWER_CONV_DATA *powerdata);
 extern GPOWER_TYPE GPOWER_ID_to_Type(const POWER_CONV_DATA *powerdata, GPOWER_ID gpower_id);
+extern u16 GPOWER_ID_to_Point(const POWER_CONV_DATA *powerdata, GPOWER_ID gpower_id);
 
 //--------------------------------------------------------------
 //  ‰e‹¿‚ÌŒvŽZ
