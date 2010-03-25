@@ -379,6 +379,17 @@ _RET
 //--------------------------------------------------------------
 sub_train_battle_win:
 {
+  DEFINE_LOCAL play_mode
+  
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  //連勝数取得
+  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, SCWK_ANSWER )
+  
+  //送信ビーコンセット：バトルサブウェイ連勝中
+  //挑戦中に一勝するごとに呼んでください
+  _BEACON_SET_REQ_SUBWAY_WIN( SCWK_ANSWER )
+  
   //ラウンド更新
   _BSUBWAY_TOOL( BSWTOOL_INC_ROUND,BSW_NULL, BSW_NULL,SCWK_ANSWER )
   
@@ -1017,8 +1028,8 @@ sub_common_retmap_lose_retire:
 {
   DEFINE_LOCAL play_mode
   
-  //受付制御　ゲーム後に
-  $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_AFTER
+  //受付制御　キャンセルゲームに
+  $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_CANCEL
   
   //ゲームモード取得
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )

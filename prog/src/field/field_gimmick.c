@@ -107,6 +107,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
   FS_OVERLAY_ID(sppoke_gimmick),  // C03R0901
   FS_OVERLAY_ID(palace_gimmick),  //
   NULL,                           // PLCゾーンのマップ
+  NULL,//C04R0109
 };
 
 const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
@@ -161,6 +162,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
   SPPOKE_GMK_SetupMerodhia,    //C03R0901
   PALACE_GMK_Setup,    //
   PALACE_MAP_GMK_Setup,    //パレスゾーンのマップ
+  BSUBWAY_GIMMICK_Setup, //C04R0109
 };
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
@@ -215,6 +217,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
   SPPOKE_GMK_EndMerodhia,    //C03R0901
   PALACE_GMK_End,    //
   PALACE_MAP_GMK_End,    //パレスゾーンのマップ
+  BSUBWAY_GIMMICK_End, //C04R0109
 };
 
 const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
@@ -269,6 +272,7 @@ const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
   SPPOKE_GMK_MoveMerodhia,    //C03R0901
   PALACE_GMK_Move,    //
   PALACE_MAP_GMK_Move,    //パレスゾーンのマップ
+  BSUBWAY_GIMMICK_Move, //C04R0109
 };
 
 //---------------------------------------------------------------------------

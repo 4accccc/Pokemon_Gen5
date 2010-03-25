@@ -184,7 +184,7 @@ sub_bsw_receipt_guide_wifi:
   _CALL sub_receipt_common_bwin
   _AB_KEYWAIT()
   _MSGWIN_CLOSE()
-
+  
   //選択メニュー
   _CALL sub_receipt_menu_challenge_wifi
   
@@ -338,7 +338,7 @@ sub_receipt_menu_challenge_wifi:
       _BMPMENU_MAKE_LIST( msg_bsw_scr_40, 3 ) //説明
       _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 4 ) //やめる
     ELSE //ダウンロードデータなし
-      _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+      _BMPMENU_INIT_EX( 1, 8, 0, 1, SCWK_ANSWER )
       _BMPMENU_MAKE_LIST( msg_bsw_scr_39, 0 ) //挑戦
       _BMPMENU_MAKE_LIST( msg_bsw_scr_42, 1 ) //歴代
       _BMPMENU_MAKE_LIST( msg_bsw_scr_40, 3 ) //説明
@@ -841,7 +841,7 @@ sub_receipt_challenge_wifi:
   
   //wifi接続フラグをワークがクリアされる前に取得
   _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_SEL_DL_BTL, BSW_NULL, BSW_NULL, dl_play )
-
+  
   //ワーク作成
   _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, BSWAY_MODE_WIFI )
   
@@ -957,6 +957,9 @@ ev_bsw_game_continue:
   _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
+  //バトルサブウェイ挑戦中のビーコンセット
+  _BEACON_SET_REQ_SUBWAY_START()
+  
   //デモ　出発
   _CALL sub_receipt_demo_start_train
   
@@ -986,10 +989,10 @@ ev_bsw_report_error:
 _END
 
 //=====================================================================
-//  受付　対戦キャンセル戻り
+//  受付　対戦キャンセル、負け戻り
 //=====================================================================
 //--------------------------------------------------------------
-//  受付　チャレンジキャンセル戻り
+//  受付　チャレンジキャンセル、負け戻り
 //--------------------------------------------------------------
 ev_bsw_game_cancel:
 {
@@ -1006,6 +1009,9 @@ ev_bsw_game_cancel:
   IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
     _CALL sub_receipt_anm_return_partner
   ENDIF
+  
+  //負けた際のスコアセット
+  _BSUBWAY_TOOL( BSWSUB_SET_LOSE_SCORE, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //成績をレポートに
   _SYSWIN_MSG( msg_bsw_scr_36 , WIN_DOWN )
@@ -1651,7 +1657,7 @@ sub_receipt_common_report_error:
       _AB_KEYWAIT()
       _MSGWIN_CLOSE()
     ENDIF
-
+    
     //レポート
     _CALL sub_receipt_common_auto_save
   ENDIF
@@ -1880,15 +1886,15 @@ sub_receipt_common_select_btl_box:
     _MSGWIN_CLOSE()
     
     IF $ret == 0 THEN //手持ち使用
-      _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, FALSE, BSW_NULL, ret )
+      _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, FALSE, BSW_NULL, BSW_NULL )
     ELSIF $ret == 1 THEN //バトルボックス
-      _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, TRUE, BSW_NULL, ret )
+      _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, TRUE, BSW_NULL, BSW_NULL )
       _BSUBWAY_TOOL( BSWSUB_PREPAR_BTL_BOX, BSW_NULL, BSW_NULL, BSW_NULL )
     ELSE //キャンセル
       $sel = FALSE
     ENDIF
   ELSE //バトルボックスポケモン居ない
-    _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, FALSE, BSW_NULL, ret )
+    _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, FALSE, BSW_NULL, BSW_NULL )
   ENDIF
   
   //事前レギュレーションチェック
@@ -1896,11 +1902,13 @@ sub_receipt_common_select_btl_box:
     _BSUBWAY_TOOL( BSWSUB_CHK_REGULATION, BSW_NULL, BSW_NULL, ret )
     
     IF $ret == FALSE THEN //エラーメッセージ
+/*  //レギュレーションメッセージを使用する
       _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_NUM, BSW_NULL, BSW_NULL, ret )
       _NUMBER( 0, ret, 1 )
       $SCWK_TEMP0 = msg_bsw_scr_21
       _CALL sub_receipt_common_bwin
       _MSGWIN_CLOSE()
+*/
       _BSUBWAY_TOOL( BSWSUB_GET_REGULATION_TYPE, BSW_NULL, BSW_NULL, ret )
       _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( ret )
       _AB_KEYWAIT()

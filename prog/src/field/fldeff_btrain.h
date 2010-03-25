@@ -55,6 +55,9 @@ typedef enum
 extern void * FLDEFF_BTRAIN_Init( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void FLDEFF_BTRAIN_Delete( FLDEFF_CTRL *fectrl, void *work );
 
+extern void FLDEFF_BTRAIN_InitResource(
+    FLDEFF_CTRL *fectrl, FLDEFF_BTRAIN_TYPE type );
+
 extern FLDEFF_TASK * FLDEFF_BTRAIN_SetTrain(
     FLDEFF_CTRL *fectrl, FLDEFF_BTRAIN_TYPE type, const VecFx32 *pos );
 extern void FLDEFF_BTRAIN_SetAnime(

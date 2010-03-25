@@ -64,7 +64,8 @@ typedef struct
 //======================================================================
 //	プロトタイプ
 //======================================================================
-static void btrain_InitResource( FLDEFF_BTRAIN *btrain );
+static void btrain_InitResource(
+    FLDEFF_BTRAIN *btrain, FLDEFF_BTRAIN_TYPE type );
 static void btrain_DeleteResource( FLDEFF_BTRAIN *btrain );
 
 static const FLDEFF_TASK_HEADER data_BTrainTaskHeader;
@@ -90,7 +91,7 @@ void * FLDEFF_BTRAIN_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
 	btrain = GFL_HEAP_AllocClearMemory( heapID, sizeof(FLDEFF_BTRAIN) );
 	btrain->fectrl = fectrl;
   
-	btrain_InitResource( btrain );
+//btrain_InitResource( btrain );
 	return( btrain );
 }
 
@@ -119,7 +120,8 @@ void FLDEFF_BTRAIN_Delete( FLDEFF_CTRL *fectrl, void *work )
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void btrain_InitResource( FLDEFF_BTRAIN *btrain )
+static void btrain_InitResource(
+    FLDEFF_BTRAIN *btrain, FLDEFF_BTRAIN_TYPE type )
 {
   int i;
   const u16 *tbl;
@@ -128,7 +130,8 @@ static void btrain_InitResource( FLDEFF_BTRAIN *btrain )
   handle = FLDEFF_CTRL_GetArcHandleEffect( btrain->fectrl );
   
   tbl = data_ArcIdxBTrainMdl;
-  
+
+#if 0  
   for( i = 0; i < FLDEFF_BTRAIN_TYPE_MAX; i++, tbl++ ){
     btrain->g3d_res_mdl[i] = GFL_G3D_CreateResourceHandle( handle, *tbl );
     GFL_G3D_TransVramTexture( btrain->g3d_res_mdl[i] );
@@ -136,11 +139,25 @@ static void btrain_InitResource( FLDEFF_BTRAIN *btrain )
     btrain->g3d_rnd[i] = GFL_G3D_RENDER_Create(
         btrain->g3d_res_mdl[i], 0, btrain->g3d_res_mdl[i] );
   }
+#else
+  {
+    i = type;
+    if( btrain->g3d_res_mdl[i] == NULL ){
+      btrain->g3d_res_mdl[i] = GFL_G3D_CreateResourceHandle(
+          handle, tbl[type] );
+      GFL_G3D_TransVramTexture( btrain->g3d_res_mdl[i] );
+      btrain->g3d_rnd[i] = GFL_G3D_RENDER_Create(
+          btrain->g3d_res_mdl[i], 0, btrain->g3d_res_mdl[i] );
+    }
+  }
+#endif
   
   tbl = data_ArcIdxBTrainAnm;
   
   for( i = 0; i < FLDEFF_BTRAIN_ANIME_TYPE_MAX; i++, tbl++ ){
-    btrain->g3d_res_anm[i] = GFL_G3D_CreateResourceHandle( handle, *tbl );
+    if( btrain->g3d_res_anm[i] == NULL ){
+      btrain->g3d_res_anm[i] = GFL_G3D_CreateResourceHandle( handle, *tbl );
+    }
   }
 }
 
@@ -156,13 +173,17 @@ static void btrain_DeleteResource( FLDEFF_BTRAIN *btrain )
   int i;
   
   for( i = 0; i < FLDEFF_BTRAIN_TYPE_MAX; i++ ){
-	  GFL_G3D_RENDER_Delete( btrain->g3d_rnd[i] );
-    GFL_G3D_FreeVramTexture( btrain->g3d_res_mdl[i] );
-    GFL_G3D_DeleteResource( btrain->g3d_res_mdl[i] );
+    if( btrain->g3d_res_mdl[i] != NULL ){
+	    GFL_G3D_RENDER_Delete( btrain->g3d_rnd[i] );
+      GFL_G3D_FreeVramTexture( btrain->g3d_res_mdl[i] );
+      GFL_G3D_DeleteResource( btrain->g3d_res_mdl[i] );
+    }
   }
   
   for( i = 0; i < FLDEFF_BTRAIN_ANIME_TYPE_MAX; i++ ){
-    GFL_G3D_DeleteResource( btrain->g3d_res_anm[i] );
+    if( btrain->g3d_res_anm[i] != NULL ){
+      GFL_G3D_DeleteResource( btrain->g3d_res_anm[i] );
+    }
   }
 }
 
@@ -188,7 +209,9 @@ FLDEFF_TASK * FLDEFF_BTRAIN_SetTrain(
   head.eff_btrain = FLDEFF_CTRL_GetEffectWork(
       fectrl, FLDEFF_PROCID_BTRAIN );
   head.type = type;
-
+  
+  btrain_InitResource( head.eff_btrain, head.type ); //リソースセット
+  
   task = FLDEFF_CTRL_AddTask(
       fectrl, &data_BTrainTaskHeader, pos, 0, &head, 0 );
   return( task );

@@ -711,8 +711,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_SELECT_POKE:
     {
       u8 buf;
-      BSUBWAY_PLAYDATA_SetData( playData,
-          BSWAY_PLAYDATA_ID_use_battle_box, &buf );
+      buf = BSUBWAY_PLAYDATA_GetData( playData,
+          BSWAY_PLAYDATA_ID_use_battle_box, NULL );
       SCRIPT_CallEvent(
           sc, BSUBWAY_EVENT_SetSelectPokeList(bsw_scr,gsys,buf) );
     }
@@ -1061,6 +1061,14 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }
     KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
     return( VMCMD_RESULT_SUSPEND );
+  //連勝、ステージ数のみクリア
+  case BSWSUB_CLEAR_STAGE_ROUND:
+    {
+      BSUBWAY_SCOREDATA_ResetRenshou( scoreData, play_mode );
+      BSUBWAY_PLAYDATA_ResetRoundNo( playData );
+      BSUBWAY_SCOREDATA_ResetStageNo( scoreData, play_mode );
+    }
+    break;
   //----ワーク依存　通信関連
   //通信開始
   case BSWSUB_COMM_START:

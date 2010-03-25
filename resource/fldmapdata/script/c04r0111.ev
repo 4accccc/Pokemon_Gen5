@@ -227,9 +227,6 @@ sub_challenge_continue_comm_multi:
     //受付対応　ゲーム後へ
     $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_AFTER
     
-    //受付対応　ゲーム後へ
-    $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_AFTER
-    
     //電車発車デモ
     _CALL sub_demo_train_starting
     
@@ -480,8 +477,11 @@ EVENT_START ev_c04r0111_home
         _BALLOONWIN_OBJMSG_POS( msg_c04r0111_08, obj_id, POS_UR )
         _AB_KEYWAIT()
         _MSGWIN_CLOSE()
-        
+
         _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
+        
+        //送信ビーコンセット：バトルサブウェイでトロフィー取得 
+        _BEACON_SET_REQ_SUBWAY_TROPHY_GET() 
       ENDIF
     ELSE  //ノーマルボスである
       //おめでとうございます
@@ -570,6 +570,11 @@ EVENT_START ev_c04r0111_home
     ENDIF
   ENDIF
   
+  //終点であれば連勝数、ステージNoをクリア
+  IF $WK_OTHER_BSUBWAY_HOME != BSWAY_SCENE_HOME_TERMINUS THEN
+    _BSUBWAY_TOOL( BSWSUB_CLEAR_STAGE_ROUND, BSW_NULL, BSW_NULL, BSW_NULL )
+  ENDIF
+
   //レポート
   _SYSWIN_MSG( msg_c04r0111_01 , WIN_DOWN )
   _REPORT_CALL( SCWK_ANSWER )
@@ -674,6 +679,9 @@ sub_demo_train_arrival:
     //電車消す
     _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_VANISH, TRUE, BSW_NULL, BSW_NULL )
     
+    //ちょっと待つ
+    _TIME_WAIT( 15 )
+
     //フェードイン
     _BLACK_IN()
     _DISP_FADE_END_CHECK()

@@ -35,6 +35,7 @@ enum
   BSWGMK_NO_C04R0108,
   BSWGMK_NO_C04R0110,
   BSWGMK_NO_C04R0111,
+  BSWGMK_NO_C04R0109,
   BSWGMK_NO_MAX,
 };
 
@@ -64,6 +65,8 @@ struct _TAG_BSW_GMK
   u32 zone_id;
   HEAPID heapID;
   VecFx32 cameraTargetPos; //車内専用カメラターゲット
+  GAMESYS_WORK *gsys;
+  FIELDMAP_WORK *fieldmap;
   void *bsw_work;
 };
 
@@ -135,7 +138,9 @@ void BSUBWAY_GIMMICK_Setup( FIELDMAP_WORK *fieldmap )
   bsw_gmk->gmk_id = id;
   bsw_gmk->zone_id = zone_id;
   bsw_gmk->heapID = heap_id;
-  
+  bsw_gmk->gsys = gsys;
+  bsw_gmk->fieldmap = fieldmap;
+
   if( data_ProcTbl[bsw_gmk->gmk_no].init_proc != NULL ){
     data_ProcTbl[bsw_gmk->gmk_no].init_proc( bsw_gmk, fieldmap );
   }
@@ -221,6 +226,7 @@ void BSUBWAY_GIMMICK_SetTrain(
   
   {
     FLDEFF_CTRL *fectrl = FIELDMAP_GetFldEffCtrl( fieldmap );
+    
     work->train_task = FLDEFF_BTRAIN_SetTrain( fectrl, type, pos );
   }
 }
@@ -268,9 +274,10 @@ static void initProc_Subway( BSW_GMK *bsw_gmk, FIELDMAP_WORK *fldmap )
   bsw_gmk->bsw_work = work;
 
   { //電車セットアップ
+    int zone_id = bsw_gmk->zone_id;
     FLDEFF_PROCID id = FLDEFF_PROCID_BTRAIN;
     FLDEFF_CTRL_RegistEffect( fectrl, &id, 1 );
-  }
+  }  
 }
 
 //--------------------------------------------------------------
@@ -430,6 +437,7 @@ static const int data_ZoneID_To_GmkID[BSWGMK_NO_MAX][2] =
   { ZONE_ID_C04R0108, FLD_GIMMICK_C04R0108 },
   { ZONE_ID_C04R0110, FLD_GIMMICK_C04R0110 },
   { ZONE_ID_C04R0111, FLD_GIMMICK_C04R0111 },
+  { ZONE_ID_C04R0109, FLD_GIMMICK_C04R0109 },
 };
 
 //--------------------------------------------------------------
@@ -446,6 +454,7 @@ static const BSW_GMK_PROC data_ProcTbl[BSWGMK_NO_MAX] =
   {initProc_Subway,delProc_Subway,NULL},//C04R0108
   {initProc_ShakeTrain,delProc_ShakeTrain,moveProc_ShakeTrain},//C04R0110
   {initProc_Subway,delProc_Subway,NULL},//FLD_GIMMICK_C04R0111
+  {initProc_Subway,delProc_Subway,NULL},//C04R0109
 };
 
 //--------------------------------------------------------------
@@ -462,6 +471,7 @@ static const VecFx32 data_InitTrainPos[BSWGMK_NO_MAX] =
   {GRID_SIZE_FX32(0),GRID_SIZE_FX32(0),GRID_SIZE_FX32(0)}, //c04r0108
   {GRID_SIZE_FX32(0),GRID_SIZE_FX32(0),GRID_SIZE_FX32(0)}, //c04r0110
   {GRID_SIZE_FX32(0),GRID_SIZE_FX32(0),GRID_SIZE_FX32(0)}, //c04r0111
+  {GRID_SIZE_FX32(0),GRID_SIZE_FX32(0),GRID_SIZE_FX32(0)}, //c04r0109
 };
 
 #if 0
