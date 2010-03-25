@@ -11,8 +11,8 @@
 #define EFFENC_NORMAL_PROB (20)  //エフェクト抽選確率デフォルト
 #define EFFENC_CAVE_INTERVAL (50)  //エフェクト抽選洞窟インターバル
 #define EFFENC_CAVE_PROB (20)  //エフェクト抽選確率洞窟
-#define EFFENC_BRIDGE_INTERVAL (50)  //エフェクト抽選橋インターバル
-#define EFFENC_BRIDGE_PROB (40)  //エフェクト抽選確率橋
+#define EFFENC_BRIDGE_INTERVAL (10)  //エフェクト抽選橋インターバル
+#define EFFENC_BRIDGE_PROB (80)  //エフェクト抽選確率橋
 
 //======================================================================
 //  define
