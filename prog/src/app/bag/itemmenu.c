@@ -518,7 +518,7 @@ static BOOL _posplus( FIELD_ITEMMENU_WORK * pWork, int length, BOOL loop )
   if( pWork->curpos == 5 && ( pWork->oamlistpos + 7 ) < length ){
     pWork->oamlistpos++;
 	// リストの終端まで来たのでカーソルが移動
-  }else if( pWork->curpos != 5 ){
+  }else if( pWork->curpos != 5 && ( pWork->curpos + 1 ) < length ){
     pWork->curpos++;
   }else{
 		// ループ
