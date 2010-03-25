@@ -21,6 +21,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_reserve_d20r0801_event_01
+_EVENT_DATA		ev_bg_d20r0801_bg1_01
 _EVENT_DATA_END
 
 
@@ -38,3 +39,9 @@ EVENT_START		ev_reserve_d20r0801_event_01
 	_DISP_FADE_END_CHECK()
 EVENT_END
 
+/**************************************************************/
+/*		D20R0801	BG										  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0801_bg1_01
+	_EASY_BGWIN_MSG( msg_d20r0801_bg1_05, TYPE_INFO )
+EVENT_END

@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/22 19:41:02
+#save date:2010/03/25 12:12:02
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d20r0501.wms
 #SECTION START:OBJ_EVENT
@@ -1011,670 +1011,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-51
-#event number: 0
-#Bg Event Label
-BGID_D20R0501_BG1_01
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG1_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-840 48 -2072
-#event number: 1
-#Bg Event Label
-BGID_D20R0501_BG1_02
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG1_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-856 48 -2072
-#event number: 2
-#Bg Event Label
-BGID_D20R0501_BG1_03
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG1_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-872 48 -2072
-#event number: 3
-#Bg Event Label
-BGID_D20R0501_BG1_04
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG1_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--168 48 -824
-#event number: 4
-#Bg Event Label
-BGID_D20R0501_BG1_05
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG1_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--152 48 -824
-#event number: 5
-#Bg Event Label
-BGID_D20R0501_BG1_06
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG1_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
--136 48 -824
-#event number: 6
-#Bg Event Label
-BGID_D20R0501_BG1_07
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG1_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-984 48 -8
-#event number: 7
-#Bg Event Label
-BGID_D20R0501_BG1_08
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG1_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1000 48 -8
-#event number: 8
-#Bg Event Label
-BGID_D20R0501_BG1_09
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG1_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1016 48 -8
-#event number: 9
-#Bg Event Label
-BGID_D20R0501_BG1_10
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG1_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1992 48 -872
-#event number: 10
-#Bg Event Label
-BGID_D20R0501_BG1_11
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG1_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-2008 48 -872
-#event number: 11
-#Bg Event Label
-BGID_D20R0501_BG1_12
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG1_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-2024 48 -872
-#event number: 12
-#Bg Event Label
-BGID_D20R0501_BG2_01
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG2_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1128 48 -1640
-#event number: 13
-#Bg Event Label
-BGID_D20R0501_BG2_02
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG2_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1144 48 -1640
-#event number: 14
-#Bg Event Label
-BGID_D20R0501_BG2_03
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG2_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1160 48 -1640
-#event number: 15
-#Bg Event Label
-BGID_D20R0501_BG2_04
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG2_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-360 48 -1208
-#event number: 16
-#Bg Event Label
-BGID_D20R0501_BG2_05
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG2_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-376 48 -1208
-#event number: 17
-#Bg Event Label
-BGID_D20R0501_BG2_06
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG2_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-392 48 -1208
-#event number: 18
-#Bg Event Label
-BGID_D20R0501_BG2_07
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG2_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-888 48 -296
-#event number: 19
-#Bg Event Label
-BGID_D20R0501_BG2_08
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG2_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-904 48 -296
-#event number: 20
-#Bg Event Label
-BGID_D20R0501_BG2_09
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG2_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-920 48 -296
-#event number: 21
-#Bg Event Label
-BGID_D20R0501_BG2_10
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG2_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1416 48 -1016
-#event number: 22
-#Bg Event Label
-BGID_D20R0501_BG2_11
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG2_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1432 48 -1016
-#event number: 23
-#Bg Event Label
-BGID_D20R0501_BG2_12
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG2_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1448 48 -1016
-#event number: 24
-#Bg Event Label
-BGID_D20R0501_BG3_01
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG3_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1128 48 -1352
-#event number: 25
-#Bg Event Label
-BGID_D20R0501_BG3_02
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG3_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1144 48 -1352
-#event number: 26
-#Bg Event Label
-BGID_D20R0501_BG3_03
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG3_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1160 48 -1352
-#event number: 27
-#Bg Event Label
-BGID_D20R0501_BG3_04
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG3_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-648 48 -968
-#event number: 28
-#Bg Event Label
-BGID_D20R0501_BG3_05
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG3_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-664 48 -968
-#event number: 29
-#Bg Event Label
-BGID_D20R0501_BG3_06
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG3_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-680 48 -968
-#event number: 30
-#Bg Event Label
-BGID_D20R0501_BG3_07
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG3_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-408 48 -392
-#event number: 31
-#Bg Event Label
-BGID_D20R0501_BG3_08
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG3_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-424 48 -392
-#event number: 32
-#Bg Event Label
-BGID_D20R0501_BG3_09
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG3_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-440 48 -392
-#event number: 33
-#Bg Event Label
-BGID_D20R0501_BG3_10
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG3_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1656 48 -1208
-#event number: 34
-#Bg Event Label
-BGID_D20R0501_BG3_11
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG3_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1672 48 -1208
-#event number: 35
-#Bg Event Label
-BGID_D20R0501_BG3_12
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG3_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1688 48 -1208
-#event number: 36
-#Bg Event Label
-BGID_D20R0501_BG4_01
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG4_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-648 48 -1544
-#event number: 37
-#Bg Event Label
-BGID_D20R0501_BG4_02
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG4_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-664 48 -1544
-#event number: 38
-#Bg Event Label
-BGID_D20R0501_BG4_03
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG4_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-680 48 -1544
-#event number: 39
-#Bg Event Label
-BGID_D20R0501_BG4_04
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG4_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-360 48 -680
-#event number: 40
-#Bg Event Label
-BGID_D20R0501_BG4_05
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG4_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-376 48 -680
-#event number: 41
-#Bg Event Label
-BGID_D20R0501_BG4_06
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG4_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-392 48 -680
-#event number: 42
-#Bg Event Label
-BGID_D20R0501_BG4_07
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG4_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1656 48 -392
-#event number: 43
-#Bg Event Label
-BGID_D20R0501_BG4_08
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG4_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1672 48 -392
-#event number: 44
-#Bg Event Label
-BGID_D20R0501_BG4_09
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG4_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1688 48 -392
-#event number: 45
-#Bg Event Label
-BGID_D20R0501_BG4_10
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG4_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1704 48 -1400
-#event number: 46
-#Bg Event Label
-BGID_D20R0501_BG4_11
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG4_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1720 48 -1400
-#event number: 47
-#Bg Event Label
-BGID_D20R0501_BG4_12
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG4_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1736 48 -1400
-#event number: 48
-#Bg Event Label
-BGID_D20R0501_BG8_01
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG8_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1032 48 -1016
-#event number: 49
-#Bg Event Label
-BGID_D20R0501_BG8_02
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG8_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1048 48 -1016
-#event number: 50
-#Bg Event Label
-BGID_D20R0501_BG8_03
-#Bg Event Type
-BG_TALK_TYPE_NORMAL
-#Bg Event Reaction Direction ID
-BG_TALK_DIR_DOWN
-#Bg Script Name
-SCRID_BG_D20R0501_BG8_01
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-1064 48 -1016
+0
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
@@ -1684,7 +1021,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+22
 #event number: 0
 #Pos Event Label
 POSID_D20R0501_EXIT_01
@@ -1700,6 +1037,363 @@ LOCALWORK10
 EVENTDATA_POSTYPE_GRID
 #position
 1032 48 -936
+#size
+3 1
+#event number: 1
+#Pos Event Label
+POSID_BG_D20R0501_BG1_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG1_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-168 48 -824
+#size
+3 1
+#event number: 2
+#Pos Event Label
+POSID_BG_D20R0501_BG1_02
+#Pos Script Name
+SCRID_BG_D20R0501_BG1_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+984 48 -8
+#size
+3 1
+#event number: 3
+#Pos Event Label
+POSID_BG_D20R0501_BG1_03
+#Pos Script Name
+SCRID_BG_D20R0501_BG1_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1992 48 -872
+#size
+3 1
+#event number: 4
+#Pos Event Label
+POSID_BG_D20R0501_BG1_04
+#Pos Script Name
+SCRID_BG_D20R0501_BG1_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+840 48 -2072
+#size
+3 1
+#event number: 5
+#Pos Event Label
+POSID_BG_D20R0501_BG11_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG11_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1128 48 -1592
+#size
+3 4
+#event number: 6
+#Pos Event Label
+POSID_BG_D20R0501_BG14_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG14_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+360 48 -1160
+#size
+3 4
+#event number: 7
+#Pos Event Label
+POSID_BG_D20R0501_BG2_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG2_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+888 48 -296
+#size
+3 1
+#event number: 8
+#Pos Event Label
+POSID_BG_D20R0501_BG6_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG6_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1416 48 -968
+#size
+3 4
+#event number: 9
+#Pos Event Label
+POSID_BG_D20R0501_BG10_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG10_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1128 48 -1304
+#size
+3 4
+#event number: 10
+#Pos Event Label
+POSID_BG_D20R0501_BG15_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG15_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+648 48 -920
+#size
+3 4
+#event number: 11
+#Pos Event Label
+POSID_BG_D20R0501_BG17_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG17_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+408 48 -344
+#size
+3 4
+#event number: 12
+#Pos Event Label
+POSID_BG_D20R0501_BG3_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG3_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+984 48 -584
+#size
+3 4
+#event number: 13
+#Pos Event Label
+POSID_BG_D20R0501_BG4_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG4_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1656 48 -344
+#size
+3 4
+#event number: 14
+#Pos Event Label
+POSID_BG_D20R0501_BG5_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG5_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1656 48 -584
+#size
+3 4
+#event number: 15
+#Pos Event Label
+POSID_BG_D20R0501_BG7_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG7_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1656 48 -1160
+#size
+3 4
+#event number: 16
+#Pos Event Label
+POSID_BG_D20R0501_BG8_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG8_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1704 48 -1352
+#size
+3 4
+#event number: 17
+#Pos Event Label
+POSID_BG_D20R0501_BG9_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG9_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1416 48 -1448
+#size
+3 4
+#event number: 18
+#Pos Event Label
+POSID_BG_D20R0501_BG12_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG12_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+648 48 -1544
+#size
+3 1
+#event number: 19
+#Pos Event Label
+POSID_BG_D20R0501_BG13_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG13_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+408 48 -1496
+#size
+3 4
+#event number: 20
+#Pos Event Label
+POSID_BG_D20R0501_BG16_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG16_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+360 48 -632
+#size
+3 4
+#event number: 21
+#Pos Event Label
+POSID_BG_D20R0501_BG19_01
+#Pos Script Name
+SCRID_BG_D20R0501_BG19_01
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+1032 48 -1016
 #size
 3 1
 #Map Event List Data End

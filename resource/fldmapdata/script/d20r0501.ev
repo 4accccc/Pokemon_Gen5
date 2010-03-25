@@ -28,6 +28,17 @@ _EVENT_DATA		ev_bg_d20r0501_bg5_01
 _EVENT_DATA		ev_bg_d20r0501_bg6_01
 _EVENT_DATA		ev_bg_d20r0501_bg7_01
 _EVENT_DATA		ev_bg_d20r0501_bg8_01
+_EVENT_DATA		ev_bg_d20r0501_bg9_01
+_EVENT_DATA		ev_bg_d20r0501_bg10_01
+_EVENT_DATA		ev_bg_d20r0501_bg11_01
+_EVENT_DATA		ev_bg_d20r0501_bg12_01
+_EVENT_DATA		ev_bg_d20r0501_bg13_01
+_EVENT_DATA		ev_bg_d20r0501_bg14_01
+_EVENT_DATA		ev_bg_d20r0501_bg15_01
+_EVENT_DATA		ev_bg_d20r0501_bg16_01
+_EVENT_DATA		ev_bg_d20r0501_bg17_01
+_EVENT_DATA		ev_bg_d20r0501_bg18_01
+_EVENT_DATA		ev_bg_d20r0501_bg19_01
 _EVENT_DATA		ev_pos_d20r0501_exit_01
 _EVENT_DATA_END
 
@@ -91,6 +102,83 @@ EVENT_END
 /*		D20R0501	BG8										  */
 /**************************************************************/
 EVENT_START		ev_bg_d20r0501_bg8_01
+	_EASY_BGWIN_MSG( msg_d20r0501_bg8_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0501	BG9										  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0501_bg9_01
+	_EASY_BGWIN_MSG( msg_d20r0501_bg9_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0501	BG10									  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0501_bg10_01
+	_EASY_BGWIN_MSG( msg_d20r0501_bg10_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0501	BG11									  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0501_bg11_01
+	_EASY_BGWIN_MSG( msg_d20r0501_bg11_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0501	BG12									  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0501_bg12_01
+	_EASY_BGWIN_MSG( msg_d20r0501_bg12_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0501	BG13									  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0501_bg13_01
+	_EASY_BGWIN_MSG( msg_d20r0501_bg13_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0501	BG14									  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0501_bg14_01
+	_EASY_BGWIN_MSG( msg_d20r0501_bg14_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0501	BG15									  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0501_bg15_01
+	_EASY_BGWIN_MSG( msg_d20r0501_bg15_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0501	BG16									  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0501_bg16_01
+	_EASY_BGWIN_MSG( msg_d20r0501_bg16_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0501	BG17									  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0501_bg17_01
+	_EASY_BGWIN_MSG( msg_d20r0501_bg17_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0501	BG18									  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0501_bg18_01
+	_EASY_BGWIN_MSG( msg_d20r0501_bg18_01, TYPE_INFO )
+EVENT_END
+
+/**************************************************************/
+/*		D20R0501	BG19									  */
+/**************************************************************/
+EVENT_START		ev_bg_d20r0501_bg19_01
 
 	//歩数チェック
 	DEFINE_LOCAL	LWK_STEP
@@ -98,7 +186,7 @@ EVENT_START		ev_bg_d20r0501_bg8_01
 	
 	//歩数が190歩以内の場合
 	IF $LWK_STEP <= 190 THEN
-		_SYSWIN_MSG( msg_d20r0501_bg9_01 , POS_DOWN )
+		_SYSWIN_MSG( msg_d20r0501_bg19_01 , POS_DOWN )
 		_SYSWIN_CLOSE()
 
 		//画面を揺らすデモを入れる
@@ -114,7 +202,7 @@ EVENT_START		ev_bg_d20r0501_bg8_01
 	
 	//歩数がそれ以上の場合
 	ELSE
-		_EASY_BGWIN_MSG( msg_d20r0501_bg8_01, TYPE_INFO )
+		_EASY_BGWIN_MSG( msg_d20r0501_bg19_02, TYPE_INFO )
 	ENDIF
 
 EVENT_END
