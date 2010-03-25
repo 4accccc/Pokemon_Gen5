@@ -7411,10 +7411,14 @@ static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_PO
   u32 recoverHP;
   u8  pokeID;
 
+  TAYA_Printf("SimpleRecover..\n");
+
   BTL_POKESET_SeekStart( targetRec );
   while( (target = BTL_POKESET_SeekNext(targetRec)) != NULL )
   {
     recoverHP = scEvent_CalcRecoverHP( wk, waza, target );
+    TAYA_Printf(" RecoverHP = %d\n", recoverHP);
+
     pokeID = BPP_GetID( target );
     if( scproc_RecoverHP(wk, target, recoverHP) )
     {
@@ -11380,8 +11384,7 @@ static void scEvent_AfterChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather 
 //----------------------------------------------------------------------------------
 static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* bpp )
 {
-  fx32 ratio = WAZADATA_GetParam( waza, WAZAPARAM_HP_RECOVER_RATIO );
-  ratio = FX32_CONST( ratio );
+  u32 ratio = WAZADATA_GetParam( waza, WAZAPARAM_HP_RECOVER_RATIO );
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
@@ -11392,7 +11395,12 @@ static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_PO
 
   {
     u32 maxHP = BPP_GetValue( bpp, BPP_MAX_HP );
-    u32 volume = BTL_CALC_MulRatio( maxHP, ratio );
+    u32 volume = (maxHP * ratio) / 100;//BTL_CALC_MulRatio( maxHP, ratio );
+    if( volume == 0 ){
+      volume = 1;
+    }else if( volume > maxHP ){
+      volume = maxHP;
+    }
     return volume;
   }
 }
