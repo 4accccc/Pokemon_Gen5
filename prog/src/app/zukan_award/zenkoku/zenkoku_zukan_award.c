@@ -516,7 +516,7 @@ static GFL_PROC_RESULT Zenkoku_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, v
       }
       else
       {
-        GFL_BMPWIN* target_bmpwin = work->text_bmpwin[target +1];
+        GFL_BMPWIN* target_bmpwin = work->text_bmpwin[target +2];
         u8 x = GFL_BMPWIN_GetPosX( target_bmpwin );
         u8 y = GFL_BMPWIN_GetPosY( target_bmpwin );
         BOOL b_change = FALSE;

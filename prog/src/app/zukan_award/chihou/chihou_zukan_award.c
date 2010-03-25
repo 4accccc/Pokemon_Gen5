@@ -114,8 +114,8 @@ static const u8 bmpwin_setup[TEXT_MAX][9] =
   // frmnum           posx  posy  sizx  sizy  palnum                dir                    x  y (x,y‚Í–³Ž‹‚µ‚ÄƒZƒ“ƒ^ƒŠƒ“ƒO‚·‚é‚±‚Æ‚à‚ ‚é)
   {  BG_FRAME_M_TEXT,    0,    0,    1,    1, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
   {  BG_FRAME_M_TEXT,    0,   24,    1,    1, BG_PAL_POS_M_BLACK,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    6,    4,   20,    2, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    6,    8,   20,    8, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    9,    3,   20,    2, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    9,    8,   20,    8, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
   {  BG_FRAME_M_TEXT,   12,   18,   14,    4, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
 };
 
@@ -516,7 +516,7 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, vo
       }
       else
       {
-        GFL_BMPWIN* target_bmpwin = work->text_bmpwin[target +1];
+        GFL_BMPWIN* target_bmpwin = work->text_bmpwin[target +2];
         u8 x = GFL_BMPWIN_GetPosX( target_bmpwin );
         u8 y = GFL_BMPWIN_GetPosY( target_bmpwin );
         BOOL b_change = FALSE;
