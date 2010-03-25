@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-03-21T15:06:26"/>
+	<create user="shimoyamada" host="W00184" date="2010-03-25T00:14:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -319,7 +319,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1066,13 +1066,13 @@
 	</row>
 
 	<row id="msg_903">
-		<language name="JPN" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:0]かち</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:0]勝ち</language>
+		<language name="JPN" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:0]ＷＩＮ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:0]ＷＩＮ</language>
 	</row>
 
 	<row id="msg_904">
-		<language name="JPN" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:0]まけ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:0]負け</language>
+		<language name="JPN" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:0]ＬＯＳＥ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">[BD:03:Ｘ右寄せ:0]ＬＯＳＥ</language>
 	</row>
 
 	<row id="msg_905">
