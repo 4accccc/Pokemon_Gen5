@@ -1033,7 +1033,7 @@ static void ShinkaDemoInit( KAWADA_MAIN_WORK* wk )
 {
   GFL_OVERLAY_Load(FS_OVERLAY_ID(shinka_demo));
 
-  GAMEBEACON_Setting(wk->gamedata);
+  //GAMEBEACON_Setting(wk->gamedata);
 
   wk->pp = PP_Create( MONSNO_KAMEERU, 1, 0, wk->heapID );
   
