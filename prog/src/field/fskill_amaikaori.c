@@ -13,10 +13,11 @@
 #include "sound/pm_sndsys.h"
 #include "fieldmap.h"
 #include "weather.h"
-
+#include "item/itemsym.h"
 #include "field_skill.h"
 #include "fld3d_ci.h"
 #include "eventwork.h"
+#include "gamesystem/game_beacon.h"
 
 #include "script.h"
 #include "fskill_amaikaori.h"
@@ -74,6 +75,7 @@ static void amaikaori_BGResRelease( AMAIKAORI_EFFECT* wk);
 //------------------------------------------------------------------
 GMEVENT * EVENT_FieldAmaimitu( FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gsys )
 {
+  GAMEBEACON_Set_UseItem( ITEM_AMAIMITU );
   return EVENT_FieldSkillAmaikaori( gsys, fieldmap, 0xFF );
 }
 

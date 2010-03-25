@@ -124,8 +124,8 @@ void BEACONINFO_Set_Dying(GAMEBEACON_INFO *info, const STRBUF *nickname);
 void BEACONINFO_Set_StateIsAbnormal(GAMEBEACON_INFO *info, const STRBUF *nickname);
 void BEACONINFO_Set_UseItem(GAMEBEACON_INFO *info, u16 item_no);
 void BEACONINFO_Set_FieldSkill(GAMEBEACON_INFO *info, u16 wazano);
-void BEACONINFO_Set_SodateyaEgg(GAMEBEACON_INFO *info, const STRBUF *nickname);
-void BEACONINFO_Set_EggHatch(GAMEBEACON_INFO *info, const STRBUF *nickname);
+void BEACONINFO_Set_SodateyaEgg(GAMEBEACON_INFO *info);
+void BEACONINFO_Set_EggHatch(GAMEBEACON_INFO *info, u16 monsno );
 void BEACONINFO_Set_Shoping(GAMEBEACON_INFO *info);
 void BEACONINFO_Set_Subway(GAMEBEACON_INFO *info);
 void BEACONINFO_Set_SubwayStraightVictories(GAMEBEACON_INFO *info, u32 victory_count);
@@ -1847,13 +1847,11 @@ void BEACONINFO_Set_FieldSkill(GAMEBEACON_INFO *info, u16 wazano)
 //==================================================================
 /**
  * 送信ビーコンセット：タマゴを育て屋から受け取った
- *
- * @param   nickname		タマゴの親(メス)のポケモンのニックネーム
  */
 //==================================================================
-void GAMEBEACON_Set_SodateyaEgg(const STRBUF *nickname)
+void GAMEBEACON_Set_SodateyaEgg( void )
 {
-  BEACONINFO_Set_SodateyaEgg(&GameBeaconSys->send.info, nickname);
+  BEACONINFO_Set_SodateyaEgg(&GameBeaconSys->send.info);
   SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
@@ -1862,14 +1860,11 @@ void GAMEBEACON_Set_SodateyaEgg(const STRBUF *nickname)
  * ビーコンセット：タマゴを育て屋から受け取った
  *
  * @param   info		
- * @param   nickname		タマゴの親(メス)のポケモンのニックネーム
  */
 //==================================================================
-void BEACONINFO_Set_SodateyaEgg(GAMEBEACON_INFO *info, const STRBUF *nickname)
+void BEACONINFO_Set_SodateyaEgg(GAMEBEACON_INFO *info)
 {
   info->action.action_no = GAMEBEACON_ACTION_SODATEYA_EGG;
-  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
-
   BEACONINFO_Set_Details_Walk(info);
 }
 
@@ -1877,12 +1872,12 @@ void BEACONINFO_Set_SodateyaEgg(GAMEBEACON_INFO *info, const STRBUF *nickname)
 /**
  * 送信ビーコンセット：タマゴが孵化
  *
- * @param   nickname		孵化したタマゴのポケモンのニックネーム
+ * @param   monsno		孵化したタマゴのポケモン番号
  */
 //==================================================================
-void GAMEBEACON_Set_EggHatch(const STRBUF *nickname)
+void GAMEBEACON_Set_EggHatch( u16 monsno )
 {
-  BEACONINFO_Set_EggHatch(&GameBeaconSys->send.info, nickname);
+  BEACONINFO_Set_EggHatch(&GameBeaconSys->send.info, monsno );
   SendBeacon_SetCommon(&GameBeaconSys->send);
 }
 
@@ -1891,13 +1886,13 @@ void GAMEBEACON_Set_EggHatch(const STRBUF *nickname)
  * 送信ビーコンセット：タマゴが孵化
  *
  * @param   info		
- * @param   nickname		孵化したタマゴのポケモンのニックネーム
+ * @param   monsno		孵化したタマゴのポケモン番号
  */
 //==================================================================
-void BEACONINFO_Set_EggHatch(GAMEBEACON_INFO *info, const STRBUF *nickname)
+void BEACONINFO_Set_EggHatch(GAMEBEACON_INFO *info, u16 monsno )
 {
   info->action.action_no = GAMEBEACON_ACTION_EGG_HATCH;
-  _StrbufNicknameCopy(nickname, info->action.normal.nickname);
+  info->action.monsno = monsno;
 
   BEACONINFO_Set_Details_Walk(info);
 }

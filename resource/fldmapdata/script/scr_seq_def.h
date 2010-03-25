@@ -7128,22 +7128,69 @@
   .endm
 
 //======================================================================
+//ビーコンセットリクエスト系
 //======================================================================
 //--------------------------------------------------------------
-/**
- * @def _BEACON_SET_REQ_ITEM_GET
- * @brief ビーコンセットリクエスト関連
- * @param itemno  取得したアイテムのナンバー
+/*
+ *  ビーコンセットリクエスト共有マクロ
  */
 //--------------------------------------------------------------
-#define _BEACON_SET_REQ_ITEM_GET( itemno ) \
-    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_ITEM_GET, itemno
-  
   .macro _ASM_BEACON_SET_REQ beacon_id, value
   .short EV_SEQ_BEACON_SET_REQUEST
   .short \beacon_id
   .short \value 
   .endm
+
+/**
+ * @def _BEACON_SET_REQ_ITEM_GET
+ * @brief アイテム拾ったビーコンセット
+ * @param itemno  取得したアイテムのナンバー
+ */
+#define _BEACON_SET_REQ_ITEM_GET( itemno ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_ITEM_GET, itemno
+
+/**
+ * @def _BEACON_SET_REQ_FSKILL_USE
+ * @brief フィールド技使用ビーコンセット
+ * @param wazano  使用した技No
+ */
+#define _BEACON_SET_REQ_FSKILL_USE( wazano ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_FSKILL_USE, wazano
+
+/**
+ * @def _BEACON_SET_REQ_TRIAL_HOUSE_START
+ * @brief トライアルハウス挑戦開始ビーコンセット
+ */
+#define _BEACON_SET_REQ_TRIAL_HOUSE_START( ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_TRIAL_HOUSE_START, 0
+
+/**
+ * @def _BEACON_SET_REQ_POKE_SHIFTER_START
+ * @brief ポケシフター挑戦開始ビーコンセット
+ */
+#define _BEACON_SET_REQ_POKE_SHIFTER_START( ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_POKE_SHIFTER_START, 0
+
+/**
+ * @def _BEACON_SET_REQ_SUBWAY_START
+ * @brief バトルサブウェイ挑戦開始ビーコンセット
+ */
+#define _BEACON_SET_REQ_SUBWAY_START( ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_SUBWAY_START, 0
+
+/**
+ * @def _BEACON_SET_REQ_SUBWAY_WIN
+ * @brief バトルサブウェイトロフィー取得ビーコンセット
+ */
+#define _BEACON_SET_REQ_SUBWAY_WIN( win_num ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_SUBWAY_WIN, win_num 
+
+/**
+ * @def _BEACON_SET_REQ_SUBWAY_TROPHY_GET
+ * @brief バトルサブウェイトロフィー取得ビーコンセット
+ */
+#define _BEACON_SET_REQ_SUBWAY_TROPHY_GET( ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_SUBWAY_TROPHY_GET, 0
 
 //--------------------------------------------------------------
 /**

@@ -45,9 +45,28 @@ VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk )
   SCRIPT_WORK*   sc       = SCRCMD_WORK_GetScriptWork( work );
 
   switch( beacon_id ){
-  case SCR_BEACON_SET_REQ_ITEM_GET:
+  case SCR_BEACON_SET_REQ_ITEM_GET: //アイテム拾った
     GAMEBEACON_Set_SpItemGet( value );
     break;
+  case SCR_BEACON_SET_REQ_FSKILL_USE: //フィールド技を使った
+    GAMEBEACON_Set_FieldSkill( value );
+    break;
+  case SCR_BEACON_SET_REQ_TRIAL_HOUSE_START: //トライアルハウス挑戦開始
+    GAMEBEACON_Set_TrialHouse();
+    break;
+  case SCR_BEACON_SET_REQ_POKE_SHIFTER_START: //ポケシフター挑戦開始
+    GAMEBEACON_Set_PokeShifter();
+    break;
+  case SCR_BEACON_SET_REQ_SUBWAY_START: //サブウェイ挑戦開始
+    GAMEBEACON_Set_Subway();
+    break;
+  case SCR_BEACON_SET_REQ_SUBWAY_WIN: //サブウェイ勝利
+    GAMEBEACON_Set_SubwayStraightVictories( value );
+    break;
+  case SCR_BEACON_SET_REQ_SUBWAY_TROPHY_GET:  //サブウェイトロフィーゲット
+    GAMEBEACON_Set_SubwayTrophyGet();
+    break;
+
   }
   return VMCMD_RESULT_CONTINUE;
 }

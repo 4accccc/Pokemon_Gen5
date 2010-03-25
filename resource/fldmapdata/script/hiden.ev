@@ -97,51 +97,58 @@ EVENT_END
 
 //すでにかいりきをつかっている場合
 ev_hiden_kairiki_already:
+{
   _SYSWIN_MSG( msg_kairiki_04 , POS_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
-  _END
+}
+_RET
 
 //秘伝わざもっていない場合
 ev_hiden_kairiki_ng:
+{
   _SYSWIN_MSG( msg_kairiki_03 , POS_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
-  _END
+}
+_RET
 
 //かいりき発動
 ev_hiden_kairiki_02:
+{
+  DEFINE_LOCAL  i_poke
+
   _FLAG_SET( SYS_FLAG_KAIRIKI )      //かいりきフラグセット
-  _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_KAIRIKI )
-  _LDWK( SCWK_TEMP0, SCWK_ANSWER )
+  _BEACON_SET_REQ_FSKILL_USE( WAZANO_KAIRIKI )
+
+  _CHECK_POKE_WAZA_GROUP( i_poke, WAZANO_KAIRIKI )
   
-  _TEMOTI_NICK_NAME( 0, SCWK_ANSWER )
+  _TEMOTI_NICK_NAME( 0, i_poke )
   _SYSWIN_MSG( msg_kairiki_05 , POS_DOWN )
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
   
   _CALL sub_cutin_player_form_set
-  _CALL_POKE_CUTIN(SCWK_TEMP0) //カットイン
+  _CALL_POKE_CUTIN( i_poke ) //カットイン
   _CALL sub_cutin_player_player_form_return
-//  _TALK_CLOSE    //カットインでMSG用BGがクリアされている対処
   
   _SYSWIN_MSG( msg_kairiki_06 , POS_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
-
-//冒険ノート
-//  _GET_NOW_ZONE_ID  SCWK_TEMP0
-//  _FNOTE_DATA_MAKE  FNOTE_ID_KAIRIKI,SCWK_TEMP0,0,0,0
-  _END
+}
+_RET
 
 //かいりき　メニューから発動
 EVENT_START ev_hiden_kairiki_menu
+{
   _FLAG_CHECK( SYS_FLAG_KAIRIKI, SCWK_ANSWER ) //かいりきフラグチェック
 
   IF $SCWK_ANSWER == 1 THEN
     _CALL ev_hiden_kairiki_already
   ELSE
     _FLAG_SET( SYS_FLAG_KAIRIKI )      //かいりきフラグセット
+    _BEACON_SET_REQ_FSKILL_USE( WAZANO_KAIRIKI )
+
     _TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
     _SYSWIN_MSG( msg_kairiki_05 , POS_DOWN )
     _SYSWIN_CLOSE()
@@ -149,21 +156,19 @@ EVENT_START ev_hiden_kairiki_menu
     _CALL sub_cutin_player_form_set
     _CALL_POKE_CUTIN(SCWK_PARAM0) //カットイン
     _CALL sub_cutin_player_player_form_return
-
-
     
-      _SYSWIN_MSG( msg_kairiki_06 , POS_DOWN )
+    _SYSWIN_MSG( msg_kairiki_06 , POS_DOWN )
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
-//    _GET_NOW_ZONE_ID  SCWK_TEMP0
-//    _FNOTE_DATA_MAKE  FNOTE_ID_KAIRIKI,SCWK_TEMP0,0,0,0
   ENDIF
+}
 EVENT_END
 
 /**************************************************************/
 /*  なみのり */
 /**************************************************************/
 EVENT_START ev_hiden_naminori
+{
   _TALK_OBJ_START()
   
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_NAMINORI )
@@ -171,12 +176,7 @@ EVENT_START ev_hiden_naminori
   IF $SCWK_ANSWER == 6 THEN
     _CALL ev_hiden_naminori_ng
   ELSE
-    
-    //ペアチェック
-//  _SYS_FLAG_PAIR_GET    SCWK_ANSWER
-//  _IFVAL_JUMP    SCWK_ANSWER,EQ,1, ev_hiden_naminori_pair_ng
-    
-      _SYSWIN_MSG( msg_naminori_01 , POS_DOWN )
+    _SYSWIN_MSG( msg_naminori_01 , POS_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
     _SYSWIN_CLOSE()
     
@@ -184,17 +184,21 @@ EVENT_START ev_hiden_naminori
       _CALL ev_hiden_naminori_02
     ENDIF
   ENDIF
+}
 EVENT_END
 
 //秘伝わざもっていない場合
 ev_hiden_naminori_ng:
+{
   _SYSWIN_MSG( msg_naminori_03 , POS_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
-  _RET
+}
+_RET
 
 //波乗り発動
 ev_hiden_naminori_02:
+{
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_NAMINORI )
   _LDWK( SCWK_TEMP0, SCWK_ANSWER )
   _TEMOTI_NICK_NAME( 0, SCWK_ANSWER )
@@ -207,32 +211,30 @@ ev_hiden_naminori_02:
   _CALL_POKE_CUTIN(SCWK_TEMP0)
   _CALL sub_cutin_player_player_form_return
   _NAMINORI()
-  
-  //冒険ノート
-//_GET_NOW_ZONE_ID  SCWK_TEMP0
-//_FNOTE_DATA_MAKE  FNOTE_ID_NAMINORI,SCWK_TEMP0,0,0,0
-  _RET
+  _BEACON_SET_REQ_FSKILL_USE( WAZANO_NAMINORI )
+}
+_RET
 
 //めにゅーから「なみのり」発動
 //SCWK_PARAM0に使用したポケモンの位置番号
 EVENT_START ev_hiden_naminori_menu
+{
   _TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
   _SYSWIN_MSG( msg_naminori_02 , POS_DOWN )
   _SYSWIN_CLOSE()
   
 //_OBJ_PAUSE_CLEAR  FLDOBJ_ID_PLAYER
   _NAMINORI()
+  _BEACON_SET_REQ_FSKILL_USE( WAZANO_NAMINORI )
 //_OBJ_PAUSE  FLDOBJ_ID_PLAYER
-
-  //冒険ノート
-//  _GET_NOW_ZONE_ID  SCWK_TEMP0
-//  _FNOTE_DATA_MAKE  FNOTE_ID_NAMINORI,SCWK_TEMP0,0,0,0
+}
 EVENT_END
 
 /**************************************************************/
 /*  居合い切り */
 /**************************************************************/
 EVENT_START ev_hiden_iaigiri
+{
   _TALK_OBJ_START()
   
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_IAIGIRI )
@@ -249,18 +251,21 @@ EVENT_START ev_hiden_iaigiri
       _SYSWIN_CLOSE()
     ENDIF
   ENDIF
+}
 EVENT_END
 
 //居合い切り　秘伝わざもっていない場合
 ev_hiden_iaigiri_ng:
+{
 	_SYSWIN_MSG( msg_iai_03 , POS_DOWN )
 	_LAST_KEYWAIT()
 	_SYSWIN_CLOSE()
-	_RET
-  //
+}
+_RET
 
 //居合い切り実行
 ev_hiden_iaigiri_02:
+{
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_IAIGIRI )
   _LDWK( SCWK_TEMP0,SCWK_ANSWER )
   
@@ -276,26 +281,20 @@ ev_hiden_iaigiri_02:
   
   //居合い切りエフェクト
   _IAIGIRI_EFFECT()
+  _BEACON_SET_REQ_FSKILL_USE( WAZANO_IAIGIRI )
   _TIME_WAIT( EV_HIDEN_IAIGIRI_OBJDEL_WAIT )
-//  _HIDENEFF_START 0,SCWK_TEMP1  // SCWK_TEMP1に1が入ったらエフェクト終了
-//  _TIME_WAIT    EV_HIDEN_IAIGIRI_OBJDEL_WAIT,SCWK_ANSWER
   
   _OBJ_DEL( SCWK_TARGET_OBJID )
   _SE_PLAY( SEQ_SE_FLD_02 )
 
-  //冒険ノート
-//  _GET_NOW_ZONE_ID  SCWK_TEMP0
-//  _FNOTE_DATA_MAKE  FNOTE_ID_IAIGIRI,SCWK_TEMP0,0,0,0
-
 // エフェクトが終わるまで待つ
-ev_hiden_iaigiri_02_eff_end_loop:
   _TIME_WAIT( 1 )
-  // エフェクト終了待ち
-//  _IFVAL_JUMP    SCWK_TEMP1,EQ,0, ev_hiden_iaigiri_02_eff_end_loop
-  _RET
+}
+_RET
 
 //居合い切り　メニューから
 EVENT_START ev_hiden_iaigiri_menu
+{
   _TALK_OBJ_START()
   
 	_TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
@@ -309,9 +308,8 @@ EVENT_START ev_hiden_iaigiri_menu
   
   //居合い切りエフェクト
   _IAIGIRI_EFFECT()
+  _BEACON_SET_REQ_FSKILL_USE( WAZANO_IAIGIRI )
   _TIME_WAIT( EV_HIDEN_IAIGIRI_OBJDEL_WAIT )
-//	_HIDENEFF_START 0,SCWK_TEMP1	// SCWK_TEMP1に1が入ったらエフェクト終了
-//	_TIME_WAIT		EV_HIDEN_IAIGIRI_OBJDEL_WAIT,SCWK_ANSWER
   
   // 目の前のオブジェを消去
   {
@@ -323,28 +321,21 @@ EVENT_START ev_hiden_iaigiri_menu
     ENDIF
   }
   _SE_PLAY( SEQ_SE_FLD_02 )
-  
-  //冒険ノート
-//	_GET_NOW_ZONE_ID	SCWK_TEMP0
-//	_FNOTE_DATA_MAKE	FNOTE_ID_IAIGIRI,SCWK_TEMP0,0,0,0
-
-ev_hiden_iaigiri_menu_eff_end_loop: // エフェクトが終わるまで待つ
-//	_TIME_WAIT		1,SCWK_ANSWER
-//	_IFVAL_JUMP		SCWK_TEMP1,EQ,0, ev_hiden_iaigiri_menu_eff_end_loop
+}
 EVENT_END
 
 /**************************************************************/
 /*							たきのぼり								*/
 /**************************************************************/
 EVENT_START ev_hiden_takinobori
+{
 	_TALK_OBJ_START()
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_TAKINOBORI )
   
   IF $SCWK_ANSWER == 6 THEN
     _CALL ev_hiden_takinobori_ng
   ELSE
-    
-      _SYSWIN_MSG( msg_taki_01 , POS_DOWN )
+    _SYSWIN_MSG( msg_taki_01 , POS_DOWN )
 	  _YES_NO_WIN( SCWK_ANSWER )
     _SYSWIN_CLOSE()
     
@@ -352,37 +343,41 @@ EVENT_START ev_hiden_takinobori
 	    _CALL ev_hiden_takinobori_02
     ENDIF
   ENDIF
+}
 EVENT_END
 
 //秘伝わざもっていない場合
 ev_hiden_takinobori_ng:
+{
 	_SYSWIN_MSG( msg_taki_03 , POS_DOWN )
 	_LAST_KEYWAIT()
 	_SYSWIN_CLOSE()
-	_RET
+}
+_RET
 
 //滝登り発動
 ev_hiden_takinobori_02:
-  _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_TAKINOBORI )
-	_LDWK( SCWK_TEMP0,SCWK_ANSWER )
-	_TEMOTI_NICK_NAME( 0,SCWK_ANSWER )
+{
+  DEFINE_LOCAL  i_poke
+
+  _CHECK_POKE_WAZA_GROUP( i_poke, WAZANO_TAKINOBORI )
+	_TEMOTI_NICK_NAME( 0, i_poke )
   
 	_SYSWIN_MSG( msg_taki_02 , POS_DOWN )
 	_SYSWIN_CLOSE()
   
   _CALL sub_cutin_player_form_set
-	_CALL_POKE_CUTIN(SCWK_TEMP0)
+	_CALL_POKE_CUTIN( i_poke )
   _CALL sub_cutin_player_player_form_return
 
-	_TAKINOBORI( SCWK_TEMP0 )
-  
-  //冒険ノート
-//	_GET_NOW_ZONE_ID( SCWK_TEMP0 )
-//	_FNOTE_DATA_MAKE FNOTE_ID_TAKINOBORI,SCWK_TEMP0,0,0,0
-	_RET
+	_TAKINOBORI( i_poke )
+  _BEACON_SET_REQ_FSKILL_USE( WAZANO_TAKINOBORI )
+}
+_RET
 
 //メニューから「たきのぼり」発動
 EVENT_START ev_hiden_takinobori_menu
+{
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
 	_SYSWIN_MSG( msg_taki_02 , POS_DOWN )
 	_SYSWIN_CLOSE()
@@ -390,21 +385,22 @@ EVENT_START ev_hiden_takinobori_menu
 //	_OBJ_PAUSE_CLEAR	FLDOBJ_ID_PLAYER
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
 	_TAKINOBORI( SCWK_PARAM0 )
-  
-  //冒険ノート
-//	_GET_NOW_ZONE_ID	SCWK_TEMP0
-//	_FNOTE_DATA_MAKE	FNOTE_ID_TAKINOBORI,SCWK_TEMP0,0,0,0
+  _BEACON_SET_REQ_FSKILL_USE( WAZANO_TAKINOBORI )
+}
 EVENT_END
 
 //たきくだり
 EVENT_START ev_hiden_takikudari
+{
 	_TAKINOBORI( 0 ) //引数　ポケモンNoだったが現在使われていない
+}
 EVENT_END
 
 /**************************************************************/
 /*							フラッシュ								*/
 /**************************************************************/
 EVENT_START ev_hiden_flash_menu
+{
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
 	_SYSWIN_MSG( msg_flash_01 , POS_DOWN )
 	_SYSWIN_CLOSE()
@@ -412,13 +408,14 @@ EVENT_START ev_hiden_flash_menu
   _CALL sub_cutin_player_form_set
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
   _CALL sub_cutin_player_player_form_return
-
+}
 EVENT_END
 
 /**************************************************************/
 /*							テレポート								*/
 /**************************************************************/
 EVENT_START ev_hiden_teleport_menu
+{
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
 	_SYSWIN_MSG( msg_teleport_01 , POS_DOWN )
 	_SYSWIN_CLOSE()
@@ -426,13 +423,14 @@ EVENT_START ev_hiden_teleport_menu
   _CALL sub_cutin_player_form_set
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
   _CALL sub_cutin_player_player_form_return
-
+}
 EVENT_END
 
 /**************************************************************/
 /*							あなをほる								*/
 /**************************************************************/
 EVENT_START ev_hiden_anawohoru_menu
+{
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
 	_SYSWIN_MSG( msg_anawohoru_01 , POS_DOWN )
 	_SYSWIN_CLOSE()
@@ -440,7 +438,7 @@ EVENT_START ev_hiden_anawohoru_menu
   _CALL sub_cutin_player_form_set
 	_CALL_POKE_CUTIN(SCWK_PARAM0)
   _CALL sub_cutin_player_player_form_return
-
+}
 EVENT_END
 
 
@@ -448,6 +446,7 @@ EVENT_END
 /*							ダイビング								*/
 /**************************************************************/
 EVENT_START ev_hiden_diving
+{
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_DAIBINGU )
   
   IF $SCWK_ANSWER == 6 THEN
@@ -457,7 +456,6 @@ EVENT_START ev_hiden_diving
     _SYSWIN_CLOSE()
 
   ELSE
-    
     _SYSWIN_MSG( msg_diving_02, POS_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )
     _SYSWIN_CLOSE()
@@ -470,9 +468,11 @@ EVENT_START ev_hiden_diving
       _CALL sub_diving_main
     ENDIF
   ENDIF
+}
 EVENT_END
 
 sub_diving_main:
+{
   _SYSWIN_MSG( msg_diving_03 , POS_DOWN )
   _SYSWIN_CLOSE()
   
@@ -485,16 +485,17 @@ sub_diving_main:
   _SET_SP_LOCATION_HERE()
   //ダイビングでのマップ遷移開始
   _DIVING( SCR_EV_DIVING_MAPCHANGE_DOWN )
-  _RET
+  _BEACON_SET_REQ_FSKILL_USE( WAZANO_DAIBINGU )
+}
+_RET
   
 /**************************************************************/
 /**************************************************************/
 EVENT_START ev_hiden_diving_menu
-
+{
 	_TEMOTI_NICK_NAME( 0,SCWK_PARAM0 )
-
   _CALL sub_diving_main
-
+}
 EVENT_END
 
 
@@ -505,7 +506,7 @@ EVENT_END
 /* 海底神殿　謎解き　2F */
 /**************************************************************/
 EVENT_START ev_hiden_seatemple_2f
-
+{
   _FLAG_CHECK( FE_SEA_TEMPLE_FLASH, SCWK_ANSWER ) //謎解きフラグチェック
 
   IF $SCWK_ANSWER == 0 THEN
@@ -519,7 +520,7 @@ EVENT_START ev_hiden_seatemple_2f
     _CALL sub_cutin_player_player_form_return
 
   ENDIF
-
+}
 EVENT_END
 
 
@@ -527,8 +528,7 @@ EVENT_END
 /* 海底神殿　謎解き　3F */
 /**************************************************************/
 EVENT_START ev_hiden_seatemple_3f
-
-
+{
   _FLAG_CHECK( FE_SEA_TEMPLE_KAIRIKI, SCWK_ANSWER ) //謎解きフラグチェック
 
   IF $SCWK_ANSWER == 0 THEN
@@ -542,5 +542,5 @@ EVENT_START ev_hiden_seatemple_3f
     _CALL sub_cutin_player_player_form_return
     
   ENDIF
-
+}
 EVENT_END

@@ -16,10 +16,13 @@
 #include "gamesystem/game_data.h"
 #include "gamesystem/iss_sys.h"
 #include "gamesystem/pm_weather.h"
+#include "gamesystem/game_beacon.h"
 
 #include "system/main.h"
 #include "sound/pm_sndsys.h" // サウンドシステム参照
 #include "demo/demo3d.h" //『はじめから』の3Dデモ
+
+#include "item/itemsym.h"
 
 #include "field/zonedata.h"
 #include "field/fieldmap.h"
@@ -1373,6 +1376,8 @@ GMEVENT* EVENT_ChangeMapByAnanukenohimo( FIELDMAP_WORK* fieldWork, GAMESYS_WORK*
 
   event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeByAnanukenohimo, sizeof(MAPCHANGE_WORK) );
   work  = GMEVENT_GetEventWork( event );
+
+  GAMEBEACON_Set_UseItem( ITEM_ANANUKENOHIMO );
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 

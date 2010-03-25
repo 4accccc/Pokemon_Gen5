@@ -7,9 +7,11 @@
  */
 //======================================================================
 #include <gflib.h>
-#include "system/gfl_use.h"
 
+#include "system/gfl_use.h"
 #include "system/main.h"  //HEAPID_PROC
+#include "gamesystem/game_beacon.h"
+
 #include "fieldmap.h"
 
 #include "field_status_local.h"
@@ -20,6 +22,7 @@
 #include "fskill_osyaberi.h"
 #include "eventwork.h"
 #include "field/zonedata.h"
+#include "waza_tool/wazano_def.h"
 
 #include "script.h"
 #include "../../../resource/fldmapdata/script/hiden_def.h" //script id
@@ -633,8 +636,9 @@ static GMEVENT * SkillUse_Sorawotobu(
     const FLDSKILL_USE_HEADER *head, const FLDSKILL_CHECK_WORK *scwk )
 {
   GMEVENT *event;
-  HIDEN_SCR_WORK *hsw;
   
+  GAMEBEACON_Set_FieldSkill( WAZANO_SORAWOTOBU );
+
   event = EVENT_FieldSkillSorawotobu( scwk->gsys, scwk->fieldmap, head->zoneID);
   return event;
 }
@@ -764,6 +768,8 @@ static GMEVENT_RESULT GMEVENT_Flash(GMEVENT *event, int *seq, void *wk )
         u32 msk;
 
         FIELD_STATUS_SetFieldSkillFlash( fldstatus, TRUE );
+        GAMEBEACON_Set_FieldSkill( WAZANO_HURASSYU );
+
         FIELD_FLASH_Control( flash, FIELD_FLASH_REQ_FADEOUT );
 
         msk = FIELD_STATUS_GetFieldSkillMapEffectMsk( p_fldstatus );
@@ -831,6 +837,8 @@ static GMEVENT * SkillUse_Anawohoru(
 {
   GMEVENT *event;
   HIDEN_SCR_WORK *hsw;
+  
+  GAMEBEACON_Set_FieldSkill( WAZANO_ANAWOHORU );
   
   event = GMEVENT_Create( scwk->gsys, NULL,
       GMEVENT_Anawohoru, sizeof(HIDEN_SCR_WORK) );
@@ -914,6 +922,8 @@ static GMEVENT * SkillUse_Teleport(
 {
   GMEVENT *event;
   HIDEN_SCR_WORK *hsw;
+  
+  GAMEBEACON_Set_FieldSkill( WAZANO_TEREPOOTO );
   
   event = GMEVENT_Create( scwk->gsys, NULL,
       GMEVENT_Teleport, sizeof(HIDEN_SCR_WORK) );

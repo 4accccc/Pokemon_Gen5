@@ -19,6 +19,7 @@
 #include "gamesystem/game_init.h"
 #include "gamesystem/game_event.h"
 #include "gamesystem/game_data.h"
+#include "gamesystem/game_beacon.h"
 #include "system/bmp_winframe.h"
 
 #include "message.naix"
@@ -993,6 +994,7 @@ static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork )
 
       // スプレー処理
       EncDataSave_SetSprayCnt( encsv, count );
+      GAMEBEACON_Set_UseItem( pWork->ret_item );
 
       // アイテムを減らす
       ITEM_Sub( pWork, 1 );
