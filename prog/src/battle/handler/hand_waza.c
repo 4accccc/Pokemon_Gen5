@@ -5761,16 +5761,6 @@ static void handler_Nemuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       hp_param->pokeID = pokeID;
       hp_param->recoverHP = (BPP_GetValue(bpp, BPP_MAX_HP) - BPP_GetValue(bpp, BPP_HP));
       hp_param->header.failSkipFlag = TRUE;
-
-      if( BPP_GetPokeSick(bpp) != POKESICK_NULL )
-      {
-        BTL_HANDEX_PARAM_CURE_SICK *cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-        cure_param->poke_cnt = 1;
-        cure_param->pokeID[0] = pokeID;
-        cure_param->sickCode = WAZASICK_EX_POKEFULL;
-        cure_param->fStdMsgDisable = TRUE;
-        cure_param->header.failSkipFlag = TRUE;
-      }
     }
   }
 }
