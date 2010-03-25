@@ -2808,8 +2808,18 @@ static void handler_Totteoki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u8 wazaCnt = BPP_WAZA_GetCount( bpp );
+    u8 usedCnt, i;
+    for(usedCnt=0, i=0; i<wazaCnt; ++i)
+    {
+      if( BPP_WAZA_GetID(bpp, i) == WAZANO_TOTTEOKI ){
+        continue;
+      }
+      if( BPP_WAZA_CheckUsedInAlive(bpp,i) ){
+        ++usedCnt;
+      }
+    }
     if( (wazaCnt < 2)
-    ||  (BPP_WAZA_GetUsedCountInAlive(bpp) < (wazaCnt-1) )
+    ||  (usedCnt < (wazaCnt-1))
     ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
     }

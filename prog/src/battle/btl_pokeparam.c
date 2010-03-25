@@ -491,7 +491,11 @@ WazaID BPP_WAZA_GetID( const BTL_POKEPARAM* bpp, u8 idx )
   GF_ASSERT(idx < bpp->wazaCnt);
   return bpp->waza[idx].number;
 }
-
+BOOL BPP_WAZA_CheckUsedInAlive( const BTL_POKEPARAM* bpp, u8 idx )
+{
+  GF_ASSERT(idx < bpp->wazaCnt);
+  return bpp->waza[idx].usedFlag;
+}
 //=============================================================================================
 /**
  * [ワザパラメータ] ID, 現PP, 最大PPを一度に取得
