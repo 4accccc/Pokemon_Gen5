@@ -57,6 +57,9 @@
 
 #include "field/eventdata_type.h"
 
+#include "net_app/btl_rec_sel.h"
+FS_EXTERN_OVERLAY(btl_rec_sel);
+
 #include "net_app/irc_match.h"
 FS_EXTERN_OVERLAY(ircbattlematch);
 extern const GFL_PROC_DATA IrcBattleMatchProcData;
@@ -88,7 +91,7 @@ static BOOL evCommTimingSync( VMHANDLE *core, void *wk );
 static BOOL evCommEntryMenuPerent( VMHANDLE *core, void *wk );
 static BOOL evCommEntryMenuChild( VMHANDLE *core, void *wk );
 static BOOL evCommRecvData( VMHANDLE *core, void *wk );
-static BOOL evBtlRecSave( VMHANDLE *core, void *wk );
+//static BOOL evBtlRecSave( VMHANDLE *core, void *wk );
 
 static void bsway_SetHomeNPC(
     BSUBWAY_SCRWORK *bsw_scr, MMDLSYS *mmdlsys, FIELDMAP_WORK *fieldmap );
@@ -982,6 +985,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //フラグを別途ワークに保存しておくのをオススメします。)
   //なので存在チェックの前にこれを呼ぶ必要がある。
   case BSWSUB_CALL_BTLREC_EXIST:
+#if 0
     if( bsw_scr->btlrec_exist_f == BSW_BTLREC_EXIST_NG ){
       LOAD_RESULT res;
       bsw_scr->btlrec_exist_f = BSW_BTLREC_EXIST_NON;
@@ -990,9 +994,13 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
         bsw_scr->btlrec_exist_f = BSW_BTLREC_EXIST_EXIST;
       }
     }
+#else //録画処理統一により不要
+    GF_ASSERT( 0 );
+#endif
     break;
   //戦闘録画データ存在チェック
   case BSWSUB_CHK_BTLREC_EXIST:
+#if 0
     GF_ASSERT( bsw_scr->btlrec_exist_f != BSW_BTLREC_EXIST_NG ); //none call
     
     if( bsw_scr->btlrec_exist_f == BSW_BTLREC_EXIST_NON ){
@@ -1000,6 +1008,9 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     }else{
       *ret_wk = TRUE;
     }
+#else //録画処理統一により不要
+    GF_ASSERT( 0 );
+#endif
     break;
   //戦闘後の録画データ格納
   case BSWSUB_STORE_BTLREC:
@@ -1012,6 +1023,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //戦闘録画データセーブ
   case BSWSUB_SAVE_BTLREC:
+#if 0 //録画処理統一により不要
     {
       bsw_scr->btlrec_save_work[0] = 0;
       bsw_scr->btlrec_save_work[1] = 0;
@@ -1019,6 +1031,10 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       bsw_scr->btlrec_exist_f = BSW_BTLREC_EXIST_EXIST;
     }
     return( VMCMD_RESULT_SUSPEND );
+#else
+    GF_ASSERT( 0 );
+    break;
+#endif
   //戦闘用ワーク開放
   case BSWSUB_FREE_BTLPRM:
     if( bsw_scr->btl_setup_param != NULL ){
@@ -1027,6 +1043,24 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       bsw_scr->btl_setup_param = NULL;
     }
     break;
+  //戦闘録画処理呼び出し
+  case BSWSUB_CALL_BTLREC:
+    {
+      GMEVENT *event;
+      
+      MI_CpuClear8( &bsw_scr->btl_rec_sel_param, sizeof(IRC_MATCH_WORK) );
+      bsw_scr->btl_rec_sel_param.gamedata = gdata;
+      bsw_scr->btl_rec_sel_param.b_rec = TRUE;
+      bsw_scr->btl_rec_sel_param.b_sync = FALSE;
+      
+      event = EVENT_FieldSubProc_Callback(
+          gsys, fieldmap, FS_OVERLAY_ID(btl_rec_sel), 
+          &BTL_REC_SEL_ProcData, &bsw_scr->btl_rec_sel_param,
+          NULL, NULL );
+      SCRIPT_CallEvent( sc, event );
+    }
+    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
+    return( VMCMD_RESULT_SUSPEND );
   //----ワーク依存　通信関連
   //通信開始
   case BSWSUB_COMM_START:
@@ -1122,6 +1156,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       *ret_wk = BSWAY_COMM_IRC_RESULT_EXIT;
     }
     break;
+  //----デバッグ
   //DEBUG 選択ポケモン強制セット
   case BSWSUB_DEBUG_SET_SELECT_POKE:
     {
@@ -1369,6 +1404,7 @@ static u16 bsway_GetHomeNPCMsgID( const MMDL *mmdl )
  * @retval
  */
 //--------------------------------------------------------------
+#if 0 //不要となった
 static BOOL evBtlRecSave( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
@@ -1384,9 +1420,9 @@ static BOOL evBtlRecSave( VMHANDLE *core, void *wk )
   if( res == SAVE_RESULT_OK || res == SAVE_RESULT_NG ){
     return( TRUE );
   }
-  
   return( FALSE );
 }
+#endif  
 
 //======================================================================
 //  parts

@@ -22,6 +22,7 @@
 #include "event_field_proclink.h"
 #include "demo/comm_btl_demo.h"
 #include "net_app/irc_match.h"
+#include "net_app/btl_rec_sel.h"
 
 //======================================================================
 //  define
@@ -73,8 +74,9 @@ struct _TAG_BSUBWAY_SCRWORK
   u8 partner:3;  ///<パートナーNo
   u8 comm_sio_f:1; ///<通信中フラグ
   u8 comm_irc_f:1; ///<赤外線通信フラグ
-  u8 btlrec_exist_f:2; ///<戦闘録画存在フラグ
-  u16 padding:14; ///<余り
+//  u8 btlrec_exist_f:2; ///<戦闘録画存在フラグ 不要となった
+  u8 padding_bit:6; ///<余り
+  u8 padding[2]; //余り
   
   u16 pare_poke[2];  ///<通信マルチパートナーが持つポケモンNo
   
@@ -131,7 +133,10 @@ struct _TAG_BSUBWAY_SCRWORK
   POKEPARTY *btl_box_party; //バトルボックス用POKEPARTY
   
   BATTLE_SETUP_PARAM *btl_setup_param;
+  BTL_REC_SEL_PARAM btl_rec_sel_param;
+#if 0 //不要となった
   u16 btlrec_save_work[2];
+#endif
 };
 
 #endif  //__SUBWAY_SCRWORK_H__
