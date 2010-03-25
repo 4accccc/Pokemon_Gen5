@@ -64,3 +64,8 @@ extern void EVENTDATA_ChangeNPCObjCode( EVENTDATA_SYSTEM * evdata, u16 npc_id, u
 extern void EVENTDATA_ChangeNPCEventID( EVENTDATA_SYSTEM * evdata, u16 npc_id, u16 eventID );
 
 
+// ダミーポジションイベントのスクリプトIDを取得
+extern u16 EVENTDATA_CheckDummyPosEvent(
+  const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos );
+
+

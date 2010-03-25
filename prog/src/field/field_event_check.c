@@ -466,6 +466,12 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 	//フィールド話し掛けチェック
   if( req.talkRequest )
   {
+    // 自機一歩前の座標を求める
+    VecFx32 pos;
+    u16 dir = FIELD_PLAYER_GetDir( req.field_player );
+    FIELD_PLAYER_GetPos( req.field_player, &pos );
+    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
+    
     { //OBJ話し掛け
       MMDL *fmmdl_talk = getFrontTalkOBJ( &req, fieldWork );
       if( fmmdl_talk != NULL )
@@ -484,13 +490,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     
     { //BG話し掛け
       u16 id;
-      VecFx32 pos;
       EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-      MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
-      u16 dir = MMDL_GetDirDisp( fmmdl );
       
-      FIELD_PLAYER_GetPos( req.field_player, &pos );
-      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
       id = EVENTDATA_CheckTalkBGEvent( req.evdata, evwork, &pos, dir );
       
       if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
@@ -506,6 +507,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
         return event;
       }
     }
+
     { //隠されアイテムチェック
       INTRUDE_SAVE_WORK * intsave;
       s16 gx,gy,gz;
@@ -530,6 +532,19 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
         return SCRIPT_SetEventScript( gsys, SCRID_HIDEN_DIVING, NULL, req.heapID );
       }
     }
+
+    { //BG ダミーポジション 話しかけ
+
+      if( ZONEDATA_IsSeaTempleDungeon( req.map_id ) ){ // 現在海底神殿のみ
+        EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
+        u16 id = EVENTDATA_CheckDummyPosEvent( req.evdata, evwork, &pos );
+        if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
+          event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
+          return event;
+        }
+      }
+    }
+
   }
 
 

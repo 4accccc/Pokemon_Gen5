@@ -170,6 +170,19 @@ extern const POS_EVENT_DATA * EVENTDATA_GetPosEvent(
 extern const POS_EVENT_DATA * EVENTDATA_GetPosEvent_XZ( 
     const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos, u16 dir ); 
 
+
+//------------------------------------------------------------------
+/**
+ * @brief	ダミーイベントを取得  "使用注意"
+ * @param	evdata イベントデータへのポインタ
+ * @param evwork イベントワークへのポインタ 
+ * @param pos チェックする座標
+ * @retval NULL = イベントなし
+ */
+//------------------------------------------------------------------
+extern const POS_EVENT_DATA * EVENTDATA_GetDummyPosEvent( 
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos );
+
 //------------------------------------------------------------------
 /**
  * @brief	座標イベントを取得
@@ -181,6 +194,8 @@ extern const POS_EVENT_DATA * EVENTDATA_GetPosEvent_XZ(
 //------------------------------------------------------------------
 extern const POS_EVENT_DATA * EVENTDATA_GetPosEventRailLocation( 
     const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const RAIL_LOCATION* location );
+
+
 
 
 //----------------------------------------------------------------------------

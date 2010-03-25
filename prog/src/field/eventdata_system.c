@@ -1280,6 +1280,47 @@ const POS_EVENT_DATA * EVENTDATA_GetPosEvent_XZ(
   return NULL;
 }
 
+
+//------------------------------------------------------------------
+/**
+ * @brief	ダミーイベントを取得  "使用注意"
+ * @param	evdata イベントデータへのポインタ
+ * @param evwork イベントワークへのポインタ 
+ * @param pos チェックする座標
+ * @retval NULL = イベントなし
+ */
+//------------------------------------------------------------------
+const POS_EVENT_DATA * EVENTDATA_GetDummyPosEvent( 
+    const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos )
+{
+  const POS_EVENT_DATA *data = evdata->pos_data;
+  
+  if( data != NULL )
+  {
+    u16 i = 0;
+    u16 *work_val;
+    u16 max = evdata->pos_count;
+
+    for( ; i < max; i++, data++ )
+    {
+      if( !PosEventData_GPOS_IsHit(data, pos) )
+      {
+        continue;
+      }
+      if ( data->check_type != POS_CHECK_TYPE_DUMMY )
+      {
+        continue;
+      }
+      work_val = EVENTWORK_GetEventWorkAdrs( evwork, data->workID );
+      if( (*work_val) == data->param )
+      {
+        return data;
+      }
+    }
+  }
+  return NULL;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief	座標イベントを取得
@@ -1339,6 +1380,28 @@ u16 EVENTDATA_CheckPosEvent(
   }
   return EVENTDATA_ID_NONE;
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief	ダミーの座標イベントチェック    "使用注意！"
+ * @param	evdata イベントデータへのポインタ
+ * @param evwork イベントワークへのポインタ 
+ * @param pos チェックする座標
+ * @retval u16 EVENTDATA_ID_NONE = イベントなし
+ */
+//------------------------------------------------------------------
+u16 EVENTDATA_CheckDummyPosEvent(
+  const EVENTDATA_SYSTEM *evdata, EVENTWORK *evwork, const VecFx32 *pos )
+{
+  const POS_EVENT_DATA* data = EVENTDATA_GetDummyPosEvent( evdata,evwork,pos );
+  
+  if ( DEBUG_FLG_GetFlg(DEBUG_FLG_DisableEvents) ) return EVENTDATA_ID_NONE;
+  if( data != NULL ){
+    return data->id;
+  }
+  return EVENTDATA_ID_NONE;
+}
+
 
 //----------------------------------------------------------------------------
 /**
