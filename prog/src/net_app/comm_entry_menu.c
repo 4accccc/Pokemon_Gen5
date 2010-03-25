@@ -385,7 +385,9 @@ void CommEntryMenu_Exit(COMM_ENTRY_MENU_PTR em)
   FLDMSGBG_DeleteMSGDATA(em->msgdata);
   WORDSET_Delete( em->wordset );
   
-  CommEntryMenu_DelCommandTable();
+  if(GFL_NET_IsInit() == TRUE){
+    CommEntryMenu_DelCommandTable();
+  }
   GFL_HEAP_FreeMemory(em);
 }
 
