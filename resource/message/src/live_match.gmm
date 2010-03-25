@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-21T13:24:22"/>
+	<create user="shimoyamada" host="W00184" date="2010-03-24T23:08:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -346,9 +346,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1567" top="247" right="2272" bottom="777" maximized="no" rayout="Vertical2">
+	<dialog left="132" top="546" right="837" bottom="1174" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="807" top="368" right="1280" bottom="766" visible="yes"/>
+		<tag-palette left="444" top="119" right="917" bottom="517" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -634,6 +634,20 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 おつかれさまでした[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">大会を　終了します
 おつかれさまでした[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="LIVE_STR_25" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<language name="JPN" width="256">データを　うけとっています……
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">データを　受け取っています……
+しばらく　お待ちください</language>
+	</row>
+
+	<row id="LIVE_STR_26" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
+		<language name="JPN" width="256">たいせん　あいてを　さがしています……
+しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="256">対戦　相手を　探しています……
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="LIVE_ERR_01">
