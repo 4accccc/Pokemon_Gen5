@@ -1537,7 +1537,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
     case BTL_ACTION_ESCAPE: actionPri = 4; break;
     case BTL_ACTION_ITEM:   actionPri = 3; break;
     case BTL_ACTION_CHANGE: actionPri = 2; break;
-    case BTL_ACTION_SKIP:   actionPri = 1; break;
+    case BTL_ACTION_SKIP:   actionPri = 0; break;
     case BTL_ACTION_MOVE:   actionPri = 0; break;
     case BTL_ACTION_FIGHT:  actionPri = 0; break;
     case BTL_ACTION_NULL: continue;
@@ -1554,9 +1554,9 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
       BTL_Printf("ポケ[%d]のワザ優先チェック .. waza=%d\n", BPP_GetID(bpp), waza);
       wazaPri = scEvent_GetWazaPriority( wk, waza, bpp );
 
-    // 「ムーブ」の場合、ワザ優先度フラットで計算
+    // 「ムーブ」または「はんどうで動けない」場合、ワザ優先度フラットで計算
     }
-    else if( actParam->gen.cmd == BTL_ACTION_MOVE )
+    else if( (actParam->gen.cmd == BTL_ACTION_MOVE) || (actParam->gen.cmd == BTL_ACTION_SKIP) )
     {
       wazaPri = 0 - WAZAPRI_MIN;
 
