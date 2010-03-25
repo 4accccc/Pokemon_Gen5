@@ -457,7 +457,7 @@ check_posevt_start:
     ENDSWITCH
 
     //ƒ–‘”Žæ“¾
-    _UN_GET_COUNTRY_NUM( chk_total )
+    _UN_GET_COUNTRY_NUM( TRUE, chk_total )
 
     IF $chk_total >= 233 THEN
       $next_scene = 16

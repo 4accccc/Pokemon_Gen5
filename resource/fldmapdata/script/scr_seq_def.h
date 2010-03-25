@@ -9047,13 +9047,15 @@
 //--------------------------------------------------------------
 /**
  * @brief 国連関連 交換した国数を取得
+ * @param my_country  自分の国を結果に含めるか？  TRUE:含める　FALSE:含めない
  * @param ret       検索結果
  */
 //--------------------------------------------------------------
-#define _UN_GET_COUNTRY_NUM( ret ) _ASM_UN_GET_COUNTRY_NUM ret
+#define _UN_GET_COUNTRY_NUM( my_country, ret ) _ASM_UN_GET_COUNTRY_NUM my_country, ret
 
-  .macro  _ASM_UN_GET_COUNTRY_NUM ret
+  .macro  _ASM_UN_GET_COUNTRY_NUM my_country, ret
   .short EV_SEQ_UN_GET_COUNTRY_NUM
+  .short \my_country
   .short \ret
   .endm
 
