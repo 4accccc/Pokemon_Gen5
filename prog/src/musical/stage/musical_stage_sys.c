@@ -80,10 +80,10 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
   if( pwk == NULL )
   {
     work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_STAGE , NULL );
-    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_PIKATYUU , HEAPID_MUSICAL_STAGE );
-    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , MONSNO_PURUNSU , HEAPID_MUSICAL_STAGE );
-    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_509  , HEAPID_MUSICAL_STAGE );
-    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_WARUBIARU , HEAPID_MUSICAL_STAGE );
+    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_PIKATYUU , MCAT_START , HEAPID_MUSICAL_STAGE );
+    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , MONSNO_PURUNSU , MCAT_START , HEAPID_MUSICAL_STAGE );
+    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_509  , MCAT_ACTION , HEAPID_MUSICAL_STAGE );
+    MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_WARUBIARU , MCAT_DISTURB , HEAPID_MUSICAL_STAGE );
     
     MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HAND_R , 19 , 0 , 0 );
     MUSICAL_STAGE_SetEquip( work->actInitWork , 0 , MUS_POKE_EQU_HAND_L  , 19 , 0 , 1 );
@@ -110,6 +110,11 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
 
     work->actInitWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_STAGE , work->actInitWork->distData , 0 );
     MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_STAGE , work->actInitWork->progWork , work->actInitWork );
+
+    work->actInitWork->musPoke[0]->point = 75;
+    work->actInitWork->musPoke[1]->point = 45;
+    work->actInitWork->musPoke[2]->point = 30;
+    work->actInitWork->musPoke[3]->point = 0;
   }
   else
   {
@@ -224,7 +229,7 @@ void MUSICAL_STAGE_SetData_Player( STAGE_INIT_WORK *initWork , const u8 idx , MU
 //--------------------------------------------------------------
 //  キャラセット(NPC
 //--------------------------------------------------------------
-void MUSICAL_STAGE_SetData_NPC( STAGE_INIT_WORK *initWork , const u8 idx , u16 pokeID , HEAPID heapId )
+void MUSICAL_STAGE_SetData_NPC( STAGE_INIT_WORK *initWork , const u8 idx , u16 pokeID , MUSICAL_NPC_APPEAL_TYPE npcAppealType , HEAPID heapId )
 {
   u8 ePos;
   GF_ASSERT_MSG( idx < MUSICAL_POKE_MAX , "Musical invalid index [%d]\n",idx);
@@ -232,6 +237,7 @@ void MUSICAL_STAGE_SetData_NPC( STAGE_INIT_WORK *initWork , const u8 idx , u16 p
 
   initWork->musPoke[idx] = MUSICAL_SYSTEM_InitMusPokeParam( pokeID , 0 , 0 , 0 , heapId );
   initWork->musPoke[idx]->charaType = MUS_CHARA_NPC;
+  initWork->musPoke[idx]->npcAppealType = npcAppealType;
 
 }
 

@@ -220,13 +220,12 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
 
   work = GFL_PROC_AllocWork( proc, sizeof(MUS_EDIT_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
   work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_STAGE , NULL );
-  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_PIKUSII , HEAPID_MUSICAL_STAGE );
-  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , MONSNO_RAITYUU , HEAPID_MUSICAL_STAGE );
-  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_EREBUU  , HEAPID_MUSICAL_STAGE );
-  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_RUKARIO , HEAPID_MUSICAL_STAGE );
+  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_PIKUSII , 0 , HEAPID_MUSICAL_STAGE );
+  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , MONSNO_RAITYUU , 0 , HEAPID_MUSICAL_STAGE );
+  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_EREBUU  , 0 , HEAPID_MUSICAL_STAGE );
+  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_RUKARIO , 0 , HEAPID_MUSICAL_STAGE );
   
   work->actInitWork->musPoke[0]->charaType = MUS_CHARA_PLAYER;
-
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STRM|HEAPDIR_MASK, 0x80000 );
   work->actInitWork->distData = MUSICAL_SYSTEM_InitDistributeData( GFL_HEAPID_APP );
@@ -234,6 +233,11 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
 
   work->actInitWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_MUSICAL_STAGE , work->actInitWork->distData , 0 );
   MUSICAL_PROGRAM_CalcPokemonPoint( HEAPID_MUSICAL_STAGE , work->actInitWork->progWork , work->actInitWork );
+
+  work->actInitWork->musPoke[0]->point = 75;
+  work->actInitWork->musPoke[1]->point = 45;
+  work->actInitWork->musPoke[2]->point = 30;
+  work->actInitWork->musPoke[3]->point = 0;
 
   //mcs—p‰Šú‰»
   work->heapId = HEAPID_MUSICAL_STAGE;

@@ -588,7 +588,7 @@ static void CG_HELP_DispPage( CG_HELP_WORK *work , const u8 page)
 
 static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
 {
-  static const anmArr[CG_HELP_PAGE_MAX] = {8,9,10,39,17,14,38};
+  static const anmArr[CG_HELP_PAGE_MAX] = {8,9,10,0,17,14,38};
   GFL_CLACT_WK_SetAnmSeq( work->clwkIcon , anmArr[page] );
   GFL_CLACT_WK_SetDrawEnable( work->clwkIcon , TRUE );
   

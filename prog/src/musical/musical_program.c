@@ -314,12 +314,12 @@ void MUSICAL_PROGRAM_SetData_NPC( MUSICAL_PROGRAM_WORK* progWork , STAGE_INIT_WO
   if( pokeData->monsno == MUS_PROG_DATA_POKE_RANDOM )
   {
     const u16 monsno = MUSICAL_SYSTEM_GetMusicalPokemonRandom();
-    MUSICAL_STAGE_SetData_NPC( actInitWork , musicalIdx , monsno , heapId );
+    MUSICAL_STAGE_SetData_NPC( actInitWork , musicalIdx , monsno , pokeData->appealType , heapId );
     ARI_TPrintf("monsno:[%d]\n",monsno);
   }
   else
   {
-    MUSICAL_STAGE_SetData_NPC( actInitWork , musicalIdx , pokeData->monsno , heapId );
+    MUSICAL_STAGE_SetData_NPC( actInitWork , musicalIdx , pokeData->monsno , pokeData->appealType , heapId );
   }
   
   for( i=0;i<MUS_PROG_DATA_EQUIP_NUM;i++ )

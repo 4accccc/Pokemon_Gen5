@@ -169,6 +169,9 @@ struct _ACTING_WORK
   u8      useItemPokePos;   //一発逆転中ポケ(使用箇所
   u16     useItemCnt;
   BOOL    isUseItemSolo;  //ボーナス被り無しチェック
+  u16     npcUseItemCnt[MUSICAL_POKE_MAX];
+  MUS_POKE_EQUIP_POS     npcUseItemPos[MUSICAL_POKE_MAX];
+  BOOL    isUsedItemPos[MUSICAL_POKE_MAX][2]; //(0:R,1:L)a
   
   //通信時に送るリクエスト
   BOOL    useItemReq;
@@ -214,6 +217,8 @@ static void STA_ACT_UpdateAttention( ACTING_WORK *work );
 
 static void STA_ACT_UpdateUseItem( ACTING_WORK *work );
 static u32 STA_ACT_GetUseItemSe( ACTING_WORK *work , const u8 usePoke , const u8 usePos );
+static const BOOL STA_ACT_IsUsingItem( ACTING_WORK *work , const u8 idx );
+static void STA_ACT_UpdateUseItemNpc( ACTING_WORK *work );
 
 static void STA_ACT_InitTransEffect( ACTING_WORK *work );
 static void STA_ACT_TermTransEffect( ACTING_WORK *work );
@@ -303,7 +308,7 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
         }
       }
     }
-    ARI_TPrintf("Rank[%d][%d]\n",i,work->pokeRank[i]);
+    ARI_TPrintf("Rank[%d:%d][%d]\n",i,work->initWork->musPoke[i]->point,work->pokeRank[i]);
   }
   
   //注目ポケ系初期化
@@ -320,6 +325,9 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
     work->useItemFlg[i] = FALSE;
+    work->npcUseItemCnt[i] = 0;
+    work->isUsedItemPos[i][0] = FALSE;
+    work->isUsedItemPos[i][1] = FALSE;
   }
 
   work->arcHandle = GFL_ARC_OpenDataHandle( ARCID_STAGE_GRA , work->heapId );
@@ -1125,9 +1133,20 @@ static void STA_ACT_StartScript( ACTING_WORK *work )
 void STA_ACT_StartAppealScript( ACTING_WORK *work , const u8 scriptNo , const u8 pokeNo )
 {
   void *scriptData = GFL_ARCHDL_UTIL_Load( work->arcHandle , NARC_stage_gra_appeal_script_00_bin + scriptNo , FALSE , work->heapId );
-  const u8 rankScriptNo[4] = {0,1,2,2};
   
-  STA_SCRIPT_SetSubScript( work->scriptSys , scriptData , rankScriptNo[work->pokeRank[pokeNo]] , 1<<pokeNo );
+  if( work->initWork->musPoke[pokeNo]->point >= 70 )
+  {
+    STA_SCRIPT_SetSubScript( work->scriptSys , scriptData , 0 , 1<<pokeNo );
+  }
+  else
+  if( work->initWork->musPoke[pokeNo]->point >= 40 )
+  {
+    STA_SCRIPT_SetSubScript( work->scriptSys , scriptData , 1 , 1<<pokeNo );
+  }
+  else
+  {
+    STA_SCRIPT_SetSubScript( work->scriptSys , scriptData , 2 , 1<<pokeNo );
+  }
   
 }
 void STA_ACT_StartSubScript( ACTING_WORK *work , const u8 scriptNo , const u8 pokeTrgBit )
@@ -1396,7 +1415,7 @@ void STA_ACT_UseItemRequest( ACTING_WORK *work , MUS_POKE_EQUIP_POS ePos )
   }
 }
 //--------------------------------------------------------------
-//アイテムの使用
+//アイテムの使用(非通信時
 //--------------------------------------------------------------
 void STA_ACT_UseItem( ACTING_WORK *work , u8 pokeIdx , MUS_POKE_EQUIP_POS ePos )
 {
@@ -1409,12 +1428,16 @@ void STA_ACT_UseItem( ACTING_WORK *work , u8 pokeIdx , MUS_POKE_EQUIP_POS ePos )
 //--------------------------------------------------------------
 const BOOL STA_ACT_IsUsingItemSelf( ACTING_WORK *work )
 {
+  return STA_ACT_IsUsingItem( work , work->playerIdx );
+}
+static const BOOL STA_ACT_IsUsingItem( ACTING_WORK *work , const u8 idx )
+{
   //演出と効果時間を両方見る
-  if( STA_POKE_IsUsingItem( work->pokeSys , work->pokeWork[work->playerIdx] ) == TRUE )
+  if( STA_POKE_IsUsingItem( work->pokeSys , work->pokeWork[idx] ) == TRUE )
   {
     return TRUE;
   }
-  return work->useItemFlg[work->playerIdx];
+  return work->useItemFlg[idx]; //こっちは非通信時のみ有効
 }
 //--------------------------------------------------------------
 //アイテムの使用の更新
@@ -1424,6 +1447,9 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
   u8 i;
   u8 usePokeArr[MUSICAL_POKE_MAX];
   u8 usePokeNum = 0;
+  
+  //NPC使用判定(すぐ使用させてリクエスト待ち状態にはさせない(判定が複雑化するから
+  STA_ACT_UpdateUseItemNpc( work );
 
   //通信時送信判定
   if( work->initWork->commWork != NULL )
@@ -1450,6 +1476,17 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
         usePokeArr[usePokeNum] = i;
         usePokeNum++;
         work->useItemFlg[i] = FALSE;
+
+        if( work->useItemPos[i] == MUS_POKE_EQU_HAND_R )
+        {
+          work->isUsedItemPos[i][0] = TRUE;
+        }
+        else
+        if( work->useItemPos[i] == MUS_POKE_EQU_HAND_L )
+        {
+          work->isUsedItemPos[i][1] = TRUE;
+        }
+        STA_ACT_CheckUseItemNpc( work , MCAT_DISTURB , i );
       }
     }
     if( usePokeNum > 0 )
@@ -1473,6 +1510,7 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
   {
     //通信時
     {
+      //目立つやつの処理
       const u8 AttentionIdx = MUS_COMM_GetUseButtonAttention( work->initWork->commWork );
       if( AttentionIdx < MUSICAL_POKE_MAX )
       {
@@ -1492,6 +1530,7 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
         MUS_COMM_ResetUseButtonAttention( work->initWork->commWork );
       }
     }
+    //使用した全員の処理
     for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
       const u8 usePos = MUS_COMM_GetUseButtonPos( work->initWork->commWork , i );
@@ -1500,10 +1539,20 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
         ARI_TPrintf("Use item!![%d][%d]\n",i,usePos);
         STA_POKE_UseItemFunc( work->pokeSys , work->pokeWork[i] , usePos );
         MUS_COMM_ResetUseButtonPos( work->initWork->commWork , i );
+        
+        if( usePos == MUS_POKE_EQU_HAND_R )
+        {
+          work->isUsedItemPos[i][0] = TRUE;
+        }
+        else
+        if( usePos == MUS_POKE_EQU_HAND_L )
+        {
+          work->isUsedItemPos[i][1] = TRUE;
+        }
       }
+      STA_ACT_CheckUseItemNpc( work , MCAT_DISTURB , i );
     }
   }
-  
   //時間判定
   if( work->useItemCnt > 0 )
   {
@@ -1537,7 +1586,6 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
             }
           }
         }
-
       }
       work->useItemPoke = MUSICAL_POKE_MAX;
       work->isUpdateAttention = TRUE;
@@ -1561,6 +1609,140 @@ static u32 STA_ACT_GetUseItemSe( ACTING_WORK *work , const u8 usePoke , const u8
   else
   {
     return STA_SE_CLAP_1;
+  }
+}
+
+static void STA_ACT_UpdateUseItemNpc( ACTING_WORK *work )
+{
+  u8 i;
+  if( work->initWork->commWork == NULL ||
+      GFL_NET_IsParentMachine() == TRUE )
+  {
+    //非通信か通信親のみ
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      if( work->npcUseItemCnt[i] > 0 )
+      {
+        work->npcUseItemCnt[i]--;
+        if( work->npcUseItemCnt[i] == 0 )
+        {
+          //発動！
+          if( work->initWork->commWork == NULL )
+          {
+            STA_ACT_UseItem( work , i , work->npcUseItemPos[i] );
+          }
+          else
+          {
+            MUS_COMM_SetReqUseItem_NPC( work->initWork->commWork , i , work->npcUseItemPos[i] );
+          }
+        }
+      }
+    }
+  }
+}
+
+void STA_ACT_CheckUseItemNpc( ACTING_WORK *work , const MUSICAL_NPC_APPEAL_TYPE type , const u8 selfIdx )
+{
+  u8 i;
+  if( work->initWork->commWork == NULL ||
+      GFL_NET_IsParentMachine() == TRUE )
+  {
+    //非通信か通信親のみ発動
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      BOOL isHaveItem[2]={FALSE,FALSE};
+      MUS_POKE_EQUIP_POS usePos;
+      MUSICAL_POKE_PARAM *musPoke = work->initWork->musPoke[i];
+      if( musPoke->charaType != MUS_CHARA_NPC )
+      {
+        //NPCじゃない
+        ARI_TPrintf("NPC[%d] Use item[%d] Not NPC\n",i,type);
+        continue;
+      }
+      if( STA_ACT_IsUsingItem( work , i ) == TRUE )
+      {
+        //アイテム使用中
+        ARI_TPrintf("NPC[%d] Use item[%d] Not Using item\n",i,type);
+        continue;
+      }
+      if( musPoke->npcAppealType != type )
+      {
+        //タイプ不一致
+        ARI_TPrintf("NPC[%d] Use item[%d] Don't muth type\n",i,type);
+        continue;
+      }
+      if( work->npcUseItemCnt[i] > 0 )
+      {
+        //使用予約済み
+        ARI_TPrintf("NPC[%d] Use item[%d] Ready use\n",i,type);
+        continue;
+      }
+      //アイテムチェック
+      if( musPoke->equip[MUS_POKE_EQU_HAND_R].itemNo != MUSICAL_ITEM_INVALID &&
+          work->isUsedItemPos[i][0] == FALSE )
+      {
+        isHaveItem[0] = TRUE;
+      }
+      if( musPoke->equip[MUS_POKE_EQU_HAND_L].itemNo != MUSICAL_ITEM_INVALID &&
+          work->isUsedItemPos[i][1] == FALSE )
+      {
+        isHaveItem[1] = TRUE;
+      }
+      if( isHaveItem[0] == FALSE && isHaveItem[1] == FALSE )
+      {
+        //アイテム無い!
+        ARI_TPrintf("NPC[%d] Use item[%d] No item\n",i,type);
+        continue;
+      }
+      else
+      if( isHaveItem[0] == TRUE && isHaveItem[1] == FALSE )
+      {
+        usePos = MUS_POKE_EQU_HAND_R;
+      }
+      else
+      if( isHaveItem[0] == TRUE && isHaveItem[1] == FALSE )
+      {
+        usePos = MUS_POKE_EQU_HAND_L;
+      }
+      else
+      {
+        const u8 rand = GFL_STD_MtRand(2);
+        usePos = (rand==0?MUS_POKE_EQU_HAND_R:MUS_POKE_EQU_HAND_L);
+      }
+      
+      switch( musPoke->npcAppealType )
+      {
+      case MCAT_NONE:
+        break;
+      case MCAT_START:   //開始10～30秒後
+        {
+          const u16 cnt = GFL_STD_MtRand(60*20) + 60*10;
+          work->npcUseItemCnt[i] = cnt;
+          work->npcUseItemPos[i] = usePos;
+          ARI_TPrintf("NPC[%d] Use item[START ][%d]\n",i,cnt);
+        }
+        break;
+      case MCAT_ACTION:  //個人演技にあわせて(0.5～1秒後)
+        if( i == selfIdx )
+        {
+          const u16 cnt = GFL_STD_MtRand(30) + 30;
+          work->npcUseItemCnt[i] = cnt;
+          work->npcUseItemPos[i] = usePos;
+          ARI_TPrintf("NPC[%d] Use item[ACTION][%d]\n",i,cnt);
+        }
+        break;
+      case MCAT_DISTURB: //妨害(1～2秒後)
+        if( GFL_STD_MtRand(100) < 50 )  // 1/2で発動
+        {
+          const u16 cnt = GFL_STD_MtRand(60) + 60;
+          work->npcUseItemCnt[i] = cnt;
+          work->npcUseItemPos[i] = usePos;
+          ARI_TPrintf("NPC[%d] Use item[DISTURB][%d]\n",i,cnt);
+        }
+        break;
+      }
+      
+    }
   }
 }
 

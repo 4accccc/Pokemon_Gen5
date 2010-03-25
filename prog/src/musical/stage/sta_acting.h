@@ -51,6 +51,7 @@ void STA_ACT_UseItem( ACTING_WORK *work , u8 pokeIdx , MUS_POKE_EQUIP_POS ePos )
 
 const u8 STA_ACT_GetUseItemAttentionPoke( ACTING_WORK *work );
 const BOOL STA_ACT_IsUsingItemSelf( ACTING_WORK *work );
+void STA_ACT_CheckUseItemNpc( ACTING_WORK *work , const MUSICAL_NPC_APPEAL_TYPE type , const u8 selfIdx );
 
 //エディタ用
 

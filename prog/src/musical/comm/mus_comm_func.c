@@ -122,6 +122,7 @@ typedef enum
 
 typedef struct
 {
+  //NPCでも使用する数値がある
   BOOL                isValid;        //有効なデータか？(ステータス受信時に立てておく
   BOOL                isValidData;    //pokeData受信完了フラグ
   BOOL                isValidStatus;  //MyStatus受信完了フラグ
@@ -133,6 +134,7 @@ typedef struct
   MUS_COMM_GAME_STATE gameState;
   MYSTATUS *myStatus;
   void *pokeData;     //MUSICAL_POKE_PARAMとPOKEMON_PARAMのセット。
+  
 }MUS_COMM_USER_DATA;
 
 struct _MUS_COMM_WORK
@@ -1768,6 +1770,21 @@ const u8 MUS_COMM_GetAppealBonus( MUS_COMM_WORK* work , const u8 pokeIdx , const
 {
   return work->userData[pokeIdx].apeerPointBonus[dataIdx];
 }
+
+//NPC用グッズ仕様リクエスト
+void MUS_COMM_SetReqUseItem_NPC( MUS_COMM_WORK* work , const u8 musIdx , const u8 pos )
+{
+  u8 i;
+  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+  {
+    if( work->userData[i].musicalIdx == musIdx )
+    {
+      work->userData[i].isReqUseButton = TRUE;
+      work->userData[i].useReqButtonPos = pos;
+    }
+  }
+}
+
 #pragma mark [>outer func (button)
 //ボタン関係
 u8 MUS_COMM_GetUseButtonPos( MUS_COMM_WORK* work , const u8 musIdx )
