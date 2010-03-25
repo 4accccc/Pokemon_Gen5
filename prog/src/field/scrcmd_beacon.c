@@ -51,6 +51,9 @@ VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk )
   case SCR_BEACON_SET_REQ_FSKILL_USE: //フィールド技を使った
     GAMEBEACON_Set_FieldSkill( value );
     break;
+  case SCR_BEACON_SET_REQ_UNION_COUNTER: //ユニオンカウンター処理開始
+    GAMEBEACON_Set_UnionIn();
+    break;
   case SCR_BEACON_SET_REQ_TRIAL_HOUSE_START: //トライアルハウス挑戦開始
     GAMEBEACON_Set_TrialHouse();
     break;

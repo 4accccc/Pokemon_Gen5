@@ -7158,6 +7158,13 @@
     _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_FSKILL_USE, wazano
 
 /**
+ * @def _BEACON_SET_REQ_UNION_COUNTER
+ * @brief ユニオンルームカウンター処理開始ビーコンセット
+ */
+#define _BEACON_SET_REQ_UNION_COUNTER( ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_UNION_COUNTER, 0
+
+/**
  * @def _BEACON_SET_REQ_TRIAL_HOUSE_START
  * @brief トライアルハウス挑戦開始ビーコンセット
  */
