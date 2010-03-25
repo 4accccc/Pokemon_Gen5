@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-23T22:49:55"/>
+	<create user="matsumiya" host="W00224" date="2010-03-25T12:07:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1419" top="258" right="2124" bottom="886" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -492,9 +492,19 @@
 ・続けてsage1_03</comment>
 		<attribute name="キャラクター">LEADER5
 ヤーコン</attribute>
-		<language name="JPN" width="256">ヤーコン『そうだと　いいがね
+		<language name="JPN" width="256">ヤーコン『そうだと　いいがね▼
+わしは　しょうじきもの　ゆえ
+ことばづかいが　わるい▼
+それに　はんして　あんたは
+ことばは　きれいだが▽
+どうも　ウソくさくてな▼
 で　なんだと　いうんだ？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ヤーコン『そうだと　いいがね
+		<language name="JPN_KANJI" width="256">ヤーコン『そうだと　いいがね▼
+わしは　正直者ゆえ
+言葉遣いが　悪い▼
+それに　反して　あんたの
+言葉は　きれいだが▽
+どうも　きなくさくてな▼
 で　なんだと　いうんだ？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -586,13 +596,15 @@
 ・続けてblack_02</comment>
 		<attribute name="キャラクター">LEADER5
 ヤーコン</attribute>
-		<language name="JPN" width="256">ヤーコン『おまえら　かくれていた
-プラズマだんを　たおしたんだってな[BE:01:ページ切り替え（クリア）]
-なるほどな　わかった
+		<language name="JPN" width="256">ヤーコン『おまえら　わるいな
+せっかく　プラズマだんを　みつけたのに[BE:01:ページ切り替え（クリア）]
+まあ　きをとりなおして
+ポケモンしょうぶと　いこう！▽
 あんまり　ワシを　またせるなよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ヤーコン『おまえら　隠れていた
-プラズマ団を　倒したんだってな[BE:01:ページ切り替え（クリア）]
-なるほどな　わかった
+		<language name="JPN_KANJI" width="256">ヤーコン『おまえら　悪いな
+せっかく　プラズマ団を　みつけたのに[BE:01:ページ切り替え（クリア）]
+まあ　気を取り直して
+ポケモン勝負と　いこう！▽
 あんまり　ワシを　待たせるなよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
