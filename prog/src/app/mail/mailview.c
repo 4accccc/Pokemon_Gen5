@@ -225,7 +225,7 @@ static const u8 templete_tbl[][3]={
 
   // はじめてメール
   { 
-    pmss_peculiar_01,  // はじめまして
+    pmss_peculiar_01,  // はじめまして ●●です！
     pmss_peculiar_02,  // ●●が大好きな　〇〇トレーナーです
     pmss_peculiar_03,  // こんど●●しようね　これからもよろしく
   },
@@ -247,8 +247,8 @@ static const u8 templete_tbl[][3]={
   // かんしゃメール
   { 
     pmss_peculiar_10,  // ●●してくれて　ありがとう！
-    pmss_peculiar_11,  // また●●しよう！　●●
-    NO_SENTENSE,       // DENY_INPUT,        // 入力禁止
+    pmss_peculiar_11,  // ●●で　とってもよかったです！
+    pmss_peculiar_21,  // また●●しよう！　●●
   },
 
   // しつもんメール
