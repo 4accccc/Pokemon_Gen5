@@ -137,7 +137,7 @@
   //キー入力関連
   DEF_CMD( EvCmdABKeyWait, EV_SEQ_ABKEYWAIT )
   DEF_CMD( EvCmdLastKeyWait, EV_SEQ_LASTKEYWAIT )
-  NO_CMD()
+  DEF_CMD( EvCmdWinMsgSetAutoPrintFlag, EV_SEQ_MSGWIN_SET_AUTOPRINT )
   NO_CMD()
   
   //メッセージウィンドウ

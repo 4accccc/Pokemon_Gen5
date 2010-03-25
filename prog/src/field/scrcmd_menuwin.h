@@ -61,3 +61,8 @@ extern BOOL SCREND_CheckEndSpWin( SCREND_CHECK *end_check, int *seq );
 extern VMCMD_RESULT EvCmdMsgWinClose( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdKeyWaitMsgCursor( VMHANDLE *core, void *wk );
+
+extern VMCMD_RESULT EvCmdWinMsgSetAutoPrintFlag( VMHANDLE *core, void *wk );
+extern BOOL SCREND_CheckEndWinMsgAutoPrintFlag( SCREND_CHECK *end_check, int *seq );
+
+

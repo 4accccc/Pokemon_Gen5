@@ -61,6 +61,11 @@
 
 #define BGFRAME_ERROR (0xff)
 
+///< 通信中などに使用する、自動メッセージ
+#define AUTO_MSG_WAIT      ( MSGSPEED_NORMAL ) ///<自動時のメッセージスピード
+#define AUTO_MSG_KEY_WAIT  ( 50 ) ///<キーウエイト
+
+
 //--------------------------------------------------------------
 //  メッセージウィンドウ、キャラオフセット
 //--------------------------------------------------------------
@@ -90,6 +95,19 @@ enum
 //======================================================================
 //  typedef struct
 //======================================================================
+//--------------------------------------------------------------
+/// FLDPRINT_CONTROL
+//  メッセージ再生の各種cont管理
+//--------------------------------------------------------------
+typedef struct
+{
+  u8 auto_msg_flag;     ///<自動メッセージ送り
+  u8 key_wait;          ///<キーウエイト
+  u8 key_skip;          ///<スキップ トリガチェック
+  u8 pad[1];
+} FLDPRINT_CONTROL;
+
+
 //--------------------------------------------------------------
 /// FLDKEYWAITCURSOR
 //--------------------------------------------------------------
@@ -140,6 +158,8 @@ struct _TAG_FLDMSGBG
   FLDSUBMSGWIN *subMsgWinTbl[FLDSUBMSGWIN_MAX];
   
   TALKMSGWIN_SYS *talkMsgWinSys;
+
+  FLDPRINT_CONTROL print_cont; ///<メッセージ表示 設定
   
   GFL_TCBLSYS *printTCBLSys;
   GFL_G3D_CAMERA *g3Dcamera;
@@ -190,8 +210,7 @@ struct _TAG_FLDMENUFUNC
 //--------------------------------------------------------------
 struct _TAG_FLDMSGPRINT_STREAM
 {
-  u8 flag_key_trg;
-  u8 flag_key_cont;
+  u16 pad;
   s16 msg_wait;
   PRINT_STREAM *printStream;
   FLDMSGBG *fmb;
@@ -313,6 +332,14 @@ static FLDSUBMSGWIN * FldMsgBG_DeleteFldSubMsgWin( FLDMSGBG *fmb, int id );
 static const FLDMENUFUNC_HEADER DATA_MenuHeader_YesNo;
 //static const u8 ALIGN4 skip_cursor_Character[128];
 
+static void Control_Init( FLDPRINT_CONTROL* cont );
+static void Control_StartPrint( FLDPRINT_CONTROL* cont );
+static void Control_SetAutoPrintFlag( FLDPRINT_CONTROL* cont, BOOL flag );
+static BOOL Control_GetAutoPrintFlag( const FLDPRINT_CONTROL* cont );
+static int Control_GetMsgWait( const FLDPRINT_CONTROL* cont );
+static BOOL Control_GetSkipKey( FLDPRINT_CONTROL* cont );
+static BOOL Control_GetWaitKey( FLDPRINT_CONTROL* cont );
+
 #ifdef DEBUG_FLDMSGBG
 static void DEBUG_AddCountPrintTCB( FLDMSGBG *fmb );
 static void DEBUG_SubCountPrintTCB( FLDMSGBG *fmb );
@@ -396,6 +423,10 @@ FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
   { //PRINT_STREAM TCB
     fmb->printTCBLSys = GFL_TCBL_Init(
         fmb->heapID, fmb->heapID, FLDMSGBG_PRINT_STREAM_MAX, 4 );
+  }
+
+  { // OPTION
+    Control_Init( &fmb->print_cont );
   }
   
   //FLDMSGBG_SetupResource( fmb );
@@ -697,6 +728,39 @@ void FLDMSGBG_ReqResetBG2( FLDMSGBG *fmb )
 {
   fmb->req_reset_bg2_control = TRUE;
 }
+
+
+//======================================================================
+//  FLDPRINT_CONTROL 自動キー送り＋メッセージスピード一定設定
+//======================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動キー送り＋メッセージスピード一定　設定
+ *
+ *	@param	fmb       ワーク
+ *	@param	flag      TRUE：ON    FALSE：OFF
+ */
+//-----------------------------------------------------------------------------
+void FLDMSGBG_SetAutoPrintFlag( FLDMSGBG *fmb, BOOL flag )
+{
+  Control_SetAutoPrintFlag( &fmb->print_cont, flag );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動キー送り　＋　メッセージスピード一定　設定取得
+ *
+ *	@param	fmb     ワーク
+ *
+ *	@retval TRUE    設定ON
+ *	@retval FALSE   設定OFF
+ */
+//-----------------------------------------------------------------------------
+BOOL FLDMSGBG_GetAutoPrintFlag( const FLDMSGBG *fmb )
+{
+  return Control_GetAutoPrintFlag( &fmb->print_cont );
+}
+
 
 //======================================================================
 //  FLDMSGPRINT フィールド文字表示関連
@@ -1920,6 +1984,9 @@ FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrintColor(
       fmb->printTCBLSys, 0,
       fmb->heapID, n_color );
 
+  // キー送り管理開始
+  Control_StartPrint( &stm->fmb->print_cont );
+
   return( stm );
 }
 
@@ -1967,20 +2034,13 @@ void FLDMSGPRINT_STREAM_Delete( FLDMSGPRINT_STREAM *stm )
 static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
     FLDMSGPRINT_STREAM *stm )
 {
-  int trg,cont;
   PRINTSTREAM_STATE state;
   
-  trg = GFL_UI_KEY_GetTrg();
-  cont = GFL_UI_KEY_GetCont();
   state = PRINTSYS_PrintStreamGetState( stm->printStream );
   
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
-    if( (trg & MSG_SKIP_BTN) ){
-      stm->flag_key_trg = TRUE;
-    }
-    
-    if( stm->flag_key_trg == TRUE && (cont & MSG_SKIP_BTN) ){
+    if( Control_GetSkipKey( &stm->fmb->print_cont ) ){
       PRINTSYS_PrintStreamShortWait( stm->printStream, 0 );
     }
 #if 0
@@ -1990,10 +2050,9 @@ static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
 #endif
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
-    if( (trg & MSG_LAST_BTN) ){
+    if( Control_GetWaitKey( &stm->fmb->print_cont ) ){
       PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       PRINTSYS_PrintStreamReleasePause( stm->printStream );
-      stm->flag_key_trg = FALSE;
       state = PRINTSTREAM_STATE_RUNNING; //即 RUNNINGで返す
     }
     break;
@@ -2109,7 +2168,7 @@ void FLDMSGWIN_STREAM_PrintStart(
   GFL_MSG_GetString( msgWin->msgData, strID, msgWin->strBuf );
   
   msgWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
-    msgWin->fmb, msgWin->strBuf, msgWin->bmpwin, x, y, MSGSPEED_GetWait() );
+    msgWin->fmb, msgWin->strBuf, msgWin->bmpwin, x, y, Control_GetMsgWait( &msgWin->fmb->print_cont ) );
 }
 
 //--------------------------------------------------------------
@@ -2130,7 +2189,7 @@ void FLDMSGWIN_STREAM_PrintStrBufStart(
   }
   
   msgWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
-    msgWin->fmb, strBuf, msgWin->bmpwin, x, y, MSGSPEED_GetWait() );
+    msgWin->fmb, strBuf, msgWin->bmpwin, x, y, Control_GetMsgWait( &msgWin->fmb->print_cont ) );
 }
 
 //--------------------------------------------------------------
@@ -2340,7 +2399,7 @@ void FLDSYSWIN_STREAM_PrintStart(
   GFL_MSG_GetString( sysWin->msgData, strID, sysWin->strBuf );
   
   sysWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
-    sysWin->fmb, sysWin->strBuf, sysWin->bmpwin, x, y, MSGSPEED_GetWait() );
+    sysWin->fmb, sysWin->strBuf, sysWin->bmpwin, x, y, Control_GetMsgWait( &sysWin->fmb->print_cont ) );
 }
 
 //--------------------------------------------------------------
@@ -2361,7 +2420,7 @@ void FLDSYSWIN_STREAM_PrintStrBufStart(
   }
   
   sysWin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
-    sysWin->fmb, strBuf, sysWin->bmpwin, x, y, MSGSPEED_GetWait() );
+    sysWin->fmb, strBuf, sysWin->bmpwin, x, y, Control_GetMsgWait( &sysWin->fmb->print_cont ) );
 }
 
 //--------------------------------------------------------------
@@ -2527,12 +2586,12 @@ GFL_BMPWIN * FLDSYSWIN_STREAM_GetBmpWin( FLDSYSWIN_STREAM *sysWin )
 struct _TAG_FLDTALKMSGWIN
 {
   u8 talkMsgWinIdx;
-  u8 flag_key_trg;
   s16 shake_y;
   
   STRBUF *strBuf;
   TALKMSGWIN_SYS *talkMsgWinSys; //FLDMSGBGより
   FLDKEYWAITCURSOR cursor_work;
+  FLDMSGBG *fmb;
 };
 
 //--------------------------------------------------------------
@@ -2555,6 +2614,8 @@ static void fldTalkMsgWin_Add(
   GF_ASSERT( fmb->talkMsgWinSys != NULL );
   
   fmb->deriveFont_plttNo = PANO_FONT_TALKMSGWIN;
+
+  tmsg->fmb = fmb;
   
   tmsg->talkMsgWinSys = fmb->talkMsgWinSys;
   tmsg->talkMsgWinIdx = idx;
@@ -2566,17 +2627,19 @@ static void fldTalkMsgWin_Add(
   case FLDTALKMSGWIN_IDX_UPPER:
     TALKMSGWIN_CreateFixWindowUpper( tmsg->talkMsgWinSys,
         FLDTALKMSGWIN_IDX_UPPER, (VecFx32*)pos, strBuf, 15,
-        type, tail );
+        type, tail, Control_GetMsgWait( &fmb->print_cont ) );
     break;
   case FLDTALKMSGWIN_IDX_LOWER:
     TALKMSGWIN_CreateFixWindowLower( tmsg->talkMsgWinSys,
         FLDTALKMSGWIN_IDX_LOWER, (VecFx32*)pos, strBuf, 15,
-        type, tail );
+        type, tail, Control_GetMsgWait( &fmb->print_cont ) );
     break;
   default:
     TALKMSGWIN_CreateFixWindowAuto( tmsg->talkMsgWinSys,
-        FLDTALKMSGWIN_IDX_AUTO, (VecFx32*)pos, strBuf, 15, type );
+        FLDTALKMSGWIN_IDX_AUTO, (VecFx32*)pos, strBuf, 15, type, 
+        Control_GetMsgWait( &fmb->print_cont ) );
   }
+  Control_StartPrint( &fmb->print_cont );
   
   TALKMSGWIN_OpenWindow( tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
   
@@ -2721,7 +2784,7 @@ void FLDTALKMSGWIN_ResetMessageStrBuf( FLDTALKMSGWIN *tmsg, STRBUF *strbuf )
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( bmpwin );
   GFL_BMP_Clear( bmp, 0xff );
   TALKMSGWIN_ResetMessage(
-    tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx, strbuf );
+    tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx, strbuf, Control_GetMsgWait( &tmsg->fmb->print_cont ) );
   GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(bmpwin) );
 }
 
@@ -2734,7 +2797,6 @@ void FLDTALKMSGWIN_ResetMessageStrBuf( FLDTALKMSGWIN *tmsg, STRBUF *strbuf )
 //--------------------------------------------------------------
 BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
 {
-  int trg,cont;
   PRINTSTREAM_STATE state;
   PRINT_STREAM *stream;
   PRINTSTREAM_PAUSE_TYPE pause_type;
@@ -2744,8 +2806,6 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
     return( FALSE );
   }
 
-  trg = GFL_UI_KEY_GetTrg();
-  cont = GFL_UI_KEY_GetCont();
   stream = TALKMSGWIN_GetPrintStream(
       tmsg->talkMsgWinSys, tmsg->talkMsgWinIdx );
   state = PRINTSYS_PrintStreamGetState( stream );
@@ -2775,11 +2835,7 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
       GFL_BMPWIN_TransVramCharacter( twin_bmp );
     }
     
-    if( (trg & MSG_SKIP_BTN) ){
-      tmsg->flag_key_trg = TRUE;
-    }
-    
-    if( tmsg->flag_key_trg == TRUE && (cont & MSG_SKIP_BTN) ){
+    if( Control_GetSkipKey( &tmsg->fmb->print_cont ) ){
       PRINTSYS_PrintStreamShortWait( stream, 0 );
     }
     break;
@@ -2791,11 +2847,10 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
       
       FLDKEYWAITCURSOR_Write( &tmsg->cursor_work, bmp, 0x0f );
 
-      if( (trg & MSG_LAST_BTN) ){
+      if( Control_GetWaitKey( &tmsg->fmb->print_cont ) ){
         PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
         PRINTSYS_PrintStreamReleasePause( stream );
         FLDKEYWAITCURSOR_Clear( &tmsg->cursor_work, bmp, 0x0f );
-        tmsg->flag_key_trg = FALSE;
       }
       
       GFL_BMPWIN_TransVramCharacter( twin_bmp );
@@ -3080,7 +3135,7 @@ void FLDPLAINMSGWIN_PrintStreamStart(
   GFL_MSG_GetString( plnwin->msgData, strID, plnwin->strBuf );
   
   plnwin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
-    plnwin->fmb, plnwin->strBuf, plnwin->bmpwin, x, y, MSGSPEED_GetWait() );
+    plnwin->fmb, plnwin->strBuf, plnwin->bmpwin, x, y, Control_GetMsgWait( &plnwin->fmb->print_cont ) );
 }
 
 //--------------------------------------------------------------
@@ -3101,7 +3156,7 @@ void FLDPLAINMSGWIN_PrintStreamStartStrBuf(
   }
   
   plnwin->msgPrintStream = FLDMSGPRINT_STREAM_SetupPrint(
-    plnwin->fmb, strBuf, plnwin->bmpwin, x, y, MSGSPEED_GetWait() );
+    plnwin->fmb, strBuf, plnwin->bmpwin, x, y, Control_GetMsgWait( &plnwin->fmb->print_cont ) );
 }
 
 //--------------------------------------------------------------
@@ -3198,7 +3253,7 @@ static void fldSubMsgWin_Add(
   
   TALKMSGWIN_CreateWindowAlone(
     subwin->talkMsgWinSys, subwin->talkMsgWinIdx,
-    strBuf, x, y, sx, sy, GX_RGB(31,31,31), type );
+    strBuf, x, y, sx, sy, GX_RGB(31,31,31), type, Control_GetMsgWait( &fmb->print_cont ) );
   
   TALKMSGWIN_OpenWindow( subwin->talkMsgWinSys, subwin->talkMsgWinIdx );
 }
@@ -4909,6 +4964,139 @@ static FLDSUBMSGWIN * FldMsgBG_DeleteFldSubMsgWin( FLDMSGBG *fmb, int id )
   GF_ASSERT( 0 );
   return( NULL );
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Print設定 初期化
+ *
+ *	@param	cont  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Control_Init( FLDPRINT_CONTROL* cont )
+{
+  GFL_STD_MemClear( cont, sizeof(FLDPRINT_CONTROL) );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ再生開始
+ *
+ *	@param	cont  ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Control_StartPrint( FLDPRINT_CONTROL* cont )
+{
+  cont->key_wait = 0;
+  cont->key_skip = 0;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動キー送り＋メッセージスピード一定フラグの設定
+ *
+ *	@param	cont    ワーク
+ *	@param	flag      フラグ
+ */
+//-----------------------------------------------------------------------------
+static void Control_SetAutoPrintFlag( FLDPRINT_CONTROL* cont, BOOL flag )
+{
+  cont->auto_msg_flag = flag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動キー送り＋メッセージスピード一定フラグの取得
+ *
+ *	@param	cont  ワーク
+ */
+//-----------------------------------------------------------------------------
+static BOOL Control_GetAutoPrintFlag( const FLDPRINT_CONTROL* cont )
+{
+  return cont->auto_msg_flag;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ再生スピードの取得
+ *
+ *	@param	cont  ワーク
+ *
+ *	@return 再生スピード
+ */
+//-----------------------------------------------------------------------------
+static int Control_GetMsgWait( const FLDPRINT_CONTROL* cont )
+{
+  if( cont->auto_msg_flag ){
+    return MSGSPEED_GetWaitByConfigParam( AUTO_MSG_WAIT );
+  }
+  return MSGSPEED_GetWait();
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージスキップ　チェック
+ *
+ *	@param	cont  ワーク
+ *
+ *	@retval TRUE    スキップ
+ *	@retval FALSE   通常表示
+ */
+//-----------------------------------------------------------------------------
+static BOOL Control_GetSkipKey( FLDPRINT_CONTROL* cont )
+{
+  int trg = GFL_UI_KEY_GetTrg();
+  int ct = GFL_UI_KEY_GetCont();
+  
+  // 自動再生中のスキップは不可能
+  if( cont->auto_msg_flag ){
+    return FALSE;
+  }
+
+  if( trg & MSG_SKIP_BTN ){
+    cont->key_skip = TRUE;
+  }
+
+  if( cont->key_skip && (ct & MSG_SKIP_BTN) ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージ送り　チェック
+ *
+ *	@param	cont  ワーク
+ *
+ *	@retval TRUE    メッセージ送り
+ *	@retval FALSE   待機
+ */
+//-----------------------------------------------------------------------------
+static BOOL Control_GetWaitKey( FLDPRINT_CONTROL* cont )
+{
+  int trg = GFL_UI_KEY_GetTrg();
+
+  // 自動送り中は、ウエイト後メッセージ送り
+  if( cont->auto_msg_flag ){
+    cont->key_wait ++;
+    if( cont->key_wait >= AUTO_MSG_KEY_WAIT  ){
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  if( trg & MSG_LAST_BTN ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+
+
+
 
 //======================================================================
 //  data

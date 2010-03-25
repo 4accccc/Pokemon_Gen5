@@ -187,6 +187,11 @@ extern void FLDMSGBG_DeleteMSGDATA( GFL_MSGDATA *msgData );
 extern void FLDMSGBG_ReqResetBG2( FLDMSGBG *fmb );
 extern void FLDMSGBG_TransResource( int bgFrame, HEAPID heapID );
 
+// 再生情報設定
+// 自動キー送り＋メッセージスピード一定
+extern void FLDMSGBG_SetAutoPrintFlag( FLDMSGBG *fmb, BOOL flag );
+extern BOOL FLDMSGBG_GetAutoPrintFlag( const FLDMSGBG *fmb );
+
 //メッセージ表示
 extern FLDMSGPRINT * FLDMSGPRINT_SetupPrint(
   FLDMSGBG *fmb, GFL_MSGDATA *msgData, GFL_BMPWIN *bmpwin );

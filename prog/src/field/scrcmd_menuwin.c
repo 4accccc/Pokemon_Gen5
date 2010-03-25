@@ -1971,6 +1971,52 @@ VMCMD_RESULT EvCmdKeyWaitMsgCursor( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージwindow　自動キー送り　＋　メッセージスピード一定　設定
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdWinMsgSetAutoPrintFlag( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
+  u16 flag = VMGetU16( core );
+
+  if( flag ){
+    FLDMSGBG_SetAutoPrintFlag( fparam->msgBG, TRUE );
+    SCREND_CHK_SetBitOn( SCREND_CHK_MSGWIN_AUTO_PRINT );
+    
+    TOMOYA_Printf( "ON\n" );
+  }else{
+    FLDMSGBG_SetAutoPrintFlag( fparam->msgBG, FALSE );
+    SCREND_CHK_SetBitOff( SCREND_CHK_MSGWIN_AUTO_PRINT );
+
+    TOMOYA_Printf( "OFF\n" );
+  }
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メッセージwindow　自動キー送り　＋　メッセージスピード一定　OFF　チェック
+ */
+//-----------------------------------------------------------------------------
+BOOL SCREND_CheckEndWinMsgAutoPrintFlag( SCREND_CHECK *end_check, int *seq )
+{
+  SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( end_check->ScrWk );
+  if( SCREND_CHK_CheckBit( SCREND_CHK_MSGWIN_AUTO_PRINT ) ){
+    FLDMSGBG_SetAutoPrintFlag( fparam->msgBG, FALSE );
+    SCREND_CHK_SetBitOff( SCREND_CHK_MSGWIN_AUTO_PRINT );
+  }
+  return TRUE;
+}
+
+
+
+
 //======================================================================
 //  parts
 //======================================================================

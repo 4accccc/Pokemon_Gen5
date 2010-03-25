@@ -83,7 +83,8 @@ extern void TALKMSGWIN_CreateWindowAlone(	TALKMSGWIN_SYS*		tmsgwinSys,
 																			u8								winsx,			
 																			u8								winsy,			
 																			u8								colIdx,
-                                      TALKMSGWIN_TYPE   winType );
+                                      TALKMSGWIN_TYPE   winType,
+                                      int               wait );
 
 extern void TALKMSGWIN_CreateFloatWindowIdx(	TALKMSGWIN_SYS*		tmsgwinSys, 
 																							int								tmsgwinIdx,
@@ -94,7 +95,8 @@ extern void TALKMSGWIN_CreateFloatWindowIdx(	TALKMSGWIN_SYS*		tmsgwinSys,
 																							u8								winsx,			
 																							u8								winsy,			
 																							u8								colIdx,
-                                              TALKMSGWIN_TYPE   winType );
+                                              TALKMSGWIN_TYPE   winType,
+                                              int               wait );
 
 extern void TALKMSGWIN_CreateFloatWindowIdxConnect(	TALKMSGWIN_SYS*		tmsgwinSys, 
 																										int								tmsgwinIdx,
@@ -105,7 +107,8 @@ extern void TALKMSGWIN_CreateFloatWindowIdxConnect(	TALKMSGWIN_SYS*		tmsgwinSys,
 																										u8								winsx,			
 																										u8								winsy,			
 																										u8								colIdx,
-                                                    TALKMSGWIN_TYPE   winType );
+                                                    TALKMSGWIN_TYPE   winType,
+                                                    int               wait );
 
 extern void TALKMSGWIN_CreateFixWindowUpper( TALKMSGWIN_SYS* tmsgwinSys,
 																			int							tmsgwinIdx,
@@ -113,7 +116,8 @@ extern void TALKMSGWIN_CreateFixWindowUpper( TALKMSGWIN_SYS* tmsgwinSys,
 																			STRBUF*					msg,
 																			u8							colIdx,
                                       TALKMSGWIN_TYPE winType,
-                                      TAIL_SETPAT tailPat );
+                                      TAIL_SETPAT     tailPat,
+                                      int             wait );
 
 extern void TALKMSGWIN_CreateFixWindowLower( TALKMSGWIN_SYS* tmsgwinSys,
 																			int							tmsgwinIdx,
@@ -121,14 +125,16 @@ extern void TALKMSGWIN_CreateFixWindowLower( TALKMSGWIN_SYS* tmsgwinSys,
 																			STRBUF*					msg,
 																			u8							colIdx,
                                       TALKMSGWIN_TYPE winType,
-                                      TAIL_SETPAT tailPat );
+                                      TAIL_SETPAT     tailPat,
+                                      int             wait );
 
 extern void TALKMSGWIN_CreateFixWindowAuto( TALKMSGWIN_SYS* tmsgwinSys,
 																							int							tmsgwinIdx,
 																							VecFx32*				pTarget,
 																							STRBUF*					msg,
 																							u8							colIdx,
-                                              TALKMSGWIN_TYPE winType );
+                                              TALKMSGWIN_TYPE winType,
+                                              int             wait );
 
 extern void TALKMSGWIN_DeleteWindow( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
 extern void TALKMSGWIN_OpenWindow( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
@@ -139,7 +145,7 @@ extern BOOL						TALKMSGWIN_CheckPrintOn( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwi
 extern PRINT_STREAM*	TALKMSGWIN_GetPrintStream( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );	
 extern GFL_BMPWIN * TALKMSGWIN_GetBmpWin( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx );
 extern void TALKMSGWIN_ResetMessage(
-    TALKMSGWIN_SYS *tmsgwinSys, int tmsgwinIdx, STRBUF *msg );
+    TALKMSGWIN_SYS *tmsgwinSys, int tmsgwinIdx, STRBUF *msg, int wait );
 extern void TALKMSGWIN_ReTransWindowBG( TALKMSGWIN_SYS* tmsgwinSys );
 
 extern GFL_BMPWIN * TALKMSGWIN_CreateBmpWindow( TALKMSGWIN_SYS *tmsgwinSys, 

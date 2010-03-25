@@ -824,9 +824,8 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_debug_tomoya
 
- _REBATTLE_TRAINER_START()
- _REBATTLE_TRAINER_CLEAR_TR_EVENT_FLAG()
- _REBATTLE_TRAINER_END()
+  _MSGWIN_SET_AUTOPRINT( TRUE )
+  _MSGWIN_SET_AUTOPRINT( FALSE )
 
 EVENT_END
 

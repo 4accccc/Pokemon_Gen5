@@ -146,6 +146,8 @@ typedef struct {
 	u8							writex;
 	u8							writey;
 	u16							timer;
+
+  int                   msgwait;
 }TMSGWIN;
 
 struct _TALKMSGWIN_SYS{
@@ -171,6 +173,7 @@ typedef struct {
 	u8							winsy;			
 	GXRgb						color;
   u16             winType;
+  int             msgwait;
 }TALKMSGWIN_SETUP;
 
 static void settingCamera( TALKMSGWIN_SYS* tmsgwinSys, int mode );
@@ -347,7 +350,8 @@ void TALKMSGWIN_CreateWindowAlone(	TALKMSGWIN_SYS*		tmsgwinSys,
 																			u8								winsx,			
 																			u8								winsy,			
 																			u8								colIdx,
-                                      TALKMSGWIN_TYPE   winType )
+                                      TALKMSGWIN_TYPE   winType,
+                                      int               wait )
 {
 	TALKMSGWIN_SETUP setup;
 
@@ -361,6 +365,7 @@ void TALKMSGWIN_CreateWindowAlone(	TALKMSGWIN_SYS*		tmsgwinSys,
 	setup.winsy = winsy;
 	setup.color = BACKGROUND_COLOR;
   setup.winType = winType;
+  setup.msgwait = wait;
   
 	setupWindow( tmsgwinSys,
       &tmsgwinSys->tmsgwin[tmsgwinIdx], NULL, msg, &setup );
@@ -376,7 +381,8 @@ void TALKMSGWIN_CreateFloatWindowIdx(	TALKMSGWIN_SYS*		tmsgwinSys,
 																			u8								winsx,			
 																			u8								winsy,			
 																			u8								colIdx,
-                                      TALKMSGWIN_TYPE   winType )
+                                      TALKMSGWIN_TYPE   winType,
+                                      int               wait )
 {
 	TALKMSGWIN_SETUP setup;
 
@@ -390,6 +396,7 @@ void TALKMSGWIN_CreateFloatWindowIdx(	TALKMSGWIN_SYS*		tmsgwinSys,
 	setup.winsy = winsy;
 	setup.color = BACKGROUND_COLOR;
   setup.winType = winType;
+  setup.msgwait = wait;
 
 	setupWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[tmsgwinIdx], pTarget, msg, &setup);
 }
@@ -404,7 +411,8 @@ void TALKMSGWIN_CreateFloatWindowIdxConnect(	TALKMSGWIN_SYS*		tmsgwinSys,
 																							u8								winsx,			
 																							u8								winsy,			
 																							u8								colIdx,
-                                              TALKMSGWIN_TYPE   winType )
+                                              TALKMSGWIN_TYPE   winType,
+                                              int               wait )
 {
 	TALKMSGWIN_SETUP setup;
 
@@ -419,6 +427,7 @@ void TALKMSGWIN_CreateFloatWindowIdxConnect(	TALKMSGWIN_SYS*		tmsgwinSys,
 	setup.winsy = winsy;
 	setup.color = BACKGROUND_COLOR;
   setup.winType = winType;
+  setup.msgwait = wait;
 
 	setupWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[tmsgwinIdx], 
 							tmsgwinSys->tmsgwin[prev_tmsgwinIdx].pTarget, msg, &setup);
@@ -434,7 +443,8 @@ void TALKMSGWIN_CreateFixWindowUpper( TALKMSGWIN_SYS* tmsgwinSys,
 																			STRBUF*					msg,
 																			u8							colIdx,
                                       TALKMSGWIN_TYPE winType,
-                                      TAIL_SETPAT tailPat )
+                                      TAIL_SETPAT     tailPat,
+                                      int             wait )
 {
 	TALKMSGWIN_SETUP setup;
 
@@ -449,6 +459,7 @@ void TALKMSGWIN_CreateFixWindowUpper( TALKMSGWIN_SYS* tmsgwinSys,
 	setup.winsy = TWIN_FIX_SIZY;
 	setup.color = BACKGROUND_COLOR;
   setup.winType = winType;
+  setup.msgwait = wait;
 
 	setupWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[tmsgwinIdx], pTarget, msg, &setup);
 }
@@ -459,7 +470,8 @@ void TALKMSGWIN_CreateFixWindowLower( TALKMSGWIN_SYS* tmsgwinSys,
 																			STRBUF*					msg,
 																			u8							colIdx,
                                       TALKMSGWIN_TYPE winType,
-                                      TAIL_SETPAT tailPat )
+                                      TAIL_SETPAT     tailPat,
+                                      int             wait )
 {
 	TALKMSGWIN_SETUP setup;
 
@@ -474,6 +486,7 @@ void TALKMSGWIN_CreateFixWindowLower( TALKMSGWIN_SYS* tmsgwinSys,
 	setup.winsy = TWIN_FIX_SIZY;
 	setup.color = BACKGROUND_COLOR;
   setup.winType = winType;
+  setup.msgwait = wait;
 
 	setupWindow(tmsgwinSys, &tmsgwinSys->tmsgwin[tmsgwinIdx], pTarget, msg, &setup);
 }
@@ -483,7 +496,8 @@ void TALKMSGWIN_CreateFixWindowAuto(	TALKMSGWIN_SYS* tmsgwinSys,
 																			VecFx32*				pTarget,
 																			STRBUF*					msg,
 																			u8							colIdx,
-                                      TALKMSGWIN_TYPE winType )
+                                      TALKMSGWIN_TYPE winType,
+                                      int             wait )
 {
 	int targetx, targety;
 
@@ -492,11 +506,11 @@ void TALKMSGWIN_CreateFixWindowAuto(	TALKMSGWIN_SYS* tmsgwinSys,
 	if( targety < (96) ){ 
 		TALKMSGWIN_CreateFixWindowLower(
         tmsgwinSys, tmsgwinIdx, pTarget, msg,
-        colIdx, winType, TAIL_SETPAT_NONE );
+        colIdx, winType, TAIL_SETPAT_NONE, wait );
 	} else {
 		TALKMSGWIN_CreateFixWindowUpper(
         tmsgwinSys, tmsgwinIdx, pTarget, msg,
-        colIdx, winType, TAIL_SETPAT_NONE );
+        colIdx, winType, TAIL_SETPAT_NONE, wait );
 	}
 }
 
@@ -561,7 +575,7 @@ GFL_BMPWIN * TALKMSGWIN_GetBmpWin( TALKMSGWIN_SYS* tmsgwinSys, int tmsgwinIdx )
 
 //------------------------------------------------------------------
 void TALKMSGWIN_ResetMessage(
-    TALKMSGWIN_SYS *tmsgwinSys, int tmsgwinIdx, STRBUF *msg )
+    TALKMSGWIN_SYS *tmsgwinSys, int tmsgwinIdx, STRBUF *msg, int wait )
 {
   TMSGWIN *tmsgwin = &tmsgwinSys->tmsgwin[tmsgwinIdx];
   
@@ -571,8 +585,7 @@ void TALKMSGWIN_ResetMessage(
   }
   
   if( msg != NULL ){
-    int wait = MSGSPEED_GetWait();
-	  
+    tmsgwin->msgwait = wait;
     tmsgwin->msg = msg;
     tmsgwin->printStream = PRINTSYS_PrintStream(
         tmsgwin->bmpwin,							// GFL_BMPWIN
@@ -704,6 +717,8 @@ static void setupWindow(	TALKMSGWIN_SYS*		tmsgwinSys,
 	tmsgwin->winPat = setup->winPat;
   tmsgwin->winType = setup->winType;
 
+  tmsgwin->msgwait = setup->msgwait;
+  
 	//描画用ビットマップ作成
 	{
 		u8 px = ( setup->winpx + setup->winsx <= 32 )? setup->winpx : 32 - setup->winsx;
@@ -811,7 +826,7 @@ static void mainfuncWindow( TALKMSGWIN_SYS* tmsgwinSys, TMSGWIN* tmsgwin )
 			if(debugOn == TRUE){
 				wait = 2;
 			} else {
-				wait = MSGSPEED_GetWait();
+				wait = tmsgwin->msgwait;
 			}
 
 			tmsgwin->seq = WINSEQ_HOLD;
@@ -865,7 +880,7 @@ static void mainfuncWindowAlone(
 			if(debugOn == TRUE){
 				wait = 2;
 			} else {
-				wait = MSGSPEED_GetWait();
+				wait = tmsgwin->msgwait;
 			}
       
 			tmsgwin->seq = WINSEQ_HOLD;
