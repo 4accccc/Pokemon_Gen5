@@ -40,7 +40,7 @@
 
 #include "arc/fieldmap/buildmodel_outdoor.naix" //NARC_output_buildmodel_
 
-#define BRIGHT_FADE_SPPED (1)
+#include "event_field_fade.h" //FIELD_FADE_DEFAULT_WAIT
 
 typedef enum {
   FADE_IN,
@@ -818,7 +818,7 @@ static void BrightCntTcb( GFL_TCB* tcb, void* work )
       int start, end;
       int fade_speed;
 
-      fade_speed = BRIGHT_FADE_SPPED;
+      fade_speed = FIELD_FADE_DEFAULT_WAIT;
       if ( wk->fade_io == FADE_IN )
       {
         //フェードインのときはＢＧ初期化する

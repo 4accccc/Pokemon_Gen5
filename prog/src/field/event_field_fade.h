@@ -47,6 +47,11 @@ typedef enum{
   FIELD_FADE_NOT_BG_INIT,   // 初期化しない
 } FIELD_FADE_BG_INIT_FLAG;
 
+//Fadeシステムに渡すウェイト
+enum {
+  FIELD_FADE_DEFAULT_WAIT = -1,
+  FIELD_FADE_QUICK_WAIT = -16,
+};
 
 //==================================================================================
 // ■フェード判定関数
