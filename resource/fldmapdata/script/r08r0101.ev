@@ -318,7 +318,7 @@ sp_poke_main_event:
   IF $SCWK_ANSWER == 0 THEN
     //SCWK_PARAM0：ポケモン位置　SCWK_PARAM1：覚えさせる技ＩＤ
     $SCWK_PARAM0 = $target_poke_pos
-    $SCWK_PARAM1 = WAZANO_KISEKINOTURUGI
+    $SCWK_PARAM1 = WAZANO_SINPINOTURUGI
     //技覚えシーケンス SCWK_ANSWER=TRUEで覚えた
     _CHG_COMMON_SCR SCRID_SKILL_LEARN
     //覚えた？
