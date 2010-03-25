@@ -139,6 +139,7 @@ typedef struct _BEACON_VIEW{
   FIELD_SUBSCREEN_WORK *subscreen;
   MISC* misc_sv;
   MYITEM_PTR item_sv;
+  POWER_CONV_DATA* gpower_data;
 
   ////////////////////////////////////////
   BEACON_STATUS* b_status;

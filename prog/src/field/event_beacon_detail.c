@@ -143,6 +143,8 @@ GMEVENT* EVENT_BeaconDetail(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u8 ta
   bdw->save = GAMEDATA_GetSaveControlWork(bdw->gdata);
   bdw->gsys = gsys;
   bdw->target = target;
+
+  IWASAWA_Printf("BeaconDetail Target = %d\n",target);
   return event;
 }
 

@@ -138,7 +138,7 @@ void BeaconDetail_InitialDraw( BEACON_DETAIL_WORK* wk )
 
   draw_BeaconWindowIni( wk );
 
-  GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, wk->list[0]);
+  GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, wk->list[wk->list_top]);
   draw_BeaconWindow( wk, wk->tmpInfo, wk->tmpTime, wk->flip_sw );
   draw_BeaconWindowVisibleSet( wk, wk->flip_sw, TRUE );
   draw_BeaconWindowVisibleSet( wk, wk->flip_sw^1, FALSE );

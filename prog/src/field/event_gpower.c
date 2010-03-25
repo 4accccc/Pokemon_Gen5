@@ -15,6 +15,7 @@
 #include "gamesystem/game_data.h"
 #include "gamesystem/g_power.h"
 #include "poke_tool/poke_tool.h"
+#include "item/itemsym.h"
 
 #include "field/fieldmap.h"
 #include "field/field_sound.h"
@@ -51,24 +52,28 @@ GMEVENT* EVENT_GPowerEffectStart(GAMESYS_WORK * gsys, GPOWER_ID g_power, BOOL mi
 {
   GMEVENT* event;
   SCRIPT_WORK* sc;
+  HEAPID tmpHeapID = GFL_HEAP_LOWID( HEAPID_FIELDMAP );
+  GAMEDATA* gdata = GAMESYSTEM_GetGameData(gsys);
+  POWER_CONV_DATA * p_data = GPOWER_PowerData_LoadAlloc( tmpHeapID );
 
   event = SCRIPT_SetEventScript( gsys, SCRID_GPOWER_EFFECT_START, NULL, HEAPID_FIELDMAP );
   sc = SCRIPT_GetScriptWorkFromEvent( event );
   {
-    POWER_CONV_DATA * p_data = GPOWER_PowerData_LoadAlloc( GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
     GPOWER_TYPE type = GPOWER_ID_to_Type( p_data, g_power );
     GPOWER_Set_OccurID( g_power, p_data, mine );
 
     SCRIPT_SetScriptWorkParam( sc, g_power, type, mine, 0 );
     sub_InstantPowerUse( gsys, SCRIPT_GetWordSet( sc ), type );
- 
-    GPOWER_PowerData_Unload( p_data );
   }
   if( mine ){ //é©ï™ÇÃÇégÇ¡ÇΩéû
+    u16 point = GPOWER_ID_to_Point( p_data, g_power );
+    MYITEM_SubItem( GAMEDATA_GetMyItem( gdata ), ITEM_DERUDAMA, point, tmpHeapID );
     GAMEBEACON_Set_GPower( g_power );
   }else{  //ëºêlÇÃÇégÇ¡ÇΩéû
     GAMEBEACON_Set_OtherGPowerUse( g_power );
   }
+  GPOWER_PowerData_Unload( p_data );
+
   return event;
 }
 

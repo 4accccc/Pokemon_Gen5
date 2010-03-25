@@ -196,6 +196,10 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
     BeaconView_SetViewPassive( wk, !bActive );
   }
   if( wk->event_id != EV_NONE ){
+    if(!bActive){
+      //リクエストを強制破棄
+      event_RequestReset( wk );
+    }
     return; //イベントリクエスト中はメイン処理をスキップ
   }
   if(!bActive){
@@ -517,6 +521,9 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   //スタックワーク領域取得
   wk->infoStack = GAMEBEACON_InfoTbl_Alloc( wk->heap_sID );
   wk->tmpInfo = GAMEBEACON_Alloc( wk->heap_sID );
+
+  //Gパワーデータ取得
+  wk->gpower_data = GPOWER_PowerData_LoadAlloc( wk->heap_sID );
 }
 
 //--------------------------------------------------------------
@@ -529,6 +536,9 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
 static void _sub_DataExit(BEACON_VIEW_PTR wk)
 {
   GAMEBEACON_Stack_PutBack( wk->infoStack );
+
+  GPOWER_PowerData_Unload( wk->gpower_data );
+
   GFL_HEAP_FreeMemory( wk->tmpInfo );
   GFL_HEAP_FreeMemory( wk->infoStack );
 }

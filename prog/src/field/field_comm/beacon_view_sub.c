@@ -154,6 +154,7 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   if(ret != GFL_UI_TP_HIT_NONE){
     wk->ctrl.target = ret;
     effReq_SetPanelFlash( wk, ret );
+    IWASAWA_Printf("PanelTarget = %d\n",ret);
     return SEQ_CALL_DETAIL_VIEW;
   }
 
@@ -161,20 +162,6 @@ int BeaconView_CheckInput( BEACON_VIEW_PTR wk )
   ret = touchin_CheckUpDown( wk, &tp );
   if(ret != GFL_UI_TP_HIT_NONE){
     list_UpDownReq( wk, ret );
-#if 0
-    u8 ofs,idx;
-
-    if( ret == SCROLL_UP ){
-      ofs = wk->ctrl.view_top+wk->ctrl.view_max+1;
-    }else{
-      ofs = wk->ctrl.view_top-1;
-    }
-    GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, ofs );
-    idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, ofs );
-  
-    //スクロールリクエスト
-    list_ScrollReq( wk, wk->tmpInfo, ofs, idx, ret, FALSE);
-#endif
     return SEQ_VIEW_UPDATE;
   }
   return SEQ_MAIN;
@@ -1546,7 +1533,7 @@ static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u32 tr_id,
 
   //使用ポイント取得
   if( twk->type == GPOWER_USE_MINE ){
-    twk->item_use = 1;
+    twk->item_use = GPOWER_ID_to_Point( wk->gpower_data, g_power );
     twk->item_num = MYITEM_GetItemNum(wk->item_sv, ITEM_DERUDAMA, wk->tmpHeapID);
     
     WORDSET_RegisterNumber( wk->wordset, 2, twk->item_use, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
@@ -1627,7 +1614,6 @@ static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
 
       //使うGパワーを覚えておく
       bvp->ctrl.g_power = twk->g_power;
-      MYITEM_SubItem( bvp->item_sv, ITEM_DERUDAMA, twk->item_use, bvp->tmpHeapID);
 
       twk->seq++;
     }
