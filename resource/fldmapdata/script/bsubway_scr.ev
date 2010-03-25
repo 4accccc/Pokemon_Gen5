@@ -2020,23 +2020,32 @@ INIT_EVENT_END
 EVENT_START ev_bsw_ttown_receipt_talk
 {
   _TALK_OBJ_START()
+   
+  $ret = FALSE
+  $msg_id = msg_bsw_ttown_01
+  
+  IF $ret == TRUE THEN
+    $msg_id = msg_bsw_ttown_00 //初回メッセージ
+    //初回フラグセット予定
+  ENDIF
   
   //戻るか？
-  _BALLOONWIN_TALKOBJ_MSG( 0 )
+  _BALLOONWIN_TALKOBJ_MSG( msg_id )
   _YES_NO_WIN( ret )
   
   IF $ret == SCR_YES THEN
-    $msg_id = 0 //ご乗車下さい
+    $msg_id = msg_bsw_ttown_02 //ご乗車下さい
   ELSE
-    $msg_id = 0 //またお越し下さい
+    $msg_id = msg_bsw_ttown_03 //またお越し下さい
   ENDIF
   
   _BALLOONWIN_TALKOBJ_MSG( msg_id )
+  _LAST_KEYWAIT()
   _MSGWIN_CLOSE()
   
   IF $ret == SCR_YES THEN
     _CALL sub_ttown_demo_start_train
-    _MAP_CHANGE( 0, 0, 0, 0 )
+    _MAP_CHANGE( ZONE_ID_T05, 22, 54, DIR_LEFT )
   ENDIF
 }
 EVENT_END
