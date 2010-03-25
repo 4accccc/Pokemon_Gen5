@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-21T18:32:11"/>
+	<create user="matsumiya" host="W00224" date="2010-03-25T17:31:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -452,9 +452,9 @@
 		<attribute name="キャラクター">c06ジムリーダー
 フウロ</attribute>
 		<language name="JPN" width="256">？？？『アララギはかせ
-そちらの　トレーナーは？[BE:01:ページ切り替え（クリア）]</language>
+そちらの　トレーナーさんは？[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">？？？『アララギ博士
-そちらの　トレーナーは？[BE:01:ページ切り替え（クリア）]</language>
+そちらの　トレーナーさんは？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c06_hakase1_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -484,11 +484,11 @@
 ・続けてhakase1_09</comment>
 		<attribute name="キャラクター">c06ジムリーダー
 フウロ</attribute>
-		<language name="JPN" width="256">フウロ『わあ！　だったら
-ジムに　ちょうせん　するよね！[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">フウロ『そうなんだ！　だったら
+ジムに　ちょうせん　するでしょ？[BE:00:ページ切り替え（行送り）]
 わあ！　とっても　たのしみ！！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">フウロ『わあ！　だったら
-ジムに　挑戦するよね！[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">フウロ『そうなんだ！　だったら
+ジムに　挑戦するでしょ？[BE:00:ページ切り替え（行送り）]
 わあ！　とっても　楽しみ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -524,13 +524,13 @@
 		<attribute name="キャラクター">c06ジムリーダー
 フウロ</attribute>
 		<language name="JPN" width="256">フウロ『……はかせ
-アタシの　ひこうきは　かもつき！[BE:01:ページ切り替え（クリア）]
+アタシの　ひこうきは　かもつきです！[BE:01:ページ切り替え（クリア）]
 はこぶのは　にもつで
-ひとは　のせないんだよ[BE:01:ページ切り替え（クリア）]</language>
+ひとは　のせないんですよ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">フウロ『……博士
-アタシの　飛行機は　貨物機！[BE:01:ページ切り替え（クリア）]
+アタシの　飛行機は　貨物機です！[BE:01:ページ切り替え（クリア）]
 運ぶのは　荷物で
-人は　乗せないんだよ[BE:01:ページ切り替え（クリア）]</language>
+人は　乗せないんですよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c06_hakase1_11" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -561,14 +561,14 @@
 ・続けてleader6_05かleader6_06</comment>
 		<attribute name="キャラクター">c06ジムリーダー
 フウロ</attribute>
-		<language name="JPN" width="256">フウロ『……ったく！[BE:01:ページ切り替え（クリア）]
-あんな　いいかげんな　かんじで
+		<language name="JPN" width="256">フウロ『……もう！[BE:01:ページ切り替え（クリア）]
+あんな　いいかげんな　かんじなのに
 せかいてきな　ポケモンはかせって[BE:00:ページ切り替え（行送り）]
-いまだに　しんじられないな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">フウロ『……もうッ！[BE:01:ページ切り替え（クリア）]
-あんな　いいかげんな　感じで
+いまだに　しんじられない[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">フウロ『……もッ！[BE:01:ページ切り替え（クリア）]
+あんな　いいかげんな　感じなのに
 世界的な　ポケモン博士って[BE:00:ページ切り替え（行送り）]
-いまだに　信じられないな[BE:01:ページ切り替え（クリア）]</language>
+いまだに　信じられない[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c06_leader6_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -578,16 +578,20 @@
 ・続けてleader6_07</comment>
 		<attribute name="キャラクター">c06ジムリーダー
 フウロ</attribute>
-		<language name="JPN" width="256">さてと……
-[1:00:トレーナー名:0]くん　だっけ！▽
-ジムに　ちょうせん　だよね？▼
-だけど　アタシ　そのまえに
-やることが　あるんだよね▼</language>
-		<language name="JPN_KANJI" width="256">さてと……
-[1:00:トレーナー名:0]くん　だっけ！▽
-ジムに　挑戦だよね？▼
-だけど　アタシ　その前に
-やることが　あるんだよね▼</language>
+		<language name="JPN" width="256">さてと
+[1:00:トレーナー名:0]くん！▼
+ジムに　ちょうせん　してくれたら
+ジムリーダーとしても▽
+すごく　うれしいんだけど▼
+アタシ　そのまえに
+やるべきことが　あるの▼</language>
+		<language name="JPN_KANJI" width="256">さてと
+[1:00:トレーナー名:0]くん！▼
+ジムに　挑戦してくれたら
+ジムリーダーとしても▽
+すごく　うれしいんだけど▼
+アタシ　その前に
+やるべきことが　あるの▼</language>
 	</row>
 
 	<row id="msg_c06_leader6_06" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -597,16 +601,20 @@
 ・続けてleader6_07</comment>
 		<attribute name="キャラクター">c06ジムリーダー
 フウロ</attribute>
-		<language name="JPN" width="256">さてと……
-[1:00:トレーナー名:0]さん　だっけ！▽
-ジムに　ちょうせん　だよね？▼
-だけど　アタシ　そのまえに
-やることが　あるんだよね▼</language>
-		<language name="JPN_KANJI" width="256">さてと……
-[1:00:トレーナー名:0]さん　だっけ！▽
-ジムに　挑戦だよね？▼
-だけど　アタシ　その前に
-やることが　あるんだよね▼</language>
+		<language name="JPN" width="256">さてと
+[1:00:トレーナー名:0]さん！▼
+ジムに　ちょうせん　してくれたら
+ジムリーダーとしても▽
+すごく　うれしいんだけど▼
+アタシ　そのまえに
+やるべきことが　あるの▼</language>
+		<language name="JPN_KANJI" width="256">さてと
+[1:00:トレーナー名:0]さん！▼
+ジムに　挑戦してくれたら
+ジムリーダーとしても▽
+すごく　うれしいんだけど▼
+アタシ　その前に
+やるべきことが　あるの▼</language>
 	</row>
 
 	<row id="msg_c06_leader6_07" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -615,13 +623,13 @@
 		<attribute name="キャラクター">c06ジムリーダー
 フウロ</attribute>
 		<language name="JPN" width="256">さっき　かもつきを
-そうじゅう　していたときに▼
+そうじゅう　していたとき▼
 タワーオブヘブンの　てっぺんに
-なにか　みえたんだよね▼</language>
+なにか　みえたのね▼</language>
 		<language name="JPN_KANJI" width="256">さっき　貨物機を
-操縦していたときに▼
+操縦していたとき▼
 タワーオブヘブンの　天辺に
-なにか　みえたんだよね▼</language>
+なにか　みえたのね▼</language>
 	</row>
 
 	<row id="msg_c06_leader6_08" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -633,16 +641,18 @@
 フウロ</attribute>
 		<language name="JPN" width="256">きっと　よわった
 ポケモンだと　おもうの！▼
-で　すごーく　きになるから
-さきに　しらべておきたいなって▼
+だとしたら　ほおっておけないでしょ？
+だから　さきに　しらべさせてね▼
 ということで　７ばんどうろの
-タワーオブヘブンに　いかせてもらうね▼</language>
+タワーオブヘブンに　いくんだけど▽
+よければ　アナタも　きてね▼</language>
 		<language name="JPN_KANJI" width="256">きっと　弱った
 ポケモンだと　思うの！▼
-で　すごーく　気になるから
-先に　調べておきたいなって▼
+だとしたら　ほおっておけないでしょ？
+だから　先に　調べさせてね▼
 ということで　７番道路の
-タワーオブヘブンに　行かせてもらうね▼</language>
+タワーオブヘブンに　行くんだけど▽
+よければ　アナタも　来てね▼</language>
 	</row>
 
 	<row id="msg_c06_stop_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

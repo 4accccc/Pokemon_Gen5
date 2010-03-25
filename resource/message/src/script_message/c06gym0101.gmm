@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T22:22:43"/>
+	<create user="matsumiya" host="W00224" date="2010-03-25T18:07:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,34 +296,38 @@
 		<comment>♀
 ・戦闘前メッセージ</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
-		<language name="JPN" width="256">ようこそ！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ウフフ
+おまちしてました[BE:01:ページ切り替え（クリア）]
 アタシ　じまんの　フキヨセジム
 たいほうで　とぶのは　たのしかった？[BE:01:ページ切り替え（クリア）]
 じゃあね　つぎは　アタシと
-もっと　たのしいこと　しようよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ようこそ！[BE:01:ページ切り替え（クリア）]
+もっと　たのしいこと　しましょう！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ウフフ
+お待ちしてました[BE:01:ページ切り替え（クリア）]
 アタシ　自慢の　フキヨセジム
 大砲での　特訓は　楽しかった？[BE:01:ページ切り替え（クリア）]
 じゃあね　今度は　アタシと
-もっと　楽しいこと　しようよ！[BE:01:ページ切り替え（クリア）]</language>
+もっと　楽しいこと　しましょう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c06gym0101_leader_02">
 		<comment>♀
 ・戦闘後メッセージ</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
-		<language name="JPN" width="256">ヒューッ！
-アナタ　すごいじゃん！[BE:01:ページ切り替え（クリア）]
-ひさびさに　ほんき　だせて
-アタシも　ポケモンも　たのしかったよ！[BE:01:ページ切り替え（クリア）]
-はい！　リーグこうにん　ジムバッジ！
-アナタに　にあうよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ヒューッ！
-アナタ　すごいじゃん！[BE:01:ページ切り替え（クリア）]
-久々に　本気　だせて
-アタシも　ポケモンも　楽しかったよ！[BE:01:ページ切り替え（クリア）]
-はい！　リーグ公認　ジムバッジ！
-アナタに　似合うよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">アナタって　すごい
+ポケモントレーナー　なのね！▼
+ひさしぶりに　ほんきで
+ポケモンしょうぶ　できて▽
+アタシも　ポケモンも　しあわせ▼
+これは　リーグこうにんの　ジムバッジ
+アナタに　にあうと　うれしいな▼</language>
+		<language name="JPN_KANJI" width="256">アナタって　すごい
+ポケモントレーナー　なのね！▼
+ひさしぶりに　本気で
+ポケモン勝負　できて▽
+アタシも　ポケモンも　しあわせ▼
+これは　リーグ公認の　ジムバッジ
+アナタに　似合うと　うれしいな▼</language>
 	</row>
 
 	<row id="msg_c06gym0101_leader_03">
@@ -340,76 +344,82 @@
 		<comment>♀
 ・アイテム入手処理</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
-		<language name="JPN" width="256">すごい！　それだけ　バッジがあれば
+		<language name="JPN" width="256">うわあ　すごいわね！▼
+それだけ　ジムバッジがあれば
 レベル７０までの　ポケモンは▽
-あなたの　いうことを　むししないわ！▼
-あと　すごく　こうふんする
-ポケモンしょうぶを　させてくれた[BE:00:ページ切り替え（行送り）]
-おれいに　この　わざマシン[BE:00:ページ切り替え（行送り）]
-もらってくれるかな[BE:01:ページ切り替え（クリア）]　</language>
-		<language name="JPN_KANJI" width="256">すごい！　それだけ　バッジがあれば
+あなたの　いうことを　きいてくれるわ▼
+あと　すごーく　しあわせ　だった
+ポケモンしょうぶの　おれいに　この▽
+わざマシンを　うけとってほしいな[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">うわあ　すごいわね！▼
+それだけ　ジムバッジがあれば
 レベル７０までの　ポケモンは▽
-あなたの　いうことを　無視しないわ！▼
-あと　すごく　興奮する
-ポケモン勝負を　させてくれた[BE:00:ページ切り替え（行送り）]
-お礼に　この　わざマシン[BE:00:ページ切り替え（行送り）]
-もらってくれるかな[BE:01:ページ切り替え（クリア）]　</language>
+あなたの　いうことを　きいてくれるわ▼
+あと　すごーく　しあわせ　だった
+ポケモン勝負の　お礼に　この▽
+技マシンを　受け取ってほしいな[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c06gym0101_leader_05">
 		<comment>♀
 ・アイテム入手処理後</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
-		<language name="JPN" width="256">プレゼントした　「アクロバット」はね
-ちょっと　テクニカル　なんだよ▼
-どうぐを　もっていなければ
-いりょくが　２ばい　になるの！▼
-つかえば　なくなる　どうぐと
-くみあわせれば　おもしろいかもよ！</language>
-		<language name="JPN_KANJI" width="256">プレゼントした　「アクロバット」はね
-ちょっと　テクニカル　なんだよ▼
-どうぐを　持っていなければ
-威力が　２倍　になるの！▼
-使えば　なくなる　どうぐと
-組みあわせれば　おもしろいかもよ！</language>
+		<language name="JPN" width="256">プレゼントした　「アクロバット」は
+どうぐを　もっていなければ▽
+いりょくが　２ばいに　なるという▽
+ちょっと　テクニカルな　わざなのね▼
+つかえば　なくなる
+どうぐと　くみあわせてみれば▽
+おもしろく　なりそうでしょ？</language>
+		<language name="JPN_KANJI" width="256">プレゼントした　「アクロバット」は
+道具を　もっていなければ▽
+威力が　２倍に　なるという▽
+ちょっと　テクニカルな　技なのね▼
+使えば　なくなる
+道具と　組み合わせてみれば▽
+おもしろく　なりそうでしょ？</language>
 	</row>
 
 	<row id="msg_c06gym0101_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・仮：d07イベント終了まで</comment>
+・クリアまで</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
 		<language name="JPN" width="256">……そういえばなんだけど
 セッカシティを　とんだとき[BE:00:ページ切り替え（行送り）]
 プラズマだん　だっけ？[BE:01:ページ切り替え（クリア）]
-あの　ひとたちが　まちに
-むかってたけど　あれって　なあに？</language>
+まちに　むかってたけど
+どういう　ひと　たちなの？</language>
 		<language name="JPN_KANJI" width="256">……そういえばなんだけど
 セッカシティを　飛んだとき[BE:00:ページ切り替え（行送り）]
 プラズマ団　だっけ？[BE:01:ページ切り替え（クリア）]
 あの人たちが　街に向かってたけど
-あれって　なあに？</language>
+どういう　人たちなの？</language>
 	</row>
 
 	<row id="msg_c06gym0101_leader_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・仮：d07イベント終了後から</comment>
+・クリアから</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
-		<language name="JPN" width="256">どう
-げんきに　してる？[BE:01:ページ切り替え（クリア）]
-あれから　アタシも
-ポケモン　きたえなおしててさ[BE:01:ページ切り替え（クリア）]
-アナタの　おかげで
-つよくなれたと　おもってる[BE:00:ページ切り替え（行送り）]
-だから……[BE:00:ページ切り替え（行送り）]
-ありがとう　ね！</language>
-		<language name="JPN_KANJI" width="256">どう
-元気に　してる？[BE:01:ページ切り替え（クリア）]
-あれから　アタシも
-ポケモン　鍛えなおしててさ[BE:01:ページ切り替え（クリア）]
-アナタの　おかげで　前より
-強くなれたと　おもってる[BE:00:ページ切り替え（行送り）]
-だから……[BE:00:ページ切り替え（行送り）]
-ありがとう　ね！</language>
+		<language name="JPN" width="256">ポケモンも　アナタも
+げんきに　してるかな？▼
+あれから　アナタとの
+ポケモンしょうぶを　おもいだして▼
+アタシも　ポケモンを
+きたえなおしたり　してるんだよ▼
+アタシの　かもつきに
+ひとは　のせないんだけど▼
+アナタとなら　どこかに
+しゅぎょうに　いっても　いいかも</language>
+		<language name="JPN_KANJI" width="256">ポケモンも　アナタも
+元気に　してるかな？▼
+あれから　アナタとの
+ポケモン勝負を　思い出して▼
+アタシも　ポケモンを
+鍛えなおしたり　してるんだよ▼
+アタシの　貨物機に
+人は　乗せないんだけど▼
+アナタとなら　どこかに
+修行に　行っても　いいかも</language>
 	</row>
 
 	<row id="msg_c06gym0101_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -473,7 +483,7 @@
 おめでとう　ございます！！</language>
 	</row>
 
-	<row id="msg_c06gym0101_statue_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06gym0101_statue_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・ジムバッジ取得前</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
@@ -485,7 +495,7 @@
 認定　トレーナー！</language>
 	</row>
 
-	<row id="msg_c06gym0101_statue_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06gym0101_statue_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
@@ -501,7 +511,7 @@
 
 	<row id="msg_c06gym0101_statue_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・c07バッジ取得時時</comment>
+・d07でのライバル戦闘後から</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">フキヨセ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　フウロ
