@@ -175,8 +175,8 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
           }
           plData->comm_battle[p].sex = GFUser_GetPublicRand0(2);
         }
-        //plData->comm_type = PL_COMM_MULTI;
-        plData->comm_type = PL_COMM_SINGLE;
+        plData->comm_type = PL_COMM_MULTI;
+        //plData->comm_type = PL_COMM_SINGLE;
         plData->is_disp_party = TRUE;
         plData->use_tile_limit = TRUE;
         plData->time_limit = 30;
