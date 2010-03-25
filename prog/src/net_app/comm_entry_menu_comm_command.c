@@ -175,9 +175,10 @@ BOOL CemSend_Entry(const MYSTATUS *myst, BOOL force_entry, BOOL comm_mp)
 static void _CemRecv_EntryOK(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
   COMM_ENTRY_MENU_PTR em = pWork;
-
+  const MYSTATUS *myst;
+  
   OS_TPrintf("Recv : EntryOK = %d\n", netID);
-  CommEntryMenu_SetEntryAnswer(em, ENTRY_PARENT_ANSWER_OK);
+  CommEntryMenu_SetEntryAnswer(em, ENTRY_PARENT_ANSWER_OK, myst);
 }
 
 //==================================================================
@@ -188,16 +189,16 @@ static void _CemRecv_EntryOK(const int netID, const int size, const void* pData,
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL CemSend_EntryOK(NetID send_id, BOOL comm_mp)
+BOOL CemSend_EntryOK(NetID send_id, BOOL comm_mp, const MYSTATUS *myst)
 {
   OS_TPrintf("Send : EntryOK net_id=%d\n", send_id);
   if(comm_mp == TRUE){
     return GFL_NET_SendDataEx(GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER), send_id, 
-      ENTRYMENU_CMD_ENTRY_OK, 0, NULL, FALSE, FALSE, FALSE);
+      ENTRYMENU_CMD_ENTRY_OK, MyStatus_GetWorkSize(), myst, FALSE, FALSE, FALSE);
   }
   else{
     return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_id, 
-      ENTRYMENU_CMD_ENTRY_OK, 0, NULL, FALSE, FALSE, FALSE);
+      ENTRYMENU_CMD_ENTRY_OK, MyStatus_GetWorkSize(), myst, FALSE, FALSE, FALSE);
   }
 }
 
@@ -218,8 +219,9 @@ BOOL CemSend_EntryOK(NetID send_id, BOOL comm_mp)
 static void _CemRecv_EntryNG(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
   COMM_ENTRY_MENU_PTR em = pWork;
-
-  CommEntryMenu_SetEntryAnswer(em, ENTRY_PARENT_ANSWER_NG);
+  const MYSTATUS *myst = pData;
+  
+  CommEntryMenu_SetEntryAnswer(em, ENTRY_PARENT_ANSWER_NG, myst);
 }
 
 //==================================================================
@@ -230,15 +232,15 @@ static void _CemRecv_EntryNG(const int netID, const int size, const void* pData,
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL CemSend_EntryNG(NetID send_id, BOOL comm_mp)
+BOOL CemSend_EntryNG(NetID send_id, BOOL comm_mp, const MYSTATUS *myst)
 {
   if(comm_mp == TRUE){
     return GFL_NET_SendDataEx(GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER), send_id, 
-      ENTRYMENU_CMD_ENTRY_NG, 0, NULL, FALSE, FALSE, FALSE);
+      ENTRYMENU_CMD_ENTRY_NG, MyStatus_GetWorkSize(), myst, FALSE, FALSE, FALSE);
   }
   else{
     return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_id, 
-      ENTRYMENU_CMD_ENTRY_NG, 0, NULL, FALSE, FALSE, FALSE);
+      ENTRYMENU_CMD_ENTRY_NG, MyStatus_GetWorkSize(), myst, FALSE, FALSE, FALSE);
   }
 }
 

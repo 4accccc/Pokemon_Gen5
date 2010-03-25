@@ -196,6 +196,7 @@ typedef struct _COMM_ENTRY_MENU_SYSTEM{
   HEAPID heap_id;
   
   ENTRY_PARENT_ANSWER entry_parent_answer;
+  MYSTATUS entry_parent_myst;
   u8 final_user_status[COMM_ENTRY_USER_MAX];
   
   u8 parent_mac_address[6];       ///<mode‚ªCOMM_ENTRY_MODE_CHILD_PARENT_DESIGNATEŽž‚Ì‚Ý
@@ -692,7 +693,7 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
   
   case _SEQ_NG_INIT:
     GFL_NET_Exit(NULL);
-    WORDSET_RegisterPlayerName( em->wordset, 0, &em->parentsearch.connect_parent->mystatus );
+    WORDSET_RegisterPlayerName( em->wordset, 0, &em->entry_parent_myst);  //&em->parentsearch.connect_parent->mystatus );
     _StreamMsgSet(em, msg_game_ng);
     em->seq = _SEQ_NG_WAIT;
     break;
@@ -902,12 +903,13 @@ static BOOL _Update_ChildParentDesignate(COMM_ENTRY_MENU_PTR em)
     break;
   
   case _SEQ_NG_INIT:
-    WORDSET_RegisterPlayerName( em->wordset, 0, &em->parentsearch.connect_parent->mystatus );
+    GFL_NET_Exit(NULL);
+    WORDSET_RegisterPlayerName( em->wordset, 0, &em->entry_parent_myst);  //&em->parentsearch.connect_parent->mystatus );
     _StreamMsgSet(em, msg_game_ng);
     em->seq = _SEQ_NG_WAIT;
     break;
   case _SEQ_NG_WAIT:
-    if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE){
+    if(GFL_NET_IsExit() == TRUE && FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE){
       em->seq = _SEQ_FINISH;
     }
     break;
@@ -938,12 +940,12 @@ static void _SendUpdate_Parent(COMM_ENTRY_MENU_PTR em)
   
   for(net_id = 0; net_id < COMM_ENTRY_USER_MAX; net_id++){
     if(em->send_bit_entry_ok & (1 << net_id)){
-      if(CemSend_EntryOK(net_id, em->mp_mode) == TRUE){
+      if(CemSend_EntryOK(net_id, em->mp_mode, &em->mine_mystatus) == TRUE){
         em->send_bit_entry_ok ^= 1 << net_id;
       }
     }
     else if(em->send_bit_entry_ng & (1 << net_id)){
-      if(CemSend_EntryNG(net_id, em->mp_mode) == TRUE){
+      if(CemSend_EntryNG(net_id, em->mp_mode, &em->mine_mystatus) == TRUE){
         em->send_bit_entry_ng ^= 1 << net_id;
       }
     }
@@ -2057,11 +2059,13 @@ static void _ParentSearchList_SetListString(COMM_ENTRY_MENU_PTR em)
  *
  * @param   em		
  * @param   answer		
+ * @param   myst		  
  */
 //==================================================================
-void CommEntryMenu_SetEntryAnswer(COMM_ENTRY_MENU_PTR em, ENTRY_PARENT_ANSWER answer)
+void CommEntryMenu_SetEntryAnswer(COMM_ENTRY_MENU_PTR em, ENTRY_PARENT_ANSWER answer, const MYSTATUS *myst)
 {
   em->entry_parent_answer = answer;
+  MyStatus_Copy(myst, &em->entry_parent_myst);
 }
 
 //==================================================================
