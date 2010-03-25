@@ -2638,6 +2638,7 @@ static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
   {
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
+      TAYA_Printf("*** MemberIN Poke=%d\n", BPP_GetID(bpp));
       scEvent_AfterMemberIn( wk, bpp );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       Hem_PopState( &wk->HEManager, hem_state );
@@ -13057,16 +13058,18 @@ static u8 scproc_HandEx_changeType( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
 static u8 scproc_HandEx_message( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
   const BTL_HANDEX_PARAM_MESSAGE* param = (const BTL_HANDEX_PARAM_MESSAGE*)(param_header);
-  const BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+  const BTL_POKEPARAM* pp_user = NULL;
+  if( param_header->userPokeID != BTL_POKEID_NULL ){
+    pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+  }
 
-
-  if( param_header->tokwin_flag ){
+  if( param_header->tokwin_flag && (pp_user!=NULL) ){
     scPut_TokWin_In( wk, pp_user );
   }
 
   handexSub_putString( wk, &param->str );
 
-  if( param_header->tokwin_flag ){
+  if( param_header->tokwin_flag && (pp_user!=NULL) ){
     scPut_TokWin_Out( wk, pp_user );
   }
 
