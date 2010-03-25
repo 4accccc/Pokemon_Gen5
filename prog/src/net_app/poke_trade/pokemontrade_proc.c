@@ -3189,7 +3189,6 @@ void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork)
 
 
 
-
 FS_EXTERN_OVERLAY(ui_common);
 FS_EXTERN_OVERLAY(app_mail);
 FS_EXTERN_OVERLAY(dpw_common);
@@ -3209,9 +3208,11 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   POKEMON_TRADE_WORK *pWork = mywk;
 
   //オーバーレイ読み込み
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
+  if(pWork->type < POKEMONTRADE_TYPE_VISUAL){
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
+  }
 
   GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
 
@@ -3575,8 +3576,7 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
 {
   int i;
   POKEMON_TRADE_WORK* pWork = mywk;
-
-
+  int type = pWork->type;
 
   
   POKMEONTRADE_RemoveCoreResource(pWork);
@@ -3613,10 +3613,11 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
 #endif// PM_DEBUG
   GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
   //オーバーレイ破棄
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
-
+  if(type < POKEMONTRADE_TYPE_VISUAL){
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
+  }
   return GFL_PROC_RES_FINISH;
 }
 
