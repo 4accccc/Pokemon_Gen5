@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-03-24T01:36:43"/>
+	<create user="matsumiya" host="W00224" date="2010-03-25T15:30:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1675" top="168" right="2380" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1486" top="298" right="2191" bottom="926" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -501,7 +501,7 @@
 ポケモンは　わかったかしら？▽
 ヒントは　ここから　ひだりの　ほんだなよ！</language>
 		<language name="JPN_KANJI" width="256">このジムで　初めて　出会った
-ポケモンは　分かったかしら？▽
+ポケモンは　わかったかしら？▽
 ヒントは　ここから　左の　本棚よ！</language>
 	</row>
 
@@ -714,8 +714,9 @@
 ジムリーダーのところへ▽
 いけるでしょうか？」</language>
 		<language name="JPN_KANJI" width="256">……もしかして　最後のメモをみて
-私の　ところに　やって来たのね！▽
-じゃあ　私から　最後の　問題ね！▼
+私の　ところに　やって来たのね！▼
+じゃあ　私から
+最後の　問題ね！▼
 「Ｑ，私と　戦って　勝てたら
 ジムリーダーの　ところへ▽
 行けるでしょうか？」</language>
@@ -1187,11 +1188,11 @@
 		<language name="JPN" width="256">ポケモンを　いれかえるときの
 タイミングについて　かかれている▼
 「あぶないと　おもう　まえには
-　いれかえろ！」▼</language>
+いれかえろ！」▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　入れ替えるときの
 タイミングについて　書かれている▼
 「危ないと　思う前には
-　入れ替えろ！」▼</language>
+入れ替えろ！」▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_04" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1268,18 +1269,20 @@
 どれも　よくにてて　かきやすそう▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンの　絵描き歌が
 たくさん　載っている▼
-どれも　よく似てて　書きやすそう▼</language>
+どれも　よく似てて　描きやすそう▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_book_10" back-color="#ffff00,,,,,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>「はじめまして　ポケモンちゃん」
 この　ほんを　よみますか？</comment>
 		<attribute name="キャラ指定">１番の正解</attribute>
-		<language name="JPN" width="256">うまれて　はじめて　ポケモンとであった
+		<language name="JPN" width="256">うまれて　はじめて
+ポケモンと　であった▽
 おとこのこの　どうわだ▼
 ちゃいろい　ちいさな
 ポケモンを　つれている▼</language>
-		<language name="JPN_KANJI" width="256">生まれて　初めて　ポケモンと出会った
+		<language name="JPN_KANJI" width="256">生まれて　初めて
+ポケモンと　出会った▽
 男の子の　童話だ▼
 茶色い　小さな
 ポケモンを　連れている▼</language>
@@ -1294,7 +1297,7 @@
 いっしょに　ぼうけんを　している▼</language>
 		<language name="JPN_KANJI" width="256">ポケモンを　連れた　少年が　
 大冒険する　物語だ▼
-二人の　男の子と　女の子が
+２人の　男の子と　女の子が
 一緒に　冒険を　している▼</language>
 	</row>
 
@@ -1302,17 +1305,20 @@
 		<comment>「きのみでつくる　おかし」
 この　ほんを　よみますか？</comment>
 		<attribute name="キャラ指定">４番の正解</attribute>
-		<language name="JPN" width="256">きのみを　おなべにいれ　あっためてつくる
+		<language name="JPN" width="256">きのみを　おなべにいれ
+あっためて　つくる▽
 おいしい　おかしが　のっている▼
 とおい　シンオウちほう　には
 きのみから　つくる▽
-「ポフィン」と　よばれる　おかしがあり▽
+「ポフィン」と　よばれる▼
+おかしが　あり
 ポケモンたちの　だいこうぶつです▼</language>
 		<language name="JPN_KANJI" width="256">木の実を　おなべに入れ　温めて作る
 おいしい　お菓子が　載っている▼
 遠い　シンオウ地方　には
-木の実から　作る▽
-「ポフィン」と　呼ばれる　お菓子があり▽
+木の実から　作る▼
+「ポフィン」と　呼ばれる
+お菓子が　あり▽
 ポケモンたちの　大好物です▼</language>
 	</row>
 
@@ -1320,15 +1326,18 @@
 		<comment>msg_c02gym0101_book_02の後。</comment>
 		<attribute name="キャラ指定">３番の正解と
 ４番のヒント</attribute>
-		<language name="JPN" width="256">うらひょうしに　メモが　ある……！▼
+		<language name="JPN" width="256">うらびょうしに
+メモが　ある……！▼
 『よく　ここが　わかったね！
-さすが　わたしにいどむだけの　ことはある▽
+さすが　わたしに▽
+いどむだけの　ことはある▽
 さて　３もんめの　もんだいだよ！▼
 [FF:00:色:1]「Ｑ，おなべで　ぐつぐつ　あっためて
 　たべると　おいしいもの　なんだ？」▼[FF:00:色:0]
 ヒントは　ここより
 いりぐちに　ちかい　ほんだよ！</language>
-		<language name="JPN_KANJI" width="256">裏表紙に　メモが　ある……！▼
+		<language name="JPN_KANJI" width="256">裏表紙に
+メモが　ある……！▼
 『よく　ここが　わかったね！
 さすが　私に挑むだけの　ことはある▽
 さて　３問目の　問題だよ！▼
@@ -1342,16 +1351,19 @@
 		<comment>msg_c02gym0101_book_05の後。</comment>
 		<attribute name="キャラ指定">２番の正解と
 ３番のヒント</attribute>
-		<language name="JPN" width="256">さいごの　ページに　メモが　ある……！▼
+		<language name="JPN" width="256">さいごの　ページに
+メモが　ある……！▼
 『うふふ！　さすがに
-もんだいが　かんたんだったね▽
+もんだいが　かんたん　だったね▽
 さて　２もんめの　もんだいだよ！▼
 [FF:00:色:1]「Ｑ，たいないで　ほのおが　もえあがり
-　あたまから　けむりをだして　はしりだす」▽[FF:00:色:0]
+　あたまから　けむりを▽
+　だして　はしりだす」▽[FF:00:色:0]
 さて　このほんは　なんでしょう！？▼
 ヒントは……
 だれかが　よんでいる　かもね！？</language>
-		<language name="JPN_KANJI" width="256">最後の　ページに　メモが　ある……！▼
+		<language name="JPN_KANJI" width="256">最後の　ページに
+メモが　ある……！▼
 『うふふ！　さすがに
 問題が　簡単だったね▽
 さて　２問目の　問題だよ！▼
@@ -1388,13 +1400,14 @@
 		<language name="JPN" width="256">ほんに　メモが　はさんである……！▼
 『ポケモントレーナーの　しょくん！
 ジムリーダーの　アロエだよ！▼
-この　としょかんに　もんだいを　かいた
-メモを　４つ　かくしました▼
+この　としょかんに
+もんだいを　かいた　メモを▽
+４つ　かくしました▼
 その　もんだいを　といて
-わたしのところまで　これるかな！？▽
+わたしの　ところまで　これるかな！？▽
 さあ　はじめの　もんだいだ！▼
 [FF:00:色:1]「Ｑ，このジムで　はじめてであった
-ポケモンは　なんだったでしょう？」▼[FF:00:色:0]
+　ポケモンは　なんだったでしょう？」▼[FF:00:色:0]
 ヒントは……
 ちゅうおうの　れつの　ほんだな！▽
 さあ　さがしてごらん！</language>
