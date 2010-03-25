@@ -133,17 +133,17 @@ EVENT_START		ev_bg_c06gym0101_pokezou
 		//ジムバッジを持っているのかを判定
 		_GET_BADGE_FLAG( LWK_BADGE, BADGE_ID_07 )
 		
-		//セッカシティのバッジ取得前の場合
-		IF $LWK_BADGE == 0 THEN
-		
-			_PLAYER_NAME( 0 )
-			_PLAINWIN_MSG_DOWN( msg_c06gym0101_statue_02 )
-			
-		//セッカシティのバッジ取得後の場合
-		ELSE
+		//D07でライバルと戦っている場合
+		IF $WK_SCENE_D07_RIVAL_01 == 2 THEN
 		
 			_PLAYER_NAME( 0 )
 			_PLAINWIN_MSG_DOWN( msg_c06gym0101_statue_03 )
+			
+		//まだ戦っていない場合
+		ELSE
+		
+			_PLAYER_NAME( 0 )
+			_PLAINWIN_MSG_DOWN( msg_c06gym0101_statue_02 )
 		
 		ENDIF
 		
@@ -235,8 +235,8 @@ _TALK_OBJ_START()
 	ELSE
 			_GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_07 )
 	
-			//【仮】　フラグ未実装　D07のイベントを終了していない場合
-			IF $SCWK_ANSWER == 0 THEN
+			//ゲームクリア後にメッセージ分岐
+			IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
 			
 				//……そういえばなんだけど　セッカシティを　とんだとき
 				_BALLOONWIN_OBJMSG( msg_c06gym0101_leader_06 , C06GYM0101_LEADER6_01 )
