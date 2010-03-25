@@ -5500,7 +5500,7 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
   wk->hitCheckParam.count = 0;
   wk->hitCheckParam.pluralHitAffinity = BTL_TYPEAFF_100;
   dmg_sum = 0;
-  TAYA_Printf("hitCnt=%d\n", wk->hitCheckParam.countMax);
+
   for(i=0; i<wk->hitCheckParam.countMax; ++i)
   {
     if( (BTL_POKESET_GetCount(&wk->pokesetFriend) == 0)
@@ -7411,13 +7411,10 @@ static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_PO
   u32 recoverHP;
   u8  pokeID;
 
-  TAYA_Printf("SimpleRecover..\n");
-
   BTL_POKESET_SeekStart( targetRec );
   while( (target = BTL_POKESET_SeekNext(targetRec)) != NULL )
   {
     recoverHP = scEvent_CalcRecoverHP( wk, waza, target );
-    TAYA_Printf(" RecoverHP = %d\n", recoverHP);
 
     pokeID = BPP_GetID( target );
     if( scproc_RecoverHP(wk, target, recoverHP) )

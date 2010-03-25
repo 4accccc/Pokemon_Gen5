@@ -557,7 +557,7 @@
 #define		WAZANO_KAENDAN				( 545 )		//かえんだん
 #define		WAZANO_TEKUNOBASUTAA	( 546 )		//テクノバスター
 #define		WAZANO_INISIENOUTA		( 547 )		//いにしえのうた
-#define		WAZANO_KISEKINOTURUGI	( 548 )		//きせきのつるぎ
+#define		WAZANO_SINPINOTURUGI	( 548 )		//しんぴのつるぎ
 #define		WAZANO_KOGOERUSEKAI		( 549 )		//こごえるせかい
 #define		WAZANO_RAIGEKI				( 550 )		//らいげき
 #define		WAZANO_AOIHONOO				( 551 )		//あおいほのお

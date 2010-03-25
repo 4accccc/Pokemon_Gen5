@@ -191,14 +191,14 @@ VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
   u16 monsno = SCRCMD_GetVMWorkValue( core, work );
   u16 skill_flg = SCRCMD_GetVMWorkValue( core, work );
   u16 *poke_pos = SCRCMD_GetVMWork( core, work );
- 	u16 *ret = SCRCMD_GetVMWork( core, work );
+  u16 *ret = SCRCMD_GetVMWork( core, work );
   int evt_flg;
   int skill_no;
 
   switch(monsno){
   case MONSNO_654:
     evt_flg = POKE_MEMO_EVENT_DARUTANISU;
-    skill_no = WAZANO_KISEKINOTURUGI;
+    skill_no = WAZANO_SINPINOTURUGI;
     break;
   case MONSNO_655:
     evt_flg = POKE_MEMO_EVENT_MERODHIA;
@@ -213,10 +213,10 @@ VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
   case MONSNO_SUIKUN:
     evt_flg = POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_BEF;
     skill_no = WAZANO_NULL;
-    break;    
+    break;
   case MONSNO_656:
     evt_flg = POKE_MEMO_EVENT_INSEKUTA;
-    skill_no = WAZANO_NULL;    
+    skill_no = WAZANO_NULL;
   default:
     *ret = FALSE;
     return VMCMD_RESULT_CONTINUE;
@@ -320,7 +320,7 @@ VMCMD_RESULT EvCmdSetEvtPokeAfterFlg( VMHANDLE *core, void *wk )
     //èëÇ´ä∑Ç¶
     POKE_MEMO_SetEventPoke_AfterEventPP( pp , evt_flg );
   }
-    
+
   return VMCMD_RESULT_CONTINUE;
 }
 
