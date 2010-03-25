@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-03-23T23:27:18"/>
+	<create user="ohmori" host="W00223" date="2010-03-25T12:58:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="595" top="456" right="1300" bottom="1084" maximized="yes" rayout="Vertical2">
+	<dialog left="1055" top="238" right="1760" bottom="867" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="538" top="645" right="921" bottom="1043" visible="no"/>
-		<band id="0" index="1" style="0000" width="484"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="217"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="1024"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -638,9 +638,13 @@ C-Gear入手前</comment>
 	<row id="msg_gts_nego_exp" back-color="#ffff80,,,#ffff80,,#ffff80,#ff0000,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
 		<comment>GTS-NEGO</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
-		<language name="JPN" width="256">ＧＴＳネゴシエーションでは
-……　……　……[BE:01:ページ切り替え（クリア）]
-ポケモンこうかんを　おこないます[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ＧＴＳネゴシエーション　では
+どんな　ポケモンを　こうかんしたいか▽
+こうかんじょうけんを　きめて▼
+おなじ　じょうけんの　かたが
+みつかったら▼
+そのかたと　ネゴシエーション
+こうかんを　おこなうことが　できます▼</language>
 		<language name="JPN_KANJI" width="256">ＧＴＳネゴシエーションでは
 ……　……　……[BE:01:ページ切り替え（クリア）]
 ポケモン交換を　おこないます[BE:01:ページ切り替え（クリア）]</language>
@@ -658,8 +662,13 @@ C-Gear入手前</comment>
 	<row id="msg_gts_nego_exp01" back-color="#ffff80,,,#ffff80,,#ffff80,#ff0000,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
 		<comment>GTS-NEGO</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
-		<language name="JPN" width="256">ネゴシエーションとは
-……　……　……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ネゴシエーションこうかん　とは
+あいてに　さしだしたい▽
+ポケモンを　３ひきえらび▼
+そのあと　あいてが　さしだした
+３ひきの　ポケモンのなかから▽
+ほしいポケモンを　１ひき　えらびあう▽
+こうかんの　ことです▼</language>
 		<language name="JPN_KANJI" width="256">ネゴシエーションとは
 ……　……　……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -667,8 +676,16 @@ C-Gear入手前</comment>
 	<row id="msg_gts_nego_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ff0000,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
 		<comment>GTS-NEGO</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
-		<language name="JPN" width="256">こうかん　じょうけん　には
-……　……　……[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">こうかんじょうけん　には
+こうかんしたい　レベル▽
+ほしいポケモン　あげるポケモン　の▽
+３つの　じょうけんが　あります▼
+それぞれの　こうかんじょうけんが
+いっちしたかたと▽
+こうかんを　することが　できます▼
+また　いちど　こうかんしたかたと
+まちあわせる　ことができる▽
+まちあわせこうかんも　あります▼</language>
 		<language name="JPN_KANJI" width="256">交換条件には
 ……　……　……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -676,7 +693,7 @@ C-Gear入手前</comment>
 	<row id="msg_gts_nego_exp_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
 		<comment>GTS-NEGO 説明メニュー</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
-		<language name="JPN" width="256">ネゴシエーションって？</language>
+		<language name="JPN" width="256">ネゴシエーションこうかん　って？</language>
 		<language name="JPN_KANJI" width="256">ネゴシエーションって？</language>
 	</row>
 
