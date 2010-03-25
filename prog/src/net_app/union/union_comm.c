@@ -452,10 +452,14 @@ void UnionComm_Update(int *seq, void *pwk, void *pWork)
 {
   UNION_SYSTEM_PTR unisys = pWork;
   
+  
   if(UnionComm_ShutdownRestarts(unisys) == TRUE){
     return; //Ø’f¨ÄŠJ ‚Ìˆ—‚ðŽÀs’†
   }
   
+  if(!GFL_NET_IsInit()){
+    return;
+  }
   if(unisys->send_beacon_update == TRUE){
     NET_WHPIPE_BeaconSetInfo();
     unisys->send_beacon_update = FALSE;
