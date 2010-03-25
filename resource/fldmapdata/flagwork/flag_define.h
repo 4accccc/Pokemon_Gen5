@@ -320,8 +320,8 @@
 #define FE_C02GYM_QUESTION_03              304 /* 0x0130 シッポウジムの問題３の回答フラグ。1＝正解している */
 #define FE_C02GYM_QUESTION_04              305 /* 0x0131 シッポウジムの問題４の回答フラグ。1＝正解している */
 #define FE_T04R0101_APPRAISAL_CROWN        306 /* 0x0132 サザナミタウン：財宝鑑定士に古代の王冠について話した */
-		/* not used   307(0x0133) */
-		/* not used   308(0x0134) */
+#define FE_PACKAGE_POKE_GET                307 /* 0x0133 パッケージポケモン（シン／ム）の捕獲フラグ */
+#define FE_ROCKCAPSULE_END                 308 /* 0x0134 ロックカプセルイベントの終了 */
 		/* not used   309(0x0135) */
 		/* not used   310(0x0136) */
 		/* not used   311(0x0137) */
