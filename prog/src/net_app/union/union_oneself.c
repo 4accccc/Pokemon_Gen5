@@ -851,6 +851,7 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ForceExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  OS_TPrintf("ForceExit seq=%d\n", *seq);
   switch(*seq){
   case 0:
     _PlayerMinePause(unisys, fieldWork, TRUE);
@@ -3067,6 +3068,9 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
       case COMM_ENTRY_RESULT_CANCEL:       //キャンセルして終了
         (*seq) = 200;
         break;
+      case COMM_ENTRY_RESULT_NG:          //断られた
+        (*seq) = 300;
+        break;
       case COMM_ENTRY_RESULT_ERROR:        //エラーで終了
         (*seq) = 200; //※check　後で作成 とりあえずキャンセルと同じにしておく
         break;
@@ -3131,6 +3135,13 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
       return TRUE;
     }
     break;
+  case 300:
+    OS_TPrintf("aaa 300\n");
+    clsys->mine.entry_answer = COMM_ENTRY_ANSWER_REFUSE;
+    UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_LEAVE);
+    _PlayerMinePause(unisys, fieldWork, TRUE);
+    OS_TPrintf("aaa 300end\n");
+    return TRUE;
   }
   
   return FALSE;
