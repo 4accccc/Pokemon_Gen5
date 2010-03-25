@@ -28,9 +28,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_BC, // camera_area
 		0, // padding
-		5,
+		43,
 		0,
-		4,
+		38,
 	},
 	{//ZONE_ID_BC10PCR0101 = 1
 		RSC_GRID_NOSCROLL,
@@ -325,7 +325,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_WB, // camera_area
 		0, // padding
-		782,
+		781,
 		0,
 		589,
 	},
@@ -1223,7 +1223,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_C03P01 = 37
 		RSC_HYBRID,
 		MMLID_SAMPLEOBJ,
-		AREA_ID_OUT24,
+		AREA_ID_OUT47,
 		MATRIX_ID_C03_A,
 		NARC_script_seq_c03p01_bin,
 		NARC_script_seq_sp_c03p01_bin,	//NARC_script_seq_sp_c03p01_bin,
@@ -2668,9 +2668,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_WB, // camera_area
 		0, // padding
-		403,
+		406,
 		1,
-		468,
+		469,
 	},
 	{//ZONE_ID_C04GYM0101 = 81
 		RSC_GRID_GYM_ELEC,
@@ -4747,9 +4747,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_WB, // camera_area
 		0, // padding
-		409,
+		425,
 		0,
-		178,
+		175,
 	},
 	{//ZONE_ID_C08GYM0101 = 144
 		RSC_HYBRID,
@@ -15175,9 +15175,9 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_WB, // camera_area
 		0, // padding
-		724,
+		760,
 		0,
-		307,
+		302,
 	},
 	{//ZONE_ID_T04PC0101 = 460
 		RSC_GRID_NOSCROLL,

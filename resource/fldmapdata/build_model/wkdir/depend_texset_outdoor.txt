@@ -1852,6 +1852,7 @@ DEP_TEXSET_IMD_OUTDOOR047 = \
 	$(SRCDIR)/outwarp03.imd \
 	$(SRCDIR)/c03_slamp_02.imd \
 	$(SRCDIR)/c03_slamp_03.imd \
+	$(SRCDIR)/c03_fountain_01.imd \
 	$(SRCDIR)/c03_gym_01.imd \
 	$(SRCDIR)/c03_ship_01.imd \
 	$(SRCDIR)/c03_ship_02.imd \
