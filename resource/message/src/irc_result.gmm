@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-03-24T15:44:36"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-24T16:03:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 
 	<dialog left="80" top="44" right="785" bottom="664" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -334,9 +334,9 @@
 
 
 	<row id="RESULT_STR_000">
-		<language name="JPN" width="256">[FF:00:色:3][1:00:トレーナー名:0][FF:00:色:0]さんと　[1:00:トレーナー名:1]さんの
+		<language name="JPN" width="256">あなたと　[1:00:トレーナー名:1]さんの
 きになる　フィーリングは……</language>
-		<language name="JPN_KANJI" width="256">[FF:00:色:3][1:00:トレーナー名:0][FF:00:色:0]さんと　[1:00:トレーナー名:1]さんの
+		<language name="JPN_KANJI" width="256">あなたと　[1:00:トレーナー名:1]さんの
 気になる　フィーリングは……</language>
 	</row>
 

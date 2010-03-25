@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-20T14:54:50"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-25T12:02:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1793" top="144" right="2498" bottom="764" maximized="no" rayout="Vertical2">
+	<dialog left="1751" top="26" right="2456" bottom="646" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -320,56 +320,122 @@
 	<row id="msg_d20r0501_bg3_01">
 		<comment>遺跡用BGメッセージ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは　ゆうきを　もち
-きぼうを　もち▽
-やさしさを　もち▽
-ゆめを　もち▽
-ぼうけんしんを　もつ</language>
-		<language name="JPN_KANJI" width="256">王は　勇気を　持ち
-希望を　持ち▽
-優しさを　持ち▽
-夢を　持ち▽
-冒険心を　持つ</language>
+		<language name="JPN" width="256">おうは　ゆうきを　もつ</language>
+		<language name="JPN_KANJI" width="256">おうは　ゆうきを　もつ</language>
 	</row>
 
 	<row id="msg_d20r0501_bg4_01">
 		<comment>遺跡用BGメッセージ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうに　なる　ということ
-すべてを　うけいれる　こと</language>
-		<language name="JPN_KANJI" width="256">王になる　ということ
-全てを　受け入れること</language>
+		<language name="JPN" width="256">おうは　きぼうを　もつ</language>
+		<language name="JPN_KANJI" width="256">おうは　きぼうを　もつ</language>
 	</row>
 
 	<row id="msg_d20r0501_bg5_01">
 		<comment>遺跡用BGメッセージ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">２……　３……　５……　７……</language>
-		<language name="JPN_KANJI" width="256">２……　３……　５……　７……</language>
+		<language name="JPN" width="256">おうは　やさしさを　もつ</language>
+		<language name="JPN_KANJI" width="256">おうは　やさしさを　もつ</language>
 	</row>
 
 	<row id="msg_d20r0501_bg6_01">
 		<comment>遺跡用BGメッセージ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">ふりむくな
-あやまちを　おそれるな</language>
-		<language name="JPN_KANJI" width="256">ふりむくな
-あやまちを　おそれるな</language>
+		<language name="JPN" width="256">おうは　ゆめを　もつ</language>
+		<language name="JPN_KANJI" width="256">おうは　ゆめを　もつ</language>
 	</row>
 
 	<row id="msg_d20r0501_bg7_01">
 		<comment>遺跡用BGメッセージ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうの　たかみを　めざすものよ
-さきに　すすみ　じぶんを　ためせ▽
-ためすことは　おうを　めざすことなり</language>
-		<language name="JPN_KANJI" width="256">王の　高みを　目指すものよ
-先に　進み　自分を　試せ▽
-試す事　それは　王を　目指す事なり</language>
+		<language name="JPN" width="256">おうは　ぼうけんしんを　もつ</language>
+		<language name="JPN_KANJI" width="256">おうは　ぼうけんしんを　もつ</language>
 	</row>
 
 	<row id="msg_d20r0501_bg8_01">
 		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうは　すべてを　うけいれた</language>
+		<language name="JPN_KANJI" width="256">おうは　すべてを　うけいれた</language>
+	</row>
+
+	<row id="msg_d20r0501_bg9_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうは　２ばんめの　かどを　まがり</language>
+		<language name="JPN_KANJI" width="256">おうは　２ばんめの　かどを　まがり</language>
+	</row>
+
+	<row id="msg_d20r0501_bg10_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうは　３ばんめの　かどを　まがり</language>
+		<language name="JPN_KANJI" width="256">おうは　３ばんめの　かどを　まがり</language>
+	</row>
+
+	<row id="msg_d20r0501_bg11_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうは　５ばんめの　かどを　まがり</language>
+		<language name="JPN_KANJI" width="256">おうは　５ばんめの　かどを　まがり</language>
+	</row>
+
+	<row id="msg_d20r0501_bg12_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうは　７ばんめの　かどを　まがった</language>
+		<language name="JPN_KANJI" width="256">おうは　７ばんめの　かどを　まがった</language>
+	</row>
+
+	<row id="msg_d20r0501_bg13_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうの　こころを　もて</language>
+		<language name="JPN_KANJI" width="256">おうの　こころを　もて</language>
+	</row>
+
+	<row id="msg_d20r0501_bg14_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">ここは　おうを　たたえる　ばしょ</language>
+		<language name="JPN_KANJI" width="256">ここは　おうを　たたえる　ばしょ</language>
+	</row>
+
+	<row id="msg_d20r0501_bg15_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうは
+たみを　てらす　ひかりを　もつ</language>
+		<language name="JPN_KANJI" width="256">おうは
+たみを　てらす　ひかりを　もつ</language>
+	</row>
+
+	<row id="msg_d20r0501_bg16_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうは
+たみを　うごかす　ちからを　もつ</language>
+		<language name="JPN_KANJI" width="256">おうは
+たみを　うごかす　ちからを　もつ</language>
+	</row>
+
+	<row id="msg_d20r0501_bg17_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうは　じあいの　こころで　つつんだ</language>
+		<language name="JPN_KANJI" width="256">おうは　じあいの　こころで　つつんだ</language>
+	</row>
+
+	<row id="msg_d20r0501_bg18_01">
+		<comment>遺跡用BGメッセージ</comment>
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">おうは　にくしみに　ながされなかった</language>
+		<language name="JPN_KANJI" width="256">おうは　にくしみに　ながされなかった</language>
+	</row>
+
+	<row id="msg_d20r0501_bg19_01">
+		<comment>遺跡用BGメッセージ
+次の階層に行けない</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" width="256">おうの　あゆみに　まよいは　ない
 まよいごに　おうの　しかくなし</language>
@@ -377,8 +443,9 @@
 迷い子に　王の　資格無し</language>
 	</row>
 
-	<row id="msg_d20r0501_bg9_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg19_02">
+		<comment>遺跡用BGメッセージ
+次の階層に行ける</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" width="256">おうの　あゆみに　まよいは　ない
 ゆうきある　おうよ　さきに　すすめ▼</language>

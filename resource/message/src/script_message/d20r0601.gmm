@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-19T18:49:54"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-25T12:32:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -325,13 +325,23 @@
 
 	<row id="msg_d20r0601_bg4_01">
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">やばんで　あっては　ならない
-そまつに　しては　いけない</language>
-		<language name="JPN_KANJI" width="256">野蛮で　あっては　ならない
-粗末に　しては　いけない</language>
+		<language name="JPN" width="256">やばんで　あっては　ならない</language>
+		<language name="JPN_KANJI" width="256">野蛮で　あっては　ならない</language>
 	</row>
 
 	<row id="msg_d20r0601_bg5_01">
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">そまつに　しては　ならない</language>
+		<language name="JPN_KANJI" width="256">粗末に　しては　ならない</language>
+	</row>
+
+	<row id="msg_d20r0601_bg6_01">
+		<attribute name="キャラ指定">BG</attribute>
+		<language name="JPN" width="256">すべては　びょうどうに　とうとい</language>
+		<language name="JPN_KANJI" width="256">全ては　平等に　尊い</language>
+	</row>
+
+	<row id="msg_d20r0601_bg7_01">
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" width="256">たたかいは　なにも　うまない
 むげんの　かなしみを　うむだけだ</language>
@@ -339,7 +349,7 @@
 無限の　悲しみを　生むだけだ</language>
 	</row>
 
-	<row id="msg_d20r0601_bg6_01">
+	<row id="msg_d20r0601_bg8_01">
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" width="256">おうに　りかいを　しめすのならば
 ここで　ひかりを　はなて</language>
