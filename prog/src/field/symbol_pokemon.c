@@ -159,7 +159,10 @@ POKEMON_PARAM * SYMBOLPOKE_PP_Create(
   PP_SetTokusei3( pp, sympoke->monsno, sympoke->form_no );
   if ( sympoke->wazano )
   {
-    PP_Put( pp, ID_PARA_waza1, sympoke->wazano );
+    if ( PP_SetWaza( pp, sympoke->wazano ) == PTL_WAZASET_FAIL )
+    {
+      PP_SetWazaPush( pp, sympoke->wazano );
+    }
   }
   return pp;
 }
