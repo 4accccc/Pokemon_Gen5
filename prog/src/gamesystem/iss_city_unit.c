@@ -59,10 +59,10 @@ struct _ISS_C_UNIT
 	int zGrid;
 
 	// 音量空間
-  u8  volume[ VOLUME_SPACE_NUM ];  // [0,127]
-  u16 xRange[ VOLUME_SPACE_NUM ];  // [world]
-  u16 yRange[ VOLUME_SPACE_NUM ];  // [world]
-  u16 zRange[ VOLUME_SPACE_NUM ];  // [world]
+  u8 volume[ VOLUME_SPACE_NUM ]; // [0,127]
+  u8 xRange[ VOLUME_SPACE_NUM ]; // [grid]
+  u8 yRange[ VOLUME_SPACE_NUM ]; // [grid]
+  u8 zRange[ VOLUME_SPACE_NUM ]; // [grid]
 };
 
 
@@ -79,9 +79,9 @@ static u8 GetVolumeZ         ( const ISS_C_UNIT* unit, const VecFx32* playerPos 
 static u8 SearchBasePriorityX( const ISS_C_UNIT* unit, const VecFx32* playerPos );
 static u8 SearchBasePriorityY( const ISS_C_UNIT* unit, const VecFx32* playerPos );
 static u8 SearchBasePriorityZ( const ISS_C_UNIT* unit, const VecFx32* playerPos ); 
-static int GetWorldX( const ISS_C_UNIT* unit );
-static int GetWorldY( const ISS_C_UNIT* unit );
-static int GetWorldZ( const ISS_C_UNIT* unit );
+static int GetWorlUnitPosX( const ISS_C_UNIT* unit ); // ユニットのワールドx座標を取得する
+static int GetWorldUnitPosY( const ISS_C_UNIT* unit ); // ユニットのワールドy座標を取得する
+static int GetWorldUnitPosZ( const ISS_C_UNIT* unit ); // ユニットのワールドz座標を取得する
 static int CalcLerp( int startVal, int endVal, int startPos, int endPos, int calcPos );
 // デバッグ
 static void DebugPrint_unitParam( const ISS_C_UNIT* unit );
@@ -195,13 +195,13 @@ static void SetupUnit( const ISS_C_UNIT_DATA* unitData, ISS_C_UNIT* unit )
   unit->yGrid = unitData->gy;
   unit->zGrid = unitData->gz;
 
-  // 音量空間 ( グリッドからワールドへ変換 )
+  // 音量空間
   for( i=0; i<VOLUME_SPACE_NUM; i++ )
   {
     unit->volume[i] = unitData->volume[i];
-    unit->xRange[i] = unitData->xRange[i] * FIELD_CONST_GRID_SIZE;
-    unit->yRange[i] = unitData->yRange[i] * FIELD_CONST_GRID_SIZE;
-    unit->zRange[i] = unitData->zRange[i] * FIELD_CONST_GRID_SIZE;
+    unit->xRange[i] = unitData->xRange[i];
+    unit->yRange[i] = unitData->yRange[i];
+    unit->zRange[i] = unitData->zRange[i];
   } 
 }
 
@@ -260,13 +260,13 @@ static u8 GetVolumeX( const ISS_C_UNIT* unit, const VecFx32* playerPos )
     int startPos, endPos;
 
     playerX = FX_Whole( playerPos->x );
-    unitX   = GetWorldX( unit );
+    unitX   = GetWorlUnitPosX( unit );
     dist    = ABS( playerX - unitX );
 
     startVal = unit->volume[ basePri ];
     endVal   = unit->volume[ destPri ];
-    startPos = unit->xRange[ basePri ];
-    endPos   = unit->xRange[ destPri ];
+    startPos = unit->xRange[ basePri ] * FIELD_CONST_GRID_SIZE;
+    endPos   = unit->xRange[ destPri ] * FIELD_CONST_GRID_SIZE;
 
     return CalcLerp( startPos, startVal, endPos, endVal, dist );
   }
@@ -304,13 +304,13 @@ static u8 GetVolumeY( const ISS_C_UNIT* unit, const VecFx32* playerPos )
     int startPos, endPos;
 
     playerY = FX_Whole( playerPos->y );
-    unitY   = GetWorldY( unit );
+    unitY   = GetWorldUnitPosY( unit );
     dist    = ABS( playerY - unitY );
 
     startVal = unit->volume[ basePri ];
     endVal   = unit->volume[ destPri ];
-    startPos = unit->yRange[ basePri ];
-    endPos   = unit->yRange[ destPri ];
+    startPos = unit->yRange[ basePri ] * FIELD_CONST_GRID_SIZE;
+    endPos   = unit->yRange[ destPri ] * FIELD_CONST_GRID_SIZE;
 
     return CalcLerp( startPos, startVal, endPos, endVal, dist );
   }
@@ -348,13 +348,13 @@ static u8 GetVolumeZ( const ISS_C_UNIT* unit, const VecFx32* playerPos )
     int startPos, endPos;
 
     playerZ = FX_Whole( playerPos->z );
-    unitZ   = GetWorldZ( unit );
+    unitZ   = GetWorldUnitPosZ( unit );
     dist    = ABS( playerZ - unitZ );
 
     startVal = unit->volume[ basePri ];
     endVal   = unit->volume[ destPri ];
-    startPos = unit->zRange[ basePri ];
-    endPos   = unit->zRange[ destPri ];
+    startPos = unit->zRange[ basePri ] * FIELD_CONST_GRID_SIZE;
+    endPos   = unit->zRange[ destPri ] * FIELD_CONST_GRID_SIZE;
 
     return CalcLerp( startPos, startVal, endPos, endVal, dist );
   }
@@ -377,13 +377,13 @@ static u8 SearchBasePriorityX( const ISS_C_UNIT* unit, const VecFx32* playerPos 
 
   // 距離を求める
   playerX = FX_Whole( playerPos->x );
-  unitX   = GetWorldX( unit );
+  unitX   = GetWorlUnitPosX( unit );
   dist    = ABS( playerX - unitX );
 
   // 検索
   for( spaceIdx=0; spaceIdx < VOLUME_SPACE_NUM; spaceIdx++ )
   {
-    if( unit->xRange[ spaceIdx ] <= dist )
+    if( unit->xRange[ spaceIdx ]*FIELD_CONST_GRID_SIZE <= dist )
     {
       return spaceIdx;
     }
@@ -408,13 +408,13 @@ static u8 SearchBasePriorityY( const ISS_C_UNIT* unit, const VecFx32* playerPos 
 
   // 距離を求める
   playerY = FX_Whole( playerPos->y );
-  unitY   = GetWorldY( unit );
+  unitY   = GetWorldUnitPosY( unit );
   dist    = ABS( playerY - unitY );
 
   // 検索
   for( spaceIdx=0; spaceIdx < VOLUME_SPACE_NUM; spaceIdx++ )
   {
-    if( unit->yRange[ spaceIdx ] <= dist )
+    if( unit->yRange[ spaceIdx ] * FIELD_CONST_GRID_SIZE <= dist )
     {
       return spaceIdx;
     }
@@ -439,13 +439,13 @@ static u8 SearchBasePriorityZ( const ISS_C_UNIT* unit, const VecFx32* playerPos 
 
   // 距離を求める
   playerZ = FX_Whole( playerPos->z );
-  unitZ   = GetWorldZ( unit );
+  unitZ   = GetWorldUnitPosZ( unit );
   dist    = ABS( playerZ - unitZ );
 
   // 検索
   for( spaceIdx=0; spaceIdx < VOLUME_SPACE_NUM; spaceIdx++ )
   {
-    if( unit->zRange[ spaceIdx ] <= dist )
+    if( unit->zRange[ spaceIdx ] * FIELD_CONST_GRID_SIZE <= dist )
     {
       return spaceIdx;
     }
@@ -463,7 +463,7 @@ static u8 SearchBasePriorityZ( const ISS_C_UNIT* unit, const VecFx32* playerPos 
  * @return ユニットのワールドx座標
  */
 //-----------------------------------------------------------------------------------------
-static int GetWorldX( const ISS_C_UNIT* unit )
+static int GetWorlUnitPosX( const ISS_C_UNIT* unit )
 {
   return unit->xGrid * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_SIZE * 0.5;
 }
@@ -477,7 +477,7 @@ static int GetWorldX( const ISS_C_UNIT* unit )
  * @return ユニットのワールドy座標
  */
 //-----------------------------------------------------------------------------------------
-static int GetWorldY( const ISS_C_UNIT* unit )
+static int GetWorldUnitPosY( const ISS_C_UNIT* unit )
 {
   return unit->yGrid * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_SIZE * 0.5;
 }
@@ -491,7 +491,7 @@ static int GetWorldY( const ISS_C_UNIT* unit )
  * @return ユニットのワールドz座標
  */
 //-----------------------------------------------------------------------------------------
-static int GetWorldZ( const ISS_C_UNIT* unit )
+static int GetWorldUnitPosZ( const ISS_C_UNIT* unit )
 {
   return unit->zGrid * FIELD_CONST_GRID_SIZE + FIELD_CONST_GRID_SIZE * 0.5;
 }

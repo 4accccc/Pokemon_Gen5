@@ -37,10 +37,9 @@
 
 // システム状態
 typedef enum {
-  SYSTEM_STATE_STOP, // 停止中
-  SYSTEM_STATE_BOOT, // 起動中
-  SYSTEM_STATE_RUN,  // 動作中
-  SYSTEM_STATE_DOWN, // 終了中
+  SYSTEM_STATE_WAIT,    // 待機
+  SYSTEM_STATE_FADEIN,  // フェードイン
+  SYSTEM_STATE_FADEOUT, // フェードアウト
 } SYSTEM_STATE;
 
 
@@ -49,13 +48,13 @@ typedef enum {
 //=================================================================================
 struct _ISS_CITY_SYS
 {
-	HEAPID       heapID; 
 	PLAYER_WORK* player; // 監視対象プレイヤー
 
 	// システム
-  SYSTEM_STATE state;         // 状態
-  int          trackVolume;   // 操作トラックのボリューム
-  int          systemVolume;  // 上位ボリューム
+  BOOL         bootFlag;     // 起動しているかどうか
+  SYSTEM_STATE state;        // 状態
+  int          trackVolume;  // 操作トラックのボリューム
+  int          systemVolume; // 上位ボリューム
 
 	// ユニット
 	ISS_C_UNIT** unit;		 // ユニット配列
@@ -72,10 +71,10 @@ struct _ISS_CITY_SYS
 //---------------------------------------------------------------------------------
 // layer 2
 static void InitializeSystem( ISS_CITY_SYS* system, HEAPID heapID, PLAYER_WORK* player ); // システムを初期化する
-static void SetupSystem( ISS_CITY_SYS* system ); // システムをセットアップする
+static void SetupSystem( ISS_CITY_SYS* system, HEAPID heapID ); // システムをセットアップする
 static void CleanUpSystem( ISS_CITY_SYS* system ); // システムをクリーンアップする
 // layer 1
-static void LoadUnitData( ISS_CITY_SYS* system ); // ユニットデータを読み込む
+static void LoadUnitData( ISS_CITY_SYS* system, HEAPID heapID ); // ユニットデータを読み込む
 static void UnloadUnitData( ISS_CITY_SYS* system ); // ユニットデータを破棄する
 //---------------------------------------------------------------------------------
 // ◇ボリューム制御
@@ -83,40 +82,42 @@ static void UnloadUnitData( ISS_CITY_SYS* system ); // ユニットデータを破棄する
 // 上位ボリューム
 static int GetSystemVolume( const ISS_CITY_SYS* system ); // 上位ボリュームを取得する
 static void SetSystemVolume( ISS_CITY_SYS* system, int volume ); // 上位ボリュームを設定する
-static BOOL UpdateSystemVolume( ISS_CITY_SYS* system ); // 上位ボリュームを更新する
+static BOOL SystemVolumeUp( ISS_CITY_SYS* system ); // 上位ボリュームを上げる
+static BOOL SystemVolumeDown( ISS_CITY_SYS* system ); // 上位ボリュームを下げる
 // トラックボリューム
 static int GetTrackVolume( const ISS_CITY_SYS* system ); // トラックボリュームを取得する
-static BOOL UpdateTrackVolume( ISS_CITY_SYS* system ); // トラックボリュームを更新する
 static void SetTrackVolume( ISS_CITY_SYS* system, int volume ); // トラックボリュームを設定する
+static BOOL UpdateTrackVolume( ISS_CITY_SYS* system ); // トラックボリュームを更新する
+static int CalcTrackVolume( ISS_CITY_SYS* system ); // トラックボリュームを計算する
+static int CalcEffectiveTrackVolume( const ISS_CITY_SYS* system ); // BGMの操作トラックに反映させるボリュームを算出する
 static void ChangeBGMTrackVolume( const ISS_CITY_SYS* system ); // BGMのトラックボリュームを変更する
-static int CalcBGMTrackVolume( const ISS_CITY_SYS* system ); // BGMの操作トラックに反映させるボリュームを算出する
 //---------------------------------------------------------------------------------
 // ◇システム動作
 //---------------------------------------------------------------------------------
 static void SystemMain( ISS_CITY_SYS* system ); // システムのメイン動作関数
-static void SystemMain_forSTOP( ISS_CITY_SYS* system ); // システムのメイン動作関数 ( SYSTEM_STATE_STOP )
-static void SystemMain_forBOOT( ISS_CITY_SYS* system ); // システムのメイン動作関数 ( SYSTEM_STATE_BOOT )
-static void SystemMain_forRUN( ISS_CITY_SYS* system ); // システムのメイン動作関数 ( SYSTEM_STATE_RUN )
-static void SystemMain_forDOWN( ISS_CITY_SYS* system ); // システムのメイン動作関数 ( SYSTEM_STATE_DOWN )
-static void InitSystemState_forSTOP( ISS_CITY_SYS* system ); // システム状態を初期化する ( SYSTEM_STATE_STOP )
-static void InitSystemState_forBOOT( ISS_CITY_SYS* system ); // システム状態を初期化する ( SYSTEM_STATE_BOOT )
-static void InitSystemState_forRUN( ISS_CITY_SYS* system ); // システム状態を初期化する ( SYSTEM_STATE_RUN )
-static void InitSystemState_forDOWN( ISS_CITY_SYS* system ); // システム状態を初期化する ( SYSTEM_STATE_DOWN )
+static void SystemMain_WAIT( ISS_CITY_SYS* system ); // システムのメイン動作関数 ( SYSTEM_STATE_WAIT )
+static void SystemMain_FADEIN( ISS_CITY_SYS* system ); // システムのメイン動作関数 ( SYSTEM_STATE_FADEIN )
+static void SystemMain_FADEOUT( ISS_CITY_SYS* system ); // システムのメイン動作関数 ( SYSTEM_STATE_FADEOUT )
 //---------------------------------------------------------------------------------
 // ◇システム制御
 //---------------------------------------------------------------------------------
 static SYSTEM_STATE GetSystemState( const ISS_CITY_SYS* system ); // システム状態を取得する
 static void SetSystemState( ISS_CITY_SYS* system, SYSTEM_STATE state ); // システム状態を変更する
 static void BootSystem( ISS_CITY_SYS* system ); // システムを起動する
-static void DownSystem( ISS_CITY_SYS* system ); // システムを終了する
 static void StopSystem( ISS_CITY_SYS* system ); // システムを停止する
 static void ZoneChange( ISS_CITY_SYS* system, u16 nextZoneID ); // ゾーンの切り替え処理を行う
 static u16 GetCurrentZoneID( const ISS_CITY_SYS* system ); // 現在のゾーンIDを取得する
+static BOOL CheckSystemBoot( const ISS_CITY_SYS* system ); // システムが起動しているかどうかをチェックする
 //---------------------------------------------------------------------------------
 // ◇ユニット
 //---------------------------------------------------------------------------------
-static BOOL CheckUnitExist( const ISS_CITY_SYS* system ); // ユニットが存在しているかどうかをチェックする
-static void ChangeUnit( ISS_CITY_SYS* system, u16 zoneID ); // ユニットを変更する
+static ISS_C_UNIT* GetCurrentUnit( const ISS_CITY_SYS* system ); // 現在のユニットを取得する
+static u8 GetCurrentUnitIndex( const ISS_CITY_SYS* system ); // 現在のユニットインデックスを取得する
+static BOOL CheckUnitExistNow( const ISS_CITY_SYS* system ); // 現在, ユニットが存在しているかどうかをチェックする
+static BOOL CheckUnitExistAt( const ISS_CITY_SYS* system, u16 zoneID ); // 指定した場所にユニットが存在しているかどうかをチェックする
+static BOOL ChangeUnit( ISS_CITY_SYS* system, u16 zoneID ); // ユニットを変更する
+static u8 SearchUnit( const ISS_CITY_SYS* system, u16 zoneID ); // ユニットを検索する
+static BOOL CheckUnitChange( const ISS_CITY_SYS* system, u16 zoneID ); // ユニットが変化するかどうかをチェックする
 
 
 //=================================================================================
@@ -138,7 +139,7 @@ ISS_CITY_SYS* ISS_CITY_SYS_Create( PLAYER_WORK* player, HEAPID heapID )
 	ISS_CITY_SYS* system;
 
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-C: create\n" );
+  OS_TFPrintf( PRINT_DEST, "--- ISS-C: create\n" );
 #endif
 
 	// システムを生成
@@ -146,7 +147,11 @@ ISS_CITY_SYS* ISS_CITY_SYS_Create( PLAYER_WORK* player, HEAPID heapID )
 
 	// システムを初期化
   InitializeSystem( system, heapID, player );
-  SetupSystem( system ); 
+  SetupSystem( system, heapID ); 
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_DEST, "--- ISS-C: create\n" );
+#endif
 	
 	return system;
 }
@@ -160,6 +165,10 @@ ISS_CITY_SYS* ISS_CITY_SYS_Create( PLAYER_WORK* player, HEAPID heapID )
 //------------------------------------------------------------------------------------------
 void ISS_CITY_SYS_Delete( ISS_CITY_SYS* system )
 {
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_DEST, "--- ISS-C: delete\n" );
+#endif
+
   // システムをクリーンアップ
   CleanUpSystem( system );
 
@@ -167,7 +176,7 @@ void ISS_CITY_SYS_Delete( ISS_CITY_SYS* system )
 	GFL_HEAP_FreeMemory( system );
 
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-C: delete\n" );
+  OS_TFPrintf( PRINT_DEST, "--- ISS-C: delete\n" );
 #endif
 }
 
@@ -180,6 +189,9 @@ void ISS_CITY_SYS_Delete( ISS_CITY_SYS* system )
 //------------------------------------------------------------------------------------------
 void ISS_CITY_SYS_Main( ISS_CITY_SYS* system )
 {
+  // 起動していない
+  if( CheckSystemBoot(system) == FALSE ) { return; }
+
   SystemMain( system );
 }
 	
@@ -239,16 +251,14 @@ static void InitializeSystem( ISS_CITY_SYS* system, HEAPID heapID, PLAYER_WORK* 
   GF_ASSERT( system );
   GF_ASSERT( player );
 
-	system->heapID        = heapID;
 	system->player        = player;
-  system->state         = SYSTEM_STATE_STOP;
+  system->bootFlag      = FALSE;
+  system->state         = SYSTEM_STATE_WAIT;
   system->trackVolume   = MIN_TRACK_VOLUME;
-  system->systemVolume  = MAX_SYSTEM_VOLUME;
+  system->systemVolume  = MIN_SYSTEM_VOLUME;
 	system->unit          = NULL;
 	system->unitNum       = 0;
   system->unitIdx       = UNIT_IDX_NULL;
-
-  SetSystemState( system, SYSTEM_STATE_STOP );
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-C: init system\n" );
@@ -260,16 +270,21 @@ static void InitializeSystem( ISS_CITY_SYS* system, HEAPID heapID, PLAYER_WORK* 
  * @brief システムをセットアップする 
  *
  * @param system
+ * @param heapID
  */
 //---------------------------------------------------------------------------------
-static void SetupSystem( ISS_CITY_SYS* system )
+static void SetupSystem( ISS_CITY_SYS* system, HEAPID heapID )
 {
   GF_ASSERT( system );
 
-	LoadUnitData( system ); // ユニット情報を読み込む
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_DEST, "--- ISS-C: setup system\n" );
+#endif 
+
+	LoadUnitData( system, heapID ); // ユニット情報を読み込む
 
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-C: setup system\n" );
+  OS_TFPrintf( PRINT_DEST, "--- ISS-C: setup system\n" );
 #endif
 }
 
@@ -284,10 +299,14 @@ static void CleanUpSystem( ISS_CITY_SYS* system )
 {
   GF_ASSERT( system );
 
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_DEST, "--- ISS-C: clean up system\n" );
+#endif
+
   UnloadUnitData( system ); // ユニットデータを破棄する
 
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-C: clean up system\n" );
+  OS_TFPrintf( PRINT_DEST, "--- ISS-C: clean up system\n" );
 #endif
 }
 
@@ -296,9 +315,10 @@ static void CleanUpSystem( ISS_CITY_SYS* system )
  * @brief ユニットデータを読み込む
  *
  * @param system
+ * @param heapID
  */
 //---------------------------------------------------------------------------------
-static void LoadUnitData( ISS_CITY_SYS* system )
+static void LoadUnitData( ISS_CITY_SYS* system, HEAPID heapID )
 {
   int dataNum;
   int datID;
@@ -310,12 +330,12 @@ static void LoadUnitData( ISS_CITY_SYS* system )
   system->unitNum = dataNum;
 
   // 各ユニットデータのワークを確保
-  system->unit = GFL_HEAP_AllocMemory( system->heapID, dataNum * sizeof(ISS_C_UNIT*) );
+  system->unit = GFL_HEAP_AllocMemory( heapID, dataNum * sizeof(ISS_C_UNIT*) );
 
   // 各ユニットデータを読み込む
   for( datID=0; datID < dataNum; datID++ )
   {
-    system->unit[ datID ] = ISS_C_UNIT_Create( system->heapID, datID );
+    system->unit[ datID ] = ISS_C_UNIT_Create( heapID, datID );
   } 
 
 #ifdef DEBUG_PRINT_ON
@@ -383,89 +403,15 @@ static void SetSystemState( ISS_CITY_SYS* system, SYSTEM_STATE state )
   // 状態を更新
   system->state = state;
 
-  // 状態に応じた初期化
-  switch( state ) {
-  case SYSTEM_STATE_STOP: InitSystemState_forSTOP( system ); break;
-  case SYSTEM_STATE_BOOT: InitSystemState_forBOOT( system ); break;
-  case SYSTEM_STATE_RUN:  InitSystemState_forRUN( system );  break;
-  case SYSTEM_STATE_DOWN: InitSystemState_forDOWN( system ); break;
-  default: GF_ASSERT(0);
-  }
-
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-C: set system state ==> " );
   switch( state ) {
-  case SYSTEM_STATE_STOP: OS_TFPrintf( PRINT_DEST, "STOP" ); break;
-  case SYSTEM_STATE_BOOT: OS_TFPrintf( PRINT_DEST, "BOOT" ); break;
-  case SYSTEM_STATE_RUN:  OS_TFPrintf( PRINT_DEST, "RUN" );  break;
-  case SYSTEM_STATE_DOWN: OS_TFPrintf( PRINT_DEST, "DOWN" ); break;
+  case SYSTEM_STATE_WAIT:    OS_TFPrintf( PRINT_DEST, "WAIT" );    break;
+  case SYSTEM_STATE_FADEIN:  OS_TFPrintf( PRINT_DEST, "FADEIN" );  break;
+  case SYSTEM_STATE_FADEOUT: OS_TFPrintf( PRINT_DEST, "FADEOUT" ); break;
   default: GF_ASSERT(0);
   }
   OS_TFPrintf( PRINT_DEST, "\n" );
-#endif
-}
-
-//---------------------------------------------------------------------------------
-/**
- * @brief システム状態を初期化する ( SYSTEM_STATE_STOP )
- * 
- * @param system 
- */
-//---------------------------------------------------------------------------------
-static void InitSystemState_forSTOP( ISS_CITY_SYS* system )
-{
-  GF_ASSERT( GetSystemState(system) == SYSTEM_STATE_STOP );
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-C: init system state for STOP\n" );
-#endif
-}
-
-//---------------------------------------------------------------------------------
-/**
- * @brief システム状態を初期化する ( SYSTEM_STATE_BOOT )
- * 
- * @param system 
- */
-//---------------------------------------------------------------------------------
-static void InitSystemState_forBOOT( ISS_CITY_SYS* system )
-{
-  GF_ASSERT( GetSystemState(system) == SYSTEM_STATE_BOOT );
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-C: init system state for BOOT\n" );
-#endif
-}
-
-//---------------------------------------------------------------------------------
-/**
- * @brief システム状態を初期化する ( SYSTEM_STATE_RUN )
- * 
- * @param system 
- */
-//---------------------------------------------------------------------------------
-static void InitSystemState_forRUN( ISS_CITY_SYS* system )
-{
-  GF_ASSERT( GetSystemState(system) == SYSTEM_STATE_RUN );
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-C: init system state for RUN\n" );
-#endif
-}
-
-//---------------------------------------------------------------------------------
-/**
- * @brief システム状態を初期化する ( SYSTEM_STATE_DOWN )
- * 
- * @param system 
- */
-//---------------------------------------------------------------------------------
-static void InitSystemState_forDOWN( ISS_CITY_SYS* system )
-{
-  GF_ASSERT( GetSystemState(system) == SYSTEM_STATE_DOWN );
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-C: init system state for DOWN\n" );
 #endif
 }
 
@@ -478,53 +424,33 @@ static void InitSystemState_forDOWN( ISS_CITY_SYS* system )
 //---------------------------------------------------------------------------------
 static void BootSystem( ISS_CITY_SYS* system )
 {
-  // すでに起動中
-  if( (GetSystemState(system) == SYSTEM_STATE_BOOT) ||
-      (GetSystemState(system) == SYSTEM_STATE_RUN) ) { return; }
+  // 起動済み
+  if( CheckSystemBoot(system) ) { return; }
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_DEST, "--- ISS-C: boot system\n" );
+#endif
+
+  system->bootFlag = TRUE; // 起動
+  SetTrackVolume( system, MIN_TRACK_VOLUME ); // トラックボリュームを最小にする
+  ChangeBGMTrackVolume( system ); // BGMに反映させる
 
   // ユニットを変更
   ChangeUnit( system, GetCurrentZoneID(system) ); 
 
   // ユニットがある
-  if( CheckUnitExist(system) == TRUE ) {
-    // 起動
-    SetSystemState( system, SYSTEM_STATE_BOOT );
+  if( CheckUnitExistNow(system) == TRUE ) {
+    SetSystemState( system, SYSTEM_STATE_FADEIN );
   }
   // ユニットがない
   else {
-    // 終了
-    SetSystemState( system, SYSTEM_STATE_DOWN );
-  }
-
-  // 音量を調整
-  UpdateTrackVolume( system );
-  ChangeBGMTrackVolume( system );
+    SetSystemState( system, SYSTEM_STATE_WAIT );
+  } 
 
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-C: boot system\n" );
+  OS_TFPrintf( PRINT_DEST, "--- ISS-C: boot system\n" );
 #endif
 }
-
-//---------------------------------------------------------------------------------
-/**
- * @brief システムを終了する
- *
- * @param system
- */
-//---------------------------------------------------------------------------------
-static void DownSystem( ISS_CITY_SYS* system )
-{
-  // すでに停止中
-  if( (GetSystemState(system) == SYSTEM_STATE_DOWN) ||
-      (GetSystemState(system) == SYSTEM_STATE_STOP) ) { return; }
-
-  // 終了させる
-  SetSystemState( system, SYSTEM_STATE_DOWN );
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-C: down system\n" );
-#endif
-} 
 
 //---------------------------------------------------------------------------------
 /**
@@ -535,8 +461,11 @@ static void DownSystem( ISS_CITY_SYS* system )
 //---------------------------------------------------------------------------------
 static void StopSystem( ISS_CITY_SYS* system )
 {
+  // 停止中
+  if( CheckSystemBoot(system) == FALSE ) { return; }
+
   // 停止させる
-  SetSystemState( system, SYSTEM_STATE_STOP );
+  system->bootFlag = FALSE;
 
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_DEST, "ISS-C: stop system\n" );
@@ -553,20 +482,39 @@ static void StopSystem( ISS_CITY_SYS* system )
 //---------------------------------------------------------------------------------
 static void ZoneChange( ISS_CITY_SYS* system, u16 nextZoneID )
 {
-  // ユニットを変更する
+  // 停止中
+  if( CheckSystemBoot(system) == FALSE ) { return; }
+
+  // 現在, ユニットが存在する
+  if( CheckUnitExistNow( system ) == TRUE ) {
+    // 移動先にもユニットが存在する
+    if( CheckUnitExistAt( system, nextZoneID ) == TRUE ) {
+      // 曲の変更に対するリアクションは, システムのON/OFFで行う. 
+      StopSystem( system );
+      return;
+    }
+  }
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_DEST, "--- ISS-C: zone change\n" );
+#endif
+
+  // ユニットを変更
   ChangeUnit( system, nextZoneID );
 
-  // ユニットが存在しない
-  if( CheckUnitExist(system) == FALSE ) {
-    DownSystem( system ); // システムを終了する
-  }
   // ユニットが存在する
+  if( CheckUnitExistNow( system ) == TRUE ) {
+    SetSystemVolume( system, MIN_SYSTEM_VOLUME );
+    SetSystemState( system, SYSTEM_STATE_FADEIN );
+  }
+  // ユニットが存在しない
   else {
-    BootSystem( system ); // システムを起動する
+    SetSystemState( system, SYSTEM_STATE_FADEOUT );
   }
 
-  UpdateTrackVolume( system ); // トラックボリュームを初期化
-  ChangeBGMTrackVolume( system ); // BGMに反映させる
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_DEST, "--- ISS-C: zone change\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------------
@@ -588,6 +536,21 @@ static u16 GetCurrentZoneID( const ISS_CITY_SYS* system )
 
 //---------------------------------------------------------------------------------
 /**
+ * @brief システムが起動しているかどうかをチェックする
+ *
+ * @param system
+ *
+ * @return システムが起動している場合 TRUE
+ *         そうでなければ FALSE
+ */
+//---------------------------------------------------------------------------------
+static BOOL CheckSystemBoot( const ISS_CITY_SYS* system )
+{
+  return system->bootFlag;
+}
+
+//---------------------------------------------------------------------------------
+/**
  * @brief システムのメイン動作
  *
  * @param system
@@ -595,109 +558,127 @@ static u16 GetCurrentZoneID( const ISS_CITY_SYS* system )
 //---------------------------------------------------------------------------------
 static void SystemMain( ISS_CITY_SYS* system )
 {
+  GF_ASSERT( system );
+
   switch( GetSystemState(system) ) {
-  case SYSTEM_STATE_STOP: SystemMain_forSTOP( system ); break;
-  case SYSTEM_STATE_BOOT: SystemMain_forBOOT( system ); break;
-  case SYSTEM_STATE_RUN:  SystemMain_forRUN( system );  break;
-  case SYSTEM_STATE_DOWN: SystemMain_forDOWN( system ); break;
+  case SYSTEM_STATE_WAIT:    SystemMain_WAIT( system );    break;
+  case SYSTEM_STATE_FADEIN:  SystemMain_FADEIN( system );  break;
+  case SYSTEM_STATE_FADEOUT: SystemMain_FADEOUT( system ); break;
   default: GF_ASSERT(0);
+  } 
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief システムのメイン動作関数 ( SYSTEM_STATE_WAIT )
+ *
+ * @param system
+ */
+//---------------------------------------------------------------------------------
+static void SystemMain_WAIT( ISS_CITY_SYS* system )
+{
+  GF_ASSERT( system );
+  GF_ASSERT( GetSystemState(system) == SYSTEM_STATE_WAIT ); 
+
+  // トラックボリュームを更新
+  if( UpdateTrackVolume( system ) ) {
+    ChangeBGMTrackVolume( system ); // BGMに反映させる
   }
 }
 
 //---------------------------------------------------------------------------------
 /**
- * @brief システムのメイン動作関数 ( SYSTEM_STATE_STOP )
+ * @brief システムのメイン動作関数 ( SYSTEM_STATE_FADEIN )
  *
  * @param system
  */
 //---------------------------------------------------------------------------------
-static void SystemMain_forSTOP( ISS_CITY_SYS* system )
-{
-  GF_ASSERT( GetSystemState(system) == SYSTEM_STATE_STOP );
-}
-
-//---------------------------------------------------------------------------------
-/**
- * @brief システムのメイン動作関数 ( SYSTEM_STATE_BOOT )
- *
- * @param system
- */
-//---------------------------------------------------------------------------------
-static void SystemMain_forBOOT( ISS_CITY_SYS* system )
+static void SystemMain_FADEIN( ISS_CITY_SYS* system )
 {
   BOOL sysVolChanged;
   BOOL trkVolChanged;
 
-  GF_ASSERT( GetSystemState(system) == SYSTEM_STATE_BOOT );
+  GF_ASSERT( system );
+  GF_ASSERT( GetSystemState(system) == SYSTEM_STATE_FADEIN );
 
-  sysVolChanged = UpdateSystemVolume( system ); // 上位ボリュームを更新
-  trkVolChanged = UpdateTrackVolume( system );  // トラックボリュームを更新
+  // 上位ボリューム・トラックボリュームを更新
+  sysVolChanged = SystemVolumeUp( system );
+  trkVolChanged = UpdateTrackVolume( system );
   
   // ボリュームが変化
   if( sysVolChanged || trkVolChanged ) {
     ChangeBGMTrackVolume( system ); // BGMに反映させる
   }
 
-  // 起動完了
+  // フェードイン完了
   if( MAX_SYSTEM_VOLUME <= GetSystemVolume(system) ) {
-    SetSystemState( system, SYSTEM_STATE_RUN );
+    SetSystemState( system, SYSTEM_STATE_WAIT );
   }
 }
 
 //---------------------------------------------------------------------------------
 /**
- * @brief システムのメイン動作関数 ( SYSTEM_STATE_RUN )
+ * @brief システムのメイン動作関数 ( SYSTEM_STATE_FADEOUT )
  *
  * @param system
  */
 //---------------------------------------------------------------------------------
-static void SystemMain_forRUN( ISS_CITY_SYS* system )
+static void SystemMain_FADEOUT( ISS_CITY_SYS* system )
 {
   BOOL sysVolChanged;
   BOOL trkVolChanged;
 
-  GF_ASSERT( GetSystemState(system) == SYSTEM_STATE_RUN ); 
+  GF_ASSERT( system );
+  GF_ASSERT( GetSystemState(system) == SYSTEM_STATE_FADEOUT );
 
-  sysVolChanged = UpdateSystemVolume( system ); // 上位ボリュームを更新
-  trkVolChanged = UpdateTrackVolume( system );  // トラックボリュームを更新
-  
-  // ボリュームが変化
-  if( sysVolChanged || trkVolChanged ) {
-    ChangeBGMTrackVolume( system ); // BGMに反映させる
-  }
-}
-
-//---------------------------------------------------------------------------------
-/**
- * @brief システムのメイン動作関数 ( SYSTEM_STATE_DOWN )
- *
- * @param system
- */
-//---------------------------------------------------------------------------------
-static void SystemMain_forDOWN( ISS_CITY_SYS* system )
-{
-  BOOL sysVolChanged;
-  BOOL trkVolChanged;
-
-  GF_ASSERT( GetSystemState(system) == SYSTEM_STATE_DOWN );
-
-  sysVolChanged = UpdateSystemVolume( system ); // 上位ボリュームを更新
-  trkVolChanged = UpdateTrackVolume( system );  // トラックボリュームを更新
+  // 上位ボリューム・トラックボリュームを更新
+  sysVolChanged = SystemVolumeDown( system );
+  trkVolChanged = UpdateTrackVolume( system );
   
   // ボリュームが変化
   if( sysVolChanged || trkVolChanged ) {
     ChangeBGMTrackVolume( system ); // BGMに反映させる
   }
 
-  // 終了完了
+  // フェードアウト完了
   if( GetSystemVolume(system) <= MIN_SYSTEM_VOLUME ) {
-    SetSystemState( system, SYSTEM_STATE_STOP );
+    SetSystemState( system, SYSTEM_STATE_WAIT );
   }
 }
 
 //---------------------------------------------------------------------------------
 /**
- * @brief ユニットが存在しているかどうかをチェックする
+ * @brief 現在のユニットを取得する
+ *
+ * @param system
+ *
+ * @return 現在のユニット
+ *         ユニットが存在しない場合 NULL
+ */
+//---------------------------------------------------------------------------------
+static ISS_C_UNIT* GetCurrentUnit( const ISS_CITY_SYS* system )
+{
+  return system->unit[ GetCurrentUnitIndex(system) ];
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief 現在のユニットインデックスを取得する
+ *
+ * @param system 
+ *
+ * @return 現在のユニットのインデックス
+ *         ユニットが存在しない場合, UNIT_IDX_NULL
+ */
+//---------------------------------------------------------------------------------
+static u8 GetCurrentUnitIndex( const ISS_CITY_SYS* system )
+{
+  return system->unitIdx;
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief 現在, ユニットが存在しているかどうかをチェックする
  *
  * @param system
  * 
@@ -705,13 +686,35 @@ static void SystemMain_forDOWN( ISS_CITY_SYS* system )
  *         そうでなければ FALSE
  */
 //---------------------------------------------------------------------------------
-static BOOL CheckUnitExist( const ISS_CITY_SYS* system )
+static BOOL CheckUnitExistNow( const ISS_CITY_SYS* system )
 {
-  if( system->unitIdx == UNIT_IDX_NULL )
-  {
+  if( GetCurrentUnitIndex(system) == UNIT_IDX_NULL ) {
     return FALSE;
   }
-  return TRUE;
+  else {
+    return TRUE;
+  }
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief 指定した場所にユニットが存在しているかどうかをチェックする
+ *
+ * @param system
+ * @param zoneID チェックする場所を指定
+ * 
+ * @return ユニットが存在している場合 TRUE
+ *         そうでなければ FALSE
+ */
+//---------------------------------------------------------------------------------
+static BOOL CheckUnitExistAt( const ISS_CITY_SYS* system, u16 zoneID )
+{
+  if( SearchUnit( system, zoneID ) == UNIT_IDX_NULL ) {
+    return FALSE;
+  }
+  else {
+    return TRUE;
+  }
 }
 
 //---------------------------------------------------------------------------------
@@ -720,9 +723,46 @@ static BOOL CheckUnitExist( const ISS_CITY_SYS* system )
  *
  * @param system
  * @param zoneID 切り替え先のゾーンID
+ *
+ * @return ユニットが変化した場合, TRUE
+ *         そうでなければ　FALSE
  */
 //---------------------------------------------------------------------------------
-static void ChangeUnit( ISS_CITY_SYS* system, u16 zoneID )
+static BOOL ChangeUnit( ISS_CITY_SYS* system, u16 zoneID )
+{
+  int oldUnitIdx;
+  int newUnitIdx;
+
+  GF_ASSERT( system );
+
+  oldUnitIdx = GetCurrentUnitIndex(system);
+  newUnitIdx = SearchUnit( system, zoneID );
+
+  // 変化なし
+  if( oldUnitIdx == newUnitIdx ) { return FALSE; }
+
+  // ユニットインデックスを変更
+  system->unitIdx = newUnitIdx;
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_DEST, "ISS-C: change unit ==> %d\n", newUnitIdx );
+#endif
+
+  return TRUE;
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief ユニットを検索する
+ *
+ * @param system
+ * @param zoneID 検索対象のゾーン
+ *
+ * @return 指定したゾーンに対応するユニットのインデックス
+ *         ユニットが存在しない場合 UNIT_IDX_NULL
+ */
+//---------------------------------------------------------------------------------
+static u8 SearchUnit( const ISS_CITY_SYS* system, u16 zoneID )
 {
 	int unitIdx;
   int unitNum;
@@ -739,17 +779,40 @@ static void ChangeUnit( ISS_CITY_SYS* system, u16 zoneID )
 		// 発見
 		if( ISS_C_UNIT_GetZoneID( system->unit[ unitIdx ] ) == zoneID )
 		{ 
-			system->unitIdx = unitIdx;
-
-#ifdef DEBUG_PRINT_ON
-      OS_TFPrintf( PRINT_DEST, "ISS-C: change unit index ==> %d\n", unitIdx );
-#endif
-      return;
+      return unitIdx;
 		}
 	}
 
   // 配置されていない
-  system->unitIdx = UNIT_IDX_NULL;
+  return UNIT_IDX_NULL;
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief ユニットが変化するかどうかをチェックする
+ *
+ * @param system
+ * @param zoneID チェックするゾーンを指定
+ *
+ * @return 指定したゾーンに移動した時に ユニットが変化する場合 TRUE
+ *         そうでなければ FALSE
+ */
+//---------------------------------------------------------------------------------
+static BOOL CheckUnitChange( const ISS_CITY_SYS* system, u16 zoneID )
+{
+  int oldUnitIdx;
+  int newUnitIdx;
+
+  oldUnitIdx = GetCurrentUnitIndex(system);
+  newUnitIdx = SearchUnit( system, zoneID );
+
+  // 変化なし
+  if(oldUnitIdx == newUnitIdx ) {
+    return FALSE;
+  }
+  else {
+    return TRUE;
+  }
 }
 
 //---------------------------------------------------------------------------------
@@ -764,12 +827,13 @@ static void ChangeUnit( ISS_CITY_SYS* system, u16 zoneID )
 static int GetSystemVolume( const ISS_CITY_SYS* system )
 { 
   GF_ASSERT( system );
+
   return system->systemVolume;
 }
 
 //---------------------------------------------------------------------------------
 /**
- * @brief 上位ボリュームを更新する
+ * @brief 上位ボリュームを上げる
  *
  * @param system
  *
@@ -777,23 +841,51 @@ static int GetSystemVolume( const ISS_CITY_SYS* system )
  *         そうでなければ FALSE
  */
 //---------------------------------------------------------------------------------
-static BOOL UpdateSystemVolume( ISS_CITY_SYS* system )
+static BOOL SystemVolumeUp( ISS_CITY_SYS* system )
 {
   int nextVolume;
 
   GF_ASSERT( system );
-  GF_ASSERT( GetSystemState(system) != SYSTEM_STATE_STOP );
 
   // ボリュームを計算
-  if( GetSystemState(system) == SYSTEM_STATE_DOWN ) {
-    nextVolume = GetSystemVolume(system) - SYSTEM_VOLUME_FADEOUT_SPEED;
-  }
-  else {
-    nextVolume = GetSystemVolume(system) + SYSTEM_VOLUME_FADEIN_SPEED;
-  }
+  nextVolume = GetSystemVolume(system) + SYSTEM_VOLUME_FADEIN_SPEED;
 
-  // 最大値・最小値補正
+  // 最大値補正
   if( MAX_SYSTEM_VOLUME <= nextVolume ) { nextVolume = MAX_SYSTEM_VOLUME; }
+
+  // ボリューム変化なし
+  if( nextVolume == GetSystemVolume(system) ) { return FALSE; }
+
+  // 上位ボリュームを更新
+  SetSystemVolume( system, nextVolume );
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_DEST, "ISS-C: system volume up ==> %d\n", nextVolume );
+#endif
+
+  return TRUE;
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief 上位ボリュームを下げる
+ *
+ * @param system
+ *
+ * @return 上位ボリュームが変化した場合 TRUE
+ *         そうでなければ FALSE
+ */
+//---------------------------------------------------------------------------------
+static BOOL SystemVolumeDown( ISS_CITY_SYS* system )
+{
+  int nextVolume;
+
+  GF_ASSERT( system );
+
+  // ボリュームを計算
+  nextVolume = GetSystemVolume(system) - SYSTEM_VOLUME_FADEOUT_SPEED;
+
+  // 最小値補正
   if( nextVolume <= MIN_SYSTEM_VOLUME ) { nextVolume = MIN_SYSTEM_VOLUME; }
 
   // ボリューム変化なし
@@ -803,7 +895,7 @@ static BOOL UpdateSystemVolume( ISS_CITY_SYS* system )
   SetSystemVolume( system, nextVolume );
 
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-C: update system volume => %d\n", nextVolume );
+  OS_TFPrintf( PRINT_DEST, "ISS-C: system volume down ==> %d\n", nextVolume );
 #endif
 
   return TRUE;
@@ -838,6 +930,7 @@ static void SetSystemVolume( ISS_CITY_SYS* system, int volume )
 static int GetTrackVolume( const ISS_CITY_SYS* system )
 {
   GF_ASSERT( system );
+
   return system->trackVolume;
 }
 
@@ -858,17 +951,13 @@ static BOOL UpdateTrackVolume( ISS_CITY_SYS* system )
   const ISS_C_UNIT* unit;
 
   GF_ASSERT( system );
-
-  // システム停止中
-  if( GetSystemState(system) == SYSTEM_STATE_STOP ) { return FALSE; }
+  GF_ASSERT( CheckSystemBoot(system) );
 
   // ユニットが配置されていない
-  if( CheckUnitExist(system) == FALSE ) { return FALSE; }
+  if( CheckUnitExistNow(system) == FALSE ) { return FALSE; }
 
   // ユニットと自機の位置からボリュームを算出
-  unit      = system->unit[ system->unitIdx ];
-  playerPos = PLAYERWORK_getPosition( system->player );
-  newVolume = ISS_C_UNIT_GetVolume( unit, playerPos );
+  newVolume = CalcTrackVolume( system );
 
   // ボリューム変化なし
   if( newVolume == GetTrackVolume(system) ) { return FALSE; }
@@ -880,6 +969,33 @@ static BOOL UpdateTrackVolume( ISS_CITY_SYS* system )
   OS_TFPrintf( PRINT_DEST, "ISS-C: update track volume ==> %d\n", newVolume );
 #endif
   return TRUE;
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief トラックボリュームを計算する
+ *
+ * @param system
+ *
+ * @return ユニットと自機の位置から算出したトラックボリューム
+ */
+//---------------------------------------------------------------------------------
+static int CalcTrackVolume( ISS_CITY_SYS* system )
+{
+  int volume;
+  const VecFx32* playerPos;
+  const ISS_C_UNIT* unit;
+
+  GF_ASSERT( system );
+  GF_ASSERT( system->player );
+  GF_ASSERT( CheckUnitExistNow(system) == TRUE );
+
+  // ユニットと自機の位置からボリュームを算出
+  unit      = GetCurrentUnit( system );
+  playerPos = PLAYERWORK_getPosition( system->player );
+  volume    = ISS_C_UNIT_GetVolume( unit, playerPos );
+
+  return volume;
 }
 
 //---------------------------------------------------------------------------------
@@ -911,7 +1027,7 @@ static void ChangeBGMTrackVolume( const ISS_CITY_SYS* system )
   int volume;
 
   // ボリューム実効値を算出
-  volume = CalcBGMTrackVolume( system );
+  volume = CalcEffectiveTrackVolume( system );
 
   // BGMのトラックボリュームに反映
   PMSND_ChangeBGMVolume( TRACKBIT, volume );
@@ -930,7 +1046,7 @@ static void ChangeBGMTrackVolume( const ISS_CITY_SYS* system )
  * @return BGMに反映させるボリューム値
  */
 //---------------------------------------------------------------------------------
-static int CalcBGMTrackVolume( const ISS_CITY_SYS* system )
+static int CalcEffectiveTrackVolume( const ISS_CITY_SYS* system )
 {
   int trackVolume;
   int systemVolume;

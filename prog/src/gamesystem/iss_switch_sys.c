@@ -7,42 +7,20 @@
  */
 /////////////////////////////////////////////////////////////////////////////////
 #include <gflib.h>
+#include "iss_switch_set.h"
 #include "iss_switch_sys.h"
-#include "sound/pm_sndsys.h"
-#include "arc/arc_def.h"  // for ARCID_ISS_SWITCH
+
+#include "sound/pm_sndsys.h" // for PMSND_xxxx
+#include "arc/arc_def.h"     // for ARCID_ISS_SWITCH
 
 
 //===============================================================================
 // ■定数
 //===============================================================================
-//#define DEBUG_PRINT_ON           // デバッグ出力スイッチ
-#define PRINT_DEST       (1)       // デバッグ情報の出力先
-#define TRACK_NUM        (16)      // トラック数
-#define TRACKBIT_ALL     (0xffff)  // 全トラック指定
-#define MAX_VOLUME       (127)     // ボリューム最大値
-#define SWITCH_DATA_NONE (0xff)    // 参照データの無効インデックス
-
-// スイッチの状態
-typedef enum{
-  SWITCH_STATE_ON,       // ON
-  SWITCH_STATE_OFF,      // OFF
-  SWITCH_STATE_FADE_IN,  // フェード イン
-  SWITCH_STATE_FADE_OUT, // フェード アウト
-} SWITCH_STATE; 
-
-
-//===============================================================================
-// ■スイッチデータ
-//===============================================================================
-typedef struct
-{ 
-  u32  soundIdx;               // シーケンス番号
-  u16  trackBit[ SWITCH_NUM ]; // 各スイッチの操作対象トラックビット
-  u16  fadeFrame;              // フェード時間
-  u16  validZoneNum;           // スイッチが有効な場所の数
-  u16* validZone;              // スイッチが有効な場所
-
-} SWITCH_DATA;
+#define DEBUG_PRINT_ON           // デバッグ出力スイッチ
+#define PRINT_DEST           (1) // デバッグ情報の出力先
+#define TRACK_NUM           (16) // トラック数
+#define TRACKBIT_ALL    (0xffff) // 全トラック指定
 
 
 //===============================================================================
@@ -50,71 +28,41 @@ typedef struct
 //===============================================================================
 struct _ISS_SWITCH_SYS
 { 
-  HEAPID heapID;
-  BOOL   boot;    // 起動しているかどうか
-
-  // スイッチ状態
-  SWITCH_STATE switchState[ SWITCH_NUM ]; // 各スイッチの状態
-  u16          fadeCount  [ SWITCH_NUM ]; // フェードカウンタ
-
-  // スイッチデータ
-  SWITCH_DATA* switchData;     // スイッチデータ配列
-  u8           switchDataNum;  // スイッチデータの数
-  u8           switchDataIdx;  // 参照データのインデックス
+  BOOL             bootFlag;     // 起動しているかどうか
+  u8               switchSetNum; // スイッチセットの数
+  ISS_SWITCH_SET** switchSet;    // スイッチセット
+  ISS_SWITCH_SET*  curSwitchSet; // 操作中のスイッチセット
 };
 
 
 //===============================================================================
-// ■システム制御
+// ■関数インデックス
 //===============================================================================
-// システム動作
-static void SystemMain( ISS_SWITCH_SYS* sys );
-static void SwitchMain( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx );
-static void SwitchMain_FADE_IN( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx );
-static void SwitchMain_FADE_OUT( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx );
-// システム操作
-static void BootSystem( ISS_SWITCH_SYS* sys );
-static void StopSystem( ISS_SWITCH_SYS* sys ); 
-static void NotifyZoneChange( ISS_SWITCH_SYS* sys, u16 nextZoneID );
-// スイッチ操作
-static void SwitchOn ( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx );
-static void SwitchOff( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx );
-
-//===============================================================================
-// ■データ操作
-//===============================================================================
-// スイッチデータ
-static u8 SearchSwitchDataIndex( const ISS_SWITCH_SYS* sys, u32 soundIdx ); 
-// 参照中スイッチデータ
-static const SWITCH_DATA* GetCurrentSwitchData   ( const ISS_SWITCH_SYS* sys );
-static BOOL               ChangeCurrentSwitchData( ISS_SWITCH_SYS* sys );
-static BOOL               CheckZoneIsValid       ( const ISS_SWITCH_SYS* sys, u16 zoneID );
-// スイッチ状態
-static SWITCH_STATE GetSwitchState( const ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx );
-static void         SetSwitchState( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx, SWITCH_STATE switchState );
-static void         InitSwitchState ( ISS_SWITCH_SYS* sys );
-static void         ResetSwitchState( ISS_SWITCH_SYS* sys ); 
-// BGM音量操作
-static void SetBGMVolume( const ISS_SWITCH_SYS* sys );
-
-//===============================================================================
-// ■作成/破棄
-//===============================================================================
-// スイッチデータ
-static void InitSwitchData     ( ISS_SWITCH_SYS* sys );
-static void LoadAllSwitchData  ( ISS_SWITCH_SYS* sys );
-static void UnloadAllSwitchData( ISS_SWITCH_SYS* sys );
-static void LoadSwitchData  ( SWITCH_DATA* switchData, ARCDATID datID, HEAPID heapID );
-static void UnloadSwitchData( SWITCH_DATA* switchData );
-
-//===============================================================================
-// ■デバッグ出力
-//===============================================================================
-static void DebugPrint_SwitchData( const ISS_SWITCH_SYS* sys );
+static void InitializeSystem( ISS_SWITCH_SYS* system ); // システムを初期化する
+static ISS_SWITCH_SYS* CreateSystem( HEAPID heapID ); // システムを生成する
+static void DeleteSystem( ISS_SWITCH_SYS* system ); // システムを破棄する
+static void CreateSwitchSet( ISS_SWITCH_SYS* system, HEAPID heapID ); // スイッチセットを生成する
+static void DeleteSwitchSet( ISS_SWITCH_SYS* system ); // スイッチセットを破棄する
+static u8 GetSwitchSetNum( const ISS_SWITCH_SYS* system ); // スイッチの数を取得する
+static ISS_SWITCH_SET* GetSwitchSet( const ISS_SWITCH_SYS* system, u8 setIdx ); // スイッチセットを取得する
+static ISS_SWITCH_SET* GetCurrentSwitchSet( const ISS_SWITCH_SYS* system ); // 操作中のスイッチセットを取得する
+static BOOL CheckCurrentSwitchSetExist( const ISS_SWITCH_SYS* system ); // 操作中のスイッチセットがあるかどうかを判定する
+static BOOL CheckCurrentSwitchSetValid( const ISS_SWITCH_SYS* system, u16 zoneID ); // 現在のスイッチセットが指定したゾーンに対応しているかどうかをチェックする
+static BOOL CheckSwitchSetExist( const ISS_SWITCH_SYS* system, u32 soundIdx ); // 指定したBGMに対応するスイッチセットがあるかどうかを判定する
+static ISS_SWITCH_SET* SearchSwitchSet( const ISS_SWITCH_SYS* system, u32 soundIdx ); // 指定したBGMに対応するスイッチセットを検索する
+static BOOL ChangeSwitchSet( ISS_SWITCH_SYS* system, u32 soundIdx ); // 指定したBGMに対応するスイッチセットに変更する
+static void SetBGMVolume( const ISS_SWITCH_SYS* system ); // 現在のスイッチセットをBGMボリュームに反映させる
+static u32 GetCurrentBGM( void ); // 現在のBGMを取得する
+static BOOL CheckSystemBoot( const ISS_SWITCH_SYS* system ); // システムが起動しているかどうかをチェックする
+static void SystemMain( ISS_SWITCH_SYS* system ); // システムメイン動作
+static void BootSystem( ISS_SWITCH_SYS* system ); // システムを起動する
+static void StopSystem( ISS_SWITCH_SYS* system ); // システムを終了する
+static void ZoneChange( ISS_SWITCH_SYS* system, u16 nextZoneID ); // ゾーン変更処理
+static void ResetCurrentSwitchSet( ISS_SWITCH_SYS* system ); // 現在のスイッチセットをリセットする
 
 
 //===============================================================================
-// ■作成・破棄
+// ■public method
 //===============================================================================
 
 //-------------------------------------------------------------------------------
@@ -128,869 +76,604 @@ static void DebugPrint_SwitchData( const ISS_SWITCH_SYS* sys );
 //-------------------------------------------------------------------------------
 ISS_SWITCH_SYS* ISS_SWITCH_SYS_Create( HEAPID heapID )
 {
-  ISS_SWITCH_SYS* sys;
+  ISS_SWITCH_SYS* system;
 
-  // 生成
-  sys = GFL_HEAP_AllocMemory( heapID, sizeof(ISS_SWITCH_SYS) );
+  system = CreateSystem( heapID ); // システムを生成
+  InitializeSystem( system );      // システムを初期化
+  CreateSwitchSet( system, heapID ); // スイッチセットを生成
 
-  // 初期化
-  sys->heapID = heapID;
-  sys->boot   = FALSE;
-  InitSwitchState( sys );
-  InitSwitchData( sys );
-
-  // 初期設定
-  LoadAllSwitchData( sys );
-
-#ifdef DEBUG_PRINT_ON
-  DebugPrint_SwitchData( sys );
-#endif
-
-  return sys;
+  return system;
 }
 
 //-------------------------------------------------------------------------------
 /**
  * @brief ISSスイッチシステムを破棄する
  *
- * @param sys
+ * @param system
  */
 //-------------------------------------------------------------------------------
-void ISS_SWITCH_SYS_Delete( ISS_SWITCH_SYS* sys )
+void ISS_SWITCH_SYS_Delete( ISS_SWITCH_SYS* system )
 { 
-  UnloadAllSwitchData( sys );
-  GFL_HEAP_FreeMemory( sys );
+  DeleteSystem( system );
 }
-
-
-//===============================================================================
-// ■動作
-//===============================================================================
 
 //-------------------------------------------------------------------------------
 /**
  * @brief システム・メイン動作
  *
- * @param sys 動かすシステム
+ * @param system 動かすシステム
  */
 //-------------------------------------------------------------------------------
-void ISS_SWITCH_SYS_Update( ISS_SWITCH_SYS* sys )
+void ISS_SWITCH_SYS_Update( ISS_SWITCH_SYS* system )
 {
-  SystemMain( sys );
+  // 停止中
+  if( CheckSystemBoot(system) == FALSE ) { return; }
+  
+  SystemMain( system );
+  SetBGMVolume( system );
 }
-
-
-//===============================================================================
-// ■システム制御
-//===============================================================================
 
 //-------------------------------------------------------------------------------
 /**
  * @brief システムを起動する
  *
- * @param sys 起動するシステム
+ * @param system 起動するシステム
  */
 //-------------------------------------------------------------------------------
-void ISS_SWITCH_SYS_On( ISS_SWITCH_SYS* sys )
+void ISS_SWITCH_SYS_On( ISS_SWITCH_SYS* system )
 {
-  BootSystem( sys );
+  BootSystem( system );
 }
 
 //-------------------------------------------------------------------------------
 /**
  * @brief システムを停止する
  *
- * @param sys 停止するシステム
+ * @param system 停止するシステム
  */
 //-------------------------------------------------------------------------------
-void ISS_SWITCH_SYS_Off( ISS_SWITCH_SYS* sys )
+void ISS_SWITCH_SYS_Off( ISS_SWITCH_SYS* system )
 {
-  StopSystem( sys );
+  StopSystem( system );
 }
 
 //-------------------------------------------------------------------------------
 /**
  * @brief ゾーンの変更を通知する
  * 
- * @param sys
+ * @param system
  * @param zoneID 変更後のゾーンID
  */
 //-------------------------------------------------------------------------------
-void ISS_SWITCH_SYS_ZoneChange( ISS_SWITCH_SYS* sys, u16 zoneID )
+void ISS_SWITCH_SYS_ZoneChange( ISS_SWITCH_SYS* system, u16 zoneID )
 {
-  NotifyZoneChange( sys, zoneID );
+  ZoneChange( system, zoneID );
 }
-
-
-//===============================================================================
-// ■スイッチ制御
-//===============================================================================
 
 //-------------------------------------------------------------------------------
 /**
  * @brief スイッチを ON にする
  *
- * @param sys スイッチを押すシステム
- * @param idx 押すスイッチのインデックス
+ * @param system スイッチを押すシステム
+ * @param idx    押すボタンインデックス
  */
 //-------------------------------------------------------------------------------
-void ISS_SWITCH_SYS_SwitchOn( ISS_SWITCH_SYS* sys, SWITCH_INDEX idx )
+void ISS_SWITCH_SYS_SwitchOn( ISS_SWITCH_SYS* system, SWITCH_INDEX idx )
 {
-  SwitchOn( sys, idx );
+  ISS_SWITCH_SET* set;
+
+  set = GetCurrentSwitchSet( system );
+
+  if( set ) { 
+    ISS_SWITCH_SET_SwitchOn( set, idx );
+  }
 }
 
 //-------------------------------------------------------------------------------
 /**
  * @brief スイッチを OFF にする
  *
- * @param sys スイッチを押すシステム
+ * @param system スイッチを押すシステム
  * @param idx 放すスイッチのインデックス
  */
 //-------------------------------------------------------------------------------
-void ISS_SWITCH_SYS_SwitchOff( ISS_SWITCH_SYS* sys, SWITCH_INDEX idx )
+void ISS_SWITCH_SYS_SwitchOff( ISS_SWITCH_SYS* system, SWITCH_INDEX idx )
 {
-  SwitchOff( sys, idx );
+  ISS_SWITCH_SET* set;
+
+  set = GetCurrentSwitchSet( system );
+
+  if( set ) { 
+    ISS_SWITCH_SET_SwitchOff( set, idx );
+  }
 }
 
 //-------------------------------------------------------------------------------
 /**
  * @brief スイッチの ON/OFF を取得する
  *
- * @param sys 取得対象システム
- * @param idx 判定するスイッチ番号
+ * @param system 取得対象システム
+ * @param idx    判定するスイッチ番号
  *
  * @return スイッチidxが押されている場合 TRUE, そうでなければ FALSE
  */
 //-------------------------------------------------------------------------------
-BOOL ISS_SWITCH_SYS_IsSwitchOn( const ISS_SWITCH_SYS* sys, SWITCH_INDEX idx )
+BOOL ISS_SWITCH_SYS_IsSwitchOn( const ISS_SWITCH_SYS* system, SWITCH_INDEX idx )
 {
-  if( SWITCH_MAX < idx )
-  {
-#ifdef DEBUG_PRINT_ON
-    OS_TFPrintf( PRINT_DEST, "ISS-S: switch index range over\n" );
-#endif
+  ISS_SWITCH_SET* set;
+
+  set = GetCurrentSwitchSet( system );
+
+  if( set ) { 
+    return ISS_SWITCH_SET_CheckSwitchOn( set, idx );
+  }
+  else {
     return FALSE;
   }
-  return (sys->switchState[idx] == SWITCH_STATE_ON);
-}
+} 
+
 
 
 //===============================================================================
-// ■非公開関数
+// ■private method
 //===============================================================================
 
 //-------------------------------------------------------------------------------
 /**
- * @brief 指定したスイッチデータを読み込む
+ * @brief システムを初期化する
  *
- * @param switchData 読み込んだデータの格納先
- * @param datID      読み込むデータを指定
- * @param heapID     使用するヒープID
+ * @param system
  */
 //-------------------------------------------------------------------------------
-static void LoadSwitchData( SWITCH_DATA* switchData, ARCDATID datID, HEAPID heapID )
+static void InitializeSystem( ISS_SWITCH_SYS* system )
 {
-  int offset = 0;
-  int size = 0;
+  system->bootFlag      = FALSE;
+  system->switchSetNum  = 0;
+  system->switchSet     = NULL;
+  system->curSwitchSet  = NULL;
 
-  // シーケンス番号
-  size = sizeof(u32);
-  GFL_ARC_LoadDataOfs( &(switchData->soundIdx), ARCID_ISS_SWITCH, datID, offset, size );
-  offset += size;
-
-  // 各スイッチの操作対象トラックビット
-  size = sizeof(u16) * SWITCH_NUM;
-  GFL_ARC_LoadDataOfs( &(switchData->trackBit), ARCID_ISS_SWITCH, datID, offset, size );
-  offset += size;
-
-  // フェード時間
-  size = sizeof(u16);
-  GFL_ARC_LoadDataOfs( &(switchData->fadeFrame), ARCID_ISS_SWITCH, datID, offset, size );
-  offset += size;
-
-  // スイッチが有効な場所の数
-  size = sizeof(u16);
-  GFL_ARC_LoadDataOfs( &(switchData->validZoneNum), ARCID_ISS_SWITCH, datID, offset, size );
-  offset += size;
-
-  // スイッチが有効な場所
-  size = sizeof(u16) * switchData->validZoneNum;
-  switchData->validZone = GFL_HEAP_AllocMemory( heapID, size );
-  GFL_ARC_LoadDataOfs( switchData->validZone, ARCID_ISS_SWITCH, datID, offset, size );
-  offset += size;
-}
-
-//-------------------------------------------------------------------------------
-/**
- * @brief 読み込んだスイッチデータを破棄する
- *
- * @param switchData 破棄するデータ
- */
-//-------------------------------------------------------------------------------
-static void UnloadSwitchData( SWITCH_DATA* switchData )
-{
-  if( switchData == NULL ){ return; }
-
-  if( switchData->validZone )
-  {
-    GFL_HEAP_FreeMemory( switchData->validZone );
-  }
-}
-
-//-------------------------------------------------------------------------------
-/**
- * @brief 現在参照中のスイッチデータを取得する
- *
- * @param sys
- *
- * @return 参照中のスイッチデータ
- *         参照中のデータがない場合 NULL
- */
-//-------------------------------------------------------------------------------
-static const SWITCH_DATA* GetCurrentSwitchData( const ISS_SWITCH_SYS* sys )
-{
-  // 参照中のデータがない
-  if( sys->switchDataIdx == SWITCH_DATA_NONE ){ return NULL; }
-
-  // 参照中のデータを返す
-  return &( sys->switchData[ sys->switchDataIdx ] );
-}
-
-//-------------------------------------------------------------------------------
-/**
- * @brief 参照するスイッチデータを更新する
- *
- * @param sys
- *
- * @return 参照データが変化したら TRUE
- *         そうでなければ FALSE
- */
-//-------------------------------------------------------------------------------
-static BOOL ChangeCurrentSwitchData( ISS_SWITCH_SYS* sys )
-{
-  u32 soundIdx;
-  u8 nextDataIdx;
-
-  // 再生中のBGMのスイッチデータに変更
-  soundIdx    = PMSND_GetBGMsoundNo(); 
-  nextDataIdx = SearchSwitchDataIndex( sys, soundIdx );
-
-  if( nextDataIdx == SWITCH_DATA_NONE ){ return FALSE; } // データが存在しない
-  if( nextDataIdx == sys->switchDataIdx ){ return FALSE; } // 変化なし
-
-  // 更新
-  sys->switchDataIdx = nextDataIdx;
-
-  // DEBUG:
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, 
-               "ISS-S: change switch data index ==> %d\n", nextDataIdx );
+  OS_TFPrintf( PRINT_DEST, "ISS-S: init system\n" );
+#endif
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief システムを生成する
+ *
+ * @param heapID
+ *
+ * @return 生成したシステム
+ */
+//-------------------------------------------------------------------------------
+static ISS_SWITCH_SYS* CreateSystem( HEAPID heapID )
+{
+  ISS_SWITCH_SYS* system;
+
+  system = GFL_HEAP_AllocMemory( heapID, sizeof(ISS_SWITCH_SYS) );
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_DEST, "ISS-S: create system\n" );
 #endif
 
-  return TRUE;
+  return system;
 }
 
 //-------------------------------------------------------------------------------
 /**
- * @brief 指定したゾーンがスイッチ状態維持の対象かどうかを調べる
- *
- * @param sys
- * @param zoneID 調べるゾーン
- *
- * @return スイッチ状態維持の対象なら TRUE
- *         そうでないなら FALSE
+ * @brief システムを破棄する*
+ * @param system
  */
 //-------------------------------------------------------------------------------
-static BOOL CheckZoneIsValid ( const ISS_SWITCH_SYS* sys, u16 zoneID )
+static void DeleteSystem( ISS_SWITCH_SYS* system )
+{
+  GF_ASSERT( system );
+
+  GFL_HEAP_FreeMemory( system );
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_DEST, "ISS-S: delete system\n" );
+#endif
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief スイッチセットを生成する
+ *
+ * @param system
+ * @param heapID
+ */
+//-------------------------------------------------------------------------------
+static void CreateSwitchSet( ISS_SWITCH_SYS* system, HEAPID heapID )
+{
+  int datID;
+  int num;
+  ISS_SWITCH_SET* set;
+
+  GF_ASSERT( system->switchSet == NULL );
+
+  // データの数を取得
+  num = GFL_ARC_GetDataFileCnt( ARCID_ISS_SWITCH );
+  system->switchSetNum = num;
+
+  // ワークを確保
+  system->switchSet = 
+    GFL_HEAP_AllocMemory( heapID, sizeof(ISS_SWITCH_SET*)*num );
+
+  // スイッチセットを生成
+  for( datID=0; datID < num; datID++ )
+  {
+    set = ISS_SWITCH_SET_Create( heapID );
+    ISS_SWITCH_SET_Load( set, datID, heapID );
+    system->switchSet[ datID ] = set;
+  }
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_DEST, "ISS-S: create switch-set\n" );
+#endif
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief スイッチセットを破棄する
+ *
+ * @param system
+ */
+//-------------------------------------------------------------------------------
+static void DeleteSwitchSet( ISS_SWITCH_SYS* system )
 {
   int i;
-  const SWITCH_DATA* switchData;
+  int num;
 
-  // 参照中のスイッチデータ取得
-  switchData = GetCurrentSwitchData( sys );
+  GF_ASSERT( system );
+  GF_ASSERT( system->switchSet );
 
-  if( switchData == NULL ){ return NULL; } // 参照中のデータが存在しない
+  num = system->switchSetNum;
 
-  // データを検索
-  for( i=0; i < switchData->validZoneNum; i++ )
+  // 全スイッチを破棄
+  for( i=0; i<num; i++ )
   {
-    // 発見
-    if( switchData->validZone[i] == zoneID ){ return TRUE; }
-  }
-  return FALSE;
-}
+    ISS_SWITCH_SET_Delete( system->switchSet[i] );
+  } 
+  // ワークを破棄
+  GFL_HEAP_FreeMemory( system->switchSet );
 
-//-------------------------------------------------------------------------------
-/**
- * @brief 指定したBGMに対応するスイッチデータのインデックスを検索する
- *
- * @param sys
- * @param soundIdx データのインデックスを取得するBGM
- *
- * @return 指定したBGMのスイッチデータのインデックス
- *         スイッチデータが存在しない場合 SWITCH_DATA_NONE
- */
-//-------------------------------------------------------------------------------
-static u8 SearchSwitchDataIndex( const ISS_SWITCH_SYS* sys, u32 soundIdx )
-{
-  SWITCH_DATA* switchData;
-  u8 dataNum;
-  u8 dataIdx;
+  // クリア
+  system->switchSetNum  = 0;
+  system->switchSet     = NULL;
+  system->curSwitchSet  = NULL;
 
-  switchData = sys->switchData;
-  dataNum    = sys->switchDataNum;
-
-  // 検索
-  for( dataIdx=0; dataIdx < dataNum; dataIdx++ )
-  {
-    // 発見
-    if( switchData[ dataIdx ].soundIdx == soundIdx )
-    {
-      return dataIdx;
-    }
-  }
-
-  // データがない
-  return SWITCH_DATA_NONE;
-}
-
-//-------------------------------------------------------------------------------
-/**
- * @brief スイッチデータを初期化する
- * 
- * @param sys
- */
-//-------------------------------------------------------------------------------
-static void InitSwitchData( ISS_SWITCH_SYS* sys )
-{
-  sys->switchData    = NULL;
-  sys->switchDataNum = 0;
-  sys->switchDataIdx = SWITCH_DATA_NONE;
-
-  // DEBUG:
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-S: init switch data\n" );
+  OS_TFPrintf( PRINT_DEST, "ISS-S: delete switch-set\n" );
 #endif
 }
 
 //-------------------------------------------------------------------------------
 /**
- * @brief すべてのスイッチデータを読み込む
+ * @brief システムメイン動作
  *
- * @param sys
+ * @param system
  */
 //-------------------------------------------------------------------------------
-static void LoadAllSwitchData( ISS_SWITCH_SYS* sys )
+static void SystemMain( ISS_SWITCH_SYS* system )
 {
-  int dataIdx;
-  u8 dataNum;
-  ARCHANDLE* handle;
+  ISS_SWITCH_SET* set;
 
-  // アーカイブハンドルオープン
-  handle = GFL_ARC_OpenDataHandle( ARCID_ISS_SWITCH, sys->heapID );
+  set = GetCurrentSwitchSet( system );
 
-  // バッファを確保
-  dataNum = GFL_ARC_GetDataFileCntByHandle( handle );
-  sys->switchDataNum = dataNum;
-  sys->switchData    = GFL_HEAP_AllocMemory( sys->heapID, sizeof(SWITCH_DATA) * dataNum );
-
-  // アーカイブハンドルクローズ
-  GFL_ARC_CloseDataHandle( handle );
-
-  // 全てのデータを読み込む
-  for( dataIdx=0; dataIdx<dataNum; dataIdx++ )
-  {
-    LoadSwitchData( &(sys->switchData[ dataIdx ]), dataIdx, sys->heapID );
+  if( set ) {
+    ISS_SWITCH_SET_Main( set );
   }
+}
 
-  // DEBUG:
+//-------------------------------------------------------------------------------
+/**
+ * @brief システムを起動する
+ *
+ * @param system
+ */
+//-------------------------------------------------------------------------------
+static void BootSystem( ISS_SWITCH_SYS* system )
+{
+  // 起動済み
+  if( CheckSystemBoot(system) == TRUE ) { return; }
+
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-S: load all switch data\n" );
+  OS_TFPrintf( PRINT_DEST, "◇ISS-S: boot system\n" );
+#endif
+
+  // 起動する
+  system->bootFlag = TRUE;
+
+  // スイッチが変化したら, スイッチをリセットする
+  if( ChangeSwitchSet( system, GetCurrentBGM() ) == TRUE )
+  {
+    ResetCurrentSwitchSet( system );
+    SetBGMVolume( system );
+  } 
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_DEST, "◆ISS-S: boot system\n" );
 #endif
 }
 
 //-------------------------------------------------------------------------------
 /**
- * @brief 読み込んだ全てのスイッチデータを破棄する
+ * @brief システムを終了する
  *
- * @param sys
+ * @param system
  */
 //-------------------------------------------------------------------------------
-static void UnloadAllSwitchData( ISS_SWITCH_SYS* sys )
+static void StopSystem( ISS_SWITCH_SYS* system )
 {
-  int dataIdx;
-  int dataNum;
-  SWITCH_DATA* data;
+  // 停止済み
+  if( CheckSystemBoot(system) == FALSE ) { return; }
 
-  dataNum = sys->switchDataNum;
-  data    = sys->switchData;
-
-  // 配列要素を破棄
-  for( dataIdx=0; dataIdx < dataNum; dataIdx++ )
-  {
-    UnloadSwitchData( &(data[ dataIdx ]) );
-  }
-  // 配列本体を破棄
-  GFL_HEAP_FreeMemory( data );
-
-  // DEBUG:
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-S: unload all switch data\n" );
+  OS_TFPrintf( PRINT_DEST, "◇ISS-S: down system\n" );
+#endif
+
+  // 停止する
+  system->bootFlag = FALSE;
+
+#ifdef DEBUG_PRINT_ON
+  OS_TFPrintf( PRINT_DEST, "◆ISS-S: down system\n" );
 #endif
 }
 
 //-------------------------------------------------------------------------------
 /**
- * @brief スイッチの状態を取得する
+ * @brief ゾーン変更処理
  *
- * @param sys
- * @param switchIdx 状態を取得するスイッチを指定
- *
- * @return 指定したスイッチの状態
+ * @param system
+ * @param nextZoneID 変更後のゾーンID
  */
 //-------------------------------------------------------------------------------
-static SWITCH_STATE GetSwitchState( const ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx )
+static void ZoneChange( ISS_SWITCH_SYS* system, u16 nextZoneID )
 {
-  // インデックス エラー
-  if( SWITCH_NUM < switchIdx )
-  {
+  // 停止中
+  if( CheckSystemBoot(system) == FALSE ) { return; }
+
 #ifdef DEBUG_PRINT_ON
-    OS_Printf( "ISS-S: switch index error\n" );
+  OS_TFPrintf( PRINT_DEST, "ISS-S: ◇zone change\n" );
 #endif
-    GF_ASSERT(0);
-    return SWITCH_STATE_OFF;
+
+  // スイッチ維持ゾーンからはずれた
+  if( CheckCurrentSwitchSetValid( system, nextZoneID ) == FALSE ) { 
+    ResetCurrentSwitchSet( system );
+    StopSystem( system );
   }
 
-  return sys->switchState[ switchIdx ];
-}
-
-//-------------------------------------------------------------------------------
-/**
- * @brief スイッチの状態を設定する
- *
- * @param sys
- * @param switchIdx   状態を取得するスイッチを指定
- * @param switchState 設定する状態
- */
-//-------------------------------------------------------------------------------
-static void SetSwitchState( ISS_SWITCH_SYS* sys, 
-                            SWITCH_INDEX switchIdx, SWITCH_STATE switchState )
-{
-  // インデックス エラー
-  if( SWITCH_NUM < switchIdx )
-  {
 #ifdef DEBUG_PRINT_ON
-    OS_Printf( "ISS-S: switch index error\n" );
-#endif
-    GF_ASSERT(0);
-    return;
-  }
-
-  sys->switchState[ switchIdx ] = switchState;
-  sys->fadeCount  [ switchIdx ] = 0;
-}
-
-//-------------------------------------------------------------------------------
-/**
- * @brief スイッチ状態を初期化する
- *
- * @param sys 初期化対象システム
- */
-//-------------------------------------------------------------------------------
-static void InitSwitchState( ISS_SWITCH_SYS* sys )
-{
-  SWITCH_INDEX switchIdx;
-
-  // 全スイッチを初期化
-  for( switchIdx=SWITCH_00; switchIdx < SWITCH_NUM; switchIdx++ )
-  {
-    SetSwitchState( sys, switchIdx, SWITCH_STATE_OFF );
-  }
-
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-S: init switch state\n" );
+  OS_TFPrintf( PRINT_DEST, "ISS-S: ◆zone change\n" );
 #endif
 } 
 
 //-------------------------------------------------------------------------------
 /**
- * @brief スイッチ0のみが押されている状態にリセットする
+ * @brief スイッチセットの数を取得する
  *
- * @param sys
+ * @param system
  */
 //-------------------------------------------------------------------------------
-static void ResetSwitchState( ISS_SWITCH_SYS* sys )
+static u8 GetSwitchSetNum( const ISS_SWITCH_SYS* system )
 {
-  InitSwitchState( sys );
-  SetSwitchState( sys, SWITCH_00, SWITCH_STATE_ON );
-
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-S: reset switch state\n" );
-#endif
+  return system->switchSetNum;
 }
 
 //-------------------------------------------------------------------------------
 /**
- * @brief システム起動
+ * @brief スイッチセットを取得する
  *
- * @param sys
+ * @param system 
+ * @param setIdx スイッチセットのインデックス
+ *
+ * @return 指定したインデックスのスイッチセット
  */
 //-------------------------------------------------------------------------------
-static void BootSystem( ISS_SWITCH_SYS* sys )
-{
-  if( sys->boot ){ return; } // すでに起動している
+static ISS_SWITCH_SET* GetSwitchSet( const ISS_SWITCH_SYS* system, u8 setIdx )
+{ 
+  GF_ASSERT( setIdx < system->switchSetNum );
 
-  // 起動
-  sys->boot = TRUE;
-
-  // 参照するスイッチデータが変わったら, リセットする
-  if( ChangeCurrentSwitchData( sys ) ){ ResetSwitchState( sys ); }
-
-  // BGM音量を設定
-  SetBGMVolume( sys );
-
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-S: boot system\n" );
-#endif
+  return system->switchSet[ setIdx ];
 }
 
 //-------------------------------------------------------------------------------
 /**
- * @brief システムを停止する
+ * @brief 操作中のスイッチセットを取得する
  *
- * @param sys 停止させるシステム
+ * @param system
  */
 //-------------------------------------------------------------------------------
-static void StopSystem( ISS_SWITCH_SYS* sys )
+static ISS_SWITCH_SET* GetCurrentSwitchSet( const ISS_SWITCH_SYS* system )
 {
-  if( sys->boot == FALSE ){ return; } // すでに停止している
-
-  // 停止
-  sys->boot = FALSE;
-
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-S: stop system\n" );
-#endif
-}
+  return system->curSwitchSet;
+} 
 
 //-------------------------------------------------------------------------------
 /**
- * @brief ゾーンの変化を通知する
+ * @brief 操作中のスイッチセットがあるかどうかを判定する
  *
- * @param sys
- * @param nextZoneID 変更後のゾーンID
+ * @param system
+ *
+ * @return 操作中のスイッチがある場合 TRUE
+ *         そうでなければ FALSE
  */
 //-------------------------------------------------------------------------------
-static void NotifyZoneChange( ISS_SWITCH_SYS* sys, u16 nextZoneID )
+static BOOL CheckCurrentSwitchSetExist( const ISS_SWITCH_SYS* system )
 {
-  // スイッチ状態維持 有効ゾーン
-  if( CheckZoneIsValid( sys, nextZoneID ) )
-  {
-    // DEBUG:
-#ifdef DEBUG_PRINT_ON
-    OS_TFPrintf( PRINT_DEST, "ISS-S: detect zone change ==> valid zone\n" );
-#endif
-    return;
+  if( GetCurrentSwitchSet(system) ) {
+    return TRUE;
   }
-
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-S: detect zone change ==> invalid zone\n" );
-#endif
-
-  // リセット ( BGM 音量操作なし )
-  ResetSwitchState( sys ); 
+  else {
+    return FALSE;
+  }
 }
 
 //-------------------------------------------------------------------------------
 /**
- * @beirf スイッチを押す
+ * @brief 現在のスイッチセットが, 
+ *        指定したゾーンに対応しているかどうかをチェックする
  *
- * @param sys 
- * @param switchIdx 押すスイッチのインデックス
+ * @param system
+ * @param zoneID 判定するゾーンID
+ *
+ * @return 指定したゾーンが, 現在のスイッチセットに対応している場合, TRUE
+ *         そうでなければ FALSE
  */
 //-------------------------------------------------------------------------------
-static void SwitchOn( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx )
+static BOOL CheckCurrentSwitchSetValid( const ISS_SWITCH_SYS* system, u16 zoneID )
 {
-  // 起動していない
-  if( !sys->boot ){ return; }
-  // スイッチが押せる状態じゃない
-  if( GetSwitchState( sys, switchIdx ) != SWITCH_STATE_OFF ){ return; }
+  ISS_SWITCH_SET* set;
 
-  // スイッチON ( フェードイン開始 )
-  SetSwitchState( sys, switchIdx, SWITCH_STATE_FADE_IN );
+  set = GetCurrentSwitchSet( system );
 
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-S: switch %d on\n", switchIdx );
-#endif
+  // スイッチがない
+  if( set == FALSE ) { return FALSE; }
+
+  return ISS_SWITCH_SET_IsValidAt( set, zoneID );
 }
 
 //-------------------------------------------------------------------------------
 /**
- * @beirf スイッチを離す
+ * @brief 指定したBGMに対応するスイッチセットがあるかどうかを判定する
  *
- * @param sys
- * @param switchIdx 離すスイッチのインデックス
+ * @param system
+ * @param soundIdx 検索キーとなるBGM
+ *
+ * @return 指定したBGMに対応するスイッチセットがある場合 TRUE
+ *         そうでなければ FALSE
  */
 //-------------------------------------------------------------------------------
-static void SwitchOff( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx )
+static BOOL CheckSwitchSetExist( const ISS_SWITCH_SYS* system, u32 soundIdx )
 {
-  // 起動していない
-  if( !sys->boot ){ return; }
-  // スイッチが離せる状態じゃない
-  if( GetSwitchState( sys, switchIdx ) != SWITCH_STATE_ON ){ return; }
-
-  // スイッチOFF ( フェードアウト開始 )
-  SetSwitchState( sys, switchIdx, SWITCH_STATE_FADE_OUT );
-
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_DEST, "ISS-S: switch %d off\n", switchIdx );
-#endif
+  if( SearchSwitchSet( system, soundIdx ) == NULL ) {
+    return FALSE;
+  }
+  else {
+    return TRUE;
+  }
 }
 
 //-------------------------------------------------------------------------------
 /**
- * @brief システム動作
+ * @brief 指定したBGMに対応するスイッチセットを検索する
  *
- * @param sys
+ * @param system
+ * @param soundIdx 検索キーとなるBGM
+ *
+ * @return 指定したBGMに対応するスイッチセットがある場合, 
+ *         そのスイッチセットを返す.
+ *         そうでなければ, NULL
  */
 //-------------------------------------------------------------------------------
-static void SystemMain( ISS_SWITCH_SYS* sys )
+static ISS_SWITCH_SET* SearchSwitchSet( const ISS_SWITCH_SYS* system, u32 soundIdx )
 {
-  SWITCH_INDEX switchIdx;
+  int idx;
+  int setNum;
+  ISS_SWITCH_SET* set;
+
+  setNum = GetSwitchSetNum( system );
+
+  // 全てのスイッチセットをチェック
+  for( idx=0; idx < setNum; idx++ )
+  {
+    set = GetSwitchSet( system, idx );
+
+    // 指定されたBGMに対応するスイッチを発見
+    if( ISS_SWITCH_SET_GetSoundIdx(set) == soundIdx ) { return set; }
+  } 
+
+  // 該当するスイッチセットは持っていない
+  return NULL;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief 指定したBGMに対応するスイッチセットに変更する
+ *
+ * @param system
+ * @param soundIdx BGMを指定
+ *
+ * @return スイッチが変化した場合 TRUE
+ *         そうでなければ FALSE
+ */
+//-------------------------------------------------------------------------------
+static BOOL ChangeSwitchSet( ISS_SWITCH_SYS* system, u32 soundIdx )
+{
+  ISS_SWITCH_SET* oldSet;
+  ISS_SWITCH_SET* newSet;
+
+  oldSet = GetCurrentSwitchSet( system );
+  newSet = SearchSwitchSet( system, soundIdx );
+
+  // スイッチセットに変化なし
+  if( oldSet == newSet ) { return FALSE; }
+
+  // スイッチセットを変更
+  system->curSwitchSet = newSet;
+  return TRUE;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief 現在のスイッチセットをBGMボリュームに反映させる
+ *
+ * @param system
+ */
+//-------------------------------------------------------------------------------
+static void SetBGMVolume( const ISS_SWITCH_SYS* system )
+{
+  ISS_SWITCH_SET* set;
+
+  set = GetCurrentSwitchSet( system );
   
-  if( sys->boot == FALSE ){ return; } // 起動していない
-  if( GetCurrentSwitchData( sys ) == NULL ){ return; } // 参照データがない
-
-  // スイッチ動作
-  for( switchIdx=SWITCH_00; switchIdx < SWITCH_NUM; switchIdx++ )
-  {
-    SwitchMain( sys, switchIdx );
-  }
-
-  // スイッチの状態をBGMに反映
-  SetBGMVolume( sys );
+  if( set ) {
+    ISS_SWITCH_SET_SetBGMVolume( set );
+  } 
 }
 
 //-------------------------------------------------------------------------------
 /**
- * @brief スイッチ動作
+ * @brief 現在のBGMを取得する
  *
- * @param sys 
- * @param switchIdx 更新するスイッチを指定
+ * @return 再生中のBGM番号
  */
 //-------------------------------------------------------------------------------
-static void SwitchMain( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx )
+static u32 GetCurrentBGM( void )
 {
-  switch( sys->switchState[ switchIdx ] )
-  {
-  case SWITCH_STATE_ON:
-  case SWITCH_STATE_OFF:
-    // 変化しない
-    break;
-  case SWITCH_STATE_FADE_IN:   SwitchMain_FADE_IN( sys, switchIdx );   break;
-  case SWITCH_STATE_FADE_OUT:  SwitchMain_FADE_OUT( sys, switchIdx );  break;
-  default:
-    // エラー
-#ifdef DEBUG_PRINT_ON
-    OS_TFPrintf( PRINT_DEST, "ISS-S: switch state error\n" ); 
-#endif
-    GF_ASSERT(0);
-    break;
-  }
+  return PMSND_GetBGMsoundNo();
 }
 
 //-------------------------------------------------------------------------------
 /**
- * @brief スイッチ動作 ( FADE_IN )
+ * @brief システムが起動しているかどうかをチェックする
  *
- * @param sys
- * @param switchIdx 動作するスイッチを指定
+ * @param system
+ *
+ * @return システムが起動中なら TRUE
+ *         そうでないなら FALSE
  */
 //-------------------------------------------------------------------------------
-static void SwitchMain_FADE_IN( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx )
+static BOOL CheckSystemBoot( const ISS_SWITCH_SYS* system )
 {
-  const SWITCH_DATA* switchData;
-
-  // 参照データ取得
-  switchData = GetCurrentSwitchData( sys );
-
-  // 参照データが存在しない
-  if( switchData == NULL )
-  {
-#ifdef DEBUG_PRINT_ON
-    OS_Printf( "ISS-S: switch data not found\n" );
-#endif
-    GF_ASSERT(0);
-    return;
-  }
-
-  // フェードカウント更新
-  sys->fadeCount[ switchIdx ]++;
-
-  // フェードイン終了
-  if( switchData->fadeFrame <= sys->fadeCount[ switchIdx ] )
-  {
-    // ON
-    SetSwitchState( sys, switchIdx, SWITCH_STATE_ON );
-
-    // DEBUG:
-#ifdef DEBUG_PRINT_ON
-    OS_TFPrintf( PRINT_DEST, "ISS-S: switch %d fade in finish\n", switchIdx );
-#endif
-  }
+  return system->bootFlag;
 }
 
 //-------------------------------------------------------------------------------
 /**
- * @brief スイッチ動作 ( FADE_OUT )
+ * @brief 現在のスイッチセットをリセットする
  *
- * @param sys
- * @param switchIdx 動作するスイッチを指定
+ * @param system
  */
 //-------------------------------------------------------------------------------
-static void SwitchMain_FADE_OUT( ISS_SWITCH_SYS* sys, SWITCH_INDEX switchIdx )
+static void ResetCurrentSwitchSet( ISS_SWITCH_SYS* system )
 {
-  const SWITCH_DATA* switchData;
+  ISS_SWITCH_SET* set;
 
-  // 参照データ
-  switchData = GetCurrentSwitchData( sys ); 
+  set = GetCurrentSwitchSet( system );
 
-  // 参照データが存在しない
-  if( switchData == NULL )
-  {
-#ifdef DEBUG_PRINT_ON
-    OS_Printf( "ISS-S: switch data not found\n" );
-#endif
-    GF_ASSERT(0);
-    return;
-  }
-
-  // フェードカウント更新
-  sys->fadeCount[ switchIdx ]++;
-
-  // フェードアウト終了
-  if( switchData->fadeFrame <= sys->fadeCount[ switchIdx ] )
-  {
-    // OFF
-    SetSwitchState( sys, switchIdx, SWITCH_STATE_OFF );
-
-    // DEBUG:
-#ifdef DEBUG_PRINT_ON
-    OS_TFPrintf( PRINT_DEST, "ISS-S: switch %d fade out finish\n", switchIdx );
-#endif
+  if( set ) {
+    ISS_SWITCH_SET_ResetSwitch( set );
   }
 }
-
-//-------------------------------------------------------------------------------
-/**
- * @brief 現在のスイッチの状態をBGMの音量に反映する
- *
- * @param sys
- */
-//-------------------------------------------------------------------------------
-static void SetBGMVolume( const ISS_SWITCH_SYS* sys )
-{
-  int switchIdx;
-  const SWITCH_DATA* switchData;
-
-  // 参照データ
-  switchData = GetCurrentSwitchData( sys );
-
-  // 各スイッチの状態を反映する
-  for( switchIdx=0; switchIdx < SWITCH_NUM; switchIdx++ )
-  {
-    switch( sys->switchState[ switchIdx ] )
-    {
-    case SWITCH_STATE_ON:
-        PMSND_ChangeBGMVolume( switchData->trackBit[ switchIdx ], MAX_VOLUME );
-        break;
-    case SWITCH_STATE_OFF:
-        PMSND_ChangeBGMVolume( switchData->trackBit[ switchIdx ], 0 );
-        break;
-    case SWITCH_STATE_FADE_IN:
-      { // フェードイン中
-        float now = (float)sys->fadeCount[ switchIdx ];
-        float end = (float)switchData->fadeFrame;
-        int   vol = MAX_VOLUME * (now / end);
-        PMSND_ChangeBGMVolume( switchData->trackBit[ switchIdx ], vol );
-      }
-      break;
-    case SWITCH_STATE_FADE_OUT:
-      { // フェードアウト中
-        float now = (float)sys->fadeCount[ switchIdx ];
-        float end = (float)switchData->fadeFrame;
-        int   vol = MAX_VOLUME * ( 1.0f - (now / end) );
-        PMSND_ChangeBGMVolume( switchData->trackBit[ switchIdx ], vol );
-      }
-      break;
-    }
-  }
-}
-
-
-#ifdef DEBUG_PRINT_ON
-//-------------------------------------------------------------------------------
-/**
- * @brief スイッチデータを出力する
- *
- * @param sys
- */
-//-------------------------------------------------------------------------------
-static void DebugPrint_SwitchData( const ISS_SWITCH_SYS* sys )
-{
-  int dataIdx;
-  int bitIdx;
-  int switchIdx;
-  int validZoneIdx;
-
-  for( dataIdx=0; dataIdx < sys->switchDataNum; dataIdx++ )
-  {
-    SWITCH_DATA* switchData = &sys->switchData[ dataIdx ];
-
-    // シーケンス番号
-    OS_TFPrintf( PRINT_DEST, 
-                 "- switchData[%d].soundIdx = %d\n", dataIdx, switchData->soundIdx );
-
-    // 各スイッチのビットマスク
-    for( switchIdx=0; switchIdx < SWITCH_NUM; switchIdx++ )
-    {
-      OS_TFPrintf( PRINT_DEST, 
-                   "- switchData[%d].trackBit[%d] = ", dataIdx, switchIdx );
-
-      for( bitIdx=0; bitIdx < TRACK_NUM; bitIdx++ )
-      {
-        if( switchData->trackBit[switchIdx] & (1<<(TRACK_NUM-1-bitIdx)) )
-        {
-          OS_TFPrintf( PRINT_DEST, "■" ); 
-        }
-        else
-        { 
-          OS_TFPrintf( PRINT_DEST, "□" ); 
-        }
-      }
-      OS_TFPrintf( PRINT_DEST, "\n" );
-    }
-
-    // フェード フレーム数
-    OS_TFPrintf( PRINT_DEST, 
-                "- switchData[%d].fadeFrame = %d\n", dataIdx, switchData->fadeFrame );
-
-    // スイッチが有効な場所
-    OS_TFPrintf( PRINT_DEST, 
-                 "- switchData[%d].validZoneNum = %d\n", dataIdx, switchData->validZoneNum ); 
-    for( validZoneIdx=0; validZoneIdx<switchData->validZoneNum; validZoneIdx++ )
-    {
-      OS_TFPrintf( PRINT_DEST, 
-                   "- switchData[%d].validZone[%d] = %d\n", 
-                   dataIdx, validZoneIdx, switchData->validZone[ validZoneIdx ] ); 
-    }
-  }
-}
-#endif

@@ -197,6 +197,8 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/iss_3ds_sys.c \
         gamesystem/iss_zone_sys.c \
         gamesystem/iss_switch_sys.c \
+        gamesystem/iss_switch_set.c \
+        gamesystem/iss_switch.c \
         gamesystem/pm_weather.c \
         system/bgwinfrm.c \
         poke_tool/gauge_tool.c \

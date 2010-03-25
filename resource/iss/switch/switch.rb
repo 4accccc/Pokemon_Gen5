@@ -147,11 +147,33 @@ file.close
   ROW_FIRST_ZONE_ID.upto( in_data.size - 1 ) do |i|
     out_data << GetZoneID( "ZONE_ID_" + in_data[i] )  # 有効ゾーン
   end
+
+  # デバッグデータを出力
+  filename = ARGV[1] + "/iss_switch_data_" + in_data[ROW_SEQ_LABEL].downcase + ".txt"
+  file = File.open( filename, "w" )
+  file.puts ( GetSeqNo(in_data[ROW_SEQ_LABEL]) )       # シーケンス番号
+  file.puts ( CalcTrackBit(flag_state, 0)      )       # スイッチ0の操作ビット
+  file.puts ( CalcTrackBit(flag_state, 1)      )       # スイッチ1の操作ビット
+  file.puts ( CalcTrackBit(flag_state, 2)      )       # スイッチ2の操作ビット
+  file.puts ( CalcTrackBit(flag_state, 3)      )       # スイッチ3の操作ビット
+  file.puts ( CalcTrackBit(flag_state, 4)      )       # スイッチ4の操作ビット
+  file.puts ( CalcTrackBit(flag_state, 5)      )       # スイッチ5の操作ビット
+  file.puts ( CalcTrackBit(flag_state, 6)      )       # スイッチ6の操作ビット
+  file.puts ( CalcTrackBit(flag_state, 7)      )       # スイッチ7の操作ビット
+  file.puts ( CalcTrackBit(flag_state, 8)      )       # スイッチ8の操作ビット
+  file.puts ( in_data[ROW_FADE_FRAME].to_i     )       # フェード フレーム数
+  file.puts ( in_data.size - ROW_FIRST_ZONE_ID )       # 有効ゾーン数
+  ROW_FIRST_ZONE_ID.upto( in_data.size - 1 ) do |i|
+    file.puts ( GetZoneID( "ZONE_ID_" + in_data[i] ) )  # 有効ゾーン
+  end
+  file.close
+
   # バイナリデータを出力
   filename = ARGV[1] + "/iss_switch_data_" + in_data[ROW_SEQ_LABEL].downcase + ".bin"
   file = File.open( filename, "wb" )
-  file.write( out_data.pack("IS*") )
+  file.write( out_data.pack("ISSSSSSSSSSCS*") )
   file.close
+
   # 出力ファイル名を記憶
   bin_file_list << filename
 end
