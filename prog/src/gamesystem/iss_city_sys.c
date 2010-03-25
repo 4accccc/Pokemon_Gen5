@@ -29,7 +29,7 @@
 #define MAX_TRACK_VOLUME  (127) // トラックボリュームの最大値
 #define MIN_SYSTEM_VOLUME   (0) // システムボリュームの最小値
 #define MAX_SYSTEM_VOLUME (127) // システムボリュームの最大値
-#define SYSTEM_VOLUME_FADEIN_SPEED  (1) // システムボリュームの変更速度 ( フェードイン )
+#define SYSTEM_VOLUME_FADEIN_SPEED  (2) // システムボリュームの変更速度 ( フェードイン )
 #define SYSTEM_VOLUME_FADEOUT_SPEED (2) // システムボリュームの変更速度 ( フェードアウト )
 
 // 操作トラック

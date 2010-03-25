@@ -31,7 +31,7 @@
 #define MAX_VOLUME (127)
 
 // マスターボリュームの変更速度
-#define MASTER_VOLUME_FADE_SPEED (2)
+#define MASTER_VOLUME_FADE_SPEED (4)
 
 // 絶対値取得マクロ
 #define ABS(n) (n>0 ? n : -n)
