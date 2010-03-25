@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-03-25T15:17:39"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-03-25T16:59:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -385,7 +385,7 @@
 欲しいんだけど　イイかな？▼</language>
 	</row>
 
-	<row id="msg_wheel_spring_f_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_wheel_spring_f_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>春：主人公性別が♂
 ・はい選択時
 ・トレーナー戦闘へ</comment>
@@ -393,7 +393,7 @@
 
 ミニスカート</attribute>
 		<language name="JPN" width="256">ありがとう！　キミって　ノリいいね！
-じゃあ　さっそくだけど
+じゃあ　さっそくだけど▽
 ポケモンしょうぶ　はじめましょ！</language>
 		<language name="JPN_KANJI" width="256">ありがとう！　キミって　ノリいいね！
 じゃあ　早速だけど▽
