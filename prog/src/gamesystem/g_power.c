@@ -296,6 +296,21 @@ GPOWER_TYPE GPOWER_ID_to_Type(const POWER_CONV_DATA *powerdata, GPOWER_ID gpower
   return powerdata[gpower_id].type;
 }
 
+//==================================================================
+/**
+ * GパワーIDから使用ポイント(デルダマ消費数)を取得する
+ *
+ * @param   powerdata		パワーデータへのポインタ
+ * @param   gpower_id		GパワーID
+ *
+ * @retval  使用ポイント(デルダマ消費数)
+ */
+//==================================================================
+u16 GPOWER_ID_to_Point(const POWER_CONV_DATA *powerdata, GPOWER_ID gpower_id)
+{
+  return powerdata[gpower_id].point;
+}
+
 //Gパワーがバグっていないか簡易的なチェック
 //※check 将来的には各タイプ毎にセットされるIDは決まっているので、
 //        それ以外のIDが入っていた場合はNULL化するなどのケアまで入れた方が良い
