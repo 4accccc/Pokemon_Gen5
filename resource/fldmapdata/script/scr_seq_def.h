@@ -7189,6 +7189,13 @@
     _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_TRIAL_HOUSE_START, 0
 
 /**
+ * @def _BEACON_SET_REQ_TRIAL_HOUSE_RANK
+ * @brief トライアルハウスランクビーコンセット
+ */
+#define _BEACON_SET_REQ_TRIAL_HOUSE_RANK( rank ) \
+    _ASM_BEACON_SET_REQ SCR_BEACON_SET_REQ_TRIAL_HOUSE_RANK, rank
+
+/**
  * @def _BEACON_SET_REQ_POKE_SHIFTER_START
  * @brief ポケシフター挑戦開始ビーコンセット
  */

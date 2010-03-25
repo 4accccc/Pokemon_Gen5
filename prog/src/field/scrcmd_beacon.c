@@ -57,6 +57,9 @@ VMCMD_RESULT EvCmdBeaconSetRequest( VMHANDLE* core, void* wk )
   case SCR_BEACON_SET_REQ_TRIAL_HOUSE_START: //トライアルハウス挑戦開始
     GAMEBEACON_Set_TrialHouse();
     break;
+  case SCR_BEACON_SET_REQ_TRIAL_HOUSE_RANK: //トライアルハウスランクセット
+    GAMEBEACON_Set_TrialHouseRank( value );
+    break;
   case SCR_BEACON_SET_REQ_POKE_SHIFTER_START: //ポケシフター挑戦開始
     GAMEBEACON_Set_PokeShifter();
     break;
