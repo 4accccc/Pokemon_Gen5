@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c03r0502.h"
-  //.include  "c03r0502.h"
+  .include  "c03r0502.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -23,6 +23,7 @@ _EVENT_DATA    ev_c03r0502_engineer_01	//HGSS連動。DLプログラム解除イベント
 _EVENT_DATA    ev_c03r0502_mrlock_01	//HGSS連動。ロックカプセルイベント
 _EVENT_DATA_END
 
+DEFINE_LOCAL player_dir
 
 /************************************************************/
 /*					システムエンジニア（ASSISTANTM）		*/
@@ -130,6 +131,148 @@ _RET
 /*					ミスターロック（CLOWN）					*/
 /************************************************************/
 EVENT_START	ev_c03r0502_mrlock_01
+  _TALK_OBJ_START()
+
+  //自機の方向を取得しておく
+  _PLAYER_DIR_GET( player_dir )
+  //イベント終了しているか？
+  IF FLAG_ON(FE_ROCKCAPSULE_END) THEN    //終了
+    //「ミスターロック」ラストメッセージ
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_mrlock_07 )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ELSE                            //まだ
+    //１回転
+    _CALL clown_spin
+    //ロックカプセル持っているか?   //@todo ダウンロードアイテムチェックをする
+    _ITEM_CHK( ITEM_ROKKUKAPUSERU, 1, SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN    //持っている
+      //タグ０番にプレーヤー名をセット
+      _PLAYER_NAME( 0 )
+       //「○○さんあて」
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_mrlock_02 )
+      _BALLOONWIN_CLOSE()
+      //モゾモゾ
+      _CALL clown_mozo
+      //「あきましたよ」
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_mrlock_03 )
+      _BALLOONWIN_CLOSE()
+      //アイテム取得  技マシン101
+      _ITEM_EVENT_KEYWAIT(ITEM_WAZAMASIN101, 1)
+      //「おやおや」
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_mrlock_04 )
+      _BALLOONWIN_CLOSE()
+      //モゾモゾ
+      _CALL clown_mozo
+      //「なになに」
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_mrlock_05 )
+      _BALLOONWIN_CLOSE()
+      //一回転
+      _CALL clown_spin
+      //「つづき」ラストメッセージ
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_mrlock_06 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+      //イベント終了フラグＯＮ
+      _FLAG_SET(FE_ROCKCAPSULE_END)
+    ELSE                            //持ってない
+      //「また　おあいすることに　なるでしょう」ラストメッセージ
+      _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_mrlock_01 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+    ENDIF
+  ENDIF
 EVENT_END
 
+//ピエロ回転
+clown_spin:
+  //自機の方向で分岐
+  SWITCH $player_dir
+  CASE DIR_UP THEN
+    //ピエロ下向き
+    _OBJ_ANIME( C03R0502_MRLOCK_01 ,anm_spin1 )
+  CASE DIR_RIGHT THEN
+    //ピエロ左向き
+    _OBJ_ANIME( C03R0502_MRLOCK_01 ,anm_spin2 )
+  CASE DIR_DOWN THEN
+    //ピエロ上向き
+    _OBJ_ANIME( C03R0502_MRLOCK_01 ,anm_spin3 )
+  CASE DIR_LEFT THEN
+    //ピエロ右向き
+    _OBJ_ANIME( C03R0502_MRLOCK_01 ,anm_spin4 )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+_RET
 
+//ピエロモゾモゾ
+clown_mozo:
+  //自機の方向で分岐
+  SWITCH $player_dir
+  CASE DIR_UP THEN
+    //ピエロ下向き
+    _OBJ_ANIME( C03R0502_MRLOCK_01 ,anm_mozo1 )
+  CASE DIR_RIGHT THEN
+    //ピエロ左向き
+    _OBJ_ANIME( C03R0502_MRLOCK_01 ,anm_mozo2 )
+  CASE DIR_DOWN THEN
+    //ピエロ上向き
+    _OBJ_ANIME( C03R0502_MRLOCK_01 ,anm_mozo3 )
+  CASE DIR_LEFT THEN
+    //ピエロ右向き
+    _OBJ_ANIME( C03R0502_MRLOCK_01 ,anm_mozo4 )
+  ENDSWITCH
+  _OBJ_ANIME_WAIT()
+_RET
+
+//ピエロ回転下向きスタート
+_ANIME_LABEL	anm_spin1
+	_ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//ピエロ回転左向きスタート
+_ANIME_LABEL	anm_spin2
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_DIR_L,1
+	_ANIME_DATA	ACMD_END,0
+
+//ピエロ回転上向きスタート
+_ANIME_LABEL	anm_spin3
+  _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
+
+//ピエロ回転右向きスタート
+_ANIME_LABEL	anm_spin4
+  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//ピエロモゾモゾ下向き
+_ANIME_LABEL	anm_mozo1
+  _ANIME_DATA	AC_STAY_WALK_D_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//ピエロモゾモゾ左向き
+_ANIME_LABEL	anm_mozo2
+  _ANIME_DATA	AC_STAY_WALK_L_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//ピエロモゾモゾ上向き
+_ANIME_LABEL	anm_mozo3
+  _ANIME_DATA	AC_STAY_WALK_U_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+//ピエロモゾモゾ右向き
+_ANIME_LABEL	anm_mozo4
+  _ANIME_DATA	AC_STAY_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
