@@ -1464,9 +1464,12 @@ static void _gearCrossObjMain(C_GEAR_WORK* pWork)
       u8 col;
       GAMEBEACON_Get_FavoriteColor(&dest_buf, beacon_info);
       col = dest_buf; //pWork->crossColor[i] - 1;
+//      OS_TPrintf("êF\n");
       GFL_CLACT_WK_SetDrawEnable( cp_wk, TRUE );
       if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  col){
+        GFL_CLACT_WK_SetDrawEnable( cp_wk, FALSE );
         GFL_CLACT_WK_SetAnmIndex( cp_wk,col);
+        GFL_CLACT_WK_SetDrawEnable( cp_wk, TRUE );
       }
       //    }
     }

@@ -483,11 +483,11 @@ int WIH_DWC_TVTCallCheck(void)
     num = pIn->maxBeaconNum;
     OS_GetMacAddress( selfMacAdr );
 
-    for( i = 0; i < num; i++ ){
+    for( i = 0; i < SCAN_PARENT_COUNT_MAX; i++ ){
       int x = GFL_NET_WLGetUserGameServiceId( i );
       if(WB_NET_COMM_TVT == x){
         if( CTVT_BCON_CheckCallSelf( GFL_NET_GetBeaconData(i) , selfMacAdr )){
-        return i;
+          return i;
         }
       }
     }

@@ -1271,6 +1271,8 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
     CTVT_COMM_BEACON *beacon = GFL_NET_GetBeaconData(index);
     STRBUF* pName = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
 
+    OS_TPrintf("ビーコン取得\n");
+    
     GFL_STR_SetStringCodeOrderLength(pName,
                                      CTVT_BCON_GetName(beacon), CTVT_COMM_NAME_LEN);
 
@@ -1285,6 +1287,8 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
                         pWork->pStrBufTVTName, pWork->pFontHandle, APP_TASKMENU_ITEM_MSGCOLOR);
       GFL_BMPWIN_TransVramCharacter(pWork->nameWin);
       GFL_BMPWIN_MakeScreen(pWork->nameWin);
+      OS_TPrintf("名前だし\n");
+			GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
     }
     GFL_STR_DeleteBuffer(pName);
 

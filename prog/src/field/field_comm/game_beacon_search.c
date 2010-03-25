@@ -365,11 +365,15 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
 //--------------------------------------------------------------
 static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_index)
 {
-  int i;
+  int i,id;
   GBS_BEACON *bcon_buff;
   int target_index = -1;
   
   for(i = 0; i < SCAN_PARENT_COUNT_MAX; i++){
+    id = GFL_NET_WLGetGameServiceID(i);
+    if(!((id==WB_NET_PALACE_SERVICEID) || (id == WB_NET_FIELDMOVE_SERVICEID) )){
+      continue;
+    }
   	bcon_buff = GFL_NET_GetBeaconData(i);
   	if(bcon_buff != NULL )
   	{
