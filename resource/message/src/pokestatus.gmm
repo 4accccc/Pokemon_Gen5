@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-23T18:38:35"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-03-25T20:05:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="129" top="145" right="834" bottom="773" maximized="no" rayout="Vertical2">
+	<dialog left="558" top="142" right="1263" bottom="770" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1774,12 +1774,22 @@
 
 	<row id="mes_status_06_30" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
 		<comment>戦う技ページ
-レベルアップの技覚えで秘伝技を忘れさせようとするときの
+技を忘れさせないときの
 警告メッセージ</comment>
-		<language name="JPN" font=" 1:small" width="120" line="5">たいせつな　わざです
-わすれることは　できません！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="120" line="5">大切な　技です
-忘れることは　できません！</language>
+		<language name="JPN" font=" 1:small" width="216" line="5">このわざは　わざマシンが　ないと
+わすれることが　できません！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="5">この技は　わざマシンが　ないと
+忘れることが　できません！</language>
+	</row>
+
+	<row id="mes_status_06_31" back-color="#ffffff,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<comment>戦う技ページ
+技を忘れさせないときの
+警告メッセージ</comment>
+		<language name="JPN" font=" 1:small" width="216" line="5">このわざは　いま　つかっているので
+わすれることが　できません！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="5">この技は　いま　使っているので
+忘れることが　できません！</language>
 	</row>
 
 	<row id="mes_status_07_01" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
