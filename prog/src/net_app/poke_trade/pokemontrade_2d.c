@@ -2995,7 +2995,7 @@ BOOL POKEMONTRADE_NEGOBG_Select6Scroll(POKEMON_TRADE_WORK* pWork)
   for(i=0;i<GTS_SEL6MSG_NUM;i++){
     GFL_CLACTPOS pos;
     GFL_CLACT_WK_GetPos(pWork->select6Msg[i], &pos,CLSYS_DRAW_SUB);
-    if(i/3){
+    if(i/4){
       pos.x += scrollnum;
     }
     else{
@@ -3039,7 +3039,7 @@ static void _initreverce(POKEMON_TRADE_WORK* pWork)
   for(i=0;i<GTS_SEL6MSG_NUM;i++){
     GFL_CLACTPOS pos;
     GFL_CLACT_WK_GetPos(pWork->select6Msg[i], &pos,CLSYS_DRAW_SUB);
-    if(i/3){
+    if(i/4){
       pos.x -= 128;
       GFL_CLACT_WK_SetBgPri(pWork->select6Msg[i],3);
       
