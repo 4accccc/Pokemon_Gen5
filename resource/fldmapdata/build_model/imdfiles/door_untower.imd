@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-03-24T14:41:13" source="door_untower.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-03-25T18:34:40" source="door_untower.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-03-24T14:41:13" source="door_untower.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-03-25T18:34:40" source="door_untower.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -66,7 +66,7 @@
 
 <material_array size="2">
 	<material index="0" name="l"
-		light0="off" light1="on" light2="off" light3="off"
+		light0="off" light1="off" light2="on" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -80,7 +80,7 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="31 31 31"
+		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
@@ -90,7 +90,7 @@
 		tex_gen_mode="none"
 	/>
 	<material index="1" name="r"
-		light0="off" light1="on" light2="off" light3="off"
+		light0="off" light1="off" light2="on" light3="off"
 		face="front"
 		alpha="31"
 		wire_mode="off"
@@ -104,7 +104,7 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="31 31 31"
+		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
