@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/21 20:39:02
+#save date:2010/03/24 22:07:59
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0305.wms
 #SECTION START:OBJ_EVENT
@@ -324,7 +324,7 @@ EVENTDATA_POSTYPE_GRID
 #type
 1
 #ID name
-FV_STADIUM_TRAINER_02
+C04R0305_TRAINER_02
 #OBJ CODE Number
 SOCCERM
 #MOVE CODE Number

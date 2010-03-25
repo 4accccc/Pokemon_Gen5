@@ -5,6 +5,6 @@
 #define _C04R0404_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_C04R0404 (1)
+#define SCRID_ZONE_C04R0404 (1)
 
 #endif //_C04R0404_DEF_H_

@@ -19,7 +19,7 @@
 #define C04R0305_CORN_02                   7
 #define C04R0305_CORN_03                   8
 #define C04R0305_TRAINER_01                9
-#define FV_STADIUM_TRAINER_02             10
+#define C04R0305_TRAINER_02               10
 #define C04R0305_TRAINER_03               11
 #define C04R0305_FAN_01                   12
 #define C04R0305_FAN_02                   13
