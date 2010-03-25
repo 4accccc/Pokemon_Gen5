@@ -355,10 +355,11 @@
 #define SCR_BEACON_SET_REQ_FSKILL_USE         (1) ///<フィールド技使用系
 #define SCR_BEACON_SET_REQ_UNION_COUNTER      (2) ///<ユニオンカウンター処理開始開始
 #define SCR_BEACON_SET_REQ_TRIAL_HOUSE_START  (3) ///<トライアルハウス挑戦開始
-#define SCR_BEACON_SET_REQ_POKE_SHIFTER_START (4) ///<ポケシフター挑戦開始
-#define SCR_BEACON_SET_REQ_SUBWAY_START       (5) ///<サブウェイ挑戦開始
-#define SCR_BEACON_SET_REQ_SUBWAY_WIN         (6) ///<サブウェイ勝利
-#define SCR_BEACON_SET_REQ_SUBWAY_TROPHY_GET  (7) ///<サブウェイトロフィーゲット
+#define SCR_BEACON_SET_REQ_TRIAL_HOUSE_RANK   (4) ///<トライアルハウスランクセット
+#define SCR_BEACON_SET_REQ_POKE_SHIFTER_START (5) ///<ポケシフター挑戦開始
+#define SCR_BEACON_SET_REQ_SUBWAY_START       (6) ///<サブウェイ挑戦開始
+#define SCR_BEACON_SET_REQ_SUBWAY_WIN         (7) ///<サブウェイ勝利
+#define SCR_BEACON_SET_REQ_SUBWAY_TROPHY_GET  (8) ///<サブウェイトロフィーゲット
 
 //--------------------------------------------------------------
 //    タイトルからのスタートメニュー項目
