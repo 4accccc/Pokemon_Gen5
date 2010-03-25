@@ -1486,7 +1486,7 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
         {
           work->isUsedItemPos[i][1] = TRUE;
         }
-        STA_ACT_CheckUseItemNpc( work , MCAT_DISTURB , i );
+        STA_ACT_CheckUseItemNpc( work , ANIT_DISTURB , i );
       }
     }
     if( usePokeNum > 0 )
@@ -1549,8 +1549,8 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
         {
           work->isUsedItemPos[i][1] = TRUE;
         }
+        STA_ACT_CheckUseItemNpc( work , ANIT_DISTURB , i );
       }
-      STA_ACT_CheckUseItemNpc( work , MCAT_DISTURB , i );
     }
   }
   //éûä‘îªíË
@@ -1641,7 +1641,7 @@ static void STA_ACT_UpdateUseItemNpc( ACTING_WORK *work )
   }
 }
 
-void STA_ACT_CheckUseItemNpc( ACTING_WORK *work , const MUSICAL_NPC_APPEAL_TYPE type , const u8 selfIdx )
+void STA_ACT_CheckUseItemNpc( ACTING_WORK *work , const ACTING_NPC_ITEMUSE_TYPE type , const u8 selfIdx )
 {
   u8 i;
   if( work->initWork->commWork == NULL ||
@@ -1663,12 +1663,6 @@ void STA_ACT_CheckUseItemNpc( ACTING_WORK *work , const MUSICAL_NPC_APPEAL_TYPE 
       {
         //ÉAÉCÉeÉÄégópíÜ
         ARI_TPrintf("NPC[%d] Use item[%d] Not Using item\n",i,type);
-        continue;
-      }
-      if( musPoke->npcAppealType != type )
-      {
-        //É^ÉCÉvïsàÍív
-        ARI_TPrintf("NPC[%d] Use item[%d] Don't muth type\n",i,type);
         continue;
       }
       if( work->npcUseItemCnt[i] > 0 )
@@ -1710,34 +1704,57 @@ void STA_ACT_CheckUseItemNpc( ACTING_WORK *work , const MUSICAL_NPC_APPEAL_TYPE 
         usePos = (rand==0?MUS_POKE_EQU_HAND_R:MUS_POKE_EQU_HAND_L);
       }
       
-      switch( musPoke->npcAppealType )
+      switch( type )
       {
-      case MCAT_NONE:
-        break;
-      case MCAT_START:   //äJén10Å`30ïbå„
+      case ANIT_ACTION:  //å¬êlââãZÇ…Ç†ÇÌÇπÇƒ(0.5Å`1ïbå„)
+        if( musPoke->npcAppealTime == NPC_APPEAL_TIME_ACTION )
         {
-          const u16 cnt = GFL_STD_MtRand(60*20) + 60*10;
-          work->npcUseItemCnt[i] = cnt;
-          work->npcUseItemPos[i] = usePos;
-          ARI_TPrintf("NPC[%d] Use item[START ][%d]\n",i,cnt);
+          if( i == selfIdx )
+          {
+            const u16 cnt = GFL_STD_MtRand(30) + 30;
+            work->npcUseItemCnt[i] = cnt;
+            work->npcUseItemPos[i] = usePos;
+            ARI_TPrintf("NPC[%d] Use item[ACTION][%d]\n",i,cnt);
+          }
         }
         break;
-      case MCAT_ACTION:  //å¬êlââãZÇ…Ç†ÇÌÇπÇƒ(0.5Å`1ïbå„)
-        if( i == selfIdx )
+      case ANIT_DISTURB: //ñWäQ(1Å`2ïbå„)
+        if( musPoke->npcAppealTime == NPC_APPEAL_TIME_DISTURB_H )
         {
-          const u16 cnt = GFL_STD_MtRand(30) + 30;
-          work->npcUseItemCnt[i] = cnt;
-          work->npcUseItemPos[i] = usePos;
-          ARI_TPrintf("NPC[%d] Use item[ACTION][%d]\n",i,cnt);
+          if( GFL_STD_MtRand(100) < 50 )  // 1/2Ç≈î≠ìÆ
+          {
+            const u16 cnt = GFL_STD_MtRand(60) + 60;
+            work->npcUseItemCnt[i] = cnt;
+            work->npcUseItemPos[i] = usePos;
+            ARI_TPrintf("NPC[%d] Use item[DISTURB][%d]\n",i,cnt);
+          }
+        }
+        if( musPoke->npcAppealTime == NPC_APPEAL_TIME_DISTURB_L )
+        {
+          if( GFL_STD_MtRand(100) < 25 )  // 1/4Ç≈î≠ìÆ
+          {
+            const u16 cnt = GFL_STD_MtRand(60) + 60;
+            work->npcUseItemCnt[i] = cnt;
+            work->npcUseItemPos[i] = usePos;
+            ARI_TPrintf("NPC[%d] Use item[DISTURB][%d]\n",i,cnt);
+          }
         }
         break;
-      case MCAT_DISTURB: //ñWäQ(1Å`2ïbå„)
-        if( GFL_STD_MtRand(100) < 50 )  // 1/2Ç≈î≠ìÆ
+      case ANIT_START:   //îCà”ïbêî
+        if( musPoke->npcAppealTime > 0 &&
+            musPoke->npcAppealTime < NPC_APPEAL_TIME_ACTION )
         {
-          const u16 cnt = GFL_STD_MtRand(60) + 60;
-          work->npcUseItemCnt[i] = cnt;
+          const s8  sub = GFL_STD_MtRand(121)-60;
+          if( musPoke->npcAppealTime + sub < 0 )
+          {
+            work->npcUseItemCnt[i] = 0;
+          }
+          else
+          {
+            work->npcUseItemCnt[i] = musPoke->npcAppealTime + sub;
+          }
           work->npcUseItemPos[i] = usePos;
-          ARI_TPrintf("NPC[%d] Use item[DISTURB][%d]\n",i,cnt);
+          ARI_TPrintf("NPC[%d] Use item[START ][%d]\n",i,work->npcUseItemCnt[i]);
         }
         break;
       }

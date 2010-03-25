@@ -110,13 +110,6 @@ begin
 
     rowBase = DATA_IDX_POKE_DATA_START + (POKEDATA_NUM*pokeIdx)
 
-    printf( "--------------------------------------------\n")
-    printf( sheet[dataCol,rowBase+POKEDATA_IDX_MONSNO].to_s + "\n")
-    printf( sheet[dataCol,rowBase+POKEDATA_IDX_TRAINER].to_s + "\n")
-    printf( sheet[dataCol,rowBase+POKEDATA_IDX_TR_NAME].to_s + "\n")
-    printf( sheet[dataCol,rowBase+POKEDATA_IDX_APPEAL_TYPE].to_s + "\n")
-    printf( sheet[dataCol,rowBase+POKEDATA_IDX_OPEN_POINT].to_s + "\n")
-
     ary = Array( sheet[dataCol,rowBase+POKEDATA_IDX_MONSNO].to_i )
     outFile.write( ary.pack("S") )
     ary = Array( sheet[dataCol,rowBase+POKEDATA_IDX_TRAINER].to_i )
@@ -124,8 +117,7 @@ begin
     ary = Array( sheet[dataCol,rowBase+POKEDATA_IDX_TR_NAME].to_i )
     outFile.write( ary.pack("C") )
     ary = Array( sheet[dataCol,rowBase+POKEDATA_IDX_APPEAL_TYPE].to_i )
-    outFile.write( ary.pack("C") )
-    outFile.write( padAry.pack("C") ) #パディング
+    outFile.write( ary.pack("S") )
     ary = Array( sheet[dataCol,rowBase+POKEDATA_IDX_OPEN_POINT].to_i )
     outFile.write( ary.pack("S") )
     

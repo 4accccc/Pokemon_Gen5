@@ -131,10 +131,11 @@ extern GAME_COMM_SYS_PTR MUS_COMM_GetGameComm( MUS_COMM_WORK* work );
 extern MUS_COMM_MODE MUS_COMM_GetMode( MUS_COMM_WORK* work );
 extern const BOOL MUS_COMM_IsPostAllMyStatus( MUS_COMM_WORK* work );
 extern const BOOL MUS_COMM_IsPostAllPoke( MUS_COMM_WORK* work );
-extern void MUS_COMM_StartSendProgram_Data( MUS_COMM_WORK* work , u32 conArr );
+extern void MUS_COMM_StartSendProgram_Data( MUS_COMM_WORK* work , u32 conArr , u32 npcArr );
 extern void MUS_COMM_StartSendProgram_Script( MUS_COMM_WORK* work );
 extern void MUS_COMM_StartSendPoke( MUS_COMM_WORK* work , MUSICAL_POKE_PARAM *musPoke);
 extern u32 MUS_COMM_GetConditionPointArr( MUS_COMM_WORK* work );
+extern u32 MUS_COMM_GetNpcArr( MUS_COMM_WORK* work );
 extern const u8 MUS_COMM_GetAppealBonus( MUS_COMM_WORK* work , const u8 pokeIdx , const u8 dataIdx );
 
 extern u8 MUS_COMM_GetUseButtonPos( MUS_COMM_WORK* work , const u8 musIdx );

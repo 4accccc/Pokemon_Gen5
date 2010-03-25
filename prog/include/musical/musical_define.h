@@ -86,13 +86,10 @@ typedef enum
 }MUSICAL_CHARA_TYPE;
 
 //NPCのアピール行動
-typedef enum
-{
-  MCAT_NONE,
-  MCAT_START,   //開始10～30秒後
-  MCAT_ACTION,  //個人演技にあわせて
-  MCAT_DISTURB, //妨害
-}MUSICAL_NPC_APPEAL_TYPE;
+#define NPC_APPEAL_TIME_NONE      (0)     //アピール無し
+#define NPC_APPEAL_TIME_ACTION    (65533) //個人演技
+#define NPC_APPEAL_TIME_DISTURB_L (65534) //妨害25%
+#define NPC_APPEAL_TIME_DISTURB_H (65535) //妨害50%
 
 //ミュ－ジカルの配点種類
 typedef enum
@@ -139,7 +136,7 @@ typedef struct
 	u16                conPoint[MCT_MAX]; //コンディション別評価点
 	BOOL               isApeerBonus[MUS_POKE_EQUIP_MAX];  //アピール成功
 	
-	MUSICAL_NPC_APPEAL_TYPE npcAppealType;  //NPCのアピール種類
+	u16                npcAppealTime;  //NPCのアピール種類
 }MUSICAL_POKE_PARAM;
 
 //----------------------------------------------------------

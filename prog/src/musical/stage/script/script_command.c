@@ -609,7 +609,7 @@ SCRIPT_FUNC_DEF( StageStartMainPart )
   SCRIPT_PRINT_LABEL(StageStartMainPart);
   
   STA_ACT_StartMainPart( work->actWork );
-  STA_ACT_CheckUseItemNpc( work->actWork , MCAT_START , 0 );
+  STA_ACT_CheckUseItemNpc( work->actWork , ANIT_START , 0 );
   return SFT_CONTINUE;
 }
 
@@ -1036,7 +1036,7 @@ SCRIPT_FUNC_DEF( PokeAppealScript )
   SCRIPT_PRINT_LABEL(PokeAppealScript);
 
   STA_ACT_StartAppealScript( work->actWork , scriptNo , pokeNo );
-  STA_ACT_CheckUseItemNpc( work->actWork , MCAT_ACTION , pokeNo );
+  STA_ACT_CheckUseItemNpc( work->actWork , ANIT_ACTION , pokeNo );
 
   return SFT_CONTINUE;
 }

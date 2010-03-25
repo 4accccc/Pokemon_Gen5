@@ -205,7 +205,7 @@ MUSICAL_POKE_PARAM* MUSICAL_SYSTEM_InitMusPokeParam( u16 monsno , u8 sex , u8 fo
   {
     musPara->conPoint[i] = 0;
   }
-  musPara->npcAppealType = MCAT_NONE;
+  musPara->npcAppealTime = NPC_APPEAL_TIME_NONE;
   
   musPara->mcssParam.monsno = monsno;
   musPara->mcssParam.sex    = sex;

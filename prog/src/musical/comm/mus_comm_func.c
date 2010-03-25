@@ -67,6 +67,7 @@ typedef enum
   MCFT_SCRIPT_SIZE,
   MCFT_STRM_SIZE,
   MCFT_CONDITION_POINT,
+  MCFT_NPC_ARR,
   MCFT_USE_BUTTON_REQ,    //子機が親機へ使用リクエスト
   MCFT_USE_BUTTON,        //親機が子機へ使用通知
   MCFT_APPEAL_BONUS,       //親機が子機へアピールボーナス状態を送信
@@ -86,6 +87,7 @@ typedef enum
   
   MCS_START_SEND_PROGRAM,
   MCS_SEND_CONDITION_POINT,
+  MCS_SEND_NPC_ARR,
   MCS_SEND_SIZE_PROGRAM,
   MCS_SEND_DATA_PROGRAM,
   MCS_WAIT_SEND_DATA_SCRIPT,
@@ -164,6 +166,7 @@ struct _MUS_COMM_WORK
   
   MUSICAL_DISTRIBUTE_DATA *distData;
   u32 conditionArr; //計算後のコンディションポイント
+  u32 npcArr;       //NPCの番号
   u8  strmDivIdx;
   BOOL isSendStrmMode;
   BOOL isSendingStrmData;
@@ -612,11 +615,21 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
                                     work->conditionArr,
                                     GFL_NET_SENDID_ALLUSER) == TRUE )
       {
+        work->commState = MCS_SEND_NPC_ARR;
+      }
+    }
+    break;
+  case MCS_SEND_NPC_ARR:
+    {
+      if( MUS_COMM_Send_FlagServer( work,
+                                    MCFT_NPC_ARR,
+                                    work->npcArr,
+                                    GFL_NET_SENDID_ALLUSER) == TRUE )
+      {
         work->commState = MCS_SEND_SIZE_PROGRAM;
       }
     }
     break;
-
   case MCS_SEND_SIZE_PROGRAM:
     if( MUS_COMM_Send_ProgramSize(work) == TRUE )
     {
@@ -1096,6 +1109,9 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
     break;
   case MCFT_CONDITION_POINT:
     work->conditionArr = pkt->value;
+    break;
+  case MCFT_NPC_ARR:
+    work->npcArr = pkt->value;
     break;
   case MCFT_USE_BUTTON_REQ:
     if( work->mode == MCM_PARENT )
@@ -1743,11 +1759,12 @@ const BOOL MUS_COMM_IsPostAllPoke( MUS_COMM_WORK* work )
   return work->isPostAllPokeData;
 }
 
-void MUS_COMM_StartSendProgram_Data( MUS_COMM_WORK* work , u32 conArr )
+void MUS_COMM_StartSendProgram_Data( MUS_COMM_WORK* work , u32 conArr , u32 npcArr )
 {
   MUS_COMM_SendTimingCommand( work , MUS_COMM_SYNC_START_SEND_PROGRAM );
   work->commState = MCS_START_SEND_PROGRAM;
   work->conditionArr = conArr;
+  work->npcArr = npcArr;
 }
 void MUS_COMM_StartSendProgram_Script( MUS_COMM_WORK* work )
 {
@@ -1764,6 +1781,10 @@ void MUS_COMM_StartSendPoke( MUS_COMM_WORK* work , MUSICAL_POKE_PARAM *musPoke)
 u32 MUS_COMM_GetConditionPointArr( MUS_COMM_WORK* work )
 {
   return work->conditionArr;
+}
+u32 MUS_COMM_GetNpcArr( MUS_COMM_WORK* work )
+{
+  return work->npcArr;
 }
 
 const u8 MUS_COMM_GetAppealBonus( MUS_COMM_WORK* work , const u8 pokeIdx , const u8 dataIdx )

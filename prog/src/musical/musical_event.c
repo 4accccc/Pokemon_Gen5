@@ -264,13 +264,15 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     {
       //マップ遷移前に演目のデータだけ必要(NPCキャラを出すため
       u32 conPointArr = 0;
+      u32 npcArr = 0;
       if( MUS_COMM_GetMode( evWork->scriptWork->commWork ) == MCM_PARENT )
       {
         const u16 sumPoint = MUSICAL_SAVE_GetSumPoint(evWork->musSave);
         evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData , sumPoint );
         conPointArr = MUSICAL_PROGRAM_GetConditionPointArr( evWork->progWork );
+        npcArr = MUSICAL_PROGRAM_GetNpcArr( evWork->progWork );
       }
-      MUS_COMM_StartSendProgram_Data( evWork->scriptWork->commWork , conPointArr );
+      MUS_COMM_StartSendProgram_Data( evWork->scriptWork->commWork , conPointArr , npcArr );
       evWork->state = MES_ENTER_WAITROOM_FIRST_BEF_COMM2;
     }
     break;
@@ -1213,6 +1215,8 @@ void MUSICAL_EVENT_SetPosCharaName_Wordset( MUSICAL_EVENT_WORK *evWork , const u
 void MUSICAL_EVENT_CalcProgramData( MUSICAL_EVENT_WORK *evWork )
 {
   u32 conPointArr = MUS_COMM_GetConditionPointArr( evWork->commWork );
+  u32 npcArr = MUS_COMM_GetNpcArr( evWork->commWork );
   evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData , 0 );
   MUSICAL_PROGRAM_SetConditionPointArr( evWork->progWork , conPointArr );
+  MUSICAL_PROGRAM_SetNpcArr( evWork->progWork , npcArr );
 }
