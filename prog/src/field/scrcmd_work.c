@@ -473,10 +473,6 @@ void SCRCMD_WORK_InitMenuWork( SCRCMD_WORK *work,
   
   menuWork->listData = FLDMENUFUNC_CreateListData(
       SCRCMD_MENU_LIST_MAX, work->heapID );
-
-  OS_TFPrintf( 3, "sizeof(SCRCMD_MENU_WORK) = %d\n", sizeof(SCRCMD_MENU_WORK) );
-  OS_TFPrintf( 3, "sizeof(STRBUF*) = %d\n", sizeof(STRBUF*) );
-  OS_TFPrintf( 3, "sizeof(void*) = %d\n", sizeof(void*) );
 }
 
 //--------------------------------------------------------------
