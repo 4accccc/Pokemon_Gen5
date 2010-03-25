@@ -193,6 +193,10 @@ static void WRITEBLOCK_Control_SetOneBlock( FLDMAPPER* g3Dmapper, FLD_G3D_MAP* g
 static BOOL WRITEBLOCK_Control_IsWriteBlockIndex( const FLDMAPPER* g3Dmapper, u32 index, FLDMAPPER_DRAW_TYPE draw_type );
 
 
+// ブロックインデックスの再計算　ツール
+static inline u32 MAPPER_ResizeBlockIndx( u32 block_index, u32 old_mapsizx, u32 new_mapsizx );
+
+
 //------------------------------------------------------------------
 /**
  * @brief	セットアップ
@@ -473,7 +477,7 @@ BOOL FLDMAPPER_Connect( FIELDMAP_WORK* fieldmap, FLDMAPPER* g3Dmapper, const MAP
   blocks = GFL_HEAP_AllocMemoryLo( 
                  g3Dmapper->heapID, sizeof(FLDMAPPER_MAPDATA) * totalSize );
 
-  // 自身のデータをコピー
+  // ブロックデータに追加するMapMatrixのブロックデータを追加
   for( iz=0; iz<g3Dmapper->sizez; iz++ )
   {
     for( ix=0; ix<g3Dmapper->sizex; ix++ )
@@ -489,19 +493,34 @@ BOOL FLDMAPPER_Connect( FIELDMAP_WORK* fieldmap, FLDMAPPER* g3Dmapper, const MAP
     for( ix=0; ix<add_sizex; ix++ )
     {
       int old_index = iz * add_sizex + ix;
-      int new_index = iz * sizex + g3Dmapper->sizex + ix;
+      int new_index = (iz * sizex) + g3Dmapper->sizex + ix;
       blocks[ new_index ].datID = add_blocks[ old_index ];
     }
   }
+
 
   // 新マップデータをセット
   for( i=0; i<totalSize; i++ )
   {
     ( (FLDMAPPER_MAPDATA*)g3Dmapper->blocks )[i] = blocks[i];
   }
-  g3Dmapper->sizex     = sizex;
-  g3Dmapper->sizez     = sizez; 
-  g3Dmapper->totalSize = totalSize; 
+
+  //保持してるブロック情報のインデックスを再計算
+  {
+    g3Dmapper->nowBlockIdx = MAPPER_ResizeBlockIndx( g3Dmapper->nowBlockIdx, g3Dmapper->sizex, sizex );
+    for( i=0; i<g3Dmapper->blockNum; i++ ){
+      if( BLOCKINFO_IsInBlockData( &g3Dmapper->blockWk[i].blockInfo ) ){
+        g3Dmapper->blockWk[i].blockInfo.blockIdx = MAPPER_ResizeBlockIndx( g3Dmapper->blockWk[i].blockInfo.blockIdx, g3Dmapper->sizex, sizex );
+
+      }
+    }
+      
+    // 最新の大きさに変更
+    g3Dmapper->sizex     = sizex;
+    g3Dmapper->sizez     = sizez; 
+    g3Dmapper->totalSize = totalSize; 
+  }
+
 
   // 大元のゲームデータとも整合性をとる
 #if 1
@@ -2124,6 +2143,24 @@ static BOOL WRITEBLOCK_Control_IsWriteBlockIndex( const FLDMAPPER* g3Dmapper, u3
     }
   }
   return FALSE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ブロックインデックスの再計算
+ *
+ *	@param	block_index     今のブロックインデックス
+ *	@param	old_mapsizx     Resize前　マップマトリックスブロックX方向総数
+ *	@param	new_mapsizx     Resize後　マップマトリックスブロックX方向総数
+ *
+ *	@return 変更後のブロックインデックス
+ */
+//-----------------------------------------------------------------------------
+static inline u32 MAPPER_ResizeBlockIndx( u32 block_index, u32 old_mapsizx, u32 new_mapsizx )
+{
+  return ((block_index / old_mapsizx) * new_mapsizx) + (block_index % old_mapsizx);
+
 }
 
 
