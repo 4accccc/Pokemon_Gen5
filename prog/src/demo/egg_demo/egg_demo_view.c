@@ -36,16 +36,15 @@
  *  定数定義
  */
 //=============================================================================
-// BGフレーム
-#define BG_FRAME_M_POKEMON        (GFL_BG_FRAME0_M)            // プライオリティ1
-
 // ステップ
 typedef enum
 {
   STEP_EGG_START,       // タマゴ開始待ち中→デモ
   STEP_EGG_DEMO,        // タマゴデモ
+  STEP_EGG_WHITE,       // タマゴ白へ
   STEP_EGG_END,         // タマゴ終了中
   STEP_MON_READY,       // ポケモン準備中
+  STEP_MON_WHITE,       // ポケモン白で待ち
   STEP_MON_START,       // ポケモン開始待ち中→鳴く
   STEP_MON_CRY,         // ポケモン鳴き終わるのを待ち中→終了する
   STEP_MON_END,         // ポケモン終了中
@@ -53,19 +52,81 @@ typedef enum
 STEP;
 
 // パーティクル対応
-#define POKE_TEX_ADRS_FOR_PARTICLE (0x30000)
+#define POKE_TEX_ADRS_FOR_PARTICLE  (0x30000)
 
 // ポケモン
 #define POKE_SCALE       (16.0f)
 #define POKE_SIZE_MAX    (96.0f)
 
 // パーティクルのフレームとポケモンアニメーションのフレームを連携させる
-#define PARTICLE_BURST_FRAME   (200)  // 0～201フレームまであり、202フレームからなし。
-#define PARTICLE_LAST_FRAME    (210)  // case STEP_EGG_DEMO: work->wait_count++; で足し込んだ後のwait_countの値が
-                                      // 202のときは既にタマゴが消えていないといけない。
-                                      // データの24フレーム目からヒビの絵になるとき、
-                                      // case STEP_EGG_DEMO: work->wait_count++; で足し込んだ後のwait_countの値が
-                                      // 24だったら、その時点で画面に表示されている絵はヒビの絵になっている。
+#define PARTICLE_BURST_FRAME   (201)  // ひびが入っている絵の最終フレーム
+
+// 3D
+// 3D個別
+static const GFL_G3D_UTIL_RES rear_res_tbl[] =
+{
+  { ARCID_EGG_DEMO, NARC_egg_demo_particle_demo_sinka02_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_EGG_DEMO, NARC_egg_demo_particle_demo_sinka02_nsbta, GFL_G3D_UTIL_RESARC },
+  { ARCID_EGG_DEMO, NARC_egg_demo_particle_demo_sinka02_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_EGG_DEMO, NARC_egg_demo_particle_demo_sinka02_nsbma, GFL_G3D_UTIL_RESARC },
+};
+enum
+{
+  REAR_ANM_T,
+  REAR_ANM_C,
+  REAR_ANM_M,
+  REAR_ANM_MAX,
+};
+static const GFL_G3D_UTIL_ANM rear_anm_tbl[REAR_ANM_MAX] = 
+{
+  { 1, 0 },
+  { 2, 0 },
+  { 3, 0 },
+};
+static const GFL_G3D_UTIL_OBJ rear_obj_tbl[] = 
+{
+  {
+    0,                         // モデルリソースID
+    0,                         // モデルデータID(リソース内部INDEX)
+    0,                         // テクスチャリソースID
+    rear_anm_tbl,               // アニメテーブル(複数指定のため)
+    NELEMS(rear_anm_tbl),       // アニメリソース数
+  },
+};
+#define REAR_COLOR_FRAME  (0)    // REAR_COLOR_FRAMEで普通の色になる
+#define REAR_WHITE_FRAME  (100)  // REAR_WHITE_FRAMEで真っ白になる
+// 3D全体
+#define THREE_RES_MAX              (4)   // 一度に読み込む総数
+#define THREE_OBJ_MAX              (1)   // 一度に読み込む総数
+// セットアップ番号
+enum
+{
+  THREE_SETUP_IDX_REAR,
+  THREE_SETUP_IDX_MAX
+};
+// セットアップデータ
+static const GFL_G3D_UTIL_SETUP three_setup_tbl[THREE_SETUP_IDX_MAX] =
+{
+  { rear_res_tbl,   NELEMS(rear_res_tbl),   rear_obj_tbl,   NELEMS(rear_obj_tbl)   },
+};
+// ユーザ(このソースのプログラムを書いた人)が決めたオブジェクト番号
+enum
+{
+  THREE_USER_OBJ_IDX_REAR,
+  THREE_USER_OBJ_IDX_MAX,
+};
+// 3Dのアニメを1フレームでどれだけ進めるか
+#define THREE_ADD (FX32_ONE)  // 60fps
+// REARを白く飛ばすアニメの状態
+typedef enum
+{
+  REAR_WHITE_ANIME_STATE_COLOR,
+  REAR_WHITE_ANIME_STATE_COLOR_TO_WHITE,
+  REAR_WHITE_ANIME_STATE_WHITE,
+  REAR_WHITE_ANIME_STATE_WHITE_TO_COLOR,
+}
+REAR_WHITE_ANIME_STATE;
+
 
 //=============================================================================
 /**
@@ -77,8 +138,7 @@ STEP;
 //=====================================
 typedef enum
 {
-  PARTICLE_SPA_FILE_0,      // ARCID_EGG_DEMO    // NARC___particle_egg_demo_particle_egg_demo_normal_spa
-  PARTICLE_SPA_FILE_1,      // ARCID_EGG_DEMO    // NARC___particle_egg_demo_particle_egg_demo_special_spa
+  PARTICLE_SPA_FILE_0,      // ARCID_EGG_DEMO    // NARC_egg_demo_particle_egg_demo_spa
   PARTICLE_SPA_FILE_MAX
 }
 PARTICLE_SPA_FILE;
@@ -92,8 +152,7 @@ PARTICLE_ARC;
 
 static const PARTICLE_ARC particle_arc[PARTICLE_SPA_FILE_MAX] =
 {
-  { ARCID_EGG_DEMO, NARC___particle_egg_demo_particle_egg_demo_normal_spa  },
-  { ARCID_EGG_DEMO, NARC___particle_egg_demo_particle_egg_demo_special_spa },
+  { ARCID_EGG_DEMO, NARC_egg_demo_particle_egg_demo_spa  },
 };
 
 //-------------------------------------
@@ -130,37 +189,12 @@ PARTICLE_MANAGER;
 //-------------------------------------
 /// パーティクル再生データ
 //=====================================
-#if 0
 static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
 {
-  {    0,     PARTICLE_SPA_FILE_0,        0 },  // タマゴの小さな殻が少し飛ぶ
-  {   80,     PARTICLE_SPA_FILE_0,        1 },  // タマゴの小さな殻が大きく飛ぶ
-  {  160,     PARTICLE_SPA_FILE_0,        2 },  // タマゴの大きな殻が放射状に激しく飛ぶ
-  {  240,     PARTICLE_SPA_FILE_0,        3 },  // 黄色の星キラキラ
-  {  320,     PARTICLE_SPA_FILE_1,        0 },  // 白紫の大きな円
-  {  400,     PARTICLE_SPA_FILE_1,        1 },  // 小さな白玉がたくさん放射状に出る
-  {  480,     PARTICLE_SPA_FILE_1,        2 },  // 白輪が広がる
-  {  560,     PARTICLE_SPA_FILE_1,        3 },  // 奇妙な色のタマゴ
+  {    PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        DEMO_EGG01 },
+  {    PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        DEMO_EGG02 },
+  {    PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        DEMO_EGG03 },
 };
-#elif 0
-static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
-{
-  {                     120,     PARTICLE_SPA_FILE_0,        0 },  // タマゴの小さな殻が少し飛ぶ
-  {                     210,     PARTICLE_SPA_FILE_0,        1 },  // タマゴの小さな殻が大きく飛ぶ
-  {    PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        2 },  // タマゴの大きな殻が放射状に激しく飛ぶ
-  {  PARTICLE_LAST_FRAME -5,     PARTICLE_SPA_FILE_0,        3 },  // 黄色の星キラキラ
-  {     PARTICLE_LAST_FRAME,     PARTICLE_SPA_FILE_0,        3 },  // 黄色の星キラキラ
-};
-#else
-static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
-{
-  {                   78 -3,     PARTICLE_SPA_FILE_0,        0 },  // タマゴの小さな殻が少し飛ぶ
-  {                  132 -3,     PARTICLE_SPA_FILE_0,        1 },  // タマゴの小さな殻が大きく飛ぶ
-  { PARTICLE_BURST_FRAME -1,     PARTICLE_SPA_FILE_0,        2 },  // タマゴの大きな殻が放射状に激しく飛ぶ
-  {  PARTICLE_LAST_FRAME -5,     PARTICLE_SPA_FILE_0,        3 },  // 黄色の星キラキラ
-  {     PARTICLE_LAST_FRAME,     PARTICLE_SPA_FILE_0,        3 },  // 黄色の星キラキラ
-};
-#endif
 
 //   0 ヒビなし
 //  24 ヒビ小開始
@@ -169,6 +203,37 @@ static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
 //  82 ヒビ中拡大
 // 132 ヒビ大開始
 // 202 = 0
+
+//-------------------------------------
+/// 3Dオブジェクトのプロパティ
+//=====================================
+typedef struct
+{
+  u16                         idx;        // GFL_G3D_UTILが割り振る番号
+  GFL_G3D_OBJSTATUS           objstatus;
+  BOOL                        draw;       // TRUEのとき描画する
+}
+THREE_OBJ_PROPERTY;
+static THREE_OBJ_PROPERTY* ThreeObjPropertyCreateArray( HEAPID heap_id, u16 num );
+static void ThreeObjPropertyDeleteArray( THREE_OBJ_PROPERTY* prop );
+static THREE_OBJ_PROPERTY* ThreeObjPropertyCreateArray( HEAPID heap_id, u16 num )
+{
+  u16 i;
+  THREE_OBJ_PROPERTY* prop_array = GFL_HEAP_AllocClearMemory( heap_id, sizeof(THREE_OBJ_PROPERTY) * num );
+  // 0以外の値で初期化するものについて初期化を行う 
+  for( i=0; i<num; i++ )
+  {
+    THREE_OBJ_PROPERTY* prop = &(prop_array[i]);
+    VEC_Set( &(prop->objstatus.trans), 0, 0, 0 );
+    VEC_Set( &(prop->objstatus.scale), FX32_ONE, FX32_ONE, FX32_ONE );
+    MTX_Identity33( &(prop->objstatus.rotate) );
+  }
+  return prop_array;
+}
+static void ThreeObjPropertyDeleteArray( THREE_OBJ_PROPERTY* prop_array )
+{
+  GFL_HEAP_FreeMemory( prop_array );
+}
 
 
 //-------------------------------------
@@ -188,13 +253,28 @@ struct _EGG_DEMO_VIEW_WORK
   BOOL                     b_white;
   u32                      voicePlayerIdx;
   u32                      wait_count;
+  
+  // VBlank中TCB
+  GFL_TCB*                    vblank_tcb;
 
   // MCSS
   MCSS_SYS_WORK*           mcss_sys_wk;
   MCSS_WORK*               mcss_wk;
+  BOOL                     mcss_anime_end;
 
   // パーティクル
   PARTICLE_MANAGER*        particle_mgr;
+
+  // 3D
+  GFL_G3D_UTIL*            three_util;
+  u16                      three_unit_idx[THREE_SETUP_IDX_MAX];             // GFL_G3D_UTILが割り振る番号        // 添え字はTHREE_SETUP_IDX_(THREE_SETUP_IDX_MAX)
+  u16                      three_obj_prop_tbl_idx[THREE_USER_OBJ_IDX_MAX];  // three_obj_prop_tblのインデックス  // 添え字はTHREE_USER_OBJ_IDX_(THREE_USER_OBJ_IDX_MAX)
+  u16                      three_obj_prop_num;
+  THREE_OBJ_PROPERTY*      three_obj_prop_tbl;
+  // 3Dフレーム
+  u32                      three_frame;
+  REAR_WHITE_ANIME_STATE   rear_white_anime_state;
+  int                      rear_white_anime_frame;
 };
 
 
@@ -203,6 +283,9 @@ struct _EGG_DEMO_VIEW_WORK
 *  ローカル関数のプロトタイプ宣言
 */
 //=============================================================================
+// VBlank関数
+static void Egg_Demo_View_VBlankFunc( GFL_TCB* tcb, void* wk );
+
 //-------------------------------------
 /// MCSS
 //=====================================
@@ -211,7 +294,19 @@ static void Egg_Demo_View_McssSysExit( EGG_DEMO_VIEW_WORK* work );
 static void Egg_Demo_View_McssInit( EGG_DEMO_VIEW_WORK* work );
 static void Egg_Demo_View_McssExit( EGG_DEMO_VIEW_WORK* work );
 static void Egg_Demo_View_McssVanish( EGG_DEMO_VIEW_WORK* work );
-static void Egg_Demo_View_McssSetAnimeIndex( EGG_DEMO_VIEW_WORK* work, int index );
+static void Egg_Demo_View_McssSetAnimeIndex( EGG_DEMO_VIEW_WORK* work, int index, BOOL b_last_stop );
+static void Egg_Demo_View_McssCallBackFunctor( u32 data, fx32 currentFrame );
+
+//-------------------------------------
+/// タマゴ
+//=====================================
+static void Egg_Demo_View_EggStopWhite( EGG_DEMO_VIEW_WORK* work );
+static BOOL Egg_Demo_View_EggIsWhite( EGG_DEMO_VIEW_WORK* work );
+
+//-------------------------------------
+/// ポケモン
+//=====================================
+void Egg_Demo_View_MonColor( EGG_DEMO_VIEW_WORK* work );
 
 //-------------------------------------
 /// パーティクル
@@ -223,6 +318,21 @@ static void Particle_Draw( PARTICLE_MANAGER* mgr );
 static void Particle_Start( PARTICLE_MANAGER* mgr );
 static void Particle_Stop( PARTICLE_MANAGER* mgr, s32 stop_count );
 
+//-------------------------------------
+/// 3D
+//=====================================
+// 3D全体
+static void Egg_Demo_View_ThreeInit( EGG_DEMO_VIEW_WORK* work );
+static void Egg_Demo_View_ThreeExit( EGG_DEMO_VIEW_WORK* work );
+static void Egg_Demo_View_ThreeDraw( EGG_DEMO_VIEW_WORK* work );  // 3D描画(GRAPHIC_3D_StartDrawとPSEL_GRAPHIC_3D_EndDrawの間で呼ぶ)
+// 3D個別
+static void Egg_Demo_View_ThreeRearInit( EGG_DEMO_VIEW_WORK* work );
+static void Egg_Demo_View_ThreeRearExit( EGG_DEMO_VIEW_WORK* work );
+static void Egg_Demo_View_ThreeRearMain( EGG_DEMO_VIEW_WORK* work );
+static void Egg_Demo_View_ThreeRearStartColorToWhite( EGG_DEMO_VIEW_WORK* work );
+static BOOL Egg_Demo_View_ThreeRearIsWhite( EGG_DEMO_VIEW_WORK* work );
+static void Egg_Demo_View_ThreeRearStartWhiteToColor( EGG_DEMO_VIEW_WORK* work );
+static BOOL Egg_Demo_View_ThreeRearIsColor( EGG_DEMO_VIEW_WORK* work );
 
 //=============================================================================
 /**
@@ -268,6 +378,11 @@ EGG_DEMO_VIEW_WORK* EGG_DEMO_VIEW_Init(
     work->voicePlayerIdx   = 0;
     work->wait_count       = 0;
   }
+
+  // VBlank中TCB
+  {
+    work->vblank_tcb = GFUser_VIntr_CreateTCB( Egg_Demo_View_VBlankFunc, work, 1 );
+  }
   
   // MCSS
   {
@@ -277,6 +392,10 @@ EGG_DEMO_VIEW_WORK* EGG_DEMO_VIEW_Init(
 
   // パーティクル
   work->particle_mgr = Particle_Init( work->heap_id );
+
+  // 3D
+  Egg_Demo_View_ThreeInit( work );
+  Egg_Demo_View_ThreeRearInit( work );
 
   return work;
 }
@@ -292,6 +411,10 @@ EGG_DEMO_VIEW_WORK* EGG_DEMO_VIEW_Init(
 //-----------------------------------------------------------------------------
 void EGG_DEMO_VIEW_Exit( EGG_DEMO_VIEW_WORK* work )
 {
+  // 3D
+  Egg_Demo_View_ThreeRearExit( work );
+  Egg_Demo_View_ThreeExit( work );
+
   // パーティクル
   Particle_Exit( work->particle_mgr );
 
@@ -300,6 +423,9 @@ void EGG_DEMO_VIEW_Exit( EGG_DEMO_VIEW_WORK* work )
     Egg_Demo_View_McssExit( work );
     Egg_Demo_View_McssSysExit( work );
   }
+
+  // VBlank中TCB
+  GFL_TCB_DeleteTask( work->vblank_tcb );
 
   // ワーク
   {
@@ -326,11 +452,10 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
       {
         // 次へ
         work->step = STEP_EGG_DEMO;
-        
         work->wait_count = 0;
 
         // アニメーション
-        Egg_Demo_View_McssSetAnimeIndex( work, 1 );
+        Egg_Demo_View_McssSetAnimeIndex( work, 1, TRUE );
         
         // パーティクル
         Particle_Start( work->particle_mgr );
@@ -340,12 +465,24 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
   case STEP_EGG_DEMO:
     {
       work->wait_count++;
-      if( work->wait_count == PARTICLE_BURST_FRAME +1 )
-        Egg_Demo_View_McssVanish( work );
-      if( work->wait_count == PARTICLE_LAST_FRAME +20 )
+      if( work->wait_count == PARTICLE_BURST_FRAME )
       {
-        work->b_white = TRUE;
+        Egg_Demo_View_EggStopWhite( work );
+        Egg_Demo_View_ThreeRearStartColorToWhite( work );
 
+        // 次へ
+        work->step = STEP_EGG_WHITE;
+      }
+    }
+    break;
+  case STEP_EGG_WHITE:
+    {
+      if(    Egg_Demo_View_EggIsWhite( work )
+          && Egg_Demo_View_ThreeRearIsWhite( work ) )
+      {
+        Egg_Demo_View_McssVanish( work );
+        work->b_white = TRUE;
+        
         // 次へ
         work->step = STEP_EGG_END;
       }
@@ -358,6 +495,20 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
     break;
   case STEP_MON_READY:
     {
+    }
+    break;
+  case STEP_MON_WHITE:
+    {
+      work->wait_count++;
+      if( work->wait_count >= 120 )
+      {
+        Egg_Demo_View_MonColor( work );
+        Egg_Demo_View_ThreeRearStartWhiteToColor( work );
+
+        // 次へ
+        work->step = STEP_MON_START;
+        work->wait_count = 0;
+      }
     }
     break;
   case STEP_MON_START:
@@ -396,6 +547,9 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
 
   // パーティクル
   Particle_Main( work->particle_mgr );
+
+  // 3D
+  Egg_Demo_View_ThreeRearMain( work );
 }
 
 //-----------------------------------------------------------------------------
@@ -416,6 +570,16 @@ void EGG_DEMO_VIEW_Draw( EGG_DEMO_VIEW_WORK* work )
 
   // パーティクル
   Particle_Draw( work->particle_mgr );
+
+  // 3D
+  Egg_Demo_View_ThreeDraw( work );
+
+  //メモ
+  //Egg_Demo_View_ThreeDraw( work );
+  //MCSS_Draw( work->mcss_sys_wk );
+  //Particle_Draw( work->particle_mgr );
+  //の順に描画したら、
+  //ポケモンMCSSが、REAR3Dのスクロールアニメにつられてスクロールしてしまっていた。
 }
 
 //-----------------------------------------------------------------------------
@@ -434,11 +598,11 @@ void EGG_DEMO_VIEW_Start( EGG_DEMO_VIEW_WORK* work )
 
 //-----------------------------------------------------------------------------
 /**
- *  @brief         白く飛ばす演出のためのパレットフェードをして欲しいか(1フレームしかTRUEにならない)
+ *  @brief         白く飛んでいるか(1フレームしかTRUEにならない)
  *
  *  @param[in,out] work  EGG_DEMO_VIEW_Initで生成したワーク
  *
- *  @retval        パレットフェードをして欲しい1フレームにおいてだけTRUEを返す
+ *  @retval        白く飛んだ1フレームにおいてだけTRUEを返す
  */
 //-----------------------------------------------------------------------------
 BOOL EGG_DEMO_VIEW_White( EGG_DEMO_VIEW_WORK* work )
@@ -463,6 +627,7 @@ void EGG_DEMO_VIEW_Hatch( EGG_DEMO_VIEW_WORK* work, const POKEMON_PARAM* pp )
   // ポケモン開始
   work->pp = pp;
   Egg_Demo_View_McssInit( work );
+  Egg_Demo_View_McssSetAnimeIndex( work, 0, FALSE );
 
   // 白にする
   MCSS_SetVanishFlag( work->mcss_wk );
@@ -472,8 +637,6 @@ void EGG_DEMO_VIEW_Hatch( EGG_DEMO_VIEW_WORK* work, const POKEMON_PARAM* pp )
   //MCSS_SetPaletteFade( work->mcss_wk, 16, 0, 1, 0x7fff );
 
   work->step = STEP_MON_READY;
-  
-  work->wait_count = 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -502,24 +665,8 @@ BOOL EGG_DEMO_VIEW_IsReady( EGG_DEMO_VIEW_WORK* work )
 //-----------------------------------------------------------------------------
 void EGG_DEMO_VIEW_MonStart( EGG_DEMO_VIEW_WORK* work )
 {
-  // 白→普通
-  MCSS_ResetVanishFlag( work->mcss_wk );
-  MCSS_SetPaletteFade( work->mcss_wk, 16, 0, 1, 0x7fff );
-
-  work->step = STEP_MON_START;
-  
+  work->step = STEP_MON_WHITE;
   work->wait_count = 0;
-
-#ifdef DEBUG_KAWADA
-    {
-      OS_Printf( "EGG_DEMO_VIEW : MCellAnmNum=%d, StopCellAnms=%d\n",
-          MCSS_GetMCellAnmNum(work->mcss_wk),
-          MCSS_GetStopCellAnms(work->mcss_wk) );
-      if( MCSS_GetStopCellAnms(work->mcss_wk) > 0 )
-          OS_Printf( "EGG_DEMO_VIEW : StopNode=%d\n", MCSS_GetStopNode(work->mcss_wk, 0) );
-    }
-#endif
-
 }
 
 //-----------------------------------------------------------------------------
@@ -545,6 +692,14 @@ BOOL EGG_DEMO_VIEW_IsEnd( EGG_DEMO_VIEW_WORK* work )
 */
 //=============================================================================
 //-------------------------------------
+/// VBlank関数
+//=====================================
+static void Egg_Demo_View_VBlankFunc( GFL_TCB* tcb, void* wk )
+{
+  EGG_DEMO_VIEW_WORK* work = (EGG_DEMO_VIEW_WORK*)wk;
+}
+
+//-------------------------------------
 /// MCSSシステム初期化処理
 //=====================================
 static void Egg_Demo_View_McssSysInit( EGG_DEMO_VIEW_WORK* work )
@@ -566,9 +721,8 @@ static void Egg_Demo_View_McssSysExit( EGG_DEMO_VIEW_WORK* work )
 static void Egg_Demo_View_McssInit( EGG_DEMO_VIEW_WORK* work )
 {
   {
-    MCSS_ADD_WORK add_wk;
-    MCSS_TOOL_MakeMAWPP( work->pp, &add_wk, MCSS_DIR_FRONT );
-    work->mcss_wk = MCSS_Add( work->mcss_sys_wk, 0, 0, 0, &add_wk );
+    work->mcss_wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->pp, MCSS_DIR_FRONT,
+                        0, 0, FX_F32_TO_FX32(-800.0f) );//-800.0f) );
 
 #ifdef DEBUG_KAWADA
     {
@@ -617,9 +771,63 @@ static void Egg_Demo_View_McssVanish( EGG_DEMO_VIEW_WORK* work )
 //-------------------------------------
 /// MCSSポケモンアニメーション設定
 //=====================================
-static void Egg_Demo_View_McssSetAnimeIndex( EGG_DEMO_VIEW_WORK* work, int index )
+static void Egg_Demo_View_McssSetAnimeIndex( EGG_DEMO_VIEW_WORK* work, int index, BOOL b_last_stop )
 {
+  NNSG2dMultiCellAnimation* mcss_anim_ctrl;
+
   MCSS_SetAnimeIndex( work->mcss_wk, index );
+  mcss_anim_ctrl = MCSS_GetAnimCtrl( work->mcss_wk );
+  NNS_G2dRestartMCAnimation( mcss_anim_ctrl );
+  MCSS_ResetAnmStopFlag( work->mcss_wk );
+
+  if( b_last_stop )  // 最終フレームでコールバックを呼ぶ場合
+  {
+    NNS_G2dSetAnimCtrlCallBackFunctor(
+        NNS_G2dGetMCAnimAnimCtrl(mcss_anim_ctrl),
+        NNS_G2D_ANMCALLBACKTYPE_LAST_FRM,
+        (u32)work,
+        Egg_Demo_View_McssCallBackFunctor );
+    work->mcss_anime_end = FALSE;
+  }
+}
+//-------------------------------------
+/// MCSSポケモン最終フレームで呼ばれるコールバック
+//=====================================
+static void Egg_Demo_View_McssCallBackFunctor( u32 data, fx32 currentFrame )
+{
+  EGG_DEMO_VIEW_WORK* work = (EGG_DEMO_VIEW_WORK*)data;
+
+  MCSS_SetAnmStopFlag( work->mcss_wk );  // このタイミングだと0フレームに戻ったところで止まるので、1フレーム遅くて使い物にならない
+  work->mcss_anime_end = TRUE;
+}
+
+//-------------------------------------
+/// タマゴのアニメを止め、白くする
+//=====================================
+static void Egg_Demo_View_EggStopWhite( EGG_DEMO_VIEW_WORK* work )
+{
+  // アニメを止める
+  MCSS_SetAnmStopFlag( work->mcss_wk );
+  // 普通→白
+  MCSS_SetPaletteFade( work->mcss_wk, 0, 16, 0, 0x7fff );
+}
+//-------------------------------------
+/// タマゴが白くなっていたらtrue
+//=====================================
+static BOOL Egg_Demo_View_EggIsWhite( EGG_DEMO_VIEW_WORK* work )
+{
+  return !MCSS_CheckExecutePaletteFade( work->mcss_wk );
+}
+
+//-------------------------------------
+/// ポケモンを表示し、白から普通の色にする、
+//=====================================
+void Egg_Demo_View_MonColor( EGG_DEMO_VIEW_WORK* work )
+{
+  // 表示
+  MCSS_ResetVanishFlag( work->mcss_wk );
+  // 白→普通
+  MCSS_SetPaletteFade( work->mcss_wk, 16, 0, 1, 0x7fff );
 }
 
 //-------------------------------------
@@ -665,8 +873,8 @@ static PARTICLE_MANAGER* Particle_Init( HEAPID heap_id )
     void* arc_res;
 
     mgr->spa_set[i].ptc = GFL_PTC_Create( mgr->spa_set[i].wk, sizeof(mgr->spa_set[i].wk), TRUE, heap_id );
-		GFL_PTC_PersonalCameraDelete( mgr->spa_set[i].ptc );
-		GFL_PTC_PersonalCameraCreate( mgr->spa_set[i].ptc, &proj, DEFAULT_PERSP_WAY, &cam_eye, &cam_up, &cam_at, heap_id );
+		//GFL_PTC_PersonalCameraDelete( mgr->spa_set[i].ptc );
+		//GFL_PTC_PersonalCameraCreate( mgr->spa_set[i].ptc, &proj, DEFAULT_PERSP_WAY, &cam_eye, &cam_up, &cam_at, heap_id );
     arc_res = GFL_PTC_LoadArcResource( particle_arc[i].arc, particle_arc[i].idx, heap_id );
     mgr->spa_set[i].res_num = GFL_PTC_GetResNum( arc_res );
     GFL_PTC_SetResource( mgr->spa_set[i].ptc, arc_res, TRUE, NULL );
@@ -740,5 +948,202 @@ static void Particle_Stop( PARTICLE_MANAGER* mgr, s32 stop_count )
 {
   mgr->play = FALSE;
   mgr->stop_count = stop_count;
+}
+
+//-------------------------------------
+/// 3D
+//=====================================
+// 3D全体
+static void Egg_Demo_View_ThreeInit( EGG_DEMO_VIEW_WORK* work )
+{
+  // 3D管理ユーティリティーのセットアップ
+  work->three_util = GFL_G3D_UTIL_Create( THREE_RES_MAX, THREE_OBJ_MAX, work->heap_id );
+
+  // NULL、ゼロ初期化
+  work->three_obj_prop_num = 0;
+}
+static void Egg_Demo_View_ThreeExit( EGG_DEMO_VIEW_WORK* work )
+{
+  // 3D管理ユーティリティーの破棄
+  GFL_G3D_UTIL_Delete( work->three_util );
+}
+static void Egg_Demo_View_ThreeDraw( EGG_DEMO_VIEW_WORK* work )  // 3D描画(GRAPHIC_3D_StartDrawとPSEL_GRAPHIC_3D_EndDrawの間で呼ぶ)
+{
+  u16 i;
+  for( i=0; i<work->three_obj_prop_num; i++ )
+  {
+    THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[i]);
+    if( prop->draw )
+    {
+      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
+      GFL_G3D_DRAW_DrawObject( obj, &(prop->objstatus) );
+    }
+  }
+}
+// 3D個別
+static void Egg_Demo_View_ThreeRearInit( EGG_DEMO_VIEW_WORK* work )
+{
+  // ユニット追加
+  {
+    u16 i = THREE_SETUP_IDX_REAR;
+    {
+      work->three_unit_idx[i] = GFL_G3D_UTIL_AddUnit( work->three_util, &three_setup_tbl[i] );
+    }
+  }
+
+  // オブジェクト全体
+  {
+    work->three_obj_prop_num = 1;
+    work->three_obj_prop_tbl = ThreeObjPropertyCreateArray( work->heap_id, work->three_obj_prop_num );
+  }
+
+  // オブジェクト
+  {
+    u16 h = 0;
+
+    u16 i = THREE_SETUP_IDX_REAR;
+    {
+      u16 head_obj_idx = GFL_G3D_UTIL_GetUnitObjIdx( work->three_util, work->three_unit_idx[i] );
+      u16 head_user_obj_idx = THREE_USER_OBJ_IDX_REAR;
+      u16 j = 0;
+      {
+        THREE_OBJ_PROPERTY* prop;
+        work->three_obj_prop_tbl_idx[head_user_obj_idx +j] = h;
+        prop = &(work->three_obj_prop_tbl[h]);
+        prop->idx  = head_obj_idx +j;
+        VEC_Set( &(prop->objstatus.trans), 0, FX_F32_TO_FX32(30.0f), 0 );
+        prop->draw = TRUE;
+        h++;
+      }
+    }
+  }
+
+  // アニメーション有効化
+  {
+    u16 i;
+    for( i=0; i<work->three_obj_prop_num; i++ )
+    {
+      THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[i]);
+      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
+      //u16 anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+      //u16 j;
+      //for( j=0; j<anime_count; j++ )
+      //{
+      //  GFL_G3D_OBJECT_EnableAnime( obj, j );
+      //}
+      GFL_G3D_OBJECT_EnableAnime( obj, REAR_ANM_T );
+    }
+  }
+
+  // フレーム
+  // プログラムでは開始フレームを0として処理する。デザイナーさんの3Dオーサリングツール上でも0フレームからスタートしているようだ。
+  work->three_frame = 0;
+
+  // REARを白く飛ばすアニメの状態
+  {
+    THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[ work->three_obj_prop_tbl_idx[THREE_USER_OBJ_IDX_REAR] ]);
+    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
+    work->rear_white_anime_state = REAR_WHITE_ANIME_STATE_COLOR;
+    work->rear_white_anime_frame = REAR_COLOR_FRAME;
+    GFL_G3D_OBJECT_EnableAnime( obj, REAR_ANM_C );
+    GFL_G3D_OBJECT_EnableAnime( obj, REAR_ANM_M );
+	  GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_C, &work->rear_white_anime_frame );
+	  GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_M, &work->rear_white_anime_frame );
+  }
+}
+static void Egg_Demo_View_ThreeRearExit( EGG_DEMO_VIEW_WORK* work )
+{
+  // ユニット破棄
+  {
+    u16 i = THREE_SETUP_IDX_REAR;
+    {
+      GFL_G3D_UTIL_DelUnit( work->three_util, work->three_unit_idx[i] );
+    }
+  }
+
+  // オブジェクト全体
+  {
+    ThreeObjPropertyDeleteArray( work->three_obj_prop_tbl );
+    work->three_obj_prop_num = 0;
+  }
+}
+static void Egg_Demo_View_ThreeRearMain( EGG_DEMO_VIEW_WORK* work )
+{
+  const fx32 anime_speed = THREE_ADD;  // 増加分（FX32_ONEで１フレーム進める）
+  
+  // アニメーション更新
+  {
+    u16 i;
+    for( i=0; i<work->three_obj_prop_num; i++ )
+    {
+      THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[i]);
+      GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
+      //u16 anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
+      //u16 j;
+      //for( j=0; j<anime_count; j++ )
+      //{
+      //  GFL_G3D_OBJECT_LoopAnimeFrame( obj, j, anime_speed );
+      //}
+      GFL_G3D_OBJECT_LoopAnimeFrame( obj, REAR_ANM_T, anime_speed );
+    }
+  }
+  
+  // フレーム
+  work->three_frame++;
+
+  // REARを白く飛ばすアニメの状態
+  {
+    THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[ work->three_obj_prop_tbl_idx[THREE_USER_OBJ_IDX_REAR] ]);
+    GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
+    BOOL b_set_anime = FALSE;
+    fx32 anime_add;  // 増加分（FX32_ONEで１フレーム進める）
+    if( work->rear_white_anime_state == REAR_WHITE_ANIME_STATE_COLOR_TO_WHITE )
+    {
+      work->rear_white_anime_frame += 5;
+      anime_add = FX32_ONE * 5;
+      if( work->rear_white_anime_frame == REAR_WHITE_FRAME )
+      {
+        work->rear_white_anime_state = REAR_WHITE_ANIME_STATE_WHITE;
+      }
+      b_set_anime = TRUE;
+    }
+    else if( work->rear_white_anime_state == REAR_WHITE_ANIME_STATE_WHITE_TO_COLOR )
+    {
+      work->rear_white_anime_frame -= 2;
+      anime_add = FX32_ONE * (-2);
+      if( work->rear_white_anime_frame == REAR_COLOR_FRAME )
+      {
+        work->rear_white_anime_state = REAR_WHITE_ANIME_STATE_COLOR;
+      }
+      b_set_anime = TRUE;
+    }
+    if( b_set_anime )
+    {
+	    GFL_G3D_OBJECT_IncAnimeFrame( obj, REAR_ANM_C, anime_add );
+	    GFL_G3D_OBJECT_IncAnimeFrame( obj, REAR_ANM_M, anime_add );
+	    //GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_C, &work->rear_white_anime_frame );
+	    //GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_M, &work->rear_white_anime_frame );
+    }
+  }
+}
+static void Egg_Demo_View_ThreeRearStartColorToWhite( EGG_DEMO_VIEW_WORK* work )
+{
+  work->rear_white_anime_frame = REAR_COLOR_FRAME;
+  work->rear_white_anime_state = REAR_WHITE_ANIME_STATE_COLOR_TO_WHITE;
+  //GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_C, &work->rear_white_anime_frame );
+}
+static BOOL Egg_Demo_View_ThreeRearIsWhite( EGG_DEMO_VIEW_WORK* work )
+{
+  return ( work->rear_white_anime_state == REAR_WHITE_ANIME_STATE_WHITE );
+}
+static void Egg_Demo_View_ThreeRearStartWhiteToColor( EGG_DEMO_VIEW_WORK* work )
+{
+  work->rear_white_anime_frame = REAR_WHITE_FRAME;
+  work->rear_white_anime_state = REAR_WHITE_ANIME_STATE_WHITE_TO_COLOR;
+  //GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_C, &work->rear_white_anime_frame );
+}
+static BOOL Egg_Demo_View_ThreeRearIsColor( EGG_DEMO_VIEW_WORK* work )
+{
+  return ( work->rear_white_anime_state == REAR_WHITE_ANIME_STATE_COLOR );
 }
 

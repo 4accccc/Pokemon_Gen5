@@ -40,6 +40,7 @@
 #include "font/font.naix"
 #include "script_message.naix"
 #include "msg/script/msg_egg_event.h"
+#include "egg_demo_particle.naix"
 // サウンド
 #include "sound/wb_sound_data.sadl"
 
@@ -53,85 +54,112 @@
 */
 //=============================================================================
 #define HEAP_SIZE              (0x50000)               ///< ヒープサイズ
-
 // BGフレーム
-#define BG_FRAME_M_BACK              (GFL_BG_FRAME2_M)        // プライオリティ2
-#define BG_FRAME_M_POKEMON           (GFL_BG_FRAME0_M)        // プライオリティ1
+#define BG_FRAME_M_POKEMON           (GFL_BG_FRAME0_M)        // プライオリティ2
+#define BG_FRAME_M_BELT              (GFL_BG_FRAME2_M)        // プライオリティ1
 #define BG_FRAME_M_TEXT              (GFL_BG_FRAME1_M)        // プライオリティ0
 
 #define BG_FRAME_S_BACK              (GFL_BG_FRAME0_S)        // プライオリティ0
+
+// BGフレームのプライオリティ
+#define BG_FRAME_PRI_M_POKEMON    (2)
+#define BG_FRAME_PRI_M_BELT       (1)
+#define BG_FRAME_PRI_M_TEXT       (0)
+
+#define BG_FRAME_PRI_S_BACK       (0)
 
 // BGパレット
 // 本数
 enum
 {
-  BG_PAL_NUM_M_BACKDROP      = 1,
+  BG_PAL_NUM_M_BELT          = 1,
   BG_PAL_NUM_M_TEXT_FONT     = 1,
   BG_PAL_NUM_M_TEXT_FRAME    = 1,
-  BG_PAL_NUM_M_TM            = 1,  // 使用せず
-  BG_PAL_NUM_M_BACK          = 1,
 };
 // 位置
 enum
 {
-  BG_PAL_POS_M_BACKDROP      = 0,                                                         // 0
-  BG_PAL_POS_M_TEXT_FONT     = BG_PAL_POS_M_BACKDROP    + BG_PAL_NUM_M_BACKDROP        ,  // 1
-  BG_PAL_POS_M_TEXT_FRAME    = BG_PAL_POS_M_TEXT_FONT   + BG_PAL_NUM_M_TEXT_FONT       ,  // 2
-  BG_PAL_POS_M_TM            = BG_PAL_POS_M_TEXT_FRAME  + BG_PAL_NUM_M_TEXT_FRAME      ,  // 3  // 使用せず
-  BG_PAL_POS_M_BACK          = BG_PAL_POS_M_TM          + BG_PAL_NUM_M_TM              ,  // 4
-  BG_PAL_POS_M_MAX           = BG_PAL_POS_M_BACK        + BG_PAL_NUM_M_BACK            ,  // 5  // ここから空き
+  BG_PAL_POS_M_BELT          = 0,
+  BG_PAL_POS_M_TEXT_FONT     = 1,
+  BG_PAL_POS_M_TEXT_FRAME    = 2,
+  BG_PAL_POS_M_MAX           = 3,  // ここから空き
 };
 // 本数
 enum
 {
-  BG_PAL_NUM_S_BACK          = 1,
+  BG_PAL_NUM_S_              = 0,
 };
 // 位置
 enum
 {
-  BG_PAL_POS_S_BACK          = 0                                                      ,  // 0
-  BG_PAL_POS_S_MAX           = BG_PAL_POS_S_BACK        + BG_PAL_NUM_S_BACK           ,  // 1  // ここから空き
+  BG_PAL_POS_S_              = 0,
+  BG_PAL_POS_S_MAX           = 0,  // ここから空き
 };
 
 // OBJパレット
 // 本数
 enum
 {
-  OBJ_PAL_NUM_M_             = 1,
+  OBJ_PAL_NUM_M_BELT         = 1,
 };
 // 位置
 enum
 {
-  OBJ_PAL_POS_M_MAX          = 0                                                      ,       // ここから空き
+  OBJ_PAL_POS_M_BELT         = 0,
+  OBJ_PAL_POS_M_MAX          = 1,       // ここから空き
 };
 // 本数
 enum
 {
-  OBJ_PAL_NUM_S_             = 1,
+  OBJ_PAL_NUM_S_             = 0,
 };
 // 位置
 enum
 {
-  OBJ_PAL_POS_S_MAX          = 0                                                      ,      // ここから空き
+  OBJ_PAL_POS_S_             = 0, 
+  OBJ_PAL_POS_S_MAX          = 0,      // ここから空き
 };
+
+// OBJのBGプライオリティ
+#define OBJ_BG_PRI_M_BELT   (BG_FRAME_PRI_M_BELT)
+
+// OBJ
+enum
+{
+  OBJ_CELL_BELT_UP_01,
+  OBJ_CELL_BELT_UP_02,
+  OBJ_CELL_BELT_UP_03,
+  OBJ_CELL_BELT_DOWN_01,
+  OBJ_CELL_BELT_DOWN_02,
+  OBJ_CELL_BELT_DOWN_03,
+  OBJ_CELL_MAX,
+};
+enum
+{
+  OBJ_RES_BELT_NCG,
+  OBJ_RES_BELT_NCL,
+  OBJ_RES_BELT_NCE,
+  OBJ_RES_MAX,
+};
+static const GFL_CLWK_DATA obj_cell_data[OBJ_CELL_MAX] =
+{
+  { 128, 96, 0, 0, OBJ_BG_PRI_M_BELT },
+  { 128, 96, 1, 0, OBJ_BG_PRI_M_BELT },
+  { 128, 96, 2, 0, OBJ_BG_PRI_M_BELT },
+  { 128, 96, 3, 0, OBJ_BG_PRI_M_BELT },
+  { 128, 96, 4, 0, OBJ_BG_PRI_M_BELT },
+  { 128, 96, 5, 0, OBJ_BG_PRI_M_BELT },
+};
+
 
 // TEXT
 #define TEXT_WININ_BACK_COLOR        (15)
 
 // フェード
-#define FADE_IN_WAIT           (2)         ///< フェードインのスピード
-#define FADE_OUT_WAIT          (2)         ///< フェードアウトのスピード
-
-#define NAMEIN_FADE_OUT_WAIT   (0)         ///< 名前入力へ移行するためのフェードアウトのスピード
-
-// 白く飛ばす演出のためのパレットフェード
-#define PFADE_TCBSYS_TASK_MAX  (8)
-#define PFADE_WAIT_TO_WHITE    (2)
-#define PFADE_WAIT_FROM_WHITE  (4)
-
-// 上下に黒帯を表示するためのwnd
-#define WND_UP_Y_APPEAR   ( 20)
-#define WND_DOWN_Y_APPEAR (130)
+#define FADE_IN_WAIT            (-16)       ///< フェードインのスピード  // BGやOBJのBELTが黒くしているのでフェードインは一瞬で行うのでマイナス
+#define FADE_OUT_WAIT           (2)         ///< フェードアウトのスピード
+#define FROM_WHITE_FADE_IN_WAIT (2)         ///< 白く飛ばしたフェードから、見える状態になるときのスピード
+#define NAMEIN_FADE_OUT_WAIT    (0)         ///< 名前入力へ移行するためのフェードアウトのスピード
 
 // はい・いいえウィンドウ
 typedef enum
@@ -150,12 +178,11 @@ TM_RESULT;
 typedef enum
 {
   TRUNK_STEP_FADE_IN,
+  TRUNK_STEP_BELT_OPEN,
   TRUNK_STEP_SOUND_INTRO,
   TRUNK_STEP_DEMO_EGG,
-  TRUNK_STEP_DEMO_TO_WHITE,
-  TRUNK_STEP_DEMO_BRIGHT_TO_WHITE,
-  TRUNK_STEP_DEMO_WHITE,
-  TRUNK_STEP_DEMO_BRIGHT_WHITE,
+  TRUNK_STEP_DEMO_HATCH,
+  TRUNK_STEP_DEMO_READY,
   TRUNK_STEP_DEMO_MON,
   TRUNK_STEP_TEXT_0,
   TRUNK_STEP_TEXT_1,
@@ -195,20 +222,6 @@ typedef enum
 }
 TM_STEP;
 
-// 白く飛ばす演出のためのパレットフェードのステップ
-typedef enum
-{
-  PFADE_STEP_WAIT,
-}
-PFADE_STEP;
-
-// 上下に黒帯を表示するためのwndのステップ
-typedef enum
-{
-  WND_STEP_WAIT,
-}
-WND_STEP;
-
 
 //=============================================================================
 /**
@@ -231,14 +244,13 @@ typedef struct
   SOUND_STEP                  sound_step;
   TEXT_STEP                   text_step;
   TM_STEP                     tm_step;
-  PFADE_STEP                  pfade_step;
-  WND_STEP                    wnd_step;
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
 
-  // 単一色、単一キャラのBG
-  GFL_ARCUTIL_TRANSINFO       sim_transinfo;  // ARCUTILは使用していないが、位置とサイズをひとまとめにしたかったので。
+  // OBJ
+  u32                         obj_res[OBJ_RES_MAX];
+  GFL_CLWK*                   obj_clwk[OBJ_CELL_MAX]; 
 
   // TEXT
   PRINT_STREAM*               text_stream;
@@ -253,18 +265,6 @@ typedef struct
   BMPWIN_YESNO_DAT            tm_dat;
   BMPMENU_WORK*               tm_wk;
   TM_RESULT                   tm_result;
-
-  // 白く飛ばす演出のためのパレットフェード
-  GFL_TCBSYS*                 pfade_tcbsys;
-  void*                       pfade_tcbsys_wk;
-  PALETTE_FADE_PTR            pfade_ptr;
-
-  // 上下に黒帯を表示するためのwnd
-  u8                          wnd_up_y;    // wnd_up_y <= 見えるピクセル < wnd_down_y
-  u8                          wnd_down_y;  //        0 <= 見えるピクセル < 192
-  s16                         wnd_appear_speed;    // 1回の移動で何ピクセル移動するか(0=移動しない、+=黒帯が見えてくる、-=黒帯がはけていく)
-  u8                          wnd_appear_wait;     // 1回の移動をするのに何フレーム待つか(0=毎フレーム移動、1=1フレームおきに移動、2=3フレームに1回移動)
-  u8                          wnd_count;
 
   // タマゴ孵化デモの演出
   EGG_DEMO_VIEW_WORK*         view;
@@ -290,6 +290,16 @@ static void Egg_Demo_VBlankFunc( GFL_TCB* tcb, void* wk );
 static void Egg_Demo_Init( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static void Egg_Demo_Exit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 
+// BG
+static void Egg_Demo_BgInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
+static void Egg_Demo_BgExit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
+
+// OBJ
+static void Egg_Demo_ObjInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
+static void Egg_Demo_ObjExit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
+static void Egg_Demo_ObjStartAnime( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
+static BOOL Egg_Demo_ObjIsEndAnime( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
+
 // サウンド
 static void Egg_Demo_SoundInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static void Egg_Demo_SoundExit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
@@ -303,10 +313,6 @@ static void Egg_Demo_SoundPlayCongratulate( EGG_DEMO_PARAM* param, EGG_DEMO_WORK
 static BOOL Egg_Demo_SoundCheckPlayCongratulate( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static void Egg_Demo_SoundFadeOutHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static BOOL Egg_Demo_SoundCheckFadeOutHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
-
-// 単一色、単一キャラのBG
-static void Egg_Demo_CreateSimpleBG( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
-static void Egg_Demo_DeleteSimpleBG( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 
 // TEXT
 static void Egg_Demo_TextInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
@@ -323,22 +329,6 @@ static void Egg_Demo_TmExit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static void Egg_Demo_TmMain( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static void Egg_Demo_TmStartSelect(  EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static TM_RESULT Egg_Demo_TmGetResult( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
-
-// 白く飛ばす演出のためのパレットフェード
-static void Egg_Demo_PFadeZero( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
-static void Egg_Demo_PFadeInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );  // パレットを書き換えるので、全パレットの用意が済んでから呼ぶこと
-static void Egg_Demo_PFadeExit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
-static void Egg_Demo_PFadeMain( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
-static void Egg_Demo_PFadeToWhite( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
-static void Egg_Demo_PFadeFromWhite( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
-static BOOL Egg_Demo_PFadeCheck( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );  // TRUE処理中、FALSE終了
-
-// 上下に黒帯を表示するためのwnd
-static void Egg_Demo_WndInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
-static void Egg_Demo_WndExit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
-static void Egg_Demo_WndMain( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
-static void Egg_Demo_WndAppear( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
-static void Egg_Demo_WndDisappear( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 
 
 //=============================================================================
@@ -448,8 +438,6 @@ static GFL_PROC_RESULT Egg_Demo_ProcInit( GFL_PROC* proc, int* seq, void* pwk, v
     work->sound_step    = SOUND_STEP_WAIT;
     work->text_step     = TEXT_STEP_WAIT;
     work->tm_step       = TM_STEP_WAIT;
-    work->pfade_step    = PFADE_STEP_WAIT;
-    work->wnd_step      = WND_STEP_WAIT;
   }
 
   Egg_Demo_Init( param, work );
@@ -483,6 +471,10 @@ static GFL_PROC_RESULT Egg_Demo_ProcExit( GFL_PROC* proc, int* seq, void* pwk, v
   if( work->trunk_step != TRUNK_STEP_NAMEIN_END )
     Egg_Demo_Exit( param, work );
 
+//  // タッチorキー
+//  GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );  // 必ずキーで終了
+//  ここでは、タッチorキーを変更しない。
+
   // ヒープ
   {
     GFL_PROC_FreeWork( proc );
@@ -513,8 +505,22 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
       if( !GFL_FADE_CheckFade() )
       {
         // 次へ
+        work->trunk_step = TRUNK_STEP_BELT_OPEN;
+
+        Egg_Demo_ObjStartAnime( param, work );
+      }
+    }
+    break;
+  case TRUNK_STEP_BELT_OPEN:
+    {
+      if( Egg_Demo_ObjIsEndAnime( param, work ) )
+      {
+        // 次へ
         work->trunk_step = TRUNK_STEP_SOUND_INTRO;
 
+        // タマゴ孵化デモの演出
+        EGG_DEMO_VIEW_Start( work->view );
+        
         Egg_Demo_SoundPlayIntro( param, work );
       }
     }
@@ -525,9 +531,6 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
       {
         // 次へ
         work->trunk_step = TRUNK_STEP_DEMO_EGG;
-
-        // タマゴ孵化デモの演出
-        EGG_DEMO_VIEW_Start( work->view );
         
         Egg_Demo_SoundPlayHatch( param, work );
       }
@@ -539,82 +542,49 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
       if( EGG_DEMO_VIEW_White( work->view ) )
       {
         // 次へ
-        work->trunk_step = TRUNK_STEP_DEMO_TO_WHITE;
-
-        Egg_Demo_WndDisappear( param, work );
-        Egg_Demo_PFadeToWhite( param, work );
+        work->trunk_step = TRUNK_STEP_DEMO_HATCH;
 
         Egg_Demo_SoundPushHatch( param, work );
       }
     }
     break;
-  case TRUNK_STEP_DEMO_TO_WHITE:
+  case TRUNK_STEP_DEMO_HATCH:
     {
-      if( !Egg_Demo_PFadeCheck( param, work ) )
-      {
-        // 次へ
-        work->trunk_step = TRUNK_STEP_DEMO_BRIGHT_TO_WHITE;
+      // 次へ
+      work->trunk_step = TRUNK_STEP_DEMO_READY;
 
-        // フェードアウト(見える→白)
-        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 16, 0 );
+      // タマゴ孵化
+      PP_Put( param->pp, ID_PARA_tamago_flag, 0 );
+
+      // 図鑑登録（捕まえた）
+      {
+        ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( param->gamedata );
+        ZUKANSAVE_SetPokeSee( zukan_savedata, param->pp );  // 見た
+        ZUKANSAVE_SetPokeGet( zukan_savedata, param->pp );  // 捕まえた
       }
+
+      {
+        // トレーナーメモ
+        PLAYER_WORK* player_wk = GAMEDATA_GetMyPlayerWork( param->gamedata );
+        POKE_MEMO_SetTrainerMemoPP(
+            param->pp,
+            POKE_MEMO_INCUBATION,
+            GAMEDATA_GetMyStatus( param->gamedata ),
+            ZONEDATA_GetPlaceNameID( PLAYERWORK_getZoneID( player_wk ) ),
+            work->heap_id );
+      }
+
+      // タマゴ孵化デモの演出
+      EGG_DEMO_VIEW_Hatch( work->view, param->pp );
     }
     break;
-  case TRUNK_STEP_DEMO_BRIGHT_TO_WHITE:
-    {
-      if( !GFL_FADE_CheckFade() )
-      {
-        // 次へ
-        work->trunk_step = TRUNK_STEP_DEMO_WHITE;
-
-        Egg_Demo_TextShowWindow( param, work );
-        
-        // タマゴ孵化
-        PP_Put( param->pp, ID_PARA_tamago_flag, 0 );
-
-        // 図鑑登録（捕まえた）
-        {
-          ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( param->gamedata );
-          ZUKANSAVE_SetPokeSee( zukan_savedata, param->pp );  // 見た
-          ZUKANSAVE_SetPokeGet( zukan_savedata, param->pp );  // 捕まえた
-        }
-
-        {
-          // トレーナーメモ
-          PLAYER_WORK* player_wk = GAMEDATA_GetMyPlayerWork( param->gamedata );
-          POKE_MEMO_SetTrainerMemoPP(
-              param->pp,
-              POKE_MEMO_INCUBATION,
-              GAMEDATA_GetMyStatus( param->gamedata ),
-              ZONEDATA_GetPlaceNameID( PLAYERWORK_getZoneID( player_wk ) ),
-              work->heap_id );
-        }
-
-        // タマゴ孵化デモの演出
-        EGG_DEMO_VIEW_Hatch( work->view, param->pp );
-      }
-    }
-    break;
-  case TRUNK_STEP_DEMO_WHITE:
+  case TRUNK_STEP_DEMO_READY:
     {
       // タマゴ孵化デモの演出
       if( EGG_DEMO_VIEW_IsReady( work->view ) )
       {
         // 次へ
-        work->trunk_step = TRUNK_STEP_DEMO_BRIGHT_WHITE;
-
-        Egg_Demo_PFadeFromWhite( param, work );
-      }
-    }
-    break;
-  case TRUNK_STEP_DEMO_BRIGHT_WHITE:
-    {
-      {
-        // 次へ
         work->trunk_step = TRUNK_STEP_DEMO_MON;
-
-        // フェードイン(白→見える)
-        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, PFADE_WAIT_FROM_WHITE );
         
         // タマゴ孵化デモの演出
         EGG_DEMO_VIEW_MonStart( work->view );
@@ -629,6 +599,7 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
         // 次へ
         work->trunk_step = TRUNK_STEP_TEXT_0;
 
+        Egg_Demo_TextShowWindow( param, work );
         Egg_Demo_TextMakeStream( param, work, egg_evemt_02 );
         
         Egg_Demo_SoundPlayCongratulate( param, work );
@@ -762,11 +733,6 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
     Egg_Demo_TextMain( param, work );
     // はい・いいえウィンドウ
     Egg_Demo_TmMain( param, work );
-    // 上下に黒帯を表示するためのwnd
-    Egg_Demo_WndMain( param, work );
-
-    // 白く飛ばす演出のためのパレットフェード
-    Egg_Demo_PFadeMain( param, work );
 
     // タマゴ孵化デモの演出
     EGG_DEMO_VIEW_Main( work->view );
@@ -798,9 +764,6 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
 static void Egg_Demo_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   EGG_DEMO_WORK* work = (EGG_DEMO_WORK*)wk;
-
-  // 白く飛ばす演出のためのパレットフェード
-  if( work->pfade_ptr ) PaletteFadeTrans( work->pfade_ptr );
 }
 
 //-------------------------------------
@@ -830,41 +793,37 @@ static void Egg_Demo_Init( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
     work->vblank_tcb = GFUser_VIntr_CreateTCB( Egg_Demo_VBlankFunc, work, 1 );
   }
 
-  // 単一色、単一キャラのBG
-  Egg_Demo_CreateSimpleBG( param, work );
-
+  // BG
+  Egg_Demo_BgInit( param, work );
+  // OBJ
+  Egg_Demo_ObjInit( param, work );
   // TEXT
   Egg_Demo_TextInit( param, work );
   // はい・いいえウィンドウ
   Egg_Demo_TmInit( param, work );
-  // 上下に黒帯を表示するためのwnd
-  Egg_Demo_WndInit( param, work );
 
   // プライオリティ、表示、背景色など
   {
-    GFL_BG_SetPriority( BG_FRAME_M_BACK              , 2 );
-    GFL_BG_SetPriority( BG_FRAME_M_POKEMON           , 1 );
-    GFL_BG_SetPriority( BG_FRAME_M_TEXT              , 0 );  // 最前面
+    GFL_BG_SetPriority( BG_FRAME_M_POKEMON           , BG_FRAME_PRI_M_POKEMON );
+    GFL_BG_SetPriority( BG_FRAME_M_BELT              , BG_FRAME_PRI_M_BELT );
+    GFL_BG_SetPriority( BG_FRAME_M_TEXT              , BG_FRAME_PRI_M_TEXT );  // 最前面
 
     GFL_BG_SetPriority( BG_FRAME_S_BACK              , 0 );  // 最前面
 
-    GFL_BG_SetVisible( BG_FRAME_M_BACK               , VISIBLE_ON );
     GFL_BG_SetVisible( BG_FRAME_M_POKEMON            , VISIBLE_ON );
+    GFL_BG_SetVisible( BG_FRAME_M_BELT               , VISIBLE_ON );
     GFL_BG_SetVisible( BG_FRAME_M_TEXT               , VISIBLE_ON );
   
     GFL_BG_SetVisible( BG_FRAME_S_BACK               , VISIBLE_ON );
 
     // パーティクル対応
-    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG0,
-                      GX_BLEND_PLANEMASK_BD | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1,
+    G2_SetBlendAlpha( /*GX_BLEND_PLANEMASK_NONE,*/GX_BLEND_PLANEMASK_BG0,
+                      GX_BLEND_PLANEMASK_BD | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG0,
                       0, 0 );
 
-    GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
+    GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x4210 );
     GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x0000 );
   }
-
-  // 白く飛ばす演出のためのパレットフェード
-  Egg_Demo_PFadeInit( param, work );  // パレットを書き換えるので、全パレットの用意が済んでから呼ぶこと
 
   // タマゴ孵化デモの演出
   work->view = EGG_DEMO_VIEW_Init( work->heap_id, param->pp );
@@ -874,18 +833,14 @@ static void Egg_Demo_Exit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
   // タマゴ孵化デモの演出
   EGG_DEMO_VIEW_Exit( work->view );
 
-  // 白く飛ばす演出のためのパレットフェード
-  Egg_Demo_PFadeExit( param, work );
-
-  // 上下に黒帯を表示するためのwnd
-  Egg_Demo_WndExit( param, work );
   // はい・いいえウィンドウ
   Egg_Demo_TmExit( param, work );
   // TEXT
   Egg_Demo_TextExit( param, work );
-
-  // 単一色、単一キャラのBG
-  Egg_Demo_DeleteSimpleBG( param, work );
+  // OBJ
+  Egg_Demo_ObjExit( param, work );
+  // BG
+  Egg_Demo_BgExit( param, work );
 
   // VBlank中TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );
@@ -896,6 +851,135 @@ static void Egg_Demo_Exit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
     GFL_FONT_Delete( work->font );
     EGG_DEMO_GRAPHIC_Exit( work->graphic );
   }
+}
+
+//-------------------------------------
+/// BG
+//=====================================
+static void Egg_Demo_BgInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
+{
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_EGG_DEMO, work->heap_id );
+
+  // BELT
+  GFL_ARCHDL_UTIL_TransVramPalette(
+      handle,
+      NARC_egg_demo_particle_demo_egg_NCLR,
+      PALTYPE_MAIN_BG,
+      BG_PAL_POS_M_BELT * 0x20,
+      BG_PAL_NUM_M_BELT * 0x20,
+      work->heap_id );
+
+  GFL_ARCHDL_UTIL_TransVramBgCharacter(
+      handle,
+      NARC_egg_demo_particle_demo_egg_bg_NCGR,
+      BG_FRAME_M_BELT,
+			0,
+      0,  // 全転送
+      FALSE,
+      work->heap_id );
+
+  GFL_ARCHDL_UTIL_TransVramScreen(
+      handle,
+      NARC_egg_demo_particle_demo_egg_NSCR,
+      BG_FRAME_M_BELT,
+      0,
+      0,  // 全転送
+      FALSE,
+      work->heap_id );
+
+  GFL_ARC_CloseDataHandle( handle );
+
+  GFL_BG_LoadScreenReq( BG_FRAME_M_BELT );
+}
+static void Egg_Demo_BgExit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
+{
+  // 何もしない
+}
+
+//-------------------------------------
+/// OBJ
+//=====================================
+static void Egg_Demo_ObjInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
+{
+  u8 i;
+
+  // リソース読み込み
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_EGG_DEMO, work->heap_id );
+
+  work->obj_res[OBJ_RES_BELT_NCL] = GFL_CLGRP_PLTT_RegisterEx( 
+          handle,
+          NARC_egg_demo_particle_demo_egg_NCLR,
+          CLSYS_DRAW_MAIN,
+          BG_PAL_POS_M_BELT * 0x20,
+          0,
+          BG_PAL_NUM_M_BELT,
+          work->heap_id );
+      
+  work->obj_res[OBJ_RES_BELT_NCG] = GFL_CLGRP_CGR_Register(
+          handle,
+          NARC_egg_demo_particle_demo_egg_NCGR,
+          FALSE,
+          CLSYS_DRAW_MAIN,
+          work->heap_id );
+
+  work->obj_res[OBJ_RES_BELT_NCE] = GFL_CLGRP_CELLANIM_Register(
+          handle,
+          NARC_egg_demo_particle_demo_egg_NCER,
+          NARC_egg_demo_particle_demo_egg_NANR,
+          work->heap_id );
+  
+  GFL_ARC_CloseDataHandle( handle );
+
+  // CLWK作成
+  for( i=0; i<OBJ_CELL_MAX; i++ )
+  {
+    work->obj_clwk[i] = GFL_CLACT_WK_Create(
+        EGG_DEMO_GRAPHIC_GetClunit( work->graphic ),
+        work->obj_res[OBJ_RES_BELT_NCG],
+        work->obj_res[OBJ_RES_BELT_NCL],
+        work->obj_res[OBJ_RES_BELT_NCE],
+        &obj_cell_data[i],
+        CLSYS_DEFREND_MAIN,
+        work->heap_id );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->obj_clwk[i], FALSE );
+  }
+}
+static void Egg_Demo_ObjExit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
+{
+  // CLWK破棄
+  u8 i;
+  for( i=0; i<OBJ_CELL_MAX; i++ )
+  {
+    GFL_CLACT_WK_Remove( work->obj_clwk[i] );
+  }
+
+  // リソース破棄
+  GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_RES_BELT_NCE] );
+  GFL_CLGRP_CGR_Release( work->obj_res[OBJ_RES_BELT_NCG] );
+  GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_RES_BELT_NCL] );
+}
+static void Egg_Demo_ObjStartAnime( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
+{
+  u8 i;
+  for( i=0; i<OBJ_CELL_MAX; i++ )
+  {
+    GFL_CLACT_WK_SetAnmIndex( work->obj_clwk[i], 0 );
+    GFL_CLACT_WK_SetAutoAnmFlag( work->obj_clwk[i], TRUE );
+  }
+}
+static BOOL Egg_Demo_ObjIsEndAnime( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
+{
+  BOOL b_end = TRUE;
+  u8 i;
+  for( i=0; i<OBJ_CELL_MAX; i++ )
+  {
+    if( GFL_CLACT_WK_CheckAnmActive( work->obj_clwk[i] ) )
+    {
+      b_end = FALSE;
+      break;
+    }
+  }
+  return b_end;
 }
 
 //-------------------------------------
@@ -980,78 +1064,6 @@ static void Egg_Demo_SoundFadeOutHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* wo
 static BOOL Egg_Demo_SoundCheckFadeOutHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
   return PMSND_CheckFadeOnBGM();
-}
-
-//-------------------------------------
-/// 単一色、単一キャラのBG
-//=====================================
-static void Egg_Demo_CreateSimpleBG( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
-{
-  // パレットの作成＆転送
-  {
-    u16* pal = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(u16) * 0x10 );
-    pal[0x00] = 0x0000;  // 透明
-    pal[0x01] = 0x0000;  // 黒
-    pal[0x02] = 0x7fff;  // 白
-    pal[0x03] = 0x2108;  // 灰
-
-    GFL_BG_LoadPalette( BG_FRAME_M_BACK, pal, 0x20, BG_PAL_POS_M_BACK*0x20 );
-    GFL_HEAP_FreeMemory( pal );
-  }
-
-  // キャラの作成＆転送
-  {
-    u32 sim_bmp_pos;
-    u32 sim_bmp_size;
-
-    GFL_BMP_DATA* sim_bmp = GFL_BMP_Create( 1, 1, GFL_BMP_16_COLOR, work->heap_id );
-    GFL_BMP_Fill( sim_bmp, 0, 0, 8, 8, 0x03 );
-
-    sim_bmp_size = GFL_BMP_GetBmpDataSize(sim_bmp);
-    sim_bmp_pos = GFL_BG_LoadCharacterAreaMan(
-                    BG_FRAME_M_BACK,
-                    GFL_BMP_GetCharacterAdrs(sim_bmp),
-                    sim_bmp_size );
-
-    GF_ASSERT_MSG( sim_bmp_pos != AREAMAN_POS_NOTFOUND, "EGG_DEMO : BGキャラ領域が足りませんでした。\n" );  // gflibのarc_util.cの
-    GF_ASSERT_MSG( sim_bmp_pos < 0xffff, "EGG_DEMO : BGキャラの位置がよくありません。\n" );                 // _TransVramBgCharacterAreaMan
-    GF_ASSERT_MSG( sim_bmp_size < 0xffff, "EGG_DEMO : BGキャラのサイズがよくありません。\n" );              // を参考にした。
-
-    work->sim_transinfo = GFL_ARCUTIL_TRANSINFO_Make( sim_bmp_pos, sim_bmp_size );
-    
-    GFL_BMP_Delete( sim_bmp );
-  }
-
-  // スクリーンの作成＆転送
-  {
-    u16* sim_scr = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(u16) * 32*24 );
-    u8 i, j;
-    u16 h = 0;
-    for(i=0; i<32; i++)
-    {
-      for(j=0; j<24; j++)
-      {
-        u16 chara_name = GFL_ARCUTIL_TRANSINFO_GetPos(work->sim_transinfo);
-        u16 flip_h     = 0;
-        u16 flip_v     = 0;
-        u16 pal        = BG_PAL_POS_M_BACK;
-        sim_scr[h] = ( pal << 12 ) | ( flip_v << 11 ) | ( flip_h << 10 ) | ( chara_name << 0 );
-        
-        h++;
-      }
-    }
-
-    GFL_BG_WriteScreen( BG_FRAME_M_BACK, sim_scr, 0, 0, 32, 24 );
-    GFL_BG_LoadScreenReq( BG_FRAME_M_BACK );
-
-    GFL_HEAP_FreeMemory( sim_scr );
-  }
-}
-static void Egg_Demo_DeleteSimpleBG( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
-{
-  GFL_BG_FreeCharacterArea( BG_FRAME_M_BACK,
-                            GFL_ARCUTIL_TRANSINFO_GetPos(work->sim_transinfo),
-                            GFL_ARCUTIL_TRANSINFO_GetSize(work->sim_transinfo) );
 }
 
 //-------------------------------------
@@ -1162,8 +1174,14 @@ static BOOL Egg_Demo_TextWaitStream( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work 
 
   switch( PRINTSYS_PrintStreamGetState( work->text_stream ) )
   { 
+  case PRINTSTREAM_STATE_RUNNING:
+    if( ( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) ) || GFL_UI_TP_GetTrg() )
+    {
+      PRINTSYS_PrintStreamShortWait( work->text_stream, 0 );
+    }
+    break;
   case PRINTSTREAM_STATE_PAUSE:
-    if( ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ) || GFL_UI_TP_GetTrg() )
+    if( ( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) ) || GFL_UI_TP_GetTrg() )
     { 
       PRINTSYS_PrintStreamReleasePause( work->text_stream );
     }
@@ -1174,7 +1192,7 @@ static BOOL Egg_Demo_TextWaitStream( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work 
     }
     break;
   }
-  
+
   return ret;
 }
 
@@ -1195,7 +1213,7 @@ static void Egg_Demo_TmInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
   work->tm_dat.frmnum    = BG_FRAME_M_TEXT;
   work->tm_dat.pos_x     = 24;
   work->tm_dat.pos_y     = 13;
-  work->tm_dat.palnum    = BG_PAL_POS_M_TEXT_FONT;//BG_PAL_POS_M_TM;
+  work->tm_dat.palnum    = BG_PAL_POS_M_TEXT_FONT;
   work->tm_dat.chrnum    = pos;  // 使われていないようだ
 
   work->tm_result = TM_RESULT_SEL;
@@ -1248,177 +1266,3 @@ static TM_RESULT Egg_Demo_TmGetResult( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* wor
   return work->tm_result;
 }
 
-//-------------------------------------
-/// 白く飛ばす演出のためのパレットフェード
-//=====================================
-static void Egg_Demo_PFadeZero( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
-{
-  work->pfade_tcbsys       = NULL;
-  work->pfade_tcbsys_wk    = NULL;
-  work->pfade_ptr          = NULL;
-}
-static void Egg_Demo_PFadeInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )  // パレットを書き換えるので、全パレットの用意が済んでから呼ぶこと
-{
-  Egg_Demo_PFadeZero( param, work );
-
-  // タスク
-  work->pfade_tcbsys_wk = GFL_HEAP_AllocClearMemory( work->heap_id, GFL_TCB_CalcSystemWorkSize(PFADE_TCBSYS_TASK_MAX) );
-  work->pfade_tcbsys = GFL_TCB_Init( PFADE_TCBSYS_TASK_MAX, work->pfade_tcbsys_wk );
-
-  // パレットフェード
-  work->pfade_ptr = PaletteFadeInit( work->heap_id );
-  PaletteTrans_AutoSet( work->pfade_ptr, TRUE );
-  PaletteFadeWorkAllocSet( work->pfade_ptr, FADE_MAIN_BG, 0x1e0, work->heap_id );
-  PaletteFadeWorkAllocSet( work->pfade_ptr, FADE_MAIN_OBJ, 0x1e0, work->heap_id );
-
-  // 現在VRAMにあるパレットを壊さないように、VRAMからパレット内容をコピーする
-  PaletteWorkSet_VramCopy( work->pfade_ptr, FADE_MAIN_BG, 0, 0x1e0 );
-  PaletteWorkSet_VramCopy( work->pfade_ptr, FADE_MAIN_OBJ, 0, 0x1e0 );
-}
-static void Egg_Demo_PFadeExit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
-{
-  // パレットフェード
-  PaletteFadeWorkAllocFree( work->pfade_ptr, FADE_MAIN_BG );
-  PaletteFadeWorkAllocFree( work->pfade_ptr, FADE_MAIN_OBJ );
-  PaletteFadeFree( work->pfade_ptr );
-
-  // タスク
-  GFL_TCB_Exit( work->pfade_tcbsys );
-  GFL_HEAP_FreeMemory( work->pfade_tcbsys_wk );
-
-  Egg_Demo_PFadeZero( param, work );
-}
-static void Egg_Demo_PFadeMain( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
-{
-  // タスク
-  if( work->pfade_tcbsys ) GFL_TCB_Main( work->pfade_tcbsys );
-
-  // ステップ
-  switch( work->pfade_step )
-  {
-  case PFADE_STEP_WAIT:
-    {
-    }
-    break;
-  }
-}
-static void Egg_Demo_PFadeToWhite( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
-{
-  // 白く飛ばす
-  u16 req_bit = (1<<BG_PAL_POS_M_BACKDROP) | (1<<BG_PAL_POS_M_BACK);
-  PaletteFadeReq(
-    work->pfade_ptr, PF_BIT_MAIN_BG, req_bit, PFADE_WAIT_TO_WHITE, 0, 16, 0x7fff, work->pfade_tcbsys
-  );
-}
-static void Egg_Demo_PFadeFromWhite( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
-{
-  // 白から戻る
-  u16 req_bit = (1<<BG_PAL_POS_M_BACKDROP) | (1<<BG_PAL_POS_M_BACK);
-//  PaletteFadeReq(
-//    work->pfade_ptr, PF_BIT_MAIN_BG, req_bit, PFADE_WAIT_FROM_WHITE, 16, 0, 0x7fff, work->pfade_tcbsys
-//  );
-  PaletteFadeReq(
-    work->pfade_ptr, PF_BIT_MAIN_BG, req_bit, 0, 0, 0, 0x7fff, work->pfade_tcbsys
-  );
-}
-static BOOL Egg_Demo_PFadeCheck( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )  // TRUE処理中、FALSE終了
-{
-  if( PaletteFadeCheck(work->pfade_ptr) == 0 )
-    return FALSE;
-  else
-    return TRUE;
-}
- 
-
-//-------------------------------------
-/// 上下に黒帯を表示するためのwnd
-//=====================================
-static void Egg_Demo_WndInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
-{
-  work->wnd_up_y     = WND_UP_Y_APPEAR;
-  work->wnd_down_y   = WND_DOWN_Y_APPEAR;
-  //work->wnd_up_y     = 0;
-  //work->wnd_down_y   = 192;
-
-  GX_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
-
-  G2_SetWnd0Position(   0, work->wnd_up_y,      128, work->wnd_down_y );
-  G2_SetWnd1Position( 128, work->wnd_up_y, 0/*256*/, work->wnd_down_y );
-
-  G2_SetWnd0InsidePlane(
-    GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ,
-    TRUE );
-  G2_SetWnd1InsidePlane(
-    GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_BG2 | GX_WND_PLANEMASK_BG3 | GX_WND_PLANEMASK_OBJ,
-    TRUE );
-
-  G2_SetWndOutsidePlane(
-    GX_WND_PLANEMASK_BG1,
-    TRUE );
-
-  work->wnd_appear_speed  = 0;
-  work->wnd_appear_wait   = 0;
-  work->wnd_count         = 0;
-}
-static void Egg_Demo_WndExit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
-{
-  GX_SetVisibleWnd( GX_WNDMASK_NONE );
-}
-static void Egg_Demo_WndMain( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
-{
-  if( work->wnd_appear_speed != 0 )
-  {
-    work->wnd_count++;
-    if( work->wnd_count >= work->wnd_appear_wait )
-    {
-      BOOL b_up_y_move  = FALSE;
-      s16  down_y       = work->wnd_down_y;
-      s16  up_y         = work->wnd_up_y;
-
-      down_y -= work->wnd_appear_speed;
-      if( work->wnd_appear_speed > 0 )
-      {
-        if( down_y < WND_DOWN_Y_APPEAR + WND_UP_Y_APPEAR ) b_up_y_move = TRUE;
-      }
-      else
-      {
-        b_up_y_move = TRUE;
-      }
-      if( b_up_y_move ) up_y += work->wnd_appear_speed;
-
-      if( down_y < WND_DOWN_Y_APPEAR ) work->wnd_down_y = WND_DOWN_Y_APPEAR;
-      else if( down_y > 192 )          work->wnd_down_y = 192;
-      else                             work->wnd_down_y = (u8)down_y;
-
-      if( up_y < 0 )                    work->wnd_up_y = 0;
-      else if( up_y > WND_UP_Y_APPEAR ) work->wnd_up_y = WND_UP_Y_APPEAR;
-      else                              work->wnd_up_y = (u8)up_y;
-
-      G2_SetWnd0Position(   0, work->wnd_up_y,      128, work->wnd_down_y );
-      G2_SetWnd1Position( 128, work->wnd_up_y, 0/*256*/, work->wnd_down_y );
-
-      {
-        if( work->wnd_appear_speed > 0 )
-        {
-          if( work->wnd_up_y == WND_UP_Y_APPEAR && work->wnd_down_y == WND_DOWN_Y_APPEAR )
-            work->wnd_appear_speed = 0;
-        }
-        else
-        {
-          if( work->wnd_up_y == 0 && work->wnd_down_y == 192 )
-            work->wnd_appear_speed = 0;
-        }
-      }
-
-      work->wnd_count = 0;
-    }
-  }
-}
-static void Egg_Demo_WndAppear( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
-{
-  work->wnd_appear_speed = 1;
-}
-static void Egg_Demo_WndDisappear( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
-{
-  work->wnd_appear_speed = -2;
-}

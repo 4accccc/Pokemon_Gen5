@@ -1,19 +1,28 @@
 /*****************************************************************************
 	Archive file index definition.
-	File: .\particle\egg_demo_particle.naix
+	File: egg_demo_particle.naix
 
-	This file was created by NINTENDO NITRO-System Archiver.
+	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2006-05-29T11:15:21
+
  *****************************************************************************/
 
-#ifndef NARC___PARTICLE_EGG_DEMO_PARTICLE_NAIX_
-#define NARC___PARTICLE_EGG_DEMO_PARTICLE_NAIX_
+#ifndef NARC_EGG_DEMO_PARTICLE_NAIX_
+#define NARC_EGG_DEMO_PARTICLE_NAIX_
 
 enum {
-	NARC___particle_egg_demo_particle_egg_demo_normal_spa = 0,
-	NARC___particle_egg_demo_particle_egg_demo_special_spa = 1
+	NARC_egg_demo_particle_demo_egg_NANR = 0,
+	NARC_egg_demo_particle_demo_egg_NCER = 1,
+	NARC_egg_demo_particle_demo_egg_NCGR = 2,
+	NARC_egg_demo_particle_demo_egg_NCLR = 3,
+	NARC_egg_demo_particle_demo_egg_NSCR = 4,
+	NARC_egg_demo_particle_demo_egg_bg_NCGR = 5,
+	NARC_egg_demo_particle_demo_sinka02_nsbca = 6,
+	NARC_egg_demo_particle_demo_sinka02_nsbma = 7,
+	NARC_egg_demo_particle_demo_sinka02_nsbmd = 8,
+	NARC_egg_demo_particle_demo_sinka02_nsbta = 9,
+	NARC_egg_demo_particle_egg_demo_spa = 10
 };
 
-/* NARC___PARTICLE_EGG_DEMO_PARTICLE_NAIX_ */
+/* NARC_EGG_DEMO_PARTICLE_NAIX_ */
 #endif

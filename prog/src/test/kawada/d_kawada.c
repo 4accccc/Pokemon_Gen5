@@ -59,6 +59,10 @@
 // ’n‰º“S˜Hü}
 #include "app/subway_map.h"
 
+// ƒ^ƒ}ƒS›z‰»ƒfƒ‚
+#include "field/zonedata.h"
+#include "demo/egg_demo.h"
+
 // ƒI[ƒo[ƒŒƒC
 FS_EXTERN_OVERLAY(zukan_toroku);
 FS_EXTERN_OVERLAY(th_award);
@@ -68,12 +72,13 @@ FS_EXTERN_OVERLAY(btl_rec_sel);
 FS_EXTERN_OVERLAY(pmsinput);
 FS_EXTERN_OVERLAY(psel);
 FS_EXTERN_OVERLAY(subway_map);
+FS_EXTERN_OVERLAY(egg_demo);
 
 
 //============================================================================================
 //	’è”’è‹`
 //============================================================================================
-#define	TOP_MENU_SIZ	( 10 )
+#define	TOP_MENU_SIZ	( 11 )
 
 typedef struct {
 	u32	main_seq;
@@ -125,6 +130,9 @@ typedef struct {
   // ’n‰º“S˜Hü}
   SUBWAY_MAP_PARAM*  subway_map_param;
 
+  // ƒ^ƒ}ƒS›z‰»ƒfƒ‚
+  EGG_DEMO_PARAM*    egg_demo_param;
+
 }KAWADA_MAIN_WORK;
 
 enum {
@@ -144,6 +152,7 @@ enum {
 	MAIN_SEQ_PSEL_CALL,
 	MAIN_SEQ_SUBWAY_MAP_CALL,
 	MAIN_SEQ_PMS_INPUT_SENTENCE_CALL,
+	MAIN_SEQ_EGG_DEMO_CALL,
   // ‚±‚±‚Ü‚Å
 
 	MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN,
@@ -156,6 +165,7 @@ enum {
 	MAIN_SEQ_PSEL_CALL_RETURN,
 	MAIN_SEQ_SUBWAY_MAP_CALL_RETURN,
 	MAIN_SEQ_PMS_INPUT_SENTENCE_CALL_RETURN,
+	MAIN_SEQ_EGG_DEMO_CALL_RETURN,
 	
   MAIN_SEQ_END,
 };
@@ -219,6 +229,10 @@ static void SubwayMapExit( KAWADA_MAIN_WORK* wk );
 // ’èŒ^•¶ŠÈˆÕ‰ï˜b
 static void PmsInputSentenceInit( KAWADA_MAIN_WORK* wk );
 static void PmsInputSentenceExit( KAWADA_MAIN_WORK* wk );
+
+// ƒ^ƒ}ƒS›z‰»ƒfƒ‚
+static void EggDemoInit( KAWADA_MAIN_WORK* wk );
+static void EggDemoExit( KAWADA_MAIN_WORK* wk );
 
 
 //============================================================================================
@@ -466,6 +480,18 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     PmsInputSentenceExit(wk); 
 		FadeInSet( wk, MAIN_SEQ_INIT );
 		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+
+  // ƒ^ƒ}ƒS›z‰»ƒfƒ‚
+  case MAIN_SEQ_EGG_DEMO_CALL:
+    EggDemoInit(wk);
+		wk->main_seq = MAIN_SEQ_EGG_DEMO_CALL_RETURN;
+    break;
+  case MAIN_SEQ_EGG_DEMO_CALL_RETURN:
+    EggDemoExit(wk);
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
 
 
 	}
@@ -952,4 +978,25 @@ static void PmsInputSentenceExit( KAWADA_MAIN_WORK* wk )
 {
 }
 
+// ƒ^ƒ}ƒS›z‰»ƒfƒ‚
+static void EggDemoInit( KAWADA_MAIN_WORK* wk )
+{
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(egg_demo));
+  ZONEDATA_Open( wk->heapID );
+
+  wk->pp = PP_Create( 1, 1, 0, wk->heapID );
+  //wk->pp = PP_Create( MONSNO_MANAFI, 1, 0, wk->heapID );
+  PP_Put( wk->pp, ID_PARA_tamago_flag, 1 );
+  wk->egg_demo_param = EGG_DEMO_AllocParam( wk->heapID, wk->gamedata, wk->pp );
+      
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &EGG_DEMO_ProcData, wk->egg_demo_param );
+}
+static void EggDemoExit( KAWADA_MAIN_WORK* wk )
+{
+  EGG_DEMO_FreeParam( wk->egg_demo_param );
+  GFL_HEAP_FreeMemory( wk->pp );
+
+  ZONEDATA_Close();
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(egg_demo));
+}
 
