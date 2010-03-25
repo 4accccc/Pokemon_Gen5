@@ -242,6 +242,9 @@ charange:
   _OBJ_ANIME( C04R0901_RECEPTION_01, anm_recep_center )
   _OBJ_ANIME_WAIT()
 
+  //すれ違い通信用データセット
+  _BEACON_SET_REQ_TRIAL_HOUSE_START()
+
   _CALL battle
 
   //受付係中央からどく
@@ -255,14 +258,24 @@ charange:
   _OBJ_ANIME_WAIT()
 
   IF $SCWK_ANSWER == TRUE THEN
-   DEFINE_LOCAL result_rank
-   DEFINE_LOCAL point       //@note 引数にとっているけど、戻り値としては使用しなくなった。
-   DEFINE_LOCAL rank_msg
+    DEFINE_LOCAL result_rank
+    DEFINE_LOCAL before_rank
+    DEFINE_LOCAL point       //@note 引数にとっているけど、戻り値としては使用しなくなった。
+    DEFINE_LOCAL rank_msg
+
+    //挑戦前ランクを取得
+    _TH_GET_RANK( before_rank )
+
     //「おつかれさま」
     _BALLOONWIN_OBJMSG_POS(msg_trialhouse_014, SCWK_TARGET_OBJID, POS_DL )
     _BALLOONWIN_CLOSE()
 
     _TH_CALC_BTL_RESULT( result_rank, point )
+
+    //ランクアップしたら、すれ違い通信用データをセット
+    IF $before_rank < $result_rank THEN
+      _BEACON_SET_REQ_TRIAL_HOUSE_RANK( result_rank )
+    ENDIF
 
     //評価アプリ起動
     {

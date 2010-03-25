@@ -131,6 +131,8 @@ _RET
 play_palpark:
   DEFINE_LOCAL i_ret
   DEFINE_LOCAL palpark_retval
+  //すれちがい通信用データセット
+  _BEACON_SET_REQ_POKE_SHIFTER_START()
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( i_ret )
 
