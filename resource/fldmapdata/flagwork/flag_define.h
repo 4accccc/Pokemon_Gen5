@@ -322,8 +322,8 @@
 #define FE_T04R0101_APPRAISAL_CROWN        306 /* 0x0132 サザナミタウン：財宝鑑定士に古代の王冠について話した */
 #define FE_PACKAGE_POKE_GET                307 /* 0x0133 パッケージポケモン（シン／ム）の捕獲フラグ */
 #define FE_ROCKCAPSULE_END                 308 /* 0x0134 ロックカプセルイベントの終了 */
-		/* not used   309(0x0135) */
-		/* not used   310(0x0136) */
+#define FE_TTOWN_RECEPT_TALK               309 /* 0x0135 ギアステーション：トレインタウン行き電車の受付　初回会話フラグ */
+#define FE_D08_ITEMGET_01                  310 /* 0x0136 リュウラセンの塔：アイテム入手フラグ */
 		/* not used   311(0x0137) */
 		/* not used   312(0x0138) */
 		/* not used   313(0x0139) */
