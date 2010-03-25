@@ -322,6 +322,11 @@ VMCMD_RESULT EvCmdObjAdd( VMHANDLE *core, void *wk )
   code = MMDL_TOOL_GetWorkOBJCode( evwork, code );
   mmdl = MMDLSYS_AddMMdlParam(
       mmdlsys, gx, gz, dir, id, code, move, zone_id );
+  
+  if( mmdl != NULL ){ //í«â¡Ç≥ÇÍÇΩOBJÇÕë¶É|Å[ÉYÇ≥ÇπÇÈ
+    MMDL_OnMoveBitMoveProcPause( mmdl );
+  }
+  
   return VMCMD_RESULT_CONTINUE;
 }
 
