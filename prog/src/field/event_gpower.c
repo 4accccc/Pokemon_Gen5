@@ -64,8 +64,10 @@ GMEVENT* EVENT_GPowerEffectStart(GAMESYS_WORK * gsys, GPOWER_ID g_power, BOOL mi
  
     GPOWER_PowerData_Unload( p_data );
   }
-  if( mine ){ //自分のを使った時だけビーコン送信
+  if( mine ){ //自分のを使った時
     GAMEBEACON_Set_GPower( g_power );
+  }else{  //他人のを使った時
+    GAMEBEACON_Set_OtherGPowerUse( g_power );
   }
   return event;
 }

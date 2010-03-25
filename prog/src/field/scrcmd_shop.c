@@ -278,6 +278,7 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   } 
   // ショップ呼び出し
   VMCMD_SetWait( core, EvShopBuyWait );
+  GAMEBEACON_Set_Shoping();
 
   /*
     イベント終了時に ret_work に終了モードを返してください

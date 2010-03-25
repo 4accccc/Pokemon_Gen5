@@ -224,6 +224,7 @@ void SODATEYA_TakeBackEgg( SODATEYA* sodateya, POKEPARTY* party )
     OBATA_Printf( "------------------------------------------\n" );
     return;
   }
+  GAMEBEACON_Set_SodateyaEgg();
 
   // ƒ^ƒ}ƒS‚ğì¬‚µ, è‚¿‚É’Ç‰Á
   CreateEgg( sodateya, egg );

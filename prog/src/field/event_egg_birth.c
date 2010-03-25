@@ -141,5 +141,7 @@ GMEVENT* EVENT_EggBirth( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, POKE
   work->gameData   = GAMESYSTEM_GetGameData( gameSystem );
   work->egg        = egg;
 
+  GAMEBEACON_Set_EggHatch( PP_Get( egg, ID_PARA_monsno, NULL ) );
+
 	return event;
 }

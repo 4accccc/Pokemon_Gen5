@@ -481,6 +481,10 @@ VMCMD_RESULT EvCmdDemoScene( VMHANDLE *core, void *wk )
   u16 demo_id = SCRCMD_GetVMWorkValue( core, wk );
   u16 scene_id = SCRCMD_GetVMWorkValue( core, wk );
 
+  if( demo_id == DEMO3D_ID_F_WHEEL ){
+    GAMEBEACON_Set_FerrisWheel();
+  }
+
   DEMO3D_PARAM_SetFromEvTime( param, SCRCMD_WORK_GetGameData( work ), demo_id, scene_id );
   EVFUNC_CallSubProc( core, work, FS_OVERLAY_ID(demo3d), &Demo3DProcData, param, NULL, NULL );
 
