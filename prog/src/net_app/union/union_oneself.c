@@ -2638,6 +2638,7 @@ static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
   case _SEQ_TIMING_WAIT:
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_SHUTDOWN, WB_NET_UNION) == TRUE){
+      GFL_NET_SetNoChildErrorCheck(FALSE);  //切断許可
       OS_TPrintf("切断前の同期取り：成功\n");
       (*seq)++;
     }
@@ -4074,10 +4075,15 @@ static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_LEAVE, WB_NET_UNION) == TRUE){
       OS_TPrintf("コロシアム切断前の同期取り：成功\n");
+      GFL_NET_SetNoChildErrorCheck(FALSE);  //切断許可
       (*seq)++;
     }
     break;
   case LEAVE_SEQ_SHUTDOWN:
+    //親機は最後まで待つ
+    if(GFL_NET_IsParentMachine() && (GFL_NET_SystemGetConnectNum()>1) ){
+      break;
+    }
     UnionComm_Req_Shutdown(unisys);
     (*seq)++;
     break;
