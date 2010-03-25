@@ -96,5 +96,5 @@ extern int CommEntryMenu_GetCompletionNum(COMM_ENTRY_MENU_PTR em);
 extern void CommEntyrMenu_MemberInfoReserveUpdate(COMM_ENTRY_MENU_PTR em);
 extern ENTRYMENU_MEMBER_INFO * CommEntryMenu_GetMemberInfo(COMM_ENTRY_MENU_PTR em);
 extern void CommEntryMenu_RecvMemberInfo(COMM_ENTRY_MENU_PTR em, const ENTRYMENU_MEMBER_INFO *member_info);
-extern void CommEntryMenu_SetEntryAnswer(COMM_ENTRY_MENU_PTR em, ENTRY_PARENT_ANSWER answer);
+extern void CommEntryMenu_SetEntryAnswer(COMM_ENTRY_MENU_PTR em, ENTRY_PARENT_ANSWER answer, const MYSTATUS *myst);
 extern u32 CommEntryMenu_GetMemberInfoSize(void);
