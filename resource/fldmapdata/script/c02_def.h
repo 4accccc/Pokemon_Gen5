@@ -21,5 +21,6 @@
 #define SCRID_C02_LEADER02_02 (14)
 #define SCRID_BG_C02_SIGN2_01 (15)
 #define SCRID_BG_C02_SIGN3_01 (16)
+#define SCRID_ZONE_C02 (17)
 
 #endif //_C02_DEF_H_

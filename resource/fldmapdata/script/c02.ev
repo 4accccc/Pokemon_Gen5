@@ -35,13 +35,38 @@ _EVENT_DATA		ev_c02_support_02
 _EVENT_DATA		ev_c02_leader02_02 
 _EVENT_DATA    ev_bg_c02_sign2_01
 _EVENT_DATA    ev_bg_c02_sign3_01
+_EVENT_DATA		ev_zone_c02
 _EVENT_DATA_END
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_c02_flag_change:
-//  _END
+/************************************************************/
+/*					ZONE_CHANGE_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_c02
+	
+	//盗難事件イベント時、博物館でのイベントが終わった後は
+	//解決するまで、アロエを3番道路の近くに配置
+	//盗難イベント中？
+	IF FLAG_ON(FE_MUSEUM_TOUNAN ) THEN
+	
+		//博物館前のジムリーダーの会話イベントは終わった？	
+		IF $WK_SCENE_C02  == 4 THEN 
+			//アロエの位置をチェンジ
+			_SXY_MOVE_NPC_POS( C02_LEADER02_01, MV_DIR_RND, 665, 0, 600 )
+		
+		ENDIF
+	ENDIF
+
+	//ライバルを配置
+	//初期状態では、博物館前に配置されている（後のイベントで使用する為）
+	//ポスを踏んだとき、ポケセン案内イベントの位置に配置し直す。
+	IF$WK_SCENE_C02 == 0 THEN
+		_SXY_MOVE_NPC_POS( C02_RIVAL_02, DIR_RIGHT,662, 0, 600 )
+	ELSIF$WK_SCENE_C02 == 3 THEN
+		_SXY_MOVE_NPC_POS( C02_SUPPORT_01, DIR_LEFT,652, 0, 587 )
+		_SXY_MOVE_NPC_POS( C02_RIVAL_02, DIR_LEFT,652, 0, 586 )
+	ENDIF
+	
+INIT_EVENT_END
 
 /**************************************************************/
 /*            ZONE_INIT_LABEL                              　 */
@@ -50,7 +75,6 @@ INIT_EVENT_START	ev_init_c02
 	
 	//盗難事件イベント時、博物館でのイベントが終わった後は
 	//解決するまで、アロエを3番道路の近くに配置
-	
 	//盗難イベント中？
 	IF FLAG_ON(FE_MUSEUM_TOUNAN ) THEN
 	
