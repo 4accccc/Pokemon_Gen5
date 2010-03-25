@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-25T17:03:55"/>
+	<create user="murakami_naoto" host="W00228" date="2010-03-25T20:33:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -514,6 +514,41 @@
 	</row>
 
 	<row id="msg_debug_murakami_11" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">R02 ランニングシューズ入手イベント</language>
+		<language name="JPN_KANJI" width="256">R02 ランニングシューズ入手イベント</language>
+	</row>
+
+	<row id="msg_debug_murakami_12" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">R02　サポート戦</language>
+		<language name="JPN_KANJI" width="256">R02　サポート戦</language>
+	</row>
+
+	<row id="msg_debug_murakami_13" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">D06R0101/電気石の洞穴/ダークトリニティとN</language>
+		<language name="JPN_KANJI" width="256">D06R0101/電気石の洞穴/ダークトリニティとN</language>
+	</row>
+
+	<row id="msg_debug_murakami_14" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">D06R0101/電気石の洞穴/ダークトリニティ</language>
+		<language name="JPN_KANJI" width="256">D06R0101/電気石の洞穴/ダークトリニティ</language>
+	</row>
+
+	<row id="msg_debug_murakami_15" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">D06R0101/電気石の洞穴/サポート博士1</language>
+		<language name="JPN_KANJI" width="256">D06R0101/電気石の洞穴/サポート博士1</language>
+	</row>
+
+	<row id="msg_debug_murakami_16" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">D08リュウラセンの塔/１階/揺れる</language>
+		<language name="JPN_KANJI" width="256">D08リュウラセンの塔/１階/揺れる</language>
+	</row>
+
+	<row id="msg_debug_murakami_17" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
+		<language name="JPN" width="256">R08 サポート戦</language>
+		<language name="JPN_KANJI" width="256">R08 サポート戦</language>
+	</row>
+
+	<row id="msg_debug_murakami_18" back-color="#ff8080,,,,,,,#ff8080,,,#ff8080,,,#ff8080,,,#ff8080,,">
 		<language name="JPN" width="256">テスト用</language>
 		<language name="JPN_KANJI" width="256">テスト用</language>
 	</row>

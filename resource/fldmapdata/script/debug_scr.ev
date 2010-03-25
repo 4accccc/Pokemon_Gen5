@@ -496,6 +496,9 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_debug_murakami
 
+		DEFINE_LOCAL	LWK_POSX
+		DEFINE_LOCAL	LWK_POSZ
+		
 		//メニュー作成
 		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_TEMP1 )
 		//リスト追加
@@ -509,7 +512,14 @@ EVENT_START   ev_debug_murakami
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_08, 8 )	//C02博物館盗難イベント(博物館外)
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_09, 9 )	//C02ライバル　ポケセン誘導
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_10, 10 )	//C02　N戦
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_11, 11 )	//テスト用
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_11, 11 )	//R02ランニングシューズ入手
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_12, 12 )	//R02のサポート戦
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_13, 13 )	//電気石の洞穴/ダークトリニティとN
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_14, 14 )	//電気石の洞穴/ダークトリニティ
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_15, 15 )	//電気石の洞穴/サポート博士①
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_16, 16 )	//リュウラセンの塔が揺れる１階
+//		_BMPMENU_MAKE_LIST( msg_debug_murakami_17, 17 )	//８番道路のサポート戦
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_18, 18 )	//テスト用
 		_BMPMENU_MAKE_LIST( msg_debug_00, 100 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -570,7 +580,7 @@ EVENT_START   ev_debug_murakami
 			
 			$WK_SCENE_D06R0101 = 4			
 			
-			_MAP_CHANGE( ZONE_ID_D06R0101, 63, 13, DIR_RIGHT )			
+			_MAP_CHANGE( ZONE_ID_D06R0101, 63, 13, DIR_LEFT)
 
 		//リュウラセンイベント最初から
 		ELSIF $SCWK_TEMP1 == 4 THEN
@@ -671,42 +681,62 @@ EVENT_START   ev_debug_murakami
 			_MAP_CHANGE( ZONE_ID_C02, 644, 586, DIR_UP )
 			
 		ELSIF $SCWK_TEMP1 == 11 THEN
-			//R02のママを表示する
-//			_FLAG_RESET  ( FV_R02_MOTHER  )  
-	
 			//R02のランニングシューズイベントを有効にする
-//			$WK_SCENE_R02 = 1
-//			$WK_SYS_FIRST_POKETYPE = 1
+			$WK_SCENE_R02 = 0
+
+		ELSIF $SCWK_TEMP1 == 12 THEN
+			//R02のサポートイベントを有効にする
+			$WK_SCENE_R02 = 0
+
+		ELSIF $SCWK_TEMP1 == 13 THEN
+			//電気石ダークトリニティのイベント②
+			$WK_SCENE_D06R0101 = 3
+			_OBJ_ADD(D06R0101_NINJA_01)
+			_OBJ_ADD(D06R0101_NINJA_02)
+			_OBJ_ADD(D06R0101_NINJA_03)
 			
-//			$WK_SCENE_D08_LEGEND  = 2
-		
-//			$WK_SCENE_D06R0101 = 3
-//			_OBJ_ADD(D06R0101_NINJA_01)
-//			_OBJ_ADD(D06R0101_NINJA_02)
-//			_OBJ_ADD(D06R0101_NINJA_03)
-/*
+		ELSIF $SCWK_TEMP1 == 14 THEN
+			//電気石ダークトリニティのイベント①
 			$WK_SCENE_D06R0101 = 0
 
 			//Nを出現
 			_OBJ_POS_CHANGE(D06R0101_BOSS_01,69,1,13,DIR_LEFT)	
-			
+
+		ELSIF $SCWK_TEMP1 == 15 THEN
+			$WK_SCENE_D06R0101 = 1
 			//博士とサポートを出現
 			_FLAG_RESET(FV_D06R0101_FRIENDS)
 			_OBJ_ADD( D06R0101_HEROINE_01 )
 			_OBJ_ADD( D06R0101_HAKASE2_01 )		
-			
-			//博士とホワイト、Nを消す
-//			_FLAG_RESET(FV_D06R0101_FRIENDS)
-			_FLAG_RESET(FV_D06R0201_BOSS_01)
-*/		
+
+		ELSIF $SCWK_TEMP1 == 16 THEN
+			//リュウラセンの塔が揺れる1回目
 			//マップチェンジ
 			_MAP_CHANGE( ZONE_ID_D08R0301, 25,5, DIR_UP )
 			$WK_SCENE_D08_LEGEND = 2
+
+		ELSIF $SCWK_TEMP1 == 17 THEN
 		
+			$WK_SCENE_R08 = 0
+		
+		//テスト用
+		ELSIF $SCWK_TEMP1 == 18 THEN
+		
+			_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
+			_OBJ_POS_CHANGE(MMDL_ID_PLAYER,LWK_POSX,3,LWK_POSZ,DIR_DOWN)
+			
+		ELSE
 		ENDIF
 		
 EVENT_END
-
+//--------------------------------------------------------------------
+//  パッケージポケモン： Nを乗せて飛ぶ              
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_poke_idou_02
+	
+	_ANIME_DATA AC_SHIN_MU_FLY_L,24
+	_ANIME_DATA	ACMD_END,0
+	
 //--------------------------------------------------------------------
 //デンチュラの巣:壊れる                       
 //--------------------------------------------------------------------

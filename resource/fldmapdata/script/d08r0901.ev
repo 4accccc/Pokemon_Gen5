@@ -47,7 +47,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	IF $LCWK_VERSION == VERSION_WHITE THEN
 		_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_MEAT_W )
 		
-		_OBJ_ADD_EX( 16, 10, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE7, MV_DMY )
+		_OBJ_ADD_EX( 16, 10, DIR_UP, MMDL_ID_EVENTOBJ_00,SHIN_A, MV_DMY )
 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_turn_d)
 		_OBJ_ANIME_WAIT()
 		
@@ -56,7 +56,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	ELSE
 		_CALL_3D_DEMO( DEMO3D_ID_N_LEGEND_MEAT_B )
 
-		_OBJ_ADD_EX( 16, 10, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE8, MV_DMY )
+		_OBJ_ADD_EX( 16, 10, DIR_UP, MMDL_ID_EVENTOBJ_00,MU_A, MV_DMY )
 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_turn_d)
 		_OBJ_ANIME_WAIT()
 		_MAP_FADE_BLACK_IN()
@@ -72,8 +72,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_01w, msg_d08r0901_boss_01b, D08R0901_BOSS_01, POS_DL )
 	_MSGWIN_CLOSE()
 
-	_TIME_WAIT(16)
-	
+	_TIME_WAIT(8)
 	//Nがパッケージポケモンの方を振り向く
 	_OBJ_ANIME(D08R0901_BOSS_01,anm_common_turn_up)
 	_OBJ_ANIME_WAIT()
@@ -91,22 +90,21 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_OBJ_ANIME(D08R0901_BOSS_01,anm_common_turn_down)
 	_OBJ_ANIME_WAIT()
 	
+	_TIME_WAIT(8)
 	//Nが喋る
 	//ぼくたちを　とめられるのは
 	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_03w, msg_d08r0901_boss_03b, D08R0901_BOSS_01, POS_DL )
 	_MSGWIN_CLOSE()
 	
 	_TIME_WAIT(16)
-	
 	//Nが喋る
 	//さて　どうする？
 	_BALLOONWIN_OBJMSG_WB( msg_d08r0901_boss_04w, msg_d08r0901_boss_04b, D08R0901_BOSS_01, POS_DL )
 	_MSGWIN_CLOSE()
 
-	_OBJ_POS_CHANGE(MMDL_ID_EVENTOBJ_00,28,0,9,DIR_RIGHT)
+	_OBJ_POS_CHANGE(MMDL_ID_EVENTOBJ_00,28,3,9,DIR_RIGHT)
 
-	_TIME_WAIT(24)
-	
+	_TIME_WAIT(20)
 	//Nがマップの上に移動する
 	//パッケージポケモンがNを乗せて飛び去る
 	_OBJ_ANIME( D08R0901_BOSS_01,anm_boss_idou_01)
@@ -119,9 +117,8 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	
 	//Nとパッケージポケモンを消す
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-	
 	//主人公がNが飛び去った方向を見る
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_left)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_turn_s1)
 	_OBJ_ANIME_WAIT()
 
 	//============フラグワーク操作=============//
@@ -133,13 +130,13 @@ EVENT_START    ev_pos_d08R0901_boss_01
 		
 	//========================================//
 	
+	_TIME_WAIT(12)
 	//ハチクとライバルがやってくる		
 	_OBJ_ANIME( D08R0901_RIVEL_01,anm_raival_idou_01)
 	_OBJ_ANIME( D08R0901_LEADER7_01,anm_leader7_idou_01)
 	_OBJ_ANIME_WAIT()
 	
 	//ライバルが喋る
-	//
 	_BALLOONWIN_OBJMSG( msg_d08r0901_black_01, D08R0901_RIVEL_01)
 	_MSGWIN_CLOSE()
 
@@ -147,6 +144,20 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	//
 	_BALLOONWIN_OBJMSG( msg_d08r0901_leader7_01, D08R0901_LEADER7_01)
 	_MSGWIN_CLOSE()
+	
+	_TIME_WAIT(16)
+	_OBJ_ANIME(D08R0901_RIVEL_01,anm_turn_s2)
+	_TIME_WAIT(24)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_down)
+	//ライバルが喋る
+	_BALLOONWIN_OBJMSG( msg_d08r0901_black_02, D08R0901_RIVEL_01)
+	_MSGWIN_CLOSE()
+	_OBJ_ANIME_WAIT()
+
+	_BALLOONWIN_OBJMSG( msg_d08r0901_leader7_02, D08R0901_LEADER7_01)
+	_MSGWIN_CLOSE()
+	_OBJ_ANIME(D08R0901_LEADER7_01,anm_common_turn_up)
+	_OBJ_ANIME_WAIT()
 	
 	//画面暗転処理
 	_MAP_FADE_BLACK_OUT()
@@ -172,9 +183,8 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	
 	//画面遷移後、イベントが自動で始まるようにセット
 	_RESERVE_SCRIPT( SCRID_RESERVE_D08_HAKASE1_01 )
-	_MAP_CHANGE_NO_FADE(ZONE_ID_D08, 179, 3, 146, DIR_UP)	
+	_MAP_CHANGE_NO_FADE(ZONE_ID_D08, 179, 3, 146, DIR_UP)
 
-	
 EVENT_END
 
 //--------------------------------------------------------------------
@@ -199,6 +209,7 @@ _ANIME_LABEL	anm_player_idou_01
 _ANIME_LABEL	anm_raival_idou_01
 
 	_ANIME_DATA AC_WALK_U_8F,8
+	_ANIME_DATA AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -206,9 +217,8 @@ _ANIME_LABEL	anm_raival_idou_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader7_idou_01
 
-	_ANIME_DATA AC_WALK_U_8F,8
-	_ANIME_DATA AC_WALK_R_8F,1
-	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA AC_WALK_U_8F,9
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
@@ -216,7 +226,6 @@ _ANIME_LABEL	anm_leader7_idou_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_poke_idou_01
 
-//	_ANIME_DATA AC_WALK_U_8F,6
 	_ANIME_DATA AC_SHIN_MU_FLY_UPPER,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -225,7 +234,7 @@ _ANIME_LABEL	anm_poke_idou_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_poke_idou_02
 	
-//	_ANIME_DATA AC_WALK_L_2F,24
+	_ANIME_DATA AC_SHIN_MU_OFFS_CLEAR,1
 	_ANIME_DATA AC_SHIN_MU_FLY_L,24
 	_ANIME_DATA	ACMD_END,0
 
@@ -269,4 +278,22 @@ _ANIME_LABEL	anm_common_turn_right
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_left
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//振り向き特殊1                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_turn_s1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//振り向き特殊2                  
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_turn_s2
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0

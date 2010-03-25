@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d08r0301.h"
-  //.include  "d08r0301.h"
+  .include  "d08r0301.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,6 +20,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_d08r0301_demo_01
+_EVENT_DATA		ev_d08r0301_hakase1_01
+_EVENT_DATA		ev_d08r0301_leader7_01
 _EVENT_DATA_END
 
 
@@ -106,5 +108,24 @@ _ANIME_LABEL	anm_common_turn_left
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+/**************************************************************/
+/*	ハチク（ジムリーダー7） の話しかけイベント                                                        
+/**************************************************************/
+EVENT_START    ev_d08r0301_leader7_01	
 	
+	_TALK_OBJ_START()
+	_BALLOONWIN_OBJMSG_WB( msg_d08r0301_leader7_01w, msg_d08r0301_leader7_01b,D08R0301_LEADER7_01, POS_DL )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+EVENT_END
+
+/**************************************************************/
+/*	博士（父）の話しかけイベント       
+/**************************************************************/
+EVENT_START    ev_d08r0301_hakase1_01	
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d08r0301_hakase1_01 )
+	
+EVENT_END
 
