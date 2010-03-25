@@ -39,6 +39,14 @@ INIT_EVENT_START	ev_init_d06r0101
 		//Nを次のイベントの位置に移動
 		_OBJ_POS_CHANGE(D06R0101_BOSS_01,69,1,13,DIR_LEFT)
 		
+		IF $WK_SCENE_D06R0101 == 2 THEN
+			_OBJ_POS_CHANGE(D06R0101_HAKASE2_01,16,0,43,DIR_LEFT)
+			_OBJ_POS_CHANGE(D06R0101_HEROINE_01,15,0,40,DIR_LEFT)
+		ELSIF $WK_SCENE_D06R0101 == 3 THEN
+			_OBJ_POS_CHANGE(D06R0101_HAKASE2_01,32,0,25,DIR_LEFT)
+			_OBJ_POS_CHANGE(D06R0101_HEROINE_01,31,0,26,DIR_LEFT)
+		ENDIF
+
 	ENDIF
 	
 
@@ -307,8 +315,13 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	_OBJ_ADD( D06R0101_HEROINE_01 )
 	_OBJ_ADD( D06R0101_HAKASE2_01 )
 //========================================//
-
+	//名前の格納
 	_PLAYER_NAME(0)
+	
+	//座標の取得
+	DEFINE_LOCAL	LWK_POSX
+	DEFINE_LOCAL	LWK_POSZ
+	_PLAYER_POS_GET( LWK_POSX,LWK_POSZ )
 	
 	//ホワイト:おーい　しってる？
 	//ホワイトが喋る
@@ -318,18 +331,29 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	//主人公がびっくり
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
 	_OBJ_ANIME_WAIT()
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_down)
+	_OBJ_ANIME_WAIT()
 	
+	_TIME_WAIT(8)
 	//サポートのイベント曲を鳴らす
 	_START_EVENT_BGM( SEQ_BGM_E_SUPPORT )	
 	
-	//主人公がよこを向く
-	_OBJ_ANIME( MMDL_ID_PLAYER,anm_common_turn_down)
+	//主人公が移動する
+	//座標による分岐
+	SWITCH $LWK_POSX
+	CASE 15 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come15 )
+	CASE 16 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come16 )
+	CASE 17 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_come17 )
+	ENDSWITCH	
 	_OBJ_ANIME_WAIT()
 	
 	//ホワイトがやってくる
 	_OBJ_ANIME( D06R0101_HEROINE_01,anm_heroine_kuru_01)
-	_TIME_WAIT(48)
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_left)
+	_TIME_WAIT(96)
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_turn_s1)
 	_OBJ_ANIME_WAIT()
 	
 	//ホワイト:しってる？　動いている
@@ -337,44 +361,43 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_white_01a, D06R0101_HEROINE_01,POS_UL)
 	_BALLOONWIN_CLOSE()
 	
-	//ホワイト、博士の方をむく
-	_OBJ_ANIME( D06R0101_HEROINE_01,anm_common_turn_down)
-	_OBJ_ANIME_WAIT()
-	
 	//ホワイトが喋る
 	//ホワイト:ですよね、はかせ
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_white_02, D06R0101_HEROINE_01,POS_UL)
 	_BALLOONWIN_CLOSE()
 	
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_down)
+	
 	//博士2がやってくる
 	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_hakase2_kuru_01)
 	_OBJ_ANIME_WAIT()
 
+	_TIME_WAIT(16)
 	//博士2が喋る
 	//博士2:ハーイ！　げんきだった？
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_01, D06R0101_HAKASE2_01,POS_UL)
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_01, D06R0101_HAKASE2_01,POS_DR)
 	_BALLOONWIN_CLOSE()
 	
 	//博士2移動して、きょろきょろする
 	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_hakase2_kyorokyoro_01)
-	_TIME_WAIT(18)
-	_OBJ_ANIME(D06R0101_HEROINE_01,anm_common_turn_left)
+	_TIME_WAIT(12)
+	_OBJ_ANIME(D06R0101_HEROINE_01,anm_turn_s2)
 	_OBJ_ANIME_WAIT()
 
 	//博士2がもとの位置に移動
 	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_hakase2_kuru_02)
-	_OBJ_ANIME( D06R0101_HEROINE_01,anm_common_turn_right)
+	_OBJ_ANIME( D06R0101_HEROINE_01,anm_common_turn_down)
 	_OBJ_ANIME_WAIT()
 	
 	//博士2が喋る
 	//博士2:あいかわらず　ここ　ポケモン
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_02, D06R0101_HAKASE2_01,POS_UL)
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_02, D06R0101_HAKASE2_01,POS_DR)
 	_BALLOONWIN_CLOSE()
 	
 	_TIME_WAIT(16)
 	//博士2が喋る
 	//博士2:ちょっと　パパに　頼まれて
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_03, D06R0101_HAKASE2_01,POS_UL)
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_03, D06R0101_HAKASE2_01,POS_DR)
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
@@ -393,41 +416,84 @@ EVENT_END
 _ANIME_LABEL	anm_player_gyoe
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0 
+	
+//--------------------------------------------------------------------
+//主人公:振り向き特殊                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_turn_s1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA AC_WAIT_32F,1
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0 
+	
+//--------------------------------------------------------------------
+//サポート:振り向き特殊                         
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_turn_s2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0 
 
+//--------------------------------------------------------------------
+//主人公: イベント位置に移動                     
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_come15
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0  
+
+_ANIME_LABEL	anm_player_come16
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0  
+
+_ANIME_LABEL	anm_player_come17
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0  
+	
 //--------------------------------------------------------------------
 //ホワイト: やってくる                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_heroine_kuru_01
-	_ANIME_DATA	AC_WALK_U_8F,11
-	_ANIME_DATA AC_WALK_R_8F,1 
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA AC_WALK_U_8F,3
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA AC_WAIT_4F,5
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_WALK_U_8F,2
+	_ANIME_DATA AC_WAIT_32F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0  
 
 //--------------------------------------------------------------------
 //博士2: やってくる                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase2_kuru_01
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,10
-	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,8
+	_ANIME_DATA AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
 //博士2: やってくる2                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase2_kuru_02
-	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //博士2:  少し上できょろきょろ                       
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase2_kyorokyoro_01
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA AC_WAIT_16F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 /**************************************************************/
@@ -437,8 +503,8 @@ EVENT_START    ev_pos_d06r0101_denki_02
 	
 	//博士2の場所を移動
 	//ホワイトの場所を移動
-	_OBJ_POS_CHANGE( D06R0101_HAKASE2_01, 24, 1, 14, DIR_DOWN )
-	_OBJ_POS_CHANGE( D06R0101_HEROINE_01, 24, 1, 13, DIR_DOWN )
+	_OBJ_POS_CHANGE( D06R0101_HAKASE2_01, 25, 1, 22, DIR_DOWN )
+	_OBJ_POS_CHANGE( D06R0101_HEROINE_01, 25, 1, 21, DIR_DOWN )
 	
 	//主人公がびっくり
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
@@ -456,21 +522,21 @@ EVENT_START    ev_pos_d06r0101_denki_02
 	
 	//博士2が喋る
 	//博士2:ハーイ！　なにか　みつかった？
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_05, D06R0101_HAKASE2_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_05, D06R0101_HAKASE2_01,POS_UL)
 	_BALLOONWIN_CLOSE()
 	
 	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_common_turn_left)
 	_OBJ_ANIME_WAIT()
 	
 	//博士2:この　どうくつは　1000ねんも
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_06, D06R0101_HAKASE2_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_06, D06R0101_HAKASE2_01,POS_UL)
 	_BALLOONWIN_CLOSE()
 	
 	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_right)
 	_OBJ_ANIME_WAIT()
 		
 	//博士2:ポケモンたちが　どこから　きたのか
-	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_07, D06R0101_HAKASE2_01,POS_DR)
+	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_07, D06R0101_HAKASE2_01,POS_UL)
 	_BALLOONWIN_CLOSE()
 	
 	//ホワイトが喋る
@@ -489,20 +555,20 @@ EVENT_END
 //ホワイト: やってくる２                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_heroine_kuru_02
-	_ANIME_DATA	AC_WALK_D_8F,9
-	_ANIME_DATA AC_WALK_R_8F,5
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_R_8F,4
 	_ANIME_DATA	AC_WALK_D_8F,4
-	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //博士2: やってくる３                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase2_kuru_03
-	_ANIME_DATA	AC_WALK_D_8F,8
-	_ANIME_DATA AC_WALK_R_8F,5
+
+	_ANIME_DATA AC_WALK_R_8F,4
 	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA AC_WALK_R_8F,1
+	_ANIME_DATA AC_WALK_R_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
