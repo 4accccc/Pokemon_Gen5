@@ -171,12 +171,15 @@ int BeaconDetail_InputCheck( BEACON_DETAIL_WORK* wk )
   }
 
   //キャラアイコンあたり判定
+  if( !wk->icon_enable_f ){
+    return SEQ_MAIN;
+  }
+
   if( input_CheckHitTrIcon(wk) || (trg & PAD_BUTTON_A)){
     sub_PlaySE( BDETAIL_SE_DECIDE );
     effReq_PopupMsg( wk );
     return SEQ_EFF_WAIT; 
   }
-
   return SEQ_MAIN;
 }
 
@@ -582,27 +585,37 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
 	  u16 dataIndex = TOWNMAP_DATA_SearchRootZoneID( wk->tmap, GAMEBEACON_Get_TownmapRootZoneID( wk->tmpInfo ) );
 
 	  //タウンマップ上の座標取得
-	  wk->icon_x = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_X );
-	  wk->icon_y = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_Y );
-    IWASAWA_Printf(" BeaconWin root_zone = %d, tmap_dat_idx = %d, x = %d, y = %d\n",
-        GAMEBEACON_Get_TownmapRootZoneID( wk->tmpInfo ),dataIndex,wk->icon_x,wk->icon_y);
-    if( wk->icon_y < 16 ){
-      wk->icon_y = 16;
-    }else if( wk->icon_y > 152 ){
-      wk->icon_y = 152;
-    }
-    if( wk->icon_x < 16){
-      wk->icon_x = 16;
-    }else if( wk->icon_x > 240 ){
-      wk->icon_x = 240;
-    }
-    act_SetPosition( wk->pAct[ACT_ICON_TR], wk->icon_x, wk->icon_y, ACT_SF_MAIN );
+    if(TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_PLACE_TYPE ) == TOWNMAP_PLACETYPE_HIDE ){
+      wk->icon_enable_f = FALSE;
+      
+      wk->icon_x = wk->icon_y = 0;
+      GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_ICON_TR], FALSE );
+      GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_ICON_EV], FALSE );
+    }else{
+      wk->icon_enable_f = TRUE;
+  	  
+      wk->icon_x = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_X );
+	    wk->icon_y = TOWNMAP_DATA_GetParam( wk->tmap, dataIndex, TOWNMAP_DATA_PARAM_POS_Y );
+      IWASAWA_Printf(" BeaconWin root_zone = %d, tmap_dat_idx = %d, x = %d, y = %d\n",
+          GAMEBEACON_Get_TownmapRootZoneID( wk->tmpInfo ),dataIndex,wk->icon_x,wk->icon_y);
+      if( wk->icon_y < 16 ){
+       wk->icon_y = 16;
+      }else if( wk->icon_y > 152 ){
+       wk->icon_y = 152;
+      }
+      if( wk->icon_x < 16){
+        wk->icon_x = 16;
+      }else if( wk->icon_x > 240 ){
+        wk->icon_x = 240;
+      }
+      act_SetPosition( wk->pAct[ACT_ICON_TR], wk->icon_x, wk->icon_y, ACT_SF_MAIN );
 
-    if( pd->icon != 0 ){
-      act_SetPosition( wk->pAct[ACT_ICON_EV], wk->icon_x-24, wk->icon_y, ACT_SF_MAIN );
-      act_AnmStart( wk->pAct[ACT_ICON_EV], ACTANM_ICON_TR + (pd->icon-1) );
+      if( pd->icon != 0 ){
+        act_SetPosition( wk->pAct[ACT_ICON_EV], wk->icon_x-24, wk->icon_y, ACT_SF_MAIN );
+        act_AnmStart( wk->pAct[ACT_ICON_EV], ACTANM_ICON_TR + (pd->icon-1) );
+      }
+      GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_ICON_EV], (pd->icon != 0) );
     }
-    GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_ICON_EV], (pd->icon != 0) );
   }
   //ポップアップメッセージ描画
   GFL_BMP_Clear( wk->win_popup.bmp, FCOL_POPUP_BASE );

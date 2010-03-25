@@ -146,6 +146,7 @@ typedef struct
   BEACON_WIN      beacon_win[BEACON_WIN_MAX];
  
   s16   icon_x,icon_y;
+  u8    icon_enable_f;
   GFL_CLWK* pAct[ACT_MAX];
 
 } BEACON_DETAIL_WORK;
