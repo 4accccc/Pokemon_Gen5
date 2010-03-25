@@ -533,7 +533,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       }
     }
 
-    { //BG ダミーポジション 話しかけ
+    { //BG ダミーポジション 話しかけ  イベントデータ節約のための特殊処理　
 
       if( ZONEDATA_IsSeaTempleDungeon( req.map_id ) ){ // 現在海底神殿のみ
         EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
