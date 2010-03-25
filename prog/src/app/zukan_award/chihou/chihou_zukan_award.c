@@ -60,24 +60,26 @@ enum
 {
   BG_PAL_NUM_M_GRA_FRONT     = 14,
   BG_PAL_NUM_M_TEXT          = 1,
+  BG_PAL_NUM_M_BLACK         = 1,
 };
 // 位置
 enum
 {
   BG_PAL_POS_M_GRA_FRONT    =  0,
   BG_PAL_POS_M_TEXT         = 14,
+  BG_PAL_POS_M_BLACK        = 15,
 };
 
 // メインOBJパレット
 // 本数
 enum
 {
-  OBJ_PAL_NUM_M_        = 0,
+  OBJ_PAL_NUM_M_BALL        = 1,
 };
 // 位置
 enum
 {
-  OBJ_PAL_POS_M_        = 0,
+  OBJ_PAL_POS_M_BALL        = 0,
 };
 
 // ProcMainのシーケンス
@@ -95,6 +97,7 @@ enum
 enum
 {
   TEXT_DUMMY,
+  TEXT_BLACK,
   TEXT_NAME,
   TEXT_MAIN,
   TEXT_STAFF,
@@ -108,11 +111,12 @@ enum
 
 static const u8 bmpwin_setup[TEXT_MAX][9] =
 {
-  // frmnum           posx  posy  sizx  sizy  palnum          dir                    x  y (x,yは無視してセンタリングすることもある)
-  {  BG_FRAME_M_TEXT,    0,    0,    1,    1, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    6,    4,   20,    2, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    6,    8,   20,    8, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,   12,   18,   14,    4, TEXT_PAL_POS,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  // frmnum           posx  posy  sizx  sizy  palnum                dir                    x  y (x,yは無視してセンタリングすることもある)
+  {  BG_FRAME_M_TEXT,    0,    0,    1,    1, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    0,   24,    1,    1, BG_PAL_POS_M_BLACK,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    6,    4,   20,    2, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    6,    8,   20,    8, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,   12,   18,   14,    4, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
 };
 
 // フェード
@@ -126,6 +130,28 @@ static const u8 bmpwin_setup[TEXT_MAX][9] =
 #define SCROLL_START_POS_Y  (64)
 #define SCROLL_WAIT         ( 0)  // 0以上の値。0で毎フレーム移動。1で待ち、移動、待ち、移動。2で待ち、待ち、移動。
 #define SCROLL_VALUE        ( 2)  // 移動するときの移動量。
+
+
+// OBJ
+enum
+{
+  OBJ_BALL_RES_NCG,
+  OBJ_BALL_RES_NCL,
+  OBJ_BALL_RES_NCE,
+  OBJ_RES_MAX,
+};
+// CELL
+enum
+{
+  OBJ_BALL_CELL,
+  OBJ_CELL_MAX,
+};
+#define OBJ_BALL_CELL_ANMSEQ  (1)
+static const GFL_CLWK_DATA obj_cell_data[OBJ_CELL_MAX] =
+{
+  // pos_x, pos_y, anmseq,               softpri, bgpri
+  {  1*8,   1*8,   OBJ_BALL_CELL_ANMSEQ, 0,       BG_FRAME_PRI_M_FRONT },
+};
 
 
 //=============================================================================
@@ -157,6 +183,10 @@ typedef struct
 
   // スクロール
   u8                          scroll_wait_count;
+
+  // OBJ
+  u32                         obj_res[OBJ_RES_MAX];
+  GFL_CLWK*                   obj_clwk[OBJ_CELL_MAX];
 }
 CHIHOU_ZUKAN_AWARD_WORK;
 
@@ -177,6 +207,13 @@ static void Chihou_Zukan_Award_BgExit( CHIHOU_ZUKAN_AWARD_WORK* work );
 static void Chihou_Zukan_Award_TextInit( CHIHOU_ZUKAN_AWARD_WORK* work );
 static void Chihou_Zukan_Award_TextExit( CHIHOU_ZUKAN_AWARD_WORK* work );
 static void Chihou_Zukan_Award_TextMain( CHIHOU_ZUKAN_AWARD_WORK* work );
+
+// 何もないところは黒にしておく
+static void Chihou_Zukan_Award_BlackInit( CHIHOU_ZUKAN_AWARD_WORK* work );
+
+// OBJ
+static void Chihou_Zukan_Award_ObjInit( CHIHOU_ZUKAN_AWARD_WORK* work );
+static void Chihou_Zukan_Award_ObjExit( CHIHOU_ZUKAN_AWARD_WORK* work );
 
 // スクロール
 static void Chihou_Zukan_Award_ScrollInit( CHIHOU_ZUKAN_AWARD_WORK* work );
@@ -307,6 +344,8 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcInit( GFL_PROC* proc, int* seq, vo
   // 生成
   Chihou_Zukan_Award_BgInit( work );
   Chihou_Zukan_Award_TextInit( work );
+  Chihou_Zukan_Award_BlackInit( work );  // 何もないところは黒にしておく
+  Chihou_Zukan_Award_ObjInit( work );
 
   // サブBG
   APP_NOGEAR_SUBSCREEN_Init();
@@ -337,6 +376,7 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcExit( GFL_PROC* proc, int* seq, vo
   APP_NOGEAR_SUBSCREEN_Exit();
 
   // 破棄
+  Chihou_Zukan_Award_ObjExit( work );
   Chihou_Zukan_Award_TextExit( work );
   Chihou_Zukan_Award_BgExit( work );
 
@@ -432,7 +472,7 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, vo
 #ifdef DEBUG_TEXT_MOVE
   {
     static int target = 0;
-    static const int target_max = 3;
+    static const int target_max = 4;
 
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
     {
@@ -446,59 +486,91 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, vo
     }
     else
     {
-      GFL_BMPWIN* target_bmpwin = work->text_bmpwin[target +1];
-      u8 x = GFL_BMPWIN_GetPosX( target_bmpwin );
-      u8 y = GFL_BMPWIN_GetPosY( target_bmpwin );
-      BOOL b_change = FALSE;
-      
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+      if( target == 3 )
       {
-        switch(target)
+        GFL_CLACTPOS pos;
+        GFL_CLACT_WK_GetPos( work->obj_clwk[OBJ_BALL_CELL], &pos, CLSYS_DEFREND_MAIN );
+
+        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
         {
-        case 0:
-          OS_Printf( "Player Name (%d, %d)\n", x, y );
-          break;
-        case 1:
-          OS_Printf( "Main Text (%d, %d)\n", x, y );
-          break;
-        case 2:
-          OS_Printf( "Game Freak (%d, %d)\n", x, y );
-          break;
+          OS_Printf( "Monster Ball (%d, %d)\n", pos.x, pos.y );
         }
-      }
-      else if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-      {
-        y--;
-        b_change = TRUE;
-      }
-      else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-      {
-        y++;
-        b_change = TRUE;
-      }
-      else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-      {
-        x--;
-        b_change = TRUE;
-      }
-      else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-      {
-        x++;
-        b_change = TRUE;
-      }
-
-      if( b_change )
-      {
-        u8 i;
-
-        GFL_BG_ClearScreen( BG_FRAME_M_TEXT );
-       
-        GFL_BMPWIN_SetPosX( target_bmpwin, x );
-        GFL_BMPWIN_SetPosY( target_bmpwin, y );
-        
-        for( i=0; i<TEXT_MAX; i++ )
+        else if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
         {
-          GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[i] );
+          pos.y--;
+        }
+        else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+        {
+          pos.y++;
+        }
+        else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+        {
+          pos.x--;
+        }
+        else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+        {
+          pos.x++;
+        }
+        
+        GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_BALL_CELL], &pos, CLSYS_DEFREND_MAIN );
+      }
+      else
+      {
+        GFL_BMPWIN* target_bmpwin = work->text_bmpwin[target +1];
+        u8 x = GFL_BMPWIN_GetPosX( target_bmpwin );
+        u8 y = GFL_BMPWIN_GetPosY( target_bmpwin );
+        BOOL b_change = FALSE;
+
+        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+        {
+          switch(target)
+          {
+          case 0:
+            OS_Printf( "Player Name (%d, %d)\n", x, y );
+            break;
+          case 1:
+            OS_Printf( "Main Text (%d, %d)\n", x, y );
+            break;
+          case 2:
+            OS_Printf( "Game Freak (%d, %d)\n", x, y );
+            break;
+          }
+        }
+        else if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+        {
+          y--;
+          b_change = TRUE;
+        }
+        else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+        {
+          y++;
+          b_change = TRUE;
+        }
+        else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+        {
+          x--;
+          b_change = TRUE;
+        }
+        else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+        {
+          x++;
+          b_change = TRUE;
+        }
+
+        if( b_change )
+        {
+          u8 i;
+
+          //GFL_BG_ClearScreen( BG_FRAME_M_TEXT );  // このBGフレームの空いているところを黒にしているので、全クリアはまずい
+          GFL_BG_FillScreen( BG_FRAME_M_TEXT, 0, 0, 0, 32, 24, GFL_BG_SCRWRT_PALNL );
+
+          GFL_BMPWIN_SetPosX( target_bmpwin, x );
+          GFL_BMPWIN_SetPosY( target_bmpwin, y );
+        
+          for( i=TEXT_DUMMY +1; i<TEXT_MAX; i++ )
+          {
+            GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[i] );
+          }
         }
       }
     }
@@ -593,6 +665,7 @@ static void Chihou_Zukan_Award_TextInit( CHIHOU_ZUKAN_AWARD_WORK* work )
     work->text_finish[i] = FALSE;
   }
   work->text_finish[TEXT_DUMMY] = TRUE;  // ダミーは済んでいることにしておく
+  work->text_finish[TEXT_BLACK] = TRUE;  // ダミーは済んでいることにしておく
 
   // パレット
   GFL_ARC_UTIL_TransVramPaletteEx(
@@ -726,6 +799,109 @@ static void Chihou_Zukan_Award_TextMain( CHIHOU_ZUKAN_AWARD_WORK* work )
 }
 
 //-------------------------------------
+/// 何もないところは黒にしておく
+//=====================================
+static void Chihou_Zukan_Award_BlackInit( CHIHOU_ZUKAN_AWARD_WORK* work )
+{
+  // 必ずChihou_Zukan_Award_TextInitが済んでから呼ぶこと
+
+  // パレットの作成＆転送
+  {
+    u16* pal = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(u16) * 0x10 );
+    pal[0x00] = 0x0000;  // 透明
+    pal[0x01] = 0x0000;  // 黒
+    GFL_BG_LoadPalette( BG_FRAME_M_TEXT, pal, 0x20, BG_PAL_POS_M_BLACK * 0x20 );
+    GFL_HEAP_FreeMemory( pal );
+  }
+
+  // キャラの塗り潰し＆転送
+  {
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_BLACK]), 1 );  // 黒
+	  GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_BLACK] );
+  }
+
+  // スクリーンの作成＆転送
+  {
+    u16* scr = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(u16) * 32*24 );  // 1画面分もスクロールしないので、これだけとっておけば十分のはず
+    u8 i, j;
+    u16 h = 0;
+    u16 chr_num = GFL_BMPWIN_GetChrNum( work->text_bmpwin[TEXT_BLACK] );
+    for(j=0; j<24; j++)       // TWL_ProgramingManual.pdf TWLプログラミングマニュアル
+    {                         // 6.2.3.2.2 スクリーンデータのアドレスマッピング
+      for(i=0; i<32; i++)     // スクリーンサイズが256×512 ドットのとき
+      {                       // を参考にした。
+        u16 chara_name = chr_num;
+        u16 flip_h     = 0;
+        u16 flip_v     = 0;
+        u16 pal        = BG_PAL_POS_M_BLACK;
+        scr[h] = ( pal << 12 ) | ( flip_v << 11 ) | ( flip_h << 10 ) | ( chara_name << 0 );
+        h++;
+      }
+    }
+    GFL_BG_WriteScreen( BG_FRAME_M_TEXT, scr, 0, 24, 32, 24 );  // 横幅が256ドットなので、折り返しはないと思う
+    GFL_BG_LoadScreenReq( BG_FRAME_M_TEXT );
+    GFL_HEAP_FreeMemory( scr );
+  }
+}
+
+//-------------------------------------
+/// OBJ
+//=====================================
+static void Chihou_Zukan_Award_ObjInit( CHIHOU_ZUKAN_AWARD_WORK* work )
+{
+  // リソースの読み込み
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_SHOUJOU, work->heap_id );
+
+  work->obj_res[OBJ_BALL_RES_NCL] = GFL_CLGRP_PLTT_RegisterEx(
+      handle,
+      NARC_shoujou_shoujou_obj_NCLR,
+      CLSYS_DRAW_MAIN,
+      OBJ_PAL_POS_M_BALL * 0x20,
+      0,
+      OBJ_PAL_NUM_M_BALL,
+      work->heap_id );
+  work->obj_res[OBJ_BALL_RES_NCG] = GFL_CLGRP_CGR_Register(
+      handle,
+      NARC_shoujou_shoujou_obj_NCGR,
+      FALSE,
+      CLSYS_DRAW_MAIN,
+      work->heap_id );
+  work->obj_res[OBJ_BALL_RES_NCE] = GFL_CLGRP_CELLANIM_Register(
+      handle,
+      NARC_shoujou_shoujou_obj_NCER,
+      NARC_shoujou_shoujou_obj_NANR,
+      work->heap_id );
+
+  GFL_ARC_CloseDataHandle( handle );
+
+  // CLWK作成
+  work->obj_clwk[OBJ_BALL_CELL] = GFL_CLACT_WK_Create(
+      CHIHOU_ZUKAN_AWARD_GRAPHIC_GetClunit( work->graphic ),
+      work->obj_res[OBJ_BALL_RES_NCG],
+      work->obj_res[OBJ_BALL_RES_NCL],
+      work->obj_res[OBJ_BALL_RES_NCE],
+      &obj_cell_data[OBJ_BALL_CELL],
+      CLSYS_DEFREND_MAIN,
+      work->heap_id );
+  GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_BALL_CELL], TRUE );
+  GFL_CLACT_WK_SetAutoAnmFlag( work->obj_clwk[OBJ_BALL_CELL], TRUE );
+}
+static void Chihou_Zukan_Award_ObjExit( CHIHOU_ZUKAN_AWARD_WORK* work )
+{
+  // CLWK破棄
+  u8 i;
+  for( i=0; i<OBJ_CELL_MAX; i++ )
+  {
+    GFL_CLACT_WK_Remove( work->obj_clwk[OBJ_BALL_CELL] );
+  }
+
+  // リソース破棄
+  GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_BALL_RES_NCE] );
+  GFL_CLGRP_CGR_Release( work->obj_res[OBJ_BALL_RES_NCG] );
+  GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_BALL_RES_NCL] );
+}
+
+//-------------------------------------
 /// スクロール
 //=====================================
 static void Chihou_Zukan_Award_ScrollInit( CHIHOU_ZUKAN_AWARD_WORK* work )
@@ -734,7 +910,14 @@ static void Chihou_Zukan_Award_ScrollInit( CHIHOU_ZUKAN_AWARD_WORK* work )
 
   GFL_BG_SetScroll( BG_FRAME_M_FRONT, GFL_BG_SCROLL_Y_SET, SCROLL_START_POS_Y );
   GFL_BG_SetScroll( BG_FRAME_M_TEXT, GFL_BG_SCROLL_Y_SET, SCROLL_START_POS_Y );
-  
+ 
+  {
+    GFL_CLACTPOS pos;
+    pos.x = obj_cell_data[OBJ_BALL_CELL].pos_x;
+    pos.y = obj_cell_data[OBJ_BALL_CELL].pos_y - SCROLL_START_POS_Y;
+    GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_BALL_CELL], &pos, CLSYS_DEFREND_MAIN );
+  }
+
   work->scroll_wait_count = SCROLL_WAIT;
 }
 static void Chihou_Zukan_Award_ScrollMain( CHIHOU_ZUKAN_AWARD_WORK* work )
@@ -753,6 +936,14 @@ static void Chihou_Zukan_Award_ScrollMain( CHIHOU_ZUKAN_AWARD_WORK* work )
       else                            value = SCROLL_VALUE;
       GFL_BG_SetScrollReq( BG_FRAME_M_FRONT, GFL_BG_SCROLL_Y_DEC, value );
       GFL_BG_SetScrollReq( BG_FRAME_M_TEXT, GFL_BG_SCROLL_Y_DEC, value );
+
+      {
+        GFL_CLACTPOS pos;
+        GFL_CLACT_WK_GetPos( work->obj_clwk[OBJ_BALL_CELL], &pos, CLSYS_DEFREND_MAIN );
+        pos.y += (s16)value;
+        GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_BALL_CELL], &pos, CLSYS_DEFREND_MAIN );
+      }
+
       work->scroll_wait_count = SCROLL_WAIT;
     }
     else
@@ -763,8 +954,19 @@ static void Chihou_Zukan_Award_ScrollMain( CHIHOU_ZUKAN_AWARD_WORK* work )
 }
 static BOOL Chihou_Zukan_Award_ScrollIsEnd( CHIHOU_ZUKAN_AWARD_WORK* work )
 {
+  BOOL ret = FALSE;
+  
   if( work->param->b_fix ) return TRUE;
 
-  return ( GFL_BG_GetScrollY( BG_FRAME_M_FRONT ) == 0 );
+  {
+    BOOL ret_bg = ( GFL_BG_GetScrollY( BG_FRAME_M_FRONT ) == 0 );
+    BOOL ret_obj = TRUE;
+    //GFL_CLACTPOS pos;  // BGのスクロールのみで判断することにしたので、コメントアウト。
+    //GFL_CLACT_WK_GetPos( work->obj_clwk[OBJ_BALL_CELL], &pos, CLSYS_DEFREND_MAIN );
+    //if( pos.y == 0 ) ret_obj = TRUE;
+
+    ret = ( ret_bg && ret_obj );
+  }
+  return ret;
 }
 
