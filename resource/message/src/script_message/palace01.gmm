@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-18T15:40:04"/>
+	<create user="ohmori" host="W00223" date="2010-03-25T15:48:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -300,15 +300,15 @@
 	</row>
 
 	<row id="msg_palace01_in_000" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>通常の姿でパレスに入った</comment>
-		<language name="JPN" width="256">パレスの　ちからで
+		<comment>通常の姿でハイリンクに入った</comment>
+		<language name="JPN" width="256">ハイリンクの　ちからで
 すがたが　へんかした！</language>
-		<language name="JPN_KANJI" width="256">パレスの　ちからで
+		<language name="JPN_KANJI" width="256">ハイリンクの　ちからで
 すがたが　へんかした！</language>
 	</row>
 
 	<row id="plc_oldman1_01_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
-		<comment>パレスの老人：初回メッセージ</comment>
+		<comment>ハイリンクの老人：初回メッセージ</comment>
 		<attribute name="キャラ指定">OLDMAN1：
 このあと「デルダマ」
 ５つ入手</attribute>
@@ -339,17 +339,17 @@
 	</row>
 
 	<row id="plc_oldman1_01_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
-		<comment>パレスの老人：分岐メッセージ
+		<comment>ハイリンクの老人：分岐メッセージ
 選択肢表示、plc_oldman1_01_07,8,9</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">さて　こどもよ　パレスについて
+		<language name="JPN" width="256">さて　こどもよ　ハイリンクについて
 ききたいことは　あるかな？</language>
-		<language name="JPN_KANJI" width="256">さて　こどもよ　パレスについて
+		<language name="JPN_KANJI" width="256">さて　こどもよ　ハイリンクについて
 ききたいことは　あるかな？</language>
 	</row>
 
 	<row id="plc_oldman1_01_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
-		<comment>パレスの老人：会話終了</comment>
+		<comment>ハイリンクの老人：会話終了</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">もし　わからないことが　あれば
 むすめたちにも　はなしを　きくといい</language>
@@ -358,7 +358,7 @@
 	</row>
 
 	<row id="plc_oldman1_01_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
-		<comment>パレスの老人：２回目メッセージ</comment>
+		<comment>ハイリンクの老人：２回目メッセージ</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">わしも　こどもも　ポケモンたちも
 たすけあって　いきている▼
@@ -371,9 +371,9 @@
 	</row>
 
 	<row id="plc_oldman1_01_05" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
-		<comment>パレスの老人：パレスとは？</comment>
+		<comment>ハイリンクの老人：ツリーとは？</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">パレスの　ちゅうしんにある
+		<language name="JPN" width="256">ハイリンクの　ちゅうしんにある
 この　おおきなきが▽
 ハイルツリーだ　▼
 ハイルツリーは　ひとや　ポケモンの
@@ -385,7 +385,7 @@
 ふしぎなパワーを　はっきする▼
 われわれは　そのパワーを
 「デルパワー」と　よんでいるのだ▼</language>
-		<language name="JPN_KANJI" width="256">パレスの　ちゅうしんにある
+		<language name="JPN_KANJI" width="256">ハイリンクの　ちゅうしんにある
 この　おおきなきが▽
 ハイルツリーだ　▼
 ハイルツリーは　ひとや　ポケモンの
@@ -400,7 +400,7 @@
 	</row>
 
 	<row id="plc_oldman1_01_06" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
-		<comment>パレスの老人：アクセスとは？</comment>
+		<comment>ハイリンクの老人：デルパワーとは？</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">ハイルツリーの　もっている
 ふしぎなパワーを　われわれは▽
@@ -425,21 +425,21 @@
 	</row>
 
 	<row id="plc_oldman1_01_07" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
-		<comment>パレスの老人：パレスとは？選択肢</comment>
+		<comment>ハイリンクの老人：ツリーとは？選択肢</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">ハイルツリー　とは？</language>
 		<language name="JPN_KANJI" width="256">ハイルツリー　とは？</language>
 	</row>
 
 	<row id="plc_oldman1_01_08" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
-		<comment>パレスの老人：アクセスとは？選択肢</comment>
+		<comment>ハイリンクの老人：デルパワーとは？選択肢</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">デルパワー　とは？</language>
 		<language name="JPN_KANJI" width="256">デルパワー　とは？</language>
 	</row>
 
 	<row id="plc_oldman1_01_09" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
-		<comment>パレスの老人：やめる、選択肢</comment>
+		<comment>ハイリンクの老人：やめる、選択肢</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
@@ -491,7 +491,7 @@
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">……うむ
 ここは　イッシュのちゅうしん　にある▽
-パレスとよばれる　ばしょだ▼
+ハイリンクとよばれる　ばしょだ▼
 イッシュにすむ　ひとと　ポケモンの
 きもちが　あつまるばしょ▼
 イッシュの　みなが
@@ -502,7 +502,7 @@
 ここに　あつまっているのだ▼</language>
 		<language name="JPN_KANJI" width="256">……うむ
 ここは　イッシュのちゅうしん　にある▽
-パレスとよばれる　ばしょだ▼
+ハイリンクとよばれる　ばしょだ▼
 イッシュにすむ　ひとと　ポケモンの
 きもちが　あつまるばしょ▼
 イッシュの　みなが
@@ -535,7 +535,7 @@
 もらえるかも　しれないな</language>
 	</row>
 
-	<row id="plc_girl4_01_01">
+	<row id="plc_girl4_01_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘１：初期メッセージ</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">この　かけはしは　もうひとつの
@@ -544,7 +544,7 @@
 せかいと　つながっています▼</language>
 	</row>
 
-	<row id="plc_girl4_01_02">
+	<row id="plc_girl4_01_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘１：分岐メッセージ
 plc_girl4_01_06,7,8</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
@@ -554,7 +554,7 @@ plc_girl4_01_06,7,8</comment>
 しりたいことは　ありますか？</language>
 	</row>
 
-	<row id="plc_girl4_01_03">
+	<row id="plc_girl4_01_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘１：会話終了</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">この　かけはしは
@@ -579,7 +579,7 @@ plc_girl4_01_06,7,8</comment>
 おしえて　くれるでしょう▼</language>
 	</row>
 
-	<row id="plc_girl4_01_04">
+	<row id="plc_girl4_01_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘１：モノリスとは？</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">「ミッション」とは
@@ -606,7 +606,7 @@ plc_girl4_01_06,7,8</comment>
 おおきく　そだつでしょう▼</language>
 	</row>
 
-	<row id="plc_girl4_01_05">
+	<row id="plc_girl4_01_05" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘１：ミッションとは？</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">さあ　かけはしのうえに
@@ -619,28 +619,28 @@ plc_girl4_01_06,7,8</comment>
 はしを　わたることが　できるはずです</language>
 	</row>
 
-	<row id="plc_girl4_01_06">
+	<row id="plc_girl4_01_06" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘１：モノリスとは？選択肢</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">この　かけはしは？</language>
 		<language name="JPN_KANJI" width="256">この　かけはしは？</language>
 	</row>
 
-	<row id="plc_girl4_01_07">
+	<row id="plc_girl4_01_07" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘１：ミッションとは？選択肢</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">ミッション　とは？</language>
 		<language name="JPN_KANJI" width="256">ミッション　とは？</language>
 	</row>
 
-	<row id="plc_girl4_01_08">
+	<row id="plc_girl4_01_08" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘１：やめる、選択肢</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="plc_girl4_02_01">
+	<row id="plc_girl4_02_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘2：初期メッセージ</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">この　かけはしは　もうひとつの
@@ -649,7 +649,7 @@ plc_girl4_01_06,7,8</comment>
 せかいと　つながってます▼</language>
 	</row>
 
-	<row id="plc_girl4_02_02">
+	<row id="plc_girl4_02_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘2：分岐メッセージ
 plc_girl4_02_06,7,8</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
@@ -659,7 +659,7 @@ plc_girl4_02_06,7,8</comment>
 しりたいことは　ありますか？</language>
 	</row>
 
-	<row id="plc_girl4_02_03">
+	<row id="plc_girl4_02_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘2：会話終了</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">この　かけはしは
@@ -684,7 +684,7 @@ plc_girl4_02_06,7,8</comment>
 おしえて　くれるでしょう▼</language>
 	</row>
 
-	<row id="plc_girl4_02_04">
+	<row id="plc_girl4_02_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘2：Gパワーとは？</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">「ミッション」とは
@@ -711,7 +711,7 @@ plc_girl4_02_06,7,8</comment>
 おおきく　そだつでしょう▼</language>
 	</row>
 
-	<row id="plc_girl4_02_05">
+	<row id="plc_girl4_02_05" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘2：Gパワーをもらうには？</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">さあ　かけはしのうえに
@@ -724,25 +724,31 @@ plc_girl4_02_06,7,8</comment>
 はしを　わたることが　できるはずです</language>
 	</row>
 
-	<row id="plc_girl4_02_06">
+	<row id="plc_girl4_02_06" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘2：Gパワーとは？選択肢</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">この　かけはしは？</language>
 		<language name="JPN_KANJI" width="256">この　かけはしは？</language>
 	</row>
 
-	<row id="plc_girl4_02_07">
+	<row id="plc_girl4_02_07" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘2：Gパワーをもらうには？選択肢</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">ミッション　とは？</language>
 		<language name="JPN_KANJI" width="256">ミッション　とは？</language>
 	</row>
 
-	<row id="plc_girl4_02_08">
+	<row id="plc_girl4_02_08" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>双子娘2：やめる、選択肢</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="plc_oldman1_02_01">
+		<attribute name="キャラ指定">OLDMAN1</attribute>
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<flowchart-group-list>
