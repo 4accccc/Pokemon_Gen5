@@ -428,6 +428,8 @@ static s32 ItemParamRcvGet( ITEMPARAM_RCV * rcv, u16 param )
     return (s32)rcv->spa_exp;
   case ITEM_PRM_SP_DEFENCE_EXP:   // “Á–h“w—Í’lƒAƒbƒv
     return (s32)rcv->spd_exp;
+  case ITEM_PRM_EXP_LIMIT_FLAG:   // “w—Í’lŒÀŠE§Œä
+		return (s32)rcv->exp_limit;
   case ITEM_PRM_FRIEND1:        // ‚È‚Â‚«“x‚P
     return (s32)rcv->friend_exp1;
   case ITEM_PRM_FRIEND2:        // ‚È‚Â‚«“x‚Q

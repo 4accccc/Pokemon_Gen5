@@ -24,7 +24,7 @@
 //============================================================================================
 //  定数定義
 //============================================================================================
-#define TEMP_BUFLEN   ( 8 )   // 計算用ワーク数
+#define TEMP_BUFLEN   ( 9 )   // 計算用ワーク数
 
 #define RCV_25PER   ( 253 )   // 25%回復
 #define RCV_HALF    ( 254 )   // 半回復
@@ -42,7 +42,7 @@ static u8 PP_RcvCheck( POKEMON_PARAM * pp, u32 pos );
 static u8 PP_Recover( POKEMON_PARAM * pp, u32 pos, u32 rcv );
 static u8 PP_Up( POKEMON_PARAM * pp, u32 pos, u32 cnt );
 static void HP_Recover( POKEMON_PARAM * pp, u32 hp, u32 max, u32 rcv );
-static s32 PrmExp_Up( s32 exp, s32 other, s32 up );
+static s32 PrmExp_Up( s32 exp, s32 other, s32 up, s32 limit );
 static u8 Friend_Up( POKEMON_PARAM * pp, s32 now, s32 prm, u16 itemNo , u16 place, u32 heap );
 static u8 Friend_UpCheck( POKEMON_PARAM * pp, ITEMDATA * dat );
 
@@ -181,6 +181,7 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
   tmp[3] = PP_Get( pp, ID_PARA_agi_exp, NULL );
   tmp[4] = PP_Get( pp, ID_PARA_spepow_exp, NULL );
   tmp[5] = PP_Get( pp, ID_PARA_spedef_exp, NULL );
+	tmp[7] = ITEM_GetBufParam( dat, ITEM_PRM_EXP_LIMIT_FLAG );
 
   // HP努力値アップ
   if( PP_Get( pp, ID_PARA_monsno, NULL ) != MONSNO_NUKENIN ){
@@ -188,8 +189,8 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
       tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_HP_EXP_POINT );
       OS_Printf( "HP EXP : now = %d, prm = %d\n", tmp[0], tmp[6] );
       if( tmp[6] > 0 ){
-        if( tmp[0] < ITEM_PRMEXP_MAX &&
-          (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
+        if( !( tmp[0] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+						(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
           GFL_HEAP_FreeMemory( dat );
           return TRUE;
         }
@@ -209,8 +210,8 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
   if( ITEM_GetBufParam( dat, ITEM_PRM_POWER_EXP ) != 0 ){
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_POWER_EXP_POINT );
     if( tmp[6] > 0 ){
-      if( tmp[1] < ITEM_PRMEXP_MAX &&
-        (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
+			if( !( tmp[1] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
       }
@@ -229,8 +230,8 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
   if( ITEM_GetBufParam( dat, ITEM_PRM_DEFENCE_EXP ) != 0 ){
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_DEFENCE_EXP_POINT );
     if( tmp[6] > 0 ){
-      if( tmp[2] < ITEM_PRMEXP_MAX &&
-        (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
+			if( !( tmp[2] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
       }
@@ -249,8 +250,8 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
   if( ITEM_GetBufParam( dat, ITEM_PRM_AGILITY_EXP ) != 0 ){
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_AGILITY_EXP_POINT );
     if( tmp[6] > 0 ){
-      if( tmp[3] < ITEM_PRMEXP_MAX &&
-        (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
+			if( !( tmp[3] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
       }
@@ -269,8 +270,8 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
   if( ITEM_GetBufParam( dat, ITEM_PRM_SP_ATTACK_EXP ) != 0 ){
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_SP_ATTACK_EXP_POINT );
     if( tmp[6] > 0 ){
-      if( tmp[4] < ITEM_PRMEXP_MAX &&
-        (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
+			if( !( tmp[4] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
       }
@@ -289,8 +290,8 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
   if( ITEM_GetBufParam( dat, ITEM_PRM_SP_DEFENCE_EXP ) != 0 ){
     tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_SP_DEFENCE_EXP_POINT );
     if( tmp[6] > 0 ){
-      if( tmp[5] < ITEM_PRMEXP_MAX &&
-        (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
+			if( !( tmp[5] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
+					(tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]) < PRMEXP_MAX ){
         GFL_HEAP_FreeMemory( dat );
         return TRUE;
       }
@@ -482,6 +483,7 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
   tmp[3] = PP_Get( pp, ID_PARA_agi_exp, NULL );
   tmp[4] = PP_Get( pp, ID_PARA_spepow_exp, NULL );
   tmp[5] = PP_Get( pp, ID_PARA_spedef_exp, NULL );
+	tmp[8] = ITEM_GetBufParam( dat, ITEM_PRM_EXP_LIMIT_FLAG );
 
   // HP努力値アップ
   if( PP_Get( pp, ID_PARA_monsno, NULL ) != MONSNO_NUKENIN )
@@ -489,7 +491,7 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
     if( ITEM_GetBufParam( dat, ITEM_PRM_HP_EXP ) != 0 )
     {
       tmp[7] = ITEM_GetBufParam( dat,ITEM_PRM_HP_EXP_POINT );
-      tmp[6] = PrmExp_Up( tmp[0], (tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]), tmp[7] );
+      tmp[6] = PrmExp_Up( tmp[0], (tmp[1]+tmp[2]+tmp[3]+tmp[4]+tmp[5]), tmp[7], tmp[8] );
       if( tmp[6] != -1 )
       {
         tmp[0] = tmp[6];
@@ -503,7 +505,7 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
   // 攻撃努力値アップ
   if( ITEM_GetBufParam( dat, ITEM_PRM_POWER_EXP ) != 0 ){
     tmp[7] = ITEM_GetBufParam( dat,ITEM_PRM_POWER_EXP_POINT );
-    tmp[6] = PrmExp_Up( tmp[1], (tmp[0]+tmp[2]+tmp[3]+tmp[4]+tmp[5]), tmp[7] );
+    tmp[6] = PrmExp_Up( tmp[1], (tmp[0]+tmp[2]+tmp[3]+tmp[4]+tmp[5]), tmp[7], tmp[8] );
     if( tmp[6] != -1 ){
       tmp[1] = tmp[6];
       PP_Put( pp, ID_PARA_pow_exp, tmp[1] );
@@ -515,7 +517,7 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
   // 防御努力値アップ
   if( ITEM_GetBufParam( dat, ITEM_PRM_DEFENCE_EXP ) != 0 ){
     tmp[7] = ITEM_GetBufParam( dat,ITEM_PRM_DEFENCE_EXP_POINT );
-    tmp[6] = PrmExp_Up( tmp[2], (tmp[0]+tmp[1]+tmp[3]+tmp[4]+tmp[5]), tmp[7] );
+    tmp[6] = PrmExp_Up( tmp[2], (tmp[0]+tmp[1]+tmp[3]+tmp[4]+tmp[5]), tmp[7], tmp[8] );
     if( tmp[6] != -1 ){
       tmp[2] = tmp[6];
       PP_Put( pp, ID_PARA_def_exp, tmp[2] );
@@ -527,7 +529,7 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
   // 素早さ努力値アップ
   if( ITEM_GetBufParam( dat, ITEM_PRM_AGILITY_EXP ) != 0 ){
     tmp[7] = ITEM_GetBufParam( dat,ITEM_PRM_AGILITY_EXP_POINT );
-    tmp[6] = PrmExp_Up( tmp[3], (tmp[0]+tmp[1]+tmp[2]+tmp[4]+tmp[5]), tmp[7] );
+    tmp[6] = PrmExp_Up( tmp[3], (tmp[0]+tmp[1]+tmp[2]+tmp[4]+tmp[5]), tmp[7], tmp[8] );
     if( tmp[6] != -1 ){
       tmp[3] = tmp[6];
       PP_Put( pp, ID_PARA_agi_exp, tmp[3] );
@@ -539,7 +541,7 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
   // 特攻努力値アップ
   if( ITEM_GetBufParam( dat, ITEM_PRM_SP_ATTACK_EXP ) != 0 ){
     tmp[7] = ITEM_GetBufParam( dat,ITEM_PRM_SP_ATTACK_EXP_POINT );
-    tmp[6] = PrmExp_Up( tmp[4], (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[5]), tmp[7] );
+    tmp[6] = PrmExp_Up( tmp[4], (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[5]), tmp[7], tmp[8] );
     if( tmp[6] != -1 ){
       tmp[4] = tmp[6];
       PP_Put( pp, ID_PARA_spepow_exp, tmp[4] );
@@ -551,7 +553,7 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
   // 特防努力値アップ
   if( ITEM_GetBufParam( dat, ITEM_PRM_SP_DEFENCE_EXP ) != 0 ){
     tmp[7] = ITEM_GetBufParam( dat,ITEM_PRM_SP_DEFENCE_EXP_POINT );
-    tmp[6] = PrmExp_Up( tmp[5], (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]), tmp[7] );
+    tmp[6] = PrmExp_Up( tmp[5], (tmp[0]+tmp[1]+tmp[2]+tmp[3]+tmp[4]), tmp[7], tmp[8] );
     if( tmp[6] != -1 ){
       tmp[5] = tmp[6];
       PP_Put( pp, ID_PARA_spedef_exp, tmp[5] );
@@ -784,17 +786,18 @@ static void HP_Recover( POKEMON_PARAM * pp, u32 hp, u32 max, u32 rcv )
  * @param exp   現在の努力値
  * @param other その他の努力値の合計
  * @param up    アップする値
+ * @param limit 限界制御
  *
  * @retval  "-1 = アップしない"
  * @retval  "0 != 計算結果（セットする努力値）"
  */
 //--------------------------------------------------------------------------------------------
-static s32 PrmExp_Up( s32 exp, s32 other, s32 up )
+static s32 PrmExp_Up( s32 exp, s32 other, s32 up, s32 limit )
 {
   if( exp == 0 && up < 0 ){
     return -1;
   }
-  if( exp >= ITEM_PRMEXP_MAX && up > 0 ){
+  if( exp >= ITEM_PRMEXP_MAX && limit == 0 && up > 0 ){
     return -1;
   }
   if( (exp+other) >= PRMEXP_MAX && up > 0 ){
@@ -802,7 +805,7 @@ static s32 PrmExp_Up( s32 exp, s32 other, s32 up )
   }
 
   exp += up;
-  if( exp > ITEM_PRMEXP_MAX ){
+  if( exp > ITEM_PRMEXP_MAX && limit == 0 ){
     exp = ITEM_PRMEXP_MAX;
   }else if( exp < 0 ){
     exp = 0;

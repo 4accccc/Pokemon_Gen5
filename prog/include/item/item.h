@@ -97,6 +97,7 @@ enum {
   ITEM_PRM_AGILITY_EXP,     // 素早さ努力値アップ
   ITEM_PRM_SP_ATTACK_EXP,     // 特攻努力値アップ
   ITEM_PRM_SP_DEFENCE_EXP,    // 特防努力値アップ
+  ITEM_PRM_EXP_LIMIT_FLAG,    // 努力値限界制御
   ITEM_PRM_FRIEND1,       // なつき度１
   ITEM_PRM_FRIEND2,       // なつき度２
   ITEM_PRM_FRIEND3,       // なつき度３
