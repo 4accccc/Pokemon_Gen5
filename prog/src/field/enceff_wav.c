@@ -26,11 +26,14 @@
 #define WAVE_COUNT (7)
 #define WAVE_AFTER_WAIT (0)
 #define WAVE_HEIGHT (FX16_ONE/4)
+#define WAVE_FADE_COUNT (50)
 
 #define PALACE_WAVE_WAIT (2)
 #define PALACE_WAVE_COUNT (7)
 #define PALACE_WAVE_AFTER_WAIT (45)
 #define PALACE_WAVE_HEIGHT (FX16_ONE/3)
+#define PALACE_WAVE_FADE_COUNT  (55)
+
 
 typedef struct
 {
@@ -43,6 +46,8 @@ typedef struct
 
   fx32 Height;
   int Fade;
+  int FadeCount;
+  BOOL FadeReq;
 }ENCEFF_WAV_WORK;
 
 static void DrawMesh(void *wk);
@@ -140,7 +145,8 @@ static GMEVENT *CreateEffMainEvt(GAMESYS_WORK *gsys)
     work->WaveWaitBase = WAVE_WAIT;
     work->Height = WAVE_HEIGHT;
     work->WaveAfterWait = WAVE_AFTER_WAIT;
-
+    work->FadeCount = WAVE_FADE_COUNT;
+    work->FadeReq = FALSE;
 
     //頂点初期化
     for (i=0;i<VTX_H_NUM*VTX_W_NUM;i++)
@@ -183,11 +189,19 @@ static GMEVENT_RESULT EffMainEvt( GMEVENT* event, int* seq, void* work )
   case 0:
     {
       BOOL rc;
+      if ( evt_work->FadeCount )
+      {
+        evt_work->FadeCount--;
+      }
+      else if( !evt_work->FadeReq ){
+        //フェードアウト開始
+        GFL_FADE_SetMasterBrightReq(evt_work->Fade, 0, 16, 0 ); //両画面フェードアウト
+        evt_work->FadeReq = TRUE;
+      }
+
       rc = WaveMain(evt_work);
       if (rc)
       {
-        //ホワイトアウト開始
-        GFL_FADE_SetMasterBrightReq(evt_work->Fade, 0, 16, 0 ); //両画面フェードアウト
         evt_work->WaveWait = EFF_AFTER_WAIT;
         (*seq)++;
       }
@@ -200,7 +214,7 @@ static GMEVENT_RESULT EffMainEvt( GMEVENT* event, int* seq, void* work )
       evt_work->WaveWait--;
       break;
     }
-    //ホワイトアウト待ち
+    //フェードアウト待ち
     if ( GFL_FADE_CheckFade() != FALSE ) break;
     return( GMEVENT_RES_FINISH );
   }
@@ -608,7 +622,9 @@ static GMEVENT *CreateEffMainEvt2(GAMESYS_WORK *gsys)
     work->WaveWaitBase = PALACE_WAVE_WAIT;
     work->Height = PALACE_WAVE_HEIGHT;
     work->WaveAfterWait = PALACE_WAVE_AFTER_WAIT;
-
+    work->FadeCount = PALACE_WAVE_FADE_COUNT;
+    work->FadeReq = FALSE;
+    
     //頂点初期化
     for (i=0;i<VTX_H_NUM*VTX_W_NUM;i++)
     {

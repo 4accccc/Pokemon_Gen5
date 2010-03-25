@@ -206,13 +206,15 @@ extern GMEVENT* EVENT_FlySkyBrightOut(
  * @param	fieldmap
  * @param	fadeType		       フェードの種類指定 ( FADE_TYPE_BLACK or FADE_TYPE_WHITE )
  * @param fadeFinishWaitFlag フェード完了を待つかどうか
+ * @param fade_speed
  *
  * @return 生成したイベント
  */
 //----------------------------------------------------------------------------------
 extern GMEVENT* EVENT_FlySkyBrightIn( 
     GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, 
-    FIELD_FADE_TYPE fadeType, FIELD_FADE_WAIT_FLAG fadeFinishWaitFlag ); 
+    FIELD_FADE_TYPE fadeType, FIELD_FADE_WAIT_FLAG fadeFinishWaitFlag,
+    const int fade_speed ); 
 //----------------------------------------------------------------------------------
 /**
  * @brief	デバッグ用 即時アウト イベント生成

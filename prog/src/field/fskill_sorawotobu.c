@@ -247,7 +247,7 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
         MMDL_SetStatusBitVanish(mmdl, TRUE);
       }
       //ブラックインリクエスト
-      GMEVENT_CallEvent(event, EVENT_FlySkyBrightIn(wk->gsys, fieldWork, FIELD_FADE_BLACK, FIELD_FADE_WAIT));
+      GMEVENT_CallEvent(event, EVENT_FlySkyBrightIn(wk->gsys, fieldWork, FIELD_FADE_BLACK, FIELD_FADE_WAIT, 0));
       (*seq)++;
     }
     break;

@@ -99,6 +99,7 @@ typedef struct
 
   // 輝度フェード
   int                     brightFadeMode;      // フェードモード
+  int                     FadeSpeed;
   FIELD_FADE_WAIT_FLAG    fadeFinishWaitFlag;  // フェード処理の完了を待つかどうか
   FIELD_FADE_BG_INIT_FLAG BGInitFlag;          // BG面の初期化を行うかどうか
 
@@ -279,12 +280,14 @@ GMEVENT* EVENT_FieldFadeIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
  * @param	fieldmap
  * @param	fadeType		       フェードの種類指定 ( FADE_TYPE_BLACK or FADE_TYPE_WHITE )
  * @param fadeFinishWaitFlag フェード完了を待つかどうか
+ * @param fade_speed
  *
  * @return 生成したイベント
  */
 //--------------------------------------------------------------------------------------------
 GMEVENT* EVENT_FlySkyBrightIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, 
-                               FIELD_FADE_TYPE fadeType, FIELD_FADE_WAIT_FLAG fadeFinishWaitFlag )
+                               FIELD_FADE_TYPE fadeType, FIELD_FADE_WAIT_FLAG fadeFinishWaitFlag,
+                               const int fade_speed )
 {
 	GMEVENT * event;
 	FADE_EVENT_WORK * work;
@@ -298,6 +301,7 @@ GMEVENT* EVENT_FlySkyBrightIn( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap
 	work->fadeType           = fadeType;
   work->fadeFinishWaitFlag = fadeFinishWaitFlag;
   work->brightFadeMode     = GetBrightFadeMode( fadeType );
+  work->FadeSpeed          = fade_speed;
 
 	return event;
 }
@@ -1559,7 +1563,7 @@ static GMEVENT_RESULT FlySkyBrightInEvent( GMEVENT* event, int* seq, void* wk )
 	switch( *seq ) {
 	case 0:
     // 輝度フェード開始
-    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, work->fadeFinishWaitFlag );
+    GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, work->FadeSpeed );
     // フィールドBG復元
     ResetFieldBG( work->fieldmap );
     InitFieldBG( work->fieldmap );
