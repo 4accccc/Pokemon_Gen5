@@ -86,6 +86,16 @@ typedef enum {
 #define BATTLEMODE_REGULATION_MASK 0x300
 
 
+//--------------------------------------------------------------
+//  検索条件”指定なし”の定義
+//--------------------------------------------------------------
+///ポケモン指定無し
+#define BATTLE_REC_SEARCH_MONSNO_NONE     (0xffff)
+///国コード指定無し
+#define BATTLE_REC_SEARCH_COUNTRY_CODE_NONE   (0xff)
+///地方コード指定無し
+#define BATTLE_REC_SEARCH_LOCAL_CODE_NONE   (0xff)
+
 
 
 //--------------------------------------------------------------
