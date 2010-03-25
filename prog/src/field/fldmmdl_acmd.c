@@ -4307,9 +4307,9 @@ static int AC_ShinMuFlyLeft0( MMDL * mmdl )
 	
 	work = MMDL_InitMoveCmdWork( mmdl, AC_WALK_WORK_SIZE );
 	work->draw_state = DRAW_STA_SHINMU_A_FLY;
-	work->wait = GRID_FRAME_4;
+	work->wait = GRID_FRAME_2;
 	work->dir = DIR_LEFT;
-	work->val = GRID_VALUE_SPEED_4;
+	work->val = GRID_VALUE_SPEED_2;
 	
 	MMDL_UpdateGridPosDir( mmdl, work->dir );
 	MMDL_SetDrawStatus( mmdl, work->draw_state );
@@ -4397,7 +4397,7 @@ static int AC_ShinMuFlyUpper1( MMDL * mmdl )
 	
 	grid = work->total_offset / GRID_HALF_FX32;
 	
-	if( grid < 40 ){
+	if( grid < 16 ){
 		return( FALSE );
 	}
 	
@@ -4429,6 +4429,21 @@ static int AC_ShinMuGutari( MMDL * mmdl )
 static int AC_ShinMuTurn( MMDL * mmdl )
 {
 	MMDL_SetDrawStatus( mmdl, DRAW_STA_SHINMU_B_TURN );
+	MMDL_IncAcmdSeq( mmdl );
+	return( TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * AC_SHIN_MU_OFFS_CLEAR
+ * @param	mmdl	MMDL *
+ * @retval	int		TRUE=Ä‹N
+ */
+//--------------------------------------------------------------
+static int AC_ShinMuOffsetClear( MMDL * mmdl )
+{
+  VecFx32 offs = {0,0,0};
+  MMDL_SetVectorDrawOffsetPos( mmdl, &offs );
 	MMDL_IncAcmdSeq( mmdl );
 	return( TRUE );
 }
@@ -6273,6 +6288,15 @@ int (* const DATA_AC_ShinMuGutari_Tbl[])( MMDL * ) =
 int (* const DATA_AC_ShinMuTurn_Tbl[])( MMDL * ) =
 {
   AC_ShinMuTurn,
+	AC_End,
+};
+
+//--------------------------------------------------------------
+/// AC_SHIN_MU_OFFS_CLEAR
+//--------------------------------------------------------------
+int (* const DATA_AC_ShinMuOffsetClear_Tbl[])( MMDL * ) =
+{
+  AC_ShinMuOffsetClear,
 	AC_End,
 };
 

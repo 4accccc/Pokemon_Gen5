@@ -621,7 +621,8 @@
 #define AC_MELODYER_SPIN 0xb1 ///<メロディア 回転
 #define AC_MELODYER_SPIN_POSE 0xb2 ///<メロディア 回転+ポーズ
 #define AC_MELODYER_SHAKE 0xb3 ///<メロディア 上下揺れ
-#define ACMD_MAX 0xb4 ///<アニメーションコマンド最大数
+#define AC_SHIN_MU_OFFS_CLEAR 0xb4 ///<シンム 描画オフセットをクリア
+#define ACMD_MAX 0xb5 ///<アニメーションコマンド最大数
 
 #define ACMD_END 0xfe ///<アニメーションコマンド終了
 #define ACMD_NOT 0xff ///<非アニメーションコマンド

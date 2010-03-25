@@ -1358,6 +1358,8 @@ int (* const * const DATA_AcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_MelodyerSpin_Tbl,         //AC_MELODYER_SPIN
   DATA_AC_MelodyerSpinPose_Tbl,     //AC_MELODYER_SPIN_POSE
   DATA_AC_MelodyerShake_Tbl,        //AC_MELODYER_SHAKE
+  
+  DATA_AC_ShinMuOffsetClear_Tbl,  //AC_SHIN_MU_OFFS_CLEAR
 };
 
 //--------------------------------------------------------------
