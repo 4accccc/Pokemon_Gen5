@@ -22,8 +22,8 @@
 //================================================================================= 
 #define SPECIAL_BGM_NONE (0xffffffff)  // 特殊BGMなし
 #define MAX_VOLUME       (127)         // 最大ボリューム
-#define APP_HOLD_VOLUME  (89)          // アプリ時のボリューム
-#define APP_FADE_FRAME   (18)          // アプリ時のフェード フレーム数
+#define APP_HOLD_VOLUME  (64)          // アプリ時のボリューム
+#define APP_FADE_FRAME   (6)          // アプリ時のフェード フレーム数
 
 
 //================================================================================= 
@@ -1079,7 +1079,7 @@ static u32 GetFieldBGM( GAMEDATA* gameData, u32 zoneID )
   // 特殊BGMが無い
   if( soundIdx == SPECIAL_BGM_NONE )
   {
-    if( playerForm == PLAYER_MOVE_FORM_SWIM )
+    if( (playerForm == PLAYER_MOVE_FORM_SWIM) && ZONEDATA_BicycleBGMEnable( zoneID ) )
     { // なみのり
       soundIdx = SEQ_BGM_NAMINORI;
     }      
