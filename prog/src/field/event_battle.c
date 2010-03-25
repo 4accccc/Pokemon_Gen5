@@ -76,6 +76,7 @@ typedef enum{
  BTL_BEACON_ST_START,
  BTL_BEACON_ST_WIN,
  BTL_BEACON_ST_CAPTURE,
+ BTL_BEACON_ST_ESCAPE,
  BTL_BEACON_ST_MAX,
 }BTL_BEACON_ST;
 
@@ -746,6 +747,9 @@ static void BeaconReq_BtlWild( BATTLE_SETUP_PARAM* bp, BTL_BEACON_ST state )
     monsno = PP_Get( PokeParty_GetMemberPointer(party,bp->capturedPokeIdx), ID_PARA_monsno, NULL );
     GAMEBEACON_Set_PokemonGet( monsno );
     break;
+  case BTL_BEACON_ST_ESCAPE:
+    GAMEBEACON_Set_Escape();
+    break;
   }
 }
 
@@ -757,10 +761,47 @@ static void BeaconReq_BtlWild( BATTLE_SETUP_PARAM* bp, BTL_BEACON_ST state )
 static void BeaconReq_BattleEnd( BATTLE_EVENT_WORK* bew )
 {
   BATTLE_SETUP_PARAM* bp = bew->battle_param;
+  
+  POKEPARTY * party = GAMEDATA_GetMyPokemon( bew->gamedata );
+  POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, PokeParty_GetMemberTopIdxNotEgg( party ));
+  STRBUF* nickname = GFL_STR_CreateBuffer( BUFLEN_POKEMON_NAME, GFL_HEAP_LOWID( HEAPID_PROC ) );
+
+  PP_Get( pp, ID_PARA_nickname, nickname );
+
+  //先頭ポケモンの残HPチェック
+  {
+    u16 hp = PP_Get(pp,ID_PARA_hp,NULL);
+    u16 hp_max = PP_Get(pp,ID_PARA_hp,NULL);
+
+    if( hp == 0 ){
+      GAMEBEACON_Set_Dying(nickname);
+    }else if( (hp*2) <= hp_max ){
+      GAMEBEACON_Set_HPLittle(nickname);
+    }
+  }
+  { //残PPチェック
+    int i;
+
+    for(i = 0;i < 4;i++){
+      if( ( PP_Get( pp, ID_PARA_waza1+i, NULL) != WAZANO_NULL ) &&
+          ( PP_Get( pp, ID_PARA_pp1+i,NULL) == 0) ){
+        GAMEBEACON_Set_PPLittle(nickname);
+        break;
+      }
+    }
+  }
+  { //状態異常チェック
+    if( PP_Get( pp, ID_PARA_condition, NULL) != 0 ) {
+      GAMEBEACON_Set_StateIsAbnormal(nickname);
+    }
+  }
+  GFL_STR_DeleteBuffer( nickname );
 
   switch( bp->competitor ){
   case BTL_COMPETITOR_WILD:
     if( bp->result == BTL_RESULT_CAPTURE ){
+      BeaconReq_BtlWild( bp, BTL_BEACON_ST_ESCAPE );
+    }else if( bp->result == BTL_RESULT_CAPTURE ){
       BeaconReq_BtlWild( bp, BTL_BEACON_ST_CAPTURE );
     }else if( bp->result == BTL_RESULT_WIN ){
       BeaconReq_BtlWild( bp, BTL_BEACON_ST_WIN );
