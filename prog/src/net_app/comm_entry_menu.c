@@ -910,6 +910,7 @@ static BOOL _Update_ChildParentDesignate(COMM_ENTRY_MENU_PTR em)
     break;
   case _SEQ_NG_WAIT:
     if(GFL_NET_IsExit() == TRUE && FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE){
+      em->entry_result = COMM_ENTRY_RESULT_CANCEL;
       em->seq = _SEQ_FINISH;
     }
     break;
