@@ -9,6 +9,7 @@
 #ifndef ZONE_C11_EVC_H
 #define ZONE_C11_EVC_H
 
+#define C11_RECEPT_01                      0
 
 #endif //ZONE_C11_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c11.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

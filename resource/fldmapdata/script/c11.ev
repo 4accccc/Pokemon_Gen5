@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c11.h"
   //.include  "c11.h"
+  .include  "c03p14_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +20,90 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_c11
+_EVENT_DATA    ev_reserve_c11_recept_end
+_EVENT_DATA    ev_c11_recept_01		//ヒウン港へ戻る受付
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/* 			予約スクリプト：船を下りる						  */
 /**************************************************************/
-//ev_c11_flag_change:
-//  _END
+EVENT_START	ev_reserve_c11_recept_end
+	//暗転復帰
+	_MAP_FADE_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	//主人公：船から降りる
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_end_ply_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：船から降りる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_end_ply_move_01
+	_ANIME_DATA	AC_WALK_L_8F,3
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
-/*                                                            */
+/* 			ヒウン港へ戻る受付								  */
 /**************************************************************/
-ev_c11:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START	ev_c11_recept_01
+	_TALK_OBJ_START()
+	
+	_BALLOONWIN_TALKOBJ_MSG( msg_c11_infomationm_01 )
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+		//はい
+		_BALLOONWIN_TALKOBJ_MSG( msg_c11_infomationm_02 )
+		_MSGWIN_CLOSE()
+		
+		_PLAYER_DIR_GET( SCWK_TEMP0 )
+		SWITCH $SCWK_TEMP0
+		CASE DIR_UP THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01u )
+		CASE DIR_LEFT THEN
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01l )
+		DEFAULT
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01r )
+		ENDSWITCH
+		_OBJ_ANIME_WAIT()
+		
+		//予約スクリプト：マップ遷移後、船から下りるスクリプトを起動
+		_RESERVE_SCRIPT( SCRID_RESERVE_C03P14_RECEPT_END )
+		
+		_MAP_FADE_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		
+		_MAP_CHANGE_NO_FADE( ZONE_ID_C03P14, 12, 0, 14, DIR_RIGHT)
+		
+		
+	ELSE
+		//いいえ
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：船に乗る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_recept_ply_move_01u
+	_ANIME_DATA	AC_WALK_R_8F,2
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_recept_ply_move_01l
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_recept_ply_move_01r
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	ACMD_END,0
+
 

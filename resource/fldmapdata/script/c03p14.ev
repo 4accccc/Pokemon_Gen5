@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "msg_c03p14.h"
   .include  "c03p14.h"
+  .include  "c11_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,14 +22,143 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c03p14_girl4_01
 _EVENT_DATA		ev_c03p14_dancer_01
+_EVENT_DATA		ev_c03p14_recept_01
+_EVENT_DATA		ev_reserve_c03p14_recept_end
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/* 			C11ユナイテッドタワー行き受付					  */
 /**************************************************************/
-//ev_zone_c03p14:
-//  _END
+EVENT_START		ev_c03p14_recept_01
+	_TALK_OBJ_START()
+
+	{
+	DEFINE_LOCAL	lwk_loop
+	DEFINE_LOCAL	lwk_select
+	
+	WHILE $lwk_loop != 555
+		
+		//ユナイテッドタワーに ごようですか？
+		_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_01, C03P14_RECEPT_01, POS_DOWN )
+		
+		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1,lwk_select )
+		_BMPMENU_MAKE_LIST( msg_c03p14_infomationw_06, 0 )
+		_BMPMENU_MAKE_LIST( msg_c03p14_infomationw_07, 1 )
+		_BMPMENU_MAKE_LIST( msg_c03p14_infomationw_08, 2 )
+		_BMPMENU_START()
+		
+		SWITCH $lwk_select
+		CASE 0 THEN
+			//はい 選択
+			_CALL	ev_select_yes
+			
+			$lwk_loop = 555
+			
+		CASE 2 THEN
+			//なにそれ 選択
+			
+			//ユナイテッドタワーは…
+			_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_04, C03P14_RECEPT_01, POS_DOWN )
+			
+		DEFAULT
+			//いいえ 選択 or Ｂキャンセル
+			
+			_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_05, C03P14_RECEPT_01, POS_DOWN )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+			
+			$lwk_loop = 555
+			
+		ENDSWITCH
+	
+	ENDWHILE
+	
+	}
+EVENT_END
+
+//「はい」を選択
+ev_select_yes:
+	//【仮】交換した国数のチェックが未実装
+	//IF $SCWK_ANSWER == VAL THEN (テンプレ）ENDIF
+
+	//お一人様ごあんなーい！
+	_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_03, C03P14_RECEPT_01, POS_DOWN )
+	_MSGWIN_CLOSE()
+	
+	//主人公：船へ
+	_PLAYER_DIR_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == DIR_UP THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01u )
+	ELSIF $SCWK_ANSWER == DIR_DOWN THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01d )
+	ELSIF $SCWK_ANSWER == DIR_LEFT THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01l )
+	ELSE
+		//現状の配置だと右向きで話しかけられないけど念のため用意しておきます
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01r )
+	ENDIF
+	_OBJ_ANIME_WAIT()
+	
+	_MAP_FADE_BLACK_OUT()
+	_DISP_FADE_END_CHECK()
+	
+	//３Ｄデモコール
+	_CALL_3D_DEMO( DEMO3D_ID_RIZA_BRIDGE )
+	
+	//予約スクリプト：マップ遷移後、船から下りるスクリプトを起動
+	_RESERVE_SCRIPT( SCRID_RESERVE_C11_RECEPT_END )
+	
+	//マップ遷移
+	_MAP_CHANGE_NO_FADE( ZONE_ID_C11, 407, 0, 762, DIR_LEFT )
+	
+_RET
+
+//--------------------------------------------------------------------
+//主人公：船へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_recept_ply_move_01u
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_recept_ply_move_01d
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_recept_ply_move_01l
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_recept_ply_move_01r
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+/**************************************************************/
+/* 			予約スクリプト：船を下りる						  */
+/**************************************************************/
+EVENT_START	ev_reserve_c03p14_recept_end
+	//暗転復帰
+	_MAP_FADE_BLACK_IN()
+	_DISP_FADE_END_CHECK()
+	
+	//主人公：船から降りる
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_end_ply_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：船から降りる
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_end_ply_move_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /* 			GIRL4	C03P14									  */
