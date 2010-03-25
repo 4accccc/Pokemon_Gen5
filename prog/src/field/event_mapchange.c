@@ -71,6 +71,7 @@ FS_EXTERN_OVERLAY(debug_data);
 #endif
 
 #include "seasonpoke_form.h"    //for SEASONPOKE_FORM_ChangeForm
+#include "enceff.h"             //for ENCEFF_SetEncEff
 
 //============================================================================================
 //============================================================================================
@@ -97,6 +98,11 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work
 static GMEVENT* EVENT_FirstGameStart( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork );
 static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork );
 
+static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk );
+
+static GMEVENT * EVENT_ChangeMapPalace( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc );
+
+
 //============================================================================================
 //
 //  イベント：ゲーム開始
@@ -109,6 +115,15 @@ typedef struct {
   GAME_INIT_WORK* gameInitWork;
   DEMO3D_PARAM    demo3dParam;
 } FIRST_START_WORK;
+
+typedef struct PALACE_JUMP_tag
+{
+  LOCATION Loc;
+  GAMESYS_WORK*  gameSystem;
+  GAMEDATA*      gameData;
+  FIELDMAP_WORK* fieldmap;
+}PALACE_JUMP;
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static GMEVENT_RESULT FirstGameStartEvent( GMEVENT* event, int* seq, void* wk )
@@ -1550,10 +1565,15 @@ GMEVENT* EVENT_ChangeMapToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecFx32
     LOCATION return_loc;
     setNowLoaction( &return_loc, fieldWork );
     GAMEDATA_SetPalaceReturnLocation(gamedata, &return_loc);
-    PMSND_PlaySE( SEQ_SE_FLD_131 ); //SEの確認用にエフェクトは無いけどあてておく
+//    PMSND_PlaySE( SEQ_SE_FLD_131 ); //SEの確認用にエフェクトは無いけどあてておく
   }
   GAMEDATA_SetIntrudeReverseArea(gamedata, TRUE);
-  event = EVENT_ChangeMapPos(gsys, fieldWork, zone_id, pos, DIR_UP, FALSE);
+//  event = EVENT_ChangeMapPos(gsys, fieldWork, zone_id, pos, DIR_UP, FALSE);
+  {
+    LOCATION loc;
+    LOCATION_SetDirect( &loc, zone_id, DIR_UP, pos->x, pos->y, pos->z );
+    event = EVENT_ChangeMapPalace( gsys, fieldWork, &loc );
+  }
   return event;
 }
 //------------------------------------------------------------------
@@ -1566,7 +1586,8 @@ GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
   MAPCHANGE_WORK* work;
   GMEVENT* event;
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gameSystem);
-  
+  FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gameSystem );
+#if 0  
   event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK) );
   work  = GMEVENT_GetEventWork( event );
 
@@ -1576,9 +1597,16 @@ GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
   work->loc_req = *(GAMEDATA_GetPalaceReturnLocation( gamedata ) );
   work->exit_type          = EXIT_TYPE_NONE;
   work->seasonUpdateEnable = FALSE;
-
+#else
+  {
+    LOCATION loc;
+    //覚えておいた戻り先をそのまま代入
+    loc = *(GAMEDATA_GetPalaceReturnLocation( gamedata ) );
+    event = EVENT_ChangeMapPalace( gameSystem, fieldWork, &loc );
+  }
+#endif
   GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
-  PMSND_PlaySE( SEQ_SE_FLD_131 ); //SEの確認用にエフェクトは無いけどあてておく
+//  PMSND_PlaySE( SEQ_SE_FLD_131 ); //SEの確認用にエフェクトは無いけどあてておく
 
   return event;
 }
@@ -2286,5 +2314,69 @@ static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID)
     GFL_HEAP_FreeMemory( data );
     GFL_ARC_CloseDataHandle( handle );
   }
+}
+
+static GMEVENT * EVENT_ChangeMapPalace( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc)
+{
+  PALACE_JUMP* work;
+  GMEVENT* event;
+
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangePalace, sizeof(PALACE_JUMP) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  work->Loc = *loc;
+  work->gameSystem = gameSystem;
+  work->gameData = GAMESYSTEM_GetGameData( gameSystem );
+  work->fieldmap = fieldmap;
+
+  return event;
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk )
+{
+  PALACE_JUMP* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  GAMEDATA*       gameData   = work->gameData;
+
+  switch(*seq)
+  {
+  case 0:
+    //ＳＥ
+    PMSND_PlaySE( SEQ_SE_FLD_131 );
+    //エフェクトコール
+    ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, ENCEFFID_PALACE_WARP);
+    (*seq)++;
+    break;
+  case 1:
+    {
+      MAPCHANGE_WORK* mc_work;
+      GMEVENT* call_event;
+      call_event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeNoFade, sizeof(MAPCHANGE_WORK) );
+      mc_work  = GMEVENT_GetEventWork( call_event );
+      // イベントワーク初期化
+      MAPCHANGE_WORK_init( mc_work, gameSystem );
+      //ロケーションセット
+      mc_work->loc_req = work->Loc;
+//      LOCATION_SetDirect( &(mc_work->loc_req), work->ZoneID, work->Dir, work->Pos.x, work->Pos.y, work->Pos.z ); 
+      mc_work->exit_type          = EXIT_TYPE_NONE;
+      mc_work->seasonUpdateEnable = FALSE;
+      //イベントコール
+      GMEVENT_CallEvent( event, call_event );
+    }
+    (*seq)++;
+    break;
+  case 2:
+    //ブラックインリクエスト　そらをとぶ演出流用
+    GMEVENT_CallEvent(event, EVENT_FlySkyBrightIn(gameSystem, fieldmap, FIELD_FADE_BLACK, FIELD_FADE_WAIT, 2));
+    (*seq)++;
+    break;
+  case 3:
+    return GMEVENT_RES_FINISH; 
+  }
+  return GMEVENT_RES_CONTINUE;
 }
 
