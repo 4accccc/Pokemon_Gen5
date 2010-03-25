@@ -8,6 +8,9 @@
  *  モジュール名：CHIHOU_ZUKAN_AWARD
  */
 //============================================================================
+#define DEBUG_TEXT_MOVE  // これが定義されているとき、テキストを動かせる
+
+
 #define HEAPID_CHIHOU_ZUKAN_AWARD (HEAPID_AWARD)
 
 
@@ -44,12 +47,10 @@
 #define HEAP_SIZE              (0x30000)               ///< ヒープサイズ
 
 // メインBGフレーム
-#define BG_FRAME_M_REAR        (GFL_BG_FRAME1_M)
-#define BG_FRAME_M_FRONT       (GFL_BG_FRAME2_M)
-#define BG_FRAME_M_TEXT        (GFL_BG_FRAME3_M)
+#define BG_FRAME_M_FRONT       (GFL_BG_FRAME1_M)
+#define BG_FRAME_M_TEXT        (GFL_BG_FRAME2_M)
 
 // メインBGフレームのプライオリティ
-#define BG_FRAME_PRI_M_REAR    (2)
 #define BG_FRAME_PRI_M_FRONT   (1)
 #define BG_FRAME_PRI_M_TEXT    (0)
 
@@ -57,16 +58,14 @@
 // 本数
 enum
 {
-  BG_PAL_NUM_M_GRA_REAR      = 6,
-  BG_PAL_NUM_M_GRA_FRONT     = 6,
+  BG_PAL_NUM_M_GRA_FRONT     = 14,
   BG_PAL_NUM_M_TEXT          = 1,
 };
 // 位置
 enum
 {
-  BG_PAL_POS_M_GRA_REAR     =  6,
   BG_PAL_POS_M_GRA_FRONT    =  0,
-  BG_PAL_POS_M_TEXT         = 12,
+  BG_PAL_POS_M_TEXT         = 14,
 };
 
 // メインOBJパレット
@@ -299,7 +298,6 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcInit( GFL_PROC* proc, int* seq, vo
   }
 
   // メインBG
-  GFL_BG_SetPriority( BG_FRAME_M_REAR,   BG_FRAME_PRI_M_REAR  );
   GFL_BG_SetPriority( BG_FRAME_M_FRONT,  BG_FRAME_PRI_M_FRONT );
   GFL_BG_SetPriority( BG_FRAME_M_TEXT,   BG_FRAME_PRI_M_TEXT  );
 
@@ -318,8 +316,9 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcInit( GFL_PROC* proc, int* seq, vo
   Chihou_Zukan_Award_ScrollInit( work );
 
   // バックグラウンドカラー
-  GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
-  GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x0000 );
+  //GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x0000 );
+  //GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x0000 );
+  // バックグラウンドカラー(透過色)まで色として使っているので、変更してはダメ。
 
   // フェードイン(黒→見える)
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
@@ -429,6 +428,84 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, vo
     break;
   }
 
+
+#ifdef DEBUG_TEXT_MOVE
+  {
+    static int target = 0;
+    static const int target_max = 3;
+
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+    {
+      target--;
+      if( target < 0 ) target = target_max -1;
+    }
+    else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+    {
+      target++;
+      if( target >= target_max ) target = 0;
+    }
+    else
+    {
+      GFL_BMPWIN* target_bmpwin = work->text_bmpwin[target +1];
+      u8 x = GFL_BMPWIN_GetPosX( target_bmpwin );
+      u8 y = GFL_BMPWIN_GetPosY( target_bmpwin );
+      BOOL b_change = FALSE;
+      
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+      {
+        switch(target)
+        {
+        case 0:
+          OS_Printf( "Player Name (%d, %d)\n", x, y );
+          break;
+        case 1:
+          OS_Printf( "Main Text (%d, %d)\n", x, y );
+          break;
+        case 2:
+          OS_Printf( "Game Freak (%d, %d)\n", x, y );
+          break;
+        }
+      }
+      else if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+      {
+        y--;
+        b_change = TRUE;
+      }
+      else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+      {
+        y++;
+        b_change = TRUE;
+      }
+      else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+      {
+        x--;
+        b_change = TRUE;
+      }
+      else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+      {
+        x++;
+        b_change = TRUE;
+      }
+
+      if( b_change )
+      {
+        u8 i;
+
+        GFL_BG_ClearScreen( BG_FRAME_M_TEXT );
+       
+        GFL_BMPWIN_SetPosX( target_bmpwin, x );
+        GFL_BMPWIN_SetPosY( target_bmpwin, y );
+        
+        for( i=0; i<TEXT_MAX; i++ )
+        {
+          GFL_BMPWIN_MakeTransWindow_VBlank( work->text_bmpwin[i] );
+        }
+      }
+    }
+  }
+#endif
+
+
   PRINTSYS_QUE_Main( work->print_que );
 
   // メイン
@@ -465,33 +542,6 @@ static void Chihou_Zukan_Award_BgInit( CHIHOU_ZUKAN_AWARD_WORK* work )
 {
   ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_SHOUJOU, work->heap_id );
 
-  // REAR
-  GFL_ARCHDL_UTIL_TransVramPalette(
-      handle,
-      NARC_shoujou_syoujyou_i_bg_NCLR,
-      PALTYPE_MAIN_BG,
-      BG_PAL_POS_M_GRA_REAR * 0x20,
-      BG_PAL_NUM_M_GRA_REAR * 0x20,
-      work->heap_id );
-
-  GFL_ARCHDL_UTIL_TransVramBgCharacter(
-      handle,
-      NARC_shoujou_syoujyou_i_bg_NCGR,
-      BG_FRAME_M_REAR,
-			0,
-      0,  // 全転送
-      FALSE,
-      work->heap_id );
-
-  GFL_ARCHDL_UTIL_TransVramScreen(
-      handle,
-      NARC_shoujou_syoujyou_i_bg_NSCR,
-      BG_FRAME_M_REAR,
-      0,
-      0,  // 全転送
-      FALSE,
-      work->heap_id );
-
   // FRONT
   GFL_ARCHDL_UTIL_TransVramPalette(
       handle,
@@ -521,10 +571,6 @@ static void Chihou_Zukan_Award_BgInit( CHIHOU_ZUKAN_AWARD_WORK* work )
 
   GFL_ARC_CloseDataHandle( handle );
 
-  // 読み込んだままではよくないものを修正
-  GFL_BG_ChangeScreenPalette( BG_FRAME_M_REAR, 0, 0, 32, 32, BG_PAL_POS_M_GRA_REAR );
-
-  GFL_BG_LoadScreenReq( BG_FRAME_M_REAR );
   GFL_BG_LoadScreenReq( BG_FRAME_M_FRONT );
 }
 static void Chihou_Zukan_Award_BgExit( CHIHOU_ZUKAN_AWARD_WORK* work )
