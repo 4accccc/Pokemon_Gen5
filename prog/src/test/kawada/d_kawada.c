@@ -63,6 +63,10 @@
 #include "field/zonedata.h"
 #include "demo/egg_demo.h"
 
+// 進化デモ
+#include "demo/shinka_demo.h"
+
+
 // オーバーレイ
 FS_EXTERN_OVERLAY(zukan_toroku);
 FS_EXTERN_OVERLAY(th_award);
@@ -73,12 +77,13 @@ FS_EXTERN_OVERLAY(pmsinput);
 FS_EXTERN_OVERLAY(psel);
 FS_EXTERN_OVERLAY(subway_map);
 FS_EXTERN_OVERLAY(egg_demo);
+FS_EXTERN_OVERLAY(shinka_demo);
 
 
 //============================================================================================
 //	定数定義
 //============================================================================================
-#define	TOP_MENU_SIZ	( 11 )
+#define	TOP_MENU_SIZ	( 12 )
 
 typedef struct {
 	u32	main_seq;
@@ -133,6 +138,10 @@ typedef struct {
   // タマゴ孵化デモ
   EGG_DEMO_PARAM*    egg_demo_param;
 
+  // 進化デモ
+  POKEPARTY*         party;
+  SHINKA_DEMO_PARAM* shinka_demo_param;
+
 }KAWADA_MAIN_WORK;
 
 enum {
@@ -153,6 +162,7 @@ enum {
 	MAIN_SEQ_SUBWAY_MAP_CALL,
 	MAIN_SEQ_PMS_INPUT_SENTENCE_CALL,
 	MAIN_SEQ_EGG_DEMO_CALL,
+	MAIN_SEQ_SHINKA_DEMO_CALL,
   // ここまで
 
 	MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN,
@@ -166,6 +176,7 @@ enum {
 	MAIN_SEQ_SUBWAY_MAP_CALL_RETURN,
 	MAIN_SEQ_PMS_INPUT_SENTENCE_CALL_RETURN,
 	MAIN_SEQ_EGG_DEMO_CALL_RETURN,
+	MAIN_SEQ_SHINKA_DEMO_CALL_RETURN,
 	
   MAIN_SEQ_END,
 };
@@ -233,6 +244,10 @@ static void PmsInputSentenceExit( KAWADA_MAIN_WORK* wk );
 // タマゴ孵化デモ
 static void EggDemoInit( KAWADA_MAIN_WORK* wk );
 static void EggDemoExit( KAWADA_MAIN_WORK* wk );
+
+// 進化デモ
+static void ShinkaDemoInit( KAWADA_MAIN_WORK* wk );
+static void ShinkaDemoExit( KAWADA_MAIN_WORK* wk );
 
 
 //============================================================================================
@@ -482,6 +497,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
+
   // タマゴ孵化デモ
   case MAIN_SEQ_EGG_DEMO_CALL:
     EggDemoInit(wk);
@@ -489,6 +505,18 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     break;
   case MAIN_SEQ_EGG_DEMO_CALL_RETURN:
     EggDemoExit(wk);
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+
+
+  // 進化デモ
+  case MAIN_SEQ_SHINKA_DEMO_CALL:
+    ShinkaDemoInit(wk);
+		wk->main_seq = MAIN_SEQ_SHINKA_DEMO_CALL_RETURN;
+    break;
+  case MAIN_SEQ_SHINKA_DEMO_CALL_RETURN:
+    ShinkaDemoExit(wk);
 		FadeInSet( wk, MAIN_SEQ_INIT );
 		wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
@@ -998,5 +1026,33 @@ static void EggDemoExit( KAWADA_MAIN_WORK* wk )
 
   ZONEDATA_Close();
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(egg_demo));
+}
+
+// 進化デモ
+static void ShinkaDemoInit( KAWADA_MAIN_WORK* wk )
+{
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(shinka_demo));
+
+  GAMEBEACON_Setting(wk->gamedata);
+
+  wk->pp = PP_Create( MONSNO_KAMEERU, 1, 0, wk->heapID );
+  
+  wk->party = PokeParty_AllocPartyWork(wk->heapID);
+  PokeParty_InitWork(wk->party);
+  PokeParty_Init(wk->party, 6);
+  PokeParty_Add( wk->party, wk->pp );
+  
+  wk->shinka_demo_param = SHINKADEMO_AllocParam(
+                              wk->heapID, wk->gamedata, wk->party,
+                              MONSNO_RIZAADON, 0, 0, TRUE );
+      
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ShinkaDemoProcData, wk->shinka_demo_param );
+}
+static void ShinkaDemoExit( KAWADA_MAIN_WORK* wk )
+{
+  SHINKADEMO_FreeParam( wk->shinka_demo_param );
+  GFL_HEAP_FreeMemory( wk->party );
+  GFL_HEAP_FreeMemory( wk->pp );
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(shinka_demo));
 }
 
