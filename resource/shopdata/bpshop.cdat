@@ -8,16 +8,45 @@
 
 // BPショップ１号
 static const SHOP_ITEM BP_shop1[] = {
-		{ ITEM_KIAINOTASUKI,	20, },
-		{ ITEM_PINTORENZU,	21, },
-		{ ITEM_METARUKOOTO,	24, },
-		{ ITEM_TOKENAIKOORI,	25, },
-		{ ITEM_TABENOKOSI,	26, },
-		{ ITEM_KIAINOTASUKI,	28, },
-		{ ITEM_NOROINOOHUDA,	35, },
-		{ ITEM_AOIBANDANA,	42, },
+		{ ITEM_TAURIN,	1, },
+		{ ITEM_RIZOTIUMU,	1, },
+		{ ITEM_BUROMUHEKISIN,	1, },
+		{ ITEM_KITOSAN,	1, },
+		{ ITEM_INDOMETASIN,	1, },
+		{ ITEM_MAKKUSUAPPU,	1, },
+		{ ITEM_PAWAARISUTO,	16, },
+		{ ITEM_PAWAABERUTO,	16, },
+		{ ITEM_PAWAARENZU,	16, },
+		{ ITEM_PAWAABANDO,	16, },
+		{ ITEM_PAWAAANKURU,	16, },
+		{ ITEM_PAWAAUEITO,	16, },
+		{ ITEM_HUSIGINAAME,	48, },
 };
 #define BP_SHOP1_MAX	(NELEMS(BP_shop1))
+
+// BPショップ２号
+static const SHOP_ITEM BP_shop2[] = {
+		{ ITEM_DOKUDOKUDAMA,	16, },
+		{ ITEM_KAENDAMA,	16, },
+		{ ITEM_SIROIHAABU,	32, },
+		{ ITEM_PAWAHURUHAABU,	32, },
+		{ ITEM_KYUUKON,	32, },
+		{ ITEM_ZYUUDENTI,	32, },
+		{ ITEM_REDDOKAADO,	32, },
+		{ ITEM_DASSYUTUPODDO,	32, },
+		{ ITEM_HIKARINOKONA,	48, },
+		{ ITEM_KODAWARIHATIMAKI,	48, },
+		{ ITEM_KIAINOHATIMAKI,	48, },
+		{ ITEM_PINTORENZU,	48, },
+		{ ITEM_TIKARANOHATIMAKI,	48, },
+		{ ITEM_KIAINOTASUKI,	48, },
+		{ ITEM_KODAWARISUKAAHU,	48, },
+		{ ITEM_SURUDOITUME,	48, },
+		{ ITEM_SURUDOIKIBA,	48, },
+		{ ITEM_HUUSEN,	48, },
+		{ ITEM_SIMETUKEBANDO,	48, },
+};
+#define BP_SHOP2_MAX	(NELEMS(BP_shop2))
 
 // BP技ショップ１号
 static const SHOP_ITEM BP_waza1[] = {
@@ -37,6 +66,7 @@ static const SHOP_ITEM BP_waza1[] = {
 // 一括アクセス用配列定義
 static const SHOP_ITEM *bp_shop_data_table[]={
 	BP_shop1,
+	BP_shop2,
 	BP_waza1,
 };
 
@@ -44,5 +74,6 @@ static const SHOP_ITEM *bp_shop_data_table[]={
 // 各ショップ販売最大数取得用
 static const u8 bp_shop_itemnum_table[]={
 	BP_SHOP1_MAX,
+	BP_SHOP2_MAX,
 	BP_WAZA1_MAX,
 };
