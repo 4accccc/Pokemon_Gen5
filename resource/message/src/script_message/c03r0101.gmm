@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-03-24T16:11:29"/>
+	<create user="nakamura_akira" host="W00161" date="2010-03-25T18:56:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -360,7 +360,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -3149,7 +3149,7 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『えらんだ　
+		<language name="JPN" width="256">まだ　『えらんだ
 さいしょの　ポケモンは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
@@ -3158,7 +3158,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『選んだ　
+		<language name="JPN_KANJI" width="256">まだ　『選んだ
 最初の　ポケモンは？』の▽
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
@@ -3190,7 +3190,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『１番　多い　
+		<language name="JPN_KANJI" width="256">まだ　『１番　多い
 プレイ時間は？』の▽
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
@@ -3411,7 +3411,7 @@ assistantm_01_17へ続く
 それとも　うけている
 いらいを　キャンセルするか？</language>
 		<language name="JPN_KANJI" width="256">まだ　『都会と　田舎
-住みたいのは？』の▽　
+住みたいのは？』の▽
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
 調査が　必要だ▼
@@ -3804,7 +3804,7 @@ assistantm_01_17へ続く
 [2桁:2]＝残りの調査必要時間</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『ポケモンの　
+		<language name="JPN" width="256">まだ　『ポケモンの
 おもしろい　ところは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[2:01:２桁:2]じかんは
@@ -3813,7 +3813,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『ポケモンの　
+		<language name="JPN_KANJI" width="256">まだ　『ポケモンの
 面白い　ところは？』の▽
 調査が　終わっていないぞ▼
 あと　[2:01:２桁:2]時間は
@@ -3836,7 +3836,7 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『ブラックと　ホワイト
-おおいのは？』の▽　
+おおいのは？』の▽
 ちょうさが　おわっていないぞ▼
 さいてい　ひとり　いじょうの
 ちょうさが　ひつようだ▼
@@ -3875,7 +3875,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『選んだ　
+		<language name="JPN_KANJI" width="256">まだ　『選んだ
 最初の　ポケモンは？』の▽
 調査が　終わっていないぞ▼
 最低　１人　以上の
@@ -4509,7 +4509,7 @@ assistantm_01_17へ続く
 つづけてくれ▼
 それとも　うけている
 いらいを　キャンセルするか？</language>
-		<language name="JPN_KANJI" width="256">まだ　『ポケモンの　
+		<language name="JPN_KANJI" width="256">まだ　『ポケモンの
 面白い　ところは？』の▽
 調査が　終わっていないぞ▼
 最低　１人　以上の
@@ -4785,7 +4785,7 @@ assistantm_01_17へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">まだ　『すきな　ポケモンの
-タイプは？』の▽　
+タイプは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
 ちょうさが　ひつようだ▼
@@ -5219,7 +5219,7 @@ assistantm_01_17へ続く
 [3桁:1]＝残りのすれ違い必要人数</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">まだ　『ポケモンの　
+		<language name="JPN" width="256">まだ　『ポケモンの
 おもしろい　ところは？』の▽
 ちょうさが　おわっていないぞ▼
 あと　[2:02:３桁:1]にんの
