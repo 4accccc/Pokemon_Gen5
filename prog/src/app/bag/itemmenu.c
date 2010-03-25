@@ -994,7 +994,6 @@ static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork )
 
       // スプレー処理
       EncDataSave_SetSprayCnt( encsv, count );
-      GAMEBEACON_Set_UseItem( pWork->ret_item );
 
       // アイテムを減らす
       ITEM_Sub( pWork, 1 );
@@ -1520,6 +1519,10 @@ static void _itemSelectWait(FIELD_ITEMMENU_WORK* pWork)
      // ------------つかう--------------
     case BAG_MENU_TSUKAU:  
 			ITEMDISP_ChangeRetButtonActive( pWork, FALSE );		// 戻るボタンをパッシブへ
+
+      if( pWork->pocketno != BAG_POKE_EVENT){ //大切なもの以外はビーコンを飛ばす
+        GAMEBEACON_Set_UseItem( pWork->ret_item );
+      }
       if((pWork->pocketno==BAG_POKE_WAZA)){         //技マシン
         _CHANGE_STATE(pWork,_itemTecniqueUseInit);
       }else if(1==ITEM_GetParam( pWork->ret_item, ITEM_PRM_EVOLUTION, pWork->heapID )){

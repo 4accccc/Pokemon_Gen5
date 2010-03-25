@@ -1377,8 +1377,6 @@ GMEVENT* EVENT_ChangeMapByAnanukenohimo( FIELDMAP_WORK* fieldWork, GAMESYS_WORK*
   event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeByAnanukenohimo, sizeof(MAPCHANGE_WORK) );
   work  = GMEVENT_GetEventWork( event );
 
-  GAMEBEACON_Set_UseItem( ITEM_ANANUKENOHIMO );
-
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
   work->loc_req      = *(GAMEDATA_GetEscapeLocation( work->gameData ));
@@ -1510,9 +1508,7 @@ GMEVENT* EVENT_ChangeMapToUnion( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldm
   LOCATION_SetDirect( &(work->loc_req), ZONE_ID_UNION, 
     DIR_UP, NUM_FX32(184), NUM_FX32(0), NUM_FX32(248) ); 
   work->exit_type = EXIT_TYPE_NONE;
- 
-  //ユニオン入室ビーコンリクエスト
-  GAMEBEACON_Set_UnionIn();
+  
   return event;
 }
 

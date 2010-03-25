@@ -75,7 +75,6 @@ static void amaikaori_BGResRelease( AMAIKAORI_EFFECT* wk);
 //------------------------------------------------------------------
 GMEVENT * EVENT_FieldAmaimitu( FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gsys )
 {
-  GAMEBEACON_Set_UseItem( ITEM_AMAIMITU );
   return EVENT_FieldSkillAmaikaori( gsys, fieldmap, 0xFF );
 }
 
