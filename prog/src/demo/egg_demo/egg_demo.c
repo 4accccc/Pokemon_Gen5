@@ -518,9 +518,6 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
         // ŽŸ‚Ö
         work->trunk_step = TRUNK_STEP_SOUND_INTRO;
 
-        // ƒ^ƒ}ƒS›z‰»ƒfƒ‚‚Ì‰‰o
-        EGG_DEMO_VIEW_Start( work->view );
-        
         Egg_Demo_SoundPlayIntro( param, work );
       }
     }
@@ -531,6 +528,9 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
       {
         // ŽŸ‚Ö
         work->trunk_step = TRUNK_STEP_DEMO_EGG;
+        
+        // ƒ^ƒ}ƒS›z‰»ƒfƒ‚‚Ì‰‰o
+        EGG_DEMO_VIEW_Start( work->view );
         
         Egg_Demo_SoundPlayHatch( param, work );
       }

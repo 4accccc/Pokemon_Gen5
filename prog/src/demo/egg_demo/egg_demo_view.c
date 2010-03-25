@@ -10,6 +10,7 @@
  */
 //============================================================================
 #define DEBUG_KAWADA
+//#define SET_PARTICLE_Y_MODE  // これが定義されているとき、パーティクルのY値を編集できるモードになる
 
 
 // インクルード
@@ -59,7 +60,8 @@ STEP;
 #define POKE_SIZE_MAX    (96.0f)
 
 // パーティクルのフレームとポケモンアニメーションのフレームを連携させる
-#define PARTICLE_BURST_FRAME   (201)  // ひびが入っている絵の最終フレーム
+#define PARTICLE_BURST_FRAME   (339)  // ひびが入っている絵の最終フレーム  // 全部で340個フレームがあった
+
 
 // 3D
 // 3D個別
@@ -126,6 +128,16 @@ typedef enum
   REAR_WHITE_ANIME_STATE_WHITE_TO_COLOR,
 }
 REAR_WHITE_ANIME_STATE;
+
+
+// ポケモンとパーティクルのY座標
+#define POKE_Y      (FX_F32_TO_FX32(-100.0f))
+#define PARTICLE_Y  (FX_F32_TO_FX32(-0.5f))
+
+
+#ifdef SET_PARTICLE_Y_MODE
+f32 particle_y = 0.0f;
+#endif
 
 
 //=============================================================================
@@ -542,6 +554,23 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
     break;
   }
 
+
+#ifdef SET_PARTICLE_Y_MODE
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+  {
+    OS_Printf( "particle_y = %f\n", particle_y );
+  }
+  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+  {
+    particle_y += 0.1f;
+  }
+  else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+  {
+    particle_y -= 0.1f;
+  }
+#endif
+
+
   // MCSS
   MCSS_Main( work->mcss_sys_wk );
 
@@ -722,7 +751,7 @@ static void Egg_Demo_View_McssInit( EGG_DEMO_VIEW_WORK* work )
 {
   {
     work->mcss_wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->pp, MCSS_DIR_FRONT,
-                        0, 0, FX_F32_TO_FX32(-800.0f) );//-800.0f) );
+                        0, POKE_Y, FX_F32_TO_FX32(-800.0f) );//-800.0f) );
 
 #ifdef DEBUG_KAWADA
     {
@@ -894,8 +923,14 @@ static void Particle_Main( PARTICLE_MANAGER* mgr )
 {
   if( mgr->play )
   {
-    VecFx32 pos = { 0, FX_F32_TO_FX32(0.5f), 0 };
+    VecFx32 pos = { 0, PARTICLE_Y, 0 };//FX_F32_TO_FX32(0.5f), 0 };
     GFL_EMIT_PTR emit;
+
+
+#ifdef SET_PARTICLE_Y_MODE
+    pos.y = FX_F32_TO_FX32(particle_y);
+#endif
+
 
     while( mgr->data_no < mgr->data_num )
     {
@@ -1011,7 +1046,7 @@ static void Egg_Demo_View_ThreeRearInit( EGG_DEMO_VIEW_WORK* work )
         work->three_obj_prop_tbl_idx[head_user_obj_idx +j] = h;
         prop = &(work->three_obj_prop_tbl[h]);
         prop->idx  = head_obj_idx +j;
-        VEC_Set( &(prop->objstatus.trans), 0, FX_F32_TO_FX32(30.0f), 0 );
+        VEC_Set( &(prop->objstatus.trans), 0, FX_F32_TO_FX32(0.0f), 0 );
         prop->draw = TRUE;
         h++;
       }
@@ -1121,8 +1156,8 @@ static void Egg_Demo_View_ThreeRearMain( EGG_DEMO_VIEW_WORK* work )
     {
 	    GFL_G3D_OBJECT_IncAnimeFrame( obj, REAR_ANM_C, anime_add );
 	    GFL_G3D_OBJECT_IncAnimeFrame( obj, REAR_ANM_M, anime_add );
-	    //GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_C, &work->rear_white_anime_frame );
-	    //GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_M, &work->rear_white_anime_frame );
+	    //GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_C, &work->rear_white_anime_frame );  // GFL_G3D_OBJECT_SetAnimeFrameだと絵が更新されなかったので、
+	    //GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_M, &work->rear_white_anime_frame );  // GFL_G3D_OBJECT_IncAnimeFrameにした。
     }
   }
 }
