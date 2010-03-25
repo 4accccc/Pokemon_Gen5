@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-03-23T10:27:16"/>
+	<create user="ohmori" host="W00223" date="2010-03-25T13:46:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="87" top="169" right="792" bottom="789" maximized="no" rayout="Vertical2">
+	<dialog left="87" top="169" right="792" bottom="788" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -333,189 +333,191 @@
 	</lock>
 
 
-	<row id="GTSNEGO_005">
+	<row id="GTSNEGO_005" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">だれでも　こうかん</language>
 		<language name="JPN_KANJI" width="256">だれでも　こうかん</language>
 	</row>
 
-	<row id="GTSNEGO_006">
+	<row id="GTSNEGO_006" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">まちあわせ　こうかん</language>
 		<language name="JPN_KANJI" width="256">まちあわせ　こうかん</language>
 	</row>
 
-	<row id="GTSNEGO_007">
+	<row id="GTSNEGO_007" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">こうかんきぼう</language>
 		<language name="JPN_KANJI" width="256">こうかんきぼう</language>
 	</row>
 
-	<row id="GTSNEGO_008">
+	<row id="GTSNEGO_008" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">レベル</language>
 		<language name="JPN_KANJI" width="256">レベル</language>
 	</row>
 
-	<row id="GTSNEGO_009">
+	<row id="GTSNEGO_009" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">LV1からLV４９</language>
 		<language name="JPN_KANJI" width="256">LV1からLV４９</language>
 	</row>
 
-	<row id="GTSNEGO_010">
+	<row id="GTSNEGO_010" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">LV５０</language>
 		<language name="JPN_KANJI" width="256">LV５０</language>
 	</row>
 
-	<row id="GTSNEGO_011">
+	<row id="GTSNEGO_011" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">LV５１から１００</language>
 		<language name="JPN_KANJI" width="256">LV５１から１００</language>
 	</row>
 
-	<row id="GTSNEGO_012">
+	<row id="GTSNEGO_012" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">なんでも</language>
 		<language name="JPN_KANJI" width="256">なんでも</language>
 	</row>
 
-	<row id="GTSNEGO_013">
+	<row id="GTSNEGO_013" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">かっこいい</language>
 		<language name="JPN_KANJI" width="256">かっこいい</language>
 	</row>
 
-	<row id="GTSNEGO_014">
+	<row id="GTSNEGO_014" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">かわいい</language>
 		<language name="JPN_KANJI" width="256">かわいい</language>
 	</row>
 
-	<row id="GTSNEGO_015">
+	<row id="GTSNEGO_015" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">こわい</language>
 		<language name="JPN_KANJI" width="256">こわい</language>
 	</row>
 
-	<row id="GTSNEGO_016">
+	<row id="GTSNEGO_016" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">へんな</language>
 		<language name="JPN_KANJI" width="256">へんな</language>
 	</row>
 
-	<row id="GTSNEGO_017">
+	<row id="GTSNEGO_017" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">なんでも</language>
 		<language name="JPN_KANJI" width="256">なんでも</language>
 	</row>
 
-	<row id="GTSNEGO_018">
+	<row id="GTSNEGO_018" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">こうかんマッチング</language>
 		<language name="JPN_KANJI" width="256">こうかんマッチング</language>
 	</row>
 
-	<row id="GTSNEGO_019">
+	<row id="GTSNEGO_019" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">きぼうにそった　こうかんあいてを
 さがしています……</language>
 		<language name="JPN_KANJI" width="256">きぼうにそった　こうかんあいてを
 さがしています……</language>
 	</row>
 
-	<row id="GTSNEGO_020">
+	<row id="GTSNEGO_020" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">キャンセル</language>
 		<language name="JPN_KANJI" width="256">キャンセル</language>
 	</row>
 
-	<row id="GTSNEGO_021">
-		<language name="JPN" width="256">こうかん　あいてが みつかりました！</language>
-		<language name="JPN_KANJI" width="256">こうかん　あいてが みつかりました！</language>
+	<row id="GTSNEGO_021" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">あいてのじょうほうを　もらっています</language>
+		<language name="JPN_KANJI" width="256">あいてのじょうほうを　もらっています</language>
 	</row>
 
-	<row id="GTSNEGO_022">
-		<language name="JPN" width="256">こうかんを　かいしします！</language>
-		<language name="JPN_KANJI" width="256">こうかんを　かいしします！</language>
+	<row id="GTSNEGO_022" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">こうかんあいてが　みつかりました！</language>
+		<language name="JPN_KANJI" width="256">こうかんあいてが　みつかりました！</language>
 	</row>
 
-	<row id="GTSNEGO_023">
+	<row id="GTSNEGO_023" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">サーチ</language>
 		<language name="JPN_KANJI" width="256">サーチ</language>
 	</row>
 
-	<row id="GTSNEGO_024">
+	<row id="GTSNEGO_024" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">こうかんする　あいてを
 えらんで　ください</language>
 		<language name="JPN_KANJI" width="256">こうかんする　あいてを
 えらんで　ください</language>
 	</row>
 
-	<row id="GTSNEGO_025">
+	<row id="GTSNEGO_025" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">こうかんきぼう　じょうけんをきめて
 サーチを　おしてください</language>
 		<language name="JPN_KANJI" width="256">こうかんきぼう　じょうけんをきめて
 サーチを　おしてください</language>
 	</row>
 
-	<row id="GTSNEGO_026">
+	<row id="GTSNEGO_026" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">こうかんあいて</language>
 		<language name="JPN_KANJI" width="256">こうかんあいて</language>
 	</row>
 
-	<row id="GTSNEGO_027">
+	<row id="GTSNEGO_027" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">どちらの　こうかんを　するか
 えらんで　ください</language>
 		<language name="JPN_KANJI" width="256">どちらの　こうかんを　するか
 えらんで　ください</language>
 	</row>
 
-	<row id="GTSNEGO_028">
+	<row id="GTSNEGO_028" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">ほしいポケモン</language>
 		<language name="JPN_KANJI" width="256">ほしいポケモン</language>
 	</row>
 
-	<row id="GTSNEGO_029">
+	<row id="GTSNEGO_029" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">あげるポケモン</language>
 		<language name="JPN_KANJI" width="256">あげるポケモン</language>
 	</row>
 
-	<row id="GTSNEGO_030">
+	<row id="GTSNEGO_030" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">はい</language>
 		<language name="JPN_KANJI" width="256">はい</language>
 	</row>
 
-	<row id="GTSNEGO_031">
+	<row id="GTSNEGO_031" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">いいえ</language>
 		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
-	<row id="GTSNEGO_032">
+	<row id="GTSNEGO_032" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">まちあわせ</language>
 		<language name="JPN_KANJI" width="256">まちあわせ</language>
 	</row>
 
-	<row id="GTSNEGO_033">
+	<row id="GTSNEGO_033" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0] [BD:03:Ｘ右寄せ:1]ID:[2:04:５桁:1]
 [1:24:国名:2]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0] [BD:03:Ｘ右寄せ:1]ID:[2:04:５桁:1]
 [1:24:国名:2]</language>
 	</row>
 
-	<row id="GTSNEGO_034">
-		<language name="JPN" width="256">まちあわせできるひとはいません</language>
-		<language name="JPN_KANJI" width="256">まちあわせできるひとはいません</language>
+	<row id="GTSNEGO_034" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">まだ　まちあわせが
+できるひとは　いません</language>
+		<language name="JPN_KANJI" width="256">まだ　まちあわせが
+できるひとは　いません</language>
 	</row>
 
-	<row id="GTSNEGO_035">
+	<row id="GTSNEGO_035" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">まちあわせあいての　せんたく</language>
 		<language name="JPN_KANJI" width="256">まちあわせあいての　せんたく</language>
 	</row>
 
-	<row id="GTSNEGO_036">
+	<row id="GTSNEGO_036" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">このひとと　まちあわせしますか？</language>
 		<language name="JPN_KANJI" width="256">このひとと　まちあわせしますか？</language>
 	</row>
 
-	<row id="GTSNEGO_037">
+	<row id="GTSNEGO_037" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">こうかんあいての　えらびかたを
 きめてください</language>
 		<language name="JPN_KANJI" width="256">こうかんあいての　えらびかたを
 きめてください</language>
 	</row>
 
-	<row id="GTSNEGO_038">
+	<row id="GTSNEGO_038" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="GTSNEGO_039">
+	<row id="GTSNEGO_039" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">すんでるばしょ
 [1:24:国名:0]
 [1:25:地域名:1]</language>
@@ -524,26 +526,31 @@
 [1:25:地域名:1]</language>
 	</row>
 
-	<row id="GTSNEGO_040">
+	<row id="GTSNEGO_040" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">あいさつ</language>
 		<language name="JPN_KANJI" width="256">あいさつ</language>
 	</row>
 
-	<row id="GTSNEGO_041">
+	<row id="GTSNEGO_041" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">こうかんすう
 [2:04:５桁:0]かい</language>
 		<language name="JPN_KANJI" width="256">こうかんすう
 [2:04:５桁:0]かい</language>
 	</row>
 
-	<row id="GTSNEGO_042">
+	<row id="GTSNEGO_042" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="GTSNEGO_043">
-		<language name="JPN" width="256">さがすのをあきらめますか？</language>
-		<language name="JPN_KANJI" width="256">さがすのをあきらめますか？</language>
+	<row id="GTSNEGO_043" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">さがすのを　あきらめますか？</language>
+		<language name="JPN_KANJI" width="256">さがすのを　あきらめますか？</language>
+	</row>
+
+	<row id="GTSNEGO_044" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">こうかんを　かいしします！</language>
+		<language name="JPN_KANJI" width="256">こうかんを　かいしします！</language>
 	</row>
 
 	<flowchart-group-list>
