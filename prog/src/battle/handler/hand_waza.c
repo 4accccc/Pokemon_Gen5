@@ -5996,7 +5996,8 @@ static void handler_Kanasibari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     if( !BPP_CheckSick(target, WAZASICK_KANASIBARI) )
     {
       WazaID  prevWaza = BPP_GetPrevOrgWazaID( target );
-      if( (prevWaza != WAZANO_NULL) && (prevWaza == WAZANO_WARUAGAKI) )
+
+      if( (prevWaza != WAZANO_NULL) && (prevWaza != WAZANO_WARUAGAKI) )
       {
         BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 
