@@ -3069,7 +3069,7 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
         (*seq) = 200;
         break;
       case COMM_ENTRY_RESULT_NG:          //断られた
-        (*seq) = 300;
+        (*seq) = 200;
         break;
       case COMM_ENTRY_RESULT_ERROR:        //エラーで終了
         (*seq) = 200; //※check　後で作成 とりあえずキャンセルと同じにしておく
