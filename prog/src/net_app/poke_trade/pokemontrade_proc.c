@@ -1166,7 +1166,7 @@ static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork)
 {
   POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, pWork->pokemonselectno);
 
-
+  pWork->pokemonselectno = 0; // Ž©•ª‚Ì‚©‚ç•\Ž¦
   POKETRADE_MESSAGE_CreatePokemonParamDisp(pWork,pp);
 
   pWork->padMode = FALSE;

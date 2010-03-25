@@ -514,7 +514,7 @@ static void _menuFriendPokemonStart(POKEMON_TRADE_WORK* pWork)
 
   int msg[]={ POKETRADE_STR_04, POKETRADE_STR_06};
   POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
-    TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
+  TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
   _CHANGE_STATE(pWork, _menuFriendPokemon);
 }
 
@@ -888,12 +888,11 @@ static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
     }
     OS_TPrintf("pokemonselectno %d\n",pWork->pokemonselectno);
     if(pWork->pokemonselectno/GTS_NEGO_POKESLT_MAX){
-      _CHANGE_STATE(pWork, _menuMyPokemonMenu); //ŒðŠ·ŠÜ‚Þ
-    }
-    else{
       _CHANGE_STATE(pWork, _menuFriendPokemonStart); //ŒðŠ·ŠÜ‚Ü‚È‚¢
     }
-    
+    else{
+      _CHANGE_STATE(pWork, _menuMyPokemonMenu); //ŒðŠ·ŠÜ‚Þ
+    }
   }
 }
 
@@ -911,6 +910,7 @@ static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork)
     POKETRADE_MESSAGE_CreatePokemonParamDisp(pWork,pp);
   }
   _select6PokeSubMask(pWork);
+  OS_TPrintf("pokemonselectno %d\n",pWork->pokemonselectno);
   _CHANGE_STATE(pWork, _pokemonStatusWaitN);  //‘I‘ð‚Éƒ‹[ƒv
 }
 
@@ -988,6 +988,8 @@ static BOOL _NEGO_Select6PokemonSelect(POKEMON_TRADE_WORK* pWork, int trgno)
     if(pp && PP_Get(pp,ID_PARA_poke_exist,NULL)){
       pWork->pokemonselectno = trgno;
 
+      OS_TPrintf("pokemonselectno %d\n",pWork->pokemonselectno);
+      
       PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
 
@@ -1878,7 +1880,7 @@ void POKE_GTS_DeletePokemonState(POKEMON_TRADE_WORK* pWork)
 
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
-    if( !GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_THREE_SELECT_CANCEL+no, sizeof(no), &no)){
+    if( !GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_THREE_SELECT_CANCEL, sizeof(no), &no)){
       return;
     }
   }
