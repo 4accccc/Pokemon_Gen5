@@ -122,3 +122,6 @@ extern u16 MISC_GetResearchStartCount( const MISC* misc, u8 idx );
 extern void MISC_SetResearchStartCount( MISC* misc, u8 idx, u16 count );
 extern s64 MISC_GetResearchStartTimeBySecond( const MISC* misc );
 extern void MISC_SetResearchStartTimeBySecond( MISC* misc, s64 time );
+//イベントロック
+extern void MISC_SetEvtRockValue( MISC* misc, const int inNo, const u32 inValue );
+extern u32 MISC_GetEvtRockValue( MISC* misc, const int inNo );

@@ -8,7 +8,7 @@
 #define SAVE_SURETIGAI_THANKYOU_LEN           (8 + 1)  //EOM込み
 
 #define GYM_MAX     (8)
-
+#define EVT_ROCK_MAX     (8)
 
 //=============================================================================
 /**
@@ -57,6 +57,6 @@ struct _MISC
   u16 gym_win_monsno[GYM_MAX][TEMOTI_POKEMAX];
 
   //配布イベント用予約領域３２バイト
-  u32 event_lock[8];
+  u32 event_lock[EVT_ROCK_MAX];
 };
 

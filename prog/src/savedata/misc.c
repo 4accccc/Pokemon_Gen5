@@ -741,3 +741,38 @@ void MISC_SetResearchStartTimeBySecond( MISC* misc, s64 time )
 {
   misc->research_start_time = time;
 }
+
+//----------------------------------------------------------
+/**
+ * @brief イベントロック値をセット
+ *
+ * @param misc
+ * @param inNo    イベントナンバー
+ * @param inValue 値
+ */
+//----------------------------------------------------------
+void MISC_SetEvtRockValue( MISC* misc, const int inNo, const u32 inValue )
+{
+  if ( inNo < EVT_ROCK_MAX ) misc->event_lock[inNo] = inValue;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief イベントロック値を取得
+ *
+ * @param misc
+ * @param inNo    イベントナンバー
+ * @return u32    値
+ */
+//----------------------------------------------------------
+u32 MISC_GetEvtRockValue( MISC* misc, const int inNo )
+{
+  if (inNo >= EVT_ROCK_MAX)
+  {
+    GF_ASSERT_MSG(0,"No Error");
+    return 0;
+  }
+
+  return misc->event_lock[inNo];
+}
+
