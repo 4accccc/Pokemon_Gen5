@@ -59,6 +59,7 @@ typedef enum{
   COMM_ENTRY_RESULT_NULL,         ///<処理実行中
   COMM_ENTRY_RESULT_SUCCESS,      ///<メンバーが集まった
   COMM_ENTRY_RESULT_CANCEL,       ///<キャンセルして終了
+  COMM_ENTRY_RESULT_NG,           ///<断られて終了
   COMM_ENTRY_RESULT_ERROR,        ///<エラーで終了
 }COMM_ENTRY_RESULT;
 
