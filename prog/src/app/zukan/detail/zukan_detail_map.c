@@ -2433,10 +2433,15 @@ static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DE
     BLOCK_POKEICON_EXIT( &work->pokeicon_res, work->pokeicon_clwk )
     // ŽŸ‚Ì‚ð¶¬
     {
-      //@todo ƒtƒHƒ‹ƒ€‚Æ‚©«•Ê‚Æ‚©‘Î‰ž‚µ‚È‚­‚Ä‚à‚¢‚¢‚ÌH
-      u32 form_no = 0;
-      u32 sex     = 0;
-      work->pokeicon_clwk = PokeiconInit( &work->pokeicon_res, work->clunit, param->heap_id, monsno, form_no, sex, 0, x, y );
+      u32 sex;
+      BOOL rare;
+      u32 form;
+
+      GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+      ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( gamedata );
+      ZUKANSAVE_GetDrawData(  zkn_sv, monsno, &sex, &rare, &form, param->heap_id );
+
+      work->pokeicon_clwk = PokeiconInit( &work->pokeicon_res, work->clunit, param->heap_id, monsno, form, sex, FALSE, x, y );
     }
   }
 

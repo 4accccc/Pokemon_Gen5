@@ -33,6 +33,7 @@
 #include "arc_def.h"
 #include "message.naix"
 #include "font/font.naix"
+#include "zukan_data.naix"
 #include "zukan_gra.naix"
 
 // メッセージ
@@ -40,8 +41,47 @@
 #include "msg/msg_zkn_type.h"
 #include "msg/msg_zkn_height.h"
 #include "msg/msg_zkn_weight.h"
-#include "msg/msg_zkn_comment_00.h"
+#if	PM_VERSION == VERSION_BLACK
+  #include "msg/msg_zkn_comment_01.h"
+#else
+  #include "msg/msg_zkn_comment_00.h"
+#endif
+
+// 外国語メッセージ
 #include "msg/msg_zkn_comment_e.h"
+#include "msg/msg_zkn_comment_fra.h"
+#include "msg/msg_zkn_comment_ger.h"
+#include "msg/msg_zkn_comment_ita.h"
+#include "msg/msg_zkn_comment_spa.h"
+#include "msg/msg_zkn_comment_kor.h"
+
+#include "msg/msg_zkn_height_e.h"
+#include "msg/msg_zkn_height_fra.h"
+#include "msg/msg_zkn_height_ger.h"
+#include "msg/msg_zkn_height_ita.h"
+#include "msg/msg_zkn_height_spa.h"
+#include "msg/msg_zkn_height_kor.h"
+
+#include "msg/msg_zkn_weight_e.h"
+#include "msg/msg_zkn_weight_fra.h"
+#include "msg/msg_zkn_weight_ger.h"
+#include "msg/msg_zkn_weight_ita.h"
+#include "msg/msg_zkn_weight_spa.h"
+#include "msg/msg_zkn_weight_kor.h"
+
+#include "msg/msg_zkn_type_e.h"
+#include "msg/msg_zkn_type_fra.h"
+#include "msg/msg_zkn_type_ger.h"
+#include "msg/msg_zkn_type_ita.h"
+#include "msg/msg_zkn_type_spa.h"
+#include "msg/msg_zkn_type_kor.h"
+
+#include "msg/msg_zkn_monsname_e.h"
+#include "msg/msg_zkn_monsname_fra.h"
+#include "msg/msg_zkn_monsname_ger.h"
+#include "msg/msg_zkn_monsname_ita.h"
+#include "msg/msg_zkn_monsname_spa.h"
+#include "msg/msg_zkn_monsname_kor.h"
 
 // zukan_info
 #include "zukan_info.h"
@@ -180,7 +220,44 @@ ZUKAN_INFO_STEP;
 
 // 外国語図鑑
 #define FOREIGN_MONSNO_MAX  (493)  // 0はポケモンではないがデータあり、1がフシギダネ、493がアルセウスまで存在する、イッシュから追加された494から存在しない
+#define FOREIGN_MONSNO_GIRATHINA_FORM  (FOREIGN_MONSNO_MAX +1)  // ギラティナだけ別フォルム用のテキストがある(487はフォルム0番、494はフォルム1番のデータ)
 
+static const u16 narc_msg_name[ZUKAN_INFO_LANG_MAX] =
+{
+  NARC_message_zkn_monsname_e_dat,
+  NARC_message_zkn_monsname_fra_dat,
+  NARC_message_zkn_monsname_ger_dat,
+  NARC_message_zkn_monsname_ita_dat,
+  NARC_message_zkn_monsname_spa_dat,
+  NARC_message_zkn_monsname_kor_dat,
+};
+static const u16 narc_msg_type[ZUKAN_INFO_LANG_MAX] =
+{
+  NARC_message_zkn_type_e_dat,
+  NARC_message_zkn_type_fra_dat,
+  NARC_message_zkn_type_ger_dat,
+  NARC_message_zkn_type_ita_dat,
+  NARC_message_zkn_type_spa_dat,
+  NARC_message_zkn_type_kor_dat,
+};
+static const u16 narc_msg_height[ZUKAN_INFO_LANG_MAX] =
+{
+  NARC_message_zkn_height_e_dat,
+  NARC_message_zkn_height_fra_dat,
+  NARC_message_zkn_height_ger_dat,
+  NARC_message_zkn_height_ita_dat,
+  NARC_message_zkn_height_spa_dat,
+  NARC_message_zkn_height_kor_dat,
+};
+static const u16 narc_msg_weight[ZUKAN_INFO_LANG_MAX] =
+{
+  NARC_message_zkn_weight_e_dat,
+  NARC_message_zkn_weight_fra_dat,
+  NARC_message_zkn_weight_ger_dat,
+  NARC_message_zkn_weight_ita_dat,
+  NARC_message_zkn_weight_spa_dat,
+  NARC_message_zkn_weight_kor_dat,
+};
 static const u16 narc_msg_explain[ZUKAN_INFO_LANG_MAX] =
 {
   NARC_message_zkn_comment_e_dat,
@@ -189,6 +266,24 @@ static const u16 narc_msg_explain[ZUKAN_INFO_LANG_MAX] =
   NARC_message_zkn_comment_ita_dat,
   NARC_message_zkn_comment_spa_dat,
   NARC_message_zkn_comment_kor_dat,
+};
+static const u16 str_id_cap_height[ZUKAN_INFO_LANG_MAX] =
+{
+  ZKN_CAP_HEIGHT_E,
+  ZKN_CAP_HEIGHT_FRA,
+  ZKN_CAP_HEIGHT_GER,
+  ZKN_CAP_HEIGHT_ITA,
+  ZKN_CAP_HEIGHT_SPA,
+  ZKN_CAP_HEIGHT_KOR,
+};
+static const u16 str_id_cap_weight[ZUKAN_INFO_LANG_MAX] =
+{
+  ZKN_CAP_WEIGHT_E,
+  ZKN_CAP_WEIGHT_FRA,
+  ZKN_CAP_WEIGHT_GER,
+  ZKN_CAP_WEIGHT_ITA,
+  ZKN_CAP_WEIGHT_SPA,
+  ZKN_CAP_WEIGHT_KOR,
 };
 
 // 外国語のタイプアイコン
@@ -891,10 +986,13 @@ void ZUKAN_INFO_Main( ZUKAN_INFO_WORK* work )
 //-----------------------------------------------------------------------------
 void ZUKAN_INFO_DeleteOthers( ZUKAN_INFO_WORK* work )
 {
-  // ポケモンの足跡
-  Zukan_Info_DeletePokefoot( work );
-  // タイプアイコン
-  Zukan_Info_DeleteTypeicon( work ); 
+  if( work->get_flag )
+  {
+    // ポケモンの足跡
+    Zukan_Info_DeletePokefoot( work );
+    // タイプアイコン
+    Zukan_Info_DeleteTypeicon( work ); 
+  } 
   // Message
   Zukan_Info_DeleteMessage( work );
 }
@@ -1005,6 +1103,9 @@ void ZUKAN_INFO_ChangePoke(
   work->personal_rnd   = personal_rnd;
   work->get_flag       = get_flag;
 
+  // モンスターボールのマーク
+  Zukan_Info_TransBall_VBlank( work );
+
   // ポケモン2D以外
   Zukan_Info_CreateOthers( work );
   //ポケモン2D
@@ -1041,12 +1142,29 @@ void ZUKAN_INFO_ChangeLang( ZUKAN_INFO_WORK* work,
                 ZUKAN_INFO_LANG lang )
 {
   // 前のを削除する
-  Zukan_Info_DeleteTypeicon( work );
+  if( work->get_flag )
+  {
+    Zukan_Info_DeleteTypeicon( work );
+  }
   Zukan_Info_DeleteMessage( work );
   
   // 次のを生成する
-  Zukan_Info_CreateForeignMessage( work, lang );
-  Zukan_Info_CreateMultiLangTypeicon( work, lang );
+  if( lang == ZUKAN_INFO_LANG_NONE || work->monsno > FOREIGN_MONSNO_MAX )
+  {
+    Zukan_Info_CreateMessage( work );
+    if( work->get_flag )
+    {
+      Zukan_Info_CreateMultiLangTypeicon( work, lang );
+    }
+  }
+  else
+  {
+    Zukan_Info_CreateForeignMessage( work, lang );
+    if( work->get_flag )
+    {
+      Zukan_Info_CreateMultiLangTypeicon( work, lang );
+    }
+  }
 }
 
 //-------------------------------------
@@ -1191,6 +1309,8 @@ static void Zukan_Info_DrawStr( HEAPID heap_id, GFL_BMPWIN* bmpwin, GFL_MSGDATA*
 //=====================================
 static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
 {
+  u16 monsno_formno_pos;
+
   GFL_MSGDATA* msgdata_common;
   GFL_MSGDATA* msgdata_kind;
   GFL_MSGDATA* msgdata_height;
@@ -1203,12 +1323,43 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
   msgdata_kind = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_type_dat, work->heap_id );
   msgdata_height = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_height_dat, work->heap_id );
   msgdata_weight = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_weight_dat, work->heap_id );
+#if	PM_VERSION == VERSION_BLACK
+  msgdata_explain = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_comment_01_dat, work->heap_id );
+#else
   msgdata_explain = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_comment_00_dat, work->heap_id );
+#endif
 
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, paltype,
                                  ZUKAN_INFO_BG_PAL_POS_MSG * ZUKAN_INFO_PAL_LINE_SIZE,
                                  ZUKAN_INFO_BG_PAL_NUM_MSG * ZUKAN_INFO_PAL_LINE_SIZE,
                                  work->heap_id );
+  
+  // 次のフォルムデータの位置を参照できるリスト
+  {
+    u32 size;
+    u16 next_form_pos_num;
+    u16* next_form_pos_list = GFL_ARC_UTIL_LoadEx( ARCID_ZUKAN_DATA, NARC_zukan_data_zkn_next_form_pos_dat, FALSE, work->heap_id, &size );
+    next_form_pos_num = (u16)( size / sizeof(u16) );
+    GF_ASSERT_MSG( next_form_pos_num > MONSNO_END+1+1, "ZUKAN_INFO : 次のフォルムのデータの位置を参照できる列の個数が足りません。\n" );
+
+    // 次のフォルムデータの位置を参照できるリストを利用して、フォルムデータの位置を得る
+    {
+      u16 pos = work->monsno;
+      {
+        u16 formno_count = 0;
+        while( formno_count != work->formno )
+        {
+          pos = next_form_pos_list[pos];
+          if( pos == 0 ) break;
+          formno_count++;
+        }
+        GF_ASSERT_MSG( pos > 0, "ZUKAN_INFO : フォルム番号が異常です。\n" );
+      }
+      monsno_formno_pos = pos;
+    }
+
+    GFL_HEAP_FreeMemory( next_form_pos_list );
+  }
 
   {
     s32 i;
@@ -1247,12 +1398,28 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
 
     // 025(ポケモンの番号)
     {
-      WORDSET* wordset = WORDSET_Create( work->heap_id );
-      WORDSET_RegisterNumber( wordset, 0, work->monsno, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_common,
-                          work->print_que, work->font,
-                          ZNK_POKELIST_17, 8, 7, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, wordset );
-      WORDSET_Delete( wordset );
+      u16 disp_no = work->monsno;
+      if( !(work->zenkoku_flag) )
+      {
+        u16* chihou_no_list = POKE_PERSONAL_GetZenkokuToChihouArray( work->heap_id, NULL );
+        disp_no = chihou_no_list[work->monsno];
+        GFL_HEAP_FreeMemory( chihou_no_list );
+      }
+      if( disp_no != 0 )  // 番号判明
+      {
+        WORDSET* wordset = WORDSET_Create( work->heap_id );
+        WORDSET_RegisterNumber( wordset, 0, disp_no, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+        Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_common,
+                            work->print_que, work->font,
+                            ZNK_POKELIST_17, 8, 5, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, wordset );
+        WORDSET_Delete( wordset );
+      }
+      else  // 番号不明
+      {
+        Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_common,
+                            work->print_que, work->font,
+                            ZKN_NO_UNKNOWN, 8, 5, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );
+      }
     }
     
     // 例：ピカチュウ
@@ -1260,13 +1427,20 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
       STRBUF* strbuf;
       strbuf = GFL_MSG_CreateString( GlobalMsg_PokeName, work->monsno );
       PRINTSYS_PrintQueColor( work->print_que, GFL_BMPWIN_GetBmp( work->bmpwin[ZUKAN_INFO_MSG_NAME] ),
-                              48, 7, strbuf, work->font, PRINTSYS_LSB_Make(1,2,0) );  
+                              48, 5, strbuf, work->font, PRINTSYS_LSB_Make(1,2,0) );  
       GFL_STR_DeleteBuffer( strbuf );
     }
 
     // 例：ねずみポケモン
-    Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_kind, work->print_que, work->font,
-                        ZKN_TYPE_000 + work->monsno, 16, 23, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );
+    {
+      u32 disp_id = ZKN_TYPE_000;  // 種族不明
+      if( work->get_flag )
+      {
+        disp_id = ZKN_TYPE_000 + work->monsno;  // 種族判明
+      }
+      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_kind, work->print_que, work->font,
+                          disp_id, 8, 22, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );
+    }
     
     // たかさ
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_common, work->print_que, work->font,
@@ -1277,16 +1451,37 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
                         ZNK_POKELIST_20, 0, 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
     
     // ？？？.？m  // 左上指定なら(40, 4)  // mとkgで小数点が揃うように
-    Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_height, work->print_que, work->font,
-                        ZKN_HEIGHT_000_000 + work->monsno, 94, 4, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
-    
+    {
+      u32 disp_id = ZKN_HEIGHT_000_000;  // たかさ不明
+      if( work->get_flag )
+      {
+        disp_id = ZKN_HEIGHT_000_000 + monsno_formno_pos;  // たかさ判明
+      }
+      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_height, work->print_que, work->font,
+                          disp_id, 93, 4, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
+    }
+
     // ？？？.？kg  // 左上指定なら(40,20)
-    Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_weight, work->print_que, work->font,
-                        ZKN_WEIGHT_000_000 + work->monsno, 100, 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
-    
+    { 
+      u32 disp_id = ZKN_WEIGHT_000_000;  // おもさ不明
+      if( work->get_flag )
+      {
+        disp_id = ZKN_WEIGHT_000_000 + monsno_formno_pos;  // おもさ判明
+      }
+      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_weight, work->print_que, work->font,
+                          disp_id, 100, 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
+    }
+
     // 例：かたい　きのみも　でんげきで
-    Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_EXPLAIN], msgdata_explain, work->print_que, work->font,
-                        ZKN_COMMENT_00_000_000 + work->monsno, 4, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
+    {
+      u32 disp_id = 0;  // テキスト不明    // ZKN_COMMENT_00_000_000  // ZKN_COMMENT_01_000_000
+      if( work->get_flag )
+      {
+        disp_id = 0 + monsno_formno_pos;  // テキスト判明
+      }
+      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_EXPLAIN], msgdata_explain, work->print_que, work->font,
+                          disp_id, 4, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
+    }
 
     for( i=0; i<ZUKAN_INFO_MSG_MAX; i++ )
     {
@@ -1303,30 +1498,37 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
 
 static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LANG lang )
 {
+  u16 monsno_formno_pos;
+
   GFL_MSGDATA* msgdata_common;
   GFL_MSGDATA* msgdata_kind;
   GFL_MSGDATA* msgdata_height;
   GFL_MSGDATA* msgdata_weight;
   GFL_MSGDATA* msgdata_explain;
+  GFL_MSGDATA* msgdata_name;
 
   PALTYPE paltype = (work->disp==ZUKAN_INFO_DISP_M)?(PALTYPE_MAIN_BG):(PALTYPE_SUB_BG);
 
-  if( lang == ZUKAN_INFO_LANG_NONE || work->monsno > FOREIGN_MONSNO_MAX )
-  {
-    Zukan_Info_CreateMessage( work );
-    return;
-  }
-
   msgdata_common = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_dat, work->heap_id );
-  msgdata_kind = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_type_dat, work->heap_id );
-  msgdata_height = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_height_dat, work->heap_id );
-  msgdata_weight = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_zkn_weight_dat, work->heap_id );
+  msgdata_kind = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, narc_msg_type[lang], work->heap_id );
+  msgdata_height = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, narc_msg_height[lang], work->heap_id );
+  msgdata_weight = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, narc_msg_weight[lang], work->heap_id );
   msgdata_explain = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, narc_msg_explain[lang], work->heap_id );
+  msgdata_name   = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, narc_msg_name[lang], work->heap_id );
 
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, paltype,
                                  ZUKAN_INFO_BG_PAL_POS_MSG * ZUKAN_INFO_PAL_LINE_SIZE,
                                  ZUKAN_INFO_BG_PAL_NUM_MSG * ZUKAN_INFO_PAL_LINE_SIZE,
                                  work->heap_id );
+  
+  // 次のフォルムデータの位置を参照できるリスト
+  {
+    monsno_formno_pos = work->monsno;
+    if( work->monsno == MONSNO_GIRATHINA  && work->formno != 0 )
+    {
+      monsno_formno_pos = FOREIGN_MONSNO_GIRATHINA_FORM;
+    }
+  }
 
   {
     s32 i;
@@ -1365,53 +1567,96 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
 
     // 025(ポケモンの番号)
     {
-      WORDSET* wordset = WORDSET_Create( work->heap_id );
-      WORDSET_RegisterNumber( wordset, 0, work->monsno, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_common,
-                          work->print_que, work->font,
-                          ZNK_POKELIST_17, 8, 7, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, wordset );
-      WORDSET_Delete( wordset );
+      u16 disp_no = work->monsno;
+      if( !(work->zenkoku_flag) )
+      {
+        u16* chihou_no_list = POKE_PERSONAL_GetZenkokuToChihouArray( work->heap_id, NULL );
+        disp_no = chihou_no_list[work->monsno];
+        GFL_HEAP_FreeMemory( chihou_no_list );
+      }
+      if( disp_no != 0 )  // 番号判明
+      {
+        WORDSET* wordset = WORDSET_Create( work->heap_id );
+        WORDSET_RegisterNumber( wordset, 0, disp_no, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+        Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_common,
+                            work->print_que, work->font,
+                            ZNK_POKELIST_17, 8, 5, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, wordset );
+        WORDSET_Delete( wordset );
+      }
+      else  // 番号不明
+      {
+        Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_common,
+                            work->print_que, work->font,
+                            ZKN_NO_UNKNOWN, 8, 5, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );
+      }
     }
     
     // 例：ピカチュウ
     {
-      STRBUF* strbuf;
-      strbuf = GFL_MSG_CreateString( GlobalMsg_PokeName, work->monsno );
-      PRINTSYS_PrintQueColor( work->print_que, GFL_BMPWIN_GetBmp( work->bmpwin[ZUKAN_INFO_MSG_NAME] ),
-                              48, 7, strbuf, work->font, PRINTSYS_LSB_Make(1,2,0) );  
-      GFL_STR_DeleteBuffer( strbuf );
+      u32 disp_id = 0 + monsno_formno_pos;  // 名前判明
+      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_name, work->print_que, work->font,
+                          disp_id, 48, 5, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
     }
 
     // 例：ねずみポケモン
-    Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_kind, work->print_que, work->font,
-                        ZKN_TYPE_000 + work->monsno, 16, 23, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );
-    
+    {
+      u32 disp_id = 0;  // 種族不明
+      if( work->get_flag )
+      {
+        disp_id = 0 + monsno_formno_pos;  // 種族判明
+      }
+      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_kind, work->print_que, work->font,
+                          disp_id, 8, 22, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );
+    }
+
     // たかさ
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_common, work->print_que, work->font,
-                        ZNK_POKELIST_19, 0, 4, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
+                        str_id_cap_height[lang], 0, 4, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
     
     // おもさ
     Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_common, work->print_que, work->font,
-                        ZNK_POKELIST_20, 0, 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
+                        str_id_cap_weight[lang], 0, 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
     
     // ？？？.？m  // 左上指定なら(40, 4)  // mとkgで小数点が揃うように
-    Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_height, work->print_que, work->font,
-                        ZKN_HEIGHT_000_000 + work->monsno, 94, 4, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
-    
+    {
+      u32 disp_id = 0;  // たかさ不明
+      if( work->get_flag )
+      {
+        disp_id = 0 + monsno_formno_pos;  // たかさ判明
+      }
+      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_height, work->print_que, work->font,
+                          disp_id, 93, 4, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
+    }
+
     // ？？？.？kg  // 左上指定なら(40,20)
-    Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_weight, work->print_que, work->font,
-                        ZKN_WEIGHT_000_000 + work->monsno, 100, 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
-    
+    { 
+      u32 disp_id = 0;  // おもさ不明
+      if( work->get_flag )
+      {
+        disp_id = 0 + monsno_formno_pos;  // おもさ判明
+      }
+      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_weight, work->print_que, work->font,
+                          disp_id, 100, 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
+    }
+
     // 例：かたい　きのみも　でんげきで
-    Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_EXPLAIN], msgdata_explain, work->print_que, work->font,
-                        ZKN_COMMENT_E_00_000 + work->monsno, 4, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
-    
+    {
+      u32 disp_id = 0;  // テキスト不明    // ZKN_COMMENT_00_000_000  // ZKN_COMMENT_01_000_000
+      if( work->get_flag )
+      {
+        disp_id = 0 + monsno_formno_pos;  // テキスト判明
+      }
+      Zukan_Info_DrawStr( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_EXPLAIN], msgdata_explain, work->print_que, work->font,
+                          disp_id, 4, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
+    }
+
     for( i=0; i<ZUKAN_INFO_MSG_MAX; i++ )
     {
       GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpwin[i] );
     }
   }
 
+  GFL_MSG_Delete(msgdata_name);
   GFL_MSG_Delete(msgdata_explain);
   GFL_MSG_Delete(msgdata_weight);
   GFL_MSG_Delete(msgdata_height);
@@ -1483,25 +1728,31 @@ static void Zukan_Info_TransBall_VBlank( ZUKAN_INFO_WORK* work )
 //=====================================
 static void Zukan_Info_Poke2dLoadResourceObj( ZUKAN_INFO_WORK* work )
 {
-  POKEMON_PASO_PARAM*   ppp;
   ARCHANDLE*            handle;
 
   CLSYS_DRAW_TYPE draw_type = (work->disp==ZUKAN_INFO_DISP_M)?(CLSYS_DRAW_MAIN):(CLSYS_DRAW_SUB);
 
-  // PPP作成
-  ppp = (POKEMON_PASO_PARAM*)PP_Create( (u16)work->monsno, 0, 0, work->heap_id );
-
   // ハンドル
   handle = POKE2DGRA_OpenHandle( work->heap_id );
   // リソース読みこみ
-  work->ncg_poke2d = POKE2DGRA_OBJ_CGR_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT, draw_type, work->heap_id );
-  work->ncl_poke2d = POKE2DGRA_OBJ_PLTT_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT ,draw_type,
-                                                     ZUKAN_INFO_OBJ_PAL_POS_POKE2D * ZUKAN_INFO_PAL_LINE_SIZE,  work->heap_id );
-  work->nce_poke2d = POKE2DGRA_OBJ_CELLANM_RegisterPPP( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_128K, draw_type, work->heap_id );
+  work->ncg_poke2d = POKE2DGRA_OBJ_CGR_Register(
+                         handle,
+                         work->monsno, work->formno, work->sex, work->rare,
+                         POKEGRA_DIR_FRONT, FALSE,
+                         work->personal_rnd,
+                         draw_type, work->heap_id );
+  work->ncl_poke2d = POKE2DGRA_OBJ_PLTT_Register(
+                         handle,
+                         work->monsno, work->formno, work->sex, work->rare,
+                         POKEGRA_DIR_FRONT, FALSE,
+                         draw_type,
+                         ZUKAN_INFO_OBJ_PAL_POS_POKE2D * ZUKAN_INFO_PAL_LINE_SIZE, work->heap_id );
+  work->nce_poke2d = POKE2DGRA_OBJ_CELLANM_Register(
+                         work->monsno, work->formno, work->sex, work->rare,
+                         POKEGRA_DIR_FRONT, FALSE,
+                         APP_COMMON_MAPPING_128K,
+                         draw_type, work->heap_id );
   GFL_ARC_CloseDataHandle( handle );
-
-  // PP破棄
-  GFL_HEAP_FreeMemory( ppp );
 }
 
 //-------------------------------------
@@ -1811,12 +2062,15 @@ static void Zukan_Info_CreateOthers( ZUKAN_INFO_WORK* work )
   // Message
   Zukan_Info_CreateMessage( work );
 
-  // タイプアイコン
-  Zukan_Info_CreateMultiLangTypeicon( work, ZUKAN_INFO_LANG_NONE );
-
-  // ポケモンの足跡
+  if( work->get_flag )
   {
-    Zukan_Info_CreatePokefoot( work, work->monsno );
+    // タイプアイコン
+    Zukan_Info_CreateMultiLangTypeicon( work, ZUKAN_INFO_LANG_NONE );
+
+    // ポケモンの足跡
+    {
+      Zukan_Info_CreatePokefoot( work, work->monsno );
+    }
   }
 }
 
@@ -1880,17 +2134,20 @@ void ZUKAN_INFO_SetDrawEnableAllObj( ZUKAN_INFO_WORK* work, BOOL on_off )
 
   // ポケモン2D
   GFL_CLACT_WK_SetDrawEnable( work->clwk_poke2d, on_off );
-  
-  // タイプアイコン
-  GFL_CLACT_WK_SetDrawEnable( work->clwk_pokefoot, on_off );
  
-  // ポケモンの足跡
-  for( i=0; i<2; i++ )
+  if( work->get_flag )
   {
-    if( work->typeicon_cg_idx[i] == GFL_CLGRP_REGISTER_FAILED )
+    // タイプアイコン
+    GFL_CLACT_WK_SetDrawEnable( work->clwk_pokefoot, on_off );
+ 
+    // ポケモンの足跡
+    for( i=0; i<2; i++ )
     {
-      continue;
+      if( work->typeicon_cg_idx[i] == GFL_CLGRP_REGISTER_FAILED )
+      {
+        continue;
+      }
+      GFL_CLACT_WK_SetDrawEnable( work->typeicon_clwk[i], on_off );
     }
-    GFL_CLACT_WK_SetDrawEnable( work->typeicon_clwk[i], on_off );
   }
 }

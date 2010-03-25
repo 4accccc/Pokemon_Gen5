@@ -655,28 +655,47 @@ static void Zukan_Detail_Voice_CreatePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
 {
   u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
 
+  u32 sex;
+  BOOL rare;
+  u32 form;
+  u32 personal_rnd = 0;
+
+  GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+  ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( gamedata );
+  ZUKANSAVE_GetDrawData(  zkn_sv, monsno, &sex, &rare, &form, param->heap_id );
+
+  if( monsno == MONSNO_PATTIIRU )  // personal_rndはmonsno==MONSNO_PATTIIRUのみセーブしてある
+  {
+    personal_rnd = ZUKANSAVE_GetPokeRandomFlag( zkn_sv, ZUKANSAVE_RANDOM_PACHI );
+  }
+
   // リソースを読み込む
   {
-    POKEMON_PASO_PARAM*   ppp;
     ARCHANDLE*            handle;
 
     CLSYS_DRAW_TYPE draw_type = CLSYS_DRAW_SUB;
 
-    // PPP作成
-    ppp = (POKEMON_PASO_PARAM*)PP_Create( monsno, 0, 0, param->heap_id );
-
     // ハンドル
     handle = POKE2DGRA_OpenHandle( param->heap_id );
     // リソース読みこみ
-    work->poke_ncg = POKE2DGRA_OBJ_CGR_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT, draw_type, param->heap_id );
-    work->poke_ncl = POKE2DGRA_OBJ_PLTT_RegisterPPP( handle, ppp, POKEGRA_DIR_FRONT, draw_type,
-                                                     OBJ_PAL_POS_S_POKE * 0x20, param->heap_id );
-    work->poke_nce = POKE2DGRA_OBJ_CELLANM_RegisterPPP( ppp, POKEGRA_DIR_FRONT, ZKNDTL_OBJ_MAPPING_S,
-                                                        draw_type, param->heap_id );
+    work->poke_ncg = POKE2DGRA_OBJ_CGR_Register(
+                         handle,
+                         (int)monsno, (int)form, (int)sex, (int)rare,
+                         POKEGRA_DIR_FRONT, FALSE,
+                         personal_rnd,
+                         draw_type, param->heap_id );
+    work->poke_ncl = POKE2DGRA_OBJ_PLTT_Register(
+                         handle,
+                         (int)monsno, (int)form, (int)sex, (int)rare,
+                         POKEGRA_DIR_FRONT, FALSE,
+                         draw_type,
+                         OBJ_PAL_POS_S_POKE * 0x20, param->heap_id );
+    work->poke_nce = POKE2DGRA_OBJ_CELLANM_Register(
+                         (int)monsno, (int)form, (int)sex, (int)rare,
+                         POKEGRA_DIR_FRONT, FALSE,
+                         ZKNDTL_OBJ_MAPPING_S,
+                         draw_type, param->heap_id );
     GFL_ARC_CloseDataHandle( handle );
-
-    // PPP破棄
-    GFL_HEAP_FreeMemory( ppp );
   }
 
   // OBJを生成する
