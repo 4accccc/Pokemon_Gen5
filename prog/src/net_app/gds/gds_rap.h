@@ -17,6 +17,8 @@
 #include "poke_tool/poke_tool_def.h"
 #include "net_app/gds/gds_battle_mode.h"
 #include "print/wordset.h"
+#include "net/nhttp_rap_evilcheck.h"
+#include "net\nhttp_rap.h"
 
 
 #include "battle\btl_common.h"
@@ -71,6 +73,7 @@ typedef enum{
   BATTLEMODE_SEARCH_NO_RANDOM_ROTATION,               ///<ランダムマッチ ローテーション
   BATTLEMODE_SEARCH_NO_RANDOM_SHOOTER,                ///<ランダムマッチ シューターバトル
   BATTLEMODE_SEARCH_NO_CONTEST,                       ///<バトル大会
+  BATTLEMODE_SEARCH_NO_ALL,                           ///<全て(施設指定無し)
 }BATTLEMODE_SEARCH_NO;
 
 
@@ -208,6 +211,16 @@ typedef struct _GDS_RAP_WORK{
 	
 	u8 div_save_seq;			///<分割セーブ実行シーケンス
 	u8 send_before_wait;		///<TRUE:送信前にメッセージを見せる為の一定ウェイト
+	u8 local_seq;
+
+  // ポケモン認証　署名
+  NHTTP_RAP_WORK* p_nhttp;  // ポケモン認証ワーク
+  u16 poke_num;
+  u8 sign[NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN];
+  NHTTP_RAP_EVILCHECK_RESULT nhttp_last_error;    ///<認証エラー状態
+  u8 error_poke_pos;        // 認証エラーが発生していたポケモン位置
+  u8 error_nhttp;           // 認証取得そのものがエラー
+  DWCSvlResult svl_result;
 }GDS_RAP_WORK;
 
 
