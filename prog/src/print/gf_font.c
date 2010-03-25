@@ -1353,6 +1353,30 @@ static void dotExpand_2x2( const u8* glyphSrc, u16 remBits, u8* dst )
     dots = BitReader_Read( &BitReader, remBits );
     *dst2nd++ = DotTbl[dots];
     dst2nd++;
+
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, remBits );
+    *dst2nd++ = DotTbl[dots];
+    dst2nd++;
+
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, remBits );
+    *dst2nd++ = DotTbl[dots];
+    dst2nd++;
+
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, 8 );
+    *dst1st++ = DotTbl[dots];
+    dots = BitReader_Read( &BitReader, remBits );
+    *dst2nd++ = DotTbl[dots];
+    dst2nd++;
 }
 
 
