@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-25T17:02:43"/>
+	<create user="shimoyamada" host="W00184" date="2010-03-25T19:19:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1460" top="262" right="2165" bottom="890" maximized="no" rayout="Vertical2">
+	<dialog left="726" top="321" right="1604" bottom="1150" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="538" top="626" right="921" bottom="1024" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="484"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="217"/>
+		<band id="3" index="4" style="0000" width="870"/>
+		<band id="4" index="0" style="0000" width="870"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -357,7 +357,7 @@ Wi-Fi P2P接続画面へ</comment>
 		<language name="JPN_KANJI" width="256">それでは　こちらへ　どうぞ！▼</language>
 	</row>
 
-	<row id="msg_wifi_counter_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ff0000,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
+	<row id="msg_wifi_counter_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>msg_wifi_club_01_01での選択肢の
 「せつめいを　きく」選択時</comment>
 		<attribute name="キャラ指定">受付の人</attribute>
@@ -365,7 +365,7 @@ Wi-Fi P2P接続画面へ</comment>
 Ｗｉ－Ｆｉコネクションに　せつぞくして[BE:01:ページ切り替え（クリア）]
 とおくにいる　みしらぬひとと
 つうしんを　つかって[BE:01:ページ切り替え（クリア）]
-たいせんや　こうかん　など
+たいせんや　こうかん　などが
 できます[BE:01:ページ切り替え（クリア）]
 くわしくは　それぞれの　しせつの
 せつめいを　おききください[BE:01:ページ切り替え（クリア）]</language>
@@ -373,7 +373,7 @@ Wi-Fi P2P接続画面へ</comment>
 Ｗｉ－Ｆｉコネクションに　接続して[BE:01:ページ切り替え（クリア）]
 遠くにいる　見知らぬ人と
 通信を　つかって[BE:00:ページ切り替え（行送り）]
-対戦や　交換など　できます[BE:01:ページ切り替え（クリア）]
+対戦や　交換などが　できます[BE:01:ページ切り替え（クリア）]
 詳しくは　それぞれの　施設の
 説明を　お聞きください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -545,7 +545,7 @@ C-Gear入手前</comment>
 ご希望ですか？</language>
 	</row>
 
-	<row id="msg_gts_normal_exp_leave" back-color="#80ff80,,,#80ff80,,#80ff80,#ff0000,#80ff80,,,#80ff80,,#ff0000,#80ff80,,,#80ff80,,">
+	<row id="msg_gts_normal_exp_leave" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>GTS</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">おきゃくさまが　こうかんに　だしたい
@@ -564,22 +564,22 @@ C-Gear入手前</comment>
 みつかったら　交換成立です[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_gts_normal_exp_search" back-color="#80ff80,,,#80ff80,,#80ff80,#ff0000,#80ff80,,,#80ff80,,#ff0000,#80ff80,,,#80ff80,,">
+	<row id="msg_gts_normal_exp_search" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>GTS</comment>
 		<attribute name="キャラ指定">GTS</attribute>
 		<language name="JPN" width="256">わたしどもが　おあずかりしている
-たくさんの　ポケモンの　なかから[BE:01:ページ切り替え（クリア）]
+たくさんのポケモンの　なかから[BE:01:ページ切り替え（クリア）]
 ほしいポケモンを
 さがすことも　できます[BE:01:ページ切り替え（クリア）]
 そのポケモンと　こうかんするときに
 あずけていたかたの　ほしいポケモンを[BE:00:ページ切り替え（行送り）]
 かわりに　おあずかりします[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">わたしどもが　お預かりしている
-たくさんの　ポケモンの　中から[BE:01:ページ切り替え（クリア）]
+たくさんのポケモンの　なかから[BE:01:ページ切り替え（クリア）]
 ほしいポケモンを
 探すことも　できます[BE:01:ページ切り替え（クリア）]
 そのポケモンと　交換するときに
-預けていた方の　ほしいポケモンを[BE:00:ページ切り替え（行送り）]
+預けていたかたの　ほしいポケモンを[BE:00:ページ切り替え（行送り）]
 代わりに　お預かりします[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -634,7 +634,7 @@ C-Gear入手前</comment>
 		<language name="JPN_KANJI" width="256">もどる</language>
 	</row>
 
-	<row id="msg_gts_nego_exp" back-color="#ffff80,,,#ffff80,,#ffff80,#ff0000,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
+	<row id="msg_gts_nego_exp" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>GTS-NEGO</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">ＧＴＳネゴシエーション　では
@@ -642,15 +642,15 @@ C-Gear入手前</comment>
 こうかんじょうけんを　きめて[BE:01:ページ切り替え（クリア）]
 おなじ　じょうけんの　かたが
 みつかったら[BE:01:ページ切り替え（クリア）]
-その　かたと　ネゴシエーション
+そのかたと　ネゴシエーション
 こうかんを　おこなうことが　できます[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ＧＴＳネゴシエーション　では
-どんな　ポケモンを　交換したいか[BE:00:ページ切り替え（行送り）]
-交換条件を　決めて[BE:01:ページ切り替え（クリア）]
-同じ　条件の　方が
+どんな　ポケモンを　こうかんしたいか[BE:00:ページ切り替え（行送り）]
+こうかんじょうけんを　きめて[BE:01:ページ切り替え（クリア）]
+おなじ　じょうけんの　かたが
 みつかったら[BE:01:ページ切り替え（クリア）]
-その方と　ネゴシエーション
-交換を　おこなうことが　できます[BE:01:ページ切り替え（クリア）]</language>
+そのかたと　ネゴシエーション
+こうかんを　おこなうことが　できます[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gts_nego_exp00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -662,26 +662,26 @@ C-Gear入手前</comment>
 ご希望ですか？</language>
 	</row>
 
-	<row id="msg_gts_nego_exp01" back-color="#ffff80,,,#ffff80,,#ffff80,#ff0000,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
+	<row id="msg_gts_nego_exp01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>GTS-NEGO</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">ネゴシエーションこうかん　とは
 あいてに　さしだしたい[BE:00:ページ切り替え（行送り）]
-ポケモンを　３ひき　えらび[BE:01:ページ切り替え（クリア）]
+ポケモンを　３ひきえらび[BE:01:ページ切り替え（クリア）]
 そのあと　あいてが　さしだした
 ３ひきの　ポケモンのなかから[BE:00:ページ切り替え（行送り）]
 ほしいポケモンを　１ひき　えらびあう[BE:00:ページ切り替え（行送り）]
 こうかんの　ことです[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ネゴシエーション交換　とは
-相手に　さしだしたい[BE:00:ページ切り替え（行送り）]
-ポケモンを　３匹　選び[BE:01:ページ切り替え（クリア）]
-そのあと　相手が　さしだした
+		<language name="JPN_KANJI" width="256">ネゴシエーションこうかん　とは
+あいてに　さしだしたい[BE:00:ページ切り替え（行送り）]
+ポケモンを　３ひきえらび[BE:01:ページ切り替え（クリア）]
+そのあと　あいてが　さしだした
 ３ひきの　ポケモンのなかから[BE:00:ページ切り替え（行送り）]
-ほしいポケモンを　１匹　選びあう[BE:00:ページ切り替え（行送り）]
-交換の　ことです[BE:01:ページ切り替え（クリア）]</language>
+ほしいポケモンを　１ひき　えらびあう[BE:00:ページ切り替え（行送り）]
+こうかんの　ことです[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_gts_nego_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ff0000,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
+	<row id="msg_gts_nego_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>GTS-NEGO</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">こうかんじょうけん　には
@@ -691,19 +691,19 @@ C-Gear入手前</comment>
 それぞれの　こうかんじょうけんが
 いっちしたかたと[BE:00:ページ切り替え（行送り）]
 こうかんを　することが　できます[BE:01:ページ切り替え（クリア）]
-また　いちど　こうかんした　かたと
+また　いちど　こうかんしたかたと
 まちあわせる　ことができる[BE:00:ページ切り替え（行送り）]
 まちあわせこうかんも　あります[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">交換条件には
-交換したい　レベル[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">こうかんじょうけん　には
+こうかんしたい　レベル[BE:00:ページ切り替え（行送り）]
 ほしいポケモン　あげるポケモン　の[BE:00:ページ切り替え（行送り）]
-３つの　条件が　あります[BE:01:ページ切り替え（クリア）]
-それぞれの　交換条件が
-一致した　方と[BE:00:ページ切り替え（行送り）]
-交換を　することが　できます[BE:01:ページ切り替え（クリア）]
-また　一度　交換した方と
-待ち合わせる　ことができる[BE:00:ページ切り替え（行送り）]
-待ち合わせ交換も　あります[BE:01:ページ切り替え（クリア）]</language>
+３つの　じょうけんが　あります[BE:01:ページ切り替え（クリア）]
+それぞれの　こうかんじょうけんが
+いっちしたかたと[BE:00:ページ切り替え（行送り）]
+こうかんを　することが　できます[BE:01:ページ切り替え（クリア）]
+また　いちど　こうかんしたかたと
+まちあわせる　ことができる[BE:00:ページ切り替え（行送り）]
+まちあわせこうかんも　あります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gts_nego_exp_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
@@ -734,7 +734,7 @@ C-Gear入手前</comment>
 		<language name="JPN_KANJI" width="256">バトルビデオを　見ますか？</language>
 	</row>
 
-	<row id="msg_btlvideo_exp" back-color="#80ffff,,,#80ffff,,#80ffff,#ff0000,#80ffff,,,#80ffff,,#ff0000,#80ffff,,,#80ffff,,">
+	<row id="msg_btlvideo_exp" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>BtlVideo</comment>
 		<attribute name="キャラ指定">BtlVideo</attribute>
 		<language name="JPN" width="256">バトルビデオでは
@@ -753,7 +753,7 @@ C-Gear入手前</comment>
 じぶんの　バトルビデオを
 ともだちに　みせることも　できます[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">バトルビデオでは
-じぶんで　録った　バトルビデオを[BE:00:ページ切り替え（行送り）]
+じぶんで　とった　バトルビデオを[BE:00:ページ切り替え（行送り）]
 発表したり[BE:01:ページ切り替え（クリア）]
 他の　トレーナーの　バトルビデオを
 みることが　できます[BE:01:ページ切り替え（クリア）]
@@ -797,7 +797,7 @@ C-Gear入手前</comment>
 		<language name="JPN_KANJI" width="256">ミュージカルショットを　見ますか？</language>
 	</row>
 
-	<row id="msg_musical_exp" back-color="#ff8080,,,#ff8080,,#ff8080,#ff0000,#ff8080,,,#ff8080,,#ff0000,#ff8080,,,#ff8080,,">
+	<row id="msg_musical_exp" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>Musical</comment>
 		<attribute name="キャラ指定">Musical</attribute>
 		<language name="JPN" width="256">ミュージカルショットでは
@@ -809,10 +809,10 @@ C-Gear入手前</comment>
 みることが　できます[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ミュージカルショットでは
 ライモンシティの[BE:00:ページ切り替え（行送り）]
-ミュージカルで　撮った[BE:00:ページ切り替え（行送り）]
+ミュージカルで　とった[BE:00:ページ切り替え（行送り）]
 写真を　発表できます[BE:01:ページ切り替え（クリア）]
-みんなが　撮った　写真も
-好きな　ポケモンごとに[BE:00:ページ切り替え（行送り）]
+みんなが　とった　写真も
+すきな　ポケモンごとに[BE:00:ページ切り替え（行送り）]
 みることが　できます[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -942,28 +942,28 @@ C-Gear入手前</comment>
 フリーと　レーティングの
 ２つの　モードが　あります[BE:01:ページ切り替え（クリア）]
 フリーモードは　だれでも
-参加できます[BE:01:ページ切り替え（クリア）]
+参加　できます[BE:01:ページ切り替え（クリア）]
 レーティングモードは
-ＧＰＦに　登録しないと[BE:00:ページ切り替え（行送り）]
-参加できません[BE:01:ページ切り替え（クリア）]</language>
+ＧＰＦに　登録　しないと[BE:00:ページ切り替え（行送り）]
+参加　できません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_02_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">フリーモードは
-とおくにいる　ひとと[BE:00:ページ切り替え（行送り）]
+とおくにいる　みしらぬひとと[BE:00:ページ切り替え（行送り）]
 てがるに　たいせんする　モードです[BE:01:ページ切り替え（クリア）]
 ポケモンを　そだてたら
 きがるに　ちょうせん　してください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">フリーモードは
-遠くにいる人と[BE:00:ページ切り替え（行送り）]
+遠くにいる　見知らぬ人と[BE:00:ページ切り替え（行送り）]
 手軽に　対戦する　モードです[BE:01:ページ切り替え（クリア）]
 ポケモンを　育てたら
-気軽に　挑戦してください[BE:01:ページ切り替え（クリア）]</language>
+気軽に　挑戦　してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_rndmatch_02_exp03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_rndmatch_02_exp03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,#ffff80,,,#ffff80,,#ff0000,#ffff80,,,#ffff80,,">
 		<comment>ランダムマッチ</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">レーティングモードは
@@ -977,10 +977,17 @@ C-Gear入手前</comment>
 レーティングは
 １５００から　スタートして[BE:00:ページ切り替え（行送り）]
 かつと　あがり　まけると　さがります[BE:01:ページ切り替え（クリア）]
-つよい　トレーナーほど
-レーティングは　たかく　なるので[BE:01:ページ切り替え（クリア）]
+たいせんが　つよい　トレーナーほど
+レーティングは　たかく　なりますので[BE:01:ページ切り替え（クリア）]
 ぜひ　ちょうせんして
-いまの　レベルを　たしかめてください[BE:01:ページ切り替え（クリア）]</language>
+いまの　レベルを　たしかめてください[BE:01:ページ切り替え（クリア）]
+さいごに　さんか　するときに
+ちゅうい　していただきたいのは[BE:01:ページ切り替え（クリア）]
+レーティングモードの　せいせきは
+ほんたいとＤＳカードを　さしかえると[BE:00:ページ切り替え（行送り）]
+すべて　きえてしまいます[BE:01:ページ切り替え（クリア）]
+さんかちゅう　ＤＳを　かえるときは
+ごちゅうい　ください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">レーティングモードは
 ＧＰＦに　登録すると[BE:00:ページ切り替え（行送り）]
 選ぶことが　できる[BE:01:ページ切り替え（クリア）]
@@ -992,10 +999,17 @@ C-Gear入手前</comment>
 レーティングは
 １５００から　スタートして[BE:00:ページ切り替え（行送り）]
 勝つと　上がり　負けると　下がります[BE:01:ページ切り替え（クリア）]
-強い　トレーナーほど
-レーティングは　高く　なるので[BE:01:ページ切り替え（クリア）]
+対戦が　強い　トレーナーほど
+レーティングは　高く　なりますで[BE:01:ページ切り替え（クリア）]
 ぜひ　挑戦して
-今の　レベルを　確かめてください[BE:01:ページ切り替え（クリア）]</language>
+今の　レベルを　確かめてください[BE:01:ページ切り替え（クリア）]
+最後に　参加中に
+注意　していただきたいのは[BE:01:ページ切り替え（クリア）]
+レーティングモードの　成績は
+本体とＤＳカードを　差し替えると[BE:00:ページ切り替え（行送り）]
+すべて　消えてしまいます[BE:01:ページ切り替え（クリア）]
+参加中　ＤＳを　替えるときは
+ご注意　ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_rndmatch_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
