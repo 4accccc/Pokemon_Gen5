@@ -395,7 +395,11 @@ BOOL MAPATTR_VALUE_CheckShopShelf3( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckEncountShortGrassLow( const MAPATTR_VALUE val )
 {
-  return ( val == MATTR_E_GRASS_LOW );
+  if( val == MATTR_E_GRASS_LOW ||
+      val == MATTR_E_GRASS_LOW_02 ||
+      val == MATTR_SNOW_GRASS_LOW ){
+    return TRUE;
+  }
 }
 
 //--------------------------------------------------------------
@@ -407,7 +411,13 @@ BOOL MAPATTR_VALUE_CheckEncountShortGrassLow( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckEncountShortGrassHigh( const MAPATTR_VALUE val )
 {
-  return ( val == MATTR_E_GRASS_HIGH );
+  if( val == MATTR_E_GRASS_HIGH ||
+      val == MATTR_E_GRASS_HIGH_02 ||
+      val == MATTR_SNOW_GRASS_HIGH
+  ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------
