@@ -255,6 +255,7 @@ static u32 ReBattle_SearchData( const REBATTLE_TRAINER_DATA* cp_data, u32 id, u3
     }
   }
 
+  OS_TPrintf( "ÄíData id = %d  level = %d\n", id, badge_num );
   GF_ASSERT_MSG(0, "Äíƒf[ƒ^‚È‚µ");
 
   return 0;
