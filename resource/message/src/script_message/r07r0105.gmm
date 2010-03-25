@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T15:45:00"/>
+	<create user="matsumiya" host="W00224" date="2010-03-25T21:18:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1457" top="190" right="2162" bottom="810" maximized="no" rayout="Vertical2">
+	<dialog left="1451" top="252" right="2156" bottom="880" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,73 +292,75 @@
 	</lock>
 
 
-	<row id="msg_r07r0105_leader6_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・GRIDX=16、GRIDZ=13、上向き（暫定）</comment>
 		<attribute name="キャラ指定">c06ジムリーダー
 フウロ</attribute>
-		<language name="JPN" width="256">フウロ『あっ！▼
+		<language name="JPN" width="256">フウロ『きてくれたんだ
+ありがとう▼
 さっき　みえたのって　やっぱり
-きずついた　ポケモンだったよ▼
+きずついた　ポケモンでした▼
 だけど
-もう　だいじょうぶ！▼
+もう　だいじょうぶよ！▼
 キズぐすりを　つかってあげたら
-げんきになって　とんでいったわ！▼</language>
-		<language name="JPN_KANJI" width="256">フウロ『あっ！▼
+げんきになって　とんでいったの！▼</language>
+		<language name="JPN_KANJI" width="256">フウロ『来てくれたんだ
+ありがとう▼
 さっき　みえたのって　やっぱり
 傷ついた　ポケモンだったよ▼
 だけど
-もう　大丈夫！▼
+もう　大丈夫よ！▼
 キズぐすりを　使ってあげたら
-元気になって　飛んでいったわ！▼</language>
+元気になって　飛んでいったの！▼</language>
 	</row>
 
-	<row id="msg_r07r0105_leader6_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・GRIDX=198、GRIDZ=13、上向きで
 　メッセージ表示</comment>
 		<attribute name="キャラ指定">c06ジムリーダー
 フウロ</attribute>
-		<language name="JPN" width="256">エヘヘ！
+		<language name="JPN" width="256">ウフフ！
 すごく　めが　いいでしょ！▼
 パイロットの　めは　どんなに
-とおくでも　みえちゃうんだから！▼</language>
-		<language name="JPN_KANJI" width="256">エヘヘ！
+とおくでも　みえちゃうのよ！▼</language>
+		<language name="JPN_KANJI" width="256">ウフフ！
 すごく　視力が　いいでしょ！▼
 パイロットの　目は　どんなに
-遠くでも　みえちゃうんだから！▼</language>
+遠くでも　みえちゃうのよ！▼</language>
 	</row>
 
-	<row id="msg_r07r0105_leader6_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・初期位置にもどり
 　上向きでメッセージ表示</comment>
 		<attribute name="キャラ指定">c06ジムリーダー
 フウロ</attribute>
-		<language name="JPN" width="256">そうだ！　せっかく　きたんだし
-あの　かねを　ならしてごらんよ！▼
+		<language name="JPN" width="256">そうだわ！　せっかく　きたんだし
+あの　かねを　ならしたら　どう？▼
 タワーオブヘブンの　かねは
 ポケモンの　たましいを　しずめるの▼
 しかも　ならす　ひとの　こころねが
-ねいろに　はんえい　されるんだ……▼</language>
-		<language name="JPN_KANJI" width="256">そうだ！　せっかく　きたんだし
-あの　鐘を　鳴らしてごらんよ！▼
+ねいろに　はんえい　されるの……▼</language>
+		<language name="JPN_KANJI" width="256">そうだ！　せっかく　来たんだし
+あの　鐘を　鳴らしたら　どう？▼
 タワーオブヘブンの　鐘は
 ポケモンの　魂を　鎮めるの▼
 しかも　鳴らす　人の　心根が
-音色に　反映されるんだ……▼</language>
+音色に　反映されるの……▼</language>
 	</row>
 
-	<row id="msg_r07r0105_leader6_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・leader6_03表示後に再度会話したとき</comment>
 		<attribute name="キャラ指定">c06ジムリーダー
 フウロ</attribute>
-		<language name="JPN" width="256">フウロ『えんりょしなくって　いいって！▼</language>
-		<language name="JPN_KANJI" width="256">フウロ『遠慮しなくって　いいって！▼</language>
+		<language name="JPN" width="256">フウロ『えんりょ　しないで　いいのよ▼</language>
+		<language name="JPN_KANJI" width="256">フウロ『遠慮しないで　いいのよ▼</language>
 	</row>
 
-	<row id="msg_r07r0105_leader6_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公性別＝♂
 ・鐘のSE再生終了時に自動で表示
@@ -368,14 +370,14 @@
 		<language name="JPN" width="256">いい　ねいろ……▼
 [1:00:トレーナー名:0]くんは
 やさしくて　つよい　ひと……▽
-そんな　ねいろ　だよね▼</language>
+そんな　ねいろ……▼</language>
 		<language name="JPN_KANJI" width="256">いい　音色……▼
 [1:00:トレーナー名:0]くんは
 優しくて　強い　人……▽
-そんな　音色　だよね▼</language>
+そんな　音色……▼</language>
 	</row>
 
-	<row id="msg_r07r0105_leader6_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公性別＝♀
 ・鐘のSE再生終了時に自動で表示
@@ -385,30 +387,36 @@
 		<language name="JPN" width="256">いい　ねいろ……▼
 [1:00:トレーナー名:0]さんは
 やさしくて　つよい　ひと……▽
-そんな　ねいろ　だよね▼</language>
+そんな　ねいろ……▼</language>
 		<language name="JPN_KANJI" width="256">いい　音色……▼
 [1:00:トレーナー名:0]さんは
 優しくて　強い　人……▽
-そんな　音色　だよね▼</language>
+そんな　音色……▼</language>
 	</row>
 
-	<row id="msg_r07r0105_leader6_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r07r0105_leader6_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後、歩いて退場
 ・画面外に消えると、主人公、操作可能
 　c06のジムストッパー削除</comment>
 		<attribute name="キャラ指定">c06ジムリーダー
 フウロ</attribute>
-		<language name="JPN" width="256">さてと……
-では　あらためて！▼
+		<language name="JPN" width="256">では　あらためて
+あいさつ　するわね！▼
+アタシは　フキヨセ　ポケモンジム
+ジムリーダーの　フウロです▽
+つかうのは　ひこうタイプの　ポケモン▼
 じゅんびが　ととのったら
-ジムに　おいでよね！▽
-だいかんげい　するから！！▼</language>
-		<language name="JPN_KANJI" width="256">さてと……
-では　あらためて！▼
-準備が　整ったら
-ジムに　おいでよね！▽
-熱烈　大歓迎するから！！▼</language>
+ジムに　きて▽
+だいかんげい　するから！▼</language>
+		<language name="JPN_KANJI" width="256">では　あらためて
+あいさつ　するわね！▼
+アタシは　フキヨセ　ポケモンジム
+ジムリーダーの　フウロです▽
+使うのは　ひこうタイプの　ポケモン▼
+準備が　ととのったら
+ジムに　来て▽
+大歓迎するから！▼</language>
 	</row>
 
 	<row id="msg_r07r0105_chime_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
