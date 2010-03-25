@@ -93,7 +93,7 @@ static GFL_PROC_RESULT CI_Proc_Init( GFL_PROC * proc, int * seq , void *pwk, voi
     int block[ CODE_BLOCK_MAX ];
     CODEIN_PARAM* pWork;
     CodeIn_BlockDataMake_4_4_4( block );
-    pWork = CodeInput_ParamCreate( HEAPID_CODEIN, CODEIN_MODE_FRIEND, 12, block );
+    pWork = CodeInput_ParamCreate( HEAPID_CODEIN, CODEIN_MODE_FRIEND, 0, 12, block );
     wk->param = *( ( CODEIN_PARAM* )pWork );
     GFL_HEAP_FreeMemory(pWork);
   }

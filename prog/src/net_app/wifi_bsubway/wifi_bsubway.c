@@ -1697,7 +1697,7 @@ static void CODEIN_StartRoomNoProc( WIFI_BSUBWAY* p_wk, HEAPID heapID )
     0,
   };
 
-  p_wk->p_codein = CodeInput_ParamCreate( heapID, CODEIN_MODE_TRAIN_NO, VIEW_NUMBER_KETA_ROOM_NO, s_CODEIN_BLOCK );
+  p_wk->p_codein = CodeInput_ParamCreate( heapID, CODEIN_MODE_TRAIN_NO, 11, VIEW_NUMBER_KETA_ROOM_NO, s_CODEIN_BLOCK );
   
   // プロックコール
   GAMESYSTEM_CallProc( p_wk->p_param->p_gamesystem, FS_OVERLAY_ID(codein), &CodeInput_ProcData, p_wk->p_codein );
@@ -1719,7 +1719,7 @@ static void CODEIN_StartRankProc( WIFI_BSUBWAY* p_wk, HEAPID heapID )
     0,
   };
 
-  p_wk->p_codein = CodeInput_ParamCreate( heapID, CODEIN_MODE_RANK, VIEW_NUMBER_KETA_RANK, s_CODEIN_BLOCK );
+  p_wk->p_codein = CodeInput_ParamCreate( heapID, CODEIN_MODE_RANK, 11, VIEW_NUMBER_KETA_RANK, s_CODEIN_BLOCK );
   
   // プロックコール
   GAMESYSTEM_CallProc( p_wk->p_param->p_gamesystem, FS_OVERLAY_ID(codein), &CodeInput_ProcData, p_wk->p_codein );

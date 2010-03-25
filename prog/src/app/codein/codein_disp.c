@@ -1118,9 +1118,11 @@ static const int sentense_tbl[]={
  * @param   sx    幅W
  * @param   sy    高さ
  * @param   fontHandle    フォント
+ * @param   max    入力できる数値の上限
  */
 //=============================================================================================
-void CI_pv_disp_BMP_WindowAdd( GFL_BMPWIN** win, int no, int frm, int x, int y, int sx, int sy, GFL_FONT *fontHandle )
+void CI_pv_disp_BMP_WindowAdd( GFL_BMPWIN** win, int no, int frm, 
+                               int x, int y, int sx, int sy, GFL_FONT *fontHandle, int max )
 {
 //  GF_BGL_BmpWinInit( win );
 //  GF_BGL_BmpWinAdd( bgl, win, frm, x, y, sx, sy, ePAL_FONT, ofs );
@@ -1134,38 +1136,73 @@ void CI_pv_disp_BMP_WindowAdd( GFL_BMPWIN** win, int no, int frm, int x, int y, 
 //  GF_BGL_BmpWinDataFill( win, FBMP_COL_WHITE );
 //  GF_BGL_BmpWinOn( win );
   
-  CI_pv_BMP_MsgSet( *win, sentense_tbl[no], fontHandle );
+  CI_pv_BMP_MsgSet( *win, sentense_tbl[no], fontHandle, max );
 }
 
-//--------------------------------------------------------------
+
+  
+
+
+#define CODEIN_MSG_SIZE ( 22*2*2 )
+
+//=============================================================================================
 /**
- * @brief 
+ * @brief 文字列描画
  *
- * @param win 
- * @param mes_id  
- *
- * @retval  none  
- *
+ * @param   win         BMPWIN
+ * @param   mes_id      メッセージID
+ * @param   fontHandle  フォントハンドル
+ * @param   max         入力できる数値の上限
  */
-//--------------------------------------------------------------
-void CI_pv_BMP_MsgSet( GFL_BMPWIN * win, int mes_id , GFL_FONT *fontHandle )
+//=============================================================================================
+void CI_pv_BMP_MsgSet( GFL_BMPWIN * win, int mes_id , GFL_FONT *fontHandle, int max )
 {
-  GFL_MSGDATA* man;
-  STRBUF* str;
+  GFL_MSGDATA *man;
+  WORDSET     *wset;
+  STRBUF* str,*expand;
   
+  // 文字列取得＆加工
+  wset   = WORDSET_Create( HEAPID_CODEIN );
+  man    = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_code_input_dat, HEAPID_CODEIN );
+  str    = GFL_MSG_CreateString( man, mes_id );
+  expand = GFL_STR_CreateBuffer( CODEIN_MSG_SIZE, HEAPID_CODEIN );
 
-  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_code_input_dat, HEAPID_CODEIN );
-  str = GFL_MSG_CreateString( man, mes_id );
-  
-//  GF_BGL_BmpWinDataFill( win, FBMP_COL_WHITE );
+  WORDSET_RegisterNumber( wset, 0, max, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU );
+  WORDSET_ExpandStr( wset, expand, str );
+
+  // 描画
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( win ) , 15 );
-//  GF_STR_PrintSimple( win, FONT_SYSTEM, str, 0, 0, 0, NULL );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp( win ) , 0,0,str, fontHandle );
-//  GF_BGL_BmpWinOn( win );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp( win ) , 0,0,expand, fontHandle );
 
+  // 解放
+  GFL_STR_DeleteBuffer( expand );
   GFL_STR_DeleteBuffer( str );
   GFL_MSG_Delete( man );  
-  
+  WORDSET_Delete( wset );
+
+  // 転送
   GFL_BMPWIN_TransVramCharacter( win );
   GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
+}
+
+
+//=============================================================================================
+/**
+ * @brief エラー表示に特化した文字列描画ルーチン
+ *
+ * @param   win   
+ * @param   mode    
+ * @param   fontHandle    
+ * @param   max   
+ */
+//=============================================================================================
+void CI_pv_BMP_ErrorMsgSet( GFL_BMPWIN * win, int mode , GFL_FONT *fontHandle, int max )
+{
+  if(mode==CODEIN_MODE_TRAIN_NO){
+    // そのトレインナンバーはありません
+    CI_pv_BMP_MsgSet( win, msg_06, fontHandle, max );
+  }else if(mode==CODEIN_MODE_RANK){
+    // そのランクはありません
+    CI_pv_BMP_MsgSet( win, msg_07, fontHandle, max );
+  }
 }

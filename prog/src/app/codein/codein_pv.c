@@ -27,6 +27,10 @@
 
 #include "test/ariizumi/ari_debug.h"
 
+static int  _get_num(CODEIN_WORK *wk);
+static BOOL _end_check( CODEIN_WORK *wk );
+
+
 //デバッグ用マクロ
 #if DEB_ARI&0
 #define CIPV_Printf(...)  (void)((OS_Printf(__VA_ARGS__)))
@@ -209,7 +213,8 @@ BOOL CI_pv_MainInit( CODEIN_WORK* wk )
   CI_pv_FontOam_Add( wk );
   
   CI_pv_disp_BMP_WindowAdd( &wk->sys.win, wk->param.mode,
-                             GFL_BG_FRAME0_S, 2, 21, 27, 2, wk->sys.fontHandle );
+                             GFL_BG_FRAME0_S, 2, 19, 27, 4, 
+                             wk->sys.fontHandle, wk->param.max );
   
   
   CI_pv_SeqChange( wk, eSEQ_INPUT );
@@ -258,6 +263,34 @@ BOOL CI_pv_MainEnd( CODEIN_WORK* wk )
   return FALSE;
 }
 
+
+//=============================================================================================
+/**
+ * @brief エラー発生時の表示
+ *
+ * @param   wk    
+ *
+ * @retval  BOOL    
+ */
+//=============================================================================================
+BOOL CI_pv_MainErrorMsg( CODEIN_WORK *wk )
+{
+  switch( wk->gene_seq ){
+  case 0:
+    // トレインナンバー指定かランク指定の時だけ表示される（はず）
+    CI_pv_BMP_ErrorMsgSet( wk->sys.win, wk->param.mode, wk->sys.fontHandle, wk->param.max );
+    wk->gene_seq++;
+    break;
+  case 1:
+    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL ||GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg()){
+      CI_pv_BMP_MsgSet( wk->sys.win, wk->param.mode, wk->sys.fontHandle, wk->param.max );
+      CI_pv_SeqChange( wk, eSEQ_INPUT );
+    }
+    break;
+  }
+  
+  return FALSE;
+}
 
 //--------------------------------------------------------------
 /**
@@ -433,6 +466,7 @@ static BOOL (* const CI_pv_MainTable[])( CODEIN_WORK* wk ) = {
   CI_pv_MainInput,
   CI_pv_MainFocusMove,
   CI_pv_MainEnd,
+  CI_pv_MainErrorMsg,
 };
 
 
@@ -557,7 +591,7 @@ void CI_KEY_Main( CODEIN_WORK* wk )
 
 //    PMSND_PlaySystemSE( CI_SE_MOVE );
   }
-  else if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+  else if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
     ///< A ボタン押した
     
     int cur_p;
@@ -572,9 +606,14 @@ void CI_KEY_Main( CODEIN_WORK* wk )
     }   
     else if ( dat == 11 ){
       ///< End 押された場合
-      CI_pv_Input_End( wk );  
+      if(_end_check(wk)){
+        CI_pv_Input_End( wk );    
+        PMSND_PlaySystemSE( CI_SE_END );              
+      }else{
+        CI_pv_SeqChange( wk, eSEQ_ERROR_MSG );
+      }
 
-      PMSND_PlaySystemSE( CI_SE_END );        
+
     }
     else {
       
@@ -699,6 +738,47 @@ void CI_KEY_Main( CODEIN_WORK* wk )
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 入力した数値を得る
+ *
+ * @param   wk    
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int _get_num(CODEIN_WORK *wk)
+{
+  int i,num=0,keta=1;
+  for ( i=wk->code_max-1; i>-1 ; i--,keta*=10 ){
+    num += (wk->code[ i ].state - 1)*keta;
+  }
+
+  OS_Printf("取得した数値は%d\n", num);
+
+  return  num;
+}
+//----------------------------------------------------------------------------------
+/**
+ * @brief 終了判定
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static BOOL _end_check( CODEIN_WORK *wk )
+{
+  // ともだちコード入力時は無条件でOK
+  if(wk->param.mode==CODEIN_MODE_FRIEND){
+    return TRUE;
+  }else{
+    int num = _get_num( wk );
+    if(num>wk->param.max){
+      return FALSE;
+    }
+  }
+  
+  return TRUE;
+}
 
 //--------------------------------------------------------------
 /**
@@ -963,7 +1043,11 @@ void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work )
         }
         else {
           ///< 決定
-          CI_pv_Input_End( wk );          
+          if(_end_check(wk)){
+            CI_pv_Input_End( wk );  
+          }else{
+            CI_pv_SeqChange( wk, eSEQ_ERROR_MSG );
+          }
         }
       }
     }

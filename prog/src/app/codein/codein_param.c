@@ -45,7 +45,7 @@
  *
  */
 //--------------------------------------------------------------
-CODEIN_PARAM* CodeInput_ParamCreate( int heap_id, int mode, int word_len, int block[] )
+CODEIN_PARAM* CodeInput_ParamCreate( int heap_id, int mode, int max, int word_len, int block[] )
 {
   int i;
   CODEIN_PARAM* wk = NULL;
@@ -57,6 +57,7 @@ CODEIN_PARAM* CodeInput_ParamCreate( int heap_id, int mode, int word_len, int bl
   wk->mode      = mode;
   wk->word_len  = word_len; 
   wk->strbuf    = GFL_STR_CreateBuffer( word_len + 1, heap_id );
+  wk->max       = max;
   
   for ( i = 0; i < CODE_BLOCK_MAX; i++ ){
     wk->block[ i ] = block[ i ];

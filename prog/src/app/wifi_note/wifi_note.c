@@ -6269,7 +6269,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
     CodeIn_BlockDataMake_4_4_4( block );
-    p_wk->p_codein = CodeInput_ParamCreate( heapID, CODEIN_MODE_FRIEND, FRIENDCODE_MAXLEN, block );
+    p_wk->p_codein = CodeInput_ParamCreate( heapID, CODEIN_MODE_FRIEND, 0, FRIENDCODE_MAXLEN, block );
 
     WFNOTE_DrawExit( p_sys ); // ‰æ–Êƒ[ƒN‘S”jŠü
     p_wk->p_subproc = GFL_PROC_LOCAL_boot( heapID );

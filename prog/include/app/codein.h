@@ -33,8 +33,8 @@ typedef struct {
   int     mode;                       ///< 入力モード（上画面の説明文章が変わります）CODEIN_MODE_****
   int     word_len;                   ///< 入力文字数 
   int     block[ CODE_BLOCK_MAX + 1 ];///< 入力ブロック　xx-xxxx-xxx とか
-  
   int     end_state;                  ///< 終了時の状態
+  int     max;                        ///< 入力できる数値の最大（ともだちコードの時は無視）
   STRBUF*   strbuf;                   ///< 空欄ならバッファそうでなければデフォルト値
   
 } CODEIN_PARAM;
@@ -43,7 +43,7 @@ extern const GFL_PROC_DATA CodeInput_ProcData;
 
 FS_EXTERN_OVERLAY(codein);
 
-extern CODEIN_PARAM*  CodeInput_ParamCreate( int heap_id, int mode, int word_len, int block[] );
+extern CODEIN_PARAM*  CodeInput_ParamCreate( int heap_id, int mode, int max, int word_len, int block[] );
 extern void       CodeInput_ParamDelete( CODEIN_PARAM* codein_param );
 
 

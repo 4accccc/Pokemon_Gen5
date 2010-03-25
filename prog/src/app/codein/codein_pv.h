@@ -34,8 +34,8 @@ enum {
   eSEQ_INIT   = 0,
   eSEQ_INPUT,
   eSEQ_FOCUS_MOVE,
-//  eSEQ_CUR_MOVE,
   eSEQ_END,
+  eSEQ_ERROR_MSG,
 };
 
 
@@ -286,6 +286,8 @@ extern BOOL CI_pv_MainInit( CODEIN_WORK* wk );
 extern BOOL CI_pv_MainInput( CODEIN_WORK* wk );
 extern BOOL CI_pv_MainFocusMove( CODEIN_WORK* wk );
 extern BOOL CI_pv_MainEnd( CODEIN_WORK* wk );
+extern BOOL CI_pv_MainErrorMsg( CODEIN_WORK *wk );
+
 
 extern int CI_pv_FocusTopSerach( CODEIN_WORK* wk, int next );
 extern int CI_pv_FocusBottomSerach( CODEIN_WORK* wk, int next );
@@ -325,8 +327,11 @@ extern void CI_pv_FontOam_Add( CODEIN_WORK* wk );
 extern void CI_pv_FontOam_Enable( CODEIN_WORK* wk, BOOL flag );
 extern void CI_pv_FontOam_Create( CODEIN_WORK* wk, int no, int x, int y, int pal_offset );
 
-extern void CI_pv_disp_BMP_WindowAdd( GFL_BMPWIN** win, int no, int frm, int x, int y, int sx, int sy, GFL_FONT *fontHandle );
-extern void CI_pv_BMP_MsgSet( GFL_BMPWIN *win, int mes_id , GFL_FONT *fontHandle );
+extern void CI_pv_disp_BMP_WindowAdd( GFL_BMPWIN** win, int no, int frm, 
+                                      int x, int y, int sx, int sy, GFL_FONT *fontHandle, int max );
+extern void CI_pv_BMP_MsgSet( GFL_BMPWIN *win, int mes_id , GFL_FONT *fontHandle, int max );
+extern void CI_pv_BMP_ErrorMsgSet( GFL_BMPWIN * win, int mode , GFL_FONT *fontHandle, int max );
+
 
 extern void CI_pv_disp_CodeRes_Delete( CODEIN_WORK* wk );
 
