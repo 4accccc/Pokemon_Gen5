@@ -1010,11 +1010,13 @@ static void PmsInputSentenceExit( KAWADA_MAIN_WORK* wk )
 // ƒ^ƒ}ƒS›z‰»ƒfƒ‚
 static void EggDemoInit( KAWADA_MAIN_WORK* wk )
 {
+  u16 monsno = MONSNO_KAMEKKUSU;
+
   GFL_OVERLAY_Load(FS_OVERLAY_ID(egg_demo));
   ZONEDATA_Open( wk->heapID );
 
-  wk->pp = PP_Create( MONSNO_KAMEKKUSU, 1, 0, wk->heapID );
-  //wk->pp = PP_Create( MONSNO_MANAFI, 1, 0, wk->heapID );
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )  monsno = MONSNO_MANAFI;
+  wk->pp = PP_Create( monsno, 1, 0, wk->heapID );
   PP_Put( wk->pp, ID_PARA_tamago_flag, 1 );
   wk->egg_demo_param = EGG_DEMO_AllocParam( wk->heapID, wk->gamedata, wk->pp );
       

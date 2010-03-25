@@ -9,7 +9,7 @@
  *  モジュール名：EGG_DEMO_VIEW
  */
 //============================================================================
-#define DEBUG_KAWADA
+//#define DEBUG_KAWADA
 //#define SET_PARTICLE_Y_MODE  // これが定義されているとき、パーティクルのY値を編集できるモードになる
 
 
@@ -20,6 +20,7 @@
 
 #include "system/mcss.h"
 #include "system/mcss_tool.h"
+#include "poke_tool/monsno_def.h"
 
 #include "egg_demo_view.h"
 
@@ -43,6 +44,7 @@ typedef enum
   STEP_EGG_START,       // タマゴ開始待ち中→デモ
   STEP_EGG_DEMO,        // タマゴデモ
   STEP_EGG_WHITE,       // タマゴ白へ
+  STEP_EGG_ALPHA,       // タマゴ透明へ
   STEP_EGG_END,         // タマゴ終了中
   STEP_MON_READY,       // ポケモン準備中
   STEP_MON_WHITE,       // ポケモン白で待ち
@@ -59,8 +61,15 @@ STEP;
 #define POKE_SCALE       (16.0f)
 #define POKE_SIZE_MAX    (96.0f)
 
+// マナフィ以外のポケモン
 // パーティクルのフレームとポケモンアニメーションのフレームを連携させる
 #define PARTICLE_BURST_FRAME   (339)  // ひびが入っている絵の最終フレーム  // 全部で340個フレームがあった
+#define POKE_ANIME_INDEX (1)
+
+// マナフィ
+// パーティクルのフレームとポケモンアニメーションのフレームを連携させる
+#define MANAFI_PARTICLE_BURST_FRAME   (339)  // 最終フレーム  // 全部で???個フレームがあった
+#define MANAFI_POKE_ANIME_INDEX (0)
 
 
 // 3D
@@ -216,6 +225,14 @@ static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
 // 132 ヒビ大開始
 // 202 = 0
 
+static const PARTICLE_PLAY_DATA manafi_particle_play_data_tbl[] =
+{
+  {    MANAFI_PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        DEMO_EGG01 },
+  {    MANAFI_PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        DEMO_EGG02 },
+  {    MANAFI_PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        DEMO_EGG03 },
+};
+
+
 //-------------------------------------
 /// 3Dオブジェクトのプロパティ
 //=====================================
@@ -256,6 +273,7 @@ struct _EGG_DEMO_VIEW_WORK
   // 他のところのを覚えているだけで生成や破棄はしない。
   HEAPID                   heap_id;
   const POKEMON_PARAM*     pp;
+  u16                      monsno;
   
   // ステップ
   STEP                     step;
@@ -273,6 +291,8 @@ struct _EGG_DEMO_VIEW_WORK
   MCSS_SYS_WORK*           mcss_sys_wk;
   MCSS_WORK*               mcss_wk;
   BOOL                     mcss_anime_end;
+  BOOL                     mcss_alpha_anime;
+  u8                       mcss_alpha_end;
 
   // パーティクル
   PARTICLE_MANAGER*        particle_mgr;
@@ -286,7 +306,6 @@ struct _EGG_DEMO_VIEW_WORK
   // 3Dフレーム
   u32                      three_frame;
   REAR_WHITE_ANIME_STATE   rear_white_anime_state;
-  int                      rear_white_anime_frame;
 };
 
 
@@ -308,6 +327,9 @@ static void Egg_Demo_View_McssExit( EGG_DEMO_VIEW_WORK* work );
 static void Egg_Demo_View_McssVanish( EGG_DEMO_VIEW_WORK* work );
 static void Egg_Demo_View_McssSetAnimeIndex( EGG_DEMO_VIEW_WORK* work, int index, BOOL b_last_stop );
 static void Egg_Demo_View_McssCallBackFunctor( u32 data, fx32 currentFrame );
+static void Egg_Demo_View_McssAlphaAnimeStart( EGG_DEMO_VIEW_WORK* work, u8 start_alpha, u8 end_alpha );
+static void Egg_Demo_View_McssAlphaAnimeMain( EGG_DEMO_VIEW_WORK* work );
+static BOOL Egg_Demo_View_McssAlphaAnimeIsEnd( EGG_DEMO_VIEW_WORK* work );
 
 //-------------------------------------
 /// タマゴ
@@ -318,12 +340,12 @@ static BOOL Egg_Demo_View_EggIsWhite( EGG_DEMO_VIEW_WORK* work );
 //-------------------------------------
 /// ポケモン
 //=====================================
-void Egg_Demo_View_MonColor( EGG_DEMO_VIEW_WORK* work );
+static void Egg_Demo_View_MonColor( EGG_DEMO_VIEW_WORK* work );
 
 //-------------------------------------
 /// パーティクル
 //=====================================
-static PARTICLE_MANAGER* Particle_Init( HEAPID heap_id );
+static PARTICLE_MANAGER* Particle_Init( HEAPID heap_id, u16 data_num, const PARTICLE_PLAY_DATA* data_tbl );
 static void Particle_Exit( PARTICLE_MANAGER* mgr );
 static void Particle_Main( PARTICLE_MANAGER* mgr );
 static void Particle_Draw( PARTICLE_MANAGER* mgr );
@@ -376,6 +398,7 @@ EGG_DEMO_VIEW_WORK* EGG_DEMO_VIEW_Init(
   {
     work->heap_id      = heap_id;
     work->pp           = pp;
+    work->monsno       = (u16)PP_Get( work->pp, ID_PARA_monsno, NULL );
   }
 
   // ステップ
@@ -403,7 +426,14 @@ EGG_DEMO_VIEW_WORK* EGG_DEMO_VIEW_Init(
   }
 
   // パーティクル
-  work->particle_mgr = Particle_Init( work->heap_id );
+  if( work->monsno == MONSNO_MANAFI )
+  {
+    work->particle_mgr = Particle_Init( work->heap_id, NELEMS(manafi_particle_play_data_tbl), manafi_particle_play_data_tbl );
+  }
+  else
+  {
+    work->particle_mgr = Particle_Init( work->heap_id, NELEMS(particle_play_data_tbl), particle_play_data_tbl );
+  }
 
   // 3D
   Egg_Demo_View_ThreeInit( work );
@@ -467,7 +497,7 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
         work->wait_count = 0;
 
         // アニメーション
-        Egg_Demo_View_McssSetAnimeIndex( work, 1, TRUE );
+        Egg_Demo_View_McssSetAnimeIndex( work, (work->monsno==MONSNO_MANAFI)?(MANAFI_POKE_ANIME_INDEX):(POKE_ANIME_INDEX), TRUE );
         
         // パーティクル
         Particle_Start( work->particle_mgr );
@@ -476,8 +506,10 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
     break;
   case STEP_EGG_DEMO:
     {
+      u32 particle_burst_frame = (work->monsno==MONSNO_MANAFI)?(MANAFI_PARTICLE_BURST_FRAME):(PARTICLE_BURST_FRAME);
+
       work->wait_count++;
-      if( work->wait_count == PARTICLE_BURST_FRAME )
+      if( work->wait_count == particle_burst_frame )
       {
         Egg_Demo_View_EggStopWhite( work );
         Egg_Demo_View_ThreeRearStartColorToWhite( work );
@@ -489,7 +521,18 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
     break;
   case STEP_EGG_WHITE:
     {
-      if(    Egg_Demo_View_EggIsWhite( work )
+      if( Egg_Demo_View_EggIsWhite( work ) )
+      {
+        //aplhaは身体の部品が見えてしまうのでやめたEgg_Demo_View_McssAlphaAnimeStart( work, 31, 0 );
+
+        // 次へ
+        work->step = STEP_EGG_ALPHA;
+      }
+    }
+    break;
+  case STEP_EGG_ALPHA:
+    {
+      if(    1//aplhaは身体の部品が見えてしまうのでやめたEgg_Demo_View_McssAlphaAnimeIsEnd( work ) 
           && Egg_Demo_View_ThreeRearIsWhite( work ) )
       {
         Egg_Demo_View_McssVanish( work );
@@ -572,8 +615,9 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
 
 
   // MCSS
+  Egg_Demo_View_McssAlphaAnimeMain( work );
   MCSS_Main( work->mcss_sys_wk );
-
+  
   // パーティクル
   Particle_Main( work->particle_mgr );
 
@@ -736,6 +780,9 @@ static void Egg_Demo_View_McssSysInit( EGG_DEMO_VIEW_WORK* work )
   work->mcss_sys_wk = MCSS_Init( 1, work->heap_id );
   MCSS_SetTextureTransAdrs( work->mcss_sys_wk, POKE_TEX_ADRS_FOR_PARTICLE );  // パーティクルと一緒に使うため
   MCSS_SetOrthoMode( work->mcss_sys_wk );
+
+  work->mcss_alpha_anime = FALSE;
+  work->mcss_alpha_end   = 0;
 }
 //-------------------------------------
 /// MCSSシステム終了処理
@@ -829,6 +876,48 @@ static void Egg_Demo_View_McssCallBackFunctor( u32 data, fx32 currentFrame )
   MCSS_SetAnmStopFlag( work->mcss_wk );  // このタイミングだと0フレームに戻ったところで止まるので、1フレーム遅くて使い物にならない
   work->mcss_anime_end = TRUE;
 }
+//-------------------------------------
+/// MCSSポケモンアルファアニメーション
+//=====================================
+static void Egg_Demo_View_McssAlphaAnimeStart( EGG_DEMO_VIEW_WORK* work, u8 start_alpha, u8 end_alpha )  // 0-31
+{
+  u8 curr_alpha = MCSS_GetAlpha( work->mcss_wk );
+  work->mcss_alpha_end = end_alpha;
+  if( start_alpha == end_alpha )
+  {
+    work->mcss_alpha_anime = FALSE;
+    MCSS_SetAlpha( work->mcss_wk, end_alpha );
+  }
+  else
+  {
+    work->mcss_alpha_anime = TRUE;
+    MCSS_SetAlpha( work->mcss_wk, start_alpha );
+  }
+}
+static void Egg_Demo_View_McssAlphaAnimeMain( EGG_DEMO_VIEW_WORK* work )
+{
+  if( work->mcss_alpha_anime )
+  {
+    u8 curr_alpha = MCSS_GetAlpha( work->mcss_wk );
+    if( curr_alpha > work->mcss_alpha_end )
+    {
+      curr_alpha--;
+    }
+    else  // if( curr_alpha < work->mcss_alpha_end )  // ( curr_alpha == end_alpha )になることはない
+    {
+      curr_alpha++;
+    }
+    MCSS_SetAlpha( work->mcss_wk, curr_alpha );
+    if( curr_alpha == work->mcss_alpha_end )
+    {
+      work->mcss_alpha_anime = FALSE;
+    }
+  }
+}
+static BOOL Egg_Demo_View_McssAlphaAnimeIsEnd( EGG_DEMO_VIEW_WORK* work )
+{
+  return !(work->mcss_alpha_anime);
+}
 
 //-------------------------------------
 /// タマゴのアニメを止め、白くする
@@ -849,20 +938,22 @@ static BOOL Egg_Demo_View_EggIsWhite( EGG_DEMO_VIEW_WORK* work )
 }
 
 //-------------------------------------
-/// ポケモンを表示し、白から普通の色にする、
+/// ポケモンを表示し、透明、白から普通の色にする、
 //=====================================
-void Egg_Demo_View_MonColor( EGG_DEMO_VIEW_WORK* work )
+static void Egg_Demo_View_MonColor( EGG_DEMO_VIEW_WORK* work )
 {
+  // 透明→普通
+  //aplhaは身体の部品が見えてしまうのでやめたEgg_Demo_View_McssAlphaAnimeStart( work, 0, 31 );
   // 表示
   MCSS_ResetVanishFlag( work->mcss_wk );
   // 白→普通
-  MCSS_SetPaletteFade( work->mcss_wk, 16, 0, 1, 0x7fff );
+  MCSS_SetPaletteFade( work->mcss_wk, 16, 0, 2, 0x7fff );
 }
 
 //-------------------------------------
 /// パーティクル
 //=====================================
-static PARTICLE_MANAGER* Particle_Init( HEAPID heap_id )
+static PARTICLE_MANAGER* Particle_Init( HEAPID heap_id, u16 data_num, const PARTICLE_PLAY_DATA* data_tbl )
 {
   PARTICLE_MANAGER* mgr;
   u8 i;
@@ -889,8 +980,8 @@ static PARTICLE_MANAGER* Particle_Init( HEAPID heap_id )
     mgr = GFL_HEAP_AllocClearMemory( heap_id, sizeof(PARTICLE_MANAGER) );
     mgr->frame           = 0;
     mgr->data_no         = 0;
-    mgr->data_num        = NELEMS(particle_play_data_tbl);
-    mgr->data_tbl        = particle_play_data_tbl;
+    mgr->data_num        = data_num;
+    mgr->data_tbl        = data_tbl;
     mgr->play            = FALSE;
     mgr->stop_count      = -1;
   }
@@ -1078,12 +1169,12 @@ static void Egg_Demo_View_ThreeRearInit( EGG_DEMO_VIEW_WORK* work )
   {
     THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[ work->three_obj_prop_tbl_idx[THREE_USER_OBJ_IDX_REAR] ]);
     GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
+    int anime_frame = REAR_COLOR_FRAME;
     work->rear_white_anime_state = REAR_WHITE_ANIME_STATE_COLOR;
-    work->rear_white_anime_frame = REAR_COLOR_FRAME;
     GFL_G3D_OBJECT_EnableAnime( obj, REAR_ANM_C );
     GFL_G3D_OBJECT_EnableAnime( obj, REAR_ANM_M );
-	  GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_C, &work->rear_white_anime_frame );
-	  GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_M, &work->rear_white_anime_frame );
+	  GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_C, &anime_frame );
+	  GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_M, &anime_frame );
   }
 }
 static void Egg_Demo_View_ThreeRearExit( EGG_DEMO_VIEW_WORK* work )
@@ -1130,42 +1221,36 @@ static void Egg_Demo_View_ThreeRearMain( EGG_DEMO_VIEW_WORK* work )
   {
     THREE_OBJ_PROPERTY* prop = &(work->three_obj_prop_tbl[ work->three_obj_prop_tbl_idx[THREE_USER_OBJ_IDX_REAR] ]);
     GFL_G3D_OBJ* obj = GFL_G3D_UTIL_GetObjHandle( work->three_util, prop->idx );
-    BOOL b_set_anime = FALSE;
+    BOOL b_continue_c = TRUE;
+    BOOL b_continue_m = TRUE;
     fx32 anime_add;  // 増加分（FX32_ONEで１フレーム進める）
     if( work->rear_white_anime_state == REAR_WHITE_ANIME_STATE_COLOR_TO_WHITE )
     {
-      work->rear_white_anime_frame += 5;
       anime_add = FX32_ONE * 5;
-      if( work->rear_white_anime_frame == REAR_WHITE_FRAME )
+	    b_continue_c = GFL_G3D_OBJECT_IncAnimeFrame( obj, REAR_ANM_C, anime_add );
+	    b_continue_m = GFL_G3D_OBJECT_IncAnimeFrame( obj, REAR_ANM_M, anime_add );
+      if( (!b_continue_c) && (!b_continue_m) )
       {
         work->rear_white_anime_state = REAR_WHITE_ANIME_STATE_WHITE;
       }
-      b_set_anime = TRUE;
     }
     else if( work->rear_white_anime_state == REAR_WHITE_ANIME_STATE_WHITE_TO_COLOR )
     {
-      work->rear_white_anime_frame -= 2;
       anime_add = FX32_ONE * (-2);
-      if( work->rear_white_anime_frame == REAR_COLOR_FRAME )
+	    b_continue_c = GFL_G3D_OBJECT_IncAnimeFrame( obj, REAR_ANM_C, anime_add );
+	    b_continue_m = GFL_G3D_OBJECT_IncAnimeFrame( obj, REAR_ANM_M, anime_add );
+      if( (!b_continue_c) && (!b_continue_m) )
       {
         work->rear_white_anime_state = REAR_WHITE_ANIME_STATE_COLOR;
       }
-      b_set_anime = TRUE;
     }
-    if( b_set_anime )
-    {
-	    GFL_G3D_OBJECT_IncAnimeFrame( obj, REAR_ANM_C, anime_add );
-	    GFL_G3D_OBJECT_IncAnimeFrame( obj, REAR_ANM_M, anime_add );
-	    //GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_C, &work->rear_white_anime_frame );  // GFL_G3D_OBJECT_SetAnimeFrameだと絵が更新されなかったので、
-	    //GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_M, &work->rear_white_anime_frame );  // GFL_G3D_OBJECT_IncAnimeFrameにした。
-    }
+	  //GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_C, &work->rear_white_anime_frame );  // GFL_G3D_OBJECT_SetAnimeFrameだと絵が更新されなかったので、
+	  //GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_M, &work->rear_white_anime_frame );  // GFL_G3D_OBJECT_IncAnimeFrameにした。
   }
 }
 static void Egg_Demo_View_ThreeRearStartColorToWhite( EGG_DEMO_VIEW_WORK* work )
 {
-  work->rear_white_anime_frame = REAR_COLOR_FRAME;
   work->rear_white_anime_state = REAR_WHITE_ANIME_STATE_COLOR_TO_WHITE;
-  //GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_C, &work->rear_white_anime_frame );
 }
 static BOOL Egg_Demo_View_ThreeRearIsWhite( EGG_DEMO_VIEW_WORK* work )
 {
@@ -1173,9 +1258,7 @@ static BOOL Egg_Demo_View_ThreeRearIsWhite( EGG_DEMO_VIEW_WORK* work )
 }
 static void Egg_Demo_View_ThreeRearStartWhiteToColor( EGG_DEMO_VIEW_WORK* work )
 {
-  work->rear_white_anime_frame = REAR_WHITE_FRAME;
   work->rear_white_anime_state = REAR_WHITE_ANIME_STATE_WHITE_TO_COLOR;
-  //GFL_G3D_OBJECT_SetAnimeFrame( obj, REAR_ANM_C, &work->rear_white_anime_frame );
 }
 static BOOL Egg_Demo_View_ThreeRearIsColor( EGG_DEMO_VIEW_WORK* work )
 {
