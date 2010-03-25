@@ -288,13 +288,13 @@ struct _FIELD_ITEMMENU_PARAM {
 #define _PAL_SORT_CELL					(_PAL_CUR_CELL+_PAL_CUR_CELL_NUM)			// ソートボタンのパレット展開位置
 #define _PAL_SORT_CELL_NUM			(2)																		// ソートボタンのパレット本数
 #define _PAL_BAG_PARTS_CELL			(_PAL_SORT_CELL+_PAL_SORT_CELL_NUM)		// バッグのパーツCELLのパレット展開位置
-#define _PAL_BAG_PARTS_CELL_NUM	(1)						// バッグのパーツCELLのパレット展開位置
+#define _PAL_BAG_PARTS_CELL_NUM	(2)						// バッグのパーツCELLのパレット展開位置
 #define _PAL_COMMON_CELL				(_PAL_BAG_PARTS_CELL+_PAL_BAG_PARTS_CELL_NUM)	// 共通パレット展開位置
 #define _PAL_COMMON_CELL_NUM		(APP_COMMON_BARICON_PLT_NUM)
 #define _PAL_MENU_CHECKBOX_CELL			(_PAL_COMMON_CELL+_PAL_COMMON_CELL_NUM)	// チェックボックスのパレット展開位置
 #define _PAL_MENU_CHECKBOX_CELL_NUM	(1)  // チェックボックスのパレット展開位置
 
-#define	_PAL_FADE_OBJ_BIT				( 0x044f )	// パレットフェードを適用するOBJビット [ 0000_0100_0100_1111 ]
+#define	_PAL_FADE_OBJ_BIT				( 0x08cf )	// パレットフェードを適用するOBJビット [ 0000_1000_1100_1111 ]
 
 
 
