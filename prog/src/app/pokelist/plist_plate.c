@@ -1223,13 +1223,13 @@ const PLIST_PLATE_CAN_BATTLE PLIST_PLATE_CanJoinBattle( PLIST_WORK *work , PLIST
         const u32 item2 = PP_Get( pp , ID_PARA_item , NULL );
         
         if( monsno == monsno2 &&
-            reg->BOTH_POKE == 1 )
+            reg->BOTH_POKE == 0 )
         {
           return PPCB_NG_SAME_MONSNO;
         }
         if( item == item2 &&
             item != 0 &&
-            reg->BOTH_ITEM == 1 )
+            reg->BOTH_ITEM == 0 )
         {
           return PPCB_NG_SAME_ITEM;
         }
