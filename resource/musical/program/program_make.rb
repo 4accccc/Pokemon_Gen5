@@ -33,7 +33,7 @@ SCRIPT_MWLD = CW_BIN_TOOLS + "mwldarm.exe"
 SCRIPT_ELF2BIN = ENV['PROJECT_ROOT'] + "/tools/elf2bin.exe"
 
 #アーカイバー
-NARC_CONVERT = "nnsarc -c -l -n "
+NARC_CONVERT = "nnsarc -c -l -n -i "
 
 #ファイル更新日比較
 #file1の方が新しければ1を返す
