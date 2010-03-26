@@ -287,3 +287,4 @@
 "nsbmdfiles/h04_ligth.nsbmd"
 "nsbmdfiles/door_c6_ctower.nsbmd"
 "nsbmdfiles/door_untower.nsbmd"
+"nsbmdfiles/c09_back.nsbmd"
