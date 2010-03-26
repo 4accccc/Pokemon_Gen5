@@ -108,9 +108,11 @@ static void _pokemonCreateCLACTExit(POKEMON_TRADE_WORK* pWork)
   if(pWork->pPokemonTradeDemo->pPokeCreateCLWK){
     GFL_CLACT_WK_Remove( pWork->pPokemonTradeDemo->pPokeCreateCLWK);
   }
-  GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_POKECREATE] );
-  GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_POKECREATE] );
-  GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_POKECREATE] );
+  if(pWork->cellRes[CHAR_POKECREATE] ){
+    GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_POKECREATE] );
+    GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_POKECREATE] );
+    GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_POKECREATE] );
+  }
   pWork->cellRes[CHAR_POKECREATE] = 0;
   pWork->cellRes[PLT_POKECREATE] = 0;
   pWork->cellRes[ANM_POKECREATE] = 0;

@@ -109,7 +109,8 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
 
   if(
     (pWork->type == POKEMONTRADE_TYPE_GTS) ||
-    (pWork->type == POKEMONTRADE_TYPE_GTSUP)
+    (pWork->type == POKEMONTRADE_TYPE_GTSUP) ||
+    (pWork->type == POKEMONTRADE_TYPE_GTSMID)
     )
   {
     pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;

@@ -161,9 +161,9 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   G2_BlendNone();
   IRC_POKETRADEDEMO_SetModel( pWork, TRADEMIDDLE_OBJECT);  //ダウン用モデル
   
-  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1),TRUE );  //相手裏
-  IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0),TRUE );  //みかた裏
-  IRCPOKETRADE_PokeCreateMcss(pWork, 3, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1),TRUE );  //相手表
+  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1),TRUE );  //相手裏
+  IRCPOKETRADE_PokeCreateMcss(pWork, 2, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,0),TRUE );  //みかた裏
+  IRCPOKETRADE_PokeCreateMcss(pWork, 3, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1),TRUE );  //相手表
   MCSS_SetVanishFlag( pWork->pokeMcss[0] );
   MCSS_SetVanishFlag( pWork->pokeMcss[1] );
   MCSS_SetVanishFlag( pWork->pokeMcss[2] );
@@ -196,8 +196,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
   }
 
   if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME-1)){
-    _pokemonCreateCLACTInit(pWork);
-    _pokemonCreateCLACTAdd(pWork);
+  //  _pokemonCreateCLACTInit(pWork);
+  //  _pokemonCreateCLACTAdd(pWork);
   }
   
   if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME)){
@@ -249,8 +249,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
   }
 
   if(pWork->anmCount == ANMCNTC(_OAM_POKECREATE_START2)){
-    _pokemonCreateCLACTInit(pWork);
-    _pokemonCreateCLACTAdd(pWork);
+   // _pokemonCreateCLACTInit(pWork);
+   // _pokemonCreateCLACTAdd(pWork);
   }
   if(pWork->anmCount == ANMCNTC(_POKEUP_WHITEOUT_START)){
     WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
