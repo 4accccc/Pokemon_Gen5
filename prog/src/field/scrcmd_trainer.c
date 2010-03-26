@@ -55,6 +55,8 @@ SDK_COMPILER_ASSERT( SCR_TR_BTL_RULE_DOUBLE == BTL_RULE_DOUBLE );
 SDK_COMPILER_ASSERT( SCR_TR_BTL_RULE_TRIPLE == BTL_RULE_TRIPLE );
 SDK_COMPILER_ASSERT( SCR_TR_BTL_RULE_ROTATION == BTL_RULE_ROTATION );
 
+SDK_COMPILER_ASSERT( SCR_EYE_TR_0 == TRAINER_EYE_HIT0 );
+SDK_COMPILER_ASSERT( SCR_EYE_TR_1 == TRAINER_EYE_HIT1 );
 
 //======================================================================
 //	コマンド
@@ -72,120 +74,18 @@ VMCMD_RESULT EvCmdEyeTrainerMoveSet( VMHANDLE *core, void *wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
 	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
-  //GMEVENT **ev_eye_move;
   SCR_TRAINER_HITDATA * eye;
 
-  if( pos == 0 ){ //視線0
+  if( pos == SCR_EYE_TR_0 ){ //視線0
     eye = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
-  }else{
+  }else if( pos == SCR_EYE_TR_1){
     eye = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
   }
   
-  eye->ev_eye_move = EVENT_SetTrainerEyeMove( fparam->fieldMap, &eye->hitdata, 0, pos );
+  eye->ev_eye_move = TRAINER_EYEMOVE_Create(
+      SCRCMD_WORK_GetHeapID( work ), fparam->fieldMap, &eye->hitdata, pos );
   
 	return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
- * トレーナー移動終了待ち　0
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-static BOOL EvWaitTrainer0Move( VMHANDLE *core, void *wk )
-{
-  GMEVENT_RESULT res;
-  GMEVENT **ev_eye_move;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCR_TRAINER_HITDATA * eye = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
-
-  ev_eye_move = &eye->ev_eye_move;
-  res = GMEVENT_Run( *ev_eye_move );
-  
-  if( res == GMEVENT_RES_FINISH ){
-    GMEVENT_Delete( *ev_eye_move );
-    *ev_eye_move = NULL;
-    return( TRUE );
-  }
-  
-  return( FALSE );
-}
-
-//--------------------------------------------------------------
-/**
- * トレーナー移動終了待ち　1
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-static BOOL EvWaitTrainer1Move( VMHANDLE *core, void *wk )
-{
-  GMEVENT_RESULT res;
-  GMEVENT **ev_eye_move;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCR_TRAINER_HITDATA * eye = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
-
-  ev_eye_move = &eye->ev_eye_move;
-  res = GMEVENT_Run( *ev_eye_move );
-  
-  if( res == GMEVENT_RES_FINISH ){
-    GMEVENT_Delete( *ev_eye_move );
-    *ev_eye_move = NULL;
-    return( TRUE );
-  }
-  
-  return( FALSE );
-}
-
-//--------------------------------------------------------------
-/**
- * トレーナー移動終了待ち　0&1
- * @param
- * @retval
- */
-//--------------------------------------------------------------
-static BOOL EvWaitTrainer01Move( VMHANDLE *core, void *wk )
-{
-  GMEVENT **ev_eye_move0;
-  GMEVENT **ev_eye_move1;
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GMEVENT_RESULT res0,res1;
-  SCR_TRAINER_HITDATA * eye0 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
-  SCR_TRAINER_HITDATA * eye1 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
-
-  ev_eye_move0 = &eye0->ev_eye_move;
-  
-  if( *ev_eye_move0 != NULL ){
-    res0 = GMEVENT_Run( *ev_eye_move0 );
-  }else{
-    res0 = GMEVENT_RES_FINISH;
-  }
-  
-  ev_eye_move1 = &eye1->ev_eye_move;
-  
-  if( *ev_eye_move1 != NULL ){
-    res1 = GMEVENT_Run( *ev_eye_move1 );
-  }else{
-    res1 = GMEVENT_RES_FINISH;
-  }
-  
-  if( res0 == GMEVENT_RES_FINISH && res1 == GMEVENT_RES_FINISH ){
-    if( *ev_eye_move0 != NULL ){
-      GMEVENT_Delete( *ev_eye_move0 );
-    }
-    if( *ev_eye_move1 != NULL ){
-      GMEVENT_Delete( *ev_eye_move1 );
-    }
-    *ev_eye_move0 = NULL;
-    *ev_eye_move1 = NULL;
-    return( TRUE );
-  }
-  
-  return( FALSE );
 }
 
 //--------------------------------------------------------------
@@ -197,29 +97,16 @@ static BOOL EvWaitTrainer01Move( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdEyeTrainerMoveSingle( VMHANDLE *core, void *wk )
 {
-  GMEVENT **ev_eye_move;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
 	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
   
-	if( pos == SCR_EYE_TR_0 ){
-    SCR_TRAINER_HITDATA * eye0 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
-    ev_eye_move = &eye0->ev_eye_move;
-	}else{
-    SCR_TRAINER_HITDATA * eye1 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
-    ev_eye_move = &eye1->ev_eye_move;
-	}
-  
-	//登録されていない時
-  if( *ev_eye_move == NULL ){
-    return 0;
-  }
-  
-  if( pos == SCR_EYE_TR_0 ){
-    VMCMD_SetWait( core, EvWaitTrainer0Move );
-  }else{
-    VMCMD_SetWait( core, EvWaitTrainer1Move );
-  }
+  SCR_TRAINER_HITDATA * eye0 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
+  SCR_TRAINER_HITDATA * eye1 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GMEVENT * event;
+  event = EVENT_TrainerEyeMoveControl( gsys, eye0->ev_eye_move, eye1->ev_eye_move );
+  SCRIPT_CallEvent( sc, event );
    
   return VMCMD_RESULT_SUSPEND;
 }
@@ -233,26 +120,15 @@ VMCMD_RESULT EvCmdEyeTrainerMoveSingle( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdEyeTrainerMoveDouble( VMHANDLE *core, void *wk )
 {
-  GMEVENT **ev_eye_move0;
-  GMEVENT **ev_eye_move1;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCR_TRAINER_HITDATA * eye0 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
   SCR_TRAINER_HITDATA * eye1 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
   
-  ev_eye_move0 = &eye0->ev_eye_move;
-  ev_eye_move1 = &eye1->ev_eye_move;
-  
-	//登録されていない時
-  if( *ev_eye_move0 == NULL && *ev_eye_move1 == NULL ){
-    return 0;
-  }
-  
-  if( *ev_eye_move0 == NULL || *ev_eye_move1 == NULL ){
-    OS_Printf( "視線データ異常\n" );
-  }
-
-  VMCMD_SetWait( core, EvWaitTrainer01Move );
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GMEVENT * event = EVENT_TrainerEyeMoveControl( gsys, eye0->ev_eye_move, eye1->ev_eye_move );
+  SCRIPT_CallEvent( sc, event );
+   
   return VMCMD_RESULT_SUSPEND;
 }
 

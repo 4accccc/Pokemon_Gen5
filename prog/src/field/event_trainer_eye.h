@@ -29,11 +29,37 @@
 //======================================================================
 //	extern
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * 視線チェック＆トレーナーイベント生成
+ */
+//--------------------------------------------------------------
 extern GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 );
-extern int EVENT_CheckTrainerEyeRange(
+
+//--------------------------------------------------------------
+/**
+ * 視線ヒット移動制御用ワークの生成
+ */
+//--------------------------------------------------------------
+extern EV_EYEMEET_MOVE_WORK * TRAINER_EYEMOVE_Create( HEAPID heapID,
+    FIELDMAP_WORK *fieldMap, const TRAINER_HITDATA * hitdata, u32 work_pos );
+
+//--------------------------------------------------------------
+/**
+ * @brief 視線ヒット移動制御イベントの生成
+ */
+//--------------------------------------------------------------
+extern GMEVENT * EVENT_TrainerEyeMoveControl(
+    GAMESYS_WORK * gsys, EV_EYEMEET_MOVE_WORK * eye0, EV_EYEMEET_MOVE_WORK * eye1 );
+
+//--------------------------------------------------------------
+/// ツール関数：トレーナー視線チェック
+//--------------------------------------------------------------
+extern int TRAINER_MMDL_CheckEyeRange(
     const MMDL *mmdl, u16 eye_dir, int eye_range, const FIELD_ENCOUNT *enc );
 
-extern u16 EVENT_GetTrainerEyeTrainerID( const MMDL *mmdl );
+//--------------------------------------------------------------
+/// ツール関数：トレーナーID取得
+//--------------------------------------------------------------
+extern u16 TRAINER_MMDL_GetTrainerID( const MMDL *mmdl );
 
-extern GMEVENT * EVENT_SetTrainerEyeMove(
-    FIELDMAP_WORK *fieldMap, const TRAINER_HITDATA * hitdata, int gyoe, u32 work_pos );

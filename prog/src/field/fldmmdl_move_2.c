@@ -524,7 +524,7 @@ MMDL * MMDL_MovePairSearch( MMDL * mmdl )
   int type = MMDL_GetEventType( mmdl );
   int zone_id = MMDL_GetZoneID( mmdl );
   const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
-  u32 trid = EVENT_GetTrainerEyeTrainerID( mmdl );
+  u32 trid = TRAINER_MMDL_GetTrainerID( mmdl );
   
   switch( type ){
   case EV_TYPE_TRAINER:
@@ -539,7 +539,7 @@ MMDL * MMDL_MovePairSearch( MMDL * mmdl )
     {
       if( mmdl != pair && MMDL_GetZoneID(pair) == zone_id )
       {
-        if( EVENT_GetTrainerEyeTrainerID(pair) == trid )
+        if( TRAINER_MMDL_GetTrainerID(pair) == trid )
         {
           return( pair );
         }
@@ -566,11 +566,11 @@ static int PairTr_WorkSetOyaSearch( MMDL * mmdl, MV_TR_PAIR_WORK *work )
   
   no = 0;
   zone = MMDL_GetZoneID( mmdl );
-  trid = EVENT_GetTrainerEyeTrainerID( mmdl );
+  trid = TRAINER_MMDL_GetTrainerID( mmdl );
   
   while( MMDLSYS_SearchUseMMdl(mmdlsys,&oyaobj,&no) == TRUE ){
     if( mmdl != oyaobj && MMDL_GetZoneID(oyaobj) == zone &&
-      EVENT_GetTrainerEyeTrainerID(oyaobj) == trid ){
+      TRAINER_MMDL_GetTrainerID(oyaobj) == trid ){
       
       if( work->oya_init == FALSE ){
         PairTr_WorkInit( mmdl, work, oyaobj );

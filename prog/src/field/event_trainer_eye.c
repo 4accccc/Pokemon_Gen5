@@ -58,9 +58,11 @@ enum
 //  strcut
 //======================================================================
 //--------------------------------------------------------------
-//  視線ヒット移動処理用ワーク
+/**
+ * @brief 視線ヒット移動制御ワーク
+ */
 //--------------------------------------------------------------
-typedef struct
+struct _EV_EYEMEET_MOVE_WORK
 {
   int seq_no;        ///<処理番号
   BOOL end_flag;      ///<終了フラグ
@@ -74,7 +76,17 @@ typedef struct
   FLDEFF_TASK *task_gyoe;   ////<ギョエータスク
   FIELDMAP_WORK *fieldMap;  ///<FILEDMAP_WORK*
   FIELD_PLAYER *fieldPlayer; ///<FIELD_PLAYER*
-}EV_EYEMEET_MOVE_WORK;
+};
+
+//--------------------------------------------------------------
+/**
+ * @brief 視線ヒット移動制御イベント用ワーク
+ */
+//--------------------------------------------------------------
+typedef struct {
+  EV_EYEMEET_MOVE_WORK * eye0;  ///<トレーナー０用
+  EV_EYEMEET_MOVE_WORK * eye1;  ///<トレーナー１用
+}TRAINER_MOVE_EVENT_WORK;
 
 //======================================================================
 //  proto
@@ -87,11 +99,9 @@ static int treye_CheckEyeRange(
 static int treye_CheckEyeLine(
     u16 dir, s16 range, s16 tx, s16 ty, s16 tz, s16 gx, s16 gy, s16 gz );
 
-static GMEVENT_RESULT treyeEvent_EyeMeetMove( GMEVENT *ev, int *seq, void *wk );
 
 static u16 tr_GetTrainerEventType( const MMDL *mmdl );
 static BOOL tr_HitCheckEyeLine( const MMDL *mmdl, u16 dir, int range, const FIELD_ENCOUNT* enc );
-static u16 tr_GetTrainerID( const MMDL *mmdl );
 static BOOL tr_CheckEventFlag( FIELDMAP_WORK *fieldMap, const MMDL *mmdl );
 static void makeHitData( TRAINER_HITDATA *data, MMDL *mmdl, int range, u16 dir );
 static MMDL * tr_CheckPairTrainer( const MMDL *tr_mmdl, u16 tr_id );
@@ -101,6 +111,7 @@ static int (* const data_treye_CheckEyeLineTbl[DIR_MAX4])(
     s16,s16,s16,s16,s16,s16,s16);
 
 
+static GMEVENT_RESULT controlTrainerEyeMoveEvent( GMEVENT * ev, int *seq, void * wk );
 //======================================================================
 //  トレーナー視線イベント
 //======================================================================
@@ -119,22 +130,22 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 )
   
   if( treye_CheckEyeMeet(fieldMap,NULL,&hit0) == TRUE )
   {
-    MMDL *mmdl;
     TRAINER_HITDATA hit1;
     
-    if( hit0.rule_type == BTL_RULE_SINGLE ) //シングル
+    if( hit0.btl_rule == BTL_RULE_SINGLE ) //シングル
     {
-      event = createTrainerScript( fieldMap, hit0.mmdl ); //スクリプト起動
 
       if( vs2 == FALSE || //シングル戦チェック
           treye_CheckEyeMeet(fieldMap,hit0.mmdl,&hit1) == FALSE )
       { //スクリプト用イベントデータセット シングル
+        event = createTrainerScript( fieldMap, hit0.mmdl ); //スクリプト起動
         hit0.move_type = SCR_EYE_TR_TYPE_SINGLE;
         SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_0, &hit0 );
         KAGAYA_Printf( "TRAINER EYE HIT SINGLE\n" );
       }
       else
       { //スクリプト用イベントデータセット タッグ
+        event = createTrainerScript( fieldMap, hit0.mmdl ); //スクリプト起動
         hit0.move_type = SCR_EYE_TR_TYPE_TAG;
         SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_0, &hit0 );
         hit1.move_type = SCR_EYE_TR_TYPE_TAG;
@@ -142,15 +153,14 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 )
         KAGAYA_Printf( "TRAINER EYE HIT TAG DOUBLE\n" );
       }
     }
-    else if( hit0.rule_type == BTL_RULE_DOUBLE )
+    else if( hit0.btl_rule == BTL_RULE_DOUBLE )
     {
       if( vs2 == TRUE ) //ダブル可能
       {
-        event = createTrainerScript( fieldMap, hit0.mmdl ); //スクリプト起動
-        
-        mmdl = tr_CheckPairTrainer( hit0.mmdl, hit0.tr_id );
+        MMDL *mmdl = tr_CheckPairTrainer( hit0.mmdl, hit0.tr_id );
         makeHitData( &hit1, mmdl, hit0.range, hit0.dir );
         
+        event = createTrainerScript( fieldMap, hit0.mmdl ); //スクリプト起動
         //スクリプト用イベントデータセット ダブル
         hit0.move_type = SCR_EYE_TR_TYPE_DOUBLE;
         SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_0, &hit0 );
@@ -179,7 +189,7 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 )
  * @retval  int 視線ヒット時の自機までのグリッド距離。EYE_CHECK_NOHIT=エラー
  */
 //--------------------------------------------------------------
-int EVENT_CheckTrainerEyeRange(
+int TRAINER_MMDL_CheckEyeRange(
     const MMDL *mmdl, u16 eye_dir, int eye_range, const FIELD_ENCOUNT *enc )
 {
   int ret;
@@ -245,7 +255,7 @@ static BOOL treye_CheckEyeMeet(
         {
 #ifdef DEBUG_ONLY_FOR_kagaya
           KAGAYA_Printf( "視線ヒット ヒットしたトレーナーID =%d\n",
-              tr_GetTrainerID(mmdl) );
+              TRAINER_MMDL_GetTrainerID(mmdl) );
 #endif
           makeHitData( hit, mmdl, range, dir );
           return( TRUE );
@@ -436,38 +446,60 @@ static int treye_CheckEyeLineRight(
   return( EYE_CHECK_NOHIT );
 }
 
+
 //======================================================================
+//
+//
 //  視線ヒットによる移動イベント
+//
+//
 //======================================================================
 //--------------------------------------------------------------
 /**
- * 視線移動イベントセット
+ * @brief 視線ヒット移動制御イベントの生成
+ * @param gsys
+ * @param eye0  EV_EYEMEET_MOVE_WORK
+ * @param eye1  EV_EYEMEET_MOVE_WORK
+ * @return  GMEVENT 生成したイベント
+ */
+//--------------------------------------------------------------
+GMEVENT * EVENT_TrainerEyeMoveControl(
+    GAMESYS_WORK * gsys, EV_EYEMEET_MOVE_WORK * eye0, EV_EYEMEET_MOVE_WORK * eye1 )
+{
+  GMEVENT * event;
+  TRAINER_MOVE_EVENT_WORK * tmew;
+  event = GMEVENT_Create( gsys, NULL, controlTrainerEyeMoveEvent, sizeof(TRAINER_MOVE_EVENT_WORK) );
+  tmew = GMEVENT_GetEventWork( event );
+  tmew->eye0 = eye0;
+  tmew->eye1 = eye1;
+
+  return event;
+}
+//--------------------------------------------------------------
+/**
+ * 視線ヒット移動制御用ワークの生成
+ * @param   heapID
  * @param   fieldMap
  * @param   hitdata
- * @param   gyoe  !マーク制御 現状未使用
  * @param   work_pos 視線ヒットワーク要素数 0=視線主 1=ペア
  * @retval  GMEVENT 移動処理を行うGMEVENT
  */
 //--------------------------------------------------------------
-GMEVENT * EVENT_SetTrainerEyeMove(
-    FIELDMAP_WORK *fieldMap, const TRAINER_HITDATA * hitdata, int gyoe, u32 work_pos )
+EV_EYEMEET_MOVE_WORK * TRAINER_EYEMOVE_Create( HEAPID heapID,
+    FIELDMAP_WORK *fieldMap, const TRAINER_HITDATA * hitdata, u32 work_pos )
 {
-  GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
-  GMEVENT *ev = GMEVENT_Create( gsys, NULL,
-      treyeEvent_EyeMeetMove, sizeof(EV_EYEMEET_MOVE_WORK) );
-  EV_EYEMEET_MOVE_WORK *work = GMEVENT_GetEventWork( ev );
-  MI_CpuClear8( work, sizeof(EV_EYEMEET_MOVE_WORK) );
+  EV_EYEMEET_MOVE_WORK * work;
+  work = GFL_HEAP_AllocClearMemory( heapID, sizeof(EV_EYEMEET_MOVE_WORK) );
   
   work->hitdata = *hitdata;
-
-  work->gyoe_type = gyoe;
+  work->gyoe_type = 0;      //現在未使用
   work->sisen_no = work_pos;
   work->fieldMap = fieldMap;
   work->fieldPlayer = FIELDMAP_GetFieldPlayer( fieldMap );
   
-  KAGAYA_Printf( "OBJ ID %dの視線移動をセット\n", MMDL_GetOBJID(work->hitdata.mmdl) );
-  return( ev );
+  return  work;
 }
+
 
 //--------------------------------------------------------------
 /**
@@ -852,17 +884,38 @@ static int (* const data_EyeMeetMoveFuncTbl[])( EV_EYEMEET_MOVE_WORK* ) =
  * @retval  nothing
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT treyeEvent_EyeMeetMove( GMEVENT *ev, int *seq, void *wk )
+static BOOL trainerMoveTask( EV_EYEMEET_MOVE_WORK * work )
 {
-  EV_EYEMEET_MOVE_WORK *work = wk;
-  
   while( data_EyeMeetMoveFuncTbl[work->seq_no](work) == TRUE ){};
   
-  if( work->end_flag == TRUE ){
-    return( GMEVENT_RES_FINISH );
+  return( work->end_flag == TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 視線ヒット移動制御イベント
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT controlTrainerEyeMoveEvent( GMEVENT * ev, int *seq, void * wk )
+{
+  TRAINER_MOVE_EVENT_WORK * tmew = wk;
+
+  if ( tmew->eye0 && trainerMoveTask( tmew->eye0 ) == TRUE )
+  {
+    GFL_HEAP_FreeMemory( tmew->eye0 );
+    tmew->eye0 = NULL;
   }
-  
-  return( GMEVENT_RES_CONTINUE );
+
+  if ( tmew->eye1 && trainerMoveTask( tmew->eye1 ) == TRUE )
+  {
+    GFL_HEAP_FreeMemory( tmew->eye1 );
+    tmew->eye1 = NULL;
+  }
+  if ( tmew->eye0 == NULL && tmew->eye1 == NULL )
+  {
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
 }
 
 //======================================================================
@@ -958,27 +1011,15 @@ static BOOL tr_HitCheckEyeLine( const MMDL *mmdl, u16 dir, int range, const FIEL
 
 //--------------------------------------------------------------
 /**
- * 動作モデルからトレーナーID取得
- * @param mmdl MMDL*
- * @retval u16 トレーナーID
+ * @brief   動作モデルからトレーナーID取得
+ * @param   mmdl MMDL*
+ * @retval  u16 トレーナーID
  */
 //--------------------------------------------------------------
-static u16 tr_GetTrainerID( const MMDL *mmdl )
+u16 TRAINER_MMDL_GetTrainerID( const MMDL *mmdl )
 {
   u16 scr_id = MMDL_GetEventID( mmdl );
   return( SCRIPT_GetTrainerID_ByScriptID(scr_id) );
-}
-
-//--------------------------------------------------------------
-/**
- * 動作モデルからトレーナーID取得　グローバル
- * @param mmdl MMDL*
- * @retval u16 トレーナーID
- */
-//--------------------------------------------------------------
-u16 EVENT_GetTrainerEyeTrainerID( const MMDL *mmdl )
-{
-  return( tr_GetTrainerID(mmdl) );
 }
 
 //--------------------------------------------------------------
@@ -994,7 +1035,7 @@ static BOOL tr_CheckEventFlag( FIELDMAP_WORK *fieldMap, const MMDL *mmdl )
   GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
   GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
   EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
-  u16 id = tr_GetTrainerID( mmdl );
+  u16 id = TRAINER_MMDL_GetTrainerID( mmdl );
   return( SCRIPT_CheckEventFlagTrainer(evwork,id) );
 }
 
@@ -1014,8 +1055,8 @@ static void makeHitData(
   data->range = range;
   data->dir = dir;
   data->scr_id = MMDL_GetEventID( mmdl );
-  data->tr_id = tr_GetTrainerID( mmdl );
-  data->rule_type = SCRIPT_GetTrainerBtlRule( data->tr_id );
+  data->tr_id = TRAINER_MMDL_GetTrainerID( mmdl );
+  data->btl_rule = SCRIPT_GetTrainerBtlRule( data->tr_id );
   data->mmdl = mmdl;
 }
 
@@ -1039,7 +1080,7 @@ static MMDL * tr_CheckPairTrainer( const MMDL *tr_mmdl, u16 tr_id )
       type = tr_GetTrainerEventType( mmdl );
 
       if( type == EV_TYPE_TRAINER || type == EV_TYPE_TRAINER_EYEALL ){
-        if( tr_id == tr_GetTrainerID(mmdl) ){
+        if( tr_id == TRAINER_MMDL_GetTrainerID(mmdl) ){
           return( mmdl );
         }
       }

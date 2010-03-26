@@ -2115,7 +2115,7 @@ static int MvRt4Move_JikiCheck( MMDL * mmdl, MV_RT4_WORK *work )
     {
       u16 eye_dir = MMDL_GetDirDisp( mmdl );
       int eye_range = MMDL_GetParam( mmdl, MMDL_PARAM_0 );
-      int ret = EVENT_CheckTrainerEyeRange( mmdl, eye_dir, eye_range, NULL );
+      int ret = TRAINER_MMDL_CheckEyeRange( mmdl, eye_dir, eye_range, NULL );
     
       if( ret != EYE_CHECK_NOHIT ){
         u16 ac = MMDL_ChangeDirAcmdCode( eye_dir, AC_STAY_JUMP_U_8F );

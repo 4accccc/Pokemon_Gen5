@@ -13,27 +13,39 @@
 #include "fldmmdl.h"
 
 //--------------------------------------------------------------
-///  視線ヒット格納
+/**
+ * @brief トレーナー視線ヒット移動制御ワークへの不完全型ポインタ
+ */
+//--------------------------------------------------------------
+typedef struct _EV_EYEMEET_MOVE_WORK EV_EYEMEET_MOVE_WORK;
+
+//--------------------------------------------------------------
+/**
+ * @brief トレーナー視線ヒットデータ
+ */
 //--------------------------------------------------------------
 typedef struct
 {
-	int range;				//視線距離
-	int dir;					//移動方向
-	int scr_id;				//スクリプトID
-	int tr_id;				//トレーナーID
-	BtlRule rule_type;			//戦闘タイプ
-  int move_type;    //視線動作タイプ
   MMDL *mmdl;
+	int range;  				///< 視線距離
+	int dir;  					///< 移動方向
+	int scr_id;			  	///< スクリプトID
+	int tr_id;			  	///< トレーナーID
+	BtlRule btl_rule;	  ///< 戦闘ルール
+  int move_type;      ///< 視線動作タイプ
 }TRAINER_HITDATA;
 
 //--------------------------------------------------------------
 /**
- * トレーナー視線データ構造体
+ * @brief トレーナー視線ヒット：スクリプト保持データ
  */
 //--------------------------------------------------------------
 typedef struct {
+  ///トレーナー視線ヒットデータ
   TRAINER_HITDATA hitdata;
 
-  GMEVENT *ev_eye_move;
+  ///視線ヒット移動制御ワーク
+  EV_EYEMEET_MOVE_WORK * ev_eye_move;
+
 }SCR_TRAINER_HITDATA;
 
