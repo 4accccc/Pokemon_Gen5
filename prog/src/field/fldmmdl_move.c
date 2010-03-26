@@ -579,16 +579,26 @@ static void MMdl_MapAttrHeight_02(
  * @retval FLDEFF_GRASSTYPE
  */
 //--------------------------------------------------------------
-static FLDEFF_GRASSTYPE getGrassType( MAPATTR_VALUE val )
+static FLDEFF_GRASSTYPE getGrassType( MAPATTR_VALUE val, int season )
 {
   FLDEFF_GRASSTYPE type = FLDEFF_GRASS_SHORT;
   
-  if( MAPATTR_VALUE_CheckGrassAllYear(val) ){
-    type = FLDEFF_GRASS_ALLYEAR;
-  }else if( MAPATTR_VALUE_CheckSnowGrassHigh(val) ){
-    type = FLDEFF_GRASS_SNOW2;
-  }else if( MAPATTR_VALUE_CheckSnowGrassLow(val) ){
-    type = FLDEFF_GRASS_SNOW;
+  if( MAPATTR_VALUE_CheckGrassAllYearLow(val) ){ //‹Gß•Ï‰»–³‚µ
+    type = FLDEFF_GRASS_ALLYEAR_SHORT;
+  }else if( MAPATTR_VALUE_CheckGrassAllYearHigh(val) ){ //‹Gß•Ï‰»–³‚µ
+    type = FLDEFF_GRASS_ALLYEAR_SHORT2;
+  }else if( MAPATTR_VALUE_CheckSnowGrassHigh(val) ){ //“~‚Ì‚Ý“ÁŽê
+    type = FLDEFF_GRASS_SHORT2;
+    
+    if( season == PMSEASON_WINTER ){
+      type = FLDEFF_GRASS_SNOW2;
+    }
+  }else if( MAPATTR_VALUE_CheckSnowGrassLow(val) ){ //“~‚Ì‚Ý“ÁŽê
+    type = FLDEFF_GRASS_SHORT;
+    
+    if( season == PMSEASON_WINTER ){
+      type = FLDEFF_GRASS_SNOW;
+    }
   }else if( MAPATTR_VALUE_CheckEncountShortGrassHigh(val) ){
     type = FLDEFF_GRASS_SHORT2;
   }else if( MAPATTR_VALUE_CheckEncountLongGrassLow(val) ){
@@ -613,7 +623,7 @@ static FLDEFF_GRASSTYPE getGrassType( MAPATTR_VALUE val )
 static void MMdl_MapAttrGrassProc_0( MMDL *mmdl, ATTRDATA *data )
 {
   if( (data->attr_flag_now & MAPATTR_FLAGBIT_GRASS) ){
-    FLDEFF_GRASSTYPE type = getGrassType( data->attr_val_now );
+    FLDEFF_GRASSTYPE type = getGrassType( data->attr_val_now, data->season );
     FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, FALSE, type );
   }
 }
@@ -631,7 +641,7 @@ static void MMdl_MapAttrGrassProc_0( MMDL *mmdl, ATTRDATA *data )
 static void MMdl_MapAttrGrassProc_12( MMDL *mmdl, ATTRDATA *data )
 {
   if( (data->attr_flag_now & MAPATTR_FLAGBIT_GRASS) ){
-    FLDEFF_GRASSTYPE type = getGrassType( data->attr_val_now );
+    FLDEFF_GRASSTYPE type = getGrassType( data->attr_val_now, data->season );
     FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, TRUE, type );
   }
 }

@@ -394,10 +394,16 @@ static const GRASS_ARCIDX data_ArcIdxTbl[FLDEFF_GRASS_MAX][PMSEASON_TOTAL] =
     { NARC_fldeff_kusaeff_sn2_nsbmd, NARC_fldeff_kusaeff_sn2_nsbtp },
     { NARC_fldeff_kusaeff_sn2_nsbmd, NARC_fldeff_kusaeff_sn2_nsbtp },
   },
-  { //l‹G•Ï‰»‚È‚µ‘
+  { //l‹G•Ï‰»‚È‚µ‘@ã
     { NARC_fldeff_kusaeff_sp_nsbmd, NARC_fldeff_kusaeff_sp_nsbtp },
     { NARC_fldeff_kusaeff_sp_nsbmd, NARC_fldeff_kusaeff_sp_nsbtp },
     { NARC_fldeff_kusaeff_sp_nsbmd, NARC_fldeff_kusaeff_sp_nsbtp },
     { NARC_fldeff_kusaeff_sp_nsbmd, NARC_fldeff_kusaeff_sp_nsbtp },
+  },
+  { //l‹G•Ï‰»‚È‚µ‘@‹­
+    { NARC_fldeff_kusaeff_sp2_nsbmd, NARC_fldeff_kusaeff_sp2_nsbtp },
+    { NARC_fldeff_kusaeff_sp2_nsbmd, NARC_fldeff_kusaeff_sp2_nsbtp },
+    { NARC_fldeff_kusaeff_sp2_nsbmd, NARC_fldeff_kusaeff_sp2_nsbtp },
+    { NARC_fldeff_kusaeff_sp2_nsbmd, NARC_fldeff_kusaeff_sp2_nsbtp },
   },
 };

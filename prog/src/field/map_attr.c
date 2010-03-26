@@ -1024,15 +1024,24 @@ BtlBgAttr MAPATTR_GetBattleAttrID( MAPATTR_VALUE value )
 
 //--------------------------------------------------------------
 /**
- * アトリビュートバリュー　チェック　四季変化無し草むら
+ * アトリビュートバリュー　チェック　四季変化無し草むら　弱
  * @param val MAPATTR_VALUE
  * @retval BOOL FALSE=違う
  */
 //--------------------------------------------------------------
-BOOL MAPATTR_VALUE_CheckGrassAllYear( const MAPATTR_VALUE val )
+BOOL MAPATTR_VALUE_CheckGrassAllYearLow( const MAPATTR_VALUE val )
 {
-  if( val == MATTR_E_GRASS_HIGH_02 || val == MATTR_E_GRASS_LOW_02 ){
-    return TRUE;
-  }
-  return FALSE;
+  return ( val == MATTR_E_GRASS_LOW_02 );
+}
+
+//--------------------------------------------------------------
+/**
+ * アトリビュートバリュー　チェック　四季変化無し草むら　強
+ * @param val MAPATTR_VALUE
+ * @retval BOOL FALSE=違う
+ */
+//--------------------------------------------------------------
+BOOL MAPATTR_VALUE_CheckGrassAllYearHigh( const MAPATTR_VALUE val )
+{
+  return ( val == MATTR_E_GRASS_HIGH_02 );
 }
