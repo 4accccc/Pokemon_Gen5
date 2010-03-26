@@ -158,7 +158,7 @@ ball_in:
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_left )
   _OBJ_ANIME_WAIT()
 
-  _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 5, 3, 7 )
+  _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 5, 3, 8 )
   //ポケ非表示フレーム待ち
   _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_IN )
   _DISP_FADE_START(DISP_FADE_WHITEOUT,0,16,0)
@@ -168,7 +168,7 @@ ball_in:
   _DISP_FADE_START(DISP_FADE_WHITEOUT,16,0,0)
   _DISP_FADE_END_CHECK()
   _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_IN )
-  _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 5, 3, 7, 3, 8 )
+  _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 5, 3, 8, 3, 8 )
 _RET
 
 zoroa_ball_in:
@@ -224,13 +224,14 @@ add_zoroa:
 
   /*＝＝以降は仲間にできる場合の処理＝＝*/
   $loop = TRUE
-  WHILE $loop == TRUE
   //女の子下向く
-  _OBJ_ANIME( C03R0401_GIRL1_01, anm_dir_down )
+  _OBJ_ANIME( C03R0401_GIRL1_01, anm_down )
   _OBJ_ANIME_WAIT()
   //「ゾロアはつれていってほしい」
   _BALLOONWIN_OBJMSG_POS( msg_c03r0401_girl1_08 ,C03R0401_GIRL1_01, POS_DR)
   _BALLOONWIN_CLOSE()
+
+  WHILE $loop == TRUE
   {
     //「仲間にしますか？」
     _SYSWIN_MSG( msg_c03r0401_narrator_01, POS_DOWN )
@@ -461,6 +462,10 @@ EVENT_START	ev_c03r0401_poke22_01
   _AB_KEYWAIT_MARK()
   _BALLOONWIN_CLOSE()
 
+  //女の子左向く(次に控える足踏み下向きアニメコマンドでその場足踏みのみ再生されることを回避するため)
+  _OBJ_ANIME( C03R0401_GIRL1_01, anm_left )
+  _OBJ_ANIME_WAIT()
+
   //自機定位置へ
   _CALL move_player2
 
@@ -568,7 +573,8 @@ _ANIME_LABEL	anm_girl_bye
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_sereby_move
   _ANIME_DATA	AC_WALK_R_8F,1
-  _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_WALK_D_8F,1
+  _ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -586,10 +592,10 @@ _ANIME_LABEL	anm_right
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//下向く
+//下向く  足踏み付き
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_dir_down
-  _ANIME_DATA	AC_DIR_D,1
+_ANIME_LABEL	anm_down
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
   
   
