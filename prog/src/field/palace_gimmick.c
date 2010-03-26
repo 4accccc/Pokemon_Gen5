@@ -74,17 +74,6 @@ static const GFL_G3D_UTIL_ANM anm_barrier_table[ ANM_BARRIER_NUM ] =
 
 // オブジェクトインデックス
 typedef enum {
-  OBJ_TREE_W_1,
-  OBJ_TREE_W_2,
-  OBJ_TREE_W_3,
-  OBJ_TREE_W_4,
-  OBJ_TREE_W_5,
-  OBJ_TREE_W_6,
-  OBJ_TREE_W_7,
-  OBJ_TREE_W_8,
-  OBJ_TREE_W_9,
-  OBJ_TREE_W_10,
-
   OBJ_TREE_B_1,
   OBJ_TREE_B_2,
   OBJ_TREE_B_3,
@@ -95,6 +84,17 @@ typedef enum {
   OBJ_TREE_B_8,
   OBJ_TREE_B_9,
   OBJ_TREE_B_10,
+
+  OBJ_TREE_W_1,
+  OBJ_TREE_W_2,
+  OBJ_TREE_W_3,
+  OBJ_TREE_W_4,
+  OBJ_TREE_W_5,
+  OBJ_TREE_W_6,
+  OBJ_TREE_W_7,
+  OBJ_TREE_W_8,
+  OBJ_TREE_W_9,
+  OBJ_TREE_W_10,
 
 
   OBJ_BARRIER,
@@ -348,7 +348,7 @@ static int _GetTreeLevel(int wb_level)
 {
   int tree_level;
   
-  tree_level = wb_level % 3;
+  tree_level = wb_level / 3;
   if(tree_level > 9){
     tree_level = 9;
   }
