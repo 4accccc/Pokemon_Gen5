@@ -230,7 +230,7 @@
   DEF_CMD( EvCmdEyeTrainerMoveSet, EV_SEQ_EYE_TRAINER_MOVE_SET )
   DEF_CMD( EvCmdEyeTrainerMoveSingle, EV_SEQ_EYE_TRAINER_MOVE_SINGLE )
   DEF_CMD( EvCmdEyeTrainerMoveDouble, EV_SEQ_EYE_TRAINER_MOVE_DOUBLE )
-  DEF_CMD( EvCmdEyeTrainerTypeGet, EV_SEQ_EYE_TRAINER_TYPE_GET )
+  DEF_CMD( EvCmdEyeTrainerMoveTypeGet, EV_SEQ_EYE_TRAINER_MOVE_TYPE_GET )
 
   DEF_CMD( EvCmdEyeTrainerIdGet, EV_SEQ_EYE_TRAINER_ID_GET )
   DEF_CMD( EvCmdGetPlayerFrom, EV_SEQ_GET_PLAYER_FORM )
@@ -245,7 +245,7 @@
 
   DEF_CMD( EvCmdTrainerTalkTypeGet, EV_SEQ_TRAINER_TALK_TYPE_GET )
   DEF_CMD( EvCmdRevengeTrainerTalkTypeGet, EV_SEQ_REVENGE_TRAINER_TALK_TYPE_GET )
-  DEF_CMD( EvCmdTrainerTypeGet, EV_SEQ_TRAINER_TYPE_GET )
+  DEF_CMD( EvCmdTrainerBtlRuleGet, EV_SEQ_TRAINER_BTL_RULE_GET )
   DEF_CMD( EvCmdTrainerBgmSet, EV_SEQ_TRAINER_BGM_SET )
 
   DEF_CMD( EvCmdTrainerLose, EV_SEQ_TRAINER_LOSE )
@@ -258,8 +258,8 @@
   DEF_CMD( EvCmdBattleResultGet, EV_SEQ_BATTLE_RESULT_GET )
   NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdTrainerSpecialTypeGet, EV_SEQ_TRAINER_SPTYPE_GET )
+  DEF_CMD( EvCmdTrainerItemGet, EV_SEQ_TRAINER_ITEM_GET )
   NO_CMD()
   NO_CMD()
   

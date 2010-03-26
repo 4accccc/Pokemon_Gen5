@@ -37,20 +37,33 @@
 //エイリアス識別用スクリプトID
 #define SP_SCRID_ALIES        (0xffff)
 
-//トレーナータイプ定義
-#define SCR_EYE_TR_TYPE_SINGLE    (0)
-#define SCR_EYE_TR_TYPE_DOUBLE    (1)
-#define SCR_EYE_TR_TYPE_TAG     (2)
-
-//トレーナーの番号定義
-#define SCR_EYE_TR_0        (0)
-#define SCR_EYE_TR_1        (1)
-
 //連れ歩きOBJを取得するOBJID定義
 #define SCR_OBJID_MV_PAIR     (0xf2)
 
 //透明ダミーOBJを取得するOBJID定義
 #define SCR_OBJID_DUMMY       (0xf1)
+
+//======================================================================
+//    トレーナー関連の定義
+//======================================================================
+//トレーナー視線動作タイプ定義
+#define SCR_EYE_TR_TYPE_SINGLE    (0) ///<単独動作
+#define SCR_EYE_TR_TYPE_DOUBLE    (1) ///<ダブル動作
+#define SCR_EYE_TR_TYPE_TAG       (2) ///<タッグ動作（ひとりずつ動く）
+
+//トレーナーの番号定義
+#define SCR_EYE_TR_0        (0)
+#define SCR_EYE_TR_1        (1)
+
+//トレーナーの戦闘ルールタイプ定義
+#define SCR_TR_BTL_RULE_SINGLE    0   ///<シングル
+#define SCR_TR_BTL_RULE_DOUBLE    1   ///<ダブル
+#define SCR_TR_BTL_RULE_TRIPLE    2   ///<トリプル
+#define SCR_TR_BTL_RULE_ROTATION  3   ///<ローテーション
+
+#define SCR_TR_SPTYPE_NONE        0   ///<トレーナー特殊タイプ：なし
+#define SCR_TR_SPTYPE_RECOVER     1   ///<トレーナー特殊タイプ：回復
+#define SCR_TR_SPTYPE_ITEM        1   ///<トレーナー特殊タイプ：アイテム
 
 //======================================================================
 //    各コマンド依存の定義

@@ -100,6 +100,7 @@ static GMEVENT * createTrainerScript( FIELDMAP_WORK *fieldMap, MMDL *mmdl );
 static int (* const data_treye_CheckEyeLineTbl[DIR_MAX4])(
     s16,s16,s16,s16,s16,s16,s16);
 
+
 //======================================================================
 //  トレーナー視線イベント
 //======================================================================
@@ -121,27 +122,27 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 )
     MMDL *mmdl;
     TRAINER_HITDATA hit1;
     
-    if( hit0.rule_type == SCR_EYE_TR_TYPE_SINGLE ) //シングル
+    if( hit0.rule_type == BTL_RULE_SINGLE ) //シングル
     {
       event = createTrainerScript( fieldMap, hit0.mmdl ); //スクリプト起動
 
       if( vs2 == FALSE || //シングル戦チェック
           treye_CheckEyeMeet(fieldMap,hit0.mmdl,&hit1) == FALSE )
       { //スクリプト用イベントデータセット シングル
-        hit0.rule_type = SCR_EYE_TR_TYPE_SINGLE;
+        hit0.move_type = SCR_EYE_TR_TYPE_SINGLE;
         SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_0, &hit0 );
         KAGAYA_Printf( "TRAINER EYE HIT SINGLE\n" );
       }
       else
       { //スクリプト用イベントデータセット タッグ
-        hit0.rule_type = SCR_EYE_TR_TYPE_TAG;
+        hit0.move_type = SCR_EYE_TR_TYPE_TAG;
         SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_0, &hit0 );
-        hit1.rule_type = SCR_EYE_TR_TYPE_TAG;
+        hit1.move_type = SCR_EYE_TR_TYPE_TAG;
         SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_1, &hit1 );
         KAGAYA_Printf( "TRAINER EYE HIT TAG DOUBLE\n" );
       }
     }
-    else if( hit0.rule_type == SCR_EYE_TR_TYPE_DOUBLE )
+    else if( hit0.rule_type == BTL_RULE_DOUBLE )
     {
       if( vs2 == TRUE ) //ダブル可能
       {
@@ -151,9 +152,9 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 )
         makeHitData( &hit1, mmdl, hit0.range, hit0.dir );
         
         //スクリプト用イベントデータセット ダブル
-        hit0.rule_type = SCR_EYE_TR_TYPE_DOUBLE;
+        hit0.move_type = SCR_EYE_TR_TYPE_DOUBLE;
         SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_0, &hit0 );
-        hit1.rule_type = SCR_EYE_TR_TYPE_DOUBLE;
+        hit1.move_type = SCR_EYE_TR_TYPE_DOUBLE;
         SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_1, &hit1 );
         KAGAYA_Printf( "TRAINER EYE HIT DOUBLE\n" );
       }
@@ -441,14 +442,10 @@ static int treye_CheckEyeLineRight(
 //--------------------------------------------------------------
 /**
  * 視線移動イベントセット
- * @param  fsys  FIELDSYS_WORK
- * @param  fldobj  FIELD_OBJ_PTR
- * @param  jiki  PLAYER_STATE_PTR
- * @param  dir    移動方向
- * @param  range  移動距離
- * @param  gyoe  !マーク制御 現状未使用
- * @param  rule_type  対戦ルールタイプ
- * @param  work_pos 視線ヒットワーク要素数 0=視線主 1=ペア
+ * @param   fieldMap
+ * @param   hitdata
+ * @param   gyoe  !マーク制御 現状未使用
+ * @param   work_pos 視線ヒットワーク要素数 0=視線主 1=ペア
  * @retval  GMEVENT 移動処理を行うGMEVENT
  */
 //--------------------------------------------------------------
@@ -753,7 +750,7 @@ static int eyeMeetMove_JikiTurnSet( EV_EYEMEET_MOVE_WORK *work )
       MMDL_GetGridPosX(work->hitdata.mmdl), MMDL_GetGridPosZ(work->hitdata.mmdl) );
   
   if( MMDL_GetDirDisp(j_mmdl) != turn_dir &&
-    (work->sisen_no == 0 || work->hitdata.rule_type == SCR_EYE_TR_TYPE_TAG) )
+    (work->sisen_no == 0 || work->hitdata.move_type == SCR_EYE_TR_TYPE_TAG) )
   {
     if( MMDL_CheckPossibleAcmd(j_mmdl) == TRUE )
     {
@@ -1018,7 +1015,7 @@ static void makeHitData(
   data->dir = dir;
   data->scr_id = MMDL_GetEventID( mmdl );
   data->tr_id = tr_GetTrainerID( mmdl );
-  data->rule_type = SCRIPT_CheckTrainer2vs2Type( data->tr_id );
+  data->rule_type = SCRIPT_GetTrainerBtlRule( data->tr_id );
   data->mmdl = mmdl;
 }
 

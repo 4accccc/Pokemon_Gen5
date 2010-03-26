@@ -8,6 +8,10 @@
  */
 //======================================================================
 #pragma once
+
+#include "battle/battle.h"
+#include "fldmmdl.h"
+
 //--------------------------------------------------------------
 ///  視線ヒット格納
 //--------------------------------------------------------------
@@ -17,7 +21,8 @@ typedef struct
 	int dir;					//移動方向
 	int scr_id;				//スクリプトID
 	int tr_id;				//トレーナーID
-	int rule_type;			//戦闘タイプ
+	BtlRule rule_type;			//戦闘タイプ
+  int move_type;    //視線動作タイプ
   MMDL *mmdl;
 }TRAINER_HITDATA;
 

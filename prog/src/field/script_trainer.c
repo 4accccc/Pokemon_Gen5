@@ -68,19 +68,11 @@ void SCRIPT_TRAINER_SetHitData( GMEVENT * event, u32 tr_no, const TRAINER_HITDAT
 //--------------------------------------------------------------
 u16 SCRIPT_GetTrainerID_ByScriptID( u16 scr_id )
 {
-#if 0 //pl
-	if( scr_id < ID_TRAINER_2VS2_OFFSET ){
-		return (scr_id - ID_TRAINER_OFFSET + 1);		//1オリジン
-	}else{
-		return (scr_id - ID_TRAINER_2VS2_OFFSET + 1);		//1オリジン
-	}
-#else
 	if( scr_id < ID_TRAINER_2VS2_OFFSET ){
 		return (scr_id - ID_TRAINER_OFFSET);		//0オリジン
 	}else{
 		return (scr_id - ID_TRAINER_2VS2_OFFSET);		//0オリジン
 	}
-#endif
 }
 
 //--------------------------------------------------------------

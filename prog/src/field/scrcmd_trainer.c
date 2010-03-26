@@ -48,8 +48,13 @@
 #endif
 
 //======================================================================
-//	プロロトタイプ宣言
+//	プロトタイプ宣言
 //======================================================================
+SDK_COMPILER_ASSERT( SCR_TR_BTL_RULE_SINGLE == BTL_RULE_SINGLE );
+SDK_COMPILER_ASSERT( SCR_TR_BTL_RULE_DOUBLE == BTL_RULE_DOUBLE );
+SDK_COMPILER_ASSERT( SCR_TR_BTL_RULE_TRIPLE == BTL_RULE_TRIPLE );
+SDK_COMPILER_ASSERT( SCR_TR_BTL_RULE_ROTATION == BTL_RULE_ROTATION );
+
 
 //======================================================================
 //	コマンド
@@ -253,19 +258,18 @@ VMCMD_RESULT EvCmdEyeTrainerMoveDouble( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 視線：トレーナータイプ取得
+ * 視線：トレーナー動作タイプ取得
  * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
  * TR0_TYPEに固定！
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdEyeTrainerTypeGet( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdEyeTrainerMoveTypeGet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCR_TRAINER_HITDATA * eye0 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
 	u16 *ret_wk	= SCRCMD_GetVMWork( core, work );
-  *ret_wk = eye0->hitdata.rule_type;
+  *ret_wk = eye0->hitdata.move_type;
 	return VMCMD_RESULT_CONTINUE;
 }
 
@@ -481,21 +485,18 @@ VMCMD_RESULT EvCmdRevengeTrainerTalkTypeGet( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * トレーナータイプ取得
+ * トレーナー：戦闘ルール取得
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return	"0"
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdTrainerTypeGet( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdTrainerBtlRuleGet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  u16 script_id   = SCRIPT_GetStartScriptID( sc );
+  u16 tr_id     = SCRCMD_GetVMWorkValue( core, work );
 	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
 
-	//スクリプトIDから、トレーナーIDを取得、ダブルバトルタイプか取得
-	*ret_wk = SCRIPT_CheckTrainer2vs2Type(
-      SCRIPT_GetTrainerID_ByScriptID(script_id) );
+  *ret_wk = SCRIPT_GetTrainerBtlRule( tr_id );
 	return VMCMD_RESULT_CONTINUE;
 }
 
@@ -657,4 +658,37 @@ VMCMD_RESULT EvCmdGetWheelTrainerTrID( VMHANDLE *core, void *wk )
 
 	*ret_wk = trid_tbl[id];
 	return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：トレーナー：特殊タイプ取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTrainerSpecialTypeGet( VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16  tr_id	= SCRCMD_GetVMWorkValue( core, work );
+	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
+
+  *ret_wk = SCR_TR_SPTYPE_NONE; //@todo とりあえず
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：トレーナー：アイテム取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdTrainerItemGet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+	u16  tr_id	= SCRCMD_GetVMWorkValue( core, work );
+	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
+
+  //GF_ASSERT( アイテムトレーナーじゃない　）
+  *ret_wk = 0;  //とりあえず
+
+  return VMCMD_RESULT_CONTINUE;
 }
