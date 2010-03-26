@@ -2232,7 +2232,7 @@ ev_itemget_flditem_true:
   _POCKET_NAME( 2, SCWK_ANSWER )
   
   //○○ポケットにしまった
-  _SYSWIN_MSG( msg_item_get_pocket_nowait , POS_DOWN )
+  _SYSWIN_MSG( msg_item_get_pocket_nowait, POS_DOWN )
   _LAST_KEYWAIT()
   
   //最後に成功したことをSCWK_ANSWERに代入しておく！
@@ -2277,6 +2277,9 @@ _RET
 //--------------------------------------------------------------------
 ev_itemget_flditem_false:
 {
+  //ME待ち
+  _ME_WAIT()
+
   /*
   _ITEM_NAME( 0, SCWK_TEMP0 )
   _SYSWIN_MSG( msg_item_get_fail_field , POS_DOWN )
