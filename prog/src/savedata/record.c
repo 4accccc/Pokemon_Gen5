@@ -52,7 +52,6 @@ static void Record_Decoded(RECORD *rec, int id);
 int RECORD_GetWorkSize(void)
 {
   return sizeof(RECORD);
-  OS_Printf("record data size = %d\n", sizeof(RECORD));
 }
 
 //----------------------------------------------------------
@@ -67,7 +66,6 @@ void RECORD_Init(RECORD * rec)
   
   rec->crc.coded_number = OS_GetVBlankCount() | (OS_GetVBlankCount() << 8);
   Record_Coded(rec, RECID_REPORT_COUNT);
-  OS_Printf("record data size = %d\n", sizeof(RECORD));
   
 }
 
