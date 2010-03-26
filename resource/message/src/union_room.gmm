@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="WBROM" host="W00218" date="2010-02-25T21:56:58"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T12:58:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1296,11 +1296,11 @@ msg_connect_union_08からの分岐メッセージ
 ・msg_union_talkboy_02_08　「はい」で参加不成立
 
 </comment>
-		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「いま　ぼくたち
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]『いま　ぼくたち
 おえかき　してたんだ！[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　いっしょに
 おえかき　するかい？</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「今　ぼくたち
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]『今　ぼくたち
 お絵描き　してたんだ！[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　一緒に
 お絵描き　するかい？</language>
@@ -1317,11 +1317,11 @@ msg_connect_union_08からの分岐メッセージ
 ・msg_union_talkgirl_02_06_01　「はい」
 
 </comment>
-		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「いまね　わたしたち
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]『いまね　わたしたち
 おえかき　してたんだ[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　いっしょに
 おえかき　しない？</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「今ね　わたしたち
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]『今ね　わたしたち
 お絵描き　してたんだ[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　一緒に
 お絵描き　しない？</language>
@@ -1557,11 +1557,11 @@ msg_connect_union_08からの分岐メッセージ
 ・msg_union_talkboy_03_05　「いいえ」
 ・msg_union_talkboy_03_06　「はい」
 </comment>
-		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「これから　ぼくたち
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]『これから　ぼくたち
 マルチバトル　するんだ[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　いっしょに
 マルチバトル　するかい？</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「これから　ぼくたち
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]『これから　ぼくたち
 マルチバトル　するんだ[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　一緒に
 マルチバトル　するかい？</language>
@@ -1577,11 +1577,11 @@ msg_connect_union_08からの分岐メッセージ
 ・msg_union_talkgirl_03_05　「いいえ」
 ・msg_union_talkgirl_03_06　「はい」
 </comment>
-		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「これから　わたしたち
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]『これから　わたしたち
 マルチバトル　するの[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　いっしょに
 マルチバトル　しない？</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「これから　わたしたち
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]『これから　わたしたち
 マルチバトル　するの[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　一緒に
 マルチバトル　しない？</language>
@@ -1984,11 +1984,11 @@ msg_connect_union_08からの分岐メッセージ
 ・msg_union_talkboy_06_08　「はい」で参加不成立
 
 </comment>
-		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「これから　ぼくたち
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]『これから　ぼくたち
 レコードつうしん　するんだ[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　いっしょに
 レコードつうしん　するかい？</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「これから　ぼくたち
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]『これから　ぼくたち
 レコードつうしん　するんだ[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　いっしょに
 レコードつうしん　するかい？</language>
@@ -2006,11 +2006,11 @@ msg_connect_union_08からの分岐メッセージ
 ・msg_union_talkgirl_06_08　「はい」で参加不成立
 
 </comment>
-		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「いまね　わたしたち
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]『いまね　わたしたち
 レコードつうしん　してたんだ[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　いっしょに
 レコードつうしん　しない？</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「いまね　わたしたち
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]『いまね　わたしたち
 レコードつうしん　してたんだ[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　いっしょに
 レコードつうしん　しない？</language>
@@ -2223,11 +2223,11 @@ msg_connect_union_08からの分岐メッセージ
 
 
 </comment>
-		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「これから　ぼくたち
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]『これから　ぼくたち
 ぐるぐるこうかん　するんだ[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　いっしょに
 ぐるぐるこうかん　するかい？</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「これから　ぼくたち
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]『これから　ぼくたち
 ぐるぐる交換　するんだ[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　一緒に
 ぐるぐる交換　するかい？</language>
@@ -2244,11 +2244,11 @@ msg_connect_union_08からの分岐メッセージ
 ・msg_union_talkgirl_07_06_01　「はい」
 
 </comment>
-		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]「いまね　わたしたち
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]『いまね　わたしたち
 ぐるぐるこうかん　してたんだ[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　いっしょに
 ぐるぐるこうかん　しない？</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]「いまね　わたしたち
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]『いまね　わたしたち
 ぐるぐる交換　してたんだ[BE:01:ページ切り替え（クリア）]
 そうだ！　[1:00:トレーナー名:1]も　一緒に
 ぐるぐる交換　しない？</language>

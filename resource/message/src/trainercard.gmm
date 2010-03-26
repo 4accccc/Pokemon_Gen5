@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-03-17T17:52:51"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T13:05:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,12 +260,12 @@
 		</language>
 	</columns>
 
-	<dialog left="1063" top="490" right="1563" bottom="1118" maximized="no" rayout="Vertical2">
+	<dialog left="1496" top="245" right="2028" bottom="779" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1078" top="88" right="1551" bottom="486" visible="yes"/>
-		<band id="0" index="0" style="0000" width="492"/>
+		<tag-palette left="807" top="88" right="1280" bottom="486" visible="yes"/>
+		<band id="0" index="0" style="0000" width="524"/>
 		<band id="1" index="1" style="0000" width="250"/>
-		<band id="2" index="2" style="0000" width="240"/>
+		<band id="2" index="2" style="0000" width="272"/>
 		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
@@ -291,7 +291,7 @@
 	<row id="MSG_TCARD_01">
 		<comment>カード表面項目。トレーナーＩＤ。単位なし。</comment>
 		<language name="JPN" width="256">なまえ</language>
-		<language name="JPN_KANJI" width="256">なまえ</language>
+		<language name="JPN_KANJI" width="256">名前</language>
 	</row>
 
 	<row id="MSG_TCARD_02">
@@ -303,20 +303,20 @@
 	<row id="MSG_TCARD_03">
 		<comment>カード表面項目。性格。単位はなし。</comment>
 		<language name="JPN" width="256">せいかく</language>
-		<language name="JPN_KANJI" width="256">せいかく</language>
+		<language name="JPN_KANJI" width="256">性格</language>
 	</row>
 
 	<row id="MSG_TCARD_04">
 		<comment>カード表面項目。ポケモン図鑑。
 単位「匹」の表示は画像で行う。</comment>
 		<language name="JPN" width="256">ずかん</language>
-		<language name="JPN_KANJI" width="256">ずかん</language>
+		<language name="JPN_KANJI" width="256">図鑑</language>
 	</row>
 
 	<row id="MSG_TCARD_05">
 		<comment>カード表面項目。スコア。単位なし。</comment>
 		<language name="JPN" width="256">プレイじかん</language>
-		<language name="JPN_KANJI" width="256">プレイじかん</language>
+		<language name="JPN_KANJI" width="256">プレイ時間</language>
 	</row>
 
 	<row id="MSG_TCARD_06">
@@ -337,14 +337,14 @@
 		<comment>カード表面項目。冒険を始めた時。
 単位「年」、「月」、「日」の表示は画像で行う。</comment>
 		<language name="JPN" width="256">ぼうけんを　はじめたとき</language>
-		<language name="JPN_KANJI" width="256">ぼうけんを　はじめたとき</language>
+		<language name="JPN_KANJI" width="256">冒険を　始めたとき</language>
 	</row>
 
 	<row id="MSG_TCARD_09">
 		<comment>カード裏面項目。初めての殿堂入り。
 単位「年」、「月」、「日」の表示は画像で行う。時間と分の間を「：」で区切る</comment>
 		<language name="JPN" width="256">はじめての　でんどういり</language>
-		<language name="JPN_KANJI" width="256">はじめての　でんどういり</language>
+		<language name="JPN_KANJI" width="256">初めての　殿堂入り</language>
 	</row>
 
 	<row id="MSG_TCARD_10">
@@ -352,14 +352,14 @@
 単位「回」の表示は画像で行う。
 →単位はなしにします。</comment>
 		<language name="JPN" width="256">つうしんした　かいすう</language>
-		<language name="JPN_KANJI" width="256">つうしんした　かいすう</language>
+		<language name="JPN_KANJI" width="256">通信した　回数</language>
 	</row>
 
 	<row id="MSG_TCARD_11_1">
 		<comment>カード裏面項目。通信対戦の戦績。
 →単位はなしにします。</comment>
 		<language name="JPN" width="256">つうしんたいせん</language>
-		<language name="JPN_KANJI" width="256">つうしんたいせん</language>
+		<language name="JPN_KANJI" width="256">通信対戦</language>
 	</row>
 
 	<row id="MSG_TCARD_11_2">
@@ -367,7 +367,7 @@
 通信対戦の勝利回数。
 →単位はなしにします。</comment>
 		<language name="JPN" width="256">つうしんたいせん　かち</language>
-		<language name="JPN_KANJI" width="256">つうしんたいせん　かち</language>
+		<language name="JPN_KANJI" width="256">通信対戦　勝ち</language>
 	</row>
 
 	<row id="MSG_TCARD_11_3">
@@ -375,7 +375,7 @@
 通信対戦の敗北回数。
 →単位はなしにします。</comment>
 		<language name="JPN" width="256">つうしんたいせん　まけ</language>
-		<language name="JPN_KANJI" width="256">つうしんたいせん　まけ</language>
+		<language name="JPN_KANJI" width="256">通信対戦　負け</language>
 	</row>
 
 	<row id="MSG_TCARD_11_4">
@@ -383,7 +383,7 @@
 単位「回」の表示は画像で行う。
 →単位はなしにします。</comment>
 		<language name="JPN" width="256">つうしん　こうかん</language>
-		<language name="JPN_KANJI" width="256">つうしん　こうかん</language>
+		<language name="JPN_KANJI" width="256">通信交換</language>
 	</row>
 
 	<row id="MSG_TCARD_12">
@@ -412,7 +412,7 @@
 項目名と回数を2行に分けて表示。
 単位はなし。</comment>
 		<language name="JPN" width="256">とびだしてきた　ポケモンの　かず</language>
-		<language name="JPN_KANJI" width="256">とびだしてきた　ポケモンの　かず</language>
+		<language name="JPN_KANJI" width="256">飛び出してきた　ポケモンの数</language>
 	</row>
 
 	<row id="MSG_TCARD_16" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -421,14 +421,14 @@
 項目名と回数を2行に分けて表示。
 単位はなし。</comment>
 		<language name="JPN" width="256">トレーナーと　めが　あった　かいすう</language>
-		<language name="JPN_KANJI" width="256">トレーナーと　めが　あった　かいすう</language>
+		<language name="JPN_KANJI" width="256">トレーナーと　目が合った　回数</language>
 	</row>
 
 	<row id="MSG_TCARD_17" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>カード裏面項目。すれ違い通信した回数。
 単位はなし。</comment>
 		<language name="JPN" width="256">すれちがい　つうしん</language>
-		<language name="JPN_KANJI" width="256">すれちがい　つうしん</language>
+		<language name="JPN_KANJI" width="256">すれ違い通信</language>
 	</row>
 
 	<row id="MSG_TCARD_18" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -443,14 +443,14 @@
 パレス：もっているデルパワーの数
 単位はなし。</comment>
 		<language name="JPN" width="256">もっている　デルパワー</language>
-		<language name="JPN_KANJI" width="256">もっている　デルパワー</language>
+		<language name="JPN_KANJI" width="256">持っている　デルパワー</language>
 	</row>
 
 	<row id="MSG_TCARD_20" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
 		<comment>カード裏面項目。ミュージカル参加回数。
 （個人・通信の合計。）単位はなし。</comment>
 		<language name="JPN" width="256">ミュージカル　さんか</language>
-		<language name="JPN_KANJI" width="256">ミュージカル　さんか</language>
+		<language name="JPN_KANJI" width="256">ミュージカル参加</language>
 	</row>
 
 	<row id="MSG_TCARD_21" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -465,7 +465,7 @@
 トライアルハウスのバトル検定最高得点。
 単位はなし。</comment>
 		<language name="JPN" width="256">バトルけんてい　ハイスコア</language>
-		<language name="JPN_KANJI" width="256">バトルけんてい　ハイスコア</language>
+		<language name="JPN_KANJI" width="256">バトル検定　ハイスコア</language>
 	</row>
 
 	<row id="MSG_TCARD_23" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
@@ -474,7 +474,7 @@
 「バトルけんてい」の文字列から位１文字分
 空けて「○○○○ランク」と入れる。</comment>
 		<language name="JPN" width="256">バトルけんてい</language>
-		<language name="JPN_KANJI" width="256">バトルけんてい</language>
+		<language name="JPN_KANJI" width="256">バトル検定</language>
 	</row>
 
 	<row id="MSG_TCARD_BACK">
@@ -497,13 +497,13 @@
 		<language name="JPN" width="256">トレーナーカードに
 サインを　かきますか？</language>
 		<language name="JPN_KANJI" width="256">トレーナーカードに
-サインを　描きますか？</language>
+サインを　かきますか？</language>
 	</row>
 
 	<row id="MSG_TCARD_SIGN02">
 		<language name="JPN" width="256">いま　かかれている　サインは
 きえますが　よろしいですか？</language>
-		<language name="JPN_KANJI" width="256">いま　描かれている　サインは
+		<language name="JPN_KANJI" width="256">いま　かかれている　サインは
 消えますが　よろしいですか？</language>
 	</row>
 
