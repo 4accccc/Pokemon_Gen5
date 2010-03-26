@@ -98,7 +98,7 @@ typedef struct _SYMBOL_POKEMON{
   u32 wazano:10;        ///<技番号
   u32 sex:2;            ///<性別(PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWN)
   u32 form_no:6;        ///<フォルム番号
-  u32        :3;        //余り
+  u32 move_type:3;      ///<動作タイプ
 }SYMBOL_POKEMON;
 
 
