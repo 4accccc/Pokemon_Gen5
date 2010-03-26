@@ -1137,11 +1137,11 @@ EVENT_START ev_trainer_talk_battle
     DEFINE_LOCAL  LWK_2VS2_OK
 
     //トレーナータイプ取得(シングル＝０、ダブル＝１）
-    _TRAINER_TYPE_GET( LWK_TRAINER_IS_DOUBLE )
+    _TRAINER_BTL_RULE_GET( LWK_TRAINERID, LWK_TRAINER_IS_DOUBLE )
     //2vs2が可能か？チェック
     _2VS2_BATTLE_CHECK( LWK_2VS2_OK )
 
-    IF $LWK_TRAINER_IS_DOUBLE == TRUE && $LWK_2VS2_OK != TRUE THEN
+    IF $LWK_TRAINER_IS_DOUBLE == SCR_TR_BTL_RULE_DOUBLE && $LWK_2VS2_OK != TRUE THEN
       //ダブルバトルで手持ちが足りない場合、NGメッセージへ
       _CALL sub_trainer_talk_2vs2_NG
     ELSE
@@ -1297,7 +1297,7 @@ EVENT_START ev_trainer_move_battle
   //_PROGRAM      TR_BGM_SET
   
   //トレーナータイプ取得(シングル、ダブル、タッグ)
-  _EYE_TRAINER_TYPE_GET( SCWK_ANSWER )
+  _EYE_TRAINER_MOVE_TYPE_GET( SCWK_ANSWER )
 
   IF $SCWK_ANSWER == SCR_EYE_TR_TYPE_SINGLE THEN 
     _CALL ev_trainer_type_single

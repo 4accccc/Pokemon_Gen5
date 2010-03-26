@@ -2297,8 +2297,8 @@
 
 //--------------------------------------------------------------
 /**
- *  @def  _EYE_TRAINER_TYPE_GET
- *  @brief  視線：トレーナータイプ取得
+ *  @def  _EYE_TRAINER_MOVE_TYPE_GET
+ *  @brief  視線：トレーナー動作タイプ取得
  *  @param ret_wk トレーナータイプ格納先 SCR_EYE_TR_TYPE_SINGLE等が格納される
  *
  *  @note
@@ -2306,11 +2306,11 @@
  *  通常スクリプトでの使用は禁止とする。
  */
 //--------------------------------------------------------------
-#define _EYE_TRAINER_TYPE_GET( ret_wk ) \
-    _ASM_EYE_TRAINER_TYPE_GET ret_wk
+#define _EYE_TRAINER_MOVE_TYPE_GET( ret_wk ) \
+    _ASM_EYE_TRAINER_MOVE_TYPE_GET ret_wk
 
-  .macro  _ASM_EYE_TRAINER_TYPE_GET ret_wk
-  .short  EV_SEQ_EYE_TRAINER_TYPE_GET
+  .macro  _ASM_EYE_TRAINER_MOVE_TYPE_GET ret_wk
+  .short  EV_SEQ_EYE_TRAINER_MOVE_TYPE_GET
   .short  \ret_wk
   .endm
 
@@ -2464,15 +2464,18 @@
 
 //--------------------------------------------------------------
 /**
- *  _TRAINER_TYPE_GET トレーナータイプ取得
- *  @param ret_wk タイプ格納先ワーク
+ *  _TRAINER_BTL_RULE_GET トレーナータイプ取得
+ *  @param  tr_id   トレーナーID
+ *  @param  ret_wk  戦闘ルール格納先ワーク
+ *  @return SCR_TR_BTL_RULE_～(script_def.hで定義）
  */
 //--------------------------------------------------------------
-#define _TRAINER_TYPE_GET( ret_wk ) \
-  _ASM_TRAINER_TYPE_GET  ret_wk
+#define _TRAINER_BTL_RULE_GET( tr_id, ret_wk ) \
+  _ASM_TRAINER_BTL_RULE_GET  tr_id, ret_wk
 
-  .macro  _ASM_TRAINER_TYPE_GET  ret_wk
-  .short  EV_SEQ_TRAINER_TYPE_GET
+  .macro  _ASM_TRAINER_BTL_RULE_GET  tr_id, ret_wk
+  .short  EV_SEQ_TRAINER_BTL_RULE_GET
+  .short  \tr_id
   .short  \ret_wk
   .endm
 
@@ -2542,6 +2545,49 @@
   .short  \ret_wk
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _TRAINER_SPTYPE_GET
+ * @brief トレーナー特殊タイプの取得
+ * @param tr_id   トレーナーID
+ * @param ret_wk    タイプを受け取るワーク
+ * @return  SCR_TR_SPTYPE_～  （script_def.hで定義）
+ *
+ * @li  SCR_TR_SPTYPE_NONE      通常トレーナー
+ * @li  SCR_TR_SPTYPE_RECOVER   回復トレーナー
+ * @li  SCR_TR_SPTYPE_ITEM      アイテムトレーナー
+ */
+//--------------------------------------------------------------
+#define _TRAINER_SPTYPE_GET( tr_id, ret_wk ) \
+    _ASM_TRAINER_SPTYPE_GET tr_id, ret_wk
+    .macro  _ASM_TRAINER_SPTYPE_GET tr_id, ret_wk
+    .short  EV_SEQ_TRAINER_SPTYPE_GET
+    .short  \tr_id
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _TRAINER_ITEM_GET
+ * @brief アイテムトレーナーのアイテムの種類を取得
+ * @param tr_id   トレーナーID
+ * @param ret_wk  アイテムナンバーを受け取るワーク
+ * @return  アイテムナンバー
+ */
+//--------------------------------------------------------------
+#define _TRAINER_ITEM_GET( tr_id, ret_wk ) \
+    _ASM_TRAINER_ITEM_GET tr_id, ret_wk
+    .macro  _ASM_TRAINER_ITEM_GET tr_id, ret_wk
+    .short  EV_SEQ_TRAINER_ITEM_GET
+    .short  \tr_id
+    .short  \ret_wk
+    .endm
+
+//======================================================================
+//
+//    野生ポケモン戦関連
+//
+//======================================================================
 //--------------------------------------------------------------
 /**
  * _WILD_BTL_SET  野生戦呼び出し(非伝説)
@@ -4672,7 +4718,7 @@
 //--------------------------------------------------------------
 /**
  * @def _GET_MAPREPLACE_FLAG
- * @brief マップ置き換えイベントのフラグ操作
+ * @brief マップ置き換えイベントのフラグ取得
  * @param id            マップ置き換えの指定ID（prog/src/field/map_replace.h参照）
  * @param ret_wk        取得するためのワーク
  * @return  BOOL        TRUEのとき、置き換えリクエストあり
