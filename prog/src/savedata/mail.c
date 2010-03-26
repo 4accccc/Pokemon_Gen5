@@ -50,8 +50,8 @@ typedef struct _MAIL_DATA{
   u8  version;  //<カセットバージョン 1                   7
   u8  design;   //<デザインナンバー 1                     8
   STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];  // 16        24
-  MAIL_ICON icon[MAILDAT_ICONMAX];          //<アイコンNO格納場所[]   30
-  u16 form_bit;                             //padding領域をプラチナから3体のポケモンの    32
+  u16     padding[3];                       //< パディング６バイト   30
+  u16 form_bit;                             // padding領域をプラチナから3体のポケモンの    32
                                             // フォルム番号として使用(5bit単位)
   PMS_DATA  msg[MAILDAT_MSGMAX];            //<文章データ 56
 }_MAIL_DATA;
@@ -148,10 +148,11 @@ void MailData_Clear(MAIL_DATA* dat)
   dat->design = MAIL_DESIGN_NULL;
 
   GFL_STD_MemFill16(dat->name, GFL_STR_GetEOMCode(),sizeof(dat->name));
-
+/*
   for(i = 0;i < MAILDAT_ICONMAX;i++){
     dat->icon[i].dat = MAIL_ICON_NULL;
   }
+*/
   dat->form_bit = 0;
   for(i = 0;i < MAILDAT_MSGMAX;i++){
     PMSDAT_Clear(&dat->msg[i]);
@@ -222,11 +223,13 @@ BOOL MailData_Compare(MAIL_DATA* src1,MAIL_DATA* src2)
   if( GFL_STD_MemComp( src1->name,src2->name,sizeof(src1->name) ) != 0){
     return FALSE;
   }
+/*
   for(i = 0;i < MAILDAT_ICONMAX;i++){
     if(src1->icon[i].dat != src2->icon[i].dat){
       return FALSE;
     }
   }
+*/
   for(i = 0;i < MAILDAT_MSGMAX;i++){
     if(!PMSDAT_Compare( &src1->msg[i], &src2->msg[i] )){
       return FALSE;
@@ -408,12 +411,12 @@ void MailData_SetCasetteVersion(MAIL_DATA* dat,const u8 version)
  */
 u16 MailData_GetIconParamByIndex(const MAIL_DATA* dat,u8 index,u8 mode, u16 form_bit)
 {
-  MAIL_ICON mi;
+//  MAIL_ICON mi;
   int s;
   
+#if 0   //@todo 移植できていない
   if(index < MAILDAT_ICONMAX){
     mi = dat->icon[index];
-#if 0   //@todo 移植できていない
     //プラチナ以降で追加されたアイコンのフォルムIndexへ変換
     for(s = 0; s < NELEMS(MailIcon_CgxID_ConvTbl); s++){
       if(MailIcon_CgxID_ConvTbl[s].normal_cgx_id == mi.cgxID && 
@@ -424,7 +427,6 @@ u16 MailData_GetIconParamByIndex(const MAIL_DATA* dat,u8 index,u8 mode, u16 form
         break;
       }
     }
-#endif
     if(mi.cgxID > ICON_CGXID_MAX){
       mi.cgxID = NARC_poke_icon_poke_icon_000_m_NCGR;
       mi.palID = 0;
@@ -441,6 +443,10 @@ u16 MailData_GetIconParamByIndex(const MAIL_DATA* dat,u8 index,u8 mode, u16 form
   }else{
     return 0;
   }
+#else
+  return 0;
+#endif
+
 }
 
 /**
