@@ -1296,7 +1296,7 @@ static void _gearObjCreate(C_GEAR_WORK* pWork)
       };
     u8 xbuff[]=
     {
-      32,      42,      48,      52,      57,      63,
+      63,      42-10,      48-10,      52-10,      57-10,      63-10,
       178,      128,
       POS_HELPMARK_X,      POS_EDITMARK_X,    };
     u8 ybuff[]=
@@ -1655,6 +1655,12 @@ static void _timeAnimation(C_GEAR_WORK* pWork)
 
     if(GFL_CLACT_WK_GetAnmIndex(cp_wk) !=  num){
       GFL_CLACT_WK_SetAnmIndex(cp_wk,num);
+    }
+    if(num==0){
+      GFL_CLACT_WK_SetDrawEnable(cp_wk,FALSE);
+    }
+    else{
+      GFL_CLACT_WK_SetDrawEnable(cp_wk,TRUE);
     }
   }
   {  //Žž1

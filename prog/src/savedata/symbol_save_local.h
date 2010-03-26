@@ -13,14 +13,18 @@
 //==============================================================================
 //  構造体定義
 //==============================================================================
+typedef struct{
+  u16 crc16ccitt_hash;  ///<CRC
+  u16 coded_number;   ///<暗号化キー
+}RECORD_CRC;
+
 ///シンボルエンカウントセーブデータ
 struct _SYMBOL_SAVE_WORK{
   struct _SYMBOL_POKEMON symbol_poke[SYMBOL_POKE_MAX]; ///<シンボルポケモン
   u8 map_level_large;   ///<シンボルマップ(64x64)の大きさ(SYMBOL_MAP_LEVEL_LARGE)
   u8 map_level_small;   ///<シンボルマップ(32x32)の大きさ(SYMBOL_MAP_LEVEL_SMALL)
   u8 padding[2];
-  u16 crc16;            ///<シンボルポケモン全体のCRC
-  u16 cipher_code;      ///<暗号化コード
+  RECORD_CRC crc;  ///< 暗号化コード
 };
 
 //==============================================================================

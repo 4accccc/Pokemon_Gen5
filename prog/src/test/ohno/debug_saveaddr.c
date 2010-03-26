@@ -163,6 +163,7 @@ static void _changeStateDebug(SAVEADDR_WORK* pWork,StateFunc state, int line)
 #include "savedata/myitem_savedata_local.h"
 #include "net/dreamworld_netdata.h"
 #include "savedata/zukan_savedata_local.h"
+#include "savedata/symbol_save.h"
 
 
 extern MYITEM_PTR* SaveData_GetMyItem(SAVE_CONTROL_WORK * sv);
@@ -197,6 +198,39 @@ static void _keyWait(SAVEADDR_WORK* pWork)
     }
     
 
+    {  //シンボルエンカウント
+      SYMBOL_SAVE_WORK* pSym = SymbolSave_GetSymbolData(pWork->pSaveData);
+
+      SymbolSave_WorkInit(pSym);
+      SymbolSave_SetFreeZone(pSym, 12, 12, 0, 0, SYMBOL_ZONE_TYPE_FREE_SMALL);
+      SymbolSave_SetFreeZone(pSym, 13, 13, 0, 0, SYMBOL_ZONE_TYPE_FREE_SMALL);
+      SymbolSave_SetFreeZone(pSym, 14, 14, 0, 0, SYMBOL_ZONE_TYPE_FREE_SMALL);
+      {
+        SYMBOL_POKEMON aSymbol;
+        SymbolSave_GetSymbolPokemon(pSym, 0, &aSymbol);
+        OS_TPrintf("mons %d",aSymbol.monsno);
+        OS_TPrintf("waza %d ",aSymbol.wazano);
+        OS_TPrintf("fem %d",aSymbol.sex);
+        OS_TPrintf("form %d\n",aSymbol.form_no);
+      }
+      {
+        SYMBOL_POKEMON aSymbol;
+        SymbolSave_GetSymbolPokemon(pSym, 1, &aSymbol);
+        OS_TPrintf("mons %d",aSymbol.monsno);
+        OS_TPrintf("waza %d ",aSymbol.wazano);
+        OS_TPrintf("fem %d",aSymbol.sex);
+        OS_TPrintf("form %d\n",aSymbol.form_no);
+      }
+      {
+        SYMBOL_POKEMON aSymbol;
+        SymbolSave_GetSymbolPokemon(pSym, 2, &aSymbol);
+        OS_TPrintf("mons %d",aSymbol.monsno);
+        OS_TPrintf("waza %d ",aSymbol.wazano);
+        OS_TPrintf("fem %d",aSymbol.sex);
+        OS_TPrintf("form %d\n",aSymbol.form_no);
+      }
+    }
+      
     
 /*
     for(i=0;i<26;i++){
@@ -208,14 +242,15 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       GFL_HEAP_FreeMemory(pData);
     }
 */
+    /*
     {//ミステリー関連 
-      MYSTERY_DATA *pMystery = SaveData_GetMysteryData(pWork->pSaveData); 
+      MYSTERY_DATA *pMystery = MYSTERYDATA_GetCardDataOld(pWork->pSaveData); 
       GIFT_PACK_DATA  *pGift  = MYSTERYDATA_GetCardData( pMystery, 0 );
       pAddr = (u8*)pGift;
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","MYSTERY", (u32)pAddr-(u32)topAddr, sizeof(GIFT_PACK_DATA));
       OS_TPrintf( "download %d  pack%d present%d\n", sizeof(DOWNLOAD_GIFT_DATA), sizeof(GIFT_PACK_DATA), sizeof(GIFT_PRESENT) );
     }
-
+*/
     
     {//DreamWorld関連
       DREAMWORLD_SAVEDATA* pDW = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);

@@ -418,7 +418,7 @@ MYSTERY_ALBUM_WORK * MYSTERY_ALBUM_Init( const MYSTERY_ALBUM_SETUP *cp_setup, HE
     {
       if( MYSTERYDATA_IsExistsCard( p_wk->setup.p_sv, i) )
       { 
-        p_data  = MYSTERYDATA_GetCardData( p_wk->setup.p_sv, i );
+        p_data  = MYSTERYDATA_GetCardDataOld( p_wk->setup.p_sv, i );
         MYSTERY_CARD_DATA_Init( &p_wk->data[i], p_data, &p_wk->setup, heapID );
       }
     }   
@@ -1375,7 +1375,7 @@ static void Mystery_Album_RemoveCard( MYSTERY_ALBUM_WORK *p_wk, u32 card_index )
       if( MYSTERYDATA_IsExistsCard( p_wk->setup.p_sv, i) )
       { 
         GIFT_PACK_DATA *p_data;
-        p_data  = MYSTERYDATA_GetCardData( p_wk->setup.p_sv, i );
+        p_data  = MYSTERYDATA_GetCardDataOld( p_wk->setup.p_sv, i );
         MYSTERY_CARD_DATA_Init( &p_wk->data[i], p_data, &p_wk->setup, p_wk->heapID );
       }
     }   
@@ -1405,11 +1405,11 @@ static void Mystery_Album_SwapCard( MYSTERY_ALBUM_WORK *p_wk, u32 card_index1, u
   //データ作り直し
 /*
   MYSTERY_CARD_DATA_Exit( &p_wk->data[ card_index1] );
-  p_gift  = MYSTERYDATA_GetCardData( p_wk->setup.p_sv, card_index1 );
+  p_gift  = MYSTERYDATA_GetCardDataOld( p_wk->setup.p_sv, card_index1 );
   MYSTERY_CARD_DATA_Init( &p_wk->data[ card_index1], p_gift, &p_wk->setup, p_wk->heapID );
 
   MYSTERY_CARD_DATA_Exit( &p_wk->data[ card_index2] );
-  p_gift  = MYSTERYDATA_GetCardData( p_wk->setup.p_sv, card_index2 );
+  p_gift  = MYSTERYDATA_GetCardDataOld( p_wk->setup.p_sv, card_index2 );
   MYSTERY_CARD_DATA_Init( &p_wk->data[ card_index2], p_gift, &p_wk->setup, p_wk->heapID );
 */
   //カード作り直し
@@ -1425,7 +1425,7 @@ static void Mystery_Album_SwapCard( MYSTERY_ALBUM_WORK *p_wk, u32 card_index1, u
       if( MYSTERYDATA_IsExistsCard( p_wk->setup.p_sv, i) )
       { 
         GIFT_PACK_DATA *p_data;
-        p_data  = MYSTERYDATA_GetCardData( p_wk->setup.p_sv, i );
+        p_data  = MYSTERYDATA_GetCardDataOld( p_wk->setup.p_sv, i );
         MYSTERY_CARD_DATA_Init( &p_wk->data[i], p_data, &p_wk->setup, p_wk->heapID );
       }
     }   

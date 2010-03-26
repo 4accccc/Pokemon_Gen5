@@ -99,10 +99,11 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
   u16 req = SCRCMD_GetVMWorkValue( core, wk );
   u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
+  GIFT_PACK_DATA aGpd;
 
   MYSTERY_DATA * fd = SaveData_GetMysteryData( GAMEDATA_GetSaveControlWork( gamedata ) );
   int index;
-  GIFT_PACK_DATA * gpd = FIELD_MYSTERYDATA_GetGiftData( fd, &index );
+  GIFT_PACK_DATA * gpd = FIELD_MYSTERYDATA_GetGiftData( fd, &index, &aGpd );
   u8 gift_type = FIELD_MYSTERYDATA_GetGiftType( fd );
 
   switch ( req )
@@ -153,7 +154,6 @@ VMCMD_RESULT EvCmdPostmanCommand( VMHANDLE * core, void *wk )
   default:
     GF_ASSERT( 0 );
   }
-
   return VMCMD_RESULT_CONTINUE;
 }
 

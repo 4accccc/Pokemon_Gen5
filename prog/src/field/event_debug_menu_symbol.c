@@ -241,9 +241,10 @@ static GMEVENT_RESULT symbolPokeCountupEvent( GMEVENT * event, int *seq, void *w
   case 0:
     for ( i = 0; i < SYMBOL_POKE_MAX; i ++)
     {
-      const SYMBOL_POKEMON * sympoke = SymbolSave_GetSymbolPokemon( symbol_save, i );
+      SYMBOL_POKEMON  sympoke;
+      SymbolSave_GetSymbolPokemon( symbol_save, i ,&sympoke);
       OS_Printf("%03d: monsno=%03d sex(%d) form(%d) waza(%d)\n", i,
-          sympoke->monsno, sympoke->sex, sympoke->form_no, sympoke->wazano );
+          sympoke.monsno, sympoke.sex, sympoke.form_no, sympoke.wazano );
     }
     countSymbolPoke( symbol_save, SYMBOL_ZONE_TYPE_KEEP_LARGE );
     countSymbolPoke( symbol_save, SYMBOL_ZONE_TYPE_KEEP_SMALL );

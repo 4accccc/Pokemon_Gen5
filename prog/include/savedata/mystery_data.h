@@ -200,7 +200,9 @@ extern MYSTERY_DATA * SaveData_GetMysteryData(SAVE_CONTROL_WORK * sv);
 //------------------------------------------------------------------
 /// カードデータの取得
 //------------------------------------------------------------------
-extern GIFT_PACK_DATA *MYSTERYDATA_GetCardData(MYSTERY_DATA *fd, u32 cardindex);
+extern GIFT_PACK_DATA *MYSTERYDATA_GetCardDataOld(MYSTERY_DATA *fd, u32 cardindex);
+
+extern BOOL MYSTERYDATA_GetCardData(MYSTERY_DATA *fd, u32 index,GIFT_PACK_DATA *pData);
 //------------------------------------------------------------------
 /// カードデータをセーブデータ登録
 //------------------------------------------------------------------
@@ -216,15 +218,15 @@ extern BOOL MYSTERYDATA_CheckCardDataSpace(MYSTERY_DATA *fd);
 //------------------------------------------------------------------
 /// カードデータが存在するか返す
 //------------------------------------------------------------------
-extern BOOL MYSTERYDATA_IsExistsCard(const MYSTERY_DATA * fd, u32 cardindex);
+extern BOOL MYSTERYDATA_IsExistsCard( MYSTERY_DATA * fd, u32 cardindex);
 //------------------------------------------------------------------
 /// セーブデータ内にカードデータが存在するか返す
 //------------------------------------------------------------------
-extern BOOL MYSTERYDATA_IsExistsCardAll(const MYSTERY_DATA *fd);
+extern BOOL MYSTERYDATA_IsExistsCardAll( MYSTERY_DATA *fd);
 //------------------------------------------------------------------
 //	 指定のカードからデータを受け取り済みか返す
 //------------------------------------------------------------------
-extern BOOL MYSTERYDATA_IsHavePresent(const MYSTERY_DATA * fd, u32 cardindex);
+extern BOOL MYSTERYDATA_IsHavePresent( MYSTERY_DATA * fd, u32 cardindex);
 //------------------------------------------------------------------
 //   指定のカードからデータを受け取ったことにする
 //------------------------------------------------------------------

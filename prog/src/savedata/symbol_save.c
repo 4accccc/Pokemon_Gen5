@@ -43,6 +43,45 @@ const SYMBOL_ZONE_TYPE_DATA_NO SymbolZoneTypeDataNo[] = {
 //  
 //
 //==============================================================================
+
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   暗号化
+ * @param   rec   
+ */
+//--------------------------------------------------------------
+static void _Coded(SYMBOL_SAVE_WORK *pSymbol)
+{
+  GF_ASSERT(pSymbol->crc.coded_number==0);
+
+  pSymbol->crc.coded_number = OS_GetVBlankCount() | (OS_GetVBlankCount() << 8);
+  if(pSymbol->crc.coded_number==0){
+    pSymbol->crc.coded_number = 1;
+  }
+  pSymbol->crc.crc16ccitt_hash = GFL_STD_CODED_CheckSum(pSymbol, sizeof(SYMBOL_SAVE_WORK) - sizeof(RECORD_CRC));
+  GFL_STD_CODED_Coded(pSymbol, sizeof(SYMBOL_SAVE_WORK) - sizeof(RECORD_CRC), 
+    pSymbol->crc.crc16ccitt_hash + (pSymbol->crc.coded_number << 16));
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   復号化
+ * @param   rec   
+ */
+//--------------------------------------------------------------
+static void _Decoded(SYMBOL_SAVE_WORK *pSymbol)
+{
+  GF_ASSERT(pSymbol->crc.coded_number!=0);
+
+  GFL_STD_CODED_Decoded(pSymbol, sizeof(SYMBOL_SAVE_WORK) - sizeof(RECORD_CRC), 
+    pSymbol->crc.crc16ccitt_hash + (pSymbol->crc.coded_number << 16));
+
+  pSymbol->crc.coded_number = 0;
+}
+
+
 //------------------------------------------------------------------
 /**
  * セーブデータサイズを返す
@@ -67,6 +106,7 @@ void SymbolSave_WorkInit(void *work)
   SYMBOL_SAVE_WORK *symbol_save = work;
   
   GFL_STD_MemClear(symbol_save, sizeof(SYMBOL_SAVE_WORK));
+  _Coded(symbol_save);
 }
 
 
@@ -90,19 +130,32 @@ SYMBOL_SAVE_WORK* SymbolSave_GetSymbolData(SAVE_CONTROL_WORK* pSave)
 }
 
 
+
+
 //==================================================================
 /**
- * @brief シンボルポケモンデータを取得
- * @param   symbol_save
+ * 配置NoからSYMBOL_ZONE_TYPEを取得します
+ *
  * @param   no		配置No
- * @return  SYMBOL_POKEMON  シンボルポケモンデータへのポインタ
+ *
+ * @retval  SYMBOL_ZONE_TYPE		
  */
 //==================================================================
-const SYMBOL_POKEMON * SymbolSave_GetSymbolPokemon(const SYMBOL_SAVE_WORK *symbol_save, u32 no)
+static SYMBOL_ZONE_TYPE _GetZoneTypeFromNumber(u32 no)
 {
-  GF_ASSERT( no < SYMBOL_POKE_MAX );
-  return &symbol_save->symbol_poke[ no ];
+  SYMBOL_ZONE_TYPE zone_type;
+  SYMBOL_ZONE_TYPE zone_typeret = SYMBOL_ZONE_TYPE_FREE_SMALL;
+
+  for(zone_type = 0; zone_type < NELEMS(SymbolZoneTypeDataNo); zone_type++){
+    if(no < SymbolZoneTypeDataNo[zone_type].end){
+      zone_typeret=zone_type;
+      break;
+    }
+  }
+  GF_ASSERT_MSG(zone_type < NELEMS(SymbolZoneTypeDataNo), "zone_type = %d", zone_type);
+  return zone_typeret;
 }
+
 
 //==================================================================
 /**
@@ -115,23 +168,103 @@ const SYMBOL_POKEMON * SymbolSave_GetSymbolPokemon(const SYMBOL_SAVE_WORK *symbo
  * @retval  u32           空きが無い場合：SYMBOL_SPACE_NONE
  */
 //==================================================================
-u32 SymbolSave_CheckSpace(const SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type)
+static u32 _CheckSpace(const SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type)
 {
   u32 i, start,end;
+  u32 retcode = SYMBOL_SPACE_NONE;
   const SYMBOL_POKEMON *spoke;
   
   GF_ASSERT( zone_type < SYMBOL_ZONE_TYPE_KEEP_ALL );
+
   start = SymbolZoneTypeDataNo[zone_type].start;
   end = SymbolZoneTypeDataNo[zone_type].end;
   
   spoke = &symbol_save->symbol_poke[start];
   for(i = start; i < end; i++){
     if(spoke->monsno == 0){
-      return i;
+      retcode = i;
+      break;
     }
     spoke++;
   }
-  return SYMBOL_SPACE_NONE;
+  return retcode;
+}
+
+//==================================================================
+/**
+ * 開始配置Noを指定してデータの前詰めを行います
+ *
+ * @param   symbol_save		シンボルセーブ領域へのポインタ
+ * @param   no		        配置No
+ * @param   zone_type		  SYMBOL_ZONE_TYPE
+ *
+ * 捕獲してデータを削除する時にもこの関数を使用します
+ */
+//==================================================================
+static void _DataShift(SYMBOL_SAVE_WORK *symbol_save, u32 no)
+{
+  SYMBOL_ZONE_TYPE zone_type;
+  u32 start, end;
+
+  zone_type = _GetZoneTypeFromNumber(no);
+  start = no;
+  end = SymbolZoneTypeDataNo[zone_type].end;
+
+  if ( start < end ) {
+    GFL_STD_MemCopy(&symbol_save->symbol_poke[start + 1], &symbol_save->symbol_poke[start], 
+      sizeof(struct _SYMBOL_POKEMON) * (end - (start + 1)));
+  }
+  symbol_save->symbol_poke[end - 1].monsno = 0;
+
+}
+
+
+
+//==================================================================
+/**
+ * @brief シンボルポケモンデータを取得
+ * @param   symbol_save
+ * @param   no		配置No
+ * @return  SYMBOL_POKEMON  シンボルポケモンデータへのポインタ
+ */
+//==================================================================
+
+BOOL SymbolSave_GetSymbolPokemon(SYMBOL_SAVE_WORK *symbol_save, u32 no, SYMBOL_POKEMON* pSymbol)
+{
+  BOOL bRet;
+  GF_ASSERT( no < SYMBOL_POKE_MAX );
+
+  if(no >= SYMBOL_POKE_MAX){
+    return FALSE;
+  }
+  _Decoded(symbol_save);
+  GFL_STD_MemCopy( &symbol_save->symbol_poke[ no ],pSymbol, sizeof(SYMBOL_POKEMON));
+  _Coded(symbol_save);
+  return TRUE;
+}
+
+
+//==================================================================
+/**
+ * フリーゾーンに空きがあるか調べる
+ *
+ * @param   symbol_save		
+ * @param   zone_type		  SYMBOL_ZONE_TYPE
+ *
+ * @retval  u32		        空きがあった場合：配置No
+ * @retval  u32           空きが無い場合：SYMBOL_SPACE_NONE
+ */
+//==================================================================
+u32 SymbolSave_CheckSpace( SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type)
+{
+  u32 retcode;
+  
+  GF_ASSERT( zone_type < SYMBOL_ZONE_TYPE_KEEP_ALL );
+
+  _Decoded(symbol_save);
+  retcode = _CheckSpace(symbol_save, zone_type);
+  _Coded(symbol_save);
+  return retcode;
 }
 
 //==================================================================
@@ -146,14 +279,9 @@ u32 SymbolSave_CheckSpace(const SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE 
 SYMBOL_ZONE_TYPE SYMBOLZONE_GetZoneTypeFromNumber(u32 no)
 {
   SYMBOL_ZONE_TYPE zone_type;
-  
-  for(zone_type = 0; zone_type < NELEMS(SymbolZoneTypeDataNo); zone_type++){
-    if(no < SymbolZoneTypeDataNo[zone_type].end){
-      return zone_type;
-    }
-  }
-  GF_ASSERT_MSG(0, "zone_type = %d", zone_type);
-  return SYMBOL_ZONE_TYPE_FREE_SMALL;
+
+  zone_type = _GetZoneTypeFromNumber(no);
+  return zone_type;
 }
 
 //==================================================================
@@ -171,16 +299,11 @@ void SymbolSave_DataShift(SYMBOL_SAVE_WORK *symbol_save, u32 no)
 {
   SYMBOL_ZONE_TYPE zone_type;
   u32 start, end;
-  
-  zone_type = SYMBOLZONE_GetZoneTypeFromNumber(no);
-  start = no;
-  end = SymbolZoneTypeDataNo[zone_type].end;
 
-  if ( start < end ) {
-    GFL_STD_MemCopy(&symbol_save->symbol_poke[start + 1], &symbol_save->symbol_poke[start], 
-      sizeof(struct _SYMBOL_POKEMON) * (end - (start + 1)));
-  }
-  symbol_save->symbol_poke[end - 1].monsno = 0;
+  _Decoded(symbol_save);
+  _DataShift(symbol_save, no);
+  _Coded(symbol_save);
+
 }
 
 //==================================================================
@@ -204,12 +327,14 @@ void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save, u16 monsno, u16 wazan
 
   GF_ASSERT( zone_type == SYMBOL_ZONE_TYPE_FREE_LARGE || zone_type == SYMBOL_ZONE_TYPE_FREE_SMALL );
 
+  _Decoded(symbol_save);
+  
   start = SymbolZoneTypeDataNo[zone_type].start;
   end = SymbolZoneTypeDataNo[zone_type].end;
   
-  no = SymbolSave_CheckSpace(symbol_save, zone_type);
+  no = _CheckSpace(symbol_save, zone_type);
   if(no == SYMBOL_SPACE_NONE){
-    SymbolSave_DataShift(symbol_save, start);
+    _DataShift(symbol_save, start);
     spoke = &symbol_save->symbol_poke[end - 1];
   }
   else{
@@ -234,4 +359,6 @@ void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save, u16 monsno, u16 wazan
       GF_ASSERT_MSG(0, "no=%d", no - SYMBOL_NO_START_FREE_SMALL);
     }
   }
+  _Coded(symbol_save);
 }
+

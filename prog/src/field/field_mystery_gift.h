@@ -17,6 +17,6 @@
 //======================================================================
 //--------------------------------------------------------------
 extern u8 FIELD_MYSTERYDATA_GetGiftType( MYSTERY_DATA * fd );
-extern GIFT_PACK_DATA * FIELD_MYSTERYDATA_GetGiftData( MYSTERY_DATA * fd, int * index );
+extern GIFT_PACK_DATA * FIELD_MYSTERYDATA_GetGiftData( MYSTERY_DATA * fd, int * index, GIFT_PACK_DATA* pData );
 extern void FIELD_MYSTERYDATA_SetReceived( MYSTERY_DATA * fd, int index );
 
