@@ -371,7 +371,7 @@ BOOL Intrude_CheckNextPalaceAreaMine(GAME_COMM_SYS_PTR game_comm, const GAMEDATA
  * @retval  BOOL		    FALSE:í èÌÇÃÇ‹Ç‹
  */
 //==================================================================
-BOOL Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, const GAMEDATA *gamedata)
+BOOL Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, GAMEDATA *gamedata)
 {
   u8 invasion_netid;
   
