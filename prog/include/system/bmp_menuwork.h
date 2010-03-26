@@ -126,7 +126,8 @@ extern void BmpMenuWork_ListSTRBUFDelete( BMP_MENULIST_DATA *list_top );
  * @retval u32 
  */
 //--------------------------------------------------------------
-extern u32 BmpMenuWork_GetListMaxLength( const BMP_MENULIST_DATA *list_top );
+extern u32 BmpMenuWork_GetListMaxLength(
+    const BMP_MENULIST_DATA *list_top, int *no_buf );
 
 //--------------------------------------------------------------
 /**

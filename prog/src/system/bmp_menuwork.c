@@ -255,10 +255,13 @@ void BmpMenuWork_ListSTRBUFDelete( BMP_MENULIST_DATA *list_top )
  * @retval u32 
  */
 //--------------------------------------------------------------
-u32 BmpMenuWork_GetListMaxLength( const BMP_MENULIST_DATA *list_top )
+u32 BmpMenuWork_GetListMaxLength(
+    const BMP_MENULIST_DATA *list_top, int *no_buf )
 {
   u32 len,max = 0;
 	const BMP_MENULIST_DATA* list = list_top;
+  
+  *no_buf = 0;
   
   while( list->str != LIST_ENDCODE )
   {
@@ -275,6 +278,7 @@ u32 BmpMenuWork_GetListMaxLength( const BMP_MENULIST_DATA *list_top )
     }
   
     list++;
+    (*no_buf)++;
   }
   
   return( max );

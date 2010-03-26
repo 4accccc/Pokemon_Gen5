@@ -86,11 +86,11 @@ enum
 {
   PANO_BGWIN = 9, //BGウィンドウ
   PANO_SPWIN = 9, //特殊ウィンドウ
-  PANO_MENU_W = 10, //メニューパレットNo 背景白
+  PANO_MENU_W = 10, //メニューパレットNo 背景白 不透明メニュー用
   PANO_FONT_TALKMSGWIN = 11, ///<吹き出しフォントパレットNo
   PANO_TALKMSGWIN = 12, ///<吹き出しウィンドウパレットNo
-  PANO_MENU_B = 13, ///<メニューパレットNo 背景黒
-  PANO_FONT = 14, ///<フォントパレットNo
+  PANO_MENU_B = 13, ///<メニューパレットNo 背景黒 半透明用
+  PANO_FONT = 14, ///<フォントパレットNo 半透明用
 };
 
 //======================================================================
@@ -543,17 +543,21 @@ void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb )
 
 //--------------------------------------------------------------
 /**
- * FLDMSGBG BG2リソースのみ破棄
- * @param
- * @retval
+ * FLDMSGBG BG2リソースを破棄して再設定フラグをセットする。
+ * 破棄済みの場合はなにもしない。
+ * @param fmb FLDMSGBG *
+ * @retval BOOL TRUE=リソースを破棄。FALSE=破棄済みなので何もしなかった。
  */
 //--------------------------------------------------------------
-void FLDMSGBG_ReleaseBG2Resource( FLDMSGBG *fmb )
+BOOL FLDMSGBG_ReleaseBG2Resource( FLDMSGBG *fmb )
 {
   if( fmb->bgFrameBld != BGFRAME_ERROR ){
     GFL_BG_FreeBGControl( fmb->bgFrameBld );
     fmb->bgFrameBld = BGFRAME_ERROR;
+    return( TRUE );
   }
+  
+  return( FALSE );
 }
 
 //--------------------------------------------------------------
@@ -729,7 +733,6 @@ void FLDMSGBG_ReqResetBG2( FLDMSGBG *fmb )
 {
   fmb->req_reset_bg2_control = TRUE;
 }
-
 
 //======================================================================
 //  FLDPRINT_CONTROL 自動キー送り＋メッセージスピード一定設定
@@ -1059,10 +1062,9 @@ static FLDMSGWIN * fldmsgwin_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
   FLDMSGWIN *msgWin;
   u8 frame = fmb->bgFrame;
   
-  resetBG2ControlProc( fmb );
-
   if( pltt_no == PANO_FONT ){
     frame = fmb->bgFrameBld;
+    resetBG2ControlProc( fmb );
   }
   
   msgWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDMSGWIN) );
@@ -1441,10 +1443,9 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
   BMPMENULIST_HEADER menuH;
   u8 frame = fmb->bgFrame;
   
-  resetBG2ControlProc( fmb );
-
   if( pltt_no == PANO_FONT ){
     frame = fmb->bgFrameBld;
+    resetBG2ControlProc( fmb );
   }
   
   menuFunc = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDMENUFUNC) );
@@ -1746,10 +1747,11 @@ void FLDMENUFUNC_ListSTRBUFDelete(FLDMENUFUNC_LISTDATA *listData)
  * @retval u32 リスト内、最大文字数
  */
 //--------------------------------------------------------------
-u32 FLDMENUFUNC_GetListLengthMax( const FLDMENUFUNC_LISTDATA *listData )
+u32 FLDMENUFUNC_GetListLengthMax( const FLDMENUFUNC_LISTDATA *listData, int *no_buf )
 {
   u32 len;
-  len = BmpMenuWork_GetListMaxLength( (const BMP_MENULIST_DATA*)listData );
+  len = BmpMenuWork_GetListMaxLength(
+      (const BMP_MENULIST_DATA*)listData, no_buf );
   return( len );
 }
 
@@ -1780,8 +1782,9 @@ u32 FLDMENUFUNC_GetListMax( const FLDMENUFUNC_LISTDATA *listData )
 u32 FLDMENUFUNC_GetListMenuWidth(
     const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 space )
 {
+  int no;
   u32 c,len;
-  u32 num = FLDMENUFUNC_GetListLengthMax( listData );
+  u32 num = FLDMENUFUNC_GetListLengthMax( listData, &no );
   num++; //カーソル分
   len = num * font_size;
   c = len / 8;

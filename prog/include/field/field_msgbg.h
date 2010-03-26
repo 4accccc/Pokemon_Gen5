@@ -173,7 +173,7 @@ extern FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera );
 extern void FLDMSGBG_SetupResource( FLDMSGBG *fmb );
 extern void FLDMSGBG_Delete( FLDMSGBG *fmb );
 extern void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb );
-extern void FLDMSGBG_ReleaseBG2Resource( FLDMSGBG *fmb );
+extern BOOL FLDMSGBG_ReleaseBG2Resource( FLDMSGBG *fmb );
 extern void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb );
 extern void FLDMSGBG_PrintMain( FLDMSGBG *fmb );
 extern void FLDMSGBG_PrintG3D( FLDMSGBG *fmb );
@@ -285,7 +285,8 @@ extern void FLDMENUFUNC_AddArcStringListData(
     FLDMENUFUNC_LISTDATA *listData,
     GFL_MSGDATA *msgData, u32 strID, u32 param, HEAPID heapID );
 extern void FLDMENUFUNC_ListSTRBUFDelete(FLDMENUFUNC_LISTDATA *listData);
-extern u32 FLDMENUFUNC_GetListLengthMax( const FLDMENUFUNC_LISTDATA *listData );
+extern u32 FLDMENUFUNC_GetListLengthMax( const FLDMENUFUNC_LISTDATA *listData, int *no_buf );
+
 extern u32 FLDMENUFUNC_GetListMax( const FLDMENUFUNC_LISTDATA *listData );
 extern u32 FLDMENUFUNC_GetListMenuWidth(
     const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 font_space );
