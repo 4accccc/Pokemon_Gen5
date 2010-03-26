@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-21T14:30:55"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T13:20:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -462,14 +462,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1427" top="310" right="2132" bottom="938" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="637" right="1024" bottom="789" visible="yes"/>
 		<tag-palette left="532" top="179" right="1024" bottom="591" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -798,8 +798,8 @@
 カード中に記載される「うけとってね」メッセージ</comment>
 		<language name="JPN" width="216">フレンドリィショップ　に　いる
 はいたついん　から　うけとってね</language>
-		<language name="JPN_KANJI">フレンドリィショップ　に　いる
-配達員　から　うけとってね</language>
+		<language name="JPN_KANJI">フレンドリィショップに　いる
+配達員から　受け取ってね</language>
 	</row>
 
 	<row id="mystery_card_003">
@@ -962,8 +962,8 @@
 		<comment>孫配信終了メッセージ</comment>
 		<language name="JPN" width="216">おすそわけ　が　ぶじに
 しゅうりょう　しました！</language>
-		<language name="JPN_KANJI">おすそわけ　が　ぶじに
-しゅうりょう　しました！</language>
+		<language name="JPN_KANJI">おすそわけ　が
+無事に　終了しました！</language>
 	</row>
 
 	<row id="mystery_drop_001">
@@ -1049,7 +1049,7 @@
 		<language name="JPN" width="216">マナフィのタマゴを　うけとっています
 でんげんを　きらないで　ください</language>
 		<language name="JPN_KANJI">マナフィのタマゴを　受け取っています
-電源を　きらないで　ください</language>
+電源を　切らないで　ください</language>
 	</row>
 
 	<row id="mystery_ranger_008">
