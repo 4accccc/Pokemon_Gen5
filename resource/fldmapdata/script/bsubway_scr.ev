@@ -1043,11 +1043,15 @@ ev_bsw_game_after:
     _CALL sub_receipt_anm_return_partner
   ENDIF
   
-  //お疲れ様でした
-  $SCWK_TEMP0 = msg_bsw_scr_35
-  _CALL sub_receipt_common_bwin
-  _AB_KEYWAIT()
-  _MSGWIN_CLOSE()
+  //連勝中であれば　続きありのメッセージ
+  _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER != 0 THEN
+    $SCWK_TEMP0 = msg_bsw_scr_35
+    _CALL sub_receipt_common_bwin
+    _AB_KEYWAIT()
+    _MSGWIN_CLOSE()
+  ENDIF
   
   //またのご利用を
   _CALL sub_receipt_common_exit
