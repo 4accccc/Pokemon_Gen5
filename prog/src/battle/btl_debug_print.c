@@ -220,6 +220,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_AfterPokeIn_Alive:   return "生きているポケモンとの入れ替えが発生 Cleint=%d, Pos %d <-> %d\n";
   case DBGSTR_SVFL_AfterPokeIn_Dead:    return "ひんしポケモンの空きを埋める入れ替えが発生 Pos %d <-> %d\n";
   case DBGSTR_SVFL_PokeDead:            return "ポケ(%d) しにます\n";
+  case DBGSTR_SVFL_AddSickFailCode:     return "状態異常失敗コード=%d\n";
+  case DBGSTR_SVFL_AddSickFixed:        return "状態異常決定：コード=%d\n";
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";

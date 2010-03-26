@@ -6907,7 +6907,7 @@ static BOOL addsick_core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPA
 
   if( fail_code != BTL_ADDSICK_FAIL_NULL )
   {
-    BTL_Printf("状態異常失敗コード=%d\n", fail_code);
+    BTL_N_Printf( DBGSTR_SVFL_AddSickFailCode, fail_code);
     if( fAlmost ){
       scPut_AddSickFail( wk, target, fail_code, sick );
     }
@@ -6923,7 +6923,7 @@ static BOOL addsick_core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPA
     }
 
     if( !fFail ){
-      BTL_Printf("状態異常決定：コード=%d\n", sick);
+      BTL_Printf( DBGSTR_SVFL_AddSickFixed, sick);
       scPut_AddSick( wk, target, sick, sickCont );
     }
     else if( fAlmost )
@@ -9583,7 +9583,8 @@ static void scPut_AddSickFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
     case WAZASICK_MAHI:   SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_MahiAlready, pokeID ); break;
     case WAZASICK_NEMURI: SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NemuriAlready, pokeID ); break;
     case WAZASICK_KOORI:  SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KoriAlready, pokeID ); break;
-
+    default:
+      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
     }
     return;
 

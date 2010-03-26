@@ -177,6 +177,8 @@ typedef enum {
   DBGSTR_SVFL_AfterPokeIn_Alive,
   DBGSTR_SVFL_AfterPokeIn_Dead,
   DBGSTR_SVFL_PokeDead,
+  DBGSTR_SVFL_AddSickFailCode,
+  DBGSTR_SVFL_AddSickFixed,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,
