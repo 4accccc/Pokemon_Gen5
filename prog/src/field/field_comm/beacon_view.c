@@ -23,6 +23,7 @@
 #include "field/event_beacon_detail.h"
 #include "field/event_subscreen.h"
 #include "field/event_gpower.h"
+#include "field/event_freeword_input.h"
 
 #include "beacon_status.naix"
 #include "wifi_unionobj.naix"
@@ -254,6 +255,7 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
   case EV_RETURN_CGEAR:
     event = EVENT_ChangeSubScreen( wk->gsys, wk->fieldWork, FIELD_SUBSCREEN_NORMAL);
 //    FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR );
+//
     break;
   case EV_CALL_DETAIL_VIEW:
     event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork, wk->ctrl.target+wk->ctrl.view_top );
@@ -263,7 +265,7 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
     wk->ctrl.g_power = GPOWER_ID_NULL;
     break;
   case EV_CALL_TALKMSG_INPUT:
-    event = EVENT_BeaconDetail( wk->gsys, wk->fieldWork, wk->ctrl.target+wk->ctrl.view_top );
+    event = EVENT_FreeWordInput( wk->gsys, wk->fieldWork, NULL, NAMEIN_FREE_WORD, NULL );
     break;
   default:
     return NULL;

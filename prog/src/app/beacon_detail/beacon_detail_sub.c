@@ -488,7 +488,7 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
     if( hobby == GAMEBEACON_DETAILS_HOBBY_NULL ){
       GFL_STR_ClearBuffer( wk->str_expand );
     }else{
-      WORDSET_RegisterJobName( wk->wset, 0, hobby );
+      WORDSET_RegisterHobbyName( wk->wset, 0, hobby );
     }
     print_GetMsgToBuf( wk, msg_prof_hobby );
     draw_BeaconData( wk, &bp->prof[2], wk->str_expand,

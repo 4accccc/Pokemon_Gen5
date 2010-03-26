@@ -31,6 +31,7 @@
 #include "field_sound.h"
 #include "field_player.h"
 #include "event_fieldmap_control.h"
+#include "event_freeword_input.h"
 
 #include "scrcmd_proc.h"
 #include "scrcmd_proc_fld.h"
@@ -46,7 +47,6 @@
 #include "net_app/wifi_earth.h" // Earth_Demo_proc_data
 
 #include "app/name_input.h"
-#include "savedata/misc_local.h"
 
 static void callback_BoxProc( void* work );
 static void CallBackFunc_byHelloMsgIn( void* wk );
@@ -220,7 +220,7 @@ VMCMD_RESULT EvCmdCrossCommHelloMessageInputCall( VMHANDLE *core, void *wk )
     callbackWork->nameInParam.mode     = NAMEIN_FREE_WORD;
     callbackWork->nameInParam.hero_sex = MyStatus_GetMySex( myStatus );
     callbackWork->nameInParam.wordmax  = NAMEIN_GREETING_WORD_LENGTH;
-    callbackWork->nameInParam.strbuf   = GFL_STR_CreateBuffer( SAVE_SURETIGAI_SELFINTRODUCTION_LEN, HEAPID_PROC );
+    callbackWork->nameInParam.strbuf   = GFL_STR_CreateBuffer(NAMEIN_GREETING_WORD_LENGTH+EOM_SIZE, HEAPID_PROC );
     callbackWork->nameInParam.p_misc   = misc;
 
     // “ü—Í•¶š—ñ‚Ì‰Šú’l‚ğİ’è
@@ -304,7 +304,7 @@ VMCMD_RESULT EvCmdCrossCommThanksMessageInputCall( VMHANDLE *core, void *wk )
     callbackWork->nameInParam.mode     = NAMEIN_FREE_WORD;
     callbackWork->nameInParam.hero_sex = MyStatus_GetMySex( myStatus );
     callbackWork->nameInParam.wordmax  = NAMEIN_THANKS_WORD_LENGTH;
-    callbackWork->nameInParam.strbuf   = GFL_STR_CreateBuffer( SAVE_SURETIGAI_THANKYOU_LEN, HEAPID_PROC );
+    callbackWork->nameInParam.strbuf   = GFL_STR_CreateBuffer(NAMEIN_THANKS_WORD_LENGTH+EOM_SIZE, HEAPID_PROC );
     callbackWork->nameInParam.p_misc   = misc;
 
     // “ü—Í•¶š—ñ‚Ì‰Šú’l‚ğİ’è
