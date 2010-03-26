@@ -722,6 +722,7 @@ extern u32 GFL_CLGRP_PLTT_GetAddr( u32 index, CLSYS_DRAW_TYPE vramType );
  */
 //==============================================================================================
 extern u32 GFL_CLGRP_CELLANIM_Register( ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, HEAPID heapID );
+extern u32 GFL_CLGRP_CELLANIM_RegisterEx( ARCHANDLE* arcHandle, u32 cellDataID, u32 animDataID, BOOL cellCompressedFlag, BOOL animCompressedFlag, HEAPID heapID );
 
 //==============================================================================================
 /**
