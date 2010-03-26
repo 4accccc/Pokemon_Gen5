@@ -267,6 +267,9 @@ struct _BR_CODEIN_WORK{
 	
   HEAPID          heapID;     //ÉqÅ[Év
   BR_CODEIN_SELECT   select;     //ëIë
+
+  int           code_block[ BR_CODE_BLOCK_MAX ];
+  u64           code_number;
 };
 
 ///< codein_pv.c

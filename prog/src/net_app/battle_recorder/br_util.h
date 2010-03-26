@@ -148,7 +148,66 @@ extern void BR_PROFILE_DeleteMainDisplay( BR_PROFILE_WORK *p_wk );
 extern BOOL BR_PROFILE_PrintMain( BR_PROFILE_WORK *p_wk );
 
 
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *					  シーケンス
+ */
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_
+//-------------------------------------
+///	シーケンスワーク
+//=====================================
+typedef struct _BR_SEQ_WORK BR_SEQ_WORK;
 
+//-------------------------------------
+///	シーケンス関数
+//=====================================
+typedef void (*BR_SEQ_FUNCTION)( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
+//-------------------------------------
+///	外部公開
+//=====================================
+extern BR_SEQ_WORK *BR_SEQ_Init( void *p_wk_adrs, BR_SEQ_FUNCTION seq_function, HEAPID heapID );
+extern void BR_SEQ_Exit( BR_SEQ_WORK *p_wk );
+extern void BR_SEQ_Main( BR_SEQ_WORK *p_wk );
+extern BOOL BR_SEQ_IsEnd( const BR_SEQ_WORK *cp_wk );
+extern void BR_SEQ_SetNext( BR_SEQ_WORK *p_wk, BR_SEQ_FUNCTION seq_function );
+extern void BR_SEQ_End( BR_SEQ_WORK *p_wk );
+extern void BR_SEQ_SetReservSeq( BR_SEQ_WORK *p_wk, int seq );
+extern void BR_SEQ_NextReservSeq( BR_SEQ_WORK *p_wk );
+extern BOOL BR_SEQ_IsComp( const BR_SEQ_WORK *cp_wk, BR_SEQ_FUNCTION seq_function );
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *					  小さいボール演出
+ */
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	動きの種類
+//=====================================
+typedef enum
+{ 
+  BR_BALLEFF_MOVE_NOP,           //動かない(表示されない)
+  BR_BALLEFF_MOVE_EMIT,          //放射に動く          STOP
+  BR_BALLEFF_MOVE_OPENING,       //開始の動き          STOP
+  BR_BALLEFF_MOVE_BIG_CIRCLE,    //大きい円を描く      LOOP
+  BR_BALLEFF_MOVE_CIRCLE,        //円を描く            LOOP
+  BR_BALLEFF_MOVE_CIRCLE_CONT,   //場所を変えて円を描くLOOP
+
+}BR_BALLEFF_MOVE;
+//-------------------------------------
+///	カーソルワーク
+//=====================================
+typedef struct _BR_BALLEFF_WORK BR_BALLEFF_WORK;
+
+//-------------------------------------
+///	外部公開
+//=====================================
+extern BR_BALLEFF_WORK *BR_BALLEFF_Init( GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, CLSYS_DRAW_TYPE draw, HEAPID heapID );
+extern void BR_BALLEFF_Exit( BR_BALLEFF_WORK *p_wk );
+extern void BR_BALLEFF_Main( BR_BALLEFF_WORK *p_wk );
+
+extern void BR_BALLEFF_StartMove( BR_BALLEFF_WORK *p_wk, BR_BALLEFF_MOVE move, const GFL_POINT *cp_pos );
+extern BOOL BR_BALLEFF_IsMoveEnd( const BR_BALLEFF_WORK *cp_wk );
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**

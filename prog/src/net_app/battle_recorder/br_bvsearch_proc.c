@@ -13,16 +13,18 @@
 
 //システム
 #include "system/gfl_use.h"
-#include "system/main.h"  //HEAPID
+#include "system/main.h"
 
 //アーカイブ
 #include "msg/msg_battle_rec.h"
+#include "print/global_msg.h"
 
 //自分のモジュール
 #include "br_pokesearch.h"
 #include "br_inner.h"
 #include "br_util.h"
 #include "br_btn.h"
+#include "br_net.h"
 
 //外部公開
 #include "br_bvsearch_proc.h"
@@ -33,8 +35,6 @@
 */
 //=============================================================================
 #define BR_BVSEARCH_SUBSEQ_END (0xFFFFFFFF)
-
-#define BR_BVSEARCH_PLACE_MAX (23)
 
 //-------------------------------------
 ///	文字面
@@ -102,6 +102,7 @@ typedef struct
   u32                 sub_seq;
   u32                 next_sub_seq;
 	HEAPID heapID;
+ 
 } BR_BVSEARCH_WORK;
 
 
@@ -149,7 +150,7 @@ typedef enum
   BRSEARCH_DISP_PRINT_POKE,
   BRSEARCH_DISP_PRINT_AREA,
 }BRSEARCH_DISP_PRINT_TYPE;
-static void Br_BvSearch_PrintMainDisplay( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param, BRSEARCH_DISP_PRINT_TYPE type, u32 param );
+static void Br_BvSearch_PrintMainDisplay( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param, BRSEARCH_DISP_PRINT_TYPE type  );
 
 typedef enum
 { 
@@ -247,6 +248,13 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
   p_wk->p_bmpoam	= BmpOam_Init( p_wk->heapID, p_param->p_unit );
   p_wk->p_text  = BR_TEXT_Init( p_param->p_res, p_wk->p_que, p_wk->heapID );
   BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_712 );
+
+  //検索結果を初期化
+  p_param->search_data.monsno       = BATTLE_REC_SEARCH_MONSNO_NONE;
+  p_param->search_data.country_code = BATTLE_REC_SEARCH_COUNTRY_CODE_NONE;
+  p_param->search_data.local_code   = BATTLE_REC_SEARCH_LOCAL_CODE_NONE;
+  p_param->search_data.battle_mode_no  = BATTLEMODE_SEARCH_NO_ALL;
+
 
   //リソース読み込み
   BR_RES_LoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, p_wk->heapID ); 
@@ -533,6 +541,8 @@ static BOOL Br_BvSearch_Seq_Menu_Init( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
     }
   }
 
+  BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_712 );
+
 
   return TRUE;
 }
@@ -601,12 +611,45 @@ static BOOL Br_BvSearch_Seq_Menu_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
       switch( select )
       { 
       case BRSEARCH_DISP_PRINT_PLACE:
+        p_param->search_data.battle_mode_no = BATTLEMODE_SEARCH_NO_ALL;
+        Br_BvSearch_PrintMainDisplay( p_wk, p_param, BRSEARCH_DISP_PRINT_PLACE );
+        BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_710 );
         p_wk->next_sub_seq  = SUBSEQ_SELECT_PLACE;
         return TRUE;
 
       case BRSEARCH_DISP_PRINT_POKE:
+        p_param->search_data.monsno     = BATTLE_REC_SEARCH_MONSNO_NONE;
+        Br_BvSearch_PrintMainDisplay( p_wk, p_param, BRSEARCH_DISP_PRINT_POKE );
+        BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_711 );
         p_wk->next_sub_seq  = SUBSEQ_SEARCH_POKE;
         return TRUE;
+
+      case BRSEARCH_MENU_SELECT_AREA:
+        { 
+          MYSTATUS  *p_status = GAMEDATA_GetMyStatus( p_param->p_gamedata );
+          int country_code = MyStatus_GetMyNation( p_status );
+          int local_code   = MyStatus_GetMyArea( p_status );
+          if( country_code == 0 )
+          { 
+            BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_725 );
+          }
+          else
+          { 
+            if( p_param->search_data.local_code == BATTLE_REC_SEARCH_LOCAL_CODE_NONE )
+            { 
+              MYSTATUS  *p_status = GAMEDATA_GetMyStatus( p_param->p_gamedata );
+              p_param->search_data.country_code = country_code;
+              p_param->search_data.local_code   = local_code;
+            }
+            else
+            { 
+              p_param->search_data.country_code = BATTLE_REC_SEARCH_COUNTRY_CODE_NONE;
+              p_param->search_data.local_code   = BATTLE_REC_SEARCH_LOCAL_CODE_NONE;
+            }
+            Br_BvSearch_PrintMainDisplay( p_wk, p_param, BRSEARCH_DISP_PRINT_AREA );
+          }
+        }
+        break;
       }
     }
   }
@@ -624,9 +667,18 @@ static BOOL Br_BvSearch_Seq_Menu_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
       }
       if( BR_BTN_GetTrg( p_wk->p_btn[BR_BVSEARCH_BTNID_MENU_OK], x, y ))
       { 
-        p_wk->next_sub_seq  = BR_BVSEARCH_SUBSEQ_END;
-        BR_PROC_SYS_Push( p_param->p_procsys, BR_PROCID_BV_RANK );
-        return TRUE;
+        if( p_param->search_data.monsno != BATTLE_REC_SEARCH_MONSNO_NONE
+            || p_param->search_data.local_code != BATTLE_REC_SEARCH_LOCAL_CODE_NONE
+            || p_param->search_data.battle_mode_no != BATTLEMODE_SEARCH_NO_ALL )
+        { 
+          p_wk->next_sub_seq  = BR_BVSEARCH_SUBSEQ_END;
+          BR_PROC_SYS_Push( p_param->p_procsys, BR_PROCID_BV_RANK );
+          return TRUE;
+        }
+        else
+        { 
+          BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_713 );
+        }
       }
     }
   }
@@ -650,6 +702,8 @@ static BOOL Br_BvSearch_Seq_Place_Init( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC
 {
   GFL_FONT *p_font;
   GFL_MSGDATA *p_msg; 
+
+
   p_font  = BR_RES_GetFont( p_param->p_res );
   p_msg   = BR_RES_GetMsgData( p_param->p_res );
 
@@ -659,8 +713,8 @@ static BOOL Br_BvSearch_Seq_Place_Init( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC
   //リストデータ作成
   { 
     int i;
-    p_wk->p_list_data = BmpMenuWork_ListCreate( BR_BVSEARCH_PLACE_MAX, p_wk->heapID );
-    for( i = 0; i < BR_BVSEARCH_PLACE_MAX; i++ )
+    p_wk->p_list_data = BmpMenuWork_ListCreate( BATTLEMODE_SEARCH_NO_ALL, p_wk->heapID );
+    for( i = 0; i < BATTLEMODE_SEARCH_NO_ALL; i++ )
     { 
       BmpMenuWork_ListAddArchiveString( &p_wk->p_list_data[i], p_msg,
          msg_rule_no_000 + i, i, p_wk->heapID );
@@ -685,7 +739,7 @@ static BOOL Br_BvSearch_Seq_Place_Init( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC
     };
     BR_LIST_PARAM list_param  = sc_list_param;
     list_param.cp_list  = p_wk->p_list_data;
-    list_param.list_max = BR_BVSEARCH_PLACE_MAX;
+    list_param.list_max = BATTLEMODE_SEARCH_NO_ALL;
     list_param.p_res    = p_param->p_res;
     list_param.p_unit   = p_param->p_unit;
 
@@ -793,6 +847,8 @@ static BOOL Br_BvSearch_Seq_Place_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC
   //決定
   if( select != BR_LIST_SELECT_NONE )
   { 
+    p_param->search_data.battle_mode_no = select;
+    Br_BvSearch_PrintMainDisplay( p_wk, p_param, BRSEARCH_DISP_PRINT_PLACE );
     p_wk->next_sub_seq  = SUBSEQ_MENU;
     return TRUE;
   }
@@ -857,15 +913,17 @@ static BOOL Br_BvSearch_Seq_Poke_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
 { 
  
   BR_POKESEARCH_SELECT select;
-  u32 monst_now;
+  u16 mons_no;
 
   BR_POKESEARCH_Main( p_wk->p_search );
-  select  = BR_POKESEARCH_GetSelect( p_wk->p_search, &monst_now );
+  select  = BR_POKESEARCH_GetSelect( p_wk->p_search, &mons_no );
   if( select != BR_POKESEARCH_SELECT_NONE )
   { 
     if( select == BR_POKESEARCH_SELECT_DECIDE )
     { 
       //決定
+      p_param->search_data.monsno = mons_no;
+      Br_BvSearch_PrintMainDisplay( p_wk, p_param, BRSEARCH_DISP_PRINT_POKE );
       p_wk->next_sub_seq  = SUBSEQ_MENU;
     }
     else
@@ -1003,9 +1061,57 @@ static void Br_BvSearch_DeleteMainDisplay( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_P
  *	@param	*p_param                パラメータ
  */
 //-----------------------------------------------------------------------------
-static void Br_BvSearch_PrintMainDisplay( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param, BRSEARCH_DISP_PRINT_TYPE type, u32 param )
-{ 
+static void Br_BvSearch_PrintMainDisplay( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param, BRSEARCH_DISP_PRINT_TYPE type  )
+{
+  GFL_FONT *p_font;
+  GFL_MSGDATA *p_msg; 
+  p_font  = BR_RES_GetFont( p_param->p_res );
+  p_msg   = BR_RES_GetMsgData( p_param->p_res );
 
+  switch( type )
+  { 
+  case BRSEARCH_DISP_PRINT_PLACE:
+    { 
+      if( p_param->search_data.battle_mode_no != BATTLEMODE_SEARCH_NO_ALL )
+      { 
+        BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[ BR_BVSEARCH_MSGWINID_M_PLACE ], p_msg,
+            msg_rule_no_000 + p_param->search_data.battle_mode_no - 1, p_font, BR_PRINT_COL_NORMAL );
+      }
+      else
+      { 
+        BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[ BR_BVSEARCH_MSGWINID_M_PLACE ], p_msg,
+          msg_722, p_font, BR_PRINT_COL_NORMAL );
+      }
+    }
+    break;
+  case BRSEARCH_DISP_PRINT_POKE:
+    { 
+      if( p_param->search_data.monsno != BATTLE_REC_SEARCH_MONSNO_NONE )
+      { 
+        BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[ BR_BVSEARCH_MSGWINID_M_POKE ], (GFL_MSGDATA*)GlobalMsg_PokeName,
+          p_param->search_data.monsno, p_font, BR_PRINT_COL_NORMAL );
+      }
+      else
+      { 
+        BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[ BR_BVSEARCH_MSGWINID_M_POKE ], p_msg,
+          msg_722, p_font, BR_PRINT_COL_NORMAL );
+      }
+    }
+    break;
+  case BRSEARCH_DISP_PRINT_AREA:
+    { 
+      if( p_param->search_data.local_code != 0 )
+      { 
+        BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[ BR_BVSEARCH_MSGWINID_M_AREA ], p_msg, msg_722, p_font, BR_PRINT_COL_NORMAL );
+      }
+      else
+      {
+        BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[ BR_BVSEARCH_MSGWINID_M_AREA ], p_msg,
+          msg_722, p_font, BR_PRINT_COL_NORMAL );
+      }
+    }
+    break;
+  }
 }
 
 //----------------------------------------------------------------------------

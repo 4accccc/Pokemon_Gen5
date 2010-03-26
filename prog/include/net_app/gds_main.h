@@ -11,6 +11,7 @@
 
 #include "net_app/wifi_login.h"
 #include "net_app/wifi_logout.h"
+#include "net_app/battle_recorder.h"
 
 
 //==============================================================================
@@ -19,7 +20,7 @@
 ///GDSプロック制御を呼び出すときに引き渡すパラメータ構造体
 typedef struct{
   GAMEDATA          *gamedata;    ///WiFiListの取得をGAMEDATA経由でするため、
-	u8 gds_mode;			///<BR_MODE_GDS_???
+	BR_MODE gds_mode;			///<BR_MODE_???
 	u8 padding[3];
 }GDSPROC_PARAM;
 
@@ -34,6 +35,7 @@ typedef struct{
 	union{
     WIFILOGIN_PARAM login_param;
     WIFILOGOUT_PARAM logout_param;
+    BATTLERECORDER_PARAM  br_param;
   };
 }GDSPROC_MAIN_WORK;
 

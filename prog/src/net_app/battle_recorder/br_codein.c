@@ -112,6 +112,40 @@ BR_CODEIN_SELECT BR_CODEIN_GetSelect( const BR_CODEIN_WORK *wk )
   return  wk->select;
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  入力した数値を一括で取得
+ *
+ *	@param	const BR_CODEIN_WORK *wk ワーク
+ *
+ *	@return 入力した数値を一括で取得
+ */
+//-----------------------------------------------------------------------------
+u64 BR_CODEIN_GetNumber( const BR_CODEIN_WORK *wk )
+{ 
+  return wk->code_number;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  入力した数値をブロック分割して取得
+ *
+ *	@param	const BR_CODEIN_WORK *wk  ワーク
+ *	@param	*p_tbl                    配列（基本はBR_CODE_BLOCK_MAX分の配列）
+ *	@param	tbl_max                   配列の要素数（基本はBR_CODE_BLOCK_MAX）
+ */
+//-----------------------------------------------------------------------------
+void BR_CODEINT_GetNumberBlock( const BR_CODEIN_WORK *wk, int *p_tbl, int tbl_max )
+{ 
+  int i;
+  for( i = 0; i < tbl_max && i < BR_CODE_BLOCK_MAX; i++ )
+  { 
+    p_tbl[i]  = wk->code_block[i];
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  コードイン  終了

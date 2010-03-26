@@ -1320,3 +1320,477 @@ BOOL BR_PROFILE_PrintMain( BR_PROFILE_WORK *p_wk )
 
   return ret;
 }
+
+//=============================================================================
+/**
+ *  シーケンスシステム
+ */
+//=============================================================================
+//-------------------------------------
+///	シーケンスワーク
+//=====================================
+struct _BR_SEQ_WORK
+{
+	BR_SEQ_FUNCTION	seq_function;		//実行中のシーケンス関数
+	int seq;											//実行中のシーケンス関数の中のシーケンス
+	void *p_wk_adrs;							//実行中のシーケンス関数に渡すワーク
+  int reserv_seq;               //予約シーケンス
+};
+
+//-------------------------------------
+///	パブリック
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	初期化
+ *
+ *	@param	BR_SEQ_WORK *p_wk	ワーク
+ *	@param	*p_param				パラメータ
+ *	@param	seq_function		シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+BR_SEQ_WORK * BR_SEQ_Init( void *p_wk_adrs, BR_SEQ_FUNCTION seq_function, HEAPID heapID )
+{	
+  BR_SEQ_WORK *p_wk;
+
+	//作成
+  p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(BR_SEQ_WORK) );
+	GFL_STD_MemClear( p_wk, sizeof(BR_SEQ_WORK) );
+
+	//初期化
+	p_wk->p_wk_adrs	= p_wk_adrs;
+
+	//セット
+	BR_SEQ_SetNext( p_wk, seq_function );
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	破棄
+ *
+ *	@param	BR_SEQ_WORK *p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+void BR_SEQ_Exit( BR_SEQ_WORK *p_wk )
+{
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	メイン処理
+ *
+ *	@param	BR_SEQ_WORK *p_wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void BR_SEQ_Main( BR_SEQ_WORK *p_wk )
+{	
+	if( p_wk->seq_function )
+	{	
+		p_wk->seq_function( p_wk, &p_wk->seq, p_wk->p_wk_adrs );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	終了取得
+ *
+ *	@param	const BR_SEQ_WORK *cp_wk		ワーク
+ *
+ *	@return	TRUEならば終了	FALSEならば処理中
+ */	
+//-----------------------------------------------------------------------------
+BOOL BR_SEQ_IsEnd( const BR_SEQ_WORK *cp_wk )
+{	
+	return cp_wk->seq_function == NULL;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	次のシーケンスを設定
+ *
+ *	@param	BR_SEQ_WORK *p_wk	ワーク
+ *	@param	seq_function		シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+void BR_SEQ_SetNext( BR_SEQ_WORK *p_wk, BR_SEQ_FUNCTION seq_function )
+{	
+	p_wk->seq_function	= seq_function;
+	p_wk->seq	= 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	終了
+ *
+ *	@param	BR_SEQ_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+void BR_SEQ_End( BR_SEQ_WORK *p_wk )
+{	
+  BR_SEQ_SetNext( p_wk, NULL );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SEQ 次のシーケンスを予約
+ *
+ *	@param	BR_SEQ_WORK *p_wk  ワーク
+ *	@param	seq             次のシーケンス
+ */
+//-----------------------------------------------------------------------------
+void BR_SEQ_SetReservSeq( BR_SEQ_WORK *p_wk, int seq )
+{ 
+  p_wk->reserv_seq  = seq;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SEQ 予約されたシーケンスへ飛ぶ
+ *
+ *	@param	BR_SEQ_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void BR_SEQ_NextReservSeq( BR_SEQ_WORK *p_wk )
+{ 
+  p_wk->seq = p_wk->reserv_seq;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在のシーケンスと同じかどうか
+ *
+ *	@param	const BR_SEQ_WORK *cp_wk  ワーク
+ *	@param	seq_function              シーケンス
+ *
+ *	@return TRUE同じ FALSE異なる
+ */
+//-----------------------------------------------------------------------------
+BOOL BR_SEQ_IsComp( const BR_SEQ_WORK *cp_wk, BR_SEQ_FUNCTION seq_function )
+{ 
+  return cp_wk->seq_function  == seq_function;
+}
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
+ *					  小さいボール演出
+ */
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	定義
+//=====================================
+#define BR_BALLEFF_CLWK_MAX (5)
+
+
+typedef struct 
+{
+  GFL_POINT pos;
+  u16 r;
+} MOVE_CIRCLE;
+
+//-------------------------------------
+///	カーソルワーク
+//=====================================
+struct _BR_BALLEFF_WORK
+{ 
+  GFL_POINT   init_pos;
+  CLSYS_DRAW_TYPE draw;
+  BR_SEQ_WORK *p_seq;
+  BR_RES_WORK *p_res;
+
+  MOVE_CIRCLE circle[ BR_BALLEFF_CLWK_MAX ];
+  GFL_CLWK    *p_clwk[ BR_BALLEFF_CLWK_MAX ];
+  int         cnt;
+};
+
+//-------------------------------------
+///	プロトタイプ
+//=====================================
+//シーケンス
+static void Br_BallEff_Seq_Nop( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_BallEff_Seq_Emit( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_BallEff_Seq_Opening( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_BallEff_Seq_BigCircle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_BallEff_Seq_Circle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_BallEff_Seq_CircleCont( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+//動き
+static void MOVE_CIRCLE_Init( MOVE_CIRCLE *p_wk, const GFL_POINT *cp_center_pos, u16 r, u16 init_angle, int cnt_max );
+static BOOL MOVE_CIRCLE_Main( MOVE_CIRCLE *p_wk, GFL_POINT *p_now_pos, int *p_cnt );
+
+//-------------------------------------
+///	外部公開
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボールエフェクト作成
+ *
+ *  @param  GFL_CLUNIT          OAM登録ユニット
+ *	@param	BR_RES_WORK *p_res  リソース
+ *	@param	draw    描画先
+ *	@param	heapID  ヒープID 
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+BR_BALLEFF_WORK *BR_BALLEFF_Init( GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, CLSYS_DRAW_TYPE draw, HEAPID heapID )
+{ 
+  BR_BALLEFF_WORK *p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(BR_BALLEFF_WORK) );
+  GFL_STD_MemClear( p_wk, sizeof(BR_BALLEFF_WORK) );
+  p_wk->p_res = p_res;
+  p_wk->draw  = draw;
+
+  //シーケンスシステム作成
+  p_wk->p_seq = BR_SEQ_Init( p_wk, Br_BallEff_Seq_Nop, heapID );
+
+  //リソース読み込み
+  BR_RES_LoadOBJ( p_wk->p_res, BR_RES_OBJ_BALL_M + draw, heapID );
+
+  //CLWK作成
+  { 
+    int i;
+    BOOL ret;
+    GFL_CLWK_DATA cldata;
+    BR_RES_OBJ_DATA resdata;
+    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+    ret = BR_RES_GetOBJRes( p_wk->p_res, BR_RES_OBJ_BALL_M + draw, &resdata );
+    for( i = 0; i < BR_BALLEFF_CLWK_MAX; i++ )
+    { 
+      p_wk->p_clwk[i] = GFL_CLACT_WK_Create( 
+          p_unit, resdata.ncg, resdata.ncl, resdata.nce, &cldata, draw, heapID
+          );
+      GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+    }
+  }
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボールエフェクト破棄
+ *
+ *	@param	BR_BALLEFF_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void BR_BALLEFF_Exit( BR_BALLEFF_WORK *p_wk )
+{ 
+  //CLWK破棄
+  { 
+    int i;
+    for( i = 0; i < BR_BALLEFF_CLWK_MAX; i++ )
+    { 
+      GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
+    }
+  }
+
+  //リソース破棄
+  BR_RES_UnLoadOBJ( p_wk->p_res, BR_RES_OBJ_BALL_M + p_wk->draw );
+
+  //シーケンス破棄
+  BR_SEQ_Exit( p_wk->p_seq );
+
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボールエフェクトメイン処理
+ *
+ *	@param	BR_BALLEFF_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void BR_BALLEFF_Main( BR_BALLEFF_WORK *p_wk )
+{ 
+  BR_SEQ_Main( p_wk->p_seq );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボールエフェクト  エフェクト動作開始
+ *
+ *	@param	BR_BALLEFF_WORK *p_wk ワーク
+ *	@param	move                  動作の種類（列挙参照）
+ *	@param	GFL_POINT *cp_pos     動作開始位置
+ */
+//-----------------------------------------------------------------------------
+void BR_BALLEFF_StartMove( BR_BALLEFF_WORK *p_wk, BR_BALLEFF_MOVE move, const GFL_POINT *cp_pos )
+{ 
+  if( cp_pos )
+  { 
+    p_wk->init_pos  = *cp_pos;
+  }
+
+  switch( move )
+  { 
+  case BR_BALLEFF_MOVE_NOP:           //動かない(表示されない)
+    BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_Nop );
+    break;
+  case BR_BALLEFF_MOVE_EMIT:          //放射に動く          STOP
+    BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_Emit );
+    break;
+  case BR_BALLEFF_MOVE_OPENING:       //開始の動き          STOP
+    BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_Opening );
+    break;
+  case BR_BALLEFF_MOVE_BIG_CIRCLE:    //大きい円を描く      LOOP
+    BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_BigCircle );
+    break;
+  case BR_BALLEFF_MOVE_CIRCLE:        //円を描く            LOOP
+    BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_Circle );
+    break;
+  case BR_BALLEFF_MOVE_CIRCLE_CONT:   //場所を変えて円を描くLOOP
+    BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_CircleCont );
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *  @brief  ボールエフェクト  エフェクト動作終了確認  （動作によってはLOOPするので注意）
+ *
+ *	@param	const BR_BALLEFF_WORK *cp_wk ワーク
+ *
+ *	@return TRUE動作終了  FALSE動作中
+ */
+//-----------------------------------------------------------------------------
+BOOL BR_BALLEFF_IsMoveEnd( const BR_BALLEFF_WORK *cp_wk )
+{ 
+  return BR_SEQ_IsComp( cp_wk->p_seq, Br_BallEff_Seq_Nop );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  何もしない
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンス
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_BallEff_Seq_Nop( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_MAIN,
+  };
+
+  BR_BALLEFF_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    { 
+      int i;
+      for( i = 0; i < BR_BALLEFF_CLWK_MAX; i++ )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+      }
+    }
+    *p_seq  = SEQ_MAIN;
+    break;
+
+  case SEQ_MAIN:
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  放射状に出る  STOP
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンス
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_BallEff_Seq_Emit( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+
+  BR_BALLEFF_WORK *p_wk = p_wk_adrs;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  最初の演出  STOP
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンス
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_BallEff_Seq_Opening( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+
+  BR_BALLEFF_WORK *p_wk = p_wk_adrs;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  大きい円を描く  LOOP
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンス
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_BallEff_Seq_BigCircle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_MAIN,
+  };
+
+  BR_BALLEFF_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    { 
+      int i;
+      for( i = 0; i < BR_BALLEFF_CLWK_MAX; i++ )
+      { 
+        MOVE_CIRCLE_Init( &p_wk->circle[i], &p_wk->init_pos, 50, 0xFFFF*i/BR_BALLEFF_CLWK_MAX, 200 );
+      }
+    }
+    *p_seq  = SEQ_MAIN;
+    break;
+
+  case SEQ_MAIN:
+    { 
+      int i;
+      GFL_POINT pos;
+      for( i = 0; i < BR_BALLEFF_CLWK_MAX; i++ )
+      { 
+        MOVE_CIRCLE_Main( &p_wk->circle[i], &pos, &p_wk->cnt );
+      }
+
+      p_wk->cnt++;
+    }
+    break;
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  円を描く  LOOP
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンス
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_BallEff_Seq_Circle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+
+  BR_BALLEFF_WORK *p_wk = p_wk_adrs;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  円を描く（移動）  LOOP
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンス
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_BallEff_Seq_CircleCont( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+
+  BR_BALLEFF_WORK *p_wk = p_wk_adrs;
+}

@@ -112,6 +112,7 @@ SRCS  +=    $(SOUNDSRC) \
         field/event_gtsnego.c \
         field/event_wifibattlematch.c \
         field/event_battlerecorder.c \
+        field/event_gts.c \
         field/event_debug_wifimatch.c \
         net_app/wificlub/wifi_p2pevent.c \
         field/event_wificlub.c \
@@ -1691,6 +1692,7 @@ SRCS_OVERLAY_BATTLE_RECORDER  = net_app/battle_recorder/br_main.c
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_MUSICAL_SHOT
+#===> SRCS_OVERLAY_GDS_COMM
 SRCS_OVERLAY_BATTLE_RECORDER_CORE	=	net_app/battle_recorder/br_core.c \
 						net_app/battle_recorder/br_btn.c \
 						net_app/battle_recorder/br_btn_data.c \
@@ -1714,7 +1716,8 @@ SRCS_OVERLAY_BATTLE_RECORDER_CORE	=	net_app/battle_recorder/br_core.c \
 		        net_app/battle_recorder/br_codein_disp.c \
 		        net_app/battle_recorder/br_codein_pv.c \
 		        net_app/battle_recorder/br_fade.c \
-            net_app/battle_recorder/br_sidebar.c
+            net_app/battle_recorder/br_sidebar.c \
+            net_app/battle_recorder/br_net.c
 
 
 #バトルレコーダーツール WiFI上で動くバトルレコーダー内で使用するので、バトルと並列にしなければいけない

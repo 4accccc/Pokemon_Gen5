@@ -35,14 +35,11 @@
 //=====================================
 typedef enum
 {
-	BR_BTN_TYPE_SELECT,				//選択用ボタン
-	BR_BTN_TYPE_RETURN,				//1つ前のメニューへ戻る用ボタン
+	BR_BTN_TYPE_SELECT,				//選択用ボタン  data1にBR_MENUID
+	BR_BTN_TYPE_SELECT_MSG,		//選択 ＋　メッセージ表示ボタン data1にBR_MENUID data2に メッセージID　
+	BR_BTN_TYPE_RETURN,				//1つ前のメニューへ戻る用ボタン data1にBR_MENUID
 	BR_BTN_TYPE_EXIT,					//バトルレコーダー終了用ボタン
-	BR_BTN_TYPE_MYRECORD,			//自分の記録ボタン
-	BR_BTN_TYPE_OTHERRECORD,	//誰かの記録ボタン
-	BR_BTN_TYPE_DELETE_MY,		//自分の記録を消すボタン
-	BR_BTN_TYPE_DELETE_OTHER,	//誰かの記録を消すボタン
-	BR_BTN_TYPE_CHANGESEQ,		//シーケンス変更ボタン
+	BR_BTN_TYPE_CHANGESEQ,		//シーケンス変更ボタン    data1に移動先PROC　data2にPROCモード
 
 } BR_BTN_TYPE;
 
@@ -51,9 +48,27 @@ typedef enum
 //=====================================
 typedef enum
 {
-	BR_BTN_NONEPROC_VANISH,	//消える
-	BR_BTN_NONEPROC_NOPUSH,	//押せない（上画面にメッセージ表示）
+	BR_BTN_NONEPROC_VANISH,	//消える  
+	BR_BTN_NONEPROC_NOPUSH,	//押せない（上画面にメッセージ表示 data1にメッセージID）
 } BR_BTN_NONEPROC;
+
+//-------------------------------------
+///	特殊ボタン
+//=====================================
+typedef enum
+{
+  BR_BTN_UNIQUE_NONE,         //特殊ボタンではない
+	BR_BTN_UNIQUE_MYRECORD,			//自分の記録ボタン
+	BR_BTN_UNIQUE_OTHERRECORD1,	//誰かの記録ボタン1
+	BR_BTN_UNIQUE_OTHERRECORD2,	//誰かの記録ボタン2
+	BR_BTN_UNIQUE_OTHERRECORD3,	//誰かの記録ボタン3
+	BR_BTN_UNIQUE_DELETE_MY,		//自分の記録を消すボタン
+	BR_BTN_UNIQUE_DELETE_OTHER1,	//誰かの記録を消すボタン1
+	BR_BTN_UNIQUE_DELETE_OTHER2,	//誰かの記録を消すボタン2
+	BR_BTN_UNIQUE_DELETE_OTHER3,	//誰かの記録を消すボタン3
+  BR_BTN_UNIQUE_BVSEND,	      //バトルビデオを送るボタン
+  BR_BTN_UNIQUE_SHOTSEND,	      //ミュージカルショットを送るボタン
+} BR_BTN_UNIQUE;
 
 //-------------------------------------
 ///	ボタンデータ公開情報インデックス
@@ -66,11 +81,12 @@ typedef enum
 	BR_BTN_DATA_PARAM_MSGID,	//自分のアイコンに表示するメッセージID
 	BR_BTN_DATA_PARAM_ANMSEQ,	//自分のアイコンのアニメシーケンス
 	BR_BTN_DATA_PARAM_TYPE,		//ボタンの種類		BR_BTN_TYPE列挙
-	BR_BTN_DATA_PARAM_DATA1,	//種類別のデータ１
-	BR_BTN_DATA_PARAM_DATA2,	//種類別のデータ２
+	BR_BTN_DATA_PARAM_DATA1,	//種類別のデータ１  BR_BTN_TYPE列挙のコメント参照
+	BR_BTN_DATA_PARAM_DATA2,	//種類別のデータ２  BR_BTN_TYPE列挙のコメント参照
 	BR_BTN_DATA_PARAM_VALID,	//有効なボタンか	TRUE or FALSE
 	BR_BTN_DATA_PARAM_NONE_PROC,	//有効でないときの処理		BR_BTN_NONEPROC列挙
 	BR_BTN_DATA_PARAM_NONE_DATA,	//有効でないときの処理で使うデータ
+  BR_BTN_DATA_PARAM_UNIQUE,	    //特殊ボタン
 
 	BR_BTN_DATA_PARAM_MAX
 } BR_BTN_DATA_PARAM;

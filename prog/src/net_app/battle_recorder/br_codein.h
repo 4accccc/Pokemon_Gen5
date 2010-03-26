@@ -41,14 +41,13 @@ typedef enum
 typedef struct 
 {
 	
-	int		  	word_len;					    ///< 入力文字数	
-	int		  	block[ BR_CODE_BLOCK_MAX + 1 ];///< 入力ブロック　xx-xxxx-xxx とか
+	int		  	word_len;					    ///<[in ]入力文字数	
+	int		  	block[ BR_CODE_BLOCK_MAX + 1 ]; ///<[in ]入力ブロック　xx-xxxx-xxx とか
 	
-	int			  end_state;					///< 終了時の状態
-	STRBUF*		strbuf;						///< 空欄ならバッファそうでなければデフォルト値
-
-  GFL_CLUNIT  *p_unit;
-  BR_RES_WORK *p_res;
+	int			  end_state;				///< [out]終了時の状態
+	STRBUF*		strbuf;						///< [out]空欄ならバッファそうでなければデフォルト値
+  GFL_CLUNIT  *p_unit;        ///< [in ]OAM管理
+  BR_RES_WORK *p_res;         ///< [in ]リソース管理
 } BR_CODEIN_PARAM;
 
 //-------------------------------------
@@ -66,11 +65,12 @@ extern BR_CODEIN_WORK * BR_CODEIN_Init( const BR_CODEIN_PARAM *cp_param, HEAPID 
 extern void BR_CODEIN_Exit( BR_CODEIN_WORK *wk );
 extern void BR_CODEIN_Main( BR_CODEIN_WORK *wk );
 extern BR_CODEIN_SELECT BR_CODEIN_GetSelect( const BR_CODEIN_WORK *wk );
+extern void BR_CODEINT_GetNumberBlock( const BR_CODEIN_WORK *wk, int *p_tbl, int tbl_max );
+extern u64 BR_CODEIN_GetNumber( const BR_CODEIN_WORK *wk );
 
 //引数作成
 extern BR_CODEIN_PARAM*	BR_CODEIN_ParamCreate( int heap_id, int word_len, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, int block[] );
 extern void	 BR_CODEIN_ParamDelete( BR_CODEIN_PARAM* codein_param );
-
 
 //--------------------------------------------------------------
 /**

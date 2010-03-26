@@ -76,6 +76,7 @@ typedef struct
 {
   BMPOAM_SYS_PTR		p_bmpoam;	//BMPOAMシステム
   PRINT_QUE         *p_que;   //プリントキュー
+  BR_SEQ_WORK       *p_seq;
 
 	BR_BTN_WORK	      *p_btn[ BR_RECORD_BTNID_MAX ];
   BR_MSGWIN_WORK    *p_msgwin_s[ BR_RECORD_MSGWINID_S_MAX ];
@@ -90,6 +91,8 @@ typedef struct
 
   BOOL              is_profile;
 	HEAPID            heapID;
+
+  BR_RECORD_PROC_PARAM	*p_param;
 } BR_RECORD_WORK;
 
 //=============================================================================
@@ -107,6 +110,37 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Exit
 static GFL_PROC_RESULT BR_RECORD_PROC_Main
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
 
+//-------------------------------------
+///	シーケンス
+//=====================================
+static void Br_Record_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Record_Seq_FadeIn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Record_Seq_FadeOut( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Record_Seq_FadeOutAfter( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Record_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Record_Seq_ChangeDrawUp( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
+//-------------------------------------
+///	画面作成
+//=====================================
+static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
+static void Br_Record_CreateMainDisplayDouble( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
+static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, BATTLE_REC_HEADER_PTR p_header, HEAPID heapID );
+static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
+static void Br_Record_DeleteMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
+
+static void Br_Record_CreateSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
+static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
+
+//-------------------------------------
+///	その他
+//=====================================
+static BOOL Br_Record_Check2vs2( BATTLE_REC_HEADER_PTR p_head );
+static BOOL Br_Record_GetTrgProfile( BR_RECORD_WORK * p_wk, u32 x, u32 y );
+static BOOL Br_Record_GetTrgStart( u32 x, u32 y );
+
 //=============================================================================
 /**
  *					外部参照
@@ -121,26 +155,6 @@ const GFL_PROC_DATA BR_RECORD_ProcData =
 	BR_RECORD_PROC_Main,
 	BR_RECORD_PROC_Exit,
 };
-
-//=============================================================================
-/**
- *					プロトタイプ
- */
-//=============================================================================
-//画面作成
-static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
-static void Br_Record_CreateMainDisplayDouble( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
-static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, BATTLE_REC_HEADER_PTR p_header, HEAPID heapID );
-static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
-static void Br_Record_DeleteMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
-
-static void Br_Record_CreateSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
-static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
-
-//その他
-static BOOL Br_Record_Check2vs2( BATTLE_REC_HEADER_PTR p_head );
-static BOOL Br_Record_GetTrgProfile( BR_RECORD_WORK * p_wk, u32 x, u32 y );
-static BOOL Br_Record_GetTrgStart( u32 x, u32 y );
 
 //=============================================================================
 /**
@@ -167,16 +181,24 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(BR_RECORD_WORK), BR_PROC_SYS_GetHeapID( p_param->p_procsys ) );
 	GFL_STD_MemClear( p_wk, sizeof(BR_RECORD_WORK) );	
-	p_wk->heapID	= BR_PROC_SYS_GetHeapID( p_param->p_procsys );
+	p_wk->heapID	    = BR_PROC_SYS_GetHeapID( p_param->p_procsys );
   p_wk->is_profile  = FALSE;
+  p_wk->p_param     = p_param;
 
   //モジュール作成
   p_wk->p_bmpoam		= BmpOam_Init( p_wk->heapID, p_param->p_unit);
   p_wk->p_que       = PRINTSYS_QUE_Create( p_wk->heapID );
+  p_wk->p_seq       = BR_SEQ_Init( p_wk, NULL, p_wk->heapID );
 
-	//グラフィック初期化
-  Br_Record_CreateSubDisplay( p_wk, p_param );
-  Br_Record_CreateMainDisplaySingle( p_wk, p_param );
+  if( p_wk->p_param->mode == BR_RECODE_PROC_DOWNLOAD_NUMBER )
+  { 
+    //番号指定から来た場合はヘッダろプロファイルがないのですぐダウンロード
+    BR_SEQ_SetNext( p_wk->p_seq, Br_Record_Seq_NumberDownload );
+  }
+  else
+  { 
+    BR_SEQ_SetNext( p_wk->p_seq, Br_Record_Seq_FadeInBefore );
+  }
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -198,21 +220,12 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 	BR_RECORD_WORK				*p_wk	= p_wk_adrs;
 	BR_RECORD_PROC_PARAM	*p_param	= p_param_adrs;
 
-  if( p_wk->is_profile )
-  { 
-    BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
-  }
-  else
-  { 
-    Br_Record_DeleteMainDisplay( p_wk, p_param );
-  }
-
   //画面構築破棄
-  Br_Record_DeleteSubDisplay( p_wk, p_param );
   GFL_BG_LoadScreenReq( BG_FRAME_S_FONT );
   GFL_BG_LoadScreenReq( BG_FRAME_M_FONT );
 
 	//モジュール破棄
+  BR_SEQ_Exit( p_wk->p_seq );
   PRINTSYS_QUE_Delete( p_wk->p_que );
   BmpOam_Exit( p_wk->p_bmpoam );
 
@@ -255,113 +268,10 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
   };
 
 	BR_RECORD_WORK	*p_wk	= p_wk_adrs;
-	BR_RECORD_PROC_PARAM	*p_param	= p_param_adrs;
 
-
-  switch( *p_seq )
+  BR_SEQ_Main( p_wk->p_seq );
+  if( BR_SEQ_IsEnd( p_wk->p_seq ) )
   { 
-  case SEQ_FADEIN_START:
-    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
-    *p_seq  = SEQ_FADEIN_WAIT;
-    break;
-  case SEQ_FADEIN_WAIT:
-    if( BR_FADE_IsEnd( p_param->p_fade ) )
-    { 
-      *p_seq  = SEQ_MAIN;
-    }
-    break;
-  case SEQ_MAIN:
-    {
-      u32 x, y;
-      if( GFL_UI_TP_GetPointTrg( &x, &y ) )
-      {
-        //プロフィール切り替えチェック
-        if( Br_Record_GetTrgProfile( p_wk, x, y ) )
-        { 
-          p_wk->is_profile ^= 1;
-          *p_seq  = SEQ_CHANGEOUT_START;
-        }
-
-        //終了チェック
-        if( BR_BTN_GetTrg( p_wk->p_btn[BR_RECORD_BTNID_RETURN], x, y ) )
-        {	
-          p_param->ret  = BR_RECORD_RETURN_FINISH;
-          BR_PROC_SYS_Pop( p_param->p_procsys );
-          *p_seq  = SEQ_FADEOUT_START;
-        }	
-
-        //再生ボタン
-        if( Br_Record_GetTrgStart( x, y ) )
-        { 
-          p_param->ret  = BR_RECORD_RETURN_BTLREC;
-          //フェードをすっとばす
-          BR_PROC_SYS_Pop( p_param->p_procsys );
-          BR_PROC_SYS_Pop( p_param->p_procsys );
-          BR_PROC_SYS_Pop( p_param->p_procsys );
-          BR_PROC_SYS_Pop( p_param->p_procsys );
-          BR_PROC_SYS_Pop( p_param->p_procsys );
-          BR_PROC_SYS_Pop( p_param->p_procsys );
-          BR_PROC_SYS_Pop( p_param->p_procsys );
-          *p_seq  = SEQ_EXIT;
-        }
-      }
-    }
-    break;
-
-  case SEQ_CHANGEOUT_START:
-    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_MAIN, BR_FADE_DIR_OUT );
-    (*p_seq)++;
-    break;
-  case SEQ_CHANGEOUT_WAIT:
-    if( BR_FADE_IsEnd( p_param->p_fade ) )
-    { 
-      (*p_seq)++;
-    }
-    break;
-  case SEQ_CHANGEIN_START:
-    { 
-      GFL_FONT *p_font;
-      GFL_MSGDATA *p_msg;
-
-      p_font  = BR_RES_GetFont( p_param->p_res );
-      p_msg   = BR_RES_GetMsgData( p_param->p_res );
-      //読み込み変え
-      if( p_wk->is_profile )
-      { 
-        Br_Record_DeleteMainDisplay( p_wk, p_param );
-        BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[BR_RECORD_MSGWINID_S_PROFILE], p_msg, msg_719, p_font, BR_PRINT_COL_NORMAL );
-        Br_Record_CreateMainDisplayProfile( p_wk, p_param );
-      }
-      else
-      { 
-        BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
-        p_wk->p_profile_disp  = NULL;
-        BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[BR_RECORD_MSGWINID_S_PROFILE], p_msg, msg_718, p_font, BR_PRINT_COL_NORMAL );
-        Br_Record_CreateMainDisplaySingle( p_wk, p_param );
-      }
-    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_MAIN, BR_FADE_DIR_IN );
-    }
-    (*p_seq)++;
-    break;
-  case SEQ_CHANGEIN_WAIT:
-    if( BR_FADE_IsEnd( p_param->p_fade ) )
-    { 
-      *p_seq  = SEQ_MAIN;
-    }
-    break;
-
-  case SEQ_FADEOUT_START:
-    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
-    *p_seq  = SEQ_FADEOUT_WAIT;
-    break;
-  case SEQ_FADEOUT_WAIT:
-    if( BR_FADE_IsEnd( p_param->p_fade ) )
-    { 
-      *p_seq  = SEQ_EXIT;
-    }
-    break;
-  case SEQ_EXIT:
-    NAGI_Printf( "RECORD: Exit!\n" );
     return GFL_PROC_RES_FINISH;
   }
 
@@ -396,7 +306,383 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
 }
 //=============================================================================
 /**
- *			プライベート
+ *			シーケンス
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードイン前処理
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  BR_RECORD_WORK	*p_wk	= p_wk_adrs;
+
+	//グラフィック初期化
+  Br_Record_CreateSubDisplay( p_wk, p_wk->p_param );
+  Br_Record_CreateMainDisplaySingle( p_wk, p_wk->p_param );
+
+  BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeIn );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードイン
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Seq_FadeIn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_FADEIN_START,
+    SEQ_FADEIN_WAIT,
+    SEQ_FADEIN_END,
+  };
+
+  BR_RECORD_WORK	*p_wk	= p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_FADEIN_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_FADEIN_WAIT;
+    break;
+  case SEQ_FADEIN_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_FADEIN_END;
+    }
+    break;
+  case SEQ_FADEIN_END:
+    BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_Main );
+    break;
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードアウト
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Seq_FadeOut( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_FADEOUT_END,
+  };
+
+  BR_RECORD_WORK	*p_wk	= p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_FADEOUT_WAIT;
+    break;
+  case SEQ_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_FADEOUT_END;
+    }
+    break;
+  case SEQ_FADEOUT_END:
+    BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeOutAfter );
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードアウト後処理
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Seq_FadeOutAfter( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  BR_RECORD_WORK	*p_wk	= p_wk_adrs;
+
+  //グラフィック破棄
+  if( p_wk->is_profile )
+  { 
+    BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
+  }
+  else
+  { 
+    Br_Record_DeleteMainDisplay( p_wk,  p_wk->p_param );
+  }
+  Br_Record_DeleteSubDisplay( p_wk, p_wk->p_param );
+
+  BR_SEQ_End( p_seqwk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  メイン操作
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+ 	BR_RECORD_WORK	*p_wk	= p_wk_adrs;
+  
+  u32 x, y;
+  if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+  {
+    //プロフィール切り替えチェック
+    if( Br_Record_GetTrgProfile( p_wk, x, y ) )
+    { 
+      p_wk->is_profile ^= 1;
+      BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_ChangeDrawUp );
+    }
+
+    //終了チェック
+    if( BR_BTN_GetTrg( p_wk->p_btn[BR_RECORD_BTNID_RETURN], x, y ) )
+    {	
+      p_wk->p_param->ret  = BR_RECORD_RETURN_FINISH;
+      BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+      BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeOut );
+    }	
+
+    //再生ボタン
+    if( Br_Record_GetTrgStart( x, y ) )
+    { 
+      if( p_wk->p_param->mode == BR_RECODE_PROC_DOWNLOAD_RANK
+          || p_wk->p_param->mode == BR_RECODE_PROC_DOWNLOAD_NUMBER )
+      { 
+        //データダウンロード
+        BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_VideoDownload );
+      }
+      else
+      { 
+        p_wk->p_param->ret  = BR_RECORD_RETURN_BTLREC;
+        //フェードをすっとばす
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeOut );
+      }
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  上画面表示へ切り替え
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Seq_ChangeDrawUp( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_CHANGEOUT_START,
+    SEQ_CHANGEOUT_WAIT,
+    SEQ_CHANGEIN_START,
+    SEQ_CHANGEIN_WAIT,
+  };
+
+ 	BR_RECORD_WORK	*p_wk	= p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_CHANGEOUT_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_MAIN, BR_FADE_DIR_OUT );
+    (*p_seq)++;
+    break;
+  case SEQ_CHANGEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_CHANGEIN_START:
+    { 
+      GFL_FONT *p_font;
+      GFL_MSGDATA *p_msg;
+
+      p_font  = BR_RES_GetFont( p_wk->p_param->p_res );
+      p_msg   = BR_RES_GetMsgData( p_wk->p_param->p_res );
+      //読み込み変え
+      if( p_wk->is_profile )
+      { 
+        Br_Record_DeleteMainDisplay( p_wk, p_wk->p_param );
+        BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[BR_RECORD_MSGWINID_S_PROFILE], p_msg, msg_719, p_font, BR_PRINT_COL_NORMAL );
+        Br_Record_CreateMainDisplayProfile( p_wk, p_wk->p_param );
+      }
+      else
+      { 
+        BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
+        p_wk->p_profile_disp  = NULL;
+        BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[BR_RECORD_MSGWINID_S_PROFILE], p_msg, msg_718, p_font, BR_PRINT_COL_NORMAL );
+        Br_Record_CreateMainDisplaySingle( p_wk, p_wk->p_param );
+      }
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_MAIN, BR_FADE_DIR_IN );
+    }
+    (*p_seq)++;
+    break;
+  case SEQ_CHANGEIN_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    {
+      BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_Main );
+    }
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ビデオナンバーからプロファイルとヘッダをダウンロード
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_DOWNLOAD_START,
+    SEQ_DOWNLOAD_WAIT,
+    SEQ_DOWNLOAD_END,
+  };
+
+  BR_RECORD_WORK	*p_wk	= p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_DOWNLOAD_START:
+    {
+      BR_NET_REQUEST_PARAM  req_param;
+      GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
+      req_param.download_video_number = p_wk->p_param->video_number;
+      BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD, &req_param );
+      *p_seq  = SEQ_DOWNLOAD_WAIT;
+    }
+    break;
+  case SEQ_DOWNLOAD_WAIT:
+    if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
+    { 
+      *p_seq  = SEQ_DOWNLOAD_END;
+    }
+    break;
+  case SEQ_DOWNLOAD_END:
+    { 
+      BATTLE_REC_RECV *p_recv;
+      int video_number;
+      if( BR_NET_GetDownloadBattleVideo( p_wk->p_param->p_net, &p_recv, &video_number ) )
+      { 
+        p_wk->p_param->p_profile = &p_recv->profile;
+        p_wk->p_param->p_header  = &p_recv->head;
+
+        BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_Main );
+      }
+      else
+      { 
+        //@todo
+        //BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_Main );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );  //コードインも抜ける
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_SEQ_End( p_seqwk );
+      }
+    }
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  録画データ本体をダウンロード
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_DOWNLOAD_START,
+    SEQ_DOWNLOAD_WAIT,
+    SEQ_DOWNLOAD_END,
+  };
+
+  BR_RECORD_WORK	*p_wk	= p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_DOWNLOAD_START:
+    {
+      BR_NET_REQUEST_PARAM  req_param;
+      GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
+      req_param.download_video_number = RecHeader_ParamGet( p_wk->p_param->p_header, RECHEAD_IDX_DATA_NUMBER, 0 );
+      BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD, &req_param );
+      *p_seq  = SEQ_DOWNLOAD_WAIT;
+    }
+    break;
+  case SEQ_DOWNLOAD_WAIT:
+    if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
+    { 
+      *p_seq  = SEQ_DOWNLOAD_END;
+    }
+    break;
+  case SEQ_DOWNLOAD_END:
+    { 
+      int video_number;
+      BATTLE_REC_RECV       *p_btl_rec;
+      if( BR_NET_GetDownloadBattleVideo( p_wk->p_param->p_net, &p_btl_rec, &video_number ) )
+      {   
+        //受信したので、レコードを設定
+        BattleRec_DataSet( &p_btl_rec->profile, &p_btl_rec->head,
+            &p_btl_rec->rec, GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata ) );
+        
+        p_wk->p_param->ret  = BR_RECORD_RETURN_BTLREC;
+        //フェードをすっとばす
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeOut );
+      }
+      else
+      { 
+        BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_Main );
+      }
+    }
+    break;
+  }
+}
+//=============================================================================
+/**
+ *			描画
  */
 //=============================================================================
 //----------------------------------------------------------------------------

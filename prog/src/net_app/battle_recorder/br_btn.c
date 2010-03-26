@@ -19,6 +19,7 @@
 #include "print/printsys.h"
 
 //自分のモジュール
+#include "br_util.h"
 #include "br_btn_data.h"
 #include "br_btn.h"
 
@@ -55,6 +56,9 @@ typedef enum
 	BR_BTN_PARAM_DATA2,				//タイプによったデータ
 	BR_BTN_PARAM_VALID,				//おせるかどうか
   BR_BTN_PARAM_MENUID,      //自分のメニューID
+  BR_BTN_PARAM_NONE_PROC,   //押せないときの動作 BR_BTN_NONEPROC列挙
+  BR_BTN_PARAM_NONE_DATA,   //押せないときの動作のデータ（BR_BTN_NONEPROC列挙のコメント参照）
+  BR_BTN_PARAM_UNIQUE,      //固有ボタン
 } BR_BTN_PARAM;
 
 //-------------------------------------
@@ -156,7 +160,10 @@ struct _BR_BTN_SYS_WORK
 	BR_BTNEX_WORK			*p_btn_now;		//現在のボタンバッファ
 
 	BR_BTN_DATA_SYS		*p_btn_data;	//ボタンデータバッファ
-	BMPOAM_SYS_PTR		p_bmpoam;	//BMPOAMシステム
+	BMPOAM_SYS_PTR		p_bmpoam;	    //BMPOAMシステム
+  PRINT_QUE         *p_que;       //プリントキュー 
+
+  BR_TEXT_WORK      *p_text;
 };
 //=============================================================================
 /**
@@ -186,7 +193,6 @@ static void SEQ_End( SEQ_WORK *p_wk );
 //      Touch -> HideBtn -> ChangePage -> UpTag -> AppearBtn
 //
 //    戻るとき
-//      Touch -> DownTag -> HideBtn2 -> ChangePage -> AppearBtn 
 //      Touch -> LeaveBtn -> DownTag -> ChangePage -> AppearBtn
 //
 //    次のPROCへいくとき
@@ -202,7 +208,8 @@ static void SEQFUNC_AppearBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_LeaveBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_UpTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void SEQFUNC_DownTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_Input( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_Decide( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_NotPushMessage( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 ///	BTNの処理
@@ -218,6 +225,7 @@ static void BR_BTNEX_SetStackPos( BR_BTNEX_WORK *p_wk, u16 stack_num );
 static void BR_BTNEX_GetPos( const BR_BTNEX_WORK *cp_wk, s16 *p_x, s16 *p_y );
 static u32 BR_BTNEX_GetParam( const BR_BTNEX_WORK *cp_wk, BR_BTN_PARAM param );
 static void BR_BTNEX_SetSoftPriority( BR_BTNEX_WORK *p_wk, u16 soft_pri );
+static void BR_BTNEX_SetBgPriority( BR_BTNEX_WORK *p_wk, u16 bg_pri );
 
 //typedef BOOL (*BR_BTNEX_MOVEFUNCTION)( BR_BTNEX_WORK *p_wk );
 static BOOL Br_BtnEx_Move_Hide( BR_BTNEX_WORK *p_wk );
@@ -285,6 +293,7 @@ BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_W
 		p_wk->p_unit			= p_unit;
 		p_wk->heapID			= heapID;
 		p_wk->p_bmpoam		= BmpOam_Init( heapID, p_unit);
+    p_wk->p_que       = PRINTSYS_QUE_Create( heapID );
 		p_wk->p_btn_data	= BR_BTN_DATA_SYS_Init( cp_setup, heapID );
 	}
 
@@ -371,6 +380,12 @@ BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_W
 			}
 		}
 	}
+  
+  //テキスト面作成
+  { 
+    p_wk->p_text  = BR_TEXT_Init( p_wk->p_res, p_wk->p_que, heapID );
+    GFL_BG_SetVisible( BG_FRAME_M_TEXT, FALSE );
+  }
 
   //モジュール作成
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_Start );
@@ -388,6 +403,11 @@ void BR_BTN_SYS_Exit( BR_BTN_SYS_WORK *p_wk )
 {	
   //モジュール破棄
   SEQ_Exit( &p_wk->seq );
+
+  //テキスト面破棄
+  { 
+    BR_TEXT_Exit( p_wk->p_text, p_wk->p_res );
+  }
 
 	//スタックバッファ破棄
 	{	
@@ -417,6 +437,7 @@ void BR_BTN_SYS_Exit( BR_BTN_SYS_WORK *p_wk )
 
 	BR_BTN_DATA_SYS_Exit( p_wk->p_btn_data );
 	BmpOam_Exit( p_wk->p_bmpoam );
+  PRINTSYS_QUE_Delete( p_wk->p_que );
 
 	//ワーク破棄
 	GFL_HEAP_FreeMemory( p_wk );
@@ -432,6 +453,14 @@ void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk )
 {
   //シーケンス
 	SEQ_Main( &p_wk->seq );
+
+  //プリント
+  PRINTSYS_QUE_Main( p_wk->p_que );
+
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_PrintMain( p_wk->p_text );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -498,6 +527,9 @@ static void Br_Btn_Sys_PushStack( BR_BTN_SYS_WORK *p_wk, BR_BTNEX_WORK *p_btn, C
     { 
       //内部でOBJと文字OAMの両方に設定しているので i*2+1
       BR_BTNEX_SetSoftPriority( &p_wk->p_btn_stack[i], (p_wk->btn_stack_num-i)*2+1 );
+
+      //メッセージ表示するため
+      BR_BTNEX_SetBgPriority( &p_wk->p_btn_stack[i], 1 );
     }
   }
 }
@@ -710,19 +742,30 @@ static void SEQFUNC_Touch( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     {	
       if( BR_BTNEX_GetTrg( &p_wk->p_btn_now[i], x, y ) )
       {	
-
-#ifdef PM_DEBUG
-        int j;
-        NAGI_Printf("push ! [%d]\n", i );
-        for( j = 0; j < BR_BTN_DATA_PARAM_MAX; j++  )
-        {	
-          NAGI_Printf("param %d\n", BR_BTN_DATA_GetParam( p_wk->p_btn_now[i].cp_data, j) );
+        //押せるかどうか
+        BOOL is_valid = BR_BTNEX_GetParam(&p_wk->p_btn_now[i],BR_BTN_PARAM_VALID );
+        if( is_valid )
+        { 
+          GFL_BG_SetVisible( BG_FRAME_M_TEXT, FALSE );  //※
+          //押せるのでおした
+          p_wk->trg_btn	= i;
+          is_trg				= TRUE;
+          break;
         }
-#endif	//PM_DEBUG
-
-        p_wk->trg_btn	= i;
-        is_trg				= TRUE;
-        break;
+        else
+        { 
+          //押せないときの動作
+          BR_BTN_NONEPROC proc  = BR_BTNEX_GetParam(&p_wk->p_btn_now[i],BR_BTN_PARAM_NONE_PROC );
+          u16 proc_data  = BR_BTNEX_GetParam(&p_wk->p_btn_now[i],BR_BTN_PARAM_NONE_DATA );
+          switch( proc )
+          { 
+          case BR_BTN_NONEPROC_NOPUSH:
+            p_wk->trg_btn	= i;
+            SEQ_SetNext( p_seqwk, SEQFUNC_NotPushMessage );
+            break;
+          }
+          break;
+        }
       }
     }
   }
@@ -754,19 +797,12 @@ static void SEQFUNC_Touch( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 
     switch( p_wk->next_type )
     {
-    case BR_BTN_TYPE_MYRECORD:
-      /* fallthrough */
-    case BR_BTN_TYPE_OTHERRECORD:
-      if( p_wk->next_valid )
-      { 
-        SEQ_SetNext( p_seqwk, SEQFUNC_HideBtn );
-      }
-      break;
-
     case BR_BTN_TYPE_RETURN:
       SEQ_SetNext( p_seqwk, SEQFUNC_LeaveBtn );
       break;
 
+    case BR_BTN_TYPE_SELECT_MSG:
+      /* fallthrough */
     case BR_BTN_TYPE_SELECT:
       /* fallthrough */
     case BR_BTN_TYPE_CHANGESEQ:
@@ -774,7 +810,7 @@ static void SEQFUNC_Touch( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       break;
 
     default:
-      SEQ_SetNext( p_seqwk, SEQFUNC_Input );
+      SEQ_SetNext( p_seqwk, SEQFUNC_Decide );
     }
   }
 
@@ -940,7 +976,7 @@ static void SEQFUNC_ChangePage( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   BR_BTN_SYS_WORK *p_wk = p_wk_adrs;
 
   //読み替え
-  if( p_wk->next_type == BR_BTN_TYPE_SELECT )
+  if( p_wk->next_type == BR_BTN_TYPE_SELECT || p_wk->next_type == BR_BTN_TYPE_SELECT_MSG )
   {
     //次へ行く場合、押したボタンから次への情報を得る
     u32 nextID					= p_wk->next_proc; 
@@ -1077,8 +1113,10 @@ static void SEQFUNC_AppearBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 
     switch( p_wk->next_type )
     {
+    case BR_BTN_TYPE_SELECT_MSG:
+      /* fallthrough */
     case BR_BTN_TYPE_SELECT:
-      SEQ_SetNext( p_seqwk, SEQFUNC_Input );
+      SEQ_SetNext( p_seqwk, SEQFUNC_Decide );
       break;
 
     case BR_BTN_TYPE_CHANGESEQ:
@@ -1086,7 +1124,7 @@ static void SEQFUNC_AppearBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       break;
 
     default:
-      SEQ_SetNext( p_seqwk, SEQFUNC_Input );
+      SEQ_SetNext( p_seqwk, SEQFUNC_Decide );
       break;
     }
     break;
@@ -1169,6 +1207,7 @@ static void SEQFUNC_UpTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   { 
     SEQ_UP_START, //ボタン出現処理
     SEQ_UP_WAIT,  //ボタン出現待機
+    SEQ_MSG_PRINT,  //テキスト表示（ボタンによる）
     SEQ_END,
   };
   BR_BTN_SYS_WORK *p_wk = p_wk_adrs;
@@ -1208,19 +1247,36 @@ static void SEQFUNC_UpTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 			}
 			if( is_end )
 			{
-        *p_seq  = SEQ_END;
+        *p_seq  = SEQ_MSG_PRINT;
 			}
 		}
     break;
     
+  case SEQ_MSG_PRINT:  //テキスト表示（ボタンによる）
+    { 
+      const BR_BTNEX_WORK *cp_target_btn  = &p_wk->p_btn_stack[ p_wk->btn_stack_num - 1 ];
+      BR_BTN_TYPE  type = BR_BTNEX_GetParam( cp_target_btn, BR_BTN_PARAM_TYPE );
+      u16   strID       = BR_BTNEX_GetParam( cp_target_btn, BR_BTN_PARAM_DATA2 );
+      if( type == BR_BTN_TYPE_SELECT_MSG )
+      { 
+        GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE ); //消去はここ※
+        BR_TEXT_Print( p_wk->p_text, p_wk->p_res, strID );
+      }
+    }
+
+    *p_seq  = SEQ_END;
+    break;
+
   case SEQ_END:
     switch( p_wk->next_type )
     {
+    case BR_BTN_TYPE_SELECT_MSG:
+      /* fallthrough */
     case BR_BTN_TYPE_SELECT:
       SEQ_SetNext( p_seqwk, SEQFUNC_AppearBtn ); 
       break;
     default:
-      SEQ_SetNext( p_seqwk, SEQFUNC_Input ); 
+      SEQ_SetNext( p_seqwk, SEQFUNC_Decide ); 
     }
     break;
   }
@@ -1312,7 +1368,7 @@ static void SEQFUNC_DownTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
  *	@param	*p_wk_adrs				ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_Input( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_Decide( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
@@ -1327,6 +1383,8 @@ static void SEQFUNC_Input( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 		{	
       switch( p_wk->next_type )
       {	
+      case BR_BTN_TYPE_SELECT_MSG:
+      /* fallthrough */
       case BR_BTN_TYPE_SELECT:				//選択用ボタン
         /* fallthrough */
       case BR_BTN_TYPE_RETURN:				//1つ前のメニューへ戻る用ボタン
@@ -1337,20 +1395,6 @@ static void SEQFUNC_Input( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
         p_wk->input	= BR_BTN_SYS_INPUT_EXIT;
         break;
 
-      case BR_BTN_TYPE_MYRECORD:			//自分の記録ボタン
-        p_wk->input	= BR_BTN_SYS_INPUT_CHANGESEQ;
-        break;
-
-      case BR_BTN_TYPE_OTHERRECORD:	//誰かの記録ボタン
-        p_wk->input	= BR_BTN_SYS_INPUT_CHANGESEQ;
-        break;
-
-			case BR_BTN_TYPE_DELETE_MY:		//自分の記録を消すボタン
-				break;
-
-			case BR_BTN_TYPE_DELETE_OTHER:	//誰かの記録を消すボタン
-				break;
-
 			case BR_BTN_TYPE_CHANGESEQ:		//シーケンス変更ボタン			
         p_wk->input	= BR_BTN_SYS_INPUT_CHANGESEQ;
         break;
@@ -1358,6 +1402,48 @@ static void SEQFUNC_Input( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     }
 
     SEQ_SetNext( p_seqwk, SEQFUNC_Touch ); 
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	押せないメッセージ表示
+ *
+ *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	*p_seq					  シーケンス
+ *	@param	*p_wk_adrs				ワーク
+ */
+//-----------------------------------------------------------------------------
+static void SEQFUNC_NotPushMessage( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_TOUCH,
+    SEQ_END,
+  };
+
+  BR_BTN_SYS_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    { 
+      u32 strID = BR_BTNEX_GetParam(&p_wk->p_btn_now[p_wk->trg_btn],BR_BTN_PARAM_NONE_DATA );
+
+      GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
+      BR_TEXT_Print( p_wk->p_text, p_wk->p_res, strID );
+    }
+    *p_seq  = SEQ_TOUCH;
+    break;
+
+  case SEQ_TOUCH:
+    *p_seq  = SEQ_END;
+    break;
+
+  case SEQ_END:
+    SEQ_SetNext( p_seqwk, SEQFUNC_Touch );
     break;
   }
 }
@@ -1535,12 +1621,15 @@ static void BR_BTNEX_ChangeDisplay( BR_BTNEX_WORK *p_wk, CLSYS_DRAW_TYPE display
   if( p_wk->display != display )
   { 
     s16 x, y;
+    u16 soft_pri, bg_pri;
 
     p_wk->display = display;
 
     //新しく作り直すため、消去
 		{	
       BR_BTN_GetPos( p_wk->p_btn, &x, &y );
+      soft_pri  = BR_BTN_GetSoftPriority( p_wk->p_btn );
+      bg_pri    = BR_BTN_GetBgPriority( p_wk->p_btn );
 			BR_BTN_Exit( p_wk->p_btn );
 		}
     //ボタン作成
@@ -1567,7 +1656,8 @@ static void BR_BTNEX_ChangeDisplay( BR_BTNEX_WORK *p_wk, CLSYS_DRAW_TYPE display
       cldata.pos_x    = x;
       cldata.pos_y    = y + y_ofs;
       cldata.anmseq   = BR_BTN_DATA_GetParam( p_wk->cp_data, BR_BTN_DATA_PARAM_ANMSEQ );
-      cldata.softpri  = 1;
+      cldata.softpri  = soft_pri;
+      cldata.bgpri    = bg_pri;
 
       //リソース読み込み
 			if( display == CLSYS_DRAW_MAIN )
@@ -1674,6 +1764,15 @@ static u32 BR_BTNEX_GetParam( const BR_BTNEX_WORK *cp_wk, BR_BTN_PARAM param )
 	case BR_BTN_PARAM_DATA2:
 		ret = BR_BTN_DATA_GetParam( cp_wk->cp_data, BR_BTN_DATA_PARAM_DATA2 );
 		break;
+
+
+  case BR_BTN_PARAM_NONE_PROC:
+		ret = BR_BTN_DATA_GetParam( cp_wk->cp_data, BR_BTN_DATA_PARAM_NONE_PROC );
+    break;
+
+  case BR_BTN_PARAM_NONE_DATA:
+		ret = BR_BTN_DATA_GetParam( cp_wk->cp_data, BR_BTN_DATA_PARAM_NONE_DATA );
+    break;
 	
 	case BR_BTN_PARAM_VALID:
 		ret = BR_BTN_DATA_GetParam( cp_wk->cp_data, BR_BTN_DATA_PARAM_VALID );
@@ -1682,6 +1781,10 @@ static u32 BR_BTNEX_GetParam( const BR_BTNEX_WORK *cp_wk, BR_BTN_PARAM param )
 	case BR_BTN_PARAM_MENUID:
 		ret = BR_BTN_DATA_GetParam( cp_wk->cp_data, BR_BTN_DATA_PARAM_MENUID );
 		break;
+
+  case BR_BTN_PARAM_UNIQUE:
+		ret = BR_BTN_DATA_GetParam( cp_wk->cp_data, BR_BTN_DATA_PARAM_UNIQUE );
+    break;
 
 	default:
 		ret	= 0;
@@ -1702,6 +1805,18 @@ static u32 BR_BTNEX_GetParam( const BR_BTNEX_WORK *cp_wk, BR_BTN_PARAM param )
 static void BR_BTNEX_SetSoftPriority( BR_BTNEX_WORK *p_wk, u16 soft_pri )
 { 
   BR_BTN_SetSoftPriority( p_wk->p_btn, soft_pri );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGプライオリティ設定
+ *
+ *	@param	BR_BTNEX_WORK *p_wk   ワーク
+ *	@param	bg_pri                BG優先度
+ */
+//-----------------------------------------------------------------------------
+static void BR_BTNEX_SetBgPriority( BR_BTNEX_WORK *p_wk, u16 bg_pri )
+{ 
+  BR_BTN_SetBgPriority( p_wk->p_btn, bg_pri );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2290,4 +2405,33 @@ void BR_BTN_SetSoftPriority( BR_BTN_WORK *p_wk, u8 soft_pri )
 u8 BR_BTN_GetSoftPriority( const BR_BTN_WORK *cp_wk )
 { 
   return GFL_CLACT_WK_GetSoftPri( cp_wk->p_clwk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGとのプライオリティを設定
+ *
+ *	@param	BR_BTN_WORK *p_wk ワーク
+ *	@param	bg_pri          プライオリティ
+ */
+//-----------------------------------------------------------------------------
+void BR_BTN_SetBgPriority( BR_BTN_WORK *p_wk, u8 bg_pri )
+{ 
+  GFL_CLACT_WK_SetBgPri( p_wk->p_clwk, bg_pri );
+  BmpOam_ActorSetBgPriority( p_wk->p_oamfont, bg_pri );
+
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGとのプライオリティ取得
+ *
+ *	@param	const BR_BTN_WORK *cp_wk  ワーク
+ *
+ *	@return プライオリティ
+ */
+//-----------------------------------------------------------------------------
+u8 BR_BTN_GetBgPriority( const BR_BTN_WORK *cp_wk )
+{ 
+  return GFL_CLACT_WK_GetBgPri( cp_wk->p_clwk );
 }

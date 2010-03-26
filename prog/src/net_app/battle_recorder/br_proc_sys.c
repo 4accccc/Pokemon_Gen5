@@ -148,6 +148,13 @@ void BR_PROC_SYS_Main( BR_PROC_SYS *p_wk )
 	switch( p_wk->seq )
 	{	
 	case SEQ_INIT:
+
+#ifdef PM_DEBUG
+    OS_TPrintf( "prev %d\n", p_prev->procID );
+    OS_TPrintf( "now %d\n", p_now->procID );
+    OS_TPrintf( "next %d\n", p_next->procID );
+#endif 
+
 		//データを保存する
 		*p_prev	= *p_now;
 		*p_now	=	*p_next;
@@ -160,6 +167,7 @@ void BR_PROC_SYS_Main( BR_PROC_SYS *p_wk )
 		GF_ASSERT( p_now->cp_data->before_func );
 		//前処理関数を呼ぶ
 		p_now->p_param	= GFL_HEAP_AllocMemory( p_wk->heapID, p_now->cp_data->param_size );
+    GFL_STD_MemClear( p_now->p_param, p_now->cp_data->param_size );
 		p_now->cp_data->before_func( p_now->p_param, p_wk->p_wk_adrs, p_prev->p_param, p_prev->procID );
 		//以前のデータのパラメータを消す
 		if( p_prev->p_param )
@@ -196,7 +204,7 @@ void BR_PROC_SYS_Main( BR_PROC_SYS *p_wk )
 
 		//もしスタックに積んであったら、次のプロセスへ
 		//スタックに積んでなかったら、終了
-		if( p_wk->stack_num != 0 )
+		if( p_wk->stack_num > 0 )
 		{	
 			p_wk->seq	= SEQ_INIT;
 		}
@@ -273,27 +281,44 @@ void BR_PROC_SYS_Pop( BR_PROC_SYS *p_wk )
   if( p_wk->stack_num > 0 )
   { 
     p_wk->stack_num--;
-  }
 
-	if( p_wk->stack_num != 0 )
-	{	
-		const u16 procID	= p_wk->stackID[ p_wk->stack_num-1 ];
-		const BR_PROC_SYS_DATA	*cp_data	= &p_wk->cp_procdata_tbl[procID];
-		BR_PROC_WORK	proc;
+    if( p_wk->stack_num != 0 )
+    { 
+      const u16 procID	= p_wk->stackID[ p_wk->stack_num -1 ];
+      const BR_PROC_SYS_DATA	*cp_data	= &p_wk->cp_procdata_tbl[procID];
+      BR_PROC_WORK	proc;
 
-		//PROC作成
-		GFL_STD_MemClear( &proc, sizeof(BR_PROC_WORK) );
-		proc.is_use		= TRUE;
-		proc.p_param	= NULL;	//引数は実際の移動時に作成される
-		proc.procID		= procID;
-		proc.cp_data	= cp_data;
+      //PROC作成
+      GFL_STD_MemClear( &proc, sizeof(BR_PROC_WORK) );
+      proc.is_use		= TRUE;
+      proc.p_param	= NULL;	//引数は実際の移動時に作成される
+      proc.procID		= procID;
+      proc.cp_data	= cp_data;
 
-		p_wk->next_proc	= proc;
+      p_wk->next_proc	= proc;
+    }
+    else
+    {	
+      BR_PROC_Clear( &p_wk->next_proc );
+    }
 	}
 	else
 	{	
 		BR_PROC_Clear( &p_wk->next_proc );
 	}
+
+#ifdef PM_DEBUG
+  { 
+    int i;
+    OS_TPrintf( "Pop was called !!\n" );
+    OS_TPrintf( "積まれているSTACK\n" );
+    for( i = 0; i < p_wk->stack_num; i++ )
+    { 
+      OS_TPrintf( "%d ", p_wk->stackID[ i ] );
+    }
+    OS_TPrintf( "\n" );
+  }
+#endif 
 
 }
 //----------------------------------------------------------------------------
@@ -306,7 +331,6 @@ void BR_PROC_SYS_Pop( BR_PROC_SYS *p_wk )
 //-----------------------------------------------------------------------------
 void BR_PROC_SYS_Push( BR_PROC_SYS *p_wk, u16 procID )
 {	
-	int i;
 	BR_PROC_WORK	proc;
 	const BR_PROC_SYS_DATA	*cp_data	= &p_wk->cp_procdata_tbl[procID];
 	
@@ -328,6 +352,20 @@ void BR_PROC_SYS_Push( BR_PROC_SYS *p_wk, u16 procID )
 
 	//プロセスつなぎ情報
 	p_wk->next_proc	= proc;
+
+#ifdef PM_DEBUG
+  { 
+    int i;
+    OS_TPrintf( "Push was called !! %d \n", procID );
+    OS_TPrintf( "積まれているSTACK\n" );
+    for( i = 0; i < p_wk->stack_num; i++ )
+    { 
+      OS_TPrintf( "%d ", p_wk->stackID[ i ] );
+    }
+    OS_TPrintf( "\n" );
+  }
+#endif 
+
 }
 
 //=============================================================================

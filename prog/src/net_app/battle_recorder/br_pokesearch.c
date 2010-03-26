@@ -429,7 +429,7 @@ void BR_POKESEARCH_CleanUp( BR_POKESEARCH_WORK *p_wk )
  *	@return ‘I‘ğ
  */
 //-----------------------------------------------------------------------------
-BR_POKESEARCH_SELECT BR_POKESEARCH_GetSelect( const BR_POKESEARCH_WORK *cp_wk, u32 *p_mons_no )
+BR_POKESEARCH_SELECT BR_POKESEARCH_GetSelect( const BR_POKESEARCH_WORK *cp_wk, u16 *p_mons_no )
 { 
   if( cp_wk->is_end )
   { 

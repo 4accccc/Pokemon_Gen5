@@ -157,6 +157,9 @@ static GFL_PROC_RESULT BR_MENU_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 	//プロセスワーク破棄
 	GFL_PROC_FreeWork( p_proc );
 
+  //br_btn.cの中でOFFにしていることがあるので
+  GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
+
 	return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------

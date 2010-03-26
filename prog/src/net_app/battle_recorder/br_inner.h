@@ -95,6 +95,15 @@ typedef struct
 	int							            data_num;			      ///< DL した概要一覧の件数
 } BR_OUTLINE_DATA;
 
+//-------------------------------------
+///	汎用
+//=====================================
+#define BR_VIDEO_NUMBER_FIG         12 //バトルビデオナンバーの桁
+#define BR_VIDEO_NUMBER_BLOCK0_FIG  2  //バトルビデオナンバーブロック０の桁
+#define BR_VIDEO_NUMBER_BLOCK1_FIG  5  //バトルビデオナンバーブロック１の桁
+#define BR_VIDEO_NUMBER_BLOCK2_FIG  5  //バトルビデオナンバーブロック２の桁
+
+
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *					  デバッグ用

@@ -69,15 +69,18 @@ typedef struct
 //=====================================
 typedef struct 
 {
-  BMPOAM_SYS_PTR	  p_bmpoam;	//BMPOAMシステム
+  BMPOAM_SYS_PTR	  p_bmpoam;
   BR_BTN_WORK       *p_btn;
   BR_MSGWIN_WORK    *p_msgwin;
   BR_MSGWIN_WORK    *p_title;
+  BR_SEQ_WORK       *p_seq;
   PRINT_QUE         *p_que;
 	HEAPID            heapID;
 
-  BR_OUTLINE_DATA   outline;
   BR_RANK_WORK      rank;
+
+  //引数
+  BR_BVRANK_PROC_PARAM	*p_param;
   
 } BR_BVRANK_WORK;
 
@@ -96,6 +99,16 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Exit
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
 static GFL_PROC_RESULT BR_BVRANK_PROC_Main
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
+//-------------------------------------
+///	シーケンス
+//=====================================
+static void Br_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Seq_FadeOutAfter( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Seq_FadeIn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Seq_FadeOut( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Seq_RankingMain( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
 //-------------------------------------
 ///	ランキングワーク
 //=====================================
@@ -160,7 +173,8 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(BR_BVRANK_WORK), BR_PROC_SYS_GetHeapID( p_param->p_procsys ) );
 	GFL_STD_MemClear( p_wk, sizeof(BR_BVRANK_WORK) );	
-	p_wk->heapID	= BR_PROC_SYS_GetHeapID( p_param->p_procsys );
+  p_wk->p_param   = p_param_adrs;
+	p_wk->heapID	  = BR_PROC_SYS_GetHeapID( p_param->p_procsys );
   p_wk->p_bmpoam	= BmpOam_Init( p_wk->heapID, p_param->p_unit );
   p_wk->p_que     = PRINTSYS_QUE_Create( p_wk->heapID );
 
@@ -203,11 +217,18 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
 
   }
 
-  DEBUG_BR_OUTLINE_SetData( &p_wk->outline );
-  BR_RANK_Init( &p_wk->rank, &p_wk->outline, p_param->p_res, p_param->p_unit, p_wk->heapID );
+  //シーケンス管理
+  p_wk->p_seq = BR_SEQ_Init( p_wk, Br_Seq_Download, p_wk->heapID );
 
-  //アイコン作成
-  Br_Rank_CreatePokeIcon( &p_wk->rank, p_param->p_unit, p_wk->heapID );
+  //レコードからの戻りの場合はすでにダウンロードしている
+  if( p_wk->p_param->mode == BR_BVRANK_MODE_RETURN )
+  { 
+    BR_SEQ_SetNext( p_wk->p_seq,Br_Seq_FadeInBefore );
+  }
+  else
+  { 
+    BR_SEQ_SetNext( p_wk->p_seq, Br_Seq_Download );
+  }
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -228,10 +249,9 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 	BR_BVRANK_WORK				*p_wk	= p_wk_adrs;
 	BR_BVRANK_PROC_PARAM	*p_param	= p_param_adrs;
 
-  //アイコン破棄
-  Br_Rank_DeletePokeIcon( &p_wk->rank );
+  BR_SEQ_Exit( p_wk->p_seq );
 
-  BR_RANK_Exit( &p_wk->rank );
+
 
 	//モジュール破棄
   BR_MSGWIN_Exit( p_wk->p_title );
@@ -276,63 +296,11 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
 	BR_BVRANK_WORK	*p_wk	= p_wk_adrs;
 	BR_BVRANK_PROC_PARAM	*p_param	= p_param_adrs;
 
-  switch( *p_seq )
+  BR_SEQ_Main( p_wk->p_seq );
+  if( BR_SEQ_IsEnd( p_wk->p_seq ) )
   { 
-  case SEQ_FADEIN_START:
-    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
-    *p_seq  = SEQ_FADEIN_WAIT;
-    break;
-
-  case SEQ_FADEIN_WAIT:
-    if( BR_FADE_IsEnd( p_param->p_fade ) )
-    { 
-      *p_seq  = SEQ_MAIN;
-    }
-    break;
-   
-  case SEQ_MAIN:
-    BR_RANK_Main( &p_wk->rank, p_wk->heapID );
-
-    {
-      u32 x, y;
-      if( GFL_UI_TP_GetPointTrg( &x, &y ) )
-      {
-        if( BR_BTN_GetTrg( p_wk->p_btn, x, y ) )
-        { 
-          BR_PROC_SYS_Pop( p_param->p_procsys );
-          *p_seq  = SEQ_FADEOUT_START;
-          break;
-        }
-        //if( Br_Rank_IsPushBattleBV( x, y ) )
-        if(0)
-        { 
-          BR_RANK_GetSelect( &p_wk->rank );
-          BR_PROC_SYS_Push( p_param->p_procsys, BR_PROCID_RECORD );
-          *p_seq  = SEQ_FADEOUT_START;
-          break;
-        }
-      }
-    }
-    break;
-
-  case SEQ_FADEOUT_START:
-    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
-    *p_seq  = SEQ_FADEOUT_WAIT;
-    break;
-
-  case SEQ_FADEOUT_WAIT:
-    if( BR_FADE_IsEnd( p_param->p_fade ) )
-    { 
-      *p_seq  = SEQ_END;
-    }
-    break;
-
-  case SEQ_END:
     return GFL_PROC_RES_FINISH;
   }
-
-
-    
 
   BR_MSGWIN_PrintMain( p_wk->p_msgwin );
   BR_MSGWIN_PrintMain( p_wk->p_title );
@@ -340,6 +308,270 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
 
 	return GFL_PROC_RES_CONTINUE;
 }
+//=============================================================================
+/**
+ *  シーケンス
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードイン前処理
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk   ワーク
+ *	@param	*p_seq                 内部シーケンス
+ *	@param	*p_wk_adrs             ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  BR_BVRANK_WORK	*p_wk	= p_wk_adrs;
+
+  //ダウンロードしてアウトラインがきまってからランクを作成
+  BR_RANK_Init( &p_wk->rank, &p_wk->p_param->p_data->outline, p_wk->p_param->p_res, p_wk->p_param->p_unit, p_wk->heapID );
+  //アイコン作成
+  Br_Rank_CreatePokeIcon( &p_wk->rank, p_wk->p_param->p_unit, p_wk->heapID );
+
+  BR_SEQ_SetNext( p_seqwk,Br_Seq_FadeIn );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードアウト後処理
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk   ワーク
+ *	@param	*p_seq                 内部シーケンス
+ *	@param	*p_wk_adrs             ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Seq_FadeOutAfter( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  BR_BVRANK_WORK	*p_wk	= p_wk_adrs;
+
+  //ランク破棄
+  Br_Rank_DeletePokeIcon( &p_wk->rank );
+  BR_RANK_Exit( &p_wk->rank );
+
+  BR_SEQ_End( p_seqwk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードイン
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk   ワーク
+ *	@param	*p_seq                 内部シーケンス
+ *	@param	*p_wk_adrs             ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Seq_FadeIn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_FADEIN_START,
+    SEQ_FADEIN_WAIT,
+    SEQ_FADEIN_END,
+  };
+
+  BR_BVRANK_WORK	*p_wk	= p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_FADEIN_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_FADEIN_WAIT;
+    break;
+
+  case SEQ_FADEIN_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_FADEIN_END;
+    }
+    break;
+
+  case SEQ_FADEIN_END:
+    BR_SEQ_SetNext( p_seqwk,Br_Seq_RankingMain );
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フェードアウト
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk   ワーク
+ *	@param	*p_seq                内部シーケンス
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Seq_FadeOut( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_FADEOUT_END,
+  };
+
+  BR_BVRANK_WORK	*p_wk	= p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_FADEOUT_WAIT;
+    break;
+
+  case SEQ_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_FADEOUT_END;
+    }
+    break;
+
+  case SEQ_FADEOUT_END:
+    BR_SEQ_SetNext( p_seqwk, Br_Seq_FadeOutAfter );
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランキング操作メイン
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk   ワーク
+ *	@param	*p_seq                 内部シーケンス
+ *	@param	*p_wk_adrs             ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Seq_RankingMain( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  BR_BVRANK_WORK	*p_wk	= p_wk_adrs;
+
+
+  BR_RANK_Main( &p_wk->rank, p_wk->heapID );
+  {
+    u32 x, y;
+    if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+    {
+      if( BR_BTN_GetTrg( p_wk->p_btn, x, y ) )
+      { 
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_SEQ_SetNext( p_seqwk,Br_Seq_FadeOut );
+      }
+
+      if( Br_Rank_IsPushBattleBV( x, y ) )
+      { 
+        u32 select  = BR_RANK_GetSelect( &p_wk->rank );
+        BATTLE_REC_OUTLINE_RECV *p_recv = p_wk->p_param->p_data->outline.data;
+ 
+        GF_ASSERT( select < p_wk->p_param->p_data->outline.data_num );
+
+        p_wk->p_param->p_profile  = &p_recv[ select ].profile;
+        p_wk->p_param->p_header   = &p_recv[ select ].head;
+
+        BR_PROC_SYS_Push( p_wk->p_param->p_procsys, BR_PROCID_RECORD );
+        BR_SEQ_SetNext( p_seqwk,Br_Seq_FadeOut );
+      }
+    }
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダウンロードメイン
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk   ワーク
+ *	@param	*p_seq                 内部シーケンス
+ *	@param	*p_wk_adrs             ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_DOWNLOAD_START,
+    SEQ_DOWNLOAD_WAIT,
+    SEQ_DOWNLOAD_END,
+  };
+
+  BR_BVRANK_WORK	*p_wk	= p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_DOWNLOAD_START:
+    { 
+      BR_NET_REQUEST        type;
+      BR_NET_REQUEST_PARAM  req_param;
+
+      GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
+      switch( p_wk->p_param->mode )
+      { 
+      case BR_BVRANK_MODE_NEW:       //最新３０件
+        /* req_paramは必要ない */
+        type  = BR_NET_REQUEST_NEW_RANKING_DOWNLOAD;
+        break;
+      case BR_BVRANK_MODE_FAVORITE:  //通信対戦ランキング
+        /* req_paramは必要ない */
+        type  = BR_NET_REQUEST_FAVORITE_RANKING_DOWLOAD;
+        break;
+      case BR_BVRANK_MODE_SUBWAY:    //サブウェイ
+        /* req_paramは必要ない */
+        type  = BR_NET_REQUEST_SUBWAY_RANKING_DOWNLOAD;
+        break;
+      case BR_BVRANK_MODE_SEARCH:    //検索結果
+        req_param.download_video_search_data  = p_wk->p_param->search_data;
+        type  = BR_NET_REQUEST_VIDEO_SEARCH_DOWNLOAD;
+        break;
+      default:
+        GF_ASSERT(0);
+      }
+
+      BR_NET_StartRequest( p_wk->p_param->p_net, type, &req_param );
+      *p_seq  = SEQ_DOWNLOAD_WAIT;
+    }
+    break;
+  case SEQ_DOWNLOAD_WAIT:
+    if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
+    { 
+      *p_seq  = SEQ_DOWNLOAD_END;
+    }
+    break;
+  case SEQ_DOWNLOAD_END:
+    { 
+      BOOL is_exist;
+
+      BATTLE_REC_OUTLINE_RECV *p_recv = p_wk->p_param->p_data->outline.data;
+      int *p_data_num                 = &p_wk->p_param->p_data->outline.data_num;
+
+      switch( p_wk->p_param->mode )
+      { 
+      case BR_BVRANK_MODE_NEW:       //最新３０件
+        is_exist  = BR_NET_GetDownloadNewRanking( p_wk->p_param->p_net, p_recv, BR_OUTLINE_RECV_MAX, p_data_num );
+        break;
+      case BR_BVRANK_MODE_FAVORITE:  //通信対戦ランキング
+        is_exist  = BR_NET_GetDownloadNewRanking( p_wk->p_param->p_net, p_recv, BR_OUTLINE_RECV_MAX, p_data_num);
+        break;
+      case BR_BVRANK_MODE_SUBWAY:    //サブウェイ
+        is_exist  = BR_NET_GetDownloadFavoriteRanking( p_wk->p_param->p_net, p_recv, BR_OUTLINE_RECV_MAX, p_data_num);
+        break;
+      case BR_BVRANK_MODE_SEARCH:    //検索結果
+        is_exist  = BR_NET_GetDownloadBattleSearch( p_wk->p_param->p_net, p_recv, BR_OUTLINE_RECV_MAX, p_data_num );
+        break;
+      default:
+        GF_ASSERT(0);
+      }
+
+      if( is_exist )
+      { 
+        //取得できた
+        BR_SEQ_SetNext( p_seqwk,Br_Seq_FadeInBefore );
+      }
+      else
+      { 
+        //取得できなかった
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_SEQ_End( p_seqwk );
+      }
+    }
+    break;
+  }
+}
+
 //=============================================================================
 /**
  *  ランキングワーク

@@ -12,6 +12,7 @@
 #include "br_proc_sys.h"
 #include "br_res.h"
 #include "br_fade.h"
+#include "br_net.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -33,6 +34,9 @@ typedef struct
 	GFL_CLUNIT			*p_unit;			//[in]ユニット
 	BR_RES_WORK			*p_res;				//[in]リソース管理
 	BR_PROC_SYS			*p_procsys;		//[in]プロセス管理
+  BR_NET_WORK     *p_net;       //[in]通信管理
+  GAMEDATA        *p_gamedata;  //[in]ゲームデータ
+
 } BR_BVSEND_PROC_PARAM;
 
 

@@ -62,7 +62,10 @@ extern BOOL BR_PROC_SYS_IsEnd( const BR_PROC_SYS *cp_wk );
 ///	PROCの中で使う関数
 //		各PROCの引数にBR_PROC_SYSを渡し、以下のを使い操作してください
 //=====================================
-extern void * BR_PROC_SYS_GetParam( const BR_PROC_SYS *cp_wk );
+extern void * BR_PROC_SYS_GetParam( const BR_PROC_SYS *cp_wk ); //使わなくなった
 extern HEAPID BR_PROC_SYS_GetHeapID( const BR_PROC_SYS *cp_wk );
 extern void BR_PROC_SYS_Pop( BR_PROC_SYS *p_wk );
 extern void BR_PROC_SYS_Push( BR_PROC_SYS *p_wk, u16 procID );
+
+//@todo バトルビデオやミュージカルを見るときにstackを無視して終了するコマンドを作る
+//extern void BR_PROC_SYS_Finish( BR_PROC_SYS *p_wk );

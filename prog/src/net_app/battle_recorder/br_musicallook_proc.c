@@ -410,10 +410,10 @@ static BOOL Br_MusicalLook_Seq_Search_Exit( BR_MUSICALLOOK_WORK	*p_wk, BR_MUSICA
 static BOOL Br_MusicalLook_Seq_Search_Main( BR_MUSICALLOOK_WORK	*p_wk, BR_MUSICALLOOK_PROC_PARAM *p_param )
 { 
   BR_POKESEARCH_SELECT select;
-  u32 monst_now;
+  u16 mons_no;
 
   BR_POKESEARCH_Main( p_wk->p_search );
-  select  = BR_POKESEARCH_GetSelect( p_wk->p_search, &monst_now );
+  select  = BR_POKESEARCH_GetSelect( p_wk->p_search, &mons_no );
   if( select != BR_POKESEARCH_SELECT_NONE )
   { 
     if( select == BR_POKESEARCH_SELECT_DECIDE )

@@ -14,6 +14,7 @@
 #include "msg/msg_battle_rec.h"
 #include "br_btn_data.h"
 #include "br_core.h"
+#include "br_bvrank_proc.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -61,8 +62,6 @@ struct _BR_BTN_DATA_SYS
 	BR_BTN_DATA					buff[0];
 };
 
-
-
 //=============================================================================
 /**
  *					データ
@@ -87,6 +86,7 @@ static const BR_BTN_DATA sc_btn_data_browse_top[BTN_DATA_BROWSE_TOP_MAX] =
 		0,
 		0,
 		0,
+		0,
 	},
 	//バトルサブウェイ
 	{	
@@ -101,6 +101,7 @@ static const BR_BTN_DATA sc_btn_data_browse_top[BTN_DATA_BROWSE_TOP_MAX] =
 		0,
 		0,
 		0,
+    0,
 
 	},
 	//ランダムマッチ
@@ -116,6 +117,7 @@ static const BR_BTN_DATA sc_btn_data_browse_top[BTN_DATA_BROWSE_TOP_MAX] =
 		0,
 		0,
 		0,
+    0,
 
 	},
 	//やめる
@@ -131,6 +133,7 @@ static const BR_BTN_DATA sc_btn_data_browse_top[BTN_DATA_BROWSE_TOP_MAX] =
 		0,
 		0,
 		0,
+    0,
 	},
 };
 static const BR_BTN_LINK sc_btn_link_browse_top[] = 
@@ -154,12 +157,13 @@ static const BR_BTN_DATA sc_btn_data_browse_btlvideo[BTN_DATA_BROWSE_BTLVIDEO_MA
 		BR_BROWSE_MENUID_BTLVIDEO,
 		msg_06,
 		6,
-		BR_BTN_TYPE_MYRECORD,
+		BR_BTN_TYPE_CHANGESEQ,
 		BR_PROCID_RECORD,
 		0,
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
+    BR_BTN_UNIQUE_MYRECORD,
 	},
 	//誰かの記録
 	{	
@@ -174,6 +178,7 @@ static const BR_BTN_DATA sc_btn_data_browse_btlvideo[BTN_DATA_BROWSE_BTLVIDEO_MA
 		0,
 		0,
 		0,
+    0,
 	},
 	//記録を消す
 	{	
@@ -188,6 +193,7 @@ static const BR_BTN_DATA sc_btn_data_browse_btlvideo[BTN_DATA_BROWSE_BTLVIDEO_MA
 		0,
 		0,
 		0,
+    0,
 	},
 	//もどる
 	{	
@@ -202,6 +208,7 @@ static const BR_BTN_DATA sc_btn_data_browse_btlvideo[BTN_DATA_BROWSE_BTLVIDEO_MA
 		0,
 		0,
 		0,
+    0,
 	},
 };
 static const BR_BTN_LINK sc_btn_link_browse_btlvideo[] = 
@@ -229,12 +236,13 @@ static const BR_BTN_DATA sc_btn_data_browse_other_record[BTN_DATA_BROWSE_OTHER_R
 		BR_BROWSE_MENUID_OTHER_RECORD,
 		msg_10,
 		7,
-		BR_BTN_TYPE_OTHERRECORD,
+		BR_BTN_TYPE_CHANGESEQ,
 		BR_PROCID_RECORD,
-		1,
+		0,
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
+    BR_BTN_UNIQUE_OTHERRECORD1,
 	},
 	//誰かの記録２
 	{	
@@ -243,12 +251,13 @@ static const BR_BTN_DATA sc_btn_data_browse_other_record[BTN_DATA_BROWSE_OTHER_R
 		BR_BROWSE_MENUID_OTHER_RECORD,
 		msg_10,
 		7,
-		BR_BTN_TYPE_OTHERRECORD,
+		BR_BTN_TYPE_CHANGESEQ,
 		BR_PROCID_RECORD,
-		2,
+		0,
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
+    BR_BTN_UNIQUE_OTHERRECORD2,
 	},
 	//誰かの記録３
 	{	
@@ -257,12 +266,13 @@ static const BR_BTN_DATA sc_btn_data_browse_other_record[BTN_DATA_BROWSE_OTHER_R
 		BR_BROWSE_MENUID_OTHER_RECORD,
 		msg_10,
 		7,
-		BR_BTN_TYPE_OTHERRECORD,
+		BR_BTN_TYPE_CHANGESEQ,
 		BR_PROCID_RECORD,
-		3,
+		0,
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
+    BR_BTN_UNIQUE_OTHERRECORD3,
 	},
 	//戻る
 	{	
@@ -277,6 +287,7 @@ static const BR_BTN_DATA sc_btn_data_browse_other_record[BTN_DATA_BROWSE_OTHER_R
 		0,
 		0,
 		0,
+    0,
 	},
 };
 static const BR_BTN_LINK sc_btn_link_browse_other_record[] = 
@@ -307,12 +318,13 @@ static const BR_BTN_DATA sc_btn_data_browse_delete_record[BTN_DATA_BROWSE_DELETE
 		BR_BROWSE_MENUID_DELETE_RECORD,
 		msg_100,
 		6,
-		BR_BTN_TYPE_DELETE_MY,
-		0,
+		BR_BTN_TYPE_SELECT_MSG,
+		0,      //@todo はいいいえへ飛ぶ
 		0,
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
+    BR_BTN_UNIQUE_DELETE_MY,
 	},
 	//誰かの記録
 	{	
@@ -327,6 +339,7 @@ static const BR_BTN_DATA sc_btn_data_browse_delete_record[BTN_DATA_BROWSE_DELETE
 		0,
 		0,
 		0,
+    0,
 	},
 	//もどる
 	{	
@@ -341,6 +354,7 @@ static const BR_BTN_DATA sc_btn_data_browse_delete_record[BTN_DATA_BROWSE_DELETE
 		0,
 		0,
 		0,
+    0,
 	},
 };
 static const BR_BTN_LINK sc_btn_link_browse_delete_record[] = 
@@ -371,12 +385,13 @@ static const BR_BTN_DATA sc_btn_data_browse_delete_other[BTN_DATA_BROWSE_DELETE_
 		BR_BROWSE_MENUID_DELETE_OTHER,
 		msg_10,
 		7,
-		BR_BTN_TYPE_DELETE_OTHER,
+		BR_BTN_TYPE_SELECT_MSG,
+		0,  //@todo はいいいえへ飛ぶ
 		0,
-		1,
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
+    BR_BTN_UNIQUE_DELETE_OTHER1,
 	},
 	//誰かの記録２
 	{	
@@ -385,12 +400,13 @@ static const BR_BTN_DATA sc_btn_data_browse_delete_other[BTN_DATA_BROWSE_DELETE_
 		BR_BROWSE_MENUID_DELETE_OTHER,
 		msg_10,
 		7,
-		BR_BTN_TYPE_DELETE_OTHER,
+		BR_BTN_TYPE_SELECT_MSG,
+		0,     //@todo はいいいえへ飛ぶ　
 		0,
-		2,
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
+    BR_BTN_UNIQUE_DELETE_OTHER2,
 	},
 	//誰かの記録３
 	{	
@@ -399,12 +415,13 @@ static const BR_BTN_DATA sc_btn_data_browse_delete_other[BTN_DATA_BROWSE_DELETE_
 		BR_BROWSE_MENUID_DELETE_OTHER,
 		msg_10,
 		7,
-		BR_BTN_TYPE_DELETE_OTHER,
+		BR_BTN_TYPE_SELECT_MSG,
+		0,     //@todo はいいいえへ飛ぶ　
 		0,
-		3,
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
+    BR_BTN_UNIQUE_DELETE_OTHER3,
 	},
 	//戻る
 	{	
@@ -419,6 +436,7 @@ static const BR_BTN_DATA sc_btn_data_browse_delete_other[BTN_DATA_BROWSE_DELETE_
 		0,
 		0,
 		0,
+    0,
 	},
 };
 static const BR_BTN_LINK sc_btn_link_browse_delete_other[] = 
@@ -452,13 +470,14 @@ static const BR_BTN_DATA sc_btn_data_btlvideo_top[BTN_DATA_BTLVIDEO_TOP_MAX] =
 		BR_BTN_DATA_GET_Y(0,BTN_DATA_BTLVIDEO_TOP_MAX),
 		BR_BTLVIDEO_MENUID_TOP,
 		msg_700,
-		2,
+		12,
 		BR_BTN_TYPE_SELECT,
 		BR_BTLVIDEO_MENUID_LOOK,
 		0,
 		0,
 		0,
 		0,
+    0,
 	},
 	//バトルビデオを送る
 	{	
@@ -466,13 +485,14 @@ static const BR_BTN_DATA sc_btn_data_btlvideo_top[BTN_DATA_BTLVIDEO_TOP_MAX] =
 		BR_BTN_DATA_GET_Y(1,BTN_DATA_BTLVIDEO_TOP_MAX),
 		BR_BTLVIDEO_MENUID_TOP,
 		msg_701,
-		9,
-		BR_BTN_TYPE_CHANGESEQ,
-		BR_PROCID_BV_SEND,
+		7,
+		BR_BTN_TYPE_SELECT_MSG,
+		BR_MENUID_BVSEND_YESNO, //BR_PROCID_BV_SEND,
+		msg_info_032,
 		0,
-		0,
-		0,
-		0,
+		BR_BTN_NONEPROC_NOPUSH,
+		msg_726,
+    BR_BTN_UNIQUE_BVSEND,
 	},
 	//やめる
 	{	
@@ -487,6 +507,7 @@ static const BR_BTN_DATA sc_btn_data_btlvideo_top[BTN_DATA_BTLVIDEO_TOP_MAX] =
 		0,
 		0,
 		0,
+    0,
 	},
 };
 static const BR_BTN_LINK sc_btn_link_btlvideo_top[] = 
@@ -496,6 +517,58 @@ static const BR_BTN_LINK sc_btn_link_btlvideo_top[] =
 		BR_BTN_LINK_END,
 	}
 };
+
+//-------------------------------------
+///	バトルビデオを送る？	はい、いいえ
+//=====================================
+#define BTN_DATA_YESNO_MAX	(2)
+static const BR_BTN_DATA sc_btn_data_bvsend_yesno[BTN_DATA_YESNO_MAX] =
+{	
+	//はい
+	{	
+		BR_BTN_POS_X,
+		BR_BTN_DATA_GET_Y(0,BTN_DATA_YESNO_MAX),
+		BR_MENUID_BVSEND_YESNO,
+		msg_1000,
+		8,
+		BR_BTN_TYPE_CHANGESEQ,
+		BR_PROCID_BV_SEND,
+		0,
+		0,
+		0,
+		0,
+    0,
+	},
+	//いいえ
+	{	
+		BR_BTN_POS_X,
+		BR_BTN_DATA_GET_Y(1,BTN_DATA_YESNO_MAX),
+		BR_MENUID_BVSEND_YESNO,
+		msg_1001,
+		5,
+		BR_BTN_TYPE_RETURN,
+		BR_BTLVIDEO_MENUID_TOP,
+		0,
+		0,
+		0,
+		0,
+    0,
+	},
+
+};
+
+static const BR_BTN_LINK sc_btn_link_bvsend_yesno[] = 
+{	
+  { 
+    BR_BTLVIDEO_MENUID_TOP,
+    1,
+  },
+	{	
+		BR_BTN_LINK_END,
+		BR_BTN_LINK_END,
+	}
+};
+
 
 //-------------------------------------
 ///	グローバルバトルビデオモード	見るメニュー
@@ -509,13 +582,14 @@ static const BR_BTN_DATA sc_btn_data_btlvideo_look[BTN_DATA_BTLVIDEO_LOOK_MAX] =
 		BR_BTN_DATA_GET_Y(0,BTN_DATA_BTLVIDEO_LOOK_MAX),
 		BR_BTLVIDEO_MENUID_LOOK,
 		msg_200,
-		16,
+		9,
 		BR_BTN_TYPE_SELECT,
 		BR_BTLVIDEO_MENUID_RANK,
 		0,
 		0,
 		0,
 		0,
+    0,
 	},
 	//詳しく探す
 	{	
@@ -523,13 +597,14 @@ static const BR_BTN_DATA sc_btn_data_btlvideo_look[BTN_DATA_BTLVIDEO_LOOK_MAX] =
 		BR_BTN_DATA_GET_Y(1,BTN_DATA_BTLVIDEO_LOOK_MAX),
 		BR_BTLVIDEO_MENUID_LOOK,
 		msg_203,
-		17,
+		10,
 		BR_BTN_TYPE_CHANGESEQ,
 		BR_PROCID_BV_SEARCH,
 		0,
 		0,
 		0,
 		0,
+    0,
 	},
 	//ナンバーで探す
 	{	
@@ -544,6 +619,7 @@ static const BR_BTN_DATA sc_btn_data_btlvideo_look[BTN_DATA_BTLVIDEO_LOOK_MAX] =
 		0,
 		0,
 		0,
+    0,
 	},
 	//もどる
 	{	
@@ -558,6 +634,7 @@ static const BR_BTN_DATA sc_btn_data_btlvideo_look[BTN_DATA_BTLVIDEO_LOOK_MAX] =
 		0,
 		0,
 		0,
+    0,
 	},
 };
 static const BR_BTN_LINK sc_btn_link_btlvideo_look[] = 
@@ -583,41 +660,44 @@ static const BR_BTN_DATA sc_btn_data_btlvideo_rank[BTN_DATA_BTLVIDEO_RANK_MAX] =
 		BR_BTN_DATA_GET_Y(0,BTN_DATA_BTLVIDEO_RANK_MAX),
 		BR_BTLVIDEO_MENUID_RANK,
 		msg_202,
-		10,
+		9,
 		BR_BTN_TYPE_CHANGESEQ,
 		BR_PROCID_BV_RANK,
+		BR_BVRANK_MODE_NEW,
 		0,
 		0,
 		0,
-		0,
+    0,
 	},
 	//通信対戦ランキング
 	{	
 		BR_BTN_POS_X,
 		BR_BTN_DATA_GET_Y(1,BTN_DATA_BTLVIDEO_RANK_MAX),
 		BR_BTLVIDEO_MENUID_RANK,
-		msg_202,
-		10,
+		msg_208,
+		9,
 		BR_BTN_TYPE_CHANGESEQ,
 		BR_PROCID_BV_RANK,
-		1,
+		BR_BVRANK_MODE_FAVORITE,
 		0,
 		0,
 		0,
+    0,
 	},
 	//サブウェイランキング
 	{	
 		BR_BTN_POS_X,
 		BR_BTN_DATA_GET_Y(2,BTN_DATA_BTLVIDEO_RANK_MAX),
 		BR_BTLVIDEO_MENUID_RANK,
-		msg_202,
-		10,
+		msg_209,
+		9,
 		BR_BTN_TYPE_CHANGESEQ,
 		BR_PROCID_BV_RANK,
-		2,
+		BR_BVRANK_MODE_SUBWAY,
 		0,
 		0,
 		0,
+    0,
 	},
 	//もどる
 	{	
@@ -632,6 +712,7 @@ static const BR_BTN_DATA sc_btn_data_btlvideo_rank[BTN_DATA_BTLVIDEO_RANK_MAX] =
 		0,
 		0,
 		0,
+    0,
 	},
 };
 static const BR_BTN_LINK sc_btn_link_btlvideo_rank[] = 
@@ -668,6 +749,7 @@ static const BR_BTN_DATA sc_btn_data_musical_top[BTN_DATA_MUSICAL_TOP_MAX] =
 		0,
 		0,
 		0,
+    0,
 	},
 	//写真を送る
 	{	
@@ -682,6 +764,7 @@ static const BR_BTN_DATA sc_btn_data_musical_top[BTN_DATA_MUSICAL_TOP_MAX] =
 		0,
 		0,
 		0,
+    BR_BTN_UNIQUE_SHOTSEND,
 	},
 	//やめる
 	{	
@@ -696,6 +779,7 @@ static const BR_BTN_DATA sc_btn_data_musical_top[BTN_DATA_MUSICAL_TOP_MAX] =
 		0,
 		0,
 		0,
+    0,
 	},
 };
 static const BR_BTN_LINK sc_btn_link_musical_top[] = 
@@ -725,6 +809,7 @@ static const BR_BTN_DATA sc_btn_data_yesno[BTN_DATA_YESNO_MAX] =
 		0,
 		0,
 		0,
+    0,
 	},
 	//いいえ
 	{	
@@ -739,6 +824,7 @@ static const BR_BTN_DATA sc_btn_data_yesno[BTN_DATA_YESNO_MAX] =
 		0,
 		0,
 		0,
+    0,
 	},
 
 };
@@ -803,6 +889,11 @@ static const struct
 		sc_btn_data_yesno,
 		NULL,
 	},
+  { 
+    BTN_DATA_YESNO_MAX,
+    sc_btn_data_bvsend_yesno,
+    sc_btn_link_bvsend_yesno,
+  },
 };
 
 //=============================================================================
@@ -876,22 +967,37 @@ BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPI
 
 
 				//外部からの情報をいれる
-				switch( p_wk->buff[cnt].param[ BR_BTN_DATA_PARAM_TYPE ] )
+				switch( p_wk->buff[cnt].param[ BR_BTN_DATA_PARAM_UNIQUE ] )
 				{	
 				//自分の記録がなかったら押せない
-				case BR_BTN_TYPE_MYRECORD:
+				case BR_BTN_UNIQUE_MYRECORD:
 					/* fallthrough */
-				case BR_BTN_TYPE_DELETE_MY:
+				case BR_BTN_UNIQUE_DELETE_MY:
+					/* fallthrough */
+        case BR_BTN_UNIQUE_BVSEND:
 					p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->is_valid[ 0 ];
 					break;
 
 				//誰かの記録がなかったら押せない
 				//押せるならば表示が「あき」→「×××のきろく」に切り替る
-				case BR_BTN_TYPE_OTHERRECORD:
-					/* fallthrough */
-				case BR_BTN_TYPE_DELETE_OTHER:
+				case BR_BTN_UNIQUE_OTHERRECORD1:
 					{	
-						u32 id	= p_wk->buff[cnt].param[ BR_BTN_DATA_PARAM_DATA2 ];
+            u32 id  = p_wk->buff[cnt].param[ BR_BTN_DATA_PARAM_UNIQUE ] - BR_BTN_UNIQUE_OTHERRECORD1;
+
+						GF_ASSERT( id < 4 );
+						p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->is_valid[ id ];
+						if( cp_setup->is_valid[ id ] )
+						{	
+							p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_MSGID]	= msg_09;
+						}
+					}
+          break;
+
+
+				case BR_BTN_UNIQUE_DELETE_OTHER1:
+					{	
+            u32 id  = p_wk->buff[cnt].param[ BR_BTN_DATA_PARAM_UNIQUE ] - BR_BTN_UNIQUE_DELETE_OTHER1;
+
 						GF_ASSERT( id < 4 );
 						p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->is_valid[ id ];
 						if( cp_setup->is_valid[ id ] )
@@ -901,7 +1007,10 @@ BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPI
 					}
 					break;
 
-					//@todo ランダムマッチやバトルサブウェイはもしかしたら押せない状況がありえるかも
+
+        case BR_BTN_UNIQUE_SHOTSEND:
+          //GF_ASSERT( 0 ); //@todo
+          break;
 
 				default:	//その他はどんなときでも押せる
 					p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= TRUE;	
@@ -1088,12 +1197,23 @@ u16 BR_BTN_DATA_GetParam( const BR_BTN_DATA *cp_data, BR_BTN_DATA_PARAM paramID 
 STRBUF *BR_BTN_DATA_CreateString( const BR_BTN_DATA_SYS *cp_sys, const BR_BTN_DATA *cp_data, GFL_MSGDATA *p_msg, HEAPID heapID )
 { 
   STRBUF  *p_strbuf;
+  BR_BTN_UNIQUE uni = BR_BTN_DATA_GetParam( cp_data, BR_BTN_DATA_PARAM_UNIQUE );
+  u32 id;
+  BOOL is_target  = FALSE;
 
-  if( BR_BTN_DATA_GetParam( cp_data, BR_BTN_DATA_PARAM_TYPE ) == BR_BTN_TYPE_DELETE_OTHER ||
-      BR_BTN_DATA_GetParam( cp_data, BR_BTN_DATA_PARAM_TYPE ) == BR_BTN_TYPE_OTHERRECORD)
+  if( (BR_BTN_UNIQUE_OTHERRECORD1 <= uni && uni <= BR_BTN_UNIQUE_OTHERRECORD2 ) )
+  { 
+    id  = uni - BR_BTN_UNIQUE_OTHERRECORD1;
+    is_target = TRUE;
+  }
+  if( BR_BTN_UNIQUE_DELETE_OTHER1 <= uni && uni <= BR_BTN_UNIQUE_DELETE_OTHER3 )
+  { 
+    id  = uni - BR_BTN_UNIQUE_DELETE_OTHER1;
+    is_target = TRUE;
+  }
+
+  if( is_target )
   {	
-    const u32     id  = BR_BTN_DATA_GetParam( cp_data, BR_BTN_DATA_PARAM_DATA2);
-
     if( cp_sys->setup.is_valid[ id ] )
     { 
       WORDSET *p_word;

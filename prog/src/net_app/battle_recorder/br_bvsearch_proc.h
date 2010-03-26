@@ -32,6 +32,9 @@ typedef struct
 	GFL_CLUNIT			*p_unit;			//[in]ユニット
 	BR_RES_WORK			*p_res;				//[in]リソース管理
 	BR_PROC_SYS			*p_procsys;		//[in]プロセス管理
+  GAMEDATA        *p_gamedata;  //[in]ゲームデータ
+
+  BR_NET_VIDEO_SEARCH_DATA  search_data;  //[out]検索項目
 } BR_BVSEARCH_PROC_PARAM;
 
 

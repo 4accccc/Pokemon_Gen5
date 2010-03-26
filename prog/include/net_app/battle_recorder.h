@@ -45,4 +45,5 @@ typedef struct
  *					プロセスデータ
 */
 //=============================================================================
+FS_EXTERN_OVERLAY( battle_recorder );
 extern const GFL_PROC_DATA BattleRecorder_ProcData;

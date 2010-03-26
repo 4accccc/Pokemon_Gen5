@@ -41,6 +41,7 @@ typedef enum
 	BR_MUSICAL_MENUID_TOP,					//グローバルミュージカルショットモード　初期メニュー
 
 	BR_MENUID_YESNO,								//汎用	はい、いいえ
+	BR_MENUID_BVSEND_YESNO,					//バトルビデオを送る	はい、いいえ
 	BR_MENUID_MAX
 } BR_MENUID;
 

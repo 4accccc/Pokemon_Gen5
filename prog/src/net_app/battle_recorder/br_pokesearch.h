@@ -49,4 +49,4 @@ extern void BR_POKESEARCH_Exit( BR_POKESEARCH_WORK *p_wk );
 extern void BR_POKESEARCH_Main( BR_POKESEARCH_WORK *p_wk );
 extern void BR_POKESEARCH_StartUp( BR_POKESEARCH_WORK *p_wk );
 extern void BR_POKESEARCH_CleanUp( BR_POKESEARCH_WORK *p_wk );
-extern BR_POKESEARCH_SELECT BR_POKESEARCH_GetSelect( const BR_POKESEARCH_WORK *cp_wk, u32 *p_mons_no );
+extern BR_POKESEARCH_SELECT BR_POKESEARCH_GetSelect( const BR_POKESEARCH_WORK *cp_wk, u16 *p_mons_no );

@@ -681,12 +681,19 @@ void CI_pv_Input_End( BR_CODEIN_WORK* wk )
 {
 	int i;
 	u32 num = 0;
+  int block_idx = 0;
+  int block_keta = 0;
+
 	
 	STRBUF* str_dest = GFL_STR_CreateBuffer( 100, wk->heapID );
 	
 	wk->btn[ 1 ].state = 1;
 	wk->btn[ 1 ].move_wk.wait = 0;
 	
+  wk->code_block[0] = 0;
+  wk->code_block[1] = 0;
+  wk->code_block[2] = 0;
+  wk->code_number   = 0;
 	for ( i = 0; i < wk->code_max; i++ ){
 		
 		if ( wk->code[ i ].state == 0 )
@@ -694,10 +701,25 @@ void CI_pv_Input_End( BR_CODEIN_WORK* wk )
 			wk->code[ i ].state = 1;
 			GFL_CLACT_WK_SetAnmSeq( wk->code[ i ].clwk, CI_pv_disp_CodeAnimeGet( wk->code[ i ].state, wk->code[ i ].size ) );
 		}
-		
+
+    //バッファに設定
 		num = wk->code[ i ].state - 1;
 		STRTOOL_SetNumber( str_dest, num, 1, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
 		GFL_STR_AddString( wk->param.strbuf, str_dest );
+
+    //切り分けに設定
+    wk->code_block[ block_idx ] *= 10;
+    wk->code_block[ block_idx ] += num;
+    block_keta++;
+    if( block_keta >= wk->param.block[ block_idx ] )
+    { 
+      block_idx++;
+      block_keta  = 0;
+    }
+
+    //一括に設定
+    wk->code_number  *= 10;
+    wk->code_number  += num;
 	}
 	
 	GFL_STR_DeleteBuffer( str_dest );

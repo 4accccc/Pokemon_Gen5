@@ -77,8 +77,11 @@ typedef enum
 	BR_RES_OBJ_SIDEBAR_M,				//サイドバー
 	BR_RES_OBJ_SIDEBAR_S,				//サイドバー
 	BR_RES_OBJ_SHORT_BTN_S,			//短いボタン	＋	スクロールバー
-  BR_RES_OBJ_ALLOW_S,         //矢印下
   BR_RES_OBJ_ALLOW_M,         //矢印下
+  BR_RES_OBJ_ALLOW_S,         //矢印下
+
+  BR_RES_OBJ_BALL_M,        //カーソルOBJ用
+  BR_RES_OBJ_BALL_S,        //カーソルOBJ用
 
   BR_RES_OBJ_NUM_S,           //ナンバー
   BR_RES_OBJ_NUM_CURSOR_S,    //ナンバーカーソル

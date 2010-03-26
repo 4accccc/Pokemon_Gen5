@@ -58,6 +58,7 @@ const GFL_PROC_DATA GdsMainProcData = {
 //  デバッグ
 //--------------------------------------------------------------
 FS_EXTERN_OVERLAY(gds_debug);
+FS_EXTERN_OVERLAY(gds_comm);
 
 
 
@@ -161,14 +162,21 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 	
 	case SEQ_BATTLE_RECORDER:	//バトルレコーダー(GDSモード)
 		{
-		#if 0 //※check 新バトルレコーダー用の呼び出しに変える 2009.11.09(月)
-			const GFL_PROC_DATA *br_proc;
-			
-			br_proc = BattleRecoder_ProcDataGet(gmw->proc_param->gds_mode);
-  		GFL_PROC_LOCAL_CallProc(gmw->proc_sys, NO_OVERLAY_ID, &br_proc, gmw->proc_param->fsys);
+		#if 1 //※check 新バトルレコーダー用の呼び出しに変える 2009.11.09(月) 
+          //変えましたnagihashi
+      GFL_STD_MemClear( &gmw->br_param, sizeof(BATTLERECORDER_PARAM) );
+      gmw->br_param.mode  = gmw->proc_param->gds_mode;
+      gmw->br_param.p_gamedata  = gmw->proc_param->gamedata;
+  		GFL_PROC_LOCAL_CallProc(
+        gmw->proc_sys, FS_OVERLAY_ID(battle_recorder), &BattleRecorder_ProcData, &gmw->br_param);
 		#else
+
+      GFL_OVERLAY_Load( FS_OVERLAY_ID(gds_comm) );
+
 		  GFL_PROC_LOCAL_CallProc(
 		    gmw->proc_sys, FS_OVERLAY_ID(gds_debug), &GdsTestProcData, gmw->proc_param->gamedata);
+
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_comm) );
 		#endif
 			(*seq)++;
 		}

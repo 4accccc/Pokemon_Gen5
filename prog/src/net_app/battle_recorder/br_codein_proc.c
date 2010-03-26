@@ -169,9 +169,9 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 
   //グラフィック破棄
   BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_CODEIN_NUMBER_S );
-  BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_NUM_S );
-  BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_NUM_CURSOR_S );
   BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S );
+  BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_NUM_CURSOR_S );
+  BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_NUM_S );
 
 
 	//プロセスワーク破棄
@@ -239,6 +239,7 @@ static GFL_PROC_RESULT BR_CODEIN_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
 
         case BR_CODEIN_SELECT_DECIDE:
           NAGI_Printf( "CODEIN: Exit!\n" );
+          p_param->video_number  = BR_CODEIN_GetNumber( p_wk->p_codein_wk );
           BR_PROC_SYS_Push( p_param->p_procsys, BR_PROCID_RECORD );
           *p_seq  = SEQ_FADEOUT_START;
           break;

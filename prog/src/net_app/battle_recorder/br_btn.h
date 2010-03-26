@@ -87,4 +87,5 @@ extern void BR_BTN_SetPos( BR_BTN_WORK *p_wk, s16 x, s16 y );
 extern void BR_BTN_GetPos( const BR_BTN_WORK *cp_wk, s16 *p_x, s16 *p_y );
 extern void BR_BTN_SetSoftPriority( BR_BTN_WORK *p_wk, u8 soft_pri );
 extern u8 BR_BTN_GetSoftPriority( const BR_BTN_WORK *cp_wk );
-
+extern void BR_BTN_SetBgPriority( BR_BTN_WORK *p_wk, u8 bg_pri );
+extern u8 BR_BTN_GetBgPriority( const BR_BTN_WORK *cp_wk );

@@ -21,6 +21,7 @@
 #include "br_proc_sys.h"
 #include "br_fade.h"
 #include "br_sidebar.h"
+#include "br_net.h"
 
 //各プロセス
 #include "br_start_proc.h"
@@ -74,6 +75,9 @@ typedef struct
 
   //サイドバー
   BR_SIDEBAR_WORK *p_sidebar;
+
+  //通信
+  BR_NET_WORK     *p_net;
 
 	//引数
 	BR_CORE_PARAM		*p_param;
@@ -314,6 +318,14 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
     }
   }
 
+  //GDSのみ通信ON
+  { 
+    if( p_wk->p_param->p_param->mode != BR_MODE_BROWSE )
+    { 
+      p_wk->p_net = BR_NET_Init( p_wk->p_param->p_param->p_gamedata, HEAPID_BATTLE_RECORDER_CORE );
+    }
+  }
+
 	return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -331,6 +343,11 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 static GFL_PROC_RESULT BR_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
 	BR_CORE_WORK	*p_wk	= p_wk_adrs;
+
+  if( p_wk->p_net )
+  { 
+    BR_NET_Exit( p_wk->p_net );
+  }
 
   { 
     int i;
@@ -426,6 +443,12 @@ static GFL_PROC_RESULT BR_CORE_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
 
       //描画
       BR_GRAPHIC_2D_Draw( p_wk->p_graphic );
+
+      //通信
+      if( p_wk->p_net )
+      { 
+        BR_NET_Main( p_wk->p_net );
+      }
 
 			if( BR_PROC_SYS_IsEnd( p_wk->p_procsys ) )
 			{	
@@ -632,28 +655,57 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
   p_param->p_fade     = p_wk->p_fade;
   p_param->p_procsys	= p_wk->p_procsys;
   p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
-  p_param->p_profile  = BattleRec_GDSProfilePtrGet();
-  p_param->p_header   = BattleRec_HeaderPtrGet();
+  p_param->p_net      = p_wk->p_net;
+  p_param->p_gamedata = p_wk->p_param->p_param->p_gamedata;
+
   switch( preID )
   { 
   case BR_PROCID_MENU:
     { 
       const BR_MENU_PROC_PARAM	*cp_menu_param	= cp_pre_param;
       p_param->mode				= cp_menu_param->next_mode;
+      p_param->p_profile  = BattleRec_GDSProfilePtrGet();
+      p_param->p_header   = BattleRec_HeaderPtrGet();
+
+      //メモリへバトルビデオ読み込み
+      {
+        GAMEDATA  *p_gamedata = p_wk->p_param->p_param->p_gamedata;
+        SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_gamedata );
+
+        LOAD_RESULT result;
+        BattleRec_Load( p_sv_ctrl, HEAPID_BATTLE_RECORDER_SYS, &result, p_param->mode ); 
+        if( result == LOAD_RESULT_OK )
+        { 
+          if( p_param->mode == LOADDATA_MYREC )
+          { 
+            GDS_Profile_MyDataSet(p_param->p_profile, p_sv_ctrl);
+          }
+          NAGI_Printf( "戦闘録画読み込み %d\n", p_param->mode );
+        }
+        else
+        { 
+          GF_ASSERT(0);
+        }
+      }
     }
     break;
 
   case BR_PROCID_BV_RANK:
     { 
-      //@todoとりあえず今は自分
-      p_param->mode       = BR_RECODE_PROC_MY;
+      const BR_BVRANK_PROC_PARAM  *cp_rank_param  = cp_pre_param;
+      p_param->mode       = BR_RECODE_PROC_DOWNLOAD_RANK;
+      p_param->p_profile  = cp_rank_param->p_profile;
+      p_param->p_header   = cp_rank_param->p_header;
     }
     break;
 
   case BR_PROCID_CODEIN:
     { 
-      //@todoとりあえず今は自分
-      p_param->mode       = BR_RECODE_PROC_MY;
+      const BR_CODEIN_PROC_PARAM  *cp_codein_param  = cp_pre_param;
+      p_param->mode         = BR_RECODE_PROC_DOWNLOAD_NUMBER;
+      p_param->video_number = cp_codein_param->video_number;
+      p_param->p_profile    = NULL;
+      p_param->p_header     = NULL;
     }
     break;
 
@@ -661,27 +713,6 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
     GF_ASSERT_MSG( 0, "メニューとランキング、コード入力以外からは来ない %d", preID );
     break;
   }
-
-  //読み込み
-  {
-    SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_gamedata );
-
-    LOAD_RESULT result;
-    BattleRec_Load( p_sv_ctrl, HEAPID_BATTLE_RECORDER_SYS, &result, p_param->mode ); 
-    if( result == LOAD_RESULT_OK )
-    { 
-      if( p_param->mode == LOADDATA_MYREC )
-      { 
-        GDS_Profile_MyDataSet(p_param->p_profile, p_sv_ctrl);
-      }
-      NAGI_Printf( "戦闘録画読み込み %d\n", p_param->mode );
-    }
-    else
-    { 
-      GF_ASSERT(0);
-    }
-  }
-  
 }
 //----------------------------------------------------------------------------
 /**
@@ -805,10 +836,33 @@ static void BR_BVRANK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
 	BR_BVRANK_PROC_PARAM		*p_param	= p_param_adrs;
 	BR_CORE_WORK						*p_wk			= p_wk_adrs;
 
+  p_param->p_data         = p_wk->p_param->p_data;
+
+  if( preID == BR_PROCID_MENU )
+  { 
+    const BR_MENU_PROC_PARAM  *cp_menu_param = cp_pre_param;
+    p_param->mode       = cp_menu_param->next_mode;
+  }
+  else if( preID == BR_PROCID_BV_SEARCH )
+  {
+    const BR_BVSEARCH_PROC_PARAM  *cp_search_param = cp_pre_param;
+    p_param->mode         = BR_BVRANK_MODE_SEARCH;
+    p_param->search_data  = cp_search_param->search_data;
+  }
+  else if( preID == BR_PROCID_RECORD )
+  {
+    p_param->mode         = BR_BVRANK_MODE_RETURN;
+  }
+  else
+  { 
+    GF_ASSERT_MSG( 0, "%d", preID );
+  }
+
 	p_param->p_res			= p_wk->p_res;
   p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
+  p_param->p_net      = p_wk->p_net;
 }
 //----------------------------------------------------------------------------
 /**
@@ -835,13 +889,14 @@ static void BR_BVRANK_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs )
 //-----------------------------------------------------------------------------
 static void BR_BVSEARCH_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const void *cp_pre_param, u32 preID )
 { 
-	BR_BVSEND_PROC_PARAM		*p_param	= p_param_adrs;
-	BR_CORE_WORK						*p_wk			= p_wk_adrs;
+	BR_BVSEARCH_PROC_PARAM		*p_param	= p_param_adrs;
+	BR_CORE_WORK					  	*p_wk			= p_wk_adrs;
 
 	p_param->p_res			= p_wk->p_res;
   p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
+  p_param->p_gamedata = p_wk->p_param->p_param->p_gamedata;
 }
 //----------------------------------------------------------------------------
 /**
@@ -907,6 +962,8 @@ static void BR_BVSEND_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
   p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
+  p_param->p_net      = p_wk->p_net;
+  p_param->p_gamedata = p_wk->p_param->p_param->p_gamedata;
 }
 //----------------------------------------------------------------------------
 /**

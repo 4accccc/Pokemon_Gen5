@@ -11,7 +11,9 @@
 #pragma once
 
 #include "net_app/battle_recorder.h"
-
+#include "br_net.h"
+#include "br_inner.h"
+#include "br_data.h"
 //=============================================================================
 /**
  *					定数
@@ -67,6 +69,7 @@ typedef struct
 {
   BR_CORE_RETURN        ret;      //[out]終了モード
   BR_CORE_MODE          mode;     //[in ]起動モード
+  BR_DATA               *p_data;  //[in ]常駐データ
 	BATTLERECORDER_PARAM	*p_param; //[in ]本体の引数
 } BR_CORE_PARAM;
 

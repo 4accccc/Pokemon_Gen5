@@ -29,10 +29,11 @@
 typedef struct 
 {
 	
-  BR_FADE_WORK    *p_fade;      //[in]フェード
-	GFL_CLUNIT			*p_unit;			//[in]ユニット
-	BR_RES_WORK			*p_res;				//[in]リソース管理
-	BR_PROC_SYS			*p_procsys;		//[in]プロセス管理
+  BR_FADE_WORK    *p_fade;      //[in ]フェード
+	GFL_CLUNIT			*p_unit;			//[in ]ユニット
+	BR_RES_WORK			*p_res;				//[in ]リソース管理
+	BR_PROC_SYS			*p_procsys;		//[in ]プロセス管理
+  u64             video_number; //[out]入力されたナンバー
 } BR_CODEIN_PROC_PARAM;
 
 

@@ -1,0 +1,925 @@
+//[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
+/**
+ *
+ *	@file		br_net.c
+ *	@brief  バトルレコーダーネット処理
+ *	@author	Toru=Nagihashi
+ *	@data		2010.03.23
+ *
+ */
+//]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+//ライブラリ
+#include <gflib.h>
+
+//システム
+#include "system/main.h"
+
+//外部公開
+#include "br_net.h"
+
+FS_EXTERN_OVERLAY(gds_comm);
+
+//=============================================================================
+/**
+ *					定数宣言
+*/
+//=============================================================================
+
+//=============================================================================
+/**
+ *					構造体宣言
+*/
+//=============================================================================
+//-------------------------------------
+///	シーケンスワーク
+//=====================================
+typedef struct _BR_NET_SEQ_WORK BR_NET_SEQ_WORK;
+
+//-------------------------------------
+///	バトルレコーダーネット処理
+//=====================================
+struct _BR_NET_WORK
+{ 
+  
+  GDS_RAP_WORK        gdsrap;         ///<GDSライブラリ、NitroDWC関連のワーク構造体
+  GDS_PROFILE_PTR     p_gds_profile;  ///<GDSのプロフィール
+  BR_NET_SEQ_WORK     *p_seq;         ///<状態管理
+
+  BR_NET_REQUEST_PARAM reqest_param;    ///<リクエストされた引数
+  BOOL                response_flag[BR_NET_REQUEST_MAX];  ///<レスポンスを受けたかどうかのフラグ
+};
+
+//=============================================================================
+/**
+ *					プロトタイプ宣言
+*/
+//=============================================================================
+//状態関数
+static void Br_Net_Seq_Nop( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Net_Seq_WaitReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Net_Seq_UploadMusicalShotReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Net_Seq_DownloadMusicalShotReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Net_Seq_UploadBattleVideoReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Net_Seq_DownloadBattleVideoReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Net_Seq_DownloadBattleSearchReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Net_Seq_DownloadNewRankingReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Net_Seq_DownloadFavoriteRankingReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Net_Seq_DownloadSubwayRankingReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Net_Seq_UploadFavoriteBattleReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+
+//レスポンス関数
+static void Br_Net_Response_MusicalRegist(void *p_wk_adrs, const GDS_RAP_ERROR_INFO *p_error_info);
+static void Br_Net_Response_MusicalGet(void *p_wk_adrs, const GDS_RAP_ERROR_INFO *p_error_info);
+static void Br_Net_Response_BattleVideoRegist(void *p_wk_adrs, const GDS_RAP_ERROR_INFO *p_error_info);
+static void Br_Net_Response_BattleVideoSearch(void *p_wk_adrs, const GDS_RAP_ERROR_INFO *p_error_info);
+static void Br_Net_Response_BattleVideoDataGet(void *p_wk_adrs, const GDS_RAP_ERROR_INFO *p_error_info);
+static void Br_Net_Response_BattleVideoFavorite(void *p_wk_adrs, const GDS_RAP_ERROR_INFO *p_error_info);
+
+
+
+//-------------------------------------
+///	シーケンスシステム
+//=====================================
+typedef void (*BR_NET_SEQ_FUNCTION)( BR_NET_SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
+
+static BR_NET_SEQ_WORK *BR_NET_SEQ_Init( void *p_wk_adrs, BR_NET_SEQ_FUNCTION seq_function, HEAPID heapID );
+static void BR_NET_SEQ_Exit( BR_NET_SEQ_WORK *p_wk );
+static void BR_NET_SEQ_Main( BR_NET_SEQ_WORK *p_wk );
+static BOOL BR_NET_SEQ_IsEnd( const BR_NET_SEQ_WORK *cp_wk );
+static void BR_NET_SEQ_SetNext( BR_NET_SEQ_WORK *p_wk, BR_NET_SEQ_FUNCTION seq_function );
+static void BR_NET_SEQ_End( BR_NET_SEQ_WORK *p_wk );
+static void BR_NET_SEQ_SetReservSeq( BR_NET_SEQ_WORK *p_wk, int seq );
+static void BR_NET_SEQ_NextReservSeq( BR_NET_SEQ_WORK *p_wk );
+static BOOL BR_NET_SEQ_IsComp( const BR_NET_SEQ_WORK *cp_wk, BR_NET_SEQ_FUNCTION seq_function );
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルレコーダー通信  初期化
+ *
+ *  @param  GAMEDATA        ゲームデータ
+ *	@param	HEAPID heapID   ヒープID
+ *
+ *	@return ワーク
+ */
+//-----------------------------------------------------------------------------
+BR_NET_WORK *BR_NET_Init( GAMEDATA *p_gamedata, HEAPID heapID )
+{ 
+  BR_NET_WORK *p_wk;
+  
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(gds_comm) );
+
+  p_wk = GFL_HEAP_AllocMemory( heapID, sizeof(BR_NET_WORK) );
+  GFL_STD_MemClear( p_wk, sizeof(BR_NET_WORK) );
+
+  //GDS初期化
+  { 
+    GDSRAP_INIT_DATA gdsrap_data;
+    GFL_STD_MemClear( &gdsrap_data, sizeof(GDSRAP_INIT_DATA) );
+
+    gdsrap_data.gamedata      = p_gamedata;
+    gdsrap_data.gs_profile_id = MyStatus_GetProfileID( GAMEDATA_GetMyStatus( p_gamedata ) );
+    gdsrap_data.response_callback.callback_work                      = p_wk;
+    gdsrap_data.response_callback.func_musicalshot_regist            = Br_Net_Response_MusicalRegist;
+    gdsrap_data.response_callback.func_musicalshot_get               = Br_Net_Response_MusicalGet;
+    gdsrap_data.response_callback.func_battle_video_regist           = Br_Net_Response_BattleVideoRegist;
+    gdsrap_data.response_callback.func_battle_video_search_get       = Br_Net_Response_BattleVideoSearch;
+    gdsrap_data.response_callback.func_battle_video_data_get         = Br_Net_Response_BattleVideoDataGet;
+    gdsrap_data.response_callback.func_battle_video_favorite_regist  = Br_Net_Response_BattleVideoFavorite;
+
+    GDSRAP_Init(&p_wk->gdsrap, &gdsrap_data);  //通信ライブラリ初期化
+  }
+
+  //GDSプロフィール
+  {
+    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
+
+    p_wk->p_gds_profile = GDS_Profile_AllocMemory( heapID );
+    GDS_Profile_MyDataSet( p_wk->p_gds_profile, p_sv );
+  }
+
+  //状態管理
+  { 
+    p_wk->p_seq = BR_NET_SEQ_Init( p_wk, Br_Net_Seq_Nop, heapID );
+  }
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルレコーダー通信  破棄
+ *
+ *	@param	BR_NET_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void BR_NET_Exit( BR_NET_WORK *p_wk )
+{ 
+  BR_NET_SEQ_Exit( p_wk->p_seq );
+
+  GDS_Profile_FreeMemory( p_wk->p_gds_profile );
+
+  GDSRAP_Exit(&p_wk->gdsrap);
+  GFL_HEAP_FreeMemory( p_wk );
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_comm) );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルレコーダー通信  メイン処理
+ *
+ *	@param	BR_NET_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void BR_NET_Main( BR_NET_WORK *p_wk )
+{ 
+  BR_NET_SEQ_Main( p_wk->p_seq );
+  GDSRAP_Main(&p_wk->gdsrap);
+}
+//=============================================================================
+/**
+ *    リクエスト
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リクエスト開始
+ *
+ *	@param	BR_NET_WORK *p_wk                 ワーク
+ *	@param	type                              リクエストの種類
+ *	@param	BR_NET_REQUEST_PARAM *cp_param    引数
+ */
+//-----------------------------------------------------------------------------
+void BR_NET_StartRequest( BR_NET_WORK *p_wk, BR_NET_REQUEST type, const BR_NET_REQUEST_PARAM *cp_param )
+{ 
+  GF_ASSERT( type < BR_NET_REQUEST_MAX );
+
+  if( cp_param )
+  { 
+    p_wk->reqest_param  = *cp_param;
+  }
+  p_wk->response_flag[ type ] = FALSE;
+
+  switch( type )
+  { 
+  case BR_NET_REQUEST_MUSICAL_SHOT_UPLOAD:     //ミュージカルアップロード
+    BR_NET_SEQ_SetNext( p_wk->p_seq, Br_Net_Seq_UploadMusicalShotReq );
+    break;
+  case BR_NET_REQUEST_MUSICAL_SHOT_DOWNLOAD:   //ミュージカルダウンロード
+    BR_NET_SEQ_SetNext( p_wk->p_seq, Br_Net_Seq_DownloadMusicalShotReq );
+    break;
+  case BR_NET_REQUEST_BATTLE_VIDEO_UPLOAD:     //ビデオアップロード
+    BR_NET_SEQ_SetNext( p_wk->p_seq, Br_Net_Seq_UploadBattleVideoReq );
+    break;
+  case BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD:   //ビデオダウンロード
+    BR_NET_SEQ_SetNext( p_wk->p_seq, Br_Net_Seq_DownloadBattleVideoReq );
+    break;
+  case BR_NET_REQUEST_VIDEO_SEARCH_DOWNLOAD:   //ビデオ検索ダウンロード
+    BR_NET_SEQ_SetNext( p_wk->p_seq, Br_Net_Seq_DownloadBattleSearchReq );
+    break;
+  case BR_NET_REQUEST_NEW_RANKING_DOWNLOAD:    //最新ランキングダウンロード
+    BR_NET_SEQ_SetNext( p_wk->p_seq, Br_Net_Seq_DownloadNewRankingReq );
+    break;
+  case BR_NET_REQUEST_FAVORITE_RANKING_DOWLOAD://人気ランキングダウンロード
+    BR_NET_SEQ_SetNext( p_wk->p_seq, Br_Net_Seq_DownloadFavoriteRankingReq );
+    break;
+  case BR_NET_REQUEST_SUBWAY_RANKING_DOWNLOAD: //サブウェイランキングダウンロード
+    BR_NET_SEQ_SetNext( p_wk->p_seq, Br_Net_Seq_DownloadSubwayRankingReq );
+    break;
+  case BR_NET_REQUEST_FAVORITE_VIDEO_UPLOAD:   //お気に入りアップロード
+    BR_NET_SEQ_SetNext( p_wk->p_seq, Br_Net_Seq_UploadFavoriteBattleReq );
+    break;
+  default:
+    GF_ASSERT( 0 );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リクエスト待機
+ *
+ *	@param	BR_NET_WORK *p_wk   ワーク
+ *
+ *	@return TRUE 成功 FALSE 失敗
+ */
+//-----------------------------------------------------------------------------
+BOOL BR_NET_WaitRequest( BR_NET_WORK *p_wk )
+{
+  return BR_NET_SEQ_IsComp( p_wk->p_seq, Br_Net_Seq_Nop );
+}
+//=============================================================================
+/**
+ *    取得
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ミュージカルショットダウンロード取得
+ *
+ *	@param	BR_NET_WORK *p_wk ワーク
+ *	@param	*p_data_tbl       受け取るポインタテーブル
+ *	@param	tbl_max           テーブルの要素数
+ *	@param  p_recv_num        データ総数
+ *
+ *	@retval  TRUE存在する  FALSE存在しない
+ */
+//-----------------------------------------------------------------------------
+BOOL BR_NET_GetDownloadMusicalShot( BR_NET_WORK *p_wk, MUSICAL_SHOT_RECV **pp_data_tbl, int tbl_max, int *p_recv_num )
+{ 
+  *p_recv_num = GDS_RAP_RESPONSE_MusicalShot_Download_RecvPtr_Set( &p_wk->gdsrap,
+      pp_data_tbl, tbl_max );
+
+  return p_wk->response_flag[ BR_NET_REQUEST_VIDEO_SEARCH_DOWNLOAD ];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルビデオアップロードしたときのバトルビデオナンバー取得
+ *
+ *	@param	BR_NET_WORK *p_wk ワーク
+ *	@param	*p_video_number   ビデオナンバー
+ *
+ *	@retval  TRUE存在する  FALSE存在しない
+ */
+//-----------------------------------------------------------------------------
+BOOL BR_NET_GetUploadBattleVideoNumber( BR_NET_WORK *p_wk, u64 *p_video_number )
+{ 
+  *p_video_number = GDS_RAP_RESPONSE_BattleVideo_Upload_DataGet( &p_wk->gdsrap );
+  return p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_UPLOAD ];
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルビデオダウンロード取得
+ *
+ *	@param	BR_NET_WORK *p_wk         ワーク
+ *	@param  BATTLE_REC_RECV *p_data   ビデオ受信データへのポインタ
+ *	@param  int *p_video_number       バトルビデオナンバー
+ *
+ *	@retval  TRUE存在する  FALSE存在しない
+ */
+//-----------------------------------------------------------------------------
+BOOL BR_NET_GetDownloadBattleVideo( BR_NET_WORK *p_wk, BATTLE_REC_RECV **pp_data, int *p_video_number )
+{ 
+  *p_video_number = GDS_RAP_RESPONSE_BattleVideoData_Download_RecvPtr_Set( &p_wk->gdsrap, 
+	pp_data );
+
+  return p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD ];
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルビデオ検索結果取得
+ *
+ *	@param	BR_NET_WORK *p_wk ワーク
+ *	@param	*p_data_tbl      受け取るバッファのテーブル
+ *	@param	tbl_max           テーブルの要素数
+ *	@param	*p_recv_num       受け取った数
+ *
+ *	@retval  TRUE存在する  FALSE存在しない
+ */
+//-----------------------------------------------------------------------------
+BOOL BR_NET_GetDownloadBattleSearch( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV *p_data_tbl, int tbl_max, int *p_recv_num )
+{ 
+  *p_recv_num = GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy( 
+      &p_wk->gdsrap, p_data_tbl, tbl_max );
+
+  return *p_recv_num != 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  最新ランキングダウンロード取得
+ *
+ *	@param	BR_NET_WORK *p_wk ワーク
+ *	@param	*p_data_tbl      受け取るバッファのテーブル
+ *	@param	tbl_max           テーブルの要素数
+ *	@param	*p_recv_num       受け取った数
+ *
+ *	@retval  TRUE存在する  FALSE存在しない
+ */
+//-----------------------------------------------------------------------------
+BOOL BR_NET_GetDownloadNewRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV *p_data_tbl, int tbl_max, int *p_recv_num )
+{ 
+  *p_recv_num = GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy( 
+      &p_wk->gdsrap, p_data_tbl, tbl_max );
+
+  return *p_recv_num != 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人気ランキングダウンロード取得
+ *
+ *	@param	BR_NET_WORK *p_wk ワーク
+ *	@param	*p_data_tbl      受け取るバッファのテーブル
+ *	@param	tbl_max           テーブルの要素数
+ *	@param	*p_recv_num       受け取った数
+ *
+ *	@retval  TRUE存在する  FALSE存在しない
+ */
+//-----------------------------------------------------------------------------
+BOOL BR_NET_GetDownloadFavoriteRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV *p_data_tbl, int tbl_max, int *p_recv_num )
+{ 
+  *p_recv_num = GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy( 
+      &p_wk->gdsrap, p_data_tbl, tbl_max );
+
+  return *p_recv_num != 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サブウェイランキングダウンロード取得
+ *
+ *	@param	BR_NET_WORK *p_wk ワーク
+ *	@param	*p_data_tbl      受け取るバッファのテーブル
+ *	@param	tbl_max           テーブルの要素数
+ *	@param	*p_recv_num       受け取った数
+
+ *	@retval  TRUE存在する  FALSE存在しない
+ */
+//-----------------------------------------------------------------------------
+BOOL BR_NET_GetDownloadSubwayRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV *p_data_tbl, int tbl_max, int *p_recv_num )
+{ 
+  *p_recv_num = GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy( 
+      &p_wk->gdsrap, p_data_tbl, tbl_max );
+  return *p_recv_num != 0;
+}
+
+//=============================================================================
+/**
+ *  状態関数
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  何もしない
+ *
+ *	@param	BR_NET_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                内部シーケンス
+ *	@param	*p_wk_adrs            ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Seq_Nop( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  /*  none  */
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リクエスト待ち
+ *
+ *	@param	BR_NET_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                内部シーケンス
+ *	@param	*p_wk_adrs            ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Seq_WaitReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  if( GDSRAP_MoveStatusAllCheck( &p_wk->gdsrap ) )
+  { 
+    BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_Nop );
+  }
+
+  //@todo タイムアウト入れる？
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ミュージカルショットアップロード
+ *
+ *	@param	BR_NET_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                内部シーケンス
+ *	@param	*p_wk_adrs            ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Seq_UploadMusicalShotReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  BOOL ret;
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  ret = GDSRAP_Tool_Send_MusicalShotUpload( &p_wk->gdsrap, p_wk->p_gds_profile, p_wk->reqest_param.cp_upload_musical_shot_data );
+  GF_ASSERT( ret );
+
+  BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ミュージカルショットダウンロード
+ *
+ *	@param	BR_NET_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                内部シーケンス
+ *	@param	*p_wk_adrs            ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Seq_DownloadMusicalShotReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  BOOL ret;
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  ret = GDSRAP_Tool_Send_MusicalShotDownload( &p_wk->gdsrap, p_wk->reqest_param.download_musical_shot_search_monsno );
+  GF_ASSERT( ret );
+
+  BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルビデオアップロード
+ *
+ *	@param	BR_NET_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                内部シーケンス
+ *	@param	*p_wk_adrs            ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Seq_UploadBattleVideoReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  BOOL ret;
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  ret = GDSRAP_Tool_Send_BattleVideoUpload( &p_wk->gdsrap, p_wk->p_gds_profile );
+  GF_ASSERT( ret );
+
+  BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルビデオダウンロード
+ *
+ *	@param	BR_NET_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                内部シーケンス
+ *	@param	*p_wk_adrs            ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Seq_DownloadBattleVideoReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  BOOL ret;
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  ret = GDSRAP_Tool_Send_BattleVideo_DataDownload( &p_wk->gdsrap, p_wk->reqest_param.download_video_number );
+  GF_ASSERT( ret );
+
+  BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルビデオ検索結果ダウンロード
+ *
+ *	@param	BR_NET_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                内部シーケンス
+ *	@param	*p_wk_adrs            ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Seq_DownloadBattleSearchReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  BOOL ret;
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  ret = GDSRAP_Tool_Send_BattleVideoSearchDownload( 
+      &p_wk->gdsrap, 
+      p_wk->reqest_param.download_video_search_data.monsno,
+      p_wk->reqest_param.download_video_search_data.battle_mode_no,
+      p_wk->reqest_param.download_video_search_data.country_code,
+      p_wk->reqest_param.download_video_search_data.local_code
+      );
+  GF_ASSERT( ret );
+
+  BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  最新ランキングダウンロード
+ *
+ *	@param	BR_NET_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                内部シーケンス
+ *	@param	*p_wk_adrs            ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Seq_DownloadNewRankingReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  BOOL ret;
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  ret = GDSRAP_Tool_Send_BattleVideoNewDownload( &p_wk->gdsrap );
+  GF_ASSERT( ret );
+
+  BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人気ランキングダウンロード
+ *
+ *	@param	BR_NET_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                内部シーケンス
+ *	@param	*p_wk_adrs            ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Seq_DownloadFavoriteRankingReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  BOOL ret;
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  ret = GDSRAP_Tool_Send_BattleVideoCommDownload( &p_wk->gdsrap );
+  GF_ASSERT( ret );
+
+  BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルサブウェイランキングダウンロード
+ *
+ *	@param	BR_NET_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                内部シーケンス
+ *	@param	*p_wk_adrs            ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Seq_DownloadSubwayRankingReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  BOOL ret;
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  ret = GDSRAP_Tool_Send_BattleVideoSubwayDownload( &p_wk->gdsrap );
+  GF_ASSERT( ret );
+
+  BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  お気に入りビデオアップロード
+ *
+ *	@param	BR_NET_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                内部シーケンス
+ *	@param	*p_wk_adrs            ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Seq_UploadFavoriteBattleReq( BR_NET_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{
+  BOOL ret;
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  ret = GDSRAP_Tool_Send_BattleVideo_FavoriteUpload( &p_wk->gdsrap, p_wk->reqest_param.upload_favorite_video_number );
+  GF_ASSERT( ret );
+
+  BR_NET_SEQ_SetNext( p_seqwk, Br_Net_Seq_WaitReq );
+}
+
+//=============================================================================
+/**
+ *  レスポンス関数
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ミュージカルアップロード時のレスポンスコールバック
+ *
+ *	@param	*p_wk_adrs                        ワーク
+ *	@param	GDS_RAP_ERROR_INFO *p_error_info  エラー情報
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Response_MusicalRegist(void *p_wk_adrs, const GDS_RAP_ERROR_INFO *p_error_info)
+{ 
+  BR_NET_WORK *p_wk = p_wk_adrs;
+  OS_TPrintf("ミュージカルショットのアップロードレスポンス取得\n");
+  if(p_error_info->occ == TRUE)
+  {
+    //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
+  }
+  else
+  {
+    p_wk->response_flag[ BR_NET_REQUEST_MUSICAL_SHOT_UPLOAD ] = TRUE;
+    //正常時ならば受信バッファからデータ取得などを行う
+    //アップロードの場合は特に必要なし
+  }
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ミュージカルダウンロード時のレスポンスコールバック
+ *
+ *	@param	*p_wk_adrs                        ワーク
+ *	@param	GDS_RAP_ERROR_INFO *p_error_info  エラー情報
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Response_MusicalGet(void *p_wk_adrs, const GDS_RAP_ERROR_INFO *p_error_info)
+{ 
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  OS_TPrintf("ミュージカルショットのダウンロードレスポンス取得\n");
+  if(p_error_info->occ == TRUE)
+  {
+    //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
+  }
+  else
+  {
+    p_wk->response_flag[ BR_NET_REQUEST_MUSICAL_SHOT_DOWNLOAD ] = TRUE;
+    //正常時ならば受信バッファからデータ取得などを行う
+    //アップロードの場合は特に必要なし
+
+  //  GDS_RAP_RESPONSE_MusicalShot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, GDS_MUSICAL_RECV **dress_array, int array_max);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルビデオ登録時のレスポンスコールバック
+ *
+ *	@param	*p_wk_adrs                        ワーク
+ *	@param	GDS_RAP_ERROR_INFO *p_error_info  エラー情報
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Response_BattleVideoRegist(void *p_wk_adrs, const GDS_RAP_ERROR_INFO *p_error_info)
+{ 
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  OS_TPrintf("バトルビデオ登録時のダウンロードレスポンス取得\n");
+  if(p_error_info->occ == TRUE)
+  {
+    //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
+    switch(p_error_info->result){
+    case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_GET_ERROR_AUTH:    //!< ユーザー認証エラー
+      OS_TPrintf("バトルビデオデータ取得受信エラー！:ユーザー認証エラー\n");
+      break;
+    case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_GET_ERROR_ILLEGALCODE: //!< コードエラー
+      OS_TPrintf("バトルビデオデータ取得受信エラー！:コードエラー\n");
+      break;
+    case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_GET_ERROR_UNKNOWN:   //!< その他エラー
+    default:
+      OS_TPrintf("バトルビデオデータ取得受信エラー！:その他のエラー\n");
+      break;
+    }
+  }
+  else
+  {
+    p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_UPLOAD ] = TRUE;
+    //正常時ならば受信バッファからデータ取得などを行う
+    //アップロードの場合は特に必要なし
+/*    u64 data_number;
+
+    data_number = GDS_RAP_RESPONSE_BattleVideo_Upload_DataGet(&testsys->gdsrap);
+    testsys->data_number = data_number;
+    OS_TPrintf("登録コード＝%d\n", data_number);
+*/  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルビデオ検索時のレスポンスコールバック
+ *
+ *	@param	*p_wk_adrs                        ワーク
+ *	@param	GDS_RAP_ERROR_INFO *p_error_info  エラー情報
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Response_BattleVideoSearch(void *p_wk_adrs, const GDS_RAP_ERROR_INFO *p_error_info)
+{ 
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  OS_TPrintf("バトルビデオ検索のダウンロードレスポンス取得\n");
+  if(p_error_info->occ == TRUE)
+  {
+    //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
+  }
+  else
+  {
+    p_wk->response_flag[ BR_NET_REQUEST_VIDEO_SEARCH_DOWNLOAD ] = TRUE;
+    //正常時ならば受信バッファからデータ取得などを行う
+    //アップロードの場合は特に必要なし
+
+  //  int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, BOX_SHOT_RECV **box_array, int array_max);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルビデオダウンロード時のレスポンスコールバック
+ *
+ *	@param	*p_wk_adrs                        ワーク
+ *	@param	GDS_RAP_ERROR_INFO *p_error_info  エラー情報
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Response_BattleVideoDataGet(void *p_wk_adrs, const GDS_RAP_ERROR_INFO *p_error_info)
+{ 
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  OS_TPrintf("バトルビデオデータ取得のダウンロードレスポンス取得\n");
+  if(p_error_info->occ == TRUE)
+  {
+    //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
+  }
+  else
+  {
+
+    p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD ] = TRUE;
+    //正常時ならば受信バッファからデータ取得などを行う
+    //アップロードの場合は特に必要なし
+
+  //  int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, BOX_SHOT_RECV **box_array, int array_max);
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  バトルビデオお気に入り登録時のレスポンスコールバック
+ *
+ *	@param	*p_wk_adrs                        ワーク
+ *	@param	GDS_RAP_ERROR_INFO *p_error_info  エラー情報
+ */
+//-----------------------------------------------------------------------------
+static void Br_Net_Response_BattleVideoFavorite(void *p_wk_adrs, const GDS_RAP_ERROR_INFO *p_error_info)
+{ 
+  BR_NET_WORK *p_wk = p_wk_adrs;
+
+  OS_TPrintf("バトルビデオお気に入り登録のダウンロードレスポンス取得\n");
+  if( p_error_info->occ == TRUE )
+  {
+    //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
+  }
+  else
+  {
+    p_wk->response_flag[ BR_NET_REQUEST_FAVORITE_VIDEO_UPLOAD ] = TRUE;
+
+    //正常時ならば受信バッファからデータ取得などを行う
+    //アップロードの場合は特に必要なし
+
+  //  int GDS_RAP_RESPONSE_Boxshot_Download_RecvPtr_Set(GDS_RAP_WORK *gdsrap, BOX_SHOT_RECV **box_array, int array_max);
+  }
+}
+
+//=============================================================================
+/**
+ *  シーケンスシステム
+ */
+//=============================================================================
+//-------------------------------------
+///	シーケンスワーク
+//=====================================
+struct _BR_NET_SEQ_WORK
+{
+	BR_NET_SEQ_FUNCTION	seq_function;		//実行中のシーケンス関数
+	int seq;											//実行中のシーケンス関数の中のシーケンス
+	void *p_wk_adrs;							//実行中のシーケンス関数に渡すワーク
+  int reserv_seq;               //予約シーケンス
+};
+
+//-------------------------------------
+///	パブリック
+//=====================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	初期化
+ *
+ *	@param	BR_NET_SEQ_WORK *p_wk	ワーク
+ *	@param	*p_param				パラメータ
+ *	@param	seq_function		シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+static BR_NET_SEQ_WORK * BR_NET_SEQ_Init( void *p_wk_adrs, BR_NET_SEQ_FUNCTION seq_function, HEAPID heapID )
+{	
+  BR_NET_SEQ_WORK *p_wk;
+
+	//作成
+  p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(BR_NET_SEQ_WORK) );
+	GFL_STD_MemClear( p_wk, sizeof(BR_NET_SEQ_WORK) );
+
+	//初期化
+	p_wk->p_wk_adrs	= p_wk_adrs;
+
+	//セット
+	BR_NET_SEQ_SetNext( p_wk, seq_function );
+
+  return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	破棄
+ *
+ *	@param	BR_NET_SEQ_WORK *p_wk	ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BR_NET_SEQ_Exit( BR_NET_SEQ_WORK *p_wk )
+{
+  GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	メイン処理
+ *
+ *	@param	BR_NET_SEQ_WORK *p_wk ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void BR_NET_SEQ_Main( BR_NET_SEQ_WORK *p_wk )
+{	
+	if( p_wk->seq_function )
+	{	
+		p_wk->seq_function( p_wk, &p_wk->seq, p_wk->p_wk_adrs );
+	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	終了取得
+ *
+ *	@param	const BR_NET_SEQ_WORK *cp_wk		ワーク
+ *
+ *	@return	TRUEならば終了	FALSEならば処理中
+ */	
+//-----------------------------------------------------------------------------
+static BOOL BR_NET_SEQ_IsEnd( const BR_NET_SEQ_WORK *cp_wk )
+{	
+	return cp_wk->seq_function == NULL;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	次のシーケンスを設定
+ *
+ *	@param	BR_NET_SEQ_WORK *p_wk	ワーク
+ *	@param	seq_function		シーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void BR_NET_SEQ_SetNext( BR_NET_SEQ_WORK *p_wk, BR_NET_SEQ_FUNCTION seq_function )
+{	
+	p_wk->seq_function	= seq_function;
+	p_wk->seq	= 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	SEQ	終了
+ *
+ *	@param	BR_NET_SEQ_WORK *p_wk	ワーク
+ *
+ */
+//-----------------------------------------------------------------------------
+static void BR_NET_SEQ_End( BR_NET_SEQ_WORK *p_wk )
+{	
+  BR_NET_SEQ_SetNext( p_wk, NULL );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SEQ 次のシーケンスを予約
+ *
+ *	@param	BR_NET_SEQ_WORK *p_wk  ワーク
+ *	@param	seq             次のシーケンス
+ */
+//-----------------------------------------------------------------------------
+static void BR_NET_SEQ_SetReservSeq( BR_NET_SEQ_WORK *p_wk, int seq )
+{ 
+  p_wk->reserv_seq  = seq;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  SEQ 予約されたシーケンスへ飛ぶ
+ *
+ *	@param	BR_NET_SEQ_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BR_NET_SEQ_NextReservSeq( BR_NET_SEQ_WORK *p_wk )
+{ 
+  p_wk->seq = p_wk->reserv_seq;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  現在のシーケンスと同じかどうか
+ *
+ *	@param	const BR_NET_SEQ_WORK *cp_wk  ワーク
+ *	@param	seq_function              シーケンス
+ *
+ *	@return TRUE同じ FALSE異なる
+ */
+//-----------------------------------------------------------------------------
+static BOOL BR_NET_SEQ_IsComp( const BR_NET_SEQ_WORK *cp_wk, BR_NET_SEQ_FUNCTION seq_function )
+{ 
+  return cp_wk->seq_function  == seq_function;
+}

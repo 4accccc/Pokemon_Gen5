@@ -28,6 +28,8 @@ typedef enum
 	BR_RECODE_PROC_OTHER_00,
 	BR_RECODE_PROC_OTHER_01,
 	BR_RECODE_PROC_OTHER_02,
+	BR_RECODE_PROC_DOWNLOAD_RANK,
+	BR_RECODE_PROC_DOWNLOAD_NUMBER,
 } BR_RECODE_PROC_MODE;
 
 //-------------------------------------
@@ -55,8 +57,11 @@ typedef struct
 	BR_RES_WORK					*p_res;				//[in ]リソース管理
 	BR_PROC_SYS					*p_procsys;		//[in ]プロセス管理
 	GFL_CLUNIT					*p_unit;			//[in ]ユニット
-  GDS_PROFILE_PTR       p_profile;  //[in ]プロフィール
-  BATTLE_REC_HEADER_PTR p_header;   //[in ]バトルヘッダ
+  GDS_PROFILE_PTR       p_profile;  //[in ]プロフィール（modeがBR_RECODE_PROC_DOWNLOAD_NUMBER以外受け取る）
+  BATTLE_REC_HEADER_PTR p_header;   //[in ]バトルヘッダ（modeがBR_RECODE_PROC_DOWNLOAD_NUMBER以外受け取る）
+  u64                   video_number;//[in ]ビデオナンバー（modeがBR_RECODE_PROC_DOWNLOAD_NUMBERのときのみ受け取る）
+  BR_NET_WORK         *p_net;       //[in ]通信管理
+  GAMEDATA            *p_gamedata;  //[in ]ゲームデータ
 } BR_RECORD_PROC_PARAM;
 
 
