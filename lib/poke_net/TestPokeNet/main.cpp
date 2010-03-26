@@ -2,6 +2,9 @@
   Pokemon Network Library Test Client
 
   --履歴--
+  [2010/03/25] Shinichiro Yamashita
+  ・gds_header修正に伴い、サンプルも修正・更新
+
   [2010/03/17] Shinichiro Yamashita
   ・gds_header修正に伴い、サンプルも修正・更新
   ・crc値を計算するように修正
@@ -61,8 +64,8 @@
 // Auth構造体に設定する値を定義
 //#define	AUTH_PID				(2345678)	// PID
 #define	AUTH_PID				(TRAFFIC_CHECK_PID)	// PID
-#define AUTH_ROMCODE			(12)		// ROM コード
-#define AUTH_LANGCODE			(0)			// 言語コード
+#define AUTH_ROMCODE			(20)		// ROM コード
+#define AUTH_LANGCODE			(1)			// 言語コード
 
 // バトルビデオバージョン。新バージョンが出ない限り100。
 #define	BATTLEVIDEO_SERVER_VER		(100)
@@ -75,7 +78,7 @@
 // 変数等定義
 //====================================
 
-const wchar_t g_TrainerName[]	= L"やまぴー";									// プロフィールとミュージカルデータとバトル本体に使用
+const wchar_t g_TrainerName[]	= L"やまp";									// プロフィールとミュージカルデータとバトル本体に使用
 const wchar_t g_TrainerNmae2[]  = L"ミニスカートより愛をこめて叫ぶ";			// バトル本体のトレーナー情報に使用(現ソースでは未使用)
 const wchar_t g_MusicalTitle[]	= L"せくしーこまんどぅ。エリーゼのゆううつ";	// ミュージカルタイトル
 
@@ -677,21 +680,21 @@ void MakeProfileData(GDS_PROFILE* _pProfile)
 	//_pProfile->name[wcslen(g_TrainerName)] = 0xFFFF;
 	SetGDS_EOM(_pProfile->name);
 
-	_pProfile->player_id = 0x1234;			// プレイヤーID			[ － ] 0 - 0xffffffff
+	_pProfile->player_id = 0;				// プレイヤーID			[ － ] 0 - 0xffffffff
 	_pProfile->player_sex = 0;				// プレイヤー性別		[拒否] 0 - 1
-	_pProfile->birthday_month = 4;			// 誕生月				[拒否] 1 - 12
+	_pProfile->birthday_month = 1;			// 誕生月				[拒否] 1 - 12
 	_pProfile->trainer_view = 0;			// プレイヤーの見た目	[拒否] 0 - 15
 
 	_pProfile->country_code = 0;			// 住んでいる国コード	[無視] 0 - 233
 	_pProfile->local_code = 0;				// 住んでいる地方コード	[無視] * - *
 
-	_pProfile->version_code = 12;			// バージョンコード		[拒否] 20, 21	(WHITE=20, BLACK=21)
-	_pProfile->language = 0;				// 言語コード			[拒否] 1 - 8
+	_pProfile->version_code = AUTH_ROMCODE;	// バージョンコード		[拒否] 20, 21	(WHITE=20, BLACK=21)
+	_pProfile->language = AUTH_LANGCODE;	// 言語コード			[拒否] 1 - 8
 
 	_pProfile->egg_flag = 0;				// タマゴフラグ			[無視] 0 - 1
 	_pProfile->form_no = 0;					// フォルムNo			[無視] * - *
 	_pProfile->mons_sex = 0;				// モンスター性別		[無視] 0 - 1
-	_pProfile->monsno = 25;					// モンスターNo			[拒否] 1 - 可変
+	_pProfile->monsno = 1;					// モンスターNo			[拒否] 1 - 可変
 
 	// MESSAGE_FLAG_NORMAL(簡易会話) / MESSAGE_FLAG_EVENT(フリーワード)
 	_pProfile->message_flag = MESSAGE_FLAG_NORMAL;	//				[拒否] 0 - 0
@@ -730,16 +733,16 @@ void MakeMusicalshotData(MUSICAL_SHOT_DATA *_pMusicalData, int _MonsNoInc)
 	//_pMusicalData->title[wcslen(g_MusicalTitle)] = 0xFFFF;
 	SetGDS_EOM(_pMusicalData->title);
 	
-	_pMusicalData->bgNo		= 1;			// 背景番号					[拒否] 0 - 4
-	_pMusicalData->spotBit	= 0x2;			// スポットライト対象(bit)(トップだったポケモン)
+	_pMusicalData->bgNo		= 0;			// 背景番号					[拒否] 0 - 4
+	_pMusicalData->spotBit	= 0;			// スポットライト対象(bit)(トップだったポケモン)
 											//							[拒否] 0 - 15
-	_pMusicalData->year		= 2010 - 2000;	// 年						[拒否] 0 - 99
-	_pMusicalData->month	= 4;			// 月						[拒否] 1 - 12
-	_pMusicalData->day		= 19;			// 日						[拒否] 1 - 31
-	_pMusicalData->player	= 1;			// 自分の番号				[拒否] 0 - 3
+	_pMusicalData->year		= 0;			// 年						[拒否] 0 - 99
+	_pMusicalData->month	= 1;			// 月						[拒否] 1 - 12
+	_pMusicalData->day		= 1;			// 日						[拒否] 1 - 31
+	_pMusicalData->player	= 0;			// 自分の番号				[拒否] 0 - 3
 	_pMusicalData->musVer	= 0;			// ミュージカルバージョン	[拒否] 0 - 0
-	_pMusicalData->pmVersion= 0;			// PM_VERSION				[拒否] 20, 21	(WHITE=20, BLACK=21)
-	_pMusicalData->pmLang	= 0;			// PM_LANG					[拒否] 1 - 8
+	_pMusicalData->pmVersion= AUTH_ROMCODE;	// PM_VERSION				[拒否] 20, 21	(WHITE=20, BLACK=21)
+	_pMusicalData->pmLang	= AUTH_LANGCODE;// PM_LANG					[拒否] 1 - 8
 
 	for(int i = 0;i < MUSICAL_POKE_MAX; i++)
 	{
@@ -756,9 +759,9 @@ void MakeMusicalshotData(MUSICAL_SHOT_DATA *_pMusicalData, int _MonsNoInc)
 
 		// 装備グッズ
 		// 最大８つまで装備可能(ここでは１つしか設定しない)
-		_pMusicalData->shotPoke[i].equip[0].itemNo	= i;		// グッズ番号	[拒否] 0 - 99, 65535	(65535はデータ無しの場合)
+		_pMusicalData->shotPoke[i].equip[0].itemNo	= 0;		// グッズ番号	[拒否] 0 - 99, 65535	(65535はデータ無しの場合)
 		_pMusicalData->shotPoke[i].equip[0].angle	= i * 10;	// 角度			[無視] -32767 - 32768
-		_pMusicalData->shotPoke[i].equip[0].equipPos= i;		// 装備箇所		[拒否] 0 - 8, 10		(10はデータ無しの場合)
+		_pMusicalData->shotPoke[i].equip[0].equipPos= 0;		// 装備箇所		[拒否] 0 - 8, 10		(10はデータ無しの場合)
 	}
 }
 
@@ -785,11 +788,13 @@ void MakeBattleVideoHeader(BATTLE_REC_HEADER* _pHeader, BOOL bSubway, int _MonsN
 	{
 		// ランキング種別はバトルサブウェイ
 		_pHeader->mode = BATTLEMODE_COMMUNICATION_SUBWAY << BATTLEMODE_COMMUNICATION_BIT;
+		//_pHeader->mode = 0x1234;
 	}
 	else
 	{
 		// ランキング種別は通信対戦
 		_pHeader->mode = BATTLEMODE_COMMUNICATION_COMMUNICATION << BATTLEMODE_COMMUNICATION_BIT;
+		//_pHeader->mode = 0x1234;
 	}
 	
 	_pHeader->secure		= 0;		// (TRUE:安全保障, FALSE:未再生)[拒否] 0 - 0
@@ -826,9 +831,11 @@ void MakeBattleVideoData(BATTLE_REC_WORK* _pData, int _MonsNoInc)
 	// BTLREC_SETUP_SUBSET :: BTL_FIELD_SITUATION 構造体
 	_pData->setupSubset.fieldSituation.bgType	= BATTLE_BG_TYPE_GRASS;			// 戦闘背景						[拒否] 0 - 10
 	_pData->setupSubset.fieldSituation.bgAttr	= BATTLE_BG_ATTR_NORMAL_GROUND;	// 戦闘背景指定アトリビュート	[拒否] 0 - 12
-	_pData->setupSubset.fieldSituation.weather	= BTL_WEATHER_NONE;				// 天候							[拒否] 0 - 5
-	_pData->setupSubset.fieldSituation.timeZone = TIMEZONE_MORNING;				// タイムゾーン					[拒否] 0 - 4
+	_pData->setupSubset.fieldSituation.weather	= BTL_WEATHER_NONE;				// 天候							[拒否] 0 - 4
 	_pData->setupSubset.fieldSituation.season	= 0;							// 四季							[拒否] 0 - 3
+	_pData->setupSubset.fieldSituation.zoneID	= (ZONEID)0;					// コメント無し					[無視] - - -
+	_pData->setupSubset.fieldSituation.hour		= 23;							// コメント無し					[無視] 0 - 23
+	_pData->setupSubset.fieldSituation.minute	= 59;							// コメント無し					[無視] 0 - 59
 
 	// 設定データ
 	// BTLREC_SETUP_SUBSET :: CONFIG 構造体
@@ -843,23 +850,23 @@ void MakeBattleVideoData(BATTLE_REC_WORK* _pData, int _MonsNoInc)
 	_pData->setupSubset.musicDefault= 0;	// デフォルトBGM								[拒否] 0 - 65535
 	_pData->setupSubset.musicPinch	= 0;	// ピンチ時BGM									[拒否] 0 - 65535
 	_pData->setupSubset.debugFlagBit= 0;	// デバッグ機能Bitフラグ -> enum BtlDebugFlag @ battle/battle.h								[拒否] 0 - 0
-	_pData->setupSubset.competitor	= 0;	// 対戦者タイプ（ゲーム内トレーナー、通信対戦）-> enum BtlCompetitor @ battle/battle.h		[拒否] 2 - 3
+	_pData->setupSubset.competitor	= 2;	// 対戦者タイプ（ゲーム内トレーナー、通信対戦）-> enum BtlCompetitor @ battle/battle.h		[拒否] 2 - 3
 	_pData->setupSubset.myCommPos	= 0;	// 通信対戦時の自分の立ち位置（マルチの時、0,2 vs 1,3 になり、0,1が左側／2,3が右側になる）	[拒否] 0 - 3
 	_pData->setupSubset.rule		= 0;	// ルール（シングル・ダブル・トリプル・ローテ）-> enum BtlRule @ battle/battle.h			[拒否] 0 - 3
 	_pData->setupSubset.fMultiMode	= 0;	// マルチバトルフラグ（ルールは必ずダブル）		[拒否] 0 - 1
 
 	// クライアント操作内容の保存バッファ
 	// BTLREC_OPERATION_BUFFER 構造体
-	_pData->opBuffer.size		= 0;		// サイズ：BTLREC_OPERATION_BUFFER_SIZE			[拒否] 0 - 0xc00
-	_pData->opBuffer.buffer[0]	= 0;		// バッファ										[無視] 
+	_pData->opBuffer.size = 0;		// サイズ：BTLREC_OPERATION_BUFFER_SIZE					[拒否] 0 - 0xc00
+	memset(_pData->opBuffer.buffer, 0, BTLREC_OPERATION_BUFFER_SIZE);		// バッファ		[無視] 
 
 	// バトル参加プレイヤー毎の情報
 	for(int i = 0; i < BTL_CLIENT_MAX; i++)
 	{
 		// ポケモンパーティデータ
 		// REC_POKEPARTY 構造体
-		_pData->rec_party[i].PokeCountMax = 0;	// 保持出来るポケモン数の最大				[拒否] 6 - 6
-		_pData->rec_party[i].PokeCount = 0;		// 現在保持しているポケモン数				[拒否] 1 - 6
+		_pData->rec_party[i].PokeCountMax = 6;	// 保持出来るポケモン数の最大				[拒否] 6 - 6
+		_pData->rec_party[i].PokeCount = 1;		// 現在保持しているポケモン数				[拒否] 1 - 6
 		
 		// ポケモンデータ
 		// REC_POKEPARTY :: REC_POKEPARA 構造体												[ － ] 別サーバにてチェック
@@ -876,18 +883,18 @@ void MakeBattleVideoData(BATTLE_REC_WORK* _pData, int _MonsNoInc)
 		if(_pData->clientStatus[i].type == BTLREC_CLIENTSTATUS_PLAYER)
 		{
 			// MYSTATUS 構造体
-			wcscpy((wchar_t*)_pData->clientStatus[i].player.name, g_TrainerName);	// プレイヤー名
+			wcscpy((wchar_t*)_pData->clientStatus[i].player.name, g_TrainerName);	// プレイヤー名	[置換] SOAPを利用する
 			//_pData->clientStatus[i].player.name[wcslen(g_TrainerName)] = 0xFFFF;
 			SetGDS_EOM(_pData->clientStatus[i].player.name);
 
-			_pData->clientStatus[i].player.id = 0;				// トレーナーID				[置換] SOAPを利用する
+			_pData->clientStatus[i].player.id = 0;				// トレーナーID				[無視] 
 			_pData->clientStatus[i].player.profileID = 0;		// プロファイルID			[無視] 
 			_pData->clientStatus[i].player.nation = 0;			// 住んでいる国コード		[無視] 
 			_pData->clientStatus[i].player.area = 0;			// 住んでいる地方コード		[無視] 
 			_pData->clientStatus[i].player.sex = 0;				// 性別						[拒否] 0 - 1
-			_pData->clientStatus[i].player.region_code = 0;		// 言語コード				[拒否] 1 - 8
+			_pData->clientStatus[i].player.region_code = 1;		// 言語コード				[拒否] 1 - 8
 			_pData->clientStatus[i].player.trainer_view = 0;	// 見た目					[拒否] 0 - 15
-			_pData->clientStatus[i].player.rom_code = 0;		// バージョンコード			[拒否] 20, 21	(WHITE=20, BLACK=21)
+			_pData->clientStatus[i].player.rom_code = 20;		// バージョンコード			[拒否] 20, 21	(WHITE=20, BLACK=21)
 		}
 		else if(_pData->clientStatus[i].type == BTLREC_CLIENTSTATUS_TRAINER)
 		{
@@ -912,7 +919,7 @@ void MakeBattleVideoData(BATTLE_REC_WORK* _pData, int _MonsNoInc)
 		}
 	}
 
-	_pData->magic_key			= 0;	// マジックキー										[拒否] 0xe281 - 0xe281
+	_pData->magic_key			= REC_OCC_MAGIC_KEY;	// マジックキー						[拒否] 0xe281 - 0xe281
 	//_pData->padding = 0;				// 													[無視]
 	
 	// MATH_CalcCRC16CCITT																	[拒否] 

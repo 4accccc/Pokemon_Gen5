@@ -1349,8 +1349,10 @@ void MakeBattleVideoData(BATTLE_REC_WORK* _pData, int _MonsNoInc)
 	_pData->setupSubset.fieldSituation.bgType	= BATTLE_BG_TYPE_GRASS;			// 戦闘背景						[拒否] 0 - 10
 	_pData->setupSubset.fieldSituation.bgAttr	= BATTLE_BG_ATTR_NORMAL_GROUND;	// 戦闘背景指定アトリビュート	[拒否] 0 - 12
 	_pData->setupSubset.fieldSituation.weather	= BTL_WEATHER_NONE;				// 天候							[拒否] 0 - 5
-	_pData->setupSubset.fieldSituation.timeZone = TIMEZONE_MORNING;				// タイムゾーン					[拒否] 0 - 4
 	_pData->setupSubset.fieldSituation.season	= 0;							// 四季							[拒否] 0 - 3
+	_pData->setupSubset.fieldSituation.zoneID	= (ZONEID)0;					// コメント無し					[無視] - - -
+	_pData->setupSubset.fieldSituation.hour		= 0;							// コメント無し					[無視] 0 - 23
+	_pData->setupSubset.fieldSituation.minute	= 0;							// コメント無し					[無視] 0 - 59
 
 	// 設定データ
 	// BTLREC_SETUP_SUBSET :: CONFIG 構造体

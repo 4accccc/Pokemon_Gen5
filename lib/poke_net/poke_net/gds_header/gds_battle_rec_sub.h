@@ -34,15 +34,13 @@ typedef enum {
   BTLREC_OPERATION_BUFFER_SIZE = 0xc00   ///< 全クライアントの操作内容保持バッファサイズ
 }BTLREC;
 
-typedef enum {
-  TIMEZONE_MORNING =  0,
-  TIMEZONE_NOON =     1,
-  TIMEZONE_EVENING =  2,
-  TIMEZONE_NIGHT =    3,
-  TIMEZONE_MIDNIGHT = 4,
+//--------------------------------------------------------------
+/**
+ *  [10/03/25] redmine #208
+ */
+//--------------------------------------------------------------
+typedef u16 ZONEID;
 
-  TIMEZONE_MAX
-}TIMEZONE;
 
 //--------------------------------------------------------------
 /**
@@ -57,11 +55,12 @@ typedef enum {
   BTL_WEATHER_RAIN,     ///< あめ
   BTL_WEATHER_SNOW,     ///< あられ
   BTL_WEATHER_SAND,     ///< すなあらし
-  BTL_WEATHER_MIST,     ///< きり
 
   BTL_WEATHER_MAX
 
-}BtlWeather;
+}BtlWeather_tag;
+
+typedef u8 BtlWeather;
 
 //--------------------------------------------------------------
 /**
@@ -338,9 +337,13 @@ typedef struct {
   BtlBgType   bgType;
   BtlBgAttr   bgAttr;
   BtlWeather  weather;
-
-  TIMEZONE    timeZone;
   u8          season;
+
+  // ライト設定用パラメータ
+  ZONEID      zoneID;
+  u8          hour;
+  u8          minute;
+
 }BTL_FIELD_SITUATION;
 
 /**

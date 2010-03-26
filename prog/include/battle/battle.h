@@ -141,8 +141,6 @@ typedef struct {
   ZONEID      zoneID;
   u8          hour;
   u8          minute;
-
-  u32 dummy;  //旧録画データのサイズに合わせる為のダミー @todo ※check
 }BTL_FIELD_SITUATION;
 
 //-----------------------------------------------------------------------------------

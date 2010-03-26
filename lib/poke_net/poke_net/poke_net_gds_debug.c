@@ -323,8 +323,10 @@ void POKE_NET_GDS_DEBUG_PrintBattleData(BATTLE_REC_WORK* _pBattleData)
 	POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL, "   ->bgType=%d\n", _pBattleData->setupSubset.fieldSituation.bgType);
 	POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL, "   ->bgAttr=%d\n", _pBattleData->setupSubset.fieldSituation.bgAttr);
 	POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL, "   ->weather=%d\n", _pBattleData->setupSubset.fieldSituation.weather);
-	POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL, "   ->timeZone=%d\n", _pBattleData->setupSubset.fieldSituation.timeZone);
 	POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL, "   ->season=%d\n", _pBattleData->setupSubset.fieldSituation.season);
+	POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL, "   ->zoneID=%d\n", _pBattleData->setupSubset.fieldSituation.zoneID);
+	POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL, "   ->hour=%d\n", _pBattleData->setupSubset.fieldSituation.hour);
+	POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL, "   ->minute=%d\n", _pBattleData->setupSubset.fieldSituation.minute);
 
 	// BTLREC_OPERATION_BUFFER構造体
 	POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL, "--BTLREC_OPERATION_BUFFER--\n");
@@ -679,51 +681,51 @@ void POKE_NET_GDS_DEBUG_PrintResponse(POKE_NET_RESPONSE *_response ,long _size)
 
 #ifdef ___POKE_NET_BUILD_WINDOWS___
 
-	////////////////////////////////////////////////////////////
-	//// サーバーステータス取得
-	////////////////////////////////////////////////////////////
-	//else if(_response->ReqCode == POKE_NET_GDS_REQCODE_ADMIN_SVR_STATUS)
-	//{
-	//	POKE_NET_GDS_RESPONSE_ADMIN_SVR_STATUS *_responseparam;
-	//	POKE_NET_GDS_RESPONSE_ADMIN_SVR_STATUSDATA *_responseparamdata;
+	//////////////////////////////////////////////////////////
+	// サーバーステータス取得
+	//////////////////////////////////////////////////////////
+	else if(_response->ReqCode == POKE_NET_GDS_REQCODE_ADMIN_SVR_STATUS)
+	{
+		POKE_NET_GDS_RESPONSE_ADMIN_SVR_STATUS *_responseparam;
+		POKE_NET_GDS_RESPONSE_ADMIN_SVR_STATUSDATA *_responseparamdata;
 
-	//	if( _response->Result != POKE_NET_GDS_RESPONSE_RESULT_ADMIN_SVR_STATUS_SUCCESS )
-	//	{
-	//		POKE_NET_DebugPrintf(
-	//			POKE_NET_DEBUGLEVEL_NORMAL,
-	//			"[RESPONSE:POKE_NET_GDS_REQCODE_ADMIN_SVR_STATUS] Error\n"
-	//		);
-	//	}
-	//	else
-	//	{
-	//		_responseparam = (POKE_NET_GDS_RESPONSE_ADMIN_SVR_STATUS *)_response->Param;
-	//		POKE_NET_DebugPrintf(
-	//			POKE_NET_DEBUGLEVEL_NORMAL,
-	//			"[RESPONSE:POKE_NET_GDS_REQCODE_ADMIN_SVR_STATUS] SVRCount:%d\n",
-	//			_responseparam->ServerCount
-	//		);
+		if( _response->Result != POKE_NET_GDS_RESPONSE_RESULT_ADMIN_SVR_STATUS_SUCCESS )
+		{
+			POKE_NET_DebugPrintf(
+				POKE_NET_DEBUGLEVEL_NORMAL,
+				"[RESPONSE:POKE_NET_GDS_REQCODE_ADMIN_SVR_STATUS] Error\n"
+			);
+		}
+		else
+		{
+			_responseparam = (POKE_NET_GDS_RESPONSE_ADMIN_SVR_STATUS *)_response->Param;
+			POKE_NET_DebugPrintf(
+				POKE_NET_DEBUGLEVEL_NORMAL,
+				"[RESPONSE:POKE_NET_GDS_REQCODE_ADMIN_SVR_STATUS] SVRCount:%d\n",
+				_responseparam->ServerCount
+			);
 
-	//		for(i = 0; i < _responseparam->ServerCount; i++)
-	//		{
-	//			_responseparamdata = &_responseparam->Status[i];
-	//			POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL," -IP:%d.%d.%d.%d\n" ,(_responseparamdata->IP >> 24) & 0xFF ,(_responseparamdata->IP >> 16) & 0xFF ,(_responseparamdata->IP >> 8) & 0xFF ,(_responseparamdata->IP >> 0) & 0xFF );
-	//			POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL ,"  TYPE  :%d\n" ,_responseparamdata->Type);
-	//			POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL ,"  STATUS:%d\n" ,_responseparamdata->Status);
-	//			POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL ,"  MAXCON:%d\n" ,_responseparamdata->MaxConnectCount);
-	//			POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL ,"  CON   :%d\n" ,_responseparamdata->ConnectCount);
-	//			POKE_NET_DebugPrintf(
-	//				POKE_NET_DEBUGLEVEL_NORMAL,
-	//				"  UpDate:%04I64d/%02I64d/%02I64d %02I64d:%02I64d:%02I64d\n" ,
-	//				(_responseparamdata->LastUpdateTime >> 40) & 0xFFFF ,
-	//				(_responseparamdata->LastUpdateTime >> 32) & 0xFF ,
-	//				(_responseparamdata->LastUpdateTime >> 24) & 0xFF ,
-	//				(_responseparamdata->LastUpdateTime >> 16) & 0xFF ,
-	//				(_responseparamdata->LastUpdateTime >>  8) & 0xFF ,
-	//				(_responseparamdata->LastUpdateTime >>  0) & 0xFF );
-	//			POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL ,"  Req   :%d\n" ,_responseparamdata->Request);
-	//		}
-	//	}
-	//}
+			for(i = 0; i < _responseparam->ServerCount; i++)
+			{
+				_responseparamdata = &_responseparam->Status[i];
+				POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL," -IP:%d.%d.%d.%d\n" ,(_responseparamdata->IP >> 24) & 0xFF ,(_responseparamdata->IP >> 16) & 0xFF ,(_responseparamdata->IP >> 8) & 0xFF ,(_responseparamdata->IP >> 0) & 0xFF );
+				POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL ,"  TYPE  :%d\n" ,_responseparamdata->Type);
+				POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL ,"  STATUS:%d\n" ,_responseparamdata->Status);
+				POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL ,"  MAXCON:%d\n" ,_responseparamdata->MaxConnectCount);
+				POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL ,"  CON   :%d\n" ,_responseparamdata->ConnectCount);
+				POKE_NET_DebugPrintf(
+					POKE_NET_DEBUGLEVEL_NORMAL,
+					"  UpDate:%04I64d/%02I64d/%02I64d %02I64d:%02I64d:%02I64d\n" ,
+					(_responseparamdata->LastUpdateTime >> 40) & 0xFFFF ,
+					(_responseparamdata->LastUpdateTime >> 32) & 0xFF ,
+					(_responseparamdata->LastUpdateTime >> 24) & 0xFF ,
+					(_responseparamdata->LastUpdateTime >> 16) & 0xFF ,
+					(_responseparamdata->LastUpdateTime >>  8) & 0xFF ,
+					(_responseparamdata->LastUpdateTime >>  0) & 0xFF );
+				POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL ,"  Req   :%d\n" ,_responseparamdata->Request);
+			}
+		}
+	}
 
 	////////////////////////////////////////////////////////////
 	//// サーバーへの命令
