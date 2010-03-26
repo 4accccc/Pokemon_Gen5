@@ -37,6 +37,7 @@ $(DSTDIR)/$(TARGET_EV): $(SRCTXT) $(DEPENDS)
 
 $(SRCTXT): $(SRCFILE)
 	$(XLS2TAB) $(SRCFILE) > $(SRCTXT)
+	unix2dos -D $(SRCTXT)
 
 
 #--------------------------------------------------------------

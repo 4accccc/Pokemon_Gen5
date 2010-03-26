@@ -82,7 +82,7 @@ def readItemData( filename )
   #ƒwƒbƒ_•”•ª“Ç‚Ý”ò‚Î‚µ
   while line = lines.shift
     column = line.split(",")
-    if column.length >= COL_MAX then break end
+	if column.length >= COL_MAX then break end
     debug_puts("search title:#{line}")
 =begin
     if column[0 .. 6] == [
@@ -99,6 +99,9 @@ def readItemData( filename )
     if column.length < COL_MAX then
       break
     end
+	if column[COL_NUM] == 0 then
+	  next
+	end
     items << HideItem.new( column[COL_MAPNAME], column[COL_MAPID],
                           column[COL_POSX], column[COL_POSZ],
                           column[COL_ITEM], column[COL_NUM], column[COL_WORLDMAP],
