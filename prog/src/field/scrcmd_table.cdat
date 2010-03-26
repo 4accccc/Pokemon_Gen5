@@ -953,7 +953,7 @@
   DEF_CMD( EvCmdGetResearchTeamRank, EV_SEQ_GET_RESEARCH_TEAM_RANK ) 
   DEF_CMD( EvCmdResearchTeamRankUp, EV_SEQ_RESEARCH_TEAM_RANK_UP ) 
 
-  //配布ポケモンイベントで使用するために用意したコマンド
+  //配布イベントで使用するために用意したコマンド
   DEF_CMD( EvCmdGetEvtPokePos, EV_SEQ_GET_EVT_POKE_POS )
   DEF_CMD( EvCmdMoveBall, EV_SEQ_MOVE_BALL )
   DEF_CMD( EvCmdStartBallAnm, EV_SEQ_START_BALL_ANM )
@@ -965,7 +965,7 @@
   DEF_CMD( EvCmdDispPokeWin, EV_SEQ_DISP_POKE_WIN )
 
   DEF_CMD( EvCmdSetEvtPokeAfterFlg, EV_SEQ_SET_EVT_POKE_AFT_FLG )
-  NO_CMD()
+  DEF_CMD( EvCmdCheckEvtLock, EV_SEQ_CHK_EVT_LOCK )
   NO_CMD()
   NO_CMD()
 

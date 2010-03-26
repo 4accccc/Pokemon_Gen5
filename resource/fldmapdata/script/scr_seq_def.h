@@ -10119,3 +10119,19 @@
   .short \pos
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @brief 配布系イベントロックチェック
+ *
+ * @param lock_no     イベントナンバー savedata/evt_lock_def.h参照
+ * @param ret         結果    TRUE:正規開示　FALSE:未開示あるいは不正
+ */
+//--------------------------------------------------------------
+#define _CHK_EVT_LOCK( lock_no, ret ) \
+    _ASM_CHK_EVT_LOCK lock_no, ret
+
+  .macro _ASM_CHK_EVT_LOCK lock_no, ret
+  .short EV_SEQ_CHK_EVT_LOCK
+  .short \lock_no
+  .short \ret
+  .endm

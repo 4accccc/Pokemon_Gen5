@@ -95,6 +95,7 @@
 #include "scrcmd_poke_win.h"
 #include "scrcmd_item_judge.h"
 #include "scrcmd_rebattle_trainer.h"
+#include "scrcmd_evt_lock.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
