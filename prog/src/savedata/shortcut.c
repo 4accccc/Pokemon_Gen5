@@ -33,8 +33,10 @@
 //=====================================
 struct _SHORTCUT
 {	
-	u8	data[SHORTCUT_ID_MAX];
+	u8	data[SHORTCUT_SAVE_FLAG_MAX];
 };
+
+SDK_COMPILER_ASSERT( SHORTCUT_ID_MAX <= SHORTCUT_SAVE_FLAG_MAX );
 
 //=============================================================================
 /**

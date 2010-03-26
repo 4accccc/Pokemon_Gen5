@@ -619,9 +619,6 @@ static CALLTYPE ShortCutMenu_SetCallType( EVENT_PROCLINK_PARAM *p_param, SHORTCU
 	case SHORTCUT_ID_TOWNMAP:			//タウンマップ
 		p_param->call = EVENT_PROCLINK_CALL_TOWNMAP;
 		return CALLTYPE_PROC;
-	case SHORTCUT_ID_PALACEGO:			//パレスへゴー
-		p_param->select_param	= EVENT_ITEMUSE_CALL_PALACEJUMP;
-		return CALLTYPE_ITEM;
 	case SHORTCUT_ID_BTLRECORDER:	//バトルレコーダー
 		p_param->call = EVENT_PROCLINK_CALL_BTLRECORDER;
 		return CALLTYPE_PROC;
@@ -723,9 +720,6 @@ static BOOL GetItemCheckEnable( SHORTCUT_ID shortcutID, ITEMCHECK_ENABLE * enabl
 	case SHORTCUT_ID_TOWNMAP:					// タウンマップ
 		*enable = ITEMCHECK_TOWNMAP;
 		return TRUE;
-
-	case SHORTCUT_ID_PALACEGO:				// パレスへゴー
-		return FALSE;
 
 	case SHORTCUT_ID_BTLRECORDER:			// バトルレコーダー
 		*enable = ITEMCHECK_BATTLE_RECORDER;

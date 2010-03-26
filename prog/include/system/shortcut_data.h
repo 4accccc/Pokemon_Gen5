@@ -20,12 +20,11 @@
 //=====================================
 typedef enum
 {
-	SHORTCUT_ID_ZITENSYA,			//自転車
-	SHORTCUT_ID_TOWNMAP,			//タウンマップ
-	SHORTCUT_ID_PALACEGO,			//パレスへゴー
-	SHORTCUT_ID_BTLRECORDER,	//バトルレコーダー
-	SHORTCUT_ID_FRIENDNOTE,		//友達手帳
-	SHORTCUT_ID_TURIZAO,			//つりざお
+	SHORTCUT_ID_ZITENSYA,			    //自転車
+	SHORTCUT_ID_TOWNMAP,			    //タウンマップ
+	SHORTCUT_ID_BTLRECORDER,	    //バトルレコーダー
+	SHORTCUT_ID_FRIENDNOTE,		    //友達手帳
+	SHORTCUT_ID_TURIZAO,			    //つりざお
 	SHORTCUT_ID_DOWSINGMACHINE,		//ダウジングマシン
 	SHORTCUT_ID_GURASHIDEA,		    //グラシデア
 
@@ -49,6 +48,7 @@ typedef enum
 	SHORTCUT_ID_CONFIG,						//せってい
 
 
+  //１つだけなら増やせる
 	SHORTCUT_ID_MAX,
 	SHORTCUT_ID_NULL	= SHORTCUT_ID_MAX,	//データなし
 } SHORTCUT_ID;
