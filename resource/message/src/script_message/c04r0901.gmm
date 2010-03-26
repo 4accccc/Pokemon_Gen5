@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-14T12:27:31"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T15:15:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,38 +292,11 @@
 	</lock>
 
 
-	<row id="msg_c04r0901_veteranm_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・トライアルハウスストッパー</comment>
-		<attribute name="キャラ指定">VETERANM</attribute>
-		<language name="JPN" width="256">この　トライアルハウスは
-イッシュちほうで　いちばん▽
-つよい　トレーナーが▽
-その　うでまえを　きそうところだ</language>
-		<language name="JPN_KANJI" width="256">この　トライアルハウスは
-イッシュ地方で　一番▽
-強い　トレーナーが▽
-その腕前を　競うところだ</language>
-	</row>
-
-	<row id="msg_c04r0901_veteranm_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・トライアルハウスストッパー
-・クリア後
-　扉の前から移動している</comment>
-		<attribute name="キャラ指定">VETERANM</attribute>
-		<language name="JPN" width="256">この　トライアルハウスは
-イッシュちほうで　いちばん▽
-つよい　トレーナーが▽
-その　うでまえを　きそうところだ▼
-なかに　はいって
-おのれの　じつりょく　ためすがいい</language>
-		<language name="JPN_KANJI" width="256">この　トライアルハウスは
-イッシュ地方で　一番▽
-強い　トレーナーが▽
-その腕前を　競うところだ▼
-中に　入って
-おのれの　実力　試すがいい</language>
+	<row id="msg_mapscript_dummy">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-21T18:50:33"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T15:09:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1614" top="302" right="2307" bottom="918" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="518"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="531"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="685"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -532,8 +532,8 @@
 かりメッセージ　ですよ▼
 ７れんしょう　おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう</language>
+仮メッセージ　ですよ▼
+７連勝　おめでとう</language>
 	</row>
 
 	<row id="msg_c04r0111_boy2_2">
@@ -544,8 +544,8 @@
 スーパー　７れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
+仮メッセージ　ですよ▼
+スーパー　７連勝
 おめでとう</language>
 	</row>
 
@@ -556,8 +556,8 @@
 かりメッセージ　ですよ▼
 ７れんしょう　おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう</language>
+仮メッセージ　ですよ▼
+７連勝　おめでとう</language>
 	</row>
 
 	<row id="msg_c04r0111_girl2_2">
@@ -568,8 +568,8 @@
 スーパー　７れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
+仮メッセージ　ですよ▼
+スーパー　７連勝
 おめでとう</language>
 	</row>
 
@@ -580,8 +580,8 @@
 かりメッセージ　ですよ▼
 ７れんしょう　おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう</language>
+仮メッセージ　ですよ▼
+７連勝　おめでとう</language>
 	</row>
 
 	<row id="msg_c04r0111_boy3_2">
@@ -592,8 +592,8 @@
 スーパー　７れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
+仮メッセージ　ですよ▼
+スーパー　７連勝
 おめでとう</language>
 	</row>
 
@@ -604,8 +604,8 @@
 かりメッセージ　ですよ▼
 ７れんしょう　おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう</language>
+仮メッセージ　ですよ▼
+７連勝　おめでとう</language>
 	</row>
 
 	<row id="msg_c04r0111_girl3_2">
@@ -616,8 +616,8 @@
 スーパー　７れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
+仮メッセージ　ですよ▼
+スーパー　７連勝
 おめでとう</language>
 	</row>
 
@@ -628,8 +628,8 @@
 かりメッセージ　ですよ▼
 ７れんしょう　おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう</language>
+仮メッセージ　ですよ▼
+７連勝　おめでとう</language>
 	</row>
 
 	<row id="msg_c04r0111_backpackerm_2">
@@ -639,8 +639,8 @@
 かりメッセージ　ですよ▼
 １４れんしょう　おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-１４れんしょう　おめでとう</language>
+仮メッセージ　ですよ▼
+１４連勝　おめでとう</language>
 	</row>
 
 	<row id="msg_c04r0111_backpackerm_3">
@@ -651,8 +651,8 @@
 スーパー　７れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
+仮メッセージ　ですよ▼
+スーパー　７連勝
 おめでとう</language>
 	</row>
 
@@ -664,8 +664,8 @@
 スーパー　４２れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　４２れんしょう
+仮メッセージ　ですよ▼
+スーパー　４２連勝
 おめでとう</language>
 	</row>
 
@@ -677,8 +677,8 @@
 スーパー　８４れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　８４れんしょう
+仮メッセージ　ですよ▼
+スーパー　８４連勝
 おめでとう</language>
 	</row>
 
@@ -689,8 +689,8 @@
 かりメッセージ　ですよ▼
 １４れんしょう　おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-１４れんしょう　おめでとう</language>
+仮メッセージ　ですよ▼
+１４連勝　おめでとう</language>
 	</row>
 
 	<row id="msg_c04r0111_backpackerw_2">
@@ -701,8 +701,8 @@
 スーパー　７れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
+仮メッセージ　ですよ▼
+スーパー　７連勝
 おめでとう</language>
 	</row>
 
@@ -714,8 +714,8 @@
 スーパー　３５れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　３５れんしょう
+仮メッセージ　ですよ▼
+スーパー　３５連勝
 おめでとう</language>
 	</row>
 
@@ -727,8 +727,8 @@
 スーパー　６３れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　６３れんしょう
+仮メッセージ　ですよ▼
+スーパー　６３連勝
 おめでとう</language>
 	</row>
 
@@ -739,8 +739,8 @@
 かりメッセージ　ですよ▼
 １４れんしょう　おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-１４れんしょう　おめでとう</language>
+仮メッセージ　ですよ▼
+１４連勝　おめでとう</language>
 	</row>
 
 	<row id="msg_c04r0111_policeman_2">
@@ -751,7 +751,7 @@
 サブウェイマスターを
 たおしたんだって？</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
+仮メッセージ　ですよ▼
 サブウェイマスターを
 たおしたんだって？</language>
 	</row>
@@ -764,8 +764,8 @@
 スーパー　１４れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１４れんしょう
+仮メッセージ　ですよ▼
+スーパー　１４連勝
 おめでとう</language>
 	</row>
 
@@ -777,8 +777,8 @@
 スーパー　５６れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　５６れんしょう
+仮メッセージ　ですよ▼
+スーパー　５６連勝
 おめでとう</language>
 	</row>
 
@@ -789,8 +789,8 @@
 かりメッセージ　ですよ▼
 ７れんしょう　おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう</language>
+仮メッセージ　ですよ▼
+７連勝　おめでとう</language>
 	</row>
 
 	<row id="msg_c04r0111_oldman1_2">
@@ -800,8 +800,8 @@
 かりメッセージ　ですよ▼
 １４れんしょう　おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-１４れんしょう　おめでとう</language>
+仮メッセージ　ですよ▼
+１４連勝　おめでとう</language>
 	</row>
 
 	<row id="msg_c04r0111_oldman1_3">
@@ -812,7 +812,7 @@
 サブウェイマスターを
 たおしたんだって？</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
+仮メッセージ　ですよ▼
 サブウェイマスターを
 たおしたんだって？</language>
 	</row>
@@ -825,8 +825,8 @@
 スーパー　１４れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１４れんしょう
+仮メッセージ　ですよ▼
+スーパー　１４連勝
 おめでとう</language>
 	</row>
 
@@ -838,8 +838,8 @@
 スーパー　２１れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２１れんしょう
+仮メッセージ　ですよ▼
+スーパー　２１連勝
 おめでとう</language>
 	</row>
 
@@ -850,8 +850,8 @@
 かりメッセージ　ですよ▼
 スーパー　３５れんしょうだね</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　３５れんしょうだね</language>
+仮メッセージ　ですよ▼
+スーパー　３５連勝だね</language>
 	</row>
 
 	<row id="msg_c04r0111_oldman1_7">
@@ -862,8 +862,8 @@
 スーパー　６３れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　６３れんしょう
+仮メッセージ　ですよ▼
+スーパー　６３連勝
 おめでとう</language>
 	</row>
 
@@ -875,7 +875,7 @@
 サブウェイマスター
 つよかったね</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
+仮メッセージ　ですよ▼
 サブウェイマスター
 つよかったね</language>
 	</row>
@@ -888,8 +888,8 @@
 スーパー　７れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
+仮メッセージ　ですよ▼
+スーパー　７連勝
 おめでとう</language>
 	</row>
 
@@ -901,8 +901,8 @@
 スーパー　２１れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２１れんしょう
+仮メッセージ　ですよ▼
+スーパー　２１連勝
 おめでとう</language>
 	</row>
 
@@ -914,8 +914,8 @@
 スーパー　５６れんしょう
 ほんとうに　おめでとう！</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　５６れんしょう
+仮メッセージ　ですよ▼
+スーパー　５６連勝
 ほんとうに　おめでとう！</language>
 	</row>
 
@@ -927,7 +927,7 @@
 サブウェイマスター
 よわかったね</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
+仮メッセージ　ですよ▼
 サブウェイマスター
 よわかったね</language>
 	</row>
@@ -940,8 +940,8 @@
 スーパー　１４れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１４れんしょう
+仮メッセージ　ですよ▼
+スーパー　１４連勝
 おめでとう</language>
 	</row>
 
@@ -953,8 +953,8 @@
 スーパー　２１れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２１れんしょう
+仮メッセージ　ですよ▼
+スーパー　２１連勝
 おめでとう</language>
 	</row>
 
@@ -966,8 +966,8 @@
 スーパー　２８れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２８れんしょう
+仮メッセージ　ですよ▼
+スーパー　２８連勝
 おめでとう</language>
 	</row>
 
@@ -979,8 +979,8 @@
 スーパー　３５れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　３５れんしょう
+仮メッセージ　ですよ▼
+スーパー　３５連勝
 おめでとう</language>
 	</row>
 
@@ -992,8 +992,8 @@
 スーパー　８４れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　８４れんしょう
+仮メッセージ　ですよ▼
+スーパー　８４連勝
 おめでとう</language>
 	</row>
 
@@ -1005,8 +1005,8 @@
 スーパー　１００れんしょう
 とっぱ　おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１００れんしょう
+仮メッセージ　ですよ▼
+スーパー　１００連勝
 とっぱ　おめでとう</language>
 	</row>
 
@@ -1018,8 +1018,8 @@
 スーパー　７れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７れんしょう
+仮メッセージ　ですよ▼
+スーパー　７連勝
 おめでとう</language>
 	</row>
 
@@ -1030,8 +1030,8 @@
 かりメッセージ　ですよ▼
 ７れんしょう　おめでとう　ですわ</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう　ですわ</language>
+仮メッセージ　ですよ▼
+７連勝　おめでとう　ですわ</language>
 	</row>
 
 	<row id="msg_c04r0111_pilot_1">
@@ -1042,7 +1042,7 @@
 パイロットも　でんしゃに
 のったり　するですよ</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
+仮メッセージ　ですよ▼
 パイロットも　でんしゃに
 のったり　するですよ</language>
 	</row>
@@ -1055,8 +1055,8 @@
 ４２れんしょう　エリートトレーナーは
 このあたりから　でてきますよ</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-４２れんしょう　エリートトレーナーは
+仮メッセージ　ですよ▼
+４２連勝　エリートトレーナーは
 このあたりから　でてきますよ</language>
 	</row>
 
@@ -1068,8 +1068,8 @@
 スーパー　４９れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　４９れんしょう
+仮メッセージ　ですよ▼
+スーパー　４９連勝
 おめでとう</language>
 	</row>
 
@@ -1081,8 +1081,8 @@
 スーパー　６３れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　６３れんしょう
+仮メッセージ　ですよ▼
+スーパー　６３連勝
 おめでとう</language>
 	</row>
 
@@ -1094,8 +1094,8 @@
 スーパー　７７れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７７れんしょう
+仮メッセージ　ですよ▼
+スーパー　７７連勝
 おめでとう</language>
 	</row>
 
@@ -1107,7 +1107,7 @@
 なんと　３００しょう　とっぱ
 おめでとう！！！</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
+仮メッセージ　ですよ▼
 なんと　３００しょう　とっぱ
 おめでとう！！！</language>
 	</row>
@@ -1120,8 +1120,8 @@
 スーパー　２８れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２８れんしょう
+仮メッセージ　ですよ▼
+スーパー　２８連勝
 おめでとう</language>
 	</row>
 
@@ -1133,8 +1133,8 @@
 スーパー　４２れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　４２れんしょう
+仮メッセージ　ですよ▼
+スーパー　４２連勝
 おめでとう</language>
 	</row>
 
@@ -1146,8 +1146,8 @@
 スーパー　５６れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　５６れんしょう
+仮メッセージ　ですよ▼
+スーパー　５６連勝
 おめでとう</language>
 	</row>
 
@@ -1159,8 +1159,8 @@
 スーパー　９１れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　９１れんしょう
+仮メッセージ　ですよ▼
+スーパー　９１連勝
 おめでとう</language>
 	</row>
 
@@ -1172,7 +1172,7 @@
 スーパー　２００しょうとっぱ
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
+仮メッセージ　ですよ▼
 スーパー　２００しょうとっぱ
 おめでとう</language>
 	</row>
@@ -1184,8 +1184,8 @@
 かりメッセージ　ですよ▼
 ７れんしょう　おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-７れんしょう　おめでとう</language>
+仮メッセージ　ですよ▼
+７連勝　おめでとう</language>
 	</row>
 
 	<row id="msg_c04r0111_badman_2">
@@ -1195,8 +1195,8 @@
 かりメッセージ　ですよ▼
 １４れんしょう　おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-１４れんしょう　おめでとう</language>
+仮メッセージ　ですよ▼
+１４連勝　おめでとう</language>
 	</row>
 
 	<row id="msg_c04r0111_badman_3">
@@ -1207,8 +1207,8 @@
 スーパー　１４れんしょう
 やるじゃん</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１４れんしょう
+仮メッセージ　ですよ▼
+スーパー　１４連勝
 やるじゃん</language>
 	</row>
 
@@ -1219,8 +1219,8 @@
 かりメッセージ　ですよ▼
 ２１れんしょう　おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-２１れんしょう　おめでとう</language>
+仮メッセージ　ですよ▼
+２１連勝　おめでとう</language>
 	</row>
 
 	<row id="msg_c04r0111_cleaningm_2">
@@ -1231,8 +1231,8 @@
 スーパー　１４れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１４れんしょう
+仮メッセージ　ですよ▼
+スーパー　１４連勝
 おめでとう</language>
 	</row>
 
@@ -1244,8 +1244,8 @@
 スーパー　２８れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２８れんしょう
+仮メッセージ　ですよ▼
+スーパー　２８連勝
 おめでとう</language>
 	</row>
 
@@ -1256,7 +1256,7 @@
 かりメッセージ　ですよ▼
 １０００しょうとっぱですね……</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
+仮メッセージ　ですよ▼
 １０００しょうとっぱですね……</language>
 	</row>
 
@@ -1268,8 +1268,8 @@
 スーパー　２８れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２８れんしょう
+仮メッセージ　ですよ▼
+スーパー　２８連勝
 おめでとう</language>
 	</row>
 
@@ -1281,8 +1281,8 @@
 スーパー　４２れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　４２れんしょう
+仮メッセージ　ですよ▼
+スーパー　４２連勝
 おめでとう</language>
 	</row>
 
@@ -1294,8 +1294,8 @@
 スーパー　５６れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　５６れんしょう
+仮メッセージ　ですよ▼
+スーパー　５６連勝
 おめでとう</language>
 	</row>
 
@@ -1307,8 +1307,8 @@
 スーパー　７０れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７０れんしょう
+仮メッセージ　ですよ▼
+スーパー　７０連勝
 おめでとう</language>
 	</row>
 
@@ -1320,8 +1320,8 @@
 スーパー　８４れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　８４れんしょう
+仮メッセージ　ですよ▼
+スーパー　８４連勝
 おめでとう</language>
 	</row>
 
@@ -1333,8 +1333,8 @@
 スーパー　３５れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　３５れんしょう
+仮メッセージ　ですよ▼
+スーパー　３５連勝
 おめでとう</language>
 	</row>
 
@@ -1346,8 +1346,8 @@
 スーパー　４９れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　４９れんしょう
+仮メッセージ　ですよ▼
+スーパー　４９連勝
 おめでとう</language>
 	</row>
 
@@ -1359,8 +1359,8 @@
 スーパー　７０れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　７０れんしょう
+仮メッセージ　ですよ▼
+スーパー　７０連勝
 おめでとう</language>
 	</row>
 
@@ -1372,8 +1372,8 @@
 スーパー　９１れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　９１れんしょう
+仮メッセージ　ですよ▼
+スーパー　９１連勝
 おめでとう</language>
 	</row>
 
@@ -1385,8 +1385,8 @@
 スーパー　１４７れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１４７れんしょう
+仮メッセージ　ですよ▼
+スーパー　１４７連勝
 おめでとう</language>
 	</row>
 
@@ -1397,7 +1397,7 @@
 かりメッセージ　ですよ▼
 このえきは　しゅうてんですよ</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
+仮メッセージ　ですよ▼
 このえきは　しゅうてんですよ</language>
 	</row>
 
@@ -1409,8 +1409,8 @@
 スーパー　１４れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１４れんしょう
+仮メッセージ　ですよ▼
+スーパー　１４連勝
 おめでとう</language>
 	</row>
 
@@ -1422,8 +1422,8 @@
 スーパー　３５れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　３５れんしょう
+仮メッセージ　ですよ▼
+スーパー　３５連勝
 おめでとう</language>
 	</row>
 
@@ -1434,7 +1434,7 @@
 かりメッセージ　ですよ▼
 このえきは　しゅうてんですよ</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
+仮メッセージ　ですよ▼
 このえきは　しゅうてんですよ</language>
 	</row>
 
@@ -1446,8 +1446,8 @@
 スーパー　２１れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２１れんしょう
+仮メッセージ　ですよ▼
+スーパー　２１連勝
 おめでとう</language>
 	</row>
 
@@ -1459,8 +1459,8 @@
 スーパー　２８れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２８れんしょう
+仮メッセージ　ですよ▼
+スーパー　２８連勝
 おめでとう</language>
 	</row>
 
@@ -1472,8 +1472,8 @@
 スーパー　４９れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　４９れんしょう
+仮メッセージ　ですよ▼
+スーパー　４９連勝
 おめでとう</language>
 	</row>
 
@@ -1485,8 +1485,8 @@
 スーパー　２１れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２１れんしょう
+仮メッセージ　ですよ▼
+スーパー　２１連勝
 おめでとう</language>
 	</row>
 
@@ -1498,8 +1498,8 @@
 スーパー　２８れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　２８れんしょう
+仮メッセージ　ですよ▼
+スーパー　２８連勝
 おめでとう</language>
 	</row>
 
@@ -1511,8 +1511,8 @@
 スーパー　４９れんしょう
 おめでとう</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　４９れんしょう
+仮メッセージ　ですよ▼
+スーパー　４９連勝
 おめでとう</language>
 	</row>
 
@@ -1524,8 +1524,8 @@
 スーパー　１００れんしょう
 とっぱ　すごい</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイの
-かりメッセージ　ですよ▼
-スーパー　１００れんしょう
+仮メッセージ　ですよ▼
+スーパー　１００連勝
 とっぱ　すごい</language>
 	</row>
 
