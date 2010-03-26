@@ -84,9 +84,9 @@ typedef struct {
   u8 sex;              //性別
   u8 speabino;         //とくせい
   u8 rare;             //レアにするかどうか 0=ランダムレアない  1=ランダム 2=レア
-  u8 get_place;        //捕まえた場所
-  u8 birth_place;      //生まれた場所
-  u8 get_level;        //捕まえたLEVEL
+  u16 get_place;        //捕まえた場所
+  u16 birth_place;      //生まれた場所
+  u8 get_level;         //捕まえたLEVEL
   u8 style;                    //かっこよさ
   u8 beautiful;                //うつくしさ
   u8 cute;                     //かわいさ
@@ -103,7 +103,7 @@ typedef struct {
   u8 oyasex;      //親の性別 0 1 2 
   u8 level;     //ポケモンレベル
   u8 egg;       //タマゴかどうか TRUE＝たまご
-  u8 dummy;
+  u8 speabino_flag;   //特性固定フラグ
 } GIFT_PRESENT_POKEMON;
 
 
