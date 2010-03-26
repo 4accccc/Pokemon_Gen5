@@ -11,6 +11,11 @@
 
 #define PRINT_TARGET (2)  // デバッグ情報の出力先
 
+#define DISP_CHR_WIDTH   (32) // ディスプレイ幅 ( キャラ単位 )
+#define DISP_CHR_HEIGHT  (24) // ディスプレイ高さ ( キャラ単位 )
+#define DISP_DOT_WIDTH  (256) // ディスプレイ幅 ( ドット単位 )
+#define DISP_DOT_HEIGHT (192) // ディスプレイ高さ ( ドット単位 )
+
 #define DOT_PER_CHARA     (8)                      // 1キャラ = 8ドット
 #define ONE_CHARA_SIZE    (0x20)                   // 1キャラクターデータのサイズ [Byte]
 #define ONE_COLOR_SIZE    (2)                      // 1カラーデータのサイズ [Byte]

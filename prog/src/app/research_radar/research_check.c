@@ -3059,21 +3059,6 @@ static void DeleteWordset( RESEARCH_CHECK_WORK* work )
  * @return 現在調査中の調査項目ID
  */
 //-----------------------------------------------------------------------------------------
-// @todo セーブデータの修正に合わせて変更する
-#if 1
-static u8 GetInvestigatingTopicID( const RESEARCH_CHECK_WORK* work )
-{
-  SAVE_CONTROL_WORK* save;
-  QUESTIONNAIRE_SAVE_WORK* QSave;
-
-  save   = GAMEDATA_GetSaveControlWork( work->gameData );
-  QSave = SaveData_GetQuestionnaire( save );
-
-  // セーブデータから取得
-  return QuestionnaireWork_GetInvestigatingQuestion( QSave, 0 );
-}
-#endif
-#if 0
 static u8 GetInvestigatingTopicID( const RESEARCH_CHECK_WORK* work )
 {
   int qIdx;
@@ -3103,7 +3088,6 @@ static u8 GetInvestigatingTopicID( const RESEARCH_CHECK_WORK* work )
   GF_ASSERT(0);
   return 0;
 }
-#endif
 
 //-----------------------------------------------------------------------------------------
 /**

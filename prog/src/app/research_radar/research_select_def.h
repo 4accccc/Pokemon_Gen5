@@ -281,24 +281,18 @@
 #define SELECT_TOPIC_MAX_NUM      (1)  // 選択する調査項目の数
 #define SEQ_DETERMINE_WAIT_FRAMES (60) // 調査項目確定シーケンスの待ち時間
 
-// 調査項目のスクロール
-#define SCROLL_TOP_MARGIN    (24)  // 上方スクロールの余白
-#define SCROLL_BOTTOM_MARGIN (48)  // 下方スクロールの余白
-#define SCROLL_FRAME         (10)   // スクロールに要するフレーム数
-
 // スクロールバーつまみ部分
 #define SCROLL_CONTROL_LEFT     (248)  // x 座標
 #define SCROLL_CONTROL_TOP      (32)   // 上辺 y 座標
 #define SCROLL_CONTROL_BOTTOM   (160)  // 底辺 y 座標
-#define SCROLL_CONTROL_STEP_NUM (TOPIC_ID_NUM)  // 移動範囲の分割数
 
 // スクロール
-#define MIN_SCROLL_VALUE (-24) // 最小スクロール値
-#define MAX_SCROLL_VALUE (72)  // 最大スクロール値
-#define SCROLL_CURSOR_TOP_MARGIN    (24)
-#define SCROLL_CURSOR_BOTTOM_MARGIN (24) 
-#define MIN_SCROLL_CURSOR_POS (MIN_SCROLL_VALUE + SCROLL_CURSOR_TOP_MARGIN)
-#define MAX_SCROLL_CURSOR_POS (MAX_SCROLL_VALUE + 192 - SCROLL_CURSOR_BOTTOM_MARGIN)
+#define SCROLL_CURSOR_TOP_MARGIN    (24) // 画面上のスクロール余白サイズ
+#define SCROLL_CURSOR_BOTTOM_MARGIN (24) // 画面下のスクロール余白サイズ
+#define MIN_SCROLL_VALUE (-SCROLL_CURSOR_TOP_MARGIN) // 最小スクロール値
+#define MAX_SCROLL_VALUE (TOPIC_ID_NUM * TOPIC_BUTTON_HEIGHT * DOT_PER_CHARA + SCROLL_CURSOR_BOTTOM_MARGIN - DISP_DOT_HEIGHT) // 最大スクロール値
+#define MIN_SCROLL_CURSOR_POS (MIN_SCROLL_VALUE + SCROLL_CURSOR_TOP_MARGIN) // スクロールカーソル最小値
+#define MAX_SCROLL_CURSOR_POS (MAX_SCROLL_VALUE + DISP_DOT_HEIGHT - SCROLL_CURSOR_BOTTOM_MARGIN) // スクロールカーソル最大値
 
 // 調査項目選択アイコン
 #define SELECT_ICON_DRAW_OFFSET_X (0)  // 調査項目ボタン左上x座標からのオフセット
