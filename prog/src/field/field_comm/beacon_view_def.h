@@ -70,12 +70,16 @@ typedef enum{
 ///フォントカラー
 #define	FCOL_FNTOAM   ( PRINTSYS_MACRO_LSB(1,2,0) )	 ///<OAMフォント黒抜
 #define FCOL_FNTOAM_W ( PRINTSYS_MACRO_LSB(15,3,0))  ///<Oam白抜き
-#define FCOL_FNTOAM_G ( PRINTSYS_MACRO_LSB(14,4,0))  ///<Oam灰抜き
+//#define FCOL_FNTOAM_G ( PRINTSYS_MACRO_LSB(14,4,0))  ///<Oam灰抜き
+#define FCOL_FNTOAM_G ( PRINTSYS_MACRO_LSB(3,5,0))  ///<Oam灰抜き
 #define FCOL_WHITE_N  ( PRINTSYS_MACRO_LSB(15,2,0) ) ///<BG白抜き
 #define FCOL_POPUP_BASE (9)
 #define FCOL_POPUP_MAIN (1)
 #define FCOL_POPUP_SDW  (2)
 #define FCOL_POPUP      ( PRINTSYS_MACRO_LSB(FCOL_POPUP_MAIN,FCOL_POPUP_SDW,FCOL_POPUP_BASE))  //BGポップアップ
+
+///名前を灰色表示するまで経過時間
+#define BEACON_TIMEOUT_FRAME  (3*60*60) //60sec*3
 
 ///表示するログ件数
 #define VIEW_LOG_MAX    (4)

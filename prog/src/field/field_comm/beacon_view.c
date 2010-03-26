@@ -1131,7 +1131,6 @@ static void act_PanelObjAdd( BEACON_VIEW_PTR wk, u8 idx )
 
   pp->id = idx;
   pp->data_idx = PANEL_DATA_BLANK;
-  pp->data_ofs  = 0;
   pp->n_line = 0;
 
   pp->px = ACT_PANEL_OX*idx;
