@@ -750,8 +750,12 @@ void CI_KEY_Main( CODEIN_WORK* wk )
 static int _get_num(CODEIN_WORK *wk)
 {
   int i,num=0,keta=1;
+
+  // ”šî•ñ‚ğ‘S•”‚ÌŒ…‚¾‚¯‘«‚µ‚Ş
   for ( i=wk->code_max-1; i>-1 ; i--,keta*=10 ){
-    num += (wk->code[ i ].state - 1)*keta;
+    if(wk->code[ i ].state!=0){
+      num += (wk->code[ i ].state - 1)*keta;
+    }
   }
 
   OS_Printf("æ“¾‚µ‚½”’l‚Í%d\n", num);
