@@ -26,33 +26,28 @@ struct _MUSICAL_SAVE {
   //参加回数
   u16 entryNum; 
 
-
   //トップ回数
   u16 topNum;
   //累計得点
   u16 sumPoint;
 
-
-
-	//アイテム所持bit
-	u8 itemBit[MUS_SAVE_ITEM_BIT_MAX];
+  //アイテム所持bit
+  u8 itemBit[MUS_SAVE_ITEM_BIT_MAX];
   //Newアイテムbit
-	u8 itemNewBit[MUS_SAVE_ITEM_BIT_MAX];
+  u8 itemNewBit[MUS_SAVE_ITEM_BIT_MAX];
   
   //前回コンディション
   u8 befCondition[MCT_MAX];
   //前回評価点
   u8 befPoint;
 
-
-  
   //選択している演目番号
   u8 programNumber;
-  
   //配信データのチェック
   u8 enableDistData;
-  
-  u8 padding[2];
+  //デモを見たか？
+  u8 isLookDemo;
+  u8 padding[1];
 };
 
 #endif //MUSICAL_SAVE_LOCAL_H__
