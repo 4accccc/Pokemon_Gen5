@@ -142,14 +142,14 @@ EVENT_START	ev_c03r0502_mrlock_01
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ELSE                            //まだ
+    //タグ０番にプレーヤー名をセット
+      _PLAYER_NAME( 0 )
     //１回転
     _CALL clown_spin
-    //ロックカプセル持っているか?   //@todo ダウンロードアイテムチェックをする
-    _ITEM_CHK( ITEM_ROKKUKAPUSERU, 1, SCWK_ANSWER )
-    IF $SCWK_ANSWER == TRUE THEN    //持っている
-      //タグ０番にプレーヤー名をセット
-      _PLAYER_NAME( 0 )
-       //「○○さんあて」
+    //ロックカプセル持っているか? ダウンロードアイテムチェックをする output:SCWK_ANSWER
+    _CALL check_evt_lock
+    IF $SCWK_ANSWER == TRUE THEN    //チェックＯＫ
+      //「○○さんあて」
       _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_mrlock_02 )
       _BALLOONWIN_CLOSE()
       //モゾモゾ
@@ -176,7 +176,7 @@ EVENT_START	ev_c03r0502_mrlock_01
 
       //イベント終了フラグＯＮ
       _FLAG_SET(FE_ROCKCAPSULE_END)
-    ELSE                            //持ってない
+    ELSE                            //チェックＮＧ
       //「また　おあいすることに　なるでしょう」ラストメッセージ
       _BALLOONWIN_TALKOBJ_MSG( msg_c03r0502_mrlock_01 )
       _LAST_KEYWAIT()
@@ -184,6 +184,18 @@ EVENT_START	ev_c03r0502_mrlock_01
     ENDIF
   ENDIF
 EVENT_END
+
+//イベントロックチェックoutput:SCWK_ANSWER TRUE:チェックＯＫ　FALSE:チェックＮＧ
+check_evt_lock:
+  //ロックカプセル持っているか?
+  _ITEM_CHK( ITEM_ROKKUKAPUSERU, 1, SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN    //持っている
+    //イベントロックチェック
+    _CHK_EVT_LOCK( EVT_LOCK_NO_LOCKCAPSULE, SCWK_ANSWER )
+  ELSE                            //持っていない
+    $SCWK_ANSWER = FALSE
+  ENDIF
+_RET
 
 //ピエロ回転
 clown_spin:
@@ -228,33 +240,49 @@ _RET
 //ピエロ回転下向きスタート
 _ANIME_LABEL	anm_spin1
 	_ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_WAIT_2F,1
   _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_WAIT_2F,1
   _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_WAIT_2F,1
   _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	ACMD_END,0
 
 //ピエロ回転左向きスタート
 _ANIME_LABEL	anm_spin2
   _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_WAIT_2F,1
   _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_WAIT_2F,1
   _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_WAIT_2F,1
   _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	ACMD_END,0
 
 //ピエロ回転上向きスタート
 _ANIME_LABEL	anm_spin3
   _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_WAIT_2F,1
   _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_WAIT_2F,1
   _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_WAIT_2F,1
   _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	ACMD_END,0
 
 //ピエロ回転右向きスタート
 _ANIME_LABEL	anm_spin4
   _ANIME_DATA	AC_DIR_D,1
+  _ANIME_DATA	AC_WAIT_2F,1
   _ANIME_DATA	AC_DIR_L,1
+  _ANIME_DATA	AC_WAIT_2F,1
   _ANIME_DATA	AC_DIR_U,1
+  _ANIME_DATA	AC_WAIT_2F,1
   _ANIME_DATA	AC_DIR_R,1
+  _ANIME_DATA	AC_WAIT_2F,1
 	_ANIME_DATA	ACMD_END,0
 
 //ピエロモゾモゾ下向き
