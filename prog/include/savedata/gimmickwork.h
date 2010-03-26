@@ -46,7 +46,7 @@ extern GIMMICKWORK * GAMEDATA_GetGimmickWork(GAMEDATA * gamedata);
 //---------------------------------------------------------------------------
 extern int GIMMICKWORK_GetWorkSize(void);
 extern void GIMMICKWORK_Init(GIMMICKWORK * gimmick);
-
+extern void GIMMICKWORK_ClearWork(GIMMICKWORK * gimmick);
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 extern void * GIMMICKWORK_Assign(GIMMICKWORK * gimmick, int gimmick_id);

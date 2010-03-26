@@ -2288,8 +2288,8 @@ static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID)
   //ギミックワーク取得
   work = GAMEDATA_GetGimmickWork(gamedata);
 
-  //マップジャンプのときのみ初期化する（歩いてゾーンが切り替わった場合は初期化しない）
-  GIMMICKWORK_Init(work);
+  //マップジャンプのときのみワーククリアする（歩いてゾーンが切り替わった場合は初期化しない）
+  GIMMICKWORK_ClearWork(work);
 
   //ギミックデータ検索
   {

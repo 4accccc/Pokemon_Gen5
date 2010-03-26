@@ -39,6 +39,22 @@ void GIMMICKWORK_Init(GIMMICKWORK * gimmick)
 
 //---------------------------------------------------------------------------
 /**
+ * @brief	仕掛け用ワークのクリア（特定ギミックワークのクリアは行わない）
+ * @param	gimmick		仕掛けワークへのポインタ
+ */
+//---------------------------------------------------------------------------
+void GIMMICKWORK_ClearWork(GIMMICKWORK * gimmick)
+{
+  int i;
+  gimmick->id = GIMMICK_NO_ASSIGN;
+  for(i=0;i<32;i++)
+  {
+    gimmick->work[i] = 0;
+  }
+}
+
+//---------------------------------------------------------------------------
+/**
  * @brief	仕掛け用ワークの最初の認証処理
  * @param	gimmick		仕掛けワークへのポインタ
  * @param	gimmick_id		仕掛けのID
