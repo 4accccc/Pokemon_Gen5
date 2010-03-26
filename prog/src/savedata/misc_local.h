@@ -61,5 +61,8 @@ struct _MISC
   
   //購入特典不思議配布用フラグ
   u32 fushigi_purchase_privilege;
+
+  //バトルレコーダー色変えフラグ
+  u32 battle_recorder_flag;
 };
 
