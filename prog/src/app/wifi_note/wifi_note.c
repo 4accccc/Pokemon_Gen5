@@ -2548,6 +2548,15 @@ static u32 Data_FrIdxGetIdx( const WFNOTE_DATA* cp_data, u32 idx )
 static void Draw_Init( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, HEAPID heapID )
 {
   // まず行うもの
+	// 表示初期化
+	GFL_DISP_GX_SetVisibleControlDirect( 0 );
+	GFL_DISP_GXS_SetVisibleControlDirect( 0 );
+	// ブレンド初期化
+	G2_BlendNone();
+	G2S_BlendNone();
+	// 輝度を最低にしておく
+	GX_SetMasterBrightness( -16 );
+	GXS_SetMasterBrightness( -16 );
   GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
   p_draw->p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFI_NOTE, heapID );
 
