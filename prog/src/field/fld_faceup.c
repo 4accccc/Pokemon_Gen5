@@ -15,7 +15,7 @@
 
 #include "arc/fieldmap/fld_faceup.naix"
 
-#define BG_PLT_NO (10)
+#define BG_PLT_NO (9)
 #define FACE_PLT_NO (0)
 #define FACE_PLT_NUM  (2) 
 
@@ -36,7 +36,7 @@ typedef struct FACEUP_WORK_tag
 
 
 static GMEVENT_RESULT SetupEvt( GMEVENT* event, int* seq, void* work );
-static void Setup(FACEUP_WK_PTR ptr);
+static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap);
 static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work );
 static void Release(FIELDMAP_WORK * fieldmap, FACEUP_WK_PTR ptr);
 
@@ -102,7 +102,7 @@ static GMEVENT_RESULT SetupEvt( GMEVENT* event, int* seq, void* work )
     //ブラックアウト待ち
     if ( GFL_FADE_CheckFade() ) break;
     //セットアップ
-    Setup(ptr);
+    Setup(ptr, fieldmap);
     //ブラックイン開始
     GFL_FADE_SetMasterBrightReq(
           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, -3 );
@@ -123,7 +123,7 @@ static GMEVENT_RESULT SetupEvt( GMEVENT* event, int* seq, void* work )
  * @return    none
  */
 //--------------------------------------------------------------
-static void Setup(FACEUP_WK_PTR ptr)
+static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
 {
   int ncgr;
   int nscr;
@@ -133,6 +133,7 @@ static void Setup(FACEUP_WK_PTR ptr)
   PushDisp(ptr);
   //BG設定保存
   ptr->CntText = G2_GetBG3ControlText();
+  
   //ＢＧ3セットアップ（顔BG256色）
   G2_SetBG3ControlText(
       GX_BG_SCRSIZE_TEXT_256x256,
@@ -141,6 +142,29 @@ static void Setup(FACEUP_WK_PTR ptr)
       GX_BG_CHARBASE_0x04000);
 
   G2_BlendNone();
+
+  { //BGリソースをクリア
+    BOOL rc;
+    FLDMSGBG *fmb = FIELDMAP_GetFldMsgBG( fieldmap );
+    rc = FLDMSGBG_ReleaseBG2Resource( fmb );
+    if (rc) FLDMSGBG_ReqResetBG2( fmb );
+    else
+    {
+      //現在の状態を解放
+      GFL_BG_FreeBGControl( FLDBG_MFRM_EFF1 );
+    }
+    //セットしなおし
+    {
+      //BG Frame
+		  GFL_BG_BGCNT_HEADER bgcntText = {
+		   0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
+		   GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_EFF1_COLORMODE,
+		   FLDBG_MFRM_EFF1_SCRBASE, FLDBG_MFRM_EFF1_CHARBASE, FLDBG_MFRM_EFF1_CHARSIZE,
+		   GX_BG_EXTPLTT_01, FLDBG_MFRM_EFF1_PRI, 0, 0, FALSE
+		  };
+      GFL_BG_SetBGControl( FLDBG_MFRM_EFF1, &bgcntText, GFL_BG_MODE_TEXT );
+    }
+	}
 
   if (ptr->BackNo == 0)
   {
@@ -154,7 +178,7 @@ static void Setup(FACEUP_WK_PTR ptr)
   }
   //タイプごとの背景、顔BGをロード
   {
-    void *buf;
+    void *buf;    
     //背景
     //キャラ
     {
@@ -166,7 +190,7 @@ static void Setup(FACEUP_WK_PTR ptr)
       }
       GFL_BG_LoadCharacter( FLDBG_MFRM_EFF1, chr->pRawData, chr->szByte, 0 );
       GFL_HEAP_FreeMemory( buf );
-    }
+    }    
     //スクリーン
     {
       NNSG2dScreenData *scr;
@@ -190,7 +214,6 @@ static void Setup(FACEUP_WK_PTR ptr)
       GFL_BG_LoadPalette( FLDBG_MFRM_EFF1, pal->pRawData, 32, BG_PLT_NO*32 );
       GFL_HEAP_FreeMemory( buf );
     }
-
     //顔
     //キャラ
     {
