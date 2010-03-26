@@ -744,6 +744,8 @@ EVENT_START	ev_scene_c04_support_01
 	
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
+	_START_EVENT_BGM( SEQ_BGM_E_EMOTION )
+	
 	//パパ！？どうしてここに
 	_BALLOONWIN_OBJMSG_POS( msg_c04_white_08, C04_SUPPORT_01, POS_UR )
 	_MSGWIN_CLOSE()
@@ -979,6 +981,7 @@ EVENT_START	ev_scene_c04_support_01
 	_OBJ_ANIME_WAIT()
 	_OBJ_DEL( C04_SUPPORT_01 )
 	
+	_END_EVENT_BGM()
 	
 	//========================================//
 	//シーンチェンジイベント無効
