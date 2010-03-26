@@ -739,10 +739,10 @@ void FLDMSGBG_ReqResetBG2( FLDMSGBG *fmb )
 //======================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief  自動キー送り＋メッセージスピード一定　設定
+ *  @brief  自動キー送り＋メッセージスピード一定　設定
  *
- *	@param	fmb       ワーク
- *	@param	flag      TRUE：ON    FALSE：OFF
+ *  @param  fmb       ワーク
+ *  @param  flag      TRUE：ON    FALSE：OFF
  */
 //-----------------------------------------------------------------------------
 void FLDMSGBG_SetAutoPrintFlag( FLDMSGBG *fmb, BOOL flag )
@@ -752,12 +752,12 @@ void FLDMSGBG_SetAutoPrintFlag( FLDMSGBG *fmb, BOOL flag )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  自動キー送り　＋　メッセージスピード一定　設定取得
+ *  @brief  自動キー送り　＋　メッセージスピード一定　設定取得
  *
- *	@param	fmb     ワーク
+ *  @param  fmb     ワーク
  *
- *	@retval TRUE    設定ON
- *	@retval FALSE   設定OFF
+ *  @retval TRUE    設定ON
+ *  @retval FALSE   設定OFF
  */
 //-----------------------------------------------------------------------------
 BOOL FLDMSGBG_GetAutoPrintFlag( const FLDMSGBG *fmb )
@@ -1744,6 +1744,44 @@ void FLDMENUFUNC_ListSTRBUFDelete(FLDMENUFUNC_LISTDATA *listData)
 
 //--------------------------------------------------------------
 /**
+ * FLDMENUFUNC_LISTDATAに格納されているリストの最大文字幅を取得
+ * @param listData FLDMENUFUNC_LISTDATA
+ * @retval u32 リスト内、最大文字幅 ドット
+ */
+//--------------------------------------------------------------
+u32 FLDMENUFUNC_GetListLengthMax( FLDMSGBG *fmb,
+    const FLDMENUFUNC_LISTDATA *listData, int *no_buf, u32 space )
+{
+  u32 len, max = 0, no = 0, max_no = 0;
+  const BMP_MENULIST_DATA* list = (const BMP_MENULIST_DATA*)listData;
+  
+  while( list->str != LIST_ENDCODE )
+  {
+    if( list->str == NULL )
+    {
+      break;
+    }
+    
+    len = PRINTSYS_GetStrWidth(
+        (const STRBUF*)list->str, fmb->fontHandle, space );
+    
+    if( len > max )
+    {
+      max = len;
+      max_no = no;
+    }
+  
+    list++;
+    no++;
+  }
+  
+  *no_buf = max_no;
+  return( max );
+}
+
+#if 0 //old
+//--------------------------------------------------------------
+/**
  * FLDMENUFUNC_LISTDATAに格納されているリストの最大文字数を取得
  * @param listData FLDMENUFUNC_LISTDATA
  * @retval u32 リスト内、最大文字数
@@ -1756,6 +1794,7 @@ u32 FLDMENUFUNC_GetListLengthMax( const FLDMENUFUNC_LISTDATA *listData, int *no_
       (const BMP_MENULIST_DATA*)listData, no_buf );
   return( len );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1775,12 +1814,27 @@ u32 FLDMENUFUNC_GetListMax( const FLDMENUFUNC_LISTDATA *listData )
 /**
  * FLDMENUFUNC_LISTDATAに格納されているリストの最大文字数から
  * 必要なメニュー横幅を取得。
+ * @param fmb FLDMSGBG
  * @param listData FLDMENUFUNC_LISTDATA
- * @param font_size フォント横サイズ
+ * @param font_size フォント横サイズ <-miteinai
  * @param space 文字列の表示間隔
  * @retval u32 メニュー横幅 キャラ単位
  */
 //--------------------------------------------------------------
+u32 FLDMENUFUNC_GetListMenuWidth( FLDMSGBG *fmb,
+    const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 space )
+{
+  int no;
+  u32 c;
+  u32 len = FLDMENUFUNC_GetListLengthMax( fmb, listData, &no, space );
+  
+  len += 16 + space; //カーソル分
+  c = len / 8;
+  if( (len & 0x07) ){ c++; }
+  return( c );
+}
+
+#if 0
 u32 FLDMENUFUNC_GetListMenuWidth(
     const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 space )
 {
@@ -1789,11 +1843,13 @@ u32 FLDMENUFUNC_GetListMenuWidth(
   u32 num = FLDMENUFUNC_GetListLengthMax( listData, &no );
   num++; //カーソル分
   len = num * font_size;
+  
   c = len / 8;
   if( (len & 0x07) ){ c++; }
   if( space ){ c += ((num*space)/8)+1; }
   return( c );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -4322,7 +4378,7 @@ void FLDKEYWAITCURSOR_Clear(
  * キー送りカーソル 描画部分
  * @param work FLDKEYWAITCURSOR
  * @param bmp 表示先GFL_BMP_DATA
- * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI	
+ * @param n_col 透明色指定 0-15,GF_BMPPRT_NOTNUKI  
  * @retval nothing
  */
 //--------------------------------------------------------------
@@ -4563,13 +4619,13 @@ static void setBGResource( FLDMSGBG *fmb )
   fmb->bgFrameBld = FLDMSGBG_BGFRAME_BLD; //半透明BG
   
   { //BG初期化
-		GFL_BG_BGCNT_HEADER bgcntText = {
-			0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
-			GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_EFF1_COLORMODE,
-			FLDBG_MFRM_EFF1_SCRBASE,
+    GFL_BG_BGCNT_HEADER bgcntText = {
+      0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
+      GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_EFF1_COLORMODE,
+      FLDBG_MFRM_EFF1_SCRBASE,
       FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
       GX_BG_EXTPLTT_01, FLDBG_MFRM_EFF1_PRI, 0, 0, FALSE
-		};
+    };
     
     GFL_BG_SetBGControl( fmb->bgFrameBld, &bgcntText, GFL_BG_MODE_TEXT );
   }
@@ -4691,13 +4747,13 @@ static void resetBG2Control( BOOL cont_set )
   GFL_BG_SetVisible( frame, VISIBLE_OFF );
    
   if( cont_set == TRUE ){ //BG初期化
-		GFL_BG_BGCNT_HEADER bgcntText = {
-			0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
-			GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_EFF1_COLORMODE,
-			FLDBG_MFRM_EFF1_SCRBASE,
+    GFL_BG_BGCNT_HEADER bgcntText = {
+      0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
+      GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_EFF1_COLORMODE,
+      FLDBG_MFRM_EFF1_SCRBASE,
       FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
       GX_BG_EXTPLTT_01, FLDBG_MFRM_EFF1_PRI, 0, 0, FALSE
-		};
+    };
     
     GFL_BG_SetBGControl( frame, &bgcntText, GFL_BG_MODE_TEXT );
   }else{
@@ -5001,9 +5057,9 @@ static FLDSUBMSGWIN * FldMsgBG_DeleteFldSubMsgWin( FLDMSGBG *fmb, int id )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  Print設定 初期化
+ *  @brief  Print設定 初期化
  *
- *	@param	cont  ワーク
+ *  @param  cont  ワーク
  */
 //-----------------------------------------------------------------------------
 static void Control_Init( FLDPRINT_CONTROL* cont )
@@ -5013,9 +5069,9 @@ static void Control_Init( FLDPRINT_CONTROL* cont )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ再生開始
+ *  @brief  メッセージ再生開始
  *
- *	@param	cont  ワーク
+ *  @param  cont  ワーク
  */
 //-----------------------------------------------------------------------------
 static void Control_StartPrint( FLDPRINT_CONTROL* cont )
@@ -5026,10 +5082,10 @@ static void Control_StartPrint( FLDPRINT_CONTROL* cont )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  自動キー送り＋メッセージスピード一定フラグの設定
+ *  @brief  自動キー送り＋メッセージスピード一定フラグの設定
  *
- *	@param	cont    ワーク
- *	@param	flag      フラグ
+ *  @param  cont    ワーク
+ *  @param  flag      フラグ
  */
 //-----------------------------------------------------------------------------
 static void Control_SetAutoPrintFlag( FLDPRINT_CONTROL* cont, BOOL flag )
@@ -5039,9 +5095,9 @@ static void Control_SetAutoPrintFlag( FLDPRINT_CONTROL* cont, BOOL flag )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  自動キー送り＋メッセージスピード一定フラグの取得
+ *  @brief  自動キー送り＋メッセージスピード一定フラグの取得
  *
- *	@param	cont  ワーク
+ *  @param  cont  ワーク
  */
 //-----------------------------------------------------------------------------
 static BOOL Control_GetAutoPrintFlag( const FLDPRINT_CONTROL* cont )
@@ -5051,11 +5107,11 @@ static BOOL Control_GetAutoPrintFlag( const FLDPRINT_CONTROL* cont )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ再生スピードの取得
+ *  @brief  メッセージ再生スピードの取得
  *
- *	@param	cont  ワーク
+ *  @param  cont  ワーク
  *
- *	@return 再生スピード
+ *  @return 再生スピード
  */
 //-----------------------------------------------------------------------------
 static int Control_GetMsgWait( const FLDPRINT_CONTROL* cont )
@@ -5068,12 +5124,12 @@ static int Control_GetMsgWait( const FLDPRINT_CONTROL* cont )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  メッセージスキップ　チェック
+ *  @brief  メッセージスキップ　チェック
  *
- *	@param	cont  ワーク
+ *  @param  cont  ワーク
  *
- *	@retval TRUE    スキップ
- *	@retval FALSE   通常表示
+ *  @retval TRUE    スキップ
+ *  @retval FALSE   通常表示
  */
 //-----------------------------------------------------------------------------
 static BOOL Control_GetSkipKey( FLDPRINT_CONTROL* cont )
@@ -5098,12 +5154,12 @@ static BOOL Control_GetSkipKey( FLDPRINT_CONTROL* cont )
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  メッセージ送り　チェック
+ *  @brief  メッセージ送り　チェック
  *
- *	@param	cont  ワーク
+ *  @param  cont  ワーク
  *
- *	@retval TRUE    メッセージ送り
- *	@retval FALSE   待機
+ *  @retval TRUE    メッセージ送り
+ *  @retval FALSE   待機
  */
 //-----------------------------------------------------------------------------
 static BOOL Control_GetWaitKey( FLDPRINT_CONTROL* cont )

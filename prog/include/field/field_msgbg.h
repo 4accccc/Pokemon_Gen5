@@ -285,11 +285,12 @@ extern void FLDMENUFUNC_AddArcStringListData(
     FLDMENUFUNC_LISTDATA *listData,
     GFL_MSGDATA *msgData, u32 strID, u32 param, HEAPID heapID );
 extern void FLDMENUFUNC_ListSTRBUFDelete(FLDMENUFUNC_LISTDATA *listData);
-extern u32 FLDMENUFUNC_GetListLengthMax( const FLDMENUFUNC_LISTDATA *listData, int *no_buf );
+extern u32 FLDMENUFUNC_GetListLengthMax( FLDMSGBG *fmb,
+    const FLDMENUFUNC_LISTDATA *listData, int *no_buf, u32 space );
 
 extern u32 FLDMENUFUNC_GetListMax( const FLDMENUFUNC_LISTDATA *listData );
-extern u32 FLDMENUFUNC_GetListMenuWidth(
-    const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 font_space );
+extern u32 FLDMENUFUNC_GetListMenuWidth( FLDMSGBG *fmb,
+    const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 space );
 extern u32 FLDMENUFUNC_GetListMenuHeight(
     const FLDMENUFUNC_LISTDATA *listData, u32 font_size, u32 font_space );
 extern u32 FLDMENUFUNC_GetListMenuLen( u32 num, u32 font_size, u32 space );

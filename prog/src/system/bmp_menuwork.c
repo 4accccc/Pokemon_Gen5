@@ -19,9 +19,6 @@
 static BMP_MENULIST_DATA * SeekEmptyListPos(
 		BMP_MENULIST_DATA* list, u32* heapID );
 
-/// リストの終端コード
-#define LIST_ENDCODE		((const void*)0xffffffff)
-
 //======================================================================
 //	関数
 //======================================================================
@@ -258,10 +255,8 @@ void BmpMenuWork_ListSTRBUFDelete( BMP_MENULIST_DATA *list_top )
 u32 BmpMenuWork_GetListMaxLength(
     const BMP_MENULIST_DATA *list_top, int *no_buf )
 {
-  u32 len,max = 0;
+  u32 len,max = 0,no = 0,max_no = 0;
 	const BMP_MENULIST_DATA* list = list_top;
-  
-  *no_buf = 0;
   
   while( list->str != LIST_ENDCODE )
   {
@@ -275,12 +270,14 @@ u32 BmpMenuWork_GetListMaxLength(
     if( len > max )
     {
       max = len;
+      max_no = no;
     }
   
     list++;
-    (*no_buf)++;
+    no++;
   }
   
+  *no_buf = max_no;
   return( max );
 }
 

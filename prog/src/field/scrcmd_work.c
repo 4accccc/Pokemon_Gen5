@@ -570,8 +570,9 @@ void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
   u32 sx,sy,count;
   SCRCMD_MENU_WORK *menuWork = &work->menuWork;
   FLDMENUFUNC_HEADER menuH = data_MenuHeader;
+  FLDMSGBG *fmb = SCRCMD_WORK_GetFldMsgBG( work );
   
-  sx = FLDMENUFUNC_GetListMenuWidth(
+  sx = FLDMENUFUNC_GetListMenuWidth( fmb,
       menuWork->listData, menuH.font_size_x, menuH.msg_spc );
   
   if( menuWork->lr_just == SCR_MENU_JUST_R ){ //‰E‹l
@@ -599,7 +600,6 @@ void SCRCMD_WORK_StartMenu( SCRCMD_WORK *work )
       &menuH, count, menuWork->x, menuWork->y, sx, sy );
   
   {
-    FLDMSGBG *fmb = SCRCMD_WORK_GetFldMsgBG( work );
 	  menuWork->menuFunc = FLDMENUFUNC_AddEventMenuList(
       fmb, &menuH, menuWork->listData,
       BmpMenu_CallbackFunc, work,
