@@ -53,6 +53,8 @@
 #define BRIGHT_VAL  (-7)          ///< パッシブ状態のための半透明率
 
 FS_EXTERN_OVERLAY( dpw_common );
+FS_EXTERN_OVERLAY( ui_common );
+FS_EXTERN_OVERLAY( app_mail );
 
 //============================================================================================
 //  定数定義
@@ -132,7 +134,10 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
   WORLDTRADE_WORK * wk;
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID( dpw_common ) );
-  
+  //以下デモで使うので呼ぶ
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( ui_common ));
+  GFL_OVERLAY_Load( FS_OVERLAY_ID( app_mail ));
+
   GFL_NET_DebugPrintOn();
 
 
@@ -316,6 +321,8 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
 
   GFL_HEAP_DeleteHeap( HEAPID_WORLDTRADE );
 
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( app_mail ) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID( ui_common ) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( dpw_common ) );
 
   return GFL_PROC_RES_FINISH;

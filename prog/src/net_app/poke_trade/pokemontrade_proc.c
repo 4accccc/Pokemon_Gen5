@@ -3208,7 +3208,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   POKEMON_TRADE_WORK *pWork = mywk;
 
   //オーバーレイ読み込み
-  if(pWork->type < POKEMONTRADE_TYPE_VISUAL){
+  if(type < POKEMONTRADE_TYPE_VISUAL){
     GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
     GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
     GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));

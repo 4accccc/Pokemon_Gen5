@@ -49,7 +49,6 @@
 #include  "item/itemsym.h"  //ITEM_DATA_MAX
 #include  "item/item.h"  //ITEM_CheckEnable
 #include "app/townmap.h"
-#include "net_app/worldtrade.h"
 #include "../ui/debug/ui_template.h"
 #include "savedata/shortcut.h"
 #include "event_debug_beacon.h"
@@ -107,6 +106,7 @@
 #include "savedata/symbol_save.h"
 #include "savedata/symbol_save_notwifi.h"
 #include "savedata/symbol_save_field.h"
+#include "event_gts.h"
 
 FS_EXTERN_OVERLAY( d_iwasawa );
 
@@ -3222,18 +3222,6 @@ static BOOL debugMenuCallProc_ChangePlayerSex( DEBUG_MENU_EVENT_WORK *wk )
 //======================================================================
 FS_EXTERN_OVERLAY(worldtrade);
 #include "net/dwc_rapcommon.h"
-//-------------------------------------
-/// デバッグGTS用ワーク
-//=====================================
-typedef struct
-{
-  GAMESYS_WORK        *p_gamesys;
-  GMEVENT             *p_event;
-  FIELDMAP_WORK     *p_field;
-  EVENT_WIFICLUB_WORK wifi;
-  WORLDTRADE_PARAM    gts;
-} DEBUG_WIFIGTS_EVENT_WORK;
-static GMEVENT_RESULT debugMenuWifiGts( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
 //----------------------------------------------------------------------------
 /**
  *  @brief  GTS画面へいくイベント
@@ -3247,107 +3235,10 @@ static GMEVENT_RESULT debugMenuWifiGts( GMEVENT *p_event, int *p_seq, void *p_wk
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
-  GMEVENT       *p_event    = p_wk->gmEvent;
-  FIELDMAP_WORK *p_field  = p_wk->fieldWork;
-  GAMEDATA *p_gamedata      = GAMESYSTEM_GetGameData(p_gamesys);
-  DEBUG_WIFIGTS_EVENT_WORK  *p_gts;
-
-
-    //イヴェント
-    GMEVENT_Change( p_event, debugMenuWifiGts, sizeof(DEBUG_WIFIGTS_EVENT_WORK) );
-    p_gts = GMEVENT_GetEventWork( p_event );
-    GFL_STD_MemClear( p_gts, sizeof(DEBUG_WIFIGTS_EVENT_WORK) );
-
-
-    //ワーク設定
-    p_gts->p_gamesys  = p_gamesys;
-    p_gts->p_event    = p_event;
-    p_gts->p_field    = p_field;
-
-    //WiFiClubワーク設定
-    p_gts->wifi.event     = p_event;
-    p_gts->wifi.gsys      = p_gamesys;
-    p_gts->wifi.fieldmap  = p_field;
-    p_gts->wifi.pWork     = NULL;
-    p_gts->wifi.isEndProc = TRUE;
-    p_gts->wifi.selectType  = 0;
-
-    //GTSワーク設定
-    p_gts->gts.savedata         = GAMEDATA_GetSaveControlWork(p_gamedata );
-    p_gts->gts.worldtrade_data  = SaveData_GetWorldTradeData(p_gts->gts.savedata);
-    p_gts->gts.systemdata       = SaveData_GetSystemData(p_gts->gts.savedata);
-    p_gts->gts.myparty          = SaveData_GetTemotiPokemon(p_gts->gts.savedata);
-    p_gts->gts.mybox            = GAMEDATA_GetBoxManager(p_gamedata);
-    p_gts->gts.zukanwork        = GAMEDATA_GetZukanSave( p_gamedata );
-    p_gts->gts.wifilist         = GAMEDATA_GetWiFiList(p_gamedata);
-    p_gts->gts.wifihistory      = SaveData_GetWifiHistory(p_gts->gts.savedata);
-    p_gts->gts.mystatus         = SaveData_GetMyStatus(p_gts->gts.savedata);
-    p_gts->gts.config           = SaveData_GetConfig(p_gts->gts.savedata);
-    p_gts->gts.record           = SaveData_GetRecord(p_gts->gts.savedata);
-    p_gts->gts.myitem           = NULL;
-    p_gts->gts.gamesys          = p_gamesys;
-
-    p_gts->gts.zukanmode        = 0;
-    p_gts->gts.profileId        = WifiList_GetMyGSID( p_gts->gts.wifilist );
-    p_gts->gts.contestflag      = FALSE;
-    p_gts->gts.connect          = 0;
-
-    OS_Printf( "GTS Start\n" );
-    return TRUE;
+  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_Gts( p_wk->gmSys, p_wk->fieldWork ) );
+  return TRUE;
 }
 
-//----------------------------------------------------------------------------
-/**
- *  @brief  デバッグGTS接続用イベント
- *
- *  @param  GMEVENT *event  GMEVENT
- *  @param  *seq            シーケンス
- *  @param  *work           ワーク
- *
- *  @return 終了コード
- */
-//-----------------------------------------------------------------------------
-static GMEVENT_RESULT debugMenuWifiGts( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
-{
-  enum
-  {
-    SEQ_CALL_WIFI,
-    SEQ_PROC_END,
-    SEQ_CALL_GTS,
-    SEQ_EXIT,
-  };
-
-  DEBUG_WIFIGTS_EVENT_WORK  *p_wk = p_wk_adrs;
-
-  switch(*p_seq )
-  {
-  case SEQ_CALL_WIFI:
-    if(GAME_COMM_NO_NULL!= GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(p_wk->wifi.gsys))){
-      GameCommSys_ExitReq(GAMESYSTEM_GetGameCommSysPtr(p_wk->wifi.gsys));
-    }
-    *p_seq  = SEQ_PROC_END;
-    break;
-
-  case SEQ_PROC_END:
-    if(GAME_COMM_NO_NULL == GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(p_wk->wifi.gsys)))
-    {
-      *p_seq  = SEQ_CALL_GTS;
-    }
-    break;
-
-  case SEQ_CALL_GTS:
-     GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
-        FS_OVERLAY_ID(worldtrade), &WorldTrade_ProcData, &p_wk->gts ) );
-    *p_seq  = SEQ_EXIT;
-    break;
-
-  case SEQ_EXIT:
-    return GMEVENT_RES_FINISH;
-  }
-
-  return GMEVENT_RES_CONTINUE ;
-}
 
 //======================================================================
 //  デバッグメニュー　GDS接続
@@ -3433,10 +3324,15 @@ static GMEVENT_RESULT debugMenuGDS( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 
       gds_param = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(GDSPROC_PARAM));
       gds_param->gamedata = GAMESYSTEM_GetGameData(p_gds->gsys);
-      gds_param->gds_mode = 0;
+      gds_param->gds_mode = BR_MODE_GLOBAL_BV;
+
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+      { 
+        gds_param->gds_mode = BR_MODE_GLOBAL_MUSICAL;
+      }
 
       GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_gds->gsys, p_gds->fieldWork,
-          FS_OVERLAY_ID(gds_comm), &GdsMainProcData, gds_param ) );
+          NO_OVERLAY_ID, &GdsMainProcData, gds_param ) );
       (*p_seq)++;
     }
     break;

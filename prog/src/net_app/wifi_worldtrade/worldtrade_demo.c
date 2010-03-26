@@ -63,6 +63,13 @@ enum{
 	DEMO_MODE_SHINKA,
 };
 
+enum
+{ 
+  DEMO_DIV_NONE,
+  DEMO_DIV_MID,
+  DEMO_DIV_RECV,
+};
+
 //============================================================================================
 //	プロセス関数
 //============================================================================================
@@ -101,6 +108,7 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
 		wk->pNPCStatus = MakePartnerStatusData( &wk->UploadPokemonData );
 		p_param->pNPC  = wk->pNPCStatus;
 
+    wk->div_demo  = DEMO_DIV_NONE;
     call_proc = &PokemonTradeGTSSendProcData;
 		break;
 
@@ -112,6 +120,7 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
 		wk->pNPCStatus = MakePartnerStatusData( &wk->UploadPokemonData );
 		p_param->pNPC  = wk->pNPCStatus;
 
+    wk->div_demo  = DEMO_DIV_NONE;
     call_proc = &PokemonTradeGTSRecvProcData;
 		break;
 
@@ -126,7 +135,8 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
     wk->pNPCStatus 			= MakePartnerStatusData( &wk->UploadPokemonData );
     p_param->pNPC  = wk->pNPCStatus;
 
-    call_proc = &PokemonTradeGTSProcData;
+    wk->div_demo  = DEMO_DIV_MID;
+    call_proc = &PokemonTradeGTSSendProcData;
 		break;
 
 	// 交換する
@@ -138,7 +148,8 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
 		wk->pNPCStatus = MakePartnerStatusData( &wk->DownloadPokemonData[wk->TouchTrainerPos] );
 		p_param->pNPC  = wk->pNPCStatus;
 
-    call_proc = &PokemonTradeGTSProcData;
+    wk->div_demo  = DEMO_DIV_MID;
+    call_proc = &PokemonTradeGTSSendProcData;
 		break;
   default:
     GF_ASSERT(0);
@@ -158,18 +169,54 @@ int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq)
  * @brief   世界交換入り口画面メイン
  *
  * @param   wk		GTS画面ワーク
- * @param   seq		（未使用）
+ * @param   seq		
  *
  * @retval  int		アプリシーケンス
  */
 //==============================================================================
 int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 {
+  POKEMONTRADE_DEMO_PARAM *p_param  = wk->sub_proc_wk;
 	int ret=SEQ_MAIN;
 
 	switch(wk->subprocess_seq){
-	case DEMO_MODE_DEMO:
-			if( 1 ){	
+  case DEMO_MODE_DEMO:
+    if( 1 ){
+
+      //分割を順番に呼んで行く処理
+      switch( wk->div_demo ) 
+      { 
+      case DEMO_DIV_MID:
+        WorldTradeData_GetPokemonData( wk->param->worldtrade_data, wk->demoPokePara );
+        p_param->pMyPoke = wk->demoPokePara;
+        p_param->pNPCPoke = (POKEMON_PARAM*)wk->DownloadPokemonData[wk->TouchTrainerPos].postData.data;
+        // 相手のMYSTATUSが無いので、できる限りでっちあげる
+        wk->pNPCStatus = MakePartnerStatusData( &wk->DownloadPokemonData[wk->TouchTrainerPos] );
+        p_param->pNPC  = wk->pNPCStatus;
+        GAMESYSTEM_CallProc( wk->param->gamesys,
+            FS_OVERLAY_ID(pokemon_trade), &PokemonTradeGTSMidProcData, wk->sub_proc_wk );
+
+        wk->div_demo  = DEMO_DIV_RECV;
+        return SEQ_MAIN;
+
+      case DEMO_DIV_RECV:
+
+        WorldTradeData_GetPokemonData( wk->param->worldtrade_data, wk->demoPokePara );
+        p_param->pMyPoke = wk->demoPokePara;
+        p_param->pNPCPoke = (POKEMON_PARAM*)wk->DownloadPokemonData[wk->TouchTrainerPos].postData.data;
+        // 相手のMYSTATUSが無いので、できる限りでっちあげる
+        wk->pNPCStatus = MakePartnerStatusData( &wk->DownloadPokemonData[wk->TouchTrainerPos] );
+        p_param->pNPC  = wk->pNPCStatus;
+        GAMESYSTEM_CallProc( wk->param->gamesys,
+            FS_OVERLAY_ID(pokemon_trade), &PokemonTradeGTSRecvProcData, wk->sub_proc_wk );
+
+        wk->div_demo  = DEMO_DIV_NONE;
+        return SEQ_MAIN;
+
+      case DEMO_DIV_NONE:
+        /* 終了したので抜ける */
+        break;
+      }
 
 			// 進化チェック
 			if(wk->sub_process_mode==MODE_EXCHANGE){

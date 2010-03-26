@@ -548,6 +548,7 @@ typedef struct _WORLDTRADE_WORK{
 
 	// worldtrade_demo.c用ワーク
 	POKEMON_PARAM *demoPokePara;								///< 交換デモ用のポケモンポインタ
+  int           div_demo;                     ///< 分割デモのためのシーケンス
 
 
 	// worldtrade_box.c用ワーク
