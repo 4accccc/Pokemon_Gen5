@@ -15,6 +15,7 @@
 #include "print/str_tool.h"
 #include "app/app_menu_common.h"
 #include "waza_tool/wazadata.h"
+#include "field/field_skill_check.h"
 
 #include "arc_def.h"
 #include "message.naix"
@@ -146,6 +147,7 @@ enum PSTATUS_SKILL_UP_BMPWIN_TYPE
   PSBT_POW,
   PSBT_HIT,
   PSBT_INFO,
+  PSBT_FORGET_ERROR,
 
   PSBT_MAX,
 
@@ -189,6 +191,7 @@ struct _PSTATUS_SKILL_WORK
   BOOL isDisp;
   BOOL isUpdateStrStatus;
   BOOL isUpdateStrSkill;
+  BOOL isUpdateStrForgetError;
   BOOL isWaitSwapSkill;
   BOOL isChangeMode;
   BOOL isForgetConfirm;
@@ -247,6 +250,7 @@ static void PSTATUS_SKILL_UpdateKey_CursorMove( PSTATUS_WORK *work , PSTATUS_SKI
 static void PSTATUS_SKILL_UpdateCursorPos( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 newPos );
 static void PSTATUS_SKILL_SwapSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 pos1 , const u8 pos2 );
 static void PSTATUS_SKILL_ChangeForgetConfirmPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const BOOL isDisp );
+static void PSTATUS_SKILL_DispForgetError( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const FIELD_SKILL_CHECK_RET skillRet );
 
 static void PSTATUS_SKILL_InitPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , PSTATUS_SKILL_PLATE *plateWork , const u8 idx );
 static void PSTATUS_SKILL_TermPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , PSTATUS_SKILL_PLATE *plateWork );
@@ -275,6 +279,8 @@ static const u8 winPos[PSBT_MAX][4] =
   { 10,  8, 14,  2},  //威力
   { 10, 10, 14,  2},  //命中
   {  1, 13, 30,  6},  //技説明
+
+  {  4, 20, 24,  4},  //忘れ禁止警告
 };
 
 //下画面技プレート座標
@@ -388,6 +394,15 @@ void PSTATUS_SKILL_Main( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
       }
       PSTATUS_SKILL_DispSkillInfoPage_Trans( work , skillWork );
       skillWork->isUpdateStrSkill = FALSE;
+    }
+  }
+  //技忘れエラー表示更新
+  if( skillWork->isUpdateStrForgetError == TRUE )
+  {
+    if( PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( skillWork->upBmpWin[PSBT_FORGET_ERROR] )) == FALSE )
+    {
+      GFL_BMPWIN_MakeTransWindow_VBlank( skillWork->upBmpWin[PSBT_FORGET_ERROR] );
+      skillWork->isUpdateStrForgetError = FALSE;
     }
   }
   //入れ替えの更新
@@ -1032,7 +1047,8 @@ static void PSTATUS_SKILL_DrawStrSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK 
     GFL_STR_DeleteBuffer( srcStr );
     GFL_MSG_Delete( msgHandle );
   }
-
+  //エラーは消す
+  skillWork->isUpdateStrForgetError = FALSE;
   skillWork->isUpdateStrSkill = TRUE;
 }
 
@@ -1584,20 +1600,32 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
       }
       else
       {
-        //確認モードへ
-        GFL_CLACTPOS cellPos;
-        skillWork->isForgetConfirm = TRUE;
-        skillWork->changeTarget = skillWork->cursorPos;
-        PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 2 );
-        skillWork->cursorPos = 4;
-        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+        const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
+        const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+skillWork->cursorPos , NULL );
+        const FIELD_SKILL_CHECK_RET skillRet = 
+                  FIELD_SKILL_CHECK_CheckForgetSkill( work->psData->game_data , wazaNo , work->heapId );
+        //忘れていいかチェック
+        if( skillRet == FSCR_OK )
+        {
+          //確認モードへ
+          GFL_CLACTPOS cellPos;
+          skillWork->isForgetConfirm = TRUE;
+          skillWork->changeTarget = skillWork->cursorPos;
+          PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 2 );
+          skillWork->cursorPos = 4;
+          PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
 
-        PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
-        GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
-        GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
+          PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
+          GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
+          GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
 
-        PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
-        PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+          PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
+          PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+        }
+        else
+        {
+          PSTATUS_SKILL_DispForgetError( work , skillWork , skillRet );
+        }
       }
     }
     else
@@ -1694,24 +1722,40 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
             }
             else
             {
-              //確認モードへ
-              GFL_CLACTPOS cellPos;
-              work->ktst = GFL_APP_END_TOUCH;
-              skillWork->isForgetConfirm = TRUE;
-              //一回カーソル位置を変えてから
-              PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
-              skillWork->changeTarget = ret;
-              PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[ret] , 2 );
-              skillWork->cursorPos = 4;
-              //ここでもう一回変える
-              PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+              const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
+              const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+skillWork->cursorPos , NULL );
+              const FIELD_SKILL_CHECK_RET skillRet = 
+                        FIELD_SKILL_CHECK_CheckForgetSkill( work->psData->game_data , wazaNo , work->heapId );
+              //忘れていいかチェック
+              if( skillRet == FSCR_OK )
+              {
+                //確認モードへ
+                GFL_CLACTPOS cellPos;
+                work->ktst = GFL_APP_END_TOUCH;
+                skillWork->isForgetConfirm = TRUE;
+                //一回カーソル位置を変えてから
+                PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
+                skillWork->changeTarget = ret;
+                PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[ret] , 2 );
+                skillWork->cursorPos = 4;
+                //ここでもう一回変える
+                PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
 
-              PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
-              GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
-              GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
+                PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
+                GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
+                GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
 
-              PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
-              PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+                PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
+                PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
+              }
+              else
+              {
+                //一回カーソル位置を変えてから
+                PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
+                skillWork->changeTarget = ret;
+                PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[ret] , 2 );
+                PSTATUS_SKILL_DispForgetError( work , skillWork , skillRet );
+              }
             }
           }
         }
@@ -1896,6 +1940,28 @@ static void PSTATUS_SKILL_ChangeForgetConfirmPlate( PSTATUS_WORK *work , PSTATUS
     PSTATUS_SKILL_ChangeColor( plateWork , 0 );
     PSTA_OAM_ActorSetDrawEnable( plateWork->bmpOam , TRUE );
   }
+}
+
+//--------------------------------------------------------------
+//  忘れられない警告表示
+//--------------------------------------------------------------
+static void PSTATUS_SKILL_DispForgetError( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const FIELD_SKILL_CHECK_RET skillRet )
+{
+  skillWork->isUpdateStrForgetError = TRUE;
+  
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(skillWork->upBmpWin[PSBT_FORGET_ERROR]) , 0 );
+  if( skillRet == FSCR_NO_MACHINE )
+  {
+    PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_FORGET_ERROR] , mes_status_06_30 ,
+                             0 , 0 , PSTATUS_STR_COL_WHITE );
+  }
+  else
+  {
+    PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_FORGET_ERROR] , mes_status_06_31 ,
+                             0 , 0 , PSTATUS_STR_COL_WHITE );
+  }
+  
+  PMSND_PlaySystemSE(PSTATUS_SND_ERROR);
 }
 
 #pragma mark [>SkillPlate

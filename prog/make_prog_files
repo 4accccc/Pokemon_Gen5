@@ -232,7 +232,8 @@ SRCS  +=    $(SOUNDSRC) \
         system/time_icon.c \
         demo/demo3d/demo3d_param.c \
         item/shooter_item.c \
-		poke_tool/poke_memo.c
+		poke_tool/poke_memo.c \
+		field/field_skill_check.c
 
 
 #================================================
