@@ -170,6 +170,8 @@ static void CG_HELP_Init( CG_HELP_WORK *work )
   
   work->page = 0;
   CG_HELP_DispPage( work , work->page );
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
+  GFL_NET_ReloadIcon();
 
 }
 
@@ -395,18 +397,9 @@ static void CG_HELP_LoadResource( CG_HELP_WORK *work )
   {
     arcHandle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR , work->heapId );
 
-    if( MyStatus_GetMySex( work->initWork->myStatus ) == PM_MALE )
-    {
-      work->cellResIdx[CHCR_CGEAR_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , 
-            NARC_c_gear_c_gear_obj_NCLR , CLSYS_DRAW_SUB , 
-            0 , 0 , 15 , work->heapId  );
-    }
-    else
-    {
-      work->cellResIdx[CHCR_CGEAR_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , 
-            NARC_c_gear_c_gear2_obj_NCLR , CLSYS_DRAW_SUB , 
-            0 , 0 , 15 , work->heapId  );
-    }
+    work->cellResIdx[CHCR_CGEAR_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle , 
+          NARC_c_gear_c_gear_obj_NCLR , CLSYS_DRAW_SUB , 
+          0 , 0 , 15 , work->heapId  );
     work->cellResIdx[CHCR_CGEAR_NCG] = GFL_CLGRP_CGR_Register( arcHandle , 
           NARC_c_gear_c_gear_obj_NCGR , FALSE , CLSYS_DRAW_SUB , work->heapId  );
     work->cellResIdx[CHCR_CGEAR_ANM] = GFL_CLGRP_CELLANIM_Register( arcHandle , 
@@ -588,7 +581,7 @@ static void CG_HELP_DispPage( CG_HELP_WORK *work , const u8 page)
 
 static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
 {
-  static const anmArr[CG_HELP_PAGE_MAX] = {8,9,10,0,17,14,38};
+  static const anmArr[CG_HELP_PAGE_MAX] = {8,9,10,39,17,14,38};
   GFL_CLACT_WK_SetAnmSeq( work->clwkIcon , anmArr[page] );
   GFL_CLACT_WK_SetDrawEnable( work->clwkIcon , TRUE );
   
