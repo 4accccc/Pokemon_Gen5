@@ -587,14 +587,14 @@ static FLDEFF_GRASSTYPE getGrassType( MAPATTR_VALUE val )
     type = FLDEFF_GRASS_ALLYEAR;
   }else if( MAPATTR_VALUE_CheckSnowGrassHigh(val) ){
     type = FLDEFF_GRASS_SNOW2;
+  }else if( MAPATTR_VALUE_CheckSnowGrassLow(val) ){
+    type = FLDEFF_GRASS_SNOW;
   }else if( MAPATTR_VALUE_CheckEncountShortGrassHigh(val) ){
     type = FLDEFF_GRASS_SHORT2;
   }else if( MAPATTR_VALUE_CheckEncountLongGrassLow(val) ){
     type = FLDEFF_GRASS_LONG;
   }else if( MAPATTR_VALUE_CheckEncountLongGrassHigh(val) ){
     type = FLDEFF_GRASS_LONG2;
-  }else if( MAPATTR_VALUE_CheckSnowGrassLow(val) ){
-    type = FLDEFF_GRASS_SNOW;
   }
   
   return( type );
