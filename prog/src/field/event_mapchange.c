@@ -52,6 +52,8 @@
 #include "event_appear.h"
 #include "event_disappear.h" 
 #include "savedata/gimmickwork.h"   //for GIMMICKWORK
+#include "field_comm/intrude_main.h"
+#include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
 
 #include "net_app/union/union_main.h" // for UNION_CommBoot
 
@@ -1558,7 +1560,8 @@ GMEVENT* EVENT_ChangeMapToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecFx32
   GMEVENT * event;
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
-
+  VecFx32 calc_pos = *pos;
+  
   //裏フィールド以外から、パレスへ飛ぶ場合通常フィールドへの戻り先を記録しておく
   if (GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE && zone_id == ZONE_ID_PALACE01 )
   {
@@ -1571,7 +1574,25 @@ GMEVENT* EVENT_ChangeMapToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecFx32
 //  event = EVENT_ChangeMapPos(gsys, fieldWork, zone_id, pos, DIR_UP, FALSE);
   {
     LOCATION loc;
-    LOCATION_SetDirect( &loc, zone_id, DIR_UP, pos->x, pos->y, pos->z );
+    int map_offset, palace_area;
+    GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+    
+    if(intcomm == NULL){
+      palace_area = 0;
+      map_offset = 0;
+    }
+    else{
+      //子機の場合、palace_area == 0 が左端、ではなく自分のNetIDのパレスが左端の為。
+      palace_area = intcomm->intrude_status_mine.palace_area;
+      map_offset = palace_area - GAMEDATA_GetIntrudeMyID(gamedata);
+      if(map_offset < 0){
+        map_offset = intcomm->member_num + map_offset;
+      }
+    }
+    calc_pos.x += PALACE_MAP_LEN * map_offset;
+    
+    LOCATION_SetDirect( &loc, zone_id, DIR_UP, calc_pos.x, calc_pos.y, calc_pos.z );
     event = EVENT_ChangeMapPalace( gsys, fieldWork, &loc );
   }
   return event;

@@ -845,6 +845,26 @@ static BOOL _PlayerPosCheck_PalaceBridge(const VecFx32 *player_pos)
 
 //--------------------------------------------------------------
 /**
+ * パレス島の中心付近にいるか、外側にいるかを判定
+ *
+ * @param   player_pos		
+ *
+ * @retval  BOOL		    TRUE:中心の外側　FALSE:中心
+ *
+ * 連結マップの生成タイミングに使用
+ * 隣接したマップが見えないタイミングで連結する
+ */
+//--------------------------------------------------------------
+static BOOL _PlayerPosCheck_PalaceCenter(const VecFx32 *player_pos)
+{
+  if(player_pos->x > 0x308000 || player_pos->x < 0xe8000){
+    return TRUE;  //パレス島の中心から外れている
+  }
+  return FALSE;   //
+}
+
+//--------------------------------------------------------------
+/**
  * パレス通信自動起動ON/OFF処理
  *
  * @param   fieldWork		
@@ -987,7 +1007,7 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   new_area = now_area;
   
   left_end = 0;
-  right_end = PALACE_MAP_LEN * intcomm->member_num;
+  right_end = PALACE_MAP_LEN * (intcomm->connect_map_count + 1);  //intcomm->member_num;
   
   //マップループチェック
   if(pos.x < left_end){// && player_dir == DIR_LEFT){
@@ -1097,7 +1117,7 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
       FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
       FIELD_PLAYER_GetPos( fld_player, &player_pos );
       player_pos.x %= PALACE_MAP_LEN;
-      if(_PlayerPosCheck_PalaceBridge(&player_pos) == TRUE){
+      if(_PlayerPosCheck_PalaceCenter(&player_pos) == TRUE){
         return;
       }
     }

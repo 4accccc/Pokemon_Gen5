@@ -341,12 +341,12 @@ BOOL Intrude_CheckNextPalaceAreaMine(GAME_COMM_SYS_PTR game_comm, const GAMEDATA
   if(dir == DIR_LEFT){
     palace_area--;
     if(palace_area < 0){
-      palace_area = intcomm->member_num - 1;
+      palace_area = intcomm->connect_map_count; //intcomm->member_num - 1;
     }
   }
   else{
     palace_area++;
-    if(palace_area >= intcomm->member_num){
+    if(palace_area >= intcomm->connect_map_count + 1){ //intcomm->member_num){
       palace_area = 0;
     }
   }
@@ -355,4 +355,19 @@ BOOL Intrude_CheckNextPalaceAreaMine(GAME_COMM_SYS_PTR game_comm, const GAMEDATA
     return TRUE;
   }
   return FALSE;
+}
+
+//==================================================================
+/**
+ * グレースケールに変更する必要があるマップかを調べる
+ *
+ * @param   game_comm		
+ * @param   gamedata		
+ *
+ * @retval  BOOL		    TRUE:グレースケールにする必要がある
+ * @retval  BOOL		    FALSE:通常のまま
+ */
+//==================================================================
+BOOL Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, const GAMEDATA *gamedata)
+{
 }
