@@ -20,6 +20,7 @@
 
 #include "gamesystem/game_data.h"
 #include "gamesystem/playerwork.h"
+#include "system/main.h"
 
 #include "field/eventdata_system.h"
 #include "savedata/save_control.h"
@@ -147,12 +148,22 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata);
 //
 //============================================================================================
 //------------------------------------------------------------------
+/*
+ *  @brief  
+ * 
+ *  ※GAMEDATAの初期化に必要なテンポラリ確保に使うヒープは、
+ *  　ローカル変数tmpHeapIDに設定されているものを使用してください
+ *    10.03.26時点で GFL_HEAPID_APPのLowです。
+ */
 //------------------------------------------------------------------
 GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 {
   int i;
   GAMEDATA * gd;
   SITUATION *st;
+
+  //GAMEDATAの初期化に必要なテンポラリ確保に使うヒープはこのtmpHeapIDに統一してください
+  HEAPID  tmpHeapID = GFL_HEAP_LOWID( GFL_HEAPID_APP );
 
   gd = GFL_HEAP_AllocClearMemory(heapID, sizeof(GAMEDATA));
 
@@ -192,7 +203,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->eventwork = SaveControl_DataPtrGet( gd->sv_control_ptr, GMDATA_ID_EVENT_WORK );
   
   //マップマトリックス
-  gd->mapMatrix = MAP_MATRIX_Create( heapID );
+  gd->mapMatrix = MAP_MATRIX_Create( heapID, tmpHeapID );
 
   //動作モデル
   gd->mmdlsys = MMDLSYS_CreateSystem( heapID, MMDL_MDL_MAX, SaveControl_DataPtrGet(gd->sv_control_ptr,GMDATA_ID_ROCKPOS) );
@@ -247,7 +258,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->comm_player_support = COMM_PLAYER_SUPPORT_Alloc(heapID);
 
   //ビーコンステータスワーク生成
-  gd->beacon_status = BEACON_STATUS_Create( heapID );
+  gd->beacon_status = BEACON_STATUS_Create( heapID, tmpHeapID );
 
   // カレンダー生成
   gd->calender = CALENDER_Create( gd, heapID );

@@ -35,7 +35,8 @@ typedef struct _TAG_MAP_MATRIX MAP_MATRIX; ///<MAP_MATRIX
 //======================================================================
 //	extern
 //======================================================================
-extern MAP_MATRIX * MAP_MATRIX_Create( HEAPID heapID );
+extern MAP_MATRIX * MAP_MATRIX_Create( HEAPID heapID, HEAPID tmpHeapID );
+
 extern void MAP_MATRIX_Init(
 	MAP_MATRIX *pMat, const u16 matrix_id, const u16 zone_id );
 extern void MAP_MATRIX_Delete( MAP_MATRIX *pMat );

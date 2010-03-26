@@ -40,6 +40,7 @@ typedef struct
 struct _TAG_MAP_MATRIX
 {
 	HEAPID heapID;
+	HEAPID tmpHeapID;
 	u16 zone_id;
 	u32 matrix_id;
 	
@@ -64,16 +65,21 @@ static int MapMatrix_ChgBlockPos( fx32 pos );
 //--------------------------------------------------------------
 /**
  * MAP_MATRIX生成
- * @param	heapID	ワークを確保するHEAPID
+ * @param	heapID	  ワークを確保するHEAPID
+ * @param	tmpHeapID	テンポラリワークを確保するHEAPID
  * @retval	MAP_MATRIX* MAP_MATRIX*
  */
 //--------------------------------------------------------------
-MAP_MATRIX * MAP_MATRIX_Create( HEAPID heapID )
+MAP_MATRIX * MAP_MATRIX_Create( HEAPID heapID, HEAPID tmpHeapID )
 {
 	MAP_MATRIX *pMat;
-	pMat = GFL_HEAP_AllocClearMemory( heapID, sizeof(MAP_MATRIX) );
-	pMat->heapID = heapID;
-	MI_CpuFill32( pMat->map_res_id_tbl,
+	
+  pMat = GFL_HEAP_AllocClearMemory( heapID, sizeof(MAP_MATRIX) );
+	
+  pMat->heapID = heapID;
+	pMat->tmpHeapID = tmpHeapID;
+	
+  MI_CpuFill32( pMat->map_res_id_tbl,
 		MAP_MATRIX_RES_ID_NON, sizeof(u32)*MAP_MATRIX_MAX );
 	MI_CpuFill32( pMat->zone_id_tbl,
 		MAP_MATRIX_ZONE_ID_NON, sizeof(u16)*MAP_MATRIX_MAX );
@@ -92,7 +98,7 @@ void MAP_MATRIX_Init(
 	MAP_MATRIX *pMat, const u16 matrix_id, const u16 zone_id )
 {
 	void *pMatData = GFL_ARC_LoadDataAlloc(
-		ARCID_FLDMAP_MAPMATRIX, matrix_id, pMat->heapID );
+		ARCID_FLDMAP_MAPMATRIX, matrix_id, pMat->tmpHeapID );
 	MapMatrix_SetData( pMat, pMatData, matrix_id, zone_id );
 	GFL_HEAP_FreeMemory( pMatData );
 }

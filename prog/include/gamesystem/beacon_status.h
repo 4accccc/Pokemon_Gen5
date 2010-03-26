@@ -25,7 +25,7 @@ extern BEACON_STATUS* GAMEDATA_GetBeaconStatus( GAMEDATA * gamedata );
 /*
  *  @brief  ビーコンステータスワーク生成
  */
-extern BEACON_STATUS* BEACON_STATUS_Create( HEAPID heapID );
+extern BEACON_STATUS* BEACON_STATUS_Create( HEAPID heapID, HEAPID tmpHeapID );
 
 /*
  *  @brief  ビーコンステータスワーク破棄
@@ -47,4 +47,8 @@ extern u8  BEACON_STATUS_GetViewTopOffset( BEACON_STATUS* wk );
  */
 extern void BEACON_STATUS_SetViewTopOffset( BEACON_STATUS* wk, u8 ofs );
 
+/*
+ *  @brief  フリーワードバッファのアドレスを取得
+ */
+extern STRBUF* BEACON_STATUS_GetFreeWordBuffer( BEACON_STATUS* wk );
 
