@@ -67,6 +67,7 @@ static int GetVolume( const ISS_SWITCH* sw ); // スイッチの状態からBGMのトラック
 static void SetBGMVolume( const ISS_SWITCH* sw, int priorVolume ); // スイッチの状態をBGMボリュームに反映させる
 static BOOL CheckSwitchFade( const ISS_SWITCH* sw ); // フェード中かどうかを判定する
 static BOOL CheckSwitchOn( const ISS_SWITCH* sw ); // スイッチが押されているかどうかを判定する
+static BOOL CheckSwitchOff( const ISS_SWITCH* sw ); // スイッチが押されていないかどうかを判定する
 static void IncFadeCount( ISS_SWITCH* sw ); // フェードカウンタをインクリメントする
 static BOOL CheckFadeFinish( const ISS_SWITCH* sw ); // フェードが完了したかどうかをチェックする
 static void SwitchMain( ISS_SWITCH* sw ); // スイッチのメイン動作
@@ -460,6 +461,10 @@ static void SwitchMain_FADEOUT( ISS_SWITCH* sw )
 //-------------------------------------------------------------------------------
 static void SwitchOn( ISS_SWITCH* sw )
 {
+  // すでに押されている
+  if( CheckSwitchOn(sw) == TRUE ) { return; }
+
+  // ステートを変更
   SetSwitchState( sw, SWITCH_STATE_FADEIN ); 
 
 #ifdef DEBUG_MODE
@@ -476,6 +481,10 @@ static void SwitchOn( ISS_SWITCH* sw )
 //-------------------------------------------------------------------------------
 static void SwitchOff( ISS_SWITCH* sw )
 {
+  // すでに離されている
+  if( CheckSwitchOff(sw) == TRUE ) { return; }
+
+  // ステートを変更
   SetSwitchState( sw, SWITCH_STATE_FADEOUT );
 
 #ifdef DEBUG_MODE
@@ -646,8 +655,32 @@ static BOOL CheckSwitchOn( const ISS_SWITCH* sw )
   switch( GetSwitchState( sw ) ) {
   case SWITCH_STATE_ON:      return TRUE;
   case SWITCH_STATE_OFF:     return FALSE;
-  case SWITCH_STATE_FADEIN:  return FALSE;
+  case SWITCH_STATE_FADEIN:  return TRUE;
   case SWITCH_STATE_FADEOUT: return FALSE;
+  default: GF_ASSERT(0);
+  }
+
+  GF_ASSERT(0);
+  return FALSE;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief スイッチが押されていないかどうかを判定する
+ *
+ * @param sw
+ *
+ * @return スイッチが押されていない場合 TRUE
+ *         そうでなければ FALSE
+ */
+//-------------------------------------------------------------------------------
+static BOOL CheckSwitchOff( const ISS_SWITCH* sw )
+{
+  switch( GetSwitchState( sw ) ) {
+  case SWITCH_STATE_ON:      return FALSE;
+  case SWITCH_STATE_OFF:     return TRUE;
+  case SWITCH_STATE_FADEIN:  return FALSE;
+  case SWITCH_STATE_FADEOUT: return TRUE;
   default: GF_ASSERT(0);
   }
 
