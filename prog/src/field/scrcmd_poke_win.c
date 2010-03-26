@@ -105,7 +105,7 @@ static void PutPokeWin( POKE_WIN_WORK * wk )
 	wk->PokeWin = GFL_BMPWIN_Create(
 									POKEWIN_FRM, POKEWIN_PX, POKEWIN_PY,
 									POKEWIN_SX, POKEWIN_SY, POKEWIN_PAL, GFL_BMP_CHRAREA_GET_B );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->PokeWin), 0xff);
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->PokeWin), 0x11);
 	GFL_BMPWIN_TransVramCharacter( wk->PokeWin );
 	GFL_BMPWIN_MakeScreen( wk->PokeWin );
 	BmpWinFrame_Write( wk->PokeWin, WINDOW_TRANS_ON_V, POKEWIN_CGX, POKEWIN_PAL );
