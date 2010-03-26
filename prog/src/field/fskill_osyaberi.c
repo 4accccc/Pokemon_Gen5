@@ -79,7 +79,7 @@ typedef struct {
 	u32	voicePlayer;
 	BOOL	recFlag;
 
-	void * testBuff;
+//	void * testBuff;
 
 //	u8	subSeq;
 //	u8	bgPri[4];
@@ -97,7 +97,7 @@ typedef struct {
 #define	POKEWIN_PY		( 3 )
 #define	POKEWIN_SX		( 12 )
 #define	POKEWIN_SY		( 12 )
-#define	POKEWIN_PAL		( 13 )
+#define	POKEWIN_PAL		( 0 )
 #define	POKEWIN_CGX		( 1 )
 
 
@@ -294,10 +294,14 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 
 	case SEQ_VOICE_PLAY:		// Ä¶
 		{
+#if 0
 			PMV_REF	pmvRef;
 	    PMV_MakeRefDataMine( &pmvRef );
 //			OS_Printf( "addr = 0x%08x\n", wk->sv );
 			wk->voicePlayer = PMVOICE_Play( MONSNO_PERAPPU, 0, 64, FALSE, 0, 0, FALSE, (u32)&pmvRef );
+#else
+			wk->voicePlayer = PMVOICE_Play( MONSNO_PERAPPU, 0, 64, FALSE, 0, 0, FALSE, NULL );
+#endif
 /*
 			wk->voicePlayer = PMV_DBG_CustomVoicePlay(
 													(void*)MATH_ROUNDUP32( (int)(wk->testBuff) ),
@@ -312,7 +316,7 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 
 	case SEQ_VOICE_WAIT:		// –Â‚«ºI—¹‘Ò‚¿
 		if( PMVOICE_CheckPlay( wk->voicePlayer ) == FALSE ){
-			GFL_HEAP_FreeMemory( wk->testBuff );
+//			GFL_HEAP_FreeMemory( wk->testBuff );
 			*seq = SEQ_RELEASE;
 		}
 		break;
@@ -433,10 +437,14 @@ static BOOL MainPerapAnm( OSYABERI_WORK * wk )
 
 static void PutPokeWin( OSYABERI_WORK * wk )
 {
+	GFL_ARC_UTIL_TransVramPaletteEx(
+		ARCID_FLDMAP_WINFRAME,
+		BmpWinFrame_WinPalArcGet( MENU_TYPE_SYSTEM ),
+		PALTYPE_MAIN_BG, 0x20*0, POKEWIN_PAL*0x20, 0x20, HEAPID_FIELDMAP );
 	wk->pokeWin = GFL_BMPWIN_Create(
 									POKEWIN_FRM, POKEWIN_PX, POKEWIN_PY,
 									POKEWIN_SX, POKEWIN_SY, POKEWIN_PAL, GFL_BMP_CHRAREA_GET_B );
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->pokeWin), 0xff);
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->pokeWin), 0x11 );
 	GFL_BMPWIN_TransVramCharacter( wk->pokeWin );
 	GFL_BMPWIN_MakeScreen( wk->pokeWin );
 	BmpWinFrame_Write( wk->pokeWin, WINDOW_TRANS_ON_V, POKEWIN_CGX, POKEWIN_PAL );
