@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-17T14:45:25"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T18:30:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -358,7 +358,7 @@
 ちっとも　理解できないね▼</language>
 	</row>
 
-	<row id="msg_d05_workman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_d05_workman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・GRIDX=174、GRIDZ=459
 ・仮メッセージ</comment>
@@ -369,7 +369,7 @@
 冷凍コンテナに　行けるべ</language>
 	</row>
 
-	<row id="msg_d05_trainerm_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d05_trainerm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・GRIDX=205、GRIDZ=453
 ・仮メッセージ</comment>
@@ -382,6 +382,39 @@
 たくさんの　荷物は　船で▼
 どんな　ことにも
 ベストな　やり方が　あるものさ</language>
+	</row>
+
+	<row id="msg_d05_workman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No563「ゴツゴツメット」</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">ヘルメットは　しょうげきから
+まもってくれる　だいじな　どうぐ！▼
+きみの　ポケモンにも
+もたせると　いいだろう！▼</language>
+		<language name="JPN_KANJI" width="256">ヘルメットは　衝撃から
+守ってくれる　重要な　道具！▼
+きみの　ポケモンにも
+持たせると　いいだろう！▼</language>
+	</row>
+
+	<row id="msg_d05_workman1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">WORKMAN</attribute>
+		<language name="JPN" width="256">ゴツゴツメットは　ふしぎな　どうぐ
+ポケモンに　もたせておくと▼
+だげきわざを　うけたとき
+あいてにも　ダメージを　あたえるぞ▼
+……だげきわざ　ってのは
+ちょくせつ　なぐったりする　わざだぞ！</language>
+		<language name="JPN_KANJI" width="256">ゴツゴツメットは　不思議な　道具！
+ポケモンに　持たせておくと▼
+打撃技を　受けたとき
+相手にも　ダメージを　あたえるぞ▼
+……打撃技ってのは
+直接　殴ったりする　技だぞ！</language>
 	</row>
 
 	<flowchart-group-list>
