@@ -32,7 +32,7 @@
 ///EXTRA領域でストリーミングが使用するセーブサイズ
 #define SAVESIZE_EXTRA_STREAMING    (SAVE_SECTOR_SIZE * 32)  //128Kbyte
 ///EXTRA領域で図鑑壁紙が使用するセーブサイズ
-#define SAVESIZE_EXTRA_ZUKAN_WALLPAPER    (SAVE_SECTOR_SIZE * 7)  //CGX6000 + PLTT1000
+#define SAVESIZE_EXTRA_ZUKAN_WALLPAPER    (0x6800)  //(0x7000)  //CGX6000 + PLTT1000
 ///EXTRA領域で殿堂入りが使用するセーブサイズ
 #define SAVESIZE_EXTRA_DENDOU             (0x1800)
 
