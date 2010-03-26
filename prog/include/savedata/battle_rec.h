@@ -235,10 +235,10 @@ extern void BattleRec_Coded(void *data,u32 size,u32 code);
 //      ※battle_recorderオーバーレイ領域に配置されているので注意!
 //==============================================================================
 extern void BattleRecTool_ErrorStrCheck(BATTLE_REC_SAVEDATA *src, BATTLE_PARAM *bp, int heap_id);
-extern SAVE_RESULT BattleRec_GDS_RecvData_Save(SAVE_CONTROL_WORK *sv, int num, u8 secure, u16 *work0, u16 *work1);
+extern SAVE_RESULT BattleRec_GDS_RecvData_Save(SAVE_CONTROL_WORK *sv, int num, u8 secure, u16 *work0, u16 *work1, HEAPID heap_id);
 extern void BattleRec_GDS_SendData_Conv(SAVE_CONTROL_WORK *sv);
-extern SAVE_RESULT BattleRec_GDS_MySendData_DataNumberSetSave(SAVE_CONTROL_WORK *sv, u64 data_number, u16 *work0, u16 *work1);
-extern SAVE_RESULT BattleRec_SecureSetSave(SAVE_CONTROL_WORK *sv, int num);
+extern SAVE_RESULT BattleRec_GDS_MySendData_DataNumberSetSave(SAVE_CONTROL_WORK *sv, u64 data_number, u16 *work0, u16 *work1, HEAPID heap_id);
+extern SAVE_RESULT BattleRec_SecureSetSave(SAVE_CONTROL_WORK *sv, int num, u16 *work0, u16 *work1, HEAPID heap_id);
 
 #ifdef PM_DEBUG
 extern void DEBUG_BattleRec_SecureFlagSet(SAVE_CONTROL_WORK *sv);

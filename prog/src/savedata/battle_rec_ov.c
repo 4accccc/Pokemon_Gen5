@@ -41,7 +41,7 @@
 //==============================================================================
 //	
 //==============================================================================
-extern u32 * brs;
+extern BATTLE_REC_SAVEDATA * brs;
 
 
 
@@ -56,7 +56,9 @@ extern u32 * brs;
 //--------------------------------------------------------------
 void BattleRecTool_ErrorStrCheck(BATTLE_REC_SAVEDATA *src, BATTLE_PARAM *bp, int heap_id)
 {
-#if 0 //※check　録画データの内容が未確定の為、保留　2009.11.09(月)
+#if 1 //※check　サーバーでチェックされるような不正の為、無くした 2010.03.26(金)
+  return;
+#else
 	BATTLE_REC_WORK *rec = &src->rec;
 	BATTLE_REC_HEADER *head = &src->head;
 	int client_max, temoti_max, client, temoti;
@@ -174,9 +176,8 @@ static void ErrorNameSet(STRBUF *dest_str, int heap_id)
  * 内部で暗号化してからセーブを行う
  */
 //--------------------------------------------------------------
-SAVE_RESULT BattleRec_GDS_RecvData_Save(SAVE_CONTROL_WORK *sv, int num, u8 secure, u16 *work0, u16 *work1)
+SAVE_RESULT BattleRec_GDS_RecvData_Save(SAVE_CONTROL_WORK *sv, int num, u8 secure, u16 *work0, u16 *work1, HEAPID heap_id)
 {
-#if 0 //※check
 	SAVE_RESULT result;
 	
 	switch(*work0){
@@ -187,7 +188,7 @@ SAVE_RESULT BattleRec_GDS_RecvData_Save(SAVE_CONTROL_WORK *sv, int num, u8 secur
 			brs->head.secure = secure;
 			//secureフラグが更新されたので、再度CRCを作り直す
 			brs->head.magic_key = REC_OCC_MAGIC_KEY;
-			brs->head.crc.crc16ccitt_hash = SaveData_CalcCRC(sv, &brs->head, 
+			brs->head.crc.crc16ccitt_hash = GFL_STD_CrcCalc(&brs->head, 
 				sizeof(BATTLE_REC_HEADER) - GDS_CRC_SIZE - DATANUMBER_SIZE);
 		}
 		
@@ -198,13 +199,10 @@ SAVE_RESULT BattleRec_GDS_RecvData_Save(SAVE_CONTROL_WORK *sv, int num, u8 secur
 		(*work0)++;
 		break;
 	case 1:
-		result = Local_BattleRecSave(sv, brs, num, work1);
+		result = Local_BattleRecSave(sv, brs, num, work1, heap_id);
 		return result;
 	}
 	return SAVE_RESULT_CONTINUE;
-#else
-  return SAVE_RESULT_OK;
-#endif
 }
 
 //--------------------------------------------------------------
@@ -222,11 +220,9 @@ void BattleRec_GDS_SendData_Conv(SAVE_CONTROL_WORK *sv)
 {
 	GF_ASSERT(brs);
 	
-#if 0 //※check
 	//※brsに展開されているデータは、本体が複合化されているので送信前に再度暗号化を行う
 	BattleRec_Coded(&brs->rec, sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE, 
 		brs->rec.crc.crc16ccitt_hash + ((brs->rec.crc.crc16ccitt_hash ^ 0xffff) << 16));
-#endif
 }
 
 //--------------------------------------------------------------
@@ -242,9 +238,8 @@ void BattleRec_GDS_SendData_Conv(SAVE_CONTROL_WORK *sv)
  * @retval	SAVE_RESULT_NG		セーブ失敗
  */
 //--------------------------------------------------------------
-SAVE_RESULT BattleRec_GDS_MySendData_DataNumberSetSave(SAVE_CONTROL_WORK *sv, u64 data_number, u16 *work0, u16 *work1)
+SAVE_RESULT BattleRec_GDS_MySendData_DataNumberSetSave(SAVE_CONTROL_WORK *sv, u64 data_number, u16 *work0, u16 *work1, HEAPID heap_id)
 {
-#if 0 //※check
 	SAVE_RESULT result;
 
 	switch(*work0){
@@ -258,56 +253,52 @@ SAVE_RESULT BattleRec_GDS_MySendData_DataNumberSetSave(SAVE_CONTROL_WORK *sv, u6
 	case 1:
 		//送信時に行っているBattleRec_GDS_SendData_Conv関数で既に暗号化しているはずなので
 		//そのままセーブを行う
-		result = Local_BattleRecSave(sv, brs, LOADDATA_MYREC, work1);
+		result = Local_BattleRecSave(sv, brs, LOADDATA_MYREC, work1, heap_id);
 		return result;
 	}
 	return SAVE_RESULT_CONTINUE;
-#else
-  return SAVE_RESULT_OK;
-#endif
 }
 
 //--------------------------------------------------------------
 /**
  * @brief   バトルレコーダー(オフライン)でビデオを見た後、brsに読み込んでいるバトルビデオに
- * 			視聴済みフラグをセットしてセーブする(一括セーブ)
+ * 			視聴済みフラグをセットしてセーブする
  * 			※通常セーブ込み
  *
  * @param   sv		セーブデータへのポインタ
  * @param	num		セーブするデータナンバー（LOADDATA_MYREC、LOADDATA_DOWNLOAD0、LOADDATA_DOWNLOAD1…）
+ * @param   work		セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
+ * @param   work		セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
  *
  * @retval  SAVE_RESULT_???
  *
  * 内部で本体の暗号化処理を行う為、この関数以後はbrsは解放してください。
  */
 //--------------------------------------------------------------
-SAVE_RESULT BattleRec_SecureSetSave(SAVE_CONTROL_WORK *sv, int num)
+SAVE_RESULT BattleRec_SecureSetSave(SAVE_CONTROL_WORK *sv, int num, u16 *work0, u16 *work1, HEAPID heap_id)
 {
 	SAVE_RESULT result;
 
-	GF_ASSERT(brs != NULL);
-	
-#if 0 //※check
-	brs->head.secure = TRUE;
-	//secureフラグが更新されたので、再度CRCを作り直す
-	brs->head.magic_key = REC_OCC_MAGIC_KEY;
-	brs->head.crc.crc16ccitt_hash = SaveData_CalcCRC(sv, &brs->head, 
-		sizeof(BATTLE_REC_HEADER) - GDS_CRC_SIZE - DATANUMBER_SIZE);
+  switch(*work0){
+  case 0:
+  	GF_ASSERT(brs != NULL);
+  	
+  	brs->head.secure = TRUE;
+  	//secureフラグが更新されたので、再度CRCを作り直す
+  	brs->head.magic_key = REC_OCC_MAGIC_KEY;
+  	brs->head.crc.crc16ccitt_hash = GFL_STD_CrcCalc(&brs->head, 
+  		sizeof(BATTLE_REC_HEADER) - GDS_CRC_SIZE - DATANUMBER_SIZE);
 
-	//CRCをキーにして暗号化
-	BattleRec_Coded(&brs->rec, sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE, 
-		brs->rec.crc.crc16ccitt_hash + ((brs->rec.crc.crc16ccitt_hash ^ 0xffff) << 16));
-	
-	sys_SoftResetNG(SOFTRESET_TYPE_VIDEO);
-	result = SaveData_Extra_SaveBattleRecData(sv, brs, num);
-	if(result == SAVE_RESULT_OK){
-		result = SaveData_Save(sv);
+  	//CRCをキーにして暗号化
+  	BattleRec_Coded(&brs->rec, sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE, 
+  		brs->rec.crc.crc16ccitt_hash + ((brs->rec.crc.crc16ccitt_hash ^ 0xffff) << 16));
+    (*work0)++;
+    break;
+  case 1:
+	  result = Local_BattleRecSave(sv, brs, num, work1, heap_id);
+	  return result;
 	}
-	sys_SoftResetOK(SOFTRESET_TYPE_VIDEO);
-	return result;
-#else
-  return SAVE_RESULT_OK;
-#endif
+	return SAVE_RESULT_CONTINUE;
 }
 
 
@@ -324,12 +315,10 @@ void DEBUG_BattleRec_SecureFlagSet(SAVE_CONTROL_WORK *sv)
 {
 	GF_ASSERT(brs != NULL);
 	
-#if 0 //※check
 	brs->head.secure = TRUE;
 	//secureフラグが更新されたので、再度CRCを作り直す
 	brs->head.magic_key = REC_OCC_MAGIC_KEY;
-	brs->head.crc.crc16ccitt_hash = SaveData_CalcCRC(sv, &brs->head, 
+	brs->head.crc.crc16ccitt_hash = GFL_STD_CrcCalc(&brs->head, 
 		sizeof(BATTLE_REC_HEADER) - GDS_CRC_SIZE - DATANUMBER_SIZE);
-#endif
 }
 #endif	//PM_DEBUG
