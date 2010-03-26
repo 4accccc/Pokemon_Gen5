@@ -175,7 +175,7 @@ BOOL CemSend_Entry(const MYSTATUS *myst, BOOL force_entry, BOOL comm_mp)
 static void _CemRecv_EntryOK(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
   COMM_ENTRY_MENU_PTR em = pWork;
-  const MYSTATUS *myst;
+  const MYSTATUS *myst = pData;
   
   OS_TPrintf("Recv : EntryOK = %d\n", netID);
   CommEntryMenu_SetEntryAnswer(em, ENTRY_PARENT_ANSWER_OK, myst);
