@@ -430,17 +430,17 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     (FUNC_GET_SIZE)THSV_GetWorkSize,
     (FUNC_INIT_WORK)THSV_Init,
   },
+  { //ゲームクリアてもちポケモンデータ
+    GMDATA_ID_GAMECLEAR_POKE,
+    (FUNC_GET_SIZE)GameClearData_GetWorkSize,
+    (FUNC_INIT_WORK)GameClearData_Init,
+  },
   { //交換ポケモンのその後
     GMDATA_ID_TRPOKE_AFTER,
     (FUNC_GET_SIZE)TRPOKE_AFTER_SV_GetWorkSize,
     (FUNC_INIT_WORK)TRPOKE_AFTER_SV_Init,
   },
 
-  { //ゲームクリアてもちポケモンデータ
-    GMDATA_ID_GAMECLEAR_POKE,
-    (FUNC_GET_SIZE)GameClearData_GetWorkSize,
-    (FUNC_INIT_WORK)GameClearData_Init,
-  },
 };
 
 //--------------------------------------------------------------
