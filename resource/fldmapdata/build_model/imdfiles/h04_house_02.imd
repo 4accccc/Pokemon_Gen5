@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-03-22T20:50:34" source="h04_house_02_v00.ma"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-03-24T18:16:27" source="h04_house_02_v00.ma"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-03-22T20:50:34" source="h04_house_02_v00.ma"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-03-24T18:16:27" source="h04_house_02_v00.ma"/>
 <original_generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 
 <model_info
@@ -141,21 +141,21 @@
 			f3f5 f6f5 f6f6 f6f6 f3f5 f6f5 f6f6 f6f6
 			f3f6 eaea e4e1 e6e6 e6e6 e6e6 e6e6 e4e6
 			e6e4 e6e6 e4e6 e4e4 e6e4 e6e6 e4e6 e4e4
-			e9e9 e9e9 e9e9 e9e9 e9e9 e9e9 e9e9 e9e9
-			e9e9 e9e9 e9e9 e9e9 e9e9 e9e9 e9e9 e9e9
-			e9e9 eaea e4e1 e4e4 e4e4 e4e4 e4e4 e4e4
+			f2f2 f5f5 f5f5 f5f5 f3f5 f5f5 f5f5 f5f5
+			f3f5 f5f5 f5f5 f5f5 f3f5 f5f5 f5f5 f5f5
+			f3f5 eaea e4e1 e4e4 e4e4 e4e4 e4e4 e4e4
 			e6e4 e6e6 e4e6 e4e4 e6e4 e6e6 e4e6 e4e4
-			ecec ecec ecec ecec ecec ecec ecec ecec
-			ecec ecec ecec ecec ecec ecec ecec ecec
-			ecec eaea e4e1 e6e6 e6e6 e6e6 e6e6 e4e6
+			f2f2 f2f2 f2f2 f2f2 f3f2 f3f3 f3f3 f3f2
+			f2f2 f3f3 f2f3 f2f2 f3f3 f3f3 f3f3 f2f2
+			f2f2 eaea e4e1 e6e6 e6e6 e6e6 e6e6 e4e6
 			e6e4 e6e6 e4e6 e4e4 e6e4 e6e6 e4e6 e4e4
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7 e7e7
-			e7e7 eaea e4e1 eae6 eaea eaea eaea e4ea
+			f5f5 f5f5 f5f2 f5f5 f5f5 f5f5 f5f3 f5f5
+			f5f5 f5f5 f5f2 f5f5 f5f5 f5f5 f5f3 f5f5
+			f5f5 eaea e4e1 eae6 eaea eaea eaea e4ea
 			e6e4 e6e6 e4e6 e4e4 e6e4 e6e6 e4e6 e4e4
-			e9e9 e9e9 e9e9 e9e9 e9e9 e9e9 e9e9 e9e9
-			e9e9 e9e9 e9e9 e9e9 e9e9 e9e9 e9e9 e9e9
-			e9e9 eaea e4e1 e4e4 e4e4 e4e4 e4e4 e4e4
+			f6f6 f5f6 f5f2 f6f6 f6f6 f5f6 f5f3 f6f6
+			f6f6 f5f6 f5f3 f6f6 f6f6 f5f6 f5f3 f6f6
+			f6f6 eaea e4e1 e4e4 e4e4 e4e4 e4e4 e4e4
 			e4e4 e3e3 e3e3 e4e4 e6e4 e3e3 e4e3 e4e4
 			f6f6 f5f6 f5f2 f6f6 f6f6 f5f6 f5f2 f6f6
 			f6f6 f5f6 f5f3 f6f6 f6f6 f5f6 f5f3 f6f6
@@ -352,7 +352,7 @@
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="31 31 31"
+		ambient="24 24 24"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -443,6 +443,41 @@
 
 <polygon_array size="4">
 	<polygon index="0" name="polygon0"
+		vertex_size="8" polygon_size="2"
+		triangle_size="0" quad_size="2"
+		volume_min="-1.367432 0.960938 1.000000"
+		volume_max="1.367432 1.757813 1.000000"
+		volume_r="2.441406"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="8">
+					<mtx idx="0"/>
+					<tex st="0.000000 0.062500"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_xyz xyz="-1.367432 1.757813 1.000000"/>
+					<tex st="0.000000 16.000000"/>
+					<pos_xy xy="-1.367432 0.960938"/>
+					<tex st="16.000000 16.000000"/>
+					<pos_xy xy="-0.570557 0.960938"/>
+					<tex st="16.000000 0.062500"/>
+					<pos_xy xy="-0.570557 1.757813"/>
+					<tex st="15.687500 16.000000"/>
+					<pos_xy xy="1.367432 0.960938"/>
+					<tex st="15.687500 0.062500"/>
+					<pos_xy xy="1.367432 1.757813"/>
+					<tex st="-0.312500 0.062500"/>
+					<pos_xy xy="0.570557 1.757813"/>
+					<tex st="-0.312500 16.000000"/>
+					<pos_xy xy="0.570557 0.960938"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="1" name="polygon1"
 		vertex_size="14" polygon_size="5"
 		triangle_size="0" quad_size="5"
 		volume_min="-2.500000 0.125000 -2.500000"
@@ -484,41 +519,6 @@
 					<tex st="4.000000 7.000000"/>
 					<pos_xz xz="2.000000 1.000000"/>
 					<pos_xy xy="-2.000000 0.125000"/>
-				</primitive>
-			</primitive_array>
-		</mtx_prim>
-	</polygon>
-	<polygon index="1" name="polygon1"
-		vertex_size="8" polygon_size="2"
-		triangle_size="0" quad_size="2"
-		volume_min="-1.367432 0.960938 1.000000"
-		volume_max="1.367432 1.757813 1.000000"
-		volume_r="2.441406"
-		mtx_prim_size="1"
-		nrm_flag="on" clr_flag="off" tex_flag="on"
-	>
-		<mtx_prim index="0">
-			<mtx_list size="1">0</mtx_list>
-			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="8">
-					<mtx idx="0"/>
-					<tex st="0.000000 0.062500"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xyz xyz="-1.367432 1.757813 1.000000"/>
-					<tex st="0.000000 16.000000"/>
-					<pos_xy xy="-1.367432 0.960938"/>
-					<tex st="16.000000 16.000000"/>
-					<pos_xy xy="-0.570557 0.960938"/>
-					<tex st="16.000000 0.062500"/>
-					<pos_xy xy="-0.570557 1.757813"/>
-					<tex st="15.687500 16.000000"/>
-					<pos_xy xy="1.367432 0.960938"/>
-					<tex st="15.687500 0.062500"/>
-					<pos_xy xy="1.367432 1.757813"/>
-					<tex st="-0.312500 0.062500"/>
-					<pos_xy xy="0.570557 1.757813"/>
-					<tex st="-0.312500 16.000000"/>
-					<pos_xy xy="0.570557 0.960938"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -908,7 +908,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface26" kind="mesh"
+	<node index="0" name="polySurface28" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -928,8 +928,8 @@
 	>
 		<display index="0" material="0" polygon="2" priority="0"/>
 		<display index="1" material="1" polygon="3" priority="0"/>
-		<display index="2" material="2" polygon="0" priority="0"/>
-		<display index="3" material="3" polygon="1" priority="0"/>
+		<display index="2" material="2" polygon="1" priority="0"/>
+		<display index="3" material="3" polygon="0" priority="0"/>
 	</node>
 </node_array>
 
