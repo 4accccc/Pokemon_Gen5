@@ -33,6 +33,9 @@ extern  int TRCSave_GetTrainerViewChange( TR_CARD_SV_PTR outTrCard );
 // 性格（トレーナーカードで表示される）
 extern void TRCSave_SetPersonarity( TR_CARD_SV_PTR inTrCard, int personarity );
 extern  int TRCSave_GetPersonarity( TR_CARD_SV_PTR outTrCard );
+// サインアニメ
+extern void TRCSave_SetSignAnime( TR_CARD_SV_PTR inTrCard, int flag );
+extern  int TRCSave_GetSignAnime( TR_CARD_SV_PTR outTrCard );
 
 
 
