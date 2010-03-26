@@ -35,6 +35,8 @@
 
 #include "event_bsubway.h"
 
+#include "effect_encount.h"
+
 FS_EXTERN_OVERLAY(pokelist);
 
 //======================================================================
@@ -695,12 +697,23 @@ static GMEVENT_RESULT bsw_CommBattleMain( GMEVENT *event, int *seq, void *wk )
     (*seq)++;
     break;
   case 1:
+    #if 0
     {
       GMEVENT* fade_event;
       fade_event = EVENT_FieldFadeOut_Black(
           gsys, work->fieldmap, FIELD_FADE_WAIT );
       GMEVENT_CallEvent(event, fade_event);
     }
+    #else
+    {
+      FIELDMAP_WORK *fieldmap = work->fieldmap;
+      
+      //エフェクトエンカウト　エフェクト復帰キャンセル
+      EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap) );
+      ENCEFF_SetEncEff(
+        FIELDMAP_GetEncEffCntPtr(work->fieldmap), event, ENCEFFID_SUBWAY );
+    }
+    #endif
     (*seq)++;
     break;
   case 2:

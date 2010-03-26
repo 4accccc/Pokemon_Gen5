@@ -815,14 +815,10 @@ _RET
 //--------------------------------------------------------------
 sub_receipt_challenge_multi_comm_connect_group:
 {
-/*
   //子参加メニュー
   _BSUBWAY_TOOL( BSWSUB_COMM_ENTRY_CHILD_MENU, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-*/  
-  //親参加メニュー
-  _BSUBWAY_TOOL( BSWSUB_COMM_IRC_ENTRY, BSW_NULL, BSW_NULL, BSW_NULL )
   $SCWK_ANSWER = BSWAY_COMM_PERENT_ENTRY_ERROR
-
+  
   SWITCH $SCWK_ANSWER
   CASE BSWAY_COMM_CHILD_ENTRY_OK THEN //OK
     $SCWK_ANSWER = TRUE

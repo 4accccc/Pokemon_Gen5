@@ -386,7 +386,7 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
 //dst->commSupport  = GAMEDATA_GetCommPlayerSupportPtr( gdata );
   dst->commSupport  = NULL;
   
-  dst->musicDefault = SEQ_BGM_VS_NORAPOKE;
+  dst->musicDefault = SEQ_BGM_VS_SUBWAY_TRAINER;
   dst->musicPinch = SEQ_BGM_BATTLEPINCH;
   dst->result = BTL_RESULT_WIN;
   

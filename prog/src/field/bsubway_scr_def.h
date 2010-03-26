@@ -14,11 +14,11 @@
 //  define
 //======================================================================
 #ifdef DEBUG_ONLY_FOR_kagaya
-#define DEBUG_BSW_CLEAR_1 //定義で1回戦闘のみでクリア
+//#define DEBUG_BSW_CLEAR_1 //定義で1回戦闘のみでクリア
 //#define DEBUG_BSW_COMM_MULTI_BTL_SKIP //定義で通信マルチバトルをスキップ
 //#define DEBUG_BSW_BTL_SKIP //定義で戦闘スキップ
 //#define DEBUG_BSW_NORMAL_CLEAR //定義で即ノーマルクリア
-#define DEBUG_BSW_FORCE_BTL_WIN //定義で強制勝ち状態
+//#define DEBUG_BSW_FORCE_BTL_WIN //定義で強制勝ち状態
 #define DEBUG_BSW_COMM_IGNORE_POKE_OVERLAP //定義で通信ポケモン被り無視
 //#define DEBUG_BSW_REGU_NONE //定義でレギュ無視
 #endif
