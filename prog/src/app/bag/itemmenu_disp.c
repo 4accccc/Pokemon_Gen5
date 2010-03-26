@@ -1586,9 +1586,9 @@ static GFL_CLACTPOS pokectCellPos[]={
 static const u8 BagSoftPriority[] = {
 	14,		// どうぐ
 	12,		// かいふく
-	18,		// わざマシン
-	10,		// きのみ
-	20		// たいせつなもの
+	10,		// わざマシン
+	12,		// きのみ
+	16		// たいせつなもの
 };
 static const u8 BagAnime[][2] =
 {	// 開, 閉
