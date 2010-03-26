@@ -19,8 +19,8 @@
 #define C04R0404_RANDOM_03                 7
 #define C04R0404_BASKETM_01                8
 #define C04R0404_BASKETM_02                9
-#define C04R0404_BASKETM_03               10
-#define C04R0404_BOY2_01                  11
+#define C04R0404_FAN_01_2                 10
+#define C04R0404_FAN_02_2                 11
 
 #endif //ZONE_C04R0404_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0404.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

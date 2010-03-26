@@ -13,7 +13,7 @@
 #define C04R0303_RANDOM_02                 1
 #define C04R0303_RANDOM_03                 2
 #define C04R0303_FAN_01                    3
-#define C04R0303_FAN_02                    4
+#define C04R0303_FAN_02_2                  4
 #define C04R0303_TRAINER_01                5
 #define C04R0303_TRAINER_02                6
 #define C04R0303_TRAINER_03                7
@@ -32,7 +32,12 @@
 #define C04R0303_FOOTBALLM_11             20
 #define C04R0303_FOOTBALLM_13             21
 #define C04R0303_FOOTBALLM_12             22
-#define C04R0303_FOOTBALLM_01             23
+#define C04R0303_FAN_01_2                 23
+#define C04R0303_FAN_02                   24
+#define C04R0303_CORN_01                  25
+#define C04R0303_CORN_02                  26
+#define C04R0303_CORN_03                  27
+#define C04R0303_GENTLEMAN_01             28
 
 #endif //ZONE_C04R0303_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0303.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

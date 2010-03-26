@@ -21,6 +21,8 @@
 #define C04R0403_TENNISW_02                9
 #define C04R0403_BOY2_01                  10
 #define C04R0403_BOY2_02                  11
+#define C04R0403_FAN_01_2                 12
+#define C04R0403_FAN_02_2                 13
 
 #endif //ZONE_C04R0403_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c04r0403.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

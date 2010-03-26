@@ -26,6 +26,13 @@
 #define C04R0305_RANDOM_01                14
 #define C04R0305_RANDOM_02                15
 #define C04R0305_RANDOM_03                16
+#define C04R0305_CORN_06                  17
+#define C04R0305_CORN_05                  18
+#define C04R0305_CORN_04                  19
+#define C04R0305_CORN_07                  20
+#define C04R0305_SOCCERM_07               21
+#define C04R0305_FAN_01_2                 22
+#define C04R0305_FAN_02_2                 23
 
 #endif //ZONE_C04R0305_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0305.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

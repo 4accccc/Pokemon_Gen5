@@ -16,16 +16,16 @@
 #define C04R0304_RANDOM_01                 4
 #define C04R0304_RANDOM_02                 5
 #define C04R0304_RANDOM_03                 6
-#define C04R0304_BASEBALLM_01              7
-#define C04R0304_BASEBALLM_02              8
-#define C04R0304_BASEBALLM_03              9
-#define C04R0304_CORN_03                  10
-#define C04R0304_CORN_02                  11
-#define C04R0304_BASEBALLM_05             12
-#define C04R0304_BASEBALLM_04             13
-#define C04R0304_CORN_01                  14
-#define C04R0304_GENTLEM_01               15
-#define C04R0304_TRAINER_01               16
+#define C04R0304_BASEBALLM_03              7
+#define C04R0304_BASEBALLM_04              8
+#define C04R0304_BASEBALLM_05              9
+#define C04R0304_BASEBALLM_06             10
+#define C04R0304_FAN_01_2                 11
+#define C04R0304_BASEBALLM_02             12
+#define C04R0304_BASEBALLM_01             13
+#define C04R0304_FAN_02_2                 14
+#define C04R0304_TRAINER_01               15
+#define C04R0304_BASEBALLM_07             16
 
 #endif //ZONE_C04R0304_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0304.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
