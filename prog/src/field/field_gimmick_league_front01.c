@@ -567,7 +567,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
                                                NARC_league_front_pl_ele_00_ica_bin );
     }
     // エレベータ稼動音開始
-    PMSND_PlaySEVolume( SEQ_SE_FLD_57, 90 );
+    PMSND_PlaySE( SEQ_SE_FLD_148 );
     ++(*seq);
     OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
