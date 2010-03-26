@@ -39,5 +39,8 @@
 #define BG_C06_SIGN1_01                   0
 #define BG_C06_SIGN2_01                   1
 #define BG_C06_SIGN3_01                   2
+#define C06_HIDE_ITEM_01                  3
+#define C06_HIDE_ITEM_02                  4
+#define C06_HIDE_ITEM_03                  5
 
 #endif //ZONE_C06_EVB_H

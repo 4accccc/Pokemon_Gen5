@@ -56,5 +56,7 @@
 #define BG_C08_BOARD_04                   4
 #define BG_C08_BOARD_05                   5
 #define BG_C08_BOARD_06                   6
+#define BGID_C08_HIDE_ITEM_01             7
+#define BGID_C08_HIDE_ITEM_02             8
 
 #endif //ZONE_C08_EVB_H

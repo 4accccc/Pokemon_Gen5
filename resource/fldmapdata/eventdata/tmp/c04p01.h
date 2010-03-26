@@ -25,5 +25,6 @@
 #define ZONE_C04P01_EVB_H
 
 #define BG_C04P01_SIGN_01                 0
+#define C04P01_HIDE_ITEM_01               1
 
 #endif //ZONE_C04P01_EVB_H
