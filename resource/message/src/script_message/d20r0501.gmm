@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-25T12:02:07"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-26T19:34:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="210"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1751" top="26" right="2456" bottom="646" maximized="no" rayout="Vertical2">
+	<dialog left="0" top="94" right="705" bottom="714" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -299,158 +299,150 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_d20r0501_bg1_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>勇気　あるものよ
+王の　言葉に　耳を　かたむけよ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">ゆうき　あるものよ
-おうの　ことばに　みみを　かたむけよ</language>
-		<language name="JPN_KANJI" width="256">勇気　あるものよ
-王の　言葉に　耳を　かたむけよ</language>
+		<language name="JPN" width="256">listen to kings words</language>
+		<language name="JPN_KANJI" width="256">listen to kings words</language>
 	</row>
 
-	<row id="msg_d20r0501_bg2_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>素数を　理解する者は
+世界の　真理を　理解する</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">そすうを　りかい　するものは
-せかいの　しんりを　りかいする</language>
-		<language name="JPN_KANJI" width="256">素数を　理解する者は
-世界の　真理を　理解する</language>
+		<language name="JPN" width="256">prime lead to verity</language>
+		<language name="JPN_KANJI" width="256">prime lead to verity</language>
 	</row>
 
-	<row id="msg_d20r0501_bg3_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうは　ゆうきを　もつ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは　ゆうきを　もつ</language>
-		<language name="JPN_KANJI" width="256">おうは　ゆうきを　もつ</language>
+		<language name="JPN" width="256">king is brave</language>
+		<language name="JPN_KANJI" width="256">king is brave</language>
 	</row>
 
-	<row id="msg_d20r0501_bg4_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg4_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうは　きぼうを　もつ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは　きぼうを　もつ</language>
-		<language name="JPN_KANJI" width="256">おうは　きぼうを　もつ</language>
+		<language name="JPN" width="256">king never loses hope</language>
+		<language name="JPN_KANJI" width="256">king never loses hope</language>
 	</row>
 
-	<row id="msg_d20r0501_bg5_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg5_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうは　やさしさを　もつ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは　やさしさを　もつ</language>
-		<language name="JPN_KANJI" width="256">おうは　やさしさを　もつ</language>
+		<language name="JPN" width="256">king is kind</language>
+		<language name="JPN_KANJI" width="256">king is kind</language>
 	</row>
 
-	<row id="msg_d20r0501_bg6_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg6_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうは　ゆめを　もつ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは　ゆめを　もつ</language>
-		<language name="JPN_KANJI" width="256">おうは　ゆめを　もつ</language>
+		<language name="JPN" width="256">king has a dream</language>
+		<language name="JPN_KANJI" width="256">king has a dream</language>
 	</row>
 
-	<row id="msg_d20r0501_bg7_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg7_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうは　ぼうけんしんを　もつ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは　ぼうけんしんを　もつ</language>
-		<language name="JPN_KANJI" width="256">おうは　ぼうけんしんを　もつ</language>
+		<language name="JPN" width="256">king is adventurous</language>
+		<language name="JPN_KANJI" width="256">king is adventurous</language>
 	</row>
 
-	<row id="msg_d20r0501_bg8_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg8_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうは　すべてを　うけいれた</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは　すべてを　うけいれた</language>
-		<language name="JPN_KANJI" width="256">おうは　すべてを　うけいれた</language>
+		<language name="JPN" width="256">king accepts all</language>
+		<language name="JPN_KANJI" width="256">king accepts all</language>
 	</row>
 
-	<row id="msg_d20r0501_bg9_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg9_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうは　２ばんめの　かどを　まがり</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは　２ばんめの　かどを　まがり</language>
-		<language name="JPN_KANJI" width="256">おうは　２ばんめの　かどを　まがり</language>
+		<language name="JPN" width="256">king turns 2nd corner</language>
+		<language name="JPN_KANJI" width="256">king turns 2nd corner</language>
 	</row>
 
-	<row id="msg_d20r0501_bg10_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg10_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうは　３ばんめの　かどを　まがり</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは　３ばんめの　かどを　まがり</language>
-		<language name="JPN_KANJI" width="256">おうは　３ばんめの　かどを　まがり</language>
+		<language name="JPN" width="256">king turns 3rd corner</language>
+		<language name="JPN_KANJI" width="256">king turns 3rd corner</language>
 	</row>
 
-	<row id="msg_d20r0501_bg11_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg11_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうは　５ばんめの　かどを　まがり</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは　５ばんめの　かどを　まがり</language>
-		<language name="JPN_KANJI" width="256">おうは　５ばんめの　かどを　まがり</language>
+		<language name="JPN" width="256">king turns 5th corner</language>
+		<language name="JPN_KANJI" width="256">king turns 5th corner</language>
 	</row>
 
-	<row id="msg_d20r0501_bg12_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg12_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうは　７ばんめの　かどを　まがった</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは　７ばんめの　かどを　まがった</language>
-		<language name="JPN_KANJI" width="256">おうは　７ばんめの　かどを　まがった</language>
+		<language name="JPN" width="256">king turns 7th corner</language>
+		<language name="JPN_KANJI" width="256">king turns 7th corner</language>
 	</row>
 
-	<row id="msg_d20r0501_bg13_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg13_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうの　こころを　もて</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうの　こころを　もて</language>
-		<language name="JPN_KANJI" width="256">おうの　こころを　もて</language>
+		<language name="JPN" width="256">have the heart of king</language>
+		<language name="JPN_KANJI" width="256">have the heart of king</language>
 	</row>
 
-	<row id="msg_d20r0501_bg14_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg14_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>ここは　おうを　たたえる　ばしょ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">ここは　おうを　たたえる　ばしょ</language>
-		<language name="JPN_KANJI" width="256">ここは　おうを　たたえる　ばしょ</language>
+		<language name="JPN" width="256">here we praise king</language>
+		<language name="JPN_KANJI" width="256">here we praise king</language>
 	</row>
 
-	<row id="msg_d20r0501_bg15_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg15_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうは
+たみを　てらす　ひかりを　もつ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは
-たみを　てらす　ひかりを　もつ</language>
-		<language name="JPN_KANJI" width="256">おうは
-たみを　てらす　ひかりを　もつ</language>
+		<language name="JPN" width="256">king shines people</language>
+		<language name="JPN_KANJI" width="256">king shines people</language>
 	</row>
 
-	<row id="msg_d20r0501_bg16_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg16_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうは
+たみを　うごかす　ちからを　もつ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは
-たみを　うごかす　ちからを　もつ</language>
-		<language name="JPN_KANJI" width="256">おうは
-たみを　うごかす　ちからを　もつ</language>
+		<language name="JPN" width="256">king moves his people</language>
+		<language name="JPN_KANJI" width="256">king moves his people</language>
 	</row>
 
-	<row id="msg_d20r0501_bg17_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg17_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうは　じあいの　こころで　つつんだ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは　じあいの　こころで　つつんだ</language>
-		<language name="JPN_KANJI" width="256">おうは　じあいの　こころで　つつんだ</language>
+		<language name="JPN" width="256">king acts with love</language>
+		<language name="JPN_KANJI" width="256">king acts with love</language>
 	</row>
 
-	<row id="msg_d20r0501_bg18_01">
-		<comment>遺跡用BGメッセージ</comment>
+	<row id="msg_d20r0501_bg18_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>おうは　にくしみに　ながされなかった</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうは　にくしみに　ながされなかった</language>
-		<language name="JPN_KANJI" width="256">おうは　にくしみに　ながされなかった</language>
+		<language name="JPN" width="256">king fought hatred</language>
+		<language name="JPN_KANJI" width="256">king fought hatred</language>
 	</row>
 
-	<row id="msg_d20r0501_bg19_01">
-		<comment>遺跡用BGメッセージ
-次の階層に行けない</comment>
+	<row id="msg_d20r0501_bg19_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>王の　歩みに　迷いは　無い
+迷い子に　王の　資格無し</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうの　あゆみに　まよいは　ない
-まよいごに　おうの　しかくなし</language>
-		<language name="JPN_KANJI" width="256">王の　歩みに　迷いは　無い
-迷い子に　王の　資格無し</language>
+		<language name="JPN" width="256">no king gets lost</language>
+		<language name="JPN_KANJI" width="256">no king gets lost</language>
 	</row>
 
-	<row id="msg_d20r0501_bg19_02">
-		<comment>遺跡用BGメッセージ
-次の階層に行ける</comment>
+	<row id="msg_d20r0501_bg19_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>王の　歩みに　迷いは　無い
+勇気ある　王よ　先に　進め▼</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうの　あゆみに　まよいは　ない
-ゆうきある　おうよ　さきに　すすめ▼</language>
-		<language name="JPN_KANJI" width="256">王の　歩みに　迷いは　無い
-勇気ある　王よ　先に　進め▼</language>
+		<language name="JPN" width="256">go on brave king</language>
+		<language name="JPN_KANJI" width="256">go on brave king</language>
 	</row>
 
 	<row id="msg_d20r0501_sys_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">

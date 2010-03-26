@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-19T11:51:36"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-26T19:37:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="202"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -300,43 +300,43 @@
 	</row>
 
 	<row id="msg_d20r0801_bg1_01">
+		<comment>リフーゲは　たった　１人で
+１０００人の　敵を　跳ね除けた</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">リフーゲは　たった　ひとりで
-１０００にんの　てきを　はねのけた</language>
-		<language name="JPN_KANJI" width="256">リフーゲは　たった　１人で
-１０００人の　敵を　跳ね除けた</language>
+		<language name="JPN" width="256">Rifuge defeat (1000) alone</language>
+		<language name="JPN_KANJI" width="256">Rifuge defeat (1000) alone</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_02">
+		<comment>リフーゲは　１日で
+１００００人を　仲間に　した</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">リフーゲは　いちにちで
-１００００にんを　なかまに　した</language>
-		<language name="JPN_KANJI" width="256">リフーゲは　１日で
-１００００人を　仲間に　した</language>
+		<language name="JPN" width="256">(10000) join Rifuge in a day</language>
+		<language name="JPN_KANJI" width="256">(10000) join Rifuge in a day</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_03">
+		<comment>リフーゲは　１日で
+１０００００匹の　生き物を　呼んだ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">リフーゲは　いちにちで
-１０００００ひきの　いきものを　よんだ</language>
-		<language name="JPN_KANJI" width="256">リフーゲは　１日で
-１０００００匹の　生き物を　呼んだ</language>
+		<language name="JPN" width="256">Rifuge called (100000) lives</language>
+		<language name="JPN_KANJI" width="256">Rifuge called (100000) lives</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_04">
+		<comment>リフーゲは　私たちの
+希望であり　未来である</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">リフーゲは　わたしたちの
-きぼうで　あり　みらいで　ある</language>
-		<language name="JPN_KANJI" width="256">リフーゲは　私たちの
-希望であり　未来である</language>
+		<language name="JPN" width="256">Rifuge is hope future</language>
+		<language name="JPN_KANJI" width="256">Rifuge is hope future</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_05">
+		<comment>ここに　偉大なる王
+リフーゲを　たたえる</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">ここに　いだいなる　おう
-リフーゲを　たたえる</language>
-		<language name="JPN_KANJI" width="256">ここに　偉大なる王
-リフーゲを　たたえる</language>
+		<language name="JPN" width="256">the Great king Rifuge</language>
+		<language name="JPN_KANJI" width="256">the Great king Rifuge</language>
 	</row>
 
 	<flowchart-group-list>

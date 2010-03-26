@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-25T12:32:43"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-26T19:35:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="215"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -299,62 +299,65 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_d20r0601_bg1_01">
+	<row id="msg_d20r0601_bg1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>生きると　いうこと
+それは　全てに　感謝　すること</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">いきる　ということ
-それは　すべてに　かんしゃ　すること</language>
-		<language name="JPN_KANJI" width="256">生きると　いうこと
-それは　全てに　感謝　すること</language>
+		<language name="JPN" width="256">to live is to thank</language>
+		<language name="JPN_KANJI" width="256">to live is to thank</language>
 	</row>
 
-	<row id="msg_d20r0601_bg2_01">
+	<row id="msg_d20r0601_bg2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>食べる　ということ　それは
+あらゆる　命を　いただくこと</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">たべる　ということ　それは
-あらゆる　いのちを　いただくこと</language>
-		<language name="JPN_KANJI" width="256">食べる　ということ　それは
-あらゆる　命を　いただくこと</language>
+		<language name="JPN" width="256">we feed on life</language>
+		<language name="JPN_KANJI" width="256">we feed on life</language>
 	</row>
 
-	<row id="msg_d20r0601_bg3_01">
+	<row id="msg_d20r0601_bg3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>正義と　悪だけではない
+間が　あるのだ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">せいぎと　あく　だけではない
-あいだが　あるのだ</language>
-		<language name="JPN_KANJI" width="256">正義と　悪だけではない
-間が　あるのだ</language>
+		<language name="JPN" width="256">good or evil isnt all</language>
+		<language name="JPN_KANJI" width="256">good or evil isnt all</language>
 	</row>
 
-	<row id="msg_d20r0601_bg4_01">
+	<row id="msg_d20r0601_bg4_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>野蛮で　あっては　ならない</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">やばんで　あっては　ならない</language>
-		<language name="JPN_KANJI" width="256">野蛮で　あっては　ならない</language>
+		<language name="JPN" width="256">do not be barbarous</language>
+		<language name="JPN_KANJI" width="256">do not be barbarous</language>
 	</row>
 
-	<row id="msg_d20r0601_bg5_01">
+	<row id="msg_d20r0601_bg5_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>粗末に　しては　ならない</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">そまつに　しては　ならない</language>
-		<language name="JPN_KANJI" width="256">粗末に　しては　ならない</language>
+		<language name="JPN" width="256">one must not waste</language>
+		<language name="JPN_KANJI" width="256">one must not waste</language>
 	</row>
 
-	<row id="msg_d20r0601_bg6_01">
+	<row id="msg_d20r0601_bg6_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>全ては　平等に　尊い</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">すべては　びょうどうに　とうとい</language>
-		<language name="JPN_KANJI" width="256">全ては　平等に　尊い</language>
+		<language name="JPN" width="256">all is precious</language>
+		<language name="JPN_KANJI" width="256">all is precious</language>
 	</row>
 
-	<row id="msg_d20r0601_bg7_01">
+	<row id="msg_d20r0601_bg7_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>戦いは　何も　生まない
+無限の　悲しみを　生むだけだ</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">たたかいは　なにも　うまない
-むげんの　かなしみを　うむだけだ</language>
-		<language name="JPN_KANJI" width="256">戦いは　何も　生まない
-無限の　悲しみを　生むだけだ</language>
+		<language name="JPN" width="256">wars create tears</language>
+		<language name="JPN_KANJI" width="256">wars create tears</language>
 	</row>
 
-	<row id="msg_d20r0601_bg8_01">
+	<row id="msg_d20r0601_bg8_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<comment>王に　理解を　示すのならば
+ここで　光を　放て</comment>
 		<attribute name="キャラ指定">BG</attribute>
-		<language name="JPN" width="256">おうに　りかいを　しめすのならば
-ここで　ひかりを　はなて</language>
-		<language name="JPN_KANJI" width="256">王に　理解を　示すのならば
-ここで　光を　放て</language>
+		<language name="JPN" width="256">shine if agreed</language>
+		<language name="JPN_KANJI" width="256">shine if agreed</language>
 	</row>
 
 	<row id="msg_d20r0601_sys_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
