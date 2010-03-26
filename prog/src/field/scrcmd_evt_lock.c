@@ -10,7 +10,6 @@
 #include "system/vm_cmd.h"
 
 #include "gamesystem/gamesystem.h"
-#include "gamesystem/game_event.h"
 
 #include "script.h"
 #include "script_local.h"
