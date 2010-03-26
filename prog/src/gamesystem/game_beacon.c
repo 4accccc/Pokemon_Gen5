@@ -2181,7 +2181,7 @@ void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 targ
 {
   const MISC *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gamedata) );
 
-  STRTOOL_Copy(MISC_CrossComm_GetSelfIntroduction(misc), 
+  STRTOOL_Copy(MISC_CrossComm_GetThankyouMessage(misc), 
     info->action.thanks.thankyou_message, GAMEBEACON_THANKYOU_MESSAGE_LEN);
   info->action.action_no = GAMEBEACON_ACTION_THANKYOU;
   info->action.thanks.target_trainer_id = target_trainer_id;
