@@ -65,7 +65,7 @@ void * GIMMICKWORK_Assign(GIMMICKWORK * gimmick, int gimmick_id)
   if (gimmick->id != GIMMICK_NO_ASSIGN){
     GF_ASSERT_MSG(0,"二重アサイン %d => %d",gimmick->id, gimmick_id);
   }
-	GIMMICKWORK_Init(gimmick);
+	GIMMICKWORK_ClearWork(gimmick);
 	gimmick->id = gimmick_id;
 	return gimmick->work;
 }
