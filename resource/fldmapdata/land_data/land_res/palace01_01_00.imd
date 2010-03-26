@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-17T15:44:55" source="palace01_01_00.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-24T19:07:27" source="palace01_01_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-03-17T15:44:55" source="palace01_01_00.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-03-24T19:07:27" source="palace01_01_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -693,20 +693,20 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 a000 0177 0000 0000
-			0000 1000 a777 0002 7a20 01a7 0000 0000
-			0000 1000 777a 77aa 7aa7 002a 0000 0000
-			0000 0000 77a1 8377 7777 002a 0000 0000
-			0000 0000 7aa1 6877 3775 002a 0000 0000
-			0000 0000 7a10 5647 a745 0022 0000 0000
-			0000 0000 3a10 5467 a749 0002 0000 0000
-			0000 0000 3a10 9677 a875 0022 0000 0000
-			0000 0000 7a10 7773 7777 002a 0000 0000
-			0000 0000 77a1 a333 7333 0027 0000 0000
-			0000 0000 77a1 11aa 7a31 01a7 0000 0000
-			0000 0000 a771 012a a111 0177 0000 0000
-			0000 0000 1111 0001 1000 0111 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 1000 0022 0000 0000
+			0000 0000 a772 0002 7a20 0027 0000 0000
+			0000 0000 777a 77aa 7aa7 002a 0000 0000
+			0000 0000 77a2 8377 7777 002a 0000 0000
+			0000 0000 7aa2 6877 3775 0022 0000 0000
+			0000 0000 7a20 5647 a745 0022 0000 0000
+			0000 0000 3a20 5477 a774 0002 0000 0000
+			0000 0000 3a20 9477 7874 002a 0000 0000
+			0000 0000 7720 9474 4774 02a8 0000 0000
+			0000 0000 87a2 64aa 7a34 2a78 0000 0000
+			0000 0000 a3a2 67a2 22a7 277a 0000 0000
+			0000 0000 3aa2 6322 2227 0222 0000 0000
+			0000 0000 0220 4220 0022 0000 0000 0000
+			0000 0000 0000 2200 0002 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1282,22 +1282,22 @@
 		path="C:/home/wb_data3d/field/out25/chip/tex/out25_suna02.tga"
 	>
 		<bitmap size="128">
-			0022 0030 0232 0033 3333 0101 3133 0233
-			0002 3333 0333 0000 0333 0000 2233 0233
-			2000 2233 1233 3001 1033 2000 2234 0332
-			4442 2233 0233 2205 0011 4200 0022 0222
-			4477 1222 4020 1445 0001 2421 2022 0222
-			4447 0122 8542 2788 0200 2474 2220 0054
-			7777 4024 9977 4789 7505 0478 4210 5555
-			8887 9767 a997 4888 9654 0569 7220 5596
-			aa87 9999 aaaa 8888 6666 2666 6744 6696
-			9aa7 c999 e9ec 8cca 9967 7999 6698 9dd6
-			9dee ee99 deac acee 9999 e999 6edd bbde
-			dbde eeee bdac ddce b99c eedb eebb ddde
-			bbbd deed dbbe edeb bbde cdbb eedd dddd
-			ddbb dddd dddd deed dbbd dddd dddd dddd
-			dddd dffd dddd dddd dddd dddd dfdd dddd
-			dddd ffff dddd fffd dfff dddd ffff dddd
+			3333 1133 3333 3344 3333 3330 3133 0333
+			3003 1222 3221 3030 0433 0033 0322 0322
+			3000 1322 0321 1101 1022 1030 0323 0221
+			3303 1323 0023 3104 0311 3100 3013 0331
+			3003 1333 3030 1334 0001 3301 1001 0033
+			3004 0133 7433 3677 0300 3313 3101 0043
+			6606 3033 8866 3678 6404 0367 3310 4444
+			7746 8656 9886 3777 8543 0458 6330 4485
+			9974 8888 9cc9 7777 5555 3555 5633 5585
+			8994 b888 dccc 7bb9 8856 6888 5587 8cc5
+			8cdd cd88 cccc 9bdd 8888 d888 5dcc aacd
+			cacd cddd accc ccbd a88b ddca ddaa cccd
+			aaac ccdc caac dcda aacd bcaa ddcc cccc
+			ccaa cccc cccc cddc caac cccc cccc cccc
+			cccc ceec cccc cccc cccc cccc cecc cccc
+			cccc eeee cccc eeec ceee cccc eeee cccc
 		</bitmap>
 	</tex_image>
 	<tex_image index="22" name="out25_tile01"
@@ -1395,7 +1395,7 @@
 		266a 2a8a 2289 270b 22a9 26ca 7fff 7fff
 	</tex_palette>
 	<tex_palette index="13" name="out25_ki06_pl" color_size="16">
-		7fff 2e8f 2a4e 1daf 2a12 3275 2e33 21d0
+		7fff 1986 21ab 1daf 2a12 3275 2e33 21d0
 		25f1 3254 1d8e 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="14" name="out25_ki07_pl" color_size="16">
@@ -1425,8 +1425,8 @@
 		3f7e 333d 375e 373d 3b5e 3f5e 331d 373e
 	</tex_palette>
 	<tex_palette index="21" name="out25_suna02_pl" color_size="16">
-		1734 1b54 1b55 1b76 1f56 2336 2738 2777
-		2b58 2f39 2f59 331d 335a 373e 3b5b 3f5e
+		1734 1b54 1b76 1f56 2336 2738 2777 2b58
+		2f39 2f59 331d 335a 373e 3b5b 3f5e 7fff
 	</tex_palette>
 	<tex_palette index="22" name="out25_tile01_pl" color_size="16">
 		7fff 6fbd 4ad7 5319 4ef8 3ed8 5719 5b3a
@@ -5875,7 +5875,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface1587" kind="mesh"
+	<node index="0" name="polySurface1590" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
