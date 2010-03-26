@@ -416,7 +416,7 @@ static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* game
 #endif //PM_DEBUG
   }
   //プレイ時間カウント　開始
-  PLAYTIMECTRL_Start( SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork( work->gamedata ) ) );
+  PLAYTIMECTRL_Start();
 
   return event;
 }

@@ -22,7 +22,6 @@ static BOOL StartFlag = FALSE;
 static u64  LastTick = 0;
 static u64  PassedSec = 0;
 static u64  StartTick = 0;
-static PLAYTIME*  PlayTimePointer = NULL;
 
 //------------------------------------------------------------------
 /**
@@ -40,12 +39,11 @@ void PLAYTIMECTRL_Init( void )
  *
  */
 //------------------------------------------------------------------
-void PLAYTIMECTRL_Start( PLAYTIME* pt )
+void PLAYTIMECTRL_Start( void )
 {
 	StartFlag = TRUE;
 	LastTick = 0;
 	PassedSec = 0;
-	PlayTimePointer = pt;
   StartTick = OS_GetTick();
 	//StartTick = APTM_GetData();
 }
@@ -58,7 +56,7 @@ void PLAYTIMECTRL_Start( PLAYTIME* pt )
  *
  */
 //------------------------------------------------------------------
-void PLAYTIMECTRL_Countup( void )
+void PLAYTIMECTRL_Countup( GAMEDATA* gamedata )
 {
 	if( StartFlag )
 	{
@@ -78,7 +76,7 @@ void PLAYTIMECTRL_Countup( void )
     sec = OS_TicksToSeconds( tick - StartTick );
 		if( sec > PassedSec )
 		{
-			PLAYTIME_CountUp( PlayTimePointer, (sec - PassedSec) );
+			GAMEDATA_PlayTimeCountUp( gamedata, (sec - PassedSec) );
       
       if( LastTick == tick ){
         // �ʏ펞

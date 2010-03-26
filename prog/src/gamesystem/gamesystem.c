@@ -292,7 +292,7 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 	ISS_SYS_Update( gsys->iss_sys );
 
   //プレイ時間　カウントアップ
-  PLAYTIMECTRL_Countup();
+  PLAYTIMECTRL_Countup( gsys->gamedata );
 
 	if(GAMEDATA_IsFrameSpritMode(gsys->gamedata)) //フレーム分割状態にいる場合
 	{

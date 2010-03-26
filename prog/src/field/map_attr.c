@@ -400,6 +400,7 @@ BOOL MAPATTR_VALUE_CheckEncountShortGrassLow( const MAPATTR_VALUE val )
       val == MATTR_SNOW_GRASS_LOW ){
     return TRUE;
   }
+  return FALSE;
 }
 
 //--------------------------------------------------------------

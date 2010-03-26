@@ -10,6 +10,7 @@
 #define __PLAYTIME_CTRL_H__
 
 #include "savedata/playtime.h"
+#include "gamesystem/game_data.h"
 
 //------------------------------------------------------------------
 /**
@@ -21,18 +22,16 @@ extern void PLAYTIMECTRL_Init( void );
 //------------------------------------------------------------------
 /**
  * プレイ時間のカウント開始（ゲーム開始直後に１回だけ呼ぶ）
- *
- * @param   time		プレイ時間セーブデータポインタ
  */
 //------------------------------------------------------------------
-extern void PLAYTIMECTRL_Start( PLAYTIME* pt );
+extern void PLAYTIMECTRL_Start( void );
 
 //------------------------------------------------------------------
 /**
  * プレイ時間のカウント（メインループ内で毎回呼ぶ）
  */
 //------------------------------------------------------------------
-extern void PLAYTIMECTRL_Countup( void );
+extern void PLAYTIMECTRL_Countup( GAMEDATA* gamedata );
 
 
 #endif

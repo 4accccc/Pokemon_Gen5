@@ -711,3 +711,25 @@ extern void GAMEDATA_SetSymbolMapID(GAMEDATA *gamedata, u8 symbol_map_id);
  */
 //==================================================================
 extern u8 GAMEDATA_GetSymbolMapID(const GAMEDATA *gamedata);
+
+
+//==================================================================
+/**
+ * PLAYTIME カウント処理
+ *
+ * @param   gamedata		
+ * @param   value       カウント値
+ */
+//==================================================================
+extern void GAMEDATA_PlayTimeCountUp(GAMEDATA *gamedata, u32 value);
+
+
+//==================================================================
+/**
+ * PLAYTIME セーブ時間の設定
+ *
+ * @param   gamedata		
+ */
+//==================================================================
+extern void GAMEDATA_PlayTimeSetSaveTime(GAMEDATA *gamedata);
+

@@ -45,6 +45,7 @@
 #include "savedata/randommap_save.h"  //WF・BC
 #include "savedata/shortcut.h"    //SHORTCUT_SetRegister
 #include "savedata/wifilist.h"
+#include "savedata/playtime.h"
 #include "gamesystem/comm_player_support.h"
 #include "gamesystem/pm_weather.h"
 #include "net/wih_dwc.h"
@@ -132,6 +133,8 @@ struct _GAMEDATA{
   UNSV_WORK UnsvWork;      //国連ワーク
   TRIAL_HOUSE_WORK_PTR  TrialHouseWorkPtr;    //トライアルハウスワーク
   MUSICAL_SCRIPT_WORK *musicalScrWork;  //ミュージカルスクリプト用ワーク
+
+  PLAYTIME* playtime; // プレイ時間
 };
 
 //==============================================================================
@@ -231,6 +234,9 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   for(i = 0; i < GAMEDATA_WFBC_ID_MAX; i++){
     FIELD_WFBC_CORE_Clear(&gd->wfbc[i]);
   }
+
+  // プレイタイム
+  gd->playtime = PLAYTIME_Allock( heapID );
   
   //歩数カウント
   gd->fieldmap_walk_count = 0;
@@ -277,6 +283,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 //------------------------------------------------------------------
 void GAMEDATA_Delete(GAMEDATA * gamedata)
 {
+  GFL_HEAP_FreeMemory( gamedata->playtime );
   CALENDER_Delete( gamedata->calender );
   BEACON_STATUS_Delete( gamedata->beacon_status );
   COMM_PLAYER_SUPPORT_Free(gamedata->comm_player_support);
@@ -1366,6 +1373,10 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
   { //UNSV_WORK
     SaveData_LoadUnsvWork(gamedata->sv_control_ptr, &gamedata->UnsvWork);
   }
+  { //PlayTime
+    PLAYTIME* sv = SaveData_GetPlayTime( gamedata->sv_control_ptr );
+    PLAYTIME_SetAllData( gamedata->playtime, sv );
+  }
 }
 
 //--------------------------------------------------------------
@@ -1423,6 +1434,10 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
 
   { //UNSV_WORK
     SaveData_SaveUnsvWork(&gamedata->UnsvWork, gamedata->sv_control_ptr);
+  }
+  { //PlayTime
+    PLAYTIME* sv = SaveData_GetPlayTime( gamedata->sv_control_ptr );
+    PLAYTIME_SetAllData( sv, gamedata->playtime );
   }
 }
 
@@ -1814,6 +1829,32 @@ u8 GAMEDATA_GetSymbolMapID(const GAMEDATA *gamedata)
 {
   return gamedata->symbol_map_id;
 }
+
+//==================================================================
+/**
+ * PLAYTIME カウント処理
+ *
+ * @param   gamedata		
+ * @param   value       カウント値
+ */
+//==================================================================
+void GAMEDATA_PlayTimeCountUp(GAMEDATA *gamedata, u32 value)
+{
+  PLAYTIME_CountUp( gamedata->playtime, value );
+}
+
+//==================================================================
+/**
+ * PLAYTIME セーブ時間の設定
+ *
+ * @param   gamedata		
+ */
+//==================================================================
+void GAMEDATA_PlayTimeSetSaveTime(GAMEDATA *gamedata)
+{
+  PLAYTIME_SetSaveTime( gamedata->playtime );
+}
+
 
 
 //----------------------------------------------------------------------------

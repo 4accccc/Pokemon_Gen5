@@ -32,8 +32,11 @@ typedef struct PLAYTIME PLAYTIME;
 //============================================================================================
 
 extern PLAYTIME * SaveData_GetPlayTime(SAVE_CONTROL_WORK * sv);
+
+extern PLAYTIME * PLAYTIME_Allock( HEAPID heapID );
 extern void PLAYTIME_Init(PLAYTIME * coin);
 extern void PLAYTIME_CountUp(PLAYTIME * ptime, u32 value);
+extern void PLAYTIME_SetAllData( PLAYTIME * ptime, const PLAYTIME * data );
 extern u16 PLAYTIME_GetHour(const PLAYTIME * ptime);
 extern u8 PLAYTIME_GetMinute(const PLAYTIME * ptime);
 extern u8 PLAYTIME_GetSecond(const PLAYTIME * ptime);

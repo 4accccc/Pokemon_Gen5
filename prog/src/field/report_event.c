@@ -10,7 +10,6 @@
 
 #include "gamesystem/msgspeed.h"
 #include "system/bmp_winframe.h"
-#include "savedata/playtime.h"
 #include "sound/pm_sndsys.h"
 #include "font/font.naix"
 #include "app/app_keycursor.h"
@@ -231,7 +230,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 */
 
   case REPORT_SEQ_SAVE_SIZE_CHECK:        // セーブサイズ取得
-    PLAYTIME_SetSaveTime( SaveData_GetPlayTime(wk->sv) );
+    GAMEDATA_PlayTimeSetSaveTime( GAMESYSTEM_GetGameData(wk->gsys) );
     FIELD_SUBSCREEN_SetReportSize( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) );
     if( FIELD_SUBSCREEN_CheckReportType(FIELDMAP_GetFieldSubscreenWork(wk->fieldWork)) == TRUE ){
         MsgPrint( wk, msg_common_report_09 );
