@@ -203,7 +203,12 @@ void  STA_POKE_UpdateSystem_Item( STA_POKE_SYS *work )
 
 static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 {
-
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+  {
+    STA_POKE_SetFrontBack( work , pokeWork , !pokeWork->isFront );
+  }
+#endif
   //if( pokeWork->isUpdate == TRUE )
   {
     VecFx32 musPos;
@@ -263,13 +268,14 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
       }
     }
 
-    if( pokeWork->itemWork[ePos] != NULL )
+    if( pokeWork->itemWork[ePos] != NULL &&
+        pokeWork->isEnableItem[ePos] == TRUE )
     {
       if( pokeWork->isDrawItem == TRUE &&
           pokeWork->isFront == TRUE )
       {
         //こいつはFALSEでも消えるとは限らないので上のifから独立してる
-        if( pokeWork->isEnableItem[ePos] == TRUE )
+        //if( pokeWork->isEnableItem[ePos] == TRUE )
         {
           MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( pokeWork->drawWork , ePosTemp );
           if( equipData->isEnable == TRUE )
@@ -625,12 +631,25 @@ void STA_POKE_InitItemUse_Flash( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 
   itemUseWork->effWork = STA_EFF_CreateEffect( effSys , NARC_stage_gra_mus_eff_itemuse_spa );
 
-  MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , 
-                pokeWork->itemWork[itemUseWork->equipPos] ,
-                &pos );
-  pos.x = ACT_POS_X_FX(pos.x);
-  pos.y = ACT_POS_Y_FX(pos.y);
-  pos.z += FX32_ONE;
+  if( pokeWork->isFront == TRUE )
+  {
+    MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , 
+                  pokeWork->itemWork[itemUseWork->equipPos] ,
+                  &pos );
+    pos.x = ACT_POS_X_FX(pos.x);
+    pos.y = ACT_POS_Y_FX(pos.y);
+    pos.z += FX32_ONE;
+  }
+  else
+  {
+    VecFx32 *rotOfs = MUS_POKE_DRAW_GetRotateOfs( pokeWork->drawWork );
+    VEC_Add( &pokeWork->pokePos , rotOfs , &pos );
+    pos.x = ACT_POS_X_FX(pos.x);
+    pos.y = ACT_POS_Y_FX(pos.y);
+    pos.z -= (FX32_ONE*28); //後ろに出すため
+  }
+  
+  OS_FPrintf(3,"[%6.2f][%6.2f][%6.2f]\n",F32_CONST(pos.x),F32_CONST(pos.y),F32_CONST(pos.z));
   STA_EFF_CreateEmitter( itemUseWork->effWork , 0 , &pos );
   
 }
@@ -640,12 +659,23 @@ void STA_POKE_UpdateItemUse_Flash( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork 
   STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
   VecFx32 pos;
   
-  MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , 
-                pokeWork->itemWork[itemUseWork->equipPos] ,
-                &pos );
-  pos.x = ACT_POS_X_FX(pos.x);
-  pos.y = ACT_POS_Y_FX(pos.y);
-  pos.z += FX32_ONE;
+  if( pokeWork->isFront == TRUE )
+  {
+    MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , 
+                  pokeWork->itemWork[itemUseWork->equipPos] ,
+                  &pos );
+    pos.x = ACT_POS_X_FX(pos.x);
+    pos.y = ACT_POS_Y_FX(pos.y);
+    pos.z += FX32_ONE;
+  }
+  else
+  {
+    VecFx32 *rotOfs = MUS_POKE_DRAW_GetRotateOfs( pokeWork->drawWork );
+    VEC_Add( &pokeWork->pokePos , rotOfs , &pos );
+    pos.x = ACT_POS_X_FX(pos.x);
+    pos.y = ACT_POS_Y_FX(pos.y);
+    pos.z -= (FX32_ONE*28); //後ろに出すため
+  }
   
   STA_EFF_SetPosition( itemUseWork->effWork , 0 , &pos );
 
@@ -666,6 +696,18 @@ void STA_POKE_InitItemUse_Flying( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
   STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
 
   pokeWork->isEnableItem[pokeWork->itemUseWork.equipPos] = FALSE;
+
+  //背面対応
+  if( pokeWork->isFront == FALSE )
+  {
+    VecFx32 pos;
+    VecFx32 *rotOfs = MUS_POKE_DRAW_GetRotateOfs( pokeWork->drawWork );
+    VEC_Add( &pokeWork->pokePos , rotOfs , &pos );
+    pos.z -= (FX32_ONE*28); //後ろに出すため
+    MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , 
+                  pokeWork->itemWork[itemUseWork->equipPos] , &pos );
+  }
+
   MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , 
                   pokeWork->itemWork[itemUseWork->equipPos] , TRUE );
   MUS_ITEM_DRAW_SetRotation(  work->itemDrawSys , 
@@ -713,6 +755,18 @@ void STA_POKE_InitItemUse_Throw( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 
   pokeWork->isEnableItem[pokeWork->itemUseWork.equipPos] = FALSE;
   
+  //背面対応
+  if( pokeWork->isFront == FALSE )
+  {
+    VecFx32 pos;
+    VecFx32 *rotOfs = MUS_POKE_DRAW_GetRotateOfs( pokeWork->drawWork );
+    VEC_Add( &pokeWork->pokePos , rotOfs , &pos );
+    //投擲は後ろに出さない？
+    //pos.z -= (FX32_ONE*28); //後ろに出すため
+    MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , 
+                  pokeWork->itemWork[itemUseWork->equipPos] , &pos );
+  }
+
   itemUseWork->graAcc = STA_POKE_ITEMUSE_THROW_START_ACC;
   MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , 
                   pokeWork->itemWork[itemUseWork->equipPos] , TRUE );
