@@ -7932,6 +7932,7 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
     SCQUE_PUT_OP_ChangeTokusei( wk->que, tgtPokeID, atk_tok );
     BTL_HANDLER_TOKUSEI_Swap( attacker, target );
 
+    if( atk_tok != tgt_tok )
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
       scEvent_ChangeTokuseiAfter( wk, atkPokeID );
@@ -13350,6 +13351,7 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
     SCQUE_PUT_TOKWIN_OUT( wk->que, param->pokeID );
 
     // ‚Æ‚­‚¹‚¢‘‚«Š·‚¦Š®—¹ƒCƒxƒ“ƒg
+    if( prevTokusei != param->tokuseiID )
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
       scEvent_ChangeTokuseiAfter( wk, param->pokeID );
