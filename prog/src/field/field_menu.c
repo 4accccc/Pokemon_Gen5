@@ -603,6 +603,7 @@ static const u32 menu_screen_table[] = {
  NARC_field_menu_menu_bg_5_NSCR,    // 図鑑無し
  NARC_field_menu_menu_bg_4_NSCR,    // ポケモン・図鑑両方無し
  NARC_field_menu_menu_bg_5_NSCR,    // 遊覧船
+ NARC_field_menu_menu_bg_5_NSCR,    // パレス
 };
 
 
