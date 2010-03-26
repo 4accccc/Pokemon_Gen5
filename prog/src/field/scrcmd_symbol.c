@@ -321,7 +321,7 @@ static void sendDataChange( SCRCMD_WORK * work )
   SYMBOL_SAVE_WORK *symbol_save = SymbolSave_GetSymbolData(sv_ctrl);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr( gsys );
 
-  if ( IntrudeSymbol_CheckIntrudeNetID( game_comm, gamedata ) != INTRUDE_NETID_NULL )
+  if ( 1 )//IntrudeSymbol_CheckIntrudeNetID( game_comm, gamedata ) != INTRUDE_NETID_NULL )
   {
     INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect( game_comm );
     if ( intcomm == NULL )

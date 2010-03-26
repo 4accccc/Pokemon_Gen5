@@ -15,6 +15,7 @@
 #include "intrude_main.h"
 #include "field/fieldmap.h"
 #include "intrude_field.h"
+#include "field/zonedata.h"
 
 
 //==============================================================================
@@ -169,9 +170,12 @@ void IntrudeSymbol_SendSymbolDataChange(INTRUDE_COMM_SYS_PTR intcomm, SYMBOL_MAP
  * 一度この関数でTRUEを取得後、内部フラグをリセットする為、新たな通知が無い限りFALSEを返します
  */
 //==================================================================
-BOOL IntrudeSymbol_CheckSymbolDataChange(INTRUDE_COMM_SYS_PTR intcomm)
+BOOL IntrudeSymbol_CheckSymbolDataChange(INTRUDE_COMM_SYS_PTR intcomm, u16 zone_id)
 {
   BOOL ret = intcomm->recv_symbol_change_flag;
   intcomm->recv_symbol_change_flag = FALSE;
-  return ret;
+  if(ret == TRUE && ZONEDATA_IsBingo( zone_id ) == TRUE){
+    return TRUE;
+  }
+  return FALSE;
 }

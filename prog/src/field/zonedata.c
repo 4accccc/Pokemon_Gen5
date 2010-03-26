@@ -742,7 +742,7 @@ BOOL ZONEDATA_IsPalaceField(u16 zone_id)
   zone_id = ControlZoneID(zone_id);
 
   if((zone_id >= ZONE_ID_PLC04 && zone_id <= ZONE_ID_PLT04) //裏フィールド
-      || (zone_id == ZONE_ID_PALACE02)){      //ビンゴマップ
+      || (ZONEDATA_IsBingo(zone_id) == TRUE)){      //ビンゴマップ
     return TRUE;
   }
   return FALSE;
@@ -757,7 +757,10 @@ BOOL ZONEDATA_IsPalaceField(u16 zone_id)
 BOOL ZONEDATA_IsBingo(u16 zone_id)
 {
   zone_id = ControlZoneID(zone_id);
-  return (zone_id == ZONE_ID_PALACE02);
+  if(zone_id >= ZONE_ID_PALACE02 && zone_id <= ZONE_ID_PALACE10){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //==================================================================

@@ -1885,13 +1885,22 @@ static void _IntrudeRecv_SymbolDataChange(const int netID, const int size, const
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   const SYMBOL_DATA_CHANGE *p_sdc = pData;
   const INTRUDE_SYMBOL_WORK *now_symbol = &intcomm->intrude_symbol;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   
-  MATSUDA_Printf("RECV: symbol_change net_id=%d", netID);
-  if(now_symbol->net_id != netID || now_symbol->symbol_map_id != p_sdc->symbol_map_id){
-    MATSUDA_Printf("違うマップの為無視\n");
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){ //自分のデータは受け取らない
     return;
   }
-  
+
+  MATSUDA_Printf("RECV: symbol_change net_id=%d ", netID);
+  if(intcomm->intrude_status_mine.palace_area != netID){
+//  if(now_symbol->net_id != netID){// || now_symbol->symbol_map_id != p_sdc->symbol_map_id){
+    MATSUDA_Printf("侵入先と違うNetIDの為無視\n");
+    return;
+  }
+  if(ZONEDATA_IsBingo( PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata)) ) == FALSE){
+    MATSUDA_Printf("ビンゴマップにいないので無視\n");
+    return;
+  }
   MATSUDA_Printf("\n");
   intcomm->recv_symbol_change_flag = TRUE;
 }
