@@ -248,6 +248,8 @@ extern void	GFL_BBDACT_SetAnimeTable( GFL_BBDACT_SYS* bbdActSys, u16 actIdx,
 extern void	GFL_BBDACT_SetAnimeIdx( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16 animeIdx );
 extern u16 GFL_BBDACT_GetAnimeIdx( const GFL_BBDACT_SYS* bbdActSys, u16 actIdx );
 extern void	GFL_BBDACT_SetAnimeIdxContinue( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16 animeIdx );
+extern void	GFL_BBDACT_SetAnimeIdxImmediate
+	( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16 animeIdx, u16 wait );
 //	アニメフレームインデックス設定・取得
 extern void	GFL_BBDACT_SetAnimeFrmIdx( GFL_BBDACT_SYS* bbdActSys, u16 actIdx, u16 animeFrmIdx );
 extern u16 GFL_BBDACT_GetAnimeFrmIdx( const GFL_BBDACT_SYS* bbdActSys, u16 actIdx );
