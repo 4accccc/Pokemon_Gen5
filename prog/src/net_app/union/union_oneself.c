@@ -1260,6 +1260,28 @@ static BOOL OneselfSeq_TalkInit_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START, WB_NET_UNION) == TRUE){
       OS_TPrintf("会話開始前の同期待ち・・・同期完了\n");
+      (*seq)++;
+    }
+    break;
+  case 2:   //MYSTATUS交換
+    if(UnionSend_Mystatus(unisys) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case 3:
+    if(MATH_CountPopulation(((u32)situ->mycomm.mystatus_recv_bit)) > 1){
+    #if 0 //使用が未定になった　2010.03.26(金)
+      WIFI_NEGOTIATION_SAVEDATA *negosv= GAMEDATA_GetWifiNegotiation(unisys->uniparent->game_data);
+      NetID my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+      u32 recv_bit = (u32)situ->mycomm.mystatus_recv_bit;
+      int i;
+      for(i = 0; recv_bit > 0; i++){
+        if(i != my_net_id && (recv_bit & (1 << i))){
+          WIFI_NEGOTIATION_SV_SetFriend(
+            negosv, GAMEDATA_GetMyStatusPlayer(unisys->uniparent->game_data, i));
+        }
+      }
+    #endif
       return TRUE;
     }
     break;
@@ -1497,8 +1519,31 @@ static BOOL OneselfSeq_TalkInit_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
     if(GFL_NET_HANDLE_IsTimeSync(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_TALK_START, WB_NET_UNION) == TRUE){
       OS_TPrintf("会話開始前の同期待ち・・・同期完了\n");
+      (*seq)++;
+    }
+    break;
+  case 2:   //MYSTATUS交換
+    if(UnionSend_Mystatus(unisys) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case 3:
+    if(MATH_CountPopulation(((u32)situ->mycomm.mystatus_recv_bit)) > 1){
+    #if 0 //使用が未定になった 2010.03.26(金)
+      WIFI_NEGOTIATION_SAVEDATA *negosv= GAMEDATA_GetWifiNegotiation(unisys->uniparent->game_data);
+      NetID my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+      u32 recv_bit = (u32)situ->mycomm.mystatus_recv_bit;
+      int i;
+      for(i = 0; recv_bit > 0; i++){
+        if(i != my_net_id && (recv_bit & (1 << i))){
+          WIFI_NEGOTIATION_SV_SetFriend(
+            negosv, GAMEDATA_GetMyStatusPlayer(unisys->uniparent->game_data, i));
+        }
+      }
+    #endif
       return TRUE;
     }
+    break;
   }
   return FALSE;
 }
@@ -2382,8 +2427,6 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
 {
   enum{
     _SEQ_INIT,
-    _SEQ_MYSTATUS_SEND,
-    _SEQ_MYSTATUS_RECV_WAIT,
     _SEQ_TIMING,
     _SEQ_TIMING_WAIT,
     _SEQ_SUBPROC,
@@ -2403,16 +2446,6 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
     UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_04_02);
 
     (*seq)++;
-    break;
-  case _SEQ_MYSTATUS_SEND: //MYSTATUS交換
-    if(UnionSend_Mystatus(unisys) == TRUE){
-      (*seq)++;
-    }
-    break;
-  case _SEQ_MYSTATUS_RECV_WAIT:
-    if(MATH_CountPopulation(((u32)situ->mycomm.mystatus_recv_bit)) > 1){
-      (*seq)++;
-    }
     break;
   case _SEQ_TIMING:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
