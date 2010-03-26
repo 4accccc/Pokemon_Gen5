@@ -618,7 +618,6 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
   case ZONE_ID_H01:
     return NARC_field_rail_setup_H01_bin;
   case ZONE_ID_C03P01:
-  case ZONE_ID_C03P02:
     return NARC_field_rail_setup_C03P02_bin;
   case ZONE_ID_D09:
     return NARC_field_rail_setup_D09_bin;
@@ -773,7 +772,7 @@ BOOL ZONEDATA_IsBingo(u16 zone_id)
 BOOL ZONEDATA_IsWfbc(u16 zone_id)
 {
   zone_id = ControlZoneID(zone_id);
-  return ((zone_id == ZONE_ID_BCWFTEST) || (zone_id == ZONE_ID_WC10) || (zone_id == ZONE_ID_BC10) || (zone_id == ZONE_ID_PLC10) || (zone_id == ZONE_ID_PLCW10));
+  return ((zone_id == ZONE_ID_WC10) || (zone_id == ZONE_ID_BC10) || (zone_id == ZONE_ID_PLC10) || (zone_id == ZONE_ID_PLCW10));
 }
 
 //------------------------------------------------------------------

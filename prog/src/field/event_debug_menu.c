@@ -5968,11 +5968,8 @@ typedef struct {
 //--------------------------------------------------------------
 static const u16 ng_zone_table[] = {
   ZONE_ID_UNION,
-  ZONE_ID_PALACETEST,
   ZONE_ID_CLOSSEUM,
   ZONE_ID_CLOSSEUM02,
-  ZONE_ID_BCWFTEST,
-  ZONE_ID_D10,
   ZONE_ID_PLD10,
 };
 
