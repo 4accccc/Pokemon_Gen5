@@ -1068,6 +1068,7 @@ static void * FMenuCallProc_Zukan(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_C
 
   prm->gamedata = GAMESYSTEM_GetGameData( wk->param->gsys );
   prm->savedata = GAMEDATA_GetZukanSave( prm->gamedata );
+	prm->mystatus = GAMEDATA_GetMyStatus( prm->gamedata );
 
   FSND_HoldBGMVolume_forApp(
     GAMEDATA_GetFieldSound(prm->gamedata), GAMESYSTEM_GetIssSystem(wk->param->gsys) );

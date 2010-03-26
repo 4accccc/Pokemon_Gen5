@@ -258,6 +258,7 @@ static int MainSeq_CallTop( ZUKAN_MAIN_WORK * wk )
 	top = wk->work;
 
 	top->gamedata = wk->prm->gamedata;
+	top->mystatus = wk->prm->mystatus;
 
 	GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(zukan_top), &ZUKANTOP_ProcData, wk->work );
 

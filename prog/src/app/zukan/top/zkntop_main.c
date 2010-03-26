@@ -213,14 +213,21 @@ static void ExitBg(void)
 	GFL_BG_Exit();
 }
 
-static void LoadBgGraphic(void)
+static void LoadBgGraphic( ZKNTOPMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_TOP_L );
 
-	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_ZUKAN_TOP );
-	GFL_ARCHDL_UTIL_TransVramPalette(
-		ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_SUB_BG, 0, 0, HEAPID_ZUKAN_TOP );
+	if( MyStatus_GetMySex( wk->dat->mystatus ) == PTL_SEX_MALE ){
+		GFL_ARCHDL_UTIL_TransVramPalette(
+			ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_ZUKAN_TOP );
+		GFL_ARCHDL_UTIL_TransVramPalette(
+			ah, NARC_zukan_gra_top_zkn_top_bg_NCLR, PALTYPE_SUB_BG, 0, 0, HEAPID_ZUKAN_TOP );
+	}else{
+		GFL_ARCHDL_UTIL_TransVramPalette(
+			ah, NARC_zukan_gra_top_zkn_top_bg2_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_ZUKAN_TOP );
+		GFL_ARCHDL_UTIL_TransVramPalette(
+			ah, NARC_zukan_gra_top_zkn_top_bg2_NCLR, PALTYPE_SUB_BG, 0, 0, HEAPID_ZUKAN_TOP );
+	}
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_zukan_gra_top_zkn_top_cover_NCGR, GFL_BG_FRAME0_M, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
@@ -305,7 +312,7 @@ static int MainSeq_Init( ZKNTOPMAIN_WORK * wk )
 	InitVram();
 	InitBg();
 
-	LoadBgGraphic();
+	LoadBgGraphic( wk );
 	LoadSaveGraphic( wk );
 
 	InitVBlank( wk );

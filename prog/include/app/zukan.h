@@ -12,6 +12,7 @@
 
 #include "gamesystem/game_data.h"
 #include "savedata/zukan_savedata.h"
+#include "savedata/mystatus.h"
 
 
 //============================================================================================
@@ -21,6 +22,7 @@ typedef struct {
 	// [ in ]
   GAMEDATA * gamedata;				// ゲームデータ
 	ZUKAN_SAVEDATA * savedata;	// 図鑑セーブデータ
+	MYSTATUS * mystatus;				// プレイヤーデータ
 
 	u16	callMode;					// 呼び出しモード
 

@@ -11,6 +11,7 @@
 #pragma	once
 
 #include "gamesystem/game_data.h"
+#include "savedata/mystatus.h"
 
 
 //============================================================================================
@@ -20,6 +21,7 @@
 typedef struct {
   GAMEDATA * gamedata;				// ゲームデータ
 //	ZUKAN_SAVEDATA * savedata;	// 図鑑セーブデータ
+	MYSTATUS * mystatus;				// プレイヤーデータ
 
 	u32	retMode;								// 終了モード
 }ZUKANTOP_DATA;
