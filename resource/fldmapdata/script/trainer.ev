@@ -549,6 +549,7 @@ _EVENT_DATA ev_TRID_CHILDCARE_04
 _EVENT_DATA ev_TRID_RANGERW_10
 _EVENT_DATA ev_TRID_RANGERM_10
 _EVENT_DATA ev_TRID_FISHING_11
+_EVENT_DATA ev_TRID_ELITEM_21
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1088,6 +1089,7 @@ ev_TRID_CHILDCARE_04:
 ev_TRID_RANGERW_10:
 ev_TRID_RANGERM_10:
 ev_TRID_FISHING_11:
+ev_TRID_ELITEM_21:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------
