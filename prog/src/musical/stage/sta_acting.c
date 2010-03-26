@@ -48,6 +48,8 @@
 #define ACT_PAL_INFO    (0xE)
 #define ACT_PAL_FONT    (0xF)
 
+#define ACT_START_WAIT_TIME (60)
+
 #define ACT_OBJECT_IVALID (-1)
 
 #define ACT_BG_SCROLL_MAX (256)
@@ -88,6 +90,7 @@ typedef enum
   AMS_WAIT_FADEOUT,
 
   //メイン
+  AMS_ACTING_START_WAIT,  //本番前のウェイト
   AMS_ACTING_START,
   AMS_ACTING_MAIN,
 
@@ -104,11 +107,14 @@ typedef enum
 struct _ACTING_WORK
 {
   HEAPID heapId;
+
+  u16   startWait;
   
   u16   scrollOffset;
   u16   scrollOffsetTrget;
   u16   makuOffset;
   u8    playerIdx;
+  BOOL  scrollLockFirst;
   BOOL  forceScroll;
   ARCHANDLE *arcHandle;
   
@@ -261,12 +267,15 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   
   work->heapId = heapId;
   work->initWork = initWork;
-  work->scrollOffset = 0;
+  work->startWait = 0;
+  work->scrollOffset = 127; //初回更新のためにずらしておく
+  work->scrollOffsetTrget = 128;
   work->makuOffset = 0;
   work->scriptData = NULL;
   work->mainSeq = AMS_FADEIN;
   work->isEditorMode = FALSE;
-  work->forceScroll = FALSE;
+  work->scrollLockFirst = TRUE; //幕が上がりきるまでは固定させる
+  work->forceScroll = FALSE;   
 
   work->vblankFuncTcb = GFUser_VIntr_CreateTCB( STA_ACT_VBlankFunc , (void*)work , 64 );
   
@@ -490,7 +499,7 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
       }
       else
       {
-        work->mainSeq = AMS_ACTING_START;
+        work->mainSeq = AMS_ACTING_START_WAIT;
       }
     }
     break;
@@ -510,7 +519,12 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
       return ACT_RET_GO_END;
     }
     break;
-  
+  case AMS_ACTING_START_WAIT:
+    if( work->startWait++ >= ACT_START_WAIT_TIME )
+    {
+      work->mainSeq = AMS_ACTING_START;
+    }
+    break;
   case AMS_ACTING_START:
     if( work->isEditorMode == FALSE )
     {
@@ -538,7 +552,7 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
   case AMS_COMM_START_SYNC:
     if( MUS_COMM_CheckTimingCommand( work->initWork->commWork , MUS_COMM_TIMMING_START_SCRIPT ) == TRUE )
     {
-      work->mainSeq = AMS_ACTING_START;
+      work->mainSeq = AMS_ACTING_START_WAIT;
     }
     break;
     
@@ -877,8 +891,7 @@ static void STA_ACT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane 
 static void STA_ACT_SetupPokemon( ACTING_WORK *work )
 {
   u8 i;
-  VecFx32 pos = {0,FX32_CONST(160.0f),FX32_CONST(170.0f)};
-  const fx32 XBase = FX32_CONST(512.0f/(MUSICAL_POKE_MAX+1));
+  VecFx32 pos = {FX32_CONST(256.0f),FX32_CONST(160.0f),FX32_CONST(170.0f)};
   
   work->drawSys = MUS_POKE_DRAW_InitSystem( work->heapId );
   MUS_POKE_DRAW_SetTexAddres( work->drawSys , 0x20000 );
@@ -894,7 +907,6 @@ static void STA_ACT_SetupPokemon( ACTING_WORK *work )
   
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
-    pos.x = XBase*(i+1);
     work->pokeWork[i] = STA_POKE_CreatePoke( work->pokeSys , work->initWork->musPoke[i] );
     STA_POKE_SetPosition( work->pokeSys , work->pokeWork[i] , &pos );
 
@@ -987,7 +999,8 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
   if( (GFL_UI_KEY_GetCont() & (PAD_KEY_RIGHT|PAD_KEY_LEFT)) == 0 )
 #endif
   {
-    if( work->forceScroll == FALSE )
+    if( work->forceScroll == FALSE &&
+        work->scrollLockFirst == FALSE ) 
     {
       s16 scroll;
       VecFx32 pos;
@@ -1105,6 +1118,10 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
     
   }
 #endif
+  if( work->makuOffset == ACT_CURTAIN_SCROLL_MAX )
+  {
+    work->scrollLockFirst = FALSE;
+  }
   GFL_BG_SetScroll( ACT_FRAME_MAIN_CURTAIN , GFL_BG_SCROLL_Y_SET , work->makuOffset );
 }
 

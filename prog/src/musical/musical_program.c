@@ -140,7 +140,7 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_InitProgramData( HEAPID heapId , MUSICAL_D
   
   //NPC‚Ì’Š‘I
   {
-    u8 dataArr[6];
+    u8 dataArr[6]={0,0,0,0,0,0};
     u8 dataNum = 0;
     //ğŒ‚ğ–‚½‚·‚à‚Ì‚ğ’Šo
     for( i=0;i<MUS_PROG_DATA_POKE_NUM;i++ )
@@ -150,6 +150,14 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_InitProgramData( HEAPID heapId , MUSICAL_D
         dataArr[dataNum] = i;
         dataNum++;
       }
+    }
+    if( dataNum<3 )
+    {
+      GF_ASSERT_MSG(dataNum>=3,"Musical program npc is under 3!!\n");
+      dataArr[0] = 0;
+      dataArr[1] = 1;
+      dataArr[2] = 2;
+      dataNum = 3;
     }
     //¬‚º‚é
     for( i=0;i<30;i++ )

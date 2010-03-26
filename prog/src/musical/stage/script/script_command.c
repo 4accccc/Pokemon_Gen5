@@ -583,6 +583,7 @@ static void SCRIPT_TCB_MoveStageTCB(  GFL_TCB *tcb, void *work )
   STA_ACT_SetStageScroll( moveWork->actWork , newPos);
   if( isFinish == TRUE )
   {
+    STA_ACT_SetForceScroll( moveWork->actWork , FALSE );
     STA_SCRIPT_DeleteTcbTask( moveWork->scriptSys , moveWork->tcbObj );
   }
 }
