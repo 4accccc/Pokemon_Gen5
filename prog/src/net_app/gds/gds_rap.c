@@ -42,6 +42,9 @@
 ///送信前のウェイト(送信しているメッセージを見せる為にウェイトを入れている)
 #define GDS_SEND_BEFORE_WAIT	(60)
 
+///ポケモン不正チェックに登録する数
+#define GDS_VIDEO_EVIL_CHECK_NUM  (12)
+
 //--------------------------------------------------------------
 //	サブシーケンスの戻り値
 //--------------------------------------------------------------
@@ -62,6 +65,11 @@ typedef int (*SUBPROCESS_FUNC)(GDS_RAP_WORK *, GDS_RAP_SUB_PROCCESS_WORK *sub_wo
 //  データ
 //==============================================================================
 #include "gds_video_bit.cdat"
+
+//--------------------------------------------------------------
+//  
+//--------------------------------------------------------------
+FS_EXTERN_OVERLAY(dpw_common);
 
 
 //==============================================================================
@@ -104,6 +112,8 @@ int GDSRAP_Init(GDS_RAP_WORK *gdsrap, const GDSRAP_INIT_DATA *init_data)
 {
 	int ret;
 	
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
+
 	GFL_STD_MemClear(gdsrap, sizeof(GDS_RAP_WORK));
 	gdsrap->heap_id = init_data->heap_id;
 	gdsrap->gamedata = init_data->gamedata;
@@ -147,6 +157,11 @@ int GDSRAP_Init(GDS_RAP_WORK *gdsrap, const GDSRAP_INIT_DATA *init_data)
 //--------------------------------------------------------------
 void GDSRAP_Exit(GDS_RAP_WORK *gdsrap)
 {
+  if(gdsrap->p_nhttp != NULL){
+    NHTTP_RAP_PokemonEvilCheckDelete( gdsrap->p_nhttp );
+    NHTTP_RAP_End( gdsrap->p_nhttp );
+  }
+
 	//GDSライブラリ解放
 	POKE_NET_GDS_Release();
 	gdsrap->gdslib_initialize = FALSE;
@@ -161,6 +176,8 @@ void GDSRAP_Exit(GDS_RAP_WORK *gdsrap)
 	//※check　暫定ヒープ解放
 	LIB_Heap_Exit();
 	//GFL_HEAP_FreeMemory(gdsrap->areanaLo);
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
 }
 
 
@@ -239,13 +256,42 @@ int GDSRAP_Tool_Send_MusicalShotDownload(GDS_RAP_WORK *gdsrap, int monsno)
 int GDSRAP_Tool_Send_BattleVideoUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp)
 {
 	GDS_PROFILE_PTR profile_ptr;
+	BATTLE_REC_SEND *br_send = BattleRec_RecWorkAdrsGet();
 	
 	if(GDSRAP_MoveStatusAllCheck(gdsrap) == FALSE){
 		return FALSE;
 	}
 
+  //暗号化する前にポケモン不正チェック用のパラメータを作成
+  {
+    int client_max, temoti_max, i;
+    BOOL ret;
+    
+    GF_ASSERT(gdsrap->p_nhttp == NULL);
+    gdsrap->p_nhttp = NHTTP_RAP_Init( gdsrap->heap_id, 
+      MyStatus_GetProfileID( GAMEDATA_GetMyStatus(gdsrap->gamedata) ), &gdsrap->svl_result );
+    
+    //不正検査領域確保
+    NHTTP_RAP_PokemonEvilCheckCreate( gdsrap->p_nhttp, gdsrap->heap_id, 
+      sizeof(REC_POKEPARA) * GDS_VIDEO_EVIL_CHECK_NUM, NHTTP_POKECHK_VIDIO );
+
+    //ポケモン登録
+    BattleRec_ClientTemotiGet(br_send->head.mode, &client_max, &temoti_max);
+    for(i = 0; i < client_max; i++){
+      NHTTP_RAP_PokemonEvilCheckAdd(gdsrap->p_nhttp, 
+        br_send->rec.rec_party[i].member, sizeof(REC_POKEPARA) * temoti_max);
+    }
+    
+    //不正検査 コネクション作成
+    ret = NHTTP_RAP_PokemonEvilCheckConectionCreate(gdsrap->p_nhttp);
+    GF_ASSERT(ret);
+
+    ret = NHTTP_RAP_StartConnect( gdsrap->p_nhttp );  
+    GF_ASSERT( ret );
+  }
+  
 	//録画データは巨大な為、コピーせずに、そのままbrsのデータを送信する
-	gdsrap->send_buf.battle_rec_send_ptr = (BATTLE_REC_SEND *)BattleRec_RecWorkAdrsGet();
+	gdsrap->send_buf.battle_rec_send_ptr = br_send;
 	//brsに展開されている録画データ本体は復号化されているので、送信する前に再度暗号化する
 	BattleRec_GDS_SendData_Conv(GAMEDATA_GetSaveControlWork(gdsrap->gamedata));
 	
@@ -465,6 +511,7 @@ int GDSRAP_Main(GDS_RAP_WORK *gdsrap)
 					if(ret == TRUE){
 						OS_TPrintf("data send! req_code = %d\n", gdsrap->send_req);
 						gdsrap->send_req = POKE_NET_GDS_REQCODE_LAST;
+						gdsrap->local_seq = 0;
 					}
 					break;
 				default:	//今は送信出来ない
@@ -520,12 +567,66 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
 			gdsrap->response);
 		break;
 	case POKE_NET_GDS_REQCODE_BATTLEDATA_REGIST:	// バトルビデオ登録
-		ret = POKE_NET_GDS_BattleDataRegist(gdsrap->send_buf.battle_rec_send_ptr, 
-			gdsrap->response);
-		if(ret == TRUE){
-			OS_TPrintf("バトルビデオ登録リクエスト完了\n");
-		}
-		break;
+	  switch(gdsrap->local_seq){
+	  case 0:
+	    {
+        NHTTPError error;
+        error = NHTTP_RAP_Process( gdsrap->p_nhttp );
+        if( NHTTP_ERROR_NONE == error ){
+          void *p_data;
+          int i;
+          int poke_result;
+          
+          p_data  = NHTTP_RAP_GetRecvBuffer( gdsrap->p_nhttp );
+          //送られてきた状態は正常か
+          if( NHTTP_RAP_EVILCHECK_GetStatusCode( p_data ) == 0 )    // 正常
+          {
+            gdsrap->error_nhttp = FALSE;
+            // 署名を取得
+            { 
+              const s8 *cp_sign  = NHTTP_RAP_EVILCHECK_GetSign( p_data, GDS_VIDEO_EVIL_CHECK_NUM );
+              GFL_STD_MemCopy( cp_sign, gdsrap->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
+            }
+
+            OS_TPrintf("不正検査成功\n");
+            for( i = 0; i < GDS_VIDEO_EVIL_CHECK_NUM; i++ ){
+              poke_result  = NHTTP_RAP_EVILCHECK_GetPokeResult( p_data, i );
+              gdsrap->nhttp_last_error = poke_result;
+              if( poke_result != NHTTP_RAP_EVILCHECK_RESULT_OK ){
+                OS_TPrintf("ポケモン認証エラー %d番 error=%d\n", i, poke_result);
+              }
+            }
+          }
+          else
+          {
+            OS_TPrintf("不正検査失敗\n");
+            gdsrap->error_nhttp = TRUE;
+            for( i = 0; i < GDS_VIDEO_EVIL_CHECK_NUM; i++ ){
+              poke_result  = NHTTP_RAP_EVILCHECK_GetPokeResult( p_data, i );
+              gdsrap->nhttp_last_error = poke_result;
+              if( poke_result != NHTTP_RAP_EVILCHECK_RESULT_OK ){
+                OS_TPrintf("ポケモン認証エラー %d番 error=%d\n", i, poke_result);
+              }
+            }
+          }
+
+          NHTTP_RAP_PokemonEvilCheckDelete( gdsrap->p_nhttp );
+          NHTTP_RAP_End( gdsrap->p_nhttp );
+          gdsrap->p_nhttp = NULL;
+          
+          gdsrap->local_seq++;
+        }
+      }
+      break;
+	  default:
+  		ret = POKE_NET_GDS_BattleDataRegist(gdsrap->send_buf.battle_rec_send_ptr, 
+  			gdsrap->response);
+  		if(ret == TRUE){
+  			OS_TPrintf("バトルビデオ登録リクエスト完了\n");
+  		}
+  		break;
+  	}
+  	break;
 	case POKE_NET_GDS_REQCODE_BATTLEDATA_SEARCH:	// バトルビデオ検索
 		switch(gdsrap->send_req_option){
 		case POKE_NET_GDS_REQUEST_BATTLEDATA_SEARCHTYPE_CONDITION:	//詳細検索
@@ -689,7 +790,7 @@ static BOOL RecvSubProccess_DataNumberSetSave(void *work_gdsrap, void *work_recv
 	param = (POKE_NET_GDS_RESPONSE_BATTLEDATA_REGIST *)(res->Param);
 	ret = BattleRec_GDS_MySendData_DataNumberSetSave(
 		GAMEDATA_GetSaveControlWork(gdsrap->gamedata), param->Code, 
-		&recv_sub_work->recv_save_seq0, &recv_sub_work->recv_save_seq1);
+		&recv_sub_work->recv_save_seq0, &recv_sub_work->recv_save_seq1, gdsrap->heap_id);
 	if(ret == SAVE_RESULT_OK || ret == SAVE_RESULT_NG){
 		OS_TPrintf("外部セーブ完了\n");
 		return TRUE;
