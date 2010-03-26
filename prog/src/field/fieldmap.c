@@ -51,6 +51,7 @@
 
 #include "field_comm_actor.h"
 #include "field_comm/intrude_field.h"
+#include "field_comm/intrude_work.h"
 
 #include "fldmmdl.h"
 
@@ -736,7 +737,13 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
     SET_CHECK("setup: bmodel load");  //デバッグ：処理負荷計測
       //ここで配置モデルリストをセットする
-      FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata);
+      {
+        BOOL gray_scale;
+        GAME_COMM_SYS_PTR game_comm;
+        game_comm = GAMESYSTEM_GetGameCommSysPtr( fieldWork->gsys );
+        gray_scale  = Intrude_CheckGrayScaleMap( game_comm, fieldWork->gamedata );
+        FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata, gray_scale);
+      }
 
       // WFBC街情報を設定
       setupWfbc( gdata, fieldWork, fieldWork->map_id );
@@ -753,7 +760,13 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
 
     
     //マップデータ登録
-    FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res );
+    {
+      BOOL gray_scale;
+      GAME_COMM_SYS_PTR game_comm;
+      game_comm = GAMESYSTEM_GetGameCommSysPtr( fieldWork->gsys );
+      gray_scale  = Intrude_CheckGrayScaleMap( game_comm, fieldWork->gamedata );
+      FLDMAPPER_ResistData( fieldWork->g3Dmapper, &fieldWork->map_res, gray_scale );
+    }
 
     //NOGRIDマップデータ登録
     {

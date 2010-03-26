@@ -58,7 +58,7 @@ extern void FIELD_BMODEL_MAN_Draw(FIELD_BMODEL_MAN * man);
 //------------------------------------------------------------------
 //  マップデータの読み込み処理
 //------------------------------------------------------------------
-extern void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * areadata);
+extern void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * areadata, BOOL gray_scale);
 
 //------------------------------------------------------------------
 /// ヒープ指定の取得

@@ -41,6 +41,8 @@
 
 #include "field_g3d_map.h"
 
+#include "system/palanm.h"
+
 
 //============================================================================================
 /**
@@ -154,7 +156,7 @@ struct _FLD_G3D_MAPPER {
 
 
 //------------------------------------------------------------------
-static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData );
+static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, BOOL gray_scale );
 static void DeleteGlobalTexture( FLDMAPPER* g3Dmapper );
 
 
@@ -661,7 +663,7 @@ static NNSG3dResFileHeader * createDummyTexHeader( HEAPID heapID, void * file )
  * @brief	マップデータ登録
  */
 //------------------------------------------------------------------
-void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData )
+void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, BOOL gray_scale )
 {
 	GF_ASSERT( g3Dmapper );
 
@@ -699,7 +701,7 @@ void FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 
   g3Dmapper->gtexType = resistData->gtexType;
 	//グローバルテクスチャ作成
-	CreateGlobalTexture( g3Dmapper, resistData );
+	CreateGlobalTexture( g3Dmapper, resistData, gray_scale );
 	//グローバルオブジェクト作成
 	//CreateGlobalObject( g3Dmapper, resistData );
   
@@ -815,57 +817,28 @@ void FLDMAPPER_ReleaseData( FLDMAPPER* g3Dmapper )
 	DeleteGlobalTexture( g3Dmapper );
 }
 
-#include "system/palanm.h"
-#include "gamesystem/gamesystem.h"
-#include "gamesystem/game_comm.h"
+
+
 //--------------------------------------------------------------
-/**
- * デバッグ：侵入フィールド白黒化テスト
- *
- * @param   g3Dres		
- *
- * @retval  BOOL		
- */
 //--------------------------------------------------------------
-BOOL DEBUG_Field_Grayscale(GFL_G3D_RES *g3Dres)
+BOOL FLDMAPPER_Field_Grayscale(GFL_G3D_RES *g3Dres)
 {
 	NNSG3dResFileHeader*	header;
 	NNSG3dResTex*			texture;
   u32 sz;
   void* pData;
-  int invasion_netid, white_mode = 0;
-  GAME_COMM_SYS_PTR game_comm;
-  GAMEDATA *gamedata;
   
-  gamedata = GAMESYSTEM_GetGameData(DEBUG_GameSysWorkPtrGet());
-  //if(GAMEDATA_GetMapMode( gamedata ) != MAPMODE_INTRUDE){
-  if (FIELD_STATUS_GetMapMode( GAMEDATA_GetFieldStatus( gamedata) ) != MAPMODE_INTRUDE ) {
-    return FALSE;
-  }
-  game_comm = GAMESYSTEM_GetGameCommSysPtr( DEBUG_GameSysWorkPtrGet() );
-  
-  invasion_netid = GameCommStatus_GetPlayerStatus_InvasionNetID(game_comm, GAMEDATA_GetIntrudeMyID(gamedata));
-  if(invasion_netid == GAMEDATA_GetIntrudeMyID(gamedata)){
-    return FALSE;
-  }
-  white_mode = invasion_netid & 1;
-
 	header = GFL_G3D_GetResourceFileHeader(g3Dres);
 	texture = NNS_G3dGetTex( header ); 
 
 	if( texture ){
     sz = (u32)texture->plttInfo.sizePltt << 3;
     pData = (u8*)texture + texture->plttInfo.ofsPlttData;
-    if(white_mode == 0){
-      PaletteGrayScale(pData, sz / sizeof(u16));
-    }
-    else{
-      PaletteGrayScale(pData, sz / sizeof(u16));
-//      PaletteGrayScaleFlip(pData, sz / sizeof(u16));
-    }
+    PaletteGrayScale(pData, sz / sizeof(u16));
 		return TRUE;
 	}
 	return FALSE;
+
 }
 
 #define TEXTURE_RELEASE
@@ -874,7 +847,7 @@ BOOL DEBUG_Field_Grayscale(GFL_G3D_RES *g3Dres)
  * @brief	グローバルテクスチャ作成
  */
 //------------------------------------------------------------------
-static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData )
+static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, BOOL gray_scale )
 {
 	switch (resistData->gtexType) {
 	case FLDMAPPER_TEXTYPE_USE:
@@ -894,7 +867,9 @@ static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDAT
       buffer = GFL_ARC_LoadDataAlloc( gtexData->arcID, gtexData->datID,
           GFL_HEAP_LOWID(g3Dmapper->heapID) );
       GFL_G3D_CreateResourceAuto( g3Dmapper->globalTexture, buffer );
-      DEBUG_Field_Grayscale(g3Dmapper->globalTexture);
+      if( gray_scale ){
+        FLDMAPPER_Field_Grayscale(g3Dmapper->globalTexture);
+      }
       GFL_G3D_TransVramTexture( g3Dmapper->globalTexture );
       
       	TAMADA_Printf("TEX:%06x PLT:%04x\n",
@@ -913,7 +888,9 @@ static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDAT
 #else
 			const FLDMAPPER_RESIST_TEX* gtexData = &resistData->gtexData;
 			g3Dmapper->globalTexture = GFL_G3D_CreateResourceArc( gtexData->arcID, gtexData->datID );
-			DEBUG_Field_Grayscale(g3Dmapper->globalTexture);
+      if( gray_scale ){
+        FLDMAPPER_Field_Grayscale(g3Dmapper->globalTexture);
+      }
 			GFL_G3D_TransVramTexture( g3Dmapper->globalTexture );
 #endif
 		}
