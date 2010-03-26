@@ -1062,9 +1062,10 @@ static FLDMSGWIN * fldmsgwin_Add( FLDMSGBG *fmb, GFL_MSGDATA *msgData,
   FLDMSGWIN *msgWin;
   u8 frame = fmb->bgFrame;
   
+  resetBG2ControlProc( fmb );
+  
   if( pltt_no == PANO_FONT ){
     frame = fmb->bgFrameBld;
-    resetBG2ControlProc( fmb );
   }
   
   msgWin = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDMSGWIN) );
@@ -1443,9 +1444,10 @@ static FLDMENUFUNC * fldmenufunc_AddMenuList( FLDMSGBG *fmb,
   BMPMENULIST_HEADER menuH;
   u8 frame = fmb->bgFrame;
   
+  resetBG2ControlProc( fmb );
+
   if( pltt_no == PANO_FONT ){
     frame = fmb->bgFrameBld;
-    resetBG2ControlProc( fmb );
   }
   
   menuFunc = GFL_HEAP_AllocClearMemory( fmb->heapID, sizeof(FLDMENUFUNC) );

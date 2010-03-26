@@ -1090,7 +1090,7 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
 {
   STRBUF *msgbuf;
   SCRCMD_BALLOONWIN_WORK *bwin_work;
-  u16 pos_type = pos_type;
+  u16 pos_type = sc_pos_type;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
