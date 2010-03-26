@@ -133,7 +133,7 @@ VMCMD_RESULT EvCmdWifiGTSEventCall( VMHANDLE* core, void* wk )
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
 
-  SCRIPT_CallEvent( sc, EVENT_Gts( gsys, GAMESYSTEM_GetFieldMapWork(gsys)));
+  SCRIPT_CallEvent( sc, EVENT_Gts( gsys, GAMESYSTEM_GetFieldMapWork(gsys), FALSE));
   
 	return VMCMD_RESULT_SUSPEND;		///<コマンド実行を中断して制御を返す
 }

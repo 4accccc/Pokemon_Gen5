@@ -1318,12 +1318,17 @@ static int SubSeq_ServerQuery(WORLDTRADE_WORK *wk )
 	}
 #endif
 
+#ifdef WB_SEARCH_NUM_FLAG
+  search_max  = 7;
+#else
+
 	if(LastTradeDateCheck(wk, TRADE_TYPE_SEARCH)){
 		search_max += 2;
 	}
 	if(LastTradeDateCheck(wk, TRADE_TYPE_DEPOSIT)){
 		search_max += 2;
 	}
+#endif
 
 #ifdef PM_DEBUG
 	if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){

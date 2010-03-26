@@ -3235,7 +3235,7 @@ FS_EXTERN_OVERLAY(worldtrade);
 //-----------------------------------------------------------------------------
 static BOOL debugMenuCallProc_WifiGts( DEBUG_MENU_EVENT_WORK *p_wk )
 {
-  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_Gts( p_wk->gmSys, p_wk->fieldWork ) );
+  GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_Gts( p_wk->gmSys, p_wk->fieldWork, TRUE ) );
   return TRUE;
 }
 

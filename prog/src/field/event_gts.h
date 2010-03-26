@@ -20,5 +20,5 @@
  *					ŠO•”ŒöŠJ
 */
 //=============================================================================
-extern GMEVENT* EVENT_Gts( GAMESYS_WORK * p_gamesys, FIELDMAP_WORK * p_fieldmap );
+extern GMEVENT* EVENT_Gts( GAMESYS_WORK * p_gamesys, FIELDMAP_WORK * p_fieldmap, BOOL is_debug );
 

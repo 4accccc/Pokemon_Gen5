@@ -18,7 +18,7 @@
 #include "event_fieldmap_control.h"
 
 //PROC
-#include "net_app/wifi_login.h"
+#include "net_app/gds_main.h"
 
 //ŠO•”ŒöŠJ
 #include "field/event_battlerecorder.h"
@@ -36,8 +36,6 @@ FS_EXTERN_OVERLAY( battle_recorder );
 enum{
   _FIELD_COMM,
   _FIELD_CLOSE,
-  _CALL_WIFILOGIN,
-  _WAIT_WIFILOGIN,
   _CALL_BR,
   _WAIT_BR,
   _WAIT_NET_END,
@@ -52,7 +50,7 @@ typedef struct
 {
   GAMESYS_WORK      * gsys;
   FIELDMAP_WORK     * fieldmap;
-  void              * p_sub_wk;
+  GDSPROC_PARAM     param;
   BR_MODE           mode;
   BtlRule btl_rule;
 } EVENT_BR_WORK;
@@ -79,7 +77,6 @@ static GMEVENT_RESULT EVENT_BRMain(GMEVENT * event, int *  seq, void * work)
   EVENT_BR_WORK * dbw = work;
   GAMESYS_WORK * gsys = dbw->gsys;
 
-
   switch (*seq) {
   case _FIELD_COMM:
     if(GAME_COMM_NO_NULL == GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(gsys)))
@@ -89,48 +86,18 @@ static GMEVENT_RESULT EVENT_BRMain(GMEVENT * event, int *  seq, void * work)
     break;
   case _FIELD_CLOSE:
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, dbw->fieldmap));
-   // (*seq)++; //@todo
     (*seq)  = _CALL_BR;
-    break;
-  case _CALL_WIFILOGIN:
-    { 
-      WIFILOGIN_PARAM *p_param;
-      dbw->p_sub_wk = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(WIFILOGIN_PARAM));
-      p_param = dbw->p_sub_wk;
-      p_param->gamedata = GAMESYSTEM_GetGameData(gsys);
-      GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, dbw->p_sub_wk);
-    }
-    (*seq)++;
-    break;
-  case _WAIT_WIFILOGIN:
-    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-
-      WIFILOGIN_PARAM *p_param  = dbw->p_sub_wk;
-      if( p_param->result == WIFILOGIN_RESULT_LOGIN )
-      { 
-        (*seq) ++;
-      }
-      else if( p_param->result == WIFILOGIN_RESULT_CANCEL )
-      { 
-        (*seq)  = _WAIT_NET_END;
-      }
-      GFL_HEAP_FreeMemory( dbw->p_sub_wk );
-    }
     break;
   case _CALL_BR:
     { 
-      BATTLERECORDER_PARAM *p_param;
-      dbw->p_sub_wk = GFL_HEAP_AllocClearMemory(HEAPID_PROC,sizeof(BATTLERECORDER_PARAM));
-      p_param = dbw->p_sub_wk;
-      p_param->mode   = dbw->mode;
-      p_param->p_gamedata  = GAMESYSTEM_GetGameData(gsys);
-      GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(battle_recorder), &BattleRecorder_ProcData, dbw->p_sub_wk );
+      dbw->param.gamedata = GAMESYSTEM_GetGameData(gsys);
+      dbw->param.gds_mode = dbw->mode;
+      GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &GdsMainProcData, &dbw->param );
     }
     (*seq)++;
     break;
   case _WAIT_BR:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      GFL_HEAP_FreeMemory( dbw->p_sub_wk );
       (*seq) ++;
     }
     break;

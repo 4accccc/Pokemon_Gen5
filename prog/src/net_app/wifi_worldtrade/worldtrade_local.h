@@ -16,6 +16,9 @@
 #define GS_DP_GISOU
 #define GTS_DUPLICATE_BUG_FIX (1)
 
+//WBは常に検索人数MAX
+#define WB_SEARCH_NUM_FLAG
+
 #include "system/bmp_menulist.h"
 #include "system/touch_subwindow.h"
 //#include "system/numfont.h"
@@ -303,13 +306,13 @@ enum{
 #define SUB_OBJ_NUM			(  8 )
 
 ///< 1秒待つ
-#define WAIT_ONE_SECONDE_NUM	( 30 )
+#define WAIT_ONE_SECONDE_NUM	( 60 )
 
 ///< ワイプのスピード
 #define WORLDTRADE_WIPE_SPPED	( 6 )
 
 ///< サーバー確認ができるようになるまでの秒数（６０秒）
-#define SEVER_RETRY_WAIT		( 60*30 )
+#define SEVER_RETRY_WAIT		( 60*60 )
 
 ///< タッチ対応選択ボックスの表示設定
 #define WORLDTRADE_SELBOX_X		( 20  )

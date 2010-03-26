@@ -187,6 +187,12 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
       switch( wk->div_demo ) 
       { 
       case DEMO_DIV_MID:
+        if( wk->pNPCStatus )
+        { 
+          GFL_HEAP_FreeMemory( wk->pNPCStatus );
+          wk->pNPCStatus  = NULL;
+        } 
+
         WorldTradeData_GetPokemonData( wk->param->worldtrade_data, wk->demoPokePara );
         p_param->pMyPoke = wk->demoPokePara;
         p_param->pNPCPoke = (POKEMON_PARAM*)wk->DownloadPokemonData[wk->TouchTrainerPos].postData.data;
@@ -200,6 +206,11 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
         return SEQ_MAIN;
 
       case DEMO_DIV_RECV:
+        if( wk->pNPCStatus )
+        { 
+          GFL_HEAP_FreeMemory( wk->pNPCStatus );
+          wk->pNPCStatus  = NULL;
+        }
 
         WorldTradeData_GetPokemonData( wk->param->worldtrade_data, wk->demoPokePara );
         p_param->pMyPoke = wk->demoPokePara;

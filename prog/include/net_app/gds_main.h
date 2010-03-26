@@ -21,7 +21,6 @@
 typedef struct{
   GAMEDATA          *gamedata;    ///WiFiListの取得をGAMEDATA経由でするため、
 	BR_MODE gds_mode;			///<BR_MODE_???
-	u8 padding[3];
 }GDSPROC_PARAM;
 
 ///GDSプロック制御のメイン構造体
