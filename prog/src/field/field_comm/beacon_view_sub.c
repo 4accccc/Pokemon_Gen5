@@ -344,7 +344,7 @@ BOOL BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
       WORDSET_RegisterWord( wk->wordset, 0, pp->name, pp->sex, TRUE, PM_LANG );
       effReq_PopupMsgSys( wk, msg_sys_thanks_send );
  
-      OS_TPrintf("ありがとう ビーコンセット\n");
+      OS_TPrintf("ありがとう ビーコンセット %d\n", pp->tr_id );
       GAMEBEACON_Set_Thankyou( wk->gdata, pp->tr_id );
     }
     wk->sub_seq = SSEQ_THANKS_DECIDE_WAIT;
@@ -668,11 +668,27 @@ static void print_PopupWindow( BEACON_VIEW_PTR wk, STRBUF* str, u8 wait )
   }
 }
 
+//------------------------------------------------------------
+/*
+ *  @brief  ポップアップ　タイムウェイトチェック
+ */
+//------------------------------------------------------------
+static BOOL print_PopupWindowTimeWaitCheck( u8* p_wait )
+{
+  if( (*p_wait)-- > 0 && (!GFL_UI_TP_GetTrg()) ){
+    return FALSE; 
+  }
+  *p_wait = 0;
+  return TRUE;
+}
+
+//------------------------------------------------------------
 /*
  *  @brief  ポップアップ　ストリーム終了チェック
  *
  *  @retval TRUE  描画終了
  */
+//------------------------------------------------------------
 static BOOL print_PopupWindowStreamCheck( BEACON_VIEW_PTR wk )
 {
   PRINTSTREAM_STATE state;
@@ -1465,7 +1481,7 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
     twk->seq++;
     return;
   case 3:
-    if( twk->wait-- > 0 ){
+    if( print_PopupWindowTimeWaitCheck( &twk->wait ) == FALSE ){
       return;
     }
     taskAdd_MsgUpdown( twk->bvp, SCROLL_DOWN, &twk->child_task );
@@ -1488,6 +1504,7 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
 /////////////////////////////////////////////////////////////////////
 typedef struct _TASKWK_WIN_GPOWER{
   u8  seq;
+  u8  seq_next;
   u8  wait;
   u8  type;
   u8  cancel_f;
@@ -1566,6 +1583,12 @@ static void taskAdd_WinGPower( BEACON_VIEW_PTR wk, GPOWER_ID g_power, u32 tr_id,
       WORDSET_RegisterNumber( wk->wordset, 5, twk->mypower_sec, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     }
   }
+  if( twk->type == GPOWER_USE_BEACON ){
+    BeaconView_MenuBarViewSet( wk, MENU_POWER, MENU_ST_OFF );
+  }
+  BeaconView_MenuBarViewSet( wk, MENU_HELLO, MENU_ST_OFF );
+  BeaconView_MenuBarViewSet( wk, MENU_THANKS, MENU_ST_OFF );
+  BeaconView_MenuBarViewSet( wk, MENU_RETURN, MENU_ST_OFF );
 
   twk->task_ct = task_ct;
   (*task_ct)++;
@@ -1580,6 +1603,80 @@ static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
     return;
   }
 
+  switch( twk->seq ){
+  case 0:
+    GFL_BMP_Clear( bvp->win[WIN_POPUP].bmp, FCOL_POPUP_BASE );
+    
+    if( twk->mypower_use ){ //既に使用中
+      print_GetMsgToBuf( bvp, msg_sys_gpower_use_err02+(twk->mypower_min != 0) );
+      twk->seq = 4;
+    }else if( twk->item_num < twk->item_use ){  //アイテムが足りない
+      print_GetMsgToBuf( bvp, msg_sys_gpower_use_err01);
+      twk->seq = 4;
+    }else{
+      print_GetMsgToBuf( bvp, DATA_GPowerUseMsg[twk->type] );
+      twk->seq++;
+    }
+    print_PopupWindow( bvp, bvp->str_expand, 0 );
+//    GFL_BMPWIN_MakeTransWindow( bvp->win[WIN_POPUP].win );
+    taskAdd_MsgUpdown( bvp, SCROLL_UP, &twk->child_task );
+    return;
+  case 1:
+    if( twk->child_task > 0 ){
+      return;
+    }
+    tmenu_YnCreate( bvp );
+    obj_MenuIconVisibleSet( bvp, FALSE );
+    twk->seq++;
+    return;
+  case 2: //選択待ち
+    {
+      int ret = tmenu_YnUpdate( bvp );
+      if( ret == 0){
+        return;
+      }
+      twk->cancel_f = ret-1;
+      twk->seq++;
+    }
+    return;
+  case 3: //決定アニメ待ち
+    if( !tmenu_YnEndWait( bvp, twk->cancel_f )){
+      return;
+    }
+    obj_MenuIconVisibleSet( bvp, TRUE );
+    if( twk->cancel_f ){
+      twk->seq = 6;
+    }else{
+      print_GetMsgToBuf( bvp, msg_sys_gpower_use02 );
+      print_PopupWindow( bvp, bvp->str_expand, 0 );
+
+      //使うGパワーを覚えておく
+      bvp->ctrl.g_power = twk->g_power;
+
+      twk->seq = 5;
+    }
+    return;
+  case 4:
+    if( twk->child_task == 0 ){
+      twk->seq++;
+    }
+    return;
+  case 5:
+    if( print_PopupWindowTimeWaitCheck( &twk->wait ) ){
+      twk->seq++;
+    }
+    return;
+  case 6:
+    taskAdd_MsgUpdown( bvp, SCROLL_DOWN, &twk->child_task );
+    twk->seq++;
+    return;
+  case 7:
+    if( twk->child_task ){
+      return;
+    }
+  }
+
+#if 0
   switch( twk->seq ){
   case 0:
     GFL_BMP_Clear( bvp->win[WIN_POPUP].bmp, FCOL_POPUP_BASE );
@@ -1651,8 +1748,11 @@ static void tcb_WinGPower( GFL_TCBL *tcb , void* tcb_wk)
       return;
     }
   }
+#endif
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
+  
+  BeaconView_MenuBarViewSet( twk->bvp, MENU_ALL, MENU_ST_ON );
 }
 
 
