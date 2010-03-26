@@ -326,7 +326,7 @@
 #define FE_D08_ITEMGET_01                  310 /* 0x0136 リュウラセンの塔：アイテム入手フラグ */
 #define FE_D01R0201_POKE16_01              311 /* 0x0137 夢の跡地B2：ムシャーナ捕獲フラグ */
 #define FE_C08R0801_ITEMGET_01             312 /* 0x0138 ソウリュウシティ：アイテム入手フラグ */
-		/* not used   313(0x0139) */
+#define FE_R14R0201_LEG_GET                313 /* 0x0139 ツチノカミイベント：捕獲チェック */
 		/* not used   314(0x013a) */
 		/* not used   315(0x013b) */
 		/* not used   316(0x013c) */
@@ -770,8 +770,8 @@
 #define FV_T04R0101_VETERANW_01            746 /* 0x02ea サザナミタウン：巨大別荘母 */
 #define FV_T04R0101_BOY4_01                747 /* 0x02eb サザナミタウン：巨大別荘兄 */
 #define FV_D01R0201_POKE16_01              748 /* 0x02ec 夢の跡地B2：ムシャーナ */
-#define FV_R13R0103_LEG                    749 /* 0x02ed ツチノカミイベント */
-		/* not used   750(0x02ee) */
+#define FV_R14R0201_GIRL1                  749 /* 0x02ed ツチノカミイベント：きょうだい */
+#define FV_R14R0201_LEG                    750 /* 0x02ee ツチノカミイベント：ツチノカミ */
 		/* not used   751(0x02ef) */
 		/* not used   752(0x02f0) */
 		/* not used   753(0x02f1) */
