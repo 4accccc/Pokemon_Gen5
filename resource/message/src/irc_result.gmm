@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-24T16:03:36"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-26T18:40:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="80" top="44" right="785" bottom="664" maximized="no" rayout="Vertical2">
+	<dialog left="507" top="336" right="1212" bottom="956" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="706" top="20" right="1179" bottom="418" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -335,9 +335,9 @@
 
 	<row id="RESULT_STR_000">
 		<language name="JPN" width="256">あなたと　[1:00:トレーナー名:1]さんの
-きになる　フィーリングは……</language>
+きになる　フィーリングポイントは……</language>
 		<language name="JPN_KANJI" width="256">あなたと　[1:00:トレーナー名:1]さんの
-気になる　フィーリングは……</language>
+気になる　フィーリングポイントは……</language>
 	</row>
 
 	<row id="RESULT_TITLE_000">
@@ -347,82 +347,82 @@
 
 	<row id="RESULT_STR_001">
 		<comment>一番ひくい</comment>
-		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
-１</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
-１</language>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！　[1:00:トレーナー名:1]さんとは
+まいにち　すれちがう　ひと　レベル</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！　[1:00:トレーナー名:1]さんとは
+毎日　すれ違う　人　レベル</language>
 	</row>
 
 	<row id="RESULT_STR_002">
-		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
-２</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
-２</language>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！　[1:00:トレーナー名:1]さんとは
+おなじ　がっこうを　かよう　レベル</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！　[1:00:トレーナー名:1]さんとは
+同じ　学校を　通う　レベル</language>
 	</row>
 
 	<row id="RESULT_STR_003">
-		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
-３</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
-３</language>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！　[1:00:トレーナー名:1]さんとは
+かえりみちが　いっしょ　レベル</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！　[1:00:トレーナー名:1]さんとは
+帰り道が　一緒　レベル</language>
 	</row>
 
 	<row id="RESULT_STR_004">
-		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
-４</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
-４</language>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！　[1:00:トレーナー名:1]さんとは
+おみせで　バッタリ　あう　レベル</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！　[1:00:トレーナー名:1]さんとは
+お店で　バッタリ　会う　レベル</language>
 	</row>
 
 	<row id="RESULT_STR_005">
-		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
-５</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
-５</language>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！　[1:00:トレーナー名:1]さんとは
+おなじ　ふくを　きちゃう　レベル</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！　[1:00:トレーナー名:1]さんとは
+同じ　服を　着ちゃう　レベル</language>
 	</row>
 
 	<row id="RESULT_STR_006">
-		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
-６</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
-６</language>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！　[1:00:トレーナー名:1]さんとは
+じゃんけんが　おわらない　レベル</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！　[1:00:トレーナー名:1]さんとは
+じゃんけんが　終わらない　レベル</language>
 	</row>
 
 	<row id="RESULT_STR_007">
-		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
-７</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
-７</language>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！　[1:00:トレーナー名:1]さんとは
+にがてな　ものが　おなじ　レベル</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！　[1:00:トレーナー名:1]さんとは
+苦手なものが　同じ　レベル</language>
 	</row>
 
 	<row id="RESULT_STR_008">
-		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
-８</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
-８</language>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！　[1:00:トレーナー名:1]さんとは
+すきなものが　ぜんぶ　おなじ　レベル</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！　[1:00:トレーナー名:1]さんとは
+好きなものが　全部　同じ　レベル</language>
 	</row>
 
 	<row id="RESULT_STR_009">
-		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
-９</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
-９</language>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！　[1:00:トレーナー名:1]さんとは
+アイコンタクトで　はなせる　レベル</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！　[1:00:トレーナー名:1]さんとは
+アイコンタクトで　話せる　レベル</language>
 	</row>
 
 	<row id="RESULT_STR_010">
 		<comment>９９点以下</comment>
-		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
-１０</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
-１０</language>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！　[1:00:トレーナー名:1]さんとは
+テレパシーで　はなせる　レベル</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！　[1:00:トレーナー名:1]さんとは
+テレパシーで　話せる　レベル</language>
 	</row>
 
 	<row id="RESULT_STR_011">
 		<comment>１００点のとき</comment>
-		<language name="JPN" width="256">[2:02:３桁:2]てん　です！
-すごい</language>
-		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！
-すごい</language>
+		<language name="JPN" width="256">[2:02:３桁:2]てん　です！　[1:00:トレーナー名:1]さんとは
+じつは　じぶんの　ぶんしん　レベル</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:2]点　です！　[1:00:トレーナー名:1]さんとは
+実は　自分の　分身　レベル</language>
 	</row>
 
 	<flowchart-group-list>
