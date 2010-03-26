@@ -2661,7 +2661,7 @@ BOOL FIELD_CAMERA_CheckTrace(FIELD_CAMERA * camera_ptr)
   CAMERA_TRACE *trace;
   trace = camera_ptr->Trace;
   if (trace == NULL){
-    GF_ASSERT(0);
+    //GF_ASSERT(0); ‚±‚±‚ÍA‚¢‚ç‚È‚¢‚Ì‚Å‚ÍH tomoya 2010.3.26
     return FALSE;
   }
   return trace->Valid;
