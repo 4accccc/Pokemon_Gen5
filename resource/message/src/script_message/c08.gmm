@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-23T18:56:46"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T16:12:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -641,7 +641,7 @@ WOMAN2</attribute>
 どーしたの？　いきなり▼</language>
 	</row>
 
-	<row id="msg_c08_leader8b_03b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_03b" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・BLACKver
 ・続けてleader8a_03b</comment>
@@ -883,7 +883,7 @@ WOMAN2</attribute>
 こっち　だよ！▼</language>
 	</row>
 
-	<row id="msg_c08_leader8b_05b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08_leader8b_05b" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・WHITEver
 ・主人公に隣接してメッセージ表示
@@ -1075,7 +1075,7 @@ WOMAN2</attribute>
 ショルダーキーボードの　ことデス</language>
 	</row>
 
-	<row id="msg_c08_hakase2_00w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_hakase2_00w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・WHITEver
 ・c08ジムバッジ取得後にジムから出ると
@@ -1088,7 +1088,7 @@ WOMAN2</attribute>
 シャガさんは　たくましかった？▼</language>
 	</row>
 
-	<row id="msg_c08_hakase2_00b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_hakase2_00b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・BLACKver
 ・c08ジムバッジ取得後にジムから出ると
@@ -1101,7 +1101,7 @@ WOMAN2</attribute>
 アイリスちゃんは　どうだった？▼</language>
 	</row>
 
-	<row id="msg_c08_hakase2_01w" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_hakase2_01w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・WHITEver
 ・主人公に近づいて
@@ -1125,7 +1125,7 @@ WOMAN2</attribute>
 ……ゴメンね▼</language>
 	</row>
 
-	<row id="msg_c08_hakase2_01b" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c08_hakase2_01b" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・BLACKver
 ・主人公に近づいて
@@ -1149,7 +1149,7 @@ WOMAN2</attribute>
 ……ゴメンね▼</language>
 	</row>
 
-	<row id="msg_c08_hakase2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_hakase2_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・メッセージ表示後、連れ歩き開始
 ・主人公をGRIDX=431、GRIDZ=139辺りまで誘導
@@ -1177,7 +1177,7 @@ WOMAN2</attribute>
 アタシが　案内するわね▼</language>
 	</row>
 
-	<row id="msg_c08_hakase2_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_hakase2_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・所定posに到達すると
 　上向きでメッセージ表示
@@ -1197,7 +1197,7 @@ WOMAN2</attribute>
 ようやく　ポケモンリーグよ▼</language>
 	</row>
 
-	<row id="msg_c08_hakase2_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_hakase2_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・はい/いいえの選択肢表示
 ・はい→hakase2_05
@@ -1216,7 +1216,7 @@ WOMAN2</attribute>
 旅立ったこと　後悔している？</language>
 	</row>
 
-	<row id="msg_c08_hakase2_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_hakase2_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・はい選択時
 ・続けてhakase2_07</comment>
@@ -1237,7 +1237,7 @@ WOMAN2</attribute>
 ステキな　出会いが　うまれたから！▼</language>
 	</row>
 
-	<row id="msg_c08_hakase2_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_hakase2_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・いいえ選択時
 ・続けてhakase2_07</comment>
@@ -1258,7 +1258,7 @@ WOMAN2</attribute>
 ステキな　出会いが　うまれたから！▼</language>
 	</row>
 
-	<row id="msg_c08_hakase2_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_hakase2_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・アイテム入手処理
 　No001「マスターボール」
@@ -1271,7 +1271,7 @@ WOMAN2</attribute>
 これ　プレゼントよ！▼</language>
 	</row>
 
-	<row id="msg_c08_hakase2_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c08_hakase2_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・アイテム入手後、自動で表示
 ・メッセージ表示後、画面下に移動

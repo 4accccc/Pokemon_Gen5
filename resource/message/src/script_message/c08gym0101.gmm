@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-24T17:01:16"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T16:13:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1298" top="344" right="2003" bottom="972" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -349,7 +349,8 @@
 	<row id="msg_c08gym0101_leader_04w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・WHITEver
-　アイテム入手処理</comment>
+　アイテム入手処理
+　No409「ドラゴンテール」</comment>
 		<attribute name="キャラ指定">ジムリーダー
 アイリス</attribute>
 		<language name="JPN" width="256">ジムバッジが　８こ！
@@ -366,7 +367,7 @@
 この　わざマシンも　あげるー！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_05w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08gym0101_leader_05w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・WHITEver
 　アイテム入手処理後
@@ -384,7 +385,7 @@
 ボールに　もどしちゃうんだよ！▼</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_06w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c08gym0101_leader_06w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・WHITEver
 　クリアまで繰り返し</comment>
@@ -412,7 +413,7 @@
 ぬけたところに　あるんだよ！</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_06w0002" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c08gym0101_leader_06w0002" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
 		<comment>♀
 ・WHITEver
 　クリア後</comment>
@@ -495,7 +496,8 @@
 	<row id="msg_c08gym0101_leader_04b">
 		<comment>♂
 ・BLACKver
-　アイテム入手処理</comment>
+　アイテム入手処理
+　No409「ドラゴンテール」</comment>
 		<attribute name="キャラ指定">ジムリーダー
 シャガ</attribute>
 		<language name="JPN" width="256">ふむ！　イッシュ　すべての
@@ -516,7 +518,7 @@
 その名も　ドラゴンテール[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_05b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08gym0101_leader_05b">
 		<comment>♂
 ・BLACKver
 　アイテム入手処理後
@@ -536,7 +538,7 @@
 ポケモンを　入れ替えることになる</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_06b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08gym0101_leader_06b">
 		<comment>♂
 ・BLACKver
 　クリアまで繰り返し</comment>
@@ -566,7 +568,7 @@
 底知れぬのだ……</language>
 	</row>
 
-	<row id="msg_c08gym0101_leader_06b0002" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08gym0101_leader_06b0002">
 		<comment>♂
 ・BLACKver
 　クリア後
@@ -581,7 +583,7 @@
 ありがとう</language>
 	</row>
 
-	<row id="msg_c08gym0101_veteranm4_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08gym0101_veteranm4_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・戦闘前</comment>
 		<attribute name="キャラ指定">VETERANM
@@ -597,7 +599,7 @@
 少々　手荒い　けどな！▼</language>
 	</row>
 
-	<row id="msg_c08gym0101_veteranm4_02" text-color="#000000,,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08gym0101_veteranm4_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・戦闘後</comment>
 		<attribute name="キャラ指定">VETERANM
@@ -615,7 +617,7 @@
 ポケモンに　失礼だからな！</language>
 	</row>
 
-	<row id="msg_c02gym0101_glasses_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02gym0101_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手前
 ・ジムに入ると
@@ -637,7 +639,7 @@
 受け取って　くださいっすよ▼</language>
 	</row>
 
-	<row id="msg_c02gym0101_glasses_02" text-color=",,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02gym0101_glasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手後
 ・アイテム入手後、自動で表示
@@ -666,7 +668,7 @@
 注意してくださいっす！</language>
 	</row>
 
-	<row id="msg_c02gym0101_glasses_03" text-color=",,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02gym0101_glasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">GLASSES
@@ -691,7 +693,7 @@
 おめでとう　ございます！！</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_w_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_statue_w_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ：ホワイトver
 ・ジムバッジ取得前</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
@@ -703,7 +705,7 @@
 認定　トレーナー！</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_w_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_statue_w_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ：ホワイトver
 ・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
@@ -717,7 +719,7 @@
 [1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_w_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_statue_w_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ：ホワイトver
 ・r10でのライバル、サポートイベント後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
@@ -735,7 +737,7 @@
 ベル</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_b_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_statue_b_01" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ：ブラックver
 ・ジムバッジ取得前</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
@@ -747,7 +749,7 @@
 認定　トレーナー！</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_b_02" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_statue_b_02" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ：ブラックver
 ・ジムバッジ取得後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
@@ -761,7 +763,7 @@
 [1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_c02gym0101_statue_b_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02gym0101_statue_b_03" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ：ブラックver
 ・r10でのライバル、サポートイベント後</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
