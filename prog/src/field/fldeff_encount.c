@@ -553,10 +553,16 @@ static void encountTask_Update( FLDEFF_TASK *task, void *wk )
   if(!FIELDMAP_IsReady( FLDEFF_CTRL_GetFieldMapWork( enc->fectrl ) )){
     return;
   }
+#if 0
   if( work->anm_pause_f ||
       MMDLSYS_GetPauseMoveFlag(work->head.mmdl_sys)){
     return;
   }
+#else
+  if( work->anm_pause_f ){
+    return;
+  }
+#endif
   sub_PlaySE( work, enc );
   
   for( i = 0;i < enc->data.anm_num; i++){
