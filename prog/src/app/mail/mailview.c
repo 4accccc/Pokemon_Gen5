@@ -947,7 +947,7 @@ static int MailView_KeyInMsg(MAIL_VIEW_DAT* wk)
     //•`‰æI—¹‘Ò‚¿
     if(PRINTSYS_PrintStreamGetState( wk->printStream )==PRINTSTREAM_STATE_DONE)
     {
-      if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
+      if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg()){
         PRINTSYS_PrintStreamDelete( wk->printStream );
         wk->sub_seq = 2;
       }
