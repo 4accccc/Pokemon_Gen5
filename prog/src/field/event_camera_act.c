@@ -34,7 +34,7 @@
 #define L_DOOR_FRAME      (20)
 #define L_DOOR_PITCH      (0x0d33)
 #define L_DOOR_YAW        (0x0e0f)
-#define L_DOOR_ZOOM_DIST  (120 << FX32_SHIFT)
+#define L_DOOR_ZOOM_DIST  (0x00ec << FX32_SHIFT)
 
 // 右ドアへの出入り
 #define R_DOOR_FRAME     (20)
