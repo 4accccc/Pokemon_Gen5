@@ -524,7 +524,7 @@ VMCMD_RESULT EvCmdTrainerBgmSet( VMHANDLE *core, void *wk )
   u32           type = TT_TrainerDataParaGet( tr_id, ID_TD_tr_type );
   u32            seq = FSND_GetTrainerEyeBGM( type );
   GMEVENT*     event = EVENT_FSND_PushPlayNextBGM( 
-                         gsys, seq, FSND_FADE_SHORT, FSND_FADE_NONE );
+                         gsys, seq, FSND_FADE_FAST, FSND_FADE_NONE );
 
   SCRIPT_CallEvent( sc, event );
 	return VMCMD_RESULT_SUSPEND;

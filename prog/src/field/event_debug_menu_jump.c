@@ -271,7 +271,7 @@ static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk )
     {
       u16 snd_index = FSND_GetFieldBGM(GAMESYSTEM_GetGameData(work->gmSys), ZONE_ID_UNION);
       GMEVENT_CallEvent(event, 
-        EVENT_FSND_ChangeBGM(work->gmSys, snd_index, FSND_FADE_SHORT, FSND_FADE_SHORT));
+        EVENT_FSND_ChangeBGM(work->gmSys, snd_index, FSND_FADE_FAST, FSND_FADE_FAST));
     }
     (*seq)++;
     break;

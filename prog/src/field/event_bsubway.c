@@ -710,7 +710,7 @@ static GMEVENT_RESULT bsw_CommBattleMain( GMEVENT *event, int *seq, void *wk )
   case 3:
     GMEVENT_CallEvent( event, 
       EVENT_FSND_PushPlayNextBGM(gsys,work->para->musicDefault,
-        FSND_FADE_SHORT, FSND_FADE_NONE) ); 
+        FSND_FADE_FAST, FSND_FADE_NONE) ); 
     (*seq)++;
     break;
   case 4: //battle main
@@ -739,7 +739,7 @@ static GMEVENT_RESULT bsw_CommBattleMain( GMEVENT *event, int *seq, void *wk )
     break;
   case 7:
     GMEVENT_CallEvent( event,
-        EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT,FSND_FADE_NORMAL) );
+        EVENT_FSND_PopBGM(gsys, FSND_FADE_FAST,FSND_FADE_NORMAL) );
     (*seq) ++;
     break;
   case 8:

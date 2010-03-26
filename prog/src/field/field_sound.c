@@ -23,7 +23,7 @@
 #define SPECIAL_BGM_NONE (0xffffffff)  // 特殊BGMなし
 #define MAX_VOLUME       (127)         // 最大ボリューム
 #define APP_HOLD_VOLUME  (64)          // アプリ時のボリューム
-#define APP_FADE_FRAME   (6)          // アプリ時のフェード フレーム数
+#define APP_FADE_FRAME   (6)           // アプリ時のフェード フレーム数
 
 
 //================================================================================= 
@@ -445,7 +445,7 @@ static GMEVENT_RESULT PushPlayJingleBGMEvent( GMEVENT* event, int* seq, void* wk
   switch( *seq )
   {
   case 0:  // リクエスト発行
-    FIELD_SOUND_RegisterRequest_PUSH( fieldSound, FSND_FADE_SHORT );
+    FIELD_SOUND_RegisterRequest_PUSH( fieldSound, FSND_FADE_FAST );
     FIELD_SOUND_RegisterRequest_FORCE_PLAY( fieldSound, work->soundIdx );
     (*seq)++;
     break;
@@ -616,11 +616,11 @@ static GMEVENT_RESULT PushPlayBattleBGMEvent( GMEVENT* event, int* seq, void* wk
   case 0:  // リクエスト発行
     if( FIELD_SOUND_GetBGMPushCount(fieldSound) == FSND_PUSHCOUNT_NONE )
     { // ベースBGM再生中
-      FIELD_SOUND_RegisterRequest_PUSH( fieldSound, FSND_FADE_SHORT );
+      FIELD_SOUND_RegisterRequest_PUSH( fieldSound, FSND_FADE_FAST );
     }
     else
     { // 視線曲再生中(ベースBGMはすでに退避済み)
-      FIELD_SOUND_RegisterRequest_FADE_OUT( fieldSound, FSND_FADE_SHORT );
+      FIELD_SOUND_RegisterRequest_FADE_OUT( fieldSound, FSND_FADE_FAST );
     }
     (*seq)++;
     break;
@@ -854,7 +854,7 @@ void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound,
   soundIdx = GetFieldBGM( gameData, zoneID );
 
   // リクエスト登録
-  FIELD_SOUND_RegisterRequest_CHANGE( fieldSound, soundIdx, FSND_FADE_NORMAL, FSND_FADE_NONE );
+  FIELD_SOUND_RegisterRequest_CHANGE( fieldSound, soundIdx, FSND_FADE_SHORT, FSND_FADE_NONE );
 }
 
 

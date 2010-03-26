@@ -188,7 +188,7 @@ static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk )
     break;
   case SEQ_ME_WAIT:
     if( PMSND_CheckPlayBGM() == FALSE ){
-      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_SHORT));
+      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_FAST));
       (*seq)++;
     }
     break;

@@ -290,7 +290,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT * event, int 
       if( iss_type_now == ISS_TYPE_DUNGEON )
       {
         FIELD_SOUND* fieldSound = GAMEDATA_GetFieldSound( gameData );
-        GMEVENT* fadeInEvent = EVENT_FSND_FadeInBGM( gameSystem, FSND_FADE_SHORT );
+        GMEVENT* fadeInEvent = EVENT_FSND_FadeInBGM( gameSystem, FSND_FADE_FAST );
         GMEVENT_CallEvent( event, fadeInEvent );
       }
       else

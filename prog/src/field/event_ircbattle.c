@@ -249,7 +249,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       break;
     }
     BATTLE_PARAM_SetPokeParty( dbw->para, dbw->pParty, BTL_CLIENT_PLAYER );
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM( gsys, dbw->para->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE ) );
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM( gsys, dbw->para->musicDefault, FSND_FADE_FAST, FSND_FADE_NONE ) );
     (*seq) ++;
     break;
   case _CALL_BATTLE:
@@ -274,7 +274,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       break;
     }
     NET_PRINT("バトル完了 event_ircbattle\n");
-    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NONE));
+    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_FAST, FSND_FADE_NONE));
     (*seq) = _CALL_NET_END;
     break;
   case _CALL_TRADE:  //  ポケモン交換

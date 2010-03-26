@@ -78,7 +78,7 @@ static GMEVENT_RESULT EVENT_BeaconDetailMain(GMEVENT * event, int *  seq, void *
     (*seq)++;
     break;
   case _PUSH_BGM:
-    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, SEQ_BGM_GAME_SYNC, FSND_FADE_SHORT, FSND_FADE_NONE));
+    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, SEQ_BGM_GAME_SYNC, FSND_FADE_FAST, FSND_FADE_NONE));
     (*seq)++;
     //break throw
   case _CALL_BEACON_DETAIL:
@@ -117,7 +117,7 @@ static GMEVENT_RESULT EVENT_BeaconDetailMain(GMEVENT * event, int *  seq, void *
     (*seq) ++;
     break;
   case _POP_BGM:
-    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NORMAL));
+    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_FAST, FSND_FADE_NORMAL));
     (*seq) ++;
     break;
   case _FIELD_END: 

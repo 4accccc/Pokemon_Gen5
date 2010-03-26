@@ -93,7 +93,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
 #endif
   case 3:
     GMEVENT_CallEvent(event, 
-      EVENT_FSND_PushPlayNextBGM(gsys, cbw->para.musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE)); 
+      EVENT_FSND_PushPlayNextBGM(gsys, cbw->para.musicDefault, FSND_FADE_FAST, FSND_FADE_NONE)); 
     (*seq)++;
     break;
   case 4:
@@ -117,7 +117,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     (*seq) ++;
     break;
   case 7:
-    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NORMAL));
+    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_FAST, FSND_FADE_NORMAL));
     (*seq) ++;
     break;
   case 8:

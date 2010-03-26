@@ -184,7 +184,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     break;
   case SEQ_POINT_GET:         //報酬ゲット
     if( PMSND_CheckPlayBGM() == FALSE ){
-      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_SHORT));
+      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_FAST));
 
       { //パレス球
         MYITEM_PTR myitem = GAMEDATA_GetMyItem(gdata);
@@ -234,7 +234,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 
   case SEQ_MISSION_FAIL:    //ミッション失敗
     if( PMSND_CheckPlayBGM() == FALSE ){
-      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_SHORT));
+      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_FAST));
       *seq = SEQ_DISGUISE_START;
     }
     break;

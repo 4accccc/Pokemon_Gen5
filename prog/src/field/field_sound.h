@@ -20,7 +20,8 @@
 //================================================================================= 
 // フェード フレーム数
 #define FSND_FADE_NONE    (0)  // 無
-#define FSND_FADE_SHORT   (6)  // 短 
+#define FSND_FADE_FAST    (6)  // 速 
+#define FSND_FADE_SHORT  (30)  // 短
 #define FSND_FADE_NORMAL (60)  // 中
 #define FSND_FADE_LONG   (90)  // 長
 

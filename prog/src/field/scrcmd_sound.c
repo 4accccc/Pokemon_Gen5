@@ -71,7 +71,7 @@ VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
 
   {
     GMEVENT* event;
-    event = EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_SHORT, FSND_FADE_NONE );
+    event = EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_FAST, FSND_FADE_NONE );
     SCRIPT_CallEvent( sc, event );
   }
 
@@ -285,7 +285,7 @@ VMCMD_RESULT EvCmdPlayTempEventBGM( VMHANDLE *core, void *wk )
   u16            soundIdx = SCRCMD_GetVMWorkValue( core, work );
   GMEVENT* event;
 
-  event = EVENT_FSND_PushPlayNextBGM( gsys, soundIdx, FSND_FADE_SHORT, FSND_FADE_NONE );
+  event = EVENT_FSND_PushPlayNextBGM( gsys, soundIdx, FSND_FADE_FAST, FSND_FADE_NONE );
   SCRIPT_CallEvent( sc, event );
   return VMCMD_RESULT_SUSPEND;
 }
@@ -613,7 +613,7 @@ static BOOL EvWaitMe( VMHANDLE *core, void *wk )
   if( PMSND_CheckPlayBGM() == FALSE )
   {
     GMEVENT* event;
-    event = EVENT_FSND_PopBGM( gsys, FSND_FADE_NONE, FSND_FADE_SHORT );
+    event = EVENT_FSND_PopBGM( gsys, FSND_FADE_NONE, FSND_FADE_FAST );
     SCRIPT_CallEvent( sc, event );
 
     // フィールドサウンド。

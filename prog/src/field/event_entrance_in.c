@@ -271,7 +271,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
       u8 nowIssType = BGM_INFO_GetIssType( BGMInfo, nowBGM ); 
       if( ( nextIssType == ISS_TYPE_DUNGEON ) && ( nowIssType == ISS_TYPE_DUNGEON ) ) { 
         // BGM フェードアウト
-        GMEVENT* fadeOutEvent = EVENT_FSND_FadeOutBGM( gameSystem, FSND_FADE_SHORT );
+        GMEVENT* fadeOutEvent = EVENT_FSND_FadeOutBGM( gameSystem, FSND_FADE_FAST );
         GMEVENT_CallEvent( event, fadeOutEvent );
         work->BGMFadeWaitFlag = TRUE; // BGMフェードを待つ
       }

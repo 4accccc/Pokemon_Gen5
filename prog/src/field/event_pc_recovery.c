@@ -176,7 +176,7 @@ static GMEVENT_RESULT EVENT_FUNC_PcRecoveryAnime( GMEVENT* event, int* seq, void
     {
       GAMESYS_WORK* gsys;
       gsys = FIELDMAP_GetGameSysWork( rw->fieldmap );
-      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_SHORT));
+      GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_FAST));
     }
     ChangeSequence( rw, seq, SEQ_EXIT );
     break;
