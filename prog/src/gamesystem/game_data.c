@@ -57,6 +57,7 @@
 #include "savedata/un_savedata_local.h"
 #include "savedata/un_savedata.h"
 #include "savedata/bsubway_savedata.h"
+#include "savedata/tradepoke_after_save.h"
 
 //============================================================================================
 //============================================================================================
@@ -1813,3 +1814,20 @@ u8 GAMEDATA_GetSymbolMapID(const GAMEDATA *gamedata)
 {
   return gamedata->symbol_map_id;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  交換ポケモン　その後　の　セーブデータ取得
+ *
+ *	@param	gdata     ゲームデータ
+ *    
+ *	@return セーブデータ
+ */
+//-----------------------------------------------------------------------------
+TRPOKE_AFTER_SAVE* GAMEDATA_GetTrPokeAfterSaveData( GAMEDATA* gdata )
+{
+  return SaveControl_DataPtrGet( gdata->sv_control_ptr, GMDATA_ID_TRPOKE_AFTER);
+ 
+}
+

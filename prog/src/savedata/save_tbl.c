@@ -55,6 +55,7 @@
 #include "savedata/un_savedata.h"
 #include "savedata/zukan_wp_savedata.h"
 #include "savedata/trialhouse_save.h"
+#include "savedata/tradepoke_after_save.h"
 #include "savedata/dendou_save.h"
 
 //==============================================================================
@@ -429,6 +430,12 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     (FUNC_GET_SIZE)THSV_GetWorkSize,
     (FUNC_INIT_WORK)THSV_Init,
   },
+  { //交換ポケモンのその後
+    GMDATA_ID_TRPOKE_AFTER,
+    (FUNC_GET_SIZE)TRPOKE_AFTER_SV_GetWorkSize,
+    (FUNC_INIT_WORK)TRPOKE_AFTER_SV_Init,
+  },
+
   { //ゲームクリアてもちポケモンデータ
     GMDATA_ID_GAMECLEAR_POKE,
     (FUNC_GET_SIZE)GameClearData_GetWorkSize,
