@@ -361,7 +361,7 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
     return FALSE;
   }
   if(info->action.action_no == GAMEBEACON_ACTION_THANKYOU
-      && GameBeaconSys->send.info.trainer_id != info->trainer_id){
+      && GameBeaconSys->send.info.trainer_id != info->action.thanks.target_trainer_id){
     return FALSE;
   }
   
