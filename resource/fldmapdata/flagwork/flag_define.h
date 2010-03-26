@@ -770,7 +770,7 @@
 #define FV_T04R0101_VETERANW_01            746 /* 0x02ea サザナミタウン：巨大別荘母 */
 #define FV_T04R0101_BOY4_01                747 /* 0x02eb サザナミタウン：巨大別荘兄 */
 #define FV_D01R0201_POKE16_01              748 /* 0x02ec 夢の跡地B2：ムシャーナ */
-		/* not used   749(0x02ed) */
+#define FV_R13R0103_LEG                    749 /* 0x02ed ツチノカミイベント */
 		/* not used   750(0x02ee) */
 		/* not used   751(0x02ef) */
 		/* not used   752(0x02f0) */
