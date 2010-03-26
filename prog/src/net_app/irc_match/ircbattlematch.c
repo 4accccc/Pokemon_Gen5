@@ -42,6 +42,7 @@
 #include "ircbattlematch.cdat"
 
 #include "net/dwc_rapfriend.h"
+#include "poke_tool/status_rcv.h"
 
 
 enum _IBMODE_SELECT {
@@ -731,6 +732,20 @@ static void _modeSuccessMessage(IRC_BATTLE_MATCH* pWork)
   
 }
 
+static int _searchPokeParty(IRC_BATTLE_MATCH* pWork)
+{
+  int num = PokeParty_GetPokeCountBattleEnable(pWork->pBattleWork->pNetParty[0]);
+  int num2 = PokeParty_GetPokeCountBattleEnable(pWork->pBattleWork->pNetParty[1]);
+
+  OS_TPrintf("%d %d\n",num,num2);
+  if(num > num2){
+    return num2;
+  }
+  return num;
+}
+
+
+
 
 
 static void _modeCheckStart5(IRC_BATTLE_MATCH* pWork)
@@ -740,6 +755,25 @@ static void _modeCheckStart5(IRC_BATTLE_MATCH* pWork)
    case EVENTIRCBTL_ENTRYMODE_FRIEND:
      _CHANGE_STATE(pWork,_modeSuccessMessage);
      break;
+   case EVENTIRCBTL_ENTRYMODE_SINGLE:
+   case EVENTIRCBTL_ENTRYMODE_DOUBLE:
+   case EVENTIRCBTL_ENTRYMODE_TRI:
+   case EVENTIRCBTL_ENTRYMODE_ROTATE:
+     STATUS_RCV_PokeParty_RecoverAll(pWork->pBattleWork->pNetParty[0]);  //‘S‰ñ•œ
+     STATUS_RCV_PokeParty_RecoverAll(pWork->pBattleWork->pNetParty[1]);  //‘S‰ñ•œ
+     switch(_searchPokeParty(pWork)){
+     case 0:
+       GF_ASSERT(0);
+       break;
+     case 1:
+       pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
+       break;
+     case 2:
+       pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_DOUBLE;
+       break;
+       
+     }
+     _CHANGE_STATE(pWork,_modeFadeoutStart);
    default:
      _CHANGE_STATE(pWork,_modeFadeoutStart);
      break;

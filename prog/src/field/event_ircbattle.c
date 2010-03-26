@@ -169,6 +169,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq)++;
     break;
   case _CALL_IRCBATTLE_MATCH:
+    _PartySet( dbw->bBattelBox, dbw );
     dbw->irc_match.gamedata = dbw->gamedata;
     dbw->irc_match.pParty = dbw->pParty;
     dbw->irc_match.pNetParty[0] = dbw->pNetParty[0];
@@ -217,7 +218,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
   case _PLAY_EVENT_BGM:
 
-    _PartySet( dbw->bBattelBox, dbw );
+//    _PartySet( dbw->bBattelBox, dbw );
 
     switch(dbw->selectType){
     case EVENTIRCBTL_ENTRYMODE_SINGLE:
