@@ -15,6 +15,8 @@
 
 #include "field/fieldmap_proc.h"
 
+#include "trainer_eye_data.h"
+
 //======================================================================
 //	define
 //======================================================================
@@ -33,6 +35,5 @@ extern int EVENT_CheckTrainerEyeRange(
 
 extern u16 EVENT_GetTrainerEyeTrainerID( const MMDL *mmdl );
 
-extern GMEVENT * EVENT_SetTrainerEyeMove( FIELDMAP_WORK *fieldMap,
-    MMDL *mmdl, FIELD_PLAYER *jiki,
-    int dir, int range, int gyoe, int tr_type, int work_pos );
+extern GMEVENT * EVENT_SetTrainerEyeMove(
+    FIELDMAP_WORK *fieldMap, const TRAINER_HITDATA * hitdata, int gyoe, u32 work_pos );

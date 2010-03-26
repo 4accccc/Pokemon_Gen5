@@ -16,6 +16,8 @@
 
 #include "fldmmdl.h"    //MMDL
 
+#include "trainer_eye_data.h"
+
 //--------------------------------------------------------------
 /**
  * スクリプトIDから、トレーナーIDを取得
@@ -127,9 +129,9 @@ extern void SCRIPT_SetEventFlagTrainer( EVENTWORK *ev, u16 tr_id );
 extern void SCRIPT_ResetEventFlagTrainer( EVENTWORK *ev, u16 tr_id );
 
 
-extern void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
-    s16 range, u16 dir, u16 scr_id, u16 tr_id, int tr_type, int tr_no );
+extern void SCRIPT_TRAINER_SetHitData(
+    GMEVENT * event, u32 tr_no, const TRAINER_HITDATA * hitdata );
 
-extern void * SCRIPT_GetTrainerEyeData( SCRIPT_WORK * sc, u32 tr_no );
+extern SCR_TRAINER_HITDATA * SCRIPT_GetTrainerHitData( SCRIPT_WORK * sc, u32 tr_no );
 
 

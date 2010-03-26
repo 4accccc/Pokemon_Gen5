@@ -68,17 +68,15 @@ VMCMD_RESULT EvCmdEyeTrainerMoveSet( VMHANDLE *core, void *wk )
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
 	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
   //GMEVENT **ev_eye_move;
-  EV_TRAINER_EYE_HITDATA * eye;
+  SCR_TRAINER_HITDATA * eye;
 
   if( pos == 0 ){ //視線0
-    eye = SCRIPT_GetTrainerEyeData( sc, TRAINER_EYE_HIT0 );
+    eye = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
   }else{
-    eye = SCRIPT_GetTrainerEyeData( sc, TRAINER_EYE_HIT1 );
+    eye = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
   }
   
-  eye->ev_eye_move = EVENT_SetTrainerEyeMove( fparam->fieldMap,
-      eye->mmdl, FIELDMAP_GetFieldPlayer(fparam->fieldMap),
-      eye->dir, eye->range, 0, eye->tr_type, pos );
+  eye->ev_eye_move = EVENT_SetTrainerEyeMove( fparam->fieldMap, &eye->hitdata, 0, pos );
   
 	return VMCMD_RESULT_CONTINUE;
 }
@@ -96,7 +94,7 @@ static BOOL EvWaitTrainer0Move( VMHANDLE *core, void *wk )
   GMEVENT **ev_eye_move;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  EV_TRAINER_EYE_HITDATA * eye = SCRIPT_GetTrainerEyeData( sc, TRAINER_EYE_HIT0 );
+  SCR_TRAINER_HITDATA * eye = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
 
   ev_eye_move = &eye->ev_eye_move;
   res = GMEVENT_Run( *ev_eye_move );
@@ -123,7 +121,7 @@ static BOOL EvWaitTrainer1Move( VMHANDLE *core, void *wk )
   GMEVENT **ev_eye_move;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  EV_TRAINER_EYE_HITDATA * eye = SCRIPT_GetTrainerEyeData( sc, TRAINER_EYE_HIT1 );
+  SCR_TRAINER_HITDATA * eye = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
 
   ev_eye_move = &eye->ev_eye_move;
   res = GMEVENT_Run( *ev_eye_move );
@@ -151,10 +149,8 @@ static BOOL EvWaitTrainer01Move( VMHANDLE *core, void *wk )
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GMEVENT_RESULT res0,res1;
-  EV_TRAINER_EYE_HITDATA * eye0 = 
-    SCRIPT_GetTrainerEyeData( sc, TRAINER_EYE_HIT0 );
-  EV_TRAINER_EYE_HITDATA * eye1 = 
-    SCRIPT_GetTrainerEyeData( sc, TRAINER_EYE_HIT1 );
+  SCR_TRAINER_HITDATA * eye0 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
+  SCR_TRAINER_HITDATA * eye1 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
 
   ev_eye_move0 = &eye0->ev_eye_move;
   
@@ -202,12 +198,10 @@ VMCMD_RESULT EvCmdEyeTrainerMoveSingle( VMHANDLE *core, void *wk )
 	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
   
 	if( pos == SCR_EYE_TR_0 ){
-    EV_TRAINER_EYE_HITDATA * eye0 =
-      SCRIPT_GetTrainerEyeData( sc, TRAINER_EYE_HIT0 );
+    SCR_TRAINER_HITDATA * eye0 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
     ev_eye_move = &eye0->ev_eye_move;
 	}else{
-    EV_TRAINER_EYE_HITDATA * eye1 =
-      SCRIPT_GetTrainerEyeData( sc, TRAINER_EYE_HIT1 );
+    SCR_TRAINER_HITDATA * eye1 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
     ev_eye_move = &eye1->ev_eye_move;
 	}
   
@@ -238,10 +232,8 @@ VMCMD_RESULT EvCmdEyeTrainerMoveDouble( VMHANDLE *core, void *wk )
   GMEVENT **ev_eye_move1;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  EV_TRAINER_EYE_HITDATA * eye0 =
-    SCRIPT_GetTrainerEyeData( sc, TRAINER_EYE_HIT0 );
-  EV_TRAINER_EYE_HITDATA * eye1 =
-    SCRIPT_GetTrainerEyeData( sc, TRAINER_EYE_HIT1 );
+  SCR_TRAINER_HITDATA * eye0 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
+  SCR_TRAINER_HITDATA * eye1 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
   
   ev_eye_move0 = &eye0->ev_eye_move;
   ev_eye_move1 = &eye1->ev_eye_move;
@@ -271,9 +263,9 @@ VMCMD_RESULT EvCmdEyeTrainerTypeGet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  EV_TRAINER_EYE_HITDATA * eye0 = SCRIPT_GetTrainerEyeData( sc, TRAINER_EYE_HIT0 );
+  SCR_TRAINER_HITDATA * eye0 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
 	u16 *ret_wk	= SCRCMD_GetVMWork( core, work );
-  *ret_wk = eye0->tr_type;
+  *ret_wk = eye0->hitdata.rule_type;
 	return VMCMD_RESULT_CONTINUE;
 }
 
@@ -288,11 +280,11 @@ VMCMD_RESULT EvCmdEyeTrainerIdGet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  EV_TRAINER_EYE_HITDATA * eye0 = SCRIPT_GetTrainerEyeData( sc, TRAINER_EYE_HIT0 );
-  EV_TRAINER_EYE_HITDATA * eye1 = SCRIPT_GetTrainerEyeData( sc, TRAINER_EYE_HIT1 );
+  SCR_TRAINER_HITDATA * eye0 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
+  SCR_TRAINER_HITDATA * eye1 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
 	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
 	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
-  *ret_wk = (pos == SCR_EYE_TR_0) ? (eye0->tr_id) : (eye1->tr_id);
+  *ret_wk = (pos == SCR_EYE_TR_0) ? (eye0->hitdata.tr_id) : (eye1->hitdata.tr_id);
   KAGAYA_Printf( "視線トレーナーID取得 %d\n", *ret_wk );
 	return VMCMD_RESULT_CONTINUE;
 }

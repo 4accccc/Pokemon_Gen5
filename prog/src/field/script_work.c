@@ -20,7 +20,7 @@
 
 #include "print/wordset.h"    //WORDSET
 
-#include "trainer_eye_data.h"   //EV_TRAINER_EYE_HITDATA
+#include "trainer_eye_data.h"   //SCR_TRAINER_HITDATA
 #include "field/eventdata_system.h" //EVENTDATA_GetSpecialScriptData
 
 #include "fieldmap.h"   //FIELDMAP_GetFldMsgBG
@@ -108,7 +108,7 @@ struct _TAG_SCRIPT_WORK
   u8 sound_se_flag;   ///< サウンドSE再生チェックフラグ
 
 	//トレーナー視線情報
-	EV_TRAINER_EYE_HITDATA eye_hitdata[TRAINER_EYE_HITMAX];
+	SCR_TRAINER_HITDATA trainer_hitdata[TRAINER_EYE_HITMAX];
 	
 	u16 scrTempWork[TEMP_WORK_SIZE];		//ワーク(ANSWORK,TMPWORKなどの代わり)
 
@@ -633,10 +633,10 @@ void * SCRIPT_GetReBattleTrainerData( SCRIPT_WORK * sc )
  * トレーナー視線情報の取得
  */
 //--------------------------------------------------------------
-void * SCRIPT_GetTrainerEyeData( SCRIPT_WORK * sc, u32 tr_no )
+SCR_TRAINER_HITDATA * SCRIPT_GetTrainerHitData( SCRIPT_WORK * sc, u32 tr_no )
 {
   GF_ASSERT( tr_no < TRAINER_EYE_HITMAX );
-  return &sc->eye_hitdata[tr_no];
+  return &sc->trainer_hitdata[tr_no];
 }
 
 

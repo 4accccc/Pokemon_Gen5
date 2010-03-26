@@ -20,6 +20,8 @@
 //SCRID_TRAINER_MOVE_BATTLE 
 #include "../../../resource/fldmapdata/script/trainer_def.h"
 
+#include "trainer_eye_data.h"  //TRAINER_HITDATA
+
 #include "script_def.h"
 //======================================================================
 //  define
@@ -56,19 +58,6 @@ enum
 //  strcut
 //======================================================================
 //--------------------------------------------------------------
-///  視線ヒット格納
-//--------------------------------------------------------------
-typedef struct
-{
-  int range;
-  int dir;
-  int scr_id;
-  int tr_id;
-  int tr_type;
-  MMDL *mmdl;
-}EYEMEET_HITDATA;
-
-//--------------------------------------------------------------
 //  視線ヒット移動処理用ワーク
 //--------------------------------------------------------------
 typedef struct
@@ -76,15 +65,13 @@ typedef struct
   int seq_no;        ///<処理番号
   BOOL end_flag;      ///<終了フラグ
    
-  int dir;          ///<移動方向
-  int range;        ///<移動距離
+  TRAINER_HITDATA hitdata;
+
   int gyoe_type;    ///<!タイプ
-  int tr_type;      ///<トレーナータイプ
-  int sisen_no;      ///<視線番号
+  u32 sisen_no;      ///<視線番号
   int count;        ///<移動カウント
    
   FLDEFF_TASK *task_gyoe;   ////<ギョエータスク
-  MMDL *mmdl;                ///<移動を行うMMDL*
   FIELDMAP_WORK *fieldMap;  ///<FILEDMAP_WORK*
   FIELD_PLAYER *fieldPlayer; ///<FIELD_PLAYER*
 }EV_EYEMEET_MOVE_WORK;
@@ -93,26 +80,22 @@ typedef struct
 //  proto
 //======================================================================
 static BOOL treye_CheckEyeMeet(
-    FIELDMAP_WORK *fieldMap, MMDL *non_mmdl, EYEMEET_HITDATA *hit );
+    FIELDMAP_WORK *fieldMap, MMDL *non_mmdl, TRAINER_HITDATA *hit );
 static int treye_CheckEyeRange(
     const FIELD_ENCOUNT* enc, const MMDL *mmdl, const MMDL *jiki, u16 *hitDir );
 
 static int treye_CheckEyeLine(
     u16 dir, s16 range, s16 tx, s16 ty, s16 tz, s16 gx, s16 gy, s16 gz );
 
-static GMEVENT_RESULT treyeEvent_EyeMeetMove(
-    GMEVENT *ev, int *seq, void *wk );
+static GMEVENT_RESULT treyeEvent_EyeMeetMove( GMEVENT *ev, int *seq, void *wk );
 
 static u16 tr_GetTrainerEventType( const MMDL *mmdl );
 static BOOL tr_HitCheckEyeLine( const MMDL *mmdl, u16 dir, int range, const FIELD_ENCOUNT* enc );
 static u16 tr_GetTrainerID( const MMDL *mmdl );
 static BOOL tr_CheckEventFlag( FIELDMAP_WORK *fieldMap, const MMDL *mmdl );
-static void tr_InitEyeMeetHitData(
-    EYEMEET_HITDATA *data, MMDL *mmdl, int range, u16 dir );
+static void makeHitData( TRAINER_HITDATA *data, MMDL *mmdl, int range, u16 dir );
 static MMDL * tr_CheckPairTrainer( const MMDL *tr_mmdl, u16 tr_id );
-static GMEVENT * tr_SetEventScript( FIELDMAP_WORK *fieldMap, MMDL *mmdl );
-static void trEventScript_SetTrainerEyeData(
-    GMEVENT *event, const EYEMEET_HITDATA *data, int tr_type, int tr_num );
+static GMEVENT * createTrainerScript( FIELDMAP_WORK *fieldMap, MMDL *mmdl );
 
 static int (* const data_treye_CheckEyeLineTbl[DIR_MAX4])(
     s16,s16,s16,s16,s16,s16,s16);
@@ -130,48 +113,48 @@ static int (* const data_treye_CheckEyeLineTbl[DIR_MAX4])(
 //--------------------------------------------------------------
 GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 )
 {
-  EYEMEET_HITDATA hit0;
+  TRAINER_HITDATA hit0;
   GMEVENT *event = NULL;
   
   if( treye_CheckEyeMeet(fieldMap,NULL,&hit0) == TRUE )
   {
     MMDL *mmdl;
-    EYEMEET_HITDATA hit1;
+    TRAINER_HITDATA hit1;
     
-    if( hit0.tr_type == SCR_EYE_TR_TYPE_SINGLE ) //シングル
+    if( hit0.rule_type == SCR_EYE_TR_TYPE_SINGLE ) //シングル
     {
-      event = tr_SetEventScript( fieldMap, hit0.mmdl ); //スクリプト起動
+      event = createTrainerScript( fieldMap, hit0.mmdl ); //スクリプト起動
 
       if( vs2 == FALSE || //シングル戦チェック
           treye_CheckEyeMeet(fieldMap,hit0.mmdl,&hit1) == FALSE )
       { //スクリプト用イベントデータセット シングル
-        trEventScript_SetTrainerEyeData(
-            event, &hit0, SCR_EYE_TR_TYPE_SINGLE, SCR_EYE_TR_0 );
+        hit0.rule_type = SCR_EYE_TR_TYPE_SINGLE;
+        SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_0, &hit0 );
         KAGAYA_Printf( "TRAINER EYE HIT SINGLE\n" );
       }
       else
       { //スクリプト用イベントデータセット タッグ
-        trEventScript_SetTrainerEyeData(
-            event, &hit0, SCR_EYE_TR_TYPE_TAG, SCR_EYE_TR_0 );
-        trEventScript_SetTrainerEyeData(
-            event, &hit1, SCR_EYE_TR_TYPE_TAG, SCR_EYE_TR_1 );
+        hit0.rule_type = SCR_EYE_TR_TYPE_TAG;
+        SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_0, &hit0 );
+        hit1.rule_type = SCR_EYE_TR_TYPE_TAG;
+        SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_1, &hit1 );
         KAGAYA_Printf( "TRAINER EYE HIT TAG DOUBLE\n" );
       }
     }
-    else if( hit0.tr_type == SCR_EYE_TR_TYPE_DOUBLE )
+    else if( hit0.rule_type == SCR_EYE_TR_TYPE_DOUBLE )
     {
       if( vs2 == TRUE ) //ダブル可能
       {
-        event = tr_SetEventScript( fieldMap, hit0.mmdl ); //スクリプト起動
+        event = createTrainerScript( fieldMap, hit0.mmdl ); //スクリプト起動
         
         mmdl = tr_CheckPairTrainer( hit0.mmdl, hit0.tr_id );
-        tr_InitEyeMeetHitData( &hit1, mmdl, hit0.range, hit0.dir );
+        makeHitData( &hit1, mmdl, hit0.range, hit0.dir );
         
         //スクリプト用イベントデータセット ダブル
-        trEventScript_SetTrainerEyeData(
-            event, &hit0, SCR_EYE_TR_TYPE_DOUBLE, SCR_EYE_TR_0 );
-        trEventScript_SetTrainerEyeData(
-            event, &hit1, SCR_EYE_TR_TYPE_DOUBLE, SCR_EYE_TR_1 );
+        hit0.rule_type = SCR_EYE_TR_TYPE_DOUBLE;
+        SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_0, &hit0 );
+        hit1.rule_type = SCR_EYE_TR_TYPE_DOUBLE;
+        SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_1, &hit1 );
         KAGAYA_Printf( "TRAINER EYE HIT DOUBLE\n" );
       }
     }
@@ -239,7 +222,7 @@ int EVENT_CheckTrainerEyeRange(
  */
 //--------------------------------------------------------------
 static BOOL treye_CheckEyeMeet(
-    FIELDMAP_WORK *fieldMap, MMDL *non_mmdl, EYEMEET_HITDATA *hit )
+    FIELDMAP_WORK *fieldMap, MMDL *non_mmdl, TRAINER_HITDATA *hit )
 {
   u16 dir;
   u32 no=0;
@@ -263,7 +246,7 @@ static BOOL treye_CheckEyeMeet(
           KAGAYA_Printf( "視線ヒット ヒットしたトレーナーID =%d\n",
               tr_GetTrainerID(mmdl) );
 #endif
-          tr_InitEyeMeetHitData( hit, mmdl, range, dir );
+          makeHitData( hit, mmdl, range, dir );
           return( TRUE );
         }
       }
@@ -464,14 +447,13 @@ static int treye_CheckEyeLineRight(
  * @param  dir    移動方向
  * @param  range  移動距離
  * @param  gyoe  !マーク制御 現状未使用
- * @param  tr_type  トレーナータイプ
+ * @param  rule_type  対戦ルールタイプ
  * @param  work_pos 視線ヒットワーク要素数 0=視線主 1=ペア
  * @retval  GMEVENT 移動処理を行うGMEVENT
  */
 //--------------------------------------------------------------
-GMEVENT * EVENT_SetTrainerEyeMove( FIELDMAP_WORK *fieldMap,
-    MMDL *mmdl, FIELD_PLAYER *jiki,
-    int dir, int range, int gyoe, int tr_type, int work_pos )
+GMEVENT * EVENT_SetTrainerEyeMove(
+    FIELDMAP_WORK *fieldMap, const TRAINER_HITDATA * hitdata, int gyoe, u32 work_pos )
 {
   GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
   GMEVENT *ev = GMEVENT_Create( gsys, NULL,
@@ -479,16 +461,14 @@ GMEVENT * EVENT_SetTrainerEyeMove( FIELDMAP_WORK *fieldMap,
   EV_EYEMEET_MOVE_WORK *work = GMEVENT_GetEventWork( ev );
   MI_CpuClear8( work, sizeof(EV_EYEMEET_MOVE_WORK) );
   
-  work->dir = dir;
-  work->range = range;
+  work->hitdata = *hitdata;
+
   work->gyoe_type = gyoe;
-  work->tr_type = tr_type;
   work->sisen_no = work_pos;
-  work->mmdl = mmdl;
   work->fieldMap = fieldMap;
   work->fieldPlayer = FIELDMAP_GetFieldPlayer( fieldMap );
   
-  KAGAYA_Printf( "OBJ ID %dの視線移動をセット\n", MMDL_GetOBJID(mmdl) );
+  KAGAYA_Printf( "OBJ ID %dの視線移動をセット\n", MMDL_GetOBJID(work->hitdata.mmdl) );
   return( ev );
 }
 
@@ -501,8 +481,8 @@ GMEVENT * EVENT_SetTrainerEyeMove( FIELDMAP_WORK *fieldMap,
 //--------------------------------------------------------------
 static int eyeMeetMove_Init( EV_EYEMEET_MOVE_WORK *work )
 {
-  if( MMDL_CheckMoveBitMove(work->mmdl) == TRUE ){ //動作中
-    MMDL_OffMoveBitMoveProcPause( work->mmdl ); //動作ポーズ解除
+  if( MMDL_CheckMoveBitMove(work->hitdata.mmdl) == TRUE ){ //動作中
+    MMDL_OffMoveBitMoveProcPause( work->hitdata.mmdl ); //動作ポーズ解除
   }
   
   work->seq_no = SEQNO_TRMOVE_OBJMOVE_WAIT;
@@ -518,12 +498,12 @@ static int eyeMeetMove_Init( EV_EYEMEET_MOVE_WORK *work )
 //--------------------------------------------------------------
 static int eyeMeetMove_OBJMoveWait( EV_EYEMEET_MOVE_WORK *work )
 {
-  if( MMDL_CheckMoveBitMove(work->mmdl) == TRUE ){
+  if( MMDL_CheckMoveBitMove(work->hitdata.mmdl) == TRUE ){
     return( FALSE ); //動作中
   }
   
-  MMDL_SetDirDisp( work->mmdl, work->dir );
-  MMDL_OnMoveBitMoveProcPause( work->mmdl );
+  MMDL_SetDirDisp( work->hitdata.mmdl, work->hitdata.dir );
+  MMDL_OnMoveBitMoveProcPause( work->hitdata.mmdl );
   
   work->seq_no = SEQNO_TRMOVE_JIKIMOVE_WAIT;
   return( TRUE );
@@ -547,7 +527,7 @@ static int eyeMeetMove_JikiMoveWait( EV_EYEMEET_MOVE_WORK *work )
   work->seq_no = SEQNO_TRMOVE_DIR_CHANGE;
 
   {
-    u32 code = MMDL_GetMoveCode( work->mmdl );
+    u32 code = MMDL_GetMoveCode( work->hitdata.mmdl );
     KAGAYA_Printf( "トレーナー動作コード=0x%x\n", code );
     
     switch( code )
@@ -573,11 +553,11 @@ static int eyeMeetMove_JikiMoveWait( EV_EYEMEET_MOVE_WORK *work )
 static int eyeMeetMove_DirChange( EV_EYEMEET_MOVE_WORK *work )
 {
   
-  if( MMDL_CheckPossibleAcmd(work->mmdl) == TRUE ){
+  if( MMDL_CheckPossibleAcmd(work->hitdata.mmdl) == TRUE ){
     u16 code;
-    GF_ASSERT( work->dir < DIR_MAX4 );
-    code = MMDL_ChangeDirAcmdCode( work->dir, AC_DIR_U );
-    MMDL_SetAcmd( work->mmdl, code );
+    GF_ASSERT( work->hitdata.dir < DIR_MAX4 );
+    code = MMDL_ChangeDirAcmdCode( work->hitdata.dir, AC_DIR_U );
+    MMDL_SetAcmd( work->hitdata.mmdl, code );
     work->seq_no = SEQNO_TRMOVE_DIR_CHANGE_WAIT;
   }
   
@@ -593,7 +573,7 @@ static int eyeMeetMove_DirChange( EV_EYEMEET_MOVE_WORK *work )
 //--------------------------------------------------------------
 static int eyeMeetMove_DirChangeWait( EV_EYEMEET_MOVE_WORK *work )
 {
-  if( MMDL_CheckEndAcmd(work->mmdl) == FALSE ){
+  if( MMDL_CheckEndAcmd(work->hitdata.mmdl) == FALSE ){
     return( FALSE );
   }
   
@@ -612,7 +592,7 @@ static int eyeMeetMove_GyoeSet( EV_EYEMEET_MOVE_WORK *work )
 {
   FLDEFF_CTRL *fectrl =  FIELDMAP_GetFldEffCtrl( work->fieldMap );
   work->task_gyoe = FLDEFF_GYOE_SetMMdl(
-      fectrl, work->mmdl, FLDEFF_GYOETYPE_GYOE, FALSE ); //SEは鳴らさない
+      fectrl, work->hitdata.mmdl, FLDEFF_GYOETYPE_GYOE, FALSE ); //SEは鳴らさない
   work->seq_no = SEQNO_TRMOVE_GYOE_WAIT;
   return( FALSE );
 }
@@ -642,7 +622,7 @@ static int eyeMeetMove_GyoeWait( EV_EYEMEET_MOVE_WORK *work )
 //--------------------------------------------------------------
 static int eyeMeetMove_HidePullOFFSet( EV_EYEMEET_MOVE_WORK *work )
 {
-  MMDL_SetAcmd( work->mmdl, AC_HIDE_PULLOFF );
+  MMDL_SetAcmd( work->hitdata.mmdl, AC_HIDE_PULLOFF );
   work->seq_no = SEQNO_TRMOVE_HIDE_PULLOFF_WAIT;
   return( FALSE );
 }
@@ -656,7 +636,7 @@ static int eyeMeetMove_HidePullOFFSet( EV_EYEMEET_MOVE_WORK *work )
 //--------------------------------------------------------------
 static int eyeMeetMove_HidePullOFFWait( EV_EYEMEET_MOVE_WORK *work )
 {
-  if( MMDL_CheckEndAcmd(work->mmdl) == TRUE ){
+  if( MMDL_CheckEndAcmd(work->hitdata.mmdl) == TRUE ){
     work->seq_no = SEQNO_TRMOVE_GYOE_END_WAIT;
   }
   return( FALSE );
@@ -690,7 +670,7 @@ static int eyeMeetMove_GyoeEndWait( EV_EYEMEET_MOVE_WORK *work )
 //--------------------------------------------------------------
 static int eyeMeetMove_MoveRangeCheck( EV_EYEMEET_MOVE_WORK *work )
 {
-  if( work->range <= 1 ){                  //自機目の前 移動する必要なし
+  if( work->hitdata.range <= 1 ){                  //自機目の前 移動する必要なし
     work->seq_no = SEQNO_TRMOVE_MOVE_END_WAIT;
     return( TRUE );  
   }
@@ -708,9 +688,9 @@ static int eyeMeetMove_MoveRangeCheck( EV_EYEMEET_MOVE_WORK *work )
 //--------------------------------------------------------------
 static int eyeMeetMove_MoveStart( EV_EYEMEET_MOVE_WORK *work )
 {
-  if( MMDL_CheckPossibleAcmd(work->mmdl) == TRUE ){
-    u16 code = MMDL_ChangeDirAcmdCode( work->dir, AC_WALK_U_8F );
-    MMDL_SetAcmd( work->mmdl, code );
+  if( MMDL_CheckPossibleAcmd(work->hitdata.mmdl) == TRUE ){
+    u16 code = MMDL_ChangeDirAcmdCode( work->hitdata.dir, AC_WALK_U_8F );
+    MMDL_SetAcmd( work->hitdata.mmdl, code );
     work->seq_no = SEQNO_TRMOVE_MOVE;
   }
   
@@ -726,11 +706,11 @@ static int eyeMeetMove_MoveStart( EV_EYEMEET_MOVE_WORK *work )
 //--------------------------------------------------------------
 static int eyeMeetMove_Move( EV_EYEMEET_MOVE_WORK *work )
 {
-  if( MMDL_CheckEndAcmd(work->mmdl) == FALSE ){
+  if( MMDL_CheckEndAcmd(work->hitdata.mmdl) == FALSE ){
     return( FALSE );
   }
   
-  work->range--;                      //一歩減らす
+  work->hitdata.range--;                      //一歩減らす
   work->seq_no = SEQNO_TRMOVE_MOVE_RANGE_CHECK;
   return( TRUE );
 }
@@ -770,10 +750,10 @@ static int eyeMeetMove_JikiTurnSet( EV_EYEMEET_MOVE_WORK *work )
   j_mmdl = FIELD_PLAYER_GetMMdl( work->fieldPlayer );
   turn_dir = MMDL_TOOL_GetRangeDir(
       MMDL_GetGridPosX(j_mmdl), MMDL_GetGridPosZ(j_mmdl),
-      MMDL_GetGridPosX(work->mmdl), MMDL_GetGridPosZ(work->mmdl) );
+      MMDL_GetGridPosX(work->hitdata.mmdl), MMDL_GetGridPosZ(work->hitdata.mmdl) );
   
   if( MMDL_GetDirDisp(j_mmdl) != turn_dir &&
-    (work->sisen_no == 0 || work->tr_type == SCR_EYE_TR_TYPE_TAG) )
+    (work->sisen_no == 0 || work->hitdata.rule_type == SCR_EYE_TR_TYPE_TAG) )
   {
     if( MMDL_CheckPossibleAcmd(j_mmdl) == TRUE )
     {
@@ -820,10 +800,10 @@ static int eyeMeetMove_JikiTurn( EV_EYEMEET_MOVE_WORK *work )
 //--------------------------------------------------------------
 static int eyeMeetMove_AcmdEnd( EV_EYEMEET_MOVE_WORK *work )
 {
-  MMDL_EndAcmd( work->mmdl );
+  MMDL_EndAcmd( work->hitdata.mmdl );
 
   //戦闘終了後からは移動しないように、動作コードをMV_DMYにする
-  MMDL_ChangeMoveCode( work->mmdl, MV_DMY );
+  MMDL_ChangeMoveCode( work->hitdata.mmdl, MV_DMY );
  
   work->seq_no = SEQNO_TRMOVE_END;
   return( TRUE );
@@ -875,8 +855,7 @@ static int (* const data_EyeMeetMoveFuncTbl[])( EV_EYEMEET_MOVE_WORK* ) =
  * @retval  nothing
  */
 //--------------------------------------------------------------
-static GMEVENT_RESULT treyeEvent_EyeMeetMove(
-    GMEVENT *ev, int *seq, void *wk )
+static GMEVENT_RESULT treyeEvent_EyeMeetMove( GMEVENT *ev, int *seq, void *wk )
 {
   EV_EYEMEET_MOVE_WORK *work = wk;
   
@@ -1024,22 +1003,22 @@ static BOOL tr_CheckEventFlag( FIELDMAP_WORK *fieldMap, const MMDL *mmdl )
 
 //--------------------------------------------------------------
 /**
- * EYEMEET_HITDATA初期化
- * @param data EYEMEET_HITDATA
+ * TRAINER_HITDATA初期化
+ * @param data TRAINER_HITDATA
  * @param mmdl MMDL
  * @param range 視線距離
  * @param dir 移動方向
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void tr_InitEyeMeetHitData(
-    EYEMEET_HITDATA *data, MMDL *mmdl, int range, u16 dir )
+static void makeHitData(
+    TRAINER_HITDATA *data, MMDL *mmdl, int range, u16 dir )
 {
   data->range = range;
   data->dir = dir;
   data->scr_id = MMDL_GetEventID( mmdl );
   data->tr_id = tr_GetTrainerID( mmdl );
-  data->tr_type = SCRIPT_CheckTrainer2vs2Type( data->tr_id );
+  data->rule_type = SCRIPT_CheckTrainer2vs2Type( data->tr_id );
   data->mmdl = mmdl;
 }
 
@@ -1083,32 +1062,13 @@ static MMDL * tr_CheckPairTrainer( const MMDL *tr_mmdl, u16 tr_id )
  * @retval GMEVENT*
  */
 //--------------------------------------------------------------
-static GMEVENT * tr_SetEventScript( FIELDMAP_WORK *fieldMap, MMDL *mmdl )
+static GMEVENT * createTrainerScript( FIELDMAP_WORK *fieldMap, MMDL *mmdl )
 {
   GMEVENT *event;
   GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( fieldMap );
-  HEAPID heapID = FIELDMAP_GetHeapID( fieldMap );
   event = SCRIPT_SetEventScript(
       gsys, SCRID_TRAINER_MOVE_BATTLE, mmdl, GFL_HEAPID_APP );
   return( event );
-}
-
-//--------------------------------------------------------------
-/**
- * 視線情報をスクリプトイベントへセット
- * @param event 起動したGMEVENT*
- * @param data EYEMEET_HITDATA
- * @param tr_type トレーナー視線タイプ。SCR_EYE_TR_TYPE_SINGLE等
- * @param tr_num トレーナー番号。SCR_EYE_TR_0等
- * @retval nothing
- */
-//--------------------------------------------------------------
-static void trEventScript_SetTrainerEyeData(
-    GMEVENT *event, const EYEMEET_HITDATA *data, int tr_type, int tr_num )
-{
-  SCRIPT_SetTrainerEyeData( event, data->mmdl,
-    data->range, data->dir, data->scr_id, data->tr_id,
-    tr_type, tr_num );
 }
 
 //======================================================================

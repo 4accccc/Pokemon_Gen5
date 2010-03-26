@@ -21,7 +21,7 @@
 
 #include "print/wordset.h"    //WORDSET
 
-#include "trainer_eye_data.h"   //EV_TRAINER_EYE_HITDATA
+#include "trainer_eye_data.h"   //SCR_TRAINER_HITDATA
 #include "field/eventdata_system.h" //EVENTDATA_GetSpecialScriptData
 
 #include "fieldmap.h"   //FIELDMAP_GetFldMsgBG
@@ -45,21 +45,16 @@
 /**
  * トレーナー視線情報を格納 事前にSCRIPT_SetEventScript()を起動しておく事
  * @param	event SCRIPT_SetEventScript()戻り値。
- * @param	mmdl 視線がヒットしたFIELD_OBJ_PTR
- * @param	range		グリッド単位の視線距離
- * @param	dir			移動方向
- * @param	scr_id		視線ヒットしたスクリプトID
- * @param	tr_id		視線ヒットしたトレーナーID
- * @param	tr_type		トレーナータイプ　シングル、ダブル、タッグ識別
  * @param	tr_no		何番目にヒットしたトレーナーなのか
+ * @param hitdata セットする視線情報データ
  */
 //--------------------------------------------------------------
-void SCRIPT_SetTrainerEyeData( GMEVENT *event, MMDL *mmdl,
-    s16 range, u16 dir, u16 scr_id, u16 tr_id, int tr_type, int tr_no )
+void SCRIPT_TRAINER_SetHitData( GMEVENT * event, u32 tr_no, const TRAINER_HITDATA * hitdata )
 {
   SCRIPT_WORK *sc =  SCRIPT_GetScriptWorkFromEvent( event );
-	EV_TRAINER_EYE_HITDATA *eye = SCRIPT_GetTrainerEyeData( sc, tr_no );
-  TRAINER_EYE_HITDATA_Set(eye, mmdl, range, dir, scr_id, tr_id, tr_type, tr_no );
+	SCR_TRAINER_HITDATA *eye = SCRIPT_GetTrainerHitData( sc, tr_no );
+  eye->hitdata = *hitdata;
+  eye->ev_eye_move = NULL;
 }
 
 //--------------------------------------------------------------

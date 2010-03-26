@@ -91,56 +91,6 @@ VMCMD_RESULT EvCmdTrainerFlagCheck( VMHANDLE * core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
- * @brief 野生戦敗北処理
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	VMCMD_RESULT_SUSPEND
- *
- * @todo  強制終了されるスクリプトに解放忘れがないか、検討
- *
- * @note
- * スクリプトを強制終了し、敗北処理イベントへと遷移する。
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdWildLose( VMHANDLE *core, void *wk )
-{
-  GMEVENT *call_event;
-  SCRCMD_WORK *work = wk;
-  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-
-  call_event = EVENT_NormalLose( gsys );
-  SCRIPT_EntryNextEvent( sc, call_event );
-
-  VM_End( core );
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//--------------------------------------------------------------
-/**
- * @brief 野生戦敗北チェック
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return  VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdWildLoseCheck( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
-  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-  BtlResult res = GAMEDATA_GetLastBattleResult(gdata);
-
-  if (FIELD_BATTLE_IsLoseResult(res, BTL_COMPETITOR_WILD) == TRUE)
-  {
-    *ret_wk = SCR_BATTLE_RESULT_LOSE;
-  } else {
-    *ret_wk = SCR_BATTLE_RESULT_WIN;
-  }
-
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//--------------------------------------------------------------
-/**
  * @brief トレーナー敗北処理
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return	VMCMD_RESULT_SUSPEND
@@ -189,57 +139,53 @@ VMCMD_RESULT EvCmdTrainerLoseCheck( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
-#if 0
-/*
- * 一応要らないと思う
- * scrcmd_encount.c に EvCmdWildBattleRetryCheck()を定義
- */
 //--------------------------------------------------------------
 /**
- * @brief 隠しポケモン戦闘　再戦可不可チェック
+ * @brief 野生戦敗北処理
  * @param	core		仮想マシン制御構造体へのポインタ
- * @return  VMCMD_RESULT
+ * @return	VMCMD_RESULT_SUSPEND
  *
- * @todo  本当にいるのか検討する
+ * @todo  強制終了されるスクリプトに解放忘れがないか、検討
+ *
+ * @note
+ * スクリプトを強制終了し、敗北処理イベントへと遷移する。
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdSeacretPokeRetryCheck( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdWildLose( VMHANDLE *core, void *wk )
 {
+  GMEVENT *call_event;
   SCRCMD_WORK *work = wk;
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	VMCMD_RESULT* win_flag	= SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_FLAG );
-	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
-#if 0
-	*ret_wk = BattleParam_IsSeacretPokeRetry(*win_flag);
-	return 1;
-#else //wb kari
-  *ret_wk = 0;
-  return VMCMD_RESULT_CONTINUE;
-#endif
+
+  call_event = EVENT_NormalLose( gsys );
+  SCRIPT_EntryNextEvent( sc, call_event );
+
+  VM_End( core );
+  return VMCMD_RESULT_SUSPEND;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief 配布ポケモン戦闘　再戦可不可チェック
+ * @brief 野生戦敗北チェック
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return  VMCMD_RESULT
- *
- * @todo  本当にいるのか検討する
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdHaifuPokeRetryCheck( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdWildLoseCheck( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	VMCMD_RESULT* win_flag	= SCRIPT_GetMemberWork( sc, ID_EVSCR_WIN_FLAG );
-	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
-#if 0
-	*ret_wk = BattleParam_IsHaifuPokeRetry(*win_flag);
-	return 1;
-#else //wb kari
-  *ret_wk = 0;
+	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
+  GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+  BtlResult res = GAMEDATA_GetLastBattleResult(gdata);
+
+  if (FIELD_BATTLE_IsLoseResult(res, BTL_COMPETITOR_WILD) == TRUE)
+  {
+    *ret_wk = SCR_BATTLE_RESULT_LOSE;
+  } else {
+    *ret_wk = SCR_BATTLE_RESULT_WIN;
+  }
+
   return VMCMD_RESULT_CONTINUE;
-#endif
 }
 
-#endif
