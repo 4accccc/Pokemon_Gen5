@@ -611,26 +611,32 @@ static GMEVENT_RESULT PushPlayBattleBGMEvent( GMEVENT* event, int* seq, void* wk
   work = (FSND_EVWORK*)wk;
   fieldSound = work->fieldSound;
 
-  switch( *seq )
-  {
-  case 0:  // リクエスト発行
-    if( FIELD_SOUND_GetBGMPushCount(fieldSound) == FSND_PUSHCOUNT_NONE )
-    { // ベースBGM再生中
+  switch( *seq ) {
+  // リクエスト発行
+  case 0:  
+    if( FIELD_SOUND_GetBGMPushCount_atAllRequestFinished(fieldSound) == FSND_PUSHCOUNT_NONE ) { 
+      // ベースBGM再生中
       FIELD_SOUND_RegisterRequest_PUSH( fieldSound, FSND_FADE_FAST );
     }
-    else
-    { // 視線曲再生中(ベースBGMはすでに退避済み)
+    else { 
+      // 視線曲再生中 ( ベースBGMはすでに退避済み )
       FIELD_SOUND_RegisterRequest_FADE_OUT( fieldSound, FSND_FADE_FAST );
     }
     (*seq)++;
     break;
-  case 1:  // BGM退避orフェードアウト完了待ち
+
+  // BGM退避 or フェードアウト完了待ち
+  case 1:  
     if( FIELD_SOUND_HaveRequest(fieldSound) == FALSE ){ (*seq)++; }
     break;
-  case 2:  // バトルBGM再生
+
+  // バトルBGM再生
+  case 2:  
     FIELD_SOUND_RegisterRequest_FORCE_PLAY( fieldSound, work->soundIdx );
     (*seq)++;
     break;
+
+  // イベント終了
   case 3:
     return GMEVENT_RES_FINISH;
   }
@@ -753,8 +759,52 @@ GMEVENT* EVENT_FSND_WaitBGMFade( GAMESYS_WORK* gameSystem )
   work = GMEVENT_GetEventWork( event );
   work->fieldSound = GAMEDATA_GetFieldSound( gdata );
   return event;
-}
+} 
+//---------------------------------------------------------------------------------
+/**
+ * @brief BGM復帰待ちイベント
+ */
+//---------------------------------------------------------------------------------
+static GMEVENT_RESULT WaitBGMPopEvent( GMEVENT* event, int* seq, void* wk )
+{
+  FSND_EVWORK* work;
+  FIELD_SOUND* fieldSound;
 
+  work = (FSND_EVWORK*)wk;
+  fieldSound = work->fieldSound;
+
+  switch( *seq ) {
+  // BGMのPOP完了待ち
+  case 0:
+    if( FIELD_SOUND_CheckBGMPopFinished(fieldSound) == TRUE ) { (*seq)++; }
+    break;
+
+  // イベント終了
+  case 1:
+    return GMEVENT_RES_FINISH;
+  } 
+  return GMEVENT_RES_CONTINUE;
+}
+//--------------------------------------------------------------------------------- 
+/**
+ * @brief BGM復帰待ちイベントを生成する
+ *
+ * @param gameSystem
+ */
+//--------------------------------------------------------------------------------- 
+GMEVENT* EVENT_FSND_WaitBGMPop( GAMESYS_WORK* gameSystem )
+{
+  GMEVENT* event;
+  FSND_EVWORK* work;
+  GAMEDATA* gdata;
+
+  gdata = GAMESYSTEM_GetGameData( gameSystem );
+
+  event = GMEVENT_Create( gameSystem, NULL, WaitBGMPopEvent, sizeof(FSND_EVWORK) );
+  work = GMEVENT_GetEventWork( event );
+  work->fieldSound = GAMEDATA_GetFieldSound( gdata );
+  return event;
+}
 
 //=================================================================================
 // ■プレイヤーの操作により発生するBGMの変更

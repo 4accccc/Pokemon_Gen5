@@ -378,6 +378,31 @@ BOOL FIELD_SOUND_HaveRequest( const FIELD_SOUND* fieldSound )
   return TRUE;
 }
 
+//---------------------------------------------------------------------------------
+/**
+ * @brief BGMの復帰が全て終わったかどうかをチェックする
+ *
+ * @param fieldSound
+ *
+ * @return すべてのBGMの復帰リクエストが完了している場合 TRUE
+ *         そうでなければ FALSE
+ */
+//---------------------------------------------------------------------------------
+BOOL FIELD_SOUND_CheckBGMPopFinished( const FIELD_SOUND* fieldSound )
+{
+  // POPリクエスト処理中
+  if( fieldSound->request == FSND_BGM_REQUEST_POP ) {
+    return FALSE; 
+  }
+
+  // キューにPOPリクエストが登録されている
+  if( GetRequestCountInQueue( fieldSound, FSND_BGM_REQUEST_POP ) != 0 ) {
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
 
 //=================================================================================
 // ■リクエスト

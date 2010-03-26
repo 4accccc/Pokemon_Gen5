@@ -49,7 +49,9 @@ extern GMEVENT* EVENT_FSND_PushPlayBattleBGM( GAMESYS_WORK* gameSystem, u32 soun
 extern GMEVENT* EVENT_FSND_PopPlayBGM_fromBattle( GAMESYS_WORK* gameSystem );
 
 // フェード操作の完了待ち
-extern GMEVENT* EVENT_FSND_WaitBGMFade( GAMESYS_WORK* gameSystem );
+extern GMEVENT* EVENT_FSND_WaitBGMFade( GAMESYS_WORK* gameSystem ); 
+// BGM復帰待ち
+extern GMEVENT* EVENT_FSND_WaitBGMPop( GAMESYS_WORK* gameSystem );
 
 
 //=================================================================================

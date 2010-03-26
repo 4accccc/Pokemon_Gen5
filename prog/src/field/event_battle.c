@@ -137,9 +137,6 @@ typedef struct {
   ///戦闘後処理（ずかん追加画面、進化画面など）呼び出し用のパラメータ
   BTLRET_PARAM        btlret_param;
 
-  ///BGMがすでに退避済みか？フラグ
-  BOOL bgm_pushed_flag;
-
   /** @brief  サブイベントかどうか？フラグ
    * サブイベントの場合は、敗北処理など終了部分を呼び出し元から
    * 呼び出してもらう必要があるため、フックする
@@ -573,7 +570,6 @@ static GMEVENT_RESULT fieldBattleEvent(
   case 0:
     // 戦闘用ＢＧＭセット
     GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, bew->battle_param->musicDefault));
-    bew->bgm_pushed_flag = TRUE;
     (*seq)++;
     break;
   case 1:
@@ -634,10 +630,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     }
     // そうでなければ, フィールドBGMを復帰
     else {
-      if( bew->bgm_pushed_flag == TRUE ) {
-        GMEVENT_CallEvent( event, EVENT_FSND_PopPlayBGM_fromBattle( gsys ) );
-        bew->bgm_pushed_flag = FALSE;
-      }
+      GMEVENT_CallEvent( event, EVENT_FSND_PopPlayBGM_fromBattle( gsys ) );
     }
     (*seq) ++;
     break;
@@ -664,13 +657,18 @@ static GMEVENT_RESULT fieldBattleEvent(
     (*seq) ++;
     break;
   case 9:
+    // BGMの復帰待ち
+    GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMPop( gsys ) );
+    (*seq) ++;
+    break;
+  case 10:
     if ( bew->is_sub_event == FALSE ) {
       GMEVENT_CallEvent( event, 
           EVENT_FieldFadeIn_Black( gsys, fieldmap, FIELD_FADE_WAIT ) );
     }
     (*seq) ++;
     break;
-  case 10:
+  case 11:
     BEW_Destructor( bew );
     return GMEVENT_RES_FINISH;
   }
@@ -952,7 +950,6 @@ static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, BATTLE_
   bew->gsys = gsys;
   bew->gamedata = GAMESYSTEM_GetGameData( gsys );
   bew->battle_param = bp;
-  bew->bgm_pushed_flag = FALSE;
   bew->is_sub_event = FALSE;
   bew->is_no_lose = FALSE;
   bew->Examination = FALSE;
