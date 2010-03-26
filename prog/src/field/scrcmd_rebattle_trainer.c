@@ -139,6 +139,37 @@ VMCMD_RESULT EvCmdReBattleTrainerSetUpTrID( VMHANDLE *core, void *wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  再戦トレーナー　ダブルバトル トレーナーID設定
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdReBattleTrainerSetUp2vs2TrID( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  u16 rebattle_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 objid0 = SCRCMD_GetVMWorkValue( core, work );
+  u16 objid1 = SCRCMD_GetVMWorkValue( core, work );
+  u16 badge = SCRCMD_GetVMWorkValue( core, work );
+  u16 index;
+  EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData( SCRCMD_WORK_GetGameData(work) );
+  const REBATTLE_TRAINER_DATA* cp_data = SCRIPT_GetReBattleTrainerData(sc);
+
+  GF_ASSERT( cp_data );
+
+  index = ReBattle_SearchData( cp_data, rebattle_id, badge );
+
+
+  TOMOYA_Printf( "設定情報　TrainerID[%d]\n", cp_data[index].trainer_id );
+
+  // トレーナーIDの視線スクリプト設定
+  EVENTDATA_ChangeNPCEventID( evdata, objid0, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[index].trainer_id ) );
+  EVENTDATA_ChangeNPCEventID( evdata, objid1, SCRIPT_GetTrainerScriptID_By2vs2TrainerID( cp_data[index].trainer_id ) );
+
+	return VMCMD_RESULT_CONTINUE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  再戦トレーナー　ランダムトレーナーの設定
  */
 //-----------------------------------------------------------------------------

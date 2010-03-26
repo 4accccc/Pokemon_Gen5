@@ -26,6 +26,8 @@
 
 #include "system/net_err.h"
 #include "system/main.h"
+#include "system/time_icon.h"
+
 
 #include "savedata/wifilist.h"
 #include "savedata/wifihistory.h"
@@ -311,6 +313,7 @@ typedef struct {
   BMPMENU_WORK* p_yesno;
   u32 frame_bgchar;
   u32 frame_bgchar_sys;
+  TIMEICON_WORK* p_timeicon;
   
   // 文字列情報
   GFL_MSGDATA* p_msgdata;
@@ -409,6 +412,7 @@ static BOOL ROOM_DATA_LoadRoomDataWait( WIFI_BSUBWAY_ROOM* p_wk, WIFI_BSUBWAY_ER
 static u16 ROOM_DATA_GetRank( const WIFI_BSUBWAY_ROOM* cp_wk );
 static u16 ROOM_DATA_GetRoomNo( const WIFI_BSUBWAY_ROOM* cp_wk );
 static u16 ROOM_DATA_GetRoomNum( const WIFI_BSUBWAY_ROOM* cp_wk );
+static u16 ROOM_DATA_GetRoomKeta( const WIFI_BSUBWAY_ROOM* cp_wk );
 static const Dpw_Bt_Room* ROOM_DATA_GetRoomData( const WIFI_BSUBWAY_ROOM* cp_wk );
 
 // セーブ処理
@@ -512,6 +516,10 @@ static void VIEW_SetWordNumber( WIFI_BSUBWAY_VIEW* p_wk, u32 idx, u32 number, u3
 // YesNo
 static void VIEW_StartYesNo( WIFI_BSUBWAY_VIEW* p_wk );
 static u32 VIEW_MainYesNo( WIFI_BSUBWAY_VIEW* p_wk );
+
+// TimeIcon
+static void VIEW_StartTimeIcon( WIFI_BSUBWAY_VIEW* p_wk );
+static void VIEW_EndTimeIcon( WIFI_BSUBWAY_VIEW* p_wk );
 
 
 //-------------------------------------
@@ -666,6 +674,9 @@ static GFL_PROC_RESULT WiFiBsubway_ProcMain( GFL_PROC * p_proc, int * p_seq, voi
   // 初期化
   case BSUBWAY_SEQ_INIT:       
     WiFiBsubway_Connect( p_wk );
+    
+    VIEW_StartTimeIcon( &p_wk->view );
+
     (*p_seq) ++;
     break;
  
@@ -973,6 +984,24 @@ static u16 ROOM_DATA_GetRoomNum( const WIFI_BSUBWAY_ROOM* cp_wk )
   GF_ASSERT( cp_wk->setup );
   return cp_wk->room_num;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  RoomData  桁を取得
+ *
+ *	@param	cp_wk 
+ */
+//-----------------------------------------------------------------------------
+static u16 ROOM_DATA_GetRoomKeta( const WIFI_BSUBWAY_ROOM* cp_wk )
+{
+  GF_ASSERT( cp_wk );
+  GF_ASSERT( cp_wk->setup );
+  if( cp_wk->room_num < 100 ){
+    return VIEW_NUMBER_KETA_ROOM_NO-1;
+  }
+  return VIEW_NUMBER_KETA_ROOM_NO;
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -1691,13 +1720,14 @@ static void ERROR_DATA_OnlyTimeOutCount( WIFI_BSUBWAY_ERROR* p_wk )
 //-----------------------------------------------------------------------------
 static void CODEIN_StartRoomNoProc( WIFI_BSUBWAY* p_wk, HEAPID heapID )
 {
-  static int s_CODEIN_BLOCK[CODE_BLOCK_MAX] = {
+  static s_CODEIN_BLOCK[CODE_BLOCK_MAX] = {
     VIEW_NUMBER_KETA_ROOM_NO,
     0,
     0,
   };
 
-  p_wk->p_codein = CodeInput_ParamCreate( heapID, CODEIN_MODE_TRAIN_NO, 11, VIEW_NUMBER_KETA_ROOM_NO, s_CODEIN_BLOCK );
+  s_CODEIN_BLOCK[ 0 ] = ROOM_DATA_GetRoomKeta( &p_wk->roomdata );
+  p_wk->p_codein = CodeInput_ParamCreate( heapID, CODEIN_MODE_TRAIN_NO, ROOM_DATA_GetRoomNum( &p_wk->roomdata ), VIEW_NUMBER_KETA_ROOM_NO, s_CODEIN_BLOCK );
   
   // プロックコール
   GAMESYSTEM_CallProc( p_wk->p_param->p_gamesystem, FS_OVERLAY_ID(codein), &CodeInput_ProcData, p_wk->p_codein );
@@ -1719,7 +1749,7 @@ static void CODEIN_StartRankProc( WIFI_BSUBWAY* p_wk, HEAPID heapID )
     0,
   };
 
-  p_wk->p_codein = CodeInput_ParamCreate( heapID, CODEIN_MODE_RANK, 11, VIEW_NUMBER_KETA_RANK, s_CODEIN_BLOCK );
+  p_wk->p_codein = CodeInput_ParamCreate( heapID, CODEIN_MODE_RANK, DPW_BT_RANK_NUM, VIEW_NUMBER_KETA_RANK, s_CODEIN_BLOCK );
   
   // プロックコール
   GAMESYSTEM_CallProc( p_wk->p_param->p_gamesystem, FS_OVERLAY_ID(codein), &CodeInput_ProcData, p_wk->p_codein );
@@ -1971,6 +2001,7 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_ScoreUpload( WIFI_BSUBWAY* p_wk, HEA
 
   case SCORE_UPLOAD_SEQ_SAVE_WAIT:
     if( SAVE_Main(p_wk) ){
+      VIEW_EndTimeIcon( &p_wk->view );
       VIEW_PrintStream( &p_wk->view, msg_wifi_bt_009 );
       p_wk->seq++;
     }
@@ -2025,7 +2056,8 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
     break;
 
   case SCORE_UPLOAD_SEQ_GAMEDATA_MSG_00:
-    VIEW_SetWordNumber( &p_wk->view, 0, ROOM_DATA_GetRoomNum( &p_wk->roomdata ), VIEW_NUMBER_KETA_ROOM_NO );
+    VIEW_EndTimeIcon( &p_wk->view );
+    VIEW_SetWordNumber( &p_wk->view, 0, ROOM_DATA_GetRoomNum( &p_wk->roomdata ), ROOM_DATA_GetRoomKeta( &p_wk->roomdata ) );
     VIEW_PrintStream( &p_wk->view, msg_wifi_bt_001 );
     p_wk->seq++;  
     break;
@@ -2097,9 +2129,11 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
         ROOM_DATA_LoadRoomData( &p_wk->roomdata, &p_wk->bt_error, p_wk->code_input );
 
         // メッセージ表示
-        VIEW_SetWordNumber( &p_wk->view, 0, ROOM_DATA_GetRoomNo( &p_wk->roomdata ), VIEW_NUMBER_KETA_ROOM_NO );
+        VIEW_SetWordNumber( &p_wk->view, 0, ROOM_DATA_GetRoomNo( &p_wk->roomdata ), ROOM_DATA_GetRoomKeta( &p_wk->roomdata ) );
         VIEW_SetWordNumber( &p_wk->view, 1, ROOM_DATA_GetRank( &p_wk->roomdata ), VIEW_NUMBER_KETA_RANK );
         VIEW_PrintStream( &p_wk->view, msg_wifi_bt_002 );
+
+        VIEW_StartTimeIcon( &p_wk->view );
 
         p_wk->seq++;
       }
@@ -2127,6 +2161,7 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
 
   case SCORE_UPLOAD_SEQ_GAMEDATA_WAIT:
     if( SAVE_Main(p_wk) ){
+      VIEW_EndTimeIcon( &p_wk->view );
       VIEW_PrintStream( &p_wk->view, msg_wifi_bt_004 );
       p_wk->seq ++;
     }
@@ -2177,8 +2212,6 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_GamedataDownload( WIFI_BSUBWAY* p_wk
         return BSUBWAY_MAIN_RESULT_CANCEL;
       }else if( result == BMPMENU_CANCEL ){
 
-        // ROOM_DATAリセット
-        ROOM_DATA_Init( &p_wk->roomdata );
         p_wk->seq = SCORE_UPLOAD_SEQ_GAMEDATA_MSG_00;
       }
     }
@@ -2203,6 +2236,7 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
   switch( p_wk->seq )
   {
   case SCORE_UPLOAD_SEQ_SUCCESSDATA_MSG_00:
+    VIEW_EndTimeIcon( &p_wk->view );
     VIEW_PrintStream( &p_wk->view, msg_wifi_bt_006 );
     p_wk->seq++;
     break;
@@ -2250,6 +2284,7 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
         
         // 入れる。
         ROOM_DATA_SetUp( &p_wk->roomdata, &p_wk->bt_error, p_wk->code_input );
+        VIEW_StartTimeIcon( &p_wk->view );
         p_wk->seq ++;
       }else{
 
@@ -2260,7 +2295,8 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
 
   case SCORE_UPLOAD_SEQ_SUCCESSDATA_DOWNLOAD_RANK_WAIT:
     if( ROOM_DATA_SetUpWait( &p_wk->roomdata, &p_wk->bt_error ) ){
-      VIEW_SetWordNumber( &p_wk->view, 0, ROOM_DATA_GetRoomNum( &p_wk->roomdata ), VIEW_NUMBER_KETA_ROOM_NO );
+      VIEW_EndTimeIcon( &p_wk->view );
+      VIEW_SetWordNumber( &p_wk->view, 0, ROOM_DATA_GetRoomNum( &p_wk->roomdata ), ROOM_DATA_GetRoomKeta( &p_wk->roomdata ) );
       VIEW_PrintStream( &p_wk->view, msg_wifi_bt_007 );
       p_wk->seq ++;
     }
@@ -2315,9 +2351,11 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
         ROOM_DATA_LoadRoomData( &p_wk->roomdata, &p_wk->bt_error, p_wk->code_input );
 
         // メッセージ表示
-        VIEW_SetWordNumber( &p_wk->view, 0, ROOM_DATA_GetRoomNo( &p_wk->roomdata ), VIEW_NUMBER_KETA_ROOM_NO );
+        VIEW_SetWordNumber( &p_wk->view, 0, ROOM_DATA_GetRoomNo( &p_wk->roomdata ), ROOM_DATA_GetRoomKeta( &p_wk->roomdata ) );
         VIEW_SetWordNumber( &p_wk->view, 1, ROOM_DATA_GetRank( &p_wk->roomdata ), VIEW_NUMBER_KETA_RANK );
         VIEW_PrintStream( &p_wk->view, msg_wifi_bt_002 );
+
+        VIEW_StartTimeIcon( &p_wk->view );
 
         p_wk->seq ++;
       }
@@ -2343,6 +2381,7 @@ static BSUBWAY_MAIN_RESULT WiFiBsubway_Main_SuccessdataDownload( WIFI_BSUBWAY* p
 
   case SCORE_UPLOAD_SEQ_SUCCESSDATA_WAIT:
     if( SAVE_Main(p_wk) ){
+      VIEW_EndTimeIcon( &p_wk->view );
       VIEW_PrintStream( &p_wk->view, msg_wifi_bt_004 );
       p_wk->seq++;  
     }
@@ -2548,6 +2587,9 @@ static BOOL WiFiBsubway_Error( WIFI_BSUBWAY* p_wk )
     //　エラー表示処理
     // エラー表示終了を待つ
     msg_id = ERROR_DATA_GetPrintMessageID( &p_wk->bt_error );
+
+    // TimeWait Off
+    VIEW_EndTimeIcon( &p_wk->view );
     VIEW_PrintStream( &p_wk->view, msg_id );
     return TRUE;
   }
@@ -2667,6 +2709,16 @@ static void VIEW_Exit( WIFI_BSUBWAY_VIEW* p_wk )
 
   // 基本グラフィック転送
   VIEW_ExitResource( p_wk );
+
+  // TIMEICONを消しておく
+  VIEW_EndTimeIcon( p_wk );
+
+  // YESNO強制破棄
+  if( p_wk->p_yesno ){
+    BmpMenu_YesNoMenuExit( p_wk->p_yesno );
+    p_wk->p_yesno = NULL;
+  }
+
 
   // win破棄
   GFL_BMPWIN_Delete( p_wk->p_win );
@@ -2802,7 +2854,7 @@ static void VIEW_PrintStream( WIFI_BSUBWAY_VIEW* p_wk, u32 msg_id )
     PRINTSYS_PrintStreamDelete( p_wk->p_msg_stream );
     p_wk->p_msg_stream = NULL;
   }
-  
+
   GFL_MSG_GetString( p_wk->p_msgdata, msg_id, p_wk->p_strtmp );
   WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_str, p_wk->p_strtmp );
 
@@ -2918,6 +2970,37 @@ static u32 VIEW_MainYesNo( WIFI_BSUBWAY_VIEW* p_wk )
    
   return result;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タイムアイコン　開始
+ *
+ *	@param	p_wk    ワーク 
+ */
+//-----------------------------------------------------------------------------
+static void VIEW_StartTimeIcon( WIFI_BSUBWAY_VIEW* p_wk )
+{
+  GF_ASSERT( p_wk->p_timeicon == NULL );
+  p_wk->p_timeicon = TIMEICON_Create( GFUser_VIntr_GetTCBSYS(), p_wk->p_win, 15, TIMEICON_DEFAULT_WAIT, p_wk->heapID );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タイムアイコン　終了
+ *
+ *	@param	p_wk    ワーク 
+ */
+//-----------------------------------------------------------------------------
+static void VIEW_EndTimeIcon( WIFI_BSUBWAY_VIEW* p_wk )
+{
+  if( p_wk->p_timeicon )
+  {
+    TILEICON_Exit( p_wk->p_timeicon );
+    p_wk->p_timeicon =NULL;
+  }
+}
+
 
 
 //----------------------------------------------------------------------------

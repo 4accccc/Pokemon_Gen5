@@ -7342,6 +7342,28 @@
   .short \level
   .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _REBATTLE_TRAINER_SETUP_2VS2_TRID
+ * @brief 再戦トレーナー　固定トレーナー　設定
+ *
+ * @param rebattle_id   再戦トレーナー種別  (prog/src/field/rebattle_trainer.h)
+ * @param objid0        設定するOBJ識別ID  
+ * @param objid1        設定するOBJ識別ID  
+ * @param level         段階(1～4)
+ */
+//--------------------------------------------------------------
+#define _REBATTLE_TRAINER_SETUP_2VS2_TRID( rebattle_id, objid0, objid1, level ) \
+    _ASM_REBATTLE_TRAINER_SETUP_2VS2_TRID rebattle_id, objid0, objid1, level
+  
+  .macro _ASM_REBATTLE_TRAINER_SETUP_2VS2_TRID rebattle_id, objid0, objid1, level
+  .short EV_SEQ_REBATTLE_TRAINER_SETUP_2VS2_TRID
+  .short \rebattle_id
+  .short \objid0
+  .short \objid1
+  .short \level
+  .endm
+
 
 //--------------------------------------------------------------
 /**

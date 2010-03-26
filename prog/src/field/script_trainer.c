@@ -104,6 +104,20 @@ u16 SCRIPT_GetTrainerScriptID_ByTrainerID( u16 tr_id )
 
 //--------------------------------------------------------------
 /**
+ * トレーナーIDから、ダブルバトル用のスクリプトIDを取得
+ *
+ * @param   tr_id		トレーナーID
+ *
+ * @retval  "スクリプトID"
+ */
+//--------------------------------------------------------------
+u16 SCRIPT_GetTrainerScriptID_By2vs2TrainerID( u16 tr_id )
+{
+  return (tr_id + ID_TRAINER_2VS2_OFFSET);		//0オリジン
+}
+
+//--------------------------------------------------------------
+/**
  * スクリプトIDから、左右どちらのトレーナーか取得
  * @param   scr_id		スクリプトID
  * @retval  "0=左、1=右"

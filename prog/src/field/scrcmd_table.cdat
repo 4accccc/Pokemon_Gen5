@@ -883,7 +883,7 @@
   // ビッグスタジアム リトルコート
   NO_CMD()
   NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdReBattleTrainerSetUp2vs2TrID, EV_SEQ_REBATTLE_TRAINER_SETUP_2VS2_TRID )
   DEF_CMD( EvCmdReBattleTrainerStart, EV_SEQ_REBATTLE_TRAINER_START )
 
   DEF_CMD( EvCmdReBattleTrainerEnd, EV_SEQ_REBATTLE_TRAINER_END )

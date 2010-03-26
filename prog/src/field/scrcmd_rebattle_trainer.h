@@ -39,6 +39,7 @@ extern VMCMD_RESULT EvCmdReBattleTrainerStart( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdReBattleTrainerEnd( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdReBattleTrainerSetUpTrID( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdReBattleTrainerSetUp2vs2TrID( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdReBattleTrainerSetUpRndTr( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdReBattleTrainerClearTrEventFlag( VMHANDLE *core, void *wk );
 
