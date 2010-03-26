@@ -8407,6 +8407,7 @@ static void scproc_turncheck_weather( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet 
     {
       if( (!BPP_IsDead(bpp))
       &&  (!BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_ANAWOHORU))
+      &&  (!BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_DIVING))
       ){
         u32 hem_state = Hem_PushState( &wk->HEManager );
         int  damage = BTL_CALC_RecvWeatherDamage( bpp, weather );
