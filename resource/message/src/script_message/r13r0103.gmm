@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T15:55:16"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T15:33:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1420" top="167" right="2125" bottom="810" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_r13r0103_boy1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r13r0103_boy1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・弟を追いかけて、
 主人公の前に立ってからのセリフ。</comment>
 		<attribute name="キャラ指定">兄</attribute>
@@ -304,7 +304,7 @@
 おおあらしに　なるんだぞー！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r13r0103_boy2_01w" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r13r0103_boy2_01w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>●WHITE
 
 ・主人公の背後から叫ぶ。</comment>
@@ -319,7 +319,7 @@
 他の　ポケモンだもーん！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r13r0103_boy2_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r13r0103_boy2_01b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>●BLACK
 
 ・主人公の背後から叫ぶ。</comment>
@@ -334,7 +334,7 @@
 他の　ポケモンだもーん！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r13r0103_boy1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r13r0103_boy1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・叫んでから、
 主人公の背後にいる弟を追いかける。
 ・弟は主人公の正面へ逃げる。</comment>
@@ -343,7 +343,7 @@
 		<language name="JPN_KANJI" width="256">違うよ　バカっ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r13r0103_boy1_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r13r0103_boy1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・主人公の背後に回りこんでから。
 逃げた弟に向かって叫ぶ。</comment>
 		<attribute name="キャラ指定">兄</attribute>
@@ -361,7 +361,7 @@
 こらしめて　くれなくなるんだよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r13r0103_boy2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r13r0103_boy2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・叫んで、退場。</comment>
 		<attribute name="キャラ指定">弟</attribute>
 		<language name="JPN" width="256">わるさする　ポケモンが　いたら
@@ -376,14 +376,14 @@
 ばかだもーんっ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r13r0103_boy1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_r13r0103_boy1_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・叫んで、弟を追いかけ退場。</comment>
 		<attribute name="キャラ指定">兄</attribute>
 		<language name="JPN" width="256">まてよ　ばかっ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">待てよ　ばかっ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r13r0103_girl1_01" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_r13r0103_girl1_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・主人公の前まで来てから、セリフ。</comment>
 		<attribute name="キャラ指定">姉</attribute>
 		<language name="JPN" width="256">ほこらは　ツチノカミって　なまえの
@@ -402,7 +402,7 @@
 やっつけて　くれたんだって[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r13r0103_girl1_02" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_r13r0103_girl1_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・主人公の横に移動して、セリフ。</comment>
 		<attribute name="キャラ指定">姉</attribute>
 		<language name="JPN" width="256">あたしの　おじいちゃんが
@@ -411,7 +411,7 @@
 子供だったころの　お話[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r13r0103_girl1_03" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_r13r0103_girl1_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・段差を降りる途中で振り向いて。</comment>
 		<attribute name="キャラ指定">姉</attribute>
 		<language name="JPN" width="256">カザカミと　ライカミが
@@ -422,14 +422,14 @@
 ツチノカミさまが　でてくるかも[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r13r0103_girl1_04" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+	<row id="msg_r13r0103_girl1_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・画面から出た後に、叫ぶ。</comment>
 		<attribute name="キャラ指定">姉</attribute>
 		<language name="JPN" width="256">おじいちゃんが　いってたよーっ！</language>
 		<language name="JPN_KANJI" width="256">おじいちゃんが　いってたよーっ！</language>
 	</row>
 
-	<row id="msg_r13r0103_narration_01">
+	<row id="msg_r13r0103_narration_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>●カザカミ、ライカミの両方が
 手持ちに無いときのメッセージ。</comment>
 		<attribute name="キャラ指定">ナレーター</attribute>
@@ -437,7 +437,7 @@
 		<language name="JPN_KANJI" width="256">古びた　小さな　ほこらが　ある…</language>
 	</row>
 
-	<row id="msg_r13r0103_narration_02">
+	<row id="msg_r13r0103_narration_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>●カザカミ、ライカミの両方が
 手持ちにいるときのメッセージ。</comment>
 		<attribute name="キャラ指定">ナレーター</attribute>
@@ -445,7 +445,7 @@
 		<language name="JPN_KANJI" width="256">古びた　小さな　ほこらが　ある…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r13r0103_narration_03">
+	<row id="msg_r13r0103_narration_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・「！」表示後のメッセージ。
 ・このあとツチノカミが登場。</comment>
 		<attribute name="キャラ指定">ナレーター</attribute>
@@ -457,7 +457,7 @@
 はげしく　反応している！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r13r0103_tsutinokami_01">
+	<row id="msg_r13r0103_tsutinokami_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・登場後、吼える。
 
 ・話しかけて戦闘に入るときも、
@@ -467,7 +467,7 @@
 		<language name="JPN_KANJI" width="256">どろるるるるっ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r13r0103_narration_04">
+	<row id="msg_r13r0103_narration_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>●ツチノカミを倒したとき、主人公が
 逃げたときのメッセージ。</comment>
 		<attribute name="キャラ指定">ナレーター</attribute>
