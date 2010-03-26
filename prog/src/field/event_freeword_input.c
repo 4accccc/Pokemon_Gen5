@@ -80,7 +80,7 @@ GMEVENT* EVENT_FreeWordInput( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, GMEVE
   wk->param.hero_sex = MyStatus_GetMySex( wk->my );
   wk->param.p_misc = wk->misc;
   
-  GF_ASSERT( mode >= NAMEIN_THANKS_WORD && mode <= NAMEIN_FREE_WORD );
+  GF_ASSERT( mode >= NAMEIN_GREETING_WORD && mode <= NAMEIN_FREE_WORD );
 
   wk->param.wordmax = DATA_WordLength[ mode - NAMEIN_GREETING_WORD ];
   wk->param.strbuf = GFL_STR_CreateBuffer( wk->param.wordmax+EOM_SIZE, wk->heapID );

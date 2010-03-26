@@ -152,39 +152,6 @@ VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
 //======================================================================
 
 //--------------------------------------------------------------
-// ■すれ違い『挨拶メッセージ』入力画面終了後に呼ばれるコールバック関数ワーク
-//--------------------------------------------------------------
-typedef struct {
-  GAMEDATA*    gameData;
-  NAMEIN_PARAM nameInParam; // 名前入力画面のパラメータ
-  u16*         retWk;       // 入力を確定したかどうかを返すワーク
-} FREE_INPUT_CALLBACK_WORK; 
-//--------------------------------------------------------------
-/**
- * @brief すれ違い『挨拶メッセージ』入力画面終了後に呼ばれるコールバック関数
- */
-//--------------------------------------------------------------
-static void CallBackFunc_byHelloMsgIn( void* wk )
-{
-  FREE_INPUT_CALLBACK_WORK* work = (FREE_INPUT_CALLBACK_WORK*)wk;
-
-  // 入力結果をセーブデータとビーコン送信データに反映
-  if( work->nameInParam.cancel == FALSE )
-  {
-    SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( work->gameData );
-    MISC*              misc = SaveData_GetMisc( save );
-
-    MISC_CrossComm_SetSelfIntroduction( misc, work->nameInParam.strbuf );
-    GAMEBEACON_SendDataUpdate_SelfIntroduction();
-  }
-
-  // 入力を確定したかどうかをワークに返す
-  *(work->retWk) = (work->nameInParam.cancel == FALSE);
-
-  // 後始末
-  GFL_HEAP_FreeMemory( work->nameInParam.strbuf );
-} 
-//--------------------------------------------------------------
 /**
  * @brief   すれ違い『挨拶メッセージ』入力画面の呼び出し
  * @param   core    仮想マシン制御構造体へのポインタ
@@ -196,44 +163,13 @@ VMCMD_RESULT EvCmdCrossCommHelloMessageInputCall( VMHANDLE *core, void *wk )
   SCRCMD_WORK*   work       = (SCRCMD_WORK*)wk;
   SCRIPT_WORK*   script     = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK*  gameSystem = SCRCMD_WORK_GetGameSysWork( work );
-  GAMEDATA*      gameData   = GAMESYSTEM_GetGameData( gameSystem );
   FIELDMAP_WORK* fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
   GMEVENT* event;
   u16* ret_wk;
-  FREE_INPUT_CALLBACK_WORK* callbackWork;
 
   // コマンド引数を取得
   ret_wk = SCRCMD_GetVMWork( core, work ); // 第一引数
-
-  // コールバックワークを生成
-  callbackWork = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(FREE_INPUT_CALLBACK_WORK) );
-  GFL_STD_MemClear( callbackWork, sizeof(FREE_INPUT_CALLBACK_WORK) );
-  callbackWork->gameData = gameData;
-  callbackWork->retWk    = ret_wk;
-
-  // 入力画面の初期パラメータを設定
-  {
-    MISC*     misc     = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gameData) );
-    MYSTATUS* myStatus = GAMEDATA_GetMyStatus( gameData );
-    const STRCODE* code;
-
-    callbackWork->nameInParam.mode     = NAMEIN_FREE_WORD;
-    callbackWork->nameInParam.hero_sex = MyStatus_GetMySex( myStatus );
-    callbackWork->nameInParam.wordmax  = NAMEIN_GREETING_WORD_LENGTH;
-    callbackWork->nameInParam.strbuf   = GFL_STR_CreateBuffer(NAMEIN_GREETING_WORD_LENGTH+EOM_SIZE, HEAPID_PROC );
-    callbackWork->nameInParam.p_misc   = misc;
-
-    // 入力文字列の初期値を設定
-    code = MISC_CrossComm_GetSelfIntroduction( misc );
-    GFL_STR_SetStringCode( callbackWork->nameInParam.strbuf, code );
-  } 
-
-  // イベントを生成
-  event = EVENT_FieldSubProc_Callback(
-      gameSystem, fieldmap, 
-      FS_OVERLAY_ID(namein), &NameInputProcData, &callbackWork->nameInParam, // 呼び出すプロセスを指定
-      CallBackFunc_byHelloMsgIn, callbackWork );  // コールバック関数と, その引数を指定
-
+  event = EVENT_FreeWordInput( gameSystem, fieldmap, NULL, NAMEIN_GREETING_WORD, ret_wk );
   // イベントを呼ぶ
   SCRIPT_CallEvent( script, event );
 
@@ -243,31 +179,6 @@ VMCMD_RESULT EvCmdCrossCommHelloMessageInputCall( VMHANDLE *core, void *wk )
 //======================================================================
 // すれ違い『お礼メッセージ』入力画面
 //======================================================================
-
-//--------------------------------------------------------------
-/**
- * @brief すれ違い『お礼メッセージ』入力画面終了後に呼ばれるコールバック関数
- */
-//--------------------------------------------------------------
-static void CallBackFunc_byThanksMsgIn( void* wk )
-{
-  FREE_INPUT_CALLBACK_WORK* work = (FREE_INPUT_CALLBACK_WORK*)wk;
-
-  // 入力結果をセーブデータに反映
-  if( work->nameInParam.cancel == FALSE )
-  {
-    SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( work->gameData );
-    MISC*              misc = SaveData_GetMisc( save );
-
-    MISC_CrossComm_SetThankyouMessage( misc, work->nameInParam.strbuf );
-  }
-
-  // 入力を確定したかどうかをワークに返す
-  *(work->retWk) = (work->nameInParam.cancel == FALSE);
-
-  // 後始末
-  GFL_HEAP_FreeMemory( work->nameInParam.strbuf );
-} 
 //--------------------------------------------------------------
 /**
  * @brief   すれ違い『お礼メッセージ』入力画面の呼び出し
@@ -280,47 +191,15 @@ VMCMD_RESULT EvCmdCrossCommThanksMessageInputCall( VMHANDLE *core, void *wk )
   SCRCMD_WORK*   work       = (SCRCMD_WORK*)wk;
   SCRIPT_WORK*   script     = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK*  gameSystem = SCRCMD_WORK_GetGameSysWork( work );
-  GAMEDATA*      gameData   = GAMESYSTEM_GetGameData( gameSystem );
   FIELDMAP_WORK* fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
   GMEVENT* event;
   u16* ret_wk;
-  FREE_INPUT_CALLBACK_WORK* callbackWork;
 
   // コマンド引数を取得
   ret_wk = SCRCMD_GetVMWork( core, work ); // 第一引数
-
-  // コールバックワークを生成
-  callbackWork = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(FREE_INPUT_CALLBACK_WORK) );
-  GFL_STD_MemClear( callbackWork, sizeof(FREE_INPUT_CALLBACK_WORK) );
-  callbackWork->gameData = gameData;
-  callbackWork->retWk    = ret_wk;
-
-  // 入力画面の初期パラメータを設定
-  {
-    MISC*     misc     = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(gameData) );
-    MYSTATUS* myStatus = GAMEDATA_GetMyStatus( gameData );
-    const STRCODE* code;
-
-    callbackWork->nameInParam.mode     = NAMEIN_FREE_WORD;
-    callbackWork->nameInParam.hero_sex = MyStatus_GetMySex( myStatus );
-    callbackWork->nameInParam.wordmax  = NAMEIN_THANKS_WORD_LENGTH;
-    callbackWork->nameInParam.strbuf   = GFL_STR_CreateBuffer(NAMEIN_THANKS_WORD_LENGTH+EOM_SIZE, HEAPID_PROC );
-    callbackWork->nameInParam.p_misc   = misc;
-
-    // 入力文字列の初期値を設定
-    code = MISC_CrossComm_GetThankyouMessage( misc );
-    GFL_STR_SetStringCode( callbackWork->nameInParam.strbuf, code );
-  } 
-
-  // イベントを生成
-  event = EVENT_FieldSubProc_Callback(
-      gameSystem, fieldmap, 
-      FS_OVERLAY_ID(namein), &NameInputProcData, &callbackWork->nameInParam, // 呼び出すプロセスを指定
-      CallBackFunc_byThanksMsgIn, callbackWork );  // コールバック関数と, その引数を指定
-
+  event = EVENT_FreeWordInput( gameSystem, fieldmap, NULL, NAMEIN_THANKS_WORD, ret_wk );
   // イベントを呼ぶ
   SCRIPT_CallEvent( script, event );
-
   return VMCMD_RESULT_SUSPEND;
 }
 
