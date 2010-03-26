@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-04T18:55:33"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T15:51:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="950" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1476" top="208" right="2178" bottom="828" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="527"/>
@@ -294,20 +294,19 @@
 
 	<row id="msg_c07r0101_oldman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・c07ジムバッジ入手前
-・仮メッセージ</comment>
+・c07ジムバッジ入手前</comment>
 		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">りそうと　しんじつが　まじりあい
 できたとされる　リュウラセンのとう……[BE:01:ページ切り替え（クリア）]
-せんねんも　むかしより　あそこに
+すうせんねんも　むかしより　あそこに
 そびえ　わしらを　みまもっておる</language>
 		<language name="JPN_KANJI" width="256">理想と　真実が　交じり合い
 できたとされる　リュウラセンの塔……[BE:01:ページ切り替え（クリア）]
-千年も　昔より　あそこに
+数千年も　昔より　あそこに
 そびえ　わしらを　見守っておる</language>
 	</row>
 
-	<row id="msg_c07r0101_oldman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0101_oldman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・c07ジムバッジ入手後から
 　d08最上階でのイベント発生前
@@ -320,7 +319,7 @@
 不届き者が　いようとは……！</language>
 	</row>
 
-	<row id="msg_c07r0101_oldman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0101_oldman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・d08最上階でのイベント発生後
 ・仮メッセージ</comment>
@@ -334,6 +333,11 @@
 白と　黒の　光……！[BE:01:ページ切り替え（クリア）]
 そして　とどろく　鳴き声……[BE:01:ページ切り替え（クリア）]
 あれこそが　パッケージポケモンか！？</language>
+	</row>
+
+	<row id="msg_c07r0101_oldman_04">
+		<language name="JPN" width="256"></language>
+		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<flowchart-group-list>

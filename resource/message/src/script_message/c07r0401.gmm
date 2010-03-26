@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T14:11:29"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T15:55:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c07r0401_gentleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_gentleman_01">
 		<comment>♂
 ・初回
 　続けてgentleman_02
@@ -312,7 +312,7 @@
 会長なので　あります！▼</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_gentleman_02">
 		<comment>♂
 ・はい/いいえ
 　はい→gentleman_04
@@ -329,7 +329,7 @@
 わたくしに　みせてくれないかい？</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_gentleman_03">
 		<comment>♂
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">GENTLEMAN
@@ -340,7 +340,7 @@
 きみは　シャイな　トレーナーだな！</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_gentleman_04">
 		<comment>♂
 ・はい選択時
 　リスト画面へ</comment>
@@ -352,7 +352,7 @@
 どの　ポケモンだい？▼</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_gentleman_05">
 		<comment>♂
 ・キャンセルなどの場合
 　終了</comment>
@@ -364,7 +364,7 @@
 やめるのかね</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_gentleman_06">
 		<comment>♂
 ・データ取得不可能
 　終了</comment>
@@ -376,7 +376,7 @@
 ちょっと　わからないねえ</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_gentleman_07">
 		<comment>♂
 ・タマゴ選択</comment>
 		<attribute name="キャラ指定">GENTLEMAN
@@ -387,7 +387,7 @@
 判断は　ちょっと　難しいね</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_08" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_gentleman_08">
 		<comment>♂
 ・ポケモン選択
 ・選択後にレベル差を算出
@@ -406,7 +406,7 @@
 いまでは　レベル[2:02:３桁:2]　なのかい！▼</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_09" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_gentleman_09">
 		<comment>♂
 ・レベル差が９９
 ・アイテムが
@@ -421,7 +421,7 @@
 愛情　たっぷりだねえ▼</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_10" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_gentleman_10">
 		<comment>♂
 ・レベル差が５０～９８
 ・アイテムが
@@ -436,7 +436,7 @@
 愛情　感じるねえ▼</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_11" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_gentleman_11">
 		<comment>♂
 ・レベル差が２５～４９
 ・アイテムが
@@ -451,7 +451,7 @@
 愛情　あるねえ▼</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_12" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_gentleman_12">
 		<comment>♂
 ・レベル差が０～２４
 ・終了</comment>
@@ -463,7 +463,7 @@
 きみの　愛情を　感じられるね！</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_13" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_gentleman_13">
 		<comment>♂
 ・アイテム入手後（共通）</comment>
 		<attribute name="キャラ指定">GENTLEMAN
@@ -474,7 +474,7 @@
 みせてくれた　おれい　だよ！</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_14" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c07r0401_gentleman_14">
 		<comment>♂
 ・あげるアイテムがない
 ・終了</comment>
@@ -488,14 +488,6 @@
 いいものを　みせてもらった！▼
 これからも　愛情　こめて
 ポケモンを　育ててほしいね！</language>
-	</row>
-
-	<row id="msg_c07r0401_woman1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">WOMAN1
-普通女性</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c07r0401_woman2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
