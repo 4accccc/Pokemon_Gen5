@@ -19,9 +19,10 @@
 
 typedef struct TR_CARD_SV_DATA_tag
 {
-  u8 SignData[SIGHN_W*SIGHN_H*64/8]; ///<サイン面データ
-  u16 personarity;                   ///<性格（トレーナーカードで参照）
-  u16 trainer_view_change;           ///<トレーナーカードで見た目を変更した(0:していない 1:した）
+  u8 SignData[SIGHN_W*SIGHN_H*64/8]; ///< サイン面データ
+  u16 personarity;                   ///< 性格（トレーナーカードで参照）
+  u8 trainer_view_change;            ///< トレーナーカードで見た目を変更した(0:していない 1:した）
+  u8 card_anime;                     ///< サイン面をアニメさせている
 }TR_CARD_SV_DATA;
 
 //==============================================================================
@@ -167,4 +168,31 @@ void TRCSave_SetPersonarity( TR_CARD_SV_PTR inTrCard, int personarity )
   GF_ASSERT_MSG( (personarity < TRCARD_PERSONARITY_MAX),"性格の最大値を超えている\n");
 
   inTrCard->personarity = personarity;
+}
+
+//=============================================================================================
+/**
+ * @brief サインアニメ状態をセット
+ *
+ * @param   inTrCard    
+ * @param   flag      TRUE:アニメ FALSE:アニメしない
+ */
+//=============================================================================================
+void TRCSave_SetSignAnime( TR_CARD_SV_PTR inTrCard, BOOL flag )
+{
+  inTrCard->card_anime = flag;
+}
+
+//=============================================================================================
+/**
+ * @brief   サインアニメ状態を取得
+ *
+ * @param   outTrCard   
+ *
+ * @retval  int   TRUE:アニメ FALSE:アニメしない
+ */
+//=============================================================================================
+int TRCSave_GetSignAnime( TR_CARD_SV_PTR outTrCard )
+{
+  return outTrCard->card_anime;
 }
