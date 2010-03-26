@@ -111,7 +111,7 @@ u16 TOWNMAP_DATA_GetParam( const TOWNMAP_DATA *cp_wk, u16 idx, TOWNMAP_DATA_PARA
  *	@param	const TOWNMAP_DATA *cp_wk   ワーク
  *	@param	zoneID                      タウンマップで使用する用のID
  *
- *	@return タウンマップデータのインデックス
+ *	@return タウンマップデータのインデックス  見つからなかった場合TOWNMAP_DATA_ERRORを返す
  */
 //-----------------------------------------------------------------------------
 u16 TOWNMAP_DATA_SearchRootZoneID( const TOWNMAP_DATA *cp_wk, u16 zoneID )
@@ -125,6 +125,5 @@ u16 TOWNMAP_DATA_SearchRootZoneID( const TOWNMAP_DATA *cp_wk, u16 zoneID )
     }
   }
 
-  GF_ASSERT_MSG( 0, "見つかりません %d\n", zoneID );
-  return 0;
+  return TOWNMAP_DATA_ERROR;
 }
