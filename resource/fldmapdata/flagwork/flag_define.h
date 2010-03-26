@@ -324,8 +324,8 @@
 #define FE_ROCKCAPSULE_END                 308 /* 0x0134 ロックカプセルイベントの終了 */
 #define FE_TTOWN_RECEPT_TALK               309 /* 0x0135 ギアステーション：トレインタウン行き電車の受付　初回会話フラグ */
 #define FE_D08_ITEMGET_01                  310 /* 0x0136 リュウラセンの塔：アイテム入手フラグ */
-		/* not used   311(0x0137) */
-		/* not used   312(0x0138) */
+#define FE_D01R0201_POKE16_01              311 /* 0x0137 夢の跡地B2：ムシャーナ捕獲フラグ */
+#define FE_C08R0801_ITEMGET_01             312 /* 0x0138 ソウリュウシティ：アイテム入手フラグ */
 		/* not used   313(0x0139) */
 		/* not used   314(0x013a) */
 		/* not used   315(0x013b) */
@@ -762,14 +762,14 @@
 #define FV_D06R0201_PLASMA                 738 /* 0x02e2 電気洞窟内のプラズマ団したっぱ（視線トレーナー） */
 #define FV_R08_STOPPER_01                  739 /* 0x02e3 ８番道路のストッパー */
 #define FV_R16_STOPPER_01                  740 /* 0x02e4 ワンダーブリッジ前ストッパー */
-		/* not used   741(0x02e5) */
-		/* not used   742(0x02e6) */
-		/* not used   743(0x02e7) */
-		/* not used   744(0x02e8) */
-		/* not used   745(0x02e9) */
-		/* not used   746(0x02ea) */
-		/* not used   747(0x02eb) */
-		/* not used   748(0x02ec) */
+#define FV_T04_BOY3_01                     741 /* 0x02e5 サザナミタウン：波打ち際のバトル家族少年 */
+#define FV_T04R0101_BOY3_01                742 /* 0x02e6 サザナミタウン：巨大別荘少年 */
+#define FV_T04R0101_GIRL4_01               743 /* 0x02e7 サザナミタウン：巨大別荘姉 */
+#define FV_T04R0101_LADY_01                744 /* 0x02e8 サザナミタウン：巨大別荘祖母 */
+#define FV_T04R0101_GENTLEMAN_01           745 /* 0x02e9 サザナミタウン：巨大別荘祖父 */
+#define FV_T04R0101_VETERANW_01            746 /* 0x02ea サザナミタウン：巨大別荘母 */
+#define FV_T04R0101_BOY4_01                747 /* 0x02eb サザナミタウン：巨大別荘兄 */
+#define FV_D01R0201_POKE16_01              748 /* 0x02ec 夢の跡地B2：ムシャーナ */
 		/* not used   749(0x02ed) */
 		/* not used   750(0x02ee) */
 		/* not used   751(0x02ef) */
@@ -2518,7 +2518,7 @@
 #define TMFLG_AMUSEMENT_TR_BTL            2744 /* 0x0ab8 ライモン遊園地：観覧車トレーナー対戦フラグ */
 #define TMFLG_BIGSTADIUM_TR_BTL           2745 /* 0x0ab9 ビッグスタジアム：トレーナー再配置フラグ */
 #define TMFLG_LITTLECOURT_TR_BTL          2746 /* 0x0aba リトルコート：トレーナー再配置フラグ */
-		/* not used  2747(0x0abb) */
+#define TMFLG_T04R0101_BTL_FAMILY         2747 /* 0x0abb サザナミタウン：巨大別荘対戦フラグ */
 		/* not used  2748(0x0abc) */
 		/* not used  2749(0x0abd) */
 		/* not used  2750(0x0abe) */
