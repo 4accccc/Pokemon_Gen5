@@ -35,7 +35,7 @@ class Dict
     if $item_hash.has_key?( namae ) then
       return $item_hash[ namae ]
     end
-    raise ItemSymbolError, "#アイテム\"{namae}\" は存在しません！！"
+    raise ItemSymbolError, "アイテム\"#{namae}\" は存在しません！！"
   end
 
   def Dict.readZoneID( filename )
