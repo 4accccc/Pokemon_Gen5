@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T18:16:17"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T16:23:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1427" top="178" right="2132" bottom="793" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -304,7 +304,7 @@
 		<language name="JPN_KANJI" width="256">ソウリュウシティに　いらした
 トレーナーさん　こんにちは！▼
 １１番道路へ　向かう
-トレーナーさん　またいたしてね！</language>
+トレーナーさん　またいらしてね！</language>
 	</row>
 
 	<row id="msg_r08r0701_infomationw_02b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -319,7 +319,7 @@
 		<language name="JPN_KANJI" width="256">ソウリュウシティに　いらした
 トレーナーさん　こんにちは！▼
 １１番道路へ　向かう
-トレーナーさん　またいたしてね！</language>
+トレーナーさん　またいらしてね！</language>
 	</row>
 
 	<row id="msg_r08r0701_policeman_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">

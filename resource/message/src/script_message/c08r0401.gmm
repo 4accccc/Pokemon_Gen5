@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T17:24:56"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T16:20:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -353,7 +353,7 @@
 		<attribute name="キャラ指定">GIRL4
 お嬢様</attribute>
 		<language name="JPN" width="256">まだまだ　がんばれるって　かんじね</language>
-		<language name="JPN_KANJI" width="256">まだまだ　がんばれるって　かんじね</language>
+		<language name="JPN_KANJI" width="256">まだまだ　がんばれるって　感じね</language>
 	</row>
 
 	<flowchart-group-list>
