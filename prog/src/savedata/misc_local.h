@@ -58,11 +58,14 @@ struct _MISC
 
   //配布イベント用予約領域３２バイト
   u32 event_lock[EVT_ROCK_MAX];
-  
+
   //購入特典不思議配布用フラグ
   u32 fushigi_purchase_privilege;
 
   //バトルレコーダー色変えフラグ
   u32 battle_recorder_flag;
+
+  // 電光掲示板
+  u16 champNewsTimer; // チャンピオン情報を流す残り時間[min]
 };
 
