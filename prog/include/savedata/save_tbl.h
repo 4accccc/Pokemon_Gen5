@@ -1,9 +1,9 @@
 //==============================================================================
 /**
- * @file	save_tbl.h
- * @brief	WBセーブ
- * @author	matsuda
- * @date	2008.08.27(水)
+ * @file  save_tbl.h
+ * @brief WBセーブ
+ * @author  matsuda
+ * @date  2008.08.27(水)
  */
 //==============================================================================
 #ifndef __SAVE_H__
@@ -13,14 +13,14 @@
 
 
 //---------------------------------------------------------------------------
-///	セーブに使用しているセクタ数
+/// セーブに使用しているセクタ数
 //---------------------------------------------------------------------------
-#define	SAVE_PAGE_MAX		(36)
+#define SAVE_PAGE_MAX   (36)
 
-#define	SAVE_SECTOR_SIZE	(0x1000)
+#define SAVE_SECTOR_SIZE  (0x1000)
 
 //以下はデバッグツール用のセーブ領域です
-#define	DEBUG_FIGHT_SAVE	(126*SAVE_SECTOR_SIZE)		//デバッグファイト用セーブ領域
+#define DEBUG_FIGHT_SAVE  (126*SAVE_SECTOR_SIZE)    //デバッグファイト用セーブ領域
 #define DEBUG_SURETIGAI_SAVE  (125*SAVE_SECTOR_SIZE)  //すれ違い通信用セーブ領域
 
 ///EXTRA領域で戦闘録画が使用するセーブサイズ
@@ -39,63 +39,63 @@
 
 ///セーブデータ識別ID
 enum{
-	GMDATA_ID_BOXDATA,	      //ボックスデータグループ
-	GMDATA_ID_BOXTRAY_01,	    //ボックストレーデータ
-	GMDATA_ID_BOXTRAY_02,
-	GMDATA_ID_BOXTRAY_03,
-	GMDATA_ID_BOXTRAY_04,
-	GMDATA_ID_BOXTRAY_05,
-	GMDATA_ID_BOXTRAY_06,
-	GMDATA_ID_BOXTRAY_07,
-	GMDATA_ID_BOXTRAY_08,
-	GMDATA_ID_BOXTRAY_09,
-	GMDATA_ID_BOXTRAY_10,
-	GMDATA_ID_BOXTRAY_11,
-	GMDATA_ID_BOXTRAY_12,
-	GMDATA_ID_BOXTRAY_13,
-	GMDATA_ID_BOXTRAY_14,
-	GMDATA_ID_BOXTRAY_15,
-	GMDATA_ID_BOXTRAY_16,
-	GMDATA_ID_BOXTRAY_17,
-	GMDATA_ID_BOXTRAY_18,
-	GMDATA_ID_BOXTRAY_19,
-	GMDATA_ID_BOXTRAY_20,
-	GMDATA_ID_BOXTRAY_21,
-	GMDATA_ID_BOXTRAY_22,
-	GMDATA_ID_BOXTRAY_23,
-	GMDATA_ID_BOXTRAY_24,
-	GMDATA_ID_MYITEM,           // どうぐ
-	GMDATA_ID_MYPOKE,           // てもちポケモン
-	GMDATA_ID_PLAYER_DATA,      // プレイヤー関連セーブデータ
-	GMDATA_ID_SITUATION,        // フィールド状況データ
-	GMDATA_ID_WIFIHISTORY,      // Wi-Fi遊んだ履歴
-	GMDATA_ID_WIFILIST,         // ともだちコード
-	GMDATA_ID_WIFI_NEGOTIATION, // Wi-Fiネゴシエーション用交換した人のPID
+  GMDATA_ID_BOXDATA,        //ボックスデータグループ
+  GMDATA_ID_BOXTRAY_01,     //ボックストレーデータ
+  GMDATA_ID_BOXTRAY_02,
+  GMDATA_ID_BOXTRAY_03,
+  GMDATA_ID_BOXTRAY_04,
+  GMDATA_ID_BOXTRAY_05,
+  GMDATA_ID_BOXTRAY_06,
+  GMDATA_ID_BOXTRAY_07,
+  GMDATA_ID_BOXTRAY_08,
+  GMDATA_ID_BOXTRAY_09,
+  GMDATA_ID_BOXTRAY_10,
+  GMDATA_ID_BOXTRAY_11,
+  GMDATA_ID_BOXTRAY_12,
+  GMDATA_ID_BOXTRAY_13,
+  GMDATA_ID_BOXTRAY_14,
+  GMDATA_ID_BOXTRAY_15,
+  GMDATA_ID_BOXTRAY_16,
+  GMDATA_ID_BOXTRAY_17,
+  GMDATA_ID_BOXTRAY_18,
+  GMDATA_ID_BOXTRAY_19,
+  GMDATA_ID_BOXTRAY_20,
+  GMDATA_ID_BOXTRAY_21,
+  GMDATA_ID_BOXTRAY_22,
+  GMDATA_ID_BOXTRAY_23,
+  GMDATA_ID_BOXTRAY_24,
+  GMDATA_ID_MYITEM,           // どうぐ
+  GMDATA_ID_MYPOKE,           // てもちポケモン
+  GMDATA_ID_PLAYER_DATA,      // プレイヤー関連セーブデータ
+  GMDATA_ID_SITUATION,        // フィールド状況データ
+  GMDATA_ID_WIFIHISTORY,      // Wi-Fi遊んだ履歴
+  GMDATA_ID_WIFILIST,         // ともだちコード
+  GMDATA_ID_WIFI_NEGOTIATION, // Wi-Fiネゴシエーション用交換した人のPID
   GMDATA_ID_CGEAR,            // C-GEAR
-	GMDATA_ID_TRCARD,		        // トレーナーカード(サイン
-	GMDATA_ID_MYSTERYDATA,	    // 不思議な贈り物
+  GMDATA_ID_TRCARD,           // トレーナーカード(サイン
+  GMDATA_ID_MYSTERYDATA,      // 不思議な贈り物
   GMDATA_ID_DREAMWORLD,       // PDW
-	GMDATA_ID_PERAPVOICE,	      // ぺラップヴォイス
-	GMDATA_ID_SYSTEM_DATA,	    // システムデータ
-	GMDATA_ID_RECORD,  		      // レコード(スコア
-	GMDATA_ID_PMS,  		        // 簡易文
+  GMDATA_ID_PERAPVOICE,       // ぺラップヴォイス
+  GMDATA_ID_SYSTEM_DATA,      // システムデータ
+  GMDATA_ID_RECORD,           // レコード(スコア
+  GMDATA_ID_PMS,              // 簡易文
   GMDATA_ID_MAILDATA,         // メールデータ
-	GMDATA_ID_MMDL,		          // 動作モデル
-	GMDATA_ID_MUSICAL,		      // ミュージカル
+  GMDATA_ID_MMDL,             // 動作モデル
+  GMDATA_ID_MUSICAL,          // ミュージカル
   GMDATA_ID_RANDOMMAP,        // ランダム生成マップ
-	GMDATA_ID_IRCCOMPATIBLE,	  // 相性チェック
+  GMDATA_ID_IRCCOMPATIBLE,    // 相性チェック
   GMDATA_ID_EVENT_WORK,       // イベントワーク
-	GMDATA_ID_WORLDTRADEDATA,	  // GTS
+  GMDATA_ID_WORLDTRADEDATA,   // GTS
   GMDATA_ID_REGULATION_DATA,  // レギュレーション
   GMDATA_ID_GIMMICK_WORK,     // ギミック
   GMDATA_ID_BATTLE_BOX,       // バトルボックス
   GMDATA_ID_SODATEYA_WORK,    // 育て屋ワーク
   GMDATA_ID_ROCKPOS,          // かいりき岩
-	GMDATA_ID_MISC,			        // 未分類(小さいデータの集まり）
-	GMDATA_ID_INTRUDE,          // 侵入
-	GMDATA_ID_SHORTCUT,	        // Yボタン登録
-	GMDATA_ID_ZUKAN,	          // ポケモン図鑑
-	GMDATA_ID_ENCOUNT,	        // エンカウント関連セーブデータ
+  GMDATA_ID_MISC,             // 未分類(小さいデータの集まり）
+  GMDATA_ID_INTRUDE,          // 侵入
+  GMDATA_ID_SHORTCUT,         // Yボタン登録
+  GMDATA_ID_ZUKAN,            // ポケモン図鑑
+  GMDATA_ID_ENCOUNT,          // エンカウント関連セーブデータ
   GMDATA_ID_BSUBWAY_PLAYDATA, // バトルサブウェイ　プレイデータ
   GMDATA_ID_BSUBWAY_SCOREDATA,// バトルサブウェイ　スコアデータ
   GMDATA_ID_BSUBWAY_WIFIDATA, // バトルサブウェイ WiFiデータ
@@ -105,8 +105,9 @@ enum{
   GMDATA_ID_QUESTIONNAIRE,    // すれ違いアンケート
   GMDATA_ID_UNSV,             // 国連
   GMDATA_ID_THSV,             // トライアルハウスランキング表示用
+  GMDATA_ID_GAMECLEAR_POKE,   // ゲームクリアてもちポケモンデータ
 
-	GMDATA_ID_MAX,
+  GMDATA_ID_MAX,
 };
 
 ///外部セーブデータ識別ID：戦闘録画：自分
@@ -157,11 +158,11 @@ enum{
 
 
 //==============================================================================
-//	外部データ宣言
+//  外部データ宣言
 //==============================================================================
 extern const GFL_SVLD_PARAM SaveParam_Normal;
 extern const GFL_SVLD_PARAM SaveParam_ExtraTbl[];
 
 
-#endif	//__SAVE_H__
+#endif  //__SAVE_H__
 

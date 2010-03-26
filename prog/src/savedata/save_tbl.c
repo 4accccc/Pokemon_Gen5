@@ -429,6 +429,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     (FUNC_GET_SIZE)THSV_GetWorkSize,
     (FUNC_INIT_WORK)THSV_Init,
   },
+  { //ゲームクリアてもちポケモンデータ
+    GMDATA_ID_GAMECLEAR_POKE,
+    (FUNC_GET_SIZE)GameClearData_GetWorkSize,
+    (FUNC_INIT_WORK)GameClearData_Init,
+  },
 };
 
 //--------------------------------------------------------------
