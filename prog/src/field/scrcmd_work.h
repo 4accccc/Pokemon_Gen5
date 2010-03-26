@@ -104,6 +104,8 @@ extern void SCRCMD_WORK_SetCallProcTCB( SCRCMD_WORK *work, GFL_TCB *tcb );
 extern GFL_TCB * SCRCMD_WORK_GetCallProcTCB( SCRCMD_WORK *work );
 extern u8 SCRCMD_WORK_GetBeforeWindowPosType( const SCRCMD_WORK *work );
 extern void SCRCMD_WORK_SetBeforeWindowPosType( SCRCMD_WORK *work, u8 type );
+extern u8 SCRCMD_WORK_GetWindowPosType( const SCRCMD_WORK *work );
+extern void SCRCMD_WORK_SetWindowPosType( SCRCMD_WORK *work, u8 type );
 
 //アニメーションコマンド
 extern void SCRCMD_WORK_SetMMdlAnmTCB( SCRCMD_WORK *work, GFL_TCB *tcb );

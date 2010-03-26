@@ -220,6 +220,8 @@
 #define POS_DL      SCRCMD_MSGWIN_DOWNLEFT    /* ¶‰º‚©‚ç */
 #define POS_UR      SCRCMD_MSGWIN_UPRIGHT     /* ‰Eã‚©‚ç */
 #define POS_DR      SCRCMD_MSGWIN_DOWNRIGHT   /* ¶ã‚©‚ç */
+#define POS_U       SCRCMD_MSGWIN_UP_AUTO     /* ãAK”öŽ©“® */
+#define POS_D       SCRCMD_MSGWIN_DOWN_AUTO     /* ‰ºAK”öŽ©“® */
 
 #define POS_DEFAULT SCRCMD_MSGWIN_DEFAULT     /* Ž©“®U‚è•ª‚¯ */
 

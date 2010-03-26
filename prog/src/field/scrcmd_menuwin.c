@@ -316,7 +316,8 @@ static void sysWin_AddWindow( SCRCMD_WORK *work, u8 up_down )
     }
     
     if( up_down == SCRCMD_MSGWIN_DOWNLEFT ||
-        up_down == SCRCMD_MSGWIN_DOWNRIGHT ){
+        up_down == SCRCMD_MSGWIN_DOWNRIGHT ||
+        up_down == SCRCMD_MSGWIN_DOWN_AUTO ){
       y = 19;
     }
     
@@ -757,13 +758,13 @@ static const VecFx32 data_balloonWinOffsetTbl[2][4] =
 
 //--------------------------------------------------------------
 /**
- * 吹き出しウィンドウ　指定座標から調節位置を取得
+ * 吹き出しウィンドウ　画面位置から調節位置を取得
  * @param pos 指定座標
  * @param offs 座標格納先
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void balloonWin_GetOffsetPos(
+static void balloonWin_GetDispOffsetPos(
     const VecFx32 *pos, VecFx32 *offs, const GFL_G3D_CAMERA *cp_g3Dcamera )
 {
   u32 x,y;
@@ -817,6 +818,46 @@ static void balloonWin_GetOffsetPos(
     *offs = error;
     OS_Printf( "BALLOONWIN OUTSIDE SCREEN\n" );
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * 吹き出しウィンドウ　指定座標から調節位置を取得
+ * @param pos 指定座標
+ * @param offs 座標格納先
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void balloonWin_GetOffsetPos(
+    const VecFx32 *pos, VecFx32 *offs, const GFL_G3D_CAMERA *cp_g3Dcamera,
+    u8 pos_type )
+{
+  int x = 0, y = 0;
+
+  switch( pos_type ){
+  case SCRCMD_MSGWIN_UPLEFT: //ウィンドウ上　吹き出し向き左
+    x = 1;
+    break;
+  case SCRCMD_MSGWIN_DOWNLEFT: //ウィンドウ下　吹き出し向き左
+    x = 2;
+    break;
+  case SCRCMD_MSGWIN_UPRIGHT: //ウィンドウ上　吹き出し向き右
+    x = 1;
+    y = 1;
+    break;
+  case SCRCMD_MSGWIN_DOWNRIGHT: //ウィンドウ下　吹き出し向き右
+    x = 2;
+    y = 1;
+    break;
+  case SCRCMD_MSGWIN_UP_AUTO: //ウィンドウ上　吹き出し位置自動
+  case SCRCMD_MSGWIN_DOWN_AUTO: //ウィンドウ下　吹き出し位置自動
+  case SCRCMD_MSGWIN_DEFAULT: //自機の位置から自動割り当て
+    balloonWin_GetDispOffsetPos( pos, offs, cp_g3Dcamera );
+    return;
+  }
+
+  OS_Printf( "table pos %d,%d\n", y, x );
+  *offs = data_balloonWinOffsetTbl[y][x];
 }
 
 //--------------------------------------------------------------
@@ -953,8 +994,9 @@ static void balloonWin_UpdatePos( SCRCMD_WORK *work, BOOL init_flag )
       FIELD_CAMERA *p_camera = FIELDMAP_GetFieldCamera( fieldmap );
       const GFL_G3D_CAMERA *cp_g3Dcamera =
         FIELD_CAMERA_GetCameraPtr( p_camera ); //g3Dcamera Lib ハンドル
-      balloonWin_GetOffsetPos(
-        &bwin_work->tail_pos_org, &bwin_work->tail_offs, cp_g3Dcamera );
+      u8 pos_type = SCRCMD_WORK_GetWindowPosType( work );
+      balloonWin_GetOffsetPos( &bwin_work->tail_pos_org,
+          &bwin_work->tail_offs, cp_g3Dcamera, pos_type );
     }
   }
   
@@ -1043,11 +1085,12 @@ static void balloonWin_UpdatePos( SCRCMD_WORK *work )
  */
 //--------------------------------------------------------------
 static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
-    u16 objID, u16 arcID, u16 msgID, u16 pos_type,
+    u16 objID, u16 arcID, u16 msgID, u16 sc_pos_type,
     TALKMSGWIN_TYPE type )
 {
   STRBUF *msgbuf;
   SCRCMD_BALLOONWIN_WORK *bwin_work;
+  u16 pos_type = pos_type;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
@@ -1097,6 +1140,7 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
     
     switch( pos_type ){
     case SCRCMD_MSGWIN_UPLEFT: //ウィンドウ上　吹き出し向き左
+      idx = FLDTALKMSGWIN_IDX_UPPER;
       tail = TAIL_SETPAT_FIX_DL;
       break;
     case SCRCMD_MSGWIN_DOWNLEFT: //ウィンドウ下　吹き出し向き左
@@ -1109,6 +1153,12 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
     case SCRCMD_MSGWIN_DOWNRIGHT: //ウィンドウ下　吹き出し向き右
       idx = FLDTALKMSGWIN_IDX_LOWER;
       tail = TAIL_SETPAT_FIX_UR;
+      break;
+    case SCRCMD_MSGWIN_UP_AUTO: //ウィンドウ上　吹き出し位置自動
+      idx = FLDTALKMSGWIN_IDX_UPPER;
+      break;
+    case SCRCMD_MSGWIN_DOWN_AUTO: //ウィンドウ下　吹き出し位置自動
+      idx = FLDTALKMSGWIN_IDX_LOWER;
       break;
     case SCRCMD_MSGWIN_DEFAULT: //自機の位置から自動割り当て
       {
@@ -1135,6 +1185,7 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
         fparam->msgBG, idx, &bwin_work->tail_pos, msgbuf, type, tail );
     
     SCRCMD_WORK_SetBeforeWindowPosType( work, pos_type );
+    SCRCMD_WORK_SetWindowPosType( work, sc_pos_type );
   }
   
   return( TRUE );

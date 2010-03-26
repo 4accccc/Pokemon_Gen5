@@ -69,6 +69,7 @@ struct _TAG_SCRCMD_WORK
   void * backup_work;
   
   u8 before_win_pos_type;
+  u8 win_pos_type;
   u8 padding[3]; //余り
 };
 
@@ -362,6 +363,32 @@ void SCRCMD_WORK_SetBeforeWindowPosType( SCRCMD_WORK *work, u8 type )
 {
   work->before_win_pos_type = type;
 }
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ *
+ */
+//--------------------------------------------------------------
+u8 SCRCMD_WORK_GetWindowPosType( const SCRCMD_WORK *work )
+{
+  return( work->win_pos_type );
+}
+
+//--------------------------------------------------------------
+/**
+ *
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+void SCRCMD_WORK_SetWindowPosType( SCRCMD_WORK *work, u8 type )
+{
+  work->win_pos_type = type;
+}
+
 
 //======================================================================
 //  動作モデルアニメーション  

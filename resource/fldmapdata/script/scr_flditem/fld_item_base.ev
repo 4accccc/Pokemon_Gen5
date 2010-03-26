@@ -6,8 +6,10 @@
 //--------------------------------------------------------------------
 ev_fld_item2:
 {
+  DEFINE_LOCAL item_check
+
   _TALK_OBJ_START()
-  _SE_WAIT() //話しかけ開始音の終了待ち
+//  _SE_WAIT() //話しかけ開始音の終了待ち
   
   //パラメータ保存
   _LDWK( SCWK_TEMP0, SCWK_REG0 )              //アイテムナンバー
@@ -18,6 +20,22 @@ ev_fld_item2:
   //入手したアイテムが技マシンかチェック
   _WAZA_ITEM_CHK( SCWK_TEMP0, SCWK_ANSWER )
   
+  //アイテムを加えられるかチェック
+  _ADD_ITEM_CHK( SCWK_TEMP0, SCWK_TEMP1, item_check )
+  
+  IF $item_check == 1 THEN //アイテム追加可能
+    //話し掛け対象のイベントフラグを取得しセット
+    _GET_OBJ_EV_FLAG( SCWK_TARGET_OBJID, SCWK_ANSWER )
+    _FLAG_SET( SCWK_ANSWER )
+    
+    //話しかけ対象のモンスターボールを消す
+    _OBJ_DEL( SCWK_TARGET_OBJID )
+    
+    //自機ゲットポーズ
+    _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_ITEMGET )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_itemget )
+  ENDIF
+
   //○○をみつけた！
   IF $SCWK_ANSWER == 1 THEN
     _CALL ev_itemget_flditem_yes_wazam
@@ -25,11 +43,8 @@ ev_fld_item2:
     _CALL ev_itemget_flditem_no_wazam
   ENDIF
   
-  //アイテムを加えられるかチェック
-  _ADD_ITEM_CHK( SCWK_TEMP0, SCWK_TEMP1, SCWK_ANSWER )
-  
   //取得結果でメッセージを分岐させる
-  IF $SCWK_ANSWER == 1 THEN
+  IF $item_check == 1 THEN
     _CALL ev_itemget_flditem_true    //成功
   ELSE
     _CALL ev_itemget_flditem_false //失敗
@@ -42,16 +57,6 @@ _RET
 //--------------------------------------------------------------------
 ev_itemget_flditem_true:
 {
-  //話し掛け対象のイベントフラグを取得しセット
-  _GET_OBJ_EV_FLAG( SCWK_TARGET_OBJID, SCWK_ANSWER )
-  _FLAG_SET( SCWK_ANSWER )
-  
-  //話しかけ対象のモンスターボールを消す
-  _OBJ_DEL( SCWK_TARGET_OBJID )
-  
-  //自機ゲットポーズ
-  _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_ITEMGET )
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_itemget )
   
   //アイテム追加
   _ADD_ITEM( SCWK_TEMP0, SCWK_TEMP1, SCWK_ANSWER )
