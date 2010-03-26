@@ -92,8 +92,15 @@ DEFINE_LOCAL	LWK_DIR
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 
-	//【仮】全部の七賢人を捕まえている場合
-	IF $LOCALWORK10 == 7 THEN
+	//========================================/
+	
+	//七賢人ワークに＋１
+	$WK_SCENE_AFTER_SAGE += 1
+	
+	//========================================/
+
+	//全部の七賢人を捕まえている場合
+	IF $WK_SCENE_AFTER_SAGE == 6 THEN
 		
 		//ハンサムセリフ
 		_BALLOONWIN_OBJMSG( msg_r14_icpo_end_03 , MMDL_ID_EVENTOBJ_00 )
