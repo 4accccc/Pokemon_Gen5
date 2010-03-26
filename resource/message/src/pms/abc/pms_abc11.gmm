@@ -808,21 +808,26 @@
 	</row>
 
 	<row id="search_abc_86">
+		<language name="JPN" width="216">しんひのつるき</language>
+		<language name="JPN_KANJI" width="216">しんひのつるき</language>
+	</row>
+
+	<row id="search_abc_87">
 		<language name="JPN" width="216">しんひのまもり</language>
 		<language name="JPN_KANJI" width="216">しんひのまもり</language>
 	</row>
 
-	<row id="search_abc_87">
+	<row id="search_abc_88">
 		<language name="JPN" width="216">しんふるひーむ</language>
 		<language name="JPN_KANJI" width="216">しんふるひーむ</language>
 	</row>
 
-	<row id="search_abc_88">
+	<row id="search_abc_89">
 		<language name="JPN" width="216">しんほらー</language>
 		<language name="JPN_KANJI" width="216">しんほらー</language>
 	</row>
 
-	<row id="search_abc_89">
+	<row id="search_abc_90">
 		<language name="JPN" width="216">しんりよく</language>
 		<language name="JPN_KANJI" width="216">しんりよく</language>
 	</row>

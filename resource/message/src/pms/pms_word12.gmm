@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-03-20T20:48:08"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-26T19:37:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -379,88 +379,88 @@
 	</row>
 
 	<row id="pms_word12_10">
-		<language name="JPN" font=" 1:small" width="96">ローテーション</language>
-		<language name="JPN_KANJI" font=" 1:small" width="96">ローテーション</language>
-	</row>
-
-	<row id="pms_word12_11">
 		<language name="JPN" font=" 1:small" width="96">シングルバトル</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">シングルバトル</language>
 	</row>
 
-	<row id="pms_word12_12">
+	<row id="pms_word12_11">
 		<language name="JPN" font=" 1:small" width="96">せきがいせん</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">せきがいせん</language>
 	</row>
 
-	<row id="pms_word12_13">
+	<row id="pms_word12_12">
 		<language name="JPN" font=" 1:small" width="96">ダブルバトル</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">ダブルバトル</language>
 	</row>
 
-	<row id="pms_word12_14">
+	<row id="pms_word12_13">
 		<language name="JPN" font=" 1:small" width="96">チャット</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">チャット</language>
 	</row>
 
-	<row id="pms_word12_15">
-		<language name="JPN" font=" 1:small" width="96">ライブつうしん</language>
-		<language name="JPN_KANJI" font=" 1:small" width="96">ライブつうしん</language>
-	</row>
-
-	<row id="pms_word12_16">
+	<row id="pms_word12_14">
 		<language name="JPN" font=" 1:small" width="96">つうしん</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">つうしん</language>
 	</row>
 
-	<row id="pms_word12_17">
+	<row id="pms_word12_15">
 		<language name="JPN" font=" 1:small" width="96">ともだちコード</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">ともだちコード</language>
 	</row>
 
-	<row id="pms_word12_18">
+	<row id="pms_word12_16">
 		<language name="JPN" font=" 1:small" width="96">トリプルバトル</language>
-		<language name="JPN_KANJI" font=" 1:small" width="96">トランシーバー</language>
-	</row>
-
-	<row id="pms_word12_19">
-		<language name="JPN" font=" 1:small" width="96">バトルビデオ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">トリプルバトル</language>
 	</row>
 
-	<row id="pms_word12_20">
-		<language name="JPN" font=" 1:small" width="96">パレス（かり）</language>
+	<row id="pms_word12_17">
+		<language name="JPN" font=" 1:small" width="96">ハイリンク</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ハイリンク</language>
+	</row>
+
+	<row id="pms_word12_18">
+		<language name="JPN" font=" 1:small" width="96">バトルビデオ</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">バトルビデオ</language>
 	</row>
 
-	<row id="pms_word12_21">
+	<row id="pms_word12_19">
 		<language name="JPN" font=" 1:small" width="96">ボイスチャット</language>
-		<language name="JPN_KANJI" font=" 1:small" width="96">パレス（かり）</language>
-	</row>
-
-	<row id="pms_word12_22">
-		<language name="JPN" font=" 1:small" width="96">ポケシフター</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">ボイスチャット</language>
 	</row>
 
-	<row id="pms_word12_23">
-		<language name="JPN" font=" 1:small" width="96">マルチバトル</language>
+	<row id="pms_word12_20">
+		<language name="JPN" font=" 1:small" width="96">ポケシフター</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">ポケシフター</language>
 	</row>
 
-	<row id="pms_word12_24">
-		<language name="JPN" font=" 1:small" width="96">ミュージカル</language>
+	<row id="pms_word12_21">
+		<language name="JPN" font=" 1:small" width="96">マルチバトル</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">マルチバトル</language>
 	</row>
 
-	<row id="pms_word12_25">
-		<language name="JPN" font=" 1:small" width="96">ユニオン</language>
+	<row id="pms_word12_22">
+		<language name="JPN" font=" 1:small" width="96">ミュージカル</language>
 		<language name="JPN_KANJI" font=" 1:small" width="96">ミュージカル</language>
+	</row>
+
+	<row id="pms_word12_23">
+		<language name="JPN" font=" 1:small" width="96">ユニオン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ユニオン</language>
+	</row>
+
+	<row id="pms_word12_24">
+		<language name="JPN" font=" 1:small" width="96">ライブつうしん</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ライブつうしん</language>
+	</row>
+
+	<row id="pms_word12_25">
+		<language name="JPN" font=" 1:small" width="96">ローテーション</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ローテーション</language>
 	</row>
 
 	<row id="pms_word12_26">
 		<language name="JPN" font=" 1:small" width="96">ワイヤレス</language>
-		<language name="JPN_KANJI" font=" 1:small" width="96">ユニオン</language>
+		<language name="JPN_KANJI" font=" 1:small" width="96">ワイヤレス</language>
 	</row>
 
 	<flowchart-group-list>
