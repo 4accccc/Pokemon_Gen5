@@ -16,6 +16,7 @@
 #include "field_player.h"
 
 #include "field/zonedata.h"
+#include "field/field_const.h"
 
 
 //-----------------------------------------------------------------------------
@@ -596,7 +597,7 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
 
     //  座標を設定
     {
-      MMDL_InitGridPosition( p_mmdl, SIZE_GRID_FX32( pos.x ), SIZE_GRID_FX32( pos.y ), SIZE_GRID_FX32( pos.z ), dir );
+      MMDL_InitGridPosition( p_mmdl, FX32_TO_GRID( pos.x ), FX32_TO_GRID( pos.y ), FX32_TO_GRID( pos.z ), dir );
       
       MMDL_GetVectorPos( p_mmdl, &pos );
     }
@@ -609,6 +610,7 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
 
     // カメラ状態をデフォルト値に戻す
     FIELD_CAMERA_SetDefaultParameter( p_camera );
+
   }
   else
   {
@@ -616,6 +618,10 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
 
     // カメラ設定
     FLDNOGRID_MAPPER_BindCameraWork( p_mapper, FIELD_PLAYER_GetNoGridRailWork( p_wk->p_player ) );
+
+    // カメラのがくつき回避
+    // カメラトレースのリセット
+    FIELD_CAMERA_RestartTrace( p_camera );
 
   }
 

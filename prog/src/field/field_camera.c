@@ -2522,7 +2522,9 @@ static void traceUpdate(FIELD_CAMERA * camera)
   VecFx32 cam, tgt;
   VecFx32 outCam, outTgt;
 
-  if (camera->watch_target == NULL) return;
+  if (camera->watch_target == NULL) {
+    return;
+  }
 
 
   GFL_G3D_CAMERA_GetTarget(camera->g3Dcamera, &tgt);
@@ -2635,8 +2637,8 @@ void FIELD_CAMERA_StopTraceNow(FIELD_CAMERA * camera_ptr)
         OS_TPrintf( "FIELD_CAMERA_StopTraceNow err トレース情報に中身が入っています\n" );
         OS_TPrintf( "target (%d == %d)\n", trace->targetBuffer[check_idx].y, trace->targetBuffer[last_check_idx].y );
         OS_TPrintf( "camera (%d == %d)\n", trace->camPosBuffer[check_idx].y, trace->camPosBuffer[last_check_idx].y );
-        GF_ASSERT( (trace->camPosBuffer[check_idx].y == trace->camPosBuffer[last_check_idx].y) &&
-           (trace->targetBuffer[check_idx].y == trace->targetBuffer[last_check_idx].y) );
+        /*GF_ASSERT( (trace->camPosBuffer[check_idx].y == trace->camPosBuffer[last_check_idx].y) &&
+           (trace->targetBuffer[check_idx].y == trace->targetBuffer[last_check_idx].y) );*/
       }
     }
   }
