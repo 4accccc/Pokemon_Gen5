@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kawada_koji" host="W00215" date="2010-03-26T02:39:20"/>
+	<create user="shimoyamada" host="W00184" date="2010-03-26T20:20:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1344" top="271" right="2049" bottom="899" maximized="no" rayout="Vertical2">
+	<dialog left="183" top="420" right="888" bottom="1048" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1456,75 +1456,87 @@
 	</row>
 
 	<row id="ZKN_CAP_HEIGHT_E" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>E</comment>
-		<language name="JPN" font=" 1:small" width="216">Height</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">Height</language>
+		<comment>E
+高さ</comment>
+		<language name="JPN" font=" 1:small" width="216">HT</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">HT</language>
 	</row>
 
 	<row id="ZKN_CAP_HEIGHT_FRA" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>FRA</comment>
-		<language name="JPN" font=" 1:small" width="216">たかさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">高さ</language>
+		<comment>FRA
+高さ</comment>
+		<language name="JPN" font=" 1:small" width="216">HAUT.</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">HAUT.</language>
 	</row>
 
 	<row id="ZKN_CAP_HEIGHT_GER" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>GER</comment>
-		<language name="JPN" font=" 1:small" width="216">たかさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">高さ</language>
+		<comment>GER
+高さ</comment>
+		<language name="JPN" font=" 1:small" width="216">GR.</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">GR.</language>
 	</row>
 
 	<row id="ZKN_CAP_HEIGHT_ITA" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>ITA</comment>
-		<language name="JPN" font=" 1:small" width="216">たかさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">高さ</language>
+		<comment>ITA
+高さ</comment>
+		<language name="JPN" font=" 1:small" width="216">ALTEZ.</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ALTEZ.</language>
 	</row>
 
 	<row id="ZKN_CAP_HEIGHT_SPA" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>SPA</comment>
-		<language name="JPN" font=" 1:small" width="216">たかさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">高さ</language>
+		<comment>SPA
+高さ</comment>
+		<language name="JPN" font=" 1:small" width="216">ALT.</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">ALT.</language>
 	</row>
 
 	<row id="ZKN_CAP_HEIGHT_KOR" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>KOR</comment>
-		<language name="JPN" font=" 1:small" width="216">たかさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">高さ</language>
+		<comment>KOR
+高さ</comment>
+		<language name="JPN" font=" 1:small" width="216">키</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">키</language>
 	</row>
 
 	<row id="ZKN_CAP_WEIGHT_E" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>E</comment>
+		<comment>E
+重さ</comment>
 		<language name="JPN" font=" 1:small" width="216">Weight</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">Weight</language>
 	</row>
 
 	<row id="ZKN_CAP_WEIGHT_FRA" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>FRA</comment>
-		<language name="JPN" font=" 1:small" width="216">おもさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">重さ</language>
+		<comment>FRA
+重さ</comment>
+		<language name="JPN" font=" 1:small" width="216">POIDS</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">POIDS</language>
 	</row>
 
 	<row id="ZKN_CAP_WEIGHT_GER" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>GER</comment>
-		<language name="JPN" font=" 1:small" width="216">おもさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">重さ</language>
+		<comment>GER
+重さ</comment>
+		<language name="JPN" font=" 1:small" width="216">GEW.</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">GEW.</language>
 	</row>
 
 	<row id="ZKN_CAP_WEIGHT_ITA" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>ITA</comment>
-		<language name="JPN" font=" 1:small" width="216">おもさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">重さ</language>
+		<comment>ITA
+重さ</comment>
+		<language name="JPN" font=" 1:small" width="216">PESO</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">PESO</language>
 	</row>
 
 	<row id="ZKN_CAP_WEIGHT_SPA" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>SPA</comment>
-		<language name="JPN" font=" 1:small" width="216">おもさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">重さ</language>
+		<comment>SPA
+重さ</comment>
+		<language name="JPN" font=" 1:small" width="216">PESO</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">PESO</language>
 	</row>
 
 	<row id="ZKN_CAP_WEIGHT_KOR" back-color=",,,,,,,#ff8080,,,#ff8080,,,,,,,">
-		<comment>KOR</comment>
-		<language name="JPN" font=" 1:small" width="216">おもさ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">重さ</language>
+		<comment>KOR
+重さ</comment>
+		<language name="JPN" font=" 1:small" width="216">몸무게</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">몸무게</language>
 	</row>
 
 	<flowchart-group-list>
