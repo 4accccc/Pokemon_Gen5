@@ -19,7 +19,7 @@
 
 
 static BOOL StartFlag = FALSE;
-static u64  PassedTick = 0;
+static u64  LastTick = 0;
 static u64  PassedSec = 0;
 static u64  StartTick = 0;
 static PLAYTIME*  PlayTimePointer = NULL;
@@ -43,7 +43,7 @@ void PLAYTIMECTRL_Init( void )
 void PLAYTIMECTRL_Start( PLAYTIME* pt )
 {
 	StartFlag = TRUE;
-	PassedTick = 0;
+	LastTick = 0;
 	PassedSec = 0;
 	PlayTimePointer = pt;
   StartTick = OS_GetTick();
@@ -63,11 +63,34 @@ void PLAYTIMECTRL_Countup( void )
 	if( StartFlag )
 	{
 		//u64  sec = APTM_CalcSec( APTM_GetData() - StartTick );
-    u64 sec = OS_TicksToSeconds( OS_GetTick() - StartTick );
+    u64 sec;
+    u64 tick = OS_GetTick();
+
+    // チックタイムの逆点現象チェック
+    // Wifi接続時にtickは０クリアされる。
+    if( LastTick > tick ){
+      // 0クリアされる前のチック分も足しこむ。
+      tick = tick + LastTick;
+    }else{
+      LastTick = tick;
+    }
+
+    sec = OS_TicksToSeconds( tick - StartTick );
 		if( sec > PassedSec )
 		{
 			PLAYTIME_CountUp( PlayTimePointer, (sec - PassedSec) );
-			PassedSec = sec;
+      
+      if( LastTick == tick ){
+        // 通常時
+			  PassedSec = sec;
+      }else{
+
+        // 何かしらの処理でTickがクリアされた場合
+        // 再初期化。
+        StartTick = OS_GetTick();
+        PassedSec = OS_TicksToSeconds( StartTick );
+        LastTick = StartTick;  // 
+      }
 		}
 	}
 }
