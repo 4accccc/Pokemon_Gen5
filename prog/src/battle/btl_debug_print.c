@@ -222,6 +222,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_PokeDead:            return "ポケ(%d) しにます\n";
   case DBGSTR_SVFL_AddSickFailCode:     return "状態異常失敗コード=%d\n";
   case DBGSTR_SVFL_AddSickFixed:        return "状態異常決定：コード=%d\n";
+  case DBGSTR_SVFL_WazaExeStart:        return "ポケ[%d], waza=%dのワザ出し処理開始\n";
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";
