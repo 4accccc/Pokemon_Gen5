@@ -4671,6 +4671,28 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _GET_MAPREPLACE_FLAG
+ * @brief マップ置き換えイベントのフラグ操作
+ * @param id            マップ置き換えの指定ID（prog/src/field/map_replace.h参照）
+ * @param ret_wk        取得するためのワーク
+ * @return  BOOL        TRUEのとき、置き換えリクエストあり
+ *
+ * @note
+ * _CHANGE_MAPREPLACE_FLAG
+ * マップ置き換えシステムが参照するイベントフラグの取得をおこなう。
+ */
+//--------------------------------------------------------------
+#define _GET_MAPREPLACE_FLAG( id, ret_wk ) \
+    _ASM_GET_MAPREPLACE_FLAG id, ret_wk
+
+    .macro  _ASM_GET_MAPREPLACE_FLAG id, ret_wk
+    .short  EV_SEQ_GET_MAP_REPLACE_FLAG
+    .short  \id
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
  * @def _GET_WIRELESS_SAVEMODE
  * @brief ワイヤレスセーブモードの取得
  */
