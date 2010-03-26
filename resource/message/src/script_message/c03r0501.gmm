@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T13:31:39"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T14:56:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -335,7 +335,8 @@
 
 	<row id="msg_c03r0501_middlewoman2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・はい選択時</comment>
+・はい選択時
+・フィーリングチェックをしたトレーナー名</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
 		<language name="JPN" width="256">きょうの　あなたが　とんでもなく
 ハッピーに　すごせる　ヒトは……▼
@@ -357,7 +358,8 @@
 
 	<row id="msg_c03r0501_middlewoman2_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・データが1つしかないとき</comment>
+・データが1つしかないとき
+・フィーリングチェックをしたトレーナー名</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
 		<language name="JPN" width="256">きょうの　あなたが　とんでもなく
 ハッピーに　すごせる　ヒトは……▼
@@ -375,7 +377,6 @@
 
 	<row id="msg_c03r0501_mountain_01">
 		<comment>♂
-・仮メッセージ
 ・姓名判断師のテキストは
 　namechange.gmm</comment>
 		<attribute name="キャラ指定">MOUNTAIN</attribute>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T13:31:14"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T14:56:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -515,11 +515,13 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
 		<language name="JPN" width="256">おれ　カビゴン▼
-じゃなくて　プランナー！
+じゃなくて　プランナー！▼
+いきなりだけど　どうぐの
 たべのこし　って　だいじだよね</language>
 		<language name="JPN_KANJI" width="256">おれ　カビゴン▼
-じゃなくて　プランナー！
-たべのこし　って　重要だよね</language>
+じゃなくて　プランナー！▼
+いきなりだけど　道具の
+たべのこし　って　大事だよね</language>
 	</row>
 
 	<row id="msg_c03r0402_05_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

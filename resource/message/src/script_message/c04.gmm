@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-17T17:03:44"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T15:05:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -715,10 +715,11 @@
 つよくなったんだよ！　だから！▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_05">
+	<row id="msg_c04_middleman1_05" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・画面下を向いてメッセージ表示
-・続けて</comment>
+・続けてmiddleman1_06
+※このメッセージ表示前に、間をつくれないか？</comment>
 		<attribute name="キャラ指定">男性
 サポートの父親</attribute>
 		<language name="JPN" width="256">ベルのパパ『……むむっ▼
@@ -742,7 +743,8 @@
 	</row>
 
 	<row id="msg_c04_middleman1_06">
-		<comment>♂</comment>
+		<comment>♂
+・続けてmiddleman1_07</comment>
 		<attribute name="キャラ指定">男性
 サポートの父親</attribute>
 		<language name="JPN" width="256">ジムリーダーさんに
@@ -761,7 +763,7 @@
 楽しいものであるよう　祈るさ▼</language>
 	</row>
 
-	<row id="msg_c04_middleman1_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c04_middleman1_07">
 		<comment>♂
 ・画面上を向いてメッセージ表示
 ・表示後、画面下に移動
