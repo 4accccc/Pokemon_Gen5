@@ -73,7 +73,7 @@ EVENT_START	ev_t01_man3_01
 	_TALK_OBJ_START()
 	
 	//科学のチカラってスゲー
-	_GIZAWIN_OBJMSG_POS( msg_t01_bigman_01 , T01_MAN3_01, WIN_NONE )
+	_BALLOONWIN_TALKOBJ_MSG( msg_t01_bigman_01 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
@@ -90,21 +90,21 @@ EVENT_START   ev_t01_woman2_01
 	//漢字よりも平仮名が好き？
 	_BALLOONWIN_TALKOBJ_MSG( msg_t01_woman2_01 )
 	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
+	_MSGWIN_CLOSE()
 
 	IF $SCWK_ANSWER == 0 THEN
 		//はいの処理
 
 		_BALLOONWIN_TALKOBJ_MSG( msg_t01_woman2_02 )
 		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+		_MSGWIN_CLOSE()
 		_CHG_LANGID()		//漢字ひらがな切り替え
 	ELSE
 		//いいえの処理
 
 		_BALLOONWIN_TALKOBJ_MSG( msg_t01_woman2_03 )
 		_LAST_KEYWAIT()
-		_BALLOONWIN_CLOSE()
+		_MSGWIN_CLOSE()
 	ENDIF
 
 EVENT_END
