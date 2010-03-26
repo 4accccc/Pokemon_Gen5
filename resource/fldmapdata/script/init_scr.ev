@@ -132,6 +132,7 @@ init_flags:
 	//C02のサポート、ライバル、チャンピオン、アロエ、博士（父）、博士（娘）
 	//D04R601のイベント終了まで非表示
 	_FLAG_SET(FV_C02_STONEEVENT_01)
+	_FLAG_SET(FV_C02_STONEEVENT_02)
 	
 	//D03R0101:ライバル２・チャンピオン・D04R0601のイベント後まで非表示
 	_FLAG_SET( FV_D03R0101_RIVAL_02 )
