@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-03-13T14:08:54"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-03-26T18:56:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -344,12 +344,6 @@
 	<row id="msg_shortcut_menu_01_02">
 		<language name="JPN" width="256">[FF:00:色:2]タウンマップ</language>
 		<language name="JPN_KANJI" width="256">[FF:00:色:2]タウンマップ</language>
-	</row>
-
-	<row id="msg_shortcut_menu_01_03" back-color="#808080,,,#808080,,#808080,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<attribute name="キャラ指定">欠番</attribute>
-		<language name="JPN" width="256">[FF:00:色:2]パレスへゴー</language>
-		<language name="JPN_KANJI" width="256">[FF:00:色:2]パレスへゴー</language>
 	</row>
 
 	<row id="msg_shortcut_menu_01_04">
