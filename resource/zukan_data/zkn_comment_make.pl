@@ -108,8 +108,8 @@ $zukan_csv_col_form_name               =   1;  # personalと一致している�
 $zukan_csv_col_kind                    =   2;  # 種族。例：たね(たねポケモン)
 $zukan_csv_col_style                   =   3;  # 形。例：四足型
 $zukan_csv_col_w_jpn                   =   4;  # wの説明テキスト。ひらがな。
-$zukan_csv_col_w_jpn_kanji             =   5;  # wの説明テキスト。漢字。
-$zukan_csv_col_b_jpn                   =   6;  # 改行は垂直タブ(0x0B(VT)(^K)(Ctrl+K))
+$zukan_csv_col_b_jpn                   =   5;  # 改行は垂直タブ(0x0B(VT)(^K)(Ctrl+K))
+$zukan_csv_col_w_jpn_kanji             =   6;  # wの説明テキスト。漢字。
 $zukan_csv_col_b_jpn_kanji             =   7;
 $zukan_csv_col_fjname                  =   8;  # 日本語フォルム名。例：ネガフォルム(チェリム)
 
