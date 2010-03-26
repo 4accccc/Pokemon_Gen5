@@ -519,7 +519,8 @@ EVENT_START   ev_debug_murakami
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_15, 15 )	//電気石の洞穴/サポート博士①
 		_BMPMENU_MAKE_LIST( msg_debug_murakami_16, 16 )	//リュウラセンの塔が揺れる１階
 //		_BMPMENU_MAKE_LIST( msg_debug_murakami_17, 17 )	//８番道路のサポート戦
-		_BMPMENU_MAKE_LIST( msg_debug_murakami_18, 18 )	//テスト用
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_18, 18 )	//C02盗難イベント
+		_BMPMENU_MAKE_LIST( msg_debug_murakami_19, 19 )	//テスト用
 		_BMPMENU_MAKE_LIST( msg_debug_00, 100 )	//やめる
 		//メニュー表示
 		_BMPMENU_START()
@@ -698,8 +699,7 @@ EVENT_START   ev_debug_murakami
 		ELSIF $SCWK_TEMP1 == 14 THEN
 			//電気石ダークトリニティのイベント①
 			$WK_SCENE_D06R0101 = 0
-
-			//Nを出現
+			
 			_OBJ_POS_CHANGE(D06R0101_BOSS_01,69,1,13,DIR_LEFT)	
 
 		ELSIF $SCWK_TEMP1 == 15 THEN
@@ -720,11 +720,11 @@ EVENT_START   ev_debug_murakami
 			$WK_SCENE_R08 = 0
 		
 		//テスト用
-		ELSIF $SCWK_TEMP1 == 18 THEN
-		
-			_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
-			_OBJ_POS_CHANGE(MMDL_ID_PLAYER,LWK_POSX,3,LWK_POSZ,DIR_DOWN)
-			
+		ELSIF $SCWK_TEMP1 == 18 THEN		
+		_MAP_CHANGE( ZONE_ID_C02GYM0202, 5, 14, DIR_UP )
+
+		ELSIF $SCWK_TEMP1 == 19 THEN
+
 		ELSE
 		ENDIF
 		

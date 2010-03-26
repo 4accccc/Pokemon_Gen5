@@ -161,6 +161,8 @@ ev_c02gym_tounan:
 	//ママー
 	_PLAINWIN_MSG_DOWN(msg_c02gym0202_ad_01)
 	_MSGWIN_CLOSE()
+
+	_START_EVENT_BGM(SEQ_BGM_E_TROUBLE)
 	
 	//ジムリーダーが夫を振り向く
 	_OBJ_ANIME( C02GYM0202_LEADER2_01, anm_common_turn_d  )
@@ -220,6 +222,8 @@ ev_c02gym_tounan:
 	//ジムリーダー夫・アロエを消す
 	_OBJ_DEL( C02GYM0202_LEADER2_01 )
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
+	
+	_END_EVENT_BGM()
 
 _RET
 EVENT_END
