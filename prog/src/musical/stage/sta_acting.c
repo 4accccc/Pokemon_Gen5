@@ -1619,6 +1619,8 @@ static u32 STA_ACT_GetUseItemSe( ACTING_WORK *work , const u8 usePoke , const u8
   const MUSICAL_CONDITION_TYPE conType = MUS_ITEM_DATA_GetItemConditionType( itemDataSys , itemNo );
   const u8 conPoint = MUSICAL_PROGRAM_GetConOnePoint( work->initWork->progWork , conType );
   
+  //‚Â‚¢‚Å‚É‘‚â‚·
+  //work->initWork->musPoke[usePoke]->point += conPoint;
   if( conPoint >= 7 )
   {
     return STA_SE_CLAP_2;

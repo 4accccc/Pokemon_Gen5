@@ -15,6 +15,7 @@
 
 #include "musical/musical_system.h"
 #include "musical/musical_stage_sys.h"
+#include "musical/musical_shot_sys.h"
 
 #include "musical/stage/sta_local_def.h"
 #include "musical/stage/sta_acting.h"
@@ -79,6 +80,7 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
   work = GFL_PROC_AllocWork( proc, sizeof(STAGE_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
   if( pwk == NULL )
   {
+    GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_shot));
     work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_STAGE , NULL );
     MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_PIKATYUU , 60 , HEAPID_MUSICAL_STAGE );
     MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , MONSNO_PURUNSU , 120 , HEAPID_MUSICAL_STAGE );
@@ -138,6 +140,7 @@ static GFL_PROC_RESULT MusicalStageProc_Term( GFL_PROC * proc, int * seq , void 
     //–³—‚â‚èƒvƒŒ[ƒ„[‚É‰º‚µ‚½‚Ì‚Å–ß‚·
     work->actInitWork->musPoke[1]->charaType = MUS_CHARA_NPC;
     MUSICAL_STAGE_DeleteStageWork( work->actInitWork );
+    GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical_shot));
   }
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STAGE );

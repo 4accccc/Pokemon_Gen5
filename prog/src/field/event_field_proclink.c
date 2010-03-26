@@ -766,7 +766,12 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
     const BAG_PARAM *pBag = pre_param_adrs;
 
     plistData->item = pBag->ret_item;     //アイテムID
-    plistData->ret_sel  = 0;
+    if( pBag->next_proc != BAG_NEXTPROC_ITEMEQUIP &&
+        pBag->next_proc != BAG_NEXTPROC_ITEMHAVE_RET )
+    {
+      //リストからバッグへ行って戻る時以外リセット
+      plistData->ret_sel  = 0;
+    }
 
     switch( pBag->next_proc )
     { 

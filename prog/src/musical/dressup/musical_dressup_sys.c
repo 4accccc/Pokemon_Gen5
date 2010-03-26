@@ -14,6 +14,7 @@
 
 #include "musical/musical_system.h"
 #include "musical/musical_dressup_sys.h"
+#include "musical/musical_shot_sys.h"
 #include "dup_local_def.h"
 #include "dup_fitting.h"
 #include "test/ariizumi/ari_debug.h"
@@ -77,9 +78,12 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
 #if PM_DEBUG
   if( pwk == NULL )
   {
-    POKEMON_PARAM *pokePara = PP_Create( MONSNO_PURUNSU , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_DRESSUP );
-    MUSICAL_POKE_PARAM *musPoke = MUSICAL_SYSTEM_InitMusPoke( pokePara , HEAPID_MUSICAL_DRESSUP );
-    initWork = MUSICAL_DRESSUP_CreateInitWork( HEAPID_MUSICAL_DRESSUP , musPoke , SaveControl_GetPointer(/*デバッグ用*/) );
+    GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_shot));
+    {
+      POKEMON_PARAM *pokePara = PP_Create( MONSNO_PURUNSU , 20 , PTL_SETUP_POW_AUTO , HEAPID_MUSICAL_DRESSUP );
+      MUSICAL_POKE_PARAM *musPoke = MUSICAL_SYSTEM_InitMusPoke( pokePara , HEAPID_MUSICAL_DRESSUP );
+      initWork = MUSICAL_DRESSUP_CreateInitWork( HEAPID_MUSICAL_DRESSUP , musPoke , SaveControl_GetPointer(/*デバッグ用*/) );
+    }
   }
 #endif
   
@@ -100,6 +104,7 @@ static GFL_PROC_RESULT DressUpProc_Term( GFL_PROC * proc, int * seq , void *pwk,
     GFL_HEAP_FreeMemory( work->initWork->musPoke->pokePara );
     GFL_HEAP_FreeMemory( work->initWork->musPoke );
     GFL_HEAP_FreeMemory( work->initWork );
+    GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical_shot));
   }
 #endif
   GFL_HEAP_FreeMemory( work->fitInitWork );

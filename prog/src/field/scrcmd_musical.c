@@ -209,7 +209,7 @@ VMCMD_RESULT EvCmdMusicalFittingCall( VMHANDLE *core, void *wk )
     
     //ショット呼び出し
     event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
-                                         FS_OVERLAY_ID(musical), &DressUp_ProcData, callWork->initWork,
+                                         NO_OVERLAY_ID, &DressUp_ProcData, callWork->initWork,
                                          EvCmdFittingCallProc_CallBack, callWork );
     SCRIPT_CallEvent( sc, event );
   }
@@ -865,12 +865,14 @@ static void EvCmdMusical_InitCommon( SCRIPT_WORK *sc , GAMEDATA *gameData )
   musScriptWork->commWork = NULL;
   GAMEDATA_SetMusicalScrWork( gameData , musScriptWork );
   GFL_OVERLAY_Load(FS_OVERLAY_ID(musical));
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_shot));
 }
 static void EvCmdMusical_ExitCommon( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDATA *gameData )
 {
   GF_ASSERT_MSG( musScriptWork->eventWork == NULL , "イベントワークが開放してない！" );
   GF_ASSERT_MSG( musScriptWork->commWork == NULL , "通信ワークが開放してない！" );
   
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical_shot));
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical));
   GFL_HEAP_FreeMemory( musScriptWork );
   GAMEDATA_SetMusicalScrWork( gameData , NULL );

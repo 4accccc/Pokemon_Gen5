@@ -168,6 +168,13 @@ ev_musical_recept_comm_core:
   ENDIF
   
 
+  //通信前レポート
+  _REPORT_EVENT_CALL_WIRELESS( ret )
+  
+  IF $ret != SCR_REPORT_OK THEN //レポートしない
+    _CALL ev_musical_exit_common
+    _RET
+  ENDIF
 
   //フィールド通信切断
   _FIELD_COMM_EXIT_EVENT_CALL( ret )
@@ -185,13 +192,6 @@ ev_musical_recept_comm_core:
     _RET
   ENDIF
 
-  //通信前レポート
-  _REPORT_EVENT_CALL_WIRELESS( ret )
-  
-  IF $ret != SCR_REPORT_OK THEN //レポートしない
-    _CALL ev_musical_exit_common
-    _RET
-  ENDIF
   
   {
     DEFINE_LOCAL isLoop1
@@ -398,11 +398,18 @@ _RET
 /*************************************************************/
 ev_musical_exit_common:
   _MUSICAL_TOOLS( MUSICAL_TOOL_EXIT, 0,0,0 )
-  
+  _REBOOT_BEACON_SEARCH()
+ 
   _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_03 ) //また　おこしください
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
   
+_RET
+
+/*************************************************************/
+/*            共通処理最初の受付               */
+/*************************************************************/
+ev_musical_recept_first:
 _RET
 
 /*************************************************************/

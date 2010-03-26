@@ -396,7 +396,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   //------------------------------
   case MES_INIT_MUSICAL_SHOT:
     MUSICAL_EVENT_InitMusicalShot( evWork );
-    GAMESYSTEM_CallProc( evWork->gsys , FS_OVERLAY_ID(musical_shot), &MusicalShot_ProcData, evWork->shotInitWork );
+    GAMESYSTEM_CallProc( evWork->gsys , NO_OVERLAY_ID, &MusicalShot_ProcData, evWork->shotInitWork );
     evWork->state = MES_TERM_MUSICAL_SHOT;
     break;
     
@@ -644,19 +644,17 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
     shotData->year = date.year;
     shotData->month = date.month;
     shotData->day = date.day;
-    shotData->title[0] = L'ポ';
-    shotData->title[1] = L'ケ';
-    shotData->title[2] = L'ッ';
-    shotData->title[3] = L'タ';
-    shotData->title[4] = L'ー';
-    shotData->title[5] = L'リ';
-    shotData->title[6] = L'モ';
-    shotData->title[7] = L'ン';
-    shotData->title[8] = L'ス';
-    shotData->title[9] = L'タ';
-    shotData->title[10] = L'ー';
-    shotData->title[11] = L'リ';
-    shotData->title[12] = GFL_STR_GetEOMCode();
+    shotData->title[0] = L'ス';
+    shotData->title[1] = L'ト';
+    shotData->title[2] = L'リ';
+    shotData->title[3] = L'ー';
+    shotData->title[4] = L'ミ';
+    shotData->title[5] = L'ン';
+    shotData->title[6] = L'グ';
+    shotData->title[7] = L'き';
+    shotData->title[8] = L'ょ';
+    shotData->title[9] = L'く';
+    shotData->title[10] = GFL_STR_GetEOMCode();
     
     //@TODO
     shotData->musVer = MUSICAL_VERSION;

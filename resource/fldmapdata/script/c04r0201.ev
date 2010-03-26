@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c04r0201.h"
   .include  "c04r0201.h"
+  .include  "musical_scr_local.h" //ミュージカルの定義が入っています
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -103,6 +104,7 @@ EVENT_START		ev_scene_c04r0201_musical_first
 	_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_03, C04R0201_OWNER_01 )
 	_MSGWIN_CLOSE()
 	
+  _MUSICAL_TOOLS( MUSICAL_TOOL_INIT, 0,0,0 )
 	{
 	DEFINE_LOCAL LWK_ENT_CHK
 	
@@ -128,7 +130,8 @@ EVENT_START		ev_scene_c04r0201_musical_first
 	ENDIF
 	
 	}
-	
+  _MUSICAL_TOOLS( MUSICAL_TOOL_EXIT, 0,0,0 )
+
 	//私はね… …楽しみにしてるよ
 	_BALLOONWIN_OBJMSG( msg_c04r0201_owner_demo_05, C04R0201_OWNER_01 )
 	_MSGWIN_CLOSE()

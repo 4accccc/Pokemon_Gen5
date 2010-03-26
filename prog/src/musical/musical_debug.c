@@ -27,16 +27,16 @@ const BOOL MUSICAL_DEBUG_CreateDummyData( MUSICAL_SHOT_DATA* shotData , const u1
   shotData->year = date.year;
   shotData->month = date.month;
   shotData->day = date.day;
-  shotData->title[0] = L'ダ';
-  shotData->title[1] = L'ミ';
-  shotData->title[2] = L'ー';
-  shotData->title[3] = L'シ';
-  shotData->title[4] = L'ョ';
-  shotData->title[5] = L'ッ';
-  shotData->title[6] = L'ト';
-  shotData->title[7] = L'デ';
-  shotData->title[8] = L'ー';
-  shotData->title[9] = L'タ';
+  shotData->title[0] = L'ス';
+  shotData->title[1] = L'ト';
+  shotData->title[2] = L'リ';
+  shotData->title[3] = L'ー';
+  shotData->title[4] = L'ミ';
+  shotData->title[5] = L'ン';
+  shotData->title[6] = L'グ';
+  shotData->title[7] = L'き';
+  shotData->title[8] = L'ょ';
+  shotData->title[9] = L'く';
   shotData->title[10] = GFL_STR_GetEOMCode();
   shotData->player = 0;
   
@@ -79,6 +79,8 @@ const BOOL MUSICAL_DEBUG_CreateDummyData( MUSICAL_SHOT_DATA* shotData , const u1
       shotData->shotPoke[i].equip[j].angle = 0;
       shotData->shotPoke[i].equip[j].equipPos = MUS_POKE_EQU_INVALID;
     }
+    shotData->shotPoke[i].equip[0].itemNo = 19;
+    shotData->shotPoke[i].equip[0].equipPos = MUS_POKE_EQU_HAND_L;
   }
   
   POKE_PERSONAL_CloseHandle( perData );

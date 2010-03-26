@@ -23,6 +23,7 @@
 #include "musical/musical_program.h"
 #include "musical/musical_dressup_sys.h"
 #include "musical/musical_stage_sys.h"
+#include "musical/musical_shot_sys.h"
 #include "musical/comm/mus_comm_lobby.h"
 #include "musical/comm/mus_comm_func.h"
 #include "musical/stage/sta_acting.h"
