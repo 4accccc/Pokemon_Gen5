@@ -8,6 +8,8 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#define	POKEGRA_LZ	// ポケグラ圧縮有効定義
+
 //ライブラリ
 #include <gflib.h>
 
@@ -84,7 +86,11 @@ void* POKE2DGRA_LoadCharacter( NNSG2dCharacterData **ncg_data, int mons_no, int 
 
 
 	//リソースはOBJとして作っているので、LoadOBJじゃないと読み込めない
+#ifdef	POKEGRA_LZ
+	p_buf = GFL_ARC_UTIL_LoadOBJCharacter( POKEGRA_GetArcID(), cgr, TRUE, ncg_data, heapID );
+#else	// POKEGRA_LZ
 	p_buf = GFL_ARC_UTIL_LoadOBJCharacter( POKEGRA_GetArcID(), cgr, FALSE, ncg_data, heapID );
+#endif	// POKEGRA_LZ
 
 
   //パッチールのときはブチ作成
@@ -393,7 +399,11 @@ u32 POKE2DGRA_OBJ_CGR_Register( ARCHANDLE *p_handle, int mons_no, int form_no, i
 	cgr	= POKEGRA_GetCgrArcIndex( mons_no, form_no, sex, rare, dir, egg );
 
 	//読み込み
+#ifdef	POKEGRA_LZ
+	idx = GFL_CLGRP_CGR_Register( p_handle, cgr, TRUE, vramType, heapID );
+#else	// POKEGRA_LZ
 	idx = GFL_CLGRP_CGR_Register( p_handle, cgr, FALSE, vramType, heapID );
+#endif	// POKEGRA_LZ
 
   if( mons_no == MONSNO_PATTIIRU )
   { 
@@ -429,16 +439,19 @@ u32 POKE2DGRA_OBJ_CELLANM_Register( int mons_no, int form_no, int sex, int rare,
 	u32 cel, anm;
 	u32 ret;
 
+/*
   if( mons_no == MONSNO_TAMAGO || egg == TRUE )
   {
     //卵の場合はファイル指定
     p_handle  = POKE2DGRA_OpenHandle( heapID );
-    ret	= GFL_CLGRP_CELLANIM_Register( p_handle,
+    ret	= GFL_CLGRP_CELLANIM_RegisterEx( p_handle,
         NARC_pokegra_wb_pfwb_egg_normal_NCER,
-        NARC_pokegra_wb_pfwb_egg_normal_NANR, heapID );
+        NARC_pokegra_wb_pfwb_egg_normal_NANR,
+				FALSE, TRUE, heapID );
     GFL_ARC_CloseDataHandle( p_handle );
   }
   else
+*/
   { 
     //ポケモン場合は、ダミーセル
     {	

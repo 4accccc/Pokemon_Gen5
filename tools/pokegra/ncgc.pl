@@ -21,6 +21,9 @@ use File::Basename;
 		$cmd = "g2dcvtr @ARGV[0] -bmp -bg -cr/0_0_32_16 -o/@ARGV[1]";
 		system $cmd;
 
+		$file_name = basename( @ARGV[0], '.ncg' );
+        &NCBR_Comp( $file_name );
+
 		#パレットファイル生成
 		$filename = basename( @ARGV[0], 'ncg' );
 		$filename =~ s/pfwb/pmwb/g;
@@ -33,7 +36,7 @@ use File::Basename;
 		system $cmd;
 		$cmd = "rm " . $filename . "_r.NCLR";
 		system $cmd;
-		$cmd = "rm " . $filename . "NCLR";
+		$cmd = "rm " . $filename . ".NCLR";
 		system $cmd;
 
 		#_fファイルが存在しない場合に生成
@@ -56,3 +59,15 @@ use File::Basename;
 		close( DUMMY );
 	}
 
+
+#圧縮
+sub NCBR_Comp
+{
+	$r1 = @ARGV[1] . $_[0] . ".NCBR";
+	$r2 = @ARGV[1] . $_[0] . ".NCBRs";
+    rename $r1, $r2;
+    $cmd = "ntrcomp -lex -o " . $r1 . " " . $r2;
+    system $cmd;
+    $cmd = "rm " . $r2;
+    system $cmd;
+}

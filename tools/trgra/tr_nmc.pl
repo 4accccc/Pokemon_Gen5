@@ -20,6 +20,7 @@ use File::Basename;
 		$filename = basename( $filename, '.nmc' );
 		$cmd = "rm " . $filename . ".NMCR";
 		system $cmd;
+        &NANR_Comp;
 		exit(1);
 	}
  	$filename = basename( @ARGV[0] );
@@ -27,3 +28,19 @@ use File::Basename;
 	$cmd = "rm " . $filename . ".NCGR";
 	system $cmd;
 
+    &NANR_Comp;
+
+sub NANR_Comp
+{
+	#ÉäÉlÅ[ÉÄÅÑà≥èkÅÑçÌèú
+	$filename = basename( @ARGV[0] );
+	$filename = basename( $filename, '.nmc' );
+    $filename = @ARGV[1] . $filename;
+    $r1 = $filename . ".NANR";
+    $r2 = $filename . ".NANRs";
+    rename $r1, $r2;
+	$cmd = "ntrcomp -lex -o " . $r1 . " " . $r2;
+	system $cmd;
+	$cmd = "rm " . $r2;
+	system $cmd;
+}

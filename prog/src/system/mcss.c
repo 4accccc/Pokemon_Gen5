@@ -7,6 +7,8 @@
  * @date	2008.09.16
  */
 //============================================================================================
+#define	POKEGRA_LZ	// ポケグラ圧縮有効定義
+
 #include <gflib.h>
 #include <procsys.h>
 #include <tcbl.h>
@@ -1430,7 +1432,11 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 	// マルチセルアニメーションをロード。
 	mcss->mcss_ncer_buf = GFL_ARC_UTIL_LoadCellBank(		maw->arcID, maw->ncer, FALSE, &mcss->mcss_ncer, mcss->heapID );
 	GF_ASSERT( mcss->mcss_ncer_buf != NULL );
+#ifdef	POKEGRA_LZ
+	mcss->mcss_nanr_buf = GFL_ARC_UTIL_LoadAnimeBank(		maw->arcID, maw->nanr, TRUE, &mcss->mcss_nanr, mcss->heapID );
+#else	// POKEGRA_LZ
 	mcss->mcss_nanr_buf = GFL_ARC_UTIL_LoadAnimeBank(		maw->arcID, maw->nanr, FALSE, &mcss->mcss_nanr, mcss->heapID );
+#endif	// POKEGRA_LZ
 	GF_ASSERT( mcss->mcss_nanr_buf != NULL );
 	mcss->mcss_nmcr_buf = GFL_ARC_UTIL_LoadMultiCellBank(	maw->arcID, maw->nmcr, FALSE, &mcss->mcss_nmcr, mcss->heapID );
 	GF_ASSERT( mcss->mcss_nmcr_buf != NULL );
@@ -1463,8 +1469,13 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 		tlw->mcss	 = mcss;
 		// load character data for 3D (software sprite)
 		{
+#ifdef	POKEGRA_LZ
+			tlw->pBufChar = GFL_ARC_UTIL_LoadBGCharacter( maw->arcID, maw->ncbr, TRUE, &tlw->pCharData,
+                                                    GFL_HEAP_LOWID( mcss->heapID ) );
+#else	// POKEGRA_LZ
 			tlw->pBufChar = GFL_ARC_UTIL_LoadBGCharacter( maw->arcID, maw->ncbr, FALSE, &tlw->pCharData,
                                                     GFL_HEAP_LOWID( mcss->heapID ) );
+#endif	// POKEGRA_LZ
 			GF_ASSERT( tlw->pBufChar != NULL);
 		}
 

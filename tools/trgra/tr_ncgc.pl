@@ -20,6 +20,17 @@ use File::Basename;
 	if( $size ){
 		$cmd = "g2dcvtr @ARGV[0] -bmp -bg -cr/0_0_32_16 -o/@ARGV[1]";
 		system $cmd;
+
+        #ƒŠƒl[ƒ€„ˆ³k„íœ
+		$file_name = basename( @ARGV[0], '.ncg' );
+		$file_name = @ARGV[1] . $file_name;
+        $r1 = $file_name . ".NCBR";
+        $r2 = $file_name . ".NCBRs";
+        rename $r1, $r2;
+    	$cmd = "ntrcomp -lex -o " . $r1 . " " . $r2;
+    	system $cmd;
+    	$cmd = "rm " . $r2;
+    	system $cmd;
 	}
 	else{
 		$file_name = basename( @ARGV[0], '.ncg' );
@@ -27,4 +38,3 @@ use File::Basename;
 		open( DUMMY, "> " . $file_name );
 		close( DUMMY );
 	}
-

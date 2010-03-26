@@ -8,6 +8,8 @@
  *
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
+#define	TRGRA_LZ	// トレーナーグラフィック圧縮有効定義
+
 //ライブラリ
 #include <gflib.h>
 
@@ -57,7 +59,11 @@ static void* TR2DGRA_LoadCharacter( NNSG2dCharacterData **ncg_data, int trtype, 
 	//リソース受け取り
 	cgr	= TRGRA_GetCgrArcIndex( trtype );
 	//リソースはOBJとして作っているので、LoadOBJじゃないと読み込めない
+#ifdef	TRGRA_LZ
+	p_buf = GFL_ARC_UTIL_LoadOBJCharacter( TRGRA_GetArcID(), cgr, TRUE, ncg_data, heapID );
+#else	// TRGRA_LZ
 	p_buf = GFL_ARC_UTIL_LoadOBJCharacter( TRGRA_GetArcID(), cgr, FALSE, ncg_data, heapID );
+#endif	// TRGRA_LZ
 
 	return p_buf;
 }
@@ -303,7 +309,11 @@ u32 TR2DGRA_OBJ_CGR_Register( ARCHANDLE *p_handle, int trtype, CLSYS_DRAW_TYPE v
 	u32 cgr;
 	cgr	= TRGRA_GetCgrArcIndex( trtype );
 	//読み込み
+#ifdef	TRGRA_LZ
+	return GFL_CLGRP_CGR_Register( p_handle, cgr, TRUE, vramType, heapID );
+#else	// TRGRA_LZ
 	return GFL_CLGRP_CGR_Register( p_handle, cgr, FALSE, vramType, heapID );
+#endif	// TRGRA_LZ
 }
 
 //----------------------------------------------------------------------------
@@ -367,8 +377,12 @@ void TR2DGRA_OBJ_RES_Replace( ARCHANDLE *p_handle, int trtype, int cgr_idx, int 
     u32* cgr_buf;
 	  u32 cgr	= TRGRA_GetCgrArcIndex( trtype );
 
+#ifdef	TRGRA_LZ
+		cgr_buf = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, cgr, TRUE, &cgr_res, heapID );
+#else	// TRGRA_LZ
     cgr_buf = GFL_ARC_LoadDataAllocByHandle( p_handle, cgr, heapID );
     NNS_G2dGetUnpackedCharacterData( cgr_buf, &cgr_res );
+#endif	// TRGRA_LZ
 
     GFL_CLGRP_CGR_Replace( cgr_idx, cgr_res );
     

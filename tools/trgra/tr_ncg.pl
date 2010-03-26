@@ -70,7 +70,7 @@ use constant SIZE	=>	NCG_X * NCG_Y * 0x20;
 sub NCGRMake
 {
 	$file_name = basename( @ARGV[0], '.ncg' );
-	$file_name = @ARGV[1] . $file_name . ".NCGR";
+	$file_name = @ARGV[1] . $file_name . ".NCGRs";
 	open( NCG, @ARGV[0] );
 	open( NCGR, "> " . $file_name );
 	binmode( NCG );
@@ -137,4 +137,19 @@ sub NCGRMake
 
 	close( NCG );
 	close( NCGR );
+
+    &NCGR_Comp( $file_name );
+}
+
+
+#à≥èk
+sub NCGR_Comp
+{
+	$file_name = basename( $_[0], '.NCGRs' );
+    $r1 = @ARGV[1] . $file_name . ".NCGR";
+    $r2 = @ARGV[1] . $file_name . ".NCGRs";
+    $cmd = "ntrcomp -lex -o " . $r1 . " " . $r2;
+    system $cmd;
+    $cmd = "rm " . $r2;
+    system $cmd;
 }

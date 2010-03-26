@@ -6,6 +6,8 @@
  *
  */
 //======================================================================
+#define	POKEGRA_LZ	// ポケグラ圧縮有効定義
+
 #include "fld3d_ci.h"
 #include "arc_def.h"
 #include "gamesystem/game_event.h"
@@ -1642,7 +1644,11 @@ static void ReTransToPokeGra(FLD3D_CI_PTR ptr)
     ptr->chr = NULL;
     ptr->plt = NULL;
     //リソースはOBJとして作っているので、LoadOBJじゃないと読み込めない
+#ifdef	POKEGRA_LZ
+    ptr->chr_buf = GFL_ARC_UTIL_LoadOBJCharacter( POKEGRA_GetArcID(), cgr, TRUE, &ptr->chr, heapID );
+#else	// POKEGRA_LZ
     ptr->chr_buf = GFL_ARC_UTIL_LoadOBJCharacter( POKEGRA_GetArcID(), cgr, FALSE, &ptr->chr, heapID );
+#endif	// POKEGRA_LZ
     ptr->pal_buf = GFL_ARC_UTIL_LoadPalette( POKEGRA_GetArcID(), pal, &ptr->plt, heapID );
   }
   //12x12chrポケグラを16x16chrの真ん中に貼り付ける
