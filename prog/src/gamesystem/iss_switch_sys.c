@@ -94,6 +94,7 @@ ISS_SWITCH_SYS* ISS_SWITCH_SYS_Create( HEAPID heapID )
 //-------------------------------------------------------------------------------
 void ISS_SWITCH_SYS_Delete( ISS_SWITCH_SYS* system )
 { 
+  DeleteSwitchSet( system );
   DeleteSystem( system );
 }
 
