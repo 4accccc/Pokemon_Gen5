@@ -1016,7 +1016,7 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
     }
   }
   
-
+#if 0 //WBで要らなくなった
   //看板イベントチェック
   if( req.stepRequest ){
     //*
@@ -1038,7 +1038,8 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
     }
     //*/
   }
-  
+#endif
+
 //☆☆☆自機状態イベントチェックがここから
     /* 今はない */
 
