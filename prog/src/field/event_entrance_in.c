@@ -431,7 +431,9 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
 
   // カメラのトレース処理停止リクエスト発行
   case SEQ_CAMERA_STOP_TRACE_REQUEST:
-    FIELD_CAMERA_StopTraceRequest( camera );
+    if( FIELD_CAMERA_CheckTrace( camera ) == TRUE ) {
+      FIELD_CAMERA_StopTraceRequest( camera );
+    }
     *seq = SEQ_WAIT_CAMERA_TRACE;
     break;
 
