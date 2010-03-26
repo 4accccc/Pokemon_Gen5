@@ -210,7 +210,7 @@
 
 #define WK_OTHER_SPORTS_EVENT            16656 /* 0x4110 ビッグスタジアム/リトルコート：種目判別用ワーク 戻り値は user_define.h を参照 */
 #define WK_OTHER_SYMMAP_POS              16657 /* 0x4111 シンボルマップでのPOSイベント制御用 */
-		/* not used 16658(0x4112) */
+#define WK_OTHER_T05_TRAIN               16658 /* 0x4112 T05カナワタウン：転車台に配置される車両の種類を格納するワーク */
 		/* not used 16659(0x4113) */
 		/* not used 16660(0x4114) */
 		/* not used 16661(0x4115) */
