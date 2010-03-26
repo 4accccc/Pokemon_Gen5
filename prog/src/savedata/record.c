@@ -21,15 +21,14 @@ typedef struct{
 }RECORD_CRC;
 
 struct RECORD{
-  u32 large_rec[LARGE_REC_NUM]; //(70+1)x4 byte = 284 byte
-  u16 small_rec[SMALL_REC_NUM]; //(51+26)x2 byte = 154 byte
-  u16 padding;
+  u32 large_rec[LARGE_REC_NUM]; //(70+1)x4 byte  = 284 byte
+  u16 small_rec[SMALL_REC_NUM]; //    96x2 byte  = 192 byte
   //これは必ず最後
   RECORD_CRC crc;   //CRC & 暗号化キー   4 byte
 };
 #ifdef _NITRO
 // 構造体が想定のサイズとなっているかチェック
-SDK_COMPILER_ASSERT(sizeof(RECORD) == 284+154+4+2); //+=プラチナ追加分
+SDK_COMPILER_ASSERT(sizeof(RECORD) == 284+192+4); // LARGE_REC_NUMx4 + SMALL_REC_NUMx2 + 4(CRC)
 #endif
 
 //==============================================================================
@@ -53,6 +52,7 @@ static void Record_Decoded(RECORD *rec, int id);
 int RECORD_GetWorkSize(void)
 {
   return sizeof(RECORD);
+  OS_Printf("record data size = %d\n", sizeof(RECORD));
 }
 
 //----------------------------------------------------------
@@ -66,7 +66,8 @@ void RECORD_Init(RECORD * rec)
   MI_CpuClear32(rec, sizeof(RECORD));
   
   rec->crc.coded_number = OS_GetVBlankCount() | (OS_GetVBlankCount() << 8);
-  Record_Coded(rec, RECID_REPORT_COUNT_EX);
+  Record_Coded(rec, RECID_REPORT_COUNT);
+  OS_Printf("record data size = %d\n", sizeof(RECORD));
   
 }
 
@@ -471,7 +472,7 @@ void RECORD_Score_DebugSet(RECORD * rec, const u32 inScore)
     score = SCORE_MAX;
   }
 
-  RECORD_Set(rec, RECID_REPORT_COUNT_EX, score);
+  RECORD_Set(rec, RECID_REPORT_COUNT, score);
 }
 
 #endif  //PM_DEBUG
