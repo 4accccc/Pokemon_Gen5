@@ -117,6 +117,7 @@ int GDSRAP_Init(GDS_RAP_WORK *gdsrap, const GDSRAP_INIT_DATA *init_data)
 	GFL_STD_MemClear(gdsrap, sizeof(GDS_RAP_WORK));
 	gdsrap->heap_id = init_data->heap_id;
 	gdsrap->gamedata = init_data->gamedata;
+	gdsrap->pSvl = init_data->pSvl;
 	gdsrap->response_callback = init_data->response_callback;
 	gdsrap->laststat = -1;
 	gdsrap->send_req = POKE_NET_GDS_REQCODE_LAST;
@@ -269,7 +270,7 @@ int GDSRAP_Tool_Send_BattleVideoUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp
     
     GF_ASSERT(gdsrap->p_nhttp == NULL);
     gdsrap->p_nhttp = NHTTP_RAP_Init( gdsrap->heap_id, 
-      MyStatus_GetProfileID( GAMEDATA_GetMyStatus(gdsrap->gamedata) ), &gdsrap->svl_result );
+      MyStatus_GetProfileID( GAMEDATA_GetMyStatus(gdsrap->gamedata) ), gdsrap->pSvl );
     
     //•s³ŒŸ¸—ÌˆæŠm•Û
     NHTTP_RAP_PokemonEvilCheckCreate( gdsrap->p_nhttp, gdsrap->heap_id, 

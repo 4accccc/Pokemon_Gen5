@@ -11,6 +11,7 @@
 
 #include "net_app/wifi_login.h"
 #include "net_app/wifi_logout.h"
+#include "net_app/gds/gds_test.h"
 #include "net_app/battle_recorder.h"
 
 
@@ -30,12 +31,16 @@ typedef struct{
 
   GFL_PROCSYS *proc_sys;
 
-	DWCSvlResult aSVL;
+	DWCSvlResult aSvl;
 	union{
     WIFILOGIN_PARAM login_param;
     WIFILOGOUT_PARAM logout_param;
     BATTLERECORDER_PARAM  br_param;
   };
+
+#ifdef PM_DEBUG
+  GDS_TEST_PARENT gds_test_parent;
+#endif
 }GDSPROC_MAIN_WORK;
 
 

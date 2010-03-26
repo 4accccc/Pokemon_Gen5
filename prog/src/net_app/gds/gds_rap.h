@@ -168,7 +168,6 @@ typedef struct _GDS_RECV_SUB_PROCCESS_WORK{
 ///GDSライブラリ、NitroDWCに近い関係のワークの構造体
 typedef struct _GDS_RAP_WORK{
 	GAMEDATA *gamedata;
-	SAVE_CONTROL_WORK *savedata;
 	
 	//アプリから渡される重要データ
 	POKE_NET_REQUESTCOMMON_AUTH pokenet_auth;
@@ -220,7 +219,7 @@ typedef struct _GDS_RAP_WORK{
   NHTTP_RAP_EVILCHECK_RESULT nhttp_last_error;    ///<認証エラー状態
   u8 error_poke_pos;        // 認証エラーが発生していたポケモン位置
   u8 error_nhttp;           // 認証取得そのものがエラー
-  DWCSvlResult svl_result;
+	DWCSvlResult *pSvl;       // Wi-Fi Login時に取得したSVLへのポインタ
 }GDS_RAP_WORK;
 
 
@@ -228,8 +227,9 @@ typedef struct _GDS_RAP_WORK{
 typedef struct{
 	int gs_profile_id;		///<GSプロファイルID
 	
-	int heap_id;
+	HEAPID heap_id;
 	GAMEDATA *gamedata;
+	DWCSvlResult *pSvl;   ///<Wi-Fi Login時に取得したSVLへのポインタ
 	
 	GDS_RAP_RESPONSE_CALLBACK response_callback;	///データ受信時のコールバック関数
 }GDSRAP_INIT_DATA;

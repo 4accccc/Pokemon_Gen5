@@ -14,6 +14,7 @@
 #include "musical\musical_define.h"
 #include "gamesystem/game_data.h"
 #include "musical/musical_debug.h"
+#include "gds_test.h"
 
 
 #ifdef PM_DEBUG //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -109,13 +110,13 @@ const GFL_PROC_DATA GdsTestMusicalAllProcData = {
 //--------------------------------------------------------------
 GFL_PROC_RESULT GdsTestProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-  GAMEDATA *gamedata = pwk;
+  GDS_TEST_PARENT *gtp = pwk;
   GDS_TEST_SYS *testsys;
   
   testsys = GFL_PROC_AllocWork(proc, sizeof(GDS_TEST_SYS), HEAPID_GDS_TEST );
   GFL_STD_MemClear(testsys, sizeof(GDS_TEST_SYS));
   
-  testsys->sv = GAMEDATA_GetSaveControlWork(gamedata);
+  testsys->sv = GAMEDATA_GetSaveControlWork(gtp->gamedata);
   
   testsys->gds_profile_ptr = GDS_Profile_AllocMemory(HEAPID_GDS_TEST);
   GDS_Profile_MyDataSet(testsys->gds_profile_ptr, testsys->sv);
@@ -136,7 +137,7 @@ GFL_PROC_RESULT GdsTestProc_Init( GFL_PROC * proc, int * seq, void * pwk, void *
 GFL_PROC_RESULT GdsTestProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   GDS_TEST_SYS *testsys = mywk;
-  GAMEDATA *gamedata = pwk;
+  GDS_TEST_PARENT *gtp = pwk;
   int ret;
   enum{
     SEQ_COMM_INIT,
@@ -151,9 +152,10 @@ GFL_PROC_RESULT GdsTestProc_Main( GFL_PROC * proc, int * seq, void * pwk, void *
     {
       GDSRAP_INIT_DATA init_data;
 
-      init_data.gs_profile_id = MyStatus_GetProfileID(GAMEDATA_GetMyStatus(gamedata));
+      init_data.gs_profile_id = MyStatus_GetProfileID(GAMEDATA_GetMyStatus(gtp->gamedata));
       init_data.heap_id = HEAPID_GDS_TEST;
-      init_data.gamedata = gamedata;
+      init_data.gamedata = gtp->gamedata;
+      init_data.pSvl = gtp->pSvl;
 
       init_data.response_callback.callback_work = testsys;
       init_data.response_callback.func_musicalshot_regist = Response_MusicalRegist;
@@ -198,7 +200,7 @@ GFL_PROC_RESULT GdsTestProc_Main( GFL_PROC * proc, int * seq, void * pwk, void *
 GFL_PROC_RESULT GdsTestMusicalAllProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   GDS_TEST_SYS * testsys  = mywk;
-  GAMEDATA *gamedata = pwk;
+  GDS_TEST_PARENT *gtp = pwk;
   int ret;
   enum{
     SEQ_COMM_INIT,
@@ -213,9 +215,10 @@ GFL_PROC_RESULT GdsTestMusicalAllProc_Main( GFL_PROC * proc, int * seq, void * p
     {
       GDSRAP_INIT_DATA init_data;
 
-      init_data.gs_profile_id = MyStatus_GetProfileID(GAMEDATA_GetMyStatus(gamedata));
+      init_data.gs_profile_id = MyStatus_GetProfileID(GAMEDATA_GetMyStatus(gtp->gamedata));
       init_data.heap_id = HEAPID_GDS_TEST;
-      init_data.gamedata = gamedata;
+      init_data.gamedata = gtp->gamedata;
+      init_data.pSvl = gtp->pSvl;
 
       init_data.response_callback.callback_work = testsys;
       init_data.response_callback.func_musicalshot_regist = Response_MusicalRegist;

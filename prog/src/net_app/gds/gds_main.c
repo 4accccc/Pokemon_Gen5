@@ -141,7 +141,7 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
       gmw->login_param.gamedata = gmw->proc_param->gamedata;
       gmw->login_param.bg       = WIFILOGIN_BG_NORMAL;
       gmw->login_param.display  = WIFILOGIN_DISPLAY_UP;
-      gmw->login_param.pSvl = &gmw->aSVL;
+      gmw->login_param.pSvl = &gmw->aSvl;
       gmw->login_param.mode = WIFILOGIN_MODE_NORMAL;
       GFL_PROC_LOCAL_CallProc(
         gmw->proc_sys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &gmw->login_param);
@@ -162,19 +162,18 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 	
 	case SEQ_BATTLE_RECORDER:	//バトルレコーダー(GDSモード)
 		{
-		#if 1 //※check 新バトルレコーダー用の呼び出しに変える 2009.11.09(月) 
-          //変えましたnagihashi
+		#if 1
       GFL_STD_MemClear( &gmw->br_param, sizeof(BATTLERECORDER_PARAM) );
       gmw->br_param.mode  = gmw->proc_param->gds_mode;
       gmw->br_param.p_gamedata  = gmw->proc_param->gamedata;
   		GFL_PROC_LOCAL_CallProc(
         gmw->proc_sys, FS_OVERLAY_ID(battle_recorder), &BattleRecorder_ProcData, &gmw->br_param);
 		#else
-
+		  gmw->gds_test_parent.gamedata = gmw->proc_param->gamedata;
+		  gmw->gds_test_parent.pSvl = &gmw->aSvl;
       GFL_OVERLAY_Load( FS_OVERLAY_ID(gds_comm) );
-
 		  GFL_PROC_LOCAL_CallProc(
-		    gmw->proc_sys, FS_OVERLAY_ID(gds_debug), &GdsTestProcData, gmw->proc_param->gamedata);
+		    gmw->proc_sys, FS_OVERLAY_ID(gds_debug), &GdsTestProcData, &gmw->gds_test_parent);
 
       GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_comm) );
 		#endif
