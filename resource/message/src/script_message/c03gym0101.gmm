@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T22:22:04"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T15:48:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,8 @@
 
 	<row id="msg_c03gym0101_leader_04" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♂
-・アイテム入手処理</comment>
+・アイテム入手処理
+　No403「むしのていこう」</comment>
 		<attribute name="キャラ指定">LEADER3</attribute>
 		<language name="JPN" width="256">ビートルバッジ
 かっこいいでしょ！[BE:01:ページ切り替え（クリア）]
@@ -396,27 +397,6 @@
 いまだに　発見が　あるんだ▼
 ほんと　世界は
 不思議で　満ちているんだー</language>
-	</row>
-
-	<row id="msg_c03gym0101_leader_07" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>msg_c03gym0101_leader_05
-表示後に再度会話したとき
-・トランシーバー持っていない</comment>
-		<attribute name="キャラ指定">LEADER3</attribute>
-		<language name="JPN" width="256">ところでさ
-この　まちの　バトルカンパニーに▽
-いってみたの？▼
-パレスって　ふしぎな　ばしょの
-けんきゅうを　していてさ▼
-なんだか　ちんみょうで　でも
-べんりな　どうぐが　もらえるってよ</language>
-		<language name="JPN_KANJI" width="256">ところでさ
-この街の　バトルカンパニーに▽
-行ってみたの？▼
-パレスって　不思議な　場所の
-研究を　していてさ▼
-なんだか　珍妙で　でも
-便利な　道具が　もらえるってよ</language>
 	</row>
 
 	<row id="msg_c03gym0101_jugglimg_05_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
