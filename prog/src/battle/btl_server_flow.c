@@ -9568,10 +9568,34 @@ static void scPut_AddSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, WazaSick 
     SCQUE_PUT_ACT_SickIcon( wk->que, pokeID, sick );
   }
 }
+/**
+ *  ó‘ÔˆÙí‰»‚ÌŽ¸”sŒ´ˆö‚ð•\Ž¦
+ */
 static void scPut_AddSickFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, BtlAddSickFailCode failCode, WazaSick sick )
 {
   u8 pokeID = BPP_GetID( target );
-  SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, pokeID );
+
+  switch( failCode ){
+  case BTL_ADDSICK_FAIL_ALREADY:
+    switch( sick ){
+    case WAZASICK_DOKU:   SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_DokuAlready, pokeID ); break;
+    case WAZASICK_YAKEDO: SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_YakedoAlready, pokeID ); break;
+    case WAZASICK_MAHI:   SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_MahiAlready, pokeID ); break;
+    case WAZASICK_NEMURI: SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NemuriAlready, pokeID ); break;
+    case WAZASICK_KOORI:  SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KoriAlready, pokeID ); break;
+
+    }
+    return;
+
+  case BTL_ADDSICK_FAIL_NO_EFFECT:
+    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, pokeID );
+    return;
+
+  default:
+    break;
+  }
+
+  SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
 }
 //--------------------------------------------------------------------------
 /**
