@@ -634,10 +634,10 @@ VMCMD_RESULT EvCmdGetWheelTrainerObjID( VMHANDLE *core, void *wk )
 	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
  
   static const u16 obj_tbl[] = {
-    GIRL4, BOY4,
-    GIRL2, WAITER,
-    OL, BUSINESSMAN,
-    TRAINERW, TRAINERM,
+    GIRL2, DANCER,
+    MOUNTMAN, TRAINERM,
+    OL, WAITRESS,
+    BABYGIRL2, BOY4,
   };
 	*ret_wk = obj_tbl[id];
 	return VMCMD_RESULT_CONTINUE;
@@ -657,10 +657,10 @@ VMCMD_RESULT EvCmdGetWheelTrainerTrID( VMHANDLE *core, void *wk )
 	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
   
   static const u16 trid_tbl[] = {
-    TRID_PRINCESS_05, TRID_PRINCE_05,
-    TRID_MINI_06, TRID_WAITER_03,
-    TRID_OL_04, TRID_BUSINESS1_06,
-    TRID_ELITEW_14,TRID_ELITEM_14,
+    TRID_MINI_06, TRID_DANCER_03,
+    TRID_MOUNT_13, TRID_ELITEM_14,
+    TRID_OL_04, TRID_WAITRESS_04,
+    TRID_KINDERGARTENW_05,TRID_PRINCE_05,
   };
 
 	*ret_wk = trid_tbl[id];
