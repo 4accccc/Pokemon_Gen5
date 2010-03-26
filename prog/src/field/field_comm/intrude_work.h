@@ -32,4 +32,5 @@ extern WFBC_COMM_DATA * Intrude_GetWfbcCommData(INTRUDE_COMM_SYS_PTR intcomm);
 extern u8 Intrude_GetRomVersion(GAME_COMM_SYS_PTR game_comm);
 extern u8 Intrude_GetSeasonID(GAME_COMM_SYS_PTR game_comm);
 extern BOOL Intrude_CheckNextPalaceAreaMine(GAME_COMM_SYS_PTR game_comm, const GAMEDATA *gamedata, u16 dir);
+extern BOOL Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, const GAMEDATA *gamedata);
 

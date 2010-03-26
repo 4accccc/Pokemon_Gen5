@@ -8,6 +8,7 @@
 //==============================================================================
 #include <gflib.h>
 #include "system/main.h"
+#include "gamesystem/game_data.h"
 #include "gamesystem/game_comm.h"
 #include "savedata/mystatus.h"
 #include "system/net_err.h"
@@ -20,6 +21,8 @@
 #include "intrude_main.h"
 #include "bingo_types.h"
 #include "intrude_work.h"
+#include "field/field_status.h"
+#include "field/field_status_local.h"
 
 
 //==================================================================
@@ -370,4 +373,16 @@ BOOL Intrude_CheckNextPalaceAreaMine(GAME_COMM_SYS_PTR game_comm, const GAMEDATA
 //==================================================================
 BOOL Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, const GAMEDATA *gamedata)
 {
+  u8 invasion_netid;
+  
+  if (FIELD_STATUS_GetMapMode( GAMEDATA_GetFieldStatus( gamedata) ) != MAPMODE_INTRUDE ) {
+    return FALSE;
+  }
+  
+  invasion_netid = GameCommStatus_GetPlayerStatus_InvasionNetID(game_comm, GAMEDATA_GetIntrudeMyID(gamedata));
+  if(invasion_netid == GAMEDATA_GetIntrudeMyID(gamedata)){
+    return FALSE;
+  }
+  
+  return TRUE;
 }
