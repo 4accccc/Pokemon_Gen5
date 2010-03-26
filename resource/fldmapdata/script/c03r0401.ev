@@ -79,13 +79,11 @@ EVENT_START	ev_c03r0401_boy1_01
       _BALLOONWIN_OBJMSG_POS( msg_c03r0401_girl1_07 ,C03R0401_GIRL1_01, POS_DR)
       _BALLOONWIN_CLOSE()
 
-      //セレビィ戻す
-      _CALL ball_in
-
+      //セレビィ横に
+      _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_sereby_move )
       //自機を前進
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_front )
       _OBJ_ANIME_WAIT()
-
       //イベントセレビィお役御免(イベントアフターフラグを立てる)
       _SET_EVT_POKE_AFT_FLG( MONSNO_SEREBHI, poke_pos )
 
@@ -95,6 +93,8 @@ EVENT_START	ev_c03r0401_boy1_01
       //仲間にする処理
       _CALL add_zoroa
 
+      //セレビィ戻す
+      _CALL ball_in
     ELSE                          //セレビィいない
       //「・・・」
     _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy1_01 )
@@ -152,7 +152,13 @@ ball_out:
 _RET
 
 ball_in:
-  _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 4, 3, 7 )
+  //自機右向き
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_right )
+  //セレビィ左向き
+  _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_left )
+  _OBJ_ANIME_WAIT()
+
+  _START_BALL_ANM( SCR_BALL_ANM_TYPE_IN, 5, 3, 7 )
   //ポケ非表示フレーム待ち
   _WAIT_BALL_POKE_APP( SCR_BALL_ANM_TYPE_IN )
   _DISP_FADE_START(DISP_FADE_WHITEOUT,0,16,0)
@@ -162,7 +168,7 @@ ball_in:
   _DISP_FADE_START(DISP_FADE_WHITEOUT,16,0,0)
   _DISP_FADE_END_CHECK()
   _WAIT_BALL_ANM( SCR_BALL_ANM_TYPE_IN )
-  _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 4, 3, 7, 3, 8 )
+  _MOVE_BALL( SCR_BALL_ANM_TYPE_IN, 5, 3, 7, 3, 8 )
 _RET
 
 zoroa_ball_in:
@@ -219,6 +225,12 @@ add_zoroa:
   /*＝＝以降は仲間にできる場合の処理＝＝*/
   $loop = TRUE
   WHILE $loop == TRUE
+  //女の子下向く
+  _OBJ_ANIME( C03R0401_GIRL1_01, anm_dir_down )
+  _OBJ_ANIME_WAIT()
+  //「ゾロアはつれていってほしい」
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0401_girl1_08 ,C03R0401_GIRL1_01, POS_DR)
+  _BALLOONWIN_CLOSE()
   {
     //「仲間にしますか？」
     _SYSWIN_MSG( msg_c03r0401_narrator_01, POS_DOWN )
@@ -345,7 +357,6 @@ ques_have_ball:
   
   //「ボールある？」
   _BALLOONWIN_OBJMSG( msg, C03R0401_GIRL1_01  )
-  _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
 }
 _RET
@@ -551,6 +562,39 @@ _ANIME_LABEL	anm_girl_bye
   _ANIME_DATA	AC_WALK_R_8F,2
   _ANIME_DATA	AC_WALK_D_8F,6
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//セレビィ横に
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_sereby_move
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//左向く　足踏み付き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_left
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//右向く　足踏み付き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_right
+  _ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//下向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_down
+  _ANIME_DATA	AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+  
+  
+
+
   
 
 
