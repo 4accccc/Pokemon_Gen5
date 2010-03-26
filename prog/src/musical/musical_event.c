@@ -182,9 +182,16 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
   evWork->scriptWork = scriptWork;
   evWork->scriptWork->eventWork = evWork;
   evWork->commWork = scriptWork->commWork;
-  //FIXME ‰¼¶¬ˆ—
-  evWork->pokePara = PP_Create(
-      MONSNO_MUNNA , 20, PTL_SETUP_POW_AUTO , HEAPID_PROC );
+  
+  {
+    STRBUF *str = GFL_STR_CreateBuffer( SAVELEN_POKEMON_NAME+EOM_SIZE , HEAPID_PROC_WRAPPER );
+    POKEPARTY *party = GAMEDATA_GetMyPokemon( evWork->gameData );
+    evWork->pokePara = PokeParty_GetMemberPointer( party , pokeIdx );
+    //ƒr[ƒRƒ“ˆ—
+    PP_Get( evWork->pokePara , ID_PARA_nickname , str );
+    GAMEBEACON_Set_Musical( str );
+    GFL_STR_DeleteBuffer( str );
+  }
 
   evWork->dupInitWork = NULL;
   evWork->actInitWork = NULL;
@@ -454,8 +461,6 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     break;
   
   case MES_FINIHS_EVENT:
-    //FIXME ‰¼¶¬ˆ—
-    GFL_HEAP_FreeMemory( evWork->pokePara );
     GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_PROC );
     GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STRM );
     return GMEVENT_RES_FINISH;
