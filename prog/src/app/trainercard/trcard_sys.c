@@ -487,7 +487,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     cardData->TimeUpdate  = TRUE;
     cardData->PlayTime    = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(gameData) );
     cardData->Personality = TRCSave_GetPersonarity(  trc_ptr );
-//    TRCSave_GetPmsData( trc_ptr, &cardData->Pms );
+    cardData->SignAnimeOn = TRCSave_GetSignAnime(  trc_ptr );
     MYPMS_GetPms( p_wk, MYPMS_PMS_TYPE_INTRODUCTION, &cardData->Pms );
 
   }

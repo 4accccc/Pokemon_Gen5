@@ -430,7 +430,7 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
                                                                             // ボリューム指定しているので、
                                                                             // 許可bitをISSに教えてもらう必要がある
 
-  WIPE_SYS_Start( WIPE_PATTERN_FSAM, WIPE_TYPE_SHUTTERIN_DOWN,
+  WIPE_SYS_Start( WIPE_PATTERN_FMAS, WIPE_TYPE_SHUTTERIN_DOWN,
           WIPE_TYPE_SHUTTERIN_DOWN, WIPE_FADE_BLACK,
           WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
 
@@ -602,14 +602,14 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
     }
     break;
   case SEQ_PMSINPUT:  //簡易会話処理を呼ぶ
-    WIPE_SYS_Start( WIPE_PATTERN_FMAS, WIPE_TYPE_SHUTTEROUT_UP,
+    WIPE_SYS_Start( WIPE_PATTERN_FSAM, WIPE_TYPE_SHUTTEROUT_UP,
             WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
             WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
     wk->tcp->value = CALL_PMSINPUT;
     *seq = SEQ_OUT;
     break;
-  case SEQ_BADGE_VIEW_CALL: //サイン処理を呼び出すか？
-    WIPE_SYS_Start( WIPE_PATTERN_FMAS, WIPE_TYPE_SHUTTEROUT_UP,
+  case SEQ_BADGE_VIEW_CALL: // バッジ画面遷移
+    WIPE_SYS_Start( WIPE_PATTERN_FSAM, WIPE_TYPE_SHUTTEROUT_UP,
             WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
             WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
     wk->tcp->value = CALL_BADGE;
@@ -665,6 +665,7 @@ GFL_PROC_RESULT TrCardProc_End( GFL_PROC * proc, int * seq , void *pwk, void *my
     OS_Printf("見た目を%dに、性格を%dに変更\n", wk->TrCardData->UnionTrNo,wk->TrCardData->Personality);
     MyStatus_SetTrainerView( my, wk->TrCardData->UnionTrNo );
     TRCSave_SetPersonarity(  tr, wk->TrCardData->Personality );
+    TRCSave_SetSignAnime(    tr, wk->TrCardData->SignAnimeOn );
   }
 
 
@@ -2121,7 +2122,7 @@ static void JumpInputResult( TR_CARD_WORK *wk, int req, int *seq )
   // 通常終了
   case TRC_KEY_REQ_END_BUTTON:
     SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BACK,ANMS_BACK_ON,TRUE);
-    WIPE_SYS_Start( WIPE_PATTERN_FMAS, WIPE_TYPE_SHUTTEROUT_UP,
+    WIPE_SYS_Start( WIPE_PATTERN_FSAM, WIPE_TYPE_SHUTTEROUT_UP,
             WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
             WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
     *seq = SEQ_OUT;
@@ -2137,7 +2138,7 @@ static void JumpInputResult( TR_CARD_WORK *wk, int req, int *seq )
   // 性格切り替え
   case TRC_KEY_REQ_PERSONALITY:
     if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
-      if(++wk->TrCardData->Personality>24){
+      if(++wk->TrCardData->Personality>(TRCARD_PERSONARITY_MAX-1)){
         wk->TrCardData->Personality = 0;
       }
       TRCBmp_PrintPersonality( wk, wk->TrCardData->Personality, 1 );
