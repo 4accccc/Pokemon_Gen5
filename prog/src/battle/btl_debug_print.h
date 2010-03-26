@@ -83,6 +83,7 @@ typedef enum {
   DBGSTR_MAIN_RecvedMultiAITrainer,
   DBGSTR_MAIN_GetFrontPokeData,
   DBGSTR_MAIN_GetFrontPokeDataResult,
+  DBGSTR_MAIN_CommError,
 
   DBGSTR_NET_Startup,
   DBGSTR_NET_DecideClientID,
@@ -212,6 +213,10 @@ typedef enum {
   DBGSTR_EV_LinkEmpty,
   DBGSTR_EVAR_Push,
   DBGSTR_EVAR_Pop,
+
+  DBGSTR_SIDE_AddFirst,
+  DBGSTR_SIDE_NoMoreAdd,
+
 
   DBGSTR_POKESET_RemoveDeadPoke,
 

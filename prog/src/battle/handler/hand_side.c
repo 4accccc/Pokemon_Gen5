@@ -34,9 +34,8 @@ typedef struct {
 
   BTL_EVENT_FACTOR*  factor;      ///< 本体ハンドラ
   BPP_SICK_CONT  contParam;       ///< 継続パラメータ
-  u16            turn_counter;    ///< ターン数カウンタ
-  u8             add_counter;     ///< 重ねがけカウンタ
-  u8             enableFlag;      ///< 稼働中フラグ
+  u32            turn_counter;    ///< ターン数カウンタ
+  u32            add_counter;     ///< 重ねがけカウンタ
 
 }EXIST_EFFECT;
 
@@ -139,7 +138,9 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_SIDE_Add( BtlSide side, BtlSideEffect sideEffect,
     {
       if( funcTbl[i].eff == sideEffect )
       {
-        if( ExistEffect[ side ][ sideEffect ].add_counter == 0 )
+        EXIST_EFFECT* effParam = &ExistEffect[ side ][ sideEffect ];
+
+        if( effParam->add_counter == 0 )
         {
           const BtlEventHandlerTable* handlerTable;
           u32 numHandlers;
@@ -148,16 +149,21 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_SIDE_Add( BtlSide side, BtlSideEffect sideEffect,
           factor = BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, sideEffect, 0, side, handlerTable, numHandlers );
 
           BTL_EVENT_FACTOR_SetWorkValue( factor, WORKIDX_CONT, contParam.raw );
-          ExistEffect[ side ][ sideEffect ].add_counter = 1;
-          ExistEffect[ side ][ sideEffect ].turn_counter = 0;
-          ExistEffect[ side ][ sideEffect ].contParam = contParam;
-          ExistEffect[ side ][ sideEffect ].factor = factor;
+          effParam->add_counter = 1;
+          BTL_N_Printf( DBGSTR_SIDE_AddFirst, side, sideEffect, &(effParam->add_counter), effParam->add_counter );
+          effParam->turn_counter = 0;
+          effParam->contParam = contParam;
+          effParam->factor = factor;
+
           return factor;
         }
-        else if( ExistEffect[ side ][ sideEffect ].add_counter < funcTbl[i].add_max )
+        else if( effParam->add_counter < funcTbl[i].add_max )
         {
-          ExistEffect[ side ][ sideEffect ].add_counter++;
-          return ExistEffect[ side ][ sideEffect ].factor;
+          effParam->add_counter++;
+          return effParam->factor;
+        }
+        else{
+          BTL_N_Printf( DBGSTR_SIDE_NoMoreAdd, side, sideEffect );
         }
       }
     }

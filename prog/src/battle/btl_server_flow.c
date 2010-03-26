@@ -7892,7 +7892,7 @@ static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
         }
       }
 
-      if( result == HandExResult_NULL ){
+      if( (result == HandExResult_NULL) || (result == HandExResult_Fail) ){
         SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
       }
 

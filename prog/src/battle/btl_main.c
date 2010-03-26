@@ -1717,6 +1717,7 @@ static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
 {
   if( BTL_NET_CheckError() )
   {
+    BTL_N_Printf( DBGSTR_MAIN_CommError );
     wk->fCommError = TRUE;
     return TRUE;
   }

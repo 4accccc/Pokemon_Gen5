@@ -73,6 +73,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_MAIN_SendAIPartyParam:         return "AI Client=%d パーティ送信完了（ポケ数=%d\n";
   case DBGSTR_MAIN_GetFrontPokeData:         return "戦闘位置[%d] のポケモン... ";
   case DBGSTR_MAIN_GetFrontPokeDataResult:   return "    クライアント[%d]の %d 番目のポケを返す\n";
+  case DBGSTR_MAIN_CommError:                return "通信エラーによる終了\n";
 
   case DBGSTR_CLIENT_RETURN_CMD_START:       return "ID[%d], 返信開始へ\n";
   case DBGSTR_CLIENT_RETURN_CMD_DONE:        return "ID[%d], 返信しました\n";
@@ -261,6 +262,9 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_EVAR_Pop:                 return "Pop! [%5d] SP=%d\n";
   case DBGSTR_DEADREC_Add:              return " 死亡記録 ターン%d件目 ... pokeID=%d\n";
   case DBGSTR_POKESET_RemoveDeadPoke:   return "ポケ(%d) 死んだのでセットから除外\n";
+
+  case DBGSTR_SIDE_AddFirst:            return "サイドエフェクト初回登録 side=%d, eff=%d, pCnt=%p, cnt=%d\n";
+  case DBGSTR_SIDE_NoMoreAdd:           return "サイドエフェクトこれ以上登録できない side=%d, eff=%d\n";
 
   case DBGSTR_SCU_RelivePokeAct:        return "Pos[%d]=Vpos[%d] ポケ(%d)が生き返り\n";
   case DBGSTR_Item_PinchReactItem:      return "PokeID=%d, 最大HP=%d, 現HP=%d, n=%d ... ";
