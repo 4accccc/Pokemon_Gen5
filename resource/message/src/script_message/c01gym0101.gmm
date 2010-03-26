@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-23T22:20:41"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T14:41:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -467,7 +467,7 @@
 オレさまと　遊ぼうぜ！！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c01gym0101_leader1_20b" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_c01gym0101_leader1_20b" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
 		<comment>♂
 ・leader1_05c表示後に会話
 ・戦闘前メッセージ</comment>
@@ -475,8 +475,8 @@
 コーン（水）</attribute>
 		<language name="JPN" width="256">よかったね！　３にんの
 トップと　たたかうことが　できて[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">よかったね！　３にんの
-トップと　たたかうことが　できて[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">よかったね！　３人の
+トップと　戦うことが　できて[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c01gym0101_leader1_20c" text-color="#008000,,,#008000,,#008000,#008000,,,,,,#008000,,,,,,">
