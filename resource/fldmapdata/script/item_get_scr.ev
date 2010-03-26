@@ -199,21 +199,24 @@ ev_item_event_field_core:
   $SCWK_TEMP0 = $SCWK_PARAM0
   $SCWK_TEMP1 = $SCWK_PARAM1
 
-  _CALL sub_pocket_me_set
-  _TIME_WAIT( ITEM_GET_FORM_TIMING )
-  _CALL sub_item_get_player_form_anime_set
-
   _ADD_ITEM_CHK( SCWK_PARAM0, SCWK_PARAM1, i_get)
-  _CALL sub_item_event_get_field_msg
-  _ME_WAIT()
-  _OBJ_ANIME_WAIT()
-  _CALL sub_item_get_player_form_return
-
   _DEBUG_PRINT_WK( i_get )
+
   IF $i_get == FALSE THEN
+    _CALL sub_pocket_me_set
+    _CALL sub_item_event_get_field_msg
+    _ME_WAIT()
     //入手失敗システムメッセージ
     _CALL   sub_item_event_fail_nowait
   ELSE
+    _CALL sub_pocket_me_set
+    _TIME_WAIT( ITEM_GET_FORM_TIMING )
+    _CALL sub_item_get_player_form_anime_set
+    _CALL sub_item_event_get_field_msg
+    _ME_WAIT()
+    _OBJ_ANIME_WAIT()
+    _CALL sub_item_get_player_form_return
+
     //アイテム追加
     _ADD_ITEM( SCWK_PARAM0,SCWK_PARAM1,SCWK_ANSWER )
     _BEACON_SET_REQ_ITEM_GET( SCWK_PARAM0 ) 
