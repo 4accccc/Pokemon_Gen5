@@ -193,7 +193,8 @@ void NetErr_Main(void)
   if(NetErrSystem.status == NET_ERR_STATUS_NULL && GFL_NET_IsInit() == TRUE){
     if(GFL_NET_GetErrorCode() || GFL_NET_SystemIsError() || (GFL_NET_StateGetError()!=0)){
       //GFL_NET_StateGetWifiErrorNo();  これはエラー情報の取得だけに使用する
-      OS_TPrintf("NetErr エラー発生\n");
+      OS_TPrintf("NetErr エラー発生 %d %d %d\n", 
+        GFL_NET_GetErrorCode(), GFL_NET_SystemIsError(), GFL_NET_StateGetError());
       GFL_NET_DeleteInitializeCallback();
       NetErr_ErrorSet();
 
