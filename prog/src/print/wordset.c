@@ -914,6 +914,8 @@ void WORDSET_RegisterJobName( WORDSET* wordset, u32 bufID, u8 jobID )
  * @param rank    トライアルハウスのランク
  */
 //------------------------------------------------------------------
+//マルチブート用きり分け  (MB子機ではARCID_SCRIPT_MESSAGE無いので通らないようにします Ariizumi100326
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 void WORDSET_RegisterTrialHouseRank( WORDSET* wordset, u32 bufID, u8 rank )
 {
   GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
@@ -935,7 +937,7 @@ void WORDSET_RegisterTrialHouseRank( WORDSET* wordset, u32 bufID, u8 rank )
     GFL_MSG_Delete( msg );
   }
 }
-
+#endif //MULTI_BOOT_MAKE
 
 
 

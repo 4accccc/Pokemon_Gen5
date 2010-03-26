@@ -26,7 +26,9 @@
 #include "msg/script/msg_common_scr.h"
   //talkmsgwin—p‚Éfield‚ð“Ç‚Þ
   FS_EXTERN_OVERLAY(fieldmap);
+#define MB_TYPE_POKE_SHIFTER
 #endif //MULTI_BOOT_MAKE
+
 
 //======================================================================
 //	define
