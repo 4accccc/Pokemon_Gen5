@@ -230,8 +230,8 @@ static void Setup(FACEUP_WK_PTR ptr)
   //プライオリティ
   GFL_BG_SetPriority( GFL_BG_FRAME0_M, 3 );
   GFL_BG_SetPriority( GFL_BG_FRAME1_M, 0 );
-  GFL_BG_SetPriority( GFL_BG_FRAME2_M, 1 );
-  GFL_BG_SetPriority( GFL_BG_FRAME3_M, 2 );
+  GFL_BG_SetPriority( GFL_BG_FRAME2_M, 2 );
+  GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
 
   //表示
   GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
