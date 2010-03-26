@@ -46,7 +46,7 @@ static const u8 INFOWIN_GPFSYNC_CHR_Y = INFOWIN_LINE_CHRNUM*2;
 
 static const u8 INFOWIN_TIME_DRAW_X = 1;
 static const u8 INFOWIN_TIME_DRAW_WIDTH = 5;
-static const u8 INFOWIN_AMPM_DRAW_X = 7;
+static const u8 INFOWIN_AMPM_DRAW_X = 6;
 static const u8 INFOWIN_AMPM_DRAW_WIDTH = 2;
 
 static const u8 INFOWIN_GPFSYNC_DRAW_X = 10;
@@ -411,12 +411,21 @@ static  void  INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
     u8 i;
     u16 scrData[2][5];
     u16 scrDataAmPm[2][2];
-    scrData[0][0] = INFOWIN_CALC_NUM_SCR( infoWk->hour/10,infoWk->pltNo)+infoWk->ncgPos;
+    //Žž
+    if( infoWk->hour<10 )
+    {
+      scrData[0][0] = INFOWIN_BLANK_CHR_UP + (infoWk->pltNo<<12)+infoWk->ncgPos;
+      scrData[1][0] = INFOWIN_BLANK_CHR_DOWN + (infoWk->pltNo<<12)+infoWk->ncgPos;
+    }
+    else
+    {
+      scrData[0][0] = INFOWIN_CALC_NUM_SCR( infoWk->hour/10,infoWk->pltNo)+infoWk->ncgPos;
+      scrData[1][0] = scrData[0][0] + INFOWIN_LINE_CHRNUM;
+    }
     scrData[0][1] = INFOWIN_CALC_NUM_SCR( infoWk->hour%10,infoWk->pltNo)+infoWk->ncgPos;
     scrData[0][2] = (infoWk->isDispColon?INFOWIN_COLONCHR:INFOWIN_BLANK_CHR_UP) + (infoWk->pltNo<<12)+infoWk->ncgPos;
     scrData[0][3] = INFOWIN_CALC_NUM_SCR( infoWk->min/10,infoWk->pltNo)+infoWk->ncgPos;
     scrData[0][4] = INFOWIN_CALC_NUM_SCR( infoWk->min%10,infoWk->pltNo)+infoWk->ncgPos;
-    scrData[1][0] = scrData[0][0] + INFOWIN_LINE_CHRNUM;
     scrData[1][1] = scrData[0][1] + INFOWIN_LINE_CHRNUM;
     scrData[1][2] = (infoWk->isDispColon?INFOWIN_COLONCHR+INFOWIN_LINE_CHRNUM:INFOWIN_BLANK_CHR_DOWN) + (infoWk->pltNo<<12)+infoWk->ncgPos;
     scrData[1][3] = scrData[0][3] + INFOWIN_LINE_CHRNUM;
