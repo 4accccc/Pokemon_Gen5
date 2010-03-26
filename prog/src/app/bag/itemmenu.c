@@ -1812,13 +1812,13 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   {
 		int	oldpocket = pWork->pocketno;
 
-		if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){
+		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
 			pWork->pocketno++;
 			if( pWork->pocketno >= BAG_POKE_MAX ){
 				pWork->pocketno = 0;
 			}
 			GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_RIGHT], APP_COMMON_BARICON_CURSOR_RIGHT_ON );
-		}else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){
+		}else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
       pWork->pocketno--;
 			if( pWork->pocketno < 0 ){
 				pWork->pocketno = BAG_POKE_MAX-1;

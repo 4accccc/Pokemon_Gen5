@@ -1619,6 +1619,7 @@ void ITEMDISP_InitPocketCell( FIELD_ITEMMENU_WORK* pWork )
 													pWork->cellRes[_PLT_BAGPOCKET],
 													pWork->cellRes[_ANM_BAGPOCKET],
 													&dat, CLSYS_DEFREND_MAIN, pWork->heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkBag[i], TRUE );
 	}
 }
 
