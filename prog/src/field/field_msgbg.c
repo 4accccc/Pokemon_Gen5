@@ -65,6 +65,7 @@
 #define AUTO_MSG_WAIT      ( MSGSPEED_NORMAL ) ///<自動時のメッセージスピード
 #define AUTO_MSG_KEY_WAIT  ( 50 ) ///<キーウエイト
 
+#define GIZA_SHAKE_Y (8) ///<ギザウィンドウ初期揺れ幅
 
 //--------------------------------------------------------------
 //  メッセージウィンドウ、キャラオフセット
@@ -2578,8 +2579,6 @@ GFL_BMPWIN * FLDSYSWIN_STREAM_GetBmpWin( FLDSYSWIN_STREAM *sysWin )
 //======================================================================
 //  FLDTALKMSGWIN
 //======================================================================
-#define GIZA_SHAKE_Y (8)
-
 //--------------------------------------------------------------
 /// FLDTALKMSGWIN
 //--------------------------------------------------------------
@@ -2903,6 +2902,9 @@ struct _TAG_FLDPLAINMSGWIN
   GFL_BMPWIN *bmpwin;
   FLDMSGPRINT_STREAM *msgPrintStream;
   FLDMSGPRINT *msgPrint;
+  
+  s16 shake_y;
+  u8 padding[2];
 };
 
 /*
@@ -2970,6 +2972,11 @@ FLDPLAINMSGWIN * FLDPLAINMSGWIN_Add(
           FLDMSGBG_STRLEN, fmb->heapID );
   fldPlainMsgWin_Add( fmb, plnwin, bmppos_x, bmppos_y,
       bmpsize_x, bmpsize_y, type );
+  
+  if( type == TALKMSGWIN_TYPE_GIZA ){
+    plnwin->shake_y = GIZA_SHAKE_Y;
+  }
+  
   return( plnwin );
 }
 
@@ -3175,6 +3182,21 @@ BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin )
   cont = GFL_UI_KEY_GetCont();
   state = fldMsgPrintStream_ProcPrint( plnwin->msgPrintStream );
   
+  { //shake
+    GFL_BG_SetScroll(
+        FLDMSGBG_BGFRAME, GFL_BG_SCROLL_Y_SET, plnwin->shake_y );
+    
+    if( plnwin->shake_y < 0 ){
+      plnwin->shake_y += 2;
+      
+      if( plnwin->shake_y > 0 ){
+        plnwin->shake_y = 0;
+      }
+    }
+    
+    plnwin->shake_y = -plnwin->shake_y;
+  }
+  
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
     if( FLDKEYWAITCURSOR_GetState(&plnwin->cursor_work) == CURSOR_STATE_WRITE ){
@@ -3191,6 +3213,11 @@ BOOL FLDPLAINMSGWIN_PrintStream( FLDPLAINMSGWIN *plnwin )
     }
     break;
   case PRINTSTREAM_STATE_DONE: //終了
+    if( plnwin->shake_y ){ //shake
+      plnwin->shake_y = 0;
+      GFL_BG_SetScroll(
+          FLDMSGBG_BGFRAME, GFL_BG_SCROLL_Y_SET, plnwin->shake_y );
+    }
     return( TRUE );
   }
   
