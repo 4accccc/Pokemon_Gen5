@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-25T15:48:14"/>
+	<create user="ohmori" host="W00223" date="2010-03-26T16:34:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="958" top="60" right="1709" bottom="1081" maximized="no" rayout="Vertical2">
+	<dialog left="1257" top="32" right="1920" bottom="1053" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="576"/>
+		<band id="0" index="1" style="0000" width="488"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="416"/>
-		<band id="4" index="0" style="0000" width="743"/>
+		<band id="3" index="4" style="0000" width="328"/>
+		<band id="4" index="0" style="0000" width="655"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -746,9 +746,148 @@ plc_girl4_02_06,7,8</comment>
 	</row>
 
 	<row id="plc_oldman1_02_01">
-		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
+		<comment>ハイリンクの老人2：初回メッセージ</comment>
+		<attribute name="キャラ指定">OLDMAN1：
+(侵入先）</attribute>
+		<language name="JPN" width="256">おお　よくきたな……
+ここは　おぬしがいた　せかいとは▽
+ことなる　たにんのせかい▼
+ここで　おぬしは　だれかを
+たすけることになる▼
+さあ　そのハイルツリーに　ふれ
+ミッションを　うけるのだ▼</language>
+		<language name="JPN_KANJI" width="256">おお　よくきたな
+ここは　おぬしがいた　せかいとは▽
+ことなる　たにんのせかい▼
+ここで　おぬしは　だれかを
+たすけることになる▼
+さあ　そのハイルツリーに　ふれ
+ミッションを　うけるのだ▼</language>
+	</row>
+
+	<row id="plc_oldman1_02_02">
+		<comment>ハイリンクの老人2：分岐メッセージ
+選択肢表示、plc_oldman1_02_07,8,9</comment>
+		<attribute name="キャラ指定">OLDMAN1：
+(侵入先）</attribute>
+		<language name="JPN" width="256">さて　こどもよ　たにんのせかい　に
+ついて　ききたいことは　あるかな？</language>
+		<language name="JPN_KANJI" width="256">さて　こどもよ　たにんのせかい　に
+ついて　ききたいことは　あるかな？</language>
+	</row>
+
+	<row id="plc_oldman1_02_03">
+		<comment>ハイリンクの老人2：会話終了</comment>
+		<attribute name="キャラ指定">OLDMAN1：
+(侵入先）</attribute>
+		<language name="JPN" width="256">おぬしは　ひとりではない
+むすうのせかいを　かんじるのだ</language>
+		<language name="JPN_KANJI" width="256">おぬしは　ひとりではない
+むすうのせかいを　かんじるのだ</language>
+	</row>
+
+	<row id="plc_oldman1_02_04">
+		<comment>ハイリンクの老人2：２回目メッセージ</comment>
+		<attribute name="キャラ指定">OLDMAN1：
+(侵入先）</attribute>
+		<language name="JPN" width="256">みな　じぶんのせかいを
+もっている▼
+むすうのせかいは　つながり
+ひとつのせかいと　なるのだ▼</language>
+		<language name="JPN_KANJI" width="256">みな　じぶんのせかいを
+もっている▼
+むすうのせかいは　つながり
+ひとつのせかいと　なるのだ▼</language>
+	</row>
+
+	<row id="plc_oldman1_02_05">
+		<comment>ハイリンクの老人2：ツリーとは？</comment>
+		<attribute name="キャラ指定">OLDMAN1：
+(侵入先）</attribute>
+		<language name="JPN" width="256">ここは　おぬしの　しっている
+せかいとは　ことなる▽
+「たにんのせかい」だ▼
+ここには　おぬしと　おなじように
+ぼうけんを　つづける　こどもがいる▼
+……おぬしが　このせかいに
+これたと　いうことは▽
+おぬしの　ちからで▼
+その　こどもの　うんめいを
+かえることが　できる　ということだ▼
+さあ　ハイルツリーから
+ミッションを　うけとり▼
+その　こどもの　いるばしょへ
+ワープするのだ▼</language>
+		<language name="JPN_KANJI" width="256">ここは　おぬしの　しっている
+せかいとは　ことなる▽
+「たにんのせかい」だ▼
+ここには　おぬしと　おなじように
+ぼうけんを　つづける　こどもがいる▼
+……おぬしが　このせかいに
+これたと　いうことは▽
+おぬしの　ちからで▼
+その　こどもの　うんめいを
+かえることが　できる　ということだ▼
+さあ　ハイルツリーから
+ミッションを　うけとり▼
+その　こどもの　いるばしょへ
+ワープするのだ▼</language>
+	</row>
+
+	<row id="plc_oldman1_02_06">
+		<comment>ハイリンクの老人2：デルパワーとは？</comment>
+		<attribute name="キャラ指定">OLDMAN1：
+(侵入先）</attribute>
+		<language name="JPN" width="256">ここ　たにんのせかい　では
+ちずにふれて　イメージすることで▽
+じゆうに　「ワープ」することができる▼
+……このせかいは　おぬしの
+イメージで　できているのだ▼
+おぬしが　イメージできれば
+そこに　ワープすることが　できる▼
+……ただし　おぬしの
+いったことのない　ばしょは▽
+うまく　イメージができず▽
+もやが　かかったように　みえるだろう▼
+さあ　ミッションを　うけとり
+ちずにふれ　ねがうのだ▼</language>
+		<language name="JPN_KANJI" width="256">ここ　たにんのせかい　では
+ちずにふれて　イメージすることで▽
+じゆうに　「ワープ」することができる▼
+……このせかいは　おぬしの
+イメージで　できているのだ▼
+おぬしが　イメージできれば
+そこに　ワープすることが　できる▼
+……ただし　おぬしの
+いったことのない　ばしょは▽
+うまく　イメージができず▽
+もやが　かかったように　みえるだろう▼
+さあ　ミッションを　うけとり
+ちずにふれ　ねがうのだ▼</language>
+	</row>
+
+	<row id="plc_oldman1_02_07">
+		<comment>ハイリンクの老人2：ツリーとは？選択肢</comment>
+		<attribute name="キャラ指定">OLDMAN1：
+(侵入先）</attribute>
+		<language name="JPN" width="256">たにんのせかい　とは？</language>
+		<language name="JPN_KANJI" width="256">たにんのせかい　とは？</language>
+	</row>
+
+	<row id="plc_oldman1_02_08">
+		<comment>ハイリンクの老人2：デルパワーとは？選択肢</comment>
+		<attribute name="キャラ指定">OLDMAN1：
+(侵入先）</attribute>
+		<language name="JPN" width="256">ワープ　とは？</language>
+		<language name="JPN_KANJI" width="256">ワープ　とは？</language>
+	</row>
+
+	<row id="plc_oldman1_02_09">
+		<comment>ハイリンクの老人2：やめる、選択肢</comment>
+		<attribute name="キャラ指定">OLDMAN1：
+(侵入先）</attribute>
+		<language name="JPN" width="256">やめる</language>
+		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
 	<flowchart-group-list>
