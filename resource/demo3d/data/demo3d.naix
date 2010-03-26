@@ -71,8 +71,12 @@ enum {
 	NARC_data_demo3d_riza_bridge_02_nsbmd = 57,
 	NARC_data_demo3d_riza_bridge_02_nsbta = 58,
 	NARC_data_demo3d_riza_bridge_camera_bin = 59,
-	NARC_data_demo3d_v_boat_port_01_nsbmd = 60,
-	NARC_data_demo3d_v_boat_port_camera_bin = 61
+	NARC_data_demo3d_v_boat_port01_nsbmd = 60,
+	NARC_data_demo3d_v_boat_port02_nsbca = 61,
+	NARC_data_demo3d_v_boat_port02_nsbmd = 62,
+	NARC_data_demo3d_v_boat_port_01_nsbmd = 63,
+	NARC_data_demo3d_v_boat_port_camera_bin = 64,
+	NARC_data_demo3d_v_boat_port_camera_nsbmd = 65
 };
 
 /* NARC_DATA_DEMO3D_NAIX_ */
