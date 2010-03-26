@@ -469,9 +469,9 @@ static void scproc_WazaAdditionalEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPAR
   BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, u32 damage );
 static void scproc_WazaDamageReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender,
   const SVFL_WAZAPARAM* wazaParam, BtlTypeAff affinity, u32 damage, BOOL critical_flag );
-static void scproc_WazaDamageAfter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
+static void scproc_WazaDamageSideAfter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   const SVFL_WAZAPARAM* wazaParam, u32 damage );
-static void scEvent_WazaDamageAfter( BTL_SVFLOW_WORK* wk,
+static void scEvent_WazaDamageSideAfter( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, u32 damage );
 static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
@@ -601,8 +601,6 @@ static void scPut_WazaFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, 
 static void scPut_WazaAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender, WazaID waza );
 static void scput_WazaNoEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender );
 static void scput_WazaNoEffectIchigeki( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender );
-static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
-  BTL_POKEPARAM* defender, BtlTypeAff aff, u32 damage, BOOL critical_flag, BOOL plural_hit_flag );
 static void scPut_WazaDamagePlural( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   u32 poke_cnt, const BtlTypeAff* aff, BTL_POKEPARAM** bpp, const u16* damage, const u8* critical_flag, BOOL fTargetPlural );
 static void scPut_WazaAffinityMsg( BTL_SVFLOW_WORK* wk, u32 poke_cnt, const BtlTypeAff* aff, BTL_POKEPARAM** bpp,  BOOL fTargetPlural );
@@ -5529,7 +5527,7 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
       BTL_POKESET_RemoveDeadPoke( &wk->pokesetFriend );
     }
 
-    if( !BPP_IsDead(attacker) )
+//    if( !BPP_IsDead(attacker) )
     {
       if( BTL_POKESET_GetCount( &wk->pokesetEnemy ) ){
         dmg_tmp += scproc_Fight_Damage_side( wk, wazaParam, attacker, &wk->pokesetEnemy, &wk->hitCheckParam, dmg_ratio, fTargetPlural );
@@ -5605,32 +5603,32 @@ static u32 scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
 {
   BtlTypeAff affAry[ BTL_POSIDX_MAX ];
   BTL_POKEPARAM* bpp;
-  u8 poke_cnt;
+  u8 damaged_poke_cnt;
 
   scproc_Fight_Damage_ToRecover( wk, attacker, wazaParam, targets );
 
-  poke_cnt = 0;
+  damaged_poke_cnt = 0;
   BTL_POKESET_SeekStart( targets );
   while( (bpp = BTL_POKESET_SeekNext(targets) ) != NULL )
   {
-    affAry[poke_cnt] = scProc_checkWazaDamageAffinity( wk, attacker, bpp, wazaParam );
-    if( affAry[ poke_cnt ] == BTL_TYPEAFF_0 )
+    affAry[damaged_poke_cnt] = scProc_checkWazaDamageAffinity( wk, attacker, bpp, wazaParam );
+    if( affAry[ damaged_poke_cnt ] == BTL_TYPEAFF_0 )
     {
       scput_WazaNoEffect( wk, bpp );
       BTL_POKESET_Remove( targets, bpp );
       AffCounter_CountUp( &wk->affCounter, wk, attacker, bpp, BTL_TYPEAFF_0 );
     }
     else{
-      ++poke_cnt;
+      ++damaged_poke_cnt;
     }
   }
 
-  if( poke_cnt )
+  if( damaged_poke_cnt )
   {
     u32 dmg_sum = scproc_Fight_damage_side_plural( wk, attacker, targets, affAry, wazaParam,
                   hitCheckParam, dmg_ratio, fTargetPlural );
     if( dmg_sum ){
-      scproc_WazaDamageAfter( wk, attacker, wazaParam, dmg_sum );
+      scproc_WazaDamageSideAfter( wk, attacker, wazaParam, dmg_sum );
       return dmg_sum;
     }
   }
@@ -6031,12 +6029,12 @@ static void scproc_WazaDamageReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attac
  * @param   critical_flag
  */
 //----------------------------------------------------------------------------------
-static void scproc_WazaDamageAfter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
+static void scproc_WazaDamageSideAfter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   const SVFL_WAZAPARAM* wazaParam, u32 damage )
 {
   u32 hem_state = Hem_PushState( &wk->HEManager );
 
-  scEvent_WazaDamageAfter( wk, attacker, wazaParam, damage );
+  scEvent_WazaDamageSideAfter( wk, attacker, wazaParam, damage );
   scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   Hem_PopState( &wk->HEManager, hem_state );
 }
@@ -6053,7 +6051,7 @@ static void scproc_WazaDamageAfter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker
  *
  */
 //--------------------------------------------------------------------------
-static void scEvent_WazaDamageAfter( BTL_SVFLOW_WORK* wk,
+static void scEvent_WazaDamageSideAfter( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, u32 damage )
 {
   BTL_EVENTVAR_Push();
@@ -6061,7 +6059,7 @@ static void scEvent_WazaDamageAfter( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_AFTER );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZADMG_SIDE_AFTER );
   BTL_EVENTVAR_Pop();
 }
 
@@ -9264,34 +9262,6 @@ static void scput_WazaNoEffectIchigeki( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
   SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NotEffect_Ichigeki, BPP_GetID(defender) );
 }
 
-//--------------------------------------------------------------------------
-/**
- * [Put] ワザによるダメージ（単体）
- */
-//--------------------------------------------------------------------------
-static void scPut_WazaDamageSingle( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
-  BTL_POKEPARAM* defender, BtlTypeAff aff, u32 damage, BOOL critical_flag, BOOL plural_hit_flag )
-{
-  u8 pokeID = BPP_GetID( defender );
-
-  // 複数回ヒットは最後に１回だけ「効果は○○だ！」を出すため、ここでは無効化
-  if( plural_hit_flag ){
-    aff = BTL_TYPEAFF_100;
-  }
-
-
-  scPut_DecreaseHP( wk, defender, damage );
-
-  BTL_Printf("ポケ[%d]に対するワザダメージ値:%d -> 残りHP %d\n", BPP_GetID(defender), damage,
-    BPP_GetValue(defender, BPP_HP));
-
-  SCQUE_PUT_ACT_WazaDamage( wk->que, pokeID, aff, wazaParam->wazaID );
-
-  if( critical_flag )
-  {
-    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_CriticalHit );
-  }
-}
 //--------------------------------------------------------------------------
 /**
  * [Put] ワザによるダメージコマンド生成

@@ -3224,7 +3224,7 @@ static void handler_Miyaburu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static const BtlEventHandlerTable*  ADD_NekoNiKoban( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_AFTER, handler_NekoNiKoban },    // ダメージ反応ハンドラ
+    { BTL_EVENT_WAZADMG_SIDE_AFTER, handler_NekoNiKoban },    // ダメージ反応ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -7031,7 +7031,7 @@ static void handler_Narikiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static const BtlEventHandlerTable*  ADD_TonboGaeri( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_AFTER,  handler_TonboGaeri   },         // ダメージ直後
+    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_TonboGaeri   },         // ダメージ直後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -7064,7 +7064,7 @@ static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static const BtlEventHandlerTable*  ADD_KousokuSpin( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_AFTER,  handler_KousokuSpin   },         // ダメージ直後
+    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_KousokuSpin   },         // ダメージ直後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -9478,7 +9478,7 @@ static const BtlEventHandlerTable*  ADD_Inotigake( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC1,    handler_Inotigake_CalcDamage  },     // ダメージチェック
-    { BTL_EVENT_WAZA_DMG_AFTER,    handler_Inotigake_AfterDamage },
+    { BTL_EVENT_WAZADMG_SIDE_AFTER,    handler_Inotigake_AfterDamage },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -9900,7 +9900,7 @@ static const BtlEventHandlerTable*  ADD_MizuNoTikai( u32* numElems )
     { BTL_EVENT_WAZA_EXE_DECIDE, handler_CombiWaza_Decide    },    // ワザ出し確定
     { BTL_EVENT_WAZA_PARAM,      handler_CombiWaza_WazaParam },    // ワザパラメータチェック
     { BTL_EVENT_WAZA_POWER,      handler_CombiWaza_Pow       },    // 威力計算
-    { BTL_EVENT_WAZA_DMG_AFTER,  handler_CombiWaza_AfterDmg  },    // ダメージ処理終了後
+    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_CombiWaza_AfterDmg  },    // ダメージ処理終了後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -9917,7 +9917,7 @@ static const BtlEventHandlerTable*  ADD_HonooNoTikai( u32* numElems )
     { BTL_EVENT_WAZA_EXE_DECIDE, handler_CombiWaza_Decide    },    // ワザ出し確定
     { BTL_EVENT_WAZA_PARAM,      handler_CombiWaza_WazaParam },    // ワザパラメータチェック
     { BTL_EVENT_WAZA_POWER,      handler_CombiWaza_Pow       },    // 威力計算
-    { BTL_EVENT_WAZA_DMG_AFTER,  handler_CombiWaza_AfterDmg  },    // ダメージ処理終了後
+    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_CombiWaza_AfterDmg  },    // ダメージ処理終了後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -9935,7 +9935,7 @@ static const BtlEventHandlerTable*  ADD_KusaNoTikai( u32* numElems )
     { BTL_EVENT_WAZA_EXE_DECIDE, handler_CombiWaza_Decide    },    // ワザ出し確定
     { BTL_EVENT_WAZA_PARAM,      handler_CombiWaza_WazaParam },    // ワザパラメータチェック
     { BTL_EVENT_WAZA_POWER,      handler_CombiWaza_Pow       },    // 威力計算
-    { BTL_EVENT_WAZA_DMG_AFTER,  handler_CombiWaza_AfterDmg  },    // ダメージ処理終了後
+    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_CombiWaza_AfterDmg  },    // ダメージ処理終了後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
