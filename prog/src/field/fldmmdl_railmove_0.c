@@ -890,7 +890,7 @@ void MMDL_Rail_GetFrontWay( const MMDL *mmdl, VecFx16* way )
 
   p_railwk = MMDL_GetRailWork( mmdl );
 
-  dir = MMDL_GetDirMove( mmdl );
+  dir = MMDL_GetDirDisp( mmdl );
   MMDL_Rail_GetDirLineWay( mmdl, dir, way );
 }
 
