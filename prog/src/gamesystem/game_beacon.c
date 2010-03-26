@@ -17,7 +17,7 @@
 #include "savedata/my_pms_data.h"
 #include "app/townmap_util.h"
 #include "net_app\union\union_beacon_tool.h"
-#include "app/research_radar/research_select_def.h"   //SELECT_TOPIC_MAX_NUM
+#include "app/research_radar/research_data.h"   //QUESTION_NUM_PER_TOPIC
 #include "savedata/playtime.h"
 
 
@@ -313,7 +313,7 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
     int search_question_id, i;
     u32 answer;
     
-    for(i = 0; i < SELECT_TOPIC_MAX_NUM; i++){
+    for(i = 0; i < QUESTION_NUM_PER_TOPIC; i++){
       search_question_id = QuestionnaireWork_GetInvestigatingQuestion(questsave, i);
       if(search_question_id != INVESTIGATING_QUESTION_NULL){
         answer = QuestionnaireAnswer_ReadBit(&info->question_answer, search_question_id);
