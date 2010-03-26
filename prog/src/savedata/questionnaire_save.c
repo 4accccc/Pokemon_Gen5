@@ -12,6 +12,7 @@
 #include "savedata/questionnaire_save.h"
 #include "app/research_radar/questionnaire_index.h"
 #include "app/research_radar/research_data.h"   //QUESTION_NUM_PER_TOPIC
+#include "app/research_radar/question_id.h" //QUESTION_ID_xxxx
 
 
 //==============================================================================
@@ -78,9 +79,10 @@ void QuestionnaireSave_WorkInit(void *work)
   int work_index;
   
   GFL_STD_MemClear(anketo_save, sizeof(QUESTIONNAIRE_SAVE_WORK));
-  for(work_index = 0; work_index < QUESTION_NUM_PER_TOPIC; work_index++){
-    anketo_save->investigating_question_id[work_index] = INVESTIGATING_QUESTION_NULL;
-  }
+
+  anketo_save->investigating_question_id[0] = QUESTION_ID_WB;
+  anketo_save->investigating_question_id[1] = QUESTION_ID_FIRST_POKEMON;
+  anketo_save->investigating_question_id[2] = QUESTION_ID_PLAY_TIME;
 }
 
 
