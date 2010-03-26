@@ -58,5 +58,8 @@ struct _MISC
 
   //配布イベント用予約領域３２バイト
   u32 event_lock[EVT_ROCK_MAX];
+  
+  //購入特典不思議配布用フラグ
+  u32 fushigi_purchase_privilege;
 };
 
