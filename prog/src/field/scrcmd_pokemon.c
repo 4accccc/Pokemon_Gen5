@@ -226,20 +226,6 @@ VMCMD_RESULT EvCmdCheckPokemonHP( VMHANDLE * core, void *wk )
   u16 pos = SCRCMD_GetVMWorkValue( core, wk );  //ポケモンの位置
 
   {
-#if 0
-    GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( wk );
-    POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
-    u32 max = PokeParty_GetPokeCount( party );
-    POKEMON_PARAM * pp;
-    u16 nowHP, maxHP;
-
-    if (pos >= max)
-    {
-      GF_ASSERT_MSG(0, "Temoti Pos %d over max(%d)!!\n", pos, max);
-      pos = 0;
-    }
-    pp = PokeParty_GetMemberPointer( party, pos );
-#endif
     POKEMON_PARAM * pp;
     *ret_wk = FALSE;
     if ( SCRCMD_GetTemotiPP( wk, pos, &pp ) == TRUE )
@@ -283,28 +269,6 @@ VMCMD_RESULT EvCmdCheckPokemonEgg( VMHANDLE * core, void *wk )
       *ret_wk = TRUE;
     }
   }
-#if 0
-  GAMEDATA*     gdata = SCRCMD_WORK_GetGameData( work );
-  POKEPARTY*    party = GAMEDATA_GetMyPokemon( gdata );
-  int             max = PokeParty_GetPokeCountMax( party );
-  u32     tamago_flag = 0;
-  POKEMON_PARAM* param = NULL;
-
-  // ポケモン指定に対する例外処理
-  if( (pos < 0) || (max <= pos) )
-  {
-    *ret_wk = FALSE;
-    return VMCMD_RESULT_CONTINUE;
-  }
-
-  // タマゴフラグ取得
-  param       = PokeParty_GetMemberPointer( party, pos );
-  tamago_flag = PP_Get( param, ID_PARA_tamago_flag, NULL );
-
-  // 結果を格納
-  if( tamago_flag == 0 ) *ret_wk = FALSE;
-  else                   *ret_wk = TRUE;
-#endif
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -331,28 +295,6 @@ VMCMD_RESULT EvCmdGetPokemonFriendValue( VMHANDLE * core, void *wk )
       *ret_wk = PP_Get( pp, ID_PARA_friend, NULL );
     }
   }
-#if 0
-  POKEPARTY*    party = GAMEDATA_GetMyPokemon( SCRCMD_WORK_GetGameData(work) );
-  int             max = PokeParty_GetPokeCountMax( party );
-  u8            friend = 0;
-  POKEMON_PARAM* param = NULL;
-
-  // ポケモン指定に対する例外処理
-  if( (pos < 0) || (PokeParty_GetPokeCountMax(party) <= pos) )
-  {
-    *ret_wk = 0;
-    return VMCMD_RESULT_CONTINUE;
-  }
-
-  // なつき度取得
-  param       = PokeParty_GetMemberPointer( party, pos );
-  if(PP_Get( param, ID_PARA_tamago_flag, NULL ) == TRUE){
-    friend = PP_Get( param, ID_PARA_friend, NULL); 
-  }
-
-  // 結果を格納
-  *ret_wk = friend;
-#endif
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -428,13 +370,6 @@ VMCMD_RESULT EvCmdGetPartyPokeMonsNo( VMHANDLE * core, void *wk )
   SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
   u16*          ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
-#if 0
-  GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
-  POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
-  POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
-  *ret_wk = (u16)PP_Get( param, ID_PARA_monsno, NULL );
-  OBATA_Printf( "EvCmdGetPartyPokeMonsNo : %d\n", *ret_wk );
-#endif
   POKEMON_PARAM* pp;
   if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == TRUE )
   {
@@ -460,14 +395,6 @@ VMCMD_RESULT EvCmdGetPartyPokeFormNo( VMHANDLE * core, void *wk )
   SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
   u16*          ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
-#if 0
-  GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
-  POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
-  POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
-
-  *ret_wk = (u16)PP_Get( param, ID_PARA_form_no, NULL );
-  OBATA_Printf( "EvCmdGetPartyPokeFormNo : %d\n", *ret_wk );
-#endif
   POKEMON_PARAM * pp;
   if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == TRUE )
   {
@@ -907,16 +834,9 @@ VMCMD_RESULT EvCmdGetPokemonWazaNum( VMHANDLE *core, void *wk )
   u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
   u16                 pos = SCRCMD_GetVMWorkValue( core, work );       // コマンド第2引数
 
-#if 0
-  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
-  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
-  POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
-#endif
   int          waza_count = 0;
   POKEMON_PARAM *pp;
   
-  //POKEMON_PARAM *pp = PokeParty_GetMemberPointer( party , pos );
   if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == TRUE )
   {
     for( i=0; i<PTL_WAZA_MAX; i++ )
@@ -1049,26 +969,10 @@ VMCMD_RESULT EvCmdCheckPokeOwner( VMHANDLE *core, void *wk )
   u16*         ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16             pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
   GAMEDATA*     gdata = SCRCMD_WORK_GetGameData( work );
-#if 0
-  POKEPARTY*    party = GAMEDATA_GetMyPokemon( gdata );
-  int             max = PokeParty_GetPokeCountMax( party );
-#endif
   MYSTATUS*   status = GAMEDATA_GetMyStatus( gdata );
   u32     id = 0;
   POKEMON_PARAM* param = NULL;
 
-#if 0
-  // ポケモン指定に対する例外処理
-  if( (pos < 0) || (max <= pos) )
-  {
-    *ret_wk = FALSE;
-    return VMCMD_RESULT_CONTINUE;
-  }
-
-  // ID取得
-  param       = PokeParty_GetMemberPointer( party, pos );
-  id = PP_Get( param, ID_PARA_id_no, NULL );
-#endif
   id = SCRCMD_GetTemotiPPValue( work, pos, ID_PARA_id_no );
 
   NOZOMU_Printf("poke_id = %d\n",id);
@@ -1164,14 +1068,9 @@ VMCMD_RESULT EvCmdChgRotomFormNo( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdCheckRemaindWaza( VMHANDLE* core, void* wk )
 {
   SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
-#if 0
-  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
-  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
-  POKEPARTY*        party = GAMEDATA_GetMyPokemon( gdata );
-#endif
   u16*             ret_wk = SCRCMD_GetVMWork( core, work );     // コマンド第一引数(結果を受け取るワーク)
   u16            poke_pos = SCRCMD_GetVMWorkValue( core, work );// コマンド第二引数(手持ち位置)
-  //POKEMON_PARAM*     poke = PokeParty_GetMemberPointer( party, poke_pos );
+
   HEAPID          heap_id = SCRCMD_WORK_GetHeapID( work );
   u16*               waza = NULL;
   POKEMON_PARAM*     poke;
@@ -1201,11 +1100,6 @@ VMCMD_RESULT EvCmdCheckPartyPokeGetPlace( VMHANDLE* core, void* wk )
   u16*          ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
   u16              type = SCRCMD_GetVMWorkValue( core, wk );  // POKE_GET_PLACE_CHECK_～
-#if 0
-  GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
-  POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
-  POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
-#endif
   u16 place;
   static const u16 POKE_GET_PLACE_CHECK_PLACE[POKE_GET_PLACE_CHECK_MAX] = 
   {
@@ -1215,7 +1109,6 @@ VMCMD_RESULT EvCmdCheckPartyPokeGetPlace( VMHANDLE* core, void* wk )
   GF_ASSERT( type < POKE_GET_PLACE_CHECK_MAX );
   
   place = SCRCMD_GetTemotiPPValue( work, pos, ID_PARA_get_place );
-  //place = (u16)PP_Get( param, ID_PARA_get_place, NULL );
   
   if( place == POKE_GET_PLACE_CHECK_PLACE[ type ] ){
     *ret_wk = TRUE;
@@ -1241,11 +1134,6 @@ VMCMD_RESULT EvCmdGetPartyPokeGetDate( VMHANDLE* core, void* wk )
   u16*          ret_month = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16*          ret_day = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
-#if 0
-  GAMEDATA*      gdata = SCRCMD_WORK_GetGameData( work );
-  POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
-  POKEMON_PARAM* param = PokeParty_GetMemberPointer( party, pos );
-#endif
   POKEMON_PARAM* param;
   if ( SCRCMD_GetTemotiPP( work, pos, &param ) == TRUE )
   {
@@ -1270,6 +1158,7 @@ VMCMD_RESULT EvCmdGetPartyPokeGetDate( VMHANDLE* core, void* wk )
 SDK_COMPILER_ASSERT( SCR_POKEPARA_MONSNO == ID_PARA_monsno );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_ITEMNO == ID_PARA_item );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_COUNTRY_CODE == ID_PARA_country_code );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_HAIHU_FLAG == ID_PARA_event_get_flag );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_SEX == ID_PARA_sex );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_FORMNO == ID_PARA_form_no );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_SEIKAKU == ID_PARA_seikaku );
@@ -1301,6 +1190,7 @@ VMCMD_RESULT EvCmdGetPartyPokeParameter( VMHANDLE* core, void* wk )
     SCR_POKEPARA_MONSNO,
     SCR_POKEPARA_ITEMNO,
     SCR_POKEPARA_COUNTRY_CODE,
+    SCR_POKEPARA_HAIHU_FLAG,
     SCR_POKEPARA_SEX,
     SCR_POKEPARA_FORMNO,
     SCR_POKEPARA_SEIKAKU,

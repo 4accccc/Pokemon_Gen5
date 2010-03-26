@@ -158,6 +158,7 @@
 #define SCR_POKEPARA_MONSNO           (5) ///< ポケモンナンバー
 #define SCR_POKEPARA_ITEMNO           (6) ///< 保持アイテムナンバー
 #define SCR_POKEPARA_COUNTRY_CODE     (12)  ///< 国コード
+#define SCR_POKEPARA_HAIHU_FLAG       (109) ///<イベント配布フラグ
 #define SCR_POKEPARA_SEX              (110) ///<性別
 #define SCR_POKEPARA_FORMNO           (111) ///<フォルムナンバー
 #define SCR_POKEPARA_SEIKAKU          (112) ///<性格
