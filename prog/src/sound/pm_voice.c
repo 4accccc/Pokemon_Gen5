@@ -585,7 +585,7 @@ BOOL		PMVOICE_PlayOnly( u32 voicePlayerIdx)
  * @brief	鳴き声ステータス変更関数
  */
 //------------------------------------------------------------------
-void	PMVOICE_SetPan( u32 voicePlayerIdx, u8 pan)
+void	PMVOICE_SetPan( u32 voicePlayerIdx, u8 pan )
 {
 	PMVOICE_PLAYER* voicePlayer;
 
@@ -599,7 +599,7 @@ void	PMVOICE_SetPan( u32 voicePlayerIdx, u8 pan)
 	}
 }
 
-void	PMVOICE_SetVolume( u32 voicePlayerIdx, s8 volume)
+void	PMVOICE_SetVolume( u32 voicePlayerIdx, s8 volume )
 {
 	PMVOICE_PLAYER* voicePlayer;
 
@@ -617,7 +617,7 @@ void	PMVOICE_SetVolume( u32 voicePlayerIdx, s8 volume)
 	}
 }
 
-void	PMVOICE_SetSpeed( u32 voicePlayerIdx, int speed)
+void	PMVOICE_SetSpeed( u32 voicePlayerIdx, int speed )
 {
 	PMVOICE_PLAYER* voicePlayer;
 
@@ -643,7 +643,7 @@ u8	PMVOICE_GetPan( u32 voicePlayerIdx)
 	return voicePlayer->pan;
 }
 
-s8	PMVOICE_GetVolume( u32 voicePlayerIdx)
+s8	PMVOICE_GetVolume( u32 voicePlayerIdx )
 {	
 	PMVOICE_PLAYER* voicePlayer;
 
@@ -653,7 +653,7 @@ s8	PMVOICE_GetVolume( u32 voicePlayerIdx)
 	return voicePlayer->volume;
 }
 
-int	PMVOICE_GetSpeed( u32 voicePlayerIdx)
+int	PMVOICE_GetSpeed( u32 voicePlayerIdx )
 {	
 	PMVOICE_PLAYER* voicePlayer;
 
@@ -661,6 +661,16 @@ int	PMVOICE_GetSpeed( u32 voicePlayerIdx)
 	if(voicePlayer->active == FALSE){ return VOICE_SPEED_DEFAULT; }
 
 	return voicePlayer->speed;
+}
+
+void*	PMVOICE_GetWave( u32 voicePlayerIdx )
+{	
+	PMVOICE_PLAYER* voicePlayer;
+
+	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
+	if(voicePlayer->active == FALSE){ return NULL; }
+
+	return voicePlayer->waveDataBegin;
 }
 
 //------------------------------------------------------------------

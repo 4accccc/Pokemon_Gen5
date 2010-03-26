@@ -238,6 +238,10 @@ inline int	PMV_GetSpeed(u32 voicePlayerIdx)
 {
 	return PMVOICE_GetSpeed(voicePlayerIdx);
 }
+inline void*	PMV_GetWave(u32 voicePlayerIdx)
+{
+	return PMVOICE_GetWave(voicePlayerIdx);
+}
 
 //--------------------------------------------------------------------------------------------
 /**
