@@ -1072,10 +1072,12 @@ static void handler_SlowStart_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_SlowStart( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CALC_AGILITY,   handler_SlowStart_Agility   }, // すばやさ計算ハンドラ
-    { BTL_EVENT_ATTACKER_POWER, handler_SlowStart_AtkPower  }, // 攻撃力計算ハンドラ
-    { BTL_EVENT_MEMBER_IN,      handler_SlowStart_MemberIn  }, // メンバー入場ハンドラ
-    { BTL_EVENT_TURNCHECK_END,  handler_SlowStart_TurnCheck }, // ターンチェック終了ハンドラ
+    { BTL_EVENT_CALC_AGILITY,         handler_SlowStart_Agility   },  // すばやさ計算ハンドラ
+    { BTL_EVENT_ATTACKER_POWER,       handler_SlowStart_AtkPower  },  // 攻撃力計算ハンドラ
+    { BTL_EVENT_MEMBER_IN,            handler_SlowStart_MemberIn  },  // メンバー入場ハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_SlowStart_MemberIn  },  // とくせい書き換え直後ハンドラ
+    { BTL_EVENT_TURNCHECK_END,        handler_SlowStart_TurnCheck },  // ターンチェック終了ハンドラ
+
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -4519,7 +4521,7 @@ static void handler_Yobimizu_DmgToRecvFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hiraisin( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DECIDE_TARGET,          handler_Hiraisin  },  // ワザターゲット決定ハンドラ
+    { BTL_EVENT_DECIDE_TARGET,          handler_Hiraisin                },  // ワザターゲット決定ハンドラ
     { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_Hiraisin_DmgToRecvCheck },  // ダメージワザ回復化チェックハンドラ
     { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_Hiraisin_DmgToRecvFix   },  // ダメージワザ回復化決定ハンドラ
 
