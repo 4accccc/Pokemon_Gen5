@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-25T18:07:09"/>
+	<create user="matsumiya" host="W00224" date="2010-03-26T15:44:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,7 +342,8 @@
 
 	<row id="msg_c06gym0101_leader_04">
 		<comment>♀
-・アイテム入手処理</comment>
+・アイテム入手処理
+　No389「アクロバット」</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
 		<language name="JPN" width="256">うわあ　すごいわね！▼
 それだけ　ジムバッジがあれば
@@ -380,23 +381,24 @@
 おもしろく　なりそうでしょ？</language>
 	</row>
 
-	<row id="msg_c06gym0101_leader_06" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c06gym0101_leader_06">
 		<comment>♀
 ・クリアまで</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
 		<language name="JPN" width="256">……そういえばなんだけど
 セッカシティを　とんだとき[BE:00:ページ切り替え（行送り）]
 プラズマだん　だっけ？[BE:01:ページ切り替え（クリア）]
-まちに　むかってたけど
+まちに　むかってたんだよね……
 どういう　ひと　たちなの？</language>
 		<language name="JPN_KANJI" width="256">……そういえばなんだけど
 セッカシティを　飛んだとき[BE:00:ページ切り替え（行送り）]
 プラズマ団　だっけ？[BE:01:ページ切り替え（クリア）]
-あの人たちが　街に向かってたけど
+あの人たちが
+街に　向かってたんだよね……▽
 どういう　人たちなの？</language>
 	</row>
 
-	<row id="msg_c06gym0101_leader_07" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c06gym0101_leader_07">
 		<comment>♀
 ・クリアから</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
@@ -509,7 +511,7 @@
 [1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_c06gym0101_statue_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c06gym0101_statue_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・d07でのライバル戦闘後から</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
