@@ -13,6 +13,18 @@ ev_fld_item2:
   _LDWK( SCWK_TEMP0, SCWK_REG0 )              //アイテムナンバー
   _LDWK( SCWK_TEMP1, SCWK_REG1 )              //個数
   
+  _CHG_COMMON_SCR SCRID_POCKET_ME_SET //MEセット
+  
+  //入手したアイテムが技マシンかチェック
+  _WAZA_ITEM_CHK( SCWK_TEMP0, SCWK_ANSWER )
+  
+  //○○をみつけた！
+  IF $SCWK_ANSWER == 1 THEN
+    _CALL ev_itemget_flditem_yes_wazam
+  ELSE
+    _CALL ev_itemget_flditem_no_wazam
+  ENDIF
+  
   //アイテムを加えられるかチェック
   _ADD_ITEM_CHK( SCWK_TEMP0, SCWK_TEMP1, SCWK_ANSWER )
   
@@ -30,9 +42,6 @@ _RET
 //--------------------------------------------------------------------
 ev_itemget_flditem_true:
 {
-  _CHG_COMMON_SCR SCRID_POCKET_ME_SET //MEセット
-  
-  _TIME_WAIT( ITEM_GET_FORM_TIMING )
   //話し掛け対象のイベントフラグを取得しセット
   _GET_OBJ_EV_FLAG( SCWK_TARGET_OBJID, SCWK_ANSWER )
   _FLAG_SET( SCWK_ANSWER )
@@ -40,44 +49,34 @@ ev_itemget_flditem_true:
   //話しかけ対象のモンスターボールを消す
   _OBJ_DEL( SCWK_TARGET_OBJID )
   
-  //ゲットポーズと同時にメッセージを出す
-  //_CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_ANIME_SET
+  //自機ゲットポーズ
   _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_ITEMGET )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_itemget )
-
+  
   //アイテム追加
   _ADD_ITEM( SCWK_TEMP0, SCWK_TEMP1, SCWK_ANSWER )
   
-  //こんごうだま、しらたまのチェック
-  //_UG_BALLITEM_CHECK  SCWK_TEMP0
-  
-  //入手したアイテムが技マシンかチェック
-  _WAZA_ITEM_CHK( SCWK_TEMP0, SCWK_ANSWER )
-  
-  //メッセージ分岐
-  IF $SCWK_ANSWER == 1 THEN
-    _CALL ev_itemget_flditem_yes_wazam
-  ELSE
-    _CALL ev_itemget_flditem_no_wazam
-  ENDIF
-  
+  //ME、アニメ待ち
   _ME_WAIT()
   _OBJ_ANIME_WAIT()
-
+  
+  //自機元に戻す
+  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
+  
+  //自機名、アイテム名
   _PLAYER_NAME( 0 )
   _ITEM_NAME( 1, SCWK_TEMP0 )
-
+  
   //ポケットナンバーをSCWK_ANSWERに代入
   _GET_POCKET_ID( SCWK_TEMP0, SCWK_ANSWER )
   _POCKET_NAME( 2, SCWK_ANSWER )
-
-  _SYSWIN_MSG( msg_item_get_pocket_nowait , POS_DOWN )
+  
+  //○○ポケットにしまった
+  _SYSWIN_MSG( msg_item_get_pocket_nowait, POS_DOWN )
   _LAST_KEYWAIT()
   
   //最後に成功したことをSCWK_ANSWERに代入しておく！
   _LDVAL( SCWK_ANSWER,1 )
-
-  _CHG_COMMON_SCR SCRID_ITEM_GET_PLAYER_FORM_RETURN
   
   //ウィンドウクローズ
   _SYSWIN_CLOSE()
@@ -118,8 +117,12 @@ _RET
 //--------------------------------------------------------------------
 ev_itemget_flditem_false:
 {
-  _ITEM_NAME( 0,SCWK_TEMP0 )
+  /*
+  _ITEM_NAME( 0, SCWK_TEMP0 )
   _SYSWIN_MSG( msg_item_get_fail_field , POS_DOWN )
+  */
+  _SYSWIN_MSG( msg_item_get_fail_nowait, POS_DOWN )
+  
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 
