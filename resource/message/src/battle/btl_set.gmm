@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-25T00:30:47"/>
+	<create user="taya" host="W00146" date="2010-03-26T15:12:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2043,6 +2043,25 @@
 こおりが　とけた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
 こおりが　溶けた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KoriAlready">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+すでに　こおっている</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+すでに　凍っている</language>
+	</row>
+	<row id="BTL_STRID_SET_KoriAlready_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+すでに　こおっている</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+すでに　凍っている</language>
+	</row>
+	<row id="BTL_STRID_SET_KoriAlready_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+すでに　こおっている</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+すでに　凍っている</language>
 	</row>
 
 	<row id="BTL_STRID_SET_KoriNoEffect">
