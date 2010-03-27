@@ -40,6 +40,8 @@
 #include "net_app/connect_anm.h"
 #include "net/dwc_rapfriend.h"
 #include "savedata/wifilist.h"
+#include "savedata/wifihistory.h"
+#include "savedata/undata_update.h"
 
 #include "system/touch_subwindow.h"
 

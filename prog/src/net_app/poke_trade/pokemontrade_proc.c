@@ -50,6 +50,7 @@
 #include "net/dwc_rapfriend.h"
 #include "system/net_err.h"
 #include "savedata/wifihistory.h"
+#include "savedata/undata_update.h"
 
 #include "item/item.h"
 
