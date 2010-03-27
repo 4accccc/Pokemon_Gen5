@@ -778,7 +778,7 @@
 #define FV_MUSICAL_FUN_08                  754 /* 0x02f2 ミュージカルホール：出待ちのファン３人目 */
 #define FV_MUSICAL_FUN_09                  755 /* 0x02f3 ミュージカルホール：出待ちのファン４人目 */
 #define FV_MUSICAL_FUN_10                  756 /* 0x02f4 ミュージカルホール：出待ちのファン５人目 */
-		/* not used   757(0x02f5) */
+#define FV_D01R0101_GCIS_01                757 /* 0x02f5 夢の跡地：ゲーヂス */
 		/* not used   758(0x02f6) */
 		/* not used   759(0x02f7) */
 		/* not used   760(0x02f8) */
