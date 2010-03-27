@@ -196,8 +196,13 @@ EVENT_START	ev_pos_r16r0201_woman3_01
   _SXY_MOVE_EXIT_EVENT( DOOR_ID_R16R0201_R16R0301_EXIT01, 0, 0, 0 )
   
   //戦闘
-  _WILD_BTL_SET_LEGEND( MONSNO_ZOROAAKU , 99 ) //ゾロアーク
-
+  {
+    DEFINE_LOCAL flag
+    $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
+    $flag += SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
+    $flag += SCR_WILD_BTL_FLAG_FEMALE    //メスを出す
+    _WILD_BTL_SET_EX( MONSNO_ZOROAAKU , 25, flag ) //ゾロアーク
+  }
   //女性を消す
   _FLAG_SET( FV_R16R0201_WOMAN3 )
   _OBJ_DEL(R16R0201_WOMAN3_01)
