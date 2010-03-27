@@ -47,7 +47,6 @@ extern const NetRecvFuncTable BtlRecvFuncTable[];
 
 FS_EXTERN_OVERLAY(battle);
 
-
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -57,6 +56,11 @@ typedef struct{
   BATTLE_SETUP_PARAM para;
   COMM_BTL_DEMO_PARAM *demo_prm;
 }EVENT_COLOSSEUM_BATTLE_WORK;
+
+//==============================================================================
+//  プロトタイプ宣言
+//==============================================================================
+static void _SetBattleMode(int *dest_work, BATTLE_MODE battle_mode);
 
 
 //============================================================================================
@@ -137,6 +141,7 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UN
   EVENT_COLOSSEUM_BATTLE_WORK * cbw;
   BtlRule rule;
   int multi;
+  int recmode = BATTLE_MODE_MAX;
   GMEVENT *event;
 
   event = GMEVENT_Create(
@@ -149,38 +154,57 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UN
 
   switch(play_category){
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE:       //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_SINGLE_FREE);
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FREE_SHOOTER:       //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_SINGLE_FREE_SHOOTER);
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FLAT:   //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_SINGLE_50);
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FLAT_SHOOTER:   //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_SINGLE_50_SHOOTER);
     BTL_SETUP_Single_Comm(para, GAMESYSTEM_GetGameData(gsys), 
       GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, HEAPID_PROC );
     break;
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE:       //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_DOUBLE_FREE);
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FREE_SHOOTER:       //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_DOUBLE_FREE_SHOOTER);
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FLAT:   //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_DOUBLE_50);
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FLAT_SHOOTER:   //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_DOUBLE_50_SHOOTER);
     BTL_SETUP_Double_Comm(para, GAMESYSTEM_GetGameData(gsys), 
       GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, HEAPID_PROC );
     break;
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE:       //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_TRIPLE_FREE);
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FREE_SHOOTER:       //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_TRIPLE_FREE_SHOOTER);
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FLAT:   //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_TRIPLE_50);
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_TRIPLE_FLAT_SHOOTER:   //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_TRIPLE_50_SHOOTER);
     BTL_SETUP_Triple_Comm(para, GAMESYSTEM_GetGameData(gsys), 
       GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, HEAPID_PROC );
     break;
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE:       //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_ROTATION_FREE);
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FREE_SHOOTER:       //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_ROTATION_FREE_SHOOTER);
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT:   //コロシアム
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_ROTATION_50);
   case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_ROTATION_FLAT_SHOOTER:   //コロシアム
-    //※check まだローテーションの定義が無いのでとりあえずトリプル指定
-    BTL_SETUP_Triple_Comm(para, GAMESYSTEM_GetGameData(gsys), 
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_ROTATION_50_SHOOTER);
+    BTL_SETUP_Rotation_Comm(para, GAMESYSTEM_GetGameData(gsys), 
       GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, HEAPID_PROC );
     break;
   case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE:
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_MULTI_FREE);
   case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_MULTI_FREE_SHOOTER);
   case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT:
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_MULTI_50);
   case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER:
+    _SetBattleMode(&recmode, BATTLE_MODE_COLOSSEUM_MULTI_50_SHOOTER);
     BTL_SETUP_Multi_Comm(para, GAMESYSTEM_GetGameData(gsys), 
       GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, setup->standing_pos, HEAPID_PROC );
     break;
@@ -200,5 +224,19 @@ GMEVENT* EVENT_ColosseumBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, UN
   return event;
 }
 
+//--------------------------------------------------------------
+/**
+ * 録画用のバトルモードを設定
+ *
+ * @param   dest_work		
+ * @param   battle_mode		
+ */
+//--------------------------------------------------------------
+static void _SetBattleMode(int *dest_work, BATTLE_MODE battle_mode)
+{
+  if(*dest_work == BATTLE_MODE_MAX){
+    *dest_work = battle_mode;
+  }
+}
 
 

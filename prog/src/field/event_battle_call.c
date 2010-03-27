@@ -349,7 +349,8 @@ GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_pr
   bcw->gsys = gsys;
   bcw->btl_setup_prm = btl_setup_prm;
   bcw->demo_prm = demo_prm;
-  
+  bcw->battle_mode = demo_prm->battle_mode;
+  bcw->fight_count = demo_prm->fight_count;
   return event;
 }
 
