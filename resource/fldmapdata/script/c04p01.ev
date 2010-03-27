@@ -165,15 +165,18 @@ EVENT_START	ev_pos_c04p01_boss_01
 	
 	//-------------ŠÏ——ŽÔ–¢ŽÀ‘•------------------------
 	
-	//‰æ–ÊˆÃ“]y‰¼z
-	_BLACK_OUT()
+	//‰æ–ÊˆÃ“]
+	_MAP_FADE_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
+	
+	_CALL_3D_DEMO_EX( DEMO3D_ID_F_WHEEL, 0 )
+	
 	
 	//ˆÃ“]’†‚É‚m‚ÆŽålŒö‚ÌˆÊ’u‚ð•ÏX
 	_OBJ_POS_CHANGE( C04P01_BOSS_01, 53, 1, 15, DIR_RIGHT )
 	_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 55, 1, 15, DIR_LEFT )
 	
-	_BLACK_IN()
+	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 	
 	//------------------------------------------------
