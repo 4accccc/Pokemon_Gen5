@@ -179,7 +179,10 @@ EVENT_START		ev_c03r0402_man1_01
 				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_03 )
 				_MSGWIN_CLOSE()
 			
-				//【仮】もりもとさんとバトル
+				_TRAINER_BTL_SP_SET( TRID_ELITEM_21, 0, SCR_BATTLE_MODE_NOLOSE )
+			
+				//回復処理
+				_TEMOTI_POKEMON_KAIFUKU()
 			
 				//いろいろ　かんがえてるよね！
 				_BALLOONWIN_TALKOBJ_MSG( msg_c03r0402_03_04 )
