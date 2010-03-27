@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-27T12:52:37"/>
+	<create user="matsumiya" host="W00224" date="2010-03-27T17:19:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -366,24 +366,36 @@
 		<comment>♂
 ・ストッパー</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">もうしわけ　ございません▼
+ただいま　しあいを　していますので
+スタジアムには　いけません</language>
+		<language name="JPN_KANJI" width="256">申し訳ございません▼
+ただいま　試合中ですので
+スタジアムには　行けません</language>
 	</row>
 
 	<row id="msg_c04r0301_policeman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ストッパー</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">もうしわけ　ございません▼
+ただいま　しあいを　していますので
+スタジアムには　いけません</language>
+		<language name="JPN_KANJI" width="256">申し訳ございません▼
+ただいま　試合中ですので
+スタジアムには　行けません</language>
 	</row>
 
 	<row id="msg_c04r0301_policeman3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ストッパー</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">もうしわけ　ございません▼
+ただいま　しあいを　していますので
+スタジアムには　いけません</language>
+		<language name="JPN_KANJI" width="256">申し訳ございません▼
+ただいま　試合中ですので
+スタジアムには　行けません</language>
 	</row>
 
 	<flowchart-group-list>
