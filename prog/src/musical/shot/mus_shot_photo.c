@@ -398,7 +398,7 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
   const fx32 XBase = FX32_CONST(256.0f/(MUSICAL_POKE_MAX+1));
   
   work->drawSys = MUS_POKE_DRAW_InitSystem( work->heapId );
-  MUS_POKE_DRAW_SetTexAddres( work->drawSys , 0x40000 );
+  MUS_POKE_DRAW_SetTexAddres( work->drawSys , 0x20000 );
   work->itemDrawSys = MUS_ITEM_DRAW_InitSystem( work->bbdSys , MUSICAL_POKE_MAX*MUS_POKE_EQUIP_MAX, work->heapId );
   
   work->pokeSys = STA_POKE_InitSystem( work->heapId , NULL , work->drawSys , work->itemDrawSys , work->bbdSys );
