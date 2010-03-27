@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-21T19:12:39"/>
+	<create user="matsumiya" host="W00224" date="2010-03-27T16:39:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1368" top="198" right="2073" bottom="818" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -308,7 +308,7 @@
 		<language name="JPN_KANJI" width="256">ワターシ
 スゴーイ　ポケモン　もってるよー▼
 いまなら　たったの　５００円
-いま　かおうと　おもったでしょー？</language>
+いま　買おうと　思ったでしょー？</language>
 	</row>
 
 	<row id="msg_t04pc0101_glasses_02">
@@ -321,7 +321,7 @@
 みためは　ふつー　だけど▽
 けっこー　すごーいよ！▼</language>
 		<language name="JPN_KANJI" width="256">この　コイキング
-みためは　ふつー　だけど▽
+見た目は　ふつー　だけど▽
 けっこー　すごーいよ！▼</language>
 	</row>
 
@@ -330,9 +330,9 @@
 ・はい＆金額不足</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">その　おへんじ　だいすきー！
-だけど　おかね　もってないよー</language>
-		<language name="JPN_KANJI" width="256">その　おへんじ　だいすきー！
-だけど　おかね　もってないよー</language>
+だけど　おかね　たりてないよー</language>
+		<language name="JPN_KANJI" width="256">その　お返事　大好きー！
+だけど　お金　足りてないよー</language>
 	</row>
 
 	<row id="msg_t04pc0101_glasses_04">
@@ -342,9 +342,9 @@
 		<language name="JPN" width="256">その　おへんじ　だいすきー！▼
 だけど　それいじょう
 ポケモン　つれていけないよー！</language>
-		<language name="JPN_KANJI" width="256">その　おへんじ　だいすきー！▼
-だけど　それいじょう
-ポケモン　つれていけないよー！</language>
+		<language name="JPN_KANJI" width="256">その　お返事　大好きー！
+だけど　それ以上
+ポケモン　連れていけないよー！</language>
 	</row>
 
 	<row id="msg_t04pc0101_glasses_05">
@@ -354,9 +354,9 @@
 		<language name="JPN" width="256">その　おへんじ　すきじゃなーい▼
 だけど　アナタ　きっと
 きがかわって　はなしかけてくるよー！</language>
-		<language name="JPN_KANJI" width="256">その　おへんじ　すきじゃなーい▼
+		<language name="JPN_KANJI" width="256">その　お返事　好きじゃなーい▼
 だけど　アナタ　きっと
-きがかわって　はなしかけてくるよー！</language>
+気が変わって　話しかけてくるよー！</language>
 	</row>
 
 	<row id="msg_t04pc0101_glasses_06">
@@ -366,8 +366,8 @@
 		<language name="JPN" width="256">アナタに　わたした　コイキング
 みためは　ふつー　だけど▽
 けっこー　すごーいよ！▼</language>
-		<language name="JPN_KANJI" width="256">アナタに　わたした　コイキング
-みためは　ふつー　だけど▽
+		<language name="JPN_KANJI" width="256">アナタに　渡した　コイキング
+見た目は　ふつー　だけど▽
 けっこー　すごーいよ！▼</language>
 	</row>
 
