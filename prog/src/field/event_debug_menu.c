@@ -6515,42 +6515,42 @@ static GMEVENT_RESULT debugMenuEventpokeCreate( GMEVENT *event, int *seq, void *
         {
         case 0: //10えいがセレビィ
           pp = PP_Create( MONSNO_SEREBHI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
-          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_SEREBIXI_BEFORE );
+          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_SEREBIXI_BEFORE );
           PP_Put( pp , ID_PARA_event_get_flag , TRUE );
           break;
         case 1: //10えいがエンテイ
           pp = PP_Create( MONSNO_ENTEI , 50 , PTL_SETUP_RND_RARE , work->heapId );
-          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
+          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
           PP_Put( pp , ID_PARA_event_get_flag , TRUE );
           break;
         case 2: //10えいがライコウ
           pp = PP_Create( MONSNO_RAIKOU , 50 , PTL_SETUP_RND_RARE , work->heapId );
-          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
+          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
           PP_Put( pp , ID_PARA_event_get_flag , TRUE );
           break;
         case 3: //10えいがスイクン
           pp = PP_Create( MONSNO_SUIKUN , 50 , PTL_SETUP_RND_RARE , work->heapId );
-          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
+          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_BEFORE );
           PP_Put( pp , ID_PARA_event_get_flag , TRUE );
           break;
         case 4: //10えいがセレビィ(後
           pp = PP_Create( MONSNO_SEREBHI , 50 , PTL_SETUP_RND_AUTO , work->heapId );
-          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_SEREBIXI_AFTER );
+          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_SEREBIXI_AFTER );
           PP_Put( pp , ID_PARA_event_get_flag , TRUE );
           break;
         case 5: //10えいがエンテイ(後
           pp = PP_Create( MONSNO_ENTEI , 50 , PTL_SETUP_RND_RARE , work->heapId );
-          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
+          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
           PP_Put( pp , ID_PARA_event_get_flag , TRUE );
           break;
         case 6: //10えいがライコウ(後
           pp = PP_Create( MONSNO_RAIKOU , 50 , PTL_SETUP_RND_RARE , work->heapId );
-          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
+          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
           PP_Put( pp , ID_PARA_event_get_flag , TRUE );
           break;
         case 7: //10えいがスイクン(後
           pp = PP_Create( MONSNO_SUIKUN , 50 , PTL_SETUP_RND_RARE , work->heapId );
-          PP_Put( pp , ID_PARA_get_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
+          PP_Put( pp , ID_PARA_birth_place , POKE_MEMO_PLACE_ENRAISUI_AFTER );
           PP_Put( pp , ID_PARA_event_get_flag , TRUE );
           break;
         case 8: //メロディア
