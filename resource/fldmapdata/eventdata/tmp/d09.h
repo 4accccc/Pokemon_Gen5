@@ -32,6 +32,7 @@
 #define D09_FLD_ITEM_03                    2
 #define D09_FLD_ITEM_04                    3
 #define D09_FLD_ITEM_05                    4
+#define TEST_OBJ                           5
 
 #endif //ZONE_D09_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d09.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

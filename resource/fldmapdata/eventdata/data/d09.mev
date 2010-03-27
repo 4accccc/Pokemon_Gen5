@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/19 18:48:23
+#save date:2010/03/27 13:50:13
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d09.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d09.wms
 #hold event type:
 1
 #hold event number:
-5
+6
 #event number: 0
 #type
 1
@@ -165,6 +165,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_RAIL
 #position
 12 3 -1
+#event number: 5
+#type
+1
+#ID name
+TEST_OBJ
+#OBJ CODE Number
+BACKPACKERM
+#MOVE CODE Number
+MV_RAIL_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_TEST_MMDL
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+21 6 2
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -184,7 +215,7 @@ EVENTDATA_POSTYPE_RAIL
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Pos Event Label
 POS_D09_LFRONT_CONNECT
@@ -202,6 +233,23 @@ EVENTDATA_POSTYPE_RAIL
 60 0 -3
 #size
 5 1
+#event number: 1
+#Pos Event Label
+POS_D09_DUMMY
+#Pos Script Name
+SCRID_SLIPDOWN
+#Pos Check Type
+POS_CHECK_TYPE_RIGHT
+#Event Trigger Work Name
+LOCALWORK10
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_RAIL
+#position
+13 6 -2
+#size
+1 5
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_d09.h"
-  //.include  "d09.h"
+  .include  "d09.h"
   .include  "c09_def.h"
 
 //--------------------------------------------------------------
@@ -21,6 +21,8 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_d09_lfront_connect	//リーグフロント(C09)への接続イベント
+_EVENT_DATA    ev_test_mmdl	//
+_EVENT_DATA    ev_slipdown //
 _EVENT_DATA_END
 
 //------------------------！注意！------------------------------//
@@ -51,6 +53,15 @@ EVENT_START	ev_pos_d09_lfront_connect
 	//暗転無しマップ遷移
 	_MAP_CHANGE_NO_FADE( ZONE_ID_C09, 32, 0, 60, DIR_UP )
 	
+EVENT_END
+
+EVENT_START	ev_test_mmdl
+EVENT_END
+
+EVENT_START	ev_slipdown
+
+_OBJ_RAIL_SLIPDOWN( TEST_OBJ )
+
 EVENT_END
 
 //--------------------------------------------------------------------
