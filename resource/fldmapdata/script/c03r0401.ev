@@ -277,19 +277,26 @@ add_zoroa:
       }
 
       IF $SCWK_ANSWER == TRUE THEN                            //ボールを選択した
+      {
+        DEFINE_LOCAL get_msg
         //ゾロアをボールに入れて自機の場所へ
         _CALL zoroa_ball_in
 
+        //ME
+        _ME_PLAY( SEQ_ME_POKEGET )
+
         IF $temoti != 0 THEN        //手持ち
           _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_ZOROA, 0, TOKUSYU_NULL, 99, 0, ret_item )  //@todo レベル指定
-
-          _SYSWIN_MSG( msg_c03r0401_narrator_02, POS_DOWN )
-          _SYSWIN_CLOSE()
+          $get_msg = msg_c03r0401_narrator_02
         ELSE                        //ボックス
           _ADD_POKEMON_TO_BOX( SCWK_ANSWER, MONSNO_ZOROA, 0, TOKUSYU_NULL, 99, 0, ret_item )//@todo レベル指定
-          _SYSWIN_MSG( msg_c03r0401_narrator_03, POS_DOWN )
-          _SYSWIN_CLOSE()
+          $get_msg = msg_c03r0401_narrator_03
         ENDIF
+
+        _SYSWIN_MSG( msg_c03r0401_narrator_02, POS_DOWN )
+        _ME_WAIT()
+        _AB_KEYWAIT_MARK()
+        _SYSWIN_CLOSE()
         //「よかったね」
         _BALLOONWIN_OBJMSG( msg_c03r0401_girl1_09 ,C03R0401_GIRL1_01  )
         _BALLOONWIN_CLOSE()
@@ -303,6 +310,7 @@ add_zoroa:
         $WK_SCENE_C03R0401_ZOROA = 3
         //ループ抜ける
         $loop = FALSE
+      }  
       ELSE                                                  //ボールを選択しなかった
         //「つれていけないの？」
         _BALLOONWIN_OBJMSG( msg_c03r0401_girl1_14, C03R0401_GIRL1_01  )
@@ -397,7 +405,7 @@ EVENT_START	ev_c03r0401_girl1_01
         //「一緒にいる」
         _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_01 )
         _BALLOONWIN_CLOSE()
-
+/**
         //話が始まるまでのＯＢＪアニメ
         {
           DEFINE_LOCAL player_dir
@@ -420,7 +428,7 @@ EVENT_START	ev_c03r0401_girl1_01
             _OBJ_ANIME_WAIT()  
           ENDSWITCH
         }
-
+*/
         //「話のつづき」
         _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_02 )
         _BALLOONWIN_CLOSE()
@@ -434,7 +442,6 @@ EVENT_START	ev_c03r0401_girl1_01
           _SET_ZUKAN_FLAG( ZUKANCTRL_MODE_SEE, MONSNO_ZOROA )
           //「ゾロアはひとをばかす」
           _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_03 )
-          _LAST_KEYWAIT()
           _BALLOONWIN_CLOSE()
         ENDIF
 
