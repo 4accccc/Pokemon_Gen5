@@ -71,6 +71,7 @@ struct _GAMEDATA{
   SAVE_CONTROL_WORK *sv_control_ptr;    ///<セーブデータ管理ワークへのポインタ
   PLAYER_WORK playerWork[PLAYER_MAX];
   EVENTDATA_SYSTEM * evdata;
+  SITUATION * situation;
   LOCATION *start_loc;
   LOCATION *entrance_loc;
   LOCATION *special_loc;    ///<特殊接続先位置
@@ -164,7 +165,6 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
 {
   int i;
   GAMEDATA * gd;
-  SITUATION *st;
 
   //GAMEDATAの初期化に必要なテンポラリ確保に使うヒープはこのtmpHeapIDに統一してください
   HEAPID  tmpHeapID = GFL_HEAP_LOWID( GFL_HEAPID_APP );
@@ -180,11 +180,12 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->subscreen_mode = FIELD_SUBSCREEN_NORMAL;
 
   //状況データ
-  st = SaveData_GetSituation(gd->sv_control_ptr);
-  gd->start_loc = Situation_GetStartLocation(st);
-  gd->entrance_loc = Situation_GetStartLocation(st);
-  gd->special_loc = Situation_GetSpecialLocation(st);
-  gd->escape_loc = Situation_GetEscapeLocation(st);
+  gd->situation = SaveData_GetSituation(gd->sv_control_ptr);
+
+  gd->start_loc = Situation_GetStartLocation(gd->situation);
+  gd->entrance_loc = Situation_GetStartLocation(gd->situation);
+  gd->special_loc = Situation_GetSpecialLocation(gd->situation);
+  gd->escape_loc = Situation_GetEscapeLocation(gd->situation);
 
   // BGM情報取得システムを作成(BGM情報を読み込む)
   gd->bgm_info_sys = BGM_INFO_CreateSystem( heapID );
@@ -207,7 +208,7 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   gd->eventwork = SaveControl_DataPtrGet( gd->sv_control_ptr, GMDATA_ID_EVENT_WORK );
   
   //マップマトリックス
-  gd->mapMatrix = MAP_MATRIX_Create( heapID, tmpHeapID );
+  gd->mapMatrix = MAP_MATRIX_Create( heapID );
 
   //動作モデル
   gd->mmdlsys = MMDLSYS_CreateSystem( heapID, MMDL_MDL_MAX, SaveControl_DataPtrGet(gd->sv_control_ptr,GMDATA_ID_ROCKPOS) );
@@ -539,7 +540,7 @@ void GAMEDATA_SetPalaceReturnLocation(GAMEDATA * gamedata, const LOCATION * loc)
 //--------------------------------------------------------------
 void GAMEDATA_SetWarpID(GAMEDATA * gamedata, u16 warp_id)
 {
-  u16 * warp = Situation_GetWarpID( SaveData_GetSituation(gamedata->sv_control_ptr) );
+  u16 * warp = Situation_GetWarpID( gamedata->situation );
   *warp = warp_id;
 }
 
@@ -552,7 +553,7 @@ void GAMEDATA_SetWarpID(GAMEDATA * gamedata, u16 warp_id)
 //--------------------------------------------------------------
 u16 GAMEDATA_GetWarpID(GAMEDATA * gamedata)
 {
-  u16 * warp = Situation_GetWarpID( SaveData_GetSituation(gamedata->sv_control_ptr) );
+  u16 * warp = Situation_GetWarpID( gamedata->situation );
   return *warp;
 }
 
@@ -1357,7 +1358,7 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
   }
 
   { //FIELD_STATUS
-    SITUATION * situation = SaveData_GetSituation( gamedata->sv_control_ptr );
+    SITUATION * situation = gamedata->situation;
     SaveData_SituationDataLoadStatus( situation, gamedata->fldstatus );
     SaveData_SituationLoadSeasonID( situation, &gamedata->season_id );
   }
@@ -1367,7 +1368,7 @@ static void GAMEDATA_SaveDataLoad(GAMEDATA *gamedata)
     WifiList_Copy(swifilist, wifilist);
   }
   { //WEATHER_ID
-    SITUATION* sv = SaveData_GetSituation( gamedata->sv_control_ptr );
+    SITUATION* sv = gamedata->situation;
     SaveData_SituationLoadWeatherID( sv, &gamedata->weather_id );
   }
   { //UNSV_WORK
@@ -1418,7 +1419,7 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
   }
 
   { //FIELD_STATUS
-    SITUATION * situation = SaveData_GetSituation( gamedata->sv_control_ptr );
+    SITUATION * situation = gamedata->situation;
     SaveData_SituationDataUpdateStatus( situation, gamedata->fldstatus );
     SaveData_SituationUpdateSeasonID( situation, gamedata->season_id );
   }
@@ -1428,7 +1429,7 @@ static void GAMEDATA_SaveDataUpdate(GAMEDATA *gamedata)
     WifiList_Copy(wifilist, swifilist);
   }
   { //WEATHER_ID
-    SITUATION* sv = SaveData_GetSituation( gamedata->sv_control_ptr );
+    SITUATION* sv = gamedata->situation;
     SaveData_SituationUpdateWeatherID( sv, gamedata->weather_id );
   }
 
