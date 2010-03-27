@@ -349,8 +349,6 @@ GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_pr
   bcw->gsys = gsys;
   bcw->btl_setup_prm = btl_setup_prm;
   bcw->demo_prm = demo_prm;
-  bcw->battle_mode = demo_prm->battle_mode;
-  bcw->fight_count = demo_prm->fight_count;
   return event;
 }
 
@@ -379,8 +377,8 @@ GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work)
       prm->gdata = GAMESYSTEM_GetGameData( gsys );
       prm->btl_setup_prm = bcw->btl_setup_prm;
       prm->demo_prm = bcw->demo_prm;
-      prm->battle_mode = bcw->battle_mode;
-      prm->fight_count = bcw->fight_count;
+      prm->battle_mode = bcw->demo_prm->battle_mode;
+      prm->fight_count = bcw->demo_prm->fight_count;
       GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &CommBattleCommProcData, prm);
     }
     (*seq)++;
