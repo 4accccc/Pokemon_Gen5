@@ -73,10 +73,12 @@ $(targetname).narc: $(CONVERTDATA)
 	$(NAIXCUT) $(targetname).naix
 
 train1_ica_data.bin: h03_train1.ica
-	ruby $(ICACONV) -t h03_train1.ica train1_ica_data.bin
+	ruby ica_trans_data_converter.rb h03_train1.ica h03_train1_conv.ica 184 32 464
+	ruby $(ICACONV) -t h03_train1_conv.ica train1_ica_data.bin
 
 train2_ica_data.bin: h03_train2.ica
-	ruby $(ICACONV) -t h03_train2.ica train2_ica_data.bin
+	ruby ica_trans_data_converter.rb h03_train2.ica h03_train2_conv.ica 318 32 464
+	ruby $(ICACONV) -t h03_train2_conv.ica train2_ica_data.bin
 
 train1_3ds_unit_data.bin: h03.txt
 	ruby h03_conv.rb
@@ -107,7 +109,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(CONVERTDATA)
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
-	rm -f h03.txt
+	rm -f *.txt
+	rm -f *.bin
 endif
 	rm -f $(TARGETDIR)/$(targetname).narc
 	rm -f $(TARGETDIR)/$(targetname).naix

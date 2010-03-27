@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ica version="1.6.0">
+
+<head>
+	<create user="fujiwara_maiko" host="W00194" date="2010-01-27T18:48:04" source="h03_train.mb"/>
+	<title>Character Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<node_anm_info
+	frame_size="120"
+	scaling_rule="standard"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tool_end_frame="120"
+	interpolation="frame"
+	compress_node="none" node_size="1 1"
+	frame_step_mode="1"
+	tolerance_scale="0.100000"
+	tolerance_rotate="0.100000"
+	tolerance_translate="0.100000"
+/>
+
+<node_scale_data size="1">
+	1.000000
+</node_scale_data>
+
+<node_rotate_data size="1">
+	0.000000
+</node_rotate_data>
+
+<node_translate_data size="122">
+318.0 
+-8.0 3998.0 3954.067139 3910.134521 3866.20166 3822.269043 3778.336182 3734.40332 3690.470703 3646.537842 
+3602.60498 3558.672363 3514.739502 3470.806641 3426.874023 3382.941162 3339.008545 3295.075684 3251.142822 3207.210205 
+3163.277344 3119.344482 3075.411865 3031.479004 2987.546387 2943.613525 2899.680664 2855.748047 2811.815186 2767.882324 
+2723.949707 2680.016846 2636.083984 2592.151367 2548.218506 2504.285889 2460.353027 2416.420166 2372.487549 2328.554688 
+2284.621826 2240.689209 2196.756348 2152.82373 2108.890869 2064.958008 2021.025391 1977.092529 1933.159668 1889.227051 
+1845.294189 1801.361328 1757.428711 1713.49585 1669.562988 1625.630371 1581.69751 1537.764893 1493.832031 1449.89917 
+1405.966309 1362.033691 1318.10083 1274.168213 1230.235352 1186.30249 1142.369873 1098.437012 1054.50415 1010.571533 
+966.638672 922.705811 878.773193 834.840332 790.907471 746.974854 703.041992 659.109131 615.176514 571.243652 
+527.310791 483.378174 439.445312 395.512451 351.579834 307.646973 263.714355 219.781494 175.848633 131.916016 
+87.983154 44.050293 0.117676000000017 -43.815186 -87.748047 -131.680664 -175.613525 -219.546387 -263.479004 -307.411865 
+-351.344727 -395.277344 -439.210205 -483.142822 -527.075684 -571.008545 -614.941162 -658.874023 -702.806885 -746.739502 
+-790.672363 -834.605225 -878.537842 -922.470703 -966.403564 -1010.336182 -1054.269043 -1098.20166 -1142.134521 -1186.067383 
+-1230.0 
+</node_translate_data>
+
+<node_anm_array size="1">
+	<node_anm index="0">
+		<scale_x frame_step="1" data_size="1" data_head="0"/>
+		<scale_y frame_step="1" data_size="1" data_head="0"/>
+		<scale_z frame_step="1" data_size="1" data_head="0"/>
+		<rotate_x frame_step="1" data_size="1" data_head="0"/>
+		<rotate_y frame_step="1" data_size="1" data_head="0"/>
+		<rotate_z frame_step="1" data_size="1" data_head="0"/>
+		<translate_x frame_step="1" data_size="1" data_head="0"/>
+		<translate_y frame_step="1" data_size="1" data_head="1"/>
+		<translate_z frame_step="1" data_size="120" data_head="2"/>
+	</node_anm>
+</node_anm_array>
+
+</body>
+
+</ica>
+<converted!! original=h03_train2.ica/>
