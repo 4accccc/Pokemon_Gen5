@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-14T12:39:39"/>
+	<create user="matsumiya" host="W00224" date="2010-03-27T22:20:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="1018" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -379,10 +379,16 @@
 
 
 	<row id="pdw_furniture_menu_01">
-		<language name="JPN">かんきょうが　ととのってなくて
-かぐカタログが　とどかないのよね</language>
-		<language name="JPN_KANJI">環境が　整ってなくて
-家具カタログが　届かないのよね</language>
+		<language name="JPN">アタシ　かぐの　コレクター！▼
+でも　かんきょうが　ととのってなくて
+かぐカタログが　とどかないのよね▼
+カタログを　ながめる　じかんが
+アタシの　いきがい　なのに……</language>
+		<language name="JPN_KANJI">アタシ　家具の　コレクター！▼
+でも　環境が　整ってなくて
+家具カタログが　届かないのよね▼
+カタログを　ながめる　時間が
+アタシの　生きがい　なのに……</language>
 	</row>
 
 	<row id="pdw_furniture_menu_02">
@@ -466,11 +472,12 @@
 ツウごのみの　ステキな　かんじ！！▼
 その　ステキセンスを　みこんで
 おねがいが　あるの！！　きいてね！▼
-うちは　みてのとおりの
-インテリアショップ　なんだけど▼
-おきゃくさんの　このみが
-わからなくて　なやんでいるの……▼
-そこで！　この　カタログから
+アタシ　かぐのコレクターなの▼
+それで　つぎに　どんな　かぐを
+あつめようかな　って▼
+カタログを　ながめてるんだけど
+なかなか　きめられなくって……▼
+そこで！　この　かぐカタログから
 これがすき！　っていう▽
 かぐを　１つ　えらんでほしいんだ▼
 アナタの　センスを　しんじるので
@@ -480,11 +487,12 @@
 通好みの　ステキな　感じ！！▼
 その　ステキセンスを　見込んで
 お願いが　あるの！！　聞いてね！▼
-うちは　見てのとおりの
-インテリアショップ　なんだけど▼
-お客さんの　好みが
-わからなくて　悩んでいるの……▼
-そこで！　この　カタログから
+アタシ　家具の　コレクターなの▼
+それで　次に　どんな家具を
+集めようかな　って▼
+カタログを　ながめてるんだけど
+なかなか　決められなくって……▼
+そこで！　この　家具カタログから
 これが好き！　っていう▽
 家具を　１つ　選んでほしいんだ▼
 アナタの　センスを　信じるので
