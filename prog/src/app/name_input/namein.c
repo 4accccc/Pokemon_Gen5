@@ -5653,7 +5653,7 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   //SEQFUNC_Main‚ÖˆÚ“®FinishInput( p_wk );
 
   //“ü—Íƒ‚[ƒh‚ğ•Û‘¶‚·‚é
-  if( p_param->p_misc )
+  if( p_wk->p_param->p_misc )
   { 
     NAMEIN_INPUTTYPE input_type;
     input_type  = KEYBOARD_GetInputType( &p_wk->keyboard );
