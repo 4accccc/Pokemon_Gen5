@@ -89,12 +89,13 @@ init_flags:
 	_FLAG_SET( FV_D02R0101_LEADER2 )
 	_FLAG_SET( FV_D02R0101_SAGE5 )
 
-	//D05R0101：夢アイテム、夢ポケモンと遭遇イベント後に表示
+	//D01R0101：夢アイテム、夢ポケモンと遭遇イベント後に表示
 	_FLAG_SET( FV_D01R0101_ITEM_01 )
 	
-	//D05R0101：サポート、C01ジムクリア後に表示
+	//D01R0101：サポート、C01ジムクリア後に表示
 	_FLAG_SET( FV_D01R0101_SUPPORT_01 )
 	_FLAG_SET( FV_D01R0101_POKE_01 )
+	_FLAG_SET( FV_D01R0101_GCIS_01 )
 
 	//５番道路のジムリーダーとライバル
 	_FLAG_SET( FV_R05_RIVAL )

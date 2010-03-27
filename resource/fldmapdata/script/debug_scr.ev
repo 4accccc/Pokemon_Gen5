@@ -251,10 +251,48 @@ _RET
 /* ANDO                                                           */
 /**************************************************************/
 EVENT_START   ev_debug_ando
-	_FLAG_RESET( FV_C09R0501_CHAMPION_02 )
-	_FLAG_SET( FV_C09R0501_BOSS_01 )
-	_FLAG_SET( FV_C09R0501_CHAMPION_01 )
-	$WK_SCENE_C09R0501 = 1
+
+		$SCWK_TEMP2 = 0
+		//メニュー作成
+		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_TEMP2 )
+		//リスト追加
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_01, 0 )	//アイスイベント初期化
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_02, 1 )	//ネジ山チャンピオンイベント起動
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 2 )	//D05イベント起動
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 3 )	//R01イベント初期化
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 4 )	//D07R0401イベント初期化
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 5 )	//C03R0301イベント初期化
+		_BMPMENU_MAKE_LIST( msg_debug_mizu_03, 6 )	//C08初期化
+		//メニュー表示
+		_BMPMENU_START()
+	
+		IF $SCWK_TEMP2 == 0 THEN
+			_FLAG_RESET(TMFLG_C03P09_SWEETS)
+			$WK_SCENE_C03P09_SWEETS = 0
+		ELSIF $SCWK_TEMP2 == 1 THEN
+			$WK_SCENE_D07_RIVAL_01 = 1
+		ELSIF $SCWK_TEMP2 == 2 THEN
+			//バニッシュフラグ操作
+			_FLAG_RESET(FV_D05R0101_RIVAL_02)
+			//フラグ操作
+			$WK_SCENE_D05_PLASMA = 1
+			_FLAG_RESET(FE_D05R0201_PLASMA_03)
+			_FLAG_RESET(FV_D05R0201_PLASMA)
+		ELSIF $SCWK_TEMP2 == 3 THEN
+			//C07イベント初期化
+			_FLAG_RESET( FV_C07_HAKASE1 )
+			$WK_SCENE_C07 = 0
+		ELSIF $SCWK_TEMP2 == 4 THEN
+			$WK_SCENE_D07R0401 = 0
+			_FLAG_RESET(FV_D07R0401PLASMA_01)
+			_FLAG_RESET(FV_D07R0401RIVAL_01)
+		ELSIF $SCWK_TEMP2 == 5 THEN
+			$WK_SCENE_D01R0101_POKE = 1
+			$WK_SCENE_D07_RIVAL_01 = 1
+		ELSIF $SCWK_TEMP2 == 6 THEN
+			$WK_SCENE_R14R0201_LEG = 0
+		ENDIF
+	
 EVENT_END
 
 /**************************************************************/
