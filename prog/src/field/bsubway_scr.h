@@ -72,6 +72,9 @@ extern void BSUBWAY_COMM_Exit( BSUBWAY_SCRWORK *bsw_scr );
 extern void BSUBWAY_COMM_TimingSyncStart( u8 no );
 extern BOOL BSUBWAY_COMM_IsTimingSync( u8 no );
 
+extern void BSUBWAY_COMM_AddCommandTable( BSUBWAY_SCRWORK *bsw_scr );
+extern void BSUBWAY_COMM_DeleteCommandTable( BSUBWAY_SCRWORK *bsw_scr );
+
 #if 0
 extern u16 BSUBWAY_SCRWORK_CommReceivePlayerData(
     BSUBWAY_SCRWORK *bsw_scr, const u16 *recv_buf );

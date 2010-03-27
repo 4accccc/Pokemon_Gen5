@@ -215,7 +215,6 @@ static BOOL check_ConnectService(
   return( GameServiceID1 == GameServiceID2 );
 }
 
-#if 0
 //--------------------------------------------------------------
 /**
  * バトルサブウェイ用通信コマンドテーブルを追加
@@ -240,7 +239,6 @@ void BSUBWAY_COMM_DeleteCommandTable( BSUBWAY_SCRWORK *bsw_scr )
 {
   GFL_NET_DelCommandTable( GFL_NET_CMD_BSUBWAY );
 }
-#endif
 
 //======================================================================
 //  バトルサブエウィ　通信同期

@@ -104,6 +104,7 @@ static const VecFx32 data_TrainPosTbl[BTRAIN_POS_MAX];
 static const u32 data_PlayModeZoneID[BSWAY_MODE_MAX];
 static const VecFx32 data_PlayModeRecoverPos[BSWAY_MODE_MAX];
 static const u16 data_ModeBossClearFlag[BSWAY_MODE_MAX];
+static const u16 data_ModeBattleMode[BSWAY_MODE_MAX];
 const HOME_NPC_DATA data_HomeNpcTbl[];
 
 //======================================================================
@@ -1052,6 +1053,9 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       bsw_scr->btl_rec_sel_param.gamedata = gdata;
       bsw_scr->btl_rec_sel_param.b_rec = TRUE;
       bsw_scr->btl_rec_sel_param.b_sync = FALSE;
+      bsw_scr->btl_rec_sel_param.battle_mode = data_ModeBattleMode[play_mode];
+      bsw_scr->btl_rec_sel_param.fight_count = BSUBWAY_SCOREDATA_GetRenshou(
+          scoreData, play_mode );
       
       event = EVENT_FieldSubProc_Callback(
           gsys, fieldmap, FS_OVERLAY_ID(btl_rec_sel), 
@@ -1072,11 +1076,20 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //----ワーク依存　通信関連
   //通信開始
   case BSWSUB_COMM_START:
-    BSUBWAY_COMM_Init( bsw_scr );
+    if( bsw_scr->comm_irc_f == TRUE ){ //赤外線
+      BSUBWAY_COMM_AddCommandTable( bsw_scr );
+    }else{ //ワイヤレス
+      BSUBWAY_COMM_Init( bsw_scr );
+    }
+
     GAMESYSTEM_SetAlwaysNetFlag( gsys, TRUE );
     break;
   //通信終了
   case BSWSUB_COMM_END:
+    if( bsw_scr->comm_irc_f == TRUE ){ //赤外線
+      BSUBWAY_COMM_DeleteCommandTable( bsw_scr );
+    }
+    
     BSUBWAY_COMM_Exit( bsw_scr );
     GAMESYSTEM_SetAlwaysNetFlag( gsys, FALSE );
     break;
@@ -1599,7 +1612,7 @@ static const VecFx32 data_PlayModeRecoverPos[BSWAY_MODE_MAX] =
 };
 
 //--------------------------------------------------------------
-//  バトルサブウェイ　モード別クリアフラグ
+///  バトルサブウェイ　モード別クリアフラグ
 //--------------------------------------------------------------
 static const u16 data_ModeBossClearFlag[BSWAY_MODE_MAX] =
 {
@@ -1612,6 +1625,22 @@ static const u16 data_ModeBossClearFlag[BSWAY_MODE_MAX] =
   BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_DOUBLE, //super double
   BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_MULTI, //super multi
   BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_MULTI, //super comm multi
+};
+
+//--------------------------------------------------------------
+/// バトルサブウェイ　モード別バトルモード
+//--------------------------------------------------------------
+static const u16 data_ModeBattleMode[BSWAY_MODE_MAX] =
+{
+  BATTLE_MODE_SUBWAY_SINGLE, //single
+  BATTLE_MODE_SUBWAY_DOUBLE, //double
+  BATTLE_MODE_SUBWAY_MULTI, //multi
+  BATTLE_MODE_SUBWAY_MULTI, //comm_multi
+  BATTLE_MODE_SUBWAY_SINGLE, //wifi
+  BATTLE_MODE_SUBWAY_SINGLE, //super single
+  BATTLE_MODE_SUBWAY_DOUBLE, //super double
+  BATTLE_MODE_SUBWAY_MULTI, //super multi
+  BATTLE_MODE_SUBWAY_MULTI, //super comm multi
 };
 
 //--------------------------------------------------------------
