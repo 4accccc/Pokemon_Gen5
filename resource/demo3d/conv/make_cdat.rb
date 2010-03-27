@@ -154,8 +154,8 @@ class CDemo3DRes
     fp.puts("\t#{buf} },")
 
     #フェードイン
-    fp.puts("\tGFL_FADE_MASTER_BRIGHT_#{scene.fadein_col}OUT, #{scene.fadein_wait},\t///<フェードイン")
-    fp.puts("\tGFL_FADE_MASTER_BRIGHT_#{scene.fadeout_col}OUT, #{scene.fadeout_wait},\t///<フェードアウト")
+    fp.puts("\tDEMO3D_FADE_#{scene.fadein_col}, #{scene.fadein_wait},\t///<フェードイン")
+    fp.puts("\tDEMO3D_FADE_#{scene.fadeout_col}, #{scene.fadeout_wait},\t///<フェードアウト")
     #フェードアウト
 
     fp.puts("};\n\n")

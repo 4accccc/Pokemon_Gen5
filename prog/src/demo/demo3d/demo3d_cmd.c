@@ -352,10 +352,11 @@ static void tcb_BGMChangeReq( GFL_TCBL *tcb , void* tcb_wk)
 
   switch(twk->seq){
   case 0:
-    if( PMSND_CheckFadeOnBGM() == FALSE){
-      twk->seq++;
+    if( PMSND_CheckFadeOnBGM()){
+      return;
     }
-    return;
+    twk->seq++;
+    //ブレイクスルー 
   case 1:
     if( twk->push_f ){
       if( !twk->cmd->bgm_push_f ){

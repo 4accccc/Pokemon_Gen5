@@ -84,3 +84,13 @@ extern BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk );
  */
 //-----------------------------------------------------------------------------
 extern fx32 DEMO3D_ENGINE_GetNowFrame( const DEMO3D_ENGINE_WORK* wk );
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  エンジンに終了コードを通知
+ *
+ *	@param	DEMO3D_ENGINE_WORK* wk 　ワーク
+ */
+//-----------------------------------------------------------------------------
+extern void DEMO3D_ENGINE_SetEndResult( DEMO3D_ENGINE_WORK* wk, DEMO3D_RESULT end_result );
+

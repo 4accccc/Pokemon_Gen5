@@ -173,8 +173,6 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
     GFL_G3D_DOUBLE3D_Init( heapID );
 		GFUser_SetVIntrFunc(vintrFunc);
   }
-  
-  wk->cmd = Demo3D_CMD_Init( wk, heapID );
 
   unit_max = Demo3D_DATA_GetUnitMax( wk->demo_id );
 
@@ -229,6 +227,8 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
       }
     }
   }
+  
+  wk->cmd = Demo3D_CMD_Init( wk, heapID );
 
   return wk;
 }
@@ -244,6 +244,8 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
 //-----------------------------------------------------------------------------
 void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk )
 { 
+  Demo3D_CMD_Exit( wk->cmd );
+  
   // カメラ破棄
   FrustCamera_Delete( wk->camera );
 
@@ -253,8 +255,6 @@ void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk )
 		GFUser_ResetVIntrFunc();
     GFL_G3D_DOUBLE3D_Exit();
   }
-  
-  Demo3D_CMD_Exit( wk->cmd );
 
   // ICA破棄
   ICA_ANIME_Delete( wk->ica_anime );
@@ -620,6 +620,20 @@ fx32 DEMO3D_ENGINE_GetNowFrame( const DEMO3D_ENGINE_WORK* wk )
 
   return ICA_ANIME_GetNowFrame( wk->ica_anime );
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  エンジンに終了コードを通知
+ *
+ *	@param	DEMO3D_ENGINE_WORK* wk 　ワーク
+ */
+//-----------------------------------------------------------------------------
+void DEMO3D_ENGINE_SetEndResult( DEMO3D_ENGINE_WORK* wk, DEMO3D_RESULT end_result )
+{
+  GF_ASSERT(wk);
+  wk->end_result = end_result;
+}
+
 
 //-----------------------------------------------------------------------------
 /**

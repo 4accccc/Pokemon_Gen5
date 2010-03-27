@@ -32,10 +32,7 @@
  *								定数定義
  */
 //=============================================================================
-enum
-{ 
-  CMD_ELEM_MAX = 9999,  ///< コマンドループ抜け用
-};
+#define CMD_ELEM_MAX 9999  ///< コマンドループ抜け用
 
 //=============================================================================
 /**
@@ -243,6 +240,15 @@ static void cmd_SystemWorkRelease( DEMO3D_CMD_WORK* wk )
   }
   //今生きている全てのタスクを削除
   GFL_TCBL_DeleteAll( wk->tcbsys );
+
+  //BGM Push/Popチェック
+  if( wk->bgm_push_f ){ 
+    if( wk->core->end_result != DEMO3D_RESULT_FINISH ){
+      GF_ASSERT_MSG(0,"BGMがpopされずに終了します\nX+Y+L+R同時押しでアサートを抜けて、コマンド列を見直してください\n");
+    }
+    PMSND_PopBGM();
+    PMSND_FadeInBGM( 60 );
+  }
 
   ///////////////////////////////////////////////////
   //システムワーク破棄

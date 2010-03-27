@@ -353,10 +353,10 @@ void Demo3D_DATA_GetFadeParam( DEMO3D_ID id, u8 inout_f, u8* outType, u8* outSyn
 
   if(inout_f == 0){
     *outType = scene->fadein_type;
-    *outSync = scene->fadein_sync;
+    *outSync = scene->fadein_sync*(scene->frame_rate+1);
   }else{
     *outType = scene->fadeout_type;
-    *outSync = scene->fadeout_sync;
+    *outSync = scene->fadeout_sync*(scene->frame_rate+1);
   }
 }
 

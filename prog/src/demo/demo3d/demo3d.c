@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
+#include "system/wipe.h"
 
 //タスクメニュー
 #include "app/app_taskmenu.h"
@@ -125,6 +126,8 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
 static APP_EXCEPTION_WORK* APP_EXCEPTION_Create( DEMO3D_ID demo_id, DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_ENGINE_WORK* engine, HEAPID heapID );
 static void APP_EXCEPTION_Delete( APP_EXCEPTION_WORK* wk );
 static void APP_EXCEPTION_Main( APP_EXCEPTION_WORK* wk );
+
+static BOOL sub_FadeInOutReq( u8 demo_id, u8 wipe, HEAPID heapID );
 static int _key_check( DEMO3D_MAIN_WORK *wk );
 
 //=============================================================================
@@ -191,9 +194,6 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   //PRINT_QUE作成
   wk->print_que   = PRINTSYS_QUE_Create( wk->heapID );
 
-  //3D 初期化
-  wk->engine = Demo3D_ENGINE_Init( wk->graphic, param, wk->heapID );
-
   // BG/OBJを非表示にしておく
   GFL_BG_SetVisible( BG_FRAME_BACK_S, VISIBLE_OFF );
   GFL_BG_SetVisible( BG_FRAME_TEXT_S, VISIBLE_OFF );
@@ -202,19 +202,19 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   GFL_BG_SetVisible( BG_FRAME_BAR_M,  VISIBLE_OFF );
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
-  
-  // フェードイン リクエスト
-  {
-    u8 type,sync;
-    Demo3D_DATA_GetFadeParam( param->demo_id, 0, &type, &sync );
-    GFL_FADE_SetMasterBrightReq( type, 16, 0, sync );
-  }
+
+  //3D 初期化
+  wk->engine = Demo3D_ENGINE_Init( wk->graphic, param, wk->heapID );
+ 
   // デモ毎の例外処理エンジン初期化
   wk->expection = APP_EXCEPTION_Create( param->demo_id, wk->graphic, wk->engine, wk->heapID );
 
+  // フェードイン リクエスト
+  sub_FadeInOutReq( param->demo_id, WIPE_TYPE_FADEIN, wk->heapID );
 
   return GFL_PROC_RES_FINISH;
 }
+
 //-----------------------------------------------------------------------------
 /**
  *  @brief  PROC 終了処理
@@ -231,19 +231,18 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
 { 
   DEMO3D_MAIN_WORK* wk = mywk;
   
-  if( *seq == 0 )
-  {
+  switch( *seq ){
+  case 0:
     // フェードアウト リクエスト
-    u8 type,sync;
-    Demo3D_DATA_GetFadeParam( wk->param->demo_id, 1, &type, &sync );
-    GFL_FADE_SetMasterBrightReq( type, 0, 16, sync );
-    (*seq)++;
+    (*seq) = 1+sub_FadeInOutReq( wk->param->demo_id, WIPE_TYPE_FADEOUT, wk->heapID );
     return GFL_PROC_RES_CONTINUE;
-  }
-  else if( GFL_FADE_CheckFade() == TRUE )
-  {
-    // フェード中は処理に入らない
-    return GFL_PROC_RES_CONTINUE;
+  case 1:
+    if( WIPE_SYS_EndCheck() == FALSE ){
+      return GFL_PROC_RES_CONTINUE;
+    }
+    break;
+  default:
+    break;
   }
 
   // 例外処理エンジン 終了処理
@@ -291,11 +290,13 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
   DEMO3D_MAIN_WORK* wk = mywk;
   BOOL is_end;
 
+#if 0 
   // フェード中は処理しない
-  if( GFL_FADE_CheckFade() == TRUE )
+  if( WIPE_SYS_EndCheck() == FALSE ){
   {
     return GFL_PROC_RES_CONTINUE;
   }
+#endif
 
   // 例外処理エンジン 主処理
   APP_EXCEPTION_Main( wk->expection );
@@ -314,6 +315,7 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
     // [OUT] フレーム値を設定
     wk->param->end_frame  = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT; 
     wk->param->result     = DEMO3D_RESULT_USER_END;
+    DEMO3D_ENGINE_SetEndResult( wk->engine, wk->param->result );
     return GFL_PROC_RES_FINISH;
   }
   else if( is_end )
@@ -321,6 +323,7 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
     // [OUT] フレーム値を設定
     wk->param->end_frame  = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT; 
     wk->param->result     = DEMO3D_RESULT_FINISH;
+    DEMO3D_ENGINE_SetEndResult( wk->engine, wk->param->result );
     return GFL_PROC_RES_FINISH;
   }
 
@@ -334,6 +337,30 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
  */
 //=============================================================================
 
+//----------------------------------------------------------------------------------
+/*
+ *  @brief  フェードイン/アウトリクエスト
+ */
+//----------------------------------------------------------------------------------
+static BOOL sub_FadeInOutReq( u8 demo_id, u8 wipe, HEAPID heapID )
+{
+  u8  type, sync;
+  u16 color;
+
+  Demo3D_DATA_GetFadeParam( demo_id, (wipe == WIPE_TYPE_FADEOUT), &type, &sync );
+  
+  if( type == DEMO3D_FADE_BLACK ){
+    color = WIPE_FADE_BLACK;
+  }else{
+    color = WIPE_FADE_WHITE;
+  }
+  if( sync > 0 ){
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, wipe, wipe, color, sync, 1, heapID );
+    return FALSE;
+  }
+  WIPE_SetBrightnessFadeOut( color );
+  return TRUE;
+}
 
 //----------------------------------------------------------------------------------
 /**
