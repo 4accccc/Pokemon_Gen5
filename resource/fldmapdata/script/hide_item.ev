@@ -381,12 +381,12 @@ EVENT_END
 
 EVENT_START ev_hide_item_046
 //４番道路 ( 414, 569 )
-	_ITEM_EVENT_HIDEITEM( 25, 1, FLAG_HIDEITEM_046 )// すごいキズぐすり
+	_ITEM_EVENT_HIDEITEM( 50, 1, FLAG_HIDEITEM_046 )// ふしぎなアメ
 EVENT_END
 
 EVENT_START ev_hide_item_047
 //４番道路 ( 419, 532 )
-	_ITEM_EVENT_HIDEITEM( 50, 1, FLAG_HIDEITEM_047 )// ふしぎなアメ
+	_ITEM_EVENT_HIDEITEM( 25, 1, FLAG_HIDEITEM_047 )// すごいキズぐすり
 EVENT_END
 
 EVENT_START ev_hide_item_048
@@ -545,7 +545,7 @@ EVENT_START ev_hide_item_078
 EVENT_END
 
 EVENT_START ev_hide_item_079
-//リュウラセンの塔 ( 38, 33 )
+//リュウラセンの塔 ( 33, 24 )
 	_ITEM_EVENT_HIDEITEM( 93, 1, FLAG_HIDEITEM_079 )// ハートのウロコ
 EVENT_END
 
@@ -590,7 +590,7 @@ EVENT_START ev_hide_item_087
 EVENT_END
 
 EVENT_START ev_hide_item_088
-//ほけんどうくつその２ ( 4, 36 )
+//ほけんどうくつその２ ( 6, 41 )
 	_ITEM_EVENT_HIDEITEM( 25, 1, FLAG_HIDEITEM_088 )// すごいキズぐすり
 EVENT_END
 
@@ -640,7 +640,7 @@ EVENT_START ev_hide_item_097
 EVENT_END
 
 EVENT_START ev_hide_item_098
-//１２番道路 ( 604, 164 )
+//１２番道路 ( 603, 165 )
 	_ITEM_EVENT_HIDEITEM( 86, 1, FLAG_HIDEITEM_098 )// ちいさなキノコ
 EVENT_END
 
@@ -650,7 +650,7 @@ EVENT_START ev_hide_item_099
 EVENT_END
 
 EVENT_START ev_hide_item_100
-//１２番道路 ( 609, 174 )
+//１２番道路 ( 628, 174 )
 	_ITEM_EVENT_HIDEITEM( 86, 1, FLAG_HIDEITEM_100 )// ちいさなキノコ
 EVENT_END
 
@@ -740,7 +740,7 @@ EVENT_START ev_hide_item_117
 EVENT_END
 
 EVENT_START ev_hide_item_118
-//１８番道路 ( 644, 747 )
+//１８番道路 ( 642, 743 )
 	_ITEM_EVENT_HIDEITEM( 45, 1, FLAG_HIDEITEM_118 )// マックスアップ
 EVENT_END
 
@@ -755,7 +755,7 @@ EVENT_START ev_hide_item_120
 EVENT_END
 
 EVENT_START ev_hide_item_121
-//１８番道路 ( 673, 726 )
+//１７番水道 ( 673, 726 )
 	_ITEM_EVENT_HIDEITEM( 93, 1, FLAG_HIDEITEM_121 )// ハートのウロコ
 EVENT_END
 
