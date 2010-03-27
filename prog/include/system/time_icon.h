@@ -28,7 +28,7 @@ typedef struct _TIMEICON_WORK	TIMEICON_WORK;
 
 //--------------------------------------------------------------------------------------------
 /**
- * タイマーアイコン処理追加
+ * @brief		タイマーアイコン処理追加 ( TCB )
  *
  * @param		tcbsys				GFL_TCBSYS
  * @param		msg_win				メッセージを表示しているウィンドウ
@@ -41,12 +41,58 @@ typedef struct _TIMEICON_WORK	TIMEICON_WORK;
 //--------------------------------------------------------------------------------------------
 extern TIMEICON_WORK * TIMEICON_Create(
 												GFL_TCBSYS * tcbsys, GFL_BMPWIN * msg_win, u8 clear_color, u8 wait, HEAPID heapID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイマーアイコン処理追加 ( TCBL )
+ *
+ * @param		tcblsys				GFL_TCBLSYS
+ * @param		msg_win				メッセージを表示しているウィンドウ
+ * @param		clear_color		塗りつぶしカラー
+ * @param		wait					アニメウェイト
+ * @param		heapID				ヒープＩＤ
+ *
+ * @return	ワーク
+ */
+//--------------------------------------------------------------------------------------------
 extern TIMEICON_WORK * TIMEICON_CreateTcbl( 
 												GFL_TCBLSYS * tcblsys, GFL_BMPWIN * msg_win, u8 clear_color, u8 wait, HEAPID heapID );
 
 //--------------------------------------------------------------------------------------------
 /**
- * タイマーアイコン処理削除
+ * @brief		タイマーアイコン処理追加（簡易版）
+ *
+ * @param		heapID				ヒープＩＤ
+ *
+ * @return	ワーク
+ *
+ * @li	ワークを作成して、キャラの読み込みを行います
+ * @li	TCBの使用を想定してます
+ */
+//--------------------------------------------------------------------------------------------
+extern TIMEICON_WORK * TIMEICON_CreateEz( HEAPID heapID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイマーアイコン処理開始
+ *
+ * @param		wk						ワーク
+ * @param		tcbsys				GFL_TCBSYS
+ * @param		msg_win				メッセージを表示しているウィンドウ
+ * @param		clear_color		塗りつぶしカラー
+ * @param		wait					アニメウェイト
+ *
+ * @return	none
+ *
+ * @li	TIMEICON_CreateEz()で初期化した場合のみ使用
+ */
+//--------------------------------------------------------------------------------------------
+extern void TIMEICON_StartEz(
+							TIMEICON_WORK * wk, GFL_TCBSYS * tcbsys, GFL_BMPWIN * msg_win, u8 clear_color, u8 wait );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイマーアイコン処理削除
  *
  * @param		wk		ワーク
  *
