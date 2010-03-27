@@ -1141,17 +1141,23 @@ EVENT_START ev_trainer_talk_battle
 
   ELSE
   {
-    DEFINE_LOCAL  LWK_TRAINER_IS_DOUBLE
-    DEFINE_LOCAL  LWK_2VS2_OK
+    DEFINE_LOCAL  LWK_BTL_RULE
+    DEFINE_LOCAL  LWK_BTL_MEMBER
 
-    //トレーナータイプ取得(シングル＝０、ダブル＝１）
-    _TRAINER_BTL_RULE_GET( LWK_TRAINERID, LWK_TRAINER_IS_DOUBLE )
-    //2vs2が可能か？チェック
-    _2VS2_BATTLE_CHECK( LWK_2VS2_OK )
+    //トレーナータイプ取得(SCR_TR_BTL_RULE_～）
+    _TRAINER_BTL_RULE_GET( LWK_TRAINERID, LWK_BTL_RULE )
+    //何匹戦えるポケモンが手持ちにいるか、取得
+    _GET_PARTY_POKE_COUNT( LWK_BTL_MEMBER, POKECOUNT_MODE_BATTLE_ENABLE )
 
-    IF $LWK_TRAINER_IS_DOUBLE == SCR_TR_BTL_RULE_DOUBLE && $LWK_2VS2_OK != TRUE THEN
+    IF $LWK_BTL_RULE == SCR_TR_BTL_RULE_DOUBLE && $LWK_BTL_MEMBER < 2 THEN
       //ダブルバトルで手持ちが足りない場合、NGメッセージへ
       _CALL sub_trainer_talk_2vs2_NG
+    ELSIF $LWK_BTL_RULE == SCR_TR_BTL_RULE_TRIPLE && $LWK_BTL_MEMBER < 3 THEN
+      //トリプルバトルで手持ちが足りない場合、NGメッセージへ
+      _CALL sub_trainer_talk_3vs3_NG
+    ELSIF $LWK_BTL_RULE == SCR_TR_BTL_RULE_ROTATION && $LWK_BTL_MEMBER < 3 THEN
+      //ローテーションバトルで手持ちが足りない場合、NGメッセージへ
+      _CALL sub_trainer_talk_3vs3_NG
     ELSE
       //それ以外の場合、戦闘へ
       _CALL sub_trainer_talk_battle
@@ -1196,6 +1202,17 @@ sub_trainer_talk_battle:
 //--------------------------------------------------------------------
 sub_trainer_talk_2vs2_NG:
   _TRAINER_ID_GET( SCWK_ANSWER )
+  _TRAINER_TALK_TYPE_GET( LWK_MSGID_START, LWK_MSGID_AFTER, LWK_MSGID_NG )
+  _TRAINER_MSG_SET( LWK_TRAINERID, LWK_MSGID_NG )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  _RET
+
+//--------------------------------------------------------------------
+//  3vs3が不可能な（手持ちが足りない）場合
+//--------------------------------------------------------------------
+sub_trainer_talk_3vs3_NG:
+  _TRAINER_ID_GET( LWK_TRAINERID )
   _TRAINER_TALK_TYPE_GET( LWK_MSGID_START, LWK_MSGID_AFTER, LWK_MSGID_NG )
   _TRAINER_MSG_SET( LWK_TRAINERID, LWK_MSGID_NG )
   _LAST_KEYWAIT()
