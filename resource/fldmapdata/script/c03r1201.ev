@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_c03r1201.h"
-  //.include  "c03r1201.h"
+  .include  "c03r1201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA		ev_c03r1201_businessman1_01
 _EVENT_DATA		ev_c03r1201_businessman2_01
+_EVENT_DATA		ev_c03r1201_assistantm1_01
 _EVENT_DATA_END
 
 
@@ -44,3 +45,27 @@ EVENT_START		ev_c03r1201_businessman2_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1201_businessman2_01 )
 EVENT_END
 
+/**************************************************************/
+/*		C03R1201	しんかのきせきイベント					  */
+/**************************************************************/
+EVENT_START		ev_c03r1201_assistantm1_01
+
+	DEFINE_LOCAL	LWK_ZUKAN
+	
+	_GET_ZUKAN_COUNT( ZUKANCTRL_MODE_SEE,LWK_ZUKAN )
+	
+	_NUMBER( 0, LWK_ZUKAN, 3 )
+	
+
+	//ポケモンを見た数が２０以上の場合
+	IF $LWK_ZUKAN >= 20 THEN
+		//【仮】アイテム取得フラグなし
+		_EASY_TALK_ITEM_EVENT( ITEM_SINKANOKISEKI, 1, FH_01, msg_c03r1201_assistantm1_02, msg_c03r1201_assistantm1_03, msg_c03r1201_assistantm1_03 )
+	
+	//まだ２０匹以下の場合
+	ELSE
+
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r1201_assistantm1_01 )
+	ENDIF
+	
+EVENT_END

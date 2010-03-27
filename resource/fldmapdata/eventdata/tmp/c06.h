@@ -4,12 +4,10 @@
 
 #define DOOR_ID_C06_C06PC0101_EXIT01      0
 #define DOOR_ID_C06_C06R0301_EXIT01       1
-#define DOOR_ID_C06_C06R0401_EXIT01       2
-#define DOOR_ID_C06_C06GYM0101_EXIT01     3
-#define DOOR_ID_C06_C06R0201_EXIT01       4
-#define DOOR_ID_C06_C06R0101_EXIT01       5
-#define DOOR_ID_C06_C06R0501_EXIT01       6
-#define DOOR_ID_C06_D06R0101_EXIT01       7
+#define DOOR_ID_C06_C06GYM0101_EXIT01     2
+#define DOOR_ID_C06_C06R0201_EXIT01       3
+#define DOOR_ID_C06_C06R0101_EXIT01       4
+#define DOOR_ID_C06_D06R0101_EXIT01       5
 
 #endif //ZONE_C06_EVD_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
