@@ -50,5 +50,9 @@ extern void BR_SIDEBAR_SetShakePos(BR_SIDEBAR_WORK *p_wk  );
 extern BOOL BR_SIDEBAR_IsMoveEnd( const BR_SIDEBAR_WORK *cp_wk );
 
 //br_musicallook_proc.cに上画面破棄・読み込み用
+#if 0 
+//読み込み直さなくても、表示を消していれば大丈夫なので、消去
 extern void BR_SIDEBAR_UnLoadMain( BR_SIDEBAR_WORK *p_wk, BR_RES_WORK *p_res );
-extern void BR_SIDEBAR_LoadMain( BR_SIDEBAR_WORK *p_wk, GFL_CLUNIT *p_clunit, BR_FADE_WORK *p_fade, BR_RES_WORK *p_res, HEAPID heapID );
+extern void BR_SIDEBAR_LoadMain( BR_SIDEBAR_WORK *p_wk, GFL_CLUNIT *p_clunit, BR_RES_WORK *p_res, HEAPID heapID );
+#endif
+extern void BR_SIDEBAR_SetVisible( BR_SIDEBAR_WORK *p_wk, CLSYS_DRAW_TYPE type, BOOL is_visible );

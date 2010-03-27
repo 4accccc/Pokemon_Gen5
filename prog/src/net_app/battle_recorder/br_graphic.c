@@ -950,6 +950,10 @@ void BR_GRAPHIC_SetMusicalMode( BR_GRAPHIC_WORK *p_wk, HEAPID heapID )
 void BR_GRAPHIC_ReSetMusicalMode( BR_GRAPHIC_WORK *p_wk, HEAPID heapID )
 { 
 
+  //レジスタ初期化
+	G2_BlendNone();
+	GX_SetVisibleWnd( GX_WNDMASK_NONE );
+
   //GFL_BG_SetBGModeの内部でGFL_DISP_GX_InitVisibleControlBGを読んでいるので
   //直接必要な箇所だけ呼ぶ
   GX_SetGraphicsMode( sc_bgsys_header.dispMode, sc_bgsys_header.bgMode, sc_bgsys_header.bg0_2Dor3D );

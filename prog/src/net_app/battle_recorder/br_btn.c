@@ -450,6 +450,9 @@ void BR_BTN_SYS_Exit( BR_BTN_SYS_WORK *p_wk )
 	BmpOam_Exit( p_wk->p_bmpoam );
   PRINTSYS_QUE_Delete( p_wk->p_que );
 
+  //br_btn.c‚Ì’†‚ÅOFF‚É‚µ‚Ä‚¢‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å
+  GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
+
 	//ƒ[ƒN”jŠü
 	GFL_HEAP_FreeMemory( p_wk );
 }

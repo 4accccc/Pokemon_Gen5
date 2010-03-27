@@ -14,6 +14,7 @@
 #include "br_graphic.h"
 #include "br_fade.h"
 #include "br_net.h"
+#include "br_sidebar.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -31,6 +32,7 @@
 typedef struct 
 {
   BR_FADE_WORK    *p_fade;      //[in ]フェード
+  BR_SIDEBAR_WORK *p_sidebar;   //[in ]サイドバー
 	BR_GRAPHIC_WORK	*p_graphic;	  //[in ]グラフィック管理
 	BR_RES_WORK			*p_res;				//[in ]リソース管理
 	BR_PROC_SYS			*p_procsys;		//[in ]プロセス管理

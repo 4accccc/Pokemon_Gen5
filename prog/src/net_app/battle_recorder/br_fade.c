@@ -168,6 +168,7 @@ void BR_FADE_StartFadeEx( BR_FADE_WORK *p_wk, BR_FADE_TYPE type, BR_FADE_DISPLAY
   p_wk->display       = disp;
   p_wk->dir           = dir;
   p_wk->sync          = sync;
+
   p_wk->MainFunction  = Br_Fade_Factory( type );
   p_wk->is_end        = FALSE;
   p_wk->seq           = 0;
@@ -284,6 +285,7 @@ void BR_FADE_ALPHA_SetAlpha( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display, u8 ev 
     }
   }
 }
+
 //=============================================================================
 /**
  *    PRIVATE

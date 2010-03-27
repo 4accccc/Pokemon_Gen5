@@ -14,11 +14,20 @@
 #include "br_graphic.h"
 #include "br_fade.h"
 #include "br_net.h"
+#include "br_sidebar.h"
 //=============================================================================
 /**
  *					定数宣言
 */
 //=============================================================================
+//-------------------------------------
+///	戻り値
+//=====================================
+typedef enum
+{
+  BR_MUSICALSEND_RET_RETURN,  //戻った
+  BR_MUSICALSEND_RET_SEND,    //送信した
+} BR_MUSICALSEND_RET;
 
 //=============================================================================
 /**
@@ -31,11 +40,13 @@
 typedef struct 
 {
   BR_FADE_WORK    *p_fade;      //[in ]フェード
+  BR_SIDEBAR_WORK *p_sidebar;   //[in ]サイドバー
   BR_GRAPHIC_WORK	*p_graphic;	  //[in ]グラフィック管理
 	BR_RES_WORK			*p_res;				//[in ]リソース管理
 	BR_PROC_SYS			*p_procsys;		//[in ]プロセス管理
   BR_NET_WORK     *p_net;       //[in ]通信管理
   GAMEDATA        *p_gamedata;  //[in ]ゲームデータ
+  BR_MUSICALSEND_RET  ret;      //[out]戻り値
 } BR_MUSICALSEND_PROC_PARAM;
 
 

@@ -207,6 +207,7 @@ static GFL_PROC_RESULT BR_MUSICALSEND_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
   if( p_wk->p_text )
   { 
     BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
+    p_wk->p_text  = NULL;
   }
   BmpOam_Exit( p_wk->p_bmpoam );
   PRINTSYS_QUE_Delete( p_wk->p_que );
@@ -235,6 +236,7 @@ static GFL_PROC_RESULT BR_MUSICALSEND_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 	BR_MUSICALSEND_WORK	*p_wk	= p_wk_adrs;
 	BR_MUSICALSEND_PROC_PARAM	*p_param	= p_param_adrs;
 
+  //シーケンス
   BR_SEQ_Main( p_wk->p_seq );
   if( BR_SEQ_IsEnd( p_wk->p_seq ) )
   { 
@@ -243,7 +245,10 @@ static GFL_PROC_RESULT BR_MUSICALSEND_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 
   //各プリント処理
   PRINTSYS_QUE_Main( p_wk->p_que );
-
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_PrintMain( p_wk->p_text );
+  }
   if( p_wk->p_photo )
   { 
     MUS_SHOT_PHOTO_UpdateSystem( p_wk->p_photo );
@@ -349,11 +354,13 @@ static void Br_MusicalSend_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   {
     if( BR_BTN_GetTrg( p_wk->p_btn[ BR_MUSICALSEND_BTN_RETURN ], x, y ) )
     { 
+      p_wk->p_param->ret  = BR_MUSICALSEND_RET_RETURN;
       BR_SEQ_SetNext( p_seqwk, Br_MusicalSend_Seq_FadeOut );
     }
     if( BR_BTN_GetTrg( p_wk->p_btn[ BR_MUSICALSEND_BTN_SEND ], x, y ) )
     { 
-      //BR_SEQ_SetNext( p_seqwk, Br_MusicalSend_Seq_FadeOut );
+      p_wk->p_param->ret  = BR_MUSICALSEND_RET_SEND;
+      BR_SEQ_SetNext( p_seqwk, Br_MusicalSend_Seq_Upload );
     }
   }
 
@@ -391,6 +398,10 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
 
   switch( *p_seq )
   { 
+
+    //-------------------------------------
+    ///	フェードして画面きりかえ
+    //=====================================
   case SEQ_CHANGE_FADEOUT_START:
     BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
     *p_seq  = SEQ_CHANGE_FADEOUT_MAIN;
@@ -402,6 +413,7 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
     }
     break;
   case SEQ_CHANGE_MAIN:
+    Br_MusicalSend_DeleteSubDisplay( p_wk, p_wk->p_param );
     Br_MusicalSend_DeletePhoto( p_wk, p_wk->p_param );
     p_wk->p_text  = BR_TEXT_Init( p_wk->p_param->p_res, p_wk->p_que, p_wk->heapID );
     BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_017 );
@@ -442,7 +454,9 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
     *p_seq  = SEQ_FADEOUT_START;
     break;
 
-
+    //-------------------------------------
+    ///	フェードして終了
+    //=====================================
   case SEQ_FADEOUT_START:
     BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
     *p_seq  = SEQ_FADEOUT_MAIN;
@@ -479,6 +493,7 @@ static void Br_MusicalSend_CreatePhoto( BR_MUSICALSEND_WORK	*p_wk, BR_MUSICALSEN
     // ----上画面設定
 
     //上画面読み直しのため破棄
+    BR_SIDEBAR_SetVisible( p_param->p_sidebar, CLSYS_DRAW_MAIN, FALSE );
     BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_START_M );
     BR_RES_UnLoadCommon( p_param->p_res, CLSYS_DRAW_MAIN );
     //上画面読み直し
@@ -511,6 +526,7 @@ static void Br_MusicalSend_DeletePhoto( BR_MUSICALSEND_WORK	*p_wk, BR_MUSICALSEN
     //読み込みなおし
     BR_RES_LoadCommon( p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
     BR_RES_LoadBG( p_param->p_res, BR_RES_BG_START_M, p_wk->heapID );
+    BR_SIDEBAR_SetVisible( p_param->p_sidebar, CLSYS_DRAW_MAIN, TRUE );
   }
 }
 
@@ -524,48 +540,52 @@ static void Br_MusicalSend_DeletePhoto( BR_MUSICALSEND_WORK	*p_wk, BR_MUSICALSEN
 //-----------------------------------------------------------------------------
 static void Br_MusicalSend_CreateSubDisplay( BR_MUSICALSEND_WORK *p_wk, BR_MUSICALSEND_PROC_PARAM *p_param )
 { 
- // ----下画面設定
-  BR_RES_LoadBG( p_param->p_res, BR_RES_BG_PHOTO_SEND_S, p_wk->heapID );
-  BR_RES_LoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, p_wk->heapID );
-
+  if( p_wk->p_btn[0] == NULL )
   { 
-    int i;
-    GFL_CLUNIT  *p_unit;
-    GFL_CLWK_DATA cldata;
-    BR_RES_OBJ_DATA res;
-    BOOL ret;
-    u32 msgID;
 
-    GFL_FONT    *p_font;
-    GFL_MSGDATA *p_msg;
+    // ----下画面設定
+    BR_RES_LoadBG( p_param->p_res, BR_RES_BG_PHOTO_SEND_S, p_wk->heapID );
+    BR_RES_LoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, p_wk->heapID );
 
-    p_font  = BR_RES_GetFont( p_param->p_res );
-    p_msg   = BR_RES_GetMsgData( p_param->p_res );
-
-    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-
-    cldata.pos_y    = 168;
-    cldata.softpri  = 1;
-
-    p_unit  = BR_GRAPHIC_GetClunit( p_param->p_graphic );
-    ret = BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
-    GF_ASSERT( ret );
-
-    for( i = 0; i < BR_MUSICALSEND_BTN_MAX; i++ )
     { 
-      if( i == 0 )
+      int i;
+      GFL_CLUNIT  *p_unit;
+      GFL_CLWK_DATA cldata;
+      BR_RES_OBJ_DATA res;
+      BOOL ret;
+      u32 msgID;
+
+      GFL_FONT    *p_font;
+      GFL_MSGDATA *p_msg;
+
+      p_font  = BR_RES_GetFont( p_param->p_res );
+      p_msg   = BR_RES_GetMsgData( p_param->p_res );
+
+      GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+      cldata.pos_y    = 168;
+      cldata.softpri  = 1;
+
+      p_unit  = BR_GRAPHIC_GetClunit( p_param->p_graphic );
+      ret = BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
+      GF_ASSERT( ret );
+
+      for( i = 0; i < BR_MUSICALSEND_BTN_MAX; i++ )
       { 
-        msgID = msg_05;
-        cldata.pos_x    = 32;
-        cldata.anmseq   = 0;
+        if( i == 0 )
+        { 
+          msgID = msg_05;
+          cldata.pos_x    = 32;
+          cldata.anmseq   = 0;
+        }
+        else
+        { 
+          msgID = msg_302;
+          cldata.pos_x    = 128;
+          cldata.anmseq   = 0;
+        }
+        p_wk->p_btn[i] = BR_BTN_Init( &cldata, msgID, BR_BTN_DATA_SHORT_WIDTH, CLSYS_DRAW_SUB, p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
       }
-      else
-      { 
-        msgID = msg_302;
-        cldata.pos_x    = 128;
-        cldata.anmseq   = 0;
-      }
-      p_wk->p_btn[i] = BR_BTN_Init( &cldata, msgID, BR_BTN_DATA_SHORT_WIDTH, CLSYS_DRAW_SUB, p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
     }
   }
 
@@ -580,15 +600,19 @@ static void Br_MusicalSend_CreateSubDisplay( BR_MUSICALSEND_WORK *p_wk, BR_MUSIC
 //-----------------------------------------------------------------------------
 static void Br_MusicalSend_DeleteSubDisplay( BR_MUSICALSEND_WORK *p_wk, BR_MUSICALSEND_PROC_PARAM *p_param )
 { 
-  //下画面-------------
-  BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S );
-  BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_PHOTO_SEND_S );
-
+  if( p_wk->p_btn[0] )
   { 
-    int i;
-    for( i = 0; i < BR_MUSICALSEND_BTN_MAX; i++ )
+    //下画面-------------
+    BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S );
+    BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_PHOTO_SEND_S );
+
     { 
-      BR_BTN_Exit( p_wk->p_btn[i] );
+      int i;
+      for( i = 0; i < BR_MUSICALSEND_BTN_MAX; i++ )
+      { 
+        BR_BTN_Exit( p_wk->p_btn[i] );
+        p_wk->p_btn[i]  = NULL;
+      }
     }
   }
 }

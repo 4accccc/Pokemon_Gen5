@@ -158,9 +158,6 @@ static GFL_PROC_RESULT BR_MENU_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 	//プロセスワーク破棄
 	GFL_PROC_FreeWork( p_proc );
 
-  //br_btn.cの中でOFFにしていることがあるので
-  GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
-
 	return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -193,7 +190,7 @@ static GFL_PROC_RESULT BR_MENU_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
   switch( *p_seq )
   { 
   case SEQ_FADEIN_START:
-    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    BR_FADE_StartFade( p_param->p_fade, p_param->fade_type, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
     *p_seq  = SEQ_FADEIN_WAIT;
     break;
 

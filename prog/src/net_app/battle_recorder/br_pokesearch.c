@@ -584,11 +584,22 @@ static void BR_POKESEARCH_DISPLAY_CreateList( BR_POKESEARCH_WORK *p_wk )
     //リストデータ作成
     { 
       int i;
+      STRBUF  *p_strbuf;
       p_wk->p_list_data = BmpMenuWork_ListCreate( p_wk->monsno_len, p_wk->heapID );
       for( i = 0; i < p_wk->monsno_len; i++ )
       { 
+#if 0   //GlobalMsgはシステムヒープからとっている
+        //GFL_MSG_CreateStringはヒープ指定できないため、上からとる
+        //２００体くらいいると、(30+ 28)*200=116000バイトも消費するため(+28はAlloc時のヘッダ)
+        //コピーして使う
         BmpMenuWork_ListAddArchiveString( &p_wk->p_list_data[i], (GFL_MSGDATA *)GlobalMsg_PokeName,
             p_wk->p_monsno_buff[i], p_wk->p_monsno_buff[i], p_wk->heapID );
+#else
+        p_strbuf  = GFL_STR_CreateBuffer( MONS_NAME_SIZE + EOM_SIZE, p_wk->heapID );
+        GFL_MSG_GetString( GlobalMsg_PokeName, p_wk->p_monsno_buff[i], p_strbuf );
+        BmpMenuWork_ListAddString( &p_wk->p_list_data[i],
+            p_strbuf, p_wk->p_monsno_buff[i], p_wk->heapID );
+#endif
       }
     }
     {

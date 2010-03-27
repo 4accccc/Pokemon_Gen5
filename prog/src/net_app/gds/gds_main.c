@@ -29,6 +29,10 @@
 #include "gds_test.h"
 
 
+#ifdef PM_DEBUG
+//#define DEBUG_GDS
+#endif 
+
 //==============================================================================
 //	定数定義
 //==============================================================================
@@ -162,7 +166,7 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 	
 	case SEQ_BATTLE_RECORDER:	//バトルレコーダー(GDSモード)
 		{
-		#if 1
+		#ifndef DEBUG_GDS
       GFL_STD_MemClear( &gmw->br_param, sizeof(BATTLERECORDER_PARAM) );
       gmw->br_param.mode        = gmw->proc_param->gds_mode;
       gmw->br_param.p_gamedata  = gmw->proc_param->gamedata;
@@ -176,19 +180,22 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 		  GFL_PROC_LOCAL_CallProc(
 		    gmw->proc_sys, FS_OVERLAY_ID(gds_debug), &GdsTestProcData, &gmw->gds_test_parent);
 
-      GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_comm) );
 		#endif
 			(*seq)++;
 		}
 		break;
 	case SEQ_BATTLE_RECORDER_MAIN:
     if(proc_status == GFL_PROC_MAIN_NULL){
+#ifdef DEBUG_GDS
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_comm) );
+#endif
 			(*seq)++;
 		}
 		break;
 	
 	case SEQ_WIFI_CLEANUP:		//WIFI切断
 	  {
+
       gmw->logout_param.gamedata = gmw->proc_param->gamedata;
       gmw->logout_param.bg = WIFILOGIN_BG_NORMAL;
       gmw->logout_param.display = WIFILOGIN_DISPLAY_UP;

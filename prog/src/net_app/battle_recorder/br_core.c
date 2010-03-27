@@ -277,8 +277,7 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
   BR_GRAPHIC_SETUP_TYPE graphic_type;
 
 	//ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_RECORDER_CORE, 0x60000 );
-//	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_RECORDER_CORE, 0x30000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_RECORDER_CORE, 0x65000 );
 
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(BR_CORE_WORK), HEAPID_BATTLE_RECORDER_CORE );
@@ -482,6 +481,7 @@ static GFL_PROC_RESULT BR_CORE_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
         BR_NET_Main( p_wk->p_net );
       }
 
+      //終了
 			if( BR_PROC_SYS_IsEnd( p_wk->p_procsys ) )
 			{	
         *p_seq	= SEQ_FADEOUT;
@@ -579,6 +579,8 @@ static void BR_MENU_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const 
 	BR_MENU_PROC_PARAM	*p_param	= p_param_adrs;
 	BR_CORE_WORK				*p_wk			= p_wk_adrs;
 
+  p_param->fade_type = BR_FADE_TYPE_ALPHA_BG012OBJ;
+
   //バトルから戻ってきたとき
   if( p_wk->p_param->mode == BR_CORE_MODE_RETURN )
   {
@@ -626,6 +628,17 @@ static void BR_MENU_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const 
       /* fallthrough */
     case BR_PROCID_CODEIN:
       p_param->menuID = BR_BTLVIDEO_MENUID_LOOK;
+      break;
+
+    case BR_PROCID_MUSICAL_SEND:
+      { 
+        const BR_MUSICALSEND_PROC_PARAM *cp_musicalsend_param = cp_pre_param;
+        if( cp_musicalsend_param->ret == BR_MUSICALSEND_RET_RETURN )
+        { 
+          p_param->fade_type = BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA;
+        }
+        p_param->menuID			= BR_MUSICAL_MENUID_TOP;
+      }
       break;
 
     default:
@@ -1030,6 +1043,7 @@ static void BR_MUSICALLOOK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs,
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_graphic	= p_wk->p_graphic;
   p_param->p_net      = p_wk->p_net;
+  p_param->p_sidebar  = p_wk->p_sidebar;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1063,6 +1077,7 @@ static void BR_MUSICALSEND_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs,
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_graphic	= p_wk->p_graphic;
   p_param->p_net      = p_wk->p_net;
+  p_param->p_sidebar  = p_wk->p_sidebar;
   p_param->p_gamedata = p_wk->p_param->p_param->p_gamedata;
 }
 //----------------------------------------------------------------------------

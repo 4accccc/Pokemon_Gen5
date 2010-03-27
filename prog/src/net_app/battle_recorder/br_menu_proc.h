@@ -71,11 +71,12 @@ typedef struct
 	BR_MENUID				menuID;				//[in/out]プロセス開始時、終了時のメニュー
 	u32							next_proc;		//[out]次へ移動するプロセス(実際の移動はmenu_procのpush)
 	u32							next_mode;		//[out]次へ移動するプロセスに渡す情報
+  BR_FADE_TYPE    fade_type;    //[in ]開始フェードタイプ
 	
-  BR_FADE_WORK    *p_fade;      //[in]フェード
-	GFL_CLUNIT			*p_unit;			//[in]ユニット
-	BR_RES_WORK			*p_res;				//[in]リソース管理
-	BR_PROC_SYS			*p_procsys;		//[in]プロセス管理
+  BR_FADE_WORK    *p_fade;      //[in ]フェード
+	GFL_CLUNIT			*p_unit;			//[in ]ユニット
+	BR_RES_WORK			*p_res;				//[in ]リソース管理
+	BR_PROC_SYS			*p_procsys;		//[in ]プロセス管理
   const BR_MENU_BTLREC_DATA *cp_btlrec; //[in]録画データ
 } BR_MENU_PROC_PARAM;
 

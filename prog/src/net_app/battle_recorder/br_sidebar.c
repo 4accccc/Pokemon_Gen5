@@ -119,6 +119,7 @@ static BOOL BR_SIDEBAR_ONE_IsExist( const BR_SIDEBAR_ONE *cp_wk );
 static void BR_SIDEBAR_ONE_SetMoveMode( BR_SIDEBAR_ONE *p_wk, BR_SIDEBAR_ONE_MOVE_MODE mode );
 static void BR_SIDEBAR_ONE_SetShakePos( BR_SIDEBAR_ONE *p_wk );
 static BOOL BR_SIDEBAR_ONE_IsMoveNone( const BR_SIDEBAR_ONE *cp_wk );
+static void BR_SIDEBAR_ONE_SetVisible( BR_SIDEBAR_ONE *p_wk, BOOL is_visible );
 static void Br_SideBar_One_Move_Boot( BR_SIDEBAR_ONE *p_wk );
 static void Br_SideBar_One_Move_Shake( BR_SIDEBAR_ONE *p_wk );
 static void Br_SideBar_One_Move_End( BR_SIDEBAR_ONE *p_wk );
@@ -453,6 +454,7 @@ void BR_SIDEBAR_SetShakePos(BR_SIDEBAR_WORK *p_wk )
   }
 }
 
+#if 0
 //----------------------------------------------------------------------------
 /**
  *	@brief  メイン画面のリソース破棄
@@ -484,7 +486,7 @@ void BR_SIDEBAR_UnLoadMain( BR_SIDEBAR_WORK *p_wk, BR_RES_WORK *p_res )
  *	@param	BR_SIDEBAR_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void BR_SIDEBAR_LoadMain( BR_SIDEBAR_WORK *p_wk, GFL_CLUNIT *p_clunit, BR_FADE_WORK *p_fade, BR_RES_WORK *p_res, HEAPID heapID )
+void BR_SIDEBAR_LoadMain( BR_SIDEBAR_WORK *p_wk, GFL_CLUNIT *p_clunit, BR_RES_WORK *p_res, HEAPID heapID )
 { 
   //リソース読み込み
   BR_RES_LoadOBJ( p_res, BR_RES_OBJ_SIDEBAR_M, heapID );
@@ -501,6 +503,7 @@ void BR_SIDEBAR_LoadMain( BR_SIDEBAR_WORK *p_wk, GFL_CLUNIT *p_clunit, BR_FADE_W
     }
   }
 }
+#endif
 //----------------------------------------------------------------------------
 /**
  *	@brief  動作完了チェック
@@ -519,13 +522,34 @@ BOOL BR_SIDEBAR_IsMoveEnd( const BR_SIDEBAR_WORK *cp_wk )
   {
     if( BR_SIDEBAR_ONE_IsExist( &cp_wk->sidebar[i]) )
     { 
-      is_end &= BR_SIDEBAR_ONE_IsMoveNone( &cp_wk->sidebar[i]);
+      is_end &= BR_SIDEBAR_ONE_IsMoveNone( &cp_wk->sidebar[i] );
     }
   }
 
   return is_end;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  描画設定
+ *
+ *	@param	BR_SIDEBAR_WORK *p_wk ワーク
+ *	@param	type                  描画種類  どちらのバーを消すか
+ *	@param	is_visible            TRUEならば描画  FALSEならば表示しない
+ */
+//-----------------------------------------------------------------------------
+void BR_SIDEBAR_SetVisible( BR_SIDEBAR_WORK *p_wk, CLSYS_DRAW_TYPE type, BOOL is_visible )
+{ 
+  int i;
+  for( i = 0; i < BR_SIDEBAR_MAX; i++ )
+  {
+    if( sc_sidebar_data[i].draw_type == type )
+    { 
+      BR_SIDEBAR_ONE_SetVisible( &p_wk->sidebar[i], is_visible );
+    }
+  }
+
+}
 //=============================================================================
 /**
  *    サイドバー１つ
@@ -645,6 +669,18 @@ static BOOL BR_SIDEBAR_ONE_IsExist( const BR_SIDEBAR_ONE *cp_wk )
 static BOOL BR_SIDEBAR_ONE_IsMoveNone( const BR_SIDEBAR_ONE *cp_wk )
 { 
   return cp_wk->move_function == NULL;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  表示設定
+ *
+ *	@param	BR_SIDEBAR_ONE *p_wk  ワーク
+ *	@param	is_visible            TRUEで表示  FALSEで表示しない
+ */
+//-----------------------------------------------------------------------------
+static void BR_SIDEBAR_ONE_SetVisible( BR_SIDEBAR_ONE *p_wk, BOOL is_visible )
+{ 
+  GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk, is_visible );
 }
 //----------------------------------------------------------------------------
 /**

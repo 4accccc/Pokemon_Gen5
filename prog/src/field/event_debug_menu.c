@@ -3329,7 +3329,7 @@ static GMEVENT_RESULT debugMenuGDS( GMEVENT *p_event, int *p_seq, void *p_wk_adr
       gds_param->gamedata = GAMESYSTEM_GetGameData(p_gds->gsys);
       gds_param->gds_mode = BR_MODE_GLOBAL_MUSICAL;//BR_MODE_GLOBAL_BV;
 
-      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
       { 
         gds_param->gds_mode = BR_MODE_GLOBAL_BV;
       }
