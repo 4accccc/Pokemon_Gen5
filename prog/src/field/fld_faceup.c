@@ -95,7 +95,7 @@ static GMEVENT_RESULT SetupEvt( GMEVENT* event, int* seq, void* work )
   case 0:
     //ブラックアウト開始
     GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, -3 );
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, 0 );
     (*seq)++;
     break;
   case 1:
@@ -105,7 +105,7 @@ static GMEVENT_RESULT SetupEvt( GMEVENT* event, int* seq, void* work )
     Setup(ptr, fieldmap);
     //ブラックイン開始
     GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, -3 );
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 0 );
     (*seq)++;
     break;
   case 2:
@@ -304,7 +304,7 @@ static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work )
   case 0:
     //ブラックアウト開始
     GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, -3 );
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 0, 16, 0 );
     (*seq)++;
     break;
   case 1:
@@ -314,7 +314,7 @@ static GMEVENT_RESULT ReleaseEvt( GMEVENT* event, int* seq, void* work )
     Release(fieldmap, ptr);
     //ブラックイン開始
     GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, -3 );
+          GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, 0 );
     (*seq)++;
     break;
   case 2:
