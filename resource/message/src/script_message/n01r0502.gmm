@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-24T19:51:19"/>
+	<create user="matsumiya" host="W00224" date="2010-03-27T15:56:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,7 +296,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="162"/>
+		<id position="0" width="202"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="113" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1391,6 +1391,57 @@
 さっさと　退場しようか▼</language>
 	</row>
 
+	<row id="msg_n01r0502_rematch_black" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+		<comment>♂
+・ゲーチス戦に負けた場合用</comment>
+		<attribute name="キャラ指定">友達♂</attribute>
+		<language name="JPN" width="256">チェレン『……ゆるせないよ▼
+ちからを　じぶんの　ためだけに……
+しかも　まちがった　つかいかた　だよ</language>
+		<language name="JPN_KANJI" width="256">チェレン『……許せないよ▼
+力を　自分の　ためだけに……
+しかも　間違った　使い方だよ</language>
+	</row>
+
+	<row id="msg_n01r0502_rematch_champion" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+		<comment>♂
+・ゲーチス戦に負けた場合用</comment>
+		<attribute name="キャラ指定">チャンピオン
+アデク</attribute>
+		<language name="JPN" width="256">アデク『……Ｎの　ひたむきな　おもいを
+いいように　りよう　するとは……</language>
+		<language name="JPN_KANJI" width="256">アデク『……Ｎの　ひたむきな　思いを
+いいように　利用するとは……</language>
+	</row>
+
+	<row id="msg_n01r0502_rematch_boss" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+		<comment>♂
+・ゲーチス戦に負けた場合用</comment>
+		<attribute name="キャラ指定">N</attribute>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクの
+すうしきは　まちがって　いたのか？[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクの
+数式は　間違って　いたのか？[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_n01r0502_rematch_pokemon_01b" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+		<comment>ポケモン
+・ゲーチス戦に負けた場合用</comment>
+		<attribute name="キャラ指定">ポケモン
+ム</attribute>
+		<language name="JPN" width="256">……バルバル</language>
+		<language name="JPN_KANJI" width="256">……バルバル</language>
+	</row>
+
+	<row id="msg_n01r0502_rematch_pokemon_01w" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,,,#ff78ff,,,,,,">
+		<comment>ポケモン
+・ゲーチス戦に負けた場合用</comment>
+		<attribute name="キャラ指定">ポケモン
+シン</attribute>
+		<language name="JPN" width="256">……エールワ</language>
+		<language name="JPN_KANJI" width="256">……エールワ</language>
+	</row>
+
 	<row id="msg_n01r0502_sage1_10" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・メッセージ表示後
@@ -1441,14 +1492,14 @@
 だが　きにやむな▼
 おまえさんは　ゲーチスに　あやつられ
 しんじつを　おいもとめたのでは　なく▽
-じぶんの　かんがえで　うごいたし▼
+じぶんの　かんがえで　うごいたのだ！▼
 おかげで　でんせつの　ポケモンと
 であうことが　できたではないか！▼</language>
 		<language name="JPN_KANJI" width="256">アデク『ふむ　なるほどな
 だが　気に病むな▼
 おまえさんは　ゲーチスに　操られ
 真実を　追い求めたのではなく▽
-自分の　考えで　動いたし▼
+自分の　考えで　動いたのだ！▼
 おかげで　伝説の　ポケモンと
 出会うことが　できたではないか！▼</language>
 	</row>
