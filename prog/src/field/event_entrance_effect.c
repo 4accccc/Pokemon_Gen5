@@ -300,7 +300,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * work)
     { // BGMÄ¶€”õ
       u16 nowZoneID = FIELDMAP_GetZoneID( fieldmap );
       FIELD_SOUND* fieldSound = GAMEDATA_GetFieldSound( gamedata );
-      FSND_StandByNextMapBGM( fieldSound, gamedata, nowZoneID, fdaw->loc_req.zone_id );
+      FSND_StandByNextMapBGM( fieldSound, gamedata, fdaw->loc_req.zone_id );
     }
     *seq = SEQ_DOORIN_FADEOUT;
     break;

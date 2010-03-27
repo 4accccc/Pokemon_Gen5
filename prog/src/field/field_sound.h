@@ -58,13 +58,10 @@ extern GMEVENT* EVENT_FSND_WaitBGMPop( GAMESYS_WORK* gameSystem );
 // ■プレイヤーの操作により発生するBGMの変更
 //=================================================================================
 // ゾーン チェンジ
-extern void FSND_ChangeBGM_byZoneChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData, 
-                                         u16 prevZoneID, u16 nextZoneID ); 
+extern void FSND_ChangeBGM_byZoneChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 nextZoneID ); 
 
 // マップ チェンジ
-extern void FSND_StandByNextMapBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, 
-                                    u16 prevZoneID, u16 nextZoneID );
-
+extern void FSND_StandByNextMapBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 nextZoneID ); 
 extern void FSND_PlayStartBGM( FIELD_SOUND* fieldSound );
 
 // 自機移動フォーム変更

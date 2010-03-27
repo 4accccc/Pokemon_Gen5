@@ -796,7 +796,7 @@ static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange( GMEVENT* event, int* seq, void
     break;
   case 2:
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound );
     (*seq)++;
     break;
@@ -833,7 +833,7 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade( GMEVENT* event, int* seq, void* wk 
     break;
   case 1:
     // BGM更新リクエスト
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound );
     (*seq)++;
     break;
@@ -916,7 +916,7 @@ static GMEVENT_RESULT EVENT_MapChangeBySandStream( GMEVENT* event, int* seq, voi
     break;
   case 2:
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound );
     (*seq)++;
     break;
@@ -964,7 +964,7 @@ static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo( GMEVENT* event, int* seq, 
     break;
   case 2:
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound );
     (*seq)++;
     break;
@@ -1011,7 +1011,7 @@ static GMEVENT_RESULT EVENT_MapChangeByAnawohoru( GMEVENT* event, int* seq, void
     break;
   case 2:
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound );
     (*seq)++;
     break;
@@ -1057,7 +1057,7 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport( GMEVENT* event, int* seq, void*
     break;
   case 2:
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->before_zone_id, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound );
     (*seq)++;
     break;

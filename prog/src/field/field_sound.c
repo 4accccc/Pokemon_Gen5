@@ -816,22 +816,21 @@ GMEVENT* EVENT_FSND_WaitBGMPop( GAMESYS_WORK* gameSystem )
  *
  * @param fieldSound
  * @param gameData
- * @param prevZoneID チェンジ前のゾーンID
  * @param nextZoneID チェンジ後のゾーンID
  */
 //---------------------------------------------------------------------------------
 void FSND_ChangeBGM_byZoneChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData, 
-                                  u16 prevZoneID, u16 nextZoneID )
+                                  u16 nextZoneID )
 {
-  u32 nextSoundIdx, prevSoundIdx;
+  u32 soundIdx;
   u16 fadeOutFrame, fadeInFrame;
 
-  // 前後のゾーンのBGMを取得
-  prevSoundIdx = GetSpecialBGM( gameData, prevZoneID );
-  nextSoundIdx = GetSpecialBGM( gameData, nextZoneID );
-  if( prevSoundIdx == SPECIAL_BGM_NONE ){ prevSoundIdx = GetZoneBGM( gameData, prevZoneID ); }
-  if( nextSoundIdx == SPECIAL_BGM_NONE ){ nextSoundIdx = GetZoneBGM( gameData, nextZoneID ); }
-  if( prevSoundIdx == nextSoundIdx ){ return; }  // 前後のゾーンでBGMが変化しない
+
+  // チェンジ先のゾーンのBGMを取得
+  soundIdx = GetSpecialBGM( gameData, nextZoneID );
+  if( soundIdx == SPECIAL_BGM_NONE ) {
+    soundIdx = GetZoneBGM( gameData, nextZoneID ); 
+  }
 
   // フェード フレーム数を決定
   if( GetPlayerMoveForm(gameData) == PLAYER_MOVE_FORM_CYCLE )
@@ -846,7 +845,7 @@ void FSND_ChangeBGM_byZoneChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData,
   }
 
   // リクエスト登録
-  FIELD_SOUND_RegisterRequest_CHANGE( fieldSound, nextSoundIdx, fadeOutFrame, fadeInFrame );
+  FIELD_SOUND_RegisterRequest_CHANGE( fieldSound, soundIdx, fadeOutFrame, fadeInFrame );
 }
 
 //---------------------------------------------------------------------------------
@@ -859,19 +858,18 @@ void FSND_ChangeBGM_byZoneChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData,
  * @param nextZoneID チェンジ後のゾーンID
  */
 //---------------------------------------------------------------------------------
-void FSND_StandByNextMapBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, 
-                             u16 prevZoneID, u16 nextZoneID )
+void FSND_StandByNextMapBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 nextZoneID )
 {
-  u32 nextSoundIdx, prevSoundIdx;
+  u32 soundIdx;
 
   // 前後のゾーンのBGMを取得
-  prevSoundIdx = GetSpecialBGM( gameData, prevZoneID );
-  nextSoundIdx = GetSpecialBGM( gameData, nextZoneID );
-  if( prevSoundIdx == SPECIAL_BGM_NONE ){ prevSoundIdx = GetZoneBGM( gameData, prevZoneID ); }
-  if( nextSoundIdx == SPECIAL_BGM_NONE ){ nextSoundIdx = GetZoneBGM( gameData, nextZoneID ); }
+  soundIdx = GetSpecialBGM( gameData, nextZoneID );
+  if( soundIdx == SPECIAL_BGM_NONE ) {
+    soundIdx = GetZoneBGM( gameData, nextZoneID ); 
+  }
 
   // リクエスト登録
-  FIELD_SOUND_RegisterRequest_STAND_BY( fieldSound, nextSoundIdx, FSND_FADE_NORMAL );
+  FIELD_SOUND_RegisterRequest_STAND_BY( fieldSound, soundIdx, FSND_FADE_NORMAL );
 }
 
 //---------------------------------------------------------------------------------
