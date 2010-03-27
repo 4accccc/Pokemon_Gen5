@@ -44,9 +44,9 @@ static const u16 PMS_SrcElems[] = {
 	 103,	//せいかつ	1518 ... 1620
 	  47,	//きもち	1621 ... 1667
 	  32,	//なんかいことば	1668 ... 1699
-	  27,	//ユニオン	1700 ... 1726
-	  10,	//ピクチャ	1727 ... 1736
-	  61,	//こえ	1737 ... 1797
+	  26,	//ユニオン	1700 ... 1725
+	  10,	//ピクチャ	1726 ... 1735
+	  61,	//こえ	1736 ... 1796
 };
 
 //----------------------------------------------------------------
@@ -78,7 +78,7 @@ static const u16 PMS_SrcFileID[] = {
 //----------------------------------------------------------------
 
 static const PMS_WORD DupWord_00[] = {
-	1479,1733,
+	1479,1732,
 };
 
 static const PMS_WORD DupWord_01[] = {
@@ -94,7 +94,7 @@ static const PMS_WORD DupWord_03[] = {
 };
 
 static const PMS_WORD DupWord_04[] = {
-	1492,1735,
+	1492,1734,
 };
 
 static const PMS_WORD DupWord_05[] = {
@@ -102,19 +102,19 @@ static const PMS_WORD DupWord_05[] = {
 };
 
 static const PMS_WORD DupWord_06[] = {
-	1470,1728,
+	1470,1727,
 };
 
 static const PMS_WORD DupWord_07[] = {
-	1642,1729,
+	1642,1728,
 };
 
 static const PMS_WORD DupWord_08[] = {
-	1508,1736,
+	1508,1735,
 };
 
 static const PMS_WORD DupWord_09[] = {
-	1509,1727,
+	1509,1726,
 };
 
 static const struct {
