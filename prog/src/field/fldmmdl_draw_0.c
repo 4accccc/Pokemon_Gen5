@@ -385,11 +385,11 @@ static void DrawSwimHero_Draw( MMDL *mmdl )
   if( work->anmcnt.set_anm_dir != dir ){ //方向更新
     work->anmcnt.set_anm_dir = dir;
     work->anmcnt.set_anm_status = status;
-    GFL_BBDACT_SetAnimeIdxImmediate( actSys, work->actID, anm_id, 1 );
+    GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
     init_flag = TRUE;
   }else if( work->anmcnt.set_anm_status != status ){ //ステータス更新
     u16 frame = 0;
-    GFL_BBDACT_SetAnimeIdxImmediate( actSys, work->actID, anm_id, 1 );
+    GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
     GFL_BBDACT_SetAnimeFrmIdx( actSys, work->actID, frame );
     work->anmcnt.set_anm_status = status;
   }
@@ -526,7 +526,7 @@ static void DrawBlAct_DrawAlwaysAnime( MMDL *mmdl )
   
   if( work->anmcnt.set_anm_dir != dir ){ //方向更新
     work->anmcnt.set_anm_dir = dir;
-    GFL_BBDACT_SetAnimeIdxImmediate( actSys, work->actID, anm_id, 1 );
+    GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_id );
     init_flag = TRUE;
   }
   
@@ -573,7 +573,7 @@ static void DrawBlAct_DrawAct( MMDL *mmdl )
         anmcnt->set_anm_dir = dir;
         anmcnt->set_anm_status = status;
         anmcnt->next_walk_frmidx = 0;
-        GFL_BBDACT_SetAnimeIdxImmediate( actSys, work->actID, anm_idx, 1 );
+        GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
       }
       
       blact_UpdatePauseVanish( mmdl, actSys, work->actID, init_flag );
@@ -1183,8 +1183,8 @@ static void DrawTsurePoke_Draw( MMDL *mmdl )
       work->set_anm_dir = dir;
       work->offs_frame = 0;
       work->offs_y = 0;
-      GFL_BBDACT_SetAnimeIdxImmediate(
-          actSys, work->actID, work->set_anm_dir, 1 );
+      GFL_BBDACT_SetAnimeIdx(
+          actSys, work->actID, work->set_anm_dir );
       { //描画オフセットもクリア
         VecFx32 offs = {0,0,0};
         MMDL_GetVectorDrawOffsetPos( mmdl, &offs );
@@ -1323,8 +1323,8 @@ static void DrawTsurePokeFly_Draw( MMDL *mmdl )
       work->set_anm_dir = dir;
       work->offs_frame = 0;
       work->offs_y = 0; //描画オフセットもクリア
-      GFL_BBDACT_SetAnimeIdxImmediate(
-          actSys, work->actID, work->set_anm_dir, 1 );
+      GFL_BBDACT_SetAnimeIdx(
+          actSys, work->actID, work->set_anm_dir );
 
       { //描画オフセットもクリア
         VecFx32 offs = {0,0,0};
@@ -1484,7 +1484,7 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
       }
 
       work->anmcnt.set_anm_status = status;
-      GFL_BBDACT_SetAnimeIdxImmediate( actSys, work->actID, anm_idx, 1 );
+      GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
       init_flag = TRUE;
     }
   }else{ //B
@@ -1502,7 +1502,7 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
         
         work->anmcnt.set_anm_dir = dir;
         work->anmcnt.set_anm_status = status;
-        GFL_BBDACT_SetAnimeIdxImmediate( actSys, work->actID, anm_idx, 1 );
+        GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
         init_flag = TRUE;
       }
     }else{
@@ -1517,7 +1517,7 @@ static void DrawBlActShinMu_Draw( MMDL *mmdl )
         }
 
         work->anmcnt.set_anm_status = status;
-        GFL_BBDACT_SetAnimeIdxImmediate( actSys, work->actID, anm_idx, 1 );
+        GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
         init_flag = TRUE;
       }
     }
@@ -1592,7 +1592,7 @@ static void DrawBlActSpider_Draw( MMDL *mmdl )
     if( status < DRAW_STA_SPIDER_MAX ){
       u16 anm_idx = status;
       work->anmcnt.set_anm_status = status;
-      GFL_BBDACT_SetAnimeIdxImmediate( actSys, work->actID, anm_idx, 1 );
+      GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
       
       init_flag = TRUE;
     }
@@ -1665,7 +1665,7 @@ static void DrawBlActMelodyer_Draw( MMDL *mmdl )
     }
     
     work->anmcnt.set_anm_status = status;
-    GFL_BBDACT_SetAnimeIdxImmediate( actSys, work->actID, anm_idx, 1 );
+    GFL_BBDACT_SetAnimeIdx( actSys, work->actID, anm_idx );
     init_flag = TRUE;
   }
   
@@ -1771,7 +1771,7 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
     work->set_anm_dir = dir;
     work->set_anm_status = status;
     work->next_walk_frmidx = 0;
-    GFL_BBDACT_SetAnimeIdxImmediate( actSys, actID, anm_idx, 1 );
+    GFL_BBDACT_SetAnimeIdx( actSys, actID, anm_idx );
   }
   else if( status != work->set_anm_status ) //ステータス更新
   {
@@ -1781,7 +1781,7 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
     {
       if( work->set_anm_status == DRAW_STA_STOP ) //停止アニメ中
       {
-        GFL_BBDACT_SetAnimeIdxImmediate( actSys, actID, anm_idx, 1 );
+        GFL_BBDACT_SetAnimeIdx( actSys, actID, anm_idx );
         work->set_anm_status = status;
         work->next_set_wait = 0;
       }
@@ -1811,7 +1811,7 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
         
         work->next_walk_frmidx = tbl[work->next_walk_frmidx];
         
-        GFL_BBDACT_SetAnimeIdxImmediate( actSys, actID, anm_idx, 1 );
+        GFL_BBDACT_SetAnimeIdx( actSys, actID, anm_idx );
         work->set_anm_status = status;
         work->next_set_wait = 0;
       }
@@ -1841,7 +1841,7 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
       }
       
       GF_ASSERT( work->next_walk_frmidx < 4 );
-      GFL_BBDACT_SetAnimeIdxImmediate( actSys, actID, anm_idx, 1 );
+      GFL_BBDACT_SetAnimeIdx( actSys, actID, anm_idx );
       GFL_BBDACT_SetAnimeFrmIdx( actSys, actID, work->next_walk_frmidx );
       
       work->set_anm_status = status;
