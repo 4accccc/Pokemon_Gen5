@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-27T16:17:30"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-27T19:58:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,7 +357,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="370"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1028,7 +1028,7 @@ msg_musical_recept_06を
 おきゃくさんは▼
 あなたの　ドレスアップと
 ドレスアップした　ポケモンの▽
-えんぎを　たのしみにしています！</language>
+えんぎを　たのしみにしています！▼</language>
 		<language name="JPN_KANJI">ミュージカル　とは
 グッズで　着飾った　ポケモンが▽
 ステージに　あがって▼
@@ -1044,7 +1044,7 @@ msg_musical_recept_06を
 お客さんは▼
 あなたの　ドレスアップと
 ドレスアップした　ポケモンの▽
-演技を　楽しみにしています！</language>
+演技を　楽しみにしています！▼</language>
 	</row>
 
 	<row id="msg_musical_info_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -1073,7 +1073,7 @@ msg_musical_recept_06を
 さんかする　えんもくを　えらびます▼
 むかって　みぎがわは
 ドレスアップ　のみを▽
-おこなう　ことができる　うけつけです</language>
+おこなう　ことができる　うけつけです▼</language>
 		<language name="JPN_KANJI">ミュージカルには
 エントランスの　３つの　受付から▽
 参加することが　できます▼
@@ -1090,7 +1090,7 @@ msg_musical_recept_06を
 参加する　演目を　えらびます▼
 向かって　右側は
 ドレスアップ　のみを▽
-行う　ことができる　受付です</language>
+行う　ことができる　受付です▼</language>
 	</row>
 
 	<row id="msg_musical_info_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -1110,7 +1110,7 @@ msg_musical_recept_06を
 てもちの　ポケモンが　ミュージカルに
 さんかかのうか　どうかは▼
 さんかうけつけの　ときに
-かくにんして　ください</language>
+かくにんして　ください▼</language>
 		<language name="JPN_KANJI">ミュージカルには　演技が　得意で
 参加が　できる　ポケモンと▼
 演技が　苦手で　参加を
@@ -1118,7 +1118,7 @@ msg_musical_recept_06を
 手持ちの　ポケモンが　ミュージカルに
 参加可能か　どうかは▼
 参加受付の　ときに
-確認して　ください</language>
+確認して　ください▼</language>
 	</row>
 
 	<row id="msg_musical_info_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -1188,8 +1188,8 @@ msg_musical_recept_06を
 グッズを　つかった　アピールを▽
 させることが　できます▼
 ドレスアップの　いしょうしだいで
-おきゃくさんの　はんのうや▽
-アピールが　かわることも▽
+おきゃくさんの　はんのうや▼
+アピールが　かわることも
 ありますので　おためしください！▼</language>
 		<language name="JPN_KANJI">演目　とは
 ドレスアップした▽
@@ -1204,8 +1204,8 @@ msg_musical_recept_06を
 グッズを　使った　アピールを▽
 させることが　できます▼
 ドレスアップの　衣装次第で
-お客さんの　反応や▽
-アピールが　変わることも▽
+お客さんの　反応や▼
+アピールが　変わることも
 ありますので　お試しください！▼</language>
 	</row>
 
