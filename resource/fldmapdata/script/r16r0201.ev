@@ -156,6 +156,8 @@ EVENT_END
 /*                    ゾロアークPOSイベント                   */
 /**************************************************************/
 EVENT_START	ev_pos_r16r0201_woman3_01
+  //POSを無効（ローカルワーク0に0をセット)
+  $LOCALWORK0 = 0
   //イベントの対象ポケモン(エンテイ、ライコウ、スイクン)を調べる
   _CALL search_target
 
@@ -176,10 +178,10 @@ EVENT_START	ev_pos_r16r0201_woman3_01
 
   //ゾロアーク鳴き声
   _VOICE_PLAY( MONSNO_ZOROAAKU, 0 )
-  _BALLOONWIN_OBJMSG( msg_r16r0201_zoro_01, R16R0201_WOMAN3_01)
+  _GIZAPLAINWIN_MSG_POS( msg_r16r0201_zoro_01, POS_UP)
   _VOICE_WAIT()
   _AB_KEYWAIT_MARK()
-  _BALLOONWIN_CLOSE()
+  _GIZAPLAINWIN_CLOSE()
 
   //女性さらに、自機に近づく
   _OBJ_ANIME( R16R0201_WOMAN3_01, anm_woman_move2)
@@ -194,7 +196,11 @@ EVENT_START	ev_pos_r16r0201_woman3_01
   _CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_08, TRUE, TRUE )
   //自機が入れないようにトレーラーハウス入り口移動
   _SXY_MOVE_EXIT_EVENT( DOOR_ID_R16R0201_R16R0301_EXIT01, 0, 0, 0 )
-  
+
+  //「おそってきた」
+  _SYSWIN_MSG(msg_r16r0201_narrator_01, POS_DOWN)
+  _SYSWIN_CLOSE()
+
   //戦闘
   {
     DEFINE_LOCAL flag
@@ -218,16 +224,21 @@ EVENT_START	ev_pos_r16r0201_woman3_01
   SWITCH $SCWK_ANSWER
   CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN //勝利した場合、あるいは逃げた場合
     //シーンワーク更新 ゾロアークとバトルした（捕獲してない）
-    $WK_SCENE_R16R0201 = 1 
+    $WK_SCENE_R16R0201 = 1  
   CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
     _CALL backpacker_evt
-    //POSを無効（ローカルワーク0に0をセット)
-    $LOCALWORK0 = 0
     //対象ポケモンお役御免(イベント後フラグをセット)
     _SET_EVT_POKE_AFT_FLG( target_monsno, target_poke_pos )
     //シーンワーク更新　イベント完全終了
     $WK_SCENE_R16R0201 = 2
   ENDSWITCH
+
+  IF $SCWK_ANSWER == SCR_WILD_BTL_RET_WIN THEN    //勝ったとき
+    //「すがたをけした」
+    _SYSWIN_MSG(msg_r16r0201_narrator_02, POS_DOWN)
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+  ENDIF
 
 EVENT_END
 
@@ -310,6 +321,12 @@ backpacker_talk_turn:
   ENDIF
   _OBJ_ANIME_WAIT()
 
+  IF $player_dir != DIR_DOWN THEN
+    //自機を下に向ける
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_down )
+    _OBJ_ANIME_WAIT()
+  ENDIF  
+
   _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_03, R16R0201_BACKPACKERM_01)
   _BALLOONWIN_CLOSE()
 
@@ -332,7 +349,7 @@ backpacker_evt:
   _OBJ_ANIME_WAIT()
  
   //「ゾロアのすみか」
-  _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_04, MMDL_ID_EVENTOBJ_00)
+  _BALLOONWIN_OBJMSG_POS( msg_r16r0201_youngman_04, MMDL_ID_EVENTOBJ_00, POS_UP)
   _BALLOONWIN_CLOSE()
 
   //自機下向き
@@ -344,8 +361,8 @@ backpacker_evt:
   _OBJ_ANIME_WAIT()
 
   //青年のメッセージ
-  _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_05, MMDL_ID_EVENTOBJ_00)
-  _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_06, MMDL_ID_EVENTOBJ_00)
+  _BALLOONWIN_OBJMSG_POS( msg_r16r0201_youngman_05, MMDL_ID_EVENTOBJ_00, POS_UP)
+  _BALLOONWIN_OBJMSG_POS( msg_r16r0201_youngman_06, MMDL_ID_EVENTOBJ_00, POS_UP)
   _BALLOONWIN_CLOSE()
 
   //青年退出
@@ -353,7 +370,7 @@ backpacker_evt:
   _OBJ_ANIME_WAIT()
 
   //「イリュージョン」
-  _BALLOONWIN_OBJMSG( msg_r16r0201_youngman_07, MMDL_ID_EVENTOBJ_00)
+  _BALLOONWIN_OBJMSG_POS( msg_r16r0201_youngman_07, MMDL_ID_EVENTOBJ_00, POS_UP)
   _BALLOONWIN_CLOSE()
 
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_backpacker_remove2 )
@@ -475,7 +492,7 @@ _ANIME_LABEL	anm_backpacker_app
 //捕獲後の青年登場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_backpacker_app2
-  _ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
   
 
@@ -483,7 +500,7 @@ _ANIME_LABEL	anm_backpacker_app2
 //捕獲後の青年退場
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_backpacker_remove
-  _ANIME_DATA	AC_WALK_D_8F,3
+  _ANIME_DATA	AC_WALK_D_8F,2
   _ANIME_DATA	AC_DIR_R,1
   _ANIME_DATA	AC_WAIT_8F,1
   _ANIME_DATA	AC_DIR_L,1
@@ -495,6 +512,13 @@ _ANIME_LABEL	anm_backpacker_remove
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_backpacker_remove2
   _ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//下向き端踏み付き
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_down
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 
