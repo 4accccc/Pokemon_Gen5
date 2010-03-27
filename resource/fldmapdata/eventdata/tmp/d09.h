@@ -32,7 +32,9 @@
 #define D09_FLD_ITEM_03                    2
 #define D09_FLD_ITEM_04                    3
 #define D09_FLD_ITEM_05                    4
-#define TEST_OBJ                           5
+#define D09_VETERANM_01                    5
+#define D09_TRAINERM_01                    6
+#define D09_VETERANM_02                    7
 
 #endif //ZONE_D09_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d09.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

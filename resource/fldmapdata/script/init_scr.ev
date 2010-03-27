@@ -241,6 +241,9 @@ init_flags:
 	//R14R0201：ツチノカミ
 	_FLAG_SET( FV_R14R0201_LEG )
 
+	//チャンピオンロード外側：崖の下のベテラントレーナー。POSイベント後に表示。
+	_FLAG_SET( FV_D09_VETERANM_02 )
+
 }
 _RET
 
