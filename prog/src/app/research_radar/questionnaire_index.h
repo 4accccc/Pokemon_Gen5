@@ -48,3 +48,6 @@ extern u8 GetQuestionID_byAnswerID( u8 answerID );
 
 // w’è‚µ‚½‰ñ“š‚ª, Š‘®‚·‚é¿–â“à‚Ì‰½”Ô–Ú‚Ì‰ñ“š‚È‚Ì‚©‚ğæ“¾‚·‚é
 extern u8 GetAnswerIndex_atQuestion( u8 answerID );
+
+// w’è‚µ‚½¿–â‚É‘Î‚·‚é‰ñ“š‚Ì‘I‘ğˆ‚Ì”‚ğæ“¾‚·‚é
+extern u8 GetAnswerNum_byQuestionID( u8 questionID );

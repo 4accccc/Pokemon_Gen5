@@ -161,3 +161,23 @@ u8 GetAnswerIndex_atQuestion( u8 answerID )
   GF_ASSERT(0);
   return 1;
 }
+
+//---------------------------------------------------------------------------
+/**
+ * @brief 指定した質問に対する回答の選択肢の数を取得する
+ *
+ * @param questionID 質問ID ( QUESTION_ID_xxxx )
+ *
+ * @return 指定した質問の回答パターン数
+ */
+//---------------------------------------------------------------------------
+u8 GetAnswerNum_byQuestionID( u8 questionID )
+{
+  // IDエラー
+  if( QUESTION_ID_MAX < questionID ) {
+    GF_ASSERT(0);
+    return 0;
+  }
+
+  return AnswerNum_question[ questionID ];
+}
