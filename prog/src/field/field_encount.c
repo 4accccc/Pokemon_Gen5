@@ -244,12 +244,24 @@ void* FIELD_ENCOUNT_SetWildEncount( FIELD_ENCOUNT *enc, u16 mons_no, u8 mons_lv,
     if( flags & SCR_WILD_BTL_FLAG_ITEMNONE ){
       poke->item = 0xFFFF;  //アイテム所持ナシ
     }
+
+    //レア抽選方法
     if( flags & SCR_WILD_BTL_FLAG_RARE ){
-      poke->rare = TRUE;
-    }
+      poke->rare = POKE_RARE_SEL_MUST;             //必ずレア
+    }else if(flags & SCR_WILD_BTL_FLAG_NO_RARE){
+      poke->rare = POKE_RARE_SEL_NOT;         //必ずレアではない
+    }else poke->rare = POKE_RARE_SEL_DEF;       //通常抽選
+    
     if( flags & SCR_WILD_BTL_FLAG_SPEABI3 ){
       poke->spabi_3rd = TRUE;
     }
+
+    //性別指定
+    if ( flags & SCR_WILD_BTL_FLAG_MALE ){
+      poke->fixsex = PTL_SEX_MALE;        //必ずオス（性別固定ポケモン以外）
+    }else if ( flags & SCR_WILD_BTL_FLAG_FEMALE ){
+       poke->fixsex = PTL_SEX_FEMALE;        //必ずメス（性別固定ポケモン以外）
+    }else poke->fixsex = PTL_SEX_UNKNOWN; //指定無し
   }
 
   //バトルパラメータセット

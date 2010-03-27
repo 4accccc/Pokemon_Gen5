@@ -12,6 +12,11 @@
 
 #define FLD_ENCPOKE_NUM_MAX (2) ///<一度にエンカウントするポケモン数max
 
+#define POKE_RARE_SEL_DEF   (0)     //通常レア抽選
+#define POKE_RARE_SEL_MUST  (1)     //必ずレア
+#define POKE_RARE_SEL_NOT   (2)     //必ずレアではない
+
+
 ///ランダムポケモン抽選タイプ
 typedef enum{
   ENCPROB_CALCTYPE_NORMAL,  ///<ノーマル
@@ -30,9 +35,11 @@ typedef struct _ENC_POKE_PARAM
   u16 item;
   u8  level;
   u8  form;
-  u8  rare;       //強制レア
+  u8  rare;       //レア制御    0：制御しない　1：レア抽選　2：レア禁止　※レア抽選する処理はＷＢでは未実装（指定しても通常抽選になる）
   u8  spabi_3rd;  //第3特性適用
   u16 waza[4];
+  u8 fixsex;
+  u8 dummy[3];
 }ENC_POKE_PARAM;
 
 typedef struct _ENCPOKE_FLD_PARAM

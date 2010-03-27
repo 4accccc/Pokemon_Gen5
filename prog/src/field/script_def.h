@@ -121,9 +121,13 @@
 ///野生ポケモン戦闘呼び出し時に指定できるフラグ
 #define SCR_WILD_BTL_FLAG_NONE    (0x0000)  //フラグ無し
 #define SCR_WILD_BTL_FLAG_LEGEND  (0x0001)  //伝説戦闘(エンカウントメッセージが変化する)
-#define SCR_WILD_BTL_FLAG_RARE    (0x0002)  //強制レアポケ戦闘
+#define SCR_WILD_BTL_FLAG_RARE      (0x0002)  //強制レアポケ戦闘  ＷＢでは未実装
 #define SCR_WILD_BTL_FLAG_ITEMNONE  (0x0004)  //所持アイテム強制無し
 #define SCR_WILD_BTL_FLAG_SPEABI3   (0x0008)  //第3特性適用
+#define SCR_WILD_BTL_FLAG_NO_RARE   (0x0010)  //レア禁止
+#define SCR_WILD_BTL_FLAG_MALE      (0x0020)  //オスと戦闘
+#define SCR_WILD_BTL_FLAG_FEMALE    (0x0040)  //メスと戦闘
+
 
 ///野生ポケモン戦　再戦コードチェック
 #define SCR_WILD_BTL_RET_CAPTURE  (0) //捕まえた
