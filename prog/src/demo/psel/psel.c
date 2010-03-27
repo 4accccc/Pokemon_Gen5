@@ -218,7 +218,7 @@ static const u8 bmpwin_setup[TEXT_MAX][9] =
 
 // フェード
 #define S01_FADE_IN_WAIT  (0)
-#define S01_FADE_OUT_WAIT (1)//(1*THREE_INTERRUPT)  // 40フレームで真っ白にしたいので、なるべくそれに近くなるように、ここだけ特別に*THREE_INTERRUPTしない
+#define S01_FADE_OUT_WAIT (3)//(1*THREE_INTERRUPT)  // 60フレームで真っ白にしたいので、なるべくそれに近くなるように、ここだけ特別に*THREE_INTERRUPTしない
 #define S02_FADE_IN_WAIT  (2)
 #define S02_FADE_OUT_WAIT (1*THREE_INTERRUPT)
 
@@ -575,7 +575,7 @@ enum
 #define TIMETABLE_S01_CARD_READ        ( 69*THREE_INTERRUPT)  // このフレームで止めておく
 #define TIMETABLE_S01_CARD_VANISH      ( 70*THREE_INTERRUPT)
 #define TIMETABLE_S01_RIBBON_LOOSE     ( 90*THREE_INTERRUPT)
-#define TIMETABLE_S01_WO_START         (110*THREE_INTERRUPT)  // ホワイトアウトの開始フレーム  // 110-129
+#define TIMETABLE_S01_WO_START         (100*THREE_INTERRUPT)  // ホワイトアウトの開始フレーム  // 100-129
 #define TIMETABLE_S01_SCENE_END        (129*THREE_INTERRUPT)  // このフレームで止めておく
 
 #define TIMETABLE_S02_BOX_OPEN         (  0*THREE_INTERRUPT)
