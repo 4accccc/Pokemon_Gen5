@@ -168,13 +168,13 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
 
   if (ptr->BackNo == 0)
   {
-    ncgr = NARC_fld_faceup_faceup_bg_day_ncgr;
-    nscr = NARC_fld_faceup_faceup_bg_day_nscr;
+    ncgr = NARC_fld_faceup_faceup_bg_white_ncgr;
+    nscr = NARC_fld_faceup_faceup_bg_white_nscr;
   }
   else
   {
-    ncgr = NARC_fld_faceup_faceup_bg_night_ncgr;
-    nscr = NARC_fld_faceup_faceup_bg_night_nscr;
+    ncgr = NARC_fld_faceup_faceup_bg_black_ncgr;
+    nscr = NARC_fld_faceup_faceup_bg_black_nscr;
   }
   //タイプごとの背景、顔BGをロード
   {

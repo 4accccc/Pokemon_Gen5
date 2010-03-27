@@ -8,8 +8,10 @@
 #pragma once
 
 //îwåiéwíË
-#define FLD_FACEUP_BG_CITY (0)
-#define FLD_FACEUP_BG_DUNGEON  (1)
+#define FLD_FACEUP_BG_WHITE (0)
+#define FLD_FACEUP_BG_BLACK  (1)
+#define FLD_FACEUP_BG_WHEEL  (2)
+#define FLD_FACEUP_BG_CATSLE  (3)
 
 //êlï®éwíË
 #define FLD_FACEUP_CHAR_BOSS  (0)
