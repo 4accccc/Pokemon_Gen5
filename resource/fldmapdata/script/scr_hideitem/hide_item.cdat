@@ -412,7 +412,7 @@ static const HIDE_ITEM_DATA hide_item_data[128] = {
 		 68, 
 		1,0, // flags
 		205, // D07R0101 ネジやま
-		 34, 37, // x, y
+		 27, 11, // x, y
 	},
 	{ // ブロムヘキシン
 		 69, 
@@ -454,7 +454,7 @@ static const HIDE_ITEM_DATA hide_item_data[128] = {
 		 75, 
 		1,0, // flags
 		207, // D07R0301 ネジやま
-		  2, 59, // x, y
+		  3, 59, // x, y
 	},
 	{ // タウリン
 		 76, 
@@ -478,7 +478,7 @@ static const HIDE_ITEM_DATA hide_item_data[128] = {
 		 79, 
 		1,0, // flags
 		213, // D08R0101 リュウラセンの塔
-		 33, 24, // x, y
+		 38, 33, // x, y
 	},
 	{ // ポイントアップ
 		 80, 
