@@ -904,7 +904,6 @@ static u32 eps_EncPokeCalcPersonalRand(
   do{
     if(poke->rare){
       p_rnd = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
-      break;
     }else{
       p_rnd = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
     }
