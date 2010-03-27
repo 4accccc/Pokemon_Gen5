@@ -92,6 +92,7 @@ extern u8 WIFIHISTORY_GetMyCountryCount(WIFI_HISTORY * wh);
 extern u8 WIFIHISTORY_GetValidUnDataNum(WIFI_HISTORY * wh);
 extern void WIFIHISTORY_AddMyCountryCount(WIFI_HISTORY * wh);
 extern void WIFIHISTORY_SetMyNature(WIFI_HISTORY * wh, const NATURE_TYPE inType);
+extern u8 WIFIHISTORY_GetMyNature(WIFI_HISTORY * wh);
 extern void WIFIHISTORY_SetMyFavorite(WIFI_HISTORY * wh, const int inFavorite);
 extern u8 WIFIHISTORY_GetMyFavorite(WIFI_HISTORY * wh );
 

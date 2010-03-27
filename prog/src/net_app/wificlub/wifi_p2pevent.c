@@ -84,7 +84,7 @@ typedef struct{
   WIFI_LIST* pWifiList;
   GAMESYS_WORK * gsys;
   WIFILOGIN_PARAM     login;
-  BATTLE_SETUP_PARAM para;
+  BATTLE_SETUP_PARAM* para;
   COMM_BTL_DEMO_PARAM demo_prm;
   COMM_BATTLE_CALL_PROC_PARAM prm;
   POKEPARTY* pPokeParty;   //バトルに渡すPokeParty
@@ -163,31 +163,83 @@ NextMatchKindTbl aNextMatchKindTbl[] = {
 static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,EV_P2PEVENT_WORK * ep2p,int gamemode)
 {
   GAMEDATA* gamedata = GAMESYSTEM_GetGameData(pClub->gsys);
+  int no;
+  int shooter = Regulation_GetParam(ep2p->pMatchParam->pRegulation, REGULATION_SHOOTER);
   
+  switch(gamemode){
+  case WIFI_GAME_BATTLE_SINGLE_FLAT:
+    no = BATTLE_MODE_COLOSSEUM_SINGLE_50;
+    if(shooter){
+      no = BATTLE_MODE_COLOSSEUM_SINGLE_50_SHOOTER;
+    }
+    break;
+  case WIFI_GAME_BATTLE_SINGLE_ALL:
+    no = BATTLE_MODE_COLOSSEUM_SINGLE_FREE;
+    if(shooter){
+      no = BATTLE_MODE_COLOSSEUM_SINGLE_FREE_SHOOTER;
+    }
+    break;
+  case WIFI_GAME_BATTLE_DOUBLE_FLAT:
+    no = BATTLE_MODE_COLOSSEUM_DOUBLE_50;
+    if(shooter){
+      no = BATTLE_MODE_COLOSSEUM_DOUBLE_50_SHOOTER;
+    }
+    break;
+  case WIFI_GAME_BATTLE_DOUBLE_ALL:
+    no = BATTLE_MODE_COLOSSEUM_DOUBLE_FREE;
+    if(shooter){
+      no = BATTLE_MODE_COLOSSEUM_DOUBLE_FREE_SHOOTER;
+    }
+    break;
+  case WIFI_GAME_BATTLE_TRIPLE_FLAT:
+    no = BATTLE_MODE_COLOSSEUM_TRIPLE_50;
+    if(shooter){
+      no = BATTLE_MODE_COLOSSEUM_TRIPLE_50_SHOOTER;
+    }
+    break;
+  case WIFI_GAME_BATTLE_TRIPLE_ALL:
+    no = BATTLE_MODE_COLOSSEUM_TRIPLE_FREE;
+    if(shooter){
+      no = BATTLE_MODE_COLOSSEUM_TRIPLE_FREE_SHOOTER;
+    }
+    break;
+  case WIFI_GAME_BATTLE_ROTATION_FLAT:
+    no = BATTLE_MODE_COLOSSEUM_ROTATION_50;
+    if(shooter){
+      no = BATTLE_MODE_COLOSSEUM_ROTATION_50_SHOOTER;
+    }
+    break;
+  case WIFI_GAME_BATTLE_ROTATION_ALL:
+    no = BATTLE_MODE_COLOSSEUM_ROTATION_FREE;
+    if(shooter){
+      no = BATTLE_MODE_COLOSSEUM_ROTATION_FREE_SHOOTER;
+    }
+    break;
+  }
+  ep2p->prm.battle_mode = no;
+  ep2p->prm.fight_count = 0;      ///<連勝数
+
   switch(gamemode){
   case WIFI_GAME_BATTLE_SINGLE_ALL:
   case WIFI_GAME_BATTLE_SINGLE_FLAT:
     BTL_SETUP_Single_Comm(
-      &ep2p->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
+      ep2p->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
     break;
   case WIFI_GAME_BATTLE_DOUBLE_ALL:
   case WIFI_GAME_BATTLE_DOUBLE_FLAT:
-    BTL_SETUP_Double_Comm( &ep2p->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
+    BTL_SETUP_Double_Comm( ep2p->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
     break;
   case WIFI_GAME_BATTLE_TRIPLE_ALL:
   case WIFI_GAME_BATTLE_TRIPLE_FLAT:
-    BTL_SETUP_Triple_Comm( &ep2p->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
+    BTL_SETUP_Triple_Comm( ep2p->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
     break;
   case WIFI_GAME_BATTLE_ROTATION_ALL:
   case WIFI_GAME_BATTLE_ROTATION_FLAT:
-    BTL_SETUP_Rotation_Comm( &ep2p->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
+    BTL_SETUP_Rotation_Comm( ep2p->para , gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
     break;
   }
-  
-//  Regulation_GetShooterItem( ep2p->pMatchParam->pRegulation, &ep2p->para.shooterBitWork );
-//  PokeRegulation_ModifyLevelPokeParty(ep2p->pMatchParam->pRegulation,  ep2p->pPokeParty);
-  BATTLE_PARAM_SetPokeParty( &ep2p->para, ep2p->pPokeParty, BTL_CLIENT_PLAYER );
-  BATTLE_PARAM_SetRegulation( &ep2p->para, ep2p->pMatchParam->pRegulation, HEAPID_PROC);
+  BTL_SETUP_AllocRecBuffer( ep2p->para, GFL_HEAPID_APP); //録画バッファ確保 BTL_SETUPの後に必ず呼ばないといけない
+  BATTLE_PARAM_SetRegulation( ep2p->para, ep2p->pMatchParam->pRegulation, HEAPID_PROC);
 
 
 }
@@ -213,6 +265,8 @@ static void _pokeListWorkMake(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 ga
   //以下[out]
   PokeParty_InitWork(ep2p->pPokeParty);
   initWork->p_party = ep2p->pPokeParty;
+  initWork->netParty[0] = ep2p->pMatchParam->pPokeParty[0];
+  initWork->netParty[1] = ep2p->pMatchParam->pPokeParty[1];
 
 }
 
@@ -221,6 +275,10 @@ static void _pokeListWorkMake(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 ga
 //==============================================================================
 static void _pokeListWorkOut(EV_P2PEVENT_WORK * ep2p,GAMEDATA* pGameData,u32 gamemode)
 {
+//  int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+
+//  PokeParty_Copy(ep2p->pPokeParty, ep2p->pMatchParam->pPokeParty[my_net_id]);
+  BATTLE_PARAM_SetPokeParty( ep2p->para, ep2p->pPokeParty, BTL_CLIENT_PLAYER );
 }
 
 
@@ -299,6 +357,7 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     {
       _pokeListWorkMake(ep2p,GAMESYSTEM_GetGameData(pClub->gsys),ep2p->seq );
 
+      ep2p->para =BATTLE_PARAM_Create(HEAPID_PROC);
       _battleSetting(pClub, ep2p ,ep2p->pMatchParam->seq);
 
       //GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &ep2p->PokeList);
@@ -310,7 +369,6 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_BATTLE2:
     {
       _pokeListWorkOut(ep2p,GAMESYSTEM_GetGameData(pClub->gsys),ep2p->seq );
-      
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO,WB_NET_WIFICLUB);
@@ -325,11 +383,11 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
   case P2P_BATTLE_START:
 
    // _battleSetting(pClub, ep2p ,ep2p->pMatchParam->seq);
-    PMSND_PlayBGM(ep2p->para.musicDefault);
+    PMSND_PlayBGM(ep2p->para->musicDefault);
 
     GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1);
 #if 0
-    GAMESYSTEM_CallProc(ep2p->gsys, NO_OVERLAY_ID, &BtlProcData, &ep2p->para);
+    GAMESYSTEM_CallProc(ep2p->gsys, NO_OVERLAY_ID, &BtlProcData, ep2p->para);
 #else
     {
       int i;
@@ -342,8 +400,9 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
       }
       {
         ep2p->prm.gdata = GAMESYSTEM_GetGameData(pClub->gsys);
-        ep2p->prm.btl_setup_prm = &ep2p->para;
+        ep2p->prm.btl_setup_prm = ep2p->para;
         ep2p->prm.demo_prm = &ep2p->demo_prm;
+        
         GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
         GMEVENT_CallProc(pClub->event, NO_OVERLAY_ID, &CommBattleCommProcData, &ep2p->prm);
       }
@@ -354,8 +413,8 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     break;
   case P2P_BATTLE_END:
 
-    
     _pokmeonListWorkFree(ep2p);      // 
+    BATTLE_PARAM_Delete(ep2p->para);
 
     ep2p->seq = P2P_MATCH_BOARD;
 //    GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
@@ -452,6 +511,7 @@ static GFL_PROC_RESULT WifiClubProcInit( GFL_PROC * proc, int * seq, void * pwk,
   ep2p->pPokeParty = PokeParty_AllocPartyWork(GetHeapLowID(HEAPID_PROC));
   ep2p->aPokeTr.pParty = ep2p->pPokeParty; // 同じ物を使う
 
+  
   pClub->pWork = ep2p;
 
   // サウンドテスト

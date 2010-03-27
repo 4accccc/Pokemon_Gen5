@@ -36,6 +36,8 @@ typedef struct {
   u8 matchno[WIFILIST_FRIEND_MAX];   //前回マッチングした時のno
   u8 vchatMain;  // VCHATをONOFFするメインフラグ 内部は相手によって変化する為
   u8 btalk;    // 話しかけたのか、掲示板なのかで戻った際の分岐がある
+  u8 friendNo;  //対戦している人の番号
+  u8 dummy; 
 }WIFIP2PMATCH_PROC_PARAM;
 
 extern const GFL_PROC_DATA WifiP2PMatchProcData;

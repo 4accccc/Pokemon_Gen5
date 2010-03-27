@@ -2091,7 +2091,11 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
     if(wk->pParentWork->btalk){  //話しかけ接続時
       _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);
        WifiP2PMatch_FriendListInit2( wk, seq );
+
+      wk->friendNo = wk->pParentWork->friendNo;
+
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
+
     }
     else{  //相手と切断
       GFL_NET_StateWifiMatchEnd(TRUE);  // マッチングを切る
@@ -7062,6 +7066,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * 
   
   _graphicEnd(wk);
 
+  pParentWork->friendNo = wk->friendNo;
   pParentWork->seq = wk->endSeq;
 
   if(GFL_NET_IsInit()){

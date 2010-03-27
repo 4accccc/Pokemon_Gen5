@@ -998,8 +998,15 @@ static int _playerDirectBattleGO( WIFIP2PMATCH_WORK *wk, int seq )
 //  u8 command;
 
   if(!GFL_NET_IsParentMachine()){
+    u32 regulation = _createRegulation(wk);
+
+    _Menu_RegulationSetup(wk,0,1-wk->battleShooter ,REGWIN_TYPE_RULE_SHORT);
+
     _friendNameExpand(wk,  wk->friendNo - 1);
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1032, FALSE);
+//    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1032, FALSE);
+
+    WifiP2PMatchMessagePrintS(wk, msg_wifilobby_1001+wk->battleMode+wk->battleRule*4, FALSE);
+
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO_12);
   }
   else{
@@ -1014,10 +1021,12 @@ static int _playerDirectBattleGO_12( WIFIP2PMATCH_WORK *wk, int seq )
   if( !WifiP2PMatchMessageEndCheck(wk) ){
     return seq;
   }
-  EndMessageWindowOff(wk);
+//  EndMessageWindowOff(wk);
   {
-    u32 regulation = _createRegulation(wk);
-    _Menu_RegulationSetup(wk,0,1-wk->battleShooter ,REGWIN_TYPE_RULE);
+//    u32 regulation = _createRegulation(wk);
+//    _Menu_RegulationSetup(wk,0,1-wk->battleShooter ,REGWIN_TYPE_RULE_SHORT);
+//    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1001+wk->battleMode+wk->battleRule*4, FALSE);
+    
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO_13);
   }
   return seq;
@@ -1027,18 +1036,18 @@ static int _playerDirectBattleGO_12( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectBattleGO_13( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if(GFL_UI_KEY_GetTrg()){
+//  if(GFL_UI_KEY_GetTrg()){
     _Menu_RegulationDelete(wk);
  //   _Menu_RegulationDelete(wk->SysMsgWin);
 //    wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO_14);
-  }
+ // }
   return seq;
 }
 
 static int _playerDirectBattleGO_14( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  WifiP2PMatchMessagePrint(wk, msg_wifilobby_1001+wk->battleMode+wk->battleRule*4, FALSE);
+ // WifiP2PMatchMessagePrint(wk, msg_wifilobby_1001+wk->battleMode+wk->battleRule*4, FALSE);
   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO2);
   return seq;
 }
@@ -1052,9 +1061,9 @@ static int _playerDirectBattleGO1( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectBattleGO2( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  if( !WifiP2PMatchMessageEndCheck(wk) ){
-    return seq;
-  }
+//  if( !WifiP2PMatchMessageEndCheck(wk) ){
+  //  return seq;
+//  }
   _yenowinCreateM2(wk);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3);
   return seq;

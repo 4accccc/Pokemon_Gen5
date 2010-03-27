@@ -219,12 +219,13 @@ static void _modeSelectMenuFlash(GTSNEGO_WORK* pWork);
 static void _recvInfomationData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvMystatusData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _cancelButtonCallback(u32 bttnid, u32 event,void* p_work);
+static void _recvMatchData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 ///通信コマンドテーブル
 static const NetRecvFuncTable _PacketTbl[] = {
   {_recvInfomationData,   NULL},    ///_NETCMD_INFOSEND
   {_recvMystatusData, NULL},    ///_NETCMD_MYSTATUSSEND
-  {_recvMystatusData, NULL},    ///_NETCMD_MATCH
+  {_recvMatchData, NULL},    ///_NETCMD_MATCH
 };
 
 

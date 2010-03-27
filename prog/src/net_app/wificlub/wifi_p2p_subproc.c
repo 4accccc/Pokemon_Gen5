@@ -19,6 +19,7 @@
 #include "system/gfl_use.h"
 #include "system/net_err.h"
 #include "net/dwc_error.h"
+#include "net/network_define.h"
 
 #include "wifi_p2p_subproc.h"
 #include "poke_tool/poke_regulation.h"
@@ -27,6 +28,7 @@
 //	define
 //======================================================================
 #pragma mark [> define
+
 
 //======================================================================
 //	enum
@@ -40,6 +42,9 @@ typedef enum
   IBSS_INIT_POKESTATUS,
   IBSS_MAIN_POKESTATUS,
   IBSS_EXIT_POKESTATUS,
+  _POKEMONPARTY_SET,
+  _POKEMONPARTY_SEND,
+  _POKEMONPARTY_SEND2,
 }WIFICLUB_BATTLE_SUBPROC_STATE;
 
 //======================================================================
@@ -65,6 +70,8 @@ typedef struct
   HEAPID  heapId;
 }WIFICLUB_BATTLE_SUBPROC_WORK;
 
+
+
 //======================================================================
 //	proto
 //======================================================================
@@ -78,11 +85,35 @@ static GFL_PROC_RESULT WIFICLUB_BATTLE_SUB_PROC_Exit
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
 static GFL_PROC_RESULT WIFICLUB_BATTLE_SUB_PROC_Main
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
+static void _recvPartyData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static u8* _netPartyGet(int netID, void* pWk, int size);
 
 
 
 FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(poke_status);
+
+
+//======================================================================
+//	テーブル
+//======================================================================
+
+
+///通信コマンド
+typedef enum {
+  _NETCMD_PARTY = GFL_NET_CMD_WIFIP2P_SUB,
+} _WIFIP2P_SENDCMD;
+
+typedef enum {
+  _TIMING_PARTYSEND =  20,
+} _WIFIP2P_TIMING;
+
+
+///通信コマンドテーブル
+static const NetRecvFuncTable _PacketTbl[] = {
+  {_recvPartyData,   _netPartyGet},    ///_NETCMD_PARTY
+};
+
 
 
 const GFL_PROC_DATA WifiClubBattle_Sub_ProcData =
@@ -91,6 +122,43 @@ const GFL_PROC_DATA WifiClubBattle_Sub_ProcData =
   WIFICLUB_BATTLE_SUB_PROC_Main,
   WIFICLUB_BATTLE_SUB_PROC_Exit,
 };
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   パーティーの受信バッファを返す
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static u8* _netPartyGet(int netID, void* pWk, int size)
+{
+  WIFICLUB_BATTLE_SUBPROC_WORK *pWork = pWk;
+  return (u8*)pWork->param.netParty[netID];
+}
+
+
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   通信コールバックポケパーティー _NETCMD_PARTY
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _recvPartyData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  WIFICLUB_BATTLE_SUBPROC_WORK *pWork = pWk;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return;//自分のは今は受け取らない
+  }
+  //入っている
+}
+
 
 //--------------------------------------------------------------
 //	初期化
@@ -127,7 +195,8 @@ static GFL_PROC_RESULT WIFICLUB_BATTLE_SUB_PROC_Init( GFL_PROC *p_proc, int *p_s
     }
   }
   */
-  
+  GFL_NET_AddCommandTable(GFL_NET_CMD_WIFIP2P_SUB,_PacketTbl,NELEMS(_PacketTbl), procWork);
+
   WIFICLUB_BATTLE_SUBPROC_InitListData( p_param, procWork , &procWork->plData );
   WIFICLUB_BATTLE_SUBPROC_InitStatusData( p_param, procWork , &procWork->psData );
   
@@ -147,17 +216,6 @@ static GFL_PROC_RESULT WIFICLUB_BATTLE_SUB_PROC_Exit( GFL_PROC *p_proc, int *p_s
   WIFICLUB_BATTLE_SUBPROC_WORK   *procWork = p_wk_adrs;
   WIFICLUB_BATTLE_SUBPROC_PARAM  *p_param  = p_param_adrs;
 
-  u8 i;
-
-  for( i=0;i<TEMOTI_POKEMAX;i++ )
-  {
-    const u8 num = procWork->plData.in_num[i];
-    if( num > 0 )
-    {
-      POKEMON_PARAM *pp = PokeParty_GetMemberPointer( p_param->selfPokeParty , num-1 );
-      PokeParty_Add( p_param->p_party, pp );
-    }
-  }
 
   //パーティーのセット
   /*
@@ -240,10 +298,40 @@ static GFL_PROC_RESULT WIFICLUB_BATTLE_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
     else
     {
       p_param->result = WIFICLUB_BATTLE_SUBPROC_RESULT_SUCCESS;
+      procWork->state = _POKEMONPARTY_SET;
+    }
+    break;
+  case _POKEMONPARTY_SET:
+    {
+      u8 i;
+      for( i=0;i<TEMOTI_POKEMAX;i++ )
+      {
+        const u8 num = procWork->plData.in_num[i];
+        if( num > 0 )
+        {
+          POKEMON_PARAM *pp = PokeParty_GetMemberPointer( p_param->selfPokeParty , num-1 );
+          PokeParty_Add( p_param->p_party, pp );
+        }
+      }
+    }
+    procWork->state = _POKEMONPARTY_SEND;
+    break;
+  case _POKEMONPARTY_SEND:
+    if(GFL_NET_SendDataEx( GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_SENDID_ALLUSER,
+                           _NETCMD_PARTY,PokeParty_GetWorkSize() , p_param->p_party, FALSE,FALSE,TRUE )){
+      GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_PARTYSEND, WB_NET_WIFIP2P_SUB);
+      procWork->state = _POKEMONPARTY_SEND2;
+    }
+    break;
+  case _POKEMONPARTY_SEND2:
+    if( GFL_NET_HANDLE_IsTimeSync( GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_PARTYSEND, WB_NET_WIFIP2P_SUB)){
+
+      OS_TPrintf("PokeParty_GetBattlePokeNum %d \n" ,PokeParty_GetBattlePokeNum(procWork->param.netParty[0]));
+      OS_TPrintf("PokeParty_GetBattlePokeNum %d \n" ,PokeParty_GetBattlePokeNum(procWork->param.netParty[1]));
+
       return GFL_PROC_RES_FINISH;
     }
     break;
-
   case IBSS_INIT_POKESTATUS:
     GFL_OVERLAY_Load( FS_OVERLAY_ID(poke_status) );
     GFL_PROC_LOCAL_CallProc( procWork->procSys , NO_OVERLAY_ID , &PokeStatus_ProcData , &procWork->psData );

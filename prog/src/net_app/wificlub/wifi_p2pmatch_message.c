@@ -189,6 +189,7 @@ static BOOL WifiP2PMatchMessageEndCheck(WIFIP2PMATCH_WORK* wk)
 }
 
 
+
 //------------------------------------------------------------------
 /**
  * $brief   会話ウインドウ表示
@@ -200,7 +201,7 @@ static BOOL WifiP2PMatchMessageEndCheck(WIFIP2PMATCH_WORK* wk)
 //------------------------------------------------------------------
 
 
-static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSystem )
+static void WifiP2PMatchMessagePrintS( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSystem )
 {
   // 文字列取得
   u8 speed = MSGSPEED_GetWait();
@@ -208,7 +209,6 @@ static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSy
   // TimeWaitIcon破棄
   _timeWaitIconDel( wk );
 
-  wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
   wk->MsgWin = _BmpWinDel(wk->MsgWin);
 
   if(!PRINTSYS_QUE_IsFinished(wk->SysMsgQue)){
@@ -244,6 +244,25 @@ static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSy
 
   GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
   GFL_BMPWIN_MakeScreen(wk->MsgWin);
+}
+
+
+//------------------------------------------------------------------
+/**
+ * $brief   会話ウインドウ表示
+ *
+ * @param   wk
+ *
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+
+static void WifiP2PMatchMessagePrint( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bSystem )
+{
+  wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
+
+  WifiP2PMatchMessagePrintS(wk,msgno, bSystem);
 }
 
 //==============================================================================
@@ -1409,6 +1428,7 @@ static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shoo
   int category;
   PRINTSYS_LSB color;
   u16 title_msgid;
+  int space = 4;
 
   if(shooter_type == TRUE){
     shooter_type = REGULATION_SHOOTER_VALID;
@@ -1420,11 +1440,18 @@ static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shoo
 
   wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
 
-  wk->SysMsgWin= GFL_BMPWIN_Create(  GFL_BG_FRAME2_M,
-                                     REGWINDOW_WIN_PX, REGWINDOW_WIN_PY,
-                                     REGWINDOW_WIN_SX, REGWINDOW_WIN_SY,
-                                     MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
-
+  if(REGWIN_TYPE_RULE_SHORT == regwin_type){
+    wk->SysMsgWin= GFL_BMPWIN_Create(  GFL_BG_FRAME2_M,
+                                       REGWINDOW_WIN_PX, REGWINDOW_WIN_PY,
+                                       REGWINDOW_WIN_SX, REGWINDOW_WIN_SY-4,
+                                       MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+  }
+  else{
+    wk->SysMsgWin= GFL_BMPWIN_Create(  GFL_BG_FRAME2_M,
+                                       REGWINDOW_WIN_PX, REGWINDOW_WIN_PY,
+                                       REGWINDOW_WIN_SX, REGWINDOW_WIN_SY,
+                                       MCV_SYSFONT_PAL, GFL_BMP_CHRAREA_GET_B);
+  }
   //  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
   //                             0x20*MCV_SYSFONT_PAL, 0x20, HEAPID_WIFIP2PMATCH);
 
@@ -1445,7 +1472,7 @@ static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shoo
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->SysMsgWin), 0, 0, cupname, wk->fontHandle );
     GFL_STR_DeleteBuffer(cupname);
   }
-  else{
+  else if(regwin_type != REGWIN_TYPE_RULE_SHORT){
     if(regwin_type == REGWIN_TYPE_NG_TEMOTI){
       title_msgid = msg_wifilobby_098;
     }
@@ -1455,7 +1482,9 @@ static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shoo
     GFL_MSG_GetString(  wk->MsgManager, title_msgid, wk->pExpStrBuf );
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->SysMsgWin), 0, 0, wk->pExpStrBuf , wk->fontHandle);
   }
-
+  if(regwin_type == REGWIN_TYPE_RULE_SHORT){
+    space = 0;
+  }
   for(category = 0; category < REGULATION_CATEGORY_MAX; category++){
     if(fail_bit & (1 << category)){
       color = REG_FAIL_COLOR;
@@ -1463,9 +1492,9 @@ static void _Menu_RegulationSetup(WIFIP2PMATCH_WORK* wk, u32 fail_bit, BOOL shoo
     else{
       color = REG_NORMAL_COLOR;
     }
-    PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(wk->SysMsgWin),0, (4 + 2*category)*8,
+    PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(wk->SysMsgWin),0, (space + 2*category)*8,
                         wk->rpm->category[category], wk->fontHandle, color);
-    PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(wk->SysMsgWin), 14*8, (4 + 2*category)*8,
+    PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(wk->SysMsgWin), 14*8, (space + 2*category)*8,
                         wk->rpm->prerequisite[category], wk->fontHandle, color);
   }
   GFL_BMPWIN_TransVramCharacter(wk->SysMsgWin);

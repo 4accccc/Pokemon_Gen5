@@ -242,6 +242,18 @@ void WIFIHISTORY_SetMyNature(WIFI_HISTORY * wh, const NATURE_TYPE inType)
 
 //----------------------------------------------------------
 /**
+ * @brief	自分の性格を得る
+ * @param	wh			WIFI履歴データへのポインタ
+ * @return 性格
+ */
+//----------------------------------------------------------
+u8 WIFIHISTORY_GetMyNature(WIFI_HISTORY * wh)
+{
+  return wh->myNature;
+}
+
+//----------------------------------------------------------
+/**
  * @brief	自分の趣味をセット
  * @param	wh			WIFI履歴データへのポインタ
  * @param inFavorite    趣味コード

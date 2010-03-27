@@ -41,6 +41,7 @@
 #include "net/dwc_rapfriend.h"
 #include "savedata/wifilist.h"
 #include "savedata/wifihistory.h"
+#include "savedata/wifihistory_local.h"
 #include "savedata/undata_update.h"
 
 #include "system/touch_subwindow.h"
@@ -67,6 +68,7 @@ static void _changeDemo_ModelTrade24(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade25(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade26(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade27(POKEMON_TRADE_WORK* pWork);
 static void _changeTimingSaveStart(POKEMON_TRADE_WORK* pWork);
 static void _changeTimingSaveStart2(POKEMON_TRADE_WORK* pWork);
 static void _changeTimingSaveStart3(POKEMON_TRADE_WORK* pWork);
@@ -213,16 +215,14 @@ static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork)
 
 
 
-#if 0
+#if 1
 
 
 static void _UnDataSend2(POKEMON_TRADE_WORK* pWork)
 {
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),
                                _TIMING_UNDATA,WB_NET_TRADE_SERVICEID)){
-    
-    _CHANGE_STATE(pWork, _UnDataSend2);
-    
+    _CHANGE_STATE(pWork, _changeDemo_ModelTrade27);
   }
 }
 
@@ -230,8 +230,25 @@ static void _UnDataSend(POKEMON_TRADE_WORK* pWork)
 {
   WIFI_HISTORY* pWH = SaveData_GetWifiHistory(GAMEDATA_GetSaveControlWork(pWork->pGameData));
   UNITEDNATIONS_SAVE add_data;
+  POKEMON_PARAM* ppr;
+  POKEMON_PARAM* pps;
+
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    ppr = IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
+    pps = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+  }
+  else{
+    ppr = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+    pps = IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
+  }
   
-  UNDATAUP_Update(pWH, &add_data)
+  MyStatus_Copy(GAMEDATA_GetMyStatus(pWork->pGameData) , &add_data.aMyStatus);
+  add_data.recvPokemon = PP_Get( ppr , ID_PARA_monsno ,NULL) ;  //貰ったポケモン
+  add_data.sendPokemon = PP_Get( pps , ID_PARA_monsno ,NULL);  //あげたポケモン
+  add_data.favorite = WIFIHISTORY_GetMyFavorite(pWH);;   //趣味
+  add_data.countryCount = WIFIHISTORY_GetMyCountryCount(pWH) ;  //交換した国の回数
+  add_data.nature =WIFIHISTORY_GetMyNature(pWH) ;   //性格
+
   
   if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_UN, sizeof(add_data), &add_data)){
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_UNDATA, WB_NET_TRADE_SERVICEID);
@@ -304,6 +321,22 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
     _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
     return;
   }
+
+  if(
+    (pWork->type == POKEMONTRADE_TYPE_GTSNEGO)||
+    (pWork->type == POKEMONTRADE_TYPE_UNION)
+    )
+  {
+    _CHANGE_STATE(pWork, _UnDataSend);
+  }
+  else{
+    _CHANGE_STATE(pWork, _changeDemo_ModelTrade27);
+  }
+}
+
+static void _changeDemo_ModelTrade27(POKEMON_TRADE_WORK* pWork)
+{
+  
   {   //ここからいつでもPROCCHANGEしても良いように親ワークに交換情報を格納
     POKEMON_PARAM* pp;// = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
 
@@ -345,7 +378,6 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
   }
   //ポケモンセット
   _setPokemonData(pWork);
-
 
 
   _CHANGE_STATE(pWork,_saveStart);

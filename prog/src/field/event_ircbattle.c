@@ -76,8 +76,6 @@ enum _EVENT_IRCBATTLE {
   _PLAY_EVENT_BGM,
   _CALL_BATTLE,
   _WAIT_BATTLE,
-///  _CALL_IRCBATTLE_FRIEND,
-//  _WAIT_IRCBATTLE_FRIEND,
   _CALL_TRADE,
   _WAIT_TRADE,
   _CALL_EVOLUTION,
@@ -154,6 +152,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
+
     if(dbw->selectType == EVENTIRCBTL_ENTRYMODE_COMPATIBLE )
     {
       *seq = _FIELD_FADEOUT_IRCBATTLE;
@@ -220,25 +219,33 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 
 //    _PartySet( dbw->bBattelBox, dbw );
 
+    dbw->para =BATTLE_PARAM_Create(HEAPID_PROC);
+    
+    dbw->demo_prm.fight_count=0;
     switch(dbw->selectType){
     case EVENTIRCBTL_ENTRYMODE_SINGLE:
       dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_SINGLE_FREE;
       BTL_SETUP_Single_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_DOUBLE:
       dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_DOUBLE_FREE;
       BTL_SETUP_Double_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_TRI:
       dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_TRIPLE_FREE;
       BTL_SETUP_Triple_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_ROTATE:
       dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
+      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_ROTATION_FREE;
       BTL_SETUP_Rotation_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_MULTH:
       dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_MULTI_START;
+      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_MULTI_FREE;
       BTL_SETUP_Multi_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle(),
                             BTL_COMM_DS, GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() ), HEAPID_PROC );
       dbw->para->multiMode = 1;
@@ -250,6 +257,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       break;
     }
     BATTLE_PARAM_SetPokeParty( dbw->para, dbw->pParty, BTL_CLIENT_PLAYER );
+    BTL_SETUP_AllocRecBuffer( dbw->para, GFL_HEAPID_APP); //録画バッファ確保
     GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM( gsys, dbw->para->musicDefault, FSND_FADE_FAST, FSND_FADE_NONE ) );
     (*seq) ++;
     break;
@@ -274,6 +282,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
+    BATTLE_PARAM_Delete(dbw->para);
+    dbw->para = NULL;
     NET_PRINT("バトル完了 event_ircbattle\n");
     GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_FAST, FSND_FADE_NONE));
     (*seq) = _CALL_NET_END;
@@ -337,11 +347,11 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     break;
   case _WAIT_NET_END:
     if(GFL_NET_IsExit()){
+      _battleParaFree(dbw);
       (*seq) ++;
     }
     break;
   case _FIELD_OPEN:
-    _battleParaFree(dbw);
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq) ++;
     break;
@@ -412,7 +422,7 @@ GMEVENT* EVENT_IrcBattle(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT *
   dbw->ctrl =  GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(gsys) ); 
   dbw->gamedata = GAMESYSTEM_GetGameData(gsys);
   dbw->gsys = gsys;
-  dbw->para =BATTLE_PARAM_Create(HEAPID_PROC);
+
 //  bxsv = BATTLE_BOX_SAVE_GetBattleBoxSave(dbw->ctrl);
 
   {
@@ -435,7 +445,6 @@ static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw)
     GFL_HEAP_FreeMemory(dbw->pNetParty[i]);
   }
   GFL_HEAP_FreeMemory(dbw->pParty);
-  BATTLE_PARAM_Delete(dbw->para);
 }
 
 

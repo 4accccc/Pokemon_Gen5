@@ -256,6 +256,7 @@ enum{
 
 typedef enum{
   REGWIN_TYPE_RULE,        ///<ルールを見る
+  REGWIN_TYPE_RULE_SHORT,
   REGWIN_TYPE_NG_TEMOTI,   ///<手持ちNGチェック
   REGWIN_TYPE_NG_BBOX,     ///<バトルボックスNGチェック
 } REGWIN_TYPE;

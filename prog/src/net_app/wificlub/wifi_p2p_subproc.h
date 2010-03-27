@@ -53,6 +53,7 @@ typedef struct
   u8                  comm_selected_num;            //[in]すでに選び終わった人数 外部操作
   u8                  dummy[3];
   POKEPARTY           *p_party;                     //[out]出場するポケパーティ(Allocしておくこと)
+  POKEPARTY  *netParty[2];                   //[out]相手の出場するポケパーティ(Allocしておくこと)
   WIFICLUB_BATTLE_SUBPROC_RESULT  result;           //[out]終了コード
 } WIFICLUB_BATTLE_SUBPROC_PARAM;
 
