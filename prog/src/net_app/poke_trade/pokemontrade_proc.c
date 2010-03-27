@@ -49,6 +49,7 @@
 #include "net_app/gtsnego.h"
 #include "net/dwc_rapfriend.h"
 #include "system/net_err.h"
+#include "savedata/wifihistory.h"
 
 #include "item/item.h"
 
@@ -107,6 +108,7 @@ static void _gtsFirstMsgState(POKEMON_TRADE_WORK* pWork);
 static void _recvFriendBoxNum(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvChangeFactor(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvEvilCheck(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvUNData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 ///通信コマンドテーブル
 static const NetRecvFuncTable _PacketTbl[] = {
@@ -129,6 +131,7 @@ static const NetRecvFuncTable _PacketTbl[] = {
   {_recvSeqNegoNo,   NULL},    ///_NETCMD_GTSSEQNO
   {_recvFriendBoxNum,   NULL},   ///_NETCMD_FRIENDBOXNUM
   {_recvEvilCheck,   NULL},    ///_NETCMD_EVILCHECK
+  {_recvUNData,   NULL},    ///_NETCMD_UN
 
 };
 
@@ -708,6 +711,25 @@ static void _recvEvilCheck(const int netID, const int size, const void* pData, v
   pWork->evilCheck[1] = pRecvData[0];
 }
 
+//_NETCMD_UN
+
+
+static void _recvUNData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  POKEMON_TRADE_WORK *pWork = pWk;
+  const u8* pRecvData = pData;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return;//自分のは今は受け取らない
+  }
+  { //国連データ格納
+    WIFI_HISTORY* pWH = SaveData_GetWifiHistory(GAMEDATA_GetSaveControlWork(pWork->pGameData));
+    UNDATAUP_Update(pWH, (UNITEDNATIONS_SAVE*)pData);
+  }
+}
 
 
 
@@ -1216,7 +1238,6 @@ static void _networkFriendsStandbyWait2(POKEMON_TRADE_WORK* pWork)
   _CHANGE_STATE(pWork,_changePokemonSendData);
 
 }
-
 
 
 static void _preFadeOut2(POKEMON_TRADE_WORK* pWork)
