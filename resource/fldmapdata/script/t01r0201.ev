@@ -19,6 +19,7 @@ _EVENT_DATA    ev_t01r0201_middleman1_01
 _EVENT_DATA    ev_t01r0201_middlewoman1_01
 _EVENT_DATA    ev_scene_t01r0201_support_01
 _EVENT_DATA    ev_init_t01r0201
+_EVENT_DATA    ev_t01r0201_support_01
 _EVENT_DATA_END
 
 
@@ -27,9 +28,10 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START	ev_init_t01r0201
 
-	//初回訪問時のみ、イベント用にパパの位置を変更
+	//初回訪問時のみ、イベント用にパパ＆サポートの位置を変更
 	IF $WK_SCENE_T01R0201 == 0 THEN
 		_OBJ_POS_CHANGE( T01R0201_MIDDLEMAN1_01, 8, 0, 4, DIR_LEFT )
+		_OBJ_POS_CHANGE( T01R0201_SUPPORT_01, 6, 0, 4, DIR_RIGHT )
 	ENDIF
 
 INIT_EVENT_END
@@ -158,13 +160,22 @@ _ANIME_LABEL	anm_player_move_02
 EVENT_START   ev_t01r0201_middleman1_01
 	_TALK_OBJ_START()
 
-	//C04のイベント後ならメッセージ分岐
-	IF $WK_SCENE_C04 < 3 THEN
-		//イベント前
-		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0201_middleman1_02 )
+	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+		//クリア後なら
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0201_middleman1_04 )
+
 	ELSE
-		//イベント後
-		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0201_middleman1_03 )
+		//クリア前なら
+		
+		//C04のイベント後ならメッセージ分岐
+		IF $WK_SCENE_C04 < 3 THEN
+			//イベント前
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0201_middleman1_02 )
+		ELSE
+			//イベント後
+			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0201_middleman1_03 )
+		ENDIF
+	
 	ENDIF
 	
 	_LAST_KEYWAIT()
@@ -178,9 +189,26 @@ EVENT_END
 EVENT_START   ev_t01r0201_middlewoman1_01
 	_TALK_OBJ_START()
 
-	//【仮】図鑑入手までこのメッセージ
-	_BALLOONWIN_TALKOBJ_MSG( msg_t01r0201_middlewoman1_02 )
+	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+		//クリア後なら
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0201_middlewoman1_03 )
+	
+	ELSE
+		//クリア前なら
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0201_middlewoman1_02 )
+
+	ENDIF
+
 	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
+
+EVENT_END
+
+
+/************************************************************/
+/*						サポート							*/
+/************************************************************/
+EVENT_START   ev_t01r0201_support_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0201_white_end_01 )
 EVENT_END
 

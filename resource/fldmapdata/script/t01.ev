@@ -797,6 +797,9 @@ EVENT_START ev_scene_t01_friends_01
 	_FLAG_SET( FV_T01_RIVAL )
 	_FLAG_SET( FV_T01_SUPPORT )
 	
+	//サポート宅：サポートを表示
+	_FLAG_RESET( FV_T01R0201_SUPPORT )
+	
 	//========================================//
 	
 EVENT_END
