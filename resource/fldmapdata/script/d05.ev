@@ -22,6 +22,7 @@
 _EVENT_DATA    ev_pos_d05_rival_01
 _EVENT_DATA    ev_d05_workman_01
 _EVENT_DATA    ev_d05_workman_02
+_EVENT_DATA    ev_d05_trainerm_01
 _EVENT_DATA    ev_d05_workman_03
 _EVENT_DATA_END
 
@@ -174,8 +175,15 @@ EVENT_START   ev_d05_workman_02
 EVENT_END
 
 /**************************************************************/
-/*workman03一言メッセージ							          */
+/*trainerm_01一言メッセージ							          */
+/**************************************************************/
+EVENT_START   ev_d05_trainerm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_trainerm_02 )
+EVENT_END
+
+/**************************************************************/
+/*workmanアイテム入手							          */
 /**************************************************************/
 EVENT_START   ev_d05_workman_03
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d05_trainerm_02 )
+	_EASY_TALK_ITEM_EVENT(ITEM_GOTUGOTUMETTO, 1, FE_D05_ITEMGET_01, msg_d05_workman1_01, msg_d05_workman1_02, msg_d05_workman1_02 )
 EVENT_END

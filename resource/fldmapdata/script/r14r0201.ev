@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_r14r0201.h"
-  //.include  "r14r0201.h"
+  .include  "r14r0201.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -19,20 +19,562 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r14r0201
+_EVENT_DATA ev_pos_r14r0201_legend_drama_01
+_EVENT_DATA ev_bg_r14r0201_leg_01
+_EVENT_DATA ev_zone_r14r0201
+_EVENT_DATA ev_init_r14r0201
+_EVENT_DATA ev_r14r0201_poke9_01
 _EVENT_DATA_END
 
+/************************************************************/
+/*					ZONE_CHANGE_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_r14r0201
+
+{
+
+	_FLAG_SET( FV_R14R0201_GIRL1 )
+
+	//バージョンを取得して捕獲チェック条件を変更
+	DEFINE_LOCAL LCWK_VERSION
+	_GET_ROM_VERSION( LCWK_VERSION )
+	//捕獲返り値チェック
+	DEFINE_LOCAL LCWK_HOKAKU_CK
+	
+	//ツチノカミ寸劇を未読なら起動条件チェック
+	IF $WK_SCENE_R14R0201_LEG == 0 THEN
+		
+		//ホワイト：
+		IF $LCWK_VERSION == VERSION_WHITE THEN
+			_GET_MOVE_POKEMON_STATUS( MOVE_POKE_RAIKAMI, LCWK_HOKAKU_CK ) 
+			
+			IF $LCWK_HOKAKU_CK == MVPOKE_STATE_GET THEN
+					//========================================//
+	
+					//ツチノカミ寸劇を起動
+					$WK_SCENE_R14R0201_LEG = 1
+					_FLAG_RESET( FV_R14R0201_GIRL1 )
+
+					//========================================//
+			ENDIF
+			
+		//ブラック
+		ELSE
+			_GET_MOVE_POKEMON_STATUS( MOVE_POKE_KAZAKAMI, LCWK_HOKAKU_CK ) 
+			
+			IF $LCWK_HOKAKU_CK == MVPOKE_STATE_GET THEN
+					//========================================//
+	
+					//ツチノカミ寸劇を起動
+					$WK_SCENE_R14R0201_LEG = 1
+					_FLAG_RESET( FV_R14R0201_GIRL1 )
+
+					//========================================//
+			ENDIF
+			
+		ENDIF
+	
+	//ツチノカミ捕獲・倒し前
+	ELSIF $WK_SCENE_R14R0201_LEG == 3 THEN
+		//ツチノカミ表示
+		_FLAG_RESET( FV_R14R0201_LEG )
+	ENDIF
+}
+
+	
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_r14r0201
+	
+
+	//夢ポケモンイベントの値によってサポートの初期位置を変更する
+	IF $WK_SCENE_R14R0201_LEG == 3 THEN
+		_OBJ_POS_CHANGE( R14R0201_POKE9_01, 22, 5, 14, DIR_DOWN )
+	
+	ENDIF
+
+INIT_EVENT_END
+
 
 /**************************************************************/
-/*            ZONE_CHANGE_LABEL                               */
+/*  ツチノカミ寸劇*/
 /**************************************************************/
-//ev_zone_r14r0201:
-//  _END
+EVENT_START   ev_pos_r14r0201_legend_drama_01
+	{
+	
+	//主人公位置取得
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+	_PLAYER_POS_GET( POSX,POSZ )
+	
+	//弟主人公の後ろに回りこむ、姉主人公のほうを向く
+	SWITCH $POSX
+	CASE 21 THEN
+		_OBJ_ANIME( R14R0201_GIRL1_01,anm_r14r0210_girl1_look_d )
+		_OBJ_ANIME( R14R0201_BOY2_01,anm_r14r0210_boy2_playtag_01_01 )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r14r0210_player_clear_x21 )
+		_OBJ_ANIME_WAIT()
+	CASE 23 THEN
+		_OBJ_ANIME( R14R0201_GIRL1_01,anm_r14r0210_girl1_look_d )
+		_OBJ_ANIME( R14R0201_BOY2_01,anm_r14r0210_boy2_playtag_01_02 )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r14r0210_player_clear_x23 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //真ん中
+		_OBJ_ANIME( R14R0201_GIRL1_01,anm_r14r0210_girl1_look_d )
+		_OBJ_ANIME( R14R0201_BOY2_01,anm_r14r0210_boy2_playtag_01_01 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	//兄追いかける
+	_OBJ_ANIME( R14R0201_BOY1_01,anm_r14r0210_boy1_playtag_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//兄：ツチノカミさまの
+	_BALLOONWIN_OBJMSG(msg_r14r0201_boy1_01,R14R0201_BOY1_01)
+	_BALLOONWIN_CLOSE()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r14r0210_player_look_d )
+	_OBJ_ANIME_WAIT()
+	
+	//弟：ちがうもーん！
+	_BALLOONWIN_OBJMSG_WB( msg_r14r0201_boy2_01w , msg_r14r0201_boy2_01b , R14R0201_BOY2_01 , POS_DEFAULT)
+	_BALLOONWIN_CLOSE()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r14r0210_player_look_u )
+	_OBJ_ANIME_WAIT()
+	
+	//兄：ちがうよ！ バカッ
+	_BALLOONWIN_OBJMSG(msg_r14r0201_boy1_02,R14R0201_BOY1_01)
+	_BALLOONWIN_CLOSE()
+	
+	//兄追いかける・弟逃げる
+	_OBJ_ANIME( R14R0201_BOY2_01,anm_r14r0210_boy2_playtag_02 )
+	_OBJ_ANIME( R14R0201_BOY1_01,anm_r14r0210_boy1_playtag_02 )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r14r0210_player_look_d )
+	_OBJ_ANIME_WAIT()
+	
+	//兄：わるさをした
+	_BALLOONWIN_OBJMSG(msg_r14r0201_boy1_03,R14R0201_BOY1_01)
+	_BALLOONWIN_CLOSE()
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r14r0210_player_look_u )
+	_OBJ_ANIME_WAIT()
+	
+	//弟：わるさをする ポケモンがいたら
+	_BALLOONWIN_OBJMSG(msg_r14r0201_boy2_02,R14R0201_BOY2_01)
+	_BALLOONWIN_CLOSE()
+	
+	//弟退場
+	_OBJ_ANIME( R14R0201_BOY2_01,anm_r14r0210_boy2_goodbye_01 )
+	_OBJ_ANIME( R14R0201_BOY1_01,anm_c08_all_look_down )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_all_look_down  )
+	_OBJ_ANIME_WAIT()
+	
+	//兄：まてよ！ ばかっ
+	_BALLOONWIN_OBJMSG(msg_r14r0201_boy1_04,R14R0201_BOY1_01)
+	_BALLOONWIN_CLOSE()
+	
+	//兄退場
+	_OBJ_ANIME( R14R0201_BOY1_01,anm_r14r0210_boy1_goodbye_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//姉主人公の前へ
+	_OBJ_ANIME( R14R0201_GIRL1_01,anm_r14r0210_girl1_to_player_01 )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r14r0210_player_look_u )
+	_OBJ_ANIME_WAIT()
+	
+	//姉：ほこらは
+	_BALLOONWIN_OBJMSG(msg_r14r0201_girl1_01,R14R0201_GIRL1_01)
+	_BALLOONWIN_CLOSE()
+	
+	//姉主人公の横に
+	_OBJ_ANIME( R14R0201_GIRL1_01,anm_r14r0210_girl1_to_player_02 )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r14r0210_player_look_girl1_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//姉：あたしの おじいちゃんが
+	_BALLOONWIN_OBJMSG(msg_r14r0201_girl1_02,R14R0201_GIRL1_01)
+	_BALLOONWIN_CLOSE()
+	
+	//姉階段を下りて振り向く
+	_OBJ_ANIME( R14R0201_GIRL1_01,anm_r14r0210_girl1_to_player_03 )
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r14r0210_player_look_d )
+	_OBJ_ANIME_WAIT()
+	
+	//姉：カザカミとライカミが
+	_BALLOONWIN_OBJMSG(msg_r14r0201_girl1_03,R14R0201_GIRL1_01)
+	_BALLOONWIN_CLOSE()
+	
+	//姉退場
+	_OBJ_ANIME( R14R0201_GIRL1_01,anm_r14r0210_girl1_goodbye_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//姉：おじいちゃんが いってたよーっ！
+	_PLAINWIN_MSG_DOWN( msg_r14r0201_girl1_04 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
+	_OBJ_DEL( R14R0201_BOY2_01 )
+	_OBJ_DEL( R14R0201_BOY1_01 )
+	_OBJ_DEL( R14R0201_GIRL1_01 )
+
+	//========================================//
+	
+	//ツチノカミ寸劇を終了
+	$WK_SCENE_R14R0201_LEG = 2
+	_FLAG_SET( FV_R14R0201_GIRL1 )
+
+	//========================================//
+
+}
+EVENT_END
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：GIRL1下を見る
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_girl1_look_d
+	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：BOY2主人公の後ろにx21
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_boy2_playtag_01_01
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：BOY2主人公の後ろにx23
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_boy2_playtag_01_02
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：主人公中央へx21
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r14r0210_player_clear_x21
+	_ANIME_DATA	AC_WAIT_32F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：主人公中央へx22
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r14r0210_player_clear_x23
+	_ANIME_DATA	AC_WAIT_32F,1
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：BOY1主人公の前に
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_boy1_playtag_01
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：BOY2主人公の前に
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_boy2_playtag_02
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：BOY1主人公の後ろに
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_boy1_playtag_02
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：BOY2退場
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_boy2_goodbye_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ゲーヂス演説イベント：一同BOY2を見送る
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_all_look_down
+	_ANIME_DATA	AC_WAIT_16F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：BOY1退場
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_boy1_goodbye_02
+	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：GIRL1主人公の前へ
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_girl1_to_player_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：GIRL1主人公の横へ
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_girl1_to_player_02
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：主人公
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_player_look_girl1_01
+	_ANIME_DATA	AC_STAY_WALK_R_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：GIRL1階段を下りる
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_girl1_to_player_03
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：主人公U
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_player_look_u
+	_ANIME_DATA	AC_STAY_WALK_U_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：主人公D
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_player_look_d
+	_ANIME_DATA	AC_STAY_WALK_D_8F,0
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：GIRL1退場
+//--------------------------------------------------------------
+
+_ANIME_LABEL	 anm_r14r0210_girl1_goodbye_01
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
-/*                                                            */
+/*  ほこら*/
 /**************************************************************/
-ev_r14r0201:
-  //とりあえず最初のラベルだけ生成している
-  _END
+EVENT_START   ev_bg_r14r0201_leg_01
+{
 
+	//カザカミチェック定義
+	DEFINE_LOCAL LCWK_KAZAKAMI_RET
+	DEFINE_LOCAL LCWK_KAZAKAMI_POS
+	//ライカミチェック定義
+	DEFINE_LOCAL LCWK_RAIKAMI_RET
+	DEFINE_LOCAL LCWK_RAIKAMI_POS
+	
+	//カザカミ手持ちチェック
+	_GET_PARTY_POS ( MONSNO_648 , LCWK_KAZAKAMI_RET , LCWK_KAZAKAMI_POS )
+	//ライカミ手持ちチェック
+	_GET_PARTY_POS ( MONSNO_649 , LCWK_RAIKAMI_RET , LCWK_RAIKAMI_POS )
+	
+	//親チェック定義
+	DEFINE_LOCAL LCWK_OWNER_CK
+	
+	//バージョン別手持ち親チェック
+	DEFINE_LOCAL LCWK_VERSION
+	_GET_ROM_VERSION( LCWK_VERSION )
+
+	//ホワイト：
+	IF $LCWK_VERSION == VERSION_WHITE THEN
+	
+		IF $LCWK_RAIKAMI_RET == TRUE THEN
+			_CHECK_POKE_OWNER ( LCWK_OWNER_CK , LCWK_RAIKAMI_POS )
+		ENDIF
+			
+	//ブラック
+	ELSE
+		IF $LCWK_KAZAKAMI_RET == TRUE THEN
+			_CHECK_POKE_OWNER ( LCWK_OWNER_CK , LCWK_KAZAKAMI_POS )
+		ENDIF
+	ENDIF
+	
+	IF $LCWK_KAZAKAMI_RET == TRUE && $LCWK_RAIKAMI_RET == TRUE && $LCWK_OWNER_CK == TRUE THEN
+		IF FLAG_OFF( FE_R14R0201_LEG_GET ) && FLAG_OFF( FE_R14R0201_LEG_MEET ) THEN
+			_CALL ev_r14r0201_tuchi_come
+		ELSE
+			_PLAINWIN_MSG_DOWN( msg_r14r0201_narration_01)
+			_LAST_KEYWAIT()
+			_PLAINWIN_CLOSE()
+		ENDIF
+	ELSE
+		_PLAINWIN_MSG_DOWN( msg_r14r0201_narration_01)
+		_LAST_KEYWAIT()
+		_PLAINWIN_CLOSE()
+	ENDIF
+
+}
+EVENT_END
+
+/**************************************************************/
+/*CALL：ツチノカミ参上！                   */
+/**************************************************************/
+ev_r14r0201_tuchi_come:
+
+	_FLAG_RESET( FV_R14R0201_LEG )
+	_OBJ_ADD( R14R0201_POKE9_01 )
+	
+	//ふるびた ちいさな ほこらがある…
+	_PLAINWIN_MSG_DOWN( msg_r14r0201_narration_01)
+	_PLAINWIN_CLOSE()
+	
+	//主人公「！」
+	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r14r0201_player_gyoe )
+	_OBJ_ANIME_WAIT()
+	
+	//モンスターボールに入っているカザカミとライカミが
+	_PLAINWIN_MSG_DOWN( msg_r14r0201_narration_03)
+	_PLAINWIN_CLOSE()
+	
+	//演出アニメ作成
+	_EV_MOVEPOKE_CREATE( R14R0201_POKE9_01 )
+	
+	//登場
+	_EV_MOVEPOKE_START_ANIME( SCR_EV_MOVEPOKE_ANIME_TUCHI_INSIDE )
+	_EV_MOVEPOKE_CHECK_ANIME_END()
+	
+	//どぅるるるる！
+	_VOICE_PLAY( MONSNO_652, 0 )
+	_GIZAWIN_OBJMSG_POS( msg_r14r0201_tsutinokami_01 , R14R0201_POKE9_01, POS_DOWN )
+	
+	_OBJ_ANIME( MMDL_ID_PLAYER ,  anm_r14r0210_player_back_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//登場（２）
+	_EV_MOVEPOKE_START_ANIME( SCR_EV_MOVEPOKE_ANIME_TUCHI_OUTSIDE )
+	_EV_MOVEPOKE_CHECK_ANIME_END()
+	
+	//========================================/
+				
+	$WK_SCENE_R14R0201_LEG = 3
+	_FLAG_SET( FE_R14R0201_LEG_MEET )
+				
+	//========================================/
+	
+_RET
+
+//--------------------------------------------------------------
+//	カザカミ・ライカミ起動イベント：主人公「！」
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r14r0201_player_gyoe
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：主人公後退する
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r14r0210_player_back_01
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	AC_DIR_PAUSE_ON,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+/**************************************************************/
+/*  ツチノカミ話しかけ戦闘*/
+/**************************************************************/
+EVENT_START   ev_r14r0201_poke9_01
+{
+	_VOICE_PLAY( MONSNO_652, 0 )
+	_GIZAWIN_OBJMSG_POS( msg_r14r0201_tsutinokami_01 , R14R0201_POKE9_01, WIN_NONE )
+
+	_WILD_BTL_SET_LEGEND( MONSNO_652, 60 )
+	_BATTLE_RESULT_GET( SCWK_ANSWER )
+	
+	//倒した場合
+	IF $SCWK_ANSWER == 0 THEN
+
+		//========================================/
+				
+			//ツチノカミのOBJ削除
+			_OBJ_DEL( R14R0201_POKE9_01 )
+			_FLAG_SET( FV_R14R0201_LEG )
+			
+			$WK_SCENE_R14R0201_LEG = 4
+				
+		//========================================/
+				
+			_WILD_WIN()
+			
+		//負けた場合
+		ELSE
+			_WILD_LOSE()
+			
+	ENDIF
+
+}
+{
+	_WILD_RETRY_CHECK( SCWK_ANSWER )
+
+	SWITCH $SCWK_ANSWER
+	CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
+		//勝利した場合、あるいは逃げた場合
+		_PLAINWIN_MSG_DOWN( msg_r14r0201_narration_04)
+		_LAST_KEYWAIT()
+		_PLAINWIN_CLOSE()
+
+	CASE SCR_WILD_BTL_RET_CAPTURE THEN
+	//捕まえた場合
+		_FLAG_SET( FE_R14R0201_LEG_GET )
+
+	ENDSWITCH
+}
+EVENT_END

@@ -20,36 +20,27 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c07r0101_oldman_01
+_EVENT_DATA    ev_c07r0101_babygirl1_01
+_EVENT_DATA    ev_c07r0101_middlewoman1_01
 _EVENT_DATA_END
 
-
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_c07r0101_flag_change:
-//  _END
-
-/**************************************************************/
-/* D08イベント進行状況で台詞を変えるおじいさん                 */
+/* OLDMAN                 */
 /**************************************************************/
 EVENT_START   ev_c07r0101_oldman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07r0101_oldman_01 )
+EVENT_END
 
-	//ジムクリア前
-	IF $WK_SCENE_C07 == 0 THEN
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07r0101_oldman_01 )
-		
-	//ジムクリア後、リュウラセンの塔イベントクリア前
-	ELSIF $WK_SCENE_C07 == 0 THEN
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07r0101_oldman_02 )
-	
-	//リュウラセンの塔イベントクリア後
-	ELSIF $WK_SCENE_C07 == 0 THEN
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07r0101_oldman_03 )
-	
-	//その他
-	ELSE
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07r0101_oldman_01 )
-	ENDIF
+/**************************************************************/
+/* BABYGIRL1                 */
+/**************************************************************/
+EVENT_START   ev_c07r0101_babygirl1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07r0101_babygirl1_01 )
+EVENT_END
 
-
+/**************************************************************/
+/* MIDDLEWOMAN1                 */
+/**************************************************************/
+EVENT_START   ev_c07r0101_middlewoman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c07r0101_middlewoman1_01 )
 EVENT_END

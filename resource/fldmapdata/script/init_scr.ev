@@ -236,6 +236,9 @@ init_flags:
 
 	//クリア後：18番道路の七賢人その６
 	_FLAG_SET( FV_R18_SAGE )
+	
+	//R14R0201：ツチノカミ
+	_FLAG_SET( FV_R14R0201_LEG )
 
 }
 _RET
