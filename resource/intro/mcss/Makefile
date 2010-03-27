@@ -55,18 +55,18 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 # サフィックスルールを定義することで 依存関係を自動で判断してくれる
 .SUFFIXES: .NMCR .nmc .NCLR .ncl .NCBR .ncg .NCEC .nce
 
-.nmc.NMCR:
-	perl $(SCRIPT_DIR)tr_nmc.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
-
-.ncl.NCLR:
-	perl $(SCRIPT_DIR)tr_ncl.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
-
 .ncg.NCBR:
 	perl $(SCRIPT_DIR)tr_ncgc.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
 
 .nce.NCEC:
 	perl $(SCRIPT_DIR)tr_nce.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
-	g2dcvtr $<
+#	g2dcvtr $<
+
+.nmc.NMCR:
+	perl $(SCRIPT_DIR)tr_nmc.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
+
+.ncl.NCLR:
+	perl $(SCRIPT_DIR)tr_ncl.pl $(COPY_DIR)$(notdir $<) $(CNV_DIR)
 
 endif
 
