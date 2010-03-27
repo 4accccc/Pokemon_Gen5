@@ -528,6 +528,12 @@ EVENT_START   ev_pos_c08_champions_01
 	//C08演説イベントPOSを無効に／誘導イベント（２）へ
 	$WK_SCENE_C08 = 1
 	
+	//C02：ダーク/ライトストーンのサポートとアロエを非表示
+	_FLAG_SET(FV_C02_STONEEVENT_02)
+
+	//C02GYM0202：ジムリーダーを表示
+	_FLAG_RESET(FV_C02GYM0202_LEADER2)
+	
 	//======================================//
 
 EVENT_END

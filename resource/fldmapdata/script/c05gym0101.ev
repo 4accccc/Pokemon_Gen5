@@ -151,6 +151,9 @@ EVENT_START		ev_c05gym0101_leader
 		_TRAINER_FLAG_SET( TRID_OL_03 )
 		_TRAINER_FLAG_SET( TRID_BUSINESS1_04 )
 		_TRAINER_FLAG_SET( TRID_WORKER2_14 )
+		
+		//電光掲示板フラグセット
+		_FLAG_SET( SYS_FLAG_ELBOARD_C05GYMWIN )
 
 		//========================================//
 		

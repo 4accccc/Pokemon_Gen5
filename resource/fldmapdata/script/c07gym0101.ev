@@ -139,6 +139,9 @@ EVENT_START		ev_c07gym0101_leader7_01
 		_TRAINER_FLAG_SET( TRID_BATTLEG_05 )
 		_TRAINER_FLAG_SET( TRID_BATTLEG_06 )
 		_TRAINER_FLAG_SET( TRID_KARATE_06 )
+		
+		//電光掲示板のフラグセット
+		_FLAG_SET( SYS_FLAG_ELBOARD_C07GYMWIN )
 
 		//========================================//
 		

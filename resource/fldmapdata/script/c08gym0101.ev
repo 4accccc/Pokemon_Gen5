@@ -144,6 +144,9 @@ EVENT_START	ev_c08gym0101_leader8_01
 			
 			//C08R0601案内嬢POSイベント起動
 			$WK_SCENE_C08_GYMCLEAR = 1
+			
+			//電光掲示板フラグセット
+			_FLAG_SET( SYS_FLAG_ELBOARD_C08BGYMWIN )
 		
 			//========================================//
 			
@@ -235,6 +238,9 @@ EVENT_START	ev_c08gym0101_leader8_01
 			
 			//C08R0601案内嬢POSイベント起動
 			$WK_SCENE_C08_GYMCLEAR = 1
+			
+			//電光掲示板フラグセット
+			_FLAG_SET( SYS_FLAG_ELBOARD_C08WGYMWIN )
 		
 			//========================================//
 			
