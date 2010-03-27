@@ -204,10 +204,25 @@ static const INTRO_CMD_DATA c_intro_scene_05_retake_yesno[] =
 
   // 分岐 確認メッセージ
   { INTRO_CMD_TYPE_YESNO, { msg_intro_yesno_01, msg_intro_yesno_02, TRUE }, },
-    { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_06 }, // はい > シーン6にジャンプ
-    { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_05 }, // いいえ
+    { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_06 },        // はい > シーン6にジャンプ
+    { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_05_RETRY },  // いいえ
 
 };
+
+//---------------------------------------------------------------------------
+// シーン 05 > 名前入力「いいえ」
+//---------------------------------------------------------------------------
+static const INTRO_CMD_DATA c_intro_scene_05_retry[] = 
+{ 
+  { INTRO_CMD_TYPE_SET_RETCODE, INTRO_RETCODE_RETAKE }, // 外部アプリにリトライを返す
+
+#ifdef CMD_SAVE_ON
+  { INTRO_CMD_TYPE_SAVE_SASUPEND }, // セーブ中断
+#endif
+
+  { INTRO_CMD_TYPE_END, }, // 一旦終了 game_start.c から名前入力を呼び出して戻ってくる
+};
+
 
 //---------------------------------------------------------------------------
 // シーン 06 博士が締める
@@ -263,6 +278,7 @@ static const INTRO_CMD_DATA* c_intro_scene_access_tbl[ INTRO_SCENE_ID_MAX ] =
   c_intro_scene_04,
   c_intro_scene_05,
   c_intro_scene_05_retake_yesno,
+  c_intro_scene_05_retry,
   c_intro_scene_06,
   c_intro_scene_07,
 };
