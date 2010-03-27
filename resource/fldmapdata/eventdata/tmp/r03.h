@@ -51,5 +51,6 @@
 #define R03_BOARD_02                      2
 #define R03_HIDE_ITEM_00                  3
 #define R03_HIDE_ITEM_02                  4
+#define R03_HIDE_ITEM_01                  5
 
 #endif //ZONE_R03_EVB_H
