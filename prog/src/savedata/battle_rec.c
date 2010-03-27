@@ -541,27 +541,31 @@ SAVE_RESULT BattleRec_SaveDataErase(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int n
 /**
  * @brief   録画モードからクライアント数と手持ち数の上限を取得
  *
- * @param   rec_mode    録画モード(BATTLE_MODE_???)
+ * @param   rec_mode      録画モードのbit定義(BattleRecModeBitTblの内容物)
  * @param   client_max    クライアント数代入先
  * @param   temoti_max    手持ち最大数代入先
  */
 //--------------------------------------------------------------
-void BattleRec_ClientTemotiGet(BATTLE_MODE rec_mode, int *client_max, int *temoti_max)
+void BattleRec_ClientTemotiGet(u16 mode_bit, int *client_max, int *temoti_max)
 {
-  switch(rec_mode){
-  case BATTLE_MODE_COLOSSEUM_MULTI_FREE:
-  case BATTLE_MODE_COLOSSEUM_MULTI_50:
-  case BATTLE_MODE_COLOSSEUM_MULTI_FREE_SHOOTER:
-  case BATTLE_MODE_COLOSSEUM_MULTI_50_SHOOTER:
-  case BATTLE_MODE_SUBWAY_MULTI:
-    *client_max = 4;
-    *temoti_max = TEMOTI_POKEMAX / 2;
-    break;
-  default:
-    *client_max = 2;
-    *temoti_max = TEMOTI_POKEMAX;
-    break;
+  int i;
+
+  for(i = 0; i < BATTLE_MODE_MAX; i++){
+    if(BattleRecModeBitTbl[i] == mode_bit){
+      switch(i){
+      case BATTLE_MODE_COLOSSEUM_MULTI_FREE:
+      case BATTLE_MODE_COLOSSEUM_MULTI_50:
+      case BATTLE_MODE_COLOSSEUM_MULTI_FREE_SHOOTER:
+      case BATTLE_MODE_COLOSSEUM_MULTI_50_SHOOTER:
+      case BATTLE_MODE_SUBWAY_MULTI:
+        *client_max = 4;
+        *temoti_max = TEMOTI_POKEMAX / 2;
+        return;
+      }
+    }
   }
+  *client_max = 2;
+  *temoti_max = TEMOTI_POKEMAX;
 }
 
 //--------------------------------------------------------------
@@ -581,7 +585,7 @@ static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, cons
 
   GFL_STD_MemClear(head, sizeof(BATTLE_REC_HEADER));
 
-  BattleRec_ClientTemotiGet(rec_mode, &client_max, &temoti_max);
+  BattleRec_ClientTemotiGet(BattleRecModeBitTbl[rec_mode], &client_max, &temoti_max);
 
   n = 0;
   

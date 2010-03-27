@@ -141,38 +141,6 @@ typedef struct _BATTLE_REC_HEADER *   BATTLE_REC_HEADER_PTR;
 
 
 
-//==============================================================================
-//  ※check　makeを通す為の暫定定義
-//==============================================================================
-//--------------------------------------------------------------
-/**
- * @brief   戦闘開始パラメータ
- *      336 byte
- */
-//--------------------------------------------------------------
-typedef struct{
-  u8 work[336];
-}BATTLE_PARAM;
-
-//----------------------------------------------------------
-/**
- * @brief バトルレギュレーションデータ型定義  fushigi_data.h参照の為外部公開に
- */
-//----------------------------------------------------------
-typedef struct {
-  STRCODE cupName[12];
-  u16 totalLevel;
-  u8 num;
-  u8 level;
-    s8 height;
-    s8 weight;
-    u8 evolution:1;    //
-    u8 bLegend:1;
-    u8 bBothMonster:1;
-    u8 bBothItem:1;
-    u8 bFixDamage:1;
-}AAA_REGULATION;
-
 //----------------------------------------------------------------------------
 /**
   *  不完全型定義
@@ -197,8 +165,7 @@ extern BOOL BattleRec_Load( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *r
 extern BOOL BattleRec_DataOccCheck(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *result,int num);
 extern SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, BATTLE_MODE rec_mode, int fight_count, int num, u16 *work0, u16 *work1);
 extern SAVE_RESULT BattleRec_SaveDataErase(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int num);
-extern void BattleRec_ClientTemotiGet(BATTLE_MODE rec_mode, int *client_max, int *temoti_max);
-extern void BattleRec_BattleParamRec(BATTLE_PARAM *bp);
+extern void BattleRec_ClientTemotiGet(u16 mode_bit, int *client_max, int *temoti_max);
 extern void BattleRec_ServerVersionUpdate(int id_no, u32 server_version);
 extern BOOL BattleRec_ServerVersionCheck(void);
 extern BATTLE_REC_HEADER_PTR BattleRec_HeaderAllocCopy(HEAPID heap_id);
@@ -234,7 +201,6 @@ extern void BattleRec_Coded(void *data,u32 size,u32 code);
 //  battl_rec_ov.c
 //      ※battle_recorderオーバーレイ領域に配置されているので注意!
 //==============================================================================
-extern void BattleRecTool_ErrorStrCheck(BATTLE_REC_SAVEDATA *src, BATTLE_PARAM *bp, int heap_id);
 extern SAVE_RESULT BattleRec_GDS_RecvData_Save(SAVE_CONTROL_WORK *sv, int num, u8 secure, u16 *work0, u16 *work1, HEAPID heap_id);
 extern void BattleRec_GDS_SendData_Conv(SAVE_CONTROL_WORK *sv);
 extern SAVE_RESULT BattleRec_GDS_MySendData_DataNumberSetSave(SAVE_CONTROL_WORK *sv, u64 data_number, u16 *work0, u16 *work1, HEAPID heap_id);
