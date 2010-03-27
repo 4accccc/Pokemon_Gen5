@@ -9,6 +9,7 @@
 #ifndef ZONE_R16R0301_EVC_H
 #define ZONE_R16R0301_EVC_H
 
+#define R16R0301_WOMAN3_01                 0
 
 #endif //ZONE_R16R0301_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r16r0301.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -177,7 +177,7 @@ EVENT_START ev_palace01_oldman1_01
 	//初回会話分岐
 	IF FLAG_OFF( FE_PALACE01_OLDMANTALK) THEN
 		//初めてなら
-		_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_01, PALACE01_OLDMAN1_01, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_01, PALACE01_OLDMAN1_01, POS_D )
 		_MSGWIN_CLOSE()
 		
 		//デルダマ＊５入手
@@ -190,7 +190,7 @@ EVENT_START ev_palace01_oldman1_01
 		
 	ELSE
 		//２回目以降
-		_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_04, PALACE01_OLDMAN1_01, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_04, PALACE01_OLDMAN1_01, POS_D )
 		
 	ENDIF
 	
@@ -209,7 +209,7 @@ ev_oldman1_guide:
 	WHILE $lwk_loop != 555
 	
 		//パレスに興味があるのか？
-		_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_02, PALACE01_OLDMAN1_01, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_02, PALACE01_OLDMAN1_01, POS_D )
 	
 		//メニュー作成
 		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, lwk_bmpans )
@@ -223,10 +223,10 @@ ev_oldman1_guide:
 		SWITCH $lwk_bmpans
 		CASE 0 THEN
 			//パレスとは
-			_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_05, PALACE01_OLDMAN1_01, POS_DOWN )
+			_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_05, PALACE01_OLDMAN1_01, POS_D )
 		CASE 1 THEN
 			//アクセスとは
-			_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_06, PALACE01_OLDMAN1_01, POS_DOWN )
+			_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_06, PALACE01_OLDMAN1_01, POS_D )
 		DEFAULT
 			//やめる
 			$lwk_loop = 555
@@ -237,7 +237,7 @@ ev_oldman1_guide:
 	}
 	
 	//終了メッセージ
-	_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_03, PALACE01_OLDMAN1_01, POS_DOWN )
+	_BALLOONWIN_OBJMSG_POS( plc_oldman1_01_03, PALACE01_OLDMAN1_01, POS_D )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
@@ -250,7 +250,7 @@ EVENT_START ev_palace01_girl4_01
 	_TALK_OBJ_START()
 	
 	//私たちはパレスを見守るもの
-	_BALLOONWIN_OBJMSG_POS( plc_girl4_01_01, PALACE01_GIRL4_01, POS_DOWN )
+	_BALLOONWIN_OBJMSG_POS( plc_girl4_01_01, PALACE01_GIRL4_01, POS_D )
 	
 	{
 	DEFINE_LOCAL  lwk_loop
@@ -260,7 +260,7 @@ EVENT_START ev_palace01_girl4_01
 	WHILE $lwk_loop != 555
 		
 		//パレスについて知りたい？
-		_BALLOONWIN_OBJMSG_POS( plc_girl4_01_02, PALACE01_GIRL4_01, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( plc_girl4_01_02, PALACE01_GIRL4_01, POS_D )
 		
 		//メニュー作成
 		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, lwk_bmpans )
@@ -274,10 +274,10 @@ EVENT_START ev_palace01_girl4_01
 		SWITCH $lwk_bmpans
 		CASE 0 THEN
 			//リンクブリッジとは
-			_BALLOONWIN_OBJMSG_POS( plc_girl4_01_03, PALACE01_GIRL4_01, POS_DOWN )
+			_BALLOONWIN_OBJMSG_POS( plc_girl4_01_03, PALACE01_GIRL4_01, POS_D )
 		CASE 1 THEN
 			//ミッションとは
-			_BALLOONWIN_OBJMSG_POS( plc_girl4_01_04, PALACE01_GIRL4_01, POS_DOWN )
+			_BALLOONWIN_OBJMSG_POS( plc_girl4_01_04, PALACE01_GIRL4_01, POS_D )
 		DEFAULT
 			//やめる
 			$lwk_loop = 555
@@ -288,7 +288,7 @@ EVENT_START ev_palace01_girl4_01
 	}
 	
 	//終了メッセージ
-	_BALLOONWIN_OBJMSG_POS( plc_girl4_01_05 ,PALACE01_GIRL4_01, POS_DOWN )
+	_BALLOONWIN_OBJMSG_POS( plc_girl4_01_05 ,PALACE01_GIRL4_01, POS_D )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
@@ -302,7 +302,7 @@ EVENT_START ev_palace01_girl4_02
 	_TALK_OBJ_START()
 	
 	//私たちはパレスを見守るもの
-	_BALLOONWIN_OBJMSG_POS( plc_girl4_02_01, PALACE01_GIRL4_02, POS_DOWN )
+	_BALLOONWIN_OBJMSG_POS( plc_girl4_02_01, PALACE01_GIRL4_02, POS_D )
 	
 	{
 	DEFINE_LOCAL  lwk_loop
@@ -312,7 +312,7 @@ EVENT_START ev_palace01_girl4_02
 	WHILE $lwk_loop != 555
 		
 		//パレスについて知りたい？
-		_BALLOONWIN_OBJMSG_POS( plc_girl4_02_02, PALACE01_GIRL4_02, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( plc_girl4_02_02, PALACE01_GIRL4_02, POS_D )
 		
 		//メニュー作成
 		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, lwk_bmpans )
@@ -326,10 +326,10 @@ EVENT_START ev_palace01_girl4_02
 		SWITCH $lwk_bmpans
 		CASE 0 THEN
 			//Ｇパワーとは
-			_BALLOONWIN_OBJMSG_POS( plc_girl4_02_03, PALACE01_GIRL4_02, POS_DOWN )
+			_BALLOONWIN_OBJMSG_POS( plc_girl4_02_03, PALACE01_GIRL4_02, POS_D )
 		CASE 1 THEN
 			//Ｇパワーをもらうには
-			_BALLOONWIN_OBJMSG_POS( plc_girl4_02_04, PALACE01_GIRL4_02, POS_DOWN )
+			_BALLOONWIN_OBJMSG_POS( plc_girl4_02_04, PALACE01_GIRL4_02, POS_D )
 		DEFAULT
 			//やめる
 			$lwk_loop = 555
@@ -340,7 +340,7 @@ EVENT_START ev_palace01_girl4_02
 	}
 	
 	//終了メッセージ
-	_BALLOONWIN_OBJMSG_POS( plc_girl4_02_05, PALACE01_GIRL4_02, POS_DOWN )
+	_BALLOONWIN_OBJMSG_POS( plc_girl4_02_05, PALACE01_GIRL4_02, POS_D )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
