@@ -225,12 +225,12 @@ EVENT_START ev_hide_item_014
 EVENT_END
 
 EVENT_START ev_hide_item_015
-//ゆめのあとち ( 42, 49 )
+//ゆめのあとち ( 19, 45 )
 	_ITEM_EVENT_HIDEITEM( 24, 1, FLAG_HIDEITEM_002 )// まんたんのくすり
 EVENT_END
 
 EVENT_START ev_hide_item_016
-//ゆめのあとち ( 43, 13 )
+//ゆめのあとち ( 41, 16 )
 	_ITEM_EVENT_HIDEITEM( 2, 1, FLAG_HIDEITEM_003 )// ハイパーボール
 EVENT_END
 
@@ -250,7 +250,7 @@ EVENT_START ev_hide_item_019
 EVENT_END
 
 EVENT_START ev_hide_item_020
-//ヤグルマの森 ( 626, 614 )
+//ヤグルマの森外 ( 626, 614 )
 	_ITEM_EVENT_HIDEITEM( 38, 1, FLAG_HIDEITEM_008 )// ピーピーエイド
 EVENT_END
 
