@@ -243,7 +243,7 @@ static void cmd_SystemWorkRelease( DEMO3D_CMD_WORK* wk )
 
   //BGM Push/Popチェック
   if( wk->bgm_push_f ){ 
-    if( wk->core->end_result != DEMO3D_RESULT_FINISH ){
+    if( wk->core->end_result == DEMO3D_RESULT_FINISH ){
       GF_ASSERT_MSG(0,"BGMがpopされずに終了します\nX+Y+L+R同時押しでアサートを抜けて、コマンド列を見直してください\n");
     }
     PMSND_PopBGM();
