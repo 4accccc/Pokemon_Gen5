@@ -483,6 +483,9 @@ c06pc0101_def.h: c06pc0101.ev
 c06r0101_def.h: c06r0101.ev
 	$(EV_DEF) c06r0101.ev $(SCR_OFFS_ID_H)
 
+c06r0201_def.h: c06r0201.ev
+	$(EV_DEF) c06r0201.ev $(SCR_OFFS_ID_H)
+
 c06r0301_def.h: c06r0301.ev
 	$(EV_DEF) c06r0301.ev $(SCR_OFFS_ID_H)
 
