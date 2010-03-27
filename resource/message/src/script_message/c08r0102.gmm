@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-07-06T19:20:07"/>
+	<create user="matsumiya" host="W00224" date="2010-03-27T16:15:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,15 +229,15 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="182"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="170"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="127">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -292,20 +292,140 @@
 	</lock>
 
 
-	<row id="msg_c08r0102_woman2_01">
-		<comment>♀</comment>
-		<attribute name="キャラ指定">WOMAN2
-女性２（金髪）</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_c08r0102_veteranw_01" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・クリア前</comment>
+		<attribute name="キャラ指定">VETERANW</attribute>
+		<language name="JPN" width="256">あたくし　アイリスさまの
+コーチを　しております▼
+といっても　アイリスさまは
+ここに　いらしたときから▽
+あたくしより　つよくって……！</language>
+		<language name="JPN_KANJI" width="256">あたくし　アイリスさまの
+コーチを　しております▼
+といっても　アイリスさまは
+ここに　いらしたときから▽
+あたくしより　強くって……！</language>
 	</row>
 
-	<row id="msg_c08r0102_woman2a_01">
-		<comment>♀</comment>
+	<row id="msg_c08r0102_veteranw_02w" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・クリア後＋WHITEver</comment>
+		<attribute name="キャラ指定">VETERANW</attribute>
+		<language name="JPN" width="256">シャガさまが　おしえてくださる
+りゅうせいぐんは▽
+ドラゴンタイプ　さいきょうの　わざ▼
+ただし　つかったあと
+とくこうが　がくっと　さがります</language>
+		<language name="JPN_KANJI" width="256">シャガさまが　教えてくださる
+りゅうせいぐんは▽
+ドラゴンタイプ　最強の　技▼
+ただし　使ったあと
+特攻が　がくっと　下がります</language>
+	</row>
+
+	<row id="msg_c08r0102_veteranw_02b" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
+		<comment>♀
+・クリア後＋BLACKver</comment>
+		<attribute name="キャラ指定">VETERANW</attribute>
+		<language name="JPN" width="256">アイリスさまが　おしえてくださる
+りゅうせいぐんは▽
+ドラゴンタイプ　さいきょうの　わざ▼
+ただし　つかったあと
+とくこうが　がくっと　さがります</language>
+		<language name="JPN_KANJI" width="256">アイリスさまが　教えてくださる
+りゅうせいぐんは▽
+ドラゴンタイプ　最強の　技▼
+ただし　使ったあと
+特攻が　がくっと　下がります</language>
+	</row>
+
+	<row id="msg_c08r0102_footballm_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No562「かるいし」</comment>
+		<attribute name="キャラ指定">FOOTBALLM</attribute>
+		<language name="JPN" width="256">レッツ　スリム　ダイエット！▼
+きみの　ポケモン……
+たいじゅうが　きになるようなら▽
+ぜひぜひ　これを　もたせなさい！▼</language>
+		<language name="JPN_KANJI" width="256">レッツ　スリム　ダイエット！▼
+きみの　ポケモン……
+体重が　気になるようなら▽
+ぜひぜひ　これを　持たせなさい！▼</language>
+	</row>
+
+	<row id="msg_c08r0102_footballm_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">FOOTBALLM</attribute>
+		<language name="JPN" width="256">かるいしを　もっている　ポケモンは
+たいじゅうが　はんぶんに　なるんだ！▼
+けたぐり　くさむすび　といった
+たいじゅうが　かんけいする　わざの▽　
+ダメージを　おさえることが　できるね</language>
+		<language name="JPN_KANJI" width="256">かるいしを　持っている　ポケモンは
+体重が　半分に　なるんだ！▼
+けたぐり　くさむすび　といった
+ポケモンの　体重が　関係する　技の▽
+ダメージを　抑えることが　できるね</language>
+	</row>
+
+	<row id="msg_c08r0102_woman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・はい/いいえの選択肢表示
+・はい→woman2_03
+　いいえ→woman2_02</comment>
 		<attribute name="キャラ指定">WOMAN2
 女性２（金髪）</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">つかいみちが　よく　わからない
+どうぐを　もっているんだけど▽
+あなた　つかってみる……？</language>
+		<language name="JPN_KANJI" width="256">使い道が　よく　わからない
+道具を　持っているんだけど▽
+あなた　使ってみる……？</language>
+	</row>
+
+	<row id="msg_c08r0102_woman2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">WOMAN2
+女性２（金髪）</attribute>
+		<language name="JPN" width="256">そうよね……
+こまっちゃうよね……</language>
+		<language name="JPN_KANJI" width="256">そうよね……
+困っちゃうよね……</language>
+	</row>
+
+	<row id="msg_c08r0102_woman2_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・アイテム入手処理
+　No566「ねらいのまと」</comment>
+		<attribute name="キャラ指定">WOMAN2
+女性２（金髪）</attribute>
+		<language name="JPN" width="256">……あなたなら　つかいこなせるかも▼
+じゃあ　これを　どうぞ！▼</language>
+		<language name="JPN_KANJI" width="256">……あなたなら　使いこなせるかも▼
+じゃあ　これを　どうぞ！▼</language>
+	</row>
+
+	<row id="msg_c08r0102_woman2_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">WOMAN2
+女性２（金髪）</attribute>
+		<language name="JPN" width="256">ポケモンに　ねらいのまとを　もたすと
+それまで　こうかの　なかった▽
+わざも　あたるように　なるの……▼
+つかいこなすのは　ちょっと　いや
+かなーり　むずかしい　どうぐ　だけど▽
+うまい　つかいかたを　かんがえてね！</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　ねらいのまとを　持たすと
+それまで　効果の　なかった▽
+技も　当たるように　なるの……▼
+使いこなすのは　ちょっと……　いや
+かなーり　難しい　道具だけど▽
+うまい　使い方を　考えてね！</language>
 	</row>
 
 	<flowchart-group-list>

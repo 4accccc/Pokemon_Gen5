@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-24T22:30:02"/>
+	<create user="matsumiya" host="W00224" date="2010-03-27T14:35:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -304,13 +304,13 @@
 みらいと　げんざいを　つなぐ
 きかいを　つくっているのだけど▽
 まるで　でんきが　たりない▼</language>
-		<language name="JPN_KANJI" width="256">ぼくは　みらいを　しりたい！▼
-とても　ふあんだよ……
-ぼくのこども　タイムは　どんな▽
-みらいを　すごすのだろうか▼
-みらいと　げんざいを　つなぐ
-きかいを　つくっているのだけど▽
-まるで　でんきが　たりない▼</language>
+		<language name="JPN_KANJI" width="256">ぼくは　未来を　知りたい！▼
+とても　不安だよ……
+ぼくの子供　タイムは　どんな▽
+未来を　過ごすのだろうか▼
+未来と　現在を　つなぐ
+機械を　造っているのだけど▽
+まるで　電気が　足りない▼</language>
 	</row>
 
 	<row id="msg_c08_man1_02w">
@@ -325,22 +325,22 @@
 青年</attribute>
 		<language name="JPN" width="256">どこかに　このまちと　にているが
 みらいのような　としが　あるらしい▼
-その　としが　ある　せかいで
-うまれた　ポケモンで▽
-じゅうでんが　できるものが　いたら▽
+その　としが　ある　せかいで　うまれて
+わざの「じゅうでん」を　おぼえている▽
+ポケモンが　いたら▽
 きかいが　うごくかも　しれない▼
 きみ　よければ
-じゅうでんが　できる　ポケモンを▽
-かして　くれないか？▼</language>
-		<language name="JPN_KANJI" width="256">どこかに　このまちと　にているが
-みらいのような　としが　あるらしい▼
-その　としが　ある　せかいで
-うまれた　ポケモンで▽
-じゅうでんが　できるものが　いたら▽
-きかいが　うごくかも　しれない▼
+「じゅうでん」を　おぼえている▽
+ポケモンを　かしてくれないか？▼</language>
+		<language name="JPN_KANJI" width="256">どこかに　この街と　似ているが
+未来のような　都市が　あるらしい▼
+その都市が　ある　世界で　うまれて
+わざの「じゅうでん」を　覚えている▽
+ポケモンが　いたら▽
+機械が　うごくかも　しれない▼
 きみ　よければ
-じゅうでんが　できる　ポケモンを▽
-かして　くれないか？▼</language>
+「じゅうでん」を　覚えている▽
+ポケモンを　貸してくれないか？▼</language>
 	</row>
 
 	<row id="msg_c08_man1_03w">
@@ -350,8 +350,8 @@
 青年</attribute>
 		<language name="JPN" width="256">そ……　そうか　ざんねんだな
 きがむいたら　また　きてくれ▼</language>
-		<language name="JPN_KANJI" width="256">そ……　そうか　ざんねんだな
-きがむいたら　また　きてくれ▼</language>
+		<language name="JPN_KANJI" width="256">そ……　そうか　残念だな
+気が向いたら　また　来てくれ▼</language>
 	</row>
 
 	<row id="msg_c08_man1_04w">
@@ -362,7 +362,7 @@
 		<language name="JPN" width="256">あ　ありがとう！
 これで　きかいが　うごくぞ▼</language>
 		<language name="JPN_KANJI" width="256">あ　ありがとう！
-これで　きかいが　うごくぞ▼</language>
+これで　機械が　動くぞ▼</language>
 	</row>
 
 	<row id="msg_c08_man1_05w">
@@ -376,8 +376,8 @@
 じょうけんを　みたした▽
 ポケモンが　いないよ！！</language>
 		<language name="JPN_KANJI" width="256">あ　ありがとう！▼
-……って　ぼくの　おねがいした
-じょうけんを　みたした▽
+……って　ぼくの　お願いした
+条件を　満たした▽
 ポケモンが　いないよ！！</language>
 	</row>
 
@@ -386,8 +386,10 @@
 ・メッセージ表示後、装置に隣接する</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
-		<language name="JPN" width="256">さあ　みらいを　みせておくれ！▼</language>
-		<language name="JPN_KANJI" width="256">さあ　みらいを　みせておくれ！▼</language>
+		<language name="JPN" width="256">さあ　ぼくに
+みらいを　みせておくれ！▼</language>
+		<language name="JPN_KANJI" width="256">さあ　ぼくに
+未来を　みせておくれ！▼</language>
 	</row>
 
 	<row id="msg_c08_machine_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -409,12 +411,12 @@
 青年</attribute>
 		<language name="JPN" width="256">おおっ！　みらいは……
 みらいは　こうなっているのか！▼
-タイム！▼
+ぼくの　いとしの　タイム！▼
 いい　こに　そだっている！▼</language>
-		<language name="JPN_KANJI" width="256">おおっ！　みらいは……
-みらいは　こうなっているのか！▼
-タイム！▼
-いい　こに　そだっている！▼</language>
+		<language name="JPN_KANJI" width="256">おおっ！　未来は……
+未来は　こうなっているのか！▼
+ぼくの　愛しの　タイム！▼
+いい　子に　育っている！▼</language>
 	</row>
 
 	<row id="msg_c08_man1_08w">
@@ -422,18 +424,18 @@
 ・続けてman1_09w</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
-		<language name="JPN" width="256">……もとに　もどった？
-いい　たいけんだった！▽
+		<language name="JPN" width="256">……もとに　もどった？▼
+でも　いい　たいけんだった！
 ふるえが　とまらないよ！▼
 でも……　みらいを　しっても　　
 わたしが　いる　「いま」は▽
 なにも　かわらないのだね▼</language>
-		<language name="JPN_KANJI" width="256">……もとに　もどった？
-いい　たいけんだった！▽
-ふるえが　とまらないよ！▼
-でも……　みらいを　しっても　　
+		<language name="JPN_KANJI" width="256">……もとに　もどった？▼
+だけど　いい　体験だった！
+震えが　とまらないよ！▼
+でも……　未来を　知っても　　
 わたしが　いる　「いま」は▽
-なにも　かわらないのだね▼</language>
+なにも　変わらないのだね▼</language>
 	</row>
 
 	<row id="msg_c08_man1_09w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -448,9 +450,9 @@
 ありがとう
 これは　おれいです▼</language>
 		<language name="JPN_KANJI" width="256">そうだ！
-ポケモンを　かえすよ▼
+ポケモンを　返すよ▼
 ありがとう
-これは　おれいです▼</language>
+これは　お礼です▼</language>
 	</row>
 
 	<row id="msg_c08_man1_10w">
@@ -465,12 +467,21 @@
 だいじってこと……だね！▼
 よし　タイム！　あとで　でかけよう！
 きょうは　めいいっぱい　あそぼう</language>
-		<language name="JPN_KANJI" width="256">みらいについて　ふあんに　なるより
-みらいに　つながっている▽
-いまを　せいいっぱい　いきるのが▽
-だいじってこと……だね！▼
+		<language name="JPN_KANJI" width="256">未来について　不安に　なるより
+未来に　つながっている▽
+いまを　せいいっぱい　生きるのが▽
+大事ってこと……だね！▼
 よし　タイム！　あとで　でかけよう！
-きょうは　めいいっぱい　あそぼう</language>
+今日は　めいいっぱい　遊ぼう！</language>
+	</row>
+
+	<row id="msg_c08_babyboy1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：WhiteVer</comment>
+		<attribute name="キャラ指定">BABYBOY1</attribute>
+		<language name="JPN" width="256">タイム『ぼくね　ぼくね
+おおきくなったら　なにになろうかな？</language>
+		<language name="JPN_KANJI" width="256">タイム『ぼくね　ぼくね
+おおきくなったら　なにになろうかな？</language>
 	</row>
 
 	<row id="msg_c08_man1_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -486,14 +497,14 @@
 ぼくは　かこと　げんざいを　つなぐ
 きかいを　つくっている▽
 ……だけど　でんきが　たりないよ▼</language>
-		<language name="JPN_KANJI" width="256">ぼくは　かこに　もどりたい！
-やりなおしたい　ことばかりだ！▼
-ぼくのちち　バックは
-みらいを　みる▽
-きかいを　つくったんだ▼
-ぼくは　かこと　げんざいを　つなぐ
-きかいを　つくっている▽
-……だけど　でんきが　たりないよ▼</language>
+		<language name="JPN_KANJI" width="256">ぼくは　過去に　もどりたい！
+やりなおしたいこと　ばかりだ！▼
+ぼくの父さん　バックは
+未来を　みる▽
+機械を　造ったんだ▼
+ぼくは　過去と　現在を　つなぐ
+機械を　造っている▽
+……だけど　電気が　たりないよ▼</language>
 	</row>
 
 	<row id="msg_c08_man1_02b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -508,22 +519,22 @@
 青年</attribute>
 		<language name="JPN" width="256">どこかに　このまちと　にているけど
 ふるい　かんじの　としが　あるらしい▼
-その　としが　ある　せかいで
-うまれた　ポケモンで▽
-じゅうでんが　できるものが　いたら▽
+その　としが　ある　せかいで　うまれて
+わざの「じゅうでん」を　おぼえている▽
+ポケモンが　いたら▽
 きかいが　うごくかも　しれない▼
 きみ　よければ
-じゅうでんが　できる　ポケモンを▽
-かして　くれませんか？▼</language>
-		<language name="JPN_KANJI" width="256">どこかに　このまちと　にているけど
-ふるい　かんじの　としが　あるらしい▼
-その　としが　ある　せかいで
-うまれた　ポケモンで▽
-じゅうでんが　できるものが　いたら▽
-きかいが　うごくかも　しれない▼
+「じゅうでん」を　おぼえている▽
+ポケモンを　かしてくれないか？▼</language>
+		<language name="JPN_KANJI" width="256">どこかに　この街と　似ているけど
+古びた感じの　都市が　あるらしい▼
+その都市が　ある世界で　うまれて
+わざの「じゅうでん」を　覚えている▽
+ポケモンが　いたら▽
+機械が　動くかも　しれない▼
 きみ　よければ
-じゅうでんが　できる　ポケモンを▽
-かして　くれませんか？▼</language>
+「じゅうでん」を　覚えている▽
+ポケモンを　貸してくれないか？▼</language>
 	</row>
 
 	<row id="msg_c08_man1_03b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -533,8 +544,8 @@
 青年</attribute>
 		<language name="JPN" width="256">なんだ……　ざんねんだな
 ほかに　ほうほうも　ないし……▼</language>
-		<language name="JPN_KANJI" width="256">なんだ……　ざんねんだな
-ほかに　ほうほうも　ないし……▼</language>
+		<language name="JPN_KANJI" width="256">なんだ……　残念だな
+他に　方法も　ないし……▼</language>
 	</row>
 
 	<row id="msg_c08_man1_04b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -545,7 +556,7 @@
 		<language name="JPN" width="256">やった！
 さあ　きかいが　うごくぞ▼</language>
 		<language name="JPN_KANJI" width="256">やった！
-さあ　きかいが　うごくぞ▼</language>
+さあ　機械が　動くぞ▼</language>
 	</row>
 
 	<row id="msg_c08_man1_05b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -559,8 +570,8 @@
 じょうけんを　みたした▽
 ポケモンが　いないよ！！</language>
 		<language name="JPN_KANJI" width="256">あ　ありがとう！▼
-……って　ぼくの　おねがいした
-じょうけんを　みたした▽
+……って　ぼくの　お願いした
+条件を　満たした▽
 ポケモンが　いないよ！！</language>
 	</row>
 
@@ -570,7 +581,7 @@
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
 		<language name="JPN" width="256">これで　かこに　つながる！▼</language>
-		<language name="JPN_KANJI" width="256">これで　かこに　つながる！▼</language>
+		<language name="JPN_KANJI" width="256">これで　過去に　つながる！▼</language>
 	</row>
 
 	<row id="msg_c08_man1_07b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -583,10 +594,10 @@
 とうさん！！▼
 タイムです
 ぼくは　あやまりたいことが……▼</language>
-		<language name="JPN_KANJI" width="256">かこに　つながった……！？▼
-とうさん！！▼
+		<language name="JPN_KANJI" width="256">過去に　つながった……！？▼
+父さん！！▼
 タイムです
-ぼくは　あやまりたいことが……▼</language>
+ぼくは　謝りたいことが……▼</language>
 	</row>
 
 	<row id="msg_c08_man1_08b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -600,10 +611,10 @@
 ぼくの　いる　「いま」は▽
 なにも　かわらないのだね▼</language>
 		<language name="JPN_KANJI" width="256">もどってしまった？
-でんきが　きれてしまった　みたいだ▼
-かこには　もどれたけど……
+電気が　切れてしまった　みたいだ▼
+過去には　もどれたけど……
 ぼくの　いる　「いま」は▽
-なにも　かわらないのだね▼</language>
+なにも　変わらないのだね▼</language>
 	</row>
 
 	<row id="msg_c08_man1_09b" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -618,9 +629,9 @@
 ありがとう
 これは　おれいです▼</language>
 		<language name="JPN_KANJI" width="256">そうだ！
-ポケモンを　かえすよ▼
+ポケモンを　返すよ▼
 ありがとう
-これは　おれいです▼</language>
+これは　お礼です▼</language>
 	</row>
 
 	<row id="msg_c08_man1_10b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -635,12 +646,12 @@
 だいじ……　って　ことか▼
 よし！
 まえむきに　がんばろう！</language>
-		<language name="JPN_KANJI" width="256">むかしのことを　こうかいするより
-かこから　つながる▽
-いまを　せいいっぱい　いきるのが▽
-だいじ……　って　ことか▼
+		<language name="JPN_KANJI" width="256">昔のことを　後悔するより
+過去から　つながる▽
+いまを　精一杯　生きるのが▽
+大事……　って　ことか▼
 よし！
-まえむきに　がんばろう！</language>
+前向きに　がんばろう！</language>
 	</row>
 
 	<flowchart-group-list>

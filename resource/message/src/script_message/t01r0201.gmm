@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-21T18:54:40"/>
+	<create user="matsumiya" host="W00224" date="2010-03-27T16:29:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1341" top="134" right="2046" bottom="762" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_t01r0201_middleman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0201_middleman1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・t01r0301に入ると
 　カメラ移動してこのメッセージ表示
@@ -303,7 +303,7 @@
 		<language name="JPN_KANJI" width="256">だめだめだめーっ！！▼</language>
 	</row>
 
-	<row id="msg_t01r0201_white_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0201_white_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・メッセージ表示後
 　室外へ出おうとするアニメ
@@ -336,7 +336,7 @@
 研究所の前で　待ってるからね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0201_middleman1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0201_middleman1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・c04イベントまで</comment>
 		<attribute name="キャラ指定">男性</attribute>
@@ -350,9 +350,9 @@
 あんなに　世間知らず　なのに！？</language>
 	</row>
 
-	<row id="msg_t01r0201_middlewoman1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0201_middlewoman1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・ポケモン図鑑入手まで（仮）</comment>
+・クリアまで</comment>
 		<attribute name="キャラ指定">女性</attribute>
 		<language name="JPN" width="256">ベルのママ『もう　パパったら
 むすめのこと　しんぱい　しすぎよね[BE:01:ページ切り替え（クリア）]
@@ -366,7 +366,7 @@
 大人に　なるんですから</language>
 	</row>
 
-	<row id="msg_t01r0201_middleman1_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0201_middleman1_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・c04イベント後</comment>
 		<attribute name="キャラ指定">男性</attribute>
@@ -380,12 +380,47 @@
 それを　楽しみに　してるんだ</language>
 	</row>
 
+	<row id="msg_t01r0201_middleman1_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・クリア後</comment>
+		<attribute name="キャラ指定">男性</attribute>
+		<language name="JPN" width="256">ベルのパパ『やりたいことが
+たくさん　あっても▽
+じぶんは　ひとりしか　いない……▼
+それが　いちばんの　なやみ　なのかね</language>
+		<language name="JPN_KANJI" width="256">ベルのパパ『やりたいことが
+たくさん　あっても▽
+自分は　１人しか　いない……▼
+それが　一番の悩み　なのかね</language>
+	</row>
+
+	<row id="msg_t01r0201_middlewoman1_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・クリア後</comment>
+		<attribute name="キャラ指定">女性</attribute>
+		<language name="JPN" width="256">ベルのママ『なにかを　えらぶことは
+べつの　なにかを　あきらめること……▼
+だから　なかなか　きめられなくて
+とうぜん　なのよね</language>
+		<language name="JPN_KANJI" width="256">ベルのママ『なにかを　選ぶことは
+別の　なにかを　あきらめること……▼
+だから　なかなか　決められなくて
+当然なのよね</language>
+	</row>
+
 	<row id="msg_t01r0201_white_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
-・クリア後に出現</comment>
+・クリア後に出現
+・削除タイミング、条件未定</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">・クリアのあと</language>
-		<language name="JPN_KANJI" width="256">・クリア後</language>
+		<language name="JPN" width="256">ベル『いまね
+ポケモンずかんを　みなおしていたの▼
+ほんとうに　たくさんの
+ポケモンに　であったんだなあって</language>
+		<language name="JPN_KANJI" width="256">ベル『いまね
+ポケモン図鑑を　見直していたの▼
+ほんとうに　たくさんの
+ポケモンに　出会ったんだなあって</language>
 	</row>
 
 	<flowchart-group-list>

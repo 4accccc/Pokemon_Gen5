@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-23T16:46:11"/>
+	<create user="matsumiya" host="W00224" date="2010-03-27T16:16:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -723,7 +723,7 @@
 みんな　なかよしで　いいんだよね！</language>
 	</row>
 
-	<row id="msg_c08r0101_veteranw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08r0101_veteranw_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・クリア前</comment>
 		<attribute name="キャラ指定">VETERANW</attribute>
@@ -739,7 +739,7 @@
 あたくしより　強くって……！</language>
 	</row>
 
-	<row id="msg_c08r0101_veteranw_02w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08r0101_veteranw_02w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・クリア後＋WHITEver</comment>
 		<attribute name="キャラ指定">VETERANW</attribute>
@@ -755,7 +755,7 @@
 特攻が　がくっと　下がります</language>
 	</row>
 
-	<row id="msg_c08r0101_veteranw_02b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08r0101_veteranw_02b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・クリア後＋BLACKver</comment>
 		<attribute name="キャラ指定">VETERANW</attribute>
