@@ -682,16 +682,16 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
         //2010映画
         switch( place2 )
         {
-        case 30010:
+        case POKE_MEMO_PLACE_SEREBIXI_BEFORE:
           memoId = trmemo_02_13_01;
           break;
-        case 30011:
+        case POKE_MEMO_PLACE_SEREBIXI_AFTER:
           memoId = trmemo_02_14_01;
           break;
-        case 30012:
+        case POKE_MEMO_PLACE_ENRAISUI_BEFORE:
           memoId = trmemo_02_15_01;
           break;
-        case 30013:
+        case POKE_MEMO_PLACE_ENRAISUI_AFTER:
           memoId = trmemo_02_16_01;
           break;
         }
@@ -745,7 +745,9 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
       }
       
       
-      if( isParent == FALSE )
+      if( isParent == FALSE &&
+          !(place2 >= POKE_MEMO_PLACE_SEREBIXI_BEFORE && 
+            place2 <= POKE_MEMO_PLACE_ENRAISUI_AFTER) )
       {
         //タマゴじゃなければ、他人のポケの時のMsgは+1の位置にある。
         memoId++;
