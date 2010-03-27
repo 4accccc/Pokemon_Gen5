@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-03-24T21:10:07"/>
+	<create user="matsumiya" host="W00224" date="2010-03-27T16:42:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,7 +337,7 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1494" top="231" right="2199" bottom="851" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="261" top="246" right="734" bottom="644" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -426,11 +426,11 @@
 		<language name="JPN" width="256">あなたに　バトルけんていは
 まだ　はやいんだけど……▼
 いまなら　とくべつな　バトルけんていが
-できるけど　チャンジ　しちゃう？</language>
+できるから　チャンジ　しちゃう？</language>
 		<language name="JPN_KANJI" width="256">あなたに　バトル検定は
 まだ　はやいんだけど……▼
 いまなら　特別な　バトル検定が
-できるけど　チャンジしちゃう？</language>
+できるから　チャンジしちゃう？</language>
 	</row>
 
 	<row id="msg_trialhouse_009">
