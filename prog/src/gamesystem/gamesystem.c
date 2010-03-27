@@ -504,6 +504,30 @@ void GAMESYSTEM_SetAlwaysNetFlag( GAMESYS_WORK * gsys, BOOL is_on )
 	GAMEDATA_SetAlwaysNetFlag(gsys->gamedata, is_on);
 }
 
+//==================================================================
+/**
+ * 常時通信フラグをチェックした上で、常時通信を起動する
+ *
+ * @param   gsys		
+ */
+//==================================================================
+void GAMESYSTEM_CommBootAlways( GAMESYS_WORK *gsys )
+{
+  GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
+
+  if ( GAMESYSTEM_GetAlwaysNetFlag( gsys ) == TRUE )
+  {
+    if ( GameCommSys_BootCheck( gcsp ) == GAME_COMM_NO_NULL )
+    {
+      GameCommSys_Boot( gcsp, GAME_COMM_NO_FIELD_BEACON_SEARCH, gsys );
+    }
+    else
+    {
+      OS_TPrintf("!!!起動不可の状態でビーコンサーチを起動しようとした!!!\n");
+    }
+  }
+}
+
 #ifdef PM_DEBUG
 //==================================================================
 /**

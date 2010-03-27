@@ -220,6 +220,15 @@ extern BOOL GAMESYSTEM_GetAlwaysNetFlag(const GAMESYS_WORK * gsys);
 //--------------------------------------------------------------
 extern void GAMESYSTEM_SetAlwaysNetFlag( GAMESYS_WORK * gsys, BOOL is_on );
 
+//==================================================================
+/**
+ * 常時通信フラグをチェックした上で、常時通信を起動する
+ *
+ * @param   gsys		
+ */
+//==================================================================
+extern void GAMESYSTEM_CommBootAlways( GAMESYS_WORK *gsys );
+
 #ifdef PM_DEBUG
 extern GAMESYS_WORK * DEBUG_GameSysWorkPtrGet(void);
 #endif
