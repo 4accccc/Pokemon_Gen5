@@ -29,6 +29,10 @@
 #define D01_FLD_ITEM_05                   14
 #define D01_FLD_ITEM_06                   15
 #define D01_FLD_ITEM_07                   16
+#define D01R0101_SAGE1_01                 17
+#define D01R0101_SAGE1_02                 18
+#define D01R0101_SAGE1_03                 19
+#define D01R0101_POKE_02                  20
 
 #endif //ZONE_D01R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d01r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
