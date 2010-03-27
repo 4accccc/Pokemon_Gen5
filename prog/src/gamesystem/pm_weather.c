@@ -17,8 +17,6 @@
 
 #include "gamesystem/pm_weather.h"
 
-#include "fieldmap/zone_id.h"
-
 #include "field/move_pokemon.h"
 #include "field/calender.h"
 
@@ -238,7 +236,7 @@ static u16 PM_WEATHER_GetBirthDayWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* 
   u8 month;
   u8 day;
   
-  if( zone_id == ZONE_ID_R15 ){
+  if( ZONEDATA_IsBirthDayWeatherChange( zone_id ) ){
     // ¡“ú‚Ì“ú‚É‚¿‚ğæ“¾
     GFL_RTC_GetDate( &data );
 

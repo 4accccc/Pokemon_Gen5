@@ -48,6 +48,6 @@ extern VMCMD_RESULT EvCmdGetPlayerFrom( VMHANDLE *core, void *wk );
 //======================================================================
 extern VMCMD_RESULT EvCmdPlayerRailLocationGet( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdObjRailLocationGet( VMHANDLE *core, void *wk );
-
+extern VMCMD_RESULT EvCmdObjRailSlipDown( VMHANDLE *core, void *wk );
 
 

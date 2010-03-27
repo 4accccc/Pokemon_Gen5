@@ -21,6 +21,8 @@ extern "C"{
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 
+#include "fldmmdl.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					íËêîêÈåæ
@@ -32,6 +34,10 @@ extern "C"{
  *					ç\ë¢ëÃêÈåæ
 */
 //-----------------------------------------------------------------------------
+//-------------------------------------
+///	RAIL_SLIPDOWN_WORK
+//=====================================
+typedef struct _RAIL_SLIPDOWN_WORK RAIL_SLIPDOWN_WORK;
 
 //-----------------------------------------------------------------------------
 /**
@@ -40,6 +46,13 @@ extern "C"{
 //-----------------------------------------------------------------------------
 
 extern GMEVENT* EVENT_RailSlipDown(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap);
+extern GMEVENT* EVENT_RailSlipDownObj(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, MMDL* mmdl);
+
+
+// TCBÇ≈ìÆÇ©Ç∑ÅB
+extern RAIL_SLIPDOWN_WORK* RailSlipDown_Create(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, MMDL* mmdl, BOOL jiki);
+extern void RailSlipDown_Delete( RAIL_SLIPDOWN_WORK* p_wk );
+extern BOOL RailSlipDown_IsEnd( const RAIL_SLIPDOWN_WORK* cp_wk );
 
 
 #ifdef _cplusplus

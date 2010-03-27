@@ -42,6 +42,8 @@ enum
   EV_RAILSLIPDOWN_LANDING_START,  // 着地
   EV_RAILSLIPDOWN_LANDING_WAIT,
   EV_RAILSLIPDOWN_END,            // 終了
+
+  EV_RAILSLIPDOWN_END_LOOP,            // 終了
 };
 
 
@@ -49,7 +51,8 @@ enum
 ///	ずり落ち方向
 //  Yが1かわるごとのＸＺ方向の移動距離
 //=====================================
-#define RAILSLIPDOWN_MOVE_XZ  ( FX32_CONST(1.1250f) )
+//#define RAILSLIPDOWN_MOVE_XZ  ( FX32_CONST(1.1250f) )
+#define RAILSLIPDOWN_MOVE_XZ  ( FX32_CONST(1.1550f) )
 
 //-------------------------------------
 ///	1フレームでのずり落ち距離
@@ -71,11 +74,13 @@ enum
 //-------------------------------------
 ///	ずり落ち　イベントワーク
 //=====================================
-typedef struct 
+struct _RAIL_SLIPDOWN_WORK
 {
+  u32 seq;
   FLDNOGRID_MAPPER* p_mapper;
-  FIELD_RAIL_WORK* p_player_rail;
+  FIELD_RAIL_WORK* p_mmdl_rail;
   FIELD_PLAYER* p_player;
+  MMDL*         p_mmdl;
   FLDEFF_CTRL*  p_effctrl;
   FIELD_CAMERA* p_camera;
 
@@ -93,8 +98,19 @@ typedef struct
   VecFx32 target_move;
 
   RAIL_LOCATION target_location;
+
+  GFL_TCB* p_tcb;
   
+} ;
+
+//-------------------------------------
+///	ずり落ちイベントワーク
+//=====================================
+typedef struct {
+  RAIL_SLIPDOWN_WORK* p_wk;
 } EVENT_RAIL_SLIPDOWN_WORK;
+
+
 
 //-----------------------------------------------------------------------------
 /**
@@ -105,6 +121,9 @@ typedef struct
 // ずり落ち
 static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, void * p_work);
 
+
+// ずり落ちTCB
+static void RailSlipDown_Update( GFL_TCB* p_tcb, void* p_work );
 
 
 //----------------------------------------------------------------------------
@@ -134,17 +153,122 @@ GMEVENT* EVENT_RailSlipDown(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
   // ワークの初期化
   p_slipdown = GMEVENT_GetEventWork(event);
 
-  p_slipdown->p_mapper          = FIELDMAP_GetFldNoGridMapper( fieldmap );
-  p_slipdown->p_player          = FIELDMAP_GetFieldPlayer( fieldmap );
-  p_slipdown->p_player_rail     = FIELD_PLAYER_GetNoGridRailWork( p_slipdown->p_player );
-  p_slipdown->p_effctrl         = FIELDMAP_GetFldEffCtrl( fieldmap );
-  p_slipdown->p_camera          = FIELDMAP_GetFieldCamera( fieldmap );
+  // 自機
+  {
+    FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( fieldmap );
+    MMDL* p_mmdl = FIELD_PLAYER_GetMMdl( p_player );
+    p_slipdown->p_wk = RailSlipDown_Create( gsys, fieldmap, p_mmdl, TRUE );
+  }
 
-  // 自機の強制停止
-  FIELD_PLAYER_ForceStop( p_slipdown->p_player );
   
   return event;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  チャンピオンマップ　レールマップ　ずり落ち処理
+ *
+ *	@param	gsys        ゲームシステム
+ *	@param	fieldmap    フィールドマップ
+ *	@param  mmdl        すべり降りさせるモデル
+ *
+ *	@return 設定したイベント
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* EVENT_RailSlipDownObj(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, MMDL* mmdl)
+{
+  GMEVENT *event;
+  EVENT_RAIL_SLIPDOWN_WORK* p_slipdown;
+
+  event = GMEVENT_Create(
+    gsys, NULL, EVENT_RailSlipDownMain, sizeof(EVENT_RAIL_SLIPDOWN_WORK));
+
+  // チャンピオンロードかチェック
+  GF_ASSERT( FIELDMAP_GetZoneID( fieldmap ) == ZONE_ID_D09 );
+
+  // レールマップかチェック
+  GF_ASSERT( FIELDMAP_GetMapControlType( fieldmap ) == FLDMAP_CTRLTYPE_NOGRID );
+
+  // ワークの初期化
+  p_slipdown = GMEVENT_GetEventWork(event);
+
+  p_slipdown->p_wk = RailSlipDown_Create( gsys, fieldmap, mmdl, FALSE );
+
+  
+  return event;
+}
+
+// TCBで動かす。
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ずり落ち処理  TCB作成
+ */
+//-----------------------------------------------------------------------------
+RAIL_SLIPDOWN_WORK* RailSlipDown_Create(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, MMDL* mmdl, BOOL jiki)
+{
+  RAIL_SLIPDOWN_WORK* p_slipdown;
+  HEAPID heapID = FIELDMAP_GetHeapID( fieldmap );
+
+  p_slipdown = GFL_HEAP_AllocClearMemory( heapID, sizeof(RAIL_SLIPDOWN_WORK) );
+
+  p_slipdown->p_mapper          = FIELDMAP_GetFldNoGridMapper( fieldmap );
+  p_slipdown->p_mmdl            = mmdl;
+  p_slipdown->p_mmdl_rail       = MMDL_GetRailWork( mmdl );
+  p_slipdown->p_effctrl         = FIELDMAP_GetFldEffCtrl( fieldmap );
+  p_slipdown->p_camera          = FIELDMAP_GetFieldCamera( fieldmap );
+
+  if( jiki ){
+    p_slipdown->p_player          = FIELDMAP_GetFieldPlayer( fieldmap );
+
+    // 自機の強制停止
+    FIELD_PLAYER_ForceStop( p_slipdown->p_player );
+  }else{
+    p_slipdown->p_player          = NULL; // p_player == NULL はNPC
+  }
+
+  // モデルの動作自体を一時的に停止
+  MMDL_SetStatusBitHeightGetOFF( p_slipdown->p_mmdl, TRUE );  // 高さ取得OFF
+  MMDL_SetStatusBitAttrGetOFF( p_slipdown->p_mmdl, TRUE );    // アトリビュート取得OFF
+  MMDL_SetStatusBitFellowHit( p_slipdown->p_mmdl, FALSE );    // 他のオブジェとの判定 OFF
+  MMDL_OnMoveBitMoveProcPause( p_slipdown->p_mmdl );          // 動作Pause
+
+  // TCB登録
+  p_slipdown->p_tcb = GFL_TCB_AddTask( FIELDMAP_GetFieldmapTCBSys( fieldmap ), 
+      RailSlipDown_Update, p_slipdown, 0 );
+
+  return p_slipdown;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ずり落ち処理  破棄
+ */
+//-----------------------------------------------------------------------------
+void RailSlipDown_Delete( RAIL_SLIPDOWN_WORK* p_wk )
+{
+  GFL_TCB_DeleteTask( p_wk->p_tcb );
+  GFL_HEAP_FreeMemory( p_wk );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ずり落ち処理  終了まち
+ *
+ *	@param	cp_wk   ワーク
+ *
+ *	@retval TRUE    終了
+ *	@retval FALSE   途中
+ */
+//-----------------------------------------------------------------------------
+BOOL RailSlipDown_IsEnd( const RAIL_SLIPDOWN_WORK* cp_wk )
+{
+  if( cp_wk->seq == EV_RAILSLIPDOWN_END_LOOP ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 
 
 
@@ -171,8 +295,32 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
 
   //ワークの初期化 
   p_slipdown = GMEVENT_GetEventWork(p_event);
+
+  if( RailSlipDown_IsEnd( p_slipdown->p_wk ) ){
+
+    RailSlipDown_Delete( p_slipdown->p_wk );
+    return GMEVENT_RES_FINISH;
+  }
   
-  switch( *p_seq )
+
+  return GMEVENT_RES_CONTINUE;
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ずり落ちメイン　アップデート
+ *
+ *	@param	p_tcb
+ *	@param	p_work 
+ */
+//-----------------------------------------------------------------------------
+static void RailSlipDown_Update( GFL_TCB* p_tcb, void* p_work )
+{
+  RAIL_SLIPDOWN_WORK* p_slipdown = p_work;
+
+  switch( p_slipdown->seq )
   {
   case EV_RAILSLIPDOWN_SARCH_LOCATION: // ロケーションＳＥＡＲＣＨ
     
@@ -185,7 +333,7 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
       const FIELD_RAIL_MAN* cp_railMan;
       BOOL result;
 
-      MMDL_Rail_GetFrontWay( FIELD_PLAYER_GetMMdl(p_slipdown->p_player), &front_way );
+      MMDL_Rail_GetFrontWay( p_slipdown->p_mmdl, &front_way );
 
       TOMOYA_Printf( "front_way x[0x%x] y[0x%x] z[0x%x]\n", front_way.x, front_way.y, front_way.z );
       // 平面の方向に変更
@@ -193,7 +341,7 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
       VEC_Fx16Normalize( &front_way, &front_way );
 
 
-      FIELD_RAIL_WORK_GetPos( p_slipdown->p_player_rail, &now_pos );
+      FIELD_RAIL_WORK_GetPos( p_slipdown->p_mmdl_rail, &now_pos );
 
 //      TOMOYA_Printf( "nowpos x[%d] y[%d] z[%d]\n", FX_Whole(now_pos.x), FX_Whole(now_pos.y), FX_Whole(now_pos.z) );
 
@@ -229,7 +377,8 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
       {
         OS_TPrintf( "slipdown 下のレールが見つかりません。\n" );
         //GF_ASSERT( result );
-        return GMEVENT_RES_FINISH;
+        p_slipdown->seq = EV_RAILSLIPDOWN_END_LOOP;
+        return ;
       }
 
       // 場所は、ターゲットロケーションのwidthで一番UPのほうにする
@@ -292,10 +441,15 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
 
       p_slipdown->count = 0;
 
-      // カメラトレースOFF
-      FIELD_CAMERA_StopTraceRequest( p_slipdown->p_camera );
+      if( p_slipdown->p_player ){
+        // カメラトレースOFF
+        FIELD_CAMERA_StopTraceRequest( p_slipdown->p_camera );
 
-      (*p_seq) = EV_RAILSLIPDOWN_WAIT_CAMERA_TRACE;
+        p_slipdown->seq = EV_RAILSLIPDOWN_WAIT_CAMERA_TRACE;
+      }else{
+
+        p_slipdown->seq = EV_RAILSLIPDOWN_SLIPDOWN_START;
+      }
     }
     
     break;
@@ -343,9 +497,8 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
       FIELD_CAMERA_SetTargetPos( p_slipdown->p_camera, &p_slipdown->target_start );
       FIELD_CAMERA_SetCameraPos( p_slipdown->p_camera, &p_slipdown->camera_start );
 
-      PMSND_PlaySE( RAILSLIPDOWN_SE );
       
-      (*p_seq) = EV_RAILSLIPDOWN_SLIPDOWN_START;
+      p_slipdown->seq = EV_RAILSLIPDOWN_SLIPDOWN_START;
     }
     break;
 
@@ -354,7 +507,8 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
     break;
 
   case EV_RAILSLIPDOWN_SLIPDOWN_START: // ずり落ち
-      (*p_seq) = EV_RAILSLIPDOWN_SLIPDOWN_WAIT;
+      PMSND_PlaySE( RAILSLIPDOWN_SE );
+      p_slipdown->seq = EV_RAILSLIPDOWN_SLIPDOWN_WAIT;
   case EV_RAILSLIPDOWN_SLIPDOWN_WAIT:
     {
       VecFx32 pos;
@@ -366,7 +520,7 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
         VEC_Set( &pos, p_slipdown->end_pos.x, p_slipdown->end_pos.y, p_slipdown->end_pos.z );
 
         // 完了
-        (*p_seq) = EV_RAILSLIPDOWN_END;
+        p_slipdown->seq = EV_RAILSLIPDOWN_END;
       }
       else
       {
@@ -381,15 +535,20 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
         // 土煙を出す
         if( (p_slipdown->count % 2) == 0 )
         {
-          FLDEFF_KEMURI_SetMMdl( FIELD_PLAYER_GetMMdl( p_slipdown->p_player ), p_slipdown->p_effctrl );
+          FLDEFF_KEMURI_SetMMdl( p_slipdown->p_mmdl, p_slipdown->p_effctrl );
         }
       }
 
       // 座標設定
-      FIELD_PLAYER_SetPos( p_slipdown->p_player, &pos );    
+
+      if( p_slipdown->p_player ){
+        FIELD_PLAYER_SetPos( p_slipdown->p_player, &pos );    
+      }else{
+        MMDL_SetVectorPos( p_slipdown->p_mmdl, &pos );
+      }
 
       // カメラ設定
-      {
+      if( p_slipdown->p_player ){
         VecFx32 camera;
         VecFx32 target;
 
@@ -429,23 +588,39 @@ static GMEVENT_RESULT EVENT_RailSlipDownMain(GMEVENT * p_event, int *  p_seq, vo
       TOMOYA_Printf( "width_grid %d\n", p_slipdown->target_location.width_grid );
       
       // レールロケーションを設定
-      FIELD_PLAYER_SetNoGridLocation( p_slipdown->p_player, &p_slipdown->target_location );
-      FIELD_PLAYER_GetNoGridPos( p_slipdown->p_player, &pos );
-      // 座標をプレイヤーに設定
-      FIELD_PLAYER_SetPos( p_slipdown->p_player, &pos );    
+      if( p_slipdown->p_player ){
+        FIELD_PLAYER_SetNoGridLocation( p_slipdown->p_player, &p_slipdown->target_location );
+        FIELD_PLAYER_GetNoGridPos( p_slipdown->p_player, &pos );
+        // 座標をプレイヤーに設定
+        FIELD_PLAYER_SetPos( p_slipdown->p_player, &pos );    
+
+        // カメラアップデート開始
+        FLDNOGRID_MAPPER_SetRailCameraActive( p_slipdown->p_mapper, TRUE );
+        FLDNOGRID_MAPPER_UpdateCamera( p_slipdown->p_mapper );
+      }
+      else
+      {
+        MMDL_SetRailLocation( p_slipdown->p_mmdl, &p_slipdown->target_location );
+      }
     }
 
+    // 動作復帰
+    MMDL_SetStatusBitHeightGetOFF( p_slipdown->p_mmdl, FALSE );  // 高さ取得OFF
+    MMDL_SetStatusBitAttrGetOFF( p_slipdown->p_mmdl, FALSE );    // アトリビュート取得OFF
+    MMDL_SetStatusBitFellowHit( p_slipdown->p_mmdl, TRUE );    // 他のオブジェとの判定 ON
+    MMDL_OffMoveBitMoveProcPause( p_slipdown->p_mmdl );          // 動作Pause
 
-    // カメラアップデート開始
-    FLDNOGRID_MAPPER_SetRailCameraActive( p_slipdown->p_mapper, TRUE );
-    FLDNOGRID_MAPPER_UpdateCamera( p_slipdown->p_mapper );
-    return GMEVENT_RES_FINISH;
+
+
+    p_slipdown->seq = EV_RAILSLIPDOWN_END_LOOP;
+    break;
+
+  case EV_RAILSLIPDOWN_END_LOOP:            // 終了
+    break;
 
   default:
     GF_ASSERT(0);
     break;
   }
-
-  return GMEVENT_RES_CONTINUE;
 }
 

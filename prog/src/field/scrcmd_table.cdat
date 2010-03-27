@@ -272,7 +272,8 @@
   NO_CMD()
   NO_CMD()
   NO_CMD()
-  NO_CMD()
+  //“®ìƒ‚ƒfƒ‹@ƒŒ[ƒ‹ŠŠ‚è~‚è
+  DEF_CMD( EvCmdObjRailSlipDown, EV_SEQ_OBJ_RAIL_SLIPDOWN )
   
   //BGM
   DEF_CMD( EvCmdBgmPlay, EV_SEQ_BGM_PLAY )

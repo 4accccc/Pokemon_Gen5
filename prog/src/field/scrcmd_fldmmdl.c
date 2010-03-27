@@ -30,6 +30,7 @@
 #include "field_task_player_drawoffset.h"
 
 #include "event_fldmmdl_control.h"
+#include "event_rail_slipdown.h"
 
 //======================================================================
 //  ツール関数
@@ -1084,4 +1085,26 @@ VMCMD_RESULT EvCmdObjRailLocationGet( VMHANDLE *core, void *wk )
   
   return VMCMD_RESULT_CONTINUE;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  動作モデル　滑り降り
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdObjRailSlipDown( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  MMDL *mmdl = MMDLSYS_SearchOBJID(
+      mmdlsys, SCRCMD_GetVMWorkValue(core,work) );
+  SCRIPT_FLDPARAM *fldparam = SCRIPT_GetFieldParam( sc );
+  FIELDMAP_WORK *fieldmap = fldparam->fieldMap;
+
+  SCRIPT_CallEvent( sc, EVENT_RailSlipDownObj(gsys, fieldmap, mmdl) );
+  return VMCMD_RESULT_SUSPEND;
+}
+
 

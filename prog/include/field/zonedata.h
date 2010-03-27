@@ -308,3 +308,9 @@ extern BOOL ZONEDATA_IsSeaTempleDungeon3F( u16 zone_id );
 //------------------------------------------------------------------
 extern const BOOL ZONEDATA_CheckPlaceNameID_IsPalace(const u16 planeNameId);
 
+//------------------------------------------------------------------
+// íaê∂ì˙Ç…ìVãCÇ™ÇÕÇÍÇÈZONEÇ©ÅH
+//------------------------------------------------------------------
+extern BOOL ZONEDATA_IsBirthDayWeatherChange( u16 zone_id );
+
+
