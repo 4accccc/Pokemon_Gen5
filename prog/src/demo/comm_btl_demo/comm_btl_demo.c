@@ -118,6 +118,7 @@ enum
 
   START_DEMO_VS_OPEN_SYNC = 15, // VS出現時のウェイト
   START_DEMO_VS_OPEN_WAIT_SYNC = START_DEMO_VS_OPEN_SYNC+10, // VS出現時のウェイト
+  START_DEMO_WHITEOUT_SE_SYNC  = 150, //ホワイトアウト前に鳴らすSEのタイミング
   START_DEMO_FADEOUT_SYNC = 160, //「VS」表示開始からのウェイト
   START_DEMO_FINISH_SYNC = START_DEMO_FADEOUT_SYNC + 8,
 
@@ -1060,6 +1061,9 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
     {
       // フェードアウト リクエスト
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, -3 );
+    }
+    else if( wk->timer == START_DEMO_WHITEOUT_SE_SYNC){
+      PMSND_PlaySE( SEQ_SE_TDEMO_009 );
     }
     else if( wk->timer == START_DEMO_FINISH_SYNC )
     {
