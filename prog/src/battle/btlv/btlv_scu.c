@@ -3800,6 +3800,9 @@ BOOL BTLV_SCU_RecPlayFadeOut_Wait( BTLV_SCU* wk )
 
 void BTLV_SCU_RecPlayFadeIn_Start( BTLV_SCU* wk )
 {
+  GFL_BMP_Clear( wk->bmp, COLIDX_MSGWIN_CLEAR );
+  GFL_BMPWIN_TransVramCharacter( wk->win );
+
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN, 16, 0, -3 );
 }
 
