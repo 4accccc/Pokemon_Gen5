@@ -590,16 +590,41 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
     return;
   }
 
-  // キー入力 of「円グラフ」タッチ
-  if( (trg & PAD_KEY_UP) ||
-      (trg & PAD_KEY_DOWN) ||
-      (trg & PAD_KEY_LEFT) ||
-      (trg & PAD_KEY_RIGHT) ||
-      (trg & PAD_BUTTON_A) ||
-      (touch == TOUCH_AREA_GRAPH) ) 
+  // キー入力
+  if( (trg & PAD_KEY_UP)   || (trg & PAD_KEY_DOWN)  ||
+      (trg & PAD_KEY_LEFT) || (trg & PAD_KEY_RIGHT) || (trg & PAD_BUTTON_A) ) 
   {
     SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
     FinishCurrentSeq( work );
+    return;
+  }
+
+  //「円グラフ」タッチ
+  if( touch == TOUCH_AREA_GRAPH ) {
+    if( GetCountOfQuestion(work) != 0 ) {
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+      FinishCurrentSeq( work );
+    }
+    return;
+  }
+  //「ほうこくをみる」ボタン
+  if( touch == TOUCH_AREA_ANALYZE_BUTTON ) {
+    if( GetCountOfQuestion(work) != 0 ) {
+      StartPaletteAnime( work, PALETTE_ANIME_SELECT );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
+      SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
+      FinishCurrentSeq( work );
+    }
+    else {
+      PMSND_PlaySE( SEQ_SE_BEEP );
+    }
     return;
   }
 
@@ -762,6 +787,9 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
       SetNextSeq( work, RESEARCH_CHECK_SEQ_PERCENTAGE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_KEY_WAIT );
       FinishCurrentSeq( work );
+    }
+    else {
+      PMSND_PlaySE( SEQ_SE_BEEP );
     }
     return;
   }
@@ -1237,6 +1265,9 @@ static void InitSeq_ANALYZE( RESEARCH_CHECK_WORK* work )
 {
   //「…かいせきちゅう…」を表示
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZING, TRUE );
+
+  // 調査データを再セットアップ
+  SetupResearchData( work );
 
   // 円グラフ作成
   SetupMainCircleGraph( work, DATA_DISP_TYPE_TODAY );
@@ -1790,6 +1821,7 @@ static void ChangeQuestionToNext( RESEARCH_CHECK_WORK* work )
   }
 
   // データを更新
+  SetupResearchData( work );   // 調査データを再セットアップ
   ShiftQuestionIdx( work, 1 ); // 表示する質問インデックスを変更
   work->analyzeFlag = FALSE;   // 解析済みフラグを伏せる
 
@@ -1824,6 +1856,7 @@ static void ChangeQuestionToPrev( RESEARCH_CHECK_WORK* work )
   }
 
   // データを更新
+  SetupResearchData( work );    // 調査データを再セットアップ
   ShiftQuestionIdx( work, -1 ); // 表示する質問インデックスを変更
   work->analyzeFlag = FALSE;    // 解析済みフラグを伏せる
 
@@ -2795,6 +2828,10 @@ void UpdateMyAnswerIconOnGraph( RESEARCH_CHECK_WORK* work )
   pos.y = y;
   GFL_CLACT_WK_SetPos( clwk, &pos, initData->setSurface );
   GFL_CLACT_WK_SetDrawEnable( clwk, TRUE );
+
+  // アニメーション開始
+  GFL_CLACT_WK_SetAutoAnmFlag( clwk, TRUE );
+  GFL_CLACT_WK_SetAnmMode( clwk, CLSYS_ANMPM_FORWARD_L );
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: update my answer icon on graph\n" );

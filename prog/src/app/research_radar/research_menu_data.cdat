@@ -314,8 +314,8 @@ static const PALETTE_ANIME_DATA PaletteAnimeData[ PALETTE_ANIME_NUM ] =
             (MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE) + 
             (PALETTE_ANIME_CURSOR_SET_COLOR_OFFSET * ONE_COLOR_SIZE) ),
     PALETTE_ANIME_CURSOR_SET_COLOR_NUM, // 転送カラー数
-    ANIME_TYPE_BLINK_SHORT,            // アニメーションタイプ
-    0xffff,                              // フェードカラー
+    ANIME_TYPE_BLINK_SHORT,             // アニメーションタイプ
+    0xffff,                             // フェードカラー
   },
   // 選択リアクション ( メニュー項目 )
   { 

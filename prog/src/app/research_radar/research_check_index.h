@@ -87,14 +87,14 @@ typedef enum {
 
 // OBJ リソースID
 typedef enum {
-  OBJ_RESOURCE_MAIN_CHARACTER,  // MAIN-OBJ キャラクタ
-  OBJ_RESOURCE_MAIN_PALETTE,    // MAIN-OBJ パレット
-  OBJ_RESOURCE_MAIN_CELL_ANIME, // MAIN-OBJ セル アニメ
+  OBJ_RESOURCE_MAIN_CHARACTER,      // MAIN-OBJ キャラクタ
+  OBJ_RESOURCE_MAIN_PALETTE,        // MAIN-OBJ パレット
+  OBJ_RESOURCE_MAIN_CELL_ANIME,     // MAIN-OBJ セル アニメ
   OBJ_RESOURCE_MAIN_COMMON_PALETTE, // MAIN-OBJ パレット ( 共通素材ボタン用 )
-  OBJ_RESOURCE_SUB_CHARACTER,   // SUB-OBJ  キャラクタ
-  OBJ_RESOURCE_SUB_PALETTE,     // SUB-OBJ  パレット
-  OBJ_RESOURCE_SUB_CELL_ANIME,  // SUB-OBJ  セル アニメ
-  OBJ_RESOURCE_NUM,             // 総数
+  OBJ_RESOURCE_SUB_CHARACTER,       // SUB-OBJ  キャラクタ
+  OBJ_RESOURCE_SUB_PALETTE,         // SUB-OBJ  パレット
+  OBJ_RESOURCE_SUB_CELL_ANIME,      // SUB-OBJ  セル アニメ
+  OBJ_RESOURCE_NUM,                 // 総数
 } OBJ_RESOURCE_ID;
 
 // セルアクターユニット

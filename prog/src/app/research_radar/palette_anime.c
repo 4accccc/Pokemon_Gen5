@@ -15,17 +15,17 @@
 // ■定数
 //============================================================================= 
 // sin フェード
-#define SIN_FADE_ONE_CYCLE_FRAMES (120) // 明滅1回のフレーム数
-#define SIN_FADE_MIN_EVY            (0) // 最小フェード係数[0, 16]
-#define SIN_FADE_MAX_EVY            (3) // 最大フェード係数[0, 16]
+#define SIN_FADE_ONE_CYCLE_FRAMES (60) // 明滅1回のフレーム数
+#define SIN_FADE_MIN_EVY           (0) // 最小フェード係数[0, 16]
+#define SIN_FADE_MAX_EVY          (10) // 最大フェード係数[0, 16]
 // sin フェード ( 早 )
-#define SIN_FADE_FAST_ONE_CYCLE_FRAMES (100) // 明滅1回のフレーム数
-#define SIN_FADE_FAST_MIN_EVY            (0) // 最小フェード係数[0, 16]
-#define SIN_FADE_FAST_MAX_EVY            (3) // 最大フェード係数[0, 16]
+#define SIN_FADE_FAST_ONE_CYCLE_FRAMES (30) // 明滅1回のフレーム数
+#define SIN_FADE_FAST_MIN_EVY           (0) // 最小フェード係数[0, 16]
+#define SIN_FADE_FAST_MAX_EVY           (3) // 最大フェード係数[0, 16]
 // sin フェード ( 遅 )
-#define SIN_FADE_SLOW_ONE_CYCLE_FRAMES (140) // 明滅1回のフレーム数
-#define SIN_FADE_SLOW_MIN_EVY            (0) // 最小フェード係数[0, 16]
-#define SIN_FADE_SLOW_MAX_EVY            (3) // 最大フェード係数[0, 16]
+#define SIN_FADE_SLOW_ONE_CYCLE_FRAMES (90) // 明滅1回のフレーム数
+#define SIN_FADE_SLOW_MIN_EVY           (0) // 最小フェード係数[0, 16]
+#define SIN_FADE_SLOW_MAX_EVY           (3) // 最大フェード係数[0, 16]
 // 点滅
 #define BLINK_FRAMES      (20) // アニメーションフレーム数
 #define BLINK_WAIT_FRAMES  (4) // 点滅待ちフレーム数

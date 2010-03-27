@@ -1847,7 +1847,7 @@ static void RegisterMainOBJResources( RESEARCH_MENU_WORK* work )
   palette = GFL_CLGRP_PLTT_RegisterEx( arcHandle, 
                                        NARC_research_radar_graphic_obj_NCLR,
                                        CLSYS_DRAW_MAIN, 
-                                       ONE_PALETTE_SIZE*6, 0, 3, 
+                                       ONE_PALETTE_SIZE*6, 0, 4, 
                                        heapID );
 
   cellAnime = GFL_CLGRP_CELLANIM_Register( arcHandle,

@@ -244,8 +244,8 @@
 #define BMPOAM_ACTOR_ANALYZING_BG_PRIORITY    (0)   // BGプライオリティ
 #define BMPOAM_ACTOR_ANALYZING_STRING_OFFSET_X (0)  // 文字の書き込み先 x 座標オフセット
 #define BMPOAM_ACTOR_ANALYZING_STRING_OFFSET_Y (9)  // 文字の書き込み先 y 座標オフセット
-#define BMPOAM_ACTOR_ANALYZING_STRING_COLOR_L (1)   // 文字のカラー番号
-#define BMPOAM_ACTOR_ANALYZING_STRING_COLOR_S (2)   // 影のカラー番号
+#define BMPOAM_ACTOR_ANALYZING_STRING_COLOR_L (15)   // 文字のカラー番号
+#define BMPOAM_ACTOR_ANALYZING_STRING_COLOR_S (14)   // 影のカラー番号
 #define BMPOAM_ACTOR_ANALYZING_STRING_COLOR_B (0)   // 背景のカラー番号
 //「ほうこくをみる」
 #define BMPOAM_ACTOR_ANALYZE_BUTTON_CHARA_SIZE_X   (20)  // x サイズ ( キャラ単位 )
@@ -257,8 +257,8 @@
 #define BMPOAM_ACTOR_ANALYZE_BUTTON_BG_PRIORITY    (0)   // BGプライオリティ
 #define BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_OFFSET_X (0)  // 文字の書き込み先 x 座標オフセット
 #define BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_OFFSET_Y (4)  // 文字の書き込み先 y 座標オフセット
-#define BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_COLOR_L (13)  // 文字のカラー番号
-#define BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_COLOR_S (10)  // 影のカラー番号
+#define BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_COLOR_L (14)  // 文字のカラー番号
+#define BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_COLOR_S (15)  // 影のカラー番号
 #define BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_COLOR_B (0)   // 背景のカラー番号
 
 
@@ -321,7 +321,7 @@
 #define MAIN_BG_PALETTE_FADE_FLASH_OUT_END_STRENGTH   (7)     // フェード最終濃度 [0, 16]
 #define MAIN_BG_PALETTE_FADE_FLASH_OUT_COLOR          (0xffff) // 変更後の色
 // フラッシュ・アウト ( OBJ ) 
-#define MAIN_OBJ_PALETTE_FADE_FLASH_OUT_TARGET_BITMASK (0x0001) // フェード対象パレット番号のマスク
+#define MAIN_OBJ_PALETTE_FADE_FLASH_OUT_TARGET_BITMASK (0xffff) // フェード対象パレット番号のマスク
 #define MAIN_OBJ_PALETTE_FADE_FLASH_OUT_WAIT           (3)      // フェード計算待ち時間
 #define MAIN_OBJ_PALETTE_FADE_FLASH_OUT_START_STRENGTH (0)      // フェード初期濃度 [0, 16]
 #define MAIN_OBJ_PALETTE_FADE_FLASH_OUT_END_STRENGTH   (7)     // フェード最終濃度 [0, 16]
@@ -333,7 +333,7 @@
 #define MAIN_BG_PALETTE_FADE_FLASH_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]
 #define MAIN_BG_PALETTE_FADE_FLASH_IN_COLOR          (0xffff)  // 変更後の色
 // フラッシュ・イン ( OBJ ) 
-#define MAIN_OBJ_PALETTE_FADE_FLASH_IN_TARGET_BITMASK (0x0001)  // フェード対象パレット番号のマスク
+#define MAIN_OBJ_PALETTE_FADE_FLASH_IN_TARGET_BITMASK (0xffff)  // フェード対象パレット番号のマスク
 #define MAIN_OBJ_PALETTE_FADE_FLASH_IN_WAIT           (3)       // フェード計算待ち時間
 #define MAIN_OBJ_PALETTE_FADE_FLASH_IN_START_STRENGTH (7)      // フェード初期濃度 [0, 16]
 #define MAIN_OBJ_PALETTE_FADE_FLASH_IN_END_STRENGTH   (0)       // フェード最終濃度 [0, 16]

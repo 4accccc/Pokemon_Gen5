@@ -510,7 +510,7 @@ typedef struct
 
 static const CLWK_INIT_DATA ClactWorkInitData[ CLWK_NUM ] = 
 {
-  { // スクロールバー
+  { // スクロールバーのつまみ
     CLWK_SCROLL_CONTROL_POS_X,         // x 座標
     CLWK_SCROLL_CONTROL_POS_Y,         // y 座標
     CLWK_SCROLL_CONTROL_ANIME_SEQ,     // アニメーションシーケンス
@@ -521,6 +521,18 @@ static const CLWK_INIT_DATA ClactWorkInitData[ CLWK_NUM ] =
     OBJ_RESOURCE_MAIN_PALETTE,         // パレット リソース
     OBJ_RESOURCE_MAIN_CELL_ANIME,      // セルアニメ リソース
     CLSYS_DEFREND_MAIN,                // サーフェス指定
+  },
+  { // スクロールバー
+    CLWK_SCROLL_BAR_POS_X,           // x 座標
+    CLWK_SCROLL_BAR_POS_Y,           // y 座標
+    CLWK_SCROLL_BAR_ANIME_SEQ,       // アニメーションシーケンス
+    CLWK_SCROLL_BAR_SOFT_PRIORITY,   // ソフト優先順位
+    CLWK_SCROLL_BAR_BG_PRIORITY,     // BG 優先順位
+    CLUNIT_MAIN_OBJ,                 // 所属ユニット
+    OBJ_RESOURCE_MAIN_CHARACTER,     // キャラクタ リソース
+    OBJ_RESOURCE_MAIN_PALETTE,       // パレット リソース
+    OBJ_RESOURCE_MAIN_CELL_ANIME,    // セルアニメ リソース
+    CLSYS_DEFREND_MAIN,              // サーフェス指定
   },
   { // 調査項目選択アイコン0
     CLWK_SELECT_ICON_POS_X,          // x 座標
@@ -700,11 +712,17 @@ static const PALETTE_ANIME_DATA PaletteAnimeData[ PALETTE_ANIME_NUM ] =
 {
   // 調査項目カーソルON
   { 
-    (u16*)( HW_BG_PLTT + (MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE) ),  // 転送先アドレス
-    (u16*)( HW_BG_PLTT + (MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE) ),  // 元データのアドレス
-    16,                                                                     // 転送カラー数
-    ANIME_TYPE_SIN_FADE,                                                   // アニメーションタイプ
-    0xffff,                                                                 // フェードカラー
+    // 転送先アドレス
+    (u16*)( HW_BG_PLTT + 
+            (MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE) +
+            (3 * ONE_COLOR_SIZE) ),  
+    // 元データのアドレス
+    (u16*)( HW_BG_PLTT + 
+            (MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE) + 
+            (3 * ONE_COLOR_SIZE) ),  
+    3,                                  // 転送カラー数
+    ANIME_TYPE_SIN_FADE,                // アニメーションタイプ
+    0xffff,                             // フェードカラー
   },
   // 調査項目カーソルSET
   { 
@@ -719,15 +737,17 @@ static const PALETTE_ANIME_DATA PaletteAnimeData[ PALETTE_ANIME_NUM ] =
     (u16*)( HW_BG_PLTT + (MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE) ),  // 転送先アドレス
     (u16*)( HW_BG_PLTT + (MAIN_BG_PALETTE_WINDOW_ON * ONE_PALETTE_SIZE) ),  // 元データのアドレス
     16,                                                                     // 転送カラー数
-    ANIME_TYPE_BLINK,                                                      // アニメーションタイプ
+    ANIME_TYPE_BLINK,                                                       // アニメーションタイプ
     0xffff,                                                                 // フェードカラー
   },
   // メニュー項目カーソルON
   { 
-    (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
-    (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) ),  // 元データのアドレス
-    16,                                                                     // 転送カラー数
-    ANIME_TYPE_SIN_FADE,                                                   // アニメーションタイプ
+    // 転送先アドレス
+    (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) + (6 * ONE_COLOR_SIZE) ),  
+    // 元データのアドレス
+    (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) + (6 * ONE_COLOR_SIZE) ),  
+    1,                                                                      // 転送カラー数
+    ANIME_TYPE_SIN_FADE,                                                    // アニメーションタイプ
     0xffff,                                                                 // フェードカラー
   },
   // メニュー項目カーソルSET
@@ -735,7 +755,7 @@ static const PALETTE_ANIME_DATA PaletteAnimeData[ PALETTE_ANIME_NUM ] =
     (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
     (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) ),  // 元データのアドレス
     16,                                                                     // 転送カラー数
-    ANIME_TYPE_BLINK_SHORT,                                                   // アニメーションタイプ
+    ANIME_TYPE_BLINK_SHORT,                                                 // アニメーションタイプ
     0xffff,                                                                 // フェードカラー
   },
   // メニュー項目選択リアクション
@@ -743,7 +763,7 @@ static const PALETTE_ANIME_DATA PaletteAnimeData[ PALETTE_ANIME_NUM ] =
     (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
     (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) ),  // 元データのアドレス
     16,                                                                     // 転送カラー数
-    ANIME_TYPE_BLINK,                                                      // アニメーションタイプ
+    ANIME_TYPE_BLINK,                                                       // アニメーションタイプ
     0xffff,                                                                 // フェードカラー
   },
 };

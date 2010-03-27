@@ -117,6 +117,7 @@ typedef enum {
 // セルアクターワーク
 typedef enum {
   CLWK_SCROLL_CONTROL,// スクロールバーのつまみ
+  CLWK_SCROLL_BAR,    // スクロールバー
   CLWK_SELECT_ICON_0, // 調査項目選択アイコン0
   CLWK_NUM,           // 総数
 } CLWK_INDEX; 

@@ -1488,6 +1488,21 @@ static void FinishSeq_SETUP( RESEARCH_SELECT_WORK* work )
   // パレットアニメーション開始
   StartPaletteAnime( work, PALETTE_ANIME_TOPIC_CURSOR_ON );
 
+  // スクロールバーのOBJを表示
+  {
+    GFL_CLWK* scrollbar;
+    GFL_CLACTPOS pos;
+    u16 setSurface;
+
+    scrollbar = GetClactWork( work, CLWK_SCROLL_BAR );
+    pos.x = 128;
+    pos.y = 96;
+    setSurface = ClactWorkInitData[ CLWK_SCROLL_BAR ].setSurface; 
+
+    GFL_CLACT_WK_SetPos( scrollbar, &pos, setSurface );
+    GFL_CLACT_WK_SetDrawEnable( scrollbar, TRUE );
+  }
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq SETUP\n" );
 }
@@ -3249,7 +3264,7 @@ static void RegisterMainObjResources( RESEARCH_SELECT_WORK* work )
   palette = GFL_CLGRP_PLTT_RegisterEx( arcHandle, 
                                        NARC_research_radar_graphic_obj_NCLR,
                                        CLSYS_DRAW_MAIN, 
-                                       ONE_PALETTE_SIZE*6, 0, 3, 
+                                       ONE_PALETTE_SIZE*6, 0, 4, 
                                        heapID ); 
   cellAnime = GFL_CLGRP_CELLANIM_Register( arcHandle,
                                            NARC_research_radar_graphic_obj_NCER,
@@ -4158,16 +4173,10 @@ static void UpdateInvestigatingTopicID( const RESEARCH_SELECT_WORK* work )
   save    = GAMEDATA_GetSaveControlWork( work->gameData );
   QSave   = SaveData_GetQuestionnaire( save );
   
-  // @todo: セーブデータの更新に合わせて, 3つの質問IDをセーブするように変更する.
-#if 1
   // セーブデータを更新
-  QuestionnaireWork_SetInvestigatingQuestion( QSave, topicID, 0 );
-#endif
-#if 0
   QuestionnaireWork_SetInvestigatingQuestion( QSave, Question1_topic[ topicID ], 0 );
   QuestionnaireWork_SetInvestigatingQuestion( QSave, Question2_topic[ topicID ], 1 );
   QuestionnaireWork_SetInvestigatingQuestion( QSave, Question3_topic[ topicID ], 2 );
-#endif
 }
 
 
