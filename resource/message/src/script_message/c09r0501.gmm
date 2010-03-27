@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-15T22:46:23"/>
+	<create user="matsumiya" host="W00224" date="2010-03-27T21:02:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1365" top="188" right="2070" bottom="816" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -365,10 +365,12 @@
 ・WHITEver
 ・続けてboss_02</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]シンが　どれほど　つよいか
-ためす……　そのまえに　おわるとは！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]シンが　どれほど　強いか
-試す……　その前に　終わるとは！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ボクの　トモダチ
+シンが　どれほど　つよいか　ためす……▽
+そのまえに　おわるだなんて！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ボクの　トモダチ
+シンが　どれほど　強いか　試す……▽
+その前に　終わるだなんて！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_01b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -376,10 +378,12 @@
 ・BLACKver
 ・続けてboss_02</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ムが　どれほど　つよいか
-ためす……　そのまえに　おわるとは！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ムが　どれほど　強いか
-試す……　その前に　終わるとは！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ボクの　トモダチ
+ムが　どれほど　つよいか　ためす……▽
+そのまえに　おわるだなんて！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ボクの　トモダチ
+ムが　どれほど　強いか　試す……▽
+その前に　終わるだなんて！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -388,38 +392,46 @@
 　boss_03
 （イメージとしては、横並び）</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]そもそも　チャンピオンと　いえど
-ボクに　かてるわけ　ない▼
-あなたの　ポケモンが　いっていた▼
-むかしから　いっしょ　だった
-ポケモンが　しんでから▼
-いちども　ほんきで
-たたかったことが　なかったと▼
-リハビリきぶんで
-ボクに　いどまれてもね……[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">そもそも　チャンピオンと　いえど
-ボクに　勝てるわけ　ない▼
-あなたの　ポケモンが　いっていた▼
-昔から　一緒だった
-ポケモンが　死んでから▼
-一度も　本気で
-戦ったことが　なかったと▼
-リハビリ気分で
-ボクに　挑まれてもね……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]もっとも　チャンピオンという
+かたがきでは　ボクを　とめられない▼
+それに　チャンピオン……
+アナタは　やさしすぎるんだ▼
+すうねんまえ　パートナーだった
+ポケモンを　やまいで　うしない▼
+こころの　すきまを　うめるため
+イッシュを　さまよっていた……▼
+ほんきで　たたかったのも
+ひさしぶり　なんでしょう▼
+アナタの　そういう　ぶぶんは
+きらいじゃ　ないけどね[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]もっとも　チャンピオンという
+肩書きでは　ボクを　とめられない▼
+それに　チャンピオン……
+アナタは　優しすぎるんだ▼
+数年前　パートナーだった
+ポケモンを　病で　失い▼
+心の　スキマを　うめるため
+イッシュを　さまよっていた……▼
+本気で　戦ったのも
+久しぶり　なんでしょう▼
+アナタの　そういう　部分は
+キライじゃ　ないけどね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・続けてchampion_01</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]それに……▼
-ポケモンが　しんだのも
-あなたに　ムリさせられたのが▽
-りゆうでは　ないのか？[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]それに……▼
-ポケモンが　死んだのも
-あなたに　ムリさせられたのが▽
-理由では　ないのか？[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクは　チャンピオンよりも
+はるかに　つよい　トレーナーとして▽
+イッシュに　ごうれいを　かける▼
+すべての　トレーナーよ
+ポケモンを　ときはなて　と！▼[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクは　チャンピオンよりも
+はるかに　強い　トレーナーとして▽
+イッシュに　号令を　かける▼
+すべての　トレーナーよ
+ポケモンを　解き放て　と！▼[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_champion_01">
@@ -428,8 +440,12 @@
 ・続けてboss_04</comment>
 		<attribute name="キャラ指定">チャンピオン
 アデク</attribute>
-		<language name="JPN" width="256">アデク『なんと　かなしいことを……▼</language>
-		<language name="JPN_KANJI" width="256">アデク『なんと　哀しいことを……▼</language>
+		<language name="JPN" width="256">アデク『たのむ！▼
+ポケモンと　ひとを　きりはなす……
+それだけは　しないでくれっ！！▼</language>
+		<language name="JPN_KANJI" width="256">アデク『頼む！▼
+ポケモンと　人を　切り離す……
+それだけは　しないでくれっ！！▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -437,16 +453,16 @@
 ・メッセージ表示後、主人公をみて！マーク表示
 ・続けてboss_05</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]まけた　にんげんが
-なにを　いっても　ムダだよ▼
-それに　あらためて　ちかう▼
-おろかな　にんげんから
-すぐれた　ポケモンを　すくうと！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]負けた　人間が
-なにを　いっても　ムダだよ▼
-それに　あらためて　誓う▼
-愚かな　人間から
-優れた　ポケモンを　救うと！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクと　アナタは
+おたがいの　しんねんを　かけて▽
+たたかった▼
+そして　ボクが　かった▼
+もう　なにも　いわないでください▼[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクと　アナタは
+お互いの　信念を　かけて▽
+戦った▼
+そして　勝利したのは　ボクです▼
+もう　なにも　いわないでください▼[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -455,42 +471,44 @@
 ・WHITEならboss_06w
 　BLACKならboss_06b</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]……そうか
-まだ　キミが　いたか[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……そうか
-まだ　キミが　いたか[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]……まっていたよ[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……待っていたよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_06w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・続けてboss_07</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]……キミも
-ストーンを　てにいれたんだ▼
-ボクの　シンに
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクの　みた　みらいどおり
+キミも　ストーンを　てにいれたんだ▼
+その　ダークストーン……
+ボクの　シンに▽
 はんのう　しているね▽
-どちらが　うえか　きめるつもりか[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……キミも
-ストーンを　手に入れたんだ▼
-ボクの　シンに
+どちらが　うえか　きめるつもりかな[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクの　みた　未来どおり
+キミも　ストーンを　手に入れたんだ▼
+その　ダークストーン……
+ボクの　シンに▽
 反応しているね▽
-雌雄を　決するつもりか[BE:09:速度コントロール:0]▼</language>
+雌雄を　決するつもりかな[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_06b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・続けてboss_07</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]……キミも
-ストーンを　てにいれたんだ▼
-ボクの　ムに
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクの　みた　みらいどおり
+キミも　ストーンを　てにいれたんだ▼
+その　ライトストーン……
+ボクの　ムに▽
 はんのう　しているね▽
-どちらが　うえか　きめるつもりか[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……キミも
-ストーンを　手に入れたんだ▼
-ボクの　ムに
+どちらが　うえか　きめるつもりかな[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクの　みた　未来どおり
+キミも　ストーンを　手に入れたんだ▼
+その　ライトストーン……
+ボクの　ムに▽
 反応しているね▽
-雌雄を　決するつもりか[BE:09:速度コントロール:0]▼</language>
+雌雄を　決するつもりかな[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -500,12 +518,12 @@
 ・その後、Nの出現デモ開始
 ・終了するとboss_08</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]……だが
-ドラゴンたちに　ふさわしいのは▽
-こんな　ばしょ　ではない[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……だが
-ドラゴンたちに　ふさわしいのは▽
-こんな　場所　ではない[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]……だけど！▼
+でんせつの　ドラゴンたちに
+ふさわしいのは　ここ　ではない！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……だけど！▼
+伝説の　ドラゴンたちに
+相応しいのは　ここ　ではない！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_08" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -533,14 +551,18 @@
 　入れ替わりでライバルが飛び込んでくる！
 ・続けてblack_01</comment>
 		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]キミも　しろに　きたまえ▼
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]キミも　しろに　くるんだ▼
 そこで　すべてを　きめよう▼
-われわれと　ポケモンは
-かわるべきか　このままでいるか……[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]キミも　城に　来たまえ▼
-そこで　全てを　決めよう▼
-我々と　ポケモンは
-変わるべきか　このままでいるか……[BE:09:速度コントロール:0]▼</language>
+ポケモンを　かんぜんに　するため
+ひとびとから　ときはなつか！▼
+それとも　かわらず
+このままで　いるのか……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]キミも　城に　来るんだ▼
+そこで　すべてを　決めよう▼
+ポケモンを　完全に　するため
+人々から　解き放つか！▼
+それとも　変わらず
+このままで　いるのか……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -567,10 +589,10 @@
 		<comment>♂
 ・続けてchampion_03</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
-		<language name="JPN" width="256">チェレン『まあね▼
+		<language name="JPN" width="256">チェレン『はい▼
 ポケモンリーグを　かちぬきましたよ
 なかなか　タフでしたけど▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『まあね▼
+		<language name="JPN_KANJI" width="256">チェレン『はい▼
 ポケモンリーグを　勝ち抜きましたよ
 なかなか　タフでしたけど▼</language>
 	</row>
@@ -590,26 +612,28 @@
 ・主人公、操作可能に</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">チェレン『……じぶんの　やることが
-わかったから　つよくなれたんだ　きっと▼
-[1:00:トレーナー名:0]！▼
-Ｎのこと
-ぶっとばしてよッ！！▼
-それが　きみと！
-きみの　ポケモンの！▽
-やるべきこと　だろ</language>
+わかったから　つよくなれたんです▼
+[1:00:トレーナー名:0]！
+Ｎに　つたえてよ▼
+ポケモンと　いることで
+つよくなれる　にんげんが　いること▼
+ポケモンも　ぼくと　いっしょに
+まなび　つよくなれたってこと　を▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……自分の　やることが
-わかったから　強くなれたんだ　きっと▼
-[1:00:トレーナー名:0]！▼
-Ｎのこと
-ぶっとばしてよッ！！▼
-それが　きみと！
-きみの　ポケモンの！▽
-やるべきこと　だろ</language>
+わかったから　強くなれたんです▼
+[1:00:トレーナー名:0]！
+Ｎに　伝えてよ▼
+ポケモンと　いることで
+強くなれる　人間が　いること▼
+ポケモンも　ぼくと　一緒に
+学び　強くなれたってこと　を▼</language>
 	</row>
 
-	<row id="msg_c09r0501_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c09r0501_black_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・クリアまで繰り返し</comment>
+・クリアまで繰り返し
+・面倒だけど
+　n01r0520に出現したらここから削除</comment>
 		<attribute name="キャラ指定">ライバル</attribute>
 		<language name="JPN" width="256">チェレン『……アデクさんは
 ぼくが　みておくから</language>
@@ -617,9 +641,12 @@
 ぼくが　みておくから</language>
 	</row>
 
-	<row id="msg_c09r0501_champion_04">
+	<row id="msg_c09r0501_champion_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
-・クリアまで繰り返し</comment>
+・クリアまで繰り返し
+・面倒だけど
+　n01r0520に出現したらここから削除
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">チャンピオン
 アデク</attribute>
 		<language name="JPN" width="256">アデク『……まけたわ▼
@@ -628,7 +655,7 @@
 ポケモンとの　きずなを
 みせてやるはず　だったがな……▼
 あいつの　しんねんも
-また　ほんもの　ということか▼
+また　ほんもの　だったいうことか▼
 たのむ
 [1:00:トレーナー名:0]！▼
 ポケモンと　ひとを　きりはなしても
@@ -640,15 +667,15 @@
 ポケモンとの　きずなを
 みせてやるはず　だったがな……▼
 あいつの　信念も
-また　本物ということか▼
-たのむ
+また　本物だった　ということか▼
+頼む
 [1:00:トレーナー名:0]！▼
 ポケモンと　人を　切り離しても
 なにも　うまれん……▽
 それを　教えてやってくれい</language>
 	</row>
 
-	<row id="msg_c09r0501_champion_10" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c09r0501_champion_10" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・クリア後
 ・初回
@@ -677,7 +704,7 @@
 胸を　貸してもらうと　するか！▼</language>
 	</row>
 
-	<row id="msg_c09r0501_champion_11" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c09r0501_champion_11" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・クリア後
 ・2回目以降
@@ -698,7 +725,7 @@
 アデク　まいるぞ！▼</language>
 	</row>
 
-	<row id="msg_c09r0501_champion_12" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c09r0501_champion_12" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・クリア後
 ・戦闘後メッセージ
