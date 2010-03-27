@@ -1,5 +1,5 @@
 #../data/d20.mev
-../tmp/d20.bin:../data/d20.mev $(UNIQ_SCRIPTHEADER) ../tmp/d20.h 
+../tmp/d20.bin:../data/d20.mev $(UNIQ_SCRIPTHEADER) ../tmp/d20.h ../../../../prog/include/field/eventdata_type.h ../../script/D20_def.h 
 	@echo ../data/d20.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d20.h 
+	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d20.h ../../../../prog/include/field/eventdata_type.h ../../script/D20_def.h 
 
