@@ -3,6 +3,7 @@
   DEFINE_LOCAL  LWK_MSGID_START
   DEFINE_LOCAL  LWK_MSGID_AFTER
   DEFINE_LOCAL  LWK_MSGID_NG
+  DEFINE_LOCAL  LWK_TRAINER_ITEM
 
 //******************************************************************
 //  会話からのトレーナー戦闘
@@ -23,8 +24,15 @@ EVENT_START ev_trainer_talk_battle
 
   IF $SCWK_ANSWER == 1 THEN
 
-    _CALL sub_trainer_talk_after_normal
-    //_CALL ev_trainer_talk_after
+    _TRAINER_SPTYPE_GET( LWK_TRAINERID, SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == SCR_TR_SPTYPE_RECOVER THEN
+        _CALL sub_trainer_talk_after_recover
+    ELSIF $SCWK_ANSWER == SCR_TR_SPTYPE_ITEM THEN
+        _CALL sub_trainer_talk_after_item_after
+    ELSE
+        _CALL sub_trainer_talk_after_normal
+    ENDIF
 
   ELSE
   {
@@ -42,13 +50,20 @@ EVENT_START ev_trainer_talk_battle
     ELSE
       //それ以外の場合、戦闘へ
       _CALL sub_trainer_talk_battle
+
+      //特殊トレーナーの場合、戦闘後メッセージ
+      _TRAINER_SPTYPE_GET( LWK_TRAINERID, SCWK_ANSWER )
+      IF $SCWK_ANSWER == SCR_TR_SPTYPE_RECOVER THEN
+        _CALL sub_trainer_talk_after_recover
+      ELSIF $SCWK_ANSWER == SCR_TR_SPTYPE_ITEM THEN
+        _CALL sub_trainer_talk_after_item_before
+      ENDIF
     ENDIF
   }
   ENDIF
   
 EVENT_END
 
-//ev_trainer_common_11:
 sub_trainer_talk_battle:
   _TRAINER_BGM_SET( LWK_TRAINERID ) //視線曲セット
   _TRAINER_TALK_TYPE_GET( LWK_MSGID_START, LWK_MSGID_AFTER, LWK_MSGID_NG )
@@ -96,6 +111,7 @@ ev_trainer_talk_after:
   _JUMP        sub_trainer_talk_after_normal
   */
 
+//戦闘後メッセージ：通常トレーナー
 sub_trainer_talk_after_normal:
   //メッセージを取得
   _TRAINER_TALK_TYPE_GET(  LWK_MSGID_START, LWK_MSGID_AFTER, LWK_MSGID_NG )
@@ -105,6 +121,48 @@ sub_trainer_talk_after_normal:
 
   _RET
   
+//戦闘後メッセージ：回復トレーナー
+sub_trainer_talk_after_recover:
+  _TRAINER_MSG_SET( LWK_TRAINERID, TRMSG_FIGHT_AFTER_RECOVER_BEFORE )
+  _BALLOONWIN_CLOSE()
+
+  _BLACK_OUT()
+  _DISP_FADE_END_CHECK()
+
+  _TEMOTI_POKEMON_KAIFUKU() //回復処理
+	_ME_PLAY( SEQ_ME_ASA )
+  _ME_WAIT()
+
+  _BLACK_IN()
+  _DISP_FADE_END_CHECK()
+
+  _TRAINER_MSG_SET( LWK_TRAINERID, TRMSG_FIGHT_AFTER_RECOVER_AFTER )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+
+  _RET
+
+//戦闘後メッセージ：アイテムトレーナー：初回
+sub_trainer_talk_after_item_before:
+  _TRAINER_MSG_SET( LWK_TRAINERID, TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE )
+  _AB_KEYWAIT_MARK()
+  _BALLOONWIN_CLOSE()
+
+  _TRAINER_ITEM_GET( LWK_TRAINERID, SCWK_PARAM0 )
+  $SCWK_PARAM1 = 1
+  _GLOBAL_CALL  SCRID_ITEM_EVENT_KEYWAIT
+
+  _TRAINER_MSG_SET( LWK_TRAINERID, TRMSG_FIGHT_AFTER_GIFTITEM_AFTER )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  _RET
+
+//戦闘後メッセージ：アイテムトレーナー：２回目以降
+sub_trainer_talk_after_item_after:
+  _TRAINER_MSG_SET( LWK_TRAINERID, TRMSG_FIGHT_AFTER_GIFTITEM_AFTER )
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
+  _RET
 
 //--------------------------------------------------------------------
 //  再戦
@@ -184,7 +242,6 @@ _ANIME_LABEL  anm_trainer_talk_battle_hide_pulloff
 //          視線からのトレーナー戦闘            
 //
 //  LWK_TRAINERID  トレーナーID_0
-//  SCWK_TEMP1  トレーナーID_1
 //******************************************************************
 EVENT_START ev_trainer_move_battle
   //視線移動スクリプトコマンドの中で
@@ -201,6 +258,16 @@ EVENT_START ev_trainer_move_battle
   ELSIF $SCWK_ANSWER == SCR_EYE_TR_TYPE_TAG THEN
     _CALL ev_trainer_type_tag
   ENDIF
+
+  //特殊トレーナーの場合、戦闘後メッセージ
+  _EYE_TRAINER_ID_GET( SCR_EYE_TR_0, LWK_TRAINERID )
+  _TRAINER_SPTYPE_GET( LWK_TRAINERID, SCWK_ANSWER )
+  IF $SCWK_ANSWER == SCR_TR_SPTYPE_RECOVER THEN
+    _CALL sub_trainer_talk_after_recover
+  ELSIF $SCWK_ANSWER == SCR_TR_SPTYPE_ITEM THEN
+    _CALL sub_trainer_talk_after_item_before
+  ENDIF
+
 EVENT_END
 
 //--------------------------------------------------------------------
@@ -298,7 +365,6 @@ ev_trainer_type_tag:
   _EYE_TRAINER_MOVE_SINGLE( SCR_EYE_TR_0 )     //移動終了待ち
 
   //移動終了後、会話へ
-  //_TRAINER_MSG_SET  LWK_TRAINERID,TRMSG_FIGHT_START_1
   _TRAINER_MSG_SET( LWK_TRID_01, TRMSG_FIGHT_START_1 )
   _BALLOONWIN_CLOSE()
 
@@ -309,7 +375,6 @@ ev_trainer_type_tag:
   _EYE_TRAINER_MOVE_SINGLE( SCR_EYE_TR_1 )     //移動終了待ち
 
   //移動終了後、会話へ
-  //_TRAINER_MSG_SET  SCWK_TEMP1,TRMSG_FIGHT_START_2
   _TRAINER_MSG_SET( LWK_TRID_02, TRMSG_FIGHT_START_2 )
   _BALLOONWIN_CLOSE()
 
