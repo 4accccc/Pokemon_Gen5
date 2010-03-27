@@ -136,12 +136,17 @@ EVENT_START   ev_pos_r14r0201_legend_drama_01
 	_BALLOONWIN_OBJMSG(msg_r14r0201_boy1_01,R14R0201_BOY1_01)
 	_BALLOONWIN_CLOSE()
 	
+	//弟ジャンプ
+	_OBJ_ANIME( R14R0201_BOY2_01,anm_c08_boys_jump_u )
+	_OBJ_ANIME_WAIT()
+	
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r14r0210_player_look_d )
 	_OBJ_ANIME_WAIT()
 	
 	//弟：ちがうもーん！
 	_BALLOONWIN_OBJMSG_WB( msg_r14r0201_boy2_01w , msg_r14r0201_boy2_01b , R14R0201_BOY2_01 , POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
+	
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r14r0210_player_look_u )
 	_OBJ_ANIME_WAIT()
@@ -161,6 +166,10 @@ EVENT_START   ev_pos_r14r0201_legend_drama_01
 	//兄：わるさをした
 	_BALLOONWIN_OBJMSG(msg_r14r0201_boy1_03,R14R0201_BOY1_01)
 	_BALLOONWIN_CLOSE()
+	
+	//弟ジャンプ
+	_OBJ_ANIME( R14R0201_BOY2_01,anm_c08_boys_jump_d )
+	_OBJ_ANIME_WAIT()
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r14r0210_player_look_u )
 	_OBJ_ANIME_WAIT()
@@ -249,10 +258,10 @@ _ANIME_LABEL	 anm_r14r0210_girl1_look_d
 
 _ANIME_LABEL	 anm_r14r0210_boy2_playtag_01_01
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_4F,2
+	_ANIME_DATA	AC_WALK_L_4F,1
+	_ANIME_DATA	AC_WALK_D_4F,2
+	_ANIME_DATA	AC_WALK_R_4F,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -262,10 +271,10 @@ _ANIME_LABEL	 anm_r14r0210_boy2_playtag_01_01
 
 _ANIME_LABEL	 anm_r14r0210_boy2_playtag_01_02
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_4F,2
+	_ANIME_DATA	AC_WALK_R_4F,1
+	_ANIME_DATA	AC_WALK_D_4F,2
+	_ANIME_DATA	AC_WALK_L_4F,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -273,10 +282,10 @@ _ANIME_LABEL	 anm_r14r0210_boy2_playtag_01_02
 //	ツチノカミ寸劇：主人公中央へx21
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r14r0210_player_clear_x21
-	_ANIME_DATA	AC_WAIT_32F,1
+	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_R_4F,1
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -284,11 +293,25 @@ _ANIME_LABEL	anm_r14r0210_player_clear_x21
 //	ツチノカミ寸劇：主人公中央へx22
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_r14r0210_player_clear_x23
-	_ANIME_DATA	AC_WAIT_32F,1
+	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_DIR_U,1
 	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_4F,1
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：その場ジャンプup
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_boys_jump_u
+	_ANIME_DATA	AC_STAY_JUMP_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------
+//	ツチノカミ寸劇：その場ジャンプdown
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c08_boys_jump_d
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -305,9 +328,9 @@ _ANIME_LABEL	 anm_r14r0210_boy1_playtag_01
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_r14r0210_boy2_playtag_02
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_R_4F,1
+	_ANIME_DATA	AC_WALK_U_4F,2
+	_ANIME_DATA	AC_WALK_L_4F,1
 	_ANIME_DATA	AC_STAY_WALK_D_8F,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -316,10 +339,10 @@ _ANIME_LABEL	 anm_r14r0210_boy2_playtag_02
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_r14r0210_boy1_playtag_02
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_D_4F,1
+	_ANIME_DATA	AC_WALK_L_4F,1
+	_ANIME_DATA	AC_WALK_D_4F,2
+	_ANIME_DATA	AC_WALK_R_4F,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -328,8 +351,8 @@ _ANIME_LABEL	 anm_r14r0210_boy1_playtag_02
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_r14r0210_boy2_goodbye_01
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,8
+	_ANIME_DATA	AC_WALK_R_4F,1
+	_ANIME_DATA	AC_WALK_D_4F,8
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -344,7 +367,7 @@ _ANIME_LABEL	anm_c08_all_look_down
 //--------------------------------------------------------------
 
 _ANIME_LABEL	 anm_r14r0210_boy1_goodbye_02
-	_ANIME_DATA	AC_WALK_D_8F,7
+	_ANIME_DATA	AC_WALK_D_4F,7
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
