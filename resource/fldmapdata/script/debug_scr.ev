@@ -142,14 +142,10 @@ EVENT_START ev_debug_masafumi
 			$SCWK_TEMP0 = 555
 		ELSIF $SCWK_TEMP1 == 1 THEN
 			
-			//イベント無効
-			$WK_SCENE_C04R0201 = 1
-			//C04フィールド：サポートパパイベントを有効にする
-			$WK_SCENE_C04 = 2
-			//サポートパパを表示
-			_FLAG_RESET( FV_C04_SUPPORTPAPA_01 )
-			_FLAG_RESET( FV_C04_SUPPORT_01 )
-			_MAP_CHANGE( ZONE_ID_C04R0201, 10, 10, DIR_UP )
+			//D09崖滑りPOSイベント初期化
+			$WK_SCENE_D09 = 0
+			_FLAG_RESET( FV_D09_VETERANM_01 )
+			_FLAG_SET( FV_D09_VETERANM_02 )
 //			_MAP_CHANGE( ZONE_ID_C04R0305, 10, 27, DIR_UP )
 			
 		ELSIF $SCWK_TEMP1 == 2 THEN
