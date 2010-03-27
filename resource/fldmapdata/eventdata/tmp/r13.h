@@ -43,5 +43,11 @@
 #define BGID_R13_SIGN2_01                 0
 #define BGID_R13_SIGN1_01                 1
 #define BGID_R13_SIGN3_01                 2
+#define R13_HIDE_ITEM_01                  3
+#define R13_HIDE_ITEM_02                  4
+#define R13_HIDE_ITEM_03                  5
+#define R13_HIDE_ITEM_04                  6
+#define R13_HIDE_ITEM_05                  7
+#define R13_HIDE_ITEM_06                  8
 
 #endif //ZONE_R13_EVB_H

@@ -22,5 +22,8 @@
 #ifndef ZONE_W17_EVB_H
 #define ZONE_W17_EVB_H
 
+#define W17_HIDE_ITEM_01                  0
+#define W17_HIDE_ITEM_02                  1
+#define W17_HIDE_ITEM_03                  2
 
 #endif //ZONE_W17_EVB_H

@@ -27,5 +27,9 @@
 #define BG_R12_SIGN_01                    0
 #define BG_R12_SIGN_02                    1
 #define BG_R12_SIGN_03                    2
+#define R12_HIDE_ITEM_01                  3
+#define R12_HIDE_ITEM_02                  4
+#define R12_HIDE_ITEM_03                  5
+#define R12_HIDE_ITEM_04                  6
 
 #endif //ZONE_R12_EVB_H

@@ -20,5 +20,9 @@
 #define ZONE_R14R0201_EVB_H
 
 #define BG_R14R0201_LEG_01                0
+#define R14R0201_HIDE_ITEM_01             1
+#define R14R0201_HIDE_ITEM_02             2
+#define R14R0201_HIDE_ITEM_03             3
+#define R14R0201_HIDE_ITEM_04             4
 
 #endif //ZONE_R14R0201_EVB_H
