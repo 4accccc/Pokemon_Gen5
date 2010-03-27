@@ -88,7 +88,7 @@ static const GFL_G3D_UTIL_ANM g3Dutil_anmTbl_ball_in[] = {
 
 //==========================================================================
 /**
- 三銃士関連リソース
+ リソース
 */
 //==========================================================================
 
@@ -361,7 +361,12 @@ GMEVENT *SPPOKE_GMK_MoveBall( GAMESYS_WORK *gsys, const BALL_ANM_TYPE inType, co
   SPPOKE_GMK_WK *gmk_wk = GMK_TMP_WK_GetWork(fieldWork, SPPOKE_GMK_ASSIGN_ID);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
 
-  if ( inType == BALL_ANM_TYPE_OUT ) obj = OBJ_BALL_OUT;
+  if ( inType == BALL_ANM_TYPE_OUT )
+  {
+    obj = OBJ_BALL_OUT;
+    //投げるSE再生
+    PMSND_PlaySE(SPPOKE_GMK_BALL_THROW);
+  }
   else obj = OBJ_BALL_IN;
 
   //スタート座標に表示状態でボール配置
