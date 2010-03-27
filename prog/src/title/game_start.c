@@ -31,6 +31,7 @@
 
 #include "savedata/save_control.h" // for
 #include "savedata/save_control_intr.h" // for
+#include "savedata/config.h"
 
 //BGMメモリにおく
 #include "sound/sound_manager.h"
@@ -217,6 +218,8 @@ typedef struct
   SOUNDMAN_PRESET_HANDLE* bgm_handle;
   DEMO3D_PARAM demo3dParam;
   u32 voice_load_id;
+  MYSTATUS *mystatus;
+  CONFIG *config;
 }GAMESTART_FIRST_WORK;
 
 #define USE_INTRSAVE //INTRSAVE有効無効切り替えフラグ
@@ -242,15 +245,18 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
 
   // セーブデータ:ワークエリアのの初期化
   SaveControl_ClearData( sv_ctrl );
+  
+  work->mystatus = MyStatus_AllocWork(GFL_HEAPID_APP);
+  work->config = CONFIG_AllocWork(GFL_HEAPID_APP);
 
   // SELMODE 初期化
   work->selModeParam.type       = SMT_START_GAME;
-  work->selModeParam.configSave = SaveData_GetConfig( sv_ctrl );
-  work->selModeParam.mystatus   = SaveData_GetMyStatus( sv_ctrl );
+  work->selModeParam.configSave = work->config;
+  work->selModeParam.mystatus   = work->mystatus;
 
   //主人公の性別は、性別設定が終わってから入れる
   GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );  
-  work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0, 0, NAMEIN_PERSON_LENGTH , NULL, SaveData_GetMisc(sv_ctrl) );
+  work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0, 0, NAMEIN_PERSON_LENGTH , NULL, NULL );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
   work->procsys_up = GFL_PROC_LOCAL_boot( GFL_HEAPID_APP );
@@ -287,7 +293,8 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   }
 
   // イントロデモのパラメータ初期化
-  work->introParam.save_ctrl  = sv_ctrl;
+  work->introParam.mystatus   = work->mystatus;
+  work->introParam.config     = work->config;
   work->introParam.scene_id   = INTRO_SCENE_ID_00;
   work->introParam.intr_save  = work->intr_save;
   work->introParam.voice_load_id = work->voice_load_id;
@@ -355,18 +362,14 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
   case SEQ_INPUT_NAME_RETAKE_YESNO:
     //名前のセット
     {
-      MYSTATUS * myStatus;
-
-      myStatus = SaveData_GetMyStatus( SaveControl_GetPointer() );
-
-      MyStatus_SetMyNameFromString( myStatus , work->nameInParam->strbuf );
-      MyStatus_SetID(myStatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
+      MyStatus_SetMyNameFromString( work->mystatus , work->nameInParam->strbuf );
+      MyStatus_SetID(work->mystatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
       
-      if(MyStatus_GetMySex(myStatus) == PM_MALE){
-        MyStatus_SetTrainerView(myStatus, UNION_VIEW_INDEX_MAN_START);
+      if(MyStatus_GetMySex(work->mystatus) == PM_MALE){
+        MyStatus_SetTrainerView(work->mystatus, UNION_VIEW_INDEX_MAN_START);
       }
       else{
-        MyStatus_SetTrainerView(myStatus, UNION_VIEW_INDEX_WOMAN_START);
+        MyStatus_SetTrainerView(work->mystatus, UNION_VIEW_INDEX_WOMAN_START);
       }
     }
 
@@ -421,7 +424,15 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
 #ifdef USE_INTRSAVE
   IntrSave_Exit( work->intr_save );
 #endif
-
+  // Introデモで変更してきたデータをセーブデータへ反映
+  {
+    SAVE_CONTROL_WORK *sv_ctrl = SaveControl_GetPointer();
+    MyStatus_Copy(work->mystatus, SaveData_GetMyStatus(sv_ctrl));
+    CONFIG_Copy(work->config, SaveData_GetConfig(sv_ctrl));
+  }
+  GFL_HEAP_FreeMemory(work->mystatus);
+  GFL_HEAP_FreeMemory(work->config);
+  
   GFL_PROC_LOCAL_Exit( work->procsys_up );
 
   init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );

@@ -1131,7 +1131,7 @@ static BOOL CMD_SELECT_MOJI( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* pa
   
   GF_ASSERT( param[0] == 0 || param[0] == 1 );
 
-  config = SaveData_GetConfig( wk->init_param->save_ctrl );
+  config = wk->init_param->config;
   
   if( param[0] == 0 )
   {
@@ -1158,7 +1158,7 @@ static BOOL CMD_SELECT_SEX( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* par
 {
   MYSTATUS* mystatus;
 
-  mystatus = SaveData_GetMyStatus( wk->init_param->save_ctrl );
+  mystatus = wk->init_param->mystatus;
 
   if( param[0] == 0 )
   {
@@ -1318,7 +1318,7 @@ static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat,
       BOOL is_woman = sdat->cnt;
       MYSTATUS* mystatus;
 
-      mystatus = SaveData_GetMyStatus( wk->init_param->save_ctrl );
+      mystatus = wk->init_param->mystatus;
 
       if( is_woman == FALSE )
       {
@@ -1387,7 +1387,7 @@ static BOOL CMD_COMP_SEX( INTRO_CMD_WORK* wk )
 {
   MYSTATUS* mystatus;
 
-  mystatus = SaveData_GetMyStatus( wk->init_param->save_ctrl );
+  mystatus = wk->init_param->mystatus;
 
   if( MyStatus_GetMySex( mystatus ) == PTL_SEX_MALE )
   {
@@ -1417,7 +1417,7 @@ static void CMD_WORDSET_TRAINER( INTRO_CMD_WORK* wk, int bufID )
   const MYSTATUS* mystatus;
 
   wordset   = INTRO_MSG_GetWordSet( wk->wk_msg );
-  mystatus  = SaveData_GetMyStatus( wk->init_param->save_ctrl );
+  mystatus  = wk->init_param->mystatus;
 
   WORDSET_RegisterPlayerName( wordset, bufID, mystatus );
 }

@@ -67,7 +67,8 @@ typedef enum {
 //=====================================
 typedef struct {	
   // [IN]
-  SAVE_CONTROL_WORK*  save_ctrl;
+  MYSTATUS*           mystatus;
+  CONFIG*             config;
   INTRO_SCENE_ID      scene_id;
   INTR_SAVE_CONTROL*  intr_save;
   u32                 voice_load_id;
