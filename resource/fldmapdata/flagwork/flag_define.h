@@ -329,7 +329,7 @@
 #define FE_R14R0201_LEG_GET                313 /* 0x0139 ツチノカミイベント：捕獲チェック */
 #define FE_R18R0101_RANGERM_TALK           314 /* 0x013a 18番道路プレハブ：レンジャーと会話した */
 #define FE_R18R0101_POKE_GET               315 /* 0x013b 18番道路プレハブ：ポケモン入手フラグ（ラー） */
-		/* not used   316(0x013c) */
+#define FE_D05_ITEMGET_01                  316 /* 0x013c 冷凍コンテナ（外）；アイテム入手フラグ */
 		/* not used   317(0x013d) */
 		/* not used   318(0x013e) */
 		/* not used   319(0x013f) */

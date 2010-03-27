@@ -199,7 +199,7 @@
 #define WK_SCENE_R08                     16587 /* 0x40cb ８番道路：イベント用ワーク */
 #define WK_SCENE_AFTER_SAGE              16588 /* 0x40cc クリア後各地：七賢人イベント用ワーク */
 #define WK_SCENE_T04R0101_BTL_FAMILY     16589 /* 0x40cd サザナミタウン：巨大別荘用ワーク */
-#define WK_SCENE_R13R0103_LEG            16590 /* 0x40ce Ｒ13：ツチノカミイベント */
+#define WK_SCENE_R14R0201_LEG            16590 /* 0x40ce Ｒ13：ツチノカミイベント */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 
