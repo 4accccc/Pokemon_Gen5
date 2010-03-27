@@ -63,10 +63,10 @@ STEP;
 
 // マナフィ以外のポケモン
 // パーティクルのフレームとポケモンアニメーションのフレームを連携させる
-#define PARTICLE_BURST_FRAME   (339)  // ひびが入っている絵の最終フレーム  // 全部で340個フレームがあった
+#define PARTICLE_BURST_FRAME   (339)//(380)  // ひびが入っている絵の最終フレーム  // 全部で340個フレームがあった
 #define POKE_ANIME_INDEX (1)
 
-// マナフィ
+// マナフ//ィ
 // パーティクルのフレームとポケモンアニメーションのフレームを連携させる
 #define MANAFI_PARTICLE_BURST_FRAME   (339)  // 最終フレーム  // 全部で???個フレームがあった
 #define MANAFI_POKE_ANIME_INDEX (0)
@@ -641,11 +641,11 @@ void EGG_DEMO_VIEW_Draw( EGG_DEMO_VIEW_WORK* work )
   // MCSS
   MCSS_Draw( work->mcss_sys_wk );
 
-  // パーティクル
-  Particle_Draw( work->particle_mgr );
-
   // 3D
   Egg_Demo_View_ThreeDraw( work );
+
+  // パーティクル
+  Particle_Draw( work->particle_mgr );
 
   //メモ
   //Egg_Demo_View_ThreeDraw( work );
@@ -653,6 +653,13 @@ void EGG_DEMO_VIEW_Draw( EGG_DEMO_VIEW_WORK* work )
   //Particle_Draw( work->particle_mgr );
   //の順に描画したら、
   //ポケモンMCSSが、REAR3Dのスクロールアニメにつられてスクロールしてしまっていた。
+  //
+  //メモ
+  //MCSS_Draw( work->mcss_sys_wk );
+  //Particle_Draw( work->particle_mgr );
+  //Egg_Demo_View_ThreeDraw( work );
+  //の順に描画したら、
+  //パーティクルが、REAR3Dの描画より後ろになってしまっていた。
 }
 
 //-----------------------------------------------------------------------------
@@ -1082,6 +1089,9 @@ static void Particle_Stop( PARTICLE_MANAGER* mgr, s32 stop_count )
 // 3D全体
 static void Egg_Demo_View_ThreeInit( EGG_DEMO_VIEW_WORK* work )
 {
+  // レンダリングスワップバッファ
+  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );  // マニュアルソートにした(EGG_DEMO_GRAPHICではオートソートに設定していたが)
+
   // 3D管理ユーティリティーのセットアップ
   work->three_util = GFL_G3D_UTIL_Create( THREE_RES_MAX, THREE_OBJ_MAX, work->heap_id );
 
