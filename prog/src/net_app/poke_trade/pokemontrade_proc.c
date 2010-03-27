@@ -3231,7 +3231,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   POKEMON_TRADE_WORK *pWork = mywk;
 
   //オーバーレイ読み込み
-  if(type < POKEMONTRADE_TYPE_VISUAL){
+  if(type < POKEMONTRADE_TYPE_GTS){
     GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
     GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
     GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
@@ -3642,7 +3642,7 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
 #endif// PM_DEBUG
   GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
   //オーバーレイ破棄
-  if(type < POKEMONTRADE_TYPE_VISUAL){
+  if(type < POKEMONTRADE_TYPE_GTS){
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(app_mail));
