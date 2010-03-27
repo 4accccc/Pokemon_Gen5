@@ -1169,6 +1169,33 @@ static VMCMD_RESULT EvCmdWkMod( VMHANDLE *core, void *wk )
   *work_val %= SCRCMD_GetVMWorkValue( core, work );
   return VMCMD_RESULT_CONTINUE;
 }
+//--------------------------------------------------------------
+/**
+ *  ワークに論理積をとる
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdWkAnd( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  u16 * work_val;
+  work_val = SCRCMD_GetVMWork( core, work );
+  *work_val &= SCRCMD_GetVMWorkValue( core, work );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ *  ワークに論理和をとる
+ */
+//--------------------------------------------------------------
+static VMCMD_RESULT EvCmdWkOr( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  u16 * work_val;
+  work_val = SCRCMD_GetVMWork( core, work );
+  *work_val |= SCRCMD_GetVMWorkValue( core, work );
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //--------------------------------------------------------------
 /**

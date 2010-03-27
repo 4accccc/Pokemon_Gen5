@@ -45,8 +45,8 @@
 
   DEF_CMD( EvCmdPushFlagValue,  EV_SEQ_PUSH_FLAG )
   DEF_CMD( EvCmdCmpStack,  EV_SEQ_CMP_STACK )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdWkAnd, EV_SEQ_AND_WK )
+  DEF_CMD( EvCmdWkOr, EV_SEQ_OR_WK )
 
   NO_CMD()
   NO_CMD()
