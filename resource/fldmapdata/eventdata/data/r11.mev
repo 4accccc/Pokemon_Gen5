@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/24 13:28:42
+#save date:2010/03/27 22:06:36
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r11.wms
 #SECTION START:OBJ_EVENT
@@ -236,7 +236,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-2
+3
 #event number: 0
 #Bg Event Label
 BG_R11_SIGN_01
@@ -263,6 +263,19 @@ SCRID_BG_R11_SIGN_02
 EVENTDATA_POSTYPE_GRID
 #position
 568 0 56
+#event number: 2
+#Bg Event Label
+R11_HIDE_ITEM_01
+#Bg Event Type
+BG_TALK_TYPE_HIDE
+#Bg Event Reaction Direction ID
+BG_TALK_DIR_ALL
+#Bg Script Name
+SCRID_HIDE_ITEM_096
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-8 0 -56
 #Map Event List Data End
 #SECTION End:BG_EVENT
 #SECTION START:POS_EVENT
