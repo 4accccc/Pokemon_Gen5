@@ -477,10 +477,10 @@
 #define AC_STAY_WALK_D_8F 0x21 ///<下向きにその場歩き 8フレーム [rail]
 #define AC_STAY_WALK_L_8F 0x22 ///<左向きにその場歩き 8フレーム [rail]
 #define AC_STAY_WALK_R_8F 0x23 ///<右向きにその場歩き 8フレーム [rail]
-#define AC_STAY_WALK_U_4F 0x24 ///<上向きにその場歩き 4フレーム [rail]
-#define AC_STAY_WALK_D_4F 0x25 ///<下向きにその場歩き 4フレーム [rail]
-#define AC_STAY_WALK_L_4F 0x26 ///<左向きにその場歩き 4フレーム [rail]
-#define AC_STAY_WALK_R_4F 0x27 ///<右向きにその場歩き 4フレーム [rail]
+#define AC_STAY_WALK_U_4F 0x24 ///<上向きにその場歩き 4フレーム
+#define AC_STAY_WALK_D_4F 0x25 ///<下向きにその場歩き 4フレーム
+#define AC_STAY_WALK_L_4F 0x26 ///<左向きにその場歩き 4フレーム
+#define AC_STAY_WALK_R_4F 0x27 ///<右向きにその場歩き 4フレーム
 #define AC_STAY_WALK_U_2F 0x28 ///<上向きにその場歩き 2フレーム [rail]
 #define AC_STAY_WALK_D_2F 0x29 ///<下向きにその場歩き 2フレーム [rail]
 #define AC_STAY_WALK_L_2F 0x2a ///<左向きにその場歩き 2フレーム [rail]
