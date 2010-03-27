@@ -104,7 +104,7 @@ ev_select_yes:
 	_DISP_FADE_END_CHECK()
 	
 	//３Ｄデモコール
-	_CALL_3D_DEMO( DEMO3D_ID_RIZA_BRIDGE )
+	_CALL_3D_DEMO( DEMO3D_ID_G_SHIP_PORT )
 	
 	//予約スクリプト：マップ遷移後、船から下りるスクリプトを起動
 	_RESERVE_SCRIPT( SCRID_RESERVE_C11_RECEPT_END )
