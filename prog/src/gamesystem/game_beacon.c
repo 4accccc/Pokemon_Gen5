@@ -18,6 +18,8 @@
 #include "app/townmap_util.h"
 #include "net_app\union\union_beacon_tool.h"
 #include "app/research_radar/research_data.h"   //QUESTION_NUM_PER_TOPIC
+#include "app/research_radar/question_id.h"
+#include "app/research_radar/questionnaire_index.h"
 #include "savedata/playtime.h"
 
 
@@ -316,7 +318,20 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
     for(i = 0; i < QUESTION_NUM_PER_TOPIC; i++){
       search_question_id = QuestionnaireWork_GetInvestigatingQuestion(questsave, i);
       if(search_question_id != INVESTIGATING_QUESTION_NULL){
-        answer = QuestionnaireAnswer_ReadBit(&info->question_answer, search_question_id);
+        if(search_question_id == QUESTION_ID_PLAY_TIME){
+          answer = info->play_hour / 10;
+          if(info->play_hour % 10 == 0 && info->play_min > 0){
+            answer++;
+          }
+          answer++; //0‚Í–³‰ñ“š‚È‚Ì‚Å1ƒCƒ“ƒNƒŠƒƒ“ƒg
+          if(answer > GetAnswerNum_byQuestionID(search_question_id)){
+            answer = GetAnswerNum_byQuestionID(search_question_id);
+          }
+        }
+        else{
+          answer = QuestionnaireAnswer_ReadBit(&info->question_answer, search_question_id);
+        }
+        
         if(answer != 0){  //0‚Í–³‰ñ“š
           QuestionnaireWork_AddTodayCount(questsave, search_question_id, 1);
           QuestionnaireWork_AddTodayAnswerNum(questsave, search_question_id, answer, 1);
