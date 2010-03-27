@@ -40,7 +40,6 @@ typedef struct
 struct _TAG_MAP_MATRIX
 {
 	HEAPID heapID;
-	HEAPID tmpHeapID;
 	u16 zone_id;
 	u32 matrix_id;
 	
@@ -66,18 +65,16 @@ static int MapMatrix_ChgBlockPos( fx32 pos );
 /**
  * MAP_MATRIX生成
  * @param	heapID	  ワークを確保するHEAPID
- * @param	tmpHeapID	テンポラリワークを確保するHEAPID
  * @retval	MAP_MATRIX* MAP_MATRIX*
  */
 //--------------------------------------------------------------
-MAP_MATRIX * MAP_MATRIX_Create( HEAPID heapID, HEAPID tmpHeapID )
+MAP_MATRIX * MAP_MATRIX_Create( HEAPID heapID )
 {
 	MAP_MATRIX *pMat;
 	
   pMat = GFL_HEAP_AllocClearMemory( heapID, sizeof(MAP_MATRIX) );
 	
   pMat->heapID = heapID;
-	pMat->tmpHeapID = tmpHeapID;
 	
   MI_CpuFill32( pMat->map_res_id_tbl,
 		MAP_MATRIX_RES_ID_NON, sizeof(u32)*MAP_MATRIX_MAX );
@@ -95,10 +92,10 @@ MAP_MATRIX * MAP_MATRIX_Create( HEAPID heapID, HEAPID tmpHeapID )
  */
 //--------------------------------------------------------------
 void MAP_MATRIX_Init(
-	MAP_MATRIX *pMat, const u16 matrix_id, const u16 zone_id )
+	MAP_MATRIX *pMat, const u16 matrix_id, const u16 zone_id, HEAPID temp_heapID )
 {
 	void *pMatData = GFL_ARC_LoadDataAlloc(
-		ARCID_FLDMAP_MAPMATRIX, matrix_id, pMat->tmpHeapID );
+		ARCID_FLDMAP_MAPMATRIX, matrix_id, temp_heapID );
 	MapMatrix_SetData( pMat, pMatData, matrix_id, zone_id );
 	GFL_HEAP_FreeMemory( pMatData );
 }
@@ -286,7 +283,7 @@ BOOL MAP_MATRIX_CheckVectorPosRange(
  */
 //--------------------------------------------------------------
 static void MapMatrix_Replace(
-    MAP_MATRIX *pMat, const MAPREPLACE_CTRL * ctrl )
+    MAP_MATRIX *pMat, const MAPREPLACE_CTRL * ctrl, HEAPID temp_heapID )
 {
   REPLACE_REQUEST req;
   u32 before, after;
@@ -298,7 +295,7 @@ static void MapMatrix_Replace(
   case REPLACE_REQ_NON:
     break;
   case REPLACE_REQ_MATRIX:
-    MAP_MATRIX_Init( pMat, after, pMat->zone_id );
+    MAP_MATRIX_Init( pMat, after, pMat->zone_id, temp_heapID );
     OS_Printf("MapReplace:MATRIX: %d --> %d\n", before, after );
     break;
   case REPLACE_REQ_BLOCK:
@@ -323,7 +320,7 @@ static void MapMatrix_Replace(
  */
 //--------------------------------------------------------------
 void MAP_MATRIX_CheckReplace(
-    MAP_MATRIX *pMat, GAMESYS_WORK * gamesys )
+    MAP_MATRIX *pMat, GAMESYS_WORK * gamesys, HEAPID temp_heapID )
 {
   int count ,data_max;
   MAPREPLACE_CTRL * ctrl = MAPREPLACE_Create( pMat->heapID, gamesys );
@@ -333,7 +330,7 @@ void MAP_MATRIX_CheckReplace(
     u32 mat_id = MAPREPLACE_Load( ctrl, count );
     if ( mat_id != pMat->matrix_id ) continue;
     //マトリックスが一致したら置き換え処理を行う
-    MapMatrix_Replace( pMat, ctrl );
+    MapMatrix_Replace( pMat, ctrl, temp_heapID );
   }
   MAPREPLACE_Delete( ctrl );
 }

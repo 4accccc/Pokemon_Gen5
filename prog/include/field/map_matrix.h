@@ -35,10 +35,10 @@ typedef struct _TAG_MAP_MATRIX MAP_MATRIX; ///<MAP_MATRIX
 //======================================================================
 //	extern
 //======================================================================
-extern MAP_MATRIX * MAP_MATRIX_Create( HEAPID heapID, HEAPID tmpHeapID );
+extern MAP_MATRIX * MAP_MATRIX_Create( HEAPID heapID );
 
 extern void MAP_MATRIX_Init(
-	MAP_MATRIX *pMat, const u16 matrix_id, const u16 zone_id );
+	MAP_MATRIX *pMat, const u16 matrix_id, const u16 zone_id, HEAPID temp_heapID );
 extern void MAP_MATRIX_Delete( MAP_MATRIX *pMat );
 
 extern u32 MAP_MATRIX_GetMatrixID( const MAP_MATRIX *pMat );
@@ -59,7 +59,7 @@ extern void MAP_MATRIX_SetTableSize(
     MAP_MATRIX *pMat, u8 xsize, u8 zsize );
 
 extern void MAP_MATRIX_CheckReplace(
-    MAP_MATRIX *pMat, GAMESYS_WORK * gamework );
+    MAP_MATRIX *pMat, GAMESYS_WORK * gamework, HEAPID temp_heapID );
 //--------------------------------------------------------------
 /**
  * @brief   MAP_MATRIX‚Ö‚Ìƒ|ƒCƒ“ƒ^Žæ“¾

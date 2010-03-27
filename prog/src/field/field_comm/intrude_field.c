@@ -1122,8 +1122,9 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
       }
     }
 
-    mmatrix = MAP_MATRIX_Create( HEAPID_FIELDMAP, GFL_HEAP_LOWID( HEAPID_FIELDMAP ) );
-    MAP_MATRIX_Init(mmatrix, NARC_map_matrix_palace02_mat_bin, ZONE_ID_PALACE01);
+    mmatrix = MAP_MATRIX_Create( GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
+    MAP_MATRIX_Init(mmatrix,
+        NARC_map_matrix_palace02_mat_bin, ZONE_ID_PALACE01, GFL_HEAP_LOWID( HEAPID_FIELDMAP ) );
 
     do{
       OS_TPrintf("--- Map˜AŒ‹ %d ----\n", intcomm->connect_map_count + 1);
@@ -1144,8 +1145,9 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
 //==================================================================
 void IntrudeField_ConnectMapOne(FIELDMAP_WORK *fieldWork)
 {
-  MAP_MATRIX *mmatrix = MAP_MATRIX_Create( HEAPID_FIELDMAP, GFL_HEAP_LOWID( HEAPID_FIELDMAP ) );
-  MAP_MATRIX_Init(mmatrix, NARC_map_matrix_palace02_mat_bin, ZONE_ID_PALACE01);
+  MAP_MATRIX *mmatrix = MAP_MATRIX_Create( HEAPID_FIELDMAP );
+  MAP_MATRIX_Init(mmatrix,
+      NARC_map_matrix_palace02_mat_bin, ZONE_ID_PALACE01, GFL_HEAP_LOWID( HEAPID_FIELDMAP ));
 
   OS_TPrintf("--- Map˜AŒ‹ One ----\n");
   FLDMAPPER_Connect( fieldWork, FIELDMAP_GetFieldG3Dmapper( fieldWork ), mmatrix );
