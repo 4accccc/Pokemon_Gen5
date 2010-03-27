@@ -1897,6 +1897,25 @@ const RAIL_CAMERA_SET* FIELD_RAIL_GetCameraSet( const FIELD_RAIL_WORK* work )
 	return getCameraSet( work );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  今いるところの、ライン中心での座標を求める
+ *
+ *	@param	rail  レールワーク
+ *	@param	pos   位置
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_GetLineCenterPos( const FIELD_RAIL_WORK* rail, VecFx32* pos )
+{
+  s32 width_ofs;
+  // 本当はいけないが、ワークを書き換える。
+  // 確実に最後はもとに戻す。
+  width_ofs = rail->width_ofs;
+  ((FIELD_RAIL_WORK*)rail)->width_ofs = 0;
+  getRailPosition( rail, pos );
+  ((FIELD_RAIL_WORK*)rail)->width_ofs = width_ofs;
+}
+
 
 
 

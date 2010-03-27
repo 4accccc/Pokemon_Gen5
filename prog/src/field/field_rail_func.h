@@ -188,7 +188,8 @@ typedef struct
 } RAIL_CAMERAFUNC_FIXANGLE_LINEWAY;
 extern void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay_XZ( const FIELD_RAIL_MAN * man );
 extern void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay_XYZ( const FIELD_RAIL_MAN * man );
-
+//  進行方向に対するアングルを固定＋ライン中心をターゲット
+extern void FIELD_RAIL_CAMERAFUNC_FixAngleLineWay_Center( const FIELD_RAIL_MAN * man );
 
 #ifdef _cplusplus
 }	// extern "C"{

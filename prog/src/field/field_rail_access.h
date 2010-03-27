@@ -61,6 +61,7 @@ extern s32 FIELD_RAIL_GetWidthOfs( const FIELD_RAIL_WORK* rail );
 extern s32 FIELD_RAIL_GetWidthOfsMax( const FIELD_RAIL_WORK* rail );
 extern fx32 FIELD_RAIL_GetOfsUnit( const FIELD_RAIL_WORK* rail );
 extern const RAIL_CAMERA_SET* FIELD_RAIL_GetCameraSet( const FIELD_RAIL_WORK* rail );
+extern void FIELD_RAIL_GetLineCenterPos( const FIELD_RAIL_WORK* rail, VecFx32* pos );
 
 
 //------------------------------------------------------------------
