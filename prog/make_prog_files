@@ -1266,7 +1266,7 @@ SRCS_OVERLAY_TRAINERCARD = app/trainercard/trainer_card.c \
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
 #===> SRCS_OVERLAY_FIELDMAP
-#===> GROUP_OVERLAY_GIMMICK
+#===> GROUP_OVERLAY_SUBSCREEN
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_MUSICAL_SHOT = musical/shot/musical_shot_sys.c \
         musical/shot/mus_shot_photo.c\
@@ -1278,7 +1278,8 @@ SRCS_OVERLAY_MUSICAL_SHOT = musical/shot/musical_shot_sys.c \
         musical/musical_system.c \
         musical/stage/sta_act_obj.c \
         musical/stage/sta_act_light.c \
-        musical/stage/sta_act_bg.c 
+        musical/stage/sta_act_bg.c \
+        musical/stage/sta_act_poke.c
         
 
 #パレス
@@ -1396,6 +1397,7 @@ SRCS_OVERLAY_GDS_COMM =	net_app/gds/gds_rap.c \
 								savedata/battle_rec_ov.c
 
 #===> SRCS_OVERLAY_GDS_COMM
+#===> SRCS_OVERLAY_FIELD_WEATHER_SUNNY
 SRCS_OVERLAY_GDS_DEBUG =	net_app/gds/gds_test.c \
 													musical/musical_debug.c
 
@@ -1464,7 +1466,6 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_data.c \
         musical/dressup/dup_fitting_item.c \
         musical/stage/sta_acting.c \
         musical/stage/sta_act_effect.c \
-        musical/stage/sta_act_poke.c \
 		musical/stage/sta_act_audience.c \
 		musical/stage/sta_act_button.c \
         musical/stage/script/sta_act_script.c \
@@ -1682,25 +1683,11 @@ SRCS_OVERLAY_COMMAND_DEMO = demo/command_demo/command_demo.c \
 							demo/command_demo/cdemo_seq.c \
 							demo/command_demo/cdemo_comm.c
 
-#バトルレコーダー
-#===> SRCS_OVERLAY_BATTLE
-#===> SRCS_OVERLAY_BATTLE_BAG
-#===> SRCS_OVERLAY_BATTLE_PLIST
-#===> SRCS_OVERLAY_VS_MULTI_LIST
-SRCS_OVERLAY_BATTLE_RECORDER  = net_app/battle_recorder/br_main.c
-
-#バトルレコーダーコア部分
+#バトルレコーダーバトル＋ブラウザ部分
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS
-#===> SRCS_OVERLAY_MUSICAL_SHOT
 #===> SRCS_OVERLAY_GDS_COMM
-SRCS_OVERLAY_BATTLE_RECORDER_CORE	=	net_app/battle_recorder/br_core.c \
-						net_app/battle_recorder/br_btn.c \
-						net_app/battle_recorder/br_btn_data.c \
-						net_app/battle_recorder/br_res.c \
-						net_app/battle_recorder/br_graphic.c \
-						net_app/battle_recorder/br_proc_sys.c \
-						net_app/battle_recorder/br_start_proc.c \
+SRCS_OVERLAY_BATTLE_RECORDER_BROWSE	= net_app/battle_recorder/br_start_proc.c \
 						net_app/battle_recorder/br_menu_proc.c \
 						net_app/battle_recorder/br_record_proc.c \
 						net_app/battle_recorder/br_btlsubway_proc.c \
@@ -1708,18 +1695,50 @@ SRCS_OVERLAY_BATTLE_RECORDER_CORE	=	net_app/battle_recorder/br_core.c \
 						net_app/battle_recorder/br_bvrank_proc.c \
 						net_app/battle_recorder/br_bvsearch_proc.c \
 						net_app/battle_recorder/br_codein_proc.c \
-						net_app/battle_recorder/br_bvsend_proc.c \
-						net_app/battle_recorder/br_musicallook_proc.c \
-						net_app/battle_recorder/br_musicalsend_proc.c \
-		        net_app/battle_recorder/br_util.c \
-		        net_app/battle_recorder/br_pokesearch.c \
 		        net_app/battle_recorder/br_codein.c \
 		        net_app/battle_recorder/br_codein_disp.c \
 		        net_app/battle_recorder/br_codein_pv.c \
+						net_app/battle_recorder/br_bvsend_proc.c
+
+#バトルレコーダーミュージカル送信部分
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_MUSICAL_SHOT
+SRCS_OVERLAY_BATTLE_RECORDER_MUSICAL_SEND	=	net_app/battle_recorder/br_musicalsend_proc.c
+
+#バトルレコーダーミュージカル見る部分
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_DEV_WIRELESS
+#===> SRCS_OVERLAY_MUSICAL_SHOT
+SRCS_OVERLAY_BATTLE_RECORDER_MUSICAL_LOOK	=	net_app/battle_recorder/br_musicallook_proc.c
+
+
+#バトルレコーダーコア部分
+#===> SRCS_OVERLAY_BATTLE_RECORDER_BROWSE
+#===> SRCS_OVERLAY_BATTLE_RECORDER_MUSICAL_SEND
+#===> SRCS_OVERLAY_BATTLE_RECORDER_MUSICAL_LOOK
+SRCS_OVERLAY_BATTLE_RECORDER_CORE	=	net_app/battle_recorder/br_core.c \
+            net_app/battle_recorder/br_proc_sys.c \
+						net_app/battle_recorder/br_btn.c \
+						net_app/battle_recorder/br_btn_data.c \
+						net_app/battle_recorder/br_res.c \
+						net_app/battle_recorder/br_graphic.c \
+		        net_app/battle_recorder/br_util.c \
 		        net_app/battle_recorder/br_fade.c \
             net_app/battle_recorder/br_sidebar.c \
-            net_app/battle_recorder/br_net.c
+            net_app/battle_recorder/br_net.c \
+		        net_app/battle_recorder/br_pokesearch.c
 
+#バトルレコーダー
+#バトルレコーダーがここまで小分けになっているのは、
+#フィールド～ミュージカルショットのラインが一番高くなってしまったので、
+#ミュージカルショットに依存していない箇所を、ミュージカルショットと並列におくためです
+#===> SRCS_OVERLAY_BATTLE
+#===> SRCS_OVERLAY_BATTLE_BAG
+#===> SRCS_OVERLAY_BATTLE_PLIST
+#===> SRCS_OVERLAY_VS_MULTI_LIST
+#===> SRCS_OVERLAY_BATTLE_RECORDER_CORE
+SRCS_OVERLAY_BATTLE_RECORDER  = net_app/battle_recorder/br_main.c
 
 #バトルレコーダーツール WiFI上で動くバトルレコーダー内で使用するので、バトルと並列にしなければいけない
 #===> SRCS_OVERLAY_DEV_WIFI

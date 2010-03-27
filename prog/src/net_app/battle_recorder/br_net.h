@@ -64,7 +64,7 @@ typedef struct _BR_NET_WORK BR_NET_WORK;
 */
 //=============================================================================
 //--- system ---
-extern BR_NET_WORK *BR_NET_Init( GAMEDATA *p_gamedata, HEAPID heapID );
+extern BR_NET_WORK *BR_NET_Init( GAMEDATA *p_gamedata, DWCSvlResult *p_svl, HEAPID heapID );
 extern void BR_NET_Exit( BR_NET_WORK *p_wk );
 extern void BR_NET_Main( BR_NET_WORK *p_wk );
 

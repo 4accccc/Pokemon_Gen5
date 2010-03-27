@@ -107,6 +107,7 @@
 #include "savedata/symbol_save_notwifi.h"
 #include "savedata/symbol_save_field.h"
 #include "event_gts.h"
+#include "src\musical\musical_debug.h"
 
 FS_EXTERN_OVERLAY( d_iwasawa );
 
@@ -198,6 +199,7 @@ static BOOL debugMenuCallProc_Kairiki( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenu_CreateMusicalShotData( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BeaconFriendCode( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk );
 static GMEVENT_RESULT debugMenuWazaOshie( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
@@ -338,6 +340,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway },                //バトルサブウェイ
   { DEBUG_FIELD_ZUKAN_04, debugMenuCallProc_Zukan },            //ずかん
   { DEBUG_FIELD_STR66,  debugMenuCallProc_RingTone },           //着信音
+  { DEBUG_FIELD_STR47, debugMenu_CreateMusicalShotData },           //ミュージカルデータ作成
 };
 
 
@@ -3004,7 +3007,7 @@ static BOOL debugMenuCallProc_ChangeName( DEBUG_MENU_EVENT_WORK *p_wk )
 
   GFL_OVERLAY_Load(FS_OVERLAY_ID(namein) );
   //名前入力ワーク設定
-  p_ev_wk->p_param  = NAMEIN_AllocParam( HEAPID_PROC, NAMEIN_MYNAME, MyStatus_GetMySex(p_mystatus), 0, NAMEIN_PERSON_LENGTH, p_ev_wk->p_default_str, p_misc );
+  p_ev_wk->p_param  = NAMEIN_AllocParam( HEAPID_PROC, NAMEIN_MYNAME, MyStatus_GetMySex(p_mystatus), 0, NAMEIN_PERSON_LENGTH, p_ev_wk->p_default_str, NULL );
 
   return TRUE;
 }
@@ -3324,11 +3327,11 @@ static GMEVENT_RESULT debugMenuGDS( GMEVENT *p_event, int *p_seq, void *p_wk_adr
 
       gds_param = GFL_HEAP_AllocClearMemory(HEAPID_PROC, sizeof(GDSPROC_PARAM));
       gds_param->gamedata = GAMESYSTEM_GetGameData(p_gds->gsys);
-      gds_param->gds_mode = BR_MODE_GLOBAL_BV;
+      gds_param->gds_mode = BR_MODE_GLOBAL_MUSICAL;//BR_MODE_GLOBAL_BV;
 
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
       { 
-        gds_param->gds_mode = BR_MODE_GLOBAL_MUSICAL;
+        gds_param->gds_mode = BR_MODE_GLOBAL_BV;
       }
 
       GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_gds->gsys, p_gds->fieldWork,
@@ -3637,6 +3640,30 @@ static BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk )
   {
     SHORTCUT_SetRegister( p_shortcut_sv, i, TRUE );
   }
+
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー ミュージカルショット作成
+ * @param wk  DEBUG_MENU_EVENT_WORK*  ワーク
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+FS_EXTERN_OVERLAY( gds_debug );
+static BOOL debugMenu_CreateMusicalShotData( DEBUG_MENU_EVENT_WORK *wk )
+{
+  int i;
+  GAMESYS_WORK *gsys = wk->gmSys;
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(wk->gdata);
+  MUSICAL_SAVE *musSave   = MUSICAL_SAVE_GetMusicalSave( p_sv );
+
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(gds_debug) );
+
+  MUSICAL_DEBUG_CreateDummyData( MUSICAL_SAVE_GetMusicalShotData( musSave ), MONSNO_PIKATYUU , HEAPID_PROC );
+
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_debug));
 
   return FALSE;
 }

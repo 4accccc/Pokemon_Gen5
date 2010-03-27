@@ -69,6 +69,7 @@ struct _BR_FADE_WORK
 static BOOL Br_Fade_MainMasterBrightBlack( BR_FADE_WORK *p_wk, u32 *p_seq );
 static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq );
 static BOOL Br_Fade_MainPallete( BR_FADE_WORK *p_wk, u32 *p_seq );
+static BOOL Br_Fade_MainMasterBrightAndAlpha( BR_FADE_WORK *p_wk, u32 *p_seq );
 //その他
 static BR_FADE_MAINFUNCTION Br_Fade_Factory( BR_FADE_TYPE type );
 
@@ -557,6 +558,117 @@ static BOOL Br_Fade_MainPallete( BR_FADE_WORK *p_wk, u32 *p_seq )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  上画面がマスターブライト、下画面がアルファのフェードメイン処理
+ *
+ *	@param	BR_FADE_WORK *p_wk  ワーク
+ *	@param  u32 seq             シーケンス
+ *
+ *	@return TRUEならば処理終了  FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_Fade_MainMasterBrightAndAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
+{ 
+   enum
+  { 
+    SEQ_MBA_INIT,
+    SEQ_MBA_MAIN,
+    SEQ_MBA_EXIT,
+  };
+
+  switch( *p_seq )
+  { 
+  case SEQ_MBA_INIT:
+    { 
+      u32 start, end;
+      int ev1, ev2;
+
+      //方向による設定
+      if( p_wk->dir == BR_FADE_DIR_IN )
+      { 
+        start = 16;
+        end   = 0;
+      }
+      else if( p_wk->dir == BR_FADE_DIR_OUT )
+      { 
+        start = 0;
+        end   = 16;
+      }
+      if( p_wk->dir == BR_FADE_DIR_IN )
+      { 
+        ev1 = 0;
+        ev2 = 16;
+      }
+      else if( p_wk->dir == BR_FADE_DIR_OUT )
+      { 
+        ev1 = 16;
+        ev2 = 0;
+      }
+
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, start, end, p_wk->sync );
+
+      G2S_SetBlendAlpha(
+          BR_FADE_ALPHA_PLANEMASK_S_01,
+          BR_FADE_ALPHA_PLANEMASK_S_02,
+          ev1,
+          ev2
+          );
+      p_wk->cnt = 0;
+      p_wk->max = p_wk->sync == 0? 16: p_wk->sync;
+
+      *p_seq  = SEQ_MBA_MAIN;
+    }
+    break;
+
+  case SEQ_MBA_MAIN:
+    { 
+      int ev1, ev2;
+      BOOL is_end = TRUE;
+
+      //フェード方向
+      if( p_wk->dir == BR_FADE_DIR_IN )
+      { 
+        ev1 = 0 + 16 * p_wk->cnt / p_wk->max;
+        ev2 = 16 - 16 * p_wk->cnt / p_wk->max;
+      }
+      else if( p_wk->dir == BR_FADE_DIR_OUT )
+      { 
+        ev1 = 16 - 16 * p_wk->cnt / p_wk->max;
+        ev2 = 0 + 16 * p_wk->cnt / p_wk->max;
+      }
+
+      //アルファの処理
+      { 
+        G2S_ChangeBlendAlpha( ev1, ev2 );
+        if( ev1 == 0 )
+        { 
+          GFL_DISP_GXS_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_S_01 , FALSE );
+        }
+        else
+        { 
+          GFL_DISP_GXS_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_S_01 , TRUE );
+        }
+      }
+
+      is_end  &= ( p_wk->cnt++ >= p_wk->max );
+      is_end  &= ( !GFL_FADE_CheckFade() );
+
+      if( is_end )
+      { 
+        *p_seq  = SEQ_MBA_EXIT;
+      }
+    }
+    break;
+
+  case SEQ_MBA_EXIT:
+    return TRUE;
+  }
+
+
+  return FALSE; 
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  フェードの種類により実行関数を返す
  *
  *	@param	BR_FADE_TYPE  フェードの種類
@@ -576,6 +688,9 @@ static BR_FADE_MAINFUNCTION Br_Fade_Factory( BR_FADE_TYPE type )
 
   case BR_FADE_TYPE_PALLETE:
     return Br_Fade_MainPallete;
+
+  case BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA:
+    return Br_Fade_MainMasterBrightAndAlpha;
 
   default:
     GF_ASSERT( 0 );

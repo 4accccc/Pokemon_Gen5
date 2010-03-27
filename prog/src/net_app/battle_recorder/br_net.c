@@ -100,12 +100,13 @@ static BOOL BR_NET_SEQ_IsComp( const BR_NET_SEQ_WORK *cp_wk, BR_NET_SEQ_FUNCTION
  *	@brief  バトルレコーダー通信  初期化
  *
  *  @param  GAMEDATA        ゲームデータ
+ *  @param  DWCSvlResult    サービスロケータ
  *	@param	HEAPID heapID   ヒープID
  *
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-BR_NET_WORK *BR_NET_Init( GAMEDATA *p_gamedata, HEAPID heapID )
+BR_NET_WORK *BR_NET_Init( GAMEDATA *p_gamedata, DWCSvlResult *p_svl, HEAPID heapID )
 { 
   BR_NET_WORK *p_wk;
   
@@ -121,6 +122,7 @@ BR_NET_WORK *BR_NET_Init( GAMEDATA *p_gamedata, HEAPID heapID )
 
     gdsrap_data.gamedata      = p_gamedata;
     gdsrap_data.gs_profile_id = MyStatus_GetProfileID( GAMEDATA_GetMyStatus( p_gamedata ) );
+    gdsrap_data.pSvl          = p_svl;
     gdsrap_data.response_callback.callback_work                      = p_wk;
     gdsrap_data.response_callback.func_musicalshot_regist            = Br_Net_Response_MusicalRegist;
     gdsrap_data.response_callback.func_musicalshot_get               = Br_Net_Response_MusicalGet;

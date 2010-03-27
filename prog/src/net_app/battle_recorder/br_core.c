@@ -45,6 +45,10 @@
 //ŠO•”ŽQÆ
 #include "br_core.h"
 
+FS_EXTERN_OVERLAY( battle_recorder_browse );
+FS_EXTERN_OVERLAY( battle_recorder_musical_look );
+FS_EXTERN_OVERLAY( battle_recorder_musical_send );
+
 //=============================================================================
 /**
  *					’è”éŒ¾
@@ -164,6 +168,7 @@ static const BR_PROC_SYS_DATA sc_procdata_tbl[BR_PROCID_MAX]	=
 	{	
 		&BR_START_ProcData,
 		sizeof( BR_START_PROC_PARAM ),
+    FS_OVERLAY_ID( battle_recorder_browse ),
 		BR_START_PROC_BeforeFunc,
 		BR_START_PROC_AfterFunc,
 	},
@@ -171,6 +176,7 @@ static const BR_PROC_SYS_DATA sc_procdata_tbl[BR_PROCID_MAX]	=
 	{	
 		&BR_MENU_ProcData,
 		sizeof( BR_MENU_PROC_PARAM ),
+    FS_OVERLAY_ID( battle_recorder_browse ),
 		BR_MENU_PROC_BeforeFunc,
 		BR_MENU_PROC_AfterFunc,
 	},
@@ -178,6 +184,7 @@ static const BR_PROC_SYS_DATA sc_procdata_tbl[BR_PROCID_MAX]	=
 	{	
 		&BR_RECORD_ProcData,
 		sizeof( BR_RECORD_PROC_PARAM ),
+    FS_OVERLAY_ID( battle_recorder_browse ),
 		BR_RECORD_PROC_BeforeFunc,
 		BR_RECORD_PROC_AfterFunc,
 	},
@@ -185,6 +192,7 @@ static const BR_PROC_SYS_DATA sc_procdata_tbl[BR_PROCID_MAX]	=
 	{	
 		&BR_BTLSUBWAY_ProcData,
 		sizeof( BR_BTLSUBWAY_PROC_PARAM ),
+    FS_OVERLAY_ID( battle_recorder_browse ),
 		BR_BTLSUBWAY_PROC_BeforeFunc,
 		BR_BTLSUBWAY_PROC_AfterFunc,
 	},
@@ -192,6 +200,7 @@ static const BR_PROC_SYS_DATA sc_procdata_tbl[BR_PROCID_MAX]	=
 	{	
 		&BR_RNDMATCH_ProcData,
 		sizeof( BR_RNDMATCH_PROC_PARAM ),
+    FS_OVERLAY_ID( battle_recorder_browse ),
 		BR_RNDMATCH_PROC_BeforeFunc,
 		BR_RNDMATCH_PROC_AfterFunc,
 	},
@@ -199,6 +208,7 @@ static const BR_PROC_SYS_DATA sc_procdata_tbl[BR_PROCID_MAX]	=
 	{	
 		&BR_BVRANK_ProcData,
 		sizeof( BR_BVRANK_PROC_PARAM ),
+    FS_OVERLAY_ID( battle_recorder_browse ),
 		BR_BVRANK_PROC_BeforeFunc,
 		BR_BVRANK_PROC_AfterFunc,
 	},
@@ -206,6 +216,7 @@ static const BR_PROC_SYS_DATA sc_procdata_tbl[BR_PROCID_MAX]	=
 	{	
 		&BR_BVSEARCH_ProcData,
 		sizeof( BR_BVSEARCH_PROC_PARAM ),
+    FS_OVERLAY_ID( battle_recorder_browse ),
 		BR_BVSEARCH_PROC_BeforeFunc,
 		BR_BVSEARCH_PROC_AfterFunc,
 	},
@@ -213,6 +224,7 @@ static const BR_PROC_SYS_DATA sc_procdata_tbl[BR_PROCID_MAX]	=
 	{	
 		&BR_CODEIN_ProcData,
 		sizeof( BR_CODEIN_PROC_PARAM ),
+    FS_OVERLAY_ID( battle_recorder_browse ),
 		BR_CODEIN_PROC_BeforeFunc,
 		BR_CODEIN_PROC_AfterFunc,
 	},
@@ -220,6 +232,7 @@ static const BR_PROC_SYS_DATA sc_procdata_tbl[BR_PROCID_MAX]	=
 	{	
 		&BR_BVSEND_ProcData,
 		sizeof( BR_BVSEND_PROC_PARAM ),
+    FS_OVERLAY_ID( battle_recorder_browse ),
 		BR_BVSEND_PROC_BeforeFunc,
 		BR_BVSEND_PROC_AfterFunc,
 	},
@@ -227,6 +240,7 @@ static const BR_PROC_SYS_DATA sc_procdata_tbl[BR_PROCID_MAX]	=
 	{	
 		&BR_MUSICALLOOK_ProcData,
 		sizeof( BR_MUSICALLOOK_PROC_PARAM ),
+    FS_OVERLAY_ID( battle_recorder_musical_look ),
 		BR_MUSICALLOOK_PROC_BeforeFunc,
 		BR_MUSICALLOOK_PROC_AfterFunc,
 	},
@@ -234,6 +248,7 @@ static const BR_PROC_SYS_DATA sc_procdata_tbl[BR_PROCID_MAX]	=
 	{	
 		&BR_MUSICALSEND_ProcData,
 		sizeof( BR_MUSICALSEND_PROC_PARAM ),
+    FS_OVERLAY_ID( battle_recorder_musical_send ),
 		BR_MUSICALSEND_PROC_BeforeFunc,
 		BR_MUSICALSEND_PROC_AfterFunc,
 	},
@@ -336,7 +351,10 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
   { 
     if( p_wk->p_param->p_param->mode != BR_MODE_BROWSE )
     { 
-      p_wk->p_net = BR_NET_Init( p_wk->p_param->p_param->p_gamedata, HEAPID_BATTLE_RECORDER_CORE );
+      p_wk->p_net = BR_NET_Init( 
+          p_wk->p_param->p_param->p_gamedata,
+          p_wk->p_param->p_param->p_svl,
+          HEAPID_BATTLE_RECORDER_CORE );
     }
   }
 

@@ -35,8 +35,9 @@ typedef enum
 //=====================================
 typedef struct 
 {
-	BR_MODE				mode;			    ///<[in]	バトルレコーダー起動モード
-	GAMEDATA      *p_gamedata;	///<[in]	ゲームデータ
+	BR_MODE				mode;			    ///<[in ]	バトルレコーダー起動モード
+	GAMEDATA      *p_gamedata;	///<[in ]	ゲームデータ
+  DWCSvlResult  *p_svl;       ///<[in ] WIFILOGINで得たサービスロケータ
 } BATTLERECORDER_PARAM;
 
 

@@ -65,6 +65,10 @@
 "hcur_b4.NCLR"
 "hcur_b5.NCLR"
 
+"batt_rec_tag_musical.NCER"
+"batt_rec_tag_musical.NANR"
+"batt_rec_musical_tag.NCGR"
+
 "batt_rec_font.NCLR"
 "batt_rec_font2.NCLR"
 "batt_rec_font3.NCLR"

@@ -214,7 +214,14 @@ static GFL_PROC_RESULT BR_MENU_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
     break;
 
   case SEQ_FADEOUT_START:
-    BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    if( p_param->next_proc == BR_PROCID_MUSICAL_SEND )
+    { 
+      BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    }
+    else
+    { 
+      BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    }
     *p_seq  = SEQ_FADEOUT_WAIT;
     break;
 

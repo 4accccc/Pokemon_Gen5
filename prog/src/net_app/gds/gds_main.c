@@ -164,8 +164,9 @@ static GFL_PROC_RESULT GdsMainProc_Main( GFL_PROC * proc, int * seq, void * pwk,
 		{
 		#if 1
       GFL_STD_MemClear( &gmw->br_param, sizeof(BATTLERECORDER_PARAM) );
-      gmw->br_param.mode  = gmw->proc_param->gds_mode;
+      gmw->br_param.mode        = gmw->proc_param->gds_mode;
       gmw->br_param.p_gamedata  = gmw->proc_param->gamedata;
+      gmw->br_param.p_svl       = &gmw->aSvl;
   		GFL_PROC_LOCAL_CallProc(
         gmw->proc_sys, FS_OVERLAY_ID(battle_recorder), &BattleRecorder_ProcData, &gmw->br_param);
 		#else

@@ -69,6 +69,7 @@ struct _BR_PROC_SYS
  *					プロトタイプ
 */
 //=============================================================================
+static void BR_PROC_Set( BR_PROC_WORK *p_wk, u16 procID, const BR_PROC_SYS_DATA	*cp_data );
 static void BR_PROC_Clear( BR_PROC_WORK *p_wk );
 
 //=============================================================================
@@ -176,7 +177,7 @@ void BR_PROC_SYS_Main( BR_PROC_SYS *p_wk )
 		}
 
 		//プロセスを呼ぶ
-		GFL_PROC_LOCAL_CallProc( p_wk->p_procsys, NO_OVERLAY_ID,
+		GFL_PROC_LOCAL_CallProc( p_wk->p_procsys, p_now->cp_data->ov_id,
 					p_now->cp_data->cp_proc_data, p_now->p_param );	
 
 		p_wk->seq	= SEQ_PROC_MAIN;
@@ -288,12 +289,7 @@ void BR_PROC_SYS_Pop( BR_PROC_SYS *p_wk )
       const BR_PROC_SYS_DATA	*cp_data	= &p_wk->cp_procdata_tbl[procID];
       BR_PROC_WORK	proc;
 
-      //PROC作成
-      GFL_STD_MemClear( &proc, sizeof(BR_PROC_WORK) );
-      proc.is_use		= TRUE;
-      proc.p_param	= NULL;	//引数は実際の移動時に作成される
-      proc.procID		= procID;
-      proc.cp_data	= cp_data;
+      BR_PROC_Set( &proc, procID, cp_data );
 
       p_wk->next_proc	= proc;
     }
@@ -337,13 +333,7 @@ void BR_PROC_SYS_Push( BR_PROC_SYS *p_wk, u16 procID )
 	GF_ASSERT( procID < p_wk->tbl_max );
 
 	//PROC作成
-	{	
-		GFL_STD_MemClear( &proc, sizeof(BR_PROC_WORK) );
-		proc.is_use		= TRUE;
-		proc.p_param	= NULL;	//引数は実際の移動時に作成される
-		proc.procID		= procID;
-		proc.cp_data	= cp_data;
-	}
+  BR_PROC_Set( &proc, procID, cp_data );
 
 	//スタックに積む
 	GF_ASSERT( p_wk->stack_num < BR_PROC_SYS_STACK_MAX );
@@ -373,6 +363,23 @@ void BR_PROC_SYS_Push( BR_PROC_SYS *p_wk, u16 procID )
  *							PRIVATE
  */
 //=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  プログラム情報設定
+ *
+ *	@param	BR_PROC_WORK *p_wk          ワーク
+ *	@param  procID                    　プロセスID
+ *	@param	BR_PROC_SYS_DATA	*cp_data  データ
+ */
+//-----------------------------------------------------------------------------
+static void BR_PROC_Set( BR_PROC_WORK *p_wk, u16 procID, const BR_PROC_SYS_DATA	*cp_data )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(BR_PROC_WORK) );
+  p_wk->is_use		= TRUE;
+  p_wk->p_param	  = NULL;	//引数は実際の移動時に作成される
+  p_wk->procID		= procID;
+  p_wk->cp_data	  = cp_data;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief	プロセス情報を消去

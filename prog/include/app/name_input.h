@@ -136,7 +136,8 @@ typedef struct
 
   INTR_SAVE_CONTROL *p_intr_sv;  // [in]内部で、セーブしながら名前入力する(イントロ画面用)
 
-  MISC              *p_misc;    //  [in]内部でキーボードタイプを保存するためのセーブデータ
+  MISC              *p_misc;    //  [in]内部でキーボードタイプを保存するためのセーブデータ NULLを渡すとセーブしません
+                                                                                          //※NULLを渡して良いのはイントロだけです
 
 } NAMEIN_PARAM;
 

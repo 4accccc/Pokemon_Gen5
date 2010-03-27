@@ -935,7 +935,9 @@ void BR_GRAPHIC_SetMusicalMode( BR_GRAPHIC_WORK *p_wk, HEAPID heapID )
 	}
   //グラフィックモード設定
 	{	
-		GFL_BG_SetBGMode( &sc_bgsys_header3D );
+  //GFL_BG_SetBGModeの内部でGFL_DISP_GX_InitVisibleControlBGを読んでいるので
+  //直接必要な箇所だけ呼ぶ
+    GX_SetGraphicsMode( sc_bgsys_header3D.dispMode, sc_bgsys_header3D.bgMode, sc_bgsys_header3D.bg0_2Dor3D );
 	}
 }
 //----------------------------------------------------------------------------
@@ -948,7 +950,9 @@ void BR_GRAPHIC_SetMusicalMode( BR_GRAPHIC_WORK *p_wk, HEAPID heapID )
 void BR_GRAPHIC_ReSetMusicalMode( BR_GRAPHIC_WORK *p_wk, HEAPID heapID )
 { 
 
-  GFL_BG_SetBGMode( &sc_bgsys_header );
+  //GFL_BG_SetBGModeの内部でGFL_DISP_GX_InitVisibleControlBGを読んでいるので
+  //直接必要な箇所だけ呼ぶ
+  GX_SetGraphicsMode( sc_bgsys_header.dispMode, sc_bgsys_header.bgMode, sc_bgsys_header.bg0_2Dor3D );
 
   //上画面のBG面を元に戻す
 	{	

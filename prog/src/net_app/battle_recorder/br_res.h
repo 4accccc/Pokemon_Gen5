@@ -74,6 +74,10 @@ typedef enum
 {
 	BR_RES_OBJ_BROWSE_BTN_M,		//ブラウザ用ボタン、ライン
 	BR_RES_OBJ_BROWSE_BTN_S,		//ブラウザ用ボタン、ライン
+
+	BR_RES_OBJ_MUSICAL_BTN_M,		//ミュージカル用ボタン、ライン
+	BR_RES_OBJ_MUSICAL_BTN_S,		//ミュージカル用ボタン、ライン
+
 	BR_RES_OBJ_SIDEBAR_M,				//サイドバー
 	BR_RES_OBJ_SIDEBAR_S,				//サイドバー
 	BR_RES_OBJ_SHORT_BTN_S,			//短いボタン	＋	スクロールバー

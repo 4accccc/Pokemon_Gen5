@@ -518,6 +518,36 @@ void BR_RES_LoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID, HEAPID heapID )
 		}
 		break;
 
+	case BR_RES_OBJ_MUSICAL_BTN_M:
+		{	
+			ARCHANDLE *p_handle;
+
+			p_handle  = GFL_ARC_OpenDataHandle( ARCID_BATTLE_RECORDER_GRA, heapID );
+			p_data->ncl	= p_wk->obj_common_plt[ CLSYS_DRAW_MAIN ];
+			p_data->ncg	= GFL_CLGRP_CGR_Register( p_handle,
+					NARC_battle_recorder_gra_batt_rec_musical_tag_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
+			p_data->nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
+					NARC_battle_recorder_gra_batt_rec_tag_musical_NCER, NARC_battle_recorder_gra_batt_rec_tag_musical_NANR, heapID );
+
+			GFL_ARC_CloseDataHandle( p_handle );
+		}
+		break;
+
+	case BR_RES_OBJ_MUSICAL_BTN_S:
+		{	
+			ARCHANDLE *p_handle;
+
+			p_handle  = GFL_ARC_OpenDataHandle( ARCID_BATTLE_RECORDER_GRA, heapID );
+			p_data->ncl	= p_wk->obj_common_plt[ CLSYS_DRAW_SUB ];
+			p_data->ncg	= GFL_CLGRP_CGR_Register( p_handle,
+					NARC_battle_recorder_gra_batt_rec_musical_tag_NCGR, FALSE, CLSYS_DRAW_SUB, heapID );
+			p_data->nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
+					NARC_battle_recorder_gra_batt_rec_tag_musical_NCER, NARC_battle_recorder_gra_batt_rec_tag_musical_NANR, heapID );
+
+			GFL_ARC_CloseDataHandle( p_handle );
+		}
+		break;
+
 	case BR_RES_OBJ_SHORT_BTN_S:
 		{	
 			ARCHANDLE *p_handle;
@@ -645,6 +675,7 @@ void BR_RES_UnLoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID )
 
 	switch( objID )
 	{	
+  //以下、キャラとセルとパレット解放
   case BR_RES_OBJ_NUM_CURSOR_S:
     /* fallthrough */
   case BR_RES_OBJ_NUM_S:
@@ -653,6 +684,11 @@ void BR_RES_UnLoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID )
     GFL_CLGRP_CELLANIM_Release( p_data->nce );
     break;
 
+  //以下キャラとセルだけ解放
+  case BR_RES_OBJ_MUSICAL_BTN_M:		//ミュージカル用ボタン、ライン
+    /* fallthrough */
+  case BR_RES_OBJ_MUSICAL_BTN_S:		//ミュージカル用ボタン、ライン
+    /* fallthrough */
   case  BR_RES_OBJ_BALL_S:        //カーソルOBJ用
     /* fallthrough */
   case BR_RES_OBJ_BALL_M:        //カーソルOBJ

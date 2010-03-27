@@ -25,24 +25,22 @@
 //=====================================
 typedef enum
 {
+  //以下ブラウザ
 	BR_BROWSE_MENUID_TOP,						//ブラウザモード　初期メニュー
-
 	BR_BROWSE_MENUID_BTLVIDEO,			//ブラウザモード　バトルビデオメニュー,
-
 	BR_BROWSE_MENUID_OTHER_RECORD,	//ブラウザモード　だれかの記録メニュー
 	BR_BROWSE_MENUID_DELETE_RECORD,	//ブラウザモード　記録を消すメニュー
 	BR_BROWSE_MENUID_DELETE_OTHER,	//ブラウザモード　誰かの記録を消すメニュー
 	
+  //以下バトルビデオ
 	BR_BTLVIDEO_MENUID_TOP,					//グローバルバトルビデオモード　初期メニュー
-
 	BR_BTLVIDEO_MENUID_LOOK,				//グローバルバトルビデオモード　見るメニュー
 	BR_BTLVIDEO_MENUID_RANK,				//グローバルバトルビデオモード　ランキングで探すメニュー
-
-	BR_MUSICAL_MENUID_TOP,					//グローバルミュージカルショットモード　初期メニュー
-
-	BR_MENUID_YESNO,								//汎用	はい、いいえ
 	BR_MENUID_BVSEND_YESNO,					//バトルビデオを送る	はい、いいえ
-	BR_MENUID_MUSICALSEND_YESNO,					//ミュージカルショットを送る	はい、いいえ
+
+  //以下ミュージカル
+	BR_MUSICAL_MENUID_TOP,					//グローバルミュージカルショットモード　初期メニュー
+	BR_MENUID_MUSICALEXIT_YESNO,		//ミュージカルショットを送る	はい、いいえ
 
 	BR_MENUID_MAX
 } BR_MENUID;

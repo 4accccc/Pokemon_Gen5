@@ -67,6 +67,7 @@ typedef struct
   MUS_SHOT_PHOTO_WORK *p_photo;
   BR_BTN_WORK         *p_btn[ BR_MUSICALSEND_BTN_MAX ];
   BR_SEQ_WORK         *p_seq;
+  BR_TEXT_WORK        *p_text;
   BMPOAM_SYS_PTR	  	p_bmpoam;	//BMPOAMシステム
   PRINT_QUE           *p_que;
 	HEAPID              heapID;
@@ -196,12 +197,17 @@ static GFL_PROC_RESULT BR_MUSICALSEND_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 
   //シーケンス管理破棄
   BR_SEQ_Exit( p_wk->p_seq );
+  
 
   //描画
   Br_MusicalSend_DeleteSubDisplay( p_wk, p_param );
   Br_MusicalSend_DeletePhoto( p_wk, p_param );
   
 	//モジュール破棄
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
+  }
   BmpOam_Exit( p_wk->p_bmpoam );
   PRINTSYS_QUE_Delete( p_wk->p_que );
 
@@ -273,7 +279,7 @@ static void Br_MusicalSend_Seq_FadeIn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
   switch( *p_seq )
   { 
   case SEQ_FADEIN_START:
-    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
     *p_seq  = SEQ_FADEIN_WAIT;
     break;
   case SEQ_FADEIN_WAIT:
@@ -310,7 +316,7 @@ static void Br_MusicalSend_Seq_FadeOut( BR_SEQ_WORK *p_seqwk, int *p_seq, void *
   switch( *p_seq )
   { 
   case SEQ_FADEOUT_START:
-    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
     *p_seq  = SEQ_FADEOUT_WAIT;
     break;
   case SEQ_FADEOUT_WAIT:
@@ -365,15 +371,56 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
 { 
   enum
   { 
+    SEQ_CHANGE_FADEOUT_START,
+    SEQ_CHANGE_FADEOUT_MAIN,
+    SEQ_CHANGE_MAIN,
+    SEQ_CHANGE_FADEIN_START,
+    SEQ_CHANGE_FADEIN_MAIN,
+
     SEQ_UPLOAD_START,
     SEQ_UPLOAD_WAIT,
     SEQ_UPLOAD_END,
+
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_MAIN,
+
+    SEQ_END,
   };
 
   BR_MUSICALSEND_WORK	*p_wk = p_wk_adrs;
 
   switch( *p_seq )
   { 
+  case SEQ_CHANGE_FADEOUT_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_CHANGE_FADEOUT_MAIN;
+    break;
+  case SEQ_CHANGE_FADEOUT_MAIN:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    {
+      *p_seq  = SEQ_CHANGE_MAIN;
+    }
+    break;
+  case SEQ_CHANGE_MAIN:
+    Br_MusicalSend_DeletePhoto( p_wk, p_wk->p_param );
+    p_wk->p_text  = BR_TEXT_Init( p_wk->p_param->p_res, p_wk->p_que, p_wk->heapID );
+    BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_017 );
+    *p_seq  = SEQ_CHANGE_FADEIN_START;
+    break;
+  case SEQ_CHANGE_FADEIN_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_CHANGE_FADEIN_MAIN;
+    break;
+  case SEQ_CHANGE_FADEIN_MAIN:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    {
+      *p_seq  = SEQ_UPLOAD_START;
+    }
+    break;
+
+    //-------------------------------------
+    ///	アップロード開始
+    //=====================================
   case SEQ_UPLOAD_START:
     {
       BR_NET_REQUEST_PARAM  req_param;
@@ -392,7 +439,26 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
 
   case SEQ_UPLOAD_END:
-    BR_SEQ_SetNext( p_seqwk, Br_MusicalSend_Seq_FadeOut );
+    *p_seq  = SEQ_FADEOUT_START;
+    break;
+
+
+  case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_FADEOUT_MAIN;
+    break;
+
+  case SEQ_FADEOUT_MAIN:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_END;
+    }
+    break;
+
+
+  case SEQ_END:
+    BR_SEQ_End( p_seqwk );
+    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
     break;
   }
 }

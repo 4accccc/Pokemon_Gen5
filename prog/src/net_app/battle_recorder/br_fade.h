@@ -20,9 +20,10 @@
 //=====================================
 typedef enum
 {
-  BR_FADE_TYPE_MASTERBRIGHT_BLACK,  //輝度  黒
-  BR_FADE_TYPE_ALPHA_BG012OBJ,      //アルファ　BG0,1,2,OBJ
-  BR_FADE_TYPE_PALLETE,             //パレットフェード
+  BR_FADE_TYPE_MASTERBRIGHT_BLACK,      //輝度  黒
+  BR_FADE_TYPE_ALPHA_BG012OBJ,          //アルファ　BG0,1,2,OBJ
+  BR_FADE_TYPE_PALLETE,                 //パレットフェード
+  BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA,  //上画面がマスターブライト、下画面がアルファ（BR_FADE_DISPLAYはBOTH）
 
 } BR_FADE_TYPE;
 

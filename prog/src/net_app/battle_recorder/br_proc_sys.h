@@ -41,6 +41,7 @@ typedef struct
 {
 	const GFL_PROC_DATA						*cp_proc_data;	//プロセステーブル
 	u32														param_size;			//引数のサイズ
+  FSOverlayID                   ov_id;          //オーバーレイID
 	BR_PROC_SYS_BEFORE_FUNCTION		before_func;		//プロセス開始前関数
 	BR_PROC_SYS_AFTER_FUNCTION		after_func;			//プロセス終了後関数
 } BR_PROC_SYS_DATA;

@@ -730,6 +730,13 @@ static const BR_BTN_LINK sc_btn_link_btlvideo_rank[] =
 		BR_BTN_LINK_END,
 	},
 };
+
+//=============================================================================
+/**
+ *  ミュージカルショット  
+ *    ミュージカルショットのみOBJが違うためアニメシーケンス番号が違う
+ */
+//=============================================================================
 //-------------------------------------
 ///	グローバルバトルミュージカルショット	初期メニュー
 //=====================================
@@ -757,10 +764,10 @@ static const BR_BTN_DATA sc_btn_data_musical_top[BTN_DATA_MUSICAL_TOP_MAX] =
 		BR_BTN_DATA_GET_Y(1,BTN_DATA_MUSICAL_TOP_MAX),
 		BR_MUSICAL_MENUID_TOP,
 		msg_300,
+		1,
+		BR_BTN_TYPE_CHANGESEQ,
+		BR_PROCID_MUSICAL_SEND,
 		0,
-		BR_BTN_TYPE_SELECT_MSG,
-		BR_MENUID_MUSICALSEND_YESNO,
-		msg_info_032,
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_021,
@@ -772,10 +779,10 @@ static const BR_BTN_DATA sc_btn_data_musical_top[BTN_DATA_MUSICAL_TOP_MAX] =
 		BR_BTN_DATA_GET_Y(2,BTN_DATA_MUSICAL_TOP_MAX),
 		BR_MUSICAL_MENUID_TOP,
 		msg_04,
-		4,
-		BR_BTN_TYPE_EXIT,
-		0,
-		0,
+		2,
+		BR_BTN_TYPE_SELECT_MSG,
+		BR_MENUID_MUSICALEXIT_YESNO,
+		msg_10001,
 		0,
 		0,
 		0,
@@ -791,19 +798,19 @@ static const BR_BTN_LINK sc_btn_link_musical_top[] =
 };
 
 //-------------------------------------
-///	ミュージカルショットを送る？	はい、いいえ
+///	ミュージカルショットをやめる？	はい、いいえ
 //=====================================
-static const BR_BTN_DATA sc_btn_data_musicalsend_yesno[BTN_DATA_YESNO_MAX] =
+static const BR_BTN_DATA sc_btn_data_musicalexit_yesno[BTN_DATA_YESNO_MAX] =
 {	
 	//はい
 	{	
 		BR_BTN_POS_X,
 		BR_BTN_DATA_GET_Y(0,BTN_DATA_YESNO_MAX),
-		BR_MENUID_MUSICALSEND_YESNO,
+		BR_MENUID_MUSICALEXIT_YESNO,
 		msg_1000,
-		8,
-		BR_BTN_TYPE_CHANGESEQ,
-		BR_PROCID_MUSICAL_SEND,
+		3,
+		BR_BTN_TYPE_EXIT,
+		0,
 		0,
 		0,
 		0,
@@ -814,9 +821,9 @@ static const BR_BTN_DATA sc_btn_data_musicalsend_yesno[BTN_DATA_YESNO_MAX] =
 	{	
 		BR_BTN_POS_X,
 		BR_BTN_DATA_GET_Y(1,BTN_DATA_YESNO_MAX),
-		BR_MENUID_MUSICALSEND_YESNO,
+		BR_MENUID_MUSICALEXIT_YESNO,
 		msg_1001,
-		5,
+		4,
 		BR_BTN_TYPE_RETURN,
 		BR_MUSICAL_MENUID_TOP,
 		0,
@@ -828,11 +835,11 @@ static const BR_BTN_DATA sc_btn_data_musicalsend_yesno[BTN_DATA_YESNO_MAX] =
 
 };
 
-static const BR_BTN_LINK sc_btn_link_musicalsend_yesno[] = 
+static const BR_BTN_LINK sc_btn_link_musicalexit_yesno[] = 
 {	
   { 
     BR_MUSICAL_MENUID_TOP,
-    1,
+    2,
   },
 	{	
 		BR_BTN_LINK_END,
@@ -890,6 +897,7 @@ static const struct
 	const BR_BTN_LINK	*cp_link;	//ボタン繋がり
 } sc_btn_data_tbl[BR_MENUID_MAX]	=
 {	
+  //以下ブラウザ
 	{	
 		BTN_DATA_BROWSE_TOP_MAX,
 		sc_btn_data_browse_top,
@@ -915,6 +923,7 @@ static const struct
 		sc_btn_data_browse_delete_other,
 		sc_btn_link_browse_delete_other,
 	},
+  //以下バトルビデオ
 	{	
 		BTN_DATA_BTLVIDEO_TOP_MAX,
 		sc_btn_data_btlvideo_top,
@@ -930,25 +939,21 @@ static const struct
 		sc_btn_data_btlvideo_rank,
 		sc_btn_link_btlvideo_rank,
 	},
-	{	
-		BTN_DATA_MUSICAL_TOP_MAX,
-		sc_btn_data_musical_top,
-		sc_btn_link_musical_top,
-	},
-	{	
-		BTN_DATA_YESNO_MAX,
-		sc_btn_data_yesno,
-		NULL,
-	},
   { 
     BTN_DATA_YESNO_MAX,
     sc_btn_data_bvsend_yesno,
     sc_btn_link_bvsend_yesno,
   },
+  //以下ミュージカル
+	{	
+		BTN_DATA_MUSICAL_TOP_MAX,
+		sc_btn_data_musical_top,
+		sc_btn_link_musical_top,
+	},
   { 
     BTN_DATA_YESNO_MAX,
-    sc_btn_data_musicalsend_yesno,
-    sc_btn_link_musicalsend_yesno,
+    sc_btn_data_musicalexit_yesno,
+    sc_btn_link_musicalexit_yesno,
   },
 };
 
