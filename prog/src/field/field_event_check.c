@@ -321,8 +321,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
 
 //☆☆☆トレーナー視線チェックがここに入る
   if( !(req.debugRequest) && DEBUG_FLG_GetFlg(DEBUG_FLG_DisableTrainerEye) == FALSE ){
-    BOOL flag = FIELD_EVENT_Check2vs2Battle( gsys );
-    event = EVENT_CheckTrainerEye( fieldWork, flag );
+    u32 count = FIELD_EVENT_CountBattleMember( gsys );
+    event = EVENT_CheckTrainerEye( fieldWork, count );
     if( event != NULL ){
       *eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
       return event;
@@ -3208,7 +3208,7 @@ static int checkPokeWazaGroup( GAMEDATA *gdata, u32 waza_no )
  * @retval
  */
 //--------------------------------------------------------------
-BOOL FIELD_EVENT_Check2vs2Battle( GAMESYS_WORK *gsys )
+u32 FIELD_EVENT_CountBattleMember( GAMESYS_WORK *gsys )
 {
   int i,max,count;
   POKEMON_PARAM *pp;
@@ -3233,10 +3233,6 @@ BOOL FIELD_EVENT_Check2vs2Battle( GAMESYS_WORK *gsys )
     count++;
   }
   
-  if( count < 2 ){
-    return FALSE;
-  }
-  
-  return( TRUE );
+  return count;
 }
 

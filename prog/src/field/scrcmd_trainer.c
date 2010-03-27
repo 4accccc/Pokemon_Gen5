@@ -265,7 +265,7 @@ VMCMD_RESULT EvCmdTrainerMultiBattleSet( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdTrainerTalkTypeGet( VMHANDLE *core, void *wk )
 {
-	u16 btl_type,lr,start_type,after_type,one_type;
+	u16 btl_type,lr,start_type,after_type,ng_type;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   u16 script_id   = SCRIPT_GetStartScriptID( sc );
@@ -282,7 +282,7 @@ VMCMD_RESULT EvCmdTrainerTalkTypeGet( VMHANDLE *core, void *wk )
 		//シングル
 		start_type = TRMSG_FIGHT_START;
 		after_type = TRMSG_FIGHT_AFTER;
-		one_type   = 0;
+		ng_type    = TRMSG_POKE_UNDER_TWO;
 	}else{
 		//ダブル
 		lr = SCRIPT_GetTrainerLR_ByScriptID( script_id );
@@ -291,18 +291,18 @@ VMCMD_RESULT EvCmdTrainerTalkTypeGet( VMHANDLE *core, void *wk )
 			//左
 			start_type = TRMSG_FIGHT_START_1;
 			after_type = TRMSG_FIGHT_AFTER_1;
-			one_type = TRMSG_POKE_ONE_1;
+			ng_type    = TRMSG_POKE_ONE_1;
 		}else{
 			//右
 			start_type = TRMSG_FIGHT_START_2;
 			after_type = TRMSG_FIGHT_AFTER_2;
-			one_type = TRMSG_POKE_ONE_2;
+			ng_type    = TRMSG_POKE_ONE_2;
 		}
 	}
 
 	*wk1 = start_type;
 	*wk2 = after_type;
-	*wk3 = one_type;
+	*wk3 = ng_type;
 	OS_Printf( "start_type = %d\n", *wk1 );
 	OS_Printf( "after_type = %d\n", *wk2 );
 	OS_Printf( "one_type = %d\n", *wk3 );
@@ -441,7 +441,7 @@ VMCMD_RESULT EvCmd2vs2BattleCheck( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys =  SCRCMD_WORK_GetGameSysWork( work );
 	u16* ret_wk	= SCRCMD_GetVMWork( core, work );
   
-  *ret_wk = FIELD_EVENT_Check2vs2Battle( gsys );
+  *ret_wk =  ( FIELD_EVENT_CountBattleMember( gsys ) > 2 );
 	return VMCMD_RESULT_CONTINUE;
 }
 

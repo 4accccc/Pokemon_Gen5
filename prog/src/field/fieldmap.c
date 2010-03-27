@@ -127,12 +127,12 @@
 //======================================================================
 #ifdef PM_DEBUG
 
-//#define DEBUG_FIELDMAP_SPEED_CHECK
+#define DEBUG_FIELDMAP_SPEED_CHECK
 
 //#define DEBUG_FIELDMAP_INOUT_SPEED_CHECK
 //#define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK    // フィールドマップ描画にかかる処理時間を求める
 
-//#define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
+#define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
 
 
 #endif

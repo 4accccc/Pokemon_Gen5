@@ -119,11 +119,11 @@ static GMEVENT_RESULT controlTrainerEyeMoveEvent( GMEVENT * ev, int *seq, void *
 /**
  * トレーナー視線イベントチェック
  * @param fieldMap FIELDMAP_WORK*
- * @param vs2 ダブルバトル可能か TRUE=可能 FALSE=不可
+ * @param enable_member   バトル可能な手持ちポケモンの数
  * @retval GMEVENT NULL=ヒット無し
  */
 //--------------------------------------------------------------
-GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 )
+GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, u32 enable_member )
 {
   TRAINER_HITDATA hit0;
   GMEVENT *event = NULL;
@@ -136,13 +136,12 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 )
     if( btl_rule == BTL_RULE_SINGLE ) //シングル
     {
 
-      if( vs2 == FALSE || //シングル戦チェック
+      if( enable_member < 2 || //シングル戦チェック
           treye_CheckEyeMeet(fieldMap,hit0.mmdl,&hit1) == FALSE )
       { //スクリプト用イベントデータセット シングル
         event = createTrainerScript( fieldMap, hit0.mmdl ); //スクリプト起動
         hit0.move_type = SCR_EYE_TR_TYPE_SINGLE;
         SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_0, &hit0 );
-        KAGAYA_Printf( "TRAINER EYE HIT SINGLE\n" );
       }
       else
       { //スクリプト用イベントデータセット タッグ
@@ -151,23 +150,29 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 )
         SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_0, &hit0 );
         hit1.move_type = SCR_EYE_TR_TYPE_TAG;
         SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_1, &hit1 );
-        KAGAYA_Printf( "TRAINER EYE HIT TAG DOUBLE\n" );
       }
     }
     else if( btl_rule == BTL_RULE_DOUBLE )
     {
-      if( vs2 == TRUE ) //ダブル可能
-      {
+      if( enable_member >= 2 ) //ダブル可能
+      { //スクリプト用イベントデータセット ダブル
         MMDL *mmdl = tr_CheckPairTrainer( hit0.mmdl, hit0.tr_id );
         makeHitData( &hit1, mmdl, hit0.range, hit0.dir );
         
         event = createTrainerScript( fieldMap, hit0.mmdl ); //スクリプト起動
-        //スクリプト用イベントデータセット ダブル
         hit0.move_type = SCR_EYE_TR_TYPE_DOUBLE;
         SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_0, &hit0 );
         hit1.move_type = SCR_EYE_TR_TYPE_DOUBLE;
         SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_1, &hit1 );
-        KAGAYA_Printf( "TRAINER EYE HIT DOUBLE\n" );
+      }
+    }
+    else if ( btl_rule == BTL_RULE_TRIPLE || btl_rule == BTL_RULE_ROTATION )
+    {
+      if (enable_member >= 3 )  //3vs3可能
+      { //スクリプト用イベントデータセット　トリプルorローテーション
+        event = createTrainerScript( fieldMap, hit0.mmdl ); //スクリプト起動
+        hit0.move_type = SCR_EYE_TR_TYPE_SINGLE;
+        SCRIPT_TRAINER_SetHitData( event, SCR_EYE_TR_0, &hit0 );
       }
     }
     else //対応していないトレーナータイプ
@@ -236,28 +241,22 @@ int TRAINER_MMDL_CheckEyeRange(
 static BOOL treye_CheckEyeMeet(
     FIELDMAP_WORK *fieldMap, MMDL *non_mmdl, TRAINER_HITDATA *hit )
 {
-  u16 dir;
-  u32 no=0;
-  int range=EYE_CHECK_NOHIT;
-  MMDL *mmdl = NULL;
-  MMDL *jiki = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer(fieldMap) );
-  MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldMap );
+  MMDL *               jiki = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer(fieldMap) );
+  MMDLSYS *         mmdlsys = FIELDMAP_GetMMdlSys( fieldMap );
   const FIELD_ENCOUNT * enc = FIELDMAP_GetEncount( fieldMap );
+  MMDL *               mmdl = NULL;
+  u32                    no = 0;
 
-  while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE )
+  while( MMDLSYS_SearchUseMMdl( mmdlsys, &mmdl, &no ) == TRUE )
   {
     if( non_mmdl == NULL || (non_mmdl != mmdl) )
     {
-      range = treye_CheckEyeRange( enc, mmdl, jiki, &dir );
-      
+      u16   dir;
+      int range = treye_CheckEyeRange( enc, mmdl, jiki, &dir );
       if( range != EYE_CHECK_NOHIT )
       {
         if( tr_CheckEventFlag(fieldMap,mmdl) == FALSE )
         {
-#ifdef DEBUG_ONLY_FOR_kagaya
-          KAGAYA_Printf( "視線ヒット ヒットしたトレーナーID =%d\n",
-              TRAINER_MMDL_GetTrainerID(mmdl) );
-#endif
           makeHitData( hit, mmdl, range, dir );
           return( TRUE );
         }
