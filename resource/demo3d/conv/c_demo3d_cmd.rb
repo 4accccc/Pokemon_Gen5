@@ -9,7 +9,7 @@
 #==============================================
 $h_se_default = {"---"=>"DEMO3D_SE_PARAM_DEFAULT"}
 $h_brightness_disp = {"main"=>"MASK_MAIN_DISPLAY","sub"=>"MASK_SUB_DISPLAY","double"=>"MASK_DOUBLE_DISPLAY"}
-$h_bgm_pushpop = {"change"=>"DEMO3D_BGM_CHANGE","push"=>"DEMO3D_BGM_PUSH","pop"=>"DEMO3D_BGM_POP"}
+$h_bgm_push_pop = {"change"=>"DEMO3D_BGM_CHANGE","push"=>"DEMO3D_BGM_PUSH","pop"=>"DEMO3D_BGM_POP"}
 
 #==============================================
 #プレフィックス・サフィックス定義

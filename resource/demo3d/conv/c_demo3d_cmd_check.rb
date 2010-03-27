@@ -98,7 +98,14 @@ class CDemo3DCmdCheck
 
     for i in 0..(cmd.prm_num-1) do
       prm = cmd.prm_tbl[i]
-
+=begin
+      print("#{work[i]} #{prm.min} #{prm.max} #{prm.def_key} end\n")
+      if prm.def_key == nil then
+        print("def_key null\n")
+      elsif prm.def_key == "" then
+        print("def_key null str\n")
+      end
+=end
       if prm.def_key != nil then
         val = prm.def_key.fetch(work[i],nil)
         if val != nil then
