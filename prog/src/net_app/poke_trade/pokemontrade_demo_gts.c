@@ -437,7 +437,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                        ANMCNTC(_POKESPLASH_WHITEIN_TIMER), 1, pWork->heapID );
   }
-  //OS_TPrintf("C %d\n",pWork->anmCount);
+  _gtsSeStrat(pWork->anmCount);
+  OS_TPrintf("C %d\n",pWork->anmCount);
 
   if(pWork->anmCount == ANMCNTC(_DEMO_END-1)){
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);

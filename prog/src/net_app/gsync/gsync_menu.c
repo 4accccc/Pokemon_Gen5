@@ -387,9 +387,12 @@ static void _modeAppWinFlashCallback(u32 param, fx32 currentFrame )
 {
   GAMESYNC_MENU* pWork = (GAMESYNC_MENU*)param;
   {
+#if DEBUG_ONLY_FOR_ohno
+    if(0 ){
+#else
     if((pWork->selectType == GAMESYNC_RETURNMODE_UTIL)||
        (pWork->selectType == GAMESYNC_RETURNMODE_SYNC)){
-//    if(pWork->selectType == GAMESYNC_RETURNMODE_UTIL){
+#endif
       _CHANGE_STATE(pWork, _modeReportInit);
     }
     else{

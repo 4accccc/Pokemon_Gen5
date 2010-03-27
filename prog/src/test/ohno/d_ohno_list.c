@@ -161,20 +161,30 @@ static const D_MENULIST DebugMenuList[] = {
 
   {//
 		DEBUG_OHNO_MSG0019, 
-//		&PokemonTradeDemoProcData,
+		&PokemonTradeDemoProcData,
 //    &PokemonTradeGTSProcData,
 //    &PokemonTradeGTSSendProcData,
 //    &PokemonTradeGTSRecvProcData,
-    &PokemonTradeGTSMidProcData,
+//    &PokemonTradeGTSMidProcData,
     _PokeTradeDemoWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
 	},
   {//
+		DEBUG_OHNO_MSG0019, 
+//		&PokemonTradeDemoProcData,
+    &PokemonTradeGTSProcData,
+//    &PokemonTradeGTSSendProcData,
+//    &PokemonTradeGTSRecvProcData,
+//    &PokemonTradeGTSMidProcData,
+    _PokeTradeDemoWorkCreate,
+		FS_OVERLAY_ID(pokemon_trade)
+	},
+/*  {//
 		DEBUG_OHNO_MSG0015, 
 		&PokemonTradeIrcProcData,	
 		_PokeIrcTradeWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
-	},
+	},*/
 	{//
 //		DEBUG_OHNO_MSG0013, 
 //		&PokemonTradeProcData,	
@@ -544,6 +554,10 @@ static BOOL DebugOhno_ItemDebug(D_OHNO_WORK *wk)
 }
 
 
+FS_EXTERN_OVERLAY(ui_common);
+//FS_EXTERN_OVERLAY(app_mail);
+//FS_EXTERN_OVERLAY(dpw_common);
+
 
 static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
 {
@@ -563,6 +577,11 @@ static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
 
   pWork->pMy = GAMEDATA_GetMyStatusPlayer(pWork->gamedata, 0);
   pWork->pNPC = pFriend;
+
+  //オーバーレイ読み込み
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+//  GFL_OVERLAY_Load( FS_OVERLAY_ID(app_mail));
+//  GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
 
   
   return pWork;

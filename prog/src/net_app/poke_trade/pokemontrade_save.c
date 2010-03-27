@@ -221,6 +221,10 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
     POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_EGG_TRADE,
                                 pWork->pMy, 
                                 POKE_MEMO_PLACE_HUMAN_TRADE, pWork->heapID );
+
+    //‘˜A
+    
+    
     //‚¸‚©‚ñ
     ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave( pWork->pGameData ), pp );
     //ŒğŠ·”‚©‚¤‚ñ‚Æ

@@ -220,6 +220,7 @@ BOOL POKEMONTRADEPROC_IsTimeWaitSelect(POKEMON_TRADE_WORK* pWork)
   
   switch(pWork->type){
   case POKEMONTRADE_TYPE_GTSNEGO: ///< GTSネゴシエーション
+  case POKEMONTRADE_TYPE_GTSNEGODEMO:
     ret = TRUE;
     break;
   }
@@ -3356,9 +3357,13 @@ static void _commonFunc(POKEMONTRADE_DEMO_PARAM* pParent, POKEMON_TRADE_WORK *pW
   GFL_STD_MemCopy(pParent->pNPCPoke, pWork->recvPoke[1] , POKETOOL_GetWorkSize());
 
   IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, pParent->pMyPoke,TRUE);
-  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, pParent->pNPCPoke,TRUE);
-  MCSS_SetVanishFlag( pWork->pokeMcss[1] );
-  
+  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 1, pParent->pNPCPoke,TRUE);
+  if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+    MCSS_SetVanishFlag( pWork->pokeMcss[1] );
+  }
+  else{
+    MCSS_SetVanishFlag( pWork->pokeMcss[0] );
+  }
   pWork->pMy = pParent->pMy;
   pWork->pFriend = pParent->pNPC;
   
@@ -3470,10 +3475,12 @@ static GFL_PROC_RESULT PokemonTradeGTSDemoProcInit( GFL_PROC * proc, int * seq, 
   GFL_STD_MemClear(pWork, sizeof(POKEMON_TRADE_WORK));
 
   pParent->aParam.gamedata = pParent->gamedata;
-  ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_GTS);
+  ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_GTSNEGODEMO);
 
   _commonFunc(pParent, pWork);
-  _CHANGE_STATE(pWork,POKMEONTRADE_DEMO_GTS_ChangeDemo);
+//  _CHANGE_STATE(pWork,POKMEONTRADE_DEMO_GTS_ChangeDemo);
+  _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
+  
   
   return ret;
 }

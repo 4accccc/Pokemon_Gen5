@@ -43,6 +43,7 @@
 #include "msg/msg_gtsnego.h"
 #include "gsync.naix"
 #include "box_gra.naix"
+#include "item_icon.naix"
 
 #include "gsync_poke.cdat"
 #include "gsync_obj_NANR_LBLDEFS.h"
@@ -51,6 +52,7 @@
 #define _OBJPLT_POKEICON_OFFSET (0)  //ポケモンパレット
 #define _OBJPLT_GSYNC_OFFSET (3)     //ゲームシンク素材
 #define _OBJPLT_HAND_OFFSET (6)    //手
+#define _OBJPLT_ITEM_OFFSET (7)    //手
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -59,14 +61,20 @@ typedef enum
   PLT_GSYNC,
   PLT_HANDOBJ,
   PLT_POKEICON,
+  _CLACT_PLT,
+  _CLACT_PLT1,
   PLT_RESOURCE_MAX,
   CHAR_GSYNC = PLT_RESOURCE_MAX,
   CHAR_HANDOBJ,
   CHAR_SELECT_POKE,
+  _CLACT_CHR,
+  _CLACT_CHR1,
   CHAR_RESOURCE_MAX,
   ANM_GSYNC = CHAR_RESOURCE_MAX,
   ANM_HANDOBJ,
   ANM_POKEICON,
+  _CLACT_ANM,
+  _CLACT_ANM1,
   ANM_RESOURCE_MAX,
   CEL_RESOURCE_MAX,
 } _CELL_RESOURCE_TYPE;
@@ -102,7 +110,19 @@ typedef enum  //お互いのセルの表示順序
 } _CELL_PRI_ENUM;
 
 
-
+typedef struct {
+  GFL_CLWK* pIcon;
+  u16 startx;
+  u16 starty;
+  u16 sinCount1;
+  u16 sinCount2;
+  u16 downCount1;
+  u16 on;
+  u16 no;
+  u16 form;
+  u16 sex;
+  u16 end;
+} ICON_MOVE_PARAM;
 
 //#define _CELL_DISP_NUM (12)
 
@@ -116,6 +136,9 @@ struct _GSYNC_DISP_WORK {
 
   u32 cellRes[CEL_RESOURCE_MAX];
   GFL_CLWK* curIcon[_CELL_DISP_NUM];
+
+  ICON_MOVE_PARAM aIconParam[DREAM_WORLD_DATA_MAX_ITEMBOX+1];  //アイテム+ポケモン
+
   HEAPID heapID;
 
   s16 scroll_index;
@@ -124,6 +147,7 @@ struct _GSYNC_DISP_WORK {
   fx32 blendCount;
   int blendStart;
   int performCnt;
+  int GetIconApper;
 };
 
 
@@ -191,6 +215,7 @@ static void _SetBed(GSYNC_DISP_WORK* pWork,int no);
 static void _HandRelease(GSYNC_DISP_WORK* pWork);
 static void _CreatePokeIconResource(GSYNC_DISP_WORK* pWork);
 static void _blendSmoke(GSYNC_DISP_WORK* pWork);
+static void GSYNC_DISP_IconFreeAll(GSYNC_DISP_WORK* pWork );
 
 
 
@@ -237,12 +262,16 @@ void GSYNC_DISP_Main(GSYNC_DISP_WORK* pWork)
   }
   GFL_CLACT_SYS_Main();
   _blendSmoke(pWork);
+  GSYNC_DISP_PokemonMove(pWork);
+
 }
 
 void GSYNC_DISP_End(GSYNC_DISP_WORK* pWork)
 {
   int i;
   _HandRelease(pWork);
+
+  GSYNC_DISP_IconFreeAll( pWork );
 
   for(i=0;i<PLT_RESOURCE_MAX;i++){
     if(pWork->cellRes[i] ){
@@ -801,13 +830,17 @@ static void _blendSmoke(GSYNC_DISP_WORK* pWork)
   }
   else if(i < 0){
     GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
-    G2_BlendNone();
+   G2_BlendNone();
     pWork->blendStart = 0;
     return;
   }
 
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BD , i, 16);
+  //G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BD , i, 16);
 
+  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG3,
+                   GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
+                   GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BD,
+                   i,8);
 
 
 }
@@ -818,11 +851,258 @@ void GSYNC_DISP_SetPerfomance(GSYNC_DISP_WORK* pWork,int percent)
   float num = percent;
 
   num = num * 1.2;
-  if(percent>100){
+  if(percent > 100){
     pWork->performCnt = 0;
   }
   else{
     pWork->performCnt = 120 - num;
   }
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ポケモンアイコンCreate
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+
+static void GSYNC_DISP_FriendPokeIconCreate(GSYNC_DISP_WORK* pWork, u32 mons_no, u32 form_no, u32 sex)
+{
+  {
+    GFL_CLWK_DATA cellInitData;
+    ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
+
+
+    u8 pal = POKEICON_GetPalNum( mons_no,form_no,sex, FALSE );
+    u16 charno = POKEICON_GetCgxArcIndexByMonsNumber(mons_no,form_no,sex, FALSE);
+
+    pWork->cellRes[CHAR_SELECT_POKE] =
+      GFL_CLGRP_CGR_Register( arcHandlePoke ,
+                              charno,
+                              FALSE , CLSYS_DRAW_MAX , pWork->heapID );
+
+    cellInitData.pos_x = 128;
+    cellInitData.pos_y = 0;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = _POKEMON_CELL_PRI;
+    cellInitData.bgpri = 1;
+    pWork->aIconParam[DREAM_WORLD_DATA_MAX_ITEMBOX].pIcon
+      = GFL_CLACT_WK_Create( pWork->cellUnit,
+                             pWork->cellRes[CHAR_SELECT_POKE],
+                             pWork->cellRes[PLT_POKEICON],
+                             pWork->cellRes[ANM_POKEICON],
+                             &cellInitData , CLSYS_DRAW_MAIN , pWork->heapID );
+    {
+      GFL_CLWK* pIcon = pWork->aIconParam[DREAM_WORLD_DATA_MAX_ITEMBOX].pIcon;
+        GFL_CLACT_WK_SetAutoAnmFlag( pIcon , FALSE );
+      GFL_CLACT_WK_SetDrawEnable(pIcon, FALSE );
+      GFL_CLACT_WK_SetPlttOffs(pIcon ,
+                               pal , CLWK_PLTTOFFS_MODE_PLTT_TOP );
+      GFL_CLACT_WK_SetObjMode( pIcon, GX_OAM_MODE_XLU );
+      GFL_CLACT_WK_SetAffineParam( pIcon, CLSYS_AFFINETYPE_DOUBLE );
+    }
+    GFL_ARC_CloseDataHandle(arcHandlePoke);
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  アイコン 消去
+ */
+//-----------------------------------------------------------------------------
+
+
+
+static void GSYNC_DISP_IconFree(ICON_MOVE_PARAM* pIconMove)
+{
+  if(pIconMove->pIcon){
+    GFL_CLACT_WK_Remove(pIconMove->pIcon);
+  }
+  pIconMove->pIcon=NULL;
+  pIconMove->end=TRUE;
+}
+
+
+static void GSYNC_DISP_IconFreeAll(GSYNC_DISP_WORK* pWork )
+{
+  int i;
+
+  for(i = 0; i < (DREAM_WORLD_DATA_MAX_ITEMBOX+1);i++){
+    GSYNC_DISP_IconFree( &pWork->aIconParam[i] );
+  }
+}
+
+
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  アイテムアイコン表示 
+ */
+//-----------------------------------------------------------------------------
+static void GSYNC_DISP_ItemiconCreate(GSYNC_DISP_WORK* pWork,int itemid, int index)
+{
+  int res1 = index % 2;
+
+  if(pWork->cellRes[_CLACT_PLT+res1]){
+    GFL_CLGRP_PLTT_Release(pWork->cellRes[_CLACT_PLT+res1] );
+    GFL_CLGRP_CGR_Release(pWork->cellRes[_CLACT_CHR+res1] );
+    GFL_CLGRP_CELLANIM_Release(pWork->cellRes[_CLACT_ANM+res1] );
+  }
+  {
+    ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_ITEMICON, pWork->heapID );
+
+    pWork->cellRes[_CLACT_PLT+res1] = GFL_CLGRP_PLTT_RegisterEx( p_handle ,
+                                                           ITEM_GetIndex(itemid,ITEM_GET_ICON_PAL) ,
+                                                           CLSYS_DRAW_MAIN ,
+                                                            (_OBJPLT_ITEM_OFFSET+res1)*0x20, 0, 1 , pWork->heapID );
+    pWork->cellRes[_CLACT_CHR+res1] = GFL_CLGRP_CGR_Register( p_handle ,
+                                                        ITEM_GetIndex(itemid,ITEM_GET_ICON_CGX) ,
+                                                        FALSE , CLSYS_DRAW_MAIN , pWork->heapID );
+    pWork->cellRes[_CLACT_ANM+res1] = GFL_CLGRP_CELLANIM_Register( p_handle ,
+                                                             NARC_item_icon_itemicon_NCER ,
+                                                             NARC_item_icon_itemicon_NANR ,
+                                                             pWork->heapID );
+
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
+  
+  {
+    GFL_CLWK_DATA cellInitData;
+
+
+    cellInitData.pos_x = 156;
+    cellInitData.pos_y = 28;
+    cellInitData.anmseq = 0;
+    cellInitData.softpri = 0;
+    cellInitData.bgpri = 0;
+    pWork->aIconParam[index].pIcon
+      = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                           pWork->cellRes[_CLACT_CHR+res1],
+                                           pWork->cellRes[_CLACT_PLT+res1],
+                                           pWork->cellRes[_CLACT_ANM+res1],
+                                           &cellInitData ,
+                                           CLSYS_DRAW_MAIN ,
+                                           pWork->heapID );
+    {
+      GFL_CLWK* pIcon = pWork->aIconParam[index].pIcon;
+      GFL_CLACT_WK_SetAutoAnmFlag( pIcon, TRUE );
+      GFL_CLACT_WK_SetDrawEnable( pIcon, FALSE );
+      GFL_CLACT_WK_SetObjMode( pIcon, GX_OAM_MODE_XLU );
+      GFL_CLACT_WK_SetAffineParam( pIcon, CLSYS_AFFINETYPE_DOUBLE );
+    }
+  }
+  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
+                   GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
+                   GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_BD,
+                   8,8);
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *  @brief  アイテムアイコン 消去
+ */
+//-----------------------------------------------------------------------------
+
+
+
+
+
+static void _PokemonMove(ICON_MOVE_PARAM* pIcon)
+{
+
+  if(pIcon){
+    GFL_CLACTPOS pos;
+    GFL_CLSCALE scale;
+    
+    fx16 af = FX_SinIdx(pIcon->sinCount1)*4;
+    fx16 bf = FX_SinIdx(pIcon->sinCount2)*3;
+    
+    af = af >> FX16_SHIFT;
+    bf = bf >> FX16_SHIFT;
+
+    if(pIcon->pIcon){
+      GFL_CLACT_WK_GetPos(pIcon->pIcon, &pos, CLSYS_DEFREND_MAIN);
+      pos.x = pIcon->startx + af + bf;
+      pos.y = pIcon->starty + af + bf + pIcon->downCount1>>2;
+
+      if(pIcon->downCount1 % 8==0){
+        if(pIcon->startx > 128){
+          pIcon->startx = pIcon->startx - 1;
+        }
+        else{
+          pIcon->startx = pIcon->startx + 1;
+        }
+      }
+      GFL_CLACT_WK_SetPos(pIcon->pIcon, &pos, CLSYS_DEFREND_MAIN);
+      GFL_CLACT_WK_SetDrawEnable(pIcon->pIcon,TRUE);
+      pIcon->downCount1++;
+      if(pos.y > 25){
+        GFL_CLACT_WK_GetScale(pIcon->pIcon , &scale );
+        scale.x -= 1<<4;
+        scale.y -= 1<<4;
+        GFL_CLACT_WK_SetScale(pIcon->pIcon , &scale );
+      }
+      if(pos.y > 50){
+        GSYNC_DISP_IconFree(pIcon);
+      }
+    }
+    pIcon->sinCount1 += 200 + GFUser_GetPublicRand(12);
+    pIcon->sinCount2 -= 666 + GFUser_GetPublicRand(12);
+  }
+}
+
+
+void GSYNC_DISP_PokemonMove(GSYNC_DISP_WORK* pWork)
+{
+  int i,buf1=0,buf2=0;
+  int rand;
+
+  for(i = 0; i < (DREAM_WORLD_DATA_MAX_ITEMBOX+1);i++){
+    if(pWork->aIconParam[i].on){
+      _PokemonMove( &pWork->aIconParam[i] );
+    }
+  }
+
+
+  for(i = 0; i < (DREAM_WORLD_DATA_MAX_ITEMBOX+1);i++){
+    if(pWork->aIconParam[i].on==TRUE){
+      if(pWork->aIconParam[i].end==FALSE){
+        buf1 |= 1 << (i % 2);
+      }
+    }
+  }
+  {
+    rand = GFUser_GetPublicRand(DREAM_WORLD_DATA_MAX_ITEMBOX+1);
+    buf2 = 1 << (rand % 2);
+    
+    if((pWork->aIconParam[rand].on==FALSE) && (pWork->aIconParam[rand].no) != 0 && ((buf1&buf2)==0) ){
+
+      pWork->aIconParam[rand].on = TRUE;
+      pWork->aIconParam[rand].startx= 64 + GFUser_GetPublicRand(128);
+      pWork->aIconParam[rand].starty=0;
+      if(rand == DREAM_WORLD_DATA_MAX_ITEMBOX){
+        GSYNC_DISP_FriendPokeIconCreate(pWork,
+                                        pWork->aIconParam[rand].no,
+                                        pWork->aIconParam[rand].form,
+                                        pWork->aIconParam[rand].sex);
+      }
+      else{
+        GSYNC_DISP_ItemiconCreate(pWork,pWork->aIconParam[rand].no,rand);
+      }
+//      GFL_CLACT_WK_SetDrawEnable(pWork->aIconParam[rand].pIcon,TRUE);
+    }
+  }
+}
+
+void GSYNC_DISP_MoveIconAdd(GSYNC_DISP_WORK* pWork,int index, int no, int form, int sex)
+{
+  pWork->aIconParam[index].no = no;
+  pWork->aIconParam[index].form = form;
+  pWork->aIconParam[index].sex = sex;
+
 }
 

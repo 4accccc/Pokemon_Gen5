@@ -184,8 +184,6 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 }
 
 
-
-
 static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 {
 
@@ -212,7 +210,6 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
   if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME)){
     MCSS_SetVanishFlag( pWork->pokeMcss[0] );
   }
-
 
   if(pWork->anmCount == ANMCNTC(_BALL_PARTICLE_START)){
     GFL_PTC_CreateEmitterCallback(pWork->pPokemonTradeDemo->ptc[PTC_KIND_DEMO1], DERMO_TEX001, NULL, pWork);
@@ -250,6 +247,9 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
                        ANMCNTC(_POKEUP_WHITEOUT_TIMER), 1, pWork->heapID );
 
   }
+
+  _gtsSeStrat(pWork->anmCount);
+
   if(pWork->anmCount == ANMCNTC(_POKEUP_WHITEIN_START)){
     WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                        ANMCNTC(_POKEUP_WHITEIN_TIMER), 1, pWork->heapID );
@@ -304,6 +304,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     //ˆÚ“®Ý’è
   }
 
+  
   if(pWork->anmCount == ANMCNTC(_POKE_APPEAR_START2)){
     VecFx32 apos;
     apos.x = _POKEMON_PLAYER_UP_POSX;
@@ -456,7 +457,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                        ANMCNTC(_POKESPLASH_WHITEIN_TIMER), 1, pWork->heapID );
   }
-  //OS_TPrintf("C %d\n",pWork->anmCount);
+  OS_TPrintf("C %d\n",pWork->anmCount);
 
   if(pWork->anmCount == ANMCNTC(_DEMO_END-1)){
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);

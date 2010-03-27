@@ -140,6 +140,7 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 }
 
 
+
 static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 {
 
@@ -320,7 +321,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 
 #endif
 
-
+  _irSeStrat(pWork->anmCount);
+  
   if(pWork->anmCount == ANMCNTC(_IR_POKECHANGE_WHITEOUT_START)){
     WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
                        ANMCNTC(_IR_POKECHANGE_WHITEOUT_TIMER), 1, pWork->heapID );

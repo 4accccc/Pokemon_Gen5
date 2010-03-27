@@ -157,6 +157,33 @@
 #define _WAVE_NUM    (8)
 
 
+
+//SEタイミング -1はここでは当てれないので手であててある
+
+#define _GTSSTART_SEQ_SE_DANSA	    (-1)		//デモ	wireless交換デモ	ポケモンジャンプ	ぴゅう
+#define _GTSSTART_SEQ_SE_SYS_83			(-1)   //デモ	wireless交換デモ	ポケモン着地	とん！
+#define _GTSSTART_SEQ_SE_W554_PAKIN	(1)		//デモ	wireless交換デモ	ポケモン、光る	ピカーーー！
+#define _GTSSTART_SEQ_SE_BOWA2			(4)   //デモ	wireless交換デモ	ボールに入る	ボワ！
+#define _GTSSTART_SEQ_SE_KON			(29)    //デモ	wireless交換デモ	ボールはねる	コンコンコン…
+#define _GTSSTART_SEQ_SE_TDEMO_001	(17)		//デモ	wireless交換デモ	ボールからキラキラした光が出る	キラリラリラリラ…
+#define _GTSSTART_SEQ_SE_TDEMO_002	(107)		//デモ	wireless交換デモ	青い光が走りアングルが変わる	ショショショショショショショ…
+#define _GTSSTART_SEQ_SE_W028_02		(152)	//デモ	wireless交換デモ	ボール飛び上がる	シュワッ！
+#define _GTSSTART_SEQ_SE_TDEMO_006	(266)		//デモ	wireless交換デモ	ボールが天井に到達、光ってホワイトアウト	ピシャーーーン＋しゅわーーー
+#define _GTSSTART_SEQ_SE_TDEMO_007	(350)		//デモ	wireless交換デモ	空中に光の輪ができてゆっくりまわる	キラキラ…キラキラ…
+#define _GTSSTART_SEQ_SE_TDEMO_008	(636)		//デモ	wireless交換デモ	ポケモン猛スピードで飛んでいく	しゅわ！
+#define _GTSSTART_SEQ_SE_TDEMO_009	(650)		//デモ	wireless交換デモ	ホワイトアウト	しゅわわわわわわ
+#define _GTSSTART_SEQ_SE_TDEMO_010	(694)		//デモ	wireless交換デモ	ボールが上空から落ちてくる（長	キラキラ＋シューーーーン
+#define _GTSSTART_SEQ_SE_TDEMO_011	(857)		//デモ	wireless交換デモ	ボールが地上に到達	パキャーーン！キラキラキラ…
+#define _GTSSTART2_SEQ_SE_TDEMO_001	(858)		//デモ	wireless交換デモ	ボールからキラキラした光が出る(上のSEQ_SE_TDEMO_011と同時に鳴らす)	キラリラリラリラ…
+#define _GTSSTART2_SEQ_SE_TDEMO_009	(896)		//デモ	wireless交換デモ	再度ホワイトアウト	しゅわわわわわわ
+#define _GTSSTART2_SEQ_SE_KON			  (1048)   //デモ	wireless交換デモ	ボールはねる	コンコンコン…
+#define _GTSSTART_SEQ_SE_TDEMO_004	(1123)		//デモ	wireless交換デモ	ボール光る	ほわ！
+#define _GTSSTART2_SEQ_SE_BOWA2			(1166)  //デモ	wireless交換デモ	ポケモンが現れる	ボワ！
+#define _GTSSTART3_SEQ_SE_TDEMO_001	(1159)		//デモ	wireless交換デモ	ポケモン現れる（星とびちる	キラリラリラリラ…
+
+
+
+
 //----------------------------------------------------------------------------------------------
 //ここから赤外線デモ
 /*
@@ -247,3 +274,29 @@ demo_backshot2.ncg
 #define _IRC_BACK_POKMEON_SCALE_SIZE   (2)
 //奥のポケモンのα 0-31まで
 #define _IRC_BACK_POKMEON_ALPHA  (15)
+
+
+//飛び上がっていくSEのスタートフレーム
+#define _IRC_PMSND_START  (50)
+
+
+//SEタイミング -1はここでは当てれないので手であててある
+
+#define _IRCSTART_SEQ_SE_DANSA (-1)			//デモ	IR交換デモ	ポケモンジャンプ	ぴゅう
+#define _IRCSTART_SEQ_SE_SYS_83	 (-1)		//デモ	IR交換デモ	ポケモン着地	とん！
+#define _IRCSTART_SEQ_SE_W554_PAKIN (32)			//デモ	IR交換デモ	ポケモン、光る	ピカーーー！
+#define _IRCSTART_SEQ_SE_BOWA2 (33)			//デモ	IR交換デモ	ボールに入る	ボワ！
+#define _IRCSTART_SEQ_SE_KON	 (38)		//デモ	IR交換デモ	ボールはねる	コンコンコン…
+#define _IRCSTART_SEQ_SE_TDEMO_001 (30)			//デモ	IR交換デモ	ボールからキラキラした光が出る	キラリラリラリラ…
+#define _IRCSTART_SEQ_SE_W028_02 (110)			//デモ	IR交換デモ	ボール飛び上がる	シュワッ！
+#define _IRCSTART_SEQ_SE_TDEMO_009 (130)			//デモ	IR交換デモ	一度目のホワイトアウト	しゅわわわわわわ
+#define _IRCSTART_SEQ_SE_TDEMO_002 (241)			//デモ	IR交換デモ	ボールが空中移動（４秒分くらい）	ショショショショショショショ…
+#define _IRCSTART_SEQ_SE_TDEMO_003 (320)			//デモ	IR交換デモ	ポケモン交換、すれちがい	フォアッ
+#define _IRCSTART_SEQ_SE_W054_01 (364)			//デモ	IR交換デモ	波紋が広がり、ボールが飛ぶ	わわわわわわ…
+#define _IRCSTART_SEQ_SE_W179_02 (409)			//デモ	IR交換デモ	中間部ホワイトアウト	キーン
+#define _IRCSTART_SEQ_SE_W307_03 (484)			//デモ	IR交換デモ	ボール上空から落下	シュウウウウウ
+#define _IRCSTART2_SEQ_SE_KON	 (494)	//	デモ	IR交換デモ	ボールはねる	コンコンコン…
+#define _IRCSTART_SEQ_SE_TDEMO_004	 (604)		//デモ	IR交換デモ	ボール光る	ほわ！
+#define _IRCSTART_SEQ_SE_TDEMO_005 (615)			//デモ	IR交換デモ	ボールからポケモン飛び出す	パキーーーン
+#define _IRCSTART2_SEQ_SE_TDEMO_001 (605)			//デモ	IR交換デモ	飛び出したポケモンからキラキラした星が飛び出す	キラリラリラ…
+

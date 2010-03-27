@@ -1510,7 +1510,7 @@ static void _Select6MessageInit8(POKEMON_TRADE_WORK* pWork)
 
     if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
 //      _CHANGE_STATE(pWork, POKE_GTS_Select6Init);
-      _CHANGE_STATE(pWork, _PokeEvilChkPre);  //@todoÉqÅ[ÉvÇ™ë´ÇËÇ»Ç¢
+      _CHANGE_STATE(pWork, _PokeEvilChkPre);
     }
     else{
       _CHANGE_STATE(pWork, POKE_GTS_Select6Init);

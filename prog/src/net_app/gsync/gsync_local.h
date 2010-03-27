@@ -98,3 +98,7 @@ extern void GSYNC_DISP_DreamSmokeBgStart(GSYNC_DISP_WORK* pWork);
 extern void GSYNC_DISP_BlendSmokeStart(GSYNC_DISP_WORK* pWork,BOOL bFadein);
 extern void GSYNC_DISP_SetPerfomance(GSYNC_DISP_WORK* pWork,int percent);
 
+//extern void GSYNC_DISP_FriendPokeIconCreate(GSYNC_DISP_WORK* pWork, u32 mons_no, u32 form_no, u32 sex);
+//extern void GSYNC_DISP_ItemiconCreate(GSYNC_DISP_WORK* pWork,int itemid, int index);
+extern void GSYNC_DISP_PokemonMove(GSYNC_DISP_WORK* pWork);
+extern void GSYNC_DISP_MoveIconAdd(GSYNC_DISP_WORK* pWork,int index, int no, int form, int sex);

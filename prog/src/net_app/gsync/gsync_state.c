@@ -818,6 +818,33 @@ static void _itemInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_D
   }
 }
 
+//ポケモンをセーブエリアに移動
+static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSave,int monsno,int sex, int form, int tec)
+{
+  {// データ読み込み・破棄
+    TPOKE_DATA* pTP =TPOKE_DATA_Create( pWork->heapID );
+    int size = SYMBOL_ZONE_TYPE_FREE_SMALL;
+    if(TPOKE_DATA_IsSizeBig(pWork->pGameData, pTP, monsno, sex, form )){
+      size = SYMBOL_ZONE_TYPE_FREE_LARGE;
+    }
+    //ポケモンシンボルエンカウント格納
+    SymbolSave_SetFreeZone(SymbolSave_GetSymbolData(pWork->pSaveData), monsno, tec, sex, form, size);
+    TPOKE_DATA_Delete( pTP );
+  }
+}
+
+
+static void _itemDispInit(G_SYNC_WORK* pWork,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream)
+{
+  int i;
+  for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
+    if((pDream->itemID[i]!=0) && (pDream->itemNum[i]!=0)){
+      GSYNC_DISP_MoveIconAdd(pWork->pDispWork,i,pDream->itemID[i], 0, 0 );
+    }
+  }
+}
+
+
 static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_DOWNLOAD_DATA* pDream,gs_response* pRep )
 {
   if(pRep->ret_cd != DREAM_WORLD_SERVER_ERROR_NONE){
@@ -842,22 +869,14 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
     if(pWork->zukanNo != DREAM_WORLD_NOPICTURE){
       pWork->msgBit = pWork->msgBit | 0x04;
     }
-
-
-
-    {// データ読み込み・破棄
-       TPOKE_DATA* pTP =TPOKE_DATA_Create( pWork->heapID );
-      int size = SYMBOL_ZONE_TYPE_FREE_SMALL;
-      if(TPOKE_DATA_IsSizeBig(pWork->pGameData, pTP, pDream->findPokemon, pDream->findPokemonSex,
-                               pDream->findPokemonForm )){
-        size = SYMBOL_ZONE_TYPE_FREE_LARGE;
-      }
-      //ポケモンシンボルエンカウント格納
-      SymbolSave_SetFreeZone(SymbolSave_GetSymbolData(pWork->pSaveData), pDream->findPokemon,
-                             pDream->findPokemonTecnique, pDream->findPokemonSex, pDream->findPokemonForm,
-                             size);
-      TPOKE_DATA_Delete( pTP );
-    }
+    //シンボルポケ格納
+    _symbolPokemonSave(pWork, pDreamSave, pDream->findPokemon,
+                       pDream->findPokemonSex,
+                       pDream->findPokemonForm,
+                       pDream->findPokemonTecnique);
+    //
+    GSYNC_DISP_MoveIconAdd(pWork->pDispWork, DREAM_WORLD_DATA_MAX_ITEMBOX,
+                           pDream->findPokemon, pDream->findPokemonForm,pDream->findPokemonSex);
       
     //サインイン
     DREAMWORLD_SV_SetSignin(pDreamSave,pDream->signin);
@@ -865,6 +884,14 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
     _furnitureInSaveArea(pDreamSave, pDream);
     //アイテム
     _itemInSaveArea(pDreamSave, pDream);
+    //アイテムの表示
+    _itemDispInit(pWork, pDream);
+
+    G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
+                     GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
+                     GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_BD,
+                     8,8);
+    
     //          _CHANGE_STATE();  //セーブに行く?
   }
   else{
@@ -887,12 +914,10 @@ static void _lv1check(G_SYNC_WORK* pWork)
   DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
 
   //ポケモンシンボルエンカウント
-  SymbolSave_SetFreeZone(SymbolSave_GetSymbolData(pWork->pSaveData), pWork->aDreamStatus.findPokemon,
-                         pWork->aDreamStatus.findPokemonTecnique,
-                         pWork->aDreamStatus.findPokemonSex,
-                         pWork->aDreamStatus.findPokemonForm,
-                         SYMBOL_ZONE_TYPE_FREE_SMALL);  //@todo ※check ポケモンNOからSMALL,LARGE判別を加える
-
+  _symbolPokemonSave(pWork, pDreamSave, pWork->aDreamStatus.findPokemon,
+                     pWork->aDreamStatus.findPokemonSex,
+                     pWork->aDreamStatus.findPokemonForm,
+                     pWork->aDreamStatus.findPokemonTecnique);
 
   for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
     DREAMWORLD_SV_SetItem(pDreamSave, i, pWork->aDreamStatus.itemID[i], pWork->aDreamStatus.itemNum[i]);
@@ -1333,6 +1358,7 @@ static void _BoxNullMsg2(G_SYNC_WORK* pWork)
   if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
+
   if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)){
     pWork->pParent->selectType = GAMESYNC_RETURNMODE_EXIT;
     GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
@@ -1350,6 +1376,21 @@ static void _BoxNullMsg2(G_SYNC_WORK* pWork)
 static void _BoxNullMsg(G_SYNC_WORK* pWork)
 {
   GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GSYNC_012);
+
+#if 0
+  {
+    int i;
+    GSYNC_DISP_MoveIconAdd(pWork->pDispWork, 20, 1, 0, 0);
+    for(i=0;i<20;i++){
+      GSYNC_DISP_MoveIconAdd(pWork->pDispWork,i, 34+i,0,0);
+    }
+  }
+
+  GSYNC_DISP_DreamSmokeBgStart(pWork->pDispWork);
+  GSYNC_DISP_BlendSmokeStart(pWork->pDispWork,TRUE);
+#endif
+
+  
   _CHANGE_STATE(_BoxNullMsg2);
 }
 
@@ -1549,6 +1590,8 @@ static void _updateSave(G_SYNC_WORK* pWork)
 
 static void _upeffectLoop5(G_SYNC_WORK* pWork)
 {
+  GSYNC_DISP_PokemonMove(pWork->pDispWork);
+
   
   if(_IsNetworkMode(pWork)){
     if(pWork->percent < _UPLOAD_PROCESS_PERCENT){
@@ -1606,6 +1649,7 @@ static void _upeffectLoop4(G_SYNC_WORK* pWork)
       NHTTP_AddPostDataRaw(NHTTP_RAP_GetHandle(pWork->pNHTTPRap), topAddr, 0x80000 );
       GSYNC_DISP_SetPerfomance(pWork->pDispWork,0);
       pWork->percent=0;
+
       if(NHTTP_RAP_StartConnect(pWork->pNHTTPRap)){
         _CHANGE_STATE(_upeffectLoop5);
       }
