@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-27T12:49:52"/>
+	<create user="matsumiya" host="W00224" date="2010-03-27T19:12:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1369" top="260" right="2074" bottom="880" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -294,130 +294,214 @@
 
 	<row id="msg_c04r0303_fottoballm1_01">
 		<comment>♂
-・</comment>
+・GRIDX=16、GRIDZ=15
+・ディフェンスライン</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">とくてんを　きめる　やつ
+それを　サポートする　やつ▼
+チームを　つくるってことは
+それぞれの　やくわりを　きめること！</language>
+		<language name="JPN_KANJI" width="256">得点を　決める　やつ
+それを　サポートする　やつ▼
+チームを　つくるってことは
+それぞれの　役割を　決めること！</language>
 	</row>
 
 	<row id="msg_c04r0303_fottoballm2_01">
 		<comment>♂
-・</comment>
+・GRIDX=16、GRIDZ=16
+・ディフェンスライン</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">アメフトはね
+こうげき……　オフェンスと▽
+しゅび……　ディフェンスに　わかれて▽
+たのしむ　スポーツ　なんだよ</language>
+		<language name="JPN_KANJI" width="256">アメフトはね
+攻撃……　オフェンスと▽
+守備……　ディフェンスに　わかれて▽
+楽しむ　スポーツ　なんだよ</language>
 	</row>
 
 	<row id="msg_c04r0303_fottoballm3_01">
 		<comment>♂
-・</comment>
+・GRIDX=17、GRIDZ=14
+・ディフェンスライン</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">あいつの　あの　め……▼
+きっと　オレを　ねらっている▼
+この　オレの　じまんの　にくたいを！</language>
+		<language name="JPN_KANJI" width="256">あいつの　あの　目……▼
+きっと　オレを　ねらっている▼
+この　オレの　自慢の　肉体を！</language>
 	</row>
 
 	<row id="msg_c04r0303_fottoballm4_01">
 		<comment>♂
-・</comment>
+・GRIDX=17、GRIDZ=15
+・ディフェンスライン</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ヘルメットや　プロテクターの
+おもさって　７～８キロも　あるんだ！</language>
+		<language name="JPN_KANJI" width="256">ヘルメットや　プロテクターの
+重さって　７～８キロも　あるんだ！</language>
 	</row>
 
 	<row id="msg_c04r0303_fottoballm5_01">
 		<comment>♂
-・</comment>
+・GRIDX=17、GRIDZ=16
+・ディフェンスライン</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">いつも　ポケモンと　ぶつかって
+きたえた　この　ごつい　からだ！▽
+どんなことでも　びくともせん！</language>
+		<language name="JPN_KANJI" width="256">いつも　ポケモンと　ぶつかって
+トレーニングした　この　ごつい　体！▽
+どんなことでも　びくともせん！</language>
 	</row>
 
 	<row id="msg_c04r0303_fottoballm6_01">
 		<comment>♂
-・</comment>
+・GRIDX=17、GRIDZ=17
+・ディフェンスライン</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">よし！
+まもるや　みきりの　わざで▽
+まもりきって　みせよう！</language>
+		<language name="JPN_KANJI" width="256">よし！
+まもるや　みきりの　技で▽
+守りきって　みせよう！</language>
 	</row>
 
 	<row id="msg_c04r0303_fottoballm7_01">
 		<comment>♂
-・</comment>
+・GRIDX=20、GRIDZ=14
+・オフェンスライン</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">すきな　わざ？▼
+……うーん
+すてみタックルとか　とっしん　だな</language>
+		<language name="JPN_KANJI" width="256">好きな　技？▼
+……うーん
+すてみタックルとか　とっしん　だな</language>
 	</row>
 
 	<row id="msg_c04r0303_fottoballm8_01">
 		<comment>♂
-・</comment>
+・GRIDX=20、GRIDZ=15
+・オフェンスライン</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">あいての　こうげきを　よみきり
+じぶんの　こうげきを　きめる！▼
+ポケモンも　アメフトも
+おなじ　だいごみを　もつのだ！</language>
+		<language name="JPN_KANJI" width="256">相手の　攻撃を　読みきり
+自分の　攻撃を　決める！▼
+ポケモンも　アメフトも
+同じ　だいごみを　持つのだ！　</language>
 	</row>
 
 	<row id="msg_c04r0303_fottoballm9_01">
 		<comment>♂
-・</comment>
+・GRIDX=20、GRIDZ=16
+・オフェンスライン</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">アメフトの　みりょく？▼
+そうだな……
+ルールとか　きにせず▽
+まずは　しあいを　みてくれよ！</language>
+		<language name="JPN_KANJI" width="256">アメフトの　魅力？▼
+そうだな……
+ルールとか　気にせず▽
+まずは　試合を　観てくれよ！</language>
 	</row>
 
 	<row id="msg_c04r0303_fottoballm10_01">
 		<comment>♂
-・</comment>
+・GRIDX=20、GRIDZ=17
+・オフェンスライン</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">あいてに　ジャマされないように
+からだをはって　なかまをまもる！</language>
+		<language name="JPN_KANJI" width="256">あいてに　ジャマされないように
+体を張って　仲間を守る！</language>
 	</row>
 
 	<row id="msg_c04r0303_fottoballm11_01">
 		<comment>♂
-・</comment>
+・GRIDX=21、GRIDZ=15
+・オフェンスライン</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">アメフトは　クォーターバッグと
+よばれる　ポジションの　せんしゅが▽
+さくせんを　きめて　じっこうする▼
+いってみれば
+ポケモントレーナー　みたいな　もんだ</language>
+		<language name="JPN_KANJI" width="256">アメフトは　クォーターバッグと
+呼ばれる　ポジションの　選手が▽
+作戦を　決めて　実行する▼
+いってみれば
+ポケモントレーナー　みたいな　もんだ</language>
 	</row>
 
 	<row id="msg_c04r0303_fottoballm12_01">
 		<comment>♂
-・</comment>
+・GRIDX=21、GRIDZ=16
+・オフェンスライン</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">アメフトって　ありとあらゆる
+フォーメーションを　ばっちり▽
+おぼえないと　ダメなんだぜ！！</language>
+		<language name="JPN_KANJI" width="256">アメフトって　ありとあらゆる
+フォーメーションを　ばっちり▽
+覚えないと　ダメなんだぜ！！</language>
 	</row>
 
 	<row id="msg_c04r0303_fottoballm13_01">
 		<comment>♂
-・</comment>
+・GRIDX=44、GRIDZ=18</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">アメフトで　つかう　ボールって
+だえんけいで　なげにくいだろ？▼
+でも　コツを　マスターすれば
+きれいに　スルッと　なげられるのさ！</language>
+		<language name="JPN_KANJI" width="256">アメフトで　使う　ボールって
+だえん形で　投げにくいだろ？▼
+でも　コツを　マスターすれば
+きれいに　スルッと　投げられるのさ！</language>
 	</row>
 
 	<row id="msg_c04r0303_fottoballm14_01">
 		<comment>♂
-・</comment>
+・GRIDX=50、GRIDZ=21</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おれは　すごーい　ひみつへいき！▼
+だが　ひみつ　すぎて
+しあいに　でたことが　ないのだ……</language>
+		<language name="JPN_KANJI" width="256">おれは　すごーい　秘密兵器！▼
+だが　秘密すぎて
+試合に　でたことが　ないのだ……</language>
 	</row>
 
 	<row id="msg_c04r0303_fottoballm15_01">
 		<comment>♂
-・</comment>
+・GRIDX=51、GRIDZ=18</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おーい！　パスしてくれ！</language>
+		<language name="JPN_KANJI" width="256">おーい！　パスしてくれ！</language>
 	</row>
 
-	<row id="msg_c04r0303_sunglasses_01">
+	<row id="msg_c04r0303_gentleman_01">
 		<comment>♂
 ・</comment>
-		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">GENTLEMAN</attribute>
+		<language name="JPN" width="256">ぶつかる！
+ボディ　アンド　ボディ！▼
+そうなのです
+わたしが　オーナーです！</language>
+		<language name="JPN_KANJI" width="256">ぶつかる！
+ボディ　アンド　ボディ！▼
+そうなのです
+わたしが　オーナーです！</language>
 	</row>
 
 	<flowchart-group-list>
