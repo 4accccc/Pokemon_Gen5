@@ -65,5 +65,7 @@
 
 #define BGID_D02R0101_STONE_01            0
 #define BGID_D02R0101_SIGN1_01            1
+#define D02R0101_HIDE_ITEM_01             2
+#define D02R0101_HIDE_ITEM_02             3
 
 #endif //ZONE_D02R0101_EVB_H

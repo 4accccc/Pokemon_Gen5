@@ -35,5 +35,7 @@
 #ifndef ZONE_D01R0101_EVB_H
 #define ZONE_D01R0101_EVB_H
 
+#define D01R0101_HIDE_ITEM_01             0
+#define D01R0101_HIDE_ITEM_02             1
 
 #endif //ZONE_D01R0101_EVB_H
