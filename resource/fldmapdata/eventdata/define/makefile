@@ -63,13 +63,12 @@ endif
 clean:
 	@echo clean up eventdata/define ...
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
-	@-rm -f event_*.h event_*.tmp
+	@-rm -f ../tmp/*.h
+	@-rm -f ../tmp/*.tmp
 	@-rm -f $(HEADER)
 endif
 	@-rm -f $(TARGET) 
 	@-rm -f $(TARGET2)
-	@-rm -f ../tmp/*.cdat
-	@-rm -f ../tmp/*_make_list_depend*
 
 test:
 	@echo $(HEADER)

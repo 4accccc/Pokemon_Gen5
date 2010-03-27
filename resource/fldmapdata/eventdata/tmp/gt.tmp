@@ -1,5 +1,0 @@
-#../data/gt.mev
-../tmp/gt.bin:../data/gt.mev $(UNIQ_SCRIPTHEADER) ../tmp/gt.h 
-	@echo ../data/gt.mev
-	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/gt.h 
-
