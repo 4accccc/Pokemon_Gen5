@@ -41,6 +41,7 @@ enum {
 // リストデータ
 typedef struct {
   // [in]
+	GAMEDATA * gamedata;		// ゲームデータ
   POKEPARTY * pp;         // ポケモンデータ
   POKEPARTY * multi_pp;   // マルチの相手側ポケモンデータ
 

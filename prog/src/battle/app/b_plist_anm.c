@@ -157,7 +157,7 @@ enum {
 */
 #define	SCR_RETURN_PX		( 27 )
 #define	SCR_RETURN_PY		( 19 )
-#define	SCR_CHANGE_PX		( 1 )
+#define	SCR_CHANGE_PX		( 0 )
 #define	SCR_CHANGE_PY		( 1 )
 #define	SCR_STATUS_L_PX		( 0 )
 #define	SCR_STATUS_L_PY		( 19 )

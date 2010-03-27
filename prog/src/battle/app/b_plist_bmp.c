@@ -2293,37 +2293,31 @@ static void BPL_WasureruStrPut( BPLIST_WORK * wk, u32 idx )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 秘伝技エラーメッセージ表示
+ * 技忘れエラーメッセージ表示
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
+ * @param		err		エラー状況
  *
  * @return  none
  *
  *  ページ６で使用
  */
 //--------------------------------------------------------------------------------------------
-/*
-void BPL_HidenMsgPut( BPLIST_WORK * wk )
+void BPL_HidenMsgPut( BPLIST_WORK * wk, u32 mode )
 {
-//  BAPP_BMPWIN_QUE * dat;
-  PRINT_UTIL * dat;
-  STRBUF * str;
+	STRBUF * str;
 
-  if( wk->page == BPLIST_PAGE_WAZASET_BI ){
-    dat = &wk->add_win[WIN_P6_INFO];
-  }else{
-    dat = &wk->add_win[WIN_P8_INFO];
-  }
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(dat->win), 0 );
-  str = GFL_MSG_CreateString( wk->mman, mes_b_plist_05_002 );
-//  PRINTSYS_PrintQueColor(
-//    wk->que, GFL_BMPWIN_GetBmp(dat->win), 0, 0, str, wk->dat->font, PCOL_N_BLACK );
-  PRINT_UTIL_PrintColor( dat, wk->que, 0, 0, str, wk->dat->font, FCOL_P13WN );
+	// 技マシンを持っていない
+	if( mode == 0 ){
+		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_05_002 );
+	// 使用中
+	}else{
+		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_05_003 );
+	}
+  WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
   GFL_STR_DeleteBuffer( str );
-  BAPPTOOL_PrintScreenTrans( dat );
-//  BAPPTOOL_PrintQueOn( dat );
+	BattlePokeList_TalkMsgSet( wk );
 }
-*/
 
 
 #define BTN_PP_PX   ( 40 )    // 「PP」表示X座標

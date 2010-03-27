@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file  b_plist_main.c
- * @brief 戦闘用ポケモンリスト画面
- * @author  Hiroyuki Nakamura
- * @date  05.02.01
+ * @file		b_plist_main.c
+ * @brief		戦闘用ポケモンリスト画面
+ * @author	Hiroyuki Nakamura
+ * @date		05.02.01
  */
 //============================================================================================
 #include <gflib.h>
@@ -21,46 +21,8 @@
 
 #include "../btlv/btlv_effect.h"
 
-/*↑[GS_CONVERT_TAG]*/
-/*
-#include "gflib/touchpanel.h"
-*/
-//#include "system/procsys.h"
-/*↑[GS_CONVERT_TAG]*/
-/*
-#include "system/palanm.h"
-#include "system/window.h"
-*/
-//#include "system/lib_pack.h"
-/*↑[GS_CONVERT_TAG]*/
-//#include "system/arc_tool.h"
-/*↑[GS_CONVERT_TAG]*/
-//#include "system/arc_util.h"
-/*↑[GS_CONVERT_TAG]*/
-/*
-#include "system/fontproc.h"
-#include "system/msgdata.h"
-#include "system/numfont.h"
-#include "system/wordset.h"
-#include "system/font_arc.h"
-*/
-//#include "system/clact_tool.h"
-/*↑[GS_CONVERT_TAG]*/
-/*
-#include "system/snd_tool.h"
-#include "msgdata/msg.naix"
-#include "msgdata/msg_b_plist.h"
-#include "battle/battle_common.h"
-#include "battle/fight_tool.h"
-#include "poketool/pokeparty.h"
-#include "contest/contest.h"
-#include "contest/con_tool.h"
-#include "itemtool/item.h"
-#include "itemtool/myitem.h"
-#include "application/p_status.h"
-#include "application/app_tool.h"
-#include "b_bag.h"
-*/
+#include "../../field/field_skill_check.h"
+
 #include "msg/msg_b_plist.h"
 
 #include "b_app_tool.h"
@@ -74,11 +36,6 @@
 #include "b_plist_bmp_def.h"
 #include "b_plist_gra.naix"
 
-/*
-#ifdef PM_DEBUG
-#include "debug/d_fight.h"
-#endif PM_DEBUG
-*/
 
 //============================================================================================
 //  定数定義
@@ -113,8 +70,9 @@ enum {
   SEQ_BPL_MSG_WAIT,   // メッセージ表示
   SEQ_BPL_TRG_WAIT,   // メッセージ表示後のキー待ち
 
-  SEQ_BPL_WAZADEL_SEL,  // 技忘れ選択
-  SEQ_BPL_WAZADEL_MAIN, // 技忘れ決定
+  SEQ_BPL_WAZADEL_SEL,		// 技忘れ選択
+  SEQ_BPL_WAZADEL_MAIN,		// 技忘れ決定
+  SEQ_BPL_WAZADEL_ERROR,	// 技忘れエラー
 
   SEQ_BPL_WAZARCV_SEL,  // 技回復選択
 
@@ -180,6 +138,7 @@ static int BPL_SeqPokeChange( BPLIST_WORK * wk );
 static int BPL_SeqStInfoWaza( BPLIST_WORK * wk );
 static int BPL_SeqWazaDelSelect( BPLIST_WORK * wk );
 static int BPL_SeqWazaDelMain( BPLIST_WORK * wk );
+static int BPL_SeqWazaDelError( BPLIST_WORK * wk );
 static int BPL_SeqWazaRcvSelect( BPLIST_WORK * wk );
 static int BPL_SeqButtonWait( BPLIST_WORK * wk );
 static int BPL_SeqPage1Chg( BPLIST_WORK * wk );
@@ -195,12 +154,10 @@ static int BPL_SeqPPAllRcv( BPLIST_WORK * wk );
 static int BPL_SeqEndSet( BPLIST_WORK * wk );
 static int BPL_SeqEndWait( BPLIST_WORK * wk );
 static BOOL BPL_SeqEnd( GFL_TCB* tcb, BPLIST_WORK * wk );
-/*↑[GS_CONVERT_TAG]*/
 static int BPL_SeqWazaSelect( BPLIST_WORK * wk );
 
 static int BPL_PokeItemUse( BPLIST_WORK * wk );
 
-//static void BPL_VramInit(void);
 static void BPL_BgInit( BPLIST_WORK * dat );
 static void BPL_BgExit(void);
 static void BPL_BgGraphicSet( BPLIST_WORK * wk );
@@ -209,12 +166,7 @@ static void BPL_MsgManExit( BPLIST_WORK * wk );
 static void BPL_PokeDataMake( BPLIST_WORK * wk );
 
 static u8 BPL_PokemonSelect( BPLIST_WORK * wk );
-//static u8 BPL_IrekaeSelect( BPLIST_WORK * wk );
-//static u8 BPL_StatusMainSelect( BPLIST_WORK * wk );
-//static u8 BPL_StInfoWazaSelect( BPLIST_WORK * wk );
-//static u8 BPL_StWazaSelect( BPLIST_WORK * wk );
 static int BPL_TPCheck( BPLIST_WORK * wk, const GFL_UI_TP_HITTBL * tbl );
-/*↑[GS_CONVERT_TAG]*/
 static BOOL BPL_PageChange( BPLIST_WORK * wk, u8 next_page );
 static void BPL_PageChgBgScreenChg( BPLIST_WORK * wk, u8 page );
 static u8 BPL_IrekaeCheck( BPLIST_WORK * wk );
@@ -224,7 +176,7 @@ static void BPL_ExpGagePut( BPLIST_WORK * wk, u8 page );
 //static void BPL_P2_ExpGagePut( BPLIST_WORK * wk, u16 cgx, u16 px, u16 py );
 static void BPL_P3_ExpGagePut( BPLIST_WORK * wk, u16 cgx, u16 px, u16 py );
 //static void BPL_ContestWazaHeartPut( BPLIST_WORK * wk, u8 page );
-static u8 BPL_HidenCheck( BPLIST_WORK * wk );
+static FIELD_SKILL_CHECK_RET BPL_HidenCheck( BPLIST_WORK * wk );
 static void BPL_HidenOff_Battle( BPLIST_WORK * wk );
 //static void BPL_HidenOff_Contest( BPLIST_WORK * wk );
 static u8 BPL_TamagoCheck( BPLIST_WORK * wk );
@@ -290,6 +242,7 @@ static const pBPlistFunc MainSeqFunc[] = {
 
   BPL_SeqWazaDelSelect,
   BPL_SeqWazaDelMain,
+  BPL_SeqWazaDelError,
 
   BPL_SeqWazaRcvSelect,
 
@@ -312,117 +265,7 @@ static const u8 PlatePos[][2] =
   { PLATE_POKE5_PX, PLATE_POKE5_PY },
   { PLATE_POKE6_PX, PLATE_POKE6_PY }
 };
-/*
-// ポケモン選択画面移動テーブル
-static const POINTSEL_WORK NormalMoveTable[] =
-{
-  {  0,  0, 16, 6,  6,2,0,1 },    // 0
-  { 16,  1, 16, 6,  4,3,0,1 },    // 1
-  {  0,  6, 16, 6,  0,4,2,3 },    // 2
-  { 16,  7, 16, 6,  1,5,2,3 },    // 3
-  {  0, 12, 16, 6,  2,1,4,5 },    // 4
-  { 16, 13, 16, 6,  3,6,4,5 },    // 5
-  { 25, 19,  7, 5,  5,0,6,6 },    // 6（戻る）
-};
-*/
-/*
-// ページ１のタッチパネル座標
-static const GFL_UI_TP_HITTBL Page1_HitRect[] =
-{
-  {  0*8,  6*8-1,  0*8, 16*8-1 },
-  {  1*8,  7*8-1, 16*8, 32*8-1 },
-  {  6*8, 12*8-1,  0*8, 16*8-1 },
-  {  7*8, 13*8-1, 16*8, 32*8-1 },
-  { 12*8, 18*8-1,  0*8, 16*8-1 },
-  { 13*8, 19*8-1, 16*8, 32*8-1 },
-  { 19*8, 24*8-1, 27*8, 32*8-1 },
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-*/
-/*
-static const GFL_UI_TP_HITTBL ChgPage_HitRect[] =
-{
-  {  1*8, 18*8-1,  1*8, 31*8-1 },   // 0 : 入れ替え
-  { 19*8, 24*8-1,  0*8, 13*8-1 },   // 1 : 強さを見る
-  { 19*8, 24*8-1, 13*8, 26*8-1 },   // 2 : 技を見る
-  { 19*8, 24*8-1, 27*8, 32*8-1 },   // 3 : 戻る
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-*/
-/*
-// ステータスメインページのタッチパネル座標
-static const GFL_UI_TP_HITTBL StMainPage_HitRect[] =
-{
-  { 19*8, 24*8-1,  0*8,  5*8-1 },   // 0 : 前のポケモンへ
-  { 19*8, 24*8-1,  5*8, 10*8-1 },   // 1 : 次のポケモンへ
-  { 19*8, 24*8-1, 12*8, 25*8-1 },   // 2 : 技を見る
-  { 19*8, 24*8-1, 27*8, 32*8-1 },   // 3 : 戻る
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-*/
-/*
-// ステータス技選択ページのタッチパネル座標
-static const GFL_UI_TP_HITTBL StWazaSelPage_HitRect[] =
-{
-  {  6*8, 12*8-1,  0*8, 16*8-1 },   // 0 : 技１
-  {  6*8, 12*8-1, 16*8, 32*8-1 },   // 1 : 技２
-  { 12*8, 18*8-1,  0*8, 16*8-1 },   // 2 : 技３
-  { 12*8, 18*8-1, 16*8, 32*8-1 },   // 3 : 技４
-  { 19*8, 24*8-1,  0*8,  5*8-1 },   // 4 : 前のポケモンへ
-  { 19*8, 24*8-1,  5*8, 10*8-1 },   // 5 : 次のポケモンへ
-  { 19*8, 24*8-1, 12*8, 25*8-1 },   // 6 : 強さを見る
-  { 19*8, 24*8-1, 27*8, 32*8-1 },   // 7 : 戻る
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-*/
-/*
-// ステータス技選択ページのタッチパネル座標
-static const GFL_UI_TP_HITTBL StWazaInfoPage_HitRect[] =
-{
-  { 19*8, 21*8-1, 11*8, 16*8-1 },   // 0 : 技１
-  { 19*8, 21*8-1, 16*8, 21*8-1 },   // 1 : 技２
-  { 21*8, 23*8-1, 11*8, 16*8-1 },   // 2 : 技３
-  { 21*8, 23*8-1, 16*8, 21*8-1 },   // 3 : 技４
-  { 19*8, 24*8-1, 27*8, 32*8-1 },   // 4 : 戻る
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-*/
-/*
-// 技忘れ選択ページのタッチパネル座標
-static const GFL_UI_TP_HITTBL Page5_HitRect[] =
-{
-  {  6*8, 12*8-1,  0*8, 16*8-1 },   // 0 : 技１画面へ
-  {  6*8, 12*8-1, 16*8, 32*8-1 },   // 1 : 技２画面へ
-  { 12*8, 18*8-1,  0*8, 16*8-1 },   // 2 : 技３画面へ
-  { 12*8, 18*8-1, 16*8, 32*8-1 },   // 3 : 技４画面へ
-  { 18*8, 24*8-1,  8*8, 24*8-1 },   // 4 : 技５画面へ
-  {  0*8,  5*8-1, 23*8, 32*8-1 },   // 5 : 戦闘<->コンテストの切り替え
-  { 19*8, 24*8-1, 27*8, 32*8-1 },   // 6 : 戻る
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-*/
-/*
-// 技忘れ決定ページのタッチパネル座標
-static const GFL_UI_TP_HITTBL Page6_HitRect[] =
-{
-  { 19*8, 24*8-1,  0*8, 26*8-1 },   // 0 : 戦闘へ
-  {  0*8,  5*8-1, 23*8, 32*8-1 },   // 1 : 戦闘<->コンテストの切り替え
-  { 19*8, 24*8-1, 27*8, 32*8-1 },   // 2 : 戻る
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-*/
-/*
-// 技回復ページのタッチパネル座標
-static const GFL_UI_TP_HITTBL PPRcvPage_HitRect[] =
-{
-  {  6*8, 12*8-1,  0*8, 16*8-1 },   // 0 : 技１回復
-  {  6*8, 12*8-1, 16*8, 32*8-1 },   // 1 : 技２回復
-  { 12*8, 18*8-1,  0*8, 16*8-1 },   // 2 : 技３回復
-  { 12*8, 18*8-1, 16*8, 32*8-1 },   // 3 : 技４回復
-  { 19*8, 24*8-1, 27*8, 32*8-1 },   // 4 : 戻る
-  { GFL_UI_TP_HIT_END, 0, 0, 0 }
-};
-*/
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -465,12 +308,12 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
 //  wk->dat->mode = BPL_MODE_ITEMUSE;     // アイテム使用
 //  wk->dat->item = 38;
 
-/*
-  wk->dat->mode = BPL_MODE_WAZASET;     // 技忘れ
-  wk->dat->sel_poke = 1;
-  wk->dat->chg_waza = 20;
+
+//  wk->dat->mode = BPL_MODE_WAZASET;     // 技忘れ
+//  wk->dat->sel_poke = 0;
+//  wk->dat->chg_waza = 20;
 //  wk->page = BPLIST_PAGE_PP_RCV;    // PP回復技選択ページ
-*/
+
 
 //  wk->dat->mode = BPL_MODE_CHG_DEAD;   // 瀕死入れ替え時
 //  wk->dat->rule = BTL_RULE_SINGLE;
@@ -1623,16 +1466,13 @@ static int BPL_SeqWazaDelMain( BPLIST_WORK * wk )
   case BPLIST_UI_DELINFO_ENTER:   // わすれる
     PMSND_PlaySE( SEQ_SE_DECIDE2 );
     BattlePokeList_ButtonAnmInit( wk, BPL_BUTTON_WAZADEL_B );
-/*
-    if( BPL_HidenCheck( wk ) == TRUE ){
-      BPL_HidenMsgPut( wk );
-      BPL_HidenOff_Battle( wk );
-      wk->ret_seq = SEQ_BPL_WAZADEL_MAIN;
-    }else{
-      wk->ret_seq = SEQ_BPL_ENDSET;
-    }
-*/
-    wk->ret_seq = SEQ_BPL_ENDSET;
+		// 忘れられる
+		if( BPL_HidenCheck( wk ) == FSCR_OK ){
+	    wk->ret_seq = SEQ_BPL_ENDSET;
+		// 忘れられない
+		}else{
+      wk->ret_seq = SEQ_BPL_WAZADEL_ERROR;
+		}
     return SEQ_BPL_BUTTON_WAIT;
 
   case BPLIST_UI_DELINFO_RETURN:  // もどる
@@ -1671,6 +1511,21 @@ static int BPL_SeqWazaDelMain( BPLIST_WORK * wk )
 
   return SEQ_BPL_WAZADEL_MAIN;
 }
+
+static int BPL_SeqWazaDelError( BPLIST_WORK * wk )
+{
+	// 技マシンを持っていない
+	if( BPL_HidenCheck( wk ) == FSCR_NO_MACHINE ){
+		BPL_HidenMsgPut( wk, 0 );
+	// 使用中
+	}else{
+		BPL_HidenMsgPut( wk, 1 );
+	}
+	wk->talk_win_clear = 1;
+	wk->ret_seq = SEQ_BPL_WAZADEL_MAIN;
+	return SEQ_BPL_MSG_WAIT;
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2046,6 +1901,10 @@ static int BPL_SeqTrgWait( BPLIST_WORK * wk )
   }
 
   if( ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ) || GFL_UI_TP_GetTrg() == TRUE ){
+		if( wk->talk_win_clear == 1 ){
+			BmpWinFrame_Clear( wk->win[WIN_TALK].win, WINDOW_TRANS_ON );
+			wk->talk_win_clear = 0;
+		}
     return wk->ret_seq;
   }
   return SEQ_BPL_TRG_WAIT;
@@ -3491,17 +3350,15 @@ u8 BattlePokeList_MultiPosCheck( BPLIST_WORK * wk, u8 pos )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 秘伝技チェック
+ * 技忘れチェック
  *
- * @param wk    ワーク
+ * @param		wk    ワーク
  *
- * @retval  "TRUE = 秘伝技"
- * @retval  "FALSE = 秘伝技以外"
+ * @return	FIELD_SKILL_CHECK_RET
  */
 //--------------------------------------------------------------------------------------------
-static u8 BPL_HidenCheck( BPLIST_WORK * wk )
+static FIELD_SKILL_CHECK_RET BPL_HidenCheck( BPLIST_WORK * wk )
 {
-/*
   u16 waza;
 
   if( wk->dat->sel_wp == 4 ){
@@ -3509,9 +3366,8 @@ static u8 BPL_HidenCheck( BPLIST_WORK * wk )
   }else{
     waza = wk->poke[wk->dat->sel_poke].waza[wk->dat->sel_wp].id;
   }
-  return HidenWazaCheck( waza );
-*/
-  return FALSE;
+//  return FIELD_SKILL_CHECK_CheckForgetSkill( wk->dat->gamedata, waza, wk->dat->heap );
+	return FSCR_OK;
 }
 
 //--------------------------------------------------------------------------------------------
