@@ -3048,8 +3048,8 @@
 	</row>
 
 	<row id="elitem_21">
-		<language name="JPN" width="216">モリモト</language>
-		<language name="JPN_KANJI" width="216">モリモト</language>
+		<language name="JPN" width="216">サトシ</language>
+		<language name="JPN_KANJI" width="216">サトシ</language>
 	</row>
 
 	<row id="mount_13">
@@ -3068,6 +3068,31 @@
 	</row>
 
 	<row id="waitress_04">
+		<language name="JPN" width="216">ハルカ</language>
+		<language name="JPN_KANJI" width="216">ハルカ</language>
+	</row>
+
+	<row id="rival_19">
+		<language name="JPN" width="216">チェレン</language>
+		<language name="JPN_KANJI" width="216">チェレン</language>
+	</row>
+
+	<row id="rival_20">
+		<language name="JPN" width="216">チェレン</language>
+		<language name="JPN_KANJI" width="216">チェレン</language>
+	</row>
+
+	<row id="rival_21">
+		<language name="JPN" width="216">チェレン</language>
+		<language name="JPN_KANJI" width="216">チェレン</language>
+	</row>
+
+	<row id="veteranm_08">
+		<language name="JPN" width="216">モリモト</language>
+		<language name="JPN_KANJI" width="216">モリモト</language>
+	</row>
+
+	<row id="maid_02">
 		<language name="JPN" width="216">ハルカ</language>
 		<language name="JPN_KANJI" width="216">ハルカ</language>
 	</row>
