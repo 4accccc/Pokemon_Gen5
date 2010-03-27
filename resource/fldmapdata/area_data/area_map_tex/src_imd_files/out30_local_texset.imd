@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-03-27T17:33:50"/>
+	<create user="fuchino" host="W00152" date="2010-03-27T22:39:16"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,7 +29,7 @@
 
 <box_test pos_scale="5" xyz="-0.250000 0.000000 -0.250000" whd="4.000000 0.000000 1.500000"/>
 
-<tex_image_array size="18">
+<tex_image_array size="19">
 	<tex_image index="0" name="m_h1_01a"
 		width="16" height="64" original_width="16" original_height="64"
 		format="palette16"
@@ -451,7 +451,49 @@
 			3200 0023 3200 0023 3200 0023 3200 0023
 		</bitmap>
 	</tex_image>
-	<tex_image index="11" name="mise01saku"
+	<tex_image index="11" name="mise01kaidan"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="color"
+		palette_name="mise01kaidan_pl"
+		path="C:/home/wb_data3d/field/out30/map/tex/mise01kaidan.tga"
+	>
+		<bitmap size="256">
+			2222 3331 3333 3333 3333 3333 1333 2222
+			4443 4331 5555 5555 5555 5555 1334 3444
+			4443 5431 5555 5555 5555 5555 1345 3444
+			4443 5531 5555 5555 5555 5555 1355 3444
+			3332 5540 5555 5555 5555 5555 0455 2333
+			3332 5550 5555 5555 5555 5555 0555 2333
+			3332 5550 5555 5555 5555 5555 0555 2333
+			3332 3310 3333 3333 3333 3333 0133 2333
+			3332 3310 3333 3333 3333 3333 0133 2333
+			3332 3210 3333 3333 3333 3333 0123 2333
+			3332 3110 3333 3333 3333 3333 0113 2333
+			3332 2110 3333 3333 3333 3333 0112 2333
+			3332 1110 2222 2222 2222 2222 0111 2333
+			3332 4330 5555 5555 5555 5555 0334 2333
+			3332 5430 5555 5555 5555 5555 0345 2333
+			3332 5530 5555 5555 5555 5555 0355 2333
+			3332 5540 5555 5555 5555 5555 0455 2333
+			3332 5550 5555 5555 5555 5555 0555 2333
+			3332 5550 5555 5555 5555 5555 0555 2333
+			3332 5550 5555 5555 5555 5555 0555 2333
+			3332 3310 3333 3333 3333 3333 0133 2333
+			3332 3310 3333 3333 3333 3333 0133 2333
+			3332 3210 3333 3333 3333 3333 0123 2333
+			3332 3110 3333 3333 3333 3333 0113 2333
+			3332 2110 3333 3333 3333 3333 0112 2333
+			3332 1110 2222 2222 2222 2222 0111 2333
+			3332 4330 5555 5555 5555 5555 0334 2333
+			3332 5430 5555 5555 5555 5555 0345 2333
+			3332 5530 5555 5555 5555 5555 0355 2333
+			3332 5540 5555 5555 5555 5555 0455 2333
+			3332 5550 5555 5555 5555 5555 0555 2333
+			3332 5550 5555 5555 5555 5555 0555 2333
+		</bitmap>
+	</tex_image>
+	<tex_image index="12" name="mise01saku"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -469,7 +511,7 @@
 			3200 0023 3200 0023 3200 0023 3200 0023
 		</bitmap>
 	</tex_image>
-	<tex_image index="12" name="mise02"
+	<tex_image index="13" name="mise02"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -487,7 +529,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="13" name="mise02siro"
+	<tex_image index="14" name="mise02siro"
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
 		palette_name="mise02siro_pl"
@@ -512,7 +554,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="14" name="mise02yoko"
+	<tex_image index="15" name="mise02yoko"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -530,7 +572,7 @@
 			1111 1111 1111 1111 2222 2222 2222 2222
 		</bitmap>
 	</tex_image>
-	<tex_image index="15" name="mise_kumo1"
+	<tex_image index="16" name="mise_kumo1"
 		width="128" height="16" original_width="128" original_height="16"
 		format="a5i3"
 		palette_name="mise_kumo1_pl"
@@ -667,7 +709,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="16" name="mise_siro"
+	<tex_image index="17" name="mise_siro"
 		width="16" height="64" original_width="16" original_height="64"
 		format="a5i3"
 		palette_name="mise_siro_pl"
@@ -740,7 +782,7 @@
 			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8
 		</bitmap>
 	</tex_image>
-	<tex_image index="17" name="mise_sora01"
+	<tex_image index="18" name="mise_sora01"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -760,7 +802,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="18">
+<tex_palette_array size="19">
 	<tex_palette index="0" name="m_h1_01a_pl" color_size="8">
 		56b3 5ad4 5ef5 6716 6f58 6f79 7fff 7fff
 	</tex_palette>
@@ -795,25 +837,28 @@
 	<tex_palette index="10" name="mise01kage_pl" color_size="8">
 		2d6b 2d6b 2529 2108 2529 18c6 1ce7 7fff
 	</tex_palette>
-	<tex_palette index="11" name="mise01saku_pl" color_size="8">
+	<tex_palette index="11" name="mise01kaidan_pl" color_size="8">
+		56b2 56d4 5af5 5f16 6758 6b79 7fff 7fff
+	</tex_palette>
+	<tex_palette index="12" name="mise01saku_pl" color_size="8">
 		7d9c 5296 4232 3df0 4212 2d6c 35ae 7fff
 	</tex_palette>
-	<tex_palette index="12" name="mise02_pl" color_size="8">
+	<tex_palette index="13" name="mise02_pl" color_size="8">
 		4a4f 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="13" name="mise02siro_pl" color_size="8">
+	<tex_palette index="14" name="mise02siro_pl" color_size="8">
 		5ad3 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="14" name="mise02yoko_pl" color_size="8">
+	<tex_palette index="15" name="mise02yoko_pl" color_size="8">
 		4a4f 5ef4 6736 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="15" name="mise_kumo1_pl" color_size="8">
+	<tex_palette index="16" name="mise_kumo1_pl" color_size="8">
 		7680 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="16" name="mise_siro_pl" color_size="8">
+	<tex_palette index="17" name="mise_siro_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="17" name="mise_sora01_pl" color_size="8">
+	<tex_palette index="18" name="mise_sora01_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
@@ -836,7 +881,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="14" tex_palette_idx="14"
+		tex_image_idx="15" tex_palette_idx="15"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -860,7 +905,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="16" tex_palette_idx="16"
+		tex_image_idx="17" tex_palette_idx="17"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -884,7 +929,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="17" tex_palette_idx="17"
+		tex_image_idx="18" tex_palette_idx="18"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1172,7 +1217,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="11" tex_palette_idx="11"
+		tex_image_idx="12" tex_palette_idx="12"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1196,7 +1241,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="12" tex_palette_idx="12"
+		tex_image_idx="13" tex_palette_idx="13"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -1220,7 +1265,7 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="13" tex_palette_idx="13"
+		tex_image_idx="14" tex_palette_idx="14"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
@@ -2073,7 +2118,7 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="18">
+	<ex_tex_image_array size="19">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
@@ -2086,14 +2131,15 @@
 		<ex_tex_image index="9" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="10" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="11" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="12" disp_pos="720.000000 360.000000"/>
-		<ex_tex_image index="13" disp_pos="840.000000 360.000000"/>
-		<ex_tex_image index="14" disp_pos="960.000000 360.000000"/>
-		<ex_tex_image index="15" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="12" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="13" disp_pos="720.000000 360.000000"/>
+		<ex_tex_image index="14" disp_pos="840.000000 360.000000"/>
+		<ex_tex_image index="15" disp_pos="960.000000 360.000000"/>
 		<ex_tex_image index="16" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="17" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="18" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="18">
+	<ex_tex_palette_array size="19">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -2106,12 +2152,13 @@
 		<ex_tex_palette index="9" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="10" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="11" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="12" disp_pos="720.000000 420.000000"/>
-		<ex_tex_palette index="13" disp_pos="840.000000 420.000000"/>
-		<ex_tex_palette index="14" disp_pos="960.000000 420.000000"/>
-		<ex_tex_palette index="15" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="12" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="13" disp_pos="720.000000 420.000000"/>
+		<ex_tex_palette index="14" disp_pos="840.000000 420.000000"/>
+		<ex_tex_palette index="15" disp_pos="960.000000 420.000000"/>
 		<ex_tex_palette index="16" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="17" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="18" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="17">
 		<ex_material index="0" disp_pos="960.000000 300.000000"/>
