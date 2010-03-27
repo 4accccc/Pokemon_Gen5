@@ -8193,13 +8193,13 @@
 		<language name="JPN" width="256">FLD-148</language>
 		<language name="JPN_KANJI" width="256">FLD-148</language>
 	</row>
-	<row id="msg_seq_se_dmy_285">
-		<language name="JPN" width="256">DMY-285</language>
-		<language name="JPN_KANJI" width="256">DMY-285</language>
+	<row id="msg_seq_se_edemo_01">
+		<language name="JPN" width="256">EDEMO-01</language>
+		<language name="JPN_KANJI" width="256">EDEMO-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_286">
-		<language name="JPN" width="256">DMY-286</language>
-		<language name="JPN_KANJI" width="256">DMY-286</language>
+	<row id="msg_seq_se_edemo_02">
+		<language name="JPN" width="256">EDEMO-02</language>
+		<language name="JPN_KANJI" width="256">EDEMO-02</language>
 	</row>
 	<row id="msg_seq_se_dmy_287">
 		<language name="JPN" width="256">DMY-287</language>
