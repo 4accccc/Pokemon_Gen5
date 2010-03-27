@@ -337,11 +337,11 @@
         <language name="JPN" width="256">ホワイト</language>
         <language name="JPN_KANJI" width="256">ホワイト</language>
       </row><row id="answer_3">
-        <language name="JPN" width="256">しょうねん</language>
-        <language name="JPN_KANJI" width="256">少年</language>
+        <language name="JPN" width="256">おとこ</language>
+        <language name="JPN_KANJI" width="256">男</language>
       </row><row id="answer_4">
-        <language name="JPN" width="256">しょうじょ</language>
-        <language name="JPN_KANJI" width="256">少女</language>
+        <language name="JPN" width="256">おんな</language>
+        <language name="JPN_KANJI" width="256">女</language>
       </row><row id="answer_5">
         <language name="JPN" width="256">たいせん</language>
         <language name="JPN_KANJI" width="256">対戦</language>
@@ -764,7 +764,7 @@
         <language name="JPN_KANJI" width="256">９０ー１００時間</language>
       </row><row id="answer_145">
         <language name="JPN" width="256">１００じかんー</language>
-        <language name="JPN_KANJI" width="256">１００じかんー</language>
+        <language name="JPN_KANJI" width="256">１００時間ー</language>
       </row>
 
   <lock>

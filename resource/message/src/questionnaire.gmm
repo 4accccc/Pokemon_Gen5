@@ -469,7 +469,7 @@
         <language name="JPN_KANJI" width="256">・休日は何をしてる？</language>
       </row><row id="str_question_20">
         <language name="JPN" width="256">・どんな　おんがくが　すき？</language>
-        <language name="JPN_KANJI" width="256">・どんな　おんがくが　すき？</language>
+        <language name="JPN_KANJI" width="256">・どんな音楽がすき？</language>
       </row><row id="str_question_21">
         <language name="JPN" width="256">・すきな　TVばんぐみは？</language>
         <language name="JPN_KANJI" width="256">・好きなＴＶ番組は？</language>

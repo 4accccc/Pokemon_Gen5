@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-17T23:11:07"/>
+	<create user="ohmori" host="W00223" date="2010-03-27T17:59:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -334,8 +334,8 @@
 
 
 	<row id="str_menu_title" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさ　レーダー</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査レーダー</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]すれちがい　ちょうさき</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]すれ違い調査機</language>
 	</row>
 
 	<row id="str_menu_caption" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
@@ -346,13 +346,13 @@
 	</row>
 
 	<row id="str_menu_button_change" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさの　へんこう</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査の変更</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさを　きめる</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査を決める</language>
 	</row>
 
 	<row id="str_menu_button_check" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさほうこくを　みる</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査報告を見る</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]ちょうさを　みる</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]調査を見る</language>
 	</row>
 
 	<row id="str_select_title" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
@@ -458,8 +458,8 @@
 	</row>
 
 	<row id="str_check_analyze_button" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN">[BD:02:Ｘセンタリング]ほうこくを　みる</language>
-		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]報告を見る</language>
+		<language name="JPN">[BD:02:Ｘセンタリング]このちょうさを　みる</language>
+		<language name="JPN_KANJI">[BD:02:Ｘセンタリング]この報告を見る</language>
 	</row>
 
 	<flowchart-group-list>
