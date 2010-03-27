@@ -18,6 +18,10 @@
 #define R09R0201_INFOMATIONW_01            5
 #define R09R0201_BAKER_01                  6
 #define R09R0201_WORKMAN_01                7
+#define TR_PRINCESS_03                     8
+#define TR_WAITER_02                       9
+#define TR_WAITRESS_02                    10
+#define TR_PRINCE_03                      11
 
 #endif //ZONE_R09R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r09r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
