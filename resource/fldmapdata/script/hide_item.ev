@@ -490,7 +490,7 @@ EVENT_START ev_hide_item_067
 EVENT_END
 
 EVENT_START ev_hide_item_068
-//ネジやま ( 34, 37 )
+//ネジやま ( 27, 11 )
 	_ITEM_EVENT_HIDEITEM( 90, 1, FLAG_HIDEITEM_068 )// ほしのすな
 EVENT_END
 
@@ -525,7 +525,7 @@ EVENT_START ev_hide_item_074
 EVENT_END
 
 EVENT_START ev_hide_item_075
-//ネジやま ( 2, 59 )
+//ネジやま ( 3, 59 )
 	_ITEM_EVENT_HIDEITEM( 40, 1, FLAG_HIDEITEM_075 )// ピーピーエイダー
 EVENT_END
 
@@ -545,7 +545,7 @@ EVENT_START ev_hide_item_078
 EVENT_END
 
 EVENT_START ev_hide_item_079
-//リュウラセンの塔 ( 33, 24 )
+//リュウラセンの塔 ( 38, 33 )
 	_ITEM_EVENT_HIDEITEM( 93, 1, FLAG_HIDEITEM_079 )// ハートのウロコ
 EVENT_END
 
