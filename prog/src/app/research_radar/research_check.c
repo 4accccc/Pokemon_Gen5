@@ -3627,10 +3627,10 @@ static void SetupResearchData( RESEARCH_CHECK_WORK* work )
   // セーブデータ取得
   save = GAMEDATA_GetSaveControlWork( work->gameData );
   QSave = SaveData_GetQuestionnaire( save );
-  topicID = QuestionnaireWork_GetInvestigatingQuestion( QSave, 0 ); // 調査項目ID
-  questionID[0] = Question1_topic[ topicID ]; // 調査項目ID ==> 質問ID
-  questionID[1] = Question2_topic[ topicID ]; // 調査項目ID ==> 質問ID
-  questionID[2] = Question3_topic[ topicID ]; // 調査項目ID ==> 質問ID
+  topicID = GetInvestigatingTopicID( work ); // 調査項目ID
+  questionID[0] = QuestionnaireWork_GetInvestigatingQuestion( QSave, 0 ); // 質問ID
+  questionID[1] = QuestionnaireWork_GetInvestigatingQuestion( QSave, 1 ); // 質問ID
+  questionID[2] = QuestionnaireWork_GetInvestigatingQuestion( QSave, 2 ); // 質問ID
   answerNumOfQuestion[0] = AnswerNum_question[ questionID[0] ]; // 質問ID ==> 回答選択肢の数
   answerNumOfQuestion[1] = AnswerNum_question[ questionID[1] ]; // 質問ID ==> 回答選択肢の数
   answerNumOfQuestion[2] = AnswerNum_question[ questionID[2] ]; // 質問ID ==> 回答選択肢の数
