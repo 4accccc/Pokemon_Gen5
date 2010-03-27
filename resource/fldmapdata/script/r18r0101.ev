@@ -19,20 +19,118 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_r18r0101
+_EVENT_DATA    ev_r18r0101_rangerm_01
 _EVENT_DATA_END
 
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_r18r0101_flag_change:
-//  _END
+/************************************************************/
+/*						レンジャー男性						*/
+/************************************************************/
+EVENT_START	ev_r18r0101_rangerm_01
+	_TALK_OBJ_START()
+	
+	//ポケモン入手済みか
+	IF FLAG_ON( FE_R18R0101_POKE_GET ) THEN
+		//入手済み
+		
+		//そのポケモン ラーは…
+		_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_00_06 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ELSE
+		//未入手なら
+		
+		//初回会話か
+		IF FLAG_ON( FE_R18R0101_RANGERM_TALK ) THEN
+			//２回目以降
+			_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_00_02 )
+		ELSE
+			//初回
+			_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_00_01 )
+			
+			//========================================//
+			//初回会話フラグをセット
+			_FLAG_SET( FE_R18R0101_RANGERM_TALK )
+			//========================================//
+			
+		ENDIF
+		
+		_YES_NO_WIN( SCWK_ANSWER )
+		
+		IF $SCWK_ANSWER == SCR_YES THEN
+			//はい
+			
+			//ラーを入手
+			_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_643, 0, TOKUSYU_NULL, 20, 0, ITEM_MONSUTAABOORU )
+			
+			//追加できたかチェック
+			IF $SCWK_ANSWER == TRUE THEN
+				//手持ちに追加された
+				
+				//よろしくたのんだぜ
+				_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_00_05 )
+				_MSGWIN_CLOSE()
+				
+				//========================================//
+				//ポケモン入手フラグをセット
+				_FLAG_SET( FE_R18R0101_POKE_GET )
+				//========================================//
+				
+				//手に入れた！
+				_PLAYER_NAME( 0 )
+				_MONS_NAME( 1, MONSNO_643 )
+				_ME_PLAY( SEQ_ME_POKEGET )
+				_SYSWIN_MSG_ALLPUT( msg_r18r0101_00_07, POS_DEFAULT )
+				_ME_WAIT()
+				_AB_KEYWAIT_MARK()
+				_MSGWIN_CLOSE()
+				
+				//てにいれた～～に ニックネームつける？
+				_SYSWIN_MSG( msg_r18r0101_00_08, POS_DEFAULT )
+				_YES_NO_WIN( SCWK_ANSWER )
+				_MSGWIN_CLOSE()
+				
+				IF $SCWK_ANSWER == SCR_YES THEN
+					{
+					DEFINE_LOCAL	lwk_name_inpt
+					DEFINE_LOCAL	lwk_pos
+					
+					//ニックネーム画面へ
+					_GET_PARTY_POKE_COUNT( lwk_pos, POKECOUNT_MODE_TOTAL )
+					$lwk_pos -= 1
+					_PARTY_POKE_NAME_INPUT( lwk_name_inpt,lwk_pos )
+					
+					}
+				ENDIF
+				//そのポケモン…
+				_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_00_06 )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
 
-/**************************************************************/
-/*                                                            */
-/**************************************************************/
-ev_r18r0101:
-  //とりあえず最初のラベルだけ生成している
-  _END
+			ELSE
+				//手持ちがイッパイで追加できなかった
+				
+				//気持ちは嬉しいが…
+				_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_00_03 )
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+				
+			ENDIF
+			
+
+		ELSE
+			//いいえ
+		
+			//それも自由だ
+			_BALLOONWIN_TALKOBJ_MSG( msg_r18r0101_00_04 )
+			_LAST_KEYWAIT()
+			_MSGWIN_CLOSE()
+		ENDIF
+		
+	ENDIF
+
+EVENT_END
+
+
 

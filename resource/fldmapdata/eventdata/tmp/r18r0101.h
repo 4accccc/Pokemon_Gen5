@@ -9,6 +9,7 @@
 #ifndef ZONE_R18R0101_EVC_H
 #define ZONE_R18R0101_EVC_H
 
+#define R18R0101_RANGERM_01                0
 
 #endif //ZONE_R18R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r18r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
