@@ -31,7 +31,6 @@ typedef struct
 	int dir;  					///< 移動方向
 	int scr_id;			  	///< スクリプトID
 	int tr_id;			  	///< トレーナーID
-	BtlRule btl_rule;	  ///< 戦闘ルール
   int move_type;      ///< 視線動作タイプ
 }TRAINER_HITDATA;
 

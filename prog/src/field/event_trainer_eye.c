@@ -131,8 +131,9 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 )
   if( treye_CheckEyeMeet(fieldMap,NULL,&hit0) == TRUE )
   {
     TRAINER_HITDATA hit1;
+    BtlRule btl_rule = SCRIPT_GetTrainerBtlRule( hit0.tr_id );
     
-    if( hit0.btl_rule == BTL_RULE_SINGLE ) //シングル
+    if( btl_rule == BTL_RULE_SINGLE ) //シングル
     {
 
       if( vs2 == FALSE || //シングル戦チェック
@@ -153,7 +154,7 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, BOOL vs2 )
         KAGAYA_Printf( "TRAINER EYE HIT TAG DOUBLE\n" );
       }
     }
-    else if( hit0.btl_rule == BTL_RULE_DOUBLE )
+    else if( btl_rule == BTL_RULE_DOUBLE )
     {
       if( vs2 == TRUE ) //ダブル可能
       {
@@ -1056,7 +1057,6 @@ static void makeHitData(
   data->dir = dir;
   data->scr_id = MMDL_GetEventID( mmdl );
   data->tr_id = TRAINER_MMDL_GetTrainerID( mmdl );
-  data->btl_rule = SCRIPT_GetTrainerBtlRule( data->tr_id );
   data->mmdl = mmdl;
 }
 
