@@ -38,7 +38,6 @@ INIT_EVENT_START ev_zone_d13r0101
     DEFINE_LOCAL pos      //引数で使用するので定義
     //インセクタチェック
     _GET_EVT_POKE_POS( MONSNO_656, FALSE, pos, SCWK_ANSWER )
-    $SCWK_ANSWER = TRUE   //todo
 
     IF $SCWK_ANSWER == TRUE THEN    //インセクタいる
       //シーンワーク更新(シーンスクリプト有効)
