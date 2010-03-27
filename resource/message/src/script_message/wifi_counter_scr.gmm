@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-03-25T19:19:36"/>
+	<create user="matsumiya" host="W00224" date="2010-03-27T16:46:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="726" top="321" right="1604" bottom="1150" maximized="no" rayout="Vertical2">
+	<dialog left="1643" top="160" right="2197" bottom="863" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="538" top="626" right="921" bottom="1024" visible="no"/>
-		<band id="0" index="1" style="0000" width="484"/>
+		<band id="0" index="1" style="0000" width="546"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="217"/>
-		<band id="3" index="4" style="0000" width="870"/>
-		<band id="4" index="0" style="0000" width="870"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="3" index="4" style="0000" width="160"/>
+		<band id="4" index="0" style="0000" width="591"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -364,9 +364,8 @@ Wi-Fi P2P接続画面へ</comment>
 		<language name="JPN" width="256">グローバルターミナルでは
 Ｗｉ－Ｆｉコネクションに　せつぞくして[BE:01:ページ切り替え（クリア）]
 とおくにいる　みしらぬひとと
-つうしんを　つかって[BE:01:ページ切り替え（クリア）]
-たいせんや　こうかん　などが
-できます[BE:01:ページ切り替え（クリア）]
+つうしんを　つかって[BE:00:ページ切り替え（行送り）]
+たいせんや　こうかん　などができます[BE:01:ページ切り替え（クリア）]
 くわしくは　それぞれの　しせつの
 せつめいを　おききください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">グローバルターミナルでは
@@ -645,12 +644,12 @@ C-Gear入手前</comment>
 そのかたと　ネゴシエーション
 こうかんを　おこなうことが　できます[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ＧＴＳネゴシエーション　では
-どんな　ポケモンを　こうかんしたいか[BE:00:ページ切り替え（行送り）]
-こうかんじょうけんを　きめて[BE:01:ページ切り替え（クリア）]
-おなじ　じょうけんの　かたが
+どんな　ポケモンを　交換したいか[BE:00:ページ切り替え（行送り）]
+交換条件を　決めて[BE:01:ページ切り替え（クリア）]
+同じ　条件の　方が
 みつかったら[BE:01:ページ切り替え（クリア）]
-そのかたと　ネゴシエーション
-こうかんを　おこなうことが　できます[BE:01:ページ切り替え（クリア）]</language>
+その方と　ネゴシエーション
+交換を　おこなうことが　できます[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gts_nego_exp00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -667,18 +666,18 @@ C-Gear入手前</comment>
 		<attribute name="キャラ指定">GTS-NEGO</attribute>
 		<language name="JPN" width="256">ネゴシエーションこうかん　とは
 あいてに　さしだしたい[BE:00:ページ切り替え（行送り）]
-ポケモンを　３ひきえらび[BE:01:ページ切り替え（クリア）]
+ポケモンを　３ひき　えらび[BE:01:ページ切り替え（クリア）]
 そのあと　あいてが　さしだした
 ３ひきの　ポケモンのなかから[BE:00:ページ切り替え（行送り）]
 ほしいポケモンを　１ひき　えらびあう[BE:00:ページ切り替え（行送り）]
 こうかんの　ことです[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ネゴシエーションこうかん　とは
-あいてに　さしだしたい[BE:00:ページ切り替え（行送り）]
-ポケモンを　３ひきえらび[BE:01:ページ切り替え（クリア）]
-そのあと　あいてが　さしだした
-３ひきの　ポケモンのなかから[BE:00:ページ切り替え（行送り）]
-ほしいポケモンを　１ひき　えらびあう[BE:00:ページ切り替え（行送り）]
-こうかんの　ことです[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ネゴシエーション交換　とは
+相手に　さしだしたい[BE:00:ページ切り替え（行送り）]
+ポケモンを　３匹　選び[BE:01:ページ切り替え（クリア）]
+そのあと　相手が　さしだした
+３匹の　ポケモンのなかから[BE:00:ページ切り替え（行送り）]
+ほしいポケモンを　１匹　選びあう[BE:00:ページ切り替え（行送り）]
+交換の　ことです[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gts_nego_exp02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
@@ -691,19 +690,19 @@ C-Gear入手前</comment>
 それぞれの　こうかんじょうけんが
 いっちしたかたと[BE:00:ページ切り替え（行送り）]
 こうかんを　することが　できます[BE:01:ページ切り替え（クリア）]
-また　いちど　こうかんしたかたと
+また　いちど　こうかんした　かたと
 まちあわせる　ことができる[BE:00:ページ切り替え（行送り）]
 まちあわせこうかんも　あります[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">こうかんじょうけん　には
-こうかんしたい　レベル[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">交換条件には
+交換したい　レベル[BE:00:ページ切り替え（行送り）]
 ほしいポケモン　あげるポケモン　の[BE:00:ページ切り替え（行送り）]
-３つの　じょうけんが　あります[BE:01:ページ切り替え（クリア）]
-それぞれの　こうかんじょうけんが
-いっちしたかたと[BE:00:ページ切り替え（行送り）]
-こうかんを　することが　できます[BE:01:ページ切り替え（クリア）]
-また　いちど　こうかんしたかたと
-まちあわせる　ことができる[BE:00:ページ切り替え（行送り）]
-まちあわせこうかんも　あります[BE:01:ページ切り替え（クリア）]</language>
+３つの　条件が　あります[BE:01:ページ切り替え（クリア）]
+それぞれの　交換条件が
+一致した方と[BE:00:ページ切り替え（行送り）]
+交換を　することが　できます[BE:01:ページ切り替え（クリア）]
+また　１度　交換した方と
+待ち合わせる　ことができる[BE:00:ページ切り替え（行送り）]
+待ち合わせ交換も　あります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gts_nego_exp_win01" back-color="#ffff80,,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
