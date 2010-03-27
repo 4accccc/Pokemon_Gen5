@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-27T12:58:44"/>
+	<create user="matsumiya" host="W00224" date="2010-03-27T17:54:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="179"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="142">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1535" top="281" right="2240" bottom="900" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -293,52 +293,83 @@
 
 
 	<row id="msg_c04r0305_soccerm1_01">
-		<comment>♂</comment>
+		<comment>♂
+・ゴールキーパーポジション</comment>
 		<attribute name="キャラ指定">SOCCERM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">だれだって　ミスは　するさ▼
+だけど　ゴールキーパーは
+ここいちばんで　ミスしちゃいけない▼
+だって　ミスしても　じぶんで
+ゴールして　とりもどせないからね▼
+それに　くらべれば　ポケモンは
+トレーナーや　ほかの　ポケモンが▽
+ミスを　カバーしてくれる！！</language>
+		<language name="JPN_KANJI" width="256">だれだって　ミスは　するさ▼
+だけど　ゴールキーパーは
+ここ一番で　ミスしちゃいけない▼
+だって　ミスしても　自分で
+ゴールして　取り戻せないからね▼
+それに比べれば　ポケモンは
+トレーナーや　他の　ポケモンが▽
+ミスを　カバーしてくれる！！</language>
 	</row>
 
 	<row id="msg_c04r0305_soccerm2_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">SOCCERM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">めと　めが　あえば　つうじあう！▼
+サッカーせんしゅ　どうしは　もちろん
+ポケモンと　トレーナーも　そうだろ！</language>
+		<language name="JPN_KANJI" width="256">目と目が合えば　通じ合う！▼
+サッカー選手同士は　もちろん
+ポケモンと　トレーナーも　そうだろ！</language>
 	</row>
 
 	<row id="msg_c04r0305_soccerm3_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">SOCCERM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ほんとうに　つよい　トレーナーは
+できることを　きっちり　やるもんだ！</language>
+		<language name="JPN_KANJI" width="256">本当に　強い　トレーナーは
+できることを　きっちり　やるもんだ！</language>
 	</row>
 
 	<row id="msg_c04r0305_soccerm4_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">SOCCERM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">サッカーは　うつくしく　たのしい！
+ポケモンも　うつくしく　たのしいな！</language>
+		<language name="JPN_KANJI" width="256">サッカーは　美しく　楽しい！
+ポケモンも　美しく　楽しいな！</language>
 	</row>
 
 	<row id="msg_c04r0305_soccerm5_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">SOCCERM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">ポケモンと　サッカーをするから
+ポケモンサッカー！</language>
+		<language name="JPN_KANJI" width="256">ポケモンと　サッカーをするから
+ポケモンサッカー！</language>
 	</row>
 
 	<row id="msg_c04r0305_soccerm6_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">SOCCERM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">あいてに　いい　パスを　だす！▼
+そのあとは　いい　パスを　もらうため
+すぐに　うごかないと　ダメなんだよ～</language>
+		<language name="JPN_KANJI" width="256">相手に　最高のパスを　だす！▼
+そのあとは　最高のパスを　もらうため
+すぐに　動かないと　ダメなんだよ～</language>
 	</row>
 
 	<row id="msg_c04r0305_soccerm7_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">SOCCERM</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">はしれ！　はしれ！
+とにかく　かんがえて　はしれ！</language>
+		<language name="JPN_KANJI" width="256">走れ！　走れ！
+とにかく　考えて　走れ！</language>
 	</row>
 
 	<flowchart-group-list>
