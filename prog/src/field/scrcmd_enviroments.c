@@ -483,6 +483,11 @@ VMCMD_RESULT EvCmdChangeMapReplaceFlag( VMHANDLE * core, void *wk )
   if ( direct )
   {
     MAP_MATRIX * pMat = GAMEDATA_GetMapMatrix( gamedata );
+    PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gamedata );
+    u16 zone_id = PLAYERWORK_getZoneID( player );
+    u16 matID = ZONEDATA_GetMatrixID( zone_id );
+
+    MAP_MATRIX_Init( pMat, matID, zone_id );
     MAP_MATRIX_CheckReplace( pMat, gamesys );
   }
   return VMCMD_RESULT_CONTINUE;
