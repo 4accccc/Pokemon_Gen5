@@ -12,12 +12,6 @@ SCRIPTFILES += \
 	sp_bc10r0301.ev \
 	bc10r0401.ev \
 	sp_bc10r0401.ev \
-	bc10r0402.ev \
-	sp_bc10r0402.ev \
-	bc10r0403.ev \
-	sp_bc10r0403.ev \
-	bcwftest.ev \
-	sp_bcwftest.ev \
 	c01.ev \
 	sp_c01.ev \
 	c01gym0101.ev \
@@ -52,8 +46,6 @@ SCRIPTFILES += \
 	sp_c02gym0201.ev \
 	c02gym0202.ev \
 	sp_c02gym0202.ev \
-	c02gym0203.ev \
-	sp_c02gym0203.ev \
 	c02pc0101.ev \
 	sp_c02pc0101.ev \
 	c02r0101.ev \
@@ -76,16 +68,6 @@ SCRIPTFILES += \
 	sp_c03gym0101.ev \
 	c03p01.ev \
 	sp_c03p01.ev \
-	c03p02.ev \
-	sp_c03p02.ev \
-	c03p03.ev \
-	sp_c03p03.ev \
-	c03p04.ev \
-	sp_c03p04.ev \
-	c03p05.ev \
-	sp_c03p05.ev \
-	c03p06.ev \
-	sp_c03p06.ev \
 	c03p07.ev \
 	sp_c03p07.ev \
 	c03p08.ev \
@@ -94,8 +76,6 @@ SCRIPTFILES += \
 	sp_c03p09.ev \
 	c03p10.ev \
 	sp_c03p10.ev \
-	c03p11.ev \
-	sp_c03p11.ev \
 	c03p12.ev \
 	sp_c03p12.ev \
 	c03p13.ev \
@@ -108,14 +88,6 @@ SCRIPTFILES += \
 	sp_c03p16.ev \
 	c03p17.ev \
 	sp_c03p17.ev \
-	c03p18.ev \
-	sp_c03p18.ev \
-	c03p19.ev \
-	sp_c03p19.ev \
-	c03p20.ev \
-	sp_c03p20.ev \
-	c03p21.ev \
-	sp_c03p21.ev \
 	c03pc0101.ev \
 	sp_c03pc0101.ev \
 	c03r0101.ev \
@@ -138,8 +110,6 @@ SCRIPTFILES += \
 	sp_c03r0502.ev \
 	c03r0601.ev \
 	sp_c03r0601.ev \
-	c03r0701.ev \
-	sp_c03r0701.ev \
 	c03r0801.ev \
 	sp_c03r0801.ev \
 	c03r0901.ev \
@@ -226,8 +196,6 @@ SCRIPTFILES += \
 	sp_c04r0801.ev \
 	c04r0901.ev \
 	sp_c04r0901.ev \
-	c04r0902.ev \
-	sp_c04r0902.ev \
 	c04r1001.ev \
 	sp_c04r1001.ev \
 	c04r1002.ev \
@@ -264,14 +232,8 @@ SCRIPTFILES += \
 	sp_c06pc0101.ev \
 	c06r0101.ev \
 	sp_c06r0101.ev \
-	c06r0201.ev \
-	sp_c06r0201.ev \
 	c06r0301.ev \
 	sp_c06r0301.ev \
-	c06r0401.ev \
-	sp_c06r0401.ev \
-	c06r0501.ev \
-	sp_c06r0501.ev \
 	c07.ev \
 	sp_c07.ev \
 	c07gym0101.ev \
@@ -292,8 +254,6 @@ SCRIPTFILES += \
 	sp_c08gym0101.ev \
 	c08pc0101.ev \
 	sp_c08pc0101.ev \
-	c08pc0801.ev \
-	sp_c08pc0801.ev \
 	c08r0101.ev \
 	sp_c08r0101.ev \
 	c08r0102.ev \
@@ -352,8 +312,6 @@ SCRIPTFILES += \
 	sp_closseum.ev \
 	closseum02.ev \
 	sp_closseum02.ev \
-	d01.ev \
-	sp_d01.ev \
 	d01r0101.ev \
 	sp_d01r0101.ev \
 	d01r0201.ev \
@@ -470,8 +428,6 @@ SCRIPTFILES += \
 	sp_d08.ev \
 	d08r0101.ev \
 	sp_d08r0101.ev \
-	d08r0201.ev \
-	sp_d08r0201.ev \
 	d08r0301.ev \
 	sp_d08r0301.ev \
 	d08r0401.ev \
@@ -486,8 +442,6 @@ SCRIPTFILES += \
 	sp_d08r0801.ev \
 	d08r0901.ev \
 	sp_d08r0901.ev \
-	d08r1001.ev \
-	sp_d08r1001.ev \
 	d09.ev \
 	sp_d09.ev \
 	d09r0101.ev \
@@ -530,24 +484,12 @@ SCRIPTFILES += \
 	sp_d10r0301.ev \
 	d10r0401.ev \
 	sp_d10r0401.ev \
-	d10r0501.ev \
-	sp_d10r0501.ev \
-	d10r0601.ev \
-	sp_d10r0601.ev \
-	d11r0101.ev \
-	sp_d11r0101.ev \
-	d11r0201.ev \
-	sp_d11r0201.ev \
-	d11r0301.ev \
-	sp_d11r0301.ev \
 	d12.ev \
 	sp_d12.ev \
 	d12r0101.ev \
 	sp_d12r0101.ev \
 	d12r0102.ev \
 	sp_d12r0102.ev \
-	d12r0103.ev \
-	sp_d12r0103.ev \
 	d13.ev \
 	sp_d13.ev \
 	d13r0101.ev \
@@ -570,12 +512,6 @@ SCRIPTFILES += \
 	sp_d20r0701.ev \
 	d20r0801.ev \
 	sp_d20r0801.ev \
-	d20r0901.ev \
-	sp_d20r0901.ev \
-	d20r1001.ev \
-	sp_d20r1001.ev \
-	gt.ev \
-	sp_gt.ev \
 	h01.ev \
 	sp_h01.ev \
 	h01p01.ev \
@@ -656,8 +592,6 @@ SCRIPTFILES += \
 	sp_palace09.ev \
 	palace10.ev \
 	sp_palace10.ev \
-	palacetest.ev \
-	sp_palacetest.ev \
 	plc04.ev \
 	sp_plc04.ev \
 	plc05.ev \
@@ -734,18 +668,16 @@ SCRIPTFILES += \
 	sp_r03r0301.ev \
 	r03r0302.ev \
 	sp_r03r0302.ev \
-	r03r0303.ev \
-	sp_r03r0303.ev \
 	r04.ev \
 	sp_r04.ev \
 	r04r0101.ev \
 	sp_r04r0101.ev \
 	r04r0201.ev \
 	sp_r04r0201.ev \
-	r04r0202.ev \
-	sp_r04r0202.ev \
 	r05.ev \
 	sp_r05.ev \
+	r05r0101.ev \
+	sp_r05r0101.ev \
 	r06.ev \
 	sp_r06.ev \
 	r06r0101.ev \
@@ -778,8 +710,6 @@ SCRIPTFILES += \
 	sp_r08.ev \
 	r08r0101.ev \
 	sp_r08r0101.ev \
-	r08r0102.ev \
-	sp_r08r0102.ev \
 	r08r0201.ev \
 	sp_r08r0201.ev \
 	r09.ev \
@@ -826,16 +756,10 @@ SCRIPTFILES += \
 	sp_r12.ev \
 	r12r0101.ev \
 	sp_r12r0101.ev \
-	r12r0201.ev \
-	sp_r12r0201.ev \
 	r13.ev \
 	sp_r13.ev \
 	r13r0101.ev \
 	sp_r13r0101.ev \
-	r13r0102.ev \
-	sp_r13r0102.ev \
-	r13r0103.ev \
-	sp_r13r0103.ev \
 	r13r0201.ev \
 	sp_r13r0201.ev \
 	r13r0301.ev \
@@ -848,8 +772,6 @@ SCRIPTFILES += \
 	sp_r14r0201.ev \
 	r14r0202.ev \
 	sp_r14r0202.ev \
-	r14r0301.ev \
-	sp_r14r0301.ev \
 	r15.ev \
 	sp_r15.ev \
 	r15r0101.ev \
@@ -924,8 +846,6 @@ SCRIPTFILES += \
 	sp_t04pc0101.ev \
 	t04r0101.ev \
 	sp_t04r0101.ev \
-	t04r0102.ev \
-	sp_t04r0102.ev \
 	t04r0201.ev \
 	sp_t04r0201.ev \
 	t04r0301.ev \
@@ -950,7 +870,5 @@ SCRIPTFILES += \
 	sp_wc10pcr0101.ev \
 	wc10r0101.ev \
 	sp_wc10r0101.ev \
-	r05r0101.ev \
-	sp_r05r0101.ev \
 
 #é©ìÆê∂ê¨ÉtÉ@ÉCÉã zone_script.list ññîˆ
