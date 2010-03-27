@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="unno" host="W00199" date="2010-03-27T16:49:07" source="intro_town_11.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="450"
+	tool_start_frame="1"
+	tool_end_frame="450"
+	compress_material="on" material_size="37 37"
+/>
+
+<tex_pattern_list_data image_size="16" palette_size="5">
+	<image_name index="0" name="hakase2.1"/>
+	<image_name index="1" name="hakase2.13"/>
+	<image_name index="2" name="hakase2.14"/>
+	<image_name index="3" name="hakase2.15"/>
+	<image_name index="4" name="hakase2.16"/>
+	<image_name index="5" name="hakase2.2"/>
+	<image_name index="6" name="hakase2.3"/>
+	<image_name index="7" name="hakase2.4"/>
+	<image_name index="8" name="hakase2.5"/>
+	<image_name index="9" name="hakase2.6"/>
+	<image_name index="10" name="hakase2.7"/>
+	<image_name index="11" name="hakase2.8"/>
+	<image_name index="12" name="hana01.1"/>
+	<image_name index="13" name="hana01.2"/>
+	<image_name index="14" name="hana01.3"/>
+	<image_name index="15" name="hana01.4"/>
+	<palette_name index="0" name="hakase2"/>
+	<palette_name index="1" name="hana01.1_pl"/>
+	<palette_name index="2" name="hana01.2_pl"/>
+	<palette_name index="3" name="hana01.3_pl"/>
+	<palette_name index="4" name="hana01.4_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="142">
+		0 8 16 24 33 40 48 56 65 72
+		80 88 97 104 112 120 129 136 144 152
+		161 168 176 184 193 200 208 216 225 232
+		240 248 257 264 272 280 289 296 304 312
+		321 328 336 344 353 360 368 376 385 392
+		400 408 417 424 432 440 449 0 2 5
+		8 11 14 17 20 23 26 29 32 35
+		38 41 44 47 50 53 56 59 62 65
+		68 71 74 77 80 83 86 89 92 95
+		98 101 104 107 110 113 116 119 122 125
+		128 131 134 137 140 143 146 149 150 154
+		158 162 166 170 174 178 182 186 190 194
+		198 202 206 210 214 225 239 243 255 259
+		263 267 272 309 319 323 328 332 336 340
+		344 348
+	</frame_idx>
+	<image_idx size="142">
+		12 13 14 15 12 13 14 15 12 13
+		14 15 12 13 14 15 12 13 14 15
+		12 13 14 15 12 13 14 15 12 13
+		14 15 12 13 14 15 12 13 14 15
+		12 13 14 15 12 13 14 15 12 13
+		14 15 12 13 14 15 12 8 9 10
+		11 8 9 10 11 8 9 10 11 8
+		9 10 11 8 9 10 11 8 9 10
+		11 8 9 10 11 8 9 10 11 8
+		9 10 11 8 9 10 11 8 9 10
+		11 8 9 10 11 8 9 10 1 2
+		3 4 1 2 3 4 1 2 3 4
+		1 2 3 4 1 0 5 6 0 5
+		6 7 0 8 9 10 11 8 9 10
+		11 8
+	</image_idx>
+	<palette_idx size="142">
+		1 2 3 4 1 2 3 4 1 2
+		3 4 1 2 3 4 1 2 3 4
+		1 2 3 4 1 2 3 4 1 2
+		3 4 1 2 3 4 1 2 3 4
+		1 2 3 4 1 2 3 4 1 2
+		3 4 1 2 3 4 1 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="2">
+	<tex_pattern_anm index="0" material_name="hana01_1" data_size="57" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="obj_deli" data_size="85" data_head="57"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>

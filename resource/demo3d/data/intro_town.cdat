@@ -18,7 +18,7 @@ static const DEMO3D_SCENE_DATA data_intro_town_scene = {
 	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
 	FALSE,	///<2画面連結
 	TRUE,FALSE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
-	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
+	FALSE,TRUE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
 	GX_SORTMODE_AUTO,GX_BUFFERMODE_Z,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
 	FX32_CONST(40.0),FX32_CONST(40.0),defaultCameraAspect,	///<fovy_sin,fovy_cos,aspect
@@ -31,8 +31,8 @@ static const DEMO3D_SCENE_DATA data_intro_town_scene = {
 	GX_RGB(0,0,0),31,	///<フォグRGB,A
 	0,0,GX_FOGBLEND_COLOR_ALPHA,	///<フォグshift,フォグoffset,フォグモード
 	{ 0,0,0,0,0,0,0,0, }, 	///<フォグ濃度テーブル
-	{ GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),	///<エッジマーキングカラーテーブル
-	  GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0),GX_RGB(0,0,0), },
+	{ GX_RGB(12,12,12),GX_RGB(12,12,12),GX_RGB(12,12,12),GX_RGB(12,12,12),	///<エッジマーキングカラーテーブル
+	  GX_RGB(12,12,12),GX_RGB(12,12,12),GX_RGB(12,12,12),GX_RGB(12,12,12), },
 	GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0,	///<フェードイン
 	GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0,	///<フェードアウト
 };
@@ -63,12 +63,11 @@ static const DEMO3D_CMD_DATA demo3d_cmd_intro_town_end_data[] = {
 
 static const u16 res_intro_town_file_intro_town01[] = {
  NARC_data_demo3d_intro_town01_nsbmd,
- NARC_data_demo3d_intro_town01_nsbtp,
- NARC_data_demo3d_intro_town01_nsbta,
+ NARC_data_demo3d_intro_town01_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town01[] = {
- { res_intro_town_file_intro_town01, 3 },
+ { res_intro_town_file_intro_town01, 2 },
 };
 
 ///==================================
@@ -76,11 +75,13 @@ static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town01[] = {
 
 static const u16 res_intro_town_file_intro_town02[] = {
  NARC_data_demo3d_intro_town02_nsbmd,
+ NARC_data_demo3d_intro_town02_nsbtp,
+ NARC_data_demo3d_intro_town02_nsbta,
  NARC_data_demo3d_intro_town02_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town02[] = {
- { res_intro_town_file_intro_town02, 2 },
+ { res_intro_town_file_intro_town02, 4 },
 };
 
 ///==================================
@@ -90,10 +91,11 @@ static const u16 res_intro_town_file_intro_town03[] = {
  NARC_data_demo3d_intro_town03_nsbmd,
  NARC_data_demo3d_intro_town03_nsbtp,
  NARC_data_demo3d_intro_town03_nsbca,
+ NARC_data_demo3d_intro_town03_nsbma,
 };
 
 static const DEMO3D_FILE_UNIT res_intro_town_file_unit_intro_town03[] = {
- { res_intro_town_file_intro_town03, 3 },
+ { res_intro_town_file_intro_town03, 4 },
 };
 
 ///========================================================
