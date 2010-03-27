@@ -962,7 +962,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 { 
   NAMEIN_WORK   *p_wk;
   NAMEIN_PARAM  *p_param;
-  NAMEIN_INPUTTYPE  mode;
+  NAMEIN_INPUTTYPE  mode  = NAMEIN_INPUTTYPE_KANA;
 
   u32 heap_size;
   GFL_FONT_LOADTYPE font_load;
@@ -972,6 +972,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
   p_param = p_param_adrs;
 
   //セーブデータ受け取り
+  if( p_param->p_misc )
   { 
     mode    = MISC_GetNameInMode( p_param->p_misc, p_param->mode );
   }
@@ -5652,6 +5653,7 @@ static void SEQFUNC_End( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
   //SEQFUNC_Mainへ移動FinishInput( p_wk );
 
   //入力モードを保存する
+  if( p_param->p_misc )
   { 
     NAMEIN_INPUTTYPE input_type;
     input_type  = KEYBOARD_GetInputType( &p_wk->keyboard );
