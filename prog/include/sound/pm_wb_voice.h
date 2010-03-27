@@ -242,6 +242,14 @@ inline void*	PMV_GetWave(u32 voicePlayerIdx)
 {
 	return PMVOICE_GetWave(voicePlayerIdx);
 }
+inline u32 PMV_GetWaveSize(u32 voicePlayerIdx)
+{
+	return PMVOICE_GetWaveSize(voicePlayerIdx);
+}
+inline int PMV_GetWaveRate(u32 voicePlayerIdx)
+{
+	return PMVOICE_GetWaveRate(voicePlayerIdx);
+}
 
 //--------------------------------------------------------------------------------------------
 /**

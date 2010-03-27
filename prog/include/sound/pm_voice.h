@@ -113,6 +113,8 @@ extern u8		PMVOICE_GetPan(u32 voicePlayerIdx);
 extern s8		PMVOICE_GetVolume(u32 voicePlayerIdx);
 extern int	PMVOICE_GetSpeed(u32 voicePlayerIdx);
 extern void*	PMVOICE_GetWave(u32 voicePlayerIdx);
+extern u32	PMVOICE_GetWaveSize(u32 voicePlayerIdx);
+extern int	PMVOICE_GetWaveRate(u32 voicePlayerIdx);
 
 //------------------------------------------------------------------
 /**

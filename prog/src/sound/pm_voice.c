@@ -673,6 +673,27 @@ void*	PMVOICE_GetWave( u32 voicePlayerIdx )
 	return voicePlayer->waveDataBegin;
 }
 
+u32	PMVOICE_GetWaveSize( u32 voicePlayerIdx )
+{	
+	PMVOICE_PLAYER* voicePlayer;
+
+	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
+	if(voicePlayer->active == FALSE){ return 0; }
+
+	return voicePlayer->waveSize;
+}
+
+int	PMVOICE_GetWaveRate( u32 voicePlayerIdx )
+{	
+	PMVOICE_PLAYER* voicePlayer;
+
+	voicePlayer = &pmvSys.voicePlayer[voicePlayerIdx];
+	if(voicePlayer->active == FALSE){ return VOICE_RATE_DEFAULT; }
+
+	return voicePlayer->waveRate;
+}
+
+
 //------------------------------------------------------------------
 /**
  * @brief	–Â‚«º’â~ŠÖ”
