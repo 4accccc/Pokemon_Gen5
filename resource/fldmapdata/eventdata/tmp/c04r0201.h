@@ -26,7 +26,7 @@
 #define C04R0201_MIDDLEMAN1_01            13
 #define C04R0201_GENTLEMAN_01             14
 #define MUSICAL_RECEPT_COMM               15
-#define DUMMY_OBJ                         16
+#define MUSICAL_RECEPT_FITTING            16
 #define C04R0201_FAN_07                   17
 #define C04R0201_FAN_06                   18
 #define C04R0201_FAN_08                   19

@@ -81,6 +81,7 @@ typedef enum
   //スクリプトで繋がってくるので、基本接続状態
   //控え室前の同期処理
   MCS_INIT_MUSICAL,
+  MCS_SEND_MYSTATUS,
   MCS_SEND_MUSICAL_IDX,
   MCS_WAIT_MYSTATUS_ONE,
   MCS_WAIT_MYSTATUS_ALL,
@@ -549,15 +550,22 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
 
     //スクリプトから来た場合は基本接続状態
   case MCS_INIT_MUSICAL:
-    if( MUS_COMM_Send_MyStatus( work ) == TRUE )
+    MUS_COMM_SendTimingCommand( work , MUS_COMM_TIMMING_INIT_COMM );
+    work->commState = MCS_SEND_MYSTATUS;
+    break;
+  case MCS_SEND_MYSTATUS:
+    if( MUS_COMM_CheckTimingCommand( work , MUS_COMM_TIMMING_INIT_COMM ) == TRUE )
     {
-      if( work->mode == MCM_PARENT )
+      if( MUS_COMM_Send_MyStatus( work ) == TRUE )
       {
-        work->commState = MCS_SEND_MUSICAL_IDX;
-      }
-      else
-      {
-        work->commState = MCS_WAIT_MYSTATUS_ALL;
+        if( work->mode == MCM_PARENT )
+        {
+          work->commState = MCS_SEND_MUSICAL_IDX;
+        }
+        else
+        {
+          work->commState = MCS_WAIT_MYSTATUS_ALL;
+        }
       }
     }
     break;

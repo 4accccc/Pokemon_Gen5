@@ -21,12 +21,18 @@
 //--------------------------------------------------------------
 _EVENT_DATA   ev_musical_recept_single
 _EVENT_DATA   ev_musical_recept_comm
+_EVENT_DATA   ev_musical_recept_fitting
 _EVENT_DATA   ev_musical_change_program
 _EVENT_DATA   ev_musical_fan_01
 _EVENT_DATA   ev_musical_fan_02
 _EVENT_DATA   ev_musical_fan_03
 _EVENT_DATA   ev_musical_fan_04
 _EVENT_DATA   ev_musical_fan_05
+_EVENT_DATA   ev_musical_fan_06
+_EVENT_DATA   ev_musical_fan_07
+_EVENT_DATA   ev_musical_fan_08
+_EVENT_DATA   ev_musical_fan_09
+_EVENT_DATA   ev_musical_fan_10
 _EVENT_DATA_END
 
 
@@ -36,12 +42,14 @@ _EVENT_DATA_END
 DEFINE_LOCAL fan_number // ファンの番号
 
 DEFINE_LOCAL selectPoke
+DEFINE_LOCAL isFitting
 
 /*************************************************************/
 /*            一人用　受付             */
 /*************************************************************/
 EVENT_START ev_musical_recept_single
 
+  $isFitting = FALSE
   _MUSICAL_TOOLS( MUSICAL_TOOL_INIT, 0,0,0 )
 
 //デバッグ
@@ -50,12 +58,10 @@ EVENT_START ev_musical_recept_single
 
   _TALK_OBJ_START()
 
-  _BALLOONWIN_TALKOBJ_MSG( msg_musical_test_01 )
-  _YES_NO_WIN( SCWK_ANSWER )
-  _BALLOONWIN_CLOSE()
+  _BALLOONWIN_OBJMSG_POS( msg_musical_test_01, SCWK_TARGET_OBJID, POS_DL )
+  _CALL ev_musical_recept_first
 
-  IF $SCWK_ANSWER == 0 THEN
-
+  IF $SCWK_ANSWER == TRUE THEN
     //ポケモン選択
     _CALL ev_musical_select_poke
     IF $SCWK_ANSWER == FALSE THEN //  選ばなかった
@@ -89,6 +95,7 @@ EVENT_END
 /*************************************************************/
 EVENT_START ev_musical_recept_comm
 
+  $isFitting = FALSE
   _MUSICAL_TOOLS( MUSICAL_TOOL_INIT, 0,0,0 )
   _TALK_OBJ_START()
   
@@ -96,6 +103,47 @@ EVENT_START ev_musical_recept_comm
 
 EVENT_END
 
+/*************************************************************/
+/*            試着室　受付               */
+/*************************************************************/
+EVENT_START ev_musical_recept_fitting
+
+  $isFitting = TRUE
+  _MUSICAL_TOOLS( MUSICAL_TOOL_INIT, 0,0,0 )
+  
+  _TALK_OBJ_START()
+
+  _BALLOONWIN_OBJMSG_POS( msg_musical_fitting_01, SCWK_TARGET_OBJID, POS_DL )
+  _CALL ev_musical_recept_first
+
+  IF $SCWK_ANSWER == TRUE THEN //やめる
+    //ポケモン選択
+    _CALL ev_musical_select_poke
+    IF $SCWK_ANSWER == TRUE THEN //  選ばなかった
+      _BALLOONWIN_TALKOBJ_MSG( msg_musical_fitting_02 )
+      _BALLOONWIN_CLOSE()
+
+      //入場アニメ
+      _CALL recept_move_obj_fitting
+
+      _MAP_FADE_BLACK_OUT()
+      _DISP_FADE_END_CHECK()
+      _FIELD_CLOSE()
+
+      _MUSICAL_FITTING_CALL(selectPoke) //ミュージカル呼び出し
+      
+      _FIELD_OPEN()
+      //帰還アニメ(位置移動
+      _CALL recept_move_obj_return_fitting
+      _MAP_FADE_BLACK_IN()
+      _DISP_FADE_END_CHECK()
+
+    ENDIF
+  ENDIF  
+  
+  _CALL ev_musical_exit_common
+
+EVENT_END
 
 /*************************************************************/
 /*            通信　受付コア               */
@@ -139,12 +187,11 @@ ev_musical_recept_comm_core:
   //*/
   //デバッグ
 
-  //ワイヤレス通信開始しますか
-  _BALLOONWIN_TALKOBJ_MSG( msg_musical_recept_01 )
-  _YES_NO_WIN( ret )
-  _BALLOONWIN_CLOSE()
+  //ミュージカルしますか？
+  _BALLOONWIN_OBJMSG_POS( msg_musical_recept_01, SCWK_TARGET_OBJID, POS_DL )
+  _CALL ev_musical_recept_first
 
-  IF $ret == SCR_NO THEN //やめる
+  IF $SCWK_ANSWER == FALSE THEN //やめる
     _CALL ev_musical_exit_common
     _RET
   ENDIF
@@ -408,8 +455,80 @@ _RET
 
 /*************************************************************/
 /*            共通処理最初の受付               */
+/*  最初のメッセージが違うので選択肢処理をいきなり入れる。
 /*************************************************************/
 ev_musical_recept_first:
+
+  DEFINE_LOCAL isLoop
+  DEFINE_LOCAL isLoopExp
+  $isLoop = TRUE
+
+  WHILE $isLoop == TRUE
+  {
+    _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+    //リスト追加
+    _BMPMENU_MAKE_LIST( msg_musical_recept_yes, 0 )
+    _BMPMENU_MAKE_LIST( msg_musical_recept_no, 1 )
+    _BMPMENU_MAKE_LIST( msg_musical_recept_explain, 2 )
+    _BMPMENU_START()
+    _BALLOONWIN_CLOSE()
+    
+    IF $SCWK_ANSWER == 0 THEN
+      $SCWK_ANSWER = TRUE
+      $isLoop = FALSE
+    ELSIF $SCWK_ANSWER == 1 || $SCWK_ANSWER == EV_WIN_B_CANCEL THEN
+      $SCWK_ANSWER = FALSE
+      $isLoop = FALSE
+    ELSE
+      $isLoopExp = TRUE
+      //説明ゾーン ココから
+      WHILE $isLoopExp == TRUE
+      {
+        _BALLOONWIN_OBJMSG_POS( msg_musical_info_01, SCWK_TARGET_OBJID, POS_DL )
+        //メニュー作成
+        _BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+        _BMPMENU_MAKE_LIST( msg_musical_info_02, 0 )
+        _BMPMENU_MAKE_LIST( msg_musical_info_04, 1 )
+        _BMPMENU_MAKE_LIST( msg_musical_info_06, 2 )
+        _BMPMENU_MAKE_LIST( msg_musical_info_08, 3 )
+        _BMPMENU_MAKE_LIST( msg_musical_info_10, 4 )
+        _BMPMENU_MAKE_LIST( msg_musical_recept_return , 5 )
+
+        _BMPMENU_START()
+        _BALLOONWIN_CLOSE()
+      IF $SCWK_ANSWER == 5 || $SCWK_ANSWER == EV_WIN_B_CANCEL THEN
+        $isLoopExp = FALSE
+        //参加しますか？をココで出す
+        IF  $isFitting == TRUE THEN
+          _BALLOONWIN_OBJMSG_POS( msg_musical_fitting_03, SCWK_TARGET_OBJID, POS_DL )
+        ELSE
+          _BALLOONWIN_OBJMSG_POS( msg_musical_recept_08, SCWK_TARGET_OBJID, POS_DL )
+        ENDIF
+        //で、最初に戻って質問から
+      ELSIF $SCWK_ANSWER == 0 THEN
+        _BALLOONWIN_OBJMSG_POS( msg_musical_info_03, SCWK_TARGET_OBJID, POS_DL )
+        _BALLOONWIN_CLOSE()
+      ELSIF $SCWK_ANSWER == 1 THEN
+        _BALLOONWIN_OBJMSG_POS( msg_musical_info_05, SCWK_TARGET_OBJID, POS_DL )
+        _BALLOONWIN_CLOSE()
+      ELSIF $SCWK_ANSWER == 2 THEN
+        _BALLOONWIN_OBJMSG_POS( msg_musical_info_07, SCWK_TARGET_OBJID, POS_DL )
+        _BALLOONWIN_CLOSE()
+      ELSIF $SCWK_ANSWER == 3 THEN
+        _BALLOONWIN_OBJMSG_POS( msg_musical_info_09, SCWK_TARGET_OBJID, POS_DL )
+        _BALLOONWIN_CLOSE()
+      ELSIF $SCWK_ANSWER == 4 THEN
+        _BALLOONWIN_OBJMSG_POS( msg_musical_info_11, SCWK_TARGET_OBJID, POS_DL )
+        _BALLOONWIN_CLOSE()
+      ENDIF
+      
+      }
+      ENDWHILE
+      //説明ゾーン ココまで
+    ENDIF
+  }
+  ENDWHILE
+
 _RET
 
 /*************************************************************/
@@ -468,7 +587,9 @@ recept_select_program:
   _BMPMENU_MAKE_LIST( msg_musical_program_02, 1 )
   _BMPMENU_MAKE_LIST( msg_musical_program_03, 2 )
   _BMPMENU_MAKE_LIST( msg_musical_program_04, 3 )
+
   IF $enableDist == TRUE THEN
+    //配信曲が有効
     _MUSICAL_WORD_PROGRAM_TITLE(0)
     _BMPMENU_MAKE_LIST( msg_musical_program_05, 4 )
   ENDIF
@@ -510,7 +631,29 @@ recept_move_obj_comm:
 }
 _RET
 
-//受付退く一人用
+/*************************************************************/
+/*            受付演出(試着室)          */
+/*************************************************************/
+recept_move_obj_fitting:
+{
+  _OBJ_ANIME( MUSICAL_RECEPT_FITTING, anm_move_recept_start_solo )
+  _OBJ_ANIME_WAIT()
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_fitting )
+  _OBJ_ANIME_WAIT()
+}
+_RET
+
+/*************************************************************/
+/*            受付演出(試着室帰り)          */
+/*************************************************************/
+recept_move_obj_return_fitting:
+{
+  _OBJ_POS_CHANGE( MUSICAL_RECEPT_FITTING, 18, 0, 11, DIR_DOWN )
+  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 18, 0, 12, DIR_UP )
+}
+_RET
+
+//受付退く一人用(試着室も
 _ANIME_LABEL anm_move_recept_start_solo
   _ANIME_DATA AC_DIR_U,1
   _ANIME_DATA AC_WALK_U_8F,1
@@ -548,6 +691,12 @@ _ANIME_LABEL anm_move_player_start_comm
   _ANIME_DATA AC_WALK_U_8F,2
   _ANIME_DATA ACMD_END,0
 
+//主人公入る試着室
+_ANIME_LABEL anm_move_player_start_fitting
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA AC_WALK_U_8F,4
+  _ANIME_DATA ACMD_END,0
+  
 
 /*************************************************************/
 /*            脚本家                 */
@@ -666,5 +815,30 @@ EVENT_END
 
 EVENT_START ev_musical_fan_05
   $fan_number = 4
+  _CALL fan_main_routine
+EVENT_END
+
+EVENT_START ev_musical_fan_06
+  $fan_number = 5
+  _CALL fan_main_routine
+EVENT_END
+
+EVENT_START ev_musical_fan_07
+  $fan_number = 6
+  _CALL fan_main_routine
+EVENT_END
+
+EVENT_START ev_musical_fan_08
+  $fan_number = 7
+  _CALL fan_main_routine
+EVENT_END
+
+EVENT_START ev_musical_fan_09
+  $fan_number = 8
+  _CALL fan_main_routine
+EVENT_END
+
+EVENT_START ev_musical_fan_10
+  $fan_number = 9
   _CALL fan_main_routine
 EVENT_END

@@ -24,6 +24,7 @@
 #include "script_def.h"
 #include "scrcmd.h"
 #include "scrcmd_work.h"
+#include "scrcmd_proc.h"
 
 #include "musical/musical_system.h"
 #include "musical/musical_event.h"
@@ -97,7 +98,7 @@ static void EvCmdMusical_ExitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork );
 
 static GMEVENT_RESULT event_Musical( GMEVENT *event, int *seq, void *work );
 static void EvCmdMusicalShotCallProc_CallBack( void* work );
-static void EvCmdFittingCallProc_CallBack( void* work );
+static void EvCmdFittingCallProc_CallBack( CALL_PROC_WORK* work );
 static void EvCmdIrcEntry_CallBack( void* work );
 
 static BOOL EvCmdMusicalEntryParent( VMHANDLE *core, void *wk );
@@ -207,11 +208,15 @@ VMCMD_RESULT EvCmdMusicalFittingCall( VMHANDLE *core, void *wk )
     callWork->initWork->mus_save = musSave;
     callWork->initWork->commWork = NULL;
     
-    //ショット呼び出し
-    event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
-                                         NO_OVERLAY_ID, &DressUp_ProcData, callWork->initWork,
-                                         EvCmdFittingCallProc_CallBack, callWork );
-    SCRIPT_CallEvent( sc, event );
+    //試着室呼び出し
+//    event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
+//                                         NO_OVERLAY_ID, &DressUp_ProcData, callWork->initWork,
+//                                         EvCmdFittingCallProc_CallBack, callWork );
+//    SCRIPT_CallEvent( sc, event );
+
+    EVFUNC_CallSubProc( core, work, NO_OVERLAY_ID, 
+                        &DressUp_ProcData, callWork->initWork, 
+                        EvCmdFittingCallProc_CallBack, callWork );
   }
 
   return VMCMD_RESULT_SUSPEND;
@@ -942,6 +947,12 @@ static GMEVENT_RESULT event_Musical(
     if( GFL_NET_IsExit() == TRUE ||
         ev_musical_work->isComm == FALSE )
     {
+      if( ev_musical_work->isComm = TRUE )
+      {
+        //通信復帰処理
+        GAMESYS_WORK *gsys =  GMEVENT_GetGameSysWork( event );
+        GAMESYSTEM_CommBootAlways(gsys);
+      }
       EvCmdMusical_ExitCommon( ev_musical_work->musScriptWork , gdata );
       (*seq)++;
       return( GMEVENT_RES_FINISH );
@@ -957,13 +968,15 @@ static void EvCmdMusicalShotCallProc_CallBack( void* work )
   // callWorkはPROC呼び出しイベントルーチン内で解放される
   GFL_HEAP_FreeMemory( callWork->initWork );
 }
-static void EvCmdFittingCallProc_CallBack( void* work )
+
+static void EvCmdFittingCallProc_CallBack( CALL_PROC_WORK* cpw )
 {
-  EV_FITTING_CALL_WORK *callWork = work;
+  
+  EV_FITTING_CALL_WORK *callWork = (EV_FITTING_CALL_WORK*)cpw->cb_work;
   
   // callWorkはPROC呼び出しイベントルーチン内で解放される
   GFL_HEAP_FreeMemory( callWork->initWork->musPoke );
-  GFL_HEAP_FreeMemory( callWork->initWork );
+  //GFL_HEAP_FreeMemory( callWork->initWork );
 }
 
 
