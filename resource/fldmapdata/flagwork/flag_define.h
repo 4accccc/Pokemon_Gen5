@@ -327,8 +327,8 @@
 #define FE_D01R0201_POKE16_01              311 /* 0x0137 夢の跡地B2：ムシャーナ捕獲フラグ */
 #define FE_C08R0801_ITEMGET_01             312 /* 0x0138 ソウリュウシティ：アイテム入手フラグ */
 #define FE_R14R0201_LEG_GET                313 /* 0x0139 ツチノカミイベント：捕獲チェック */
-		/* not used   314(0x013a) */
-		/* not used   315(0x013b) */
+#define FE_R18R0101_RANGERM_TALK           314 /* 0x013a 18番道路プレハブ：レンジャーと会話した */
+#define FE_R18R0101_POKE_GET               315 /* 0x013b 18番道路プレハブ：ポケモン入手フラグ（ラー） */
 		/* not used   316(0x013c) */
 		/* not used   317(0x013d) */
 		/* not used   318(0x013e) */
@@ -773,11 +773,11 @@
 #define FV_R14R0201_GIRL1                  749 /* 0x02ed ツチノカミイベント：きょうだい */
 #define FV_R14R0201_LEG                    750 /* 0x02ee ツチノカミイベント：ツチノカミ */
 #define FV_C02_STONEEVENT_02               751 /* 0x02ef C02フィールド：ライト/ダークストーン入手イベント サポート、C02ジムリーダー（アロエ） */
-		/* not used   752(0x02f0) */
-		/* not used   753(0x02f1) */
-		/* not used   754(0x02f2) */
-		/* not used   755(0x02f3) */
-		/* not used   756(0x02f4) */
+#define FV_MUSICAL_FUN_06                  752 /* 0x02f0 ミュージカルホール：出待ちのファン１人目 */
+#define FV_MUSICAL_FUN_07                  753 /* 0x02f1 ミュージカルホール：出待ちのファン２人目 */
+#define FV_MUSICAL_FUN_08                  754 /* 0x02f2 ミュージカルホール：出待ちのファン３人目 */
+#define FV_MUSICAL_FUN_09                  755 /* 0x02f3 ミュージカルホール：出待ちのファン４人目 */
+#define FV_MUSICAL_FUN_10                  756 /* 0x02f4 ミュージカルホール：出待ちのファン５人目 */
 		/* not used   757(0x02f5) */
 		/* not used   758(0x02f6) */
 		/* not used   759(0x02f7) */
