@@ -32,7 +32,7 @@ static const INTRO_CMD_DATA c_intro_scene_init[] =
 static const INTRO_CMD_DATA c_intro_scene_00[] = 
 { 
   // èâä˙âª
-  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING }, CMD_READ_NEXT },
+//  { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING }, CMD_READ_NEXT },
   { INTRO_CMD_TYPE_BRIGHTNESS_SET, { -16, }, CMD_READ_NEXT },
   { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 } },
 

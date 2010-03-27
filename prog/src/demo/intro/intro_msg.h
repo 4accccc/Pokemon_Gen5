@@ -74,3 +74,6 @@ extern INTRO_LIST_SELECT INTRO_MSG_LIST_IsDecide( INTRO_MSG_WORK *wk, u32 *p_sel
 // データ公開
 extern WORDSET* INTRO_MSG_GetWordSet( INTRO_MSG_WORK* wk );
 
+// タイマーアイコン
+extern void INTRO_MSG_InitTimeIcon( INTRO_MSG_WORK * wk );
+extern void INTRO_MSG_ExitTimeIcon( INTRO_MSG_WORK * wk );

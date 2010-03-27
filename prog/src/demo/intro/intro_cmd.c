@@ -1099,6 +1099,7 @@ static BOOL CMD_SAVE_CHECK_ALL_END( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, 
       // メッセージプリント
       if( INTRO_MSG_PrintProc( wk->wk_msg ) == TRUE )
       {
+				INTRO_MSG_InitTimeIcon( wk->wk_msg );
         sdat->seq++;
       }
       break;
@@ -1106,6 +1107,7 @@ static BOOL CMD_SAVE_CHECK_ALL_END( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, 
       // 全てのセーブが完了しているか調べる
       if( IntrSave_CheckAllSaveEnd( wk->intr_save ) == TRUE )
       {
+				INTRO_MSG_ExitTimeIcon( wk->wk_msg );
         return TRUE;
       }
       break;

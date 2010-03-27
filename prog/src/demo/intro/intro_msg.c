@@ -9,6 +9,7 @@
  */
 //=============================================================================
 #include <gflib.h>
+#include "system/gfl_use.h"
 #include "system/bmp_winframe.h" // for BmpWinFrame_
 #include "system/bmp_menulist.h" // for BMPMENU_LIST_WORK
 
@@ -20,6 +21,9 @@
 #include "print/printsys.h" // for PRINT_QUE
 
 #include "gamesystem/msgspeed.h"  // for MSGSPEED_GetWait
+
+// タイマーアイコン
+#include "system/time_icon.h"
 
 #include "font/font.naix"
 
@@ -89,6 +93,9 @@ struct _INTRO_MSG_WORK {
   // 文字列
   STRBUF*   strbuf;
   STRBUF*   exp_strbuf;
+
+	// タイマーアイコン
+	TIMEICON_WORK * timeicon;
 };
 
 //=============================================================================
@@ -126,7 +133,7 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
   // @TODO intro.cに既にある。統合する。
   wk->print_que = PRINTSYS_QUE_Create( heap_id );
 
-  wk->msg_tcblsys = GFL_TCBL_Init( wk->heap_id, wk->heap_id, 1, 0 );
+  wk->msg_tcblsys = GFL_TCBL_Init( wk->heap_id, wk->heap_id, 2, 0 );
 
   // メッセージ用フォント転送
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0x20*PLTID_BG_TEXT_M, 0x20, heap_id );
@@ -152,6 +159,9 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
   // ウィンドウカーソル初期化
   wk->cursor_work = APP_KEYCURSOR_Create( 15, TRUE, TRUE, wk->heap_id );
 
+	// タイマーアイコン初期設定
+	wk->timeicon = TIMEICON_CreateEz( wk->heap_id );
+
   return wk;
 }
 
@@ -166,6 +176,8 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
 //-----------------------------------------------------------------------------
 void INTRO_MSG_Exit( INTRO_MSG_WORK* wk )
 {
+	INTRO_MSG_ExitTimeIcon( wk );
+
   APP_KEYCURSOR_Delete( wk->cursor_work );
 
   GFL_STR_DeleteBuffer( wk->strbuf );
@@ -350,7 +362,7 @@ BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk )
       if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE || (  GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL ) || GFL_UI_TP_GetTrg() )
       {
         PRINTSYS_PrintStreamReleasePause( wk->print_stream );
-        PMSND_PlaySE( SEQ_SE_DECIDE1 );
+        PMSND_PlaySE( SEQ_SE_MESSAGE );
       }
       break;
 
@@ -498,7 +510,7 @@ void INTRO_MSG_LIST_Start( INTRO_MSG_WORK* wk, const INTRO_LIST_DATA *cp_tbl, u3
 	}
 
   GFL_BMPWIN_MakeTransWindow( p_bmpwin ); // スクリーン＆キャラ転送
-  BmpWinFrame_Write( p_bmpwin, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_M ); // 周りにフレームを書く
+  BmpWinFrame_Write( p_bmpwin, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M ); // 周りにフレームを書く
 
   if( is_cansel )
   {
@@ -522,7 +534,7 @@ void INTRO_MSG_LIST_Finish( INTRO_MSG_WORK *wk )
 {
   INTRO_LIST_WORK* list = &wk->list;
 
-  BmpWinFrame_Clear( wk->win_list, WINDOW_TRANS_ON_V );
+  BmpWinFrame_Clear( wk->win_list, WINDOW_TRANS_ON );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->win_list ), 0 ); // クリア
   GFL_BMPWIN_TransVramCharacter( wk->win_list ); // 転送
 
@@ -593,4 +605,36 @@ INTRO_LIST_SELECT INTRO_MSG_LIST_IsDecide( INTRO_MSG_WORK *wk, u32 *p_select )
 WORDSET* INTRO_MSG_GetWordSet( INTRO_MSG_WORK* wk )
 {
   return wk->wordset;
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タイマーアイコンセット
+ *
+ *	@param	INTRO_MSG_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INTRO_MSG_InitTimeIcon( INTRO_MSG_WORK* wk )
+{
+	TIMEICON_StartEz( wk->timeicon, GFUser_VIntr_GetTCBSYS(), wk->win_dispwin, 15, TIMEICON_DEFAULT_WAIT );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  タイマーアイコン削除
+ *
+ *	@param	INTRO_MSG_WORK* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+void INTRO_MSG_ExitTimeIcon( INTRO_MSG_WORK* wk )
+{
+	if( wk->timeicon != NULL ){
+		TILEICON_Exit( wk->timeicon );
+		wk->timeicon = NULL;
+	}
 }
