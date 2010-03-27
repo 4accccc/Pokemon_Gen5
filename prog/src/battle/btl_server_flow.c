@@ -12975,7 +12975,8 @@ static u8 scproc_HandEx_resetRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
   u32 i;
   u8 result = 0;
 
-  for(i=0; i<param->poke_cnt; ++i){
+  for(i=0; i<param->poke_cnt; ++i)
+  {
     pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
     if( !BPP_IsDead(pp_target) ){
       SCQUE_PUT_OP_RankReset( wk->que, param->pokeID[i] );

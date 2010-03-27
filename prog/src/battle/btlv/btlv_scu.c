@@ -2413,6 +2413,12 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
   case SEQ_WAIT_STREAM_RUNNING:
     if( wk->printStream )
     {
+      if( (GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B))
+      ||  (GFL_UI_TP_GetCont())
+      ){
+        PRINTSYS_PrintStreamShortWait( wk->printStream, 0 );
+      }
+
       wk->printState = PRINTSYS_PrintStreamGetState( wk->printStream );
       if( wk->printState != PRINTSTREAM_STATE_RUNNING )
       {

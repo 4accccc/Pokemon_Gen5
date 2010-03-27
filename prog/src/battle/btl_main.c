@@ -1972,8 +1972,25 @@ BOOL BTL_MAIN_IsMultiMode( const BTL_MAIN_MODULE * wk )
 //=============================================================================================
 BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
 {
-  // @@@ ‚¢‚Ü‚Ì‚Æ‚±‚ëí‚É‹–‰Â‚·‚é
-  return BTL_ESCAPE_MODE_OK;
+  switch( wk->setupParam->competitor ){
+  case BTL_COMPETITOR_WILD:
+    return BTL_ESCAPE_MODE_OK;
+
+  case BTL_COMPETITOR_TRAINER:
+    #ifdef PM_DEBUG
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+      return BTL_ESCAPE_MODE_OK;
+    }
+    #endif
+    return BTL_ESCAPE_MODE_NG;
+
+  case BTL_COMPETITOR_COMM:
+  case BTL_COMPETITOR_SUBWAY:
+    return BTL_ESCAPE_MODE_CONFIRM;
+
+  default:
+    return BTL_ESCAPE_MODE_NG;
+  }
 }
 //=============================================================================================
 /**
