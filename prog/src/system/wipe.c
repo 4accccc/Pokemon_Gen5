@@ -175,6 +175,12 @@ const static pWIPEFunc WipeFunc[] = {
 	WipeFunc05,
 	WipeFunc06,
 	WipeFunc07,
+	WipeFunc16,
+	WipeFunc17,
+	WipeFunc38,
+	WipeFunc39,
+
+  /* 常駐メモリをあけるため　カット
 	WipeFunc08,
 	WipeFunc09,
 	WipeFunc10,
@@ -183,8 +189,6 @@ const static pWIPEFunc WipeFunc[] = {
 	WipeFunc13,
 	WipeFunc14,
 	WipeFunc15,
-	WipeFunc16,
-	WipeFunc17,
 	WipeFunc18,
 	WipeFunc19,
 	WipeFunc20,
@@ -205,11 +209,10 @@ const static pWIPEFunc WipeFunc[] = {
 	WipeFunc35,
 	WipeFunc36,
 	WipeFunc37,
-	WipeFunc38,
-	WipeFunc39,
 	WipeFunc40,
 	WipeFunc41,
 	WipeFunc42,
+  */
 #endif //MULTI_BOOT_MAKE
 };
 

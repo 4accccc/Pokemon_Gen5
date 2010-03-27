@@ -47,6 +47,14 @@
 #define 	WIPE_TYPE_SHUTTERIN_UP			(5)// シャッターイン	下から上			ハードウェアウィンドウ使用
 #define 	WIPE_TYPE_SLIDEOUT				(6)// スライドアウト	右から左			ハードウェアウィンドウ使用	
 #define 	WIPE_TYPE_SLIDEIN				(7)// スライドイン		右から左			ハードウェアウィンドウ使用
+#define 	WIPE_TYPE_HOLEOUT				(8)// ホールアウト							ハードウェアウィンドウ使用 旧16
+#define 	WIPE_TYPE_HOLEIN				(9)// ホールイン							ハードウェアウィンドウ使用  旧17
+#define 	WIPE_TYPE_SLIDEOUT_LR			(10)// スライドアウト　左から右 			ハードウェアウィンドウ使用　旧38
+#define 	WIPE_TYPE_SLIDEIN_LR			(11)// スライドイン	　 左から右				ハードウェアウィンドウ使用　旧39
+
+#define 	WIPE_TYPE_MAX					(12)// 最大数
+
+/* 常駐メモリをあけるため　カット
 #define 	WIPE_TYPE_SPLITOUT_VSIDE		(8)// スプリットアウト	縦　画面上下から	ハードウェアウィンドウ使用
 #define 	WIPE_TYPE_SPLITIN_VCENTER		(9)// スプリットイン	縦　画面中央から	ハードウェアウィンドウ使用
 #define 	WIPE_TYPE_SPLITOUT_VCENTER		(10)// スプリットアウト	縦	画面中央から	ハードウェアウィンドウ使用
@@ -55,8 +63,6 @@
 #define 	WIPE_TYPE_SPLITIN_HCENTER		(13)// スプリットイン	横	画面中央から	ハードウェアウィンドウ使用
 #define 	WIPE_TYPE_SPLITOUT_HCENTER		(14)// スプリットアウト	横	画面中央から	ハードウェアウィンドウ使用
 #define 	WIPE_TYPE_SPLITIN_HSIDE			(15)// スプリットイン	横	画面左右から	ハードウェアウィンドウ使用
-#define 	WIPE_TYPE_HOLEOUT				(16)// ホールアウト							ハードウェアウィンドウ使用
-#define 	WIPE_TYPE_HOLEIN				(17)// ホールイン							ハードウェアウィンドウ使用
 #define 	WIPE_TYPE_TUNNELOUT				(18)// トンネルアウト						ハードウェアウィンドウ使用
 #define 	WIPE_TYPE_TUNNELIN				(19)// トンネルイン							ハードウェアウィンドウ使用
 #define 	WIPE_TYPE_CURTAINOUT			(20)// カーテンアウト						ハードウェアウィンドウ使用
@@ -77,13 +83,10 @@
 #define 	WIPE_TYPE_FLASHIN_FOREWAY		(35)// フラッシュイン	４方向              ハードウェアウィンドウ使用
 #define 	WIPE_TYPE_TUNNELOUT_TOP			(36)// トンネルアウト						ハードウェアウィンドウ使用
 #define 	WIPE_TYPE_TUNNELIN_TOP			(37)// トンネルイン							ハードウェアウィンドウ使用
-#define 	WIPE_TYPE_SLIDEOUT_LR			(38)// スライドアウト　左から右 			ハードウェアウィンドウ使用
-#define 	WIPE_TYPE_SLIDEIN_LR			(39)// スライドイン	　 左から右				ハードウェアウィンドウ使用
 #define 	WIPE_TYPE_PESOCOMOUT			(40)// パソコンアウト						ハードウェアウィンドウ使用
 #define 	WIPE_TYPE_PESOCOMIN				(41)// パソコンイン							ハードウェアウィンドウ使用
 #define 	WIPE_TYPE_ROUNDOUT				(42)// ラウンドアウト						ハードウェアウィンドウ使用
-
-#define 	WIPE_TYPE_MAX					(43)// 最大数
+*/
 
 //-------------------------------------
 //	
