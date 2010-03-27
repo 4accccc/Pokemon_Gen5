@@ -50,6 +50,8 @@ typedef struct _BTL_REC_SEL_PARAM
   GAMEDATA*         gamedata;           ///< [in,out]  GAMEDATA  // 性別判定、バトルレコーダーの有無判定、セーブデータ取得
   BOOL              b_rec;              ///< [in]      サーバーバージョンを比較した結果、録画セーブ可能のときTRUE
   BOOL              b_sync;             ///< [in]      同期を取る必要があるときTRUE
+  int               battle_mode;        ///< [in]      BATTLE_MODE_xxx
+  int               fight_count;        ///< [in]      連勝数
 }
 BTL_REC_SEL_PARAM;
 
@@ -66,7 +68,9 @@ extern BTL_REC_SEL_PARAM*  BTL_REC_SEL_AllocParam(
                             HEAPID           heap_id,
                             GAMEDATA*        gamedata,
                             BOOL             b_rec,
-                            BOOL             b_sync );
+                            BOOL             b_sync,
+                            int              battle_mode,
+                            int              fight_count );
 
 //-------------------------------------
 /// PROC パラメータ解放
@@ -81,4 +85,6 @@ extern void             BTL_REC_SEL_InitParam(
                             BTL_REC_SEL_PARAM*  param,
                             GAMEDATA*           gamedata,
                             BOOL                b_rec,
-                            BOOL                b_sync );
+                            BOOL                b_sync,
+                            int                 battle_mode,
+                            int                 fight_count );

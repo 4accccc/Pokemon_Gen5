@@ -48,6 +48,8 @@ typedef struct {
   GAMEDATA* gdata;
   BATTLE_SETUP_PARAM  *btl_setup_prm;
   COMM_BTL_DEMO_PARAM *demo_prm;
+  int battle_mode;      ///<BATTLE_MODE_xxx
+  int fight_count;      ///<˜AŸ”
   // [PRIVATE]
   BTL_REC_SEL_PARAM  btl_rec_sel_param;
 } COMM_BATTLE_CALL_PROC_PARAM;
@@ -60,6 +62,8 @@ typedef struct{
   GAMESYS_WORK * gsys;  
   BATTLE_SETUP_PARAM  *btl_setup_prm;
   COMM_BTL_DEMO_PARAM *demo_prm;
+  int battle_mode;      ///<BATTLE_MODE_xxx
+  int fight_count;      ///<˜AŸ”
   // [PRIVATE]
   COMM_BATTLE_CALL_PROC_PARAM cbc;
 }EVENT_BATTLE_CALL_WORK;

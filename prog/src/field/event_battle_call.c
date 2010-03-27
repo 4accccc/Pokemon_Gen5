@@ -273,7 +273,7 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
       else
       {
         // 通信対戦時のサーババーション
-        if( bcw->btl_setup_prm->commServerVer >= BTL_NET_SERVER_VERSION )
+        if( bcw->btl_setup_prm->commServerVer <= BTL_NET_SERVER_VERSION )
         {
           // 自分と同じサーバーバージョン OR 自分が一番高いならば録画可能
           b_rec = TRUE;
@@ -289,6 +289,8 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
         bcw->btl_rec_sel_param.gamedata  = bcw->gdata;
         bcw->btl_rec_sel_param.b_rec     = b_rec;
         bcw->btl_rec_sel_param.b_sync    = TRUE;
+        bcw->btl_rec_sel_param.battle_mode = bcw->battle_mode;
+        bcw->btl_rec_sel_param.fight_count = bcw->fight_count;
         GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID( btl_rec_sel ), &BTL_REC_SEL_ProcData, &bcw->btl_rec_sel_param );
       }
       (*seq) = SEQ_BGM_POP;
@@ -376,6 +378,8 @@ GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work)
       prm->gdata = GAMESYSTEM_GetGameData( gsys );
       prm->btl_setup_prm = bcw->btl_setup_prm;
       prm->demo_prm = bcw->demo_prm;
+      prm->battle_mode = bcw->battle_mode;
+      prm->fight_count = bcw->fight_count;
       GAMESYSTEM_CallProc(gsys, NO_OVERLAY_ID, &CommBattleCommProcData, prm);
     }
     (*seq)++;

@@ -47,58 +47,58 @@ typedef u64 DATA_NUMBER;
 //--------------------------------------------------------------
 //  戦闘モード(施設一覧)
 //--------------------------------------------------------------
-///バトルモード
+///バトルモード   ※BattleRecModeBitTblと並びを同じにしておくこと！！
 typedef enum{
   //コロシアム：シングル
-  BATTLE_MODE_COLOSSEUM_SINGLE_FREE,
-  BATTLE_MODE_COLOSSEUM_SINGLE_50,
-  BATTLE_MODE_COLOSSEUM_SINGLE_FREE_SHOOTER,
-  BATTLE_MODE_COLOSSEUM_SINGLE_50_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_SINGLE_FREE,    //コロシアム　シングル　制限無し
+  BATTLE_MODE_COLOSSEUM_SINGLE_50,      //コロシアム　シングル　フラット
+  BATTLE_MODE_COLOSSEUM_SINGLE_FREE_SHOOTER,  //コロシアム　シングル　制限無し　シューターあり
+  BATTLE_MODE_COLOSSEUM_SINGLE_50_SHOOTER,    //コロシアム　シングル　フラット　シューターあり
   //コロシアム：ダブル
-  BATTLE_MODE_COLOSSEUM_DOUBLE_FREE,
-  BATTLE_MODE_COLOSSEUM_DOUBLE_50,
-  BATTLE_MODE_COLOSSEUM_DOUBLE_FREE_SHOOTER,
-  BATTLE_MODE_COLOSSEUM_DOUBLE_50_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_DOUBLE_FREE,          //コロシアム　ダブル　制限無し
+  BATTLE_MODE_COLOSSEUM_DOUBLE_50,            //コロシアム　ダブル　フラット
+  BATTLE_MODE_COLOSSEUM_DOUBLE_FREE_SHOOTER,  //コロシアム　ダブル　制限無し　シューターあり
+  BATTLE_MODE_COLOSSEUM_DOUBLE_50_SHOOTER,    //コロシアム　ダブル　フラット　シューターあり
   //コロシアム：トリプル
-  BATTLE_MODE_COLOSSEUM_TRIPLE_FREE,
-  BATTLE_MODE_COLOSSEUM_TRIPLE_50,
-  BATTLE_MODE_COLOSSEUM_TRIPLE_FREE_SHOOTER,
-  BATTLE_MODE_COLOSSEUM_TRIPLE_50_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_TRIPLE_FREE,          //コロシアム　トリプル　制限無し
+  BATTLE_MODE_COLOSSEUM_TRIPLE_50,            //コロシアム　トリプル　フラット
+  BATTLE_MODE_COLOSSEUM_TRIPLE_FREE_SHOOTER,  //コロシアム　トリプル　制限無し　シューターあり
+  BATTLE_MODE_COLOSSEUM_TRIPLE_50_SHOOTER,    //コロシアム　トリプル　フラット　シューターあり
   //コロシアム：ローテーション
-  BATTLE_MODE_COLOSSEUM_ROTATION_FREE,
-  BATTLE_MODE_COLOSSEUM_ROTATION_50,
-  BATTLE_MODE_COLOSSEUM_ROTATION_FREE_SHOOTER,
-  BATTLE_MODE_COLOSSEUM_ROTATION_50_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_ROTATION_FREE,        //コロシアム　ローテーション　制限無し
+  BATTLE_MODE_COLOSSEUM_ROTATION_50,          //コロシアム　ローテーション　フラット
+  BATTLE_MODE_COLOSSEUM_ROTATION_FREE_SHOOTER,  //コロシアム　ローテ　制限無し　シューターあり
+  BATTLE_MODE_COLOSSEUM_ROTATION_50_SHOOTER,    //コロシアム　ローテ　フラット　シューターあり
   //コロシアム：マルチ
-  BATTLE_MODE_COLOSSEUM_MULTI_FREE,
-  BATTLE_MODE_COLOSSEUM_MULTI_50,
-  BATTLE_MODE_COLOSSEUM_MULTI_FREE_SHOOTER,
-  BATTLE_MODE_COLOSSEUM_MULTI_50_SHOOTER,
+  BATTLE_MODE_COLOSSEUM_MULTI_FREE,           //コロシアム　マルチ　制限無し
+  BATTLE_MODE_COLOSSEUM_MULTI_50,             //コロシアム　マルチ　フラット
+  BATTLE_MODE_COLOSSEUM_MULTI_FREE_SHOOTER,   //コロシアム　マルチ　制限無し　シューターあり
+  BATTLE_MODE_COLOSSEUM_MULTI_50_SHOOTER,     //コロシアム　マルチ　フラット　シューターあり
   //地下鉄
-  BATTLE_MODE_SUBWAY_SINGLE,     //WIFI DL含む
-  BATTLE_MODE_SUBWAY_DOUBLE,
-  BATTLE_MODE_SUBWAY_MULTI,      //NPC, COMM, WIFI
+  BATTLE_MODE_SUBWAY_SINGLE,     //WIFI DL含む      地下鉄　シングル
+  BATTLE_MODE_SUBWAY_DOUBLE,                      //地下鉄　ダブル
+  BATTLE_MODE_SUBWAY_MULTI,      //NPC, COMM, WIFI  地下鉄　マルチ
   //ランダムマッチ：フリー
-  BATTLE_MODE_RANDOM_FREE_SINGLE,
-  BATTLE_MODE_RANDOM_FREE_DOUBLE,
-  BATTLE_MODE_RANDOM_FREE_TRIPLE,
-  BATTLE_MODE_RANDOM_FREE_ROTATION,
-  BATTLE_MODE_RANDOM_FREE_SHOOTER,
+  BATTLE_MODE_RANDOM_FREE_SINGLE,             //ランダムマッチ　フリー　シングル
+  BATTLE_MODE_RANDOM_FREE_DOUBLE,             //ランダムマッチ　フリー　ダブル
+  BATTLE_MODE_RANDOM_FREE_TRIPLE,             //ランダムマッチ　フリー　トリプル
+  BATTLE_MODE_RANDOM_FREE_ROTATION,           //ランダムマッチ　フリー　ローテーション
+  BATTLE_MODE_RANDOM_FREE_SHOOTER,            //ランダムマッチ　フリー　シューターバトル
   //ランダムマッチ：レーティング
-  BATTLE_MODE_RANDOM_RATING_SINGLE,
-  BATTLE_MODE_RANDOM_RATING_DOUBLE,
-  BATTLE_MODE_RANDOM_RATING_TRIPLE,
-  BATTLE_MODE_RANDOM_RATING_ROTATION,
-  BATTLE_MODE_RANDOM_RATING_SHOOTER,
+  BATTLE_MODE_RANDOM_RATING_SINGLE,           //ランダムマッチ　レーティング　シングル
+  BATTLE_MODE_RANDOM_RATING_DOUBLE,           //ランダムマッチ　レーティング　ダブル
+  BATTLE_MODE_RANDOM_RATING_TRIPLE,           //ランダムマッチ　レーティング　トリプル
+  BATTLE_MODE_RANDOM_RATING_ROTATION,         //ランダムマッチ　レーティング　ローテーション
+  BATTLE_MODE_RANDOM_RATING_SHOOTER,          //ランダムマッチ　レーティング　シューターバトル
   //大会
-  BATTLE_MODE_COMPETITION_SINGLE,
-  BATTLE_MODE_COMPETITION_SINGLE_SHOOTER,
-  BATTLE_MODE_COMPETITION_DOUBLE,
-  BATTLE_MODE_COMPETITION_DOUBLE_SHOOTER,
-  BATTLE_MODE_COMPETITION_TRIPLE,
-  BATTLE_MODE_COMPETITION_TRIPLE_SHOOTER,
-  BATTLE_MODE_COMPETITION_ROTATION,
-  BATTLE_MODE_COMPETITION_ROTATION_SHOOTER,
+  BATTLE_MODE_COMPETITION_SINGLE,             //大会バトル　シングル　シューター無し
+  BATTLE_MODE_COMPETITION_SINGLE_SHOOTER,     //大会バトル　シングル　シューターあり
+  BATTLE_MODE_COMPETITION_DOUBLE,             //大会バトル　ダブル　シューター無し
+  BATTLE_MODE_COMPETITION_DOUBLE_SHOOTER,     //大会バトル　ダブル　シューターあり
+  BATTLE_MODE_COMPETITION_TRIPLE,             //大会バトル　トリプル　シューター無し
+  BATTLE_MODE_COMPETITION_TRIPLE_SHOOTER,     //大会バトル　トリプル　シューターあり
+  BATTLE_MODE_COMPETITION_ROTATION,           //大会バトル　ローテーション　シューター無し
+  BATTLE_MODE_COMPETITION_ROTATION_SHOOTER,   //大会バトル　ローテーション　シューターあり
 }BATTLE_MODE;
 
 //終端
@@ -195,7 +195,7 @@ extern void BattleRec_DataClear(void);
 extern void * BattleRec_RecWorkAdrsGet( void );
 extern BOOL BattleRec_Load( SAVE_CONTROL_WORK *sv, HEAPID heapID, LOAD_RESULT *result, int num );
 extern BOOL BattleRec_DataOccCheck(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *result,int num);
-extern SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int rec_mode, int fight_count, int num, u16 *work0, u16 *work1);
+extern SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, BATTLE_MODE rec_mode, int fight_count, int num, u16 *work0, u16 *work1);
 extern SAVE_RESULT BattleRec_SaveDataErase(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int num);
 extern void BattleRec_ClientTemotiGet(BATTLE_MODE rec_mode, int *client_max, int *temoti_max);
 extern void BattleRec_BattleParamRec(BATTLE_PARAM *bp);

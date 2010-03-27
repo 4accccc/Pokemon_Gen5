@@ -490,6 +490,8 @@ const GFL_PROC_DATA    BTL_REC_SEL_ProcData =
  *  @param[in]   gamedata      GAMEDATA  // 性別判定、バトルレコーダーの有無判定、セーブデータ取得
  *  @param[in]   b_rec         サーバーバージョンを比較した結果、録画セーブ可能のときTRUE
  *  @param[in]   b_sync        同期を取る必要があるときTRUE
+ *  @param[in]   battle_mode   BATTLE_MODE_xxx
+ *  @param[in]   fight_count   連勝数
  *
  *  @retval      BTL_REC_SEL_PARAM
  */
@@ -498,10 +500,12 @@ BTL_REC_SEL_PARAM*  BTL_REC_SEL_AllocParam(
                             HEAPID           heap_id,
                             GAMEDATA*        gamedata,
                             BOOL             b_rec,
-                            BOOL             b_sync )
+                            BOOL             b_sync,
+                            int              battle_mode,
+                            int              fight_count )
 {
   BTL_REC_SEL_PARAM* param = GFL_HEAP_AllocMemory( heap_id, sizeof( BTL_REC_SEL_PARAM ) );
-  BTL_REC_SEL_InitParam( param, gamedata, b_rec, b_sync );
+  BTL_REC_SEL_InitParam( param, gamedata, b_rec, b_sync, battle_mode, fight_count );
   return param;
 }
 
@@ -528,6 +532,8 @@ void             BTL_REC_SEL_FreeParam(
  *  @param[in]       gamedata   GAMEDATA  // 性別判定、バトルレコーダーの有無判定、セーブデータ取得
  *  @param[in]       b_rec      サーバーバージョンを比較した結果、録画セーブ可能のときTRUE
  *  @param[in]       b_sync     同期を取る必要があるときTRUE
+ *  @param[in]       battle_mode   BATTLE_MODE_xxx
+ *  @param[in]       fight_count   連勝数
  *
  *  @retval          
  */
@@ -536,11 +542,15 @@ void             BTL_REC_SEL_InitParam(
                             BTL_REC_SEL_PARAM*  param,
                             GAMEDATA*           gamedata,
                             BOOL                b_rec,
-                            BOOL                b_sync )
+                            BOOL                b_sync,
+                            int                 battle_mode,
+                            int                 fight_count )
 {
   param->gamedata    = gamedata;
   param->b_rec       = b_rec;
   param->b_sync      = b_sync;
+  param->battle_mode = battle_mode;
+  param->fight_count = fight_count;
 }
 
 
@@ -1131,7 +1141,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       if( work->battle_rec_new_save_result != SAVE_RESULT_OK && work->battle_rec_new_save_result != SAVE_RESULT_NG )
       {
         work->battle_rec_new_save_result = BattleRec_Save( sv, work->heap_id,
-            work->battle_rec_new_mode, 0, LOADDATA_MYREC,  // fight_countはバトルサブウェイ以外では使わないので0でいい
+            param->battle_mode, param->fight_count, LOADDATA_MYREC,  // fight_countはバトルサブウェイ以外では使わないので0でいい
             &(work->battle_rec_new_work0), &(work->battle_rec_new_work1) );
       }
 #endif

@@ -868,7 +868,7 @@ static void BtlRecSelInit( KAWADA_MAIN_WORK* wk )
     MYITEM_AddItem( myitem_ptr, ITEM_BATORUREKOODAA, 1, wk->heapID );
   }
 
-  wk->btl_rec_sel_param = BTL_REC_SEL_AllocParam( wk->heapID, wk->gamedata, b_rec, b_sync );
+  wk->btl_rec_sel_param = BTL_REC_SEL_AllocParam( wk->heapID, wk->gamedata, b_rec, b_sync,0,0 );
   
   GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &BTL_REC_SEL_ProcData, wk->btl_rec_sel_param );
 }

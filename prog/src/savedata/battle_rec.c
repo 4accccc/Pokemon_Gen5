@@ -34,6 +34,7 @@
 #include "savedata\battle_rec.h"
 #include "net_app/gds/gds_profile_local.h"
 #include "battle_rec_local.h"
+#include "net_app/gds/gds_battle_mode.h"
 
 /*----------------------------------------------------------------------------*/
 
@@ -63,6 +64,12 @@ static BOOL restore_OperationBuffer( BATTLE_SETUP_PARAM* setup, const BATTLE_REC
 static BOOL store_SetupSubset( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec );
 static BOOL restore_SetupSubset( BATTLE_SETUP_PARAM* setup, const BATTLE_REC_WORK* rec );
 
+
+//==============================================================================
+//  データ
+//==============================================================================
+#include "battle_rec_mode.cdat"
+SDK_COMPILER_ASSERT(BATTLE_MODE_MAX == NELEMS(BattleRecModeBitTbl));
 
 
 //--------------------------------------------------------------
@@ -447,7 +454,7 @@ SAVE_RESULT Local_BattleRecSave(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *work
  * @retval  セーブ結果(SAVE_RESULT_OK or SAVE_RESULT_NG が返るまで場合は毎フレーム呼び続けてください)
  */
 //------------------------------------------------------------------
-SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int rec_mode, int fight_count, int num, u16 *work0, u16 *work1)
+SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, BATTLE_MODE rec_mode, int fight_count, int num, u16 *work0, u16 *work1)
 {
   BATTLE_REC_HEADER *head;
   BATTLE_REC_WORK *rec;
@@ -589,8 +596,9 @@ static void RecHeaderCreate(SAVE_CONTROL_WORK *sv, BATTLE_REC_HEADER *head, cons
     }
   }
 
+  GF_ASSERT(rec_mode < BATTLE_MODE_MAX);
   head->battle_counter = counter;
-  head->mode = rec_mode;
+  head->mode = BattleRecModeBitTbl[rec_mode];
   head->server_vesion = BTL_NET_SERVER_VERSION;
 }
 
@@ -993,10 +1001,15 @@ u64 RecHeader_ParamGet(BATTLE_REC_HEADER_PTR head, int index, int param)
     return head->battle_counter;
 
   case RECHEAD_IDX_MODE:
-    if(head->mode >= BATTLE_MODE_MAX){
-      return BATTLE_MODE_COLOSSEUM_SINGLE_FREE;
+    {
+      int i;
+      for(i = 0; i < BATTLE_MODE_MAX; i++){
+        if(head->mode == BattleRecModeBitTbl[i]){
+          return i;
+        }
+      }
     }
-    return head->mode;
+    return BATTLE_MODE_COLOSSEUM_SINGLE_FREE;
   case RECHEAD_IDX_DATA_NUMBER:
     return head->data_number;
   case RECHEAD_IDX_SECURE:
