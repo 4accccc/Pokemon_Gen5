@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/22 15:47:12
+#save date:2010/03/27 23:17:30
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r14.wms
 #SECTION START:OBJ_EVENT
@@ -49,7 +49,7 @@ TR_KARATE_11
 #OBJ CODE Number
 FIGHTERM
 #MOVE CODE Number
-MV_RND_H
+MV_RND_LR
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -111,7 +111,7 @@ TR_ELITEM_16
 #OBJ CODE Number
 TRAINERM
 #MOVE CODE Number
-MV_RND_V
+MV_RND_UD
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
