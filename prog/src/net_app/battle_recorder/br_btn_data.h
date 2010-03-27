@@ -115,6 +115,7 @@ typedef struct
   BOOL    is_valid[BR_RECORD_NUM];
   STRBUF  *p_name[BR_RECORD_NUM];
   u32     sex[BR_RECORD_NUM];
+  BOOL    is_musical_valid;
 } BR_BTN_DATA_SETUP;
 
 

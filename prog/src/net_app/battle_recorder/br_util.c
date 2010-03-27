@@ -253,9 +253,13 @@ struct _BR_LIST_WORK
   BR_LIST_MOVE_FUNC move_callback;
   GFL_UI_TP_HITTBL    hittbl[BR_LIST_HITTBL_MAX];
 
+  //ボールエフェクト
+  BR_BALLEFF_WORK     *p_balleff;
+
   BOOL      is_hit;   //スライダー
   u16       trg_y;    //スライダートリガ座標
   GFL_BMP_DATA        *p_bmp[0];
+
 };
 //-------------------------------------
 ///	プロトタイプ
@@ -315,6 +319,7 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
   }
   else if( p_wk->param.type == BR_LIST_TYPE_CURSOR )
   { 
+    p_wk->p_balleff = BR_BALLEFF_Init( cp_param->p_unit, p_wk->param.p_res, CLSYS_DRAW_MAIN, heapID );
     p_wk->move_callback = Br_CursorList_MoveCallback;
   }
 
@@ -474,6 +479,10 @@ void BR_LIST_Exit( BR_LIST_WORK* p_wk )
   GFL_BMPWIN_ClearScreen( p_wk->p_bmpwin );
   GFL_BMPWIN_Delete( p_wk->p_bmpwin );
 
+  if( p_wk->p_balleff )
+  {
+    BR_BALLEFF_Exit( p_wk->p_balleff );
+  }
 
   if( p_wk->param.frm < GFL_BG_FRAME0_S )
   { 
@@ -548,6 +557,12 @@ void BR_LIST_Main( BR_LIST_WORK* p_wk )
       GF_ASSERT( p_wk->cursor + p_wk->list < p_wk->param.list_max  );
       p_wk->select_param  = p_wk->param.cp_list[ p_wk->cursor + p_wk->list ].param;
     }
+  }
+
+
+  if( p_wk->p_balleff )
+  {
+    BR_BALLEFF_Main( p_wk->p_balleff );
   }
 }
 
@@ -1483,8 +1498,11 @@ BOOL BR_SEQ_IsComp( const BR_SEQ_WORK *cp_wk, BR_SEQ_FUNCTION seq_function )
 
 typedef struct 
 {
-  GFL_POINT pos;
+  GFL_POINT center_pos;
+  GFL_POINT now_pos;
   u16 r;
+  u16 init_angle;
+  int cnt_max;
 } MOVE_CIRCLE;
 
 //-------------------------------------
@@ -1514,7 +1532,7 @@ static void Br_BallEff_Seq_Circle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 static void Br_BallEff_Seq_CircleCont( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 //動き
 static void MOVE_CIRCLE_Init( MOVE_CIRCLE *p_wk, const GFL_POINT *cp_center_pos, u16 r, u16 init_angle, int cnt_max );
-static BOOL MOVE_CIRCLE_Main( MOVE_CIRCLE *p_wk, GFL_POINT *p_now_pos, int *p_cnt );
+static BOOL MOVE_CIRCLE_Main( MOVE_CIRCLE *p_wk, GFL_POINT *p_now_pos, int cnt );
 
 //-------------------------------------
 ///	外部公開
@@ -1757,7 +1775,7 @@ static void Br_BallEff_Seq_BigCircle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       GFL_POINT pos;
       for( i = 0; i < BR_BALLEFF_CLWK_MAX; i++ )
       { 
-        MOVE_CIRCLE_Main( &p_wk->circle[i], &pos, &p_wk->cnt );
+        MOVE_CIRCLE_Main( &p_wk->circle[i], &pos, p_wk->cnt );
       }
 
       p_wk->cnt++;
@@ -1793,4 +1811,56 @@ static void Br_BallEff_Seq_CircleCont( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
 { 
 
   BR_BALLEFF_WORK *p_wk = p_wk_adrs;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  円運動  初期化
+ *
+ *	@param	MOVE_CIRCLE *p_wk         ワーク
+ *	@param	GFL_POINT *cp_center_pos  中心座標
+ *	@param	r                         半径
+ *	@param	init_angle                初期角度
+ *	@param	cnt_max                   動作するシンク
+ */
+//-----------------------------------------------------------------------------
+static void MOVE_CIRCLE_Init( MOVE_CIRCLE *p_wk, const GFL_POINT *cp_center_pos, u16 r, u16 init_angle, int cnt_max )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(MOVE_CIRCLE) );
+  p_wk->center_pos  = *cp_center_pos;
+  p_wk->r           = r;
+  p_wk->cnt_max     = cnt_max;
+  p_wk->init_angle  = init_angle;
+
+  MOVE_CIRCLE_Main( p_wk, NULL, 0 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  円運動  メイン処理
+ *
+ *	@param	MOVE_CIRCLE *p_wk ワーク
+ *	@param	*p_now_pos        現在座標受け取り
+ *	@param	cnt               カウンタ
+ *
+ *	@return TRUE maxシンクを超えた  FALSE maxシンクを超えてない
+ */
+//-----------------------------------------------------------------------------
+static BOOL MOVE_CIRCLE_Main( MOVE_CIRCLE *p_wk, GFL_POINT *p_now_pos, int cnt )
+{ 
+  u16 angle;
+
+  //現在のアングルを取得
+  angle = p_wk->init_angle + (0xFFFF * cnt / p_wk->cnt_max);
+
+  //中心座標、半径、角度から座標を求める
+  p_wk->now_pos.x = (FX_CosIdx( angle ) * p_wk->r) >> FX32_SHIFT;
+  p_wk->now_pos.y = (FX_SinIdx( angle ) * p_wk->r) >> FX32_SHIFT;
+
+  //受け取りバッファに格納
+  if( p_now_pos )
+  { 
+    *p_now_pos  = p_wk->now_pos;
+  }
+
+  return cnt == p_wk->cnt_max;
 }

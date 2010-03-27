@@ -1323,9 +1323,9 @@ static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, GFL_CLUNIT *p_clunit, int numb
         NARC_battle_recorder_gra_batt_rec_bpfont_NCLR,
         CLSYS_DRAW_MAIN, PLT_OBJ_M_BTLSUBWAY_BP*0x20, 0, 1, heapID );
     p_wk->res_cel = GFL_CLGRP_CELLANIM_Register( p_handle,
-        NARC_battle_recorder_gra_batt_rec_bpfont_64k_NCER, NARC_battle_recorder_gra_batt_rec_bpfont_64k_NANR, heapID );
+        NARC_battle_recorder_gra_batt_rec_bpfont_NCER, NARC_battle_recorder_gra_batt_rec_bpfont_NANR, heapID );
     p_wk->res_chr = GFL_CLGRP_CGR_Register( p_handle,
-              NARC_battle_recorder_gra_batt_rec_browse_bpfont_NCGR,
+              NARC_battle_recorder_gra_batt_rec_bpfont_NCGR,
               FALSE, CLSYS_DRAW_MAIN, heapID );
 
     GFL_ARC_CloseDataHandle( p_handle );

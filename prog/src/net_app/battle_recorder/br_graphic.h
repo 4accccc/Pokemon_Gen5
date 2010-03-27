@@ -15,6 +15,15 @@
  *					定数宣言
 */
 //=============================================================================
+//-------------------------------------
+///	グラフィック設定モード
+//=====================================
+typedef enum
+{
+  BR_GRAPHIC_SETUP_2D,  //2Dメインにセットアップ
+  BR_GRAPHIC_SETUP_3D,  //3Dメインにセットアップ(G3Dの初期化等は行いません)
+} BR_GRAPHIC_SETUP_TYPE;
+
 
 //=============================================================================
 /**
@@ -36,7 +45,7 @@ typedef struct _BR_GRAPHIC_WORK  BR_GRAPHIC_WORK;
 //	ディスプレイセレクトにはGX_DISP_SELECT_MAIN_SUB or GX_DISP_SELECT_SUB_MAINを
 //	渡してください。途中で書き換えたい場合、GFL_DISP_SetDispSelectを使用して下さい。
 //=====================================
-extern BR_GRAPHIC_WORK * BR_GRAPHIC_Init( int display_select, HEAPID heapID );
+extern BR_GRAPHIC_WORK * BR_GRAPHIC_Init( BR_GRAPHIC_SETUP_TYPE type, int display_select, HEAPID heapID );
 //-------------------------------------
 ///破棄
 //=====================================

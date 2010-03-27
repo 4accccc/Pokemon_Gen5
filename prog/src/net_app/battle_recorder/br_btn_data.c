@@ -743,8 +743,8 @@ static const BR_BTN_DATA sc_btn_data_musical_top[BTN_DATA_MUSICAL_TOP_MAX] =
 		BR_MUSICAL_MENUID_TOP,
 		msg_301,
 		0,
-		BR_BTN_TYPE_EXIT,//BR_BTN_TYPE_CHANGESEQ,
-		0,//BR_PROCID_MUSICAL_LOOK,
+		BR_BTN_TYPE_CHANGESEQ,
+		BR_PROCID_MUSICAL_LOOK,
 		0,
 		0,
 		0,
@@ -758,12 +758,12 @@ static const BR_BTN_DATA sc_btn_data_musical_top[BTN_DATA_MUSICAL_TOP_MAX] =
 		BR_MUSICAL_MENUID_TOP,
 		msg_300,
 		0,
-		BR_BTN_TYPE_CHANGESEQ,
-		BR_PROCID_MUSICAL_SEND,
+		BR_BTN_TYPE_SELECT_MSG,
+		BR_MENUID_MUSICALSEND_YESNO,
+		msg_info_032,
 		0,
-		0,
-		0,
-		0,
+		BR_BTN_NONEPROC_NOPUSH,
+		msg_info_021,
     BR_BTN_UNIQUE_SHOTSEND,
 	},
 	//やめる
@@ -791,9 +791,60 @@ static const BR_BTN_LINK sc_btn_link_musical_top[] =
 };
 
 //-------------------------------------
+///	ミュージカルショットを送る？	はい、いいえ
+//=====================================
+static const BR_BTN_DATA sc_btn_data_musicalsend_yesno[BTN_DATA_YESNO_MAX] =
+{	
+	//はい
+	{	
+		BR_BTN_POS_X,
+		BR_BTN_DATA_GET_Y(0,BTN_DATA_YESNO_MAX),
+		BR_MENUID_MUSICALSEND_YESNO,
+		msg_1000,
+		8,
+		BR_BTN_TYPE_CHANGESEQ,
+		BR_PROCID_MUSICAL_SEND,
+		0,
+		0,
+		0,
+		0,
+    0,
+	},
+	//いいえ
+	{	
+		BR_BTN_POS_X,
+		BR_BTN_DATA_GET_Y(1,BTN_DATA_YESNO_MAX),
+		BR_MENUID_MUSICALSEND_YESNO,
+		msg_1001,
+		5,
+		BR_BTN_TYPE_RETURN,
+		BR_MUSICAL_MENUID_TOP,
+		0,
+		0,
+		0,
+		0,
+    0,
+	},
+
+};
+
+static const BR_BTN_LINK sc_btn_link_musicalsend_yesno[] = 
+{	
+  { 
+    BR_MUSICAL_MENUID_TOP,
+    1,
+  },
+	{	
+		BR_BTN_LINK_END,
+		BR_BTN_LINK_END,
+	}
+};
+
+
+
+//-------------------------------------
 ///	汎用	はい、いいえ
 //=====================================
-#define BTN_DATA_YESNO_MAX	(2)
 static const BR_BTN_DATA sc_btn_data_yesno[BTN_DATA_YESNO_MAX] =
 {	
 	//はい
@@ -893,6 +944,11 @@ static const struct
     BTN_DATA_YESNO_MAX,
     sc_btn_data_bvsend_yesno,
     sc_btn_link_bvsend_yesno,
+  },
+  { 
+    BTN_DATA_YESNO_MAX,
+    sc_btn_data_musicalsend_yesno,
+    sc_btn_link_musicalsend_yesno,
   },
 };
 
@@ -1009,7 +1065,9 @@ BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPI
 
 
         case BR_BTN_UNIQUE_SHOTSEND:
-          //GF_ASSERT( 0 ); //@todo
+          { 
+            p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->is_musical_valid;
+          }
           break;
 
 				default:	//その他はどんなときでも押せる

@@ -42,6 +42,8 @@ typedef enum
 
 	BR_MENUID_YESNO,								//汎用	はい、いいえ
 	BR_MENUID_BVSEND_YESNO,					//バトルビデオを送る	はい、いいえ
+	BR_MENUID_MUSICALSEND_YESNO,					//ミュージカルショットを送る	はい、いいえ
+
 	BR_MENUID_MAX
 } BR_MENUID;
 
@@ -59,6 +61,7 @@ typedef struct
   BOOL    is_valid[BR_BTLREC_DATA_NUM];
   STRBUF  *p_name[BR_BTLREC_DATA_NUM];
   u32     sex[BR_BTLREC_DATA_NUM];
+  BOOL    is_musical_valid;
 } BR_MENU_BTLREC_DATA;
 
 

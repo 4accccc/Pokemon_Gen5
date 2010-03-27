@@ -125,6 +125,7 @@ static GFL_PROC_RESULT BR_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
       setup.p_name[i]   = p_param->cp_btlrec->p_name[i];
       setup.sex[i]      = p_param->cp_btlrec->sex[i];
     }
+    setup.is_musical_valid  = p_param->cp_btlrec->is_musical_valid;
     p_wk->p_btn	= BR_BTN_SYS_Init( p_param->menuID, p_param->p_unit, p_param->p_res, &setup, p_wk->heapID );
   }
 

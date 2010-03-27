@@ -80,8 +80,24 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 	GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
 	GX_VRAM_TEX_NONE,						// テクスチャイメージスロット
 	GX_VRAM_TEXPLTT_NONE,				// テクスチャパレットスロット
-	GX_OBJVRAMMODE_CHAR_1D_128K,// メイン画面OBJマッピングモード		
-	GX_OBJVRAMMODE_CHAR_1D_128K,// サブ画面OBJマッピングモード
+	GX_OBJVRAMMODE_CHAR_1D_32K,// メイン画面OBJマッピングモード		
+	GX_OBJVRAMMODE_CHAR_1D_32K,// サブ画面OBJマッピングモード
+};
+
+static const GFL_DISP_VRAM sc_vramSetTable3D = 
+{
+  GX_VRAM_BG_128_D,           // メイン2DエンジンのBG
+  GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
+  GX_VRAM_SUB_BG_128_C,       // サブ2DエンジンのBG
+  GX_VRAM_SUB_BGEXTPLTT_NONE, // サブ2DエンジンのBG拡張パレット
+  GX_VRAM_OBJ_32_FG,          // メイン2DエンジンのOBJ
+  GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
+  GX_VRAM_SUB_OBJ_16_I,       // サブ2DエンジンのOBJ
+  GX_VRAM_SUB_OBJEXTPLTT_NONE,// サブ2DエンジンのOBJ拡張パレット
+  GX_VRAM_TEX_01_AB,          // テクスチャイメージスロット
+  GX_VRAM_TEXPLTT_0123_E,     // テクスチャパレットスロット
+  GX_OBJVRAMMODE_CHAR_1D_32K,
+  GX_OBJVRAMMODE_CHAR_1D_32K
 };
 
 //=============================================================================
@@ -98,6 +114,10 @@ static const GFL_DISP_VRAM sc_vramSetTable =
 static const GFL_BG_SYS_HEADER sc_bgsys_header	=
 {	
 	GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_2D	//グラフィックモード、メインBG面設定、サブBG面設定、BG0面設定
+};
+static const GFL_BG_SYS_HEADER sc_bgsys_header3D	=
+{	
+  GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D	//グラフィックモード、メインBG面設定、サブBG面設定、BG0面設定
 };
 //-------------------------------------
 ///	BG面設定
@@ -382,7 +402,7 @@ struct _BR_GRAPHIC_WORK
 {
 	GRAPHIC_BG_WORK		bg;
 	GRAPHIC_OBJ_WORK	obj;
-	GRAPHIC_G3D_WORK		g3d;
+	GRAPHIC_G3D_WORK	g3d;
 	GFL_TCB						*p_vblank_task;
 };
 
@@ -435,15 +455,32 @@ static void Graphic_3d_SetUp( void );
 /**
  *	@brief	グラフィック設定
  *
+ *  @param  type    設定タイプ
  *	@param	ディスプレイ選択	GX_DISP_SELECT_MAIN_SUB or GX_DISP_SELECT_SUB_MAIN
  *	@param	HEAPID heapID ヒープ
  */
 //-----------------------------------------------------------------------------
-BR_GRAPHIC_WORK * BR_GRAPHIC_Init( int display_select, HEAPID heapID )
+BR_GRAPHIC_WORK * BR_GRAPHIC_Init( BR_GRAPHIC_SETUP_TYPE type, int display_select, HEAPID heapID )
 {	
+  const GFL_DISP_VRAM     *cp_vram_bank;
+  const GFL_BG_SYS_HEADER *cp_header;
+
 	BR_GRAPHIC_WORK * p_wk;
 	p_wk	= GFL_HEAP_AllocMemory(heapID, sizeof(BR_GRAPHIC_WORK) );
 	GFL_STD_MemClear( p_wk, sizeof(BR_GRAPHIC_WORK) );
+
+  //タイプ別設定
+  switch( type )
+  { 
+  case BR_GRAPHIC_SETUP_2D:  //2Dメインにセットアップ
+    cp_vram_bank  = &sc_vramSetTable;
+    break;
+
+  case BR_GRAPHIC_SETUP_3D:  //3Dメインにセットアップ
+    cp_vram_bank  = &sc_vramSetTable3D;
+    break;
+  }
+
 
 	//レジスタ初期化
 	G2_BlendNone();
@@ -455,7 +492,7 @@ BR_GRAPHIC_WORK * BR_GRAPHIC_Init( int display_select, HEAPID heapID )
 	GFL_DISP_ClearVRAM( 0 );
 
 	//VRAMバンク設定
-	GFL_DISP_SetBank( &sc_vramSetTable );
+	GFL_DISP_SetBank( cp_vram_bank );
 
 	//ディスプレイON
 	GFL_DISP_SetDispSelect( display_select );
@@ -473,7 +510,7 @@ BR_GRAPHIC_WORK * BR_GRAPHIC_Init( int display_select, HEAPID heapID )
 	GRAPHIC_BG_Init( &p_wk->bg, heapID );
 #endif //GRAPHIC_BG_USE
 #ifdef GRAPHIC_OBJ_USE
-	GRAPHIC_OBJ_Init( &p_wk->obj, &sc_vramSetTable, heapID );
+	GRAPHIC_OBJ_Init( &p_wk->obj, cp_vram_bank, heapID );
 #endif //GRAPHIC_OBJ_USE
 #ifdef GRAPHIC_G3D_USE
 	//GRAPHIC_G3D_Init( &p_wk->g3d, heapID );
@@ -883,46 +920,7 @@ static GFL_G3D_CAMERA * GRAPHIC_G3D_GetCamera( const GRAPHIC_G3D_WORK *cp_wk )
 //-----------------------------------------------------------------------------
 void BR_GRAPHIC_SetMusicalMode( BR_GRAPHIC_WORK *p_wk, HEAPID heapID )
 { 
-  { 
-    static const GFL_DISP_VRAM vramBank = {
-      GX_VRAM_BG_64_E,             // メイン2DエンジンのBG
-      GX_VRAM_BGEXTPLTT_NONE,     // メイン2DエンジンのBG拡張パレット
-      GX_VRAM_SUB_BG_128_C,         // サブ2DエンジンのBG
-      GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
-      GX_VRAM_OBJ_16_G,              // メイン2DエンジンのOBJ
-      GX_VRAM_OBJEXTPLTT_NONE,       // メイン2DエンジンのOBJ拡張パレット
-      GX_VRAM_SUB_OBJ_128_D,        // サブ2DエンジンのOBJ
-      GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
-      GX_VRAM_TEX_01_AB,            // テクスチャイメージスロット
-      GX_VRAM_TEXPLTT_0_F,          // テクスチャパレットスロット
-      GX_OBJVRAMMODE_CHAR_1D_32K,
-      GX_OBJVRAMMODE_CHAR_1D_128K
-    };
-    //上画面だけバンクを変える
-    GX_ResetBankForBG();			// メイン2DエンジンのBG
-    GX_ResetBankForBGExtPltt();		// メイン2DエンジンのBG拡張パレット
-    GX_ResetBankForOBJ();			// メイン2DエンジンのOBJ
-    GX_ResetBankForOBJExtPltt();	// メイン2DエンジンのOBJ拡張パレット
-    GX_ResetBankForTex();			// テクスチャイメージ
-    GX_ResetBankForTexPltt();		// テクスチャパレット
 
-    GX_SetBankForBG( vramBank.main_bg );
-    GX_SetBankForBGExtPltt( vramBank.main_bg_expltt );
-    GX_SetBankForOBJ( vramBank.main_obj );
-    GX_SetBankForOBJExtPltt( vramBank.main_obj_expltt );
-    GX_SetBankForTex( vramBank.teximage );
-    GX_SetBankForTexPltt( vramBank.texpltt );
-    GX_SetOBJVRamModeChar( vramBank.main_mapping );
-  }
-
-  //グラフィックモード設定
-	{	
-    static const GFL_BG_SYS_HEADER sc_bgsys_header3D	=
-    {	
-      GX_DISPMODE_GRAPHICS,GX_BGMODE_0,GX_BGMODE_0,GX_BG0_AS_3D	//グラフィックモード、メインBG面設定、サブBG面設定、BG0面設定
-    };
-		GFL_BG_SetBGMode( &sc_bgsys_header3D );
-	}
 
   //上画面のBG面だけ破棄
 	{	
@@ -935,6 +933,10 @@ void BR_GRAPHIC_SetMusicalMode( BR_GRAPHIC_WORK *p_wk, HEAPID heapID )
       }
 		}
 	}
+  //グラフィックモード設定
+	{	
+		GFL_BG_SetBGMode( &sc_bgsys_header3D );
+	}
 }
 //----------------------------------------------------------------------------
 /**
@@ -945,24 +947,6 @@ void BR_GRAPHIC_SetMusicalMode( BR_GRAPHIC_WORK *p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 void BR_GRAPHIC_ReSetMusicalMode( BR_GRAPHIC_WORK *p_wk, HEAPID heapID )
 { 
-  //グラフィックモードを元に戻す
-  { 
-    //上画面だけバンクを変える
-    GX_ResetBankForBG();			// メイン2DエンジンのBG
-    GX_ResetBankForBGExtPltt();		// メイン2DエンジンのBG拡張パレット
-    GX_ResetBankForOBJ();			// メイン2DエンジンのOBJ
-    GX_ResetBankForOBJExtPltt();	// メイン2DエンジンのOBJ拡張パレット
-    GX_ResetBankForTex();			// テクスチャイメージ
-    GX_ResetBankForTexPltt();		// テクスチャパレット
-
-    GX_SetBankForBG( sc_vramSetTable.main_bg );
-    GX_SetBankForBGExtPltt( sc_vramSetTable.main_bg_expltt );
-    GX_SetBankForOBJ( sc_vramSetTable.main_obj );
-    GX_SetBankForOBJExtPltt( sc_vramSetTable.main_obj_expltt );
-    GX_SetBankForTex( sc_vramSetTable.teximage );
-    GX_SetBankForTexPltt( sc_vramSetTable.texpltt );
-    GX_SetOBJVRamModeChar( sc_vramSetTable.main_mapping );
-  }
 
   GFL_BG_SetBGMode( &sc_bgsys_header );
 

@@ -469,7 +469,7 @@ void BR_RES_LoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID, HEAPID heapID )
 			p_data->ncg	= GFL_CLGRP_CGR_Register( p_handle,
 					NARC_battle_recorder_gra_batt_rec_browse_line_NCGR, FALSE, CLSYS_DRAW_MAIN, heapID );
 			p_data->nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
-					NARC_battle_recorder_gra_batt_rec_line_64k_NCER, NARC_battle_recorder_gra_batt_rec_line_64k_NANR, heapID );
+					NARC_battle_recorder_gra_batt_rec_line_NCER, NARC_battle_recorder_gra_batt_rec_line_NANR, heapID );
 
 			GFL_ARC_CloseDataHandle( p_handle );
 		}
@@ -483,7 +483,7 @@ void BR_RES_LoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID, HEAPID heapID )
 			p_data->ncg	= GFL_CLGRP_CGR_Register( p_handle,
 					NARC_battle_recorder_gra_batt_rec_browse_line_NCGR, FALSE, CLSYS_DRAW_SUB, heapID );
 			p_data->nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
-					NARC_battle_recorder_gra_batt_rec_line_64k_NCER, NARC_battle_recorder_gra_batt_rec_line_64k_NANR, heapID );
+					NARC_battle_recorder_gra_batt_rec_line_NCER, NARC_battle_recorder_gra_batt_rec_line_NANR, heapID );
 
 			GFL_ARC_CloseDataHandle( p_handle );
 		}
@@ -527,7 +527,7 @@ void BR_RES_LoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID, HEAPID heapID )
 			p_data->ncg	= GFL_CLGRP_CGR_Register( p_handle,
 					NARC_battle_recorder_gra_batt_rec_gds_tag2_NCGR, FALSE, CLSYS_DRAW_SUB, heapID );
 			p_data->nce	= GFL_CLGRP_CELLANIM_Register( p_handle,
-					NARC_battle_recorder_gra_batt_rec_tag2_gds_64k_NCER, NARC_battle_recorder_gra_batt_rec_tag2_gds_64k_NANR, heapID );
+					NARC_battle_recorder_gra_batt_rec_tag2_gds_NCER, NARC_battle_recorder_gra_batt_rec_tag2_gds_NANR, heapID );
 
 			GFL_ARC_CloseDataHandle( p_handle );
 		}

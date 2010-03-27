@@ -191,7 +191,7 @@ struct _SHORTCUTMENU_WORK
 	SHORTCUTMENU_INPUT	input;			//実行した入力 4
 	SHORTCUT_ID					shortcutID;	//選んだショートカットID 4
 	SHORTCUT_CURSOR			*p_cursor;	//カーソル 4
-
+  BOOL                is_move_end;
   GFL_TCB             *p_scroll_tcb;
 };
 
@@ -471,12 +471,13 @@ void SHORTCUTMENU_Main( SHORTCUTMENU_WORK *p_wk )
 	case MAINSEQ_OPEN_START:		//開く開始
     PMSND_PlaySE( SHORTCUTMENU_SND_SE_POPUP );
 		p_wk->cnt	=	0;
+    p_wk->is_move_end = FALSE;
     p_wk->p_scroll_tcb  = GFUser_VIntr_CreateTCB( Shortcut_ScrollTask, p_wk, 0);
 		p_wk->seq	= MAINSEQ_OPEN_WAIT;
 		break;
 
 	case MAINSEQ_OPEN_WAIT:		//開き待ち
-    if( p_wk->cnt >= LISTMOVE_SYNC )
+    if( p_wk->is_move_end )
     {	
       GFL_TCB_DeleteTask( p_wk->p_scroll_tcb );
       p_wk->seq	= MAINSEQ_MAIN;
@@ -1100,6 +1101,7 @@ static void Shortcut_ScrollTask( GFL_TCB *, void *p_wk_adrs )
   if( p_wk->cnt++ >= LISTMOVE_SYNC )
   { 
     scroll_y  = LISTMOVE_END;
+    p_wk->is_move_end = TRUE;
   }
   GFL_BG_SetScroll( BG_FRAME_SCROLL_M, GFL_BG_SCROLL_Y_SET, scroll_y );
 }

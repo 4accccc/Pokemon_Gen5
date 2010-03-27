@@ -259,6 +259,7 @@ static const BR_PROC_SYS_DATA sc_procdata_tbl[BR_PROCID_MAX]	=
 static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
 	BR_CORE_WORK	*p_wk;
+  BR_GRAPHIC_SETUP_TYPE graphic_type;
 
 	//ヒープ作成
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BATTLE_RECORDER_CORE, 0x60000 );
@@ -270,7 +271,15 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 	p_wk->p_param		= p_param_adrs;
 
 	//グラフィック初期化
-	p_wk->p_graphic	= BR_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, HEAPID_BATTLE_RECORDER_CORE );
+  if( p_wk->p_param->p_param->mode == BR_MODE_GLOBAL_MUSICAL )
+  { 
+    graphic_type  = BR_GRAPHIC_SETUP_3D;
+  }
+  else
+  { 
+    graphic_type  = BR_GRAPHIC_SETUP_2D;
+  }
+	p_wk->p_graphic	= BR_GRAPHIC_Init( graphic_type, GX_DISP_SELECT_MAIN_SUB, HEAPID_BATTLE_RECORDER_CORE );
 	p_wk->p_res			= BR_RES_Init( HEAPID_BATTLE_RECORDER_CORE );
 	BR_RES_LoadBG( p_wk->p_res, BR_RES_BG_START_M, HEAPID_BATTLE_RECORDER_CORE );
 	BR_RES_LoadBG( p_wk->p_res, BR_RES_BG_START_S, HEAPID_BATTLE_RECORDER_CORE );
@@ -315,6 +324,11 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
         p_wk->btlrec_data.p_name[i]   = GDS_Profile_CreateNameString( p_profile, HEAPID_BATTLE_RECORDER_CORE );
         p_wk->btlrec_data.sex[i]      = GDS_Profile_GetSex( p_profile );
       }
+    }
+
+    {
+      MUSICAL_SAVE* p_musical = MUSICAL_SAVE_GetMusicalSave( GAMEDATA_GetSaveControlWork(p_wk->p_param->p_param->p_gamedata) );
+      p_wk->btlrec_data.is_musical_valid  = MUSICAL_SAVE_IsValidMusicalShotData( p_musical );
     }
   }
 
@@ -997,6 +1011,7 @@ static void BR_MUSICALLOOK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs,
   p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_graphic	= p_wk->p_graphic;
+  p_param->p_net      = p_wk->p_net;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1029,6 +1044,8 @@ static void BR_MUSICALSEND_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs,
   p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_graphic	= p_wk->p_graphic;
+  p_param->p_net      = p_wk->p_net;
+  p_param->p_gamedata = p_wk->p_param->p_param->p_gamedata;
 }
 //----------------------------------------------------------------------------
 /**
