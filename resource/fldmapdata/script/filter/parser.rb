@@ -16,7 +16,7 @@ module PmScript
 
   class Parser < Racc::Parser
 
-module_eval <<'..end sp4.y modeval..idc6e4d9ae1b', 'sp4.y', 572
+module_eval <<'..end sp4.y modeval..id30ad27b9d9', 'sp4.y', 572
 
 def initialize
 end
@@ -120,7 +120,7 @@ def parse( f )
           # ”äŠr‰‰ŽZŽq
 					pushq [ $&, $& ]
 
-        when /\A\+=/, /\A\-=/, /\A\*=/, /\A\/=/, /\A\%=/
+        when /\A\+=/, /\A\-=/, /\A\*=/, /\A\/=/, /\A\%=/, /\A\|=/, /\A\&=/
           # •¡‡‘ã“ü‰‰ŽZŽq
           pushq [ :OP_COMP_ASSIGN, $& ]
 
@@ -172,7 +172,7 @@ def on_error( t, v, values )
   end
 
 
-..end sp4.y modeval..idc6e4d9ae1b
+..end sp4.y modeval..id30ad27b9d9
 
 ##### racc 1.4.5 generates ###
 

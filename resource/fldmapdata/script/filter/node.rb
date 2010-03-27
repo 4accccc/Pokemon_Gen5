@@ -503,6 +503,10 @@ module PmScript
         puts "\t_ASM_DIV_WK\t#{varname}, #{value}"
       when "%="
         puts "\t_ASM_MOD_WK\t#{varname}, #{value}"
+      when "|="
+        puts "\t_ASM_OR_WK\t#{varname}, #{value}"
+      when "&="
+        puts "\t_ASM_AND_WK\t#{varname}, #{value}"
       else
         raise CompileError, "#{@fname}:#{@lineno}: iregal operator #{@op}"
       end
