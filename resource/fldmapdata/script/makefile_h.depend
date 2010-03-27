@@ -153,15 +153,6 @@ bc10r0301_def.h: bc10r0301.ev
 bc10r0401_def.h: bc10r0401.ev
 	$(EV_DEF) bc10r0401.ev $(SCR_OFFS_ID_H)
 
-bc10r0402_def.h: bc10r0402.ev
-	$(EV_DEF) bc10r0402.ev $(SCR_OFFS_ID_H)
-
-bc10r0403_def.h: bc10r0403.ev
-	$(EV_DEF) bc10r0403.ev $(SCR_OFFS_ID_H)
-
-bcwftest_def.h: bcwftest.ev
-	$(EV_DEF) bcwftest.ev $(SCR_OFFS_ID_H)
-
 c01_def.h: c01.ev
 	$(EV_DEF) c01.ev $(SCR_OFFS_ID_H)
 
@@ -213,9 +204,6 @@ c02gym0201_def.h: c02gym0201.ev
 c02gym0202_def.h: c02gym0202.ev
 	$(EV_DEF) c02gym0202.ev $(SCR_OFFS_ID_H)
 
-c02gym0203_def.h: c02gym0203.ev
-	$(EV_DEF) c02gym0203.ev $(SCR_OFFS_ID_H)
-
 c02pc0101_def.h: c02pc0101.ev
 	$(EV_DEF) c02pc0101.ev $(SCR_OFFS_ID_H)
 
@@ -249,21 +237,6 @@ c03gym0101_def.h: c03gym0101.ev
 c03p01_def.h: c03p01.ev
 	$(EV_DEF) c03p01.ev $(SCR_OFFS_ID_H)
 
-c03p02_def.h: c03p02.ev
-	$(EV_DEF) c03p02.ev $(SCR_OFFS_ID_H)
-
-c03p03_def.h: c03p03.ev
-	$(EV_DEF) c03p03.ev $(SCR_OFFS_ID_H)
-
-c03p04_def.h: c03p04.ev
-	$(EV_DEF) c03p04.ev $(SCR_OFFS_ID_H)
-
-c03p05_def.h: c03p05.ev
-	$(EV_DEF) c03p05.ev $(SCR_OFFS_ID_H)
-
-c03p06_def.h: c03p06.ev
-	$(EV_DEF) c03p06.ev $(SCR_OFFS_ID_H)
-
 c03p07_def.h: c03p07.ev
 	$(EV_DEF) c03p07.ev $(SCR_OFFS_ID_H)
 
@@ -275,9 +248,6 @@ c03p09_def.h: c03p09.ev
 
 c03p10_def.h: c03p10.ev
 	$(EV_DEF) c03p10.ev $(SCR_OFFS_ID_H)
-
-c03p11_def.h: c03p11.ev
-	$(EV_DEF) c03p11.ev $(SCR_OFFS_ID_H)
 
 c03p12_def.h: c03p12.ev
 	$(EV_DEF) c03p12.ev $(SCR_OFFS_ID_H)
@@ -296,18 +266,6 @@ c03p16_def.h: c03p16.ev
 
 c03p17_def.h: c03p17.ev
 	$(EV_DEF) c03p17.ev $(SCR_OFFS_ID_H)
-
-c03p18_def.h: c03p18.ev
-	$(EV_DEF) c03p18.ev $(SCR_OFFS_ID_H)
-
-c03p19_def.h: c03p19.ev
-	$(EV_DEF) c03p19.ev $(SCR_OFFS_ID_H)
-
-c03p20_def.h: c03p20.ev
-	$(EV_DEF) c03p20.ev $(SCR_OFFS_ID_H)
-
-c03p21_def.h: c03p21.ev
-	$(EV_DEF) c03p21.ev $(SCR_OFFS_ID_H)
 
 c03pc0101_def.h: c03pc0101.ev
 	$(EV_DEF) c03pc0101.ev $(SCR_OFFS_ID_H)
@@ -341,9 +299,6 @@ c03r0502_def.h: c03r0502.ev
 
 c03r0601_def.h: c03r0601.ev
 	$(EV_DEF) c03r0601.ev $(SCR_OFFS_ID_H)
-
-c03r0701_def.h: c03r0701.ev
-	$(EV_DEF) c03r0701.ev $(SCR_OFFS_ID_H)
 
 c03r0801_def.h: c03r0801.ev
 	$(EV_DEF) c03r0801.ev $(SCR_OFFS_ID_H)
@@ -474,9 +429,6 @@ c04r0801_def.h: c04r0801.ev
 c04r0901_def.h: c04r0901.ev
 	$(EV_DEF) c04r0901.ev $(SCR_OFFS_ID_H)
 
-c04r0902_def.h: c04r0902.ev
-	$(EV_DEF) c04r0902.ev $(SCR_OFFS_ID_H)
-
 c04r1001_def.h: c04r1001.ev
 	$(EV_DEF) c04r1001.ev $(SCR_OFFS_ID_H)
 
@@ -531,17 +483,8 @@ c06pc0101_def.h: c06pc0101.ev
 c06r0101_def.h: c06r0101.ev
 	$(EV_DEF) c06r0101.ev $(SCR_OFFS_ID_H)
 
-c06r0201_def.h: c06r0201.ev
-	$(EV_DEF) c06r0201.ev $(SCR_OFFS_ID_H)
-
 c06r0301_def.h: c06r0301.ev
 	$(EV_DEF) c06r0301.ev $(SCR_OFFS_ID_H)
-
-c06r0401_def.h: c06r0401.ev
-	$(EV_DEF) c06r0401.ev $(SCR_OFFS_ID_H)
-
-c06r0501_def.h: c06r0501.ev
-	$(EV_DEF) c06r0501.ev $(SCR_OFFS_ID_H)
 
 c07_def.h: c07.ev
 	$(EV_DEF) c07.ev $(SCR_OFFS_ID_H)
@@ -572,9 +515,6 @@ c08gym0101_def.h: c08gym0101.ev
 
 c08pc0101_def.h: c08pc0101.ev
 	$(EV_DEF) c08pc0101.ev $(SCR_OFFS_ID_H)
-
-c08pc0801_def.h: c08pc0801.ev
-	$(EV_DEF) c08pc0801.ev $(SCR_OFFS_ID_H)
 
 c08r0101_def.h: c08r0101.ev
 	$(EV_DEF) c08r0101.ev $(SCR_OFFS_ID_H)
@@ -662,9 +602,6 @@ closseum_def.h: closseum.ev
 
 closseum02_def.h: closseum02.ev
 	$(EV_DEF) closseum02.ev $(SCR_OFFS_ID_H)
-
-d01_def.h: d01.ev
-	$(EV_DEF) d01.ev $(SCR_OFFS_ID_H)
 
 d01r0101_def.h: d01r0101.ev
 	$(EV_DEF) d01r0101.ev $(SCR_OFFS_ID_H)
@@ -840,9 +777,6 @@ d08_def.h: d08.ev
 d08r0101_def.h: d08r0101.ev
 	$(EV_DEF) d08r0101.ev $(SCR_OFFS_ID_H)
 
-d08r0201_def.h: d08r0201.ev
-	$(EV_DEF) d08r0201.ev $(SCR_OFFS_ID_H)
-
 d08r0301_def.h: d08r0301.ev
 	$(EV_DEF) d08r0301.ev $(SCR_OFFS_ID_H)
 
@@ -863,9 +797,6 @@ d08r0801_def.h: d08r0801.ev
 
 d08r0901_def.h: d08r0901.ev
 	$(EV_DEF) d08r0901.ev $(SCR_OFFS_ID_H)
-
-d08r1001_def.h: d08r1001.ev
-	$(EV_DEF) d08r1001.ev $(SCR_OFFS_ID_H)
 
 d09_def.h: d09.ev
 	$(EV_DEF) d09.ev $(SCR_OFFS_ID_H)
@@ -930,21 +861,6 @@ d10r0301_def.h: d10r0301.ev
 d10r0401_def.h: d10r0401.ev
 	$(EV_DEF) d10r0401.ev $(SCR_OFFS_ID_H)
 
-d10r0501_def.h: d10r0501.ev
-	$(EV_DEF) d10r0501.ev $(SCR_OFFS_ID_H)
-
-d10r0601_def.h: d10r0601.ev
-	$(EV_DEF) d10r0601.ev $(SCR_OFFS_ID_H)
-
-d11r0101_def.h: d11r0101.ev
-	$(EV_DEF) d11r0101.ev $(SCR_OFFS_ID_H)
-
-d11r0201_def.h: d11r0201.ev
-	$(EV_DEF) d11r0201.ev $(SCR_OFFS_ID_H)
-
-d11r0301_def.h: d11r0301.ev
-	$(EV_DEF) d11r0301.ev $(SCR_OFFS_ID_H)
-
 d12_def.h: d12.ev
 	$(EV_DEF) d12.ev $(SCR_OFFS_ID_H)
 
@@ -953,9 +869,6 @@ d12r0101_def.h: d12r0101.ev
 
 d12r0102_def.h: d12r0102.ev
 	$(EV_DEF) d12r0102.ev $(SCR_OFFS_ID_H)
-
-d12r0103_def.h: d12r0103.ev
-	$(EV_DEF) d12r0103.ev $(SCR_OFFS_ID_H)
 
 d13_def.h: d13.ev
 	$(EV_DEF) d13.ev $(SCR_OFFS_ID_H)
@@ -989,15 +902,6 @@ d20r0701_def.h: d20r0701.ev
 
 d20r0801_def.h: d20r0801.ev
 	$(EV_DEF) d20r0801.ev $(SCR_OFFS_ID_H)
-
-d20r0901_def.h: d20r0901.ev
-	$(EV_DEF) d20r0901.ev $(SCR_OFFS_ID_H)
-
-d20r1001_def.h: d20r1001.ev
-	$(EV_DEF) d20r1001.ev $(SCR_OFFS_ID_H)
-
-gt_def.h: gt.ev
-	$(EV_DEF) gt.ev $(SCR_OFFS_ID_H)
 
 h01_def.h: h01.ev
 	$(EV_DEF) h01.ev $(SCR_OFFS_ID_H)
@@ -1119,9 +1023,6 @@ palace09_def.h: palace09.ev
 palace10_def.h: palace10.ev
 	$(EV_DEF) palace10.ev $(SCR_OFFS_ID_H)
 
-palacetest_def.h: palacetest.ev
-	$(EV_DEF) palacetest.ev $(SCR_OFFS_ID_H)
-
 plc04_def.h: plc04.ev
 	$(EV_DEF) plc04.ev $(SCR_OFFS_ID_H)
 
@@ -1236,9 +1137,6 @@ r03r0301_def.h: r03r0301.ev
 r03r0302_def.h: r03r0302.ev
 	$(EV_DEF) r03r0302.ev $(SCR_OFFS_ID_H)
 
-r03r0303_def.h: r03r0303.ev
-	$(EV_DEF) r03r0303.ev $(SCR_OFFS_ID_H)
-
 r04_def.h: r04.ev
 	$(EV_DEF) r04.ev $(SCR_OFFS_ID_H)
 
@@ -1248,11 +1146,11 @@ r04r0101_def.h: r04r0101.ev
 r04r0201_def.h: r04r0201.ev
 	$(EV_DEF) r04r0201.ev $(SCR_OFFS_ID_H)
 
-r04r0202_def.h: r04r0202.ev
-	$(EV_DEF) r04r0202.ev $(SCR_OFFS_ID_H)
-
 r05_def.h: r05.ev
 	$(EV_DEF) r05.ev $(SCR_OFFS_ID_H)
+
+r05r0101_def.h: r05r0101.ev
+	$(EV_DEF) r05r0101.ev $(SCR_OFFS_ID_H)
 
 r06_def.h: r06.ev
 	$(EV_DEF) r06.ev $(SCR_OFFS_ID_H)
@@ -1301,9 +1199,6 @@ r08_def.h: r08.ev
 
 r08r0101_def.h: r08r0101.ev
 	$(EV_DEF) r08r0101.ev $(SCR_OFFS_ID_H)
-
-r08r0102_def.h: r08r0102.ev
-	$(EV_DEF) r08r0102.ev $(SCR_OFFS_ID_H)
 
 r08r0201_def.h: r08r0201.ev
 	$(EV_DEF) r08r0201.ev $(SCR_OFFS_ID_H)
@@ -1374,20 +1269,11 @@ r12_def.h: r12.ev
 r12r0101_def.h: r12r0101.ev
 	$(EV_DEF) r12r0101.ev $(SCR_OFFS_ID_H)
 
-r12r0201_def.h: r12r0201.ev
-	$(EV_DEF) r12r0201.ev $(SCR_OFFS_ID_H)
-
 r13_def.h: r13.ev
 	$(EV_DEF) r13.ev $(SCR_OFFS_ID_H)
 
 r13r0101_def.h: r13r0101.ev
 	$(EV_DEF) r13r0101.ev $(SCR_OFFS_ID_H)
-
-r13r0102_def.h: r13r0102.ev
-	$(EV_DEF) r13r0102.ev $(SCR_OFFS_ID_H)
-
-r13r0103_def.h: r13r0103.ev
-	$(EV_DEF) r13r0103.ev $(SCR_OFFS_ID_H)
 
 r13r0201_def.h: r13r0201.ev
 	$(EV_DEF) r13r0201.ev $(SCR_OFFS_ID_H)
@@ -1406,9 +1292,6 @@ r14r0201_def.h: r14r0201.ev
 
 r14r0202_def.h: r14r0202.ev
 	$(EV_DEF) r14r0202.ev $(SCR_OFFS_ID_H)
-
-r14r0301_def.h: r14r0301.ev
-	$(EV_DEF) r14r0301.ev $(SCR_OFFS_ID_H)
 
 r15_def.h: r15.ev
 	$(EV_DEF) r15.ev $(SCR_OFFS_ID_H)
@@ -1521,9 +1404,6 @@ t04pc0101_def.h: t04pc0101.ev
 t04r0101_def.h: t04r0101.ev
 	$(EV_DEF) t04r0101.ev $(SCR_OFFS_ID_H)
 
-t04r0102_def.h: t04r0102.ev
-	$(EV_DEF) t04r0102.ev $(SCR_OFFS_ID_H)
-
 t04r0201_def.h: t04r0201.ev
 	$(EV_DEF) t04r0201.ev $(SCR_OFFS_ID_H)
 
@@ -1559,7 +1439,4 @@ wc10pcr0101_def.h: wc10pcr0101.ev
 
 wc10r0101_def.h: wc10r0101.ev
 	$(EV_DEF) wc10r0101.ev $(SCR_OFFS_ID_H)
-
-r05r0101_def.h: r05r0101.ev
-	$(EV_DEF) r05r0101.ev $(SCR_OFFS_ID_H)
 
