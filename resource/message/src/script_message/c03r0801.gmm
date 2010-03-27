@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-24T15:53:08"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-27T16:30:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,8 +271,8 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -466,7 +466,7 @@ msg_c03r0801_hint_02</comment>
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
-モモト</attribute>
+</attribute>
 		<language name="JPN" width="256">ジョウトから　しごとで　きたけど
 ここは　なにもかも　ダイナミックだな</language>
 		<language name="JPN_KANJI" width="256">ジョウトから　仕事で　来たけど
@@ -504,7 +504,9 @@ msg_c03r0801_hint_02</comment>
 	<row id="msg_c03r0801_businessman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
 		<comment>お客さん
 ・長い話後</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+		<attribute name="キャラ指定">BUSINESSMAN
+モモト
+ジョウト</attribute>
 		<language name="JPN" width="256">あぁ！　きてきが　なってる！
 ごめんよ　ひきとめちゃって……[BE:01:ページ切り替え（クリア）]
 でも　はなしが　できて
@@ -518,10 +520,10 @@ msg_c03r0801_hint_02</comment>
 	<row id="msg_c03r0801_businessman_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
 		<comment>トレーナー前</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">しごとの　あいまの　ひとしょうぶ
-もちろん　やって　くれるよね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">仕事の　合間の　一勝負
-もちろん　やって　くれるよね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">しごとの　あいまに　ひとしょうぶ！
+これが　また　かくべつ　なんだ▼</language>
+		<language name="JPN_KANJI" width="256">仕事の　合間に　一勝負！
+これが　また　格別　なんだ▼</language>
 	</row>
 
 	<row id="msg_c03r0801_businessman_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
@@ -537,25 +539,30 @@ msg_c03r0801_hint_02</comment>
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">TRAINERM
-タクト</attribute>
+</attribute>
 		<language name="JPN" width="256">うみの　むこうには
-まだまだ　ポケモンが　いるんだよ！</language>
+まだまだ　ポケモンが　いるんだ！▽
+ワクワクが　とまらないね！</language>
 		<language name="JPN_KANJI" width="256">海の　向こうには
-まだまだ　ポケモンが　いるんだよ！</language>
+まだまだ　ポケモンが　いるんだ！▽
+ワクワクが　とまらないね！</language>
 	</row>
 
 	<row id="msg_c03r0801_trainerm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,#ffff80,,#ffff80,,,,#ffff80,,">
 		<comment>お客さん
 ・短い話２</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
-		<language name="JPN" width="256">ごうかな　せんしつで
-きゅうけいちゅう　だよ</language>
-		<language name="JPN_KANJI" width="256">豪華な　船室で　休憩中だよ</language>
+		<language name="JPN" width="256">ごうかな　せんしつで　ノビノビっと
+あしを　のばして　きゅうけいちゅうさ</language>
+		<language name="JPN_KANJI" width="256">豪華な　船室で　ノビノビっと
+足を　伸ばして　休憩中さ</language>
 	</row>
 
 	<row id="msg_c03r0801_trainerm_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,#ffff80,,#ffff80,,,,#ffff80,,">
 		<comment>トレーナー前</comment>
-		<attribute name="キャラ指定">TRAINERM</attribute>
+		<attribute name="キャラ指定">TRAINERM
+タクト
+シンオウ</attribute>
 		<language name="JPN" width="256">つよい　トレーナーが
 あつまるって　きいて▽
 はるばる　シンオウから　きたんだ！▽
@@ -572,23 +579,28 @@ msg_c03r0801_hint_02</comment>
 		<language name="JPN" width="256">ふねに　ゆられて　ポケモンしょうぶ！▼
 そのうえ　みたこともない
 ポケモンが　みれて▽
-ぼくは　しあわせ　です</language>
+ぼくは　しあわせー　です</language>
 		<language name="JPN_KANJI" width="256">船に　揺られて　ポケモン勝負！▼
 その上　見たこともない
 ポケモンが　見れて▽
-ぼくは　幸せ　です</language>
+ぼくは　幸せー　です</language>
 	</row>
 
 	<row id="msg_c03r0801_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,#ff78ff,,#ff78ff,,,,#ff78ff,,">
 		<comment>お客さん
 ・短い話</comment>
-		<attribute name="キャラ指定">TRAINERW</attribute>
+		<attribute name="キャラ指定">TRAINERW
+</attribute>
 		<language name="JPN" width="256">この　ふねの　トレーナーは
 うみの　むこうから　きたひとが[BE:00:ページ切り替え（行送り）]
-おおい　らしいわ</language>
+おおい　らしいわ▼
+かくいう　わたしも
+カントーから　きたの！</language>
 		<language name="JPN_KANJI" width="256">この　船の　トレーナーは
-海の　向こうから　きた人が[BE:00:ページ切り替え（行送り）]
-多い　らしいわ</language>
+海の　向こうから　きた人が▽
+多い　らしいわ▼
+かくいう　わたしも
+カントーから　来たの！</language>
 	</row>
 
 	<row id="msg_c03r0801_trainerw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,#ff78ff,,#ff78ff,,,,#ff78ff,,">
@@ -603,7 +615,9 @@ msg_c03r0801_hint_02</comment>
 
 	<row id="msg_c03r0801_trainerw_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,#ff78ff,,#ff78ff,,,,#ff78ff,,">
 		<comment>トレーナー前</comment>
-		<attribute name="キャラ指定">TRAINERW</attribute>
+		<attribute name="キャラ指定">TRAINERW
+スイ
+カントー</attribute>
 		<language name="JPN" width="256">ゆらゆら　ゆられながらの
 ポケモンしょうぶ！[BE:00:ページ切り替え（行送り）]
 ワクワク　するわね！[BE:01:ページ切り替え（クリア）]</language>
@@ -625,40 +639,49 @@ msg_c03r0801_hint_02</comment>
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
-		<language name="JPN" width="256">すげー！　すげー！[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">すげー！　すげー！▼
 なにが　すごいかって？
-この　ふねだよ　このふね！</language>
-		<language name="JPN_KANJI" width="256">すげー！　すげー！[BE:01:ページ切り替え（クリア）]
+この　ふねだよ　このふね！▼
+どこが　すごいかって？
+うーん……　とにかく　すごいんだ！</language>
+		<language name="JPN_KANJI" width="256">すげー！　すげー！▼
 なにが　すごいかって？
-この　ふねだよ　このふね！</language>
+この　ふねだよ　このふね！▼
+どこが　すごいかって？
+うーん……　とにかく　すごいんだ！</language>
 	</row>
 
 	<row id="msg_c03r0801_boy2_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
 		<comment>お客さん
 ・短い話２</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
-		<language name="JPN" width="256">ポケモンしょうぶ！
-と　おもったけど　てもちが　ないよー</language>
-		<language name="JPN_KANJI" width="256">ポケモンしょうぶ！
-と　おもったけど　てもちが　ないよー</language>
+		<language name="JPN" width="256">ポケモンしょうぶ！▼
+と　おもったけど
+てもちの　ポケモンが　ないよー！！</language>
+		<language name="JPN_KANJI" width="256">ポケモンしょうぶ！▼
+と　おもったけど
+てもちの　ポケモンが　ないよー！！</language>
 	</row>
 
 	<row id="msg_c03r0801_boy2_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
 		<comment>トレーナー前</comment>
-		<attribute name="キャラ指定">BOY2</attribute>
-		<language name="JPN" width="256">おっし　トレーナー！
-おいらと　しょうぶだ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">おっし　トレーナー！
-おいらと　しょうぶだ！[BE:01:ページ切り替え（クリア）]</language>
+		<attribute name="キャラ指定">BOY2
+こだわりなし</attribute>
+		<language name="JPN" width="256">おっし　トレーナー！▼
+ただの　たんパン　じゃないところを
+おいらが　かれいに　みせてやるよ！▼</language>
+		<language name="JPN_KANJI" width="256">おっし　トレーナー！▼
+ただの　たんパン　じゃないところを
+おいらが　かれいに　みせてやるよ！▼</language>
 	</row>
 
 	<row id="msg_c03r0801_boy2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
-		<language name="JPN" width="256">あっちゃー　まけちゃった
-じしん　あったのになー！</language>
-		<language name="JPN_KANJI" width="256">あっちゃー　まけちゃった
-じしん　あったのになー！</language>
+		<language name="JPN" width="256">アッチャー！　まけちゃったー！
+きみには　だつパン　だ！</language>
+		<language name="JPN_KANJI" width="256">アッチャー！　まけちゃったー！
+きみには　だつパン　だ！</language>
 	</row>
 
 	<row id="msg_c03r0801_girl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,#ff78ff,,#ff78ff,,,,#ff78ff,,">
@@ -715,7 +738,8 @@ msg_c03r0801_hint_02</comment>
 
 	<row id="msg_c03r0801_girl2_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,#ff78ff,,#ff78ff,,,,#ff78ff,,">
 		<comment>トレーナー前</comment>
-		<attribute name="キャラ指定">GIRL2</attribute>
+		<attribute name="キャラ指定">GIRL2
+シンオウ</attribute>
 		<language name="JPN" width="256">わたし　そとのうみ　から
 やってきた　トレーナーなの！[BE:00:ページ切り替え（行送り）]
 めずらしい　ポケモン　みせてあげる！[BE:01:ページ切り替え（クリア）]</language>
@@ -728,21 +752,25 @@ msg_c03r0801_hint_02</comment>
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">めずらしかった？
-わたしの　ポケモン！</language>
+わたしの　ポケモン！▼
+中でも　ミミロップは
+わたしの　おきにいりなの！</language>
 		<language name="JPN_KANJI" width="256">珍しかった？
-わたしの　ポケモン！</language>
+わたしの　ポケモン！▼
+中でも　ミミロップは
+わたしの　お気に入りなの！</language>
 	</row>
 
 	<row id="msg_c03r0801_boy4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">BOY4</attribute>
-		<language name="JPN" width="256">この　ごうかな　ふねには
+		<language name="JPN" width="256">この　ゴージャスな　ふねには
 ぼくみたいな　おかねもちが[BE:00:ページ切り替え（行送り）]
-おにあいだろ？</language>
-		<language name="JPN_KANJI" width="256">この　ごうかな　船には
+グレートに　おにあいだろ？</language>
+		<language name="JPN_KANJI" width="256">この　ゴージャスな　船には
 ぼくみたいな　お金持ちが[BE:00:ページ切り替え（行送り）]
-お似合いだろ？</language>
+グレートに　お似合いだろ？</language>
 	</row>
 
 	<row id="msg_c03r0801_boy4_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
@@ -759,7 +787,8 @@ msg_c03r0801_hint_02</comment>
 
 	<row id="msg_c03r0801_boy4_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
 		<comment>トレーナー前</comment>
-		<attribute name="キャラ指定">BOY4</attribute>
+		<attribute name="キャラ指定">BOY4
+ホウエン</attribute>
 		<language name="JPN" width="256">きひんの　ある　このふねで
 じょうひんな　たたかいを[BE:00:ページ切り替え（行送り）]
 みせて　あげるよ！[BE:01:ページ切り替え（クリア）]</language>
@@ -783,10 +812,12 @@ msg_c03r0801_hint_02</comment>
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
-		<language name="JPN" width="256">あら　ルームサービス？
-あらやだ　ちがいますのね</language>
-		<language name="JPN_KANJI" width="256">あら　ルームサービス？
-あらやだ　ちがいますのね</language>
+		<language name="JPN" width="256">あら　ルームサービス？▼
+じまんの　ロイヤルイッシュティー
+たいへん　びみ　でしたわ！</language>
+		<language name="JPN_KANJI" width="256">あら　ルームサービス？▼
+じまんの　ロイヤルイッシュティー
+大変　美味　でしたわ！</language>
 	</row>
 
 	<row id="msg_c03r0801_girl4_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,#ff78ff,,#ff78ff,,,,#ff78ff,,">
@@ -794,33 +825,34 @@ msg_c03r0801_hint_02</comment>
 ・短い話２</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">そとの　うつくしい　けしきも
-もうしぶんは　ないのですが[BE:01:ページ切り替え（クリア）]
-きゃくしつの　ふんいきも
+もうしぶんは　ないのですが▼
+きゃくしつの　ロイヤルな　ふんいきも
 わたくし　おきにいり　ですの</language>
 		<language name="JPN_KANJI" width="256">外の　美しい　景色も
-申し分は　ないのですが[BE:01:ページ切り替え（クリア）]
-客室の　雰囲気も
+申し分は　ないのですが▼
+客室の　ロイヤルな　雰囲気も
 わたくし　お気に入り　ですの</language>
 	</row>
 
 	<row id="msg_c03r0801_girl4_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,#ff78ff,,#ff78ff,,,,#ff78ff,,">
 		<comment>トレーナー前</comment>
-		<attribute name="キャラ指定">GIRL4</attribute>
+		<attribute name="キャラ指定">GIRL4
+カントー</attribute>
 		<language name="JPN" width="256">ワルツを　おどる　ステップで
-ポケモンしょうぶを　かれいに[BE:00:ページ切り替え（行送り）]
-えんしゅつ　しますわ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ワルツを　おどる　ステップで
-ポケモン勝負を　かれいに[BE:00:ページ切り替え（行送り）]
-演出　しますわ！[BE:01:ページ切り替え（クリア）]</language>
+ポケモンしょうぶを　ロイヤルに▽
+えんしゅつ　しますわ！▼</language>
+		<language name="JPN_KANJI" width="256">ワルツを　踊る　ステップで
+ポケモン勝負を　ロイヤルに▽
+演出　しますわ！▼</language>
 	</row>
 
 	<row id="msg_c03r0801_girl4_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,#ff78ff,,#ff78ff,,,,#ff78ff,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
-		<language name="JPN" width="256">あつい　ポケモンしょうぶに
-わたくし　よって　しまいましたわ</language>
-		<language name="JPN_KANJI" width="256">あつい　ポケモン勝負に
-わたくし　よって　しまいましたわ</language>
+		<language name="JPN" width="256">ロイヤルな　ポケモンしょうぶに
+わたくし　よって　しまいましたわ……</language>
+		<language name="JPN_KANJI" width="256">ロイヤルな　ポケモン勝負に
+わたくし　よって　しまいましたわ……</language>
 	</row>
 
 	<row id="msg_c03r0801_gentleman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
@@ -843,22 +875,22 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">おー　かわいい　おきゃくさんだ
 ちょっと　おちゃでも　のんでいくか？[BE:00:ページ切り替え（行送り）]
-ささっ　そこに　すわって！[BE:01:ページ切り替え（クリア）]
-……　……　……　……　……
-……　……　……　なのだが[BE:01:ページ切り替え（クリア）]
-それが　……　……　……
-……　……　……　……　……[BE:01:ページ切り替え（クリア）]
-……　……　……　……　……
-……　……　……　なんですよ</language>
+ささっ　そこに　すわって！▽
+……　……　……　……　……▽
+……　……　……　なのだが▽
+それが　……　……　……▽
+……　……　……　……　……▽
+……　……　……　……　……▽
+……　……　……　なのだよ！</language>
 		<language name="JPN_KANJI" width="256">おー　かわいい　お客さんだ
-ちょっと　お茶でも　飲んでいくか？[BE:00:ページ切り替え（行送り）]
-ささっ　そこに　座って！[BE:01:ページ切り替え（クリア）]
-……　……　……　……　……
-……　……　……　なのだが[BE:01:ページ切り替え（クリア）]
-それが　……　……　……
-……　……　……　……　……[BE:01:ページ切り替え（クリア）]
-……　……　……　……　……
-……　……　……　なんですよ</language>
+ちょっと　お茶でも　飲んでいくか？▽
+ささっ　そこに　座って！▽
+……　……　……　……　……▽
+……　……　……　なのだが▽
+それが　……　……　……▽
+……　……　……　……　……▽
+……　……　……　……　……▽
+……　……　……　なのだよ！</language>
 	</row>
 
 	<row id="msg_c03r0801_gentleman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
@@ -875,30 +907,35 @@ msg_c03r0801_hint_02</comment>
 
 	<row id="msg_c03r0801_gentleman_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
 		<comment>トレーナー前</comment>
-		<attribute name="キャラ指定">GENTLEMAN</attribute>
-		<language name="JPN" width="256">せんしつで　くつろぐのも　いいが
-ポケモンしょうぶで　たのしむのは[BE:00:ページ切り替え（行送り）]
-もっと　よいですな[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">船室で　くつろぐのも　いいが
-ポケモン勝負で　楽しむのは[BE:00:ページ切り替え（行送り）]
-もっと　よいですな[BE:01:ページ切り替え（クリア）]</language>
+		<attribute name="キャラ指定">GENTLEMAN
+こだわりなし</attribute>
+		<language name="JPN" width="256">ホッホッホ　ポケモンしょうぶ　かね？▽
+せんしつで　くつろぐのも　あきた
+どれ　レッツ　チークダンス！</language>
+		<language name="JPN_KANJI" width="256">ホッホッホ　ポケモン勝負　かね？▽
+船室で　くつろぐのも　飽きた
+どれ　レッツ　チークダンス！</language>
 	</row>
 
 	<row id="msg_c03r0801_gentleman_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
 		<comment>トレーナー後</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
 		<language name="JPN" width="256">にて　さんて　うえをいく
-あなたに　わたしは　かんぱいです</language>
+やはり　わかさには　かてませんな！</language>
 		<language name="JPN_KANJI" width="256">二手　三手　上を行く
-あなたに　わたしは　完敗です</language>
+やはり　若さには　勝てませんな！</language>
 	</row>
 
 	<row id="msg_c03r0801_lady_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,#ff78ff,,#ff78ff,,,,#ff78ff,,">
 		<comment>お客さん
 ・短い話</comment>
 		<attribute name="キャラ指定">LADY</attribute>
-		<language name="JPN" width="256">みじかい　はなし　です</language>
-		<language name="JPN_KANJI" width="256">短い話　です</language>
+		<language name="JPN" width="256">ポケモントレーナーを　さがしてるの？
+わたしは　しらないわねぇ　ごめんね▽
+せんいんさん　なら　しってそうよ？</language>
+		<language name="JPN_KANJI" width="256">ポケモントレーナーを　探してるの？
+わたしは　知らないわねぇ　ごめんね▽
+船員さん　なら　知ってそうよ？</language>
 	</row>
 
 	<row id="msg_c03r0801_lady_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,#ff78ff,,#ff78ff,,,,#ff78ff,,">
@@ -937,11 +974,12 @@ msg_c03r0801_hint_02</comment>
 
 	<row id="msg_c03r0801_lady_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,#ff78ff,,#ff78ff,,,,#ff78ff,,">
 		<comment>トレーナー前</comment>
-		<attribute name="キャラ指定">LADY</attribute>
+		<attribute name="キャラ指定">LADY
+こだわりなし</attribute>
 		<language name="JPN" width="256">あらあら　かわいい　おきゃくさんね
 ポケモンしょうぶ　しちゃおうかしら[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">あらあら　かわいい　おきゃくさんね
-ポケモンしょうぶ　しちゃおうかしら[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">あらあら　かわいい　お客さんね
+ポケモン勝負　しちゃおうかしら[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c03r0801_lady_05" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,,#ff78ff,,#ff78ff,,,,#ff78ff,,">
@@ -950,7 +988,7 @@ msg_c03r0801_hint_02</comment>
 		<language name="JPN" width="256">かわいいだけ　じゃなく
 ポケモンしょうぶも　つよいのね！</language>
 		<language name="JPN_KANJI" width="256">かわいいだけ　じゃなく
-ポケモンしょうぶも　つよいのね！</language>
+ポケモン勝負も　つよいのね！</language>
 	</row>
 
 	<row id="msg_c03r0801_man3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,#8080ff,,#8080ff,,,,#8080ff,,">
@@ -1023,12 +1061,12 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">MAID</attribute>
 		<language name="JPN" width="256">せかいを　わたりあるいた
 わたしより　つよいなんて！？[BE:01:ページ切り替え（クリア）]
-せかいは　とんでもなく
-ひろいって　わたし　きづきました</language>
+せかいは　とんでもなく　ひろいって
+わたし　きづきました！</language>
 		<language name="JPN_KANJI" width="256">世界を　渡り歩いた
 私より　強いなんて！？[BE:01:ページ切り替え（クリア）]
-世界は　とんでもなく
-広いって　私　気づきました</language>
+世界は　とんでもなく　広いって
+私　気づきました！</language>
 	</row>
 
 	<row id="msg_c03r0801_babygirl2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,#404040,,#404040,,,,#404040,,">
