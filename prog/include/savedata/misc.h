@@ -125,3 +125,7 @@ extern void MISC_SetResearchStartTimeBySecond( MISC* misc, s64 time );
 //イベントロック
 extern void MISC_SetEvtRockValue( MISC* misc, const int inNo, const u32 inValue );
 extern u32 MISC_GetEvtRockValue( MISC* misc, const int inNo );
+// 電光掲示板
+extern u16 MISC_GetChampNewsMinutes( const MISC* misc );
+extern void MISC_SetChampNewsMinutes( MISC* misc, u16 minutes );
+extern void MISC_DecChampNewsMinutes( MISC* misc, u16 minutes );

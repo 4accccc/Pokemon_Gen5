@@ -21,11 +21,8 @@
 #include "field/zonedata.h"
 #include "field/enc_pokeset.h"  // for ENCPOKE_GetGenerateZone
 
-#include "arc/arc_def.h" 
-#include "arc/gate.naix"
-#include "arc/message.naix" 
-#include "msg/msg_gate.h"
-#include "../../../resource/fldmapdata/zonetable/zone_id.h"
+#include "savedata/gimmickwork.h"
+#include "savedata/misc.h" // for MISC_xxxx
 
 #include "gmk_tmp_wk.h"
 #include "gimmick_obj_elboard.h"
@@ -37,7 +34,12 @@
 #include "field_task_camera_rot.h"
 #include "field_task_target_offset.h"
 #include "move_pokemon.h"
-#include "savedata/gimmickwork.h"
+
+#include "arc/arc_def.h" 
+#include "arc/gate.naix"
+#include "arc/message.naix" 
+#include "msg/msg_gate.h"
+#include "../../../resource/fldmapdata/zonetable/zone_id.h"
 
 
 //==========================================================================================
@@ -359,8 +361,10 @@ typedef struct
 //==========================================================================================
 typedef struct
 {
-  u32             recoveryFrame;  // 復帰フレーム
-  NEWS_ENTRY_DATA newsEntryData;  // ニュース登録状況
+  BOOL            firstSetupFlag;   // 初回セットアップが完了しているかどうか
+  u32             recoveryFrame;    // 復帰フレーム
+  u16             champNewsMinutes; // ゲートに入った時のチャンプニュース残り時間
+  NEWS_ENTRY_DATA newsEntryData;    // ニュース登録状況
 
 } SAVEWORK; 
 
@@ -374,12 +378,15 @@ typedef struct
   GAMEDATA*      gameData;   // ゲームデータ
   GAMESYS_WORK*  gameSystem; // ゲームシステム
 
+  BOOL firstSetupFlag; // １回目のセットアップが完了しているかどうか
+
   GOBJ_ELBOARD*        elboard;        // 電光掲示板管理オブジェクト
   u32                  recoveryFrame;  // 復帰フレーム
   ELBOARD_ZONE_DATA*   gateData;       // ゲートデータ
   ELBOARD_SPNEWS_DATA* spNewsData;     // 臨時ニュースデータ
   u8                   spNewsDataNum;  // 臨時ニュースデータ数
   NEWS_ENTRY_DATA      newsEntryData;  // ニュース登録状況
+  u16                  champNewsMinutes; // ゲートに入った時のチャンプニュース残り時間
 
 } GATEWORK;
 
@@ -392,11 +399,13 @@ SAVEWORK* GetGimmickSaveWork( FIELDMAP_WORK* fieldmap ); // ギミックのセーブワー
 // ギミックの保存と復帰
 static void SaveGimmick( const GATEWORK* work ); // ギミック状態をセーブする
 static void LoadGimmick( GATEWORK* work ); // ギミック状態をロードする
+static void RecoverChampNewsTimer( GATEWORK* work ); // チャンピオンニュースの残り表示時間を復帰する
 static void RecoverSpNewsFlags( GATEWORK* work ); // 臨時ニュースのフラグ状態を復帰する
 static void RecoverElboardStatus( GATEWORK* work ); // 電光掲示板の状態を復帰する
 // ギミック管理ワークの生成・破棄
 static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap ); // ギミック管理ワークを生成する
 static void DeleteGateWork( GATEWORK* work ); // ギミック管理ワークを破棄する
+static void FirstSetupGateWork( GATEWORK* work ); // ギミック管理ワークの初回セットアップを行う
 // ゲートデータ
 static void LoadGateData( GATEWORK* work ); // ゲートデータを読み込む
 static void DeleteGateData( GATEWORK* work ); // ゲートデータを破棄する
@@ -440,6 +449,8 @@ static void AddNews_CHAMPION( GATEWORK* work ); // チャンピオン情報を追加する
 static void AddNews_SPECIAL( GATEWORK* work ); // 臨時情報を追加する
 static void AddSpNews_DIRECT( GATEWORK* work, const ELBOARD_SPNEWS_DATA* spnews, NEWS_INDEX news_idx ); // 臨時情報 ( メッセージそのまま ) を追加する
 static void AddSpNews_GYM( GATEWORK* work ); // 臨時情報 ( ジム情報 ) を追加する
+// デバッグ
+static void DebugPrint_SAVEWORK( const SAVEWORK* save ); // セーブワークを出力する
 
 
 //==========================================================================================
@@ -467,16 +478,22 @@ void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   LoadSpNewsData( work ); // 臨時ニュース
   LoadGimmick( work );    // ギミックのセーブデータ
 
-  // 復帰処理
-  RecoverSpNewsFlags( work );   // フラグ復帰
-  SetupElboardNews( work );     // ニュース復帰
-  RecoverElboardStatus( work ); // 掲示板の状態復帰
+  // 初回セットアップ
+  if( work->firstSetupFlag == FALSE ) { 
+    FirstSetupGateWork( work ); 
+  }
+  else {
+    RecoverChampNewsTimer( work ); // チャンピオンニュースの残り時間復帰
+    RecoverSpNewsFlags( work );    // フラグ復帰
+  }
 
-  // 電光掲示板を配置
-  SetElboardPos( work );
+  // ニュースをセットアップ
+  SetupElboardNews( work );
 
-  // モニター・アニメーション開始
-  StartMonitorAnime( work );
+  // 掲示板・モニターをセットアップ
+  RecoverElboardStatus( work );  // 掲示板の状態復帰
+  SetElboardPos( work ); // 電光掲示板を配置
+  StartMonitorAnime( work ); // モニター・アニメーション開始
 
   // DEBUG:
   OBATA_Printf( "GIMMICK-GATE: setup\n" );
@@ -731,39 +748,14 @@ static void SaveGimmick( const GATEWORK* work )
   GF_ASSERT( work->elboard );
 
   // ギミック状態を保存
-  saveWork                = GetGimmickSaveWork( work->fieldmap );
-  saveWork->recoveryFrame = GOBJ_ELBOARD_GetFrame( work->elboard ) >> FX32_SHIFT; 
-  saveWork->newsEntryData = work->newsEntryData;
+  saveWork = GetGimmickSaveWork( work->fieldmap );
+  saveWork->firstSetupFlag   = work->firstSetupFlag;
+  saveWork->recoveryFrame    = GOBJ_ELBOARD_GetFrame( work->elboard ) >> FX32_SHIFT; 
+  saveWork->champNewsMinutes = work->champNewsMinutes;
+  saveWork->newsEntryData    = work->newsEntryData;
 
   // DEBUG: セーブバッファ出力
-  {
-    int i;
-    OBATA_Printf( "GIMMICK-GATE: gimmick save\n" );
-    OBATA_Printf( "-recoveryFrame = %d\n", saveWork->recoveryFrame );
-    OBATA_Printf( "-newsEntryData.newsNum = %d\n",  saveWork->newsEntryData.newsNum );
-    for( i=0; i<NEWS_INDEX_NUM; i++ )
-    {
-      OBATA_Printf( "-newsEntryData.newsType[%d] = ", i );
-      switch( saveWork->newsEntryData.newsType[i] ) {
-      case NEWS_TYPE_NULL:        OBATA_Printf( "NULL\n" );        break;
-      case NEWS_TYPE_DATE:        OBATA_Printf( "DATE\n" );        break;
-      case NEWS_TYPE_WEATHER:     OBATA_Printf( "WEATHER\n" );     break;
-      case NEWS_TYPE_PROPAGATION: OBATA_Printf( "PROPAGATION\n" ); break;
-      case NEWS_TYPE_INFO_A:      OBATA_Printf( "INFO_A\n" );      break;
-      case NEWS_TYPE_INFO_B:      OBATA_Printf( "INFO_B\n" );      break;
-      case NEWS_TYPE_INFO_C:      OBATA_Printf( "INFO_C\n" );      break;
-      case NEWS_TYPE_CM:          OBATA_Printf( "CM\n" );          break;
-      case NEWS_TYPE_SPECIAL:     OBATA_Printf( "SPECIAL\n" );     break;
-      case NEWS_TYPE_CHAMPION:    OBATA_Printf( "CHAMPION\n" );    break;
-      default:                    OBATA_Printf( "UNKNOWN\n" );     break;
-      }
-    }
-    for( i=0; i<NEWS_INDEX_NUM; i++ )
-    {
-      OBATA_Printf( "-newsEntryData.spNewsFlag[%d] = %d\n",
-                    i, saveWork->newsEntryData.spNewsFlag[i] );
-    }
-  }
+  DebugPrint_SAVEWORK( saveWork );
 }
 
 //------------------------------------------------------------------------------------------
@@ -781,38 +773,34 @@ static void LoadGimmick( GATEWORK* work )
   GF_ASSERT( work->fieldmap );
 
   // セーブデータ取得
-  saveWork            = GetGimmickSaveWork( work->fieldmap );
-  work->recoveryFrame = saveWork->recoveryFrame;  // 掲示板の復帰ポイント
+  saveWork = GetGimmickSaveWork( work->fieldmap );
+  work->firstSetupFlag   = saveWork->firstSetupFlag;
+  work->recoveryFrame    = saveWork->recoveryFrame;  // 掲示板の復帰ポイント
+  work->champNewsMinutes = saveWork->champNewsMinutes;
 
   // DEBUG: セーブバッファ出力
-  {
-    int i;
-    OBATA_Printf( "GIMMICK-GATE: gimmick load\n" );
-    OBATA_Printf( "-recoveryFrame = %d\n", saveWork->recoveryFrame );
-    OBATA_Printf( "-newsEntryData.newsNum = %d\n",  saveWork->newsEntryData.newsNum );
-    for( i=0; i<NEWS_INDEX_NUM; i++ )
-    {
-      OBATA_Printf( "-newsEntryData.newsType[%d] = ", i );
-      switch( saveWork->newsEntryData.newsType[i] ) {
-      case NEWS_TYPE_NULL:        OBATA_Printf( "NULL\n" );        break;
-      case NEWS_TYPE_DATE:        OBATA_Printf( "DATE\n" );        break;
-      case NEWS_TYPE_WEATHER:     OBATA_Printf( "WEATHER\n" );     break;
-      case NEWS_TYPE_PROPAGATION: OBATA_Printf( "PROPAGATION\n" ); break;
-      case NEWS_TYPE_INFO_A:      OBATA_Printf( "INFO_A\n" );      break;
-      case NEWS_TYPE_INFO_B:      OBATA_Printf( "INFO_B\n" );      break;
-      case NEWS_TYPE_INFO_C:      OBATA_Printf( "INFO_C\n" );      break;
-      case NEWS_TYPE_CM:          OBATA_Printf( "CM\n" );          break;
-      case NEWS_TYPE_SPECIAL:     OBATA_Printf( "SPECIAL\n" );     break;
-      case NEWS_TYPE_CHAMPION:    OBATA_Printf( "CHAMPION\n" );    break;
-      default:                    OBATA_Printf( "UNKNOWN\n" );     break;
-      }
-    }
-    for( i=0; i<NEWS_INDEX_NUM; i++ )
-    {
-      OBATA_Printf( "-newsEntryData.spNewsFlag[%d] = %d\n",
-                    i, saveWork->newsEntryData.spNewsFlag[i] );
-    }
-  }
+  DebugPrint_SAVEWORK( saveWork );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief チャンピオンニュースの残り表示時間を復帰する
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------------
+static void RecoverChampNewsTimer( GATEWORK* work )
+{
+  SAVE_CONTROL_WORK* save;
+  MISC* misc;
+
+  GF_ASSERT( work );
+  GF_ASSERT( work->fieldmap );
+  GF_ASSERT( work->gameData );
+
+  save = GAMEDATA_GetSaveControlWork( work->gameData );
+  misc = SaveData_GetMisc( save ); 
+  MISC_SetChampNewsMinutes( misc, work->champNewsMinutes );
 }
 
 //------------------------------------------------------------------------------------------
@@ -889,10 +877,11 @@ static GATEWORK* CreateGateWork( FIELDMAP_WORK* fieldmap )
                                           heapID, sizeof(GATEWORK) );
   // ワークを初期化
   GFL_STD_MemClear( work, sizeof(GATEWORK) );
-  work->heapID     = heapID;
-  work->fieldmap   = fieldmap;
-  work->gameSystem = FIELDMAP_GetGameSysWork( fieldmap );
-  work->gameData   = GAMESYSTEM_GetGameData( work->gameSystem );
+  work->heapID         = heapID;
+  work->fieldmap       = fieldmap;
+  work->gameSystem     = FIELDMAP_GetGameSysWork( fieldmap );
+  work->gameData       = GAMESYSTEM_GetGameData( work->gameSystem );
+  work->firstSetupFlag = FALSE;
 
   // 電光掲示板管理ワークを作成
   {
@@ -920,6 +909,33 @@ static void DeleteGateWork( GATEWORK* work )
     DeleteGateData( work );      // ゲートデータ
     DeleteSpNewsData( work );    // 臨時ニュースデータ
     GMK_TMP_WK_FreeWork( work->fieldmap, GIMMICK_WORK_ASSIGN_ID ); // 本体
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief ギミック管理ワークの初回セットアップを行う
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------------
+static void FirstSetupGateWork( GATEWORK* work )
+{
+  const SAVE_CONTROL_WORK* save;
+  const MISC* misc;
+
+  GF_ASSERT( work );
+  GF_ASSERT( work->gameData );
+  GF_ASSERT( work->firstSetupFlag == FALSE );
+
+  if( work->firstSetupFlag == FALSE ) {
+    // チャンピオンニュースの残り時間を取得
+    save = GAMEDATA_GetSaveControlWorkConst( work->gameData );
+    misc = SaveData_GetMiscConst( save ); 
+    work->champNewsMinutes = MISC_GetChampNewsMinutes( misc );
+
+    // 初回セットアップ完了
+    work->firstSetupFlag = TRUE;
   }
 }
 
@@ -1086,7 +1102,12 @@ static void AddNewsEntryData( GATEWORK* work, NEWS_TYPE newsType, u32 spNewsFlag
 //------------------------------------------------------------------------------------------
 static BOOL CheckChampionNews( const GATEWORK* work )
 {
-  return FALSE;
+  if( 0 < work->champNewsMinutes ) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
 }
 
 //------------------------------------------------------------------------------------------
@@ -2078,4 +2099,41 @@ static void GetMovePokeWeather( const GATEWORK* work, WEATHER_NEWS_PARAM* dest )
   // 天気ニュースデータに追加
   dest->zoneID[0]    = zoneID;
   dest->weatherNo[0] = weatherNo;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief セーブワークを出力する
+ *
+ * @param save
+ */
+//------------------------------------------------------------------------------------------
+static void DebugPrint_SAVEWORK( const SAVEWORK* save )
+{
+  int i;
+  OBATA_Printf( "GIMMICK-GATE: gimmick load\n" );
+  OBATA_Printf( "-recoveryFrame = %d\n", save->recoveryFrame );
+  OBATA_Printf( "-newsEntryData.newsNum = %d\n",  save->newsEntryData.newsNum );
+  for( i=0; i<NEWS_INDEX_NUM; i++ )
+  {
+    OBATA_Printf( "-newsEntryData.newsType[%d] = ", i );
+    switch( save->newsEntryData.newsType[i] ) {
+    case NEWS_TYPE_NULL:        OBATA_Printf( "NULL\n" );        break;
+    case NEWS_TYPE_DATE:        OBATA_Printf( "DATE\n" );        break;
+    case NEWS_TYPE_WEATHER:     OBATA_Printf( "WEATHER\n" );     break;
+    case NEWS_TYPE_PROPAGATION: OBATA_Printf( "PROPAGATION\n" ); break;
+    case NEWS_TYPE_INFO_A:      OBATA_Printf( "INFO_A\n" );      break;
+    case NEWS_TYPE_INFO_B:      OBATA_Printf( "INFO_B\n" );      break;
+    case NEWS_TYPE_INFO_C:      OBATA_Printf( "INFO_C\n" );      break;
+    case NEWS_TYPE_CM:          OBATA_Printf( "CM\n" );          break;
+    case NEWS_TYPE_SPECIAL:     OBATA_Printf( "SPECIAL\n" );     break;
+    case NEWS_TYPE_CHAMPION:    OBATA_Printf( "CHAMPION\n" );    break;
+    default:                    OBATA_Printf( "UNKNOWN\n" );     break;
+    }
+  }
+  for( i=0; i<NEWS_INDEX_NUM; i++ )
+  {
+    OBATA_Printf( "-newsEntryData.spNewsFlag[%d] = %d\n", 
+                  i, save->newsEntryData.spNewsFlag[i] );
+  }
 }

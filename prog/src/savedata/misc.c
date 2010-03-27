@@ -776,3 +776,47 @@ u32 MISC_GetEvtRockValue( MISC* misc, const int inNo )
   return misc->event_lock[inNo];
 }
 
+//----------------------------------------------------------
+/**
+ * @brief チャンピオンニュースの残り時間を取得する
+ *
+ * @param  misc
+ *
+ * @return 電光掲示板でチャンプニュースを流す残り時間[min]
+ */
+//----------------------------------------------------------
+u16 MISC_GetChampNewsMinutes( const MISC* misc )
+{
+  return misc->champ_news_minutes;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief チャンピオンニュースの残り時間を設定する
+ *
+ * @param misc
+ * @param minutes 残り時間[min]
+ */
+//----------------------------------------------------------
+void MISC_SetChampNewsMinutes( MISC* misc, u16 minutes )
+{
+  misc->champ_news_minutes = minutes;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief チャンピオンニュースの残り時間をデクリメントする
+ *
+ * @param misc
+ * @param minutes 経過時間[min]
+ */
+//----------------------------------------------------------
+void MISC_DecChampNewsMinutes( MISC* misc, u16 minutes )
+{
+  if( minutes <= misc->champ_news_minutes ) {
+    misc->champ_news_minutes -= minutes;
+  }
+  else {
+    misc->champ_news_minutes = 0;
+  }
+}

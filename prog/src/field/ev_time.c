@@ -215,6 +215,13 @@ static void UpdateMinuteEvent(GAMEDATA * gdata, s32 diff_minute, const RTCTime *
 		ppt = SaveData_GetTemotiPokemon(sv);
 		SHEIMI_NFORM_ChangeNormal_TimeUpdate(ppt, diff_minute, now);
 	}  
+
+  // 電光掲示板のチャンピオンニュース表示残り時間をデクリメント
+  {
+    SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork(gdata);
+    MISC* misc = SaveData_GetMisc( sv );
+    MISC_DecChampNewsMinutes( misc, diff_minute );
+  }
 }
 
 

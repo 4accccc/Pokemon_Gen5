@@ -66,6 +66,6 @@ struct _MISC
   u32 battle_recorder_flag;
 
   // 電光掲示板
-  u16 champNewsTimer; // チャンピオン情報を流す残り時間[min]
+  u16 champ_news_minutes; // チャンピオン情報を流す残り時間[min]
 };
 
