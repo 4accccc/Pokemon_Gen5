@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-03-26T19:58:38"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-03-27T15:51:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -586,13 +586,13 @@
 	</row>
 
 	<row id="msg_debug_masafumi_12" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,">
-		<language name="JPN" width="256">仮メッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">C04 サポート父イベント</language>
+		<language name="JPN_KANJI" width="256">C04 サポート父イベント</language>
 	</row>
 
 	<row id="msg_debug_masafumi_13" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,">
-		<language name="JPN" width="256">仮メッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">観覧車トレーナー</language>
+		<language name="JPN_KANJI" width="256">観覧車トレーナー</language>
 	</row>
 
 	<row id="msg_debug_masafumi_14" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,">
