@@ -28,24 +28,18 @@
 
 #include "tr_tool/tr_tool.h"		//TT_TrainerMessageGet
 #include "tr_tool/trno_def.h"
+#include "tr_tool/trtype_def.h" //TRTYPE_
 #include "arc/fieldmap/fldmmdl_objcode.h"
 
 #include "event_battle.h"
 
-#include "field_sound.h"
+#include "field_sound.h"      // FSND_～
 
 #include "trainer_eye_data.h"
 
 #include "field_event_check.h"
 
 #include "event_field_fade.h" //EVENT_FieldFadeIn_Black
-#if 0
-#include "battle/battle_common.h"	//↓インクルードに必要
-#include "ev_trainer.h"				//EvTrainer
-#include "field_encount.h"			//DebugFieldEncount
-#include "field_battle.h"			//BattleParam_IsWinResult
-#include "ev_pokemon.h"				//EvPoke_Add
-#endif
 
 //======================================================================
 //	プロトタイプ宣言
@@ -160,12 +154,21 @@ VMCMD_RESULT EvCmdEyeTrainerIdGet( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCR_TRAINER_HITDATA * eye0 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
-  SCR_TRAINER_HITDATA * eye1 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
 	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
 	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
-  *ret_wk = (pos == SCR_EYE_TR_0) ? (eye0->hitdata.tr_id) : (eye1->hitdata.tr_id);
-  KAGAYA_Printf( "視線トレーナーID取得 %d\n", *ret_wk );
+  SCR_TRAINER_HITDATA * eye = NULL;
+
+  if( pos == SCR_EYE_TR_0 ){ //視線0
+    eye = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
+  }else if( pos == SCR_EYE_TR_1){
+    eye = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
+  }
+  if ( eye ) {
+    *ret_wk = eye->hitdata.tr_id;
+  } else {
+    GF_ASSERT( 0 );
+    *ret_wk = 0;  //エラー回避
+  }
 	return VMCMD_RESULT_CONTINUE;
 }
 
@@ -547,7 +550,16 @@ VMCMD_RESULT EvCmdTrainerSpecialTypeGet( VMHANDLE * core, void *wk )
 	u16  tr_id	= SCRCMD_GetVMWorkValue( core, work );
 	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
 
-  *ret_wk = SCR_TR_SPTYPE_NONE; //@todo とりあえず
+  if ( TT_TrainerDataParaGet( tr_id, ID_TD_hp_recover_flag ) ) {
+    //回復トレーナー
+    *ret_wk = SCR_TR_SPTYPE_RECOVER;
+  } else if ( TT_TrainerDataParaGet( tr_id, ID_TD_gift_item ) != 0 ) {
+    //アイテムトレーナー
+    *ret_wk = SCR_TR_SPTYPE_ITEM;
+  } else {
+    //通常のトレーナー
+    *ret_wk = SCR_TR_SPTYPE_NONE;
+  }
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -564,7 +576,7 @@ VMCMD_RESULT EvCmdTrainerItemGet( VMHANDLE *core, void *wk )
 	u16* ret_wk		= SCRCMD_GetVMWork( core, work );
 
   //GF_ASSERT( アイテムトレーナーじゃない　）
-  *ret_wk = 0;  //とりあえず
+  *ret_wk = TT_TrainerDataParaGet( tr_id, ID_TD_gift_item );
 
   return VMCMD_RESULT_CONTINUE;
 }

@@ -12,19 +12,13 @@
 
 #include "script.h"
 #include "script_trainer.h"
-//#include "script_local.h"
 
 #include "scrcmd_work.h"
 #include "eventwork_def.h"
 
-#include "field/zonedata.h"
-
-#include "print/wordset.h"    //WORDSET
 
 #include "trainer_eye_data.h"   //SCR_TRAINER_HITDATA
-#include "field/eventdata_system.h" //EVENTDATA_GetSpecialScriptData
 
-#include "fieldmap.h"   //FIELDMAP_GetFldMsgBG
 #include "battle/battle.h"
 
 
