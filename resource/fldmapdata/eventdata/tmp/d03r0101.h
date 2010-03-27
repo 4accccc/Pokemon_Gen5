@@ -34,13 +34,16 @@
 #define D03R0101_FLD_ITEM_03              20
 #define D03R0101_FLD_ITEM_04              21
 #define D03R0101_FLD_ITEM_05              22
-#define D03R0101_FLD_ITEM_06              23
-#define D03R0101_FLD_ITEM_7               24
+#define D03R0101_FLD_ITEM_7               23
+#define D03R0101_FLD_ITEM_06              24
 
 #endif //ZONE_D03R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d03r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
 #ifndef ZONE_D03R0101_EVB_H
 #define ZONE_D03R0101_EVB_H
 
+#define D03R0101_HIDE_ITEM_01             0
+#define D03R0101_HIDE_ITEM_03             1
+#define D03R0101_HIDE_ITEM_02             2
 
 #endif //ZONE_D03R0101_EVB_H

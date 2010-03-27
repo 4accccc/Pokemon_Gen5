@@ -23,5 +23,6 @@
 #ifndef ZONE_D05_EVB_H
 #define ZONE_D05_EVB_H
 
+#define D05_HIDE_ITEM_01                  0
 
 #endif //ZONE_D05_EVB_H
