@@ -63,6 +63,8 @@ void DEBUG_MYSTERY_SetGiftPokeData( GIFT_PACK_DATA *p_data )
     p_poke->oyaname[4]  = 0xffff;
 
     p_poke->nickname[0]  = 0xffff;
+
+    p_poke->birth_place = 40001;
   }
   p_data->gift_type     = MYSTERYGIFT_TYPE_POKEMON;
 }
