@@ -1,4 +1,4 @@
-//======================================================================
+////======================================================================
 /**
  * @file	scrcmd_menuwin.c
  * @brief	スクリプトコマンド：メニュー、システムウィンドウ関連
@@ -28,6 +28,8 @@
 #include "arc/script_message.naix"
 #include "msg/script/msg_common_scr.h"
 #include "../../../resource/fldmapdata/script/usescript.h"
+
+#include "sound/pm_sndsys.h"
 
 //======================================================================
 //  define
@@ -1992,6 +1994,7 @@ static BOOL EvWaitKeyWaitMsgCursor( VMHANDLE *core, void *wk )
   void *win = SCRCMD_WORK_GetMsgWinPtr( work );
   
   if( trg & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) ){
+    PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
     return( TRUE );
   }
   
