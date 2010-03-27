@@ -779,8 +779,8 @@
 #define FV_MUSICAL_FUN_09                  755 /* 0x02f3 ミュージカルホール：出待ちのファン４人目 */
 #define FV_MUSICAL_FUN_10                  756 /* 0x02f4 ミュージカルホール：出待ちのファン５人目 */
 #define FV_D01R0101_GCIS_01                757 /* 0x02f5 夢の跡地：ゲーヂス */
-		/* not used   758(0x02f6) */
-		/* not used   759(0x02f7) */
+#define FV_D09_VETERANM_01                 758 /* 0x02f6 チャンピオンロード外側：崖の上のベテラン */
+#define FV_D09_VETERANM_02                 759 /* 0x02f7 チャンピオンロード外側：崖の下のベテラン */
 		/* not used   760(0x02f8) */
 		/* not used   761(0x02f9) */
 		/* not used   762(0x02fa) */
