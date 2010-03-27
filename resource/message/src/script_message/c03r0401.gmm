@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-03-25T19:50:13"/>
+	<create user="matsushima" host="W00181" date="2010-03-27T17:11:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -332,13 +332,13 @@
 		<language name="JPN" width="256">おはなしの　つづきを　してあげるね！[BE:01:ページ切り替え（クリア）]
 …　…　…　…
 ひとりぼっちに　なった　ゾロアは[BE:00:ページ切り替え（行送り）]
-おかあさんを　さがしまわりました…[BE:00:ページ切り替え（行送り）]
+おかあさんを　さがしまわりました…[BE:01:ページ切り替え（クリア）]
 あんた　ゾロアって　みたことある？
 ほら　こんな　ポケモンなのよ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">お話の　続きを　してあげるね！[BE:01:ページ切り替え（クリア）]
 …　…　…　…
 ひとりぼっちに　なった　ゾロアは[BE:00:ページ切り替え（行送り）]
-おかあさんを　探しまわりました…[BE:00:ページ切り替え（行送り）]
+おかあさんを　探しまわりました…[BE:01:ページ切り替え（クリア）]
 あんた　ゾロアって　みたことある？
 ほら　こんな　ポケモンなのよ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -380,10 +380,10 @@ msg_c03r0401_girl1_04</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ズイウンシティは　ひろくて
 ぐるぐる　めが　まわっちゃうよ[BE:00:ページ切り替え（行送り）]
-あたしだって　まいごに　なるわ！[BE:01:ページ切り替え（クリア）]</language>
+あたしだって　まいごに　なるわ！</language>
 		<language name="JPN_KANJI" width="256">ズイウンシティは　広くて
 ぐるぐる　目が　回っちゃうよ[BE:00:ページ切り替え（行送り）]
-あたしだって　迷子に　なるわ！[BE:01:ページ切り替え（クリア）]</language>
+あたしだって　迷子に　なるわ！</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_06_1" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -476,18 +476,18 @@ msg_c03r0401_girl1_04</comment>
 	<row id="msg_c03r0401_narrator_02">
 		<comment>・手持ちに入ったときのメッセージ。</comment>
 		<attribute name="キャラ指定">ナレーション</attribute>
-		<language name="JPN" width="256">ゾロアが　なかまに　くわわった！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ゾロアが　なかまに　くわわった！</language>
 		<language name="JPN_KANJI" width="256">ゾロアが
-仲間に　くわわった！[BE:01:ページ切り替え（クリア）]</language>
+仲間に　くわわった！</language>
 	</row>
 
 	<row id="msg_c03r0401_narrator_03">
 		<comment>・ボックスに転送されたときのメッセージ。</comment>
 		<attribute name="キャラ指定">ナレーション</attribute>
 		<language name="JPN" width="256">ゾロアは　あいている　ボックスに
-てんそうされた！[BE:01:ページ切り替え（クリア）]</language>
+てんそうされた！</language>
 		<language name="JPN_KANJI" width="256">ゾロアは　空いている　ボックスに
-転送された！[BE:01:ページ切り替え（クリア）]</language>
+転送された！</language>
 	</row>
 
 	<row id="msg_c03r0401_girl1_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
