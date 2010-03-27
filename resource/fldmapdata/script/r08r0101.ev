@@ -38,6 +38,8 @@ DEFINE_LOCAL TrgtObj
 /**************************************************************/
 EVENT_START ev_scene_r08r0101
   $is_scene_evt = TRUE    //シーンイベント起動フラグ
+  //シーンイベント消化 シーンイベント再起動防止シーケンス
+  $WK_SCENE_R08R0101_LEG = 1
   //自機所定の位置へ移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
   _OBJ_ANIME_WAIT()
@@ -46,8 +48,6 @@ EVENT_START ev_scene_r08r0101
   IF $SCWK_ANSWER == TRUE THEN
     _CALL common_root
   ENDIF
-  //シーンイベント消化
-  $WK_SCENE_R08R0101_LEG = 1
 EVENT_END
 
 //技覚えるまでの共通ルーチン
@@ -119,7 +119,10 @@ common_root:
       _BALLOONWIN_CLOSE()
       //自機上向き
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
-      //
+      //ちょっと待つ
+      _TIME_WAIT(8)
+      //シーンイベント消化　シーンイベント完全終了
+      $WK_SCENE_R08R0101_LEG = 2
     ENDIF
 
     //三銃士ポケモンそろっているか？
@@ -198,13 +201,15 @@ INIT_EVENT_START ev_zone_r08r0101
 	_FLAG_SET( FV_R08R0101_POKE6 )
 	_FLAG_SET( FV_R08R0101_POKE11 )
 
-  IF $WK_SCENE_R08R0101_LEG == 0 THEN
+  IF $WK_SCENE_R08R0101_LEG < 2 THEN
     //イベント条件判定
     _GET_EVT_POKE_POS( MONSNO_654, TRUE, pos, SCWK_ANSWER )
     IF $SCWK_ANSWER == TRUE THEN
       //爺さん非表示
       _FLAG_SET( FV_R08R0101_OLDMAN1 )
-    ENDIF  
+      //シーンイベント起動
+      $WK_SCENE_R08R0101_LEG = 0
+    ENDIF
   ENDIF
 INIT_EVENT_END
 
