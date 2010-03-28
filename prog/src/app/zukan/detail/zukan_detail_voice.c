@@ -13,7 +13,12 @@
 
 //#define DEBUG_SOUND_TEST  // これが定義されているとき、サウンドのテストが可能
 
-#define GRAPH_GATHER  // これが定義されているとき、密集したグラフを描画する
+
+#define GRAPH_GATHER       // これが定義されているとき、密集したグラフを描画する
+#ifdef GRAPH_GATHER
+  #define GRAPH_SWAP_BMPWIN  // これが定義されているとき、グラフ描画用にビットマップウィンドウを2つ用意する
+#endif  // 同一ビットマップでGFL_BMP_Printすると危険かもしれない、と思い、2つ用意した。(memcpy, memmoveどちらとして働くのか分からないから)
+        // どうもGFL_BMP_Printに時間が掛かっているようだ。VRAMにおいてVRAM同士でコピーすれば速いだろうか？
 
 
 // インクルード
@@ -153,8 +158,8 @@ END_CMD;
 #define GRAPH_BITMAP_CHAR_SIZE_Y    (15)
 
 #define GRAPH_DATA_INTERVAL_X       (3)  // これだけ離してX座標を取る  // 4の場合、x 0 0 0 x 0 0 0 x となる
-#define GRAPH_DATA_MOVE_WAIT        (0)  // このフレームだけ待ってGRAPH_DATA_MOVE_SPEEDだけ移動する  // 0の場合、x x x  // 2の場合、x 0 0 x 0 0 x
-#define GRAPH_DATA_MOVE_SPEED       (2)//(1)  // 移動する際の移動量  // [x] = [x+GRAPH_DATA_MOVE_SPEED] となる
+#define GRAPH_DATA_MOVE_WAIT        (2)////////(0)  // このフレームだけ待ってGRAPH_DATA_MOVE_SPEEDだけ移動する  // 0の場合、x x x  // 2の場合、x 0 0 x 0 0 x
+#define GRAPH_DATA_MOVE_SPEED       (6)////////(2)//(1)  // 移動する際の移動量  // [x] = [x+GRAPH_DATA_MOVE_SPEED] となる
 
 #define GRAPH_DATA_SIZE_X           (GRAPH_DATA_MOVE_SPEED+GRAPH_DATA_INTERVAL_X+ 30*8 +GRAPH_DATA_MOVE_SPEED+GRAPH_DATA_INTERVAL_X)
                                             // GRAPH_DATA_SIZE_Xは描画するデータ数(GRAPH_DATA_MIN_X, GRAPH_DATA_MAX_Xから求める)より
@@ -201,6 +206,17 @@ END_CMD;
 #endif
 
 
+#ifdef GRAPH_SWAP_BMPWIN
+typedef enum
+{
+  GRAPH_SWAP_BMPWIN_IDX_0,
+  GRAPH_SWAP_BMPWIN_IDX_1,
+  GRAPH_SWAP_BMPWIN_IDX_MAX,
+}
+GRAPH_SWAP_BMPWIN_IDX;
+#endif
+
+
 #ifdef DEBUG_SOUND_TEST  // これが定義されているとき、サウンドのテストが可能
 static int speed;
 static int volume;
@@ -228,7 +244,12 @@ typedef struct
   GFL_BMPWIN*                 time_bmpwin;
   GFL_MSGDATA*                time_msgdata;
 
+#ifdef GRAPH_SWAP_BMPWIN
+  GRAPH_SWAP_BMPWIN_IDX       graph_swap_bmpwin_idx;  // これから描画するビットマップウィンドウ
+  GFL_BMPWIN*                 graph_bmpwin[GRAPH_SWAP_BMPWIN_IDX_MAX];
+#else
   GFL_BMPWIN*                 graph_bmpwin;
+#endif
   s16                         graph_data_y[GRAPH_DATA_SIZE_X];  // データ座標y = graph_data_y[データ座標x] 
   s16                         graph_data_prev_x;                // 前にデータを書いたところ
   u8                          graph_data_move_wait_count;       // グラフが移動するまでに待つフレーム数(0のとき毎フレーム進む)
@@ -1119,6 +1140,21 @@ static void Zukan_Detail_Voice_TouchPlayButton( ZUKAN_DETAIL_VOICE_PARAM* param,
 //=====================================
 static void Zukan_Detail_Voice_GraphInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+#ifdef GRAPH_SWAP_BMPWIN
+  u8 i;
+  for( i=0; i<GRAPH_SWAP_BMPWIN_IDX_MAX; i++ )
+  {
+    work->graph_bmpwin[i] = GFL_BMPWIN_Create(
+                                BG_FRAME_M_TIME,
+                                1, 2,
+                                GRAPH_BITMAP_CHAR_SIZE_X, GRAPH_BITMAP_CHAR_SIZE_Y,
+                                BG_PAL_POS_M_TIME,
+                                GFL_BMP_CHRAREA_GET_B );
+  }
+  Zukan_Detail_Voice_GraphReset( param, work, cmn );
+  work->graph_swap_bmpwin_idx = GRAPH_SWAP_BMPWIN_IDX_0; 
+  GFL_BMPWIN_MakeTransWindow_VBlank( work->graph_bmpwin[work->graph_swap_bmpwin_idx] );
+#else
   work->graph_bmpwin = GFL_BMPWIN_Create(
                            BG_FRAME_M_TIME,
                            1, 2,
@@ -1127,6 +1163,7 @@ static void Zukan_Detail_Voice_GraphInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN
                            GFL_BMP_CHRAREA_GET_B );
   Zukan_Detail_Voice_GraphReset( param, work, cmn );
   GFL_BMPWIN_MakeTransWindow_VBlank( work->graph_bmpwin );
+#endif
 
 #ifdef GRAPH_GATHER
   work->graph_full_bmp_data = GFL_BMP_Create( GRAPH_DATA_FULL_SIZE_X_MAX /8 +1, GRAPH_BITMAP_CHAR_SIZE_Y, GFL_BMP_16_COLOR, param->heap_id );
@@ -1138,7 +1175,17 @@ static void Zukan_Detail_Voice_GraphExit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN
   GFL_BMP_Delete( work->graph_full_bmp_data );
 #endif
 
+#ifdef GRAPH_SWAP_BMPWIN
+  {
+    u8 i;
+    for( i=0; i<GRAPH_SWAP_BMPWIN_IDX_MAX; i++ )
+    {
+      GFL_BMPWIN_Delete( work->graph_bmpwin[i] );
+    }
+  }
+#else
   GFL_BMPWIN_Delete( work->graph_bmpwin );
+#endif
 }
 
 #ifdef GRAPH_GATHER
@@ -1215,6 +1262,24 @@ static void Zukan_Detail_Voice_GraphReset( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
   work->graph_data_full_print   = work->graph_data_full_size;  // 書き終わっている
   work->wave_full_millisec      = 0;
 
+#ifdef GRAPH_SWAP_BMPWIN
+  {
+    u8 i;
+
+    s16 bitmap_min_x  = GRAPH_DATA_X_TO_BITMAP_X( GRAPH_DATA_MIN_X );  // 含む
+    s16 bitmap_max_x  = GRAPH_DATA_X_TO_BITMAP_X( GRAPH_DATA_MAX_X );  // 含む
+    s16 bitmap_size_x = bitmap_max_x - bitmap_min_x +1;
+
+    for( i=0; i<GRAPH_SWAP_BMPWIN_IDX_MAX; i++ )
+    {
+      // 横一直線を書いて初期化
+      GFL_BMP_DATA* bmp_data = GFL_BMPWIN_GetBmp( work->graph_bmpwin[i] );
+      GFL_BMP_Clear( bmp_data, 0 );  // クリアしておく
+      GFL_BMP_Fill( bmp_data, bitmap_min_x, GRAPH_DATA_Y_TO_BITMAP_Y(0), bitmap_size_x, 1, GRAPH_COLOR );
+      GFL_BMPWIN_TransVramCharacter( work->graph_bmpwin[i] );
+    }
+  }
+#else
   {
     // 横一直線を書いて初期化
     GFL_BMP_DATA* bmp_data = GFL_BMPWIN_GetBmp( work->graph_bmpwin );
@@ -1229,6 +1294,7 @@ static void Zukan_Detail_Voice_GraphReset( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
   
     GFL_BMPWIN_TransVramCharacter( work->graph_bmpwin );
   }
+#endif
 }
 
 #else
@@ -1257,7 +1323,12 @@ static void Zukan_Detail_Voice_GraphDrawBitmap( ZUKAN_DETAIL_VOICE_PARAM* param,
   // work->graph_data_full_printを書いた分だけ進める
   // …ということをしたいときにこの関数を呼び出すこと。
 
+#ifdef GRAPH_SWAP_BMPWIN
+  GRAPH_SWAP_BMPWIN_IDX   graph_swap_bmpwin_idx_prev = ( work->graph_swap_bmpwin_idx == GRAPH_SWAP_BMPWIN_IDX_0 )?( GRAPH_SWAP_BMPWIN_IDX_1 ):( GRAPH_SWAP_BMPWIN_IDX_0 );
+  GFL_BMP_DATA* bmp_data = GFL_BMPWIN_GetBmp( work->graph_bmpwin[work->graph_swap_bmpwin_idx] );
+#else
   GFL_BMP_DATA* bmp_data = GFL_BMPWIN_GetBmp( work->graph_bmpwin );
+#endif
 
   s16 bitmap_min_x  = GRAPH_DATA_X_TO_BITMAP_X( GRAPH_DATA_MIN_X );  // 含む
   s16 bitmap_max_x  = GRAPH_DATA_X_TO_BITMAP_X( GRAPH_DATA_MAX_X );  // 含む
@@ -1266,6 +1337,18 @@ static void Zukan_Detail_Voice_GraphDrawBitmap( ZUKAN_DETAIL_VOICE_PARAM* param,
   s16 draw_start = bitmap_max_x - GRAPH_DATA_MOVE_SPEED +1;  // 空きの開始位置
   s16 draw_size = 0;                                         // 空きに書いた横ピクセル数
 
+#ifdef GRAPH_SWAP_BMPWIN
+  // 今書いてあるグラフをそのままGRAPH_DATA_MOVE_SPEEDだけずらす
+  {
+    GFL_BMP_DATA* bmp_data_prev = GFL_BMPWIN_GetBmp( work->graph_bmpwin[graph_swap_bmpwin_idx_prev] );
+    GFL_BMP_Print( 
+        bmp_data_prev, bmp_data,
+        bitmap_min_x + GRAPH_DATA_MOVE_SPEED, 0,
+        bitmap_min_x, 0,
+        bitmap_size_x - GRAPH_DATA_MOVE_SPEED, GRAPH_BITMAP_CHAR_SIZE_Y*8,  // y方向は全部書いていい。書いちゃいけないところは透明にしてあるので。
+        GF_BMPPRT_NOTNUKI );
+  }
+#else
   // 今書いてあるグラフをそのままGRAPH_DATA_MOVE_SPEEDだけずらす
   GFL_BMP_Print( 
       bmp_data, bmp_data,
@@ -1273,6 +1356,7 @@ static void Zukan_Detail_Voice_GraphDrawBitmap( ZUKAN_DETAIL_VOICE_PARAM* param,
       bitmap_min_x, 0,
       bitmap_size_x - GRAPH_DATA_MOVE_SPEED, GRAPH_BITMAP_CHAR_SIZE_Y*8,  // y方向は全部書いていい。書いちゃいけないところは透明にしてあるので。
       GF_BMPPRT_NOTNUKI );
+#endif
 
   // ずらしてできた空きをクリアする
   GFL_BMP_Fill( bmp_data, draw_start, 0, GRAPH_DATA_MOVE_SPEED, GRAPH_BITMAP_CHAR_SIZE_Y*8, 0 );
@@ -1299,7 +1383,12 @@ static void Zukan_Detail_Voice_GraphDrawBitmap( ZUKAN_DETAIL_VOICE_PARAM* param,
     GFL_BMP_Fill( bmp_data, draw_start + draw_size, GRAPH_DATA_Y_TO_BITMAP_Y(0), GRAPH_DATA_MOVE_SPEED - draw_size, 1, GRAPH_COLOR );
   }
   
+#ifdef GRAPH_SWAP_BMPWIN
+  GFL_BMPWIN_MakeTransWindow_VBlank( work->graph_bmpwin[work->graph_swap_bmpwin_idx] );
+  work->graph_swap_bmpwin_idx = graph_swap_bmpwin_idx_prev;
+#else
   GFL_BMPWIN_TransVramCharacter( work->graph_bmpwin );
+#endif
 }
 
 #else
