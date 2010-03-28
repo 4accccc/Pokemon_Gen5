@@ -717,7 +717,7 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   GFL_BG_LoadScreenReq( FIELD_MENU_BG_BUTTON );
   
   //フォント用パレット
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , FIELD_MENU_PLT_FONT * 32, 16*2, work->tempHeapId );
+//  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , FIELD_MENU_PLT_FONT * 32, 16*2, work->tempHeapId );
   
   //セル系システムの作成
   work->cellUnit = GFL_CLACT_UNIT_Create( 8 , 0 , work->heapId );
