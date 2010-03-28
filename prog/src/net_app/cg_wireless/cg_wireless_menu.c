@@ -206,6 +206,7 @@ struct _CG_WIRELESS_MENU {
   int TelTimer;
   GFL_CLWK* buttonObj[_SELECTMODE_MAX];
   GFL_CLWK* TVTCall;
+  GFL_CLWK* TVTCallName;
 
 };
 
@@ -536,6 +537,23 @@ static void _CreateButtonObj(CG_WIRELESS_MENU* pWork)
   GFL_CLACT_WK_SetAutoAnmFlag( pWork->TVTCall , TRUE );
   GFL_CLACT_WK_SetDrawEnable( pWork->TVTCall, TRUE );
   GFL_CLACT_WK_SetObjMode(pWork->TVTCall, GX_OAM_MODE_XLU);
+
+
+  cellInitData.pos_x = 128;
+  cellInitData.pos_y = 192/2;
+  cellInitData.anmseq = 18;
+  cellInitData.softpri = 0;
+  cellInitData.bgpri = 2;
+  pWork->TVTCallName = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                        pWork->cellRes[CHAR_OBJ],
+                                        pWork->cellRes[PLT_OBJ],
+                                        pWork->cellRes[ANM_OBJ],
+                                        &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+  GFL_CLACT_WK_SetAutoAnmFlag( pWork->TVTCallName , TRUE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->TVTCallName, FALSE );
+  GFL_CLACT_WK_SetObjMode(pWork->TVTCallName, GX_OAM_MODE_XLU);
+
+
 }
 
 //------------------------------------------------------------------------------
@@ -1288,17 +1306,13 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
       GFL_BMPWIN_TransVramCharacter(pWork->nameWin);
       GFL_BMPWIN_MakeScreen(pWork->nameWin);
       OS_TPrintf("–¼‘O‚¾‚µ\n");
+      GFL_CLACT_WK_SetDrawEnable( pWork->TVTCallName, TRUE );
 			GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+
+
+
     }
     GFL_STR_DeleteBuffer(pName);
-
-  //  if(pWork->TelTimer < 0){
-  //    PMSND_PlaySE( SEQ_SE_SYS_35 );
-  //    pWork->TelTimer = _TEL_TIMER;
-  //  }
-   // else{
-  //    pWork->TelTimer--;
-  //  }
     {
       FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( pWork->gamedata );
       FSND_RequestTVTRingTone( fsnd);
@@ -1306,9 +1320,19 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
     if(15 == GFL_CLACT_WK_GetAnmSeq(pWork->TVTCall)){
       GFL_CLACT_WK_SetAnmSeq(pWork->TVTCall, 16);
     }
+    if(11 == GFL_CLACT_WK_GetAnmSeq(pWork->buttonObj[1])){
+      GFL_CLACT_WK_SetAnmSeq( pWork->buttonObj[1], 19 );
+    }
   }
   else{
-//    PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
+    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( pWork->gamedata );
+    FSND_StopTVTRingTone(fsnd);
+    GFL_CLACT_WK_SetDrawEnable( pWork->TVTCallName, FALSE );
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->nameWin), 0 );
+    GFL_BMPWIN_TransVramCharacter(pWork->nameWin);
+    if(19 == GFL_CLACT_WK_GetAnmSeq(pWork->buttonObj[1])){
+      GFL_CLACT_WK_SetAnmSeq( pWork->buttonObj[1], 11 );
+    }
     if(16 == GFL_CLACT_WK_GetAnmSeq(pWork->TVTCall)){
       GFL_CLACT_WK_SetAnmSeq(pWork->TVTCall, 15);
     }
@@ -1522,6 +1546,7 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
     GFL_CLACT_WK_Remove(pWork->buttonObj[i]);
   }
   GFL_CLACT_WK_Remove( pWork->TVTCall);
+  GFL_CLACT_WK_Remove( pWork->TVTCallName);
   
   GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_OBJ] );
   GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_OBJ] );

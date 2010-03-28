@@ -814,6 +814,9 @@ static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq );
 static int _playerDirectInit( WIFIP2PMATCH_WORK *wk, int seq );
 static int MessageEndReturnList( WIFIP2PMATCH_WORK *wk, int seq );
 static int _parentModeSelectMenuInit2( WIFIP2PMATCH_WORK *wk, int seq );
+static int _parentModeCallMenuSendD( WIFIP2PMATCH_WORK *wk, int seq );
+static int _DirectConnectWait( WIFIP2PMATCH_WORK *wk, int seq  );
+static int _DirectConnectWait2( WIFIP2PMATCH_WORK *wk, int seq  );
 
 
 
@@ -991,8 +994,11 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _parentModeSelectMenuInit2, //WIFIP2PMATCH_MODE_SELECT_INIT2
   _playerDirectEnd2, //WIFIP2PMATCH_PLAYERDIRECT_END2,
   _playerDirectEndCall2, //WIFIP2PMATCH_PLAYERDIRECT_ENDCALL2,
+  _playerDirectVCTChangeE, //WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE_E
+  _parentModeCallMenuSendD, //WIFIP2PMATCH_MODE_CALL_CHECK_D
+  _DirectConnectWait,//WIFIP2PMATCH_MODE_CONNECTWAIT,
+  _DirectConnectWait2,//  WIFIP2PMATCH_MODE_CONNECTWAIT2,
 
-  
 };
 
 #define _MAXNUM   (2)         // 最大接続人数
@@ -3225,10 +3231,12 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   }
 
 
-  if( wk->DirectModeNo!=0){
-    if(!WIFI_STATUS_IsVChatMac(wk->pMatch, WifiFriendMatchStatusGet( wk->DirectModeNo-1 ))){
-        wk->DirectModeNo=0;
-    }
+//  if( wk->DirectModeNo!=0){
+//    if(!WIFI_STATUS_IsVChatMac(wk->pMatch, WifiFriendMatchStatusGet( wk->DirectModeNo-1 ))){
+  //      wk->DirectModeNo=0;
+    //}
+//  }
+  if(0){
   }
   else{
     int j;
@@ -3812,6 +3820,10 @@ static int WifiP2PMatch_Disconnect(WIFIP2PMATCH_WORK *wk, int seq)
   // ユーザーデータOFF
   //  WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );
   //
+
+
+
+
   // エラーチェック
   if( GFL_NET_StateIsWifiError() ){
     _errorDisp(wk);
@@ -3825,6 +3837,11 @@ static int WifiP2PMatch_Disconnect(WIFIP2PMATCH_WORK *wk, int seq)
   }
   wk->timer--;
   if((GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)) || (wk->timer==0)){
+
+
+    // 話しかけている友達ナンバー取得
+    WIFI_MCR_NpcPauseOff( &wk->matchroom, MCRSYS_GetMoveObjWork( wk, WIFI_MCR_PlayerSelect( &wk->matchroom ) ) );
+
     EndMessageWindowOff(wk);
     _myStatusChange(wk,  WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
 
@@ -4349,25 +4366,23 @@ static int _childModeMatchMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
   {
     status = _WifiMyStatusGet( wk, p_status );
 
-#if 1
     switch(status){
     case WIFI_STATUS_RECRUIT:
     case WIFI_STATUS_PLAY_AND_RECRUIT:
       _ChildModeMatchMenuDisp(wk);
       _CHANGESTATE(wk, WIFIP2PMATCH_MODE_MATCH_WAIT);
       break;
-    case WIFI_STATUS_PLAYING:
-      //メッセージ出して終了
-      
-      WIFI_MCR_NpcPauseOff( &wk->matchroom, p_npc );
-      
-      _CHANGESTATE(wk,WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
-      break;
     case WIFI_STATUS_WAIT:   //相手指定で呼びかけるモードにいく
       _ChildModeMatchMenuDisp(wk);
       _CHANGESTATE(wk, WIFIP2PMATCH_MODE_PLAYERDIRECT_INIT);
+      break;
+    case WIFI_STATUS_PLAYING:
+    default:
+      //メッセージ出して終了
+      WIFI_MCR_NpcPauseOff( &wk->matchroom, p_npc );
+      _CHANGESTATE(wk,WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
+      break;
     }
-#endif
 
   }
 
@@ -4416,7 +4431,7 @@ static BOOL _playerDirectConnectStart( WIFIP2PMATCH_WORK *wk )
         wk->timeWaitWork = TimeWaitIconAdd( wk->MsgWin, COMM_TALK_WIN_CGX_NUM );
         wk->DirectMacSet = friendNo;
 
-        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+        _CHANGESTATE(wk,  WIFIP2PMATCH_MODE_CONNECTWAIT);
         
         message = 1;
       }else{
@@ -4430,6 +4445,50 @@ static BOOL _playerDirectConnectStart( WIFIP2PMATCH_WORK *wk )
   return TRUE;
 }
 
+
+
+static int _DirectConnectWait( WIFIP2PMATCH_WORK *wk, int seq  )
+{
+  if(GFL_NET_DWC_IsNewPlayer()!=-1){
+    _CHANGESTATE(wk,  WIFIP2PMATCH_MODE_FRIENDLIST);
+  }
+
+  wk->timer++;
+
+  if( (wk->timer % (15*60))==0 ){  //カウントアップ
+    WIFI_STATUS_SetVChatMac(wk->pMatch, WifiFriendMatchStatusGet( wk->friendNo-1 ));
+    _myStatusChange(wk, WIFI_STATUS_CALL, WIFI_GAME_UNIONMATCH);  // 呼びかけ待機中になる
+  }
+
+  if(GFL_UI_KEY_GetTrg()){
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_068, FALSE);
+    _yenowinCreateM2(wk);
+    
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CONNECTWAIT2);
+  }
+  return seq;
+}
+
+
+static int _DirectConnectWait2( WIFIP2PMATCH_WORK *wk, int seq  )
+{
+  int ret;
+  if( !WifiP2PMatchMessageEndCheck(wk) ){
+    return seq;
+  }
+  ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
+  if(ret == BMPMENU_NULL){  // まだ選択中
+    return seq;
+  }else if(ret == 0){ // はいを選択した場合
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_071, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_DISCONNECT);
+  }
+  else{  // いいえを選択した場合
+    EndMessageWindowOff(wk);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CONNECTWAIT);
+  }
+  return seq;
+}
 
 
 //----------------------------------------------------------------------------
@@ -5157,21 +5216,34 @@ static int _parentModeCallMenuSend( WIFIP2PMATCH_WORK *wk, int seq )
   if(_connectingErrFunc(wk)){
   }
   else if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_GAME_CHECK2, WB_NET_WIFICLUB)){
-    u16 status = _WifiMyStatusGet( wk, wk->pMatch );
-    u16 gamemode[2];
-    BOOL result = TRUE;
-
-    gamemode[0] = _WifiMyGameModeGet( wk, wk->pMatch );
-    gamemode[1] = WIFI_STATUS_GetVChatStatus(wk->pMatch);
-
-    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_MYSTATUS, MyStatus_GetWorkSize(), GAMEDATA_GetMyStatus(wk->pGameData));
-    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_STATUS, sizeof(u16)*2, gamemode);
-    if( result ){
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_CHECK);
+    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_MYSTATUS, MyStatus_GetWorkSize(), GAMEDATA_GetMyStatus(wk->pGameData))){
+      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_CHECK_D);
     }
   }
   return seq;
 }
+
+//------------------------------------------------------------------
+/**
+ * $brief   つながるべきステートを送信  WIFIP2PMATCH_MODE_CALL_CHECK_D
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _parentModeCallMenuSendD( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  u16 gamemode[2];
+  u16 status = _WifiMyStatusGet( wk, wk->pMatch );
+  gamemode[0] = _WifiMyGameModeGet( wk, wk->pMatch );
+  gamemode[1] = WIFI_STATUS_GetVChatStatus(wk->pMatch);
+
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_STATUS, sizeof(u16)*2, gamemode)){
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_CHECK);
+  }
+  return seq;
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -5664,6 +5736,9 @@ static void _myStatusChange(WIFIP2PMATCH_WORK *wk, int status,int gamemode)
 {
   if(wk->pMatch==NULL){  //0707
     return;
+  }
+  if((status == WIFI_STATUS_WAIT) && (gamemode==WIFI_GAME_LOGIN_WAIT)){
+    WIFI_STATUS_ResetVChatMac(wk->pMatch);
   }
   _myStatusChange_not_send( wk, status, gamemode );
   _sendMatchStatus(wk);

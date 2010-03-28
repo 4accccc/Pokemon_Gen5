@@ -88,6 +88,27 @@ static void _irSeStrat(int count)
 }
 
 
+static void _jumpSeStrat(int count)
+{
+  int i;
+  _SE_TBL setbl[]={
+    {SEQ_SE_DANSA,  _IRCSTART_SEQ_SE_DANSA},
+    {SEQ_SE_SYS_83,  _IRCSTART_SEQ_SE_SYS_83},
+  };
+
+  for(i=0;i<elementof(setbl);i++){
+    if(setbl[i].frame == count){
+      PMSND_PlaySE(setbl[i].se);
+    }
+  }
+  OS_TPrintf("C %d\n",count);
+}
+
+
+
+
+
+
 
 //------------------------------------------------------------------
 /**
@@ -430,6 +451,7 @@ static void _byebyeMessage(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade2_jump(POKEMON_TRADE_WORK* pWork)
 {
+  _jumpSeStrat(pWork->anmCount);
   if(pWork->anmCount == 10){
     _byebyeMessage(pWork);  //別れのメッセージ
   }

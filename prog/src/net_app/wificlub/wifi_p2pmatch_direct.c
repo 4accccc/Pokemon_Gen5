@@ -1532,11 +1532,32 @@ static int _playerDirectVCTChange3( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE4);
   }
   else{  // Ç¢Ç¢Ç¶ÇëIëÇµÇΩèÍçá
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE_E);
   }
   EndMessageWindowOff(wk);
   return seq;
 }
+
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   VCTÇãtì]Ç≥ÇπÇÈ WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE_E
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectVCTChangeE( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  u8 command;
+  command = WIFIP2PMATCH_PLAYERDIRECT_END;
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_DIRECT_COMMAND,1, &command)){
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+  }
+  return seq;
+}
+
 
 
 //------------------------------------------------------------------
