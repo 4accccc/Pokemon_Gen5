@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-03-25T18:56:30"/>
+	<create user="nakamura_akira" host="W00161" date="2010-03-28T17:56:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2605,14 +2605,14 @@ assistantm_01_15へ続く
 すでに　このちょうさに　ひつような
 データを　しらべているじゃないか！▼
 さすがは　[1:00:トレーナー名:1]たいいんだ▼
-このまま　ちょうさいらいを　うけて
-すぐに　わたしに　ほうこくしてくれ！</language>
+このまま　ちょうさないようを
+わたしに　ほうこくしてくれ！</language>
 		<language name="JPN_KANJI" width="256">……ん？▼
 すでに　この調査に　必要な　データを
 調べているじゃないか！▼
 さすがは　[1:00:トレーナー名:1]隊員だ▼
-このまま　調査依頼を　受けて
-すぐに　わたしに　報告してくれ！</language>
+このまま　調査内容を
+わたしに　報告してくれ！</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_15" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -6142,8 +6142,8 @@ assistantm_01_25へ続く
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
 		<language name="JPN" width="256">ふむふむ……　なるほど……▼
-いちばん　にんきのある　きゅうじつの
-すごしかたは▽
+いちばん　にんきのある
+きゅうじつの　すごしかたは▽
 『[1:13:アンケート回答:0]』のようだな▼
 いちばん　にんきのある　あそびばは
 『[1:13:アンケート回答:1]』のようだな▼
@@ -7459,7 +7459,7 @@ woman2_17○へ続く（それぞれ対応したものへ）</comment>
 		<attribute name="キャラ指定">WOMAN2
 アンケート隊員</attribute>
 		<language name="JPN" width="256">ちょうさレーダーに
-『どんな　あそびが　すきか
+『どんな　あそびが　すきか▽
 ちょうさ』が　ふえた！</language>
 		<language name="JPN_KANJI" width="256">調査レーダーに
 『どんな　遊びが　好きか　調査』が▽
