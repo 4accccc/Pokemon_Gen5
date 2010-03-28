@@ -2052,6 +2052,8 @@ EVENT_START ev_bsw_ttown_receipt_talk
   _MSGWIN_CLOSE()
   
   IF $ret == SCR_YES THEN
+    //トレインタウンの電車状態を決定する
+    _GET_TRAIN_TOWN_COND( WK_OTHER_T05_TRAIN )
     _CALL sub_ttown_demo_start_train
     _MAP_CHANGE( ZONE_ID_T05, 22, 54, DIR_LEFT )
   ENDIF
