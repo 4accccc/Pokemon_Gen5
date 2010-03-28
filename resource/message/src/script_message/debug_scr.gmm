@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-03-27T17:33:21"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-03-28T18:43:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="50" top="225" right="754" bottom="842" maximized="no" rayout="Vertical2">
+	<dialog left="1572" top="203" right="2268" bottom="820" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="521"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
+		<band id="2" index="3" style="0000" width="539"/>
+		<band id="3" index="4" style="0000" width="147"/>
+		<band id="4" index="0" style="0000" width="688"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -575,32 +575,32 @@
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_debug_masafumi_10" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,">
+	<row id="msg_debug_masafumi_10" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">自宅２階ゲーム開始</language>
 		<language name="JPN_KANJI" width="256">自宅２階ゲーム開始</language>
 	</row>
 
-	<row id="msg_debug_masafumi_11" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,">
+	<row id="msg_debug_masafumi_11" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">C09ポケモンリーグ手前</language>
 		<language name="JPN_KANJI" width="256">C09ポケモンリーグ手前</language>
 	</row>
 
-	<row id="msg_debug_masafumi_12" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,">
+	<row id="msg_debug_masafumi_12" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">C04 サポート父イベント</language>
 		<language name="JPN_KANJI" width="256">C04 サポート父イベント</language>
 	</row>
 
-	<row id="msg_debug_masafumi_13" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,">
+	<row id="msg_debug_masafumi_13" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">観覧車トレーナー</language>
 		<language name="JPN_KANJI" width="256">観覧車トレーナー</language>
 	</row>
 
-	<row id="msg_debug_masafumi_14" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,">
-		<language name="JPN" width="256">仮メッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_debug_masafumi_14" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<language name="JPN" width="256">カナワタウン</language>
+		<language name="JPN_KANJI" width="256">カナワタウン</language>
 	</row>
 
-	<row id="msg_debug_masafumi_15" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,">
+	<row id="msg_debug_masafumi_15" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<language name="JPN" width="256">仮メッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
@@ -668,6 +668,66 @@
 	<row id="msg_debug_mizu_07" back-color="#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,#ff00ff,,,#ff00ff,,#ff00ff,#ff00ff,,,#ff00ff,,">
 		<language name="JPN" width="256">仮メッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_debug_masafumi_14_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>カナワタウン：転車台イベント用</comment>
+		<language name="JPN" width="256">シングル</language>
+		<language name="JPN_KANJI" width="256">シングル</language>
+	</row>
+
+	<row id="msg_debug_masafumi_14_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>カナワタウン：転車台イベント用</comment>
+		<language name="JPN" width="256">Ｓシングル</language>
+		<language name="JPN_KANJI" width="256">Ｓシングル</language>
+	</row>
+
+	<row id="msg_debug_masafumi_14_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>カナワタウン：転車台イベント用</comment>
+		<language name="JPN" width="256">ダブル</language>
+		<language name="JPN_KANJI" width="256">ダブル</language>
+	</row>
+
+	<row id="msg_debug_masafumi_14_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>カナワタウン：転車台イベント用</comment>
+		<language name="JPN" width="256">Ｓダブル</language>
+		<language name="JPN_KANJI" width="256">Ｓダブル</language>
+	</row>
+
+	<row id="msg_debug_masafumi_14_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>カナワタウン：転車台イベント用</comment>
+		<language name="JPN" width="256">マルチ</language>
+		<language name="JPN_KANJI" width="256">マルチ</language>
+	</row>
+
+	<row id="msg_debug_masafumi_14_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>カナワタウン：転車台イベント用</comment>
+		<language name="JPN" width="256">Ｓマルチ</language>
+		<language name="JPN_KANJI" width="256">Ｓマルチ</language>
+	</row>
+
+	<row id="msg_debug_masafumi_14_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>カナワタウン：転車台イベント用</comment>
+		<language name="JPN" width="256">Wi-Fi</language>
+		<language name="JPN_KANJI" width="256">Wi-Fi</language>
+	</row>
+
+	<row id="msg_debug_masafumi_14_08" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>カナワタウン：転車台イベント用</comment>
+		<language name="JPN" width="256">カナワ行き</language>
+		<language name="JPN_KANJI" width="256">カナワ行き</language>
+	</row>
+
+	<row id="msg_debug_masafumi_14_09" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>カナワタウン：転車台イベント用</comment>
+		<language name="JPN" width="256">古いレア</language>
+		<language name="JPN_KANJI" width="256">古いレア</language>
+	</row>
+
+	<row id="msg_debug_masafumi_14_10" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>カナワタウン：転車台イベント用</comment>
+		<language name="JPN" width="256">新しいレア</language>
+		<language name="JPN_KANJI" width="256">新しいレア</language>
 	</row>
 
 	<flowchart-group-list>
