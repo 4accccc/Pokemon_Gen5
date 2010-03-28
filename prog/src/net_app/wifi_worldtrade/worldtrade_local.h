@@ -505,7 +505,7 @@ typedef struct _WORLDTRADE_WORK{
 	GFL_CLWK *			BoxArrowActWork[2];						///< ボックス名の横にある矢印
 	GFL_CLWK *			PartnerCursorActWork;					///< 下画面で交換相手を選ぶカーソル
 	GFL_CLWK *			PromptDsActWork;						///< 下画面を見なさいアイコン
-	int						DrawOffset;								///< 画面全体をズラすための変数
+	int						  DrawOffset;								///< 画面全体をズラすための変数
 
 	// BMPWIN描画周り
 	GFL_BMPWIN*			MsgWin;									///< 会話ウインドウ
@@ -551,7 +551,6 @@ typedef struct _WORLDTRADE_WORK{
 
 	// worldtrade_demo.c用ワーク
 	POKEMON_PARAM *demoPokePara;								///< 交換デモ用のポケモンポインタ
-  int           div_demo;                     ///< 分割デモのためのシーケンス
 
 
 	// worldtrade_box.c用ワーク
@@ -786,6 +785,7 @@ extern int WorldTrade_Demo_Init(WORLDTRADE_WORK *wk, int seq);
 extern int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq);
 extern int WorldTrade_Demo_End(WORLDTRADE_WORK *wk, int seq);
 
+extern MYSTATUS *MakePartnerStatusData( Dpw_Tr_Data *dtd );
 
 //==============================================================================
 //	外部データ宣言

@@ -43,6 +43,7 @@
 #include "msg/msg_wifi_gts.h"
 #include "msg/msg_wifi_system.h"
 
+#include "savedata/undata_update.h"
 
 #include "worldtrade.naix"			// グラフィックアーカイブ定義
 
@@ -64,7 +65,7 @@ static void InitWork( WORLDTRADE_WORK *wk );
 static void FreeWork( WORLDTRADE_WORK *wk );
 static void AfterTradeCheck_ProcessControl( WORLDTRADE_WORK *wk );
 static void WifiHistoryDataSet( WIFI_HISTORY *wifiHistory, Dpw_Tr_Data *trData );
-static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int boxno);
+static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, POKEMON_PARAM *sendpp, Dpw_Tr_Data *tr,int boxno );
 static void TradeDateUpDate( WORLDTRADE_DATA *worldtrade_data, int trade_type );
 static int MyPokemonPocketFullCheck( WORLDTRADE_WORK *wk, Dpw_Tr_Data *trData);
 static void PrintError( WORLDTRADE_WORK *wk );
@@ -1189,13 +1190,8 @@ static int Subseq_ExchangeStart( WORLDTRADE_WORK *wk )
 static int Subseq_ExchangeResult( WORLDTRADE_WORK *wk )
 {
 	int result;
-#if 0 //origin
-	if ((result=Dpw_Tr_IsAsyncEnd())){
-#else
-		//ワーニングがでるので
-		result=Dpw_Tr_IsAsyncEnd();
+  result=Dpw_Tr_IsAsyncEnd();
 	if (result){
-#endif 
 		s32 result = Dpw_Tr_GetAsyncResult();
 		wk->timeout_count = 0;
 		switch (result){
@@ -1204,7 +1200,10 @@ static int Subseq_ExchangeResult( WORLDTRADE_WORK *wk )
 			wk->subprocess_seq = SUBSEQ_SAVE;
 
 			UploadPokemonDataDelete( wk, 0 );
-			ExchangePokemonDataAdd(  wk, (POKEMON_PARAM*)wk->ExchangePokemonData.postData.data,
+			ExchangePokemonDataAdd(  wk, 
+                    (POKEMON_PARAM*)wk->ExchangePokemonData.postData.data,
+                    (POKEMON_PARAM*)wk->UploadPokemonData.postData.data,
+                    &wk->ExchangePokemonData,
 										wk->BoxTrayNo);
 			OS_Printf("exchange poke adr = %08x\n", (u32)wk->ExchangePokemonData.postData.data);
 
@@ -2620,14 +2619,15 @@ static void DownloadPokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int 
  * @brief   検索してみつけたポケモンと交換する時の処理
  *
  * @param   wk		
- * @param   pp		
+ * @param   pp		  受け取ったポケモン
+ * @param   sendpp  あげたポケモン
+ * @param   tr      交換した人のデータ
  * @param   boxno		
- * @param   flag		
  *
  * @retval  none		
  */
 //------------------------------------------------------------------
-static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int boxno )
+static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, POKEMON_PARAM *sendpp, Dpw_Tr_Data *tr,int boxno )
 {
 
 	// 図鑑登録処理
@@ -2659,7 +2659,6 @@ static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int 
 		u8 friend = FIRST_NATUKIDO;
 		PP_Put(pp, ID_PARA_friend, friend);
 	}
-
 	
 	// 個性乱数から取得される性別とPOKEPARAに格納されている性別が違った場合に修正する
 	// 配布ブーバーン・エレキブル・ペラップ・エレブー・ブーバー対策
@@ -2697,14 +2696,31 @@ static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int 
 
 	}
 
+  //国連データセーブ
+  { 
+    MYSTATUS  *p_status = MakePartnerStatusData( tr );
+
+    UNITEDNATIONS_SAVE  un_data;
+    GFL_STD_MemClear( &un_data, sizeof(UNITEDNATIONS_SAVE) );
+
+    MyStatus_Copy( p_status, &un_data.aMyStatus );
+
+    un_data.recvPokemon = PP_Get( pp, ID_PARA_monsno, NULL );
+    un_data.sendPokemon = PP_Get( sendpp, ID_PARA_monsno, NULL );
+    un_data.favorite    = tr->favorite;
+    un_data.nature      = tr->nature;
+    un_data.countryCount= tr->countryCount;
+    UNDATAUP_Update( wk->param->wifihistory, &un_data );
+
+    GFL_HEAP_FreeMemory( p_status );
+  }
+  
+
 /* GTSで自分でポケモンを預けている時に、自分から検索してポケモンを交換した際
    セーブデータの「ポケモンをGTSに預けているフラグ」を落としてしまっているバグに対処 */
 
-#if AFTER_MASTER_070510_GTS_MENU_FIX
-	// この処理はいらない
-#else
-	WorldTradeData_SetFlag( wk->param->worldtrade_data, 0 );
-#endif
+  //この処理はいらない
+	//WorldTradeData_SetFlag( wk->param->worldtrade_data, 0 );
 
 
 	// ポケモンの交換成立最終日をセーブする

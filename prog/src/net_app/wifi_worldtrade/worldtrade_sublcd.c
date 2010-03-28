@@ -271,7 +271,7 @@ static void HeroDemoTask(  GFL_TCB* tcb, void *work  )
 			// ‰ñ“]‚ª‚ä‚Á‚­‚è‚É‚È‚Á‚ÄŽ~‚Ü‚é
 			HeroAnimeChange( hdw, 1 );
 		}
-		hdw->heroy+=5;
+		hdw->heroy+=5/2;
 		SetSubLcdObj_Pos( wk->SubActWork[0], HERO_START_POSX, hdw->heroy );
 		break;
 
@@ -293,7 +293,7 @@ static void HeroDemoTask(  GFL_TCB* tcb, void *work  )
 
 		}
 		else{
-    		hdw->heroy-=2;
+    		hdw->heroy-=2/2;
     	}
 		SetSubLcdObj_Pos( wk->SubActWork[0], HERO_START_POSX, hdw->heroy );
 		
@@ -381,7 +381,7 @@ static void HeroReturnDemoTask(  GFL_TCB* tcb, void *work  )
 			// ‰ñ“]‚µŽn‚ß‚é
 			HeroAnimeChange( hdw, 6 );
 		}
-		hdw->heroy+=2;
+		hdw->heroy+=2/2;
 		SetSubLcdObj_Pos( wk->SubActWork[0], HERO_START_POSX, hdw->heroy );
 		break;
 
@@ -401,7 +401,7 @@ static void HeroReturnDemoTask(  GFL_TCB* tcb, void *work  )
 			// ‚à‚¤‰æ–ÊŠO‚È‚Ì‚Å‚È‚ñ‚Å‚à‚¢‚¢
 			HeroAnimeChange( hdw, 3 );
 		}
-		hdw->heroy-=5;
+		hdw->heroy-=5/2;
 		SetSubLcdObj_Pos( wk->SubActWork[0], HERO_START_POSX, hdw->heroy );
 		
 		break;
