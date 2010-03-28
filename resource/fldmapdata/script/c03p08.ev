@@ -20,6 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_init_c03p08
+_EVENT_DATA		ev_recover_c03p08
 _EVENT_DATA		ev_c03p08_businessman_01
 _EVENT_DATA		ev_c03p08_trainerw_01
 _EVENT_DATA		ev_bg_c03p08_sign_01
@@ -42,7 +43,14 @@ INIT_EVENT_START	ev_init_c03p08
 	//C03R1301ボディチェック初期化
 	$WK_SCENE_C03R1301_SUNGLASSES = 0
 				
-	//==================================//
+	//==================================//
+	//群集の起動
+	_CROWD_PEOPLE_START()
+	
+INIT_EVENT_END
+INIT_EVENT_START	ev_recover_c03p08
+	//群集の起動
+  _CROWD_PEOPLE_START()
 
 INIT_EVENT_END
 

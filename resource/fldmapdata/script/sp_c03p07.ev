@@ -16,6 +16,8 @@
 //              特殊スクリプト
 //--------------------------------------------------------------
 _SCENE_CHANGE_LABEL		sp_c03p07_tbl
+_FIELD_INIT_LABEL		SCRID_INIT_C03P07
+_FIELD_RECOVER_LABEL		SCRID_RECOVER_C03P07
 _SP_EVENT_DATA_END
 
 //テーブル定義

@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/26 15:57:52
+#save date:2010/03/28 19:09:02
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p10.wms
 #SECTION START:OBJ_EVENT
@@ -67,7 +67,7 @@ DOOR_ID_C03R0401_C03P10_EXIT01
 #Door Direction
 EXIT_DIR_LEFT
 #Door Type
-EXIT_TYPE_WALL
+EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -84,7 +84,7 @@ DOOR_ID_C03R1001_C03P10_EXIT01
 #Door Direction
 EXIT_DIR_RIGHT
 #Door Type
-EXIT_TYPE_WALL
+EXIT_TYPE_DOOR
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
