@@ -522,36 +522,6 @@ VMCMD_RESULT EvCMdBmodelDirectChangeModelID( VMHANDLE * core, void * wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
-//--------------------------------------------------------------
-/**
- * @brief トレインタウンの電車用モデルIDを取得
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdGetTrainModelID( VMHANDLE * core, void *wk )
-{
-  u16 train_id = SCRCMD_GetVMWorkValue( core, wk );
-  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
-  static const BMODEL_ID trains[] = {
-    NARC_output_buildmodel_outdoor_tt_train01_nsbmd,
-    NARC_output_buildmodel_outdoor_tt_train02_nsbmd,
-    NARC_output_buildmodel_outdoor_tt_train03_nsbmd,
-    NARC_output_buildmodel_outdoor_tt_train04_nsbmd,
-    NARC_output_buildmodel_outdoor_tt_train05_nsbmd,
-    NARC_output_buildmodel_outdoor_tt_train06_nsbmd,
-    NARC_output_buildmodel_outdoor_tt_train07_nsbmd,
-    NARC_output_buildmodel_outdoor_tt_train08_nsbmd,
-    NARC_output_buildmodel_outdoor_tt_train09_nsbmd,
-    NARC_output_buildmodel_outdoor_tt_train10_nsbmd,
-  };
-  if ( train_id >= NELEMS(trains) )
-  {
-    GF_ASSERT( 0 );
-    train_id = 0;
-  }
-  *ret_wk = trains[train_id];
-  return VMCMD_RESULT_CONTINUE;
-}
-
 //======================================================================
 //
 //

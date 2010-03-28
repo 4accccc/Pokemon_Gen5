@@ -810,11 +810,9 @@
   NO_CMD()
   NO_CMD()
 
-  //トレインタウン用
-  DEF_CMD( EvCmdGetTrainModelID, EV_SEQ_GET_TRAIN_MODEL_ID )
-  NO_CMD()
-
   //図鑑評価
+  NO_CMD()
+  NO_CMD()
   NO_CMD()
   DEF_CMD( EvCmdGetZukanComplete, EV_SEQ_GET_ZUKAN_COMPLETE )
 
@@ -990,6 +988,12 @@
   //観覧車トレーナー対戦関連
   DEF_CMD( EvCmdGetWheelTrainerObjID, EV_SEQ_GET_WHEEL_TRAINER_OBJ_ID )
   DEF_CMD( EvCmdGetWheelTrainerTrID, EV_SEQ_GET_WHEEL_TRAINER_TR_ID )
+  NO_CMD()
+  NO_CMD()
+
+  //トレインタウン用
+  DEF_CMD( EvCmdGetTrainModelID, EV_SEQ_GET_TRAIN_MODEL_ID )
+  DEF_CMD( EvCmdGetTrainTownCondition, EV_SEQ_GET_TRAIN_TOWN_COND )
   NO_CMD()
   NO_CMD()
 

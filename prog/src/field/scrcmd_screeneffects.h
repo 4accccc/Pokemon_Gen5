@@ -42,6 +42,5 @@ extern VMCMD_RESULT EvCmdBModelAnimeWait( VMHANDLE * core, void *wk );
 
 extern VMCMD_RESULT EvCmdMapFade_InitBG( VMHANDLE * core, void *wk );
 
-extern VMCMD_RESULT EvCmdGetTrainModelID( VMHANDLE * core, void *wk );
 
 
