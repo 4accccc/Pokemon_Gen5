@@ -119,13 +119,13 @@ ev_sports_event_chk:
 	//エントランスのNPC表示チェック
 	IF FLAG_ON( FE_SPORTS_PLAYING ) THEN
 		//試合中ならワープポイントを塞ぐガードマンを表示
-		_FLAG_RESET( FV_STADIUM_GUARDMAN )
+		_FLAG_RESET( FV_STADIUM_PLAYING )
 		//選手とファンを非表示
 		_FLAG_SET( FV_STADIUM_SPORTSMAN )
 
 	ELSE
 		//練習中なら上と逆
-		_FLAG_SET( FV_STADIUM_GUARDMAN )
+		_FLAG_SET( FV_STADIUM_PLAYING )
 		_FLAG_RESET( FV_STADIUM_SPORTSMAN )
 	
 	ENDIF

@@ -20,9 +20,13 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c04r0302_girl4_01
-_EVENT_DATA    ev_c04r0302_boy2_01
+_EVENT_DATA    ev_c04r0302_boy2_01		//試合中のみ表示
 _EVENT_DATA    ev_c04r0302_woman3_01
 _EVENT_DATA    ev_c04r0302_mountman_01
+_EVENT_DATA    ev_c04r0302_woman2_01	//試合中のみ表示
+_EVENT_DATA    ev_c04r0302_man3_01		//試合中のみ表示
+_EVENT_DATA    ev_c04r0302_maid_01		//試合中のみ表示
+_EVENT_DATA    ev_c04r0302_dancer_01	//試合中のみ表示
 _EVENT_DATA_END
 
 
@@ -30,7 +34,19 @@ _EVENT_DATA_END
 /*							少女							*/
 /************************************************************/
 EVENT_START	ev_c04r0302_girl4_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0302_girl4_01 )
+	_TALK_OBJ_START()
+
+	//試合中かチェック
+	IF FLAG_ON( FE_SPORTS_PLAYING ) THEN
+		//試合中なら
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0302_girl4_01 )
+	ELSE
+		//練習中なら
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0302_girl4_02 )
+	ENDIF
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
 EVENT_END
 
 
@@ -38,7 +54,26 @@ EVENT_END
 /*							少年						*/
 /************************************************************/
 EVENT_START	ev_c04r0302_boy2_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0302_boy2_01 )
+	_TALK_OBJ_START()
+	
+	//競技種目をチェック
+	SWITCH $WK_OTHER_SPORTS_EVENT
+	CASE SPORTS_EVENT_FOOTBALL THEN
+		//フットボール
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0302_boy2_01 )
+
+	CASE SPORTS_EVENT_BASEBALL THEN
+		//野球
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0302_boy2_02 )
+
+	DEFAULT
+		//それ以外（サッカー）
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0302_boy2_03 )
+
+	ENDSWITCH
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
 EVENT_END
 
 
@@ -55,6 +90,38 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_c04r0302_mountman_01
 	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0302_mountain_01 )
+EVENT_END
+
+
+/************************************************************/
+/*						お姉さん２							*/
+/************************************************************/
+EVENT_START	ev_c04r0302_woman2_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0302_woman2_01 )
+EVENT_END
+
+
+/************************************************************/
+/*						お兄さん							*/
+/************************************************************/
+EVENT_START	ev_c04r0302_man3_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0302_man3_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							メイド							*/
+/************************************************************/
+EVENT_START	ev_c04r0302_maid_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0302_maid_01 )
+EVENT_END
+
+
+/************************************************************/
+/*							ダンサー						*/
+/************************************************************/
+EVENT_START	ev_c04r0302_dancer_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0302_dancer_01 )
 EVENT_END
 
 

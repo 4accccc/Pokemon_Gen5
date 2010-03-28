@@ -13,6 +13,10 @@
 #define C04R0302_BOY2_01                   1
 #define C04R0302_WOMAN3_01                 2
 #define C04R0302_MOUNTMAN_01               3
+#define C04R0302_WOMAN2_01                 4
+#define C04R0302_MAN3_01                   5
+#define C04R0302_MAID_01                   6
+#define C04R0302_DANCER_01                 7
 
 #endif //ZONE_C04R0302_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c04r0302.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
