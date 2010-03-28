@@ -13,6 +13,8 @@
 
 //#define DEBUG_SOUND_TEST  // これが定義されているとき、サウンドのテストが可能
 
+#define GRAPH_GATHER  // これが定義されているとき、密集したグラフを描画する
+
 
 // インクルード
 #include <gflib.h>
@@ -152,7 +154,7 @@ END_CMD;
 
 #define GRAPH_DATA_INTERVAL_X       (3)  // これだけ離してX座標を取る  // 4の場合、x 0 0 0 x 0 0 0 x となる
 #define GRAPH_DATA_MOVE_WAIT        (0)  // このフレームだけ待ってGRAPH_DATA_MOVE_SPEEDだけ移動する  // 0の場合、x x x  // 2の場合、x 0 0 x 0 0 x
-#define GRAPH_DATA_MOVE_SPEED       (1)  // 移動する際の移動量  // [x] = [x+GRAPH_DATA_MOVE_SPEED] となる
+#define GRAPH_DATA_MOVE_SPEED       (2)//(1)  // 移動する際の移動量  // [x] = [x+GRAPH_DATA_MOVE_SPEED] となる
 
 #define GRAPH_DATA_SIZE_X           (GRAPH_DATA_MOVE_SPEED+GRAPH_DATA_INTERVAL_X+ 30*8 +GRAPH_DATA_MOVE_SPEED+GRAPH_DATA_INTERVAL_X)
                                             // GRAPH_DATA_SIZE_Xは描画するデータ数(GRAPH_DATA_MIN_X, GRAPH_DATA_MAX_Xから求める)より
@@ -181,13 +183,22 @@ END_CMD;
 #define GRAPH_COLOR (15)  // グラフの描画色
 
 // waveデータの最大値
-#define WAVE_DATA_VALUE_MAX                (128)                     // wave_data_begin * WAVE_DATA_VALUE_MAX_TO_GRAPH_DATA / WAVE_DATA_VALUE_MAX
+#define WAVE_DATA_VALUE_MAX                (128)                     // wave_data_begin[i] * WAVE_DATA_VALUE_MAX_TO_GRAPH_DATA / WAVE_DATA_VALUE_MAX
 #define WAVE_DATA_VALUE_MAX_TO_GRAPH_DATA  ( GRAPH_DATA_MAX_Y -8 )   // としてグラフに表示する
 
 // X座標を取るときにwaveデータをどれだけ進めるか
 #define WAVE_DATA_INTERVAL(data_num_per_frame)  ((data_num_per_frame)*GRAPH_DATA_INTERVAL_X*(GRAPH_DATA_MOVE_WAIT+1)/GRAPH_DATA_MOVE_SPEED)
                                                      // data_num_per_frameは再生したら1フレームで進むデータ数
 #define WAVE_DATA_SIZE_MAX    (26000)    // pokemon_wb/prog/src/sound/pm_voice.c  PMVOICE_WAVESIZE_MAX 参考
+
+
+#ifdef GRAPH_GATHER
+  #define GRAPH_DATA_FULL_SIZE_X_MAX  (30*8*4)//(GRAPH_DATA_MAX_X-GRAPH_DATA_MIN_X+1)  // 前もって用意しておく完全なグラフの最大横ピクセル数(画面上に書ける横範囲より大きくてもいい)
+                                                                             // 縦はGRAPH_BITMAP_CHAR_SIZE_Yぴったりにしておく
+
+  #define WAVE_DATA_SPEED_ONE  (32768)  // NNS_SndWaveOutStart  再生スピードspeedは、再生する速さを指定します。speed÷32768倍の速さで再生されます。
+  #define WAVE_DATA_PLAY_FPS   (60)     // 60フレームで再生
+#endif
 
 
 #ifdef DEBUG_SOUND_TEST  // これが定義されているとき、サウンドのテストが可能
@@ -221,10 +232,20 @@ typedef struct
   s16                         graph_data_y[GRAPH_DATA_SIZE_X];  // データ座標y = graph_data_y[データ座標x] 
   s16                         graph_data_prev_x;                // 前にデータを書いたところ
   u8                          graph_data_move_wait_count;       // グラフが移動するまでに待つフレーム数(0のとき毎フレーム進む)
+#ifdef GRAPH_GATHER
+  u16                         full_monsno;                      // 前もって用意しておく完全なグラフの持ち主のmonsno(0のときなし)
+  u16                         full_formno;                      // 前もって用意しておく完全なグラフの持ち主のformno
+  GFL_BMP_DATA*               graph_full_bmp_data;              // 前もって用意しておく完全なグラフ
+  s16                         graph_data_full_size;             // 前もって用意しておく完全なデータは横何ピクセルあるか
+  s16                         graph_data_full_print;            // 次に書く横ピクセルの位置(0=これから書く; 例3=3ピクセル目から書く; graph_data_full_size=書き終わっている;)
+#endif
 
   const s8*                   wave_data_begin;                  // waveデータ
   u32                         wave_data_curr_pos;               // waveデータのこれから見る位置
   u32                         wave_data_interval;               // waveデータの見る位置の間隔
+#ifdef GRAPH_GATHER
+  u32                         wave_full_millisec;               // 前もって用意しておくwaveデータの総時間
+#endif
 
   u32                         poke_ncg;
   u32                         poke_ncl;
@@ -232,7 +253,7 @@ typedef struct
   GFL_CLWK*                   poke_clwk;
   
   u32                         voice_idx;
-  BOOL                        voice_play;
+  BOOL                        voice_play;  // 時間を更新中はTRUEにしておく(なので、ボイスの再生が終わってもTRUEのままのこともある)
   OSTick                      voice_start;
   u16                         voice_disp_millisec;
   u16                         voice_prev_disp_millisec;
@@ -294,7 +315,7 @@ static void Zukan_Detail_Voice_GraphExit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN
 static void Zukan_Detail_Voice_GraphMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Voice_GraphReset( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Voice_GraphDrawBitmap( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
-static void Zukan_Detail_Voice_WaveDataSetup( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Voice_WaveDataSetup( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn, u16 monsno, u16 formno );
 
 
 //=============================================================================
@@ -938,6 +959,52 @@ static void Zukan_Detail_Voice_DeleteTime( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
 
   GFL_BMPWIN_TransVramCharacter( work->time_bmpwin );
 }
+
+#ifdef GRAPH_GATHER
+
+static void Zukan_Detail_Voice_UpdateTime( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  if( work->voice_play )
+  {
+    {
+      OSTick now = OS_GetTick();  // MachineSystem_Init関数でOS_InitTickは呼ばれている
+      OSTick diff;
+      u64 diff_millisec;
+      if( now >= work->voice_start )
+      {
+        diff = now - work->voice_start;
+      }
+      else
+      {
+        diff = now + ( 0xFFFFFFFFFFFFFFFF - work->voice_start );
+      }
+      diff_millisec =OS_TicksToMilliSeconds( diff );
+      if( diff_millisec > 9990 ) diff_millisec = 9990;
+      work->voice_disp_millisec = (u16)diff_millisec;
+    }
+    if( work->voice_disp_millisec >= work->wave_full_millisec )
+    {
+      work->voice_disp_millisec = work->wave_full_millisec;
+      work->voice_play = FALSE;
+    }
+  }
+
+  // 表示
+  if( work->voice_disp_millisec != work->voice_prev_disp_millisec )
+  {
+    u16 disp_sec = work->voice_disp_millisec / 1000;
+    u16 disp_milli = work->voice_disp_millisec % 1000;
+    disp_milli = disp_milli / 10 + ( (disp_milli%10 < 5) ? (0) : (1) );  // 四捨五入
+
+    Zukan_Detail_Voice_DeleteTime( param, work, cmn );
+    Zukan_Detail_Voice_CreateTime( param, work, cmn, disp_sec, disp_milli );
+
+    work->voice_prev_disp_millisec = work->voice_disp_millisec;
+  }
+}
+
+#else
+
 static void Zukan_Detail_Voice_UpdateTime( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   if( work->voice_play )
@@ -982,6 +1049,9 @@ static void Zukan_Detail_Voice_UpdateTime( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
     work->voice_prev_disp_millisec = work->voice_disp_millisec;
   }
 }
+
+#endif
+
 static void Zukan_Detail_Voice_ResetTime( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   if( work->voice_play )
@@ -1025,15 +1095,21 @@ static void Zukan_Detail_Voice_TouchPlayButton( ZUKAN_DETAIL_VOICE_PARAM* param,
     if(    0<=x && x<256
         && 0<=y && y<168 )
     {
-      u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
-      u16 formno = 0;
-   
+      ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( ZKNDTL_COMMON_GetGamedata(cmn) );
+      u16  monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
+      u32  formno;
+      u32  sex;
+      BOOL rare;
+
+      // 現在表示する姿
+      ZUKANSAVE_GetDrawData(  zkn_sv, monsno, &sex, &rare, &formno, param->heap_id );
+
       work->voice_idx = PMV_PlayVoice( monsno, formno );
       work->voice_disp_millisec = 0;
       work->voice_start = OS_GetTick();  // MachineSystem_Init関数でOS_InitTickは呼ばれている
       work->voice_play = TRUE;
 
-      Zukan_Detail_Voice_WaveDataSetup( param, work, cmn );
+      Zukan_Detail_Voice_WaveDataSetup( param, work, cmn, monsno, (u16)formno );
     }
   }
 }
@@ -1051,11 +1127,37 @@ static void Zukan_Detail_Voice_GraphInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN
                            GFL_BMP_CHRAREA_GET_B );
   Zukan_Detail_Voice_GraphReset( param, work, cmn );
   GFL_BMPWIN_MakeTransWindow_VBlank( work->graph_bmpwin );
+
+#ifdef GRAPH_GATHER
+  work->graph_full_bmp_data = GFL_BMP_Create( GRAPH_DATA_FULL_SIZE_X_MAX /8 +1, GRAPH_BITMAP_CHAR_SIZE_Y, GFL_BMP_16_COLOR, param->heap_id );
+#endif
 }
 static void Zukan_Detail_Voice_GraphExit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+#ifdef GRAPH_GATHER
+  GFL_BMP_Delete( work->graph_full_bmp_data );
+#endif
+
   GFL_BMPWIN_Delete( work->graph_bmpwin );
 }
+
+#ifdef GRAPH_GATHER
+
+static void Zukan_Detail_Voice_GraphMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  if( work->graph_data_move_wait_count > 0 )
+  {
+    work->graph_data_move_wait_count--;
+  }
+  else
+  {
+    Zukan_Detail_Voice_GraphDrawBitmap( param, work, cmn );
+    work->graph_data_move_wait_count = GRAPH_DATA_MOVE_WAIT;
+  }
+}
+
+#else
+
 static void Zukan_Detail_Voice_GraphMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   if( work->graph_data_move_wait_count > 0 )
@@ -1098,6 +1200,39 @@ static void Zukan_Detail_Voice_GraphMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN
     Zukan_Detail_Voice_GraphDrawBitmap( param, work, cmn );
   }
 }
+
+#endif
+
+#ifdef GRAPH_GATHER
+
+static void Zukan_Detail_Voice_GraphReset( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  work->graph_data_move_wait_count = GRAPH_DATA_MOVE_WAIT;
+  
+  work->full_monsno             = 0;
+  work->full_formno             = 0;
+  work->graph_data_full_size    = 0;
+  work->graph_data_full_print   = work->graph_data_full_size;  // 書き終わっている
+  work->wave_full_millisec      = 0;
+
+  {
+    // 横一直線を書いて初期化
+    GFL_BMP_DATA* bmp_data = GFL_BMPWIN_GetBmp( work->graph_bmpwin );
+   
+    s16 bitmap_min_x  = GRAPH_DATA_X_TO_BITMAP_X( GRAPH_DATA_MIN_X );  // 含む
+    s16 bitmap_max_x  = GRAPH_DATA_X_TO_BITMAP_X( GRAPH_DATA_MAX_X );  // 含む
+    s16 bitmap_size_x = bitmap_max_x - bitmap_min_x +1;
+
+    GFL_BMP_Clear( bmp_data, 0 );  // クリアしておく
+    
+    GFL_BMP_Fill( bmp_data, bitmap_min_x, GRAPH_DATA_Y_TO_BITMAP_Y(0), bitmap_size_x, 1, GRAPH_COLOR );
+  
+    GFL_BMPWIN_TransVramCharacter( work->graph_bmpwin );
+  }
+}
+
+#else
+
 static void Zukan_Detail_Voice_GraphReset( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   s16 i;
@@ -1110,6 +1245,65 @@ static void Zukan_Detail_Voice_GraphReset( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
   work->graph_data_move_wait_count = GRAPH_DATA_MOVE_WAIT;
   Zukan_Detail_Voice_GraphDrawBitmap( param, work, cmn );
 }
+
+#endif
+
+#ifdef GRAPH_GATHER
+
+static void Zukan_Detail_Voice_GraphDrawBitmap( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 今書いてあるグラフをそのままGRAPH_DATA_MOVE_SPEEDだけずらす
+  // ずらしてできた空きにwork->graph_full_bmp_dataを書く
+  // work->graph_data_full_printを書いた分だけ進める
+  // …ということをしたいときにこの関数を呼び出すこと。
+
+  GFL_BMP_DATA* bmp_data = GFL_BMPWIN_GetBmp( work->graph_bmpwin );
+
+  s16 bitmap_min_x  = GRAPH_DATA_X_TO_BITMAP_X( GRAPH_DATA_MIN_X );  // 含む
+  s16 bitmap_max_x  = GRAPH_DATA_X_TO_BITMAP_X( GRAPH_DATA_MAX_X );  // 含む
+  s16 bitmap_size_x = bitmap_max_x - bitmap_min_x +1;
+
+  s16 draw_start = bitmap_max_x - GRAPH_DATA_MOVE_SPEED +1;  // 空きの開始位置
+  s16 draw_size = 0;                                         // 空きに書いた横ピクセル数
+
+  // 今書いてあるグラフをそのままGRAPH_DATA_MOVE_SPEEDだけずらす
+  GFL_BMP_Print( 
+      bmp_data, bmp_data,
+      bitmap_min_x + GRAPH_DATA_MOVE_SPEED, 0,
+      bitmap_min_x, 0,
+      bitmap_size_x - GRAPH_DATA_MOVE_SPEED, GRAPH_BITMAP_CHAR_SIZE_Y*8,  // y方向は全部書いていい。書いちゃいけないところは透明にしてあるので。
+      GF_BMPPRT_NOTNUKI );
+
+  // ずらしてできた空きをクリアする
+  GFL_BMP_Fill( bmp_data, draw_start, 0, GRAPH_DATA_MOVE_SPEED, GRAPH_BITMAP_CHAR_SIZE_Y*8, 0 );
+
+  // work->graph_full_bmp_dataを書けるとき
+  if( work->graph_data_full_print < work->graph_data_full_size )
+  {
+    draw_size = work->graph_data_full_size - work->graph_data_full_print;
+    if( draw_size > GRAPH_DATA_MOVE_SPEED ) draw_size = GRAPH_DATA_MOVE_SPEED;
+    
+    GFL_BMP_Print(
+        work->graph_full_bmp_data, bmp_data,
+        work->graph_data_full_print, 0,
+        draw_start, 0,
+        draw_size, GRAPH_BITMAP_CHAR_SIZE_Y*8,  // y方向は全部書いていい。書いちゃいけないところは透明にしてあるので。
+        GF_BMPPRT_NOTNUKI );
+
+    work->graph_data_full_print += draw_size;
+  }
+
+  // work->graph_full_bmp_dataが書けないとき、もしくは、書いたが足りないとき
+  if( draw_size < GRAPH_DATA_MOVE_SPEED )
+  {
+    GFL_BMP_Fill( bmp_data, draw_start + draw_size, GRAPH_DATA_Y_TO_BITMAP_Y(0), GRAPH_DATA_MOVE_SPEED - draw_size, 1, GRAPH_COLOR );
+  }
+  
+  GFL_BMPWIN_TransVramCharacter( work->graph_bmpwin );
+}
+
+#else
+
 static void Zukan_Detail_Voice_GraphDrawBitmap( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   s16 i;
@@ -1194,11 +1388,107 @@ static void Zukan_Detail_Voice_GraphDrawBitmap( ZUKAN_DETAIL_VOICE_PARAM* param,
 
   GFL_BMPWIN_TransVramCharacter( work->graph_bmpwin );
 }
-static void Zukan_Detail_Voice_WaveDataSetup( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+
+#endif
+
+static void Zukan_Detail_Voice_WaveDataSetup( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn, u16 monsno, u16 formno )
 {
   work->wave_data_begin = PMV_GetWave( work->voice_idx );
   work->wave_data_curr_pos = 0;
   work->wave_data_interval = WAVE_DATA_INTERVAL( PMV_GetWaveRate( work->voice_idx ) / 60 );
+
+#ifdef GRAPH_GATHER
+  work->graph_data_full_print = 0;  // これから書く
+
+  // ポケモンが(フォルムが)変わっている場合、新たに用意する
+  if( monsno != work->full_monsno || formno != work->full_formno )
+  {
+    work->full_monsno = monsno;
+    work->full_formno = formno;
+
+    work->wave_full_millisec = (u32)(                                                      \
+          (f32)PMVOICE_GetWaveSize( work->voice_idx ) * (f32)WAVE_DATA_SPEED_ONE           \
+        / (f32)PMV_GetWaveRate( work->voice_idx ) / (f32)PMV_GetSpeed( work->voice_idx )   \
+        * 1000.0f                                                                          \
+        + 0.5f );  // 四捨五入
+    // waveデータの総時間[millisec] = データ数 / レート(即ち1秒当たりのデータ数) / 速度(例えば速度2倍なら時間は1/2倍) * 1000
+
+    GFL_BMP_Clear( work->graph_full_bmp_data, 0 );
+
+    {
+      u32 dot_idx = 0;
+      u32 data_idx_start = 0;  // data_idx_start<=  <data_idx_end
+      u32 data_idx_end;
+
+      // 1フレームで消費されるデータ数 = レート(即ち1秒当たりのデータ数) * 速度(例えば速度2倍なら消費されるのも2倍) / FPS
+      // 1ドット移動するのに掛かるフレーム数 = (GRAPH_DATA_MOVE_WAIT+1) / GRAPH_DATA_MOVE_SPEED
+      // 1ドットに書かれるデータ数 = 1フレームで消費されるデータ数 * 1ドット移動するのに掛かるフレーム数
+
+      // GRAPH_DATA_INTERVAL_Xは使用しない。離さずくっつけて書くので。
+
+      while( data_idx_start < PMVOICE_GetWaveSize( work->voice_idx ) )
+      {
+        data_idx_end =                                                                                                  \
+            (f32)PMV_GetWaveRate( work->voice_idx ) * (f32)PMV_GetSpeed( work->voice_idx ) / (f32)WAVE_DATA_SPEED_ONE   \
+          / (f32)WAVE_DATA_PLAY_FPS                                                                                     \
+          * (f32)(GRAPH_DATA_MOVE_WAIT+1) / (f32)GRAPH_DATA_MOVE_SPEED                                                  \
+          * (f32)(dot_idx+1);
+      
+        if( data_idx_end > PMVOICE_GetWaveSize( work->voice_idx ) )  data_idx_end = PMVOICE_GetWaveSize( work->voice_idx );
+
+        // 描画
+        if( dot_idx < GRAPH_DATA_FULL_SIZE_X_MAX )
+        {
+          u32  i;
+          s16  min = GRAPH_DATA_SATURATION_MAX_Y;
+          s16  max = GRAPH_DATA_SATURATION_MIN_Y;
+          s16  value;
+          for( i=data_idx_start; i<data_idx_end; i++ )
+          {
+            value =                                                                                                                     \
+                  (s16)( ( (s32)(work->wave_data_begin[i]) * WAVE_DATA_VALUE_MAX_TO_GRAPH_DATA * PMVOICE_GetVolume( work->voice_idx ) ) \
+                / WAVE_DATA_VALUE_MAX / WAVE_DATA_VALUE_MAX );
+            // work->wave_data_begin[i]は、小さな音も大きな音も関係なく、最大最小が全ポケモンで揃えられたデータが入っている(と思われる)。
+            // そのデータを、PMVOICE_GetVolumeで小さくしたり大きくしたりして再生している(と思われる)。
+            // だから、波形の大きさを音の大きさと合わせるには、
+            // (音の大きさも考慮した波形の大きさ) = work->wave_data_begin[i] * PMVOICE_GetVolume / WAVE_DATA_VALUE_MAX
+            // としてやる(WAVE_DATA_VALUE_MAXはwork->wave_data_begin[i]が取り得る最大値)。
+            // それを更に、描画範囲の縦方向に収まるようにしたいので、
+            // (音の大きさも考慮した波形の大きさ) * WAVE_DATA_VALUE_MAX_TO_GRAPH_DATA / WAVE_DATA_VALUE_MAX
+            // としてやる(WAVE_DATA_VALUE_MAX_TO_GRAPH_DATAは描画範囲の縦方向の最大値)。
+            value = MATH_CLAMP( value, GRAPH_DATA_SATURATION_MIN_Y, GRAPH_DATA_SATURATION_MAX_Y );
+            if( value < min ) min = value;
+            if( value > max ) max = value;
+          }
+          if( min <= max )
+          {
+            if( min < GRAPH_DATA_MIN_Y ) min = GRAPH_DATA_MIN_Y;  // 縦の塗り潰されるピクセル数はmax-min+1となる
+            if( max > GRAPH_DATA_MAX_Y ) max = GRAPH_DATA_MAX_Y;
+            GFL_BMP_Fill( work->graph_full_bmp_data, dot_idx, GRAPH_DATA_Y_TO_BITMAP_Y(max), 1, max-min+1, GRAPH_COLOR );
+          }
+
+          {
+            // ここで、dot_idx>0のとき、[dot_idx-1]は後ろのデータ1つと繋ぎ、[dot_idx]は前のデータ1つと繋ぐことをする
+          }
+
+        }
+        else
+        {
+          GF_ASSERT_MSG( dot_idx < GRAPH_DATA_FULL_SIZE_X_MAX, "ZUKAN_DETAIL_VOICE : waveデータがビットマップの横範囲内に描画しきれません。\n" );
+        }
+
+        // 次へ
+        dot_idx++;
+        data_idx_start = data_idx_end +1;
+      }
+
+      if( dot_idx > GRAPH_DATA_FULL_SIZE_X_MAX ) dot_idx = GRAPH_DATA_FULL_SIZE_X_MAX;
+      work->graph_data_full_size = dot_idx;
+
+      // work->graph_full_bmp_dataのwork->graph_data_full_sizeからのドットには何も書かれていない
+    }
+  }
+#endif
 }
 
 
