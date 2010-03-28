@@ -434,6 +434,9 @@ sub_rndmatch_try:
     $reg_return = SEQ_SUB_RNDMATCH_RETRY
     _RET
   ENDIF
+
+  //手持ち全回復
+  _TEMOTI_POKEMON_KAIFUKU()
   
   //入り口移動アニメ
   _CALL sub_anm_wifi_counter_in
@@ -672,6 +675,9 @@ sub_gts_normal_exchange:
     $reg_return = SEQ_SUB_GTS_NORMAL_RETRY
     _RET
   ENDIF
+
+  //手持ち全回復
+  _TEMOTI_POKEMON_KAIFUKU()
  
   //入り口移動アニメ
   _CALL sub_anm_wifi_counter_in
@@ -830,6 +836,9 @@ sub_gts_nego_exchange:
     $reg_return = SEQ_SUB_GTS_NEGO_RETRY
     _RET
   ENDIF
+
+  //手持ち全回復
+  _TEMOTI_POKEMON_KAIFUKU()
  
   //入り口移動アニメ
   _CALL sub_anm_wifi_counter_in

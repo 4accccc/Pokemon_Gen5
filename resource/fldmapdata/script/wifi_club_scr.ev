@@ -242,6 +242,9 @@ sub_club_counter_connect:
   //接続　それではご案内します
   _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_04, SCWK_TARGET_OBJID, POS_DL )
   _BALLOONWIN_CLOSE()
+  
+  //手持ち全回復
+  _TEMOTI_POKEMON_KAIFUKU()
 
   //エレベータアニメ再生
   _CHG_COMMON_SCR SCRID_POKECEN_ELEVATOR_IN
