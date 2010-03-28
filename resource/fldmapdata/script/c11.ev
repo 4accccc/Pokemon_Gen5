@@ -83,6 +83,8 @@ EVENT_START	ev_c11_recept_01
 		
 	ELSE
 		//‚¢‚¢‚¦
+		_BALLOONWIN_TALKOBJ_MSG( msg_c11_infomationm_03 )
+		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 	
 	ENDIF
