@@ -23,9 +23,12 @@ _EVENT_DATA    ev_c04r0301_infomationw_01
 _EVENT_DATA    ev_c04r0301_trainerm_01
 _EVENT_DATA    ev_c04r0301_ol_01
 _EVENT_DATA    ev_c04r0301_boy2_01
-_EVENT_DATA    ev_c04r0301_baseballm_01
+_EVENT_DATA    ev_c04r0301_sports_01		//選手：可変OBJ
 _EVENT_DATA    ev_pos_c04r0301_connect_01	//競技場への接続POSイベント
 _EVENT_DATA    ev_zone_c04r0301
+_EVENT_DATA    ev_c04r0301_policeman_01
+_EVENT_DATA    ev_c04r0301_policeman_02
+_EVENT_DATA    ev_c04r0301_policeman_03
 _EVENT_DATA_END
 
 
@@ -48,6 +51,15 @@ INIT_EVENT_START	ev_zone_c04r0301
 		_CALL	ev_sports_event_chk
 	ENDIF
 
+	//一日一回だけトレーナーフラグをリセットして再戦できるようにする
+	IF FLAG_OFF( TMFLG_STADIUM_TR_BTL ) THEN
+		_REBATTLE_TRAINER_START()
+		_REBATTLE_TRAINER_CLEAR_TR_EVENT_FLAG()	//トレーナーフラグを初期化
+		_REBATTLE_TRAINER_END()
+		
+		_FLAG_SET( TMFLG_STADIUM_TR_BTL )	//一日フラグをセット
+	ENDIF
+
 INIT_EVENT_END
 
 
@@ -64,6 +76,8 @@ ev_sports_event_chk:
 
 		$WK_OTHER_SPORTS_EVENT = SPORTS_EVENT_BASEBALL
 		
+		$OBJCHRWORK0 = BASEBALLM		//見た目を野球選手に
+		
 		//競技中かチェック
 		_GET_TIME( SCWK_TEMP0, SCWK_TEMP1 )
 		IF $SCWK_TEMP0 >= 14 && $SCWK_TEMP0 <= 16 THEN
@@ -75,6 +89,8 @@ ev_sports_event_chk:
 	//火曜、金曜なら「サッカー」
 
 		$WK_OTHER_SPORTS_EVENT = SPORTS_EVENT_SOCCER
+		
+		$OBJCHRWORK0 = SOCCERM		//見た目を野球選手に
 		
 		//競技中かチェック
 		_GET_TIME( SCWK_TEMP0, SCWK_TEMP1 )
@@ -88,6 +104,8 @@ ev_sports_event_chk:
 
 		$WK_OTHER_SPORTS_EVENT = SPORTS_EVENT_FOOTBALL
 		
+		$OBJCHRWORK0 = FOOTBALLM		//見た目を野球選手に
+		
 		//競技中かチェック
 		_GET_TIME( SCWK_TEMP0, SCWK_TEMP1 )
 		IF $SCWK_TEMP0 >= 14 && $SCWK_TEMP0 <= 15 THEN
@@ -98,11 +116,20 @@ ev_sports_event_chk:
 	ENDSWITCH
 
 
-	//競技中ならワープポイントを塞ぐガードマンを表示
-	_FLAG_SET( FV_STADIUM_GUARDMAN )
+	//エントランスのNPC表示チェック
 	IF FLAG_ON( FE_SPORTS_PLAYING ) THEN
+		//試合中ならワープポイントを塞ぐガードマンを表示
 		_FLAG_RESET( FV_STADIUM_GUARDMAN )
+		//選手とファンを非表示
+		_FLAG_SET( FV_STADIUM_SPORTSMAN )
+
+	ELSE
+		//練習中なら上と逆
+		_FLAG_SET( FV_STADIUM_GUARDMAN )
+		_FLAG_RESET( FV_STADIUM_SPORTSMAN )
+	
 	ENDIF
+
 
 _RET
 
@@ -136,22 +163,49 @@ EVENT_END
 /************************************************************/
 EVENT_START	ev_c04r0301_infomationw_01
 	_TALK_OBJ_START()
-
-	//曜日を取得
-	_GET_WEEK( SCWK_ANSWER )
-
-	//曜日で分岐　【仮】イベント詳細未定だが曜日ネタを予定
-	IF $SCWK_ANSWER == RTC_WEEK_MONDAY THEN
-		//月曜日の処理
-		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_infomationw_01 )
-	ELSE
-		//月曜日以外の処理
-		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_infomationw_01 )
-	ENDIF
-
+	
+	//競技種目をチェック
+	SWITCH $WK_OTHER_SPORTS_EVENT
+	CASE SPORTS_EVENT_FOOTBALL THEN
+	//フットボール
+	
+		//試合中かチェック
+		IF FLAG_ON( FE_SPORTS_PLAYING ) THEN
+			//試合中なら
+			_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_infomationw_01 )
+		ELSE
+			//練習中なら
+			_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_infomationw_02 )
+		ENDIF
+	
+	CASE SPORTS_EVENT_BASEBALL THEN
+	//野球
+	
+		//試合中かチェック
+		IF FLAG_ON( FE_SPORTS_PLAYING ) THEN
+			//試合中なら
+			_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_infomationw_03 )
+		ELSE
+			//練習中なら
+			_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_infomationw_04 )
+		ENDIF
+	
+	DEFAULT
+	//それ以外（サッカー）
+	
+		//試合中かチェック
+		IF FLAG_ON( FE_SPORTS_PLAYING ) THEN
+			//試合中なら
+			_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_infomationw_05 )
+		ELSE
+			//練習中なら
+			_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_infomationw_06 )
+		ENDIF
+	
+	ENDSWITCH
+	
 	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-
+	_MSGWIN_CLOSE()
 EVENT_END
 
 
@@ -172,19 +226,74 @@ EVENT_END
 
 
 /************************************************************/
-/*							少年							*/
+/*					少年（試合中は非表示）					*/
 /************************************************************/
 EVENT_START	ev_c04r0301_boy2_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_boy2_01 )
+	_TALK_OBJ_START()
+	
+	//競技種目をチェック
+	SWITCH $WK_OTHER_SPORTS_EVENT
+	CASE SPORTS_EVENT_FOOTBALL THEN
+		//フットボール
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_boy2_01 )
+
+	CASE SPORTS_EVENT_BASEBALL THEN
+		//野球
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_boy2_02 )
+
+	DEFAULT
+		//それ以外（サッカー）
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_boy2_03 )
+
+	ENDSWITCH
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
 EVENT_END
 
 
 /************************************************************/
-/*						ベースボール選手					*/
+/*			スポーツ選手（可変OBJ：試合中は非表示）			*/
 /************************************************************/
-EVENT_START	ev_c04r0301_baseballm_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_baseballm_01 )
+EVENT_START	ev_c04r0301_sports_01
+	_TALK_OBJ_START()
+	
+	//競技種目をチェック
+	SWITCH $WK_OTHER_SPORTS_EVENT
+	CASE SPORTS_EVENT_FOOTBALL THEN
+		//フットボール
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_footballm_01 )
+
+	CASE SPORTS_EVENT_BASEBALL THEN
+		//野球
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_baseballm_01 )
+
+	DEFAULT
+		//それ以外（サッカー）
+		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_soccerm_01 )
+
+	ENDSWITCH
+	
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+	
 EVENT_END
 
+
+/************************************************************/
+/*			警備員（ストッパー：練習中は非表示）			*/
+/************************************************************/
+EVENT_START	ev_c04r0301_policeman_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_policeman1_01 )
+EVENT_END
+
+EVENT_START	ev_c04r0301_policeman_02
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_policeman2_01 )
+EVENT_END
+
+EVENT_START	ev_c04r0301_policeman_03
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0301_policeman3_01 )
+EVENT_END
 
 
