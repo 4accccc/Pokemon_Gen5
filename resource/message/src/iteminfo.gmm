@@ -4960,12 +4960,12 @@
 	</row>
 
 	<row id="ITEMINFO_537">
-		<language name="JPN" width="256">ー
-ー
-ー</language>
-		<language name="JPN_KANJI" width="256">ー
-ー
-ー</language>
+		<language name="JPN" width="256">ある　とくていの　ポケモンを
+しんかさせる　ふしぎな　ウロコ。
+にじいろに　かがやいている。</language>
+		<language name="JPN_KANJI" width="256">ある　特定の　ポケモンを
+進化させる　不思議な　ウロコ。
+にじいろに　かがやいている。</language>
 	</row>
 
 	<row id="ITEMINFO_538">
@@ -5320,15 +5320,6 @@
 	</row>
 
 	<row id="ITEMINFO_577">
-		<language name="JPN" width="256">ある　とくていの　ポケモンを
-しんかさせる　ふしぎな　ウロコ。
-にじいろに　かがやいている。</language>
-		<language name="JPN_KANJI" width="256">ある　特定の　ポケモンを
-進化させる　不思議な　ウロコ。
-にじいろに　かがやいている。</language>
-	</row>
-
-	<row id="ITEMINFO_578">
 		<language name="JPN" width="256">ポケモンの　きを　ひかせる　どうぐ。
 やせいポケモンとの　せんとうから
 ぜったいに　にげられる。</language>
@@ -5337,7 +5328,7 @@
 絶対に　逃げられる。</language>
 	</row>
 
-	<row id="ITEMINFO_579">
+	<row id="ITEMINFO_578">
 		<language name="JPN" width="256">ミュージカルで　ポケモンに　つける
 いろとりどりの　グッズを　たくさん
 しまえる　きれいで　すてきなケース。</language>
@@ -5346,7 +5337,7 @@
 収納する　きれいで　すてきなケース。</language>
 	</row>
 
-	<row id="ITEMINFO_580">
+	<row id="ITEMINFO_579">
 		<language name="JPN" width="256">あれくるう　うみを　ものともせず
 じゆうに　とびまわっていたと　される
 ポケモンの　あたまの　ホネ。</language>
@@ -5355,7 +5346,7 @@
 ポケモンの　頭の　ホネ。</language>
 	</row>
 
-	<row id="ITEMINFO_581">
+	<row id="ITEMINFO_580">
 		<language name="JPN" width="256">あたりいったいに　いい　かおりが
 ひろがる　めずらしい　キノコ。
 マニアが　たかく　かってくれる。</language>
@@ -5364,7 +5355,7 @@
 マニアが　高く　買ってくれる。</language>
 	</row>
 
-	<row id="ITEMINFO_582">
+	<row id="ITEMINFO_581">
 		<language name="JPN" width="256">キラキラと　きんいろに　ひかる
 じゅんきんせいの　おおきな　たま。
 マニアが　たかく　かってくれる。</language>
@@ -5373,7 +5364,7 @@
 マニアが　高く　買ってくれる。</language>
 	</row>
 
-	<row id="ITEMINFO_583">
+	<row id="ITEMINFO_582">
 		<language name="JPN" width="256">きれいな　ぎんいろに　ひかる
 とても　おおつぶの　しんじゅ。
 マニアが　たかく　かってくれる。</language>
@@ -5382,7 +5373,7 @@
 マニアが　高く　買ってくれる。</language>
 	</row>
 
-	<row id="ITEMINFO_584">
+	<row id="ITEMINFO_583">
 		<language name="JPN" width="256">すいせいが　ちかづいたとき
 ちひょうに　おちた　かけら。
 マニアが　たかく　かってくれる。</language>
@@ -5391,7 +5382,7 @@
 マニアが　高く　買ってくれる。</language>
 	</row>
 
-	<row id="ITEMINFO_585">
+	<row id="ITEMINFO_584">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
 ぶんめいで　つかわれた　どうか。
 マニアが　たかく　かってくれる。</language>
@@ -5400,7 +5391,7 @@
 マニアが　高く　買ってくれる。</language>
 	</row>
 
-	<row id="ITEMINFO_586">
+	<row id="ITEMINFO_585">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
 ぶんめいで　つかわれた　ぎんか。
 マニアが　たかく　かってくれる。</language>
@@ -5409,7 +5400,7 @@
 マニアが　高く　買ってくれる。</language>
 	</row>
 
-	<row id="ITEMINFO_587">
+	<row id="ITEMINFO_586">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
 ぶんめいで　つかわれた　きんか。
 マニアが　たかく　かってくれる。</language>
@@ -5418,7 +5409,7 @@
 マニアが　高く　買ってくれる。</language>
 	</row>
 
-	<row id="ITEMINFO_588">
+	<row id="ITEMINFO_587">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
 ぶんめいで　つくられた　つぼ。
 マニアが　たかく　かってくれる。</language>
@@ -5427,7 +5418,7 @@
 マニアが　高く　買ってくれる。</language>
 	</row>
 
-	<row id="ITEMINFO_589">
+	<row id="ITEMINFO_588">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
 ぶんめいで　つくられた　うでわ。
 マニアが　たかく　かってくれる。</language>
@@ -5436,7 +5427,7 @@
 マニアが　高く　買ってくれる。</language>
 	</row>
 
-	<row id="ITEMINFO_590">
+	<row id="ITEMINFO_589">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
 ぶんめいで　つくられた　せきぞう。
 マニアが　たかく　かってくれる。</language>
@@ -5445,7 +5436,7 @@
 マニアが　高く　買ってくれる。</language>
 	</row>
 
-	<row id="ITEMINFO_591">
+	<row id="ITEMINFO_590">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
 ぶんめいで　つくられた　おうかん。
 マニアが　たかく　かってくれる。</language>
@@ -5454,7 +5445,7 @@
 マニアが　高く　買ってくれる。</language>
 	</row>
 
-	<row id="ITEMINFO_592">
+	<row id="ITEMINFO_591">
 		<language name="JPN" width="256">ヒウンシティの　めいぶつアイス。
 ポケモン　１ひきの　じょうたいの
 いじょうを　すべて　かいふくする。</language>
@@ -5463,7 +5454,7 @@
 異常を　すべて　回復する。</language>
 	</row>
 
-	<row id="ITEMINFO_593">
+	<row id="ITEMINFO_592">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 こうげきが　きゅうしょに　あたる
 かくりつが　すこし　あがる。</language>
@@ -5472,7 +5463,7 @@
 確率が　すこし　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_594">
+	<row id="ITEMINFO_593">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　すばやさが
 すこし　あがる。</language>
@@ -5481,7 +5472,7 @@
 すこし　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_595">
+	<row id="ITEMINFO_594">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　とくこうが
 すこし　あがる。</language>
@@ -5490,7 +5481,7 @@
 すこし　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_596">
+	<row id="ITEMINFO_595">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　とくぼうが
 すこし　あがる。</language>
@@ -5499,7 +5490,7 @@
 すこし　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_597">
+	<row id="ITEMINFO_596">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　ぼうぎょが
 すこし　あがる。</language>
@@ -5508,7 +5499,7 @@
 すこし　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_598">
+	<row id="ITEMINFO_597">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　こうげきが
 すこし　あがる。</language>
@@ -5517,7 +5508,7 @@
 すこし　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_599">
+	<row id="ITEMINFO_598">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　こうげきの
 めいちゅうりつが　すこし　あがる。</language>
@@ -5526,7 +5517,7 @@
 命中率が　すこし　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_600">
+	<row id="ITEMINFO_599">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　すばやさが
 かなり　あがる。</language>
@@ -5535,7 +5526,7 @@
 かなり　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_601">
+	<row id="ITEMINFO_600">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　とくこうが
 かなり　あがる。</language>
@@ -5544,7 +5535,7 @@
 かなり　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_602">
+	<row id="ITEMINFO_601">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　とくぼうが
 かなり　あがる。</language>
@@ -5553,7 +5544,7 @@
 かなり　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_603">
+	<row id="ITEMINFO_602">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　ぼうぎょが
 かなり　あがる。</language>
@@ -5562,7 +5553,7 @@
 かなり　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_604">
+	<row id="ITEMINFO_603">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　こうげきが
 かなり　あがる。</language>
@@ -5571,7 +5562,7 @@
 かなり　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_605">
+	<row id="ITEMINFO_604">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　こうげきの
 めいちゅうりつが　かなり　あがる。</language>
@@ -5580,7 +5571,7 @@
 命中率が　かなり　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_606">
+	<row id="ITEMINFO_605">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　すばやさが
 さいこうまで　あがる。</language>
@@ -5589,7 +5580,7 @@
 最高まで　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_607">
+	<row id="ITEMINFO_606">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　とくこうが
 さいこうまで　あがる。</language>
@@ -5598,7 +5589,7 @@
 最高まで　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_608">
+	<row id="ITEMINFO_607">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　とくぼうが
 さいこうまで　あがる。</language>
@@ -5607,7 +5598,7 @@
 最高まで　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_609">
+	<row id="ITEMINFO_608">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　ぼうぎょが
 さいこうまで　あがる。</language>
@@ -5616,7 +5607,7 @@
 最高まで　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_610">
+	<row id="ITEMINFO_609">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 ポケモンの　こうげきが
 さいこうまで　あがる。</language>
@@ -5625,7 +5616,7 @@
 最高まで　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_611">
+	<row id="ITEMINFO_610">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 みかたポケモンの　めいちゅうりつが
 さいこうまで　あがる。</language>
@@ -5634,7 +5625,7 @@
 最高まで　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_612">
+	<row id="ITEMINFO_611">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 つかうと　みかたの　ポケモンの
 とくせいを　はつどう　させる。</language>
@@ -5643,7 +5634,7 @@
 とくせいを　発動させる。</language>
 	</row>
 
-	<row id="ITEMINFO_613">
+	<row id="ITEMINFO_612">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 つかうと　みかたの　ポケモンが
 もっている　どうぐを　なくす。</language>
@@ -5652,7 +5643,7 @@
 持っている　道具を　なくす。</language>
 	</row>
 
-	<row id="ITEMINFO_614">
+	<row id="ITEMINFO_613">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 つかうと　みかたの　ポケモンが
 もっている　どうぐを　すぐつかう。</language>
@@ -5661,7 +5652,7 @@
 持っている　道具を　すぐ使う。</language>
 	</row>
 
-	<row id="ITEMINFO_615">
+	<row id="ITEMINFO_614">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 つかうと　みかたの　ポケモンの
 のうりょく　へんかが　もとにもどる。</language>
@@ -5670,7 +5661,7 @@
 能力変化が　もとにもどる。</language>
 	</row>
 
-	<row id="ITEMINFO_616">
+	<row id="ITEMINFO_615">
 		<language name="JPN" width="256">ポケシューター　せんようの　どうぐ。
 こうげきが　きゅうしょに　あたる
 かくりつが　かなり　あがる。</language>
@@ -5679,7 +5670,7 @@
 確率が　かなり　あがる。</language>
 	</row>
 
-	<row id="ITEMINFO_617">
+	<row id="ITEMINFO_616">
 		<language name="JPN" width="256">シンの　にくたいが　ほろび
 へんかした　すがた。えいゆうの
 とうじょうを　まっていると　される。</language>
@@ -5688,7 +5679,7 @@
 登場を　待っていると　される。</language>
 	</row>
 
-	<row id="ITEMINFO_618">
+	<row id="ITEMINFO_617">
 		<language name="JPN" width="256">ムの　にくたいが　ほろび
 へんかした　すがた。えいゆうの
 とうじょうを　まっていると　される。</language>
@@ -5697,7 +5688,7 @@
 登場を　待っていると　される。</language>
 	</row>
 
-	<row id="ITEMINFO_619">
+	<row id="ITEMINFO_618">
 		<language name="JPN" width="256">でんきを　まとって
 あいてに　ぶつかって　こうげきする。
 じぶんも　ダメージを　うける。</language>
@@ -5706,7 +5697,7 @@
 自分も　ダメージを　受ける。</language>
 	</row>
 
-	<row id="ITEMINFO_620">
+	<row id="ITEMINFO_619">
 		<language name="JPN" width="256">カマや　ツメなどの　するどいもので
 きりつけて　こうげきする。
 ほそいきを　きることも　できる。</language>
@@ -5715,7 +5706,7 @@
 細い木を　きることも　できる。</language>
 	</row>
 
-	<row id="ITEMINFO_621">
+	<row id="ITEMINFO_620">
 		<language name="JPN" width="256">こんしんの　ちからで　こうげきする。
 おもいいわを　おすことも　できる。
 </language>
@@ -5724,7 +5715,7 @@
 </language>
 	</row>
 
-	<row id="ITEMINFO_622">
+	<row id="ITEMINFO_621">
 		<language name="JPN" width="256">おおきな　なみを　おこして
 すべての　ポケモンを　こうげきする。
 みずのうえを　すすむことも　できる。</language>
@@ -5733,7 +5724,7 @@
 水の上を　進むことも　できる。</language>
 	</row>
 
-	<row id="ITEMINFO_623">
+	<row id="ITEMINFO_622">
 		<language name="JPN" width="256">１ターンめで　そらへ　とびあがって
 ２ターンめで　こうげきする。
 しっているまちに　いどうも　できる。</language>
@@ -5742,7 +5733,7 @@
 知っている街に　移動も　できる。</language>
 	</row>
 
-	<row id="ITEMINFO_624">
+	<row id="ITEMINFO_623">
 		<language name="JPN" width="256">１ターンめで　もぐり　２ターンめに
 うきあがって　こうげきする。うみの
 なかに　もぐる　ことも　できる。</language>
@@ -5751,7 +5742,7 @@
 中に　もぐることも　できる。</language>
 	</row>
 
-	<row id="ITEMINFO_625">
+	<row id="ITEMINFO_624">
 		<language name="JPN" width="256">たきを　さかのぼるような　すさまじい
 いきおいで　とっしん　こうげきする。
 たきを　のぼることも　できる。</language>
@@ -5760,7 +5751,7 @@
 たきを　のぼることも　できる。</language>
 	</row>
 
-	<row id="ITEMINFO_626">
+	<row id="ITEMINFO_625">
 		<language name="JPN" width="256">いわを　くだくような　パンチで
 こうげきする。　ひびわれた　いわを
 こわすことも　できる。</language>
@@ -5769,7 +5760,7 @@
 壊すことも　できる。</language>
 	</row>
 
-	<row id="ITEMINFO_627">
+	<row id="ITEMINFO_626">
 		<language name="JPN" width="256">まくしたてる　ように　どなりつけて
 あいての　とくこうを　さげる。
 </language>
@@ -5778,7 +5769,7 @@
 </language>
 	</row>
 
-	<row id="ITEMINFO_628">
+	<row id="ITEMINFO_627">
 		<language name="JPN" width="256">さいだい　４にんで　つうわができる
 テレビきのうつきの
 さいしんがた　トランシーバー。</language>
@@ -5787,12 +5778,21 @@
 最新型トランシーバー。</language>
 	</row>
 
-	<row id="ITEMINFO_629">
+	<row id="ITEMINFO_628">
 		<language name="JPN" width="256">まぼろしの　いし。
 
 </language>
 		<language name="JPN_KANJI" width="256">幻の　石。
 
+</language>
+	</row>
+
+	<row id="ITEMINFO_629">
+		<language name="JPN" width="256">キャモメが　はいたつ　している
+たいせつな　てがみ。
+</language>
+		<language name="JPN_KANJI" width="256">キャモメが　配達している
+たいせつな　手紙。
 </language>
 	</row>
 
@@ -5815,12 +5815,12 @@
 	</row>
 
 	<row id="ITEMINFO_632">
-		<language name="JPN" width="256">キャモメが　はいたつ　している
-たいせつな　てがみ。
-</language>
-		<language name="JPN_KANJI" width="256">キャモメが　配達している
-たいせつな　手紙。
-</language>
+		<language name="JPN" width="256">ー
+ー
+ー</language>
+		<language name="JPN_KANJI" width="256">ー
+ー
+ー</language>
 	</row>
 
 	<row id="ITEMINFO_633">
