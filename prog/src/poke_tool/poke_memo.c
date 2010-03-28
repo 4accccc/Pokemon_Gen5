@@ -43,6 +43,7 @@ typedef enum
 #pragma mark [> proto
 static void POKE_MEMO_ClearPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_DATA_TYPE setType );
 static void POKE_MEMO_SetPlaceTime( POKEMON_PASO_PARAM *ppp , const u32 place , const POKE_MEMO_DATA_TYPE setType );
+static void POKE_MEMO_SetPlaceTimeEx( POKEMON_PASO_PARAM *ppp , const u32 place , const u32 year , const u32 month , const u32 day , const POKE_MEMO_DATA_TYPE setType );
 static void POKE_MEMO_CopyPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_DATA_TYPE srcSetType );
 static void POKE_MEMO_SetMyStatus( POKEMON_PASO_PARAM *ppp , const MYSTATUS* my , const HEAPID heapId );
 static void POKE_MEMO_SetGetLevel( POKEMON_PASO_PARAM *ppp );
@@ -103,9 +104,7 @@ void POKE_MEMO_SetTrainerMemoPPP( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_SET_
     break;
 
   case POKE_MEMO_DISTRIBUTION: //配布
-    POKE_MEMO_SetPlaceTime( ppp , place , PMDT_2 );
-    POKE_MEMO_SetGetLevel( ppp );
-    POKE_MEMO_SetRomVersion( ppp );
+    GF_ASSERT_MSG(FALSE,"専用関数使って！\n")
     break;
     
   case POKE_MEMO_EGG_FIRST:
@@ -149,6 +148,22 @@ void POKE_MEMO_SetTrainerMemoPokeShifter( POKEMON_PASO_PARAM *ppp )
   }
 }
 
+void POKE_MEMO_SetTrainerMemoPokeDistribution( POKEMON_PASO_PARAM *ppp , const u32 place , const u32 year , const u32 month , const u32 day )
+{
+  if( PPP_Get( ppp , ID_PARA_tamago_exist , NULL ) == TRUE )
+  {
+    POKE_MEMO_SetPlaceTimeEx( ppp , place , year , month , day , PMDT_1 );
+  }
+  else
+  {
+    POKE_MEMO_SetPlaceTimeEx( ppp , place , year , month , day , PMDT_2 );
+  }
+  POKE_MEMO_SetGetLevel( ppp );
+  POKE_MEMO_SetRomVersion( ppp );
+
+  PPP_Put( ppp , ID_PARA_event_get_flag , 1 );
+}
+
 static void POKE_MEMO_ClearPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_DATA_TYPE setType )
 {
   if( setType == PMDT_1 )
@@ -185,6 +200,24 @@ static void POKE_MEMO_SetPlaceTime( POKEMON_PASO_PARAM *ppp , const u32 place , 
     PPP_Put( ppp , ID_PARA_birth_year  , date.year );
     PPP_Put( ppp , ID_PARA_birth_month , date.month );
     PPP_Put( ppp , ID_PARA_birth_day   , date.day );
+  }
+}
+
+static void POKE_MEMO_SetPlaceTimeEx( POKEMON_PASO_PARAM *ppp , const u32 place , const u32 year , const u32 month , const u32 day , const POKE_MEMO_DATA_TYPE setType )
+{
+  if( setType == PMDT_1 )
+  {
+    PPP_Put( ppp , ID_PARA_get_place , place );
+    PPP_Put( ppp , ID_PARA_get_year  , year );
+    PPP_Put( ppp , ID_PARA_get_month , month );
+    PPP_Put( ppp , ID_PARA_get_day   , day );
+  }
+  else
+  {
+    PPP_Put( ppp , ID_PARA_birth_place , place );
+    PPP_Put( ppp , ID_PARA_birth_year  , year );
+    PPP_Put( ppp , ID_PARA_birth_month , month );
+    PPP_Put( ppp , ID_PARA_birth_day   , day );
   }
 }
 

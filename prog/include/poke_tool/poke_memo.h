@@ -68,6 +68,8 @@ extern void POKE_MEMO_SetTrainerMemoPPP( POKEMON_PASO_PARAM *ppp , const POKE_ME
                                   const MYSTATUS* my, const u32 place , const HEAPID heapId );
 //余計な関数呼ばないために独立
 extern void POKE_MEMO_SetTrainerMemoPokeShifter( POKEMON_PASO_PARAM *ppp );
+//日付設定のため独立
+extern void POKE_MEMO_SetTrainerMemoPokeDistribution( POKEMON_PASO_PARAM *ppp , const u32 place , const u32 year , const u32 month , const u32 day );
 
 //イベント用ポケモンチェック
 extern const BOOL POKE_MEMO_CheckEventPokePP( POKEMON_PARAM *pp , const POKE_MEMO_EVENT_TYPE type );
