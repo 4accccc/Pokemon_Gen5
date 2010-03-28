@@ -8448,7 +8448,7 @@
 /**
  * @def _CALL_3D_DEMO
  * @brief デモ呼び出し
- * @param demo_no   デモID指定ナンバー
+ * @param demo_no   デモID指定ナンバー pokemon_wb\prog\include\demo\demo3d_demoid.h 参照
  *
  * @note  フェード処理は別途呼び出す必要がある
  */
