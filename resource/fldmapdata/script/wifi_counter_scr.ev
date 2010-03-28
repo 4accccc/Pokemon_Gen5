@@ -151,7 +151,7 @@ sub_wifi_counter_main_menu:
   DEFINE_LOCAL  i_ret
   
   //分岐・ランダムマッチ/GTS/説明を聞く/やめる
-	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
 		
 	_BMPMENU_MAKE_LIST( msg_wifi_counter_win01, SEQ_RANDOM_MATCH )	  //ランダムマッチ
 	_BMPMENU_MAKE_LIST( msg_wifi_counter_win02, SEQ_GTS )	            //GTS
@@ -247,7 +247,7 @@ sub_rndmatch_menu:
   DEFINE_LOCAL  i_ret
 
   //分岐・挑戦する/説明を聞く/やめる
-	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
 		
 	_BMPMENU_MAKE_LIST( msg_rndmatch_01_win01, SEQ_SUB_RNDMATCH_TRY_SELECT) //挑戦する
 	_BMPMENU_MAKE_LIST( msg_rndmatch_01_win02, SEQ_SUB_RNDMATCH_EXP )	      //説明を聞く
@@ -283,7 +283,7 @@ sub_rndmatch_exp:
     _BALLOONWIN_OBJMSG_POS( msg_rndmatch_02_02 , SCWK_TARGET_OBJID, POS_DL )
 
     //分岐・預ける/探す/わかった
-	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
 		
   	_BMPMENU_MAKE_LIST( msg_rndmatch_02_win01, 0 )   //ランダムマッチに就いて
 	  _BMPMENU_MAKE_LIST( msg_rndmatch_02_win02, 1 )   //レーティングモードについて
@@ -327,7 +327,7 @@ sub_rndmatch_try_select:
   _BALLOONWIN_OBJMSG_POS( msg_rndmatch_03 , SCWK_TARGET_OBJID, POS_DL )
 
   //分岐・シングル/ダブル/トリプル/ローテ/シューター/もどる
-  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
 		
   _BMPMENU_MAKE_LIST( msg_rndmatch_03_win01, 0 )   //シングル
 	_BMPMENU_MAKE_LIST( msg_rndmatch_03_win02, 1 )   //ダブル
@@ -366,7 +366,7 @@ sub_rndmatch_try_check:
   _BALLOONWIN_OBJMSG_POS( i_msg , SCWK_TARGET_OBJID, POS_DL )
 
   //分岐・決定/ルールを聞く/もどる
-  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
   _BMPMENU_MAKE_LIST( msg_rndmatch_04_win01, 0 )   //決定
 	_BMPMENU_MAKE_LIST( msg_rndmatch_04_win02, 1 )   //ルールを聞く
 	_BMPMENU_MAKE_LIST( msg_rndmatch_04_win03, 2 )   //戻る
@@ -506,7 +506,7 @@ sub_gts_menu:
   _BALLOONWIN_OBJMSG_POS( msg_gts_01 , SCWK_TARGET_OBJID, POS_DL )
 
   //分岐・GTS/GTSネゴシエーション/説明を聞く/やめる
-	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
 		
 	_BMPMENU_MAKE_LIST( msg_gts_win01, SEQ_SUB_GTS_NORMAL)	  //GTS
 	_BMPMENU_MAKE_LIST( msg_gts_win02, SEQ_SUB_GTS_NEGO)	    //GTSネゴシエーション
@@ -582,7 +582,7 @@ sub_gts_normal_menu:
   _BALLOONWIN_OBJMSG_POS( msg_gts_normal_01 , SCWK_TARGET_OBJID, POS_DL )
 
   //分岐・GTS/バトルビデオ/ミュージカルショット/説明を聞く/やめる
-	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
 		
 	_BMPMENU_MAKE_LIST( msg_gts_normal_win01, SEQ_SUB_GTS_NORMAL_EXCHANGE )    //交換
 	_BMPMENU_MAKE_LIST( msg_gts_normal_win02, SEQ_SUB_GTS_NORMAL_EXP )	      //説明を聞く
@@ -616,7 +616,7 @@ sub_gts_normal_exp:
     _BALLOONWIN_OBJMSG_POS( msg_gts_normal_exp02 , SCWK_TARGET_OBJID, POS_DL )
 
     //分岐・預ける/探す/わかった
-	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
 		
   	_BMPMENU_MAKE_LIST( msg_gts_normal_exp_win01, 0 )   //預ける
 	  _BMPMENU_MAKE_LIST( msg_gts_normal_exp_win02, 1 )   //探す
@@ -741,7 +741,7 @@ sub_gts_nego_menu:
   DEFINE_LOCAL  i_ret
 
   //分岐・交換/説明を聞く/やめる
-	_BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
 		
 	_BMPMENU_MAKE_LIST( msg_gts_nego_win01, SEQ_SUB_GTS_NEGO_EXCHANGE )    //交換
 	_BMPMENU_MAKE_LIST( msg_gts_nego_win02, SEQ_SUB_GTS_NEGO_EXP )	      //説明を聞く
@@ -776,7 +776,7 @@ sub_gts_nego_exp:
     _BALLOONWIN_OBJMSG_POS( msg_gts_nego_exp00 , SCWK_TARGET_OBJID, POS_DL )
 
     //分岐・預ける/探す/わかった
-	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
 		
   	_BMPMENU_MAKE_LIST( msg_gts_nego_exp_win01, 0 )   //預ける
 	  _BMPMENU_MAKE_LIST( msg_gts_nego_exp_win02, 1 )   //探す
@@ -857,7 +857,7 @@ sub_gterminal_musical:
     _BALLOONWIN_OBJMSG_POS( msg_musical_01 , SCWK_TARGET_OBJID, POS_DL )
 
     //分岐・ミュージカルショットを見る/説明を聞く/やめる
-	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
 		
   	_BMPMENU_MAKE_LIST( msg_musical_win01, 0 )   //みる
 	  _BMPMENU_MAKE_LIST( msg_musical_win02, 1 )   //説明を聞く
@@ -897,7 +897,7 @@ sub_gterminal_btl_video:
     _BALLOONWIN_OBJMSG_POS( msg_btlvideo_01 , SCWK_TARGET_OBJID, POS_DL )
 
     //分岐・バトルビデオを見る/説明を聞く/やめる
-	  _BMPMENU_INIT_EX( 1, 1, 0, 1, i_ret )
+	  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, i_ret )
 		
   	_BMPMENU_MAKE_LIST( msg_btlvideo_win01, 0 )   //みる
 	  _BMPMENU_MAKE_LIST( msg_btlvideo_win02, 1 )   //説明を聞く
