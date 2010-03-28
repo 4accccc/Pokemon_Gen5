@@ -228,7 +228,7 @@ static void _modeSelectBattleTypeInit(CG_WIRELESS_MENU* pWork);
 
 static void _buttonWindowDelete(CG_WIRELESS_MENU* pWork);
 static void _ReturnButtonStart(CG_WIRELESS_MENU* pWork);
-//static void _UpdatePalletAnime(CG_WIRELESS_MENU* pWork );
+static void _UpdatePalletAnime(CG_WIRELESS_MENU* pWork );
 
 
 
@@ -945,7 +945,7 @@ static void _modeSelectMenuWait(CG_WIRELESS_MENU* pWork)
 		GFL_BMN_Main( pWork->pButton );
 	}
 
-  //_UpdatePalletAnime(pWork);
+  _UpdatePalletAnime(pWork);
   _UpdateMessage(pWork);
 
 }
@@ -1219,61 +1219,25 @@ static void _modeNetworkOn(CG_WIRELESS_MENU* pWork)
 }
 
 
-static void _UpdatePalletAnimeSingle(CG_WIRELESS_MENU* pWork , u16 anmCnt , u8 pltNo )
-{
-  int i;
-  const u16* pal = (u16*)&pWork->BackupPalette[32*pltNo];
-  const u16* lpal = (u16*)&pWork->LightPalette[32*pltNo];
-
-  for(i = 0;i<16;i++){
-    //1～0に変換
-    const u32 br = _PALETTE_R(pal[i]);
-    const u32 bg = _PALETTE_G(pal[i]);
-    const u32 bb = _PALETTE_B(pal[i]);
-    
-    const fx16 cos = (FX_CosIdx(anmCnt)+FX16_ONE)/2;
-    const u8 r = br + (((_PALETTE_R(lpal[i])-br)*cos)>>FX16_SHIFT);
-    const u8 g = bg + (((_PALETTE_G(lpal[i])-bg)*cos)>>FX16_SHIFT);
-    const u8 b = bb + (((_PALETTE_B(lpal[i])-bb)*cos)>>FX16_SHIFT);
-    u16 palx[16];
-    
-    pWork->TransPalette[i] = GX_RGB(r, g, b);
-    //OS_TPrintf("%d pal %x  %x\n",i,pal[i],pWork->TransPalette[i]);
-    {
-      NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
-                                          pltNo * 32,  pWork->TransPalette , 32 );
-    }
-  }
-}
-
 //--------------------------------------------------------------
 //	パレットアニメーションの更新
 //--------------------------------------------------------------
 static void _UpdatePalletAnime(CG_WIRELESS_MENU* pWork )
 {
-
-
-  //プレートアニメ
-  if( pWork->anmCos + APP_TASKMENU_ANIME_VALUE >= 0x10000 )
-  {
-    pWork->anmCos = pWork->anmCos+APP_TASKMENU_ANIME_VALUE-0x10000;
-  }
-  else
-  {
-    pWork->anmCos += APP_TASKMENU_ANIME_VALUE;
-  }
-  {
-    if(GAME_COMM_STATUS_BIT_WIRELESS & pWork->bit){
-      _UpdatePalletAnimeSingle(pWork,pWork->anmCos, Btn_PalettePos[ _SELECTMODE_PALACE ]);
+  if(GAME_COMM_STATUS_BIT_WIRELESS_TR & pWork->bit){
+//  if(){
+    if(12 == GFL_CLACT_WK_GetAnmSeq(pWork->buttonObj[0])){
+      GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[0],TRUE);
+      GFL_CLACT_WK_SetAnmSeq( pWork->buttonObj[0], 20 );
     }
-    if(GAME_COMM_STATUS_BIT_WIRELESS_TR & pWork->bit){
-      _UpdatePalletAnimeSingle(pWork,pWork->anmCos, Btn_PalettePos[ _SELECTMODE_TV ]);
+  }
+  else{
+    if(20 == GFL_CLACT_WK_GetAnmSeq(pWork->buttonObj[0])){
+      GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[0],FALSE);
+      GFL_CLACT_WK_SetAnmSeq( pWork->buttonObj[0], 12 );
     }
   }
 }
-
-
-
 
 //------------------------------------------------------------------------------
 /**
@@ -1288,29 +1252,19 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
   if(-1 != index ){
     CTVT_COMM_BEACON *beacon = GFL_NET_GetBeaconData(index);
     STRBUF* pName = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
-
-    OS_TPrintf("ビーコン取得\n");
-    
     GFL_STR_SetStringCodeOrderLength(pName,
                                      CTVT_BCON_GetName(beacon), CTVT_COMM_NAME_LEN);
-
-    if(FALSE==GFL_STR_CompareBuffer(pName, pWork->pStrBufTVTName)){
-
+    if(FALSE==GFL_CLACT_WK_GetDrawEnable( pWork->TVTCallName )){
+//    if(FALSE==GFL_STR_CompareBuffer(pName, pWork->pStrBufTVTName)){
       GFL_STR_SetStringCodeOrderLength(pWork->pStrBufTVTName,
                                        CTVT_BCON_GetName(beacon), CTVT_COMM_NAME_LEN);
-
       GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->nameWin), 0 );
-
       PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(pWork->nameWin), 0, 0,
                         pWork->pStrBufTVTName, pWork->pFontHandle, APP_TASKMENU_ITEM_MSGCOLOR);
       GFL_BMPWIN_TransVramCharacter(pWork->nameWin);
       GFL_BMPWIN_MakeScreen(pWork->nameWin);
-      OS_TPrintf("名前だし\n");
       GFL_CLACT_WK_SetDrawEnable( pWork->TVTCallName, TRUE );
 			GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
-
-
-
     }
     GFL_STR_DeleteBuffer(pName);
     {
@@ -1321,6 +1275,7 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
       GFL_CLACT_WK_SetAnmSeq(pWork->TVTCall, 16);
     }
     if(11 == GFL_CLACT_WK_GetAnmSeq(pWork->buttonObj[1])){
+      GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[1],TRUE);
       GFL_CLACT_WK_SetAnmSeq( pWork->buttonObj[1], 19 );
     }
   }
@@ -1331,6 +1286,7 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->nameWin), 0 );
     GFL_BMPWIN_TransVramCharacter(pWork->nameWin);
     if(19 == GFL_CLACT_WK_GetAnmSeq(pWork->buttonObj[1])){
+      GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[1],FALSE);
       GFL_CLACT_WK_SetAnmSeq( pWork->buttonObj[1], 11 );
     }
     if(16 == GFL_CLACT_WK_GetAnmSeq(pWork->TVTCall)){

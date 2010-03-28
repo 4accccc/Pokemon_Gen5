@@ -230,7 +230,7 @@ static GFL_BG_SYS_HEADER BGsys_data = {
 
 static void dispInit(GTSNEGO_DISP_WORK* pWork);
 static void settingSubBgControl(GTSNEGO_DISP_WORK* pWork);
-static void _TOUCHBAR_Init(GTSNEGO_DISP_WORK* pWork);
+static void _TOUCHBAR_Init(GTSNEGO_DISP_WORK* pWork, int palPos);
 static void	_VBlank( GFL_TCB *tcb, void *work );
 static void _SetArrow(GTSNEGO_DISP_WORK* pWork,int x,int y,BOOL bRight);
 static void _ArrowRelease(GTSNEGO_DISP_WORK* pWork);
@@ -275,7 +275,7 @@ GTSNEGO_DISP_WORK* GTSNEGO_DISP_Init(HEAPID id, GAMEDATA* pGameData)
 
   _CreateCrossIcon(pWork);
   
-  _TOUCHBAR_Init(pWork);
+  _TOUCHBAR_Init(pWork, _TOUCHBAR_PAL1);
 
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
 
@@ -300,6 +300,7 @@ void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
 {
   int i;
   GFL_CLACT_WK_Remove(pWork->crossIcon);
+
 
   _RemoveMenuBarObj(pWork);
   _BGPanelFree(pWork);
@@ -518,16 +519,28 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
 
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gtsnego_nego_back_NCLR,
                                       PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
-    // サブ画面BG0キャラ転送
+    // MAIN画面BG0キャラ転送
     pWork->mainchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_gtsnego_nego_back_NCGR,
                                                                   GFL_BG_FRAME0_M, 0, 0, pWork->heapID);
 
-    // サブ画面BG0スクリーン転送
+    // MAIN画面BG0スクリーン転送
     GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_back_NSCR,
                                               GFL_BG_FRAME0_M, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
                                               pWork->heapID);
 
+
+    pWork->cellRes[CHAR_MENUBAR] =
+      GFL_CLGRP_CGR_Register( p_handle , NARC_gtsnego_menu_bar_NCGR ,
+                              FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+    pWork->cellRes[PLT_MENUBAR] =
+      GFL_CLGRP_PLTT_RegisterEx(
+        p_handle ,NARC_gtsnego_menu_bar_NCLR , CLSYS_DRAW_SUB ,    0x20*_OBJPAL_MENUBAR_POS, 0, _OBJPAL_MENUBAR_NUM, pWork->heapID  );
+    pWork->cellRes[ANM_MENUBAR] =
+      GFL_CLGRP_CELLANIM_Register(
+        p_handle , NARC_gtsnego_menubar_NCER, NARC_gtsnego_menubar_NANR , pWork->heapID  );
+
+    
     
     pWork->cellRes[CHAR_NEGOOBJ] =
       GFL_CLGRP_CGR_Register( p_handle , NARC_gtsnego_nego_obj_NCGR ,
@@ -559,16 +572,6 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
       GFL_CLGRP_CELLANIM_Register(
         p_handle , NARC_gtsnego_nego_obj_NCER, NARC_gtsnego_nego_obj_NANR , pWork->heapID  );
 
-
-    pWork->cellRes[CHAR_MENUBAR] =
-      GFL_CLGRP_CGR_Register( p_handle , NARC_gtsnego_menu_bar_NCGR ,
-                              FALSE , CLSYS_DRAW_SUB , pWork->heapID );
-    pWork->cellRes[PLT_MENUBAR] =
-      GFL_CLGRP_PLTT_RegisterEx(
-        p_handle ,NARC_gtsnego_menu_bar_NCLR , CLSYS_DRAW_SUB ,    0x20*_OBJPAL_MENUBAR_POS, 0, _OBJPAL_MENUBAR_NUM, pWork->heapID  );
-    pWork->cellRes[ANM_MENUBAR] =
-      GFL_CLGRP_CELLANIM_Register(
-        p_handle , NARC_gtsnego_menubar_NCER, NARC_gtsnego_menubar_NANR , pWork->heapID  );
 
 
     pWork->pBlink = BLINKPALANM_Create(0,16,GFL_BG_FRAME0_M,pWork->heapID);
@@ -615,6 +618,7 @@ static void dispInit(GTSNEGO_DISP_WORK* pWork)
 
 static void _paletteModeChange(GTSNEGO_DISP_WORK* pWork, int mode)
 {
+  /*
   ARCHANDLE* p_handle;
     p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
 
@@ -631,6 +635,7 @@ static void _paletteModeChange(GTSNEGO_DISP_WORK* pWork, int mode)
         p_handle ,NARC_gtsnego_menu_bar_NCLR , CLSYS_DRAW_SUB ,    0x20*_OBJPAL_MENUBAR_POS, 0, _OBJPAL_MENUBAR_NUM, pWork->heapID  );
   }
   GFL_ARC_CloseDataHandle(p_handle);
+*/
 }
 
 
@@ -698,7 +703,7 @@ void GTSNEGO_DISP_LevelInputFree(GTSNEGO_DISP_WORK* pWork)
  */
 //-----------------------------------------------------------------------------
 
-static void _TOUCHBAR_Init(GTSNEGO_DISP_WORK* pWork)
+static void _TOUCHBAR_Init(GTSNEGO_DISP_WORK* pWork,int palPos)
 {
   //アイコンの設定
   //数分作る
@@ -719,7 +724,7 @@ static void _TOUCHBAR_Init(GTSNEGO_DISP_WORK* pWork)
   touchbar_setup.is_notload_bg = FALSE;
   touchbar_setup.bar_frm	= GFL_BG_FRAME3_S;						//BG読み込みのためのBG面上下画面判定にも必要
   touchbar_setup.bg_plt		= _TOUCHBAR_PAL;			//BGﾊﾟﾚｯﾄ
-  touchbar_setup.obj_plt	= _TOUCHBAR_PAL;			//OBJﾊﾟﾚｯﾄ
+  touchbar_setup.obj_plt	= palPos;			//OBJﾊﾟﾚｯﾄ
   touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
   pWork->pTouchWork = TOUCHBAR_Init(&touchbar_setup, pWork->heapID);
 }
@@ -727,6 +732,14 @@ static void _TOUCHBAR_Init(GTSNEGO_DISP_WORK* pWork)
 TOUCHBAR_WORK* GTSNEGO_DISP_GetTouchWork(GTSNEGO_DISP_WORK* pWork)
 {
   return pWork->pTouchWork;
+}
+
+void GTSNEGO_DISP_DeleteTouchWork(GTSNEGO_DISP_WORK* pWork)
+{
+  if(pWork->pTouchWork){
+    TOUCHBAR_Exit(pWork->pTouchWork);
+    pWork->pTouchWork=NULL;
+  }
 }
 
 
@@ -888,13 +901,30 @@ void GTSNEGO_DISP_ArrowAnim(GTSNEGO_DISP_WORK* pWork,int i)
 
 void GTSNEGO_DISP_FriendSelectInit(GTSNEGO_DISP_WORK* pWork, BOOL bCursor)
 {
+
+  GTSNEGO_DISP_DeleteTouchWork(pWork);
+  _TOUCHBAR_Init(pWork, _TOUCHBAR_PAL2);
+
   _paletteModeChange(pWork, _PALMODE_FRIEND);
 	{
     ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
     pWork->pBGPanelScrAddr = GFL_ARCHDL_UTIL_LoadScreen(p_handle, NARC_gtsnego_nego_wait_under_bg2_NSCR,
                                               FALSE, &pWork->pBGPanelScr, pWork->heapID);
+
+    GFL_ARCHDL_UTIL_TransVramPaletteEx(p_handle, NARC_gtsnego_menu_bar_NCLR,
+                                       PALTYPE_SUB_OBJ, 0, 0x20*_OBJPAL_MENUBAR_POS,
+                                       0x20*_OBJPAL_MENUBAR_NUM, pWork->heapID);
+
     GFL_ARC_CloseDataHandle(p_handle);
-	}
+
+    p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFIUNIONCHAR, pWork->heapID );
+    GFL_ARCHDL_UTIL_TransVramPaletteEx(p_handle, WF_2DC_ARC_GETUNINCL,
+                                       PALTYPE_SUB_OBJ, 0, 0x20*_OBJPAL_UNION_POS,
+                                       0x20*_OBJPAL_UNION_NUM, pWork->heapID);
+    GFL_ARC_CloseDataHandle(p_handle);
+  }
+
+
   _CreateMenuBarObj(pWork);
   _CreateScrollBarObj( pWork, bCursor);
   pWork->bgscrollRenew=TRUE;
@@ -996,13 +1026,20 @@ void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork)
       pWork->unionOAM[i]=NULL;
     }
   }
+  _RemoveMenuBarObj(pWork);
   _BGPanelFree(pWork);
 
+
+  GTSNEGO_DISP_DeleteTouchWork(pWork);
+  _TOUCHBAR_Init(pWork, _TOUCHBAR_PAL1);
   
   _DeleteScrollBarObj(pWork);
   
   GFL_BG_FillScreen( GFL_BG_FRAME2_S,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
   GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+  GFL_ARCHDL_UTIL_TransVramPaletteEx(p_handle, NARC_gtsnego_nego_obj_NCLR,
+                                     PALTYPE_SUB_OBJ, 0, 0x20*_OBJPAL_NEGOOBJ_POS,
+                                     0x20*_OBJPAL_NEGOOBJ_NUM, pWork->heapID);
   GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_under_bg1_NSCR,
                                             GFL_BG_FRAME0_S, 0,
                                             GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
@@ -1010,7 +1047,6 @@ void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork)
 
   GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_S );
   GFL_ARC_CloseDataHandle(p_handle);
-  _RemoveMenuBarObj(pWork);
 
 }
 
@@ -1565,7 +1601,7 @@ static void _RemoveSearchPeople(GTSNEGO_DISP_WORK* pWork)
  */
 //-----------------------------------------------------------------------------
 
-void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork)
+void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork,int index)
 {
   int i;
   ARCHANDLE* p_handle;
@@ -1580,7 +1616,7 @@ void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork)
     GFL_ARC_CloseDataHandle(p_handle);
 
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->SearchPeopleOAM , FALSE );
-    GFL_CLACT_WK_SetAnmSeq(pWork->SearchBackOAM, 28);
+    GFL_CLACT_WK_SetAnmSeq(pWork->SearchBackOAM, 28+index);
 
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
     pWork->SearchScroll=0;
@@ -1663,16 +1699,39 @@ void GTSNEGO_DISP_ResetDispSet(GTSNEGO_DISP_WORK* pWork)
   int i;
   ARCHANDLE* p_handle;
 	{
+    for(i=0;i<SCROLL_PANEL_NUM;i++){
+      if(pWork->unionOAM[i]){
+        GFL_CLACT_WK_SetDrawEnable(pWork->unionOAM[i],FALSE);
+        GFL_CLACT_WK_Remove(pWork->unionOAM[i]);
+        pWork->unionOAM[i]=NULL;
+      }
+    }
+    _RemoveMenuBarObj(pWork);
+    _BGPanelFree(pWork);
+    _RemoveSearchPeople(pWork);
+    _DeleteScrollBarObj(pWork);
+    _ArrowRelease(pWork);
+    //-----------------------再転送
     p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
 
     GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_back_NSCR,
                                               GFL_BG_FRAME0_M, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
                                               pWork->heapID);
-    GFL_ARC_CloseDataHandle(p_handle);
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gtsnego_nego_under_bg1_NSCR,
+                                              GFL_BG_FRAME0_S, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                              pWork->heapID);
+    
+    GFL_ARCHDL_UTIL_TransVramPaletteEx(p_handle, NARC_gtsnego_nego_obj_NCLR,
+                                       PALTYPE_SUB_OBJ, 0, 0x20*_OBJPAL_NEGOOBJ_POS,
+                                       0x20*_OBJPAL_NEGOOBJ_NUM, pWork->heapID);
 
-    _BGPanelFree(pWork);
-    _RemoveSearchPeople(pWork);
+    GFL_ARC_CloseDataHandle(p_handle);
+    //---------------------
+
+    GTSNEGO_DISP_DeleteTouchWork(pWork);
+    _TOUCHBAR_Init(pWork, _TOUCHBAR_PAL1);
     
     GFL_BG_SetVisible( GFL_BG_FRAME2_M,FALSE );
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
@@ -1685,3 +1744,4 @@ void GTSNEGO_DISP_ResetDispSet(GTSNEGO_DISP_WORK* pWork)
  // G2S_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BG3,15,9);
 
 }
+

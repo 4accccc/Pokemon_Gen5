@@ -430,7 +430,11 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
 
 static void _byebyeMessage(POKEMON_TRADE_WORK* pWork)
 {
-  if(pWork->bByebyeMessageEach){
+  if((pWork->type == POKEMONTRADE_TYPE_GTSUP) ||
+     (pWork->type == POKEMONTRADE_TYPE_GTSMID)){
+    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_19, pWork->pMessageStrBufEx );
+  }
+  else if(pWork->bByebyeMessageEach){
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_29, pWork->pMessageStrBufEx );
   }
   else{

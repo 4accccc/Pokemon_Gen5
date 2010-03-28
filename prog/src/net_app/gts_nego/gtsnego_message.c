@@ -1349,6 +1349,7 @@ void GTSNEGO_MESSAGE_FindPlayer(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMy, int n
 
 void GTSNEGO_MESSAGE_ResetDispSet(GTSNEGO_MESSAGE_WORK* pWork)
 {
+  int i;
   if(pWork->titleDispWin){
     BmpWinFrame_Clear(pWork->titleDispWin, WINDOW_TRANS_OFF);
     GFL_BMPWIN_ClearScreen(pWork->titleDispWin);
@@ -1360,6 +1361,15 @@ void GTSNEGO_MESSAGE_ResetDispSet(GTSNEGO_MESSAGE_WORK* pWork)
     APP_TASKMENU_WIN_Delete(pWork->pAppWin);
     pWork->pAppWin = NULL;
   }
+
+  for(i=0;i< SCROLL_PANEL_NUM;i++){
+    if(pWork->MyStatusDispWin[i]){
+      GFL_BMPWIN_ClearScreen(pWork->MyStatusDispWin[i]);
+      GFL_BMPWIN_Delete(pWork->MyStatusDispWin[i]);
+      pWork->MyStatusDispWin[i]=NULL;
+    }
+  }
+  
   GTSNEGO_MESSAGE_DispClear(pWork);
   GTSNEGO_MESSAGE_DispInit(pWork);
 	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,

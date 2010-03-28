@@ -19,14 +19,36 @@ typedef struct _GTSNEGO_DISP_WORK  GTSNEGO_DISP_WORK;
 #define _BUTTON_MSG_PAL   (11)  // メッセージフォント
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
 
-#define _TOUCHBAR_PAL  (15)  //タッチバーのパレット
+#define _TOUCHBAR_PAL1  (0)  //タッチバーのパレット    OBJ
+#define _TOUCHBAR_PAL2  (8)  //タッチバーのパレット  本数３OBJ
+#define _TOUCHBAR_PAL  (15)  //タッチバーのパレットBG
 
 #define _OBJPAL_UNION_POS   (0)
 #define _OBJPAL_UNION_NUM   (8)
 #define _OBJPAL_NEGOOBJ_POS (8)
-#define _OBJPAL_NEGOOBJ_NUM (7)
-#define _OBJPAL_MENUBAR_POS (8)
+#define _OBJPAL_NEGOOBJ_NUM (8)
+#define _OBJPAL_MENUBAR_POS (0xa)
 #define _OBJPAL_MENUBAR_NUM (1)
+
+
+
+//最初の画面OK
+//  0,1 にAPPをあてる
+//  タスクバー黒 はない
+
+
+//ランダム検索   タスクバー
+ // 0,1 にAPPをあてる
+
+//まちあわせ
+ // 8,9 にAPPをあてる  aにタスクバー黒をあてる
+
+
+//まちあわせにはいったら    APP 変更  キャラクターパレット転送     aパレットだけいれ
+//戻る時に  NEGOOBJパレット再転送   APP 変更
+//
+
+
 
 #define _OBJPAL_NEGOOBJ_POS_MAIN (0)
 #define _OBJPAL_NEGOOBJ_NUM_MAIN (8)
@@ -155,12 +177,13 @@ extern int GTSNEGO_DISP_ScrollChipDispMouse(GTSNEGO_DISP_WORK* pWork,int y,int m
 extern void GTSNEGO_DISP_SearchPeopleDispSet(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_SearchPeopleDispMain(GTSNEGO_DISP_WORK* pWork);
 extern GFL_CLUNIT* GTSNEGO_DISP_GetCellUtil(GTSNEGO_DISP_WORK* pWork);
-extern void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork);
+extern void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork,int index);
 extern void GTSNEGO_DISP_UnionListRenew(GTSNEGO_DISP_WORK* pWork,GAMEDATA* pGameData, int no);
 extern BOOL GTSNEGO_DISP_CrossIconFlash(GTSNEGO_DISP_WORK* pWork, CROSSCUR_TYPE type);
 extern BOOL GTSNEGO_DISP_CrossIconFlashEnd(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_ResetDispSet(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork);
+extern void GTSNEGO_DISP_DeleteTouchWork(GTSNEGO_DISP_WORK* pWork);
 
 //extern void GTSNEGO_MESSAGE_PlateDisp(GTSNEGO_MESSAGE_WORK* pWork, MYSTATUS* pMyStatus, int index );
 extern void GTSNEGO_MESSAGE_FriendListPlateDisp(GTSNEGO_MESSAGE_WORK* pWork,GAMEDATA* pGameData);

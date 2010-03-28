@@ -20,6 +20,6 @@ struct _MYITEM {
 	ITEM_ST MySkillItem[ BAG_WAZA_ITEM_MAX ];		// 手持ちの技マシン
 	ITEM_ST MyDrugItem[ BAG_DRUG_ITEM_MAX ];		// 手持ちの薬
 	ITEM_ST MyNutsItem[ BAG_NUTS_ITEM_MAX ];		// 手持ちの木の実
-	u32	cnv_button[DUMMY_SHORTCUT_MAX];									// 便利ボタン @@OO削除予定  便利ウインドウは統合管理される
+	u32	cnv_button[DUMMY_SHORTCUT_MAX];									// 便利ボタン
 };
 

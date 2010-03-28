@@ -134,7 +134,11 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
 
 
   
-  if(pWork->bEncountMessageEach){
+  if((pWork->type == POKEMONTRADE_TYPE_GTSDOWN) ||
+     (pWork->type == POKEMONTRADE_TYPE_GTSMID)){
+    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_20, pWork->pMessageStrBufEx );
+  }
+  else if(pWork->bEncountMessageEach){
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_30, pWork->pMessageStrBufEx );
   }
   else{
