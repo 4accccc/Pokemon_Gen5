@@ -40,7 +40,7 @@ EVENT_START		ev_c03p14_recept_01
 	WHILE $lwk_loop != 555
 		
 		//ユナイテッドタワーに ごようですか？
-		_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_01, C03P14_RECEPT_01, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_01, C03P14_RECEPT_01, POS_D )
 		
 		_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1,lwk_select )
 		_BMPMENU_MAKE_LIST( msg_c03p14_infomationw_06, 0 )
@@ -59,12 +59,12 @@ EVENT_START		ev_c03p14_recept_01
 			//なにそれ 選択
 			
 			//ユナイテッドタワーは…
-			_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_04, C03P14_RECEPT_01, POS_DOWN )
+			_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_04, C03P14_RECEPT_01, POS_D )
 			
 		DEFAULT
 			//いいえ 選択 or Ｂキャンセル
 			
-			_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_05, C03P14_RECEPT_01, POS_DOWN )
+			_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_05, C03P14_RECEPT_01, POS_D )
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
@@ -83,7 +83,7 @@ ev_select_yes:
 	//IF $SCWK_ANSWER == VAL THEN (テンプレ）ENDIF
 
 	//お一人様ごあんなーい！
-	_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_03, C03P14_RECEPT_01, POS_DOWN )
+	_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_03, C03P14_RECEPT_01, POS_D )
 	_MSGWIN_CLOSE()
 	
 	//主人公：船へ
