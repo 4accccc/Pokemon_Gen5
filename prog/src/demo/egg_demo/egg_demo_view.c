@@ -31,6 +31,8 @@
 #include "egg_demo_particle.naix"
 // サウンド
 #include "sound/pm_voice.h"
+#include "sound/wb_sound_data.sadl"
+#include "sound/pm_sndsys.h"
 
 
 //=============================================================================
@@ -66,7 +68,11 @@ STEP;
 #define PARTICLE_BURST_FRAME   (339)//(380)  // ひびが入っている絵の最終フレーム  // 全部で340個フレームがあった
 #define POKE_ANIME_INDEX (1)
 
-// マナフ//ィ
+#define EGG_CRACK_FRAME_01      ( 24 -4)  // ヒビ小開始
+#define EGG_CRACK_FRAME_02      (112 -3)  // ヒビ中開始 
+#define EGG_CRACK_FRAME_03      (227 -15)  // ヒビ大開始
+
+// マナフィ
 // パーティクルのフレームとポケモンアニメーションのフレームを連携させる
 #define MANAFI_PARTICLE_BURST_FRAME   (339)  // 最終フレーム  // 全部で???個フレームがあった
 #define MANAFI_POKE_ANIME_INDEX (0)
@@ -509,11 +515,30 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
       u32 particle_burst_frame = (work->monsno==MONSNO_MANAFI)?(MANAFI_PARTICLE_BURST_FRAME):(PARTICLE_BURST_FRAME);
 
       work->wait_count++;
+      if( work->monsno == MONSNO_MANAFI )
+      {
+      }
+      else
+      {
+        if( work->wait_count == EGG_CRACK_FRAME_01 )
+        {
+          PMSND_PlaySE( SEQ_SE_EDEMO_01 );
+        }
+        else if( work->wait_count == EGG_CRACK_FRAME_02 )
+        {
+          PMSND_PlaySE( SEQ_SE_EDEMO_02 );
+        }
+        else if( work->wait_count == EGG_CRACK_FRAME_03 )
+        {
+          PMSND_PlaySE( SEQ_SE_EDEMO_02 );
+        }
+      }
       if( work->wait_count == particle_burst_frame )
       {
         Egg_Demo_View_EggStopWhite( work );
         Egg_Demo_View_ThreeRearStartColorToWhite( work );
-
+        PMSND_PlaySE( SEQ_SE_TDEMO_011 );
+        
         // 次へ
         work->step = STEP_EGG_WHITE;
       }
