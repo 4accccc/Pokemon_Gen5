@@ -133,6 +133,7 @@ static void init_intrude_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
 static void exit_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void update_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
 static void draw_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive );
+static GMEVENT* evcheck_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK );
 
 static void init_beacon_view_subscreen(FIELD_SUBSCREEN_WORK * pWork,FIELD_SUBSCREEN_MODE prevMode);
 static void exit_beacon_view_subscreen( FIELD_SUBSCREEN_WORK* pWork );
@@ -205,8 +206,8 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     FIELD_SUBSCREEN_INTRUDE,      
     init_intrude_subscreen,
     update_intrude_subscreen,
-    draw_intrude_subscreen ,
-    NULL ,
+    draw_intrude_subscreen,
+    evcheck_intrude_subscreen,
     exit_intrude_subscreen,
     NULL ,
   },
@@ -1054,7 +1055,7 @@ static void draw_union_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  ƒƒjƒ…[‰æ–Ê‚Ì‰Šú‰»
+ *  @brief  N“ü‰º‰æ–Ê‚Ì‰Šú‰»
  *  @param  heapID  ƒq[ƒv‚h‚c
  */
 //-----------------------------------------------------------------------------
@@ -1065,7 +1066,7 @@ static void init_intrude_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  ƒƒjƒ…[‰æ–Ê‚Ì”jŠü
+ *  @brief  N“ü‰º‰æ–Ê‚Ì”jŠü
  */
 //-----------------------------------------------------------------------------
 static void exit_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork )
@@ -1075,22 +1076,32 @@ static void exit_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork )
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  ƒƒjƒ…[‰æ–Ê‚ÌXV
+ *  @brief  N“ü‰º‰æ–Ê‚ÌXV
  */
 //-----------------------------------------------------------------------------
 static void update_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
-  INTRUDE_SUBDISP_Update(pWork->intsubWork);
+  INTRUDE_SUBDISP_Update(pWork->intsubWork, bActive);
 }
 
 //----------------------------------------------------------------------------
 /**
- *  @brief  ƒƒjƒ…[‰æ–Ê‚Ì•`‰æ
+ *  @brief  N“ü‰º‰æ–Ê‚Ì•`‰æ
  */
 //-----------------------------------------------------------------------------
 static void draw_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
-  INTRUDE_SUBDISP_Draw(pWork->intsubWork);
+  INTRUDE_SUBDISP_Draw(pWork->intsubWork, bActive);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  N“ü‰º‰æ–Ê‚ÌƒCƒxƒ“ƒgƒ`ƒFƒbƒN
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* evcheck_intrude_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK )
+{
+  return INTRUDE_SUBDISP_EventCheck(pWork->intsubWork, bEvReqOK, pWork );
 }
 
 //=============================================================================

@@ -21,6 +21,7 @@
 #include "system/main.h"
 #include "field/zonedata.h"
 #include "musical/musical_comm_field.h"
+#include "field/intrude_common.h"
 
 
 //==============================================================================
@@ -37,10 +38,10 @@ typedef enum{
 }GCSSEQ;
 
 ///通信最大人数
-#define COMM_PLAYER_MAX   (4)
+#define COMM_PLAYER_MAX   (FIELD_COMM_MEMBER_MAX)
 
 ///インフォメーションメッセージキュー数
-#define COMM_INFO_QUE_MAX     (24)
+#define COMM_INFO_QUE_MAX     (6)
 
 
 //==============================================================================
@@ -53,9 +54,9 @@ typedef enum{
 typedef struct{
   u16 zone_id;        ///<現在いるゾーンID
   u16 old_zone_id;    ///<前までいたゾーンID
-  u16 same_count;      ///<同じステータスが送られてきた回数
+  u16 padding;        //
   u8 invasion_netid;  ///<侵入先ROM
-  u8 padding;
+  u8 old_invasion_netid;  ///<前までいた侵入先ROM
 }GAME_COMM_PLAYER_STATUS;
 
 //--------------------------------------------------------------
@@ -65,7 +66,12 @@ typedef struct{
 typedef struct{
   u16 message_id;
   u8 net_id;
-  u8 use;           ///<TRUE:使用中 FALSE:未使用
+  u8 use:1;           ///<TRUE:使用中 FALSE:未使用
+  u8 sex:1;
+  u8 target_sex:1;
+  u8      :5;
+  STRBUF *name_strbuf;         ///<メッセージの主プレイヤー名
+  STRBUF *target_name_strbuf;  ///<メッセージの主プレイヤーのターゲットにされたプレイヤー名
 }GAME_COMM_INFO_QUE;
 
 ///インフォメーション構造体
@@ -74,8 +80,6 @@ typedef struct{
   u8 now_pos;       ///<貯まっているキューの開始位置
   u8 space_pos;     ///<空きキューの開始位置
   u8 padding[2];
-  
-  STRBUF *name_strbuf[COMM_INFO_QUE_MAX];
 }GAME_COMM_INFO;
 
 //--------------------------------------------------------------
@@ -186,7 +190,7 @@ static const GAME_FUNC_TBL GameFuncTbl[] = {
 //  プロトタイプ宣言
 //==============================================================================
 static void GameCommSub_SeqSet(GAME_COMM_SUB_WORK *sub_work, u8 seq);
-static void GameCommInfo_SetQue(GAME_COMM_SYS_PTR gcsp, int comm_net_id, u32 message_id);
+static void GameCommInfo_SetQue(GAME_COMM_SYS_PTR gcsp, int comm_net_id, int target_net_id, u32 message_id);
 
 
 //==============================================================================
@@ -208,14 +212,20 @@ GAME_COMM_SYS_PTR GameCommSys_Alloc(HEAPID heap_id, GAMEDATA *gamedata)
 {
   GAME_COMM_SYS_PTR gcsp;
   GAME_COMM_INFO *comm_info;
+  const MYSTATUS *myst;
   int i;
   
   gcsp = GFL_HEAP_AllocClearMemory(heap_id, sizeof(GAME_COMM_SYS));
   gcsp->gamedata = gamedata;
   
+  myst = GAMEDATA_GetMyStatus(gamedata);
   comm_info = &gcsp->info;
-  for(i = 0; i < COMM_PLAYER_MAX; i++){
-    comm_info->name_strbuf[i] = GFL_STR_CreateBuffer(BUFLEN_PERSON_NAME, heap_id);
+  for(i = 0; i < COMM_INFO_QUE_MAX; i++){
+    comm_info->msg_que[i].name_strbuf = GFL_STR_CreateBuffer(PERSON_NAME_SIZE + EOM_SIZE, heap_id);
+    comm_info->msg_que[i].target_name_strbuf = GFL_STR_CreateBuffer(PERSON_NAME_SIZE + EOM_SIZE, heap_id);
+    //吹っ飛ばないように自分のデータで埋めておく
+    MyStatus_CopyNameString(myst, comm_info->msg_que[i].name_strbuf);
+    MyStatus_CopyNameString(myst, comm_info->msg_que[i].target_name_strbuf);
   }
   return gcsp;
 }
@@ -234,8 +244,9 @@ void GameCommSys_Free(GAME_COMM_SYS_PTR gcsp)
   
   GF_ASSERT(gcsp->game_comm_no == GAME_COMM_NO_NULL && gcsp->app_work == NULL);
   
-  for(i = 0; i < COMM_PLAYER_MAX; i++){
-    GFL_STR_DeleteBuffer(comm_info->name_strbuf[i]);
+  for(i = 0; i < COMM_INFO_QUE_MAX; i++){
+    GFL_STR_DeleteBuffer(comm_info->msg_que[i].name_strbuf);
+    GFL_STR_DeleteBuffer(comm_info->msg_que[i].target_name_strbuf);
   }
   GFL_HEAP_FreeMemory(gcsp);
 }
@@ -563,47 +574,16 @@ void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZON
   if(player_status->zone_id == zone_id && player_status->invasion_netid == invasion_netid){
     return;
   }
-  //※check　暫定処理　通信確立＝必ず名前を交換しあっている状況ではないため
-  {
-    MYSTATUS *myst = GAMEDATA_GetMyStatusPlayer(gcsp->gamedata, comm_net_id);
-    if(MyStatus_CheckNameClear(myst) == TRUE){
-      OS_TPrintf("INFO:名前がない net_id = %d\n", comm_net_id);
-      return;
-    }
-  }
   
+  //メッセージ作成
   if(player_status->zone_id != zone_id){
     player_status->old_zone_id = player_status->zone_id;
     player_status->zone_id = zone_id;
-    player_status->same_count = 0;
   }
-  else if(ZONEDATA_IsPalace(zone_id) == TRUE){
-    player_status->same_count++;
-  }
-  player_status->invasion_netid = invasion_netid;
-  
-  //メッセージ作成
-  if(ZONEDATA_IsPalace(zone_id) == TRUE){
-    if(player_status->same_count == 0){
-      GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test01_01 + comm_net_id);
-      GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test03_01 + comm_net_id);
-      OS_TPrintf("INFO:パレスにいます net_id = %d\n", comm_net_id);
-    }
-    else if(player_status->same_count > 60 * 10){
-      GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test01_01 + comm_net_id);
-      GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test03_01 + comm_net_id);
-      player_status->same_count = 0;
-      OS_TPrintf("INFO:継続してパレスにいます net_id = %d\n", comm_net_id);
-    }
-  }
-  else if(ZONEDATA_IsPalace(player_status->old_zone_id) == TRUE && comm_net_id != invasion_netid
-      && ZONEDATA_IsPalace(zone_id) == FALSE && invasion_netid == GFL_NET_SystemGetCurrentID()){
-    GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test07_01 + comm_net_id);
-    OS_TPrintf("INFO:街に侵入してきた！ net_id = %d\n", comm_net_id);
-  }
-  else if(old == 0 && now == 0){
-    GameCommInfo_SetQue(gcsp, comm_net_id, msg_invasion_test09_01);
-    OS_TPrintf("INFO:通信接続した！ net_id = %d\n", comm_net_id);
+  if(player_status->invasion_netid != invasion_netid){
+    player_status->old_invasion_netid = player_status->invasion_netid;
+    player_status->invasion_netid = invasion_netid;
+    GameCommInfo_MessageEntry_IntrudePalace(gcsp, comm_net_id, invasion_netid);
   }
 }
 
@@ -632,15 +612,35 @@ u8 GameCommStatus_GetPlayerStatus_InvasionNetID(GAME_COMM_SYS_PTR gcsp, int comm
  * インフォメーションメッセージをキューに貯める
  *
  * @param   gcsp		      
- * @param   comm_net_id		
+ * @param   comm_net_id		  メッセージの主となる人物のNetID
+ * @param   target_net_id		メッセージの主のターゲットとなる人物のNetID
  * @param   message_id		
  */
 //--------------------------------------------------------------
-static void GameCommInfo_SetQue(GAME_COMM_SYS_PTR gcsp, int comm_net_id, u32 message_id)
+static void GameCommInfo_SetQue(GAME_COMM_SYS_PTR gcsp, int comm_net_id, int target_net_id, u32 message_id)
 {
   GAME_COMM_INFO *comm_info = &gcsp->info;
   GAME_COMM_INFO_QUE *que;
+  const MYSTATUS *myst, *target_myst;
+
+  if(comm_net_id == GAMEDATA_GetIntrudeMyID(gcsp->gamedata)){
+    myst = GAMEDATA_GetMyStatus(gcsp->gamedata);
+  }
+  else{
+    myst = GAMEDATA_GetMyStatusPlayer(gcsp->gamedata, comm_net_id);
+  }
+  if(target_net_id == GAMEDATA_GetIntrudeMyID(gcsp->gamedata)){
+    target_myst = GAMEDATA_GetMyStatus(gcsp->gamedata);
+  }
+  else{
+    target_myst = GAMEDATA_GetMyStatusPlayer(gcsp->gamedata, target_net_id);
+  }
   
+  //※check　暫定処理　通信確立＝必ず名前を交換しあっている状況ではないため
+  if(MyStatus_CheckNameClear(myst) == TRUE || MyStatus_CheckNameClear(target_myst) == TRUE){
+    return;
+  }
+
   if(comm_info->msg_que[comm_info->space_pos].use == TRUE){
     //メッセージの優先順位が決まっていない今は上書き(古いキューは最新のキューで上書きされる
     que = &comm_info->msg_que[comm_info->space_pos];
@@ -650,11 +650,15 @@ static void GameCommInfo_SetQue(GAME_COMM_SYS_PTR gcsp, int comm_net_id, u32 mes
     que = &comm_info->msg_que[comm_info->space_pos];
   }
 
-  GFL_STD_MemClear(que, sizeof(GAME_COMM_INFO_QUE));
   que->net_id = comm_net_id;
   que->message_id = message_id;
   que->use = TRUE;
-
+  
+  MyStatus_CopyNameString(myst, que->name_strbuf);
+  que->sex = MyStatus_GetMySex(myst);
+  MyStatus_CopyNameString(target_myst, que->target_name_strbuf);
+  que->target_sex = MyStatus_GetMySex(target_myst);
+  
   comm_info->space_pos++;
   if(comm_info->space_pos >= COMM_INFO_QUE_MAX){
     comm_info->space_pos = 0;
@@ -679,7 +683,6 @@ BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *des
 {
   GAME_COMM_INFO *comm_info = &gcsp->info;
   GAME_COMM_INFO_QUE *que = &comm_info->msg_que[comm_info->now_pos];
-  MYSTATUS *myst;
   int i;
   
   if(que->use == FALSE){
@@ -688,12 +691,14 @@ BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *des
   
   //キューをGAME_COMM_INFO_MESSAGE型に変換して代入
   GFL_STD_MemClear(dest_msg, sizeof(GAME_COMM_INFO_MESSAGE));
-  myst = GAMEDATA_GetMyStatusPlayer(gcsp->gamedata, que->net_id);
-  MyStatus_CopyNameString(myst, comm_info->name_strbuf[que->net_id]);
-  for(i = 0; i < INFO_WORDSET_MAX; i++){
-    dest_msg->name[i] = comm_info->name_strbuf[que->net_id];
-    dest_msg->wordset_no[i] = i;//que->net_id;
-  }
+
+  dest_msg->name[0] = que->name_strbuf;
+  dest_msg->wordset_no[0] = 0;
+  dest_msg->wordset_sex[0] = que->sex;
+  dest_msg->name[1] = que->target_name_strbuf;
+  dest_msg->wordset_no[1] = 1;
+  dest_msg->wordset_sex[1] = que->target_sex;
+
   dest_msg->message_id = que->message_id;
   
   //キューの参照位置を進める
@@ -708,39 +713,83 @@ BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *des
 
 //==================================================================
 /**
- * インフォメーションメッセージ登録：ミッション受注
+ * インフォメーションメッセージ登録：「xxxx」は「xxxx」のパレスからパワーをもらった
  *
  * @param   gcsp		
- * @param   accept_netid		ミッション受注者のNetID
+ * @param   player_netid		主のNetID
+ * @param   target_netid		ターゲットのNetID
  */
 //==================================================================
-void GameCommInfo_MessageEntry_Mission(GAME_COMM_SYS_PTR gcsp, int accept_netid)
+void GameCommInfo_MessageEntry_GetPower(GAME_COMM_SYS_PTR gcsp, int player_netid, int target_netid)
 {
-  GameCommInfo_SetQue(gcsp, accept_netid, msg_invasion_mission_000);
+  u16 msg_id = (player_netid == target_netid) ? msg_invasion_info_010 : msg_invasion_info_009;
+  GameCommInfo_SetQue(gcsp, player_netid, target_netid, msg_id);
 }
 
 //==================================================================
 /**
- * インフォメーションメッセージ登録：「xxxx」のパレスにいます
+ * インフォメーションメッセージ登録：「xxxx」が「xxxx」のパレスに侵入しました
  *
  * @param   gcsp		
- * @param   intrude_netid		侵入先のNetID
+ * @param   player_netid		主のNetID
+ * @param   target_netid		ターゲットのNetID
  */
 //==================================================================
-void GameCommInfo_MessageEntry_MyPalace(GAME_COMM_SYS_PTR gcsp, int intrude_netid)
+void GameCommInfo_MessageEntry_IntrudePalace(GAME_COMM_SYS_PTR gcsp, int player_netid, int target_netid)
 {
-  GameCommInfo_SetQue(gcsp, intrude_netid, msg_invasion_test08_00);
+  u16 msg_id = (player_netid == target_netid) ? msg_invasion_info_001 : msg_invasion_info_000;
+  GameCommInfo_SetQue(gcsp, player_netid, target_netid, msg_id);
 }
 
 //==================================================================
 /**
- * インフォメーションメッセージ登録：「xxxx」のパレスに入りました！
+ * インフォメーションメッセージ登録：「xxxx」のパレスとつながりました
  *
  * @param   gcsp		
- * @param   intrude_netid		侵入先のNetID
+ * @param   player_netid		主のNetID
  */
 //==================================================================
-void GameCommInfo_MessageEntry_IntrudePalace(GAME_COMM_SYS_PTR gcsp, int intrude_netid)
+void GameCommInfo_MessageEntry_PalaceConnect(GAME_COMM_SYS_PTR gcsp, int player_netid)
 {
-  GameCommInfo_SetQue(gcsp, intrude_netid, msg_invasion_intrude_001);
+  GameCommInfo_SetQue(gcsp, player_netid, player_netid, msg_invasion_info_002);
 }
+
+//==================================================================
+/**
+ * インフォメーションメッセージ登録：「xxxx」は帰っていきました
+ *
+ * @param   gcsp		
+ * @param   player_netid		主のNetID
+ */
+//==================================================================
+void GameCommInfo_MessageEntry_Leave(GAME_COMM_SYS_PTR gcsp, int player_netid)
+{
+  GameCommInfo_SetQue(gcsp, player_netid, player_netid, msg_invasion_info_003);
+}
+
+//==================================================================
+/**
+ * インフォメーションメッセージ登録：ミッション成功
+ *
+ * @param   gcsp		
+ */
+//==================================================================
+void GameCommInfo_MessageEntry_MissionSuccess(GAME_COMM_SYS_PTR gcsp)
+{
+  GameCommInfo_SetQue(gcsp, GAMEDATA_GetIntrudeMyID(gcsp->gamedata), 
+    GAMEDATA_GetIntrudeMyID(gcsp->gamedata), msg_invasion_info_003);
+}
+
+//==================================================================
+/**
+ * インフォメーションメッセージ登録：ミッション失敗
+ *
+ * @param   gcsp		
+ */
+//==================================================================
+void GameCommInfo_MessageEntry_MissionFail(GAME_COMM_SYS_PTR gcsp)
+{
+  GameCommInfo_SetQue(gcsp, GAMEDATA_GetIntrudeMyID(gcsp->gamedata), 
+    GAMEDATA_GetIntrudeMyID(gcsp->gamedata), msg_invasion_info_003);
+}
+

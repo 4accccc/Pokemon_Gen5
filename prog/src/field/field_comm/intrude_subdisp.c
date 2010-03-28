@@ -29,6 +29,8 @@
 #include "system/bmp_oam.h"
 #include "intrude_mission_field.h"
 #include "sound/pm_sndsys.h"
+#include "field/event_intrude_subscreen.h"
+#include "field/scrcmd_intrude.h"
 
 
 //==============================================================================
@@ -43,7 +45,7 @@ enum{
 };
 
 ///インフォメーションメッセージ更新ウェイト
-#define INFOMSG_UPDATE_WAIT   (90)
+#define INFOMSG_UPDATE_WAIT   (60)
 
 ///フォントBGパレット展開位置
 #define _FONT_BG_PALNO      (14)
@@ -84,22 +86,11 @@ enum{
   INTSUB_ACTOR_LV_NUM_KETA_2,
   INTSUB_ACTOR_LV_NUM_KETA_MAX = INTSUB_ACTOR_LV_NUM_KETA_2,
 
-  INTSUB_ACTOR_POINT_NUM_KETA_0,
-  INTSUB_ACTOR_POINT_NUM_KETA_1,
-  INTSUB_ACTOR_POINT_NUM_KETA_2,
-  INTSUB_ACTOR_POINT_NUM_KETA_3,
-  INTSUB_ACTOR_POINT_NUM_KETA_4,
-  INTSUB_ACTOR_POINT_NUM_KETA_5,
-  INTSUB_ACTOR_POINT_NUM_KETA_6,
-  INTSUB_ACTOR_POINT_NUM_KETA_7,
-  INTSUB_ACTOR_POINT_NUM_KETA_8,
-  INTSUB_ACTOR_POINT_NUM_KETA_MAX = INTSUB_ACTOR_POINT_NUM_KETA_8,
-
   INTSUB_ACTOR_MAX,
 };
 
 ///BMPOAMで使用するアクター数
-#define INTSUB_ACTOR_BMPOAM_NUM   (16 + 2)
+#define INTSUB_ACTOR_BMPOAM_NUM   (16 + 4)
 
 ///OBJパレットINDEX
 enum{
@@ -141,7 +132,6 @@ enum{
   SOFTPRI_CUR_S = 20,
   SOFTPRI_CUR_L = 19,
   SOFTPRI_LV_NUM = 10,
-  SOFTPRI_POINT_NUM = 10,
   SOFTPRI_INFOMSG = 8,
   SOFTPRI_ENTRY_BUTTON = 5,
   SOFTPRI_ENTRY_BUTTON_MSG = 4,
@@ -234,9 +224,39 @@ enum{
   _TITLE_PRINT_OTHER_PALACE3,     ///<通信相手のパレスにいます
 };
 
+///参加ボタンの表示タイプ
+enum{
+  ENTRY_BUTTON_MSG_PATERN_ENTRY,    ///<「さんか」
+  ENTRY_BUTTON_MSG_PATERN_BACK,     ///<「もどる」
+  
+  ENTRY_BUTTON_MSG_PATERN_MAX,
+};
+
+//--------------------------------------------------------------
+//  イベントNo
+//--------------------------------------------------------------
+enum{
+  _EVENT_REQ_NO_NULL,             ///<イベントリクエスト無し
+  _EVENT_REQ_NO_TOWN_WARP,        ///<街へワープ
+  _EVENT_REQ_NO_PLAYER_WARP,      ///<プレイヤーのいる所へワープ
+  _EVENT_REQ_NO_MISSION_ENTRY,    ///<ミッションに参加
+};
+
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
+///intcommから取得出来るパラメータ類(非通信の時はソロ用の値がセットされる)
+typedef struct{
+  u8 now_palace_area;       ///<現在自分がいるパレスエリア
+  u8 recv_profile;          ///<受信したプロフィール(bit管理)
+  u8 recv_num;              ///<受信したプロフィール人数
+  u8 palace_in;             ///<TRUE:パレス島におとずれた
+  MISSION_STATUS m_status;  ///<ミッション状況
+  s32 m_timer;              ///<ミッションタイマー
+  const MISSION_DATA *p_md; ///<受信しているミッションデータへのポインタ
+}INTRUDE_COMM_PARAM;
+
 ///侵入下画面制御ワーク
 typedef struct _INTRUDE_SUBDISP{
   GAMESYS_WORK *gsys;
@@ -262,10 +282,13 @@ typedef struct _INTRUDE_SUBDISP{
   GFL_CLWK *act[INTSUB_ACTOR_MAX];
 
   BMPOAM_SYS_PTR bmpoam_sys;
-  GFL_BMP_DATA *entrymsg_bmp;
+  GFL_BMP_DATA *entrymsg_bmp[ENTRY_BUTTON_MSG_PATERN_MAX];
+  GFL_BMP_DATA *backmsg_bmp;
   GFL_BMP_DATA *infomsg_bmp;
-  BMPOAM_ACT_PTR entrymsg_bmpoam;
+  BMPOAM_ACT_PTR entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_MAX];
   BMPOAM_ACT_PTR infomsg_bmpoam;
+  
+  INTRUDE_COMM_PARAM comm;  ///<intcommから取得出来るパラメータ類(非通信の時はソロ用の値)
   
   u8 my_net_id;
   u8 town_update_req;     ///<街アイコン更新リクエスト(TOWN_UPDATE_REQ_???)
@@ -278,9 +301,23 @@ typedef struct _INTRUDE_SUBDISP{
   
   u8 title_print_type;    ///<_TITLE_PRINT_xxx
   u8 infomsg_trans_req;
-  u8 mission_ready_msg_seq;
-  u8 mission_exe_msg_seq;
+  u8 print_mission_status;  ///<現在表示しているミッション状況
+  u8 back_exit;           ///< TRUE:「もどる」ボタンを押して下画面終了モードになっている
+  
+  u8 event_req;           ///< _EVENT_REQ_NO_xxx
+  u8 padding[3];
 }INTRUDE_SUBDISP;
+
+///パレスゾーン設定データ
+typedef struct{
+  u16 zone_id;            ///<このデータ対象のゾーンID
+  u16 warp_zone_id;       ///<ワープ先ゾーンID
+  s16 warp_grid_x;        ///<ワープ先X座標
+  s16 warp_grid_y;        ///<ワープ先Y座標
+  s16 warp_grid_z;        ///<ワープ先Z座標
+  u8 sub_x;               ///<下画面座標X
+  u8 sub_y;               ///<下画面座標Y
+}PALACE_ZONE_SETTING;
 
 
 //==============================================================================
@@ -303,32 +340,25 @@ static void _IntSub_ActorCreate_Area(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *hand
 static void _IntSub_ActorCreate_CursorS(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_LvNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
-static void _IntSub_ActorCreate_PointNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_Delete_EntryButton(INTRUDE_SUBDISP_PTR intsub);
-static void _IntSub_ActorUpdate_TouchTown(
-  INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
-static void _IntSub_ActorUpdate_Area(
-  INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
+static void _IntSub_ActorUpdate_TouchTown(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy);
+static void _IntSub_ActorUpdate_Area(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy);
 static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
-static void _IntSub_ActorUpdate_CursorL(
-  INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
-static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, 
-  INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
-static void _IntSub_ActorUpdate_LvNum(
-  INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
-static void _IntSub_ActorUpdate_PointNum(
-  INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy);
-static OCCUPY_INFO * _IntSub_GetArreaOccupy(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
-static void _IntSub_TitleMsgUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
-static void _IntSub_InfoMsgUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
-static u8 _IntSub_GetProfileRecvNum(INTRUDE_COMM_SYS_PTR intcomm);
+static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy, ZONEID my_zone_id);
+static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy);
+static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy);
+static OCCUPY_INFO * _IntSub_GetArreaOccupy(INTRUDE_SUBDISP_PTR intsub);
+static void _IntSub_TitleMsgUpdate(INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id);
+static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub);
 static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos, int net_id);
 static void _SetRect(int x, int y, int half_size_x, int half_size_y, GFL_RECT *rect);
 static BOOL _CheckRectHit(int x, int y, const GFL_RECT *rect);
 static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
-static void _IntSub_BGBarUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
-static void _IntSub_BGColorUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
+static void _IntSub_BGBarUpdate(INTRUDE_SUBDISP_PTR intsub);
+static void _IntSub_BGColorUpdate(INTRUDE_SUBDISP_PTR intsub);
+static void _IntSub_CommParamInit(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm);
+static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm);
 
 
 //==============================================================================
@@ -362,6 +392,13 @@ enum{
 };
 
 
+//--------------------------------------------------------------
+//  外部データ
+//--------------------------------------------------------------
+#include "palace_zone_setting.cdat"
+
+
+
 //==============================================================================
 //
 //  
@@ -391,6 +428,8 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
     GF_ASSERT_MSG(0, "my_net_id = %d\n", intsub->my_net_id);
     intsub->my_net_id = 0;
   }
+
+  _IntSub_CommParamInit(intsub, Intrude_Check_CommConnect(game_comm));
   
   handle = GFL_ARC_OpenDataHandle(ARCID_PALACE, HEAPID_FIELDMAP);
   
@@ -433,15 +472,14 @@ void INTRUDE_SUBDISP_Exit(INTRUDE_SUBDISP_PTR intsub)
  * @param   intsub		
  */
 //==================================================================
-void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
+void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  int i;
   
-  if(intcomm == NULL){
-    return;
-  }
+  _IntSub_CommParamUpdate(intsub, intcomm);
   
 	GFL_TCBL_Main( intsub->tcbl_sys );
 	PRINTSYS_QUE_Main( intsub->print_que );
@@ -451,41 +489,45 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
     BmpOam_ActorBmpTrans(intsub->infomsg_bmpoam);
     intsub->infomsg_trans_req = FALSE;
   }
-  if(PRINTSYS_QUE_IsExistTarget(intsub->print_que, intsub->entrymsg_bmp) == FALSE){
-    BmpOam_ActorBmpTrans(intsub->entrymsg_bmpoam);
+  for(i = 0; i < ENTRY_BUTTON_MSG_PATERN_MAX; i++){
+    if(PRINTSYS_QUE_IsExistTarget(intsub->print_que, intsub->entrymsg_bmp[i]) == FALSE){
+      BmpOam_ActorBmpTrans(intsub->entrymsg_bmpoam[i]);
+    }
   }
   
   //タッチ判定チェック
   _IntSub_TouchUpdate(intcomm, intsub);
   
   //WFBCへのワープチェック
-  if(intsub->wfbc_go == TRUE){
-    int palace_area = Intrude_GetPalaceArea(intcomm);
-    
-    if(GFL_NET_IsConnectMember(palace_area) == FALSE){
-      intsub->wfbc_go = FALSE;
-      OS_TPrintf("WFBCへの飛び先相手がいなくなったのでキャンセル netID=%d\n", palace_area);
-    }
-    else{
-      switch(intsub->wfbc_seq){
-      case 0:
-        if(IntrudeSend_WfbcReq(intcomm, palace_area) == TRUE){
-          intsub->wfbc_seq++;
-        }
-        break;
-      case 1:
-        if(Intrude_GetRecvWfbc(intcomm) == TRUE){
-          FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(intsub->gsys);
-          FIELD_SUBSCREEN_WORK *subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
+  if(intcomm != NULL){
+    if(intsub->wfbc_go == TRUE){
+      int palace_area = Intrude_GetPalaceArea(intcomm);
+      
+      if(GFL_NET_IsConnectMember(palace_area) == FALSE){
+        intsub->wfbc_go = FALSE;
+        OS_TPrintf("WFBCへの飛び先相手がいなくなったのでキャンセル netID=%d\n", palace_area);
+      }
+      else{
+        switch(intsub->wfbc_seq){
+        case 0:
+          if(IntrudeSend_WfbcReq(intcomm, palace_area) == TRUE){
+            intsub->wfbc_seq++;
+          }
+          break;
+        case 1:
+          if(Intrude_GetRecvWfbc(intcomm) == TRUE){
+            FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(intsub->gsys);
+            FIELD_SUBSCREEN_WORK *subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
 
-          Intrude_SetWarpTown(game_comm, PALACE_TOWN_WFBC);
-          FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
-          intsub->wfbc_go = FALSE;
+            Intrude_SetWarpTown(game_comm, PALACE_TOWN_WFBC);
+            intsub->event_req = _EVENT_REQ_NO_TOWN_WARP;
+            intsub->wfbc_go = FALSE;
+          }
+          break;
+        default:
+          GF_ASSERT(0);
+          break;
         }
-        break;
-      default:
-        GF_ASSERT(0);
-        break;
       }
     }
   }
@@ -498,35 +540,70 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub)
  * @param   intsub		
  */
 //==================================================================
-void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub)
+void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  PLAYER_WORK *player_work = GAMESYSTEM_GetMyPlayerWork(intsub->gsys);
+  ZONEID my_zone_id = PLAYERWORK_getZoneID(player_work);
   OCCUPY_INFO *area_occupy;
   
-  if(intcomm == NULL){
-    return;
-  }
+  area_occupy = _IntSub_GetArreaOccupy(intsub);
 
-  area_occupy = _IntSub_GetArreaOccupy(intcomm, intsub);
-
-  _IntSub_BGBarUpdate(intcomm, intsub);
+  _IntSub_BGBarUpdate(intsub);
   //BGスクリーンカラー変更チェック
-  _IntSub_BGColorUpdate(intcomm, intsub);
+  _IntSub_BGColorUpdate(intsub);
   
   //インフォメーションメッセージ
-  _IntSub_TitleMsgUpdate(intcomm, intsub);
-  _IntSub_InfoMsgUpdate(intcomm, intsub);
+  _IntSub_TitleMsgUpdate(intsub, my_zone_id);
+  _IntSub_InfoMsgUpdate(intsub);
   
   //アクター更新
-  _IntSub_ActorUpdate_TouchTown(intsub, intcomm, area_occupy);
-  _IntSub_ActorUpdate_Area(intsub, intcomm, area_occupy);
+  _IntSub_ActorUpdate_TouchTown(intsub, area_occupy);
+  _IntSub_ActorUpdate_Area(intsub, area_occupy);
   _IntSub_ActorUpdate_CursorS(intsub, intcomm, area_occupy);
-  _IntSub_ActorUpdate_CursorL(intsub, intcomm, area_occupy);
-  _IntSub_ActorUpdate_EntryButton(intsub, intcomm, area_occupy);
-  _IntSub_ActorUpdate_LvNum(intsub, intcomm, area_occupy);
-  _IntSub_ActorUpdate_PointNum(intsub, intcomm, area_occupy);
+  _IntSub_ActorUpdate_CursorL(intsub, area_occupy, my_zone_id);
+  _IntSub_ActorUpdate_EntryButton(intsub, area_occupy);
+  _IntSub_ActorUpdate_LvNum(intsub, area_occupy);
+}
+
+//==================================================================
+/**
+ * 侵入下画面：イベント起動チェック
+ *
+ * @param   intsub		
+ * @param   bEvReqOK		TRUE:イベント起動してもよい　FALSE：他のイベントが起動中
+ *
+ * @retval  GMEVENT*		
+ */
+//==================================================================
+GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, FIELD_SUBSCREEN_WORK* subscreen )
+{
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(intsub->gsys);
+
+  if(bEvReqOK == FALSE || fieldWork == NULL){
+    return NULL;
+  }
+  
+  if(intsub->back_exit == TRUE){
+    FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_NORMAL );
+    return NULL;
+  }
+
+  switch(intsub->event_req){
+  case _EVENT_REQ_NO_TOWN_WARP:
+    PMSND_PlaySE( SEQ_SE_FLD_102 );
+    return EVENT_IntrudeTownWarp(intsub->gsys, fieldWork, Intrude_GetWarpTown(game_comm));
+  case _EVENT_REQ_NO_PLAYER_WARP:
+    PMSND_PlaySE( SEQ_SE_FLD_102 );
+    return EVENT_IntrudePlayerWarp(intsub->gsys, fieldWork, Intrude_GetWarpPlayerNetID(game_comm));
+  case _EVENT_REQ_NO_MISSION_ENTRY:
+    return EVENT_Intrude_MissionStartWait(intsub->gsys);
+  }
+  
+  return NULL;
 }
 
 
@@ -554,9 +631,9 @@ static void _IntSub_SystemSetup(INTRUDE_SUBDISP_PTR intsub)
   intsub->msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
     NARC_message_invasion_dat, HEAPID_FIELD_SUBSCREEN );
   
-  intsub->strbuf_temp = GFL_STR_CreateBuffer(64, HEAPID_FIELD_SUBSCREEN);
-  intsub->strbuf_info = GFL_STR_CreateBuffer(64, HEAPID_FIELD_SUBSCREEN);
-  intsub->strbuf_title = GFL_STR_CreateBuffer(64, HEAPID_FIELD_SUBSCREEN);
+  intsub->strbuf_temp = GFL_STR_CreateBuffer(128, HEAPID_FIELD_SUBSCREEN);
+  intsub->strbuf_info = GFL_STR_CreateBuffer(128, HEAPID_FIELD_SUBSCREEN);
+  intsub->strbuf_title = GFL_STR_CreateBuffer(128, HEAPID_FIELD_SUBSCREEN);
 }
 
 //--------------------------------------------------------------
@@ -790,7 +867,6 @@ static void _IntSub_ActorCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
   _IntSub_ActorCreate_CursorS(intsub, handle);
   _IntSub_ActorCreate_CursorL(intsub, handle);
   _IntSub_ActorCreate_LvNum(intsub, handle);
-  _IntSub_ActorCreate_PointNum(intsub, handle);
   _IntSub_ActorCreate_EntryButton(intsub, handle);
 }
 
@@ -974,35 +1050,6 @@ static void _IntSub_ActorCreate_LvNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *han
 
 //--------------------------------------------------------------
 /**
- * ポイント数値アクター生成
- *
- * @param   intsub		
- * @param   handle		
- */
-//--------------------------------------------------------------
-static void _IntSub_ActorCreate_PointNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
-{
-  int i;
-  GFL_CLWK_DATA head = {
-  	4 * 8, 0x17 * 8,               //X, Y座標
-  	PALACE_ACT_ANMSEQ_POINT_NUM,   //アニメーションシーケンス
-  	SOFTPRI_POINT_NUM,             //ソフトプライオリティ
-  	BGPRI_ACTOR_COMMON,            //BGプライオリティ
-  };
-  u16 width = 8;
-  
-  head.pos_x += width * (INTSUB_ACTOR_POINT_NUM_KETA_MAX - INTSUB_ACTOR_POINT_NUM_KETA_0);
-  for(i = INTSUB_ACTOR_POINT_NUM_KETA_0; i <= INTSUB_ACTOR_POINT_NUM_KETA_MAX; i++){
-    intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
-      intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
-      &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
-    GFL_CLACT_WK_SetDrawEnable(intsub->act[i], TRUE);
-    head.pos_x -= width;
-  }
-}
-
-//--------------------------------------------------------------
-/**
  * 参加ボタンアクター生成
  *
  * @param   intsub		
@@ -1017,13 +1064,14 @@ static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDL
   	SOFTPRI_ENTRY_BUTTON,       //ソフトプライオリティ
   	BGPRI_ACTOR_COMMON,         //BGプライオリティ
   };
+  int i;
   
   intsub->act[INTSUB_ACTOR_ENTRY] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
     &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], FALSE);  //表示OFF
 
-  {//「さんか」BMPOAM
+  for(i = 0; i < ENTRY_BUTTON_MSG_PATERN_MAX; i++){//「さんか」BMPOAM
     BMPOAM_ACT_DATA bmpoam_head = {
       NULL,   //OAMとして表示させるBMPデータへのポインタ
       ENTRY_BUTTON_POS_X - 16, ENTRY_BUTTON_POS_Y - 8,   //X, Y
@@ -1036,16 +1084,16 @@ static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDL
     };
     STRBUF *entry_str;
     
-    intsub->entrymsg_bmp = GFL_BMP_Create( 
+    intsub->entrymsg_bmp[i] = GFL_BMP_Create( 
       ENTRYMSG_BMP_SIZE_X, ENTRYMSG_BMP_SIZE_Y, GFL_BMP_16_COLOR, HEAPID_FIELD_SUBSCREEN );
     
-    bmpoam_head.bmp = intsub->entrymsg_bmp;
+    bmpoam_head.bmp = intsub->entrymsg_bmp[i];
     bmpoam_head.pltt_index = intsub->index_pltt_font;
-    intsub->entrymsg_bmpoam = BmpOam_ActorAdd(intsub->bmpoam_sys, &bmpoam_head);
-    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam, FALSE);
+    intsub->entrymsg_bmpoam[i] = BmpOam_ActorAdd(intsub->bmpoam_sys, &bmpoam_head);
+    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[i], FALSE);
 
-    entry_str = GFL_MSG_CreateString( intsub->msgdata, msg_invasion_subdisp_000 );
-    PRINTSYS_PrintQueColor( intsub->print_que, intsub->entrymsg_bmp, 0, 0, entry_str, 
+    entry_str = GFL_MSG_CreateString( intsub->msgdata, msg_invasion_subdisp_000 + i );
+    PRINTSYS_PrintQueColor( intsub->print_que, intsub->entrymsg_bmp[i], 0, 0, entry_str, 
       intsub->font_handle, PRINTSYS_MACRO_LSB(15,2,0) );
     GFL_STR_DeleteBuffer(entry_str);
   }
@@ -1060,9 +1108,13 @@ static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDL
 //--------------------------------------------------------------
 static void _IntSub_Delete_EntryButton(INTRUDE_SUBDISP_PTR intsub)
 {
+  int i;
+  
   //アクターはまとめて削除されるので、それ以外のBMPOAM等を削除
-  BmpOam_ActorDel(intsub->entrymsg_bmpoam);
-  GFL_BMP_Delete(intsub->entrymsg_bmp);
+  for(i = 0; i < ENTRY_BUTTON_MSG_PATERN_MAX; i++){
+    BmpOam_ActorDel(intsub->entrymsg_bmpoam[i]);
+    GFL_BMP_Delete(intsub->entrymsg_bmp[i]);
+  }
 }
 
 //==============================================================================
@@ -1073,16 +1125,15 @@ static void _IntSub_Delete_EntryButton(INTRUDE_SUBDISP_PTR intsub)
  * 更新処理：タッチ街アクター
  *
  * @param   intsub		
- * @param   intcomm		
  * @param   area_occupy		
  */
 //--------------------------------------------------------------
-static void _IntSub_ActorUpdate_TouchTown(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+static void _IntSub_ActorUpdate_TouchTown(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy)
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   int i;
   
-  if(intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
+  if(intsub->comm.now_palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
     //自分のエリアの為、パレス島しかタッチ出来ない
     for(i = INTSUB_ACTOR_TOUCH_TOWN_0; i <= INTSUB_ACTOR_TOUCH_TOWN_MAX; i++){
       GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);
@@ -1102,11 +1153,10 @@ static void _IntSub_ActorUpdate_TouchTown(INTRUDE_SUBDISP_PTR intsub, INTRUDE_CO
  * 更新処理：エリアアイコン
  *
  * @param   intsub		
- * @param   intcomm		
  * @param   area_occupy		
  */
 //--------------------------------------------------------------
-static void _IntSub_ActorUpdate_Area(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+static void _IntSub_ActorUpdate_Area(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy)
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   int i, profile_num, area_width, net_id;
@@ -1116,15 +1166,15 @@ static void _IntSub_ActorUpdate_Area(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SY
   u8 pal_tbl[FIELD_COMM_MEMBER_MAX] = {0, 0, 0};
   s32 tbl_count = 0, actno;
   
-  profile_num = _IntSub_GetProfileRecvNum(intcomm);
-  my_area = intcomm->intrude_status_mine.palace_area;
+  profile_num = intsub->comm.recv_num;
+  my_area = intsub->comm.now_palace_area;
   area_width = AREA_POST_WIDTH / profile_num;
   pos.x = AREA_POST_LEFT + area_width;
   pos.y = AREA_POST_Y;
   
   //プロフィール受信済みのユーザーのパレットオフセットテーブルを作る
   for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
-    if(intcomm->recv_profile & (1 << net_id)){
+    if(intsub->comm.recv_profile & (1 << net_id)){
       pal_tbl[tbl_count] = net_id;  //net_id = パレットオフセット
       if(net_id == my_area){
         now_tbl_pos = tbl_count;  //自分が今いるパレスエリアのテーブル位置を記憶
@@ -1174,11 +1224,11 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
   static const s8 PalaceWearOffset[] = {0, 3, -3, 0}; //最後の0は4BYTEアライメント
   int town_no;
   
-  profile_num = _IntSub_GetProfileRecvNum(intcomm);
+  profile_num = intsub->comm.recv_num;
   area_width = AREA_POST_WIDTH / (profile_num + 1);
   base_x = AREA_POST_LEFT + area_width;
 
-  my_area = intcomm->intrude_status_mine.palace_area;
+  my_area = intsub->comm.now_palace_area;
   pos_count = -1;
   
   GFL_STD_MemClear(town_num, sizeof(town_num[0]) * PALACE_TOWN_DATA_MAX);
@@ -1190,7 +1240,11 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
       GFL_CLACT_WK_SetDrawEnable(act, FALSE);
       continue;
     }
-    else if(intcomm->recv_profile & (1 << net_id)){
+    else if(intcomm == NULL){
+      GFL_CLACT_WK_SetDrawEnable(act, FALSE);
+      continue;
+    }
+    else if(intsub->comm.recv_profile & (1 << net_id)){
       ist = &intcomm->intrude_status[net_id];
     }
     else{
@@ -1210,10 +1264,10 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
       GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
     }
     else{ //このプレイヤーがいるパレスエリアを指す
-      if(intcomm->recv_profile & (1 << ist->palace_area)){
+      if(intsub->comm.recv_profile & (1 << ist->palace_area)){
         pos_count = 0;
         for(s = 0; s < ist->palace_area; s++){
-          if(intcomm->recv_profile & (1 << s)){
+          if(intsub->comm.recv_profile & (1 << s)){
             pos_count++;
           }
         }
@@ -1237,22 +1291,19 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
  * 更新処理：自分カーソル
  *
  * @param   intsub		
- * @param   intcomm		
  * @param   area_occupy		
  */
 //--------------------------------------------------------------
-static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy, ZONEID my_zone_id)
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
-  PLAYER_WORK *player_work = GAMESYSTEM_GetMyPlayerWork(intsub->gsys);
-  ZONEID mine_zone_id = PLAYERWORK_getZoneID(player_work);
   GFL_CLWK *act;
   GFL_CLACTPOS pos;
   int my_net_id;
   int town_no;
   
   my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
-  town_no = _IntSub_TownPosGet(mine_zone_id, &pos, my_net_id);
+  town_no = _IntSub_TownPosGet(my_zone_id, &pos, my_net_id);
   act = intsub->act[INTSUB_ACTOR_CUR_L];
   GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
   GFL_CLACT_WK_SetDrawEnable(act, TRUE);
@@ -1263,26 +1314,31 @@ static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
  * 更新処理：参加しますボタン
  *
  * @param   intsub		
- * @param   intcomm		
  * @param   area_occupy		
  */
 //--------------------------------------------------------------
-static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy)
 {
-  MISSION_STATUS m_st;
+  if(intsub->back_exit == FALSE && intsub->comm.recv_num <= 1){
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], TRUE);
+    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_ENTRY], FALSE);
+    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_BACK], TRUE);
+    return;
+  }
+  else{
+    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_BACK], FALSE);
+  }
   
-  m_st = MISSION_FIELD_CheckStatus(&intcomm->mission);
-  switch(m_st){
+  switch(intsub->comm.m_status){
   case MISSION_STATUS_NULL:
-  case MISSION_STATUS_ENTRY:
   case MISSION_STATUS_READY:
   case MISSION_STATUS_EXE:
     GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], FALSE);
-    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam, FALSE);
+    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_ENTRY], FALSE);
     break;
   case MISSION_STATUS_NOT_ENTRY:
     GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], TRUE);
-    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam, TRUE);
+    BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_ENTRY], TRUE);
     break;
   default:
     GF_ASSERT(0);
@@ -1295,11 +1351,10 @@ static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, INTRUDE_
  * 更新処理：レベル数値
  *
  * @param   intsub		
- * @param   intcomm		
  * @param   area_occupy		
  */
 //--------------------------------------------------------------
-static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
+static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *area_occupy)
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   int i, level;
@@ -1308,7 +1363,7 @@ static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_S
   
   my_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
 //  level = my_occupy->intrude_level;
-  level = MISSION_GetMissionTimer(&intcomm->mission);
+  level = intsub->comm.m_timer;
   
   for(i = 0; i <= INTSUB_ACTOR_LV_NUM_KETA_MAX - INTSUB_ACTOR_LV_NUM_KETA_0; i++){
     act = intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0 + i];
@@ -1319,55 +1374,30 @@ static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_S
 
 //--------------------------------------------------------------
 /**
- * 更新処理：ポイント数値
- *
- * @param   intsub		
- * @param   intcomm		
- * @param   area_occupy		
- */
-//--------------------------------------------------------------
-static void _IntSub_ActorUpdate_PointNum(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm, OCCUPY_INFO *area_occupy)
-{
-  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
-  int i, point;
-  OCCUPY_INFO *my_occupy;
-  GFL_CLWK *act;
-  
-  my_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
-  point = 0;//my_occupy->intrude_point;
-  
-  for(i = 0; i <= INTSUB_ACTOR_POINT_NUM_KETA_MAX - INTSUB_ACTOR_POINT_NUM_KETA_0; i++){
-    act = intsub->act[INTSUB_ACTOR_POINT_NUM_KETA_0 + i];
-    GFL_CLACT_WK_SetAnmIndex(act, point % 10);
-    point /= 10;
-  }
-}
-
-//--------------------------------------------------------------
-/**
  * タイトルメッセージ更新処理
  *
- * @param   intcomm		
  * @param   intsub		
  */
 //--------------------------------------------------------------
-static void _IntSub_TitleMsgUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub)
+static void _IntSub_TitleMsgUpdate(INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id)
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   int print_type = _TITLE_PRINT_NULL;
   int msg_id;
   
-  if(intcomm == NULL || intcomm->palace_in == FALSE){
-    print_type = _TITLE_PRINT_PALACE_GO;
-    msg_id = msg_invasion_title_000;
-  }
-  else if(intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
-    print_type = _TITLE_PRINT_MY_PALACE;
-    msg_id = msg_invasion_title_001;
+  if(ZONEDATA_IsPalace(my_zone_id) == TRUE){
+    if(intsub->comm.now_palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
+      print_type = _TITLE_PRINT_MY_PALACE;
+      msg_id = msg_invasion_title_001;
+    }
+    else{
+      print_type = _TITLE_PRINT_OTHER_PALACE0 + intsub->comm.now_palace_area;
+      msg_id = msg_invasion_title_002;
+    }
   }
   else{
-    print_type = _TITLE_PRINT_OTHER_PALACE0 + intcomm->intrude_status_mine.palace_area;
-    msg_id = msg_invasion_title_002;
+    print_type = _TITLE_PRINT_PALACE_GO;
+    msg_id = msg_invasion_title_000;
   }
   
   if(intsub->title_print_type == print_type || print_type == _TITLE_PRINT_NULL){
@@ -1377,7 +1407,7 @@ static void _IntSub_TitleMsgUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP
   
   if(print_type >= _TITLE_PRINT_OTHER_PALACE0 && print_type <= _TITLE_PRINT_OTHER_PALACE3){
     const MYSTATUS *myst;
-    myst = GAMEDATA_GetMyStatusPlayer(gamedata, intcomm->intrude_status_mine.palace_area);
+    myst = GAMEDATA_GetMyStatusPlayer(gamedata, intsub->comm.now_palace_area);
     WORDSET_RegisterPlayerName( intsub->wordset, 0, myst );
   }
   
@@ -1395,12 +1425,12 @@ static void _IntSub_TitleMsgUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP
  * @param   intsub		
  */
 //--------------------------------------------------------------
-static void _IntSub_InfoMsgUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub)
+static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub)
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   GAME_COMM_INFO_MESSAGE infomsg;
   int k;
-  const MISSION_DATA *md;
+  BOOL msg_on = FALSE;
 #if 0
   MISSION_STATUS mission_status;
 #endif
@@ -1413,34 +1443,42 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_
     return;
   }
   
-  md = MISSION_GetRecvData(&intcomm->mission);
-  if(md != NULL){ //ミッション発動中の場合はミッションを表示
-#if 0
-    if(MISSION_FIELD_CheckStatus(mission) == MISSION_STATUS_READY){
-#else
-    if(0){
-#endif
-      intsub->mission_exe_msg_seq = 0;
-      switch(intsub->mission_ready_msg_seq){
-      case 0:
-        break;
-      }
+  if(intsub->comm.m_status != MISSION_STATUS_NULL && intsub->comm.p_md != NULL
+      && intsub->print_mission_status != intsub->comm.m_status){
+    //ミッション発動中の場合はミッション関連のメッセージを優先して表示
+    //ミッションは状況を示すメッセージの為、キューに貯めずに現在の状態をそのまま表示
+    switch(intsub->comm.m_status){
+    case MISSION_STATUS_NOT_ENTRY: //ミッションは実施されているが参加していない
+      GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_004, intsub->strbuf_info );
+      break;
+    case MISSION_STATUS_READY:     //ミッション開始待ち
+      GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_005, intsub->strbuf_info );
+      break;
+    case MISSION_STATUS_EXE:       //ミッション中
+      GFL_MSG_GetString(intsub->msgdata, 
+        msg_invasion_info_m01 + intsub->comm.p_md->cdata.type, intsub->strbuf_info );
+      break;
+    default:
+      GF_ASSERT_MSG(0, "m_status=%d\n", intsub->comm.m_status);
+      return;
     }
-    else{
-      intsub->mission_ready_msg_seq = 0;
-    }
+    intsub->print_mission_status = intsub->comm.m_status;
+    msg_on = TRUE;
   }
   else if(GameCommInfo_GetMessage(game_comm, &infomsg) == TRUE){
-    intsub->mission_exe_msg_seq = 0;
-    intsub->mission_ready_msg_seq = 0;
+    intsub->print_mission_status = MISSION_STATUS_NULL;
     GFL_MSG_GetString(intsub->msgdata, infomsg.message_id, intsub->strbuf_temp );
     for(k = 0 ; k < INFO_WORDSET_MAX; k++){
       if(infomsg.name[k]!=NULL){
         WORDSET_RegisterWord( intsub->wordset, infomsg.wordset_no[k], infomsg.name[k], 
-          PM_MALE, TRUE, PM_LANG);
+          infomsg.wordset_sex[k], TRUE, PM_LANG);
       }
     }
     WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
+    msg_on = TRUE;
+  }
+  
+  if(msg_on == TRUE){
     GFL_BMP_Clear( intsub->infomsg_bmp, 0 );
     PRINTSYS_PrintQueColor( intsub->print_que, intsub->infomsg_bmp, 0, 0, intsub->strbuf_info, 
       intsub->font_handle, PRINTSYS_MACRO_LSB(15,2,0) );
@@ -1458,47 +1496,25 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_
 /**
  * 侵入しているエリアの占拠情報ポインタを取得する
  *
- * @param   intcomm		
  * @param   intsub		
  *
  * @retval  OCCUPY_INFO *		侵入先の占拠情報
  */
 //--------------------------------------------------------------
-static OCCUPY_INFO * _IntSub_GetArreaOccupy(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub)
+static OCCUPY_INFO * _IntSub_GetArreaOccupy(INTRUDE_SUBDISP_PTR intsub)
 {
   OCCUPY_INFO *area_occupy;
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
 
-  if(intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)
-      || intcomm->intrude_status_mine.palace_area == PALACE_AREA_NO_NULL){
+  if(intsub->comm.now_palace_area == GAMEDATA_GetIntrudeMyID(gamedata)
+      || intsub->comm.now_palace_area == PALACE_AREA_NO_NULL){
     area_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
   }
   else{
-    area_occupy = GAMEDATA_GetOccupyInfo(gamedata, intcomm->intrude_status_mine.palace_area);
+    area_occupy = GAMEDATA_GetOccupyInfo(gamedata, intsub->comm.now_palace_area);
   }
   
   return area_occupy;
-}
-
-//--------------------------------------------------------------
-/**
- * プロフィール受信人数を取得
- * @param   intcomm		
- * @retval  u8		プロフィール受信人数
- */
-//--------------------------------------------------------------
-static u8 _IntSub_GetProfileRecvNum(INTRUDE_COMM_SYS_PTR intcomm)
-{
-  u32 recv_profile;
-  u8 profile_num;
-  
-  recv_profile = intcomm->recv_profile; //MATH_CountPopulationを使用するためu32に代入
-  profile_num = MATH_CountPopulation(recv_profile);
-  if(profile_num > FIELD_COMM_MEMBER_MAX){
-    GF_ASSERT_MSG(0, "profile_num = %d\n", profile_num);
-    profile_num = 1;
-  }
-  return profile_num;
 }
 
 //--------------------------------------------------------------
@@ -1599,7 +1615,8 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   GFL_CLWK *act;
 
-  if(intsub->wfbc_go == TRUE || GFL_UI_TP_GetPointTrg(&x, &y) == FALSE 
+  if(intsub->event_req != _EVENT_REQ_NO_NULL || intsub->wfbc_go == TRUE 
+      || GFL_UI_TP_GetPointTrg(&x, &y) == FALSE 
       || FIELD_SUBSCREEN_GetAction( subscreen ) != FIELD_SUBSCREEN_ACTION_NONE){
     return;
   }
@@ -1607,21 +1624,20 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
   //プレイヤーアイコンタッチ判定
   my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
   for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
-    if(net_id != my_net_id && (intcomm->recv_profile & (1 << net_id))){
+    if(net_id != my_net_id && (intsub->comm.recv_profile & (1 << net_id))){
       act = intsub->act[INTSUB_ACTOR_CUR_S_0 + net_id];
       if(GFL_CLACT_WK_GetDrawEnable(act) == TRUE){
         GFL_CLACT_WK_GetPos( act, &pos, CLSYS_DRAW_SUB );
         if(x - TOUCH_RANGE_PLAYER_ICON_X <= pos.x && x + TOUCH_RANGE_PLAYER_ICON_X >= pos.x
             && y - TOUCH_RANGE_PLAYER_ICON_Y <= pos.y && y + TOUCH_RANGE_PLAYER_ICON_Y >= pos.y){
-          if(ZONEDATA_IsWfbc(intcomm->intrude_status[net_id].zone_id) == TRUE){
+          if(intcomm != NULL && ZONEDATA_IsWfbc(intcomm->intrude_status[net_id].zone_id) == TRUE){
             intsub->wfbc_go = TRUE;
             intsub->wfbc_seq = 0;
           }
           else{
             Intrude_SetWarpPlayerNetID(game_comm, net_id);
-            FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_PLAYER_WARP);
+            intsub->event_req = _EVENT_REQ_NO_PLAYER_WARP;
           }
-          PMSND_PlaySE( SEQ_SE_FLD_102 ); //※check サブスクリーンイベントからワープイベントを起動するようにしたらそっちに移す
           return;
         }
       }
@@ -1629,7 +1645,7 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
   }
   
   //街タッチ判定
-  if(intcomm->intrude_status_mine.palace_area != GAMEDATA_GetIntrudeMyID(gamedata)){
+  if(intsub->comm.now_palace_area != GAMEDATA_GetIntrudeMyID(gamedata)){
     for(i = 0; i < PALACE_TOWN_DATA_MAX; i++){
       _SetRect(PalaceTownData[i].subscreen_x, PalaceTownData[i].subscreen_y, 
         TOWN_ICON_HITRANGE_HALF, TOWN_ICON_HITRANGE_HALF, &rect);
@@ -1640,9 +1656,8 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
         }
         else{
           Intrude_SetWarpTown(game_comm, i);
-          FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
+          intsub->event_req = _EVENT_REQ_NO_TOWN_WARP;
         }
-        PMSND_PlaySE( SEQ_SE_FLD_102 ); //※check サブスクリーンイベントからワープイベントを起動するようにしたらそっちに移す
         return;
       }
     }
@@ -1653,46 +1668,41 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
     PALACE_ICON_HITRANGE_HALF, PALACE_ICON_HITRANGE_HALF, &rect);
   if(_CheckRectHit(x, y, &rect) == TRUE){
     Intrude_SetWarpTown(game_comm, PALACE_TOWN_DATA_PALACE);
-    FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP);
-    PMSND_PlaySE( SEQ_SE_FLD_102 ); //※check サブスクリーンイベントからワープイベントを起動するようにしたらそっちに移す
+    intsub->event_req = _EVENT_REQ_NO_TOWN_WARP;
     return;
   }
   
   ///参加ボタンタッチ判定
-  if(MISSION_FIELD_CheckStatus(&intcomm->mission) == MISSION_STATUS_NOT_ENTRY){
+  if(intcomm != NULL && intsub->comm.m_status == MISSION_STATUS_NOT_ENTRY){
     _SetRect(ENTRY_BUTTON_POS_X, ENTRY_BUTTON_POS_Y, 
       ENTRY_BUTTON_HITRANGE_HALF_X, ENTRY_BUTTON_HITRANGE_HALF_Y, &rect);
     if(_CheckRectHit(x, y, &rect) == TRUE){
       MISSION_SetMissionEntry(intcomm, &intcomm->mission);
-      FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_MISSION_ENTRY);
+      intsub->event_req = _EVENT_REQ_NO_MISSION_ENTRY;
     }
   }
-  
-#if 0
-  //ミッションアイコンタッチ判定
-  if(MISSION_RecvCheck(&intcomm->mission) == TRUE){
-    _SetRect(MISSION_ICON_POS_X, MISSION_ICON_POS_Y, 
-      POWER_ICON_HITRANGE_HALF_X, POWER_ICON_HITRANGE_HALF_Y, &rect);
+  ///もどるボタンタッチ判定
+  if(intsub->back_exit == FALSE 
+      && BmpOam_ActorGetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_BACK]) == TRUE){
+    _SetRect(ENTRY_BUTTON_POS_X, ENTRY_BUTTON_POS_Y, 
+      ENTRY_BUTTON_HITRANGE_HALF_X, ENTRY_BUTTON_HITRANGE_HALF_Y, &rect);
     if(_CheckRectHit(x, y, &rect) == TRUE){
-      FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_INTRUDE_MISSION_PUT);
-      return;
+      intsub->back_exit = TRUE;
     }
   }
-#endif
 }
 
 //--------------------------------------------------------------
 /**
  * 接続人数を監視し、Barスクリーンの一人用と通信用を変更する
  *
- * @param   intcomm		
  * @param   intsub		
  */
 //--------------------------------------------------------------
-static void _IntSub_BGBarUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub)
+static void _IntSub_BGBarUpdate(INTRUDE_SUBDISP_PTR intsub)
 {
   if(intsub->bar_type == BG_BAR_TYPE_SINGLE){
-    if(_IntSub_GetProfileRecvNum(intcomm) > 1){
+    if(intsub->comm.recv_num > 1){
       GFL_ARC_UTIL_TransVramScreen(
         ARCID_PALACE, NARC_palace_palace_bar2_lz_NSCR, INTRUDE_FRAME_S_BAR, 0, 
         0x800, TRUE, HEAPID_FIELDMAP);
@@ -1700,7 +1710,7 @@ static void _IntSub_BGBarUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
     }
   }
   else{ //BG_BAR_TYPE_COMM
-    if(_IntSub_GetProfileRecvNum(intcomm) <= 1){
+    if(intsub->comm.recv_num <= 1){
       GFL_ARC_UTIL_TransVramScreen(
         ARCID_PALACE, NARC_palace_palace_bar_lz_NSCR, INTRUDE_FRAME_S_BAR, 0, 
         0x800, TRUE, HEAPID_FIELDMAP);
@@ -1713,26 +1723,18 @@ static void _IntSub_BGBarUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
 /**
  * 侵入エリアを監視し、BGのカラーを変更する
  *
- * @param   intcomm		
  * @param   intsub		
  */
 //--------------------------------------------------------------
-static void _IntSub_BGColorUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub)
+static void _IntSub_BGColorUpdate(INTRUDE_SUBDISP_PTR intsub)
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   int bg_pal;
   
-  bg_pal = intcomm->intrude_status_mine.palace_area;
+  bg_pal = intsub->comm.now_palace_area;
   if(bg_pal == intsub->now_bg_pal){
     return;
-  }
-  
-  if(intcomm->intrude_status_mine.palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
-    GameCommInfo_MessageEntry_MyPalace(game_comm, intcomm->intrude_status_mine.palace_area);
-  }
-  else{
-    GameCommInfo_MessageEntry_IntrudePalace(game_comm, bg_pal);
   }
   
   GFL_BG_ChangeScreenPalette(
@@ -1751,3 +1753,60 @@ static void _IntSub_BGColorUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_
   intsub->now_bg_pal = bg_pal;
 }
 
+//--------------------------------------------------------------
+/**
+ * intcommから引き出すパラメータバッファの初期化
+ *
+ * @param   intsub		
+ * @param   intcomm		
+ */
+//--------------------------------------------------------------
+static void _IntSub_CommParamInit(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm)
+{
+  INTRUDE_COMM_PARAM *comm = &intsub->comm;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+  
+  if(intcomm == NULL){
+    comm->now_palace_area = GAMEDATA_GetIntrudeMyID(gamedata);
+    comm->recv_profile = 1 << comm->now_palace_area;
+    comm->recv_num = 1;
+    comm->palace_in = FALSE;
+    comm->m_status = MISSION_STATUS_NULL;
+    comm->m_timer = 0;
+  }
+  else{
+    _IntSub_CommParamUpdate(intsub, intcomm);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * intcommから引き出すパラメータの更新処理
+ *
+ * @param   intsub		
+ * @param   intcomm		
+ */
+//--------------------------------------------------------------
+static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm)
+{
+  INTRUDE_COMM_PARAM *comm = &intsub->comm;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+  
+  if(intcomm == NULL){
+    //一部を除いて最後の状態から何も更新しない
+    intsub->comm.m_status = MISSION_STATUS_NULL;
+    intsub->comm.p_md = NULL;
+  }
+  else{
+    const MISSION_DATA *md;
+
+    comm->now_palace_area = intcomm->intrude_status_mine.palace_area;
+    comm->recv_profile = intcomm->recv_profile;
+    comm->recv_num = MATH_CountPopulation((u32)(comm->recv_profile));
+    comm->palace_in = intcomm->palace_in;
+    comm->m_status = MISSION_FIELD_CheckStatus(&intcomm->mission);
+    comm->m_timer = MISSION_GetMissionTimer(&intcomm->mission);
+
+    comm->p_md = MISSION_GetRecvData(&intcomm->mission);
+  }
+}

@@ -506,8 +506,13 @@ void Intrude_SetProfile(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_
   GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   MYSTATUS *myst;
   OCCUPY_INFO *occupy;
+  BOOL new_player = FALSE;
   
   myst = GAMEDATA_GetMyStatusPlayer(gamedata, net_id);
+  if((intcomm->recv_profile & (1 << net_id)) == 0
+      || MyStatus_GetID(myst) != MyStatus_GetID(&profile->mystatus)){
+    new_player = TRUE;
+  }
   MyStatus_Copy(&profile->mystatus, myst);
 
   occupy = GAMEDATA_GetOccupyInfo(gamedata, net_id);
@@ -517,6 +522,10 @@ void Intrude_SetProfile(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_
   
   intcomm->recv_profile |= 1 << net_id;
   OS_TPrintf("プロフィール受信　net_id=%d, recv_bit=%d\n", net_id, intcomm->recv_profile);
+  
+  if(new_player == TRUE && net_id != GFL_NET_SystemGetCurrentID()){
+    GameCommInfo_MessageEntry_PalaceConnect(intcomm->game_comm, net_id);
+  }
 }
 
 //==================================================================

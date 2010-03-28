@@ -228,6 +228,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 
   case SEQ_POINT_GET_MSG_END_BUTTON_WAIT:
     if(IntrudeEventPrint_LastKeyWait() == TRUE){
+      GameCommInfo_MessageEntry_MissionSuccess(game_comm);
       (*seq) = SEQ_DISGUISE_START;
     }
     break;
@@ -235,6 +236,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
   case SEQ_MISSION_FAIL:    //ƒ~ƒbƒVƒ‡ƒ“Ž¸”s
     if( PMSND_CheckPlayBGM() == FALSE ){
       GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_FAST));
+      GameCommInfo_MessageEntry_MissionFail(game_comm);
       *seq = SEQ_DISGUISE_START;
     }
     break;

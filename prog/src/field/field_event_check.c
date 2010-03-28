@@ -2498,21 +2498,6 @@ static GMEVENT * checkSubScreenEvent(
   case FIELD_SUBSCREEN_ACTION_PALACE_WARP:
     event = EVENT_IntrudeTownWarp(gsys, fieldWork, PALACE_TOWN_DATA_PALACE);
     break;
-  case FIELD_SUBSCREEN_ACTION_INTRUDE_TOWN_WARP:
-    {
-      GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-      event = EVENT_IntrudeTownWarp(gsys, fieldWork, Intrude_GetWarpTown(game_comm));
-    }
-    break;
-  case FIELD_SUBSCREEN_ACTION_INTRUDE_PLAYER_WARP:
-    {
-      GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-      event = EVENT_IntrudePlayerWarp(gsys, fieldWork, Intrude_GetWarpPlayerNetID(game_comm));
-    }
-    break;
-  case FIELD_SUBSCREEN_ACTION_INTRUDE_MISSION_ENTRY:
-    event = EVENT_Intrude_MissionStartWait(gsys);
-    break;
   
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
     event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_BEACON_VIEW);

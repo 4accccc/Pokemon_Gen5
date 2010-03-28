@@ -49,6 +49,7 @@ static void _IntrudeRecv_OccupyInfo(const int netID, const int size, const void*
 static void _IntrudeRecv_TargetTiming(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_PlayerSupport(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_SecretItem(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_GPowerEquip(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_WfbcReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_Wfbc(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_WfbcNpcAns(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -90,6 +91,7 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_TargetTiming, NULL},           //INTRUDE_CMD_TARGET_TIMING
   {_IntrudeRecv_PlayerSupport, NULL},          //INTRUDE_CMD_PLAYER_SUPPORT
   {_IntrudeRecv_SecretItem, NULL},             //INTRUDE_CMD_SECRET_ITEM
+  {_IntrudeRecv_GPowerEquip, NULL},            //INTRUDE_CMD_GPOWER_EQUIP
   {_IntrudeRecv_WfbcReq, NULL},                //INTRUDE_CMD_WFBC_REQ
   {_IntrudeRecv_Wfbc, NULL},                   //INTRUDE_CMD_WFBC
   {_IntrudeRecv_WfbcNpcAns, NULL},             //INTRUDE_CMD_WFBC_NPC_ANS
@@ -355,6 +357,7 @@ static void _IntrudeRecv_DeleteProfile(const int netID, const int size, const vo
   if(intcomm->recv_profile & (1 << (*leave_netid))){
     intcomm->recv_profile ^= 1 << (*leave_netid);
     CommPlayer_Del(intcomm->cps, *leave_netid);
+    GameCommInfo_MessageEntry_Leave(intcomm->game_comm, *leave_netid);
   }
   OS_TPrintf("Receive:離脱者のプロフィール削除 離脱者のNetID = %d\n", *leave_netid);
 }
@@ -1033,7 +1036,6 @@ static void _IntrudeRecv_MissionData(const int netID, const int size, const void
   new_mission = MISSION_SetMissionData(intcomm, &intcomm->mission, mdata);
   if(new_mission == TRUE){  //連続受信で上書きされないように直接代入はしない
     intcomm->new_mission_recv = TRUE;
-    GameCommInfo_MessageEntry_Mission(intcomm->game_comm, mdata->accept_netid);
   }
   
   OS_TPrintf("ミッション受信：new_mission_recv = %d\n", new_mission);
@@ -1554,6 +1556,56 @@ BOOL IntrudeSend_SecretItem(NetID send_netid, const INTRUDE_SECRET_ITEM_SAVE *it
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), 
     send_netid, INTRUDE_CMD_SECRET_ITEM, sizeof(INTRUDE_SECRET_ITEM_SAVE), itemdata, 
     FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：Gパワーを装備した
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_GPowerEquip(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const u8 *p_palace_area = pData;
+  
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){ //自分のデータは受け取らない
+    return;
+  }
+  if((intcomm->recv_profile & (1 << netID)) == 0){
+    OS_TPrintf("受信：GPOWER_EQUIP プロフィール未受信の為、受け取らない netID=%d\n", netID);
+    return;
+  }
+  
+  GameCommInfo_MessageEntry_GetPower(intcomm->game_comm, netID, *p_palace_area);
+}
+
+//==================================================================
+/**
+ * データ送信：Gパワーを装備した
+ *
+ * @param   send_netid    サポート相手
+ * @param   support_type  サポートタイプ(SUPPORT_TYPE_???)
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_GPowerEquip(u8 palace_area)
+{
+  if(_OtherPlayerExistence() == FALSE){
+    return TRUE;
+  }
+
+  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    INTRUDE_CMD_GPOWER_EQUIP, sizeof(palace_area), &palace_area);
 }
 
 //==============================================================================

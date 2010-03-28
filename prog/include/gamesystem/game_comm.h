@@ -70,7 +70,7 @@ typedef enum{
 
 
 ///インフォメーションメッセージ内のwordset最大数
-#define INFO_WORDSET_MAX      (4)
+#define INFO_WORDSET_MAX      (2)
 
 //==============================================================================
 //  型定義
@@ -86,8 +86,8 @@ typedef struct _GAME_COMM_SYS * GAME_COMM_SYS_PTR;
 typedef struct{
   STRBUF *name[INFO_WORDSET_MAX];     ///<未使用の場合はNULLが入っています
   u8 wordset_no[INFO_WORDSET_MAX];
+  u8 wordset_sex[INFO_WORDSET_MAX];
   u16 message_id;
-  u8 padding[2];
 }GAME_COMM_INFO_MESSAGE;
 
 
@@ -118,9 +118,12 @@ extern GAMEDATA * GameCommSys_GetGameData(GAME_COMM_SYS_PTR gcsp);
 extern void GameCommStatus_SetPlayerStatus(GAME_COMM_SYS_PTR gcsp, int comm_net_id, ZONEID zone_id, u8 invasion_netid);
 extern u8 GameCommStatus_GetPlayerStatus_InvasionNetID(GAME_COMM_SYS_PTR gcsp, int comm_net_id);
 extern BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *dest_msg);
-extern void GameCommInfo_MessageEntry_Mission(GAME_COMM_SYS_PTR gcsp, int accept_netid);
-extern void GameCommInfo_MessageEntry_MyPalace(GAME_COMM_SYS_PTR gcsp, int intrude_netid);
-extern void GameCommInfo_MessageEntry_IntrudePalace(GAME_COMM_SYS_PTR gcsp, int intrude_netid);
+extern void GameCommInfo_MessageEntry_GetPower(GAME_COMM_SYS_PTR gcsp, int player_netid, int target_netid);
+extern void GameCommInfo_MessageEntry_IntrudePalace(GAME_COMM_SYS_PTR gcsp, int player_netid, int target_netid);
+extern void GameCommInfo_MessageEntry_PalaceConnect(GAME_COMM_SYS_PTR gcsp, int player_netid);
+extern void GameCommInfo_MessageEntry_Leave(GAME_COMM_SYS_PTR gcsp, int player_netid);
+extern void GameCommInfo_MessageEntry_MissionSuccess(GAME_COMM_SYS_PTR gcsp);
+extern void GameCommInfo_MessageEntry_MissionFail(GAME_COMM_SYS_PTR gcsp);
 
 
 #endif  //__ASM_NO_DEF_

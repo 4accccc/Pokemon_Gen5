@@ -433,7 +433,6 @@ static GMEVENT_RESULT _event_MissionStartWait( GMEVENT * event, int * seq, void 
     {
       MISSION_STATUS mst = MISSION_FIELD_CheckStatus(&intcomm->mission);
       switch(mst){
-      case MISSION_STATUS_ENTRY:
       case MISSION_STATUS_READY:
         break;
       case MISSION_STATUS_EXE:

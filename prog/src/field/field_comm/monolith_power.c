@@ -23,6 +23,7 @@
 #include "app_menu_common.naix"
 #include "app/app_menu_common.h"
 #include "sound/pm_sndsys.h"
+#include "gamesystem/game_comm.h"
 
 
 //==============================================================================
@@ -366,6 +367,7 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     SEQ_INIT,
     SEQ_TOP,
     SEQ_DECIDE_STREAM,
+    SEQ_DECIDE_SEND,
     SEQ_DECIDE_STREAM_WAIT,
     SEQ_TP_RELEASE_WAIT,
     SEQ_FINISH,
@@ -436,6 +438,16 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
       WORDSET_RegisterGPowerName( 
         appwk->setup->wordset, 0, mpw->use_gpower_id[mpw->decide_cursor_pos] );
       _Set_MsgStreamExpand(mpw, appwk->setup, msg_mono_pow_011);
+      *seq = SEQ_DECIDE_SEND;
+    }
+    break;
+  case SEQ_DECIDE_SEND:
+    if(appwk->parent->intcomm != NULL){
+      if(IntrudeSend_GPowerEquip(appwk->parent->palace_area) == TRUE){
+        *seq = SEQ_DECIDE_STREAM_WAIT;
+      }
+    }
+    else{
       *seq = SEQ_DECIDE_STREAM_WAIT;
     }
     break;
@@ -447,6 +459,12 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
           GAMEDATA *gamedata = GAMESYSTEM_GetGameData(appwk->parent->gsys);
           INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude(GAMEDATA_GetSaveControlWork(gamedata));
           ISC_SAVE_SetGPowerID(intsave, mpw->use_gpower_id[mpw->decide_cursor_pos]);
+        }
+        {
+          GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(appwk->parent->gsys);
+          GameCommInfo_MessageEntry_GetPower(game_comm, 
+            GAMEDATA_GetIntrudeMyID(GAMESYSTEM_GetGameData(appwk->parent->gsys)), 
+            appwk->parent->palace_area);
         }
         appwk->common->power_eqp_update = TRUE;
         mpw->decide_cursor_pos = _CURSOR_POS_NONE;
