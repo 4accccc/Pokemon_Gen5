@@ -1626,7 +1626,8 @@ void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork,int index)
     GFL_ARC_CloseDataHandle(p_handle);
 
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->SearchPeopleOAM , FALSE );
-    GFL_CLACT_WK_SetAnmSeq(pWork->SearchBackOAM, 28+index);
+    GFL_CLACT_WK_SetAnmSeq(pWork->SearchPeopleOAM, 11+index);
+    GFL_CLACT_WK_SetAnmSeq(pWork->SearchBackOAM, 28);
 
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
     pWork->SearchScroll=0;

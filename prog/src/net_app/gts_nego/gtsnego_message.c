@@ -333,7 +333,7 @@ void GTSNEGO_MESSAGE_InfoMessageDispLine(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
 {
   GFL_BMPWIN* pwin;
 
-  GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBufStream );
+  GFL_MSG_GetString( pWork->pMsgData, msgid, pWork->pStrBuf );
   
   if(pWork->infoDispWin==NULL){
     pWork->infoDispWin = GFL_BMPWIN_Create(
@@ -346,8 +346,10 @@ void GTSNEGO_MESSAGE_InfoMessageDispLine(GTSNEGO_MESSAGE_WORK* pWork,int msgid)
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
   GFL_FONTSYS_SetColor(1, 2, 15);
 
-  pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBufStream, pWork->pFontHandle,
-                                        MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
+  PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) , 0, 0, pWork->pStrBuf, pWork->pFontHandle );
+
+//  pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBufStream, pWork->pFontHandle,
+  //                                      MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
 
   BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar1M), _BUTTON_WIN_PAL );
 
@@ -1094,9 +1096,10 @@ APP_TASKMENU_WORK* GTSNEGO_MESSAGE_MatchOrReturnStart(GTSNEGO_MESSAGE_WORK* pWor
   pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 |GX_BLEND_PLANEMASK_BG2| GX_BLEND_PLANEMASK_OBJ , -8 );
   return pAppTask;
 }
+
 
 void GTSNEGO_MESSAGE_AppMenuClose(APP_TASKMENU_WORK* pAppTask)
 {

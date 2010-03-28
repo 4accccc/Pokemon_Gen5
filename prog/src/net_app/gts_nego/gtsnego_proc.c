@@ -504,6 +504,10 @@ static void _messagePMS( GTSNEGO_WORK *pWork )
 #endif
 
   pWork->timer--;
+
+  if(pWork->timer==20){
+    GTSNEGO_MESSAGE_InfoMessageDispLine(pWork->pMessageWork,GTSNEGO_044);
+  }
   if(pWork->timer==0){
     EVENT_GTSNEGO_WORK *pParent = pWork->dbw;
     pParent->result = TRUE;
@@ -511,9 +515,6 @@ static void _messagePMS( GTSNEGO_WORK *pWork )
     GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork, GTSNEGO_040);
     GTSNEGO_MESSAGE_PMSDrawInit(pWork->pMessageWork, pWork->pDispWork);
     GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, pPMS);
-
-    GTSNEGO_MESSAGE_InfoMessageDispLine(pWork->pMessageWork,GTSNEGO_044);
-    
     _CHANGE_STATE(pWork, _messageEnd);
   }
 }
@@ -778,7 +779,6 @@ static void _lookatDownState( GTSNEGO_WORK *pWork )
 
 static void _matchingState( GTSNEGO_WORK *pWork )
 {
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
 #if _DISP_DEBUG
   if(GFL_UI_KEY_GetTrg()==0){
     return;
@@ -955,6 +955,7 @@ static void _levelSelectDecide( GTSNEGO_WORK *pWork )
   GTSNEGO_MESSAGE_TitleMessage(pWork->pMessageWork,GTSNEGO_018);
 
   GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork, &_cancelButtonCallback, pWork );
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0| GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_OBJ , -8 );
 //  GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork);
 //  pWork->pAppWin = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork,GTSNEGO_020);
   _CHANGE_STATE(pWork, _matchKeyMake);
