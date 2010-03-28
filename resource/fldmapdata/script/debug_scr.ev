@@ -123,59 +123,99 @@ EVENT_START ev_debug_masafumi
 	$SCWK_TEMP0 = 0
 	$SCWK_TEMP1 = 0
 	
-//	WHILE $SCWK_TEMP0 != 555
+	//メニュー作成
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_TEMP1 )
+	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_debug_01, 1 )	//テスト01
+	_BMPMENU_MAKE_LIST( msg_debug_02, 2 )	//テスト02
+	_BMPMENU_MAKE_LIST( msg_debug_03, 3 )	//テスト03
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_13, 4 )	//観覧車トレーナー
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_14, 5 )	//カナワタウン
+	_BMPMENU_MAKE_LIST( msg_debug_masafumi_05, 0 )	//四天王部屋
+	_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
+	//メニュー表示
+	_BMPMENU_START()
+	
+	IF $SCWK_TEMP1 == 0 THEN
+		_CALL	ev_bigfour_menu	//四天王部屋
 
-		//メニュー作成
-		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_TEMP1 )
-		//リスト追加
-		_BMPMENU_MAKE_LIST( msg_debug_01, 1 )	//テスト01
-		_BMPMENU_MAKE_LIST( msg_debug_02, 2 )	//テスト02
-		_BMPMENU_MAKE_LIST( msg_debug_03, 3 )	//テスト03
-		_BMPMENU_MAKE_LIST( msg_debug_masafumi_05, 0 )	//四天王部屋
-		_BMPMENU_MAKE_LIST( msg_debug_05, 4 )	//観覧車トレーナー
-		_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
-		//メニュー表示
+	ELSIF $SCWK_TEMP1 == 1 THEN
+		
+		_FLAG_RESET( FV_T01R0201_SUPPORT )
+		
+		//D09崖滑りPOSイベント初期化
+		$WK_SCENE_D09 = 0
+		_FLAG_RESET( FV_D09_VETERANM_01 )
+		_FLAG_SET( FV_D09_VETERANM_02 )
+//		_MAP_CHANGE( ZONE_ID_C04R0305, 10, 27, DIR_UP )
+
+	ELSIF $SCWK_TEMP1 == 2 THEN
+		
+//		_MAP_CHANGE( ZONE_ID_C04R0304, 10, 60, DIR_UP )
+		_MAP_CHANGE( ZONE_ID_C04R0404, 6, 24, DIR_UP )
+//		$WK_SCENE_T01R0101 = 3
+//		$WK_SCENE_T01 = 4
+//		_FLAG_RESET( FV_T01_RIVAL )
+//		_FLAG_RESET( FV_T01_SUPPORT )
+//		_MAP_CHANGE( ZONE_ID_T01R0101, 6, 8, DIR_DOWN )
+
+	ELSIF $SCWK_TEMP1 == 3 THEN
+
+		_MAP_CHANGE( ZONE_ID_C04R0303, 9, 28, DIR_DOWN )
+
+	ELSIF $SCWK_TEMP1 == 4 THEN
+		//観覧車トレーナー
+		_FLAG_RESET( TMFLG_AMUSEMENT_TR_BTL )
+		_FLAG_RESET( FV_AMUSEMENT_TRAINER )
+		_MAP_CHANGE( ZONE_ID_C04P01, 52, 15, DIR_RIGHT )
+ 
+	ELSIF $SCWK_TEMP1 == 5 THEN
+		//カナワタウンの転車台に配置される車両を変更
+		_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_01, 1 )	//シングル
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_02, 2 )	//Ｓシングル
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_03, 3 )	//ダブル
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_04, 4 )	//Ｓダブル
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_05, 5 )	//マルチ
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_06, 6 )	//Ｓマルチ
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_07, 7 )	//Wi-Fi
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_08, 8 )	//カナワ行き
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_09, 9 )	//古いレア
+		_BMPMENU_MAKE_LIST( msg_debug_masafumi_14_10, 10 )	//新しいレア
+		_BMPMENU_MAKE_LIST( msg_debug_01, 0 )	//テスト01（車両なし）
+		_BMPMENU_MAKE_LIST( msg_debug_00, 100 )	//やめる
 		_BMPMENU_START()
-	
-		IF $SCWK_TEMP1 == 0 THEN
-			_CALL	ev_bigfour_menu
-			$SCWK_TEMP0 = 555
-		ELSIF $SCWK_TEMP1 == 1 THEN
-			
-			//D09崖滑りPOSイベント初期化
-			$WK_SCENE_D09 = 0
-			_FLAG_RESET( FV_D09_VETERANM_01 )
-			_FLAG_SET( FV_D09_VETERANM_02 )
-//			_MAP_CHANGE( ZONE_ID_C04R0305, 10, 27, DIR_UP )
-			
-		ELSIF $SCWK_TEMP1 == 2 THEN
-			
-//			_MAP_CHANGE( ZONE_ID_C04R0304, 10, 60, DIR_UP )
-			_MAP_CHANGE( ZONE_ID_C04R0404, 6, 24, DIR_UP )
-//			$WK_SCENE_T01R0101 = 3
-//			$WK_SCENE_T01 = 4
-//			_FLAG_RESET( FV_T01_RIVAL )
-//			_FLAG_RESET( FV_T01_SUPPORT )
-//			_MAP_CHANGE( ZONE_ID_T01R0101, 6, 8, DIR_DOWN )
-			
-			$SCWK_TEMP0 = 555
-		ELSIF $SCWK_TEMP1 == 3 THEN
-			$SCWK_TEMP0 = 555
-			
-			_MAP_CHANGE( ZONE_ID_C04R0303, 9, 28, DIR_DOWN )
-			
-			
-		ELSIF $SCWK_TEMP1 == 4 THEN
-			_FLAG_RESET( TMFLG_AMUSEMENT_TR_BTL )
-			_FLAG_RESET( FV_AMUSEMENT_TRAINER )
-			_MAP_CHANGE( ZONE_ID_C04P01, 52, 15, DIR_RIGHT )
- 			$SCWK_TEMP0 = 555
-			 
-		ELSE
-			$SCWK_TEMP0 = 555
+		
+		SWITCH $SCWK_ANSWER
+		CASE 0 THEN
+			$WK_OTHER_T05_TRAIN = 0
+		CASE 1 THEN
+			$WK_OTHER_T05_TRAIN = 1
+		CASE 2 THEN
+			$WK_OTHER_T05_TRAIN = 2
+		CASE 3 THEN
+			$WK_OTHER_T05_TRAIN = 3
+		CASE 4 THEN
+			$WK_OTHER_T05_TRAIN = 4
+		CASE 5 THEN
+			$WK_OTHER_T05_TRAIN = 5
+		CASE 6 THEN
+			$WK_OTHER_T05_TRAIN = 6
+		CASE 7 THEN
+			$WK_OTHER_T05_TRAIN = 7
+		CASE 8 THEN
+			$WK_OTHER_T05_TRAIN = 8
+		CASE 9 THEN
+			$WK_OTHER_T05_TRAIN = 9
+		CASE 10 THEN
+			$WK_OTHER_T05_TRAIN = 10
+		ENDSWITCH
+		
+		IF $SCWK_ANSWER <= 10 THEN
+			_MAP_CHANGE( ZONE_ID_T05, 25, 38, DIR_UP )
 		ENDIF
-	
-//	ENDWHILE
+		
+	ENDIF
 	
 EVENT_END
 
