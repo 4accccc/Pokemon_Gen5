@@ -227,7 +227,7 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
   
   work->actInitWork->musPoke[0]->charaType = MUS_CHARA_PLAYER;
 
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STRM|HEAPDIR_MASK, 0x80000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STRM|HEAPDIR_MASK, 0x40000 );
   work->actInitWork->distData = MUSICAL_SYSTEM_InitDistributeData( GFL_HEAPID_APP );
   MUSICAL_SYSTEM_LoadDistributeData( work->actInitWork->distData , NULL , 0 , HEAPID_MUSICAL_STRM );
 
