@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="yoshida" host="W00210" date="2010-03-26T20:44:23" source="demo_sinka02.mb"/>
+	<create user="yoshida" host="W00210" date="2010-03-28T14:17:41" source="demo_sinka02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="yoshida" host="W00210" date="2010-03-26T20:44:23" source="demo_sinka02.mb"/>
+<original_create user="yoshida" host="W00210" date="2010-03-28T14:17:41" source="demo_sinka02.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -1844,7 +1844,7 @@
 		volume_max="1.000000 1.000000 0.000000"
 		volume_r="1.414307"
 	>
-		<display index="0" material="0" polygon="0" priority="0"/>
+		<display index="0" material="0" polygon="0" priority="12"/>
 	</node>
 	<node index="2" name="pCylinder2" kind="mesh"
 		parent="0"
@@ -1864,7 +1864,7 @@
 		volume_max="1.000000 1.000000 0.000000"
 		volume_r="1.414307"
 	>
-		<display index="0" material="2" polygon="1" priority="0"/>
+		<display index="0" material="2" polygon="1" priority="13"/>
 	</node>
 	<node index="3" name="pasted01" kind="mesh"
 		parent="0"
@@ -1884,7 +1884,7 @@
 		volume_max="1.000000 1.000000 0.000000"
 		volume_r="1.414307"
 	>
-		<display index="0" material="1" polygon="2" priority="0"/>
+		<display index="0" material="1" polygon="2" priority="11"/>
 	</node>
 </node_array>
 
