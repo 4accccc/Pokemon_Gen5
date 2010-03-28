@@ -178,7 +178,7 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	//ME鳴らす
 	_ME_PLAY( SEQ_ME_KEYITEM )
 	_ME_WAIT()
-
+	_AB_KEYWAIT_MARK()
 	_SYSWIN_CLOSE()
 
 //***********************************************************//
@@ -253,6 +253,9 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	//T01ママのタウンマップ入手イベント有効
 	$WK_SCENE_T01 = 1
 	_FLAG_RESET( FV_T01_MAMA_01 )	//ママを表示
+
+	//スタートメニューに「ふしぎなおくりもの」を追加
+	_SET_STARTMENU_FLAG( SCR_STARTMENU_FLAG_HUSHIGI )
 
 //=======================================================//
 

@@ -256,6 +256,11 @@ _TALK_OBJ_START()
 		//Cギア入手フラグ
 		_FLAG_SET( FE_CGEAR_GET )
 		
+		//スタートメニューに「バトル大会」を追加
+		_SET_STARTMENU_FLAG( SCR_STARTMENU_FLAG_BATTLE )
+		//スタートメニューに「ゲームシンク設定」を追加
+		_SET_STARTMENU_FLAG( SCR_STARTMENU_FLAG_GAMESYNC )
+		
 		//========================================/
 	ELSE
 	
