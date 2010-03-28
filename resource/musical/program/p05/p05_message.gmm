@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2009-09-28T12:57:48"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-28T16:07:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="59" top="226" right="738" bottom="846" maximized="no" rayout="Vertical2">
+	<dialog left="377" top="490" right="1056" bottom="1110" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="161" right="1280" bottom="559" visible="no"/>
 		<band id="0" index="0" style="0000" width="504"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="671"/>
 		<band id="3" index="3" style="0000" width="671"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -335,22 +335,29 @@
 
 	<row id="TITLE">
 		<comment>最初のメッセージはタイトル固定でお願いします</comment>
-		<language name="JPN" width="256">ポケッターリモンスターリ</language>
-		<language name="JPN_KANJI" width="256">ポケッターリモンスターリ</language>
+		<language name="JPN" width="256">ストリーミングきょく</language>
+		<language name="JPN_KANJI" width="256">ストリーミング曲</language>
 	</row>
 
 	<row id="MSG_01">
-		<language name="JPN" width="256">おおきかったり　ちいさかったり
-ふわふわしてたり　そらとんだり</language>
-		<language name="JPN_KANJI" width="256">おおきかったり　ちいさかったり
-ふわふわしてたり　そらとんだり</language>
+		<language name="JPN" width="256">（ストーリーや　かしの）
+（メッセージが　はいります　）</language>
+		<language name="JPN_KANJI" width="256">（ストーリーや　歌詞の）
+（メッセージが　入ります　）</language>
 	</row>
 
 	<row id="MSG_02">
-		<language name="JPN" width="256">みんな　ちがっているけれど
-みんな　いっしょさ　ともだちさ！</language>
-		<language name="JPN_KANJI" width="256">みんな　ちがっているけれど
-みんな　いっしょさ　ともだちさ！</language>
+		<language name="JPN" width="256">（ストーリーや　かしの）
+（メッセージが　はいります　）</language>
+		<language name="JPN_KANJI" width="256">（ストーリーや　歌詞の）
+（メッセージが　入ります　）</language>
+	</row>
+
+	<row id="MSG_03">
+		<language name="JPN" width="256">（ストーリーや　かしの）
+（メッセージが　はいります　）</language>
+		<language name="JPN_KANJI" width="256">（ストーリーや　歌詞の）
+（メッセージが　入ります　）</language>
 	</row>
 
 	<flowchart-group-list>

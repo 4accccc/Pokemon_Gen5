@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2009-12-22T16:21:17"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-28T20:25:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1630" top="592" right="2335" bottom="1220" maximized="no" rayout="Vertical2">
+	<dialog left="339" top="407" right="1044" bottom="1035" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="161" right="1280" bottom="559" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -340,24 +340,24 @@
 	</row>
 
 	<row id="MSG_01">
-		<language name="JPN" width="256">いそげや　いそげ　まよわずすすめ
-なつが　おわってしまう　まえに</language>
-		<language name="JPN_KANJI" width="256">いそげや　いそげ　まよわずすすめ
-なつが　おわってしまう　まえに</language>
+		<language name="JPN" width="256">（ストーリーや　かしの）
+（メッセージが　はいります　）</language>
+		<language name="JPN_KANJI" width="256">（ストーリーや　歌詞の）
+（メッセージが　入ります　）</language>
 	</row>
 
 	<row id="MSG_02">
-		<language name="JPN" width="256">この　じょうねつを　とどけよう
-この　きもちを　きみに　おくろう</language>
-		<language name="JPN_KANJI" width="256">この　じょうねつを　とどけよう
-この　きもちを　きみに　おくろう</language>
+		<language name="JPN" width="256">（ストーリーや　かしの）
+（メッセージが　はいります　）</language>
+		<language name="JPN_KANJI" width="256">（ストーリーや　歌詞の）
+（メッセージが　入ります　）</language>
 	</row>
 
 	<row id="MSG_03">
-		<language name="JPN" width="256">なつの　ひざしに　まけないくらい
-あつい　きもちを　うたにこめて！</language>
-		<language name="JPN_KANJI" width="256">なつの　ひざしに　まけないくらい
-あつい　きもちを　うたにこめて！</language>
+		<language name="JPN" width="256">（ストーリーや　かしの）
+（メッセージが　はいります　）</language>
+		<language name="JPN_KANJI" width="256">（ストーリーや　歌詞の）
+（メッセージが　入ります　）</language>
 	</row>
 
 	<flowchart-group-list>
