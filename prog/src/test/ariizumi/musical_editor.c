@@ -32,6 +32,7 @@
 #include "musical/stage/sta_acting.h"
 #include "musical/stage/sta_act_poke.h"
 #include "musical/musical_camera_def.h"
+#include "musical/musical_shot_sys.h"
 #include "savedata/musical_dist_save.h"
 
 #include "debug/gf_mcs.h"
@@ -217,6 +218,7 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
   int ePos;
   MUS_EDIT_LOCAL_WORK *work;
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x80000 );
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_shot));
 
   work = GFL_PROC_AllocWork( proc, sizeof(MUS_EDIT_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
   work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_STAGE , NULL );
@@ -260,6 +262,8 @@ static GFL_PROC_RESULT MusicalEditProc_Term( GFL_PROC * proc, int * seq , void *
   MUSICAL_STAGE_DeleteStageWork( work->actInitWork );
   GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STAGE );
+
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical_shot));
 
   return GFL_PROC_RES_FINISH;
 }
