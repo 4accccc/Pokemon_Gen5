@@ -183,6 +183,8 @@ extern BOOL GTSNEGO_DISP_CrossIconFlash(GTSNEGO_DISP_WORK* pWork, CROSSCUR_TYPE 
 extern BOOL GTSNEGO_DISP_CrossIconFlashEnd(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_ResetDispSet(GTSNEGO_DISP_WORK* pWork);
 extern void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork);
+extern void GTSNEGO_DISP_FriendSelectFree2(GTSNEGO_DISP_WORK* pWork);
+
 extern void GTSNEGO_DISP_DeleteTouchWork(GTSNEGO_DISP_WORK* pWork);
 
 //extern void GTSNEGO_MESSAGE_PlateDisp(GTSNEGO_MESSAGE_WORK* pWork, MYSTATUS* pMyStatus, int index );

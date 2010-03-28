@@ -340,12 +340,14 @@ static BOOL _AnyoneOrFriendButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
   pWork->changeMode = bttnid;
   if(bttnid==0){
     pWork->key1 = _CROSSCUR_TYPE_MAINUP;
+    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin,pWork->key1);
     _buttonDecide(pWork, pWork->key1);
     _CHANGE_STATE(pWork,_modeSelectMenuFlash);
 
   }
   else{
     pWork->key1 = _CROSSCUR_TYPE_MAINDOWN;
+    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin,pWork->key1);
     _buttonDecide(pWork, pWork->key1);
     _CHANGE_STATE(pWork,_modeSelectMenuFlash);
   }
@@ -1019,6 +1021,7 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
     if(pWork->key2 == _CROSSCUR_TYPE_ANY4){
       PMSND_PlaySystemSE(_SE_DECIDE);
+      GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork , pWork->key2);
       _CHANGE_STATE(pWork, _levelSelectDecide);
       return;
     }
@@ -1032,6 +1035,7 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
   switch(GFL_UI_TP_HitTrg(_tp_data)){
   case 0:
     PMSND_PlaySystemSE(_SE_DECIDE);
+//    pApp
     _CHANGE_STATE(pWork, _levelSelectDecide);
     return;
     break;
@@ -1071,7 +1075,6 @@ static void _levelSelect( GTSNEGO_WORK *pWork )
 {
   pWork->changeMode = 0;
 
-  GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key2);
 
   GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
   GTSNEGO_DISP_LevelInputInit(pWork->pDispWork);
@@ -1083,6 +1086,7 @@ static void _levelSelect( GTSNEGO_WORK *pWork )
 
   GF_ASSERT(pWork->pAppWin==NULL);
   pWork->pAppWin = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork,GTSNEGO_023);
+  GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key2);
 
   _CHANGE_STATE(pWork,_levelSelectWait);
 }
@@ -1248,9 +1252,14 @@ static void _friendSelectDecide2( GTSNEGO_WORK *pWork )
 static void _friendSelectDecide( GTSNEGO_WORK *pWork )
 {
   GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_036);
-
-  
   _CHANGE_STATE(pWork,_friendSelectDecide2);
+}
+
+
+static void _friendSelectBack( GTSNEGO_WORK *pWork )
+{
+  GTSNEGO_DISP_FriendSelectFree2(pWork->pDispWork);
+  _CHANGE_STATE(pWork,_modeSelectMenuInit);
 }
 
 
@@ -1367,6 +1376,8 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
     case 2:
       pWork->key3 = trgindex  + _CROSSCUR_TYPE_FRIEND1;
       GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, NULL, pWork->key3);
+      GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork , pWork->key3);
+
       pWork->selectFriendIndex = pWork->scrollPanelCursor.oamlistpos + pWork->key3  - _CROSSCUR_TYPE_FRIEND1;
       OS_TPrintf("‘I‚ñ‚¾”Ô† %d\n", pWork->selectFriendIndex);
 //      pWork->selectFriendIndex = trgindex;
@@ -1395,9 +1406,10 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
   TOUCHBAR_Main(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork));
   switch( TOUCHBAR_GetTrg(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork))){
   case TOUCHBAR_ICON_RETURN:
+    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin, _CROSSCUR_TYPE_NONE);
     GTSNEGO_DISP_FriendSelectFree(pWork->pDispWork);
     GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
-    _CHANGE_STATE(pWork,_modeSelectMenuInit);
+    _CHANGE_STATE(pWork,_friendSelectBack);
     break;
   default:
     break;
@@ -1556,9 +1568,11 @@ static void _modeSelectMenuFlash(GTSNEGO_WORK* pWork)
 {
   int buttonNo = _buttonCheck(pWork, pWork->key1);
   if(buttonNo==_CROSSCUR_TYPE_MAINUP){
+    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin, _CROSSCUR_TYPE_NONE);
     _CHANGE_STATE(pWork,_levelSelect);
   }
   else if(buttonNo==_CROSSCUR_TYPE_MAINDOWN){
+    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin, _CROSSCUR_TYPE_NONE);
     _CHANGE_STATE(pWork,_friendSelect);
   }
 }

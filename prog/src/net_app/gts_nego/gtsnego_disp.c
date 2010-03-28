@@ -824,7 +824,6 @@ BOOL GTSNEGO_DISP_CrossIconFlash(GTSNEGO_DISP_WORK* pWork, CROSSCUR_TYPE type)
   //  return FALSE;
 //  }
   GFL_CLACT_WK_SetAnmSeq(pWork->crossIcon, crosspos[type].flash);
-  GFL_CLACT_WK_SetDrawEnable(pWork->crossIcon,TRUE);
   return TRUE;
 }
 
@@ -1022,10 +1021,18 @@ void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork)
   int i;
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
 
+  
+  
   GTSNEGO_DISP_DeleteTouchWork(pWork);
   _TOUCHBAR_Init(pWork, _TOUCHBAR_PAL1);
+  _RemoveMenuBarObj(pWork);
+  GFL_ARC_CloseDataHandle(p_handle);
+}
 
-  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
+void GTSNEGO_DISP_FriendSelectFree2(GTSNEGO_DISP_WORK* pWork)
+{
+  int i;
+  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
 
   for(i=0;i<SCROLL_PANEL_NUM;i++){
     if(pWork->unionOAM[i]){
@@ -1033,11 +1040,9 @@ void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork)
       pWork->unionOAM[i]=NULL;
     }
   }
-  _RemoveMenuBarObj(pWork);
   _BGPanelFree(pWork);
 
 
-  
   _DeleteScrollBarObj(pWork);
   
   GFL_BG_FillScreen( GFL_BG_FRAME2_S,	0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
