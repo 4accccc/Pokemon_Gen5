@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-17T21:29:49"/>
+	<create user="matsumiya" host="W00224" date="2010-03-28T18:05:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -351,15 +351,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="134" right="1998" bottom="762" maximized="no" rayout="Vertical2">
+	<dialog left="1419" top="269" right="2123" bottom="896" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="529"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="540"/>
-		<band id="3" index="4" style="0000" width="155"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="3" index="4" style="0000" width="154"/>
+		<band id="4" index="0" style="0000" width="696"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -411,108 +411,132 @@
 		<comment>♀
 ・主人公♂＋春
 ・観覧車その1</comment>
-		<attribute name="キャラ指定">GIRL4</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">わあ……　やっぱ　たかいなあ……
+あ　ダメ……　こわくなってきた……</language>
+		<language name="JPN_KANJI" width="256">わあ……　やっぱ　高いなあ……
+あ　ダメ……　怖くなってきた……</language>
 	</row>
 
 	<row id="msg_wheel_spring_f_02">
 		<comment>♀
 ・主人公♂＋春
 ・観覧車その２</comment>
-		<attribute name="キャラ指定">GIRL4</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">……うう　ゆれる　……　……　……
+こわいよ……　……たかいよお……</language>
+		<language name="JPN_KANJI" width="256">……うう　ゆれる……　……　……
+怖いよ……　……高いよお……</language>
 	</row>
 
 	<row id="msg_wheel_spring_f_03">
 		<comment>♀
 ・主人公♂＋春
 ・観覧車その３</comment>
-		<attribute name="キャラ指定">GIRL4</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">あ　ダメ……　もう　げんかい……
+こっち……　ね　そばに　きて……</language>
+		<language name="JPN_KANJI" width="256">あ　ダメ　……　もう　限界　……
+こっち　……　ね　側に　きて　……</language>
 	</row>
 
-	<row id="msg_wheel_spring_m_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
+	<row id="msg_wheel_spring_m_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
 		<comment>♂
 ・主人公♀＋春
 ・観覧車その1</comment>
-		<attribute name="キャラ指定">BOY4</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">DANCER</attribute>
+		<language name="JPN" width="256">……のぼってる　のぼってる……　
+オオ　いがいに　スピードあるな　コレ</language>
+		<language name="JPN_KANJI" width="256">……上ってる　上ってる……　
+オオ　意外に　スピードあるな　コレ</language>
 	</row>
 
 	<row id="msg_wheel_spring_m_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
 		<comment>♂
 ・主人公♀＋春
 ・観覧車その２</comment>
-		<attribute name="キャラ指定">BOY4</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">DANCER</attribute>
+		<language name="JPN" width="256">お！　ちょっと　こっち　きてみろよ！
+ほらアレアレ！　って　あっ……　……</language>
+		<language name="JPN_KANJI" width="256">お！　ちょっと　こっち　来てみろよ！
+ほらアレアレ！　って　あっ……　……</language>
 	</row>
 
 	<row id="msg_wheel_spring_m_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
 		<comment>♂
 ・主人公♀＋春
 ・観覧車その３</comment>
-		<attribute name="キャラ指定">BOY4</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">DANCER</attribute>
+		<language name="JPN" width="256">……　……　……　……　……　……
+……　……　……　……　……　……</language>
+		<language name="JPN_KANJI" width="256">……　……　……　……　……　……
+……　……　……　……　……　……</language>
 	</row>
 
 	<row id="msg_wheel_summer_f_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♀
+		<comment>♂
 ・主人公♂＋夏
 ・観覧車その1</comment>
-		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">MOUNTMAN</attribute>
+		<language name="JPN" width="256">オオウ……　ムシムシとして……
+まるで　サウナだな　しょうねん！</language>
+		<language name="JPN_KANJI" width="256">オオウ……　ムシムシとして……
+まるで　サウナだな　しょうねん！</language>
 	</row>
 
 	<row id="msg_wheel_summer_f_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♀
+		<comment>♂
 ・主人公♂＋夏
 ・観覧車その２</comment>
-		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">MOUNTMAN</attribute>
+		<language name="JPN" width="256">アアア　あついなア……　しょうねんの
+はだを　あせが　つたっているぞ……</language>
+		<language name="JPN_KANJI" width="256">アアア　熱いなア……　少年の
+肌を　汗が　伝っているぞ……</language>
 	</row>
 
 	<row id="msg_wheel_summer_f_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♀
+		<comment>♂
 ・主人公♂＋夏
 ・観覧車その３</comment>
-		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">MOUNTMAN</attribute>
+		<language name="JPN" width="256">ところで……　……
+すきなひとは　いないのか？</language>
+		<language name="JPN_KANJI" width="256">ところで……　……
+好きな人は　いないのか？</language>
 	</row>
 
 	<row id="msg_wheel_summer_m_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公♀＋夏
 ・観覧車その1</comment>
-		<attribute name="キャラ指定">WAITER</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">オオ　そうぞう　いじょうに　たかい
+アア　そうぞう　いじょうに　ゆれる</language>
+		<language name="JPN_KANJI" width="256">オオ　想像　以上に　高い
+アア　想像　以上に　ゆれる</language>
 	</row>
 
 	<row id="msg_wheel_summer_m_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公♀＋夏
 ・観覧車その２</comment>
-		<attribute name="キャラ指定">WAITER</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">オイ　うごくなよお！　おちるでしょ！
+おねがいだから　うごかないでー！！</language>
+		<language name="JPN_KANJI" width="256">オイ　動くなよお！　落ちるでしょ！
+お願いだから　動かないでー！！</language>
 	</row>
 
-	<row id="msg_wheel_summer_m_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_wheel_summer_m_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公♀＋夏
 ・観覧車その３</comment>
-		<attribute name="キャラ指定">WAITER</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">あ……　もうダメ……　げんかいです
+……て　……て　つないで　いい？</language>
+		<language name="JPN_KANJI" width="256">あ……　もうダメ……　限界です
+……手　……手　つないで　いい？</language>
 	</row>
 
 	<row id="msg_wheel_fall_f_01">
@@ -520,8 +544,10 @@
 ・主人公♂＋秋
 ・観覧車その1</comment>
 		<attribute name="キャラ指定">OL</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">すてきな　ながめ　……　……なのに
+……　……　……　……　グスッ……</language>
+		<language name="JPN_KANJI" width="256">素敵な　眺め　……　……なのに
+……　……　……　……　グスッ……</language>
 	</row>
 
 	<row id="msg_wheel_fall_f_02">
@@ -529,8 +555,10 @@
 ・主人公♂＋秋
 ・観覧車その２</comment>
 		<attribute name="キャラ指定">OL</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">……グスッ　……ごめん　……
+……　……　……となり　いい？</language>
+		<language name="JPN_KANJI" width="256">……グスッ　……ごめん　……
+……　……　……となり　いい？</language>
 	</row>
 
 	<row id="msg_wheel_fall_f_03">
@@ -538,89 +566,109 @@
 ・主人公♂＋秋
 ・観覧車その３</comment>
 		<attribute name="キャラ指定">OL</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<language name="JPN" width="256">おりるまでで　いいから……　……
+この　ままで……　おねがい……</language>
+		<language name="JPN_KANJI" width="256">降りるまでで　いいから……　……
+この　ままで……　お願い……</language>
 	</row>
 
 	<row id="msg_wheel_fall_m_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
-		<comment>♂
+		<comment>♀
 ・主人公♀＋秋
 ・観覧車その1</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">WAITRESS</attribute>
+		<language name="JPN" width="256">……　……　……　……　……　……
+せっかくだし　おしゃべり　しません？</language>
+		<language name="JPN_KANJI" width="256">……　……　……　……　……　……
+せっかくだし　おしゃべり　しません？</language>
 	</row>
 
-	<row id="msg_wheel_fall_m_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
-		<comment>♂
+	<row id="msg_wheel_fall_m_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+		<comment>♀
 ・主人公♀＋秋
 ・観覧車その２</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">WAITRESS</attribute>
+		<language name="JPN" width="256">……なんですよ　……　……　やだー！
+そしたら……　……　そうそう……</language>
+		<language name="JPN_KANJI" width="256">……なんですよ　……　……　やだー！
+そしたら……　……　そうそう……</language>
 	</row>
 
-	<row id="msg_wheel_fall_m_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,,">
-		<comment>♂
+	<row id="msg_wheel_fall_m_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,,">
+		<comment>♀
 ・主人公♀＋秋
 ・観覧車その３</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">WAITRESS</attribute>
+		<language name="JPN" width="256">……　すきだよって……　うそばっか
+……　……が　いたんですよー……</language>
+		<language name="JPN_KANJI" width="256">……　好きだよって……　うそばっか
+……　……が　いたんですよー……</language>
 	</row>
 
 	<row id="msg_wheel_winter_f_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・主人公♂＋冬
 ・観覧車その1</comment>
-		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">BABYGIRL2</attribute>
+		<language name="JPN" width="256">わーいわーい！　くるくる　まわるー！
+わーいわーい！　どんどん　あがるー！</language>
+		<language name="JPN_KANJI" width="256">わーいわーい！　くるくる　回るー！
+わーいわーい！　どんどん　上がるー！</language>
 	</row>
 
 	<row id="msg_wheel_winter_f_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・主人公♂＋冬
 ・観覧車その２</comment>
-		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">BABYGIRL2</attribute>
+		<language name="JPN" width="256">わーい！　たかーい！　たかいぞー！！
+えへへ　おにーちゃん！　たのしーね！</language>
+		<language name="JPN_KANJI" width="256">わーい！　高ーい！　高いぞー！！
+えへへ　おにーちゃん！　楽しーね！</language>
 	</row>
 
 	<row id="msg_wheel_winter_f_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・主人公♂＋冬
 ・観覧車その３</comment>
-		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">BABYGIRL2</attribute>
+		<language name="JPN" width="256">ねー　おにーちゃん！　おひざの
+うえに　のっかっても　いーい？</language>
+		<language name="JPN_KANJI" width="256">ねー　おにーちゃん！　おひざの
+上に　乗っても　いーい？</language>
 	</row>
 
 	<row id="msg_wheel_winter_m_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公♀＋冬
 ・観覧車その1</comment>
-		<attribute name="キャラ指定">TRAINERM</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">BOY4</attribute>
+		<language name="JPN" width="256">わあ　まちが　どんどん　ちいさく……　
+とても　きれい　ゴホッ！　ゴホッ！</language>
+		<language name="JPN_KANJI" width="256">わあ　町が　どんどん　小さく……　
+とても　きれい　ゴホッ！　ゴホッ！</language>
 	</row>
 
-	<row id="msg_wheel_winter_m_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_wheel_winter_m_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公♀＋冬
 ・観覧車その２</comment>
-		<attribute name="キャラ指定">TRAINERM</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">BOY4</attribute>
+		<language name="JPN" width="256">……　……　ゴホッ！　ごめん……
+すこし　ひえただけ　だから……</language>
+		<language name="JPN_KANJI" width="256">……　……　ゴホッ！　ごめん……
+すこし　冷えただけ　だから……</language>
 	</row>
 
-	<row id="msg_wheel_winter_m_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_wheel_winter_m_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公♀＋冬
 ・観覧車その３</comment>
-		<attribute name="キャラ指定">TRAINERM</attribute>
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+		<attribute name="キャラ指定">BOY4</attribute>
+		<language name="JPN" width="256">……　ありがとう……　あたたかい……
+あなたは……　やさしい　ひとだね……</language>
+		<language name="JPN_KANJI" width="256">……　ありがとう……　暖かい……
+あなたは……　優しい　人だね……</language>
 	</row>
 
 	<flowchart-group-list>
