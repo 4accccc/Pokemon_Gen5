@@ -65,7 +65,7 @@ EVENT_START ev_union_guide_00
     	_PLAINWIN_MSG_DOWN( msg_union_info_01_03 )
 
   		//メニュー作成
-  		_BMPMENU_INIT_EX( 1, 1, 0, 1, lwk_bmpans )
+  		_BMPMENU_INIT_EX(  MENU_X1, MENU_Y1, 0, 1, lwk_bmpans )
   		//リスト追加
   		_BMPMENU_MAKE_LIST( msg_union_info_03_09, 4 )	//チャット
   		_BMPMENU_MAKE_LIST( msg_union_info_03_04, 0 )	//対戦
