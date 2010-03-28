@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-27T17:19:33"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-03-28T17:05:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,43 +292,91 @@
 	</lock>
 
 
-	<row id="msg_c04r0301_infomationw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0301_infomationw_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・仮メッセージ
-・月曜日</comment>
+・アメフト試合中</comment>
 		<attribute name="キャラ指定">INFOMATIONW
 受付♀</attribute>
-		<language name="JPN" width="256">ほんじつ　しあいは　ございませんが
-かんきゃくせきから　せんしゅの[BE:00:ページ切り替え（行送り）]
-れんしゅうを　みることは　できますよ</language>
-		<language name="JPN_KANJI" width="256">本日　試合は　ございませんが
-選手の　練習をみることは　できますよ</language>
+		<language name="JPN" width="256">ただいま　アメフトが
+しあいちゅう　です！</language>
+		<language name="JPN_KANJI" width="256">ただいま　アメフトが
+しあいちゅう　です！</language>
 	</row>
 
-	<row id="msg_c04r0301_infomationw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0301_infomationw_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・仮メッセージ
-・月曜日以外</comment>
-		<language name="JPN" width="256">ほんじつ　しあいは　ございませんが
-かんきゃくせきから　せんしゅの[BE:00:ページ切り替え（行送り）]
-れんしゅうを　みることは　できますよ</language>
-		<language name="JPN_KANJI" width="256">本日　試合は　ございませんが
-選手の　練習をみることは　できますよ</language>
+・アメフト練習時間（対戦できる）</comment>
+		<attribute name="キャラ指定">INFOMATIONW
+受付♀</attribute>
+		<language name="JPN" width="256">ただいま　アメフトが
+れんしゅうちゅう　です▼
+きょうぎじょうで　せんしゅと　あくしゅ！</language>
+		<language name="JPN_KANJI" width="256">ただいま　やきゅうが
+れんしゅうちゅう　です▼
+きょうぎじょうで　せんしゅと　あくしゅ！</language>
 	</row>
 
-	<row id="msg_c04r0301_trainerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0301_infomationw_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・野球試合中</comment>
+		<attribute name="キャラ指定">INFOMATIONW
+受付♀</attribute>
+		<language name="JPN" width="256">ただいま　やきゅうが
+しあいちゅう　です！</language>
+		<language name="JPN_KANJI" width="256">ただいま　やきゅうが
+しあいちゅう　です！</language>
+	</row>
+
+	<row id="msg_c04r0301_infomationw_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・野球練習時間（対戦できる）</comment>
+		<attribute name="キャラ指定">INFOMATIONW
+受付♀</attribute>
+		<language name="JPN" width="256">ただいま　やきゅうが
+れんしゅうちゅう　です▼
+きょうぎじょうで　せんしゅと　あくしゅ！</language>
+		<language name="JPN_KANJI" width="256">ただいま　やきゅうが
+れんしゅうちゅう　です▼
+きょうぎじょうで　せんしゅと　あくしゅ！</language>
+	</row>
+
+	<row id="msg_c04r0301_infomationw_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・サッカー試合中</comment>
+		<attribute name="キャラ指定">INFOMATIONW
+受付♀</attribute>
+		<language name="JPN" width="256">ただいま　サッカーが
+しあいちゅう　です！</language>
+		<language name="JPN_KANJI" width="256">ただいま　サッカーが
+しあいちゅう　です！</language>
+	</row>
+
+	<row id="msg_c04r0301_infomationw_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・サッカー練習時間（対戦できる）</comment>
+		<attribute name="キャラ指定">INFOMATIONW
+受付♀</attribute>
+		<language name="JPN" width="256">ただいま　サッカーが
+れんしゅうちゅう　です▼
+きょうぎじょうで　せんしゅと　あくしゅ！</language>
+		<language name="JPN_KANJI" width="256">ただいま　サッカーが
+れんしゅうちゅう　です▼
+きょうぎじょうで　せんしゅと　あくしゅ！</language>
+	</row>
+
+	<row id="msg_c04r0301_trainerm_01">
 		<comment>♂
-・仮メッセージ</comment>
+・分岐なし</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
-		<language name="JPN" width="256">こどものころってさ　やきゅうせんしゅや
+		<language name="JPN" width="256">こどものころってさ
 スポーツせんしゅに　あこがれるよな</language>
-		<language name="JPN_KANJI" width="256">子供のころってさ　野球選手や
+		<language name="JPN_KANJI" width="256">子供のころってさ
 スポーツ選手に　あこがれるよな</language>
 	</row>
 
-	<row id="msg_c04r0301_ol_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0301_ol_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀
-・仮メッセージ</comment>
+・分岐なし</comment>
 		<attribute name="キャラ指定">OL</attribute>
 		<language name="JPN" width="256">すきな　せんしゅと
 おそろいの　ポケモン　そだてているの</language>
@@ -336,9 +384,23 @@
 おそろいの　ポケモン　育てているの</language>
 	</row>
 
-	<row id="msg_c04r0301_boy2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0301_boy2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
+・アメフトのとき
+試合中は非表示</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">ぼくが　モンスターボールを
+なげるときは　あの　アメフトの[BE:00:ページ切り替え（行送り）]
+なげかたを　まねしているんだ！</language>
+		<language name="JPN_KANJI" width="256">ぼくが　モンスターボールを
+投げるときは　あの　アメフトの[BE:00:ページ切り替え（行送り）]
+投げ方を　マネしているんだ！</language>
+	</row>
+
+	<row id="msg_c04r0301_boy2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・野球のとき
+試合中は非表示</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">ぼくが　モンスターボールを
 なげるときは　あの　ピッチャーの[BE:00:ページ切り替え（行送り）]
@@ -348,21 +410,68 @@
 投げ方を　マネしているんだ！</language>
 	</row>
 
-	<row id="msg_c04r0301_baseballm_01">
+	<row id="msg_c04r0301_boy2_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
-・仮メッセージ</comment>
+・サッカーのとき
+試合中は非表示</comment>
+		<attribute name="キャラ指定">BOY2</attribute>
+		<language name="JPN" width="256">ぼくが　モンスターボールを
+なげるときは　あの　キーパーの[BE:00:ページ切り替え（行送り）]
+なげかたを　まねしているんだ！</language>
+		<language name="JPN_KANJI" width="256">ぼくが　モンスターボールを
+投げるときは　あの　キーパーの[BE:00:ページ切り替え（行送り）]
+投げ方を　マネしているんだ！</language>
+	</row>
+
+	<row id="msg_c04r0301_footballm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+試合中は非表示</comment>
+		<attribute name="キャラ指定">FOOTBALLM</attribute>
+		<language name="JPN" width="256">あはは！　ぼく　アメフトせんしゅ！[BE:01:ページ切り替え（クリア）]
+てを　けがしているから
+サインは　できないんだ！　ごめん！[BE:01:ページ切り替え（クリア）]
+で　キミは　トレーナーカードに
+どんな　サインを　かいているのかな？</language>
+		<language name="JPN_KANJI" width="256">あはは！　ボク　アメフト選手！[BE:01:ページ切り替え（クリア）]
+手を　怪我しているから
+サインは　できないんだ！　ごめん！[BE:01:ページ切り替え（クリア）]
+で　キミは　トレーナーカードに
+どんな　サインを　かいているのかな？</language>
+	</row>
+
+	<row id="msg_c04r0301_baseballm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+試合中は非表示</comment>
 		<attribute name="キャラ指定">BASEBALLM</attribute>
-		<language name="JPN" width="256">あはは！　てを　けがしているから
+		<language name="JPN" width="256">あはは！　ぼく　やきゅうせんしゅ！[BE:01:ページ切り替え（クリア）]
+てを　けがしているから
 サインは　できないんだ！　ごめん！[BE:01:ページ切り替え（クリア）]
 で　キミは　トレーナーカードに
 どんな　サインを　かいているのかな？</language>
-		<language name="JPN_KANJI" width="256">あはは！　手を　怪我しているから
+		<language name="JPN_KANJI" width="256">あはは！　ボク　野球選手！[BE:01:ページ切り替え（クリア）]
+手を　怪我しているから
 サインは　できないんだ！　ごめん！[BE:01:ページ切り替え（クリア）]
 で　キミは　トレーナーカードに
 どんな　サインを　かいているのかな？</language>
 	</row>
 
-	<row id="msg_c04r0301_policeman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0301_soccerm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+試合中は非表示</comment>
+		<attribute name="キャラ指定">SOCCERM</attribute>
+		<language name="JPN" width="256">あはは！　ぼく　サッカーせんしゅ！[BE:01:ページ切り替え（クリア）]
+てを　けがしているから
+サインは　できないんだ！　ごめん！[BE:01:ページ切り替え（クリア）]
+で　キミは　トレーナーカードに
+どんな　サインを　かいているのかな？</language>
+		<language name="JPN_KANJI" width="256">あはは！　ボク　サッカー選手！[BE:01:ページ切り替え（クリア）]
+手を　怪我しているから
+サインは　できないんだ！　ごめん！[BE:01:ページ切り替え（クリア）]
+で　キミは　トレーナーカードに
+どんな　サインを　かいているのかな？</language>
+	</row>
+
+	<row id="msg_c04r0301_policeman1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ストッパー</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
@@ -374,7 +483,7 @@
 スタジアムには　行けません</language>
 	</row>
 
-	<row id="msg_c04r0301_policeman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0301_policeman2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ストッパー</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
@@ -386,7 +495,7 @@
 スタジアムには　行けません</language>
 	</row>
 
-	<row id="msg_c04r0301_policeman3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0301_policeman3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ストッパー</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
