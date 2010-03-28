@@ -8,6 +8,14 @@
 #ifndef ZONE_D10R0201_EVC_H
 #define ZONE_D10R0201_EVC_H
 
+#define D10R0201_FLD_ITEM_01               0
+#define D10R0201_FLD_ITEM_02               1
+#define D10R0201_FLD_ITEM_03               2
+#define D10R0201_FLD_ITEM_04               3
+#define D10R0201_FLD_ITEM_05               4
+#define D10R0201_FLD_ITEM_06               5
+#define D10R0201_FLD_ITEM_07               6
+#define D10R0201_FLD_ITEM_08               7
 
 #endif //ZONE_D10R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d10r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
