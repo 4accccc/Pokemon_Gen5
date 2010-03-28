@@ -33,14 +33,14 @@ EVENT_START ev_badgeparty
     _TALK_OBJ_START()
 
     //前説
-    _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_01 )
+    _BALLOONWIN_OBJMSG_POS( msg_badgeparty_01, SCWK_TARGET_OBJID, POS_D )
     _YES_NO_WIN( SCWK_ANSWER )
     _BALLOONWIN_CLOSE()
 
     IF $SCWK_ANSWER == SCR_NO THEN
 
         //「わたしが　みなくても～」
-        _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_02 )
+        _BALLOONWIN_OBJMSG_POS( msg_badgeparty_02, SCWK_TARGET_OBJID, POS_D )
         _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
 
@@ -65,10 +65,10 @@ sub_badgeparty:
     DEFINE_LOCAL  SEL_POS
 
     //「どの　ジムバッジを　みましょうか？」
-    _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_03 )
+    _BALLOONWIN_OBJMSG_POS( msg_badgeparty_03, SCWK_TARGET_OBJID, POS_D )
 
     // X=1,Y=1,カーソル初期位置=0,Bキャンセル=1(有効)
-    _BMPMENU_INIT_EX( 1, 1, 0, 1, SEL_POS )
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SEL_POS )
     _GET_BADGE_FLAG( SCWK_ANSWER, BADGE_ID_01 )
     IF $SCWK_ANSWER == TRUE THEN
         _BMPMENU_MAKE_LIST( msg_badgeparty_select_01, BADGE_ID_01 )
@@ -110,7 +110,7 @@ sub_badgeparty:
 
     IF $SEL_POS == EV_WIN_B_CANCEL THEN
         //「わたしが　みなくても～」
-        _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_02 )
+        _BALLOONWIN_OBJMSG_POS( msg_badgeparty_02, SCWK_TARGET_OBJID, POS_D )
         _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
         $select_result = FALSE
@@ -120,21 +120,21 @@ sub_badgeparty:
     // 「あなたが　～バッジを　てにしたときの…」
     SWITCH $SEL_POS
     CASE BADGE_ID_01 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_04 )
+      _BALLOONWIN_OBJMSG_POS( msg_badgeparty_04, SCWK_TARGET_OBJID, POS_D )
     CASE BADGE_ID_02 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_05 )
+      _BALLOONWIN_OBJMSG_POS( msg_badgeparty_05, SCWK_TARGET_OBJID, POS_D )
     CASE BADGE_ID_03 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_06 )
+      _BALLOONWIN_OBJMSG_POS( msg_badgeparty_06, SCWK_TARGET_OBJID, POS_D )
     CASE BADGE_ID_04 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_07 )
+      _BALLOONWIN_OBJMSG_POS( msg_badgeparty_07, SCWK_TARGET_OBJID, POS_D )
     CASE BADGE_ID_05 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_08 )
+      _BALLOONWIN_OBJMSG_POS( msg_badgeparty_08, SCWK_TARGET_OBJID, POS_D )
     CASE BADGE_ID_06 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_09 )
+      _BALLOONWIN_OBJMSG_POS( msg_badgeparty_09, SCWK_TARGET_OBJID, POS_D )
     CASE BADGE_ID_07 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_10 )
+      _BALLOONWIN_OBJMSG_POS( msg_badgeparty_10, SCWK_TARGET_OBJID, POS_D )
     CASE BADGE_ID_08 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_11 )
+      _BALLOONWIN_OBJMSG_POS( msg_badgeparty_11, SCWK_TARGET_OBJID, POS_D )
     ENDSWITCH
     _BALLOONWIN_CLOSE()
 
@@ -145,22 +145,22 @@ sub_badgeparty:
 
     SWITCH $SCWK_ANSWER
     CASE 1 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_12 )
+      _BALLOONWIN_OBJMSG_POS( msg_badgeparty_12, SCWK_TARGET_OBJID, POS_D )
     CASE 2 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_13 )
+      _BALLOONWIN_OBJMSG_POS( msg_badgeparty_13, SCWK_TARGET_OBJID, POS_D )
     CASE 3 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_14 )
+      _BALLOONWIN_OBJMSG_POS( msg_badgeparty_14, SCWK_TARGET_OBJID, POS_D )
     CASE 4 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_15 )
+      _BALLOONWIN_OBJMSG_POS( msg_badgeparty_15, SCWK_TARGET_OBJID, POS_D )
     CASE 5 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_16 )
+      _BALLOONWIN_OBJMSG_POS( msg_badgeparty_16, SCWK_TARGET_OBJID, POS_D )
     CASE 6 THEN
-      _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_17 )
+      _BALLOONWIN_OBJMSG_POS( msg_badgeparty_17, SCWK_TARGET_OBJID, POS_D )
     ENDSWITCH
     _BALLOONWIN_CLOSE()
 
     //「ほかの　ジムバッジも　みましょうか？」
-    _BALLOONWIN_TALKOBJ_MSG( msg_badgeparty_18 )
+    _BALLOONWIN_OBJMSG_POS( msg_badgeparty_18, SCWK_TARGET_OBJID, POS_D )
     _YES_NO_WIN( SCWK_ANSWER )
     _BALLOONWIN_CLOSE()
     IF $SCWK_ANSWER == SCR_NO THEN
