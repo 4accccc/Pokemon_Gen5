@@ -22,6 +22,8 @@
 #include "net_app/mystery.h"
 #include "system/gfl_use.h"
 
+#include "net_app/gts_tool.h"
+
 //--------------------------------------------------------------
 /**
  * @brief  不思議データからのポケモン作成
@@ -130,7 +132,20 @@ POKEMON_PARAM* MYSTERY_CreatePokemon(const GIFT_PACK_DATA* pPack, HEAPID heapID,
   PP_Put(pp, ID_PARA_strong, pGift->strong);  
   PP_Put(pp, ID_PARA_fur, pGift->strong);  
 
-//  u16 ribbon_no;        //リボンビット 16本  @todo 下山田さん待ち
+  //リボン設定
+  { 
+    int i;
+    u32 id_para_ribbon;
+    for( i = 0; i < GTS_TOOL_GetDistributeRibbonMax(); i++ )
+    { 
+      if( (pGift->ribbon_no & (1<<i)) != 0 )
+      { 
+        id_para_ribbon  = GTS_TOOL_GetDistributeRibbon( i );
+        PP_Put(pp, id_para_ribbon, TRUE );  
+      }
+    }
+  }
+
 
   if(pGift->version!=0){
     PP_Put(pp, ID_PARA_get_cassette, pGift->version);
@@ -170,19 +185,25 @@ POKEMON_PARAM* MYSTERY_CreatePokemon(const GIFT_PACK_DATA* pPack, HEAPID heapID,
     PP_Put(pp, ID_PARA_tamago_flag, TRUE);
   }
 
-  //配布ポケモン
+  //配布ポケモンフラグ＋トレーナーメモ
   { 
+    const u32 year    = MYSTERYDATA_GetYear( pPack->recv_date );
+    const u32 month   = MYSTERYDATA_GetMonth( pPack->recv_date );
+    const u32 day     = MYSTERYDATA_GetDay( pPack->recv_date );
+    u32 place;
+
+    //タマゴならばGetPlace
+    //ポケモンならばBirthPlace
     if( pGift->egg )
     {
-      //タマゴなら生まれた場所から検索する
-      POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_DISTRIBUTION,
-          NULL, pGift->birth_place, heapID );
+      place = pGift->get_place;
     }
     else
     { 
-      POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_DISTRIBUTION,
-          NULL, pGift->get_place, heapID );
+      place = pGift->birth_place;
     }
+
+    POKE_MEMO_SetTrainerMemoPokeDistribution( PP_GetPPPPointer(pp) , place , year , month , day );
   }
 
   PP_Renew( pp );
