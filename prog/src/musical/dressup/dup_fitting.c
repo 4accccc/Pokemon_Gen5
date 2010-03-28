@@ -19,6 +19,7 @@
 #include "dressup_gra.naix"
 #include "msg/msg_dress_up.h"
 
+#include "field/field_sound.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "infowin/infowin.h"
@@ -590,10 +591,9 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   case DUS_FADEIN_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      // TODO 現在デモ機能OFF
-      /*
-      if( DUP_FIT_ITEMGROUP_GetItemNum(work->itemGroupField) == 0 )
+      if( MUSICAL_SAVE_IsLookDemo(work->initWork->mus_save) == FALSE )
       {
+        MUSICAL_SAVE_SetLookDemo(work->initWork->mus_save , TRUE );
         //フィールドにアイテム無かったらデモ
         DUP_DEMO_DemoStart( work );
       }
@@ -601,8 +601,6 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       {
         work->state = DUS_FITTING_MAIN;
       }
-      */
-      work->state = DUS_FITTING_MAIN;
     }
     //初回回転アニメのためフェードイン中でも動かす
     if( work->isSortAnime == TRUE )
@@ -612,7 +610,8 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     break;
     
   case DUS_FADEOUT_WAIT:
-    if( WIPE_SYS_EndCheck() == TRUE )
+    if( WIPE_SYS_EndCheck() == TRUE &&
+        PMSND_CheckFadeOnBGM() == FALSE )
     {
       return FIT_RET_GO_END;
     }
@@ -681,6 +680,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       {
         WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                         WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
+        PMSND_FadeOutBGM( FSND_FADE_NORMAL );
         work->state = DUS_FADEOUT_WAIT;
         work->isOpenCurtain = TRUE;
       }
@@ -704,6 +704,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     {
         WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                         WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
+        PMSND_FadeOutBGM( FSND_FADE_NORMAL );
         work->state = DUS_FADEOUT_WAIT;
         work->isOpenCurtain = TRUE;
     }
@@ -3253,7 +3254,7 @@ static void DUP_DEMO_DemoMain( FITTING_WORK *work )
   case 5:
     {
       const GFL_POINT start ={ 162,120 };
-      const GFL_POINT end   ={ 208,160 };
+      const GFL_POINT end   ={ 192,160 };
       DUP_DEMO_DemoPhaseDragPen( work , &start , &end , 60 );
     }
     break;
@@ -3262,7 +3263,7 @@ static void DUP_DEMO_DemoMain( FITTING_WORK *work )
     break;
   case 7:
     {
-      const GFL_POINT start ={ 208,160 };
+      const GFL_POINT start ={ 192,160 };
       const GFL_POINT end   ={ 162,120 };
       DUP_DEMO_DemoPhaseDragPen( work , &start , &end , 60 );
     }

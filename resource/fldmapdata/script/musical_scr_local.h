@@ -5,6 +5,8 @@
 //
 //======================================================================
 
+#define MUSICAL_FITTING_BGM (SEQ_BGM_MSL_DRESSUP)
+
 //イベントで渡すグッズ
 #define MUSICAL_GOODS_KEEKI (24)
 #define MUSICAL_GOODS_KURAUN (55)

@@ -297,3 +297,12 @@ const u16 MUSICAL_SAVE_GetSumPoint( MUSICAL_SAVE *musSave )
   return musSave->sumPoint;
 }
 
+const BOOL MUSICAL_SAVE_IsLookDemo( MUSICAL_SAVE *musSave )
+{
+  return musSave->isLookDemo;
+}
+
+void MUSICAL_SAVE_SetLookDemo( MUSICAL_SAVE *musSave , const BOOL flg )
+{
+  musSave->isLookDemo = flg;
+}

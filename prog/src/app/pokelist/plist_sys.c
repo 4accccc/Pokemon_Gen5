@@ -1561,7 +1561,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
           {
             //ƒŒƒxƒ‹‚¾‚¯•\Ž¦HP•Ï‚í‚é‚Ì‚ÅResetParam‚ðŽg‚¤
             PLIST_PLATE_ResetParam( work , work->plateWork[work->pokeCursor] , work->selectPokePara , 0 );
-            PMSND_PlaySystemSE( PLIST_SND_LVUP );
+            //PMSND_PlaySystemSE( PLIST_SND_LVUP );
           }
           else
           {

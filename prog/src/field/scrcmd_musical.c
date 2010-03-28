@@ -97,6 +97,7 @@ static void EvCmdMusical_InitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork , G
 static void EvCmdMusical_ExitCommon_Comm( MUSICAL_SCRIPT_WORK *musScriptWork );
 
 static GMEVENT_RESULT event_Musical( GMEVENT *event, int *seq, void *work );
+static GMEVENT_RESULT event_Fitting( GMEVENT *event, int *seq, void *work );
 static void EvCmdMusicalShotCallProc_CallBack( void* work );
 static void EvCmdFittingCallProc_CallBack( CALL_PROC_WORK* work );
 static void EvCmdIrcEntry_CallBack( void* work );
@@ -202,11 +203,17 @@ VMCMD_RESULT EvCmdMusicalFittingCall( VMHANDLE *core, void *wk )
     POKEMON_PARAM *pokePara = PokeParty_GetMemberPointer( party , pokeIdx );
     MUSICAL_POKE_PARAM *musPoke = MUSICAL_SYSTEM_InitMusPoke( pokePara , HEAPID_PROC );
 
-    EV_FITTING_CALL_WORK *callWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(EV_FITTING_CALL_WORK) );
+    EV_FITTING_CALL_WORK *callWork;
+
+    event = GMEVENT_Create( gsys, NULL, event_Fitting, sizeof(EV_FITTING_CALL_WORK) );
+    callWork = GMEVENT_GetEventWork( event );
+  	MI_CpuClear8( callWork, sizeof(EV_FITTING_CALL_WORK) );
+
     callWork->initWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(DRESSUP_INIT_WORK) );
     callWork->initWork->musPoke = musPoke;
     callWork->initWork->mus_save = musSave;
     callWork->initWork->commWork = NULL;
+    SCRIPT_CallEvent( sc, event );
     
     //試着室呼び出し
 //    event = EVENT_FieldSubProc_Callback( gsys, fieldmap, 
@@ -214,9 +221,9 @@ VMCMD_RESULT EvCmdMusicalFittingCall( VMHANDLE *core, void *wk )
 //                                         EvCmdFittingCallProc_CallBack, callWork );
 //    SCRIPT_CallEvent( sc, event );
 
-    EVFUNC_CallSubProc( core, work, NO_OVERLAY_ID, 
-                        &DressUp_ProcData, callWork->initWork, 
-                        EvCmdFittingCallProc_CallBack, callWork );
+//    EVFUNC_CallSubProc( core, work, NO_OVERLAY_ID, 
+//                        &DressUp_ProcData, callWork->initWork, 
+//                        EvCmdFittingCallProc_CallBack, callWork );
   }
 
   return VMCMD_RESULT_SUSPEND;
@@ -947,7 +954,7 @@ static GMEVENT_RESULT event_Musical(
     if( GFL_NET_IsExit() == TRUE ||
         ev_musical_work->isComm == FALSE )
     {
-      if( ev_musical_work->isComm = TRUE )
+      if( ev_musical_work->isComm == TRUE )
       {
         //通信復帰処理
         GAMESYS_WORK *gsys =  GMEVENT_GetGameSysWork( event );
@@ -960,6 +967,62 @@ static GMEVENT_RESULT event_Musical(
   }
   return( GMEVENT_RES_CONTINUE );
 }
+//--------------------------------------------------------------
+/**
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT event_Fitting( GMEVENT *event, int *seq, void *work )
+{
+  EV_FITTING_CALL_WORK *evWork = work;
+  GAMESYS_WORK *gsys =  GMEVENT_GetGameSysWork( event );
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+  
+  switch( (*seq) )
+  {
+  case 0:
+    GMEVENT_CallEvent(event, EVENT_FSND_PushBGM(gsys, 30));
+    (*seq)++;
+    break; 
+    
+  case 1:
+    //GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldWork));
+    (*seq)++;
+    break;
+    
+  case 2:
+    GMEVENT_CallEvent(event, EVENT_FSND_WaitBGMFade(gsys));
+    (*seq)++;
+    break;
+    
+  case 3:
+    GAMESYSTEM_CallProc( gsys, NO_OVERLAY_ID, &DressUp_ProcData, evWork->initWork ); 
+    (*seq)++;
+    break;
+
+  case 4:  // サブプロセス終了待ち
+    if( GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL ) break;
+    (*seq) ++;
+    break;
+
+  case 5:
+    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_NONE, FSND_FADE_NORMAL));
+    (*seq)++;
+    break;
+  //後はフィールドに任せた！！
+  case 6:
+    GFL_HEAP_FreeMemory( evWork->initWork->musPoke );
+    GFL_HEAP_FreeMemory( evWork->initWork );
+
+    return( GMEVENT_RES_FINISH );
+    break;
+  }
+  return( GMEVENT_RES_CONTINUE );
+  
+}
+
 
 static void EvCmdMusicalShotCallProc_CallBack( void* work )
 {

@@ -126,16 +126,16 @@ EVENT_START ev_musical_recept_fitting
       //入場アニメ
       _CALL recept_move_obj_fitting
 
+      //c04r0201でも初回イベントで使ってるので注意
       _MAP_FADE_BLACK_OUT()
       _DISP_FADE_END_CHECK()
       _FIELD_CLOSE()
-
+      
       _MUSICAL_FITTING_CALL(selectPoke) //ミュージカル呼び出し
       
       _FIELD_OPEN()
-      //帰還アニメ(位置移動
       _CALL recept_move_obj_return_fitting
-      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_WHITE_IN()
       _DISP_FADE_END_CHECK()
 
     ENDIF
