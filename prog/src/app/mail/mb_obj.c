@@ -380,7 +380,7 @@ static GFL_CLWK* ClactAdd( MAILBOX_APP_WORK * appwk, const CLACT_OBJECT_ADD_PARA
   dat.pos_y   = prm->y;   ///< [ Y ] À•W
   dat.anmseq  = prm->anm;        ///< ƒAƒjƒ”Ô†
   dat.softpri = 0;
-  dat.bgpri   = 0;
+  dat.bgpri   = prm->bg_pri;
 
   return GFL_CLACT_WK_Create( appwk->clUnit, appwk->clres[RES_CGR][prm->id[0]], 
                                              appwk->clres[RES_PAL][prm->id[1]],

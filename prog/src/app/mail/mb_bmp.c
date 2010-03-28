@@ -132,8 +132,8 @@
 #define BMPWIN_NAME_PAL   ( MBMAIN_SBG_PAL_MAILMSE )
 #define BMPWIN_NAME_CGX   ( BMPWIN_MAILMSG3_CGX + BMPWIN_MAILMSG_SX * BMPWIN_MAILMSG_SY )
 
-#define FCOL_TCH_BLN_M01  ( PRINTSYS_LSB_Make( 3, 2, 4 ) )    // フォントカラー：タッチ青抜M01
-#define FCOL_TCH_RDN_M01  ( PRINTSYS_LSB_Make( 5, 4, 4 ) )    // フォントカラー：タッチ赤抜M01
+#define FCOL_TCH_BLN_M01  ( PRINTSYS_LSB_Make( 5, 6, 4 ) )    // フォントカラー：タッチ青抜M01
+#define FCOL_TCH_RDN_M01  ( PRINTSYS_LSB_Make( 7, 8, 4 ) )    // フォントカラー：タッチ赤抜M01
 #define FCOL_TLK_BKW_M14  ( PRINTSYS_LSB_Make( 1, 2, 15 ) )   // フォントカラー：会話黒白M14
 #define FCOL_TCH_BKN_M15  ( PRINTSYS_LSB_Make( 15, 1, 0 ) )   // フォントカラー：タッチ黒抜M15
 #define FCOL_SYS_BKN_M15  ( PRINTSYS_LSB_Make( 1, 2, 0 ) )    // フォントカラー：システム黒抜M15
@@ -521,22 +521,6 @@ void MBBMP_DefaultStrSet( MAILBOX_SYS_WORK * syswk )
   GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_TITLE] );
 
   // やめる
-/*
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[MBMAIN_BMPWIN_ID_RET]), 0 );
-  StrPrint(
-    syswk->app, syswk->app->mman,
-    MBMAIN_BMPWIN_ID_RET, msg_return,
-    BMPWIN_RET_SX*8/2, 0,
-    syswk->font, FCOL_TCH_BKN_M15, STRPRINT_MODE_CENTER );
-  GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_RET] );
-  // とじる
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(syswk->app->win[MBMAIN_BMPWIN_ID_CLOSE]), 0 );
-  StrPrint(
-    syswk->app, syswk->app->mman,
-    MBMAIN_BMPWIN_ID_CLOSE, msg_close,
-    BMPWIN_CLOSE_SX*8/2, 0,
-    syswk->font, FCOL_TCH_BKN_M15, STRPRINT_MODE_CENTER );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -818,7 +802,7 @@ void MBBMP_MailMesPut( MAILBOX_SYS_WORK * syswk )
 
 
 
-  GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_NAME] );
+//  GFL_BMPWIN_MakeTransWindow_VBlank( syswk->app->win[MBMAIN_BMPWIN_ID_NAME] );
 }
 
 //--------------------------------------------------------------------------------------------

@@ -43,7 +43,7 @@ enum {
  * @return  Œ‹‰Ê
  */
 //--------------------------------------------------------------------------------------------
-extern u32 MBUI_MailboxTouchButtonCheck( MAILBOX_SYS_WORK * syswk );
+extern int MBUI_MailboxTouchButtonCheck( MAILBOX_SYS_WORK * syswk );
 
 //--------------------------------------------------------------------------------------------
 /**

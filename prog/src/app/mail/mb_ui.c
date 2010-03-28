@@ -83,12 +83,8 @@ static const GFL_UI_TP_HITTBL MailReadHitTbl[] =
  * @return  Œ‹‰Ê
  */
 //--------------------------------------------------------------------------------------------
-u32 MBUI_MailboxTouchButtonCheck( MAILBOX_SYS_WORK * syswk )
+int MBUI_MailboxTouchButtonCheck( MAILBOX_SYS_WORK * syswk )
 {
-  if( syswk->app->page_max == 0 ){
-    return GFL_UI_TP_HIT_NONE;
-  }
-
   return GFL_UI_TP_HitTrg( TouchButtonHitTbl );
 }
 

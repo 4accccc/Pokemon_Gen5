@@ -697,7 +697,7 @@ static int MainSeq_MailMenuMain( MAILBOX_SYS_WORK * syswk )
   case MBMAIN_MENU_READ:    // ƒ[ƒ‹‚ð“Ç‚Þ
     MBMAIN_SelBoxDel( syswk );
     MBBMP_TalkWinDel( syswk );
-    MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_CURSOR, TRUE );
+    MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_CURSOR, FALSE );
     MBBMP_ClosePut( syswk->app );
     MBOBJ_MailReadCurMove( syswk->app );
     SubDispMailWrite( syswk );
