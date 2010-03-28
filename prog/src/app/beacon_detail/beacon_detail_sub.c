@@ -154,10 +154,10 @@ void BeaconDetail_InitialDraw( BEACON_DETAIL_WORK* wk )
  */
 int BeaconDetail_InputCheck( BEACON_DETAIL_WORK* wk )
 {
-  TOUCHBAR_ICON icon = TOUCHBAR_GetTrg( wk->touchbar );
+  TOUCHBAR_ICON icon = TOUCHBAR_GetTouch( wk->touchbar );
   int trg = GFL_UI_KEY_GetTrg();
   
-  if( icon == TOUCHBAR_ICON_RETURN ){
+  if( TOUCHBAR_GetTrg( wk->touchbar ) == TOUCHBAR_ICON_RETURN ){
     wk->param->ret_mode = 0;  //1にするとCギアトップに直接戻れる。が、×がなくなったのでこのモードでは戻らないことになった10.03.20
     return SEQ_FADEOUT;
   }
@@ -610,6 +610,7 @@ static void draw_UpdateUnderView( BEACON_DETAIL_WORK* wk )
         wk->icon_x = 240;
       }
       act_SetPosition( wk->pAct[ACT_ICON_TR], wk->icon_x, wk->icon_y, ACT_SF_MAIN );
+      GFL_CLACT_WK_SetDrawEnable( wk->pAct[ACT_ICON_TR], TRUE );
 
       if( pd->icon != 0 ){
         act_SetPosition( wk->pAct[ACT_ICON_EV], wk->icon_x-24, wk->icon_y, ACT_SF_MAIN );
@@ -748,6 +749,18 @@ static void taskAdd_WinPopup( BEACON_DETAIL_WORK* wk, int* task_ct )
   (*task_ct)++;
 }
 
+static BOOL popup_CheckTimeWait( TASKWK_WIN_POPUP* twk )
+{
+  if( GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_A)){
+    twk->wait = 0;
+    return FALSE;
+  }
+  if( twk->wait-- == 0){
+    return FALSE;
+  }
+  return TRUE;
+}
+
 static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
 {
   TASKWK_WIN_POPUP* twk = (TASKWK_WIN_POPUP*)tcb_wk;
@@ -764,7 +777,7 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
     twk->seq++;
     return;
   case 2:
-    if( twk->wait-- > 0 ){
+    if(popup_CheckTimeWait(twk)){
       return;
     }
     taskAdd_MsgUpdown( twk->bdw, SCROLL_DOWN, &twk->child_task );
@@ -903,14 +916,16 @@ static void taskAdd_PageScroll( BEACON_DETAIL_WORK* wk, u8 dir, int* task_ct )
   twk->dir = dir;
   if( dir == SCROLL_UP ){
     twk->next = wk->list_top+1;
+    TOUCHBAR_SetActive( wk->touchbar,  TOUCHBAR_ICON_CUR_U, FALSE );
   }else{
     twk->next = wk->list_top-1;
+    TOUCHBAR_SetActive( wk->touchbar,  TOUCHBAR_ICON_CUR_D, FALSE );
   }
+  TOUCHBAR_SetActive( wk->touchbar,  TOUCHBAR_ICON_RETURN, FALSE );
+
   //次に表示されるウィンドウを描く
   GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, wk->list[twk->next]);
   draw_BeaconWindow( wk, wk->tmpInfo, wk->tmpTime, wk->flip_sw^1 );
-
-  TOUCHBAR_SetActiveAll( wk->touchbar, FALSE );
 
   twk->bdw = wk;
   twk->task_ct = task_ct;
@@ -924,11 +939,18 @@ static void tcb_PageScroll( GFL_TCBL *tcb , void* tcb_wk)
 
   switch( twk->seq ){
   case 0:
+    if( TOUCHBAR_GetTrg( twk->bdw->touchbar ) == TOUCHBAR_SELECT_NONE ){
+      return;
+    }
+    TOUCHBAR_SetActiveAll( twk->bdw->touchbar, FALSE );
+    twk->seq++;
+    return;
+  case 1:
     taskAdd_BWinScroll( twk->bdw, twk->bdw->flip_sw, SCROLL_POS_DEF, twk->dir, &twk->child_task );
     taskAdd_BWinScroll( twk->bdw, twk->bdw->flip_sw^1, pos_tbl[twk->dir], twk->dir, &twk->child_task );
     twk->seq++;
     return;
-  case 1:
+  case 2:
     if( twk->child_task ){
       return;
     }
@@ -937,8 +959,8 @@ static void tcb_PageScroll( GFL_TCBL *tcb , void* tcb_wk)
   twk->bdw->flip_sw ^= 1;
   twk->bdw->list_top = twk->next;
   draw_UpdateUnderView( twk->bdw );
-  sub_UpDownButtonActiveControl( twk->bdw );
   TOUCHBAR_SetActiveAll( twk->bdw->touchbar, TRUE );
+  sub_UpDownButtonActiveControl( twk->bdw );
 
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);

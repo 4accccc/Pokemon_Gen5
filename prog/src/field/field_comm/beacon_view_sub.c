@@ -357,6 +357,7 @@ BOOL BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
     break;
   case SSEQ_THANKS_VIEW_UPDATE:
     if( wk->eff_task_ct == 0 ){
+      BeaconView_MenuBarViewSet( wk, MENU_THANKS, MENU_ST_ON );
       wk->sub_seq = SSEQ_THANKS_MAIN;
     }
     break;
