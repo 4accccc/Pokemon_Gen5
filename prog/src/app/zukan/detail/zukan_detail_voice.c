@@ -1198,7 +1198,7 @@ static void Zukan_Detail_Voice_WaveDataSetup( ZUKAN_DETAIL_VOICE_PARAM* param, Z
 {
   work->wave_data_begin = PMV_GetWave( work->voice_idx );
   work->wave_data_curr_pos = 0;
-  work->wave_data_interval = WAVE_DATA_INTERVAL( PMV_GetWaveRate( work->voice_idx ) / 1000 );
+  work->wave_data_interval = WAVE_DATA_INTERVAL( PMV_GetWaveRate( work->voice_idx ) / 60 );
 }
 
 
