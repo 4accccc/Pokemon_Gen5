@@ -184,6 +184,32 @@ BOOL POKEMONTRADEPROC_IsNetworkMode(POKEMON_TRADE_WORK* pWork)
 
 //------------------------------------------------------------------
 /**
+ * @brief   デモに入る前にBGM変更
+ * @param   POKEMON_TRADE_WORK ワーク
+ * @param   _TRADE_SCENE_NO_E no シーン管理enum
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+void POKEMONTRADE_DEMOBGMChange(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->demoBGM!=0){
+    pWork->demoBGM++;
+    if(pWork->demoBGM==2){
+      PMSND_FadeInBGM( 6 );
+    }
+    else if(pWork->demoBGM==8){
+      PMSND_PauseBGM( TRUE );
+      PMSND_PushBGM();
+      PMSND_PlayBGM(  SEQ_BGM_KOUKAN );
+      PMSND_FadeInBGM( 1 );
+      pWork->demoBGM=0;
+    }
+  }
+}
+
+//------------------------------------------------------------------
+/**
  * @brief   ３体見せ合いモードかどうか
  * @param   POKEMON_TRADE_WORK
  * @retval  TRUEなら通信モード
@@ -3543,7 +3569,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
     }
     //読み込む事ができない場合は書かない
   }
-
+  POKEMONTRADE_DEMOBGMChange(pWork);
   GFL_CLACT_SYS_Main(); // CLSYSメイン
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);

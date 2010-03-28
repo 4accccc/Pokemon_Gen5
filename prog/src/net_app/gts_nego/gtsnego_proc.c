@@ -1557,11 +1557,9 @@ static void _modeSelectMenuFlash(GTSNEGO_WORK* pWork)
   int buttonNo = _buttonCheck(pWork, pWork->key1);
   if(buttonNo==_CROSSCUR_TYPE_MAINUP){
     _CHANGE_STATE(pWork,_levelSelect);
-    return;
   }
-  if(buttonNo==_CROSSCUR_TYPE_MAINDOWN){
+  else if(buttonNo==_CROSSCUR_TYPE_MAINDOWN){
     _CHANGE_STATE(pWork,_friendSelect);
-    return;
   }
 }
 

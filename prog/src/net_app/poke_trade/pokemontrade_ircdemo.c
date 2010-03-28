@@ -91,7 +91,7 @@ void POKMEONTRADE_IRCDEMO_ChangeDemo(POKEMON_TRADE_WORK* pWork)
   VecFx32 apos;
   int i;
 
-  _demoBGMChange();
+  _demoBGMChangeStart(pWork);
   
   pWork->mcssStop[0] = TRUE;
   MCSS_SetAnimeIndex(pWork->pokeMcss[0], 0);
@@ -100,6 +100,7 @@ void POKMEONTRADE_IRCDEMO_ChangeDemo(POKEMON_TRADE_WORK* pWork)
     VecFx32 pos={_POKEMON_PLAYER_CENTER_POSX,_POKEMON_PLAYER_CENTER_POSY, _POKEMON_PLAYER_CENTER_POSZ};
     MCSS_SetPosition( pWork->pokeMcss[0] ,&pos );
   }
+  _setNextAnim(pWork, 0);
   _CHANGE_STATE(pWork,_changeDemo_ModelT1);
 }
 

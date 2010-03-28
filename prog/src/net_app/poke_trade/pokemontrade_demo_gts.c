@@ -122,7 +122,7 @@ void POKMEONTRADE_DEMO_GTS_ChangeDemo(POKEMON_TRADE_WORK* pWork)
   VecFx32 apos;
   int i;
 
-  _demoBGMChange();
+  _demoBGMChangeStart(pWork);
   
   //‹­§’âŽ~
   pWork->mcssStop[0] = TRUE;
@@ -133,6 +133,7 @@ void POKMEONTRADE_DEMO_GTS_ChangeDemo(POKEMON_TRADE_WORK* pWork)
     MCSS_SetPosition( pWork->pokeMcss[0] ,&pos );
   }
   
+  _setNextAnim(pWork, 0);
   _CHANGE_STATE(pWork,_changeDemo_ModelT1);
 }
 
@@ -177,6 +178,7 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 {
+  _gtsSeStrat(pWork->anmCount);
 
 
   if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME-3)){
@@ -437,7 +439,6 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                        ANMCNTC(_POKESPLASH_WHITEIN_TIMER), 1, pWork->heapID );
   }
-  _gtsSeStrat(pWork->anmCount);
   OS_TPrintf("C %d\n",pWork->anmCount);
 
   if(pWork->anmCount == ANMCNTC(_DEMO_END-1)){

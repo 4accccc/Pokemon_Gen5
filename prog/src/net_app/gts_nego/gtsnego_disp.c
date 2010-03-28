@@ -301,6 +301,7 @@ void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
   int i;
   GFL_CLACT_WK_Remove(pWork->crossIcon);
 
+  GTSNEGO_DISP_DeleteTouchWork(pWork);
 
   _RemoveMenuBarObj(pWork);
   _BGPanelFree(pWork);
@@ -819,10 +820,11 @@ BOOL GTSNEGO_DISP_CrossIconFlash(GTSNEGO_DISP_WORK* pWork, CROSSCUR_TYPE type)
   if(pWork->crossIcon==NULL){
     return FALSE;
   }
-  if(GFL_CLACT_WK_GetAnmSeq(pWork->crossIcon) >= _FLASH_ANIM_NO){
-    return FALSE;
-  }
+//  if(GFL_CLACT_WK_GetAnmSeq(pWork->crossIcon) >= _FLASH_ANIM_NO){
+  //  return FALSE;
+//  }
   GFL_CLACT_WK_SetAnmSeq(pWork->crossIcon, crosspos[type].flash);
+  GFL_CLACT_WK_SetDrawEnable(pWork->crossIcon,TRUE);
   return TRUE;
 }
 
@@ -1020,6 +1022,11 @@ void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork)
   int i;
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
 
+  GTSNEGO_DISP_DeleteTouchWork(pWork);
+  _TOUCHBAR_Init(pWork, _TOUCHBAR_PAL1);
+
+  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
+
   for(i=0;i<SCROLL_PANEL_NUM;i++){
     if(pWork->unionOAM[i]){
       GFL_CLACT_WK_Remove(pWork->unionOAM[i]);
@@ -1030,8 +1037,6 @@ void GTSNEGO_DISP_FriendSelectFree(GTSNEGO_DISP_WORK* pWork)
   _BGPanelFree(pWork);
 
 
-  GTSNEGO_DISP_DeleteTouchWork(pWork);
-  _TOUCHBAR_Init(pWork, _TOUCHBAR_PAL1);
   
   _DeleteScrollBarObj(pWork);
   

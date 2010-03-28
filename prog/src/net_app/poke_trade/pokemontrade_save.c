@@ -93,6 +93,21 @@ static void _setNextAnim(POKEMON_TRADE_WORK* pWork, int timer)
 }
 
 
+static void _endBGM(POKEMON_TRADE_WORK* pWork)
+{
+  PMSND_PopBGM();
+  PMSND_PauseBGM( FALSE );
+  PMSND_FadeInBGM( 60 );
+}
+
+static void _endME(POKEMON_TRADE_WORK* pWork)
+{
+  PMSND_PopBGM();
+  PMSND_PauseBGM( FALSE );
+  PMSND_FadeInBGM( 24 );
+}
+
+
 //------------------------------------------------------------------
 /**
  * @brief   ポケモン交換終了。
@@ -113,10 +128,10 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
 
   if(
     (pWork->type == POKEMONTRADE_TYPE_GTS) ||
-    (pWork->type == POKEMONTRADE_TYPE_GTSUP) ||
-    (pWork->type == POKEMONTRADE_TYPE_GTSMID)
+    (pWork->type == POKEMONTRADE_TYPE_GTSUP)
     )
   {
+    _endBGM(pWork);
     pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
     _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
     return;
@@ -126,11 +141,10 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
 
   POKETRADE_MESSAGE_HeapInit(pWork);
 
+  PMSND_PauseBGM( TRUE );
   PMSND_PushBGM();
   PMSND_PlayBGM( SEQ_ME_POKEGET );
   PMSND_FadeInBGM( 8 );
-
-
 
 
   
@@ -210,8 +224,8 @@ static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork)
     return;
   }
   POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_KEY);
-  PMSND_PopBGM();
-  PMSND_FadeInBGM( 24 );
+
+  _endME(pWork);
 
   _setNextAnim(pWork, 0);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade23);
@@ -227,6 +241,7 @@ static void _UnDataSend2(POKEMON_TRADE_WORK* pWork)
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),
                                _TIMING_UNDATA,WB_NET_TRADE_SERVICEID)){
     _CHANGE_STATE(pWork, _changeDemo_ModelTrade27);
+
   }
 }
 
@@ -249,9 +264,9 @@ static void _UnDataSend(POKEMON_TRADE_WORK* pWork)
   MyStatus_Copy(GAMEDATA_GetMyStatus(pWork->pGameData) , &add_data.aMyStatus);
   add_data.recvPokemon = PP_Get( ppr , ID_PARA_monsno ,NULL) ;  //貰ったポケモン
   add_data.sendPokemon = PP_Get( pps , ID_PARA_monsno ,NULL);  //あげたポケモン
-  add_data.favorite = WIFIHISTORY_GetMyFavorite(pWH);;   //趣味
+  add_data.favorite = WIFIHISTORY_GetMyFavorite(pWH);   //趣味
   add_data.countryCount = WIFIHISTORY_GetMyCountryCount(pWH) ;  //交換した国の回数
-  add_data.nature =WIFIHISTORY_GetMyNature(pWH) ;   //性格
+  add_data.nature =WIFIHISTORY_GetMyNature(pWH);   //性格
 
   
   if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_UN, sizeof(add_data), &add_data)){
@@ -316,16 +331,21 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
 
   if(
     (pWork->type == POKEMONTRADE_TYPE_EVENT)||
+    (pWork->type == POKEMONTRADE_TYPE_GTSMID) ||
     (pWork->type == POKEMONTRADE_TYPE_GTSDOWN)
     )
   {
     pWork->pParentWork->ret = POKEMONTRADE_MOVE_END;
-    PMSND_PopBGM();
-    PMSND_FadeInBGM( 24 );
+    
+    _endBGM(pWork);
     _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
     return;
   }
 
+  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
+    WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData),
+                                  pWork->pFriend);
+  }
   if(
     (pWork->type == POKEMONTRADE_TYPE_GTSNEGO)||
     (pWork->type == POKEMONTRADE_TYPE_UNION)
@@ -340,6 +360,9 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade27(POKEMON_TRADE_WORK* pWork)
 {
+
+
+
   
   {   //ここからいつでもPROCCHANGEしても良いように親ワークに交換情報を格納
     POKEMON_PARAM* pp;// = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
@@ -523,8 +546,7 @@ static void _changeTimingSaveStart2(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork)
 {
-  PMSND_PopBGM();
-  PMSND_FadeInBGM( 24 );
+  _endBGM(pWork);
 
   GFL_DISP_GX_SetVisibleControlDirect( 0 );
   GFL_DISP_GXS_SetVisibleControlDirect( 0 );

@@ -122,7 +122,7 @@ void POKMEONTRADE_DEMO_GTSDOWN_ChangeDemo(POKEMON_TRADE_WORK* pWork)
   VecFx32 apos;
   int i;
 
-  _demoBGMChange();
+  _demoBGMChangeStart(pWork);
   
   //‹­§’âŽ~
   pWork->mcssStop[0] = TRUE;
@@ -184,7 +184,7 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 {
-
+  _gtsSeStrat(pWork->anmCount);
 
   if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME-3)){
     //Ž©•ª‚ð”’‚­‚·‚é

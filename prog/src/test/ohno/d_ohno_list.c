@@ -136,8 +136,11 @@ extern const GFL_PROC_DATA NetFourChildProcData;
 static const D_MENULIST DebugMenuList[] = {
 	{//
 		DEBUG_OHNO_MSG0017, 
-		&PokemonTradeWiFiProcData,	
-		_PokeTradeWorkCreate,
+//		&PokemonTradeWiFiProcData,	
+//		_PokeTradeWorkCreate,
+//		FS_OVERLAY_ID(pokemon_trade)
+    &PokemonTradeGTSMidProcData,
+    _PokeTradeDemoWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
 	},
 #if 0

@@ -252,21 +252,12 @@ static void _setNextAnim(POKEMON_TRADE_WORK* pWork, int timer)
 }
 
 
-//------------------------------------------------------------------
-/**
- * @brief   デモに入る前にBGM変更
- * @param   POKEMON_TRADE_WORK ワーク
- * @param   _TRADE_SCENE_NO_E no シーン管理enum
- * @retval  none
- */
-//------------------------------------------------------------------
 
-static void _demoBGMChange(void)
+static void _demoBGMChangeStart(POKEMON_TRADE_WORK* pWork)
 {
-  PMSND_PushBGM();
-  PMSND_PlayBGM(  SEQ_BGM_KOUKAN );
-  PMSND_FadeInBGM( 8 );
+  pWork->demoBGM = 1;
 }
+
 
 //------------------------------------------------------------------
 /**
@@ -277,6 +268,8 @@ static void _demoBGMChange(void)
 //------------------------------------------------------------------
 static void _changeDemo_ModelT1(POKEMON_TRADE_WORK* pWork)
 {
+//  _demoBGMChange(pWork->anmCount);
+  
   if(pWork->mcssStop[0]!=TRUE){  //アニメ終了待ち
     return;
   }

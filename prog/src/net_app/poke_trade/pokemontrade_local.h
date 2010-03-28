@@ -653,6 +653,7 @@ struct _POKEMON_TRADE_WORK{
   BOOL touchON;
   int bgscroll;
   int ringLineNo;
+  int demoBGM;
 
   int modelno;  ///< 表示しているモデルの番号
   int pokemonselectno;  ///< 自分と相手のポケモン選択中のどちらを指しているか
@@ -808,6 +809,8 @@ extern void POKETRADE_2D_GTSPokemonIconVisible(POKEMON_TRADE_WORK* pWork,int sid
 extern void POKEMONTRADE_changeTimingDemoStart(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_IsEggAndLastBattlePokemonChange(POKEMON_TRADE_WORK* pWork);
 extern void POKETRADE_MESSAGE_WindowTimeIconStart(POKEMON_TRADE_WORK* pWork);
+
+extern void POKEMONTRADE_DEMOBGMChange(POKEMON_TRADE_WORK* pWork);
 
 
 #if _TRADE_DEBUG
