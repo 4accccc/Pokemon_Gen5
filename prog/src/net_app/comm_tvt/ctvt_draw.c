@@ -136,6 +136,7 @@ struct _CTVT_DRAW_WORK
   BOOL isDispStampType;
   BOOL canDraw;
   BOOL isFinish;
+  BOOL reqStopCamera;
   CTVT_DRAW_EDTI_BUTTON_TYPE editMode;
 
   u32 befPenX;
@@ -423,6 +424,7 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   drawWork->isUpdateMsgWin = FALSE;
   drawWork->canDraw = FALSE;
   drawWork->isFinish = FALSE;
+  drawWork->reqStopCamera = FALSE;
 
   CTVT_DRAW_DrawInfoMsg( work , drawWork , FALSE );
   
@@ -524,10 +526,17 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
     break;
 
   case CDS_FADEOUT:
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
-    drawWork->state = CDS_FADEOUT_WAIT;
-    drawWork->canDraw = FALSE;
+    {
+      CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+      if( drawWork->reqStopCamera == FALSE ||
+          CTVT_CAMERA_IsStopCapture( work , camWork ) == TRUE )
+      {
+        WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
+        drawWork->state = CDS_FADEOUT_WAIT;
+        drawWork->canDraw = FALSE;
+      }
+    }
     break;
 
   case CDS_FADEOUT_WAIT:
@@ -575,6 +584,11 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
       drawWork->isFinish = TRUE;
       drawWork->state = CDS_FADEOUT;
       COMM_TVT_SetSusspend( work , TRUE );
+      {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+        CTVT_CAMERA_StopCapture( work , camWork );
+        drawWork->reqStopCamera = TRUE;
+      }
     }
     break;
 
@@ -620,6 +634,11 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
         drawWork->isFinish = TRUE;
         drawWork->state = CDS_FADEOUT;
         COMM_TVT_SetSusspend( work , TRUE );
+        {
+          CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+          CTVT_CAMERA_StopCapture( work , camWork );
+          drawWork->reqStopCamera = TRUE;
+        }
       }
     }
     break;
@@ -640,6 +659,11 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
       drawWork->isFinish = TRUE;
       drawWork->state = CDS_FADEOUT;
       COMM_TVT_SetSusspend( work , TRUE );
+      {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+        CTVT_CAMERA_StopCapture( work , camWork );
+        drawWork->reqStopCamera = TRUE;
+      }
     }
     break;
   }

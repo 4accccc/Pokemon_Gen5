@@ -177,6 +177,7 @@ void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
       }
     }
   }
+  CAMERA_SYS_UpdateCameta( camWork->camSys );
 #if (defined(SDK_TWL))
   
   if( COMM_TVT_CanUseCamera() == TRUE )
@@ -391,7 +392,14 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
     }
   }
 }
-
+void CTVT_CAMERA_StopCapture( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
+{
+  CAMERA_SYS_StopCapture( camWork->camSys );
+}
+const BOOL CTVT_CAMERA_IsStopCapture( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
+{
+  return CAMERA_SYS_IsStopCapture( camWork->camSys );
+}
 //--------------------------------------------------------------
 //	カメラ用コールバック
 //--------------------------------------------------------------

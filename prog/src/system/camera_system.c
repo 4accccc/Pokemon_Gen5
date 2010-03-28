@@ -14,6 +14,11 @@
 
 #include "system/camera_system.h"
 
+#include "arc_def.h"
+#include "camera_sys.naix"
+
+
+#include "test/ariizumi/ari_debug.h"
 #ifdef SDK_TWL
 
 //======================================================================
@@ -28,7 +33,16 @@
 //	enum
 //======================================================================
 #pragma mark [> enum
-
+typedef enum
+{
+  CSS_NONE,
+  CSS_WAIT_PLAY_START,
+  CSS_PLAYING_START,
+  CSS_ACTIVE,
+  CSS_WAIT_PLAY_END,
+  CSS_PLAYING_END,
+  CSS_FINISH,
+}CAMERA_SND_STATE;
 
 //======================================================================
 //	typedef struct
@@ -61,6 +75,11 @@ struct _CAMERA_SYSTEM_WORK
   //コールバック
   CAMERA_SYS_CaptureCallBack captureCallBack;
   void  *userWork;
+  
+  //シャッター音管理
+  u8   sndState;
+  void *sndData;  //32アライメント必須
+  u32  sndSize;
 };
 
 
@@ -68,6 +87,9 @@ struct _CAMERA_SYSTEM_WORK
 //	proto
 //======================================================================
 #pragma mark [> proto
+
+static void CAMERA_SYS_LoadSutterSnd( CAMERA_SYSTEM_WORK *work , const BOOL isStart );
+static void CAMERA_SYS_ReleaseSutterSnd( CAMERA_SYSTEM_WORK *work );
 
 static void CAMERA_SYS_VSyncCallBack(CAMERAResult result);
 static void CAMERA_SYS_ErrorCallBack(CAMERAResult result);
@@ -106,7 +128,7 @@ CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId )
   
   work->captureCallBack = NULL;
   work->userWork = NULL;
-
+  
   // カメラ初期化
   {
     CAMERAResult result;
@@ -123,7 +145,7 @@ CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId )
     result = CAMERA_I2CEffect(work->currentCamera, CAMERA_EFFECT_NONE);
     if (result != CAMERA_RESULT_SUCCESS)
     {
-        OS_TPrintf("CAMERA_I2CEffect was failed. (%d)\n", result);
+        ARI_TPrintf("CAMERA_I2CEffect was failed. (%d)\n", result);
     }
     
     //ホワイトバランスと露出の自動化
@@ -160,15 +182,37 @@ CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId )
     CAMERA_SetOutputFormat(CAMERA_OUTPUT_RGB);
   }
   
+  work->sndData = NULL;
+  work->sndState = CSS_NONE;
+
+  // シャッター音のためにDSPコンポーネントをロード。
+  // (どのコンポーネントでもよいのでここではG.711を使用)
+  {
+      (void)MI_FreeWram_B(MI_WRAM_ARM9);
+      (void)MI_CancelWram_B(MI_WRAM_ARM9);
+      (void)MI_FreeWram_C(MI_WRAM_ARM9);
+      (void)MI_CancelWram_C(MI_WRAM_ARM9);
+      {
+        FSFile  file[1];
+        DSP_OpenStaticComponentG711(file);
+        if (!DSP_LoadG711(file, 0xFF, 0xFF))
+        {
+            OS_TPanic("can't allocate WRAM Slot");
+        }
+      }
+  }
   return work;
 }
 
 void CAMERA_SYS_ExitSystem( CAMERA_SYSTEM_WORK* work )
 {
+  // シャッター音のためにDSPコンポーネントをアンロード。
+  DSP_UnloadG711();
   CAMERA_SYS_StopCapture( work );
   CAMERA_Stop();
   MI_StopNDma(NDMA_NO);
   CAMERA_End();
+  CAMERA_SYS_ReleaseSutterSnd( work );
   
   CAMERA_SYS_DeleteReadBuffer( work );
   
@@ -189,7 +233,76 @@ static void CAMERA_SYS_CallDmaRacv( CAMERA_SYSTEM_WORK *work )
   
 }
 
+void CAMERA_SYS_UpdateCameta( CAMERA_SYSTEM_WORK *work )
+{
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    work->sndState = CSS_WAIT_PLAY_START;
+  }
+  switch(work->sndState)
+  {
+  case CSS_WAIT_PLAY_START:
+    CAMERA_SYS_LoadSutterSnd( work , TRUE );
+    {
+      BOOL ret = DSP_PlayShutterSound( work->sndData , work->sndSize );
+      ARI_TPrintf("Play shutter start[%d].\n",ret);
+    }
+    work->sndState = CSS_PLAYING_START;
+    break;
 
+  case CSS_PLAYING_START:
+    if( DSP_IsShutterSoundPlaying() == FALSE )
+    {
+      CAMERA_SYS_ReleaseSutterSnd( work );
+      work->sndState = CSS_ACTIVE;
+      ARI_TPrintf("Finish play shutter start.\n");
+    }
+    break;
+
+  case CSS_WAIT_PLAY_END:
+    CAMERA_SYS_LoadSutterSnd( work , FALSE );
+    {
+      BOOL ret = DSP_PlayShutterSound( work->sndData , work->sndSize );
+      ARI_TPrintf("Play shutter end[%d].\n",ret);
+    }
+    work->sndState = CSS_PLAYING_END;
+    break;
+  case CSS_PLAYING_END:
+    if( DSP_IsShutterSoundPlaying() == FALSE )
+    {
+      CAMERA_SYS_ReleaseSutterSnd( work );
+      work->sndState = CSS_FINISH;
+      ARI_TPrintf("Finish play shutter end.\n");
+    }
+    break;
+    
+  case CSS_FINISH:
+    break;
+    
+  }
+}
+
+//16バイトアライメントが要るのでオリジナル読み
+static void CAMERA_SYS_LoadSutterSnd( CAMERA_SYSTEM_WORK *work , const BOOL isStart )
+{
+  const u16 datId = (isStart == TRUE ? NARC_camera_sys_videorec_sound_begin_32730_wav:NARC_camera_sys_videorec_sound_end_32730_wav );
+  
+  CAMERA_SYS_ReleaseSutterSnd( work );
+    //ARCID_CAMERA_SYS
+  work->sndSize = GFL_ARC_GetDataSize( ARCID_CAMERA_SYS , datId );
+  work->sndData = GFL_NET_Align32Alloc( work->heapId , work->sndSize );
+  GFL_ARC_LoadData(work->sndData, ARCID_CAMERA_SYS, datId);
+  DC_FlushRange( work->sndData , work->sndSize );
+}
+
+static void CAMERA_SYS_ReleaseSutterSnd( CAMERA_SYSTEM_WORK *work )
+{
+  if( work->sndData != NULL )
+  {
+    GFL_NET_Align32Free( work->sndData );
+    work->sndData = NULL;
+  }
+}
 //--------------------------------------------------------------------------------
 //    カメラ割り込み処理 (エラー時とVsync時の両方で発生)
 //
@@ -200,7 +313,7 @@ static void CAMERA_SYS_ErrorCallBack(CAMERAResult result)
 
   if( result != 0 )
   {
-    OS_TPrintf("Error was occurred[%d].\n",result);
+    ARI_TPrintf("Error was occurred[%d].\n",result);
   }
   // カメラ停止処理
   CAMERA_StopCapture();
@@ -265,11 +378,11 @@ static void CAMERA_SYS_DmaRecvCallBack( void* arg )
   {
     void *buffer;
 #if CAM_SYS_DRAW_TICK
-    OS_TPrintf(".");
+    ARI_TPrintf(".");
 #endif //CAM_SYS_DRAW_TICK
     if (MI_IsNDmaBusy(NDMA_NO)) // 画像の転送が終わっているかチェック
     {
-      OS_TPrintf("DMA was not done until VBlank.\n");
+      ARI_TPrintf("DMA was not done until VBlank.\n");
       MI_StopNDma(NDMA_NO);
     }
     // 次のフレームのキャプチャを開始する
@@ -310,7 +423,7 @@ static void CAMERA_SYS_DmaRecvCallBack( void* arg )
     {
       OSTick uspf = OS_TicksToMicroSeconds(OS_GetTick() - begin) / count;
       int mfps = (int)(1000000000LL / uspf);
-      OS_TPrintf("%2d.%03d fps\n", mfps / 1000, mfps % 1000);
+      ARI_TPrintf("%2d.%03d fps\n", mfps / 1000, mfps % 1000);
       count = 0;
       begin = OS_GetTick();
     }
@@ -341,11 +454,11 @@ void CAMERA_SYS_CreateReadBuffer( CAMERA_SYSTEM_WORK* work , const int bufferNum
       work->readBufferArr[i] = GFL_NET_Align32Alloc( heapId , sizeof(u16)*width*height );
     }
     work->createBuffer = TRUE;
-    OS_TPrintf("CameraSystem create buffer size[%x]+workArea \n",(sizeof(u16)*WIDTH*HEIGHT)*bufferNum );
+    ARI_TPrintf("CameraSystem create buffer size[%x]+workArea \n",(sizeof(u16)*WIDTH*HEIGHT)*bufferNum );
   }
   else
   {
-    OS_TPrintf("CameraSystem Rend buffer is created yet!!\n");
+    ARI_TPrintf("CameraSystem Rend buffer is created yet!!\n");
   }
 
 }
@@ -374,11 +487,11 @@ void CAMERA_SYS_SetReadBuffer( CAMERA_SYSTEM_WORK* work , void *topAdr , const i
       work->readBufferArr[i] = (void*)((u32)topAdr + (i*width*height*sizeof(u16)));
     }
     work->createBuffer = FALSE;
-    OS_TPrintf("CameraSystem create buffer size[%x]+workArea \n",(sizeof(u16)*WIDTH*HEIGHT)*bufferNum );
+    ARI_TPrintf("CameraSystem create buffer size[%x]+workArea \n",(sizeof(u16)*WIDTH*HEIGHT)*bufferNum );
   }
   else
   {
-    OS_TPrintf("CameraSystem Rend buffer is created yet!!\n");
+    ARI_TPrintf("CameraSystem Rend buffer is created yet!!\n");
   }
 }
 
@@ -404,12 +517,12 @@ void CAMERA_SYS_DeleteReadBuffer( CAMERA_SYSTEM_WORK* work )
     }
     else
     {
-      OS_TPrintf("CameraSystem Camera is busy!!\n");
+      ARI_TPrintf("CameraSystem Camera is busy!!\n");
     }
   }
   else
   {
-    OS_TPrintf("CameraSystem Capture now!!\n");
+    ARI_TPrintf("CameraSystem Capture now!!\n");
   }
 }
 
@@ -428,16 +541,17 @@ void CAMERA_SYS_StartCapture( CAMERA_SYSTEM_WORK* work )
       work->isCapture = TRUE;
       work->startRequest = TRUE;
       work->stabilizedCount = 0;
-      OS_TPrintf("CameraSystem Start Capture\n");
+      ARI_TPrintf("CameraSystem Start Capture\n");
+      work->sndState = CSS_WAIT_PLAY_START;
     }
     else
     {
-      OS_TPrintf("CameraSystem Camera is busy now!!\n");
+      ARI_TPrintf("CameraSystem Camera is busy now!!\n");
     }
   }
   else
   {
-    OS_TPrintf("CameraSystem Capture is start yet!\n");
+    ARI_TPrintf("CameraSystem Capture is start yet!\n");
   }
 
 }
@@ -449,13 +563,24 @@ void CAMERA_SYS_StopCapture( CAMERA_SYSTEM_WORK* work )
     work->isCapture = FALSE;
     work->startRequest = FALSE;
     CAMERA_StopCapture();
-    OS_TPrintf("CameraSystem Stop Capture.\n");
+    ARI_TPrintf("CameraSystem Stop Capture.\n");
+    work->sndState = CSS_WAIT_PLAY_END;
     //ここでDMAを止めてはいけない
   }
   else
   {
-    OS_TPrintf("CameraSystem Capture is stop yet!\n");
+    ARI_TPrintf("CameraSystem Capture is stop yet!\n");
   }
+}
+
+//停止待ち(実際は停止音待ち
+const BOOL CAMERA_SYS_IsStopCapture( CAMERA_SYSTEM_WORK* work )
+{
+  if( work->sndState == CSS_FINISH )
+  {
+    return TRUE;
+  }
+  return FALSE;
 }
 
 const BOOL CAMERA_SYS_IsCapture( CAMERA_SYSTEM_WORK* work )
@@ -504,7 +629,7 @@ void CAMERA_SYS_SetTrimming( CAMERA_SYSTEM_WORK* work , const u16 left , const u
     }
     else
     {
-      OS_TPrintf("CameraSystem Camera is busy now!!\n");
+      ARI_TPrintf("CameraSystem Camera is busy now!!\n");
     }
   }
 }
@@ -537,7 +662,7 @@ void CAMERA_SYS_ResetTrimming( CAMERA_SYSTEM_WORK* work )
     }
     else
     {
-      OS_TPrintf("CameraSystem Camera is busy now!!\n");
+      ARI_TPrintf("CameraSystem Camera is busy now!!\n");
     }
   }
 }

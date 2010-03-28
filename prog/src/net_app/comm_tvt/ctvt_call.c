@@ -474,10 +474,16 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     break;
 
   case CCS_FADEOUT_BOTH:
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
-    COMM_TVT_SetUpperFade( work , FALSE );
-    callWork->state = CCS_FADEOUT_WAIT;
+    {
+      CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+      if( CTVT_CAMERA_IsStopCapture( work , camWork ) == TRUE )
+      {
+        WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
+        COMM_TVT_SetUpperFade( work , FALSE );
+        callWork->state = CCS_FADEOUT_WAIT;
+      }
+    }
     break;
 
   case CCS_FADEOUT_WAIT:
@@ -506,6 +512,8 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
     {
       if( GFL_CLACT_WK_CheckAnmActive( callWork->clwkReturn ) == FALSE )
       {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+        CTVT_CAMERA_StopCapture( work , camWork );
         callWork->state = CCS_FADEOUT_BOTH;
       }
     }
@@ -628,7 +636,9 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
       if( initWork->mode == CTM_CHILD )
       {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
         //CGEAR‚©‚çŒÄ‚Ño‚µ‚Å‚«‚½B
+        CTVT_CAMERA_StopCapture( work , camWork );
         callWork->state = CCS_FADEOUT_BOTH;
         callWork->barState = CCBS_NONE;
       }

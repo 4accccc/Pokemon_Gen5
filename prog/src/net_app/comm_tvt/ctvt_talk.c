@@ -129,6 +129,7 @@ struct _CTVT_TALK_WORK
 {
   CTVT_TALK_STATE state;
   CTVT_TALK_SUB_STATE subState;
+  BOOL reqStopCamera;
   
   //スライダー系
   u8          sliderPos;
@@ -334,6 +335,7 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
   }
 
   talkWork->state = CTS_FADEIN;
+  talkWork->reqStopCamera = FALSE;
   talkWork->recButtonState = CRBT_NONE;
   talkWork->befRecButtonState = CRBT_MAX;
 
@@ -439,11 +441,17 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     {
       break;
     }
-        
-    WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
-    COMM_TVT_SetUpperFade( work , TRUE );
-    talkWork->state = CTS_FADEOUT_WAIT;
+    {
+      CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+      if( talkWork->reqStopCamera == FALSE ||
+          CTVT_CAMERA_IsStopCapture( work , camWork ) == TRUE )
+      {
+        WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , heapId );
+        COMM_TVT_SetUpperFade( work , TRUE );
+        talkWork->state = CTS_FADEOUT_WAIT;
+      }
+    }
     break;
 
   case CTS_FADEOUT_WAIT:
@@ -543,9 +551,13 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
   case CTS_WAIT_FINISH_CHILD:
     if( COMM_TVT_GetConnectNum( work ) <= 1 )
     {
+      CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
       talkWork->subState = CTSS_GO_END;
       talkWork->state = CTS_FADEOUT_BOTH;
       COMM_TVT_SetSusspend( work , TRUE );
+      CTVT_CAMERA_StopCapture( work , camWork );
+      talkWork->reqStopCamera = TRUE;
+      
     }
     break;
 
@@ -566,6 +578,11 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       talkWork->subState = CTSS_GO_END;
       talkWork->state = CTS_FADEOUT_BOTH;
       COMM_TVT_SetSusspend( work , TRUE );
+      {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+        CTVT_CAMERA_StopCapture( work , camWork );
+        talkWork->reqStopCamera = TRUE;
+      }
     }
     break;
     
@@ -616,6 +633,11 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
         talkWork->subState = CTSS_GO_END;
         talkWork->state = CTS_FADEOUT_BOTH;
         COMM_TVT_SetSusspend( work , TRUE );
+        {
+          CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+          CTVT_CAMERA_StopCapture( work , camWork );
+          talkWork->reqStopCamera = TRUE;
+        }
       }
     }
     break;
@@ -637,6 +659,11 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
       talkWork->subState = CTSS_GO_END;
       talkWork->state = CTS_FADEOUT_BOTH;
       COMM_TVT_SetSusspend( work , TRUE );
+      {
+        CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+        CTVT_CAMERA_StopCapture( work , camWork );
+        talkWork->reqStopCamera = TRUE;
+      }
     }
     break;
   }
@@ -1277,6 +1304,11 @@ static void CTVT_TALK_UpdateEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *ta
         talkWork->subState = CTSS_GO_END;
         talkWork->state = CTS_FADEOUT_BOTH;
         COMM_TVT_SetSusspend( work , TRUE );
+        {
+          CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+          CTVT_CAMERA_StopCapture( work , camWork );
+          talkWork->reqStopCamera = TRUE;
+        }
       }
     }
     else

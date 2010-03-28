@@ -37,6 +37,8 @@ extern CTVT_CAMERA_WORK* CTVT_CAMERA_Init( COMM_TVT_WORK *work , const HEAPID he
 extern void CTVT_CAMERA_Term( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );
 extern void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );
 extern void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );
+extern void CTVT_CAMERA_StopCapture( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );
+extern const BOOL CTVT_CAMERA_IsStopCapture( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );
 
 extern void CTVT_CAMERA_SetRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx );
 extern void CTVT_CAMERA_SetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );

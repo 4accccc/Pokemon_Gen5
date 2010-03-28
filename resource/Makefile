@@ -161,7 +161,8 @@ SUBDIRS	=	wmi \
 			psel \
 			subway_map_gra \
 			item_judge \
-			p_tree
+			p_tree \
+			camera_sys
 
 
 include $(RESOURCE_MACRO)

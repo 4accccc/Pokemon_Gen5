@@ -290,5 +290,6 @@
   ARCID_REBATTLE_TRAINER "fieldmap/rebattle_trainer.narc"  # 再戦トレーナー情報
   ARCID_PALACE_EFFECT "palace_effect.narc"  # palace演出関連
   ARCID_TPOKE_DATA "fieldmap/tpoke_data.narc"  # 連れ歩きポケモン検索情報
+  ARCID_CAMERA_SYS "camera_sys.narc"  # カメラシャッター音
 
 
