@@ -53,7 +53,7 @@ FS_EXTERN_OVERLAY(ui_common);
 //=============================================================================
 enum
 { 
-  DEMO3D_HEAP_SIZE = 0x200000,  ///< ヒープサイズ
+  DEMO3D_HEAP_SIZE = 0x130000,  ///< ヒープサイズ
 };
 
 //=============================================================================
@@ -373,6 +373,9 @@ static BOOL sub_FadeInOutReq( u8 demo_id, u8 wipe, HEAPID heapID )
 //----------------------------------------------------------------------------------
 static int _key_check( DEMO3D_MAIN_WORK *wk )
 {
+  if( WIPE_SYS_EndCheck() == FALSE ){
+    return FALSE;
+  }
   if( wk->expection->key_skip )
   {
     if( GFL_UI_KEY_GetTrg() & 
