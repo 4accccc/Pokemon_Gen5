@@ -782,7 +782,7 @@
 #define FV_D09_VETERANM_01                 758 /* 0x02f6 チャンピオンロード外側：崖の上のベテラン */
 #define FV_D09_VETERANM_02                 759 /* 0x02f7 チャンピオンロード外側：崖の下のベテラン */
 #define FV_C08R0701_STOPPER_01             760 /* 0x02f8 ソウリュウシティ：11番道路方面ストッパー */
-		/* not used   761(0x02f9) */
+#define FV_STADIUM_SPORTSMAN               761 /* 0x02f9 ビッグスタジアム／リトルコートエントランス：選手とファン */
 		/* not used   762(0x02fa) */
 		/* not used   763(0x02fb) */
 		/* not used   764(0x02fc) */
@@ -2516,8 +2516,8 @@
 #define TMFLG_R13_TREASURE                2742 /* 0x0ab6 13番道路：海辺のお宝イベント */
 #define TMFLG_C03R0402_BATTLE             2743 /* 0x0ab7 ゲームフリーク：森本さん戦闘フラグ */
 #define TMFLG_AMUSEMENT_TR_BTL            2744 /* 0x0ab8 ライモン遊園地：観覧車トレーナー対戦フラグ */
-#define TMFLG_BIGSTADIUM_TR_BTL           2745 /* 0x0ab9 ビッグスタジアム：トレーナー再配置フラグ */
-#define TMFLG_LITTLECOURT_TR_BTL          2746 /* 0x0aba リトルコート：トレーナー再配置フラグ */
+#define TMFLG_STADIUM_TR_BTL              2745 /* 0x0ab9 ビッグスタジアム／リトルコート：トレーナー再配置フラグ */
+		/* not used  2746(0x0aba) */
 #define TMFLG_T04R0101_BTL_FAMILY         2747 /* 0x0abb サザナミタウン：巨大別荘対戦フラグ */
 		/* not used  2748(0x0abc) */
 		/* not used  2749(0x0abd) */
