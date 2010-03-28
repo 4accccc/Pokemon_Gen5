@@ -738,6 +738,7 @@ struct _CAMERA_SYSTEM_WORK
 };
 CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId ){return NULL;}
 void CAMERA_SYS_ExitSystem( CAMERA_SYSTEM_WORK* work ){}
+void CAMERA_SYS_UpdateCameta( CAMERA_SYSTEM_WORK *work ){}
 
 void CAMERA_SYS_CreateReadBuffer( CAMERA_SYSTEM_WORK* work , const int bufferNum , const HEAPID heapId ){}
 const u32 CAMERA_SYS_GetBufferSize( CAMERA_SYSTEM_WORK* work , const int bufferNum ){return 0;}
@@ -746,6 +747,7 @@ void CAMERA_SYS_SetReadBuffer( CAMERA_SYSTEM_WORK* work , void *topAdr , const i
 void CAMERA_SYS_DeleteReadBuffer( CAMERA_SYSTEM_WORK* work ){}
 void CAMERA_SYS_StartCapture( CAMERA_SYSTEM_WORK* work ){}
 void CAMERA_SYS_StopCapture( CAMERA_SYSTEM_WORK* work ){}
+const BOOL CAMERA_SYS_IsStopCapture( CAMERA_SYSTEM_WORK* work ){return TRUE;}
 const BOOL CAMERA_SYS_IsCapture( CAMERA_SYSTEM_WORK* work ){return FALSE;}
 void CAMERA_SYS_SetCaptureCallBack( CAMERA_SYSTEM_WORK* work , 
                                     CAMERA_SYS_CaptureCallBack callBack , 
