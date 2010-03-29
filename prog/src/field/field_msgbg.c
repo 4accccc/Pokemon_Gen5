@@ -2381,6 +2381,18 @@ BOOL FLDMSGWIN_STREAM_CheckAllPrintTrans( FLDMSGWIN_STREAM *msgWin )
   return( FLDMSGPRINT_CheckPrintTrans(msgWin->msgPrint) );
 }
 
+//--------------------------------------------------------------
+/**
+ * FLDMSGWIN_STREAM メッセージウィンドウ　BMPWIN取得
+ * @param msgWin FLDMSGWIN_STREAM
+ * @retval GFL_BMPWIN
+ */
+//--------------------------------------------------------------
+GFL_BMPWIN * FLDMSGWIN_STREAM_GetBmpWin( FLDMSGWIN_STREAM *msgWin )
+{
+	return msgWin->bmpwin;
+}
+
 //======================================================================
 //  FLDSYSWIN_STREAM
 //======================================================================
