@@ -262,7 +262,7 @@ static const ITEM_ST DebugItem[] = {
 	{ ITEM_KOORINAOSI,		20 },		// こおりなおし
 	{ ITEM_MAHINAOSI,		22 },		// まひなおし
 	{ ITEM_EFEKUTOGAADO,	54 },		// エフェクトガード
-	{ ITEM_KURITHIKATTAA,	55 },		// クリティカッター
+	{ ITEM_KURITHIKATTO,	55 },		// クリティカット
 	{ ITEM_PURASUPAWAA,		56 },		// プラスパワー
 	{ ITEM_DHIFENDAA,		57 },		// ディフェンダー
 	{ ITEM_SUPIIDAA,		58 },		// スピーダー
