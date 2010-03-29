@@ -398,8 +398,12 @@ static int sub_BadgeWait(TR_CARD_SYS* wk)
     return BADGE_WAIT;
   }
   
-
+  // カードに戻るならカード初期化へ
+  if(wk->tcp->value==CALL_CARD){
   return CARD_INIT;
+  }
+
+  return CARDSYS_END;
 }
 
 

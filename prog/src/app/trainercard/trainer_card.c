@@ -1659,6 +1659,12 @@ static int CheckKey(TR_CARD_WORK* wk)
     PMSND_PlaySE( SND_TRCARD_CANCEL );   //èIóπâπ
     return TRC_KEY_REQ_END_BUTTON;
   }
+  else if(keyTrg & PAD_BUTTON_X )
+  {
+    PMSND_PlaySE( SND_TRCARD_CANCEL );   //èIóπâπ
+    return TRC_KEY_REQ_END_BUTTON;
+    
+  }
 
 #ifdef KEY_LR_OK
   if(keyTrg & (PAD_KEY_LEFT|PAD_KEY_RIGHT))

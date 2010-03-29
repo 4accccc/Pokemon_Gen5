@@ -30,6 +30,8 @@
 #include "arc/message.naix"         // NARC_message_leader_board_dat
 #include "msg/msg_trainercard.h"
 
+#include "trcard_sys.h"
+
 #include "badge_view_def.h"       // 各種定義等
 
 #ifdef PM_DEBUG
@@ -1417,7 +1419,16 @@ static BOOL SubSuq_FadeOut( BADGEVIEW_WORK *wk )
 static BOOL SubSuq_FadeOutWait( BADGEVIEW_WORK *wk )
 {
   if( WIPE_SYS_EndCheck() ){
-    wk->seq = 0;
+    if(wk->next_seq==TOUCH_END){
+      wk->param->value = CALL_NONE;
+      wk->seq = 0;
+    }else if(wk->next_seq==TOUCH_RETURN){
+      wk->param->value = CALL_NONE;
+      wk->seq = 0;
+    }else if(wk->next_seq==TOUCH_CHANGE_CARD){
+      wk->param->value = CALL_CARD;
+      wk->seq = 0;
+    }
     return FALSE;
   }
   return TRUE;
@@ -1754,6 +1765,9 @@ static int TouchBar_KeyControl( BADGEVIEW_WORK *wk )
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
     PMSND_PlaySE( SEQ_SE_CANCEL1 );
     trg = TOUCH_RETURN;
+  }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X){
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );
+    trg = TOUCH_END;
   }
   // 左ページ・右ページ・戻る機能の呼び出し
   ExecFunc(wk, trg);

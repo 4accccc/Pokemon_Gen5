@@ -31,6 +31,7 @@
 #define CALL_NONE     ( 0 ) ///< トレーナーカード通常終了
 #define CALL_PMSINPUT ( 1 ) ///< トレーナカードから簡易会話呼び出し
 #define CALL_BADGE    ( 2 ) ///< トレーナーカードからバッヂ確認画面呼び出し
+#define CALL_CARD     ( 3 ) ///< トレーナーカードからバッヂ確認画面呼び出し
 
 //パレット使用リスト
 enum{
