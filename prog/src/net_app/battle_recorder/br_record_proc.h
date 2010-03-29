@@ -14,6 +14,7 @@
 #include "br_fade.h"
 #include "savedata/gds_profile.h"
 #include "savedata/battle_rec.h"
+#include "br_inner.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -57,11 +58,12 @@ typedef struct
 	BR_RES_WORK					*p_res;				//[in ]リソース管理
 	BR_PROC_SYS					*p_procsys;		//[in ]プロセス管理
 	GFL_CLUNIT					*p_unit;			//[in ]ユニット
-  GDS_PROFILE_PTR       p_profile;  //[in ]プロフィール（modeがBR_RECODE_PROC_DOWNLOAD_NUMBER以外受け取る）
-  BATTLE_REC_HEADER_PTR p_header;   //[in ]バトルヘッダ（modeがBR_RECODE_PROC_DOWNLOAD_NUMBER以外受け取る）
-  u64                   video_number;//[in ]ビデオナンバー（modeがBR_RECODE_PROC_DOWNLOAD_NUMBERのときのみ受け取る）
+  u64                 video_number; //[in ]ビデオナンバー（modeがBR_RECODE_PROC_DOWNLOAD_NUMBERのときのみ受け取る）
   BR_NET_WORK         *p_net;       //[in ]通信管理
   GAMEDATA            *p_gamedata;  //[in ]ゲームデータ
+  BR_RECORD_DATA      *p_record;    //[in ]録画常駐データ
+  BR_OUTLINE_DATA     *p_outline;   //[in ]アウトライン常駐データ
+  BOOL                is_btl_return;//[in ]戦闘からの戻り
 } BR_RECORD_PROC_PARAM;
 
 

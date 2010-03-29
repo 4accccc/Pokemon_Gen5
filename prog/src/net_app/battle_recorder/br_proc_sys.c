@@ -27,7 +27,7 @@
  *					定数宣言
 */
 //=============================================================================
-#define BR_PROC_SYS_STACK_MAX	(5)
+
 
 //=============================================================================
 /**
@@ -63,6 +63,9 @@ struct _BR_PROC_SYS
 	BR_PROC_WORK				next_proc;
 	u32									stackID[BR_PROC_SYS_STACK_MAX];
 	u32									stack_num;
+
+  BR_PROC_SYS_RECOVERY_DATA *p_recovery;
+  BOOL                is_recovery;
 };
 //=============================================================================
 /**
@@ -85,12 +88,13 @@ static void BR_PROC_Clear( BR_PROC_WORK *p_wk );
  *	@param	BR_PROC_SYS_DATA *cp_procdata_tbl	プロセステーブル
  *	@param	tbl_max												テーブル最大
  *	@param	p_wk_adrs											ワークアドレス（ALLOC,FREE_FUNCに渡す値）
+ *	@param  p_recovery                    復帰データ
  *	@param	heapID												ヒープID
  *
  *	@return	ワーク
  */
 //-----------------------------------------------------------------------------
-BR_PROC_SYS * BR_PROC_SYS_Init( u16 startID, const BR_PROC_SYS_DATA *cp_procdata_tbl, u16 tbl_max, void *p_wk_adrs, HEAPID heapID )
+BR_PROC_SYS * BR_PROC_SYS_Init( u16 startID, const BR_PROC_SYS_DATA *cp_procdata_tbl, u16 tbl_max, void *p_wk_adrs, BR_PROC_SYS_RECOVERY_DATA *p_recovery, HEAPID heapID )
 {	
 	BR_PROC_SYS *p_wk;
 
@@ -100,6 +104,7 @@ BR_PROC_SYS * BR_PROC_SYS_Init( u16 startID, const BR_PROC_SYS_DATA *cp_procdata
 	p_wk->tbl_max					= tbl_max;
 	p_wk->p_wk_adrs				= p_wk_adrs;
 	p_wk->cp_procdata_tbl	= cp_procdata_tbl;
+  p_wk->p_recovery      = p_recovery;
 
 	p_wk->p_procsys				= GFL_PROC_LOCAL_boot( heapID );
 
@@ -108,8 +113,27 @@ BR_PROC_SYS * BR_PROC_SYS_Init( u16 startID, const BR_PROC_SYS_DATA *cp_procdata
 	BR_PROC_Clear( &p_wk->next_proc );
 	BR_PROC_Clear( &p_wk->prev_proc );
 
-	//最初のプロセスを積む
-	BR_PROC_SYS_Push( p_wk, startID );
+  if( p_wk->p_recovery->stack_num )
+  {
+    //復帰データがあった場合は復帰
+    int i;
+    for( i = 0; i < p_wk->p_recovery->stack_num; i++ )
+    { 
+      BR_PROC_SYS_Push( p_wk, p_wk->p_recovery->stackID[i] );
+    }
+
+    //復帰したのでデータクリア
+    GFL_STD_MemClear( p_wk->p_recovery, sizeof(BR_PROC_SYS_RECOVERY_DATA) );
+
+    //リカバリーフラグON
+    p_wk->is_recovery = TRUE;
+  }
+  else
+  { 
+    //なかった場合
+    //最初のプロセスを積む
+    BR_PROC_SYS_Push( p_wk, startID );
+  }
 	return p_wk;
 }
 //----------------------------------------------------------------------------
@@ -169,7 +193,21 @@ void BR_PROC_SYS_Main( BR_PROC_SYS *p_wk )
 		//前処理関数を呼ぶ
 		p_now->p_param	= GFL_HEAP_AllocMemory( p_wk->heapID, p_now->cp_data->param_size );
     GFL_STD_MemClear( p_now->p_param, p_now->cp_data->param_size );
-		p_now->cp_data->before_func( p_now->p_param, p_wk->p_wk_adrs, p_prev->p_param, p_prev->procID );
+    {
+      u32 preID;
+      if( p_wk->is_recovery )
+      { 
+        preID = BR_PROC_SYS_RECOVERY_ID;
+      }
+      else
+      { 
+        preID = p_prev->procID;
+      }
+      p_now->cp_data->before_func( p_now->p_param, p_wk->p_wk_adrs, p_prev->p_param, preID );
+
+      //フラグを渡し終えたので復帰OFF
+      p_wk->is_recovery = FALSE;
+    }
 		//以前のデータのパラメータを消す
 		if( p_prev->p_param )
 		{	
@@ -356,6 +394,28 @@ void BR_PROC_SYS_Push( BR_PROC_SYS *p_wk, u16 procID )
   }
 #endif 
 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  COREPROCを中断し、mainに一旦帰る
+ *
+ *	@param	BR_PROC_SYS *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void BR_PROC_SYS_Interruput( BR_PROC_SYS *p_wk )
+{ 
+  int i;
+
+  //復帰データ保存
+  GFL_STD_MemCopy( p_wk->stackID, p_wk->p_recovery->stackID, sizeof(u32)*BR_PROC_SYS_STACK_MAX );
+  p_wk->p_recovery->stack_num = p_wk->stack_num;
+
+  //全部POP
+  for( i = 0; i < p_wk->p_recovery->stack_num; i++ )
+  { 
+    BR_PROC_SYS_Pop( p_wk );
+  }
 }
 
 //=============================================================================

@@ -342,7 +342,7 @@ static void Br_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
   }
 
   //ダウンロードしてアウトラインがきまってからランクを作成
-  BR_RANK_Init( &p_wk->rank, &p_wk->p_param->p_data->outline, p_wk->p_param->p_res, p_wk->p_param->p_unit, p_wk->p_balleff, p_wk->heapID );
+  BR_RANK_Init( &p_wk->rank, p_wk->p_param->p_outline, p_wk->p_param->p_res, p_wk->p_param->p_unit, p_wk->p_balleff, p_wk->heapID );
   //アイコン作成
   Br_Rank_CreatePokeIcon( &p_wk->rank, p_wk->p_param->p_unit, p_wk->heapID );
 
@@ -484,12 +484,12 @@ static void Br_Seq_RankingMain( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       if( Br_Rank_IsPushBattleBV( x, y ) )
       { 
         u32 select  = BR_RANK_GetSelect( &p_wk->rank );
-        BATTLE_REC_OUTLINE_RECV *p_recv = p_wk->p_param->p_data->outline.data;
+        BATTLE_REC_OUTLINE_RECV *p_recv = p_wk->p_param->p_outline->data;
  
-        GF_ASSERT( select < p_wk->p_param->p_data->outline.data_num );
+        GF_ASSERT( select < p_wk->p_param->p_outline->data_num );
 
-        p_wk->p_param->p_profile  = &p_recv[ select ].profile;
-        p_wk->p_param->p_header   = &p_recv[ select ].head;
+        //何番目のデータをよみに行くか
+        p_wk->p_param->p_outline->data_idx  = select;
 
         BR_PROC_SYS_Push( p_wk->p_param->p_procsys, BR_PROCID_RECORD );
         BR_SEQ_SetNext( p_seqwk,Br_Seq_FadeOut );
@@ -547,6 +547,9 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
         GF_ASSERT(0);
       }
 
+      //受信しなおすのでクリア
+      GFL_STD_MemClear( p_wk->p_param->p_outline, sizeof(BR_OUTLINE_DATA ) );
+
       BR_NET_StartRequest( p_wk->p_param->p_net, type, &req_param );
       *p_seq  = SEQ_DOWNLOAD_WAIT;
     }
@@ -562,8 +565,8 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     { 
       BOOL is_exist;
 
-      BATTLE_REC_OUTLINE_RECV *p_recv = p_wk->p_param->p_data->outline.data;
-      int *p_data_num                 = &p_wk->p_param->p_data->outline.data_num;
+      BATTLE_REC_OUTLINE_RECV *p_recv = p_wk->p_param->p_outline->data;
+      int *p_data_num                 = &p_wk->p_param->p_outline->data_num;
 
       switch( p_wk->p_param->mode )
       { 

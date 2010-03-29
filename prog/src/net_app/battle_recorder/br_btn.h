@@ -63,7 +63,7 @@ typedef struct _BR_BTN_SYS_WORK BR_BTN_SYS_WORK;
  *					PUBILICä÷êî
 */
 //=============================================================================
-extern BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, const BR_BTN_DATA_SETUP *cp_setup, HEAPID heapID );
+extern BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, const BR_SAVE_INFO  *cp_saveinfo, HEAPID heapID );
 extern void BR_BTN_SYS_Exit( BR_BTN_SYS_WORK *p_wk );
 extern void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk );
 extern BR_BTN_SYS_INPUT BR_BTN_SYS_GetInput( const BR_BTN_SYS_WORK *cp_wk, u32 *p_seq, u32 *p_param );

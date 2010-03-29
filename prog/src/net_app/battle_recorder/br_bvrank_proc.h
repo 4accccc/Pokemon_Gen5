@@ -50,10 +50,8 @@ typedef struct
 	BR_RES_WORK			*p_res;				//[in ]リソース管理
 	BR_PROC_SYS			*p_procsys;		//[in ]プロセス管理
   BR_NET_WORK     *p_net;       //[in ]ネット管理
-  BR_DATA         *p_data;      //[in ]常駐データ
+  BR_OUTLINE_DATA *p_outline;   //[in ]常駐データ
   BR_NET_VIDEO_SEARCH_DATA  search_data;  //[in]検索項目（modeがBR_BVRANK_MODE_SEARCHのとき入れる）
-  GDS_PROFILE_PTR       p_profile;  //[out ]プロフィール
-  BATTLE_REC_HEADER_PTR p_header;   //[out ]バトルヘッダ
 } BR_BVRANK_PROC_PARAM;
 
 

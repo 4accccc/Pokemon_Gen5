@@ -70,30 +70,39 @@ enum
 
 
 //-------------------------------------
-///戦闘録画データ
+///外部セーブデータの状況
 //=====================================
+#define BR_SAVEDATA_NUM  4
 typedef struct 
 {
-	BOOL						is_valid;
-	void						*p_btlrec;
-} BR_BTLREC_DATA;
-typedef struct 
-{
-	BR_BTLREC_DATA	my;
-	BR_BTLREC_DATA	other[3];
-} BR_BTLREC_SET;
-
+  BOOL    is_valid[BR_SAVEDATA_NUM]; //セーブデータが存在するか
+  STRBUF  *p_name[BR_SAVEDATA_NUM];  //名前
+  u32     sex[BR_SAVEDATA_NUM];      //性別
+  BOOL    is_musical_valid;             //ミュージカルは存在するか
+  BOOL    is_check;                     //１度チェックしたか
+} BR_SAVE_INFO;
 
 //-------------------------------------
 ///	ランキングで必要な情報
 //=====================================
-#define BR_OUTLINE_RECV_MAX (30)
+#define BR_OUTLINE_RECV_MAX   (30)
+#define BR_OUTLINE_LOCAL_DATA (0xFFFF)
 typedef struct 
 {
-	BATTLE_REC_OUTLINE_RECV	data[ BR_OUTLINE_RECV_MAX ];			  ///< DL した概要一覧
+	BATTLE_REC_OUTLINE_RECV	    data[ BR_OUTLINE_RECV_MAX ];			  ///< DL した概要一覧
 	u8							            secure_flag[ BR_OUTLINE_RECV_MAX ];	///< DL した概要のフラグ
-	int							            data_num;			      ///< DL した概要一覧の件数
+	int							            data_num;			                      ///< DL した概要一覧の件数
+  int                         data_idx;                           ///< 現在みているIDX（ローカルならばBR_OUTLINE_LOCAL_DATA）
 } BR_OUTLINE_DATA;
+
+//-------------------------------------
+///	レコードで必要な情報
+//=====================================
+typedef struct 
+{
+  u64                       video_number;   //録画番号
+} BR_RECORD_DATA;
+
 
 //-------------------------------------
 ///	汎用

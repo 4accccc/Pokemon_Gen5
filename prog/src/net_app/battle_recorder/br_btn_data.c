@@ -11,11 +11,17 @@
 //ライブラリ
 #include <gflib.h>
 
+//アーカイブ
 #include "msg/msg_battle_rec.h"
-#include "br_btn_data.h"
+
+//自分のモジュール
 #include "br_core.h"
 #include "br_bvrank_proc.h"
 #include "br_bvdelete_proc.h"
+#include "br_record_proc.h"
+
+//外部公開
+#include "br_btn_data.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -160,7 +166,7 @@ static const BR_BTN_DATA sc_btn_data_browse_btlvideo[BTN_DATA_BROWSE_BTLVIDEO_MA
 		10,
 		BR_BTN_TYPE_CHANGESEQ,
 		BR_PROCID_RECORD,
-		0,
+		BR_RECODE_PROC_MY,
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
@@ -239,7 +245,7 @@ static const BR_BTN_DATA sc_btn_data_browse_other_record[BTN_DATA_BROWSE_OTHER_R
 		11,
 		BR_BTN_TYPE_CHANGESEQ,
 		BR_PROCID_RECORD,
-		0,
+		BR_RECODE_PROC_OTHER_00,
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
@@ -254,7 +260,7 @@ static const BR_BTN_DATA sc_btn_data_browse_other_record[BTN_DATA_BROWSE_OTHER_R
 		11,
 		BR_BTN_TYPE_CHANGESEQ,
 		BR_PROCID_RECORD,
-		0,
+		BR_RECODE_PROC_OTHER_01,
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
@@ -269,7 +275,7 @@ static const BR_BTN_DATA sc_btn_data_browse_other_record[BTN_DATA_BROWSE_OTHER_R
 		11,
 		BR_BTN_TYPE_CHANGESEQ,
 		BR_PROCID_RECORD,
-		0,
+		BR_RECODE_PROC_OTHER_02,
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
@@ -1053,20 +1059,7 @@ BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPI
 	//ヘッダつきバッファ作成
 	p_wk	= GFL_HEAP_AllocMemory( heapID, size );
 	GFL_STD_MemClear( p_wk, size );
-
-  //設定構造体コピー
-  { 
-    int i;
-    for( i = 0; i < BR_RECORD_NUM; i++ )
-    { 
-      p_wk->setup.is_valid[i] = cp_setup->is_valid[i];
-      p_wk->setup.sex[i]      = cp_setup->sex[i];
-      if( cp_setup->p_name[i] )
-      { 
-        p_wk->setup.p_name[i] = GFL_STR_CreateCopyBuffer( cp_setup->p_name[i], heapID );
-      }
-    }
-  }
+  p_wk->setup = *cp_setup;
 
 	//バッファに情報設定
 	{	
@@ -1095,7 +1088,7 @@ BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPI
 				case BR_BTN_UNIQUE_DELETE_MY:
 					/* fallthrough */
         case BR_BTN_UNIQUE_BVSEND:
-					p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->is_valid[ 0 ];
+					p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->cp_saveinfo->is_valid[ 0 ];
 					break;
 
 				//誰かの記録がなかったら押せない
@@ -1109,8 +1102,8 @@ BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPI
             u32 id  = p_wk->buff[cnt].param[ BR_BTN_DATA_PARAM_UNIQUE ] - BR_BTN_UNIQUE_OTHERRECORD1;
 
 						GF_ASSERT( id < 4 );
-						p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->is_valid[ id ];
-						if( cp_setup->is_valid[ id ] )
+						p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->cp_saveinfo->is_valid[ id ];
+						if( cp_setup->cp_saveinfo->is_valid[ id ] )
 						{	
 							p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_MSGID]	= msg_09;
 						}
@@ -1127,8 +1120,8 @@ BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPI
             u32 id  = p_wk->buff[cnt].param[ BR_BTN_DATA_PARAM_UNIQUE ] - BR_BTN_UNIQUE_DELETE_OTHER1;
 
 						GF_ASSERT( id < 4 );
-						p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->is_valid[ id ];
-						if( cp_setup->is_valid[ id ] )
+						p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->cp_saveinfo->is_valid[ id ];
+						if( cp_setup->cp_saveinfo->is_valid[ id ] )
 						{	
 							p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_MSGID]	= msg_09;
 						}
@@ -1138,7 +1131,7 @@ BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPI
 
         case BR_BTN_UNIQUE_SHOTSEND:
           { 
-            p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->is_musical_valid;
+            p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->cp_saveinfo->is_musical_valid;
           }
           break;
 
@@ -1163,18 +1156,6 @@ BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPI
 //-----------------------------------------------------------------------------
 void BR_BTN_DATA_SYS_Exit( BR_BTN_DATA_SYS *p_wk )
 {	
-  //設定構造体の中にあるワークを開放
-  { 
-    int i;
-    for( i = 0; i < BR_RECORD_NUM; i++ )
-    { 
-      if( p_wk->setup.p_name[i] )
-      { 
-        GFL_STR_DeleteBuffer( p_wk->setup.p_name[i] );
-      }
-    }
-  }
-
 	GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
@@ -1344,7 +1325,7 @@ STRBUF *BR_BTN_DATA_CreateString( const BR_BTN_DATA_SYS *cp_sys, const BR_BTN_DA
 
   if( is_target )
   {	
-    if( cp_sys->setup.is_valid[ id ] )
+    if( cp_sys->setup.cp_saveinfo->is_valid[ id ] )
     { 
       WORDSET *p_word;
       STRBUF  *p_src;
@@ -1352,7 +1333,9 @@ STRBUF *BR_BTN_DATA_CreateString( const BR_BTN_DATA_SYS *cp_sys, const BR_BTN_DA
       //単語作成を一時的に使用
       p_word  = WORDSET_Create( GFL_HEAP_LOWID( heapID ) );
 
-      WORDSET_RegisterWord( p_word, 0, cp_sys->setup.p_name[ id ], cp_sys->setup.sex[ id ], TRUE, PM_LANG );
+      WORDSET_RegisterWord( p_word, 0, 
+          cp_sys->setup.cp_saveinfo->p_name[ id ],
+          cp_sys->setup.cp_saveinfo->sex[ id ], TRUE, PM_LANG );
       p_src	= GFL_MSG_CreateString( p_msg, BR_BTN_DATA_GetParam( cp_data, BR_BTN_DATA_PARAM_MSGID) );
       p_strbuf	= GFL_MSG_CreateString( p_msg, BR_BTN_DATA_GetParam( cp_data, BR_BTN_DATA_PARAM_MSGID) );
       WORDSET_ExpandStr( p_word, p_strbuf, p_src );

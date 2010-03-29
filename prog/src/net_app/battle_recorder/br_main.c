@@ -245,6 +245,19 @@ static GFL_PROC_RESULT BR_SYS_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_p
   }
 #endif
 
+  //常駐データでアロックしていたものを破棄
+  if( p_wk->data.rec_saveinfo.is_check )
+  { 
+    int i;
+    for( i = 0; i < BR_SAVEDATA_NUM; i++ )
+    { 
+      if( p_wk->data.rec_saveinfo.p_name[i] )
+      { 
+        GFL_STR_DeleteBuffer( p_wk->data.rec_saveinfo.p_name[i] );
+      }
+    }
+  }
+
   //モジュール破棄
   SUBPROC_Exit( &p_wk->subproc );
 

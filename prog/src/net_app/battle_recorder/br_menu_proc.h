@@ -12,6 +12,7 @@
 #include "br_proc_sys.h"
 #include "br_res.h"
 #include "br_fade.h"
+#include "br_inner.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -51,17 +52,6 @@ typedef enum
  *					構造体
 */
 //=============================================================================
-#define BR_BTLREC_DATA_NUM  4
-//-------------------------------------
-///	メニューで使用する録画データ
-//=====================================
-typedef struct 
-{
-  BOOL    is_valid[BR_BTLREC_DATA_NUM];
-  STRBUF  *p_name[BR_BTLREC_DATA_NUM];
-  u32     sex[BR_BTLREC_DATA_NUM];
-  BOOL    is_musical_valid;
-} BR_MENU_BTLREC_DATA;
 
 
 //-------------------------------------
@@ -78,7 +68,7 @@ typedef struct
 	GFL_CLUNIT			*p_unit;			//[in ]ユニット
 	BR_RES_WORK			*p_res;				//[in ]リソース管理
 	BR_PROC_SYS			*p_procsys;		//[in ]プロセス管理
-  const BR_MENU_BTLREC_DATA *cp_btlrec; //[in]録画データ
+  const BR_SAVE_INFO  *cp_saveinfo; //[in]外部データ状況
 } BR_MENU_PROC_PARAM;
 
 

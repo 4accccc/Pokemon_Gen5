@@ -283,13 +283,13 @@ static const GFL_POINT  sc_tag_pos[]  =
  *  @param	mode						起動モード
  *  @param	GFL_CLUNIT			ユニット
  *  @param	BR_RES_WORK			リソース
- *  @param	BR_BTLREC_SET		バトル録画情報
+ *  @param	BR_SAVE_INFO		バトル録画情報
  *	@param	HEAPID heapID		ヒープID
  *
  *	@return	ワーク
  */
 //-----------------------------------------------------------------------------
-BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, const BR_BTN_DATA_SETUP *cp_setup, HEAPID heapID )
+BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, const BR_SAVE_INFO *cp_saveinfo, HEAPID heapID )
 {	
 	BR_BTN_SYS_WORK *p_wk;
 
@@ -304,7 +304,13 @@ BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_W
 		p_wk->heapID			= heapID;
 		p_wk->p_bmpoam		= BmpOam_Init( heapID, p_unit);
     p_wk->p_que       = PRINTSYS_QUE_Create( heapID );
-		p_wk->p_btn_data	= BR_BTN_DATA_SYS_Init( cp_setup, heapID );
+
+    {
+      BR_BTN_DATA_SETUP setup;
+      GFL_STD_MemClear( &setup, sizeof(BR_BTN_DATA_SETUP) );
+      setup.cp_saveinfo = cp_saveinfo;
+      p_wk->p_btn_data	= BR_BTN_DATA_SYS_Init( &setup, heapID );
+    }
 	}
 
 	//リソース読み込み

@@ -94,6 +94,11 @@ typedef struct
   BOOL              is_profile;
 	HEAPID            heapID;
 
+  GDS_PROFILE_PTR       p_profile;
+  BATTLE_REC_HEADER_PTR p_header;
+
+  BOOL                  can_save;
+
   BR_RECORD_PROC_PARAM	*p_param;
 } BR_RECORD_WORK;
 
@@ -123,6 +128,7 @@ static void Br_Record_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 static void Br_Record_Seq_ChangeDrawUp( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Record_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 ///	画面作成
@@ -196,10 +202,57 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   p_wk->p_seq       = BR_SEQ_Init( p_wk, NULL, p_wk->heapID );
   p_wk->p_balleff   = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
 
+  //読み込むデータを選別
+  switch( p_wk->p_param->mode )
+  { 
+  case BR_RECODE_PROC_DOWNLOAD_RANK:
+    //ランクからきたときはアウトラインを受信してきているので、
+    //アウトラインのヘッダを使う
+    p_wk->p_header  = &p_wk->p_param->p_outline->data[ p_wk->p_param->p_outline->data_idx ].head;
+    p_wk->p_profile  = &p_wk->p_param->p_outline->data[ p_wk->p_param->p_outline->data_idx ].profile;
+    p_wk->can_save  = TRUE;
+    break;
+
+  case BR_RECODE_PROC_MY:
+  case BR_RECODE_PROC_OTHER_00:
+  case BR_RECODE_PROC_OTHER_01:
+  case BR_RECODE_PROC_OTHER_02:
+    //保存してあるデータを使うときはBRS上に読み込んでいるので、それを使う
+    p_wk->p_header  = BattleRec_HeaderPtrGet();
+    p_wk->p_profile = BattleRec_GDSProfilePtrGet();
+    p_wk->can_save  = FALSE;
+    break;
+
+  case BR_RECODE_PROC_DOWNLOAD_NUMBER:
+    //番号から来たときは先によみにいくので、まだない
+    if( !p_wk->p_param->is_btl_return )
+    { 
+      p_wk->p_header  = NULL;
+      p_wk->p_profile = NULL;
+    }
+    else
+    { 
+      //ただし復帰時はBRS上に読んでいるのでそれを使う
+      p_wk->p_header  = BattleRec_HeaderPtrGet();
+      p_wk->p_profile = BattleRec_GDSProfilePtrGet();
+    }
+    p_wk->can_save  = TRUE;
+    break;
+  }
+
+  //シーケンス指定
   if( p_wk->p_param->mode == BR_RECODE_PROC_DOWNLOAD_NUMBER )
   { 
     //番号指定から来た場合はヘッダろプロファイルがないのですぐダウンロード
-    BR_SEQ_SetNext( p_wk->p_seq, Br_Record_Seq_NumberDownload );
+    if( !p_wk->p_param->is_btl_return )
+    { 
+      BR_SEQ_SetNext( p_wk->p_seq, Br_Record_Seq_NumberDownload );
+    }
+    else
+    { 
+      //こちらも復帰時はそのままレコード画面へ
+      BR_SEQ_SetNext( p_wk->p_seq, Br_Record_Seq_FadeInBefore );
+    }
   }
   else
   { 
@@ -472,6 +525,17 @@ static void Br_Record_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeOut );
     }	
 
+    //録画ボタン
+    if( p_wk->p_btn[BR_RECORD_BTNID_SAVE] )
+    { 
+      if( BR_BTN_GetTrg( p_wk->p_btn[BR_RECORD_BTNID_SAVE], x, y ) )
+      {	
+        p_wk->p_param->ret  = BR_RECORD_RETURN_FINISH;
+        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_Save );
+      }	
+    }
+
     //再生ボタン
     if( Br_Record_GetTrgStart( x, y ) )
     { 
@@ -485,14 +549,7 @@ static void Br_Record_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
       { 
         p_wk->p_param->ret  = BR_RECORD_RETURN_BTLREC;
         //フェードをすっとばす
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+        BR_PROC_SYS_Interruput( p_wk->p_param->p_procsys );
         BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeOut );
       }
     }
@@ -639,8 +696,8 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
       int video_number;
       if( BR_NET_GetDownloadBattleVideo( p_wk->p_param->p_net, &p_recv, &video_number ) )
       { 
-        p_wk->p_param->p_profile = &p_recv->profile;
-        p_wk->p_param->p_header  = &p_recv->head;
+        p_wk->p_profile = &p_recv->profile;
+        p_wk->p_header  = &p_recv->head;
 
         *p_seq  = SEQ_FADEOUT_START;
       }
@@ -768,7 +825,7 @@ static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
     {
       BR_NET_REQUEST_PARAM  req_param;
       GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
-      req_param.download_video_number = RecHeader_ParamGet( p_wk->p_param->p_header, RECHEAD_IDX_DATA_NUMBER, 0 );
+      req_param.download_video_number = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_DATA_NUMBER, 0 );
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD, &req_param );
 
       *p_seq  = SEQ_DOWNLOAD_WAIT;
@@ -791,7 +848,10 @@ static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
         BattleRec_DataSet( &p_btl_rec->profile, &p_btl_rec->head,
             &p_btl_rec->rec, GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata ) );
         
+        p_wk->p_param->p_record->video_number = video_number;
+
         p_wk->p_param->ret  = BR_RECORD_RETURN_BTLREC;
+        BR_PROC_SYS_Interruput( p_wk->p_param->p_procsys );
         *p_seq  = SEQ_FADEOUT_START;
       }
       else
@@ -817,17 +877,7 @@ static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
 
     Br_Record_Download_DeleteDisplay( p_wk, p_wk->p_param );
 
-    //フェードをすっとばす
-    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-
-    BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeOutAfter );
+    BR_SEQ_End( p_wk->p_seq );
     break;
 
   case SEQ_FADEOUT_START_RET:
@@ -849,6 +899,19 @@ static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
     BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeInBefore );
     break;
   }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  保存シーケンス
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+
 }
 //=============================================================================
 /**
@@ -923,9 +986,9 @@ static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_
         { 
           STRBUF  *p_name;
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
-          p_name    = GDS_Profile_CreateNameString( p_param->p_profile, p_wk->heapID );
+          p_name    = GDS_Profile_CreateNameString( p_wk->p_profile, p_wk->heapID );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
-          WORDSET_RegisterWord( p_word, 0, p_name, GDS_Profile_GetSex(p_param->p_profile), TRUE, PM_LANG );
+          WORDSET_RegisterWord( p_word, 0, p_name, GDS_Profile_GetSex(p_wk->p_profile), TRUE, PM_LANG );
           WORDSET_ExpandStr( p_word, p_strbuf, p_src );
           GFL_STR_DeleteBuffer( p_name );
           GFL_STR_DeleteBuffer( p_src );
@@ -933,13 +996,13 @@ static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_
         break;
       case BR_RECORD_MSGWINID_M_BTL_RULE:       //コロシアム　シングル　せいげんなし
         {
-          const u32 btl_rule  = RecHeader_ParamGet( p_param->p_header, RECHEAD_IDX_MODE, 0);
+          const u32 btl_rule  = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_MODE, 0);
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID + btl_rule );
         }
         break;
       case BR_RECORD_MSGWINID_M_BTL_NUMBER:    //ビデオナンバー
         { 
-          const u64 number  = RecHeader_ParamGet( p_param->p_header, RECHEAD_IDX_DATA_NUMBER, 0);
+          const u64 number  = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_DATA_NUMBER, 0);
           u64 dtmp1 = number;
           u32 dtmp2[3];
 
@@ -979,7 +1042,7 @@ static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_
 
   //ポケアイコン
   { 
-    Br_Record_AddPokeIcon( p_wk, p_param->p_unit, p_param->p_header, p_wk->heapID );
+    Br_Record_AddPokeIcon( p_wk, p_param->p_unit, p_wk->p_header, p_wk->heapID );
   }
 }
 
@@ -1137,7 +1200,7 @@ static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, 
 //-----------------------------------------------------------------------------
 static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
 {
-  p_wk->p_profile_disp  = BR_PROFILE_CreateMainDisplay( p_param->p_profile, p_param->p_res, p_param->p_unit, p_wk->p_que, p_wk->heapID );
+  p_wk->p_profile_disp  = BR_PROFILE_CreateMainDisplay( p_wk->p_profile, p_param->p_res, p_param->p_unit, p_wk->p_que, p_wk->heapID );
 
 }
 //----------------------------------------------------------------------------
@@ -1164,10 +1227,19 @@ static void Br_Record_DeleteMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_P
       if( p_wk->res_icon_chr[i] != GFL_CLGRP_REGISTER_FAILED )
       { 
         GFL_CLGRP_CGR_Release(p_wk->res_icon_chr[i]);
+        p_wk->res_icon_chr[i] = GFL_CLGRP_REGISTER_FAILED;
       }
     }
-    GFL_CLGRP_PLTT_Release(p_wk->res_icon_plt);
-    GFL_CLGRP_CELLANIM_Release(p_wk->res_icon_cel);
+    if( p_wk->res_icon_plt != GFL_CLGRP_REGISTER_FAILED )
+    { 
+      GFL_CLGRP_PLTT_Release(p_wk->res_icon_plt);
+      p_wk->res_icon_plt  = GFL_CLGRP_REGISTER_FAILED;
+    }
+    if( p_wk->res_icon_cel != GFL_CLGRP_REGISTER_FAILED )
+    { 
+      GFL_CLGRP_CELLANIM_Release(p_wk->res_icon_cel);
+      p_wk->res_icon_cel  = GFL_CLGRP_REGISTER_FAILED;
+    }
 
   }
 
@@ -1224,22 +1296,46 @@ static void Br_Record_CreateSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
   p_msg   = BR_RES_GetMsgData( p_param->p_res );
 
 
-  //ボタン作成
+  //ボタン作成  
+  if( p_wk->can_save )
   { 
-    GFL_CLWK_DATA cldata;
-    BR_RES_OBJ_DATA res;
+    { 
+      GFL_CLWK_DATA cldata;
+      BR_RES_OBJ_DATA res;
 
-    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+      GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
 
-    cldata.pos_x    = 80;
-    cldata.pos_y    = 168;
-    cldata.anmseq   = 0;
-    cldata.softpri  = 1;
+      cldata.pos_x    = 24;
+      cldata.pos_y    = 168;
+      cldata.anmseq   = 0;
+      cldata.softpri  = 1;
 
-    BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
+      BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
 
-    p_wk->p_btn[BR_RECORD_BTNID_RETURN] = BR_BTN_Init( &cldata, msg_05, BR_BTN_DATA_SHORT_WIDTH,CLSYS_DRAW_SUB, p_param->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
-;
+      p_wk->p_btn[BR_RECORD_BTNID_RETURN] = BR_BTN_Init( &cldata, msg_05, BR_BTN_DATA_SHORT_WIDTH,CLSYS_DRAW_SUB, p_param->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
+
+      cldata.pos_x    = 136;
+      cldata.anmseq   = 3;
+      p_wk->p_btn[BR_RECORD_BTNID_SAVE] = BR_BTN_Init( &cldata, msg_602, BR_BTN_DATA_SHORT_WIDTH,CLSYS_DRAW_SUB, p_param->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
+    }
+  }
+  else
+  { 
+    { 
+      GFL_CLWK_DATA cldata;
+      BR_RES_OBJ_DATA res;
+
+      GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+      cldata.pos_x    = 80;
+      cldata.pos_y    = 168;
+      cldata.anmseq   = 0;
+      cldata.softpri  = 1;
+
+      BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
+
+      p_wk->p_btn[BR_RECORD_BTNID_RETURN] = BR_BTN_Init( &cldata, msg_05, BR_BTN_DATA_SHORT_WIDTH,CLSYS_DRAW_SUB, p_param->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
+    }
   }
 
   //メッセージWIN作成

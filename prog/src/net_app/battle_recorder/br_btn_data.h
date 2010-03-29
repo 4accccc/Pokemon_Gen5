@@ -112,10 +112,7 @@ typedef struct _BR_BTN_DATA  BR_BTN_DATA;
 #define BR_RECORD_NUM 4
 typedef struct 
 {
-  BOOL    is_valid[BR_RECORD_NUM];
-  STRBUF  *p_name[BR_RECORD_NUM];
-  u32     sex[BR_RECORD_NUM];
-  BOOL    is_musical_valid;
+  const BR_SAVE_INFO  *cp_saveinfo;
 } BR_BTN_DATA_SETUP;
 
 

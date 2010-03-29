@@ -16,7 +16,12 @@
  *					定数宣言
 */
 //=============================================================================
-#define BR_PROC_SYS_NONE_ID	(0xFFFFFFFF)
+//一番最初のBR_PROC_SYS_BEFORE_FUNCTION関数ではpreIDからこの値が帰ってくる
+#define BR_PROC_SYS_NONE_ID	    (0xFFFFFFFF)
+//復帰時は以下のパラメータがpreIDから帰ってくる
+#define BR_PROC_SYS_RECOVERY_ID	(0xFFFFFFFE)
+
+#define BR_PROC_SYS_STACK_MAX	  (5)
 
 //=============================================================================
 /**
@@ -46,6 +51,16 @@ typedef struct
 	BR_PROC_SYS_AFTER_FUNCTION		after_func;			//プロセス終了後関数
 } BR_PROC_SYS_DATA;
 
+//-------------------------------------
+///	プロセス復帰データ
+//=====================================
+typedef struct 
+{
+  u32	  stackID[BR_PROC_SYS_STACK_MAX];
+  u32		stack_num;
+} BR_PROC_SYS_RECOVERY_DATA;
+
+
 //=============================================================================
 /**
  *					PUBLIC関数
@@ -54,7 +69,7 @@ typedef struct
 //-------------------------------------
 ///	システム
 //=====================================
-extern BR_PROC_SYS * BR_PROC_SYS_Init( u16 startID, const BR_PROC_SYS_DATA *cp_procdata_tbl, u16 tbl_max, void *p_wk_adrs, HEAPID heapID );
+extern BR_PROC_SYS * BR_PROC_SYS_Init( u16 startID, const BR_PROC_SYS_DATA *cp_procdata_tbl, u16 tbl_max, void *p_wk_adrs, BR_PROC_SYS_RECOVERY_DATA *p_recovery, HEAPID heapID );
 extern void BR_PROC_SYS_Exit( BR_PROC_SYS *p_wk );
 extern void BR_PROC_SYS_Main( BR_PROC_SYS *p_wk );
 extern BOOL BR_PROC_SYS_IsEnd( const BR_PROC_SYS *cp_wk );
@@ -68,5 +83,4 @@ extern HEAPID BR_PROC_SYS_GetHeapID( const BR_PROC_SYS *cp_wk );
 extern void BR_PROC_SYS_Pop( BR_PROC_SYS *p_wk );
 extern void BR_PROC_SYS_Push( BR_PROC_SYS *p_wk, u16 procID );
 
-//@todo バトルビデオやミュージカルを見るときにstackを無視して終了するコマンドを作る
-//extern void BR_PROC_SYS_Finish( BR_PROC_SYS *p_wk );
+extern void BR_PROC_SYS_Interruput( BR_PROC_SYS *p_wk );
