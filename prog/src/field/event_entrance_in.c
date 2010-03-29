@@ -52,8 +52,8 @@ typedef enum {
 //=======================================================================================
 // ■イベント ワーク
 //=======================================================================================
-typedef struct
-{
+typedef struct {
+
   GAMESYS_WORK*            gameSystem;
   GAMEDATA*                gameData;
   FIELDMAP_WORK*           fieldmap;
@@ -550,7 +550,6 @@ static void SetupCamera( EVENT_WORK* work )
 
   // カメラモードを変更
   FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
-  FIELD_CAMERA_BindDefaultTarget( camera );
 }
 
 //---------------------------------------------------------------------------------------
