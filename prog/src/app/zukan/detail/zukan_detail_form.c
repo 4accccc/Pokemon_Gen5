@@ -201,10 +201,10 @@ typedef enum
 {
   STATE_TOP,
   STATE_TOP_OSHIDASHI,
-//  STATE_TOP_TO_EXCHANGE,
+  STATE_TOP_TO_EXCHANGE,
   STATE_EXCHANGE,
   STATE_EXCHANGE_IREKAE,
-//  STATE_EXCHANGE_TO_TOP,
+  STATE_EXCHANGE_TO_TOP,
 }
 STATE;
 
@@ -380,12 +380,17 @@ typedef enum
 OSHIDASHI_STATE;
 typedef enum
 {
-  OSHIDASHI_DIRECT_L,  // 左から右へ
-  OSHIDASHI_DIRECT_R,  // 右から左へ
+  OSHIDASHI_DIRECT_L_TO_R,  // 左から右へ
+  OSHIDASHI_DIRECT_R_TO_L,  // 右から左へ
 }
 OSHIDASHI_DIRECT;
 
-#define OSHIDASHI_SPEED  (2.0f)  // 押し出し速度(1フレームでこれだけ移動する)
+#define OSHIDASHI_SPEED  (8.0f)  // 押し出し速度(1フレームでこれだけ移動する)
+
+
+// 階層変更  // TOP_TO_EXCHANGE or EXCHANGE_TO_TOP
+#define KAISOU_CURR_SPEED  (2.0f)  // 階層変更の際のcurrの速度(1フレームでこれだけ移動する)
+#define KAISOU_COMP_SPEED  (8.0f)  // 階層変更の際のcompの速度(1フレームでこれだけ移動する)
 
 
 //=============================================================================
@@ -513,6 +518,10 @@ typedef struct
   // 押し出し
   OSHIDASHI_STATE             oshidashi_state;
   OSHIDASHI_DIRECT            oshidashi_direct;
+
+  // 階層変更  // TOP_TO_EXCHANGE or EXCHANGE_TO_TOP
+  BOOL                        kaisou_curr_end;  // TRUEのとき、currは所定の位置に到着している
+  BOOL                        kaisou_comp_end;  // TRUEのとき、compは所定の位置に到着している
 }
 ZUKAN_DETAIL_FORM_WORK;
 
@@ -629,6 +638,14 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
 
 // 入れ替え
 static void Zukan_Detail_Form_IrekaeMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
+// 押し出し
+static void Zukan_Detail_Form_OshidashiChangeCompareForm( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Form_OshidashiSetPosCompareForm( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Form_OshidashiMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
+// 階層変更  // TOP_TO_EXCHANGE or EXCHANGE_TO_TOP
+static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 
 //=============================================================================
@@ -1148,10 +1165,16 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
     Zukan_Detail_Form_ObjButtonMain( param, work, cmn );
  
     // 入れ替え 
-    Zukan_Detail_Form_IrekaeMain( param, work, cmn );  // Zukan_Detail_Form_IrekaeMainでスクロールバーを更新する命令を出しているので、
+    Zukan_Detail_Form_IrekaeMain( param, work, cmn );  // Zukan_Detail_Form_IrekaeMainでスクロールバーを更新する命令を出しているので、↓つづく
 
     // スクロールバー
-    Zukan_Detail_Form_ObjBarMain( param, work, cmn );  // 必ずZukan_Detail_Form_IrekaeMain→Zukan_Detail_Form_ObjBarMainの順で。
+    Zukan_Detail_Form_ObjBarMain( param, work, cmn );  // つづき↑必ずZukan_Detail_Form_IrekaeMain→Zukan_Detail_Form_ObjBarMainの順で。
+
+    // 押し出し
+    Zukan_Detail_Form_OshidashiMain( param, work, cmn );
+
+    // 階層変更  // TOP_TO_EXCHANGE or EXCHANGE_TO_TOP
+    Zukan_Detail_Form_KaisouMain( param, work, cmn );
 
     // 最背面
     ZKNDTL_COMMON_RearMain( work->rear_wk_m );
@@ -1200,14 +1223,17 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
     case ZKNDTL_CMD_CUR_D:
     case ZKNDTL_CMD_FORM_CUR_D:
       {
-        u16 monsno_curr;
-        u16 monsno_go;
-        monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
-        ZKNDTL_COMMON_GoToNextPoke(cmn);
-        monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
-        if( monsno_curr != monsno_go )
+        if( work->state == STATE_TOP || work->state == STATE_EXCHANGE )
         {
-          Zukan_Detail_Form_ChangePoke(param, work, cmn);
+          u16 monsno_curr;
+          u16 monsno_go;
+          monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+          ZKNDTL_COMMON_GoToNextPoke(cmn);
+          monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
+          if( monsno_curr != monsno_go )
+          {
+            Zukan_Detail_Form_ChangePoke(param, work, cmn);
+          }
         }
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
@@ -1215,14 +1241,17 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
     case ZKNDTL_CMD_CUR_U:
     case ZKNDTL_CMD_FORM_CUR_U:
       {
-        u16 monsno_curr;
-        u16 monsno_go;
-        monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
-        ZKNDTL_COMMON_GoToPrevPoke(cmn);
-        monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
-        if( monsno_curr != monsno_go )
+        if( work->state == STATE_TOP || work->state == STATE_EXCHANGE )
         {
-          Zukan_Detail_Form_ChangePoke(param, work, cmn);
+          u16 monsno_curr;
+          u16 monsno_go;
+          monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+          ZKNDTL_COMMON_GoToPrevPoke(cmn);
+          monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
+          if( monsno_curr != monsno_go )
+          {
+            Zukan_Detail_Form_ChangePoke(param, work, cmn);
+          }
         }
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
@@ -1257,7 +1286,11 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
       break;
     case ZKNDTL_CMD_FORM_RETURN:
       {
-        Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
+        //Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
+        if( work->state == STATE_EXCHANGE )
+        {
+          Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE_TO_TOP );
+        }
       }
       break;
     case ZKNDTL_CMD_FORM_CUR_L:
@@ -2491,6 +2524,14 @@ static void Zukan_Detail_Form_ChangePoke( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
 
   // 変更されたポケモン用に、トップ画面でフォルムを切り替えるための矢印を用意する
   Zukan_Detail_Form_ObjButtonAroowSetup( param, work, cmn );
+
+  // 押し出し用関数を利用してcompをcurrの次のフォルムにしておく
+  // 押し出し用関数を利用して位置設定
+  if( work->state == STATE_TOP && work->diff_num >= 2 ) 
+  {
+    work->oshidashi_direct = OSHIDASHI_DIRECT_R_TO_L;
+    Zukan_Detail_Form_OshidashiChangeCompareForm( param, work, cmn );
+  }
 }
 
 //-------------------------------------
@@ -2545,7 +2586,7 @@ static void Zukan_Detail_Form_Input( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAI
       BOOL change_state = FALSE;
       BUTTON_OBJ push_button;
 
-      // 前後ボタン、再生ボタン
+      // 前後ボタン、再生ボタン  // トップ画面でフォルムを切り替えるための矢印
       push_button = Zukan_Detail_Form_ObjButtonCheckPush( param, work, cmn );
 
       if( push_button != BUTTON_OBJ_NONE )
@@ -2566,6 +2607,20 @@ static void Zukan_Detail_Form_Input( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAI
             }
           }
           break;
+        case BUTTON_OBJ_ARROW_L:
+          {
+            work->oshidashi_direct = OSHIDASHI_DIRECT_R_TO_L;
+            Zukan_Detail_Form_OshidashiChangeCompareForm( param, work, cmn );
+            Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP_OSHIDASHI );
+          }
+          break;
+        case BUTTON_OBJ_ARROW_R:
+          {
+            work->oshidashi_direct = OSHIDASHI_DIRECT_L_TO_R;
+            Zukan_Detail_Form_OshidashiChangeCompareForm( param, work, cmn );
+            Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP_OSHIDASHI );
+          }
+          break;
         }
       }
       else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
@@ -2581,7 +2636,8 @@ static void Zukan_Detail_Form_Input( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAI
       }
       if( change_state )
       {
-        Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE );
+        //Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE );
+        Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP_TO_EXCHANGE );
         PMSND_PlaySE( SEQ_SE_DECIDE1 );
       }
     }
@@ -2641,10 +2697,79 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
       // 遷移後の状態
       switch(state)
       {
+      case STATE_TOP_OSHIDASHI:
+        {
+          if( work->oshidashi_state == OSHIDASHI_STATE_NONE )
+          {
+            work->oshidashi_state = OSHIDASHI_STATE_MOVE;
+          }
+          else
+          {
+            // 何もしない
+          }
+        }
+        break;
+      case STATE_TOP_TO_EXCHANGE:
+        {
+          work->kaisou_curr_end = FALSE;
+          work->kaisou_comp_end = FALSE;
+
+          // 押し出し用関数を利用して位置設定
+          if( /*work->state == STATE_TOP &&*/ work->diff_num >= 2 ) 
+          {
+            work->oshidashi_direct = OSHIDASHI_DIRECT_R_TO_L;
+            Zukan_Detail_Form_OshidashiSetPosCompareForm( param, work, cmn );
+          }
+        }
+        break;
       case STATE_EXCHANGE:
         {
           b_top_exchange = TRUE;
           
+          if( work->diff_num >= 2 )
+          {
+            VecFx32 p;
+
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
+
+            PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &p );
+          }
+
+          // タッチバー
+          ZUKAN_DETAIL_TOUCHBAR_SetType(
+              touchbar,
+              ZUKAN_DETAIL_TOUCHBAR_TYPE_FORM,
+              ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
+        }
+        break;
+      }
+    }
+    break;
+  case STATE_TOP_OSHIDASHI:
+    {
+      // 遷移後の状態
+      switch(state)
+      {
+      case STATE_TOP:
+        {
+          // 何もしない
+        }
+        break;
+      }
+    }
+    break;
+  case STATE_TOP_TO_EXCHANGE:
+    {
+      // 遷移後の状態
+      switch(state)
+      {
+      case STATE_EXCHANGE:
+        {
+          b_top_exchange = TRUE;
+
           if( work->diff_num >= 2 )
           {
             VecFx32 p;
@@ -2708,6 +2833,12 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
           }
         }
         break;
+      case STATE_EXCHANGE_TO_TOP:
+        {
+          work->kaisou_curr_end = FALSE;
+          work->kaisou_comp_end = FALSE;
+        }
+        break;
       }
     }
     break;
@@ -2719,6 +2850,44 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
       case STATE_EXCHANGE:
         {
           // 何もしない
+        }
+        break;
+      }
+    }
+    break;
+  case STATE_EXCHANGE_TO_TOP:
+    {
+      // 遷移後の状態
+      switch(state)
+      {
+      case STATE_TOP:
+        {
+          b_top_exchange = TRUE;
+
+          if( work->diff_num >= 2 )
+          {
+            VecFx32 p;
+
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &poke_pos[POKE_CURR_POS_CENTER] );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &poke_pos[POKE_CURR_POS_CENTER] );
+      
+            PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &p );
+          }
+
+          // タッチバー
+          ZUKAN_DETAIL_TOUCHBAR_SetType(
+              touchbar,
+              ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
+              ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
+
+          // 押し出し用関数を利用して位置設定
+          if( /*work->state == STATE_TOP &&*/ work->diff_num >= 2 ) 
+          {
+            work->oshidashi_direct = OSHIDASHI_DIRECT_R_TO_L;
+            Zukan_Detail_Form_OshidashiSetPosCompareForm( param, work, cmn );
+          }
         }
         break;
       }
@@ -2744,7 +2913,7 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
 
     // 変更された状態用に、トップ画面でフォルムを切り替えるための矢印を用意する
     Zukan_Detail_Form_ObjButtonAroowSetup( param, work, cmn );
- }
+  }
 }
 
 //-------------------------------------
@@ -3570,6 +3739,339 @@ static void Zukan_Detail_Form_IrekaeMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
         MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
         MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &p );
       }
+    }
+  }
+}
+
+//-------------------------------------
+/// 押し出し
+//=====================================
+static void Zukan_Detail_Form_OshidashiChangeCompareForm( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u16 diff_comp_no_prev = work->diff_comp_no;
+
+  if( work->oshidashi_direct == OSHIDASHI_DIRECT_L_TO_R )  // 左から右へ
+  {
+    if( work->diff_num >= 3 )
+    {
+      work->diff_comp_no = work->diff_curr_no + work->diff_num -1;
+      work->diff_comp_no %= work->diff_num;
+    }
+  }
+  else  // 右から左へ
+  {
+    if( work->diff_num >= 3 )
+    {
+      work->diff_comp_no = work->diff_curr_no +1;
+      work->diff_comp_no %= work->diff_num;
+    }
+  }
+
+  if( work->diff_comp_no != diff_comp_no_prev )
+  {
+    // 前のを破棄
+    //BLOCK_POKE_EXIT( work->mcss_sys_wk, work->poke_mcss_wk[POKE_COMP_F].poke_wk )
+    //BLOCK_POKE_EXIT( work->mcss_sys_wk, work->poke_mcss_wk[POKE_COMP_B].poke_wk )
+    PokeMcssWorkExit( &work->poke_mcss_wk[POKE_COMP_F], work->mcss_sys_wk );
+    PokeMcssWorkExit( &work->poke_mcss_wk[POKE_COMP_B], work->mcss_sys_wk );
+  
+    // 次のを生成
+    Zukan_Detail_Form_PokeInitFromDiffInfo( param, work, cmn,
+        POKE_COMP_F, POKE_COMP_B, POKE_COMP_RPOS, work->diff_comp_no );
+    PokeMcssCallBackDataInit( work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data,
+                              POKE_COMP_F, work );
+    PokeMcssCallBackDataInit( work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data,
+                              POKE_COMP_B, work );
+  }
+  
+  // 押し出し用関数を利用して位置設定
+  Zukan_Detail_Form_OshidashiSetPosCompareForm( param, work, cmn );
+}
+static void Zukan_Detail_Form_OshidashiSetPosCompareForm( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  const f32  left_x    =  -256.0f;
+  const f32  center_x  =     0.0f;
+  const f32  right_x   =   256.0f;
+  const f32  base_y    =   -24.0f;
+  const f32  base_z    =     0.0f;
+
+  VecFx32 pos_fx32;
+
+  if( work->oshidashi_direct == OSHIDASHI_DIRECT_L_TO_R )  // 左から右へ
+  {
+    // 左に置く
+    pos_fx32.x = FX_F32_TO_FX32(left_x);
+    pos_fx32.y = FX_F32_TO_FX32(base_y);
+    pos_fx32.z = FX_F32_TO_FX32(base_z);
+    MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &pos_fx32 );
+    MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &pos_fx32 );
+  }
+  else  // 右から左へ
+  {
+    // 右に置く
+    pos_fx32.x = FX_F32_TO_FX32(right_x);
+    pos_fx32.y = FX_F32_TO_FX32(base_y);
+    pos_fx32.z = FX_F32_TO_FX32(base_z);
+    MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &pos_fx32 );
+    MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &pos_fx32 );
+  }
+}
+static void Zukan_Detail_Form_OshidashiMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  if( work->oshidashi_state == OSHIDASHI_STATE_MOVE )
+  {
+    const f32  left_x    =  -256.0f;
+    const f32  center_x  =     0.0f;
+    const f32  right_x   =   256.0f;
+    const f32  base_y    =   -24.0f;
+    const f32  base_z    =     0.0f;
+
+    VecFx32 pos_fx32;
+    f32     pos_x;
+    BOOL    move_end = FALSE;
+    
+    MCSS_GetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &pos_fx32 );
+    pos_x = FX_FX32_TO_F32( pos_fx32.x );
+
+    if( work->oshidashi_direct == OSHIDASHI_DIRECT_L_TO_R )  // 左から右へ
+    {
+      pos_x += OSHIDASHI_SPEED;
+      if( pos_x >= center_x )
+      {
+        move_end = TRUE;
+      }
+    }
+    else  // 右から左へ
+    {
+      pos_x -= OSHIDASHI_SPEED;
+      if( pos_x <= center_x )
+      {
+        move_end = TRUE;
+      }
+    }
+
+    if( move_end )
+    {
+      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
+
+
+        if( work->diff_num >= 2 )
+        {
+          u16 no;
+          MCSS_WORK* mw;
+          POKE_MCSS_CALL_BACK_DATA* pmcbd;
+
+          // 位置入れ替え
+          MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
+          MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
+          {
+            VecFx32 p;
+            PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
+            
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &p );
+          }
+          
+          // 番号、ポインタ入れ替え
+          no = work->diff_curr_no;
+          work->diff_curr_no = work->diff_comp_no;
+          work->diff_comp_no = no;
+
+          mw = work->poke_mcss_wk[POKE_CURR_F].poke_wk;
+          work->poke_mcss_wk[POKE_CURR_F].poke_wk = work->poke_mcss_wk[POKE_COMP_F].poke_wk;
+          work->poke_mcss_wk[POKE_COMP_F].poke_wk = mw;
+
+          pmcbd = work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data;
+          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data;
+          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data = pmcbd;
+          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_COMP_F;
+          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_CURR_F;
+
+          mw = work->poke_mcss_wk[POKE_CURR_B].poke_wk;
+          work->poke_mcss_wk[POKE_CURR_B].poke_wk = work->poke_mcss_wk[POKE_COMP_B].poke_wk;
+          work->poke_mcss_wk[POKE_COMP_B].poke_wk = mw;
+
+          pmcbd = work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data;
+          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data;
+          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data = pmcbd;
+          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_COMP_B;
+          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_CURR_B;
+
+          // ポケアイコン変更
+          Zukan_Detail_Form_ChangePokeicon( param, work, cmn );
+
+          // テキスト
+          // テキストはOBJではなくBGなので、入れ替えできないので丸々書き直し
+          Zukan_Detail_Form_WritePokeCurrText( param, work, cmn );
+          Zukan_Detail_Form_WritePokeCompText( param, work, cmn );
+
+          // テキストに合わせて、フォルム名の背面フィールドを用意する
+          Zukan_Detail_Form_ObjFieldSetup( param, work, cmn );
+
+          // 図鑑セーブデータに閲覧中データ設定
+          {
+            u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
+
+            GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+            ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( gamedata );
+
+            u32  sex  = work->diff_info_list[work->diff_curr_no].sex;
+            BOOL rare = (work->diff_info_list[work->diff_curr_no].rare==0)?FALSE:TRUE;
+            u32  form = work->diff_info_list[work->diff_curr_no].form;
+
+            ZUKANSAVE_SetDrawData(  zkn_sv, monsno, sex, rare, form );
+
+#ifdef DEBUG_KAWADA
+            {
+              OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, diff_no=%d, f=%d, s=%d, r=%d\n", monsno, work->diff_curr_no, form, sex, rare );
+            }
+#endif
+#ifdef DEBUG_KAWADA
+            {
+              ZUKANSAVE_GetDrawData(  zkn_sv, monsno, &sex, &rare, &form, param->heap_id );
+              OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, ZUKANSAVE_GetDrawData, f=%d, s=%d, r=%d\n", monsno, form, sex, rare );
+            }
+#endif
+          }
+
+          //if( work->diff_num >= 3 )
+          //{
+          //  work->bar_cursor_move_by_key = TRUE;
+          //}
+        }
+
+
+      // 押し出し用関数を利用してcompをcurrの次のフォルムにしておく
+      // 押し出し用関数を利用して位置設定
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &poke_pos[POKE_CURR_POS_CENTER] );
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &poke_pos[POKE_CURR_POS_CENTER] );
+      work->oshidashi_direct = OSHIDASHI_DIRECT_R_TO_L;
+      Zukan_Detail_Form_OshidashiChangeCompareForm( param, work, cmn );
+      // STATE_TOPの状態のときに1度でもフォルム変更を行うと、compにはcurrの次のフォルムを設定して終わるようになる。
+      // STATE_TOPの状態のときにフォルム変更を行わなかったら、compはSTATE_EXCHANGEの状態のときに設定したもののままになる。
+      
+      work->oshidashi_state = OSHIDASHI_STATE_NONE;
+    }
+    else
+    {
+      pos_fx32.x = FX_F32_TO_FX32(pos_x);
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &pos_fx32 );
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &pos_fx32 );
+ 
+      MCSS_GetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &pos_fx32 );
+      pos_x = FX_FX32_TO_F32( pos_fx32.x );
+      if( work->oshidashi_direct == OSHIDASHI_DIRECT_L_TO_R )  // 左から右へ
+      {
+        pos_x += OSHIDASHI_SPEED;
+      }
+      else  // 右から左へ
+      {
+        pos_x -= OSHIDASHI_SPEED;
+      }
+      pos_fx32.x = FX_F32_TO_FX32(pos_x);
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &pos_fx32 );
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &pos_fx32 );
+    }
+  }
+}
+
+//-------------------------------------
+/// 階層変更  // TOP_TO_EXCHANGE or EXCHANGE_TO_TOP
+//=====================================
+static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  const f32  exchange_left_x  =   -64.0f;
+  const f32  exchange_right_x =    64.0f;
+  const f32  top_center_x     =     0.0f;
+  const f32  top_right_x      =   256.0f;
+  const f32  base_y           =   -24.0f;
+  const f32  base_z           =     0.0f;
+
+  if( work->diff_num < 2 )
+  {
+    if( work->state == STATE_TOP_TO_EXCHANGE )
+    {
+      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE );
+    }
+    else if( work->state == STATE_EXCHANGE_TO_TOP )
+    {
+      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
+    }
+    return;
+  }
+
+  if( work->state == STATE_TOP_TO_EXCHANGE )
+  {
+    VecFx32 pos_fx32;
+    f32     pos_x;
+    if( !work->kaisou_curr_end )
+    {
+      MCSS_GetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &pos_fx32 );
+      pos_x = FX_FX32_TO_F32( pos_fx32.x );
+      pos_x -= KAISOU_CURR_SPEED;
+      if( pos_x <= exchange_left_x )
+      {
+        pos_x = exchange_left_x;
+        work->kaisou_curr_end = TRUE;
+      }
+      pos_fx32.x = FX_F32_TO_FX32( pos_x );
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &pos_fx32 );
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &pos_fx32 );
+    }
+    if( !work->kaisou_comp_end )
+    {
+      MCSS_GetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &pos_fx32 );
+      pos_x = FX_FX32_TO_F32( pos_fx32.x );
+      pos_x -= KAISOU_COMP_SPEED;
+      if( pos_x <= exchange_right_x )
+      {
+        pos_x = exchange_right_x;
+        work->kaisou_comp_end = TRUE;
+      }
+      pos_fx32.x = FX_F32_TO_FX32( pos_x );
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &pos_fx32 );
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &pos_fx32 );
+    }
+    if( work->kaisou_curr_end && work->kaisou_comp_end )
+    {
+      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE );
+    }
+  }
+  else if( work->state == STATE_EXCHANGE_TO_TOP )
+  {
+    VecFx32 pos_fx32;
+    f32     pos_x;
+    if( !work->kaisou_curr_end )
+    {
+      MCSS_GetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &pos_fx32 );
+      pos_x = FX_FX32_TO_F32( pos_fx32.x );
+      pos_x += KAISOU_CURR_SPEED;
+      if( pos_x >= top_center_x )
+      {
+        pos_x = top_center_x;
+        work->kaisou_curr_end = TRUE;
+      }
+      pos_fx32.x = FX_F32_TO_FX32( pos_x );
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &pos_fx32 );
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &pos_fx32 );
+    }
+    if( !work->kaisou_comp_end )
+    {
+      MCSS_GetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &pos_fx32 );
+      pos_x = FX_FX32_TO_F32( pos_fx32.x );
+      pos_x += KAISOU_COMP_SPEED;
+      if( pos_x >= top_right_x )
+      {
+        pos_x = top_right_x;
+        work->kaisou_comp_end = TRUE;
+      }
+      pos_fx32.x = FX_F32_TO_FX32( pos_x );
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &pos_fx32 );
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &pos_fx32 );
+    }
+    if( work->kaisou_curr_end && work->kaisou_comp_end )
+    {
+      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
     }
   }
 }
