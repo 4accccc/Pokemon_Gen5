@@ -58,15 +58,9 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START		ev_pos_d20r0301_exit_01
 	
-	//画面暗転
-	_MAP_FADE_BLACK_OUT()
-	
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_exit )
-	
-	//暗転終了
-	_DISP_FADE_END_CHECK()
 	_OBJ_ANIME_WAIT()
-
+	
 	//マップチェンジ
 	_DIVING( SCR_EV_DIVING_MAPCHANGE_UP )
 	
@@ -76,5 +70,5 @@ EVENT_END
 //		共通
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_exit
-	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
