@@ -32,6 +32,8 @@
 #include "fieldmap_func.h"
 #include "field_player_nogrid.h"
 
+#include "fieldmap_ctrl_hybrid.h"
+
 
 #include "debug/gf_mcs.h"
 
@@ -167,6 +169,8 @@ typedef struct {
 	u32	last_control_type;
 	RE_MCS_SELECT_DATA select_last;
 
+  u8 default_base_type;
+  u8 pad[3];
 
 	// レール描画ワーク
 	FLDMAPFUNC_WORK* p_rail_draw;
@@ -213,6 +217,7 @@ typedef struct {
 
   // レール表示のON　OFF
   BOOL rail_draw_flag;
+
 	
 	// 描画オブジェ部
 	RE_RAIL_DRAW_OBJ draw_obj[ RM_DRAW_OBJ_MAX ];
@@ -398,6 +403,14 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 		// カメラターゲット設定
 //		FIELD_CAMERA_BindTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), &p_wk->camera_target );
 
+    // ベースタイプの成りすまし
+    if( FIELDMAP_GetMapControlType( p_wk->p_fieldmap ) == FLDMAP_CTRLTYPE_HYBRID ){
+      FIELDMAP_CTRL_HYBRID* p_hybrid;
+      p_hybrid = FIELDMAP_GetMapCtrlWork( p_wk->p_fieldmap );
+      p_wk->default_base_type = FIELDMAP_CTRL_HYBRID_GetBaseSystemType( p_hybrid );
+
+      FIELDMAP_CTRL_HYBRID_DEBUG_SetBaseSystem( p_hybrid, FLDMAP_BASESYS_RAIL );
+    }
 
 		// デフォルトターゲットの変更
 		p_wk->cp_field_default_target = FIELD_CAMERA_DEBUG_GetDefaultTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ) );
@@ -514,6 +527,13 @@ static GMEVENT_RESULT DEBUG_RailEditorEvent( GMEVENT * p_event, int *  p_seq, vo
 
 		// デフォルトターゲットをもとにもどす
 		FIELD_CAMERA_DEBUG_SetDefaultTarget( FIELDMAP_GetFieldCamera( p_wk->p_fieldmap ), p_wk->cp_field_default_target );
+
+    // ベースタイプの成りすましを元に戻す
+    if( FIELDMAP_GetMapControlType( p_wk->p_fieldmap ) == FLDMAP_CTRLTYPE_HYBRID ){
+      FIELDMAP_CTRL_HYBRID* p_hybrid;
+      p_hybrid = FIELDMAP_GetMapCtrlWork( p_wk->p_fieldmap );
+      FIELDMAP_CTRL_HYBRID_DEBUG_SetBaseSystem( p_hybrid, p_wk->default_base_type );
+    }
 
     {
       FLDNOGRID_MAPPER* p_mapper;

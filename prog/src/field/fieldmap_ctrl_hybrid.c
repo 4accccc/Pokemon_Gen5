@@ -157,6 +157,12 @@ void FIELDMAP_CTRL_HYBRID_ChangeBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FIELDMAP
 
 
 
+#ifdef PM_DEBUG
+void FIELDMAP_CTRL_HYBRID_DEBUG_SetBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FLDMAP_BASESYS_TYPE type )
+{
+  p_wk->base_type = type;
+}
+#endif
 
 //-----------------------------------------------------------------------------
 /**

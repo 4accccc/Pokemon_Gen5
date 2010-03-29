@@ -52,6 +52,13 @@ extern FLDMAP_BASESYS_TYPE FIELDMAP_CTRL_HYBRID_GetBaseSystemType( const FIELDMA
 // その場で、レールとグリッドを切り替える
 extern void FIELDMAP_CTRL_HYBRID_ChangeBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FIELDMAP_WORK* p_fieldmap );
 
+#ifdef PM_DEBUG
+
+// ベースシステムを設定の物になりすませる。
+extern void FIELDMAP_CTRL_HYBRID_DEBUG_SetBaseSystem( FIELDMAP_CTRL_HYBRID* p_wk, FLDMAP_BASESYS_TYPE type );
+
+#endif
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif
