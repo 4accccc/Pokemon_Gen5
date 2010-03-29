@@ -26,6 +26,8 @@
 
 #include "field/field_beacon_message.h"
 #include "gamesystem/game_beacon_accessor.h"
+#include "../../field/field_comm/intrude_work.h"
+#include "../../field/field_comm/intrude_main.h"
 
 #include "../field_sound.h"
 
@@ -555,6 +557,8 @@ static void _PanelPaletteChange(C_GEAR_WORK* pWork)
       }
       DC_FlushRange(pWork->palTrans[i], _CGEAR_NET_CHANGEPAL_NUM*2);
       GXS_LoadBGPltt(pWork->palTrans[i], (16*(i+1) + _CGEAR_NET_CHANGEPAL_POSX) * 2, _CGEAR_NET_CHANGEPAL_NUM*2);
+      //@todoF•ÏX
+      //   GXS_LoadOBJPltt(pWork->palTrans[i], (16*(i+1) + _CGEAR_NET_CHANGEPAL_POSX) * 2, _CGEAR_NET_CHANGEPAL_NUM*2);
     }
   }
 }
@@ -1997,12 +2001,15 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
   {
     GAME_COMM_SYS_PTR pGC = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
     {
-
       pWork->plt_counter++;
       if(pWork->plt_counter>=66)
       {
         pWork->beacon_bit=0;
         pWork->plt_counter=0;
+      }
+
+      if(Intrude_CheckPalaceConnect(pGC)){
+        pWork->beacon_bit |= GAME_COMM_STATUS_BIT_WIRELESS;
       }
       if(!pWork->beacon_bit){
         u32 bit = WIH_DWC_GetAllBeaconTypeBit();
