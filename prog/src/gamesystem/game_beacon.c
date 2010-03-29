@@ -26,9 +26,6 @@
 //==============================================================================
 //  定数定義
 //==============================================================================
-///ビーコン寿命
-#define LIFE_TIME     (15 * 60)
-
 ///配信用マジックキー：ポケモン
 #define MAGIC_KEY_DISTRIBUTION_POKE    (0x2932013a)
 ///配信用マジックキー：アイテム
@@ -278,7 +275,7 @@ static void SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send)
 {
   if(send->info.action.action_no != GAMEBEACON_ACTION_SEARCH){
     send->life++;
-    if(send->life > LIFE_TIME){
+    if(send->life > CrossCommData[send->info.action.action_no].life){
       send->life = 0;
       send->info.action.action_no = GAMEBEACON_ACTION_SEARCH;
     }
