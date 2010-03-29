@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T15:13:49"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T18:11:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c04r0601_hakase2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_hakase2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・pos起動（GRIDX=2～7、GRIDZ=10）
 ※当たり判定の不具合があるので
@@ -306,7 +306,7 @@
 [1:00:トレーナー名:0]！！▼</language>
 	</row>
 
-	<row id="msg_c04r0601_black_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0601_black_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、主人公を誘導
 　所定の位置(アララギの前）に到達すると
@@ -316,7 +316,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『こっちだよ▼</language>
 	</row>
 
-	<row id="msg_c04r0601_hakase2_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_hakase2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・続けてhakase2_03</comment>
 		<attribute name="キャラ指定">アララギ博士(娘）</attribute>
@@ -334,7 +334,7 @@
 ドドーンと　サービスよ！！▼</language>
 	</row>
 
-	<row id="msg_c04r0601_hakase2_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_hakase2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・まずチェレンの前に移動して
 　hakase2_04</comment>
@@ -343,7 +343,7 @@
 		<language name="JPN_KANJI" width="256">はい　チェレン！▼</language>
 	</row>
 
-	<row id="msg_c04r0601_hakase2_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_hakase2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公の前に移動して
 ・アイテム入手処理
@@ -355,7 +355,7 @@
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]も▼</language>
 	</row>
 
-	<row id="msg_c04r0601_hakase2_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_hakase2_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手後
 ・続けてhakase2_06</comment>
@@ -374,7 +374,7 @@
 最後かも　しれないんだから！▼</language>
 	</row>
 
-	<row id="msg_c04r0601_hakase2_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_hakase2_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・横を向いてメッセージ表示
 ・hakase2_07</comment>
@@ -391,7 +391,7 @@
 旅を　楽しみなさいね！▼</language>
 	</row>
 
-	<row id="msg_c04r0601_hakase2_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0601_hakase2_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ後、画面下に移動
 ・画面外に消えるとblack_02</comment>
@@ -410,7 +410,7 @@
 ベルに　会わなきゃね▼</language>
 	</row>
 
-	<row id="msg_c04r0601_black_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0601_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・下を向いたままメッセージ表示
 　続けてblack_03</comment>
@@ -421,7 +421,7 @@
 お礼を　いう前に　いっちゃった▼</language>
 	</row>
 
-	<row id="msg_c04r0601_black_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0601_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・主人公と向き合って
 ・メッセージ表示後、下に移動

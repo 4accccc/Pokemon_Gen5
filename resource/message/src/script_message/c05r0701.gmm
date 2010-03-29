@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T15:25:13"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T18:15:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,8 +364,7 @@
 		<comment>♀
 ・はい選択時で条件を満たしているとき
 ・アイテム入手処理
-　仮でNo158「オボンのみ」
-　→ハートのウロコに変更予定
+　No093「ハートのウロコ」
 
 ・0＝指定した技名
 ・1＝指定した技を覚えているポケモン
