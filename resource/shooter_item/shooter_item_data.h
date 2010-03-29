@@ -3,14 +3,14 @@
  * @file shooter_item_data.h
  * @brief シューター用アイテム使用許可ビット
  * @author toru=nagihashi
- * @date Wed Mar 10 20:07:45 +0900 2010
+ * @date Tue Mar 30 00:22:50 +0900 2010
  * @note このファイルはshooter_item_conv.rbにて自動生成されております
 */
 //============================================================================================
 #ifndef __SHOOTER_ITEM_DATA_H__
 #define __SHOOTER_ITEM_DATA_H__
 
-#define	SHOOTER_ITEM_KURITHIKATTAA		(0)
+#define	SHOOTER_ITEM_KURITHIKATTO		(0)
 #define	SHOOTER_ITEM_SUPIIDAA		(1)
 #define	SHOOTER_ITEM_SUPESYARUAPPU		(2)
 #define	SHOOTER_ITEM_SUPESYARUGAADO		(3)
