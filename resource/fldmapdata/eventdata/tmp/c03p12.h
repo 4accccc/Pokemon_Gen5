@@ -4,6 +4,7 @@
 
 #define DOOR_ID_C03P12_C03_EXIT01         0
 #define DOOR_ID_C03P12_C03R0901_EXIT01    1
+#define DOOR_ID_C03P12_C03P01_EXIT01      2
 
 #endif //ZONE_C03P12_EVD_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p12.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

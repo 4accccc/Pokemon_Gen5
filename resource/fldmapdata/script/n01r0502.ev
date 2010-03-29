@@ -29,6 +29,9 @@ _EVENT_DATA		ev_n01r0502_wkobjcode00_01
 _EVENT_DATA		ev_n01r0502_wkobjcode01_01
 _EVENT_DATA		ev_init_n01r0502
 _EVENT_DATA		ev_recover_n01r0502
+_EVENT_DATA		ev_n01r0502_sage1_01
+_EVENT_DATA		ev_n01r0502_champion_01
+_EVENT_DATA		ev_n01r0502_rival_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -38,7 +41,7 @@ INIT_EVENT_START 	ev_zone_n01r0502
 	//可変OBJの確定
 	_GET_ROM_VERSION( SCWK_ANSWER )
 	IF $SCWK_ANSWER == VERSION_WHITE THEN
-		IF $WK_SCENE_N01R0502 == 4 THEN 
+		IF $WK_SCENE_N01R0502 >= 4 THEN 
 			$OBJCHRWORK0 = SHIN_A	//シン
 		ELSE
 			$OBJCHRWORK0 = SHIN_B	//シン
@@ -47,7 +50,7 @@ INIT_EVENT_START 	ev_zone_n01r0502
 		$OBJCHRWORK1 = MU_B		//ム
 	
 	ELSE
-		IF $WK_SCENE_N01R0502 == 4 THEN 
+		IF $WK_SCENE_N01R0502 >= 4 THEN 
 			$OBJCHRWORK0 = MU_A		//ム
 		ELSE
 			$OBJCHRWORK0 = MU_B		//ム
@@ -78,6 +81,12 @@ INIT_EVENT_START	ev_init_n01r0502
 		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 35, DIR_DOWN )
 		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE01_01, 16, 0, 38, DIR_DOWN )
 		_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 39, DIR_LEFT )
+	CASE 5 THEN		//ゲーチス戦で負けた場合
+		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 35, DIR_DOWN )
+		_OBJ_POS_CHANGE( N01R0502_CHAMPION_01, 15, 0, 40, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0502_RIVAL_01, 17, 0, 40, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0502_SAGE1_01, 16, 0, 38, DIR_DOWN )
+		_OBJ_POS_CHANGE( N01R0502_BOSS_01, 16, 0, 36, DIR_DOWN )
 	ENDSWITCH
 
 INIT_EVENT_END
@@ -99,6 +108,12 @@ INIT_EVENT_START	ev_recover_n01r0502
 		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 35, DIR_DOWN )
 		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE01_01, 16, 0, 38, DIR_DOWN )
 		_OBJ_POS_CHANGE( N01R0502_BOSS_01, 17, 0, 39, DIR_LEFT )
+	CASE 5 THEN		//ゲーチス戦で負けた場合
+		_OBJ_POS_CHANGE( N01R0502_WKOBJCODE00_01, 16, 0, 35, DIR_DOWN )
+		_OBJ_POS_CHANGE( N01R0502_CHAMPION_01, 15, 0, 40, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0502_RIVAL_01, 17, 0, 40, DIR_UP )
+		_OBJ_POS_CHANGE( N01R0502_SAGE1_01, 16, 0, 38, DIR_DOWN )
+		_OBJ_POS_CHANGE( N01R0502_BOSS_01, 16, 0, 36, DIR_DOWN )
 	ENDSWITCH
 
 INIT_EVENT_END
@@ -477,7 +492,7 @@ _ANIME_LABEL	anm_n_turn
 /*	最終イベント５	Ｎ話しかけ起動							*/
 /************************************************************/
 EVENT_START		ev_n01r0502_boss_01
-_TALK_OBJ_START()
+	_TALK_OBJ_START()
 IF $WK_SCENE_N01R0502 == 3 THEN
 
 	//Nと戦闘
@@ -616,10 +631,17 @@ IF $WK_SCENE_N01R0502 == 3 THEN
 	
 	//========================================/
 
-ELSE
+ELSIF $WK_SCENE_N01R0502 == 4 THEN
 	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_boss_10w, msg_n01r0502_boss_10b, N01R0502_BOSS_01, WIN_NONE )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
+
+ELSE	
+
+	_BALLOONWIN_TALKOBJ_MSG( msg_n01r0502_rematch_boss )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+
 ENDIF
 
 EVENT_END
@@ -655,6 +677,26 @@ _TALK_OBJ_START()
 	_OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_legend_gutari )
 	_OBJ_ANIME_WAIT()
 
+IF $WK_SCENE_N01R0502 == 5 THEN
+
+{
+	DEFINE_LOCAL	LWK_ROM
+	_GET_ROM_VERSION( LWK_ROM )
+		IF $LWK_ROM == VERSION_WHITE THEN
+			_BALLOONWIN_TALKOBJ_MSG( msg_n01r0502_rematch_pokemon_01w )
+			_MSGWIN_CLOSE()
+			_VOICE_PLAY( MONSNO_650, 0 )
+			_VOICE_WAIT()
+		ELSE
+			_BALLOONWIN_TALKOBJ_MSG( msg_n01r0502_rematch_pokemon_01b )
+			_MSGWIN_CLOSE()
+			_VOICE_PLAY( MONSNO_651, 0 )
+			_VOICE_WAIT()
+		ENDIF
+}
+
+ELSE
+
 	//WHITE版の場合
 {
 	DEFINE_LOCAL	LWK_ROM
@@ -667,6 +709,8 @@ _TALK_OBJ_START()
 			_VOICE_WAIT()
 		ENDIF
 }
+
+ENDIF
 
 	_OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_stay_d )
 	_OBJ_ANIME_WAIT()
@@ -703,6 +747,9 @@ _TALK_OBJ_START()
 				//シンのOBJ削除
 				_OBJ_DEL( N01R0502_WKOBJCODE01_01 )
 				
+				//フラグセット
+				_FLAG_SET( FV_N01R0502_LEGEND_02 )
+				
 				//自機の位置調整
 				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
 				
@@ -732,7 +779,10 @@ _TALK_OBJ_START()
 				
 				//ムのOBJ削除
 				_OBJ_DEL( N01R0502_WKOBJCODE01_01 )
-				
+
+				//フラグセット
+				_FLAG_SET( FV_N01R0502_LEGEND_02 )
+
 				//自機の位置調整
 				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
 
@@ -949,7 +999,7 @@ ev_last:
 	//BGM終了
 	_END_EVENT_BGM()
 
-	//【仮】戦闘呼び出し　全滅処理が未定
+	//戦闘呼び出し
 	_TRAINER_BTL_SET( TRID_SAGE1_01, 0 )
 	//敗戦チェック
 	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
@@ -1119,7 +1169,12 @@ ev_last:
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
 	
+	//========================================/
 	
+	//$WK_SCENE_N01R0502を６にして終了
+	$WK_SCENE_N01R0502 = 6
+
+	//========================================/
 	
 	//ゲームクリア
 	_GOTO_GAMECLEAR_DEMO( 0 )
@@ -1282,3 +1337,208 @@ _ANIME_LABEL	anm_champion_lastscene
 	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
 	_ANIME_DATA	ACMD_END,0
 	
+/**************************************************************/
+/*		ゲーチス	話しかけ（負けた場合のもの）			  */
+/**************************************************************/
+EVENT_START		ev_n01r0502_sage1_01
+_TALK_OBJ_START()
+	//戦闘呼び出し
+	_TRAINER_BTL_SET( TRID_SAGE1_01, 0 )
+	//敗戦チェック
+	_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+
+		_CAMERA_START()		//カメラ操作開始
+		_CAMERA_PURGE()		//カメラのバインドを解く
+	
+		//カメラ操作　Ｎの位置にカメラを合わせる
+		_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,60 )
+		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+		_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 39, DIR_UP )
+	
+		_OBJ_ANIME( N01R0502_BOSS_01, anm_dir_d )
+		_OBJ_ANIME( N01R0502_SAGE1_01, anm_dir_d )
+		_OBJ_ANIME( N01R0502_RIVAL_01, anm_dir_u )
+		_OBJ_ANIME( N01R0502_CHAMPION_01, anm_dir_u )
+		_OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_dir_d )
+		_OBJ_ANIME_WAIT()
+	
+		_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+	ELSE
+		_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+	ENDIF
+
+	_TIME_WAIT( 30 )
+
+	//ゲーチス・自機：気圧されるアニメ
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_keosu )
+	_OBJ_ANIME( N01R0502_SAGE1_01, anm_gcis_keosu )
+	_OBJ_ANIME_WAIT()
+
+	//……どういうことだ？
+	_BALLOONWIN_OBJMSG( msg_n01r0502_sage1_08 , N01R0502_SAGE1_01 )
+	_MSGWIN_CLOSE()
+	
+	//ライバル：ゲーチスをどつく
+	_OBJ_ANIME( N01R0502_RIVAL_01, anm_rival_dotsuku1 )
+	_OBJ_ANIME_WAIT()
+
+	//みぐるしいよ
+	_BALLOONWIN_OBJMSG( msg_n01r0502_black_02 , N01R0502_RIVAL_01 )
+	_MSGWIN_CLOSE()
+
+	//ライバル・ゲーチス：画面外へ
+	_OBJ_ANIME( N01R0502_RIVAL_01, anm_rival_dotsuku2 )
+	_OBJ_ANIME( N01R0502_SAGE1_01, anm_gcis_dotsuku )
+	_OBJ_ANIME( N01R0502_CHAMPION_01, anm_champion_tsureteku2 )
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tsureteku2 )
+	_OBJ_ANIME_WAIT()
+	
+	_TIME_WAIT(20)
+	
+	//自機・チャンピオン・N：歩み寄る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_ayumi )
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_ayumi )
+	_OBJ_ANIME( N01R0502_CHAMPION_01, anm_champion_ayumi )
+	_OBJ_ANIME_WAIT()
+
+	//ボクが　きみのことを　ゲーチスに
+	_BALLOONWIN_OBJMSG( msg_n01r0502_boss_13 , N01R0502_BOSS_01 )
+	_MSGWIN_CLOSE()
+	
+	//ふむ　なるほどな
+	_BALLOONWIN_OBJMSG_WB( msg_n01r0502_champion_02w, msg_n01r0502_champion_02b, N01R0502_SAGE1_01, WIN_NONE )
+	_MSGWIN_CLOSE()
+	
+	//だが　ぼくに　えいゆうの　しかくはない！
+	_BALLOONWIN_OBJMSG( msg_n01r0502_boss_14 , N01R0502_BOSS_01 )
+	_MSGWIN_CLOSE()
+	
+	//そうかあ？
+	_BALLOONWIN_OBJMSG( msg_n01r0502_champion_03 , N01R0502_CHAMPION_01 )
+	_MSGWIN_CLOSE()
+
+	//わかったような　ことを
+	_BALLOONWIN_OBJMSG( msg_n01r0502_boss_15 , N01R0502_BOSS_01 )
+	_MSGWIN_CLOSE()
+	
+	//Ｎよ　おたがい　りかい　しあえなくとも　ひていする
+	_BALLOONWIN_OBJMSG( msg_n01r0502_champion_04 , N01R0502_CHAMPION_01 )
+	_MSGWIN_CLOSE()
+	
+	//そうだね　いまなら　それも　わかる
+	_BALLOONWIN_OBJMSG( msg_n01r0502_boss_16 , N01R0502_BOSS_01 )
+	_MSGWIN_CLOSE()
+	
+	//Ｎのアップ絵表示
+	_START_FACEUP( 0, 0 )
+
+	//プレイヤー名！
+	_PLAYER_NAME( 0 )
+	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_17 )
+	_PLAINWIN_CLOSE()
+
+	//はいと　答えた回数でメッセージ分岐
+	
+{
+	DEFINE_LOCAL	LWK_ROM
+	_GET_ROM_VERSION( LWK_ROM )
+		//ホワイトバージョンでかつ
+		IF $LWK_ROM == VERSION_WHITE THEN
+			
+			SWITCH $WK_OTHER_N_COUNT
+			CASE 0 THEN
+				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_01 )
+				_LAST_KEYWAIT()
+				_PLAINWIN_CLOSE()
+			//1回の場合
+			CASE 1 THEN
+				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_02 )
+				_LAST_KEYWAIT()
+				_PLAINWIN_CLOSE()
+			//2回の場合
+			CASE 2 THEN
+				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_03 )
+				_LAST_KEYWAIT()
+				_PLAINWIN_CLOSE()
+			//3回の場合
+			CASE 3 THEN
+				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_04 )
+				_LAST_KEYWAIT()
+				_PLAINWIN_CLOSE()
+			//4回の場合
+			CASE 4 THEN
+				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_05 )
+				_LAST_KEYWAIT()
+				_PLAINWIN_CLOSE()
+			ENDSWITCH
+
+		ELSE
+			SWITCH $WK_OTHER_N_COUNT
+			CASE 0 THEN
+				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_06 )
+				_LAST_KEYWAIT()
+				_PLAINWIN_CLOSE()
+			//1回の場合
+			CASE 1 THEN
+				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_07 )
+				_LAST_KEYWAIT()
+				_PLAINWIN_CLOSE()
+			//2回の場合
+			CASE 2 THEN
+				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_08 )
+				_LAST_KEYWAIT()
+				_PLAINWIN_CLOSE()
+			//3回の場合
+			CASE 3 THEN
+				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_09 )
+				_LAST_KEYWAIT()
+				_PLAINWIN_CLOSE()
+			//4回の場合
+			CASE 4 THEN
+				_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_10 )
+				_LAST_KEYWAIT()
+				_PLAINWIN_CLOSE()
+    		ENDSWITCH
+		ENDIF
+}
+	//Ｎのアップ絵終了
+	_END_FACEUP()
+
+	_OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_legend_last )
+	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_last )
+	_OBJ_ANIME_WAIT()
+
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 10 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+	
+	//========================================/
+	
+	//$WK_SCENE_N01R0502を６にして終了
+	$WK_SCENE_N01R0502 = 6
+
+	//========================================/
+	
+	//ゲームクリア
+	_GOTO_GAMECLEAR_DEMO( 0 )
+
+EVENT_END
+
+/**************************************************************/
+/*		RIVAL		N01R0502								  */
+/**************************************************************/
+EVENT_START		ev_n01r0502_rival_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0502_rematch_black )
+EVENT_END
+
+/**************************************************************/
+/*		CHAMP		N01R0502								  */
+/**************************************************************/
+EVENT_START		ev_n01r0502_champion_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_n01r0502_rematch_champion )
+EVENT_END

@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/25 19:19:19
+#save date:2010/03/28 20:49:58
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\n01r0502.wms
 #SECTION START:OBJ_EVENT
@@ -55,7 +55,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_N01R0502_EVENT_01
 #Event Script Name
-SCRID_DUMMY
+SCRID_N01R0502_SAGE1_01
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -86,7 +86,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_N01R0502_EVENT_01
 #Event Script Name
-SCRID_DUMMY
+SCRID_N01R0502_CHAMPION_01
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number
@@ -117,7 +117,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_N01R0502_EVENT_01
 #Event Script Name
-SCRID_DUMMY
+SCRID_N01R0502_RIVAL_01
 #Direction Type Number
 DIR_UP
 #Parameter 0 Number

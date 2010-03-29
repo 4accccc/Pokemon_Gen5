@@ -827,7 +827,7 @@ pl_boat_end:
 	_RESERVE_SCRIPT( SCRID_RESERVE_C03P16_CABINGUIDE_01 )
 	
 	//マップチェンジ
-	_MAP_CHANGE_NO_FADE( ZONE_ID_C03P16, 18, 0, 16, DIR_LEFT )
+	_MAP_CHANGE_NO_FADE( ZONE_ID_C03P16, 19, 0, 16, DIR_LEFT )
 _RET
 
 //--------------------------------------------------------------
