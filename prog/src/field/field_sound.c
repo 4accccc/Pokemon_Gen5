@@ -713,7 +713,7 @@ GMEVENT* EVENT_FSND_PopPlayBGM_fromBattle( GAMESYS_WORK* gameSystem )
   work = GMEVENT_GetEventWork( event );
   work->fieldSound = GAMEDATA_GetFieldSound( gameData );
   work->fadeInFrame = FSND_FADE_NORMAL;
-  work->fadeOutFrame = FSND_FADE_NORMAL;
+  work->fadeOutFrame = FSND_FADE_SHORT;
   return event;
 } 
 //---------------------------------------------------------------------------------
@@ -760,6 +760,8 @@ GMEVENT* EVENT_FSND_WaitBGMFade( GAMESYS_WORK* gameSystem )
   work->fieldSound = GAMEDATA_GetFieldSound( gdata );
   return event;
 } 
+
+static int count = 0;
 //---------------------------------------------------------------------------------
 /**
  * @brief BGM復帰待ちイベント
@@ -776,11 +778,14 @@ static GMEVENT_RESULT WaitBGMPopEvent( GMEVENT* event, int* seq, void* wk )
   switch( *seq ) {
   // BGMのPOP完了待ち
   case 0:
+    count++;
+    OS_TFPrintf( 3, "count = %d\n", count );
     if( FIELD_SOUND_CheckBGMPopFinished(fieldSound) == TRUE ) { (*seq)++; }
     break;
 
   // イベント終了
   case 1:
+    count = 0;
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;

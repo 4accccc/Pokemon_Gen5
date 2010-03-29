@@ -567,24 +567,24 @@ static GMEVENT_RESULT fieldBattleEvent(
   FIELDMAP_WORK *     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   
   switch( *seq ) {
+  // 戦闘用ＢＧＭセット
   case 0:
-    // 戦闘用ＢＧＭセット
     GMEVENT_CallEvent(event, EVENT_FSND_PushPlayBattleBGM(gsys, bew->battle_param->musicDefault));
     (*seq)++;
     break;
+
+  //エンカウントエフェクト
   case 1:
-    //エンカウントエフェクト
     ENCEFF_SetEncEff(FIELDMAP_GetEncEffCntPtr(fieldmap), event, bew->EncEffNo);
-/**
-    GMEVENT_CallEvent( event,
-        EVENT_FieldEncountEffect(gsys,fieldmap) );
-*/
     (*seq)++;
     break;
+
+  // フィールドマップ終了
   case 2:
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, fieldmap));
     (*seq)++;
     break;
+
   case 3:
     //侵入システムに戦闘中であることを伝える
     {
@@ -596,12 +596,14 @@ static GMEVENT_RESULT fieldBattleEvent(
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle), &BtlProcData, bew->battle_param );
     (*seq)++;
     break;
+    
   case 4:
     bew->btlret_param.btlResult = bew->battle_param;
     bew->btlret_param.gameData  = gamedata;
     GMEVENT_CallProc( event, FS_OVERLAY_ID(battle_return), &BtlRet_ProcData, &bew->btlret_param );
     (*seq)++;
     break;
+
   case 5:
     //侵入システムにフィールド中であることを伝える
     {
@@ -611,6 +613,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     }
     (*seq) ++;
     break;
+
   case 6: 
     //戦闘結果反映処理
     BEW_reflectBattleResult( bew, gamedata ); 
@@ -623,10 +626,11 @@ static GMEVENT_RESULT fieldBattleEvent(
     }
     (*seq) ++;
     break;
+
   case 7:
     // 負けた場合, BGMを停止する
     if( (bew->is_no_lose == FALSE) && (BEW_IsLoseResult(bew) == TRUE) ) { 
-      GMEVENT_CallEvent( event, EVENT_FSND_ResetBGM( gsys, FSND_FADE_NORMAL ) );
+      GMEVENT_CallEvent( event, EVENT_FSND_ResetBGM( gsys, FSND_FADE_SHORT ) );
     }
     // そうでなければ, フィールドBGMを復帰
     else {
@@ -634,10 +638,10 @@ static GMEVENT_RESULT fieldBattleEvent(
     }
     (*seq) ++;
     break;
+
   case 8: 
     //勝ち負け判定
-    if( (bew->is_no_lose == FALSE) && (BEW_IsLoseResult(bew) == TRUE) )
-    {
+    if( (bew->is_no_lose == FALSE) && (BEW_IsLoseResult(bew) == TRUE) ) {
       //負けの場合、イベントはここで終了。
       //復帰イベントへと遷移する
       if (bew->is_sub_event == TRUE) {
@@ -649,18 +653,18 @@ static GMEVENT_RESULT fieldBattleEvent(
         return GMEVENT_RES_CONTINUE;  //ChangeEventではFINISHさせてはいけない
       }
     }
-    else
-    {
-      //PMSND_FadeInBGM(BATTLE_BGM_FADEIN_WAIT);
+    else {
       GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     }
     (*seq) ++;
     break;
+
+  // BGMの復帰待ち
   case 9:
-    // BGMの復帰待ち
     GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMPop( gsys ) );
     (*seq) ++;
     break;
+
   case 10:
     if ( bew->is_sub_event == FALSE ) {
       GMEVENT_CallEvent( event, 
@@ -668,6 +672,7 @@ static GMEVENT_RESULT fieldBattleEvent(
     }
     (*seq) ++;
     break;
+
   case 11:
     BEW_Destructor( bew );
     return GMEVENT_RES_FINISH;

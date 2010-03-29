@@ -322,7 +322,10 @@ FSND_PUSHCOUNT FIELD_SOUND_GetBGMPushCount_atAllRequestFinished( const FIELD_SOU
 
   // POP リクエスト処理中
   if( fieldSound->request == FSND_BGM_REQUEST_POP ) {
-    pushCount--;
+    // POP処理が未実行
+    if( fieldSound->state == FSND_STATE_POP_out ) {
+      pushCount--;
+    }
   }
 
   GF_ASSERT( FSND_PUSHCOUNT_NONE <= pushCount );
@@ -392,7 +395,10 @@ BOOL FIELD_SOUND_CheckBGMPopFinished( const FIELD_SOUND* fieldSound )
 {
   // POPリクエスト処理中
   if( fieldSound->request == FSND_BGM_REQUEST_POP ) {
-    return FALSE; 
+    // まだPOPしていない
+    if( fieldSound->state == FSND_STATE_POP_out ) {
+      return FALSE;
+    }
   }
 
   // キューにPOPリクエストが登録されている
