@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T14:22:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,9 +292,18 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
+	<row id="msg_n01r0404_hakaiw1_01">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">プラズマ団
+したっぱ♀</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_n01r0404_hakaiw2_01">
+		<comment>♀</comment>
+		<attribute name="キャラ指定">プラズマ団
+したっぱ♀</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>

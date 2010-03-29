@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T14:41:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="256"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1292" top="218" right="1997" bottom="846" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,35 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_n01r0401_ninja1_01">
+		<comment>♂
+・posを踏むと出現しメッセージ表示
+・続けてninja2_01</comment>
+		<attribute name="キャラ指定">NINJA
+ダークトリニティ</attribute>
+		<language name="JPN" width="256">……プラズマだんは
+ゲーチスさまが　つくられた▼
+しちけんじんも　めがみも
+われら　ダークトリニティも▽
+ゲーチスさまが　あつめたのだ……▼</language>
+		<language name="JPN_KANJI" width="256">……プラズマ団は
+ゲーチスさまが　組織なされた▼
+七賢人も　女神も
+われら　ダークトリニティも▽
+ゲーチスさまが　集めたのだ……▼</language>
+	</row>
+
+	<row id="msg_n01r0401_ninja2_01">
+		<comment>♂
+・2体目のダークトリニティ出現
+・メッセージ表示後、２体とも削除
+　主人公操作可能に</comment>
+		<attribute name="キャラ指定">NINJA
+ダークトリニティ</attribute>
+		<language name="JPN" width="256">……たたかえ▼
+それが　ゲーチスさまの　のぞみ……▼</language>
+		<language name="JPN_KANJI" width="256">……戦え▼
+それが　ゲーチスさまの　望み……▼</language>
 	</row>
 
 	<flowchart-group-list>

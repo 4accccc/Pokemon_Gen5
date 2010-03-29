@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T14:44:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1317" top="233" right="2022" bottom="853" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,11 +292,24 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_n01r0204_hakaim1_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ</attribute>
+		<language name="JPN" width="256">この　しろは　すうねん　まえより
+ひそかに　けんぞう　されていたのだ▽　
+だれにも　しられることなく……</language>
+		<language name="JPN_KANJI" width="256">この　城は　数年前より
+密かに　建造されていたのだ▽　
+だれにも　知られることなく……</language>
+	</row>
+
+	<row id="msg_n01r0204_hakaim2_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">プラズマ団したっぱ</attribute>
+		<language name="JPN" width="256">すべては　ゲーチスさまの
+けいさんどおり　けいかくどおり</language>
+		<language name="JPN_KANJI" width="256">すべては　ゲーチスさまの
+計算通り　計画通り</language>
 	</row>
 
 	<flowchart-group-list>

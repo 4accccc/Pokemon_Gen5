@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-12-02T12:37:19"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T14:26:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1334" top="235" right="2039" bottom="855" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,11 +292,22 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_n01r0303_hakaim_01">
+		<comment>♂</comment>
+		<attribute name="キャラ指定">プラズマ団
+したっぱ</attribute>
+		<language name="JPN" width="256">オレは　さくせんとして
+ひとから　ポケモンを　うばうべく▼
+Ｎさまから　ポケモンを　あたえられ
+こうどうを　ともに　してきた……▼
+……そうして　おもうのは　ポケモンを
+てばなすのは　いや　だなあ</language>
+		<language name="JPN_KANJI" width="256">オレは　作戦として
+人から　ポケモンを　奪うべく▼
+Ｎさまから　ポケモンを　与えられ
+行動を　共に　してきた……▼
+……そうして　思うのは　ポケモンを
+手放すのは　いや　だなあ</language>
 	</row>
 
 	<flowchart-group-list>
