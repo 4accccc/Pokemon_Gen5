@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T18:53:13"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T21:04:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -347,6 +347,7 @@
 	<row id="msg_d06_leader_04">
 		<comment>♂
 ・主人公と向き合ってアイテム入手処理
+　No405「じならし」
 ・続けてleader_05</comment>
 		<attribute name="キャラ指定">LEADER5</attribute>
 		<language name="JPN" width="256">ほらよ！
@@ -404,8 +405,10 @@
 	<row id="msg_d06_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>･仮メッセージ</comment>
 		<attribute name="キャラ指定">看板</attribute>
-		<language name="JPN" width="256">でんきいしの　ほらあな</language>
-		<language name="JPN_KANJI" width="256">電気石の洞穴</language>
+		<language name="JPN" width="256">でんきいしの　ほらあな
+でんきを　おびると　ビリビリビリ！</language>
+		<language name="JPN_KANJI" width="256">電気石の洞穴
+電気を　帯びると　ビリビリビリ！</language>
 	</row>
 
 	<flowchart-group-list>
