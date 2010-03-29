@@ -44,6 +44,7 @@
 enum {
   MAP_RES_CUBE,           // 
   MAP_RES_CUBE_ANIME,     // 
+  MAP_RES_CUBE_ANIME2,     // 
 
   MAP_RES_WARP,           // 
   MAP_RES_WARP_ANIME,     // 
@@ -54,6 +55,7 @@ static const GFL_G3D_UTIL_RES map_res_tbl[ MAP_RES_NUM ] =
 {
   { ARCID_PALACE_EFFECT, NARC_palace_effect_block_nsbmd, GFL_G3D_UTIL_RESARC },     // 
   { ARCID_PALACE_EFFECT, NARC_palace_effect_block_nsbma, GFL_G3D_UTIL_RESARC },     // 
+  { ARCID_PALACE_EFFECT, NARC_palace_effect_block_nsbta, GFL_G3D_UTIL_RESARC },     // 
 
   { ARCID_PALACE_EFFECT, NARC_palace_effect_warp01_nsbmd, GFL_G3D_UTIL_RESARC },     // 
   { ARCID_PALACE_EFFECT, NARC_palace_effect_warp01_nsbta, GFL_G3D_UTIL_RESARC },     // 
@@ -62,6 +64,7 @@ static const GFL_G3D_UTIL_RES map_res_tbl[ MAP_RES_NUM ] =
 // アニメーションインデックス
 enum{
   MAP_ANM_CUBE_ANIME,
+  MAP_ANM_CUBE_ANIME2,
   MAP_ANM_CUBE_NUM,
 
   MAP_ANM_WARP_ANIME = 0,
@@ -70,6 +73,7 @@ enum{
 static const GFL_G3D_UTIL_ANM map_res_cube_anm_tbl[ MAP_ANM_CUBE_NUM ] = 
 {
   { MAP_RES_CUBE_ANIME, 0 },
+  { MAP_RES_CUBE_ANIME2, 0 },
 };
 
 static const GFL_G3D_UTIL_ANM map_res_warp_anm_tbl[ MAP_ANM_WARP_NUM ] = 
@@ -188,11 +192,16 @@ void PALACE_MAP_GMK_Setup(FIELDMAP_WORK *fieldWork)
 
     // アニメOFF
     {
-      EXP_OBJ_ANM_CNT_PTR anime = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, 
-          EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, MAP_ANM_CUBE_ANIME );
-      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, MAP_ANM_CUBE_ANIME, TRUE );
-      FLD_EXP_OBJ_ChgAnmStopFlg( anime, TRUE );
-      FLD_EXP_OBJ_ChgAnmLoopFlg( anime, FALSE );
+      EXP_OBJ_ANM_CNT_PTR anime;
+      
+      for( i=0; i<MAP_ANM_CUBE_NUM; i++ ){
+        anime = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, 
+            EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, i );
+
+        FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, i, TRUE );
+        FLD_EXP_OBJ_ChgAnmStopFlg( anime, TRUE );
+        FLD_EXP_OBJ_ChgAnmLoopFlg( anime, FALSE );
+      }
     }
   }
 
@@ -236,6 +245,7 @@ void PALACE_MAP_GMK_Move(FIELDMAP_WORK *fieldWork)
   GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( fieldWork );
   GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
   EVENTDATA_SYSTEM* evsys = GAMEDATA_GetEventData( gdata );
+  int i;
 
   // ワーク取得
   wk = GMK_TMP_WK_GetWork( fieldWork, GIMMICK_WORK_ASSIGN_ID );
@@ -283,9 +293,16 @@ void PALACE_MAP_GMK_Move(FIELDMAP_WORK *fieldWork)
 
       // 表示ON
       FLD_EXP_OBJ_SetVanish( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, FALSE );
-      FLD_EXP_OBJ_SetObjAnmFrm( exobj_cnt, 
-        EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, MAP_ANM_CUBE_ANIME, 0 );
-      FLD_EXP_OBJ_ChgAnmStopFlg( anime, FALSE );
+
+      for( i=0; i<MAP_ANM_CUBE_NUM; i++ ){
+
+        anime = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, 
+            EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, i );
+
+        FLD_EXP_OBJ_SetObjAnmFrm( exobj_cnt, 
+          EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, i, 0 );
+        FLD_EXP_OBJ_ChgAnmStopFlg( anime, FALSE );
+      }
 
       wk->objstatus->trans = pos;
 

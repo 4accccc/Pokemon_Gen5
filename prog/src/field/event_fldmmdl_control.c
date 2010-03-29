@@ -29,6 +29,8 @@
 #include "script.h"
 #include "script_def.h"
 
+#include "fldeff_kemuri.h"
+
 #include "event_fldmmdl_control.h"
 #include "fldmmdl_code.h"
 
@@ -437,6 +439,7 @@ static const fx32 DATA_JumpOffsTbl[] =	// 8
 //=====================================
 typedef struct 
 {
+  FLDEFF_CTRL* fectrl;
   MMDL*   p_mmdl;
   s16     count;
   VecFx32 start;
@@ -488,6 +491,8 @@ static GMEVENT_RESULT EVENTFUNC_HighJump(GMEVENT * event, int *seq, void*work)
 
       MMDL_InitPosition( wkhj->p_mmdl, &pos, MMDL_GetDirDisp( wkhj->p_mmdl ) );
       PMSND_PlaySE( SEQ_SE_FLD_10 );  // ’…’n
+
+      FLDEFF_KEMURI_SetMMdl( wkhj->p_mmdl, wkhj->fectrl );  // “y‰Œ
     }
   }
 
@@ -514,6 +519,7 @@ GMEVENT * EVENT_HighJump( GAMESYS_WORK * gsys, MMDL* mmdl, const VecFx32* cp_sta
   event = GMEVENT_Create( gsys, NULL, EVENTFUNC_HighJump, sizeof(EV_FLDMMDL_HIGHJUMP) );
   wkhj = GMEVENT_GetEventWork( event );
   wkhj->p_mmdl = mmdl;
+  wkhj->fectrl = FIELDMAP_GetFldEffCtrl( GAMESYSTEM_GetFieldMapWork( gsys ) );
   wkhj->start  = *cp_start;
   VEC_Subtract( cp_end, cp_start, &wkhj->move );
 
