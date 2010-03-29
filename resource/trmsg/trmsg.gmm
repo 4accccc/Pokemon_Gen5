@@ -11043,6 +11043,13 @@
 いまだに　考えるんだよね</language>
 	</row>
 
+	<row id="TRID_MAID_02_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">わたしの！
+スペシャルな　ポケモンたちが！？</language>
+		<language name="JPN_KANJI" width="216">わたしの！
+スペシャルな　ポケモンたちが！？</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
