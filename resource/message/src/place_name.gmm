@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-03-23T23:43:30"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T22:55:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="0" top="354" right="705" bottom="982" maximized="no" rayout="Vertical2">
+	<dialog left="1567" top="198" right="2272" bottom="826" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -482,13 +482,13 @@
 	</row>
 
 	<row id="MAPNAME_R17">
-		<language name="JPN" width="256">１７ばんどうろ</language>
-		<language name="JPN_KANJI" width="256">１７番道路</language>
+		<language name="JPN" width="256">１７ばんすいどう</language>
+		<language name="JPN_KANJI" width="256">１７番水道</language>
 	</row>
 
 	<row id="MAPNAME_W18">
-		<language name="JPN" width="256">１８ばんすいどう</language>
-		<language name="JPN_KANJI" width="256">１８番水道</language>
+		<language name="JPN" width="256">１８ばんどうろ</language>
+		<language name="JPN_KANJI" width="256">１８番道路</language>
 	</row>
 
 	<row id="MAPNAME_R19">
@@ -659,8 +659,8 @@
 	</row>
 
 	<row id="MAPNAME_R09R03" text-color="#0000ff,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">ほけんどうくつその２</language>
-		<language name="JPN_KANJI" width="256">保険洞くつその２</language>
+		<language name="JPN" width="256">しゅぎょうのいわや</language>
+		<language name="JPN_KANJI" width="256">修行の岩屋</language>
 	</row>
 
 	<row id="MAPNAME_R16R01" text-color="#0000ff,,,#ff0000,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
@@ -719,8 +719,8 @@
 	</row>
 
 	<row id="MAPNAME_PALACE" text-color="#0000ff,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">パレス</language>
-		<language name="JPN_KANJI" width="256">パレス（仮）</language>
+		<language name="JPN" width="256">ハイリンク</language>
+		<language name="JPN_KANJI" width="256">ハイリンク</language>
 	</row>
 
 	<row id="MAPNAME_D19" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,#0000ff,,,,,,">
@@ -729,9 +729,9 @@
 		<language name="JPN_KANJI" width="256">ほうじょうの社</language>
 	</row>
 
-	<row id="MAPNAME_D20" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
-		<language name="JPN" width="256">海底遺跡（仮）</language>
-		<language name="JPN_KANJI" width="256">海底遺跡（仮）</language>
+	<row id="MAPNAME_D20" text-color="#ff0000,,,#ff0000,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">かいていいせき</language>
+		<language name="JPN_KANJI" width="256">海底遺跡</language>
 	</row>
 
 	<row id="MAPNAME_D21" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,#0000ff,,,,,,">
@@ -740,7 +740,7 @@
 		<language name="JPN_KANJI" width="256">迷いの森</language>
 	</row>
 
-	<row id="MAPNAME_D22" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="MAPNAME_D22" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,#ff0000,,,,,," back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
 		<language name="JPN" width="256">超古代遺跡（仮）</language>
 		<language name="JPN_KANJI" width="256">超古代遺跡（仮）</language>
 	</row>
