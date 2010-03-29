@@ -385,7 +385,7 @@ GMEVENT *TRIAL_HOUSE_CreateBeaconSearchEvt( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK
     init->data[0].version   = 1<<GET_VERSION();     // 受け取るバージョンのビット
     init->dataNum = 1;  //受け取り側は１
     init->ConfusionID = 0;   //混線しないためのID
-    init->heapID = HEAPID_APP_CONTROL;
+    init->heapID = GFL_HEAP_LOWID(HEAPID_FIELDMAP);
   }
 
   return event;
