@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-03-28T22:10:23"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T17:43:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="42" top="261" right="747" bottom="881" maximized="no" rayout="Vertical2">
+	<dialog left="1455" top="265" right="2160" bottom="885" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="134" right="1280" bottom="532" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,17 +292,17 @@
 	</lock>
 
 
-	<row id="msg_c04r0302_girl4_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04r0302_girl4_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・試合中</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">しあいの　ときの
 プロの　かおって　すてきー！</language>
-		<language name="JPN_KANJI" width="256">しあいの　ときの
-プロの　かおって　すてきー！</language>
+		<language name="JPN_KANJI" width="256">試合を　しているときの
+プロの　顔って　すてきー！</language>
 	</row>
 
-	<row id="msg_c04r0302_girl4_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c04r0302_girl4_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・練習中</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
@@ -312,10 +312,10 @@
 すごいって　わかるんだねー</language>
 	</row>
 
-	<row id="msg_c04r0302_boy2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0302_boy2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アメフトのとき
-※練習中は非表示（エントランスと同一人物）</comment>
+・練習中は非表示（エントランスと同一人物）</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">アメフトがうまくて　ポケモンがつよい！
 そんな　おとなに　なりたいや！</language>
@@ -323,10 +323,10 @@
 そんな　大人に　なりたいや！</language>
 	</row>
 
-	<row id="msg_c04r0302_boy2_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0302_boy2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・野球のとき
-※練習中は非表示（エントランスと同一人物）</comment>
+・練習中は非表示（エントランスと同一人物）</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">やきゅうがうまくて　ポケモンがつよい！
 そんな　おとなに　なりたいや！</language>
@@ -334,10 +334,10 @@
 そんな　大人に　なりたいや！</language>
 	</row>
 
-	<row id="msg_c04r0302_boy2_03" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0302_boy2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・サッカーのとき
-※練習中は非表示（エントランスと同一人物）</comment>
+・練習中は非表示（エントランスと同一人物）</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">サッカーがうまくて　ポケモンがつよい！
 そんな　おとなに　なりたいや！</language>
@@ -345,7 +345,7 @@
 そんな　大人に　なりたいや！</language>
 	</row>
 
-	<row id="msg_c04r0302_woman3_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
+	<row id="msg_c04r0302_woman3_01">
 		<comment>♀
 分岐なし</comment>
 		<attribute name="キャラ指定">WOMAN3</attribute>
@@ -355,7 +355,7 @@
 いつでも　真剣勝負！</language>
 	</row>
 
-	<row id="msg_c04r0302_mountain_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
+	<row id="msg_c04r0302_mountain_01">
 		<comment>♂
 ・分岐なし</comment>
 		<attribute name="キャラ指定">MOUNTAIN</attribute>
@@ -367,37 +367,37 @@
 野球とは　不思議な　ものだ</language>
 	</row>
 
-	<row id="msg_c04r0302_woman2_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
+	<row id="msg_c04r0302_woman2_01">
 		<comment>♀
 ・分岐なし
-※練習中は非表示</comment>
+・練習中は非表示</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">きゃー　こっちむいてー！</language>
 		<language name="JPN_KANJI" width="256">きゃー　こっちむいてー！</language>
 	</row>
 
-	<row id="msg_c04r0302_man3_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
+	<row id="msg_c04r0302_man3_01">
 		<comment>♂
 ・分岐なし
-※練習中は非表示</comment>
+・練習中は非表示</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
 		<language name="JPN" width="256">きゃー　こっちむいてー！</language>
 		<language name="JPN_KANJI" width="256">きゃー　こっちむいてー！</language>
 	</row>
 
-	<row id="msg_c04r0302_maid_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
+	<row id="msg_c04r0302_maid_01">
 		<comment>♀
 ・分岐なし
-※練習中は非表示</comment>
+・練習中は非表示</comment>
 		<attribute name="キャラ指定">MAID</attribute>
 		<language name="JPN" width="256">モーモーミルク　いかがですかー</language>
 		<language name="JPN_KANJI" width="256">モーモーミルク　いかがですかー</language>
 	</row>
 
-	<row id="msg_c04r0302_dancer_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
+	<row id="msg_c04r0302_dancer_01">
 		<comment>♂
 ・分岐なし
-※練習中は非表示</comment>
+・練習中は非表示</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
 		<language name="JPN" width="256">イヤッホー！</language>
 		<language name="JPN_KANJI" width="256">イヤッホー！</language>

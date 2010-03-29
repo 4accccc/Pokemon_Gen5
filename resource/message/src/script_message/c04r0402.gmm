@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-03-28T22:11:01"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T18:02:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1495" top="218" right="2200" bottom="838" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,10 +292,10 @@
 	</lock>
 
 
-	<row id="msg_c04r0402_badman_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c04r0402_badman_01">
 		<comment>♂
 ・下記OBJと隣接
-※練習中は非表示
+・練習中は非表示
 （エントランスのBADMANと同一人物）</comment>
 		<attribute name="キャラ指定">BADMAN</attribute>
 		<language name="JPN" width="256">ぼくたちは　スポーツだいすき　でね
@@ -306,10 +306,10 @@
 練習も　見学しているのさ</language>
 	</row>
 
-	<row id="msg_c04r0402_woman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c04r0402_woman2_01">
 		<comment>♀
 ・上記OBJと隣接
-※練習中は非表示
+・練習中は非表示
 （エントランスのWOMAN2と同一人物）</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">ひとと　ポケモンとが　おりなす
@@ -322,72 +322,86 @@
 これって　スポーツの　進化系かも</language>
 	</row>
 
-	<row id="msg_c04r0402_gentleman_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0402_gentleman_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・試合中</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
-		<language name="JPN" width="256">まいにちの！
-れんしゅうが！▽
-うんぬん！</language>
-		<language name="JPN_KANJI" width="256">まいにちの！
-れんしゅうが！▽
-うんぬん！</language>
+		<language name="JPN" width="256">ほら！　いま！　そこ！▼
+ああ！　ちがう！　そうじゃない！▼
+そう！　そうそう！
+そうだとも！　ほれ！▽
+わしの　いうとおりに　せんか！</language>
+		<language name="JPN_KANJI" width="256">ほら！　いま！　そこ！▼
+ああ！　違う！　そうじゃない！▼
+そう！　そうそう！
+そうだとも！　ほれ！▽
+わしの　いうとおりに　せんか！</language>
 	</row>
 
-	<row id="msg_c04r0402_gentleman_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0402_gentleman_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・練習中</comment>
 		<attribute name="キャラ指定">GENTLEMAN</attribute>
-		<language name="JPN" width="256">エレガント！</language>
-		<language name="JPN_KANJI" width="256">エレガント！</language>
+		<language name="JPN" width="256">だまって　れんしゅうを　みまもる
+せんしゅを　しんじているからね！</language>
+		<language name="JPN_KANJI" width="256">だまって　練習を　見守る
+選手を　信じているからね！</language>
 	</row>
 
-	<row id="msg_c04r0402_man1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c04r0402_man1_01">
 		<comment>♂
 ・分岐なし</comment>
 		<attribute name="キャラ指定">MAN1</attribute>
-		<language name="JPN" width="256">ふむふむ
-あのプレーは　マネできそうだ</language>
-		<language name="JPN_KANJI" width="256">ふむふむ
-あのプレーは　マネできそうだ</language>
+		<language name="JPN" width="256">ふむふむ！　あの　プレーは
+トイレのときに　マネできそうだ</language>
+		<language name="JPN_KANJI" width="256">ふむふむ！　あの　プレーは
+トイレのときに　マネできそうだ</language>
 	</row>
 
-	<row id="msg_c04r0402_fighterw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c04r0402_fighterw_01">
 		<comment>♀
 ・分岐なし
-※練習中は非表示</comment>
+・練習中は非表示</comment>
 		<attribute name="キャラ指定">FIGHTERW</attribute>
-		<language name="JPN" width="256">だいこーふんね！</language>
-		<language name="JPN_KANJI" width="256">だいこーふんね！</language>
+		<language name="JPN" width="256">みた？
+いま　かつやくした　きんにく！▽
+まさに　ハッスル　マッスル！！</language>
+		<language name="JPN_KANJI" width="256">みた？　いま　活躍した　筋肉！
+まさに　ハッスル　マッスル！！</language>
 	</row>
 
-	<row id="msg_c04r0402_middleman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c04r0402_middleman1_01">
 		<comment>♂
 ・分岐なし
-※練習中は非表示</comment>
+・練習中は非表示</comment>
 		<attribute name="キャラ指定">MIDDLEMAN1</attribute>
-		<language name="JPN" width="256">たーのしー！</language>
-		<language name="JPN_KANJI" width="256">たーのしー！</language>
+		<language name="JPN" width="256">ううむ！　これは！
+めいしょうぶが　うまれる　よかん！</language>
+		<language name="JPN_KANJI" width="256">ううむ！　これは！
+名勝負が　うまれる　予感！▽
+歴史の　生き証人に　なるかも！</language>
 	</row>
 
-	<row id="msg_c04r0402_boy2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c04r0402_boy2_01">
 		<comment>♂
 ・分岐なし
-※練習中は非表示</comment>
+・練習中は非表示</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
-		<language name="JPN" width="256">いつか　ぼくも　あのステージへ！</language>
-		<language name="JPN_KANJI" width="256">いつか　ぼくも　あのステージへ！</language>
+		<language name="JPN" width="256">すごーい！　かっこいい！
+いつか　ぼくも　あのステージへ！</language>
+		<language name="JPN_KANJI" width="256">すごーい！　かっこいい！
+いつか　ぼくも　あのステージへ！</language>
 	</row>
 
-	<row id="msg_c04r0402_girl2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c04r0402_girl2_01">
 		<comment>♀
 ・分岐なし
-※練習中は非表示</comment>
+・練習中は非表示</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
-		<language name="JPN" width="256">しんじてるわ！
-ビッグマネーを　つかむのよ！</language>
-		<language name="JPN_KANJI" width="256">しんじてるわ！
-ビッグマネーを　つかむのよ！</language>
+		<language name="JPN" width="256">しんじてるわ！　ビッグマネーを
+……じゃなくて　えいこうを　つかむのよ！</language>
+		<language name="JPN_KANJI" width="256">信じてるわ！　ビッグマネーを
+……じゃなくて　栄光を　つかむのよ！</language>
 	</row>
 
 	<flowchart-group-list>

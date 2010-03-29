@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-03-28T22:14:13"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T17:47:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,51 +292,62 @@
 	</lock>
 
 
-	<row id="msg_c04r0401_infomationw_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0401_infomationw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・テニス試合中</comment>
 		<attribute name="キャラ指定">INFOMATIONW</attribute>
-		<language name="JPN" width="256">ただいま　テニスの
-しあいちゅう　です！</language>
-		<language name="JPN_KANJI" width="256">ただいま　テニスの
-しあいちゅう　です！</language>
+		<language name="JPN" width="256">リトルコートでは　ただいま
+テニスの　しあいちゅう　です！</language>
+		<language name="JPN_KANJI" width="256">リトルコートでは
+ただいま　テニスの　試合中です！</language>
 	</row>
 
-	<row id="msg_c04r0401_infomationw_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0401_infomationw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・テニス練習中</comment>
 		<attribute name="キャラ指定">INFOMATIONW</attribute>
-		<language name="JPN" width="256">ただいま　テニスの
-れんしゅうちゅう　です！</language>
-		<language name="JPN_KANJI" width="256">ただいま　テニスの
-れんしゅうちゅう　です！</language>
+		<language name="JPN" width="256">ただいま　リトルコートでは
+テニスの　せんしゅ　たちが▽
+れんしゅうを　しています！▼
+いっぱんの　かたがたも
+けんがくが　できるんですよ！</language>
+		<language name="JPN_KANJI" width="256">ただいま　リトルコートでは
+テニスの　選手たちが▽
+練習を　しています！▼
+一般　の方々も
+見学が　できるんですよ！</language>
 	</row>
 
-	<row id="msg_c04r0401_infomationw_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0401_infomationw_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・バスケ試合中</comment>
 		<attribute name="キャラ指定">INFOMATIONW</attribute>
-		<language name="JPN" width="256">ただいま　バスケの
-しあいちゅう　です！</language>
-		<language name="JPN_KANJI" width="256">ただいま　バスケの
-しあいちゅう　です！</language>
+		<language name="JPN" width="256">リトルコートでは　ただいま
+バスケットの　しあいちゅう　です！</language>
+		<language name="JPN_KANJI" width="256">リトルコートでは
+ただいま　バスケットの　試合中です！</language>
 	</row>
 
-	<row id="msg_c04r0401_infomationw_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0401_infomationw_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・バスケ練習中</comment>
 		<attribute name="キャラ指定">INFOMATIONW</attribute>
-		<language name="JPN" width="256">ただいま　バスケの
-れんしゅうちゅう　です！</language>
-		<language name="JPN_KANJI" width="256">ただいま　バスケの
-れんしゅうちゅう　です！</language>
+		<language name="JPN" width="256">ただいま　リトルコートでは
+バスケットの　せんしゅ　たちが▽
+れんしゅうを　しています！▼
+いっぱんの　かたがたも
+けんがくが　できるんですよ！</language>
+		<language name="JPN_KANJI" width="256">ただいま　リトルコートでは
+バスケットの　選手たちが▽
+練習を　しています！▼
+一般　の方々も
+見学が　できるんですよ！</language>
 	</row>
 
 	<row id="msg_c04r0401_badman_01">
 		<comment>♂
-・仮メッセージ
 ・下記OBJと隣接
-※試合中は非表示</comment>
+・試合中は非表示</comment>
 		<attribute name="キャラ指定">BADMAN</attribute>
 		<language name="JPN" width="256">ぼくたちは　スポーツだいすき　でね
 しあい　だけでなく[BE:00:ページ切り替え（行送り）]
@@ -346,11 +357,10 @@
 練習も　見学しているのさ</language>
 	</row>
 
-	<row id="msg_c04r0401_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0401_woman2_01">
 		<comment>♀
-・仮メッセージ
 ・上記OBJと隣接
-※試合中は非表示</comment>
+・試合中は非表示</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">ひとと　ポケモンとが　おりなす
 あたらしい　かたちの[BE:00:ページ切り替え（行送り）]
@@ -366,40 +376,41 @@
 		<comment>♂
 ・分岐なし</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">コートで　れんしゅうちゅうの
-せんしゅに　はなしかけると[BE:00:ページ切り替え（行送り）]
-ポケモンしょうぶを　いどまれるぞ！</language>
-		<language name="JPN_KANJI" width="256">練習中の　選手に　話しかけると
-ポケモン勝負を　挑まれるぞ！</language>
+		<language name="JPN" width="256">れんしゅうちゅうの　せんしゅに
+はなしかけると　ポケモンしょうぶを▽
+いどまれることも　あるぞ！</language>
+		<language name="JPN_KANJI" width="256">練習中の　選手に
+話しかけると　ポケモン勝負を▽
+挑まれることも　あるぞ！</language>
 	</row>
 
 	<row id="msg_c04r0401_tennisw_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・テニスのとき
-※試合中は非表示</comment>
+・試合中は非表示</comment>
 		<attribute name="キャラ指定">TENNISW</attribute>
 		<language name="JPN" width="256">いちりゅうの　テニスプレイヤーが
 ポケモンと　いっしょに▽
 きょうぎじょうで　まってるわよ！</language>
-		<language name="JPN_KANJI" width="256">いちりゅうの　テニスプレイヤーが
-ポケモンと　いっしょに▽
-きょうぎじょうで　まってるわよ！</language>
+		<language name="JPN_KANJI" width="256">一流の　テニスプレイヤーが
+ポケモンと　一緒に▽
+コートの　上で　待ってるわよ！</language>
 	</row>
 
 	<row id="msg_c04r0401_basketm_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・バスケのとき
-※試合中は非表示</comment>
+・試合中は非表示</comment>
 		<attribute name="キャラ指定">BASKETM</attribute>
 		<language name="JPN" width="256">いちりゅうの　バスケせんしゅが
 ポケモンと　いっしょに▽
 きょうぎじょうで　まってるわよ！</language>
-		<language name="JPN_KANJI" width="256">いちりゅうの　バスケせんしゅが
-ポケモンと　いっしょに▽
-きょうぎじょうで　まってるわよ！</language>
+		<language name="JPN_KANJI" width="256">一流の　バスケ選手が
+ポケモンと　一緒に▽
+コートの　上で　待ってるわよ！</language>
 	</row>
 
-	<row id="msg_c04r0301_policeman1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0301_policeman1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ストッパー</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
@@ -411,7 +422,7 @@
 コートに　入ることは　できません</language>
 	</row>
 
-	<row id="msg_c04r0301_policeman2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0301_policeman2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ストッパー</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
@@ -423,7 +434,7 @@
 コートに　入ることは　できません</language>
 	</row>
 
-	<row id="msg_c04r0301_policeman3_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c04r0301_policeman3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・ストッパー</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
