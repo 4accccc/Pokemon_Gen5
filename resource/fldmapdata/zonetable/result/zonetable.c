@@ -1052,8 +1052,8 @@ static const ZONEDATA ZoneData[] = {
 		NARC_camera_scroll_original_C03_bin, // camera_area
 		0, // padding
 		3,
-		7,
-		9,
+		8,
+		8,
 	},
 	{//ZONE_ID_C03GYM0101 = 32
 		RSC_GRID_DEFAULT,
@@ -7356,7 +7356,7 @@ static const ZONEDATA ZoneData[] = {
 		0, // padding
 		0,
 		5,
-		3,
+		0,
 	},
 	{//ZONE_ID_D09R0101 = 223
 		RSC_GRID_NOSCROLL,

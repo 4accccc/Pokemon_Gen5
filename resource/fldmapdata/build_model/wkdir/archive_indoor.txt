@@ -143,3 +143,4 @@
 "nsbmdfiles/cabin_door.nsbmd"
 "nsbmdfiles/cabin_door_r.nsbmd"
 "nsbmdfiles/monitor01.nsbmd"
+"nsbmdfiles/c04_gtrain_01.nsbmd"
