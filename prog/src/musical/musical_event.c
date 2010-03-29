@@ -98,6 +98,10 @@ typedef enum
   MES_WAITROOM_THIRD,
   MES_EXIT_WAITROOM_THIRD,
 
+  MES_ERROR_INIT,
+  MES_ERROR_RETURN_HALL,
+  MES_ERROR_REQ_DISP,
+  MES_ERROR_RETURN_SCRIPT,
 }MUSICAL_EVENT_STATE;
 
 
@@ -135,6 +139,7 @@ struct _MUSICAL_EVENT_WORK
   u8 rankIndex[MUSICAL_POKE_MAX];     //参加番号が順位順で入っている
   u8 selfIdx;
 
+  BOOL isNetErr;
 };
 
 
@@ -184,6 +189,7 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
   evWork->scriptWork = scriptWork;
   evWork->scriptWork->eventWork = evWork;
   evWork->commWork = scriptWork->commWork;
+  evWork->isNetErr = FALSE;
   
   {
     STRBUF *str = GFL_STR_CreateBuffer( SAVELEN_POKEMON_NAME+EOM_SIZE , HEAPID_PROC_WRAPPER );
@@ -322,11 +328,18 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   //------------------------------
   case MES_EXIT_FIELD:
     {
-      const BOOL isFinish = MUSICAL_EVENT_ExitField( event , evWork );
-      if( isFinish == TRUE )
+      if( evWork->isNetErr == TRUE )
       {
-        evWork->subSeq = 0;
-        evWork->state = MES_INIT_MUSICAL;
+        evWork->state = MES_ERROR_INIT;
+      }
+      else
+      {
+        const BOOL isFinish = MUSICAL_EVENT_ExitField( event , evWork );
+        if( isFinish == TRUE )
+        {
+          evWork->subSeq = 0;
+          evWork->state = MES_INIT_MUSICAL;
+        }
       }
     }
     break;
@@ -362,6 +375,10 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
       {
         evWork->subSeq = 0;
         evWork->state = MES_WAITROOM_SECOND;
+        if( evWork->isNetErr == TRUE )
+        {
+          evWork->state = MES_ERROR_INIT;
+        }
       }
     }
     break;
@@ -373,11 +390,18 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     
   case MES_EXIT_WAITROOM_SECOND:
     {
-      const BOOL isFinish = MUSICAL_EVENT_ExitField( event , evWork );
-      if( isFinish == TRUE )
+      if( evWork->isNetErr == TRUE )
       {
-        evWork->subSeq = 0;
-        evWork->state = MES_INIT_ACTING;
+        evWork->state = MES_ERROR_INIT;
+      }
+      else
+      {
+        const BOOL isFinish = MUSICAL_EVENT_ExitField( event , evWork );
+        if( isFinish == TRUE )
+        {
+          evWork->subSeq = 0;
+          evWork->state = MES_INIT_ACTING;
+        }
       }
     }
     break;
@@ -385,10 +409,12 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   //ショーパート
   //------------------------------
   case MES_INIT_ACTING:
-    MUSICAL_EVENT_InitActing( evWork );
-    ARI_TPrintf("InitAct[%8x][%8x][%8x]\n",evWork->gsys,&MusicalStage_ProcData,evWork->actInitWork );
-    GAMESYSTEM_CallProc( evWork->gsys , NO_OVERLAY_ID, &MusicalStage_ProcData, evWork->actInitWork );
-    evWork->state = MES_TERM_ACTING;
+    {
+      MUSICAL_EVENT_InitActing( evWork );
+      ARI_TPrintf("InitAct[%8x][%8x][%8x]\n",evWork->gsys,&MusicalStage_ProcData,evWork->actInitWork );
+      GAMESYSTEM_CallProc( evWork->gsys , NO_OVERLAY_ID, &MusicalStage_ProcData, evWork->actInitWork );
+      evWork->state = MES_TERM_ACTING;
+    }
     break;
   
   case MES_TERM_ACTING:
@@ -396,6 +422,11 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     {
       MUSICAL_EVENT_TermActing( evWork );
       evWork->state = MES_INIT_MUSICAL_SHOT;
+      if( evWork->isNetErr == TRUE )
+      {
+        //フィールド開くため
+        evWork->state = MES_ENTER_WAITROOM_THIRD;
+      }
     }
     break;
 
@@ -442,6 +473,10 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
       {
         evWork->subSeq = 0;
         evWork->state = MES_TERM_MUSICAL;
+        if( evWork->isNetErr == TRUE )
+        {
+          evWork->state = MES_ERROR_INIT;
+        }
       }
     }
     break;
@@ -463,8 +498,31 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_PROC );
     GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_STRM );
     return GMEVENT_RES_FINISH;
-  }
+    break;
 
+  case MES_ERROR_INIT:
+    NetErr_App_ReqErrorDisp();
+    evWork->state = MES_ERROR_RETURN_HALL;
+    break;
+
+  //エラー処理
+  //------------------------------
+  case MES_ERROR_RETURN_HALL:
+    MUSICAL_EVENT_TermMusical( evWork );
+    MUSICAL_EVENT_JumpMusicalHall( event , evWork );
+    evWork->state = MES_ERROR_REQ_DISP;
+    break;
+
+  case MES_ERROR_REQ_DISP:
+    evWork->state = MES_ERROR_RETURN_SCRIPT;
+    break;
+
+  case MES_ERROR_RETURN_SCRIPT:
+    MUSICAL_EVENT_RunScript( event , evWork , SCRID_MUSICAL_RETURN_HALL_ERR );
+    evWork->state = MES_FINIHS_EVENT;
+    break;
+
+  }
   return GMEVENT_RES_CONTINUE;
 }
 
@@ -476,6 +534,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
 static void MUSICAL_EVENT_InitMusical( MUSICAL_EVENT_WORK *evWork )
 {
   evWork->musPoke = MUSICAL_SYSTEM_InitMusPoke( evWork->pokePara , HEAPID_PROC_WRAPPER );
+  
   
   if( evWork->isComm == FALSE )
   {
@@ -1287,4 +1346,23 @@ void MUSICAL_EVENT_CalcProgramData( MUSICAL_EVENT_WORK *evWork )
   evWork->progWork = MUSICAL_PROGRAM_InitProgramData( HEAPID_PROC_WRAPPER , evWork->distData , 0 );
   MUSICAL_PROGRAM_SetConditionPointArr( evWork->progWork , conPointArr );
   MUSICAL_PROGRAM_SetNpcArr( evWork->progWork , npcArr );
+}
+
+void MUSICAL_EVENT_CheckNetErr( MUSICAL_EVENT_WORK *evWork )
+{
+  if( evWork->isComm == TRUE )
+  {
+    if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE &&
+        evWork->isNetErr == FALSE )
+    {
+      OS_TPrintf("Musical Error!!!\n");
+      //NetErr_App_ReqErrorDisp();
+      evWork->isNetErr = TRUE;
+    }
+  }
+}
+
+const BOOL MUSICAL_EVENT_IsNetErr( MUSICAL_EVENT_WORK *evWork )
+{
+  return evWork->isNetErr;
 }

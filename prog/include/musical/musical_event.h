@@ -28,3 +28,5 @@ extern const u8 MUSICAL_EVENT_GetMaxPointCondition( MUSICAL_EVENT_WORK *evWork ,
 extern const u8 MUSICAL_EVENT_GetPosObjView( MUSICAL_EVENT_WORK *evWork , const u8 idx );
 extern void MUSICAL_EVENT_SetPosCharaName_Wordset( MUSICAL_EVENT_WORK *evWork , const u8 pos , WORDSET *wordSet , const u8 wordIdx );
 extern void MUSICAL_EVENT_CalcProgramData( MUSICAL_EVENT_WORK *evWork );
+extern void MUSICAL_EVENT_CheckNetErr( MUSICAL_EVENT_WORK *evWork );
+extern const BOOL MUSICAL_EVENT_IsNetErr( MUSICAL_EVENT_WORK *evWork );

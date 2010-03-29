@@ -740,11 +740,20 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
   u16  val1 = SCRCMD_GetVMWorkValue( core, work );
   u16  val2 = SCRCMD_GetVMWorkValue( core, work );
   u16* ret_wk = SCRCMD_GetVMWork( core, work );
+  BOOL isNetErr = FALSE;
 
   MUSICAL_SCRIPT_WORK *musScriptWork = NULL;
   if( type != MUSICAL_TOOL_INIT )
   {
     musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
+    if( musScriptWork->eventWork != NULL )
+    {
+      MUSICAL_EVENT_CheckNetErr( musScriptWork->eventWork );
+      if( MUSICAL_EVENT_IsNetErr( musScriptWork->eventWork ) == TRUE )
+      {
+        isNetErr = TRUE;
+      }
+    }
   }
 
   ARI_TPrintf("ScriptMusTools[%d][%d][%d]\n",type,val1,val2);
@@ -805,7 +814,8 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
     break;
   case MUSICAL_TOOL_COMM_TIMESYNC:
     //非通信ならスルー
-    if( musScriptWork->commWork != NULL )
+    if( musScriptWork->commWork != NULL &&
+        isNetErr == FALSE )
     {
       musScriptWork->commSyncNo = val1;
       MUS_COMM_SendTimingCommand( musScriptWork->commWork , musScriptWork->commSyncNo );
@@ -815,7 +825,8 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
     break;
   case MUSICAL_TOOL_COMM_WAIT_POST_PROGRAM:
     //非通信ならスルー
-    if( musScriptWork->commWork != NULL )
+    if( musScriptWork->commWork != NULL &&
+        isNetErr == FALSE )
     {
       VMCMD_SetWait( core, EvCmdMusicalWaitPostProgram );
       return( VMCMD_RESULT_SUSPEND );
@@ -827,7 +838,8 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
     break;
   case MUSICAL_TOOL_COMM_WAIT_POST_ALLPOKE:
     //非通信ならスルー
-    if( musScriptWork->commWork != NULL )
+    if( musScriptWork->commWork != NULL &&
+        isNetErr == FALSE )
     {
       VMCMD_SetWait( core, EvCmdMusicalWaitPostAllPoke );
       return( VMCMD_RESULT_SUSPEND );
@@ -860,6 +872,17 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
                                            cbWork );  //←自動開放
       SCRIPT_CallEvent( sc, event );
       return( VMCMD_RESULT_SUSPEND );
+    }
+    break;
+  case MUSICAL_TOOL_COMM_CHECK_ERROR:
+    if( musScriptWork->commWork != NULL &&
+        isNetErr == FALSE )
+    {
+      *ret_wk = FALSE;
+    }
+    else
+    {
+      *ret_wk = TRUE;
     }
     break;
   case MUSICAL_TOOL_PRINT:
@@ -1168,6 +1191,15 @@ static BOOL EvCmdMusicalCommTimingSync( VMHANDLE *core, void *wk )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
   
+  if( musScriptWork->eventWork != NULL )
+  {
+    MUSICAL_EVENT_CheckNetErr( musScriptWork->eventWork );
+    if( MUSICAL_EVENT_IsNetErr( musScriptWork->eventWork ) == TRUE )
+    {
+      return TRUE;
+    }
+  }
+
   if( MUS_COMM_CheckTimingCommand( musScriptWork->commWork , musScriptWork->commSyncNo ) == TRUE )
   {
     return TRUE;
@@ -1190,6 +1222,12 @@ static BOOL EvCmdMusicalWaitPostProgram( VMHANDLE *core, void *wk )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
   
+  MUSICAL_EVENT_CheckNetErr( musScriptWork->eventWork );
+  if( MUSICAL_EVENT_IsNetErr( musScriptWork->eventWork ) == TRUE )
+  {
+    return TRUE;
+  }
+
   if( MUS_COMM_IsPostScriptData( musScriptWork->commWork ) == TRUE )
   {
     return TRUE;
@@ -1239,6 +1277,15 @@ static BOOL EvCmdMusicalWaitExitNet( VMHANDLE *core, void *wk )
   GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
   MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
 
+  if( musScriptWork->eventWork != NULL )
+  {
+    MUSICAL_EVENT_CheckNetErr( musScriptWork->eventWork );
+    if( MUSICAL_EVENT_IsNetErr( musScriptWork->eventWork ) == TRUE )
+    {
+      return TRUE;
+    }
+  }
+
   if( GameCommSys_BootCheck( gameComm ) == GAME_COMM_NO_NULL )
   {
     return TRUE;
@@ -1260,6 +1307,12 @@ static BOOL EvCmdMusicalWaitPostAllPoke( VMHANDLE *core, void *wk )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
   MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
   
+  MUSICAL_EVENT_CheckNetErr( musScriptWork->eventWork );
+  if( MUSICAL_EVENT_IsNetErr( musScriptWork->eventWork ) == TRUE )
+  {
+    return TRUE;
+  }
+
   if( MUS_COMM_IsPostAllPoke( musScriptWork->commWork ) == TRUE )
   {
     return TRUE;

@@ -576,6 +576,7 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
 
     //スクリプトから来た場合は基本接続状態
   case MCS_INIT_MUSICAL:
+    GFL_NET_SetNoChildErrorCheck( TRUE );
     MUS_COMM_SendTimingCommand( work , MUS_COMM_TIMMING_INIT_COMM );
     work->commState = MCS_SEND_MYSTATUS;
     break;

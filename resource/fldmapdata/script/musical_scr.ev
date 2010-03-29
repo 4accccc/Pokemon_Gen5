@@ -24,6 +24,7 @@ _EVENT_DATA   ev_musical_recept_comm
 _EVENT_DATA   ev_musical_recept_fitting
 _EVENT_DATA   ev_musical_change_program
 _EVENT_DATA   ev_musical_return_hall
+_EVENT_DATA   ev_musical_return_hall_err
 _EVENT_DATA   ev_musical_fan_01
 _EVENT_DATA   ev_musical_fan_02
 _EVENT_DATA   ev_musical_fan_03
@@ -154,6 +155,19 @@ EVENT_START ev_musical_return_hall
   _MAP_FADE_BLACK_IN( )
   _MAP_FADE_END_CHECK()
 EVENT_END
+
+/*************************************************************/
+/*            帰ってきた時処理             */
+/*************************************************************/
+EVENT_START ev_musical_return_hall_err
+  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_END_CHECK()
+
+  _BALLOONWIN_OBJMSG( msg_musical_test_03, MUSICAL_RECEPT_COMM )
+  _BALLOONWIN_CLOSE()
+
+EVENT_END
+
 /*************************************************************/
 /*            通信　受付コア               */
 /*************************************************************/

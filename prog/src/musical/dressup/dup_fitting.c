@@ -815,7 +815,8 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   }
 
   //アイテム保持の上段メッセージの更新
-  if( work->isUpdateMsg == FALSE )
+  if( work->isUpdateMsg == FALSE &&
+      work->isDemo == FALSE )
   {
     if( work->dispItemId == MUSICAL_ITEM_INVALID &&
         work->holdItem != NULL &&
