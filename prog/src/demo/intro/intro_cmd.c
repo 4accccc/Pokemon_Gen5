@@ -793,6 +793,7 @@ static BOOL CMD_WORDSET( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param 
  *  @brief  メッセージ表示
  *
  *  @param  param[0] str_id
+ *  @param  param[1] win_id
  *
  *  @retval
  */
@@ -802,7 +803,7 @@ static BOOL CMD_PRINT_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* para
   switch( sdat->seq )
   {
     case 0:
-      INTRO_MSG_SetPrint( wk->wk_msg, param[0] );
+      INTRO_MSG_SetPrint( wk->wk_msg, param[0], param[1] );
       sdat->seq++;
       break;
 
@@ -962,6 +963,7 @@ static BOOL CMD_MCSS_FADE_REQ( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
  *
  *  @param  param[0] メッセージID
  *  @param  param[1] MCSS_ID
+ *  @param  param[2] win_id
  *
  *  @retval
  */
@@ -977,7 +979,7 @@ static BOOL CMD_MCSS_TALK_MSG( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* 
   switch( sdat->seq )
   {
     case 0:
-      INTRO_MSG_SetPrint( wk->wk_msg, str_id );
+      INTRO_MSG_SetPrint( wk->wk_msg, str_id, param[2] );
       sdat->seq++;
       break;
     
@@ -1090,7 +1092,7 @@ static BOOL CMD_SAVE_CHECK_ALL_END( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, 
       else
       {
         // ちょっとまってね！
-        INTRO_MSG_SetPrint( wk->wk_msg, msg_intro_00 );
+        INTRO_MSG_SetPrint( wk->wk_msg, msg_intro_00, 1 );
         sdat->seq++;
       }
       break;

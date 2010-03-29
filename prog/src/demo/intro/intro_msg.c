@@ -45,6 +45,7 @@
 enum
 { 
   CGX_BMPWIN_FRAME_POS = 1,
+  CGX_BMPWIN_FRAME_TALK_POS = CGX_BMPWIN_FRAME_POS + MENU_WIN_CGX_SIZ,
   STRBUF_SIZE = 1600,
 };
 
@@ -140,6 +141,7 @@ INTRO_MSG_WORK* INTRO_MSG_Create( HEAPID heap_id )
 
   // フレームウィンドウ用のキャラを用意
   BmpWinFrame_GraphicSet( BG_FRAME_TEXT_M, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M, MENU_TYPE_SYSTEM, heap_id );
+  BmpWinFrame_GraphicSet( BG_FRAME_TEXT_M, CGX_BMPWIN_FRAME_TALK_POS, PLTID_BG_TALK_WIN_M, MENU_TYPE_TALK, heap_id );
 
   // フォントを展開
   wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_MEMORY, FALSE, wk->heap_id );
@@ -254,12 +256,13 @@ void INTRO_MSG_Main( INTRO_MSG_WORK* wk )
  *
  *	@param	INTRO_MSG_WORK* wk　メインワーク
  *	@param	str_id メッセージID
+ *	@param	win_id ウィンドウID
  *
  *	@retval
  */
 //-----------------------------------------------------------------------------
 //void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, WORDSET_CALLBACK callback_func, void* callback_arg )
-void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id )
+void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, int win_id )
 {
   const u8 clear_color = 15;
   GFL_BMPWIN* win;
@@ -296,7 +299,11 @@ void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id )
   wk->print_stream = PRINTSYS_PrintStream( win, 4, 0, wk->exp_strbuf, wk->font, msgspeed,
                                            wk->msg_tcblsys, 0xffff, wk->heap_id, clear_color );
 
-  BmpWinFrame_Write( win, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M );
+	if( win_id == 0 ){
+		BmpWinFrame_Write( win, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_POS, PLTID_BG_TEXT_WIN_M );
+	}else{
+		BmpWinFrame_Write( win, WINDOW_TRANS_ON_V, CGX_BMPWIN_FRAME_TALK_POS, PLTID_BG_TALK_WIN_M );
+	}
 
   // 転送
   GFL_BMPWIN_TransVramCharacter( win );

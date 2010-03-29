@@ -61,7 +61,7 @@ extern void INTRO_MSG_Main( INTRO_MSG_WORK* wk );
 extern void INTRO_MSG_LoadGmm( INTRO_MSG_WORK* wk, GflMsgLoadType type, u16 msg_dat_id );
 
 // stream
-extern void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id );
+extern void INTRO_MSG_SetPrint( INTRO_MSG_WORK* wk, int str_id, int win_id );
 extern BOOL INTRO_MSG_PrintProc( INTRO_MSG_WORK* wk );
 extern PRINTSTREAM_STATE INTRO_MSG_GetPrintState( INTRO_MSG_WORK* wk );
 

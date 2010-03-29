@@ -36,7 +36,7 @@ static const INTRO_CMD_DATA c_intro_scene_00[] =
   { INTRO_CMD_TYPE_BRIGHTNESS_SET, { -16, }, CMD_READ_NEXT },
   { INTRO_CMD_TYPE_FADE_REQ, { GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 2 } },
 
-  { INTRO_CMD_TYPE_PRINT_MSG, { msg_kanamode_01 } }, // ゲームで　つかう もじは
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_kanamode_01, 0 } }, // ゲームで　つかう もじは
   
   { INTRO_CMD_TYPE_YESNO, { msg_kanamode_window_01, msg_kanamode_window_02, FALSE }, },
     { INTRO_CMD_TYPE_SELECT_MOJI, 0 }, // かな
@@ -50,7 +50,7 @@ static const INTRO_CMD_DATA c_intro_scene_00[] =
 //---------------------------------------------------------------------------
 static const INTRO_CMD_DATA c_intro_scene_01[] =
 {
-//  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_00 } }, // ……ごめんなさい ちょっと待ってね！
+//  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_00, 1 } }, // ……ごめんなさい ちょっと待ってね！
 
   { INTRO_CMD_TYPE_BGM_FADEOUT, { 16 }, CMD_READ_NEXT }, // BGMフェードアウト
   { INTRO_CMD_TYPE_WAIT, { 16 } }, // ウェイト
@@ -63,7 +63,7 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
 
 #if 0
   // デモを飛ばす？
-  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_demoskip_01 } }, // デモをとばす？
+  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_demoskip_01, 0 } }, // デモをとばす？
   { INTRO_CMD_TYPE_YESNO, { msg_intro_yesno_01, msg_intro_yesno_02, TRUE }, },
     { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_05 },  // はい	デモとばす
     { INTRO_CMD_TYPE_NONE }, 			      // いいえ 何もしない
@@ -74,8 +74,8 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
   { INTRO_CMD_TYPE_SAVE_INIT }, // セーブ開始
 #endif
   
-  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_01, 0 }, }, // ハーイ！
-  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_02, 0 }, }, // わたし　アララギと　いいます
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_01, 0, 1 }, }, // ハーイ！
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_02, 0, 1 }, }, // わたし　アララギと　いいます
 
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_02 }, // シーン02へ
 };
@@ -104,8 +104,8 @@ static const INTRO_CMD_DATA c_intro_scene_02[] =
 
   { INTRO_CMD_TYPE_MCSS_SET_ANIME, {1,0}, CMD_READ_NEXT }, // 通常アニメ
 
-  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_03, 0 } }, // そう！　この　せかいには
-  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_04, 0 } }, // ふしぎな　ちからを　ひめている
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_03, 0, 1 } }, // そう！　この　せかいには
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_04, 0, 1 } }, // ふしぎな　ちからを　ひめている
   
   { INTRO_CMD_TYPE_SET_SCENE, INTRO_SCENE_ID_03 }, // シーン03へ
 };
@@ -117,7 +117,7 @@ static const INTRO_CMD_DATA c_intro_scene_03[] =
 {
   { INTRO_CMD_TYPE_MCSS_FADE_REQ, {1, FALSE }, }, // ポケモン非表示 
 
-  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_05, 0 } }, // さて　わたしの　はなしは
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_05, 0, 1 } }, // さて　わたしの　はなしは
 
   { INTRO_CMD_TYPE_MCSS_FADE_REQ, {0, FALSE }, },  // 博士 非表示 
   
@@ -132,15 +132,15 @@ static const INTRO_CMD_DATA c_intro_scene_04[] =
   { INTRO_CMD_TYPE_G3D_SELECT_SEX_SET_VISIBLE, { TRUE }, CMD_READ_NEXT },    // 3G選択肢表示
   { INTRO_CMD_TYPE_G3D_SELECT_SEX_INIT },  // ３D男女選択開始
 
-  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_gender_01, 0 } }, // あなたは　おとこのこ？
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_gender_01, 0, 1 } }, // あなたは　おとこのこ？
 
   // 性別選択
   { INTRO_CMD_TYPE_G3D_SELECT_SEX_MAIN },  // 3D男女選択 主処理
 
   // 男女判定
   { INTRO_CMD_TYPE_COMP, INTRO_CMD_COMP_SEX },
-    { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_gender_02, 0 } },  // おとこのこ　なのね？
-    { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_gender_03, 0 } },  // おんなのこ　なのね？
+    { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_gender_02, 0, 1 } },  // おとこのこ　なのね？
+    { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_gender_03, 0, 1 } },  // おんなのこ　なのね？
 
   // 分岐 確認メッセージ
   { INTRO_CMD_TYPE_YESNO, { msg_intro_yesno_01, msg_intro_yesno_02, TRUE }, },
@@ -160,7 +160,7 @@ static const INTRO_CMD_DATA c_intro_scene_05[] =
 { 
   { INTRO_CMD_TYPE_SET_RETCODE, INTRO_RETCODE_RETAKE }, // 外部アプリにリトライを返す
 
-  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_name_01, 0 } }, // なまえも しりたいな
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_name_01, 0, 1 } }, // なまえも しりたいな
 
 #ifdef CMD_SAVE_ON
   { INTRO_CMD_TYPE_SAVE_SASUPEND }, // セーブ中断
@@ -198,8 +198,8 @@ static const INTRO_CMD_DATA c_intro_scene_05_retake_yesno[] =
 
   // 男女判定
   { INTRO_CMD_TYPE_COMP, INTRO_CMD_COMP_SEX },
-    { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_name_02, 0 } }, //[トレーナー名]くん　でいい？
-    { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_name_03, 0 } }, //[トレーナー名]さん　でいい？
+    { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_name_02, 0, 1 } }, //[トレーナー名]くん　でいい？
+    { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_name_03, 0, 1 } }, //[トレーナー名]さん　でいい？
 
   //@TODO 何故かここでメッセージウェイトが入らない > 暫定バグフィクス
   { INTRO_CMD_TYPE_WAIT, 1 },
@@ -238,14 +238,14 @@ static const INTRO_CMD_DATA c_intro_scene_06[] =
   //@TODO フェードインはうまく行っていない
 //  { INTRO_CMD_TYPE_MCSS_FADE_REQ, {0, TRUE}, },  // 博士フェードイン
   
-  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_06, 0 } }, // [トレーナー名]と いう　なまえ！
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_06, 0, 1 } }, // [トレーナー名]と いう　なまえ！
   
 #ifdef CMD_SAVE_ON
   { INTRO_CMD_TYPE_SAVE_MYSTATUS }, // マイステータスのセーブ
   { INTRO_CMD_TYPE_SAVE_CHECK_ALL_END }, // セーブ終了終了チェック
 #endif
 
-  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_07, 0 } }, // [トレーナー名]！！
+  { INTRO_CMD_TYPE_MCSS_TALK_MSG, { msg_intro_07, 0, 1 } }, // [トレーナー名]！！
 
   // 博士フェードアウト
   { INTRO_CMD_TYPE_MCSS_FADE_REQ, {0, FALSE}, },

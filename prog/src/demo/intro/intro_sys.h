@@ -39,6 +39,7 @@ enum
 	//ÉÅÉCÉìBG
 	PLTID_BG_BACK_M				= 0,
 	PLTID_BG_POKE_M				= 1,
+	PLTID_BG_TALK_WIN_M	  = 8,
 	PLTID_BG_TEXT_WIN_M	  = 9,
 	PLTID_BG_TEXT_M	      = 10,
 	PLTID_BG_TASKMENU_M		= 11,
