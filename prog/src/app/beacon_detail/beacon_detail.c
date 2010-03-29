@@ -277,8 +277,9 @@ static GFL_PROC_RESULT BeaconDetailProc_Main( GFL_PROC *proc, int *seq, void *pw
 	BEACON_DETAIL_WORK* wk = mywk;
 
   //タッチバーメイン処理
-	_sub_TouchBarMain( wk->touchbar );
-  
+  if( (*seq) >= SEQ_MAIN && (*seq) <= SEQ_POPUP ){
+  	_sub_TouchBarMain( wk->touchbar );
+  }
   switch(*seq){
   case SEQ_FADEIN:
     *seq = seq_FadeIn( wk );

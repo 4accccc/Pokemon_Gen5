@@ -239,6 +239,8 @@ static void sub_PlttVramTrans( u16* p_data, u8 target, u16 pos, u16 num  )
  */
 static void sub_UpDownButtonActiveControl( BEACON_DETAIL_WORK* wk )
 {
+  TOUCHBAR_SetActive( wk->touchbar,  TOUCHBAR_ICON_RETURN, TRUE );
+
   if( wk->list_top > 0 ){
     TOUCHBAR_SetActive( wk->touchbar,  TOUCHBAR_ICON_CUR_U, TRUE );
   }else{
@@ -477,8 +479,8 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
       GFL_STR_ClearBuffer( wk->str_expand );
     }else{
       WORDSET_RegisterJobName( wk->wset, 0, job);
+      print_GetMsgToBuf( wk, msg_prof_job );
     }
-    print_GetMsgToBuf( wk, msg_prof_job );
     draw_BeaconData( wk, &bp->prof[1], wk->str_expand,
       BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 1 );
   }
@@ -489,8 +491,8 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
       GFL_STR_ClearBuffer( wk->str_expand );
     }else{
       WORDSET_RegisterHobbyName( wk->wset, 0, hobby );
+      print_GetMsgToBuf( wk, msg_prof_hobby );
     }
-    print_GetMsgToBuf( wk, msg_prof_hobby );
     draw_BeaconData( wk, &bp->prof[2], wk->str_expand,
         BMP_PROF01_DAT_PX, BMP_PROF01_DAT_PX*8, BMP_PROF01_DAT_SX, BMP_PROF01_DAT_SY, 0 );
   }
@@ -510,12 +512,12 @@ static void draw_BeaconWindow( BEACON_DETAIL_WORK* wk, GAMEBEACON_INFO* info, u1
         BMP_PROF02_DAT_PX, 0, BMP_PROF02_DAT_SX, BMP_PROF02_DAT_SY, 1);
   }
   //出身地
-  GFL_MSG_GetString( wk->msg, msg_home_town_word , wk->str_tmp);
   {
     u16 nation = GAMEBEACON_Get_Nation(info);
     WORDSET_RegisterCountryName( wk->wset, 0, nation);
     WORDSET_RegisterLocalPlaceName( wk->wset, 1, nation, GAMEBEACON_Get_Area(info));
-    draw_BeaconData( wk, &bp->home[1], wk->str_tmp,
+    print_GetMsgToBuf( wk, msg_home_town_word );
+    draw_BeaconData( wk, &bp->home[1], wk->str_expand,
         0, 0, BMP_HOME02_SX, BMP_HOME02_SY, 0 );
   }
   //レコード
@@ -697,7 +699,7 @@ static void tcb_MsgUpdown( GFL_TCBL *tcb , void* tcb_wk)
   if( twk->ct++ < twk->frame ){
     twk->y += twk->diff;
     GFL_BG_SetScroll( BG_FRAME_POPUP_M, GFL_BG_SCROLL_Y_SET, twk->y );
-    IWASAWA_Printf("Popup %d\n",twk->y);
+//    IWASAWA_Printf("Popup %d\n",twk->y);
     return;
   }
 
@@ -788,7 +790,7 @@ static void tcb_WinPopup( GFL_TCBL *tcb , void* tcb_wk)
       return;
     }
   }
-  TOUCHBAR_SetActiveAll( twk->bdw->touchbar, TRUE );
+  sub_UpDownButtonActiveControl( twk->bdw );
   --(*twk->task_ct);
   GFL_TCBL_Delete(tcb);
 }
@@ -959,7 +961,6 @@ static void tcb_PageScroll( GFL_TCBL *tcb , void* tcb_wk)
   twk->bdw->flip_sw ^= 1;
   twk->bdw->list_top = twk->next;
   draw_UpdateUnderView( twk->bdw );
-  TOUCHBAR_SetActiveAll( twk->bdw->touchbar, TRUE );
   sub_UpDownButtonActiveControl( twk->bdw );
 
   --(*twk->task_ct);

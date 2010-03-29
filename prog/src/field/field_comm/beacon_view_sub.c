@@ -219,6 +219,7 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
     pp = panel_GetPanelFromDataIndex( wk, idx );
     if(pp != NULL){ //ターゲットパネル書換え
       panel_Draw( wk, pp, wk->tmpInfo );
+      panel_VisibleSet( pp, TRUE );
       effReq_SetIconEffect( wk, pp, wk->tmpInfo, FALSE );
       sub_PlaySE( BVIEW_SE_ICON );
     }
@@ -900,10 +901,11 @@ static void panel_VisibleSet( PANEL_WORK* pp, BOOL visible_f )
 
   if(pp->rank > 0){
     GFL_CLACT_WK_SetDrawEnable( pp->cRank, visible_f );
+  }else{
+    GFL_CLACT_WK_SetDrawEnable( pp->cRank, FALSE );
   }
   if( !visible_f ){ //隠したい時だけ強制
     panel_IconVisibleSet( pp, visible_f );
-    GFL_CLACT_WK_SetDrawEnable( pp->cRank, visible_f );
   }
 }
 
@@ -930,6 +932,7 @@ static void panel_Clear( PANEL_WORK* pp )
 
   pp->data_idx = PANEL_DATA_BLANK;
   pp->n_line = 0;
+  pp->rank = 0;
 
   if( pp->tcb != NULL ){
     GFL_TCBL_Delete( pp->tcb );
@@ -1050,7 +1053,7 @@ static void panel_NamePrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp )
   GFL_BMP_Clear( pp->msgOam.bmp, 0 );
 
   if( time >= BEACON_TIMEOUT_FRAME ){
-    IWASAWA_Printf("BeaconTimeout tr_id = %d, %d\n", pp->tr_id, time );
+//    IWASAWA_Printf("BeaconTimeout tr_id = %d, %d\n", pp->tr_id, time );
   	PRINTSYS_PrintColor( pp->msgOam.bmp, 0, 0, pp->name, wk->fontHandle, FCOL_FNTOAM_G );
   }else{
   	PRINTSYS_PrintColor( pp->msgOam.bmp, 0, 0, pp->name, wk->fontHandle, FCOL_FNTOAM_W );
@@ -1063,9 +1066,7 @@ static void panel_NamePrint( BEACON_VIEW_PTR wk, PANEL_WORK* pp )
  */
 static void panel_RankSet( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* info )
 {
-#if 0
-  pp->rank = 1;
-#endif
+  pp->rank = GAMEBEACON_Get_ResearchTeamRank(info);
   if(pp->rank == 0){
     GFL_CLACT_WK_SetAnmFrame( pp->cRank, 0);
   }else{
@@ -1090,6 +1091,7 @@ static void panel_Draw( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_INFO* inf
 
   //プレイヤー名転送
   panel_NamePrint( wk, pp );
+  
   //ランクセット
   panel_RankSet( wk, pp, info);
 
@@ -1804,11 +1806,18 @@ static void taskAdd_IconEffect( BEACON_VIEW_PTR wk, PANEL_WORK* pp, GAMEBEACON_I
     twk->action = GAMEBEACON_Get_Action_ActionNo( info );
   }
 
-  if( twk->action == GAMEBEACON_ACTION_SEARCH ){
+  switch( twk->action ){
+  case GAMEBEACON_ACTION_SEARCH:
     panel_MsgPrint( wk, pp, pp->str ); 
-  }else if( twk->action == GAMEBEACON_ACTION_THANKYOU ){
+    break;
+  case GAMEBEACON_ACTION_THANKYOU:
     GAMEBEACON_Get_ThankyouMessage(info, wk->str_tmp );
     panel_MsgPrint( wk, pp, wk->str_tmp ); 
+    break;
+  case GAMEBEACON_ACTION_FREEWORD:
+    GAMEBEACON_Get_FreeWordMessage(info, wk->str_tmp );
+    panel_MsgPrint( wk, pp, wk->str_tmp ); 
+    break;
   }
   panel_IconObjUpdate( wk, pp, GAMEBEACON_GetActionDataIconType( twk->action ) );
   panel_IconVisibleSet( pp, TRUE );

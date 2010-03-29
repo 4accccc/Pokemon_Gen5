@@ -89,7 +89,7 @@ static const u8 DATA_BeaconDataType[GAMEBEACON_ACTION_MAX][2] = {
   BEACON_WSET_NICKNAME,	  BEACON_ICON_BTL_WIN,	  ///<DYING 先頭のポケモンが瀕死 33
   BEACON_WSET_NICKNAME,	  BEACON_ICON_BTL_WIN,	  ///<STATE_IS_ABNORMAL 先頭のポケモンが状態異常 34
   BEACON_WSET_ITEM,	      BEACON_ICON_ITEM_GET,	  ///<USE_ITEM アイテムを使用 35
-  BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<FIELD_SKILL フィールド技を使用 36
+  BEACON_WSET_WAZA,	      BEACON_ICON_INFO,	      ///<FIELD_SKILL フィールド技を使用 36
   BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<SODATEYA_EGG 育て屋から卵を引き取った 37
   BEACON_WSET_MONSNAME,	  BEACON_ICON_INFO,	      ///<EGG_HATCH タマゴが孵化した 38
   BEACON_WSET_DEFAULT,	  BEACON_ICON_INFO,	      ///<SHOPING 買い物中 39
@@ -1054,7 +1054,7 @@ u32 GAMEBEACON_Get_Action_VictoryCount(const GAMEBEACON_INFO *info)
 {
   switch(info->action.action_no){
   case GAMEBEACON_ACTION_SUBWAY_STRAIGHT_VICTORIES:
-    return info->action.victory_count;
+    return info->action.victory_count + 1;
   }
   GF_ASSERT(0);
   return info->action.victory_count;
@@ -1162,7 +1162,7 @@ void GAMEBEACON_InfoWordset(const GAMEBEACON_INFO *info, WORDSET *wordset, HEAPI
     WORDSET_RegisterNumber( wordset, 1, GAMEBEACON_Get_Action_Hour(info), 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     break;
   case BEACON_WSET_THANKS:
-    WORDSET_RegisterNumber( wordset, 1, GAMEBEACON_Get_Action_ThankyouCount(info), 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordset, 1, GAMEBEACON_Get_Action_ThankyouCount(info), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     break;
   case BEACON_WSET_HAIHU_MONS:
     WORDSET_RegisterItemName( wordset, 1, GAMEBEACON_Get_Action_DistributionMonsno(info));
@@ -1296,8 +1296,7 @@ static BOOL errchk_action_waza(const GAMEBEACON_INFO* info )
 //エラーチェック サブウェイ連勝数タイプ 
 static BOOL errchk_action_victory(const GAMEBEACON_INFO* info )
 {
-  if( info->action.victory_count == 0 ||
-      info->action.victory_count > 7 ){
+  if( info->action.victory_count > 6 ){
     GF_ASSERT(0);
     return TRUE;
   }
