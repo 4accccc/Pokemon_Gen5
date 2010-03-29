@@ -114,9 +114,9 @@ static const u8 bmpwin_setup[TEXT_MAX][9] =
   // frmnum           posx  posy  sizx  sizy  palnum                dir                    x  y (x,yは無視してセンタリングすることもある)
   {  BG_FRAME_M_TEXT,    0,    0,    1,    1, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
   {  BG_FRAME_M_TEXT,    0,   24,    1,    1, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    6,    4,   20,    2, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    6,    8,   20,    8, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,   11,   18,   14,    4, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    7,    4,   20,    2, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    7,    8,   20,    8, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,   11,   17,   14,    4, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
 };
 
 // フェード
@@ -150,7 +150,7 @@ enum
 static const GFL_CLWK_DATA obj_cell_data[OBJ_CELL_MAX] =
 {
   // pos_x, pos_y, anmseq,               softpri, bgpri
-  {  8,     8,     OBJ_BALL_CELL_ANMSEQ, 0,       BG_FRAME_PRI_M_FRONT },
+  {  18,    15,    OBJ_BALL_CELL_ANMSEQ, 0,       BG_FRAME_PRI_M_FRONT },
 };
 
 

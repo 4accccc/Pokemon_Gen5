@@ -114,9 +114,9 @@ static const u8 bmpwin_setup[TEXT_MAX][9] =
   // frmnum           posx  posy  sizx  sizy  palnum                dir                    x  y (x,yは無視してセンタリングすることもある)
   {  BG_FRAME_M_TEXT,    0,    0,    1,    1, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
   {  BG_FRAME_M_TEXT,    0,   24,    1,    1, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    7,    3,   20,    2, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    7,    8,   20,    8, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,   10,   18,   14,    4, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    7,    3,   20,    3, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 4 },
+  {  BG_FRAME_M_TEXT,    7,    7,   20,    9, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 4 },
+  {  BG_FRAME_M_TEXT,   12,   17,   15,    4, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 2, 0 },
 };
 
 // フェード
@@ -150,7 +150,7 @@ enum
 static const GFL_CLWK_DATA obj_cell_data[OBJ_CELL_MAX] =
 {
   // pos_x, pos_y, anmseq,               softpri, bgpri
-  {  10,    7,     OBJ_BALL_CELL_ANMSEQ, 0,       BG_FRAME_PRI_M_FRONT },
+  {  14,    11,     OBJ_BALL_CELL_ANMSEQ, 0,       BG_FRAME_PRI_M_FRONT },
 };
 
 
@@ -744,6 +744,7 @@ static void Chihou_Zukan_Award_TextInit( CHIHOU_ZUKAN_AWARD_WORK* work )
     GFL_STR_DeleteBuffer( strbuf );
   }
 
+/*
   // ゲームフリークスタッフ一同
   {
     STRBUF*  strbuf       = GFL_MSG_CreateString( work->msgdata, msg_award_04 );
@@ -755,6 +756,21 @@ static void Chihou_Zukan_Award_TextInit( CHIHOU_ZUKAN_AWARD_WORK* work )
         work->print_que,
         GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_STAFF]),
         x, bmpwin_setup[TEXT_STAFF][8],
+        strbuf,
+        work->font,
+        PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
+    GFL_STR_DeleteBuffer( strbuf );
+  }
+*/
+  // ゲームフリークスタッフ一同
+  {
+    STRBUF*  strbuf       = GFL_MSG_CreateString( work->msgdata, msg_award_05 );
+    u16      str_width    = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
+    u16      bmp_width    = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_STAFF]) );
+    PRINTSYS_PrintQueColor(
+        work->print_que,
+        GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_STAFF]),
+        bmpwin_setup[TEXT_STAFF][7], bmpwin_setup[TEXT_STAFF][8],  // 左寄せ
         strbuf,
         work->font,
         PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
