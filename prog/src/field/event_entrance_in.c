@@ -54,16 +54,16 @@ typedef enum {
 //=======================================================================================
 typedef struct {
 
-  GAMESYS_WORK*            gameSystem;
-  GAMEDATA*                gameData;
-  FIELDMAP_WORK*           fieldmap;
-  LOCATION                 nextLocation;      // 遷移先指定
-  EXIT_TYPE                exitType;          // 出入り口タイプ
-  BOOL                     seasonDisplayFlag; // 季節表示を行うかどうか
-  ENTRANCE_CAMERA_SETTINGS cameraSettings;    // 特殊出入り口のカメラ設定データ
-  FIELD_FADE_TYPE          fadeOutType;       // 季節表示がない場合のF/Oタイプ
-  BOOL                     BGMFadeWaitFlag;   // BGM のフェード完了を待つかどうか
-  FIELD_CAMERA_MODE        initCameraMode;    // イベント開始時のカメラモード
+  GAMESYS_WORK*     gameSystem;
+  GAMEDATA*         gameData;
+  FIELDMAP_WORK*    fieldmap;
+  LOCATION          nextLocation;      // 遷移先指定
+  EXIT_TYPE         exitType;          // 出入り口タイプ
+  BOOL              seasonDisplayFlag; // 季節表示を行うかどうか
+  ENTRANCE_CAMERA   cameraSettings;    // 特殊出入り口のカメラ設定データ
+  FIELD_FADE_TYPE   fadeOutType;       // 季節表示がない場合のF/Oタイプ
+  BOOL              BGMFadeWaitFlag;   // BGM のフェード完了を待つかどうか
+  FIELD_CAMERA_MODE initCameraMode;    // イベント開始時のカメラモード
 
 } EVENT_WORK;
 
@@ -425,7 +425,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
   // カメラ演出データ取得
   case SEQ_LOAD_ENTRANCE_CAMERA_SETTINGS:
     // データ取得
-    ENTRANCE_CAMERA_SETTINGS_LoadData( &work->cameraSettings, work->exitType );
+    ENTRANCE_CAMERA_LoadData( &work->cameraSettings, work->exitType );
 
     // データが有効かどうか
     if( work->cameraSettings.validFlag_IN ) {
@@ -438,7 +438,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
 
   // カメラ演出タスクの作成
   case SEQ_CREATE_CAMERA_EFFECT_TASK:
-    ENTRANCE_CAMERA_SETTINGS_AddDoorInTask( fieldmap, &(work->cameraSettings) );
+    ENTRANCE_CAMERA_AddDoorInTask( fieldmap, &(work->cameraSettings) );
     *seq = SEQ_WAIT_CAMERA_EFFECT_TASK;
     break;
 

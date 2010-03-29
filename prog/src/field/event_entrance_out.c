@@ -56,18 +56,18 @@ typedef enum {
 //=======================================================================================
 typedef struct {
 
-  GAMESYS_WORK*            gameSystem;
-  GAMEDATA*                gameData;
-  FIELDMAP_WORK*           fieldmap;
-  LOCATION                 location;          // 遷移先指定
-  u16                      prevZoneID;        // 遷移前のゾーン
-  EXIT_TYPE                exitType;          // 出入り口タイプ
-  BOOL                     seasonDisplayFlag; // 季節表示を行うかどうか
-  u8                       startSeason;       // 最初に表示する季節
-  u8                       endSeason;         // 最後に表示する季節
-  ENTRANCE_CAMERA_SETTINGS cameraSettings;    // 特殊出入り口のカメラ設定データ
-  FIELD_FADE_TYPE          fadeInType;        // 季節表示がない場合のF/Iタイプ
-  FIELD_CAMERA_MODE        initCameraMode;    // イベント開始時のカメラモード
+  GAMESYS_WORK*     gameSystem;
+  GAMEDATA*         gameData;
+  FIELDMAP_WORK*    fieldmap;
+  LOCATION          location;          // 遷移先指定
+  u16               prevZoneID;        // 遷移前のゾーン
+  EXIT_TYPE         exitType;          // 出入り口タイプ
+  BOOL              seasonDisplayFlag; // 季節表示を行うかどうか
+  u8                startSeason;       // 最初に表示する季節
+  u8                endSeason;         // 最後に表示する季節
+  ENTRANCE_CAMERA   cameraSettings;    // 特殊出入り口のカメラ設定データ
+  FIELD_FADE_TYPE   fadeInType;        // 季節表示がない場合のF/Iタイプ
+  FIELD_CAMERA_MODE initCameraMode;    // イベント開始時のカメラモード
 
 } EVENT_WORK;
 
@@ -411,7 +411,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *
   // カメラ演出データ取得
   case SEQ_LOAD_ENTRANCE_CAMERA_SETTINGS:
     // データ取得
-    ENTRANCE_CAMERA_SETTINGS_LoadData( &work->cameraSettings, work->exitType );
+    ENTRANCE_CAMERA_LoadData( &work->cameraSettings, work->exitType );
 
     // データが有効かどうか
     if( work->cameraSettings.validFlag_OUT ) {
@@ -424,7 +424,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *
 
   // カメラの初期状態を設定する
   case SEQ_INIT_CAMERA_SETTINGS:
-    ENTRANCE_CAMERA_SETTINGS_PrepareForDoorOut( fieldmap, &(work->cameraSettings) );
+    ENTRANCE_CAMERA_PrepareForDoorOut( fieldmap, &(work->cameraSettings) );
     *seq = SEQ_DOOR_OUT_ANIME;
     break;
 
@@ -444,7 +444,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *
 
   // カメラ演出タスクの作成
   case SEQ_CREATE_CAMERA_EFFECT_TASK:
-    ENTRANCE_CAMERA_SETTINGS_AddDoorOutTask( fieldmap, &(work->cameraSettings) );
+    ENTRANCE_CAMERA_AddDoorOutTask( fieldmap, &(work->cameraSettings) );
     *seq = SEQ_WAIT_CAMERA_EFFECT_TASK;
     break;
 
