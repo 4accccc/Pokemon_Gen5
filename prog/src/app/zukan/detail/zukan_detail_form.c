@@ -338,6 +338,17 @@ typedef enum
 }
 BUTTON_OBJ;
 
+// スクロールバー
+// バーカーソル
+#define  BAR_CURSOR_POS_Y      (7*8)
+#define  BAR_CURSOR_POS_X_MIN  (18*8+12)  // BAR_CURSOR_POS_X_MIN<= <=BAR_CURSOR_POS_X_MAX
+#define  BAR_CURSOR_POS_X_MAX  (18*8+12 +8*8)
+// スクロールバー
+#define  BAR_RANGE_TOUCH_X_MIN  (18*8)          // BAR_RANGE_TOUCH_X_MIN<= <=BAR_RANGE_TOUCH_X_MAX
+#define  BAR_RANGE_TOUCH_X_MAX  (18*8 +11*8-1)
+#define  BAR_RANGE_TOUCH_Y_MIN  (7*8)           // BAR_RANGE_TOUCH_Y_MIN<= <=BAR_RANGE_TOUCH_Y_MAX
+#define  BAR_RANGE_TOUCH_Y_MAX  (7*8 +1*8-1)
+
 
 //=============================================================================
 /**
@@ -436,6 +447,8 @@ typedef struct
   u32                         obj_res[OBJ_RES_MAX];
   GFL_CLWK*                   obj_clwk[OBJ_MAX];
   BUTTON                      button[BUTTON_OBJ_MAX];
+  BOOL                        bar_cursor_move_by_key;    // TRUEのとき、キーでバーカーソルを動かした
+  BOOL                        bar_cursor_move_by_touch;  // TRUEのとき、タッチでバーカーソルを動かし中
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
@@ -479,6 +492,17 @@ static BUTTON_OBJ Zukan_Detail_Form_ObjButtonCheckPush( ZUKAN_DETAIL_FORM_PARAM*
 static void Zukan_Detail_Form_ObjButtonMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 static void Zukan_Detail_Form_ObjFieldSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
+static void Zukan_Detail_Form_ObjBarSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Form_ObjBarMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static BOOL Zukan_Detail_Form_ObjBarMainTouch( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static BOOL Zukan_Detail_Form_ObjBarMainKey( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Form_ObjBarGetPosX( u16 num, u16 no, u8* a_pos_x_min, u8* a_pos_x_center, u8* a_pos_x_max );
+static u16 Zukan_Detail_Form_ObjBarGetNo( u16 num, u8 x );
+static u16 Zukan_Detail_Form_GetNoExceptOne( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                                             u16 except_idx, u16 target_idx );
+static u16 Zukan_Detail_Form_GetDiffInfoListIdx( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                                                 u16 except_idx, u16 no );
 
 // MCSSポケモン
 static void Zukan_Detail_Form_McssSysInit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -546,9 +570,6 @@ static void Zukan_Detail_Form_ChangePokeicon( ZUKAN_DETAIL_FORM_PARAM* param, ZU
 
 // 入力
 static void Zukan_Detail_Form_Input( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
-
-// スクロールバーを移動させる
-static void Zukan_Detail_Form_MoveScrollBar( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 // 状態を遷移させる
 static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn,
@@ -1070,6 +1091,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
   {
     // 前後ボタン、再生ボタン
     Zukan_Detail_Form_ObjButtonMain( param, work, cmn );
+  
+    // スクロールバー
+    Zukan_Detail_Form_ObjBarMain( param, work, cmn );
    
     // 最背面
     ZKNDTL_COMMON_RearMain( work->rear_wk_m );
@@ -1094,6 +1118,8 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
 
     ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
   
+    work->bar_cursor_move_by_key = FALSE;
+
     switch( cmd )
     {
     case ZKNDTL_CMD_NONE:
@@ -1166,7 +1192,7 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
           }
 
           Zukan_Detail_Form_ChangeCompareForm( param, work, cmn );
-          Zukan_Detail_Form_MoveScrollBar( param, work, cmn );
+          work->bar_cursor_move_by_key = TRUE;
         }
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
@@ -1189,7 +1215,7 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
           }
 
           Zukan_Detail_Form_ChangeCompareForm( param, work, cmn );
-          Zukan_Detail_Form_MoveScrollBar( param, work, cmn );
+          work->bar_cursor_move_by_key = TRUE;
         }
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
@@ -1273,6 +1299,11 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
               OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, ZUKANSAVE_GetDrawData, f=%d, s=%d, r=%d\n", monsno, form, sex, rare );
             }
 #endif
+          }
+
+          if( work->diff_num >= 3 )
+          {
+            work->bar_cursor_move_by_key = TRUE;
           }
         }
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
@@ -2389,6 +2420,9 @@ static void Zukan_Detail_Form_ChangePoke( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
 
   // 変更されたポケモン用に、フォルム名の背面フィールドを用意する
   Zukan_Detail_Form_ObjFieldSetup( param, work, cmn );
+
+  // 変更されたポケモン用に、スクロールバーを用意する
+  Zukan_Detail_Form_ObjBarSetup( param, work, cmn );
 }
 
 //-------------------------------------
@@ -2510,17 +2544,16 @@ static void Zukan_Detail_Form_Input( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAI
           }
           break;
         }
+
+        // タッチ継続中の場合は、それを止める
+        work->bar_cursor_move_by_touch = FALSE;
       }
+
+      // スクロールバーの操作チェックは他の関数で行っているので、ここでは行わない
+
     }
     break;
   }
-}
-
-//-------------------------------------
-/// スクロールバーを移動させる
-//=====================================
-static void Zukan_Detail_Form_MoveScrollBar( param, work, cmn )
-{
 }
 
 //-------------------------------------
@@ -2588,6 +2621,9 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
 
   // テキストに合わせて、フォルム名の背面フィールドを用意する
   Zukan_Detail_Form_ObjFieldSetup( param, work, cmn );
+
+  // 変更された状態用に、スクロールバーを用意する
+  Zukan_Detail_Form_ObjBarSetup( param, work, cmn );
 }
 
 //-------------------------------------
@@ -2899,6 +2935,270 @@ static void Zukan_Detail_Form_ObjFieldSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
   {
     GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_FIELD_COMP], FALSE );
   }
+}
+
+static void Zukan_Detail_Form_ObjBarSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 現在の状態でスクロールバーを準備する
+
+  BOOL disp = FALSE;
+  switch(work->state)
+  {
+  case STATE_TOP:
+    {
+      // 表示しない
+    }
+    break;
+  case STATE_EXCHANGE:
+    {
+      if( work->diff_num >= 3 )
+      {
+        disp = TRUE;  // 表示する
+      }
+      else
+      {
+        // 表示しない
+      }
+    }
+    break;
+  }
+
+  if( disp )
+  {
+    u8  pos_x_center;
+    GFL_CLACTPOS pos;
+    u16 no = Zukan_Detail_Form_GetNoExceptOne( param, work, cmn,
+                 work->diff_curr_no, work->diff_comp_no );
+    Zukan_Detail_Form_ObjBarGetPosX( work->diff_num -1, no, NULL, &pos_x_center, NULL );
+    pos.x = pos_x_center;
+    pos.y = BAR_CURSOR_POS_Y;
+    GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_BAR_CURSOR], &pos, CLSYS_DEFREND_MAIN );
+    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_BAR_RANGE], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_BAR_CURSOR], TRUE );
+    // 初期化 
+    work->bar_cursor_move_by_key    = FALSE;
+    work->bar_cursor_move_by_touch  = FALSE;
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_BAR_RANGE], FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_BAR_CURSOR], FALSE );
+  }
+}
+static void Zukan_Detail_Form_ObjBarMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  BOOL ret = FALSE;
+
+  if( work->state == STATE_EXCHANGE )
+  {
+    // キー
+    if( !ret )
+    {
+      ret = Zukan_Detail_Form_ObjBarMainKey( param, work, cmn );
+    }
+    // タッチ
+    if( !ret )  // キー入力がないので、タッチしていい
+    {
+      ret = Zukan_Detail_Form_ObjBarMainTouch( param, work, cmn );
+    }
+    else  // キー入力があったので、タッチは無視
+    {
+      // タッチ継続中の場合は、それを止める
+      work->bar_cursor_move_by_touch = FALSE;
+    }
+  }
+  else
+  {
+    // タッチ継続中の場合は、それを止める
+    work->bar_cursor_move_by_touch = FALSE;
+  }
+}
+
+static BOOL Zukan_Detail_Form_ObjBarMainTouch( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u32 x, y;
+  
+  // タッチ継続中
+  if( work->bar_cursor_move_by_touch )
+  {
+    if( GFL_UI_TP_GetPointCont( &x, &y ) )
+    {
+      // 状況変更なし
+    }
+    else
+    {
+      work->bar_cursor_move_by_touch = FALSE;
+    }
+  }
+  // 新たにスクロールバーをタッチしたか検出する
+  else
+  {
+    if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+    {
+      if(    BAR_RANGE_TOUCH_X_MIN<=x&&x<=BAR_RANGE_TOUCH_X_MAX
+          && BAR_RANGE_TOUCH_Y_MIN<=y&&y<=BAR_RANGE_TOUCH_Y_MAX )
+      {
+        work->bar_cursor_move_by_touch = TRUE;
+      }
+    }
+  }
+
+  // タッチしているので、バーカーソルを動かし、フォルムも変更する
+  if( work->bar_cursor_move_by_touch )
+  {
+    u16 diff_comp_no_prev = work->diff_comp_no;
+    u16 no_except_curr;
+  
+    GFL_CLACTPOS pos;
+    x = MATH_CLAMP( x, BAR_CURSOR_POS_X_MIN, BAR_CURSOR_POS_X_MAX );
+    pos.x = x;
+    pos.y = BAR_CURSOR_POS_Y;
+    GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_BAR_CURSOR], &pos, CLSYS_DEFREND_MAIN );
+
+    no_except_curr = Zukan_Detail_Form_ObjBarGetNo( work->diff_num-1, (u8)x );
+
+    work->diff_comp_no = Zukan_Detail_Form_GetDiffInfoListIdx( param, work, cmn,
+                                                               work->diff_curr_no, no_except_curr );
+
+    // 比較フォルム変更
+    if( diff_comp_no_prev != work->diff_comp_no )
+    {
+      Zukan_Detail_Form_ChangeCompareForm( param, work, cmn );
+    }
+  }
+  
+  return work->bar_cursor_move_by_touch;
+}
+static BOOL Zukan_Detail_Form_ObjBarMainKey( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  BOOL ret = FALSE;  // キーによる入力があったらTRUE
+  if( work->bar_cursor_move_by_key )
+  {
+    u8  pos_x_center;
+    GFL_CLACTPOS pos;
+    u16 no = Zukan_Detail_Form_GetNoExceptOne( param, work, cmn,
+                 work->diff_curr_no, work->diff_comp_no );
+    Zukan_Detail_Form_ObjBarGetPosX( work->diff_num -1, no, NULL, &pos_x_center, NULL );
+    pos.x = pos_x_center;
+    pos.y = BAR_CURSOR_POS_Y;
+    GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_BAR_CURSOR], &pos, CLSYS_DEFREND_MAIN );
+    ret = TRUE;
+  } 
+  return ret;
+}
+static void Zukan_Detail_Form_ObjBarGetPosX( u16 num, u16 no, u8* a_pos_x_min, u8* a_pos_x_center, u8* a_pos_x_max )
+{
+  // num個のデータ中のno番目(0<=no<num)のデータを指すスクロールバーの位置を得る
+  // その位置はpos_x_min<=  <pos_x_maxとなる
+  // pos_x_min<=pos_x_center<pox_x_max
+  // no==0のとき、pos_x_center=pos_x_min
+  // no==num-1のとき、pos_x_center=pos_x_max
+
+  u8 pos_x_min, pos_x_center, pos_x_max;
+
+  pos_x_min = ( BAR_CURSOR_POS_X_MAX - BAR_CURSOR_POS_X_MIN +1 ) * no / num + BAR_CURSOR_POS_X_MIN;
+  pos_x_max = ( BAR_CURSOR_POS_X_MAX - BAR_CURSOR_POS_X_MIN +1 ) * (no +1) / num + BAR_CURSOR_POS_X_MIN;
+
+  if( no == 0 )                     pos_x_center = pos_x_min;
+  else if( no == num -1 )           pos_x_center = pos_x_max -1;
+  else if( pos_x_min >= pos_x_max ) pos_x_center = pos_x_min;
+  else                              pos_x_center = ( pos_x_min + pos_x_max -1 ) / 2;
+
+  if( a_pos_x_min )    *a_pos_x_min    = pos_x_min;
+  if( a_pos_x_max )    *a_pos_x_max    = pos_x_max;
+  if( a_pos_x_center ) *a_pos_x_center = pos_x_center;
+}
+
+static u16 Zukan_Detail_Form_ObjBarGetNo( u16 num, u8 x )
+{
+  // 座標xがnum個のデータ中のno番目(0<=no<num)のデータかを得る
+  // xが範囲の最小より小さいときは0を返し、xが範囲の最大より大きいときはnum-1を返す
+  
+  u16 no;
+  u8  pos_x_min, pos_x_center, pos_x_max;
+  for( no=0; no<num; no++ )
+  {
+    Zukan_Detail_Form_ObjBarGetPosX( num, no, &pos_x_min, &pos_x_center, &pos_x_max );
+    if( no == 0 )
+    {
+      if( x < pos_x_max )
+      {
+        break;
+      }
+    }
+    else if( no == num-1 )
+    {
+      //if( pos_x_min <= x )  // もうここまでbreakせずに来たのなら、これしかないので無条件で
+      {
+        break;
+      }
+    }
+    else
+    {
+      if( pos_x_min <= x && x < pos_x_max )
+      {
+        break;
+      }
+    }
+  }
+
+  return no;
+}
+
+static u16 Zukan_Detail_Form_GetNoExceptOne( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                                             u16 except_idx, u16 target_idx )
+{
+  // diff_info_list[target_idx]となるtarget_idxがdiff_info_list中何番目かを求める
+  // ただし、diff_info_list[except_idx]となるexcept_idxは除いて何番目かを数える
+  // 即ち、target_idxのままか、target_idx-1となる
+
+  u16 ret_no = 0;
+  u16 i;
+  for( i=0; i<work->diff_num; i++ )
+  {
+    if( i == except_idx )
+    {
+      // 何もしない
+    }
+    else if( i== target_idx )
+    {
+      break;
+    }
+    else
+    {
+      ret_no++;
+    }
+  }
+  return ret_no;
+}
+
+static u16 Zukan_Detail_Form_GetDiffInfoListIdx( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                                                 u16 except_idx, u16 no )
+{
+  // no番目のデータはdiff_info_listの何番目の添え字に当たるかを得る
+  // ただし、diff_info_list[except_idx]となるexcept_idxは除いたno番目である
+  // 即ち、戻り値ret_idxはret_idx=noかret_idx=no+1となるdiff_info_list[ret_idx]である
+
+  u16 ret_idx = 0;
+  u16 no_count = 0;
+  u16 i;
+  for( i=0; i<work->diff_num; i++ )
+  {
+    if( i == except_idx )
+    {
+      // 何もしない
+    }
+    else
+    {
+      if( no_count == no )
+      {
+        ret_idx = i;
+        break;
+      }
+      no_count++;
+    }
+  }
+  return ret_idx;
 }
 
 
