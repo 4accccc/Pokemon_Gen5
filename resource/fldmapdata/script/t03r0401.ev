@@ -103,12 +103,12 @@ sub_badgeparty:
     ENDIF
 
     //「やめる」のメニュー項目は無条件に追加
-    _BMPMENU_MAKE_LIST( msg_badgeparty_select_09, EV_WIN_B_CANCEL )
+    _BMPMENU_MAKE_LIST( msg_badgeparty_select_09, 0xff )
 
     _BMPMENU_START()
     _BALLOONWIN_CLOSE()
 
-    IF $SEL_POS == EV_WIN_B_CANCEL THEN
+    IF $SEL_POS == 0xff || $SEL_POS == EV_WIN_B_CANCEL THEN
         //「わたしが　みなくても～」
         _BALLOONWIN_OBJMSG_POS( msg_badgeparty_02, SCWK_TARGET_OBJID, POS_D )
         _LAST_KEYWAIT()
