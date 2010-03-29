@@ -1615,6 +1615,17 @@ void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork,int index)
 {
   int i;
   ARCHANDLE* p_handle;
+  int unionno[]=
+  {0,9,
+15,5,
+6,11,
+1,12,
+2,13,
+7,8,
+3,10,
+4,14};
+
+  
 	{
     p_handle = GFL_ARC_OpenDataHandle( ARCID_GTSNEGO, pWork->heapID );
 
@@ -1626,7 +1637,7 @@ void GTSNEGO_DISP_SearchEndPeopleDispSet(GTSNEGO_DISP_WORK* pWork,int index)
     GFL_ARC_CloseDataHandle(p_handle);
 
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->SearchPeopleOAM , FALSE );
-    GFL_CLACT_WK_SetAnmSeq(pWork->SearchPeopleOAM, 11+index);
+    GFL_CLACT_WK_SetAnmSeq(pWork->SearchPeopleOAM, 11 + unionno[index]);
     GFL_CLACT_WK_SetAnmIndex(pWork->SearchPeopleOAM,4);
     GFL_CLACT_WK_SetAnmSeq(pWork->SearchBackOAM, 28);
 
