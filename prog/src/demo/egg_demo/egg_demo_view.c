@@ -65,16 +65,16 @@ STEP;
 
 // マナフィ以外のポケモン
 // パーティクルのフレームとポケモンアニメーションのフレームを連携させる
-#define PARTICLE_BURST_FRAME   (339)//(380)  // ひびが入っている絵の最終フレーム  // 全部で340個フレームがあった
+#define PARTICLE_BURST_FRAME   (380)  // ひびが入っている絵の最終フレーム  // 全部で381個フレームがあった
 #define POKE_ANIME_INDEX (1)
 
 #define EGG_CRACK_FRAME_01      ( 24 -4)  // ヒビ小開始
 #define EGG_CRACK_FRAME_02      (112 -3)  // ヒビ中開始 
-#define EGG_CRACK_FRAME_03      (227 -15)  // ヒビ大開始
+#define EGG_CRACK_FRAME_03      (227 -9)  // ヒビ大開始
 
 // マナフィ
 // パーティクルのフレームとポケモンアニメーションのフレームを連携させる
-#define MANAFI_PARTICLE_BURST_FRAME   (339)  // 最終フレーム  // 全部で???個フレームがあった
+#define MANAFI_PARTICLE_BURST_FRAME   (380)  // 最終フレーム  // 全部で???個フレームがあった
 #define MANAFI_POKE_ANIME_INDEX (0)
 
 
