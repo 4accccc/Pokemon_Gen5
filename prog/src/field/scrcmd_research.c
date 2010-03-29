@@ -484,6 +484,9 @@ VMCMD_RESULT EvCmdSetMyAnswer( VMHANDLE *core, void *wk )
   QuestionnaireAnswer_WriteBit( myAnswer, qID, aIdx );
   GAMEBEACON_SendDataUpdate_Questionnaire( myAnswer );
 
+  // DEBUG:
+  OS_TFPrintf( 3, "_SET_MY_ANSWER ==> qID=%d, aIdx=%d\n", qID, aIdx );
+
   return VMCMD_RESULT_CONTINUE;
 }
 
