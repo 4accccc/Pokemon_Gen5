@@ -27,7 +27,7 @@
 #define FAR_PLANE  (512 << FX32_SHIFT)
 
 // 上ドアへの出入り
-#define U_DOOR_FRAME     (20)
+#define U_DOOR_FRAME     (10)
 #define U_DOOR_ZOOM_DIST (0x00b4 << FX32_SHIFT)
 
 // 左ドアへの出入り

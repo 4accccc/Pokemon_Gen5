@@ -414,31 +414,17 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *
     ENTRANCE_CAMERA_SETTINGS_LoadData( &work->cameraSettings, work->exitType );
 
     // データが有効かどうか
-    if( work->cameraSettings.validFlag_OUT )
-    {
+    if( work->cameraSettings.validFlag_OUT ) {
       *seq = SEQ_INIT_CAMERA_SETTINGS;
     }
-    else
-    {
+    else {
       *seq = SEQ_DOOR_OUT_ANIME;
     } 
     break;
 
   // カメラの初期状態を設定する
   case SEQ_INIT_CAMERA_SETTINGS:
-    {
-      VecFx32 targetOffset;
-
-      VEC_Set( &targetOffset, 
-          work->cameraSettings.targetOffsetX << FX32_SHIFT,
-          work->cameraSettings.targetOffsetY << FX32_SHIFT,
-          work->cameraSettings.targetOffsetZ << FX32_SHIFT );
-
-      FIELD_CAMERA_SetAnglePitch( camera, work->cameraSettings.pitch );
-      FIELD_CAMERA_SetAngleYaw( camera, work->cameraSettings.yaw );
-      FIELD_CAMERA_SetAngleLen( camera, work->cameraSettings.length << FX32_SHIFT );
-      FIELD_CAMERA_SetTargetOffset( camera, &targetOffset );
-    }
+    ENTRANCE_CAMERA_SETTINGS_PrepareForDoorOut( fieldmap, &(work->cameraSettings) );
     *seq = SEQ_DOOR_OUT_ANIME;
     break;
 
@@ -448,56 +434,17 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *
         EVENT_FieldDoorOutAnime( gameSystem, fieldmap, FALSE, 
                                  work->seasonDisplayFlag, work->startSeason, work->endSeason, work->fadeInType ) );
 
-    if( work->cameraSettings.validFlag_OUT )
-    {
+    if( work->cameraSettings.validFlag_OUT ) {
       *seq = SEQ_CREATE_CAMERA_EFFECT_TASK;
     }
-    else
-    {
+    else {
       *seq = SEQ_DISPLAY_PLACE_NAME;
     } 
     break;
 
   // カメラ演出タスクの作成
   case SEQ_CREATE_CAMERA_EFFECT_TASK:
-    {
-      u16 frame;
-      u16 pitch, yaw;
-      fx32 length;
-      VecFx32 targetOffset;
-      // 各パラメータ取得
-      {
-        FLD_CAMERA_PARAM defaultParam; 
-
-        // デフォルトパラメータ取得
-        FIELD_CAMERA_GetInitialParameter( camera, &defaultParam );
-
-        frame  = work->cameraSettings.frame;
-        pitch  = defaultParam.Angle.x;
-        yaw    = defaultParam.Angle.y;
-        length = defaultParam.Distance << FX32_SHIFT;
-        VEC_Set( &targetOffset, defaultParam.Shift.x, defaultParam.Shift.y, defaultParam.Shift.z );
-      }
-      // タスク登録
-      {
-        FIELD_TASK_MAN* taskMan;
-        FIELD_TASK* zoomTaks;
-        FIELD_TASK* pitchTask;
-        FIELD_TASK* yawTask;
-        FIELD_TASK* targetOffsetTask;
-        // 生成
-        zoomTaks         = FIELD_TASK_CameraLinearZoom  ( fieldmap, frame, length );
-        pitchTask        = FIELD_TASK_CameraRot_Pitch   ( fieldmap, frame, pitch );
-        yawTask          = FIELD_TASK_CameraRot_Yaw     ( fieldmap, frame, yaw );
-        targetOffsetTask = FIELD_TASK_CameraTargetOffset( fieldmap, frame, &targetOffset );
-        // 登録
-        taskMan = FIELDMAP_GetTaskManager( fieldmap );
-        FIELD_TASK_MAN_AddTask( taskMan, zoomTaks, NULL );
-        FIELD_TASK_MAN_AddTask( taskMan, pitchTask, NULL );
-        FIELD_TASK_MAN_AddTask( taskMan, yawTask, NULL );
-        FIELD_TASK_MAN_AddTask( taskMan, targetOffsetTask, NULL );
-      }
-    }
+    ENTRANCE_CAMERA_SETTINGS_AddDoorOutTask( fieldmap, &(work->cameraSettings) );
     *seq = SEQ_WAIT_CAMERA_EFFECT_TASK;
     break;
 
@@ -506,8 +453,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *
     {
       FIELD_TASK_MAN* taskMan;
       taskMan = FIELDMAP_GetTaskManager( fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) )
-      { 
+      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ) { 
         *seq = SEQ_DISPLAY_PLACE_NAME;
       }
     }

@@ -438,42 +438,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
 
   // カメラ演出タスクの作成
   case SEQ_CREATE_CAMERA_EFFECT_TASK:
-    {
-      u16 frame;
-      u16 pitch, yaw;
-      fx32 length;
-      VecFx32 targetOffset;
-      // 各パラメータ取得
-      {
-        frame  = work->cameraSettings.frame;
-        pitch  = work->cameraSettings.pitch;
-        yaw    = work->cameraSettings.yaw;
-        length = work->cameraSettings.length << FX32_SHIFT;
-        VEC_Set( &targetOffset, 
-                 work->cameraSettings.targetOffsetX << FX32_SHIFT,
-                 work->cameraSettings.targetOffsetY << FX32_SHIFT,
-                 work->cameraSettings.targetOffsetZ << FX32_SHIFT );
-      }
-      // タスク登録
-      {
-        FIELD_TASK_MAN* taskMan;
-        FIELD_TASK* zoomTaks;
-        FIELD_TASK* pitchTask;
-        FIELD_TASK* yawTask;
-        FIELD_TASK* targetOffsetTask;
-        // 生成
-        zoomTaks         = FIELD_TASK_CameraLinearZoom  ( fieldmap, frame, length );
-        pitchTask        = FIELD_TASK_CameraRot_Pitch   ( fieldmap, frame, pitch );
-        yawTask          = FIELD_TASK_CameraRot_Yaw     ( fieldmap, frame, yaw );
-        targetOffsetTask = FIELD_TASK_CameraTargetOffset( fieldmap, frame, &targetOffset );
-        // 登録
-        taskMan = FIELDMAP_GetTaskManager( fieldmap );
-        FIELD_TASK_MAN_AddTask( taskMan, zoomTaks, NULL );
-        FIELD_TASK_MAN_AddTask( taskMan, pitchTask, NULL );
-        FIELD_TASK_MAN_AddTask( taskMan, yawTask, NULL );
-        FIELD_TASK_MAN_AddTask( taskMan, targetOffsetTask, NULL );
-      }
-    }
+    ENTRANCE_CAMERA_SETTINGS_AddDoorInTask( fieldmap, &(work->cameraSettings) );
     *seq = SEQ_WAIT_CAMERA_EFFECT_TASK;
     break;
 
