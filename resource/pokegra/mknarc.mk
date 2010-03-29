@@ -46,6 +46,7 @@ CNV_DIR = ./
 
 #スクリプトが存在するディレクトリを指定
 SCRIPT_DIR = ../../tools/pokegra/
+COMP_SCRIPT_DIR = ../../tools/pokegra/comp/
 
 #コンバート対象のファイルツリーを生成
 NCGFILE		:= $(wildcard $(RES_DIR)????_???_*.ncg)
@@ -80,11 +81,11 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 #nmcデータからの生成ルール
 ncg: $(notdir $(NCGFILE:.ncg=.NCGR))
 %.NCGR: $(RES_DIR)%.ncg
-	perl $(SCRIPT_DIR)ncg.pl $< $(CNV_DIR)
+	perl $(COMP_SCRIPT_DIR)ncg.pl $< $(CNV_DIR)
 
 ncgc: $(notdir $(NCGCFILE:.ncg=.NCBR))
 %.NCBR: $(RES_DIR)%.ncg
-	perl $(SCRIPT_DIR)ncgc.pl $< $(CNV_DIR)
+	perl $(COMP_SCRIPT_DIR)ncgc.pl $< $(CNV_DIR)
 
 nce: $(notdir $(NMCFILE:.nmc=.NCEC))
 %.NCEC: $(RES_DIR)%.nce $(SCRIPT_DIR)nce.pl
@@ -92,7 +93,7 @@ nce: $(notdir $(NMCFILE:.nmc=.NCEC))
 
 nmc: $(notdir $(NMCFILE:.nmc=.NMCR))
 %.NMCR: $(RES_DIR)%.nmc $(RES_DIR)%.nce
-	perl $(SCRIPT_DIR)nmc.pl $< $(CNV_DIR)
+	perl $(COMP_SCRIPT_DIR)nmc.pl $< $(CNV_DIR)
 
 ncl: $(notdir $(NCLFILE:.ncl=.NCLR))
 %.NCLR: $(RES_DIR)%.ncl
