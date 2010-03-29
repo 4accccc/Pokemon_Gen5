@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T14:35:10"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T18:57:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_d08r0301_demo_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d08r0301_demo_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>演出
 ・pos（GRIDX=24~26、GRIDZ=10）起動
 ・画面揺らす
@@ -308,7 +308,7 @@
 暴れている……？</language>
 	</row>
 
-	<row id="msg_d08r0301_hakase1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d08r0301_hakase1_01">
 		<comment>♂
 ・d08でmsg_d08_white_07表示後</comment>
 		<attribute name="キャラ指定">博士父</attribute>
@@ -320,7 +320,7 @@
 娘に　調べさせるか</language>
 	</row>
 
-	<row id="msg_d08r0301_leader7_01w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08r0301_leader7_01w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・d08でmsg_d08_white_07表示後
 ・WHITEver</comment>
@@ -336,7 +336,7 @@
 眠りから　さますとは……</language>
 	</row>
 
-	<row id="msg_d08r0301_leader7_01b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_d08r0301_leader7_01b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・d08でmsg_d08_white_07表示後
 ・BLACKver</comment>
