@@ -73,11 +73,13 @@ enum
 enum
 {
   OBJ_PAL_NUM_M_BALL        = 1,
+  OBJ_PAL_NUM_M_GF          = 1,
 };
 // 位置
 enum
 {
   OBJ_PAL_POS_M_BALL        = 0,
+  OBJ_PAL_POS_M_GF          = 1,
 };
 
 // ProcMainのシーケンス
@@ -109,6 +111,10 @@ enum
 #define TEXT_COLOR_B      (0)  // 文字背景色(透明)
 #define TEXT_COLOR_BLACK  (3)  // スクロールする際の空き領域を黒にしておく
 
+// 文字の色
+#define TEXT_COLOR_VALUE_L   (0x1D29)
+#define TEXT_COLOR_VALUE_S   (0x3210)
+
 static const u8 bmpwin_setup[TEXT_MAX][9] =
 {
   // frmnum           posx  posy  sizx  sizy  palnum                dir                    x  y (x,yは無視してセンタリングすることもある)
@@ -138,19 +144,25 @@ enum
   OBJ_BALL_RES_NCG,
   OBJ_BALL_RES_NCL,
   OBJ_BALL_RES_NCE,
+  OBJ_GF_RES_NCG,
+  OBJ_GF_RES_NCL,
+  OBJ_GF_RES_NCE,
   OBJ_RES_MAX,
 };
 // CELL
 enum
 {
   OBJ_BALL_CELL,
+  OBJ_GF_CELL,
   OBJ_CELL_MAX,
 };
 #define OBJ_BALL_CELL_ANMSEQ  (0)
+#define OBJ_GF_CELL_ANMSEQ    (0)
 static const GFL_CLWK_DATA obj_cell_data[OBJ_CELL_MAX] =
 {
   // pos_x, pos_y, anmseq,               softpri, bgpri
-  {  18,    15,    OBJ_BALL_CELL_ANMSEQ, 0,       BG_FRAME_PRI_M_FRONT },
+  {   18,    15,   OBJ_BALL_CELL_ANMSEQ, 0,       BG_FRAME_PRI_M_FRONT },
+  {  175,   136,   OBJ_GF_CELL_ANMSEQ,   0,       BG_FRAME_PRI_M_FRONT },
 };
 
 
@@ -472,7 +484,7 @@ static GFL_PROC_RESULT Zenkoku_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, v
 #ifdef DEBUG_TEXT_MOVE
   {
     static int target = 0;
-    static const int target_max = 4;
+    static const int target_max = 5;
 
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
     {
@@ -486,14 +498,16 @@ static GFL_PROC_RESULT Zenkoku_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, v
     }
     else
     {
-      if( target == 3 )
+      if( target >= 3 )
       {
+        int obj_cell_idx = target - 3;
         GFL_CLACTPOS pos;
-        GFL_CLACT_WK_GetPos( work->obj_clwk[OBJ_BALL_CELL], &pos, CLSYS_DEFREND_MAIN );
+        GFL_CLACT_WK_GetPos( work->obj_clwk[obj_cell_idx], &pos, CLSYS_DEFREND_MAIN );
 
         if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
         {
-          OS_Printf( "Monster Ball (%d, %d)\n", pos.x, pos.y );
+          if( obj_cell_idx == OBJ_BALL_CELL )    OS_Printf( "Monster Ball (%d, %d)\n", pos.x, pos.y );
+          else if( obj_cell_idx == OBJ_GF_CELL ) OS_Printf( "Logo (%d, %d)\n", pos.x, pos.y );
         }
         else if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
         {
@@ -512,7 +526,7 @@ static GFL_PROC_RESULT Zenkoku_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, v
           pos.x++;
         }
         
-        GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_BALL_CELL], &pos, CLSYS_DEFREND_MAIN );
+        GFL_CLACT_WK_SetPos( work->obj_clwk[obj_cell_idx], &pos, CLSYS_DEFREND_MAIN );
       }
       else
       {
@@ -803,8 +817,11 @@ static void Zenkoku_Zukan_Award_BlackInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
   // パレットの作成＆転送
   {
     u16* pal = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(u16) * 0x10 );
-    pal[0x00] = 0x0000;  // 黒
-    GFL_BG_LoadPalette( BG_FRAME_M_TEXT, pal, 0x2, TEXT_PAL_POS*0x20 + TEXT_COLOR_BLACK*0x2 );
+    pal[0x00]                = 0x0000;              // 透明
+    pal[TEXT_COLOR_L]        = TEXT_COLOR_VALUE_L;  // 文字主色
+    pal[TEXT_COLOR_S]        = TEXT_COLOR_VALUE_S;  // 文字影色
+    pal[TEXT_COLOR_BLACK]    = 0x0000;              // 黒
+    GFL_BG_LoadPalette( BG_FRAME_M_TEXT, pal, 0x20, TEXT_PAL_POS*0x20 );
     GFL_HEAP_FreeMemory( pal );
   }
 
@@ -846,6 +863,7 @@ static void Zenkoku_Zukan_Award_ObjInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
   // リソースの読み込み
   ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_SHOUJOU, work->heap_id );
 
+  // BALL
   work->obj_res[OBJ_BALL_RES_NCL] = GFL_CLGRP_PLTT_RegisterEx(
       handle,
       NARC_shoujou_shoujou_obj_NCLR,
@@ -866,9 +884,31 @@ static void Zenkoku_Zukan_Award_ObjInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
       NARC_shoujou_shoujou_obj_NANR,
       work->heap_id );
 
+  // GF
+  work->obj_res[OBJ_GF_RES_NCL] = GFL_CLGRP_PLTT_RegisterEx(
+      handle,
+      NARC_shoujou_shoujou_logo_NCLR,
+      CLSYS_DRAW_MAIN,
+      OBJ_PAL_POS_M_GF * 0x20,
+      0,
+      OBJ_PAL_NUM_M_GF,
+      work->heap_id );
+  work->obj_res[OBJ_GF_RES_NCG] = GFL_CLGRP_CGR_Register(
+      handle,
+      NARC_shoujou_shoujou_logo_NCGR,
+      FALSE,
+      CLSYS_DRAW_MAIN,
+      work->heap_id );
+  work->obj_res[OBJ_GF_RES_NCE] = GFL_CLGRP_CELLANIM_Register(
+      handle,
+      NARC_shoujou_shoujou_logo_NCER,
+      NARC_shoujou_shoujou_logo_NANR,
+      work->heap_id );
+
   GFL_ARC_CloseDataHandle( handle );
 
   // CLWK作成
+  // BALL
   work->obj_clwk[OBJ_BALL_CELL] = GFL_CLACT_WK_Create(
       ZENKOKU_ZUKAN_AWARD_GRAPHIC_GetClunit( work->graphic ),
       work->obj_res[OBJ_BALL_RES_NCG],
@@ -879,6 +919,18 @@ static void Zenkoku_Zukan_Award_ObjInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
       work->heap_id );
   GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_BALL_CELL], TRUE );
   GFL_CLACT_WK_SetAutoAnmFlag( work->obj_clwk[OBJ_BALL_CELL], TRUE );
+
+  // GF
+  work->obj_clwk[OBJ_GF_CELL] = GFL_CLACT_WK_Create(
+      ZENKOKU_ZUKAN_AWARD_GRAPHIC_GetClunit( work->graphic ),
+      work->obj_res[OBJ_GF_RES_NCG],
+      work->obj_res[OBJ_GF_RES_NCL],
+      work->obj_res[OBJ_GF_RES_NCE],
+      &obj_cell_data[OBJ_GF_CELL],
+      CLSYS_DEFREND_MAIN,
+      work->heap_id );
+  GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_GF_CELL], TRUE );
+  GFL_CLACT_WK_SetAutoAnmFlag( work->obj_clwk[OBJ_GF_CELL], TRUE );
 }
 static void Zenkoku_Zukan_Award_ObjExit( ZENKOKU_ZUKAN_AWARD_WORK* work )
 {
@@ -886,10 +938,15 @@ static void Zenkoku_Zukan_Award_ObjExit( ZENKOKU_ZUKAN_AWARD_WORK* work )
   u8 i;
   for( i=0; i<OBJ_CELL_MAX; i++ )
   {
-    GFL_CLACT_WK_Remove( work->obj_clwk[OBJ_BALL_CELL] );
+    GFL_CLACT_WK_Remove( work->obj_clwk[i] );
   }
 
   // リソース破棄
+  // GF
+  GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_GF_RES_NCE] );
+  GFL_CLGRP_CGR_Release( work->obj_res[OBJ_GF_RES_NCG] );
+  GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_GF_RES_NCL] );
+  // BALL
   GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_BALL_RES_NCE] );
   GFL_CLGRP_CGR_Release( work->obj_res[OBJ_BALL_RES_NCG] );
   GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_BALL_RES_NCL] );
@@ -906,10 +963,14 @@ static void Zenkoku_Zukan_Award_ScrollInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
   GFL_BG_SetScroll( BG_FRAME_M_TEXT, GFL_BG_SCROLL_Y_SET, SCROLL_START_POS_Y );
  
   {
-    GFL_CLACTPOS pos;
-    pos.x = obj_cell_data[OBJ_BALL_CELL].pos_x;
-    pos.y = obj_cell_data[OBJ_BALL_CELL].pos_y - SCROLL_START_POS_Y;
-    GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_BALL_CELL], &pos, CLSYS_DEFREND_MAIN );
+    u8 i;
+    for( i=0; i<OBJ_CELL_MAX; i++ )
+    {
+      GFL_CLACTPOS pos;
+      pos.x = obj_cell_data[i].pos_x;
+      pos.y = obj_cell_data[i].pos_y - SCROLL_START_POS_Y;
+      GFL_CLACT_WK_SetPos( work->obj_clwk[i], &pos, CLSYS_DEFREND_MAIN );
+    }
   }
 
   work->scroll_wait_count = SCROLL_WAIT;
@@ -932,10 +993,14 @@ static void Zenkoku_Zukan_Award_ScrollMain( ZENKOKU_ZUKAN_AWARD_WORK* work )
       GFL_BG_SetScrollReq( BG_FRAME_M_TEXT, GFL_BG_SCROLL_Y_DEC, value );
 
       {
-        GFL_CLACTPOS pos;
-        GFL_CLACT_WK_GetPos( work->obj_clwk[OBJ_BALL_CELL], &pos, CLSYS_DEFREND_MAIN );
-        pos.y += (s16)value;
-        GFL_CLACT_WK_SetPos( work->obj_clwk[OBJ_BALL_CELL], &pos, CLSYS_DEFREND_MAIN );
+        u8 i;
+        for( i=0; i<OBJ_CELL_MAX; i++ )
+        {
+          GFL_CLACTPOS pos;
+          GFL_CLACT_WK_GetPos( work->obj_clwk[i], &pos, CLSYS_DEFREND_MAIN );
+          pos.y += (s16)value;
+          GFL_CLACT_WK_SetPos( work->obj_clwk[i], &pos, CLSYS_DEFREND_MAIN );
+        }
       }
 
       work->scroll_wait_count = SCROLL_WAIT;
