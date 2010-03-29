@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T14:48:59"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T20:29:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -350,11 +350,11 @@
 		<language name="JPN" width="256">ツタージャね！
 じゃあ　これを　あげる！▼
 ポケモンに　もたせると　くさタイプの
-わざの　いりょくが　あがるんだ！</language>
+わざの　いりょくが　あがるんだ！▼</language>
 		<language name="JPN_KANJI" width="256">ツタージャね！
 じゃあ　これを　あげる！▼
 ポケモンに　持たせると　くさタイプの
-技の　威力が　あがるんだ！</language>
+技の　威力が　あがるんだ！▼</language>
 	</row>
 
 	<row id="msg_c02r0501_trainerw_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -366,11 +366,11 @@
 		<language name="JPN" width="256">ミジュマルね！
 じゃあ　これを　あげる！▼
 ポケモンに　もたせると　みずタイプの
-わざの　いりょくが　あがるんだ！</language>
+わざの　いりょくが　あがるんだ！▼</language>
 		<language name="JPN_KANJI" width="256">ミジュマルね！
 じゃあ　これを　あげる！▼
 ポケモンに　持たせると　みずタイプの
-技の　威力が　あがるんだ！</language>
+技の　威力が　あがるんだ！▼</language>
 	</row>
 
 	<row id="msg_c02r0501_trainerw_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -383,11 +383,11 @@
 		<language name="JPN" width="256">ポカブね！
 じゃあ　これを　あげる！▼
 ポケモンに　もたせると　ほのおタイプの
-わざの　いりょくが　あがるんだ！</language>
+わざの　いりょくが　あがるんだ！▼</language>
 		<language name="JPN_KANJI" width="256">ポカブね！
 じゃあ　これを　あげる！▼
 ポケモンに　持たせると　ほのおタイプの
-技の　威力が　あがるんだ！</language>
+技の　威力が　あがるんだ！▼</language>
 	</row>
 
 	<row id="msg_c02r0501_trainerw_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
