@@ -1307,9 +1307,9 @@ static BOOL CMD_G3D_SELECT_SEX_MAIN( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat,
     // Œˆ’è
     else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
-      PMSND_PlaySE( SEQ_SE_DECIDE1 );
+      PMSND_PlaySE( SEQ_SE_DECIDE2 );
       sdat->seq++;
-    }
+		}
     break;
 
   case 2 :
