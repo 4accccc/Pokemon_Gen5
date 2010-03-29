@@ -249,8 +249,8 @@ void LOCATION_SetDefaultPos(LOCATION * loc, u16 zone_id)
 //------------------------------------------------------------------
 void LOCATION_SetGameStart(LOCATION * loc)
 {
-	//LOCATION_DEBUG_SetDefaultPos(loc, ZONE_ID_GAMESTART);
-#if 1
+  LOCATION_SetDefaultPos( loc, ZONE_ID_GAMESTART );
+#if 0
   loc->type = LOCATION_TYPE_DIRECT;
   loc->zone_id = ZONE_ID_GAMESTART;
   loc->exit_id = DOOR_ID_JUMP_CODE;
