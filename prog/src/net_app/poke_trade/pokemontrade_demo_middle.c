@@ -179,7 +179,12 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   G2S_BlendNone();
 
   G2_BlendNone();
-  IRC_POKETRADEDEMO_SetModel( pWork, TRADEUP_OBJECT);  //上だけモデル
+
+
+ // IRC_POKETRADEDEMO_SetModel( pWork, TRADEMIDDLE_OBJECT);  //ミドル用モデル
+ // IRC_POKETRADEDEMO_RemoveModel( pWork);
+
+  
  //IRC_POKETRADEDEMO_SetModel( pWork, TRADEMIDDLE_OBJECT);  //ダウン用モデル
   
   IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1),FALSE );  //相手裏
@@ -197,6 +202,9 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 
 //  _setNextAnim(pWork, _POKEUP_WHITEIN_START);
   _setNextAnim(pWork, 0);
+
+  IRC_POKETRADEDEMO_SetModel( pWork, TRADEUP_OBJECT);  //上だけモデル
+
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade3);
 
   G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BD,0,0);
@@ -219,7 +227,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     IRC_POKETRADEDEMO_RemoveModel( pWork);
     IRC_POKETRADEDEMO_SetModel( pWork, TRADEMIDDLE_OBJECT);  //ミドル用モデル
   }
-  if(pWork->anmCount == ANMCNTC(_POKECHANGE_WHITEOUT_START+_POKECHANGE_WHITEOUT_TIMER)){
+  if(pWork->anmCount == ANMCNTC(_POKECHANGE_WHITEIN_START+1)){
 
 //    POKEMONTRADE_DEMO_ICA_Delete(pWork->pPokemonTradeDemo);
 //    POKEMONTRADE_DEMO_ICA_Init(pWork->pPokemonTradeDemo,_DEMO_TYPE_DOWN);  //ICA
@@ -291,7 +299,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
   }
 
 
-  if(pWork->anmCount == ANMCNTC(_POKEUP_WHITEIN_START)){
+  if(pWork->anmCount == ANMCNTC(_POKEUP_WHITEIN_START+3)){
     WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                        ANMCNTC(_POKEUP_WHITEIN_TIMER), 1, pWork->heapID );
   }
@@ -385,6 +393,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
   }
 
   if(ANMCNTC(_POKE_SIDEIN_START) == pWork->anmCount){
+
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
     pWork->pMoveMcss[0]=NULL;
     MCSS_ResetVanishFlag( pWork->pokeMcss[0] );
@@ -459,22 +468,28 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
   }
 
 #if 1
-  if(ANMCNTC(_POKEMON_CREATE_TIME) == pWork->anmCount){
+  {
+    int num = 3;
+   // if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+      num=0;
+    //}
+    if(ANMCNTC(_POKEMON_CREATE_TIME) == pWork->anmCount){
       VecFx32 apos;
-    MCSS_ResetVanishFlag(pWork->pokeMcss[3]);
-    apos.x = _POKEMON_PLAYER_CENTER_POSX;
-    apos.y = _POKEMON_PLAYER_CENTER_POSY;
-    apos.z = _POKEMON_PLAYER_CENTER_POSZ;
-    MCSS_SetPosition( pWork->pokeMcss[3] ,&apos );
-    MCSS_SetAnmStopFlag(pWork->pokeMcss[3]);
-
-    MCSS_SetPaletteFade( pWork->pokeMcss[3], 16, 16, 0, 0x7fff );
-  }
-  if(ANMCNTC(_POKEMON_CREATE_TIME+1) == pWork->anmCount){
-    MCSS_SetPaletteFade( pWork->pokeMcss[3], 8, 8, 0, 0x7fff );
-  }
-  if(ANMCNTC(_POKEMON_CREATE_TIME+2) == pWork->anmCount){
-    MCSS_SetPaletteFade( pWork->pokeMcss[3], 0, 0, 0, 0x7fff  );
+      MCSS_ResetVanishFlag(pWork->pokeMcss[num]);
+      apos.x = _POKEMON_PLAYER_CENTER_POSX;
+      apos.y = _POKEMON_PLAYER_CENTER_POSY;
+      apos.z = _POKEMON_PLAYER_CENTER_POSZ;
+      MCSS_SetPosition( pWork->pokeMcss[num] ,&apos );
+      MCSS_SetAnmStopFlag(pWork->pokeMcss[num]);
+      
+      MCSS_SetPaletteFade( pWork->pokeMcss[num], 16, 16, 0, 0x7fff );
+    }
+    if(ANMCNTC(_POKEMON_CREATE_TIME+1) == pWork->anmCount){
+      MCSS_SetPaletteFade( pWork->pokeMcss[num], 8, 8, 0, 0x7fff );
+    }
+    if(ANMCNTC(_POKEMON_CREATE_TIME+2) == pWork->anmCount){
+      MCSS_SetPaletteFade( pWork->pokeMcss[num], 0, 0, 0, 0x7fff  );
+    }
   }
 #endif
 
@@ -483,7 +498,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, WIPE_FADE_WHITE,
                        ANMCNTC(_POKECHANGE_WHITEOUT_TIMER), 1, pWork->heapID );
   }
-  if(pWork->anmCount == ANMCNTC(_POKECHANGE_WHITEIN_START)){
+  if(pWork->anmCount == ANMCNTC(_POKECHANGE_WHITEIN_START+3)){
     WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                        ANMCNTC(_POKECHANGE_WHITEIN_TIMER), 1, pWork->heapID );
   }
@@ -495,7 +510,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     WIPE_SYS_Start(WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_WHITE,
                        ANMCNTC(_POKESPLASH_WHITEIN_TIMER), 1, pWork->heapID );
   }
-  //OS_TPrintf("C %d\n",pWork->anmCount);
+  OS_TPrintf("C %d\n",pWork->anmCount);
 
   if(pWork->anmCount == ANMCNTC(_DEMO_END-1)){
     _moveMcssDelete(pWork, 0);

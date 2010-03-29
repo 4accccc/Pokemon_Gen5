@@ -1308,6 +1308,11 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
+
+
+  
+  //@todoêÿífèàóùgtsnego_info_21AppWin
+
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_B, WB_NET_TRADE_SERVICEID)){
       return;

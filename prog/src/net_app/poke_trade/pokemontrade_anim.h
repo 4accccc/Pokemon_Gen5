@@ -115,10 +115,10 @@
 
 
 //絵コンテ１０番
-#define _POKEMON_PLAYER_SIDEOUT_POSX _MCSS_POS_X(-140)           // 自分のポケモンのX
+#define _POKEMON_PLAYER_SIDEOUT_POSX _MCSS_POS_X(-150)           // 自分のポケモンのX
 #define _POKEMON_PLAYER_SIDEOUT_POSY _POKEMON_PLAYER_UP_POSY    // 自分のポケモンのY
 #define _POKEMON_PLAYER_SIDEOUT_POSZ _MCSS_POS_Z(0)    // 自分のポケモンのZ
-#define _POKEMON_FRIEND_SIDEOUT_POSX _MCSS_POS_X(130)           // 相手のポケモンのX
+#define _POKEMON_FRIEND_SIDEOUT_POSX _MCSS_POS_X(150)           // 相手のポケモンのX
 #define _POKEMON_FRIEND_SIDEOUT_POSY _POKEMON_FRIEND_DOWN_POSY  // 相手のポケモンのY
 #define _POKEMON_FRIEND_SIDEOUT_POSZ _MCSS_POS_Z(0)  // 相手のポケモンのZ
 
