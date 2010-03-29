@@ -429,7 +429,6 @@ sub_receipt_challenge_single_double:
   _CALL sub_receipt_common_save
   
   IF $SCWK_ANSWER == 1 THEN //キャンセル
-    _CALL sub_receipt_common_exit
     _RET
   ENDIF
   
@@ -873,7 +872,6 @@ sub_receipt_challenge_wifi:
   _CALL sub_receipt_common_save
   
   IF $SCWK_ANSWER == 1 THEN //キャンセル
-    _CALL sub_receipt_common_exit
     _RET
   ENDIF
   
@@ -1757,6 +1755,9 @@ sub_receipt_common_save:
   
   IF $SCWK_ANSWER == 1 THEN //キャンセル
     _CALL sub_receipt_common_exit
+    $SCWK_ANSWER = 1
+  ELSE
+    $SCWK_ANSWER = 0
   ENDIF
 }
 _RET
