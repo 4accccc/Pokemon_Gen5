@@ -50,6 +50,7 @@ extern void MUSICAL_PROGRAM_SetNpcArr( MUSICAL_PROGRAM_WORK* progWork , const u3
 
 extern void MUSICAL_PROGRAM_SetData_NPC( MUSICAL_PROGRAM_WORK* progWork , STAGE_INIT_WORK *actInitWork , const u8 musicalIdx , const u8 NPCIdx , HEAPID heapId );
 extern const u8 MUSICAL_PROGRAM_GetBgNo( MUSICAL_PROGRAM_WORK* progWork );
+extern const u8 MUSICAL_PROGRAM_GetRewardType( MUSICAL_PROGRAM_WORK* progWork );
 
 extern const u8 MUSICAL_PROGRAM_GetNpcObjId( MUSICAL_PROGRAM_WORK* progWork , const u8 NPCIdx );
 extern const u8 MUSICAL_PROGRAM_GetNpcNameIdx( MUSICAL_PROGRAM_WORK* progWork , const u8 NPCIdx );

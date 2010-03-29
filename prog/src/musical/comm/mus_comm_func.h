@@ -73,13 +73,19 @@ typedef struct
   STRCODE name[BUFLEN_PERSON_NAME+EOM_SIZE];
 }MUS_COMM_BEACON;
 
+//開始時に交換される雑データ(MYSTATUSとPPPもパックする
+typedef struct
+{
+  u16 sumPoint; //合計得点(ファン計算に使用
+  u16 pad;
+}MUS_COMM_MISC_DATA;
 
 //======================================================================
 //	proto
 //======================================================================
 #pragma mark [> proto
 
-extern void MUS_COMM_InitMusical( MUS_COMM_WORK* work , MYSTATUS *myStatus , GAME_COMM_SYS_PTR gameComm , MUSICAL_DISTRIBUTE_DATA *distData , const HEAPID heapId );
+extern void MUS_COMM_InitMusical( MUS_COMM_WORK* work , MYSTATUS *myStatus , POKEMON_PASO_PARAM *ppp , GAME_COMM_SYS_PTR gameComm , MUSICAL_DISTRIBUTE_DATA *distData , const HEAPID heapId );
 extern void MUS_COMM_ExitMusical( MUS_COMM_WORK* work );
 
 extern MUS_COMM_WORK* MUS_COMM_CreateWork( HEAPID heapId , GAME_COMM_SYS_PTR gameComm , SAVE_CONTROL_WORK *saveCtrl , MUSICAL_DISTRIBUTE_DATA *distData );
@@ -128,6 +134,7 @@ extern const BOOL MUS_COMM_Send_UseButtonFlg( MUS_COMM_WORK* work , u8 pos );
 
 extern u8 MUS_COMM_GetSelfMusicalIndex( MUS_COMM_WORK* work );
 extern u8 MUS_COMM_GetMusicalIndex( MUS_COMM_WORK* work , const u8 idx);
+extern const MUS_COMM_MISC_DATA* MUS_COMM_GetUserMiscData( MUS_COMM_WORK* work , const u8 idx );
 extern GAME_COMM_SYS_PTR MUS_COMM_GetGameComm( MUS_COMM_WORK* work );
 extern MUS_COMM_MODE MUS_COMM_GetMode( MUS_COMM_WORK* work );
 extern const BOOL MUS_COMM_IsPostAllMyStatus( MUS_COMM_WORK* work );

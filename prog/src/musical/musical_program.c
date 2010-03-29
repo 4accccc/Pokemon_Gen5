@@ -356,6 +356,13 @@ const u8 MUSICAL_PROGRAM_GetBgNo( MUSICAL_PROGRAM_WORK* progWork )
   return progWork->progData->bgNo;
 }
 
+//--------------------------------------------------------------
+//	‚²–J”üŽí—Þ
+//--------------------------------------------------------------
+const u8 MUSICAL_PROGRAM_GetRewardType( MUSICAL_PROGRAM_WORK* progWork )
+{
+  return progWork->progData->rewardType;
+}
 
 //--------------------------------------------------------------
 //	NPCŒ©‚½–ÚŽæ“¾

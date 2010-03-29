@@ -49,6 +49,7 @@
 #include "musical/musical_event.h"
 
 #include "debug/debug_flg.h"
+#include "musical_reward_table.cdat" //景品テーブル
 //======================================================================
 //  define
 //======================================================================
@@ -196,7 +197,7 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
   evWork->dupInitWork = NULL;
   evWork->actInitWork = NULL;
   evWork->shotInitWork = NULL;
-  evWork->musSave = MUSICAL_SAVE_GetMusicalSave( evWork->saveCtrl );
+  evWork->musSave = GAMEDATA_GetMusicalSavePtr( gdata );
   
   evWork->distData = MUSICAL_SYSTEM_InitDistributeData( HEAPID_PROC_WRAPPER );
   if( evWork->isComm == FALSE || 
@@ -209,7 +210,12 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
   {
     evWork->state = MES_ENTER_WAITROOM_FIRST_BEF_COMM;
     evWork->subSeq = 0;
-    MUS_COMM_InitMusical( evWork->commWork , GAMEDATA_GetMyStatus(evWork->gameData) , evWork->gameComm , evWork->distData , HEAPID_PROC_WRAPPER );
+    MUS_COMM_InitMusical( evWork->commWork , 
+                          GAMEDATA_GetMyStatus(evWork->gameData) , 
+                          PP_GetPPPPointer( evWork->pokePara ) , 
+                          evWork->gameComm , 
+                          evWork->distData , 
+                          HEAPID_PROC_WRAPPER );
   }
   else
   {
@@ -766,10 +772,11 @@ static void MUSICAL_EVENT_SetSaveData( MUSICAL_EVENT_WORK *evWork )
     MUSICAL_SAVE_AddTopNum( evWork->musSave );
   }
   
-  //最高点
+  //最高点・累計点
   {
     const u8 point = MUSICAL_EVENT_GetPoint( evWork , evWork->selfIdx );
     MUSICAL_SAVE_SetBefPoint( evWork->musSave , point );
+    MUSICAL_SAVE_AddSumPoint( evWork->musSave , point );
   }
 
   //コンディションの保存
@@ -808,6 +815,10 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
 {
   u8 i,j;
   u8 num;
+  u8 rewardNum;
+  u8 *rewardArr = GFL_HEAP_AllocClearMemory( HEAPID_PROC_WRAPPER , MUS_REWARD_NUM );
+  u32 checkPoint = 0;
+  static const u16 totalPointArr[10] = {20000,15000,10000,5000,2500,1000,500,250,100,0};
   //とりあえず初期化
   for( i=0;i<MUS_SAVE_FAN_NUM;i++ )
   {
@@ -822,21 +833,57 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
   if( evWork->isComm == FALSE )
   {
     //非通信なので1人
-    num = 1;
+    checkPoint = MUSICAL_SAVE_GetSumPoint( evWork->musSave );
+    checkPoint += MUSICAL_EVENT_GetPoint( evWork , evWork->selfIdx );
   }
   else
   {
-    num = GFL_NET_GetConnectNum();
-  }
-  {
-    //トップ同着対応
-    const u16 selfPoint = MUSICAL_EVENT_GetPoint( evWork , evWork->selfIdx );
-    const u16 topPoint  = MUSICAL_EVENT_GetPoint( evWork , evWork->rankIndex[0] );
-    if( selfPoint == topPoint )
+    ARI_TPrintf( "Comm point check!\n");
+    
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
-      //トップなので追加
-      num += 1;
+      const MUS_COMM_MISC_DATA *miscData = MUS_COMM_GetUserMiscData( evWork->commWork , i );
+      MUSICAL_POKE_PARAM *musPoke = MUS_COMM_GetMusPokeParam( evWork->commWork , i );
+      if( musPoke != NULL )
+      {
+        checkPoint += miscData->sumPoint;
+        checkPoint += MUSICAL_EVENT_GetPoint( evWork , i );
+        ARI_TPrintf( "[%d:%d+%d]\n",i,MUSICAL_EVENT_GetPoint( evWork , evWork->selfIdx ),miscData->sumPoint );
+      }
     }
+    //FIXME 全員の得点
+  }
+
+  for( i=0;i<MUS_SAVE_FAN_NUM;i++ )
+  {
+    if( totalPointArr[i] <= checkPoint )
+    {
+      num = 10-i;
+      break;
+    }
+  }
+  ARI_TPrintf( "Total point[%d] rewardNum[%d]\n",checkPoint,num );
+  //景品テーブルの作成
+  {
+    
+    const u8 type = MUSICAL_PROGRAM_GetRewardType( evWork->progWork );
+    ARI_TPrintf( "CheckReward type[%d]\n",type );
+    if( type < MUS_REWARD_TYPE )
+    {
+      //一応チェック
+      rewardNum = 0;
+      for( j=0;j<MUS_REWARD_NUM;j++ )
+      {
+        const u16 itemNo = MUSICAL_REWARD_TABLE[type][j];
+        if( MUSICAL_SAVE_ChackHaveItem( evWork->musSave , itemNo ) == FALSE )
+        {
+          rewardArr[j] = itemNo;
+          rewardNum++;
+          ARI_TPrintf( "[%2d]",itemNo );
+        }
+      }
+    }
+    ARI_TPrintf( "\nTotal[%d]\n",rewardNum );
   }
   {
     const MUSICAL_CONDITION_TYPE conType = MUSICAL_PROGRAM_GetMaxConditionType( evWork->progWork );
@@ -860,20 +907,42 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
     
     for( i=0;i<num;i++ )
     {
+      u8 rand;
       const u8 idx = fanTempArr[i];
       MUSICAL_FAN_STATE* fanState = MUSICAL_SAVE_GetFanState( evWork->musSave , idx );
       const u8 point = MUSICAL_EVENT_GetPoint( evWork , evWork->selfIdx );
-      ARI_TPrintf("Fan[%d]",idx);
+      ARI_TPrintf("Fan[%d]",idx+1);
       //見た目の決定
       fanState->type = conType; //タイプを渡す
       ARI_TPrintf("[%d]",fanState->type);
       //贈り物の抽選
-      ARI_TPrintf("[%3d/100:",point);
-      if( GFUser_GetPublicRand0(100) < point )
+      rand = GFUser_GetPublicRand0(100);
+      ARI_TPrintf("[%3d/100 (%d):",point,rand);
+      if( rand < point )
       {
+        if( rewardNum > 0 )
+        {
+          const u8 idx = GFUser_GetPublicRand0(rewardNum);
+          fanState->giftType = MUSICAL_GIFT_TYPE_GOODS;
+          fanState->giftValue = rewardArr[idx];
+          for( j=idx;j<rewardNum-1;j++ )
+          {
+            rewardArr[j] = rewardArr[j+1];
+          }
+          rewardNum--;
+          ARI_TPrintf("%d:%d",fanState->giftType,fanState->giftValue);
+        }
+        else
+        {
+          //グッズがない！
+          //現状アイテムは渡さない
+          ARI_TPrintf("goods none!");
+        }
+        
+#if 0 
         u16 itemIdx;
         //@todo 正しい抽選ルーチン
-        for( itemIdx = 0 ; itemIdx<100 ; itemIdx++ )
+        for( arrIdx = 0 ; arrIdx<100 ; arrIdx++ )
         {
           if( MUSICAL_SAVE_ChackHaveItem( evWork->musSave , itemIdx ) == FALSE )
           {
@@ -903,10 +972,12 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
           fanState->giftValue = 92; //金の玉
         }
         ARI_TPrintf("%d:%d",fanState->giftType,fanState->giftValue);
+#endif
       }
       ARI_TPrintf("]\n");
     }
   }
+  GFL_HEAP_FreeMemory(rewardArr);
 }
 
 #pragma mark [>FieldFunc

@@ -368,6 +368,41 @@ EVENT_START ev_c04r0202_mus_3rd
     ELSE
       _FLAG_RESET( FV_MUSICAL_FUN_05 )
     ENDIF
+    
+    _GET_MUSICAL_FAN_VALUE_TYPE( 5 , fan_type )
+    IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
+      _FLAG_SET( FV_MUSICAL_FUN_06 )
+    ELSE
+      _FLAG_RESET( FV_MUSICAL_FUN_06 )
+    ENDIF
+
+    _GET_MUSICAL_FAN_VALUE_TYPE( 6 , fan_type )
+    IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
+      _FLAG_SET( FV_MUSICAL_FUN_07 )
+    ELSE
+      _FLAG_RESET( FV_MUSICAL_FUN_07 )
+    ENDIF
+
+    _GET_MUSICAL_FAN_VALUE_TYPE( 7 , fan_type )
+    IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
+      _FLAG_SET( FV_MUSICAL_FUN_08 )
+    ELSE
+      _FLAG_RESET( FV_MUSICAL_FUN_08 )
+    ENDIF
+
+    _GET_MUSICAL_FAN_VALUE_TYPE( 8 , fan_type )
+    IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
+      _FLAG_SET( FV_MUSICAL_FUN_09 )
+    ELSE
+      _FLAG_RESET( FV_MUSICAL_FUN_09 )
+    ENDIF
+
+    _GET_MUSICAL_FAN_VALUE_TYPE( 9 , fan_type )
+    IF $fan_type == MUSICAL_FAL_TYPE_NONE THEN
+      _FLAG_SET( FV_MUSICAL_FUN_10 )
+    ELSE
+      _FLAG_RESET( FV_MUSICAL_FUN_10 )
+    ENDIF
   }
 
 
