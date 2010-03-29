@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T15:05:16"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T17:16:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -378,7 +378,7 @@
 遊園地で　やり過ごそう！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c04_oldman_03" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_oldman_03">
 		<comment>♂
 ・メッセージ表示後
 　アイテム入手処理
