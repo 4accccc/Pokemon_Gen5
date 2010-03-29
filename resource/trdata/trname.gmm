@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-03-12T21:03:06"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-29T17:43:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -202,6 +202,11 @@
 			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="169" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="51" japanese="ミュージカル客層" english="ミュージカル客層" view="EP" width="78" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">おとこのひと、女の子等</comment>
+				<comment language="english">おとこのひと、女の子等</comment>
+			</tag>
 		</group>
 
 		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
@@ -349,13 +354,13 @@
 		</language>
 	</columns>
 
-	<dialog left="0" top="176" right="689" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1409" top="308" right="2114" bottom="936" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="514"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="681"/>
-		<band id="3" index="3" style="0000" width="681"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1948,8 +1953,8 @@
 	</row>
 
 	<row id="tennis_03">
-		<language name="JPN" width="216">ハルカ</language>
-		<language name="JPN_KANJI" width="216">ハルカ</language>
+		<language name="JPN" width="216">マリー</language>
+		<language name="JPN_KANJI" width="216">マリー</language>
 	</row>
 
 	<row id="tennis_04">
@@ -1973,8 +1978,8 @@
 	</row>
 
 	<row id="baseball_03">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">デビッド</language>
+		<language name="JPN_KANJI" width="216">デビッド</language>
 	</row>
 
 	<row id="baseball_04">
@@ -1998,8 +2003,8 @@
 	</row>
 
 	<row id="soccer_03">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">マルコ</language>
+		<language name="JPN_KANJI" width="216">マルコ</language>
 	</row>
 
 	<row id="soccer_04">
@@ -2023,8 +2028,8 @@
 	</row>
 
 	<row id="football_03">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">ビル</language>
+		<language name="JPN_KANJI" width="216">ビル</language>
 	</row>
 
 	<row id="football_04">
@@ -2048,8 +2053,8 @@
 	</row>
 
 	<row id="basket_03">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">ケリー</language>
+		<language name="JPN_KANJI" width="216">ケリー</language>
 	</row>
 
 	<row id="basket_04">
@@ -2103,13 +2108,13 @@
 	</row>
 
 	<row id="fanm_10">
-		<language name="JPN" width="216">サトとサト</language>
-		<language name="JPN_KANJI" width="216">サトとサト</language>
+		<language name="JPN" width="216">カズとトモ</language>
+		<language name="JPN_KANJI" width="216">カズとトモ</language>
 	</row>
 
 	<row id="fanm_11">
-		<language name="JPN" width="216">サトとサト</language>
-		<language name="JPN_KANJI" width="216">サトとサト</language>
+		<language name="JPN" width="216">トシとユウ</language>
+		<language name="JPN_KANJI" width="216">トシとユウ</language>
 	</row>
 
 	<row id="fanw_03">
@@ -2133,18 +2138,18 @@
 	</row>
 
 	<row id="fanw_07">
-		<language name="JPN" width="216">ハルとハル</language>
-		<language name="JPN_KANJI" width="216">ハルとハル</language>
+		<language name="JPN" width="216">ユキとエリ</language>
+		<language name="JPN_KANJI" width="216">ユキとエリ</language>
 	</row>
 
 	<row id="fanw_08">
-		<language name="JPN" width="216">ハルとハル</language>
-		<language name="JPN_KANJI" width="216">ハルとハル</language>
+		<language name="JPN" width="216">カナとユカ</language>
+		<language name="JPN_KANJI" width="216">カナとユカ</language>
 	</row>
 
 	<row id="fanw_09">
-		<language name="JPN" width="216">ハルとハル</language>
-		<language name="JPN_KANJI" width="216">ハルとハル</language>
+		<language name="JPN" width="216">マキとシホ</language>
+		<language name="JPN_KANJI" width="216">マキとシホ</language>
 	</row>
 
 	<row id="mini_07">
@@ -2618,8 +2623,8 @@
 	</row>
 
 	<row id="fanw_10">
-		<language name="JPN" width="216">ハルとハル</language>
-		<language name="JPN_KANJI" width="216">ハルとハル</language>
+		<language name="JPN" width="216">ハルとチカ</language>
+		<language name="JPN_KANJI" width="216">ハルとチカ</language>
 	</row>
 
 	<row id="futago_04">
