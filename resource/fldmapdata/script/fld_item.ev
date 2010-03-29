@@ -2380,7 +2380,8 @@ ev_itemget_flditem_true:
   
   //アイテム追加
   _ADD_ITEM( SCWK_TEMP0, SCWK_TEMP1, SCWK_ANSWER )
-  
+  _BEACON_SET_REQ_ITEM_GET( SCWK_TEMP0 )
+
   //ME、アニメ待ち
   _ME_WAIT()
   _OBJ_ANIME_WAIT()
