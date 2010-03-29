@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-04T16:58:08"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T20:37:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -238,7 +238,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="272"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -266,15 +266,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1365" top="102" right="2068" bottom="729" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="649" top="113" right="1122" bottom="511" visible="no"/>
-		<band id="0" index="1" style="0000" width="528"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="541"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="695"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -355,18 +355,15 @@
 ユナイテッドタワーに　来ているよ</language>
 	</row>
 
-	<row id="msg_backpackerm_01">
+	<row id="msg_backpackerm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+		<comment>・c03ヒウンシティの
+　すれ違い調査隊に
+　趣味関連の兄弟をおいた場合、メッセージ変更</comment>
 		<attribute name="キャラ指定">バックパッカー</attribute>
 		<language name="JPN" width="256">へぇ！　きみの　しゅみは
-[1:28:しゅみ名:6]　なんだね▼
-もし　しゅみが　かわったら
-ヒウンシティにいる　きょうだいにも▽
-おしえてあげてよ（仮）</language>
+[1:28:しゅみ名:6]　なんだね！</language>
 		<language name="JPN_KANJI" width="256">へぇ！　君の　趣味は
-[1:28:しゅみ名:6]　なんだね▼
-もし　趣味が　変わったら
-ヒウンシティにいる　兄弟にも▽
-教えてあげてよ（仮）</language>
+[1:28:しゅみ名:6]　なんだね！</language>
 	</row>
 
 	<row id="msg_babyboy1_01">
