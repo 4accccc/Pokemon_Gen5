@@ -29,10 +29,8 @@ enum {
 	NARC_mictest_obj_note_NCGR = 15,
 	NARC_mictest_obj_note_NCER = 16,
 	NARC_mictest_obj_note_NANR = 17,
-	NARC_mictest_obj_button_NCLR = 18,
-	NARC_mictest_obj_button_NCGR = 19,
-	NARC_mictest_obj_button_NCER = 20,
-	NARC_mictest_obj_button_NANR = 21
+	NARC_mictest_obj_button_NCER = 18,
+	NARC_mictest_obj_button_NANR = 19
 };
 
 /* NARC_MICTEST_NAIX_ */

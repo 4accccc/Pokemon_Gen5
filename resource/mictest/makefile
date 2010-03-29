@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= genya_hosaka
+USERS	= genya_hosaka mori
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -49,6 +49,11 @@ do-build:	subdir $(TARGETDIR)/$(targetname).narc
 
 subdir:
 	@$(MAKE_SUBDIR)
+
+
+# obj_button.nceは\resource\app_menu_common\task_menu.ncg task_menu.nclを
+# コピーしてきて作成しています。なのでtask_menu.ncgが更新された時には反映させる必要があります。
+# そのためコンバートしてもこのフォルダのtask_menu.ncgはアーカイブに含まれていません。
 
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc

@@ -16,7 +16,5 @@
 "obj_note.NCGR"
 "obj_note.NCER"
 "obj_note.NANR"
-"obj_button.NCLR"
-"obj_button.NCGR"
 "obj_button.NCER"
 "obj_button.NANR"
