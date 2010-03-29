@@ -761,7 +761,6 @@ GMEVENT* EVENT_FSND_WaitBGMFade( GAMESYS_WORK* gameSystem )
   return event;
 } 
 
-static int count = 0;
 //---------------------------------------------------------------------------------
 /**
  * @brief BGM復帰待ちイベント
@@ -778,14 +777,11 @@ static GMEVENT_RESULT WaitBGMPopEvent( GMEVENT* event, int* seq, void* wk )
   switch( *seq ) {
   // BGMのPOP完了待ち
   case 0:
-    count++;
-    OS_TFPrintf( 3, "count = %d\n", count );
     if( FIELD_SOUND_CheckBGMPopFinished(fieldSound) == TRUE ) { (*seq)++; }
     break;
 
   // イベント終了
   case 1:
-    count = 0;
     return GMEVENT_RES_FINISH;
   } 
   return GMEVENT_RES_CONTINUE;
