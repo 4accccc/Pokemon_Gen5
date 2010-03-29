@@ -132,7 +132,7 @@ select_elec:
     //どの家電？
     _SYSWIN_MSG(msg_rotom_07, POS_DOWN )
     //リスト作成
-    _BMPMENU_INIT_EX( 1,1,0,1,LIST_SEL_RET ) 
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1,0,1,LIST_SEL_RET ) 
     _BMPMENU_MAKE_LIST(msg_rotom_window_01, 1 )          //レンジ
     _BMPMENU_MAKE_LIST(msg_rotom_window_02, 2 )          //洗濯機
     _BMPMENU_MAKE_LIST(msg_rotom_window_04, 3 )          //冷蔵庫

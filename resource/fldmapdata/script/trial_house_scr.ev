@@ -77,16 +77,16 @@ EVENT_START ev_tri_house_reception
     //マスターランクになったか？
     IF $rank == TH_RANK_MASTER THEN
       //「ししょう！チャレンジする？」
-      _BALLOONWIN_OBJMSG_POS(msg_trialhouse_002, SCWK_TARGET_OBJID, POS_DL )
+      _BALLOONWIN_OBJMSG_POS(msg_trialhouse_002, SCWK_TARGET_OBJID, POS_D )
     ELSE
       //「チャレンジする？」
-      _BALLOONWIN_OBJMSG_POS(msg_trialhouse_001, SCWK_TARGET_OBJID, POS_DL )
+      _BALLOONWIN_OBJMSG_POS(msg_trialhouse_001, SCWK_TARGET_OBJID, POS_D )
     ENDIF
 
     WHILE $loop == TRUE
       $loop = FALSE
       //リスト作成
-      _BMPMENU_INIT_EX( 1,1,0,1,first_list_ret )
+      _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1,0,1,first_list_ret )
       _BMPMENU_MAKE_LIST( msg_trialhouse_str1, 0 )    //チャレンジ
       _BMPMENU_MAKE_LIST( msg_trialhouse_str2, 1 )    //せつめい
       _BMPMENU_MAKE_LIST( msg_trialhouse_str8, 2 )    //ダウンロード
@@ -154,9 +154,9 @@ charange:
 
   IF $download_flg == FALSE THEN      //ロムデータのとき
      //シングル？ダブル?
-    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_006, SCWK_TARGET_OBJID, POS_DL )
+    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_006, SCWK_TARGET_OBJID, POS_D )
     //リスト作成
-    _BMPMENU_INIT_EX( 1,1,0,1,list_ret )
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1,0,1,list_ret )
     _BMPMENU_MAKE_LIST( msg_trialhouse_str4, 0 )    //シングル
     _BMPMENU_MAKE_LIST( msg_trialhouse_str5, 1 )    //ダブル
     _BMPMENU_MAKE_LIST( msg_trialhouse_str3, 2 )    //やめる
@@ -575,7 +575,7 @@ EVENT_START ev_tri_house_rank_disp
     //「どっちみる？」
     _SYSWIN_MSG_ALLPUT_DOWN( msg_trialhouse_033 )
     //選択しだす
-    _BMPMENU_INIT_EX( 1,1,0,1,SCWK_ANSWER )
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1,0,1,SCWK_ANSWER )
     _BMPMENU_MAKE_LIST( msg_trialhouse_str9, 0 )    //ROM
     _BMPMENU_MAKE_LIST( msg_trialhouse_str10, 1 )    //ダウンロード
     _BMPMENU_MAKE_LIST( msg_trialhouse_str3, 2 )    //やめる

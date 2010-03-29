@@ -205,8 +205,8 @@ EVENT_START	ev_pos_r16r0201_woman3_01
   {
     DEFINE_LOCAL flag
     $flag = SCR_WILD_BTL_FLAG_LEGEND    //メッセージを変更
-    $flag += SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
-    $flag += SCR_WILD_BTL_FLAG_FEMALE    //メスを出す
+    $flag |= SCR_WILD_BTL_FLAG_NO_RARE  //レア禁止
+    $flag |= SCR_WILD_BTL_FLAG_FEMALE    //メスを出す
     _WILD_BTL_SET_EX( MONSNO_ZOROAAKU , 25, flag ) //ゾロアーク
   }
   //女性を消す

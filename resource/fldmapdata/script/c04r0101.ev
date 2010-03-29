@@ -158,7 +158,7 @@ easy_talk_loop:
 
   WHILE $exit == FALSE
     //ƒŠƒXƒgì¬
-    _BMPMENU_INIT_EX( 1,1,0,1,list_ret )
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1,0,1,list_ret )
     _BMPMENU_MAKE_LIST( msg_touroku__win_01, 1 )  //©ŒÈĞ‰î
     _BMPMENU_MAKE_LIST( msg_touroku__win_02, 2 )  //Ÿ‚Á‚½‚Æ‚«
     _BMPMENU_MAKE_LIST( msg_touroku__win_03, 3 )  //•‰‚¯‚½‚Æ‚«
