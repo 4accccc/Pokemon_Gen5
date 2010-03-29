@@ -298,6 +298,7 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
 
   dst->musicDefault = SEQ_BGM_VS_NORAPOKE;
   dst->musicPinch = SEQ_BGM_BATTLEPINCH;
+  dst->musicWin = SEQ_BGM_WIN1;
 
   dst->result = BTL_RESULT_WIN;
 
@@ -376,6 +377,9 @@ static void setup_common_Trainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData,
 
   dst->competitor = BTL_COMPETITOR_TRAINER;
   dst->rule = rule;
+
+  // @TODO 本当はもっとこまかい対応が必要
+  dst->musicWin = SEQ_BGM_WIN2;
 }
 
 //=============================================================================================
@@ -413,6 +417,7 @@ static void setup_common_CommTrainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameDat
   dst->multiMode = multiMode;
   dst->commPos = commPos;
   dst->commNetIDBit = 0xFF;
+  dst->musicWin = SEQ_BGM_WIN2;
 
   // 録画データ生成のため、対戦相手のMYSTATUS, POKEPARTYを受け取るバッファとして確保します taya
   {
