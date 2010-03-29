@@ -47,19 +47,19 @@ static const struct{
 		15 * 60,		//life
 	},
 	{	//10  四天王と対戦を開始しました！(GAMEBEACON_ACTION_BATTLE_BIGFOUR_START)
-		3,		//priority
+		2,		//priority
 		15 * 60,		//life
 	},
 	{	//11  四天王に勝利しました！(GAMEBEACON_ACTION_BATTLE_BIGFOUR_VICTORY)
-		3,		//priority
+		2,		//priority
 		15 * 60,		//life
 	},
 	{	//12  チャンピオンと対戦を開始しました！(GAMEBEACON_ACTION_BATTLE_CHAMPION_START)
-		4,		//priority
+		2,		//priority
 		15 * 60,		//life
 	},
 	{	//13  チャンピオンに勝利しました！(GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY)
-		4,		//priority
+		2,		//priority
 		15 * 60,		//life
 	},
 	{	//14  ポケモン捕獲(GAMEBEACON_ACTION_POKE_GET)
@@ -79,7 +79,7 @@ static const struct{
 		10 * 60,		//life
 	},
 	{	//18  Gパワー発動(GAMEBEACON_ACTION_GPOWER)
-		5,		//priority
+		2,		//priority
 		20 * 60,		//life
 	},
 	{	//19  貴重品ゲット(GAMEBEACON_ACTION_SP_ITEM_GET)
@@ -87,15 +87,15 @@ static const struct{
 		10 * 60,		//life
 	},
 	{	//20  一定のプレイ時間を越えた(GAMEBEACON_ACTION_PLAYTIME)
-		4,		//priority
+		2,		//priority
 		15 * 60,		//life
 	},
 	{	//21  図鑑完成(GAMEBEACON_ACTION_ZUKAN_COMPLETE)
-		4,		//priority
+		2,		//priority
 		15 * 60,		//life
 	},
 	{	//22  お礼を受けた回数が規定数を超えた(GAMEBEACON_ACTION_THANKYOU_OVER)
-		4,		//priority
+		2,		//priority
 		15 * 60,		//life
 	},
 	{	//23  ユニオンルームに入った(GAMEBEACON_ACTION_UNION_IN)
@@ -107,15 +107,15 @@ static const struct{
 		10 * 60,		//life
 	},
 	{	//25  ポケモン配布中(GAMEBEACON_ACTION_DISTRIBUTION_POKE)
-		4,		//priority
+		2,		//priority
 		20 * 60,		//life
 	},
 	{	//26  アイテム配布中(GAMEBEACON_ACTION_DISTRIBUTION_ITEM)
-		4,		//priority
+		2,		//priority
 		20 * 60,		//life
 	},
 	{	//27  その他配布中(GAMEBEACON_ACTION_DISTRIBUTION_ETC)
-		4,		//priority
+		2,		//priority
 		20 * 60,		//life
 	},
 	{	//28  急所に攻撃をあてた(GAMEBEACON_ACTION_CRITICAL_HIT)
@@ -175,7 +175,7 @@ static const struct{
 		10 * 60,		//life
 	},
 	{	//42  バトルサブウェイトロフィーゲット(GAMEBEACON_ACTION_SUBWAY_TROPHY_GET)
-		4,		//priority
+		1,		//priority
 		15 * 60,		//life
 	},
 	{	//43  トライアルハウスに挑戦中(GAMEBEACON_ACTION_TRIALHOUSE)
@@ -199,11 +199,11 @@ static const struct{
 		10 * 60,		//life
 	},
 	{	//48  他人のGパワーを使用(GAMEBEACON_ACTION_OTHER_GPOWER_USE)
-		4,		//priority
+		1,		//priority
 		10 * 60,		//life
 	},
 	{	//49  一言メッセージ(GAMEBEACON_ACTION_FREEWORD)
-		5,		//priority
+		2,		//priority
 		20 * 60,		//life
 	},
 };
