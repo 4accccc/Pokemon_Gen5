@@ -26,6 +26,7 @@ _EVENT_DATA    ev_init_t05
 _EVENT_DATA    ev_recover_t05
 _EVENT_DATA    ev_bg_t05_railmap_01	//路線図
 _EVENT_DATA    ev_bg_t05_board_01
+_EVENT_DATA    ev_t05_recept_01		//帰りの電車受付
 _EVENT_DATA_END
 
 
@@ -34,6 +35,7 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START   ev_zone_t05
 INIT_EVENT_END
+
 
 /************************************************************/
 /*					FIELD_INIT_SCRIPT						*/
@@ -47,6 +49,7 @@ INIT_EVENT_START   ev_init_t05
   ENDIF
 INIT_EVENT_END
 
+
 /************************************************************/
 /*					FIELD_INIT_SCRIPT						*/
 /************************************************************/
@@ -58,6 +61,7 @@ INIT_EVENT_START   ev_recover_t05
     _BMODEL_DIRECT_CHANGE_MODEL_ID( SCR_BMID_EVENT, 24, 25, SCWK_ANSWER )
   ENDIF
 INIT_EVENT_END
+
 
 /************************************************************/
 /*						てっちゃん							*/
@@ -84,16 +88,14 @@ EVENT_START	ev_t05_railfan_01
 		//車両解説へ
 		_CALL	ev_rail_talk
 		
-		//終了メッセージ
-		_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_06 )
-	
+
 	ELSE
 		//いいえ
 		_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+
 	ENDIF
-	
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
 	
 	_CAMERA_DEF_MOVE(15)		//カメラ主人公位置に復帰
 	_CAMERA_WAIT_MOVE()
@@ -104,41 +106,80 @@ EVENT_END
 
 //車両解説
 ev_rail_talk:
+{
+DEFINE_LOCAL	lwk_msg_num
+	
+	_MSGWIN_SET_AUTOPRINT( TRUE )
+	
 	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
 	
+	//カメラ切り替え１
 	_CAMERA_MOVE( 6616,60032,970752,1503232,323663,1945600, 1)
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_MOVE( 6616,3968,970752,1794048,323663,1945600, 120)
+	_CAMERA_MOVE( 6616,3968,970752,1794048,323663,1945600, 160)
 	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 	
-	_TIME_WAIT( 80 )
+	$lwk_msg_num = msg_t05_railfan_railtalk1_00
+	$lwk_msg_num += $WK_OTHER_T05_TRAIN
+	
+	_PLAINWIN_MSG_UP( lwk_msg_num )
+	_TIME_WAIT( 16 )
 	
 	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
+	_MSGWIN_CLOSE()
 	
-	//カメラ切り替え
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	//カメラ切り替え２
+//	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_MOVE( 7000,9600,970752,1785856,323663,1843200, 1)
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_MOVE( 7000,9600,970752,1785856,323663,1220608, 120)
+	_CAMERA_MOVE( 7000,9600,970752,1785856,323663,1220608, 180)
 	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 	
-	_TIME_WAIT( 80 )
+	$lwk_msg_num = msg_t05_railfan_railtalk2_00
+	$lwk_msg_num += $WK_OTHER_T05_TRAIN
+	
+	_PLAINWIN_MSG_UP( lwk_msg_num )
+	_TIME_WAIT( 16 )
 	
 	_BLACK_OUT()
 	_DISP_FADE_END_CHECK()
+	_MSGWIN_CLOSE()
 	
-	//カメラ切り替え
-	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	//カメラ切り替え３（戻す）
+//	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_MOVE( 5208,0,970752,1671168,327759,2424832, 1)
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
+	
+	_MSGWIN_SET_AUTOPRINT( FALSE )
+	
+	$lwk_msg_num = msg_t05_railfan_end_00
+	$lwk_msg_num += $WK_OTHER_T05_TRAIN
+	
+	//終了メッセージ
+	_BALLOONWIN_TALKOBJ_MSG( lwk_msg_num )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 
+}
 _RET
+
+/*没カメラ ぐるっとズーム
+	_CAMERA_MOVE( 7640,0,970752,1671168,782415,2265088, 1)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_MOVE( 7256,55168,970752,1384448,196687,1712128, 140)
+*/
+
+/*没カメラ 車庫からどっしり
+	_CAMERA_MOVE( 7640,0,970752,1671168,782415,2265088, 1)
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_MOVE( 7256,55168,970752,1384448,196687,1712128, 140)
+*/
 
 
 /************************************************************/
@@ -155,6 +196,9 @@ EVENT_END
 EVENT_START	ev_bg_t05_railmap_01
 	_TALK_START_SE_PLAY()
 	
+	_SYSWIN_MSG( msg_t05_sign2_01, POS_DOWN )
+	_MSGWIN_CLOSE()
+	
 	_CALL_SUBWAY_ROUTE_MAP()
 	
 EVENT_END
@@ -166,5 +210,89 @@ EVENT_END
 EVENT_START	ev_bg_t05_board_01
 	_EASY_BGWIN_MSG( msg_t05_sign1_01, TYPE_TOWN )
 EVENT_END
+
+
+/************************************************************/
+/*							受付							*/
+/************************************************************/
+EVENT_START	ev_t05_recept_01
+	_TALK_OBJ_START()
+	
+	_BALLOONWIN_TALKOBJ_MSG( msg_t05_recept_01 )
+	_YES_NO_WIN( SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == SCR_YES THEN
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_recept_02 )
+		_MSGWIN_CLOSE()
+		
+		_PLAYER_DIR_GET( SCWK_ANSWER )
+		IF $SCWK_ANSWER == DIR_UP THEN
+			//上向き
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01u )
+			_OBJ_ANIME_WAIT()
+
+		ELSIF $SCWK_ANSWER == DIR_DOWN THEN
+			//下向き
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01d )
+			_TIME_WAIT( 24 )
+			_OBJ_ANIME( T05_RECEPT_01, anm_recept_move_01 )
+			_OBJ_ANIME_WAIT()
+
+		ELSE
+			//右向き ※左からは話しかけられない
+			_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_01r )
+			_TIME_WAIT( 8 )
+			_OBJ_ANIME( T05_RECEPT_01, anm_recept_move_01 )
+			_OBJ_ANIME_WAIT()
+
+		ENDIF
+		
+		_TIME_WAIT( 16 )
+		
+		_MAP_FADE_BLACK_OUT()
+		_DISP_FADE_END_CHECK()
+		
+		_MAP_CHANGE_NO_FADE( ZONE_ID_C04R0109, 16, 0, 14, DIR_DOWN )
+		
+		_MAP_FADE_BLACK_IN()
+		_DISP_FADE_END_CHECK()
+		
+	
+	ELSE
+		_BALLOONWIN_TALKOBJ_MSG( msg_t05_recept_03 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ENDIF
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//主人公：電車の前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_01u
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01d
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_move_01r
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+
+//--------------------------------------------------------------------
+//受付：見送る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_recept_move_01
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 
 
