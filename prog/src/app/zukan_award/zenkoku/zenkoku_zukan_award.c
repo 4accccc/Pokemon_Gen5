@@ -58,16 +58,14 @@
 // 本数
 enum
 {
-  BG_PAL_NUM_M_GRA_FRONT     = 14,
+  BG_PAL_NUM_M_GRA_FRONT     = 15,
   BG_PAL_NUM_M_TEXT          = 1,
-  BG_PAL_NUM_M_BLACK         = 1,
 };
 // 位置
 enum
 {
   BG_PAL_POS_M_GRA_FRONT    =  0,
-  BG_PAL_POS_M_TEXT         = 14,
-  BG_PAL_POS_M_BLACK        = 15,
+  BG_PAL_POS_M_TEXT         = 15,
 };
 
 // メインOBJパレット
@@ -104,16 +102,18 @@ enum
   TEXT_MAX,
 };
 
-#define TEXT_PAL_POS (BG_PAL_POS_M_TEXT)
-#define TEXT_COLOR_L (1)
-#define TEXT_COLOR_S (2)
-#define TEXT_COLOR_B (0)
+// BG_PAL_POS_M_TEXTの割り当て
+#define TEXT_PAL_POS      (BG_PAL_POS_M_TEXT)
+#define TEXT_COLOR_L      (1)  // 文字主色
+#define TEXT_COLOR_S      (2)  // 文字影色
+#define TEXT_COLOR_B      (0)  // 文字背景色(透明)
+#define TEXT_COLOR_BLACK  (3)  // スクロールする際の空き領域を黒にしておく
 
 static const u8 bmpwin_setup[TEXT_MAX][9] =
 {
   // frmnum           posx  posy  sizx  sizy  palnum                dir                    x  y (x,yは無視してセンタリングすることもある)
   {  BG_FRAME_M_TEXT,    0,    0,    1,    1, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    0,   24,    1,    1, BG_PAL_POS_M_BLACK,   GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    0,   24,    1,    1, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
   {  BG_FRAME_M_TEXT,    6,    4,   20,    2, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
   {  BG_FRAME_M_TEXT,    6,    8,   20,    8, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
   {  BG_FRAME_M_TEXT,   11,   18,   14,    4, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
@@ -808,15 +808,14 @@ static void Zenkoku_Zukan_Award_BlackInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
   // パレットの作成＆転送
   {
     u16* pal = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(u16) * 0x10 );
-    pal[0x00] = 0x0000;  // 透明
-    pal[0x01] = 0x0000;  // 黒
-    GFL_BG_LoadPalette( BG_FRAME_M_TEXT, pal, 0x20, BG_PAL_POS_M_BLACK * 0x20 );
+    pal[0x00] = 0x0000;  // 黒
+    GFL_BG_LoadPalette( BG_FRAME_M_TEXT, pal, 0x2, TEXT_PAL_POS*0x20 + TEXT_COLOR_BLACK*0x2 );
     GFL_HEAP_FreeMemory( pal );
   }
 
   // キャラの塗り潰し＆転送
   {
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_BLACK]), 1 );  // 黒
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_BLACK]), TEXT_COLOR_BLACK );  // 黒
 	  GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_BLACK] );
   }
 
@@ -833,7 +832,7 @@ static void Zenkoku_Zukan_Award_BlackInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
         u16 chara_name = chr_num;
         u16 flip_h     = 0;
         u16 flip_v     = 0;
-        u16 pal        = BG_PAL_POS_M_BLACK;
+        u16 pal        = TEXT_PAL_POS;
         scr[h] = ( pal << 12 ) | ( flip_v << 11 ) | ( flip_h << 10 ) | ( chara_name << 0 );
         h++;
       }
