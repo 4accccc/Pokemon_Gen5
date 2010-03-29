@@ -634,6 +634,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_footmark.c \
         field/fldeff_reflect.c \
         field/field_place_name.c \
+        field/place_name_letter.c \
         field/event_camera_act.c \
         field/event_entrance_in.c \
         field/event_entrance_out.c \
@@ -722,8 +723,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_bubble.c \
         field/trial_house.c \
         field/field_saveanime.c \
-        field/field_gimmick_league_front01.c \
-        field/field_gimmick_league_front02.c \
         field/mapdatafunc/mapdata_attr.c \
         field/scrcmd_pdw.c \
         field/event_movepoke.c \
@@ -854,6 +853,14 @@ SRCS_OVERLAY_FIELD_GYM_DRAGON = field/gym_dragon.c
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_FIELD_GIMMICK_BGATE = field/field_gimmick_bgate_jet.c
+
+#===> GROUP_OVERLAY_SUBSCREEN
+#GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_FIELD_GIMMICK_LFRONT01 = field/field_gimmick_league_front01.c
+
+#===> GROUP_OVERLAY_SUBSCREEN
+#GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_FIELD_GIMMICK_LFRONT02 = field/field_gimmick_league_front02.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
