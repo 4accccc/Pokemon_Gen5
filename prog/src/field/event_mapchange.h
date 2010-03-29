@@ -179,6 +179,7 @@ extern GMEVENT* EVENT_ChangeMapFromUnion( GAMESYS_WORK* gameSystem, FIELDMAP_WOR
  * @brief パレス・裏フィールドへのマップ遷移イベント生成
  */
 //------------------------------------------------------------------
+extern GMEVENT* EVENT_ChangeMapFldToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecFx32* pos );
 extern GMEVENT* EVENT_ChangeMapToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecFx32* pos );
 extern GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem );
 

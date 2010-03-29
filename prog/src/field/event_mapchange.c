@@ -75,6 +75,9 @@ FS_EXTERN_OVERLAY(debug_data);
 #include "seasonpoke_form.h"    //for SEASONPOKE_FORM_ChangeForm
 #include "enceff.h"             //for ENCEFF_SetEncEff
 
+#include "palace_warp_check.h"
+#include "../../../resource/fldmapdata/script/field_ev_scr_def.h" // for SCRID_FLD_EV_
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -99,11 +102,12 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade(GMEVENT * event, int *seq, void*work
 
 static GMEVENT* EVENT_FirstGameStart( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork );
 static GMEVENT* EVENT_FirstMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* gameInitWork );
-
+static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk );
+static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc);
+static GMEVENT * EVENT_ChangeMapPalace( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc);
 
-static GMEVENT * EVENT_ChangeMapPalace( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc );
-
+static void setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap);
 
 //============================================================================================
 //
@@ -1549,7 +1553,52 @@ GMEVENT* EVENT_ChangeMapFromUnion( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fiel
   return event;
 } 
 
-static void setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap);
+//------------------------------------------------------------------
+/**
+ * @brief 表フィールドからパレスマップに移動するとき
+ */
+//------------------------------------------------------------------
+GMEVENT* EVENT_ChangeMapFldToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecFx32* pos )
+{
+  GMEVENT * event;
+  FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  VecFx32 calc_pos = *pos;
+  
+  //裏フィールド以外から、パレスへ飛ぶ場合通常フィールドへの戻り先を記録しておく
+  if (GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE && zone_id == ZONE_ID_PALACE01 )
+  {
+    LOCATION return_loc;
+    setNowLoaction( &return_loc, fieldWork );
+    GAMEDATA_SetPalaceReturnLocation(gamedata, &return_loc);
+  }
+  GAMEDATA_SetIntrudeReverseArea(gamedata, TRUE);
+  {
+    LOCATION loc;
+    int map_offset, palace_area;
+    GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+    
+    if(intcomm == NULL){
+      palace_area = 0;
+      map_offset = 0;
+    }
+    else{
+      //子機の場合、palace_area == 0 が左端、ではなく自分のNetIDのパレスが左端の為。
+      palace_area = intcomm->intrude_status_mine.palace_area;
+      map_offset = palace_area - GAMEDATA_GetIntrudeMyID(gamedata);
+      if(map_offset < 0){
+        map_offset = intcomm->member_num + map_offset;
+      }
+    }
+    calc_pos.x += PALACE_MAP_LEN * map_offset;
+    
+    LOCATION_SetDirect( &loc, zone_id, DIR_UP, calc_pos.x, calc_pos.y, calc_pos.z );
+    event = EVENT_ChangeMapPalaceWithCheck( gsys, fieldWork, &loc );
+  }
+  return event;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief パレスマップに移動するとき
@@ -2337,14 +2386,32 @@ static void AssignGimmickID(GAMEDATA * gamedata, int inZoneID)
   }
 }
 
+static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc)
+{
+  PALACE_JUMP* work;
+  GMEVENT* event;
+
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangePalaceWithCheck, sizeof(PALACE_JUMP) );
+  
+  work  = GMEVENT_GetEventWork( event );
+  // イベントワーク初期化
+  work->Loc = *loc;
+  work->gameSystem = gameSystem;
+  work->gameData = GAMESYSTEM_GetGameData( gameSystem );
+  work->fieldmap = fieldmap;
+
+  return event;
+}
+
+
 static GMEVENT * EVENT_ChangeMapPalace( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc)
 {
   PALACE_JUMP* work;
   GMEVENT* event;
 
   event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangePalace, sizeof(PALACE_JUMP) );
+  
   work  = GMEVENT_GetEventWork( event );
-
   // イベントワーク初期化
   work->Loc = *loc;
   work->gameSystem = gameSystem;
@@ -2400,4 +2467,41 @@ static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk 
   }
   return GMEVENT_RES_CONTINUE;
 }
+
+//パレスにもぐれるかをチェックして、ＯＫならもぐるイベント
+static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, void* wk )
+{
+  PALACE_JUMP* work = (PALACE_JUMP*)wk;
+
+  switch(*seq){
+  case 0:
+    //進入可能座標チェック
+    if ( PLC_WP_CHK_Check(work->gameSystem) )
+    {   //進入可能
+      //進入可能メッセージコール
+      SCRIPT_CallScript( event, SCRID_FLD_EV_WARP_SUCCESS, NULL, NULL, FIELDMAP_GetHeapID( work->fieldmap ) );
+      //マップチェンジイベント変更シーケンスへ
+      (*seq) = 1;
+    }
+    else
+    {     //進入不可能
+      //進入不可能メッセージコール
+      SCRIPT_CallScript( event, SCRID_FLD_EV_WARP_FAILED, NULL, NULL, FIELDMAP_GetHeapID( work->fieldmap ) );
+      //終了シーケンスへ
+      (*seq) = 2;
+    }
+    break;
+  case 1:
+    {
+      GMEVENT* call_event;
+      call_event = EVENT_ChangeMapPalace( work->gameSystem, work->fieldmap, &work->Loc );
+      GMEVENT_ChangeEvent(event, call_event);
+    }
+    break;
+  case 2:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
 
