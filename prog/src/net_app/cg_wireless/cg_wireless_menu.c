@@ -46,6 +46,7 @@
 
 #include "../../field/field_comm/intrude_work.h"
 #include "../../field/field_comm/intrude_main.h"
+#include "../../field/field_comm/intrude_work.h"
 
 #include "net/net_whpipe.h"
 #include "net/ctvt_beacon.h"
@@ -817,7 +818,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
   switch( bttnid ){
   case _SELECTMODE_PALACE:
     { ///@todo  パレスの演出がはいってからでないと今は外さずに置きます
-      GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
+ //     GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
       if(pWork->dbw->bPalaceJump){
         pWork->selectType = CG_WIRELESS_RETURNMODE_PALACE;
         PMSND_PlaySystemSE(_SE_DESIDE);
@@ -1224,8 +1225,9 @@ static void _modeNetworkOn(CG_WIRELESS_MENU* pWork)
 //--------------------------------------------------------------
 static void _UpdatePalletAnime(CG_WIRELESS_MENU* pWork )
 {
-  if(GAME_COMM_STATUS_BIT_WIRELESS_TR & pWork->bit){
-//  if(){
+  GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
+//  if(GAME_COMM_STATUS_BIT_WIRELESS_TR & pWork->bit){
+  if(Intrude_CheckPalaceConnect(pComm)){
     if(12 == GFL_CLACT_WK_GetAnmSeq(pWork->buttonObj[0])){
       GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[0],TRUE);
       GFL_CLACT_WK_SetAnmSeq( pWork->buttonObj[0], 20 );
