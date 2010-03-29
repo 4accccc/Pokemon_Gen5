@@ -115,15 +115,14 @@ ev_pdw_furniture_select_routine:
     _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_06, SCWK_TARGET_OBJID, POS_D )
     _AB_KEYWAIT ()
     _BALLOONWIN_CLOSE()
-    _RET
+  ELSE
+    //家具番号の設定
+    _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_SET_SELECT_FURNITURE , SCWK_ANSWER , 0 , 0)
+    //"なるほど！　こんなに　ステキなら夢にも　でてきそうですよね！"
+    _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_07, SCWK_TARGET_OBJID, POS_D )
+    _AB_KEYWAIT ()
+    _BALLOONWIN_CLOSE()
   ENDIF
-  
-  //家具番号の設定
-  _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_SET_SELECT_FURNITURE , SCWK_ANSWER , 0 , 0)
-  //"なるほど！　こんなに　ステキなら夢にも　でてきそうですよね！"
-  _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_07, SCWK_TARGET_OBJID, POS_D )
-  _AB_KEYWAIT ()
-  _BALLOONWIN_CLOSE()
 
   _CHG_LOCAL_SCR                // ローカルスクリプトに切り替え
 
