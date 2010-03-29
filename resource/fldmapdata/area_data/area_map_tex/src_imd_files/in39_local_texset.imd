@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-03-11T21:54:45"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-03-26T23:41:26"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -1319,12 +1319,12 @@
 			4442 1112 1111 1111 1111 1111 1111 1111
 			6666 6666 6666 6666 6666 6666 6666 6666
 			2222 2222 2222 2222 2222 2222 2222 2222
-			0000 0000 0000 0000 0000 0000 0000 0000
-			2124 2244 4222 1244 4211 2244 4222 2124
-			2127 6426 2466 6126 2167 6426 2466 2126
-			2127 6426 2466 6126 2167 6426 2466 2126
-			2127 6426 2466 6126 2167 6426 2466 2126
-			2124 2244 4222 1244 4211 2244 4222 2124
+			1111 1111 1111 1111 1111 1111 1111 1111
+			2124 1244 4212 1244 4212 1244 4212 2124
+			2127 6226 2266 6126 2167 6226 2266 2126
+			2127 6416 1466 6216 1267 6416 1466 2126
+			2127 6226 2266 6126 2167 6226 2266 2126
+			2124 1244 4212 1244 4212 1244 4212 2124
 			0000 0000 0000 0000 0000 0000 0000 0000
 			6777 6666 6666 7766 6777 6666 6666 6666
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -1381,70 +1381,70 @@
 		path="C:/home/wb_data3d/field/in39/chip/tex/n/n_kabe3.tga"
 	>
 		<bitmap size="512">
-			eeee eeee eeee eeee a9ce bbbb 2e9b dd62
-			cccc cccc cccc cccc a9ce bbbb 2e9b dd32
-			bbbb bbbb bbbb abbb a9ce bbbb 2e9b dd62
-			6666 6666 6666 6666 a9ce bbbb 2e9b dd62
-			7777 7777 7777 7777 a9ce bbbb 2e9b dd62
-			6666 6666 6666 6666 a9ce bbbb 2e9b dd62
-			bbbb bbbb bbbb bbbb a9ce bbbb 2e9b dd62
-			6666 6666 6666 6666 a9ce 3333 2e93 dd62
-			0746 0000 0000 6470 54ce 1115 2e91 dd62
-			0746 0000 0000 6470 54ce 5554 2e95 dd62
-			7746 7777 7777 6477 44ce 5554 2e95 dd62
-			4446 4444 4444 6444 66ce 4446 2e94 dd62
-			63bb 6666 6666 bb36 99ce bbb9 2e9b dd62
-			4446 4444 4444 6444 aace 333b 8e93 dd68
-			7746 7777 7777 6477 aace 333b 8e93 dd68
-			7746 7777 7777 6477 3ace 3646 8e96 dd68
-			7746 7777 7777 6477 3ace 4556 8e91 dd68
-			7746 5577 7755 6477 3ace 4156 8e91 dd68
-			7746 a577 775a 6477 3ace 4156 8e91 dd68
-			0746 3500 0053 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4116 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4156 8e91 dd68
-			0746 4500 0054 6470 3ace 4556 8e91 dd68
-			0746 4500 0054 6470 3ace 4556 8e91 dd68
-			0746 4500 0054 6470 3ace 4556 8e91 dd68
-			0746 4500 0054 6470 3ace 4556 8e91 dd68
-			0746 4500 0054 6470 3ace 4556 8e91 dd68
-			0746 4500 0054 6470 3ace 4556 8e91 dd68
-			0746 4500 0054 6470 3ace 4556 8e91 dd68
-			7746 4577 7754 6477 3ace 4556 8e91 dd68
-			7746 4577 7754 6477 3ace 4556 8e91 dd68
-			7746 4577 7754 6477 3ace 4556 8e91 dd68
-			7746 4577 7754 6477 3ace 4556 8e91 dd68
-			7746 5577 7755 6477 3ace 4556 8e91 dd68
-			4446 4444 4444 6444 3ace 4556 8e91 dd68
-			33bb 3333 3333 bb33 3ace 4556 8e95 dd68
-			5555 5555 5555 5555 3ace 4556 8e95 dd68
-			0000 0000 0000 0000 3ace 6556 8e95 dd68
-			0000 0000 0000 0000 3ace 6666 8e96 dd68
-			5455 5545 4554 5455 3ace 1155 8e91 dd68
-			33bb 3333 3333 bb33 3ace 1154 8e91 dd38
-			6666 6666 6666 6666 3ace 3333 8e93 dd88
-			7666 7577 7757 6667 ccce cccc 8ecc dd88
-			7666 7577 7757 6667 888e 8366 8e88 dd88
-			7666 0700 0070 6667 fffe ffff 8eff dd88
-			7666 0700 0070 6667 eeee eeee 8eee dd88
-			7666 7577 7757 6667 3ace 3333 2e93 dd22
-			33bb 3333 3333 bb33 aace aaaa de9a dddd
-			cccc cccc cccc cccc ccce cccc fecc ddff
-			eeee eeee eeee eeee eeee eeee eeee eeee
-			eeee eeee eeee eeee eeee eeee eeee eeee
+			0000 0000 0000 0000 8530 9999 4139 2274
+			3333 3333 3333 3333 8530 9999 4139 2274
+			9999 9999 9999 8999 8530 9999 4139 2274
+			bbbb bbbb bbbb bbbb 8530 9999 4139 2274
+			eeee eeee eeee eeee 8530 9999 4139 2274
+			bbbb bbbb bbbb bbbb 8530 9999 4139 2274
+			9999 9999 9999 9999 8530 9999 4139 2274
+			bbbb bbbb bbbb bbbb 8530 aaaa 413a 2274
+			fecb ffff ffff bcef dc30 eeed 4139 2274
+			fecb ffff ffff bcef dc30 dddc 4139 2274
+			eecb eeee eeee bcee cc30 dddc 4139 2274
+			cccb cccc cccc bccc bb30 bbbb 4139 2274
+			ba99 bbbb bbbb 99ab 5530 5555 4135 2274
+			cccb cccc cccc bccc 8830 9999 6139 2276
+			eecb eeee eeee bcee 8830 9999 6139 2276
+			eecb eeee eeee bcee a830 bbbb 6139 2276
+			eecb eeee eeee bcee a830 cddb 6139 2276
+			eecb ddee eedd bcee a830 cedb 6139 2276
+			eecb 8dee eed8 bcee a830 cedb 6139 2276
+			fecb adff ffda bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cedb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			fecb cdff ffdc bcef a830 cddb 6139 2276
+			eecb cdee eedc bcee a830 cddb 6139 2276
+			eecb cdee eedc bcee a830 cddb 6139 2276
+			eecb cdee eedc bcee a830 cddb 6139 2276
+			eecb cdee eedc bcee a830 cddb 6139 2276
+			eecb ddee eedd bcee a830 cddb 6139 2276
+			cccb cccc cccc bccc a830 cddb 6139 2276
+			aa99 aaaa aaaa 99aa a830 cddb 6139 2276
+			dddd dddd dddd dddd a830 cddb 6139 2276
+			ffff ffff ffff ffff a830 bddb 6139 2276
+			ffff ffff ffff ffff a830 bbbb 6139 2276
+			dcdd ddcd cddc dcdd a830 eedd 6139 2276
+			aa99 aaaa aaaa 99aa a830 eddc 6139 2276
+			bbbb bbbb bbbb bbbb a830 aaaa 6139 2266
+			ebbb edee eede bbbe 3330 3333 6133 2266
+			ebbb edee eede bbbe 6610 6bbb 6016 2266
+			ebbb feff ffef bbbe 1110 1111 6011 2266
+			ebbb feff ffef bbbe 0000 0000 6000 2266
+			ebbb edee eede bbbe a830 aaaa 415a 2244
+			aa99 aaaa aaaa 99aa 8830 8888 2158 2222
+			3333 3333 3333 3333 3330 3333 1133 1111
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="42" name="n_kabe4"
@@ -2994,8 +2994,8 @@
 		6bff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="40" name="n_kabe3_pl" color_size="16">
-		7fff 73de 2ed7 4f3a 679d 6fbe 5b7c 73df
-		3b1a 3ad7 42f8 4b19 2e54 2697 118e 19f3
+		118e 19f3 2697 2e54 2ed7 3ad7 3b1a 3b7e
+		42f8 4b19 4f3a 5b7c 679d 6fbe 73df 7fff
 	</tex_palette>
 	<tex_palette index="41" name="n_kabe4_pl" color_size="32">
 		1080 10a1 10a4 10e1 14a1 14a2 14c1 14e2
@@ -3020,7 +3020,7 @@
 		73df 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="44" name="n_kabe_pl" color_size="16">
-		116e 1e13 2697 3ed7 475b 4f5c 53bc 63dd
+		116e 19f3 2697 3ed7 475b 4f5c 53bc 63dd
 		67be 6bfe 73fe 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="45" name="n_kaidan2_pl" color_size="8">

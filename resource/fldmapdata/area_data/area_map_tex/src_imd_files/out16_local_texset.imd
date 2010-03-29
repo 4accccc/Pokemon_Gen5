@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-03-26T19:30:16"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-03-29T19:45:18"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -378,14 +378,14 @@
 		path="C:/home/wb_data3d/field/out16/chip/tex/h04_drum3.tga"
 	>
 		<bitmap size="64">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 4000 0004 0000 0000 7740 0047
-			0000 0000 7440 2077 0000 0000 2222 2474
-			0220 7770 2477 1422 2221 7774 2777 1122
-			2221 7774 4777 1111 2111 7744 4477 1111
-			2111 4664 4444 1122 2221 6566 2244 1222
-			6442 5556 4226 2244 6642 6555 7743 2477
-			6322 3655 7743 2477 3122 3366 4441 2144
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 3222 2223 2222 2222 7732 2237
+			2222 2222 7332 2277 2222 2222 1111 2373
+			2662 5552 1055 2311 6664 5550 1555 2411
+			6664 5550 0555 4444 6444 5500 0055 4444
+			6444 0bb0 0000 4466 6664 babb 6600 4666
+			b996 aaab 966b 6699 bb96 baaa cc98 69cc
+			b866 8baa cc98 69cc 8466 88bb 9994 6499
 		</bitmap>
 	</tex_image>
 	<tex_image index="7" name="h04_fuch2"
@@ -675,8 +675,9 @@
 	<tex_palette index="4" name="h04_drum1_pl" color_size="8">
 		0c63 0000 7fff 6b5a 5294 3def 7fff 7fff
 	</tex_palette>
-	<tex_palette index="5" name="h04_drum3_pl" color_size="8">
-		0c63 14a5 2108 294a 2d6b 31ac 39cd 4a53
+	<tex_palette index="5" name="h04_drum3_pl" color_size="16">
+		050a 0847 0c63 0c69 14a5 1df3 2108 2531
+		294a 2d6b 31ac 39cd 4a53 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="6" name="h04_drum_pl" color_size="8">
 		7fff 2cc3 34e4 28c3 3d04 4d66 0d50 04ed
