@@ -20,12 +20,81 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_d01r0201_poke16_01
+_EVENT_DATA    ev_zone_d01r0201
 _EVENT_DATA_END
 
+/************************************************************/
+/*					ZONE_CHANGE_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_d01r0201
+{
+
+	//曜日チェック
+	DEFINE_LOCAL LWK_WEEKCK
+	_GET_WEEK( LWK_WEEKCK )
+
+	//ゲームクリアしている
+	//金曜で今日のイベントを終えていなかったら
+	IF $LWK_WEEKCK == RTC_WEEK_FRIDAY && FLAG_ON( SYS_FLAG_GAME_CLEAR ) && FLAG_OFF( TMFLG_D01R0201_POKE16_BTL ) THEN
+		
+		//D01R0201：ムシャーナ復活
+		_FLAG_RESET( FV_D01R0201_POKE16_01 )
+	
+	ENDIF
+
+}
+INIT_EVENT_END
 
 /**************************************************************/
 /*   D01R0201　クリア後ムシャーナ                */
 /**************************************************************/
 EVENT_START   ev_d01r0201_poke16_01
 
+	//ムンナ：むにゃ！？
+	_VOICE_PLAY(MONSNO_516,0)
+	_BALLOONWIN_OBJMSG_POS(msg_d01r0201_pokemon_01,D01R0201_POKE16_01, POS_DEFAULT )
+	_BALLOONWIN_CLOSE()
+{
+	 _WILD_BTL_SET_EX ( MONSNO_516 , 50 , SCR_WILD_BTL_FLAG_SPEABI3 ) 
+	 _BATTLE_RESULT_GET( SCWK_ANSWER )
+
+	//倒した場合
+	IF $SCWK_ANSWER == 0 THEN
+
+		//========================================/
+				
+			//ムシャーナのOBJ削除
+			_OBJ_DEL( D01R0201_POKE16_01 )
+			_FLAG_SET( FV_D01R0201_POKE16_01 )
+				
+		//========================================/
+				
+			_WILD_WIN()
+			
+		//負けた場合
+		ELSE
+			_WILD_LOSE()
+			
+	ENDIF
+
+}
+{
+	_WILD_RETRY_CHECK( SCWK_ANSWER )
+
+	SWITCH $SCWK_ANSWER
+	CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
+		//勝利した場合、あるいは逃げた場合
+		_PLAINWIN_MSG_DOWN( msg_d01r0201_pokemon_02)
+		_LAST_KEYWAIT()
+		_PLAINWIN_CLOSE()
+		
+		//今日のイベントを終了
+		_FLAG_SET( TMFLG_D01R0201_POKE16_BTL )
+
+	CASE SCR_WILD_BTL_RET_CAPTURE THEN
+	//捕まえた場合
+		//今日のイベントを終了
+		_FLAG_SET( TMFLG_D01R0201_POKE16_BTL )
+	ENDSWITCH
+}
 EVENT_END

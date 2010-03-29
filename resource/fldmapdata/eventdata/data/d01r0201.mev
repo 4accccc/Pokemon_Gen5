@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/29 16:14:16
+#save date:2010/03/29 19:31:19
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d01r0201.wms
 #SECTION START:OBJ_EVENT
@@ -22,7 +22,7 @@ MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
-0
+FV_D01R0201_POKE16_01
 #Event Script Name
 SCRID_D01R0201_POKE16_01
 #Direction Type Number
