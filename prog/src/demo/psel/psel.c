@@ -143,6 +143,9 @@ enum
 #define PSELSND_CANCEL  ( SEQ_SE_CANCEL1 )
 #define PSELSND_MOVE    ( SEQ_SE_SELECT1 )
 
+#define PSELSND_DEMO_RIBBON_LOOSE  ( SEQ_SE_SDEMO_01 )
+#define PSELSND_DEMO_BOX_OPEN      ( SEQ_SE_SDEMO_02 )
+
 
 
 
@@ -3364,6 +3367,10 @@ static int Psel_S01Main    ( PSEL_WORK* work, int* seq )
       }
 
       Psel_ThreeS01Main( work );
+      if( work->three_frame == TIMETABLE_S01_RIBBON_LOOSE )
+      {
+        PMSND_PlaySE( PSELSND_DEMO_RIBBON_LOOSE );
+      }
       if( work->three_frame == TIMETABLE_S01_WO_START -1 )
       {
         // シーケンスフレーム
@@ -3474,7 +3481,13 @@ static int Psel_S02Init    ( PSEL_WORK* work, int* seq )
 static int Psel_S02FadeIn  ( PSEL_WORK* work, int* seq )
 {
   if( work->sub_seq_frame >= 16 ) Psel_ThreeS02Main( work );  // 3Dのアニメ開始を少し遅らせる
-  
+
+  //if( work->three_frame == TIMETABLE_S02_BOX_OPEN )
+  if( work->sub_seq_frame == 15 )
+  {
+    PMSND_PlaySE( PSELSND_DEMO_BOX_OPEN );
+  }
+
   Psel_ThreeS02OnlyMbSelectAnimeMain( work ); 
   Psel_PokeSetMain( work );
   Psel_PalMain( work );
