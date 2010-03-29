@@ -20,7 +20,6 @@
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"  // for ZONE_ID_C09P02
 #include "event_mapchange.h"  // for EVENT_ChangeMapPosNoFade
 #include "event_fieldmap_control.h"  // for EVENT_FieldBrightOut
-#include "field_gimmick_league_front02.h"  // for EVENT_LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent
 #include "eventwork.h"  // for EVENTWORK_
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"  // for SYS_FLAG_BIGFOUR_xxxx
 #include "sound/pm_sndsys.h" // for PMSND_xxxx
@@ -634,11 +633,13 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     break;
   // Ÿ‚ÌƒCƒxƒ“ƒg‚ÖØ‚è‘Ö‚¦
   case 6:
+    /*
     {
       GMEVENT* next_event;
       next_event = LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent( work->gsys, work->fieldmap );
       GMEVENT_ChangeEvent( event, next_event );
     }
+    */
     ++(*seq);
     OBATA_Printf( "GIMMICK-LF01 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;

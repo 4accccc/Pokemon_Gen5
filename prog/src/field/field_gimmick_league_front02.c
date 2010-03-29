@@ -266,6 +266,13 @@ void LEAGUE_FRONT_02_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   // ギミック初期化
   InitGimmick( work, fieldmap );
   LoadGimmick( work, fieldmap ); 
+
+  // イベントをセット
+  {
+    GAMESYS_WORK* gameSystem = FIELDMAP_GetGameSysWork( fieldmap );
+    GMEVENT* event = LEAGUE_FRONT_02_GIMMICK_GetLiftDownEvent( gameSystem, fieldmap );
+    GAMESYSTEM_SetEvent( gameSystem, event );
+  }
 }
 
 //------------------------------------------------------------------------------------------
@@ -507,11 +514,11 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       work->liftAnime = ICA_ANIME_CreateAlloc( heap_id, ARCID, 
                                                NARC_league_front_pl_ele_01_ica_bin );
     }
+    // カメラのトレース処理停止リクエスト発行
+    FIELD_CAMERA_StopTraceRequest( work->camera );
     // リフトと自機の座標を初期化
     MoveLift( work );
     SetPlayerOnLift( work );
-    // カメラのトレース処理停止リクエスト発行
-    FIELD_CAMERA_StopTraceRequest( work->camera );
     (*seq)++;
     OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
@@ -519,13 +526,17 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     // カメラのトレース処理終了待ち
     if( FIELD_CAMERA_CheckTrace( work->camera ) == FALSE ) { (*seq)++; }
     break;
-  // フェードイン
+  // フェードイン開始
   case 2:
+    // フェードイン開始
     {
       GMEVENT* new_event;
       new_event = EVENT_FieldFadeIn_Black( work->gsys, work->fieldmap, FIELD_FADE_WAIT );
       GMEVENT_CallEvent( event, new_event );
     }
+    // リフトと自機の座標を初期化
+    MoveLift( work );
+    SetPlayerOnLift( work );
     (*seq)++;
     OBATA_Printf( "GIMMICK-LF02 LIFT DOWN EVENT: seq ==> %d\n", *seq );
     break;
