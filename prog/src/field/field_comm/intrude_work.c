@@ -386,3 +386,23 @@ BOOL Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, GAMEDATA *gamedata)
   
   return TRUE;
 }
+
+//==================================================================
+/**
+ * パレスで誰かと繋がっているかを取得する
+ *
+ * @param   game_comm		
+ *
+ * @retval  BOOL		    TRUE:パレスで誰かと接続状態
+ * @retval  BOOL		    FALSE:誰とも繋がっていない
+ */
+//==================================================================
+BOOL Intrude_CheckPalaceConnect(GAME_COMM_SYS_PTR game_comm)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  
+  if(intcomm->recv_profile > 1 && GFL_NET_GetConnectNum() > 1){
+    return TRUE;
+  }
+  return FALSE;
+}
