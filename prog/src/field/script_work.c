@@ -28,6 +28,7 @@
 
 #include "musical/musical_event.h"  //MUSICAL_EVENT_WORK
 
+#include "script_trainer.h" //SCRIPT_GetTrainerHitData
 
 //============================================================================================
 //  define
