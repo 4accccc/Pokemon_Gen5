@@ -234,9 +234,42 @@ static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, BTL_CLIENT_ID client, 
   *party = PokeParty_AllocPartyWork( heapID );
   dst->tr_data[client] = BSP_TRAINER_DATA_Create( heapID );
 
-  if(tr_id != TRID_NULL){
+  if(tr_id != TRID_NULL)
+  {
     TT_EncountTrainerPersonalDataMake( tr_id, dst->tr_data[client], heapID );
     TT_EncountTrainerPokeDataMake( tr_id, *party, heapID );
+  }
+
+  switch( dst->tr_data[client]->tr_type ){
+  case TRTYPE_LEADER1A:
+  case TRTYPE_LEADER1C:
+  case TRTYPE_LEADER1B:
+  case TRTYPE_LEADER2:
+  case TRTYPE_LEADER3:
+  case TRTYPE_LEADER4:
+  case TRTYPE_LEADER5:
+  case TRTYPE_LEADER6:
+  case TRTYPE_LEADER7:
+  case TRTYPE_LEADER8A:
+  case TRTYPE_LEADER8B:
+    dst->musicWin = SEQ_BGM_WIN3;
+    break;
+
+  case TRTYPE_BOSS:
+  case TRTYPE_HAKAIM1:
+  case TRTYPE_HAKAIW1:
+  case TRTYPE_SAGE1:
+    dst->musicWin = SEQ_BGM_WIN4;
+    break;
+
+  case TRTYPE_BIGFOUR1:
+  case TRTYPE_BIGFOUR2:
+  case TRTYPE_BIGFOUR3:
+  case TRTYPE_BIGFOUR4:
+  case TRTYPE_BCHAMP:
+  case TRTYPE_CHAMPION:
+    dst->musicWin = SEQ_BGM_WIN5;
+    break;
   }
 }
 
