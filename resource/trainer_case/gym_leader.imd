@@ -1,0 +1,1833 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<imd version="1.6.0">
+
+<head>
+	<create user="mori" host="W00155" date="2010-03-27T17:38:06"/>
+	<title>Model Data for NINTENDO NITRO-System</title>
+	<generator name="NNS_3DMaterialEditor" version="2.7.0.20050228"/>
+</head>
+
+<body>
+
+<original_create user="mori" host="W00155" date="2010-03-03T18:11:28" source="untitled"/>
+<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+
+<model_info
+	pos_scale="0"
+	scaling_rule="standard"
+	vertex_style="direct"
+	magnify="1.000000"
+	tool_start_frame="1"
+	tex_matrix_mode="maya"
+	compress_node="none" node_size="9 9"
+	compress_material="off" material_size="8 8"
+	output_texture="all"
+	force_full_weight="off"
+	use_primitive_strip="on"
+/>
+
+<box_test pos_scale="0" xyz="-2.000000 -0.500000 -1.500000" whd="4.000000 1.000000 3.000000"/>
+
+<tex_image_array size="8">
+	<tex_image index="0" name="face1"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="face1_pl"
+		path="C:/Documents and Settings/mori/デスクトップ/jim_face/face1.bmp"
+	>
+		<bitmap size="1024">
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 0999 4444 4444 4444
+			4444 4444 4444 4444 4444 9904 9999 9999
+			9999 9999 9999 9999 4099 4444 4444 4444
+			4444 4444 4444 4444 4444 9044 9999 9999
+			9999 9999 9999 9999 4409 4444 4444 4444
+			4444 4444 4444 4444 4444 0444 9999 9999
+			9999 9999 9999 9999 4449 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 9999 9999
+			9999 9999 9999 9999 4440 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 9999 9999
+			9999 9999 9999 9999 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 9999 9999
+			9999 9999 9999 0999 4444 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 9999 9999
+			9999 9999 9999 0999 4444 4444 4444 4444
+			3444 4444 4444 4444 4444 4444 9999 9999
+			9999 9999 9999 4999 4444 4444 4444 4444
+			4344 4444 4444 4444 4444 4444 9999 9999
+			9999 9999 9999 4099 4444 4444 4444 4444
+			4344 4444 4344 0444 4444 4444 9999 9999
+			9999 9999 9999 4099 4444 4444 4444 4444
+			4404 4444 0734 7044 4440 4444 9999 9999
+			9999 9999 9999 4399 4444 4444 4444 4444
+			4404 4444 0773 7044 4440 4444 9999 9999
+			9999 9999 9999 3309 4444 4444 4444 4444
+			4404 3444 0777 7734 3440 4444 9999 9999
+			9999 9999 9999 3309 4443 4444 4444 4444
+			4440 7044 3777 7704 3440 3443 9999 9999
+			9999 9999 9999 3309 4433 4444 4444 4444
+			4440 7700 7777 7773 7340 3330 9999 9999
+			9999 9999 9999 3309 4333 4444 4444 4444
+			0440 7777 7777 7777 7734 3330 9999 9999
+			9999 9999 9999 3330 3333 4443 4444 5444
+			7040 7777 7777 7777 7773 3335 9999 9999
+			9999 9999 9999 3330 3333 4333 4444 7044
+			7700 7777 7777 7777 7777 3335 9999 9999
+			9999 9999 9999 3330 3333 3333 4443 7044
+			7777 7777 7777 7777 7777 3335 9999 9999
+			9999 9999 9999 3330 3333 3333 4333 7704
+			5777 7777 7777 7777 7777 3335 9999 9999
+			9999 9999 9999 3330 3333 3333 3333 7703
+			7777 7775 7777 7777 7777 0335 9999 9999
+			9999 9999 9999 3330 3333 3333 3333 0270
+			7772 7527 7777 7777 7777 0333 9999 9999
+			9999 9999 9999 3330 3333 3333 3333 9970
+			7204 5277 7777 7777 5777 3033 9999 9999
+			9999 9999 9999 3330 3333 3300 0333 4970
+			0009 2772 7777 7777 5577 3303 9999 9999
+			9999 9999 9999 3330 0333 3305 0333 0974
+			9044 7770 7777 5777 4522 3333 9999 9999
+			9999 9999 9999 3030 0333 3305 7033 0747
+			9040 7709 7777 5222 4555 3333 9999 9999
+			9999 9999 9999 0030 0333 3055 7033 7747
+			8900 7778 7777 5555 5555 3222 9999 9999
+			9999 9999 9999 0900 0033 3053 7033 7477
+			7777 1477 5711 0022 2550 2777 9999 9999
+			9999 9999 9999 0999 9033 3030 7703 4777
+			7774 7747 2115 9808 4508 7777 9999 9999
+			9999 9999 9999 0999 9903 0330 7703 7777
+			4447 7774 0527 9944 8529 7724 9999 9999
+			9999 9999 9999 9999 9990 0309 7703 7777
+			7777 7777 0027 8964 8452 7744 9999 9999
+			9999 9999 9999 9999 9999 3309 7770 7777
+			7777 7777 5027 5225 4855 7224 9999 9999
+			9999 9999 9999 9999 9999 3099 7770 7777
+			7777 7777 0527 5555 4405 2772 9999 9999
+			9999 9999 9999 9999 9999 3099 7703 7777
+			7777 7777 5557 0000 2450 7777 9999 9999
+			9999 9999 9999 9999 9999 0999 7703 7777
+			7777 7777 5555 2055 7255 7557 9999 9999
+			9999 9999 9999 9999 9999 0099 7033 7777
+			7777 5777 5555 2305 2255 5772 9999 9999
+			9999 9999 9999 9999 9999 8849 0533 7777
+			2777 5552 5555 2330 7255 7777 9999 9999
+			9999 9999 9999 9999 9999 8849 5503 7772
+			9277 5289 0555 5233 7525 7557 9999 9999
+			9999 9999 9999 9999 9999 8894 5508 7705
+			7777 5525 9025 5203 2525 5772 9999 9999
+			9999 9999 9999 9999 9999 8894 5504 7055
+			2777 5552 9900 5290 2525 7777 9999 9999
+			9999 9999 9999 9999 9999 4894 5550 0555
+			5770 0055 9999 5099 5255 7777 9999 9999
+			9999 9999 9999 9999 0999 4999 5550 5555
+			5505 0802 9999 5099 5255 2225 9999 9999
+			9999 9999 9999 0999 0400 4999 5550 5555
+			0055 8880 9990 2999 2555 7725 9999 9999
+			9999 9999 0999 4000 0444 8499 5550 5555
+			8805 8884 9908 0999 5555 7722 9999 9999
+			9999 9999 4000 4444 0044 8499 5550 5555
+			8805 8848 9908 9999 7550 7777 9999 9999
+			9999 9999 0666 0440 0600 8499 5508 5555
+			8805 8848 4088 9999 7229 7777 9999 9999
+			9999 9999 6666 6006 9066 9499 5208 5555
+			8805 8488 4098 9944 5299 7777 9999 9999
+			9999 9999 6666 0666 9066 9949 2708 5555
+			8055 8488 0999 4400 2894 2577 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="face2"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="face2_pl"
+		path="C:/Documents and Settings/mori/デスクトップ/jim_face/face2.bmp"
+	>
+		<bitmap size="1024">
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd cc0d cccc 7777 7777
+			b777 cccc cccc cccc 200c 3333 dddd dddd
+			dddd dddd dddd dddd ccc0 7ccc c777 7ccc
+			7777 cccb cccc cccc 306c 3333 dddd dddd
+			dddd dddd dddd 0ddd cccc 77cc 7c77 cc77
+			7777 ccc7 cccc cccc 30bc 3333 dddd dddd
+			dddd dddd dddd 0ddd cccc 777c 77c7 c777
+			7777 cc77 cccc cccc 0cbc 3333 dddd dddd
+			dddd dddd dddd c0dd cccc 777c 77cc c777
+			777c cc77 cccc cccc 0cbc 3333 dddd dddd
+			dddd dddd dddd c0dd cccc cccc 77cc c777
+			cccc cccc cccc cccc 0cbc 3333 dddd dddd
+			dddd dddd dddd c0dd cccc 777c 7cc7 cc77
+			7777 cc77 cccc cccc ccbc 3330 dddd dddd
+			dddd dddd dddd c0dd cccc 777c cc77 7ccc
+			7777 cc77 cccc cccc ccbc 3330 dddd dddd
+			dddd dddd dddd c3dd cccc 77cc 7777 7777
+			7777 cccc cccc cccc ccbc 330c dddd dddd
+			dddd dddd dddd c0dd cccc 7ccc 7777 7777
+			c777 cccc cccc cccc ccbc 330c dddd dddd
+			dddd dddd dddd c011 cccc cccc 777c 7777
+			ccc7 cccc cccc cccc ccbc 330c dddd dddd
+			dddd dddd 1ddd c033 cccc cccc cccc cccc
+			cccc cccc cccc cccc ccbc 330c dddd dddd
+			dddd dddd 31dd 6333 cccc cccc 7775 3337
+			5303 cca8 cccc cccc ccbc 330c dddd dddd
+			dddd dddd 331d 0333 cccc 733c 7777 7777
+			0377 8530 cccc cccc ccbc 330c dddd dddd
+			dddd dddd 3331 0333 3ccc 7773 7777 7777
+			7777 3337 cca5 cccc cccb 330c dddd dddd
+			dddd dddd 3333 3333 7700 7777 7777 7777
+			7777 7777 cc57 cccc cccb 330b dddd dddd
+			dddd dddd 3333 0333 7773 7777 7777 7777
+			7777 7777 5377 cccc cccb 3330 dddd dddd
+			dddd dddd 3333 7003 7777 7777 7777 7777
+			7777 4477 4444 ccc5 cccb 3330 dddd dddd
+			dddd dddd 3333 7700 7777 4477 0000 0000
+			4444 0044 0000 3335 bccb 3330 dddd dddd
+			dddd dddd 0330 7770 0047 0000 8880 8888
+			0000 3300 3830 0003 6b30 3330 dddd dddd
+			dddd dddd 400d 0444 8500 3b00 8803 8888
+			8558 3003 880b 0303 0000 3330 dddd dddd
+			dddd dddd 0ddd 0000 8522 3b08 850c 8888
+			8888 c00b 830b 3303 0500 3300 dddd dddd
+			dddd dddd dddd 2200 8022 3b53 8500 8888
+			8888 300b 880b 3303 5aa0 3300 dddd dddd
+			dddd dddd dddd 00dd 8020 3b58 8500 8888
+			8888 300b a80b 3303 aaa0 2200 dddd dddd
+			dddd dddd dddd 0ddd 8002 3c58 8c00 8888
+			8888 300b aa0b 0303 aaa0 2203 dddd dddd
+			dddd dddd dddd 0ddd 8222 3c58 8c30 8888
+			8888 300c aa0c 0303 aaaa 2203 dddd dddd
+			dddd dddd dddd 0ddd 8222 3c58 8c30 8888
+			8888 333c aa5c 0330 aaaa 2203 dddd dddd
+			dddd dddd dddd 0ddd 0222 cc88 88b3 8888
+			8888 b3bc aaac a030 aaaa 2220 dddd dddd
+			dddd dddd dddd 0ddd 0222 c888 88cc 8888
+			aa88 ccca 8aa5 a030 3aaa 2220 dddd dddd
+			dddd dddd dddd dddd 0220 8888 8855 a888
+			aaaa 888a 5aaa a033 0aaa 2222 dddd dddd
+			dddd dddd dddd dddd 0220 8888 8888 aaaa
+			aaaa aaaa 08aa a033 00aa 2222 dddd dddd
+			dddd dddd dddd dddd 0220 8888 5888 aaaa
+			aaaa aaaa 08aa 0333 2003 2222 dddd dddd
+			dddd dddd dddd dddd 2220 8880 5888 aaaa
+			aaaa aaaa 08aa 0333 2220 2222 dddd dddd
+			dddd dddd dddd dddd 2220 8880 a588 aaaa
+			aaaa aaaa 05aa 3333 2220 2222 dddd dddd
+			dddd dddd dddd 0ddd 2223 8802 8888 aaaa
+			5aaa aaa8 20aa 3330 2203 2222 dddd dddd
+			dddd dddd dddd 0ddd 2223 8522 8888 5555
+			a855 aaaa 222a 3302 2033 2222 dddd dddd
+			dddd dddd dddd 31dd 2233 0222 8888 aaa8
+			aaaa aaaa 2220 3022 0333 2222 dddd dddd
+			dddd dddd dddd 3311 2233 0022 8833 aa88
+			aaaa 20aa 2222 1022 3333 2220 dddd dddd
+			dddd dddd 11dd 3321 2333 0002 5003 aa88
+			aaaa 2228 2222 2302 3331 2203 dddd dddd
+			dddd dddd 3311 3331 2333 0dd0 3303 a850
+			33aa 2055 2222 3330 3331 2023 dddd dddd
+			dddd dddd 3333 3321 0333 0ddd 30d0 0033
+			5533 2055 0022 3333 3331 0223 dddd dddd
+			dddd dddd 3333 3203 2333 ddd0 0ddd 5503
+			5555 2055 3302 3333 3331 0222 dddd dddd
+			dddd dddd 3333 3333 2333 dd02 dddd 5500
+			5555 2055 3330 2333 3333 2222 dddd dddd
+			dddd dddd 3333 3333 2333 d022 dddd 550d
+			5555 0058 3333 3233 2333 2222 dddd dddd
+			dddd dddd 3333 3333 2233 0222 0ddd 5500
+			8855 0058 3333 3333 2333 2222 dddd dddd
+			dddd dddd 3300 3333 2222 2222 0000 5550
+			8885 0058 3333 3333 2223 2222 dddd dddd
+			dddd dddd 0099 2220 2222 0222 0000 8883
+			8888 0035 3333 3333 2222 2222 dddd dddd
+			dddd dddd 9999 2209 2222 0222 0000 8853
+			3388 0003 3330 2233 2222 2222 dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="face3"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="face3_pl"
+		path="C:/Documents and Settings/mori/デスクトップ/jim_face/face3.bmp"
+	>
+		<bitmap size="1024">
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd 885d 8888 db88 dddd dddd
+			bddd 888b 8888 8888 d588 dddd dddd dddd
+			dddd dddd dddd 885d db88 dddd dddd dddd
+			dddd dddd 8bbd 8888 5888 dddd dddd dddd
+			dddd dddd dddd 8885 dddb bbdd 8888 8888
+			bb88 dddd dddd 88bd 8888 ddd5 dddd dddd
+			dddd dddd dddd d885 bddd 8888 8888 8888
+			8888 8888 ddbb bddd 5888 ddd5 dddd dddd
+			dddd dddd 5ddd bd88 888b 8888 8888 8888
+			8888 8888 8888 ddbb 688d dd06 dddd dddd
+			dddd dddd 5ddd 8bb8 8888 8888 8888 8888
+			8888 8888 8888 bb88 66bb dd06 dddd dddd
+			dddd dddd 5ddd 88bb 8888 8888 8888 8888
+			8888 8888 8888 6688 6bb6 d066 dddd dddd
+			dddd dddd 5ddd 888b 8888 8888 8888 8888
+			8888 8888 6888 6666 bb66 d066 dddd dddd
+			dddd dddd 0d22 8886 8888 8888 8888 8888
+			8888 6888 6666 6666 b666 d06b dddd dddd
+			dddd dddd 02aa 8500 8888 5555 5555 5555
+			5555 6666 6666 6666 6666 d0bb dddd dddd
+			dddd dddd aaaa 007a 5555 aaaa ccc2 cccc
+			cccc 5555 6665 6666 6666 d0b6 dddd dddd
+			dddd dddd aaaa 77aa aa07 2aaa cccc cccc
+			cccc a0cc 555a 6666 6666 0056 dddd dddd
+			dddd dddd aaaa 007a aaa2 c2aa cccc cccc
+			cccc 2ccc aaaa 0555 0000 aa20 dddd dddd
+			dddd dddd 0aaa 2a20 aaaa c2aa cccc cccc
+			cccc cccc aaa2 70aa aaa7 aaaa dddd dddd
+			dddd dddd a000 2aa7 aaaa cc2a cccc cccc
+			cccc cccc aaa2 0aaa aa77 aaaa dddd dddd
+			dddd dddd 7aaa a2aa aaaa cc2a cccc cccc
+			cccc cccc aa2c 2aaa a000 aaaa dddd dddd
+			dddd dddd 7aaa a2aa aaaa 4492 cccc cccc
+			cccc 44cc aa2c aaaa 07a2 aa00 dddd dddd
+			dddd dddd a7aa aa2a aaaa ccc2 cc49 cccc
+			9ccc c944 a299 aaaa 7aa2 00aa dddd dddd
+			dddd dddd a7aa aa2a aaaa ccc2 c4cc cccc
+			94cc 99cc a299 aaaa aa2a aaa7 dddd dddd
+			dddd dddd aa7a aaa2 2aaa 0ccc ccc0 cccc
+			cccc 999c a299 aaaa aa2a aaa7 dddd dddd
+			dddd dddd aa7a aaa2 2aaa d0cc cc4d cccc
+			cccc 9400 2999 aaaa aa2a aa7a dddd dddd
+			dddd dddd aa7a aaa2 2aaa db4c c9d8 cccc
+			4ccc 09dd 2999 aaaa a2aa aa7a dddd dddd
+			dddd dddd a277 aaa2 2aaa 6d0c c98d cccc
+			dccc dd8b 2990 aaaa a2aa aa7a dddd dddd
+			dddd dddd 7277 aa07 2aaa 8db0 cb80 cccc
+			dccc d8d6 0944 aaaa a2aa 7a7a dddd dddd
+			dddd dddd 7277 7707 2aaa 8db0 cb80 cccc
+			dccc d606 090b aaaa a2aa 7727 dddd dddd
+			dddd dddd 2777 7077 2777 8db4 9b65 cccc
+			dccc d606 290b aaaa 7077 7727 dddd dddd
+			dddd dddd 2777 7077 7777 6d40 9456 cccc
+			9ccc d658 7904 7777 7077 7727 dddd dddd
+			dddd dddd 7777 0772 7707 b490 9955 ccc4
+			9ccc b566 7294 7777 7707 7772 dddd dddd
+			dddd dddd 7777 0777 7072 9907 9999 ccc9
+			cccc 9b59 7709 7777 7707 7772 dddd dddd
+			dddd dddd 7770 7777 0700 9077 4999 cccc
+			cccc cccc 7770 7777 2770 2777 dddd dddd
+			dddd dddd 700d 2777 0077 9000 9999 cccc
+			cccc 02cc 0777 0777 7777 7277 dddd dddd
+			dddd dddd 0ddd 7770 7772 9902 9999 c999
+			cccc 70cc 7007 7007 7777 7727 dddd dddd
+			dddd dddd dddd 000d 7727 9907 4999 bdb0
+			c400 09cc 0770 7770 2777 0772 dddd dddd
+			dddd dddd dddd dddd 7000 9077 0999 1111
+			c011 99cc 7000 7777 7000 d007 dddd dddd
+			dddd dddd dddd dddd 0ddd 0d00 9994 1100
+			cc00 009c 770d 0007 00dd ddd0 dddd dddd
+			dddd dddd dddd dddd dddd dddd 900d 0099
+			cccc dd00 00dd ddd0 dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd 0ddd cc94
+			004c dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd 000d
+			0990 dddd dddd 0ddd 0dd0 ddd0 dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd 90dd
+			0999 dddd dddd c0dd c00c dd0c dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd 90dd
+			0999 d555 00dd c4d0 cc0c d0cc dddd dddd
+			dddd dddd ddd4 dddd dddd 222d dddd 9400
+			4999 5860 dd25 cc0d 9cc0 0ccc dddd dddd
+			dddd dddd dd49 dddd 2ddd ddd2 0022 9991
+			9999 8885 ddd6 c90d 44c0 c944 dddd dddd
+			dddd dddd dd0c dddd d22d dddd 440d 9991
+			5999 6888 dddd 990d cc94 cccc dddd dddd
+			dddd dddd dd09 dddd ddd2 dddd 3340 cc41
+			854c 1588 dddd 490d 44c9 cc99 dddd dddd
+			dddd dddd dd09 2ddd dddd 1ddd 1333 cccc
+			86c9 1358 dddd 490d cc44 cccc dddd dddd
+			dddd dddd dd09 d2dd dddd 31dd 1333 cccc
+			885c 1335 dddd 40dd 4cc9 ccc9 dddd dddd
+			dddd dddd dd09 dd0d dddd 31dd 1333 cccc
+			5885 3333 ddd1 40dd c449 cccc dddd dddd
+			dddd dddd ddd0 dd2d dddd 331d c133 cccc
+			3685 3333 ddd1 90dd ccc4 0ccc dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+		</bitmap>
+	</tex_image>
+	<tex_image index="3" name="face4"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="face4_pl"
+		path="C:/Documents and Settings/mori/デスクトップ/jim_face/face4.bmp"
+	>
+		<bitmap size="1024">
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff 0fff 5550 4555 4444
+			5544 5555 5555 5555 f044 ffff ffff ffff
+			ffff ffff ffff ffff 500f 5555 6645 6666
+			6666 5554 5555 5555 0045 ffff ffff ffff
+			ffff ffff ffff ffff 5550 4555 6666 6666
+			6666 5546 5555 5555 e055 fff0 ffff ffff
+			ffff ffff ffff 0fff 5555 6455 6666 6666
+			6666 4666 5555 5555 e455 ff0e ffff ffff
+			ffff ffff ffff 50ff 5555 6645 6666 5555
+			6665 6666 5554 5555 4555 f0ee ffff ffff
+			ffff ffff ffff 50ff 5555 6645 5666 6665
+			6655 6666 5556 5555 4555 f0ee ffff ffff
+			ffff ffff ffff 550f 5555 6664 5566 6666
+			5556 6666 5546 5555 4555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 6664 5566 6666
+			5556 5555 5555 5555 5555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 5555 5555 6666
+			5556 5555 5555 5555 5555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 6644 5566 6665
+			6655 6666 5556 5555 4555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 6666 5666 5555
+			6655 6666 5554 5555 4555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 6664 6666 5555
+			6666 4666 5555 5555 4555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 6645 6666 6666
+			6666 5466 5555 5555 4555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 6455 6666 6666
+			6666 5554 5555 5555 4555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 5555 6664 6666
+			5546 5555 5555 5555 4555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 5555 4455 4444
+			5555 5555 5555 5555 c555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 2555 2222 2222
+			2222 5552 5555 5555 c455 0cee ffff ffff
+			ffff ffff ffff 550f 5555 6622 6666 6666
+			6666 2266 5555 5555 c455 a0cc ffff ffff
+			ffff ffff 00ff 550f 2455 6666 6666 6666
+			6666 6666 2226 5222 c455 a0cc ffff ffff
+			ffff ffff bb33 5403 6644 6666 6666 6666
+			6666 6666 6666 2266 c422 a0cc ffff ffff
+			ffff ffff bbbb 449b 6662 6666 6666 6666
+			6666 6666 2666 0000 c400 a0cc ffff ffff
+			ffff ffff bbbb 209b 6666 6666 2226 2222
+			6662 6666 0222 4099 0004 a0c4 ffff ffff
+			ffff ffff bbbb 609b 2666 2222 0002 0000
+			2222 2222 3000 4099 4444 a404 ffff ffff
+			ffff ffff 3399 6203 0066 0000 3330 3333
+			0000 0000 9004 4099 4444 0444 ffff ffff
+			ffff ffff bbbb 2223 4400 0009 9300 9999
+			3039 e0c0 90c4 1199 4441 4444 ffff ffff
+			ffff ffff bbbb 000b 4403 0c09 904e 9999
+			9939 00c0 90e4 1199 4411 4444 ffff ffff
+			ffff ffff bb93 3309 3403 4c09 9c00 9999
+			9999 00e0 93e4 1199 4411 4444 ffff ffff
+			ffff ffff 9339 3349 3400 4e09 9e00 9999
+			9999 00e3 b9e4 119b 1111 4444 ffff ffff
+			ffff ffff 3bbb 0334 9400 4e09 9e00 9999
+			9999 00e3 b9e4 119b 1111 4411 ffff ffff
+			ffff ffff 9bb3 1000 9001 4e09 9e00 9999
+			9999 04e3 b9e4 109b 1111 4111 ffff ffff
+			ffff ffff 9939 1100 9011 4e99 9e00 9999
+			9999 4ceb b9ec 109b 1111 1111 ffff ffff
+			ffff ffff 939b 1103 4011 ce99 9ec4 9999
+			bbb9 eebb bbee 110b 1111 0111 ffff ffff
+			ffff ffff 33bb 1103 0011 e999 99ee bb99
+			bbbb 99bb bbb9 1109 1111 1111 ffff ffff
+			ffff ffff 339b 10f0 0111 9999 9933 bb99
+			bbbb bbbb bbbb 1111 1111 1111 ffff ffff
+			ffff ffff 3399 10f0 0111 9999 9999 bb99
+			bbbb bbbb 1bbb 1111 1111 1111 ffff ffff
+			ffff ffff 3339 0ff0 1111 9999 9999 bbb3
+			bbbb bbbb 03bb 1100 1111 1111 ffff ffff
+			ffff ffff 0393 0fff 1110 9991 9999 bbb3
+			bbbb bbbb bbbb 1110 0111 1110 ffff ffff
+			ffff ffff 0399 0fff 1001 9990 9999 bbbb
+			bbbb bbbb 3bbb 1110 0111 110f ffff ffff
+			ffff ffff f099 10ff 1111 9900 9999 bbbb
+			39bb bb33 09bb 1111 0111 10ff ffff ffff
+			ffff ffff ff00 110f 1111 9901 9999 3399
+			bb93 bbbb 10bb 1111 0111 0fff ffff ffff
+			ffff ffff ffff 1110 1111 9011 9999 bbb9
+			bbbb bbbb 113b 1111 0111 ffff ffff ffff
+			ffff ffff 0fff 0000 1100 0111 9991 bb99
+			bbbb 3bbb 1110 1011 0111 ffff ffff ffff
+			ffff ffff ffff ffff 110f 1000 9901 b999
+			bbbb 03bb 1100 0011 1111 fff0 ffff ffff
+			ffff ffff ffff ffff 010f 00ff 3111 b999
+			bbbb 0933 0088 4011 1100 fff0 ffff ffff
+			ffff ffff ffff ffff f00f 0fff 0010 9930
+			3399 0999 8877 d010 00ff fff0 ffff ffff
+			ffff ffff ffff ffff ff0f ffff 7700 3007
+			9933 0999 8777 d008 ffff ff00 ffff ffff
+			ffff ffff ffff ffff ffff ffff 7780 0777
+			9999 0999 0077 0888 ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff 7880 0777
+			9999 0499 8800 0888 ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+		</bitmap>
+	</tex_image>
+	<tex_image index="4" name="face5"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="face5_pl"
+		path="C:/Documents and Settings/mori/デスクトップ/jim_face/face5.bmp"
+	>
+		<bitmap size="1024">
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff 0fff 5550 4555 4444
+			5544 5555 5555 5555 f044 ffff ffff ffff
+			ffff ffff ffff ffff 500f 5555 6645 6666
+			6666 5554 5555 5555 0045 ffff ffff ffff
+			ffff ffff ffff ffff 5550 4555 6666 6666
+			6666 5546 5555 5555 e055 fff0 ffff ffff
+			ffff ffff ffff 0fff 5555 6455 6666 6666
+			6666 4666 5555 5555 e455 ff0e ffff ffff
+			ffff ffff ffff 50ff 5555 6645 6666 5555
+			6665 6666 5554 5555 4555 f0ee ffff ffff
+			ffff ffff ffff 50ff 5555 6645 5666 6665
+			6655 6666 5556 5555 4555 f0ee ffff ffff
+			ffff ffff ffff 550f 5555 6664 5566 6666
+			5556 6666 5546 5565 4555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 6664 5566 6666
+			5556 5555 5555 5565 5555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 5555 5555 6666
+			5556 5555 5555 5565 5555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 6644 5566 6665
+			6655 6666 5556 6665 6666 0eee ffff ffff
+			ffff ffff ffff 550f 5555 6666 5666 5555
+			6655 6666 5554 5565 4555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 6664 6666 5555
+			6666 4666 5555 5565 4555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 6645 6666 6666
+			6666 5466 5555 6665 4556 0eee ffff ffff
+			ffff ffff ffff 550f 5555 6455 6666 6666
+			6666 5554 5555 5555 4556 0eee ffff ffff
+			ffff ffff ffff 550f 5555 5555 6664 6666
+			5546 5555 5555 6666 4556 0eee ffff ffff
+			ffff ffff ffff 550f 5555 5555 4455 4444
+			5555 5555 5555 5555 c555 0eee ffff ffff
+			ffff ffff ffff 550f 5555 2555 2222 2222
+			2222 5552 5555 5555 c455 0cee ffff ffff
+			ffff ffff ffff 550f 5555 6622 6666 6666
+			6666 2266 5555 5555 c455 a0cc ffff ffff
+			ffff ffff 00ff 550f 2455 6666 6666 6666
+			6666 6666 2226 5222 c455 a0cc ffff ffff
+			ffff ffff bb33 5403 6644 6666 6666 6666
+			6666 6666 6666 2266 c422 a0cc ffff ffff
+			ffff ffff bbbb 449b 6662 6666 6666 6666
+			6666 6666 2666 0000 c400 a0cc ffff ffff
+			ffff ffff bbbb 209b 6666 6666 2226 2222
+			6662 6666 0222 4099 0004 a0c4 ffff ffff
+			ffff ffff bbbb 609b 2666 2222 0002 0000
+			2222 2222 3000 4099 4444 a404 ffff ffff
+			ffff ffff 3399 6203 0066 0000 3330 3333
+			0000 0000 9004 4099 4444 0444 ffff ffff
+			ffff ffff bbbb 2223 4400 0009 9300 9999
+			3039 e0c0 90c4 1199 4441 4444 ffff ffff
+			ffff ffff bbbb 000b 4403 0c09 904e 9999
+			9939 00c0 90e4 1199 4411 4444 ffff ffff
+			ffff ffff bb93 3309 3403 4c09 9c00 9999
+			9999 00e0 93e4 1199 4411 4444 ffff ffff
+			ffff ffff 9339 3349 3400 4e09 9e00 9999
+			9999 00e3 b9e4 119b 1111 4444 ffff ffff
+			ffff ffff 3bbb 0334 9400 4e09 9e00 9999
+			9999 00e3 b9e4 119b 1111 4411 ffff ffff
+			ffff ffff 9bb3 1000 9001 4e09 9e00 9999
+			9999 04e3 b9e4 109b 1111 4111 ffff ffff
+			ffff ffff 9939 1100 9011 4e99 9e00 9999
+			9999 4ceb b9ec 109b 1111 1111 ffff ffff
+			ffff ffff 939b 1103 4011 ce99 9ec4 9999
+			bbb9 eebb bbee 110b 1111 0111 ffff ffff
+			ffff ffff 33bb 1103 0011 e999 99ee bb99
+			bbbb 99bb bbb9 1109 1111 1111 ffff ffff
+			ffff ffff 339b 10f0 0111 9999 9933 bb99
+			bbbb bbbb bbbb 1111 1111 1111 ffff ffff
+			ffff ffff 3399 10f0 0111 9999 9999 bb99
+			bbbb bbbb 1bbb 1111 1111 1111 ffff ffff
+			ffff ffff 3339 0ff0 1111 9999 9999 bbb3
+			bbbb bbbb 03bb 1100 1111 1111 ffff ffff
+			ffff ffff 0393 0fff 1110 9991 9999 bbb3
+			bbbb bbbb bbbb 1110 0111 1110 ffff ffff
+			ffff ffff 0399 0fff 1001 9990 9999 bbbb
+			bbbb bbbb 3bbb 1110 0111 110f ffff ffff
+			ffff ffff f099 10ff 1111 9900 9999 bbbb
+			39bb bb33 09bb 1111 0111 10ff ffff ffff
+			ffff ffff ff00 110f 1111 9901 9999 3399
+			bb93 bbbb 10bb 1111 0111 0fff ffff ffff
+			ffff ffff ffff 1110 1111 9011 9999 bbb9
+			bbbb bbbb 113b 1111 0111 ffff ffff ffff
+			ffff ffff 0fff 0000 1100 0111 9991 bb99
+			bbbb 3bbb 1110 1011 0111 ffff ffff ffff
+			ffff ffff ffff ffff 110f 1000 9901 b999
+			bbbb 03bb 1100 0011 1111 fff0 ffff ffff
+			ffff ffff ffff ffff 010f 00ff 3111 b999
+			bbbb 0933 0088 4011 1100 fff0 ffff ffff
+			ffff ffff ffff ffff f00f 0fff 0010 9930
+			3399 0999 8877 d010 00ff fff0 ffff ffff
+			ffff ffff ffff ffff ff0f ffff 7700 3007
+			9933 0999 8777 d008 ffff ff00 ffff ffff
+			ffff ffff ffff ffff ffff ffff 7780 0777
+			9999 0999 0077 0888 ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff 7880 0777
+			9999 0499 8800 0888 ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+			ffff ffff ffff ffff ffff ffff ffff ffff
+		</bitmap>
+	</tex_image>
+	<tex_image index="5" name="face6"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="face6_pl"
+		path="C:/Documents and Settings/mori/デスクトップ/jim_face/face6.bmp"
+	>
+		<bitmap size="1024">
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 0999 4444 4444 4444
+			4444 4444 4444 4444 4444 9904 9999 9999
+			9999 9999 9999 9999 4099 4444 4444 4444
+			4444 4444 4444 4444 4444 9044 9999 9999
+			9999 9999 9999 9999 4409 4444 4444 4444
+			4444 4444 4444 4444 4444 0444 9999 9999
+			9999 9999 9999 9999 4449 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 9999 9999
+			9999 9999 9999 9999 4440 4444 4444 4444
+			4444 4444 4444 4444 4444 4444 9999 9999
+			9999 9999 9999 9999 4444 4444 7774 4447
+			4444 4444 4444 4444 4444 4444 9999 9999
+			9999 9999 9999 0999 4444 4444 4474 4444
+			4444 4444 4444 4444 4444 4444 9999 9999
+			9999 9999 9999 0999 4444 4444 4474 4444
+			3444 4444 4444 4444 4444 4444 9999 9999
+			9999 9999 9999 4999 4444 4444 7774 4477
+			4344 4444 4444 4444 4444 4444 9999 9999
+			9999 9999 9999 4099 4444 4444 4474 4474
+			4344 4444 4344 0444 4444 4444 9999 9999
+			9999 9999 9999 4099 4444 4444 4474 4474
+			4404 4444 0734 7044 4440 4444 9999 9999
+			9999 9999 9999 4399 4444 4444 7774 4477
+			4404 4444 0773 7044 4440 4444 9999 9999
+			9999 9999 9999 3309 4444 4444 4444 4444
+			4404 3444 0777 7734 3440 4444 9999 9999
+			9999 9999 9999 3309 4443 4444 4444 4444
+			4440 7044 3777 7704 3440 3443 9999 9999
+			9999 9999 9999 3309 4433 4444 4444 4444
+			4440 7700 7777 7773 7340 3330 9999 9999
+			9999 9999 9999 3309 4333 4444 4444 4444
+			0440 7777 7777 7777 7734 3330 9999 9999
+			9999 9999 9999 3330 3333 4443 4444 5444
+			7040 7777 7777 7777 7773 3335 9999 9999
+			9999 9999 9999 3330 3333 4333 4444 7044
+			7700 7777 7777 7777 7777 3335 9999 9999
+			9999 9999 9999 3330 3333 3333 4443 7044
+			7777 7777 7777 7777 7777 3335 9999 9999
+			9999 9999 9999 3330 3333 3333 4333 7704
+			5777 7777 7777 7777 7777 3335 9999 9999
+			9999 9999 9999 3330 3333 3333 3333 7703
+			7777 7775 7777 7777 7777 0335 9999 9999
+			9999 9999 9999 3330 3333 3333 3333 0270
+			7772 7527 7777 7777 7777 0333 9999 9999
+			9999 9999 9999 3330 3333 3333 3333 9970
+			7204 5277 7777 7777 5777 3033 9999 9999
+			9999 9999 9999 3330 3333 3300 0333 4970
+			0009 2772 7777 7777 5577 3303 9999 9999
+			9999 9999 9999 3330 0333 3305 0333 0974
+			9044 7770 7777 5777 4522 3333 9999 9999
+			9999 9999 9999 3030 0333 3305 7033 0747
+			9040 7709 7777 5222 4555 3333 9999 9999
+			9999 9999 9999 0030 0333 3055 7033 7747
+			8900 7778 7777 5555 5555 3222 9999 9999
+			9999 9999 9999 0900 0033 3053 7033 7477
+			7777 1477 5711 0022 2550 2777 9999 9999
+			9999 9999 9999 0999 9033 3030 7703 4777
+			7774 7747 2115 9808 4508 7777 9999 9999
+			9999 9999 9999 0999 9903 0330 7703 7777
+			4447 7774 0527 9944 8529 7724 9999 9999
+			9999 9999 9999 9999 9990 0309 7703 7777
+			7777 7777 0027 8964 8452 7744 9999 9999
+			9999 9999 9999 9999 9999 3309 7770 7777
+			7777 7777 5027 5225 4855 7224 9999 9999
+			9999 9999 9999 9999 9999 3099 7770 7777
+			7777 7777 0527 5555 4405 2772 9999 9999
+			9999 9999 9999 9999 9999 3099 7703 7777
+			7777 7777 5557 0000 2450 7777 9999 9999
+			9999 9999 9999 9999 9999 0999 7703 7777
+			7777 7777 5555 2055 7255 7557 9999 9999
+			9999 9999 9999 9999 9999 0099 7033 7777
+			7777 5777 5555 2305 2255 5772 9999 9999
+			9999 9999 9999 9999 9999 8849 0533 7777
+			2777 5552 5555 2330 7255 7777 9999 9999
+			9999 9999 9999 9999 9999 8849 5503 7772
+			9277 5289 0555 5233 7525 7557 9999 9999
+			9999 9999 9999 9999 9999 8894 5508 7705
+			7777 5525 9025 5203 2525 5772 9999 9999
+			9999 9999 9999 9999 9999 8894 5504 7055
+			2777 5552 9900 5290 2525 7777 9999 9999
+			9999 9999 9999 9999 9999 4894 5550 0555
+			5770 0055 9999 5099 5255 7777 9999 9999
+			9999 9999 9999 9999 0999 4999 5550 5555
+			5505 0802 9999 5099 5255 2225 9999 9999
+			9999 9999 9999 0999 0400 4999 5550 5555
+			0055 8880 9990 2999 2555 7725 9999 9999
+			9999 9999 0999 4000 0444 8499 5550 5555
+			8805 8884 9908 0999 5555 7722 9999 9999
+			9999 9999 4000 4444 0044 8499 5550 5555
+			8805 8848 9908 9999 7550 7777 9999 9999
+			9999 9999 0666 0440 0600 8499 5508 5555
+			8805 8848 4088 9999 7229 7777 9999 9999
+			9999 9999 6666 6006 9066 9499 5208 5555
+			8805 8488 4098 9944 5299 7777 9999 9999
+			9999 9999 6666 0666 9066 9949 2708 5555
+			8055 8488 0999 4400 2894 2577 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+			9999 9999 9999 9999 9999 9999 9999 9999
+		</bitmap>
+	</tex_image>
+	<tex_image index="6" name="face7"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="face7_pl"
+		path="C:/Documents and Settings/mori/デスクトップ/jim_face/face7.bmp"
+	>
+		<bitmap size="1024">
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd cc0d cccc 7777 7777
+			b777 cccc cccc cccc 200c 3333 dddd dddd
+			dddd dddd dddd dddd ccc0 7ccc c777 7ccc
+			7777 cccb cccc cccc 306c 3333 dddd dddd
+			dddd dddd dddd 0ddd cccc 77cc 7c77 cc77
+			7777 ccc7 cccc cccc 30bc 3333 dddd dddd
+			dddd dddd dddd 0ddd cccc 777c 77c7 c777
+			7777 cc77 cccc cccc 0cbc 3333 dddd dddd
+			dddd dddd dddd c0dd cccc 777c 77cc c777
+			777c cc77 cc7c cccc 0cbc 3333 dddd dddd
+			dddd dddd dddd c0dd cccc cccc 77cc c777
+			cccc cccc 777c cc77 0cbc 3333 dddd dddd
+			dddd dddd dddd c0dd cccc 777c 7cc7 cc77
+			7777 cc77 cc7c c77c ccbc 3330 dddd dddd
+			dddd dddd dddd c0dd cccc 777c cc77 7ccc
+			7777 cc77 cc7c cc7c ccbc 3330 dddd dddd
+			dddd dddd dddd c3dd cccc 77cc 7777 7777
+			7777 cccc cc7c cc7c ccbc 330c dddd dddd
+			dddd dddd dddd c0dd cccc 7ccc 7777 7777
+			c777 cccc cc7c cc7c ccbc 330c dddd dddd
+			dddd dddd dddd c011 cccc cccc 777c 7777
+			ccc7 cccc cccc cc7c ccbc 330c dddd dddd
+			dddd dddd 1ddd c033 cccc cccc cccc cccc
+			cccc cccc cccc cc7c ccbc 330c dddd dddd
+			dddd dddd 31dd 6333 cccc cccc 7775 3337
+			5303 cca8 cccc cc7c ccbc 330c dddd dddd
+			dddd dddd 331d 0333 cccc 733c 7777 7777
+			0377 8530 cccc cc7c ccbc 330c dddd dddd
+			dddd dddd 3331 0333 3ccc 7773 7777 7777
+			7777 3337 cca5 cc7c cccb 330c dddd dddd
+			dddd dddd 3333 3333 7700 7777 7777 7777
+			7777 7777 cc57 cccc cccb 330b dddd dddd
+			dddd dddd 3333 0333 7773 7777 7777 7777
+			7777 7777 5377 cccc cccb 3330 dddd dddd
+			dddd dddd 3333 7003 7777 7777 7777 7777
+			7777 4477 4444 ccc5 cccb 3330 dddd dddd
+			dddd dddd 3333 7700 7777 4477 0000 0000
+			4444 0044 0000 3335 bccb 3330 dddd dddd
+			dddd dddd 0330 7770 0047 0000 8880 8888
+			0000 3300 3830 0003 6b30 3330 dddd dddd
+			dddd dddd 400d 0444 8500 3b00 8803 8888
+			8558 3003 880b 0303 0000 3330 dddd dddd
+			dddd dddd 0ddd 0000 8522 3b08 850c 8888
+			8888 c00b 830b 3303 0500 3300 dddd dddd
+			dddd dddd dddd 2200 8022 3b53 8500 8888
+			8888 300b 880b 3303 5aa0 3300 dddd dddd
+			dddd dddd dddd 00dd 8020 3b58 8500 8888
+			8888 300b a80b 3303 aaa0 2200 dddd dddd
+			dddd dddd dddd 0ddd 8002 3c58 8c00 8888
+			8888 300b aa0b 0303 aaa0 2203 dddd dddd
+			dddd dddd dddd 0ddd 8222 3c58 8c30 8888
+			8888 300c aa0c 0303 aaaa 2203 dddd dddd
+			dddd dddd dddd 0ddd 8222 3c58 8c30 8888
+			8888 333c aa5c 0330 aaaa 2203 dddd dddd
+			dddd dddd dddd 0ddd 0222 cc88 88b3 8888
+			8888 b3bc aaac a030 aaaa 2220 dddd dddd
+			dddd dddd dddd 0ddd 0222 c888 88cc 8888
+			aa88 ccca 8aa5 a030 3aaa 2220 dddd dddd
+			dddd dddd dddd dddd 0220 8888 8855 a888
+			aaaa 888a 5aaa a033 0aaa 2222 dddd dddd
+			dddd dddd dddd dddd 0220 8888 8888 aaaa
+			aaaa aaaa 08aa a033 00aa 2222 dddd dddd
+			dddd dddd dddd dddd 0220 8888 5888 aaaa
+			aaaa aaaa 08aa 0333 2003 2222 dddd dddd
+			dddd dddd dddd dddd 2220 8880 5888 aaaa
+			aaaa aaaa 08aa 0333 2220 2222 dddd dddd
+			dddd dddd dddd dddd 2220 8880 a588 aaaa
+			aaaa aaaa 05aa 3333 2220 2222 dddd dddd
+			dddd dddd dddd 0ddd 2223 8802 8888 aaaa
+			5aaa aaa8 20aa 3330 2203 2222 dddd dddd
+			dddd dddd dddd 0ddd 2223 8522 8888 5555
+			a855 aaaa 222a 3302 2033 2222 dddd dddd
+			dddd dddd dddd 31dd 2233 0222 8888 aaa8
+			aaaa aaaa 2220 3022 0333 2222 dddd dddd
+			dddd dddd dddd 3311 2233 0022 8833 aa88
+			aaaa 20aa 2222 1022 3333 2220 dddd dddd
+			dddd dddd 11dd 3321 2333 0002 5003 aa88
+			aaaa 2228 2222 2302 3331 2203 dddd dddd
+			dddd dddd 3311 3331 2333 0dd0 3303 a850
+			33aa 2055 2222 3330 3331 2023 dddd dddd
+			dddd dddd 3333 3321 0333 0ddd 30d0 0033
+			5533 2055 0022 3333 3331 0223 dddd dddd
+			dddd dddd 3333 3203 2333 ddd0 0ddd 5503
+			5555 2055 3302 3333 3331 0222 dddd dddd
+			dddd dddd 3333 3333 2333 dd02 dddd 5500
+			5555 2055 3330 2333 3333 2222 dddd dddd
+			dddd dddd 3333 3333 2333 d022 dddd 550d
+			5555 0058 3333 3233 2333 2222 dddd dddd
+			dddd dddd 3333 3333 2233 0222 0ddd 5500
+			8855 0058 3333 3333 2333 2222 dddd dddd
+			dddd dddd 3300 3333 2222 2222 0000 5550
+			8885 0058 3333 3333 2223 2222 dddd dddd
+			dddd dddd 0099 2220 2222 0222 0000 8883
+			8888 0035 3333 3333 2222 2222 dddd dddd
+			dddd dddd 9999 2209 2222 0222 0000 8853
+			3388 0003 3330 2233 2222 2222 dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+		</bitmap>
+	</tex_image>
+	<tex_image index="7" name="face8"
+		width="64" height="64" original_width="64" original_height="64"
+		format="palette16"
+		color0_mode="color"
+		palette_name="face8_pl"
+		path="C:/Documents and Settings/mori/デスクトップ/jim_face/face8.bmp"
+	>
+		<bitmap size="1024">
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd 885d 8888 db88 dddd dddd
+			bddd 888b 8888 8888 d588 dddd dddd dddd
+			dddd dddd dddd 885d db88 dddd dddd dddd
+			dddd dddd 8bbd 8888 5888 dddd dddd dddd
+			dddd dddd dddd 8885 dddb bbdd 8888 8888
+			bb88 dddd dddd 88bd 8888 ddd5 dddd dddd
+			dddd dddd dddd d885 bddd 8888 8888 8888
+			8888 8888 ddbb bddd 5888 ddd5 dddd dddd
+			dddd dddd 5ddd bd88 888b 8888 8888 8888
+			8888 8888 8888 ddbb 688d dd06 dddd dddd
+			dddd dddd 5ddd 8bb8 8888 8888 8888 8888
+			8888 8888 8888 bb88 66bb dd06 dddd dddd
+			dddd dddd 5ddd 88bb 8888 8888 8888 8888
+			8888 8888 8888 6688 6bb6 d066 dddd dddd
+			dddd dddd 5ddd 888b 8888 8888 8888 8888
+			8888 8888 6888 6666 bb66 d066 dddd dddd
+			dddd dddd 0d22 8886 8888 8888 8888 8888
+			8888 6888 6666 6666 b666 d06b dddd dddd
+			dddd dddd 02aa 8500 8888 5555 5555 5555
+			5555 6666 6666 6666 6666 d0bb dddd dddd
+			dddd dddd aaaa 007a 5555 aaaa ccc2 cccc
+			cccc 5555 6665 6666 6666 d0b6 dddd dddd
+			dddd dddd aaaa 77aa aa07 2aaa cccc cccc
+			cccc a0cc 555a 6666 6666 0056 dddd dddd
+			dddd dddd aaaa 007a aaa2 c2aa cccc cccc
+			cccc 2ccc aaaa 0555 0000 aa20 dddd dddd
+			dddd dddd 0aaa 2a20 aaaa c2aa cccc cccc
+			cccc cccc aaa2 70aa aaa7 aaaa dddd dddd
+			dddd dddd a000 2aa7 aaaa cc2a cccc cccc
+			cccc cccc aaa2 0aaa aa77 aaaa dddd dddd
+			dddd dddd 7aaa a2aa aaaa cc2a cccc cccc
+			cccc cccc aa2c 2aaa a000 aaaa dddd dddd
+			dddd dddd 7aaa a2aa aaaa 4492 cccc cccc
+			cccc 44cc aa2c aaaa 07a2 aa00 dddd dddd
+			dddd dddd a7aa aa2a aaaa ccc2 cc49 cccc
+			9ccc c944 a299 aaaa 7aa2 00aa dddd dddd
+			dddd dddd a7aa aa2a aaaa ccc2 c4cc cccc
+			94cc 99cc a299 aaaa 0000 aaa0 dddd dddd
+			dddd dddd aa7a aaa2 2aaa 0ccc ccc0 cccc
+			cccc 999c a299 aaaa aa20 aaa0 dddd dddd
+			dddd dddd aa7a aaa2 2aaa d0cc cc4d cccc
+			cccc 9400 2999 aaaa aa20 aa70 dddd dddd
+			dddd dddd aa7a aaa2 2aaa db4c c9d8 cccc
+			4ccc 09dd 2999 0aaa 0000 aa00 dddd dddd
+			dddd dddd a277 aaa2 2aaa 6d0c c98d cccc
+			dccc dd8b 2990 0aaa a2aa aa0a dddd dddd
+			dddd dddd 7277 aa07 2aaa 8db0 cb80 cccc
+			dccc d8d6 0944 0aaa a2aa 7a0a dddd dddd
+			dddd dddd 7277 7707 2aaa 8db0 cb80 cccc
+			dccc d606 090b 0aaa a2aa 7707 dddd dddd
+			dddd dddd 2777 7077 2777 8db4 9b65 cccc
+			dccc d606 290b 0aaa 0000 7700 dddd dddd
+			dddd dddd 2777 7077 7777 6d40 9456 cccc
+			9ccc d658 7904 7777 7077 7727 dddd dddd
+			dddd dddd 7777 0772 7707 b490 9955 ccc4
+			9ccc b566 7294 7777 7707 7772 dddd dddd
+			dddd dddd 7777 0777 7072 9907 9999 ccc9
+			cccc 9b59 7709 7777 7707 7772 dddd dddd
+			dddd dddd 7770 7777 0700 9077 4999 cccc
+			cccc cccc 7770 7777 2770 2777 dddd dddd
+			dddd dddd 700d 2777 0077 9000 9999 cccc
+			cccc 02cc 0777 0777 7777 7277 dddd dddd
+			dddd dddd 0ddd 7770 7772 9902 9999 c999
+			cccc 70cc 7007 7007 7777 7727 dddd dddd
+			dddd dddd dddd 000d 7727 9907 4999 bdb0
+			c400 09cc 0770 7770 2777 0772 dddd dddd
+			dddd dddd dddd dddd 7000 9077 0999 1111
+			c011 99cc 7000 7777 7000 d007 dddd dddd
+			dddd dddd dddd dddd 0ddd 0d00 9994 1100
+			cc00 009c 770d 0007 00dd ddd0 dddd dddd
+			dddd dddd dddd dddd dddd dddd 900d 0099
+			cccc dd00 00dd ddd0 dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd 0ddd cc94
+			004c dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd 000d
+			0990 dddd dddd 0ddd 0dd0 ddd0 dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd 90dd
+			0999 dddd dddd c0dd c00c dd0c dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd 90dd
+			0999 d555 00dd c4d0 cc0c d0cc dddd dddd
+			dddd dddd ddd4 dddd dddd 222d dddd 9400
+			4999 5860 dd25 cc0d 9cc0 0ccc dddd dddd
+			dddd dddd dd49 dddd 2ddd ddd2 0022 9991
+			9999 8885 ddd6 c90d 44c0 c944 dddd dddd
+			dddd dddd dd0c dddd d22d dddd 440d 9991
+			5999 6888 dddd 990d cc94 cccc dddd dddd
+			dddd dddd dd09 dddd ddd2 dddd 3340 cc41
+			854c 1588 dddd 490d 44c9 cc99 dddd dddd
+			dddd dddd dd09 2ddd dddd 1ddd 1333 cccc
+			86c9 1358 dddd 490d cc44 cccc dddd dddd
+			dddd dddd dd09 d2dd dddd 31dd 1333 cccc
+			885c 1335 dddd 40dd 4cc9 ccc9 dddd dddd
+			dddd dddd dd09 dd0d dddd 31dd 1333 cccc
+			5885 3333 ddd1 40dd c449 cccc dddd dddd
+			dddd dddd ddd0 dd2d dddd 331d c133 cccc
+			3685 3333 ddd1 90dd ccc4 0ccc dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+			dddd dddd dddd dddd dddd dddd dddd dddd
+		</bitmap>
+	</tex_image>
+</tex_image_array>
+
+<tex_palette_array size="8">
+	<tex_palette index="0" name="face1_pl" color_size="16">
+		1485 195b 1d93 20c6 3108 3a99 44e8 4f7f
+		6295 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="1" name="face2_pl" color_size="16">
+		0000 0446 10a9 1d0c 20d4 21d4 318c 3579
+		46bb 4ef8 637f 6ef7 7fbd 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="face3_pl" color_size="16">
+		1485 14f4 15ef 1e7e 21b7 2588 2e6a 2eb5
+		370c 3e9c 3fbc 5f3a 5f7f 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="3" name="face4_pl" color_size="16">
+		0000 18eb 2107 21d4 254e 2d59 2d6a 30c3
+		4143 46bb 4ef8 637f 6ef7 7732 7fbd 7fff
+	</tex_palette>
+	<tex_palette index="4" name="face5_pl" color_size="16">
+		0000 18eb 2107 21d4 254e 2d59 2d6a 30c3
+		4143 46bb 4ef8 637f 6ef7 7732 7fbd 7fff
+	</tex_palette>
+	<tex_palette index="5" name="face6_pl" color_size="16">
+		1485 195b 1d93 20c6 3108 3a99 44e8 4f7f
+		6295 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="6" name="face7_pl" color_size="16">
+		0000 0446 10a9 1d0c 20d4 21d4 318c 3579
+		46bb 4ef8 637f 6ef7 7fbd 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="7" name="face8_pl" color_size="16">
+		1485 14f4 15ef 1e7e 21b7 2588 2e6a 2eb5
+		370c 3e9c 3fbc 5f3a 5f7f 7fff 7fff 7fff
+	</tex_palette>
+</tex_palette_array>
+
+<material_array size="8">
+	<material index="0" name="lambert2"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="26"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="31 31 31"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="0" tex_palette_idx="0"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="1" name="lambert3"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="26"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="1"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="31 31 31"
+		ambient="0 0 0"
+		specular="0 0 0"
+		emission="31 31 31"
+		shininess_table_flag="off"
+		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="2" name="lambert4"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="26"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="2"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="31 31 31"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="2" tex_palette_idx="2"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="3" name="lambert5"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="26"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="3"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="31 31 31"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="3" tex_palette_idx="3"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="4" name="lambert6"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="26"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="4"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="31 31 31"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="4" tex_palette_idx="4"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="5" name="lambert7"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="26"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="5"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="31 31 31"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="5" tex_palette_idx="5"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="6" name="lambert8"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="26"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="6"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="31 31 31"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="6" tex_palette_idx="6"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="7" name="lambert9"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="26"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="7"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="31 31 31"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="7" tex_palette_idx="7"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+</material_array>
+
+<matrix_array size="8">
+	<matrix index="0" mtx_weight="1" node_idx="1"/>
+	<matrix index="1" mtx_weight="1" node_idx="2"/>
+	<matrix index="2" mtx_weight="1" node_idx="3"/>
+	<matrix index="3" mtx_weight="1" node_idx="4"/>
+	<matrix index="4" mtx_weight="1" node_idx="5"/>
+	<matrix index="5" mtx_weight="1" node_idx="6"/>
+	<matrix index="6" mtx_weight="1" node_idx="7"/>
+	<matrix index="7" mtx_weight="1" node_idx="8"/>
+</matrix_array>
+
+<polygon_array size="8">
+	<polygon index="0" name="polygon0"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">0</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 64.000000"/>
+					<pos_s xyz="-0.500000 -0.500000 0.000000"/>
+					<tex st="64.000000 64.000000"/>
+					<pos_xy xy="0.500000 -0.500000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xy xy="0.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.500000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="1" name="polygon1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">1</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 64.000000"/>
+					<pos_s xyz="-0.500000 -0.500000 0.000000"/>
+					<tex st="64.000000 64.000000"/>
+					<pos_xy xy="0.500000 -0.500000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xy xy="0.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.500000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="2" name="polygon2"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+		mtx_prim_size="1"
+		nrm_flag="off" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">2</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 64.000000"/>
+					<pos_s xyz="-0.500000 -0.500000 0.000000"/>
+					<tex st="64.000000 64.000000"/>
+					<pos_xy xy="0.500000 -0.500000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xy xy="0.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.500000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="3" name="polygon3"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">3</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 64.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-0.500000 -0.500000 0.000000"/>
+					<tex st="64.000000 64.000000"/>
+					<pos_xy xy="0.500000 -0.500000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xy xy="0.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.500000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="4" name="polygon4"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">4</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 64.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-0.500000 -0.500000 0.000000"/>
+					<tex st="64.000000 64.000000"/>
+					<pos_xy xy="0.500000 -0.500000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xy xy="0.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.500000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="5" name="polygon5"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">5</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 64.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-0.500000 -0.500000 0.000000"/>
+					<tex st="64.000000 64.000000"/>
+					<pos_xy xy="0.500000 -0.500000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xy xy="0.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.500000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="6" name="polygon6"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">6</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 64.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-0.500000 -0.500000 0.000000"/>
+					<tex st="64.000000 64.000000"/>
+					<pos_xy xy="0.500000 -0.500000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xy xy="0.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.500000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+	<polygon index="7" name="polygon7"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+		mtx_prim_size="1"
+		nrm_flag="on" clr_flag="off" tex_flag="on"
+	>
+		<mtx_prim index="0">
+			<mtx_list size="1">7</mtx_list>
+			<primitive_array size="1">
+				<primitive index="0" type="quads" vertex_size="4">
+					<mtx idx="0"/>
+					<tex st="0.000000 64.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-0.500000 -0.500000 0.000000"/>
+					<tex st="64.000000 64.000000"/>
+					<pos_xy xy="0.500000 -0.500000"/>
+					<tex st="64.000000 0.000000"/>
+					<pos_xy xy="0.500000 0.500000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="-0.500000 0.500000"/>
+				</primitive>
+			</primitive_array>
+		</mtx_prim>
+	</polygon>
+</polygon_array>
+
+<node_array size="9">
+	<node index="0" name="group1" kind="null"
+		parent="-1"
+		child="1"
+		brother_next="-1"
+		brother_prev="-1"
+		draw_mtx="off"
+		billboard="off"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 0.000000"
+		visibility="on"
+		display_size="0"
+	>
+	</node>
+	<node index="1" name="pPlane1" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="2"
+		brother_prev="-1"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 1.500000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+	>
+		<display index="0" material="0" polygon="0" priority="0"/>
+	</node>
+	<node index="2" name="pPlane2" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="3"
+		brother_prev="1"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="-1.060059 0.000000 1.060059"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+	>
+		<display index="0" material="1" polygon="1" priority="0"/>
+	</node>
+	<node index="3" name="pPlane3" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="4"
+		brother_prev="2"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="-1.500000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+	>
+		<display index="0" material="2" polygon="2" priority="0"/>
+	</node>
+	<node index="4" name="pPlane4" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="5"
+		brother_prev="3"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="-1.060059 0.000000 -1.060059"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+	>
+		<display index="0" material="3" polygon="3" priority="0"/>
+	</node>
+	<node index="5" name="pPlane5" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="6"
+		brother_prev="4"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="0.000000 0.000000 -1.500000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+	>
+		<display index="0" material="4" polygon="4" priority="0"/>
+	</node>
+	<node index="6" name="pPlane6" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="7"
+		brother_prev="5"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="1.060059 0.000000 -1.060059"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+	>
+		<display index="0" material="5" polygon="5" priority="0"/>
+	</node>
+	<node index="7" name="pPlane7" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="8"
+		brother_prev="6"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="1.500000 0.000000 0.000000"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+	>
+		<display index="0" material="6" polygon="6" priority="0"/>
+	</node>
+	<node index="8" name="pPlane8" kind="mesh"
+		parent="0"
+		child="-1"
+		brother_next="-1"
+		brother_prev="7"
+		draw_mtx="on"
+		billboard="on"
+		scale="1.000000 1.000000 1.000000"
+		rotate="0.000000 0.000000 0.000000"
+		translate="1.060059 0.000000 1.060059"
+		visibility="on"
+		display_size="1"
+		vertex_size="4" polygon_size="1"
+		triangle_size="0" quad_size="1"
+		volume_min="-0.500000 -0.500000 0.000000"
+		volume_max="0.500000 0.500000 0.000000"
+		volume_r="0.707031"
+	>
+		<display index="0" material="7" polygon="7" priority="0"/>
+	</node>
+</node_array>
+
+<output_info vertex_size="32" polygon_size="8"
+	triangle_size="0" quad_size="8"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="8">
+		<ex_tex_image index="0" disp_pos="-420.000000 360.000000"/>
+		<ex_tex_image index="1" disp_pos="-300.000000 360.000000"/>
+		<ex_tex_image index="2" disp_pos="-180.000000 360.000000"/>
+		<ex_tex_image index="3" disp_pos="-60.000000 360.000000"/>
+		<ex_tex_image index="4" disp_pos="60.000000 360.000000"/>
+		<ex_tex_image index="5" disp_pos="180.000000 360.000000"/>
+		<ex_tex_image index="6" disp_pos="300.000000 360.000000"/>
+		<ex_tex_image index="7" disp_pos="420.000000 360.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="8">
+		<ex_tex_palette index="0" disp_pos="-420.000000 420.000000"/>
+		<ex_tex_palette index="1" disp_pos="-300.000000 420.000000"/>
+		<ex_tex_palette index="2" disp_pos="-180.000000 420.000000"/>
+		<ex_tex_palette index="3" disp_pos="-60.000000 420.000000"/>
+		<ex_tex_palette index="4" disp_pos="60.000000 420.000000"/>
+		<ex_tex_palette index="5" disp_pos="180.000000 420.000000"/>
+		<ex_tex_palette index="6" disp_pos="300.000000 420.000000"/>
+		<ex_tex_palette index="7" disp_pos="420.000000 420.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="8">
+		<ex_material index="0" disp_pos="-420.000000 300.000000"/>
+		<ex_material index="1" disp_pos="-300.000000 300.000000"/>
+		<ex_material index="2" disp_pos="-180.000000 300.000000"/>
+		<ex_material index="3" disp_pos="-60.000000 300.000000"/>
+		<ex_material index="4" disp_pos="60.000000 300.000000"/>
+		<ex_material index="5" disp_pos="180.000000 300.000000"/>
+		<ex_material index="6" disp_pos="300.000000 300.000000"/>
+		<ex_material index="7" disp_pos="420.000000 300.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="8">
+		<ex_polygon index="0" disp_pos="-420.000000 240.000000"/>
+		<ex_polygon index="1" disp_pos="-300.000000 240.000000"/>
+		<ex_polygon index="2" disp_pos="-180.000000 240.000000"/>
+		<ex_polygon index="3" disp_pos="-60.000000 240.000000"/>
+		<ex_polygon index="4" disp_pos="60.000000 240.000000"/>
+		<ex_polygon index="5" disp_pos="180.000000 240.000000"/>
+		<ex_polygon index="6" disp_pos="300.000000 240.000000"/>
+		<ex_polygon index="7" disp_pos="420.000000 240.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="9">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+		<ex_node index="1" disp_pos="-420.000000 180.000000"/>
+		<ex_node index="2" disp_pos="-300.000000 180.000000"/>
+		<ex_node index="3" disp_pos="-180.000000 180.000000"/>
+		<ex_node index="4" disp_pos="-60.000000 180.000000"/>
+		<ex_node index="5" disp_pos="60.000000 180.000000"/>
+		<ex_node index="6" disp_pos="180.000000 180.000000"/>
+		<ex_node index="7" disp_pos="300.000000 180.000000"/>
+		<ex_node index="8" disp_pos="420.000000 180.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
+
+</body>
+
+</imd>
