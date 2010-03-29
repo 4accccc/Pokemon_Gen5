@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-28T16:38:55"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T22:37:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1293" top="118" right="1998" bottom="746" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,17 +292,41 @@
 	</lock>
 
 
-	<row id="msg_r09_baker_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">BAKER
-パン屋</attribute>
-		<language name="JPN" width="256">あそこにある　ほらあな……
-なかに　なにが　あるんだろうね？</language>
-		<language name="JPN_KANJI" width="256">あそこにある　洞穴……
-中に　なにが　あるんだろうね？</language>
+	<row id="msg_r09_fighterm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・クリア前
+・GRIDX=346、GRIDZ=186</comment>
+		<attribute name="キャラ指定">FIGHTERM</attribute>
+		<language name="JPN" width="256">この　ほらあなに　ひそむのは
+てごわい　ポケモンばかり！▼
+チャンピオンが　ときどき
+しゅぎょうのため　はいっていくが▼
+オマエさんが　いどむには
+まだまだ　はやいな！</language>
+		<language name="JPN_KANJI" width="256">この　洞穴に　ひそむのは
+手強い　ポケモンばかり！▼
+チャンピオンが　ときどき
+修行のため　入っていくが▼
+オマエさんが　挑むには
+まだまだ　早いな！</language>
 	</row>
 
-	<row id="msg_r09_badman_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r09_fighterm_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・クリア後、洞窟前から移動しており
+　中に入れるようになっている</comment>
+		<attribute name="キャラ指定">FIGHTERM</attribute>
+		<language name="JPN" width="256">ほう！　オマエさん
+なかなかの　トレーナーだな！▼
+ほらあなに　はいり　おのれと
+ポケモンを　きたえてみよ！</language>
+		<language name="JPN_KANJI" width="256">ほう！　オマエさん
+なかなかの　トレーナーだな！▼
+洞穴に　入り　己と
+ポケモンを　鍛えてみよ！</language>
+	</row>
+
+	<row id="msg_r09_badman_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・r09r0101からｒ09に来ると
 　この動作モデルに！マークを表示して
@@ -317,7 +341,7 @@
 第１球　投げました！！▼</language>
 	</row>
 
-	<row id="msg_r09_badman_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r09_badman_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">BASEBALLM</attribute>
@@ -368,7 +392,7 @@
 移動できる　モードに　なります！</language>
 	</row>
 
-	<row id="msg_r09_sign4_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r09_sign4_01" text-color="#000000,,,#ff0000,,#000000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">シリンダーブリッジ
 イッシュじまんの　てつどうきょう</language>
