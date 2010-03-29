@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-02-16T19:54:54"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-29T17:43:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -85,6 +85,11 @@
 			<tag entry="15" japanese="趣味（調査レーダー）" english="趣味（調査レーダー）" view="EP" length="0" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="16" japanese="Gパワー名称" english="Gパワー名称" view="EP" width="156" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">Gパワーの名称です</comment>
+				<comment language="english">Gパワーの名称です</comment>
+			</tag>
 			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">ポケモンの特殊状態です。</comment>
@@ -94,6 +99,9 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
 				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="19" japanese="アンケート回答" english="アンケート回答" view="EP" width="108" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -116,19 +124,17 @@
 				<comment language="japanese">ぼうけんノートなどで使う</comment>
 				<comment language="english">ぼうけんノートなどで使う</comment>
 			</tag>
-			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+			<tag entry="34" japanese="ミュージカル演目名" english="ミュージカル演目名" view="EP" width="234" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">コンテストのジャンル
-「○○○○○コンテスト」</comment>
-				<comment language="english">コンテストのジャンル
-「○○○○○コンテスト」</comment>
+				<comment language="japanese">ミュージカルの演目名</comment>
+				<comment language="english">ミュージカルの演目名</comment>
 			</tag>
-			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+			<tag entry="35" japanese="ミュージカルコンディション" english="ミュージカルコンディション" view="EP" width="65" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">○○○○ランク
-「ランク」も含む</comment>
-				<comment language="english">○○○○ランク
-「ランク」も含む</comment>
+				<comment language="japanese">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
+				<comment language="english">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
 			</tag>
 			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -190,6 +196,17 @@
 				<comment language="japanese">スペイン語の挨拶</comment>
 				<comment language="english">スペイン語の挨拶</comment>
 			</tag>
+			<tag entry="49" japanese="ミュージカルグッズ部位" english="ミュージカルグッズ部位" view="EP" width="39" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="169" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="51" japanese="ミュージカル客層" english="ミュージカル客層" view="EP" width="78" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">おとこのひと、女の子等</comment>
+				<comment language="english">おとこのひと、女の子等</comment>
+			</tag>
 		</group>
 
 		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
@@ -249,7 +266,7 @@
 				<comment language="english">描画X座標を加算します。
 使用は許可制です。</comment>
 			</tag>
-			<tag entry="05" japanese="X指定" english="X指定" view="EP">
+			<tag entry="05" japanese="X指定" english="X指定" view="EP" length="0" line="1">
 				<parameter number="0" japanese="Ｘ座標" english="Ｘ座標" type="int16"/>
 				<comment language="japanese">描画Ｘ座標を指定値に変更。
 使用は許可制です。</comment>
@@ -337,7 +354,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1409" top="308" right="2114" bottom="936" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -367,5 +384,1261 @@
 
 	<row id="BST_NAME_000">
 		<language name="JPN" width="216">ーーーーー</language>
+	</row>
+
+	<row id="BST_NAME_001">
+		<language name="JPN" width="216">イチロウタ</language>
+	</row>
+
+	<row id="BST_NAME_002">
+		<language name="JPN" width="216">ロンドン</language>
+	</row>
+
+	<row id="BST_NAME_003">
+		<language name="JPN" width="216">モモジ</language>
+	</row>
+
+	<row id="BST_NAME_004">
+		<language name="JPN" width="216">スミス</language>
+	</row>
+
+	<row id="BST_NAME_005">
+		<language name="JPN" width="216">アニョー</language>
+	</row>
+
+	<row id="BST_NAME_006">
+		<language name="JPN" width="216">クルベット</language>
+	</row>
+
+	<row id="BST_NAME_007">
+		<language name="JPN" width="216">シヅ</language>
+	</row>
+
+	<row id="BST_NAME_008">
+		<language name="JPN" width="216">クワン</language>
+	</row>
+
+	<row id="BST_NAME_009">
+		<language name="JPN" width="216">ムラマサ</language>
+	</row>
+
+	<row id="BST_NAME_010">
+		<language name="JPN" width="216">セミマル</language>
+	</row>
+
+	<row id="BST_NAME_011">
+		<language name="JPN" width="216">イチモンジ</language>
+	</row>
+
+	<row id="BST_NAME_012">
+		<language name="JPN" width="216">ケビン</language>
+	</row>
+
+	<row id="BST_NAME_013">
+		<language name="JPN" width="216">ハツ</language>
+	</row>
+
+	<row id="BST_NAME_014">
+		<language name="JPN" width="216">チュチュ</language>
+	</row>
+
+	<row id="BST_NAME_015">
+		<language name="JPN" width="216">モンモ</language>
+	</row>
+
+	<row id="BST_NAME_016">
+		<language name="JPN" width="216">ウメチヨ</language>
+	</row>
+
+	<row id="BST_NAME_017">
+		<language name="JPN" width="216">ポンド</language>
+	</row>
+
+	<row id="BST_NAME_018">
+		<language name="JPN" width="216">ルピー</language>
+	</row>
+
+	<row id="BST_NAME_019">
+		<language name="JPN" width="216">ドル</language>
+	</row>
+
+	<row id="BST_NAME_020">
+		<language name="JPN" width="216">ルーティ</language>
+	</row>
+
+	<row id="BST_NAME_021">
+		<language name="JPN" width="216">ウォン</language>
+	</row>
+
+	<row id="BST_NAME_022">
+		<language name="JPN" width="216">ペソ</language>
+	</row>
+
+	<row id="BST_NAME_023">
+		<language name="JPN" width="216">クローネ</language>
+	</row>
+
+	<row id="BST_NAME_024">
+		<language name="JPN" width="216">レアル</language>
+	</row>
+
+	<row id="BST_NAME_025">
+		<language name="JPN" width="216">ノブナガ</language>
+	</row>
+
+	<row id="BST_NAME_026">
+		<language name="JPN" width="216">ノブヒデ</language>
+	</row>
+
+	<row id="BST_NAME_027">
+		<language name="JPN" width="216">ノブヤス</language>
+	</row>
+
+	<row id="BST_NAME_028">
+		<language name="JPN" width="216">ノブタダ</language>
+	</row>
+
+	<row id="BST_NAME_029">
+		<language name="JPN" width="216">エマニエル</language>
+	</row>
+
+	<row id="BST_NAME_030">
+		<language name="JPN" width="216">ドミニカ</language>
+	</row>
+
+	<row id="BST_NAME_031">
+		<language name="JPN" width="216">モンロー</language>
+	</row>
+
+	<row id="BST_NAME_032">
+		<language name="JPN" width="216">サンレイ</language>
+	</row>
+
+	<row id="BST_NAME_033">
+		<language name="JPN" width="216">ゲンナイ</language>
+	</row>
+
+	<row id="BST_NAME_034">
+		<language name="JPN" width="216">アナンダ</language>
+	</row>
+
+	<row id="BST_NAME_035">
+		<language name="JPN" width="216">セルジブデ</language>
+	</row>
+
+	<row id="BST_NAME_036">
+		<language name="JPN" width="216">マイラ</language>
+	</row>
+
+	<row id="BST_NAME_037">
+		<language name="JPN" width="216">ターニャ</language>
+	</row>
+
+	<row id="BST_NAME_038">
+		<language name="JPN" width="216">テリッサ</language>
+	</row>
+
+	<row id="BST_NAME_039">
+		<language name="JPN" width="216">ゴウジン</language>
+	</row>
+
+	<row id="BST_NAME_040">
+		<language name="JPN" width="216">アブドゥル</language>
+	</row>
+
+	<row id="BST_NAME_041">
+		<language name="JPN" width="216">ジムジロウ</language>
+	</row>
+
+	<row id="BST_NAME_042">
+		<language name="JPN" width="216">アオヤギ</language>
+	</row>
+
+	<row id="BST_NAME_043">
+		<language name="JPN" width="216">シャコ</language>
+	</row>
+
+	<row id="BST_NAME_044">
+		<language name="JPN" width="216">イサキ</language>
+	</row>
+
+	<row id="BST_NAME_045">
+		<language name="JPN" width="216">フツ</language>
+	</row>
+
+	<row id="BST_NAME_046">
+		<language name="JPN" width="216">ムラクモ</language>
+	</row>
+
+	<row id="BST_NAME_047">
+		<language name="JPN" width="216">トツカ</language>
+	</row>
+
+	<row id="BST_NAME_048">
+		<language name="JPN" width="216">アマナツ</language>
+	</row>
+
+	<row id="BST_NAME_049">
+		<language name="JPN" width="216">カレルレン</language>
+	</row>
+
+	<row id="BST_NAME_050">
+		<language name="JPN" width="216">ファルナ</language>
+	</row>
+
+	<row id="BST_NAME_051">
+		<language name="JPN" width="216">ガスパール</language>
+	</row>
+
+	<row id="BST_NAME_052">
+		<language name="JPN" width="216">ツルギ</language>
+	</row>
+
+	<row id="BST_NAME_053">
+		<language name="JPN" width="216">ディプロ</language>
+	</row>
+
+	<row id="BST_NAME_054">
+		<language name="JPN" width="216">ジャガー</language>
+	</row>
+
+	<row id="BST_NAME_055">
+		<language name="JPN" width="216">ポロ</language>
+	</row>
+
+	<row id="BST_NAME_056">
+		<language name="JPN" width="216">アバッキオ</language>
+	</row>
+
+	<row id="BST_NAME_057">
+		<language name="JPN" width="216">スカンピ</language>
+	</row>
+
+	<row id="BST_NAME_058">
+		<language name="JPN" width="216">ティウ</language>
+	</row>
+
+	<row id="BST_NAME_059">
+		<language name="JPN" width="216">アトラス</language>
+	</row>
+
+	<row id="BST_NAME_060">
+		<language name="JPN" width="216">カリスト</language>
+	</row>
+
+	<row id="BST_NAME_061">
+		<language name="JPN" width="216">ニコラオス</language>
+	</row>
+
+	<row id="BST_NAME_062">
+		<language name="JPN" width="216">パウロ</language>
+	</row>
+
+	<row id="BST_NAME_063">
+		<language name="JPN" width="216">ホビロン</language>
+	</row>
+
+	<row id="BST_NAME_064">
+		<language name="JPN" width="216">クララベル</language>
+	</row>
+
+	<row id="BST_NAME_065">
+		<language name="JPN" width="216">クラーラ</language>
+	</row>
+
+	<row id="BST_NAME_066">
+		<language name="JPN" width="216">オルガ</language>
+	</row>
+
+	<row id="BST_NAME_067">
+		<language name="JPN" width="216">ボブ</language>
+	</row>
+
+	<row id="BST_NAME_068">
+		<language name="JPN" width="216">ボブヒコ</language>
+	</row>
+
+	<row id="BST_NAME_069">
+		<language name="JPN" width="216">ミカ</language>
+	</row>
+
+	<row id="BST_NAME_070">
+		<language name="JPN" width="216">メンカウラ</language>
+	</row>
+
+	<row id="BST_NAME_071">
+		<language name="JPN" width="216">リンカーン</language>
+	</row>
+
+	<row id="BST_NAME_072">
+		<language name="JPN" width="216">トルーマン</language>
+	</row>
+
+	<row id="BST_NAME_073">
+		<language name="JPN" width="216">フーバー</language>
+	</row>
+
+	<row id="BST_NAME_074">
+		<language name="JPN" width="216">ナヨギク</language>
+	</row>
+
+	<row id="BST_NAME_075">
+		<language name="JPN" width="216">ヒグラシ</language>
+	</row>
+
+	<row id="BST_NAME_076">
+		<language name="JPN" width="216">アイリーン</language>
+	</row>
+
+	<row id="BST_NAME_077">
+		<language name="JPN" width="216">クリノスケ</language>
+	</row>
+
+	<row id="BST_NAME_078">
+		<language name="JPN" width="216">カキエモン</language>
+	</row>
+
+	<row id="BST_NAME_079">
+		<language name="JPN" width="216">モモタロウ</language>
+	</row>
+
+	<row id="BST_NAME_080">
+		<language name="JPN" width="216">ロベルタ</language>
+	</row>
+
+	<row id="BST_NAME_081">
+		<language name="JPN" width="216">パク</language>
+	</row>
+
+	<row id="BST_NAME_082">
+		<language name="JPN" width="216">ツルコ</language>
+	</row>
+
+	<row id="BST_NAME_083">
+		<language name="JPN" width="216">メルセデス</language>
+	</row>
+
+	<row id="BST_NAME_084">
+		<language name="JPN" width="216">ファビアン</language>
+	</row>
+
+	<row id="BST_NAME_085">
+		<language name="JPN" width="216">ネタロウ</language>
+	</row>
+
+	<row id="BST_NAME_086">
+		<language name="JPN" width="216">ピアジェ</language>
+	</row>
+
+	<row id="BST_NAME_087">
+		<language name="JPN" width="216">エーミル</language>
+	</row>
+
+	<row id="BST_NAME_088">
+		<language name="JPN" width="216">シンエモン</language>
+	</row>
+
+	<row id="BST_NAME_089">
+		<language name="JPN" width="216">ウェイ</language>
+	</row>
+
+	<row id="BST_NAME_090">
+		<language name="JPN" width="216">ミン</language>
+	</row>
+
+	<row id="BST_NAME_091">
+		<language name="JPN" width="216">マールクス</language>
+	</row>
+
+	<row id="BST_NAME_092">
+		<language name="JPN" width="216">マチゾウ</language>
+	</row>
+
+	<row id="BST_NAME_093">
+		<language name="JPN" width="216">シンゲン</language>
+	</row>
+
+	<row id="BST_NAME_094">
+		<language name="JPN" width="216">クラウド</language>
+	</row>
+
+	<row id="BST_NAME_095">
+		<language name="JPN" width="216">バシレウス</language>
+	</row>
+
+	<row id="BST_NAME_096">
+		<language name="JPN" width="216">ホフマン</language>
+	</row>
+
+	<row id="BST_NAME_097">
+		<language name="JPN" width="216">サダ</language>
+	</row>
+
+	<row id="BST_NAME_098">
+		<language name="JPN" width="216">ヨド</language>
+	</row>
+
+	<row id="BST_NAME_099">
+		<language name="JPN" width="216">ゴサク</language>
+	</row>
+
+	<row id="BST_NAME_100">
+		<language name="JPN" width="216">コッフェル</language>
+	</row>
+
+	<row id="BST_NAME_101">
+		<language name="JPN" width="216">カメ</language>
+	</row>
+
+	<row id="BST_NAME_102">
+		<language name="JPN" width="216">カードイ</language>
+	</row>
+
+	<row id="BST_NAME_103">
+		<language name="JPN" width="216">シンタロウ</language>
+	</row>
+
+	<row id="BST_NAME_104">
+		<language name="JPN" width="216">エンゾウ</language>
+	</row>
+
+	<row id="BST_NAME_105">
+		<language name="JPN" width="216">ディオーネ</language>
+	</row>
+
+	<row id="BST_NAME_106">
+		<language name="JPN" width="216">ネレイド</language>
+	</row>
+
+	<row id="BST_NAME_107">
+		<language name="JPN" width="216">アックン</language>
+	</row>
+
+	<row id="BST_NAME_108">
+		<language name="JPN" width="216">カックン</language>
+	</row>
+
+	<row id="BST_NAME_109">
+		<language name="JPN" width="216">ロアン</language>
+	</row>
+
+	<row id="BST_NAME_110">
+		<language name="JPN" width="216">クェン</language>
+	</row>
+
+	<row id="BST_NAME_111">
+		<language name="JPN" width="216">テルモト</language>
+	</row>
+
+	<row id="BST_NAME_112">
+		<language name="JPN" width="216">カネツグ</language>
+	</row>
+
+	<row id="BST_NAME_113">
+		<language name="JPN" width="216">ユイットル</language>
+	</row>
+
+	<row id="BST_NAME_114">
+		<language name="JPN" width="216">パンタード</language>
+	</row>
+
+	<row id="BST_NAME_115">
+		<language name="JPN" width="216">フリッツ</language>
+	</row>
+
+	<row id="BST_NAME_116">
+		<language name="JPN" width="216">ヨヘイ</language>
+	</row>
+
+	<row id="BST_NAME_117">
+		<language name="JPN" width="216">ワカタケ</language>
+	</row>
+
+	<row id="BST_NAME_118">
+		<language name="JPN" width="216">ツバル</language>
+	</row>
+
+	<row id="BST_NAME_119">
+		<language name="JPN" width="216">カイン</language>
+	</row>
+
+	<row id="BST_NAME_120">
+		<language name="JPN" width="216">アベル</language>
+	</row>
+
+	<row id="BST_NAME_121">
+		<language name="JPN" width="216">ポワソン</language>
+	</row>
+
+	<row id="BST_NAME_122">
+		<language name="JPN" width="216">ユイトール</language>
+	</row>
+
+	<row id="BST_NAME_123">
+		<language name="JPN" width="216">ユーセフ</language>
+	</row>
+
+	<row id="BST_NAME_124">
+		<language name="JPN" width="216">ザイド</language>
+	</row>
+
+	<row id="BST_NAME_125">
+		<language name="JPN" width="216">ベティ</language>
+	</row>
+
+	<row id="BST_NAME_126">
+		<language name="JPN" width="216">ヘレン</language>
+	</row>
+
+	<row id="BST_NAME_127">
+		<language name="JPN" width="216">クンヤ</language>
+	</row>
+
+	<row id="BST_NAME_128">
+		<language name="JPN" width="216">シャムス</language>
+	</row>
+
+	<row id="BST_NAME_129">
+		<language name="JPN" width="216">ズラータ</language>
+	</row>
+
+	<row id="BST_NAME_130">
+		<language name="JPN" width="216">ポリーナ</language>
+	</row>
+
+	<row id="BST_NAME_131">
+		<language name="JPN" width="216">レオナルト</language>
+	</row>
+
+	<row id="BST_NAME_132">
+		<language name="JPN" width="216">ローレンツ</language>
+	</row>
+
+	<row id="BST_NAME_133">
+		<language name="JPN" width="216">エンガワ</language>
+	</row>
+
+	<row id="BST_NAME_134">
+		<language name="JPN" width="216">コハダ</language>
+	</row>
+
+	<row id="BST_NAME_135">
+		<language name="JPN" width="216">セルジオ</language>
+	</row>
+
+	<row id="BST_NAME_136">
+		<language name="JPN" width="216">フェリペ</language>
+	</row>
+
+	<row id="BST_NAME_137">
+		<language name="JPN" width="216">ビージャル</language>
+	</row>
+
+	<row id="BST_NAME_138">
+		<language name="JPN" width="216">メリル</language>
+	</row>
+
+	<row id="BST_NAME_139">
+		<language name="JPN" width="216">タピオカ</language>
+	</row>
+
+	<row id="BST_NAME_140">
+		<language name="JPN" width="216">ゲンゴロウ</language>
+	</row>
+
+	<row id="BST_NAME_141">
+		<language name="JPN" width="216">ダンカン</language>
+	</row>
+
+	<row id="BST_NAME_142">
+		<language name="JPN" width="216">モルガン</language>
+	</row>
+
+	<row id="BST_NAME_143">
+		<language name="JPN" width="216">ココメーロ</language>
+	</row>
+
+	<row id="BST_NAME_144">
+		<language name="JPN" width="216">パク</language>
+	</row>
+
+	<row id="BST_NAME_145">
+		<language name="JPN" width="216">ポモドーロ</language>
+	</row>
+
+	<row id="BST_NAME_146">
+		<language name="JPN" width="216">オベロン</language>
+	</row>
+
+	<row id="BST_NAME_147">
+		<language name="JPN" width="216">トリトン</language>
+	</row>
+
+	<row id="BST_NAME_148">
+		<language name="JPN" width="216">カロン</language>
+	</row>
+
+	<row id="BST_NAME_149">
+		<language name="JPN" width="216">ザビエル</language>
+	</row>
+
+	<row id="BST_NAME_150">
+		<language name="JPN" width="216">ヤコブ</language>
+	</row>
+
+	<row id="BST_NAME_151">
+		<language name="JPN" width="216">ヨアキム</language>
+	</row>
+
+	<row id="BST_NAME_152">
+		<language name="JPN" width="216">セリーヌ</language>
+	</row>
+
+	<row id="BST_NAME_153">
+		<language name="JPN" width="216">コウ</language>
+	</row>
+
+	<row id="BST_NAME_154">
+		<language name="JPN" width="216">マリーズ</language>
+	</row>
+
+	<row id="BST_NAME_155">
+		<language name="JPN" width="216">ジュズマル</language>
+	</row>
+
+	<row id="BST_NAME_156">
+		<language name="JPN" width="216">ムネチカ</language>
+	</row>
+
+	<row id="BST_NAME_157">
+		<language name="JPN" width="216">オニマル</language>
+	</row>
+
+	<row id="BST_NAME_158">
+		<language name="JPN" width="216">テツ</language>
+	</row>
+
+	<row id="BST_NAME_159">
+		<language name="JPN" width="216">ニッケイ</language>
+	</row>
+
+	<row id="BST_NAME_160">
+		<language name="JPN" width="216">サビアサギ</language>
+	</row>
+
+	<row id="BST_NAME_161">
+		<language name="JPN" width="216">シャンク</language>
+	</row>
+
+	<row id="BST_NAME_162">
+		<language name="JPN" width="216">アイアン</language>
+	</row>
+
+	<row id="BST_NAME_163">
+		<language name="JPN" width="216">ボギー</language>
+	</row>
+
+	<row id="BST_NAME_164">
+		<language name="JPN" width="216">マーチ</language>
+	</row>
+
+	<row id="BST_NAME_165">
+		<language name="JPN" width="216">ミキヲ</language>
+	</row>
+
+	<row id="BST_NAME_166">
+		<language name="JPN" width="216">ポルカ</language>
+	</row>
+
+	<row id="BST_NAME_167">
+		<language name="JPN" width="216">アントク</language>
+	</row>
+
+	<row id="BST_NAME_168">
+		<language name="JPN" width="216">トキヒト</language>
+	</row>
+
+	<row id="BST_NAME_169">
+		<language name="JPN" width="216">ユキムラ</language>
+	</row>
+
+	<row id="BST_NAME_170">
+		<language name="JPN" width="216">ウジマサ</language>
+	</row>
+
+	<row id="BST_NAME_171">
+		<language name="JPN" width="216">ハミード</language>
+	</row>
+
+	<row id="BST_NAME_172">
+		<language name="JPN" width="216">アフマド</language>
+	</row>
+
+	<row id="BST_NAME_173">
+		<language name="JPN" width="216">イチマツ</language>
+	</row>
+
+	<row id="BST_NAME_174">
+		<language name="JPN" width="216">ナヨタケ</language>
+	</row>
+
+	<row id="BST_NAME_175">
+		<language name="JPN" width="216">ボブジロウ</language>
+	</row>
+
+	<row id="BST_NAME_176">
+		<language name="JPN" width="216">ボブヨシ</language>
+	</row>
+
+	<row id="BST_NAME_177">
+		<language name="JPN" width="216">ワディム</language>
+	</row>
+
+	<row id="BST_NAME_178">
+		<language name="JPN" width="216">ユーリー</language>
+	</row>
+
+	<row id="BST_NAME_179">
+		<language name="JPN" width="216">ベロア</language>
+	</row>
+
+	<row id="BST_NAME_180">
+		<language name="JPN" width="216">モヘア</language>
+	</row>
+
+	<row id="BST_NAME_181">
+		<language name="JPN" width="216">カマナリ</language>
+	</row>
+
+	<row id="BST_NAME_182">
+		<language name="JPN" width="216">ヨブコ</language>
+	</row>
+
+	<row id="BST_NAME_183">
+		<language name="JPN" width="216">キャメロン</language>
+	</row>
+
+	<row id="BST_NAME_184">
+		<language name="JPN" width="216">ジャッキー</language>
+	</row>
+
+	<row id="BST_NAME_185">
+		<language name="JPN" width="216">ドクデス</language>
+	</row>
+
+	<row id="BST_NAME_186">
+		<language name="JPN" width="216">チミン</language>
+	</row>
+
+	<row id="BST_NAME_187">
+		<language name="JPN" width="216">アデニン</language>
+	</row>
+
+	<row id="BST_NAME_188">
+		<language name="JPN" width="216">タマトヨ</language>
+	</row>
+
+	<row id="BST_NAME_189">
+		<language name="JPN" width="216">キクリ</language>
+	</row>
+
+	<row id="BST_NAME_190">
+		<language name="JPN" width="216">クシナダ</language>
+	</row>
+
+	<row id="BST_NAME_191">
+		<language name="JPN" width="216">ダニイル</language>
+	</row>
+
+	<row id="BST_NAME_192">
+		<language name="JPN" width="216">フョードル</language>
+	</row>
+
+	<row id="BST_NAME_193">
+		<language name="JPN" width="216">マキエ</language>
+	</row>
+
+	<row id="BST_NAME_194">
+		<language name="JPN" width="216">ウルシ</language>
+	</row>
+
+	<row id="BST_NAME_195">
+		<language name="JPN" width="216">モリリン</language>
+	</row>
+
+	<row id="BST_NAME_196">
+		<language name="JPN" width="216">ミズノスケ</language>
+	</row>
+
+	<row id="BST_NAME_197">
+		<language name="JPN" width="216">ウソブキ</language>
+	</row>
+
+	<row id="BST_NAME_198">
+		<language name="JPN" width="216">オタフク</language>
+	</row>
+
+	<row id="BST_NAME_199">
+		<language name="JPN" width="216">ゲッコウ</language>
+	</row>
+
+	<row id="BST_NAME_200">
+		<language name="JPN" width="216">イザヨイ</language>
+	</row>
+
+	<row id="BST_NAME_201">
+		<language name="JPN" width="216">ネジヒコ</language>
+	</row>
+
+	<row id="BST_NAME_202">
+		<language name="JPN" width="216">ファウスト</language>
+	</row>
+
+	<row id="BST_NAME_203">
+		<language name="JPN" width="216">ヤブサメ</language>
+	</row>
+
+	<row id="BST_NAME_204">
+		<language name="JPN" width="216">ウツケ</language>
+	</row>
+
+	<row id="BST_NAME_205">
+		<language name="JPN" width="216">フトコロ</language>
+	</row>
+
+	<row id="BST_NAME_206">
+		<language name="JPN" width="216">ロッテ</language>
+	</row>
+
+	<row id="BST_NAME_207">
+		<language name="JPN" width="216">テレーゼ</language>
+	</row>
+
+	<row id="BST_NAME_208">
+		<language name="JPN" width="216">ツヤコ</language>
+	</row>
+
+	<row id="BST_NAME_209">
+		<language name="JPN" width="216">ボルドバト</language>
+	</row>
+
+	<row id="BST_NAME_210">
+		<language name="JPN" width="216">ソロンゴ</language>
+	</row>
+
+	<row id="BST_NAME_211">
+		<language name="JPN" width="216">ハーン</language>
+	</row>
+
+	<row id="BST_NAME_212">
+		<language name="JPN" width="216">ムー</language>
+	</row>
+
+	<row id="BST_NAME_213">
+		<language name="JPN" width="216">シャンバラ</language>
+	</row>
+
+	<row id="BST_NAME_214">
+		<language name="JPN" width="216">ロンゴ</language>
+	</row>
+
+	<row id="BST_NAME_215">
+		<language name="JPN" width="216">ウンスー</language>
+	</row>
+
+	<row id="BST_NAME_216">
+		<language name="JPN" width="216">ハリマオ</language>
+	</row>
+
+	<row id="BST_NAME_217">
+		<language name="JPN" width="216">エンピ</language>
+	</row>
+
+	<row id="BST_NAME_218">
+		<language name="JPN" width="216">テンホウ</language>
+	</row>
+
+	<row id="BST_NAME_219">
+		<language name="JPN" width="216">チーホウ</language>
+	</row>
+
+	<row id="BST_NAME_220">
+		<language name="JPN" width="216">スーカンツ</language>
+	</row>
+
+	<row id="BST_NAME_221">
+		<language name="JPN" width="216">ススタケ</language>
+	</row>
+
+	<row id="BST_NAME_222">
+		<language name="JPN" width="216">マウス</language>
+	</row>
+
+	<row id="BST_NAME_223">
+		<language name="JPN" width="216">カメノゾキ</language>
+	</row>
+
+	<row id="BST_NAME_224">
+		<language name="JPN" width="216">テラコッタ</language>
+	</row>
+
+	<row id="BST_NAME_225">
+		<language name="JPN" width="216">バフ</language>
+	</row>
+
+	<row id="BST_NAME_226">
+		<language name="JPN" width="216">ボルドー</language>
+	</row>
+
+	<row id="BST_NAME_227">
+		<language name="JPN" width="216">マツウシ</language>
+	</row>
+
+	<row id="BST_NAME_228">
+		<language name="JPN" width="216">ツルマツ</language>
+	</row>
+
+	<row id="BST_NAME_229">
+		<language name="JPN" width="216">サエモン</language>
+	</row>
+
+	<row id="BST_NAME_230">
+		<language name="JPN" width="216">グエン</language>
+	</row>
+
+	<row id="BST_NAME_231">
+		<language name="JPN" width="216">ムーイ</language>
+	</row>
+
+	<row id="BST_NAME_232">
+		<language name="JPN" width="216">パーム</language>
+	</row>
+
+	<row id="BST_NAME_233">
+		<language name="JPN" width="216">ポンタ</language>
+	</row>
+
+	<row id="BST_NAME_234">
+		<language name="JPN" width="216">ドンタ</language>
+	</row>
+
+	<row id="BST_NAME_235">
+		<language name="JPN" width="216">マゴベエ</language>
+	</row>
+
+	<row id="BST_NAME_236">
+		<language name="JPN" width="216">シンエモン</language>
+	</row>
+
+	<row id="BST_NAME_237">
+		<language name="JPN" width="216">ヤマウバ</language>
+	</row>
+
+	<row id="BST_NAME_238">
+		<language name="JPN" width="216">シンジャ</language>
+	</row>
+
+	<row id="BST_NAME_239">
+		<language name="JPN" width="216">ナマナリ</language>
+	</row>
+
+	<row id="BST_NAME_240">
+		<language name="JPN" width="216">ハンニャ</language>
+	</row>
+
+	<row id="BST_NAME_241">
+		<language name="JPN" width="216">セドリック</language>
+	</row>
+
+	<row id="BST_NAME_242">
+		<language name="JPN" width="216">シモン</language>
+	</row>
+
+	<row id="BST_NAME_243">
+		<language name="JPN" width="216">ジョウハラ</language>
+	</row>
+
+	<row id="BST_NAME_244">
+		<language name="JPN" width="216">ワルダ</language>
+	</row>
+
+	<row id="BST_NAME_245">
+		<language name="JPN" width="216">ハイサム</language>
+	</row>
+
+	<row id="BST_NAME_246">
+		<language name="JPN" width="216">コンニョン</language>
+	</row>
+
+	<row id="BST_NAME_247">
+		<language name="JPN" width="216">ハマチ</language>
+	</row>
+
+	<row id="BST_NAME_248">
+		<language name="JPN" width="216">イクラ</language>
+	</row>
+
+	<row id="BST_NAME_249">
+		<language name="JPN" width="216">ジョルジュ</language>
+	</row>
+
+	<row id="BST_NAME_250">
+		<language name="JPN" width="216">サミュエル</language>
+	</row>
+
+	<row id="BST_NAME_251">
+		<language name="JPN" width="216">ハンフリー</language>
+	</row>
+
+	<row id="BST_NAME_252">
+		<language name="JPN" width="216">アドルフ</language>
+	</row>
+
+	<row id="BST_NAME_253">
+		<language name="JPN" width="216">コマ</language>
+	</row>
+
+	<row id="BST_NAME_254">
+		<language name="JPN" width="216">ギンチヨ</language>
+	</row>
+
+	<row id="BST_NAME_255">
+		<language name="JPN" width="216">ガニメデ</language>
+	</row>
+
+	<row id="BST_NAME_256">
+		<language name="JPN" width="216">プロテウス</language>
+	</row>
+
+	<row id="BST_NAME_257">
+		<language name="JPN" width="216">ペトロ</language>
+	</row>
+
+	<row id="BST_NAME_258">
+		<language name="JPN" width="216">フィリポ</language>
+	</row>
+
+	<row id="BST_NAME_259">
+		<language name="JPN" width="216">タマカヅラ</language>
+	</row>
+
+	<row id="BST_NAME_260">
+		<language name="JPN" width="216">ノノミヤ</language>
+	</row>
+
+	<row id="BST_NAME_261">
+		<language name="JPN" width="216">オオテンタ</language>
+	</row>
+
+	<row id="BST_NAME_262">
+		<language name="JPN" width="216">ドウジギリ</language>
+	</row>
+
+	<row id="BST_NAME_263">
+		<language name="JPN" width="216">アンギーユ</language>
+	</row>
+
+	<row id="BST_NAME_264">
+		<language name="JPN" width="216">フェザン</language>
+	</row>
+
+	<row id="BST_NAME_265">
+		<language name="JPN" width="216">ヘチカン</language>
+	</row>
+
+	<row id="BST_NAME_266">
+		<language name="JPN" width="216">リキュウ</language>
+	</row>
+
+	<row id="BST_NAME_267">
+		<language name="JPN" width="216">ツルミ</language>
+	</row>
+
+	<row id="BST_NAME_268">
+		<language name="JPN" width="216">チャチャ</language>
+	</row>
+
+	<row id="BST_NAME_269">
+		<language name="JPN" width="216">ロマン</language>
+	</row>
+
+	<row id="BST_NAME_270">
+		<language name="JPN" width="216">バレリー</language>
+	</row>
+
+	<row id="BST_NAME_271">
+		<language name="JPN" width="216">コレチカ</language>
+	</row>
+
+	<row id="BST_NAME_272">
+		<language name="JPN" width="216">ノリカタ</language>
+	</row>
+
+	<row id="BST_NAME_273">
+		<language name="JPN" width="216">マリオン</language>
+	</row>
+
+	<row id="BST_NAME_274">
+		<language name="JPN" width="216">ダンテ</language>
+	</row>
+
+	<row id="BST_NAME_275">
+		<language name="JPN" width="216">ビルギット</language>
+	</row>
+
+	<row id="BST_NAME_276">
+		<language name="JPN" width="216">マルギット</language>
+	</row>
+
+	<row id="BST_NAME_277">
+		<language name="JPN" width="216">バーンク</language>
+	</row>
+
+	<row id="BST_NAME_278">
+		<language name="JPN" width="216">スギカツ</language>
+	</row>
+
+	<row id="BST_NAME_279">
+		<language name="JPN" width="216">ボブノリ</language>
+	</row>
+
+	<row id="BST_NAME_280">
+		<language name="JPN" width="216">ボブエモン</language>
+	</row>
+
+	<row id="BST_NAME_281">
+		<language name="JPN" width="216">エリック</language>
+	</row>
+
+	<row id="BST_NAME_282">
+		<language name="JPN" width="216">オスカル</language>
+	</row>
+
+	<row id="BST_NAME_283">
+		<language name="JPN" width="216">トトメス</language>
+	</row>
+
+	<row id="BST_NAME_284">
+		<language name="JPN" width="216">ラムセス</language>
+	</row>
+
+	<row id="BST_NAME_285">
+		<language name="JPN" width="216">マツカゼ</language>
+	</row>
+
+	<row id="BST_NAME_286">
+		<language name="JPN" width="216">ウネメ</language>
+	</row>
+
+	<row id="BST_NAME_287">
+		<language name="JPN" width="216">コテツ</language>
+	</row>
+
+	<row id="BST_NAME_288">
+		<language name="JPN" width="216">トウシロウ</language>
+	</row>
+
+	<row id="BST_NAME_289">
+		<language name="JPN" width="216">サイズニー</language>
+	</row>
+
+	<row id="BST_NAME_290">
+		<language name="JPN" width="216">パナラット</language>
+	</row>
+
+	<row id="BST_NAME_291">
+		<language name="JPN" width="216">マンゾウ</language>
+	</row>
+
+	<row id="BST_NAME_292">
+		<language name="JPN" width="216">イエオン</language>
+	</row>
+
+	<row id="BST_NAME_293">
+		<language name="JPN" width="216">ショウ</language>
+	</row>
+
+	<row id="BST_NAME_294">
+		<language name="JPN" width="216">ツヅミ</language>
+	</row>
+
+	<row id="BST_NAME_295">
+		<language name="JPN" width="216">カミュ</language>
+	</row>
+
+	<row id="BST_NAME_296">
+		<language name="JPN" width="216">リルケ</language>
+	</row>
+
+	<row id="BST_NAME_297">
+		<language name="JPN" width="216">サティー</language>
+	</row>
+
+	<row id="BST_NAME_298">
+		<language name="JPN" width="216">アパルナ</language>
+	</row>
+
+	<row id="BST_NAME_299">
+		<language name="JPN" width="216">ミカヅキ</language>
+	</row>
+
+	<row id="BST_NAME_300">
+		<language name="JPN" width="216">シンゲツ</language>
+	</row>
+
+	<row id="BST_NAME_301">
+		<language name="JPN" width="216">トウヤ</language>
+	</row>
+
+	<row id="BST_NAME_302">
+		<language name="JPN" width="216">トウヤ</language>
+	</row>
+
+	<row id="BST_NAME_303">
+		<language name="JPN" width="216">トウヤ</language>
+	</row>
+
+	<row id="BST_NAME_304">
+		<language name="JPN" width="216">トウコ</language>
+	</row>
+
+	<row id="BST_NAME_305">
+		<language name="JPN" width="216">トウコ</language>
+	</row>
+
+	<row id="BST_NAME_306">
+		<language name="JPN" width="216">トウコ</language>
+	</row>
+
+	<row id="BST_NAME_307">
+		<language name="JPN" width="216">ボス１</language>
+	</row>
+
+	<row id="BST_NAME_308">
+		<language name="JPN" width="216">ボス２</language>
+	</row>
+
+	<row id="BST_NAME_309">
+		<language name="JPN" width="216">ボス３</language>
+	</row>
+
+	<row id="BST_NAME_310">
+		<language name="JPN" width="216">ボス４</language>
+	</row>
+
+	<row id="BST_NAME_311">
+		<language name="JPN" width="216">ボス５</language>
+	</row>
+
+	<row id="BST_NAME_312">
+		<language name="JPN" width="216">ボス６</language>
+	</row>
+
+	<row id="BST_NAME_313">
+		<language name="JPN" width="216">ボス７</language>
+	</row>
+
+	<row id="BST_NAME_314">
+		<language name="JPN" width="216">ボス８</language>
 	</row>
 
