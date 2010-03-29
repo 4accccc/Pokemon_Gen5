@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-02-15T21:20:43"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T21:16:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="253" top="176" right="958" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1553" top="294" right="2258" bottom="914" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -339,11 +339,15 @@
 格闘家</attribute>
 		<language name="JPN" width="256">バトルサブウェイは
 ぜんぶで　７ろせん！[BE:01:ページ切り替え（クリア）]
-このホームから　とおくなるにつれて
-てごわい　トレーナーが　のっている</language>
+わたしのいる　ところから
+とおくなるに　つれて▼
+てごわい　トレーナーが　まちかまえる
+トレインに　のれるぞ！</language>
 		<language name="JPN_KANJI" width="256">バトルサブウェイは　全７路線！[BE:01:ページ切り替え（クリア）]
-このホームから　遠くなるにつれて
-手ごわい　トレーナーが　乗っている</language>
+わたしのいる　ところから
+遠くなるに　つれて▼
+てごわい　トレーナーが　待ちかまえる
+トレインに　乗れるぞ！</language>
 	</row>
 
 	<row id="msg_touroku_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
