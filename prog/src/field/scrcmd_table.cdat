@@ -269,11 +269,11 @@
   DEF_CMD( EvCmdTrainerFlagCheck, EV_SEQ_TRAINER_FLAG_CHECK )
   NO_CMD()
 
-  NO_CMD()
-  NO_CMD()
-  NO_CMD()
-  //動作モデル　レール滑り降り
+  //動作モデル2
   DEF_CMD( EvCmdObjRailSlipDown, EV_SEQ_OBJ_RAIL_SLIPDOWN )
+  DEF_CMD( EvCmdObjHighJump, EV_SEQ_OBJ_HIGH_JUMP )
+  NO_CMD()
+  NO_CMD()
   
   //BGM
   DEF_CMD( EvCmdBgmPlay, EV_SEQ_BGM_PLAY )

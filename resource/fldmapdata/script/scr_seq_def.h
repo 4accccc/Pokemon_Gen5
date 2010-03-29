@@ -2883,9 +2883,6 @@
 
 
 
-//======================================================================
-//  レール滑り降り
-//======================================================================
 //--------------------------------------------------------------
 /**
  *  @def  _OBJ_RAIL_SLIPDOWN
@@ -2899,6 +2896,27 @@
   .macro  _ASM_OBJ_RAIL_SLIPDOWN objid
   .short  EV_SEQ_OBJ_RAIL_SLIPDOWN
   .short  \objid
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def  _OBJ_HIGH_JUMP
+ *  @brief  動作モデル　高いところから飛び降りる。 ネジ山演出で使用
+ *  @param  objid   動かす動作オブジェ
+ *  @param  gx      着地ｘグリッド座標
+ *  @param  gy      着地ｙグリッド座標
+ *  @param  gz      着地ｚグリッド座標
+ */
+//--------------------------------------------------------------
+#define _OBJ_HIGH_JUMP( objid, gx, gy, gz )  \
+    _ASM_OBJ_HIGH_JUMP objid, gx, gy, gz
+
+  .macro  _ASM_OBJ_HIGH_JUMP objid, gx, gy, gz
+  .short  EV_SEQ_OBJ_HIGH_JUMP
+  .short  \objid
+  .short  \gx
+  .short  \gy
+  .short  \gz
   .endm
 
 

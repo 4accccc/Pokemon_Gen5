@@ -838,6 +838,9 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_debug_tomoya
 
+//*
+  _OBJ_HIGH_JUMP(0, 782, 0, 756)
+//*/
 /*
   _CAMERA_START()
 
@@ -849,7 +852,7 @@ EVENT_START   ev_debug_tomoya
   
   _CAMERA_END()
 //*/
-//*
+/*
   _EV_MOVEPOKE_CREATE( 0 )
 
   _EV_MOVEPOKE_START_ANIME(SCR_EV_MOVEPOKE_ANIME_TUCHI_INSIDE)
