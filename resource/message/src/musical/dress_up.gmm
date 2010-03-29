@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-29T17:12:28"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-29T20:39:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -352,13 +352,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1386" top="209" right="2216" bottom="801" maximized="no" rayout="Vertical2">
+	<dialog left="950" top="384" right="1450" bottom="976" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="29" right="1280" bottom="427" visible="yes"/>
-		<band id="0" index="0" style="0000" width="598"/>
+		<tag-palette left="807" top="29" right="1280" bottom="427" visible="no"/>
+		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="222"/>
-		<band id="2" index="2" style="0000" width="222"/>
-		<band id="3" index="3" style="0000" width="598"/>
+		<band id="2" index="2" style="0000" width="268"/>
+		<band id="3" index="3" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -413,9 +413,9 @@ DUP_MSG_01を表示
 
 0:グッズ名</comment>
 		<language name="JPN" width="256">[1:0A:グッズ名:0]
-[1:31:ミュージカルグッズ部位:1]　につける　グッズです</language>
+[1:31:ミュージカルグッズ部位:1]　につけるための　グッズです</language>
 		<language name="JPN_KANJI" width="256">[1:0A:グッズ名:0]
-[1:31:ミュージカルグッズ部位:1]　につける　グッズです</language>
+[1:31:ミュージカルグッズ部位:1]　につけるための　グッズです</language>
 	</row>
 
 	<row id="DUP_MSG_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -424,9 +424,9 @@ DUP_MSG_01を表示
 際に表示
 
 0:パーツのタグ（現状なし）</comment>
-		<language name="JPN" width="256">[1:31:ミュージカルグッズ部位:0]　のグッズを
+		<language name="JPN" width="256">[1:31:ミュージカルグッズ部位:0]　につける　グッズを
 せんとうに　ならびかえました</language>
-		<language name="JPN_KANJI" width="256">[1:31:ミュージカルグッズ部位:0]　のグッズを
+		<language name="JPN_KANJI" width="256">[1:31:ミュージカルグッズ部位:0]　に着ける　グッズを
 先頭に　ならびかえました</language>
 	</row>
 
@@ -436,9 +436,9 @@ DUP_MSG_01を表示
 表示
 別のパーツをソートした場合は
 DUP_MSG_05の方を表示</comment>
-		<language name="JPN" width="256">グッズの　ならびを
+		<language name="JPN" width="256">グッズの　ならびの　じゅんばんを
 もとに　もどしました</language>
-		<language name="JPN_KANJI" width="256">グッズの　ならびを
+		<language name="JPN_KANJI" width="256">グッズの　並び順を
 元に　戻しました</language>
 	</row>
 
@@ -449,7 +449,7 @@ DUP_MSG_01に切り替え</comment>
 		<language name="JPN" width="256">リストから　グッズを　ひきだして
 ポケモンに　つけることが　できます</language>
 		<language name="JPN_KANJI" width="256">リストから　グッズを　引き出して
-ポケモンに　つけることが　できます</language>
+ポケモンに　着けることが　できます</language>
 	</row>
 
 	<flowchart-group-list>
