@@ -353,7 +353,11 @@ void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
   if(pWork->pMsgTcblSys==NULL){
     return;
   }
-  
+
+  if(pWork->pAppWin){
+    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+    pWork->pAppWin = NULL;
+  }
 
   if(pWork->pAppTaskRes){
     APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
@@ -1126,5 +1130,62 @@ void POKEMONTRADE_NEGOBG_SlideMessageDel(POKEMON_TRADE_WORK *pWork,int side)
     pWork->StatusWin1[side]=NULL;
     pWork->StatusWin2[side]=NULL;
   }
+}
+
+
+
+
+//ボタン作成
+APP_TASKMENU_WIN_WORK* POKEMONTRADE_MESSAGE_CancelButtonStart(POKEMON_TRADE_WORK* pWork,int msgno)
+{
+  pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+  GFL_MSG_GetString(pWork->pMsgData, msgno, pWork->appitem[0].str);
+  pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+  pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+  pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
+                                    pWork->appitem, 24-16, 24-3, 15, pWork->heapID);
+
+  GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+
+  GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
+  TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE );
+  
+  return pWork->pAppWin;
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ボタンを消す 表示は戻す
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKEMONTRADE_MESSAGE_CancelButtonDelete(POKEMON_TRADE_WORK* pWork,int bar,int change)
+{
+  if(bar){
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], TRUE );
+  }
+  if(change){
+    TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, TRUE );
+  }
+  APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+  pWork->pAppWin = NULL;
+}
+
+
+const static GFL_UI_TP_HITTBL _tp_data[]={
+  { 24*8-32 , 24*8, 128-32, 128+32},
+  {GFL_UI_TP_HIT_END,0,0,0},
+};
+
+
+BOOL POKEMONTRADE_MESSAGE_ButtonCheck(POKEMON_TRADE_WORK* pWork)
+{
+  switch(GFL_UI_TP_HitTrg(_tp_data)){
+  case 0:
+    return TRUE;
+    break;
+  }
+  return FALSE;
 }
 

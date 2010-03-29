@@ -506,6 +506,7 @@ struct _POKEMON_TRADE_WORK{
 
   BOOL padMode;
 
+  APP_TASKMENU_WIN_WORK* pAppWin;
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
   APP_TASKMENU_RES* pAppTaskRes;
@@ -999,3 +1000,11 @@ extern void POKMEONTRADE_DEMO_GTSDOWN_ChangeDemo(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_DEMO_GTSMID_ChangeDemo(POKEMON_TRADE_WORK* pWork);
 extern void POKMEONTRADE_DEMO_GTS_ChangeDemo(POKEMON_TRADE_WORK* pWork);
 
+
+
+
+
+//É{É^ÉìçÏê¨
+extern APP_TASKMENU_WIN_WORK* POKEMONTRADE_MESSAGE_CancelButtonStart(POKEMON_TRADE_WORK* pWork,int msgno);
+extern void POKEMONTRADE_MESSAGE_CancelButtonDelete(POKEMON_TRADE_WORK* pWork,int bar,int change);
+extern BOOL POKEMONTRADE_MESSAGE_ButtonCheck(POKEMON_TRADE_WORK* pWork);

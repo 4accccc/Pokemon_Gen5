@@ -555,14 +555,35 @@ static void _changePokemonSendDataNetWait(POKEMON_TRADE_WORK* pWork)
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
+
+  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
+    if(pWork->pAppWin==NULL){
+      POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
+    }
+    if(POKEMONTRADE_MESSAGE_ButtonCheck(pWork)){
+      GFL_NET_StateWifiMatchEnd(TRUE);
+      _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
+      return;
+    }
+  }
+
   if(!CheckNegoWaitTimer(pWork)){
     return;
   }
+
+
+  
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_E, WB_NET_TRADE_SERVICEID)){
       return;
     }
   }
+
+  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
+    POKEMONTRADE_MESSAGE_CancelButtonDelete(pWork, TRUE, TRUE);  //
+  }
+
+  
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_LAST) &&
      (pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_LAST)){
 
@@ -690,6 +711,16 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
+  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
+    if(pWork->pAppWin==NULL){
+      POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
+    }
+    if(POKEMONTRADE_MESSAGE_ButtonCheck(pWork)){
+      GFL_NET_StateWifiMatchEnd(TRUE);
+      _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
+      return;
+    }
+  }
   if(!CheckNegoWaitTimer(pWork)){
     return;
   }
@@ -697,6 +728,9 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
     if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_D, WB_NET_TRADE_SERVICEID)){
       return;
     }
+  }
+  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
+    POKEMONTRADE_MESSAGE_CancelButtonDelete(pWork, TRUE, TRUE);  //
   }
 
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_DECIDE) &&
@@ -1498,11 +1532,28 @@ static void _Select6MessageInit8(POKEMON_TRADE_WORK* pWork)
   int targetID = 1 - myID;
 
 
+  
+  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
+    if(pWork->pAppWin==NULL){
+      POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
+    }
+    if(POKEMONTRADE_MESSAGE_ButtonCheck(pWork)){
+      GFL_NET_StateWifiMatchEnd(TRUE);
+      _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
+      return;
+    }
+  }
+
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_B, WB_NET_TRADE_SERVICEID)){
       return;
     }
   }
+  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
+    POKEMONTRADE_MESSAGE_CancelButtonDelete(pWork, TRUE, TRUE);  //
+  }
+
+  
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_SELECT) &&
      (pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_SELECT)){
 
