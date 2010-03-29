@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-02-23T17:24:59"/>
+	<create user="matsushima" host="W00181" date="2010-03-29T12:36:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,12 +235,12 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="200"/>
+		<comment position="4" width="296"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
 		<language japanese="JPN" english="JPN">
-			<message position="2" width="274"/>
+			<message position="2" width="273"/>
 			<font default=" 0:large" position="5" width="109">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -251,7 +251,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="257"/>
 			<font default=" 0:large" position="6" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1476" top="255" right="2181" bottom="875" maximized="no" rayout="Vertical2">
+	<dialog left="46" top="172" right="751" bottom="792" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="788" top="349" right="1261" bottom="747" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -314,6 +314,102 @@
 		<language name="JPN_KANJI" width="256">ふぉふぉふぉ！　強さとは
 体の　大きさでは　ない▽
 心の　大きさよ！</language>
+	</row>
+
+	<row id="msg_c03p13_captain_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●船長のポジション（GRIDX=20/GIRIDZ=13）
+●船を向いて立っています。
+
+●話し掛けると、振り向いてセリフ。
+●セリフ後に「リバティチケット」の有無をチェックします。
+　・チケットを持っている　→msg_c03p13_captain_02
+　・チケットを持っていない　→再び船を向いて終了。</comment>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
+		<language name="JPN" width="256">ごうかきゃくせんと　くらべれば
+とても　ちいさな　ふねですが[BE:00:ページ切り替え（行送り）]
+おおうなばらを　すすむ　ロマンに[BE:00:ページ切り替え（行送り）]
+ふねの　サイズは　かんけいないです。[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">豪華客船と　くらべれば
+とても　小さな　船ですが[BE:00:ページ切り替え（行送り）]
+大海原を　航海する　ロマンに[BE:00:ページ切り替え（行送り）]
+船の　サイズは　関係ないのです。[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03p13_captain_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●リバティチケットを持っているときのセリフ
+　・「はい」　→msg_c03p13_captain_03
+　・「いいえ」　→msg_c03p13_captain_04
+
+※このセリフは初回のみ。
+２回目以降は、msg_c03p13_captain_05になります。</comment>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
+		<language name="JPN" width="256">…おや！
+リバティチケットを　おもちですね[BE:01:ページ切り替え（クリア）]
+リバティガーデンとうへ　いかれますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">…おや！
+リバティチケットを　お持ちですね[BE:00:ページ切り替え（行送り）]
+リバティガーデン島へ　行かれますか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03p13_captain_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●「はい」のセリフ
+●セリフ後、画面フェードアウト。
+　→出航デモへ</comment>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
+		<language name="JPN" width="256">ちょうど　よい　タイミングでした
+そろそろ　しゅっこうしますので[BE:00:ページ切り替え（行送り）]
+じょうせんして　おまちください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">ちょうど　よい　タイミングでした
+そろそろ　出航しますので[BE:00:ページ切り替え（行送り）]
+乗船して　お待ちください[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03p13_captain_04" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●「いいえ」のセリフ</comment>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
+		<language name="JPN" width="256">リバティガーデンとうへ
+いきたくなりましたら[BE:00:ページ切り替え（行送り）]
+また　こえを　かけてください</language>
+		<language name="JPN_KANJI" width="256">リバティガーデン島へ
+行きたくなりましたら[BE:00:ページ切り替え（行送り）]
+また　声を　かけてください</language>
+	</row>
+
+	<row id="msg_c03p13_captain_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●２回目以降のセリフ。
+　・「はい」　→msg_c03p13_captain_03
+　・「いいえ」　→msg_c03p13_captain_04</comment>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
+		<language name="JPN" width="256">リバティガーデンとうへ　いきますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">リバティガーデン島へ　行きますか？[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03p13_captain_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●プラズマ団イベントが進行しているとき「はい」を選んだ場合
+●セリフ後、画面フェードアウト。
+※出航デモはカット。</comment>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
+		<language name="JPN" width="256">プラズマだんの　ぼうきょを
+とめなければ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">プラズマだんの　暴挙を
+止めなければ！[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_c03p13_captain_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<comment>●プラズマ団イベントが進行しているとき「いいえ」を選んだ場合
+</comment>
+		<attribute name="キャラ指定">PILOT
+船長</attribute>
+		<language name="JPN" width="256">じゅんびが　おわりましたら
+こえを　かけてください！</language>
+		<language name="JPN_KANJI" width="256">準備が　整いましたら
+声を　かけてください！</language>
 	</row>
 
 	<flowchart-group-list>
