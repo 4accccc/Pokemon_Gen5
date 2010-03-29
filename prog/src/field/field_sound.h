@@ -19,11 +19,11 @@
 // ■定数
 //================================================================================= 
 // フェード フレーム数
-#define FSND_FADE_NONE    (0)  // 無
-#define FSND_FADE_FAST    (6)  // 速 
-#define FSND_FADE_SHORT  (30)  // 短
-#define FSND_FADE_NORMAL (60)  // 中
-#define FSND_FADE_LONG   (90)  // 長
+#define FSND_FADE_NONE   (0)                 // 無
+#define FSND_FADE_FAST   (PMSND_FADE_FAST)   // 短
+#define FSND_FADE_SHORT  (PMSND_FADE_SHORT)  // やや短
+#define FSND_FADE_NORMAL (PMSND_FADE_NORMAL) // 中
+#define FSND_FADE_LONG   (PMSND_FADE_LONG)   // 長
 
 
 //=================================================================================

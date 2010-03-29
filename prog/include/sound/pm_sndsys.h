@@ -48,6 +48,17 @@
 #define PMSND_MASKPL_EFFSE	(PMSND_MASKPL_SE1|PMSND_MASKPL_SE2|PMSND_MASKPL_PSG|PMSND_MASKPL_SE3)
 #define PMSND_MASKPL_ALLSE	(PMSND_MASKPL_SYS|PMSND_MASKPL_EFFSE)
 #define PMSND_MASKPL_ALL	(PMSND_MASKPL_BGM|PMSND_MASKPL_ALLSE)
+
+//------------------------------------------------------------------
+/**
+ * @brief	BGM フェードフレーム数
+ */
+//------------------------------------------------------------------
+#define PMSND_FADE_FAST    (6)  // 短 
+#define PMSND_FADE_SHORT  (30)  // やや短
+#define PMSND_FADE_NORMAL (60)  // 中
+#define PMSND_FADE_LONG   (90)  // 長
+
 //------------------------------------------------------------------
 /**
  * @brief	ＳＥプレーヤー設定定義
