@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-02-10T19:48:01"/>
+	<create user="matsushima" host="W00181" date="2010-03-29T19:54:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -325,12 +325,12 @@
 		<attribute name="キャラ指定">事情通老人</attribute>
 		<language name="JPN" width="256">おぬしが　ポケモンと　こころを　かよわせ
 はっきした　つよさは▽
-ポルトスにも　つうじたじゃろう▼
+アトスにも　つうじたじゃろう▼
 また　いつか…　おぬしと　たたかうため
 ここに　もどってくるかも　しれんのう▼</language>
 		<language name="JPN_KANJI" width="256">おぬしが　ポケモンと　心を　通わせて
 発揮した　強さは▽
-ポルトスにも　通じたじゃろう▼
+アトスにも　通じたじゃろう▼
 また　いつか…　おぬしと　戦うため
 ここに　戻ってくるかも　しれんのう▼</language>
 	</row>
@@ -341,10 +341,10 @@
 
 ・セリフ後、msg_d06r0203_guide_03へ。</comment>
 		<language name="JPN" width="256">わしの　めに　くるいは　なかったのう
-ポルトスは　おぬしの　ちからを　みとめ▽
+アトスは　おぬしの　ちからを　みとめ▽
 ともに　いきることを　のぞんだようじゃ▼</language>
 		<language name="JPN_KANJI" width="256">わしの　目に　くるいは　なかったのう
-ポルトスは　おぬしの　力を　認め▽
+アトスは　おぬしの　力を　認め▽
 ともに　生きることを　望んだようじゃ▼</language>
 	</row>
 
