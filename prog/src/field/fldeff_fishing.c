@@ -173,12 +173,16 @@ static void fishing_lure_DeleteResource( FLDEFF_FISHING_LURE *wk )
  * @retval nothing
  */
 //--------------------------------------------------------------
-FLDEFF_TASK* FLDEFF_FISHING_LURE_Set( FLDEFF_CTRL *fectrl, VecFx32* tpos )
+FLDEFF_TASK* FLDEFF_FISHING_LURE_Set( FLDEFF_CTRL *fectrl, VecFx32* tpos, u8 dir, BOOL y_diff )
 {
   VecFx32 pos;
   FLDEFF_FISHING_LURE *wk;
   TASKHEADER_FISHING_LURE head;
-  
+  const u8 ofs_tbl[][4] = {
+   { 8, 0, 8, 8 },  //岸 up,down,left,right
+   { 0, 8, 16, 16 },  //浅瀬
+  };
+
   if( FLDEFF_CTRL_CheckRegistEffect( fectrl, FLDEFF_PROCID_FISHING_LURE ) == FALSE )
   { // エフェクトを登録
     FLDEFF_PROCID id = FLDEFF_PROCID_FISHING_LURE;
@@ -187,9 +191,10 @@ FLDEFF_TASK* FLDEFF_FISHING_LURE_Set( FLDEFF_CTRL *fectrl, VecFx32* tpos )
 
   wk = FLDEFF_CTRL_GetEffectWork( fectrl, FLDEFF_PROCID_FISHING_LURE );
   head.eff_lure = wk;
-  head.pos = *tpos; 
-  head.pos.z += FX32_CONST(8); 
+  head.pos = *tpos;
 
+  head.pos.z += FX32_CONST( ofs_tbl[ y_diff ][dir] ); 
+ 
   return FLDEFF_CTRL_AddTask(
       fectrl, &DATA_fishing_lure_TaskHeader, NULL, 0, &head, 0 );
 }

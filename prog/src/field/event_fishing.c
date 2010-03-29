@@ -74,7 +74,8 @@ typedef struct _FISHING_WORK{
   VecFx32 target_pos;
   VecFx32 player_view_ofs;
 
-  u16     enc_type;
+  u8      dir;
+  u8      enc_type;
   u16     enc_error;
   u32     time;
   u32     count;
@@ -89,20 +90,13 @@ static void sub_DelGyoeAnime( FISHING_WORK* wk );
 static void sub_SetLureAnime( FISHING_WORK* wk );
 static void sub_DelLureAnime( FISHING_WORK* wk );
 
-static const VecFx32 DATA_FishingFormOfs[] = {
- { FX32_CONST(0),0,FX32_CONST(0) }, //up
- { FX32_CONST(0),0,FX32_CONST(0) }, //down
- { FX32_CONST(-0),0,FX32_CONST(0) }, //left
- { FX32_CONST(0),0,FX32_CONST(0) }, //right
-};
-
 /*
  *  @brief  釣りができるポジションかチェック
  */
 BOOL FieldFishingCheckPos( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, VecFx32* outPos )
 {
   u8 dir;
-  VecFx32 pos;
+  VecFx32 t_pos;
   MMDL* mmdl;
   FIELD_PLAYER* player;
   FLDMAPPER_GRIDINFODATA gridData;
@@ -113,14 +107,14 @@ BOOL FieldFishingCheckPos( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, VecFx32* ou
   mmdl = FIELD_PLAYER_GetMMdl( player );
   dir = MMDL_GetDirDisp( mmdl );
 
-  FIELD_PLAYER_GetDirPos( player, dir, &pos );
-  if( FLDMAPPER_GetGridData( mapper, &pos, &gridData) == FALSE){
+  FIELD_PLAYER_GetDirPos( player, dir, &t_pos );
+  if( FLDMAPPER_GetGridData( mapper, &t_pos, &gridData) == FALSE){
     return FALSE;
   }
   //岸チェック
   if( MAPATTR_VALUE_CheckShore( MAPATTR_GetAttrValue( gridData.attr ) ) == TRUE ){ //岸
-    MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 ); //もう一歩先
-    if( FLDMAPPER_GetGridData( mapper, &pos, &gridData) == FALSE){
+    MMDL_TOOL_AddDirVector( dir, &t_pos, GRID_FX32 ); //もう一歩先
+    if( FLDMAPPER_GetGridData( mapper, &t_pos, &gridData) == FALSE){
       return FALSE;
     }
   }
@@ -129,9 +123,9 @@ BOOL FieldFishingCheckPos( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, VecFx32* ou
     return FALSE;
   }
   if( outPos != NULL ){
-    outPos->x = pos.x;
+    outPos->x = t_pos.x;
     outPos->y = gridData.height;
-    outPos->z = pos.z;
+    outPos->z = t_pos.z;
   }
 
   return TRUE;
@@ -157,10 +151,10 @@ GMEVENT * EVENT_FieldFishing( FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gsys )
   wk->mmdl_sys = FIELDMAP_GetMMdlSys( wk->fieldWork );
   wk->fplayer = FIELDMAP_GetFieldPlayer( fieldmap );
   wk->player_mmdl = FIELD_PLAYER_GetMMdl( wk->fplayer );
+  wk->dir = MMDL_GetDirDisp( wk->player_mmdl );
 
   FIELD_PLAYER_GetPos( wk->fplayer, &wk->player_pos);
   wk->player_form = FIELD_PLAYER_GetDrawForm( wk->fplayer );
-  MMDL_GetVectorDrawOffsetPos( wk->player_mmdl, &wk->player_view_ofs );
 
   //ポジションチェック
   if( FieldFishingCheckPos( wk->gdata, wk->fieldWork, &wk->target_pos ) == FALSE){
@@ -195,12 +189,11 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
       *seq = SEQ_END;
       break;
     }
-    MMDLSYS_PauseMoveProc( wk->mmdl_sys );
+//    MMDLSYS_PauseMoveProc( wk->mmdl_sys );
 
     //フォルムチェンジ
     FIELD_PLAYER_ChangeDrawForm( wk->fplayer, PLAYER_DRAW_FORM_FISHING );
     MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_START );
-    MMDL_SetVectorDrawOffsetPos( wk->player_mmdl, &DATA_FishingFormOfs[MMDL_GetDirDisp( wk->player_mmdl )]);
     (*seq)++;
     break;
 
@@ -269,8 +262,6 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
 
 	case SEQ_END:
     FIELD_PLAYER_ChangeDrawForm( wk->fplayer, wk->player_form );
-    MMDL_SetVectorDrawOffsetPos( wk->player_mmdl, &wk->player_view_ofs );
-    MMDLSYS_ClearPauseMoveProc( wk->mmdl_sys );
 		return GMEVENT_RES_FINISH;
 
   //エンカウントイベントへ移行
@@ -335,7 +326,7 @@ static void sub_DelGyoeAnime( FISHING_WORK* wk )
 static void sub_SetLureAnime( FISHING_WORK* wk )
 {
   FLDEFF_CTRL *fectrl =  FIELDMAP_GetFldEffCtrl( wk->fieldWork );
-  wk->task_lure = FLDEFF_FISHING_LURE_Set( fectrl, &wk->target_pos );
+  wk->task_lure = FLDEFF_FISHING_LURE_Set( fectrl, &wk->target_pos, wk->dir, ( wk->target_pos.y == wk->player_pos.y ) );
 }
 
 /*
