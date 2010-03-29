@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2009-12-17T18:47:55"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T15:14:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="102" top="135" right="807" bottom="763" maximized="no" rayout="Vertical2">
+	<dialog left="1588" top="263" right="2293" bottom="891" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="787" top="36" right="1260" bottom="434" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -336,7 +336,7 @@
 	<row id="msg_reg_000" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>項目</comment>
 		<language name="JPN" width="216" line="2">ポケモンのかず</language>
-		<language name="JPN_KANJI" width="216" line="2">ポケモンのかず</language>
+		<language name="JPN_KANJI" width="216" line="2">ポケモンの数</language>
 	</row>
 
 	<row id="msg_reg_001" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
@@ -348,19 +348,19 @@
 	<row id="msg_reg_002" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>項目</comment>
 		<language name="JPN" width="216" line="2">とくべつなポケモン</language>
-		<language name="JPN_KANJI" width="216" line="2">とくべつなポケモン</language>
+		<language name="JPN_KANJI" width="216" line="2">特別なポケモン</language>
 	</row>
 
 	<row id="msg_reg_003" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>項目</comment>
 		<language name="JPN" width="216" line="2">おなじポケモン</language>
-		<language name="JPN_KANJI" width="216" line="2">おなじポケモン</language>
+		<language name="JPN_KANJI" width="216" line="2">同じポケモン</language>
 	</row>
 
 	<row id="msg_reg_004" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>項目</comment>
 		<language name="JPN" width="216" line="2">おなじ　どうぐ</language>
-		<language name="JPN_KANJI" width="216" line="2">おなじ　どうぐ</language>
+		<language name="JPN_KANJI" width="216" line="2">同じ道具</language>
 	</row>
 
 	<row id="msg_reg_005" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
@@ -372,31 +372,31 @@
 	<row id="msg_reg_num_000" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>ポケモンの数</comment>
 		<language name="JPN" width="216" line="2">：せいげんなし</language>
-		<language name="JPN_KANJI" width="216" line="2">：せいげんなし</language>
+		<language name="JPN_KANJI" width="216" line="2">：制限なし</language>
 	</row>
 
 	<row id="msg_reg_num_001" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>ポケモンの数</comment>
 		<language name="JPN" width="216" line="2">：[2:00:１桁:0]ひき</language>
-		<language name="JPN_KANJI" width="216" line="2">：[2:00:１桁:0]ひき</language>
+		<language name="JPN_KANJI" width="216" line="2">：[2:00:１桁:0]匹</language>
 	</row>
 
 	<row id="msg_reg_num_002" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>ポケモンの数</comment>
 		<language name="JPN" width="216" line="2">：[2:00:１桁:0]ひき　いじょう</language>
-		<language name="JPN_KANJI" width="216" line="2">：[2:00:１桁:0]ひき　いじょう</language>
+		<language name="JPN_KANJI" width="216" line="2">：[2:00:１桁:0]匹　以上</language>
 	</row>
 
 	<row id="msg_reg_num_003" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>ポケモンの数</comment>
 		<language name="JPN" width="216" line="2">：[2:00:１桁:0]　～　[2:00:１桁:1]ひき</language>
-		<language name="JPN_KANJI" width="216" line="2">：[2:00:１桁:0]　～　[2:00:１桁:1]ひき</language>
+		<language name="JPN_KANJI" width="216" line="2">：[2:00:１桁:0]　～　[2:00:１桁:1]匹</language>
 	</row>
 
 	<row id="msg_reg_lv_000" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>ポケモンのレベル</comment>
 		<language name="JPN" width="216" line="2">：せいげんなし</language>
-		<language name="JPN_KANJI" width="216" line="2">：せいげんなし</language>
+		<language name="JPN_KANJI" width="216" line="2">：制限なし</language>
 	</row>
 
 	<row id="msg_reg_lv_001" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
@@ -414,55 +414,55 @@
 	<row id="msg_reg_lv_003" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>ポケモンのレベル（以上）</comment>
 		<language name="JPN" width="216" line="2">：[2:02:３桁:0]いじょう</language>
-		<language name="JPN_KANJI" width="216" line="2">：[2:02:３桁:0]いじょう</language>
+		<language name="JPN_KANJI" width="216" line="2">：[2:02:３桁:0]以上</language>
 	</row>
 
 	<row id="msg_reg_lv_004" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>ポケモンのレベル（引き下げ）</comment>
 		<language name="JPN" width="216" line="2">：[2:02:３桁:0]いかに　なる</language>
-		<language name="JPN_KANJI" width="216" line="2">：[2:02:３桁:0]いかに　なる</language>
+		<language name="JPN_KANJI" width="216" line="2">：[2:02:３桁:0]以下に　なる</language>
 	</row>
 
 	<row id="msg_reg_lv_005" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>ポケモンのレベル（引き上げ）</comment>
 		<language name="JPN" width="216" line="2">：[2:02:３桁:0]いじょうに　なる</language>
-		<language name="JPN_KANJI" width="216" line="2">：[2:02:３桁:0]いじょうに　なる</language>
+		<language name="JPN_KANJI" width="216" line="2">：[2:02:３桁:0]以上に　なる</language>
 	</row>
 
 	<row id="msg_reg_sp_000" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>特別なポケモン</comment>
 		<language name="JPN" width="216" line="2">：さんかできる</language>
-		<language name="JPN_KANJI" width="216" line="2">：さんかできる</language>
+		<language name="JPN_KANJI" width="216" line="2">：参加できる</language>
 	</row>
 
 	<row id="msg_reg_sp_001" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>特別なポケモン</comment>
 		<language name="JPN" width="216" line="2">：さんかできない</language>
-		<language name="JPN_KANJI" width="216" line="2">：さんかできない</language>
+		<language name="JPN_KANJI" width="216" line="2">：参加できない</language>
 	</row>
 
 	<row id="msg_reg_samepoke_000" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>同じポケモン</comment>
 		<language name="JPN" width="216" line="2">：さんかできる</language>
-		<language name="JPN_KANJI" width="216" line="2">：さんかできる</language>
+		<language name="JPN_KANJI" width="216" line="2">：参加できる</language>
 	</row>
 
 	<row id="msg_reg_samepoke_001" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>同じポケモン</comment>
 		<language name="JPN" width="216" line="2">：さんかできない</language>
-		<language name="JPN_KANJI" width="216" line="2">：さんかできない</language>
+		<language name="JPN_KANJI" width="216" line="2">：参加できない</language>
 	</row>
 
 	<row id="msg_reg_sameitem_000" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>同じ道具</comment>
 		<language name="JPN" width="216" line="2">：もたせられる</language>
-		<language name="JPN_KANJI" width="216" line="2">：もたせられる</language>
+		<language name="JPN_KANJI" width="216" line="2">：持たせられる</language>
 	</row>
 
 	<row id="msg_reg_sameitem_001" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>同じ道具</comment>
 		<language name="JPN" width="216" line="2">：もたせられない</language>
-		<language name="JPN_KANJI" width="216" line="2">：もたせられない</language>
+		<language name="JPN_KANJI" width="216" line="2">：持たせられない</language>
 	</row>
 
 	<row id="msg_reg_shooter_000" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
