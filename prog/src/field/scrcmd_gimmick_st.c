@@ -26,6 +26,7 @@
 #include "field_sound.h"
 
 #include "field_gimmick_bgate_jet.h"
+#include "scrcmd_gimmick_st.h"
 
 FS_EXTERN_OVERLAY(field_gimmick_bgate);
 
