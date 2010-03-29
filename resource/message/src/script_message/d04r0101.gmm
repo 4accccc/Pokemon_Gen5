@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T14:23:45"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T18:39:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -311,26 +311,34 @@
 好きな　カセキを　もらってくれない？[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_d04r0101_backpackerw_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0101_backpackerw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム１選択時</comment>
 		<attribute name="キャラ指定">BACKPACKERW
 バックパッカー♀</attribute>
-		<language name="JPN" width="256">かめのカセキ　なんだ
-それは（ポケモンの　とくちょう）</language>
-		<language name="JPN_KANJI" width="256">かめのカセキ　なんだ
-それは（ポケモンの　とくちょう）</language>
+		<language name="JPN" width="256">ふたのカセキ　なんだ！▼
+それは　おおむかしの　うみを
+じゆうに　およいでいた▽
+ポケモンの　カセキ　らしいよ！</language>
+		<language name="JPN_KANJI" width="256">ふたのカセキ　なんだ！▼
+それは　大昔の　海を
+自由に　泳いでいた▽
+ポケモンの　カセキ　らしいよ！</language>
 	</row>
 
-	<row id="msg_d04r0101_backpackerw_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0101_backpackerw_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム２選択時</comment>
 		<attribute name="キャラ指定">BACKPACKERW
 バックパッカー♀</attribute>
-		<language name="JPN" width="256">とりのカセキ　なんだ
-それは（ポケモンの　とくちょう）</language>
-		<language name="JPN_KANJI" width="256">とりのカセキ　なんだ
-それは（ポケモンの　とくちょう）</language>
+		<language name="JPN" width="256">はねのカセキ　なんだ！▼
+それは　おおむかしの　しんりんで
+くらしていた　とりポケモンの　カセキ▽
+……だけど　とべなかったらしいよ</language>
+		<language name="JPN_KANJI" width="256">はねのカセキ　なんだ！▼
+それは　大昔の　森林で
+暮らしていた　とりポケモンの　カセキ▽
+……だけど　飛べなかったらしいよ</language>
 	</row>
 
 	<row id="msg_d04r0101_backpackerw_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -378,15 +386,15 @@
 	<row id="msg_d04r0101_kaseki_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>選択肢ウインドウ用</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">かめのカセキ</language>
-		<language name="JPN_KANJI" width="256">かめのカセキ</language>
+		<language name="JPN" width="256">ふたのカセキ</language>
+		<language name="JPN_KANJI" width="256">ふたのカセキ</language>
 	</row>
 
 	<row id="msg_d04r0101_kaseki_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>選択肢ウインドウ用</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">とりのカセキ</language>
-		<language name="JPN_KANJI" width="256">とりのカセキ</language>
+		<language name="JPN" width="256">はねのカセキ</language>
+		<language name="JPN_KANJI" width="256">はねのカセキ</language>
 	</row>
 
 	<row id="msg_d04r0101_kaseki_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">

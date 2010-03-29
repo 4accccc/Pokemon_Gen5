@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T14:25:28"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T18:42:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -300,8 +300,8 @@
 　ライバルのメッセージ表示後
 　主人公がライバルの隣まで移動</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『……[1:00:トレーナー名:0]　こっちだね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『……[1:00:トレーナー名:0]　こっちだね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『……[1:00:トレーナー名:0]　こっちだよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">チェレン『……[1:00:トレーナー名:0]　こっちだよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d04r0601_sage1_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -341,7 +341,7 @@
 シンを　復活させるため▽
 苦労なされて　いますね▼
 ですが　ここには　お探しの
-ダークストーンは　ないようです▼</language>
+ライトストーンは　ないようです▼</language>
 	</row>
 
 	<row id="msg_d04r0601_sage1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -398,7 +398,7 @@
 ポケモンの　解放なのか？▼</language>
 	</row>
 
-	<row id="msg_d04r0601_sage1_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0601_sage1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けて
 　sage1_03wか
@@ -501,7 +501,7 @@
 すでに　用意して　いるのですよ▼</language>
 	</row>
 
-	<row id="msg_d04r0601_champion_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_d04r0601_champion_02">
 		<comment>♂
 ・続けてsage1_04</comment>
 		<attribute name="キャラ指定">チャンピオン
@@ -518,7 +518,7 @@
 ポケモンの　ためにも！▼</language>
 	</row>
 
-	<row id="msg_d04r0601_sage1_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0601_sage1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてchampion_02a</comment>
 		<attribute name="キャラ指定">七賢人ゲーチス</attribute>
@@ -532,7 +532,7 @@
 判断なさって　おるのですよ▼</language>
 	</row>
 
-	<row id="msg_d04r0601_champion_02a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d04r0601_champion_02a">
 		<comment>♂
 ・続けてsage1_04a</comment>
 		<attribute name="キャラ指定">チャンピオン
@@ -545,7 +545,7 @@
 ワシも　バカに　されたものだな▼</language>
 	</row>
 
-	<row id="msg_d04r0601_sage1_04a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_d04r0601_sage1_04a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・メッセージ表示後、移動
 ・主人公とチャンピオンの間を割って立ち去る
@@ -642,8 +642,10 @@
 ・メッセージ表示後、画面暗転
 ・d03r0101に続く</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
-		<language name="JPN" width="256">アデク『……うむ　そうするか[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アデク『……うむ　そうするか[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">アデク『……うむ　そうするか
+なんだか　ここは　いきぐるしいわ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">アデク『……うむ　そうするか
+なんだか　ここは　息苦しいわ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
