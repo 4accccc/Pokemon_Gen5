@@ -821,6 +821,7 @@ static void _itemInSaveArea(DREAMWORLD_SAVEDATA* pDreamSave,DREAM_WORLD_SERVER_D
 //ポケモンをセーブエリアに移動
 static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSave,int monsno,int sex, int form, int tec)
 {
+  u8 move_type = 0; ///<@todo PDWで持ってくるようになる
   {// データ読み込み・破棄
     TPOKE_DATA* pTP =TPOKE_DATA_Create( pWork->heapID );
     int size = SYMBOL_ZONE_TYPE_FREE_SMALL;
@@ -828,7 +829,8 @@ static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSav
       size = SYMBOL_ZONE_TYPE_FREE_LARGE;
     }
     //ポケモンシンボルエンカウント格納
-    SymbolSave_SetFreeZone(SymbolSave_GetSymbolData(pWork->pSaveData), monsno, tec, sex, form, size);
+    SymbolSave_SetFreeZone(
+        SymbolSave_GetSymbolData(pWork->pSaveData), monsno, tec, sex, form, move_type, size);
     TPOKE_DATA_Delete( pTP );
   }
 }

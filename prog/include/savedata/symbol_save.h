@@ -130,7 +130,8 @@ extern BOOL SymbolSave_GetSymbolPokemon(SYMBOL_SAVE_WORK *symbol_save, u32 no, S
 extern u32 SymbolSave_CheckSpace(
   SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type);
 extern void SymbolSave_DataShift(SYMBOL_SAVE_WORK *symbol_save, u32 no);
-extern void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save, u16 monsno, u16 wazano, u8 sex, u8 form_no, SYMBOL_ZONE_TYPE zone_type);
+extern void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save,
+    u16 monsno, u16 wazano, u8 sex, u8 form_no, u8 move_type, SYMBOL_ZONE_TYPE zone_type);
 
 static inline u32 SymbolSave_CheckFreeZoneSpace(
     SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_type)

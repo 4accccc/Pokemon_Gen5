@@ -19,5 +19,5 @@ extern BOOL SymbolSave_Field_MoveAuto( SYMBOL_SAVE_WORK *symbol_save, u32 no );
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 extern BOOL SymbolSave_Field_Set( SYMBOL_SAVE_WORK *symbol_save,
-    u16 monsno, u16 wazano, u8 sex, u8 form_no, SYMBOL_ZONE_TYPE zone_type );
+    u16 monsno, u16 wazano, u8 sex, u8 form_no, u8 move_type, SYMBOL_ZONE_TYPE zone_type );
 

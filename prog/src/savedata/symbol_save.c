@@ -52,7 +52,7 @@ const SYMBOL_ZONE_TYPE_DATA_NO SymbolZoneTypeDataNo[] = {
  * @param   rec   
  */
 //--------------------------------------------------------------
-static void _Coded(SYMBOL_SAVE_WORK *pSymbol)
+void SymbolSave_Local_Encode(SYMBOL_SAVE_WORK *pSymbol)
 {
   GF_ASSERT(pSymbol->crc.coded_number==0);
 
@@ -71,7 +71,7 @@ static void _Coded(SYMBOL_SAVE_WORK *pSymbol)
  * @param   rec   
  */
 //--------------------------------------------------------------
-static void _Decoded(SYMBOL_SAVE_WORK *pSymbol)
+void SymbolSave_Local_Decode(SYMBOL_SAVE_WORK *pSymbol)
 {
   GF_ASSERT(pSymbol->crc.coded_number!=0);
 
@@ -106,7 +106,7 @@ void SymbolSave_WorkInit(void *work)
   SYMBOL_SAVE_WORK *symbol_save = work;
   
   GFL_STD_MemClear(symbol_save, sizeof(SYMBOL_SAVE_WORK));
-  _Coded(symbol_save);
+  SymbolSave_Local_Encode(symbol_save);
 }
 
 
@@ -237,9 +237,9 @@ BOOL SymbolSave_GetSymbolPokemon(SYMBOL_SAVE_WORK *symbol_save, u32 no, SYMBOL_P
   if(no >= SYMBOL_POKE_MAX){
     return FALSE;
   }
-  _Decoded(symbol_save);
+  SymbolSave_Local_Decode(symbol_save);
   GFL_STD_MemCopy( &symbol_save->symbol_poke[ no ],pSymbol, sizeof(SYMBOL_POKEMON));
-  _Coded(symbol_save);
+  SymbolSave_Local_Encode(symbol_save);
   return TRUE;
 }
 
@@ -261,9 +261,9 @@ u32 SymbolSave_CheckSpace( SYMBOL_SAVE_WORK *symbol_save, SYMBOL_ZONE_TYPE zone_
   
   GF_ASSERT( zone_type < SYMBOL_ZONE_TYPE_KEEP_ALL );
 
-  _Decoded(symbol_save);
+  SymbolSave_Local_Decode(symbol_save);
   retcode = _CheckSpace(symbol_save, zone_type);
-  _Coded(symbol_save);
+  SymbolSave_Local_Encode(symbol_save);
   return retcode;
 }
 
@@ -300,9 +300,9 @@ void SymbolSave_DataShift(SYMBOL_SAVE_WORK *symbol_save, u32 no)
   SYMBOL_ZONE_TYPE zone_type;
   u32 start, end;
 
-  _Decoded(symbol_save);
+  SymbolSave_Local_Decode(symbol_save);
   _DataShift(symbol_save, no);
-  _Coded(symbol_save);
+  SymbolSave_Local_Encode(symbol_save);
 
 }
 
@@ -315,19 +315,21 @@ void SymbolSave_DataShift(SYMBOL_SAVE_WORK *symbol_save, u32 no)
  * @param   wazano		    技番号
  * @param   sex		        性別(PTL_SEX_MALE, PTL_SEX_FEMALE, PTL_SEX_UNKNOWN)
  * @param   form_no		    フォルム番号
+ * @param   move_type     動作タイプ指定
  * @param   zone_type     SYMBOL_ZONE_TYPE
  *
  * 空きが無い場合は先頭のデータをところてん式に追い出して最後尾にセットします
  */
 //==================================================================
-void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save, u16 monsno, u16 wazano, u8 sex, u8 form_no, SYMBOL_ZONE_TYPE zone_type)
+void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save,
+    u16 monsno, u16 wazano, u8 sex, u8 form_no, u8 move_type, SYMBOL_ZONE_TYPE zone_type)
 {
   u32 no, start, end;
   SYMBOL_POKEMON *spoke;
 
   GF_ASSERT( zone_type == SYMBOL_ZONE_TYPE_FREE_LARGE || zone_type == SYMBOL_ZONE_TYPE_FREE_SMALL );
 
-  _Decoded(symbol_save);
+  SymbolSave_Local_Decode(symbol_save);
   
   start = SymbolZoneTypeDataNo[zone_type].start;
   end = SymbolZoneTypeDataNo[zone_type].end;
@@ -344,6 +346,7 @@ void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save, u16 monsno, u16 wazan
   spoke->wazano = wazano;
   spoke->sex = sex;
   spoke->form_no = form_no;
+  spoke->move_type = move_type;
 
   //マップの拡張チェック
   if(zone_type == SYMBOL_ZONE_TYPE_FREE_LARGE){
@@ -359,6 +362,6 @@ void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save, u16 monsno, u16 wazan
       GF_ASSERT_MSG(0, "no=%d", no - SYMBOL_NO_START_FREE_SMALL);
     }
   }
-  _Coded(symbol_save);
+  SymbolSave_Local_Encode(symbol_save);
 }
 

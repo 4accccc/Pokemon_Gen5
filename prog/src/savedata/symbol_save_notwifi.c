@@ -26,7 +26,11 @@
 //==================================================================
 SYMBOL_MAP_LEVEL_LARGE SymbolSave_GetMapLevelLarge(SYMBOL_SAVE_WORK *symbol_save)
 {
-  return symbol_save->map_level_large;
+  SYMBOL_MAP_LEVEL_LARGE large;
+  SymbolSave_Local_Decode(symbol_save);
+  large = symbol_save->map_level_large;
+  SymbolSave_Local_Encode(symbol_save);
+  return large;
 }
 
 //==================================================================
@@ -38,7 +42,11 @@ SYMBOL_MAP_LEVEL_LARGE SymbolSave_GetMapLevelLarge(SYMBOL_SAVE_WORK *symbol_save
 //==================================================================
 SYMBOL_MAP_LEVEL_SMALL SymbolSave_GetMapLevelSmall(SYMBOL_SAVE_WORK *symbol_save)
 {
-  return symbol_save->map_level_small;
+  SYMBOL_MAP_LEVEL_SMALL small;
+  SymbolSave_Local_Decode(symbol_save);
+  small = symbol_save->map_level_small;
+  SymbolSave_Local_Encode(symbol_save);
+  return small;
 }
 
 //--------------------------------------------------------------
@@ -60,7 +68,10 @@ static u8 SymbolSave_GetArraySymbolPokemon(SYMBOL_SAVE_WORK *symbol_save, SYMBOL
   
   GF_ASSERT_MSG(array_num >= copy_num, " array(%d) < copy(%d)\n", array_num, copy_num);
   GFL_STD_MemClear(dest_array, sizeof(struct _SYMBOL_POKEMON) * array_num);
-  GFL_STD_MemCopy(&symbol_save->symbol_poke[no], dest_array, sizeof(struct _SYMBOL_POKEMON) * copy_num);
+  SymbolSave_Local_Decode(symbol_save);  //ˆÃ†‰»‰ğœ
+  GFL_STD_MemCopy(
+      &symbol_save->symbol_poke[no], dest_array, sizeof(struct _SYMBOL_POKEMON) * copy_num);
+  SymbolSave_Local_Encode(symbol_save);  //Ä‚ÑˆÃ†‰»
   for(i = 0; i < copy_num; i++){
     if(dest_array[i].monsno == 0){
       break;

@@ -202,15 +202,16 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       SYMBOL_SAVE_WORK* pSym = SymbolSave_GetSymbolData(pWork->pSaveData);
 
       SymbolSave_WorkInit(pSym);
-      SymbolSave_SetFreeZone(pSym, 12, 12, 0, 0, SYMBOL_ZONE_TYPE_FREE_SMALL);
-      SymbolSave_SetFreeZone(pSym, 13, 13, 0, 0, SYMBOL_ZONE_TYPE_FREE_SMALL);
-      SymbolSave_SetFreeZone(pSym, 14, 14, 0, 0, SYMBOL_ZONE_TYPE_FREE_SMALL);
+      SymbolSave_SetFreeZone(pSym, 12, 12, 0, 0, 0, SYMBOL_ZONE_TYPE_FREE_SMALL);
+      SymbolSave_SetFreeZone(pSym, 13, 13, 0, 0, 0, SYMBOL_ZONE_TYPE_FREE_SMALL);
+      SymbolSave_SetFreeZone(pSym, 14, 14, 0, 0, 0, SYMBOL_ZONE_TYPE_FREE_SMALL);
       {
         SYMBOL_POKEMON aSymbol;
         SymbolSave_GetSymbolPokemon(pSym, 0, &aSymbol);
         OS_TPrintf("mons %d",aSymbol.monsno);
         OS_TPrintf("waza %d ",aSymbol.wazano);
         OS_TPrintf("fem %d",aSymbol.sex);
+        OS_TPrintf("move %d",aSymbol.move_type);
         OS_TPrintf("form %d\n",aSymbol.form_no);
       }
       {
@@ -219,6 +220,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
         OS_TPrintf("mons %d",aSymbol.monsno);
         OS_TPrintf("waza %d ",aSymbol.wazano);
         OS_TPrintf("fem %d",aSymbol.sex);
+        OS_TPrintf("move %d",aSymbol.move_type);
         OS_TPrintf("form %d\n",aSymbol.form_no);
       }
       {
@@ -227,6 +229,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
         OS_TPrintf("mons %d",aSymbol.monsno);
         OS_TPrintf("waza %d ",aSymbol.wazano);
         OS_TPrintf("fem %d",aSymbol.sex);
+        OS_TPrintf("move %d",aSymbol.move_type);
         OS_TPrintf("form %d\n",aSymbol.form_no);
       }
     }

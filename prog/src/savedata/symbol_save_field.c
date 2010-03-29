@@ -31,12 +31,12 @@
  */
 //==================================================================
 BOOL SymbolSave_Field_Set( SYMBOL_SAVE_WORK *symbol_save,
-    u16 monsno, u16 wazano, u8 sex, u8 form_no, SYMBOL_ZONE_TYPE zone_type )
+    u16 monsno, u16 wazano, u8 sex, u8 form_no, u8 move_type, SYMBOL_ZONE_TYPE zone_type )
 {
   if ( zone_type == SYMBOL_ZONE_TYPE_FREE_LARGE || zone_type == SYMBOL_ZONE_TYPE_FREE_SMALL )
   {
     //マップ拡張チェックなども含めてまかせてしまう
-    SymbolSave_SetFreeZone( symbol_save, monsno, wazano, sex, form_no, zone_type );
+    SymbolSave_SetFreeZone( symbol_save, monsno, wazano, sex, form_no, move_type, zone_type );
   }
   else
   {
@@ -49,10 +49,13 @@ BOOL SymbolSave_Field_Set( SYMBOL_SAVE_WORK *symbol_save,
       no = end - 1;
     }
 #endif
+    SymbolSave_Local_Decode(symbol_save);  //暗号化解除
     symbol_save->symbol_poke[ no ].monsno = monsno;
     symbol_save->symbol_poke[ no ].wazano = wazano;
     symbol_save->symbol_poke[ no ].sex = sex;
     symbol_save->symbol_poke[ no ].form_no = form_no;
+    symbol_save->symbol_poke[ no ].move_type = move_type;
+    SymbolSave_Local_Encode(symbol_save);  //再び暗号化
   }
   return TRUE;
 }
@@ -105,8 +108,10 @@ BOOL SymbolSave_Field_MoveAuto( SYMBOL_SAVE_WORK *symbol_save, u32 now_no )
     return FALSE;
 
   } else {
+    SymbolSave_Local_Decode(symbol_save);  //暗号化解除
     //新しい場所に代入する
     symbol_save->symbol_poke[new_no] = symbol_save->symbol_poke[now_no];
+    SymbolSave_Local_Encode(symbol_save);  //再び暗号化
     //元のゾーンを前詰め
     SymbolSave_DataShift(symbol_save, now_no);
     TAMADA_Printf(":Success\n");

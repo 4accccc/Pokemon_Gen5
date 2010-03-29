@@ -195,11 +195,12 @@ static void addSymbolPokemons( GAMESYS_WORK * gsys, SYMBOL_ZONE_TYPE zone_type )
   {
     u16 monsno;
     u8 sex;
+    u8 move_type = 0;
     do {
       monsno = GFUser_GetPublicRand0( 492 ) + 1;
       sex = POKETOOL_GetSex( monsno, 0, 0 );
     } while ( need_large != TPOKE_DATA_IsSizeBig( gamedata, tpdata, monsno, sex, 0 ) );
-    SymbolSave_Field_Set( symbol_save, monsno, 0, sex, 0, zone_type );
+    SymbolSave_Field_Set( symbol_save, monsno, 0, sex, 0, move_type, zone_type );
   }
   TPOKE_DATA_Delete( tpdata );
 }
@@ -243,8 +244,8 @@ static GMEVENT_RESULT symbolPokeCountupEvent( GMEVENT * event, int *seq, void *w
     {
       SYMBOL_POKEMON  sympoke;
       SymbolSave_GetSymbolPokemon( symbol_save, i ,&sympoke);
-      OS_Printf("%03d: monsno=%03d sex(%d) form(%d) waza(%d)\n", i,
-          sympoke.monsno, sympoke.sex, sympoke.form_no, sympoke.wazano );
+      OS_Printf("%03d: monsno=%03d sex(%d) form(%d) waza(%d) move(%d)\n", i,
+          sympoke.monsno, sympoke.sex, sympoke.form_no, sympoke.wazano, sympoke.move_type );
     }
     countSymbolPoke( symbol_save, SYMBOL_ZONE_TYPE_KEEP_LARGE );
     countSymbolPoke( symbol_save, SYMBOL_ZONE_TYPE_KEEP_SMALL );
@@ -597,7 +598,7 @@ static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void 
         BOOL isLargeType = ( work->place == SYMBOL_ZONE_TYPE_FREE_LARGE
             || work->place == SYMBOL_ZONE_TYPE_KEEP_LARGE );
         if ( ( isLargePoke && isLargeType ) || ( !isLargePoke && !isLargeType ) ) {
-          SymbolSave_Field_Set( symbolSave , work->monsNo , work->wazaNo , work->sex , 0 , work->place );
+          SymbolSave_Field_Set( symbolSave , work->monsNo , work->wazaNo , work->sex , 0 , 0, work->place );
           PMSND_PlaySE( SEQ_SE_DECIDE1 );
         } else {
           PMSND_PlaySE( SEQ_SE_CANCEL1 );
