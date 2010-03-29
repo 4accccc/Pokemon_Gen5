@@ -67,17 +67,20 @@ enum{
   INTSUB_ACTOR_AREA_0,
   INTSUB_ACTOR_AREA_1,
   INTSUB_ACTOR_AREA_2,
-  INTSUB_ACTOR_AREA_3,
-  INTSUB_ACTOR_AREA_MAX = INTSUB_ACTOR_AREA_3,
+  INTSUB_ACTOR_AREA_MAX = INTSUB_ACTOR_AREA_2,
 
   INTSUB_ACTOR_CUR_S_0,
   INTSUB_ACTOR_CUR_S_1,
   INTSUB_ACTOR_CUR_S_2,
-  INTSUB_ACTOR_CUR_S_3,
-  INTSUB_ACTOR_CUR_S_MAX = INTSUB_ACTOR_CUR_S_3,
-  
+  INTSUB_ACTOR_CUR_S_MAX = INTSUB_ACTOR_CUR_S_2,
+
   INTSUB_ACTOR_CUR_L,       ///<自分の居場所を指す
   INTSUB_ACTOR_ENTRY,       ///<「参加」ボタン
+
+  INTSUB_ACTOR_WARP_NG_0,
+  INTSUB_ACTOR_WARP_NG_1,
+  INTSUB_ACTOR_WARP_NG_2,
+  INTSUB_ACTOR_WARP_NG_MAX = INTSUB_ACTOR_WARP_NG_2,
   
 //  INTSUB_ACTOR_MARK,        ///<自分のいるエリアを指す
 
@@ -131,6 +134,7 @@ enum{
   SOFTPRI_AREA = 50,
   SOFTPRI_CUR_S = 20,
   SOFTPRI_CUR_L = 19,
+  SOFTPRI_WARP_NG = 30,
   SOFTPRI_LV_NUM = 10,
   SOFTPRI_INFOMSG = 8,
   SOFTPRI_ENTRY_BUTTON = 5,
@@ -231,6 +235,16 @@ enum{
   
   ENTRY_BUTTON_MSG_PATERN_MAX,
 };
+
+//--------------------------------------------------------------
+//  
+//--------------------------------------------------------------
+///通信相手が不明ゾーンにいる場合の表示座標X
+#define NOTHING_ZONE_SUB_POS_X            (240)
+///通信相手が不明ゾーンにいる場合の表示座標Y
+#define NOTHING_ZONE_SUB_POS_Y            (64)
+///通信相手が不明ゾーンにいる場合の表示座標間隔Y
+#define NOTHING_ZONE_SUB_POS_Y_SPACE      (24)
 
 //--------------------------------------------------------------
 //  イベントNo
@@ -339,6 +353,7 @@ static void _IntSub_ActorCreate_TouchTown(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE 
 static void _IntSub_ActorCreate_Area(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_CursorS(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
+static void _IntSub_ActorCreate_WarpNG(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_LvNum(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_ActorCreate_EntryButton(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle);
 static void _IntSub_Delete_EntryButton(INTRUDE_SUBDISP_PTR intsub);
@@ -351,7 +366,6 @@ static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *a
 static OCCUPY_INFO * _IntSub_GetArreaOccupy(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_TitleMsgUpdate(INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id);
 static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub);
-static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos, int net_id);
 static void _SetRect(int x, int y, int half_size_x, int half_size_y, GFL_RECT *rect);
 static BOOL _CheckRectHit(int x, int y, const GFL_RECT *rect);
 static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub);
@@ -366,12 +380,12 @@ static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS
 //==============================================================================
 ///パレスアイコン座標
 enum{
-  PALACE_ICON_POS_X = 128,      ///<パレスアイコン座標X
-  PALACE_ICON_POS_Y = 8*0xa,    ///<パレスアイコン座標Y
+  PALACE_ICON_POS_X = 128,        ///<パレスアイコン座標X
+  PALACE_ICON_POS_Y = 0xb*8+4,    ///<パレスアイコン座標Y
   PALACE_ICON_HITRANGE_HALF = 16, ///<パレスアイコンのタッチ判定半径
   
   PALACE_CURSOR_POS_X = PALACE_ICON_POS_X,      ///<パレスアイコンをカーソルが指す場合の座標X
-  PALACE_CURSOR_POS_Y = PALACE_ICON_POS_Y - 20, ///<パレスアイコンをカーソルが指す場合の座標Y
+  PALACE_CURSOR_POS_Y = PALACE_ICON_POS_Y - 16, ///<パレスアイコンをカーソルが指す場合の座標Y
 };
 
 ///エリアアイコン配置座標
@@ -391,6 +405,10 @@ enum{
   ENTRY_BUTTON_HITRANGE_HALF_Y = 8,   ///<参加ボタンのタッチ判定半径Y
 };
 
+///各通信プレイヤー毎にずらす値
+static const s8 WearOffset[FIELD_COMM_MEMBER_MAX][2] = {
+  {-4, -4}, {4, -4}, {0, 4},
+};
 
 //--------------------------------------------------------------
 //  外部データ
@@ -424,10 +442,6 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   intsub->now_bg_pal = 0xff;  //初回に必ず更新がかかるように0xff
   
   intsub->my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-  if(intsub->my_net_id > FIELD_COMM_MEMBER_MAX){
-    GF_ASSERT_MSG(0, "my_net_id = %d\n", intsub->my_net_id);
-    intsub->my_net_id = 0;
-  }
 
   _IntSub_CommParamInit(intsub, Intrude_Check_CommConnect(game_comm));
   
@@ -478,7 +492,8 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   int i;
-  
+
+  intsub->my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   _IntSub_CommParamUpdate(intsub, intcomm);
   
 	GFL_TCBL_Main( intsub->tcbl_sys );
@@ -866,6 +881,7 @@ static void _IntSub_ActorCreate(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
   _IntSub_ActorCreate_Area(intsub, handle);
   _IntSub_ActorCreate_CursorS(intsub, handle);
   _IntSub_ActorCreate_CursorL(intsub, handle);
+  _IntSub_ActorCreate_WarpNG(intsub, handle);
   _IntSub_ActorCreate_LvNum(intsub, handle);
   _IntSub_ActorCreate_EntryButton(intsub, handle);
 }
@@ -916,8 +932,8 @@ static void _IntSub_ActorCreate_TouchTown(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE 
   
   //タッチパレス島
   head.anmseq = PALACE_ACT_ANMSEQ_TOUCH_PALACE;
-  head.pos_x = 128;
-  head.pos_y = 0xb*8+4;
+  head.pos_x = PALACE_ICON_POS_X;
+  head.pos_y = PALACE_ICON_POS_Y;
   intsub->act[INTSUB_ACTOR_TOUCH_PALACE] = GFL_CLACT_WK_Create(intsub->clunit, 
     intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
     &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
@@ -1009,6 +1025,34 @@ static void _IntSub_ActorCreate_CursorL(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *h
     INTSUB_ACTOR_PAL_BASE_START + intsub->my_net_id, CLWK_PLTTOFFS_MODE_PLTT_TOP);
   GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_CUR_L], FALSE);  //表示OFF
   GFL_CLACT_WK_SetAutoAnmFlag(intsub->act[INTSUB_ACTOR_CUR_L], TRUE);  //オートアニメON
+}
+
+//--------------------------------------------------------------
+/**
+ * 通信相手のワープNGを示すアクター生成
+ *
+ * @param   intsub		
+ * @param   handle		
+ */
+//--------------------------------------------------------------
+static void _IntSub_ActorCreate_WarpNG(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
+{
+  int i;
+  GFL_CLWK_DATA head = {
+  	0, 0,                       //X, Y座標
+  	PALACE_ACT_ANMSEQ_WARP_NG,    //アニメーションシーケンス
+  	SOFTPRI_WARP_NG,              //ソフトプライオリティ
+  	BGPRI_ACTOR_COMMON,         //BGプライオリティ
+  };
+  
+  for(i = INTSUB_ACTOR_WARP_NG_0; i <= INTSUB_ACTOR_WARP_NG_MAX; i++){
+    intsub->act[i] = GFL_CLACT_WK_Create(intsub->clunit, 
+      intsub->index_cgr, intsub->index_pltt, intsub->index_cell, 
+      &head, CLSYS_DEFREND_SUB, HEAPID_FIELD_SUBSCREEN);
+    GFL_CLACT_WK_SetPlttOffs(intsub->act[i], 
+      INTSUB_ACTOR_PAL_BASE_START + i-INTSUB_ACTOR_WARP_NG_0, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+    GFL_CLACT_WK_SetDrawEnable(intsub->act[i], FALSE);  //表示OFF
+  }
 }
 
 //--------------------------------------------------------------
@@ -1203,6 +1247,27 @@ static void _IntSub_ActorUpdate_Area(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *ar
 
 //--------------------------------------------------------------
 /**
+ * ゾーンIDと一致するパレス設定データへのポインタを取得する
+ *
+ * @param   zone_id		
+ *
+ * @retval  const PALACE_ZONE_SETTING *		一致するデータが無い場合はNULL
+ */
+//--------------------------------------------------------------
+static const PALACE_ZONE_SETTING * _GetZoneSettingData(ZONEID zone_id)
+{
+  int i;
+  
+  for(i = 0; i < NELEMS(PalaceZoneSetting); i++){
+    if(PalaceZoneSetting[i].zone_id == zone_id){
+      return &PalaceZoneSetting[i];
+    }
+  }
+  return NULL;
+}
+
+//--------------------------------------------------------------
+/**
  * 更新処理：通信相手カーソル
  *
  * @param   intsub		
@@ -1214,15 +1279,12 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   int my_area, net_id, profile_num, pos_count, s, area_width;
-  GFL_CLWK *act;
-  GFL_CLACTPOS pos;
+  GFL_CLWK *act, *act_hate;
+  GFL_CLACTPOS pos, pos_hate;
   INTRUDE_STATUS *ist;
   s16 base_x;
   u8 palace_num[FIELD_COMM_MEMBER_MAX];
   u8 town_num[PALACE_TOWN_DATA_MAX];
-  static const s8 TownWearOffset[] = {3, -3, 6, 0};   //最後の0は4BYTEアライメント
-  static const s8 PalaceWearOffset[] = {0, 3, -3, 0}; //最後の0は4BYTEアライメント
-  int town_no;
   
   profile_num = intsub->comm.recv_num;
   area_width = AREA_POST_WIDTH / (profile_num + 1);
@@ -1236,12 +1298,15 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
   
   for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
     act = intsub->act[INTSUB_ACTOR_CUR_S_0 + net_id];
+    act_hate = intsub->act[INTSUB_ACTOR_WARP_NG_0 + net_id];
     if(net_id == GAMEDATA_GetIntrudeMyID(gamedata)){
       GFL_CLACT_WK_SetDrawEnable(act, FALSE);
+      GFL_CLACT_WK_SetDrawEnable(act_hate, FALSE);
       continue;
     }
     else if(intcomm == NULL){
       GFL_CLACT_WK_SetDrawEnable(act, FALSE);
+      GFL_CLACT_WK_SetDrawEnable(act_hate, FALSE);
       continue;
     }
     else if(intsub->comm.recv_profile & (1 << net_id)){
@@ -1249,38 +1314,49 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
     }
     else{
       GFL_CLACT_WK_SetDrawEnable(act, FALSE);
+      GFL_CLACT_WK_SetDrawEnable(act_hate, FALSE);
       continue;
     }
     
     if(ist->palace_area == my_area){  //このプレイヤーがいる街を指す
-      town_no = _IntSub_TownPosGet(ist->zone_id, &pos, net_id);
-      if(town_no == _TOWN_NO_PALACE){
-        town_no = 0;
+      if(ZONEDATA_IsPalace(ist->zone_id) == TRUE){
+        pos.x = PALACE_CURSOR_POS_X + WearOffset[net_id][0];
+        pos.y = PALACE_CURSOR_POS_Y + WearOffset[net_id][1];
       }
-      if(town_no != _TOWN_NO_FREE){
-        pos.x += TownWearOffset[town_num[town_no]];
-        town_num[town_no]++;
+      else{
+        const PALACE_ZONE_SETTING *zonesetting = _GetZoneSettingData(ist->zone_id);
+        if(zonesetting != NULL){
+          pos.x = zonesetting->sub_x + WearOffset[net_id][0];
+          pos.y = zonesetting->sub_y + WearOffset[net_id][1];
+          GFL_CLACT_WK_SetDrawEnable(act_hate, FALSE);
+        }
+        else{ //不明ゾーン
+          pos.x = NOTHING_ZONE_SUB_POS_X - 8;
+          pos.y = NOTHING_ZONE_SUB_POS_Y + NOTHING_ZONE_SUB_POS_Y_SPACE * net_id;;
+          pos_hate = pos;
+          pos_hate.x = NOTHING_ZONE_SUB_POS_X;
+          GFL_CLACT_WK_SetPos(act_hate, &pos_hate, CLSYS_DEFREND_SUB);
+          GFL_CLACT_WK_SetDrawEnable(act_hate, TRUE);
+        }
       }
       GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
     }
     else{ //このプレイヤーがいるパレスエリアを指す
-      if(intsub->comm.recv_profile & (1 << ist->palace_area)){
-        pos_count = 0;
-        for(s = 0; s < ist->palace_area; s++){
-          if(intsub->comm.recv_profile & (1 << s)){
-            pos_count++;
-          }
+      int s;
+      GFL_CLACT_WK_SetDrawEnable(act_hate, FALSE);
+      for(s = 0; s < FIELD_COMM_MEMBER_MAX; s++){
+        if(GFL_CLACT_WK_GetPlttOffs(intsub->act[INTSUB_ACTOR_AREA_0 + s]) == INTSUB_ACTOR_PAL_BASE_START + net_id){
+          GFL_CLACT_WK_GetPos( intsub->act[INTSUB_ACTOR_AREA_0 + s], &pos, CLSYS_DRAW_SUB );
+          break;
         }
-        pos.x = base_x + area_width * pos_count + PalaceWearOffset[palace_num[pos_count]];
-        pos.y = AREA_POST_Y;
-        GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
-        palace_num[pos_count]++;
       }
-      else{
-        //このプレイヤーが居るエリアが、こちらはまだプロフィールを受信していないエリアの場合は無視
+      if(s == FIELD_COMM_MEMBER_MAX){
         GFL_CLACT_WK_SetDrawEnable(act, FALSE);
         continue;
       }
+      pos.x += WearOffset[net_id][0];
+      pos.y += WearOffset[net_id][1];
+      GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
     }
     GFL_CLACT_WK_SetDrawEnable(act, TRUE);
   }
@@ -1300,11 +1376,26 @@ static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO 
   GFL_CLWK *act;
   GFL_CLACTPOS pos;
   int my_net_id;
-  int town_no;
   
   my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
-  town_no = _IntSub_TownPosGet(my_zone_id, &pos, my_net_id);
+  if(ZONEDATA_IsPalace(my_zone_id) == TRUE){
+    pos.x = PALACE_CURSOR_POS_X + WearOffset[intsub->my_net_id][0];
+    pos.y = PALACE_CURSOR_POS_Y + WearOffset[intsub->my_net_id][1];
+  }
+  else{
+    const PALACE_ZONE_SETTING *zonesetting = _GetZoneSettingData(my_zone_id);
+    if(zonesetting != NULL){
+      pos.x = zonesetting->sub_x + WearOffset[intsub->my_net_id][0];
+      pos.y = zonesetting->sub_y + WearOffset[intsub->my_net_id][1];
+    }
+    else{
+      pos.x = NOTHING_ZONE_SUB_POS_X - 8;
+      pos.y = NOTHING_ZONE_SUB_POS_Y + NOTHING_ZONE_SUB_POS_Y_SPACE * intsub->my_net_id;
+    }
+  }
   act = intsub->act[INTSUB_ACTOR_CUR_L];
+  GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_CUR_L], 
+    INTSUB_ACTOR_PAL_BASE_START + intsub->my_net_id, CLWK_PLTTOFFS_MODE_PLTT_TOP);
   GFL_CLACT_WK_SetPos(act, &pos, CLSYS_DEFREND_SUB);
   GFL_CLACT_WK_SetDrawEnable(act, TRUE);
 }
@@ -1517,41 +1608,6 @@ static OCCUPY_INFO * _IntSub_GetArreaOccupy(INTRUDE_SUBDISP_PTR intsub)
   return area_occupy;
 }
 
-//--------------------------------------------------------------
-/**
- * 街アイコン配置座標を取得する
- *
- * @param   zone_id		
- * @param   dest_pos		
- * @param   net_id
- * 
- * @retval  街No(パレスエリアの場合は_TOWN_NO_PALACE, どこにも属さない場合は_TOWN_NO_FREE)
- */
-//--------------------------------------------------------------
-static u8 _IntSub_TownPosGet(ZONEID zone_id, GFL_CLACTPOS *dest_pos, int net_id)
-{
-  int i;
-  
-  for(i = 0; i < PALACE_TOWN_DATA_MAX; i++){
-    if(PalaceTownData[i].reverse_zone_id == zone_id
-        || PalaceTownData[i].front_zone_id == zone_id){
-      dest_pos->x = PalaceTownData[i].subscreen_x;
-      dest_pos->y = PalaceTownData[i].subscreen_y;
-      return i;
-    }
-  }
-  
-  if(ZONEDATA_IsPalace(zone_id) == TRUE){
-    dest_pos->x = PALACE_CURSOR_POS_X;
-    dest_pos->y = PALACE_CURSOR_POS_Y;
-    return _TOWN_NO_PALACE;
-  }
-  else{
-    dest_pos->x = NO_TOWN_CURSOR_POS_X + NO_TOWN_CURSOR_POS_SPACE_X * net_id;
-    dest_pos->y = NO_TOWN_CURSOR_POS_Y;
-    return _TOWN_NO_FREE;
-  }
-}
 
 //==============================================================================
 //  
