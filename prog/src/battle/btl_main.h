@@ -34,7 +34,7 @@ extern BOOL BTL_MAIN_IsRecordEnable( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_GetSetupStatusFlag( const BTL_MAIN_MODULE* wk, BTL_STATUS_FLAG flag );
 extern const SHOOTER_ITEM_BIT_WORK* BTL_MAIN_GetSetupShooterBit( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_GetDebugFlag( const BTL_MAIN_MODULE* wk, BtlDebugFlag flag );
-
+extern u16 BTL_MAIN_GetWinBGMNo( const BTL_MAIN_MODULE* wk );
 
 
 /*------------------------------------------------------------------------------*/
@@ -63,6 +63,7 @@ extern u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk );
 extern u8 BTL_MAIN_GetFriendCleintID( const BTL_MAIN_MODULE* wk );
 extern u8 BTL_MAIN_GetEnemyClientID( const BTL_MAIN_MODULE* wk, u8 idx );
 extern BtlSide BTL_MAIN_GetPlayerSide( const BTL_MAIN_MODULE* wk );
+extern BOOL BTL_MAINUTIL_IsFriendClientID( u8 clientID_1, u8 clientID_2 );
 
 //-------------------------------------------------------------------------------
 /**

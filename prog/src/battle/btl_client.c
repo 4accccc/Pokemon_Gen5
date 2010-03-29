@@ -244,6 +244,8 @@ static BOOL SubProc_REC_SelectPokemon( BTL_CLIENT* wk, int* seq );
 static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode );
 static BOOL SubProc_UI_ConfirmIrekae( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq );
+static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq );
+static BtlResult checkResult( BTL_CLIENT* wk, const BTL_RESULT_CONTEXT* resultContext );
 static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_NotifyTimeUp( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_ServerCmd( BTL_CLIENT* wk, int* seq );
@@ -828,8 +830,11 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
     { BTL_ACMD_RECORD_DATA,
        { SubProc_UI_RecordData,    NULL,                      NULL                       } },
 
-    { BTL_ACMD_EXIT_WIN_TRAINER,
+    { BTL_ACMD_EXIT_WIN_NPC,
       { SubProc_UI_WinToTrainer,   NULL,  NULL }, },
+
+    { BTL_ACMD_EXIT_COMM,
+      { SubProc_UI_ExitCommTrainer,   NULL,  NULL }, },
 
     { BTL_ACMD_NOTIFY_TIMEUP,
       { SubProc_UI_NotifyTimeUp,   NULL,  NULL }, },
@@ -2931,6 +2936,87 @@ static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq )
   return TRUE;
 }
 //---------------------------------------------------
+// 通信対戦終了
+//---------------------------------------------------
+static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    {
+      const void* pResultContext;
+      BtlResult  result;
+      u16 strID;
+      u8  fMulti;
+      u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
+
+      BTL_ADAPTER_GetRecvData( wk->adapter, &pResultContext );
+
+      result = checkResult( wk, (const BTL_RESULT_CONTEXT*)pResultContext );
+      fMulti = BTL_MAIN_IsMultiMode( wk->mainModule );
+      TAYA_Printf("Result Code=%d , fMulti=%d\n", result, fMulti );
+
+      switch( result ){
+      case BTL_RESULT_WIN:
+        strID = (fMulti)? BTL_STRID_STD_WinCommMulti : BTL_STRID_STD_WinComm;
+        PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo(wk->mainModule) );
+        break;
+      case BTL_RESULT_LOSE:
+        strID = (fMulti)? BTL_STRID_STD_LoseCommMulti : BTL_STRID_STD_LoseComm;
+        break;
+      case BTL_RESULT_DRAW:
+        strID = (fMulti)? BTL_STRID_STD_DrawCommMulti : BTL_STRID_STD_DrawComm;
+        break;
+      default:
+        return TRUE;
+      }
+
+      TAYA_Printf(" StrID=%d utuyo\n", strID);
+
+      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, strID );
+      BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+      if( fMulti ){
+        u8 clientID_2 = BTL_MAIN_GetEnemyClientID( wk->mainModule, 1 );
+        BTLV_STRPARAM_AddArg( &wk->strParam, clientID_2);
+      }
+      BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      TAYA_Printf("メッセージ終了\n");
+      (*seq)++;
+    }
+    break;
+  case 2:
+    TAYA_Printf("おわり\n");
+    return TRUE;
+  }
+  return FALSE;
+}
+
+static BtlResult checkResult( BTL_CLIENT* wk, const BTL_RESULT_CONTEXT* resultContext )
+{
+  switch( resultContext->resultCode ){
+  case BTL_RESULT_LOSE:
+    if( !BTL_MAINUTIL_IsFriendClientID(resultContext->clientID, wk->myID) ){
+      return BTL_RESULT_WIN;
+    }
+    break;
+
+  case BTL_RESULT_WIN:
+    if( !BTL_MAINUTIL_IsFriendClientID(resultContext->clientID, wk->myID) ){
+      return BTL_RESULT_LOSE;
+    }
+    break;
+
+  }
+  return resultContext->resultCode;
+}
+
+
+//---------------------------------------------------
 // ゲーム内トレーナー戦に勝利
 //---------------------------------------------------
 static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq )
@@ -2939,6 +3025,10 @@ static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq )
   case 0:
     {
       u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
+      u16 winBGM = BTL_MAIN_GetWinBGMNo( wk->mainModule );
+
+      PMSND_PlayBGM( winBGM );
+
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_WinTrainer );
       BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
       BTLV_StartMsg( wk->viewCore, &wk->strParam );

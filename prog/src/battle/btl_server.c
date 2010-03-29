@@ -76,17 +76,18 @@ struct _BTL_SERVER {
   ServerMainProc    mainProc;
   int               seq;
 
-  BTL_MAIN_MODULE*      mainModule;
-  BTL_POKE_CONTAINER*   pokeCon;
-  SVCL_WORK             client[ BTL_CLIENT_MAX ];
-  BTL_SVFLOW_WORK*      flowWork;
-  SvflowResult          flowResult;
-  BtlBagMode            bagMode;
-  GFL_STD_RandContext   randContext;
-  BTL_RECTOOL           recTool;
-  STRBUF*               strbuf;
+  BTL_MAIN_MODULE*        mainModule;
+  BTL_POKE_CONTAINER*     pokeCon;
+  SVCL_WORK               client[ BTL_CLIENT_MAX ];
+  BTL_SVFLOW_WORK*        flowWork;
+  SvflowResult            flowResult;
+  BtlBagMode              bagMode;
+  GFL_STD_RandContext     randContext;
+  BTL_RECTOOL             recTool;
+  BTL_RESULT_CONTEXT      btlResultContext;
+  STRBUF*                 strbuf;
 
-  BTL_SVCL_ACTION       clientAction;
+  BTL_SVCL_ACTION         clientAction;
 
   u32         escapeClientID;
   u32         exitTimer;
@@ -122,11 +123,14 @@ static u8 Irekae_GetEnemyPutPokeID( BTL_SERVER* server );
 static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
-static BOOL ServerMain_ExitBattle_ForTrainer( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_ExitBattle_KeyWait( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_ExitBattle_ForCommPlayer( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_ExitBattle_ForNPC( BTL_SERVER* server, int* seq );
 static BOOL SendActionRecord( BTL_SERVER* server, BOOL fChapter );
 static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry );
 static void* MakeSelectActionRecord( BTL_SERVER* server, BOOL fChapter, u32* dataSize );
 static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize, const BtlRotateDir* dirAry );
+static void storeClientAction( BTL_SERVER* server );
 static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd );
 static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* sendData, u32 dataSize );
 static void SetAdapterCmdSingle( BTL_SERVER* server, BtlAdapterCmd cmd, u8 clientID, const void* sendData, u32 dataSize );
@@ -136,7 +140,6 @@ static void Svcl_Clear( SVCL_WORK* clwk );
 static BOOL Svcl_IsEnable( const SVCL_WORK* clwk );
 static void Svcl_Setup( SVCL_WORK* clwk, u8 clientID, BTL_ADAPTER* adapter, BOOL fLocalClient );
 static void Svcl_SetParty( SVCL_WORK* client, BTL_PARTY* party, u8 numCoverPos );
-static void storeClientAction( BTL_SERVER* server );
 
 
 
@@ -309,6 +312,7 @@ void BTL_SERVER_Delete( BTL_SERVER* wk )
   for(i=0; i<BTL_CLIENT_MAX; ++i)
   {
     if( (wk->client[i].myID != CLIENT_DISABLE_ID)
+    &&  (wk->client[i].adapter != NULL)
     &&  (wk->client[i].isLocalClient == FALSE)
     ){
       // 同一マシン上にあるクライアントでなければ、
@@ -971,35 +975,93 @@ static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq )
 //----------------------------------------------------------------------------------
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
 {
-  // @todo 本来は勝ちor負け、野生orトレーナー戦などで分岐する
-  switch( *seq ){
+  BtlResult result = BTL_MAIN_ChecBattleResult( server->mainModule );
+
+  server->btlResultContext.resultCode = result;
+  server->btlResultContext.clientID = BTL_MAIN_GetPlayerClientID( server->mainModule );
+
+  {
+    BtlCompetitor  competitor = BTL_MAIN_GetCompetitor( server->mainModule );
+
+    switch( competitor ){
+    case BTL_COMPETITOR_TRAINER:
+      setMainProc( server, ServerMain_ExitBattle_ForNPC );
+      break;
+
+    case BTL_COMPETITOR_COMM:
+
+      setMainProc( server, ServerMain_ExitBattle_ForCommPlayer );
+      break;
+
+    default:
+      setMainProc( server, ServerMain_ExitBattle_KeyWait );
+      break;
+    }
+  }
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * サーバメインループ：バトル終了処理時キー待ち
+ *
+ * @param   server
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL ServerMain_ExitBattle_KeyWait( BTL_SERVER* server, int* seq )
+{
+  switch( *seq ) {
   case 0:
-    if( BTL_MAIN_ChecBattleResult(server->mainModule) == BTL_RESULT_WIN )
-    {
-      PMSND_PlayBGM( SEQ_BGM_WIN1 );
-      if( BTL_MAIN_GetCompetitor(server->mainModule) == BTL_COMPETITOR_TRAINER ){
-        setMainProc( server, ServerMain_ExitBattle_ForTrainer );
-      }else{
-        (*seq)++;
-      }
-    }
-    else
-    {
-      (*seq)++;
-    }
-    break;
-  case 1:
     {
       u8 touch = FALSE;
+
       if( (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B))
       ||  (GFL_UI_TP_GetTrg())
       ){
         touch = TRUE;
       }
       if( touch ){
+        ++(*seq);
         return TRUE;
       }
     }
+    break;
+
+  case 1:
+    return TRUE;
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * サーバメインループ：バトル終了（通信対戦トレーナーとの対戦）
+ *
+ * @param   server
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL ServerMain_ExitBattle_ForCommPlayer( BTL_SERVER* server, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    TAYA_Printf(" **** Start ExitComm ACMD\n");
+    SetAdapterCmdEx( server, BTL_ACMD_EXIT_COMM, &server->btlResultContext, sizeof(server->btlResultContext) );
+    (*seq)++;
+    break;
+  case 1:
+    if( WaitAllAdapterReply(server) ){
+      TAYA_Printf(" **** End ExitComm ACMD\n");
+      ResetAdapterCmd( server );
+      (*seq)++;
+    }
+    break;
+  case 2:
+    setMainProc( server, ServerMain_ExitBattle_KeyWait );
     break;
   }
   return FALSE;
@@ -1014,11 +1076,11 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
  * @retval  BOOL
  */
 //----------------------------------------------------------------------------------
-static BOOL ServerMain_ExitBattle_ForTrainer( BTL_SERVER* server, int* seq )
+static BOOL ServerMain_ExitBattle_ForNPC( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
   case 0:
-    SetAdapterCmd( server, BTL_ACMD_EXIT_WIN_TRAINER );
+    SetAdapterCmdEx( server, BTL_ACMD_EXIT_WIN_NPC, &server->btlResultContext, sizeof(server->btlResultContext) );
     (*seq)++;
     break;
   case 1:
@@ -1028,17 +1090,7 @@ static BOOL ServerMain_ExitBattle_ForTrainer( BTL_SERVER* server, int* seq )
     }
     break;
   case 2:
-    {
-      u8 touch = FALSE;
-      if( (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B))
-      ||  (GFL_UI_TP_GetTrg())
-      ){
-        touch = TRUE;
-      }
-      if( touch ){
-        return TRUE;
-      }
-    }
+    setMainProc( server, ServerMain_ExitBattle_KeyWait );
     break;
   }
   return FALSE;

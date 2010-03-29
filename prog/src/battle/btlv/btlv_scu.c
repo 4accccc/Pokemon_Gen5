@@ -317,6 +317,7 @@ BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore,
   wk->playerClientID = playerClientID;
   wk->defaultFont = defaultFont;
   wk->smallFont = smallFont;
+  wk->btlinSkipFlag = FALSE;
 
   wk->printStream = NULL;
   wk->tcbl = tcbl;

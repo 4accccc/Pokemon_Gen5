@@ -1986,6 +1986,19 @@ BOOL BTL_MAIN_IsMultiMode( const BTL_MAIN_MODULE * wk )
 }
 //=============================================================================================
 /**
+ * 勝利時BGMナンバーを返す
+ *
+ * @param   wk
+ *
+ * @retval  u16
+ */
+//=============================================================================================
+u16 BTL_MAIN_GetWinBGMNo( const BTL_MAIN_MODULE* wk )
+{
+  return wk->setupParam->musicWin;
+}
+//=============================================================================================
+/**
  * 「にげる」を選択した時の反応タイプ
  *
  * @param   wk
@@ -3006,6 +3019,16 @@ u8 BTL_MAIN_GetFriendCleintID( const BTL_MAIN_MODULE* wk )
     return friendClientID;
   }
   return BTL_CLIENTID_NULL;
+}
+BOOL BTL_MAINUTIL_IsFriendClientID( u8 clientID_1, u8 clientID_2 )
+{
+  if( clientID_1 == clientID_2 ){
+    return TRUE;
+  }
+  if( clientID_1 == (GetFriendCrientID(clientID_2)) ){
+    return TRUE;
+  }
+  return FALSE;
 }
 u8 BTL_MAIN_GetEnemyClientID( const BTL_MAIN_MODULE* wk, u8 idx )
 {
