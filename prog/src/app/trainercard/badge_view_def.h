@@ -137,9 +137,26 @@ enum{
 
 // タッチバー検出時の機能
 enum{
-  FUNC_LEFT_PAGE=0,
-  FUNC_RIGHT_PAGE,
-  FUNC_END,
+  TOUCH_BADGE_0=0,      ///< バッジ８個
+  TOUCH_BADGE_1,
+  TOUCH_BADGE_2,
+  TOUCH_BADGE_3,
+  TOUCH_BADGE_4,
+  TOUCH_BADGE_5,
+  TOUCH_BADGE_6,
+  TOUCH_BADGE_7,
+  TOUCH_GYM_READER_0,   ///< ジムリーダー８人
+  TOUCH_GYM_READER_1,
+  TOUCH_GYM_READER_2,
+  TOUCH_GYM_READER_3,
+  TOUCH_GYM_READER_4,
+  TOUCH_GYM_READER_5,
+  TOUCH_GYM_READER_6,
+  TOUCH_GYM_READER_7,
+  TOUCH_CHANGE_CARD,    ///< カードに戻る
+  TOUCH_BOOKMARK,       ///< Yボタンメニュー
+  TOUCH_END,            ///< 終了
+  TOUCH_RETURN,         ///< 戻る
 };
 
 #define BV_CLACT_NUM        ( BV_OBJ_MAX ) // OBJ登録最大数

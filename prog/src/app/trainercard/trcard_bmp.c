@@ -400,15 +400,10 @@ void TRCBmp_WriteTrWinInfo(TR_CARD_WORK* wk, GFL_BMPWIN *win[], const TR_CARD_DA
               STR_NUM_DISP_SPACE,0);    //Žž
       
       PRINTSYS_Print( GFL_BMPWIN_GetBmp(win[TRC_BMPWIN_PLAY_TIME]) , SEC_DISP_POS_X+SEC_DISP_OFS, 0, wk->CPrmBuf[MSG_TCARD_12], wk->fontHandle );
-//      GF_STR_PrintColor(win[TRC_BMPWIN_PLAY_TIME], FONT_SYSTEM, wk->CPrmBuf[MSG_TCARD_12],
-//          SEC_DISP_POS_X+SEC_DISP_OFS, 0, 0, TR_MSGCOLOR, NULL);
     }
     
     // ŠÈˆÕ‰ï˜b•`‰æ
     {
-//      STRBUF *str = PMSDAT_ToString( &wk->TrCardData->Pms, wk->heapId );
-//      PRINTSYS_Print( GFL_BMPWIN_GetBmp(win[TRC_BMPWIN_PMSWORD]) , 0, 0, str, wk->fontHandle );
-//      GFL_STR_DeleteBuffer( str );
 
         PMS_DRAW_SetNullColorPallet( wk->PmsDrawWork, 0 );
         PMS_DRAW_Print( wk->PmsDrawWork, win[TRC_BMPWIN_PMSWORD], &wk->TrCardData->Pms, 0 );
@@ -470,7 +465,7 @@ void TRCBmp_PrintTrainerType( TR_CARD_WORK *wk, int trtype, int trans_sw )
 
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[TRC_BMPWIN_TRAINER_TYPE]), 0 );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->win[TRC_BMPWIN_TRAINER_TYPE]),
-                   WIN_TRTYPE_SX*8-length, 0, str, wk->fontHandle );
+                   WIN_TRTYPE_SX*8-length-3, 0, str, wk->fontHandle );
   GFL_STR_DeleteBuffer( str );
   GFL_MSG_Delete( msgdata );
 
@@ -499,7 +494,7 @@ void TRCBmp_PrintPersonality( TR_CARD_WORK *wk, int personality, int trans_sw )
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->win[TRC_BMPWIN_PERSONALITY]), 
                   0, 0, wk->CPrmBuf[2], wk->fontHandle );
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(wk->win[TRC_BMPWIN_PERSONALITY]),
-                   WIN_TRTYPE_SX*8-length, 0, str, wk->fontHandle );
+                   WIN_TRTYPE_SX*8-length-3, 0, str, wk->fontHandle );
   GFL_STR_DeleteBuffer( str );
 
   if(trans_sw){

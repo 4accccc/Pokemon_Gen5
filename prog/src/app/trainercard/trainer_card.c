@@ -1050,17 +1050,6 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
 //  GFL_ARC_UTIL_TransVramScreen( ARCID_TRAINERCARD, NARC_trainer_case_card_case2bg_NSCR,
 //    TRC_BG_BADGE_BACK, 0, 0, 0, wk->heapId );
 
-  //殿堂入りマーク表示
-  if(!wk->isClear && wk->TrCardData->BadgeFlag >= 0x00FF){
-    GFL_BG_WriteScreenExpand(TRC_BG_BADGE_CASE,
-      0,7,7,9,wk->pSBCase->rawData,0,0,
-      wk->pSBCase->screenWidth/8,wk->pSBCase->screenHeight/8);
-  }else if(wk->TrCardData->BadgeFlag == 0xFFFF){
-    GFL_BG_WriteScreenExpand(TRC_BG_BADGE_CASE,
-      0,14,7,9,wk->pSBCase->rawData,7,0,
-      wk->pSBCase->screenWidth/8,wk->pSBCase->screenHeight/8);
-  }
-  GFL_BG_LoadScreenReq(TRC_BG_BADGE_CASE);
   //サイン展開
   DecodeSignData(wk->TrCardData->SignRawData, wk->TrSignData);
 
