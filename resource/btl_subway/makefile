@@ -54,6 +54,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 do-build: binmake narc
 
 binmake:
+	ruby bts_trainer_arr.rb ../../tools/btl_subway/trainer.txt > bts_tr_arr.rb
 	ruby ../../tools/btl_subway/btl_subway_conv.rb pd_list.txt bts_wb_tr.tdm ../../resource/message/template.gmm
 
 narc:
