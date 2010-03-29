@@ -579,7 +579,7 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
   
   if( type == FLDMAP_BASESYS_GRID )
   {
-    static const MMDL_HEADER data_MMdlHeader =
+    static MMDL_HEADER data_MMdlHeader =
     {
       MMDL_ID_PLAYER,	///<識別ID
       HERO,	///<表示するOBJコード
@@ -596,6 +596,8 @@ static void mapCtrlHybrid_ChangeBaseSystem( FIELDMAP_WORK* p_fieldmap, FIELDMAP_
       MMDL_HEADER_POSTYPE_GRID,
     };
     VecFx32 pos = *((VecFx32*)cp_pos);
+
+    data_MMdlHeader.obj_code = MMDL_GetOBJCode( p_mmdl );
     
     // 動作変更
     FIELD_PLAYER_StopNoGrid( p_wk->p_player );

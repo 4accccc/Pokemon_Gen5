@@ -29,7 +29,7 @@
 #define MV_SPEED (2*FX32_ONE) ///<移動速度
 
 
-static const MMDL_HEADER data_MMdlHeader =
+static MMDL_HEADER data_MMdlHeader =
 {
 	MMDL_ID_PLAYER,	///<識別ID
 	HERO,	///<表示するOBJコード
@@ -413,6 +413,7 @@ FIELD_PLAYER_NOGRID* FIELD_PLAYER_NOGRID_Create( FIELD_PLAYER_CORE* p_player_cor
   // 動作コードをレール動作に変更
   if( MMDL_GetMoveCode( p_wk->p_mmdl ) != MV_RAIL_DMY )
   {
+    data_MMdlHeader.obj_code = MMDL_GetOBJCode( p_wk->p_mmdl );
     MMDL_ChangeMoveParam( p_wk->p_mmdl, &data_MMdlHeader );
   }
 
