@@ -269,7 +269,6 @@ void PALACE_MAP_GMK_Move(FIELDMAP_WORK *fieldWork)
   // 表示キューブOFF
   if( wk->on ){
 
-    
     if( FLD_EXP_OBJ_ChkAnmEnd(anime) ){
       // OFF
       FLD_EXP_OBJ_SetVanish( exobj_cnt, EXPOBJ_UNIT_IDX, MAP_OBJ_CUBE, TRUE );
