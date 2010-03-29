@@ -254,6 +254,12 @@ VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
   if( type >= MUSICAL_VALUE_WR_SELF_IDX )
   {
     musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
+    if( musScriptWork == NULL )
+    {
+      GF_ASSERT_MSG(0,"Musical script work is NULL!!");
+      *ret_wk = 0;
+      return VMCMD_RESULT_CONTINUE;
+    }
     evWork = musScriptWork->eventWork;
   }
 

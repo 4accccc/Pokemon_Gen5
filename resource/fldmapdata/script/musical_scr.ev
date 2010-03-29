@@ -23,6 +23,7 @@ _EVENT_DATA   ev_musical_recept_single
 _EVENT_DATA   ev_musical_recept_comm
 _EVENT_DATA   ev_musical_recept_fitting
 _EVENT_DATA   ev_musical_change_program
+_EVENT_DATA   ev_musical_return_hall
 _EVENT_DATA   ev_musical_fan_01
 _EVENT_DATA   ev_musical_fan_02
 _EVENT_DATA   ev_musical_fan_03
@@ -78,8 +79,9 @@ EVENT_START ev_musical_recept_single
         //入場アニメ
         _CALL recept_move_obj_solo
 
-        //FIXME ポケモンインデックス設定！
-          _MUSICAL_CALL(selectPoke,MUSICAL_CALL_LOCAL) //ミュージカル呼び出し
+        _MAP_FADE_BLACK_OUT( )
+        _MAP_FADE_END_CHECK()
+        _MUSICAL_CALL(selectPoke,MUSICAL_CALL_LOCAL) //ミュージカル呼び出し
         //ここから処理は帰ってきません。
         //細かい開放はプログラムで行います。
       ENDIF
@@ -145,6 +147,13 @@ EVENT_START ev_musical_recept_fitting
 
 EVENT_END
 
+/*************************************************************/
+/*            帰ってきた時処理             */
+/*************************************************************/
+EVENT_START ev_musical_return_hall
+  _MAP_FADE_BLACK_IN( )
+  _MAP_FADE_END_CHECK()
+EVENT_END
 /*************************************************************/
 /*            通信　受付コア               */
 /*************************************************************/
@@ -352,6 +361,9 @@ ev_musical_recept_comm_core:
 
   //入場アニメ
   _CALL recept_move_obj_comm
+  
+  _MAP_FADE_BLACK_OUT( )
+  _MAP_FADE_END_CHECK()
 
   _MUSICAL_CALL(selectPoke,MUSICAL_CALL_COMM) //ミュージカル呼び出し
 
@@ -765,7 +777,7 @@ fan_main_routine:
     CASE MUSICAL_GIFT_TYPE_GOODS THEN
       //グッズをもらう
       //グッズ名のセット
-      _MUSICAL_WORD_GOODS_NAME( 0 , gift_number )
+      _MUSICAL_WORD_GOODS_NAME( 1 , gift_number )
       //贈るメッセージ
       _BALLOONWIN_TALKOBJ_MSG( msg_id )
       _AB_KEYWAIT ()

@@ -22,6 +22,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_c04r0202
+_EVENT_DATA    ev_init_c04r0202
 _EVENT_DATA    ev_c04r0202_mus_1st
 _EVENT_DATA    ev_c04r0202_mus_2nd
 _EVENT_DATA    ev_c04r0202_mus_3rd
@@ -64,12 +65,12 @@ grade_all_msg_routine:
   IF $point >= 100 THEN
     //単独100点以上が居る
     _BALLOONWIN_OBJMSG( msg_mus_03_001_04 , C04R0202_WOMAN1_01 )
-  ELSIF $point == 50 THEN
-    //全員同じ(50点
-    _BALLOONWIN_OBJMSG( msg_mus_03_001_01 , C04R0202_WOMAN1_01 )
   ELSE
     _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_MIN_POINT,0,point)
-    IF $point >= 40 THEN
+    IF $point >= 70 THEN
+      //平均70以上
+      _BALLOONWIN_OBJMSG( msg_mus_03_001_01 , C04R0202_WOMAN1_01 )
+    ELSIF $point >= 40 THEN
       //平均40以上
       _BALLOONWIN_OBJMSG( msg_mus_03_001_02 , C04R0202_WOMAN1_01 )
     ELSE
@@ -170,7 +171,7 @@ grade_one_msg_routine:
   
   IF $point >= 100 THEN
     _BALLOONWIN_OBJMSG( msg_mus_03_003_01 , C04R0202_WOMAN1_01 )
-  ELSIF $point >= 50 THEN
+  ELSIF $point >= 70 THEN
     _BALLOONWIN_OBJMSG( msg_mus_03_003_02 , C04R0202_WOMAN1_01 )
   ELSIF $point >= 40 THEN
     _BALLOONWIN_OBJMSG( msg_mus_03_003_03 , C04R0202_WOMAN1_01 )
@@ -198,14 +199,29 @@ INIT_EVENT_START ev_zone_c04r0202
   $OBJCHRWORK3 = $retWk
   _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_POS_TO_OBJ_VIEW,3,retWk)
   $OBJCHRWORK4 = $retWk
+INIT_EVENT_END
 
+/**************************************************************/
+//  ゾーン初期化クリプト
+/**************************************************************/
+INIT_EVENT_START ev_init_c04r0202
+  //NoFunc!
 INIT_EVENT_END
 
 /**************************************************************/
 //  ミュージカル台詞　開始時
 /**************************************************************/
 EVENT_START ev_c04r0202_mus_1st
+
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラパージ
+  _CAMERA_MOVE(9724,0,970900,753664,0,688128, 1)
+  _CAMERA_WAIT_MOVE()
   
+  _MAP_FADE_BLACK_IN( )
+  _MAP_FADE_END_CHECK()
+  
+/*
   //開始時の移動
   _GET_MUSICAL_WAITROOM_VALUE(MUSICAL_VALUE_WR_SELF_IDX,0,selfPos)
 
@@ -220,7 +236,7 @@ EVENT_START ev_c04r0202_mus_1st
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_player_start_to_main_4 )
    ENDSWITCH
   _OBJ_ANIME_WAIT()
-  
+*/  
   //演目内容の読み上げようにデータ着信待ち
   _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_WAIT_POST_PROGRAM , 0 , 0 , 0 )
 
@@ -245,6 +261,7 @@ EVENT_START ev_c04r0202_mus_1st
   _MAP_FADE_BLACK_OUT( )
   _MAP_FADE_END_CHECK()
 
+  _CAMERA_END()		//カメラパージ
 EVENT_END
 
 /**************************************************************/
@@ -252,7 +269,12 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_c04r0202_mus_2nd
 
-  _MAP_FADE_BLACK_IN( )
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラパージ
+  _CAMERA_MOVE(9724,0,970900,753664,0,688128, 1)
+  _CAMERA_WAIT_MOVE()
+
+  _MAP_FADE_WHITE_IN( )
   _MAP_FADE_END_CHECK()
 
   //デバッグげし
@@ -268,6 +290,8 @@ EVENT_START ev_c04r0202_mus_2nd
   _MAP_FADE_BLACK_OUT( )
   _MAP_FADE_END_CHECK()
 
+  _CAMERA_END()		//カメラパージ
+
 EVENT_END
 
 /**************************************************************/
@@ -276,6 +300,11 @@ EVENT_END
 EVENT_START ev_c04r0202_mus_3rd
 
   DEFINE_LOCAL isLoop   //ループチェック
+
+  _CAMERA_START()		//カメラ操作開始
+  _CAMERA_PURGE()		//カメラパージ
+  _CAMERA_MOVE(9724,0,970900,753664,0,688128, 1)
+  _CAMERA_WAIT_MOVE()
 
   _MAP_FADE_BLACK_IN( )
   _MAP_FADE_END_CHECK()
@@ -404,7 +433,11 @@ EVENT_START ev_c04r0202_mus_3rd
       _FLAG_RESET( FV_MUSICAL_FUN_10 )
     ENDIF
   }
+  
+  _MAP_FADE_BLACK_OUT( )
+  _MAP_FADE_END_CHECK()
 
+  _CAMERA_END()		//カメラパージ
 
 EVENT_END
 

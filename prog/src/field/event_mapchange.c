@@ -2276,12 +2276,14 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, const LOCATION * loc_req 
   }
   //※check　ユニオンルームへの移動を受付スクリプトで制御するようになったらサブスクリーンモードの
   //         変更もそのスクリプト内で行うようにする
+  //         ミュージカル控え室も同じように処理するAri100329
   switch(loc_req->zone_id){
   case ZONE_ID_UNION:
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_UNION);
     break;
   case ZONE_ID_CLOSSEUM:
   case ZONE_ID_CLOSSEUM02:
+  case ZONE_ID_C04R0202:
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NOGEAR);
     break;
   default:

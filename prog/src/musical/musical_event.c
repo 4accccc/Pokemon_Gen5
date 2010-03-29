@@ -44,6 +44,7 @@
 #include "message.naix"
 
 #include "../resource/fldmapdata/script/c04r0202_def.h"
+#include "../resource/fldmapdata/script/musical_scr_def.h"
 #include "../resource/fldmapdata/script/musical_scr_local.h"
 
 #include "musical/musical_event.h"
@@ -80,7 +81,7 @@ typedef enum
   MES_INIT_MUSICAL_SHOT,
   MES_TERM_MUSICAL_SHOT,
 
-  MES_RETURN_FIELD,
+  MES_CALL_HALL_EVENT,
   MES_FINIHS_EVENT,
 
   MES_ENTER_WAITROOM_FIRST_BEF_COMM,
@@ -305,8 +306,8 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     break;
     
   case MES_ENTER_WAITROOM_FIRST:
-    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( GFL_HEAPID_APP );
-    GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_PROC );
+    //GFL_HEAP_DEBUG_PrintExistMemoryBlocks( GFL_HEAPID_APP );
+    //GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_PROC );
     MUSICAL_EVENT_JumpWaitingRoom( event , evWork );
     evWork->state = MES_WAITROOM_FIRST;
     break;
@@ -450,20 +451,12 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   case MES_TERM_MUSICAL:
     MUSICAL_EVENT_TermMusical( evWork );
     MUSICAL_EVENT_JumpMusicalHall( event , evWork );
-    evWork->state = MES_FINIHS_EVENT;
+    evWork->state = MES_CALL_HALL_EVENT;
     break;
   
-  //フィールドへ戻る
-  //------------------------------
-  case MES_RETURN_FIELD:
-    {
-      const BOOL isFinish = MUSICAL_EVENT_InitField( event , evWork );
-      if( isFinish == TRUE )
-      {
-        evWork->subSeq = 0;
-        evWork->state = MES_FINIHS_EVENT;
-      }
-    }
+  case MES_CALL_HALL_EVENT:
+    MUSICAL_EVENT_RunScript( event , evWork , SCRID_MUSICAL_RETURN_HALL );
+    evWork->state = MES_FINIHS_EVENT;
     break;
   
   case MES_FINIHS_EVENT:
@@ -851,7 +844,6 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
         ARI_TPrintf( "[%d:%d+%d]\n",i,MUSICAL_EVENT_GetPoint( evWork , i ),miscData->sumPoint );
       }
     }
-    //FIXME 全員の得点
   }
 
   for( i=0;i<MUS_SAVE_FAN_NUM;i++ )
@@ -1054,10 +1046,12 @@ static const void MUSICAL_EVENT_JumpWaitingRoom( GMEVENT *event, MUSICAL_EVENT_W
 {
   GMEVENT *newEvent;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork( evWork->gsys );
-  const VecFx32 pos = { FX32_CONST(40.0f) , FX32_CONST(0.0f) , FX32_CONST(360.0f) };
+  VecFx32 pos = { FX32_CONST(136.0f) , FX32_CONST(0.0f) , FX32_CONST(200.0f) };
   
-  newEvent = EVENT_ChangeMapPos( evWork->gsys, fieldWork ,
-                ZONE_ID_C04R0202 , &pos , 0, FALSE );
+  pos.x += evWork->selfIdx * (FX32_ONE*32);
+  
+  newEvent = EVENT_ChangeMapPosNoFade( evWork->gsys, fieldWork ,
+                ZONE_ID_C04R0202 , &pos , DIR_UP );
   GMEVENT_CallEvent(event, newEvent);
 }
 
@@ -1077,11 +1071,11 @@ static const void MUSICAL_EVENT_JumpMusicalHall( GMEVENT *event, MUSICAL_EVENT_W
   
   if( evWork->isComm == TRUE )
   {
-    newEvent = EVENT_ChangeMapPos( evWork->gsys, fieldWork , ZONE_ID_C04R0201 , &posComm , DIR_DOWN, FALSE );
+    newEvent = EVENT_ChangeMapPosNoFade( evWork->gsys, fieldWork , ZONE_ID_C04R0201 , &posComm , DIR_DOWN );
   }
   else
   {
-    newEvent = EVENT_ChangeMapPos( evWork->gsys, fieldWork , ZONE_ID_C04R0201 , &pos , DIR_DOWN, FALSE );
+    newEvent = EVENT_ChangeMapPosNoFade( evWork->gsys, fieldWork , ZONE_ID_C04R0201 , &pos , DIR_DOWN);
   }
   GMEVENT_CallEvent(event, newEvent);
 }
