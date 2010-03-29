@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T14:22:27"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T18:29:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,6 @@ C03ジムリーダー</attribute>
 
 	<row id="msg_d02_fighterw_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
-・GRIDX=601、GRIDZ=583
 ・アイテム入手処理
 　No「いわくだき」</comment>
 		<attribute name="キャラ指定">FIGHTERW</attribute>
@@ -375,8 +374,7 @@ C03ジムリーダー</attribute>
 	<row id="msg_d02_rock_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・アイテム入手処理
-　No091「ほしのかけら」
-※入手アイテムはランダムにするかも</comment>
+　No091「ほしのかけら」</comment>
 		<attribute name="キャラ指定">特殊な岩</attribute>
 		<language name="JPN" width="256">[1:01:ポケモン種族名:0]は
 ためしのいわを　こわそうとした！[BE:01:ページ切り替え（クリア）]</language>
