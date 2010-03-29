@@ -186,7 +186,7 @@ DEMO3D_ENGINE_WORK* Demo3D_ENGINE_Init( DEMO3D_GRAPHIC_WORK* graphic, DEMO3D_PAR
   ICA_ANIME_SetAnimeFrame( wk->ica_anime, FX32_CONST(wk->env.start_frame) );
 
   // 3D管理ユーティリティーの生成
-  wk->g3d_util = GFL_G3D_UTIL_Create( unit_max*6, unit_max, heapID );
+  wk->g3d_util = GFL_G3D_UTIL_Create( unit_max*6, unit_max*6, heapID );
 
   // ユニット追加
   {
@@ -265,6 +265,7 @@ void Demo3D_ENGINE_Exit( DEMO3D_ENGINE_WORK* wk )
     for( i=0; i<Demo3D_DATA_GetUnitMax( wk->demo_id ); i++ )
     {
       GFL_G3D_UTIL_DelUnit( wk->g3d_util, wk->unit_idx[i] );
+      GF_ASSERT_MSG( GFL_HEAP_CheckHeapSafe( HEAPID_DEMO3D ) == TRUE,"Demo3D HeapError!\n" );
     }
   }
   
@@ -519,21 +520,22 @@ static void set_camera_disp_offset( DEMO3D_ENGINE_WORK* wk, GFL_G3D_CAMERA* p_ca
 //-----------------------------------------------------------------------------
 BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
 {
-  GFL_G3D_CAMERA* p_camera;
   BOOL is_end;
 
 //  OS_Printf("frame=%f \n", FX_FX32_TO_F32(ICA_ANIME_GetNowFrame( wk->ica_anime )) );
 
   // コマンド実行
-  Demo3D_CMD_Main( wk->cmd, ICA_ANIME_GetNowFrame( wk->ica_anime ) );
+  if( wk->end_result == DEMO3D_RESULT_NULL){
+    Demo3D_CMD_Main( wk->cmd, ICA_ANIME_GetNowFrame( wk->ica_anime ) );
+  }else{
+    Demo3D_CMD_Main( wk->cmd, -FX32_ONE );
+  }
 
-  p_camera = wk->camera;
-  
   // ICAカメラ更新
-  is_end = ICA_ANIME_IncAnimeFrame( wk->ica_anime, wk->anime_speed );
+  is_end = ICA_ANIME_IncAnimeFrameNoLoop( wk->ica_anime, wk->anime_speed );
 
   // ICAカメラ座標を設定
-  ICA_CAMERA_SetCameraStatus( p_camera, wk->ica_anime );
+  ICA_CAMERA_SetCameraStatus( wk->camera, wk->ica_anime );
   
 #ifdef DEBUG_USE_KEY
   // アニメ再生切り替え
@@ -553,7 +555,7 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
 
   // 画面の表示位置をずらす
   if( wk->is_double ){
-    set_camera_disp_offset( wk, p_camera );
+    set_camera_disp_offset( wk, wk->camera );
   }
 
   // アニメーション更新
@@ -572,7 +574,7 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk )
   }
 
   // カメラ切り替え
-  GFL_G3D_CAMERA_Switching( p_camera );
+  GFL_G3D_CAMERA_Switching( wk->camera );
 
   // 描画
 	DEMO3D_GRAPHIC_3D_StartDraw( wk->graphic );

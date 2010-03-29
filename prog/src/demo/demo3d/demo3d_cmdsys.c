@@ -132,9 +132,10 @@ void Demo3D_CMD_Exit( DEMO3D_CMD_WORK* wk )
 
   // ヒープ開放
   GFL_HEAP_FreeMemory( wk );
-  
+#if 0  
   GF_ASSERT_MSG( GFL_HEAP_CheckHeapSafe( 0 ) == TRUE,"System HeapError!\n" );
   GF_ASSERT_MSG( GFL_HEAP_CheckHeapSafe( HEAPID_DEMO3D ) == TRUE,"Demo3D HeapError!\n" );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -156,7 +157,7 @@ void Demo3D_CMD_Main( DEMO3D_CMD_WORK* wk, fx32 now_frame )
   GFL_TCBL_Main( wk->tcbsys );
 
   // コマンドを末端までなめたら、コマンドサーチはもうしない
-  if( wk->is_cmd_end ){
+  if( wk->is_cmd_end || (now_frame == (-FX32_ONE))){
     return;
   }
   data  = Demo3D_DATA_GetCmdData( wk->demo_id );

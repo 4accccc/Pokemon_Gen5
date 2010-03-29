@@ -230,7 +230,8 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
 static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
   DEMO3D_MAIN_WORK* wk = mywk;
-  
+ 
+#if 0
   switch( *seq ){
   case 0:
     // フェードアウト リクエスト
@@ -244,7 +245,7 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
   default:
     break;
   }
-
+#endif
   // 例外処理エンジン 終了処理
   APP_EXCEPTION_Delete( wk->expection );
 
@@ -259,6 +260,7 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
   
   //3D 破棄
   Demo3D_ENGINE_Exit( wk->engine );
+  GF_ASSERT_MSG( GFL_HEAP_CheckHeapSafe( HEAPID_DEMO3D ) == TRUE,"Demo3D HeapError!\n" );
 
   //描画設定破棄
   DEMO3D_GRAPHIC_Exit( wk->graphic );
@@ -310,23 +312,27 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
   //3D描画
   is_end = Demo3D_ENGINE_Main( wk->engine );
 
-  // ループ検出かキー終了有効の時にはキーでも終了
-  if(_key_check(wk)){
-    // [OUT] フレーム値を設定
-    wk->param->end_frame  = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT; 
-    wk->param->result     = DEMO3D_RESULT_USER_END;
-    DEMO3D_ENGINE_SetEndResult( wk->engine, wk->param->result );
-    return GFL_PROC_RES_FINISH;
+  switch( *seq ){
+  case 0:
+    // ループ検出かキー終了有効の時にはキーでも終了
+    if(_key_check(wk) || is_end ){
+      // [OUT] フレーム値を設定
+      wk->param->end_frame  = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT; 
+      wk->param->result     = DEMO3D_RESULT_USER_END + is_end;
+      DEMO3D_ENGINE_SetEndResult( wk->engine, wk->param->result );
+    
+      // フェードアウト リクエスト
+      if( sub_FadeInOutReq( wk->param->demo_id, WIPE_TYPE_FADEOUT, wk->heapID )){
+        return GFL_PROC_RES_FINISH;
+      }
+      (*seq)++;
+    }
+    break;
+  case 1:
+    if( WIPE_SYS_EndCheck() == TRUE ){
+      return GFL_PROC_RES_FINISH;
+    }
   }
-  else if( is_end )
-  {
-    // [OUT] フレーム値を設定
-    wk->param->end_frame  = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT; 
-    wk->param->result     = DEMO3D_RESULT_FINISH;
-    DEMO3D_ENGINE_SetEndResult( wk->engine, wk->param->result );
-    return GFL_PROC_RES_FINISH;
-  }
-
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -373,7 +379,7 @@ static BOOL sub_FadeInOutReq( u8 demo_id, u8 wipe, HEAPID heapID )
 //----------------------------------------------------------------------------------
 static int _key_check( DEMO3D_MAIN_WORK *wk )
 {
-  if( WIPE_SYS_EndCheck() == FALSE ){
+  if( wk->param->result != DEMO3D_RESULT_NULL || WIPE_SYS_EndCheck() == FALSE ){
     return FALSE;
   }
   if( wk->expection->key_skip )
