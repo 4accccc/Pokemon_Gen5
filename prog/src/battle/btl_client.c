@@ -30,10 +30,11 @@
 #include "btlv\btlv_timer.h"
 #include "btlv\btlv_input.h"
 
-#include "btl_client.h"
-
 #include "tr_ai/tr_ai.h"
 #include "tr_tool/tr_tool.h"
+
+#include "btl_client.h"
+
 
 enum {
   PRINT_FLG = FALSE,
@@ -116,6 +117,7 @@ struct _BTL_CLIENT {
   BTLV_CORE*      viewCore;
   BTLV_STRPARAM   strParam;
   BTLV_STRPARAM   strParamSub;
+  BTL_SERVER*     cmdCheckServer;
   BtlRotateDir    prevRotateDir;
 
   ClientSubProc  subProc;
@@ -369,6 +371,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->cmdQue = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_SERVER_CMD_QUE) );
   wk->mainProc = ClientMain_Normal;
   wk->myState = 0;
+  wk->cmdCheckServer = NULL;
 
   wk->commWaitInfoOn = FALSE;
   wk->shooterEnergy = 0;
@@ -455,6 +458,20 @@ void BTL_CLIENT_AttachViewCore( BTL_CLIENT* wk, BTLV_CORE* viewCore )
 {
   wk->viewCore = viewCore;
 }
+
+//=============================================================================================
+/**
+ * コマンド整合性チェク用のサーバモジュールをアタッチ
+ *
+ * @param   wk
+ * @param   server
+ */
+//=============================================================================================
+void BTL_CLIENT_AttachCmeCheckServer( BTL_CLIENT* wk, BTL_SERVER* server )
+{
+  wk->cmdCheckServer = server;
+}
+
 
 
 //=============================================================================================
@@ -2894,15 +2911,22 @@ static BOOL SubProc_UI_ConfirmIrekae( BTL_CLIENT* wk, int* seq )
 //---------------------------------------------------
 static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq )
 {
+  u32 dataSize;
+  const void* dataBuf;
+
+  dataSize = BTL_ADAPTER_GetRecvData( wk->adapter, &dataBuf );
+
   if( wk->btlRec )
   {
-    u32 dataSize;
-    const void* dataBuf;
-
-    dataSize = BTL_ADAPTER_GetRecvData( wk->adapter, &dataBuf );
     BTL_Printf("録画データ %d bytes 書き込み\n", dataSize);
     BTL_REC_Write( wk->btlRec, dataBuf, dataSize );
   }
+
+  if( wk->cmdCheckServer )
+  {
+    BTL_SERVER_CMDCHECK_RestoreActionData( wk->cmdCheckServer, dataBuf, dataSize );
+  }
+
   return TRUE;
 }
 //---------------------------------------------------

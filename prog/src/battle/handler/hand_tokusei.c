@@ -3831,7 +3831,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kansouhada( u32* numElems )
 
 //    { BTL_EVENT_DMG_TO_RECOVER_CHECK,  handler_Kansouhada_DmgRecover    },  // ダメージワザ回復チェックハンドラ
 //    { BTL_EVENT_DMG_TO_RECOVER_FIX,    handler_Kansouhada_DmgRecoverFix },  // ダメージワザ回復化決定ハンドラ
-    { BTL_EVENT_NOEFFECT_CHECK_L2,     handler_Kansouhada_Check  },  // 無効化チェックハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L3,     handler_Kansouhada_Check  },  // 無効化チェックハンドラ
 
   };
   *numElems = NELEMS(HandlerTable);
@@ -3860,7 +3860,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tyosui( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
 //    { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_Tyosui_Check }, // ダメージワザ回復チェックハンドラ
 //    { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_Tyosui_Fix   },
-    { BTL_EVENT_NOEFFECT_CHECK_L2,      handler_Tyosui_Check },   // 無効化チェックハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L3,      handler_Tyosui_Check },   // 無効化チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -3893,7 +3893,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tikuden( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
 //    { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_Tikuden_Check   }, // ダメージワザ回復チェックハンドラ
 //    { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_Tikuden_Fix     },
-    { BTL_EVENT_NOEFFECT_CHECK_L2,      handler_Tikuden_CheckEx },
+    { BTL_EVENT_NOEFFECT_CHECK_L3,      handler_Tikuden_CheckEx },
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -3908,7 +3908,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_DenkiEngine( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
 //    { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_DenkiEngine_Check   },  // ダメージワザ回復チェックハンドラ
 //    { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_DenkiEngine_Fix     },  // ダメージワザ回復化決定ハンドラ
-    { BTL_EVENT_NOEFFECT_CHECK_L2,      handler_DenkiEngine_CheckEx },
+    { BTL_EVENT_NOEFFECT_CHECK_L3,      handler_DenkiEngine_CheckEx },
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -4098,7 +4098,7 @@ static void handler_FusiginaMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_FusiginaMamori( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NOEFFECT_CHECK_L2,        handler_FusiginaMamori }, // 無効化チェックLv2ハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L3,        handler_FusiginaMamori }, // 無効化チェックLv2ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -4326,7 +4326,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Moraibi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
 //    { BTL_EVENT_DMG_TO_RECOVER_CHECK,  handler_Moraibi_NoEffect      }, // ダメージワザ回復化チェックハンドラ
 //    { BTL_EVENT_DMG_TO_RECOVER_FIX,    handler_Moraibi_DmgRecoverFix }, // ダメージ回復化決定ハンドラ
-    { BTL_EVENT_NOEFFECT_CHECK_L2,     handler_Moraibi_CheckNoEffect }, // 無効化チェックハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L3,     handler_Moraibi_CheckNoEffect }, // 無効化チェックハンドラ
 
     { BTL_EVENT_ATTACKER_POWER,        handler_Moraibi_AtkPower      }, // 攻撃力決定ハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_BEFORE, handler_Moraibi_Remove        }, // とくせい書き換え直前ハンドラ
@@ -4605,7 +4605,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yobimizu( u32* numElems )
 
 //    { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_Yobimizu_DmgToRecvCheck },  // ダメージワザ回復化チェックハンドラ
 //    { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_Yobimizu_DmgToRecvFix   },  // ダメージワザ回復化決定ハンドラ
-      { BTL_EVENT_NOEFFECT_CHECK_L2,     handler_Yobimizu_CheckNoEffect }, // 無効化チェックハンドラ
+      { BTL_EVENT_NOEFFECT_CHECK_L3,     handler_Yobimizu_CheckNoEffect }, // 無効化チェックハンドラ
 
 
   };
@@ -4659,7 +4659,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hiraisin( u32* numElems )
 
 //    { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_Hiraisin_DmgToRecvCheck },  // ダメージワザ回復化チェックハンドラ
 //    { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_Hiraisin_DmgToRecvFix   },  // ダメージワザ回復化決定ハンドラ
-    { BTL_EVENT_NOEFFECT_CHECK_L2,     handler_Hiraisin_CheckNoEffect }, // 無効化チェックハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L3,     handler_Hiraisin_CheckNoEffect }, // 無効化チェックハンドラ
 
 
   };
@@ -6243,7 +6243,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sousyoku( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
 //    { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_Sousyoku_Check }, // ダメージワザ回復チェックハンドラ
 //    { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_Sousyoku_Fix   }, // ダメージワザ回復化決定ハンドラ
-    { BTL_EVENT_NOEFFECT_CHECK_L2,     handler_Sousyoku_CheckNoEffect }, // 無効化チェックハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L3,     handler_Sousyoku_CheckNoEffect }, // 無効化チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

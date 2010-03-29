@@ -56,6 +56,7 @@ typedef enum {
 #include "btl_adapter.h"
 #include "btl_pokeparam.h"
 #include "btl_rec.h"
+#include "btl_server.h"
 #include "btlv/btlv_core_def.h"
 #include "app/b_bag.h"
 
@@ -75,6 +76,8 @@ extern BTL_ADAPTER* BTL_CLIENT_GetAdapter( BTL_CLIENT* client );
 
 
 extern void BTL_CLIENT_AttachViewCore( BTL_CLIENT* wk, BTLV_CORE* viewCore );
+extern void BTL_CLIENT_AttachCmeCheckServer( BTL_CLIENT* wk, BTL_SERVER* server );
+
 
 extern BOOL BTL_CLIENT_Main( BTL_CLIENT* client );
 

@@ -14,11 +14,12 @@
 #include "btl_main_def.h"
 #include "btl_pokeparam.h"
 #include "btl_adapter.h"
+#include "btl_action.h"
 #include "btl_server_flow_def.h"
 #include "app/b_bag.h"
 
-typedef struct _BTL_SERVER    BTL_SERVER;
-
+typedef struct _BTL_SERVER       BTL_SERVER;
+typedef struct _BTL_SVCL_ACTION  BTL_SVCL_ACTION;
 
 typedef enum {
 
@@ -35,6 +36,9 @@ extern BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainWork, const GFL_STD_R
 
 extern void BTL_SERVER_AttachLocalClient( BTL_SERVER* server, BTL_ADAPTER* adapter, u8 clientID, u8 numCoverPos );
 extern void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GFL_NETHANDLE* netHandle, u8 clientID, u8 numCoverPos );
+extern void BTL_SERVER_CmdCheckMode( BTL_SERVER* server, u8 clientID, u8 numCoverPos );
+
+
 extern void BTL_SERVER_Startup( BTL_SERVER* server );
 extern void BTL_SERVER_Delete( BTL_SERVER* wk );
 
@@ -52,6 +56,11 @@ extern void BTL_SERVER_AddBonusMoney( BTL_SERVER* server, u32 volume );
 extern void BTL_SERVER_InitChangePokemonReq( BTL_SERVER* server );
 extern void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, BtlPokePos pos );
 extern BOOL BTL_SERVER_IsFrontPokemon( BTL_SERVER* server, const BTL_POKEPARAM* bpp );
+
+//-------------------------------------
+// client->コマンド整合性チェック処理
+//-------------------------------------
+extern void BTL_SERVER_CMDCHECK_RestoreActionData( BTL_SERVER* server, const void* recData, u32 recDataSize );
 
 
 #endif

@@ -5162,6 +5162,7 @@ static void handler_Mamoru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u8 counter = BPP_COUNTER_Get( bpp, BPP_COUNTER_MAMORU );
 
+    // 連続利用による失敗チェック
     if( counter )
     {
       if( counter >= NELEMS(randRange) ){
@@ -5169,8 +5170,20 @@ static void handler_Mamoru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
       }
       if( BTL_CALC_GetRand( randRange[counter] ) != 0 )
       {
-        // 連続利用による失敗。
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
+        return;
+      }
+    }
+
+    // 現ターン最後の行動なら失敗
+    {
+      u8 myOrder, maxOrder;
+      if( BTL_SVFTOOL_GetMyActionOrder(flowWk, pokeID, &myOrder, &maxOrder) )
+      {
+        if( (myOrder+1) == maxOrder ){
+          BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
+          return;
+        }
       }
     }
   }

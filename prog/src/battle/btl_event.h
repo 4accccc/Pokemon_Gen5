@@ -65,6 +65,7 @@ typedef enum {
   BTL_EVENT_DECIDE_TARGET,          ///< ワザ対象決定
   BTL_EVENT_NOEFFECT_CHECK_L1,      ///< ワザ無効化チェック（lv1 = 必中には負ける）ハンドラ
   BTL_EVENT_NOEFFECT_CHECK_L2,      ///< ワザ無効化チェック（lv2 = 必中にも勝つ）ハンドラ
+  BTL_EVENT_NOEFFECT_CHECK_L3,      ///< ワザ無効化チェック（lv3 = 必中にも勝つ＆まもるより後）ハンドラ
   BTL_EVENT_CHECK_MAMORU_BREAK,     ///< まもる無効化チェック
   BTL_EVENT_WAZA_AVOID,             ///< ワザ外れた
   BTL_EVENT_DMG_TO_RECOVER_CHECK,   ///< ワザダメージ->回復化チェックハンドラ

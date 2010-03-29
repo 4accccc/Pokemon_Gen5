@@ -88,9 +88,10 @@ extern void BTL_SVFLOW_ResetSystem( BTL_SVFLOW_WORK* wk );
 extern void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk );
 
 extern BOOL BTL_SVFLOW_MakeShooterChargeCommand( BTL_SVFLOW_WORK* wk );
-extern SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk );
-extern SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk );
-extern SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk );
+extern SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction );
+extern SvflowResult BTL_SVFLOW_StartBtlIn( BTL_SVFLOW_WORK* wk );
+extern SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction );
+
 extern SvflowResult BTL_SVFLOW_ContinueAfterPokeChange( BTL_SVFLOW_WORK* wk );
 extern void BTL_SVFLOW_CreateRotationCommand( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRotateDir dir );
 extern BOOL BTL_SVFLOW_CreatePlayerEscapeCommand( BTL_SVFLOW_WORK* wk );
@@ -104,6 +105,8 @@ extern SVCL_WORK* BTL_SERVER_GetClientWorkIfEnable( BTL_SERVER* server, u8 clien
 extern BOOL BTL_SERVER_IsClientEnable( const BTL_SERVER* server, u8 clientID );
 extern u8 BTL_SVCL_GetNumActPoke( SVCL_WORK* clwk );
 extern const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx );
+extern BTL_ACTION_PARAM BTL_SVCL_ACTION_Get( const BTL_SVCL_ACTION* clientAction, u8 clientID, u8 posIdx );
+
 
 extern void BTL_SVF_SickDamageRecall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sickID, u32 damage );
 extern u8 BTL_SVFLOW_GetEscapeClientID( const BTL_SVFLOW_WORK* wk );

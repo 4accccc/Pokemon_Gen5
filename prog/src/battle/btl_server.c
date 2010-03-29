@@ -60,6 +60,15 @@ typedef BOOL (*ServerMainProc)(BTL_SERVER*, int*);
 
 //--------------------------------------------------------------
 /**
+ *  クライアントアクション格納構造体
+ */
+//--------------------------------------------------------------
+struct _BTL_SVCL_ACTION {
+  BTL_ACTION_PARAM     param[ BTL_CLIENT_MAX ][ BTL_POSIDX_MAX ];
+};
+
+//--------------------------------------------------------------
+/**
  *
  */
 //--------------------------------------------------------------
@@ -76,6 +85,8 @@ struct _BTL_SERVER {
   GFL_STD_RandContext   randContext;
   BTL_RECTOOL           recTool;
   STRBUF*               strbuf;
+
+  BTL_SVCL_ACTION       clientAction;
 
   u32         escapeClientID;
   u32         exitTimer;
@@ -125,7 +136,7 @@ static void Svcl_Clear( SVCL_WORK* clwk );
 static BOOL Svcl_IsEnable( const SVCL_WORK* clwk );
 static void Svcl_Setup( SVCL_WORK* clwk, u8 clientID, BTL_ADAPTER* adapter, BOOL fLocalClient );
 static void Svcl_SetParty( SVCL_WORK* client, BTL_PARTY* party, u8 numCoverPos );
-
+static void storeClientAction( BTL_SERVER* server );
 
 
 
@@ -234,6 +245,37 @@ void BTL_SERVER_ReceptionNetClient( BTL_SERVER* server, BtlCommMode commMode, GF
     Svcl_SetParty( client, party, numCoverPos );
   }
 }
+
+//=============================================================================================
+/**
+ * コマンド整合性チェックモードでクライアントをセットアップ
+ *
+ * @param   server
+ * @param   clientID
+ * @param   numCoverPos
+ */
+//=============================================================================================
+void BTL_SERVER_CmdCheckMode( BTL_SERVER* server, u8 clientID, u8 numCoverPos )
+{
+  GF_ASSERT(clientID < BTL_CLIENT_MAX);
+  GF_ASSERT(server->client[clientID].adapter==NULL);
+
+  {
+    SVCL_WORK* client;
+    BTL_PARTY* party;
+    BTL_ADAPTER* adapter;
+
+    party = BTL_POKECON_GetPartyData( server->pokeCon, clientID );
+
+    client = &server->client[ clientID ];
+
+    Svcl_Setup( client, clientID, NULL, FALSE );
+    Svcl_SetParty( client, party, numCoverPos );
+  }
+}
+
+
+
 //--------------------------------------------------------------------------------------
 /**
  * 全クライアント生成・接続完了後のスタートアップ処理
@@ -380,7 +422,7 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
       // 入場演出処理後、捕獲デモ以外の処理
       if( BTL_MAIN_GetCompetitor(server->mainModule) != BTL_COMPETITOR_DEMO_CAPTURE )
       {
-        BTL_SVFLOW_Start_AfterPokemonIn( server->flowWork );
+        BTL_SVFLOW_StartBtlIn( server->flowWork );
         if( server->que->writePtr )
         {
           SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
@@ -534,7 +576,9 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
         break;
       }
 
-      server->flowResult = BTL_SVFLOW_StartTurn( server->flowWork );
+      storeClientAction( server );
+
+      server->flowResult = BTL_SVFLOW_StartTurn( server->flowWork, &server->clientAction );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult);
 
       if( SendActionRecord(server, check_acton_chapter(server)) ){
@@ -716,8 +760,10 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
     {
       ResetAdapterCmd( server );
 
+      storeClientAction( server );
+
       SCQUE_Init( server->que );
-      server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork );
+      server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork, &server->clientAction );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
 
       if( SendActionRecord(server, FALSE) ){
@@ -1001,6 +1047,11 @@ static BOOL ServerMain_ExitBattle_ForTrainer( BTL_SERVER* server, int* seq )
 //----------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------
 
+void BTL_SERVER_CMDCHECK_RestoreActionData( BTL_SERVER* server, const void* recData, u32 recDataSize )
+{
+
+}
+
 
 /**
  *  アクション記録データ送信開始
@@ -1085,6 +1136,30 @@ static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize, const BtlRot
   }
 
   return BTL_RECTOOL_FixRotationData( &server->recTool, dataSize );
+}
+
+/**
+ *  各クライアントから返信のあったアクション内容を構造体に格納
+ */
+static void storeClientAction( BTL_SERVER* server )
+{
+  SVCL_WORK* clwk;
+  u32 i, j;
+
+  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    clwk = &server->client[i];
+    if( Svcl_IsEnable(clwk) )
+    {
+      u32 returnDataSize, numAction;
+      const BTL_ACTION_PARAM* action = BTL_ADAPTER_GetReturnData( clwk->adapter, &returnDataSize );
+      numAction = returnDataSize / sizeof(BTL_ACTION_PARAM);
+      for(j=0; j<numAction; ++j){
+        server->clientAction.param[i][j] = *action;
+        ++action;
+      }
+    }
+  }
 }
 
 
@@ -1332,6 +1407,13 @@ const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx )
   }
 }
 
+BTL_ACTION_PARAM BTL_SVCL_ACTION_Get( const BTL_SVCL_ACTION* clientAction, u8 clientID, u8 posIdx )
+{
+  GF_ASSERT(clientID<BTL_CLIENT_MAX);
+  GF_ASSERT(posIdx<BTL_POSIDX_MAX);
+  return clientAction->param[ clientID ][ posIdx ];
+}
+void BTL_SVCL_ACTION_Restore( BTL_SERVER* server, const void*
 
 
 //----------------------------------------------

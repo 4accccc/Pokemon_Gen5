@@ -90,6 +90,7 @@ struct _BTL_MAIN_MODULE {
 
   BTLV_CORE*    viewCore;
   BTL_SERVER*   server;
+  BTL_SERVER*   cmdCheckServer;
   BTL_CLIENT*   client[ BTL_CLIENT_MAX ];
   BTL_TRAINER_DATA   trainerParam[ BTL_CLIENT_MAX ];
   const MYSTATUS*    playerStatus;
@@ -680,10 +681,13 @@ static BOOL cleanup_common( int* seq, void* work )
   PokeCon_Release( &wk->pokeconForClient );
   PokeCon_Release( &wk->pokeconForServer );
 
-  if( wk->server )
-  {
+  if( wk->server ){
     BTL_SERVER_Delete( wk->server );
   }
+  if( wk->cmdCheckServer ){
+    BTL_SERVER_Delete( wk->cmdCheckServer );
+  }
+
 
   BTL_Printf("クリーンアップ 1-4\n");
 
@@ -1541,8 +1545,21 @@ static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int*
   // 自分がサーバではない
   else
   {
+    u32 i;
+
     wk->client[ clientID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, clientID, 1,
     BTL_CLIENT_TYPE_UI, bagMode, wk->heapID  );
+
+    // コマンド整合性チェックのためサーバを作る
+    wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
+    for(i=0; i<BTL_CLIENT_MAX; ++i)
+    {
+      if( BTL_MAIN_IsExistClient(wk, i) ){
+        BTL_SERVER_CmdCheckMode( wk->server, i, 1 );
+      }
+    }
+
+    BTL_CLIENT_AttachCmeCheckServer( wk->client[clientID], wk->server );
   }
 
   return TRUE;

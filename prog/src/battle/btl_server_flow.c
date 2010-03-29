@@ -308,7 +308,7 @@ static inline u32 ActPri_Make( u8 actPri, u8 wazaPri, u8 spPri, u16 agility );
 static inline u8 ActPri_GetWazaPri( u32 priValue );
 static inline u8 ActPri_GetSpPri( u32 priValue );
 static inline u32 ActPri_SetSpPri( u32 priValue, u8 spPri );
-static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 orderMax );
+static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction, ACTION_ORDER_WORK* order, u32 orderMax );
 static void sortActionSub( ACTION_ORDER_WORK* order, u32 numOrder );
 static u8 scEvent_GetWazaPriority( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* bpp );
 static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BOOL fTrickRoomEnable );
@@ -850,7 +850,7 @@ void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk )
  * @retval  SvflowResult
  */
 //--------------------------------------------------------------------------
-SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
+SvflowResult BTL_SVFLOW_StartBtlIn( BTL_SVFLOW_WORK* wk )
 {
   SVCL_WORK* cw;
   u32 i, posIdx;
@@ -886,7 +886,7 @@ SvflowResult BTL_SVFLOW_Start_AfterPokemonIn( BTL_SVFLOW_WORK* wk )
  * @retval  SvflowResult
  */
 //=============================================================================================
-SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk )
+SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction )
 {
   relivePokeRec_Init( wk );
   BTL_DEADREC_StartTurn( &wk->deadRec );
@@ -900,7 +900,7 @@ SvflowResult BTL_SVFLOW_StartTurn( BTL_SVFLOW_WORK* wk )
   clearPokeCantActionFlag( wk );
 
   wk->flowResult =  SVFLOW_RESULT_DEFAULT;
-  wk->numActOrder = sortClientAction( wk, wk->actOrder, NELEMS(wk->actOrder) );
+  wk->numActOrder = sortClientAction( wk, clientAction, wk->actOrder, NELEMS(wk->actOrder) );
   wk->numEndActOrder = ActOrderProc_Main( wk, 0 );
   BTL_N_Printf( DBGSTR_SVFL_TurnStart_Result, wk->numEndActOrder, wk->numActOrder );
 
@@ -958,7 +958,7 @@ SvflowResult BTL_SVFLOW_ContinueAfterPokeChange( BTL_SVFLOW_WORK* wk )
  * @retval  SvflowResult
  */
 //=============================================================================================
-SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
+SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction )
 {
   const BTL_ACTION_PARAM* action;
   u32 i;
@@ -975,7 +975,7 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk )
   numDeadPoke = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
   wk->flowResult =  SVFLOW_RESULT_DEFAULT;
 
-  wk->numActOrder = sortClientAction( wk, wk->actOrder, NELEMS(wk->actOrder) );
+  wk->numActOrder = sortClientAction( wk, clientAction, wk->actOrder, NELEMS(wk->actOrder) );
   wk->numEndActOrder = 0;
 
   // まずは入れ替え側を処理
@@ -1475,17 +1475,17 @@ static inline u32 ActPri_SetSpPri( u32 priValue, u8 spPri )
 
 //----------------------------------------------------------------------------------
 /**
- *
  * ポケモンごとのアクションをチェックし、処理順序を確定
  *
- * @param   server
- * @param   order       処理する順番にクライアントIDを並べ直して格納するための配列
- * @param   orderMax    配列 order の要素数
+ * @param   wk
+ * @param   clientAction    クライアントアクションデータハンドラ
+ * @param   order           処理する順番にクライアントIDを並べ直して格納するための配列
+ * @param   orderMax        配列 order の要素数
  *
  * @retval  u8    処理するポケモン数
  */
 //----------------------------------------------------------------------------------
-static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 orderMax )
+static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction, ACTION_ORDER_WORK* order, u32 orderMax )
 {
   SVCL_WORK* clwk;
   const BTL_ACTION_PARAM* actParam;
@@ -1504,7 +1504,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* order, u32 o
     numPoke = BTL_SVCL_GetNumActPoke( clwk );
     for(j=0; j<numPoke; j++)
     {
-      order[p].action = *BTL_SVCL_GetPokeAction( clwk, j );
+      order[p].action = BTL_SVCL_ACTION_Get( clientAction, i, j );
       if( BTL_ACTION_IsDeplete(&order[p].action) ){
         break;
       }
@@ -4833,6 +4833,31 @@ static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
       }
     }
   }
+
+  // Lv3 無効化チェック（攻撃ポケが必中状態でも無効化＆「まもる」より低プライオリティ）
+  BTL_POKESET_SeekStart( targets );
+  while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
+  {
+    hem_state = Hem_PushState( &wk->HEManager );
+    if( scEvent_CheckNotEffect(wk, wazaParam, 2, attacker, bpp, &wk->strParam) )
+    {
+      BTL_POKESET_Remove( targets, bpp );
+
+      // とりあえず文字を出すだけのリアクション
+      if( HANDEX_STR_IsEnable(&wk->strParam) ){
+        handexSub_putString( wk, &wk->strParam );
+        HANDEX_STR_Clear( &wk->strParam );
+      }else{
+        // HandExを利用したリアクション
+        if( !scproc_HandEx_Root( wk, ITEM_DUMMY_DATA ) ){
+          // 何もリアクションなければ「効果がないようだ…」
+          SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, BPP_GetID(bpp) );
+        }
+      }
+    }
+    Hem_PopState( &wk->HEManager, hem_state );
+  }
+
 }
 //--------------------------------------------------------------------------
 /**
