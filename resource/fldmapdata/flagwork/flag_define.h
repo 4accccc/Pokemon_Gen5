@@ -773,11 +773,11 @@
 #define FV_R14R0201_GIRL1                  749 /* 0x02ed ツチノカミイベント：きょうだい */
 #define FV_R14R0201_LEG                    750 /* 0x02ee ツチノカミイベント：ツチノカミ */
 #define FV_C02_STONEEVENT_02               751 /* 0x02ef C02フィールド：ライト/ダークストーン入手イベント サポート、C02ジムリーダー（アロエ） */
-#define FV_MUSICAL_FUN_06                  752 /* 0x02f0 ミュージカルホール：出待ちのファン１人目 */
-#define FV_MUSICAL_FUN_07                  753 /* 0x02f1 ミュージカルホール：出待ちのファン２人目 */
-#define FV_MUSICAL_FUN_08                  754 /* 0x02f2 ミュージカルホール：出待ちのファン３人目 */
-#define FV_MUSICAL_FUN_09                  755 /* 0x02f3 ミュージカルホール：出待ちのファン４人目 */
-#define FV_MUSICAL_FUN_10                  756 /* 0x02f4 ミュージカルホール：出待ちのファン５人目 */
+#define FV_MUSICAL_FUN_06                  752 /* 0x02f0 ミュージカルホール：出待ちのファン６人目 */
+#define FV_MUSICAL_FUN_07                  753 /* 0x02f1 ミュージカルホール：出待ちのファン７人目 */
+#define FV_MUSICAL_FUN_08                  754 /* 0x02f2 ミュージカルホール：出待ちのファン８人目 */
+#define FV_MUSICAL_FUN_09                  755 /* 0x02f3 ミュージカルホール：出待ちのファン９人目 */
+#define FV_MUSICAL_FUN_10                  756 /* 0x02f4 ミュージカルホール：出待ちのファン１０人目 */
 #define FV_D01R0101_GCIS_01                757 /* 0x02f5 夢の跡地：ゲーヂス */
 #define FV_D09_VETERANM_01                 758 /* 0x02f6 チャンピオンロード外側：崖の上のベテラン */
 #define FV_D09_VETERANM_02                 759 /* 0x02f7 チャンピオンロード外側：崖の下のベテラン */
