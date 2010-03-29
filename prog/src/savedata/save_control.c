@@ -74,6 +74,13 @@ SAVE_CONTROL_WORK * SaveControl_SystemInit(HEAPID heap_id)
 
 	//データ存在チェックを行っている
 	load_ret = GFL_BACKUP_Load(ctrl->sv_normal, HEAPID_SAVE_TEMP);
+  if(load_ret == LOAD_RESULT_OK || load_ret == LOAD_RESULT_NG){
+    //データを読めても初回セットアップしかされていないならデータ無し扱いにする
+    if(SaveData_GetNowSaveModeSetup(ctrl) == TRUE){
+      load_ret = LOAD_RESULT_NULL;
+      OS_TPrintf("初回セットアップのみの為、データ無し扱い\n");
+    }
+  }
 	ctrl->first_status = 0;
 	switch(load_ret){
 	case LOAD_RESULT_OK:				///<データ正常読み込み
@@ -364,11 +371,6 @@ u32 SaveControl_GetLoadResult(const SAVE_CONTROL_WORK * sv)
 //---------------------------------------------------------------------------
 BOOL SaveData_GetExistFlag(SAVE_CONTROL_WORK * sv)
 {
-  if(sv->data_exists == TRUE){
-    if(SaveData_GetNowSaveModeSetup(sv) == TRUE){
-      return FALSE; //初回セットアップ状態の場合はデータ無し判定
-    }
-  }
 	return sv->data_exists;
 }
 
