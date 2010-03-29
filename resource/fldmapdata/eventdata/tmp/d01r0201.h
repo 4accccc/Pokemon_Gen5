@@ -11,7 +11,7 @@
 #ifndef ZONE_D01R0201_EVC_H
 #define ZONE_D01R0201_EVC_H
 
-#define D01R0201_POKE15_01                 0
+#define D01R0201_POKE16_01                 0
 #define TR_SCIENTISTM_08                   1
 #define TR_ESPM_07                         2
 #define TR_SCIENTISTW_06                   3

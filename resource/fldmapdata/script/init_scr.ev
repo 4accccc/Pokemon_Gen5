@@ -78,9 +78,6 @@ init_flags:
 	//D05R0201:コンテナworkmanを戦闘後まで非表示に設定
 	_FLAG_SET( FV_D05R0201_WORKMAN_01 )
 	
-	//D05:コンテナworkmanを戦闘後まで非表示に設定
-	//_FLAG_SET( FV_D05R0101_WORKMAN_01 )
-	
 	//C05：ゲーヂスとジムリーダー会話イベント、コンテナクリア後に表示
 	_FLAG_SET( FV_C05_GYMLEADER_02 )
 	_FLAG_SET( FV_C05_SAGE_01 )
@@ -96,6 +93,10 @@ init_flags:
 	_FLAG_SET( FV_D01R0101_SUPPORT_01 )
 	_FLAG_SET( FV_D01R0101_POKE_01 )
 	_FLAG_SET( FV_D01R0101_GCIS_01 )
+	//D01R0101：七賢人、ゲームクリア後に表示
+	_FLAG_SET( FV_D01R0101_SAGE )
+	//D01R0201：ムシャーナ、ゲームクリア後に表示
+	_FLAG_SET( FV_D01R0201_POKE16_01 )
 
 	//５番道路のジムリーダーとライバル
 	_FLAG_SET( FV_R05_RIVAL )
@@ -334,8 +335,27 @@ ev_first_gameclear:
 
   //クリア後イベント：１８番道路の七賢人その６を表示
   _FLAG_RESET( FV_R18_SAGE )
-
-
+  
+	//D01R0101：七賢人、ゲームクリア後に表示
+	_FLAG_RESET( FV_D01R0101_SAGE )
+	//D01R0201：ムシャーナ、ゲームクリア後に表示
+	_FLAG_RESET( FV_D01R0201_POKE16_01 )
+	
+	//D05R0201：七賢人、ゲームクリア後に表示
+	_FLAG_RESET( FV_D05R0201_SAGE7 )
+	
+	//C05R0601：ホドモエマーケットお香売り表示
+	_FLAG_RESET( FV_C05R0601_OKOU )
+	
+	//FV_R16_STOPPER_01：16番道路ストッパー解除
+	_FLAG_SET( FV_R16_STOPPER_01 )
+	
+	//FV_R16_STOPPER_01：16番道路ストッパー解除
+	_FLAG_SET( FV_R16_STOPPER_01 )
+	
+	//FV_C08R0701_STOPPER_01：ソウリュウシティ11番道路方面ストッパー解除
+	_FLAG_SET( FV_C08R0701_STOPPER_01 )
+	$WK_SCENE_C08R0701_STOPPER = 1
 
 _RET
 

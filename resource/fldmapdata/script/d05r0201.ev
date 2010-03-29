@@ -21,7 +21,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_reserve_d05r0201_vs_plasma
-_EVENT_DATA    ev_d05r0201_sage_02
+_EVENT_DATA    ev_d05r0201_sage_01
 _EVENT_DATA    ev_d05r0201_rival_01
 
 _EVENT_DATA    ev_d05r0201_hakaim_01
@@ -652,6 +652,7 @@ ev_d05r0201_vs_plasma_win:
 	//D05R0201のイベントキャラクターを全て非表示にする
 	_FLAG_SET(FV_D05R0201_PLASMA)
 	_FLAG_SET(FV_D05R0201_WORKMAN_01)
+	_FLAG_SET( FV_D05R0201_SAGE7 )
 	
 	//***ワーク操作：C05のPOSを起動***
 	$WK_SCENE_C05 = 2
@@ -1020,7 +1021,7 @@ EVENT_END
 /**************************************************************/
 /*【仮】クリア後イベント：七賢人イベント                     */
 /**************************************************************/
-EVENT_START   ev_d05r0201_sage_02
+EVENT_START   ev_d05r0201_sage_01
 	
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
@@ -1042,6 +1043,9 @@ DEFINE_LOCAL	LWK_DIR
 	//階段SE
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
+	
+	//ハンサム曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_HANDSOME )
 
 	//ハンサム出現
 	_OBJ_ADD_EX( 4,17,DIR_UP,MMDL_ID_EVENTOBJ_00,ICPO,MV_DMY )
@@ -1051,19 +1055,23 @@ DEFINE_LOCAL	LWK_DIR
 	SWITCH $LWK_DIR
 	CASE DIR_LEFT THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_left_come )
-		_OBJ_ANIME( D05R0201_SAGE_02, anm_stay_u2 )
+		_OBJ_ANIME( D05R0201_SAGE_01, anm_stay_d )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_d )
 		_OBJ_ANIME_WAIT()
 	CASE DIR_RIGHT THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_right_come )
-		_OBJ_ANIME( D05R0201_SAGE_02, anm_stay_u2 )
+		_OBJ_ANIME( D05R0201_SAGE_01, anm_stay_d )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_d )
 		_OBJ_ANIME_WAIT()
 	CASE DIR_UP THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_up_come )
-		_OBJ_ANIME( D05R0201_SAGE_02, anm_stay_r2 )
+		_OBJ_ANIME( D05R0201_SAGE_01, anm_stay_l )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_l )
 		_OBJ_ANIME_WAIT()
 	CASE DIR_DOWN THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_down_come )
-		_OBJ_ANIME( D05R0201_SAGE_02, anm_stay_r2 )
+		_OBJ_ANIME( D05R0201_SAGE_01, anm_stay_d )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_d )
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 
@@ -1078,24 +1086,31 @@ DEFINE_LOCAL	LWK_DIR
 	SWITCH $LWK_DIR
 	CASE DIR_LEFT THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_left_come2 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_d )
 		_OBJ_ANIME_WAIT()
 	CASE DIR_RIGHT THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_right_come2 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_u )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_d )
 		_OBJ_ANIME_WAIT()
 	CASE DIR_UP THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_up_come2 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_l )
 		_OBJ_ANIME_WAIT()
 	CASE DIR_DOWN THEN
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_down_come2 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_l )
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
+	
+	//========================================/
+	
+	//七賢人ワークに＋１
+	$WK_SCENE_AFTER_SAGE += 1
+	
+	//========================================/
 
-	//【仮】全部の七賢人を捕まえている場合
-	IF $LOCALWORK10 == 7 THEN
+	//全部の七賢人を捕まえている場合
+	IF $WK_SCENE_AFTER_SAGE == 6 THEN
 		
 		//ハンサムセリフ
 		_BALLOONWIN_OBJMSG( msg_d05r0201_icpo_end_03 , MMDL_ID_EVENTOBJ_00 )
@@ -1115,10 +1130,13 @@ DEFINE_LOCAL	LWK_DIR
 	_DISP_FADE_END_CHECK()
 
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-	_OBJ_DEL( D05R0201_SAGE_02 )
+	_OBJ_DEL( D05R0201_SAGE_01 )
 	
 	_BLACK_IN()
 	_DISP_FADE_END_CHECK()
+	
+	//ライバル曲停止
+	_END_EVENT_BGM()
 
 	//========================================/
 	
@@ -1145,6 +1163,7 @@ _ANIME_LABEL	anm_stay_r
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_stay_l
+	_ANIME_DATA	AC_WAIT_16F,1
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -1172,43 +1191,41 @@ _ANIME_LABEL	anm_stay_l2
 //	ハンサムアニメ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_left_come
-	_ANIME_DATA	AC_WALK_U_4F,6
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_U_4F,8
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_right_come
-	_ANIME_DATA	AC_WALK_L_4F,6
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_U_4F,8
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_up_come
-	_ANIME_DATA	AC_WALK_L_4F,5
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_4F,7
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_4F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_down_come
-	_ANIME_DATA	AC_WALK_L_4F,5
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_4F,8
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_left_come2
 	_ANIME_DATA	AC_WALK_R_4F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_right_come2
 	_ANIME_DATA	AC_WALK_L_4F,1
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_up_come2
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_4F,1
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_down_come2
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_L_4F,1
+	_ANIME_DATA	AC_WALK_U_4F,2
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
