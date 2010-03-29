@@ -1835,11 +1835,12 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 			COMPATIBLE_MENU_GetStatusData( p_wk->p_param->p_irc, p_wk->p_param->p_you_status  );
       { 
         if( p_wk->p_param->p_gamesys )
-        { 
-          GAMEDATA  *p_data  = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
-          SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_data );
-          WIFI_NEGOTIATION_SAVEDATA* pSV  = WIFI_NEGOTIATION_SV_GetSaveData(p_sv_ctrl);;
-          WIFI_NEGOTIATION_SV_SetFriend(pSV, (MYSTATUS*)p_wk->p_param->p_you_status->my_status );
+        {
+          //Žd—l‚ª‚È‚­‚È‚è‚Ü‚µ‚½
+//          GAMEDATA  *p_data  = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
+//          SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_data );
+//          WIFI_NEGOTIATION_SAVEDATA* pSV  = WIFI_NEGOTIATION_SV_GetSaveData(p_sv_ctrl);;
+//          WIFI_NEGOTIATION_SV_SetFriend(pSV, (MYSTATUS*)p_wk->p_param->p_you_status->my_status );
         }
       }
       *p_seq	= SEQ_TIMING_START;
