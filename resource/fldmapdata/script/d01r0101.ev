@@ -231,7 +231,7 @@ ev_d01r0101_pokecount:
 				
 				
 				//名前入力画面呼び出し
-				_PARTY_POKE_NAME_INPUT(SCWK_NAMEINPUT,POKE_COUNT)
+				_PARTY_POKE_NAME_INPUT(SCWK_NAMEINPUT,POKE_COUNT,TRUE)
 				
 			ELSE
 				//いいえの場合はスキップ

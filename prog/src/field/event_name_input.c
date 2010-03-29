@@ -21,8 +21,8 @@
 //=====================================================================================
 // ■非公開関数のプロトタイプ宣言
 //=====================================================================================
-static GMEVENT * EVENT_NameInput( 
-    GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, NAMEIN_PARAM* namein_param );
+static GMEVENT * EVENT_NameInput( GAMESYS_WORK* gameSystem,
+    FIELDMAP_WORK* fieldmap, NAMEIN_PARAM* namein_param, BOOL fade_flag );
 static GMEVENT_RESULT EVENT_FUNC_NameInput( GMEVENT* event, int* seq, void* wk ); 
 static GMEVENT_RESULT EVENT_FUNC_NameInput_PartyPoke(
     GMEVENT* event, int* seq, void* wk );
@@ -39,6 +39,7 @@ typedef struct {
 	GAMESYS_WORK*  gameSystem;
 	FIELDMAP_WORK* fieldmap;
   NAMEIN_PARAM*  nameInParam; // 名前入力画面のパラメータ
+  BOOL           fade_flag;   // アプリ呼び出し前後にフェード処理をおこなうかどうか
 } NAMEIN_WORK; 
 
 
@@ -54,7 +55,7 @@ typedef struct {
  */
 //-------------------------------------------------------------------------------------
 static GMEVENT* EVENT_NameInput( 
-    GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, NAMEIN_PARAM* namein_param )
+    GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, NAMEIN_PARAM* namein_param, BOOL fade_flag )
 {
 	GMEVENT* event;
 	NAMEIN_WORK* niw;
@@ -67,6 +68,7 @@ static GMEVENT* EVENT_NameInput(
 	niw->gameSystem = gameSystem;
 	niw->fieldmap = fieldmap;
   niw->nameInParam = namein_param;
+  niw->fade_flag = fade_flag;
 	return event;
 }
 
@@ -83,9 +85,15 @@ static GMEVENT_RESULT EVENT_FUNC_NameInput(GMEVENT * event, int * seq, void * wk
 	switch( *seq ) 
   {
 	case 0: // 名前入力画面呼び出し
-    GMEVENT_CallEvent( 
-        event, EVENT_FieldSubProc(niw->gameSystem, niw->fieldmap, 
-          FS_OVERLAY_ID(namein), &NameInputProcData, niw->nameInParam) );
+    if (niw->fade_flag) {
+      GMEVENT_CallEvent( 
+          event, EVENT_FieldSubProc(niw->gameSystem, niw->fieldmap, 
+            FS_OVERLAY_ID(namein), &NameInputProcData, niw->nameInParam) );
+    } else {
+      GMEVENT_CallEvent( 
+          event, EVENT_FieldSubProcNoFade(niw->gameSystem, niw->fieldmap, 
+            FS_OVERLAY_ID(namein), &NameInputProcData, niw->nameInParam) );
+    }
     (*seq)++;
 		break;
 	case 1: // イベント終了
@@ -109,6 +117,7 @@ typedef struct {
   NAMEIN_PARAM*  nameInParam; // 名前入力画面のパラメータ
   POKEMON_PARAM* pokeParam;   // 名前入力対象ポケモン
   u16*           retWork;     // 結果の格納先ワークへのポインタ
+  BOOL           fade_flag;   // アプリ呼び出し前後のフェード有り無し
 } PARTY_NAMEIN_WORK; 
 
 //-------------------------------------------------------------------------------------
@@ -126,7 +135,8 @@ typedef struct {
  *          FALSE: 名前入力をキャンセル
  */
 //-------------------------------------------------------------------------------------
-GMEVENT* EVENT_NameInput_PartyPoke( GAMESYS_WORK* gameSystem, u16* ret_wk, u16 party_index )
+GMEVENT* EVENT_NameInput_PartyPoke(
+    GAMESYS_WORK* gameSystem, u16* ret_wk, u16 party_index, BOOL fade_flag )
 {
   GMEVENT* event;
   PARTY_NAMEIN_WORK* work;
@@ -152,6 +162,7 @@ GMEVENT* EVENT_NameInput_PartyPoke( GAMESYS_WORK* gameSystem, u16* ret_wk, u16 p
   work->gameSystem = gameSystem;
   work->fieldmap   = GAMESYSTEM_GetFieldMapWork( gameSystem );
   work->retWork    = ret_wk;
+  work->fade_flag  = fade_flag;
 
   // ポケモン名入力画面を作成
   {
@@ -184,8 +195,8 @@ static GMEVENT_RESULT EVENT_FUNC_NameInput_PartyPoke( GMEVENT* event, int* seq, 
   switch( *seq )
   {
   case 0: //----------------------------------------------- 共通イベント呼び出し
-    GMEVENT_CallEvent( 
-        event, EVENT_NameInput(pniw->gameSystem, pniw->fieldmap, pniw->nameInParam) );
+    GMEVENT_CallEvent( event,
+        EVENT_NameInput(pniw->gameSystem, pniw->fieldmap, pniw->nameInParam, pniw->fade_flag) );
     ++(*seq);
     break;
   case 1: //----------------------------------------------- イベント終了

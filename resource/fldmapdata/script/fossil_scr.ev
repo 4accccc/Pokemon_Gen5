@@ -246,7 +246,7 @@ get_poke:
       //追加位置は追加前の手持ち数と一致
       $SEL_POS = $POKE_NUM
       //名前入力
-      _PARTY_POKE_NAME_INPUT( SCWK_ANSWER, SEL_POS )
+      _PARTY_POKE_NAME_INPUT( SCWK_ANSWER, SEL_POS, TRUE )
     ENDIF
     //依頼フラグをクリアする
     $WK_OTHER_KASEKI_NUM = 0

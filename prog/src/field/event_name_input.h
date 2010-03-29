@@ -16,9 +16,10 @@
  * @param gameSystem
  * @param ret_wk      入力結果を受け取るワーク ( TRUE:確定, FALSE:キャンセル )
  * @param party_index 名前を入力するポケモンのパーティー内インデックス
+ * @param fade_flag   アプリ呼び出し前後に画面フェードをよぶかどうか
  *
  * @return イベント
  */
 //-------------------------------------------------------------------------------------
 extern GMEVENT* EVENT_NameInput_PartyPoke( 
-    GAMESYS_WORK* gameSystem, u16* ret_wk, u16 party_index );
+    GAMESYS_WORK* gameSystem, u16* ret_wk, u16 party_index, BOOL fade_flag );

@@ -273,7 +273,7 @@ ev_name_input:
 	WHILE $lwk_name_while != 555
 
 		//名前入力画面呼び出し（インデックスは１匹しかいないはずなので固定値）
-		_PARTY_POKE_NAME_INPUT( lwk_name_ret, 0 )
+		_PARTY_POKE_NAME_INPUT( lwk_name_ret, 0, TRUE )
 
 		_CAMERA_END()		//カメラ操作終了
 		_CAMERA_START()		//カメラ操作開始

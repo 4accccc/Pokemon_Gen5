@@ -821,9 +821,10 @@ extern VMCMD_RESULT EvCmdPartyPokeNameInput( VMHANDLE *core, void *wk )
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
   u16*        ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
   u16          index = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+  u16      fade_flag = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数
 
   // イベントを呼び出す
-  SCRIPT_CallEvent( scw, EVENT_NameInput_PartyPoke(gsys, ret_wk, index) );
+  SCRIPT_CallEvent( scw, EVENT_NameInput_PartyPoke(gsys, ret_wk, index, fade_flag) );
   return VMCMD_RESULT_SUSPEND;
 }
 

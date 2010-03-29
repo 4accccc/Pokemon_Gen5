@@ -93,7 +93,7 @@ _RET
 //名前入力開始
 input_name:
     //名前入力
-    _PARTY_POKE_NAME_INPUT( SCWK_ANSWER, SEL_POS )
+    _PARTY_POKE_NAME_INPUT( SCWK_ANSWER, SEL_POS, TRUE )
 
     //ニックネーム取得
     _TEMOTI_NICK_NAME( 0, SEL_POS )

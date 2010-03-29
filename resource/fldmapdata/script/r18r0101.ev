@@ -99,7 +99,7 @@ EVENT_START	ev_r18r0101_rangerm_01
 					//ニックネーム画面へ
 					_GET_PARTY_POKE_COUNT( lwk_pos, POKECOUNT_MODE_TOTAL )
 					$lwk_pos -= 1
-					_PARTY_POKE_NAME_INPUT( lwk_name_inpt,lwk_pos )
+					_PARTY_POKE_NAME_INPUT( lwk_name_inpt,lwk_pos, TRUE )
 					
 					}
 				ENDIF

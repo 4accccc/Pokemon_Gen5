@@ -5081,17 +5081,22 @@
  * @brief 手持ちポケモンの名前入力画面を呼び出す
  * @param ret_wk 入力結果を受け取るワーク
  * @param index  名前を設定する手持ちポケモンのインデックスを指定
+ * @param fade_flag 画面フェードを自動でおこなうかどうか
  * @retval  TRUEのとき、入力した名前を確定した場合
  * @retval  FALSEのとき、入力をキャンセルした場合
+ *
+ * @li  引数fade_flag=TRUEのとき、呼び出し前後のフェードは自動で行われる
+ * @li  引数fade_flag=FALSEのとき、スクリプトでフェード処理を記述すること
  */
 //--------------------------------------------------------------
-#define _PARTY_POKE_NAME_INPUT( ret_wk, index ) \
-    _ASM_PARTY_POKE_NAME_INPUT ret_wk, index
+#define _PARTY_POKE_NAME_INPUT( ret_wk, index, fade_flag ) \
+    _ASM_PARTY_POKE_NAME_INPUT ret_wk, index, fade_flag
 
-  .macro  _ASM_PARTY_POKE_NAME_INPUT ret_wk, index
+  .macro  _ASM_PARTY_POKE_NAME_INPUT ret_wk, index, fade_flag
   .short  EV_SEQ_PARTY_POKE_NAME_INPUT
   .short  \ret_wk
   .short  \index
+  .short  \fade_flag
   .endm
 
 //--------------------------------------------------------------
