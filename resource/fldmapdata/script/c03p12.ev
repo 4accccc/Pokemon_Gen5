@@ -220,7 +220,7 @@ _ANIME_LABEL	anm_sun_leave18
 /*		C03P12	DANCER										  */
 /**************************************************************/
 EVENT_START		ev_c03p12_dancer_01
-	
+_TALK_OBJ_START()
 	//ダンサーイベント開始前
 	IF $WK_SCENE_C3CENTER_DANCE <= 1 THEN
 		
