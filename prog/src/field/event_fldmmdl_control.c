@@ -432,7 +432,7 @@ static const fx32 DATA_JumpOffsTbl[] =	// 8
 };
 #define EV_FLDMMDL_HIGHJUMP_FRAME (NELEMS(DATA_JumpOffsTbl)-1)  // フレーム
 
-#define EV_FLDMMDL_JUMP_DOWN_DIST (2*FX32_ONE)
+#define EV_FLDMMDL_JUMP_DOWN_DIST (4*FX32_ONE)
 
 //-------------------------------------
 ///	ハイジャンプワーク

@@ -240,6 +240,7 @@ static void modeChange_CalcDirectPos( FIELD_CAMERA * camera );
 //------------------------------------------------------------------
 static void updateGlobalAngleYaw( FIELD_CAMERA * camera, const VecFx32* cp_targetPos, const VecFx32* cp_cameraPos );
 
+static void getGosaCalcAngleParam( const VecFx32* n_dist, u16 yaw, u16 pitch, u16* ret_yaw, u16* ret_pitch );
 
 //------------------------------------------------------------------
 // カメラ可動エリア判定
@@ -978,6 +979,10 @@ static void modeChange_CalcVecAngel( const VecFx32* cp_vec, u16* p_pitch, u16* p
   // yaw
   yaw = FX_Atan2Idx( dist.x, dist.z );
 
+  // 誤差を予測
+  getGosaCalcAngleParam( &dist, yaw, pitch, &yaw, &pitch );
+  
+
   *p_pitch = pitch;
   *p_yaw = yaw;
   *p_len = len;
@@ -1024,7 +1029,7 @@ static void modeChange_CalcCameraPos( FIELD_CAMERA * camera )
   else
   {
     // ターゲットからカメラまでのベクトルを求める
-    VEC_Subtract( &camera->camPos, &camera->target, &dist );
+    VEC_Subtract( &camera->campos_write, &camera->target_write, &dist );
 
     modeChange_SetVecAngel( camera, &dist );
   }
@@ -1053,7 +1058,7 @@ static void modeChange_CalcTargetPos( FIELD_CAMERA * camera )
   else
   {
     // カメラからターゲットまでのベクトルを求める
-    VEC_Subtract( &camera->target, &camera->camPos, &dist );
+    VEC_Subtract( &camera->target_write, &camera->campos_write, &dist );
 
     modeChange_SetVecAngel( camera, &dist );
   }
@@ -1099,6 +1104,197 @@ static void updateGlobalAngleYaw( FIELD_CAMERA * camera, const VecFx32* cp_targe
 
   camera->globl_angle_yaw = FX_Atan2Idx( way.x, way.z );
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  誤差を考慮したアングルに変更
+ *
+ *	@param	n_dist    アングルの計算に使用した単位ベクトル
+ *	@param	yaw       アングルYaw
+ *	@param	pitch     アングルPitch
+ *	@param	ret_yaw   Yaw戻り値
+ *	@param	ret_pitch Pitch戻り値
+ */
+//-----------------------------------------------------------------------------
+static void getGosaCalcAngleParam( const VecFx32* n_dist, u16 yaw, u16 pitch, u16* ret_yaw, u16* ret_pitch )
+{
+  VecFx16 gosa = {0,0,0};
+  VecFx16 gosa_1 = {0,0,0};
+  VecFx16 gosa_2 = {0,0,0};
+  fx16 gosa_y_1 = 0;
+  fx16 gosa_y_2 = 0;
+  fx16 sinYaw;
+  fx16 cosYaw;
+  fx16 sinPitch;
+  fx16 cosPitch;
+
+  // 戻り値
+  *ret_yaw = yaw;
+  *ret_pitch = pitch;
+
+  TOMOYA_Printf( "before yaw %d  pitch %d\n", yaw, pitch );
+
+
+  // まず平面
+  
+  // ちょうど
+  {
+    sinYaw = FX_SinIdx( yaw );
+    cosYaw = FX_CosIdx( yaw );
+    sinPitch = FX_SinIdx( pitch );
+    cosPitch = FX_CosIdx( pitch );
+    gosa.x = FX_Mul( sinYaw, cosPitch );
+    gosa.y = sinPitch;
+    gosa.z = FX_Mul( cosYaw, cosPitch );
+  }
+
+  // -1度
+  {
+    // 平面
+    sinYaw = FX_SinIdx( yaw - 182 );
+    cosYaw = FX_CosIdx( yaw - 182 );
+    sinPitch = FX_SinIdx( pitch );
+    cosPitch = FX_CosIdx( pitch );
+    gosa_1.x = FX_Mul( sinYaw, cosPitch );
+    gosa_1.z = FX_Mul( cosYaw, cosPitch );
+
+    // Y
+    sinPitch = FX_SinIdx( pitch - 182 );
+    gosa_y_1 = sinPitch;
+  }
+
+  // +1度
+  {
+    // 平面
+    sinYaw = FX_SinIdx( yaw + 182 );
+    cosYaw = FX_CosIdx( yaw + 182 );
+    sinPitch = FX_SinIdx( pitch );
+    cosPitch = FX_CosIdx( pitch );
+    gosa_2.x = FX_Mul( sinYaw, cosPitch );
+    gosa_2.z = FX_Mul( cosYaw, cosPitch );
+
+    // Y
+    sinPitch = FX_SinIdx( pitch + 182 );
+    gosa_y_2 = sinPitch;
+  }
+
+  // yawのチェック
+  // 0～90
+  if( yaw < 0x4000 ){
+    
+    if( (gosa.x < n_dist->x) && (gosa.z > n_dist->z) ){
+      // Yawマイナス方向
+      if( MATH_ABS(gosa.x - n_dist->x) >= MATH_ABS(gosa.z - n_dist->z) ){
+        yaw -= (182 * (n_dist->x - gosa.x)) / (gosa_1.x - gosa.x);
+      }else{
+        yaw -= (182 * (gosa.z - n_dist->z)) / (gosa.z - gosa_1.z);
+      }
+    }else if( (gosa.x > n_dist->x) && (gosa.z < n_dist->z) ){
+      // Yawプラス方向
+      if( MATH_ABS(gosa.x - n_dist->x) >= MATH_ABS(gosa.z - n_dist->z) ){
+        yaw += (182 * (gosa.x - n_dist->x)) / (gosa.x - gosa_2.x);
+      }else{
+        yaw += (182 * (n_dist->z - gosa.z)) / (gosa_2.z - gosa.z);
+      }
+    }
+    
+  // 90～180
+  }else if( yaw < 0x8000 ){
+
+    if( (gosa.x > n_dist->x) && (gosa.z > n_dist->z) ){
+      // Yawマイナス方向
+      if( MATH_ABS(gosa.x - n_dist->x) >= MATH_ABS(gosa.z - n_dist->z) ){
+        yaw -= (182 * (gosa.x - n_dist->x)) / (gosa.x - gosa_1.x);
+      }else{
+        yaw -= (182 * (gosa.z - n_dist->z)) / (gosa.z - gosa_1.z);
+      }
+    }else if( (gosa.x < n_dist->x) && (gosa.z < n_dist->z) ){
+      // Yawプラス方向
+      if( MATH_ABS(gosa.x - n_dist->x) >= MATH_ABS(gosa.z - n_dist->z) ){
+        yaw += (182 * (n_dist->x - gosa.x)) / (gosa_2.x - gosa.x);
+      }else{
+        yaw += (182 * (n_dist->z - gosa.z)) / (gosa_2.z - gosa.z);
+      }
+    }
+
+  // 180～270
+  }else if( yaw < 0xC000 ){
+
+    if( (gosa.x > n_dist->x) && (gosa.z < n_dist->z) ){
+      // Yawマイナス方向
+      if( MATH_ABS(gosa.x - n_dist->x) >= MATH_ABS(gosa.z - n_dist->z) ){
+        yaw -= (182 * (gosa.x - n_dist->x)) / (gosa.x - gosa_1.x);
+      }else{
+        yaw -= (182 * (n_dist->z - gosa.z)) / (gosa_1.z - gosa.z);
+
+      }
+    }else if( (gosa.x < n_dist->x) && (gosa.z > n_dist->z) ){
+      // Yawプラス方向
+      if( MATH_ABS(gosa.x - n_dist->x) >= MATH_ABS(gosa.z - n_dist->z) ){
+        yaw += (182 * (n_dist->x - gosa.x)) / (gosa_2.x - gosa.x);
+      }else{
+        yaw += (182 * (gosa.z - n_dist->z)) / (gosa.z - gosa_2.z);
+      }
+    }
+
+  // 270～360
+  }else{
+
+    if( (gosa.x < n_dist->x) && (gosa.z < n_dist->z) ){
+      // Yawマイナス方向
+      if( MATH_ABS(gosa.x - n_dist->x) >= MATH_ABS(gosa.z - n_dist->z) ){
+        yaw -= (182 * (n_dist->x - gosa.x)) / (gosa_1.x - gosa.x);
+      }else{
+        yaw -= (182 * (n_dist->z - gosa.z)) / (gosa_1.z - gosa.z);
+
+      }
+    }else if( (gosa.x > n_dist->x) && (gosa.z > n_dist->z) ){
+      // Yawプラス方向
+      if( MATH_ABS(gosa.x - n_dist->x) >= MATH_ABS(gosa.z - n_dist->z) ){
+        yaw += (182 * (gosa.x - n_dist->x)) / (gosa.x - gosa_2.x);
+      }else{
+        yaw += (182 * (gosa.z - n_dist->z)) / (gosa.z - gosa_2.z);
+      }
+    }
+  }
+
+
+
+  // Pitchのチェック
+  if( pitch < 0x4000 ){
+    
+    if( (gosa.y > n_dist->y) ){
+
+      // Yawマイナス方向
+      pitch -= (182 * (gosa.y - n_dist->y)) / (gosa.y - gosa_y_1);
+
+    }else if( (gosa.y < n_dist->y) ){
+      // Yawプラス方向
+      pitch += (182 * (n_dist->y - gosa.y)) / (gosa_y_2 - gosa.y);
+    }
+    
+  // 270～360
+  }else if( pitch >= 0xC000 ){
+
+    if( (gosa.y > n_dist->y) ){
+
+      // Yawマイナス方向
+      pitch -= (182 * (gosa.y - n_dist->y)) / (gosa.y - gosa_y_1);
+
+    }else if( (gosa.y < n_dist->y) ){
+      // Yawプラス方向
+      pitch += (182 * (n_dist->y - gosa.y)) / (gosa_y_2 - gosa.y);
+    }
+
+  }
+
+  TOMOYA_Printf( "after yaw %d  pitch %d\n", yaw, pitch );
+
+  *ret_yaw = yaw;
+  *ret_pitch = pitch;
+}
+
 
 
 

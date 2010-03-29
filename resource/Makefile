@@ -23,7 +23,6 @@ endif
 
 
 SUBDIRS	=	wmi \
-			rebattle_trainer \
 			demo3d \
 			tokusei\
 			waza_tbl\
@@ -32,6 +31,7 @@ SUBDIRS	=	wmi \
 			personal\
 			trdata \
 			trmsg \
+			rebattle_trainer \
 			sound \
 			effect_viewer \
 			bag \

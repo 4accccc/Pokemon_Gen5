@@ -38,7 +38,7 @@ EXCELFILE = rebattle_trainer.xls
 #ターゲットファイル
 ##########################################
 
-HEADER = $(PROJECT_ROOT)prog/include/tr_tool/trno_def.h
+HEADER = $(PROJECT_ROOT)resource/trdata/trno_def.h
 HEADER2 = $(PROJECT_ROOT)prog/arc/fieldmap/fldmmdl_objcode.h
 
 LIST_FILE 	= list.txt
