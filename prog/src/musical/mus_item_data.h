@@ -85,10 +85,13 @@ const BOOL	MUS_ITEM_DATA_IsFrontItem( MUS_ITEM_DATA_WORK*  dataWork );
 const BOOL  MUS_ITEM_DATA_CanReverseItem( MUS_ITEM_DATA_WORK*  dataWork );
 
 //装備箇所からユーザータイプ装備箇所へ変換
-const MUS_POKE_EQUIP_USER MUS_ITEM_DATA_EquipPosToUserType( const MUS_POKE_EQUIP_USER pos );
+const MUS_POKE_EQUIP_USER MUS_ITEM_DATA_EquipPosToUserType( const MUS_POKE_EQUIP_POS pos );
 
 //アイテムのコンディションタイプを取得
 const MUSICAL_CONDITION_TYPE MUS_ITEM_DATA_GetItemConditionType( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo );
 
 //アイテムの使用タイプを取得
 const MUSICAL_ITEM_USETYPE MUS_ITEM_DATA_GetItemUseType( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo );
+
+//メイン装備箇所取得
+const MUS_POKE_EQUIP_TYPE MUS_ITEM_DATA_GetItemMainPos( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo );

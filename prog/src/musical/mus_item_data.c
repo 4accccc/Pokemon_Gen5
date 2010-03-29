@@ -321,7 +321,7 @@ const BOOL  MUS_ITEM_DATA_CanReverseItem( MUS_ITEM_DATA_WORK*  dataWork )
   return FALSE;
 }
 
-const MUS_POKE_EQUIP_USER MUS_ITEM_DATA_EquipPosToUserType( const MUS_POKE_EQUIP_USER pos )
+const MUS_POKE_EQUIP_USER MUS_ITEM_DATA_EquipPosToUserType( const MUS_POKE_EQUIP_POS pos )
 {
   switch( pos )
   {
@@ -368,7 +368,6 @@ const MUS_POKE_EQUIP_USER MUS_ITEM_DATA_EquipPosToUserType( const MUS_POKE_EQUIP
   }
 }
 
-
 //アイテムのコンディションタイプを取得
 const MUSICAL_CONDITION_TYPE MUS_ITEM_DATA_GetItemConditionType( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo )
 {
@@ -381,4 +380,11 @@ const MUSICAL_ITEM_USETYPE MUS_ITEM_DATA_GetItemUseType( MUS_ITEM_DATA_SYS* sysW
 {
   const MUS_ITEM_DATA_WORK *data = MUS_ITEM_DATA_GetMusItemData( sysWork , itemNo );
   return data->useType;
+}
+
+//メイン装備箇所取得
+const MUS_POKE_EQUIP_TYPE MUS_ITEM_DATA_GetItemMainPos( MUS_ITEM_DATA_SYS* sysWork , const u16 itemNo )
+{
+  const MUS_ITEM_DATA_WORK *data = MUS_ITEM_DATA_GetMusItemData( sysWork , itemNo );
+  return data->mainPos;
 }

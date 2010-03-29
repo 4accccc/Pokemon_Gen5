@@ -58,7 +58,6 @@ static u8 PLIST_ITEM_RecoverCheck( u16 item );
 static const u16 PLIST_ITEM_UTIL_GetParamExpSum( POKEMON_PARAM *pp );
 static const BOOL PLIST_ITEM_UTIL_CanAddParamExp( POKEMON_PARAM *pp , const int id , u16 item );
 static const BOOL PLIST_ITEM_UTIL_CanSubParamExp( POKEMON_PARAM *pp , const int id , u16 item );
-static const s32 PLIST_ITEM_UTIL_GetFriendValue( POKEMON_PARAM *pp , u16 itemNo , HEAPID heapId );
 static void PLIST_ITEM_UTIL_ItemUseMessageCommon( PLIST_WORK *work , u16 msgId );
 static void PLIST_ITEM_UTIL_ItemUseMessageParamExp( PLIST_WORK *work , u16 msgId , u16 statusID );
 static void PLIST_ITEM_UTIL_ItemUseMessageLvUp( PLIST_WORK *work );
@@ -862,26 +861,6 @@ static const BOOL PLIST_ITEM_UTIL_CanSubParamExp( POKEMON_PARAM *pp , const int 
   return FALSE;
 }
 
-//--------------------------------------------------------------------------
-//  現在のなつき度から対応するなつき度増減値を取得
-//--------------------------------------------------------------------------
-static const s32 PLIST_ITEM_UTIL_GetFriendValue( POKEMON_PARAM *pp , u16 itemNo , HEAPID heapId )
-{
-  const u32 friend = PP_Get( pp , ID_PARA_friend , NULL );
-  if( friend < 100 )
-  {
-    return ITEM_GetParam( itemNo , ITEM_PRM_FRIEND1 , heapId );
-  }
-  else
-  if( friend < 200 )
-  {
-    return ITEM_GetParam( itemNo , ITEM_PRM_FRIEND2 , heapId );
-  }
-  else
-  {
-    return ITEM_GetParam( itemNo , ITEM_PRM_FRIEND3 , heapId );
-  }
-}
 
 //--------------------------------------------------------------------------
 //  メッセージ表示汎用(WORDSET１にニックネーム 表示して終了

@@ -18,6 +18,8 @@
 #include "musical_item.naix"
 #include "dressup_gra.naix"
 #include "msg/msg_dress_up.h"
+#include "msg/msg_musical_common.h"
+#include "msg/msg_mus_item_name.h"
 
 #include "field/field_sound.h"
 #include "print/printsys.h"
@@ -308,6 +310,7 @@ struct _FITTING_WORK
   s16 listSwingSpeed;
   //デモ用
   BOOL isDemo;
+  BOOL isReadyDemo;
   u16  demoCnt;
   u8   demoPhase;
   u8   demoMoveValue; //回転させる量(アイテム個数で
@@ -342,9 +345,12 @@ struct _FITTING_WORK
   BOOL    isOpenCurtain;
   BOOL    isUpdateMsg;  //描画中
   BOOL    isDispMsg;    //表示中
+  u16     dispItemId;
   
   //Msg系
   GFL_MSGDATA *msgHandle;
+  GFL_MSGDATA *msgItemHandle;
+  GFL_MSGDATA *msgMusicalHandle;
   GFL_FONT *fontHandle;
   PRINT_QUE *printQue;
   GFL_BMPWIN *msgWin;
@@ -413,6 +419,9 @@ static void DUP_DEMO_DemoPhaseDragPen( FITTING_WORK *work , const GFL_POINT *sta
 static void DUP_FIT_InitMessage( FITTING_WORK *work );
 static void DUP_FIT_TermMessage( FITTING_WORK *work );
 static void DUP_FIT_DrawMessage( FITTING_WORK *work , u16 msgId , WORDSET *wordSet );
+static void DUP_FIT_DrawMessageDefault( FITTING_WORK *work );
+static void DUP_FIT_DrawMessageItem( FITTING_WORK *work , FIT_ITEM_WORK *item );
+static void DUP_FIT_DrawMessageSort( FITTING_WORK *work , const MUS_POKE_EQUIP_USER pos );
 
 #pragma mark [> proto Effect
 static void DUP_EFFECT_InitCell( FITTING_WORK *work );
@@ -471,6 +480,7 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   work->isOpenCurtain = FALSE;
   work->isDispMsg = FALSE;
   work->isUpdateMsg = FALSE;
+  work->dispItemId = MUSICAL_ITEM_INVALID;
   work->bgScrollCnt = 0;
   work->listTotalMove = 0;
 
@@ -511,6 +521,16 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
     work->sortAnimeEndAngle = 0x10000 + work->listAngle%LIST_ONE_ANGLE;
   }
 
+  if( MUSICAL_SAVE_IsLookDemo(work->initWork->mus_save) == FALSE )
+  {
+    MUSICAL_SAVE_SetLookDemo(work->initWork->mus_save , TRUE );
+    work->isReadyDemo = TRUE;
+  }
+  else
+  {
+    work->isReadyDemo = FALSE;
+  }
+  
   PMSND_PlayBGM( SEQ_BGM_MSL_DRESSUP );
 
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
@@ -591,10 +611,8 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   case DUS_FADEIN_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      if( MUSICAL_SAVE_IsLookDemo(work->initWork->mus_save) == FALSE )
+      if( work->isReadyDemo == TRUE )
       {
-        MUSICAL_SAVE_SetLookDemo(work->initWork->mus_save , TRUE );
-        //フィールドにアイテム無かったらデモ
         DUP_DEMO_DemoStart( work );
       }
       else
@@ -757,11 +775,13 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
                         DUP_MSGWIN_LEFT , DUP_MSGWIN_TOP ,
                         DUP_MSGWIN_WIDTH , DUP_MSGWIN_HEIGHT ,
                         FIT_PLT_BG_SUB_FONT , GFL_BMP_CHRAREA_GET_B );
+      if( work->isReadyDemo == FALSE )
       {
-        WORDSET *wordSet = WORDSET_Create( work->heapId );
-        WORDSET_RegisterPokeNickName( wordSet , 0 , work->initWork->musPoke->pokePara );
-        DUP_FIT_DrawMessage( work , DUP_MSG_01 , wordSet );
-        WORDSET_Delete( wordSet );
+        DUP_FIT_DrawMessageDefault( work );
+      }
+      else
+      {
+        DUP_FIT_DrawMessage( work , DUP_MSG_07 , NULL );
       }
 
       BmpWinFrame_Write( work->msgWin , WINDOW_TRANS_ON_V , 
@@ -791,6 +811,25 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       work->curtainScrollCnt -= DUP_CURTAIN_SCROLL_VALUE;
       GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_L , GFL_BG_SCROLL_X_SET , 128 - work->curtainScrollCnt );
       GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_R , GFL_BG_SCROLL_X_SET , -128 + work->curtainScrollCnt );
+    }
+  }
+
+  //アイテム保持の上段メッセージの更新
+  if( work->isUpdateMsg == FALSE )
+  {
+    if( work->dispItemId == MUSICAL_ITEM_INVALID &&
+        work->holdItem != NULL &&
+        DUP_FIT_ITEM_GetItemState(work->holdItem)->itemId != MUSICAL_ITEM_INVALID )
+    {
+      DUP_FIT_DrawMessageItem( work , work->holdItem );
+      work->dispItemId = DUP_FIT_ITEM_GetItemState(work->holdItem)->itemId;
+    }
+    else
+    if( work->dispItemId != MUSICAL_ITEM_INVALID &&
+        work->holdItem == NULL )
+    {
+      DUP_FIT_DrawMessageDefault( work );
+      work->dispItemId = MUSICAL_ITEM_INVALID;
     }
   }
 
@@ -1267,7 +1306,7 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
         const u8 g = (pltData[col] & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
         const u8 b = (pltData[col] & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
         //ARI_TPrintf("[%04x:%d:%d:%d]\n",pltData[i],r,g,b);
-        pltData[col] = GX_RGB( r/2 , g/2 , b/2 );
+        pltData[col] = GX_RGB( r/8 , g/8 , b/8 );
       }
     }
     {
@@ -2001,7 +2040,8 @@ static void DUP_FIT_UpdateTpList( FITTING_WORK *work , s16 subX , s16 subY )
       {
         if( work->holdItem != NULL )
         {
-          PMSND_PlaySE( DUP_SE_LIST_TOUCH_GOODS );
+          //鳴らさないように修正
+          //PMSND_PlaySE( DUP_SE_LIST_TOUCH_GOODS );
         }
         else
         {
@@ -2544,6 +2584,8 @@ static const BOOL DUP_FIT_UpdateTpPokeCheck( FITTING_WORK *work )
       DUP_FIT_SortItemIdx( work , userType , startIdx );
       work->sortType = userType;
     }
+    DUP_FIT_DrawMessageSort( work , work->sortType );
+
     work->isSortAnime = TRUE;
     work->sortAnimeMoveAngle = 0;
     work->sortAnimeEndAngle = 0x10000 + work->listAngle%LIST_ONE_ANGLE;
@@ -3225,6 +3267,8 @@ static void DUP_DEMO_DemoEnd( FITTING_WORK *work )
   work->isDemo = FALSE;
   work->state = DUS_FITTING_MAIN;
   GFL_CLACT_WK_SetDrawEnable( work->demoPen, FALSE );
+
+  DUP_FIT_DrawMessageDefault( work );
 }
 
 static void DUP_DEMO_DemoMain( FITTING_WORK *work )
@@ -3385,6 +3429,8 @@ static void DUP_FIT_InitMessage( FITTING_WORK *work )
   
   //メッセージ
   work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_dress_up_dat , work->heapId );
+  work->msgItemHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_mus_item_name_dat , work->heapId );
+  work->msgMusicalHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_common_dat , work->heapId );
 
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , FIT_PLT_BG_SUB_FONT*16*2, 16*2, work->heapId );
   
@@ -3397,6 +3443,8 @@ static void DUP_FIT_InitMessage( FITTING_WORK *work )
 static void DUP_FIT_TermMessage( FITTING_WORK *work )
 {
   PRINTSYS_QUE_Delete( work->printQue );
+  GFL_MSG_Delete( work->msgItemHandle );
+  GFL_MSG_Delete( work->msgMusicalHandle );
   GFL_MSG_Delete( work->msgHandle );
   GFL_FONT_Delete( work->fontHandle );
 }
@@ -3421,8 +3469,80 @@ static void DUP_FIT_DrawMessage( FITTING_WORK *work , u16 msgId , WORDSET *wordS
   GFL_STR_DeleteBuffer( srcStr );
   work->isUpdateMsg = TRUE;
 }
+static void DUP_FIT_DrawMessageDefault( FITTING_WORK *work )
+{
+  WORDSET *wordSet = WORDSET_Create( work->heapId );
+  WORDSET_RegisterPokeNickName( wordSet , 0 , work->initWork->musPoke->pokePara );
+  DUP_FIT_DrawMessage( work , DUP_MSG_01 , wordSet );
+  WORDSET_Delete( wordSet );
+}
 
+static void DUP_FIT_DrawMessageItem( FITTING_WORK *work , FIT_ITEM_WORK *item )
+{
+  MUS_ITEM_DATA_SYS* itemDataSys = MUS_ITEM_DRAW_GetItemDataSys( work->itemDrawSys );
 
+  const ITEM_STATE *itemState = DUP_FIT_ITEM_GetItemState( item );
+  MUS_POKE_EQUIP_TYPE pos = MUS_ITEM_DATA_GetItemMainPos( itemDataSys , itemState->itemId );
+
+  WORDSET *wordSet = WORDSET_Create( work->heapId );
+
+  STRBUF *itemBuf = GFL_MSG_CreateString( work->msgItemHandle , ITEM_NAME_000+itemState->itemId );
+  STRBUF *posBuf = GFL_MSG_CreateString( work->msgMusicalHandle , MUSICAL_GOODS_POS_01+pos );
+  WORDSET_RegisterWord( wordSet, 0, itemBuf, 0, TRUE, PM_LANG );
+  WORDSET_RegisterWord( wordSet, 1, posBuf, 0, TRUE, PM_LANG );
+
+  DUP_FIT_DrawMessage( work , DUP_MSG_04 , wordSet );
+
+  GFL_STR_DeleteBuffer( posBuf );
+  GFL_STR_DeleteBuffer( itemBuf );
+  WORDSET_Delete( wordSet );
+}
+
+static void DUP_FIT_DrawMessageSort( FITTING_WORK *work , const MUS_POKE_EQUIP_USER pos )
+{
+  if( pos == MUS_POKE_EQUIP_USER_MAX )
+  {
+    DUP_FIT_DrawMessage( work , DUP_MSG_06 , NULL );
+  }
+  else
+  {
+    u16 msgId = 0;
+    switch( pos )
+    {
+    case MUS_POKE_EQU_USER_EAR_R:	//耳(右耳)
+    case MUS_POKE_EQU_USER_EAR_L:	//耳(左耳)
+      msgId = MUSICAL_GOODS_POS_01;
+      break;
+    case MUS_POKE_EQU_USER_HEAD:		//頭
+      msgId = MUSICAL_GOODS_POS_02;
+      break;
+    case MUS_POKE_EQU_USER_FACE:		//顔
+      msgId = MUSICAL_GOODS_POS_08;
+      break;
+    case MUS_POKE_EQU_USER_BODY:		//胴
+      msgId = MUSICAL_GOODS_POS_05;
+      break;
+    case MUS_POKE_EQU_USER_WAIST:		//腰
+      msgId = MUSICAL_GOODS_POS_06;
+      break;
+    case MUS_POKE_EQU_USER_HAND_R:	//手(右手)
+    case MUS_POKE_EQU_USER_HAND_L:	//手(左手)
+      msgId = MUSICAL_GOODS_POS_07;
+      break;
+    }
+    {
+      WORDSET *wordSet = WORDSET_Create( work->heapId );
+
+      STRBUF *posBuf = GFL_MSG_CreateString( work->msgMusicalHandle , msgId );
+      WORDSET_RegisterWord( wordSet, 0, posBuf, 0, TRUE, PM_LANG );
+
+      DUP_FIT_DrawMessage( work , DUP_MSG_05 , wordSet );
+
+      GFL_STR_DeleteBuffer( posBuf );
+      WORDSET_Delete( wordSet );
+    }
+  }
+}
 #pragma mark [> EffectFunc
 //演出エフェクト系
 
