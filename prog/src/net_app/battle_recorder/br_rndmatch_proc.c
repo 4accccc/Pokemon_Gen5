@@ -1092,21 +1092,21 @@ static void Br_RndMatch_CreateSubDisplay( BR_RNDMATCH_WORK *p_wk, BR_RNDMATCH_PR
   } sc_msgwin_data[BR_RNDMATCH_MSGWINID_S_MAX]  =
   { 
     {
-      8,
+      4,
       3,
       24,
       2,
       msg_900
     },
     {
-      8,
+      4,
       8,
       24,
       2,
       msg_901
     },
     {
-      8,
+      4,
       13,
       24,
       2,

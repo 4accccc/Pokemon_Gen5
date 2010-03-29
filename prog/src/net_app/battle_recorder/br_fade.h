@@ -49,10 +49,7 @@ typedef enum
   BR_FADE_DIR_OUT,  //0->16
 }BR_FADE_DIR;
 
-//-------------------------------------
-///	パレットフェードで使用する色
-//=====================================
-#define BR_FADE_COLOR_BLUE  (0x7e05)
+typedef BOOL (*BR_FADE_CHENGEFADE_CALLBACK)( void *p_wk_adrs );
 
 //=============================================================================
 /**
@@ -82,6 +79,16 @@ extern void BR_FADE_Main( BR_FADE_WORK *p_wk );
 extern void BR_FADE_StartFade( BR_FADE_WORK *p_wk, BR_FADE_TYPE type, BR_FADE_DISPLAY disp, BR_FADE_DIR  dir );
 extern void BR_FADE_StartFadeEx( BR_FADE_WORK *p_wk, BR_FADE_TYPE type, BR_FADE_DISPLAY disp, BR_FADE_DIR dir, u32 sync );
 extern BOOL BR_FADE_IsEnd( const BR_FADE_WORK *cp_wk );
+
+typedef struct
+{ 
+  BR_FADE_TYPE fadein_type;
+  BR_FADE_TYPE fadeout_type;
+  BR_FADE_DISPLAY disp;
+  BR_FADE_CHENGEFADE_CALLBACK callback;
+  void *p_wk_adrs;
+}BR_FADE_CHANGEFADE_PARAM;
+extern void BR_FADE_StartChangeFade( BR_FADE_WORK *p_wk, const BR_FADE_CHANGEFADE_PARAM *cp_param );
 
 //-------------------------------------
 ///	その他特殊

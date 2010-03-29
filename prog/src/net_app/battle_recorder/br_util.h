@@ -40,6 +40,42 @@ extern BOOL BR_MSGWIN_PrintMain( BR_MSGWIN_WORK* p_wk );
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
+ *					  小さいボール演出
+ */
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+//-------------------------------------
+///	動きの種類
+//=====================================
+typedef enum
+{ 
+  BR_BALLEFF_MOVE_NOP,           //動かない(表示されない)
+  BR_BALLEFF_MOVE_EMIT,          //放射に動く          STOP
+  BR_BALLEFF_MOVE_LINE,          //線の動き            STOP
+  BR_BALLEFF_MOVE_OPENING,       //開始の動き          STOP
+  BR_BALLEFF_MOVE_BIG_CIRCLE,    //大きい円を描く      LOOP
+  BR_BALLEFF_MOVE_CIRCLE,        //円を描く            LOOP
+  BR_BALLEFF_MOVE_CIRCLE_CONT,   //場所を変えて円を描くLOOP
+
+}BR_BALLEFF_MOVE;
+//-------------------------------------
+///	カーソルワーク
+//=====================================
+typedef struct _BR_BALLEFF_WORK BR_BALLEFF_WORK;
+
+//-------------------------------------
+///	外部公開
+//=====================================
+extern BR_BALLEFF_WORK *BR_BALLEFF_Init( GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, CLSYS_DRAW_TYPE draw, HEAPID heapID );
+extern void BR_BALLEFF_Exit( BR_BALLEFF_WORK *p_wk );
+extern void BR_BALLEFF_Main( BR_BALLEFF_WORK *p_wk );
+
+extern void BR_BALLEFF_StartMove( BR_BALLEFF_WORK *p_wk, BR_BALLEFF_MOVE move, const GFL_POINT *cp_pos );
+extern BOOL BR_BALLEFF_IsMoveEnd( const BR_BALLEFF_WORK *cp_wk );
+
+extern void BR_BALLEFF_SetAnmSeq( BR_BALLEFF_WORK *p_wk, int seq );
+
+//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+/**
  *					  リスト表示構造体
  */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
@@ -71,9 +107,10 @@ typedef struct
   u8  plt;
   u8  frm;
   u8  str_line; //何行の文字か(何キャラ使うか)
-  BR_LIST_TYPE  type;
-  BR_RES_WORK   *p_res;
-  GFL_CLUNIT    *p_unit;
+  BR_LIST_TYPE    type;
+  BR_RES_WORK     *p_res;
+  GFL_CLUNIT      *p_unit;
+  BR_BALLEFF_WORK *p_balleff;
 } BR_LIST_PARAM;
 
 //-------------------------------------
@@ -117,7 +154,8 @@ extern void BR_LIST_Write( BR_LIST_WORK *p_wk );
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
 ///	テキストワーク
-//    内部的にはMSGWINと同じ
+//    内部的にはMSGWINと同じだが
+//    フレームの書き込みを行なう
 //=====================================
 typedef BR_MSGWIN_WORK BR_TEXT_WORK;
 
@@ -176,103 +214,3 @@ extern void BR_SEQ_SetReservSeq( BR_SEQ_WORK *p_wk, int seq );
 extern void BR_SEQ_NextReservSeq( BR_SEQ_WORK *p_wk );
 extern BOOL BR_SEQ_IsComp( const BR_SEQ_WORK *cp_wk, BR_SEQ_FUNCTION seq_function );
 
-//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-/**
- *					  小さいボール演出
- */
-//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-//-------------------------------------
-///	動きの種類
-//=====================================
-typedef enum
-{ 
-  BR_BALLEFF_MOVE_NOP,           //動かない(表示されない)
-  BR_BALLEFF_MOVE_EMIT,          //放射に動く          STOP
-  BR_BALLEFF_MOVE_OPENING,       //開始の動き          STOP
-  BR_BALLEFF_MOVE_BIG_CIRCLE,    //大きい円を描く      LOOP
-  BR_BALLEFF_MOVE_CIRCLE,        //円を描く            LOOP
-  BR_BALLEFF_MOVE_CIRCLE_CONT,   //場所を変えて円を描くLOOP
-
-}BR_BALLEFF_MOVE;
-//-------------------------------------
-///	カーソルワーク
-//=====================================
-typedef struct _BR_BALLEFF_WORK BR_BALLEFF_WORK;
-
-//-------------------------------------
-///	外部公開
-//=====================================
-extern BR_BALLEFF_WORK *BR_BALLEFF_Init( GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, CLSYS_DRAW_TYPE draw, HEAPID heapID );
-extern void BR_BALLEFF_Exit( BR_BALLEFF_WORK *p_wk );
-extern void BR_BALLEFF_Main( BR_BALLEFF_WORK *p_wk );
-
-extern void BR_BALLEFF_StartMove( BR_BALLEFF_WORK *p_wk, BR_BALLEFF_MOVE move, const GFL_POINT *cp_pos );
-extern BOOL BR_BALLEFF_IsMoveEnd( const BR_BALLEFF_WORK *cp_wk );
-
-//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
-/**
- *					  デバッグ用
- */
-//_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_
-#ifdef PM_DEBUG
-#include "musical/mus_shot_photo.h"
-#include "poke_tool/monsno_def.h" //debug用
-//----------------------------------------------------------------------------
-/**
- *	@brief  ミュージカルショットデータ作成
- *
- *	@param	MUSICAL_SHOT_DATA *p_data   受け取りワーク
- */
-//-----------------------------------------------------------------------------
-static inline void DEBUG_Br_MusicalLook_GetPhotData( MUSICAL_SHOT_DATA *shotData )
-{ 
-  u8 i;
-  RTCDate date;
-  GFL_RTC_GetDate( &date );
-  shotData->bgNo = 1;
-  shotData->spotBit = 2;
-  shotData->year = date.year;
-  shotData->month = date.month;
-  shotData->day = date.day;
-  shotData->title[0] = L'ポ';
-  shotData->title[1] = L'ケ';
-  shotData->title[2] = L'ッ';
-  shotData->title[3] = L'タ';
-  shotData->title[4] = L'ー';
-  shotData->title[5] = L'リ';
-  shotData->title[6] = L'モ';
-  shotData->title[7] = L'ン';
-  shotData->title[8] = L'ス';
-  shotData->title[9] = L'タ';
-  shotData->title[10] = L'ー';
-  shotData->title[11] = L'リ';
-  shotData->title[12] = GFL_STR_GetEOMCode();
-
-  shotData->shotPoke[0].monsno = 1;
-  shotData->shotPoke[1].monsno = 2;
-  shotData->shotPoke[2].monsno = 3;
-  shotData->shotPoke[3].monsno = 4;
-
-  for( i=0;i<MUSICAL_POKE_MAX;i++ )
-  {
-    u8 j;
-    shotData->shotPoke[i].trainerName[0] = L'ト';
-    shotData->shotPoke[i].trainerName[1] = L'レ';
-    shotData->shotPoke[i].trainerName[2] = L'ー';
-    shotData->shotPoke[i].trainerName[3] = L'ナ';
-    shotData->shotPoke[i].trainerName[4] = L'１'+i;
-    shotData->shotPoke[i].trainerName[5] = 0;
-
-    for( j=0;j<MUSICAL_ITEM_EQUIP_MAX;j++ )
-    {
-      shotData->shotPoke[i].equip[j].itemNo = MUSICAL_ITEM_INVALID;
-      shotData->shotPoke[i].equip[j].angle = 0;
-      shotData->shotPoke[i].equip[j].equipPos = MUS_POKE_EQU_INVALID;
-    }
-    shotData->shotPoke[i].equip[0].itemNo = 0;
-    shotData->shotPoke[i].equip[0].angle = 0;
-    shotData->shotPoke[i].equip[0].equipPos = MUS_POKE_EQU_HAND_R;
-  }
-}
-
-#endif //PM_DEBUG

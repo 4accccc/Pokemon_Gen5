@@ -599,6 +599,7 @@ static void BR_SIDEBAR_ONE_Init( BR_SIDEBAR_ONE *p_wk, GFL_CLUNIT *p_clunit, con
       GFL_STD_MemClear( &data, sizeof(GFL_CLWK_DATA) );
       data.pos_x  = cp_data->boot_init_x;
       data.pos_y  = cp_data->boot_init_y;
+      data.bgpri  = 1;
       p_wk->x = FX32_CONST( data.pos_x );
       p_wk->y = FX32_CONST( data.pos_y );
       p_wk->scale = cp_data->boot_scale_x;

@@ -68,6 +68,7 @@ typedef struct
   BR_BTN_WORK         *p_btn[ BR_MUSICALSEND_BTN_MAX ];
   BR_SEQ_WORK         *p_seq;
   BR_TEXT_WORK        *p_text;
+  BR_BALLEFF_WORK     *p_balleff;
   BMPOAM_SYS_PTR	  	p_bmpoam;	//BMPOAMシステム
   PRINT_QUE           *p_que;
 	HEAPID              heapID;
@@ -160,6 +161,7 @@ static GFL_PROC_RESULT BR_MUSICALSEND_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
     GFL_CLUNIT *p_unit;
     p_unit  = BR_GRAPHIC_GetClunit( p_param->p_graphic );
     p_wk->p_bmpoam	= BmpOam_Init( p_wk->heapID, p_unit );
+    p_wk->p_balleff = BR_BALLEFF_Init( p_unit, p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
   }
 
   //自分のミュージカルショット読み込み
@@ -204,6 +206,7 @@ static GFL_PROC_RESULT BR_MUSICALSEND_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
   Br_MusicalSend_DeletePhoto( p_wk, p_param );
   
 	//モジュール破棄
+  BR_BALLEFF_Exit( p_wk->p_balleff );
   if( p_wk->p_text )
   { 
     BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
@@ -242,6 +245,9 @@ static GFL_PROC_RESULT BR_MUSICALSEND_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
   { 
     return GFL_PROC_RES_FINISH;
   }
+
+  //ボール処理
+  BR_BALLEFF_Main( p_wk->p_balleff );
 
   //各プリント処理
   PRINTSYS_QUE_Main( p_wk->p_que );
@@ -417,6 +423,12 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
     Br_MusicalSend_DeletePhoto( p_wk, p_wk->p_param );
     p_wk->p_text  = BR_TEXT_Init( p_wk->p_param->p_res, p_wk->p_que, p_wk->heapID );
     BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_017 );
+    {
+      GFL_POINT pos;
+      pos.x = 256/2;
+      pos.y = 192/2;
+      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
+    }
     *p_seq  = SEQ_CHANGE_FADEIN_START;
     break;
   case SEQ_CHANGE_FADEIN_START:
@@ -446,6 +458,7 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
   case SEQ_UPLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
+      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_UPLOAD_END;
     }
     break;
@@ -582,7 +595,7 @@ static void Br_MusicalSend_CreateSubDisplay( BR_MUSICALSEND_WORK *p_wk, BR_MUSIC
         { 
           msgID = msg_302;
           cldata.pos_x    = 128;
-          cldata.anmseq   = 0;
+          cldata.anmseq   = 4;
         }
         p_wk->p_btn[i] = BR_BTN_Init( &cldata, msgID, BR_BTN_DATA_SHORT_WIDTH, CLSYS_DRAW_SUB, p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
       }

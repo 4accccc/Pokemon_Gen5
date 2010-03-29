@@ -104,6 +104,7 @@ struct _BR_POKESEARCH_WORK
   BR_LIST_WORK          *p_list;
   BOOL                  is_start;
   BR_POKESEARCH_SEQ     now_seq;
+  BR_BALLEFF_WORK       *p_balleff;
 
   const ZUKAN_SAVEDATA  *cp_zkn;
   //ソートされたポケモン番号データ
@@ -174,7 +175,7 @@ static const u16 sc_zukansort_data_idx[]=
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-BR_POKESEARCH_WORK *BR_POKESEARCH_Init( const ZUKAN_SAVEDATA *cp_zkn, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit,  BMPOAM_SYS_PTR p_bmpoam, BR_FADE_WORK *p_fade, HEAPID heapID )
+extern BR_POKESEARCH_WORK *BR_POKESEARCH_Init( const ZUKAN_SAVEDATA *cp_zkn, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit,  BMPOAM_SYS_PTR p_bmpoam, BR_FADE_WORK *p_fade, BR_BALLEFF_WORK *p_balleff, HEAPID heapID )
 { 
   BR_POKESEARCH_WORK *p_wk;
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(BR_POKESEARCH_WORK) );
@@ -187,6 +188,7 @@ BR_POKESEARCH_WORK *BR_POKESEARCH_Init( const ZUKAN_SAVEDATA *cp_zkn, BR_RES_WOR
   p_wk->p_bmpoam  = p_bmpoam;
   p_wk->p_que     = PRINTSYS_QUE_Create( p_wk->heapID );
   p_wk->p_sort_data  = ZUKANDATA_AllocSort50onData( GFL_HEAP_LOWID(heapID), &p_wk->sort_len );
+  p_wk->p_balleff    = p_balleff;
 
   //図鑑データから見たことのあるポケモンを検索
   { 
@@ -586,6 +588,7 @@ static void BR_POKESEARCH_DISPLAY_CreateList( BR_POKESEARCH_WORK *p_wk )
       int i;
       STRBUF  *p_strbuf;
       p_wk->p_list_data = BmpMenuWork_ListCreate( p_wk->monsno_len, p_wk->heapID );
+      p_strbuf  = GFL_STR_CreateBuffer( MONS_NAME_SIZE + EOM_SIZE, p_wk->heapID );
       for( i = 0; i < p_wk->monsno_len; i++ )
       { 
 #if 0   //GlobalMsgはシステムヒープからとっている
@@ -595,12 +598,12 @@ static void BR_POKESEARCH_DISPLAY_CreateList( BR_POKESEARCH_WORK *p_wk )
         BmpMenuWork_ListAddArchiveString( &p_wk->p_list_data[i], (GFL_MSGDATA *)GlobalMsg_PokeName,
             p_wk->p_monsno_buff[i], p_wk->p_monsno_buff[i], p_wk->heapID );
 #else
-        p_strbuf  = GFL_STR_CreateBuffer( MONS_NAME_SIZE + EOM_SIZE, p_wk->heapID );
         GFL_MSG_GetString( GlobalMsg_PokeName, p_wk->p_monsno_buff[i], p_strbuf );
         BmpMenuWork_ListAddString( &p_wk->p_list_data[i],
             p_strbuf, p_wk->p_monsno_buff[i], p_wk->heapID );
 #endif
       }
+      GFL_STR_DeleteBuffer( p_strbuf );
     }
     {
       static const BR_LIST_PARAM sc_list_param  =

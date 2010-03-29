@@ -518,11 +518,11 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
   } sc_msgwin_data[BR_BTLSUBWAY_MSGWINID_M_SINGLE_MAX]  =
   { 
     {
-      4,
       3,
-      14,
+      3,
+      12,
       2,
-      msg_804
+      msg_729,
     },
     { 
       4,
@@ -656,11 +656,11 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
   } sc_msgwin_data[BR_BTLSUBWAY_MSGWINID_M_DOUBLE_MAX]  =
   { 
     {
-      4,
       3,
-      14,
+      3,
+      12,
       2,
-      msg_804
+      msg_729,
     },
     { 
       4,
@@ -792,11 +792,11 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
   } sc_msgwin_data[BR_BTLSUBWAY_MSGWINID_M_MULTI_MAX]  =
   { 
     {
-      4,
       3,
-      14,
+      3,
+      12,
       2,
-      msg_804
+      msg_729,
     },
     { 
       4,
@@ -1005,11 +1005,11 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
   } sc_msgwin_data[BR_BTLSUBWAY_MSGWINID_M_WIFI_MAX]  =
   { 
     {
-      4,
       3,
-      13,
+      3,
+      12,
       2,
-      msg_804
+      msg_729,
     },
     { 
       4,
@@ -1026,16 +1026,16 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
       msg_815,
     },
     { 
-      19,
+      21,
       10,
-      5,
+      7,
       2,
       msg_814,
     },
     { 
       25,
       10,
-      5,
+      4,
       2,
       msg_809,
     },
@@ -1347,6 +1347,7 @@ static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, GFL_CLUNIT *p_clunit, int numb
     p_wk->p_clwk = GFL_CLACT_WK_Create( p_clunit,
           p_wk->res_chr, p_wk->res_plt, p_wk->res_cel,
             &cldata, CLSYS_DEFREND_MAIN, heapID );
+    GFL_CLACT_WK_SetObjMode( p_wk->p_clwk, GX_OAM_MODE_XLU );
 
     //êîéö
     for( i = 0; i < OBJNUMBER_MAX; i++ )
@@ -1357,6 +1358,8 @@ static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, GFL_CLUNIT *p_clunit, int numb
       p_wk->p_num[i] = GFL_CLACT_WK_Create( p_clunit,
           p_wk->res_chr, p_wk->res_plt, p_wk->res_cel,
             &cldata, CLSYS_DEFREND_MAIN, heapID );
+
+      GFL_CLACT_WK_SetObjMode( p_wk->p_num[i], GX_OAM_MODE_XLU );
     }
   }
 

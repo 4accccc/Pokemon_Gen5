@@ -63,6 +63,8 @@ typedef enum
 
   BR_RES_BG_CODEIN_NUMBER_S,
 
+  BR_RES_BG_BVDELETE_S,
+
 } BR_RES_BGID;
 
 
@@ -93,6 +95,21 @@ typedef enum
 	BR_RES_OBJ_MAX
 } BR_RES_OBJID;
 
+//-------------------------------------
+///	色指定
+//=====================================
+typedef enum
+{
+  BR_RES_COLOR_TYPE_BLUE,
+  BR_RES_COLOR_TYPE_GREEN,
+  BR_RES_COLOR_TYPE_PINK,
+  BR_RES_COLOR_TYPE_BLACK,
+  BR_RES_COLOR_TYPE_YELLOW,
+  BR_RES_COLOR_TYPE_RED,
+  BR_RES_COLOR_TYPE_DBROWN, //ダークブラウン
+  BR_RES_COLOR_TYPE_BROWN,
+} BR_RES_COLOR_TYPE;
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -121,7 +138,7 @@ typedef struct _BR_RES_WORK BR_RES_WORK;
 //-------------------------------------
 ///	リソース管理作成
 //=====================================
-extern BR_RES_WORK *BR_RES_Init( HEAPID heapID );
+extern BR_RES_WORK *BR_RES_Init( BR_RES_COLOR_TYPE color, BOOL is_browse, HEAPID heapID );
 extern void BR_RES_Exit( BR_RES_WORK *p_wk );
 
 //-------------------------------------
@@ -146,3 +163,4 @@ extern void BR_RES_UnLoadCommon( BR_RES_WORK *p_wk, CLSYS_DRAW_TYPE type );
 extern GFL_FONT * BR_RES_GetFont( const BR_RES_WORK *cp_wk );
 extern GFL_MSGDATA * BR_RES_GetMsgData( const BR_RES_WORK *cp_wk );
 extern WORDSET * BR_RES_GetWordSet( const BR_RES_WORK *cp_wk );
+extern u16 BR_RES_GetFadeColor( const BR_RES_WORK *cp_wk );

@@ -54,6 +54,7 @@ typedef struct
   BMP_MENULIST_DATA *p_list_data;
   BR_LIST_WORK      *p_list;
   WORDSET           *p_word;
+  BR_BALLEFF_WORK   *p_balleff;
 
   u16               plt;
   u16               cel;
@@ -76,6 +77,8 @@ typedef struct
   BR_SEQ_WORK       *p_seq;
   PRINT_QUE         *p_que;
 	HEAPID            heapID;
+  BR_BALLEFF_WORK   *p_balleff;
+  BR_TEXT_WORK      *p_text;
 
   BR_RANK_WORK      rank;
 
@@ -99,6 +102,7 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Exit
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
 static GFL_PROC_RESULT BR_BVRANK_PROC_Main
 	( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs );
+
 //-------------------------------------
 ///	シーケンス
 //=====================================
@@ -108,11 +112,13 @@ static void Br_Seq_FadeIn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_Seq_FadeOut( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_Seq_RankingMain( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Seq_NextDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Seq_NextRanking( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 ///	ランキングワーク
 //=====================================
-static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit, HEAPID heapID );
+static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit, BR_BALLEFF_WORK  *p_balleff, HEAPID heapID );
 static void BR_RANK_Exit( BR_RANK_WORK *p_wk );
 static void BR_RANK_Main( BR_RANK_WORK *p_wk, HEAPID heapID );
 static u32  BR_RANK_GetSelect( const BR_RANK_WORK *cp_wk );
@@ -167,8 +173,6 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
 {	
 	BR_BVRANK_WORK				*p_wk;
 	BR_BVRANK_PROC_PARAM	*p_param	= p_param_adrs;
-  GFL_FONT    *p_font;
-  GFL_MSGDATA *p_msg;
 
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(BR_BVRANK_WORK), BR_PROC_SYS_GetHeapID( p_param->p_procsys ) );
@@ -178,56 +182,19 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   p_wk->p_bmpoam	= BmpOam_Init( p_wk->heapID, p_param->p_unit );
   p_wk->p_que     = PRINTSYS_QUE_Create( p_wk->heapID );
 
-	//グラフィック初期化
-  BR_RES_LoadBG( p_param->p_res, BR_RES_BG_BVRANK, p_wk->heapID );
-  BR_RES_LoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, p_wk->heapID );
-
-  //モジュール初期化
-  p_font  = BR_RES_GetFont( p_param->p_res );
-  p_msg   = BR_RES_GetMsgData( p_param->p_res );
-  //ボタン
-  { 
-    GFL_CLWK_DATA cldata;
-    BR_RES_OBJ_DATA res;
-    BOOL ret;
-
-
-    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-
-    cldata.pos_x    = 80;
-    cldata.pos_y    = 168;
-    cldata.anmseq   = 0;
-    cldata.softpri  = 1;
-
-    ret = BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
-    GF_ASSERT( ret );
-
-    p_wk->p_btn = BR_BTN_Init( &cldata, msg_05, BR_BTN_DATA_SHORT_WIDTH, CLSYS_DRAW_SUB, p_param->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
-;
-  }
-  //メッセージ
-  { 
-    //バトルビデオを見る
-    p_wk->p_msgwin  = BR_MSGWIN_Init( BG_FRAME_S_FONT, 11, 6, 10, 4, PLT_BG_S_FONT, p_wk->p_que, p_wk->heapID );
-    BR_MSGWIN_PrintColor( p_wk->p_msgwin, p_msg, msg_603, p_font, BR_PRINT_COL_NORMAL );
-
-    //バトルビデオさいしん３０件
-    p_wk->p_title = BR_MSGWIN_Init( BG_FRAME_M_FONT, 3, 3, 26, 4, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
-    BR_MSGWIN_PrintColor( p_wk->p_title, p_msg, msg_605, p_font, BR_PRINT_COL_NORMAL );
-
-  }
+  p_wk->p_balleff = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
 
   //シーケンス管理
-  p_wk->p_seq = BR_SEQ_Init( p_wk, Br_Seq_Download, p_wk->heapID );
+  p_wk->p_seq = BR_SEQ_Init( p_wk, Br_Seq_NextDownload, p_wk->heapID );
 
   //レコードからの戻りの場合はすでにダウンロードしている
   if( p_wk->p_param->mode == BR_BVRANK_MODE_RETURN )
   { 
-    BR_SEQ_SetNext( p_wk->p_seq,Br_Seq_FadeInBefore );
+    BR_SEQ_SetNext( p_wk->p_seq, Br_Seq_FadeInBefore );
   }
   else
   { 
-    BR_SEQ_SetNext( p_wk->p_seq, Br_Seq_Download );
+    BR_SEQ_SetNext( p_wk->p_seq, Br_Seq_NextDownload );
   }
 
 	return GFL_PROC_RES_FINISH;
@@ -251,17 +218,14 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 
   BR_SEQ_Exit( p_wk->p_seq );
 
-
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
+    p_wk->p_text  = NULL;
+  }
 
 	//モジュール破棄
-  BR_MSGWIN_Exit( p_wk->p_title );
-  BR_MSGWIN_Exit( p_wk->p_msgwin );
-  BR_BTN_Exit( p_wk->p_btn );
-  BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S );
-  BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_BVRANK );
-
-  GFL_BG_LoadScreenReq( BG_FRAME_S_FONT );
-  GFL_BG_LoadScreenReq( BG_FRAME_M_FONT );
+  BR_BALLEFF_Exit( p_wk->p_balleff );
 
   BmpOam_Exit( p_wk->p_bmpoam ); 
   PRINTSYS_QUE_Delete( p_wk->p_que );
@@ -284,27 +248,34 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT BR_BVRANK_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
-  enum
-  { 
-    SEQ_FADEIN_START,
-    SEQ_FADEIN_WAIT,
-    SEQ_MAIN,
-    SEQ_FADEOUT_START,
-    SEQ_FADEOUT_WAIT,
-    SEQ_END,
-  };
 	BR_BVRANK_WORK	*p_wk	= p_wk_adrs;
-	BR_BVRANK_PROC_PARAM	*p_param	= p_param_adrs;
 
+  //シーケンス処理
   BR_SEQ_Main( p_wk->p_seq );
   if( BR_SEQ_IsEnd( p_wk->p_seq ) )
   { 
     return GFL_PROC_RES_FINISH;
   }
 
-  BR_MSGWIN_PrintMain( p_wk->p_msgwin );
-  BR_MSGWIN_PrintMain( p_wk->p_title );
+  //ボール処理
+  BR_BALLEFF_Main( p_wk->p_balleff );
+
+  //文字表示処理
   PRINTSYS_QUE_Main( p_wk->p_que );
+  if( p_wk->p_msgwin )
+  { 
+    BR_MSGWIN_PrintMain( p_wk->p_msgwin );
+  }
+  if( p_wk->p_title )
+  { 
+    BR_MSGWIN_PrintMain( p_wk->p_title );
+  }
+
+  //テキスト処理
+  if( p_wk->p_text )
+  {  
+    BR_TEXT_PrintMain( p_wk->p_text );
+  }
 
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -325,9 +296,53 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
 static void Br_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   BR_BVRANK_WORK	*p_wk	= p_wk_adrs;
+  GFL_FONT    *p_font = BR_RES_GetFont( p_wk->p_param->p_res );
+  GFL_MSGDATA *p_msg  = BR_RES_GetMsgData( p_wk->p_param->p_res );
+
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_Exit( p_wk->p_text, p_wk->p_param->p_res );
+    p_wk->p_text  = NULL;
+  }
+
+	//グラフィック初期化
+  BR_RES_LoadBG( p_wk->p_param->p_res, BR_RES_BG_BVRANK, p_wk->heapID );
+  BR_RES_LoadOBJ( p_wk->p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, p_wk->heapID );
+
+  //ボタン
+  { 
+    GFL_CLWK_DATA cldata;
+    BR_RES_OBJ_DATA res;
+    BOOL ret;
+
+    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+    cldata.pos_x    = 80;
+    cldata.pos_y    = 168;
+    cldata.anmseq   = 0;
+    cldata.softpri  = 1;
+
+    ret = BR_RES_GetOBJRes( p_wk->p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
+    GF_ASSERT( ret );
+
+    p_wk->p_btn = BR_BTN_Init( &cldata, msg_05, BR_BTN_DATA_SHORT_WIDTH, CLSYS_DRAW_SUB, p_wk->p_param->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
+;
+  }
+
+  //メッセージ
+  { 
+    //バトルビデオを見る
+    p_wk->p_msgwin  = BR_MSGWIN_Init( BG_FRAME_S_FONT, 11, 6, 10, 4, PLT_BG_S_FONT, p_wk->p_que, p_wk->heapID );
+    BR_MSGWIN_PrintColor( p_wk->p_msgwin, p_msg, msg_603, p_font, BR_PRINT_COL_NORMAL );
+
+    //バトルビデオさいしん３０件
+    p_wk->p_title = BR_MSGWIN_Init( BG_FRAME_M_FONT, 3, 3, 26, 4, PLT_BG_M_FONT, p_wk->p_que, p_wk->heapID );
+    BR_MSGWIN_PrintColor( p_wk->p_title, p_msg, msg_605, p_font, BR_PRINT_COL_NORMAL );
+
+  }
 
   //ダウンロードしてアウトラインがきまってからランクを作成
-  BR_RANK_Init( &p_wk->rank, &p_wk->p_param->p_data->outline, p_wk->p_param->p_res, p_wk->p_param->p_unit, p_wk->heapID );
+  BR_RANK_Init( &p_wk->rank, &p_wk->p_param->p_data->outline, p_wk->p_param->p_res, p_wk->p_param->p_unit, p_wk->p_balleff, p_wk->heapID );
   //アイコン作成
   Br_Rank_CreatePokeIcon( &p_wk->rank, p_wk->p_param->p_unit, p_wk->heapID );
 
@@ -348,7 +363,18 @@ static void Br_Seq_FadeOutAfter( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
 
   //ランク破棄
   Br_Rank_DeletePokeIcon( &p_wk->rank );
-  BR_RANK_Exit( &p_wk->rank );
+  BR_RANK_Exit( &p_wk->rank );  
+  
+  BR_MSGWIN_Exit( p_wk->p_title );
+  BR_MSGWIN_Exit( p_wk->p_msgwin );
+  GFL_BG_LoadScreenReq( BG_FRAME_S_FONT );
+  GFL_BG_LoadScreenReq( BG_FRAME_M_FONT );
+
+  BR_BTN_Exit( p_wk->p_btn );
+  
+  BR_RES_UnLoadOBJ( p_wk->p_param->p_res, BR_RES_OBJ_SHORT_BTN_S );
+  BR_RES_UnLoadBG( p_wk->p_param->p_res, BR_RES_BG_BVRANK );
+
 
   BR_SEQ_End( p_seqwk );
 }
@@ -528,6 +554,7 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   case SEQ_DOWNLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
+      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_DOWNLOAD_END;
     }
     break;
@@ -559,7 +586,7 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       if( is_exist )
       { 
         //取得できた
-        BR_SEQ_SetNext( p_seqwk,Br_Seq_FadeInBefore );
+        BR_SEQ_SetNext( p_seqwk, Br_Seq_NextRanking );
       }
       else
       { 
@@ -568,6 +595,99 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
         BR_SEQ_End( p_seqwk );
       }
     }
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダウンロードへの接続
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk   ワーク
+ *	@param	*p_seq                 内部シーケンス
+ *	@param	*p_wk_adrs             ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Seq_NextDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_CHANGE_MAIN,
+    SEQ_CHANGE_FADEIN_START,
+    SEQ_CHANGE_FADEIN_WAIT,
+    SEQ_END,
+  };
+
+  BR_BVRANK_WORK	*p_wk	= p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_CHANGE_MAIN:
+
+    if( p_wk->p_text == NULL )
+    { 
+      p_wk->p_text    = BR_TEXT_Init( p_wk->p_param->p_res, p_wk->p_que, p_wk->heapID );
+    }
+    BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_010 );
+
+    {
+      GFL_POINT pos;
+      pos.x = 256/2;
+      pos.y = 192/2;
+      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
+    }
+
+    *p_seq  = SEQ_CHANGE_FADEIN_START;
+    break;
+  case SEQ_CHANGE_FADEIN_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_CHANGE_FADEIN_WAIT;
+    break;
+  case SEQ_CHANGE_FADEIN_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    {
+      *p_seq  = SEQ_END;
+    }
+    break;
+  case SEQ_END:
+    BR_SEQ_SetNext( p_seqwk, Br_Seq_Download );
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ランキングへの接続
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk   ワーク
+ *	@param	*p_seq                 内部シーケンス
+ *	@param	*p_wk_adrs             ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_Seq_NextRanking( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_CHANGE_FADEOUT_START,
+    SEQ_CHANGE_FADEOUT_WAIT,
+    SEQ_END,
+  };
+
+  BR_BVRANK_WORK	*p_wk	= p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_CHANGE_FADEOUT_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_CHANGE_FADEOUT_WAIT;
+    break;
+  case SEQ_CHANGE_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    {
+      *p_seq  = SEQ_END;
+    }
+    break;
+
+  case SEQ_END:
+    BR_SEQ_SetNext( p_seqwk, Br_Seq_FadeInBefore );
     break;
   }
 }
@@ -585,10 +705,11 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
  *	@param	BR_OUTLINE_DATA *cp_data  リストに表示するデータ
  *	@param	*p_res  リソース
  *	@param	*p_unit ユニット
+ *	@param  balleff ボール演出
  *	@param	heapID  ヒープID
  */
 //-----------------------------------------------------------------------------
-static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit, HEAPID heapID )
+static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit, BR_BALLEFF_WORK  *p_balleff, HEAPID heapID )
 { 
   GFL_FONT    *p_font;
   GFL_MSGDATA *p_msg;
@@ -599,6 +720,7 @@ static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR
   GFL_STD_MemClear( p_wk, sizeof(BR_RANK_WORK) );
   p_wk->cp_data   = cp_data;
   p_wk->p_word    = WORDSET_Create( heapID );
+  p_wk->p_balleff = p_balleff;
 
   //リストデータ作成
   { 
@@ -639,6 +761,7 @@ static void BR_RANK_Init( BR_RANK_WORK *p_wk, const BR_OUTLINE_DATA *cp_data, BR
     list_param.list_max = cp_data->data_num;
     list_param.p_res    = p_res;
     list_param.p_unit   = p_unit;
+    list_param.p_balleff= p_wk->p_balleff;
     //リスト作成
     p_wk->p_list  = BR_LIST_Init( &list_param, heapID );
 

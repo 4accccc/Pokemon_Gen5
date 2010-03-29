@@ -69,6 +69,7 @@ typedef struct
   PRINT_QUE           *p_que;
 	HEAPID              heapID;
   BR_MUSICALLOOK_PROC_PARAM *p_param;
+  BR_BALLEFF_WORK     *p_balleff;
 
   //受信したデータ
   MUSICAL_SHOT_RECV   *p_musical_shot_tbl[BR_MUSICALLOOK_RECV_MAX];
@@ -101,6 +102,7 @@ static void Br_MusicalLook_Seq_PhotoMain( BR_SEQ_WORK *p_seqwk, int *p_seq, void
 static void Br_MusicalLook_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_MusicalLook_Seq_NextPhoto( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_MusicalLook_Seq_ReturnPhoto( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_MusicalLook_Seq_ReturnSearch( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_MusicalLook_Seq_NextDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_MusicalLook_Seq_ChengePhoto( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_MusicalLook_Seq_ChengeProfile( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -175,6 +177,7 @@ static GFL_PROC_RESULT BR_MUSICALLOOK_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
     GFL_CLUNIT *p_unit;
     p_unit  = BR_GRAPHIC_GetClunit( p_param->p_graphic );
     p_wk->p_bmpoam	= BmpOam_Init( p_wk->heapID, p_unit );
+    p_wk->p_balleff = BR_BALLEFF_Init( p_unit, p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
   }
 
   BR_RES_LoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, p_wk->heapID );
@@ -212,6 +215,7 @@ static GFL_PROC_RESULT BR_MUSICALLOOK_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 
   BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S );
 
+  BR_BALLEFF_Exit( p_wk->p_balleff );
   BmpOam_Exit( p_wk->p_bmpoam );
   PRINTSYS_QUE_Delete( p_wk->p_que );
 	//プロセスワーク破棄
@@ -242,6 +246,9 @@ static GFL_PROC_RESULT BR_MUSICALLOOK_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
   { 
     return GFL_PROC_RES_FINISH;
   }
+
+  //ボール処理
+  BR_BALLEFF_Main( p_wk->p_balleff );
  
   //各プリント表示
   PRINTSYS_QUE_Main( p_wk->p_que );
@@ -257,6 +264,11 @@ static GFL_PROC_RESULT BR_MUSICALLOOK_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
   if( p_wk->p_text )
   {  
     BR_TEXT_PrintMain( p_wk->p_text );
+  }
+
+  if( p_wk->p_photo )
+  { 
+    MUS_SHOT_PHOTO_UpdateSystem( p_wk->p_photo );
   }
 
 	return GFL_PROC_RES_CONTINUE;
@@ -385,7 +397,6 @@ static void Br_MusicalLook_Seq_SearchMain( BR_SEQ_WORK *p_seqwk, int *p_seq, voi
 //-----------------------------------------------------------------------------
 static void Br_MusicalLook_Seq_PhotoMain( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
-
   BR_MUSICALLOOK_WORK	*p_wk = p_wk_adrs;
   u32 x, y;
   if( GFL_UI_TP_GetPointTrg( &x, &y ) )
@@ -455,6 +466,8 @@ static void Br_MusicalLook_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
   case SEQ_DOWNLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
+
+      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_DOWNLOAD_END;
     } 
     break;
@@ -464,13 +477,13 @@ static void Br_MusicalLook_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
       BOOL is_recv;
       is_recv = BR_NET_GetDownloadMusicalShot( p_wk->p_param->p_net, p_wk->p_musical_shot_tbl, BR_MUSICALLOOK_RECV_MAX, &p_wk->musical_shot_recv_num );
 
-      if( is_recv )
+      if( is_recv && p_wk->musical_shot_recv_num )
       { 
         BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_NextPhoto );
       }
       else
       { 
-        BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_FadeOut );
+        BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_ReturnSearch );
       }
     }
     break;
@@ -595,6 +608,63 @@ static void Br_MusicalLook_Seq_ReturnPhoto( BR_SEQ_WORK *p_seqwk, int *p_seq, vo
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ダウンロードから検索画面へのつなぎ
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
+ *	@param	*p_seq                シーケンス
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_MusicalLook_Seq_ReturnSearch( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_CHANGE_FADEOUT_START,
+    SEQ_CHANGE_FADEOUT_WAIT,
+    SEQ_CHANGE_MAIN,
+    SEQ_CHANGE_FADEIN_START,
+    SEQ_CHANGE_FADEIN_WAIT,
+    SEQ_END,
+  };
+
+  BR_MUSICALLOOK_WORK	*p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_CHANGE_FADEOUT_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_CHANGE_FADEOUT_WAIT;
+    break;
+  case SEQ_CHANGE_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    {
+      *p_seq  = SEQ_CHANGE_MAIN;
+    }
+    break;
+  case SEQ_CHANGE_MAIN:
+
+    Br_MusicalLook_Download_DeleteDisplay( p_wk, p_wk->p_param );
+    Br_MusicalLook_Search_CreateDisplay( p_wk, p_wk->p_param );
+
+    *p_seq  = SEQ_CHANGE_FADEIN_START;
+    break;
+  case SEQ_CHANGE_FADEIN_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_CHANGE_FADEIN_WAIT;
+    break;
+  case SEQ_CHANGE_FADEIN_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    {
+      *p_seq  = SEQ_END;
+    }
+    break;
+  case SEQ_END:
+    BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_SearchMain );
+    break;
+  }
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  検索画面からダウンロード画面へのつなぎ
  *
  *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
@@ -632,6 +702,13 @@ static void Br_MusicalLook_Seq_NextDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, v
 
     Br_MusicalLook_Search_DeleteDisplay( p_wk, p_wk->p_param );
     Br_MusicalLook_Download_CreateDisplay( p_wk, p_wk->p_param );
+
+    {
+      GFL_POINT pos;
+      pos.x = 256/2;
+      pos.y = 192/2;
+      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
+    }
 
     *p_seq  = SEQ_CHANGE_FADEIN_START;
     break;
@@ -994,7 +1071,7 @@ static void Br_MusicalLook_Search_CreateDisplay( BR_MUSICALLOOK_WORK	*p_wk, BR_M
       p_wk->p_text    = BR_TEXT_Init( p_param->p_res, p_wk->p_que, p_wk->heapID );
     }
     BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_303 );
-    p_wk->p_search  = BR_POKESEARCH_Init( NULL, p_param->p_res, p_unit, p_wk->p_bmpoam, p_param->p_fade, p_wk->heapID ); 
+    p_wk->p_search  = BR_POKESEARCH_Init( NULL, p_param->p_res, p_unit, p_wk->p_bmpoam, p_param->p_fade, p_wk->p_balleff, p_wk->heapID ); 
     BR_POKESEARCH_StartUp( p_wk->p_search );
   }
 }

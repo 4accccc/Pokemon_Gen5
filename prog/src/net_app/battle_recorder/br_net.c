@@ -271,7 +271,7 @@ BOOL BR_NET_GetDownloadMusicalShot( BR_NET_WORK *p_wk, MUSICAL_SHOT_RECV **pp_da
   *p_recv_num = GDS_RAP_RESPONSE_MusicalShot_Download_RecvPtr_Set( &p_wk->gdsrap,
       pp_data_tbl, tbl_max );
 
-  return p_wk->response_flag[ BR_NET_REQUEST_VIDEO_SEARCH_DOWNLOAD ];
+  return p_wk->response_flag[ BR_NET_REQUEST_MUSICAL_SHOT_DOWNLOAD ];
 }
 
 //----------------------------------------------------------------------------

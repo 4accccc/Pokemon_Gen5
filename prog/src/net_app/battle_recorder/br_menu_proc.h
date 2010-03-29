@@ -37,10 +37,11 @@ typedef enum
 	BR_BTLVIDEO_MENUID_LOOK,				//グローバルバトルビデオモード　見るメニュー
 	BR_BTLVIDEO_MENUID_RANK,				//グローバルバトルビデオモード　ランキングで探すメニュー
 	BR_MENUID_BVSEND_YESNO,					//バトルビデオを送る	はい、いいえ
+	BR_BTLVIDEO_MENUID_EXIT_YESNO,	//バトルビデオをやめる	はい、いいえ
 
   //以下ミュージカル
 	BR_MUSICAL_MENUID_TOP,					//グローバルミュージカルショットモード　初期メニュー
-	BR_MENUID_MUSICALEXIT_YESNO,		//ミュージカルショットを送る	はい、いいえ
+	BR_MENUID_MUSICALEXIT_YESNO,		//ミュージカルショットをやめる	はい、いいえ
 
 	BR_MENUID_MAX
 } BR_MENUID;

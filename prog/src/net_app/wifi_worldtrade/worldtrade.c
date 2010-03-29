@@ -185,7 +185,7 @@ static GFL_PROC_RESULT WorldTradeProc_Init( GFL_PROC * proc, int * seq, void * p
 
     //フィールドサウンドをPUSH
     PMSND_PauseBGM(FALSE);
-    PMSND_PushBGM();
+    PMSND_StopBGM();
 
     return GFL_PROC_RES_FINISH;
 }
@@ -294,9 +294,7 @@ static GFL_PROC_RESULT WorldTradeProc_End( GFL_PROC * proc, int * seq, void * pa
   GF_ASSERT( GFL_HEAP_CheckHeapSafe(HEAPID_WORLDTRADE) );
 
   //フィールドサウンド復帰
-  PMSND_PopBGM();
-  PMSND_PauseBGM(FALSE);
-  PMSND_FadeInBGM(60);
+  PMSND_StopBGM();
 
   WirelessIconEasyEnd();
   WorldTrade_ExitSystem( wk );

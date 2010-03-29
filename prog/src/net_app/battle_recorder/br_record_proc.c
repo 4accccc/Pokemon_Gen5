@@ -77,6 +77,8 @@ typedef struct
   BMPOAM_SYS_PTR		p_bmpoam;	//BMPOAMシステム
   PRINT_QUE         *p_que;   //プリントキュー
   BR_SEQ_WORK       *p_seq;
+  BR_BALLEFF_WORK   *p_balleff;
+  BR_TEXT_WORK      *p_text;
 
 	BR_BTN_WORK	      *p_btn[ BR_RECORD_BTNID_MAX ];
   BR_MSGWIN_WORK    *p_msgwin_s[ BR_RECORD_MSGWINID_S_MAX ];
@@ -134,6 +136,9 @@ static void Br_Record_DeleteMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_P
 static void Br_Record_CreateSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 
+static void Br_Record_Download_CreateDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
+static void Br_Record_Download_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
+
 //-------------------------------------
 ///	その他
 //=====================================
@@ -189,6 +194,7 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   p_wk->p_bmpoam		= BmpOam_Init( p_wk->heapID, p_param->p_unit);
   p_wk->p_que       = PRINTSYS_QUE_Create( p_wk->heapID );
   p_wk->p_seq       = BR_SEQ_Init( p_wk, NULL, p_wk->heapID );
+  p_wk->p_balleff   = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
 
   if( p_wk->p_param->mode == BR_RECODE_PROC_DOWNLOAD_NUMBER )
   { 
@@ -225,6 +231,7 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
   GFL_BG_LoadScreenReq( BG_FRAME_M_FONT );
 
 	//モジュール破棄
+  BR_BALLEFF_Exit( p_wk->p_balleff );
   BR_SEQ_Exit( p_wk->p_seq );
   PRINTSYS_QUE_Delete( p_wk->p_que );
   BmpOam_Exit( p_wk->p_bmpoam );
@@ -274,6 +281,9 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
   { 
     return GFL_PROC_RES_FINISH;
   }
+
+  //ボール処理
+  BR_BALLEFF_Main( p_wk->p_balleff );
 
   //文字表示
   { 
@@ -400,6 +410,7 @@ static void Br_Record_Seq_FadeOut( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
   case SEQ_FADEOUT_END:
     BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeOutAfter );
+    break;
   }
 
 }
@@ -566,27 +577,59 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
 { 
   enum
   { 
+    SEQ_INIT,
+    SEQ_FADEIN_START,
+    SEQ_FADEIN_WAIT,
+
     SEQ_DOWNLOAD_START,
     SEQ_DOWNLOAD_WAIT,
     SEQ_DOWNLOAD_END,
+
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_END,
+
+    SEQ_FADEOUT_START_EXIT,
+    SEQ_FADEOUT_WAIT_EXIT,
+    SEQ_END_EXIT,
   };
 
   BR_RECORD_WORK	*p_wk	= p_wk_adrs;
 
   switch( *p_seq )
   { 
+  case SEQ_INIT:
+    //作成
+    Br_Record_Download_CreateDisplay( p_wk, p_wk->p_param );
+
+    *p_seq  = SEQ_FADEIN_START;
+    break;
+  case SEQ_FADEIN_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_FADEIN_WAIT;
+    break;
+  case SEQ_FADEIN_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_DOWNLOAD_START;
+    }
+    break;
   case SEQ_DOWNLOAD_START:
     {
       BR_NET_REQUEST_PARAM  req_param;
       GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
       req_param.download_video_number = p_wk->p_param->video_number;
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD, &req_param );
+
+
+
       *p_seq  = SEQ_DOWNLOAD_WAIT;
     }
     break;
   case SEQ_DOWNLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
+      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_DOWNLOAD_END;
     }
     break;
@@ -599,17 +642,49 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
         p_wk->p_param->p_profile = &p_recv->profile;
         p_wk->p_param->p_header  = &p_recv->head;
 
-        BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_Main );
+        *p_seq  = SEQ_FADEOUT_START;
       }
       else
       { 
-        //@todo
-        //BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_Main );
         BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );  //コードインも抜ける
         BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
         BR_SEQ_End( p_seqwk );
       }
+      *p_seq  = SEQ_FADEOUT_START_EXIT;
     }
+    break;
+  case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_FADEOUT_WAIT;
+    break;
+  case SEQ_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_END;
+    }
+    break;
+  case SEQ_END:
+    Br_Record_Download_DeleteDisplay( p_wk, p_wk->p_param );
+    BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_Main );
+    break;
+
+  case SEQ_FADEOUT_START_EXIT:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_FADEOUT_WAIT_EXIT;
+    break;
+  case SEQ_FADEOUT_WAIT_EXIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_END_EXIT;
+    }
+    break;
+  case SEQ_END_EXIT:
+    if( p_wk->p_text )
+    { 
+      BR_TEXT_Exit( p_wk->p_text, p_wk->p_param->p_res );
+      p_wk->p_text  = NULL;
+    }
+    BR_SEQ_End( p_seqwk );
     break;
   }
 }
@@ -626,27 +701,83 @@ static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
 { 
   enum
   { 
+    SEQ_CHANGE_FADEOUT_START,
+    SEQ_CHANGE_FADEOUT_WAIT,
+    SEQ_CHANGE_MAIN,
+    SEQ_CHANGE_FADEIN_START,
+    SEQ_CHANGE_FADEIN_WAIT,
+
     SEQ_DOWNLOAD_START,
     SEQ_DOWNLOAD_WAIT,
     SEQ_DOWNLOAD_END,
+
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_FADEOUT_END,
+
+    SEQ_FADEOUT_START_RET,
+    SEQ_FADEOUT_WAIT_RET,
+    SEQ_FADEOUT_END_RET,
+
   };
 
   BR_RECORD_WORK	*p_wk	= p_wk_adrs;
 
   switch( *p_seq )
   { 
+  case SEQ_CHANGE_FADEOUT_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_CHANGE_FADEOUT_WAIT;
+    break;
+  case SEQ_CHANGE_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    {
+      *p_seq  = SEQ_CHANGE_MAIN;
+    }
+    break;
+  case SEQ_CHANGE_MAIN:
+
+    //破棄
+    if( p_wk->is_profile )
+    { 
+      BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
+    }
+    else
+    { 
+      Br_Record_DeleteMainDisplay( p_wk,  p_wk->p_param );
+    }
+    Br_Record_DeleteSubDisplay( p_wk, p_wk->p_param );
+
+    //作成
+    Br_Record_Download_CreateDisplay( p_wk, p_wk->p_param );
+
+    *p_seq  = SEQ_CHANGE_FADEIN_START;
+    break;
+  case SEQ_CHANGE_FADEIN_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    *p_seq  = SEQ_CHANGE_FADEIN_WAIT;
+    break;
+  case SEQ_CHANGE_FADEIN_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    {
+      *p_seq  = SEQ_DOWNLOAD_START;
+    }
+    break;
+
   case SEQ_DOWNLOAD_START:
     {
       BR_NET_REQUEST_PARAM  req_param;
       GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
       req_param.download_video_number = RecHeader_ParamGet( p_wk->p_param->p_header, RECHEAD_IDX_DATA_NUMBER, 0 );
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD, &req_param );
+
       *p_seq  = SEQ_DOWNLOAD_WAIT;
     }
     break;
   case SEQ_DOWNLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
+      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_DOWNLOAD_END;
     }
     break;
@@ -661,22 +792,61 @@ static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
             &p_btl_rec->rec, GAMEDATA_GetSaveControlWork( p_wk->p_param->p_gamedata ) );
         
         p_wk->p_param->ret  = BR_RECORD_RETURN_BTLREC;
-        //フェードをすっとばす
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeOut );
+        *p_seq  = SEQ_FADEOUT_START;
       }
       else
       { 
-        BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_Main );
+        //受信に失敗したので、画面
+        *p_seq  = SEQ_FADEOUT_START_RET;
       }
     }
+    break;
+
+  case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_FADEOUT_WAIT;
+    break;
+  case SEQ_FADEOUT_WAIT:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_FADEOUT_END;
+    }
+    break;
+  case SEQ_FADEOUT_END:
+    //破棄
+
+    Br_Record_Download_DeleteDisplay( p_wk, p_wk->p_param );
+
+    //フェードをすっとばす
+    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+    BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
+
+    BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeOutAfter );
+    break;
+
+  case SEQ_FADEOUT_START_RET:
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_OUT );
+    *p_seq  = SEQ_FADEOUT_WAIT_RET;
+    break;
+  case SEQ_FADEOUT_WAIT_RET:
+    if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
+    { 
+      *p_seq  = SEQ_FADEOUT_END_RET;
+    }
+    break;
+  case SEQ_FADEOUT_END_RET:
+    //破棄
+
+    Br_Record_Download_DeleteDisplay( p_wk, p_wk->p_param );
+
+
+    BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeInBefore );
     break;
   }
 }
@@ -1121,6 +1291,46 @@ static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
 	BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_RECORD_S );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダウンロード用の絵を作成
+ *
+ *	@param	BR_RECORD_WORK * p_wk ワーク
+ *	@param	                      引数
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Download_CreateDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
+{ 
+  //ダウンロード用の絵を作成
+  if( p_wk->p_text == NULL )
+  { 
+    p_wk->p_text    = BR_TEXT_Init( p_wk->p_param->p_res, p_wk->p_que, p_wk->heapID );
+  }
+  BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_023 );
+  {
+    GFL_POINT pos;
+    pos.x = 256/2;
+    pos.y = 192/2;
+    BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダウンロード用の絵を破棄
+ *
+ *	@param	BR_RECORD_WORK * p_wk ワーク
+ *	@param	                      引数
+ */
+//-----------------------------------------------------------------------------
+static void Br_Record_Download_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
+{ 
+  BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_Exit( p_wk->p_text, p_wk->p_param->p_res );
+    p_wk->p_text  = NULL;
+  }
+}
 
 //----------------------------------------------------------------------------
 /**

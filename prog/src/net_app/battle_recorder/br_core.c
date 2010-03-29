@@ -2,7 +2,7 @@
 /**
  *
  *	@file		br_core.c
- *	@brief	バトルレコーダーコア部分（バトルレコードプレイヤー以外の部分）
+ *	@brief	バトルレコーダーコア部分
  *	@author	Toru=Nagihashi
  *	@data		2009.11.09
  *
@@ -35,6 +35,7 @@
 #include "br_bvsend_proc.h"
 #include "br_musicallook_proc.h"
 #include "br_musicalsend_proc.h"
+#include "br_bvdelete_proc.h"
 
 //セーブデータ
 #include "savedata/battlematch_savedata.h"
@@ -133,6 +134,9 @@ static void BR_CODEIN_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs );
 //ビデオ送信
 static void BR_BVSEND_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const void *cp_pre_param, u32 preID );
 static void BR_BVSEND_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs );
+//ビデオ消去
+static void BR_BVDELETE_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const void *cp_pre_param, u32 preID );
+static void BR_BVDELETE_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs );
 //ミュージカルショット写真をみる
 static void BR_MUSICALLOOK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const void *cp_pre_param, u32 preID );
 static void BR_MUSICALLOOK_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs );
@@ -236,6 +240,14 @@ static const BR_PROC_SYS_DATA sc_procdata_tbl[BR_PROCID_MAX]	=
 		BR_BVSEND_PROC_BeforeFunc,
 		BR_BVSEND_PROC_AfterFunc,
 	},
+	//BR_PROCID_BV_DELETE,	  //バトルビデオ消去画面
+  { 
+		&BR_BVDELETE_ProcData,
+		sizeof( BR_BVDELETE_PROC_PARAM ),
+    FS_OVERLAY_ID( battle_recorder_browse ),
+		BR_BVDELETE_PROC_BeforeFunc,
+		BR_BVDELETE_PROC_AfterFunc,
+  },
 	//	BR_PROCID_MUSICAL_LOOK,	//ミュージカルショット	写真を見る画面
 	{	
 		&BR_MUSICALLOOK_ProcData,
@@ -294,7 +306,11 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
     graphic_type  = BR_GRAPHIC_SETUP_2D;
   }
 	p_wk->p_graphic	= BR_GRAPHIC_Init( graphic_type, GX_DISP_SELECT_MAIN_SUB, HEAPID_BATTLE_RECORDER_CORE );
-	p_wk->p_res			= BR_RES_Init( HEAPID_BATTLE_RECORDER_CORE );
+	p_wk->p_res			= BR_RES_Init( 
+      BR_RES_COLOR_TYPE_GREEN,
+      p_wk->p_param->p_param->mode == BR_MODE_BROWSE,
+      HEAPID_BATTLE_RECORDER_CORE );
+
 	BR_RES_LoadBG( p_wk->p_res, BR_RES_BG_START_M, HEAPID_BATTLE_RECORDER_CORE );
 	BR_RES_LoadBG( p_wk->p_res, BR_RES_BG_START_S, HEAPID_BATTLE_RECORDER_CORE );
 
@@ -305,7 +321,7 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
   //フェードプロセス
   p_wk->p_fade  = BR_FADE_Init( HEAPID_BATTLE_RECORDER_CORE );
   BR_FADE_PALETTE_Copy( p_wk->p_fade );  //BR_RES_Initでよんでいるので
-  BR_FADE_PALETTE_SetColor( p_wk->p_fade, BR_FADE_COLOR_BLUE );
+  BR_FADE_PALETTE_SetColor( p_wk->p_fade, BR_RES_GetFadeColor( p_wk->p_res ) );
   if( p_wk->p_param->mode == BR_CORE_MODE_INIT )
   { 
     BR_FADE_PALETTE_TransColor( p_wk->p_fade, BR_FADE_DISPLAY_BOTH );
@@ -1019,6 +1035,40 @@ static void BR_BVSEND_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
  */
 //-----------------------------------------------------------------------------
 static void BR_BVSEND_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs )
+{ 
+
+
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	プロック処理前関数
+ *
+ *	@param	void *p_param_adrs	アロケートされた引数ワーク
+ *	@param	*p_wk_adrs					メインワーク
+ *	@param	void *cp_pre_param	このプロセスの前の引数ワーク
+ *	@param	preID								このプロセスの前のID
+ */
+//-----------------------------------------------------------------------------
+static void BR_BVDELETE_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const void *cp_pre_param, u32 preID )
+{ 
+	BR_BVDELETE_PROC_PARAM	*p_param	= p_param_adrs;
+	BR_CORE_WORK						*p_wk			= p_wk_adrs;
+
+	p_param->p_res			= p_wk->p_res;
+  p_param->p_fade     = p_wk->p_fade;
+	p_param->p_procsys	= p_wk->p_procsys;
+	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
+  p_param->p_gamedata = p_wk->p_param->p_param->p_gamedata;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	プロック処理後関数
+ *
+ *	@param	void *p_param_adrs	引数ワーク
+ *	@param	*p_wk_adrs					メインワーク
+ */
+//-----------------------------------------------------------------------------
+static void BR_BVDELETE_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs )
 { 
 
 

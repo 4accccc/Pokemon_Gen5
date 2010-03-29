@@ -253,9 +253,6 @@ struct _BR_LIST_WORK
   BR_LIST_MOVE_FUNC move_callback;
   GFL_UI_TP_HITTBL    hittbl[BR_LIST_HITTBL_MAX];
 
-  //ボールエフェクト
-  BR_BALLEFF_WORK     *p_balleff;
-
   BOOL      is_hit;   //スライダー
   u16       trg_y;    //スライダートリガ座標
   GFL_BMP_DATA        *p_bmp[0];
@@ -270,6 +267,29 @@ static void BMP_Copy( const GFL_BMP_DATA *cp_src, GFL_BMP_DATA *p_dst, u16 src_x
 
 static BOOL Br_TouchList_MoveCallback( BR_LIST_WORK *p_wk, s8 value );
 static BOOL Br_CursorList_MoveCallback( BR_LIST_WORK *p_wk, s8 value );
+
+//-------------------------------------
+///	データ
+//=====================================
+static const GFL_POINT sc_cursor_pos[]  =
+{ 
+  { 
+    24,76
+  },
+  { 
+    24,100
+  },
+  { 
+    24,124
+  },
+  { 
+    24,148
+  },
+  { 
+    24,172
+  },
+};
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  リスト初期化
@@ -291,7 +311,7 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
     size  = sizeof(BR_LIST_WORK) + sizeof(GFL_BMP_DATA*) * cp_param->list_max;
     p_wk  = GFL_HEAP_AllocMemory( heapID, size );
     GFL_STD_MemClear( p_wk, size );
-    p_wk->param = *cp_param;
+    p_wk->param     = *cp_param;
     p_wk->min       = 0;
     p_wk->max       = cp_param->list_max;
     p_wk->line_max  = cp_param->h / cp_param->str_line;
@@ -319,8 +339,11 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
   }
   else if( p_wk->param.type == BR_LIST_TYPE_CURSOR )
   { 
-    p_wk->p_balleff = BR_BALLEFF_Init( cp_param->p_unit, p_wk->param.p_res, CLSYS_DRAW_MAIN, heapID );
     p_wk->move_callback = Br_CursorList_MoveCallback;
+    if( p_wk->param.p_balleff )
+    { 
+      BR_BALLEFF_StartMove( p_wk->param.p_balleff, BR_BALLEFF_MOVE_CIRCLE, &sc_cursor_pos[ p_wk->cursor ] );
+    }
   }
 
   //BMPWIN作成
@@ -464,6 +487,11 @@ void BR_LIST_Exit( BR_LIST_WORK* p_wk )
 { 
   int i;
 
+  if( p_wk->param.p_balleff )
+  { 
+    BR_BALLEFF_StartMove( p_wk->param.p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
+  }
+
   for( i = 0; i < BR_LIST_CLWK_MAX; i++ )
   { 
     GFL_CLACT_WK_Remove( p_wk->p_clwk[i] );
@@ -478,11 +506,6 @@ void BR_LIST_Exit( BR_LIST_WORK* p_wk )
   }
   GFL_BMPWIN_ClearScreen( p_wk->p_bmpwin );
   GFL_BMPWIN_Delete( p_wk->p_bmpwin );
-
-  if( p_wk->p_balleff )
-  {
-    BR_BALLEFF_Exit( p_wk->p_balleff );
-  }
 
   if( p_wk->param.frm < GFL_BG_FRAME0_S )
   { 
@@ -559,11 +582,6 @@ void BR_LIST_Main( BR_LIST_WORK* p_wk )
     }
   }
 
-
-  if( p_wk->p_balleff )
-  {
-    BR_BALLEFF_Main( p_wk->p_balleff );
-  }
 }
 
 //----------------------------------------------------------------------------
@@ -831,20 +849,22 @@ static BOOL Br_TouchList_MoveCallback( BR_LIST_WORK *p_wk, s8 value )
 //-----------------------------------------------------------------------------
 static BOOL Br_CursorList_MoveCallback( BR_LIST_WORK *p_wk, s8 value )
 { 
+  BOOL ret  = FALSE;
+
   if( p_wk->list == 0  )
   {
     //リスト上部の場合カーソルが中央に動くまでリストは動かない
     if(p_wk->cursor == p_wk->line_max/2 && value == 1 )
     {
       p_wk->list  += 1;
-      return TRUE;
+      ret = TRUE;
     }
     else
     { 
       if( 0 <= p_wk->cursor + value && p_wk->cursor + value <= p_wk->line_max/2 )
       { 
         p_wk->cursor  += value;
-        return TRUE;
+        ret = TRUE;
       }
     }
   }
@@ -854,14 +874,14 @@ static BOOL Br_CursorList_MoveCallback( BR_LIST_WORK *p_wk, s8 value )
     if( p_wk->cursor == p_wk->line_max/2 && value == -1 )
     { 
       p_wk->list  += -1;
-      return TRUE;
+      ret = TRUE;
     }
     else
     {
       if( p_wk->line_max/2 <= p_wk->cursor + value && p_wk->cursor + value < p_wk->line_max )
       { 
         p_wk->cursor  += value;
-        return TRUE;
+        ret = TRUE;
       }
     }
   }
@@ -869,10 +889,19 @@ static BOOL Br_CursorList_MoveCallback( BR_LIST_WORK *p_wk, s8 value )
   { 
     //その他はリストが動く
     p_wk->list  += value;
-    return TRUE;
+    ret = TRUE;
   }
 
-  return FALSE;
+  //動くときカーソルが移動する
+  if( ret )
+  { 
+    if( p_wk->param.p_balleff )
+    { 
+      BR_BALLEFF_StartMove( p_wk->param.p_balleff, BR_BALLEFF_MOVE_CIRCLE, &sc_cursor_pos[ p_wk->cursor ] );
+    }
+  }
+
+  return ret;
 }
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -1493,9 +1522,11 @@ BOOL BR_SEQ_IsComp( const BR_SEQ_WORK *cp_wk, BR_SEQ_FUNCTION seq_function )
 //-------------------------------------
 ///	定義
 //=====================================
-#define BR_BALLEFF_CLWK_MAX (5)
+#define BR_BALLEFF_CLWK_MAX (12)
 
-
+//-------------------------------------
+///	動作用ワーク
+//=====================================
 typedef struct 
 {
   GFL_POINT center_pos;
@@ -1504,6 +1535,23 @@ typedef struct
   u16 init_angle;
   int cnt_max;
 } MOVE_CIRCLE;
+
+typedef struct 
+{
+  GFL_POINT start_pos;
+  GFL_POINT end_pos;
+  GFL_POINT now_pos;
+
+  int wait_cnt;
+  int cnt_max;
+} MOVE_LINE;
+
+typedef struct 
+{
+  const GFL_POINT *cp_homing_pos;
+  VecFx32 now_pos;
+  fx32 speed;
+} MOVE_HOMING;
 
 //-------------------------------------
 ///	カーソルワーク
@@ -1515,9 +1563,19 @@ struct _BR_BALLEFF_WORK
   BR_SEQ_WORK *p_seq;
   BR_RES_WORK *p_res;
 
-  MOVE_CIRCLE circle[ BR_BALLEFF_CLWK_MAX ];
+  union
+  { 
+    MOVE_LINE   line;
+    MOVE_CIRCLE circle;
+    MOVE_HOMING homing;
+  }move[BR_BALLEFF_CLWK_MAX];
+  GFL_POINT   now_pos[ BR_BALLEFF_CLWK_MAX ];
   GFL_CLWK    *p_clwk[ BR_BALLEFF_CLWK_MAX ];
   int         cnt;
+  BOOL        is_end;
+  BOOL        is_homing;
+
+  BOOL        is_end_one[ BR_BALLEFF_CLWK_MAX ];
 };
 
 //-------------------------------------
@@ -1526,6 +1584,7 @@ struct _BR_BALLEFF_WORK
 //シーケンス
 static void Br_BallEff_Seq_Nop( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_BallEff_Seq_Emit( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_BallEff_Seq_Line( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_BallEff_Seq_Opening( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_BallEff_Seq_BigCircle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_BallEff_Seq_Circle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
@@ -1533,6 +1592,51 @@ static void Br_BallEff_Seq_CircleCont( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
 //動き
 static void MOVE_CIRCLE_Init( MOVE_CIRCLE *p_wk, const GFL_POINT *cp_center_pos, u16 r, u16 init_angle, int cnt_max );
 static BOOL MOVE_CIRCLE_Main( MOVE_CIRCLE *p_wk, GFL_POINT *p_now_pos, int cnt );
+static void MOVE_LINE_Init( MOVE_LINE *p_wk, const GFL_POINT *cp_start_pos, const GFL_POINT *cp_end_pos, int wait_cnt, int cnt_max );
+static BOOL MOVE_LINE_Main( MOVE_LINE *p_wk, GFL_POINT *p_now_pos, int cnt );
+//ホーミング
+static void MOVE_HOMING_Init( MOVE_HOMING *p_wk, const GFL_POINT *cp_homing_pos,const GFL_POINT *cp_init_pos, fx32 speed );
+static BOOL MOVE_HOMING_Main( MOVE_HOMING *p_wk, GFL_POINT *p_now_pos );
+
+//-------------------------------------
+///	データ
+//=====================================
+//直線動作のデータ
+static const GFL_POINT sc_line_start_pos  =
+{ 
+  256/2,
+  16
+};
+static const GFL_POINT sc_line_end_pos  =
+{ 
+  256/2,
+  192+24
+};
+#define BR_BALLEFF_LINE_SYNC  (25*2)
+
+//オープニングのデータ
+static const GFL_POINT sc_opening_start_pos  =
+{ 
+  256/2,
+  -16
+};
+static const GFL_POINT sc_opening_end_pos  =
+{ 
+  256/2,
+  192/2
+};
+#define BR_BALLEFF_OPENING_SYNC  (18*2)
+
+//追尾データ
+#define BR_BALLEFF_HOMING_SPEED_FIX  (FX32_CONST( 8.0f ) / 2)
+#define BR_BALLEFF_HOMING_SPEED(x)  (BR_BALLEFF_HOMING_SPEED_FIX  - (x * FX32_CONST( 0.4f ) / 2))
+#define BR_BALLEFF_HOMING_SPEED_OP(x)  (FX32_CONST( 7.0f ) / 2  - (x * FX32_CONST( 0.9f ) / 2))
+
+//円をかく
+#define BR_BALLEFF_CIRCLE_R (15)
+#define BR_BALLEFF_CIRCLE_SYNC (90)
+#define BR_BALLEFF_CIRCLE_USE_MAX (6)
+
 
 //-------------------------------------
 ///	外部公開
@@ -1571,6 +1675,7 @@ BR_BALLEFF_WORK *BR_BALLEFF_Init( GFL_CLUNIT *p_unit, BR_RES_WORK *p_res, CLSYS_
     GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
 
     ret = BR_RES_GetOBJRes( p_wk->p_res, BR_RES_OBJ_BALL_M + draw, &resdata );
+    GF_ASSERT( ret );
     for( i = 0; i < BR_BALLEFF_CLWK_MAX; i++ )
     { 
       p_wk->p_clwk[i] = GFL_CLACT_WK_Create( 
@@ -1635,6 +1740,9 @@ void BR_BALLEFF_StartMove( BR_BALLEFF_WORK *p_wk, BR_BALLEFF_MOVE move, const GF
   { 
     p_wk->init_pos  = *cp_pos;
   }
+  p_wk->is_end      = FALSE;
+
+  OS_TPrintf( "X%d Y%d\n", p_wk->init_pos.x, p_wk->init_pos.y );
 
   switch( move )
   { 
@@ -1643,6 +1751,9 @@ void BR_BALLEFF_StartMove( BR_BALLEFF_WORK *p_wk, BR_BALLEFF_MOVE move, const GF
     break;
   case BR_BALLEFF_MOVE_EMIT:          //放射に動く          STOP
     BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_Emit );
+    break;
+  case BR_BALLEFF_MOVE_LINE:          //線の動き            STOP
+    BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_Line );
     break;
   case BR_BALLEFF_MOVE_OPENING:       //開始の動き          STOP
     BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_Opening );
@@ -1669,7 +1780,24 @@ void BR_BALLEFF_StartMove( BR_BALLEFF_WORK *p_wk, BR_BALLEFF_MOVE move, const GF
 //-----------------------------------------------------------------------------
 BOOL BR_BALLEFF_IsMoveEnd( const BR_BALLEFF_WORK *cp_wk )
 { 
-  return BR_SEQ_IsComp( cp_wk->p_seq, Br_BallEff_Seq_Nop );
+  return cp_wk->is_end;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボールエフェクト  アニメ変更
+ *
+ *	@param	BR_BALLEFF_WORK *p_wk ワーク
+ *	@param	seq                   アニメシーケンス
+ */
+//-----------------------------------------------------------------------------
+void BR_BALLEFF_SetAnmSeq( BR_BALLEFF_WORK *p_wk, int seq )
+{ 
+  int i;
+  for( i = 0; i < BR_BALLEFF_CLWK_MAX; i++ )
+  { 
+    GFL_CLACT_WK_SetAnmSeq( p_wk->p_clwk[i], seq );
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1701,7 +1829,8 @@ static void Br_BallEff_Seq_Nop( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
         GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
       }
     }
-    *p_seq  = SEQ_MAIN;
+    p_wk->is_end  = TRUE;
+    *p_seq        = SEQ_MAIN;
     break;
 
   case SEQ_MAIN:
@@ -1720,8 +1849,90 @@ static void Br_BallEff_Seq_Nop( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 //-----------------------------------------------------------------------------
 static void Br_BallEff_Seq_Emit( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
+  BR_BALLEFF_WORK *p_wk = p_wk_adrs;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  直線に動く  STOP
+ *
+ *	@param	BR_SEQ_WORK *p_seqwk  シーケンス
+ *	@param	*p_seq                シーケンス変数
+ *	@param	*p_wk_adrs            ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void Br_BallEff_Seq_Line( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+{ 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_END
+  };
 
   BR_BALLEFF_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    { 
+      int i;
+      p_wk->cnt   = 0;
+
+      //初期座標
+      for(i = 0; i < BR_BALLEFF_CLWK_MAX; i++ )
+      { 
+        p_wk->now_pos[i]  = sc_line_start_pos;
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+      }
+
+      //先頭
+      MOVE_LINE_Init( &p_wk->move[0].line, &p_wk->now_pos[0], &sc_line_end_pos, 0, BR_BALLEFF_LINE_SYNC );
+
+      //追尾
+      for( i = 1; i < BR_BALLEFF_CLWK_MAX; i++ )
+      { 
+        MOVE_HOMING_Init( &p_wk->move[i].homing, &p_wk->now_pos[i-1], &p_wk->now_pos[i], BR_BALLEFF_HOMING_SPEED(i) );
+      }
+    }
+    *p_seq  = SEQ_MAIN;
+  /* fallthr */
+
+  case SEQ_MAIN:
+    { 
+      int i;
+      GFL_CLACTPOS  clpos;
+      BOOL is_end = TRUE;
+
+      //先頭動作
+      p_wk->is_end  = MOVE_LINE_Main( &p_wk->move[0].line, &p_wk->now_pos[0], p_wk->cnt );
+      is_end  &= p_wk->is_end;
+
+      //追尾
+      for( i = 1; i < BR_BALLEFF_CLWK_MAX; i++ )
+      { 
+        is_end  &= MOVE_HOMING_Main( &p_wk->move[i].homing, &p_wk->now_pos[i] );
+      }
+
+      //設定
+      for(i = 0; i < BR_BALLEFF_CLWK_MAX; i++ )
+      { 
+        clpos.x = p_wk->now_pos[i].x;
+        clpos.y = p_wk->now_pos[i].y;
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, p_wk->draw );
+      }
+
+      p_wk->cnt++;
+
+      if( is_end )
+      { 
+        *p_seq  = SEQ_END;
+      }
+    }
+    break;
+  case SEQ_END:
+    BR_SEQ_SetNext( p_wk->p_seq, Br_BallEff_Seq_Nop );
+    break;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1734,8 +1945,132 @@ static void Br_BallEff_Seq_Emit( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
 //-----------------------------------------------------------------------------
 static void Br_BallEff_Seq_Opening( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
+  enum
+  { 
+    OPENING_LINE_USE_MAX  = BR_BALLEFF_CIRCLE_USE_MAX,//半分は降りてくる
+    //半分は円を作る
+  };
+
+  enum
+  { 
+    SEQ_LINE_INIT,
+    SEQ_LINE_MAIN,
+
+    SEQ_CIRCLE_INIT,
+    SEQ_CIRCLE_MAIN,
+
+    SEQ_END
+  };
 
   BR_BALLEFF_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_LINE_INIT:
+    { 
+      int i;
+      p_wk->cnt   = 0;
+
+      //初期座標
+      for(i = 0; i < OPENING_LINE_USE_MAX; i++ )
+      { 
+        p_wk->now_pos[i]  = sc_opening_start_pos;
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+      }
+
+      //先頭
+      MOVE_LINE_Init( &p_wk->move[0].line, &p_wk->now_pos[0], &sc_opening_end_pos, 0, BR_BALLEFF_OPENING_SYNC );
+
+      //追尾
+      for( i = 1; i < OPENING_LINE_USE_MAX; i++ )
+      { 
+        MOVE_HOMING_Init( &p_wk->move[i].homing, &p_wk->now_pos[i-1], &p_wk->now_pos[i], BR_BALLEFF_HOMING_SPEED_OP(i) );
+      }
+    }
+    *p_seq  = SEQ_LINE_MAIN;
+  /* fallthr */
+
+  case SEQ_LINE_MAIN:
+    { 
+      int i;
+      GFL_CLACTPOS  clpos;
+
+      //先頭動作
+      p_wk->is_end_one[0]  = MOVE_LINE_Main( &p_wk->move[0].line, &p_wk->now_pos[0], p_wk->cnt );
+
+      //追尾
+      for( i = 1; i < OPENING_LINE_USE_MAX; i++ )
+      { 
+        p_wk->is_end_one[i] = MOVE_HOMING_Main( &p_wk->move[i].homing, &p_wk->now_pos[i] );
+      }
+
+      //設定
+      for(i = 0; i < OPENING_LINE_USE_MAX; i++ )
+      { 
+        clpos.x = p_wk->now_pos[i].x;
+        clpos.y = p_wk->now_pos[i].y;
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, p_wk->draw );
+      }
+
+      p_wk->cnt++;
+
+      if( p_wk->is_end_one[0] )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[0], FALSE );
+        *p_seq  = SEQ_CIRCLE_INIT;
+      }
+    }
+    break;
+
+  case SEQ_CIRCLE_INIT:
+    {
+      int i = 0;
+      p_wk->cnt = 0;
+      
+      //円を表示
+      for( i = OPENING_LINE_USE_MAX; i < BR_BALLEFF_CLWK_MAX; i++ )
+      { 
+        MOVE_CIRCLE_Init( &p_wk->move[i].circle, &sc_opening_end_pos, BR_BALLEFF_CIRCLE_R, 0xFFFF*(i-OPENING_LINE_USE_MAX)/(BR_BALLEFF_CLWK_MAX - OPENING_LINE_USE_MAX ), BR_BALLEFF_CIRCLE_SYNC );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+      }
+    }
+    *p_seq  = SEQ_CIRCLE_MAIN;
+    /* fallthr */
+
+  case SEQ_CIRCLE_MAIN:
+    { 
+      int i;
+      GFL_CLACTPOS  clpos;
+
+      //円を表示
+      for( i = OPENING_LINE_USE_MAX; i < BR_BALLEFF_CLWK_MAX; i++ )
+      { 
+        MOVE_CIRCLE_Main( &p_wk->move[i].circle, &p_wk->now_pos[i], p_wk->cnt );
+      }
+
+      //追尾し続けている奴は終わったら消す
+      for( i = 1; i < OPENING_LINE_USE_MAX; i++ )
+      { 
+        p_wk->is_end_one[i] = MOVE_HOMING_Main( &p_wk->move[i].homing, &p_wk->now_pos[i] );
+        if( p_wk->is_end_one[i] )
+        { 
+          GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], FALSE );
+        }
+      }
+
+      //設定
+      for(i = 0; i < BR_BALLEFF_CLWK_MAX; i++ )
+      { 
+        clpos.x = p_wk->now_pos[i].x;
+        clpos.y = p_wk->now_pos[i].y;
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, p_wk->draw );
+      }
+
+      p_wk->is_end  = TRUE;
+      p_wk->cnt++;
+    }
+    break;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1761,21 +2096,27 @@ static void Br_BallEff_Seq_BigCircle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   case SEQ_INIT:
     { 
       int i;
-      for( i = 0; i < BR_BALLEFF_CLWK_MAX; i++ )
+      p_wk->cnt = 0;
+      for( i = 0; i < BR_BALLEFF_CIRCLE_USE_MAX; i++ )
       { 
-        MOVE_CIRCLE_Init( &p_wk->circle[i], &p_wk->init_pos, 50, 0xFFFF*i/BR_BALLEFF_CLWK_MAX, 200 );
+        MOVE_CIRCLE_Init( &p_wk->move[i].circle, &p_wk->init_pos, BR_BALLEFF_CIRCLE_R, 0xFFFF*i/BR_BALLEFF_CIRCLE_USE_MAX, BR_BALLEFF_CIRCLE_SYNC );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
       }
     }
     *p_seq  = SEQ_MAIN;
-    break;
+    /* fallthr  */
 
   case SEQ_MAIN:
     { 
       int i;
       GFL_POINT pos;
-      for( i = 0; i < BR_BALLEFF_CLWK_MAX; i++ )
+      GFL_CLACTPOS  clpos;
+      for( i = 0; i < BR_BALLEFF_CIRCLE_USE_MAX; i++ )
       { 
-        MOVE_CIRCLE_Main( &p_wk->circle[i], &pos, p_wk->cnt );
+        MOVE_CIRCLE_Main( &p_wk->move[i].circle, &pos, p_wk->cnt );
+        clpos.x = pos.x;
+        clpos.y = pos.y;
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, p_wk->draw );
       }
 
       p_wk->cnt++;
@@ -1795,8 +2136,46 @@ static void Br_BallEff_Seq_BigCircle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 //-----------------------------------------------------------------------------
 static void Br_BallEff_Seq_Circle( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
+  enum
+  { 
+    SEQ_INIT,
+    SEQ_MAIN,
+  };
 
   BR_BALLEFF_WORK *p_wk = p_wk_adrs;
+
+  switch( *p_seq )
+  { 
+  case SEQ_INIT:
+    { 
+      int i;
+      p_wk->cnt = 0;
+      for( i = 0; i < BR_BALLEFF_CIRCLE_USE_MAX; i++ )
+      { 
+        MOVE_CIRCLE_Init( &p_wk->move[i].circle, &p_wk->init_pos, 10, 0xFFFF*i/BR_BALLEFF_CIRCLE_USE_MAX, BR_BALLEFF_CIRCLE_SYNC );
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+      }
+    }
+    *p_seq  = SEQ_MAIN;
+    /* fallthr  */
+
+  case SEQ_MAIN:
+    { 
+      int i;
+      GFL_POINT pos;
+      GFL_CLACTPOS  clpos;
+      for( i = 0; i < BR_BALLEFF_CIRCLE_USE_MAX; i++ )
+      { 
+        MOVE_CIRCLE_Main( &p_wk->move[i].circle, &pos, p_wk->cnt );
+        clpos.x = pos.x;
+        clpos.y = pos.y;
+        GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, p_wk->draw );
+      }
+
+      p_wk->cnt++;
+    }
+    break;
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1852,9 +2231,14 @@ static BOOL MOVE_CIRCLE_Main( MOVE_CIRCLE *p_wk, GFL_POINT *p_now_pos, int cnt )
   //現在のアングルを取得
   angle = p_wk->init_angle + (0xFFFF * cnt / p_wk->cnt_max);
 
-  //中心座標、半径、角度から座標を求める
+  ///角度から座標を求める
   p_wk->now_pos.x = (FX_CosIdx( angle ) * p_wk->r) >> FX32_SHIFT;
   p_wk->now_pos.y = (FX_SinIdx( angle ) * p_wk->r) >> FX32_SHIFT;
+
+  //中心座標を足す
+  p_wk->now_pos.x += p_wk->center_pos.x;
+  p_wk->now_pos.y += p_wk->center_pos.y;
+
 
   //受け取りバッファに格納
   if( p_now_pos )
@@ -1863,4 +2247,133 @@ static BOOL MOVE_CIRCLE_Main( MOVE_CIRCLE *p_wk, GFL_POINT *p_now_pos, int cnt )
   }
 
   return cnt == p_wk->cnt_max;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  直線運動  初期化
+ *
+ *	@param	MOVE_LINE *p_wk           ワーク
+ *	@param	GFL_POINT *cp_start_pos   開始点
+ *	@param	GFL_POINT *cp_end_pos     終了点
+ *	@param	wait_cnt                  待機時間
+ *	@param	cnt_max                   動作時間
+ */
+//-----------------------------------------------------------------------------
+static void MOVE_LINE_Init( MOVE_LINE *p_wk, const GFL_POINT *cp_start_pos, const GFL_POINT *cp_end_pos, int wait_cnt, int cnt_max )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(MOVE_LINE) );
+  p_wk->start_pos = *cp_start_pos;
+  p_wk->end_pos   = *cp_end_pos;
+  p_wk->wait_cnt  = wait_cnt;
+  p_wk->cnt_max   = cnt_max;
+
+  MOVE_LINE_Main( p_wk, NULL, 0 );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  直線運動  メイン処理
+ *
+ *	@param	MOVE_LINE *p_wk ワーク
+ *	@param	*p_now_pos      現在座標の受け取り
+ *	@param	cnt             カウンタ
+ *
+ *	@return TRUE maxシンクを超えた  FALSE maxシンクを超えてない
+ */
+//-----------------------------------------------------------------------------
+static BOOL MOVE_LINE_Main( MOVE_LINE *p_wk, GFL_POINT *p_now_pos, int cnt )
+{ 
+  BOOL ret  = FALSE;
+  cnt -= p_wk->wait_cnt;
+  cnt = MATH_IMax( cnt, 0 );
+
+  p_wk->now_pos.x = p_wk->start_pos.x + (p_wk->end_pos.x - p_wk->start_pos.x) * cnt / p_wk->cnt_max;
+  p_wk->now_pos.y = p_wk->start_pos.y + (p_wk->end_pos.y - p_wk->start_pos.y) * cnt / p_wk->cnt_max;
+
+  if( cnt >= p_wk->cnt_max )
+  {
+    p_wk->now_pos = p_wk->end_pos;
+    ret = TRUE;
+  }
+
+  if( p_now_pos )
+  { 
+    *p_now_pos  = p_wk->now_pos;
+  }
+
+  return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ホーミング  初期化
+ *
+ *	@param	MOVE_HOMING *p_wk         ワーク
+ *	@param	GFL_POINT *cp_homing_pos  追尾する座標
+ *	@param	speed                     スピード
+ */
+//-----------------------------------------------------------------------------
+static void MOVE_HOMING_Init( MOVE_HOMING *p_wk, const GFL_POINT *cp_homing_pos,const GFL_POINT *cp_init_pos, fx32 speed )
+{ 
+  GFL_STD_MemClear( p_wk, sizeof(MOVE_HOMING) );
+  p_wk->cp_homing_pos = cp_homing_pos;
+  p_wk->now_pos.x       = FX32_CONST(cp_init_pos->x);
+  p_wk->now_pos.y       = FX32_CONST(cp_init_pos->y);
+  p_wk->now_pos.z       = 0;
+  p_wk->speed           = speed;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ホーミング  メイン処理
+ *
+ *	@param	MOVE_HOMING *p_wk   ワーク
+ *	@param	*p_now_pos          座標
+ *
+ *	@return TRUEならば追尾座標と同じ場所  FALSEならば追尾中
+ */
+//-----------------------------------------------------------------------------
+static BOOL MOVE_HOMING_Main( MOVE_HOMING *p_wk, GFL_POINT *p_now_pos )
+{
+  //自分と相手の差分
+  VecFx32 diff;
+  VecFx32 add;
+  fx32  distance;
+
+  diff.x  = FX32_CONST(p_wk->cp_homing_pos->x) - p_wk->now_pos.x;
+  diff.y  = FX32_CONST(p_wk->cp_homing_pos->y) - p_wk->now_pos.y;
+  diff.z  = 0;
+
+  distance  = VEC_Mag( &diff );
+
+  if( distance != 0 )
+  { 
+    add.x = FX_Div( FX_Mul( diff.x, p_wk->speed ), distance );
+    add.y = FX_Div( FX_Mul( diff.y, p_wk->speed ), distance );
+
+    if( MATH_IAbs(diff.x) > MATH_IAbs(add.x) )
+    { 
+      p_wk->now_pos.x += add.x;
+    }
+    else
+    { 
+      p_wk->now_pos.x = FX32_CONST(p_wk->cp_homing_pos->x);
+    }
+
+    if( MATH_IAbs(diff.y) > MATH_IAbs(add.y) )
+    { 
+      p_wk->now_pos.y += add.y;
+    }
+    else
+    { 
+      p_wk->now_pos.y = FX32_CONST(p_wk->cp_homing_pos->y);
+    }
+
+    //OS_Printf( "X%.3f Y%.3f S%.3f calc%.3f dist%.3f \n", FX_FX32_TO_F32(diff.x), FX_FX32_TO_F32(diff.y), FX_FX32_TO_F32(distance) , FX_FX32_TO_F32( FX_Div( FX_Mul( diff.y, p_wk->speed ), distance ) ));
+  }
+
+  if( p_now_pos )
+  { 
+    p_now_pos->x  = p_wk->now_pos.x >> FX32_SHIFT;
+    p_now_pos->y  = p_wk->now_pos.y >> FX32_SHIFT;
+  }
+
+  return distance == 0;
 }

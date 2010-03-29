@@ -97,6 +97,7 @@ typedef struct
   //common
   BR_MSGWIN_WORK      *p_msgwin_m[ BR_BVSEARCH_MSGWINID_M_MAX ];
   BR_TEXT_WORK        *p_text;
+  BR_BALLEFF_WORK     *p_balleff;
   BMPOAM_SYS_PTR	  	p_bmpoam;	//BMPOAMシステム
   PRINT_QUE           *p_que;
   u32                 sub_seq;
@@ -248,6 +249,7 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
   p_wk->p_bmpoam	= BmpOam_Init( p_wk->heapID, p_param->p_unit );
   p_wk->p_text  = BR_TEXT_Init( p_param->p_res, p_wk->p_que, p_wk->heapID );
   BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_712 );
+  p_wk->p_balleff = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
 
   //検索結果を初期化
   p_param->search_data.monsno       = BATTLE_REC_SEARCH_MONSNO_NONE;
@@ -287,6 +289,7 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void
   BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S ); 
 
 	//モジュール破棄
+  BR_BALLEFF_Exit( p_wk->p_balleff );
   BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
   BmpOam_Exit( p_wk->p_bmpoam );
   PRINTSYS_QUE_Delete( p_wk->p_que );
@@ -423,6 +426,8 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
   }
 
   PRINTSYS_QUE_Main( p_wk->p_que );
+  //ボール処理
+  BR_BALLEFF_Main( p_wk->p_balleff );
 
   return GFL_PROC_RES_CONTINUE;
 }
@@ -877,7 +882,7 @@ static BOOL Br_BvSearch_Seq_Place_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC
 //-----------------------------------------------------------------------------
 static BOOL Br_BvSearch_Seq_Poke_Init( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param )
 { 
-  p_wk->p_search  = BR_POKESEARCH_Init( NULL, p_param->p_res, p_param->p_unit, p_wk->p_bmpoam, p_param->p_fade, p_wk->heapID ); 
+  p_wk->p_search  = BR_POKESEARCH_Init( NULL, p_param->p_res, p_param->p_unit, p_wk->p_bmpoam, p_param->p_fade, p_wk->p_balleff, p_wk->heapID ); 
   BR_POKESEARCH_StartUp( p_wk->p_search );
   return TRUE;
 }

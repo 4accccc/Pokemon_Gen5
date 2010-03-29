@@ -30,6 +30,7 @@
 #define BR_FADE_ALPHA_PLANEMASK_S_01  (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 )
 #define BR_FADE_ALPHA_PLANEMASK_S_02  (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2)
 
+#define BR_FADE_CHANGEFADE_NONE (0xFFFF)
 //=============================================================================
 /**
  *					構造体宣言
@@ -58,6 +59,9 @@ struct _BR_FADE_WORK
   PALETTE_FADE_PTR      p_pfd;
   GXRgb           pfd_color;
   u16             dummy;
+
+  BR_FADE_CHANGEFADE_PARAM  changefade_param;
+  u32                       sub_seq;
 };
 
 //=============================================================================
@@ -67,9 +71,12 @@ struct _BR_FADE_WORK
 //=============================================================================
 //実行関数
 static BOOL Br_Fade_MainMasterBrightBlack( BR_FADE_WORK *p_wk, u32 *p_seq );
+static BOOL Br_Fade_MainMasterBrightWhite( BR_FADE_WORK *p_wk, u32 *p_seq );
 static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq );
 static BOOL Br_Fade_MainPallete( BR_FADE_WORK *p_wk, u32 *p_seq );
 static BOOL Br_Fade_MainMasterBrightAndAlpha( BR_FADE_WORK *p_wk, u32 *p_seq );
+
+static BOOL Br_Fade_MainChangeFade( BR_FADE_WORK *p_wk, u32 *p_seq );
 //その他
 static BR_FADE_MAINFUNCTION Br_Fade_Factory( BR_FADE_TYPE type );
 
@@ -90,7 +97,8 @@ BR_FADE_WORK * BR_FADE_Init( HEAPID heapID )
   BR_FADE_WORK *p_wk;
   p_wk  = GFL_HEAP_AllocMemory( heapID, sizeof(BR_FADE_WORK) );
   GFL_STD_MemClear( p_wk, sizeof(BR_FADE_WORK) );
-  p_wk->p_pfd = PaletteFadeInit( heapID );
+  p_wk->sub_seq = BR_FADE_CHANGEFADE_NONE;
+  p_wk->p_pfd   = PaletteFadeInit( heapID );
 
   PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_MAIN_BG, FADE_PAL_ALL_SIZE, heapID );
   PaletteFadeWorkAllocSet( p_wk->p_pfd, FADE_MAIN_OBJ, FADE_PAL_ALL_SIZE, heapID );
@@ -187,6 +195,26 @@ BOOL BR_FADE_IsEnd( const BR_FADE_WORK *cp_wk )
 { 
   return cp_wk->is_end;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  画面切り替えように、  フェードイン→コールバックー＞フェードアウトする
+ *
+ *	@param	BR_FADE_WORK *p_wk                  ワーク
+ *	@param	BR_FADE_CHANGEFADE_PARAM *cp_param  引数
+ */
+//-----------------------------------------------------------------------------
+void BR_FADE_StartChangeFade( BR_FADE_WORK *p_wk, const BR_FADE_CHANGEFADE_PARAM *cp_param )
+{ 
+  p_wk->changefade_param  = *cp_param;
+  p_wk->sub_seq       = 0;
+  p_wk->sync          = BR_FADE_DEFAULT_SYNC;
+
+  p_wk->MainFunction  = Br_Fade_MainChangeFade;
+  p_wk->is_end        = FALSE;
+  p_wk->seq           = 0;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  フェードで使用するパレットをコピー
@@ -226,12 +254,12 @@ void BR_FADE_PALETTE_TransColor( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display )
   //画面による設定
   if( display & BR_FADE_DISPLAY_MAIN )
   { 
-    ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_OBJ, 0x3FFE, 16, p_wk->pfd_color );	///< main	oam
+//    ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_OBJ, 0x3FFE, 16, p_wk->pfd_color );	///< main	oam
     ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_BG,  0xBFFF, 16, p_wk->pfd_color );	///< main	bg
   }
   if( display & BR_FADE_DISPLAY_SUB )
   { 
-    ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_OBJ, 0xFFFE, 16, p_wk->pfd_color );	///< sub	oam
+//    ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_OBJ, 0xFFFE, 16, p_wk->pfd_color );	///< sub	oam
     ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_BG,  0xBFFF, 16, p_wk->pfd_color );	///< sub	bg
   }
 
@@ -259,11 +287,15 @@ void BR_FADE_ALPHA_SetAlpha( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display, u8 ev 
         );
     if( ev == 0 )
     { 
-      GFL_DISP_GX_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_M_01 , FALSE );
+      GFL_DISP_GX_SetVisibleControl( GX_BLEND_PLANEMASK_BG0 , FALSE );
+      GFL_DISP_GX_SetVisibleControl( GX_BLEND_PLANEMASK_BG1 , FALSE );
+      GFL_DISP_GX_SetVisibleControl( GX_BLEND_PLANEMASK_BG2 , FALSE );
     }
     else
     { 
-      GFL_DISP_GX_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_M_01 , TRUE );
+      GFL_DISP_GX_SetVisibleControl( GX_BLEND_PLANEMASK_BG0 , TRUE );
+      GFL_DISP_GX_SetVisibleControl( GX_BLEND_PLANEMASK_BG1 , TRUE );
+      GFL_DISP_GX_SetVisibleControl( GX_BLEND_PLANEMASK_BG2 , TRUE );
     }
   }
   //下画面
@@ -277,11 +309,13 @@ void BR_FADE_ALPHA_SetAlpha( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display, u8 ev 
         );
     if( ev == 0 )
     { 
-      GFL_DISP_GXS_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_S_01 , FALSE );
+      GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_BG0 , FALSE );
+      GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_BG1 , FALSE );
     }
     else
     { 
-      GFL_DISP_GXS_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_S_01 , TRUE );
+      GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_BG0 , TRUE );
+      GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_BG1 , TRUE );
     }
   }
 }
@@ -324,6 +358,71 @@ static BOOL Br_Fade_MainMasterBrightBlack( BR_FADE_WORK *p_wk, u32 *p_seq )
       if( p_wk->display & BR_FADE_DISPLAY_SUB )
       { 
         mode  |= GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB;
+      }
+      //方向による設定
+      if( p_wk->dir == BR_FADE_DIR_IN )
+      { 
+        start = 16;
+        end   = 0;
+      }
+      else if( p_wk->dir == BR_FADE_DIR_OUT )
+      { 
+        start = 0;
+        end   = 16;
+      }
+
+      GFL_FADE_SetMasterBrightReq( mode, start, end, p_wk->sync );
+      *p_seq  = SEQ_MBB_MAIN;
+    }
+    break;
+
+  case SEQ_MBB_MAIN:
+    if( !GFL_FADE_CheckFade() )
+    { 
+      *p_seq  = SEQ_MBB_EXIT;
+    }
+    break;
+
+  case SEQ_MBB_EXIT:
+    return TRUE;
+  }
+
+
+  return FALSE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  輝度でのフェードメイン処理  白くなる
+ *
+ *	@param	BR_FADE_WORK *p_wk  ワーク
+ *	@param  u32 seq             シーケンス
+ *
+ *	@return TRUEならば処理終了  FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_Fade_MainMasterBrightWhite( BR_FADE_WORK *p_wk, u32 *p_seq )
+{ 
+  enum
+  { 
+    SEQ_MBB_INIT,
+    SEQ_MBB_MAIN,
+    SEQ_MBB_EXIT,
+  };
+
+  switch( *p_seq )
+  { 
+  case SEQ_MBB_INIT:
+    { 
+      u32 mode  = 0;
+      u32 start, end;
+      //画面による設定
+      if( p_wk->display & BR_FADE_DISPLAY_MAIN )
+      { 
+        mode  |= GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN;
+      }
+      if( p_wk->display & BR_FADE_DISPLAY_SUB )
+      { 
+        mode  |= GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB;
       }
       //方向による設定
       if( p_wk->dir == BR_FADE_DIR_IN )
@@ -439,11 +538,15 @@ static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
         G2_ChangeBlendAlpha( ev1, ev2 );
         if( ev1 == 0 )
         { 
-          GFL_DISP_GX_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_M_01 , FALSE );
+          GFL_DISP_GX_SetVisibleControl( GX_BLEND_PLANEMASK_BG0 , FALSE );
+          GFL_DISP_GX_SetVisibleControl( GX_BLEND_PLANEMASK_BG1 , FALSE );
+          GFL_DISP_GX_SetVisibleControl( GX_BLEND_PLANEMASK_BG2 , FALSE );
         }
         else
         { 
-          GFL_DISP_GX_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_M_01 , TRUE );
+          GFL_DISP_GX_SetVisibleControl( GX_BLEND_PLANEMASK_BG0 , TRUE );
+          GFL_DISP_GX_SetVisibleControl( GX_BLEND_PLANEMASK_BG1 , TRUE );
+          GFL_DISP_GX_SetVisibleControl( GX_BLEND_PLANEMASK_BG2 , TRUE );
         }
       }
       //下画面
@@ -452,11 +555,13 @@ static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
         G2S_ChangeBlendAlpha( ev1, ev2 );
         if( ev1 == 0 )
         { 
-          GFL_DISP_GXS_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_S_01 , FALSE );
+          GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_BG0 , FALSE );
+          GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_BG1 , FALSE );
         }
         else
         { 
-          GFL_DISP_GXS_SetVisibleControl( BR_FADE_ALPHA_PLANEMASK_S_01 , TRUE );
+          GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_BG0 , TRUE );
+          GFL_DISP_GXS_SetVisibleControl( GX_BLEND_PLANEMASK_BG1 , TRUE );
         }
       }
     }
@@ -668,6 +773,74 @@ static BOOL Br_Fade_MainMasterBrightAndAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
 
   return FALSE; 
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief  画面読み替えようのフェード
+ *
+ *	@param	BR_FADE_WORK *p_wk  ワーク
+ *	@param  u32 seq             シーケンス
+ *
+ *	@return TRUEならば処理終了  FALSEならば処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_Fade_MainChangeFade( BR_FADE_WORK *p_wk, u32 *p_seq )
+{ 
+  enum
+  { 
+    SEQ_FADEOUT_START,
+    SEQ_FADEOUT_WAIT,
+    SEQ_CHANGE,
+    SEQ_FADEIN_START,
+    SEQ_FADEIN_WAIT,
+    SEQ_END,
+  };
+
+  switch( *p_seq )
+  { 
+  case SEQ_FADEOUT_START:
+    BR_FADE_StartFade( p_wk, p_wk->changefade_param.fadeout_type,
+        p_wk->changefade_param.disp, BR_FADE_DIR_OUT );
+    p_wk->sub_seq = 0;
+    (*p_seq)++;
+    break;
+  case SEQ_FADEOUT_WAIT:
+    if( p_wk->MainFunction( p_wk, &p_wk->sub_seq ) )
+    { 
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_CHANGE:
+    if( p_wk->changefade_param.callback )
+    { 
+      if( p_wk->changefade_param.callback( p_wk->changefade_param.p_wk_adrs ) )
+      { 
+        (*p_seq)++;
+      }
+    }
+    else
+    { 
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_FADEIN_START:
+    BR_FADE_StartFade( p_wk, p_wk->changefade_param.fadein_type,
+        p_wk->changefade_param.disp, BR_FADE_DIR_IN );
+    p_wk->sub_seq = 0;
+    (*p_seq)++;
+    break;
+  case SEQ_FADEIN_WAIT:
+    if( p_wk->MainFunction( p_wk, &p_wk->sub_seq ) )
+    { 
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_END:
+    return TRUE;
+    break;
+  }
+
+  return FALSE;
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -684,6 +857,9 @@ static BR_FADE_MAINFUNCTION Br_Fade_Factory( BR_FADE_TYPE type )
   { 
   case BR_FADE_TYPE_MASTERBRIGHT_BLACK:
     return Br_Fade_MainMasterBrightBlack;
+
+  case BR_FADE_TYPE_MASTERBRIGHT_WHITE:
+    return Br_Fade_MainMasterBrightWhite;
 
   case BR_FADE_TYPE_ALPHA_BG012OBJ:
     return Br_Fade_MainAlpha;

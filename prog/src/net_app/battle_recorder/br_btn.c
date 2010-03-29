@@ -179,6 +179,13 @@ static void Br_Btn_Sys_PushStack( BR_BTN_SYS_WORK *p_wk, BR_BTNEX_WORK *p_btn, C
 static BOOL Br_Btn_Sys_PopStack( BR_BTN_SYS_WORK *p_wk, BR_BTNEX_WORK *p_btn );
 static void Br_Btn_Sys_ReLoadBtn( BR_BTN_SYS_WORK *p_wk, BR_MENUID menuID, const GFL_POINT *cp_init_pos );
 
+typedef enum
+{ 
+  BR_BTN_SYS_CHANGE_PALLETE_OFFSET_STACK_MODE_UP,
+  BR_BTN_SYS_CHANGE_PALLETE_OFFSET_STACK_MODE_DOWN,
+}BR_BTN_SYS_CHANGE_PALLETE_OFFSET_STACK_MODE;
+static void Br_Btn_Sys_ChangePalleteOffsetStack( BR_BTN_SYS_WORK *p_wk, BR_BTN_SYS_CHANGE_PALLETE_OFFSET_STACK_MODE mode );
+
 //-------------------------------------
 ///	SEQ
 //=====================================
@@ -228,6 +235,7 @@ static void BR_BTNEX_GetPos( const BR_BTNEX_WORK *cp_wk, s16 *p_x, s16 *p_y );
 static u32 BR_BTNEX_GetParam( const BR_BTNEX_WORK *cp_wk, BR_BTN_PARAM param );
 static void BR_BTNEX_SetSoftPriority( BR_BTNEX_WORK *p_wk, u16 soft_pri );
 static void BR_BTNEX_SetBgPriority( BR_BTNEX_WORK *p_wk, u16 bg_pri );
+static void BR_BTNEX_SetPalletOffset( BR_BTNEX_WORK *p_wk, u16 ofs );
 
 //typedef BOOL (*BR_BTNEX_MOVEFUNCTION)( BR_BTNEX_WORK *p_wk );
 static BOOL Br_BtnEx_Move_Hide( BR_BTNEX_WORK *p_wk );
@@ -391,12 +399,6 @@ BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_W
 			}
 		}
 	}
-  
-  //テキスト面作成
-  { 
-    p_wk->p_text  = BR_TEXT_Init( p_wk->p_res, p_wk->p_que, heapID );
-    GFL_BG_SetVisible( BG_FRAME_M_TEXT, FALSE );
-  }
 
   //モジュール作成
 	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_Start );
@@ -416,8 +418,10 @@ void BR_BTN_SYS_Exit( BR_BTN_SYS_WORK *p_wk )
   SEQ_Exit( &p_wk->seq );
 
   //テキスト面破棄
+  if( p_wk->p_text )
   { 
     BR_TEXT_Exit( p_wk->p_text, p_wk->p_res );
+    p_wk->p_text  = NULL;
   }
 
 	//スタックバッファ破棄
@@ -449,9 +453,6 @@ void BR_BTN_SYS_Exit( BR_BTN_SYS_WORK *p_wk )
 	BR_BTN_DATA_SYS_Exit( p_wk->p_btn_data );
 	BmpOam_Exit( p_wk->p_bmpoam );
   PRINTSYS_QUE_Delete( p_wk->p_que );
-
-  //br_btn.cの中でOFFにしていることがあるので
-  GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
 
 	//ワーク破棄
 	GFL_HEAP_FreeMemory( p_wk );
@@ -616,6 +617,40 @@ static void Br_Btn_Sys_ReLoadBtn( BR_BTN_SYS_WORK *p_wk, BR_MENUID menuID, const
 		}
 	}
 }
+//----------------------------------------------------------------------------
+/**
+ *	@brief	スタックのボタンを位置によりパレットオフセットを変える
+ *
+ *	@param	BR_BTN_SYS_WORK *p_wk ワーク
+ *	@param  モード
+ */
+//-----------------------------------------------------------------------------
+static void Br_Btn_Sys_ChangePalleteOffsetStack( BR_BTN_SYS_WORK *p_wk, BR_BTN_SYS_CHANGE_PALLETE_OFFSET_STACK_MODE mode )
+{
+  int i;
+  BOOL is_on;
+  for( i = 0; i < p_wk->btn_stack_num; i++ )
+  {
+    switch( mode )
+    {
+    case BR_BTN_SYS_CHANGE_PALLETE_OFFSET_STACK_MODE_UP:
+      is_on = (i == p_wk->btn_stack_num - 1);
+      break;
+    case BR_BTN_SYS_CHANGE_PALLETE_OFFSET_STACK_MODE_DOWN:
+      is_on = (i >= p_wk->btn_stack_num - 2);
+      break;
+    }
+
+    if( is_on )
+    { 
+      BR_BTNEX_SetPalletOffset( &p_wk->p_btn_stack[i], 0 );
+    }
+    else
+    { 
+      BR_BTNEX_SetPalletOffset( &p_wk->p_btn_stack[i], 1 );
+    }
+  }
+}
 
 //=============================================================================
 /**
@@ -760,7 +795,11 @@ static void SEQFUNC_Touch( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
         BOOL is_valid = BR_BTNEX_GetParam(&p_wk->p_btn_now[i],BR_BTN_PARAM_VALID );
         if( is_valid )
         { 
-          GFL_BG_SetVisible( BG_FRAME_M_TEXT, FALSE );  //※
+          if( p_wk->p_text )
+          { 
+            BR_TEXT_Exit( p_wk->p_text, p_wk->p_res );
+            p_wk->p_text  = NULL;
+          }
           //押せるのでおした
           p_wk->trg_btn	= i;
           is_trg				= TRUE;
@@ -1261,6 +1300,7 @@ static void SEQFUNC_UpTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 			}
 			if( is_end )
 			{
+        Br_Btn_Sys_ChangePalleteOffsetStack( p_wk, BR_BTN_SYS_CHANGE_PALLETE_OFFSET_STACK_MODE_UP );
         *p_seq  = SEQ_MSG_PRINT;
 			}
 		}
@@ -1273,7 +1313,10 @@ static void SEQFUNC_UpTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       u16   strID       = BR_BTNEX_GetParam( cp_target_btn, BR_BTN_PARAM_DATA2 );
       if( type == BR_BTN_TYPE_SELECT_MSG )
       { 
-        GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE ); //消去はここ※
+        if( p_wk->p_text == NULL )
+        { 
+          p_wk->p_text  = BR_TEXT_Init( p_wk->p_res, p_wk->p_que, p_wk->heapID );
+        }
         BR_TEXT_Print( p_wk->p_text, p_wk->p_res, strID );
       }
     }
@@ -1362,6 +1405,7 @@ static void SEQFUNC_DownTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 			}
 			if( is_end )
 			{
+        Br_Btn_Sys_ChangePalleteOffsetStack( p_wk, BR_BTN_SYS_CHANGE_PALLETE_OFFSET_STACK_MODE_DOWN );
         *p_seq  = SEQ_END;
 			}
 		}
@@ -1446,7 +1490,10 @@ static void SEQFUNC_NotPushMessage( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
     { 
       u32 strID = BR_BTNEX_GetParam(&p_wk->p_btn_now[p_wk->trg_btn],BR_BTN_PARAM_NONE_DATA );
 
-      GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
+      if( p_wk->p_text == NULL )
+      { 
+          p_wk->p_text  = BR_TEXT_Init( p_wk->p_res, p_wk->p_que, p_wk->heapID );
+      }
       BR_TEXT_Print( p_wk->p_text, p_wk->p_res, strID );
     }
     *p_seq  = SEQ_TOUCH;
@@ -1826,6 +1873,18 @@ static void BR_BTNEX_SetSoftPriority( BR_BTNEX_WORK *p_wk, u16 soft_pri )
 static void BR_BTNEX_SetBgPriority( BR_BTNEX_WORK *p_wk, u16 bg_pri )
 { 
   BR_BTN_SetBgPriority( p_wk->p_btn, bg_pri );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレット設定
+ *
+ *	@param	BR_BTNEX_WORK *p_wk ワーク  
+ *	@param	ofs                 パレットオフセット
+ */
+//-----------------------------------------------------------------------------
+static void BR_BTNEX_SetPalletOffset( BR_BTNEX_WORK *p_wk, u16 ofs )
+{ 
+  BR_BTN_SetPalleteOffset( p_wk->p_btn, ofs );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2276,7 +2335,7 @@ BR_BTN_WORK * BR_BTN_InitEx( const GFL_CLWK_DATA *cp_cldata, const STRBUF *cp_st
 		STRBUF			*p_str;
 
 		p_wk->p_bmp	= GFL_BMP_Create( p_wk->w/8, 2, GFL_BMP_16_COLOR, heapID );
-		PRINTSYS_Print( p_wk->p_bmp, 0, 0, cp_strbuf, p_font );
+		PRINTSYS_PrintColor( p_wk->p_bmp, 0, 0, cp_strbuf, p_font, PRINTSYS_LSB_Make( 0xF, 0xE, 0 ) );
 	}
 
 
@@ -2293,6 +2352,7 @@ BR_BTN_WORK * BR_BTN_InitEx( const GFL_CLWK_DATA *cp_cldata, const STRBUF *cp_st
 		actdata.setSerface	= display;
 		actdata.draw_type		= display;
 		actdata.bg_pri			= cp_cldata->bgpri;
+    actdata.pal_offset  = 1;
 		p_wk->p_oamfont	= BmpOam_ActorAdd( p_bmpoam, &actdata );
     BmpOam_ActorBmpTrans(p_wk->p_oamfont);
     BmpOam_ActorSetObjMode( p_wk->p_oamfont, GX_OAM_MODE_XLU );
@@ -2443,4 +2503,17 @@ void BR_BTN_SetBgPriority( BR_BTN_WORK *p_wk, u8 bg_pri )
 u8 BR_BTN_GetBgPriority( const BR_BTN_WORK *cp_wk )
 { 
   return GFL_CLACT_WK_GetBgPri( cp_wk->p_clwk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットチェンジ
+ *
+ *	@param	BR_BTN_WORK *p_wk ワーク
+ *	@param	ofs               オフセット
+ */
+//-----------------------------------------------------------------------------
+void BR_BTN_SetPalleteOffset( BR_BTN_WORK *p_wk, u16 ofs )
+{ 
+  GFL_CLACT_WK_SetPlttOffs( p_wk->p_clwk, ofs, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+  BmpOam_ActorSetPaletteOffset( p_wk->p_oamfont, ofs + 1 );
 }

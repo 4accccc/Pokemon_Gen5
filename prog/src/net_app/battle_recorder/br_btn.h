@@ -89,3 +89,4 @@ extern void BR_BTN_SetSoftPriority( BR_BTN_WORK *p_wk, u8 soft_pri );
 extern u8 BR_BTN_GetSoftPriority( const BR_BTN_WORK *cp_wk );
 extern void BR_BTN_SetBgPriority( BR_BTN_WORK *p_wk, u8 bg_pri );
 extern u8 BR_BTN_GetBgPriority( const BR_BTN_WORK *cp_wk );
+extern void BR_BTN_SetPalleteOffset( BR_BTN_WORK *p_wk, u16 ofs );
