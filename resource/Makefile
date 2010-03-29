@@ -163,7 +163,8 @@ SUBDIRS	=	wmi \
 			item_judge \
 			p_tree \
 			camera_sys \
-			cross_comm
+			cross_comm \
+			btl_subway
 
 
 include $(RESOURCE_MACRO)
