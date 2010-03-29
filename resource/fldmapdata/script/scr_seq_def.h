@@ -5813,7 +5813,7 @@
 #define _GET_TEMOTI_GETDATE( ret_year, ret_month, ret_day, poke_pos ) _ASM_GET_TEMOTI_GETDATE ret_year, ret_month, ret_day, poke_pos
 
   .macro  _ASM_GET_TEMOTI_GETDATE ret_year, ret_month, ret_day, poke_pos
-  .short  EV_SEQ_GET_TEMOTI_GETPLACE
+  .short  EV_SEQ_GET_TEMOTI_GETDATE
   .short  \ret_year
   .short  \ret_month
   .short  \ret_day
