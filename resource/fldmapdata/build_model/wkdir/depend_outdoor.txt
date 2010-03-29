@@ -289,4 +289,5 @@ DEP_OUTDOOR	=	\
 	$(RESDIR)/door_c6_ctower.nsbmd \
 	$(RESDIR)/door_untower.nsbmd \
 	$(RESDIR)/c09_back.nsbmd \
+	$(RESDIR)/toh_bell01.nsbmd \
 
