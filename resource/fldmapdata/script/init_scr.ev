@@ -199,18 +199,6 @@ init_flags:
 	//５番道路：チャンピオンと少年達を非表示。C04ジムクリア後に表示
 	_FLAG_SET( FV_R05_CHAMPION )
 	
-	//ミュージカルのファンを全員消す
-	_FLAG_SET( FV_MUSICAL_FUN_01 )
-	_FLAG_SET( FV_MUSICAL_FUN_02 )
-	_FLAG_SET( FV_MUSICAL_FUN_03 )
-	_FLAG_SET( FV_MUSICAL_FUN_04 )
-	_FLAG_SET( FV_MUSICAL_FUN_05 )
-	_FLAG_SET( FV_MUSICAL_FUN_06 )
-	_FLAG_SET( FV_MUSICAL_FUN_07 )
-	_FLAG_SET( FV_MUSICAL_FUN_08 )
-	_FLAG_SET( FV_MUSICAL_FUN_09 )
-	_FLAG_SET( FV_MUSICAL_FUN_10 )
-	
 	//ポケモン研究所のミネズミ。T02のポケセンイベント後に表示
 	_FLAG_SET( FV_T01R0401_POKEMON_01 )
 	//ポケモン研究所の博士（父）。C06のイベント後に表示
