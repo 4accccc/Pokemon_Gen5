@@ -2383,6 +2383,7 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
     SEQ_WAIT_USERCTRL_COMM,
     SEQ_AFTER_USERCTRL,
     SEQ_DONE,
+    SEQ_END,
   };
 
   switch( wk->printSeq ){
@@ -2434,7 +2435,7 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
     }
     else
     {
-      return TRUE;
+      wk->printSeq = SEQ_DONE;
     }
     break;
 
@@ -2469,17 +2470,25 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
       PRINTSYS_PrintStreamDelete( wk->printStream );
       wk->printStream = NULL;
       wk->printSeq = SEQ_DONE;
-      return TRUE;
     }
     else
     {
       PRINTSYS_PrintStreamReleasePause( wk->printStream );
+      PMSND_PlaySE( SEQ_SE_MESSAGE );
       wk->printSeq = SEQ_WAIT_STREAM_RUNNING;
       wk->printWait = wk->printWaitOrg;
     }
     break;
 
   case SEQ_DONE:
+    if( !PMSND_CheckPlaySE() ){
+      wk->printSeq = SEQ_END;
+      return TRUE;
+    }
+    break;
+
+  case SEQ_END:
+  default:
     return TRUE;
   }
   return FALSE;

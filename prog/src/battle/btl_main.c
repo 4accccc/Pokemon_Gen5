@@ -1394,7 +1394,7 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
     }
     break;
   case 11:
-    if( wk->ImServer )
+//    if( wk->ImServer )  // 整合性チェック用にClientにもサーバーモジュールを作るので
     {
       u32 i;
       PokeCon_Init( &wk->pokeconForServer, wk, TRUE );
