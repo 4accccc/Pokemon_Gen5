@@ -441,7 +441,7 @@ sub_train_battle_win_clear:
   ENDIF
   
   //アニメを少し表示しながらフェードアウト
-  _TIME_WAIT( 55 )
+  _TIME_WAIT( 70 )
   _MAP_FADE_BLACK_OUT()
   _MAP_FADE_END_CHECK()
   

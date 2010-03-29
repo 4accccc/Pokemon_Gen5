@@ -439,6 +439,9 @@ sub_receipt_challenge_single_double:
   //乗車メッセージ
   _CALL sub_receipt_msg_geton_train
   
+  //バトルサブウェイ挑戦中のビーコンセット
+  _BEACON_SET_REQ_SUBWAY_START()
+
   //デモ　出発
   _CALL sub_receipt_demo_start_train
   
@@ -596,6 +599,9 @@ sub_receipt_challenge_multi_ai:
   //乗車メッセージ
   _CALL sub_receipt_msg_geton_train
   
+  //バトルサブウェイ挑戦中のビーコンセット
+  _BEACON_SET_REQ_SUBWAY_START()
+
   //デモ　出発
   _CALL sub_receipt_demo_start_train
   
@@ -781,6 +787,9 @@ sub_receipt_challenge_multi_comm:
   //通信同期待ち
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_AUTO_SAVE, BSW_NULL, BSW_NULL )
   
+  //バトルサブウェイ挑戦中のビーコンセット
+  _BEACON_SET_REQ_SUBWAY_START()
+
   //デモ　出発
   _CALL sub_receipt_demo_start_train
   
@@ -887,6 +896,9 @@ sub_receipt_challenge_wifi:
   
   //乗車メッセージ
   _CALL sub_receipt_msg_geton_train
+  
+  //バトルサブウェイ挑戦中のビーコンセット
+  _BEACON_SET_REQ_SUBWAY_START()
   
   //デモ　出発
   _CALL sub_receipt_demo_start_train
@@ -1467,9 +1479,7 @@ _RET
 
 //アニメデータ　乗車　受付
 _ANIME_LABEL anm_receipt_geton_receipt
-  _ANIME_DATA AC_WALK_R_8F,4
-  _ANIME_DATA AC_WALK_U_8F,1
-  _ANIME_DATA AC_WALK_R_8F,1
+  _ANIME_DATA AC_WALK_R_8F,5
   _ANIME_DATA AC_STAY_WALK_L_8F,1
   _ANIME_DATA ACMD_END,0
 
@@ -1529,8 +1539,8 @@ sub_receipt_demo_arrival_train:
   //パートナー登場
   IF $ai_multi == TRUE THEN
     _CALL sub_receipt_common_add_partner
-    _OBJ_POS_CHANGE( objid_partner, 16, 0, 13, DIR_DOWN )
     _BSUBWAY_TOOL( BSWTOOL_OBJ_VANISH, objid_partner, TRUE, BSW_NULL )
+    _OBJ_POS_CHANGE( objid_partner, 16, 0, 13, DIR_DOWN )
     _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_ON, objid_partner, 0, BSW_NULL )
   ENDIF
   
@@ -1542,7 +1552,7 @@ sub_receipt_demo_arrival_train:
   _MAP_FADE_END_CHECK()
   
   //電車アニメ
-  _TIME_WAIT( 30 ) //仮
+  _TIME_WAIT( 100 ) //仮
   
   //自機移動アニメ
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_demo_arrival_train_getdown_jiki )
@@ -1826,9 +1836,6 @@ _RET
 //--------------------------------------------------------------
 sub_receipt_common_add_partner:
 {
-  
-  
-  
   _CALL sub_receipt_common_get_objid_partner
   $objid = $SCWK_ANSWER
   
@@ -1836,10 +1843,12 @@ sub_receipt_common_add_partner:
   
   _BSUBWAY_TOOL( BSWTOOL_CHK_EXIST_OBJ, objid, BSW_NULL, ret )
   
-  IF $ret == FALSE THEN
-    _BSUBWAY_TOOL( BSWTOOL_GET_OBJCODE_PARTNER, BSW_NULL, BSW_NULL, OBJCHRWORK0 )
-    _OBJ_ADD( objid )
+  IF $ret == TRUE THEN
+    _OBJ_DEL( objid )
   ENDIF
+  
+  _BSUBWAY_TOOL( BSWTOOL_GET_OBJCODE_PARTNER, BSW_NULL, BSW_NULL, OBJCHRWORK0 )
+  _OBJ_ADD( objid )
 }
 _RET
 
@@ -1865,6 +1874,63 @@ _RET
 //  受付　手持ちorバトルボックス選択、事前レギュチェック
 //  @retval SCWK_ANSWER TRUE=完了 FALSE=キャンセル、エラー
 //--------------------------------------------------------------
+sub_receipt_common_select_btl_box:
+{
+  DEFINE_LOCAL regu
+  
+  $regu = REG_SUBWAY_SINGLE
+  
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  SWITCH $play_mode
+  CASE BSWAY_MODE_SINGLE THEN
+    $regu = REG_SUBWAY_SINGLE
+  CASE BSWAY_MODE_S_SINGLE THEN
+    $regu = REG_SUBWAY_SINGLE
+  CASE BSWAY_MODE_DOUBLE THEN
+    $regu = REG_SUBWAY_DOUBLE
+  CASE BSWAY_MODE_S_DOUBLE THEN
+    $regu = REG_SUBWAY_DOUBLE
+  CASE BSWAY_MODE_MULTI THEN
+    $regu = REG_SUBWAY_MALTI
+  CASE BSWAY_MODE_COMM_MULTI THEN
+    $regu = REG_SUBWAY_MALTI
+  CASE BSWAY_MODE_S_MULTI THEN
+    $regu = REG_SUBWAY_MALTI
+  CASE BSWAY_MODE_S_COMM_MULTI THEN
+    $regu = REG_SUBWAY_MALTI
+  CASE BSWAY_MODE_WIFI THEN
+    $regu = REG_SUBWAY_SINGLE
+  ENDSWITCH
+  
+  //パーティ選択ウィンドウ
+  _BTL_UTIL_PARTY_SELECT_CALL( regu, ret )
+  
+  SWITCH $ret
+  CASE SCR_BTL_PARTY_SELECT_TEMOTI THEN //手持ち
+    _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, FALSE, BSW_NULL, BSW_NULL )
+    $ret = TRUE
+  CASE SCR_BTL_PARTY_SELECT_BTLBOX THEN //バトルボックス
+    _BSUBWAY_TOOL( BSWSUB_SET_USE_BTL_BOX_FLAG, TRUE, BSW_NULL, BSW_NULL )
+    _BSUBWAY_TOOL( BSWSUB_PREPAR_BTL_BOX, BSW_NULL, BSW_NULL, BSW_NULL )
+    $ret = TRUE
+  CASE SCR_BTL_PARTY_SELECT_CANCEL THEN //選択キャンセル
+    $ret = FALSE
+  CASE SCR_BTL_PARTY_SELECT_NG THEN //レギュレーションNG
+    _BSUBWAY_TOOL( BSWSUB_GET_REGULATION_TYPE, BSW_NULL, BSW_NULL, ret )
+    _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( ret )
+    _AB_KEYWAIT()
+    _MSGWIN_CLOSE()
+    $ret = FALSE
+  DEFAULT
+    $ret = FALSE
+  ENDSWITCH
+  
+  $SCWK_ANSWER = $ret
+}
+_RET
+
+/* old
 sub_receipt_common_select_btl_box:
 {
   DEFINE_LOCAL sel
@@ -1902,13 +1968,13 @@ sub_receipt_common_select_btl_box:
     _BSUBWAY_TOOL( BSWSUB_CHK_REGULATION, BSW_NULL, BSW_NULL, ret )
     
     IF $ret == FALSE THEN //エラーメッセージ
-/*  //レギュレーションメッセージを使用する
-      _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_NUM, BSW_NULL, BSW_NULL, ret )
-      _NUMBER( 0, ret, 1 )
-      $SCWK_TEMP0 = msg_bsw_scr_21
-      _CALL sub_receipt_common_bwin
-      _MSGWIN_CLOSE()
-*/
+    //レギュレーションメッセージを使用する
+//      _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_NUM, BSW_NULL, BSW_NULL, ret )
+//      _NUMBER( 0, ret, 1 )
+//      $SCWK_TEMP0 = msg_bsw_scr_21
+//      _CALL sub_receipt_common_bwin
+//      _MSGWIN_CLOSE()
+    
       _BSUBWAY_TOOL( BSWSUB_GET_REGULATION_TYPE, BSW_NULL, BSW_NULL, ret )
       _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( ret )
       _AB_KEYWAIT()
@@ -1925,6 +1991,7 @@ sub_receipt_common_select_btl_box:
   $SCWK_ANSWER = $sel
 }
 _RET
+*/
 
 //--------------------------------------------------------------
 //  受付　ゾーン別に受付OBJ IDを取得
@@ -2078,10 +2145,9 @@ sub_ttown_demo_start_train:
   //電車移動
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, BTRAIN_ANIME_TYPE_START_HOME, BSW_NULL, BSW_NULL )
   
-  _TIME_WAIT( 45 ) //アニメを少し見せてフェードアウト
+  _TIME_WAIT( 60 ) //アニメを少し見せてフェードアウト
 }
 _RET
-
 
 //=====================================================================
 //  debug

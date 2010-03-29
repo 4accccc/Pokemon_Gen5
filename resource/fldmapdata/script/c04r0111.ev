@@ -645,7 +645,7 @@ sub_demo_train_arrival:
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
   
-  _TIME_WAIT( 50 ) //アニメを待つ
+  _TIME_WAIT( 100 ) //アニメを待つ
   
   //自機登場アニメ
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_demo_train_arrival_jiki )
@@ -668,9 +668,9 @@ sub_demo_train_arrival:
   
   //途中駅なら電車去る
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN
-    _TIME_WAIT( 20 ) //ちょっと待つ
+    _TIME_WAIT( 30 ) //ちょっと待つ
     _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, 0, BTRAIN_POS_RECEIPT, BSW_NULL )
-    _TIME_WAIT( 45 ) //ちょっと待つ
+    _TIME_WAIT( 40 ) //ちょっと待つ
     
     //ブラックアウト
     _BLACK_OUT()
@@ -680,7 +680,7 @@ sub_demo_train_arrival:
     _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_VANISH, TRUE, BSW_NULL, BSW_NULL )
     
     //ちょっと待つ
-    _TIME_WAIT( 15 )
+    _TIME_WAIT( 30 )
 
     //フェードイン
     _BLACK_IN()
@@ -763,7 +763,7 @@ sub_demo_train_starting:
   
   //電車発車
   _BSUBWAY_TOOL( BSWTOOL_SET_TRAIN_ANM, 3, BTRAIN_POS_HOME, BSW_NULL )
-  _TIME_WAIT( 30 ) //アニメを少し見せる
+  _TIME_WAIT( 60 ) //アニメを少し見せる
   
   //マップフェードアウト
   _MAP_FADE_BLACK_OUT()
