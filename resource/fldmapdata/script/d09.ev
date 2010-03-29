@@ -71,7 +71,7 @@ EVENT_START	ev_pos_d09_slipdown_01
 	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラパージ
-	_CAMERA_MOVE( 8485,163,1408921,2199600,483328,2613248, 30 )
+	_CAMERA_MOVE( 8485,163,1408921,2199600,483328,2613248, 20 )
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//ベテラン：若手を見て
@@ -79,7 +79,7 @@ EVENT_START	ev_pos_d09_slipdown_01
 	_OBJ_ANIME_WAIT()
 	
 	//ここの崖は すべれるぞ！
-	_BALLOONWIN_OBJMSG_POS( msg_d09_veteranm_01, D09_VETERANM_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_POS( msg_d09_veteranm_01, D09_VETERANM_01, POS_UL )
 	_MSGWIN_CLOSE()
 	
 	//ベテラン：下を向いて
@@ -96,7 +96,7 @@ EVENT_START	ev_pos_d09_slipdown_01
 	_OBJ_ANIME_WAIT()
 	
 	//やってみろ！
-	_BALLOONWIN_OBJMSG_POS( msg_d09_veteranm_02, D09_VETERANM_01, POS_DEFAULT )
+	_PLAINWIN_MSG_DOWN( msg_d09_veteranm_02 )
 	_MSGWIN_CLOSE()
 	
 	//若手：ジタバタ
@@ -104,11 +104,11 @@ EVENT_START	ev_pos_d09_slipdown_01
 	_OBJ_ANIME_WAIT()
 	
 	//ひー！俺には無理っす
-	_BALLOONWIN_OBJMSG_POS( msg_d09_trainerm_01, D09_TRAINERM_01, POS_DEFAULT )
+	_GIZAWIN_OBJMSG_POS( msg_d09_trainerm_01, D09_TRAINERM_01, POS_UR )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
-	_CAMERA_DEF_MOVE(30)		//カメラ主人公位置に復帰
+	_CAMERA_RECV_MOVE(20)	//カメラ復帰移動
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
@@ -146,7 +146,7 @@ _ANIME_LABEL	anm_stay_walk_r
 //若手：ジタバタ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_trainerm_move_01
-	_ANIME_DATA	AC_STAY_WALK_D_2F,2
+	_ANIME_DATA	AC_STAY_WALK_D_2F,4
 	_ANIME_DATA	ACMD_END,0
 
 
