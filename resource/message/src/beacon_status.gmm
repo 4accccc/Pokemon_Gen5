@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-03-26T18:47:57"/>
+	<create user="iwasawa" host="W00157" date="2010-03-29T16:07:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -387,19 +387,20 @@
 
 	<row id="msg_sys_freeword_ini" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>一言メッセージ初期化内容
-ローカライズ版でも8文字以内に収めること</comment>
+ローカライズ版でも8文字以内に収めること
+名前入力画面の初期文字列なので、漢字不可</comment>
 		<language name="JPN" width="256">げんき？</language>
-		<language name="JPN_KANJI" width="256">元気？</language>
+		<language name="JPN_KANJI" width="256">げんき？</language>
 	</row>
 
-	<row id="msg_beacon_001" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_beacon_001" back-color="#ffff80,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<language name="JPN" width="256">『[1:00:トレーナー名:0]』さんが
 ちかくに　います</language>
 		<language name="JPN_KANJI" width="256">『[1:00:トレーナー名:0]』さんが
 近くに　います</language>
 	</row>
 
-	<row id="msg_beacon_002" back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
+	<row id="msg_beacon_002" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">[1:00:トレーナー名:0]さんが
 やせいの　[1:01:ポケモン種族名:1]との
 せんとうを　かいし　しました！</language>
