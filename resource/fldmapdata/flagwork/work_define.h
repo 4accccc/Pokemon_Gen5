@@ -202,6 +202,7 @@
 #define WK_SCENE_R14R0201_LEG            16590 /* 0x40ce Ｒ13：ツチノカミイベント */
 #define WK_SCENE_D09                     16591 /* 0x40cf D09チャンピオンロード外側：イベント用ワーク */
 #define WK_SCENE_C08R0701_STOPPER        16592 /* 0x40d0 ソウリュウシティ：11番道路方面ストッパー */
+#define WK_SCENE_H04_ITEMNUM             16593 /* 0x40d1 ビレッジブリッジ：持っている配達物の数を保存する */
 
 #define WK_SCENE_AREA_END                16655 /* 0x410f  */
 

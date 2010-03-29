@@ -331,10 +331,10 @@
 #define FE_R18R0101_POKE_GET               315 /* 0x013b 18番道路プレハブ：ポケモン入手フラグ（ラー） */
 #define FE_D05_ITEMGET_01                  316 /* 0x013c 冷凍コンテナ（外）；アイテム入手フラグ */
 #define FE_R14R0201_LEG_MEET               317 /* 0x013d ツチノカミイベント：出会ったチェック */
-		/* not used   318(0x013e) */
-		/* not used   319(0x013f) */
-		/* not used   320(0x0140) */
-		/* not used   321(0x0141) */
+#define FE_H04_ITEM_01                     318 /* 0x013e ビレッジブリッジ：配達物を貰っているかの判定 */
+#define FE_H04_ITEM_03                     319 /* 0x013f ビレッジブリッジ：配達物を貰っているかの判定 */
+#define FE_H04_ITEMHAVING_01               320 /* 0x0140 ビレッジブリッジ：配達物を持っているかのフラグ */
+#define FE_H04_DELIVERY_01                 321 /* 0x0141 ビレッジブリッジ：キャモメのイベントが起動しているかのフラグ */
 		/* not used   322(0x0142) */
 		/* not used   323(0x0143) */
 		/* not used   324(0x0144) */
@@ -783,8 +783,8 @@
 #define FV_D09_VETERANM_02                 759 /* 0x02f7 チャンピオンロード外側：崖の下のベテラン */
 #define FV_C08R0701_STOPPER_01             760 /* 0x02f8 ソウリュウシティ：11番道路方面ストッパー */
 #define FV_STADIUM_SPORTSMAN               761 /* 0x02f9 ビッグスタジアム／リトルコートエントランス：選手とファン */
-		/* not used   762(0x02fa) */
-		/* not used   763(0x02fb) */
+#define FV_H04_POKE_01                     762 /* 0x02fa ビレッジブリッジ：キャモメ */
+#define FV_H04_ITEM_02                     763 /* 0x02fb ビレッジブリッジ：モンスターボール */
 		/* not used   764(0x02fc) */
 		/* not used   765(0x02fd) */
 		/* not used   766(0x02fe) */
@@ -2519,7 +2519,7 @@
 #define TMFLG_STADIUM_TR_BTL              2745 /* 0x0ab9 ビッグスタジアム／リトルコート：トレーナー再配置フラグ */
 		/* not used  2746(0x0aba) */
 #define TMFLG_T04R0101_BTL_FAMILY         2747 /* 0x0abb サザナミタウン：巨大別荘対戦フラグ */
-		/* not used  2748(0x0abc) */
+#define TMFLG_D01R0201_POKE16_BTL         2748 /* 0x0abc 夢の跡地B2：ムシャーナエンカウントフラグ */
 		/* not used  2749(0x0abd) */
 		/* not used  2750(0x0abe) */
 		/* not used  2751(0x0abf) */
