@@ -67,6 +67,9 @@
 #include "poke_tool/shinka_check.h"
 #include "demo/shinka_demo.h"
 
+// 図鑑詳細
+#include "../../app/zukan/detail/zukan_detail.h"
+
 
 // オーバーレイ
 FS_EXTERN_OVERLAY(zukan_toroku);
@@ -79,12 +82,13 @@ FS_EXTERN_OVERLAY(psel);
 FS_EXTERN_OVERLAY(subway_map);
 FS_EXTERN_OVERLAY(egg_demo);
 FS_EXTERN_OVERLAY(shinka_demo);
+FS_EXTERN_OVERLAY(zukan_detail);
 
 
 //============================================================================================
 //	定数定義
 //============================================================================================
-#define	TOP_MENU_SIZ	( 12 )
+#define	TOP_MENU_SIZ	( 13 )
 
 typedef struct {
 	u32	main_seq;
@@ -143,6 +147,10 @@ typedef struct {
   POKEPARTY*         party;
   SHINKA_DEMO_PARAM* shinka_demo_param;
 
+  // 図鑑詳細
+  ZUKAN_DETAIL_PARAM* zukan_detail_param;
+  u16                 poke_list[5];
+
 }KAWADA_MAIN_WORK;
 
 enum {
@@ -164,6 +172,7 @@ enum {
 	MAIN_SEQ_PMS_INPUT_SENTENCE_CALL,
 	MAIN_SEQ_EGG_DEMO_CALL,
 	MAIN_SEQ_SHINKA_DEMO_CALL,
+	MAIN_SEQ_ZUKAN_DETAIL_CALL,
   // ここまで
 
 	MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN,
@@ -178,6 +187,7 @@ enum {
 	MAIN_SEQ_PMS_INPUT_SENTENCE_CALL_RETURN,
 	MAIN_SEQ_EGG_DEMO_CALL_RETURN,
 	MAIN_SEQ_SHINKA_DEMO_CALL_RETURN,
+	MAIN_SEQ_ZUKAN_DETAIL_CALL_RETURN,
 	
   MAIN_SEQ_END,
 };
@@ -249,6 +259,10 @@ static void EggDemoExit( KAWADA_MAIN_WORK* wk );
 // 進化デモ
 static void ShinkaDemoInit( KAWADA_MAIN_WORK* wk );
 static void ShinkaDemoExit( KAWADA_MAIN_WORK* wk );
+
+// 図鑑詳細
+static void ZukanDetailInit( KAWADA_MAIN_WORK* wk );
+static void ZukanDetailExit( KAWADA_MAIN_WORK* wk );
 
 
 //============================================================================================
@@ -518,6 +532,18 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     break;
   case MAIN_SEQ_SHINKA_DEMO_CALL_RETURN:
     ShinkaDemoExit(wk);
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+
+
+  // 図鑑詳細
+  case MAIN_SEQ_ZUKAN_DETAIL_CALL:
+    ZukanDetailInit(wk);
+		wk->main_seq = MAIN_SEQ_ZUKAN_DETAIL_CALL_RETURN;
+    break;
+  case MAIN_SEQ_ZUKAN_DETAIL_CALL_RETURN:
+    ZukanDetailExit(wk);
 		FadeInSet( wk, MAIN_SEQ_INIT );
 		wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
@@ -1059,5 +1085,62 @@ static void ShinkaDemoExit( KAWADA_MAIN_WORK* wk )
   GFL_HEAP_FreeMemory( wk->pp );
   ZONEDATA_Close();
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(shinka_demo));
+}
+
+// 図鑑詳細
+static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
+{
+  u16 poke_list_num = 5;
+  ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( wk->gamedata );
+  u16 i;
+  
+  ZUKANSAVE_SetGraphicVersionUpFlag( zukan_savedata );
+ 
+  wk->poke_list[0] = 201;
+  wk->poke_list[1] = 202;
+  wk->poke_list[2] = 203;
+  wk->poke_list[3] = 151;
+  wk->poke_list[4] = 487;
+
+  for( i=0; i<poke_list_num; i++ )
+  {
+    POKEMON_PARAM* pp = PP_Create( wk->poke_list[i] , 1, 0, wk->heapID );
+    ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
+    ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
+    if( wk->poke_list[i] == 201 )
+    {
+      u16 j;
+      for( j=1; j<=6; j++ )
+      {
+        PP_Put( pp, ID_PARA_form_no, j );
+        ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
+        ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
+      }
+    }
+    if( wk->poke_list[i] == 487 )
+    {
+      u16 j;
+      for( j=1; j<=1; j++ )
+      {
+        PP_Put( pp, ID_PARA_form_no, j );
+        ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
+        ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
+      }
+    }
+    GFL_HEAP_FreeMemory( pp );
+  }
+
+	wk->zukan_detail_param = GFL_HEAP_AllocMemory( wk->heapID, sizeof(ZUKAN_DETAIL_PARAM) );
+  wk->zukan_detail_param->gamedata = wk->gamedata;
+  wk->zukan_detail_param->type     = ZUKAN_DETAIL_TYPE_INFO;
+  wk->zukan_detail_param->list     = wk->poke_list;
+  wk->zukan_detail_param->num      = poke_list_num;
+  wk->zukan_detail_param->no       = 0;
+
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, FS_OVERLAY_ID(zukan_detail), &ZUKAN_DETAIL_ProcData, wk->zukan_detail_param );
+}
+static void ZukanDetailExit( KAWADA_MAIN_WORK* wk )
+{
+  GFL_HEAP_FreeMemory( wk->zukan_detail_param );
 }
 

@@ -126,12 +126,14 @@ enum
 {
   OBJ_PAL_NUM_M_BUTTON_BAR       = 3,  // 前後ボタン、再生ボタン、スクロールバー、バーカーソル
   OBJ_PAL_NUM_M_FIELD            = 1,  // フォルム名の背面フィールド
+  OBJ_PAL_NUM_M_ARROW            = 2,  // トップ画面でフォルムを切り替えるための矢印
 };
 // 位置
 enum
 {
   OBJ_PAL_POS_M_BUTTON_BAR       = 0,
   OBJ_PAL_POS_M_FIELD            = 3,
+  OBJ_PAL_POS_M_ARROW            = 4,
 };
 
 
@@ -198,8 +200,10 @@ END_CMD;
 typedef enum
 {
   STATE_TOP,
+  STATE_TOP_OSHIDASHI,
 //  STATE_TOP_TO_EXCHANGE,
   STATE_EXCHANGE,
+  STATE_EXCHANGE_IREKAE,
 //  STATE_EXCHANGE_TO_TOP,
 }
 STATE;
@@ -297,6 +301,9 @@ enum
   OBJ_RES_FIELD_NCG,       // フォルム名の背面フィールド
   OBJ_RES_FIELD_NCL,
   OBJ_RES_FIELD_NCE,
+  OBJ_RES_ARROW_NCG,       // トップ画面でフォルムを切り替えるための矢印
+  OBJ_RES_ARROW_NCL,
+  OBJ_RES_ARROW_NCE,
   OBJ_RES_MAX,
 };
 enum
@@ -330,6 +337,8 @@ typedef enum
 {
   BUTTON_OBJ_FRONT_BACK,  // 前後ボタン
   BUTTON_OBJ_PLAY,        // 再生ボタン
+  BUTTON_OBJ_ARROW_L,     // トップ画面でフォルムを切り替えるための矢印
+  BUTTON_OBJ_ARROW_R,     // トップ画面でフォルムを切り替えるための矢印
   BUTTON_OBJ_MAX,
 
   // タッチ用
@@ -350,6 +359,35 @@ BUTTON_OBJ;
 #define  BAR_RANGE_TOUCH_Y_MAX  (7*8 +1*8-1)
 
 
+// 入れ替え
+typedef enum
+{
+  IREKAE_STATE_NONE,    // 入れ替えしていない
+  IREKAE_STATE_MOVE,    // 入れ替え中
+}
+IREKAE_STATE;
+
+#define IREKAE_THETA_ADD    (0x400)  // 増加分  // FX_SinIdx
+#define IREKAE_THETA_MAX   (0x8000)  // 半周    // FX_SinIdx
+
+
+// 押し出し
+typedef enum
+{
+  OSHIDASHI_STATE_NONE,    // 押し出ししていない
+  OSHIDASHI_STATE_MOVE,    // 押し出し中
+}
+OSHIDASHI_STATE;
+typedef enum
+{
+  OSHIDASHI_DIRECT_L,  // 左から右へ
+  OSHIDASHI_DIRECT_R,  // 右から左へ
+}
+OSHIDASHI_DIRECT;
+
+#define OSHIDASHI_SPEED  (2.0f)  // 押し出し速度(1フレームでこれだけ移動する)
+
+
 //=============================================================================
 /**
 *  構造体宣言
@@ -358,9 +396,14 @@ BUTTON_OBJ;
 // ボタン
 typedef struct
 {
-  u8            pos_x;   // ピクセル  // 左上
+  s16           set_pos_x;  // 配置座標
+  s16           set_pos_y;
+  u32           set_ncg;    // リソース
+  u32           set_ncl;
+  u32           set_nce;
+  u8            pos_x;   // ピクセル  // 左上  // タッチ座標
   u8            pos_y; 
-  u8            size_x;  // ピクセル
+  u8            size_x;  // ピクセル           // タッチサイズ
   u8            size_y;
   u8            anmseq_active;  // 押すことができるときのアニメ番号
   u8            anmseq_push;    // 押したアニメ中のアニメ番号
@@ -462,6 +505,14 @@ typedef struct
   
   // 状態
   STATE                       state;
+
+  // 入れ替え
+  IREKAE_STATE                irekae_state;
+  int                         irekae_theta;  // FX_SinIdxの引数
+
+  // 押し出し
+  OSHIDASHI_STATE             oshidashi_state;
+  OSHIDASHI_DIRECT            oshidashi_direct;
 }
 ZUKAN_DETAIL_FORM_WORK;
 
@@ -484,11 +535,12 @@ static void Zukan_Detail_Form_WritePokeCurrText( ZUKAN_DETAIL_FORM_PARAM* param,
 static void Zukan_Detail_Form_WritePokeCompText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Form_ScrollPokeText( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
-// OBJ  // 前後ボタン、再生ボタン、スクロールバー、バーカーソル  // フォルム名の背面フィールド
+// OBJ  // 前後ボタン、再生ボタン、スクロールバー、バーカーソル  // フォルム名の背面フィールド  // トップ画面でフォルムを切り替えるための矢印
 static void Zukan_Detail_Form_ObjBaseCreate( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Form_ObjBaseDelete( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 static BUTTON_OBJ Zukan_Detail_Form_ObjButtonCheckPush( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Form_ObjButtonAroowSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Form_ObjButtonMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 static void Zukan_Detail_Form_ObjFieldSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -574,6 +626,9 @@ static void Zukan_Detail_Form_Input( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAI
 // 状態を遷移させる
 static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn,
                 STATE state );
+
+// 入れ替え
+static void Zukan_Detail_Form_IrekaeMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 
 //=============================================================================
@@ -1091,10 +1146,13 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
   {
     // 前後ボタン、再生ボタン
     Zukan_Detail_Form_ObjButtonMain( param, work, cmn );
-  
+ 
+    // 入れ替え 
+    Zukan_Detail_Form_IrekaeMain( param, work, cmn );  // Zukan_Detail_Form_IrekaeMainでスクロールバーを更新する命令を出しているので、
+
     // スクロールバー
-    Zukan_Detail_Form_ObjBarMain( param, work, cmn );
-   
+    Zukan_Detail_Form_ObjBarMain( param, work, cmn );  // 必ずZukan_Detail_Form_IrekaeMain→Zukan_Detail_Form_ObjBarMainの順で。
+
     // 最背面
     ZKNDTL_COMMON_RearMain( work->rear_wk_m );
     ZKNDTL_COMMON_RearMain( work->rear_wk_s );
@@ -1224,6 +1282,12 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
       {
         if( work->diff_num >= 2 )
         {
+          Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE_IREKAE );
+        }
+
+/*        
+        if( work->diff_num >= 2 )
+        {
           u16 no;
           MCSS_WORK* mw;
           POKE_MCSS_CALL_BACK_DATA* pmcbd;
@@ -1306,6 +1370,7 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
             work->bar_cursor_move_by_key = TRUE;
           }
         }
+*/
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
@@ -2423,6 +2488,9 @@ static void Zukan_Detail_Form_ChangePoke( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
 
   // 変更されたポケモン用に、スクロールバーを用意する
   Zukan_Detail_Form_ObjBarSetup( param, work, cmn );
+
+  // 変更されたポケモン用に、トップ画面でフォルムを切り替えるための矢印を用意する
+  Zukan_Detail_Form_ObjButtonAroowSetup( param, work, cmn );
 }
 
 //-------------------------------------
@@ -2563,50 +2631,97 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
                 STATE state )
 {
   ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
- 
+  BOOL b_top_exchange = FALSE;  // STATE_TOPからSTATE_EXCHANGEに変更するとき、もしくはその逆のときTRUE
+
   // 遷移前の状態 
   switch(work->state)
   {
   case STATE_TOP:
     {
-      if( work->diff_num >= 2 )
+      // 遷移後の状態
+      switch(state)
       {
-        VecFx32 p;
+      case STATE_EXCHANGE:
+        {
+          b_top_exchange = TRUE;
+          
+          if( work->diff_num >= 2 )
+          {
+            VecFx32 p;
 
-        MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
-        MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
 
-        PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
-        MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
-        MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &p );
+            PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &p );
+          }
+
+          // タッチバー
+          ZUKAN_DETAIL_TOUCHBAR_SetType(
+              touchbar,
+              ZUKAN_DETAIL_TOUCHBAR_TYPE_FORM,
+              ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
+        }
+        break;
       }
-
-      // タッチバー
-      ZUKAN_DETAIL_TOUCHBAR_SetType(
-          touchbar,
-          ZUKAN_DETAIL_TOUCHBAR_TYPE_FORM,
-          ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
     }
     break;
   case STATE_EXCHANGE:
     {
-      if( work->diff_num >= 2 )
+      // 遷移後の状態
+      switch(state)
       {
-        VecFx32 p;
+      case STATE_TOP:
+        {
+          b_top_exchange = TRUE;
 
-        MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &poke_pos[POKE_CURR_POS_CENTER] );
-        MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &poke_pos[POKE_CURR_POS_CENTER] );
+          if( work->diff_num >= 2 )
+          {
+            VecFx32 p;
+
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &poke_pos[POKE_CURR_POS_CENTER] );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &poke_pos[POKE_CURR_POS_CENTER] );
       
-        PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
-        MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
-        MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &p );
-      }
+            PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &p );
+          }
 
-      // タッチバー
-      ZUKAN_DETAIL_TOUCHBAR_SetType(
-          touchbar,
-          ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
-          ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
+          // タッチバー
+          ZUKAN_DETAIL_TOUCHBAR_SetType(
+              touchbar,
+              ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
+              ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
+        }
+        break;
+      case STATE_EXCHANGE_IREKAE:
+        {
+          if( work->irekae_state == IREKAE_STATE_NONE )
+          {
+            work->irekae_state = IREKAE_STATE_MOVE;
+            work->irekae_theta = 0;
+          }
+          else
+          {
+            // 何もしない
+          }
+        }
+        break;
+      }
+    }
+    break;
+  case STATE_EXCHANGE_IREKAE:
+    {
+      // 遷移後の状態
+      switch(state)
+      {
+      case STATE_EXCHANGE:
+        {
+          // 何もしない
+        }
+        break;
+      }
     }
     break;
   }
@@ -2614,16 +2729,22 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
   // 遷移後の状態
   work->state = state;
 
-  // テキスト
-  // 遷移された状態で、テキストをスクロールさせて、比較フォルムのテキストを書くor消す
-  Zukan_Detail_Form_ScrollPokeText( param, work, cmn );
-  Zukan_Detail_Form_WritePokeCompText( param, work, cmn );
+  if( b_top_exchange )
+  {
+    // テキスト
+    // 遷移された状態で、テキストをスクロールさせて、比較フォルムのテキストを書くor消す
+    Zukan_Detail_Form_ScrollPokeText( param, work, cmn );
+    Zukan_Detail_Form_WritePokeCompText( param, work, cmn );
 
-  // テキストに合わせて、フォルム名の背面フィールドを用意する
-  Zukan_Detail_Form_ObjFieldSetup( param, work, cmn );
+    // テキストに合わせて、フォルム名の背面フィールドを用意する
+    Zukan_Detail_Form_ObjFieldSetup( param, work, cmn );
 
-  // 変更された状態用に、スクロールバーを用意する
-  Zukan_Detail_Form_ObjBarSetup( param, work, cmn );
+    // 変更された状態用に、スクロールバーを用意する
+    Zukan_Detail_Form_ObjBarSetup( param, work, cmn );
+
+    // 変更された状態用に、トップ画面でフォルムを切り替えるための矢印を用意する
+    Zukan_Detail_Form_ObjButtonAroowSetup( param, work, cmn );
+ }
 }
 
 //-------------------------------------
@@ -2675,6 +2796,26 @@ static void Zukan_Detail_Form_ObjBaseCreate( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
                                      NARC_zukan_gra_info_formewin_obj_NANR,
                                      param->heap_id );
 
+    work->obj_res[OBJ_RES_ARROW_NCL] = GFL_CLGRP_PLTT_RegisterEx( 
+                                     handle,
+                                     NARC_zukan_gra_info_mapwin_obj_NCLR,
+                                     CLSYS_DRAW_MAIN,
+                                     OBJ_PAL_POS_M_ARROW*0x20,
+                                     0,
+                                     OBJ_PAL_NUM_M_ARROW,
+                                     param->heap_id );	
+    work->obj_res[OBJ_RES_ARROW_NCG] = GFL_CLGRP_CGR_Register(
+                                     handle,
+                                     NARC_zukan_gra_info_mapwin_obj_NCGR,
+                                     FALSE,
+                                     CLSYS_DRAW_MAIN,
+                                     param->heap_id );
+    work->obj_res[OBJ_RES_ARROW_NCE] = GFL_CLGRP_CELLANIM_Register(
+                                     handle,
+                                     NARC_zukan_gra_info_mapwin_obj_NCER,
+                                     NARC_zukan_gra_info_mapwin_obj_NANR,
+                                     param->heap_id );
+
     GFL_ARC_CloseDataHandle( handle );
   }
 
@@ -2707,6 +2848,11 @@ static void Zukan_Detail_Form_ObjBaseCreate( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
 
   // ボタン
   {
+    work->button[BUTTON_OBJ_FRONT_BACK].set_pos_x              = 8*8;
+    work->button[BUTTON_OBJ_FRONT_BACK].set_pos_y              = 19*8;
+    work->button[BUTTON_OBJ_FRONT_BACK].set_ncg                = OBJ_RES_BUTTON_BAR_NCG;
+    work->button[BUTTON_OBJ_FRONT_BACK].set_ncl                = OBJ_RES_BUTTON_BAR_NCL;
+    work->button[BUTTON_OBJ_FRONT_BACK].set_nce                = OBJ_RES_BUTTON_BAR_NCE;
     work->button[BUTTON_OBJ_FRONT_BACK].pos_x                  = 8*8;
     work->button[BUTTON_OBJ_FRONT_BACK].pos_y                  = 19*8;
     work->button[BUTTON_OBJ_FRONT_BACK].size_x                 = 8*8;
@@ -2718,6 +2864,11 @@ static void Zukan_Detail_Form_ObjBaseCreate( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
     work->button[BUTTON_OBJ_FRONT_BACK].state                  = BUTTON_STATE_ACTIVE;
     work->button[BUTTON_OBJ_FRONT_BACK].clwk                   = NULL;
 
+    work->button[BUTTON_OBJ_PLAY].set_pos_x              = 16*8;
+    work->button[BUTTON_OBJ_PLAY].set_pos_y              = 19*8;
+    work->button[BUTTON_OBJ_PLAY].set_ncg                = OBJ_RES_BUTTON_BAR_NCG;
+    work->button[BUTTON_OBJ_PLAY].set_ncl                = OBJ_RES_BUTTON_BAR_NCL;
+    work->button[BUTTON_OBJ_PLAY].set_nce                = OBJ_RES_BUTTON_BAR_NCE;
     work->button[BUTTON_OBJ_PLAY].pos_x                  = 16*8;
     work->button[BUTTON_OBJ_PLAY].pos_y                  = 19*8;
     work->button[BUTTON_OBJ_PLAY].size_x                 = 8*8;
@@ -2728,6 +2879,38 @@ static void Zukan_Detail_Form_ObjBaseCreate( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
     work->button[BUTTON_OBJ_PLAY].se                     = SEQ_SE_DECIDE1;
     work->button[BUTTON_OBJ_PLAY].state                  = BUTTON_STATE_ACTIVE;
     work->button[BUTTON_OBJ_PLAY].clwk                   = NULL;
+
+    work->button[BUTTON_OBJ_ARROW_L].set_pos_x              = 128;
+    work->button[BUTTON_OBJ_ARROW_L].set_pos_y              = 96;
+    work->button[BUTTON_OBJ_ARROW_L].set_ncg                = OBJ_RES_ARROW_NCG;
+    work->button[BUTTON_OBJ_ARROW_L].set_ncl                = OBJ_RES_ARROW_NCL;
+    work->button[BUTTON_OBJ_ARROW_L].set_nce                = OBJ_RES_ARROW_NCE;
+    work->button[BUTTON_OBJ_ARROW_L].pos_x                  = 0;
+    work->button[BUTTON_OBJ_ARROW_L].pos_y                  = 0;
+    work->button[BUTTON_OBJ_ARROW_L].size_x                 = 16;
+    work->button[BUTTON_OBJ_ARROW_L].size_y                 = 16;
+    work->button[BUTTON_OBJ_ARROW_L].anmseq_active          = 4;
+    work->button[BUTTON_OBJ_ARROW_L].anmseq_push            = 5;
+    work->button[BUTTON_OBJ_ARROW_L].key                    = PAD_BUTTON_L;
+    work->button[BUTTON_OBJ_ARROW_L].se                     = SEQ_SE_DECIDE1;
+    work->button[BUTTON_OBJ_ARROW_L].state                  = BUTTON_STATE_ACTIVE;
+    work->button[BUTTON_OBJ_ARROW_L].clwk                   = NULL;
+
+    work->button[BUTTON_OBJ_ARROW_R].set_pos_x              = 224;
+    work->button[BUTTON_OBJ_ARROW_R].set_pos_y              = 96;
+    work->button[BUTTON_OBJ_ARROW_R].set_ncg                = OBJ_RES_ARROW_NCG;
+    work->button[BUTTON_OBJ_ARROW_R].set_ncl                = OBJ_RES_ARROW_NCL;
+    work->button[BUTTON_OBJ_ARROW_R].set_nce                = OBJ_RES_ARROW_NCE;
+    work->button[BUTTON_OBJ_ARROW_R].pos_x                  = 240;
+    work->button[BUTTON_OBJ_ARROW_R].pos_y                  = 0;
+    work->button[BUTTON_OBJ_ARROW_R].size_x                 = 16;
+    work->button[BUTTON_OBJ_ARROW_R].size_y                 = 16;
+    work->button[BUTTON_OBJ_ARROW_R].anmseq_active          = 2;
+    work->button[BUTTON_OBJ_ARROW_R].anmseq_push            = 3;
+    work->button[BUTTON_OBJ_ARROW_R].key                    = PAD_BUTTON_R;
+    work->button[BUTTON_OBJ_ARROW_R].se                     = SEQ_SE_DECIDE1;
+    work->button[BUTTON_OBJ_ARROW_R].state                  = BUTTON_STATE_ACTIVE;
+    work->button[BUTTON_OBJ_ARROW_R].clwk                   = NULL;
   }
 
   // ボタンCLWK作成
@@ -2738,15 +2921,15 @@ static void Zukan_Detail_Form_ObjBaseCreate( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
     for( i=0; i<BUTTON_OBJ_MAX; i++ )
     {
       GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
-      cldata.pos_x      = work->button[i].pos_x;
-      cldata.pos_y      = work->button[i].pos_y;
+      cldata.pos_x      = work->button[i].set_pos_x;
+      cldata.pos_y      = work->button[i].set_pos_y;
       cldata.anmseq     = work->button[i].anmseq_active;
       cldata.softpri    = 0;
       cldata.bgpri      = BG_FRAME_PRI_M_REAR;
 
       work->button[i].clwk = GFL_CLACT_WK_Create(
                              work->clunit,
-                             work->obj_res[OBJ_RES_BUTTON_BAR_NCG], work->obj_res[OBJ_RES_BUTTON_BAR_NCL], work->obj_res[OBJ_RES_BUTTON_BAR_NCE],
+                             work->obj_res[work->button[i].set_ncg], work->obj_res[work->button[i].set_ncl], work->obj_res[work->button[i].set_nce],
                              &cldata,
                              CLSYS_DEFREND_MAIN,
                              param->heap_id );
@@ -2785,6 +2968,10 @@ static void Zukan_Detail_Form_ObjBaseDelete( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
     GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_RES_FIELD_NCL] );
     GFL_CLGRP_CGR_Release( work->obj_res[OBJ_RES_FIELD_NCG] );
     GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_RES_FIELD_NCE] );
+
+    GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_RES_ARROW_NCL] );
+    GFL_CLGRP_CGR_Release( work->obj_res[OBJ_RES_ARROW_NCG] );
+    GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_RES_ARROW_NCE] );
   }
 }
 
@@ -2797,10 +2984,14 @@ static BUTTON_OBJ Zukan_Detail_Form_ObjButtonCheckPush( ZUKAN_DETAIL_FORM_PARAM*
   // キー
   for( i=0; i<BUTTON_OBJ_MAX; i++ )
   {
-    if( GFL_UI_KEY_GetTrg() & work->button[i].key )
+    BOOL on_off = GFL_CLACT_WK_GetDrawEnable( work->button[i].clwk );
+    if( on_off )
     {
-      push_button = i;
-      break;
+      if( GFL_UI_KEY_GetTrg() & work->button[i].key )
+      {
+        push_button = i;
+        break;
+      }
     }
   }
 
@@ -2812,11 +3003,15 @@ static BUTTON_OBJ Zukan_Detail_Form_ObjButtonCheckPush( ZUKAN_DETAIL_FORM_PARAM*
       u8 i;
       for( i=0; i<BUTTON_OBJ_MAX; i++ )
       {
-        if(    work->button[i].pos_x <= x && x < work->button[i].pos_x + work->button[i].size_x
-            && work->button[i].pos_y <= y && y < work->button[i].pos_y + work->button[i].size_y )
+        BOOL on_off = GFL_CLACT_WK_GetDrawEnable( work->button[i].clwk );
+        if( on_off )
         {
-          push_button = i;
-          break;
+          if(    work->button[i].pos_x <= x && x < work->button[i].pos_x + work->button[i].size_x
+              && work->button[i].pos_y <= y && y < work->button[i].pos_y + work->button[i].size_y )
+          {
+            push_button = i;
+            break;
+          }
         }
       }
     }
@@ -2837,6 +3032,40 @@ static BUTTON_OBJ Zukan_Detail_Form_ObjButtonCheckPush( ZUKAN_DETAIL_FORM_PARAM*
   }
 
   return push_button; 
+}
+
+static void Zukan_Detail_Form_ObjButtonAroowSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 現在の状態で、トップ画面でフォルムを切り替えるための矢印を準備する
+
+  BOOL disp = FALSE;
+  switch(work->state)
+  {
+  case STATE_TOP:
+    {
+      if( work->diff_num >= 2 )
+      {
+        disp = TRUE;  // 表示する
+      }
+    }
+    break;
+  case STATE_EXCHANGE:
+    {
+      // 表示しない
+    }
+    break;
+  }
+
+  if( disp )
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->button[BUTTON_OBJ_ARROW_L].clwk, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( work->button[BUTTON_OBJ_ARROW_R].clwk, TRUE );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->button[BUTTON_OBJ_ARROW_L].clwk, FALSE );
+    GFL_CLACT_WK_SetDrawEnable( work->button[BUTTON_OBJ_ARROW_R].clwk, FALSE );
+  }
 }
 
 static void Zukan_Detail_Form_ObjButtonMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
@@ -3199,6 +3428,150 @@ static u16 Zukan_Detail_Form_GetDiffInfoListIdx( ZUKAN_DETAIL_FORM_PARAM* param,
     }
   }
   return ret_idx;
+}
+
+//-------------------------------------
+/// 入れ替え
+//=====================================
+static void Zukan_Detail_Form_IrekaeMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  if( work->irekae_state == IREKAE_STATE_MOVE )
+  {
+    const f32  left_x  =  -64.0f;
+    const f32  right_x =   64.0f;
+    const f32  base_y  =  -24.0f;
+    const f32  height  =   24.0f;
+    const f32  curr_z  = -12800.0f;  // 後ろに描画されるように奥のほうへ配置
+    const f32  comp_z  =  128.0f;    // 前に描画されるように手前のほうへ配置
+    fx16 s_fx16;
+    f32  s;
+
+    work->irekae_theta += IREKAE_THETA_ADD;
+    if( work->irekae_theta >= IREKAE_THETA_MAX )
+    {
+      work->irekae_theta = IREKAE_THETA_MAX;
+      work->irekae_state = IREKAE_STATE_NONE;
+
+      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE );
+
+
+        if( work->diff_num >= 2 )
+        {
+          u16 no;
+          MCSS_WORK* mw;
+          POKE_MCSS_CALL_BACK_DATA* pmcbd;
+
+          // 位置入れ替え
+          MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
+          MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
+          {
+            VecFx32 p;
+            PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
+            
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
+            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &p );
+          }
+          
+          // 番号、ポインタ入れ替え
+          no = work->diff_curr_no;
+          work->diff_curr_no = work->diff_comp_no;
+          work->diff_comp_no = no;
+
+          mw = work->poke_mcss_wk[POKE_CURR_F].poke_wk;
+          work->poke_mcss_wk[POKE_CURR_F].poke_wk = work->poke_mcss_wk[POKE_COMP_F].poke_wk;
+          work->poke_mcss_wk[POKE_COMP_F].poke_wk = mw;
+
+          pmcbd = work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data;
+          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data;
+          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data = pmcbd;
+          work->poke_mcss_wk[POKE_CURR_F].poke_call_back_data->poke_idx = POKE_COMP_F;
+          work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data->poke_idx = POKE_CURR_F;
+
+          mw = work->poke_mcss_wk[POKE_CURR_B].poke_wk;
+          work->poke_mcss_wk[POKE_CURR_B].poke_wk = work->poke_mcss_wk[POKE_COMP_B].poke_wk;
+          work->poke_mcss_wk[POKE_COMP_B].poke_wk = mw;
+
+          pmcbd = work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data;
+          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data = work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data;
+          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data = pmcbd;
+          work->poke_mcss_wk[POKE_CURR_B].poke_call_back_data->poke_idx = POKE_COMP_B;
+          work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data->poke_idx = POKE_CURR_B;
+
+          // ポケアイコン変更
+          Zukan_Detail_Form_ChangePokeicon( param, work, cmn );
+
+          // テキスト
+          // テキストはOBJではなくBGなので、入れ替えできないので丸々書き直し
+          Zukan_Detail_Form_WritePokeCurrText( param, work, cmn );
+          Zukan_Detail_Form_WritePokeCompText( param, work, cmn );
+
+          // テキストに合わせて、フォルム名の背面フィールドを用意する
+          Zukan_Detail_Form_ObjFieldSetup( param, work, cmn );
+
+          // 図鑑セーブデータに閲覧中データ設定
+          {
+            u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
+
+            GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+            ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( gamedata );
+
+            u32  sex  = work->diff_info_list[work->diff_curr_no].sex;
+            BOOL rare = (work->diff_info_list[work->diff_curr_no].rare==0)?FALSE:TRUE;
+            u32  form = work->diff_info_list[work->diff_curr_no].form;
+
+            ZUKANSAVE_SetDrawData(  zkn_sv, monsno, sex, rare, form );
+
+#ifdef DEBUG_KAWADA
+            {
+              OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, diff_no=%d, f=%d, s=%d, r=%d\n", monsno, work->diff_curr_no, form, sex, rare );
+            }
+#endif
+#ifdef DEBUG_KAWADA
+            {
+              ZUKANSAVE_GetDrawData(  zkn_sv, monsno, &sex, &rare, &form, param->heap_id );
+              OS_Printf( "ZUKAN_DETAIL_FORM : monsno=%d, ZUKANSAVE_GetDrawData, f=%d, s=%d, r=%d\n", monsno, form, sex, rare );
+            }
+#endif
+          }
+
+          if( work->diff_num >= 3 )
+          {
+            work->bar_cursor_move_by_key = TRUE;
+          }
+        }
+   
+
+    }
+    else
+    {
+      s_fx16 = FX_SinIdx(work->irekae_theta);
+      s = FX_FX16_TO_F32(s_fx16); 
+
+      // POKE_CURR_
+      {
+        f32 x = ( right_x - left_x ) * work->irekae_theta / (f32)IREKAE_THETA_MAX + left_x;
+        f32 y = height * s + base_y;
+        VecFx32 p;
+        p.x = FX_F32_TO_FX32(x);
+        p.y = FX_F32_TO_FX32(y);
+        p.z = FX_F32_TO_FX32(curr_z);
+        MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
+        MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &p );
+      }
+     
+      // POKE_COMP_
+      {
+        f32 x = ( left_x - right_x ) * work->irekae_theta / (f32)IREKAE_THETA_MAX + right_x;
+        f32 y = - height * s + base_y;
+        VecFx32 p;
+        p.x = FX_F32_TO_FX32(x);
+        p.y = FX_F32_TO_FX32(y);
+        p.z = FX_F32_TO_FX32(comp_z);
+        MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
+        MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &p );
+      }
+    }
+  }
 }
 
 

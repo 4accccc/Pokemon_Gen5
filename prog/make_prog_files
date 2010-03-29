@@ -1998,6 +1998,7 @@ SRCS_OVERLAY_SUBWAY_MAP = app/subway_map/subway_map.c \
 #===> SRCS_OVERLAY_PMSINPUT
 #===> SRCS_OVERLAY_PSEL
 #===> SRCS_OVERLAY_SUBWAY_MAP
+#===> SRCS_OVERLAY_ZUKAN_DETAIL
 SRCS_OVERLAY_KAWADA_DEBUG = test/kawada/d_kawada.c
 
 # ポケモンドリームキャッチからフィールドへの復帰管理
