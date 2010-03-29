@@ -6223,7 +6223,7 @@ typedef struct {
 static const FLDMENUFUNC_HEADER ZukanMenuHeader =
 {
   1,    //リスト項目数
-  8,    //表示最大項目数
+  9,    //表示最大項目数
   0,    //ラベル表示Ｘ座標
   13,   //項目表示Ｘ座標
   0,    //カーソル表示Ｘ座標
@@ -6251,6 +6251,7 @@ static const FLDMENUFUNC_LIST ZukanMenuList[] =
   { DEBUG_FIELD_ZUKAN_11, (void*)7 },   // 地方見た
   { DEBUG_FIELD_ZUKAN_09, (void*)2 },   // ランダム
   { DEBUG_FIELD_ZUKAN_03, (void*)3 },   // フォルム
+  { DEBUG_FIELD_ZUKAN_12, (void*)8 },   // 言語
   { DEBUG_FIELD_ZUKAN_05, (void*)4 },   // 全国フラグ
   { DEBUG_FIELD_ZUKAN_06, (void*)5 },   // バージョンアップ
 };
@@ -6269,7 +6270,7 @@ static const DEBUG_MENU_INITIALIZER DebugMenuZukanImitializer = {
 /// proto
 //--------------------------------------------------------------
 static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk );
-static void SetZukanDataOne( DEBUG_ZUKAN_WORK * wk, u16 mons, u16 form, u32 mode );
+static void SetZukanDataOne( DEBUG_ZUKAN_WORK * wk, u16 mons, u16 form, u16 lang, u32 mode );
 
 
 //--------------------------------------------------------------
@@ -6334,7 +6335,7 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
       {
         u32 i;
         for( i=1; i<=MONSNO_END; i++ ){
-          SetZukanDataOne( wk, i, 0, 0 );
+          SetZukanDataOne( wk, i, 0, PM_LANG, 0 );
         }
       }
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
@@ -6344,7 +6345,7 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
       {
         u32 i;
         for( i=1; i<=MONSNO_END; i++ ){
-          SetZukanDataOne( wk, i, 0, 1 );
+          SetZukanDataOne( wk, i, 0, PM_LANG, 1 );
         }
       }
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
@@ -6360,9 +6361,9 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
           if( rand == 2 ){ continue; }
           max = ZUKANSAVE_GetFormMax( i );
           if( max != 0 ){
-            SetZukanDataOne( wk, i, GFL_STD_MtRand(max), rand );
+            SetZukanDataOne( wk, i, GFL_STD_MtRand(max), PM_LANG, rand );
           }else{
-            SetZukanDataOne( wk, i, 0, rand );
+            SetZukanDataOne( wk, i, 0, PM_LANG, rand );
           }
         }
       }
@@ -6377,7 +6378,7 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
           max = ZUKANSAVE_GetFormMax( i );
           if( max != 0 ){
             for( j=0; j<max; j++ ){
-              SetZukanDataOne( wk, i, j, 0 );
+              SetZukanDataOne( wk, i, j, PM_LANG, 0 );
             }
           }
         }
@@ -6402,7 +6403,7 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
 				buf = POKE_PERSONAL_GetZenkokuToChihouArray( work->heapID, NULL );
         for( i=1; i<=MONSNO_END; i++ ){
 					if( buf[i] != 0 ){
-						SetZukanDataOne( wk, i, 0, 0 );
+						SetZukanDataOne( wk, i, 0, PM_LANG, 0 );
 					}
         }
 				GFL_HEAP_FreeMemory( buf );
@@ -6417,10 +6418,26 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
 				buf = POKE_PERSONAL_GetZenkokuToChihouArray( work->heapID, NULL );
         for( i=1; i<=MONSNO_END; i++ ){
 					if( buf[i] != 0 ){
-	          SetZukanDataOne( wk, i, 0, 1 );
+	          SetZukanDataOne( wk, i, 0, PM_LANG, 1 );
 					}
         }
 				GFL_HEAP_FreeMemory( buf );
+      }
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
+
+    case 8:     // 言語
+      {
+        u32 i;
+        for( i=1; i<=MONSNO_END; i++ ){
+          SetZukanDataOne( wk, i, 0, LANG_JAPAN, 0 );
+          SetZukanDataOne( wk, i, 0, LANG_ENGLISH, 0 );
+          SetZukanDataOne( wk, i, 0, LANG_FRANCE, 0 );
+          SetZukanDataOne( wk, i, 0, LANG_ITALY, 0 );
+          SetZukanDataOne( wk, i, 0, LANG_GERMANY, 0 );
+          SetZukanDataOne( wk, i, 0, LANG_SPAIN, 0 );
+          SetZukanDataOne( wk, i, 0, LANG_KOREA, 0 );
+        }
       }
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
@@ -6431,9 +6448,11 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
   return GMEVENT_RES_CONTINUE;
 }
 
-static void SetZukanDataOne( DEBUG_ZUKAN_WORK * wk, u16 mons, u16 form, u32 mode )
+static void SetZukanDataOne( DEBUG_ZUKAN_WORK * wk, u16 mons, u16 form, u16 lang, u32 mode )
 {
   POKEMON_PARAM * pp = PP_Create( mons, 50, 0, wk->heapID );
+	PP_Put( pp, ID_PARA_form_no, form );
+  PP_Put( pp, ID_PARA_country_code, lang );
 
   if( mode == 0 ){
     ZUKANSAVE_SetPokeGet( wk->sv, pp );
