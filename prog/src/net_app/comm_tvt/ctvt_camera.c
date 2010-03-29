@@ -177,7 +177,10 @@ void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
       }
     }
   }
-  CAMERA_SYS_UpdateCameta( camWork->camSys );
+  if( COMM_TVT_CanUseCamera() == TRUE )
+  {
+    CAMERA_SYS_UpdateCameta( camWork->camSys );
+  }
 #if (defined(SDK_TWL))
   
   if( COMM_TVT_CanUseCamera() == TRUE )

@@ -115,6 +115,7 @@ struct _ACTING_WORK
   u16   makuOffset;
   u8    playerIdx;
   BOOL  scrollLockFirst;
+  BOOL  lockScroll;
   BOOL  forceScroll;
   ARCHANDLE *arcHandle;
   
@@ -275,7 +276,8 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   work->mainSeq = AMS_FADEIN;
   work->isEditorMode = FALSE;
   work->scrollLockFirst = TRUE; //–‹‚ªã‚ª‚è‚«‚é‚Ü‚Å‚ÍŒÅ’è‚³‚¹‚é
-  work->forceScroll = FALSE;   
+  work->forceScroll = FALSE;
+  work->lockScroll = FALSE;
 
   work->vblankFuncTcb = GFUser_VIntr_CreateTCB( STA_ACT_VBlankFunc , (void*)work , 64 );
   
@@ -373,7 +375,6 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   work->bgmSeqData = work->initWork->distData->midiSeqData;
   work->bgmBankData = work->initWork->distData->midiBnkData;
   work->bgmWaveData = work->initWork->distData->midiWaveData;
-  PMDSND_PresetExtraMusic( work->bgmSeqData , work->bgmBankData , SEQ_BGM_MSL_DL_01 );
   
   return work;
 }
@@ -1000,6 +1001,7 @@ static void STA_ACT_UpdateScroll( ACTING_WORK *work )
 #endif
   {
     if( work->forceScroll == FALSE &&
+        work->lockScroll == FALSE &&
         work->scrollLockFirst == FALSE ) 
     {
       s16 scroll;
@@ -1394,6 +1396,11 @@ void STA_ACT_SetUpdateAttention( ACTING_WORK *work )
 //--------------------------------------------------------------
 //  BGMŠÖŒW
 //--------------------------------------------------------------
+void  STA_ACT_ReadyBgm( ACTING_WORK *work )
+{
+  PMDSND_PresetExtraMusic( work->bgmSeqData , work->bgmBankData , SEQ_BGM_MSL_DL_01 );
+}
+
 void  STA_ACT_StartBgm( ACTING_WORK *work )
 {
   PMDSND_PlayExtraMusic(SEQ_BGM_MSL_DL_01);
@@ -1938,6 +1945,10 @@ const u8 STA_ACT_GetPokeEquipPoint( ACTING_WORK *work , const u8 pokeNo )
   return work->initWork->musPoke[pokeNo]->point;
 }
 
+void STA_ACT_SetLockScroll( ACTING_WORK *work , const BOOL flg )
+{
+  work->lockScroll = flg;
+}
 void STA_ACT_SetForceScroll( ACTING_WORK *work , const BOOL flg )
 {
   work->forceScroll = flg;

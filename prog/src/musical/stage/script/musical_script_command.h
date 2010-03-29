@@ -69,7 +69,8 @@
 #define SCRIPT_ENUM_PokeAppealScript (50)
 #define SCRIPT_ENUM_PokeSubScript (51)
 #define SCRIPT_ENUM_BgmSetDataLink (52)
-#define SEQ_END             (53)
+#define SCRIPT_ENUM_BgmReady (53)
+#define SEQ_END             (54)
 
 #ifndef __C_NO_DEF_
 
@@ -980,6 +981,17 @@
   .endm
 
 #pragma mark [>Music Command
+//======================================================================
+/**
+ * @brief BGM：準備 (SEQの後に行い、準備→データ関連付け→再生)
+ *
+ * #param_num 0
+ */
+//======================================================================
+  .macro  ComBgmReady
+  .short  SCRIPT_ENUM_BgmReady
+  .endm
+
 //======================================================================
 /**
  * @brief BGM：再生

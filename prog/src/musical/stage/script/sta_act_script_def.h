@@ -108,6 +108,7 @@ extern void STA_ACT_FinishMainPart( ACTING_WORK *work );
 extern void	STA_ACT_LoadBg( ACTING_WORK *work , const u8 bgNo );
 extern void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 msgSpd );
 extern void STA_ACT_HideMessage( ACTING_WORK *work );
+extern void  STA_ACT_ReadyBgm( ACTING_WORK *work );
 extern void  STA_ACT_StartBgm(  ACTING_WORK *work );
 extern void  STA_ACT_StopBgm(  ACTING_WORK *work );
 extern void  STA_ACT_SetBgmLinkNumber(  ACTING_WORK *work , const u16 dstNum , const u16 srcNum );
@@ -137,6 +138,7 @@ extern void STA_ACT_SetUpdateAttention( ACTING_WORK *work );
 extern void STA_ACT_PlayTransEffect( ACTING_WORK *work , const u8 idx );
 extern const u8 STA_ACT_GetPokeEquipPoint( ACTING_WORK *work , const u8 pokeNo );
 extern void STA_ACT_SetForceScroll( ACTING_WORK *work , const BOOL flg );
+extern void STA_ACT_SetLockScroll( ACTING_WORK *work , const BOOL flg );
 extern void STA_ACT_StartAppealScript( ACTING_WORK *work , const u8 scriptNo , const u8 pokeNo );
 extern void STA_ACT_StartSubScript( ACTING_WORK *work , const u8 scriptNo , const u8 pokeTrgBit );
 

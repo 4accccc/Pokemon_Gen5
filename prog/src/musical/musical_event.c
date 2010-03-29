@@ -848,7 +848,7 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
       {
         checkPoint += miscData->sumPoint;
         checkPoint += MUSICAL_EVENT_GetPoint( evWork , i );
-        ARI_TPrintf( "[%d:%d+%d]\n",i,MUSICAL_EVENT_GetPoint( evWork , evWork->selfIdx ),miscData->sumPoint );
+        ARI_TPrintf( "[%d:%d+%d]\n",i,MUSICAL_EVENT_GetPoint( evWork , i ),miscData->sumPoint );
       }
     }
     //FIXME ‘Sˆõ‚Ì“¾“_
@@ -1077,11 +1077,11 @@ static const void MUSICAL_EVENT_JumpMusicalHall( GMEVENT *event, MUSICAL_EVENT_W
   
   if( evWork->isComm == TRUE )
   {
-    newEvent = EVENT_ChangeMapPos( evWork->gsys, fieldWork , ZONE_ID_C04R0201 , &posComm , 2, FALSE );
+    newEvent = EVENT_ChangeMapPos( evWork->gsys, fieldWork , ZONE_ID_C04R0201 , &posComm , DIR_DOWN, FALSE );
   }
   else
   {
-    newEvent = EVENT_ChangeMapPos( evWork->gsys, fieldWork , ZONE_ID_C04R0201 , &pos , 2, FALSE );
+    newEvent = EVENT_ChangeMapPos( evWork->gsys, fieldWork , ZONE_ID_C04R0201 , &pos , DIR_DOWN, FALSE );
   }
   GMEVENT_CallEvent(event, newEvent);
 }

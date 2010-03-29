@@ -1386,6 +1386,7 @@ SCRIPT_FUNC_DEF( PokeActionComeNearToTop )
     
       moveWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveStageTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
       STA_ACT_SetForceScroll( work->actWork , TRUE );
+      STA_ACT_SetLockScroll( work->actWork , TRUE );
     }
   }
   if( autoWait == 1 )
@@ -1968,6 +1969,18 @@ SCRIPT_FUNC_DEF( MessageColor )
 //  ‰¹Šy
 //------------------------------------------------------------------
 #pragma mark [>Bgm
+SCRIPT_FUNC_DEF( BgmReady )
+{
+  STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
+  STA_SCRIPT_SYS *work = scriptWork->sysWork;
+
+  SCRIPT_PRINT_LABEL(BgmReady);
+
+  STA_ACT_ReadyBgm( work->actWork );
+
+  return SFT_CONTINUE;
+}
+
 SCRIPT_FUNC_DEF( BgmStart )
 {
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
