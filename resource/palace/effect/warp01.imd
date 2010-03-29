@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-11-26T21:42:22" source="warp01.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-29T18:38:14" source="warp01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2009-11-26T21:42:22" source="warp01.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-03-29T18:38:14" source="warp01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -30,43 +30,43 @@
 <box_test pos_scale="3" xyz="-2.000000 0.375000 -2.000000" whd="4.000000 3.252197 4.000000"/>
 
 <tex_image_array size="2">
-	<tex_image index="0" name="warp03"
+	<tex_image index="0" name="warp01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="gtswarp_g"
-		path="C:/home/wb_data3d/build_model/indoor/warp01/tex/warp03.tga"
+		path="C:/home/wb_data3d/field/out25/warp01/tex/warp01.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 6666 6666 0000 0000 0000
-			0000 0000 6600 ccc5 5ccc 0066 0000 0000
-			0000 0000 c566 332c c233 665c 0000 0000
-			0000 6000 2cc5 1113 3111 5cc2 0006 0000
-			0000 5600 132c 4444 4444 c231 0065 0000
-			0000 c560 4132 bbb4 4bbb 2314 065c 0000
-			0000 2c60 b413 bbbb bbbb 314b 06c2 0000
-			0000 3c56 bb41 9abb bba9 14bb 65c3 0000
-			0000 12c6 bbb4 999a a999 4bbb 6c21 0000
-			6000 43c5 abb4 8899 9988 4bba 5c34 0006
-			6000 412c 9bbb 8789 9888 bbb9 c214 0006
-			6000 413c 9abb 7778 8888 bba9 c314 0006
-			6000 413c 99bb 8788 8888 bb99 c314 0006
-			6000 413c 99bb 8888 8888 bb99 c314 0006
-			6000 413c 9abb 8888 8888 bba9 c314 0006
-			6000 412c 9bbb 8889 9888 bbb9 c214 0006
-			6000 43c5 abb4 8899 9988 4bba 5c34 0006
-			0000 12c6 bbb4 999a a999 4bbb 6c21 0000
-			0000 3c56 bb41 9abb bba9 14bb 65c3 0000
-			0000 2c60 4413 bbbb bbbb 314b 06c2 0000
-			0000 c560 4132 bbb4 4bbb 2314 065c 0000
-			0000 5600 132c 4444 4444 c231 0065 0000
-			0000 6000 32c5 1113 3111 5c23 0006 0000
-			0000 0000 cc56 332c c233 65cc 0000 0000
-			0000 0000 6600 ccc5 5ccc 0066 0000 0000
-			0000 0000 0000 6666 6666 0000 0000 0000
+			0000 0000 6000 4444 4444 0006 0000 0000
+			0000 0000 4466 7776 6777 0644 0000 0000
+			0000 6000 7644 aa87 78aa 4467 0006 0000
+			0000 4600 8776 bbba abbb 6778 0064 0000
+			0000 6460 ba87 cccc cccc 78ab 0646 0000
+			0000 7640 cba8 111c c111 8abc 0467 0000
+			0000 8746 1cba 1111 1111 abc1 6478 0000
+			0000 a764 11cb 3211 1123 bc11 467a 0000
+			6000 b874 111c 3332 2333 c111 478b 0006
+			4000 ca76 211c 5533 3355 c112 67ac 0004
+			4000 cb87 3111 5953 3555 1113 78bc 0004
+			4000 cba7 3211 9995 5555 1123 7abc 0004
+			4000 cba7 3311 5955 5555 1133 7abc 0004
+			4000 cba7 3311 5555 5555 1133 7abc 0004
+			4000 cba7 3211 5555 5555 1123 7abc 0004
+			4000 cb87 3111 5553 3555 1113 78bc 0004
+			4000 ca76 211c 5533 3355 c112 67ac 0004
+			6000 b874 111c 3332 2333 c111 478b 0006
+			0000 a764 11cb 3211 1123 bc11 467a 0000
+			0000 8746 ccba 1111 1111 abc1 6478 0000
+			0000 7640 cba8 111c c111 8abc 0467 0000
+			0000 6460 ba87 cccc cccc 78ab 0646 0000
+			0000 4600 a876 bbba abbb 678a 0064 0000
+			0000 6000 7744 aa87 78aa 4477 0006 0000
+			0000 0000 4460 7776 6777 0644 0000 0000
+			0000 0000 6000 4444 4444 0006 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -77,7 +77,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="warp_g"
-		path="C:/home/wb_data3d/build_model/indoor/warp01/tex/warp_g.tga"
+		path="C:/home/wb_data3d/field/out25/warp01/tex/warp_g.tga"
 	>
 		<bitmap size="16">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -88,11 +88,11 @@
 
 <tex_palette_array size="2">
 	<tex_palette index="0" name="gtswarp_g" color_size="16">
-		7fff 5ef7 4e73 56b5 6b39 56b5 6717 5bf3
-		3fee 2beb 2b8a 2b4a 4a52 7fff 7fff 7fff
+		0000 1e1d 1e3f 2a7f 318c 3adf 3def 4a52
+		4e73 4f7f 56b5 5ef7 6b39 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="warp_g" color_size="4">
-		7fff 1ba0 7fff 7fff
+		7fff 1e1d 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -850,7 +850,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="polySurface10" kind="mesh"
+	<node index="0" name="a" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"

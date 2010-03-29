@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-23T20:58:56" source="p_bar_002.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-29T19:19:06" source="p_bar_002.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-03-23T20:58:56" source="p_bar_002.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-03-29T19:19:06" source="p_bar_002.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -34,7 +34,7 @@
 		width="64" height="64" original_width="64" original_height="64"
 		format="a5i3"
 		palette_name="p_bar_001_pl"
-		path="C:/home/wb_data3d/field/out25/p_barrier/p_bar_001.tga"
+		path="C:/home/wb_data3d/field/out25/p_barrier/tex/p_bar_001.tga"
 	>
 		<bitmap size="2048">
 			0000 0000 1008 2018 4030 5848 7868 9888

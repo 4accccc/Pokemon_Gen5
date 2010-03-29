@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-23T20:58:56" source="p_bar_002.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-29T19:19:06" source="p_bar_002.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -11,9 +11,9 @@
 <body>
 
 <tex_srt_info
-	frame_size="25"
+	frame_size="60"
 	tool_start_frame="1"
-	tool_end_frame="25"
+	tool_end_frame="60"
 	interpolation="frame"
 	tex_matrix_mode="maya"
 	compress_material="on" material_size="1 1"
@@ -31,10 +31,14 @@
 	0.000000
 </tex_rotate_data>
 
-<tex_translate_data size="26">
+<tex_translate_data size="61">
 	0.000000 0.000000 0.041748 0.083252 0.125000 0.166748 0.208252 0.250000 0.291748 0.333252
 	0.375000 0.416748 0.458252 0.500000 0.541748 0.583252 0.625000 0.666748 0.708252 0.750000
-	0.791748 0.833252 0.875000 0.916748 0.958252 1.000000
+	0.791748 0.833252 0.875000 0.916748 0.958252 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000 1.000000
+	1.000000
 </tex_translate_data>
 
 <tex_srt_anm_array size="1">
@@ -43,7 +47,7 @@
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="25" data_head="1"/>
+		<tex_translate_t frame_step="1" data_size="60" data_head="1"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>
 
