@@ -75,6 +75,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
   enum {
     SEQ_DOOROUT_INIT = 0,
     SEQ_DOOROUT_CAMERA_TRACE_WAIT,
+    SEQ_DOOROUT_BGM_START,
     SEQ_DOOROUT_FADEIN,
     SEQ_DOOROUT_CAMERA_ACT_START,
     SEQ_DOOROUT_SOUND_LOAD_WAIT,
@@ -91,6 +92,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
   GAMEDATA *              gameData   = work->gameData;
   FIELDMAP_WORK *         fieldmap   = work->fieldmap;
   FIELD_SOUND *           fieldSound = work->fieldSound;
+  FIELD_CAMERA *          camera     = FIELDMAP_GetFieldCamera( fieldmap );
 
   FLDMAPPER *        fldmapper  = FIELDMAP_GetFieldG3Dmapper( fieldmap );
   FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( fldmapper );
@@ -104,18 +106,30 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
     }
     // 自機を消す
     MAPCHANGE_setPlayerVanish( fieldmap, TRUE );
-    // カメラのトレース機能をOFF
-    FIELD_CAMERA_StopTraceRequest( FIELDMAP_GetFieldCamera( fieldmap ) );
-    *seq = SEQ_DOOROUT_CAMERA_TRACE_WAIT;
+
+    // トレースシステムが無効
+    if( FIELD_CAMERA_CheckTraceSys( camera ) == FALSE ) {
+      *seq = SEQ_DOOROUT_BGM_START;
+    }
+    // トレースシステムが有効
+    else {
+      FIELD_CAMERA_StopTraceRequest( camera ); // カメラのトレース機能をOFF
+      *seq = SEQ_DOOROUT_CAMERA_TRACE_WAIT;
+    }
     break;
 
   // カメラのトレース処理完了待ち
   case SEQ_DOOROUT_CAMERA_TRACE_WAIT:
     // トレース処理が完了
-    if( FIELD_CAMERA_CheckTrace( FIELDMAP_GetFieldCamera( fieldmap ) ) == FALSE ) {
-      FSND_PlayStartBGM( fieldSound ); // BGM 再生開始
-      *seq = SEQ_DOOROUT_FADEIN;
+    if( FIELD_CAMERA_CheckTrace( camera ) == FALSE ) {
+      *seq = SEQ_DOOROUT_BGM_START;
     }
+    break;
+
+  // BGM 再生開始
+  case SEQ_DOOROUT_BGM_START:
+    FSND_PlayStartBGM( fieldSound );
+    *seq = SEQ_DOOROUT_FADEIN;
     break;
 
   // 画面フェードイン開始
@@ -135,7 +149,10 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
 
   // サウンドの読み込み待ち
   case SEQ_DOOROUT_SOUND_LOAD_WAIT:
-    if( PMSND_IsLoading() != TRUE ) {
+    if( PMSND_IsLoading() == TRUE ) {
+      OS_Printf( "WARNING!!: BGMの読み込みが間に合っていません!\n" ); // 警告!!
+    }
+    else {
       *seq = SEQ_DOOROUT_OPENANIME_START;
     }
     break;
@@ -269,83 +286,78 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * wk)
     SEQ_DOORIN_END,
   };
 
-	FIELD_DOOR_ANIME_WORK * work = wk;
-	GAMESYS_WORK  * gameSystem = work->gameSystem;
-  GAMEDATA * gameData = GAMESYSTEM_GetGameData( gameSystem );
-  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gameSystem );
+	FIELD_DOOR_ANIME_WORK * work       = wk;
+	GAMESYS_WORK *          gameSystem = work->gameSystem;
+  GAMEDATA *              gameData   = work->gameData;
+  FIELDMAP_WORK *         fieldmap   = work->fieldmap;
+  FIELD_SOUND *           fieldSound = work->fieldSound;
 
-  FLDMAPPER * fldmapper = FIELDMAP_GetFieldG3Dmapper(fieldmap);
-  FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager(fldmapper);
+  FLDMAPPER *        fldmapper  = FIELDMAP_GetFieldG3Dmapper( fieldmap );
+  FIELD_BMODEL_MAN * bmodel_man = FLDMAPPER_GetBuildModelManager( fldmapper );
 
-  switch (*seq)
-  { 
+  switch( *seq ) { 
+  // ドアオープン開始
   case SEQ_DOORIN_OPENANIME_START:
     work->ctrl = FIELD_BMODEL_Create_Search( bmodel_man, BM_SEARCH_ID_DOOR, &work->doorPos );
-    if (work->ctrl)
-    {
-      u16 seNo;
-      FIELD_BMODEL_StartAnime( work->ctrl, BMANM_INDEX_DOOR_OPEN );
-      if( FIELD_BMODEL_GetCurrentSENo( work->ctrl, &seNo) )
-      {
-        PMSND_PlaySE( seNo );
-      }
+    if( CheckDoorExist( work ) == TRUE ) {
+      StartDoorOpen( work );
     }
     *seq = SEQ_DOORIN_CAMERA_ACT;
-    //*seq = SEQ_DOORIN_PLAYER_ONESTEP;
     break;
 
+  // カメラ演出開始
   case SEQ_DOORIN_CAMERA_ACT: 
-    if( work->cameraAnimeFlag )
-    {
+    if( work->cameraAnimeFlag ) {
       EVENT_CAMERA_ACT_CallDoorInEvent( event, gameSystem, fieldmap ); 
     }
-    if (work->ctrl == NULL)
-    { /* エラーよけ、ドアがない場合 */
+
+    // ドアがない場合
+    if (work->ctrl == NULL) {
       *seq = SEQ_DOORIN_PLAYER_ONESTEP;
     } 
-    else
-    {
+    // ドアがある場合
+    else {
       *seq = SEQ_DOORIN_OPENANIME_WAIT;
     }
     break;
 
+  // ドアオープン待ち
   case SEQ_DOORIN_OPENANIME_WAIT:
     if( CheckDoorAnimeFinish(work) == TRUE ) {
       *seq = SEQ_DOORIN_PLAYER_ONESTEP;
     }
     break;
 
+  // 自機の一歩移動アニメ開始
   case SEQ_DOORIN_PLAYER_ONESTEP:
-    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gameSystem, fieldmap) );
+    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime( gameSystem, fieldmap ) );
     *seq = SEQ_DOORIN_BGM_STAND_BY;
     break;
 
+  // BGM再生準備
   case SEQ_DOORIN_BGM_STAND_BY:
-    { // BGM再生準備
-      u16 nowZoneID = FIELDMAP_GetZoneID( fieldmap );
-      FIELD_SOUND* fieldSound = GAMEDATA_GetFieldSound( gameData );
-      FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    }
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     *seq = SEQ_DOORIN_FADEOUT;
     break;
 
+  // 画面フェード開始
   case SEQ_DOORIN_FADEOUT:
-    // 画面フェードアウト
-    if( work->seasonDispFlag )
-    { // 輝度フェード
-      GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Black(gameSystem, fieldmap, FIELD_FADE_WAIT) );
-    }
-    else
-    { // 基本フェード
+    if( work->seasonDispFlag ) { 
+      // 輝度フェード
       GMEVENT_CallEvent( event, 
-          EVENT_FieldFadeOut(gameSystem, fieldmap, work->fadeType, FIELD_FADE_WAIT) );
+          EVENT_FieldFadeOut_Black( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
+    }
+    else { 
+      // 基本フェード
+      GMEVENT_CallEvent( event, 
+          EVENT_FieldFadeOut( gameSystem, fieldmap, work->fadeType, FIELD_FADE_WAIT ) );
     }
     *seq = SEQ_DOORIN_END;
     break;
 
+  // イベント終了
   case SEQ_DOORIN_END:
-    if( work->cameraAnimeFlag )
-    {
+    if( work->cameraAnimeFlag ) {
       EVENT_CAMERA_ACT_ResetCameraParameter( fieldmap );  // カメラの設定をデフォルトに戻す
     }
     FIELD_BMODEL_Delete( work->ctrl );
@@ -514,21 +526,4 @@ static void StartDoorClose( const FIELD_DOOR_ANIME_WORK* work )
   if( FIELD_BMODEL_GetCurrentSENo( work->ctrl, &seNo ) ) {
     PMSND_PlaySE( seNo );
   }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+} 

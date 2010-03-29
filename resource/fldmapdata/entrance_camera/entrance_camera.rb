@@ -52,7 +52,7 @@ class CameraData
   # @param pass 出力先ディレクトリへのパス
   def OutputBinaryData( pass )
     # 出力
-    filename = "#{pass}/#{@exitType_lavel.downcase}.bin"
+    filename = "#{pass}/#{GetFileName()}.bin"
     file = File.open( filename, "wb" )
     file.write( [@exitType].pack("I") )
     file.write( [@pitch].pack("I") )
@@ -71,7 +71,7 @@ class CameraData
   # @param pass 出力先ディレクトリへのパス
   def OutputDebugData( pass )
     # 出力
-    filename = "#{pass}/#{@exitType_lavel.downcase}.txt"
+    filename = "#{pass}/#{GetFileName()}.txt"
     file = File.open( filename, "wb" )
     file.puts( "exitType      = #{@exitType}(#{@exitType_lavel})" )
     file.puts( "pitch         = #{@pitch}" )
@@ -84,6 +84,30 @@ class CameraData
     file.puts( "validFlag_IN  = #{@validFlag_IN}" )
     file.puts( "validflag_OUT = #{@validFlag_OUT}" )
     file.close()
+  end
+  #-----------------------------------------
+  # @brief ファイル名を取得する
+  # @return ファイル名
+  def GetFileName() 
+    type = @exitType_lavel
+    # ラベル名変換ハッシュを作成
+    exitTypeHash = Hash.new
+    exitTypeHash[ "EXIT_TYPE_SP1" ] = "EXIT_TYPE_SP01"
+    exitTypeHash[ "EXIT_TYPE_SP2" ] = "EXIT_TYPE_SP02"
+    exitTypeHash[ "EXIT_TYPE_SP3" ] = "EXIT_TYPE_SP03"
+    exitTypeHash[ "EXIT_TYPE_SP4" ] = "EXIT_TYPE_SP04"
+    exitTypeHash[ "EXIT_TYPE_SP5" ] = "EXIT_TYPE_SP05"
+    exitTypeHash[ "EXIT_TYPE_SP6" ] = "EXIT_TYPE_SP06"
+    exitTypeHash[ "EXIT_TYPE_SP7" ] = "EXIT_TYPE_SP07"
+    exitTypeHash[ "EXIT_TYPE_SP8" ] = "EXIT_TYPE_SP08"
+    exitTypeHash[ "EXIT_TYPE_SP9" ] = "EXIT_TYPE_SP09"
+    # ラベル名を変換
+    if exitTypeHash.has_key?( @exitType_lavel ) == true then
+      type = exitTypeHash[ type ]
+    end
+    # ファイル名を作成
+    filename = "#{type.downcase}"
+    return filename
   end
 end
 
