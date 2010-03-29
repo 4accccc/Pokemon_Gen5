@@ -401,6 +401,9 @@ BOOL Intrude_CheckPalaceConnect(GAME_COMM_SYS_PTR game_comm)
 {
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   
+  if(intcomm == NULL){
+    return FALSE;
+  }
   if(intcomm->recv_profile > 1 && GFL_NET_GetConnectNum() > 1){
     return TRUE;
   }
