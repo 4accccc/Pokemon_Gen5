@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T18:52:44"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T21:01:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -409,9 +409,9 @@
 ・black_07表示後
 　所定のプラズマ団を４人倒すまで</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『しゅじんこうは
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]は
 そっちの　プラズマだんを　たのむよ！</language>
-		<language name="JPN_KANJI" width="256">チェレン『しゅじんこうは
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]は
 そっちの　プラズマだんを　たのむよ！</language>
 	</row>
 
