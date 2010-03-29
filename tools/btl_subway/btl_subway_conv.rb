@@ -7,6 +7,8 @@
   require File.dirname(__FILE__) + '/../hash/item_hash.rb'
   require File.dirname(__FILE__) + '/../hash/trtype_hash.rb'
 
+  require 'bts_tr_arr.rb'
+
 class PD
   enum_const_set %w[
     GRA_NO
@@ -238,11 +240,13 @@ end
 
     next if split_data[ TD::NAME ] == "#"
 
-    tr_type = $trtype_hash[ split_data[ TD::TYPE ] ]
+    #tr_type = $trtype_hash[ split_data[ TD::TYPE ] ]
+    tr_type_index = $bts_trainername_array[ split_data[ TD::TYPE ].to_i ]
+    tr_type = $trtype_hash[ tr_type_index ]
     poke_cnt = split_data[ TD::POKE_CNT ].to_i
 
     if tr_type == nil
-      print "不明なトレーナータイプが設定されています\n"
+      print "不明なトレーナータイプ(#{split_data[TD::TYPE]})が設定されています\n"
       exit( 1 )
     end
 
