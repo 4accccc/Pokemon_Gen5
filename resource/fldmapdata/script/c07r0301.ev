@@ -47,8 +47,8 @@ EVENT_END
 
 
 /**************************************************************/
-/* 【仮】イカリまんじゅうくれるお母さん                              */
+/* イカリまんじゅうくれるお母さん                              */
 /**************************************************************/
 EVENT_START   ev_c07r0301_woman3_01
-  _EASY_TALK_ITEM_EVENT(ITEM_KIZUGUSURI, 1, FE_C07R0301_IKARI, msg_c07r0301_woman3_01, msg_c07r0301_woman3_02, msg_c07r0301_woman3_02 )
+  _EASY_TALK_ITEM_EVENT(ITEM_IKARIMANZYUU, 1, FE_C07R0301_IKARI, msg_c07r0301_woman3_01, msg_c07r0301_woman3_02, msg_c07r0301_woman3_02 )
 EVENT_END
