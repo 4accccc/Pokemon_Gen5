@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T12:58:48"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T15:24:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,14 +337,14 @@
 		</language>
 	</columns>
 
-	<dialog left="13" top="116" right="718" bottom="744" maximized="no" rayout="Vertical2">
+	<dialog left="1486" top="238" right="2191" bottom="866" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="787" top="36" right="1260" bottom="434" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -3418,9 +3418,9 @@ msg_connect_union_08からの分岐メッセージ
 
 	<row id="msg_union_battle_01_27" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>パーティ決定後、相手の決定待ち</comment>
-		<language name="JPN" width="216" line="2">しょうしょう　おまちください
+		<language name="JPN" width="216" line="2">しばらく　おまちください
 Ｂボタンで　キャンセル</language>
-		<language name="JPN_KANJI" width="216" line="2">少々　お待ちください
+		<language name="JPN_KANJI" width="216" line="2">しばらく　お待ちください
 Ｂボタンで　キャンセル</language>
 	</row>
 
@@ -3458,8 +3458,8 @@ msg_connect_union_08からの分岐メッセージ
 
 	<row id="msg_union_battle_01_32" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>ポケモンリストで繰り出すポケモンを決定後、通信相手待ち</comment>
-		<language name="JPN" width="216" line="2">しょうしょう　おまちください</language>
-		<language name="JPN_KANJI" width="216" line="2">少々　お待ちください</language>
+		<language name="JPN" width="216" line="2">しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="216" line="2">しばらく　お待ちください</language>
 	</row>
 
 	<row id="msg_union_test_000" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
@@ -3692,8 +3692,8 @@ msg_connect_union_08からの分岐メッセージ
 
 	<row id="msg_union_test_012" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
 		<comment>コロシアムの立ち位置にたった</comment>
-		<language name="JPN" width="216" line="2">しょうしょう　おまちください</language>
-		<language name="JPN_KANJI" width="216" line="2">少々　お待ちください</language>
+		<language name="JPN" width="216" line="2">しばらく　おまちください</language>
+		<language name="JPN_KANJI" width="216" line="2">しばらく　お待ちください</language>
 	</row>
 
 	<row id="msg_union_test_013" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
@@ -3760,16 +3760,16 @@ msg_connect_union_08からの分岐メッセージ
 	</row>
 
 	<row id="msg_union_test_019" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
-		<language name="JPN" width="216" line="2">たいしゅつします
-しょうしょう　おまちください</language>
+		<language name="JPN" width="216" line="2">たいしゅつ　します
+しばらく　おまちください</language>
 		<language name="JPN_KANJI" width="216" line="2">退出します
-少々　お待ちください</language>
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="msg_union_test_020" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color="#80ffff,,,,,,#80ffff,#80ffff,,#80ffff,#80ffff,,#80ffff,,,#80ffff,,">
-		<language name="JPN" width="216" line="2">しょうしょう　おまちください
+		<language name="JPN" width="216" line="2">しばらく　おまちください
 Ｂボタンで　キャンセル</language>
-		<language name="JPN_KANJI" width="216" line="2">少々　お待ちください
+		<language name="JPN_KANJI" width="216" line="2">しばらく　お待ちください
 Ｂボタンで　キャンセル</language>
 	</row>
 

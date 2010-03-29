@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-28T12:44:14"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T15:18:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="171"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -322,8 +322,8 @@
 	<row id="MSG_TCARD_06">
 		<comment>カード表面項目。プレイ時間。
 時間と分の間を「：」で区切る。単位なし。</comment>
-		<language name="JPN" width="256">IDNo．</language>
-		<language name="JPN_KANJI" width="256">IDNo．</language>
+		<language name="JPN" width="256">ＩＤＮｏ．</language>
+		<language name="JPN_KANJI" width="256">ＩＤＮｏ．</language>
 	</row>
 
 	<row id="MSG_TCARD_07">
@@ -819,7 +819,7 @@
 		<language name="JPN" width="256">あついだけでなく　つめたいだけでなく
 ふたつを　じざいに　コントロールせよ</language>
 		<language name="JPN_KANJI" width="256">熱いだけでなく　冷たいだけでなく
-二つを　自在に　コントロールせよ</language>
+２つを　自在に　コントロールせよ</language>
 	</row>
 
 	<row id="MSG_BADGE_LEADER8B_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-03-03T18:18:56"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T15:17:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,14 +342,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -390,8 +390,8 @@
 
 	<row id="START_MENU_STR_ITEM_04">
 		<comment>WI-FIの設定用メニューです</comment>
-		<language name="JPN" width="256">ＷｉーＦｉせってい</language>
-		<language name="JPN_KANJI" width="256">ＷｉーＦｉ設定</language>
+		<language name="JPN" width="256">Ｗｉ－Ｆｉせってい</language>
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ設定</language>
 	</row>
 
 	<row id="START_MENU_STR_ITEM_05">
@@ -510,10 +510,10 @@
 		<comment>通信機能を設定するときのメッセージ</comment>
 		<language name="JPN" width="256">このゲームを　さいだいげんに
 たのしむには　むせんつうしんきのうを
-ＯＮに　してください
+オンに　してください
 ひこうきや　びょういんなど
 むせんつうしんを　きんしに　している
-ばしょでは　ＯＦＦに　してください
+ばしょでは　オフに　してください
 ゲームちゅうの　せっていがめんでも
 へんこう　することが　できます</language>
 		<language name="JPN_KANJI" width="256">このゲームを　最大限に楽しむには
@@ -560,7 +560,7 @@
 
 	<row id="START_MENU_STR_CONTINUE_01">
 		<comment>続きから始めるときのメッセージ</comment>
-		<language name="JPN" width="256">つうしんきのうを　ＯＮにしますか？</language>
+		<language name="JPN" width="256">つうしんきのうを　オンにしますか？</language>
 		<language name="JPN_KANJI" width="256">通信機能を　ＯＮにしますか？</language>
 	</row>
 

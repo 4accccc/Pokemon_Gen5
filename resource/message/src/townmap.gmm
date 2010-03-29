@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T12:53:23"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T15:18:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1438" top="171" right="2143" bottom="791" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="301" right="1263" bottom="699" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -524,8 +524,8 @@
 
 	<row id="TM_PLACE_C03_05" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>名所５</comment>
-		<language name="JPN" width="256">マッサージしの　いえ</language>
-		<language name="JPN_KANJI" width="256">マッサージ師の家</language>
+		<language name="JPN" width="256">マッサージおねえさんの　いえ</language>
+		<language name="JPN_KANJI" width="256">マッサージお姉さんの家</language>
 	</row>
 
 	<row id="TM_PLACE_C03_06" back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,#80ffff,,,,,,">

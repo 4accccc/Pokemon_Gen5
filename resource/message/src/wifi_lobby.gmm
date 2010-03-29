@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T12:55:32"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T15:26:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,14 +337,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="113" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -775,12 +775,12 @@
 	</row>
 
 	<row id="msg_wifilobby_054">
-		<language name="JPN" width="216">ボイスチャットを　ＯＮにしました▼</language>
+		<language name="JPN" width="216">ボイスチャットを　オンにしました▼</language>
 		<language name="JPN_KANJI" width="216">ボイスチャットを　ＯＮにしました▼</language>
 	</row>
 
 	<row id="msg_wifilobby_055">
-		<language name="JPN" width="216">ボイスチャットを　ＯＦＦにしました▼</language>
+		<language name="JPN" width="216">ボイスチャットを　オフにしました▼</language>
 		<language name="JPN_KANJI" width="216">ボイスチャットを　ＯＦＦにしました▼</language>
 	</row>
 
@@ -869,7 +869,7 @@
 
 	<row id="msg_wifilobby_069">
 		<language name="JPN" width="216">この　ともだちと　あそぶ　あいだは
-ボイスチャットが　ＯＮに　なります▼
+ボイスチャットが　オンに　なります▼
 この　ともだちの　ぼしゅうに
 おうぼ　しますか？</language>
 		<language name="JPN_KANJI" width="216">この友達と　遊ぶあいだは
@@ -880,7 +880,7 @@
 
 	<row id="msg_wifilobby_070">
 		<language name="JPN" width="216">この　ともだちと　あそぶ　あいだは
-ボイスチャットが　ＯＦＦに　なります▼
+ボイスチャットが　オフに　なります▼
 この　ともだちの　ぼしゅうに
 おうぼ　しますか？</language>
 		<language name="JPN_KANJI" width="216">この友達と　遊ぶあいだは
@@ -917,14 +917,14 @@
 
 	<row id="msg_wifilobby_074">
 		<language name="JPN" width="216">たいせんや　こうかんの　ときの
-ＢＧＭを　ＯＦＦに　しました▼</language>
+ＢＧＭを　オフに　しました▼</language>
 		<language name="JPN_KANJI" width="216">対戦や　交換の　ときの
 ＢＧＭを　ＯＦＦに　しました▼</language>
 	</row>
 
 	<row id="msg_wifilobby_075">
 		<language name="JPN" width="216">たいせんや　こうかんの　ときの
-ＢＧＭを　ＯＮに　しました▼</language>
+ＢＧＭを　オンに　しました▼</language>
 		<language name="JPN_KANJI" width="216">対戦や　交換の　ときの
 ＢＧＭを　ＯＮに　しました▼</language>
 	</row>
