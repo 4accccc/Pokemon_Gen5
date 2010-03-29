@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-03-12T21:03:06"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-29T17:05:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -202,6 +202,9 @@
 			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="169" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="51" japanese="ミュージカル客層" english="ミュージカル客層" view="EP" width="39" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
 		</group>
 
 		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
@@ -349,7 +352,7 @@
 		</language>
 	</columns>
 
-	<dialog left="0" top="176" right="689" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1576" top="190" right="2265" bottom="810" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="514"/>
