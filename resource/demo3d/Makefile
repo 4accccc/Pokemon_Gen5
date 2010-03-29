@@ -93,10 +93,10 @@ make_narc:
 	@echo naixƒJƒbƒg
 	$(NAIXCUT) $(demo3d_naix)
 
-$(demoid_def_h): demo_list.txt $(DEMO_LIST)
+$(demoid_def_h): demo_list.txt
 	$(MAKE) make_demoid
 
-$(demo_res_dat): demo_list.txt $(DEMO_LIST)
+$(demo_res_dat): demo_list.txt
 	$(MAKE) make_demoid
 
 make_demoid:
