@@ -838,6 +838,18 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_debug_tomoya
 
+/*
+  _CAMERA_START()
+
+
+  _CAMERA_MOVE( 11685,60719,1408830,2064416,12288,3702784, 8 )
+  _CAMERA_WAIT_MOVE()
+  _CAMERA_RECV_MOVE( 8 )
+  _CAMERA_WAIT_MOVE()
+  
+  _CAMERA_END()
+//*/
+//*
   _EV_MOVEPOKE_CREATE( 0 )
 
   _EV_MOVEPOKE_START_ANIME(SCR_EV_MOVEPOKE_ANIME_TUCHI_INSIDE)
@@ -847,6 +859,7 @@ EVENT_START   ev_debug_tomoya
   _EV_MOVEPOKE_CHECK_ANIME_END()
   
   _EV_MOVEPOKE_DELETE()
+//*/
 
 EVENT_END
 

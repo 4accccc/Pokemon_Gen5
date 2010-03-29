@@ -31,7 +31,7 @@
 //static GMEVENT_RESULT WaitTraceStopEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WaitTraceStopForCamMvEvt( GMEVENT* event, int* seq, void* work );
 static GMEVENT_RESULT WaitCamMovEvt( GMEVENT* event, int* seq, void* work );
-static void EndCamera(FIELD_CAMERA *camera);
+static void EndCamera(FIELDMAP_WORK *fieldWork,  FIELD_CAMERA *camera);
 
 static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* work );
 
@@ -74,12 +74,13 @@ SDK_COMPILER_ASSERT(sizeof(CAM_PARAM) == 44);
 //--------------------------------------------------------------
 /**
  * カメラ終了処理
+ * @param fieldWork フィールドマップワーク
  * @param   camera   カメラポインタ
  * @param   chk     チェック構造体
  * @retval none
  */
 //--------------------------------------------------------------
-static void EndCamera(FIELD_CAMERA *camera)
+static void EndCamera(FIELDMAP_WORK *fieldWork,  FIELD_CAMERA *camera)
 {
   //復帰パラメータをクリアする
   FIELD_CAMERA_ClearRecvCamParam(camera);
@@ -87,6 +88,10 @@ static void EndCamera(FIELD_CAMERA *camera)
   {
     //カメラトレース再開
     FIELD_CAMERA_RestartTrace(camera);
+  }
+  // レール動作中は、カメラの制御を削除
+  if( FIELDMAP_GetBaseSystemType( fieldWork ) == FLDMAP_BASESYS_RAIL ){
+    FLDNOGRID_MAPPER_SetRailCameraActive( FIELDMAP_GetFldNoGridMapper( fieldWork ), TRUE );
   }
   //終了チェックフラグをオフ
   SCREND_CHK_SetBitOff(SCREND_CHK_CAMERA);
@@ -105,7 +110,7 @@ BOOL SCREND_CheckEndCamera(SCREND_CHECK *end_check , int *seq)
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(end_check->gsys);
   FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
 
-  EndCamera(camera);
+  EndCamera(fieldWork, camera);
 
   return  TRUE;
 }
@@ -138,6 +143,11 @@ VMCMD_RESULT EvCmdCamera_Start( VMHANDLE *core, void *wk )
       call_event = GMEVENT_Create( gsys, NULL, WaitTraceStopForCamMvEvt, 0 );
       SCRIPT_CallEvent( sc, call_event );
     }
+
+    // レール動作中は、カメラの制御を削除
+    if( FIELDMAP_GetBaseSystemType( fieldWork ) == FLDMAP_BASESYS_RAIL ){
+      FLDNOGRID_MAPPER_SetRailCameraActive( FIELDMAP_GetFldNoGridMapper( fieldWork ), FALSE );
+    }
   }
   else
   {
@@ -163,7 +173,7 @@ VMCMD_RESULT EvCmdCamera_End( VMHANDLE *core, void *wk )
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FIELD_CAMERA *camera = FIELDMAP_GetFieldCamera( fieldWork );
 
-  EndCamera(camera);
+  EndCamera(fieldWork, camera);
 
   return VMCMD_RESULT_CONTINUE;
 }
