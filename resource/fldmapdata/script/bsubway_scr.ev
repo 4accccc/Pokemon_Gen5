@@ -1015,6 +1015,11 @@ ev_bsw_game_cancel:
   
   //AIマルチならばパートナー去る
   IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
+    $SCWK_TEMP0 = msg_bsw_scr_94
+    $SCWK_TEMP1 = msg_bsw_scr_94
+    _CALL sub_partner_common_bwin
+    _AB_KEYWAIT()
+
     _CALL sub_receipt_anm_return_partner
   ENDIF
   
@@ -1052,6 +1057,11 @@ ev_bsw_game_after:
   
   //AIマルチならばパートナー去る
   IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
+    $SCWK_TEMP0 = msg_bsw_scr_94
+    $SCWK_TEMP1 = msg_bsw_scr_94
+    _CALL sub_partner_common_bwin
+    _AB_KEYWAIT()
+    
     _CALL sub_receipt_anm_return_partner
   ENDIF
   
@@ -1359,6 +1369,7 @@ sub_receipt_anm_return_partner:
   
   //パートナー退場
   _OBJ_ANIME( objid, anm_receipt_return_partner )
+  
   _OBJ_ANIME_WAIT()
   
   //自機受付に向く
