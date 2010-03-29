@@ -34,6 +34,10 @@ _EVENT_DATA_END
 // ■ローカル変数
 //======================================================================
 //----------------------------------------------------------------------
+// layer 8
+//----------------------------------------------------------------------
+DEFINE_LOCAL v8_1
+//----------------------------------------------------------------------
 // layer 7
 //----------------------------------------------------------------------
 DEFINE_LOCAL v7_1
@@ -41,14 +45,13 @@ DEFINE_LOCAL v7_1
 // layer 6
 //----------------------------------------------------------------------
 DEFINE_LOCAL v6_1
+DEFINE_LOCAL v6_2
+DEFINE_LOCAL v6_3
 //----------------------------------------------------------------------
 // layer 5
 //----------------------------------------------------------------------
 DEFINE_LOCAL v5_1
 DEFINE_LOCAL v5_2
-DEFINE_LOCAL v5_3
-DEFINE_LOCAL v5_4
-DEFINE_LOCAL v5_5
 //----------------------------------------------------------------------
 // layer 4
 //----------------------------------------------------------------------
@@ -60,7 +63,6 @@ DEFINE_LOCAL v4_5
 DEFINE_LOCAL v4_6
 DEFINE_LOCAL v4_7
 DEFINE_LOCAL v4_8
-DEFINE_LOCAL v4_9
 //----------------------------------------------------------------------
 // layer 3
 //----------------------------------------------------------------------
@@ -78,7 +80,6 @@ DEFINE_LOCAL v3_b
 DEFINE_LOCAL v3_c
 DEFINE_LOCAL v3_d
 DEFINE_LOCAL v3_e
-DEFINE_LOCAL v3_f
 //----------------------------------------------------------------------
 // layer 2
 //----------------------------------------------------------------------
@@ -95,8 +96,6 @@ DEFINE_LOCAL v2_a
 DEFINE_LOCAL v2_b
 DEFINE_LOCAL v2_c
 DEFINE_LOCAL v2_d
-DEFINE_LOCAL v2_e
-DEFINE_LOCAL v2_f
 //----------------------------------------------------------------------
 // layer 1
 //----------------------------------------------------------------------
@@ -107,8 +106,6 @@ DEFINE_LOCAL v1_4
 DEFINE_LOCAL v1_5
 DEFINE_LOCAL v1_6
 DEFINE_LOCAL v1_7
-DEFINE_LOCAL v1_8
-DEFINE_LOCAL v1_9
 
 
 //======================================================================
@@ -180,23 +177,27 @@ _RET
 // ■隊長サブルーチンリスト
 //======================================================================
 //----------------------------------------------------------------------
-// layer 7
+// layer 8
 //----------------------------------------------------------------------
 // ■シーケンス
 // LEADER_MAIN ◆隊長メイン
 //----------------------------------------------------------------------
-// layer 6
+// layer 7
 //----------------------------------------------------------------------
 // ■シーケンス
 // RECEIVE_REQUEST ◆『依頼を受ける』
 // REPORT_REQUEST  ◆『依頼の報告』
+//----------------------------------------------------------------------
+// layer 6
+//----------------------------------------------------------------------
+// ■シーケンス
+// RES_REQ_SELECT ◆依頼選択シーケンス
 //----------------------------------------------------------------------
 // layer 5
 //----------------------------------------------------------------------
 // ■シーケンス
 // RES_REQ_REPORT ◆調査結果を報告シーケンス
 // RES_REQ_CANCEL ◆依頼キャンセルシーケンス
-// RES_REQ_SELECT ◆依頼選択シーケンス
 //----------------------------------------------------------------------
 // layer 4
 //----------------------------------------------------------------------
@@ -211,6 +212,7 @@ _RET
 // layer 3
 //----------------------------------------------------------------------
 // ■機能
+// START_RES_REQ          ◆依頼の調査を開始する
 // FINISH_CURRENT_RES_REQ ◆受けている依頼を完了する
 // ■チェック
 // CHECK_RES_REQ_ALREADY_ARCHIEVE ◆指定した依頼について, すでに達成済みかどうかを事前にチェックする
@@ -284,6 +286,7 @@ _RET
 // LEADER_SAY_Lets_next_research          ◆隊長「次の調査も期待しているぞ！」
 // LEADER_SAY_It_is_count_research        ◆隊長「人数調査だな？」
 // LEADER_SAY_It_is_time_research         ◆隊長「時間調査だな？」
+// LEADER_SAY_You_have_finishd_research   ◆隊長「すでに調査が完了しているじゃないか！」
 
 
 
@@ -322,10 +325,10 @@ EVENT_END
 //----------------------------------------------------------------------
 LEADER_MAIN:
 {
-  // v7_1 ループフラグ
+  // v8_1 ループフラグ
 
-  $v7_1 = TRUE
-  WHILE $v7_1 == TRUE
+  $v8_1 = TRUE
+  WHILE $v8_1 == TRUE
 
     // 隊長「今日はどうする？」
     // メインメニューを表示
@@ -402,7 +405,9 @@ REPORT_REQUEST:
 
     // 依頼を達成している
     IF $SCWK_ANSWER == TRUE THEN
-      _CALL RES_REQ_REPORT // 報告処理
+      _CALL LEADER_SAY_Report_research_result // 隊長「調査内容を報告してくれ」
+      _CALL SYSTEM_MSG_REPORT_RESULT          // システム「調査を隊長に報告した！」
+      _CALL RES_REQ_REPORT                    // 報告処理
       _RET
     // 依頼を達成していない
     ELSE
@@ -421,6 +426,83 @@ REPORT_REQUEST:
 _RET
 
 //----------------------------------------------------------------------
+// ◆依頼選択処理
+//----------------------------------------------------------------------
+RES_REQ_SELECT:
+{
+  // v6_1 依頼ID
+  // v6_2 調査タイプ
+  // v6_3 ループフラグ
+
+  $v6_3 = TRUE
+
+  // 選択するかキャンセルするまで繰り返す
+  WHILE $v6_3 == TRUE
+
+    _CALL SELECT_REQUEST_TYPE // 調査タイプを選択
+    $v6_2 = $SCWK_ANSWER      // 選択した調査タイプを取得
+
+    // 調査タイプの説明
+    SWITCH $v6_2
+    CASE RESEARCH_REQ_TYPE_COUNT THEN _CALL LEADER_SAY_It_is_count_research   // 隊長「人数調査だな？」
+    CASE RESEARCH_REQ_TYPE_TIME  THEN _CALL LEADER_SAY_It_is_time_research    // 隊長「時間調査だな？」
+    ENDSWITCH
+  
+    //『人数調査』or『時間調査』を選択
+    IF ($v6_2 == RESEARCH_REQ_TYPE_COUNT) || ($v6_2 == RESEARCH_REQ_TYPE_TIME) THEN
+
+      // 調査依頼の選択
+      $SCWK_TEMP0 = $v6_2
+      _CALL SELECT_REQUEST // 調査依頼を選択
+      $v6_1 = $SCWK_ANSWER // 選択した依頼IDを取得
+    
+      //『やめる』以外を選択
+      IF ($v6_1 != RESEARCH_REQ_ID_NONE) && ($v6_1 != EV_WIN_B_CANCEL) THEN 
+
+        // すでに達成済みかどうかをチェック
+        $SCWK_TEMP0 = $v6_1
+        _CALL CHECK_RES_REQ_ALREADY_ARCHIEVE
+
+        // すでに達成済み
+        IF $SCWK_ANSWER == TRUE THEN
+          _CALL LEADER_SAY_You_have_finishd_research     // 隊長「すでに調査が完了しているじゃないか！」
+          $SCWK_TEMP0 = $v6_1                            // 調査開始
+          _CALL START_RES_REQ                            //
+          _CALL RES_REQ_REPORT                           // 報告処理
+          _RET
+        ELSE
+          // 選択した依頼の説明と確認
+          $SCWK_TEMP0 = $v6_1                 // 隊長「～依頼内容の説明～」 
+          _CALL LEADER_SAY_This_request_is    //
+          _CALL LEADER_SAY_Is_this_request_ok // 隊長「この調査依頼を受けるのか？」==>『はい』or『いいえ』
+      
+          //『はい』
+          IF $SCWK_ANSWER == SCR_YES THEN
+            $SCWK_TEMP0 = $v6_1                         // 調査開始
+            _CALL START_RES_REQ                         //
+            _CALL SYSTEM_MSG_RECEIVE_REQUEST            // システム「調査依頼を受けた！」
+            _CALL LEADER_SAY_Come_again_if_you_achieve  // 隊長「調査が終了したら, 報告に来てくれ」
+            _RET                                        // 依頼選択処理終了
+          ENDIF 
+        ENDIF
+
+      ENDIF
+
+    ENDIF
+  
+    _CALL LEADER_SAY_Do_you_select_other_request //「では他の依頼を受けるのか？」==> 『はい』or『いいえ』
+  
+    //『いいえ』
+    IF $SCWK_ANSWER == SCR_NO THEN
+      _CALL LEADER_SAY_Come_again_if_you_want // 隊長「依頼を受けたくなったら また来てくれ」
+      _RET
+    ENDIF
+
+  ENDWHILE
+}
+_RET
+
+//----------------------------------------------------------------------
 // ◆調査結果を報告する
 //----------------------------------------------------------------------
 RES_REQ_REPORT:
@@ -430,8 +512,6 @@ RES_REQ_REPORT:
 
   _GET_RESEARCH_TEAM_RANK( v5_1 ) // 報告前の隊員ランクを取得
 
-  _CALL LEADER_SAY_Report_research_result // 隊長「調査内容を報告してくれ」
-  _CALL SYSTEM_MSG_REPORT_RESULT          // システム「調査を隊長に報告した！」
   _CALL LEADER_SAY_Ah_hah                 // 隊長「ふむふむ……」
   _CALL LEADER_SAY_Present_for_you        // 隊長「これは調査の報酬だ 受け取ってくれ」
 
@@ -441,9 +521,9 @@ RES_REQ_REPORT:
 
   // すべての依頼を達成
   IF $SCWK_ANSWER == TRUE THEN
-    _CALL LEADER_SAY_Congraturation // 隊長「これは私の気持ちだ 受け取ってくれ」
-    _CALL ACHIEVE_PRIZE_GET         // 全依頼達成アイテムの入手処理
-    _CALL LEADER_SAY_I_hope_for_you // 隊長「今後も期待しているぞ！」
+    _CALL LEADER_SAY_Congraturation  // 隊長「これは私の気持ちだ 受け取ってくれ」
+    _CALL COMPLETE_PRIZE_GET         // 全依頼達成アイテムの入手処理
+    _CALL LEADER_SAY_I_hope_for_you  // 隊長「今後も期待しているぞ！」
 
   // 未達成の依頼が残っている
   ELSE
@@ -490,69 +570,6 @@ RES_REQ_CANCEL:
   ENDIF
 
   _CALL LEADER_SAY_Continue_research // 隊長「では引き続き, 調査を続けてくれ」
-}
-_RET
-
-//----------------------------------------------------------------------
-// ◆依頼選択処理
-//----------------------------------------------------------------------
-RES_REQ_SELECT:
-{
-  // v5_1 依頼ID
-  // v5_2 調査タイプ
-  // v5_3 ループフラグ
-
-  $v5_3 = TRUE
-
-  // 選択するかキャンセルするまで繰り返す
-  WHILE $v5_3 == TRUE
-
-    _CALL SELECT_REQUEST_TYPE // 調査タイプを選択
-    $v5_2 = $SCWK_ANSWER      // 選択した調査タイプを取得
-
-    // 調査タイプの説明
-    SWITCH $v5_2
-    CASE RESEARCH_REQ_TYPE_COUNT THEN _CALL LEADER_SAY_It_is_count_research   // 隊長「人数調査だな？」
-    CASE RESEARCH_REQ_TYPE_TIME  THEN _CALL LEADER_SAY_It_is_time_research    // 隊長「時間調査だな？」
-    ENDSWITCH
-  
-    //『人数調査』or『時間調査』を選択
-    IF ($v5_2 == RESEARCH_REQ_TYPE_COUNT) || ($v5_2 == RESEARCH_REQ_TYPE_TIME) THEN
-
-      // 調査依頼の選択
-      $SCWK_TEMP0 = $v5_2
-      _CALL SELECT_REQUEST // 調査依頼を選択
-      $v5_1 = $SCWK_ANSWER // 選択した依頼IDを取得
-    
-      //『やめる』以外を選択
-      IF ($v5_1 != RESEARCH_REQ_ID_NONE) && ($v5_1 != EV_WIN_B_CANCEL) THEN 
-        // 選択した依頼の説明と確認
-        $SCWK_TEMP0 = $v5_1                 // 隊長「～依頼内容の説明～」 
-        _CALL LEADER_SAY_This_request_is    //
-        _CALL LEADER_SAY_Is_this_request_ok // 隊長「この調査依頼を受けるのか？」==> 『はい』or『いいえ』
-      
-        //『はい』
-        IF $SCWK_ANSWER == SCR_YES THEN
-          $SCWK_TEMP0 = $v5_1                                         // 依頼受理処理
-          _CALL GET_RES_REQ_QUESTION_ID                               //
-          _START_RESEARCH( v5_1, SCWK_TEMP1, SCWK_TEMP2, SCWK_TEMP3 ) // 調査開始
-          _CALL SYSTEM_MSG_RECEIVE_REQUEST                            // システム「調査依頼を受けた！」
-          _CALL LEADER_SAY_Come_again_if_you_achieve                  // 隊長「調査が終了したら, 報告に来てくれ」
-          _RET                                                        // 依頼選択処理終了
-        ENDIF 
-      ENDIF
-
-    ENDIF
-  
-    _CALL LEADER_SAY_Do_you_select_other_request //「では他の依頼を受けるのか？」==> 『はい』or『いいえ』
-  
-    //『いいえ』
-    IF $SCWK_ANSWER == SCR_NO THEN
-      _CALL LEADER_SAY_Come_again_if_you_want // 隊長「依頼を受けたくなったら また来てくれ」
-      _RET
-    ENDIF
-
-  ENDWHILE
 }
 _RET
 
@@ -831,8 +848,18 @@ _RET
 //----------------------------------------------------------------------
 COMPLETE_PRIZE_GET:
 {
-  $SCWK_TEMP0 = ITEM_HUSIGINAAME
-  _ITEM_EVENT_KEYWAIT( SCWK_TEMP0, 1 )
+  _ITEM_EVENT_KEYWAIT( ITEM_HUSIGINAAME, 1 )
+}
+_RET
+
+//----------------------------------------------------------------------
+// ◆依頼の調査を開始する
+// ◇in SCWK_TEMP0 開始する調査依頼ID ( RESEARCH_REQ_ID_xxxx )
+//----------------------------------------------------------------------
+START_RES_REQ:
+{
+  _CALL GET_RES_REQ_QUESTION_ID                               // 依頼IDから質問IDを取得
+  _START_RESEARCH( v6_1, SCWK_TEMP1, SCWK_TEMP2, SCWK_TEMP3 ) // 調査開始
 }
 _RET
 
@@ -2650,6 +2677,18 @@ LEADER_SAY_It_is_time_research:
 }
 _RET
 //----------------------------------------------------------------------
+// ◆隊長「すでに調査が完了しているじゃないか！」
+//----------------------------------------------------------------------
+LEADER_SAY_You_have_finishd_research:
+{
+  _PLAYER_NAME(1)
+  _TALK_OBJ_START()
+  _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_14x, SCWK_TARGET_OBJID, POS_D )
+  _AB_KEYWAIT()
+  _BALLOONWIN_CLOSE() 
+}
+_RET
+//----------------------------------------------------------------------
 // ◆隊長「今日から君は～隊員だ！」
 //----------------------------------------------------------------------
 LEADER_SAY_I_appoint_you_as:
@@ -2780,17 +2819,6 @@ LEADER_SAY_This_request_is:
   _BALLOONWIN_OBJMSG_POS( v4_1, SCWK_TARGET_OBJID, POS_D )
   _AB_KEYWAIT()
   _BALLOONWIN_CLOSE() 
-
-  // すでに達成済み
-  $SCWK_TEMP0 = $v4_2
-  _CALL CHECK_RES_REQ_ALREADY_ARCHIEVE
-  IF $SCWK_ANSWER == TRUE THEN
-    _PLAYER_NAME(1)
-    _TALK_OBJ_START()
-    _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_14x, SCWK_TARGET_OBJID, POS_D )
-    _AB_KEYWAIT()
-    _BALLOONWIN_CLOSE() 
-  ENDIF
 }
 _RET 
 //----------------------------------------------------------------------
