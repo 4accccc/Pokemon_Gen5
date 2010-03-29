@@ -62,7 +62,7 @@ void  NATSUKI_CalcUseItem( POKEMON_PARAM* pp, u16 item_no, ZONEID zoneID, HEAPID
 
   for( i = 0 ; i < 3 ; i++ )
   { 
-    natsuki_table[ i ] = ITEM_GetParam( item_no, ITEM_PRM_FRIEND1 + i, heapID );
+    natsuki_table[ i ] = ITEM_GetParam( item_no, ITEM_PRM_FRIEND1_POINT + i, heapID );
   }
 
   NATSUKI_CalcAct( pp, natsuki_table, zoneID, heapID );
