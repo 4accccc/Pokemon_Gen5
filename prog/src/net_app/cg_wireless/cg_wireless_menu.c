@@ -46,7 +46,6 @@
 
 #include "../../field/field_comm/intrude_work.h"
 #include "../../field/field_comm/intrude_main.h"
-#include "../../field/field_comm/intrude_work.h"
 
 #include "net/net_whpipe.h"
 #include "net/ctvt_beacon.h"

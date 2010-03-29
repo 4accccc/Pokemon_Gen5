@@ -26,12 +26,9 @@
 
 #include "system/wipe.h"      //WIPE_SYS_EndCheck
 #include "event_mapchange.h"
-#include "event_ircbattle.h"      //EVENT_IrcBattle
 #include "field_comm/intrude_field.h"
 #include "event_debug_menu.h"     //DEBUG_EVENT_DebugMenu
 #include "event_battle.h"         //EVENT_Battle
-#include "event_gsync.h"         //EVENT_GSync
-#include "event_cg_wireless.h"         //EVENT_CG_Wireless
 #include "event_beacon_detail.h"         //EVENT_BeaconDetail
 #include "event_gpower.h"         //EVENT_CheckGPower
 #include "event_fieldtalk.h"      //EVENT_FieldTalk
@@ -116,8 +113,6 @@
 #include "field_diving_data.h"  //DIVINGSPOT_Check
 #include "poke_tool/natsuki.h"  //NATSUKI_CalcTsurearuki
 
-#include "net_app/cg_help.h"  //CGHELP呼び出し
-#include "event_fieldmap_control.h"  //CGHELP呼び出し
 
 #ifdef PM_DEBUG
 extern BOOL DebugBGInitEnd;    //BG初期化監視フラグ             宣言元　fieldmap.c
@@ -2473,48 +2468,10 @@ static GMEVENT * checkSubScreenEvent(
   subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
   
   switch(FIELD_SUBSCREEN_GetAction(subscreen)){
-  case FIELD_SUBSCREEN_ACTION_IRC:
-#if 0 //確認無しでイベントを起こすように修正 最終的に消します
-    {
-			GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
-			GAME_COMM_NO no = GameCommSys_BootCheck(gcsp);
-			if(GAME_COMM_NO_FIELD_BEACON_SEARCH == no || GAME_COMM_NO_DEBUG_SCANONLY == no){
-				GameCommSys_ExitReq(gcsp);
-			}
-			if((GAME_COMM_NO_FIELD_BEACON_SEARCH == no) || (GAME_COMM_NO_NULL == no)||
-         (GAME_COMM_NO_DEBUG_SCANONLY == no)){
-				event = EVENT_IrcBattle(gsys, fieldWork, NULL, TRUE);
-			}
-		}
-#endif
-    event = EVENT_IrcBattle(gsys, fieldWork, NULL, TRUE);
-    break;
-  case FIELD_SUBSCREEN_ACTION_GSYNC:
-    event = EVENT_GSync(gsys, fieldWork, NULL, TRUE);
-    break;
-  case FIELD_SUBSCREEN_ACTION_WIRELESS:
-    event = EVENT_CG_Wireless(gsys, fieldWork, NULL, TRUE);
-    break;
   case FIELD_SUBSCREEN_ACTION_PALACE_WARP:
     event = EVENT_IntrudeTownWarp(gsys, fieldWork, PALACE_TOWN_DATA_PALACE);
     break;
   
-  case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
-    event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_BEACON_VIEW);
-    break;
-  case FIELD_SUBSCREEN_ACTION_SCANRADAR:
-    event = EVENT_ResearchRadar( gsys, fieldWork );
-    break;
-  case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
-    {
-      CG_HELP_INIT_WORK *initWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC,sizeof(CG_HELP_INIT_WORK) );
-      initWork->myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(gsys));
-      event = EVENT_FieldSubProc_Callback(gsys, fieldWork, FS_OVERLAY_ID(cg_help),&CGearHelp_ProcData,initWork,NULL,initWork);
-    }
-    break;
-  case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR:
-    event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_NORMAL);
-    break;
   case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_INTRUDE:
     event = EVENT_ChangeSubScreen(gsys, fieldWork, FIELD_SUBSCREEN_INTRUDE);
     break;

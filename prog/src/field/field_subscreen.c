@@ -118,6 +118,7 @@ static void init_firstget_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREE
 static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
 static void exit_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork );
 static void actioncallback_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork, FIELD_SUBSCREEN_ACTION actionno );
+static GMEVENT* evcheck_nomal_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK );
 
 static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_MODE prevMode );
 static void update_topmenu_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive );
@@ -180,7 +181,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     init_normal_subscreen,
     update_normal_subscreen,
     NULL ,
-    NULL ,
+    evcheck_nomal_subscreen,
     exit_normal_subscreen,
     actioncallback_normal_subscreen,
   },
@@ -752,6 +753,17 @@ static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
   CGEAR_Main(pWork->cgearWork,bActive);
 }
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  CGEAR下画面のイベントチェック
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT* evcheck_nomal_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bEvReqOK )
+{
+  return CGEAR_EventCheck(pWork->cgearWork, bEvReqOK, pWork );
+}
+
 
 //=============================================================================
 //=============================================================================

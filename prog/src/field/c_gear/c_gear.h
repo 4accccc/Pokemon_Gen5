@@ -34,6 +34,7 @@ extern void CGEAR_Exit(C_GEAR_WORK* pWork);
 
 extern void CGEAR_SetCrossColor(C_GEAR_WORK* pWork,int color,int index);
 extern void CGEAR_ResetCrossColor(C_GEAR_WORK* pWork,int index);
+extern GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WORK* pSub );
 
 
 //extern const GFL_PROC_DATA CGEARProcData;

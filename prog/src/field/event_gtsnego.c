@@ -67,6 +67,7 @@ enum _EVENT_GTSNEGO {
 //=====================================
 typedef struct 
 {
+  int soundNo;
   DWCSvlResult aSVL;
   GAMESYS_WORK        *gsys;
   FIELDMAP_WORK       *fieldmap;
@@ -97,6 +98,8 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
       fade_event = EVENT_FieldFadeOut_Black(gsys, pFieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
+    dbw->soundNo = PMSND_GetBGMsoundNo();
+    PMSND_FadeOutBGM(6);
     (*seq) ++;
     break;
   case _FIELD_CLOSE:
@@ -107,7 +110,6 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     }
     break;
   case _CALL_WIFILOGIN:
-    PMSND_PushBGM();
     dbw->login.pSvl = &dbw->aSVL;
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->login);
     (*seq)++;
@@ -198,8 +200,8 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     GFL_HEAP_FreeMemory(dbw->gts.pStatus[0]);
     GFL_HEAP_FreeMemory(dbw->gts.pStatus[1]);
     GFL_HEAP_FreeMemory(dbw->aPokeTr.pParty);
-    PMSND_PopBGM();
-    PMSND_FadeInBGM( 8 );
+    PMSND_PlayBGM(dbw->soundNo);
+    PMSND_FadeInBGM(PMSND_FADE_NORMAL);
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq) ++;
     break;

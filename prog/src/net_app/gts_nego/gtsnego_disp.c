@@ -330,7 +330,7 @@ void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
   BLINKPALANM_Exit(pWork->pBlink);
   BLINKPALANM_Exit(pWork->pBlinkUnder);
 
-  GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_M, 1, 0);
+//  GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_M, 1, 0);
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_S, 1, 0);
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME2_S, 1, 0);
   GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);

@@ -31,6 +31,15 @@
 
 #include "../field_sound.h"
 
+#include "../event_ircbattle.h"      //EVENT_IrcBattle
+#include "../event_gsync.h"         //EVENT_GSync
+#include "../event_cg_wireless.h"         //EVENT_CG_Wireless
+#include "net_app/cg_help.h"  //CGHELP呼び出し
+#include "../event_fieldmap_control.h"  //CGHELP呼び出し
+#include "../event_research_radar.h"  //EVENT_ResearchRadar
+#include "../event_subscreen.h"      //EVENT_ChangeSubScreen
+
+
 
 #define _NET_DEBUG (1)  //デバッグ時は１
 #define _BRIGHTNESS_SYNC (0)  // フェードのＳＹＮＣは要調整
@@ -219,6 +228,7 @@ struct _C_GEAR_WORK {
   GFL_TCB*                    vblank_tcb;
   void* pfade_tcbsys_wk;
   PALETTE_FADE_PTR            pfade_ptr;
+  int createEvent;
 
   u16 palBase[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
   u16 palChange[_CGEAR_NET_CHANGEPAL_MAX][_CGEAR_NET_CHANGEPAL_NUM];
@@ -1092,17 +1102,19 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     _editMarkONOFF(pWork, pWork->bPanelEdit);
     break;
   case 2:
-    PMSND_PlaySE( SEQ_SE_MSCL_07 );
-    FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_CGEAR_HELP);
+//    PMSND_PlaySE( SEQ_SE_MSCL_07 );
+    pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_HELP;
+//    FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_CGEAR_HELP);
     //help
     break;
   case 3:
-    PMSND_PlaySE( SEQ_SE_MSCL_07 );
-    FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW);
+  //  PMSND_PlaySE( SEQ_SE_MSCL_07 );
+    pWork->createEvent = FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW;
+//    FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW);
     break;
   case 4:
-    PMSND_PlaySE( SEQ_SE_MSCL_07 );
-    FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_SCANRADAR);
+    pWork->createEvent = FIELD_SUBSCREEN_ACTION_SCANRADAR;
+//    FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_SCANRADAR);
     break;
   case 5:
     PMSND_PlaySE( SEQ_SE_MSCL_07 );
@@ -1238,13 +1250,16 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       if(GFL_NET_IsInit()){  //通信ONなら
         switch(type){
         case CGEAR_PANELTYPE_IR:
-          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_IRC);
+          pWork->createEvent = FIELD_SUBSCREEN_ACTION_IRC;
+//          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_IRC);
           break;
         case CGEAR_PANELTYPE_WIRELESS:
-          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_WIRELESS);
+          pWork->createEvent = FIELD_SUBSCREEN_ACTION_WIRELESS;
+//          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_WIRELESS);
           break;
         case CGEAR_PANELTYPE_WIFI:
-          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_GSYNC);
+          pWork->createEvent = FIELD_SUBSCREEN_ACTION_GSYNC;
+//          FIELD_SUBSCREEN_SetAction(pWork->subscreen, FIELD_SUBSCREEN_ACTION_GSYNC);
           break;
         }
       }
@@ -2091,21 +2106,6 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 //------------------------------------------------------------------------------
 void CGEAR_ActionCallback( C_GEAR_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno)
 {
-
-  switch(actionno){
-  case FIELD_SUBSCREEN_ACTION_GSYNC:
-    PMSND_PlaySystemSE( GEAR_SE_DECIDE_ );
-    _CHANGE_STATE(pWork,_modeSelectAnimInit);
-    break;
-  case FIELD_SUBSCREEN_ACTION_IRC:
-    PMSND_PlaySystemSE( GEAR_SE_DECIDE_ );
-    _CHANGE_STATE(pWork,_modeSelectAnimInit);
-    break;
-  case FIELD_SUBSCREEN_ACTION_WIRELESS:
-    PMSND_PlaySystemSE( GEAR_SE_DECIDE_ );
-    _CHANGE_STATE(pWork,_modeSelectAnimInit);
-    break;
-  }
 }
 
 
@@ -2142,4 +2142,57 @@ void CGEAR_Exit( C_GEAR_WORK* pWork )
 
 }
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   EventCheck
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WORK* pSub )
+{
+  GMEVENT* event=NULL;
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(pWork->pGameSys);
+
+  if(bEvReqOK == FALSE || fieldWork == NULL){
+    pWork->createEvent=FIELD_SUBSCREEN_ACTION_NONE;
+    return NULL;
+  }
+  switch(pWork->createEvent){
+  case FIELD_SUBSCREEN_ACTION_GSYNC:
+    PMSND_PlaySystemSE( GEAR_SE_DECIDE_ );
+    _CHANGE_STATE(pWork,_modeSelectAnimInit);
+    event = EVENT_GSync(pWork->pGameSys, fieldWork, NULL, TRUE);
+    break;
+  case FIELD_SUBSCREEN_ACTION_IRC:
+    PMSND_PlaySystemSE( GEAR_SE_DECIDE_ );
+    _CHANGE_STATE(pWork,_modeSelectAnimInit);
+    event = EVENT_IrcBattle(pWork->pGameSys, fieldWork, NULL, TRUE);
+    break;
+  case FIELD_SUBSCREEN_ACTION_WIRELESS:
+    PMSND_PlaySystemSE( GEAR_SE_DECIDE_ );
+    _CHANGE_STATE(pWork,_modeSelectAnimInit);
+    event = EVENT_CG_Wireless(pWork->pGameSys, fieldWork, NULL, TRUE);
+    break;
+  case FIELD_SUBSCREEN_ACTION_SCANRADAR:
+    PMSND_PlaySystemSE( SEQ_SE_MSCL_07 );
+    event = EVENT_ResearchRadar( pWork->pGameSys, fieldWork );
+    break;
+  case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
+    PMSND_PlaySystemSE( SEQ_SE_MSCL_07 );
+    event = EVENT_ChangeSubScreen(pWork->pGameSys, fieldWork, FIELD_SUBSCREEN_BEACON_VIEW);
+    break;
+  case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
+    PMSND_PlaySystemSE( SEQ_SE_MSCL_07 );
+    {
+      CG_HELP_INIT_WORK *initWork = GFL_HEAP_AllocClearMemory( HEAPID_PROC,sizeof(CG_HELP_INIT_WORK) );
+      initWork->myStatus = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(pWork->pGameSys));
+      event = EVENT_FieldSubProc_Callback(pWork->pGameSys, fieldWork, FS_OVERLAY_ID(cg_help),&CGearHelp_ProcData,initWork,NULL,initWork);
+    }
+    break;
+  }
+  return event;
+}
 
