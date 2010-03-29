@@ -11,10 +11,24 @@
 #define __TRAINERCARD_DATA_H__
 
 // トレーナーカードで設定できる「性格」の最大値
-#define TRCARD_PERSONARITY_MAX    ( 8 )
+#define TRCARD_PERSONARITY_MAX    ( 25 )
+
+#define TRCARD_FINISH_PALACE      (  0 )
+#define TRCARD_FINISH_POKESHIFTER (  1 )
+#define TRCARD_FINISH_TRIALHOUSE  (  2 )
+#define TRCARD_FINISH_DENDOU      (  3 )
 
 #include "savedata/save_control.h"
 #include "system/pms_data.h"
+
+// サイズがRTCDateより小さい日付構造体
+typedef struct{
+  u8 year;
+  u8 month;
+  u8 day;
+  u8 etc;
+} SHORT_DATE;
+
 
 typedef struct TR_CARD_SV_DATA_tag * TR_CARD_SV_PTR;
 
@@ -36,7 +50,18 @@ extern  int TRCSave_GetPersonarity( TR_CARD_SV_PTR outTrCard );
 // サインアニメ
 extern void TRCSave_SetSignAnime( TR_CARD_SV_PTR inTrCard, int flag );
 extern  int TRCSave_GetSignAnime( TR_CARD_SV_PTR outTrCard );
-
+// 最後にカードを開いた日
+extern void TRCSave_SetLastTime( TR_CARD_SV_PTR inTrCard, s64 DateTime );
+extern s64  TRCSave_GetLastTime( TR_CARD_SV_PTR outTrCard );
+// バッジ取得日時
+extern void TRCSave_SetBadgeDate( TR_CARD_SV_PTR inTrCard, int no, int year, int month, int day );
+extern SHORT_DATE TRCSave_GetBadgeDate( TR_CARD_SV_PTR outTrCard, int no );
+// バッジの磨き具合
+extern int  TRCSave_GetBadgePolish( TR_CARD_SV_PTR outTrCard, int no );
+extern void TRCSave_SetBadgePolish( TR_CARD_SV_PTR inTrCard, int no, int polish );
+// 各種イベントの終了状態
+extern void TRCSave_SetEventOpenFlag( TR_CARD_SV_PTR inTrCard, int event );
+extern BOOL TRCSave_GetEventOpenFlag( TR_CARD_SV_PTR outTrCard, int event );
 
 
 #endif //__TRAINERCARD_DATA_H__

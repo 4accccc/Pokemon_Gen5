@@ -16,13 +16,20 @@
 #define SIGHN_H (8)
 
 #define DEFAULT_BADGE_SCRUCH  (140)
+#define TRAINERCARD_BADGE_NUM (  8)
+
 
 typedef struct TR_CARD_SV_DATA_tag
 {
-  u8 SignData[SIGHN_W*SIGHN_H*64/8]; ///< サイン面データ
-  u16 personarity;                   ///< 性格（トレーナーカードで参照）
-  u8 trainer_view_change;            ///< トレーナーカードで見た目を変更した(0:していない 1:した）
-  u8 card_anime;                     ///< サイン面をアニメさせている
+  u8         SignData[SIGHN_W*SIGHN_H*64/8];   ///< サイン面データ
+  u16        personarity;                      ///< 性格（トレーナーカードで参照）
+  u8         trainer_view_change;              ///< トレーナーカードで見た目を変更した(0:していない 1:した）
+  u8         card_anime;                       ///< サイン面をアニメさせている
+  SHORT_DATE badgeGetDate[TRAINERCARD_BADGE_NUM]; ///< バッジ取得日
+  s64        lastTime;                         ///< 最後にトレーナーカードを開いた日付・時刻の数値
+  u8         polish[TRAINERCARD_BADGE_NUM];    ///< バッジの磨きパラメータ
+  u32        openflag;                         ///< 各イベントをこなしているかフラグ
+  u32        dummy[TRAINERCARD_BADGE_NUM];     ///< もう８つ何か情報を持つことがありそうなので。
 }TR_CARD_SV_DATA;
 
 //==============================================================================
@@ -195,4 +202,127 @@ void TRCSave_SetSignAnime( TR_CARD_SV_PTR inTrCard, BOOL flag )
 int TRCSave_GetSignAnime( TR_CARD_SV_PTR outTrCard )
 {
   return outTrCard->card_anime;
+}
+
+
+//=============================================================================================
+/**
+ * @brief 最後にカードを開いた日を設定
+ *
+ * @param   inTrCard    
+ * @param   DateTime    
+ */
+//=============================================================================================
+void TRCSave_SetLastTime( TR_CARD_SV_PTR inTrCard, s64 DateTime )
+{
+  inTrCard->lastTime = DateTime;
+}
+
+//=============================================================================================
+/**
+ * @brief 最後にカードを開いた日を取得
+ *
+ * @param   outTrCard   
+ *
+ * @retval  s64   
+ */
+//=============================================================================================
+s64 TRCSave_GetLastTime( TR_CARD_SV_PTR outTrCard )
+{
+  return outTrCard->lastTime;
+}
+
+//=============================================================================================
+/**
+ * @brief バッジ取得日時を取得
+ *
+ * @param   outTrCard   
+ * @param   no    
+ *
+ * @retval  SHORT_DATE    
+ */
+//=============================================================================================
+SHORT_DATE TRCSave_GetBadgeDate( TR_CARD_SV_PTR outTrCard, int no )
+{
+  GF_ASSERT(no<TRAINERCARD_BADGE_NUM);
+
+  return outTrCard->badgeGetDate[no];
+}
+
+//=============================================================================================
+/**
+ * @brief バッジ取得日時を設定
+ *
+ * @param   inTrCard    
+ * @param   no    
+ * @param   date    
+ */
+//=============================================================================================
+void TRCSave_SetBadgeDate( TR_CARD_SV_PTR inTrCard, int no, int year, int month, int day )
+{
+  GF_ASSERT(no<TRAINERCARD_BADGE_NUM);
+
+  inTrCard->badgeGetDate[no].year = year;
+  inTrCard->badgeGetDate[no].year = month;
+  inTrCard->badgeGetDate[no].year = day;
+}
+
+
+//=============================================================================================
+/**
+ * @brief バッジの磨き具合を取得
+ *
+ * @param   outTrCard   
+ * @param   no    
+ *
+ * @retval  SHORT_DATE    
+ */
+//=============================================================================================
+int TRCSave_GetBadgePolish( TR_CARD_SV_PTR outTrCard, int no )
+{
+  GF_ASSERT(no<TRAINERCARD_BADGE_NUM);
+
+  return outTrCard->polish[no];
+}
+
+//=============================================================================================
+/**
+ * @brief バッジの磨き具合を設定
+ *
+ * @param   inTrCard    
+ * @param   no    
+ * @param   polish    
+ */
+//=============================================================================================
+void TRCSave_SetBadgePolish( TR_CARD_SV_PTR inTrCard, int no, int polish )
+{
+  inTrCard->polish[no] = polish;
+}
+
+//=============================================================================================
+/**
+ * @brief 各種イベントを終了済か取得
+ *
+ * @param   outTrCard   
+ * @param   event   
+ *
+ * @retval  BOOL    
+ */
+//=============================================================================================
+BOOL TRCSave_GetEventOpenFlag( TR_CARD_SV_PTR outTrCard, int event )
+{
+  return 1 & (outTrCard->openflag>>event);
+}
+
+//=============================================================================================
+/**
+ * @brief 各種イベントの終了条件を設定
+ *
+ * @param   outTrCard   
+ * @param   event   
+ */
+//=============================================================================================
+void TRCSave_SetEventOpenFlag( TR_CARD_SV_PTR inTrCard, int event )
+{
+  inTrCard->openflag |= (1<<event);
 }
