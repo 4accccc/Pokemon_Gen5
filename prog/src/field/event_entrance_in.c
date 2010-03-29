@@ -16,11 +16,11 @@
 
 #include "event_entrance_in.h"
 
-#include "entrance_camera_settings.h"  // for ENTRANCE_CAMERA_SETTINGS
-#include "event_fieldmap_control.h"    // for EVENT_FieldFadeOut_xxxx
-#include "event_entrance_effect.h"     // for EVENT_FieldDoorInAnime
-#include "event_fldmmdl_control.h"     // for EVENT_PlayerOneStepAnime
-#include "event_disappear.h"           // for EVENT_DISAPPEAR_xxxx
+#include "entrance_camera.h"         // for ENTRANCE_CAMERA
+#include "event_fieldmap_control.h"  // for EVENT_FieldFadeOut_xxxx
+#include "event_entrance_effect.h"   // for EVENT_FieldDoorInAnime
+#include "event_fldmmdl_control.h"   // for EVENT_PlayerOneStepAnime
+#include "event_disappear.h"         // for EVENT_DISAPPEAR_xxxx
 
 #include "sound/pm_sndsys.h"
 #include "field_sound.h"

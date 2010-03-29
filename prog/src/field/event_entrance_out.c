@@ -23,7 +23,7 @@
 #include "event_fldmmdl_control.h"     // for EVENT_PlayerOneStepAnime
 #include "field_place_name.h"          // for FIELD_PLACE_NAME_Display
 #include "fieldmap.h"                  // for FIELDMAP_GetPlaceNameSys
-#include "entrance_camera_settings.h"  // for ENTRANCE_CAMERA_SETTINGS
+#include "entrance_camera.h"           // for ENTRANCE_CAMERA
 
 #include "sound/pm_sndsys.h"
 #include "sound/bgm_info.h"
