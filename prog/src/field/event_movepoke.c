@@ -34,7 +34,7 @@
 //-----------------------------------------------------------------------------
 
 //-------------------------------------
-///	アニメーションデータバッファ
+///	アニメーション状態
 //=====================================
 enum
 {
@@ -241,6 +241,14 @@ static void MOVEPOKE_Update( FLDMAPFUNC_WORK* p_taskwk, FIELDMAP_WORK* p_fieldma
         ICA_ANIME_Delete( p_wk->p_anime );
         p_wk->p_anime = NULL;
         p_wk->anime_status = ANIME_STATUS_NONE;
+
+
+        // 位置を初期化
+        {
+          VecFx32 pos;
+          MMDL_GetVectorPos( p_wk->p_poke, &pos );
+          MMDL_InitPosition( p_wk->p_poke, &pos, MMDL_GetDirDisp(p_wk->p_poke) );
+        }
       }
     }
     break;
@@ -298,6 +306,5 @@ static void MOVEPOKE_SetUpMMdl( const ICA_ANIME* cp_anime, MMDL* p_mmdl, const V
   else if( rotate.y == FX32_CONST(270) ){
     MMDL_SetDirAll( p_mmdl, DIR_LEFT );
   }
-
 }
 

@@ -136,6 +136,12 @@ static WEATHER_TASK_FUNC_RESULT WEATHER_SUNNY_Init( WEATHER_TASK* p_wk, WEATHER_
 	u32 fogoffset, fogslope;
 	SUNNY_WORK* p_sunnywork;
 
+  // ZONEFOGLIGHTがよみこまれるまで待機
+  if( WEATHER_TASK_IsZoneFogLoading(p_wk) ){
+    TOMOYA_Printf( "ZoneFogLoaing...\n" );
+    return WEATHER_TASK_FUNC_RESULT_CONTINUE;
+  }
+
 	// ローカルワーク取得
 	p_sunnywork = WEATHER_TASK_GetWorkData( p_wk );
 	p_sunnywork->fade_init = FALSE;

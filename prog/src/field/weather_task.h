@@ -313,6 +313,7 @@ extern BOOL WEATHER_TASK_FogFade_IsFade( const WEATHER_TASK* cp_wk );
 //-------------------------------------
 ///	É]Å[Éìópê›íËÇÃéÊìæ
 //=====================================
+extern BOOL WEATHER_TASK_IsZoneFogLoading( const WEATHER_TASK* cp_wk );
 extern BOOL WEATHER_TASK_IsZoneFog( const WEATHER_TASK* cp_wk );
 extern BOOL WEATHER_TASK_IsZoneLight( const WEATHER_TASK* cp_wk );
 extern s32 WEATHER_TASK_GetZoneFogOffset( const WEATHER_TASK* cp_wk );

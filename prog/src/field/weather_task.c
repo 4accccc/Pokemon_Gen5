@@ -1217,6 +1217,24 @@ extern BOOL WEATHER_TASK_FogFade_IsFade( const WEATHER_TASK* cp_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  ZoneFog読み込み中チェック
+ *
+ *	@param	cp_wk   ワーク
+ *
+ *	@retval TRUE  読み込み中
+ */
+//-----------------------------------------------------------------------------
+BOOL WEATHER_TASK_IsZoneFogLoading( const WEATHER_TASK* cp_wk )
+{
+  if( FIELD_ZONEFOGLIGHT_GetStatus( cp_wk->cp_zonefog ) == FIELD_ZONEFOGLIGHT_STATUS_LOADING ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	ゾーンフォグ情報の有無
  *
  *	@param	cp_wk		ワーク

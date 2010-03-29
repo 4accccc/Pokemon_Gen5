@@ -853,7 +853,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     
     // ゾーンフォグシステム生成
     fieldWork->zonefog = FIELD_ZONEFOGLIGHT_Create( fieldWork->heapID );
-    FIELD_ZONEFOGLIGHT_Load( fieldWork->zonefog, ZONEDATA_GetFog(fieldWork->map_id), ZONEDATA_GetLight(fieldWork->map_id), fieldWork->heapID );
+    FIELD_ZONEFOGLIGHT_LoadReq( fieldWork->zonefog, ZONEDATA_GetFog(fieldWork->map_id), ZONEDATA_GetLight(fieldWork->map_id), 1 );
 
     // ライトシステム生成
     {
@@ -2200,6 +2200,9 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
 
   // scenearea
   FLD_SCENEAREA_Update( fieldWork->sceneArea, &fieldWork->now_pos );
+
+  //ZONEFOGLIGHT
+  FIELD_ZONEFOGLIGHT_Update( fieldWork->zonefog, fieldWork->heapID ); 
 	
 	FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_FIELD_PRBUF );
 	FIELD_FOG_Main( fieldWork->fog );
@@ -2766,7 +2769,7 @@ static void zoneChange_SetZoneFogLight( FIELDMAP_WORK *fieldWork, u32 zone_id )
 
 	FIELD_ZONEFOGLIGHT_Clear( p_zonefog );
 	
-	FIELD_ZONEFOGLIGHT_Load( fieldWork->zonefog, ZONEDATA_GetFog(zone_id), ZONEDATA_GetLight(zone_id), fieldWork->heapID );
+	FIELD_ZONEFOGLIGHT_LoadReq( fieldWork->zonefog, ZONEDATA_GetFog(zone_id), ZONEDATA_GetLight(zone_id), 1 );  // 実際の読み込みはメインフレーム
 }
 
 //--------------------------------------------------------------

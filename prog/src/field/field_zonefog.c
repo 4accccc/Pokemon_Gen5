@@ -46,6 +46,10 @@ typedef struct {
 //=====================================
 struct _FIELD_ZONEFOGLIGHT	
 {
+  u8  status;
+  s8  load_wait;
+  u16  load_dataid;
+  
 	FOG_DATA* p_data;
 
 	u32 light;
@@ -98,6 +102,27 @@ void FIELD_ZONEFOGLIGHT_Delete( FIELD_ZONEFOGLIGHT* p_sys )
 	GFL_HEAP_FreeMemory( p_sys );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ゾーンのFOG設定　読み込み処理
+ *
+ *	@param	p_sys     システム
+ *	@param	heapID    ヒープID
+ */
+//-----------------------------------------------------------------------------
+void FIELD_ZONEFOGLIGHT_Update( FIELD_ZONEFOGLIGHT* p_sys, HEAPID heapID )
+{
+  if( p_sys->status == FIELD_ZONEFOGLIGHT_STATUS_LOADING ){
+    
+    p_sys->load_wait --;
+    if(p_sys->load_wait <= 0){
+      p_sys->p_data = GFL_ARCHDL_UTIL_Load( p_sys->p_handle, p_sys->load_dataid, FALSE, heapID );
+      p_sys->status = FIELD_ZONEFOGLIGHT_STATUS_NORMAL;
+    }
+  }
+}
+
+
 
 //----------------------------------------------------------------------------
 /**
@@ -105,20 +130,37 @@ void FIELD_ZONEFOGLIGHT_Delete( FIELD_ZONEFOGLIGHT* p_sys )
  *
  *	@param	p_sys			システム
  *	@param	datano		フォグデータナンバー
- *	@param	heapID		ヒープID
  */
 //-----------------------------------------------------------------------------
-void FIELD_ZONEFOGLIGHT_Load( FIELD_ZONEFOGLIGHT* p_sys, u32 fogno, u32 lightno, HEAPID heapID )
+void FIELD_ZONEFOGLIGHT_LoadReq( FIELD_ZONEFOGLIGHT* p_sys, u32 fogno, u32 lightno, s8 wait )
 {
 	GF_ASSERT( p_sys );
 	GF_ASSERT( p_sys->p_data == NULL );
 
 	if( fogno != FIELD_ZONEFOGLIGHT_DATA_NONE )
 	{
-		p_sys->p_data = GFL_ARCHDL_UTIL_Load( p_sys->p_handle, fogno, FALSE, heapID );
+    p_sys->status = FIELD_ZONEFOGLIGHT_STATUS_LOADING;
+    p_sys->load_dataid  = fogno;
+    p_sys->load_wait    = wait;
 	}
 	p_sys->light	= lightno;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  今の状態を取得
+ *
+ *	@param	cp_sys システム
+ *
+ *	@retval	FIELD_ZONEFOGLIGHT_STATUS_NORMAL    通常
+ *	@retval	FIELD_ZONEFOGLIGHT_STATUS_LOADING   読み込み
+ */
+//-----------------------------------------------------------------------------
+FIELD_ZONEFOGLIGHT_STATUS FIELD_ZONEFOGLIGHT_GetStatus( const FIELD_ZONEFOGLIGHT* cp_sys )
+{
+  return cp_sys->status;
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -137,6 +179,11 @@ void FIELD_ZONEFOGLIGHT_Clear( FIELD_ZONEFOGLIGHT* p_sys )
 		p_sys->p_data = NULL;
 	}
 	p_sys->light = FIELD_ZONEFOGLIGHT_DATA_NONE;
+
+  // 読み込みリクエストも破棄
+  if( p_sys->status == FIELD_ZONEFOGLIGHT_STATUS_LOADING ){
+    p_sys->status = FIELD_ZONEFOGLIGHT_STATUS_NORMAL;
+  }
 }
 
 //----------------------------------------------------------------------------

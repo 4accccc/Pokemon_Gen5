@@ -31,6 +31,15 @@ extern "C"{
 #define FIELD_ZONEFOGLIGHT_DATA_NONE	(0xfffffff)
 #define FIELD_ZONEFOGLIGHT_ARC_LIGHT	( ARCID_ZONELIGHT_TABLE )
 
+//-------------------------------------
+///	èÛë‘
+//=====================================
+typedef enum {
+  FIELD_ZONEFOGLIGHT_STATUS_NORMAL,   // í èÌèÛë‘
+  FIELD_ZONEFOGLIGHT_STATUS_LOADING,  // ì«Ç›çûÇ›èÛë‘
+} FIELD_ZONEFOGLIGHT_STATUS;
+
+
 //-----------------------------------------------------------------------------
 /**
  *					ç\ë¢ëÃêÈåæ
@@ -67,8 +76,12 @@ typedef struct {
 extern FIELD_ZONEFOGLIGHT* FIELD_ZONEFOGLIGHT_Create( HEAPID heapID );
 extern void FIELD_ZONEFOGLIGHT_Delete( FIELD_ZONEFOGLIGHT* p_sys );
 
-extern void FIELD_ZONEFOGLIGHT_Load( FIELD_ZONEFOGLIGHT* p_sys, u32 fogno, u32 lightno, HEAPID heapID );
+extern void FIELD_ZONEFOGLIGHT_Update( FIELD_ZONEFOGLIGHT* p_sys, HEAPID heapID );
+
+extern void FIELD_ZONEFOGLIGHT_LoadReq( FIELD_ZONEFOGLIGHT* p_sys, u32 fogno, u32 lightno, s8 wait );
 extern void FIELD_ZONEFOGLIGHT_Clear( FIELD_ZONEFOGLIGHT* p_sys );
+
+extern FIELD_ZONEFOGLIGHT_STATUS FIELD_ZONEFOGLIGHT_GetStatus( const FIELD_ZONEFOGLIGHT* cp_sys );
 
 extern BOOL FIELD_ZONEFOGLIGHT_IsFogData( const FIELD_ZONEFOGLIGHT* cp_sys );
 extern BOOL FIELD_ZONEFOGLIGHT_IsLightData( const FIELD_ZONEFOGLIGHT* cp_sys );
