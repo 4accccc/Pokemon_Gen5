@@ -12,6 +12,7 @@
 #include "system/gfl_use.h"
 #include "system/bmp_winframe.h"
 #include "system/poke2dgra.h"
+#include "system/time_icon.h"
 #include "sound/pm_sndsys.h"
 #include "sound/pm_wb_voice.h"
 #include "sound/snd_mic.h"
@@ -64,6 +65,7 @@ typedef struct {
 
 //	GFL_ARCUTIL_TRANSINFO	winCgx;
 	GFL_BMPWIN * pokeWin;
+	TIMEICON_WORK * timeIcon;
 
 	GFL_CLUNIT * clunit;
 	GFL_CLWK * clwk;
@@ -80,10 +82,6 @@ typedef struct {
 	BOOL	recFlag;
 
 //	void * testBuff;
-
-//	u8	subSeq;
-//	u8	bgPri[4];
-//	int	disp;
 
 }OSYABERI_WORK;
 
@@ -212,6 +210,10 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 		if( FLDMSGWIN_STREAM_Print( wk->msgWin ) == TRUE ){
 		  GFL_UI_SleepDisable( GFL_UI_SLEEP_MIC );		// スリープ禁止
 			SND_MIC_Init( HEAPID_FIELDMAP );
+			wk->timeIcon = TIMEICON_Create(
+											GFUser_VIntr_GetTCBSYS(),
+											FLDMSGWIN_STREAM_GetBmpWin(wk->msgWin),
+											15, TIMEICON_DEFAULT_WAIT, HEAPID_FIELDMAP );
 			*seq = SEQ_MIC_INIT_WAIT;
 		}
 		break;
@@ -219,6 +221,7 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 	case SEQ_MIC_INIT_WAIT:	// マイク準備待ち
 		SND_MIC_Main();
 		if( SND_MIC_IsAmpOnWaitFlag() == TRUE ){
+			TILEICON_Exit( wk->timeIcon );
 			PMSND_PauseBGM( TRUE );
 			FLDMSGWIN_STREAM_ClearMessage( wk->msgWin );
 			FLDMSGWIN_STREAM_PrintStart( wk->msgWin, 0, 0, perap_msg_01 );
