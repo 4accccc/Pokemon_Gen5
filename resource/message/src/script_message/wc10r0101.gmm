@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-06T20:04:48"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T15:42:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -370,12 +370,12 @@
 		<language name="JPN" width="256">きょうは　ほんとうに
 ありがとう[BE:01:ページ切り替え（クリア）]
 また　あしたな
-シーユー　トゥモロー！[BE:00:ページ切り替え（行送り）]
+シー　ユー　トゥモロー！[BE:00:ページ切り替え（行送り）]
 と　もりが　ささやいておる▼</language>
 		<language name="JPN_KANJI" width="256">今日は　本当に
 ありがとう[BE:01:ページ切り替え（クリア）]
 また　明日な
-シーユー　トゥモロー！[BE:00:ページ切り替え（行送り）]
+シー　ユー　トゥモロー！[BE:00:ページ切り替え（行送り）]
 と　森が　ささやいておる▼</language>
 	</row>
 

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-03-26T23:10:20"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T15:41:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,9 +330,9 @@
 		</language>
 	</columns>
 
-	<dialog left="267" top="175" right="767" bottom="987" maximized="no" rayout="Vertical2">
+	<dialog left="1441" top="210" right="1941" bottom="1022" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1127" top="137" right="1600" bottom="535" visible="yes"/>
+		<tag-palette left="807" top="137" right="1280" bottom="535" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="237"/>
 		<band id="2" index="3" style="0000" width="253"/>
@@ -394,10 +394,10 @@
 ミニスカート</attribute>
 		<language name="JPN" width="256">ありがとう！　キミって　ノリいいね！
 じゃあ　さっそくだけど▽
-ポケモンしょうぶ　はじめましょ！</language>
+ポケモンしょうぶ　はじめましょ！▼</language>
 		<language name="JPN_KANJI" width="256">ありがとう！　キミって　ノリいいね！
 じゃあ　早速だけど▽
-ポケモン勝負　始めましょ！</language>
+ポケモン勝負　始めましょ！▼</language>
 	</row>
 
 	<row id="msg_wheel_spring_f_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -456,8 +456,8 @@
 		<language name="JPN" width="256">……　……あ　あの　ありがと！▼
 この　かんらんしゃさ　まえから
 のって　みたかったんだけど▽
-ここって　ふたりのり　せんようだし▽
-ともだちと　いっしょに　のって▽
+ここって　ふたりのり　せんようだし▼
+ともだちと　いっしょに　のって
 もし　こわがったり　しちゃったら▽
 はずかしいな　って　おもってて▼
 こまってた　とこに　キミが
@@ -471,8 +471,8 @@
 		<language name="JPN_KANJI" width="256">……　……あ　あの　ありがと！▼
 この　観覧車さ　前から
 乗って　みたかったんだけど▽
-ここって　二人乗り　専用だし▽
-友達と　一緒に　乗って▽
+ここって　二人乗り　専用だし▼
+友達と　一緒に　乗って
 もし　こわがったり　しちゃったら▽
 恥ずかしい　って　思ってて▼
 困ってた　とこに　キミが
@@ -528,11 +528,11 @@
 		<language name="JPN" width="256">へへ　なんか　うれしい！　ありがと！
 [1:00:トレーナー名:0]くん！▼
 じゃあ　さっそく　だけど
-ポケモンしょうぶ　しよっか！</language>
+ポケモンしょうぶ　しよっか！▼</language>
 		<language name="JPN_KANJI" width="256">へへ　何か　うれしい！　ありがと！
 [1:00:トレーナー名:0]くん！▼
 じゃあ　早速　だけど
-ポケモン　勝負　しよっか！</language>
+ポケモン　勝負　しよっか！▼</language>
 	</row>
 
 	<row id="msg_wheel_spring_f_08" text-color="#ff0000,,,,,#ff0000,,,,,,,,,,,,," back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
@@ -549,7 +549,7 @@
 		<language name="JPN" width="256">そっか……　ざんねん　だけど
 [1:00:トレーナー名:0]くん▽
 いそがしそう　だもんね……</language>
-		<language name="JPN_KANJI" width="256">そっか……　残念　だけど
+		<language name="JPN_KANJI" width="256">そっか……　残念だけど
 [1:00:トレーナー名:0]くん▽
 いそがしそう　だもんね……</language>
 	</row>
@@ -672,11 +672,11 @@
 		<language name="JPN" width="256">え？　マジで　いいの？　サンキュー！
 オマエって　いいヤツ　だなー！▼
 じゃあ　オレが　マジあいしてる
-ポケモン　しょうかい　させてよ！</language>
+ポケモン　しょうかい　させてよ！▼</language>
 		<language name="JPN_KANJI" width="256">え？　マジで　いいの？　サンキュー！
 オマエって　いいヤツ　だなー！▼
 じゃあ　オレが　マジ愛してる
-ポケモン　紹介　させてよ！</language>
+ポケモン　紹介させてよ！▼</language>
 	</row>
 
 	<row id="msg_wheel_spring_m_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -803,12 +803,12 @@
 やった！　サンキュー！！▽
 やっぱ　オマエ　いいヤツだな！▼
 じゃあさ　さっそくだけど
-オレと　ポケモンしょうぶ　しよーぜ！</language>
+オレと　ポケモンしょうぶ　しよーぜ！▼</language>
 		<language name="JPN_KANJI" width="256">え？　いいの？　マジで！？
 やった！　サンキュー！！▽
 やっぱ　オマエ　いいヤツだな！▼
 じゃあさ　早速だけど
-オレと　ポケモン勝負　しよーぜ！</language>
+オレと　ポケモン勝負　しよーぜ！▼</language>
 	</row>
 
 	<row id="msg_wheel_spring_m_08" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#c0c0c0,,,#c0c0c0,,#ffffff,#c0c0c0,,,#c0c0c0,,">
@@ -936,11 +936,11 @@
 		<language name="JPN" width="256">そうかあ！　しょうねん！
 キミは　みどころ　アリ　だな！▼
 さあ　さっそく　あいさつ　がわりに
-イッパツ　しょうぶと　いこうか！</language>
+イッパツ　しょうぶと　いこうか！▼</language>
 		<language name="JPN_KANJI" width="256">そうかあ！　少年！
 キミは　見所　アリ　だな！▼
 さあ　早速　あいさつ代わりに
-イッパツ　勝負と　いこうか！</language>
+イッパツ　勝負と　いこうか！▼</language>
 	</row>
 
 	<row id="msg_wheel_summer_f_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1046,8 +1046,8 @@
 
 ※１度観覧車に乗って以降
 
-・いいえ選択時
-・再度話しかけると06から</comment>
+・はい選択時
+・トレーナー戦闘へ</comment>
 		<attribute name="キャラ指定">MOUNTMAN
 
 山男</attribute>
@@ -1055,12 +1055,12 @@
 これで　また　ふたりの　あいだは▽
 おおきく　しんてん　してしまうな！▼
 じゃあ　まずは　あいさつ　がわりに
-ポケモン　イッパツ　やっとくか！</language>
+ポケモン　イッパツ　やっとくか！▼</language>
 		<language name="JPN_KANJI" width="256">そうか！　そうかあ！　少年！
 これで　また　二人の　あいだは▽
-大きく　進展　してしまうな！▼
+大きく　進展してしまうな！▼
 じゃあ　まずは　あいさつ　代わりに
-ポケモン　イッパツ　やっとくか！</language>
+ポケモン　イッパツ　やっとくか！▼</language>
 	</row>
 
 	<row id="msg_wheel_summer_f_08" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1143,7 +1143,7 @@
 二人が　過ごした　アツい　時間を
 物語ってしまうな　少年！▼
 これで　ボクらの　仲は　一層
-進展　してしまった　わけだ！▼
+進展してしまった　わけだ！▼
 ボクら　二人の　夏休みは
 いつまでも　終わらないな！▼
 では　また　会おう！　少年！</language>
@@ -1201,13 +1201,13 @@
 あなたが　わたしは　きょうみぶかい▼
 まあ　それは　それ……
 わたしは　エリートトレーナー▽
-しょうぶに　だきょうは　ないよ</language>
+しょうぶに　だきょうは　ないよ▼</language>
 		<language name="JPN_KANJI" width="256">そうか　わかった……▼
 そこまで　観覧車に　ひかれる
 あなたが　私は　興味深い▼
 まあ　それは　それ……
 私は　エリートトレーナー▽
-勝負に　妥協は　ないよ</language>
+勝負に　妥協は　ないよ▼</language>
 	</row>
 
 	<row id="msg_wheel_summer_m_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -1470,7 +1470,7 @@ OL</attribute>
 がんばって　勝負するよ！</language>
 	</row>
 
-	<row id="msg_wheel_fall_f_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_wheel_fall_f_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>秋：主人公性別が♂
 ・はい選択時
 ・トレーナー戦闘へ</comment>
@@ -1480,11 +1480,11 @@ OL</attribute>
 		<language name="JPN" width="256">フフフ　ありがと……
 キミ　わかいのに　やさしいんだね▼
 じゃあ　ポケモンしょうぶ　しよっか
-おねーさん　がんばるから！</language>
+おねーさん　がんばるから！▼</language>
 		<language name="JPN_KANJI" width="256">フフフ　ありがと……
 キミ　若いのに　優しいんだね▼
 じゃあ　ポケモン勝負　しよっか
-おねーさん　頑張るから！</language>
+おねーさん　頑張るから！▼</language>
 	</row>
 
 	<row id="msg_wheel_fall_f_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1672,8 +1672,8 @@ OL</attribute>
 OL</attribute>
 		<language name="JPN" width="256">……　……　……　……　……　……
 また　[1:00:トレーナー名:0]に▽
-あまえちゃったな……▽
-アタシの　ほうが　おねーさんなのに▽
+あまえちゃったな……▼
+アタシの　ほうが　おねーさんなのに
 何か　なさけない……▼
 でも　[1:00:トレーナー名:0]だから……▼
 いや　イイや　なんでも　ない……▼
@@ -1683,8 +1683,8 @@ OL</attribute>
 ふたりで　すごせると　いいな</language>
 		<language name="JPN_KANJI" width="256">……　……　……　……　……　……
 また　[1:00:トレーナー名:0]に▽
-甘えちゃったな……▽
-アタシの　ほうが　おねーさんなのに▽
+甘えちゃったな……▼
+アタシの　ほうが　おねーさんなのに
 何か　情けない……▼
 でも　[1:00:トレーナー名:0]だから……▼
 いや　イイや　何でも　ない……▼
@@ -1724,7 +1724,7 @@ OL</attribute>
 一緒に　乗りますけど？</language>
 	</row>
 
-	<row id="msg_wheel_fall_m_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_wheel_fall_m_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>秋：主人公性別が♀
 ・はい選択時
 ・トレーナー戦闘へ</comment>
@@ -1735,12 +1735,12 @@ OL</attribute>
 それとも　じしん　あるのかな？▼
 まあ　いいですけど
 しょうぶすれば　わかるし▽
-さっそく　はじめましょ！</language>
+さっそく　はじめましょ！▼</language>
 		<language name="JPN_KANJI" width="256">なんか　アッサリ　してますね……
 それとも　自信　あるのかな？▼
 まあ　いいですけど
 勝負すれば　わかるし▽
-早速　始めましょ！</language>
+早速　始めましょ！▼</language>
 	</row>
 
 	<row id="msg_wheel_fall_m_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -1852,12 +1852,12 @@ OL</attribute>
 なんかー　あなたと　いると▽
 ワタシ　げんきに　なるんですよ！▼
 じゃあ　まずは　いっしょに
-ポケモンしょうぶ　しましょ！</language>
+ポケモンしょうぶ　しましょ！▼</language>
 		<language name="JPN_KANJI" width="256">え！　いいんですか！　ありがとー！
 何かー　あなたと　いると▽
 ワタシ　元気に　なるんですよ！▼
 じゃあ　まずは　一緒に
-ポケモン勝負　しましょ！</language>
+ポケモン勝負　しましょ！▼</language>
 	</row>
 
 	<row id="msg_wheel_fall_m_08" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
@@ -2255,7 +2255,7 @@ OL</attribute>
 付き合って　もらえないかな？</language>
 	</row>
 
-	<row id="msg_wheel_winter_m_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_wheel_winter_m_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>冬：主人公性別が♀
 ・はい選択時
 ・トレーナー戦闘へ</comment>
@@ -2265,11 +2265,11 @@ OL</attribute>
 		<language name="JPN" width="256">ほんとうかい？　ありがとう
 きみは　しんせつな　ひとだね……▼
 それじゃあ　さっそくだけど
-しょうぶに　つきあってもらえるかな</language>
+しょうぶに　つきあってもらえるかな▼</language>
 		<language name="JPN_KANJI" width="256">本当かい？　ありがとう
 君は　親切な　人だね……▼
 それじゃあ　早速だけど
-勝負に　付き合ってもらえるかな</language>
+勝負に　付き合ってもらえるかな▼</language>
 	</row>
 
 	<row id="msg_wheel_winter_m_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -2402,10 +2402,10 @@ OL</attribute>
 おぼっちゃま</attribute>
 		<language name="JPN" width="256">ありがとう……　うれしいな……
 それじゃあ　まず　いっしょに▽
-ポケモンしょうぶ　しようよ！</language>
+ポケモンしょうぶ　しようよ！▼</language>
 		<language name="JPN_KANJI" width="256">ありがとう……　うれしいな……
 それじゃあ　まず　一緒に▽
-ポケモン勝負　しようよ！</language>
+ポケモン勝負　しようよ！▼</language>
 	</row>
 
 	<row id="msg_wheel_winter_m_08" text-color="#ff0000,,,,,,,,,,,,,,,,,,">
