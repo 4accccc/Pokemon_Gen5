@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T15:41:07"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T16:33:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,9 +292,9 @@
 	</lock>
 
 
-	<row id="msg_r06r0301_oldman1a_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r06r0301_oldman1a_01">
 		<comment>♂
-・仮メッセージ</comment>
+・WHITEver</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">おいしい　やさいを　たべたいなら
 しぜんで　そだてるのが　いちばんさ▼
@@ -310,9 +310,9 @@
 その　証拠ってもんだよ</language>
 	</row>
 
-	<row id="msg_r06r0301_oldman1b_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r06r0301_oldman1b_01">
 		<comment>♂
-・仮メッセージ</comment>
+・BLACKver</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">おんしつを　つかって
 やさいを　そだてるのが　いちばんさ▼
@@ -328,7 +328,7 @@
 野菜は　とびっきり　おいしいよ</language>
 	</row>
 
-	<row id="msg_r06r0301_babygirl1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r06r0301_babygirl1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公性別＝♂
 ・アイテム入手処理
@@ -340,7 +340,7 @@
 これ　あげる！▼</language>
 	</row>
 
-	<row id="msg_r06r0301_babygirl1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r06r0301_babygirl1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・主人公性別＝♂
 ・アイテム入手処理
@@ -352,7 +352,7 @@
 これ　あげる！▼</language>
 	</row>
 
-	<row id="msg_r06r0301_babygirl1_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_r06r0301_babygirl1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・アイテム入手後
 ・主人公性別♂♀共有</comment>
@@ -367,7 +367,7 @@
 べつの　ポケモンに　なったの！</language>
 	</row>
 
-	<row id="msg_r06r0301_middlewoman_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r06r0301_middlewoman_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・HP/PP満タン時</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN</attribute>
@@ -377,7 +377,7 @@
 元気一杯って　感じね！！</language>
 	</row>
 
-	<row id="msg_r06r0301_middlewoman_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_r06r0301_middlewoman_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・HP/PP満タンでない時
 　続けて画面暗転して回復処理</comment>
