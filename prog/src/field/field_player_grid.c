@@ -1345,6 +1345,25 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Stop(
 
 //--------------------------------------------------------------
 /**
+ * 自転車が入れないアトリビュートかチェック
+ * @param val MAPATTR_VALUE
+ * @retval BOOL TRUE=進入不可アトリビュート
+ */
+//--------------------------------------------------------------
+static BOOL gjikiCycle_CheckAttr( MAPATTR_VALUE val )
+{
+  if( MAPATTR_VALUE_CheckLongGrass(val) ||
+      MAPATTR_VALUE_CheckOze01(val) ||
+      MAPATTR_VALUE_CheckOzeStairs(val) ||
+      MAPATTR_VALUE_CheckSnowNotCycle(val) ){
+    return( TRUE ); //hit
+  }
+  
+  return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
  * オーダーチェック　移動中
  * @param  gjiki FIELD_PLAYER_GRID
  * @param mmdl MMDL*
@@ -1355,6 +1374,73 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Stop(
  * @retval JIKI_MOVEORDER
  */
 //--------------------------------------------------------------
+static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Walk(
+  FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
+{
+  if( MMDL_CheckPossibleAcmd(mmdl) == FALSE ){
+    return( JIKI_MOVEORDER_NON );
+  }
+  
+  if( input->dir == DIR_NOT )
+  {
+    return( gjikiCycle_CheckMoveOrder_Stop( gjiki, mmdl, input) );
+  }
+  
+  {
+    MAPATTR attr;
+    u32 hit = gjiki_HitCheckMove( gjiki, mmdl, input->dir, &attr );
+    
+    if( input->debug_flag == TRUE )
+    {
+      if( hit != MMDL_MOVEHITBIT_NON &&
+          !(hit & MMDL_MOVEHITBIT_OUTRANGE) )
+      {
+        hit = MMDL_MOVEHITBIT_NON;
+      }
+    }
+    
+    if( attr != MAPATTR_ERROR )
+    {
+      MAPATTR_VALUE val = MAPATTR_GetAttrValue( attr );
+      MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( attr );
+      
+      if( (hit & MMDL_MOVEHITBIT_ATTR) )
+      {
+        u16 attr_dir = DIR_NOT;
+        
+        if( MAPATTR_VALUE_CheckJumpUp(val) ){
+          attr_dir = DIR_UP;
+        }else if( MAPATTR_VALUE_CheckJumpDown(val) ){
+          attr_dir = DIR_DOWN;
+        }else if( MAPATTR_VALUE_CheckumpLeft(val) ){
+          attr_dir = DIR_LEFT;
+        }else if( MAPATTR_VALUE_CheckJumpRight(val) ){
+          attr_dir = DIR_RIGHT;
+        }
+        
+        if( attr_dir != DIR_NOT && attr_dir == input->dir ){
+          return( JIKI_MOVEORDER_JUMP ); //ジャンプ方向一致
+        }
+      }
+      
+      if( hit == MMDL_MOVEHITBIT_NON )
+      {
+        if( (flag & MAPATTR_FLAGBIT_WATER) == 0 && //not水地形
+            gjikiCycle_CheckAttr(val) == FALSE ){
+          return( JIKI_MOVEORDER_WALK );
+        }
+        
+        if( input->debug_flag == TRUE ){ //デバッグ移動
+          return( JIKI_MOVEORDER_WALK );
+        }
+      }
+    }
+  }
+  
+  return( JIKI_MOVEORDER_HITCH );
+}
+
+#if 0 //旧
 static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Walk(
   FIELD_PLAYER_GRID *gjiki, MMDL *mmdl, const INPUTDATA *input )
 {
@@ -1424,6 +1510,7 @@ static JIKI_MOVEORDER gjikiCycle_CheckMoveOrder_Walk(
   
   return( JIKI_MOVEORDER_HITCH );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
