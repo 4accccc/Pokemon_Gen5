@@ -36,6 +36,10 @@
 #define NORMAL_QUIZ_NUM_MAX  (30)
 #define QUIZ_NUM_MAX  (NORMAL_QUIZ_NUM_MAX+1)   //通常30問+誕生日問題1問
 
+#ifdef PM_DEBUG
+//デバッグ用クイズ番号　実体はmisc.c
+extern int DebugQuizNo = 0;
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -79,17 +83,27 @@ VMCMD_RESULT EvCmdGetQuiz( VMHANDLE *core, void *wk )
   {
     *quiz = msg_quiz_31;
     *hint = msg_quiz_hint_31;
-    *ans = answer[QUIZ_NUM_MAX-1];
+    *ans = answer[QUIZ_NUM_MAX-1];    
   }
   else
   {
     u32 rnd;
     //0～29の乱数をとる
-    rnd = GFUser_GetPublicRand(NORMAL_QUIZ_NUM_MAX);
+    rnd = GFUser_GetPublicRand(NORMAL_QUIZ_NUM_MAX);    
     *quiz = msg_quiz_01 + rnd;
     *hint = msg_quiz_hint_01 + rnd;
     *ans = answer[rnd];
   }
+#ifdef PM_DEBUG
+  if (DebugQuizNo != 0)
+  {
+    u32 quiz_no;
+    quiz_no = DebugQuizNo-1;
+    *quiz = msg_quiz_01 + quiz_no;
+    *hint = msg_quiz_hint_01 + quiz_no;
+    *ans = answer[quiz_no];
+  }
+#endif  //PM_DEBUG
 
   return VMCMD_RESULT_CONTINUE;
 }
