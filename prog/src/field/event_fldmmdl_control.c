@@ -404,6 +404,120 @@ static BOOL checkAnimeTCB( OBJ_ANIME_EVENT_WORK *work )
 	return( flag );
 }
 
+
+//-----------------------------------------------------------------------------
+/**
+ *  　ネジ山で使用  Highジャンプ
+ */
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	ハイジャンプ　シーケンス
+//=====================================
+enum {
+  EV_FLDMMDL_HIGHJUMP_SEQ_ARCH,    // ARCH処理
+  EV_FLDMMDL_HIGHJUMP_SEQ_DOWN,    // くだり処理
+} ;
+
+//--------------------------------------------------------------
+///	AC_JUMP系　高さYオフセット その2
+//--------------------------------------------------------------
+static const fx32 DATA_JumpOffsTbl[] =	// 8
+{
+	 2*FX32_ONE,4*FX32_ONE,6*FX32_ONE,8*FX32_ONE,
+	 9*FX32_ONE,10*FX32_ONE,10*FX32_ONE,10*FX32_ONE,
+	 9*FX32_ONE,8*FX32_ONE,6*FX32_ONE,5*FX32_ONE,
+	 3*FX32_ONE,2*FX32_ONE,0*FX32_ONE
+};
+#define EV_FLDMMDL_HIGHJUMP_FRAME (NELEMS(DATA_JumpOffsTbl))  // フレーム
+
+#define EV_FLDMMDL_JUMP_DOWN_DIST (2*FX32_ONE)
+
+//-------------------------------------
+///	ハイジャンプワーク
+//=====================================
+typedef struct 
+{
+  MMDL*   p_mmdl;
+  s16     count;
+  VecFx32 start;
+  VecFx32 move;
+} EV_FLDMMDL_HIGHJUMP;
+
+//-----------------------------------------------------------------------------
+/**
+ *  高いところから飛び降りる
+ *
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT EVENTFUNC_HighJump(GMEVENT * event, int *seq, void*work)
+{
+  EV_FLDMMDL_HIGHJUMP* wkhj = work;
+  VecFx32 pos;
+  GMEVENT_RESULT ret = GMEVENT_RES_CONTINUE;
+
+  switch( *seq ){
+  case EV_FLDMMDL_HIGHJUMP_SEQ_ARCH:
+    // まずはARCH
+    pos = wkhj->start; 
+    pos.y += DATA_JumpOffsTbl[ wkhj->count ];
+    wkhj->count ++;
+
+    // 平行方向移動
+    pos.x += FX_Div( FX_Mul( wkhj->move.x, wkhj->count<<FX32_SHIFT ), EV_FLDMMDL_HIGHJUMP_FRAME<< FX32_SHIFT );
+    pos.z += FX_Div( FX_Mul( wkhj->move.z, wkhj->count<<FX32_SHIFT ), EV_FLDMMDL_HIGHJUMP_FRAME<< FX32_SHIFT );
+
+    // 座標を更新
+    MMDL_SetVectorPos( wkhj->p_mmdl, &pos );
+
+    if( wkhj->count > EV_FLDMMDL_HIGHJUMP_FRAME ){
+      (*seq)++;
+    }
+    break;
+
+    
+  case EV_FLDMMDL_HIGHJUMP_SEQ_DOWN:
+    // 落ちるだけ
+    // 終点のYになるまで落とす。
+    MMDL_GetVectorPos( wkhj->p_mmdl, &pos );
+    if( (pos.y - EV_FLDMMDL_JUMP_DOWN_DIST) > (wkhj->start.y + wkhj->move.y) ){
+      pos.y -= EV_FLDMMDL_JUMP_DOWN_DIST;
+    }else{
+      pos.y = wkhj->start.y + wkhj->move.y;
+      ret = GMEVENT_RES_FINISH; // 完了
+    }
+    MMDL_SetVectorPos( wkhj->p_mmdl, &pos );
+  }
+
+  return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  高いところから飛び降りる処理
+ *
+ *	@param	gsys        ゲームシステム
+ *	@param	mmdl        モデル
+ *	@param	cp_start    開始座標
+ *	@param	cp_end      終了座標
+ *
+ *	@return イベント
+ */
+//----------------------------------------------------------------------------
+GMEVENT * EVENT_HighJump( GAMESYS_WORK * gsys, MMDL* mmdl, const VecFx32* cp_start, const VecFx32* cp_end )
+{
+  int i;
+  GMEVENT * event;
+  EV_FLDMMDL_HIGHJUMP * wkhj;
+  event = GMEVENT_Create( gsys, NULL, EVENTFUNC_HighJump, sizeof(EV_FLDMMDL_HIGHJUMP) );
+  wkhj = GMEVENT_GetEventWork( event );
+  wkhj->p_mmdl = mmdl;
+  wkhj->start  = *cp_start;
+  VEC_Subtract( cp_end, cp_start, &wkhj->move );
+
+  return event;
+}
+
+
 #if 0
 //======================================================================
 //	動作モデル	

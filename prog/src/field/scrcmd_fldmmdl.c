@@ -1023,6 +1023,40 @@ VMCMD_RESULT EvCmdGetPlayerFrom( VMHANDLE *core, void *wk )
   return( VMCMD_RESULT_CONTINUE );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ハイジャンプ
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdObjHighJump( VMHANDLE *core, void *wk )
+{
+	MMDL *mmdl;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+	u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
+	u16 gx	= SCRCMD_GetVMWorkValue( core, work );
+	u16 gy	= SCRCMD_GetVMWorkValue( core, work );
+	u16 gz	= SCRCMD_GetVMWorkValue( core, work );
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  VecFx32 start, end;
+  
+	//対象のフィールドOBJのポインタ取得
+	mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+  GF_ASSERT( mmdl != NULL && "ERROR OBJ ID" );
+
+  // 今の座標と終了座標を求める
+  MMDL_GetVectorPos( mmdl, &start );
+  end.x = GRID_TO_FX32( gx ) + MMDL_VEC_X_GRID_OFFS_FX32;
+  end.y = GRID_TO_FX32( gy );
+  end.z = GRID_TO_FX32( gz ) + MMDL_VEC_Z_GRID_OFFS_FX32;
+  
+  SCRIPT_CallEvent( sc, EVENT_HighJump(gsys, mmdl, &start, &end) );
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
 //======================================================================
 //  railマップ専用
 //======================================================================
