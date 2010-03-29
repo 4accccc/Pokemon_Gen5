@@ -1384,11 +1384,14 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
 
       PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
 
-      for(i=0; i<wk->numClients; ++i)
+      for(i=0; i<BTL_CLIENT_MAX; ++i)
       {
-        srcParty_Set( wk, i, BTL_NET_GetPartyData(i) );
-        Bspstore_Party( wk, i, BTL_NET_GetPartyData(i) );
-        PokeCon_AddParty( &wk->pokeconForClient, wk, i );
+        if( BTL_MAIN_IsExistClient(wk, i) )
+        {
+          srcParty_Set( wk, i, BTL_NET_GetPartyData(i) );
+          Bspstore_Party( wk, i, BTL_NET_GetPartyData(i) );
+          PokeCon_AddParty( &wk->pokeconForClient, wk, i );
+        }
       }
       (*seq)++;
     }
@@ -1398,8 +1401,11 @@ static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
     {
       u32 i;
       PokeCon_Init( &wk->pokeconForServer, wk, TRUE );
-      for(i=0; i<wk->numClients; ++i){
-        PokeCon_AddParty( &wk->pokeconForServer, wk, i );
+      for(i=0; i<BTL_CLIENT_MAX; ++i)
+      {
+        if( BTL_MAIN_IsExistClient(wk, i) ){
+          PokeCon_AddParty( &wk->pokeconForServer, wk, i );
+        }
       }
     }
     (*seq)++;
@@ -1529,7 +1535,7 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
 static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int* seq )
 {
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
-  u8 clientID = sp->commPos;
+  u8 clientID = wk->myClientID;
   u8 bagMode = checkBagMode( sp );
 
   // 自分がサーバ
@@ -1548,7 +1554,7 @@ static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int*
     u32 i;
 
     wk->client[ clientID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, clientID, 1,
-    BTL_CLIENT_TYPE_UI, bagMode, wk->heapID  );
+      BTL_CLIENT_TYPE_UI, bagMode, wk->heapID  );
 
     // コマンド整合性チェックのためサーバを作る
     wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );

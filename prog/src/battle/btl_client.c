@@ -406,6 +406,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   }else{
     wk->btlRec = NULL;
   }
+
   return wk;
 }
 
@@ -4587,9 +4588,6 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       u8 vpos;
-
-      TAYA_Printf("Capture pos=%d, yure=%d, succeed=%d, zukan=%d, critical=%d, ballID=%d\n",
-        args[0], args[1], args[2], args[3], args[4], args[5] );
 
       vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
       BTLV_EFFECT_BallThrow( vpos, args[5], args[1], args[2], args[4] );

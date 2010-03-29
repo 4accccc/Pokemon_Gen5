@@ -98,7 +98,7 @@ static struct {
   int               args[ BTL_STR_ARG_MAX ];  ///< ˆø”•Û‘¶”z—ñ
 
   HEAPID          heapID;               ///< ƒq[ƒvID
-  u8              clientID;             ///< UIƒNƒ‰ƒCƒAƒ“ƒgID
+  u32             clientID;             ///< UIƒNƒ‰ƒCƒAƒ“ƒgID
 
 }SysWork;
 
@@ -377,8 +377,12 @@ static inline SetStrFormat get_strFormat( u8 pokeID )
 {
   u8 targetClientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
 
+  TAYA_Printf( "    ypokeID=%d, clientID=%d, myID=%dz\n", pokeID, targetClientID, SysWork.clientID );
+
   if( BTL_MAIN_IsOpponentClientID(SysWork.mainModule, SysWork.clientID, targetClientID) )
   {
+    TAYA_Printf( "    yOpponentz\n");
+
     if( BTL_MAIN_GetCompetitor(SysWork.mainModule) == BTL_COMPETITOR_WILD )
     {
       return SETTYPE_WILD;
@@ -388,6 +392,8 @@ static inline SetStrFormat get_strFormat( u8 pokeID )
       return SETTYPE_ENEMY;
     }
   }
+  TAYA_Printf( "    yFriendz\n");
+
   return SETTYPE_MINE;
 }
 /**

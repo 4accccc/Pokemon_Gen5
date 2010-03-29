@@ -31,12 +31,12 @@ enum {
 //--------------------------------------------------------------
 static struct {
 
-  BtlWeather    weather;
-  u16           weatherTurn;
+  u32       weather;
+  u32       weatherTurn;
 
   BTL_EVENT_FACTOR*  factor[ BTL_FLDEFF_MAX ];
   BPP_SICK_CONT      cont[ BTL_FLDEFF_MAX ];
-  u8                 turnCount[ BTL_FLDEFF_MAX ];
+  u32                turnCount[ BTL_FLDEFF_MAX ];
 
 }Work;
 
