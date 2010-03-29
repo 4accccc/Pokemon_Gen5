@@ -1156,7 +1156,7 @@ extern BOOL BOX2MAIN_BattlePokeCheck( BOX2_SYS_WORK * syswk, u32 pos );
  * @retval	"FALSE = ‚»‚êˆÈŠO"
  */
 //--------------------------------------------------------------------------------------------
-extern BOOL BOX2MAIN_PokeItemFormChange( POKEMON_PASO_PARAM * ppp );
+extern BOOL BOX2MAIN_PokeItemFormChange( BOX2_SYS_WORK * syswk, POKEMON_PASO_PARAM * ppp );
 
 //--------------------------------------------------------------------------------------------
 /**

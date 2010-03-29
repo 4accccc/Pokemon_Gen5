@@ -17,6 +17,7 @@
 #include "system/bmp_winframe.h"
 #include "sound/pm_sndsys.h"
 #include "savedata/perapvoice.h"
+#include "savedata/zukan_savedata.h"
 #include "font/font.naix"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/pokerus.h"
@@ -1596,6 +1597,27 @@ BOOL BOX2MAIN_BattlePokeCheck( BOX2_SYS_WORK * syswk, u32 pos )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		フォルムチェンジ
+ *
+ * @param		syswk		ボックス画面システムワーク
+ * @param		ppp			POKEMON_PASO_PARAM
+ * @param		form		フォルム番号
+ *
+ * @retval	none
+ */
+//--------------------------------------------------------------------------------------------
+static void ChangePokeForm( BOX2_SYS_WORK * syswk, POKEMON_PASO_PARAM * ppp, u16 form )
+{
+	POKEMON_PARAM * pp;
+
+	PPP_ChangeFormNo( ppp, form );
+	pp = PP_CreateByPPP( ppp, HEAPID_BOX_APP );
+	ZUKANSAVE_SetPokeSee( GAMEDATA_GetZukanSave(syswk->dat->gamedata), pp );
+	GFL_HEAP_FreeMemory( pp );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * 持ち物変更によるフォルムチェンジ
  *
  * @param	ppp		POKEMON_PASO_PARAM
@@ -1604,7 +1626,7 @@ BOOL BOX2MAIN_BattlePokeCheck( BOX2_SYS_WORK * syswk, u32 pos )
  * @retval	"FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
-BOOL BOX2MAIN_PokeItemFormChange( POKEMON_PASO_PARAM * ppp )
+BOOL BOX2MAIN_PokeItemFormChange( BOX2_SYS_WORK * syswk, POKEMON_PASO_PARAM * ppp )
 {
 	u16	bf, af;
 	u16	mons;
@@ -1618,7 +1640,8 @@ BOOL BOX2MAIN_PokeItemFormChange( POKEMON_PASO_PARAM * ppp )
 		bf = PPP_Get( ppp, ID_PARA_form_no, NULL );
 		af = POKETOOL_GetPokeTypeFromItem( item );
 		if( bf != af ){
-			PPP_ChangeFormNo( ppp, af );
+//			PPP_ChangeFormNo( ppp, af );
+			ChangePokeForm( syswk, ppp, af );
 		}
 		if( bf != af ){ return TRUE; }
 	// ギラティナ
@@ -1628,12 +1651,14 @@ BOOL BOX2MAIN_PokeItemFormChange( POKEMON_PASO_PARAM * ppp )
 		af = bf;
 		if( bf == FORMNO_GIRATHINA_ANOTHER ){
 			if( item == ITEM_HAKKINDAMA ){
-				PPP_ChangeFormNo( ppp, FORMNO_GIRATHINA_ORIGIN );
+//				PPP_ChangeFormNo( ppp, FORMNO_GIRATHINA_ORIGIN );
+				ChangePokeForm( syswk, ppp, FORMNO_GIRATHINA_ORIGIN );
 				af = FORMNO_GIRATHINA_ORIGIN;
 			}
 		}else{
 			if( item != ITEM_HAKKINDAMA ){
-				PPP_ChangeFormNo( ppp, FORMNO_GIRATHINA_ANOTHER );
+//				PPP_ChangeFormNo( ppp, FORMNO_GIRATHINA_ANOTHER );
+				ChangePokeForm( syswk, ppp, FORMNO_GIRATHINA_ANOTHER );
 				af = FORMNO_GIRATHINA_ANOTHER;
 			}
 		}
@@ -1685,7 +1710,8 @@ void BOX2MAIN_FormChangeSheimi( BOX2_SYS_WORK * syswk, u32 b_pos, u32 a_pos )
 
 	ppp = BOX2MAIN_PPPGet( syswk, syswk->tray, pos );
 
-	PPP_ChangeFormNo( ppp, FORMNO_SHEIMI_LAND );
+//	PPP_ChangeFormNo( ppp, FORMNO_SHEIMI_LAND );
+	ChangePokeForm( syswk, ppp, FORMNO_SHEIMI_LAND );
 
 	// ポケモンアイコン切り替え
 	BOX2OBJ_PokeIconChange( syswk, syswk->tray, pos, syswk->app->pokeicon_id[pos] );
