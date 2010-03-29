@@ -335,8 +335,8 @@
 #define FE_H04_ITEM_03                     319 /* 0x013f ビレッジブリッジ：配達物を貰っているかの判定 */
 #define FE_H04_ITEMHAVING_01               320 /* 0x0140 ビレッジブリッジ：配達物を持っているかのフラグ */
 #define FE_H04_DELIVERY_01                 321 /* 0x0141 ビレッジブリッジ：キャモメのイベントが起動しているかのフラグ */
-		/* not used   322(0x0142) */
-		/* not used   323(0x0143) */
+#define FE_H04R0301_FISHING_CLEAR          322 /* 0x0142 ビレッジブリッジ民家：釣りイベント クリアフラグ */
+#define FE_T05R0301_BTLITEM_TALK           323 /* 0x0143 カナワタウン民家：戦闘用アイテム入手イベント 初回会話フラグ */
 		/* not used   324(0x0144) */
 		/* not used   325(0x0145) */
 		/* not used   326(0x0146) */
@@ -2520,8 +2520,8 @@
 		/* not used  2746(0x0aba) */
 #define TMFLG_T04R0101_BTL_FAMILY         2747 /* 0x0abb サザナミタウン：巨大別荘対戦フラグ */
 #define TMFLG_D01R0201_POKE16_BTL         2748 /* 0x0abc 夢の跡地B2：ムシャーナエンカウントフラグ */
-		/* not used  2749(0x0abd) */
-		/* not used  2750(0x0abe) */
+#define TMFLG_H04R0301_FISHING            2749 /* 0x0abd ビレッジブリッジ民家：釣りイベント */
+#define TMFLG_T05R0301_BTLITEM            2750 /* 0x0abe カナワタウン民家：戦闘用アイテム入手イベント */
 		/* not used  2751(0x0abf) */
 		/* not used  2752(0x0ac0) */
 		/* not used  2753(0x0ac1) */
