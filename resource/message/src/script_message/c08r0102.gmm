@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-27T16:15:05"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T18:22:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -340,7 +340,7 @@
 特攻が　がくっと　下がります</language>
 	</row>
 
-	<row id="msg_c08r0102_footballm_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c08r0102_footballm_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 　No562「かるいし」</comment>

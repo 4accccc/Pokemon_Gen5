@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-27T16:16:15"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T18:21:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -359,7 +359,7 @@
 しあわせな　ひびを　すごしていたんだ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08r0101_leader8a_02w">
+	<row id="msg_c08r0101_leader8a_02w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けて
 　WHITEならleader8b_02w
@@ -391,7 +391,7 @@
 それぞれの　味方を　した……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c08r0101_leader8a_02b">
+	<row id="msg_c08r0101_leader8a_02b" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・続けて
 　WHITEならleader8b_02w
@@ -617,7 +617,7 @@
 方法は　わからぬ……▼</language>
 	</row>
 
-	<row id="msg_c08r0101_leader8a_04_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c08r0101_leader8a_04_02">
 		<comment>♂
 ・続けて
 　WHITEならleader8a_05w
@@ -634,7 +634,7 @@
 ジムバッジを　てにいれねば　ならない▼</language>
 	</row>
 
-	<row id="msg_c08r0101_leader8a_05w" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c08r0101_leader8a_05w">
 		<comment>♂
 ・WHITEver
 　アイリスをみてメッセージ表示

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T15:55:53"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T18:20:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -406,7 +406,7 @@
 いまでは　レベル[2:02:３桁:2]　なのかい！▼</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_09">
+	<row id="msg_c07r0401_gentleman_09" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・レベル差が９９
 ・アイテムが
@@ -421,7 +421,7 @@
 愛情　たっぷりだねえ▼</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_10">
+	<row id="msg_c07r0401_gentleman_10" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・レベル差が５０～９８
 ・アイテムが
@@ -436,7 +436,7 @@
 愛情　感じるねえ▼</language>
 	</row>
 
-	<row id="msg_c07r0401_gentleman_11">
+	<row id="msg_c07r0401_gentleman_11" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♂
 ・レベル差が２５～４９
 ・アイテムが
