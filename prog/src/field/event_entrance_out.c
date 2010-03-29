@@ -303,23 +303,22 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT * event, int 
     (*seq)++;
     break;
 
-  // BGMフェードイン
+  // BGM 操作
   case 2:  
-    // 現在のBGMがダンジョンISS ==> BGMフェードイン
     { 
       BGM_INFO_SYS* bgm_info = GAMEDATA_GetBGMInfoSys( gameData );
       u8 season = GAMEDATA_GetSeasonID( gameData );
       u16 zone_id = FIELDMAP_GetZoneID( fieldmap );
       u32 bgm_now = ZONEDATA_GetBGMID( zone_id, season );
       u8 iss_type_now = BGM_INFO_GetIssType( bgm_info, bgm_now ); 
-      if( iss_type_now == ISS_TYPE_DUNGEON )
-      {
+      // 現在のBGMがダンジョンISS
+      if( iss_type_now == ISS_TYPE_DUNGEON ) {
+        // フェードイン
         FIELD_SOUND* fieldSound = GAMEDATA_GetFieldSound( gameData );
         GMEVENT* fadeInEvent = EVENT_FSND_FadeInBGM( gameSystem, FSND_FADE_FAST );
         GMEVENT_CallEvent( event, fadeInEvent );
       }
-      else
-      {
+      else {
         FSND_PlayStartBGM( fieldSound );
       }
     }
