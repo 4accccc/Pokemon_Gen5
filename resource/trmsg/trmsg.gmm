@@ -10732,7 +10732,7 @@
 		<language name="JPN" width="216">トリプルバトルは　ポケモン
 ３びきでの　あたらしい　しょうぶ！▼
 たたかえる　ポケモンを
-３びきは　ようい　しててください！</language>
+３びきは　ようい　してください！</language>
 		<language name="JPN_KANJI" width="216">トリプルバトルは　ポケモン
 ３匹での　新しい　勝負！▼
 戦える　ポケモンを
@@ -10967,6 +10967,80 @@
 だけど　つよいって　なんだろう？</language>
 		<language name="JPN_KANJI" width="216">……ポケモン勝負は　楽しい
 だけど　つよいって　なんだろう？</language>
+	</row>
+
+	<row id="TRID_ELITEW_18_TRMSG_POKE_UNDER_TWO">
+		<language name="JPN" width="216">ローテーションバトルは　ポケモン
+３びきでの　あたらしい　しょうぶ！▼
+たたかえる　ポケモンを
+３びきは　ようい　してください！</language>
+		<language name="JPN_KANJI" width="216">ローテーションバトルは　ポケモン
+３匹での　新しい　勝負！▼
+戦える　ポケモンを
+３匹は　用意してください！</language>
+	</row>
+
+	<row id="TRID_ELITEW_18_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">ターンごとに　てんかいが　かわる
+ローテーションバトル！▽
+あなたに　こなせるかしら？▼</language>
+		<language name="JPN_KANJI" width="216">ターンごとに　展開が　変わる
+ローテーションバトル！▽
+あなたに　こなせるかしら？▼</language>
+	</row>
+
+	<row id="TRID_ELITEW_18_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">グルグル　めが　まわって
+あたまも　まわって……</language>
+		<language name="JPN_KANJI" width="216">グルグル　目が　回って
+頭も　回って……</language>
+	</row>
+
+	<row id="TRID_ELITEW_18_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">ぎゃくてんの　ようそを　ひめつつ
+でも　つよい　トレーナーなら▽
+きちんと　たいおう　できるのが▽
+ローテーションバトルの　だいごみ！</language>
+		<language name="JPN_KANJI" width="216">逆転の　要素を　秘めつつ
+でも　強い　トレーナーなら▽
+きちんと　対応できるのが▽
+ローテーションバトルの　だいごみ！</language>
+	</row>
+
+	<row id="TRID_ELITEM_18_TRMSG_POKE_UNDER_TWO">
+		<language name="JPN" width="216">トリプルバトルは　ポケモン
+３びきでの　あたらしい　しょうぶ！▼
+たたかえる　ポケモンを
+３びきは　ようい　してください！</language>
+		<language name="JPN_KANJI" width="216">トリプルバトルは　ポケモン
+３匹での　新しい　勝負！▼
+戦える　ポケモンを
+３匹は　用意してください！</language>
+	</row>
+
+	<row id="TRID_ELITEM_18_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">かんがえに　かんがえた
+３びきの　くみあわせ！▽
+あっとうてきな　はかいりょくさ！</language>
+		<language name="JPN_KANJI" width="216">考えに　考えた
+３匹の　組み合わせ！▽
+圧倒的な　破壊力さ！</language>
+	</row>
+
+	<row id="TRID_ELITEM_18_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ポジションを　まちがえたか？
+いや　それいぜんの　もんだいか？</language>
+		<language name="JPN_KANJI" width="216">ポジションを　間違えたか？
+いや　それ以前の　問題か？</language>
+	</row>
+
+	<row id="TRID_ELITEM_18_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">どの　ポケモンを
+まんなかに　だすか……▽
+いまだに　かんがえるんだよね</language>
+		<language name="JPN_KANJI" width="216">どの　ポケモンを
+真ん中に　配置するか……▽
+いまだに　考えるんだよね</language>
 	</row>
 
 	<flowchart-group-list>
