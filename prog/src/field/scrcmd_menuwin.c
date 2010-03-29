@@ -313,14 +313,53 @@ static void sysWin_AddWindow( SCRCMD_WORK *work, u8 up_down )
     SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
     
-    if( up_down == SCRCMD_MSGWIN_NON ){
-      up_down = SCRCMD_WORK_GetBeforeWindowPosType( work );
-    }
-    
-    if( up_down == SCRCMD_MSGWIN_DOWNLEFT ||
-        up_down == SCRCMD_MSGWIN_DOWNRIGHT ||
-        up_down == SCRCMD_MSGWIN_DOWN_AUTO ){
+    if( up_down == SCRCMD_MSGWIN_DOWN ){
       y = 19;
+    }else if( up_down == SCRCMD_MSGWIN_NON ){ //前回の位置を継続
+      up_down = SCRCMD_WORK_GetBeforeWindowPosType( work );
+       
+      switch( up_down ){
+      case SCRCMD_MSGWIN_UPLEFT:
+      case SCRCMD_MSGWIN_UPRIGHT: 
+      case SCRCMD_MSGWIN_UP_AUTO:
+        up_down = SCRCMD_MSGWIN_UP;
+        break;
+      case SCRCMD_MSGWIN_DOWNLEFT:
+      case SCRCMD_MSGWIN_DOWNRIGHT:
+      case SCRCMD_MSGWIN_DOWN_AUTO:
+        y = 19;
+        up_down = SCRCMD_MSGWIN_DOWN;
+        break;
+      case SCRCMD_MSGWIN_DEFAULT:
+        GF_ASSERT( 0 && "SYSWIN BEFORE POS ERROR" );
+        y = 19;
+        up_down = SCRCMD_MSGWIN_DOWN;
+        break;
+      default:
+        GF_ASSERT( 0 && "SYSWIN BEFORE POS ERROR" );
+        y = 19;
+        up_down = SCRCMD_MSGWIN_DOWN;
+      }
+    }else{ //エラー
+      GF_ASSERT( 0 && "SYSWIN POS ERROR" );
+      
+      switch( up_down ){
+      case SCRCMD_MSGWIN_UPLEFT:
+      case SCRCMD_MSGWIN_UPRIGHT: 
+      case SCRCMD_MSGWIN_UP_AUTO:
+        up_down = SCRCMD_MSGWIN_UP;
+        break;
+      case SCRCMD_MSGWIN_DOWNLEFT:
+      case SCRCMD_MSGWIN_DOWNRIGHT:
+      case SCRCMD_MSGWIN_DOWN_AUTO:
+      case SCRCMD_MSGWIN_DEFAULT:
+        y = 19;
+        up_down = SCRCMD_MSGWIN_DOWN;
+        break;
+      default:
+        y = 19;
+        up_down = SCRCMD_MSGWIN_DOWN;
+      }
     }
     
 	  sysWin = FLDSYSWIN_STREAM_Add( fparam->msgBG, msgData, y );
