@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-12T14:08:59"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T16:42:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c01r0302_man1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0302_man1_01">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">MAN1
@@ -311,7 +311,7 @@
 ポケモンも　育ててみようかな</language>
 	</row>
 
-	<row id="msg_c01r0302_breederw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0302_breederw_01">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BREEDERW
@@ -326,7 +326,7 @@
 強くする　トレーナーも　いるそうよ</language>
 	</row>
 
-	<row id="msg_c01r0302_poke1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0302_poke1_01">
 		<comment>ポケモン
 ・あわせて鳴き声SE</comment>
 		<attribute name="キャラ指定">ポケモン
@@ -335,7 +335,7 @@
 		<language name="JPN_KANJI" width="256">ぎゅぎぃー！</language>
 	</row>
 
-	<row id="msg_c01r0302_poke2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0302_poke2_01">
 		<comment>ポケモン
 ・WHITEver
 ・あわせて鳴き声SE</comment>

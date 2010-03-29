@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T19:04:32"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T16:45:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1310" top="141" right="2015" bottom="769" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="806" top="169" right="1280" bottom="567" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -388,7 +388,7 @@
 向こうの　倉庫を　見てるから▼</language>
 	</row>
 
-	<row id="msg_c02_boss_01" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c02_boss_01" text-color="#000000,,,,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・ジムの前のPOSを踏むと
 　画面左から出現
@@ -493,7 +493,7 @@
 だれが　理解できようか……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_c02_boss_05w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c02_boss_05w" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
 		<comment>♂
 ･メッセージ後、画面左方向へ
 ・画面外に消えると主人公操作可能に</comment>
@@ -514,7 +514,7 @@
 キミと　トモダチに　なる！▼</language>
 	</row>
 
-	<row id="msg_c02_boss_05b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
+	<row id="msg_c02_boss_05b" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
 		<comment>♂
 ･メッセージ後、画面左方向へ
 ・画面外に消えると主人公操作可能に</comment>
@@ -903,7 +903,7 @@ C02ジムリーダー</attribute>
 ナチュラル　ボーン　ママ</language>
 	</row>
 
-	<row id="msg_c02_hakase2_stone_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_hakase2_stone_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・所定のposを踏むとイベント発動
 ・続けてleader2_stone_01
@@ -921,7 +921,7 @@ C02ジムリーダー</attribute>
 巻き込まれちゃったのね……▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_stone_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_stone_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・博物館から出現
 　所定のpos（GRIDX=644、GRIDZ=582）に
@@ -934,7 +934,7 @@ C02ジムリーダー</attribute>
 		<language name="JPN_KANJI" width="256">アロエ『これ　かい？▼</language>
 	</row>
 
-	<row id="msg_c02_white_stone_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02_white_stone_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・？表示後にメッセージ表示
 ・続けてleader2_stone_02</comment>
@@ -947,7 +947,7 @@ C02ジムリーダー</attribute>
 ふるいいし　じゃあ▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_stone_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_stone_02" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・続けて
 　hakase1_stone_01wか
@@ -960,7 +960,7 @@ C02ジムリーダー</attribute>
 本当に　ドラゴンポケモン　かい？▼</language>
 	</row>
 
-	<row id="msg_c02_hakase1_stone_01w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,,">
+	<row id="msg_c02_hakase1_stone_01w" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♂：d04r0601イベント後
 ・WHITEver
 ・続けてhakase2_stone_02</comment>
@@ -979,7 +979,7 @@ C02ジムリーダー</attribute>
 成分が　含まれていたんだよ▼</language>
 	</row>
 
-	<row id="msg_c02_hakase1_stone_01b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,,">
+	<row id="msg_c02_hakase1_stone_01b" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♂：d04r0601イベント後
 ・BLACKer
 ・続けてhakase2_stone_02</comment>
@@ -998,7 +998,7 @@ C02ジムリーダー</attribute>
 成分が　含まれていたんだよ▼</language>
 	</row>
 
-	<row id="msg_c02_hakase2_stone_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_hakase2_stone_02" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・続けてleader2_stone_03</comment>
 		<attribute name="キャラ指定">アララギ博士娘</attribute>
@@ -1008,7 +1008,7 @@ C02ジムリーダー</attribute>
 アタシ　なんですけど▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_stone_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_stone_03" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・続けてwhite_stone_02</comment>
 		<attribute name="キャラ指定">c02ジムリーダー
@@ -1023,7 +1023,7 @@ C02ジムリーダー</attribute>
 ちゃーんと　わかってるよ▼</language>
 	</row>
 
-	<row id="msg_c02_white_stone_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02_white_stone_02" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・続けてleader2_stone_04</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -1037,7 +1037,7 @@ C02ジムリーダー</attribute>
 きづかなくて　よかったですねえ▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_stone_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_stone_04" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・続けてleader2_stone_05</comment>
 		<attribute name="キャラ指定">c02ジムリーダー
@@ -1056,7 +1056,7 @@ C02ジムリーダー</attribute>
 奪おうと　したんだね▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_stone_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_stone_05" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・主人公に隣接して
 ・続けて
@@ -1071,7 +1071,7 @@ C02ジムリーダー</attribute>
 [1:00:トレーナー名:0]　これを……▼</language>
 	</row>
 
-	<row id="msg_c02_champion_stone_01w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02_champion_stone_01w" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂：d04r0601イベント後
 ・WHITEver
 ・はい/いいえの選択肢
@@ -1095,7 +1095,7 @@ C02ジムリーダー</attribute>
 それで　いいのか？</language>
 	</row>
 
-	<row id="msg_c02_champion_stone_01b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02_champion_stone_01b" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂：d04r0601イベント後
 ・BLACKer
 ・はい/いいえの選択肢
@@ -1119,7 +1119,7 @@ C02ジムリーダー</attribute>
 それで　いいんだな？</language>
 	</row>
 
-	<row id="msg_c02_champion_stone_01y" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02_champion_stone_01y" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂：d04r0601イベント後
 ・はい選択時
 ・続けて
@@ -1137,7 +1137,7 @@ C02ジムリーダー</attribute>
 こころして　受け取れい▼</language>
 	</row>
 
-	<row id="msg_c02_champion_stone_01n" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02_champion_stone_01n" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂：d04r0601イベント後
 ・いいえ選択時
 ・再度、はい/いいえの選択肢
@@ -1155,7 +1155,7 @@ C02ジムリーダー</attribute>
 切り離される　世界を　待つのか？</language>
 	</row>
 
-	<row id="msg_c02_champion_stone_01_01n" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02_champion_stone_01_01n" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂：d04r0601イベント後
 ・champion_stone_01nで
 　いいえ選択時
@@ -1172,7 +1172,7 @@ C02ジムリーダー</attribute>
 ストーンを　受け取ってくれい！</language>
 	</row>
 
-	<row id="msg_c02_champion_stone_01_01y" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02_champion_stone_01_01y" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂：d04r0601イベント後
 ・champion_stone_01_01nで
 　はい選択時
@@ -1193,7 +1193,7 @@ C02ジムリーダー</attribute>
 いざ　というときは　守ってくれ！▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_stone_06w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_stone_06w" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・WHITEver
 ・アイテム入手処理
@@ -1218,7 +1218,7 @@ C02ジムリーダー</attribute>
 大事に　しておくれよ▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_stone_06b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_stone_06b" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・BLACKver
 ・アイテム入手処理
@@ -1243,7 +1243,7 @@ C02ジムリーダー</attribute>
 大事に　しておくれよ▼</language>
 	</row>
 
-	<row id="msg_c02_hakase1_stone_02" text-color="#ff0000,,,#ff0000,,#ff0000,,#000000,,,#000000,,,#000000,,,#000000,,">
+	<row id="msg_c02_hakase1_stone_02" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♂：d04r0601イベント後
 ・WHITEver
 ・続けてhakase2_sub_01</comment>
@@ -1258,7 +1258,7 @@ C02ジムリーダー</attribute>
 めざめると　いうのかね？</language>
 	</row>
 
-	<row id="msg_c02_hakase2_sub_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
+	<row id="msg_c02_hakase2_sub_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,,,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・サブウインで表示
 ・続けてchampion_sub_01</comment>
@@ -1267,7 +1267,7 @@ C02ジムリーダー</attribute>
 		<language name="JPN_KANJI" width="256">あっ？</language>
 	</row>
 
-	<row id="msg_c02_champion_sub_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,,,,,,,,">
+	<row id="msg_c02_champion_sub_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,,,,,,,,,,,,,">
 		<comment>♂：d04r0601イベント後
 ・サブウインで表示
 ・続けてwhite_sub_01</comment>
@@ -1276,7 +1276,7 @@ C02ジムリーダー</attribute>
 		<language name="JPN_KANJI" width="256">……</language>
 	</row>
 
-	<row id="msg_c02_white_sub_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
+	<row id="msg_c02_white_sub_01" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・サブウインで表示
 ・続けてleader2_stone_07</comment>
@@ -1285,7 +1285,7 @@ C02ジムリーダー</attribute>
 		<language name="JPN_KANJI" width="256">えーと</language>
 	</row>
 
-	<row id="msg_c02_leader2_stone_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_stone_07" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・！マーク表示後にメッセージ
 ・続けてchampion_stone_02</comment>
@@ -1297,7 +1297,7 @@ C02ジムリーダー</attribute>
 あいつらが　いるじゃないか▼</language>
 	</row>
 
-	<row id="msg_c02_champion_stone_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02_champion_stone_02" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂：d04r0601イベント後
 ・続けてchampion_stone_03</comment>
 		<attribute name="キャラ指定">チャンピオン
@@ -1308,7 +1308,7 @@ C02ジムリーダー</attribute>
 あいつらが　おったな▼</language>
 	</row>
 
-	<row id="msg_c02_champion_stone_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c02_champion_stone_03" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂：d04r0601イベント後
 ・メッセージ表示後
 　チャンピオン「そらをとぶ」演出
@@ -1334,7 +1334,7 @@ C02ジムリーダー</attribute>
 ではな！▼</language>
 	</row>
 
-	<row id="msg_c02_hakase2_stone_03w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_hakase2_stone_03w" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・WHITEver
 ・続けてhakase1_stone_03</comment>
@@ -1347,7 +1347,7 @@ C02ジムリーダー</attribute>
 なにか　知っているかも！▼</language>
 	</row>
 
-	<row id="msg_c02_hakase2_stone_03b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_hakase2_stone_03b" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・BLACKver
 ・続けてhakase1_stone_03</comment>
@@ -1360,7 +1360,7 @@ C02ジムリーダー</attribute>
 なにか　ご存じかも！▼</language>
 	</row>
 
-	<row id="msg_c02_hakase1_stone_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,,">
+	<row id="msg_c02_hakase1_stone_03" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♂：d04r0601イベント後
 ・続けてhakase2_stone_04
 ・0＝主人公名前</comment>
@@ -1375,7 +1375,7 @@ C02ジムリーダー</attribute>
 けっして　忘れるんじゃ　ないよ▼</language>
 	</row>
 
-	<row id="msg_c02_hakase2_stone_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c02_hakase2_stone_04" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・メッセージ表示後
 　博士父と博士娘、画面右へ移動する
@@ -1394,7 +1394,7 @@ C02ジムリーダー</attribute>
 研究所に　戻るわね……▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_stone_08" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_c02_leader2_stone_08" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・続けてwhite_stone_03
 ・別マップに行くと動作モデル削除</comment>
@@ -1408,7 +1408,7 @@ C02ジムリーダー</attribute>
 あたしたちが　駆けつけるからさ！▼</language>
 	</row>
 
-	<row id="msg_c02_leader2_stone_08a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,,,,,,,,">
+	<row id="msg_c02_leader2_stone_08a" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,,,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・white_stone_03表示後
 　別マップに行くまで繰り返し表示</comment>
@@ -1422,7 +1422,7 @@ C02ジムリーダー</attribute>
 あたしたちが　駆けつけるからさ！</language>
 	</row>
 
-	<row id="msg_c02_white_stone_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02_white_stone_03" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・white_stone_03表示後
 　別マップに行くまで繰り返し表示
