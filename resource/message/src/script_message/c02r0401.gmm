@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-10T15:46:42"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T16:59:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c02r0401_fighterm1_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c02r0401_fighterm1_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">FIGHTERM
 格闘家</attribute>
@@ -304,7 +304,7 @@
 ポケモン交換が　できるのだ！</language>
 	</row>
 
-	<row id="msg_c02r0401_fighterm2_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c02r0401_fighterm2_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">FIGHTERM
 格闘家</attribute>
@@ -316,19 +316,20 @@
 つまり　道具の　プレゼントだ！</language>
 	</row>
 
-	<row id="msg_c02r0401_boy2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c02r0401_boy2_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
-		<language name="JPN" width="256">・デッキについて</language>
-		<language name="JPN_KANJI" width="256">・デッキについて</language>
+		<language name="JPN" width="256">クリティカッター？　イッシュじゃ
+クリティカットって　なまえ　なんだよ</language>
+		<language name="JPN_KANJI" width="256">クリティカッター？　イッシュじゃ
+クリティカットって　名称なんだよ</language>
 	</row>
 
-	<row id="msg_c02r0401_shopm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02r0401_shopm_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けてショップの処理へ
 ・購入できるのは
-　クリティカッターなど</comment>
+　クリティカットなど</comment>
 		<attribute name="キャラ指定">SHOPM</attribute>
 		<language name="JPN" width="256">この　そうこで　いちじてきに
 おみせを　はじめたんだ▽
