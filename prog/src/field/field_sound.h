@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////////
 #pragma once
 #include "gflib.h"
-#include "pm_sndsys.h"                // for PMSND_xxxx
+#include "sound/pm_sndsys.h"          // for PMSND_xxxx
 #include "gamesystem/gamesystem.h"    // for GAMESYS_WORK
 #include "gamesystem/gamedata_def.h"  // for GAMEDATA
 #include "gamesystem/game_event.h"    // for GMEVENT
