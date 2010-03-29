@@ -954,7 +954,6 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   }
 }
 
-
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
@@ -976,6 +975,10 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
    
   if( fieldWork->fldMMdlSys != NULL ){
     MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
+
+    if ( MMDL_BLACTCONT_IsThereReserve(fieldWork->fldMMdlSys) == TRUE ){
+      return MAINSEQ_RESULT_CONTINUE;
+    }
   }
   
   { //フィールド初期化スクリプトの呼び出し

@@ -196,6 +196,7 @@ static BOOL BBDResUnitIndex_SearchResID(
 
 static void BlActAddReserve_Init( MMDL_BLACTCONT *pBlActCont );
 static void BlActAddReserve_Delete( MMDL_BLACTCONT *pBlActCont );
+static u32 BlActAddReserve_CheckReserve( const MMDL_BLACTCONT *pBlActCont );
 static void BlActAddReserve_RegistResourceParam(
     MMDL_BLACTCONT *pBlActCont, u16 code, BBDRESBIT flag );
 static void BlActAddReserve_DigestResourceParam(
@@ -361,6 +362,25 @@ void MMDL_BLACTCONT_SetGlobalScaleOne( MMDLSYS *mmdlsys )
     MMDL_BBD_GLOBAL_SCALE_ONE,MMDL_BBD_GLOBAL_SCALE_ONE};
   GFL_BBD_SYS *bbdSys = GFL_BBDACT_GetBBDSystem( pBlActCont->pBbdActSys );
   GFL_BBD_SetScale( bbdSys, &scale );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL_BLACTCONT 予約リソース、アクターチェック
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+BOOL MMDL_BLACTCONT_IsThereReserve( const MMDLSYS *mmdlsys )
+{
+	const MMDL_BLACTCONT *pBlActCont =
+    MMDLSYS_GetBlActCont( (MMDLSYS*)mmdlsys );
+
+  if( BlActAddReserve_CheckReserve(pBlActCont) == TRUE ){
+    return( TRUE );
+  }
+  
+  return( FALSE );
 }
 
 //======================================================================
@@ -1260,6 +1280,52 @@ static void BlActAddReserve_Delete( MMDL_BLACTCONT *pBlActCont )
     GFL_HEAP_FreeMemory( pReserve );
     pBlActCont->pReserve = NULL;
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * ビルボードアクター追加予約処理　予約あるかチェック
+ * @param MMDL_BLACTCONT *pBlActCont
+ * @retval BOOL TRUE=予約あり
+ */
+//--------------------------------------------------------------
+static u32 BlActAddReserve_CheckReserve( const MMDL_BLACTCONT *pBlActCont )
+{
+  u32 i;
+  u32 count = 0;
+  const BLACT_RESERVE *pReserve = pBlActCont->pReserve;
+  
+  { //予約パラメタ
+    const ADDRES_RESERVE_PARAM *pResParam = pReserve->pReserveResParam;
+    
+    for( i = 0; i < pReserve->resMax; i++, pResParam++ ){
+      if( pResParam->code != REGIDCODE_MAX ){
+        return( TRUE );
+      }
+    }
+  }
+  
+  { //リソース
+    const ADDRES_RESERVE *pRes = pReserve->pReserveRes;
+    
+    for( i = 0; i < pReserve->resDigestFrameMax; i++, pRes++ ){
+      if( pRes->pG3dRes != NULL ){
+        return( TRUE );
+      }
+    }
+  }
+
+  { //アクター
+    const ADDACT_RESERVE *pRes = pReserve->pReserveAct;
+    
+    for( i = 0; i < pReserve->actMax; i++, pRes++ ){
+      if( pRes->outID != NULL && pRes->pTransActRes != NULL ){
+        return( TRUE );
+      }
+    }
+  }
+  
+  return( FALSE );
 }
 
 //--------------------------------------------------------------
