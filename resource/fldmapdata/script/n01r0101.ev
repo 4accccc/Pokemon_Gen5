@@ -123,21 +123,7 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_MSGWIN_CLOSE()
 	
 	//７人衆２：前へ
-
 	_OBJ_ANIME( N01R0101_SAGE2_02, anm_sage2_move_01 )
-	/*
-	//七人衆：主人公を囲む
-	//７人衆３：前へ
-	_OBJ_ANIME( N01R0101_SAGE2_03, anm_sage3_move_01 )
-	//７人衆４：前へ
-	_OBJ_ANIME( N01R0101_SAGE2_04, anm_sage4_move_01 )
-	//７人衆５：前へ
-	_OBJ_ANIME( N01R0101_SAGE2_05, anm_sage5_move_01 )
-	//７人衆６：前へ
-	_OBJ_ANIME( N01R0101_SAGE2_06, anm_sage6_move_01 )
-	//７人衆７：前へ
-	_OBJ_ANIME( N01R0101_SAGE2_07, anm_sage7_move_01 )
-	*/
 	_OBJ_ANIME_WAIT()
 	
 	//われら６人を相手に勝ち残れるとは思えん
@@ -147,6 +133,9 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	//???だいじょうぶだろうよ
 	_PLAINWIN_MSG_DOWN( msg_n01r0101_leader5_01 )
 	_MSGWIN_CLOSE()
+	
+	//イベント曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_GL_UNION )
 	
 	//ヤーコン：登場
 	_OBJ_ADD( N01R0101_LEADER5_01 )
@@ -262,6 +251,9 @@ EVENT_START	ev_scene_n01r0101_sagevsleader
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド
 	_CAMERA_END()		//カメラ操作終了
+
+	//BGM終了
+	_END_EVENT_BGM()
 
 	//========================================//
 	

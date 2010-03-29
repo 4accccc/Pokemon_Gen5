@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/02 22:58:25
+#save date:2010/03/29 20:16:41
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01r0202.wms
 #SECTION START:OBJ_EVENT
@@ -18,7 +18,7 @@ C01R0202_DANCER_01
 #OBJ CODE Number
 DANCER
 #MOVE CODE Number
-MV_RTDR         
+MV_SPIN_L
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -34,13 +34,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-1
+0
 #Move Limit Z Number
-1
+0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 184
+-88 0 136
 #event number: 1
 #type
 1
@@ -96,13 +96,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+1
 #Move Limit Z Number
-2
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 0 184
+-56 0 168
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
