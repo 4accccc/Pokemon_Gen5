@@ -517,3 +517,68 @@ void* BTL_RECTOOL_FixRotationData( BTL_RECTOOL* recTool, u32* dataSize )
   return NULL;
 }
 
+
+
+
+
+//=============================================================================================
+/**
+ * [コマンド整合性チェック用] クライアントが受け取ったアクション選択データを RECTOOL に書き戻す
+ *
+ * @param   recTool
+ * @param   data
+ * @param   dataSize
+ */
+//=============================================================================================
+void BTL_RECTOOL_RestoreStart( BTL_RECTOOL* recTool, const void* data, u32 dataSize )
+{
+  GF_ASSERT(dataSize<sizeof(recTool->buffer));
+
+  GFL_STD_MemCopy( data, recTool->buffer, dataSize );
+  recTool->writePtr = dataSize;
+  recTool->clientBit = 0;
+  recTool->numClients = 0;
+  recTool->type = 0;
+  recTool->fChapter = 0;
+  recTool->fError = 0;
+}
+
+//=============================================================================================
+/**
+ * [コマンド整合性チェック用] クライアントが受け取ったアクション選択データ読み取り
+ *
+ * @param   recTool
+ * @param   rp          [io]
+ * @param   clientID    [out]
+ * @param   posIdx      [out]
+ * @param   action      [out]
+ *
+ * @retval  BOOL    これ以上読めなくなったらFALSE
+ */
+//=============================================================================================
+BOOL BTL_RECTOOL_RestoreFwd( BTL_RECTOOL* recTool, u32* rp, u8* clientID, u8* numAction, BTL_ACTION_PARAM* action )
+{
+  if( (*rp) == 0 ){
+    (*rp) = 1;  // ヘッダ分をスキップ
+  }
+
+  if( (*rp) < recTool->writePtr )
+  {
+    u32 dataSize;
+
+    ReadClientActionTag( recTool->buffer[ (*rp) ], clientID, numAction );
+
+    GF_ASSERT((*clientID) < BTL_CLIENT_MAX);
+    GF_ASSERT((*numAction) < BTL_POSIDX_MAX);
+
+    dataSize = sizeof(BTL_ACTION_PARAM) * (*numAction);
+    ++(*rp);
+    GFL_STD_MemCopy( &(recTool->buffer[(*rp)]), action, dataSize );
+    (*rp) += dataSize;
+
+
+    return TRUE;
+  }
+
+  return FALSE;
+}

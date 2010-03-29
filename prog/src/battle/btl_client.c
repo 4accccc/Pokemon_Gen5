@@ -168,6 +168,7 @@ struct _BTL_CLIENT {
   u8   escapeClientID;
   u8   change_escape_code;
   u8   fForceQuitSelAct;
+  u8   fCmdCheckReady;
   u16  EnemyPokeHPBase;
 
   u8          myChangePokeCnt;
@@ -374,6 +375,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->mainProc = ClientMain_Normal;
   wk->myState = 0;
   wk->cmdCheckServer = NULL;
+  wk->fCmdCheckReady = FALSE;
 
   wk->commWaitInfoOn = FALSE;
   wk->shooterEnergy = 0;
@@ -2931,6 +2933,7 @@ static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq )
   if( wk->cmdCheckServer )
   {
     BTL_SERVER_CMDCHECK_RestoreActionData( wk->cmdCheckServer, dataBuf, dataSize );
+    wk->fCmdCheckReady = TRUE;
   }
 
   return TRUE;
@@ -2953,7 +2956,6 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
 
       result = checkResult( wk, (const BTL_RESULT_CONTEXT*)pResultContext );
       fMulti = BTL_MAIN_IsMultiMode( wk->mainModule );
-      TAYA_Printf("Result Code=%d , fMulti=%d\n", result, fMulti );
 
       switch( result ){
       case BTL_RESULT_WIN:
@@ -2970,8 +2972,6 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
         return TRUE;
       }
 
-      TAYA_Printf(" StrID=%d utuyo\n", strID);
-
       BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, strID );
       BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
       if( fMulti ){
@@ -2985,12 +2985,10 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
   case 1:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
-      TAYA_Printf("メッセージ終了\n");
       (*seq)++;
     }
     break;
   case 2:
-    TAYA_Printf("おわり\n");
     return TRUE;
   }
   return FALSE;
@@ -3233,6 +3231,13 @@ restart:
 
       cmdSize = BTL_ADAPTER_GetRecvData( wk->adapter, &cmdBuf );
       SCQUE_Setup( wk->cmdQue, cmdBuf, cmdSize );
+
+      if( (wk->cmdCheckServer != NULL)
+      &&  (wk->fCmdCheckReady)
+      ){
+        BTL_SERVER_CMDCHECK_Make( wk->cmdCheckServer, cmdBuf, cmdSize );
+        wk->fCmdCheckReady = FALSE;
+      }
 
       if( wk->commWaitInfoOn )
       {

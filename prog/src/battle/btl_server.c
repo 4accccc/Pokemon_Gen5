@@ -65,6 +65,7 @@ typedef BOOL (*ServerMainProc)(BTL_SERVER*, int*);
 //--------------------------------------------------------------
 struct _BTL_SVCL_ACTION {
   BTL_ACTION_PARAM     param[ BTL_CLIENT_MAX ][ BTL_POSIDX_MAX ];
+  u8                   count[ BTL_CLIENT_MAX ];
 };
 
 //--------------------------------------------------------------
@@ -267,6 +268,8 @@ void BTL_SERVER_CmdCheckMode( BTL_SERVER* server, u8 clientID, u8 numCoverPos )
     SVCL_WORK* client;
     BTL_PARTY* party;
     BTL_ADAPTER* adapter;
+
+    BTL_EVENT_InitSystem();
 
     party = BTL_POKECON_GetPartyData( server->pokeCon, clientID );
 
@@ -1101,7 +1104,37 @@ static BOOL ServerMain_ExitBattle_ForNPC( BTL_SERVER* server, int* seq )
 
 void BTL_SERVER_CMDCHECK_RestoreActionData( BTL_SERVER* server, const void* recData, u32 recDataSize )
 {
+  u32 rp = 0;
+  BTL_ACTION_PARAM action[ BTL_POSIDX_MAX ];
+  u8 clientID, numAction, i;
 
+  for(i=0; i<BTL_CLIENT_MAX; ++i){
+    server->clientAction.count[ i ] = 0;
+  }
+
+  BTL_RECTOOL_RestoreStart( &server->recTool, recData, recDataSize );
+  while( BTL_RECTOOL_RestoreFwd(&server->recTool, &rp, &clientID, &numAction, action) )
+  {
+    BTL_N_Printf( DBGSTR_SV_RestoreAction, clientID, numAction );
+    for(i=0; i<numAction; ++i){
+      server->clientAction.param[ clientID ][ i ] = action[ i ];
+    }
+    server->clientAction.count[ clientID ] = numAction;
+  }
+}
+BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, const void* recvedCmd, u32 cmdSize )
+{
+  BTL_SVFLOW_StartTurn( server->flowWork, &server->clientAction );
+
+  if( server->que->writePtr == cmdSize )
+  {
+    if( GFL_STD_MemComp(server->que->buffer, recvedCmd, cmdSize) == 0 ){
+      BTL_N_Printf( DBGSTR_SV_CmdCheckOK );
+      return FALSE;
+    }
+  }
+  BTL_N_Printf( DBGSTR_SV_CmdCheckNG, server->que->writePtr, cmdSize );
+  return TRUE;
 }
 
 
@@ -1201,6 +1234,7 @@ static void storeClientAction( BTL_SERVER* server )
   for(i=0; i<BTL_CLIENT_MAX; ++i)
   {
     clwk = &server->client[i];
+    server->clientAction.count[i] = 0;
     if( Svcl_IsEnable(clwk) )
     {
       u32 returnDataSize, numAction;
@@ -1208,6 +1242,7 @@ static void storeClientAction( BTL_SERVER* server )
       numAction = returnDataSize / sizeof(BTL_ACTION_PARAM);
       for(j=0; j<numAction; ++j){
         server->clientAction.param[i][j] = *action;
+        server->clientAction.count[i]++;
         ++action;
       }
     }
@@ -1457,6 +1492,12 @@ const BTL_ACTION_PARAM* BTL_SVCL_GetPokeAction( SVCL_WORK* clwk, u8 posIdx )
     action += posIdx;
     return action;
   }
+}
+
+u8 BTL_SVCL_ACTION_GetNumActPoke( const BTL_SVCL_ACTION* clientAction, u8 clientID )
+{
+  GF_ASSERT(clientID<BTL_CLIENT_MAX);
+  return clientAction->count[ clientID ];
 }
 
 BTL_ACTION_PARAM BTL_SVCL_ACTION_Get( const BTL_SVCL_ACTION* clientAction, u8 clientID, u8 posIdx )

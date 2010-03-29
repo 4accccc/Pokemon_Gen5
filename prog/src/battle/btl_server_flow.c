@@ -1501,7 +1501,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
     clwk = BTL_SERVER_GetClientWork( wk->server, i );
     if( clwk == NULL ){ continue; }
 
-    numPoke = BTL_SVCL_GetNumActPoke( clwk );
+    numPoke = BTL_SVCL_ACTION_GetNumActPoke( clientAction, i );
     for(j=0; j<numPoke; j++)
     {
       order[p].action = BTL_SVCL_ACTION_Get( clientAction, i, j );

@@ -203,6 +203,9 @@ typedef enum {
   DBGSTR_SV_StartChangePokeInfo,
   DBGSTR_SV_SendQuitACmad,
   DBGSTR_SV_ReplyQuitACmad,
+  DBGSTR_SV_RestoreAction,
+  DBGSTR_SV_CmdCheckOK,
+  DBGSTR_SV_CmdCheckNG,
 
   DBGSTR_EVENT_AddFactorInfo,
   DBGSTR_EV_AddFactor,

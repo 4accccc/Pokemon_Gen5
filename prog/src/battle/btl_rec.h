@@ -52,6 +52,8 @@ extern void* BTL_RECTOOL_FixSelActionData( BTL_RECTOOL* recTool, u32* dataSize )
 extern void BTL_RECTOOL_PutRotationData( BTL_RECTOOL* recTool, u8 clientID, BtlRotateDir dir );
 extern void* BTL_RECTOOL_FixRotationData( BTL_RECTOOL* recTool, u32* dataSize );
 
+extern void BTL_RECTOOL_RestoreStart( BTL_RECTOOL* recTool, const void* data, u32 dataSize );
+extern BOOL BTL_RECTOOL_RestoreFwd( BTL_RECTOOL* recTool, u32* rp, u8* clientID, u8* posIdx, BTL_ACTION_PARAM* action );
 
 
 /*===========================================================================================*/
@@ -87,4 +89,7 @@ extern void BTL_RECREADER_Reset( BTL_RECREADER* wk );
 extern const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID, u8 *numAction, u8* fChapter );
 extern BtlRotateDir BTL_RECREADER_ReadRotation( BTL_RECREADER* wk, u8 clientID );
 extern u32 BTL_RECREADER_GetTurnCount( const BTL_RECREADER* wk );
+
+
+
 

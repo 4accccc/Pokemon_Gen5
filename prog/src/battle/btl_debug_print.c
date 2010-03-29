@@ -238,6 +238,9 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SV_StartChangePokeInfo:         return "入れ替えポケモン選択へ  交替されるポケ数=%d\n";
   case DBGSTR_SV_SendQuitACmad:               return "全クライアントにバトル終了コマンド(%d)送信開始\n";
   case DBGSTR_SV_ReplyQuitACmad:              return "全クライアントからバトル終了コマンド受信応答あり\n";
+  case DBGSTR_SV_RestoreAction:               return "整合性チェック用サーバ：ClientID=%d, numAction:%d 復元\n";
+  case DBGSTR_SV_CmdCheckOK:                  return "整合性チェック用サーバ：チェックOK\n";
+  case DBGSTR_SV_CmdCheckNG:                  return "整合性チェック用サーバ：チェックNG!! cmdSize= %d , %d\n";
 
 
   case DBGSTR_SC_PutCmd:                return "[QUE]PutCmd=%d, Format=%02x, argCnt=%d, args=";
