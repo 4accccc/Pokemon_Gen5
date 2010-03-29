@@ -11,6 +11,7 @@
 
 #define C03P13_VETERANM_01                 0
 #define C03P13_BOY2_01                     1
+#define C03P13_PILOT_01                    2
 
 #endif //ZONE_C03P13_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c03p13.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
