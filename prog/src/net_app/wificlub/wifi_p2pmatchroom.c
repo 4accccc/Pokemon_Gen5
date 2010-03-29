@@ -509,6 +509,7 @@ static BOOL WcrMainObjCmdCheck_Single( WIFI_MATCHROOM* p_mcr, MCR_MOVEOBJ* p_obj
       p_obj->accesFriend = 0;
     }
   }
+  return TRUE;
 }
 
 
