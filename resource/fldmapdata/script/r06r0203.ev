@@ -52,19 +52,25 @@ EVENT_START ev_r06r0203_legend1
     SWITCH $SCWK_ANSWER
     CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
     //勝利した場合、あるいは逃げた場合
-        _CALL sub_legend1_escaped
+        IF FLAG_OFF(FE_LEGEND1_BATTLE) THEN
+        //初回のみ、じいさんデモ。復活以降はでない
+            _CALL sub_legend1_escaped
+        ENDIF
 
         
     CASE SCR_WILD_BTL_RET_CAPTURE THEN
     //捕まえた場合
-        _CALL sub_legend1_captured
+        IF FLAG_OFF(FE_LEGEND1_BATTLE) THEN
+        //初回のみ、じいさんデモ。復活以降はでない
+            _CALL sub_legend1_captured
+        ENDIF
 
         _FLAG_SET( FE_LEGEND1_GET )
-        _FLAG_SET( FV_D09_ROCK1 )
-        _FLAG_SET( FV_D02_ROCK1 )
-
     ENDSWITCH
     
+    _FLAG_SET( FV_D09_ROCK1 )
+    _FLAG_SET( FV_D02_ROCK1 )
+
     //【2/24_村上_フラグを追加】
     //アトスと戦ったかどうかを判別するフラグ
     _FLAG_SET(FE_LEGEND1_BATTLE)
@@ -75,16 +81,27 @@ EVENT_END
 /*  捕まえそこなったとき                                      */
 /**************************************************************/
 sub_legend1_escaped:
+    //どこかへ消えてしまった…
     _SYSWIN_MSG( msg_r06r0203_legend1_02 , POS_DOWN )
     _AB_KEYWAIT()
     _SYSWIN_CLOSE()
 
     _CALL   sub_guide_appear
 
+    //「通じたじゃろう」
     _BALLOONWIN_OBJMSG( msg_r06r0203_guide_01, MMDL_ID_EVENTOBJ_00 )
+    //「ポルトスとアラミスにも伝わるはずじゃ」
+    _BALLOONWIN_OBJMSG( msg_r06r0203_guide_03, MMDL_ID_EVENTOBJ_00 )
     _BALLOONWIN_CLOSE()
 
-    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_guide_disappear_01 )
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_guide_disappear_02 )
+    _OBJ_ANIME_WAIT()
+
+    //「探すかどうかはおぬし次第…」
+    _BALLOONWIN_OBJMSG( msg_r06r0203_guide_04, MMDL_ID_EVENTOBJ_00 )
+    _BALLOONWIN_CLOSE()
+
+    _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_guide_disappear_03 )
     _OBJ_ANIME_WAIT()
     _OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
     _RET
@@ -95,14 +112,16 @@ sub_legend1_escaped:
 sub_legend1_captured:
     _CALL   sub_guide_appear
 
+    //「ともに　生きることを望んだようじゃ」
     _BALLOONWIN_OBJMSG( msg_r06r0203_guide_02, MMDL_ID_EVENTOBJ_00 )
-    _BALLOONWIN_CLOSE()
+    //「ポルトスとアラミスにも伝わるはずじゃ」
     _BALLOONWIN_OBJMSG( msg_r06r0203_guide_03, MMDL_ID_EVENTOBJ_00 )
     _BALLOONWIN_CLOSE()
 
     _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_guide_disappear_02 )
     _OBJ_ANIME_WAIT()
 
+    //「探すかどうかはおぬし次第…」
     _BALLOONWIN_OBJMSG( msg_r06r0203_guide_04, MMDL_ID_EVENTOBJ_00 )
     _BALLOONWIN_CLOSE()
 
@@ -114,8 +133,12 @@ sub_legend1_captured:
 /**************************************************************/
 /**************************************************************/
 sub_guide_appear:
+    //じいさん出現、歩いてくる
     _OBJ_ADD_EX( 2, 11, DIR_UP, MMDL_ID_EVENTOBJ_00, OLDMAN1, MV_DOWN )
     _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_guide_appear_01 )
+    _OBJ_ANIME_WAIT()
+    //主人公、じいさんが出てくる方向（左）を見る
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_to_guide )
     _OBJ_ANIME_WAIT()
     _RET
 
@@ -143,5 +166,8 @@ _ANIME_LABEL	anm_guide_disappear_03
     _ANIME_DATA AC_WALK_D_16F, 7
     _ANIME_DATA ACMD_END, 0
 
+_ANIME_LABEL  anm_player_turn_to_guide
+    _ANIME_DATA AC_DIR_L,1
+    _ANIME_DATA ACMD_END, 0
 
 
