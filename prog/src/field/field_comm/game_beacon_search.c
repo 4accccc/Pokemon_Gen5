@@ -256,6 +256,10 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
   GAME_BEACON_SYS_PTR gbs = pWork;
   GBS_TARGET_INFO *target;
   
+  if(GAMEDATA_GetIsSave(GAMESYSTEM_GetGameData(gsys)) == TRUE){
+    return;
+  }
+  
   GAMEBEACON_SendBeaconUpdate();
   
   target = GameBeacon_UpdateBeacon(gbs);
