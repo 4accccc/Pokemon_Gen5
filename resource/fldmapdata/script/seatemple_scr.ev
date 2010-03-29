@@ -119,10 +119,14 @@ EVENT_START ev_seatemple_skill_use_2f
 	//画面を揺らすデモを入れる
 	_SHAKE_CAMERA(0,1,3,6,0,0,0,0)
 
+	_SE_PLAY( SEQ_SE_FLD_126 )
+
 	//ストッパー移動
 	_OBJ_ANIME( D20R0601_STOPPER_01, anm_up_move )
 	_OBJ_ANIME( D20R0601_CUBE_01, anm_up_move )
 	_OBJ_ANIME_WAIT()
+
+	_SE_WAIT()
 
 	_PLAINWIN_MSG_DOWN( msg_seatemple_skill_01 )
 	_LAST_KEYWAIT()
@@ -138,11 +142,15 @@ EVENT_START ev_seatemple_skill_use_3f
 	//画面を揺らすデモを入れる
 	_SHAKE_CAMERA(0,1,3,6,0,0,0,0)
 
+	_SE_PLAY( SEQ_SE_FLD_126 )
+
 	//ストッパー移動
 	_OBJ_ANIME( D20R0701_STOPPER_01, anm_right_move )
 	_OBJ_ANIME( D20R0701_CUBE_01, anm_right_move )
 	_OBJ_ANIME_WAIT()
-	
+
+	_SE_WAIT()
+
 	_PLAINWIN_MSG_DOWN( msg_seatemple_skill_01 )
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
