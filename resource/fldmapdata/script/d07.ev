@@ -57,8 +57,7 @@ EVENT_START  ev_pos_d07_rival_01
 	_OBJ_ADD(D07_RIVAL_01)
 	
 	//【仮】専用曲鳴らす
-	_START_EVENT_BGM( SEQ_BGM_E_RIVAL )
-	//_START_TEMP_EVENT_BGM( SEQ_BGM_E_RIVAL )
+	_START_TEMP_EVENT_BGM( SEQ_BGM_E_RIVAL )
 
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
@@ -95,15 +94,15 @@ EVENT_START  ev_pos_d07_rival_01
 	_OBJ_ANIME( D07_RIVAL_01,anm_d07_rival_walk_up1 )
 	_OBJ_ANIME_WAIT()
 	
-	//【仮】戦闘処理（トレーナーIDが無いため仮処理）
-	/*	//ライバルと戦闘（持ちタイプで分岐）
+	//ライバルと戦闘（持ちタイプで分岐）
 	
 	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
 		//最初の３匹で草タイプを選択した時の処理
-		_TRAINER_BTL_SET( TRID_RIVAL_04, 0 )
+		_TRAINER_BTL_SET( TRID_RIVAL_19, 0 )
 		//結果チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_OBJ_ADD(D07_CHAMPION_01)
 			_TRAINER_WIN()
 		ELSE
 			_TRAINER_LOSE()
@@ -111,10 +110,11 @@ EVENT_START  ev_pos_d07_rival_01
 
 	ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN	
 		//最初の３匹で炎タイプを選択した時の処理
-		_TRAINER_BTL_SET( TRID_RIVAL_05, 0 )
+		_TRAINER_BTL_SET( TRID_RIVAL_20, 0 )
 		//結果チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_OBJ_ADD(D07_CHAMPION_01)
 			_TRAINER_WIN()
 		ELSE
 			_TRAINER_LOSE()
@@ -122,30 +122,17 @@ EVENT_START  ev_pos_d07_rival_01
 		
 	ELSE
 		//最初の３匹で水タイプを選択した時の処理
-		_TRAINER_BTL_SET( TRID_RIVAL_06, 0 )
+		_TRAINER_BTL_SET( TRID_RIVAL_21, 0 )
 		//結果チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_OBJ_ADD(D07_CHAMPION_01)
 			_TRAINER_WIN()
 		ELSE
 			_TRAINER_LOSE()
 		ENDIF
 		
 	ENDIF
-	*/
-	
-	//【仮】戦闘が無いため暗転処理
-	_BLACK_OUT()
-	_DISP_FADE_END_CHECK()
-	
-	//【仮】ライバル曲停止（本来は戦闘処理で自動停止）
-	_END_EVENT_BGM()
-	
-	//【仮】戦闘復帰後にアテグのOBJを表示（本来はWIN処理内に入れる）
-	_OBJ_ADD(D07_CHAMPION_01)
-	
-	_BLACK_IN()
-	_DISP_FADE_END_CHECK()
 	
 	//アテグ：なかなかのポケモン勝負！
 	_PLAINWIN_MSG_UP(msg_d07_champion_01  )
@@ -167,6 +154,9 @@ EVENT_START  ev_pos_d07_rival_01
 	
 	//WAIT
 	 _TIME_WAIT ( 30 )
+	 
+	//アテグジャンプ
+	 _OBJ_HIGH_JUMP( D07_CHAMPION_01, 142, 0, 206 ) 
 	 
 	//アテグライバルに隣接
 	_OBJ_ANIME( D07_CHAMPION_01,anm_d07_champion_jump_to_rival )
@@ -315,7 +305,6 @@ _ANIME_LABEL	anm_d07_player_look_champion
 //	D07　ライバルイベント用：アテグ、ライバルに隣接
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d07_champion_jump_to_rival
-	_ANIME_DATA	AC_JUMP_D_2G_16F,1
 	_ANIME_DATA	AC_WALK_D_8F,3
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -332,7 +321,7 @@ _ANIME_LABEL	anm_d07_rival_look_champion01
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_d07_champion_gift_to_rival
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WAIT_8F,2
+	_ANIME_DATA	AC_WAIT_8F,3
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
