@@ -929,7 +929,7 @@ static void Zukan_Detail_Info_GetCurrPokeInfo(
     }
   }
  
-#if 1
+#if 0 
   // 全言語チェック用
   {
     u8 i;

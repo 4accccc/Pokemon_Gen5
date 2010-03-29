@@ -78,7 +78,7 @@ typedef struct _ZUKAN_DETAIL_TOUCHBAR_WORK ZUKAN_DETAIL_TOUCHBAR_WORK;
 *  関数のプロトタイプ宣言
 */
 //=============================================================================
-extern ZUKAN_DETAIL_TOUCHBAR_WORK* ZUKAN_DETAIL_TOUCHBAR_Init( HEAPID heap_id );
+extern ZUKAN_DETAIL_TOUCHBAR_WORK* ZUKAN_DETAIL_TOUCHBAR_Init( HEAPID heap_id, BOOL form_version );
 extern void ZUKAN_DETAIL_TOUCHBAR_Exit( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 extern void ZUKAN_DETAIL_TOUCHBAR_Main( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 

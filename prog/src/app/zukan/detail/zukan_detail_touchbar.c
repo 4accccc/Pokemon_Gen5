@@ -178,7 +178,10 @@ struct _ZUKAN_DETAIL_TOUCHBAR_WORK
 {
   // 他のところから借用するもの
   HEAPID                        heap_id;
- 
+
+  // 引数
+  BOOL                          form_version;  // TRUEのときフォルムありバージョン
+
   // ここで作成するもの
   // 状態
   ZUKAN_DETAIL_TOUCHBAR_STATE   state;
@@ -258,7 +261,7 @@ static void Zukan_Detail_Touchbar_DeleteForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
  *  @retval          
  */
 //------------------------------------------------------------------
-ZUKAN_DETAIL_TOUCHBAR_WORK* ZUKAN_DETAIL_TOUCHBAR_Init( HEAPID heap_id )
+ZUKAN_DETAIL_TOUCHBAR_WORK* ZUKAN_DETAIL_TOUCHBAR_Init( HEAPID heap_id, BOOL form_version )
 {
   ZUKAN_DETAIL_TOUCHBAR_WORK*   work;
 
@@ -267,7 +270,8 @@ ZUKAN_DETAIL_TOUCHBAR_WORK* ZUKAN_DETAIL_TOUCHBAR_Init( HEAPID heap_id )
 
   // 初期化
   work->heap_id           = heap_id;
-
+  work->form_version      = form_version;
+  
   // 状態
   work->state = ZUKAN_DETAIL_TOUCHBAR_STATE_DISAPPEAR;
   work->prev_type = ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL;
@@ -736,6 +740,18 @@ static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
     {
       work->icon_set[i].clwk = ZKND_TBAR_GetClwk( work->tbwk, work->icon_set[i].cset->id );
     } 
+  }
+
+  // フォルムありバージョンかフォルムなしバージョンか
+  {
+    if( work->form_version )
+    {
+      // このままでいい
+    }
+    else
+    {
+      ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[GENERAL_ICON_CUSTOM_FORM].cset->id, FALSE );
+    }
   }
 }
 static void Zukan_Detail_Touchbar_DeleteGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )

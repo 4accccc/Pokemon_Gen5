@@ -18,6 +18,7 @@
 #include "system/main.h"
 
 #include "gamesystem/gamedata_def.h"
+#include "savedata/zukan_savedata.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
 
@@ -231,7 +232,11 @@ static GFL_PROC_RESULT Zukan_Detail_ProcInit( GFL_PROC* proc, int* seq, void* pw
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Zukan_Detail_VBlankFunc, work, 1 );
 
   // タッチバー
-  work->touchbar = ZUKAN_DETAIL_TOUCHBAR_Init( work->heap_id );
+  {
+    ZUKAN_SAVEDATA* zkn_sv       = GAMEDATA_GetZukanSave( param->gamedata );
+    BOOL            form_version = ZUKANSAVE_GetGraphicVersionUpFlag( zkn_sv );
+    work->touchbar = ZUKAN_DETAIL_TOUCHBAR_Init( work->heap_id, form_version );
+  } 
   // タイトルバー
   work->headbar = ZUKAN_DETAIL_HEADBAR_Init( work->heap_id, work->font, work->print_que );
 
