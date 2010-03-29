@@ -114,9 +114,9 @@ static const u8 bmpwin_setup[TEXT_MAX][9] =
   // frmnum           posx  posy  sizx  sizy  palnum                dir                    x  y (x,yは無視してセンタリングすることもある)
   {  BG_FRAME_M_TEXT,    0,    0,    1,    1, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
   {  BG_FRAME_M_TEXT,    0,   24,    1,    1, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    7,    4,   20,    2, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,    7,    8,   20,    8, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
-  {  BG_FRAME_M_TEXT,   11,   17,   14,    4, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    1,    4,   30,    3, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    1,    8,   30,    9, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_M_TEXT,    1,   17,   30,    5, TEXT_PAL_POS,         GFL_BMP_CHRAREA_GET_F, 0, 0 },
 };
 
 // フェード
@@ -721,7 +721,7 @@ static void Zenkoku_Zukan_Award_TextInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
     PRINTSYS_PrintQueColor(
         work->print_que,
         GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_NAME]),
-        bmpwin_setup[TEXT_NAME][7], bmpwin_setup[TEXT_NAME][8],  // 左寄せ
+        0, bmpwin_setup[TEXT_NAME][8],  // gmmでセンタリング指定しているのでxは0でいい
         strbuf,
         work->font,
         PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
@@ -733,11 +733,10 @@ static void Zenkoku_Zukan_Award_TextInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
   // ここに証明します
   {
     STRBUF*  strbuf       = GFL_MSG_CreateString( work->msgdata, msg_award_03 );
-    u16      str_width    = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
     PRINTSYS_PrintQueColor(
         work->print_que,
         GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_MAIN]),
-        bmpwin_setup[TEXT_MAIN][7], bmpwin_setup[TEXT_MAIN][8],  // 左寄せ
+        0, bmpwin_setup[TEXT_MAIN][8],  // gmmでセンタリング指定しているのでxは0でいい
         strbuf,
         work->font,
         PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
@@ -747,14 +746,10 @@ static void Zenkoku_Zukan_Award_TextInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
   // ゲームフリークスタッフ一同
   {
     STRBUF*  strbuf       = GFL_MSG_CreateString( work->msgdata, msg_award_04 );
-    u16      str_width    = (u16)( PRINTSYS_GetStrWidth( strbuf, work->font, 0 ) );
-    u16      bmp_width    = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_STAFF]) );
-    //u16      x            = bmp_width - str_width;  // 右寄せ
-    u16      x            = 0;  // gmmで右寄せ指定しているので、0でいい。
     PRINTSYS_PrintQueColor(
         work->print_que,
         GFL_BMPWIN_GetBmp(work->text_bmpwin[TEXT_STAFF]),
-        x, bmpwin_setup[TEXT_STAFF][8],
+        0, bmpwin_setup[TEXT_STAFF][8],  // gmmでセンタリング指定しているのでxは0でいい
         strbuf,
         work->font,
         PRINTSYS_LSB_Make(TEXT_COLOR_L,TEXT_COLOR_S,TEXT_COLOR_B) );
