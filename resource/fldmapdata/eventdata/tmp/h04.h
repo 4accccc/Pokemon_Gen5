@@ -24,11 +24,16 @@
 #define H04_GIRL2_01                       5
 #define H04_WOMAN1_01                      6
 #define H04_MAN3_01                        7
-#define H04_WAITRESS_01                    8
-#define H04_GUITAR_01                      9
-#define H04_LEADSINGER_01                 10
-#define H04_VOICE_01                      11
-#define H04_GRASSSOUND_01                 12
+#define H04_GUITAR_01                      8
+#define H04_LEADSINGER_01                  9
+#define H04_VOICE_01                      10
+#define H04_GRASSSOUND_01                 11
+#define H04_GIRL1_01                      12
+#define H04_POKE100_01                    13
+#define H04_OLDMAN1_01                    14
+#define H04_BOY1_01                       15
+#define H04_BACKPACKERW_01                16
+#define H04_MONSTERBALL_01                17
 
 #endif //ZONE_H04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/h04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

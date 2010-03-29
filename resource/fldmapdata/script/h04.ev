@@ -26,8 +26,10 @@ _EVENT_DATA    ev_h04_leadsinger_01
 _EVENT_DATA		ev_bg_h04_sign_01
 _EVENT_DATA		ev_bg_h04_sign_02
 _EVENT_DATA		ev_bg_h04_sign_03
-_EVENT_DATA		ev_pos_h04_waitress
-_EVENT_DATA		ev_h04_waitress_01
+
+//さんどいっち
+//_EVENT_DATA		ev_pos_h04_waitress
+//_EVENT_DATA		ev_h04_waitress_01
 _EVENT_DATA		ev_h04_man1_01
 _EVENT_DATA		ev_h04_woman1_01
 _EVENT_DATA		ev_h04_girl2_01
@@ -36,6 +38,15 @@ _EVENT_DATA		ev_h04_pikachu_01
 _EVENT_DATA		ev_h04_poke17_01
 _EVENT_DATA		ev_h04_poke19_01
 _EVENT_DATA		ev_h04_poke20_01
+
+//きゃもめ
+_EVENT_DATA		ev_h04_girl1_01
+_EVENT_DATA		ev_h04_boy1_01
+_EVENT_DATA		ev_h04_oldman1_01
+_EVENT_DATA		ev_h04_backpackerw_01
+_EVENT_DATA		ev_h04_poke100_01
+_EVENT_DATA		ev_h04_monsterball_01
+
 _EVENT_DATA_END
 
 //------------------------------注意--------------------------------//
@@ -48,41 +59,333 @@ _EVENT_DATA_END
 //																	//
 //------------------------------------------------------------------//
 /**************************************************************/
+/*  h04 キャモメイベント                  */
+/**************************************************************/
+//ガール1（イベント依頼人）
+EVENT_START   ev_h04_girl1_01
+	
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+				
+	//カメラ操作　チャンピオンの位置にカメラを合わせる
+	_CAMERA_MOVE( 9170,0,1089626,4082719,217088,1757184,45 )	//一番最後の引数は移動にかかるフレーム数
+
+	_TALK_OBJ_START()
+	IF FLAG_OFF(FE_H04_DELIVERY_01) && $WK_SCENE_H04_ITEMNUM == 0 THEN
+	
+		_FLAG_SET(FE_H04_DELIVERY_01)
+		_FLAG_RESET(FV_H04_ITEM_02)
+		_OBJ_ADD(H04_MONSTERBALL_01)
+		$WK_SCENE_H04_ITEMNUM = 0
+			
+		_BALLOONWIN_OBJMSG(msg_h04_poke_01,H04_POKE100_01)
+		_VOICE_PLAY( MONSNO_278, 0 )
+		_VOICE_WAIT()
+		_MSGWIN_CLOSE()
+		
+		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_d)
+		_OBJ_ANIME_WAIT()
+		_TIME_WAIT(16)
+		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_l)
+		_OBJ_ANIME_WAIT()
+		_TIME_WAIT(8)
+		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_r)
+		_OBJ_ANIME_WAIT()
+		_TIME_WAIT(8)
+		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_l)
+		_OBJ_ANIME_WAIT()		
+		_TIME_WAIT(24)	
+		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_d)
+		_OBJ_ANIME_WAIT()
+		
+		_TIME_WAIT(16)
+		_BALLOONWIN_OBJMSG(msg_h04_girl1_01a,H04_GIRL1_01)
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ELSE
+	
+		IF FLAG_ON(FE_H04_ITEMHAVING_01) THEN
+		
+			_BALLOONWIN_TALKOBJ_MSG(msg_h04_girl1_02)
+			_MSGWIN_CLOSE()
+			
+			//手紙を渡すようなアニメ
+			_OBJ_ANIME(H04_GIRL1_01,anm_common_gyoe)
+			_OBJ_ANIME_WAIT()
+			
+			_OBJ_ANIME(H04_POKE100_01,anm_common_jump_d)
+			_BALLOONWIN_OBJMSG_POS(msg_h04_poke_02,H04_POKE100_01,POS_DEFAULT)
+			_VOICE_PLAY( MONSNO_278, 0 )
+			_VOICE_WAIT()
+			_MSGWIN_CLOSE()
+			_OBJ_ANIME_WAIT()
+			
+			//手紙を一枚見つけた
+			IF $WK_SCENE_H04_ITEMNUM == 1 THEN
+				_BALLOONWIN_OBJMSG_POS(msg_h04_girl1_03,H04_GIRL1_01,POS_DEFAULT)
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+						
+			//手紙を二枚見つけた
+			ELSIF $WK_SCENE_H04_ITEMNUM == 2 THEN
+				_BALLOONWIN_OBJMSG_POS(msg_h04_girl1_04,H04_GIRL1_01,POS_DEFAULT)
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+			
+			//手紙を三枚見つけた
+			ELSIF $WK_SCENE_H04_ITEMNUM == 3 THEN
+				_BALLOONWIN_OBJMSG_POS(msg_h04_girl1_05,H04_GIRL1_01,POS_DEFAULT)
+				_MSGWIN_CLOSE()
+				
+				_OBJ_ANIME(H04_POKE100_01,anm_common_jump_d)
+				_BALLOONWIN_OBJMSG_POS(msg_h04_poke_03,H04_POKE100_01,POS_DEFAULT)
+				_VOICE_PLAY( MONSNO_278, 0 )
+				_VOICE_WAIT()
+				_MSGWIN_CLOSE()
+				_OBJ_ANIME_WAIT()
+				
+    			//フェードイン
+    			_BLACK_OUT()
+    			_DISP_FADE_END_CHECK()
+    			
+    			_OBJ_DEL(H04_POKE100_01)
+    			_FLAG_SET(FV_H04_POKE_01)
+
+			    //ちょっと待つ
+			    _TIME_WAIT( 20 )
+
+			    //フェードイン
+			    _BLACK_IN()
+			    _DISP_FADE_END_CHECK()
+    
+				_SYSWIN_MSG( msg_h04_sys_01, POS_DEFAULT )
+				_MSGWIN_CLOSE()
+				
+				_ITEM_EVENT_KEYWAIT(ITEM_AKAIITO,1)
+				
+			ENDIF
+			
+			_FLAG_RESET(FE_H04_ITEMHAVING_01)
+		
+		ELSE			
+
+			//手紙を見つけていない
+			IF $WK_SCENE_H04_ITEMNUM == 0 THEN
+				_BALLOONWIN_OBJMSG_POS(msg_h04_girl1_01,H04_GIRL1_01,POS_DEFAULT)
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()	
+								
+			//手紙を一枚見つけた
+			ELSIF $WK_SCENE_H04_ITEMNUM == 1 THEN
+				_BALLOONWIN_OBJMSG_POS(msg_h04_girl1_03,H04_GIRL1_01,POS_DEFAULT)
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+						
+			//手紙を二枚見つけた
+			ELSIF $WK_SCENE_H04_ITEMNUM == 2 THEN
+				_BALLOONWIN_OBJMSG_POS(msg_h04_girl1_04,H04_GIRL1_01,POS_DEFAULT)
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+
+			//手紙を三枚見つけた（イベントをクリアしている）
+			ELSIF $WK_SCENE_H04_ITEMNUM == 3 THEN
+				_BALLOONWIN_OBJMSG_POS(msg_h04_girl1_06,H04_GIRL1_01,POS_DEFAULT)
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+			
+			ENDIF
+		
+		ENDIF
+
+	ENDIF
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 20 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+
+EVENT_END
+
+//ボーイ1
+EVENT_START   ev_h04_boy1_01
+	
+	IF FLAG_OFF(FE_H04_DELIVERY_01) THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_boy1_02)
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_boy1_01)
+	ENDIF
+
+EVENT_END
+
+//老人（手紙を持っている）
+EVENT_START   ev_h04_oldman1_01
+
+	IF FLAG_OFF(FE_H04_DELIVERY_01) THEN		
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_oldman1_02)
+	ELSE
+		_EASY_TALK_ITEM_EVENT(ITEM_HAITATUBUTU1,1,FE_H04_ITEM_01,msg_h04_oldman1_01,msg_h04_oldman1_02,msg_h04_oldman1_02)
+		$WK_SCENE_H04_ITEMNUM += 1
+		_FLAG_SET(FE_H04_ITEMHAVING_01)
+	ENDIF
+
+EVENT_END
+
+//バックパッカー（手紙を持っている）
+EVENT_START   ev_h04_backpackerw_01
+
+	IF FLAG_OFF(FE_H04_DELIVERY_01) THEN		
+		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_backpackerw_02)
+	ELSE
+		_EASY_TALK_ITEM_EVENT(ITEM_HAITATUBUTU3,1,FE_H04_ITEM_03,msg_h04_backpackerw_01,msg_h04_backpackerw_02,msg_h04_backpackerw_02)
+		$WK_SCENE_H04_ITEMNUM += 1
+		_FLAG_SET(FE_H04_ITEMHAVING_01)
+	ENDIF
+
+EVENT_END
+
+//モンスターボール（手紙自身）
+EVENT_START   ev_h04_monsterball_01
+
+	//アイテム入手処理
+	_OBJ_DEL(H04_MONSTERBALL_01)
+ 	_ITEM_EVENT_FIELD(ITEM_HAITATUBUTU2,1)
+ 	_FLAG_SET(FV_H04_ITEM_02)
+	$WK_SCENE_H04_ITEMNUM += 1 
+	_FLAG_SET(FE_H04_ITEMHAVING_01)
+	
+EVENT_END
+
+//キャモメ（依頼主）
+EVENT_START   ev_h04_poke100_01
+
+	_CAMERA_START()		//カメラ操作開始
+	_CAMERA_PURGE()		//カメラのバインドを解く
+				
+	//カメラ操作　チャンピオンの位置にカメラを合わせる
+	_CAMERA_MOVE( 9170,0,1089626,4082719,217088,1757184,45 )	//一番最後の引数は移動にかかるフレーム数
+	
+	IF FLAG_OFF(FE_H04_DELIVERY_01) && $WK_SCENE_H04_ITEMNUM == 0 THEN
+		_TALK_OBJ_START()
+		_FLAG_SET(FE_H04_DELIVERY_01)
+		_FLAG_RESET(FV_H04_ITEM_02)
+		_OBJ_ADD(H04_MONSTERBALL_01)
+		$WK_SCENE_H04_ITEMNUM = 0
+			
+		_BALLOONWIN_OBJMSG_POS(msg_h04_poke_01,H04_POKE100_01,POS_DEFAULT)
+		_VOICE_PLAY( MONSNO_278, 0 )
+		_VOICE_WAIT()
+		_MSGWIN_CLOSE()
+		
+		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_d)
+		_OBJ_ANIME_WAIT()
+		_TIME_WAIT(16)
+		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_l)
+		_OBJ_ANIME_WAIT()
+		_TIME_WAIT(8)
+		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_r)
+		_OBJ_ANIME_WAIT()
+		_TIME_WAIT(8)
+		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_l)
+		_OBJ_ANIME_WAIT()		
+		_TIME_WAIT(24)	
+		_OBJ_ANIME(H04_POKE100_01,anm_common_turn_d)
+		_OBJ_ANIME_WAIT()
+		
+		_TIME_WAIT(16)
+		_BALLOONWIN_OBJMSG_POS(msg_h04_girl1_01a,H04_GIRL1_01,POS_UL)
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	
+	ELSE
+		_EASY_TALK_POKEVOICE(MONSNO_278,msg_h04_poke_01)
+	ENDIF
+	_CAMERA_WAIT_MOVE()	//カメラ移動
+	
+	//自機にカメラを戻す
+	_CAMERA_RECV_MOVE( 20 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
+	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
+	_CAMERA_END()		//カメラ操作終了
+
+	_DEBUG_PRINT_WK( WK_SCENE_H04_ITEMNUM )
+
+EVENT_END
+
+/**************************************************************/
 /*  h04 ウェイトレスPOSイベント                  */
 /**************************************************************/
+/*
 EVENT_START   ev_h04_waitress_01
 
 EVENT_END
+*/
 /**************************************************************/
-/*  h04 ウェイトレス会話用イベントスクリプト                     */
+/*  h04 ビレッジサンドイベント        */
 /**************************************************************/
+/*
+//ウェイトレスさん
 EVENT_START   ev_pos_h04_waitress
 
+//	_EASY_BALLOONWIN_TALKOBJ_MSG()
+
+	//対戦している？
+	IF FLAG_ON(FH_07)THEN
+	
+	ELSE
+	
+	
+	ENDIF
+
+
 EVENT_END
-/**************************************************************/
-/*  h04 GIRL2 会話用イベントスクリプト                      */
-/**************************************************************/
+*/
+//ガール2
 EVENT_START   ev_h04_girl2_01
 
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_girl2_02)
+
 EVENT_END
-/**************************************************************/
-/*  h04 MAN1会話用イベントスクリプト                      */
-/**************************************************************/
+
+//マン1
 EVENT_START   ev_h04_man1_01
 
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_man1_02)
+
 EVENT_END
-/**************************************************************/
-/*  h04 会話用イベントスクリプト                      */
-/**************************************************************/
+
+//マン三
 EVENT_START   ev_h04_man3_01
 
-EVENT_END
-/**************************************************************/
-/*  h04 会話用イベントスクリプト                      */
-/**************************************************************/
-EVENT_START   ev_h04_woman1_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_man3_02)
 
 EVENT_END
+
+//ウーマン1
+EVENT_START   ev_h04_woman1_01
+
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h04_woman1_02)
+
+EVENT_END
+
+/*
+//ウェイトレスさんとの対戦
+ev_boss_btl:
+
+//戦闘処理
+		_TRAINER_BTL_SET ( TRID_, 0 )
+		//敗戦チェック
+		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+		ELSE
+			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+		ENDIF
+_RET
+*/
 /**************************************************************/
 /*  h04 会話用イベントスクリプト                      */
 /**************************************************************/
@@ -321,4 +624,63 @@ EVENT_START   ev_h04_leadsinger_01
 		ENDIF
 	
 	ENDIF
+	
+//--------------------------------------------------------------------
+// 共通アニメ：びっくりする                    
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_gyoe
+
+	_ANIME_DATA AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：右振り向き                   
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_r
+
+	_ANIME_DATA AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_l
+
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// サポートが振り向くアニメ：左振り向き                      
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_support_turn_l
+	
+	_ANIME_DATA AC_WAIT_16F,1
+	_ANIME_DATA AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+//--------------------------------------------------------------------
+// 共通アニメ：下振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_d
+
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：上振り向き                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_turn_u
+
+	_ANIME_DATA AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// 共通アニメ：ジャンプ                       
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_common_jump_d
+
+	_ANIME_DATA AC_JUMP_R_1G_8F,1
+	_ANIME_DATA AC_JUMP_L_1G_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 EVENT_END

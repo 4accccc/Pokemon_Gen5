@@ -237,6 +237,9 @@ init_flags:
 
 	//チャンピオンロード外側：崖の下のベテラントレーナー。POSイベント後に表示。
 	_FLAG_SET( FV_D09_VETERANM_02 )
+	
+	//H04 配達物イベント　イベント起動時まで非表示
+	_FLAG_SET(FV_H04_ITEM_02)
 
 }
 _RET
