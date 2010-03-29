@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T13:35:35"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T17:12:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -467,10 +467,10 @@
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">ヤツの　ギターを　きいているとなぁ
 わかい　ころに　とびだした　いえと[BE:00:ページ切り替え（行送り）]
-なく　おふくろを　おもいだすのさ…[BE:01:ページ切り替え（クリア）]</language>
+なく　おふくろを　おもいだすのさ……[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ヤツの　ギターを　聴いているとなぁ
 若いころに　飛び出した　家と[BE:00:ページ切り替え（行送り）]
-泣く　おふくろを　思い出すのさ…[BE:01:ページ切り替え（クリア）]</language>
+泣く　おふくろを　思い出すのさ……[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>

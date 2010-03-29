@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T14:54:55"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T17:10:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,9 +337,8 @@
 隣の　コンパネを　押してくださいませ</language>
 	</row>
 
-	<row id="msg_c03r0301_businessman_10" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03r0301_businessman_10">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
 		<language name="JPN" width="256">いやあ……　いつも　おこされるとき
 ポケモンの　めざましビンタ　でして▽
@@ -362,7 +361,7 @@
 道具の　研究開発！</language>
 	</row>
 
-	<row id="msg_c03r0301_painting1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c03r0301_painting1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">絵画？</attribute>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T14:51:49"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T17:08:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03p14_infomationw_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p14_infomationw_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・話しかけた時のgmm
 ・はい/いいえ/なにそれ？の選択肢表示
@@ -307,7 +307,7 @@
 ユナイテッドタワーに　ご用ですか？</language>
 	</row>
 
-	<row id="msg_c03p14_infomationw_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p14_infomationw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・はい、だけど行けない</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -325,7 +325,7 @@
 また　お越しください！</language>
 	</row>
 
-	<row id="msg_c03p14_infomationw_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p14_infomationw_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・はい選択時
 ・メッセージの後に道をあけて、主人公が船に乗り込む</comment>
@@ -336,7 +336,7 @@
 どうぞ　ご乗船ください！▼</language>
 	</row>
 
-	<row id="msg_c03p14_infomationw_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p14_infomationw_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・なにそれ？選択時
 ・この後0001に戻る</comment>
@@ -361,7 +361,7 @@
 どうぞ　お楽しみください！▼</language>
 	</row>
 
-	<row id="msg_c03p14_infomationw_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03p14_infomationw_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -369,7 +369,7 @@
 		<language name="JPN_KANJI" width="256">またの　お越しを　お待ちしてますね！</language>
 	</row>
 
-	<row id="msg_c03p14_infomationw_06" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p14_infomationw_06" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♀
 ・選択肢</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -377,7 +377,7 @@
 		<language name="JPN_KANJI" width="256">はい</language>
 	</row>
 
-	<row id="msg_c03p14_infomationw_07" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p14_infomationw_07" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♀
 ・選択肢</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -385,7 +385,7 @@
 		<language name="JPN_KANJI" width="256">いいえ</language>
 	</row>
 
-	<row id="msg_c03p14_infomationw_08" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03p14_infomationw_08" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
 		<comment>♀
 ・選択肢</comment>
 		<attribute name="キャラ指定">INFORMATIONW</attribute>
@@ -393,7 +393,7 @@
 		<language name="JPN_KANJI" width="256">なにそれ？</language>
 	</row>
 
-	<row id="msg_c03p14_girl4_01">
+	<row id="msg_c03p14_girl4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
@@ -407,7 +407,7 @@
 そういってたから　信じてるの！</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p14_dancer3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・wk_scene_c03centerが0の場合
 　ダンサーイベント開始前</comment>
@@ -418,7 +418,7 @@
 ヒウンシティに　来たんだよー！</language>
 	</row>
 
-	<row id="msg_c03p14_dancer3_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03p14_dancer3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・wk_scene_c03centerが1の場合
 　会話後・中央広場の方へ消える</comment>

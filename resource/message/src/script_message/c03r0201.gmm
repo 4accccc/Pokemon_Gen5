@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T14:54:01"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T17:09:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -383,7 +383,7 @@
 連れているか　みせてくれない？</language>
 	</row>
 
-	<row id="msg_c03r0201_juggling_01a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0201_juggling_01a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、リスト画面へ</comment>
@@ -409,7 +409,7 @@
 お礼は　どれが　いいかな？▼</language>
 	</row>
 
-	<row id="msg_c03r0201_select_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0201_select_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>選択後、juggling_07へ
 No149「クラボのみ」</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -417,7 +417,7 @@ No149「クラボのみ」</comment>
 		<language name="JPN_KANJI" width="256">クラボのみ</language>
 	</row>
 
-	<row id="msg_c03r0201_select_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0201_select_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>選択後、juggling_07へ
 No150「カゴのみ」</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -425,7 +425,7 @@ No150「カゴのみ」</comment>
 		<language name="JPN_KANJI" width="256">カゴのみ</language>
 	</row>
 
-	<row id="msg_c03r0201_select_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0201_select_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>選択後、juggling_07へ
 No151「モモンのみ」</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -433,7 +433,7 @@ No151「モモンのみ」</comment>
 		<language name="JPN_KANJI" width="256">モモンのみ</language>
 	</row>
 
-	<row id="msg_c03r0201_select_04" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0201_select_04" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>選択後、juggling_07へ
 No152「チーゴのみ」</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -441,7 +441,7 @@ No152「チーゴのみ」</comment>
 		<language name="JPN_KANJI" width="256">チーゴのみ</language>
 	</row>
 
-	<row id="msg_c03r0201_select_05" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0201_select_05" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,,,,,,,,">
 		<comment>選択後、juggling_07へ
 No153「ナナシのみ」</comment>
 		<attribute name="キャラ指定">選択肢</attribute>
@@ -495,7 +495,7 @@ No153「ナナシのみ」</comment>
 ちょっとしたモノ　あげるからねー</language>
 	</row>
 
-	<row id="msg_c03r0201_juggling_06" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0201_juggling_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・選んだけど一致していない
 ・0＝ポケモンのタイプ</comment>
