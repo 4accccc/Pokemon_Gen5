@@ -1413,7 +1413,6 @@ BTL_ACTION_PARAM BTL_SVCL_ACTION_Get( const BTL_SVCL_ACTION* clientAction, u8 cl
   GF_ASSERT(posIdx<BTL_POSIDX_MAX);
   return clientAction->param[ clientID ][ posIdx ];
 }
-void BTL_SVCL_ACTION_Restore( BTL_SERVER* server, const void*
 
 
 //----------------------------------------------
