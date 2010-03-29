@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T13:20:40"/>
+	<create user="matsumiya" host="W00224" date="2010-03-29T19:12:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -748,7 +748,7 @@
 シッポウシティに　向かうよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r03_sodateya_01m">
+	<row id="msg_r03_sodateya_01m" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>育て屋：タマゴが見つかったときに３番道路を通ると
 声をかけてくれる（POSイベント）</comment>
 		<attribute name="キャラ指定">育て屋じいさん</attribute>
@@ -758,7 +758,7 @@
 ちょっと　きてくれ！▼</language>
 	</row>
 
-	<row id="msg_r03_sodateya_01f">
+	<row id="msg_r03_sodateya_01f" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>育て屋：タマゴが見つかったときに３番道路を通ると
 声をかけてくれる（POSイベント）</comment>
 		<attribute name="キャラ指定">育て屋じいさん</attribute>
@@ -766,30 +766,6 @@
 ちょっと　きてくれ！▼</language>
 		<language name="JPN_KANJI" width="256">おーい　[1:00:トレーナー名:0]ちゃん！
 ちょっと　きてくれ！▼</language>
-	</row>
-
-	<row id="msg_r03_hakaim_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_r03_hakaim_04" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_r03_hakaim_05" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_r03_hakaim_06" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_r03_woman3_01">
