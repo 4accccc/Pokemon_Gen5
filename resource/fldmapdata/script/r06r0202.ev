@@ -59,7 +59,7 @@ EVENT_START   ev_pos_r06r0202_oldman1_01
 	ENDIF
 	
 	//おぬし…
-	_BALLOONWIN_OBJMSG_POS( msg_r06r0202_guide_01, R06R0202_OLDMAN1_01, POS_DOWN )
+	_BALLOONWIN_OBJMSG_POS( msg_r06r0202_guide_01, R06R0202_OLDMAN1_01, POS_DR )
 	
 	//はい。いいえ選択
 	_YES_NO_WIN( SCWK_ANSWER )
@@ -68,7 +68,7 @@ EVENT_START   ev_pos_r06r0202_oldman1_01
 	IF $SCWK_ANSWER == SCR_YES THEN
 	
 		//ひととポケモンが
-		_BALLOONWIN_OBJMSG_POS( msg_r06r0202_guide_02, R06R0202_OLDMAN1_01, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( msg_r06r0202_guide_02, R06R0202_OLDMAN1_01, POS_DR )
 		_MSGWIN_CLOSE()
 		
 		//じじい一歩右へ歩く
@@ -80,7 +80,7 @@ EVENT_START   ev_pos_r06r0202_oldman1_01
 		_OBJ_ANIME_WAIT()		
 
 		//ポケモンたちをすくいだした
-		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_03, R06R0202_OLDMAN1_01, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_03, R06R0202_OLDMAN1_01, POS_DR )
 		_MSGWIN_CLOSE()
 		
 		//じじい主人公の前に移動
@@ -92,7 +92,7 @@ EVENT_START   ev_pos_r06r0202_oldman1_01
 		_OBJ_ANIME_WAIT()	
 		
 		//アトス　ポルトス　アラミスは
-		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_04, R06R0202_OLDMAN1_01, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_04, R06R0202_OLDMAN1_01, POS_DR )
 		_MSGWIN_CLOSE()
 		
 		//じじい段差をあがる
@@ -100,7 +100,7 @@ EVENT_START   ev_pos_r06r0202_oldman1_01
 		_OBJ_ANIME_WAIT()	
 		
 		//ひとのいくさがおわると
-		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_05, R06R0202_OLDMAN1_01, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_05, R06R0202_OLDMAN1_01, POS_DR )
 		_MSGWIN_CLOSE()
 
 		//じじい正面を向く
@@ -108,7 +108,7 @@ EVENT_START   ev_pos_r06r0202_oldman1_01
 		_OBJ_ANIME_WAIT()	
 
 		//何百年ものあいだ
-		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_06, R06R0202_OLDMAN1_01, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_06, R06R0202_OLDMAN1_01, POS_DR )
 		_MSGWIN_CLOSE()
 		
 		//じじい段差を下がる
@@ -116,7 +116,7 @@ EVENT_START   ev_pos_r06r0202_oldman1_01
 		_OBJ_ANIME_WAIT()	
 		
 		//しかし　かれらは
-		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_07, R06R0202_OLDMAN1_01, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_07, R06R0202_OLDMAN1_01, POS_DR )
 		_MSGWIN_CLOSE()
 		
 		//じじい一歩進む
@@ -124,7 +124,7 @@ EVENT_START   ev_pos_r06r0202_oldman1_01
 		_OBJ_ANIME_WAIT()	
 		
 		//おぬしなら…
-		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_08, R06R0202_OLDMAN1_01, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_08, R06R0202_OLDMAN1_01, POS_DR )
 		_MSGWIN_CLOSE()
 		
 		//=========　フラグワーク操作　===========//
@@ -136,7 +136,7 @@ EVENT_START   ev_pos_r06r0202_oldman1_01
 	ELSE
 		//いいえを選択
 		//としよりのはなしを
-		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_10, R06R0202_OLDMAN1_01, POS_DOWN )
+		_BALLOONWIN_OBJMSG_POS( msg_d06r0203_guide_10, R06R0202_OLDMAN1_01, POS_DR )
 		_MSGWIN_CLOSE()
 		
 		//じじい元の位置に戻る
