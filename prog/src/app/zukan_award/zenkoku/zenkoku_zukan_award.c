@@ -72,14 +72,14 @@ enum
 // 本数
 enum
 {
-  OBJ_PAL_NUM_M_BALL        = 1,
+  OBJ_PAL_NUM_M_BALL        = 2,
   OBJ_PAL_NUM_M_GF          = 1,
 };
 // 位置
 enum
 {
   OBJ_PAL_POS_M_BALL        = 0,
-  OBJ_PAL_POS_M_GF          = 1,
+  OBJ_PAL_POS_M_GF          = 2,
 };
 
 // ProcMainのシーケンス
