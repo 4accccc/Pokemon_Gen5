@@ -255,6 +255,39 @@ BOOL ICA_ANIME_IncAnimeFrame( ICA_ANIME* anime, fx32 frame )
 
 //-----------------------------------------------------------------------------------
 /**
+ * @brief アニメーションを進める(ノンループバージョン)
+ *
+ * @param anime 更新するアニメーション
+ * @param frame 進めるフレーム数
+ *
+ * @return 終了フレームまで再生したらTRUE
+ */
+//-----------------------------------------------------------------------------------
+BOOL ICA_ANIME_IncAnimeFrameNoLoop( ICA_ANIME* anime, fx32 frame )
+{
+  int now;
+
+  if( ( anime->nowFrame >> FX32_SHIFT) < anime->frameSize ){
+    // フレームを更新
+    anime->nowFrame += frame;
+  
+    now = anime->nowFrame >> FX32_SHIFT;
+    
+    // 現在フレームがバッファリング範囲をはずれたら, バッファを更新する
+    if( ( now < anime->bufStartFrame ) ||
+      ( (anime->bufStartFrame + anime->bufSize) <= now ) )
+    {
+      UpdateBuf( anime, anime->nowFrame );
+    }
+    return FALSE;
+  }else{
+    return TRUE;
+  }
+}
+
+
+//-----------------------------------------------------------------------------------
+/**
  * @brief 現在フレームを指定する
  *
  * @param anime 設定するアニメーション
