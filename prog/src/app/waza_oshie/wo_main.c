@@ -40,6 +40,7 @@
 #include "sound/pm_sndsys.h"
 
 #include "savedata/config.h"
+#include "app/app_keycursor.h"      // APP_KEY_CURSOR
 #include "app/app_menu_common.h"
 #include "waza_tool/wazadata.h"
 #include "app/p_status.h"
@@ -153,7 +154,6 @@ typedef struct {
   BMP_MENULIST_DATA * ld;   // BMPリストデータ
 
   BMPMENU_WORK * mw;      // BMPメニューワーク
-  TOUCH_SW_SYS* ynbtn_wk; // YesNoボタンワーク
 
   GFL_FONT     *fontHandle;  // フォントハンドル
   GFL_TCBLSYS  *pMsgTcblSys;  // メッセージ表示用タスクSYS
@@ -202,6 +202,7 @@ typedef struct {
   APP_TASKMENU_ITEMWORK yn_menuitem[2];
   PRINT_UTIL            *printUtil;
   PRINT_QUE             *printQue;
+  APP_KEYCURSOR_WORK *printCursor;
   APP_TASKMENU_WIN_WORK *oboe_menu_work[2];
 }WO_WORK;
 
@@ -1193,8 +1194,9 @@ static void WO_BmpWinSet( WO_WORK * wk )
 
   GFL_BMPWIN_ClearTransWindow_VBlank( wk->win[WIN_ABTN] );
 
-  //YesNoボタンシステムワーク確保
-  wk->ynbtn_wk = TOUCH_SW_AllocWork(HEAPID_WAZAOSHIE);
+  wk->printCursor = APP_KEYCURSOR_Create( 15, TRUE, FALSE, HEAPID_WAZAOSHIE );
+  
+
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1210,8 +1212,7 @@ static void WO_BmpWinExit( WO_WORK * wk )
 {
   u32 i;
 
-  //YesNoボタンシステムワーク解放
-  TOUCH_SW_FreeWork( wk->ynbtn_wk);
+  APP_KEYCURSOR_Delete(wk->printCursor);
 
   for( i=0; i<WIN_MAX; i++ ){
     GFL_BMPWIN_Delete( wk->win[i] );
@@ -1497,6 +1498,8 @@ static int WO_SeqSelect( WO_WORK * wk )
 static int WO_SeqMsgWait( WO_WORK * wk )
 { 
   int status = PRINTSYS_PrintStreamGetState( wk->printStream );
+  APP_KEYCURSOR_Main( wk->printCursor, wk->printStream, wk->win[WIN_MSG] );
+
   if(status == PRINTSTREAM_STATE_RUNNING){
     if(GFL_UI_KEY_GetCont()&PAD_BUTTON_DECIDE){
       PRINTSYS_PrintStreamShortWait( wk->printStream, 0 );
@@ -1523,19 +1526,6 @@ static int WO_SeqMsgWait( WO_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int WO_SeqYesNoPut( WO_WORK * wk )
 {
-#if 0
-  TOUCH_SW_PARAM param;
-  MI_CpuClear8(&param,sizeof(TOUCH_SW_PARAM));
-
-  param.bg_frame = SFRM_MSG;
-  param.char_offs = WO_YESNO_WIN_CGX;
-  param.pltt_offs = WO_PAL_YESNO_WIN;
-  param.x   = WO_YESNO_WIN_PX;
-  param.y   = WO_YESNO_WIN_PY;
-  param.kt_st = wk->key_mode;
-  param.key_pos = 0;
-  TOUCH_SW_Init( wk->ynbtn_wk, &param);
-#endif
   APP_TASKMENU_INITWORK init;
 
   init.heapId   = HEAPID_WAZAOSHIE;
@@ -1565,27 +1555,7 @@ static int WO_SeqYesNoPut( WO_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int WO_SeqYesNoWait( WO_WORK * wk )
 {
-/*
-  u32 ret,key_mode;
 
-  ret = TOUCH_SW_Main( wk->ynbtn_wk );
-  switch(ret){
-  case TOUCH_SW_RET_YES:
-    ret = YesNoFunc[wk->ynidx].yes( wk );
-    PassiveSet( FALSE );
-    break;
-  case TOUCH_SW_RET_NO:
-    ret = YesNoFunc[wk->ynidx].no( wk );
-    PassiveSet( FALSE );
-    break;
-  default:
-    return SEQ_YESNO_WAIT;
-  }
-  //現在の操作モードを取得
-  wk->key_mode = TOUCH_SW_GetKTStatus(wk->ynbtn_wk);
-//  WO_InputModeChange(wk);
-  TOUCH_SW_Reset( wk->ynbtn_wk);
-*/
   u32 ret=SEQ_YESNO_WAIT;
   if(APP_TASKMENU_IsFinish( wk->app_menuwork )){
     if(APP_TASKMENU_GetCursorPos(wk->app_menuwork)==0){
