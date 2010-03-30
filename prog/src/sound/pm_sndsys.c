@@ -121,7 +121,7 @@ static NNSSndHeapHandle					PmSndHeapHandle;
 static u32											bgmFadeCounter;
 static PMSND_FADESTATUS					fadeStatus;
 static PMSND_REVERB							reverbStatus;
-static SOUNDMAN_PRESET_HANDLE*	systemPresetHandle;
+//static SOUNDMAN_PRESET_HANDLE*	systemPresetHandle;
 static SOUNDMAN_PRESET_HANDLE*	usrPresetHandle1;
 static PMSND_SEPLAYER_DATA			sePlayerData[SEPLAYER_MAX];
 static SNDTrackInfo							trackInfo[TRACK_NUM];
@@ -206,7 +206,15 @@ static void PMSND_InitCore( BOOL systemSEload )
 
 	// 常駐サウンドデータ読み込み
 	if( systemSEload ){
+#if 0
 		systemPresetHandle = SOUNDMAN_PresetGroup(GROUP_GLOBAL);
+#else
+		const NNSSndArcGroupInfo* groupInfo;
+		u32 groupIdx = GROUP_GLOBAL;
+
+		groupInfo = NNS_SndArcGetGroupInfo(groupIdx);
+		NNS_SndArcLoadGroup(groupIdx, PmSndHeapHandle);
+#endif
 		usrPresetHandle1 = NULL;
 #ifdef PM_DEBUG
 		heapRemainsAfterPresetSE = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
@@ -273,7 +281,9 @@ void	PMSND_Exit( void )
 {
 //マルチブート用きり分け
 #ifndef MULTI_BOOT_MAKE  //通常時処理
+#if 0
 	SOUNDMAN_ReleasePresetData(systemPresetHandle);
+#endif
 #endif //MULTI_BOOT_MAKE
 
 	NNS_SndHeapDestroy(PmSndHeapHandle);
