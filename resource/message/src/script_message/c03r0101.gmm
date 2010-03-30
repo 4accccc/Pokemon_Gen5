@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-03-28T17:56:53"/>
+	<create user="nakamura_akira" host="W00161" date="2010-03-30T12:03:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -352,7 +352,7 @@
 		</language>
 	</columns>
 
-	<dialog left="125" top="259" right="830" bottom="887" maximized="no" rayout="Vertical2">
+	<dialog left="115" top="8" right="820" bottom="636" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="163" right="1280" bottom="561" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -360,7 +360,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1812,6 +1812,34 @@ assistantm_01_15へ続く
 面白さを　研究するのだ</language>
 	</row>
 
+	<row id="msg_c03r0101_assistantm_01_13x" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>・隊長
+『いらいをうける』を選択し、依頼一覧から『じかんちょうさ』を選択し、
+各依頼を選択後に対象の調査レーダーの人数がカンストしている場合に
+表示
+
+assistantm_01_23○へ続く
+
+[トレーナー名:1]＝主人公名</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+隊長</attribute>
+		<language name="JPN" width="256">……ん？▼
+すでに　こんなに　おおくのひとと　
+すれちがっているなんて！▼
+さすがは　[1:00:トレーナー名:1]たいいんだ▼
+これなら　いまの　データで　
+じゅうぶんだ▼
+このまま　ちょうさないようを
+わたしに　ほうこくしてくれ！</language>
+		<language name="JPN_KANJI" width="256">……ん？▼
+すでに　こんなに　多くの人と
+すれ違っているなんて！▼
+さすがは　[1:00:トレーナー名:1]隊員だ
+これなら　今の　データで　十分だ▼
+このまま　調査内容を
+わたしに　報告してくれ！</language>
+	</row>
+
 	<row id="msg_c03r0101_assistantm_01_14a" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>・隊長
 『いらいをうける』を選択し、
@@ -2596,7 +2624,7 @@ assistantm_01_15へ続く
 各依頼を選択後に対象の調査レーダーの人数がすでに依頼人数を
 達成している場合に表示
 
-assistantm_01_15へ続く
+assistantm_01_23○へ続く
 
 [トレーナー名:1]＝主人公名</comment>
 		<attribute name="キャラ指定">ASSISTANTM
