@@ -144,7 +144,7 @@ sub_elevator_main:
     _BMPMENU_START()
 
     _DEBUG_PRINT_WK( SCWK_ANSWER )
-    IF $SCWK_ANSWER != 0xff THEN
+    IF $SCWK_ANSWER != 0xff && $SCWK_ANSWER != EV_WIN_B_CANCEL THEN
         //エレベーターに乗り込む
         _CALL sub_elevator_in
 
