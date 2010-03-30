@@ -546,7 +546,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 
       //このローカルPROC内でPROC遷移するため、エラーシステムを自分で動かす
       //->gamesystem_main上のLOCAL_PROCで動くのですべてで動かす必要がある
-      //if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_MAINMENU  )
+      //if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_MAINMENU )
       { 
         const GFL_PROC_MAIN_STATUS  status  = WBM_SYS_SUBPROC_GetStatus( p_wk->p_subproc );
         if( status == GFL_PROC_MAIN_CHANGE || status == GFL_PROC_MAIN_NULL )
@@ -1336,6 +1336,7 @@ static void *WBM_LISTAFTER_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID he
   p_param->p_param        = &p_wk->param;
   p_param->p_player_btl_party = p_wk->p_player_btl_party;
   p_param->p_enemy_btl_party  = p_wk->p_enemy_btl_party;
+  p_param->p_recv_data        = &p_wk->recv_data;
 
   if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
   { 

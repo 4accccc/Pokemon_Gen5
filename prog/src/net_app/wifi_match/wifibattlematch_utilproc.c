@@ -238,7 +238,9 @@ static void UTIL_WIFI_Init( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATC
   GFL_OVERLAY_Load( FS_OVERLAY_ID(wifibattlematch_core));
 
   //ネットモジュールの作成
-  p_wk->p_net   = WIFIBATTLEMATCH_NET_Init( p_param->p_param->p_game_data, NULL, heapID );
+  p_wk->p_net   = WIFIBATTLEMATCH_NET_Init( 
+      p_param->p_recv_data->sake_recordID,
+      p_param->p_param->p_game_data, NULL, heapID );
 }
 //----------------------------------------------------------------------------
 /**

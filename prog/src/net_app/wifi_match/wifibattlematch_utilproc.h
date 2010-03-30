@@ -10,6 +10,7 @@
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 #pragma once
 #include "net_app/wifibattlematch.h"
+#include "wifibattlematch_data.h"
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
  *					リスト後プロセス
@@ -48,7 +49,7 @@ typedef struct
   //以下、[in ]常駐データ置き場
   POKEPARTY                   *p_player_btl_party; //自分で決めたパーティ
   POKEPARTY                   *p_enemy_btl_party; //相手の決めたパーティ
-
+  WIFIBATTLEMATCH_RECV_DATA   *p_recv_data;
 } WIFIBATTLEMATCH_LISTAFTER_PARAM;
 
 //-------------------------------------

@@ -193,7 +193,7 @@ typedef struct _WIFIBATTLEMATCH_NET_WORK WIFIBATTLEMATCH_NET_WORK;
 //-------------------------------------
 ///	ÉèÅ[ÉNçÏê¨
 //=====================================
-extern WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( GAMEDATA *p_gamedata, DWCSvlResult *p_svl_result, HEAPID heapID );
+extern WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( u32 sake_recordID, GAMEDATA *p_gamedata, DWCSvlResult *p_svl_result, HEAPID heapID );
 extern void WIFIBATTLEMATCH_NET_Exit( WIFIBATTLEMATCH_NET_WORK *p_wk );
 extern void WIFIBATTLEMATCH_NET_Main( WIFIBATTLEMATCH_NET_WORK *p_wk );
 

@@ -511,7 +511,7 @@ static void SAKE_Init( DEBUG_SAKE_WORK *p_wk, GAMEDATA *p_gamedata, HEAPID heapI
   p_wk->p_que     = PRINTSYS_QUE_Create( heapID );
   p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_FONT, PLT_FONT_M, 0, 0, p_wk->p_que, p_wk->p_font, heapID );
   Sake_CreateDisplay( p_wk, heapID );
-  p_wk->p_net = WIFIBATTLEMATCH_NET_Init( p_gamedata, NULL, heapID );
+  p_wk->p_net = WIFIBATTLEMATCH_NET_Init( 0, p_gamedata, NULL, heapID );
 
   NUMINPUT_Init( &p_wk->numinput, BG_FRAME_S_NUM, PLT_FONT_S, p_wk->p_small_font, heapID );
   GFL_BG_SetVisible( BG_FRAME_S_NUM, FALSE );
@@ -883,7 +883,7 @@ static void ATLAS_Init( DEBUG_ATLAS_WORK *p_wk, GAMEDATA *p_gamedata, HEAPID hea
   p_wk->p_que     = PRINTSYS_QUE_Create( heapID );
   p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_FONT, PLT_FONT_M, 0, 0, p_wk->p_que, p_wk->p_font, heapID );
   Atlas_CreateReportDisplay( p_wk, heapID );
-  p_wk->p_net = WIFIBATTLEMATCH_NET_Init( p_gamedata, NULL, heapID );
+  p_wk->p_net = WIFIBATTLEMATCH_NET_Init( 0, p_gamedata, NULL, heapID );
 
   NUMINPUT_Init( &p_wk->numinput, BG_FRAME_S_NUM, PLT_FONT_S, p_wk->p_small_font, heapID );
   GFL_BG_SetVisible( BG_FRAME_S_NUM, FALSE );

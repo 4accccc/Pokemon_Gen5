@@ -353,7 +353,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Init( GFL_PROC *p_proc, int *p_s
 	p_wk->p_word	= WORDSET_CreateEx( WORDSET_DEFAULT_SETNUM, WORDSET_COUNTRY_BUFLEN, HEAPID_WIFIBATTLEMATCH_CORE );
 
 	//ƒ‚ƒWƒ…[ƒ‹‚Ìì¬
-  p_wk->p_net   = WIFIBATTLEMATCH_NET_Init( p_param->p_param->p_game_data, p_param->p_svl_result, HEAPID_WIFIBATTLEMATCH_CORE );
+  p_wk->p_net   = WIFIBATTLEMATCH_NET_Init( p_wk->p_param->p_recv_data->sake_recordID,
+      p_param->p_param->p_game_data, p_param->p_svl_result, HEAPID_WIFIBATTLEMATCH_CORE );
   p_wk->p_text  = WBM_TEXT_Init( BG_FRAME_M_TEXT, PLT_FONT_M, PLT_TEXT_M, CGR_OFS_M_TEXT, p_wk->p_que, p_wk->p_font, HEAPID_WIFIBATTLEMATCH_CORE );
   p_wk->p_seq   = WBM_SEQ_Init( p_wk, WbmRndSeq_Init, HEAPID_WIFIBATTLEMATCH_CORE );
   p_wk->p_subseq   = WBM_SEQ_Init( p_wk, NULL, HEAPID_WIFIBATTLEMATCH_CORE );
@@ -1035,7 +1036,8 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
         Util_RenewalMyData( p_param->p_player_data, p_wk );
 
         //Á‚µ‚½‚­‚È‚¢î•ñ‚ğí’“‚É•Û‘¶
-        p_wk->p_param->p_recv_data->record_save_idx  = p_wk->rnd_score.record_save_idx;
+        p_wk->p_param->p_recv_data->record_save_idx = p_wk->rnd_score.record_save_idx;
+        p_wk->p_param->p_recv_data->sake_recordID   = WIFIBATTLEMATCH_GDB_GetRecordID( p_wk->p_net );
 
         //©•ª‚Ìî•ñ‚ğ•\¦
         Util_PlayerInfo_Create( p_wk, WIFIBATTLEMATCH_CORE_RETMODE_RATE );

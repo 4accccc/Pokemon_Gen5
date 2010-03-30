@@ -105,6 +105,7 @@ typedef struct
 typedef struct 
 {
   u8    record_save_idx;
+  u32   sake_recordID;
 } WIFIBATTLEMATCH_RECV_DATA;
 
 

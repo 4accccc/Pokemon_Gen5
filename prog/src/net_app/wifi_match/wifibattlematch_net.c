@@ -515,7 +515,7 @@ static const NetRecvFuncTable sc_net_recv_tbl[] =
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-extern WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( GAMEDATA *p_gamedata, DWCSvlResult *p_svl_result, HEAPID heapID )
+WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( u32 sake_recordID, GAMEDATA *p_gamedata, DWCSvlResult *p_svl_result, HEAPID heapID )
 { 
   WIFIBATTLEMATCH_NET_WORK *p_wk;
 
@@ -527,6 +527,7 @@ extern WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( GAMEDATA *p_gamedata
   p_wk->pid           = MyStatus_GetProfileID( GAMEDATA_GetMyStatus( p_gamedata ) );
   p_wk->p_gamedata    = p_gamedata;
   p_wk->p_svl_result  = p_svl_result;
+  p_wk->sake_record_id= sake_recordID;
 
   p_wk->magic_num = 0x573;
 
@@ -2668,7 +2669,7 @@ static void DwcRap_Gdb_GetCallback(int record_num, DWCGdbField** records, void* 
         if( !GFL_STD_StrCmp( field->name, SAKE_STAT_RECORDID ) )
         { 
           p_wk->sake_record_id  = field->value.int_s32;
-          DEBUG_NET_Printf("recordID取得!\n", p_wk->sake_record_id );
+          DEBUG_NET_Printf("recordID取得 %d!\n", p_wk->sake_record_id );
         }
       }
     }
@@ -2987,6 +2988,8 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
 
   p_wk->seq             = 0;
   DEBUG_NET_Printf( "GDBW: request[%d]\n", type );
+  GF_ASSERT( p_wk->sake_record_id == 0 );
+
   switch( type )
   { 
   case WIFIBATTLEMATCH_GDB_WRITE_DEBUGALL:
@@ -3070,7 +3073,7 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
       p_wk->p_field_buff[1].type          = DWC_GDB_FIELD_TYPE_BYTE;
       p_wk->p_field_buff[1].value.int_u8  = (p_wk->record_data.save_idx + 1 ) % NELEMS(scp_stat_record_data_tbl);
 
-      OS_TPrintf( "戦績データを送信開始 今%d 次IDX%d\n", p_wk->record_data.save_idx,p_wk->p_field_buff[1].value.int_u8 );
+      OS_TPrintf( "戦績データを送信開始 sake%d 今%d 次IDX%d\n", p_wk->sake_record_id, p_wk->record_data.save_idx,p_wk->p_field_buff[1].value.int_u8 );
     }
     break;
   }
