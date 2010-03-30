@@ -161,13 +161,24 @@ BSUBWAY_SCRWORK * BSUBWAY_SCRWORK_CreateWork(
           BSWAY_PLAYDATA_ID_pare_poke,
           &(bsw_scr->five_poke[bsw_scr->partner]) );
       
-      BSUBWAY_SCRWORK_MakePartnerRomData(
-          bsw_scr, &bsw_scr->five_data[bsw_scr->partner],
-        BSUBWAY_FIVE_FIRST + bsw_scr->partner,
-        BSUBWAY_PLAYDATA_GetData(bsw_scr->playData,
-          BSWAY_PLAYDATA_ID_pare_itemfix, NULL ),
-        &(bsw_scr->five_poke[bsw_scr->partner]),
-        bsw_scr->heapID );
+      {
+        int i;
+        int start_no = BSWAY_PARTNER_DATA_START_NO_WOMAN;
+        PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+        u32 sex = MyStatus_GetMySex( &player->mystatus );
+        
+        if( sex ){ //woman
+          start_no = BSWAY_PARTNER_DATA_START_NO_MAN;
+        }
+        
+        BSUBWAY_SCRWORK_MakePartnerRomData(
+            bsw_scr, &bsw_scr->five_data[bsw_scr->partner],
+          start_no + bsw_scr->partner,
+          BSUBWAY_PLAYDATA_GetData(bsw_scr->playData,
+            BSWAY_PLAYDATA_ID_pare_itemfix, NULL ),
+          &(bsw_scr->five_poke[bsw_scr->partner]),
+          bsw_scr->heapID );
+      }
     }
   }
   
@@ -1561,14 +1572,19 @@ void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 }
 #endif
 
-void BSUBWAY_SCRWORK_ChoiceBtlSeven( BSUBWAY_SCRWORK *wk )
+void BSUBWAY_SCRWORK_ChoiceBtlSeven( BSUBWAY_SCRWORK *wk, u8 sex )
 {
   int i;
-
-  for(i = 0;i < BSWAY_FIVE_NUM;i++){
+  int start_no = BSWAY_PARTNER_DATA_START_NO_WOMAN;
+  
+  if( sex ){
+    start_no = BSWAY_PARTNER_DATA_START_NO_MAN;
+  }
+  
+  for(i = 0;i < BSWAY_PARTNER_NUM;i++){
     wk->five_item[i] = BSUBWAY_SCRWORK_MakeRomTrainerData(
         wk, &(wk->five_data[i]),
-        BSUBWAY_FIVE_FIRST + i, wk->member_num,
+        start_no + i, wk->member_num,
         wk->mem_poke, wk->mem_item, &(wk->five_poke[i]), wk->heapID );
   }
 }

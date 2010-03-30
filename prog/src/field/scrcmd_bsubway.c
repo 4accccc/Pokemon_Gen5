@@ -909,7 +909,16 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //パートナーデータロード
   case BSWSUB_CHOICE_BTL_SEVEN:
     {
-      BSUBWAY_SCRWORK_ChoiceBtlSeven( bsw_scr );
+      PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+      u32 sex = MyStatus_GetMySex( &player->mystatus );
+      
+      if( sex == PM_MALE ){
+        sex = PM_FEMALE;
+      }else{
+        sex = PM_MALE;
+      }
+      
+      BSUBWAY_SCRWORK_ChoiceBtlSeven( bsw_scr, sex );
     }
     break;
   //選択メンバーのポケモン番号を取得
@@ -1770,8 +1779,17 @@ void BSUBWAY_SCRWORK_DebugCreateWork( GAMESYS_WORK *gsys, u16 mode )
 
   //aiマルチ
   if( mode == BSWAY_MODE_MULTI || mode == BSWAY_MODE_S_MULTI ){
+    PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
+    u32 sex = MyStatus_GetMySex( &player->mystatus );
+
+    if( sex == PM_MALE ){
+      sex = PM_FEMALE;
+    }else{
+      sex = PM_MALE;
+    }
+    
     bsw_scr->partner = 0;
-    BSUBWAY_SCRWORK_ChoiceBtlSeven( bsw_scr );
+    BSUBWAY_SCRWORK_ChoiceBtlSeven( bsw_scr, sex );
   }
   
   //対戦トレーナー抽選

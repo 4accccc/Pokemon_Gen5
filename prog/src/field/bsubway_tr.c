@@ -67,7 +67,8 @@ static BOOL set_BSWayPokemonParam(
     u16 *set_poke_no,u16 *set_item_no,
     BSUBWAY_PAREPOKE_PARAM *poke, HEAPID heapID );
 
-static void * get_TrainerRomData(u16 tr_no,HEAPID heapID);
+static BSUBWAY_TRAINER_ROM_DATA * get_TrainerRomData(
+    u16 tr_no, HEAPID heapID );
 
 static void get_PokemonRomData(
     BSUBWAY_POKEMON_ROM_DATA *prd,int index);
@@ -84,6 +85,7 @@ static u16 get_Rand( BSUBWAY_SCRWORK *wk );
 //--------------------------------------------------------------
 /// タワーに出現するトレーナータイプ←→OBJコード
 //--------------------------------------------------------------
+#if 0 // gs
 static const u16 btower_trtype2objcode[][2] =
 {
  {TRTYPE_TANPAN,  BOY2},  ///<たんパンこぞう
@@ -145,6 +147,64 @@ static const u16 btower_trtype2objcode[][2] =
 // {TRTYPE_PL_ARTIST,  ARTIST},  ///<げいじゅつか
 // {TRTYPE_PL_POKEGIRL,  PIKACHU},  ///<ポケモンごっこ♀
 };
+#else //wb
+static const u16 btower_trtype2objcode[][2] =
+{
+ {TRTYPE_TANPAN,  BOY2},  ///<たんパンこぞう
+ {TRTYPE_MINI,  GIRL1},  ///<ミニスカート
+ {TRTYPE_SCHOOLB,  BOY1},  ///<じゅくがえり
+ {TRTYPE_SCHOOLG, GIRL3 },  ///<じゅくがえり
+ {TRTYPE_PRINCE,  BOY4},  ///<おぼっちゃま
+ {TRTYPE_PRINCESS,  GIRL4},  ///<おじょうさま
+ {TRTYPE_KINDERGARTENM, BABYBOY2},    //えんじ♂
+ {TRTYPE_KINDERGARTENW, BABYGIRL2},    //えんじ♀
+ {TRTYPE_BACKPACKERM, BACKPACKERM},//バックパッカー♂
+ {TRTYPE_BACKPACKERW, BACKPACKERW},//バックパッカー♂
+ {TRTYPE_WAITER,WAITER}, //ウエーター
+ {TRTYPE_WAITRESS,WAITRESS}, //ウエートレス
+ {TRTYPE_DAISUKIM,  MIDDLEMAN1},  ///<だいすきクラブ
+ {TRTYPE_DAISUKIW,  MIDDLEWOMAN1},  ///<だいすきクラブ
+ {TRTYPE_DOCTOR, DOCTOR },   //ドクター
+ {TRTYPE_NURSE,  NURSE},    //ナース
+ {TRTYPE_CYCLINGM,  CYCLEM},  ///<サイクリング♂
+ {TRTYPE_CYCLINGW,  CYCLEW},  ///<サイクリング♀
+ {TRTYPE_GENTLE,  GENTLEMAN},  ///<ジェントルマン
+ {TRTYPE_MADAM,  LADY},  ///<マダム
+ {TRTYPE_BREEDERM,  MAN1},  ///<ポケモンブリーダー
+ {TRTYPE_BREEDERW,  WOMAN1},  ///<ポケモンブリーダー
+ {TRTYPE_SCIENTISTM,  ASSISTANTM},  //けんきゅういん♂
+ {TRTYPE_SCIENTISTW,  ASSISTANTW},  //けんきゅういん♀
+ {TRTYPE_ESPM,  ESPM},  ///<サイキッカー
+ {TRTYPE_ESPW,  ESPW},  ///<サイキッカー
+ {TRTYPE_KARATE,  FIGHTERM},  //からておう
+ {TRTYPE_BATTLEG,  GIRL2},  ///<バトルガール
+ {TRTYPE_RANGERM,  MAN3},  ///<ポケモンレンジャー
+ {TRTYPE_RANGERW,  WOMAN3},  ///<ポケモンレンジャー
+ {TRTYPE_ELITEM,  MAN3},  ///<エリートトレーナー
+ {TRTYPE_ELITEW,  WOMAN3},  ///<エリートトレーナー
+ {TRTYPE_VETERANM,  OLDMAN1},  ///<ベテラントレーナー
+ {TRTYPE_VETERANW,  OLDWOMAN1},  ///<ベテラントレーナー
+ {TRTYPE_FISHING,  FISHING},  ///<つりびと
+ {TRTYPE_MOUNT,  MAN1},  ///<やまおとこ
+ {TRTYPE_WORKER1,  WORKMAN},  ///<さぎょういん
+ {TRTYPE_WORKER2,  WORKMAN},  ///<さぎょういん
+ {TRTYPE_JUGGLING, CLOWN },   //クラウン
+ {TRTYPE_ARTIST,  OLDMAN1},  ///<げいじゅつか
+ {TRTYPE_POLICE,  POLICEMAN},  ///<おまわりさん
+ {TRTYPE_HEADS,  BADMAN},  ///<スキンヘッズ
+ {TRTYPE_BADRIDER, BADRIDER},   //ぼうそうぞく
+ {TRTYPE_CLEANING, CLEANINGM},   //せいそういん
+ {TRTYPE_RAIL,RAILMAN }, //てつどういん
+ {TRTYPE_PILOT, PILOT},   //パイロット
+ {TRTYPE_BUSINESS1, BUSINESSMAN},    //ビジネスマン1
+ {TRTYPE_BUSINESS2, BUSINESSMAN},    //ビジネスマン2
+ {TRTYPE_PARASOL,  AMBRELLA},  ///<パラソルおねえさん
+ {TRTYPE_BAKER,     BAKER },   //ベーカリー
+ {TRTYPE_CHILDCARE, WOMAN3}, //ほいくし
+ {TRTYPE_MAID, MAID},    //メイド
+ {TRTYPE_OL, OL},    //ＯＬ
+};
+#endif
 
 #define TRTYPE2OBJCODE_MAX  (NELEMS(btower_trtype2objcode))
 
@@ -808,6 +868,7 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
   OS_Printf( "stage = %d\n", stage );
   OS_Printf( "round = %d\n", round );
 
+#if 0 //gs
   //タワータイクーンはシングルのみ
   if( play_mode == BSWAY_MODE_SINGLE ){
     //タワータイクーン1回目
@@ -819,7 +880,43 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
       return TOWER_MASTER_SECOND;
     }
   }
-  
+#else //wb
+  //タワータイクーンはシングルのみ
+  if( play_mode == BSWAY_MODE_SINGLE ||
+      play_mode == BSWAY_MODE_S_SINGLE ){
+    //タワータイクーン1回目
+    if( (stage==2) && (round==6) ){
+      return 306;
+    }
+    //タワータイクーン2回目
+    if((stage==6)&&(round==6)){
+      return 307;
+    }
+  }else if( play_mode == BSWAY_MODE_DOUBLE ||
+            play_mode == BSWAY_MODE_S_DOUBLE ){
+    //タワータイクーン1回目
+    if( (stage==2) && (round==6) ){
+      return 308;
+    }
+    //タワータイクーン2回目
+    if((stage==6)&&(round==6)){
+      return 309;
+    }
+  }else if( play_mode == BSWAY_MODE_MULTI ||
+            play_mode == BSWAY_MODE_S_MULTI ||
+            play_mode == BSWAY_MODE_COMM_MULTI ||
+            play_mode == BSWAY_MODE_S_COMM_MULTI ){
+    //タワータイクーン1回目
+    if( (stage==2) && (round==6) ){
+      return 310;
+    }
+    //タワータイクーン2回目
+    if((stage==6)&&(round==6)){
+      return 311;
+    }
+  }
+#endif
+
   if(stage<7){
     if(round==(6)){
       no=(TrainerNoRangeTable2[stage][1]-TrainerNoRangeTable2[stage][0])+1;
@@ -859,17 +956,17 @@ static BSUBWAY_TRAINER_ROM_DATA * alloc_TrainerRomData(
   BSUBWAY_TRAINER_ROM_DATA  *trd;
   GFL_MSGDATA *msgdata;
   STRBUF *name;
-
+  
   msgdata =  GFL_MSG_Create(
       GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
       NARC_message_btdtrname_dat, heapID );
   
   MI_CpuClear8(tr_data, sizeof(BSUBWAY_PARTNER_DATA));
   trd = get_TrainerRomData(tr_no,heapID);
-
+  
   //トレーナーIDをセット
   tr_data->bt_trd.player_id=tr_no;
-
+  
   //トレーナー出現メッセージ
   tr_data->bt_trd.appear_word[0] = 0xFFFF;
   tr_data->bt_trd.appear_word[1] = tr_no*3;
@@ -879,8 +976,9 @@ static BSUBWAY_TRAINER_ROM_DATA * alloc_TrainerRomData(
   
   //GSデータからの移植による処理
   //wbでは存在していないタイプを書き換え
-  #if 1
+  #if 0
   if( check_TrainerType(trd->tr_type) == FALSE ){
+    OS_Printf( "BSUBWAY ERROR TRAINER TYPE" );
     tr_data->bt_trd.tr_type = TRTYPE_TANPAN;
   }
   #endif
@@ -1313,6 +1411,20 @@ static BOOL set_BSWayPokemonParam(
  * TOWER_AI_MULTI_ONLY 似た処理 frontier_tool.c Frontier_TrainerRomDataGet
  */
 //--------------------------------------------------------------
+static BSUBWAY_TRAINER_ROM_DATA * get_TrainerRomData(
+    u16 tr_no, HEAPID heapID )
+{
+  OS_Printf( "BSUBWAY load TrainerRomData Num = %d\n", tr_no );
+  
+  if( tr_no >= 314 ){
+    GF_ASSERT( 0 && "BSUBWAY TRAINER ROM DATA NUM OVER" );
+    tr_no = 0;
+  }
+  
+  return GFL_ARC_UTIL_Load( ARCID_BSW_TR, tr_no, 0, heapID );
+}
+
+#if 0 //old gs
 static void * get_TrainerRomData( u16 tr_no, HEAPID heapID )
 {
 #ifdef DEBUG_ONLY_FOR_kagaya
@@ -1321,6 +1433,7 @@ static void * get_TrainerRomData( u16 tr_no, HEAPID heapID )
   //AIマルチ限定なのでプラチナ！
   return GFL_ARC_UTIL_Load( ARCID_PL_BTD_TR, tr_no, 0, heapID );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1332,11 +1445,28 @@ static void * get_TrainerRomData( u16 tr_no, HEAPID heapID )
  */
 //--------------------------------------------------------------
 static void get_PokemonRomData(
+    BSUBWAY_POKEMON_ROM_DATA *prd, int index)
+{
+  OS_Printf( "BSUBWAY load PokemonRomData Num = %d\n", index );
+  
+#if 0  
+  if( index >= 314 ){
+    GF_ASSERT( 0 && "BSUBWAY POKEMON ROM DATA NUM OVER" );
+    index = 0;
+  }
+#endif
+  
+  GFL_ARC_LoadData( (void*)prd, ARCID_BSW_PD, index );
+}
+
+#if 0 //old gs
+static void get_PokemonRomData(
     BSUBWAY_POKEMON_ROM_DATA *prd,int index)
 {
   //ここは通信はありえないのでプラチナ限定！(AIマルチ)
   GFL_ARC_LoadData( (void*)prd, ARCID_PL_BTD_PM, index );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -1362,12 +1492,14 @@ static void  make_TrainerData(
   //トレーナーデータをセット
   bp->tr_data[client_no]->tr_type = tr_data->bt_trd.tr_type;
   
+#if 0
   //GSデータからの移植による処理
   //wbでは存在していないタイプを書き換え
   if( check_TrainerType(bp->tr_data[client_no]->tr_type) == FALSE ){
     bp->tr_data[client_no]->tr_type = TRTYPE_TANPAN;
   }
-  
+#endif
+
 //PM_strcpy( bp->tr_data[client_no].name, &tr_data->bt_trd.name[0] );
   GFL_STR_SetStringCode( bp->tr_data[client_no]->name, tr_data->bt_trd.name );
   

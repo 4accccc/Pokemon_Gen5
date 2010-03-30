@@ -44,8 +44,9 @@
 #define LEADER_SET_1ST  (20+1)  //21人目のとき現在の連勝数は20
 #define LEADER_SET_2ND  (48+1)  //49人目のとき現在の連勝数は48
 
-#define BSWAY_FIVE_NUM    (5)  ///<5人衆の数
-#define BSUBWAY_FIVE_FIRST  (300)  ///<5人衆データのスタートindex
+#define BSWAY_PARTNER_NUM (3)  ///<5人衆の数
+#define BSWAY_PARTNER_DATA_START_NO_MAN (300)  ///<5人衆データのスタートindex
+#define BSWAY_PARTNER_DATA_START_NO_WOMAN (303) ///<5人衆データのスタートindex
 
 ///バトルサブウェイプレイモードスクリプト用定義 BSWAY_PLAYMODEと同一
 #define BSWAY_MODE_SINGLE  (0)

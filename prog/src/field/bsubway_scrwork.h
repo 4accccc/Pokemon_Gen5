@@ -104,14 +104,14 @@ struct _TAG_BSUBWAY_SCRWORK
   //対戦相手データ格納場所
   BSUBWAY_PARTNER_DATA  tr_data[2];
  	
-  //5人衆抽選データ格納場所
-	BSUBWAY_PARTNER_DATA five_data[BSWAY_FIVE_NUM];
+  //パートナー抽選データ格納場所
+	BSUBWAY_PARTNER_DATA five_data[BSWAY_PARTNER_NUM];
   
-	//5人衆抽選ポケモンパラメータ格納場所
-	BSUBWAY_PAREPOKE_PARAM five_poke[BSWAY_FIVE_NUM];
+	//パートナー抽選ポケモンパラメータ格納場所
+	BSUBWAY_PAREPOKE_PARAM five_poke[BSWAY_PARTNER_NUM];
 
 	//5人衆抽選ポケモンアイテムfixフラグ
-	u8 five_item[BSWAY_FIVE_NUM]; 
+	u8 five_item[BSWAY_PARTNER_NUM]; 
   
   u16  send_buf[35];  //通信用データバッファ
   u16  recv_buf[35];  //通信用データバッファ
