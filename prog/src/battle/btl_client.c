@@ -3076,7 +3076,7 @@ static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq )
       BTLV_EFFECT_DelTrainer( BTLV_MCSS_POS_TR_BB );
       BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
       BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
-       BTLV_StartMsgTrainer( wk->viewCore, trainerID, TRMSG_FIGHT_LOSE );
+      BTLV_StartMsgTrainer( wk->viewCore, trainerID, TRMSG_FIGHT_LOSE );
       (*seq)++;
     }
     break;

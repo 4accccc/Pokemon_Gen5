@@ -1932,7 +1932,8 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
           scproc_BeforeFirstFight( wk );
           FlowFlg_Set( wk, FLOWFLG_FIRST_FIGHT );
         }
-        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Fight, action.fight.waza, action.fight.targetPos);
+//        BTL_N_Printf( DBGSTR_SVFL_ActOrder_Fight, action.fight.waza, action.fight.targetPos);
+        OS_TPrintf("【たたかう】ポケ[%d]のワザ[%d]を、位置[%d]の相手に\n", BPP_GetID(bpp), action.fight.waza, action.fight.targetPos);
         wk->currentSabotageType = CheckSabotageType( wk, bpp );
         scproc_Fight( wk, bpp, &action );
         break;
@@ -3218,7 +3219,7 @@ static u8 ItemEff_SPDefenceRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 it
 }
 static u8 ItemEff_AgilityRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_AGILITY );
+  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_AGILITY_RANK );
 }
 static u8 ItemEff_HitRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
