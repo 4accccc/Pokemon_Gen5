@@ -1053,7 +1053,7 @@ static const ZONEDATA ZoneData[] = {
 		0, // padding
 		3,
 		8,
-		8,
+		1,
 	},
 	{//ZONE_ID_C03GYM0101 = 32
 		RSC_GRID_DEFAULT,
