@@ -448,6 +448,13 @@ GMEVENT * DEBUG_EVENT_DebugMenu(
   dmew->fieldWork = fieldWork;
   dmew->heapID = heapID;
 
+
+  // POS表示更新　を　停止
+  {
+    FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( fieldWork );
+    FIELD_DEBUG_SetPosUpdateFlag( debug, FALSE );
+  }
+
   return event;
 }
 
@@ -575,6 +582,12 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
         if( work->call_proc(work) == TRUE ){
           return( GMEVENT_RES_CONTINUE );
         }
+      }
+
+      // POS表示更新　を　再開
+      {
+        FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( work->fieldWork );
+        FIELD_DEBUG_SetPosUpdateFlag( debug, TRUE );
       }
       return( GMEVENT_RES_FINISH );
     }
