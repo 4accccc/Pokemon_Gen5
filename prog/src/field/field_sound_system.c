@@ -234,7 +234,8 @@ static void DebugPrint_pushedBGM( const FIELD_SOUND* fieldSound );
 static void DebugPrint_AllInfo( const FIELD_SOUND* fieldSound );
 
 //常駐SE判定のためのコールバック関数
-static BOOL checkStaticEntrySE( u32 sndIndex );
+static BOOL checkEnableSE( u32 sndIndex );
+//static BOOL checkStaticEntrySE( u32 sndIndex );
 
 //================================================================================= 
 // ■システム作成/破棄
@@ -262,7 +263,7 @@ FIELD_SOUND* FIELD_SOUND_Create( HEAPID heapID )
   fieldSound->ringToneSys = RINGTONE_SYS_Create( heapID, fieldSound->playerVolumeFader );
 
   //常駐判定用コールバックを登録
-  PMSND_SetPlayableCallBack( checkStaticEntrySE );
+  PMSND_SetPlayableCallBack( checkEnableSE );
 
   return fieldSound;
 }
@@ -749,6 +750,7 @@ void FIELD_SOUND_RePlayEnvSE( FIELD_SOUND* fieldSound )
 }
 
 //================================================================================= 
+//  常駐SEの判定
 //================================================================================= 
 //---------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------
@@ -792,6 +794,9 @@ static const u16 StaticEntryList[] = {
 	SEQ_SE_SYS_79,
 };
 
+//---------------------------------------------------------------------------------
+//  常駐登録かどうかリストを検索する
+//---------------------------------------------------------------------------------
 static BOOL checkStaticEntrySE( u32 sndIndex )
 {
   int i;
@@ -805,6 +810,42 @@ static BOOL checkStaticEntrySE( u32 sndIndex )
   return FALSE;
 }
 
+//---------------------------------------------------------------------------------
+//  SndHeap内を検索する
+//---------------------------------------------------------------------------------
+static BOOL checkSeqInSndArc( u32 sndIndex )
+{
+  int i;
+  const NNSSndArcSeqInfo*			seqInfo;
+  const NNSSndArcBankInfo*		bnkInfo;
+
+  seqInfo = NNS_SndArcGetSeqInfo(sndIndex);
+  if(NNS_SndArcGetFileAddress(seqInfo->fileId) == NULL) return FALSE;
+
+  bnkInfo = NNS_SndArcGetBankInfo(seqInfo->param.bankNo);
+  if(NNS_SndArcGetFileAddress(bnkInfo->fileId) == NULL) return FALSE;
+
+  for(i=0; i<4; i++){
+    if(bnkInfo->waveArcNo[i] != NNS_SND_ARC_INVALID_WAVEARC_NO){
+      const NNSSndArcWaveArcInfo* wavInfo = NNS_SndArcGetWaveArcInfo(bnkInfo->waveArcNo[i]);
+      if(NNS_SndArcGetFileAddress(wavInfo->fileId) == NULL) return FALSE;
+    }
+  }
+  return TRUE;
+}
+//---------------------------------------------------------------------------------
+// 非同期読み込み中に鳴らしても大丈夫なSEかどうかをチェックする
+//---------------------------------------------------------------------------------
+static BOOL checkEnableSE( u32 sndIndex )
+{
+  if ( checkStaticEntrySE( sndIndex ) == FALSE ) return FALSE;
+  if ( checkSeqInSndArc( sndIndex) == FALSE )
+  {
+    OS_TPrintf("!!!!!!常駐SE（%4d）なのにロードされていない!!!!!!\n", sndIndex );
+    return FALSE;
+  }
+  return TRUE;
+}
 
 
 //================================================================================= 
