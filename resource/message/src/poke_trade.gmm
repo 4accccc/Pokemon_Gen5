@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-03-29T16:03:09"/>
+	<create user="matsumiya" host="W00224" date="2010-03-30T11:04:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="555" top="175" right="1260" bottom="795" maximized="no" rayout="Vertical2">
+	<dialog left="555" top="173" right="1255" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="532" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="525"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="692"/>
+		<band id="3" index="3" style="0000" width="692"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -877,8 +877,8 @@
 	</row>
 
 	<row id="POKETRADE_STR2_07">
-		<language name="JPN" width="256">たまご</language>
-		<language name="JPN_KANJI" width="256">たまご</language>
+		<language name="JPN" width="256">タマゴ</language>
+		<language name="JPN_KANJI" width="256">タマゴ</language>
 	</row>
 
 	<row id="POKETRADE_STR2_08">
@@ -1213,20 +1213,20 @@
 
 	<row id="gtsnego_info_19" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<comment>GTSでの台詞</comment>
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]をあずけます</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]をあずけます</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]を　あずけます</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を預けます</language>
 	</row>
 
 	<row id="gtsnego_info_20" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<comment>GTSでの台詞</comment>
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:1]をひきとった</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:1]をひきとった</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:1]を　ひきとった</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:1]を引き取った</language>
 	</row>
 
 	<row id="gtsnego_info_21" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<comment>GTSネゴでの強制切断</comment>
-		<language name="JPN" width="256">せつぞくをきる</language>
-		<language name="JPN_KANJI" width="256">せつぞくをきる</language>
+		<language name="JPN" width="256">せつぞくを　きる</language>
+		<language name="JPN_KANJI" width="256">接続を切る</language>
 	</row>
 
 	<flowchart-group-list>
