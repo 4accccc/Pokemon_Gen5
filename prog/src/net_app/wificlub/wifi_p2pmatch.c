@@ -2105,7 +2105,7 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
 
     }
     else{  //相手と切断
-      GFL_NET_StateWifiMatchEnd(TRUE);  // マッチングを切る
+      GFL_NET_StateWifiMatchEnd(TRUE);  // マッチングを切る  @todo専用切断を作るのが適切
       _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
       wk->timer = _RECONECTING_WAIT_TIME;
       _CHANGESTATE(wk, WIFIP2PMATCH_RECONECTING_WAIT);
@@ -3312,8 +3312,6 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
     }
     ret = WIFI_MCR_Main( &wk->matchroom );
     WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
-    //        ret = BmpListMain(wk->lw);
-    OS_TPrintf("WIFI_MCR_Main %d \n",ret);
   }
   switch(ret){
   case MCR_RET_NONE:

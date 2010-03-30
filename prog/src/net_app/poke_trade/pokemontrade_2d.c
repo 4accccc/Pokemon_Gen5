@@ -1268,7 +1268,7 @@ void POKETRADE2D_IconAllGray(POKEMON_TRADE_WORK* pWork,BOOL bGray)
 
 
 
-GFL_CLWK* IRC_POKETRADE_GetCLACT( POKEMON_TRADE_WORK* pWork , int x, int y, int* trayno, int* pokeindex, int* outline, int* outindex)
+GFL_CLWK* IRC_POKETRADE_GetCLACT( POKEMON_TRADE_WORK* pWork , int x, int y, int* trayno, int* pokeindex, int* outline, int* outindex, int* outRingLine)
 {
   GFL_CLACTPOS apos;
   int line,i,line2;
@@ -1297,7 +1297,9 @@ GFL_CLWK* IRC_POKETRADE_GetCLACT( POKEMON_TRADE_WORK* pWork , int x, int y, int*
           if(outline != NULL){
             *outline =line2;
             *outindex = i;
+            *outRingLine = line;
           }
+          OS_TPrintf("pokeicon %d %d  %d\n",line,i,line2);
           return pWork->pokeIcon[line][i];
           //          line += BoxScrollNum(pWork);
         }
@@ -2479,7 +2481,7 @@ void POKETRADE_2D_GTSPokemonIconResetAll(POKEMON_TRADE_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int line, int pos,int x,int y,POKEMON_PASO_PARAM* ppp)
+void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int Ringline, int pos,int x,int y,POKEMON_PASO_PARAM* ppp)
 {
   GFL_CLWK_DATA cellInitData;
 
@@ -2489,9 +2491,14 @@ void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int line, int pos,int x
   cellInitData.softpri = 0;
   cellInitData.bgpri = 0;
 
+
+  OS_TPrintf("pokeIconNcgRes %d %d %d \n",Ringline,pos,pWork->pokeIconNcgRes[Ringline][pos]);
+//  pWork->pokeIconNcgRes[line][pos]
+
+  
   pWork->curIcon[CELL_CUR_POKE_KEY] =
     GFL_CLACT_WK_Create( pWork->cellUnit ,
-                         pWork->pokeIconNcgRes[line][pos],
+                         pWork->pokeIconNcgRes[Ringline][pos],
                          pWork->cellRes[PLT_POKEICON],
                          pWork->cellRes[ANM_POKEICON],
                          &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );

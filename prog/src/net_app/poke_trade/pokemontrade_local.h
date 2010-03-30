@@ -742,7 +742,7 @@ extern void IRC_POKETRADEDEMO_Init( POKEMON_TRADE_WORK* pWork );
 extern void IRC_POKETRADEDEMO_Main( POKEMON_TRADE_WORK* pWork );
 extern void IRC_POKETRADEDEMO_End( POKEMON_TRADE_WORK* pWork );
 //extern GFL_CLWK* IRC_POKETRADE_GetCLACT( POKEMON_TRADE_WORK* pWork , int x, int y, int* trayno, int* pokeindex);
-extern GFL_CLWK* IRC_POKETRADE_GetCLACT( POKEMON_TRADE_WORK* pWork , int x, int y, int* trayno, int* pokeindex, int* outline, int* outindex);
+extern GFL_CLWK* IRC_POKETRADE_GetCLACT( POKEMON_TRADE_WORK* pWork , int x, int y, int* trayno, int* pokeindex, int* outline, int* outindex, int* outRingLine);
 
 extern void IRC_POKETRADEDEMO_SetModel( POKEMON_TRADE_WORK* pWork, int modelno);
 extern void IRC_POKETRADEDEMO_RemoveModel( POKEMON_TRADE_WORK* pWork);
