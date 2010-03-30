@@ -215,7 +215,7 @@ static u16 sub_EntryFishingEncMonsNo( u16* ary, u16 num, u16 monsno)
 
   for(i = 0;i < num;i++){
     if( ary[i] == monsno ){
-      return 0;
+      return num;
     }
   }
   ary[num] = monsno;
