@@ -3900,7 +3900,6 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
     {
       u8 i;
       u8 ofs = 0;
-      u8 num;
       BOOL isFinish = FALSE;
       REGULATION *reg = (REGULATION*)work->plData->reg;
       
@@ -3908,8 +3907,8 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
       OS_TPrintf("Min[%d]Max[%d]\n",reg->NUM_LO,reg->NUM_HI);
       while( isFinish == FALSE )
       {
-        num = 0;
         //Œ»Ý‚Ì‘I‘ð‚ð‰Šú‰»
+        work->btlJoinNum = 0;
         for( i=0;i<PLIST_LIST_MAX;i++ )
         {
           work->plData->in_num[i] = 0;
@@ -3928,16 +3927,16 @@ void PLIST_ForceExit_Timeup( PLIST_WORK *work )
             if( ret == PPCB_OK )
             {
               OS_TPrintf("[%d]",idx);
-              work->plData->in_num[num] = idx+1;
-              num++;
+              work->plData->in_num[work->btlJoinNum] = idx+1;
+              work->btlJoinNum++;
             }
-            if( num == reg->NUM_HI )
+            if( work->btlJoinNum == reg->NUM_HI )
             {
               break;
             }
           }
         }
-        if( num >= reg->NUM_LO )
+        if( work->btlJoinNum >= reg->NUM_LO )
         {
           isFinish = TRUE;
           OS_TPrintf("[OK!]\n");
