@@ -91,6 +91,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f ./eventdata_type.h
 	rm -f $(targetname).narc
 	rm -f $(targetname).naix
+	rm -f $(CONVERT_DATA)
+	rm -f $(DEBUG_DATA)
 endif
 	rm -f $(TARGETDIR)$(targetname).narc
 	rm -f $(TARGETDIR)$(targetname).naix

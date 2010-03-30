@@ -864,28 +864,62 @@ static GMEVENT_RESULT EVENT_MapChangeBGMKeep( GMEVENT* event, int* seq, void* wk
   GAMEDATA*        gameData   = work->gameData;
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
-  switch( *seq )
-  {
+  switch( *seq ) {
   case 0:
+    // 季節更新の有無を決定
+    SetSeasonUpdate( work );
+
     // 動作モデル停止
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
     (*seq)++;
     break;
+
+  // 画面フェードアウト
   case 1:
-    // 画面フェードアウト ( クロスフェード )
-    GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Cross( gameSystem, fieldmap ) );
+    // 季節フェード
+    if( work->seasonUpdateEnable && work->seasonUpdateOccur ) {
+      GMEVENT_CallEvent( event, 
+          EVENT_FieldFadeOut_Season( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
+    }
+    // 基本フェード
+    else {
+      FIELD_FADE_TYPE fadeOutType;
+
+      fadeOutType = 
+        FIELD_FADE_GetFadeOutType( work->before_zone_id, work->loc_req.zone_id );
+
+      GMEVENT_CallEvent( event, 
+          EVENT_FieldFadeOut( gameSystem, fieldmap, fadeOutType, FIELD_FADE_WAIT ) );
+    }
     (*seq)++;
     break;
+
+  // マップチェンジ コア イベント
   case 2:
-    // マップチェンジ コア イベント
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, work->mapchange_type ) );
     (*seq)++;
     break;
+
+  // 画面フェードイン
   case 3:
-    // 画面フェードイン ( クロスフェード )
-    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Cross( gameSystem, fieldmap ) );
+    // 季節フェード
+    if( work->seasonUpdateEnable && work->seasonUpdateOccur ) {
+      GMEVENT_CallEvent( event, 
+          EVENT_FieldFadeIn_Season( gameSystem, fieldmap, work->prevSeason, work->nextSeason ) );
+    }
+    // 基本フェード
+    else {
+      FIELD_FADE_TYPE fadeOutType;
+
+      fadeOutType = 
+        FIELD_FADE_GetFadeInType( work->before_zone_id, work->loc_req.zone_id );
+
+      GMEVENT_CallEvent( event, 
+          EVENT_FieldFadeIn( gameSystem, fieldmap, fadeOutType, FIELD_FADE_WAIT, TRUE, 0, 0 ) );
+    }
     (*seq)++;
     break;
+
   case 4:
     return GMEVENT_RES_FINISH; 
   }

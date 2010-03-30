@@ -71,45 +71,53 @@ void ENTRANCE_CAMERA_LoadData( ENTRANCE_CAMERA* dest, EXIT_TYPE exitType )
 void ENTRANCE_CAMERA_AddDoorInTask( 
     FIELDMAP_WORK* fieldmap, const ENTRANCE_CAMERA* data )
 {
+  u16 frame;
+  u16 pitch, yaw;
+  fx32 length;
+  VecFx32 targetOffset;
+  FIELD_CAMERA* camera;
+
   GF_ASSERT( data->validFlag_IN ); // 入る時に有効なデータではない
 
-  {
-    u16 frame;
-    u16 pitch, yaw;
-    fx32 length;
-    VecFx32 targetOffset;
+  camera = FIELDMAP_GetFieldCamera( fieldmap );
 
-    // 各パラメータ取得
-    frame  = data->frame;
-    pitch  = data->pitch;
-    yaw    = data->yaw;
-    length = data->length << FX32_SHIFT;
-    VEC_Set( &targetOffset, 
-        data->targetOffsetX << FX32_SHIFT,
-        data->targetOffsetY << FX32_SHIFT,
-        data->targetOffsetZ << FX32_SHIFT );
+  // 各パラメータ取得
+  frame  = data->frame;
+  pitch  = data->pitch;
+  yaw    = data->yaw;
+  length = data->length << FX32_SHIFT;
+  VEC_Set( &targetOffset, 
+      data->targetOffsetX << FX32_SHIFT,
+      data->targetOffsetY << FX32_SHIFT,
+      data->targetOffsetZ << FX32_SHIFT );
 
-    // タスク登録
-    {
-      FIELD_TASK_MAN* taskMan;
-      FIELD_TASK* zoomTaks;
-      FIELD_TASK* pitchTask;
-      FIELD_TASK* yawTask;
-      FIELD_TASK* targetOffsetTask;
+  // 即時反映
+  if( frame == 0 ) {
+    FIELD_CAMERA_SetAngleLen( camera, length );
+    FIELD_CAMERA_SetAnglePitch( camera, pitch );
+    FIELD_CAMERA_SetAngleYaw( camera, yaw );
+    FIELD_CAMERA_SetTargetOffset( camera, &targetOffset );
+  }
+  // タスク登録
+  else {
+    FIELD_TASK_MAN* taskMan;
+    FIELD_TASK* zoomTaks;
+    FIELD_TASK* pitchTask;
+    FIELD_TASK* yawTask;
+    FIELD_TASK* targetOffsetTask;
 
-      // タスクを生成
-      zoomTaks         = FIELD_TASK_CameraLinearZoom  ( fieldmap, frame, length );
-      pitchTask        = FIELD_TASK_CameraRot_Pitch   ( fieldmap, frame, pitch );
-      yawTask          = FIELD_TASK_CameraRot_Yaw     ( fieldmap, frame, yaw );
-      targetOffsetTask = FIELD_TASK_CameraTargetOffset( fieldmap, frame, &targetOffset );
+    // タスクを生成
+    zoomTaks         = FIELD_TASK_CameraLinearZoom  ( fieldmap, frame, length );
+    pitchTask        = FIELD_TASK_CameraRot_Pitch   ( fieldmap, frame, pitch );
+    yawTask          = FIELD_TASK_CameraRot_Yaw     ( fieldmap, frame, yaw );
+    targetOffsetTask = FIELD_TASK_CameraTargetOffset( fieldmap, frame, &targetOffset );
 
-      // タスクを登録
-      taskMan = FIELDMAP_GetTaskManager( fieldmap );
-      FIELD_TASK_MAN_AddTask( taskMan, zoomTaks, NULL );
-      FIELD_TASK_MAN_AddTask( taskMan, pitchTask, NULL );
-      FIELD_TASK_MAN_AddTask( taskMan, yawTask, NULL );
-      FIELD_TASK_MAN_AddTask( taskMan, targetOffsetTask, NULL );
-    }
+    // タスクを登録
+    taskMan = FIELDMAP_GetTaskManager( fieldmap );
+    FIELD_TASK_MAN_AddTask( taskMan, zoomTaks, NULL );
+    FIELD_TASK_MAN_AddTask( taskMan, pitchTask, NULL );
+    FIELD_TASK_MAN_AddTask( taskMan, yawTask, NULL );
+    FIELD_TASK_MAN_AddTask( taskMan, targetOffsetTask, NULL );
   }
 }
 
@@ -124,54 +132,58 @@ void ENTRANCE_CAMERA_AddDoorInTask(
 void ENTRANCE_CAMERA_AddDoorOutTask( 
     FIELDMAP_WORK* fieldmap, const ENTRANCE_CAMERA* data )
 {
+  u16 frame;
+  u16 pitch, yaw;
+  fx32 length;
+  VecFx32 targetOffset;
   FIELD_CAMERA* camera;
 
   GF_ASSERT( data->validFlag_OUT ); // 出る時に有効なデータではない
 
   camera = FIELDMAP_GetFieldCamera( fieldmap );
 
+  // 各パラメータ取得
   {
-    u16 frame;
-    u16 pitch, yaw;
-    fx32 length;
-    VecFx32 targetOffset;
+    FLD_CAMERA_PARAM defaultParam; 
 
-    // 各パラメータ取得
-    {
-      FLD_CAMERA_PARAM defaultParam; 
+    // デフォルトパラメータを取得
+    FIELD_CAMERA_GetInitialParameter( camera, &defaultParam );
 
-      // デフォルトパラメータを取得
-      FIELD_CAMERA_GetInitialParameter( camera, &defaultParam );
+    frame  = data->frame;
+    pitch  = defaultParam.Angle.x;
+    yaw    = defaultParam.Angle.y;
+    length = defaultParam.Distance << FX32_SHIFT;
+    VEC_Set( &targetOffset, 
+        defaultParam.Shift.x, defaultParam.Shift.y, defaultParam.Shift.z );
+  }
 
-      frame  = data->frame;
-      pitch  = defaultParam.Angle.x;
-      yaw    = defaultParam.Angle.y;
-      length = defaultParam.Distance << FX32_SHIFT;
-      VEC_Set( &targetOffset, 
-          defaultParam.Shift.x, defaultParam.Shift.y, defaultParam.Shift.z );
-    }
+  // 即時反映
+  if( frame == 0 ) {
+    FIELD_CAMERA_SetAngleLen( camera, length );
+    FIELD_CAMERA_SetAnglePitch( camera, pitch );
+    FIELD_CAMERA_SetAngleYaw( camera, yaw );
+    FIELD_CAMERA_SetTargetOffset( camera, &targetOffset );
+  }
+  // タスク登録
+  else {
+    FIELD_TASK_MAN* taskMan;
+    FIELD_TASK* zoomTaks;
+    FIELD_TASK* pitchTask;
+    FIELD_TASK* yawTask;
+    FIELD_TASK* targetOffsetTask;
 
-    // タスク登録
-    {
-      FIELD_TASK_MAN* taskMan;
-      FIELD_TASK* zoomTaks;
-      FIELD_TASK* pitchTask;
-      FIELD_TASK* yawTask;
-      FIELD_TASK* targetOffsetTask;
+    // タスクを生成
+    zoomTaks         = FIELD_TASK_CameraLinearZoom  ( fieldmap, frame, length );
+    pitchTask        = FIELD_TASK_CameraRot_Pitch   ( fieldmap, frame, pitch );
+    yawTask          = FIELD_TASK_CameraRot_Yaw     ( fieldmap, frame, yaw );
+    targetOffsetTask = FIELD_TASK_CameraTargetOffset( fieldmap, frame, &targetOffset );
 
-      // タスクを生成
-      zoomTaks         = FIELD_TASK_CameraLinearZoom  ( fieldmap, frame, length );
-      pitchTask        = FIELD_TASK_CameraRot_Pitch   ( fieldmap, frame, pitch );
-      yawTask          = FIELD_TASK_CameraRot_Yaw     ( fieldmap, frame, yaw );
-      targetOffsetTask = FIELD_TASK_CameraTargetOffset( fieldmap, frame, &targetOffset );
-
-      // タスクを登録
-      taskMan = FIELDMAP_GetTaskManager( fieldmap );
-      FIELD_TASK_MAN_AddTask( taskMan, zoomTaks, NULL );
-      FIELD_TASK_MAN_AddTask( taskMan, pitchTask, NULL );
-      FIELD_TASK_MAN_AddTask( taskMan, yawTask, NULL );
-      FIELD_TASK_MAN_AddTask( taskMan, targetOffsetTask, NULL );
-    }
+    // タスクを登録
+    taskMan = FIELDMAP_GetTaskManager( fieldmap );
+    FIELD_TASK_MAN_AddTask( taskMan, zoomTaks, NULL );
+    FIELD_TASK_MAN_AddTask( taskMan, pitchTask, NULL );
+    FIELD_TASK_MAN_AddTask( taskMan, yawTask, NULL );
+    FIELD_TASK_MAN_AddTask( taskMan, targetOffsetTask, NULL );
   }
 }
 
