@@ -1073,7 +1073,7 @@ static void * FMenuCallProc_Zukan(PROCLINK_WORK* wk, u32 param, EVENT_PROCLINK_C
 
   prm->gamedata = GAMESYSTEM_GetGameData( wk->param->gsys );
   prm->savedata = GAMEDATA_GetZukanSave( prm->gamedata );
-	prm->mystatus = GAMEDATA_GetMyStatus( prm->gamedata );
+  prm->mystatus = GAMEDATA_GetMyStatus( prm->gamedata );
 
   FSND_HoldBGMVolume_forApp(
     GAMEDATA_GetFieldSound(prm->gamedata), GAMESYSTEM_GetIssSystem(wk->param->gsys) );
@@ -1468,7 +1468,15 @@ static void * FMenuCallProc_TrainerCard(PROCLINK_WORK* wk, u32 param, EVENT_PROC
 static RETURNFUNC_RESULT FMenuReturnProc_TrainerCard(PROCLINK_WORK* wk,void* param_adrs)
 { 
   TRCARD_CALL_PARAM * tr_param  = param_adrs;
+
+  OS_Printf("next_proc=%d\n", tr_param->next_proc);
+  // フィールドに直接戻る
+  if(tr_param->next_proc==TRAINERCARD_NEXTPROC_EXIT){
+    return RETURNFUNC_RESULT_EXIT;
+  }
+  // フィールドメニューに戻る
   return RETURNFUNC_RESULT_RETURN;
+  
 }
 //-------------------------------------
 /// タウンマップ
