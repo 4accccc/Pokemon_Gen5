@@ -105,6 +105,7 @@ void	GFL_MCS_Resident(void)
 	}
 #else
 	{
+#if 0
 		if(tickStackP >= TIMER_LEN){ tickStackP = 0; tickMax = 0; }
 
 		if(DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now >= 0xf000){
@@ -129,6 +130,7 @@ void	GFL_MCS_Resident(void)
 		commHeader->comm = MCSRSDCOMM_DEFAULTINFO;
 		commHeader->param = param;
 		GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sizeof(MCSRSDCOMM_HEADER));
+#endif
 	}
 #endif
 }
