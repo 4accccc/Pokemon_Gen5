@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-30T17:51:44"/>
+	<create user="matsumiya" host="W00224" date="2010-03-30T17:55:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1491" top="289" right="2196" bottom="917" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -519,10 +519,10 @@
 ・メッセージ表示後、1番道路へ
 ・画面外に消えると主人公、操作可能に</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『あっ　まってよ
-[1:00:トレーナー名:0]も　はやく　きてよ▼</language>
-		<language name="JPN_KANJI" width="256">ベル『あっ　待ってよ
-[1:00:トレーナー名:0]も　はやく　来てよ▼</language>
+		<language name="JPN" width="256">ベル『あっ　まってよお
+[1:00:トレーナー名:0]も　はやく　きてね▼</language>
+		<language name="JPN_KANJI" width="256">ベル『あっ　待ってよお
+[1:00:トレーナー名:0]も　はやく　来てね▼</language>
 	</row>
 
 	<row id="msg_t01_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -551,7 +551,7 @@
 みんな　いっしょが　いいって▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『ベルが
 旅をはじめるなら　最初の一歩は▽
-みんな　いっしょが　いいって▼</language>
+みんな　一緒が　いいって▼</language>
 	</row>
 
 	<row id="msg_t01_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -566,8 +566,8 @@
 みんなで　いっしょに
 １ばんどうろに　ふみだそうよ！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『ねえ　[1:00:トレーナー名:0]！▼
-みんなで　いっしょに
-１ばんどうろに　ふみだそうよ！▼</language>
+みんなで　一緒に
+１番道路に　ふみだそうよ！▼</language>
 	</row>
 
 	<row id="msg_t01_black_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
