@@ -2027,8 +2027,7 @@ SCRIPT_FUNC_DEF( SeqBgmStart )  //SEQ_BGM開始
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
   const s32 bgmNo = ScriptFunc_GetValueS32();
 
-  PMSND_PlayBGM( bgmNo );
-
+  STA_ACT_StartSeqBgm( work->actWork , bgmNo );
 
   return SFT_CONTINUE;
 }
@@ -2037,8 +2036,8 @@ SCRIPT_FUNC_DEF( SeqBgmStop )   //SEQ_BGM開始
 {
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
-  
-  PMSND_StopBGM( );
+
+  STA_ACT_StopSeqBgm( work->actWork );
 
   return SFT_CONTINUE;
 }

@@ -277,6 +277,8 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     }
   }
 #endif
+  MUSICAL_EVENT_CheckNetErr( evWork );
+  
   switch( evWork->state )
   {
   case MES_ENTER_WAITROOM_FIRST_BEF_COMM:

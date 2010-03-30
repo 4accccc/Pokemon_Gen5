@@ -122,6 +122,11 @@ struct _ACTING_WORK
   ACTING_MAIN_SEQ mainSeq;
   
   GFL_TCB   *vblankFuncTcb;
+  
+  //BGMチェック系
+  BOOL isReadyExBgm;
+  BOOL isPlayExBgm;
+  BOOL isPlayBgm;
 
   STAGE_INIT_WORK *initWork;
 
@@ -279,6 +284,10 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   work->forceScroll = FALSE;
   work->lockScroll = FALSE;
 
+  work->isReadyExBgm = FALSE;
+  work->isPlayExBgm = FALSE;
+  work->isPlayBgm = FALSE;
+
   work->vblankFuncTcb = GFUser_VIntr_CreateTCB( STA_ACT_VBlankFunc , (void*)work , 64 );
   
   //自キャラの選択
@@ -386,7 +395,20 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   DEBUGWIN_ExitProc();
 #endif  //USE_DEBUGWIN_SYSTEM
   
-	PMDSND_ReleaseExtraMusic();
+  if( work->isPlayBgm == TRUE )
+  {
+    PMSND_StopBGM();
+  }
+
+  if( work->isPlayExBgm == TRUE )
+  {
+    PMDSND_StopExtraMusic();
+  }
+  
+  if( work->isReadyExBgm == TRUE )
+  {
+  	PMDSND_ReleaseExtraMusic();
+  }
 
   //フェードないので仮処理
   GX_SetMasterBrightness(-16);  
@@ -603,6 +625,22 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
   GFL_G3D_DRAW_End();
   //OBJの更新
   GFL_CLACT_SYS_Main();
+
+  if( work->initWork->commWork != NULL )
+  {
+    if( work->mainSeq != AMS_FADEIN &&
+        work->mainSeq != AMS_WAIT_FADEIN &&
+        work->mainSeq != AMS_FADEOUT &&
+        work->mainSeq != AMS_WAIT_FADEOUT )
+    {
+      if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+      {
+        //リクエストはしない
+        work->mainSeq = AMS_FADEOUT;
+      }
+    }
+  }
+
 
 #if PM_DEBUG
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
@@ -1398,17 +1436,21 @@ void STA_ACT_SetUpdateAttention( ACTING_WORK *work )
 //--------------------------------------------------------------
 void  STA_ACT_ReadyBgm( ACTING_WORK *work )
 {
+  work->isReadyExBgm = TRUE;
   PMDSND_PresetExtraMusic( work->bgmSeqData , work->bgmBankData , SEQ_BGM_MSL_DL_01 );
 }
 
 void  STA_ACT_StartBgm( ACTING_WORK *work )
 {
+  GF_ASSERT_MSG( work->isReadyExBgm == TRUE , "Download bgm is not ready!!!\nPlz [SCRIPT_ENUM_BgmReady]!!\n" );
+  work->isPlayExBgm = TRUE;
   PMDSND_PlayExtraMusic(SEQ_BGM_MSL_DL_01);
   //NNS_SndArcPlayerStartSeq( SOUNDMAN_GetHierarchyPlayerSndHandle(), SEQ_BGM_MSL_DL_01 );
 }
 
 void  STA_ACT_StopBgm( ACTING_WORK *work )
 {
+  work->isPlayExBgm = FALSE;
   PMDSND_StopExtraMusic();
   //NNS_SndPlayerStopSeq(SOUNDMAN_GetHierarchyPlayerSndHandle(), 0);
   //SOUNDMAN_UnloadHierarchyPlayer();
@@ -1418,6 +1460,18 @@ void  STA_ACT_SetBgmLinkNumber(  ACTING_WORK *work , const u16 dstNum , const u1
 {
   ARI_TPrintf("LinkSeqWaveData[%d][%d]\n",dstNum,srcNum);
   PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , dstNum , work->bgmWaveData , srcNum );
+}
+
+void  STA_ACT_StartSeqBgm( ACTING_WORK *work , const u32 seqNo )
+{
+  work->isPlayBgm = TRUE;
+  PMSND_PlayBGM( seqNo );
+}
+
+void  STA_ACT_StopSeqBgm( ACTING_WORK *work )
+{
+  work->isPlayBgm = FALSE;
+  PMSND_StopBGM( );
 }
 
 #pragma mark [> itemUse func

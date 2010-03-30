@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "system/net_err.h"
 
 #include "net/network_define.h"
 #include "poke_tool/poke_tool.h"
@@ -149,6 +150,7 @@ struct _MUS_COMM_WORK
 {
   HEAPID heapId;
   
+  BOOL isErr;
   BOOL isInitIrc;
   BOOL isInitComm;
   BOOL isRefreshUserData;
@@ -313,6 +315,7 @@ void MUS_COMM_InitField( HEAPID heapId , GAMEDATA *gameData , GAME_COMM_SYS_PTR 
   work->isInitIrc = isIrc;
   work->gameData = gameData;
   work->gameComm = gameComm;
+  work->isErr = FALSE;
 
   GameCommSys_Boot( gameComm , GAME_COMM_NO_MUSICAL , work );
 }
@@ -566,6 +569,15 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
     }
   }
 #endif
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+  {
+    ARI_TPrintf("mus_com_func ERROR!!!\n");
+    work->isErr = TRUE;
+  }
+  if( work->isErr == TRUE )
+  {
+    return;
+  }
 
   switch( work->commState )
   {
