@@ -236,12 +236,23 @@ static void register_TrainerName( WORDSET* wset, u8 bufIdx, u8 clientID )
 {
   if( clientID != BTL_CLIENTID_COMM_SUPPORT )
   {
-    // @todo トレーナー名は直接strbufを貰っているのでソレを使うべきなのだ
-    u32 trainerID = BTL_MAIN_GetClientTrainerID( SysWork.mainModule, clientID );
-    if( trainerID != TRID_NULL ){
-      WORDSET_RegisterTrainerName( wset, bufIdx, trainerID );
-//      WORDSET_RegisterTrainerName
-    }else{
+    if( BTL_MAIN_IsClientNPC(SysWork.mainModule, clientID) )
+    {
+      if( BTL_MAIN_GetCompetitor(SysWork.mainModule) == BTL_COMPETITOR_TRAINER )
+      {
+        u32 trainerID = BTL_MAIN_GetClientTrainerID( SysWork.mainModule, clientID );
+        if( trainerID != TRID_NULL ){
+          WORDSET_RegisterTrainerName( wset, bufIdx, trainerID );
+        }
+      }
+      else{
+        const STRBUF* name;
+        u32 tr_type;
+        name = BTL_MAIN_GetClientTrainerName( SysWork.mainModule, clientID, &tr_type );
+        WORDSET_RegisterWord( wset, bufIdx, name, TT_TrainerTypeSexGet(tr_type), TRUE, PM_LANG );
+      }
+    }
+    else{
       const MYSTATUS* status = BTL_MAIN_GetClientPlayerData( SysWork.mainModule, clientID );
       WORDSET_RegisterPlayerName( wset, bufIdx, status );
     }

@@ -5409,22 +5409,13 @@ BtlPokePos BTL_CLIENT_GetProcPokePos( const BTL_CLIENT* client )
  */
 static void AIItem_Setup( BTL_CLIENT* wk )
 {
-  u16 trID = BTL_MAIN_GetClientTrainerID( wk->mainModule, wk->myID );
   u32 i;
 
-  if( trID != TRID_NULL )
-  {
-    for(i=0; i<NELEMS(wk->AIItem); ++i){
-      wk->AIItem[i] = TT_TrainerDataParaGet( trID, ID_TD_use_item1+i );
-    }
-  }
-  else
-  {
-    for(i=0; i<NELEMS(wk->AIItem); ++i){
-      wk->AIItem[i] = ITEM_DUMMY_DATA;
-    }
+  for(i=0; i<NELEMS(wk->AIItem); ++i){
+    wk->AIItem[i] = BTL_MAIN_GetClientUseItem( wk->mainModule, wk->myID, i );
   }
 }
+
 /**
  *  使用アイテムチェック
  */

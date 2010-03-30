@@ -79,9 +79,12 @@ struct _BTL_POKE_CONTAINER {
 
 typedef struct {
   MYSTATUS*   playerStatus;
+  STRBUF*     name;
+
   u16         trainerType;
   u16         trainerID;
-  STRBUF*     name;
+  u16         useItem[ BSP_TRAINERDATA_ITEM_MAX ];
+
 }BTL_TRAINER_DATA;
 
 struct _BTL_MAIN_MODULE {
@@ -2094,7 +2097,7 @@ u32 BTL_MAIN_GetZukanCapturedCount( const BTL_MAIN_MODULE* wk )
 //=============================================================================================
 GAMEDATA* BTL_MAIN_GetGameData( const BTL_MAIN_MODULE* wk )
 {
-  (GAMEDATA*)(wk->setupParam->gameData);
+  return (GAMEDATA*)(wk->setupParam->gameData);
 }
 //=============================================================================================
 /**
@@ -3984,16 +3987,38 @@ static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAIN
     dst->trainerID = trData->tr_id;
     dst->trainerType = trData->tr_type;
     dst->name = trData->name;
+    GFL_STD_MemCopy( trData->use_item, dst->useItem, sizeof(trData->use_item) );
   }
   else{
+    u32 i;
     dst->trainerID = TRID_NULL;
     dst->trainerType = 0;
     dst->name = NULL;
+    for(i=0; i<NELEMS(dst->useItem); ++i){
+      dst->useItem[i] = ITEM_DUMMY_DATA;
+    }
   }
 }
 BOOL BTL_MAIN_IsClientNPC( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
   return ( wk->trainerParam[clientID].playerStatus == NULL );
+}
+u16 BTL_MAIN_GetClientUseItem( const BTL_MAIN_MODULE* wk, u8 clientID, u8 itemIdx )
+{
+  if( BTL_MAIN_IsClientNPC(wk, clientID) )
+  {
+    const BTL_TRAINER_DATA* trData = &wk->trainerParam[clientID];
+    if( itemIdx < NELEMS(trData->useItem) ){
+      return trData->useItem[ itemIdx ];
+    }
+  }
+  return ITEM_DUMMY_DATA;
+}
+
+const STRBUF* BTL_MAIN_GetClientTrainerName( const BTL_MAIN_MODULE* wk, u8 clientID, u32* tr_type )
+{
+  *tr_type = wk->trainerParam[clientID].trainerType;
+  return wk->trainerParam[clientID].name;
 }
 // string x 2
 u32 BTL_MAIN_GetClientTrainerID( const BTL_MAIN_MODULE* wk, u8 clientID )
