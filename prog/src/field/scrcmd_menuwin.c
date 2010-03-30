@@ -1117,7 +1117,7 @@ static void balloonWin_UpdatePos( SCRCMD_WORK *work )
 
 //--------------------------------------------------------------
 /**
- * 吹き出しウィンドウ描画
+ * 吹き出しウィンドウ作成
  * @param work  SCRCMD_WORK
  * @param objID 吹き出しを出すOBJID
  * @param arcID 表示するメッセージのアーカイブ指定ID
@@ -1146,14 +1146,9 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
     return( FALSE );
   }
   
-  bwin_work = SCRCMD_WORK_GetBalloonWinWork( work );
-  MI_CpuClear8( bwin_work, sizeof(SCRCMD_BALLOONWIN_WORK) );
-  
-  bwin_work->obj_id = objID;
-  
   msgbuf = SCRIPT_GetMsgBuffer( sc );
-  
-  {
+
+  { //メッセージ初期化
     WORDSET *wordset = SCRIPT_GetWordSet( sc );
     STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
 
@@ -1169,6 +1164,8 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
     WORDSET_ExpandStr( wordset, msgbuf, tmpbuf );
   }
 
+  bwin_work = SCRCMD_WORK_GetBalloonWinWork( work );
+  
   //既にビットが立っていたら新しく作らない
   if( SCREND_CHK_CheckBit(SCREND_CHK_BALLON_WIN_OPEN) )
   {
@@ -1176,10 +1173,14 @@ static BOOL balloonWin_SetWrite( SCRCMD_WORK *work,
     GF_ASSERT( tmsg != NULL );
     FLDTALKMSGWIN_ResetMessageStrBuf( tmsg, msgbuf );
   }
-  else
+  else //初期化
   {  
     u16 idx = FLDTALKMSGWIN_IDX_UPPER;
     TAIL_SETPAT tail = TAIL_SETPAT_NONE;
+    
+    MI_CpuClear8( bwin_work, sizeof(SCRCMD_BALLOONWIN_WORK) );
+    
+    bwin_work->obj_id = objID;
     
     switch( pos_type ){
     case SCRCMD_MSGWIN_UPLEFT: //ウィンドウ上　吹き出し向き左
