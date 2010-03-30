@@ -435,7 +435,7 @@
 
   DEF_CMD( EvCmdSeaTempleGetStepWalk, EV_SEQ_GET_SEATEMPLE_STEP_WALK )
   DEF_CMD( EvCmdChkStartMenuViewFlag, EV_SEQ_CHK_START_MENU_VIEW_FLAG )
-  NO_CMD()
+  DEF_CMD( EvCmdChkDendouData, EV_SEQ_CHK_DENDOU_DATA )
   NO_CMD()
 
   // ˆç‚Ä‰®
@@ -596,7 +596,7 @@
   DEF_CMD( EvCmdFieldOpen,EV_SEQ_FIELD_OPEN )
   DEF_CMD( EvCmdFieldClose, EV_SEQ_FIELD_CLOSE )
   DEF_CMD( EvCmdFreeSubProcWork, EV_SEQ_FREE_SUB_PROC_WORK )
-  NO_CMD()
+  DEF_CMD( EvCmdCallDendouProc, EV_SEQ_CALL_DENDOU_PC_PROC )
 
   DEF_CMD( EvCmdCallBagProc, EV_SEQ_CALL_BAG_PROC )
   DEF_CMD( EvCmdCallBoxProc, EV_SEQ_CALL_BOX_PROC )

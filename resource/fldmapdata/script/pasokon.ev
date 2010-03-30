@@ -27,6 +27,8 @@ _EVENT_DATA_END
 //--------------------------------------------------------------
 // パソコン終了フラグ
 DEFINE_LOCAL log_out 
+DEFINE_LOCAL f_game_clear
+DEFINE_LOCAL dendou_check
 
 /**************************************************************/
 /*                                                            */
@@ -40,13 +42,13 @@ EVENT_START ev_pc
   DEFINE_LOCAL select_pos
   DEFINE_LOCAL f_pcname
   DEFINE_LOCAL f_zukan_get
-  DEFINE_LOCAL f_game_clear
 
   // ローカル変数の初期化
   $log_out = FALSE
   _FLAG_CHECK( SYS_FLAG_PCNAME, f_pcname )
   _FLAG_CHECK( SYS_FLAG_ZUKAN_GET, f_zukan_get )
   _FLAG_CHECK( SYS_FLAG_GAME_CLEAR, f_game_clear )
+  _CHK_DENDOU_DATA( dendou_check ) //「殿堂入り」データチェック
 
   // PC起動イベント
   _POKECEN_PC_ON()
@@ -72,7 +74,7 @@ EVENT_START ev_pc
       _BMPMENU_MAKE_LIST( msg_pc_window_04, msg_pc_window_04 )  // はかせのパソコン
     ENDIF
     IF $f_game_clear == TRUE THEN
-      _BMPMENU_MAKE_LIST( msg_pc_window_05, msg_pc_window_05 )  // でんどういり
+      _BMPMENU_MAKE_LIST( msg_pc_window_05, msg_pc_window_05 )  // きろくをみる
     ENDIF
     _BMPMENU_MAKE_LIST( msg_pc_window_06, msg_pc_window_06 )  // スイッチをきる
     _BMPMENU_START_BREAKABLE()
@@ -83,7 +85,7 @@ EVENT_START ev_pc
     CASE msg_pc_window_02 THEN _CALL( pc_box )
     CASE msg_pc_window_03 THEN _CALL( pc_mail_box )
     CASE msg_pc_window_04 THEN _CALL( pc_zukan_check )
-    CASE msg_pc_window_05 THEN _CALL( pc_dendouiri )
+    CASE msg_pc_window_05 THEN _CALL( pc_record )
     CASE msg_pc_window_06 THEN $log_out = TRUE
     CASE EV_WIN_B_CANCEL  THEN $log_out = TRUE
     CASE EV_WIN_X_BREAK   THEN $log_out = TRUE
@@ -105,7 +107,6 @@ pc_box:
   DEFINE_LOCAL select_pos
   DEFINE_LOCAL box_end_mode
 
-  // SE
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
   //「ポケモンの あずかりシステムを …」
@@ -166,7 +167,6 @@ pc_mail_box:
   DEFINE_LOCAL exit
   DEFINE_LOCAL select_pos 
 
-  // SE
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
   //「○○の パコンに せつぞくした！」
@@ -209,7 +209,6 @@ _RET
 /**************************************************************/
 pc_zukan_check:
 {
-  // SE
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
   //「はかせの パソコンに せつぞくした！」
@@ -223,14 +222,62 @@ pc_zukan_check:
 _RET
 
 /**************************************************************/
-/*       殿堂入り処理                                         */
+/*       きろくをみる                                         */
 /**************************************************************/
-pc_dendouiri:
+pc_record:
 {
-  // SE
+  DEFINE_LOCAL loop
+  DEFINE_LOCAL select_pos
+  
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
-  // @todo データが正常かどうかをチェック
-  // @todo 殿堂入り画面の表示
+  $loop = TRUE
+  WHILE $loop == TRUE
+
+    // 説明文表示用のウィンドウを表示
+    _SYSWIN_MSG( msg_exp_window , POS_DOWN )
+
+    _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, select_pos )
+
+    // はじめてのクリア
+    IF $f_game_clear == TRUE THEN
+      _BMPMENU_MAKE_LIST_EX( msg_pc_kiroku_window_01, msg_pc_kiroku_01, msg_pc_kiroku_window_01 )  
+    ENDIF
+    // 殿堂入り
+    IF $dendou_check != SCR_DENDOU_DATA_NULL THEN
+      _BMPMENU_MAKE_LIST_EX( msg_pc_kiroku_window_02, msg_pc_kiroku_02, msg_pc_kiroku_window_02 )  
+    ENDIF
+    // 接続を切る
+    _BMPMENU_MAKE_LIST_EX( msg_pc_kiroku_window_03, msg_pc_kiroku_03, msg_pc_kiroku_window_03 )  
+    _BMPMENU_START_BREAKABLE()
+    _SYSWIN_CLOSE()
+
+    SWITCH $select_pos
+    CASE msg_pc_kiroku_window_01 THEN // はじめてのクリア
+      // @todo「はじめてのクリア」画面呼び出し
+
+    CASE msg_pc_kiroku_window_02 THEN // 殿堂入り
+      // データが正常な場合
+      IF $dendou_check == SCR_DENDOU_DATA_OK THEN
+        _CALL_DENDOU_PC_PROC() // 殿堂入り画面呼び出し
+      // データが正常でない場合
+      ELSE
+        _SYSWIN_MSG( msg_pc_on_04, POS_DOWN ) //「データが壊れています｣
+        _AB_KEYWAIT()                         //
+        _SYSWIN_CLOSE()                       //
+      ENDIF
+
+    CASE msg_pc_kiroku_window_03 THEN // 接続を切る
+      $loop = FALSE
+
+    CASE EV_WIN_B_CANCEL THEN
+      $loop = FALSE
+
+    CASE EV_WIN_X_BREAK THEN 
+      $loop = FALSE
+      $log_out = TRUE // ログアウト
+    ENDSWITCH 
+
+  ENDWHILE
 }
 _RET

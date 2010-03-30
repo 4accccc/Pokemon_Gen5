@@ -21,7 +21,10 @@
 
 #include "scrcmd_enviroments.h"
 
+#include "system/main.h"
 #include "system/rtc_tool.h"  //GFL_RTC_GetTimeZone
+#include "savedata/save_tbl.h"
+#include "savedata/dendou_save.h"
 #include "savedata/mystatus.h"  //MyStatus_～
 #include "savedata/config.h" // CONFIG
 #include "savedata/box_savedata.h"  //BOX_MANAGER
@@ -855,4 +858,61 @@ VMCMD_RESULT EvCmdChkStartMenuViewFlag( VMHANDLE * core, void * wk )
 }
 
 
+//--------------------------------------------------------------
+/**
+ * @brief「殿堂入り」データが存在するかどうかをチェックする
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdChkDendouData( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK* work     = (SCRCMD_WORK*)wk;
+  GAMEDATA*    gameData = SCRCMD_WORK_GetGameData( work );
+  EVENTWORK*   evwork   = GAMEDATA_GetEventWork( gameData );
+  SAVE_CONTROL_WORK* save;
+  LOAD_RESULT result;
+  DENDOU_SAVEDATA* dendouData;
+  u16* ret_wk; 
 
+  // 引数を取得
+  ret_wk = SCRCMD_GetVMWork( core, wk ); // 第一引数: 戻り値の格納先
+
+  // チャンピオンに勝っている
+  if( EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_CHAMPION_WIN ) ) { 
+
+    // 外部データをロード
+    save = GAMEDATA_GetSaveControlWork( gameData );
+    result = SaveControl_Extra_Load( save, SAVE_EXTRA_ID_DENDOU, HEAPID_PROC );
+
+    // 読み込み結果を返す
+    switch( result ) {
+    case LOAD_RESULT_NULL:
+      *ret_wk = SCR_DENDOU_DATA_NULL;
+      break;
+    case LOAD_RESULT_OK:
+    case LOAD_RESULT_NG:
+      dendouData = 
+        SaveControl_Extra_DataPtrGet( save, SAVE_EXTRA_ID_DENDOU, EXGMDATA_ID_DENDOU );
+      // レコードが０件
+      if( DendouData_GetRecordCount( dendouData ) == 0 ) {
+        *ret_wk = SCR_DENDOU_DATA_NULL;
+      }
+      else {
+        *ret_wk = SCR_DENDOU_DATA_OK;
+      }
+      break;
+    default:
+      *ret_wk = SCR_DENDOU_DATA_NG;
+      break;
+    }
+
+    // 外部データを解放
+    SaveControl_Extra_Unload( save, SAVE_EXTRA_ID_DENDOU );
+  }
+  // チャンピオンに勝っていない
+  else {
+    // データは存在しない
+    *ret_wk = SCR_DENDOU_DATA_NULL;
+  }
+
+  return VMCMD_RESULT_CONTINUE;
+}

@@ -34,6 +34,8 @@
 
 #include "proc_gameclear_save.h"
 
+#include "savedata/save_tbl.h"
+
 //==============================================================================================
 //==============================================================================================
 //--------------------------------------------------------------
@@ -100,6 +102,52 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
         GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
         0, 16, -16 );
     SCRIPT_CallGameClearScript( gcwk->gsys, HEAPID_PROC );
+
+    // 初回クリア
+    if( gcwk->clear_mode == GAMECLEAR_MODE_FIRST ) {
+      DENDOU_RECORD* record;
+      RTCDate date;
+      POKEPARTY* party;
+
+      RTC_GetDate( &date );
+      party = GAMEDATA_GetMyPokemon( gamedata );
+      record = GAMEDATA_GetDendouRecord( gamedata );
+
+      DendouRecord_Add( record, party, &date, HEAPID_PROC );
+    }
+    // 殿堂入り
+    else {
+      SAVE_CONTROL_WORK* save;
+      DENDOU_SAVEDATA* dendouData;
+      LOAD_RESULT result;
+      RTCDate date;
+      POKEPARTY* party;
+
+      RTC_GetDate( &date );
+      party = GAMEDATA_GetMyPokemon( gamedata ); 
+      save = GAMEDATA_GetSaveControlWork( gamedata );
+      result = SaveControl_Extra_Load( save, SAVE_EXTRA_ID_DENDOU, HEAPID_PROC );
+      dendouData = SaveControl_Extra_DataPtrGet( save, SAVE_EXTRA_ID_DENDOU, EXGMDATA_ID_DENDOU );
+      DendouData_AddRecord( dendouData, party, &date, HEAPID_PROC );
+
+      SaveControl_Extra_SaveAsyncInit(save, SAVE_EXTRA_ID_DENDOU);
+      while(1){ //←説明だからwhileで回しているだけです。実際は毎回処理を返してください。
+        SAVE_RESULT save_ret = SaveControl_Extra_SaveAsyncMain(save, SAVE_EXTRA_ID_DENDOU);
+        if(save_ret == SAVE_RESULT_OK || save_ret == SAVE_RESULT_NG){
+          break;
+        }
+      }
+
+      SaveControl_Extra_Unload( save, SAVE_EXTRA_ID_DENDOU );
+    }
+
+    
+
+    {
+      MISC* misc;
+      misc = GAMEDATA_GetMiscWork( gamedata );
+      MISC_SetChampNewsMinutes( misc, 60*24 );
+    }
 
 		(*seq) ++;
 		break;

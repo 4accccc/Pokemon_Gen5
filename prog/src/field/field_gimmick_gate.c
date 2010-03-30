@@ -1212,11 +1212,15 @@ static void GetChampMonsNo_byDendouData( const GATEWORK* work, int* destMonsNo, 
       *destMonsNum = DendouData_GetPokemonCount( dendouData, 0 );
 
       // モンスター番号を取得
-      for( i=0; *destMonsNum; i++ )
+      for( i=0; i<*destMonsNum; i++ )
       {
         DENDOU_POKEMON_DATA pokeData;
+        pokeData.nickname = GFL_STR_CreateBuffer( 64, work->heapID );
+        pokeData.oyaname = GFL_STR_CreateBuffer( 64, work->heapID );
         DendouData_GetPokemonData( dendouData, 0, i, &pokeData );
         destMonsNo[i] = pokeData.monsno;
+        GFL_STR_DeleteBuffer( pokeData.nickname );
+        GFL_STR_DeleteBuffer( pokeData.oyaname );
       }
     } 
     // レコードがない
@@ -1258,8 +1262,12 @@ static void GetChampMonsNo_byFirstClear( const GATEWORK* work, int* destMonsNo, 
   for( i=0; i<*destMonsNum; i++ )
   {
     DENDOU_POKEMON_DATA pokeData;
+    pokeData.nickname = GFL_STR_CreateBuffer( 64, work->heapID );
+    pokeData.oyaname = GFL_STR_CreateBuffer( 64, work->heapID );
     DendouRecord_GetPokemonData( record, i, &pokeData );
     destMonsNo[i] = pokeData.monsno;
+    GFL_STR_DeleteBuffer( pokeData.nickname );
+    GFL_STR_DeleteBuffer( pokeData.oyaname );
   }
 }
 

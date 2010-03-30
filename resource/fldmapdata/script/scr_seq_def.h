@@ -4697,6 +4697,20 @@
     .short  \type
     .short  \ret_wk
     .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _CHK_DENDOU_DATA
+ * @brief「殿堂入り」データが存在するかどうかをチェックする
+ * @param ret_wk  戻り値（TRUE/FALSEを返す）TRUEでデータが存在
+ */
+//--------------------------------------------------------------
+#define _CHK_DENDOU_DATA( ret_wk ) \
+    _ASM_CHK_DENDOU_DATA ret_wk
+    .macro  _ASM_CHK_DENDOU_DATA ret_wk
+    .short  EV_SEQ_CHK_DENDOU_DATA
+    .short  \ret_wk
+    .endm
     
 
 //--------------------------------------------------------------
@@ -6943,6 +6957,18 @@
 
   .macro _ASM_SUBPROC_WORK
   .short EV_SEQ_FREE_SUB_PROC_WORK
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief 殿堂入り画面を呼び出す
+ */
+//--------------------------------------------------------------
+#define _CALL_DENDOU_PC_PROC() \
+    _ASM_CALL_DENDOU_PC_PROC
+
+  .macro  _ASM_CALL_DENDOU_PC_PROC
+  .short  EV_SEQ_CALL_DENDOU_PC_PROC
   .endm
 
 //--------------------------------------------------------------

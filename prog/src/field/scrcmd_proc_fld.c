@@ -32,6 +32,7 @@
 #include "field_player.h"
 #include "event_fieldmap_control.h"
 #include "event_freeword_input.h"
+#include "event_dendou_pc.h"
 
 #include "scrcmd_proc.h"
 #include "scrcmd_proc_fld.h"
@@ -280,5 +281,24 @@ VMCMD_RESULT EvCmdCallGeonet( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief   殿堂入りを呼び出します
+ * @param   core    仮想マシン制御構造体へのポインタ
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdCallDendouProc( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*       scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*          gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
+  FIELDMAP_WORK*     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  GMEVENT*           event = NULL;
 
-
+  // イベントを呼び出す
+  SCRIPT_CallEvent( scw, EVENT_DendouPC2( gsys ) );
+  return VMCMD_RESULT_SUSPEND;
+}

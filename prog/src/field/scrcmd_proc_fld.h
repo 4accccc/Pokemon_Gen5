@@ -52,3 +52,6 @@ extern VMCMD_RESULT EvCmdCallCGearGetDemo( VMHANDLE *core, void *wk );
 
 ///ジオネット呼び出し
 extern VMCMD_RESULT EvCmdCallGeonet( VMHANDLE *core, void *wk ); 
+
+// 殿堂入り画面呼び出し
+VMCMD_RESULT EvCmdCallDendouProc( VMHANDLE *core, void *wk );
