@@ -73,7 +73,7 @@
 #define _DEBUG_ALONETEST (19)
 #else
 //誰でも繋がる、、、が、パレスの通信バージョンとして使用 昔の通信と接続で問題があるときにバージョンを上げていく
-#define _DEBUG_ALONETEST (104)
+#define _DEBUG_ALONETEST (105)
 #endif
 
 #define POKEMONWB_BEACON_PRODUCT_NO (0)   //この番号のビーコンは製品版
