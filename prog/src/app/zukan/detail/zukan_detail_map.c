@@ -305,8 +305,16 @@ SCROLL_STATE;
 #define SEASON_R_ARROW_SIZE_X (3*8)
 #define SEASON_R_ARROW_SIZE_Y (2*8)
 
-#define SEASON_ARROW_ANMSEQ_NORMAL (2)
-#define SEASON_ARROW_ANMSEQ_SELECT (3)
+#define SEASON_R_ARROW_ANMSEQ_NORMAL (2)
+#define SEASON_R_ARROW_ANMSEQ_SELECT (3)
+
+#define SEASON_L_ARROW_POS_X  (0*8)
+#define SEASON_L_ARROW_POS_Y  (0)
+#define SEASON_L_ARROW_SIZE_X (3*8)
+#define SEASON_L_ARROW_SIZE_Y (2*8)
+
+#define SEASON_L_ARROW_ANMSEQ_NORMAL (4)
+#define SEASON_L_ARROW_ANMSEQ_SELECT (5)
 
 #define SEASON_PANEL_POS_X  (0)
 #define SEASON_PANEL_POS_Y  (0)
@@ -351,7 +359,7 @@ enum
 {
   OBJ_ZUKAN_START,                          // OBJ_ZUKAN_START<= <OBJ_ZUKAN_END
   OBJ_SEASON          = OBJ_ZUKAN_START,
-  //OBJ_SEASON_L,
+  OBJ_SEASON_L,
   OBJ_SEASON_R,
   OBJ_UNKNOWN,
   OBJ_ZUKAN_END,
@@ -595,7 +603,7 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
                  STATE state );
 static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_ChangePlace( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
-static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn, BOOL b_next );
 
 // 分布データ
 static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARCHANDLE* handle );
@@ -1376,8 +1384,8 @@ static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAI
     {
       // OBJ_ZUKAN_
       1,
-      //SEASON_ARROW_ANMSEQ_NORMAL,
-      SEASON_ARROW_ANMSEQ_NORMAL,
+      SEASON_L_ARROW_ANMSEQ_NORMAL,
+      SEASON_R_ARROW_ANMSEQ_NORMAL,
       0,
 
       // OBJ_TM_
@@ -1389,7 +1397,7 @@ static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAI
     {
       // OBJ_ZUKAN_
       BG_FRAME_PRI_M_ROOT,
-      //BG_FRAME_PRI_M_ROOT,
+      BG_FRAME_PRI_M_ROOT,
       BG_FRAME_PRI_M_ROOT,
       BG_FRAME_PRI_M_ROOT,
 
@@ -1402,7 +1410,7 @@ static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAI
     {
       // OBJ_ZUKAN_
       2,
-      //1,
+      1,
       0,
       3,
 
@@ -1757,11 +1765,22 @@ static void Zukan_Detail_Map_SeasonArrowMain( ZUKAN_DETAIL_MAP_PARAM* param, ZUK
 {
   if( GFL_CLACT_WK_GetDrawEnable( work->obj_clwk[OBJ_SEASON_R] ) )
   {
-    if( GFL_CLACT_WK_GetAnmSeq( work->obj_clwk[OBJ_SEASON_R] ) == SEASON_ARROW_ANMSEQ_SELECT )
+    if( GFL_CLACT_WK_GetAnmSeq( work->obj_clwk[OBJ_SEASON_R] ) == SEASON_R_ARROW_ANMSEQ_SELECT )
     {
       if( !GFL_CLACT_WK_CheckAnmActive( work->obj_clwk[OBJ_SEASON_R] ) )
       {
-        GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_SEASON_R], SEASON_ARROW_ANMSEQ_NORMAL );
+        GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_SEASON_R], SEASON_R_ARROW_ANMSEQ_NORMAL );
+      }
+    }
+  }
+
+  if( GFL_CLACT_WK_GetDrawEnable( work->obj_clwk[OBJ_SEASON_L] ) )
+  {
+    if( GFL_CLACT_WK_GetAnmSeq( work->obj_clwk[OBJ_SEASON_L] ) == SEASON_L_ARROW_ANMSEQ_SELECT )
+    {
+      if( !GFL_CLACT_WK_CheckAnmActive( work->obj_clwk[OBJ_SEASON_L] ) )
+      {
+        GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_SEASON_L], SEASON_L_ARROW_ANMSEQ_NORMAL );
       }
     }
   }
@@ -2061,7 +2080,19 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
               work->season_id++;
               if( work->season_id >= PMSEASON_TOTAL ) work->season_id = PMSEASON_SPRING;
 
-              Zukan_Detail_Map_ChangeSeason( param, work, cmn );
+              Zukan_Detail_Map_ChangeSeason( param, work, cmn, TRUE );
+              PMSND_PlaySE( SEQ_SE_DECIDE1 );
+            }
+            else if(    SEASON_L_ARROW_POS_X<=x&&x<SEASON_L_ARROW_POS_X+SEASON_L_ARROW_SIZE_X
+                     && SEASON_L_ARROW_POS_Y<=y&&y<SEASON_L_ARROW_POS_Y+SEASON_L_ARROW_SIZE_Y )
+            {
+              work->ktst = GFL_APP_KTST_TOUCH;
+              
+              // 変更後の季節にする
+              if( work->season_id == PMSEASON_SPRING ) work->season_id = PMSEASON_WINTER;
+              else                                     work->season_id--;
+
+              Zukan_Detail_Map_ChangeSeason( param, work, cmn, FALSE );
               PMSND_PlaySE( SEQ_SE_DECIDE1 );
             }
             else if(    SEASON_PANEL_POS_X<=x&&x<SEASON_PANEL_POS_X+SEASON_PANEL_SIZE_X
@@ -2101,7 +2132,20 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
             work->season_id++;
             if( work->season_id >= PMSEASON_TOTAL ) work->season_id = PMSEASON_SPRING;
 
-            Zukan_Detail_Map_ChangeSeason( param, work, cmn );
+            Zukan_Detail_Map_ChangeSeason( param, work, cmn, TRUE );
+            PMSND_PlaySE( SEQ_SE_DECIDE1 );
+            select_enable = FALSE;
+          }
+          else if(    SEASON_L_ARROW_POS_X<=x&&x<SEASON_L_ARROW_POS_X+SEASON_L_ARROW_SIZE_X
+                   && SEASON_L_ARROW_POS_Y<=y&&y<SEASON_L_ARROW_POS_Y+SEASON_L_ARROW_SIZE_Y )
+          {
+            work->ktst = GFL_APP_KTST_TOUCH;
+
+            // 変更後の季節にする
+            if( work->season_id == PMSEASON_SPRING ) work->season_id = PMSEASON_WINTER;
+            else                                     work->season_id--;
+
+            Zukan_Detail_Map_ChangeSeason( param, work, cmn, FALSE );
             PMSND_PlaySE( SEQ_SE_DECIDE1 );
             select_enable = FALSE;
           }
@@ -2473,6 +2517,7 @@ static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DE
   GFL_BMPWIN_TransVramCharacter( work->text_bmpwin[TEXT_SEASON] );
   GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON], FALSE );
   GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON_R], FALSE );
+  GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON_L], FALSE );
 
   // 次のを表示
   // 1年中同じ分布のとき
@@ -2486,8 +2531,10 @@ static void Zukan_Detail_Map_ChangePoke( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DE
     Zukan_Detail_Map_UtilPrintSeason( param, work, cmn );
     GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON], TRUE );
 
-    GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_SEASON_R], SEASON_ARROW_ANMSEQ_NORMAL );
+    GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_SEASON_R], SEASON_R_ARROW_ANMSEQ_NORMAL );
     GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON_R], TRUE );
+    GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_SEASON_L], SEASON_L_ARROW_ANMSEQ_NORMAL );
+    GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_SEASON_L], TRUE );
   }
 
   // 今の季節の生息地を表示する
@@ -2532,7 +2579,7 @@ static void Zukan_Detail_Map_ChangePlace( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
   Zukan_Detail_Map_UtilBrightenPlaceIcon( param, work, cmn );
 }
 
-static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn, BOOL b_next )
 {
   // 変更前の季節 = 取得不可
   // 変更後の季節 = work->season_id
@@ -2558,8 +2605,15 @@ static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
 
   // 次のを表示
   Zukan_Detail_Map_UtilPrintSeason( param, work, cmn );
-  
-  GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_SEASON_R], SEASON_ARROW_ANMSEQ_SELECT );
+ 
+  if( b_next )
+  {
+    GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_SEASON_R], SEASON_R_ARROW_ANMSEQ_SELECT );
+  }
+  else
+  {
+    GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_SEASON_L], SEASON_L_ARROW_ANMSEQ_SELECT );
+  }
 
   // カーソルを非表示にする
   {

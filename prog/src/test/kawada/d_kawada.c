@@ -1098,9 +1098,9 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
  
   wk->poke_list[0] = 201;
   wk->poke_list[1] = 202;
-  wk->poke_list[2] = 203;
-  wk->poke_list[3] = 151;
-  wk->poke_list[4] = 487;
+  wk->poke_list[2] = 151;
+  wk->poke_list[3] = 487;
+  wk->poke_list[4] = 582;  // MONSNO_TURUTTO
 
   for( i=0; i<poke_list_num; i++ )
   {
