@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T15:24:27"/>
+	<create user="matsumiya" host="W00224" date="2010-03-30T11:58:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -441,9 +441,9 @@
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">あなたー　よくきたー！
-なんでも　かってけー！</language>
-		<language name="JPN_KANJI" width="256">あなたー　よくきたー！
-なんでも　かってけー！</language>
+いっぱい　みていけー！</language>
+		<language name="JPN_KANJI" width="256">あなたー　よく来たー！
+いっぱい　見ていけー！</language>
 	</row>
 
 	<row id="msg_c05r0601_trainerw_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
