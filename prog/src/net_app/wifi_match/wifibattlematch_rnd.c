@@ -2720,7 +2720,7 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, WIFIBATTLEMA
       is_rate = TRUE;
 
       info_setup.rate     = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
-          RNDMATCH_TYPE_RATE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_LOSE );
+          RNDMATCH_TYPE_RATE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_RATE );
       info_setup.win_cnt  = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
           RNDMATCH_TYPE_RATE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_WIN );
       info_setup.lose_cnt = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
