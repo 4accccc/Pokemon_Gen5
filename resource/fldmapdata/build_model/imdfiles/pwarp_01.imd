@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-29T18:24:54" source="pwarp_01_001.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-30T13:41:37" source="pwarp_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-03-29T18:24:54" source="pwarp_01_001.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-03-30T13:41:37" source="pwarp_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -30,7 +30,37 @@
 <box_test pos_scale="3" xyz="-2.000000 0.000000 -2.000000" whd="4.000000 3.627197 4.000000"/>
 
 <tex_image_array size="3">
-	<tex_image index="0" name="pwbl"
+	<tex_image index="0" name="p_warp"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="p_warp_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/pwarp_01/tex/p_warp.tga"
+	>
+		<bitmap size="64">
+			7777 7777 7777 7777 7777 5567 7655 7777
+			6777 3455 5543 7776 5677 3334 4333 7765
+			4577 2233 3322 7754 3567 2123 3222 7653
+			3457 1112 2222 7543 3357 2122 2222 7533
+			3357 2222 2222 7533 3457 2222 2222 7543
+			3567 2223 3222 7653 4577 2233 3322 7754
+			5677 3334 4333 7765 6777 3455 5543 7776
+			7777 5567 7655 7777 7777 7777 7777 7777
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="p_warpp"
+		width="8" height="16" original_width="8" original_height="16"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="p_warpp_pl"
+		path="C:/home/wb_data3d/build_model/outdoor/pwarp_01/tex/p_warpp.tga"
+	>
+		<bitmap size="16">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 5555 5555
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="pwbl"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -48,76 +78,22 @@
 			2220 2222 2222 0222 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="warp03"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette16"
-		color0_mode="color"
-		palette_name="gtswarp_g"
-		path="C:/home/wb_data3d/build_model/outdoor/pwarp_01/tex/warp03.tga"
-	>
-		<bitmap size="64">
-			0000 0000 0000 0000 0000 2210 0122 0000
-			1000 4322 2234 0001 2100 4443 3444 0012
-			3200 5544 4455 0023 4210 5654 4555 0124
-			4320 6665 5555 0234 4420 5655 5555 0244
-			4420 5555 5555 0244 4320 5555 5555 0234
-			4210 5554 4555 0124 3200 5544 4455 0023
-			2100 4443 3444 0012 1000 4322 2234 0001
-			0000 2210 0122 0000 0000 0000 0000 0000
-		</bitmap>
-	</tex_image>
-	<tex_image index="2" name="warp_g"
-		width="8" height="16" original_width="8" original_height="16"
-		format="palette4"
-		color0_mode="transparency"
-		palette_name="warp_g"
-		path="C:/home/wb_data3d/build_model/outdoor/pwarp_01/tex/warp_g.tga"
-	>
-		<bitmap size="16">
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 5555 5555
-		</bitmap>
-	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="3">
-	<tex_palette index="0" name="gtswarp_g" color_size="8">
-		1599 19db 1e1d 1e3f 2a7f 3adf 4f7f 7fff
+	<tex_palette index="0" name="p_warp_pl" color_size="8">
+		7fff 4f7f 3adf 2a7f 1e3f 1e1d 19db 1599
 	</tex_palette>
-	<tex_palette index="1" name="pwbl_pl" color_size="8">
-		5270 5691 5ed4 6716 6737 6b58 6f7a 7fff
-	</tex_palette>
-	<tex_palette index="2" name="warp_g" color_size="4">
+	<tex_palette index="1" name="p_warpp_pl" color_size="4">
 		7fff 1e1d 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="pwbl_pl" color_size="8">
+		5270 5691 5ed4 6716 6737 6b58 6f7a 7fff
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size="6">
-	<material index="0" name="pwbl"
-		light0="on" light1="off" light2="off" light3="off"
-		face="front"
-		alpha="31"
-		wire_mode="off"
-		polygon_mode="modulate"
-		polygon_id="0"
-		fog_flag="on"
-		depth_test_decal="off"
-		translucent_update_depth="off"
-		render_1_pixel="off"
-		far_clipping="off"
-		diffuse="25 25 25"
-		ambient="25 25 25"
-		specular="0 0 0"
-		emission="0 0 0"
-		shininess_table_flag="off"
-		tex_image_idx="0" tex_palette_idx="1"
-		tex_tiling="repeat repeat"
-		tex_scale="1.000000 1.000000"
-		tex_rotate="0.000000"
-		tex_translate="0.000000 0.000000"
-		tex_gen_mode="none"
-	/>
-	<material index="1" name="warp03"
+	<material index="0" name="p_warp"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -134,14 +110,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="1" tex_palette_idx="0"
+		tex_image_idx="0" tex_palette_idx="0"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="2" name="warp_g"
+	<material index="1" name="p_warpp"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="25"
@@ -158,14 +134,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
+		tex_image_idx="1" tex_palette_idx="1"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="warp_g_1"
+	<material index="2" name="p_warpp_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="19"
@@ -182,14 +158,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
+		tex_image_idx="1" tex_palette_idx="1"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="4" name="warp_g_2"
+	<material index="3" name="p_warpp_2"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="12"
@@ -206,14 +182,14 @@
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
-		tex_image_idx="2" tex_palette_idx="2"
+		tex_image_idx="1" tex_palette_idx="1"
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="5" name="warp_g_3"
+	<material index="4" name="p_warpp_3"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="6"
@@ -227,6 +203,30 @@
 		far_clipping="off"
 		diffuse="25 25 25"
 		ambient="0 0 0"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="5" name="pwbl"
+		light0="on" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="0"
+		fog_flag="on"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="25 25 25"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -1116,12 +1116,12 @@
 		volume_max="4.000000 7.254639 4.000000"
 		volume_r="7.880859"
 	>
-		<display index="0" material="0" polygon="4" priority="0"/>
-		<display index="1" material="1" polygon="5" priority="0"/>
-		<display index="2" material="2" polygon="3" priority="0"/>
-		<display index="3" material="3" polygon="2" priority="0"/>
-		<display index="4" material="4" polygon="1" priority="0"/>
-		<display index="5" material="5" polygon="0" priority="0"/>
+		<display index="0" material="0" polygon="5" priority="0"/>
+		<display index="1" material="1" polygon="3" priority="0"/>
+		<display index="2" material="2" polygon="2" priority="0"/>
+		<display index="3" material="3" polygon="1" priority="0"/>
+		<display index="4" material="4" polygon="0" priority="0"/>
+		<display index="5" material="5" polygon="4" priority="0"/>
 	</node>
 </node_array>
 
