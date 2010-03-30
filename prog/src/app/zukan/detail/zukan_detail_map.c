@@ -2699,7 +2699,8 @@ static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
     GFL_CLACT_WK_SetAnmSeq( work->obj_clwk[OBJ_SEASON_L], SEASON_L_ARROW_ANMSEQ_SELECT );
   }
 
-  // カーソルを非表示にする
+  // タッチ入力されてここに来た場合は、カーソルを非表示にする
+  if( work->ktst == GFL_APP_KTST_TOUCH )
   {
     GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_CURSOR], FALSE );
   }
