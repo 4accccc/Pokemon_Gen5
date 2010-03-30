@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2010-03-30T13:20:40"/>
+	<create user="tamada" host="W00139" date="2010-03-30T15:19:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -699,6 +699,11 @@
 	<row id="DEBUG_FIELD_ITEM_STR4">
 		<language name="JPN" width="160">ばしょID[2:01:２桁:2]</language>
 		<language name="JPN_KANJI" width="160">場所ID[2:01:２桁:2]</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR35">
+		<language name="JPN" width="160">フェードそくどきりかえ</language>
+		<language name="JPN_KANJI" width="160">フェード速度切替</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR36">

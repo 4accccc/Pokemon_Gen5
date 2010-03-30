@@ -253,6 +253,7 @@ static BOOL debugMenuCallProc_SymbolPokeKeepSmallFull( DEBUG_MENU_EVENT_WORK * w
 static BOOL debugMenuCallProc_SymbolPokeFreeLargeFull( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenuCallProc_SymbolPokeFreeSmallFull( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenuCallProc_SymbolPokeCountup( DEBUG_MENU_EVENT_WORK * wk );
+static BOOL debugMenuCallProc_FadeSpeedChange( DEBUG_MENU_EVENT_WORK * wk );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -295,6 +296,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR22, debugMenuCallProc_ControlRtcList },  //時間
   { DEBUG_FIELD_STR61, debugMenuCallProc_CaptureList },     //キャプチャ
   { DEBUG_FIELD_STR40, debugMenuCallProc_ChangePlayerSex },   //主人公性別変更
+  { DEBUG_FIELD_STR35, debugMenuCallProc_FadeSpeedChange },   //フェード速度変更
 
   { DEBUG_FIELD_TITLE_03, (void*)BMPMENULIST_LABEL },       //○データ作成
   { DEBUG_FIELD_STR41, debugMenuCallProc_DebugMakePoke },   //ポケモン作成
@@ -4377,6 +4379,22 @@ static void debugMenuWriteUseMemoryDump( DEBUG_USEMEMORY_EVENT_WORK* p_wk )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ * @brief フェード速度変更
+ */
+//----------------------------------------------------------------------------
+static BOOL debugMenuCallProc_FadeSpeedChange( DEBUG_MENU_EVENT_WORK * wk )
+{
+  if (GFL_FADE_GetFadeSpeed() != 2)
+  {
+    GFL_FADE_SetFadeSpeed( 2 );
+  } else {
+    GFL_FADE_SetDefaultFadeSpeed();
+  }
+
+  return FALSE;
+}
 
 //----------------------------------------------------------------------------
 /**
