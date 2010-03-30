@@ -1246,6 +1246,8 @@ u32 MMDL_HitCheckMove(
   const MMDL *mmdl, const VecFx32 *vec, s16 x, s16 y, s16 z, u16 dir )
 {
   u32 ret;
+  u32 attr;
+  fx32 height;
   VecFx32 pos;
   
   ret = MMDL_MOVEHITBIT_NON;
@@ -1258,23 +1260,20 @@ u32 MMDL_HitCheckMove(
     ret |= MMDL_MOVEHITBIT_LIM;
   }
   
-  {
-    u32 attr;
-    fx32 height;
-    
-    if( MMdl_HitCheckMoveAttr(mmdl,dir,pos) == TRUE ){
-      ret |= MMDL_MOVEHITBIT_ATTR;
-    }
-
-    if( MMDL_GetMapPosHeight(mmdl,&pos,&height) == TRUE ){
-      fx32 diff = vec->y - height;
-      if( diff < 0 ){ diff = -diff; }
-      if( diff >= HEIGHT_DIFF_COLLISION ){
-        ret |= MMDL_MOVEHITBIT_HEIGHT;
-      }
-    }else{
+  if( MMdl_HitCheckMoveAttr(mmdl,dir,pos) == TRUE ){
+    ret |= MMDL_MOVEHITBIT_ATTR;
+  }
+  
+  if( MMDL_GetMapPosHeight(mmdl,&pos,&height) == TRUE ){
+    fx32 diff = vec->y - height;
+    if( diff < 0 ){ diff = -diff; }
+    if( diff >= HEIGHT_DIFF_COLLISION ){
       ret |= MMDL_MOVEHITBIT_HEIGHT;
     }
+    
+    y = SIZE_GRID_FX32( height ); //çÇÇ≥Ç™éÊÇÍÇΩç€ÇÕà⁄ìÆêÊÇÃçÇÇ≥Ç≈çXêV
+  }else{
+    ret |= MMDL_MOVEHITBIT_HEIGHT;
   }
   
   if( MMDL_HitCheckMoveFellow(mmdl,x,y,z) == TRUE ){
@@ -1453,7 +1452,7 @@ BOOL MMDL_HitCheckFellow( const MMDL *mmdl0, const MMDL *mmdl1,
         
       if( sy < 0 )
       {
-        sy = -sy;
+        sy = sy;
       }
     
       if( sy < H_GRID_FELLOW_SIZE )
