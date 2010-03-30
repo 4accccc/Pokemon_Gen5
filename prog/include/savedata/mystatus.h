@@ -31,7 +31,7 @@ typedef struct _MYSTATUS MYSTATUS;
 struct _MYSTATUS {
   STRCODE name[PERSON_NAME_SIZE + EOM_SIZE];    // 16
   u32 id;               // 20 PlayerID
-  u32 profileID;        // 24
+  u32 profileID;        // 24 GameSyncID
   u8 nation;            ///< ‘  25
   u8 area;              ///< ’nˆæ 26
   u8 region_code;       //PM_LANG   27

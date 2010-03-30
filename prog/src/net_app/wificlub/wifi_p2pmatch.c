@@ -3312,6 +3312,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
     ret = WIFI_MCR_Main( &wk->matchroom );
     WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
     //        ret = BmpListMain(wk->lw);
+    OS_TPrintf("WIFI_MCR_Main %d \n",ret);
   }
   switch(ret){
   case MCR_RET_NONE:
@@ -4748,6 +4749,12 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       _CHANGESTATE(wk, WIFIP2PMATCH_MODE_CHILD_CONNECT);
     }
     else{
+      if(WIFI_STATUS_GetVChatStatus(wk->pMatch)){//自分がON
+        WifiP2PMatchMessagePrint(wk, msg_wifilobby_070, FALSE);
+      }
+      else{
+        WifiP2PMatchMessagePrint(wk, msg_wifilobby_069, FALSE);
+      }
       _CHANGESTATE(wk, WIFIP2PMATCH_MODE_VCHAT_NEGO);
     }
     break;
@@ -5681,6 +5688,9 @@ static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq )
       return seq;
     }else if(ret == 0){ // はいを選択した場合
       // 接続開始
+      //VCT反転
+      WIFI_STATUS_SetVChatStatus(wk->pMatch, 1-WIFI_STATUS_GetVChatStatus(wk->pMatch));
+      
       _CHANGESTATE(wk, WIFIP2PMATCH_MODE_CHILD_CONNECT);
     }
     else{
