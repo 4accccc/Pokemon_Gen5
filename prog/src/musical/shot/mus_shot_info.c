@@ -20,6 +20,7 @@
 #include "msg/msg_musical_shot.h"
 
 #include "app/app_taskmenu.h"
+#include "app/app_menu_common.h"
 #include "gamesystem/msgspeed.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -34,20 +35,21 @@
 //======================================================================
 #pragma mark [> define
 #define MUS_INFO_FRAME_MSG ( GFL_BG_FRAME0_S )
-#define MUS_INFO_FRAME_INFO ( GFL_BG_FRAME2_S )
+#define MUS_INFO_FRAME_BAR ( GFL_BG_FRAME2_S )
 #define MUS_INFO_FRAME_BG ( GFL_BG_FRAME3_S )
 
+#define MUS_INFO_PAL_BAR ( 0x09 )
 #define MUS_INFO_PAL_FONT ( 0x0a )
 #define MUS_INFO_PAL_WIN ( 0x0b )
 #define MUS_INFO_PAL_YESNO ( 0x0c ) //２本
 
 #define MUS_INFO_MSGWIN_X ( 1 )
-#define MUS_INFO_MSGWIN_Y ( 3 )
+#define MUS_INFO_MSGWIN_Y ( 1 )
 #define MUS_INFO_MSGWIN_WIDTH ( 30 )
 #define MUS_INFO_MSGWIN_HEIGHT ( 4 )
 
 #define MUS_INFO_YESNO_X ( 32-APP_TASKMENU_PLATE_WIDTH_YN_WIN )
-#define MUS_INFO_YESNO_Y ( 6+2 )
+#define MUS_INFO_YESNO_Y ( 6 )
 #define MSU_INFO_YESNO_COLOR (PRINTSYS_LSB_Make(0xE,0xF,0))
 
 #define MUS_INFO_CGX_WIN (1)
@@ -65,10 +67,21 @@ typedef enum
   MSIS_YESNO_WAIT,
   //見るだけモード
   MSIS_KEY_WAIT,
+  MSIS_WAIT_ANIME,
   
   MSIS_FINISH,
   
 }MUSICAL_SHOT_INFO_STATE;
+
+typedef enum
+{
+  SICR_PLT_APP,
+  SICR_NCG_APP,
+  SICR_ANM_APP,
+
+  SICR_MAX,
+  
+}SHOT_INFO_CELL_RES;
 
 //======================================================================
 //	typedef struct
@@ -94,19 +107,24 @@ struct _MUS_SHOT_INFO_WORK
   PRINT_QUE *printQue;
   APP_TASKMENU_WORK *yesNoWork;
 	APP_TASKMENU_RES	*takmenures;
+
+
+  GFL_CLUNIT  *cellUnit;
+  u32         cellResIdx[SICR_MAX];
+  GFL_CLWK    *clwkReturn;
 };
 
 //======================================================================
 //	proto
 //======================================================================
 #pragma mark [> proto
-static void MUS_SHOT_INFO_InitGraphic( MUS_SHOT_INFO_WORK *work );
+static void MUS_SHOT_INFO_InitGraphic( MUS_SHOT_INFO_WORK *infoWork );
 static void MUS_SHOT_INFO_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane , u8 mode );
-static void MUS_SHOT_INFO_InitMessage( MUS_SHOT_INFO_WORK *work );
-static void MUS_SHOT_INFO_ExitMessage( MUS_SHOT_INFO_WORK *work );
-static void MUS_SHOT_INFO_DispMessage( MUS_SHOT_INFO_WORK *work , const u16 msgId );
-static void MUS_SHOT_INFO_HideMessage( MUS_SHOT_INFO_WORK *work );
-static void MUS_SHOT_INFO_DispYesNo( MUS_SHOT_INFO_WORK *work );
+static void MUS_SHOT_INFO_InitMessage( MUS_SHOT_INFO_WORK *infoWork );
+static void MUS_SHOT_INFO_ExitMessage( MUS_SHOT_INFO_WORK *infoWork );
+static void MUS_SHOT_INFO_DispMessage( MUS_SHOT_INFO_WORK *infoWork , const u16 msgId );
+static void MUS_SHOT_INFO_HideMessage( MUS_SHOT_INFO_WORK *infoWork );
+static void MUS_SHOT_INFO_DispYesNo( MUS_SHOT_INFO_WORK *infoWork );
 
 //--------------------------------------------------------------
 //	初期化
@@ -150,9 +168,20 @@ void MUS_SHOT_INFO_ExitSystem( MUS_SHOT_INFO_WORK *infoWork )
 {
 	APP_TASKMENU_RES_Delete( infoWork->takmenures );
 
+  if( infoWork->isChackMode == FALSE )
+  {
+    GFL_CLGRP_PLTT_Release(     infoWork->cellResIdx[SICR_PLT_APP] );
+    GFL_CLGRP_CGR_Release(      infoWork->cellResIdx[SICR_NCG_APP] );
+    GFL_CLGRP_CELLANIM_Release( infoWork->cellResIdx[SICR_ANM_APP] );
+
+    GFL_CLACT_WK_Remove( infoWork->clwkReturn );
+  }
+
+  GFL_CLACT_UNIT_Delete( infoWork->cellUnit );
+
   MUS_SHOT_INFO_ExitMessage( infoWork );
   GFL_BG_FreeBGControl( MUS_INFO_FRAME_MSG );
-  GFL_BG_FreeBGControl( MUS_INFO_FRAME_INFO );
+  GFL_BG_FreeBGControl( MUS_INFO_FRAME_BAR );
   GFL_BG_FreeBGControl( MUS_INFO_FRAME_BG );
   GFL_HEAP_FreeMemory( infoWork );
 }
@@ -210,7 +239,24 @@ void MUS_SHOT_INFO_UpdateSystem( MUS_SHOT_INFO_WORK *infoWork )
     break;
   
   case MSIS_KEY_WAIT:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+    {
+      static const GFL_UI_TP_HITTBL hitTbl[2] = 
+      {
+        { 192-24 , 192 ,
+          256-24 , 255 },
+        { GFL_UI_TP_HIT_END ,0,0,0 },
+      };
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ||
+          GFL_UI_TP_HitTrg( hitTbl ) == 0 )
+      {
+        infoWork->state = MSIS_WAIT_ANIME;
+        GFL_CLACT_WK_SetAnmSeq( infoWork->clwkReturn , APP_COMMON_BARICON_RETURN_ON );
+        GFL_CLACT_WK_SetAutoAnmFlag( infoWork->clwkReturn , TRUE );
+      }
+    }
+    break;
+  case MSIS_WAIT_ANIME:
+    if( GFL_CLACT_WK_CheckAnmActive( infoWork->clwkReturn ) == FALSE )
     {
       infoWork->state = MSIS_FINISH;
     }
@@ -256,7 +302,7 @@ const BOOL MUS_SHOT_INFO_IsFinish( MUS_SHOT_INFO_WORK *infoWork )
 //--------------------------------------------------------------
 //	描画系初期化
 //--------------------------------------------------------------
-static void MUS_SHOT_INFO_InitGraphic( MUS_SHOT_INFO_WORK *work )
+static void MUS_SHOT_INFO_InitGraphic( MUS_SHOT_INFO_WORK *infoWork )
 {
   //BG系
   {
@@ -291,35 +337,92 @@ static void MUS_SHOT_INFO_InitGraphic( MUS_SHOT_INFO_WORK *work )
       GX_BG_EXTPLTT_01, 3, 0, 0, FALSE  // pal, pri, areaover, dmy, mosaic
     };
     MUS_SHOT_INFO_SetupBgFunc( &header_sub0 , MUS_INFO_FRAME_MSG  , GFL_BG_MODE_TEXT );
-    MUS_SHOT_INFO_SetupBgFunc( &header_sub2 , MUS_INFO_FRAME_INFO  , GFL_BG_MODE_TEXT );
+    MUS_SHOT_INFO_SetupBgFunc( &header_sub2 , MUS_INFO_FRAME_BAR  , GFL_BG_MODE_TEXT );
     MUS_SHOT_INFO_SetupBgFunc( &header_sub3 , MUS_INFO_FRAME_BG , GFL_BG_MODE_TEXT );
   }
+
+  //OBJ系の初期化
+  {
+    infoWork->cellUnit = GFL_CLACT_UNIT_Create( 8 , 0, infoWork->heapId );
+    GFL_CLACT_UNIT_SetDefaultRend( infoWork->cellUnit );
+
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
+  }
+  
   //BG読み込み
   /*
   {
-    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_MUSICAL_SHOT , work->heapId );
+    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_MUSICAL_SHOT , infoWork->heapId );
     GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_musical_shot_info_bg_NCLR , 
-                      PALTYPE_SUB_BG , 0 , 0 , work->heapId );
+                      PALTYPE_SUB_BG , 0 , 0 , infoWork->heapId );
     GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_musical_shot_info_bg_NCGR ,
-                      MUS_INFO_FRAME_BG , 0 , 0, FALSE , work->heapId );
+                      MUS_INFO_FRAME_BG , 0 , 0, FALSE , infoWork->heapId );
     GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_musical_shot_info_bg_NSCR , 
-                      MUS_INFO_FRAME_BG ,  0 , 0, FALSE , work->heapId );
+                      MUS_INFO_FRAME_BG ,  0 , 0, FALSE , infoWork->heapId );
     GFL_BG_LoadScreenReq(MUS_INFO_FRAME_BG);
     GFL_ARC_CloseDataHandle(arcHandle);
   }
   */
   {
-    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_DRESSUP_GRA , work->heapId );
+    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_DRESSUP_GRA , infoWork->heapId );
 
     //下画面
     GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_test_bg_d_NCLR , 
-                      PALTYPE_SUB_BG , 0 , 0 , work->heapId );
+                      PALTYPE_SUB_BG , 0 , 0 , infoWork->heapId );
     GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_bg_mirror_NCGR ,
-                      MUS_INFO_FRAME_BG , 0 , 0, FALSE , work->heapId );
+                      MUS_INFO_FRAME_BG , 0 , 0, FALSE , infoWork->heapId );
     GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_test_bg_d_NSCR , 
-                      MUS_INFO_FRAME_BG ,  0 , 0, FALSE , work->heapId );
+                      MUS_INFO_FRAME_BG ,  0 , 0, FALSE , infoWork->heapId );
     GFL_ARC_CloseDataHandle(arcHandle);
   }
+  if( infoWork->isChackMode == FALSE )
+  {
+    //共通素材
+    {
+      ARCHANDLE *commonArcHandle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , infoWork->heapId );
+      
+      //バー
+      GFL_ARCHDL_UTIL_TransVramPalette( commonArcHandle , APP_COMMON_GetBarPltArcIdx() , 
+                        PALTYPE_SUB_BG , MUS_INFO_PAL_BAR*32 , 32 , infoWork->heapId );
+      GFL_ARCHDL_UTIL_TransVramBgCharacter( commonArcHandle , APP_COMMON_GetBarCharArcIdx() ,
+                        MUS_INFO_FRAME_BAR , 0 , 0, FALSE , infoWork->heapId );
+      GFL_ARCHDL_UTIL_TransVramScreen( commonArcHandle , APP_COMMON_GetBarScrnArcIdx() , 
+                        MUS_INFO_FRAME_BAR , 0 , 0, FALSE , infoWork->heapId );
+      GFL_BG_ChangeScreenPalette( MUS_INFO_FRAME_BAR , 0 , 21 , 32 , 3 , MUS_INFO_PAL_BAR );
+      GFL_BG_LoadScreenReq( MUS_INFO_FRAME_BAR );
+
+      //バーアイコン
+      infoWork->cellResIdx[SICR_PLT_APP] = GFL_CLGRP_PLTT_RegisterEx( commonArcHandle , 
+            APP_COMMON_GetBarIconPltArcIdx() , CLSYS_DRAW_SUB , 
+            0 , 0 , 
+            APP_COMMON_BARICON_PLT_NUM , infoWork->heapId  );
+      infoWork->cellResIdx[SICR_NCG_APP] = GFL_CLGRP_CGR_Register( commonArcHandle , 
+            APP_COMMON_GetBarIconCharArcIdx() , FALSE , CLSYS_DRAW_SUB , infoWork->heapId  );
+      infoWork->cellResIdx[SICR_ANM_APP] = GFL_CLGRP_CELLANIM_Register( commonArcHandle , 
+            APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_32K) , 
+            APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_32K), 
+            infoWork->heapId  );
+
+      GFL_ARC_CloseDataHandle( commonArcHandle );
+    }
+    
+    {
+      //OBJの作成
+      GFL_CLWK_DATA cellInitData;
+      cellInitData.pos_x = 256-24;
+      cellInitData.pos_y = 192-24;
+      cellInitData.anmseq = APP_COMMON_BARICON_RETURN;
+      cellInitData.bgpri = 0;
+      cellInitData.softpri = 0;
+
+      infoWork->clwkReturn = GFL_CLACT_WK_Create( infoWork->cellUnit ,
+                infoWork->cellResIdx[SICR_NCG_APP],
+                infoWork->cellResIdx[SICR_PLT_APP],
+                infoWork->cellResIdx[SICR_ANM_APP],
+                &cellInitData ,CLSYS_DRAW_SUB , infoWork->heapId );
+    }
+  }
+
 }
 //--------------------------------------------------------------------------
 //  Bg初期化 機能部
@@ -335,108 +438,108 @@ static void MUS_SHOT_INFO_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bg
 //--------------------------------------------------------------------------
 //  メッセージ系初期化
 //--------------------------------------------------------------------------
-static void MUS_SHOT_INFO_InitMessage( MUS_SHOT_INFO_WORK *work )
+static void MUS_SHOT_INFO_InitMessage( MUS_SHOT_INFO_WORK *infoWork )
 {
   //メッセージ用処理
-  work->msgWin = GFL_BMPWIN_Create( MUS_INFO_FRAME_MSG , MUS_INFO_MSGWIN_X , MUS_INFO_MSGWIN_Y ,
+  infoWork->msgWin = GFL_BMPWIN_Create( MUS_INFO_FRAME_MSG , MUS_INFO_MSGWIN_X , MUS_INFO_MSGWIN_Y ,
                   MUS_INFO_MSGWIN_WIDTH , MUS_INFO_MSGWIN_HEIGHT , MUS_INFO_PAL_FONT ,
                   GFL_BMP_CHRAREA_GET_B );
-  GFL_BMPWIN_TransVramCharacter( work->msgWin );
-  GFL_BMPWIN_MakeScreen( work->msgWin );
+  GFL_BMPWIN_TransVramCharacter( infoWork->msgWin );
+  GFL_BMPWIN_MakeScreen( infoWork->msgWin );
   GFL_BG_LoadScreenReq(MUS_INFO_FRAME_MSG);
   
   
   //フォント読み込み
-  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  infoWork->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , infoWork->heapId );
   
   //メッセージ
-  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_shot_dat , work->heapId );
+  infoWork->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_shot_dat , infoWork->heapId );
 
-  BmpWinFrame_GraphicSet( MUS_INFO_FRAME_MSG , MUS_INFO_CGX_WIN , MUS_INFO_PAL_WIN , 0 , work->heapId );
+  BmpWinFrame_GraphicSet( MUS_INFO_FRAME_MSG , MUS_INFO_CGX_WIN , MUS_INFO_PAL_WIN , 0 , infoWork->heapId );
 
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , MUS_INFO_PAL_FONT*0x20, 16*2, work->heapId );
+  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , MUS_INFO_PAL_FONT*0x20, 16*2, infoWork->heapId );
   GFL_FONTSYS_SetDefaultColor();
   
-  work->tcblSys = GFL_TCBL_Init( work->heapId , work->heapId , 3 , 0x100 );
-  work->printHandle = NULL;
-  work->msgStr = NULL;
+  infoWork->tcblSys = GFL_TCBL_Init( infoWork->heapId , infoWork->heapId , 3 , 0x100 );
+  infoWork->printHandle = NULL;
+  infoWork->msgStr = NULL;
   
   //YesNo用
-  work->printQue = PRINTSYS_QUE_Create( work->heapId );
+  infoWork->printQue = PRINTSYS_QUE_Create( infoWork->heapId );
 }
 
 //--------------------------------------------------------------------------
 //  メッセージ系開放
 //--------------------------------------------------------------------------
-static void MUS_SHOT_INFO_ExitMessage( MUS_SHOT_INFO_WORK *work )
+static void MUS_SHOT_INFO_ExitMessage( MUS_SHOT_INFO_WORK *infoWork )
 {
-  PRINTSYS_QUE_Delete( work->printQue );
-  if( work->printHandle != NULL )
+  PRINTSYS_QUE_Delete( infoWork->printQue );
+  if( infoWork->printHandle != NULL )
   {
-    PRINTSYS_PrintStreamDelete( work->printHandle );
+    PRINTSYS_PrintStreamDelete( infoWork->printHandle );
   }
-  if( work->msgStr != NULL )
+  if( infoWork->msgStr != NULL )
   {
-    GFL_STR_DeleteBuffer( work->msgStr );
+    GFL_STR_DeleteBuffer( infoWork->msgStr );
   }
-  GFL_MSG_Delete( work->msgHandle );
-  GFL_BMPWIN_Delete( work->msgWin );
-  GFL_FONT_Delete( work->fontHandle );
-  GFL_TCBL_Exit( work->tcblSys );
+  GFL_MSG_Delete( infoWork->msgHandle );
+  GFL_BMPWIN_Delete( infoWork->msgWin );
+  GFL_FONT_Delete( infoWork->fontHandle );
+  GFL_TCBL_Exit( infoWork->tcblSys );
 }
 
 //--------------------------------------------------------------------------
 //  メッセージ表示
 //--------------------------------------------------------------------------
-static void MUS_SHOT_INFO_DispMessage( MUS_SHOT_INFO_WORK *work , const u16 msgId )
+static void MUS_SHOT_INFO_DispMessage( MUS_SHOT_INFO_WORK *infoWork , const u16 msgId )
 {
-  if( work->printHandle != NULL )
+  if( infoWork->printHandle != NULL )
   {
     ARI_TPrintf( NULL , "Message is not finish!!\n" );
-    PRINTSYS_PrintStreamDelete( work->printHandle );
-    work->printHandle = NULL;
+    PRINTSYS_PrintStreamDelete( infoWork->printHandle );
+    infoWork->printHandle = NULL;
   }
 
   {
-    if( work->msgStr != NULL )
+    if( infoWork->msgStr != NULL )
     {
-      GFL_STR_DeleteBuffer( work->msgStr );
-      work->msgStr = NULL;
+      GFL_STR_DeleteBuffer( infoWork->msgStr );
+      infoWork->msgStr = NULL;
     }
     
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0xf );
-    work->msgStr = GFL_MSG_CreateString( work->msgHandle , msgId );
-    work->printHandle = PRINTSYS_PrintStream( work->msgWin , 0,0, work->msgStr ,work->fontHandle ,
-                        MSGSPEED_GetWait() , work->tcblSys , 2 , work->heapId , 0 );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( infoWork->msgWin ) , 0xf );
+    infoWork->msgStr = GFL_MSG_CreateString( infoWork->msgHandle , msgId );
+    infoWork->printHandle = PRINTSYS_PrintStream( infoWork->msgWin , 0,0, infoWork->msgStr ,infoWork->fontHandle ,
+                        MSGSPEED_GetWait() , infoWork->tcblSys , 2 , infoWork->heapId , 0 );
   }
-  BmpWinFrame_Write( work->msgWin , WINDOW_TRANS_ON_V , MUS_INFO_CGX_WIN , MUS_INFO_PAL_WIN );
+  BmpWinFrame_Write( infoWork->msgWin , WINDOW_TRANS_ON_V , MUS_INFO_CGX_WIN , MUS_INFO_PAL_WIN );
 }
 
 //--------------------------------------------------------------------------
 //  メッセージ表示
 //--------------------------------------------------------------------------
-static void MUS_SHOT_INFO_HideMessage( MUS_SHOT_INFO_WORK *work )
+static void MUS_SHOT_INFO_HideMessage( MUS_SHOT_INFO_WORK *infoWork )
 {
-  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0 );
-  BmpWinFrame_Clear( work->msgWin , WINDOW_TRANS_ON_V );
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( infoWork->msgWin ) , 0 );
+  BmpWinFrame_Clear( infoWork->msgWin , WINDOW_TRANS_ON_V );
 }
 
 //--------------------------------------------------------------------------
 //  選択肢表示
 //--------------------------------------------------------------------------
-static void MUS_SHOT_INFO_DispYesNo( MUS_SHOT_INFO_WORK *work )
+static void MUS_SHOT_INFO_DispYesNo( MUS_SHOT_INFO_WORK *infoWork )
 {
   APP_TASKMENU_ITEMWORK itemWork[2];
   APP_TASKMENU_INITWORK initWork;
   
-  itemWork[0].str = GFL_MSG_CreateString( work->msgHandle , MUSICAL_SHOT_INFO_02 );
-  itemWork[1].str = GFL_MSG_CreateString( work->msgHandle , MUSICAL_SHOT_INFO_03 );
+  itemWork[0].str = GFL_MSG_CreateString( infoWork->msgHandle , MUSICAL_SHOT_INFO_02 );
+  itemWork[1].str = GFL_MSG_CreateString( infoWork->msgHandle , MUSICAL_SHOT_INFO_03 );
   itemWork[0].msgColor = MSU_INFO_YESNO_COLOR;
   itemWork[1].msgColor = MSU_INFO_YESNO_COLOR;
   itemWork[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
   itemWork[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
 
-  initWork.heapId = work->heapId;
+  initWork.heapId = infoWork->heapId;
   initWork.itemNum = 2;
   initWork.itemWork = itemWork;
 //  initWork.bgFrame = MUS_INFO_FRAME_MSG;
@@ -444,13 +547,13 @@ static void MUS_SHOT_INFO_DispYesNo( MUS_SHOT_INFO_WORK *work )
   initWork.posType = ATPT_LEFT_UP;
   initWork.charPosX = MUS_INFO_YESNO_X;
   initWork.charPosY = MUS_INFO_YESNO_Y;
-  //initWork.msgHandle = work->msgHandle;
- // initWork.fontHandle = work->fontHandle;
-//  initWork.printQue = work->printQue;
+  //initWork.msgHandle = infoWork->msgHandle;
+ // initWork.fontHandle = infoWork->fontHandle;
+//  initWork.printQue = infoWork->printQue;
   initWork.w = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
   initWork.h = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
 
-  work->yesNoWork = APP_TASKMENU_OpenMenu( &initWork, work->takmenures );
+  infoWork->yesNoWork = APP_TASKMENU_OpenMenu( &initWork, infoWork->takmenures );
   
   GFL_STR_DeleteBuffer( itemWork[0].str );
   GFL_STR_DeleteBuffer( itemWork[1].str );
