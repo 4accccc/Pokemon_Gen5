@@ -317,7 +317,6 @@ typedef struct
 
 
 
-
 static void FIELD_CROWD_PEOPLE_TASK_Create( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
 static void FIELD_CROWD_PEOPLE_TASK_Delete( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
 static void FIELD_CROWD_PEOPLE_TASK_Update( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldmap, void* p_work );
@@ -627,6 +626,9 @@ static void FIELD_CROWD_PEOPLE_WK_Init( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_
   // Vanish
   MMDL_SetStatusBitVanish( p_wk->p_mmdl, TRUE );
 
+  // Not Save
+  MMDL_SetMoveBitNotSave( p_wk->p_mmdl, TRUE );
+
   // 描画オフセット設定
   {
     VecFx32 offset = {0,0,0};
@@ -736,6 +738,9 @@ static void FIELD_CROWD_PEOPLE_WK_SetUp( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p
   p_wk->last_side = FALSE;
   p_wk->last_dir  = 0;
 
+  // Not Save
+  MMDL_SetMoveBitNotSave( p_wk->p_mmdl, TRUE );
+
   // 起動ポイントを保存
   p_wk->cp_point = cp_point;
 
@@ -757,6 +762,9 @@ static void FIELD_CROWD_PEOPLE_WK_ClearMove( FIELD_CROWD_PEOPLE_WK* p_wk )
 
   // 表示OFF
   MMDL_SetStatusBitVanish( p_wk->p_mmdl, TRUE );
+
+  // Not Save
+  MMDL_SetMoveBitNotSave( p_wk->p_mmdl, TRUE );
 }
 
 
