@@ -11,6 +11,7 @@
 #include "system/main.h"
 #include "system/gfl_use.h"
 #include "system/wipe.h"
+#include "system/net_err.h"
 
 #include "arc_def.h"
 #include "message.naix"
@@ -195,7 +196,7 @@ static const u16 ITEM_SWING_ANGLE_SORT_ADD_VALUE = 0x200;
 #define EFFECT_UP_NUM (8)   //上画面のきらきらの数
 #define EFFECT_UP_LIMIT_X (56)
 #define EFFECT_UP_LIMIT_Y (90)
-#define EFFECT_END_EFFECT_CNT (60)   //上画面のきらきらの数
+#define EFFECT_END_EFFECT_CNT (60)
 
 //======================================================================
 //  enum
@@ -405,6 +406,7 @@ static void DUP_CHECK_UpdateTpMain( FITTING_WORK *work );
 static void DUP_CHECK_UpdateTpHoldingItem( FITTING_WORK *work );
 static void DUP_CHECK_ResetItemAngle( FITTING_WORK *work );
 static void DUP_CHECK_SaveNowEquip( FITTING_WORK *work );
+static void DUP_CHECK_UpdateEndEffect(  FITTING_WORK *work );
 
 #pragma mark [> proto Demo
 static void DUP_DEMO_DemoMain( FITTING_WORK *work );
@@ -483,7 +485,8 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   work->dispItemId = MUSICAL_ITEM_INVALID;
   work->bgScrollCnt = 0;
   work->listTotalMove = 0;
-
+  work->msgWin = NULL;
+  
   work->listSpeed = 0;
   work->snapPos = MUS_POKE_EQU_INVALID;
   DUP_FIT_SetupGraphic( work );
@@ -571,7 +574,11 @@ void  DUP_FIT_TermFitting( FITTING_WORK *work )
   {
     GFL_CLGRP_CELLANIM_Release( work->objResIdx[i] );
   }
-
+  
+  if( work->msgWin != NULL )
+  {
+    GFL_BMPWIN_Delete( work->msgWin );
+  }
   GFL_CLACT_UNIT_Delete( work->cellUnit );
   GFL_CLACT_SYS_Delete();
 
@@ -681,16 +688,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
 
   case DUS_WAIT_END_EFFECT:
     work->endEffCnt++;
-    {
-      GFL_CLACTPOS cellPos;
-      cellPos.x = BUTTON_ASSEPT_POS_X;
-      cellPos.y = BUTTON_ASSEPT_POS_Y+work->endEffCnt*2;
-      GFL_CLACT_WK_SetPos( work->buttonCell[0] , &cellPos , CLSYS_DEFREND_MAIN );
-
-      cellPos.x = BUTTON_RETURN_POS_X;
-      cellPos.y = BUTTON_RETURN_POS_Y+work->endEffCnt*2;
-      GFL_CLACT_WK_SetPos( work->buttonCell[1] , &cellPos , CLSYS_DEFREND_MAIN );
-    }
+    DUP_CHECK_UpdateEndEffect( work );
 
     if( work->endEffCnt > EFFECT_END_EFFECT_CNT )
     {
@@ -803,7 +801,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       GFL_BG_LoadScreenV_Req( FIT_FRAME_SUB_BG );
       
       GFL_BMPWIN_Delete( work->msgWin );
-
+      work->msgWin = NULL;
     }
     else
     if( work->curtainScrollCnt > 0 )
@@ -854,11 +852,36 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     work->listSeWaitCnt--;
   }
   
+  if( work->initWork->commWork != NULL )
+  {
+    if( work->state != DUS_FADEIN_WAIT_SND &&
+        work->state != DUS_FADEIN_WAIT &&
+        work->state != DUS_FADEOUT_WAIT )
+    {
+      if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+      {
+        //リクエストはしない
+        WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                        WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
+        PMSND_FadeOutBGM( FSND_FADE_NORMAL );
+        work->state = DUS_FADEOUT_WAIT;
+      }
+    }
+  }
+
 #if DEB_ARI
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
-    GFL_UI_KEY_GetCont() & PAD_BUTTON_START )
+    GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
   {
-    return FIT_RET_GO_END;
+    if( work->state != DUS_FADEIN_WAIT_SND &&
+        work->state != DUS_FADEIN_WAIT &&
+        work->state != DUS_FADEOUT_WAIT )
+    {
+      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                      WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
+      PMSND_FadeOutBGM( FSND_FADE_NORMAL );
+      work->state = DUS_FADEOUT_WAIT;
+    }
   }
 #endif //DEB_ARI
   return ret;
@@ -3213,7 +3236,39 @@ static void DUP_CHECK_SaveNowEquip( FITTING_WORK *work )
 
     save_pos++;
   }
-  
+}
+
+static void DUP_CHECK_UpdateEndEffect(  FITTING_WORK *work )
+{
+  //セル
+  {
+    GFL_CLACTPOS cellPos;
+    cellPos.x = BUTTON_ASSEPT_POS_X;
+    cellPos.y = BUTTON_ASSEPT_POS_Y+work->endEffCnt*2;
+    if( cellPos.y >= 192+32 )
+    {
+      cellPos.y = 192+32;
+    }
+    GFL_CLACT_WK_SetPos( work->buttonCell[0] , &cellPos , CLSYS_DEFREND_MAIN );
+
+    cellPos.x = BUTTON_RETURN_POS_X;
+    cellPos.y = BUTTON_RETURN_POS_Y+work->endEffCnt*2;
+    if( cellPos.y >= 192+32 )
+    {
+      cellPos.y = 192+32;
+    }
+    GFL_CLACT_WK_SetPos( work->buttonCell[1] , &cellPos , CLSYS_DEFREND_MAIN );
+  }
+  //パレットアニメ
+  {
+    u8 pal = ((work->endEffCnt*3)*8/EFFECT_END_EFFECT_CNT) + 4;
+    if( pal >= 11 )
+    {
+      pal = 3;
+    }
+    GFL_BG_ChangeScreenPalette( FIT_FRAME_MAIN_MIRROR , 10 , 44 , 12 , 12 , pal);
+    GFL_BG_LoadScreenV_Req( FIT_FRAME_MAIN_MIRROR );
+  }
 }
 
 #pragma mark [> DemoFunc
