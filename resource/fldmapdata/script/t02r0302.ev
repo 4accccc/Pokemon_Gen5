@@ -54,7 +54,7 @@ _TALK_OBJ_START()
 		_BALLOONWIN_OBJMSG_POS( msg_t02r0302_babygirl1_03,T02R0302_BABYGIRL1_01,POS_DL )
 		
 		//三択表示・くさ、みず、ほのお
-    	_BMPMENU_INIT_EX( 1, 1, 0, 0, LWK_JANKEN_SELECT )
+    	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LWK_JANKEN_SELECT )
 
 		_BMPMENU_MAKE_LIST( msg_t02r0302_babygirl1_10, 0 )	//『ほのお』
 		_BMPMENU_MAKE_LIST( msg_t02r0302_babygirl1_11, 1 )	//『くさ』

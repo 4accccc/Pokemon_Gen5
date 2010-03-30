@@ -108,7 +108,7 @@ EVENT_START		ev_pos_h01r0201_rival_01
 	DEFINE_LOCAL  LWK_WIN
 
 	//選択肢表示
-   	_BMPMENU_INIT_EX( 1, 1, 0, 0, LWK_WIN )
+   	_BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, LWK_WIN )
 
 	_BMPMENU_MAKE_LIST( msg_h01r0201_black_win01, 0 )	//『ポケモンセンター』
 	_BMPMENU_MAKE_LIST( msg_h01r0201_black_win02, 1 )	//『ポケモンジム』
