@@ -629,7 +629,7 @@ static void AcRailStayWalkWorkInit( MMDL * mmdl, int dir, s16 wait, u16 draw )
 	work = MMDL_InitMoveCmdWork( mmdl, AC_RAIL_STAY_WALK_WORK_SIZE );
 	
 	work->draw_state = draw;
-	work->wait = wait + FRAME_1;	//FRAME_1=動作->アニメへの1フレーム
+	work->wait = wait;
 	
 	MMDL_SetDirDisp( mmdl, dir );
 	MMDL_SetDrawStatus( mmdl, draw );
