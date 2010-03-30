@@ -20,6 +20,7 @@
 #define R16_FLD_ITEM_01                    6
 #define R16_FLD_ITEM_02                    7
 #define R16_STOPPER_01                     8
+#define R16_FLD_ITEM_03                    9
 
 #endif //ZONE_R16_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r16.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
