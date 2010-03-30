@@ -57,7 +57,6 @@ struct DREAM_WORLD_SERVER_CREATE_DATA{
 };
 
 
-
 /// ダウンロードデータ構造体
 typedef struct {
   u32 uploadCount;     ///< アップロード回数
@@ -75,9 +74,11 @@ typedef struct {
   u16 itemID[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテム
   u8 itemNum[DREAM_WORLD_DATA_MAX_ITEMBOX];  ///< 持ち帰ったアイテムの個数
   DREAM_WORLD_FURNITUREDATA Furniture[DREAM_WORLD_DATA_MAX_FURNITURE];  ///<	26*5=130  配信家具情報
+  u8 findPokemonAct;  ///< であったポケモンの動き
+  u8 dummy;
   u16 CRC;  /// このデータのCRC-16/CCITT
-  u16 dummy;
 } DREAM_WORLD_SERVER_DOWNLOAD_DATA;
+
 
 
 /// ダウンロード完了をPDWサーバに知らせる構造体
