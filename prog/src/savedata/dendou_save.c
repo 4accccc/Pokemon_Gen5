@@ -190,6 +190,11 @@ void DendouRecord_Add( DENDOU_RECORD* record, const POKEPARTY* party, const RTCD
   record->year = date->year;
   record->month = date->month;
   record->day = date->day;
+
+  if(strbuf)
+  {
+    GFL_STR_DeleteBuffer( strbuf );
+  }
   
 }
 
@@ -230,12 +235,6 @@ void DendouData_AddRecord( DENDOU_SAVEDATA* data, const POKEPARTY* party, const 
     data->savePoint = 0;
   }
   data->latestNumber++;
-
-
-  if(strbuf)
-  {
-    GFL_STR_DeleteBuffer(strbuf);
-  }
 
 }
 
