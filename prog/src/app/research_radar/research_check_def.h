@@ -206,16 +206,16 @@
 // 左カーソル
 #define CLWK_CONTROL_CURSOR_L_POS_X (0)  // x 座標 ( ドット単位 )
 #define CLWK_CONTROL_CURSOR_L_POS_Y (0)  // y 座標 ( ドット単位 )
-#define CLWK_CONTROL_CURSOR_L_WIDTH (16) // 幅
-#define CLWK_CONTROL_CURSOR_L_HEIGHT (16) // 高さ
+#define CLWK_CONTROL_CURSOR_L_WIDTH (32) // 幅
+#define CLWK_CONTROL_CURSOR_L_HEIGHT (32) // 高さ
 #define CLWK_CONTROL_CURSOR_L_ANIME_SEQ (NANR_obj_l)  // アニメーションシーケンス
 #define CLWK_CONTROL_CURSOR_L_SOFT_PRIORITY (0)  // ソフト優先順位 0>0xff
 #define CLWK_CONTROL_CURSOR_L_BG_PRIORITY   (0)  // BG 優先順位
 // 右カーソル
 #define CLWK_CONTROL_CURSOR_R_POS_X (0)  // x 座標 ( ドット単位 )
 #define CLWK_CONTROL_CURSOR_R_POS_Y (0)  // y 座標 ( ドット単位 )
-#define CLWK_CONTROL_CURSOR_R_WIDTH (16) // 幅
-#define CLWK_CONTROL_CURSOR_R_HEIGHT (16) // 高さ
+#define CLWK_CONTROL_CURSOR_R_WIDTH (32) // 幅
+#define CLWK_CONTROL_CURSOR_R_HEIGHT (32) // 高さ
 #define CLWK_CONTROL_CURSOR_R_ANIME_SEQ (NANR_obj_r)  // アニメーションシーケンス
 #define CLWK_CONTROL_CURSOR_R_SOFT_PRIORITY (0)  // ソフト優先順位 0>0xff
 #define CLWK_CONTROL_CURSOR_R_BG_PRIORITY   (0)  // BG 優先順位
