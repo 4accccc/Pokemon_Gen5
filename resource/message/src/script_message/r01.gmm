@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T19:10:08"/>
+	<create user="matsumiya" host="W00224" date="2010-03-30T18:58:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -545,7 +545,7 @@
 つかまえたか　いってしまった……</language>
 	</row>
 
-	<row id="msg_r01_white_10">
+	<row id="msg_r01_white_10" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・msg_r01_white_06表示後
 　T02側に出現
@@ -564,7 +564,7 @@
 捕まえたか　比べてみる？</language>
 	</row>
 
-	<row id="msg_r01_white_11">
+	<row id="msg_r01_white_11" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -574,7 +574,7 @@
 じゃあ　ここで　待ってるね</language>
 	</row>
 
-	<row id="msg_r01_white_12">
+	<row id="msg_r01_white_12" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・はい選択＆3匹以上
 ・0＝捕獲数</comment>
@@ -587,7 +587,7 @@
 そんなに　ポケモン　捕まえたんだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_white_13">
+	<row id="msg_r01_white_13" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・はい選択＆2匹</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -599,7 +599,7 @@
 あたしたち　みんな　一緒だね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_white_14">
+	<row id="msg_r01_white_14" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・はい選択＆1匹以下</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -618,10 +618,10 @@
 ・表示後、ＴＶトランシーバーのコール音再生</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『じゃあ
-カラクサタウンに　いくか[BE:00:ページ切り替え（行送り）]
+カラクサタウンに　いこうか[BE:00:ページ切り替え（行送り）]
 はかせも　まっているし[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『じゃあ
-カラクサタウンに　行くか[BE:00:ページ切り替え（行送り）]
+カラクサタウンに　行こうか[BE:00:ページ切り替え（行送り）]
 博士も　待っているし[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
