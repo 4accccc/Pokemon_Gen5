@@ -222,10 +222,10 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
 
   work = GFL_PROC_AllocWork( proc, sizeof(MUS_EDIT_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
   work->actInitWork = MUSICAL_STAGE_CreateStageWork( HEAPID_MUSICAL_STAGE , NULL );
-  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_PIKUSII , 0 , HEAPID_MUSICAL_STAGE );
-  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , MONSNO_RAITYUU , 0 , HEAPID_MUSICAL_STAGE );
-  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_EREBUU  , 0 , HEAPID_MUSICAL_STAGE );
-  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_RUKARIO , 0 , HEAPID_MUSICAL_STAGE );
+  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 0 , MONSNO_PIKUSII , 0 , 0 , HEAPID_MUSICAL_STAGE );
+  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 1 , MONSNO_RAITYUU , 0 , 0 , HEAPID_MUSICAL_STAGE );
+  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 2 , MONSNO_EREBUU  , 0 , 0 , HEAPID_MUSICAL_STAGE );
+  MUSICAL_STAGE_SetData_NPC( work->actInitWork , 3 , MONSNO_RUKARIO , 0 , 0 , HEAPID_MUSICAL_STAGE );
   
   work->actInitWork->musPoke[0]->charaType = MUS_CHARA_PLAYER;
 

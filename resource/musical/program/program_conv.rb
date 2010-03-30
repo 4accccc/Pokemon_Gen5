@@ -31,9 +31,11 @@ DATA_IDX_POKE_DATA_START = 10
 POKEDATA_IDX_MONSNO = 0
 POKEDATA_IDX_TRAINER = 1
 POKEDATA_IDX_TR_NAME = 2
-POKEDATA_IDX_APPEAL_TYPE = 3
-POKEDATA_IDX_OPEN_POINT = 4   #登場ポイント
-POKEDATA_IDX_GOODS_BASE = 5
+POKEDATA_IDX_TR_SEX = 3
+POKEDATA_IDX_POKE_SEX = 4
+POKEDATA_IDX_APPEAL_TYPE = 5
+POKEDATA_IDX_OPEN_POINT = 6   #登場ポイント
+POKEDATA_IDX_GOODS_BASE = 7
 
 GOODSDATA_IDX_NO = 0
 GOODSDATA_IDX_POS = 1
@@ -42,7 +44,7 @@ GOODSDATA_IDX_POS = 1
 GOODS_NUM = 8
 GOODSDATA_NUM = 2
 POKE_NUM = 6
-POKEDATA_NUM = 5 + GOODSDATA_NUM*GOODS_NUM
+POKEDATA_NUM = 7 + GOODSDATA_NUM*GOODS_NUM
 
 #============================
 #	proto
@@ -116,10 +118,15 @@ begin
     outFile.write( ary.pack("C") )
     ary = Array( sheet[dataCol,rowBase+POKEDATA_IDX_TR_NAME].to_i )
     outFile.write( ary.pack("C") )
+    ary = Array( sheet[dataCol,rowBase+POKEDATA_IDX_TR_SEX].to_i )
+    outFile.write( ary.pack("C") )
+    ary = Array( sheet[dataCol,rowBase+POKEDATA_IDX_POKE_SEX].to_i )
+    outFile.write( ary.pack("C") )
     ary = Array( sheet[dataCol,rowBase+POKEDATA_IDX_APPEAL_TYPE].to_i )
     outFile.write( ary.pack("S") )
     ary = Array( sheet[dataCol,rowBase+POKEDATA_IDX_OPEN_POINT].to_i )
     outFile.write( ary.pack("S") )
+    outFile.write( padAry.pack("S") ) #パディング
     
     goodsIdx = 0
     while goodsIdx < GOODS_NUM

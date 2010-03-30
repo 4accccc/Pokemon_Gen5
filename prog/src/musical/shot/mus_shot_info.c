@@ -13,7 +13,8 @@
 #include "system/gfl_use.h"
 
 #include "arc_def.h"
-#include "musical_shot.naix"
+//#include "musical_shot.naix"
+#include "dressup_gra.naix"
 #include "message.naix"
 #include "font/font.naix"
 #include "msg/msg_musical_shot.h"
@@ -77,6 +78,7 @@ struct _MUS_SHOT_INFO_WORK
 {
   HEAPID heapId;
   MUSICAL_SHOT_INFO_STATE state;
+  u8 bgScrollCnt;
   
   BOOL              isChackMode;
   MUSICAL_SHOT_DATA *shotData;
@@ -118,6 +120,7 @@ MUS_SHOT_INFO_WORK* MUS_SHOT_INFO_InitSystem( MUSICAL_SHOT_DATA *shotData , MUSI
   infoWork->shotData = shotData;
   infoWork->musicalSave = musicalSave;
   infoWork->msgStr = NULL;
+  infoWork->bgScrollCnt = 0;
 
   if( isChackMode == TRUE )
   {
@@ -227,6 +230,15 @@ void MUS_SHOT_INFO_UpdateSystem( MUS_SHOT_INFO_WORK *infoWork )
     }
   }
   PRINTSYS_QUE_Main( infoWork->printQue );
+
+  //ƒXƒNƒ[ƒ‹Œn
+  infoWork->bgScrollCnt++;
+  if( infoWork->bgScrollCnt > 1 )
+  {
+    infoWork->bgScrollCnt = 0;
+    GFL_BG_SetScrollReq( MUS_INFO_FRAME_BG , GFL_BG_SCROLL_X_INC , 1 );
+    GFL_BG_SetScrollReq( MUS_INFO_FRAME_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -283,6 +295,7 @@ static void MUS_SHOT_INFO_InitGraphic( MUS_SHOT_INFO_WORK *work )
     MUS_SHOT_INFO_SetupBgFunc( &header_sub3 , MUS_INFO_FRAME_BG , GFL_BG_MODE_TEXT );
   }
   //BG“Ç‚Ýž‚Ý
+  /*
   {
     ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_MUSICAL_SHOT , work->heapId );
     GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_musical_shot_info_bg_NCLR , 
@@ -292,6 +305,19 @@ static void MUS_SHOT_INFO_InitGraphic( MUS_SHOT_INFO_WORK *work )
     GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_musical_shot_info_bg_NSCR , 
                       MUS_INFO_FRAME_BG ,  0 , 0, FALSE , work->heapId );
     GFL_BG_LoadScreenReq(MUS_INFO_FRAME_BG);
+    GFL_ARC_CloseDataHandle(arcHandle);
+  }
+  */
+  {
+    ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_DRESSUP_GRA , work->heapId );
+
+    //‰º‰æ–Ê
+    GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_dressup_gra_test_bg_d_NCLR , 
+                      PALTYPE_SUB_BG , 0 , 0 , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_dressup_gra_bg_mirror_NCGR ,
+                      MUS_INFO_FRAME_BG , 0 , 0, FALSE , work->heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_dressup_gra_test_bg_d_NSCR , 
+                      MUS_INFO_FRAME_BG ,  0 , 0, FALSE , work->heapId );
     GFL_ARC_CloseDataHandle(arcHandle);
   }
 }

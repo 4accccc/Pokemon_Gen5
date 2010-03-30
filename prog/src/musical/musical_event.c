@@ -935,7 +935,8 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
     
     for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
-      const MUS_COMM_MISC_DATA *miscData = MUS_COMM_GetUserMiscData( evWork->commWork , i );
+      u8 idx = MUSICAL_EVENT_GetPosIndex( evWork , i );
+      const MUS_COMM_MISC_DATA *miscData = MUS_COMM_GetUserMiscData( evWork->commWork , idx );
       MUSICAL_POKE_PARAM *musPoke = MUS_COMM_GetMusPokeParam( evWork->commWork , i );
       if( musPoke != NULL )
       {

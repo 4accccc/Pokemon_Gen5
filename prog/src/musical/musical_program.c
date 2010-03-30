@@ -53,8 +53,11 @@ typedef struct
   u16 monsno;
   u8  trainerType;
   u8  trainerName;
+  u8  trainerSex;
+  u8  pokeSex;
   u16 appealTime;
   u16 openPoint;  //“oêƒ|ƒCƒ“ƒg
+  u16 padding;
   MUSICAL_PROGRAM_EQUIP_DATA equipData[MUS_PROG_DATA_EQUIP_NUM];
 }MUSICAL_PROGRAM_POKE_DATA;
 
@@ -327,16 +330,7 @@ void MUSICAL_PROGRAM_SetData_NPC( MUSICAL_PROGRAM_WORK* progWork , STAGE_INIT_WO
 {
   u8 i;
   const MUSICAL_PROGRAM_POKE_DATA *pokeData = &progWork->progData->pokeData[progWork->npcArr[NPCIdx]];
-  if( pokeData->monsno == MUS_PROG_DATA_POKE_RANDOM )
-  {
-    const u16 monsno = MUSICAL_SYSTEM_GetMusicalPokemonRandom();
-    MUSICAL_STAGE_SetData_NPC( actInitWork , musicalIdx , monsno , pokeData->appealTime , heapId );
-    ARI_TPrintf("monsno:[%d]\n",monsno);
-  }
-  else
-  {
-    MUSICAL_STAGE_SetData_NPC( actInitWork , musicalIdx , pokeData->monsno , pokeData->appealTime , heapId );
-  }
+  MUSICAL_STAGE_SetData_NPC( actInitWork , musicalIdx , pokeData->monsno , pokeData->pokeSex , pokeData->appealTime , heapId );
   
   for( i=0;i<MUS_PROG_DATA_EQUIP_NUM;i++ )
   {
