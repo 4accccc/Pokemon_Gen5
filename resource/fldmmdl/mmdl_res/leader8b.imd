@@ -133,8 +133,8 @@
 			0000 0000 def0 dddd dddd 00fe 0000 0000 
 			0000 0000 ddef dddd eedd 0f2e 0000 0000 
 			0000 f000 dd5e dd55 dddd f2ee 0000 0000 
-			0000 f000 5eee ddd5 beed 2ddd 000f 0000 
-			0000 f000 ee2e bb2e cccb eede 000f 0000 
+			0000 f000 5eee eee5 beee 2ddd 000f 0000 
+			0000 f000 ee2e bbe2 cccb eede 000f 0000 
 			0000 f000 2ee2 ccbb cccc edde 000f 0000 
 			0000 0000 b2ef cccb cccc fdec 0000 0000 
 			0000 f000 db2c cccd dccc cebd 000f 0000 
@@ -168,8 +168,8 @@
 			0000 0000 def0 dddd dddd 00fe 0000 0000 
 			0000 0000 ddef dddd eedd 0f2e 0000 0000 
 			0000 f000 dd5e dd55 dddd f2ee 0000 0000 
-			0000 f000 5eee ddd5 beed 2ddd 000f 0000 
-			0000 f000 ee2e bb2e cccb eede 000f 0000 
+			0000 f000 5eee eee5 beee 2ddd 000f 0000 
+			0000 f000 ee2e bbe2 cccb eede 000f 0000 
 			0000 f000 2ee2 ccbb cccc edde 000f 0000 
 			0000 0000 b2ef cccb cccc fdec 0000 0000 
 			0000 f000 db2c cccd dccc cebd 000f 0000 
@@ -204,8 +204,8 @@
 			0000 0000 def0 dddd dddd 00fe 0000 0000 
 			0000 0000 ddef dddd eedd 0f2e 0000 0000 
 			0000 f000 dd5e dd55 dddd f2ee 0000 0000 
-			0000 f000 5eee ddd5 beed 2ddd 000f 0000 
-			0000 f000 ee2e bb2e cccb eede 000f 0000 
+			0000 f000 5eee eee5 beee 2ddd 000f 0000 
+			0000 f000 ee2e bbe2 cccb eede 000f 0000 
 			0000 f000 2ee2 ccbb cccc edde 000f 0000 
 			0000 0000 b2ef cccb cccc fdec 0000 0000 
 			0000 f000 db2c cccd dccc cebd 000f 0000 
@@ -252,7 +252,7 @@
 			0000 0000 cdb0 dcc5 bbdd 00fe 0000 0000 
 			0000 0000 ddf0 dd5d eedd 000f 0000 0000 
 			0000 0000 ddf0 eddd feed 0000 0000 0000 
-			0000 0000 df00 eedd 0f94 0000 0000 0000 
+			0000 0000 df00 22dd 0f94 0000 0000 0000 
 			0000 0000 f000 39ff f444 0000 0000 0000 
 			0000 0000 0000 397f dde4 000f 0000 0000 
 			0000 0000 0000 369f deef 00fe 0000 0000 
@@ -287,7 +287,7 @@
 			0000 0000 cdb0 dcc5 bbdd 00fe 0000 0000 
 			0000 0000 ddf0 dd5d eedd 000f 0000 0000 
 			0000 0000 ddf0 eddd ffed 0000 0000 0000 
-			0000 0000 df00 eedd 0f94 0000 0000 0000 
+			0000 0000 df00 22dd 0f94 0000 0000 0000 
 			0000 0000 f000 39ff f444 0000 0000 0000 
 			0000 0000 0000 397f dde4 000f 0000 0000 
 			0000 0000 f000 369f deef 00fe 0000 0000 
@@ -323,7 +323,7 @@
 			0000 0000 cdb0 dcc5 bbdd 00fe 0000 0000 
 			0000 0000 ddf0 dd5d eedd 000f 0000 0000 
 			0000 0000 ddf0 eddd feed 0000 0000 0000 
-			0000 0000 df00 eedd 0f94 0000 0000 0000 
+			0000 0000 df00 22dd 0f94 0000 0000 0000 
 			0000 0000 f000 39ff 0444 0000 0000 0000 
 			0000 0000 0000 497f ffde 000f 0000 0000 
 			0000 0000 0000 f69f fede 00f2 0000 0000 
@@ -346,21 +346,21 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 fff0 0fff 0000 0000 0000 
 			0000 0000 f000 dddf fedd 00ff 0000 0000 
-			0000 0000 ef00 5edd ddd5 0fed 0000 0000 
-			0000 0000 def0 ddee dddd fedd 0000 0000 
-			0000 0000 5eef e55e dddd eddd 000f 0000 
-			0000 0000 dd5f 5dde deee dddd 000f 0000 
-			0000 f000 dd5e dddd bcce ddeb 000f 0000 
-			0000 f000 d5ee eddd cccc debc 000f 0000 
-			0000 f000 eeee cedd cccc fecc 0000 0000 
-			0000 f000 eeee ceee cddb 0fcc 0000 0000 
-			0000 0000 eeef ceee daab 0fcb 0000 0000 
+			0000 0000 ef00 dddd dddd 0fed 0000 0000 
+			0000 0000 def0 dddd dddd fedd 0000 0000 
+			0000 0000 ddef d5dd eedd fd22 0000 0000 
+			0000 0000 5d5f dd5d 22ed deee 000f 0000 
+			0000 f000 5e5e dd5d bc2e eeeb 000f 0000 
+			0000 f000 5eee edd5 ccc2 eebc 000f 0000 
+			0000 f000 eeee 2ed5 cccc fecc 0000 0000 
+			0000 f000 eeee c22e cddb 0fcc 0000 0000 
+			0000 0000 eeef c2ee daab 0fcb 0000 0000 
 			0000 0000 eeef cecc fdbc 0fcb 0000 0000 
 			0000 0000 eef0 5dcc bbcc 0a5c 0000 0000 
 			0000 0000 ef00 ddbb 5ccd 0bdc 0000 0000 
-			0000 0000 f000 ddee d5dd 0fdd 0000 0000 
-			0000 0000 0000 deef ddde 0fdd 0000 0000 
-			0000 0000 0000 49f0 ddee 00fd 0000 0000 
+			0000 0000 f000 d5ee d5d5 0fdd 0000 0000 
+			0000 0000 0000 5eef dd5e 0f5d 0000 0000 
+			0000 0000 0000 49f0 d522 00f5 0000 0000 
 			0000 0000 0000 444f ff93 000f 0000 0000 
 			0000 0000 f000 4edd f793 0000 0000 0000 
 			0000 0000 ef00 feed f963 0000 0000 0000 
@@ -381,21 +381,21 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 fff0 0fff 0000 0000 0000 
 			0000 0000 f000 dddf fedd 00ff 0000 0000 
-			0000 0000 ef00 5edd ddd5 0fed 0000 0000 
-			0000 0000 def0 ddee dddd fedd 0000 0000 
-			0000 0000 5eef e55e dddd eddd 000f 0000 
-			0000 0000 dd5f 5dde deee dddd 000f 0000 
-			0000 f000 dd5e dddd bcce ddeb 000f 0000 
-			0000 f000 d5ee eddd cccc debc 000f 0000 
-			0000 f000 eeee cedd cccc fecc 0000 0000 
-			0000 f000 eeee ceee cddb 0fcc 0000 0000 
-			0000 0000 eeef ceee daab 0fcb 0000 0000 
+			0000 0000 ef00 dddd dddd 0fed 0000 0000 
+			0000 0000 def0 dddd dddd fedd 0000 0000 
+			0000 0000 ddef d5dd eedd fd22 0000 0000 
+			0000 0000 5d5f dd5d 22ed deee 000f 0000 
+			0000 f000 5e5e dd5d bc2e eeeb 000f 0000 
+			0000 f000 5eee edd5 ccc2 eebc 000f 0000 
+			0000 f000 eeee 2ed5 cccc fecc 0000 0000 
+			0000 f000 eeee c22e cddb 0fcc 0000 0000 
+			0000 0000 eeef c2ee daab 0fcb 0000 0000 
 			0000 0000 eeef cecc fdbc 0fcb 0000 0000 
 			0000 0000 eef0 5dcc bbcc 0a5c 0000 0000 
 			0000 0000 ef00 ddbb 5ccd 0bdc 0000 0000 
-			0000 0000 f000 ddee d5dd 0fdd 0000 0000 
-			0000 0000 0000 deff ddde 0fdd 0000 0000 
-			0000 0000 0000 49f0 ddee 00fd 0000 0000 
+			0000 0000 f000 d5ee d5d5 0fdd 0000 0000 
+			0000 0000 0000 5eef dd5e 0f5d 0000 0000 
+			0000 0000 0000 49f0 d522 00f5 0000 0000 
 			0000 0000 0000 444f ff93 000f 0000 0000 
 			0000 0000 f000 4edd f793 0000 0000 0000 
 			0000 0000 ef00 feed f963 000f 0000 0000 
@@ -417,21 +417,21 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 fff0 0fff 0000 0000 0000 
 			0000 0000 f000 dddf fedd 00ff 0000 0000 
-			0000 0000 ef00 5edd ddd5 0fed 0000 0000 
-			0000 0000 def0 ddee dddd fedd 0000 0000 
-			0000 0000 5eef e55e dddd eddd 000f 0000 
-			0000 0000 dd5f 5dde deee dddd 000f 0000 
-			0000 f000 dd5e dddd bcce ddeb 000f 0000 
-			0000 f000 d5ee eddd cccc debc 000f 0000 
-			0000 f000 eeee cedd cccc fecc 0000 0000 
-			0000 f000 eeee ceee cddb 0fcc 0000 0000 
-			0000 0000 eeef ceee daab 0fcb 0000 0000 
+			0000 0000 ef00 dddd dddd 0fed 0000 0000 
+			0000 0000 def0 dddd dddd fedd 0000 0000 
+			0000 0000 ddef d5dd eedd fd22 0000 0000 
+			0000 0000 5d5f dd5d 22ed deee 000f 0000 
+			0000 f000 5e5e dd5d bc2e eeeb 000f 0000 
+			0000 f000 5eee edd5 ccc2 eebc 000f 0000 
+			0000 f000 eeee 2ed5 cccc fecc 0000 0000 
+			0000 f000 eeee c22e cddb 0fcc 0000 0000 
+			0000 0000 eeef c2ee daab 0fcb 0000 0000 
 			0000 0000 eeef cecc fdbc 0fcb 0000 0000 
 			0000 0000 eef0 5dcc bbcc 0a5c 0000 0000 
 			0000 0000 ef00 ddbb 5ccd 0bdc 0000 0000 
-			0000 0000 f000 ddee d5dd 0fdd 0000 0000 
-			0000 0000 0000 deef ddde 0fdd 0000 0000 
-			0000 0000 0000 49f0 ddee 00fd 0000 0000 
+			0000 0000 f000 d5ee d5d5 0fdd 0000 0000 
+			0000 0000 0000 5eef dd5e 0f5d 0000 0000 
+			0000 0000 0000 49f0 d522 00f5 0000 0000 
 			0000 0000 0000 4440 ff93 000f 0000 0000 
 			0000 0000 f000 edff f794 0000 0000 0000 
 			0000 0000 2f00 edef f96f 0000 0000 0000 
@@ -453,7 +453,7 @@
 <tex_palette_array size='1'>
 	<tex_palette name='accordion' color_size='16' index='0'>
 		2e47 1cc7 316b 412a 2085 5af7 45e9 2dc6 
-		0000 23ff 1953 363b 4afc 7fff 5294 0000 
+		0000 23ff 1953 3e7c 4afc 7fff 5294 0000 
 	</tex_palette>
 </tex_palette_array>
 
