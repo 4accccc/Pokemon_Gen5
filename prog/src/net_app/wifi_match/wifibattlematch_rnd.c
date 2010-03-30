@@ -1449,7 +1449,7 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     ///	Atlasへの書き込み
     //=====================================
   case SEQ_START_MSG:
-    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_013, WBM_TEXT_TYPE_STREAM );
+    WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_013, WBM_TEXT_TYPE_WAIT);
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_REPORT_ATLAS );
     break;
@@ -1466,18 +1466,23 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
 #endif
       { 
         *p_seq = SEQ_SC_HEAP_EXIT;
+        WBM_TEXT_EndWait( p_wk->p_text );
       }
+      else
+      {
+        //エラー
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //戻る
+          WBM_TEXT_EndWait( p_wk->p_text );
+          *p_seq = SEQ_START_SAVE_MSG;
+          break;
 
-      //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
-      { 
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //戻る
-        *p_seq = SEQ_START_SAVE_MSG;
-        break;
-
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
-        break;
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_TEXT_EndWait( p_wk->p_text );
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+          break;
+        }
       }
     }
     break;
