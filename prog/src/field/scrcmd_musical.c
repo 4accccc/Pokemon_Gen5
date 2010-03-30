@@ -686,6 +686,15 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
       MUSICAL_EVENT_SetPosCharaName_Wordset( evWork , val , wordset , idx );
     }
     break;
+    
+  case MUSICAL_WORD_POKE_NAME:
+    {
+      MUSICAL_SCRIPT_WORK *musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
+      MUSICAL_EVENT_WORK *evWork = musScriptWork->eventWork;
+      
+      MUSICAL_EVENT_SetPosPokeName_Wordset( evWork , val , wordset , idx );
+    }
+    break;
   }
 
   return VMCMD_RESULT_CONTINUE;
@@ -876,13 +885,13 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
     break;
   case MUSICAL_TOOL_COMM_CHECK_ERROR:
     if( musScriptWork->commWork != NULL &&
-        isNetErr == FALSE )
+        isNetErr == TRUE )
     {
-      *ret_wk = FALSE;
+      *ret_wk = TRUE;
     }
     else
     {
-      *ret_wk = TRUE;
+      *ret_wk = FALSE;
     }
     break;
   case MUSICAL_TOOL_PRINT:

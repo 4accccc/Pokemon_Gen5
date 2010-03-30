@@ -13,6 +13,7 @@
 #include "musical/musical_define.h"
 #include "musical/musical_local.h"
 #include "musical/musical_comm_field.h"
+#include "poke_tool/poke_tool.h"
 #include "gamesystem/game_comm.h"
 #include "savedata/save_control.h"
 #include "savedata/mystatus.h"
@@ -126,6 +127,7 @@ extern void MUS_COMM_SendTimingCommand( MUS_COMM_WORK *work , const u8 no );
 extern const BOOL MUS_COMM_CheckTimingCommand( MUS_COMM_WORK *work , const u8 no );
 
 extern MYSTATUS *MUS_COMM_GetPlayerMyStatus( MUS_COMM_WORK* work , u8 idx );
+extern POKEMON_PASO_PARAM* MUS_COMM_GetPlayerPPP( MUS_COMM_WORK* work , u8 idx );
 extern const BOOL MUS_COMM_IsRefreshUserData( MUS_COMM_WORK *work );
 extern void MUS_COMM_ResetRefreshUserData( MUS_COMM_WORK *work );
 

@@ -986,6 +986,21 @@ MYSTATUS* MUS_COMM_GetPlayerMyStatus( MUS_COMM_WORK* work , u8 idx )
   return NULL;
 }
 
+//--------------------------------------------------------------
+// pppŽæ“¾
+//--------------------------------------------------------------
+POKEMON_PASO_PARAM* MUS_COMM_GetPlayerPPP( MUS_COMM_WORK* work , u8 idx )
+{
+  if( work->commState != MCS_NONE )
+  {
+    if( work->userData[idx].isValidStatus == TRUE )
+    {
+      return work->userData[idx].ppp;
+    }
+  }
+  return NULL;
+}
+
 
 #pragma mark [> beacon func
 //--------------------------------------------------------------

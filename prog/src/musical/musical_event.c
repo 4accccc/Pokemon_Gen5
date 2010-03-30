@@ -704,22 +704,17 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
     shotData->year = date.year;
     shotData->month = date.month;
     shotData->day = date.day;
-    shotData->title[0] = L'ス';
-    shotData->title[1] = L'ト';
-    shotData->title[2] = L'リ';
-    shotData->title[3] = L'ー';
-    shotData->title[4] = L'ミ';
-    shotData->title[5] = L'ン';
-    shotData->title[6] = L'グ';
-    shotData->title[7] = L'き';
-    shotData->title[8] = L'ょ';
-    shotData->title[9] = L'く';
-    shotData->title[10] = GFL_STR_GetEOMCode();
+    {
+      STRBUF * tmpBuf = MUSICAL_EVENT_CreateStr_ProgramTitle( evWork , HEAPID_PROC_WRAPPER );
+      GFL_STR_GetStringCode( tmpBuf , shotData->title , MUSICAL_PROGRAM_NAME_MAX );
+      GFL_STR_DeleteBuffer( tmpBuf );
+    }
     
     //@TODO
     shotData->musVer = MUSICAL_VERSION;
     shotData->pmVersion = VERSION_BLACK;
     shotData->pmLang = LANG_JAPAN;
+    shotData->player = evWork->selfIdx;
     
     //スポットライトの計算
     {
@@ -741,17 +736,43 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
     
     for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
+      MYSTATUS *myStatus = NULL;
       u8 j;
       MUSICAL_POKE_PARAM *musPoke = evWork->actInitWork->musPoke[i];
       //FIXME 性別とか
       shotData->shotPoke[i].monsno = musPoke->mcssParam.monsno;
-      shotData->shotPoke[i].trainerName[0] = L'ト';
-      shotData->shotPoke[i].trainerName[1] = L'レ';
-      shotData->shotPoke[i].trainerName[2] = L'ー';
-      shotData->shotPoke[i].trainerName[3] = L'ナ';
-      shotData->shotPoke[i].trainerName[4] = L'１'+i;
-      shotData->shotPoke[i].trainerName[5] = 0;
+      shotData->shotPoke[i].sex = musPoke->mcssParam.sex;
+      shotData->shotPoke[i].rare = musPoke->mcssParam.rare;
+      shotData->shotPoke[i].form = musPoke->mcssParam.form;
+
+      if( i == evWork->selfIdx )
+      {
+        myStatus = GAMEDATA_GetMyStatus( evWork->gameData );
+      }
+      else
+      if( evWork->isComm == TRUE )
+      {
+        u8 idx = MUSICAL_EVENT_GetPosIndex( evWork , i );
+        myStatus = MUS_COMM_GetPlayerMyStatus( evWork->commWork , idx );
+      }
       
+      if( myStatus != NULL )
+      {
+        GFL_STD_MemCopy( myStatus->name , shotData->shotPoke[i].trainerName , (SAVELEN_PLAYER_NAME+EOM_SIZE)*2 );
+      }
+      else
+      {
+        u8 idx = MUSICAL_EVENT_GetPosIndex( evWork , i );
+        const u8 nameIdx = MUSICAL_PROGRAM_GetNpcNameIdx( evWork->progWork , idx-1 );
+        GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_extra_dat , HEAPID_PROC );
+        STRBUF * tmpBuf = GFL_MSG_CreateString( msgHandle , nameIdx );
+
+        GFL_STR_GetStringCode( tmpBuf , shotData->shotPoke[i].trainerName , SAVELEN_PLAYER_NAME+EOM_SIZE );
+        
+        GFL_STR_DeleteBuffer( tmpBuf );
+        GFL_MSG_Delete( msgHandle );
+      }
+
       //装備箇所の初期化
       for( j=0;j<MUSICAL_ITEM_EQUIP_MAX;j++ )
       {
@@ -1339,6 +1360,47 @@ void MUSICAL_EVENT_SetPosCharaName_Wordset( MUSICAL_EVENT_WORK *evWork , const u
   }
 }
 
+
+void MUSICAL_EVENT_SetPosPokeName_Wordset( MUSICAL_EVENT_WORK *evWork , const u8 pos , WORDSET *wordSet , const u8 wordIdx )
+{
+  u8 i;
+  BOOL isSet = FALSE;
+  u8 idx = MUSICAL_EVENT_GetPosIndex( evWork , pos );
+
+  if( pos == evWork->selfIdx )
+  {
+    MYSTATUS *myStatus = GAMEDATA_GetMyStatus( evWork->gameData );
+    WORDSET_RegisterPokeNickName( wordSet , wordIdx , evWork->pokePara );
+    isSet = TRUE;
+  }
+  else
+  if( evWork->isComm == TRUE )
+  {
+    POKEMON_PASO_PARAM *ppp = MUS_COMM_GetPlayerPPP( evWork->commWork , idx );
+    if( ppp != NULL )
+    {
+      WORDSET_RegisterPokeNickNamePPP( wordSet , wordIdx , ppp );
+      isSet = TRUE;
+    }
+  }
+  
+  if( isSet == FALSE )
+  {
+    /*
+    const u8 nameIdx = MUSICAL_PROGRAM_GetNpcNameIdx( evWork->progWork , idx-1 );
+    GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_extra_dat , HEAPID_PROC );
+    STRBUF * tmpBuf = GFL_MSG_CreateString( msgHandle , nameIdx );
+    
+    //@TODO 海外版男女対応
+    WORDSET_RegisterWord( wordSet, wordIdx, tmpBuf, 0, TRUE, PM_LANG );
+
+    GFL_STR_DeleteBuffer( tmpBuf );
+    GFL_MSG_Delete( msgHandle );
+    */
+    const u16 monsno = MUSICAL_PROGRAM_GetNpcMonsno( evWork->progWork , idx-1 );
+    WORDSET_RegisterPokeMonsNameNo( wordSet, wordIdx, monsno );
+  }
+}
 
 //演目データ受信後に数値を計算する
 void MUSICAL_EVENT_CalcProgramData( MUSICAL_EVENT_WORK *evWork )

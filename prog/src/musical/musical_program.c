@@ -379,6 +379,13 @@ const u8 MUSICAL_PROGRAM_GetNpcNameIdx( MUSICAL_PROGRAM_WORK* progWork , const u
 {
   return progWork->progData->pokeData[ progWork->npcArr[NPCIdx] ].trainerName;
 }
+//--------------------------------------------------------------
+//	NPCMonsNo
+//--------------------------------------------------------------
+const u16 MUSICAL_PROGRAM_GetNpcMonsno( MUSICAL_PROGRAM_WORK* progWork , const u8 NPCIdx )
+{
+  return progWork->progData->pokeData[ progWork->npcArr[NPCIdx] ].monsno;
+}
 
 //--------------------------------------------------------------
 //	コンディションの単体ポイントを取得(ポイント／全体装備個数

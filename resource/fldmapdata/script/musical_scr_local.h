@@ -49,6 +49,7 @@
 #define MUSICAL_WORD_AUDI_TYPE (3)  //人気客層
 #define MUSICAL_WORD_CONDITION (4)  //コンディション名
 #define MUSICAL_WORD_NPC_NAME (5)  //※参加者名前
+#define MUSICAL_WORD_POKE_NAME (6)  //※参加者名前
 
 //_MUSICAL_CALL 用
 #define MUSICAL_CALL_LOCAL (0)        //非通信
