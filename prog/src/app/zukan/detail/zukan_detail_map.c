@@ -2704,6 +2704,14 @@ static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
   {
     GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_CURSOR], FALSE );
   }
+  // キー入力されてここに来た場合は、カーソルを現在の位置 or プレイヤーの位置に表示する
+  else
+  {
+    if( work->state == STATE_SELECT )  // マップの拠点を選べる状態でなければ、カーソルは表示しなくていい
+    {
+      Zukan_Detail_Map_SetCursor( param, work, cmn );
+    }
+  }
 
   // 今の季節の生息地を表示する
   Zukan_Detail_Map_UtilDrawSeasonArea( param, work, cmn );
