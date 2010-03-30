@@ -2512,7 +2512,7 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
     break;
 
   case SEQ_DONE:
-    if( !PMSND_CheckPlaySE() ){
+    if( !PMSND_CheckPlayingSEIdx(SEQ_SE_MESSAGE) ){
       wk->printSeq = SEQ_END;
       return TRUE;
     }
