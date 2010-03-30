@@ -9,9 +9,6 @@
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
-
-//#define MICTEST_USE_SND
-
 //  ƒVƒXƒeƒ€
 #include <gflib.h>
 #include "calctool.h"
@@ -19,6 +16,7 @@
 #include "system/main.h"
 #include "system/wipe.h"
 #include "system/brightness.h"
+#include "sound/pm_sndsys.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "print/global_font.h"
@@ -810,9 +808,7 @@ static void SEQFUNC_Main( MICTEST_SEQ_WORK *p_seq_wk, u32 *p_seq )
 
   case SEQ_MAIN:
     if( IsProcEndTrg() ) {
-#if MICTEST_USE_SND
-      PMSND_PlaySE( SEQ_SE_DP_SELECT );
-#endif
+      PMSND_PlaySE( SEQ_SE_CANCEL1 );
       *p_seq = SEQ_EXIT;
     }
     break;
