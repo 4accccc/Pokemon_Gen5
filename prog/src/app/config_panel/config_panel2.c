@@ -642,7 +642,7 @@ static BOOL Scroll_ChangePlt_Safe_IsOk( const SCROLL_WORK *cp_wk );
 //-------------------------------------
 /// CONFIRM
 //=====================================
-static void CONFIRM_Init( CONFIRM_WORK *p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_font, GFL_MSGDATA *p_msg, GFL_TCBLSYS *p_tcbl, APP_TASKMENU_RES *p_res, HEAPID heapID );
+static void CONFIRM_Init( CONFIRM_WORK *p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_font, GFL_MSGDATA *p_msg, GFL_TCBLSYS *p_tcbl, APP_TASKMENU_RES *p_res, PRINT_QUE *p_que, HEAPID heapID );
 static void CONFIRM_Exit( CONFIRM_WORK *p_wk );
 static void CONFIRM_Main( CONFIRM_WORK *p_wk );
 static void CONFIRM_Start( CONFIRM_WORK *p_wk, int wait );
@@ -1312,6 +1312,7 @@ static GFL_PROC_RESULT CONFIG_PROC_Init( GFL_PROC *p_proc,int *p_seq, void *p_pa
         p_wk->p_msg,
         p_wk->p_tcbl,
         p_wk->p_confirmres,
+        p_wk->p_que,
         HEAPID_CONFIG );
   }
 
@@ -3581,7 +3582,7 @@ static BOOL Scroll_ChangePlt_Safe_IsOk( const SCROLL_WORK *cp_wk )
  *  @param  heapID              ヒープID
  */
 //-----------------------------------------------------------------------------
-static void CONFIRM_Init( CONFIRM_WORK *p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_font, GFL_MSGDATA *p_msg, GFL_TCBLSYS *p_tcbl, APP_TASKMENU_RES *p_res, HEAPID heapID )
+static void CONFIRM_Init( CONFIRM_WORK *p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_font, GFL_MSGDATA *p_msg, GFL_TCBLSYS *p_tcbl, APP_TASKMENU_RES *p_res, PRINT_QUE *p_que, HEAPID heapID )
 {
   GFL_STD_MemClear( p_wk, sizeof(CONFIRM_WORK) );
   p_wk->select  = CONFIRM_SELECT_NULL;
@@ -3593,7 +3594,7 @@ static void CONFIRM_Init( CONFIRM_WORK *p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_
       p_font,
       p_msg,
       p_tcbl,
-      NULL,
+      p_que,
       heapID );
 
   //はい、いいえウィンドウ作成
