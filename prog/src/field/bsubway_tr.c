@@ -637,6 +637,8 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   { //AIパートナー設定
     client = BTL_CLIENT_PARTNER;
     
+    KAGAYA_Printf( "パートナーNo.%d\n", wk->partner );
+
     //トレーナーデータ
     dst->tr_data[client] = create_BSP_TRAINER_DATA( HEAPID_PROC );
     tr_data = dst->tr_data[client];
@@ -983,9 +985,12 @@ static BSUBWAY_TRAINER_ROM_DATA * alloc_TrainerRomData(
   }
   #endif
   
+  OS_Printf( "BSUBWAY allocTrainerRomData NameNo = %d\n", tr_no );
+
   name = GFL_MSG_CreateString( msgdata, tr_no );
   GFL_STR_GetStringCode( name,
       &tr_data->bt_trd.name[0], BUFLEN_PERSON_NAME );
+  OS_Printf( "トレーナーネーム %s\n", tr_data->bt_trd.name );
   GFL_STR_DeleteBuffer(name);
   GFL_MSG_Delete( msgdata );
   return trd;

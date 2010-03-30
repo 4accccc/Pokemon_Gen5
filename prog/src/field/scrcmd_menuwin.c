@@ -313,7 +313,9 @@ static void sysWin_AddWindow( SCRCMD_WORK *work, u8 up_down )
     SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
     GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
     
-    if( up_down == SCRCMD_MSGWIN_DOWN ){
+    if( up_down == SCRCMD_MSGWIN_UP ){
+      y = 1;
+    }else if( up_down == SCRCMD_MSGWIN_DOWN ){
       y = 19;
     }else if( up_down == SCRCMD_MSGWIN_NON ){ //‘O‰ñ‚ÌˆÊ’u‚ðŒp‘±
       up_down = SCRCMD_WORK_GetBeforeWindowPosType( work );

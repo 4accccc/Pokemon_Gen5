@@ -106,10 +106,8 @@ struct _TAG_BSUBWAY_SCRWORK
  	
   //パートナー抽選データ格納場所
 	BSUBWAY_PARTNER_DATA five_data[BSWAY_PARTNER_NUM];
-  
 	//パートナー抽選ポケモンパラメータ格納場所
 	BSUBWAY_PAREPOKE_PARAM five_poke[BSWAY_PARTNER_NUM];
-
 	//5人衆抽選ポケモンアイテムfixフラグ
 	u8 five_item[BSWAY_PARTNER_NUM]; 
   

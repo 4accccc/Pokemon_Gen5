@@ -1575,10 +1575,10 @@ void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 void BSUBWAY_SCRWORK_ChoiceBtlSeven( BSUBWAY_SCRWORK *wk, u8 sex )
 {
   int i;
-  int start_no = BSWAY_PARTNER_DATA_START_NO_WOMAN;
+  int start_no = BSWAY_PARTNER_DATA_START_NO_MAN;
   
   if( sex ){
-    start_no = BSWAY_PARTNER_DATA_START_NO_MAN;
+    start_no = BSWAY_PARTNER_DATA_START_NO_WOMAN;
   }
   
   for(i = 0;i < BSWAY_PARTNER_NUM;i++){
