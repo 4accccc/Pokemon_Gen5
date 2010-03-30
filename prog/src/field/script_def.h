@@ -450,7 +450,12 @@
 #define SCR_SYMMAP_INFO_IS_ENTRANCE     (2)   ///<入ったマップか？
 
 
-
+//--------------------------------------------------------------
+//    ゲームクリア指定    _GOTO_GAMECLEAR_DEMO()コマンド用
+//    prog/src/field/event_gameclear.hのGAMECLEAR_MODEと一致している必要がある
+//--------------------------------------------------------------
+#define SCR_GAMECLEAR_MODE_FIRST      (0)     ///<初回ゲームクリア
+#define SCR_GAMECLEAR_MODE_DENDOU     (1)     ///<2回目以降、殿堂入り
 
 
 

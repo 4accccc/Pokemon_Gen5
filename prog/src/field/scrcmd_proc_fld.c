@@ -219,7 +219,7 @@ VMCMD_RESULT EvCmdGameClearDemo( VMHANDLE *core, void *wk )
   u16 mode = SCRCMD_GetVMWorkValue( core, work );
   GMEVENT * call_event;
 
-  call_event = EVENT_GameClear( gsys, GAMECLEAR_MODE_NORMAL );
+  call_event = EVENT_GameClear( gsys, mode );
   //スクリプト終了後、指定したイベントに遷移する
   SCRIPT_EntryNextEvent( sc, call_event );
   

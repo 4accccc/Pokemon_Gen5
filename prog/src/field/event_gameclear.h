@@ -22,8 +22,8 @@
  */
 //--------------------------------------------------------------
 typedef enum {
-  GAMECLEAR_MODE_NORMAL = 0,      ///<’Êí
-  GAMECLEAR_MODE_EXTERNAL,   ///<Šg’£
+  GAMECLEAR_MODE_FIRST = 0,  ///<‰‰ñ
+  GAMECLEAR_MODE_DENDOU,     ///<‚»‚êˆÈ~i“a“°“ü‚èj
 }GAMECLEAR_MODE;
 
 //======================================================================

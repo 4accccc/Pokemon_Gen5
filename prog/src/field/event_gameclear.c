@@ -43,7 +43,8 @@ typedef struct {
   GAMECLEAR_MODE clear_mode;
   BOOL saveSuccessFlag;
   const MYSTATUS * mystatus;
-  void * pWork;
+
+  GAMECLEAR_MSG_PARAM para_child;
 }GAMECLEAR_WORK;
 
 
@@ -99,29 +100,17 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
         GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
         0, 16, -16 );
     SCRIPT_CallGameClearScript( gcwk->gsys, HEAPID_PROC );
-#if 0
-    { //殿堂入りの代わりにNの城デモ
-      DEMO3D_PARAM * param = GFL_HEAP_AllocClearMemory( HEAPID_PROC, sizeof(DEMO3D_PARAM) );
-      param->demo_id = DEMO3D_ID_N_CASTLE;
-      GMEVENT_CallProc( event, FS_OVERLAY_ID(demo3d), &Demo3DProcData, param );
-      gcwk->pWork = param;
-    }
-#endif
 
 		(*seq) ++;
 		break;
 
 	case GMCLEAR_SEQ_SAVE_START:
-
-    //「上書きします」とか表示する予定
-
-		//
-    //GAMEDATA_SaveAsyncStart( gamedata );
     (*seq) ++;
 		break;
 
   case GMCLEAR_SEQ_SAVE_MESSAGE:
-    GMEVENT_CallProc( event, FS_OVERLAY_ID(gameclear_demo), &GameClearMsgProcData, gcwk->gsys );
+    GMEVENT_CallProc(
+        event, FS_OVERLAY_ID(gameclear_demo), &GameClearMsgProcData, &gcwk->para_child );
     (*seq) ++;
 		break;
 
@@ -160,6 +149,10 @@ GMEVENT * EVENT_GameClear( GAMESYS_WORK * gsys, GAMECLEAR_MODE mode )
   gcwk->gsys = gsys;
   gcwk->clear_mode = mode;
   gcwk->mystatus = GAMEDATA_GetMyStatus( gamedata );
+
+  //子プロセスに渡すパラメータ
+  gcwk->para_child.gsys = gsys;
+  gcwk->para_child.clear_mode = mode;
 
   //移動ポケモン復活チェック
   MP_RecoverMovePoke( gamedata );

@@ -119,7 +119,8 @@ const GFL_PROC_DATA GameClearMsgProcData = {
 static GFL_PROC_RESULT GameClearMsgProc_Init( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   GAMECLEAR_MSG_WORK * gcmwk;
-  GAMESYS_WORK * gsys = pwk;
+  GAMECLEAR_MSG_PARAM * para = pwk;
+  GAMESYS_WORK * gsys = para->gsys;
 
  	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GAMEOVER_MSG, 0x40000 );
   gcmwk = GFL_PROC_AllocWork(proc, sizeof(GAMECLEAR_MSG_WORK), HEAPID_GAMEOVER_MSG);
@@ -137,6 +138,7 @@ static GFL_PROC_RESULT GameClearMsgProc_Init( GFL_PROC * proc, int * seq, void *
 static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   GAMECLEAR_MSG_WORK * wk = mywk;
+  GAMECLEAR_MSG_PARAM * para = pwk;
 
   int trg = GFL_UI_KEY_GetTrg();
 
@@ -168,8 +170,13 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
       GAMECLEAR_BMPWIN_CH							//ウインドウキャラ領域の開始キャラクタナンバー
     );
 
-    //でんどういり　おめでとう！
-    scr_msg_print( wk, msg_gameclear_01, 0, 0 );
+    if ( para->clear_mode == GAMECLEAR_MODE_FIRST ) {
+      //ゲームクリア　おめでとう！
+      scr_msg_print( wk, msg_gameclear_first_01, 0, 0 );
+    } else {
+      //でんどういり　おめでとう！
+      scr_msg_print( wk, msg_gameclear_01, 0, 0 );
+    }
 
     GFL_BMPWIN_MakeTransWindow( wk->bmpwin );
 
