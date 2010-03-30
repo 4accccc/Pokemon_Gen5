@@ -3084,7 +3084,8 @@ static u16 checkTalkAttrEvent( EV_REQUEST *req, FIELDMAP_WORK *fieldMap)
   
   //波乗りアトリビュート話し掛けチェック
 
-  if( FIELD_PLAYER_GetMoveForm(req->field_player) != PLAYER_MOVE_FORM_SWIM )
+  if( (FIELD_PLAYER_GetMoveForm( req->field_player ) != PLAYER_MOVE_FORM_SWIM) &&
+      (FIELD_PLAYER_GetMoveForm( req->field_player ) != PLAYER_MOVE_FORM_DIVING) )  // ダイビング状態であれば、波に乗るかきかない。
   {
     MAPATTR_FLAG attr_flag = MAPATTR_GetAttrFlag( attr );
     

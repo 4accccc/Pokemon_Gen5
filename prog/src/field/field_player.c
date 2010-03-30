@@ -760,6 +760,7 @@ BOOL FIELD_PLAYER_CheckChangeEventDrawForm( FIELD_PLAYER *fld_player )
   
   switch( form ){
   case PLAYER_MOVE_FORM_SWIM:
+  case PLAYER_MOVE_FORM_DIVING:
     return( FALSE );
   }
   

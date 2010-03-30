@@ -147,7 +147,8 @@ extern GMEVENT* EVENT_ChangeMapBySandStream( GAMESYS_WORK* gameSystem, FIELDMAP_
 extern GMEVENT* EVENT_ChangeMapByAnanukenohimo( FIELDMAP_WORK* fieldWork, GAMESYS_WORK* gameSystem );
 extern GMEVENT* EVENT_ChangeMapByAnawohoru( GAMESYS_WORK* gameSystem );
 extern GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK* gameSystem );
-extern GMEVENT* EVENT_ChangeMapBySeaTemple( GAMESYS_WORK* gameSystem );
+extern GMEVENT* EVENT_ChangeMapBySeaTempleUp( GAMESYS_WORK* gameSystem );
+extern GMEVENT* EVENT_ChangeMapBySeaTempleDown( GAMESYS_WORK* gameSystem, u16 zone_id );
 
 //------------------------------------------------------------------
 /**

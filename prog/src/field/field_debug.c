@@ -34,7 +34,8 @@ struct _TAG_FIELD_DEBUG_WORK
 	FIELDMAP_WORK *pFieldMainWork; //FIELDMAP_WORK*
 	
 	BOOL flag_bgscr_load;	//デバッグBG面のスクリーンロード
-	BOOL flag_pos_print;	//座標表示切り替え
+	u16 flag_pos_print;	//座標表示切り替え
+	u16 flag_pos_update;	//座標表示更新可能フラグ
 };
 
 //======================================================================
@@ -99,12 +100,8 @@ void FIELD_DEBUG_Delete( FIELD_DEBUG_WORK *work )
 //--------------------------------------------------------------
 void FIELD_DEBUG_UpdateProc( FIELD_DEBUG_WORK *work )
 {
-	if( work->flag_pos_print == TRUE ){ //座標表示
-    // R+Xのデバックメニューを壊さないために、Event中の描画をOFF
-    GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->pFieldMainWork );
-    if( GAMESYSTEM_GetEvent(gsys) == NULL) {
-  	  DebugFieldPosPrint_Proc( work );
-    }
+	if( (work->flag_pos_print == TRUE) && (work->flag_pos_update == TRUE) ){ //座標表示
+    DebugFieldPosPrint_Proc( work );
 	}
 	
 	if( work->flag_bgscr_load == TRUE ){ //デバッグ用BGスクリーン反映
@@ -455,6 +452,7 @@ void FIELD_DEBUG_SetPosPrint( FIELD_DEBUG_WORK *work )
 #else
 	if( work->flag_pos_print == FALSE ){
 		work->flag_pos_print = TRUE;
+		work->flag_pos_update = TRUE;
     resetBgCont( work );
 	}else{
 		work->flag_pos_print = FALSE;
@@ -463,6 +461,20 @@ void FIELD_DEBUG_SetPosPrint( FIELD_DEBUG_WORK *work )
 		GFL_BG_LoadScreenReq( work->bgFrame );
 	}
 #endif
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  表示更新フラグ　設定
+ *
+ *	@param	work
+ *	@param	flag 
+ */
+//-----------------------------------------------------------------------------
+void FIELD_DEBUG_SetPosUpdateFlag( FIELD_DEBUG_WORK *work, BOOL flag )
+{
+  work->flag_pos_update = flag;
 }
 
 //--------------------------------------------------------------

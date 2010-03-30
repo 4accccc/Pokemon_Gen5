@@ -1029,7 +1029,7 @@ static void modeChange_CalcCameraPos( FIELD_CAMERA * camera )
   else
   {
     // ターゲットからカメラまでのベクトルを求める
-    VEC_Subtract( &camera->campos_write, &camera->target_write, &dist );
+    VEC_Subtract( &camera->camPos, &camera->target_write, &dist );
 
     modeChange_SetVecAngel( camera, &dist );
   }
@@ -1058,7 +1058,7 @@ static void modeChange_CalcTargetPos( FIELD_CAMERA * camera )
   else
   {
     // カメラからターゲットまでのベクトルを求める
-    VEC_Subtract( &camera->target_write, &camera->campos_write, &dist );
+    VEC_Subtract( &camera->target, &camera->campos_write, &dist );
 
     modeChange_SetVecAngel( camera, &dist );
   }

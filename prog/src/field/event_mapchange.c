@@ -1133,7 +1133,7 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport( GMEVENT* event, int* seq, void*
  * @brief 「海底神殿　退場」によるマップチェンジ
  */
 //------------------------------------------------------------------
-static GMEVENT_RESULT EVENT_MapChangeBySeaTemple( GMEVENT* event, int* seq, void* wk )
+static GMEVENT_RESULT EVENT_MapChangeBySeaTempleUp( GMEVENT* event, int* seq, void* wk )
 {
   MAPCHANGE_WORK* work       = wk;
   GAMESYS_WORK*   gameSystem = work->gameSystem;
@@ -1146,17 +1146,60 @@ static GMEVENT_RESULT EVENT_MapChangeBySeaTemple( GMEVENT* event, int* seq, void
     GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
     (*seq)++;
     break;
-  case 1: 
-    // SE再生
-    PMSND_PlaySE( SEQ_SE_FLD_123 );
+  // ホワイトアウト
+  case 1:
+    GMEVENT_CallEvent( event, EVENT_FieldFadeOut_White( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
     (*seq)++;
     break;
 
-    // 基本的なマップチェンジで海面へ
+  // マップチェンジ
   case 2:
-    if( PMSND_CheckPlaySE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_123) ) == FALSE )
+    // マップチェンジ コアイベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_NORMAL ) );
+    (*seq)++;
+    break;
+
+  // ホワイトイン
+  case 3:
+    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_White( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
+    (*seq)++;
+    break;
+
+  // 完了
+  case 4:
+    return GMEVENT_RES_FINISH; 
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 「海底神殿　入場」によるマップチェンジ
+ */
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangeBySeaTempleDown( GMEVENT* event, int* seq, void* wk )
+{
+  MAPCHANGE_WORK* work       = wk;
+  GAMESYS_WORK*   gameSystem = work->gameSystem;
+  FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+
+  switch( *seq )
+  {
+  case 0:
+    // 動作モデル停止
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
+    (*seq)++;
+    break;
+  // ブラックアウト
+  case 1:
+    GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Black( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
+    (*seq)++;
+    break;
+
+  // マップチェンジ BGM変更あり
+  case 2:
     {
-      GMEVENT* sub_event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeBGMKeep, sizeof(MAPCHANGE_WORK) );
+      GMEVENT* sub_event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeNoFade, sizeof(MAPCHANGE_WORK) );
       MAPCHANGE_WORK* sub_work;
 
       sub_work  = GMEVENT_GetEventWork( sub_event );
@@ -1166,7 +1209,15 @@ static GMEVENT_RESULT EVENT_MapChangeBySeaTemple( GMEVENT* event, int* seq, void
       (*seq)++;
     }
     break;
+
+  // ブラックイン
   case 3:
+    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Black( gameSystem, fieldmap, FIELD_FADE_WAIT ) );
+    (*seq)++;
+    break;
+
+  // 完了
+  case 4:
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
@@ -1516,22 +1567,47 @@ GMEVENT* EVENT_ChangeMapByTeleport( GAMESYS_WORK* gameSystem )
  * @return GMEVENT 生成したマップ遷移イベント
  */
 //-----------------------------------------------------------------------------
-GMEVENT* EVENT_ChangeMapBySeaTemple( GAMESYS_WORK* gameSystem )
+GMEVENT* EVENT_ChangeMapBySeaTempleUp( GAMESYS_WORK* gameSystem )
 {
   GMEVENT* event;
   MAPCHANGE_WORK* work;
 
-  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeBySeaTemple, sizeof(MAPCHANGE_WORK) );
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeBySeaTempleUp, sizeof(MAPCHANGE_WORK) );
   work  = GMEVENT_GetEventWork( event );
 
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
   work->loc_req      = *(GAMEDATA_GetSpecialLocation( work->gameData ));
   work->loc_req.type = LOCATION_TYPE_DIRECT;
+  work->loc_req.dir_id = DIR_DOWN;  // 出てきたときは下を見る。
   work->exit_type    = EXIT_TYPE_NONE;
 
   return event;
 }
+
+//----------------------------------------------------------------------------
+/**
+ * @brief マップ遷移イベント生成（ 海底神殿へもぐる )
+ * @param gameSystem ゲームシステムへのポインタ
+ * @return GMEVENT 生成したマップ遷移イベント
+ */
+//-----------------------------------------------------------------------------
+GMEVENT* EVENT_ChangeMapBySeaTempleDown( GAMESYS_WORK* gameSystem, u16 zone_id )
+{
+  GMEVENT* event;
+  MAPCHANGE_WORK* work;
+
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeBySeaTempleDown, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  LOCATION_SetDefaultPos( &(work->loc_req), zone_id );
+  work->exit_type    = EXIT_TYPE_NONE;
+
+  return event;
+}
+
 
 //------------------------------------------------------------------
 /**

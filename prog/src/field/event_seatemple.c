@@ -183,16 +183,34 @@ static GMEVENT_RESULT EVENT_DivingDown( GMEVENT* p_event, int* p_seq, void* p_wo
         GMEVENT * p_sub_event;
         result = DIVINGSPOT_Check( p_wk->p_fieldmap, &connect_zone_id );
         GF_ASSERT( result );
-        p_sub_event = DEBUG_EVENT_ChangeMapDefaultPos( p_wk->p_gsys, 
-            p_wk->p_fieldmap, connect_zone_id );
+        p_sub_event = EVENT_ChangeMapBySeaTempleDown( p_wk->p_gsys, 
+            connect_zone_id );
         GMEVENT_CallEvent(p_event, p_sub_event);
       }
       (*p_seq)++;
     }
     break;
 
-  // 完了待ち
   case 3:
+    {
+      FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+      MMDL* p_mmdl = FIELD_PLAYER_GetMMdl( p_player );
+      // 一歩上へ
+      MMDL_SetAcmd( p_mmdl, AC_WALK_U_16F );
+      (*p_seq)++;
+    } 
+    break;
+
+
+  // 完了待ち
+  case 4:
+    {
+      FIELD_PLAYER* p_player = FIELDMAP_GetFieldPlayer( p_wk->p_fieldmap );
+      MMDL* p_mmdl = FIELD_PLAYER_GetMMdl( p_player );
+      if( MMDL_CheckEndAcmd( p_mmdl ) == FALSE ){
+        break;
+      }
+    }
     return GMEVENT_RES_FINISH;
   }
 
@@ -221,18 +239,29 @@ static GMEVENT_RESULT EVENT_DivingUp( GMEVENT* p_event, int* p_seq, void* p_work
       FIELD_PLAYER_SetMoveForm( p_player, PLAYER_MOVE_FORM_SWIM );
       FIELD_PLAYER_ClearOBJCodeFix( p_player );
     }
-    // マップジャンプ
-    {
-      GMEVENT* p_sub_event;
-      p_sub_event = EVENT_ChangeMapBySeaTemple( p_wk->p_gsys );
-
-      GMEVENT_CallEvent(p_event, p_sub_event);
-    }
     (*p_seq)++;
     break;
 
-  // 完了待ち
+    // SE再生
   case 1:
+    PMSND_PlaySE( SEQ_SE_FLD_123 );
+    (*p_seq) ++;
+    break;
+
+  case 2:
+    if( PMSND_CheckPlaySE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_123) ) == FALSE )
+    {
+      // マップジャンプ
+      GMEVENT* p_sub_event;
+      p_sub_event = EVENT_ChangeMapBySeaTempleUp( p_wk->p_gsys );
+
+      GMEVENT_CallEvent(p_event, p_sub_event);
+      (*p_seq)++;
+    }
+    break;
+
+  // 完了待ち
+  case 3:
     return GMEVENT_RES_FINISH;
   }
 

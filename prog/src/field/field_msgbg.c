@@ -5182,6 +5182,7 @@ static BOOL Control_GetWaitKey( FLDPRINT_CONTROL* cont )
   if( cont->auto_msg_flag ){
     cont->key_wait ++;
     if( cont->key_wait >= AUTO_MSG_KEY_WAIT  ){
+      cont->key_wait = 0;
       return TRUE;
     }
     return FALSE;
