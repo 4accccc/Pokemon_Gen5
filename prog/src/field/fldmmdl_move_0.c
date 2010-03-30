@@ -1152,7 +1152,7 @@ static int MvSpinMove_Wait( MMDL * mmdl, MV_SPIN_DIR_WORK *work )
       return( FALSE );
     }
     
-    if( checkDashButtonCont() == FALSE ){
+    if( checkDashButtonTrg() == FALSE ){
       return( FALSE );
     }
     

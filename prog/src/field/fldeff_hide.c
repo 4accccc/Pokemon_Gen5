@@ -340,5 +340,5 @@ static const HIDE_ARCIDX data_ArcIdxTbl[HIDE_MAX] =
 static const u32 data_PullOffSeTbl[HIDE_MAX] =
 {
   SEQ_SE_TB_START,
-  SEQ_SE_W254_04,
+  SEQ_SE_FLD_149,
 };
