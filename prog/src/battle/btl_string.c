@@ -240,6 +240,7 @@ static void register_TrainerName( WORDSET* wset, u8 bufIdx, u8 clientID )
     u32 trainerID = BTL_MAIN_GetClientTrainerID( SysWork.mainModule, clientID );
     if( trainerID != TRID_NULL ){
       WORDSET_RegisterTrainerName( wset, bufIdx, trainerID );
+//      WORDSET_RegisterTrainerName
     }else{
       const MYSTATUS* status = BTL_MAIN_GetClientPlayerData( SysWork.mainModule, clientID );
       WORDSET_RegisterPlayerName( wset, bufIdx, status );

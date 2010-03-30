@@ -2441,7 +2441,14 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
       if( (GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B))
       ||  (GFL_UI_TP_GetCont())
       ){
-        PRINTSYS_PrintStreamShortWait( wk->printStream, 0 );
+        if( !PRINTSYS_IsTempSpeedMode(wk->printStream) ){
+          PRINTSYS_PrintStream_StartTempSpeedMode( wk->printStream, MSGSPEED_GetWaitByConfigParam(MSGSPEED_FAST) );
+        }
+      }
+      else{
+        if( PRINTSYS_IsTempSpeedMode(wk->printStream) ){
+          PRINTSYS_PrintStream_StopTempSpeedMode( wk->printStream );
+        }
       }
 
       wk->printState = PRINTSYS_PrintStreamGetState( wk->printStream );

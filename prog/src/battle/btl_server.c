@@ -584,7 +584,6 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       }
 
       storeClientAction( server );
-
       server->flowResult = BTL_SVFLOW_StartTurn( server->flowWork, &server->clientAction );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult);
 
@@ -766,10 +765,9 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
+      SCQUE_Init( server->que );
 
       storeClientAction( server );
-
-      SCQUE_Init( server->que );
       server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork, &server->clientAction );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
 
@@ -988,7 +986,7 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
 
     switch( competitor ){
     case BTL_COMPETITOR_TRAINER:
-    case BTL_COMPETITOR_SUBWAY:
+//    case BTL_COMPETITOR_SUBWAY: // @todo サブウェイトレーナーのメッセージを取得する手だてが今のところ無い。
       setMainProc( server, ServerMain_ExitBattle_ForNPC );
       break;
 
@@ -1134,7 +1132,22 @@ BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, const void* recvedCmd, u32 cm
       return FALSE;
     }
   }
-  BTL_N_Printf( DBGSTR_SV_CmdCheckNG, server->que->writePtr, cmdSize );
+  //BTL_N_Printf( DBGSTR_SV_CmdCheckNG, server->que->writePtr, cmdSize );
+  {
+    u32 i;
+    OS_TPrintf( "****** コマンド整合性チェック NG   ****** \n" );
+    OS_TPrintf( " sc = %d bytes\n", cmdSize );
+    for(i=0; i<cmdSize; ++i){
+      OS_TPrintf("%02x,", ((u8*)(recvedCmd))[i]);
+      if( (i+1)%16 == 0){ OS_TPrintf("\n"); }
+    }
+    OS_TPrintf( " cc = %d bytes\n", server->que->writePtr );
+    for(i=0; i<server->que->writePtr; ++i){
+      OS_TPrintf("%02x,", server->que->buffer[i]);
+      if( (i+1)%16 == 0){ OS_TPrintf("\n"); }
+    }
+  }
+
   return TRUE;
 }
 

@@ -109,6 +109,7 @@ extern void BTL_MAIN_ClientPokemonReflectToServer( BTL_MAIN_MODULE* wk, u8 pokeI
 extern u32 BTL_MAIN_GetBonusMoney( const BTL_MAIN_MODULE* wk );
 extern u32 BTL_MAIN_FixBonusMoney( BTL_MAIN_MODULE* wk );
 extern BtlResult BTL_MAIN_ChecBattleResult( BTL_MAIN_MODULE* wk );
+extern void BTL_MAIN_NotifyCmdCheckError( BTL_MAIN_MODULE* wk );
 
 
 /*------------------------------------------------------------------------------*/

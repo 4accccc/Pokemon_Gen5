@@ -1317,23 +1317,29 @@ static  BOOL  check_tr_message( BTL_CLIENT* wk );
 
 static  BOOL  check_tr_message( BTL_CLIENT* wk )
 {
-  u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
-  u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
-  BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
-
-  if( ( BTL_MAIN_GetRule( wk->mainModule ) != BTL_RULE_SINGLE ) &&
-      ( BTL_MAIN_GetCompetitor( wk->mainModule ) != BTL_COMPETITOR_TRAINER ) )
+  if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER )
   {
-    return FALSE;
-  }
-
-  if( TT_TrainerMessageCheck( trainerID, TRMSG_FIGHT_POKE_LAST_HP_HALF, wk->heapID ) )
-  {
-    //‚Æ‚è‚ ‚¦‚¸ÅŒã‚Ì1•C”»’è‚¾‚¯‚·‚é
-    if( ( BTL_PARTY_GetAliveMemberCount( party ) == 1 ) && ( wk->trainer_msg_check == FALSE ))
+    u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
+    u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
+    if( trainerID != TRID_NULL )
     {
-      wk->trainer_msg_check = TRUE;
-      return TRUE;
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+
+      if( ( BTL_MAIN_GetRule( wk->mainModule ) != BTL_RULE_SINGLE ) &&
+          ( BTL_MAIN_GetCompetitor( wk->mainModule ) != BTL_COMPETITOR_TRAINER ) )
+      {
+        return FALSE;
+      }
+
+      if( TT_TrainerMessageCheck( trainerID, TRMSG_FIGHT_POKE_LAST_HP_HALF, wk->heapID ) )
+      {
+        //‚Æ‚è‚ ‚¦‚¸ÅŒã‚Ì1•C”»’è‚¾‚¯‚·‚é
+        if( ( BTL_PARTY_GetAliveMemberCount( party ) == 1 ) && ( wk->trainer_msg_check == FALSE ))
+        {
+          wk->trainer_msg_check = TRUE;
+          return TRUE;
+        }
+      }
     }
   }
 
@@ -3235,7 +3241,9 @@ restart:
       if( (wk->cmdCheckServer != NULL)
       &&  (wk->fCmdCheckReady)
       ){
-        BTL_SERVER_CMDCHECK_Make( wk->cmdCheckServer, cmdBuf, cmdSize );
+        if( BTL_SERVER_CMDCHECK_Make(wk->cmdCheckServer, cmdBuf, cmdSize) ){
+          BTL_MAIN_NotifyCmdCheckError( wk->mainModule );
+        }
         wk->fCmdCheckReady = FALSE;
       }
 
