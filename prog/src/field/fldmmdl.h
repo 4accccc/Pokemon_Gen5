@@ -958,6 +958,7 @@ extern BOOL MMDL_CheckStatusBitHeightExpand( const MMDL * mmdl );
 
 extern void MMDL_SetStatusBitAttrGetOFF( MMDL * mmdl, BOOL flag );
 extern int MMDL_CheckStatusBitAttrGetOFF( const MMDL * mmdl );
+extern void MMDL_SetMoveBitNotSave( MMDL *mmdl, BOOL flag );
 
 extern BOOL MMDLSYS_SearchUseMMdl(
 	const MMDLSYS *fos, MMDL **mmdl, u32 *no );
