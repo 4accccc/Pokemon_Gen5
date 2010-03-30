@@ -15,6 +15,9 @@
 //--------------------------------------------------------------
 // スクリプトテーブル
 //--------------------------------------------------------------
+_EVENT_DATA ev_fld_item_37
+_EVENT_DATA ev_fld_item_38
+_EVENT_DATA ev_fld_item_39
 _EVENT_DATA ev_fld_item_0
 _EVENT_DATA ev_fld_item_1
 _EVENT_DATA ev_fld_item_2
@@ -24,129 +27,14 @@ _EVENT_DATA ev_fld_item_5
 _EVENT_DATA ev_fld_item_6
 _EVENT_DATA ev_fld_item_7
 _EVENT_DATA ev_fld_item_8
-_EVENT_DATA ev_fld_item_9
-_EVENT_DATA ev_fld_item_10
-_EVENT_DATA ev_fld_item_11
-_EVENT_DATA ev_fld_item_12
-_EVENT_DATA ev_fld_item_13
-_EVENT_DATA ev_fld_item_14
-_EVENT_DATA ev_fld_item_15
-_EVENT_DATA ev_fld_item_16
-_EVENT_DATA ev_fld_item_17
-_EVENT_DATA ev_fld_item_18
-_EVENT_DATA ev_fld_item_19
-_EVENT_DATA ev_fld_item_20
-_EVENT_DATA ev_fld_item_21
-_EVENT_DATA ev_fld_item_22
-_EVENT_DATA ev_fld_item_23
-_EVENT_DATA ev_fld_item_24
-_EVENT_DATA ev_fld_item_25
-_EVENT_DATA ev_fld_item_26
-_EVENT_DATA ev_fld_item_27
-_EVENT_DATA ev_fld_item_28
-_EVENT_DATA ev_fld_item_29
-_EVENT_DATA ev_fld_item_30
-_EVENT_DATA ev_fld_item_31
-_EVENT_DATA ev_fld_item_32
-_EVENT_DATA ev_fld_item_33
-_EVENT_DATA ev_fld_item_34
-_EVENT_DATA ev_fld_item_35
-_EVENT_DATA ev_fld_item_36
-_EVENT_DATA ev_fld_item_37
-_EVENT_DATA ev_fld_item_38
-_EVENT_DATA ev_fld_item_39
 _EVENT_DATA ev_fld_item_40
 _EVENT_DATA ev_fld_item_41
 _EVENT_DATA ev_fld_item_42
+_EVENT_DATA ev_fld_item_12
+_EVENT_DATA ev_fld_item_13
+_EVENT_DATA ev_fld_item_14
 _EVENT_DATA ev_fld_item_43
 _EVENT_DATA ev_fld_item_44
-_EVENT_DATA ev_fld_item_45
-_EVENT_DATA ev_fld_item_46
-_EVENT_DATA ev_fld_item_47
-_EVENT_DATA ev_fld_item_48
-_EVENT_DATA ev_fld_item_49
-_EVENT_DATA ev_fld_item_50
-_EVENT_DATA ev_fld_item_51
-_EVENT_DATA ev_fld_item_52
-_EVENT_DATA ev_fld_item_53
-_EVENT_DATA ev_fld_item_54
-_EVENT_DATA ev_fld_item_55
-_EVENT_DATA ev_fld_item_56
-_EVENT_DATA ev_fld_item_57
-_EVENT_DATA ev_fld_item_58
-_EVENT_DATA ev_fld_item_59
-_EVENT_DATA ev_fld_item_60
-_EVENT_DATA ev_fld_item_61
-_EVENT_DATA ev_fld_item_62
-_EVENT_DATA ev_fld_item_63
-_EVENT_DATA ev_fld_item_64
-_EVENT_DATA ev_fld_item_65
-_EVENT_DATA ev_fld_item_66
-_EVENT_DATA ev_fld_item_67
-_EVENT_DATA ev_fld_item_68
-_EVENT_DATA ev_fld_item_69
-_EVENT_DATA ev_fld_item_70
-_EVENT_DATA ev_fld_item_71
-_EVENT_DATA ev_fld_item_72
-_EVENT_DATA ev_fld_item_73
-_EVENT_DATA ev_fld_item_74
-_EVENT_DATA ev_fld_item_75
-_EVENT_DATA ev_fld_item_76
-_EVENT_DATA ev_fld_item_77
-_EVENT_DATA ev_fld_item_78
-_EVENT_DATA ev_fld_item_79
-_EVENT_DATA ev_fld_item_80
-_EVENT_DATA ev_fld_item_81
-_EVENT_DATA ev_fld_item_82
-_EVENT_DATA ev_fld_item_83
-_EVENT_DATA ev_fld_item_84
-_EVENT_DATA ev_fld_item_85
-_EVENT_DATA ev_fld_item_86
-_EVENT_DATA ev_fld_item_87
-_EVENT_DATA ev_fld_item_88
-_EVENT_DATA ev_fld_item_89
-_EVENT_DATA ev_fld_item_90
-_EVENT_DATA ev_fld_item_91
-_EVENT_DATA ev_fld_item_92
-_EVENT_DATA ev_fld_item_93
-_EVENT_DATA ev_fld_item_94
-_EVENT_DATA ev_fld_item_95
-_EVENT_DATA ev_fld_item_96
-_EVENT_DATA ev_fld_item_97
-_EVENT_DATA ev_fld_item_98
-_EVENT_DATA ev_fld_item_99
-_EVENT_DATA ev_fld_item_100
-_EVENT_DATA ev_fld_item_101
-_EVENT_DATA ev_fld_item_102
-_EVENT_DATA ev_fld_item_103
-_EVENT_DATA ev_fld_item_104
-_EVENT_DATA ev_fld_item_105
-_EVENT_DATA ev_fld_item_106
-_EVENT_DATA ev_fld_item_107
-_EVENT_DATA ev_fld_item_108
-_EVENT_DATA ev_fld_item_109
-_EVENT_DATA ev_fld_item_110
-_EVENT_DATA ev_fld_item_111
-_EVENT_DATA ev_fld_item_112
-_EVENT_DATA ev_fld_item_113
-_EVENT_DATA ev_fld_item_114
-_EVENT_DATA ev_fld_item_115
-_EVENT_DATA ev_fld_item_116
-_EVENT_DATA ev_fld_item_117
-_EVENT_DATA ev_fld_item_118
-_EVENT_DATA ev_fld_item_119
-_EVENT_DATA ev_fld_item_120
-_EVENT_DATA ev_fld_item_121
-_EVENT_DATA ev_fld_item_122
-_EVENT_DATA ev_fld_item_123
-_EVENT_DATA ev_fld_item_124
-_EVENT_DATA ev_fld_item_125
-_EVENT_DATA ev_fld_item_126
-_EVENT_DATA ev_fld_item_127
-_EVENT_DATA ev_fld_item_128
-_EVENT_DATA ev_fld_item_129
-_EVENT_DATA ev_fld_item_130
-_EVENT_DATA ev_fld_item_131
 _EVENT_DATA ev_fld_item_132
 _EVENT_DATA ev_fld_item_133
 _EVENT_DATA ev_fld_item_134
@@ -155,14 +43,57 @@ _EVENT_DATA ev_fld_item_136
 _EVENT_DATA ev_fld_item_137
 _EVENT_DATA ev_fld_item_138
 _EVENT_DATA ev_fld_item_139
+_EVENT_DATA ev_fld_item_22
+_EVENT_DATA ev_fld_item_23
+_EVENT_DATA ev_fld_item_24
+_EVENT_DATA ev_fld_item_25
+_EVENT_DATA ev_fld_item_26
+_EVENT_DATA ev_fld_item_45
+_EVENT_DATA ev_fld_item_46
+_EVENT_DATA ev_fld_item_47
+_EVENT_DATA ev_fld_item_48
 _EVENT_DATA ev_fld_item_140
 _EVENT_DATA ev_fld_item_141
+_EVENT_DATA ev_fld_item_15
+_EVENT_DATA ev_fld_item_16
+_EVENT_DATA ev_fld_item_49
+_EVENT_DATA ev_fld_item_50
+_EVENT_DATA ev_fld_item_51
+_EVENT_DATA ev_fld_item_52
+_EVENT_DATA ev_fld_item_53
+_EVENT_DATA ev_fld_item_54
 _EVENT_DATA ev_fld_item_142
 _EVENT_DATA ev_fld_item_143
 _EVENT_DATA ev_fld_item_144
+_EVENT_DATA ev_fld_item_27
+_EVENT_DATA ev_fld_item_28
+_EVENT_DATA ev_fld_item_55
+_EVENT_DATA ev_fld_item_56
+_EVENT_DATA ev_fld_item_57
 _EVENT_DATA ev_fld_item_145
 _EVENT_DATA ev_fld_item_146
+_EVENT_DATA ev_fld_item_58
+_EVENT_DATA ev_fld_item_59
+_EVENT_DATA ev_fld_item_60
+_EVENT_DATA ev_fld_item_86
+_EVENT_DATA ev_fld_item_9
+_EVENT_DATA ev_fld_item_10
+_EVENT_DATA ev_fld_item_11
+_EVENT_DATA ev_fld_item_125
+_EVENT_DATA ev_fld_item_126
+_EVENT_DATA ev_fld_item_127
+_EVENT_DATA ev_fld_item_29
+_EVENT_DATA ev_fld_item_30
+_EVENT_DATA ev_fld_item_61
+_EVENT_DATA ev_fld_item_62
+_EVENT_DATA ev_fld_item_87
+_EVENT_DATA ev_fld_item_88
 _EVENT_DATA ev_fld_item_147
+_EVENT_DATA ev_fld_item_63
+_EVENT_DATA ev_fld_item_64
+_EVENT_DATA ev_fld_item_65
+_EVENT_DATA ev_fld_item_128
+_EVENT_DATA ev_fld_item_129
 _EVENT_DATA ev_fld_item_148
 _EVENT_DATA ev_fld_item_149
 _EVENT_DATA ev_fld_item_150
@@ -172,12 +103,43 @@ _EVENT_DATA ev_fld_item_153
 _EVENT_DATA ev_fld_item_154
 _EVENT_DATA ev_fld_item_155
 _EVENT_DATA ev_fld_item_156
+_EVENT_DATA ev_fld_item_31
+_EVENT_DATA ev_fld_item_32
+_EVENT_DATA ev_fld_item_33
+_EVENT_DATA ev_fld_item_34
+_EVENT_DATA ev_fld_item_35
+_EVENT_DATA ev_fld_item_36
+_EVENT_DATA ev_fld_item_66
+_EVENT_DATA ev_fld_item_67
+_EVENT_DATA ev_fld_item_130
 _EVENT_DATA ev_fld_item_157
+_EVENT_DATA ev_fld_item_68
+_EVENT_DATA ev_fld_item_69
+_EVENT_DATA ev_fld_item_70
+_EVENT_DATA ev_fld_item_71
+_EVENT_DATA ev_fld_item_121
+_EVENT_DATA ev_fld_item_122
+_EVENT_DATA ev_fld_item_123
+_EVENT_DATA ev_fld_item_124
 _EVENT_DATA ev_fld_item_158
 _EVENT_DATA ev_fld_item_159
+_EVENT_DATA ev_fld_item_72
+_EVENT_DATA ev_fld_item_73
+_EVENT_DATA ev_fld_item_74
+_EVENT_DATA ev_fld_item_75
+_EVENT_DATA ev_fld_item_76
+_EVENT_DATA ev_fld_item_77
+_EVENT_DATA ev_fld_item_89
 _EVENT_DATA ev_fld_item_160
 _EVENT_DATA ev_fld_item_161
+_EVENT_DATA ev_fld_item_179
+_EVENT_DATA ev_fld_item_79
+_EVENT_DATA ev_fld_item_80
 _EVENT_DATA ev_fld_item_162
+_EVENT_DATA ev_fld_item_78
+_EVENT_DATA ev_fld_item_81
+_EVENT_DATA ev_fld_item_82
+_EVENT_DATA ev_fld_item_131
 _EVENT_DATA ev_fld_item_163
 _EVENT_DATA ev_fld_item_164
 _EVENT_DATA ev_fld_item_165
@@ -190,11 +152,73 @@ _EVENT_DATA ev_fld_item_171
 _EVENT_DATA ev_fld_item_172
 _EVENT_DATA ev_fld_item_173
 _EVENT_DATA ev_fld_item_174
+_EVENT_DATA ev_fld_item_83
+_EVENT_DATA ev_fld_item_84
+_EVENT_DATA ev_fld_item_85
 _EVENT_DATA ev_fld_item_175
+_EVENT_DATA ev_fld_item_17
+_EVENT_DATA ev_fld_item_18
+_EVENT_DATA ev_fld_item_19
+_EVENT_DATA ev_fld_item_20
+_EVENT_DATA ev_fld_item_21
+_EVENT_DATA ev_fld_item_90
+_EVENT_DATA ev_fld_item_91
+_EVENT_DATA ev_fld_item_92
+_EVENT_DATA ev_fld_item_93
+_EVENT_DATA ev_fld_item_94
+_EVENT_DATA ev_fld_item_95
+_EVENT_DATA ev_fld_item_96
+_EVENT_DATA ev_fld_item_288
+_EVENT_DATA ev_fld_item_289
+_EVENT_DATA ev_fld_item_290
+_EVENT_DATA ev_fld_item_97
+_EVENT_DATA ev_fld_item_98
+_EVENT_DATA ev_fld_item_99
+_EVENT_DATA ev_fld_item_100
+_EVENT_DATA ev_fld_item_101
+_EVENT_DATA ev_fld_item_102
+_EVENT_DATA ev_fld_item_103
+_EVENT_DATA ev_fld_item_104
+_EVENT_DATA ev_fld_item_105
+_EVENT_DATA ev_fld_item_106
+_EVENT_DATA ev_fld_item_107
+_EVENT_DATA ev_fld_item_108
+_EVENT_DATA ev_fld_item_275
+_EVENT_DATA ev_fld_item_276
+_EVENT_DATA ev_fld_item_277
+_EVENT_DATA ev_fld_item_278
+_EVENT_DATA ev_fld_item_279
+_EVENT_DATA ev_fld_item_280
+_EVENT_DATA ev_fld_item_281
+_EVENT_DATA ev_fld_item_282
+_EVENT_DATA ev_fld_item_283
+_EVENT_DATA ev_fld_item_284
+_EVENT_DATA ev_fld_item_109
+_EVENT_DATA ev_fld_item_110
+_EVENT_DATA ev_fld_item_111
+_EVENT_DATA ev_fld_item_112
+_EVENT_DATA ev_fld_item_113
+_EVENT_DATA ev_fld_item_287
+_EVENT_DATA ev_fld_item_285
+_EVENT_DATA ev_fld_item_286
+_EVENT_DATA ev_fld_item_114
+_EVENT_DATA ev_fld_item_115
+_EVENT_DATA ev_fld_item_116
+_EVENT_DATA ev_fld_item_117
+_EVENT_DATA ev_fld_item_118
+_EVENT_DATA ev_fld_item_119
+_EVENT_DATA ev_fld_item_120
 _EVENT_DATA ev_fld_item_176
 _EVENT_DATA ev_fld_item_177
 _EVENT_DATA ev_fld_item_178
-_EVENT_DATA ev_fld_item_179
+_EVENT_DATA ev_fld_item_267
+_EVENT_DATA ev_fld_item_268
+_EVENT_DATA ev_fld_item_269
+_EVENT_DATA ev_fld_item_270
+_EVENT_DATA ev_fld_item_271
+_EVENT_DATA ev_fld_item_272
+_EVENT_DATA ev_fld_item_273
+_EVENT_DATA ev_fld_item_274
 _EVENT_DATA ev_fld_item_180
 _EVENT_DATA ev_fld_item_181
 _EVENT_DATA ev_fld_item_182
@@ -240,6 +264,18 @@ _EVENT_DATA ev_fld_item_221
 _EVENT_DATA ev_fld_item_222
 _EVENT_DATA ev_fld_item_223
 _EVENT_DATA ev_fld_item_224
+_EVENT_DATA ev_fld_item_255
+_EVENT_DATA ev_fld_item_256
+_EVENT_DATA ev_fld_item_257
+_EVENT_DATA ev_fld_item_258
+_EVENT_DATA ev_fld_item_259
+_EVENT_DATA ev_fld_item_260
+_EVENT_DATA ev_fld_item_261
+_EVENT_DATA ev_fld_item_262
+_EVENT_DATA ev_fld_item_263
+_EVENT_DATA ev_fld_item_264
+_EVENT_DATA ev_fld_item_265
+_EVENT_DATA ev_fld_item_266
 _EVENT_DATA ev_fld_item_225
 _EVENT_DATA ev_fld_item_226
 _EVENT_DATA ev_fld_item_227
@@ -270,40 +306,29 @@ _EVENT_DATA ev_fld_item_251
 _EVENT_DATA ev_fld_item_252
 _EVENT_DATA ev_fld_item_253
 _EVENT_DATA ev_fld_item_254
-_EVENT_DATA ev_fld_item_255
-_EVENT_DATA ev_fld_item_256
-_EVENT_DATA ev_fld_item_257
-_EVENT_DATA ev_fld_item_258
-_EVENT_DATA ev_fld_item_259
-_EVENT_DATA ev_fld_item_260
-_EVENT_DATA ev_fld_item_261
-_EVENT_DATA ev_fld_item_262
-_EVENT_DATA ev_fld_item_263
-_EVENT_DATA ev_fld_item_264
-_EVENT_DATA ev_fld_item_265
-_EVENT_DATA ev_fld_item_266
-_EVENT_DATA ev_fld_item_267
-_EVENT_DATA ev_fld_item_268
-_EVENT_DATA ev_fld_item_269
-_EVENT_DATA ev_fld_item_270
-_EVENT_DATA ev_fld_item_271
-_EVENT_DATA ev_fld_item_272
-_EVENT_DATA ev_fld_item_273
-_EVENT_DATA ev_fld_item_274
-_EVENT_DATA ev_fld_item_275
-_EVENT_DATA ev_fld_item_276
-_EVENT_DATA ev_fld_item_277
-_EVENT_DATA ev_fld_item_278
-_EVENT_DATA ev_fld_item_279
-_EVENT_DATA ev_fld_item_280
-_EVENT_DATA ev_fld_item_281
-_EVENT_DATA ev_fld_item_282
-_EVENT_DATA ev_fld_item_283
-_EVENT_DATA ev_fld_item_284
-_EVENT_DATA ev_fld_item_285
-_EVENT_DATA ev_fld_item_286
 _EVENT_DATA ev_fld_item2
 _EVENT_DATA_END
+
+//--------------------------------------------------------------
+// MAP=r01 X=408 Y=120 ITEM=ふしぎなアメ FLAG=37
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_37
+  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r02 X=408 Y=120 ITEM=げんきのかたまり FLAG=38
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_38
+  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r03 X=408 Y=120 ITEM=かいふくのくすり FLAG=39
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_39
+  _FLD_ITEM_EVENT ITEM_KAIHUKUNOKUSURI,1
+EVENT_END
 
 //--------------------------------------------------------------
 // MAP=r02 X=408 Y=120 ITEM=モンスターボール FLAG=0
@@ -369,23 +394,23 @@ EVENT_START ev_fld_item_8
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r05 X=408 Y=120 ITEM=キトサン FLAG=9
+// MAP=d01 X=408 Y=120 ITEM=げんきのかけら FLAG=40
 //--------------------------------------------------------------
-EVENT_START ev_fld_item_9
-  _FLD_ITEM_EVENT ITEM_KITOSAN,1
+EVENT_START ev_fld_item_40
+  _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r05 X=408 Y=120 ITEM=げんきのかたまり FLAG=10
+// MAP=d01 X=408 Y=120 ITEM=すごいキズぐすり FLAG=41
 //--------------------------------------------------------------
-EVENT_START ev_fld_item_10
-  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
+EVENT_START ev_fld_item_41
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r05 X=408 Y=120 ITEM=すごいキズぐすり FLAG=11
+// MAP=d01 X=408 Y=120 ITEM=すごいキズぐすり FLAG=42
 //--------------------------------------------------------------
-EVENT_START ev_fld_item_11
+EVENT_START ev_fld_item_42
   _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
 EVENT_END
 
@@ -411,202 +436,6 @@ EVENT_START ev_fld_item_14
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r04 X=414 Y=569 ITEM=すごいキズぐすり FLAG=15
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_15
-  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r04 X=419 Y=532 ITEM=ディフェンダー FLAG=16
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_16
-  _FLD_ITEM_EVENT ITEM_DHIFENDAA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d09 X=408 Y=120 ITEM=げんきのかけら FLAG=17
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_17
-  _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d09 X=408 Y=120 ITEM=すごいキズぐすり FLAG=18
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_18
-  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d09 X=408 Y=120 ITEM=ハイパーボール FLAG=19
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_19
-  _FLD_ITEM_EVENT ITEM_HAIPAABOORU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d09 X=408 Y=120 ITEM=きんのたま FLAG=20
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_20
-  _FLD_ITEM_EVENT ITEM_KINNOTAMA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d09 X=408 Y=120 ITEM=なんでもなおし FLAG=21
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_21
-  _FLD_ITEM_EVENT ITEM_NANDEMONAOSI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d02r0101 X=49 Y=55 ITEM=せんせいのツメ FLAG=22
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_22
-  _FLD_ITEM_EVENT ITEM_SENSEINOTUME,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d02r0101 X=37 Y=37 ITEM=まひなおし FLAG=23
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_23
-  _FLD_ITEM_EVENT ITEM_MAHINAOSI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d02r0101 X=43 Y=81 ITEM=どくけし FLAG=24
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_24
-  _FLD_ITEM_EVENT ITEM_DOKUKESI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d02r0101 X=50 Y=42 ITEM=モンスターボール FLAG=25
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_25
-  _FLD_ITEM_EVENT ITEM_MONSUTAABOORU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d02r0101 X=117 Y=60 ITEM=いいキズぐすり FLAG=26
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_26
-  _FLD_ITEM_EVENT ITEM_IIKIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d03r0101 X=408 Y=120 ITEM=ハートのウロコ FLAG=27
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_27
-  _FLD_ITEM_EVENT ITEM_HAATONOUROKO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d03r0101 X=408 Y=120 ITEM=おいしいみず FLAG=28
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_28
-  _FLD_ITEM_EVENT ITEM_OISIIMIZU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d05r0101 X=408 Y=120 ITEM=ゴールドスプレー FLAG=29
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_29
-  _FLD_ITEM_EVENT ITEM_GOORUDOSUPUREE,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d05r0101 X=408 Y=120 ITEM=とけないこおり FLAG=30
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_30
-  _FLD_ITEM_EVENT ITEM_TOKENAIKOORI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d06r0101 X=408 Y=120 ITEM=あなぬけのヒモ FLAG=31
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_31
-  _FLD_ITEM_EVENT ITEM_ANANUKENOHIMO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d06r0101 X=408 Y=120 ITEM=ふしぎなアメ FLAG=32
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_32
-  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d06r0101 X=408 Y=120 ITEM=げんきのかたまり FLAG=33
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_33
-  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d06r0101 X=408 Y=120 ITEM=じしゃく FLAG=34
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_34
-  _FLD_ITEM_EVENT ITEM_ZISYAKU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d06r0201 X=408 Y=120 ITEM=ダークボール FLAG=35
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_35
-  _FLD_ITEM_EVENT ITEM_DAAKUBOORU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d06r0201 X=408 Y=120 ITEM=ひかりのこな FLAG=36
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_36
-  _FLD_ITEM_EVENT ITEM_HIKARINOKONA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r01 X=408 Y=120 ITEM=ふしぎなアメ FLAG=37
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_37
-  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r02 X=408 Y=120 ITEM=げんきのかたまり FLAG=38
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_38
-  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r03 X=408 Y=120 ITEM=かいふくのくすり FLAG=39
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_39
-  _FLD_ITEM_EVENT ITEM_KAIHUKUNOKUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d01 X=408 Y=120 ITEM=げんきのかけら FLAG=40
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_40
-  _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d01 X=408 Y=120 ITEM=どくけし FLAG=41
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_41
-  _FLD_ITEM_EVENT ITEM_DOKUKESI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d01 X=408 Y=120 ITEM=すごいキズぐすり FLAG=42
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_42
-  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
 // MAP=r03 X=408 Y=120 ITEM=ピーピーリカバー FLAG=43
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_43
@@ -618,615 +447,6 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_44
   _FLD_ITEM_EVENT ITEM_KINNOTAMA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d02 X=17 Y=65 ITEM=ちいさなキノコ FLAG=45
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_45
-  _FLD_ITEM_EVENT ITEM_TIISANAKINOKO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d02 X=17 Y=65 ITEM=おおきなキノコ FLAG=46
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_46
-  _FLD_ITEM_EVENT ITEM_OOKINAKINOKO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d02 X=17 Y=65 ITEM=エフェクトガード FLAG=47
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_47
-  _FLD_ITEM_EVENT ITEM_EFEKUTOGAADO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d02 X=17 Y=65 ITEM=げんきのかけら FLAG=48
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_48
-  _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r04 X=421 Y=590 ITEM=ポイントマックス FLAG=49
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_49
-  _FLD_ITEM_EVENT ITEM_POINTOMAKKUSU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r04 X=420 Y=573 ITEM=ヨクアタール FLAG=50
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_50
-  _FLD_ITEM_EVENT ITEM_YOKUATAARU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r04 X=405 Y=596 ITEM=ゴールドスプレー FLAG=51
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_51
-  _FLD_ITEM_EVENT ITEM_GOORUDOSUPUREE,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r04 X=395 Y=573 ITEM=すごいキズぐすり FLAG=52
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_52
-  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r04 X=416 Y=553 ITEM=ピーピーエイド FLAG=53
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_53
-  _FLD_ITEM_EVENT ITEM_PIIPIIEIDO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r04 X=435 Y=557 ITEM=キズぐすり FLAG=54
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_54
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d03r0101 X=408 Y=120 ITEM=きちょうなホネ FLAG=55
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_55
-  _FLD_ITEM_EVENT ITEM_KITYOUNAHONE,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d03r0101 X=408 Y=120 ITEM=ピーピーエイダー FLAG=56
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_56
-  _FLD_ITEM_EVENT ITEM_PIIPIIEIDAA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d03r0101 X=408 Y=120 ITEM=おいしいみず FLAG=57
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_57
-  _FLD_ITEM_EVENT ITEM_OISIIMIZU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d04r0301 X=408 Y=120 ITEM=わざマシン３０ FLAG=58
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_58
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN30,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d04r0401 X=408 Y=120 ITEM=マックスアップ FLAG=59
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_59
-  _FLD_ITEM_EVENT ITEM_MAKKUSUAPPU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d04r0501 X=408 Y=120 ITEM=たいようのいし FLAG=60
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_60
-  _FLD_ITEM_EVENT ITEM_TAIYOUNOISI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d05r0101 X=408 Y=120 ITEM=タウリン FLAG=61
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_61
-  _FLD_ITEM_EVENT ITEM_TAURIN,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d05 X=164 Y=461 ITEM=ピーピーエイド FLAG=62
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_62
-  _FLD_ITEM_EVENT ITEM_PIIPIIEIDO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r06 X=137 Y=396 ITEM=リーフのいし FLAG=63
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_63
-  _FLD_ITEM_EVENT ITEM_RIIHUNOISI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r06 X=408 Y=120 ITEM=きんのたま FLAG=64
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_64
-  _FLD_ITEM_EVENT ITEM_KINNOTAMA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r06 X=124 Y=362 ITEM=インドメタシン FLAG=65
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_65
-  _FLD_ITEM_EVENT ITEM_INDOMETASIN,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d06r0301 X=408 Y=120 ITEM=げんきのかたまり FLAG=66
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_66
-  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d06r0301 X=408 Y=120 ITEM=かみなりのいし FLAG=67
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_67
-  _FLD_ITEM_EVENT ITEM_KAMINARINOISI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r07 X=408 Y=120 ITEM=まんたんのくすり FLAG=68
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_68
-  _FLD_ITEM_EVENT ITEM_MANTANNOKUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r07 X=408 Y=120 ITEM=リゾチウム FLAG=69
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_69
-  _FLD_ITEM_EVENT ITEM_RIZOTIUMU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r07 X=408 Y=120 ITEM=ポイントアップ FLAG=70
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_70
-  _FLD_ITEM_EVENT ITEM_POINTOAPPU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r07 X=408 Y=120 ITEM=ピーピーマックス FLAG=71
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_71
-  _FLD_ITEM_EVENT ITEM_PIIPIIMAKKUSU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d07r0101 X=408 Y=120 ITEM=なんでもなおし FLAG=72
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_72
-  _FLD_ITEM_EVENT ITEM_NANDEMONAOSI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d07 X=408 Y=120 ITEM=つきのいし FLAG=73
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_73
-  _FLD_ITEM_EVENT ITEM_TUKINOISI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d07 X=408 Y=120 ITEM=まんまるいし FLAG=74
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_74
-  _FLD_ITEM_EVENT ITEM_MANMARUISI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D07r0101 X=408 Y=120 ITEM=すごいキズぐすり FLAG=75
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_75
-  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d07r0501 X=408 Y=120 ITEM=キズぐすり FLAG=76
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_76
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d07r0501 X=408 Y=120 ITEM=わざマシン９１ FLAG=77
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_77
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN91,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d08r0101 X=408 Y=120 ITEM=わざマシン６３ FLAG=78
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_78
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN63,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r08 X=408 Y=120 ITEM=ブロムヘキシン FLAG=79
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_79
-  _FLD_ITEM_EVENT ITEM_BUROMUHEKISIN,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r08 X=408 Y=120 ITEM=ひかりのいし FLAG=80
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_80
-  _FLD_ITEM_EVENT ITEM_HIKARINOISI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r09 X=347 Y=182 ITEM=マックスアップ FLAG=81
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_81
-  _FLD_ITEM_EVENT ITEM_MAKKUSUAPPU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r09 X=357 Y=188 ITEM=げんきのかたまり FLAG=82
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_82
-  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r10 X=408 Y=120 ITEM=わざマシン０５ FLAG=83
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_83
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN05,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r10 X=408 Y=120 ITEM=めざめいし FLAG=84
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_84
-  _FLD_ITEM_EVENT ITEM_MEZAMEISI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r10 X=408 Y=120 ITEM=ピーピーマックス FLAG=85
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_85
-  _FLD_ITEM_EVENT ITEM_PIIPIIMAKKUSU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d04r0501 X=408 Y=120 ITEM=ふしぎなアメ FLAG=86
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_86
-  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d05 X=182 Y=469 ITEM=ハートのウロコ FLAG=87
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_87
-  _FLD_ITEM_EVENT ITEM_HAATONOUROKO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d05 X=201 Y=468 ITEM=ゴールドスプレー FLAG=88
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_88
-  _FLD_ITEM_EVENT ITEM_GOORUDOSUPUREE,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d07r0101 X=408 Y=120 ITEM=ピーピーエイド FLAG=89
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_89
-  _FLD_ITEM_EVENT ITEM_PIIPIIEIDO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d09r0101 X=408 Y=120 ITEM=キズぐすり FLAG=90
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_90
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d09r0601 X=408 Y=120 ITEM=わざマシン０２ FLAG=91
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_91
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN02,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d09r0901 X=408 Y=120 ITEM=わざマシン１２ FLAG=92
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_92
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN12,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d09r1001 X=408 Y=120 ITEM=キズぐすり FLAG=93
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_93
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d09r1201 X=408 Y=120 ITEM=わざマシン９３ FLAG=94
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_94
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN93,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r11 X=460 Y=179 ITEM=キズぐすり FLAG=95
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_95
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r11 X=483 Y=166 ITEM=キズぐすり FLAG=96
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_96
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r11 X=494 Y=165 ITEM=キズぐすり FLAG=97
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_97
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r12 X=589 Y=182 ITEM=キズぐすり FLAG=98
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_98
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r12 X=606 Y=164 ITEM=キズぐすり FLAG=99
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_99
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r12 X=627 Y=169 ITEM=キズぐすり FLAG=100
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_100
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r13 X=682 Y=191 ITEM=キズぐすり FLAG=101
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_101
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r13 X=724 Y=233 ITEM=キズぐすり FLAG=102
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_102
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r13 X=688 Y=232 ITEM=キズぐすり FLAG=103
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_103
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r13 X=692 Y=245 ITEM=キズぐすり FLAG=104
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_104
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r13 X=739 Y=264 ITEM=キズぐすり FLAG=105
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_105
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r14 X=724 Y=337 ITEM=キズぐすり FLAG=106
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_106
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r14 X=694 Y=357 ITEM=キズぐすり FLAG=107
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_107
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r14 X=704 Y=364 ITEM=キズぐすり FLAG=108
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_108
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r15 X=632 Y=444 ITEM=キズぐすり FLAG=109
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_109
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r15 X=619 Y=421 ITEM=キズぐすり FLAG=110
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_110
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r15 X=599 Y=421 ITEM=キズぐすり FLAG=111
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_111
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r16 X=408 Y=120 ITEM=わざマシン６６ FLAG=112
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_112
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN66,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r16 X=408 Y=120 ITEM=キズぐすり FLAG=113
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_113
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=w17 X=710 Y=747 ITEM=キズぐすり FLAG=114
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_114
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=w17 X=691 Y=748 ITEM=ひでんマシン０７ FLAG=115
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_115
-  _FLD_ITEM_EVENT ITEM_HIDENMASIN07,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d13 X=715 Y=727 ITEM=キズぐすり FLAG=116
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_116
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r18 X=634 Y=710 ITEM=わざマシン０６ FLAG=117
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_117
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN06,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r18 X=642 Y=741 ITEM=わざマシン１９ FLAG=118
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_118
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN19,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r18 X=642 Y=761 ITEM=キズぐすり FLAG=119
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_119
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r18 X=613 Y=753 ITEM=キズぐすり FLAG=120
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_120
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r07r0102 X=408 Y=120 ITEM=わざマシン６１ FLAG=121
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_121
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN61,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r07r0102 X=408 Y=120 ITEM=キズぐすり FLAG=122
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_122
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r07r0103 X=408 Y=120 ITEM=わざマシン６５ FLAG=123
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_123
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN65,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r07r0103 X=408 Y=120 ITEM=キズぐすり FLAG=124
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_124
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=c05r0601 X=2 Y=16 ITEM=キズぐすり FLAG=125
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_125
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=c05 X=168 Y=395 ITEM=キズぐすり FLAG=126
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_126
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=c05 X=217 Y=414 ITEM=キズぐすり FLAG=127
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_127
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r06 X=143 Y=398 ITEM=キズぐすり FLAG=128
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_128
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r06 X=101 Y=376 ITEM=キズぐすり FLAG=129
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_129
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=c06 X=69 Y=344 ITEM=キズぐすり FLAG=130
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_130
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r09 X=344 Y=188 ITEM=キズぐすり FLAG=131
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_131
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1286,6 +506,69 @@ EVENT_START ev_fld_item_139
 EVENT_END
 
 //--------------------------------------------------------------
+// MAP=d02r0101 X=49 Y=55 ITEM=ぎんのこな FLAG=22
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_22
+  _FLD_ITEM_EVENT ITEM_GINNOKONA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d02r0101 X=37 Y=37 ITEM=まひなおし FLAG=23
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_23
+  _FLD_ITEM_EVENT ITEM_MAHINAOSI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d02r0101 X=43 Y=81 ITEM=どくけし FLAG=24
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_24
+  _FLD_ITEM_EVENT ITEM_DOKUKESI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d02r0101 X=50 Y=42 ITEM=モンスターボール FLAG=25
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_25
+  _FLD_ITEM_EVENT ITEM_MONSUTAABOORU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d02r0101 X=117 Y=60 ITEM=いいキズぐすり FLAG=26
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_26
+  _FLD_ITEM_EVENT ITEM_IIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d02 X=17 Y=65 ITEM=もくたん FLAG=45
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_45
+  _FLD_ITEM_EVENT ITEM_MOKUTAN,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d02 X=17 Y=65 ITEM=おおきなキノコ FLAG=46
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_46
+  _FLD_ITEM_EVENT ITEM_OOKINAKINOKO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d02 X=17 Y=65 ITEM=エフェクトガード FLAG=47
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_47
+  _FLD_ITEM_EVENT ITEM_EFEKUTOGAADO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d02 X=17 Y=65 ITEM=げんきのかけら FLAG=48
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_48
+  _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
+EVENT_END
+
+//--------------------------------------------------------------
 // MAP=d02r0101 X=107 Y=41 ITEM=わざマシン２２ FLAG=140
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_140
@@ -1300,10 +583,66 @@ EVENT_START ev_fld_item_141
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r04 X=407 Y=565 ITEM=キズぐすり FLAG=142
+// MAP=r04 X=414 Y=569 ITEM=すごいキズぐすり FLAG=15
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_15
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r04 X=419 Y=532 ITEM=ディフェンダー FLAG=16
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_16
+  _FLD_ITEM_EVENT ITEM_DHIFENDAA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r04 X=421 Y=590 ITEM=ポイントマックス FLAG=49
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_49
+  _FLD_ITEM_EVENT ITEM_POINTOMAKKUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r04 X=420 Y=573 ITEM=ヨクアタール FLAG=50
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_50
+  _FLD_ITEM_EVENT ITEM_YOKUATAARU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r04 X=405 Y=596 ITEM=ゴールドスプレー FLAG=51
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_51
+  _FLD_ITEM_EVENT ITEM_GOORUDOSUPUREE,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r04 X=395 Y=573 ITEM=すごいキズぐすり FLAG=52
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_52
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r04 X=416 Y=553 ITEM=ピーピーエイド FLAG=53
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_53
+  _FLD_ITEM_EVENT ITEM_PIIPIIEIDO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r04 X=435 Y=557 ITEM=きせきのタネ FLAG=54
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_54
+  _FLD_ITEM_EVENT ITEM_KISEKINOTANE,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r04 X=407 Y=565 ITEM=しんぴのしずく FLAG=142
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_142
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+  _FLD_ITEM_EVENT ITEM_SINPINOSIZUKU,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1321,6 +660,41 @@ EVENT_START ev_fld_item_144
 EVENT_END
 
 //--------------------------------------------------------------
+// MAP=d03r0101 X=408 Y=120 ITEM=ハートのウロコ FLAG=27
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_27
+  _FLD_ITEM_EVENT ITEM_HAATONOUROKO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d03r0101 X=408 Y=120 ITEM=おいしいみず FLAG=28
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_28
+  _FLD_ITEM_EVENT ITEM_OISIIMIZU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d03r0101 X=408 Y=120 ITEM=くろいメガネ FLAG=55
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_55
+  _FLD_ITEM_EVENT ITEM_KUROIMEGANE,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d03r0101 X=408 Y=120 ITEM=ピーピーエイダー FLAG=56
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_56
+  _FLD_ITEM_EVENT ITEM_PIIPIIEIDAA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d03r0101 X=408 Y=120 ITEM=おいしいみず FLAG=57
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_57
+  _FLD_ITEM_EVENT ITEM_OISIIMIZU,1
+EVENT_END
+
+//--------------------------------------------------------------
 // MAP=d03r0101 X=408 Y=120 ITEM=ほのおのいし FLAG=145
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_145
@@ -1335,10 +709,157 @@ EVENT_START ev_fld_item_146
 EVENT_END
 
 //--------------------------------------------------------------
+// MAP=d04r0301 X=408 Y=120 ITEM=わざマシン３０ FLAG=58
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_58
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN30,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d04r0401 X=408 Y=120 ITEM=ポイントアップ FLAG=59
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_59
+  _FLD_ITEM_EVENT ITEM_POINTOAPPU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d04r0501 X=408 Y=120 ITEM=たいようのいし FLAG=60
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_60
+  _FLD_ITEM_EVENT ITEM_TAIYOUNOISI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d04r0501 X=408 Y=120 ITEM=やわらかいすな FLAG=86
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_86
+  _FLD_ITEM_EVENT ITEM_YAWARAKAISUNA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r05 X=408 Y=120 ITEM=キトサン FLAG=9
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_9
+  _FLD_ITEM_EVENT ITEM_KITOSAN,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r05 X=408 Y=120 ITEM=げんきのかたまり FLAG=10
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_10
+  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r05 X=408 Y=120 ITEM=すごいキズぐすり FLAG=11
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_11
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=c05r0601 X=2 Y=16 ITEM=キズぐすり FLAG=125
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_125
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=c05 X=168 Y=395 ITEM=キズぐすり FLAG=126
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_126
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=c05 X=217 Y=414 ITEM=キズぐすり FLAG=127
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_127
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d05r0101 X=408 Y=120 ITEM=ゴールドスプレー FLAG=29
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_29
+  _FLD_ITEM_EVENT ITEM_GOORUDOSUPUREE,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d05r0101 X=408 Y=120 ITEM=とけないこおり FLAG=30
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_30
+  _FLD_ITEM_EVENT ITEM_TOKENAIKOORI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d05r0101 X=408 Y=120 ITEM=タウリン FLAG=61
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_61
+  _FLD_ITEM_EVENT ITEM_TAURIN,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d05 X=164 Y=461 ITEM=ピーピーエイド FLAG=62
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_62
+  _FLD_ITEM_EVENT ITEM_PIIPIIEIDO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d05 X=182 Y=469 ITEM=ハートのウロコ FLAG=87
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_87
+  _FLD_ITEM_EVENT ITEM_HAATONOUROKO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d05 X=201 Y=468 ITEM=ゴールドスプレー FLAG=88
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_88
+  _FLD_ITEM_EVENT ITEM_GOORUDOSUPUREE,1
+EVENT_END
+
+//--------------------------------------------------------------
 // MAP=d05r0101 X=408 Y=120 ITEM=わざマシン５５ FLAG=147
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_147
   _FLD_ITEM_EVENT ITEM_WAZAMASIN55,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r06 X=137 Y=396 ITEM=リーフのいし FLAG=63
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_63
+  _FLD_ITEM_EVENT ITEM_RIIHUNOISI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r06 X=408 Y=120 ITEM=きんのたま FLAG=64
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_64
+  _FLD_ITEM_EVENT ITEM_KINNOTAMA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r06 X=124 Y=362 ITEM=インドメタシン FLAG=65
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_65
+  _FLD_ITEM_EVENT ITEM_INDOMETASIN,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r06 X=143 Y=398 ITEM=キズぐすり FLAG=128
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_128
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r06 X=101 Y=376 ITEM=シルクのスカーフ FLAG=129
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_129
+  _FLD_ITEM_EVENT ITEM_SIRUKUNOSUKAAHU,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1398,10 +919,73 @@ EVENT_START ev_fld_item_155
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r06r0203 X=408 Y=120 ITEM=キズぐすり FLAG=156
+// MAP=r06r0203 X=408 Y=120 ITEM=かたいいし FLAG=156
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_156
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+  _FLD_ITEM_EVENT ITEM_KATAIISI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d06r0101 X=408 Y=120 ITEM=あなぬけのヒモ FLAG=31
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_31
+  _FLD_ITEM_EVENT ITEM_ANANUKENOHIMO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d06r0101 X=408 Y=120 ITEM=ふしぎなアメ FLAG=32
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_32
+  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d06r0101 X=408 Y=120 ITEM=げんきのかたまり FLAG=33
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_33
+  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d06r0101 X=408 Y=120 ITEM=じしゃく FLAG=34
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_34
+  _FLD_ITEM_EVENT ITEM_ZISYAKU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d06r0201 X=408 Y=120 ITEM=ダークボール FLAG=35
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_35
+  _FLD_ITEM_EVENT ITEM_DAAKUBOORU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d06r0201 X=408 Y=120 ITEM=ひかりのこな FLAG=36
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_36
+  _FLD_ITEM_EVENT ITEM_HIKARINOKONA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d06r0301 X=408 Y=120 ITEM=げんきのかたまり FLAG=66
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_66
+  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d06r0301 X=408 Y=120 ITEM=かみなりのいし FLAG=67
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_67
+  _FLD_ITEM_EVENT ITEM_KAMINARINOISI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=c06 X=69 Y=344 ITEM=ブロムヘキシン FLAG=130
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_130
+  _FLD_ITEM_EVENT ITEM_BUROMUHEKISIN,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1412,6 +996,62 @@ EVENT_START ev_fld_item_157
 EVENT_END
 
 //--------------------------------------------------------------
+// MAP=r07 X=408 Y=120 ITEM=するどいくちばし FLAG=68
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_68
+  _FLD_ITEM_EVENT ITEM_SURUDOIKUTIBASI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r07 X=408 Y=120 ITEM=リゾチウム FLAG=69
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_69
+  _FLD_ITEM_EVENT ITEM_RIZOTIUMU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r07 X=408 Y=120 ITEM=ポイントアップ FLAG=70
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_70
+  _FLD_ITEM_EVENT ITEM_POINTOAPPU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r07 X=408 Y=120 ITEM=ピーピーマックス FLAG=71
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_71
+  _FLD_ITEM_EVENT ITEM_PIIPIIMAKKUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r07r0102 X=408 Y=120 ITEM=わざマシン６１ FLAG=121
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_121
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN61,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r07r0102 X=408 Y=120 ITEM=キズぐすり FLAG=122
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_122
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r07r0103 X=408 Y=120 ITEM=わざマシン６５ FLAG=123
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_123
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN65,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r07r0103 X=408 Y=120 ITEM=まがったスプーン FLAG=124
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_124
+  _FLD_ITEM_EVENT ITEM_MAGATTASUPUUN,1
+EVENT_END
+
+//--------------------------------------------------------------
 // MAP=r07r0104 X=408 Y=120 ITEM=わざマシン８１ FLAG=158
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_158
@@ -1419,10 +1059,59 @@ EVENT_START ev_fld_item_158
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r07r0104 X=408 Y=120 ITEM=キズぐすり FLAG=159
+// MAP=r07r0104 X=408 Y=120 ITEM=のろいのおふだ FLAG=159
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_159
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+  _FLD_ITEM_EVENT ITEM_NOROINOOHUDA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d07r0101 X=408 Y=120 ITEM=なんでもなおし FLAG=72
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_72
+  _FLD_ITEM_EVENT ITEM_NANDEMONAOSI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d07 X=408 Y=120 ITEM=つきのいし FLAG=73
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_73
+  _FLD_ITEM_EVENT ITEM_TUKINOISI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d07 X=408 Y=120 ITEM=かいふくのくすり FLAG=74
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_74
+  _FLD_ITEM_EVENT ITEM_KAIHUKUNOKUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D07r0101 X=408 Y=120 ITEM=すごいキズぐすり FLAG=75
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_75
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d07r0501 X=408 Y=120 ITEM=メタルコート FLAG=76
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_76
+  _FLD_ITEM_EVENT ITEM_METARUKOOTO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d07r0501 X=408 Y=120 ITEM=わざマシン９１ FLAG=77
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_77
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN91,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d07r0101 X=408 Y=120 ITEM=ピーピーエイド FLAG=89
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_89
+  _FLD_ITEM_EVENT ITEM_PIIPIIEIDO,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1440,10 +1129,59 @@ EVENT_START ev_fld_item_161
 EVENT_END
 
 //--------------------------------------------------------------
+// MAP=d07r0101 X=408 Y=120 ITEM=ふしぎなアメ FLAG=179
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_179
+  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r08 X=408 Y=120 ITEM=どくバリ FLAG=79
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_79
+  _FLD_ITEM_EVENT ITEM_DOKUBARI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r08 X=408 Y=120 ITEM=ひかりのいし FLAG=80
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_80
+  _FLD_ITEM_EVENT ITEM_HIKARINOISI,1
+EVENT_END
+
+//--------------------------------------------------------------
 // MAP=r08 X=408 Y=120 ITEM=わざマシン３６ FLAG=162
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_162
   _FLD_ITEM_EVENT ITEM_WAZAMASIN36,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d08r0101 X=408 Y=120 ITEM=わざマシン６３ FLAG=78
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_78
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN63,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r09 X=347 Y=182 ITEM=マックスアップ FLAG=81
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_81
+  _FLD_ITEM_EVENT ITEM_MAKKUSUAPPU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r09 X=357 Y=188 ITEM=げんきのかたまり FLAG=82
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_82
+  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r09 X=344 Y=188 ITEM=りゅうのキバ FLAG=131
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_131
+  _FLD_ITEM_EVENT ITEM_RYUUNOKIBA,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1503,10 +1241,10 @@ EVENT_START ev_fld_item_170
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r09r303 X=408 Y=120 ITEM=キズぐすり FLAG=171
+// MAP=r09r303 X=408 Y=120 ITEM=くろおび FLAG=171
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_171
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+  _FLD_ITEM_EVENT ITEM_KUROOBI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1531,10 +1269,395 @@ EVENT_START ev_fld_item_174
 EVENT_END
 
 //--------------------------------------------------------------
+// MAP=r10 X=408 Y=120 ITEM=わざマシン０５ FLAG=83
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_83
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN05,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r10 X=408 Y=120 ITEM=めざめいし FLAG=84
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_84
+  _FLD_ITEM_EVENT ITEM_MEZAMEISI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r10 X=408 Y=120 ITEM=ピーピーマックス FLAG=85
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_85
+  _FLD_ITEM_EVENT ITEM_PIIPIIMAKKUSU,1
+EVENT_END
+
+//--------------------------------------------------------------
 // MAP=r10 X=408 Y=120 ITEM=かいふくのくすり FLAG=175
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_175
   _FLD_ITEM_EVENT ITEM_KAIHUKUNOKUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d09 X=408 Y=120 ITEM=げんきのかけら FLAG=17
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_17
+  _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d09 X=408 Y=120 ITEM=すごいキズぐすり FLAG=18
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_18
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d09 X=408 Y=120 ITEM=ハイパーボール FLAG=19
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_19
+  _FLD_ITEM_EVENT ITEM_HAIPAABOORU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d09 X=408 Y=120 ITEM=きんのたま FLAG=20
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_20
+  _FLD_ITEM_EVENT ITEM_KINNOTAMA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d09 X=408 Y=120 ITEM=なんでもなおし FLAG=21
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_21
+  _FLD_ITEM_EVENT ITEM_NANDEMONAOSI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d09r0101 X=408 Y=120 ITEM=キズぐすり FLAG=90
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_90
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d09r0601 X=408 Y=120 ITEM=わざマシン０２ FLAG=91
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_91
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN02,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d09r0901 X=408 Y=120 ITEM=わざマシン１２ FLAG=92
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_92
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN12,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d09r1001 X=408 Y=120 ITEM=キズぐすり FLAG=93
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_93
+  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d09r1201 X=408 Y=120 ITEM=わざマシン９３ FLAG=94
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_94
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN93,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r11 X=460 Y=179 ITEM=すごいキズぐすり FLAG=95
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_95
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r11 X=483 Y=166 ITEM=すごいキズぐすり FLAG=96
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_96
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=h04 X=408 Y=120 ITEM=すごいキズぐすり FLAG=288
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_288
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=h04 X=408 Y=120 ITEM=すごいキズぐすり FLAG=289
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_289
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=h04 X=408 Y=120 ITEM=すごいキズぐすり FLAG=290
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_290
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r11 X=494 Y=165 ITEM=プロテクター FLAG=97
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_97
+  _FLD_ITEM_EVENT ITEM_PUROTEKUTAA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r12 X=589 Y=182 ITEM=するどいツメ FLAG=98
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_98
+  _FLD_ITEM_EVENT ITEM_SURUDOITUME,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r12 X=606 Y=164 ITEM=わざマシン０９ FLAG=99
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_99
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN09,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r12 X=627 Y=169 ITEM=すごいキズぐすり FLAG=100
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_100
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r13 X=682 Y=191 ITEM=すごいキズぐすり FLAG=101
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_101
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r13 X=724 Y=233 ITEM=しんかいのウロコ FLAG=102
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_102
+  _FLD_ITEM_EVENT ITEM_SINKAINOUROKO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r13 X=688 Y=232 ITEM=すごいキズぐすり FLAG=103
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_103
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r13 X=692 Y=245 ITEM=わざマシン０３ FLAG=104
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_104
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN03,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r13 X=739 Y=264 ITEM=しんかいのキバ FLAG=105
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_105
+  _FLD_ITEM_EVENT ITEM_SINKAINOKIBA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r14 X=724 Y=337 ITEM=れいかいのぬの FLAG=106
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_106
+  _FLD_ITEM_EVENT ITEM_REIKAINONUNO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r14 X=694 Y=357 ITEM=すごいキズぐすり FLAG=107
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_107
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r14 X=704 Y=364 ITEM=すごいキズぐすり FLAG=108
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_108
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r14r0201 X=408 Y=120 ITEM=すごいキズぐすり FLAG=275
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_275
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r14r0201 X=408 Y=120 ITEM=わざマシン９２ FLAG=276
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_276
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN92,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r14r0201 X=408 Y=120 ITEM=すごいキズぐすり FLAG=277
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_277
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r14r0201 X=408 Y=120 ITEM=すごいキズぐすり FLAG=278
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_278
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r14r0201 X=408 Y=120 ITEM=まんまるいし FLAG=279
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_279
+  _FLD_ITEM_EVENT ITEM_MANMARUISI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r14r0201 X=408 Y=120 ITEM=すごいキズぐすり FLAG=280
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_280
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r14r0201 X=408 Y=120 ITEM=わざマシン２４ FLAG=281
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_281
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN24,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r14r0201 X=408 Y=120 ITEM=すごいキズぐすり FLAG=282
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_282
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r14r0201 X=408 Y=120 ITEM=するどいキバ FLAG=283
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_283
+  _FLD_ITEM_EVENT ITEM_SURUDOIKIBA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r14r0201 X=408 Y=120 ITEM=すごいキズぐすり FLAG=284
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_284
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r15 X=632 Y=444 ITEM=アップグレード FLAG=109
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_109
+  _FLD_ITEM_EVENT ITEM_APPUGUREEDO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r15 X=619 Y=421 ITEM=わざマシン５０ FLAG=110
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_110
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN50,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r15 X=599 Y=421 ITEM=あやしいパッチ FLAG=111
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_111
+  _FLD_ITEM_EVENT ITEM_AYASIIPATTI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r16 X=408 Y=120 ITEM=わざマシン６６ FLAG=112
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_112
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN66,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r16 X=408 Y=120 ITEM=エレキブースター FLAG=113
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_113
+  _FLD_ITEM_EVENT ITEM_EREKIBUUSUTAA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r16 X=408 Y=120 ITEM=マグマブースター FLAG=287
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_287
+  _FLD_ITEM_EVENT ITEM_MAGUMABUUSUTAA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r16r0201 X=408 Y=120 ITEM=わざマシン５３ FLAG=285
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_285
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN53,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r16r0201 X=408 Y=120 ITEM=すごいキズぐすり FLAG=286
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_286
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=w17 X=710 Y=747 ITEM=りゅうのウロコ FLAG=114
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_114
+  _FLD_ITEM_EVENT ITEM_RYUUNOUROKO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=w17 X=691 Y=748 ITEM=ひでんマシン０７ FLAG=115
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_115
+  _FLD_ITEM_EVENT ITEM_HIDENMASIN07,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d13 X=715 Y=727 ITEM=すごいキズぐすり FLAG=116
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_116
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r18 X=634 Y=710 ITEM=わざマシン０６ FLAG=117
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_117
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN06,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r18 X=642 Y=741 ITEM=わざマシン１９ FLAG=118
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_118
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN19,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r18 X=642 Y=761 ITEM=すごいキズぐすり FLAG=119
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_119
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=r18 X=613 Y=753 ITEM=すごいキズぐすり FLAG=120
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_120
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1559,10 +1682,59 @@ EVENT_START ev_fld_item_178
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d07r0101 X=408 Y=120 ITEM=ふしぎなアメ FLAG=179
+// MAP=d10r0201 X=408 Y=120 ITEM=げんきのかたまり FLAG=267
 //--------------------------------------------------------------
-EVENT_START ev_fld_item_179
-  _FLD_ITEM_EVENT ITEM_HUSIGINAAME,1
+EVENT_START ev_fld_item_267
+  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d10r0201 X=408 Y=120 ITEM=すごいキズぐすり FLAG=268
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_268
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d10r0201 X=408 Y=120 ITEM=わざマシン３５ FLAG=269
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_269
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN35,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d10r0201 X=408 Y=120 ITEM=すごいキズぐすり FLAG=270
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_270
+  _FLD_ITEM_EVENT ITEM_SUGOIKIZUGUSURI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d10r0201 X=408 Y=120 ITEM=おおきなキノコ FLAG=271
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_271
+  _FLD_ITEM_EVENT ITEM_OOKINAKINOKO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d10r0201 X=408 Y=120 ITEM=わざマシン０３ FLAG=272
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_272
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN03,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d10r0201 X=408 Y=120 ITEM=なんでもなおし FLAG=273
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_273
+  _FLD_ITEM_EVENT ITEM_NANDEMONAOSI,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=d10r0201 X=408 Y=120 ITEM=げんきのかたまり FLAG=274
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_274
+  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1881,6 +2053,90 @@ EVENT_START ev_fld_item_224
 EVENT_END
 
 //--------------------------------------------------------------
+// MAP=D20R0601 X=408 Y=120 ITEM=こだいのせきぞう FLAG=255
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_255
+  _FLD_ITEM_EVENT ITEM_KODAINOSEKIZOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのどうか FLAG=256
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_256
+  _FLD_ITEM_EVENT ITEM_KODAINODOUKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのぎんか FLAG=257
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_257
+  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのきんか FLAG=258
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_258
+  _FLD_ITEM_EVENT ITEM_KODAINOKINKA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのツボ FLAG=259
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_259
+  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのツボ FLAG=260
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_260
+  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのツボ FLAG=261
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_261
+  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのうでわ FLAG=262
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_262
+  _FLD_ITEM_EVENT ITEM_KODAINOUDEWA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのうでわ FLAG=263
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_263
+  _FLD_ITEM_EVENT ITEM_KODAINOUDEWA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのうでわ FLAG=264
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_264
+  _FLD_ITEM_EVENT ITEM_KODAINOUDEWA,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0701 X=408 Y=120 ITEM=こだいのせきぞう FLAG=265
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_265
+  _FLD_ITEM_EVENT ITEM_KODAINOSEKIZOU,1
+EVENT_END
+
+//--------------------------------------------------------------
+// MAP=D20R0801 X=408 Y=120 ITEM=こだいのおうかん FLAG=266
+//--------------------------------------------------------------
+EVENT_START ev_fld_item_266
+  _FLD_ITEM_EVENT ITEM_KODAINOOUKAN,1
+EVENT_END
+
+//--------------------------------------------------------------
 // MAP=WC10 X=0 Y=0 ITEM=ほしのすな FLAG=225
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_225
@@ -2090,230 +2346,6 @@ EVENT_START ev_fld_item_254
   _FLD_ITEM_EVENT ITEM_MEZAMEISI,1
 EVENT_END
 
-//--------------------------------------------------------------
-// MAP=D20R0601 X=408 Y=120 ITEM=こだいのせきぞう FLAG=255
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_255
-  _FLD_ITEM_EVENT ITEM_KODAINOSEKIZOU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0701 X=408 Y=120 ITEM=こだいのどうか FLAG=256
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_256
-  _FLD_ITEM_EVENT ITEM_KODAINODOUKA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0701 X=408 Y=120 ITEM=こだいのぎんか FLAG=257
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_257
-  _FLD_ITEM_EVENT ITEM_KODAINOGINKA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0701 X=408 Y=120 ITEM=こだいのきんか FLAG=258
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_258
-  _FLD_ITEM_EVENT ITEM_KODAINOKINKA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0701 X=408 Y=120 ITEM=こだいのツボ FLAG=259
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_259
-  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0701 X=408 Y=120 ITEM=こだいのツボ FLAG=260
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_260
-  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0701 X=408 Y=120 ITEM=こだいのツボ FLAG=261
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_261
-  _FLD_ITEM_EVENT ITEM_KODAINOTUBO,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0701 X=408 Y=120 ITEM=こだいのうでわ FLAG=262
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_262
-  _FLD_ITEM_EVENT ITEM_KODAINOUDEWA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0701 X=408 Y=120 ITEM=こだいのうでわ FLAG=263
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_263
-  _FLD_ITEM_EVENT ITEM_KODAINOUDEWA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0701 X=408 Y=120 ITEM=こだいのうでわ FLAG=264
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_264
-  _FLD_ITEM_EVENT ITEM_KODAINOUDEWA,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0701 X=408 Y=120 ITEM=こだいのせきぞう FLAG=265
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_265
-  _FLD_ITEM_EVENT ITEM_KODAINOSEKIZOU,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=D20R0801 X=408 Y=120 ITEM=こだいのおうかん FLAG=266
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_266
-  _FLD_ITEM_EVENT ITEM_KODAINOOUKAN,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d10r0201 X=408 Y=120 ITEM=キズぐすり FLAG=267
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_267
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d10r0201 X=408 Y=120 ITEM=キズぐすり FLAG=268
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_268
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d10r0201 X=408 Y=120 ITEM=キズぐすり FLAG=269
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_269
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d10r0201 X=408 Y=120 ITEM=キズぐすり FLAG=270
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_270
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d10r0201 X=408 Y=120 ITEM=キズぐすり FLAG=271
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_271
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d10r0201 X=408 Y=120 ITEM=キズぐすり FLAG=272
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_272
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d10r0201 X=408 Y=120 ITEM=キズぐすり FLAG=273
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_273
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=d10r0201 X=408 Y=120 ITEM=キズぐすり FLAG=274
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_274
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r14r0201 X=408 Y=120 ITEM=キズぐすり FLAG=275
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_275
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r14r0201 X=408 Y=120 ITEM=キズぐすり FLAG=276
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_276
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r14r0201 X=408 Y=120 ITEM=キズぐすり FLAG=277
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_277
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r14r0201 X=408 Y=120 ITEM=キズぐすり FLAG=278
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_278
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r14r0201 X=408 Y=120 ITEM=キズぐすり FLAG=279
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_279
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r14r0201 X=408 Y=120 ITEM=キズぐすり FLAG=280
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_280
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r14r0201 X=408 Y=120 ITEM=キズぐすり FLAG=281
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_281
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r14r0201 X=408 Y=120 ITEM=キズぐすり FLAG=282
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_282
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r14r0201 X=408 Y=120 ITEM=キズぐすり FLAG=283
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_283
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r14r0201 X=408 Y=120 ITEM=キズぐすり FLAG=284
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_284
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r16r0201 X=408 Y=120 ITEM=キズぐすり FLAG=285
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_285
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
-//--------------------------------------------------------------
-// MAP=r16r0201 X=408 Y=120 ITEM=キズぐすり FLAG=286
-//--------------------------------------------------------------
-EVENT_START ev_fld_item_286
-  _FLD_ITEM_EVENT ITEM_KIZUGUSURI,1
-EVENT_END
-
 
 //======================================================================
 // scr_flditem/fld_item_base.ev
@@ -2380,8 +2412,7 @@ ev_itemget_flditem_true:
   
   //アイテム追加
   _ADD_ITEM( SCWK_TEMP0, SCWK_TEMP1, SCWK_ANSWER )
-  _BEACON_SET_REQ_ITEM_GET( SCWK_TEMP0 )
-
+  
   //ME、アニメ待ち
   _ME_WAIT()
   _OBJ_ANIME_WAIT()
