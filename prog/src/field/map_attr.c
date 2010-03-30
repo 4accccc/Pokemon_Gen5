@@ -750,7 +750,7 @@ BOOL MAPATTR_VALUE_CheckSeasonGround2( const MAPATTR_VALUE val )
 //--------------------------------------------------------------
 BOOL MAPATTR_VALUE_CheckEncountGround( const MAPATTR_VALUE val )
 {
-  return ( val == MATTR_E_ZIMEN_01 );
+  return ( (val == MATTR_E_ZIMEN_01) || (val == MATTR_E_SLIP_01) );
 }
 //--------------------------------------------------------------
 /**

@@ -574,7 +574,6 @@ static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk )
           return( GMEVENT_RES_CONTINUE );
         }
       }
-
       return( GMEVENT_RES_FINISH );
     }
     break;

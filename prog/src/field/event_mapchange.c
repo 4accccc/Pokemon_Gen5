@@ -1156,7 +1156,7 @@ static GMEVENT_RESULT EVENT_MapChangeBySeaTemple( GMEVENT* event, int* seq, void
   case 2:
     if( PMSND_CheckPlaySE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_FLD_123) ) == FALSE )
     {
-      GMEVENT* sub_event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChange, sizeof(MAPCHANGE_WORK) );
+      GMEVENT* sub_event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangeBGMKeep, sizeof(MAPCHANGE_WORK) );
       MAPCHANGE_WORK* sub_work;
 
       sub_work  = GMEVENT_GetEventWork( sub_event );

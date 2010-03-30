@@ -100,12 +100,16 @@ void FIELD_DEBUG_Delete( FIELD_DEBUG_WORK *work )
 void FIELD_DEBUG_UpdateProc( FIELD_DEBUG_WORK *work )
 {
 	if( work->flag_pos_print == TRUE ){ //座標表示
-		DebugFieldPosPrint_Proc( work );
+    // R+Xのデバックメニューを壊さないために、Event中の描画をOFF
+    GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( work->pFieldMainWork );
+    if( GAMESYSTEM_GetEvent(gsys) == NULL) {
+  	  DebugFieldPosPrint_Proc( work );
+    }
 	}
 	
 	if( work->flag_bgscr_load == TRUE ){ //デバッグ用BGスクリーン反映
-		GFL_BG_LoadScreenReq( work->bgFrame );
-		work->flag_bgscr_load = FALSE;
+    GFL_BG_LoadScreenReq( work->bgFrame );
+    work->flag_bgscr_load = FALSE;
 	}
 }
 
@@ -454,6 +458,9 @@ void FIELD_DEBUG_SetPosPrint( FIELD_DEBUG_WORK *work )
     resetBgCont( work );
 	}else{
 		work->flag_pos_print = FALSE;
+    // スクリーンのクリア
+    GFL_BG_ClearScreen( work->bgFrame );
+		GFL_BG_LoadScreenReq( work->bgFrame );
 	}
 #endif
 }

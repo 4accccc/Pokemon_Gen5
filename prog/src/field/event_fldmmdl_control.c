@@ -432,7 +432,7 @@ static const fx32 DATA_JumpOffsTbl[] =	// 8
 };
 #define EV_FLDMMDL_HIGHJUMP_FRAME (NELEMS(DATA_JumpOffsTbl)-1)  // フレーム
 
-#define EV_FLDMMDL_JUMP_DOWN_DIST (4*FX32_ONE)
+#define EV_FLDMMDL_JUMP_DOWN_DIST (8*FX32_ONE)
 
 //-------------------------------------
 ///	ハイジャンプワーク
@@ -463,7 +463,7 @@ static GMEVENT_RESULT EVENTFUNC_HighJump(GMEVENT * event, int *seq, void*work)
     // まずはARCH
     pos = wkhj->start; 
     pos.y += DATA_JumpOffsTbl[ wkhj->count ];
-    wkhj->count ++;
+    wkhj->count += 2;
 
     // 平行方向移動
     pos.x += FX_Div( FX_Mul( wkhj->move.x, wkhj->count<<FX32_SHIFT ), EV_FLDMMDL_HIGHJUMP_FRAME<< FX32_SHIFT );
@@ -484,9 +484,12 @@ static GMEVENT_RESULT EVENTFUNC_HighJump(GMEVENT * event, int *seq, void*work)
     MMDL_GetVectorPos( wkhj->p_mmdl, &pos );
     if( (pos.y - EV_FLDMMDL_JUMP_DOWN_DIST) > (wkhj->start.y + wkhj->move.y) ){
       pos.y -= EV_FLDMMDL_JUMP_DOWN_DIST;
+
       MMDL_SetVectorPos( wkhj->p_mmdl, &pos );
     }else{
       pos.y = wkhj->start.y + wkhj->move.y;
+      pos.x = wkhj->start.x + wkhj->move.x;
+      pos.z = wkhj->start.z + wkhj->move.z;
       ret = GMEVENT_RES_FINISH; // 完了
 
       MMDL_InitPosition( wkhj->p_mmdl, &pos, MMDL_GetDirDisp( wkhj->p_mmdl ) );
@@ -516,6 +519,8 @@ GMEVENT * EVENT_HighJump( GAMESYS_WORK * gsys, MMDL* mmdl, const VecFx32* cp_sta
   int i;
   GMEVENT * event;
   EV_FLDMMDL_HIGHJUMP * wkhj;
+  fx32 frame;
+
   event = GMEVENT_Create( gsys, NULL, EVENTFUNC_HighJump, sizeof(EV_FLDMMDL_HIGHJUMP) );
   wkhj = GMEVENT_GetEventWork( event );
   wkhj->p_mmdl = mmdl;
