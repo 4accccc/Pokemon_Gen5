@@ -1452,7 +1452,7 @@ BOOL MMDL_HitCheckFellow( const MMDL *mmdl0, const MMDL *mmdl1,
         
       if( sy < 0 )
       {
-        sy = sy;
+        sy = -sy;
       }
     
       if( sy < H_GRID_FELLOW_SIZE )
