@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T15:46:31"/>
+	<create user="matsumiya" host="W00224" date="2010-03-30T18:04:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1408" top="194" right="2113" bottom="822" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -303,14 +303,23 @@
 って　もう　もらったのか！
 おお！　かわいい　ポケモンだなあ[BE:01:ページ切り替え（クリア）]
 ついに　きみたちも
-トレーナーとして　たびだつんだなあ</language>
+トレーナーとして　たびだつんだなあ▼
+では　わたしが
+「たんけんの　こころえ」なる▽
+ほんを　よんであげよう！▼
+「トレーナーに　とって　だいじなのは
+　Ｘボタン！」　……わすれるなよ</language>
 		<language name="JPN_KANJI" width="256">チェレンのパパ『おお！　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
 聞いたよ！　博士から
 ポケモンを　もらうんだって[BE:01:ページ切り替え（クリア）]
 って　もう　もらったのか！
 おおう！　かわいい　ポケモンだなあ[BE:01:ページ切り替え（クリア）]
 ついに　君たちも
-トレーナーとして　旅立つんだなあ</language>
+トレーナーとして　旅立つんだなあ▼
+では　私が　「探検の心得」なる
+本を　読んであげよう！▼
+「トレーナーに　とって　大事なのは
+　Ｘボタン！」　……忘れるなよ</language>
 	</row>
 
 	<row id="msg_t01r0301_middlewoman2_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
