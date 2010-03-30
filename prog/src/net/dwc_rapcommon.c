@@ -120,7 +120,20 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
     NET_MEMORY_PRINT( "main alloc memory size=%d rest=%d %d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle),name );
   }
 
-  //NAGI_Printf( "[>name%d size%d align%d\n", name, size, align );
+  //Žc‚èƒq[ƒv’²¸
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+  { 
+    static u32 s_wifi_buff  = 0;
+    u32 free_area;
+    free_area  = NNS_FndGetTotalFreeSizeForExpHeap( pDwcRapWork->headHandle );
+    if( s_wifi_buff < free_area )
+    { 
+      s_wifi_buff = free_area;
+    }
+    NET_MEMORY_PRINT( "HEAP[WIFI] most free area rest=0x%x %d\n", size, s_wifi_buff ,name );
+  }
+#endif //DEBUG_ONLY_FOR_toru_nagihashi
+
 
   if(ptr == NULL){
     GF_ASSERT_MSG(ptr,"dwcalloc not allocate! size %d,align %d rest %d name %d\n", size, align, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandle), name );
