@@ -18,8 +18,9 @@ typedef struct ENCEFF_PRG_WORK_tag
 	BOOL								vTexRecover;
 	DRAW3DMODE					dMode;
   BOOL CapEndFlg;
-  GFL_G3D_CAMERA *g3Dcamera;
+//  GFL_G3D_CAMERA *g3Dcamera;
   NNSGfdTexKey	texKey;
+  VecFx32 CamPos;
 
   void *Work;
 
@@ -62,12 +63,16 @@ GMEVENT *ENCEFF_PRG_Create(
 
     work = GMEVENT_GetEventWork(event);
     MI_CpuClear8( work, size );
+
+    work->CamPos = *inCamPos;
+/**    
     {
       VecFx32 target = {0,0,0};
       //カメラ作成
       work->g3Dcamera = GFL_G3D_CAMERA_CreateDefault(
           inCamPos, &target, HEAPID_FLD3DCUTIN );   //カットインのヒープを使用
     }
+*/    
     work->CreateFunc = createFunc;
     work->DrawFunc = drawFunc;
   }
@@ -102,12 +107,15 @@ GMEVENT *ENCEFF_PRG_CreateNoFlash(
 
     work = GMEVENT_GetEventWork(event);
     MI_CpuClear8( work, size );
+    work->CamPos = *inCamPos;
+/**    
     {
       VecFx32 target = {0,0,0};
       //カメラ作成
       work->g3Dcamera = GFL_G3D_CAMERA_CreateDefault(
           inCamPos, &target, HEAPID_FLD3DCUTIN );   //カットインのヒープを使用
     }
+*/    
     work->CreateFunc = createFunc;
     work->DrawFunc = drawFunc;
   }
@@ -125,16 +133,25 @@ GMEVENT *ENCEFF_PRG_CreateNoFlash(
 //-----------------------------------------------------------------------------
 void ENCEFF_PRG_Draw(ENCEFF_PRG_PTR ptr)
 {
-  G3X_Reset();
+
   {
-    VecFx32		camPos, camUp, target, vecNtmp;
-		MtxFx43		mtxCamera, mtxCameraInv;
+     G3_Perspective(
+                    FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
+                    FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),  // sine and cosine of FOVY
+                    defaultCameraAspect,        // aspect
+                    defaultCameraNear,           // near
+                    defaultCameraFar,            // far
+                    NULL            // a pointer to a matrix if you use it
+            );
+  }
 
-		GFL_G3D_CAMERA_GetPos( ptr->g3Dcamera, &camPos );
-		GFL_G3D_CAMERA_GetCamUp( ptr->g3Dcamera, &camUp );
-		GFL_G3D_CAMERA_GetTarget( ptr->g3Dcamera, &target );
+  G3X_Reset();
 
-		G3_LookAt( &camPos, &camUp, &target, &mtxCamera );	//mtxCameraには行列計算結果が返る
+  {
+    VecFx32 camUp = { 0, FX32_ONE, 0 };
+    VecFx32 target = { 0, 0, 0 };
+    VecFx32	camPos = ptr->CamPos;
+		G3_LookAt( &camPos, &camUp, &target, NULL ); 
   }
 
   G3_TexImageParam( GX_TEXFMT_DIRECT, GX_TEXGEN_TEXCOORD,
@@ -229,7 +246,12 @@ static GMEVENT_RESULT MainEvt( GMEVENT* event, int* seq, void* work )
     
     //フィールド表示モード切替
     FIELDMAP_SetDraw3DMode(fieldmap, DRAW3DMODE_ENCEFF);
-
+/**    
+    // レール動作中は、カメラの制御を削除
+    if( FIELDMAP_GetBaseSystemType( fieldmap ) == FLDMAP_BASESYS_RAIL ){
+      FLDNOGRID_MAPPER_SetRailCameraActive( FIELDMAP_GetFldNoGridMapper( fieldmap ), FALSE );
+    }
+*/
     //生成関数コール
     {
       GMEVENT *call_event;
@@ -252,10 +274,15 @@ static GMEVENT_RESULT MainEvt( GMEVENT* event, int* seq, void* work )
 			evt_work->vTex &= (GX_VRAM_D^0xffffffff);
 			GX_SetBankForTex(evt_work->vTex); 
 		}
-
+/**
+    // レール動作中は、カメラの制御復帰
+    if( FIELDMAP_GetBaseSystemType( fieldmap ) == FLDMAP_BASESYS_RAIL ){
+      FLDNOGRID_MAPPER_SetRailCameraActive( FIELDMAP_GetFldNoGridMapper( fieldmap ), TRUE );
+    }
+*/
 		FIELDMAP_SetDraw3DMode(fieldmap, evt_work->dMode);
     //カメラ解放
-    GFL_G3D_CAMERA_Delete(evt_work->g3Dcamera);
+//    GFL_G3D_CAMERA_Delete(evt_work->g3Dcamera);
     return( GMEVENT_RES_FINISH );
   }
 
@@ -412,7 +439,7 @@ static GMEVENT_RESULT MainEvtNoFlash( GMEVENT* event, int* seq, void* work )
 
 		FIELDMAP_SetDraw3DMode(fieldmap, evt_work->dMode);
     //カメラ解放
-    GFL_G3D_CAMERA_Delete(evt_work->g3Dcamera);
+//    GFL_G3D_CAMERA_Delete(evt_work->g3Dcamera);
     return( GMEVENT_RES_FINISH );
   }
 
