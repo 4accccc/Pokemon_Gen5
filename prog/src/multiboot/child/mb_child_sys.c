@@ -656,7 +656,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
           work->captureNum++;
         }
       }
-      if( work->captureNum > 1 )
+      if( work->captureNum > 0 )
       {
         work->state = MCS_TRANS_POKE_INIT;
         MB_COMM_SetChildState( work->commWork , MCCS_SEND_POKE );
