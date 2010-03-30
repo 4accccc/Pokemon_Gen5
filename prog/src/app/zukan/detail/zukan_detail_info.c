@@ -169,8 +169,10 @@ ZUKAN_DETAIL_INFO_WORK;
 // VBlank関数
 static void Zukan_Detail_Info_VBlankFunc( GFL_TCB* tcb, void* wk );
 
-// 言語ボタンのタッチ
-static void Zukan_Detail_Info_TouchLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+// 言語ボタンのタッチ入力
+static BOOL Zukan_Detail_Info_TouchLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+// 言語ボタンのキー入力
+static BOOL Zukan_Detail_Info_KeyLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 // ポケモンを変更する
 static void Zukan_Detail_Info_ChangePoke( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -528,8 +530,14 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
       }
       else
       {
-        // 言語ボタンのタッチ
-        Zukan_Detail_Info_TouchLangButton( param, work, cmn ); 
+        // 言語ボタンのタッチ入力
+        BOOL is_input = Zukan_Detail_Info_TouchLangButton( param, work, cmn ); 
+        
+        // 言語ボタンのキー入力
+        if( !is_input )
+        {
+          Zukan_Detail_Info_KeyLangButton( param, work, cmn );
+        }
       }
     }
     break;
@@ -672,10 +680,11 @@ static void Zukan_Detail_Info_VBlankFunc( GFL_TCB* tcb, void* wk )
 }
 
 //-------------------------------------
-/// 言語ボタンのタッチ
+/// 言語ボタンのタッチ入力
 //=====================================
-static void Zukan_Detail_Info_TouchLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+static BOOL Zukan_Detail_Info_TouchLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  BOOL is_input = FALSE;
   u32 x, y;
 
   // タッチ判定
@@ -697,12 +706,93 @@ static void Zukan_Detail_Info_TouchLangButton( ZUKAN_DETAIL_INFO_PARAM* param, Z
 
             // 言語を変更する
             Zukan_Detail_Info_ChangeLang( param, work, cmn, i );
+            is_input = TRUE;
           }
           break;
         }
       }
     }
   }
+
+  return is_input;
+}
+
+//-------------------------------------
+/// 言語ボタンのキー入力
+//=====================================
+static BOOL Zukan_Detail_Info_KeyLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  BOOL is_input = FALSE;
+  u8 i;
+
+  // キー判定
+  int trg = GFL_UI_KEY_GetTrg();
+ 
+  if( work->lang == ZUKAN_INFO_LANG_NONE )  // まだどれも選んでいないとき
+  {
+    if( trg & ( PAD_BUTTON_R | PAD_BUTTON_L ) )
+    {
+      for( i=0; i<ZUKAN_INFO_LANG_MAX; i++ )  // 一番左にある言語ボタンを選ぶ
+      {
+        if( GFL_CLACT_WK_GetDrawEnable( work->lang_btn[i].clwk ) )
+        {
+          work->lang_btn[i].state = LANG_BTN_STATE_PUSH_START;
+          GFL_CLACT_WK_SetAnmSeq( work->lang_btn[i].clwk, work->lang_btn[i].push_anmseq );
+          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+          
+          // 言語を変更する
+          Zukan_Detail_Info_ChangeLang( param, work, cmn, i );
+          is_input = TRUE;
+          break;
+        }
+      }
+    }
+  }
+  else  // 既にどれかを選んでいるとき
+  {
+    if( trg & PAD_BUTTON_R )
+    {
+      i = 1;
+      while( i < ZUKAN_INFO_LANG_MAX )
+      {
+        u8 j = ( work->lang + i ) % ZUKAN_INFO_LANG_MAX;
+        if( GFL_CLACT_WK_GetDrawEnable( work->lang_btn[j].clwk ) )
+        {
+          work->lang_btn[j].state = LANG_BTN_STATE_PUSH_START;
+          GFL_CLACT_WK_SetAnmSeq( work->lang_btn[j].clwk, work->lang_btn[j].push_anmseq );
+          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+          
+          // 言語を変更する
+          Zukan_Detail_Info_ChangeLang( param, work, cmn, j );
+          is_input = TRUE;
+          break;
+        }
+        i++;
+      }
+    }
+    else if( trg & PAD_BUTTON_L )
+    {
+      i = 1;
+      while( i < ZUKAN_INFO_LANG_MAX )
+      {
+        u8 j = ( work->lang + ZUKAN_INFO_LANG_MAX - i ) % ZUKAN_INFO_LANG_MAX;
+        if( GFL_CLACT_WK_GetDrawEnable( work->lang_btn[j].clwk ) )
+        {
+          work->lang_btn[j].state = LANG_BTN_STATE_PUSH_START;
+          GFL_CLACT_WK_SetAnmSeq( work->lang_btn[j].clwk, work->lang_btn[j].push_anmseq );
+          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+          
+          // 言語を変更する
+          Zukan_Detail_Info_ChangeLang( param, work, cmn, j );
+          is_input = TRUE;
+          break;
+        }
+        i++;
+      }
+    }
+  }
+  
+  return is_input;
 }
 
 //-------------------------------------
