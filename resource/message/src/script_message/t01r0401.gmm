@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-30T18:00:22"/>
+	<create user="matsumiya" host="W00224" date="2010-03-30T18:01:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -455,7 +455,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『ポケモン図鑑　ですよね▼</language>
 	</row>
 
-	<row id="msg_t01r0401_white_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0401_white_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・サポートの頭上に「？」マーク表示
 ・続けてhakase2_08表示</comment>
@@ -528,7 +528,7 @@
 冒険の　旅に　でかけるよね！</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_11" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_hakase2_11">
 		<comment>♀
 ・いいえ選択時
 ・再度はい/いいえの選択肢表示
@@ -554,7 +554,7 @@
 ポケモンに　出会ってほしいのッ！</language>
 	</row>
 
-	<row id="msg_t01r0401_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0401_white_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・続けてblack_05</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -564,7 +564,7 @@
 じゃなくて　はい！▼</language>
 	</row>
 
-	<row id="msg_t01r0401_black_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0401_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてhakase2_12</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -637,7 +637,7 @@
 １番道路に　行くと　しよう▼</language>
 	</row>
 
-	<row id="msg_t01r0401_hakase2_20" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0401_hakase2_20">
 		<comment>♀
 ・t02pc0101のイベント後以降
 ・シナリオイベントがあるときはそちらに
@@ -707,7 +707,7 @@
 		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンずかんが
 ぜんこくばんに　バージョンアップした！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモン図鑑が
-全国ばんに　バージョンアップした！▼</language>
+全国版に　バージョンアップした！▼</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase1_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -743,7 +743,7 @@
 		<language name="JPN_KANJI" width="256">アララギパパ『よお　[1:00:トレーナー名:0]！</language>
 	</row>
 
-	<row id="msg_t01r0401_pokemon_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0401_pokemon_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ポケモン
 ・メッセージとともに鳴き声再生
 ・t02pc0101イベント後、博士とともにここに出現
@@ -763,7 +763,7 @@
 笑顔の　男性が　写っている</language>
 	</row>
 
-	<row id="msg_t01r0401_photo_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_t01r0401_photo_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・c06でのイベント後メッセージ切り替え</comment>
 		<attribute name="キャラ指定">写真たて</attribute>
