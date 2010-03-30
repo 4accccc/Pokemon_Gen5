@@ -239,10 +239,12 @@ void DEBUGWIN_ExitProc( void )
   debWork->flg = debWork->flg & (DWF_MASK-DWF_IS_INIT);
 }
 
+#define DEBUGWIN_CHAR_ADR ((void*)((u32)GFL_DISPUT_GetCgxPtr(debWork->frmnum)+0x20))
+
 static void DEBUGWIN_OpenDebugWindow( void )
 {
   //VRAMのデータを退避
-  GFL_STD_MemCopy16(GFL_DISPUT_GetCgxPtr(debWork->frmnum), debWork->charTempArea, DEBUGWIN_CHAR_TEMP_AREA);
+  GFL_STD_MemCopy16(DEBUGWIN_CHAR_ADR, debWork->charTempArea, DEBUGWIN_CHAR_TEMP_AREA);
   GFL_STD_MemCopy16(GFL_DISPUT_GetScrPtr(debWork->frmnum), debWork->scrnTempArea, DEBUGWIN_SCRN_TEMP_AREA);
   GFL_STD_MemCopy16(GFL_DISPUT_GetPltPtr(debWork->frmnum), debWork->plttTempArea, DEBUGWIN_PLTT_TEMP_AREA);
   //Fontカラーの退避
@@ -268,11 +270,11 @@ static void DEBUGWIN_OpenDebugWindow( void )
     {
       for( x=0;x<DEBUGWIN_WIDTH;x++ )
       {
-        buf[x+y*32] = x+y*DEBUGWIN_WIDTH;
+        buf[x+y*32] = x+y*DEBUGWIN_WIDTH+1;
       }
       for( x=DEBUGWIN_WIDTH;x<32;x++ )
       {
-        buf[x+y*32] = DEBUGWIN_HEIGHT*DEBUGWIN_WIDTH;
+        buf[x+y*32] = 0;
       }
     }
     DC_FlushRange(buf, sizeof( u16 )*32*DEBUGWIN_HEIGHT);
@@ -290,8 +292,8 @@ static void DEBUGWIN_OpenDebugWindow( void )
 //    GFL_STD_MemCopy16(col, GFL_DISPUT_GetPltPtr(debWork->frmnum), sizeof(u16)*4);
   }
   
-  debWork->bmp = GFL_BMP_CreateInVRAM( GFL_DISPUT_GetCgxPtr(debWork->frmnum) , DEBUGWIN_WIDTH , DEBUGWIN_HEIGHT , GFL_BMP_16_COLOR , HEAPID_DEBUGWIN );
-  GFL_STD_MemClear16( GFL_DISPUT_GetCgxPtr(debWork->frmnum) , DEBUGWIN_CHAR_TEMP_AREA );
+  debWork->bmp = GFL_BMP_CreateInVRAM(DEBUGWIN_CHAR_ADR , DEBUGWIN_WIDTH , DEBUGWIN_HEIGHT , GFL_BMP_16_COLOR , HEAPID_DEBUGWIN );
+  GFL_STD_MemClear16( DEBUGWIN_CHAR_ADR , DEBUGWIN_CHAR_TEMP_AREA );
   //GFL_BMP_Clear( debWork->bmp , 0 );
   
   DEBUGWIN_DrawDebugWindow( TRUE , FALSE );
@@ -309,7 +311,7 @@ static void DEBUGWIN_CloseDebugWindow( void )
   GFL_FONTSYS_SetColor( debWork->fontColBkup[0] ,
                         debWork->fontColBkup[1] ,
                         debWork->fontColBkup[2] );
-  GFL_STD_MemCopy16(debWork->charTempArea, GFL_DISPUT_GetCgxPtr(debWork->frmnum), DEBUGWIN_CHAR_TEMP_AREA);
+  GFL_STD_MemCopy16(debWork->charTempArea, DEBUGWIN_CHAR_ADR, DEBUGWIN_CHAR_TEMP_AREA);
   GFL_STD_MemCopy16(debWork->scrnTempArea, GFL_DISPUT_GetScrPtr(debWork->frmnum), DEBUGWIN_SCRN_TEMP_AREA);
   GFL_STD_MemCopy16(debWork->plttTempArea, GFL_DISPUT_GetPltPtr(debWork->frmnum), DEBUGWIN_PLTT_TEMP_AREA);
 }
