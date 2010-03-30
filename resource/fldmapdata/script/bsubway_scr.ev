@@ -1563,7 +1563,7 @@ sub_receipt_demo_arrival_train:
   _MAP_FADE_END_CHECK()
   
   //電車アニメ
-  _TIME_WAIT( 100 ) //仮
+  _TIME_WAIT( 30 ) //仮
   
   //自機移動アニメ
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_demo_arrival_train_getdown_jiki )

@@ -1764,7 +1764,7 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
       work->next_set_wait = 0; //セット待ち解除
     }
   }
-
+  
   if( dir != work->set_anm_dir ) //方向更新は無条件で更新
   {
     init_flag = TRUE;
@@ -1847,6 +1847,12 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
       work->set_anm_status = status;
       work->next_set_wait = 0;
     }
+  }
+  
+  //方向初期化後、アニメが繁栄されるまでにアニメ停止バグが現状ある。
+  //停止時は無理やり反映させる事で緊急対処
+  if( work->set_anm_status == DRAW_STA_STOP ){
+    init_flag = TRUE;
   }
   
   #ifdef DEBUG_ONLY_FOR_kagaya
