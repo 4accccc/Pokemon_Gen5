@@ -8245,7 +8245,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_DUN2001, // camera_area
 		0, // padding
-		0,
+		5,
 		0,
 		0,
 	},
@@ -8278,7 +8278,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_DUN2002, // camera_area
 		0, // padding
-		0,
+		5,
 		0,
 		0,
 	},
@@ -8311,7 +8311,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_DUN2003, // camera_area
 		0, // padding
-		0,
+		5,
 		0,
 		0,
 	},
@@ -8344,7 +8344,7 @@ static const ZONEDATA ZoneData[] = {
     TRUE,
 		MATRIX_ID_DUN2004, // camera_area
 		0, // padding
-		0,
+		5,
 		0,
 		0,
 	},
@@ -13230,7 +13230,7 @@ static const ZONEDATA ZoneData[] = {
 		0, // padding
 		5,
 		0,
-		4,
+		6,
 	},
 	{//ZONE_ID_T01R0201 = 401
 		RSC_GRID_NOSCROLL,
