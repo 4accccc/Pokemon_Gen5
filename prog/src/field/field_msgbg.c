@@ -340,6 +340,7 @@ static BOOL Control_GetAutoPrintFlag( const FLDPRINT_CONTROL* cont );
 static int Control_GetMsgWait( const FLDPRINT_CONTROL* cont );
 static BOOL Control_GetSkipKey( FLDPRINT_CONTROL* cont );
 static BOOL Control_GetWaitKey( FLDPRINT_CONTROL* cont );
+static void set_printStreamTempSpeed( PRINT_STREAM *printStream, BOOL skip );
 
 #ifdef DEBUG_FLDMSGBG
 static void DEBUG_AddCountPrintTCB( FLDMSGBG *fmb );
@@ -2103,18 +2104,16 @@ static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
   switch( state ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
     if( Control_GetSkipKey( &stm->fmb->print_cont ) ){
-      PRINTSYS_PrintStreamShortWait( stm->printStream, 0 );
+      set_printStreamTempSpeed( stm->printStream, TRUE );
+    }else{
+      set_printStreamTempSpeed( stm->printStream, FALSE );
     }
-#if 0
-    else{
-      PRINTSYS_PrintStreamShortWait( stm->printStream, stm->msg_wait );
-    }
-#endif
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
     if( Control_GetWaitKey( &stm->fmb->print_cont ) ){
       PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       PRINTSYS_PrintStreamReleasePause( stm->printStream );
+      set_printStreamTempSpeed( stm->printStream, FALSE );
       state = PRINTSTREAM_STATE_RUNNING; //即 RUNNINGで返す
     }
     break;
@@ -2908,7 +2907,9 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
     }
     
     if( Control_GetSkipKey( &tmsg->fmb->print_cont ) ){
-      PRINTSYS_PrintStreamShortWait( stream, 0 );
+      set_printStreamTempSpeed( stream, TRUE );
+    }else{
+      set_printStreamTempSpeed( stream, FALSE );
     }
     break;
   case PRINTSTREAM_STATE_PAUSE: //一時停止中
@@ -2923,6 +2924,7 @@ BOOL FLDTALKMSGWIN_Print( FLDTALKMSGWIN *tmsg )
         PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
         PRINTSYS_PrintStreamReleasePause( stream );
         FLDKEYWAITCURSOR_Clear( &tmsg->cursor_work, bmp, 0x0f );
+        set_printStreamTempSpeed( stream, FALSE );
       }
       
       GFL_BMPWIN_TransVramCharacter( twin_bmp );
@@ -5194,10 +5196,23 @@ static BOOL Control_GetWaitKey( FLDPRINT_CONTROL* cont )
   return FALSE;
 }
 
-
-
-
-
+//--------------------------------------------------------------
+/**
+ * プリントストリームのウェイト短取得
+ * @param printStream PRINT_STREAM
+ * @param skip TRUE=メッセージスキップ FLASE=スキップ切る
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void set_printStreamTempSpeed( PRINT_STREAM *printStream, BOOL skip )
+{
+  if( skip == TRUE ){
+    int wait = MSGSPEED_GetWaitByConfigParam( MSGSPEED_FAST );
+    PRINTSYS_PrintStream_StartTempSpeedMode( printStream, wait ); 
+  }else{
+    PRINTSYS_PrintStream_StopTempSpeedMode( printStream ); 
+  }
+}
 
 //======================================================================
 //  data
