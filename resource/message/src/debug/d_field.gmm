@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-03-29T17:34:51"/>
+	<create user="tamada" host="W00139" date="2010-03-30T13:20:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="35" top="202" right="740" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="164" top="189" right="869" bottom="817" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="752" top="242" right="1280" bottom="764" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1418,13 +1418,13 @@ allocable (0x[2:07:８桁:5])</language>
 	</row>
 
 	<row id="DEBUG_FIELD_ZUKAN_01">
-		<language name="JPN" width="160">ぜんこくほかくセット</language>
-		<language name="JPN_KANJI" width="160">ぜんこくずかんセット</language>
+		<language name="JPN" width="160">ぜんこくほかくコンプ</language>
+		<language name="JPN_KANJI" width="160">ぜんこくずかんコンプ</language>
 	</row>
 
 	<row id="DEBUG_FIELD_ZUKAN_03">
-		<language name="JPN" width="160">ずかんフォルムセット</language>
-		<language name="JPN_KANJI" width="160">ずかんフォルムセット</language>
+		<language name="JPN" width="160">ずかんフォルムコンプ</language>
+		<language name="JPN_KANJI" width="160">ずかんフォルムコンプ</language>
 	</row>
 
 	<row id="DEBUG_FIELD_ZUKAN_04">
@@ -1443,8 +1443,8 @@ allocable (0x[2:07:８桁:5])</language>
 	</row>
 
 	<row id="DEBUG_FIELD_ZUKAN_07">
-		<language name="JPN" width="160">ぜんこくみたセット</language>
-		<language name="JPN_KANJI" width="160">ぜんこくみたセット</language>
+		<language name="JPN" width="160">ぜんこくみたコンプ</language>
+		<language name="JPN_KANJI" width="160">ぜんこくみたコンプ</language>
 	</row>
 
 	<row id="DEBUG_FIELD_ZUKAN_09">
@@ -1453,18 +1453,33 @@ allocable (0x[2:07:８桁:5])</language>
 	</row>
 
 	<row id="DEBUG_FIELD_ZUKAN_10">
-		<language name="JPN" width="160">イッシュほかくセット</language>
-		<language name="JPN_KANJI" width="160">イッシュほかくセット</language>
+		<language name="JPN" width="160">イッシュほかくコンプ</language>
+		<language name="JPN_KANJI" width="160">イッシュほかくコンプ</language>
 	</row>
 
 	<row id="DEBUG_FIELD_ZUKAN_11">
-		<language name="JPN" width="160">イッシュみたセット</language>
-		<language name="JPN_KANJI" width="160">イッシュみたセット</language>
+		<language name="JPN" width="160">イッシュみたコンプ</language>
+		<language name="JPN_KANJI" width="160">イッシュみたコンプ</language>
 	</row>
 
 	<row id="DEBUG_FIELD_ZUKAN_12">
-		<language name="JPN" width="160">げんごセット</language>
-		<language name="JPN_KANJI" width="160">げんごセット</language>
+		<language name="JPN" width="160">げんごコンプ</language>
+		<language name="JPN_KANJI" width="160">げんごコンプ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_13">
+		<language name="JPN" width="160">ちほうみた２５</language>
+		<language name="JPN_KANJI" width="160">地方見た２５</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_14">
+		<language name="JPN" width="160">ちほうみた６０</language>
+		<language name="JPN_KANJI" width="160">地方見た６０</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_15">
+		<language name="JPN" width="160">ちほうみた１２０</language>
+		<language name="JPN_KANJI" width="160">地方見た１２０</language>
 	</row>
 
 	<row id="DEBUG_FIELD_GEONET">

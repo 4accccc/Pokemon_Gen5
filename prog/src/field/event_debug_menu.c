@@ -6204,9 +6204,27 @@ static GMEVENT_RESULT debugMenuZoneJump( GMEVENT *p_event, int *p_seq, void *p_w
   return GMEVENT_RES_CONTINUE;
 }
 
-//======================================================================
+//======================================================================================
+//
 //  デバッグメニュー　図鑑
+//
+//======================================================================================
 //======================================================================
+//======================================================================
+typedef enum {
+  DEBUG_ZKNCMD_GLOBAL_GET_FULL = 0,
+  DEBUG_ZKNCMD_GLOBAL_SEE_FULL,
+  DEBUG_ZKNCMD_RANDOM,
+  DEBUG_ZKNCMD_FORM_FULL,
+  DEBUG_ZKNCMD_ZENKOKU_FLAG,
+  DEBUG_ZKNCMD_VERSION_UP,
+  DEBUG_ZKNCMD_LOCAL_GET_FULL,
+  DEBUG_ZKNCMD_LOCAL_SEE_FULL,   //7
+  DEBUG_ZKNCMD_LANGUAGE_FULL,    //8
+  DEBUG_ZKNCMD_LOCAL_SEE_25,
+  DEBUG_ZKNCMD_LOCAL_SEE_60,
+  DEBUG_ZKNCMD_LOCAL_SEE_120,
+}DEBUG_ZKNCMD;
 
 typedef struct {
   int seq_no;
@@ -6244,15 +6262,18 @@ static const FLDMENUFUNC_HEADER ZukanMenuHeader =
 ///メニューリスト
 static const FLDMENUFUNC_LIST ZukanMenuList[] =
 {
-  { DEBUG_FIELD_ZUKAN_01, (void*)0 },   // 全国捕獲
-  { DEBUG_FIELD_ZUKAN_07, (void*)1 },   // 全国見た
-  { DEBUG_FIELD_ZUKAN_10, (void*)6 },   // 地方捕獲
-  { DEBUG_FIELD_ZUKAN_11, (void*)7 },   // 地方見た
-  { DEBUG_FIELD_ZUKAN_09, (void*)2 },   // ランダム
-  { DEBUG_FIELD_ZUKAN_03, (void*)3 },   // フォルム
-  { DEBUG_FIELD_ZUKAN_12, (void*)8 },   // 言語
-  { DEBUG_FIELD_ZUKAN_05, (void*)4 },   // 全国フラグ
-  { DEBUG_FIELD_ZUKAN_06, (void*)5 },   // バージョンアップ
+  { DEBUG_FIELD_ZUKAN_01, (void*)DEBUG_ZKNCMD_GLOBAL_GET_FULL }, // 全国捕獲コンプ
+  { DEBUG_FIELD_ZUKAN_07, (void*)DEBUG_ZKNCMD_GLOBAL_SEE_FULL }, // 全国見たコンプ
+  { DEBUG_FIELD_ZUKAN_10, (void*)DEBUG_ZKNCMD_LOCAL_GET_FULL },  // 地方捕獲コンプ
+  { DEBUG_FIELD_ZUKAN_11, (void*)DEBUG_ZKNCMD_LOCAL_SEE_FULL },  // 地方見たコンプ
+  { DEBUG_FIELD_ZUKAN_09, (void*)DEBUG_ZKNCMD_RANDOM },          // ランダムセット
+  { DEBUG_FIELD_ZUKAN_03, (void*)DEBUG_ZKNCMD_FORM_FULL },       // フォルムコンプ
+  { DEBUG_FIELD_ZUKAN_12, (void*)DEBUG_ZKNCMD_LANGUAGE_FULL },   // 言語コンプ
+  { DEBUG_FIELD_ZUKAN_05, (void*)DEBUG_ZKNCMD_ZENKOKU_FLAG },    // 全国フラグ
+  { DEBUG_FIELD_ZUKAN_06, (void*)DEBUG_ZKNCMD_VERSION_UP },      // バージョンアップ
+  { DEBUG_FIELD_ZUKAN_13, (void*)DEBUG_ZKNCMD_LOCAL_SEE_25 },    // 地方見た２５
+  { DEBUG_FIELD_ZUKAN_14, (void*)DEBUG_ZKNCMD_LOCAL_SEE_60 },    // 地方見た６０
+  { DEBUG_FIELD_ZUKAN_15, (void*)DEBUG_ZKNCMD_LOCAL_SEE_120 },   // 地方見た１２０
 };
 
 static const DEBUG_MENU_INITIALIZER DebugMenuZukanImitializer = {
@@ -6270,6 +6291,7 @@ static const DEBUG_MENU_INITIALIZER DebugMenuZukanImitializer = {
 //--------------------------------------------------------------
 static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk );
 static void SetZukanDataOne( DEBUG_ZUKAN_WORK * wk, u16 mons, u16 form, u16 lang, u32 mode );
+static void SetZukanLocal( DEBUG_ZUKAN_WORK * wk, u16 count, u32 mode );
 
 
 //--------------------------------------------------------------
@@ -6330,7 +6352,7 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 
-    case 0:     // 全国捕獲
+    case DEBUG_ZKNCMD_GLOBAL_GET_FULL:     // 全国捕獲
       {
         u32 i;
         for( i=1; i<=MONSNO_END; i++ ){
@@ -6340,7 +6362,7 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 
-    case 1:     // 全国見た
+    case DEBUG_ZKNCMD_GLOBAL_SEE_FULL:     // 全国見た
       {
         u32 i;
         for( i=1; i<=MONSNO_END; i++ ){
@@ -6350,7 +6372,7 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 
-    case 2:     // ランダム
+    case DEBUG_ZKNCMD_RANDOM:     // ランダム
       {
         u32 rand;
         u32 max;
@@ -6369,7 +6391,7 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 
-    case 3:     // フォルム
+    case DEBUG_ZKNCMD_FORM_FULL:     // フォルム
       {
         u32 max;
         u16 i, j;
@@ -6385,17 +6407,19 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 
-    case 4:     // 全国フラグ
+    case DEBUG_ZKNCMD_ZENKOKU_FLAG:     // 全国フラグ
       ZUKANSAVE_SetZenkokuZukanFlag( work->sv );
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 
-    case 5:     // バージョンアップ
+    case DEBUG_ZKNCMD_VERSION_UP:     // バージョンアップ
       ZUKANSAVE_SetGraphicVersionUpFlag( work->sv );
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 
-    case 6:     // 地方捕獲
+    case DEBUG_ZKNCMD_LOCAL_GET_FULL:     // 地方捕獲
+      SetZukanLocal( wk, MONSNO_END, 0 );
+#if 0
       {
 				u16 * buf;
         u32 i;
@@ -6407,10 +6431,13 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
         }
 				GFL_HEAP_FreeMemory( buf );
       }
+#endif
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 
-    case 7:     // 地方見た
+    case DEBUG_ZKNCMD_LOCAL_SEE_FULL:     // 地方見た
+      SetZukanLocal( wk, MONSNO_END, 1 );
+#if 0
       {
 				u16 * buf;
         u32 i;
@@ -6422,10 +6449,26 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
         }
 				GFL_HEAP_FreeMemory( buf );
       }
+#endif
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 
-    case 8:     // 言語
+    case DEBUG_ZKNCMD_LOCAL_SEE_25:
+      SetZukanLocal( wk, 25, 1 );
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
+
+    case DEBUG_ZKNCMD_LOCAL_SEE_60:
+      SetZukanLocal( wk, 60, 1 );
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
+
+    case DEBUG_ZKNCMD_LOCAL_SEE_120:
+      SetZukanLocal( wk, 120, 1 );
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      return GMEVENT_RES_FINISH;
+
+    case DEBUG_ZKNCMD_LANGUAGE_FULL:     // 言語
       {
         u32 i;
         for( i=1; i<=MONSNO_END; i++ ){
@@ -6447,6 +6490,21 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
   return GMEVENT_RES_CONTINUE;
 }
 
+static void SetZukanLocal( DEBUG_ZUKAN_WORK * wk, u16 count, u32 mode )
+{
+  u16 * buf;
+  u32 i;
+  buf = POKE_PERSONAL_GetZenkokuToChihouArray( wk->heapID, NULL );
+  for( i=1; i<=MONSNO_END; i++ ){
+    if( buf[i] != 0 ){
+      SetZukanDataOne( wk, i, 0, PM_LANG, mode );
+      count --;
+    }
+    if ( count == 0 ) break;
+  }
+  GFL_HEAP_FreeMemory( buf );
+}
+
 static void SetZukanDataOne( DEBUG_ZUKAN_WORK * wk, u16 mons, u16 form, u16 lang, u32 mode )
 {
   POKEMON_PARAM * pp = PP_Create( mons, 50, 0, wk->heapID );
@@ -6463,6 +6521,10 @@ static void SetZukanDataOne( DEBUG_ZUKAN_WORK * wk, u16 mons, u16 form, u16 lang
 }
 
 
+//======================================================================================
+//
+//
+//======================================================================================
 //--------------------------------------------------------------
 //イベントポケモン作成
 //--------------------------------------------------------------
