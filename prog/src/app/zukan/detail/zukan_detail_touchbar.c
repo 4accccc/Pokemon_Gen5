@@ -844,7 +844,7 @@ static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work 
     {
     case ZUKAN_DETAIL_TOUCHBAR_DISP_INFO:
       {
-        if( ZKND_TBAR_GetVisible( work->tbwk, GENERAL_ICON_CUSTOM_FORM ) )
+        if( ZKND_TBAR_GetVisible( work->tbwk, work->icon_set[GENERAL_ICON_CUSTOM_FORM].cset->id ) )
           icon = GENERAL_ICON_CUSTOM_FORM;
         else
           icon = GENERAL_ICON_CUSTOM_MAP;
@@ -883,7 +883,7 @@ static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work 
       break;
     case ZUKAN_DETAIL_TOUCHBAR_DISP_VOICE:
       {
-        if( ZKND_TBAR_GetVisible( work->tbwk, GENERAL_ICON_CUSTOM_FORM ) )
+        if( ZKND_TBAR_GetVisible( work->tbwk, work->icon_set[GENERAL_ICON_CUSTOM_FORM].cset->id ) )
           icon = GENERAL_ICON_CUSTOM_FORM;
         else
           icon = GENERAL_ICON_CUSTOM_INFO;
