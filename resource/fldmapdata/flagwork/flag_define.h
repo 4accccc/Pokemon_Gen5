@@ -2365,7 +2365,7 @@
 
 #define SYS_FLAG_AREA_START               2400 /* 0x0960  */
 
-#define SYS_FLAG_GAME_CLEAR               2400 /* 0x0960 殿堂入りフラグ（チャンピオンに勝利） */
+#define SYS_FLAG_GAME_CLEAR               2400 /* 0x0960 シナリオクリアフラグ（N城攻略時にセット） */
 #define SYS_FLAG_FIRST_POKE_GET           2401 /* 0x0961 最初のポケモンを入手した */
 #define SYS_FLAG_ZUKAN_GET                2402 /* 0x0962 ずかんをもらった */
 #define SYS_FLAG_RUNNINGSHOES             2403 /* 0x0963 ランニングシューズ入手フラグ（Bダッシュ判定に使用） */
@@ -2392,7 +2392,7 @@
 #define SYS_FLAG_ELBOARD_C08WGYMWIN       2424 /* 0x0978 電光掲示板用フラグ：臨時ニュースC08ジムクリア（verホワイト） */
 #define SYS_FLAG_ELBOARD_C08BGYMWIN       2425 /* 0x0979 電光掲示板用フラグ：臨時ニュースC08ジムクリア（verブラック） */
 #define SYS_FLAG_ELBOARD_CHAMPWIN         2426 /* 0x097a 電光掲示板用フラグ：臨時ニュースチャンピオンに勝利 */
-#define SYS_FLAG_SCENARIO_CLEAR           2427 /* 0x097b シナリオクリアフラグ（N城攻略時にセット） */
+#define SYS_FLAG_CHAMPION_WIN             2427 /* 0x097b 殿堂入りフラグ（チャンピオンに勝利） */
 		/* not used  2428(0x097c) */
 		/* not used  2429(0x097d) */
 		/* not used  2430(0x097e) */
