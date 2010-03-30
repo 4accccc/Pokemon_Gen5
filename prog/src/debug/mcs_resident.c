@@ -47,7 +47,10 @@ static u8 MCSRSD_recvBuffer[RECVBUF_SIZE];
 static u16	tickStack[TIMER_LEN];
 static u16	tickStackP = 0;
 static u16	tickMax = 0;
+static u16	tickCount = 0;
 extern OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now;    // Œ»Ý‚Ìƒ`ƒbƒN
+#define GET_TICKSTACKPOS(point, start, count)	\
+	{ point = start + count; if(point >= TIMER_LEN){ point -= TIMER_LEN; } }
 //============================================================================================
 /**
  *
@@ -65,6 +68,33 @@ void	GFL_MCS_Resident(void)
 			break;
 		case MCSRSDCOMM_REQVRAMSTATUS:
 			GFL_MCS_Resident_SendTexVramStatus();
+			break;
+		case MCSRSDCOMM_DEFAULTINFO:
+#if 0
+			{
+				MCSRSDCOMM_HEADER* commHeader = (MCSRSDCOMM_HEADER*)MCSRSD_sendBuffer;
+				int i;
+				u32 param = 0;
+				for(i=0; i<tickCount; i++){
+					int p;
+					GET_TICKSTACKPOS(p, tickStackP, tickCount)
+					param += tickStack[p];
+				}
+				param /= tickCount;
+				param &= 0x0000ffff;			// ‰ºˆÊ16bit‚ÉƒAƒxƒŒ[ƒWŠi”[
+				param |= (tickMax << 16);	// ãˆÊ16bit‚ÉÅ‘å’lŠi”[
+
+				commHeader->comm = MCSRSDCOMM_DEFAULTINFO;
+				commHeader->param = param;
+				GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sizeof(MCSRSDCOMM_HEADER));
+
+				OS_Printf("tick ave = %d, max = %d, count = %d\n", param&0xffff, tickMax, tickCount);
+
+				GET_TICKSTACKPOS(tickStackP, tickStackP, tickCount)
+				tickCount = 0;
+				tickMax = 0;
+			}
+#endif
 			break;
 		}
 	}
@@ -104,8 +134,8 @@ void	GFL_MCS_Resident(void)
 		}
 	}
 #else
-	{
 #if 0
+	{
 		if(tickStackP >= TIMER_LEN){ tickStackP = 0; tickMax = 0; }
 
 		if(DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now >= 0xf000){
@@ -117,7 +147,27 @@ void	GFL_MCS_Resident(void)
 
 		tickStackP++;
 	}
+#else
 
+
+#if 0
+	{
+		int p;
+		GET_TICKSTACKPOS(p, tickStackP, tickCount)
+
+		if(DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now >= 0xf000){
+			tickStack[p] = 0xf000;
+		} else {
+			tickStack[p] = (u16)DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now;
+		}
+		if(tickStack[p] > tickMax){ tickMax = tickStack[p]; }
+
+		tickCount++;
+	}
+#endif
+
+#endif
+#if 0
 	if(tickStackP == TIMER_LEN){
 		MCSRSDCOMM_HEADER* commHeader = (MCSRSDCOMM_HEADER*)MCSRSD_sendBuffer;
 		int i;
@@ -130,8 +180,8 @@ void	GFL_MCS_Resident(void)
 		commHeader->comm = MCSRSDCOMM_DEFAULTINFO;
 		commHeader->param = param;
 		GFL_MCS_Write(GFL_MCS_RESIDENT_ID, MCSRSD_sendBuffer, sizeof(MCSRSDCOMM_HEADER));
-#endif
 	}
+#endif
 #endif
 }
 
