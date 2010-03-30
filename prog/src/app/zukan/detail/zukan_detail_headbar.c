@@ -370,7 +370,7 @@ static void Zukan_Detail_Headbar_DeleteBase( ZUKAN_DETAIL_HEADBAR_WORK* work )
 }
 static void Zukan_Detail_Headbar_Create( ZUKAN_DETAIL_HEADBAR_WORK* work )
 {
-  if( !( ZUKAN_DETAIL_HEADBAR_TYPE_INFO <= work->type && work->type <= ZUKAN_DETAIL_HEADBAR_TYPE_FORM ) ) return;
+  if( !( 0 <= work->type && work->type < ZUKAN_DETAIL_HEADBAR_TYPE_MAX ) ) return;
 
   // BGƒpƒŒƒbƒg
   {
@@ -381,6 +381,7 @@ static void Zukan_Detail_Headbar_Create( ZUKAN_DETAIL_HEADBAR_WORK* work )
       0,
       2,
       1,
+      3,
       3,
     };
 

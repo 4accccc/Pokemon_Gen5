@@ -2701,6 +2701,7 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
                 STATE state )
 {
   ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
+  ZUKAN_DETAIL_HEADBAR_WORK*   headbar  = ZKNDTL_COMMON_GetHeadbar(cmn);
   BOOL b_top_exchange = FALSE;  // STATE_TOPからSTATE_EXCHANGEに変更するとき、もしくはその逆のときTRUE
 
   // 遷移前の状態 
@@ -2801,6 +2802,11 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
               touchbar,
               ZUKAN_DETAIL_TOUCHBAR_TYPE_FORM,
               ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
+
+          // タイトルバー
+          ZUKAN_DETAIL_HEADBAR_SetType(
+              headbar,
+              ZUKAN_DETAIL_HEADBAR_TYPE_FORM_COMPARE );
         }
         break;
       }
@@ -2895,6 +2901,11 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
               touchbar,
               ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
               ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
+
+          // タイトルバー
+          ZUKAN_DETAIL_HEADBAR_SetType(
+              headbar,
+              ZUKAN_DETAIL_HEADBAR_TYPE_FORM );
 
           // 押し出し用関数を利用して位置設定
           if( /*work->state == STATE_TOP &&*/ work->diff_num >= 2 ) 
