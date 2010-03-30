@@ -596,7 +596,7 @@ GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, F
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(intsub->gsys);
-  GMEVENT *event;
+  GMEVENT *event = NULL;
   
   if(bEvReqOK == FALSE || fieldWork == NULL){
     return NULL;
