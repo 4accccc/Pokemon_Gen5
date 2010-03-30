@@ -288,8 +288,8 @@ void DendouRecord_GetPokemonData( const DENDOU_RECORD* record, int poke_pos, DEN
   poke_data->formNumber     = recPoke->formNumber;
   poke_data->sex            = recPoke->sex;
 
-  GFL_STR_SetStringCode( poke_data->nickname, recPoke->nickname );
-  GFL_STR_SetStringCode( poke_data->oyaname,  recPoke->oyaname );
+  GFL_STR_SetStringCodeOrderLength( poke_data->nickname, recPoke->nickname, POKENAME_BUFSIZE );
+  GFL_STR_SetStringCodeOrderLength( poke_data->oyaname,  recPoke->oyaname,  OYANAME_BUFSIZE );
 
   for(i=0; i<4; i++)
   {
