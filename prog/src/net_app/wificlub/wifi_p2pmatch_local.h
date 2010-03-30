@@ -230,6 +230,7 @@ enum{
   WIFIP2PMATCH_MODE_CALL_CHECK_D,
   WIFIP2PMATCH_MODE_CONNECTWAIT,
   WIFIP2PMATCH_MODE_CONNECTWAIT2,
+  WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND,
 
 };
 
@@ -482,7 +483,7 @@ struct _WIFIP2PMATCH_WORK{
   u8 DirectModeNo;    // ダイレクトにはなしかけられている場合、話してきたやつのNO
   u8 DirectMacSet;  //話しかける為のMACをセットした人
   u8 keepGameMode;
-    u8 dummy;
+  u8 command;   ///< direct進行の為のコマンド
 };
 
 //通信関連の関数

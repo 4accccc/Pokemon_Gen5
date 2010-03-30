@@ -998,6 +998,7 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _parentModeCallMenuSendD, //WIFIP2PMATCH_MODE_CALL_CHECK_D
   _DirectConnectWait,//WIFIP2PMATCH_MODE_CONNECTWAIT,
   _DirectConnectWait2,//  WIFIP2PMATCH_MODE_CONNECTWAIT2,
+  _playerDirectWaitSendCommand, // WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND
 
 };
 
@@ -3333,7 +3334,8 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
 
   case MCR_RET_MYSELECT:   //パソコンに話しかける
-    Snd_SePlay(_SE_DESIDE);
+    wk->pParentWork->btalk = FALSE;  //NOTダイレクト
+     Snd_SePlay(_SE_DESIDE);
     if(_modeWait(status)){
       WIFI_MCR_PCAnmStart( &wk->matchroom );  // pcアニメ開始
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
@@ -4042,7 +4044,7 @@ static int _parentModeSelectMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   return seq;
 }
 
-
+//WIFIP2PMATCH_MODE_SELECT_INIT2
 static int _parentModeSelectMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
 {
   WifiP2PMatchMessagePrint(wk, msg_wifilobby_006, FALSE);
@@ -5683,6 +5685,7 @@ static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq )
     _errorDisp(wk);
   }
   else{
+    GFL_FONTSYS_SetDefaultColor();
     ret = BmpMenu_YesNoSelectMain(wk->pYesNoWork);
     if(ret == BMPMENU_NULL){  // まだ選択中
       return seq;
