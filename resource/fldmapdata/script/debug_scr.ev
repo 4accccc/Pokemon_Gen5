@@ -775,6 +775,8 @@ sub_iwasawa_main:
 
     CASE SEQ_IWASAWA_EXIT THEN
       $i_loop = FALSE
+    CASE EV_WIN_B_CANCEL THEN
+      $i_loop = FALSE
     ENDSWITCH
   ENDWHILE
 
