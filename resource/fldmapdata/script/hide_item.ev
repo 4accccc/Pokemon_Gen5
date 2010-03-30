@@ -146,12 +146,13 @@ _EVENT_DATA  ev_hide_item_124
 _EVENT_DATA  ev_hide_item_125
 _EVENT_DATA  ev_hide_item_126
 _EVENT_DATA  ev_hide_item_127
+_EVENT_DATA  ev_hide_item_128
 //--------------------------------------------------------------
 //               スクリプト本体 開始
 //--------------------------------------------------------------
 EVENT_START ev_hide_item_000
 //サンヨウシティ ( 744, 579 )
-	_ITEM_EVENT_HIDEITEM( 581, 1, FLAG_HIDEITEM_000 )// かおるキノコ
+	_ITEM_EVENT_HIDEITEM( 580, 1, FLAG_HIDEITEM_000 )// かおるキノコ
 EVENT_END
 
 EVENT_START ev_hide_item_001
@@ -716,7 +717,7 @@ EVENT_END
 
 EVENT_START ev_hide_item_113
 //ほうじょうのやしろ ( 27, 43 )
-	_ITEM_EVENT_HIDEITEM( 581, 1, FLAG_HIDEITEM_113 )// かおるキノコ
+	_ITEM_EVENT_HIDEITEM( 580, 1, FLAG_HIDEITEM_113 )// かおるキノコ
 EVENT_END
 
 EVENT_START ev_hide_item_114
@@ -787,6 +788,11 @@ EVENT_END
 EVENT_START ev_hide_item_127
 //ゆめのあとち ( 8, 12 )
 	_ITEM_EVENT_HIDEITEM( 21, 1, FLAG_HIDEITEM_127 )// ねむけざまし
+EVENT_END
+
+EVENT_START ev_hide_item_128
+//ビレッジブリッジ ( 32, 45 )
+	_ITEM_EVENT_HIDEITEM( 234, 1, FLAG_HIDEITEM_128 )// たべのこし
 EVENT_END
 
 //--------------------------------------------------------------
