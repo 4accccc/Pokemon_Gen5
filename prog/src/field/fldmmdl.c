@@ -1149,8 +1149,10 @@ void MMDL_SAVEDATA_Save(
   save = savedata->SaveWorkBuf;
   
   while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) == TRUE ){
-    mmdl_SaveData_SaveMMdl( mmdl, save );
-    save++;
+    if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_NOT_SAVE) == 0 ){
+      mmdl_SaveData_SaveMMdl( mmdl, save );
+      save++;
+    }
   }
 }
 
@@ -3959,9 +3961,6 @@ BOOL MMDL_CheckStatusBitHeightExpand( const MMDL * mmdl )
 }
 #endif
 
-//======================================================================
-//  MMDL 動作ビット関連
-//======================================================================
 //--------------------------------------------------------------
 /**
  * MMDL アトリビュート取得を停止
@@ -3992,6 +3991,23 @@ int MMDL_CheckStatusBitAttrGetOFF( const MMDL * mmdl )
     return( TRUE );
   }
   return( FALSE );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDL 非セーブ対象にする
+ * @param mmdl MMDL*
+ * @param flag TRUE=非セーブ FALSE=セーブされる
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void MMDL_SetMoveBitNotSave( MMDL *mmdl, BOOL flag )
+{
+  if( flag == TRUE ){
+    MMDL_OnStatusBit( mmdl, MMDL_MOVEBIT_NOT_SAVE );
+  }else{
+    MMDL_OffStatusBit( mmdl, MMDL_MOVEBIT_NOT_SAVE );
+  }
 }
 
 //======================================================================

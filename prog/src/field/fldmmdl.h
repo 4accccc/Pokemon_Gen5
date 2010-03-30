@@ -223,6 +223,7 @@ typedef enum
 	MMDL_MOVEBIT_REFLECT_SET=(1<<17),///<映り込みをセットした
 	MMDL_MOVEBIT_EFFSET_SHOAL=(1<<18),///<浅瀬エフェクトをセット
   MMDL_MOVEBIT_REJECT_PAUSE_MOVE=(1<<19),///<動作ポーズを拒否する
+  MMDL_MOVEBIT_NOT_SAVE=(1<<20),///<セーブ対象ではない
 }MMDL_MOVEBIT;
 
 //--------------------------------------------------------------
