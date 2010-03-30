@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="james_turner" host="W00212" date="2010-03-30T13:39:04" source="n_legend_born_w_01.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="1461"
+	tool_start_frame="0"
+	tool_end_frame="1460"
+	compress_material="on" material_size="16 16"
+/>
+
+<tex_pattern_list_data image_size="11" palette_size="11">
+	<image_name index="0" name="n_tp_back.1"/>
+	<image_name index="1" name="n_tp_back.2"/>
+	<image_name index="2" name="n_tp_col.1"/>
+	<image_name index="3" name="n_tp_col.2"/>
+	<image_name index="4" name="n_tp_grid.1"/>
+	<image_name index="5" name="n_tp_grid.2"/>
+	<image_name index="6" name="n_tp_roof.1"/>
+	<image_name index="7" name="n_tp_roof.2"/>
+	<image_name index="8" name="n_tp_stone.3"/>
+	<image_name index="9" name="n_tp_wall.1"/>
+	<image_name index="10" name="n_tp_wall.2"/>
+	<palette_name index="0" name="n_tp_back.1_pl"/>
+	<palette_name index="1" name="n_tp_back.2_pl"/>
+	<palette_name index="2" name="n_tp_col.1_pl"/>
+	<palette_name index="3" name="n_tp_col.2_pl"/>
+	<palette_name index="4" name="n_tp_grid.1_pl"/>
+	<palette_name index="5" name="n_tp_grid.2_pl"/>
+	<palette_name index="6" name="n_tp_roof.1_pl"/>
+	<palette_name index="7" name="n_tp_roof.2_pl"/>
+	<palette_name index="8" name="n_tp_stone.3_pl"/>
+	<palette_name index="9" name="n_tp_wall.1_pl"/>
+	<palette_name index="10" name="n_tp_wall.2_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="16">
+		0 810 1161 0 0 810 1161 0 810 1161
+		0 810 1161 0 810 1161
+	</frame_idx>
+	<image_idx size="16">
+		4 5 4 8 2 3 2 6 7 6
+		0 1 0 9 10 9
+	</image_idx>
+	<palette_idx size="16">
+		4 5 4 8 2 3 2 6 7 6
+		0 1 0 9 10 9
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="6">
+	<tex_pattern_anm index="0" material_name="n_tp_grid" data_size="3" data_head="0"/>
+	<tex_pattern_anm index="1" material_name="n_tp_stone" data_size="1" data_head="3"/>
+	<tex_pattern_anm index="2" material_name="n_tp_col" data_size="3" data_head="4"/>
+	<tex_pattern_anm index="3" material_name="n_tp_roof" data_size="3" data_head="7"/>
+	<tex_pattern_anm index="4" material_name="n_tp_back" data_size="3" data_head="10"/>
+	<tex_pattern_anm index="5" material_name="n_tp_wall" data_size="3" data_head="13"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>
