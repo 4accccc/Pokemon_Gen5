@@ -579,7 +579,7 @@ u8 GAMEBEACON_Get_Job(const GAMEBEACON_INFO *info)
   if(answer == 0){
     return GAMEBEACON_DETAILS_JOB_NULL;
   }
-  return answer - 1;  //回答は無回答の"0"を含めて0始まりの為、仕事IDと一致させる為に-1
+  return answer;
 }
 
 //==================================================================
@@ -597,7 +597,7 @@ u8 GAMEBEACON_Get_Hobby(const GAMEBEACON_INFO *info)
   if(answer == 0){
     return GAMEBEACON_DETAILS_HOBBY_NULL;
   }
-  return answer - 1;  //回答は無回答の"0"を含めて0始まりの為、趣味IDと一致させる為に-1
+  return answer;
 }
 
 //==================================================================
