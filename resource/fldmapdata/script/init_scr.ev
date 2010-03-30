@@ -277,7 +277,11 @@ INIT_EVENT_START  ev_init_gameclear_script
 {
   //初回ゲームクリア時の処理を呼び出す
   IF FLAG_OFF( SYS_FLAG_GAME_CLEAR ) THEN
-    _CALL	ev_first_gameclear  
+    //初回なら
+    _CALL	ev_first_gameclear
+  ELSE
+    //２回目以降なら殿堂入りフラグをセット【保留】ゲームクリアと殿堂入りをちゃんと分けた方が良い
+    _FLAG_SET( SYS_FLAG_CHAMPION_WIN )
   ENDIF
   
   //全滅時の戻り先を自宅にする

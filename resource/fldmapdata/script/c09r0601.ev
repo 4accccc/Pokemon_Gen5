@@ -85,7 +85,7 @@ EVENT_START   ev_reserve_c09r0601_champion_01
 	//========================================//
 	
 	//ìaì∞ì¸ÇËèàóù
-	_GOTO_GAMECLEAR_DEMO( 0 )
+	_GOTO_GAMECLEAR_DEMO( 1 )
 
 EVENT_END
 
