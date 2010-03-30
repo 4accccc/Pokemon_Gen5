@@ -3361,13 +3361,22 @@ static FIELD_SKILL_CHECK_RET BPL_HidenCheck( BPLIST_WORK * wk )
 {
   u16 waza;
 
+	// 新しく覚える技はチェックしなくていいハズ
+  if( wk->dat->sel_wp == 4 ){
+		return FSCR_OK;
+	}
+
+	waza = wk->poke[wk->dat->sel_poke].waza[wk->dat->sel_wp].id;
+  return FIELD_SKILL_CHECK_CheckForgetSkill( wk->dat->gamedata, waza, wk->dat->heap );
+
+/*
   if( wk->dat->sel_wp == 4 ){
     waza = wk->dat->chg_waza;
   }else{
     waza = wk->poke[wk->dat->sel_poke].waza[wk->dat->sel_wp].id;
   }
-//  return FIELD_SKILL_CHECK_CheckForgetSkill( wk->dat->gamedata, waza, wk->dat->heap );
-	return FSCR_OK;
+  return FIELD_SKILL_CHECK_CheckForgetSkill( wk->dat->gamedata, waza, wk->dat->heap );
+*/
 }
 
 //--------------------------------------------------------------------------------------------
