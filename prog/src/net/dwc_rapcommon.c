@@ -123,14 +123,14 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
   //Žc‚èƒq[ƒv’²¸
 #ifdef DEBUG_ONLY_FOR_toru_nagihashi
   { 
-    static u32 s_wifi_buff  = 0;
+    static u32 s_wifi_buff  = 0xFFFFFFFF;
     u32 free_area;
     free_area  = NNS_FndGetTotalFreeSizeForExpHeap( pDwcRapWork->headHandle );
-    if( s_wifi_buff < free_area )
+    if( s_wifi_buff > free_area )
     { 
       s_wifi_buff = free_area;
     }
-    NET_MEMORY_PRINT( "HEAP[WIFI] most free area rest=0x%x %d\n", size, s_wifi_buff ,name );
+    NET_MEMORY_PRINT( "HEAP[WIFI] most low free area rest=0x%x\n", s_wifi_buff );
   }
 #endif //DEBUG_ONLY_FOR_toru_nagihashi
 

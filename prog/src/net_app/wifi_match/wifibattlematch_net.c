@@ -646,6 +646,20 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
       repair  =  WIFIBATTLEMATCH_NET_ERROR_NONE;
       break;
     }
+
+    switch( repair )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:      //復帰可能地点まで戻る
+      NetErr_DispCallPushPop();
+      GFL_NET_StateClearWifiError();
+      break;
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      NetErr_App_ReqErrorDisp();
+      break;
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL:       //電源切断
+      NetErr_DispCallFatal();
+      break;
+    }
   }
 
   return repair;
