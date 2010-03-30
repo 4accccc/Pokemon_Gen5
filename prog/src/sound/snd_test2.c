@@ -1359,10 +1359,34 @@ static void writeButton(SOUNDTEST_WORK* sw, u8 x, u8 y, BOOL flag )
 //------------------------------------------------------------------
 static void printName(SOUNDTEST_WORK* sw, int idx)
 {
+	PRINTSYS_LSB lsb;
+
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(sw->bmpwinName[idx]), 0);
 
-    PRINT_UTIL_PrintColor(  &sw->printUtilName[idx], sw->printQue, 3, 7,
-              sw->setName[idx], sw->fontHandle, PRINTSYS_LSB_Make(2,3,0));
+	lsb = PRINTSYS_LSB_Make(2,3,0);
+
+  if(idx == NAMEIDX_SE){
+		int i;
+		const NNSSndArcSeqInfo*			seqInfo;
+		const NNSSndArcBankInfo*		bnkInfo;
+		BOOL	f = TRUE;
+
+		seqInfo = NNS_SndArcGetSeqInfo(sw->setNo[NOIDX_SENO]);
+		if(NNS_SndArcGetFileAddress(seqInfo->fileId) == NULL){ f = FALSE; }
+
+		bnkInfo = NNS_SndArcGetBankInfo(seqInfo->param.bankNo);
+		if(NNS_SndArcGetFileAddress(bnkInfo->fileId) == NULL){ f = FALSE; }
+
+		for(i=0; i<4; i++){
+			if(bnkInfo->waveArcNo[i] != NNS_SND_ARC_INVALID_WAVEARC_NO){
+				const NNSSndArcWaveArcInfo* wavInfo = NNS_SndArcGetWaveArcInfo(bnkInfo->waveArcNo[i]);
+				if(NNS_SndArcGetFileAddress(wavInfo->fileId) == NULL){ f = FALSE; }
+			}
+		}
+		if(f == TRUE){ lsb = PRINTSYS_LSB_Make(4,3,0); }
+	}
+  PRINT_UTIL_PrintColor
+		(&sw->printUtilName[idx], sw->printQue, 3, 7, sw->setName[idx], sw->fontHandle, lsb);
 }
 
 //------------------------------------------------------------------
