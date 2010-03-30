@@ -127,7 +127,7 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_KeyWait( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForCommPlayer( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForNPC( BTL_SERVER* server, int* seq );
-static BOOL SendActionRecord( BTL_SERVER* server, BOOL fChapter );
+static BOOL SendActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL fChapter );
 static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry );
 static void* MakeSelectActionRecord( BTL_SERVER* server, BOOL fChapter, u32* dataSize );
 static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize, const BtlRotateDir* dirAry );
@@ -587,7 +587,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
       server->flowResult = BTL_SVFLOW_StartTurn( server->flowWork, &server->clientAction );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult);
 
-      if( SendActionRecord(server, check_acton_chapter(server)) ){
+      if( SendActionRecord(server, BTL_RECTIMING_StartTurn, check_acton_chapter(server)) ){
         (*seq)++;
       }else{
         (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
@@ -770,8 +770,7 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
       storeClientAction( server );
       server->flowResult = BTL_SVFLOW_StartAfterPokeIn( server->flowWork, &server->clientAction );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
-
-      if( SendActionRecord(server, FALSE) ){
+      if( SendActionRecord(server, BTL_RECTIMING_PokeInCover, FALSE) ){
         (*seq)++;
       }else{
         (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
@@ -787,7 +786,7 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
     break;
 
   case 4:
-    SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+    SetAdapterCmdEx( server, 4, server->que->buffer, server->que->writePtr );
     (*seq)++;
     break;
 
@@ -884,10 +883,11 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
     {
       ResetAdapterCmd( server );
       SCQUE_Init( server->que );
+
+      storeClientAction( server );
       server->flowResult = BTL_SVFLOW_ContinueAfterPokeChange( server->flowWork );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
-
-      if( SendActionRecord(server, FALSE) ){
+      if( SendActionRecord(server, BTL_RECTIMING_PokeInChange, FALSE) ){
         (*seq)++;
       }else{
         (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
@@ -991,11 +991,14 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
       break;
 
     case BTL_COMPETITOR_COMM:
-
       setMainProc( server, ServerMain_ExitBattle_ForCommPlayer );
       break;
 
     default:
+      if( result == BTL_RESULT_WIN ){
+        u16 winBGM = BTL_MAIN_GetWinBGMNo( server->mainModule );
+        PMSND_PlayBGM( winBGM );
+      }
       setMainProc( server, ServerMain_ExitBattle_KeyWait );
       break;
     }
@@ -1155,7 +1158,7 @@ BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, const void* recvedCmd, u32 cm
 /**
  *  アクション記録データ送信開始
  */
-static BOOL SendActionRecord( BTL_SERVER* server, BOOL fChapter )
+static BOOL SendActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL fChapter )
 {
   void* recData;
   u32   recDataSize;

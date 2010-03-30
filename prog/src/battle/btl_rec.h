@@ -18,6 +18,16 @@ typedef enum {
 //  BTL_RECFIELD_POKE_CHANGE,   ///< ターン途中のポケモン入れ替え
 }BtlRecFieldType;
 
+/**
+ *  コマンド生成タイミング
+ */
+typedef enum {
+  BTL_RECTIMING_StartTurn,
+  BTL_RECTIMING_PokeInCover,
+  BTL_RECTIMING_PokeInChange,
+  BTL_RECTIMING_Rotation,
+}BtlRecTiming;
+
 /*===========================================================================================*/
 /*                                                                                           */
 /* サーバー用                                                                                */
