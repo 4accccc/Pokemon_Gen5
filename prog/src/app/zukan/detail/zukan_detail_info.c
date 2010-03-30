@@ -444,6 +444,12 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
             ZUKAN_DETAIL_TOUCHBAR_DISP_INFO );
         ZUKAN_DETAIL_TOUCHBAR_Appear( touchbar, ZUKAN_DETAIL_TOUCHBAR_SPEED_OUTSIDE );
       }
+      else
+      {
+        ZUKAN_DETAIL_TOUCHBAR_SetDispOfGeneral(
+            touchbar,
+            ZUKAN_DETAIL_TOUCHBAR_DISP_INFO );
+      }
       // タイトルバー
       if( ZUKAN_DETAIL_HEADBAR_GetState( headbar ) != ZUKAN_DETAIL_HEADBAR_STATE_APPEAR )
       {

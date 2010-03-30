@@ -45,6 +45,13 @@ enum
   OBJ_PAL_POS_M_CUSTOM             = ZKNDTL_OBJ_PAL_POS_M_TOUCHBAR + ZKND_TBAR_OBJ_PLT_NUM,
 };
 
+// GENERALのパレットアニメ用にパレットを変更する
+#define OBJ_PAL_OFFSET_GENERAL_ANIME_NONE  (0)
+#define OBJ_PAL_OFFSET_GENERAL_ANIME_EXEC  (2)
+#define RES_PAL_POS_GENERAL_ANIME_START    (1)  // リソースのパレットの列番号
+#define RES_PAL_POS_GENERAL_ANIME_END      (2)  // リソースのパレットの列番号
+#define GENERAL_ANIME_ADD              (0x400)  // FX_CosIdxを使用するので0<= <0x10000
+
 // セルアクターユニットで使えるワーク数
 #define CLUNIT_WORK_NUM    (16)
 
@@ -187,6 +194,7 @@ struct _ZUKAN_DETAIL_TOUCHBAR_WORK
   ZUKAN_DETAIL_TOUCHBAR_STATE   state;
   ZUKAN_DETAIL_TOUCHBAR_TYPE    prev_type;
   ZUKAN_DETAIL_TOUCHBAR_TYPE    type;
+  ZUKAN_DETAIL_TOUCHBAR_DISP    prev_disp;
   ZUKAN_DETAIL_TOUCHBAR_DISP    disp;
   ZUKAN_DETAIL_TOUCHBAR_SPEED   speed;
   u8                            scroll_wait_count;
@@ -218,6 +226,12 @@ struct _ZUKAN_DETAIL_TOUCHBAR_WORK
   u8            icon_set_num;
   ICON_SET      icon_set[ICON_MAX_MAX];
   s16           icon_ofs_pos_y;
+
+  // GENERALのパレットアニメ
+  u16           pal_anime_general_start[0x10];
+  u16           pal_anime_general_end[0x10];
+  u16           pal_anime_general_now[0x10];
+  int           pal_anime_general_count;
 };
 
 
@@ -237,6 +251,11 @@ static void Zukan_Detail_Touchbar_SetIconOfsPosY( ZUKAN_DETAIL_TOUCHBAR_WORK* wo
 // GENERAL
 static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 static void Zukan_Detail_Touchbar_DeleteGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
+static void Zukan_Detail_Touchbar_AnimeBaseInitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
+static void Zukan_Detail_Touchbar_AnimeBaseExitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
+static void Zukan_Detail_Touchbar_AnimeInitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
+static void Zukan_Detail_Touchbar_AnimeExitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
+static void Zukan_Detail_Touchbar_AnimeMainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 
 // MAP
 static void Zukan_Detail_Touchbar_CreateMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
@@ -276,6 +295,7 @@ ZUKAN_DETAIL_TOUCHBAR_WORK* ZUKAN_DETAIL_TOUCHBAR_Init( HEAPID heap_id, BOOL for
   work->state = ZUKAN_DETAIL_TOUCHBAR_STATE_DISAPPEAR;
   work->prev_type = ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL;
   work->type      = ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL;
+  work->prev_disp = ZUKAN_DETAIL_TOUCHBAR_DISP_INFO;
   work->disp      = ZUKAN_DETAIL_TOUCHBAR_DISP_INFO;
   work->speed = ZUKAN_DETAIL_TOUCHBAR_SPEED_OUTSIDE;
 
@@ -403,6 +423,12 @@ void ZUKAN_DETAIL_TOUCHBAR_Main( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
   }
 
   ZKND_TBAR_Main( work->tbwk );
+
+  // GENERALのパレットアニメ
+  if( work->type == ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL )
+  {
+    Zukan_Detail_Touchbar_AnimeMainGeneral( work );
+  }
 }
 
 
@@ -422,6 +448,7 @@ void ZUKAN_DETAIL_TOUCHBAR_SetType(
 {
   work->prev_type = work->type;
   work->type = type;
+  work->prev_disp = work->disp;
   work->disp = disp;
 
   Zukan_Detail_Touchbar_Delete( work );
@@ -535,6 +562,30 @@ ZKNDTL_COMMAND ZUKAN_DETAIL_TOUCHBAR_GetTrg( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 void ZUKAN_DETAIL_TOUCHBAR_Unlock( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
   ZKND_TBAR_UnlockWhole( work->tbwk );
+}
+
+//------------------------------------------------------------------
+/**
+ *  @brief        
+ *
+ *  @param[in,out]   
+ *
+ *  @retval          
+ */
+//------------------------------------------------------------------
+void ZUKAN_DETAIL_TOUCHBAR_SetDispOfGeneral(
+                   ZUKAN_DETAIL_TOUCHBAR_WORK* work,
+                   ZUKAN_DETAIL_TOUCHBAR_DISP  disp )
+{
+  if( work->type == ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL )
+  {
+    work->prev_disp = work->disp;
+    work->disp = disp;
+
+    // GENERALのパレットアニメ
+    Zukan_Detail_Touchbar_AnimeExitGeneral( work );
+    Zukan_Detail_Touchbar_AnimeInitGeneral( work );
+  }
 }
 
 
@@ -753,11 +804,19 @@ static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
       ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[GENERAL_ICON_CUSTOM_FORM].cset->id, FALSE );
     }
   }
+
+  // GENERALのパレットアニメ
+  Zukan_Detail_Touchbar_AnimeBaseInitGeneral( work );
+  Zukan_Detail_Touchbar_AnimeInitGeneral( work );
 }
 static void Zukan_Detail_Touchbar_DeleteGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
   if( work->tbwk )
   {
+    // GENERALのパレットアニメ
+    Zukan_Detail_Touchbar_AnimeExitGeneral( work );
+    Zukan_Detail_Touchbar_AnimeBaseExitGeneral( work );
+
     // タッチバー破棄
     ZKND_TBAR_Exit( work->tbwk );
 
@@ -771,6 +830,98 @@ static void Zukan_Detail_Touchbar_DeleteGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
 
   // NULL初期化
   work->tbwk = NULL;
+}
+static void Zukan_Detail_Touchbar_AnimeBaseInitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
+{
+  NNSG2dPaletteData* pal_data;
+  void* buf = GFL_ARC_UTIL_LoadPalette( ARCID_ZUKAN_GRA, NARC_zukan_gra_info_info_obj_NCLR, &pal_data, work->heap_id );
+  u16* raw_data = pal_data->pRawData;
+  GFL_STD_MemCopy( &raw_data[RES_PAL_POS_GENERAL_ANIME_START*0x10], work->pal_anime_general_start, 0x20 );
+  GFL_STD_MemCopy( &raw_data[RES_PAL_POS_GENERAL_ANIME_END*0x10], work->pal_anime_general_end, 0x20 );
+  GFL_HEAP_FreeMemory( buf );
+  work->pal_anime_general_count = 0;
+}
+static void Zukan_Detail_Touchbar_AnimeBaseExitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
+{
+  // 何もしない
+}
+static void Zukan_Detail_Touchbar_AnimeInitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
+{
+  u8 icon;
+  GFL_CLWK* clwk;
+  switch( work->disp )
+  {
+  case ZUKAN_DETAIL_TOUCHBAR_DISP_INFO:   icon = GENERAL_ICON_CUSTOM_INFO;    break;
+  case ZUKAN_DETAIL_TOUCHBAR_DISP_MAP:    icon = GENERAL_ICON_CUSTOM_MAP;     break;
+  case ZUKAN_DETAIL_TOUCHBAR_DISP_VOICE:  icon = GENERAL_ICON_CUSTOM_VOICE;   break;
+  case ZUKAN_DETAIL_TOUCHBAR_DISP_FORM:   icon = GENERAL_ICON_CUSTOM_FORM;    break;
+  }
+  clwk = ZKND_TBAR_GetClwk( work->tbwk, work->icon_set[icon].cset->id );
+  //GFL_CLACT_WK_SetPlttOffs( clwk, OBJ_PAL_OFFSET_GENERAL_ANIME_EXEC, CLWK_PLTTOFFS_MODE_PLTT_TOP );  // これでも同じようにパレットを変えられるのだが、↓つづく
+  GFL_CLACT_WK_SetPlttOffs( clwk, OBJ_PAL_OFFSET_GENERAL_ANIME_EXEC, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+}
+static void Zukan_Detail_Touchbar_AnimeExitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
+{
+  u8 icon;
+  GFL_CLWK* clwk;
+  switch( work->prev_disp )
+  {
+  case ZUKAN_DETAIL_TOUCHBAR_DISP_INFO:   icon = GENERAL_ICON_CUSTOM_INFO;    break;
+  case ZUKAN_DETAIL_TOUCHBAR_DISP_MAP:    icon = GENERAL_ICON_CUSTOM_MAP;     break;
+  case ZUKAN_DETAIL_TOUCHBAR_DISP_VOICE:  icon = GENERAL_ICON_CUSTOM_VOICE;   break;
+  case ZUKAN_DETAIL_TOUCHBAR_DISP_FORM:   icon = GENERAL_ICON_CUSTOM_FORM;    break;
+  }
+  clwk = ZKND_TBAR_GetClwk( work->tbwk, work->icon_set[icon].cset->id );
+  //GFL_CLACT_WK_SetPlttOffs( clwk, OBJ_PAL_OFFSET_GENERAL_ANIME_NONE, CLWK_PLTTOFFS_MODE_PLTT_TOP );  // つづき↑元に戻したらデザイナーさんのパレットアニメが発生しなくなってしまった。
+  GFL_CLACT_WK_SetPlttOffs( clwk, OBJ_PAL_OFFSET_GENERAL_ANIME_NONE, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+}
+static void Zukan_Detail_Touchbar_AnimeMainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
+{
+  u8 i;
+  fx16 cos;
+
+  if( work->pal_anime_general_count + GENERAL_ANIME_ADD >= 0x10000 )
+  {
+    work->pal_anime_general_count = work->pal_anime_general_count + GENERAL_ANIME_ADD - 0x10000;
+  }
+  else
+  {
+    work->pal_anime_general_count = work->pal_anime_general_count + GENERAL_ANIME_ADD;
+  }
+  cos = ( FX_CosIdx( work->pal_anime_general_count ) + FX16_ONE ) / 2;  // 0<= <=1にしておく
+
+  for( i=0; i<0x10; i++ )
+  {
+    u8 s_r = ( work->pal_anime_general_start[i] & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+    u8 s_g = ( work->pal_anime_general_start[i] & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+    u8 s_b = ( work->pal_anime_general_start[i] & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+    u8 e_r = ( work->pal_anime_general_end[i]   & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+    u8 e_g = ( work->pal_anime_general_end[i]   & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+    u8 e_b = ( work->pal_anime_general_end[i]   & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+
+    u8 r = s_r + (((e_r-s_r)*cos)>>FX16_SHIFT);
+    u8 g = s_g + (((e_g-s_g)*cos)>>FX16_SHIFT);
+    u8 b = s_b + (((e_b-s_b)*cos)>>FX16_SHIFT);
+
+    work->pal_anime_general_now[i] = GX_RGB( r, g, b );
+  }
+
+  if( ZKNDTL_BG_FRAME_M_TOUCHBAR < GFL_BG_FRAME0_S )
+  {
+    NNS_GfdRegisterNewVramTransferTask(
+        NNS_GFD_DST_2D_OBJ_PLTT_MAIN,
+        ( OBJ_PAL_POS_M_CUSTOM + OBJ_PAL_OFFSET_GENERAL_ANIME_EXEC ) * 0x20,
+        work->pal_anime_general_now,
+        0x20 );
+  }
+  else
+  {
+    NNS_GfdRegisterNewVramTransferTask(
+        NNS_GFD_DST_2D_BG_PLTT_SUB ,
+        ( OBJ_PAL_POS_M_CUSTOM + OBJ_PAL_OFFSET_GENERAL_ANIME_EXEC ) * 0x20,
+        work->pal_anime_general_now,
+        0x20 );
+  }
 }
 
 //-------------------------------------
