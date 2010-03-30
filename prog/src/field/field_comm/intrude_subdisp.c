@@ -596,7 +596,8 @@ GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, F
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(intsub->gsys);
-
+  GMEVENT *event;
+  
   if(bEvReqOK == FALSE || fieldWork == NULL){
     return NULL;
   }
@@ -609,12 +610,19 @@ GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, F
   switch(intsub->event_req){
   case _EVENT_REQ_NO_TOWN_WARP:
     PMSND_PlaySE( SEQ_SE_FLD_102 );
-    return EVENT_IntrudeTownWarp(intsub->gsys, fieldWork, intsub->warp_zone_id);
+    event = EVENT_IntrudeTownWarp(intsub->gsys, fieldWork, intsub->warp_zone_id);
+    break;
   case _EVENT_REQ_NO_PLAYER_WARP:
     PMSND_PlaySE( SEQ_SE_FLD_102 );
-    return EVENT_IntrudePlayerWarp(intsub->gsys, fieldWork, Intrude_GetWarpPlayerNetID(game_comm));
+    event = EVENT_IntrudePlayerWarp(intsub->gsys, fieldWork, Intrude_GetWarpPlayerNetID(game_comm));
+    break;
   case _EVENT_REQ_NO_MISSION_ENTRY:
-    return EVENT_Intrude_MissionStartWait(intsub->gsys);
+    event = EVENT_Intrude_MissionStartWait(intsub->gsys);
+    break;
+  }
+  if(event != NULL){
+    intsub->event_req = _EVENT_REQ_NO_NULL;
+    return event;
   }
   
   return NULL;
