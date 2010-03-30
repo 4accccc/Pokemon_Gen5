@@ -26,10 +26,6 @@ PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
   FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 
   int i;
-  s16 x,y,z;
-
-  FIELD_PLAYER_GetGridPos( fld_player, &x, &y, &z );
-
 
   if (tbl == NULL || max == 0) return TRUE;
 
@@ -37,13 +33,27 @@ PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
   {
     if ( tbl[i].pos_type == MMDL_HEADER_POSTYPE_GRID )
     {
+      s16 x,y,z;
       MMDL_HEADER_GRIDPOS * pos = (MMDL_HEADER_GRIDPOS *)(tbl[i].pos_buf);
       const OBJCODE_PARAM *param = MMDLSYS_GetOBJCodeParam( fos, tbl[i].obj_code );
-      OS_Printf( "%d,%d, %d,%d\n",pos->gx, pos->gz, param->size_width, param->size_depth);
+      FIELD_PLAYER_GetGridPos( fld_player, &x, &y, &z );
       if ( (pos->gx<=x) && (x<pos->gx+param->size_width) &&
            (pos->gz<=z) && (z<pos->gz+param->size_depth) )
       {
-        OS_Printf( "Dont warp\n");
+        NOZOMU_Printf( "Dont warp\n");
+        return FALSE;
+      }
+    }
+    else if ( tbl[i].pos_type == MMDL_HEADER_POSTYPE_RAIL )
+    {
+      RAIL_LOCATION rail_loc;
+      MMDL_HEADER_RAILPOS * pos = (MMDL_HEADER_RAILPOS *)(tbl[i].pos_buf);
+      FIELD_PLAYER_GetNoGridLocation( fld_player, &rail_loc );
+      if ( (pos->rail_index == rail_loc.rail_index) &&
+           (pos->front_grid == rail_loc.line_grid) &&
+           (pos->side_grid == rail_loc.width_grid) )
+      {
+        NOZOMU_Printf( "Dont warp\n");
         return FALSE;
       }
     }
