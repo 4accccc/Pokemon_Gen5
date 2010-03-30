@@ -37,8 +37,9 @@ PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
       MMDL_HEADER_GRIDPOS * pos = (MMDL_HEADER_GRIDPOS *)(tbl[i].pos_buf);
       const OBJCODE_PARAM *param = MMDLSYS_GetOBJCodeParam( fos, tbl[i].obj_code );
       FIELD_PLAYER_GetGridPos( fld_player, &x, &y, &z );
+      //¦Šî“_‚Í¶‰º
       if ( (pos->gx<=x) && (x<pos->gx+param->size_width) &&
-           (pos->gz<=z) && (z<pos->gz+param->size_depth) )
+           (pos->gz-param->size_depth<z) && (z<=pos->gz) )
       {
         NOZOMU_Printf( "Dont warp\n");
         return FALSE;
