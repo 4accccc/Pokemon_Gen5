@@ -50,6 +50,7 @@ typedef enum
   BEACON_SEQ_MAIN,
   BEACON_SEQ_END,
   BEACON_SEQ_NET_END,
+  BEACON_SEQ_SET_DL_TYPE,
 }BEACON_SEQ;
 
 //--------------------------------------------------------------
@@ -476,9 +477,13 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
     //通信完全終了待ち
     if ( GFL_NET_IsResetEnable() )
     {
-      //終了
-      return( GMEVENT_RES_FINISH );
+      (*seq) = BEACON_SEQ_SET_DL_TYPE;
     }
+    break;
+  case BEACON_SEQ_SET_DL_TYPE:
+    SetDLDataType( gsys, evt_wk->Ptr );
+    //終了
+    return( GMEVENT_RES_FINISH );
   }
   
   return( GMEVENT_RES_CONTINUE );
