@@ -3609,7 +3609,7 @@ static void INFO_Update( INFO_WORK *p_wk, const PLACE_DATA *cp_data )
 				PRINTSYS_Print( p_bmp, INFO_STR_PLACE5_X, INFO_STR_PLACE5_Y, p_wk->p_strbuf, p_wk->p_font );
 			}
 			//PLACE6
-			msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE5_MSGID);
+			msgID = PLACEDATA_GetParam( cp_data, TOWNMAP_DATA_PARAM_PLACE6_MSGID);
 			if( msgID != TOWNMAP_DATA_ERROR )
 			{	
 				GFL_MSG_GetString( p_wk->cp_guide_msg, msgID, p_wk->p_strbuf );
