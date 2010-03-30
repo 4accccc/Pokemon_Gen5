@@ -4004,9 +4004,9 @@ int MMDL_CheckStatusBitAttrGetOFF( const MMDL * mmdl )
 void MMDL_SetMoveBitNotSave( MMDL *mmdl, BOOL flag )
 {
   if( flag == TRUE ){
-    MMDL_OnStatusBit( mmdl, MMDL_MOVEBIT_NOT_SAVE );
+    MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_NOT_SAVE );
   }else{
-    MMDL_OffStatusBit( mmdl, MMDL_MOVEBIT_NOT_SAVE );
+    MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_NOT_SAVE );
   }
 }
 
