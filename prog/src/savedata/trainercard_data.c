@@ -27,9 +27,10 @@ typedef struct TR_CARD_SV_DATA_tag
   u8         card_anime;                       ///< サイン面をアニメさせている
   SHORT_DATE badgeGetDate[TRAINERCARD_BADGE_NUM]; ///< バッジ取得日
   s64        lastTime;                         ///< 最後にトレーナーカードを開いた日付・時刻の数値
-  u8         polish[TRAINERCARD_BADGE_NUM];    ///< バッジの磨きパラメータ
+  u8         dummy[TRAINERCARD_BADGE_NUM];     ///< ダミー１
   u32        openflag;                         ///< 各イベントをこなしているかフラグ
-  u32        dummy[TRAINERCARD_BADGE_NUM];     ///< もう８つ何か情報を持つことがありそうなので。
+  u16        polish[TRAINERCARD_BADGE_NUM];    ///< バッジ磨きのパラメータ
+  u16        dummy2[TRAINERCARD_BADGE_NUM];    ///< ダミー２
 }TR_CARD_SV_DATA;
 
 //==============================================================================
@@ -262,9 +263,9 @@ void TRCSave_SetBadgeDate( TR_CARD_SV_PTR inTrCard, int no, int year, int month,
 {
   GF_ASSERT(no<TRAINERCARD_BADGE_NUM);
 
-  inTrCard->badgeGetDate[no].year = year;
-  inTrCard->badgeGetDate[no].year = month;
-  inTrCard->badgeGetDate[no].year = day;
+  inTrCard->badgeGetDate[no].year  = year;
+  inTrCard->badgeGetDate[no].month = month;
+  inTrCard->badgeGetDate[no].day   = day;
 }
 
 
