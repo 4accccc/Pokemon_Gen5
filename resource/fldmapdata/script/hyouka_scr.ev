@@ -23,6 +23,10 @@ _EVENT_DATA_END //終了
 //====================================================================
   DEFINE_LOCAL    HYOUKA_MSGID
   DEFINE_LOCAL    HYOUKA_COUNT
+  DEFINE_LOCAL    ITEM_RESULT_COUNT
+  DEFINE_LOCAL    ITEM_RESULT_01
+  DEFINE_LOCAL    ITEM_RESULT_02
+  DEFINE_LOCAL    ITEM_RESULT_03
 
 /**************************************************************/
 /*    図鑑評価：アララギ博士（娘）                            */
@@ -35,15 +39,43 @@ ev_zukan_daughter:
   _BALLOONWIN_CLOSE()
 
   IF $SCWK_ANSWER == SCR_YES THEN
+  //ずかんを見せる→「はい」
       _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE, HYOUKA_MSGID, HYOUKA_COUNT )
 
       IF FLAG_ON( FE_ZUKAN_COMPLETE_LOCAL_SEE ) THEN
-          _CALL sub_zukan_local_get
+      //地方図鑑・見たをコンプリート→捕まえた数
+          _CALL sub_zukan_setup_local_get
+          _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02a )
+          _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
+          _AB_KEYWAIT_MARK()
+          _BALLOONWIN_CLOSE()
       ELSE
-          _CALL sub_zukan_local_see
+      //地方図鑑・見た数
+          _CALL sub_zukan_setup_local_see
+          _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02 )
+          _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
+          _AB_KEYWAIT_MARK()
+          _BALLOONWIN_CLOSE()
       ENDIF
 
+      //アイテムをもらえるか？チェック
+      _CALL sub_zukan_present_check
+      IF $ITEM_RESULT_COUNT != 0 THEN
+        //「なんだかいいかんじで～プレゼントするわ！」
+        _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_05 )
+        _BALLOONWIN_CLOSE()
+        //どうぐプレゼント処理をコール
+        _CALL sub_zukan_present
+      ENDIF
+
+      //「これからもよろしくね！」
+      _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_10 )
+      _LAST_KEYWAIT()
+      _BALLOONWIN_CLOSE()
+
+
   ELSE
+  //ずかんを見せる→「いいえ」
       _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_03 )
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
@@ -52,7 +84,10 @@ ev_zukan_daughter:
   _CHG_LOCAL_SCR
 }
 
-sub_zukan_local_see:
+//--------------------------------------------------------------------
+//地方図鑑：見た数評価
+//--------------------------------------------------------------------
+sub_zukan_setup_local_see:
     _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE, HYOUKA_MSGID, HYOUKA_COUNT )
 
     IF $HYOUKA_COUNT >= 150 THEN
@@ -62,45 +97,107 @@ sub_zukan_local_see:
     ENDIF
 
     _NUMBER( 0, HYOUKA_COUNT, 1 )
-    _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02 )
-    _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
-    _LAST_KEYWAIT()
-    _BALLOONWIN_CLOSE()
     _RET
 
-sub_zukan_local_get:
+//--------------------------------------------------------------------
+//地方図鑑：捕まえた数評価
+//--------------------------------------------------------------------
+sub_zukan_setup_local_get:
     _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET, HYOUKA_MSGID, HYOUKA_COUNT )
 
     _NUMBER( 0, HYOUKA_COUNT, 1 )
-    _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_02 )
-    _BALLOONWIN_TALKOBJ_MSG( HYOUKA_MSGID )
-    _LAST_KEYWAIT()
-    _BALLOONWIN_CLOSE()
     _RET
 
+//--------------------------------------------------------------------
+//どうぐもらえるか？チェック
+//--------------------------------------------------------------------
+sub_zukan_present_check:
+  _GET_ZUKAN_COUNT( ZUKANCTRL_MODE_SEE, SCWK_ANSWER )
+
+  $ITEM_RESULT_COUNT = 0
+  IF FLAG_OFF( FE_HYOUKA_ITEMGET_01 ) && $SCWK_ANSWER >= 25 THEN
+    $ITEM_RESULT_01 = 1
+    $ITEM_RESULT_COUNT += 1
+  ELSE
+    $ITEM_RESULT_01 = 0
+  ENDIF
+  IF FLAG_OFF( FE_HYOUKA_ITEMGET_02 ) && $SCWK_ANSWER >= 60 THEN
+    $ITEM_RESULT_02 = 1
+    $ITEM_RESULT_COUNT += 1
+  ELSE
+    $ITEM_RESULT_02 = 0
+  ENDIF
+  IF FLAG_OFF( FE_HYOUKA_ITEMGET_03 ) && $SCWK_ANSWER >= 115 THEN
+    $ITEM_RESULT_03 = 1
+    $ITEM_RESULT_COUNT += 1
+  ELSE
+    $ITEM_RESULT_03 = 0
+  ENDIF
+  _RET
+
+//--------------------------------------------------------------------
+//  どうぐをプレゼントされる処理
+//--------------------------------------------------------------------
 sub_zukan_present:
 {
-  DEFINE_LOCAL  item_result
+  IF $ITEM_RESULT_01 != 0 THEN
+    _ADD_ITEM_CHK( ITEM_WAZAMASIN54, 1, SCWK_ANSWER )
+    IF $SCWK_ANSWER == FALSE THEN
+      _GLOBAL_CALL  SCRID_ITEM_EVENT_FAIL_KEYWAIT
+      _RET
+    ENDIF
 
-  //_GET_ZUKAN_COUNT( SCWK_ANSWER )
-  IF FLAG_OFF( FE_HYOUKA_ITEMGET_01 ) && $SCWK_ANSWER >= 30 THEN
+    $SCWK_PARAM0  = ITEM_WAZAMASIN54  //「みねうち」
+    $SCWK_PARAM1  = 1
     _GLOBAL_CALL  SCRID_ITEM_EVENT_KEYWAIT
+    _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_06 )
+    _BALLOONWIN_CLOSE()
     _FLAG_SET( FE_HYOUKA_ITEMGET_01 )
-  ELSIF FLAG_OFF( FE_HYOUKA_ITEMGET_02 ) && $SCWK_ANSWER >= 60 THEN
+
+    $ITEM_RESULT_COUNT -= 1
+    IF $ITEM_RESULT_COUNT != 0 THEN
+      //「これもつかってみて！▼」
+      _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_09 )
+    ENDIF
+
+  ENDIF
+
+  IF $ITEM_RESULT_02 != 0 THEN
+    _ADD_ITEM_CHK( ITEM_WAZAMASIN17, 1, SCWK_ANSWER )
+    IF $SCWK_ANSWER == FALSE THEN
+      _GLOBAL_CALL  SCRID_ITEM_EVENT_FAIL_KEYWAIT
+      _RET
+    ENDIF
+
+    $SCWK_PARAM0  = ITEM_WAZAMASIN17  //「まもる」
+    $SCWK_PARAM1  = 1
     _GLOBAL_CALL  SCRID_ITEM_EVENT_KEYWAIT
+    _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_07 )
+    _BALLOONWIN_CLOSE()
     _FLAG_SET( FE_HYOUKA_ITEMGET_02 )
-  ELSIF FLAG_OFF( FE_HYOUKA_ITEMGET_03 ) && $SCWK_ANSWER >= 100 THEN
+
+    $ITEM_RESULT_COUNT -= 1
+    IF $ITEM_RESULT_COUNT != 0 THEN
+      //「これもつかってみて！▼」
+      _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_09 )
+    ENDIF
+
+  ENDIF
+
+  IF $ITEM_RESULT_03 != 0 THEN
+    _ADD_ITEM_CHK( ITEM_WAZAMASIN10, 1, SCWK_ANSWER )
+    IF $SCWK_ANSWER == FALSE THEN
+      _GLOBAL_CALL  SCRID_ITEM_EVENT_FAIL_KEYWAIT
+      _RET
+    ENDIF
+
+    $SCWK_PARAM0  = ITEM_WAZAMASIN10  //「めざめるパワー」
+    $SCWK_PARAM1  = 1
     _GLOBAL_CALL  SCRID_ITEM_EVENT_KEYWAIT
+    _BALLOONWIN_TALKOBJ_MSG( msg_hyouka_hakase2_08 )
+    _BALLOONWIN_CLOSE()
     _FLAG_SET( FE_HYOUKA_ITEMGET_03 )
-  ELSIF FLAG_OFF( FE_HYOUKA_ITEMGET_04 ) && $SCWK_ANSWER >= 120 THEN
-    _GLOBAL_CALL  SCRID_ITEM_EVENT_KEYWAIT
-    _FLAG_SET( FE_HYOUKA_ITEMGET_04 )
-  ELSIF FLAG_OFF( FE_HYOUKA_ITEMGET_05 ) && $SCWK_ANSWER >= 140 THEN
-    _GLOBAL_CALL  SCRID_ITEM_EVENT_KEYWAIT
-    _FLAG_SET( FE_HYOUKA_ITEMGET_05 )
-  ELSIF FLAG_OFF( FE_HYOUKA_ITEMGET_06 ) && $SCWK_ANSWER >= 150 THEN
-    _GLOBAL_CALL  SCRID_ITEM_EVENT_KEYWAIT
-    _FLAG_SET( FE_HYOUKA_ITEMGET_06 )
+
   ENDIF
   _RET
 }
@@ -140,10 +237,39 @@ ev_zukan_father:
 /**************************************************************/
 ev_zukan_machine:
 {
-  _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_AUTO, HYOUKA_MSGID, HYOUKA_COUNT )
-  _SYSWIN_MSG( HYOUKA_MSGID , POS_DOWN )
-  _AB_KEYWAIT()
-  _SYSWIN_CLOSE()
+  _GET_ZENKOKU_ZUKAN_FLAG( SCWK_ANSWER )
+  IF $SCWK_ANSWER == TRUE THEN
+  //全国図鑑モード＝博士（父）の評価
+      _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_GLOBAL, HYOUKA_MSGID, HYOUKA_COUNT )
+      _SYSWIN_MSG( msg_hyouka_hakase_02, POS_DOWN )
+      _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )
+      _AB_KEYWAIT_MARK()
+      _SYSWIN_CLOSE()
+  ELSE
+  //地方図鑑モード＝博士（娘）の評価
+      IF FLAG_ON( FE_ZUKAN_COMPLETE_LOCAL_SEE ) THEN
+      //地方図鑑・見たをコンプリート→捕まえた数
+          _CALL sub_zukan_setup_local_get
+          _SYSWIN_MSG( msg_hyouka_hakase2_02a, POS_DOWN )
+          _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )
+          _AB_KEYWAIT_MARK()
+      ELSE
+      //地方図鑑・見た数
+          _CALL sub_zukan_setup_local_see
+          _SYSWIN_MSG( msg_hyouka_hakase2_02, POS_DOWN )
+          _SYSWIN_MSG( HYOUKA_MSGID, POS_DOWN )
+          _AB_KEYWAIT_MARK()
+      ENDIF
+      //アイテムをもらえるか？チェック
+      _CALL sub_zukan_present_check
+      IF $ITEM_RESULT_COUNT != 0 THEN
+        //「なんだかいいかんじで～けんきゅうじょにきてね！」
+          _SYSWIN_MSG( msg_hyouka_hakase2_04, POS_DOWN )
+          _AB_KEYWAIT_MARK()
+      ENDIF
+      _SYSWIN_CLOSE()
+  ENDIF
+
   _CHG_LOCAL_SCR
 }
 
