@@ -146,6 +146,7 @@ static void ICON_SetKey( ICON_WORK *p_wk, u32 key );
 static u32 ICON_GetKey( const ICON_WORK *cp_wk );
 static void ICON_SetFlip( ICON_WORK *p_wk, BOOL is_flip );
 static BOOL ICON_GetFlip( const ICON_WORK *cp_wk );
+static void ICON_ResetPushByKey( ICON_WORK *p_wk );  // アイコンをキーで押したことにするのをリセットする  // ZKND_Modified アイコン個別操作を追加。
 static void Icon_PushFuncNormal( ICON_WORK *p_wk );
 static void Icon_PushFuncFlip( ICON_WORK *p_wk );
 
@@ -383,7 +384,18 @@ void ZKND_TBAR_Main( ZKND_TBAR_WORK *p_wk )
 		p_wk->seq	 = ZKND_TBAR_SEQ_MAIN;
 		break;
 	}
-	
+
+  // ZKND_Modified アイコン個別操作を追加。↓
+  {
+    int i;
+    for( i = 0; i < p_wk->tbl_len; i++ )
+	  {
+      // アイコンをキーで押したことにするのをリセットする
+		  ICON_ResetPushByKey( &p_wk->icon[ i ] );  // アイコンをキーで押したことにするのを、1ループでOFFにする
+    }
+  }
+  // ZKND_Modified アイコン個別操作を追加。↑
+
 	}
 //----------------------------------------------------------------------------
 /**
@@ -1056,7 +1068,6 @@ static BOOL ICON_Main( ICON_WORK *p_wk )
       GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
       is_update	= TRUE;
     }
-    p_wk->is_push_by_key = FALSE;  // 1ループでフラグをOFFにする
     // ZKND_Modified アイコン個別操作を追加。↑
 
 		//動作関数
@@ -1243,6 +1254,15 @@ static BOOL ICON_GetFlip( const ICON_WORK *cp_wk )
 {	
 	return cp_wk->now_anmseq	== cp_wk->data.push_anmseq;
 }
+
+// ZKND_Modified アイコン個別操作を追加。↓
+// アイコンをキーで押したことにするのをリセットする
+static void ICON_ResetPushByKey( ICON_WORK *p_wk )
+{
+  p_wk->is_push_by_key = FALSE;
+}
+// ZKND_Modified アイコン個別操作を追加。↑
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	ボタンが押された時の動作関数	通常版
