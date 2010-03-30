@@ -25,7 +25,7 @@ DEBUG_FLG_DEF( ShortcutBtlIn , "Shortcut BtlIn")
 DEBUG_FLG_DEF( DisableWL , "Disable WL")            //DSi設定無線通信OFF
 //Page2
 DEBUG_FLG_DEF( DisableEULA, "DisableEULA")
-DEBUG_FLG_DEF( TestFlg11, "テスト11")
+DEBUG_FLG_DEF( WifiMatchRateFlag, "ランダムマッチレーティング")
 DEBUG_FLG_DEF( TestFlg12, "テスト12")
 DEBUG_FLG_DEF( TestFlg13, "テスト13")
 DEBUG_FLG_DEF( TestFlg14, "テスト14")

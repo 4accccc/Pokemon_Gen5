@@ -107,6 +107,7 @@ typedef struct
   POKEPARTY                   *p_enemy_modify_party; //
   DWCSvlResult                svl_result;         //WIFIログイン時に得るサービスロケータ
   BATTLEMATCH_BATTLE_SCORE    btl_score;          //バトルの成績
+  u32                         server_time;        //サーバアクセス時間
 #if 0
   DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *p_gpf_data;
   WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA   *p_sake_data;
@@ -333,7 +334,9 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
     case WIFIBATTLEMATCH_MODE_RANDOM:
       //ランダムマッチはポケセンWIFIカウンターから入り、
       //ゲームシステム等でメモリを食っているので、HEAPID_PROCにシステムをおく
-      parentID  = HEAPID_PROC;
+      //parentID  = HEAPID_PROC;
+      //PROCはさまざまなイベントが乗る可能性があるのでAPPから貰う
+      parentID  = GFL_HEAPID_APP;
       break;
 
     case WIFIBATTLEMATCH_MODE_MAINMENU:
@@ -480,7 +483,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 
   WIFIBATTLEMATCH_SYS   *p_wk     = p_wk_adrs;
 
-  DEBUG_HEAP_PrintRestUse( GFL_HEAPID_APP );
+  //DEBUG_HEAP_PrintRestUse( GFL_HEAPID_APP );
 
   //シーケンス
 	switch( *p_seq )
@@ -508,6 +511,12 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
 			{	
 				*p_seq	= WBM_SYS_SEQ_EXIT;
 			}
+
+      //SAKEサーバーへのアクセス時間をカウントする
+      if( p_wk->server_time > 0 )
+      { 
+        p_wk->server_time--;
+      }
 
       //このローカルPROC内でPROC遷移するため、エラーシステムを自分で動かす
       if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_MAINMENU )
@@ -678,6 +687,7 @@ static void *WBM_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID,
   p_param->p_player_data  = p_wk->p_player_data;
   p_param->p_enemy_data   = p_wk->p_enemy_data;
   p_param->p_svl_result   = &p_wk->svl_result;
+  p_param->p_server_time  = &p_wk->server_time;
   { 
     BATTLEMATCH_DATA  *p_btlmatch_sv  = SaveData_GetBattleMatch( GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data ) );
     p_param->p_rndmatch     =  BATTLEMATCH_GetRndMatch( p_btlmatch_sv );
@@ -1351,16 +1361,105 @@ static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapI
 { 
   WIFIBATTLEMATCH_SYS             *p_wk     = p_wk_adrs;
   BTL_REC_SEL_PARAM               *p_param;
+  BATTLE_MODE                     battle_mode;
+
   p_param	= GFL_HEAP_AllocMemory( heapID, sizeof(BTL_REC_SEL_PARAM) );
 	GFL_STD_MemClear( p_param, sizeof(BTL_REC_SEL_PARAM) );
 
-  p_param->gamedata   = p_wk->param.p_game_data;
+  //バトルタイプ設定
+  if( p_wk->type == WIFIBATTLEMATCH_TYPE_RNDFREE )
+  { 
+    //ランダムマッチ：フリー
+    battle_mode = BATTLE_MODE_RANDOM_FREE_SINGLE + p_wk->param.btl_rule;
+  }
+  else if( p_wk->type == WIFIBATTLEMATCH_TYPE_RNDRATE )
+  { 
+    //ランダムマッチ：レーティング
+    battle_mode = BATTLE_MODE_RANDOM_RATING_SINGLE + p_wk->param.btl_rule;
+  }
+  else
+  { 
+    REGULATION_CARD_TYPE  type;
+    if( p_wk->type == WIFIBATTLEMATCH_TYPE_WIFICUP )
+    { 
+      //WIFI大会
+      type  = REGULATION_CARD_TYPE_WIFI;
+    }
+    else if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
+    { 
+      //LIVE大会
+      type  = REGULATION_CARD_TYPE_LIVE;
+    }
+    else
+    { 
+      GF_ASSERT(0);
+    }
+
+    { 
+      SAVE_CONTROL_WORK   *p_sv       = GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data );
+      REGULATION_SAVEDATA *p_reg_sv   = SaveData_GetRegulationSaveData( p_sv );
+      REGULATION_CARDDATA *p_reg_card = RegulationSaveData_GetRegulationCard( p_reg_sv, type );
+      REGULATION          *p_reg      = RegulationData_GetRegulation( p_reg_card );
+      BOOL                is_shooter  = Regulation_GetParam( p_reg, REGULATION_SHOOTER );
+
+      switch( Regulation_GetParam( p_reg, REGULATION_BATTLETYPE ) )
+      {
+      case REGULATION_BATTLE_SINGLE:    ///< シングル
+        if( is_shooter )
+        { 
+          battle_mode = BATTLE_MODE_COMPETITION_SINGLE_SHOOTER;     //大会バトル　シングル　シューターあり
+        }
+        else
+        { 
+          battle_mode = BATTLE_MODE_COMPETITION_SINGLE;             //大会バトル　シングル　シューター無し
+        }
+        break;
+
+      case REGULATION_BATTLE_DOUBLE:    ///< ダブル
+        if( is_shooter )
+        { 
+          battle_mode = BATTLE_MODE_COMPETITION_DOUBLE_SHOOTER;     //大会バトル　ダブル　シューターあり
+        }
+        else
+        { 
+          battle_mode = BATTLE_MODE_COMPETITION_DOUBLE;             //大会バトル　ダブル　シューター無し
+        }
+        break;
+
+      case REGULATION_BATTLE_TRIPLE:    ///< トリプル
+        if( is_shooter )
+        { 
+          battle_mode = BATTLE_MODE_COMPETITION_TRIPLE_SHOOTER;     //大会バトル　トリプル　シューターあり
+        }
+        else
+        { 
+          battle_mode = BATTLE_MODE_COMPETITION_TRIPLE;             //大会バトル　トリプル　シューター無し
+        }
+        break;
+
+      case REGULATION_BATTLE_ROTATION:  ///< ローテーション
+        if( is_shooter )
+        { 
+          battle_mode = BATTLE_MODE_COMPETITION_ROTATION_SHOOTER;   //大会バトル　ローテーション　シューターあり
+        }
+        else
+        { 
+          battle_mode = BATTLE_MODE_COMPETITION_ROTATION;           //大会バトル　ローテーション　シューター無し
+        }
+        break;
+      }
+    }
+  }
+
+  p_param->gamedata     = p_wk->param.p_game_data;
   p_param->b_rec        = TRUE;
   p_param->b_sync       = FALSE;
+  p_param->battle_mode  = battle_mode;;
+  p_param->fight_count  = 0;
 
   if( p_wk->p_enemy_data->btl_server_version != p_wk->p_player_data->btl_server_version )
   { 
-    p_param->b_rec        = FALSE;
+    p_param->b_rec      = FALSE;
   }
 
   return p_param;

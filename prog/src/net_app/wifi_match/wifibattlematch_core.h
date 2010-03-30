@@ -74,6 +74,7 @@ typedef struct
   WIFIBATTLEMATCH_ENEMYDATA   *p_player_data;
   WIFIBATTLEMATCH_ENEMYDATA   *p_enemy_data;
   DWCSvlResult                *p_svl_result;
+  u32                         *p_server_time;
 
 } WIFIBATTLEMATCH_CORE_PARAM;
 

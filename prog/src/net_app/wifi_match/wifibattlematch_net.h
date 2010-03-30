@@ -79,6 +79,10 @@ typedef enum
   WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL,       //電源切断
 } WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE;
 
+
+//サケサーバーのアクセス時間
+#define WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC (60*30)
+
 //=============================================================================
 /**
  *					構造体宣言

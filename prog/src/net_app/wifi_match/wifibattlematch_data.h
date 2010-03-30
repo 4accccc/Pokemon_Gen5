@@ -63,6 +63,44 @@ typedef struct
 //対戦者情報のサイズ
 #define WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE (sizeof(WIFIBATTLEMATCH_ENEMYDATA) + PokeParty_GetWorkSize())
 
+//-------------------------------------
+///	対戦履歴
+//=====================================
+typedef struct 
+{
+  //対戦相手のプロフィール
+  u32 your_gamesyncID; //ゲームシンクID
+  u32 your_profileID;  //PID
+
+  //対戦相手のポケモン
+  u16 your_monsno[TEMOTI_POKEMAX]; //ポケモンNO
+  u8  your_form[TEMOTI_POKEMAX];   //フォルムNO
+  u8  your_lv[TEMOTI_POKEMAX];     //レベル
+  u8  your_sex[TEMOTI_POKEMAX];    //性別      
+
+  //自分のポケモン
+  u16 my_monsno[TEMOTI_POKEMAX]; //ポケモンNO
+  u8  my_form[TEMOTI_POKEMAX];   //フォルムNO
+  u8  my_lv[TEMOTI_POKEMAX];     //レベル
+  u8  my_sex[TEMOTI_POKEMAX];    //性別      
+
+  //対戦情報
+  u32 datetime; //対戦日時
+  u32 cupNO;    //大会No.
+  u8  result;   //対戦結果
+  u8  btl_type; //対戦タイプ
+} WIFIBATTLEMATCH_RECORD_DATA;
+
+
+
+
+
+
+
+
+
+
+
 #include "arc_def.h"
 #include "message.naix"
 #include "net_app/wifi_country.h"
