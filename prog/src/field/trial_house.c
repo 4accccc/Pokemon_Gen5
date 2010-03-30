@@ -631,7 +631,7 @@ void TRIAL_HOUSE_InvalidDLData( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr )
   NOZOMU_Printf("検定データ　%dbyte をクリア\n",size);
 
   GFL_STD_MemClear( &exa_data, size );
-  BATTLE_EXAMINATION_SAVE_Write(sv, &exa_data, ptr->HeapID);
+  BATTLE_EXAMINATION_SAVE_Write(sv, &exa_data, GFL_HEAP_LOWID(HEAPID_PROC));
 }
 
 //--------------------------------------------------------------
