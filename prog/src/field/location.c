@@ -224,7 +224,7 @@ void LOCATION_SetDefaultPos(LOCATION * loc, u16 zone_id)
 	loc->type = LOCATION_TYPE_DIRECT;
 	loc->zone_id = zone_id;
 	loc->exit_id = DOOR_ID_JUMP_CODE;
-	loc->dir_id = 0;
+	loc->dir_id = EXIT_DIR_DOWN;
   loc->exit_ofs = LOCATION_DEFAULT_EXIT_OFS;
   if( ZONEDATA_IsRailOnlyMap(zone_id) )
   {
