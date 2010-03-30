@@ -1821,7 +1821,7 @@ static void WO_DefStrWrite( WO_WORK * wk )
     StrPut( wk, WIN_MWAZA, wk->fontHandle, WOFCOL_N_WHITE, STR_MODE_LEFT ,32*i);
 
     //PP
-    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->win[WIN_MWAZA]), F_WLIST_PP1_OX, 32*i+16, wk->pp1_str,
+    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->win[WIN_MWAZA]), U_WLIST_PP1_X, 32*i+16, wk->pp1_str,
                          wk->fontHandle, WOFCOL_N_BLACK );
     GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_MWAZA] );
 
@@ -1832,8 +1832,8 @@ static void WO_DefStrWrite( WO_WORK * wk )
     WORDSET_RegisterNumber( wk->wset, 1,
       PPP_Get(ppp,ID_PARA_pp_max1+i,NULL),2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
     WORDSET_ExpandStr( wk->wset, wk->mbuf, wk->pp2_str );
-    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->win[WIN_MWAZA]), F_WLIST_PP2_OX, 32*i+16,
-                       wk->mbuf, wk->fontHandle, WOFCOL_N_BLACK );
+    PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp(wk->win[WIN_MWAZA]), U_WLIST_PP2_X, 32*i+16,
+                         wk->mbuf, wk->fontHandle, WOFCOL_N_BLACK );
     GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_MWAZA] );
 
   }

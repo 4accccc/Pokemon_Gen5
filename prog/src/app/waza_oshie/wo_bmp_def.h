@@ -165,6 +165,11 @@ enum {
 #define BG_ABTN_OX    (0)
 #define BG_ABTN_OY    (12)
 
+// 上画面でPP表示の用の位置指定
+#define U_WLIST_PP1_X   ( 8 )
+#define U_WLIST_PP2_X   ( U_WLIST_PP1_X + 24)
+
+// 下画面でPP表示用の位置指定
 #define F_WLIST_PP1_OX  (12*8)
 #define F_WLIST_PP2_OX  (F_WLIST_PP1_OX+3*8)
 
