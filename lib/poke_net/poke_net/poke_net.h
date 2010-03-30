@@ -115,6 +115,7 @@ typedef int SOCKET;
 //             LINUX特有
 //------------------------------------
 #ifdef ___POKE_NET_BUILD_LINUX___
+#define POKE_NET_ACCEPT_TIMEOUT		15			// SSL_acceptタイムアウト(sec)
 #define POKE_NET_RECV_TIMEOUT		40			// 受信タイムアウト(sec)
 #define POKE_NET_SEND_TIMEOUT		40			// 送信タイムアウト(sec)
 #endif

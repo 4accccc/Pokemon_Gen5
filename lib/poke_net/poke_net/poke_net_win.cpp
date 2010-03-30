@@ -452,6 +452,19 @@ BOOL POKE_NET_Connecting()
 				// SSL通信の開始
 				while((ret = SSL_connect(POKE_NET_Control.m_pSSL)) <= 0)
 				{
+					// タイムアウト処理
+					if( POKE_NET_Control.ConnectTimeOut != 0 )
+					{
+						timetmp = GetTickCount();
+						if((signed)(timetmp - starttime) >= (POKE_NET_Control.ConnectTimeOut * 1000))
+						{
+							// タイムアウト
+							POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_LEVEL1 ,"#POKE_NET SSL_connect timeout socket:%08X\n" ,POKE_NET_Control.Socket);
+							POKE_NET_Control.LastErrorCode = POKE_NET_LASTERROR_CONNECTTIMEOUT;
+							return FALSE;
+						}
+					}
+
 					errcode = SSL_get_error(POKE_NET_Control.m_pSSL, ret);
 
 					if(errcode == SSL_ERROR_WANT_READ || errcode == SSL_ERROR_WANT_WRITE)
@@ -558,6 +571,7 @@ BOOL POKE_NET_Sending()
 		sizetmp = POKE_NET_Control.SendSize - offset;									// 残りサイズ計算
 		if( sizetmp > POKE_NET_Control.SendSize )sizetmp = POKE_NET_Control.SendSize;	// 一度に送る量をこえたら補正
 
+#ifdef ___COMMUNICATES_BY_USING_SSL___
 		// ブロッキングしないで書き込めるデータがあるか調べる
 		FD_ZERO( &fdset ); 
 		FD_SET( POKE_NET_Control.Socket , &fdset ); 
@@ -565,7 +579,6 @@ BOOL POKE_NET_Sending()
 		timeout.tv_usec = 0; 
 		sret = select( POKE_NET_Control.Socket+1 ,NULL ,&fdset ,NULL ,&timeout ); 
 		if( sret && (sret != -1) ){
-#ifdef ___COMMUNICATES_BY_USING_SSL___
 			// SSL関係
 			ret = SSL_write(POKE_NET_Control.m_pSSL, (char *)&POKE_NET_Control.SendBuffer[offset], sizetmp);	// 送信
 			if(ret <= 0)
@@ -594,6 +607,13 @@ BOOL POKE_NET_Sending()
 				}
 			}
 #else
+		// ブロッキングしないで書き込めるデータがあるか調べる
+		FD_ZERO( &fdset ); 
+		FD_SET( POKE_NET_Control.Socket , &fdset ); 
+		timeout.tv_sec = 0; 
+		timeout.tv_usec = 0; 
+		sret = select( POKE_NET_Control.Socket+1 ,NULL ,&fdset ,NULL ,&timeout ); 
+		if( sret && (sret != -1) ){
 			ret = send(POKE_NET_Control.Socket ,(char *)&POKE_NET_Control.SendBuffer[offset] ,sizetmp ,0 );	// 送信
 			if( (ret == SOCKET_ERROR) || (ret == 0) ){
 				// 送信エラー、もしくは切断された

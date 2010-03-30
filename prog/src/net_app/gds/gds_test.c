@@ -654,6 +654,9 @@ static void Response_BattleVideoRegist(void *work, const GDS_RAP_ERROR_INFO *err
     case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_GET_ERROR_ILLEGALCODE: //!< コードエラー
       OS_TPrintf("バトルビデオデータ取得受信エラー！:コードエラー\n");
       break;
+  	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGALPOKEMON_VERIFY: //!< ポケモン署名でエラー
+  		OS_TPrintf("バトルビデオ登録受信エラー！:ポケモン署名でエラー\n");
+  		break;
     case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_GET_ERROR_UNKNOWN:   //!< その他エラー
     default:
       OS_TPrintf("バトルビデオデータ取得受信エラー！:その他のエラー\n");

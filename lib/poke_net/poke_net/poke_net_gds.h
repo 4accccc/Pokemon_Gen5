@@ -6,7 +6,7 @@
  *===========================================================================*/
 /*! @file
 	@brief	Syachi Pokemon GDS WiFi ライブラリ
-	@date	2010/03/25
+	@date	2010/03/29
 */
 //===========================================================================
 /**
@@ -19,6 +19,7 @@
 			　セットアップ方法は別途 syachi_poke_net_inst.pdf を参照してください。<br>
 			<br>
 			<b>・バージョン履歴</b><br>
+			　0.23　[10/03/29]　・バトルビデオ登録機能のインタフェースを、署名データを送信出来るように修正<br>
 			　0.22　[10/03/25]　・GDS構造体の一部変更への対応<br>
 			　　　　　　　　　　　　　　　・OS_Alloc, OS_Freeを使用しないように修正<br>
 			　0.21　[10/03/17]　・GDS構造体の一部変更への対応<br>
@@ -36,7 +37,7 @@
 			　　　<b>Nitro/TWL版通信ライブラリ、及びそのサンプルプログラムには一切関係はありません。</b><br>
 			<br>
 			<br>
-		@version	0.22<br>
+		@version	0.23<br>
 
 */
 
@@ -138,7 +139,7 @@ extern BOOL POKE_NET_GDS_MusicalShotGet(long _pokemonno, void* _response);
 // POKE_NET_GDS_BattleDataGet					: ダウンロード
 // POKE_NET_GDS_BattleDataFavorite				: お気に入り登録
 // (実装 : poke_net_gds.c)
-extern BOOL POKE_NET_GDS_BattleDataRegist(BATTLE_REC_SEND* _data, void* _response);
+extern BOOL POKE_NET_GDS_BattleDataRegist(BATTLE_REC_SEND* _data, u8* _signModule, long _signSize, void* _response);
 extern BOOL POKE_NET_GDS_BattleDataSearchCondition(BATTLE_REC_SEARCH_SEND* _condition, void* _response);
 extern BOOL POKE_NET_GDS_BattleDataSearchRankingLatest(u32 _svrversion, void* _response);
 extern BOOL POKE_NET_GDS_BattleDataSearchRankingComm(u32 _svrversion, void* _response);

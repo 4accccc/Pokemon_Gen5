@@ -243,6 +243,9 @@ BOOL POKE_NET_GDS_MusicalShotGet(long _pokemonno, void* _response)
 	<b>発行リクエスト:</b>POKE_NET_GDS_REQCODE_BATTLEDATA_REGIST
 
 	@param[in]		_data		アップロードしたいバトルデータ
+	@param[in]		_signModule	署名データ
+	@param[in]		_signSize	署名データサイズ<br>
+								指定する値が256を超えると関数は何も行わずにFALSEを返します。
 	@param[in,out]	_response	レスポンスを受け取るメモリの先頭アドレス<br>
 								POKE_NET_RESPONSE構造体が返ってきます。<br>
 								ResultメンバにはPOKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_xxxxの値が返ってきます。<br>
@@ -254,11 +257,22 @@ BOOL POKE_NET_GDS_MusicalShotGet(long _pokemonno, void* _response)
 	@retval			FALSE		リクエストの登録に失敗しました
 */
 //====================================
-BOOL POKE_NET_GDS_BattleDataRegist(BATTLE_REC_SEND* _data, void* _response)
+BOOL POKE_NET_GDS_BattleDataRegist(BATTLE_REC_SEND* _data, u8* _signModule, long _signSize, void* _response)
 {
-	POKE_NET_GDS_REQUEST_BATTLEDATA_REGIST req;
+	POKE_NET_GDS_REQUEST_BATTLEDATA_REGIST req = {0};
+
+	if(_signSize > POKE_NET_GDS_REQUEST_BATTLEDATA_SIGN_MAXSIZE)
+	{
+		POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_NORMAL,
+			"#POKE_NET Error. The maximum size of the prepared SignModuleBuffer is (%d). \n",
+			POKE_NET_GDS_REQUEST_BATTLEDATA_SIGN_MAXSIZE
+		);
+		return FALSE;
+	}
 
 	req.Data = *_data;
+	req.SignSize = _signSize;
+	memcpy(req.SignModule, _signModule, (u32)_signSize);	// 署名データをコピー
 
 	return(POKE_NET_Request(POKE_NET_GDS_REQCODE_BATTLEDATA_REGIST, &req, _response, -1));
 }

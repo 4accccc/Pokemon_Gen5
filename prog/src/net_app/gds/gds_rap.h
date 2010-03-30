@@ -217,6 +217,7 @@ typedef struct _GDS_RAP_WORK{
   u16 poke_num;
   u8 sign[NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN];
   NHTTP_RAP_EVILCHECK_RESULT nhttp_last_error;    ///<認証エラー状態
+  u8 evil_check_count;      // 認証チェックに通したポケモンの数
   u8 error_poke_pos;        // 認証エラーが発生していたポケモン位置
   u8 error_nhttp;           // 認証取得そのものがエラー
 	DWCSvlResult *pSvl;       // Wi-Fi Login時に取得したSVLへのポインタ

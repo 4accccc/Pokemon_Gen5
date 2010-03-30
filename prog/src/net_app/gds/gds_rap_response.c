@@ -204,19 +204,19 @@ int GDS_RAP_RESPONSE_BattleVideo_Upload(GDS_RAP_WORK *gdsrap, POKE_NET_RESPONSE 
 		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオ登録受信エラー！:不正データ\n");
 		break;
+  case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGAL_RANKINGTYPE:  //!< 不正なランキング種別
+    OS_TPrintf("バトルビデオ登録受信エラー！:不正なランキング種別\n");
+    break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGALPROFILE:	//!< 不正なユーザープロフィール
 		//※check　エラーごとに専用のケアとメッセージを入れる
 		OS_TPrintf("バトルビデオ登録受信エラー！:不正なユーザー\n");
 		break;
+	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGALPOKEMON_VERIFY: //!< ポケモン署名でエラー
+		OS_TPrintf("バトルビデオ登録受信エラー！:ポケモン署名でエラー\n");
+	  break;
 	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_UNKNOWN:	//!< その他エラー
 	default:
 		//※check　エラーごとに専用のケアとメッセージを入れる
-		OS_TPrintf("バトルビデオ登録受信エラー！:その他のエラー\n");
-		break;
-	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGALPOKEMON_MINE: //自分のポケモンでエラー
-		OS_TPrintf("バトルビデオ登録受信エラー！:自分のポケモンが不正\n");
-		break;
-	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGALPOKEMON_OTHER:	//相手のポケモンでエラ
 		OS_TPrintf("バトルビデオ登録受信エラー！:その他のエラー\n");
 		break;
 	}

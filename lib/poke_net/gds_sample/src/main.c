@@ -2,6 +2,9 @@
   Pokemon Network Library Test Client
 
   --履歴--
+  [2010/03/29] Shinichiro Yamashita
+・poke_net機能(バトルビデオアップデート)のインタフェース変更に伴い修正
+  
   [2010/03/17] Shinichiro Yamashita
   ・履歴コメントを新規追加
   ・gds_header修正に伴い、サンプルも修正・更新
@@ -40,8 +43,8 @@
 
 // Auth構造体に設定する値を定義
 #define	AUTH_PID				(2345678)	// PID
-#define AUTH_ROMCODE			(12)		// ROM コード
-#define AUTH_LANGCODE			(0)			// 言語コード
+#define AUTH_ROMCODE			(20)		// ROM コード
+#define AUTH_LANGCODE			(1)			// 言語コード
 #define BATTLEID_AUTO_ENCODE
 
 // この値をPIDとして送信すると、色々なチェックが無視されるので注意！
@@ -706,6 +709,9 @@ static int update_musical_download(GameSequence* seq)
   ----------------------------------------------------------------------*/
 static int update_battle_upload(GameSequence* seq)
 {
+	const int SIGNATURE_SIZE = 128;					// 署名サイズ
+	unsigned char pModule[SIGNATURE_SIZE] = {0};	// 署名データ
+
     if (seq->result == INPUT_CONFIRM) {
         int no   = getResultValue(seq, 0),
             type = getResultValue(seq, 1);
@@ -725,7 +731,7 @@ static int update_battle_upload(GameSequence* seq)
 	    MakeBattleVideoData(&((BATTLE_REC_SEND*)sReqBuff)->rec, 1);
 
 	    // 通信
-	    POKE_NET_GDS_BattleDataRegist((BATTLE_REC_SEND*)sReqBuff ,sResBuff);
+	    POKE_NET_GDS_BattleDataRegist((BATTLE_REC_SEND*)sReqBuff, pModule, SIGNATURE_SIZE ,sResBuff);
 
         return update_gds_response(state_menu);
     }
@@ -1200,8 +1206,8 @@ void MakeProfileData(GDS_PROFILE* _pProfile)
 	_pProfile->country_code = 0;			// 住んでいる国コード	[無視] 0 - 233
 	_pProfile->local_code = 0;				// 住んでいる地方コード	[無視] * - *
 
-	_pProfile->version_code = 12;			// バージョンコード		[拒否] 20, 21	(WHITE=20, BLACK=21)
-	_pProfile->language = 0;				// 言語コード			[拒否] 1 - 8
+	_pProfile->version_code = 20;			// バージョンコード		[拒否] 20, 21	(WHITE=20, BLACK=21)
+	_pProfile->language = 1;				// 言語コード			[拒否] 1 - 8
 
 	_pProfile->egg_flag = 0;				// タマゴフラグ			[無視] 0 - 1
 	_pProfile->form_no = 0;					// フォルムNo			[無視] * - *
@@ -1304,12 +1310,12 @@ void MakeBattleVideoHeader(BATTLE_REC_HEADER* _pHeader, BOOL bSubway, int _MonsN
 	if(bSubway)
 	{
 		// ランキング種別はバトルサブウェイ
-		_pHeader->mode = BATTLEMODE_COMMUNICATION_SUBWAY << BATTLEMODE_COMMUNICATION_BIT;
+		_pHeader->mode = 0x1234;//BATTLEMODE_COMMUNICATION_SUBWAY << BATTLEMODE_COMMUNICATION_BIT;
 	}
 	else
 	{
 		// ランキング種別は通信対戦
-		_pHeader->mode = BATTLEMODE_COMMUNICATION_COMMUNICATION << BATTLEMODE_COMMUNICATION_BIT;
+		_pHeader->mode = 0x1234;//BATTLEMODE_COMMUNICATION_COMMUNICATION << BATTLEMODE_COMMUNICATION_BIT;
 	}
 	
 	_pHeader->secure		= 0;		// (TRUE:安全保障, FALSE:未再生)[拒否] 0 - 0
@@ -1384,8 +1390,8 @@ void MakeBattleVideoData(BATTLE_REC_WORK* _pData, int _MonsNoInc)
 
 		// ポケモンパーティデータ
 		// REC_POKEPARTY 構造体
-		_pData->rec_party[i].PokeCountMax = 0;	// 保持出来るポケモン数の最大				[拒否] 6 - 6
-		_pData->rec_party[i].PokeCount = 0;		// 現在保持しているポケモン数				[拒否] 1 - 6
+		_pData->rec_party[i].PokeCountMax = 6;	// 保持出来るポケモン数の最大				[拒否] 6 - 6
+		_pData->rec_party[i].PokeCount = 1;		// 現在保持しているポケモン数				[拒否] 1 - 6
 		
 		// ポケモンデータ
 		// REC_POKEPARTY :: REC_POKEPARA 構造体												[ － ] 別サーバにてチェック
@@ -1414,9 +1420,9 @@ void MakeBattleVideoData(BATTLE_REC_WORK* _pData, int _MonsNoInc)
 			_pData->clientStatus[i].player.nation = 0;			// 住んでいる国コード		[無視] 
 			_pData->clientStatus[i].player.area = 0;			// 住んでいる地方コード		[無視] 
 			_pData->clientStatus[i].player.sex = 0;				// 性別						[拒否] 0 - 1
-			_pData->clientStatus[i].player.region_code = 0;		// 言語コード				[拒否] 1 - 8
+			_pData->clientStatus[i].player.region_code = 1;		// 言語コード				[拒否] 1 - 8
 			_pData->clientStatus[i].player.trainer_view = 0;	// 見た目					[拒否] 0 - 15
-			_pData->clientStatus[i].player.rom_code = 0;		// バージョンコード			[拒否] 20, 21	(WHITE=20, BLACK=21)
+			_pData->clientStatus[i].player.rom_code = 20;		// バージョンコード			[拒否] 20, 21	(WHITE=20, BLACK=21)
 		}
 		else if(_pData->clientStatus[i].type == BTLREC_CLIENTSTATUS_TRAINER)
 		{

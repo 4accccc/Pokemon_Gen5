@@ -278,9 +278,12 @@ int GDSRAP_Tool_Send_BattleVideoUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp
 
     //ポケモン登録
     BattleRec_ClientTemotiGet(br_send->head.mode, &client_max, &temoti_max);
+    gdsrap->evil_check_count = 0;
     for(i = 0; i < client_max; i++){
       NHTTP_RAP_PokemonEvilCheckAdd(gdsrap->p_nhttp, 
-        br_send->rec.rec_party[i].member, sizeof(REC_POKEPARA) * temoti_max);
+        br_send->rec.rec_party[i].member, 
+        sizeof(REC_POKEPARA) * br_send->rec.rec_party[i].PokeCount);//temoti_max);
+      gdsrap->evil_check_count += br_send->rec.rec_party[i].PokeCount;
     }
     
     //不正検査 コネクション作成
@@ -585,12 +588,12 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
             gdsrap->error_nhttp = FALSE;
             // 署名を取得
             { 
-              const s8 *cp_sign  = NHTTP_RAP_EVILCHECK_GetSign( p_data, GDS_VIDEO_EVIL_CHECK_NUM );
+              const s8 *cp_sign  = NHTTP_RAP_EVILCHECK_GetSign( p_data, gdsrap->evil_check_count );
               GFL_STD_MemCopy( cp_sign, gdsrap->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN );
             }
 
             OS_TPrintf("不正検査成功\n");
-            for( i = 0; i < GDS_VIDEO_EVIL_CHECK_NUM; i++ ){
+            for( i = 0; i < gdsrap->evil_check_count; i++ ){
               poke_result  = NHTTP_RAP_EVILCHECK_GetPokeResult( p_data, i );
               gdsrap->nhttp_last_error = poke_result;
               if( poke_result != NHTTP_RAP_EVILCHECK_RESULT_OK ){
@@ -602,7 +605,7 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
           {
             OS_TPrintf("不正検査失敗\n");
             gdsrap->error_nhttp = TRUE;
-            for( i = 0; i < GDS_VIDEO_EVIL_CHECK_NUM; i++ ){
+            for( i = 0; i < gdsrap->evil_check_count; i++ ){
               poke_result  = NHTTP_RAP_EVILCHECK_GetPokeResult( p_data, i );
               gdsrap->nhttp_last_error = poke_result;
               if( poke_result != NHTTP_RAP_EVILCHECK_RESULT_OK ){
@@ -617,11 +620,15 @@ static int GDSRAP_MAIN_Send(GDS_RAP_WORK *gdsrap)
           
           gdsrap->local_seq++;
         }
+        else{
+          OS_TPrintf("不正検査中...\n");
+          return FALSE;
+        }
       }
       break;
 	  default:
   		ret = POKE_NET_GDS_BattleDataRegist(gdsrap->send_buf.battle_rec_send_ptr, 
-  			gdsrap->response);
+  			gdsrap->sign, NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN, gdsrap->response);
   		if(ret == TRUE){
   			OS_TPrintf("バトルビデオ登録リクエスト完了\n");
   		}

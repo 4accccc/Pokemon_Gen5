@@ -2,7 +2,10 @@
   Pokemon Network Library Test Client
 
   --履歴--
-  [2010/03/25] Shinichiro Yamashita
+ [2010/03/29] Shinichiro Yamashita
+   ・poke_net機能(バトルビデオアップデート)のインタフェース変更に伴い修正
+
+ [2010/03/25] Shinichiro Yamashita
   ・gds_header修正に伴い、サンプルも修正・更新
 
   [2010/03/17] Shinichiro Yamashita
@@ -43,6 +46,8 @@
 #include "../poke_net/poke_net_gds.h"	// POKE_NETライブラリのヘッダ
 #include "../poke_net/poke_net_opt.h"	// バトルビデオIDの変換メソッドが宣言してあります。
 #include "Nitro/crc.h"	// CRC計算
+#include "openssl/evp.h"	// RSA-SHA1
+#include "openssl/bio.h"	// BIOオブジェクト
 
 
 //====================================
@@ -72,6 +77,9 @@
 
 // イベントバトルビデオのIDへ変換する。
 #define TO_EVENT_BATTLEVIDEO_ID(x)	(x + 900000000000ULL)
+
+// 署名計算を行う
+//#define DO_SIGN
 
 
 //====================================
@@ -147,11 +155,51 @@ void MakeBattleVideoData(BATTLE_REC_WORK *_brec, int _MonsNoInc = 1);						// 本
 void SetGDS_EOM(STRCODE* _pStr);
 
 
+#define SIGNATURE_SIZE (256)
+#ifdef DO_SIGN
+namespace RSA_SHA1
+{
+#define PRIVATE_KEY_FILENAME "TestPrivateKey.pem"
+#define PUBLIC_KEY_FILENAME "TestPubKey.pem"
+#define PUBLIC_KEY_FILENAME2 "TestPubKey_syachi.pem"
+#define POKEMON_COUNT_MAX (12)
+
+	void Dump(void* p, int Size, const char* strHeader);			// ダンプします。
+	void DumpPublicKey_DER(EVP_PKEY* pKey);			// DER形式で公開鍵をメモリダンプします。
+	void DumpPrivateKey_DER(EVP_PKEY* pKey);		// DER形式で秘密鍵をメモリダンプします。
+	void DumpPublicKey_PEM(EVP_PKEY* pKey);			// PEM形式で公開鍵を出力します。
+	void DumpPrivateKey_PEM(EVP_PKEY* pKey);		// PEM形式で秘密鍵を出力します。
+
+	//enum BOOL
+	//{
+	//	FALSE,
+	//	TRUE
+	//};
+	BOOL Initialize_Sign(const char* strPemFilename);	// 署名モードで初期化します。
+	BOOL Initialize_Verify(const char* strPemFilename);	// 検証モードで初期化します。
+	void Release_Sign(void);
+	void Release_Verify(void);
+	int GetSignModuleSize(void);	// 署名データの最大長を取得します。
+	int Sign(unsigned char* pDest, int DestSize, const unsigned char* pSrc, int SrcSize);	// 署名を施します。
+	BOOL Verify(const unsigned char* pModule, int ModuleSize, unsigned char* pTarget, int TargetSize);	// 署名を検証します。
+
+	//**---------------------------------------**
+	// グローバル
+	//**---------------------------------------**
+	EVP_PKEY* g_pKey_Sign = NULL;
+	EVP_PKEY* g_pKey_Verify = NULL;
+};
+#endif	// DO_SIGN
+
+
 //====================================
 // メイン関数
 //====================================
-void main(int argc ,char *argv[])
+int main(int argc ,char *argv[])
 {
+	unsigned int ModuleSize = 0;					// 署名のサイズ
+	unsigned char pModule[SIGNATURE_SIZE] = {0};	// 署名データ
+
 	const int BufferSize = 1024 * 64;
 
 	// ライブラリに設定するバッファ
@@ -177,6 +225,17 @@ void main(int argc ,char *argv[])
 		"-finished\n",		// [8] POKE_NET_GDS_STATUS_FINISHED		// 正常終了
 		"-error"			// [9] POKE_NET_GDS_STATUS_ERROR		// エラー終了
 	};
+
+#ifdef DO_SIGN
+	// ====================================
+	// 署名関係 初期化
+	// ====================================
+	if(!RSA_SHA1::Initialize_Sign(PRIVATE_KEY_FILENAME))
+	{
+		printf("Initialize_Sign() failed.\n");
+		return 0;
+	}
+#endif	// DO_SIGN
 
 	// ====================================
 	// Winsock初期化
@@ -384,8 +443,54 @@ void main(int argc ,char *argv[])
 			// バトルビデオ本体を作成
 			MakeBattleVideoData(&((BATTLE_REC_SEND*)ReqBuff)->rec);
 
+#ifdef DO_SIGN
+			// 署名データ作成
+			BATTLE_REC_WORK* pREC = &(((BATTLE_REC_SEND*)ReqBuff)->rec);
+			unsigned char buffer[sizeof(REC_POKEPARA) * 12] = {0};
+			int Size = 0;
+			{
+				// ポケモンデータを結合
+				for(int i = 0; i < BTL_CLIENT_MAX; i++)
+				{
+					int count = pREC->rec_party[i].PokeCount; // ｎ番目のパーティーのポケモン数
+
+					if( count > 0 )
+					{
+						if(Size + count > POKEMON_COUNT_MAX)
+						{
+							// 合計が１２体超えることはない。超えたら不正データ
+							printf(
+								"CHK_PokeParamVerify PokeCount(%d) > Max(%d) count over.",
+								Size + count,
+								POKEMON_COUNT_MAX
+							);
+
+							return FALSE;
+						}
+						
+						// count体分コピー
+						memcpy(
+							buffer + Size * sizeof(REC_POKEPARA),
+							&(pREC->rec_party[i].member[0]),
+							count * sizeof(REC_POKEPARA)
+						);
+
+						Size += count;
+					}
+				}
+			}
+
+			// テスト用秘密鍵で署名する
+			ModuleSize = RSA_SHA1::Sign(pModule, SIGNATURE_SIZE, buffer, Size * sizeof(REC_POKEPARA));
+			if(ModuleSize <= 0)
+			{
+				printf("Sign() failed.\n");
+				return 0;
+			}
+#endif	// DO_SIGN
+
 			// 通信
-			POKE_NET_GDS_BattleDataRegist((BATTLE_REC_SEND*)ReqBuff ,ResBuff);
+			POKE_NET_GDS_BattleDataRegist((BATTLE_REC_SEND*)ReqBuff, pModule, ModuleSize, ResBuff);
 		}
 
 		// ***************************************************
@@ -665,6 +770,15 @@ void main(int argc ,char *argv[])
 	// Winsock終了
 	// ====================================
 	WSACleanup();
+
+#ifdef DO_SIGN
+	// ====================================
+	// 署名関係 解放
+	// ====================================
+	RSA_SHA1::Release_Sign();
+#endif	// DO_SIGN
+
+	return 0;
 }
 
 
@@ -866,7 +980,7 @@ void MakeBattleVideoData(BATTLE_REC_WORK* _pData, int _MonsNoInc)
 		// ポケモンパーティデータ
 		// REC_POKEPARTY 構造体
 		_pData->rec_party[i].PokeCountMax = 6;	// 保持出来るポケモン数の最大				[拒否] 6 - 6
-		_pData->rec_party[i].PokeCount = 1;		// 現在保持しているポケモン数				[拒否] 1 - 6
+		_pData->rec_party[i].PokeCount = 3;		// 現在保持しているポケモン数				[拒否] 1 - 6
 		
 		// ポケモンデータ
 		// REC_POKEPARTY :: REC_POKEPARA 構造体												[ － ] 別サーバにてチェック
@@ -926,6 +1040,9 @@ void MakeBattleVideoData(BATTLE_REC_WORK* _pData, int _MonsNoInc)
 	MATHCRC16Table crctable;
 	MATH_CRC16CCITTInitTable(&crctable);
 	_pData->crc.crc16ccitt_hash = MATH_CalcCRC16CCITT(&crctable, _pData, sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE);
+
+
+
 }
 
 
@@ -940,3 +1057,360 @@ void SetGDS_EOM(STRCODE* _pStr)
 }
 
 
+
+
+#ifdef DO_SIGN
+namespace RSA_SHA1
+{
+//**---------------------------------------**
+// 署名モードで初期化します。
+//**---------------------------------------**
+BOOL Initialize_Sign(const char* strPemFilename)
+{
+	if(g_pKey_Sign != NULL)
+	{
+		Release_Sign();
+	}
+
+	// 鍵オブジェクト作成
+	//g_pKey_Sign = NULL;//EVP_PKEY_new();
+
+	//// 新規に鍵ペアを生成
+	//	pRSA = RSA_generate_key(1024, RSA_F4, NULL, NULL);
+	//	EVP_PKEY_set1_RSA(g_pKey_Sign, pRSA);
+
+	// PEM形式データからキーオブジェクトを作成
+	FILE* fp = fopen(strPemFilename, "r");
+	if(fp == NULL)
+	{
+		printf("fopen >> NULL.\n");
+		return FALSE;
+	}
+	
+	BIO* pBio = BIO_new_fp(fp, BIO_CLOSE);
+	if(pBio == NULL)
+	{
+		printf("BIO_new_fp >> failed. res=(NULL)\n");
+		return FALSE;
+	}
+
+	g_pKey_Sign = PEM_read_bio_PrivateKey(pBio, NULL, NULL, NULL);
+	if(g_pKey_Sign == NULL)
+	{
+		printf("PEM_read_bio_RSA_PUBKEY >> failed. g_pKey_Sign=(NULL)\n");
+		BIO_free(pBio);
+		return FALSE;
+	}
+
+	BIO_free(pBio);
+
+	// ダンプ
+	DumpPrivateKey_PEM(g_pKey_Sign);
+	DumpPrivateKey_DER(g_pKey_Sign);
+
+	return TRUE;
+}
+
+
+//**---------------------------------------**
+// 検証モードで初期化します。
+//**---------------------------------------**
+BOOL Initialize_Verify(const char* strPemFilename)
+{
+	if(g_pKey_Verify != NULL)
+	{
+		Release_Verify();
+	}
+
+	// 鍵オブジェクト作成
+	//EVP_PKEY* pKey2 = NULL;// = EVP_PKEY_new();
+
+	// DER形式データからキーオブジェクトを作成
+	//if(d2i_PublicKey(EVP_PKEY_RSA, &pKey2, (const unsigned char**)&DecodedData, DecodedSize) == NULL)
+	//{
+	//	sprintf(tmp, "i2d_RSAPublicKey >> failed. res=(NULL)\n");
+	//	OutputDebugStringA(tmp);
+	//	return 0;
+	//}
+
+	// PEM形式データからキーオブジェクトを作成
+	FILE* fp = fopen(strPemFilename, "r");
+	if(fp == NULL)
+	{
+		printf("fopen >> NULL.\n");
+		return FALSE;
+	}
+
+	BIO* pBio = BIO_new_fp(fp, BIO_CLOSE);
+	if(pBio == NULL)
+	{
+		printf("BIO_new_fp >> failed. res=(NULL)\n");
+		return FALSE;
+	}
+
+	//BIO* pBio = BIO_new(BIO_s_mem());
+	//BIO_write(pBio, Pem, strlen((char*)Pem) + 1);
+
+	g_pKey_Verify = PEM_read_bio_PUBKEY(pBio, NULL, NULL, NULL);
+	if(g_pKey_Verify == NULL)
+	{
+		printf("PEM_read_bio_RSA_PUBKEY >> failed. pKey2=(NULL)\n");
+		BIO_free(pBio);
+		return FALSE;
+	}
+
+	BIO_free(pBio);
+
+	// ダンプ
+	DumpPublicKey_PEM(g_pKey_Verify);
+	DumpPublicKey_DER(g_pKey_Verify);
+
+	return TRUE;
+}
+
+
+
+//**---------------------------------------**
+// 解放
+//**---------------------------------------**
+void Release_Sign(void)
+{
+	EVP_PKEY_free(g_pKey_Sign);
+	g_pKey_Sign = NULL;
+}
+
+
+//**---------------------------------------**
+// 解放
+//**---------------------------------------**
+void Release_Verify(void)
+{
+	EVP_PKEY_free(g_pKey_Verify);
+	g_pKey_Verify = NULL;
+}
+
+
+//**---------------------------------------**
+// 署名データの最大長を取得します。
+//**---------------------------------------**
+int GetSignModuleSize(void)
+{
+	return (int)EVP_PKEY_size(g_pKey_Sign);
+}
+
+
+//**---------------------------------------**
+// 署名を施します。
+//**---------------------------------------**
+int Sign(unsigned char* pDest, int DestSize, const unsigned char* pSrc, int SrcSize)
+{
+	int res = 0;
+	memset(pDest, 0, DestSize);
+
+	// コンテキスト初期化
+	EVP_MD_CTX Ctx;
+	res = EVP_SignInit(&Ctx, EVP_sha1());
+	if(res == 0)
+	{
+		printf("EVP_SignInit_ex >> failed. res=(%d)\n", res);
+		return FALSE;
+	}
+
+	// 署名対象データをコンテキストに追加
+	res = EVP_SignUpdate(&Ctx, pSrc, SrcSize);
+	if(res == 0)
+	{
+		printf("EVP_SignUpdate >> failed. res=(%d)\n", res);
+		return FALSE;
+	}
+
+	// 署名を計算
+	unsigned int Size = 0;
+	res = EVP_SignFinal(&Ctx, pDest, &Size, g_pKey_Sign);
+	if(res == 0)
+	{
+		printf("EVP_SignFinal >> failed. res=(%d)\n", res);
+		return FALSE;
+	}
+
+	printf("EVP_SignFinal >> succeeded. res=(%d) size=(%d)\n", res, Size);
+	return Size;
+}
+
+
+//**---------------------------------------**
+// 署名を検証します。
+//**---------------------------------------**
+BOOL Verify(const unsigned char* pModule, int ModuleSize, unsigned char* pTarget, int TargetSize)
+{
+	int res = 0;
+
+	// コンテキスト初期化
+	EVP_MD_CTX Ctx2;
+	res = EVP_VerifyInit(&Ctx2, EVP_sha1());
+	if(res == 0)
+	{
+		printf("EVP_VerifyInit >> failed. res=(%d)\n", res);
+		return FALSE;
+	}
+
+	// 署名対象データをコンテキストに追加
+	res = EVP_VerifyUpdate(&Ctx2, pTarget, TargetSize);
+	if(res == 0)
+	{
+		printf("EVP_VerifyUpdate >> failed. res=(%d)\n", res);
+		return FALSE;
+	}
+
+	// 署名を検証
+	res = EVP_VerifyFinal(&Ctx2, pModule, ModuleSize, g_pKey_Verify);
+	if(res == 0)
+	{
+		printf("EVP_VerifyFinal >> failed. res=(%d)\n", res);
+		return FALSE;
+	}
+
+	printf("EVP_VerifyFinal >> succeeded. res=(%d)\n", res);
+
+	return TRUE;
+}
+
+
+
+
+
+
+
+//**---------------------------------------**
+// ダンプします。
+//**---------------------------------------**
+void Dump(void* p, int Size, const char* strHeader)
+{
+	printf("%s Dump...\n", strHeader);
+	for(int i = 0; i < (int)Size; i++)
+	{
+		fprintf(stdout, "%02x ", ((unsigned char*)p)[i]);
+	}
+	printf("\n...%s Dump\n", strHeader);
+}
+
+
+//**---------------------------------------**
+// DER形式で公開鍵をメモリダンプします。
+//**---------------------------------------**
+void DumpPublicKey_DER(EVP_PKEY* pKey)
+{
+	unsigned char* pDer = NULL;
+
+	rsa_st* pRSA = EVP_PKEY_get1_RSA(pKey);
+	int Size = i2d_RSAPublicKey(pRSA, &pDer);
+	RSA_free(pRSA);
+
+	if(Size <= 0)
+	{
+		printf("DumpPublicKey_DER >> i2d_RSAPublicKey() failed. res=(%d)\n", Size);
+		return;
+	}
+
+	// ダンプ
+	Dump(pDer, Size, "DumpPublicKey_DER >> ");
+}
+
+
+//**---------------------------------------**
+// DER形式で秘密鍵をメモリダンプします。
+//**---------------------------------------**
+void DumpPrivateKey_DER(EVP_PKEY* pKey)
+{
+	unsigned char* pDer = NULL;
+
+	rsa_st* pRSA = EVP_PKEY_get1_RSA(pKey);
+	int Size = i2d_RSAPrivateKey(pRSA, &pDer);
+	RSA_free(pRSA);
+
+	if(Size <= 0)
+	{
+		printf("DumpPrivateKey_DER >> i2d_RSAPublicKey() failed. res=(%d)\n", Size);
+		return;
+	}
+
+	// ダンプ
+	Dump(pDer, Size, "DumpPrivateKey_DER >> ");
+}
+
+
+//**---------------------------------------**
+// PEM形式で公開鍵を出力します。
+//**---------------------------------------**
+void DumpPublicKey_PEM(EVP_PKEY* pKey)
+{
+	int res = 0;
+	char Pem[2048] = {0};
+
+	BIO* pBio = BIO_new(BIO_s_mem());
+	if(pBio == NULL)
+	{
+		printf("DumpPublicKey_PEM >> BIO_new() failed. res=(NULL)\n");
+		return;
+	}
+
+	// 公開鍵
+	rsa_st* pRSA = EVP_PKEY_get1_RSA(pKey);
+	res = PEM_write_bio_RSA_PUBKEY(pBio, pRSA);
+	RSA_free(pRSA);
+
+	if(res == 0)
+	{
+		printf("DumpPublicKey_PEM >> PEM_write_bio_RSA_PUBKEY() failed. res=(%d)\n", res);
+		return;
+	}
+
+	// 読み込み
+	BIO_read(pBio, Pem, 2048);
+
+	// 公開鍵ダンプ
+	printf("DumpPublicKey_PEM >> (strlen:%d)\n%s\n", strlen(Pem), Pem);
+
+	BIO_free(pBio);
+}
+
+
+//**---------------------------------------**
+// PEM形式で秘密鍵を出力します。
+//**---------------------------------------**
+void DumpPrivateKey_PEM(EVP_PKEY* pKey)
+{
+	int res = 0;
+	char Pem[2048] = {0};
+
+	BIO* pBio = BIO_new(BIO_s_mem());
+	if(pBio == NULL)
+	{
+		printf("DumpPrivateKey_PEM >> BIO_new() failed. res=(NULL)\n");
+		return;
+	}
+
+	// 秘密鍵
+	rsa_st* pRSA = EVP_PKEY_get1_RSA(pKey);
+	res = PEM_write_bio_RSAPrivateKey(pBio, pRSA, NULL, NULL, NULL, NULL, NULL);
+	RSA_free(pRSA);
+
+	if(res == 0)
+	{
+		printf("DumpPrivateKey_PEM >> PEM_write_bio_RSA_PUBKEY() failed. res=(%d)\n", res);
+		return;
+	}
+
+	// 読み込み
+	BIO_read(pBio, Pem, 2048);
+
+	// 秘密鍵ダンプ
+	printf("DumpPrivateKey_PEM >> (strlen:%d)\n%s\n", strlen(Pem), Pem);
+
+	BIO_free(pBio);
+}
+
+
+};	// namespace RSA_SHA1
+
+#endif	// DO_SIGN
