@@ -47,6 +47,7 @@
 #define PLIST_BG_SUB_PLT_BACK (0x00)  //1本
 #define PLIST_BG_SUB_PLT_PLATE (0x01) //1本
 #define PLIST_BG_SUB_PLT_BAR (0x02) //1本
+#define PLIST_BG_SUB_PLT_HP_BAR (0x0d)  //1本 文字用
 #define PLIST_BG_SUB_PLT_FONT (0x0e)      //1本
 
 

@@ -227,6 +227,8 @@ static void PLIST_BATTLE_InitResource( PLIST_WORK *work )
   GFL_ARCHDL_UTIL_TransVramPaletteEx( arcHandle , NARC_pokelist_gra_list_battle_sub_NCLR , 
                     PALTYPE_SUB_BG , PLIST_BG_SUB_PLT_PLATE*16*2 , PLIST_BG_SUB_PLT_PLATE*16*2 , 
                     16*2 , work->heapId );
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_pokelist_gra_hp_bar_NCLR , 
+                    PALTYPE_SUB_BG , PLIST_BG_SUB_PLT_HP_BAR*16*2 , 16*2 , work->heapId );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_pokelist_gra_list_battle_sub_NCGR ,
                     PLIST_BG_SUB_BATTLE_WIN , 0 , 0, FALSE , work->heapId );
 
@@ -448,17 +450,20 @@ static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *w
     const u8 charY = posY/8;
     const u8 modX = posX%8;
 
+    //HPバーの色を使う！
     iconWork->sexStrWin = GFL_BMPWIN_Create( PLIST_BG_SUB_BATTLE_STR , charX + 3 , charY, 
-          3 , 2 , PLIST_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
+          3 , 2 , PLIST_BG_SUB_PLT_HP_BAR , GFL_BMP_CHRAREA_GET_B );
     if( sex == PTL_SEX_MALE )
     {
+      const PRINTSYS_LSB fontColBlue = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER_BLUE , PLIST_FONT_PARAM_SHADOW_BLUE , 0 );
       PLIST_UTIL_DrawStrFunc( work , iconWork->sexStrWin , mes_pokelist_01_28 ,
-                      modX+4 , 0 , PLIST_FONT_BATTLE_BLUE );
+                      modX+4 , 0 , fontColBlue );
     }
     else if( sex == PTL_SEX_FEMALE )
     {
+      const PRINTSYS_LSB fontColRed = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER_RED , PLIST_FONT_PARAM_SHADOW_RED , 0 );
       PLIST_UTIL_DrawStrFunc( work , iconWork->sexStrWin , mes_pokelist_01_29 ,
-                      modX+4 , 0 , PLIST_FONT_BATTLE_RED );
+                      modX+4 , 0 , fontColRed );
     }
   }
   //レベル
