@@ -436,11 +436,9 @@ EVENT_END
 /************************************************************/
 EVENT_START		ev_c04r0201_stylistpoke_01
 
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_stylistpoke_01 )
+	_EASY_TALK_POKEVOICE(MONSNO_505,msg_c04r0201_stylistpoke_01)
 	
 EVENT_END
-
-//【仮】後でポケモンの鳴き声が出るように追記が必要
 
 /************************************************************/
 /*						ジェントル							*/
