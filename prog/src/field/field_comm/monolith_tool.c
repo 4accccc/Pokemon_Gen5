@@ -701,7 +701,7 @@ GFL_CLWK * MonolithTool_TownIcon_Create(MONOLITH_SETUP *setup, const OCCUPY_INFO
   GFL_CLWK_DATA ActHead_Town = {  //街アイコンのアクターヘッダ
     0, 0, //pos_x, pos_y
     COMMON_ANMSEQ_BLACK_TOWN, //anmseq
-    0, 2, //softpri, bgpri
+    10, 2, //softpri, bgpri
   };
   
   setSerface = (res_index == COMMON_RESOURCE_INDEX_UP) ? CLSYS_DEFREND_MAIN : CLSYS_DEFREND_SUB;
@@ -764,6 +764,53 @@ void MonolithTool_TownIcon_Update(GFL_CLWK *cap, const OCCUPY_INFO *occupy, int 
 
   GFL_CLACT_WK_SetDrawEnable( cap, TRUE );
   GFL_CLACT_WK_SetAnmSeqDiff( cap, anmseq );
+}
+
+//==================================================================
+/**
+ * 街アイコンカーソルアクターを作成
+ *
+ * @param   setup		    
+ * @param   pos		      表示座標
+ * @param   res_index		COMMON_RESOURCE_INDEX
+ *
+ * @retval  GFL_CLWK *		
+ */
+//==================================================================
+GFL_CLWK * MonolithTool_TownCursor_Create(MONOLITH_SETUP *setup, const GFL_POINT *pos, COMMON_RESOURCE_INDEX res_index)
+{
+  GFL_CLWK *cap;
+  u16 setSerface;
+  GFL_CLWK_DATA ActHead_TownCursor = {  //街アイコンカーソルのアクターヘッダ
+    0, 0, //pos_x, pos_y
+    COMMON_ANMSEQ_TOWN_CURSOR, //anmseq
+    0, 2, //softpri, bgpri
+  };
+  
+  setSerface = (res_index == COMMON_RESOURCE_INDEX_UP) ? CLSYS_DEFREND_MAIN : CLSYS_DEFREND_SUB;
+  
+  ActHead_TownCursor.pos_x = pos->x;
+  ActHead_TownCursor.pos_y = pos->y;
+  
+  cap = GFL_CLACT_WK_Create( setup->clunit, 
+    setup->common_res[res_index].char_index, 
+    setup->common_res[res_index].pltt_index, 
+    setup->common_res[res_index].cell_index, 
+    &ActHead_TownCursor, setSerface, HEAPID_MONOLITH );
+
+  return cap;
+}
+
+//==================================================================
+/**
+ * 街アイコンカーソルアクター削除
+ *
+ * @param   cap		
+ */
+//==================================================================
+void MonolithTool_TownCursor_Delete(GFL_CLWK *cap)
+{
+  GFL_CLACT_WK_Remove(cap);
 }
 
 //==================================================================

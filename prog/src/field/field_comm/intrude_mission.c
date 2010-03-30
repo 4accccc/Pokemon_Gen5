@@ -1212,6 +1212,12 @@ void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_CONV_DATA *
     }
     break;
   case MISSION_TYPE_SKILL:       //‹Z
+    {
+      const MISSION_TYPEDATA_SKILL *d_skill = (void*)cdata->data;
+
+      _Wordset_Strcode(wordset, 0, target->name, 
+        PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
+    }
     break;
   case MISSION_TYPE_BASIC:       //Šî‘b
     {
@@ -1246,8 +1252,8 @@ void MISSIONDATA_Wordset(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_CONV_DATA *
     {
       const MISSION_TYPEDATA_PERSONALITY *d_per = (void*)cdata->data;
       
-      WORDSET_RegisterNumber(wordset, 0, d_per->num, 3, 
-        STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+      _Wordset_Strcode(wordset, 0, target->name, 
+        PERSON_NAME_SIZE + EOM_SIZE, temp_heap_id);
     }
     break;
   }

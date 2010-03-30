@@ -23,7 +23,7 @@
 ///ミッション説明画面制御ワーク
 typedef struct{
   MONOLITH_BMPSTR bmpstr_title;
-  GFL_CLWK *act_town[INTRUDE_TOWN_MAX]; ///<街アイコンアクターへのポインタ
+  GFL_CLWK *act_town[MISSION_LIST_MAX]; ///<街アイコンアクターへのポインタ
 }MONOLITH_PALACEMAP_WORK;
 
 //==============================================================================
@@ -59,17 +59,15 @@ const GFL_PROC_DATA MonolithAppProc_Up_PalaceMap = {
 ///街アイコン表示座標テーブル
 static const GFL_POINT TownIconPosTbl[] = {
   {11*8, 6*8},
-  {16*8, 6*8},
-  {21*8, 6*8},
-  
+  {0x15*8, 6*8},
+
   {8*8, 10*8},
   {0x18*8, 10*8},
-  
-  {11*8, 14*8},
-  {16*8, 14*8},
-  {21*8, 14*8},
+
+  {11*8, 0xe*8},
+  {0x15*8, 0xe*8},
 };
-SDK_COMPILER_ASSERT(NELEMS(TownIconPosTbl) == INTRUDE_TOWN_MAX);
+SDK_COMPILER_ASSERT(NELEMS(TownIconPosTbl) == MISSION_LIST_MAX);
 
 
 
@@ -240,7 +238,7 @@ static void _TownIcon_AllCreate(MONOLITH_PALACEMAP_WORK *mpw, MONOLITH_APP_PAREN
   
   occupy = MonolithTool_GetOccupyInfo(appwk);
   
-  for(i = 0; i < INTRUDE_TOWN_MAX; i++){
+  for(i = 0; i < MISSION_LIST_MAX; i++){
     mpw->act_town[i] = MonolithTool_TownIcon_Create(
       appwk->setup, occupy, i, &TownIconPosTbl[i], COMMON_RESOURCE_INDEX_UP);
   }
@@ -255,7 +253,7 @@ static void _TownIcon_AllDelete(MONOLITH_PALACEMAP_WORK *mpw)
 {
   int i;
   
-  for(i = 0; i < INTRUDE_TOWN_MAX; i++){
+  for(i = 0; i < MISSION_LIST_MAX; i++){
     MonolithTool_TownIcon_Delete(mpw->act_town[i]);
   }
 }
@@ -273,7 +271,7 @@ static void _TownIcon_AllUpdate(MONOLITH_PALACEMAP_WORK *mpw, MONOLITH_APP_PAREN
   OCCUPY_INFO *occupy;
   
   occupy = MonolithTool_GetOccupyInfo(appwk);
-  for(i = 0; i < INTRUDE_TOWN_MAX; i++){
+  for(i = 0; i < MISSION_LIST_MAX; i++){
     MonolithTool_TownIcon_Update(mpw->act_town[i], occupy, i);
   }
 }

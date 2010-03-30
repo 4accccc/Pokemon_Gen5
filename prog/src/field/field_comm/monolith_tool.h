@@ -114,6 +114,9 @@ extern GFL_CLWK * MonolithTool_TownIcon_Create(MONOLITH_SETUP *setup,
 extern void MonolithTool_TownIcon_Delete(GFL_CLWK *cap);
 extern void MonolithTool_TownIcon_Update(GFL_CLWK *cap, const OCCUPY_INFO *occupy, int town_no);
 
+extern GFL_CLWK * MonolithTool_TownCursor_Create(MONOLITH_SETUP *setup, const GFL_POINT *pos, COMMON_RESOURCE_INDEX res_index);
+extern void MonolithTool_TownCursor_Delete(GFL_CLWK *cap);
+
 extern GFL_CLWK * MonolithTool_CancelIcon_Create(MONOLITH_SETUP *setup);
 extern void MonolithTool_CancelIcon_Delete(GFL_CLWK *cap);
 extern void MonolithTool_CancelIcon_Update(GFL_CLWK *cap);

@@ -365,6 +365,8 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
   int i;
   enum{
     SEQ_INIT,
+    SEQ_FIRST_STREAM,
+    SEQ_FIRST_STREAM_WAIT,
     SEQ_TOP,
     SEQ_DECIDE_STREAM,
     SEQ_DECIDE_SEND,
@@ -388,7 +390,22 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
   
   switch(*seq){
   case SEQ_INIT:
-    *seq = SEQ_TOP;
+    *seq = SEQ_FIRST_STREAM;
+    break;
+
+  case SEQ_FIRST_STREAM:
+    if(PRINTSYS_QUE_IsFinished( appwk->setup->printQue ) == TRUE){  //※check　Queのパレットカラーが被るので暫定対処　フォントのカラー指定が個別に出来るようになれば取っ払う
+      _Set_MsgStream(mpw, appwk->setup, msg_mono_pow_014);
+      (*seq)++;
+    }
+    break;
+  case SEQ_FIRST_STREAM_WAIT:
+    if(_Wait_MsgStream(appwk->setup, mpw) == TRUE){
+      if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+        _Clear_MsgStream(mpw);
+        (*seq) = SEQ_TOP;
+      }
+    }
     break;
     
   case SEQ_TOP:
@@ -1083,7 +1100,7 @@ static void _HavePointCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WORK 
   WORDSET_RegisterNumber(appwk->setup->wordset, 0, 0, 4,//occupy->intrude_point, 4, 
     STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
   MonolithTool_Bmpoam_Create(appwk->setup, &mpw->bmpstr_point, COMMON_RESOURCE_INDEX_DOWN, 
-    128+64, 192-_MENU_BAR_Y_LEN/2, 8, 2, msg_mono_pow_013, appwk->setup->wordset);
+    128+48, 192-_MENU_BAR_Y_LEN/2, 12, 2, msg_mono_pow_013, appwk->setup->wordset);
   MonolithTool_Bmpoam_BGPriSet(appwk->setup, &mpw->bmpstr_point, BGPRI_BMPOAM_HAVE_POINT);
 }
 

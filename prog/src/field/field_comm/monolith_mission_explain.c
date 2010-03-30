@@ -31,6 +31,9 @@ enum{
   BMPWIN_MAX,
 };
 
+///メニューバーのY長
+#define _MENU_BAR_Y_LEN           (8*3)
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -38,6 +41,7 @@ enum{
 typedef struct{
   GFL_BMPWIN *bmpwin[BMPWIN_MAX];
   PRINT_UTIL print_util[BMPWIN_MAX];
+  MONOLITH_BMPSTR bmpstr_bar;           ///<BMPOAM「ミッションをタッチしてください」
   u8 view_town;                         ///<ミッション説明を表示中の街番号
   u8 padding[3];
 }MONOLITH_MSEXPLAIN_WORK;
@@ -57,6 +61,8 @@ static void _Setup_BGFrameExit(void);
 static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup);
 static void _Setup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_MSEXPLAIN_WORK *mmw);
 static void _Setup_BmpWin_Exit(MONOLITH_MSEXPLAIN_WORK *mmw);
+static void _Setup_BmpOam_Create(MONOLITH_SETUP *setup, MONOLITH_MSEXPLAIN_WORK *mmw);
+static void _Setup_BmpOam_Exit(MONOLITH_MSEXPLAIN_WORK *mmw);
 static void _Write_MissionExplain(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_MSEXPLAIN_WORK *mmw, int select_town);
 
 
@@ -110,6 +116,9 @@ static GFL_PROC_RESULT MonolithMissionExplainProc_Init(GFL_PROC * proc, int * se
   _Setup_BGGraphicLoad(appwk->setup);
   _Setup_BmpWin_Create(appwk->setup, mmw);
   
+  //OBJ
+  _Setup_BmpOam_Create(appwk->setup, mmw);
+  
   mmw->view_town = 0xff;  //初回の描画を通す為に存在しない街番号を設定
   
   return GFL_PROC_RES_FINISH;
@@ -135,6 +144,8 @@ static GFL_PROC_RESULT MonolithMissionExplainProc_Main( GFL_PROC * proc, int * s
   if(appwk->up_proc_finish == TRUE || appwk->force_finish == TRUE){
     return GFL_PROC_RES_FINISH;
   }
+
+  MonolithTool_Bmpoam_TransUpdate(appwk->setup, &mmw->bmpstr_bar);
   
   for(i = 0; i < BMPWIN_MAX; i++){
     if(PRINT_UTIL_Trans(&mmw->print_util[i], appwk->setup->printQue) == TRUE){
@@ -174,6 +185,9 @@ static GFL_PROC_RESULT MonolithMissionExplainProc_End( GFL_PROC * proc, int * se
   //BG
   _Setup_BmpWin_Exit(mmw);
   _Setup_BGFrameExit();
+  
+  //OBJ
+  _Setup_BmpOam_Exit(mmw);
   
   GFL_PROC_FreeWork(proc);
   return GFL_PROC_RES_FINISH;
@@ -285,6 +299,32 @@ static void _Setup_BmpWin_Exit(MONOLITH_MSEXPLAIN_WORK *mmw)
 {
   GFL_BMPWIN_Delete(mmw->bmpwin[BMPWIN_TYPE]);
   GFL_BMPWIN_Delete(mmw->bmpwin[BMPWIN_EXPLAIN]);
+}
+
+//--------------------------------------------------------------
+/**
+ * BMPOAM作成
+ *
+ * @param   setup		
+ * @param   mmw		
+ */
+//--------------------------------------------------------------
+static void _Setup_BmpOam_Create(MONOLITH_SETUP *setup, MONOLITH_MSEXPLAIN_WORK *mmw)
+{
+  MonolithTool_Bmpoam_Create(setup, &mmw->bmpstr_bar, COMMON_RESOURCE_INDEX_DOWN, 
+    128, 192-_MENU_BAR_Y_LEN/2, 28, 2, msg_mono_mis_005, NULL);
+}
+
+//--------------------------------------------------------------
+/**
+ * BMPOAM削除
+ *
+ * @param   mmw		
+ */
+//--------------------------------------------------------------
+static void _Setup_BmpOam_Exit(MONOLITH_MSEXPLAIN_WORK *mmw)
+{
+  MonolithTool_Bmpoam_Delete(&mmw->bmpstr_bar);
 }
 
 //--------------------------------------------------------------

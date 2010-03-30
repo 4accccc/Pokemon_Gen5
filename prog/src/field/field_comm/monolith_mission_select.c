@@ -54,12 +54,14 @@ typedef struct{
   GFL_BMPWIN *bmpwin;
   STRBUF *strbuf_stream;
   PRINT_STREAM *print_stream;
-  GFL_CLWK *act_town[INTRUDE_TOWN_MAX]; ///<街アイコンアクターへのポインタ
+  GFL_CLWK *act_town[MISSION_LIST_MAX]; ///<街アイコンアクターへのポインタ
   GFL_CLWK *act_cancel;   ///<キャンセルアイコンアクターへのポインタ
   PANEL_ACTOR panel[_PANEL_MAX];
   MISSION_ENTRY_REQ send_entry_req;     ///<ミッション受注送信バッファ
+  GFL_CLWK *act_town_cursor;
   u8 no_select;           ///<ミッション受注済み。選択はもう出来ない
   u8 order_end;           ///<TRUE:ミッションを受注して終了
+  u8 view_mode;
 }MONOLITH_MSSELECT_WORK;
 
 //==============================================================================
@@ -77,6 +79,7 @@ static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup);
 static void _TownIcon_AllCreate(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_APP_PARENT *appwk);
 static void _TownIcon_AllDelete(MONOLITH_MSSELECT_WORK *mmw);
 static void _TownIcon_AllUpdate(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_APP_PARENT *appwk);
+static void _TownCursor_Update(MONOLITH_MSSELECT_WORK *mmw, int select_town_no);
 static void _Msselect_PanelCreate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_WORK *mmw);
 static void _Msselect_PanelDelete(MONOLITH_MSSELECT_WORK *mmw);
 static void _Msselect_PanelUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_WORK *mmw);
@@ -108,44 +111,43 @@ const GFL_PROC_DATA MonolithAppProc_Down_MissionSelect = {
 enum{
   TOWN_0_X = 11*8,
   TOWN_0_Y = 3*8,
-  TOWN_1_X = 16*8,
+  TOWN_1_X = 0x15*8,
   TOWN_1_Y = 3*8,
-  TOWN_2_X = 21*8,
-  TOWN_2_Y = 3*8,
-  
-  TOWN_3_X = 8*8,
+
+  TOWN_2_X = 8*8,
+  TOWN_2_Y = 7*8,
+  TOWN_3_X = 0x18*8,
   TOWN_3_Y = 7*8,
-  TOWN_4_X = 0x18*8,
-  TOWN_4_Y = 7*8,
   
-  TOWN_5_X = 11*8,
+  TOWN_4_X = 11*8,
+  TOWN_4_Y = 11*8,
+  TOWN_5_X = 0x15*8,
   TOWN_5_Y = 11*8,
-  TOWN_6_X = 16*8,
-  TOWN_6_Y = 11*8,
-  TOWN_7_X = 21*8,
-  TOWN_7_Y = 11*8,
 };
 
 ///街アイコン表示座標テーブル
 static const GFL_POINT TownIconPosTbl[] = {
   {TOWN_0_X, TOWN_0_Y},
   {TOWN_1_X, TOWN_1_Y},
+  
   {TOWN_2_X, TOWN_2_Y},
-  
   {TOWN_3_X, TOWN_3_Y},
-  {TOWN_4_X, TOWN_4_Y},
   
+  {TOWN_4_X, TOWN_4_Y},
   {TOWN_5_X, TOWN_5_Y},
-  {TOWN_6_X, TOWN_6_Y},
-  {TOWN_7_X, TOWN_7_Y},
 };
-SDK_COMPILER_ASSERT(NELEMS(TownIconPosTbl) == INTRUDE_TOWN_MAX);
+SDK_COMPILER_ASSERT(NELEMS(TownIconPosTbl) == MISSION_LIST_MAX);
+
+///街アイコンカーソルの時計回りで進む場合の街番号
+ALIGN4 static const u8 TownCursor_MoveTbl[] = {
+  0, 1, 3, 5, 4, 2,
+};
 
 ///街アイコンタッチ範囲：半径
 #define TOWN_TOUCH_RANGE  (8)
 
 ///街アイコンタッチ範囲テーブル
-static const GFL_UI_TP_HITTBL TownTouchRect[] = {
+ALIGN4 static const GFL_UI_TP_HITTBL TownTouchRect[] = {
   {//TOUCH_TOWN0
     TOWN_0_Y - TOWN_TOUCH_RANGE,
     TOWN_0_Y + TOWN_TOUCH_RANGE,
@@ -182,18 +184,6 @@ static const GFL_UI_TP_HITTBL TownTouchRect[] = {
     TOWN_5_X - TOWN_TOUCH_RANGE,
     TOWN_5_X + TOWN_TOUCH_RANGE,
   },
-  {//TOUCH_TOWN6
-    TOWN_6_Y - TOWN_TOUCH_RANGE,
-    TOWN_6_Y + TOWN_TOUCH_RANGE,
-    TOWN_6_X - TOWN_TOUCH_RANGE,
-    TOWN_6_X + TOWN_TOUCH_RANGE,
-  },
-  {//TOUCH_TOWN7
-    TOWN_7_Y - TOWN_TOUCH_RANGE,
-    TOWN_7_Y + TOWN_TOUCH_RANGE,
-    TOWN_7_X - TOWN_TOUCH_RANGE,
-    TOWN_7_X + TOWN_TOUCH_RANGE,
-  },
   {////TOUCH_RECEIVE パネル：ミッションを受ける
     PANEL_RECEIVE_Y - PANEL_CHARSIZE_Y/2*8,
     PANEL_RECEIVE_Y + PANEL_CHARSIZE_Y/2*8,
@@ -208,7 +198,7 @@ static const GFL_UI_TP_HITTBL TownTouchRect[] = {
   },
   { GFL_UI_TP_HIT_END, 0, 0, 0 },
 };
-SDK_COMPILER_ASSERT(NELEMS(TownTouchRect) == INTRUDE_TOWN_MAX + 3);
+SDK_COMPILER_ASSERT(NELEMS(TownTouchRect) == MISSION_LIST_MAX + 3);
 
 enum{
   TOUCH_TOWN0,
@@ -217,8 +207,6 @@ enum{
   TOUCH_TOWN3,
   TOUCH_TOWN4,
   TOUCH_TOWN5,
-  TOUCH_TOWN6,
-  TOUCH_TOWN7,
   TOUCH_RECEIVE,
   TOUCH_CANCEL,
 };
@@ -247,6 +235,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Init(GFL_PROC * proc, int * seq
   
   mmw = GFL_PROC_AllocWork(proc, sizeof(MONOLITH_MSSELECT_WORK), HEAPID_MONOLITH);
   GFL_STD_MemClear(mmw, sizeof(MONOLITH_MSSELECT_WORK));
+  mmw->view_mode = VIEW_ORDER;
   
   //BG
   _Setup_BGFrameSetting();
@@ -256,6 +245,8 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Init(GFL_PROC * proc, int * seq
   _TownIcon_AllCreate(mmw, appwk);
   _Msselect_PanelCreate(appwk, mmw);
   _Msselect_CancelIconCreate(appwk, mmw);
+  mmw->act_town_cursor = MonolithTool_TownCursor_Create(
+    appwk->setup, &TownIconPosTbl[0], COMMON_RESOURCE_INDEX_DOWN);
 
   return GFL_PROC_RES_FINISH;
 }
@@ -276,6 +267,8 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
 	MONOLITH_MSSELECT_WORK *mmw = mywk;
   enum{
     SEQ_INIT,
+    SEQ_FIRST_STREAM,
+    SEQ_FIRST_STREAM_WAIT,
     SEQ_TOP,
     SEQ_NO_SELECT,
     SEQ_ORDER,
@@ -286,6 +279,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
   };
   
   _TownIcon_AllUpdate(mmw, appwk);
+  _TownCursor_Update(mmw, appwk->common->mission_select_no);
   _Msselect_PanelUpdate(appwk, mmw);
   _Msselect_CancelIconUpdate(mmw);
 
@@ -297,10 +291,26 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
   case SEQ_INIT:
     if(MISSION_RecvCheck(&appwk->parent->intcomm->mission) == TRUE){  //ミッション受注済み
       _Msselect_ViewChange(appwk, mmw, VIEW_ENFORCEMENT);
-      *seq = SEQ_NO_SELECT;
     }
-    else{
-      *seq = SEQ_TOP;
+    *seq = SEQ_FIRST_STREAM;
+    break;
+  case SEQ_FIRST_STREAM:
+    if(PRINTSYS_QUE_IsFinished( appwk->setup->printQue ) == TRUE){  //※check　Queのパレットカラーが被るので暫定対処　フォントのカラー指定が個別に出来るようになれば取っ払う
+      _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_004);
+      (*seq)++;
+    }
+    break;
+  case SEQ_FIRST_STREAM_WAIT:
+    if(_Wait_MsgStream(appwk->setup, mmw) == TRUE){
+      if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+        _Clear_MsgStream(mmw);
+        if(mmw->view_mode == VIEW_ORDER){
+          *seq = SEQ_TOP;
+        }
+        else{
+          *seq = SEQ_NO_SELECT;
+        }
+      }
     }
     break;
     
@@ -316,8 +326,30 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
         *seq = SEQ_NO_SELECT;
         break;
       }
-
-      if(tp_ret >= TOUCH_TOWN0 && tp_ret < TOUCH_TOWN0 + INTRUDE_TOWN_MAX){
+      
+      if(trg & (PAD_KEY_UP | PAD_KEY_RIGHT | PAD_KEY_DOWN | PAD_KEY_LEFT)){
+        int now_pos;
+        for(now_pos = 0; now_pos < NELEMS(TownCursor_MoveTbl); now_pos++){
+          if(TownCursor_MoveTbl[now_pos] == appwk->common->mission_select_no){
+            break;
+          }
+        }
+        if(trg & (PAD_KEY_UP | PAD_KEY_RIGHT)){
+          now_pos++;
+          if(now_pos >= NELEMS(TownCursor_MoveTbl)){
+            now_pos = 0;
+          }
+        }
+        else if(trg & (PAD_KEY_DOWN | PAD_KEY_LEFT)){
+          now_pos--;
+          if(now_pos < 0){
+            now_pos = NELEMS(TownCursor_MoveTbl) - 1;
+          }
+        }
+        appwk->common->mission_select_no = TownCursor_MoveTbl[now_pos];
+      }
+      
+      if(tp_ret >= TOUCH_TOWN0 && tp_ret < TOUCH_TOWN0 + MISSION_LIST_MAX){
         OS_TPrintf("街選択 %d\n", tp_ret);
         appwk->common->mission_select_no = tp_ret;
       }
@@ -427,6 +459,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_End( GFL_PROC * proc, int * seq
   }
 
   //OBJ
+  MonolithTool_TownCursor_Delete(mmw->act_town_cursor);
   _Msselect_CancelIconDelete(mmw);
   _Msselect_PanelDelete(mmw);
   _TownIcon_AllDelete(mmw);
@@ -617,7 +650,7 @@ static void _TownIcon_AllCreate(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_APP_PARENT
   
   occupy = MonolithTool_GetOccupyInfo(appwk);
   
-  for(i = 0; i < INTRUDE_TOWN_MAX; i++){
+  for(i = 0; i < MISSION_LIST_MAX; i++){
     mmw->act_town[i] = MonolithTool_TownIcon_Create(
       appwk->setup, occupy, i, &TownIconPosTbl[i], COMMON_RESOURCE_INDEX_UP);
   }
@@ -632,7 +665,7 @@ static void _TownIcon_AllDelete(MONOLITH_MSSELECT_WORK *mmw)
 {
   int i;
   
-  for(i = 0; i < INTRUDE_TOWN_MAX; i++){
+  for(i = 0; i < MISSION_LIST_MAX; i++){
     MonolithTool_TownIcon_Delete(mmw->act_town[i]);
   }
 }
@@ -650,9 +683,24 @@ static void _TownIcon_AllUpdate(MONOLITH_MSSELECT_WORK *mmw, MONOLITH_APP_PARENT
   OCCUPY_INFO *occupy;
   
   occupy = MonolithTool_GetOccupyInfo(appwk);
-  for(i = 0; i < INTRUDE_TOWN_MAX; i++){
+  for(i = 0; i < MISSION_LIST_MAX; i++){
     MonolithTool_TownIcon_Update(mmw->act_town[i], occupy, i);
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * 街アイコンカーソル更新
+ *
+ * @param   mmw		
+ */
+//--------------------------------------------------------------
+static void _TownCursor_Update(MONOLITH_MSSELECT_WORK *mmw, int select_town_no)
+{
+  GFL_CLACTPOS pos;
+  pos.x = TownIconPosTbl[select_town_no].x;
+  pos.y = TownIconPosTbl[select_town_no].y;
+  GFL_CLACT_WK_SetPos( mmw->act_town_cursor, &pos, CLSYS_DEFREND_SUB );
 }
 
 //==================================================================
@@ -769,4 +817,5 @@ static void _Msselect_ViewChange(MONOLITH_APP_PARENT *appwk, MONOLITH_MSSELECT_W
     MonolithTool_PanelOBJ_SetEnable(&mmw->panel[_PANEL_ORDER], FALSE);
     MonolithTool_PanelOBJ_SetEnable(&mmw->panel[_PANEL_ENFORCEMENT], TRUE);
   }
+  mmw->view_mode = view_mode;
 }
