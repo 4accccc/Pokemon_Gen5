@@ -126,7 +126,7 @@ extern u32 RECORD_Score_Get(RECORD * rec);
 #define RECID_SODATEYA_CNT      (LARGE_REC_START+23)  ///< @育て屋にポケモンを預けた回数
 
 #define RECID_KILL_POKE         (LARGE_REC_START+24)  ///< @倒したポケモンの数
-#define RECID_DAYMAX_EXP        (LARGE_REC_START+25)  ///< @1日に稼いだ経験値
+#define RECID_DAYMAX_EXP        (LARGE_REC_START+25)  ///< @1日に稼いだ経験値最大値
 #define RECID_DAYCNT_EXP        (LARGE_REC_START+26)  ///< @1日に稼いだ経験値
 
 #define RECID_GTS_PUT           (LARGE_REC_START+27)  ///< @GTSにポケモンを預けた回数
@@ -137,7 +137,7 @@ extern u32 RECORD_Score_Get(RECORD * rec);
 #define RECID_WIN_BP            (LARGE_REC_START+32)  ///< @勝ち取ったBP
 #define RECID_USE_BP            (LARGE_REC_START+33)  ///< @使ったBP
 
-#define RECID_SURECHIGAI_NUM    (LARGE_REC_START+34)    ///< @すれちがい通信をした回数
+#define RECID_SURECHIGAI_NUM    (LARGE_REC_START+34)  ///< @すれちがい通信をした回数
 #define RECID_IRC_TRADE         (LARGE_REC_START+35)  ///< @赤外線通信交換をした回数
 #define RECID_IRC_BATTLE        (LARGE_REC_START+36)  ///< @赤外線通信対戦をした回数
 #define RECID_IRC_BTL_WIN       (LARGE_REC_START+37)  ///< @赤外線通信対戦の勝利数
