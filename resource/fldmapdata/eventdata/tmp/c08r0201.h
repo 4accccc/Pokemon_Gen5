@@ -11,6 +11,8 @@
 #define ZONE_C08R0201_EVC_H
 
 #define C08R0201_VETERANM_01               0
+#define C08R0201_TRAINERW_01               1
+#define C08R0201_TRAINERM_01               2
 
 #endif //ZONE_C08R0201_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08r0201.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

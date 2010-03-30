@@ -20,7 +20,35 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_c08r0201_veteranm_01
+_EVENT_DATA    ev_zone_c08r0201
 _EVENT_DATA_END
+
+/**************************************************************/
+/*            フィールド初期化スクリプト                      */
+/**************************************************************/
+INIT_EVENT_START ev_zone_c08r0201
+	{
+	
+	_FLAG_SET( FV_C08R0201_TRAINERW_01 )
+	_FLAG_SET( FV_C08R0201_TRAINERM_01 )
+	
+	//バージョンチェック
+	DEFINE_LOCAL LCW_VERSION
+	_GET_ROM_VERSION ( LCW_VERSION ) 
+	
+	//★Blackの場合ローテーションバトル
+	IF $LCW_VERSION == VERSION_BLACK THEN
+		_FLAG_RESET( FV_C08R0201_TRAINERW_01 )
+	
+	//★whiteの場合トリプルバトル
+	ELSE
+		_FLAG_RESET( FV_C08R0201_TRAINERM_01 )
+	
+	ENDIF
+		
+	}
+INIT_EVENT_END
+
 
 /************************************************************/
 /*	VETERANM                                                */

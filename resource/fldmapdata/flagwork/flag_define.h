@@ -785,8 +785,8 @@
 #define FV_STADIUM_SPORTSMAN               761 /* 0x02f9 ビッグスタジアム／リトルコートエントランス：選手とファン */
 #define FV_H04_POKE_01                     762 /* 0x02fa ビレッジブリッジ：キャモメ */
 #define FV_H04_ITEM_02                     763 /* 0x02fb ビレッジブリッジ：モンスターボール */
-		/* not used   764(0x02fc) */
-		/* not used   765(0x02fd) */
+#define FV_C08R0201_TRAINERW_01            764 /* 0x02fc ソウリュウシティ：ローテーションバトルの館 */
+#define FV_C08R0201_TRAINERM_01            765 /* 0x02fd ソウリュウシティ：トリプルバトルの館 */
 		/* not used   766(0x02fe) */
 		/* not used   767(0x02ff) */
 		/* not used   768(0x0300) */

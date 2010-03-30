@@ -81,6 +81,8 @@ init_flags:
 	//C05：ゲーヂスとジムリーダー会話イベント、コンテナクリア後に表示
 	_FLAG_SET( FV_C05_GYMLEADER_02 )
 	_FLAG_SET( FV_C05_SAGE_01 )
+	//C05R0601：ホドモエマーケットお香売り表示
+	_FLAG_SET( FV_C05R0601_OKOU )
 	
 	//D02R0101：盗難イベント
 	_FLAG_SET( FV_D02R0101_LEADER2 )

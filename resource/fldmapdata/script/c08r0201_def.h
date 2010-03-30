@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_C08R0201_VETERANM_01 (1)
+#define SCRID_ZONE_C08R0201 (2)
 
 #endif //_C08R0201_DEF_H_
