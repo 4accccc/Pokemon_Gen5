@@ -20,6 +20,7 @@
 #include "app/box2.h"
 #include "app/zukan.h"
 #include "app/wifi_note.h"
+#include "app/dendou_pc.h"
 #include "demo/command_demo.h"
 #include "../../battle/app/vs_multi_list.h"
 
@@ -33,7 +34,7 @@
 //============================================================================================
 //  ’è”’è‹`
 //============================================================================================
-#define TOP_MENU_SIZ  ( 13 )
+#define TOP_MENU_SIZ  ( 14 )
 
 typedef struct {
   u32 main_seq;
@@ -62,6 +63,8 @@ typedef struct {
 
   WIFINOTE_PROC_PARAM wifi_note_data;
 
+	DENDOUPC_PARAM	dpc_data;
+
 }NAKAHIRO_MAIN_WORK;
 
 enum {
@@ -85,6 +88,8 @@ enum {
   MAIN_SEQ_VSMLIST_R,
 
   MAIN_SEQ_WIFI_NOTE,
+
+  MAIN_SEQ_DENDOU_PC,
 
   MAIN_SEQ_POKEICON,
 
@@ -403,6 +408,12 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(wifinote), &WifiNoteProcData, &wk->wifi_note_data );
     wk->main_seq = MAIN_SEQ_END;
     break;
+
+	case  MAIN_SEQ_DENDOU_PC:
+//		wk->dpc_data.sv = ;
+    GFL_PROC_SysCallProc( FS_OVERLAY_ID(dendou_pc), &DENDOUPC_ProcData, &wk->dpc_data );
+    wk->main_seq = MAIN_SEQ_END;
+		break;
 
   case MAIN_SEQ_POKEICON:
     GFL_PROC_SysCallProc( NO_OVERLAY_ID, &POKEICONVIEW_ProcData, NULL );

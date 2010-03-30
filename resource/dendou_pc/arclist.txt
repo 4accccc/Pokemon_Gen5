@@ -1,0 +1,9 @@
+"bgd_lz.NCGR"
+"bgd.NCLR"
+"bgd_base_lz.NSCR"
+"bgd_light_lz.NSCR"
+"bgd_title_lz.NSCR"
+
+"bgu_lz.NCGR"
+"bgu.NCLR"
+"bgu_base_lz.NSCR"

@@ -164,6 +164,7 @@ SUBDIRS	=	wmi \
 			p_tree \
 			camera_sys \
 			cross_comm \
+			dendou_pc \
 			btl_subway
 
 

@@ -1613,6 +1613,16 @@ SRCS_OVERLAY_BOX    = app/box/box2.c \
                       app/box\box2_ui.c \
                       app/box\box2_bgwfrm.c
 
+# “a“°“ü‚è‚o‚b
+#===> SRCS_OVERLAY_POKE_STATUS
+#===> SRCS_OVERLAY_BAG
+SRCS_OVERLAY_DENDOU_PC = app/dendou_pc/dendou_pc.c \
+                         app/dendou_pc/dpc_main.c \
+                         app/dendou_pc/dpc_seq.c \
+                         app/dendou_pc/dpc_bmp.c \
+                         app/dendou_pc/dpc_obj.c \
+                         app/dendou_pc/dpc_ui.c
+
 # ƒJƒƒ‰ƒeƒXƒg
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_DEV_WIRELESS

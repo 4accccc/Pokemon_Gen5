@@ -1,0 +1,25 @@
+/*****************************************************************************
+	Archive file index definition.
+	File: dendou_pc_gra.naix
+
+	This file was created by NINTENDO TWL-System Archiver.
+
+
+ *****************************************************************************/
+
+#ifndef NARC_DENDOU_PC_GRA_NAIX_
+#define NARC_DENDOU_PC_GRA_NAIX_
+
+enum {
+	NARC_dendou_pc_gra_bgd_lz_NCGR = 0,
+	NARC_dendou_pc_gra_bgd_NCLR = 1,
+	NARC_dendou_pc_gra_bgd_base_lz_NSCR = 2,
+	NARC_dendou_pc_gra_bgd_light_lz_NSCR = 3,
+	NARC_dendou_pc_gra_bgd_title_lz_NSCR = 4,
+	NARC_dendou_pc_gra_bgu_lz_NCGR = 5,
+	NARC_dendou_pc_gra_bgu_NCLR = 6,
+	NARC_dendou_pc_gra_bgu_base_lz_NSCR = 7
+};
+
+/* NARC_DENDOU_PC_GRA_NAIX_ */
+#endif
