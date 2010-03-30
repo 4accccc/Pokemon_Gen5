@@ -1,9 +1,9 @@
 //======================================================================
 /**
- * @file	scrcmd_enviroments.c
- * @brief	スクリプトコマンド：システム管理データ関連
+ * @file  scrcmd_enviroments.c
+ * @brief スクリプトコマンド：システム管理データ関連
  * @date  2009.09.22
- * @author	tamada GAMEFREAK inc.
+ * @author  tamada GAMEFREAK inc.
  *
  */
 //======================================================================
@@ -316,6 +316,14 @@ VMCMD_RESULT EvCmdSetBadgeFlag( VMHANDLE * core, void *wk )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( wk );
 
   MISC_SetBadgeFlag( GAMEDATA_GetMiscWork(gdata), badge_id );
+
+  // バッジ取得日付の保存
+  {
+    RTCDate date;
+    GFL_RTC_GetDate(&date);
+    TRCSave_SetBadgeDate( GAMEDATA_GetTrainerCardPtr(gdata), badge_id, 
+                          date.year, date.month, date.day );
+  }
   return VMCMD_RESULT_CONTINUE;
 }
 
