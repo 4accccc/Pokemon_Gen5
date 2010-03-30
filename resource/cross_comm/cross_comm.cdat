@@ -39,27 +39,27 @@ static const struct{
 		10 * 60,		//life
 	},
 	{	//8  ジムリーダーと対戦を開始しました！(GAMEBEACON_ACTION_BATTLE_LEADER_START)
-		2,		//priority
+		0,		//priority
 		15 * 60,		//life
 	},
 	{	//9  ジムリーダーに勝利しました！(GAMEBEACON_ACTION_BATTLE_LEADER_VICTORY)
-		2,		//priority
+		0,		//priority
 		15 * 60,		//life
 	},
 	{	//10  四天王と対戦を開始しました！(GAMEBEACON_ACTION_BATTLE_BIGFOUR_START)
-		2,		//priority
+		0,		//priority
 		15 * 60,		//life
 	},
 	{	//11  四天王に勝利しました！(GAMEBEACON_ACTION_BATTLE_BIGFOUR_VICTORY)
-		2,		//priority
+		0,		//priority
 		15 * 60,		//life
 	},
 	{	//12  チャンピオンと対戦を開始しました！(GAMEBEACON_ACTION_BATTLE_CHAMPION_START)
-		2,		//priority
+		0,		//priority
 		15 * 60,		//life
 	},
 	{	//13  チャンピオンに勝利しました！(GAMEBEACON_ACTION_BATTLE_CHAMPION_VICTORY)
-		2,		//priority
+		0,		//priority
 		15 * 60,		//life
 	},
 	{	//14  ポケモン捕獲(GAMEBEACON_ACTION_POKE_GET)
@@ -79,7 +79,7 @@ static const struct{
 		10 * 60,		//life
 	},
 	{	//18  Gパワー発動(GAMEBEACON_ACTION_GPOWER)
-		2,		//priority
+		5,		//priority
 		20 * 60,		//life
 	},
 	{	//19  貴重品ゲット(GAMEBEACON_ACTION_SP_ITEM_GET)
@@ -103,47 +103,47 @@ static const struct{
 		10 * 60,		//life
 	},
 	{	//24  「ありがとう！」(GAMEBEACON_ACTION_THANKYOU)
-		1,		//priority
+		3,		//priority
 		10 * 60,		//life
 	},
 	{	//25  ポケモン配布中(GAMEBEACON_ACTION_DISTRIBUTION_POKE)
-		2,		//priority
+		5,		//priority
 		20 * 60,		//life
 	},
 	{	//26  アイテム配布中(GAMEBEACON_ACTION_DISTRIBUTION_ITEM)
-		2,		//priority
+		5,		//priority
 		20 * 60,		//life
 	},
 	{	//27  その他配布中(GAMEBEACON_ACTION_DISTRIBUTION_ETC)
-		2,		//priority
+		5,		//priority
 		20 * 60,		//life
 	},
 	{	//28  急所に攻撃をあてた(GAMEBEACON_ACTION_CRITICAL_HIT)
-		0,		//priority
+		1,		//priority
 		10 * 60,		//life
 	},
 	{	//29  急所に攻撃を受けた(GAMEBEACON_ACTION_CRITICAL_DAMAGE)
-		0,		//priority
+		1,		//priority
 		10 * 60,		//life
 	},
 	{	//30  戦闘から逃げ出した(GAMEBEACON_ACTION_ESCAPE)
-		0,		//priority
+		2,		//priority
 		10 * 60,		//life
 	},
 	{	//31  HPが残り少ない(GAMEBEACON_ACTION_HP_LITTLE)
-		0,		//priority
-		10 * 60,		//life
+		3,		//priority
+		15 * 60,		//life
 	},
 	{	//32  PPが残り少ない(GAMEBEACON_ACTION_PP_LITTLE)
-		0,		//priority
+		2,		//priority
 		10 * 60,		//life
 	},
 	{	//33  先頭のポケモンが瀕死(GAMEBEACON_ACTION_DYING)
-		0,		//priority
-		10 * 60,		//life
+		4,		//priority
+		20 * 60,		//life
 	},
 	{	//34  先頭のポケモンが状態異常(GAMEBEACON_ACTION_STATE_IS_ABNORMAL)
-		0,		//priority
+		1,		//priority
 		10 * 60,		//life
 	},
 	{	//35  アイテムを使用(GAMEBEACON_ACTION_USE_ITEM)
@@ -171,11 +171,11 @@ static const struct{
 		10 * 60,		//life
 	},
 	{	//41  バトルサブウェイ連勝中(GAMEBEACON_ACTION_SUBWAY_STRAIGHT_VICTORIES)
-		1,		//priority
+		2,		//priority
 		10 * 60,		//life
 	},
 	{	//42  バトルサブウェイトロフィーゲット(GAMEBEACON_ACTION_SUBWAY_TROPHY_GET)
-		1,		//priority
+		3,		//priority
 		15 * 60,		//life
 	},
 	{	//43  トライアルハウスに挑戦中(GAMEBEACON_ACTION_TRIALHOUSE)
@@ -183,7 +183,7 @@ static const struct{
 		10 * 60,		//life
 	},
 	{	//44  トライアルハウスでランク確定(GAMEBEACON_ACTION_TRIALHOUSE_RANK)
-		1,		//priority
+		2,		//priority
 		10 * 60,		//life
 	},
 	{	//45  観覧車に乗った(GAMEBEACON_ACTION_FERRIS_WHEEL)
@@ -199,11 +199,11 @@ static const struct{
 		10 * 60,		//life
 	},
 	{	//48  他人のGパワーを使用(GAMEBEACON_ACTION_OTHER_GPOWER_USE)
-		1,		//priority
+		2,		//priority
 		10 * 60,		//life
 	},
 	{	//49  一言メッセージ(GAMEBEACON_ACTION_FREEWORD)
-		2,		//priority
+		3,		//priority
 		20 * 60,		//life
 	},
 };
