@@ -107,6 +107,7 @@ typedef enum
   POKETRADE_FACTOR_SINGLE_NG,    //一体選択NG
   POKETRADE_FACTOR_END,            //終わり選択
   POKETRADE_FACTOR_EGG,        // たまごと最後の手持ち交換
+  POKETRADE_FACTOR_WAZA,      //技がまずい
   POKETRADE_FACTOR_TRI_SELECT,   //  ３体選択にすすむ
 
   POKETRADE_FACTOR_TRI_DECIDE,   //  ３たい交換する

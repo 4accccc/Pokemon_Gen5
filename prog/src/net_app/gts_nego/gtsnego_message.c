@@ -101,7 +101,7 @@ typedef struct {
 
 
 struct _GTSNEGO_MESSAGE_WORK {
-  u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
+//  u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
   u32 bgchar2S;  //SystemMsg
   u32 bgchar1M; //info
 

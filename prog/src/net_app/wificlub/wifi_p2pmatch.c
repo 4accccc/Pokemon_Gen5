@@ -3236,9 +3236,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   //      wk->DirectModeNo=0;
     //}
 //  }
-  if(0){
-  }
-  else{
+  {
     int j;
     for(j = 0; j < WIFIP2PMATCH_MEMBER_MAX ; j++){
       int n = GFUser_GetPublicRand0(WIFIP2PMATCH_MEMBER_MAX);  //‚¢‚Â‚àŽá‚¢‡‚É‚È‚ç–³‚¢‚æ‚¤‚É—”ŒŸ¸
@@ -5094,8 +5092,8 @@ void WifiP2PMatchRecvMyStatus(const int netID, const int size, const void* pData
   //‚OC‚PC‚QC‚R‚ª’ÊM—p‚É“ü‚ê‚Ä‚à—Ç‚¢
   pTargetSt = GAMEDATA_GetMyStatusPlayer(wk->pGameData,netID);  //netID‚Å‘ã“ü
   MyStatus_Copy(pData,pTargetSt);
-
-  WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(wk->pGameData), pTargetSt);
+//Žd—l
+//  WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(wk->pGameData), pTargetSt);
 
   //  wk->matchGameMode[netID] = pRecvData[0];
 }

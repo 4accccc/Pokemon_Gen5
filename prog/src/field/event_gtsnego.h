@@ -17,5 +17,6 @@
 
 
 extern GMEVENT* EVENT_GTSNego( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap );
-extern void EVENT_GTSNegoChange(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event);
-
+#if PM_DEBUG
+extern void EVENT_GTSNegoChangeDebug(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event);
+#endif

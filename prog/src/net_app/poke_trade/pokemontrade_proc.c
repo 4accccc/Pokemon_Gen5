@@ -57,6 +57,7 @@
 #include "app/app_menu_common.h"
 
 #include "pokemontrade_local.h"
+#include "waza_tool/wazano_def.h"
 
 #define HEAPSIZE_POKETRADE (0xd2000)   //全共通 WiFiだとほぼマックス
 #define HEAPSIZE_POKETRADE_DEMO (0xa2000)   //全共通 WiFiだとほぼマックス
@@ -1062,6 +1063,44 @@ BOOL POKEMONTRADE_IsEggAndLastBattlePokemonChange(POKEMON_TRADE_WORK* pWork)
 }
 
 
+
+BOOL POKEMONTRADE_IsWazaPokemon(POKEMON_TRADE_WORK* pWork)
+{
+  POKEMON_PARAM* pp1 = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
+  int waza[4];
+  int i;
+  BOOL flg = FALSE;
+
+  if(pWork->type != POKEMONTRADE_TYPE_IRC){
+    return FALSE;
+  }
+  if(pWork->selectBoxno != pWork->BOX_TRAY_MAX){
+    return FALSE;
+  }
+  
+  waza[0]  = PP_Get(pp1,ID_PARA_waza1,NULL);
+  waza[1]  = PP_Get(pp1,ID_PARA_waza2,NULL);
+  waza[2]  = PP_Get(pp1,ID_PARA_waza3,NULL);
+  waza[3]  = PP_Get(pp1,ID_PARA_waza4,NULL);
+
+//いあいぎり／かいりき／なみのり／そらをとぶ／ダイビング／たきのぼり／いわくだき／フラッシュ
+  for(i=0;i<4;i++){
+    switch( waza[i] ){
+    case WAZANO_ANAWOHORU:		// あなをほる
+		case WAZANO_HURASSYU:			// フラッシュ
+		case WAZANO_IAIGIRI:			// いあいぎり
+		case WAZANO_KAIRIKI:			// かいりき
+		case WAZANO_NAMINORI:			// なみのり
+		case WAZANO_SORAWOTOBU:		// そらをとぶ
+		case WAZANO_DAIBINGU:			// ダイビング
+		case WAZANO_TAKINOBORI:		// たきのぼり
+		case WAZANO_IWAKUDAKI:		// いわくだき
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
 //交換選択通信送信
 void POKETRE_MAIN_ChangePokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
 {
@@ -1071,6 +1110,10 @@ void POKETRE_MAIN_ChangePokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
   if( bMode ){
     if(POKEMONTRADE_IsEggAndLastBattlePokemonChange(pWork)){
       u8 cmd = POKETRADE_FACTOR_EGG;
+      bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
+    }
+    else if(POKEMONTRADE_IsWazaPokemon(pWork)){
+      u8 cmd = POKETRADE_FACTOR_WAZA;
       bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
     }
     else{
@@ -1757,6 +1800,12 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
     msgno = POKETRADE_STR_97;
   }
   else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_EGG){
+    msgno = POKETRADE_STR_98;
+  }
+  else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_WAZA){
+    msgno = POKETRADE_STR_97;
+  }
+  else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_WAZA){
     msgno = POKETRADE_STR2_03;
   }
   else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_SINGLE_NG){

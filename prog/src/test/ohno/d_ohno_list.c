@@ -143,6 +143,16 @@ static const D_MENULIST DebugMenuList[] = {
     _PokeTradeDemoWorkCreate,
 		FS_OVERLAY_ID(pokemon_trade)
 	},
+  {//
+		DEBUG_OHNO_MSG0019, 
+//		&PokemonTradeDemoProcData,
+//    &PokemonTradeGTSProcData,
+//    &PokemonTradeGTSSendProcData,
+    &PokemonTradeGTSRecvProcData,
+//    &PokemonTradeGTSMidProcData,
+    _PokeTradeDemoWorkCreate,
+		FS_OVERLAY_ID(pokemon_trade)
+	},
 #if 0
   {//
 		DEBUG_OHNO_MSG0018,
@@ -153,14 +163,14 @@ static const D_MENULIST DebugMenuList[] = {
 //		FS_OVERLAY_ID(gts_negotiate)
 		FS_OVERLAY_ID(pokemon_trade)
 	},
-#endif
-
 	{//
 		DEBUG_OHNO_MSG0018,
 		&GtsNego_ProcData,	
 		_PokeTradeGtsNegoCreate,
 		FS_OVERLAY_ID(gts_negotiate)
 	},
+#endif
+
 
   {//
 		DEBUG_OHNO_MSG0019, 
@@ -571,7 +581,7 @@ static void * _PokeTradeDemoWorkCreate(D_OHNO_WORK *wk)
 	pWork = GFL_HEAP_AllocClearMemory(GFL_HEAPID_APP, sizeof(POKEMONTRADE_DEMO_PARAM));
 
   pWork->pMyPoke = PP_Create(MONSNO_509, 100, 123456, GFL_HEAPID_APP);
-  pWork->pNPCPoke = PP_Create(MONSNO_509, 100, 123456, GFL_HEAPID_APP);
+  pWork->pNPCPoke = PP_Create(MONSNO_510, 100, 123456, GFL_HEAPID_APP);
 
 
   pWork->gamedata = GAMEDATA_Create(GFL_HEAPID_APP);

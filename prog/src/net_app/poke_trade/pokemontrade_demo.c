@@ -427,6 +427,16 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.y = _POKEMON_PLAYER_CENTER_POSY;
       apos.z = _POKEMON_PLAYER_CENTER_POSZ;
       MCSS_SetPosition( pWork->pokeMcss[num] ,&apos );
+      MCSS_GetScale( pWork->pokeMcss[num], &apos );
+      if(apos.x < 0){
+        apos.x = -FX32_ONE*16;
+      }
+      else{
+        apos.x = FX32_ONE*16;
+      }
+      apos.y = FX32_ONE*16;
+      apos.z = FX32_ONE;
+      MCSS_SetScale( pWork->pokeMcss[num], &apos );
       MCSS_SetAnmStopFlag(pWork->pokeMcss[num]);
       
       MCSS_SetPaletteFade( pWork->pokeMcss[num], 16, 16, 0, 0x7fff );

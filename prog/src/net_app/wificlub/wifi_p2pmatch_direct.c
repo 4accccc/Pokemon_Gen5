@@ -867,7 +867,7 @@ static u32 _createRegulation(WIFIP2PMATCH_WORK *wk)
 static void _convertRegulation(WIFIP2PMATCH_WORK *wk,u32 regulation)
 {
   int i;
-  if(regulation | 0x80000000){
+  if(regulation & 0x80000000){
     wk->battleShooter = 1;
   }
   else{
@@ -937,7 +937,7 @@ static int _playerDirectNoregParent( WIFIP2PMATCH_WORK *wk, int seq )
   EndMessageWindowOff(wk);
 
   _CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit );
-  _Menu_RegulationSetup(wk, fail_bit, 1-wk->battleShooter , REGWIN_TYPE_NG_TEMOTI);
+  _Menu_RegulationSetup(wk, fail_bit, wk->battleShooter , REGWIN_TYPE_NG_TEMOTI);
 
   _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT1);
   return seq;
@@ -948,7 +948,7 @@ static int _playerDirectNoregParent1( WIFIP2PMATCH_WORK *wk, int seq )
   u32 fail_bit;
   if(GFL_UI_KEY_GetTrg()){
     _CheckRegulation_BBox(wk->pRegulation, wk->pGameData, &fail_bit );
-    _Menu_RegulationSetup(wk, fail_bit, 1-wk->battleShooter , REGWIN_TYPE_NG_BBOX);
+    _Menu_RegulationSetup(wk, fail_bit, wk->battleShooter , REGWIN_TYPE_NG_BBOX);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT2);
   }
   return seq;
@@ -969,7 +969,7 @@ static int _playerDirectNoregParent2( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerDirectBattleWatch( WIFIP2PMATCH_WORK *wk, int seq )
 {
   u32 regulation = _createRegulation(wk);
-  _Menu_RegulationSetup(wk,0,1-wk->battleShooter ,REGWIN_TYPE_RULE);
+  _Menu_RegulationSetup(wk,0,wk->battleShooter ,REGWIN_TYPE_RULE);
   _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_WATCH2);
   return seq;
 }
@@ -1000,7 +1000,7 @@ static int _playerDirectBattleGO( WIFIP2PMATCH_WORK *wk, int seq )
   if(!GFL_NET_IsParentMachine()){
     u32 regulation = _createRegulation(wk);
 
-    _Menu_RegulationSetup(wk,0,1-wk->battleShooter ,REGWIN_TYPE_RULE_SHORT);
+    _Menu_RegulationSetup(wk,0,wk->battleShooter ,REGWIN_TYPE_RULE_SHORT);
 
     _friendNameExpand(wk,  wk->friendNo - 1);
 //    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1032, FALSE);

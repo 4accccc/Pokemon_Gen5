@@ -330,12 +330,21 @@ void GTSNEGO_DISP_End(GTSNEGO_DISP_WORK* pWork)
   BLINKPALANM_Exit(pWork->pBlink);
   BLINKPALANM_Exit(pWork->pBlinkUnder);
 
-//  GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_M, 1, 0);
+  GFL_BG_FreeCharacterArea(GFL_BG_FRAME3_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->backchar),
+                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->backchar));
+  GFL_BG_FreeCharacterArea(GFL_BG_FRAME0_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar),
+                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->subchar));
+  GFL_BG_FreeCharacterArea(GFL_BG_FRAME0_M,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar),
+                           GFL_ARCUTIL_TRANSINFO_GetSize(pWork->mainchar));
+  
+  GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_M, 1, 0);
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_S, 1, 0);
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME2_S, 1, 0);
-  GFL_BG_FreeBGControl(GFL_BG_FRAME1_S);
-  GFL_BG_FreeBGControl(GFL_BG_FRAME0_S);
   GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+
+  for(i=GFL_BG_FRAME0_M;i<=GFL_BG_FRAME3_S;i++){
+    GFL_BG_FreeBGControl(i);
+  }
 	GFL_BG_Exit();
   GFL_HEAP_FreeMemory(pWork);
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));

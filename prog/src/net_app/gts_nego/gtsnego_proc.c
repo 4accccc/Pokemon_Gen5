@@ -286,6 +286,7 @@ static void _recvInfomationData(const int netID, const int size, const void* pDa
     return;//Ž©•ª‚Ì‚Í¡‚ÍŽó‚¯Žæ‚ç‚È‚¢
   }
   GFL_STD_MemCopy(pData,&pEv->aUser[1],sizeof(EVENT_GTSNEGO_USER_DATA));
+  NET_PRINT("GTStype %d %d\n",pEv->aUser[1].selectType ,pEv->aUser[1].selectLV);
 }
 
 //------------------------------------------------------------------------------
@@ -675,6 +676,9 @@ static void _timingCheck( GTSNEGO_WORK *pWork )
 
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO2, WB_NET_GTSNEGO)){
     EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+
+    NET_PRINT("GTStype %d %d\n",pEv->aUser[0].selectType ,pEv->aUser[0].selectLV);
+
     if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_INFOSEND, sizeof(EVENT_GTSNEGO_USER_DATA),&pEv->aUser[0])){
       _CHANGE_STATE(pWork,_pmssendCheck);
     }
@@ -707,8 +711,10 @@ static void _friendGreeState( GTSNEGO_WORK *pWork )
   }
   else if(GFL_NET_HANDLE_GetNumNegotiation()==2){
     EVENT_GTSNEGO_WORK *pParent = pWork->dbw;
-    pParent->aUser[0].selectLV = pWork->myChageType;
-    pParent->aUser[0].selectType = pWork->changeMode;
+    pParent->aUser[0].selectLV = pWork->chageLevel;
+    pParent->aUser[0].selectType = pWork->myChageType;
+    OS_TPrintf("myChageType %d %d\n",pWork->chageLevel,pWork->myChageType);
+
     WIFI_NEGOTIATION_SV_GetMsg(GAMEDATA_GetWifiNegotiation(pWork->pGameData),&pWork->myMatchData.pms);
     pWork->myMatchData.num = WIFI_NEGOTIATION_SV_GetChangeCount(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO2, WB_NET_GTSNEGO);
@@ -752,18 +758,17 @@ static void _lookatDownState( GTSNEGO_WORK *pWork )
     pWork->timer--;
   }
   else{
-    pWork->timer = _FRIEND_GREE_DOWN_TIME;
     if(GFL_NET_SystemGetCurrentID() != GFL_NET_NO_PARENTMACHINE){  // Žq‹@‚Æ‚µ‚ÄÚ‘±‚ªŠ®—¹‚µ‚½
       if(GFL_NET_HANDLE_RequestNegotiation()){
+        pWork->timer = _FRIEND_GREE_DOWN_TIME;
         _CHANGE_STATE(pWork,_friendGreeState);
       }
     }
     else{
+      pWork->timer = _FRIEND_GREE_DOWN_TIME;
       _CHANGE_STATE(pWork,_friendGreeStateParent);
     }
   }
-
-
 }
 
 

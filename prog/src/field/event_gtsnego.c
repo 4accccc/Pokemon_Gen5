@@ -75,6 +75,9 @@ typedef struct
   POKEMONTRADE_PARAM aPokeTr;
   WIFILOGIN_PARAM     login;
   BOOL bFieldEnd;
+#if PM_DEBUG
+  BOOL is_debug;
+#endif
 } EVENT_GTSNEGO_LINK_WORK;
 
 
@@ -98,6 +101,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
       fade_event = EVENT_FieldFadeOut_Black(gsys, pFieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
+    
     dbw->soundNo = PMSND_GetBGMsoundNo();
     PMSND_FadeOutBGM(6);
     (*seq) ++;
@@ -206,11 +210,13 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     (*seq) ++;
     break;
   case _FIELD_FADEIN:
-    {
+#if PM_DEBUG
+    if(dbw->is_debug){
       GMEVENT* fade_event;
       fade_event = EVENT_FieldFadeIn_Black(gsys, pFieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
+#endif
     (*seq) ++;
     break;
   case _FIELD_END:
@@ -223,7 +229,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
 /*
  *  @brief  WiFiクラブ呼び出しパラメータセット
  */
-static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,BOOL bFieldEnd )
+static EVENT_GTSNEGO_LINK_WORK* wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap,BOOL bFieldEnd )
 {
   BATTLE_SETUP_PARAM * para;
   EVENT_GTSNEGO_LINK_WORK * dbw;
@@ -256,6 +262,7 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
     dbw->login.display = WIFILOGIN_BG_NORMAL;
     dbw->login.display = WIFILOGIN_DISPLAY_UP;
   }
+  return dbw;
 }
 
 //------------------------------------------------------------------
@@ -269,16 +276,20 @@ GMEVENT* EVENT_GTSNego( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
   wifi_SetEventParam( event, gsys, fieldmap,FALSE );
   return event;
 }
+
+#if PM_DEBUG
 //------------------------------------------------------------------
 /*
  *  @brief  WiFiクラブイベントチェンジ
  */
 //------------------------------------------------------------------
-void EVENT_GTSNegoChange(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event)
+void EVENT_GTSNegoChangeDebug(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap,GMEVENT * event)
 {
+  EVENT_GTSNEGO_LINK_WORK* dbw ;
   GMEVENT_Change( event, EVENT_GTSNegoMain, sizeof(EVENT_GTSNEGO_LINK_WORK) );
-  wifi_SetEventParam( event, gsys, fieldmap,TRUE );
+  dbw = wifi_SetEventParam( event, gsys, fieldmap,TRUE );
+  dbw->is_debug=TRUE;
 }
-
+#endif
 
 
