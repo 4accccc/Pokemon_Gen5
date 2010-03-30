@@ -456,8 +456,15 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
       {
         evWork->subSeq = 0;
         evWork->state = MES_WAITROOM_THIRD;
-        MUSICAL_EVENT_CalcFanState( evWork );
-        MUSICAL_EVENT_SetSaveData( evWork );
+        if( evWork->isNetErr == TRUE )
+        {
+          evWork->state = MES_ERROR_INIT;
+        }
+        else
+        {
+          MUSICAL_EVENT_CalcFanState( evWork );
+          MUSICAL_EVENT_SetSaveData( evWork );
+        }
       }
     }
     break;
@@ -468,27 +475,38 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     evWork->state = MES_TERM_MUSICAL;
     break;
     
+    /*
   case MES_EXIT_WAITROOM_THIRD:
     {
-      const BOOL isFinish = MUSICAL_EVENT_ExitField( event , evWork );
-      if( isFinish == TRUE )
+      if( evWork->isNetErr == TRUE )
       {
-        evWork->subSeq = 0;
-        evWork->state = MES_TERM_MUSICAL;
-        if( evWork->isNetErr == TRUE )
+        evWork->state = MES_ERROR_INIT;
+      }
+      else
+      {
+        const BOOL isFinish = MUSICAL_EVENT_ExitField( event , evWork );
+        if( isFinish == TRUE )
         {
-          evWork->state = MES_ERROR_INIT;
+          evWork->subSeq = 0;
+          evWork->state = MES_TERM_MUSICAL;
         }
       }
     }
     break;
-    
+    */
   //”X‚ÌŠJ•ú
   //------------------------------
   case MES_TERM_MUSICAL:
-    MUSICAL_EVENT_TermMusical( evWork );
-    MUSICAL_EVENT_JumpMusicalHall( event , evWork );
-    evWork->state = MES_CALL_HALL_EVENT;
+    if( evWork->isNetErr == TRUE )
+    {
+      evWork->state = MES_ERROR_INIT;
+    }
+    else
+    {
+      MUSICAL_EVENT_TermMusical( evWork );
+      MUSICAL_EVENT_JumpMusicalHall( event , evWork );
+      evWork->state = MES_CALL_HALL_EVENT;
+    }
     break;
   
   case MES_CALL_HALL_EVENT:

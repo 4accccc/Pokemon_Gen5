@@ -894,6 +894,16 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
       *ret_wk = FALSE;
     }
     break;
+  case MUSICAL_TOOL_IS_COMM:
+    if( musScriptWork->commWork != NULL )
+    {
+      *ret_wk = TRUE;
+    }
+    else
+    {
+      *ret_wk = FALSE;
+    }
+    break;
   case MUSICAL_TOOL_PRINT:
     ARI_TPrintf("----------------------------\n");
     ARI_TPrintf("ScriptMusTools Print[%d][%d]\n",val1,val2);

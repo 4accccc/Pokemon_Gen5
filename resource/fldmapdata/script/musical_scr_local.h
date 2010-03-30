@@ -106,6 +106,7 @@
 #define MUSICAL_TOOL_COMM_WAIT_POST_ALLPOKE (17)  //ポケ受信待ち
 #define MUSICAL_TOOL_COMM_IR_CONNECT (18) //赤外線接続
 #define MUSICAL_TOOL_COMM_CHECK_ERROR (19) //エラーチェック
+#define MUSICAL_TOOL_IS_COMM (20) //通信か？
 
 #define MUSICAL_TOOL_PRINT (100) //デバッグ出力
 
@@ -121,3 +122,4 @@
 //タイミングシンク用番号
 #define MUSICAL_COMM_SYNC_FIRST (10)
 #define MUSICAL_COMM_SYNC_DRESSUP_START (11)
+#define MUSICAL_COMM_SYNC_GRADE_START (12)

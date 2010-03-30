@@ -154,6 +154,7 @@ EVENT_END
 EVENT_START ev_musical_return_hall
   _MAP_FADE_BLACK_IN( )
   _MAP_FADE_END_CHECK()
+  _MSGWIN_SET_AUTOPRINT( FALSE )
 EVENT_END
 
 /*************************************************************/
@@ -162,9 +163,10 @@ EVENT_END
 EVENT_START ev_musical_return_hall_err
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
+  _MSGWIN_SET_AUTOPRINT( FALSE )
 
-  _BALLOONWIN_OBJMSG( msg_musical_test_03, MUSICAL_RECEPT_COMM )
-  _BALLOONWIN_CLOSE()
+//  _BALLOONWIN_OBJMSG( msg_musical_test_03, MUSICAL_RECEPT_COMM )
+//  _BALLOONWIN_CLOSE()
 
 EVENT_END
 
