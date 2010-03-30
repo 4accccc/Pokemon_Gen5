@@ -234,7 +234,7 @@ static const u16 FIELD_MENU_ITEM_MSG_ARR[FMIT_MAX] =
 };
 
 
-static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX+1][3] =
+static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX+2][3] =
 {
   //ダミー
   { NARC_field_menu_menu_obj_common_NCGR, 
@@ -272,9 +272,14 @@ static const u32 FIELD_MENU_ITEM_ICON_RES_ARR[FMIT_MAX+1][3] =
   { NARC_field_menu_menu_icon_itembag2_NCGR,
     NARC_field_menu_menu_icon_itembag2_NCER,
     NARC_field_menu_menu_icon_itembag2_NANR},
+  // 図鑑(女の子）
+  { NARC_field_menu_menu_icon_zukan2_NCGR,
+    NARC_field_menu_menu_icon_zukan2_NCER,
+    NARC_field_menu_menu_icon_zukan2_NANR},
 };
 
-#define GIRLS_BAG_RES   ( 8 )
+#define GIRLS_BAG_RES     ( 8 )
+#define GIRLS_ZUKAN_RES   ( 9 )
 
 //--------------------------------------------------------------
 //  初期化
@@ -1009,6 +1014,12 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, 
         initWork.nceArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[GIRLS_BAG_RES][1];
         initWork.anmArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[GIRLS_BAG_RES][2];
       }
+      // バッグで女の子の時はリソースを差し替えて登録
+      if(itemType==FMIT_ZUKAN && MyStatus_GetMySex( work->my )==1){
+        initWork.ncgArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[GIRLS_ZUKAN_RES][0];
+        initWork.nceArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[GIRLS_ZUKAN_RES][1];
+        initWork.anmArcIdx  = FIELD_MENU_ITEM_ICON_RES_ARR[GIRLS_ZUKAN_RES][2];
+      }
     }
     else
     {
@@ -1269,9 +1280,10 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
 //      work->state = FMS_EXIT_INIT;
     }
     else
-    { // カーソル表示
-      work->isDispCursor = TRUE;
+    { // 隠れていたカーソル表示
+      work->isDispCursor   = TRUE;
       work->isUpdateCursor = TRUE;
+      work->activeIcon = NULL;
       GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
     }
 
