@@ -31,6 +31,7 @@
 #include "sound/pm_sndsys.h"
 #include "field/event_intrude_subscreen.h"
 #include "field/scrcmd_intrude.h"
+#include "intrude_field.h"
 
 
 //==============================================================================
@@ -318,20 +319,10 @@ typedef struct _INTRUDE_SUBDISP{
   u8 print_mission_status;  ///<現在表示しているミッション状況
   u8 back_exit;           ///< TRUE:「もどる」ボタンを押して下画面終了モードになっている
   
+  u16 warp_zone_id;
   u8 event_req;           ///< _EVENT_REQ_NO_xxx
-  u8 padding[3];
+  u8 padding;
 }INTRUDE_SUBDISP;
-
-///パレスゾーン設定データ
-typedef struct{
-  u16 zone_id;            ///<このデータ対象のゾーンID
-  u16 warp_zone_id;       ///<ワープ先ゾーンID
-  s16 warp_grid_x;        ///<ワープ先X座標
-  s16 warp_grid_y;        ///<ワープ先Y座標
-  s16 warp_grid_z;        ///<ワープ先Z座標
-  u8 sub_x;               ///<下画面座標X
-  u8 sub_y;               ///<下画面座標Y
-}PALACE_ZONE_SETTING;
 
 
 //==============================================================================
@@ -409,11 +400,6 @@ enum{
 static const s8 WearOffset[FIELD_COMM_MEMBER_MAX][2] = {
   {-4, -4}, {4, -4}, {0, 4},
 };
-
-//--------------------------------------------------------------
-//  外部データ
-//--------------------------------------------------------------
-#include "palace_zone_setting.cdat"
 
 
 
@@ -534,7 +520,7 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
             FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(intsub->gsys);
             FIELD_SUBSCREEN_WORK *subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
 
-            Intrude_SetWarpTown(game_comm, PALACE_TOWN_WFBC);
+            intsub->warp_zone_id = ZONE_ID_PLC10;
             intsub->event_req = _EVENT_REQ_NO_TOWN_WARP;
             intsub->wfbc_go = FALSE;
           }
@@ -610,7 +596,7 @@ GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, F
   switch(intsub->event_req){
   case _EVENT_REQ_NO_TOWN_WARP:
     PMSND_PlaySE( SEQ_SE_FLD_102 );
-    return EVENT_IntrudeTownWarp(intsub->gsys, fieldWork, Intrude_GetWarpTown(game_comm));
+    return EVENT_IntrudeTownWarp(intsub->gsys, fieldWork, intsub->warp_zone_id);
   case _EVENT_REQ_NO_PLAYER_WARP:
     PMSND_PlaySE( SEQ_SE_FLD_102 );
     return EVENT_IntrudePlayerWarp(intsub->gsys, fieldWork, Intrude_GetWarpPlayerNetID(game_comm));
@@ -1247,27 +1233,6 @@ static void _IntSub_ActorUpdate_Area(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *ar
 
 //--------------------------------------------------------------
 /**
- * ゾーンIDと一致するパレス設定データへのポインタを取得する
- *
- * @param   zone_id		
- *
- * @retval  const PALACE_ZONE_SETTING *		一致するデータが無い場合はNULL
- */
-//--------------------------------------------------------------
-static const PALACE_ZONE_SETTING * _GetZoneSettingData(ZONEID zone_id)
-{
-  int i;
-  
-  for(i = 0; i < NELEMS(PalaceZoneSetting); i++){
-    if(PalaceZoneSetting[i].zone_id == zone_id){
-      return &PalaceZoneSetting[i];
-    }
-  }
-  return NULL;
-}
-
-//--------------------------------------------------------------
-/**
  * 更新処理：通信相手カーソル
  *
  * @param   intsub		
@@ -1324,7 +1289,7 @@ static void _IntSub_ActorUpdate_CursorS(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM
         pos.y = PALACE_CURSOR_POS_Y + WearOffset[net_id][1];
       }
       else{
-        const PALACE_ZONE_SETTING *zonesetting = _GetZoneSettingData(ist->zone_id);
+        const PALACE_ZONE_SETTING *zonesetting = IntrudeField_GetZoneSettingData(ist->zone_id);
         if(zonesetting != NULL){
           pos.x = zonesetting->sub_x + WearOffset[net_id][0];
           pos.y = zonesetting->sub_y + WearOffset[net_id][1];
@@ -1383,7 +1348,7 @@ static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO 
     pos.y = PALACE_CURSOR_POS_Y + WearOffset[intsub->my_net_id][1];
   }
   else{
-    const PALACE_ZONE_SETTING *zonesetting = _GetZoneSettingData(my_zone_id);
+    const PALACE_ZONE_SETTING *zonesetting = IntrudeField_GetZoneSettingData(my_zone_id);
     if(zonesetting != NULL){
       pos.x = zonesetting->sub_x + WearOffset[intsub->my_net_id][0];
       pos.y = zonesetting->sub_y + WearOffset[intsub->my_net_id][1];
@@ -1711,7 +1676,8 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
           intsub->wfbc_seq = 0;
         }
         else{
-          Intrude_SetWarpTown(game_comm, i);
+          const PALACE_ZONE_SETTING *zonesetting = IntrudeField_GetZoneSettingData(PalaceTownData[i].front_zone_id);
+          intsub->warp_zone_id = zonesetting->warp_zone_id;
           intsub->event_req = _EVENT_REQ_NO_TOWN_WARP;
         }
         return;
@@ -1723,7 +1689,7 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
   _SetRect(PALACE_ICON_POS_X, PALACE_ICON_POS_Y, 
     PALACE_ICON_HITRANGE_HALF, PALACE_ICON_HITRANGE_HALF, &rect);
   if(_CheckRectHit(x, y, &rect) == TRUE){
-    Intrude_SetWarpTown(game_comm, PALACE_TOWN_DATA_PALACE);
+    intsub->warp_zone_id = ZONE_ID_PALACE01;
     intsub->event_req = _EVENT_REQ_NO_TOWN_WARP;
     return;
   }

@@ -107,6 +107,21 @@ static GMEVENT * EVENT_PalaceBarrierMove( GAMESYS_WORK *gsys, FIELDMAP_WORK *fie
 static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *wk );
 
 
+//==============================================================================
+//  データ
+//==============================================================================
+///パレスへワープしてきたときの出現座標
+static const VecFx32 PalaceWarpPos = {
+  PALACE_MAP_LEN/2 - 1*FX32_ONE,
+  32*FX32_ONE,
+  488 * FX32_ONE,
+};
+
+//--------------------------------------------------------------
+//  外部データ
+//--------------------------------------------------------------
+#include "palace_zone_setting.cdat"
+
 
 //==============================================================================
 //
@@ -1251,4 +1266,52 @@ GMEVENT * IntrudeField_CheckSecretItemEvent(GAMESYS_WORK *gsys, INTRUDE_COMM_SYS
   }
   
   return NULL;
+}
+
+//==================================================================
+/**
+ * ゾーンIDと一致するパレス設定データへのポインタを取得する
+ *
+ * @param   zone_id		
+ *
+ * @retval  const PALACE_ZONE_SETTING *		一致するデータが無い場合はNULL
+ */
+//==================================================================
+const PALACE_ZONE_SETTING * IntrudeField_GetZoneSettingData(u16 zone_id)
+{
+  int i;
+  
+  for(i = 0; i < NELEMS(PalaceZoneSetting); i++){
+    if(PalaceZoneSetting[i].zone_id == zone_id){
+      return &PalaceZoneSetting[i];
+    }
+  }
+  return NULL;
+}
+
+//==================================================================
+/**
+ * パレスタウンへワープする為の座標取得
+ *
+ * @param   zone_id		ワープ先ゾーンID
+ * @param   vec		    ワープ先座標代入先
+ *
+ * @retval  BOOL		  TRUE:正常終了　FALSE:パレスに関連するゾーンIDではない為、データ未取得
+ */
+//==================================================================
+BOOL IntrudeField_GetPalaceTownZoneID(u16 zone_id, VecFx32 *vec)
+{
+  if(ZONEDATA_IsPalace(zone_id) != TRUE){
+    const PALACE_ZONE_SETTING *zonesetting = IntrudeField_GetZoneSettingData(zone_id);
+    if(zonesetting == NULL){
+      GF_ASSERT_MSG(0, "zone_id = %d", zone_id);
+      return FALSE;
+    }
+    VEC_Set(vec, GRID_SIZE_FX32(zonesetting->warp_grid_x), 
+      GRID_SIZE_FX32(zonesetting->warp_grid_y), GRID_SIZE_FX32(zonesetting->warp_grid_z));
+  }
+  else{
+    *vec = PalaceWarpPos;
+  }
+  return TRUE;
 }

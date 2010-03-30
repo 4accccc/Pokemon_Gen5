@@ -148,12 +148,6 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
 };
 SDK_COMPILER_ASSERT(NELEMS(PalaceTownData) == PALACE_TOWN_DATA_MAX);
 
-///パレスへワープしてきたときの出現座標
-static const VecFx32 PalaceWarpPos = {
-  PALACE_MAP_LEN/2 - 1*FX32_ONE,
-  32*FX32_ONE,
-  488 * FX32_ONE,
-};
 
 //--------------------------------------------------------------
 //  
@@ -965,47 +959,6 @@ FIELD_SUBSCREEN_MODE Intrude_SUBSCREEN_Watch(GAME_COMM_SYS_PTR game_comm, FIELD_
 #endif
 
   return FIELD_SUBSCREEN_MODE_MAX;
-}
-
-//==================================================================
-/**
- * パレスタウンの裏フィールドのゾーンIDを取得
- *
- * @param   town_tblno		
- *
- * @retval  int		
- */
-//==================================================================
-int Intrude_GetPalaceTownZoneID(int town_tblno)
-{
-  if(town_tblno == PALACE_TOWN_DATA_PALACE){
-    return ZONE_ID_PALACE01;
-  }
-  return PalaceTownData[town_tblno].reverse_zone_id;
-}
-
-//==================================================================
-/**
- * パレスタウンのワープ出現先座標をランダムで取得します
- *
- * @param   town_tblno		
- * @param   vec		
- */
-//==================================================================
-void Intrude_GetPalaceTownRandPos(int town_tblno, VecFx32 *vec, int palace_area)
-{
-  int rand_no;
-  
-  if(town_tblno == PALACE_TOWN_DATA_PALACE){
-    *vec = PalaceWarpPos;
-//    vec->x += palace_area * PALACE_MAP_LEN;
-    return;
-  }
-  rand_no = GFUser_GetPublicRand0(PALACE_WARP_POS_PATERN);
-  vec->x = GRID_TO_FX32( PalaceTownData[town_tblno].warp_pos[rand_no].gx );
-  vec->y = PalaceTownData[town_tblno].warp_pos[rand_no].y * FX32_ONE;
-  vec->z = GRID_TO_FX32( PalaceTownData[town_tblno].warp_pos[rand_no].gz );
-  GF_ASSERT(vec->x != 0 || vec->y != 0 || vec->z != 0); //全部0は設定し忘れ
 }
 
 //==================================================================

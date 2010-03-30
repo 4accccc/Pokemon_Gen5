@@ -894,6 +894,53 @@ static GMEVENT_RESULT EVENT_MapChangeBGMKeep( GMEVENT* event, int* seq, void* wk
 
 //------------------------------------------------------------------
 /**
+ * @brief パレス間ワープ(裏から裏)によるマップチェンジ
+ */
+//------------------------------------------------------------------
+static GMEVENT_RESULT EVENT_MapChangePalace_to_Palace( GMEVENT* event, int* seq, void* wk )
+{
+  MAPCHANGE_WORK*  work       = wk;
+  GAMESYS_WORK*    gameSystem = work->gameSystem;
+  GAMEDATA*        gameData   = work->gameData;
+  FIELDMAP_WORK*   fieldmap   = work->fieldmap;
+  FIELD_SOUND*    fieldSound = GAMEDATA_GetFieldSound( gameData );
+
+  switch( *seq )
+  {
+  case 0:
+    // 動作モデル停止
+    GMEVENT_CallEvent( event, EVENT_ObjPauseAll( gameSystem, fieldmap ) );
+    (*seq)++;
+    break;
+  case 1:
+    // 画面フェードアウト ( クロスフェード )
+    GMEVENT_CallEvent( event, EVENT_FieldFadeOut_Cross( gameSystem, fieldmap ) );
+    (*seq)++;
+    break;
+  case 2:
+    // BGM変更
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
+    FSND_PlayStartBGM( fieldSound );
+    (*seq)++;
+    break;
+  case 3:
+    // マップチェンジ コア イベント
+    GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, work->mapchange_type ) );
+    (*seq)++;
+    break;
+  case 4:
+    // 画面フェードイン ( クロスフェード )
+    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_Cross( gameSystem, fieldmap ) );
+    (*seq)++;
+    break;
+  case 5:
+    return GMEVENT_RES_FINISH; 
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//------------------------------------------------------------------
+/**
  * @brief 流砂によるマップチェンジ
  */
 //------------------------------------------------------------------
@@ -1527,7 +1574,7 @@ GMEVENT* EVENT_ChangeMapToUnion( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldm
   // イベントワーク初期化
   MAPCHANGE_WORK_init( work, gameSystem ); 
   LOCATION_SetDirect( &(work->loc_req), ZONE_ID_UNION, 
-    DIR_UP, NUM_FX32(184), NUM_FX32(0), NUM_FX32(248) ); 
+    EXITDIR_fromDIR(DIR_UP), NUM_FX32(184), NUM_FX32(0), NUM_FX32(248) ); 
   work->exit_type = EXIT_TYPE_NONE;
   
   return event;
@@ -1566,13 +1613,12 @@ GMEVENT* EVENT_ChangeMapFldToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecF
   VecFx32 calc_pos = *pos;
   
   //裏フィールド以外から、パレスへ飛ぶ場合通常フィールドへの戻り先を記録しておく
-  if (GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE && zone_id == ZONE_ID_PALACE01 )
   {
     LOCATION return_loc;
     setNowLoaction( &return_loc, fieldWork );
     GAMEDATA_SetPalaceReturnLocation(gamedata, &return_loc);
   }
-  GAMEDATA_SetIntrudeReverseArea(gamedata, TRUE);
+
   {
     LOCATION loc;
     int map_offset, palace_area;
@@ -1593,59 +1639,13 @@ GMEVENT* EVENT_ChangeMapFldToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecF
     }
     calc_pos.x += PALACE_MAP_LEN * map_offset;
     
-    LOCATION_SetDirect( &loc, zone_id, DIR_UP, calc_pos.x, calc_pos.y, calc_pos.z );
+    LOCATION_SetDirect( &loc, zone_id, EXITDIR_fromDIR( DIR_UP ), 
+      calc_pos.x, calc_pos.y, calc_pos.z );
     event = EVENT_ChangeMapPalaceWithCheck( gsys, fieldWork, &loc );
   }
   return event;
 }
 
-//------------------------------------------------------------------
-/**
- * @brief パレスマップに移動するとき
- */
-//------------------------------------------------------------------
-GMEVENT* EVENT_ChangeMapToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecFx32* pos )
-{
-  GMEVENT * event;
-  FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
-  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
-  VecFx32 calc_pos = *pos;
-  
-  //裏フィールド以外から、パレスへ飛ぶ場合通常フィールドへの戻り先を記録しておく
-  if (GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE && zone_id == ZONE_ID_PALACE01 )
-  {
-    LOCATION return_loc;
-    setNowLoaction( &return_loc, fieldWork );
-    GAMEDATA_SetPalaceReturnLocation(gamedata, &return_loc);
-//    PMSND_PlaySE( SEQ_SE_FLD_131 ); //SEの確認用にエフェクトは無いけどあてておく
-  }
-  GAMEDATA_SetIntrudeReverseArea(gamedata, TRUE);
-//  event = EVENT_ChangeMapPos(gsys, fieldWork, zone_id, pos, DIR_UP, FALSE);
-  {
-    LOCATION loc;
-    int map_offset, palace_area;
-    GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
-    
-    if(intcomm == NULL){
-      palace_area = 0;
-      map_offset = 0;
-    }
-    else{
-      //子機の場合、palace_area == 0 が左端、ではなく自分のNetIDのパレスが左端の為。
-      palace_area = intcomm->intrude_status_mine.palace_area;
-      map_offset = palace_area - GAMEDATA_GetIntrudeMyID(gamedata);
-      if(map_offset < 0){
-        map_offset = intcomm->member_num + map_offset;
-      }
-    }
-    calc_pos.x += PALACE_MAP_LEN * map_offset;
-    
-    LOCATION_SetDirect( &loc, zone_id, DIR_UP, calc_pos.x, calc_pos.y, calc_pos.z );
-    event = EVENT_ChangeMapPalace( gsys, fieldWork, &loc );
-  }
-  return event;
-}
 //------------------------------------------------------------------
 /**
  * @brief パレスから自分のフィールドに戻るとき
@@ -1821,6 +1821,57 @@ GMEVENT * EVENT_ChangeMapBGMKeep( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* field
   dir = EXITDIR_fromDIR( dir );
   LOCATION_SetDirect( &(work->loc_req), zoneID, dir, pos->x, pos->y, pos->z );
   work->exit_type = EXIT_TYPE_NONE;
+  
+  return event;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief マップ遷移イベント生成 (パレス間ワープ(裏から裏))
+ * @param gameSystem ゲームシステムへのポインタ
+ * @param fieldmap   フィールドシステムへのポインタ
+ * @param zoneID     遷移するマップのZONE指定
+ * @param pos        遷移するマップでの座標指定
+ * @param dir        遷移するマップでの方向指定
+ * @return GMEVENT  生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+GMEVENT * EVENT_ChangeMapPalace_to_Palace( GAMESYS_WORK* gameSystem, u16 zoneID, const VecFx32* pos )
+{
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
+  VecFx32 calc_pos = *pos;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gameSystem);
+  
+  event = GMEVENT_Create( gameSystem, NULL, EVENT_MapChangePalace_to_Palace, sizeof(MAPCHANGE_WORK) );
+  work  = GMEVENT_GetEventWork( event );
+
+  if(ZONEDATA_IsPalace(zoneID) == TRUE){
+    int map_offset, palace_area;
+    GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSystem);
+    INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+    
+    if(intcomm == NULL){
+      palace_area = 0;
+      map_offset = 0;
+    }
+    else{
+      //子機の場合、palace_area == 0 が左端、ではなく自分のNetIDのパレスが左端の為。
+      palace_area = intcomm->intrude_status_mine.palace_area;
+      map_offset = palace_area - GAMEDATA_GetIntrudeMyID(gamedata);
+      if(map_offset < 0){
+        map_offset = intcomm->member_num + map_offset;
+      }
+    }
+    calc_pos.x += PALACE_MAP_LEN * map_offset;
+  }
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  LOCATION_SetDirect(&(work->loc_req), zoneID, EXITDIR_fromDIR( DIR_UP ), 
+    calc_pos.x, calc_pos.y, calc_pos.z );
+  work->exit_type = EXIT_TYPE_NONE;
+  work->seasonUpdateEnable = FALSE;
   
   return event;
 }
@@ -2496,6 +2547,7 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
   case 1:
     {
       GMEVENT* call_event;
+      GAMEDATA_SetIntrudeReverseArea(work->gameData, TRUE);
       call_event = EVENT_ChangeMapPalace( work->gameSystem, work->fieldmap, &work->Loc );
       GMEVENT_ChangeEvent(event, call_event);
     }

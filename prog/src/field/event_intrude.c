@@ -33,6 +33,7 @@
 #include "sound/pm_sndsys.h"
 #include "event_mapchange.h"
 #include "sound/pm_sndsys.h"
+#include "fieldmap/zone_id.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -585,15 +586,10 @@ FIRST_TALK_RET EVENT_INTRUDE_FirstTalkSeq(INTRUDE_COMM_SYS_PTR intcomm, COMMTALK
 GMEVENT * EVENT_IntrudeWarpMyPalace(GAMESYS_WORK *gsys)
 {
   GMEVENT * event;
-  ZONEID warp_zone_id;
   VecFx32 pos;
-  int palace_area;
   
-  palace_area = GAMEDATA_GetIntrudeMyID(GAMESYSTEM_GetGameData(gsys));
-  warp_zone_id = Intrude_GetPalaceTownZoneID(PALACE_TOWN_DATA_PALACE);
-  Intrude_GetPalaceTownRandPos(PALACE_TOWN_DATA_PALACE, &pos, palace_area);
-  
-  event = EVENT_ChangeMapToPalace( gsys, warp_zone_id, &pos );
+  IntrudeField_GetPalaceTownZoneID(ZONE_ID_PALACE01, &pos);
+  event = EVENT_ChangeMapPalace_to_Palace( gsys, ZONE_ID_PALACE01, &pos );
   return event;
 }
 

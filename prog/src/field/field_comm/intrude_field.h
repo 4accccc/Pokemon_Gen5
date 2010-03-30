@@ -36,6 +36,21 @@ enum{
 };
 
 //==============================================================================
+//  構造体定義
+//==============================================================================
+///パレスゾーン設定データ
+typedef struct{
+  u16 zone_id;            ///<このデータ対象のゾーンID
+  u16 warp_zone_id;       ///<ワープ先ゾーンID
+  s16 warp_grid_x;        ///<ワープ先X座標
+  s16 warp_grid_y;        ///<ワープ先Y座標
+  s16 warp_grid_z;        ///<ワープ先Z座標
+  u8 sub_x;               ///<下画面座標X
+  u8 sub_y;               ///<下画面座標Y
+}PALACE_ZONE_SETTING;
+
+
+//==============================================================================
 //  外部関数宣言
 //==============================================================================
 extern void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor);
@@ -48,6 +63,8 @@ extern void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WO
 extern GMEVENT * IntrudeField_CheckSecretItemEvent(GAMESYS_WORK *gsys, INTRUDE_COMM_SYS_PTR intcomm, const FIELD_PLAYER *pcActor);
 extern GMEVENT * Intrude_CheckPosEvent(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor);
 extern GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *pcActor, const VecFx32 *now_pos, const VecFx32 *front_pos, u16 player_dir);
+extern BOOL IntrudeField_GetPalaceTownZoneID(u16 zone_id, VecFx32 *vec);
+extern const PALACE_ZONE_SETTING * IntrudeField_GetZoneSettingData(u16 zone_id);
 
 
 //--------------------------------------------------------------
