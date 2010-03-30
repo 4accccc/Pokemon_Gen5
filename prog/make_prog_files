@@ -659,6 +659,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/sound_obj.c \
 				field/shortcut_menu.c \
         field/event_name_input.c \
+        field/event_dendou_pc.c \
         field/event_fishing.c \
         field/fskill_amaikaori.c \
         field/field_g3dobj.c \
@@ -695,6 +696,8 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/bsubway_tr.c \
         field/fld_trade.c \
         field/scrcmd_league_front.c \
+        field/field_gimmick_league_front01.c \
+        field/field_gimmick_league_front02.c \
         field/scrcmd_palpark.c \
         field/scrcmd_beacon.c \
         field/party_select_list.c \
@@ -854,14 +857,6 @@ SRCS_OVERLAY_FIELD_GYM_DRAGON = field/gym_dragon.c
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_FIELD_GIMMICK_BGATE = field/field_gimmick_bgate_jet.c
-
-#===> GROUP_OVERLAY_SUBSCREEN
-#GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_FIELD_GIMMICK_LFRONT01 = field/field_gimmick_league_front01.c
-
-#===> GROUP_OVERLAY_SUBSCREEN
-#GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_FIELD_GIMMICK_LFRONT02 = field/field_gimmick_league_front02.c
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK

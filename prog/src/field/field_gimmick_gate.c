@@ -23,6 +23,8 @@
 
 #include "savedata/gimmickwork.h"
 #include "savedata/misc.h" // for MISC_xxxx
+#include "savedata/save_tbl.h"
+#include "savedata/dendou_save.h"
 
 #include "gmk_tmp_wk.h"
 #include "gimmick_obj_elboard.h"
@@ -40,6 +42,7 @@
 #include "arc/message.naix" 
 #include "msg/msg_gate.h"
 #include "../../../resource/fldmapdata/zonetable/zone_id.h"
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 
 //==========================================================================================
@@ -421,6 +424,11 @@ static void GetRareWeather( const GATEWORK* work, WEATHER_NEWS_PARAM* dest ); //
 static void GetMovePokeWeather( const GATEWORK* work, WEATHER_NEWS_PARAM* dest ); // 移動ポケモンに関する天気ニュースを取得する
 // チャンピオンニュース
 static BOOL CheckChampionNews( const GATEWORK* work ); // チャンピオンニュースがあるかどうかを判定する
+static BOOL CheckChampionDataExist( const GATEWORK* work ); // チャンピオンデータが存在するかどうかを判定する
+static BOOL CheckFirstClearDataExist( const GATEWORK* work ); //「はじめてのクリア」データが存在するかどうかを判定する
+static BOOL CheckDendouDataExist( const GATEWORK* work ); //「殿堂入り」データが存在するかどうかを判定する
+static void GetChampMonsNo_byDendouData( const GATEWORK* work, int* destMonsNo, int* destMonsNum ); //「殿堂入り」データのモンスター番号を取得する
+static void GetChampMonsNo_byFirstClear( const GATEWORK* work, int* destMonsNo, int* destMonsNum ); //「はじめてクリア」データのモンスター番号を取得する
 // 臨時ニュース
 static void LoadSpNewsData( GATEWORK* work ); // 臨時ニュースデータを読み込む
 static void DeleteSpNewsData( GATEWORK* work ); // 臨時ニュースデータを破棄する
@@ -1101,12 +1109,157 @@ static void AddNewsEntryData( GATEWORK* work, NEWS_TYPE newsType, u32 spNewsFlag
  */
 //------------------------------------------------------------------------------------------
 static BOOL CheckChampionNews( const GATEWORK* work )
+{ 
+  //「はじめてクリア」or「殿堂入り」データが存在する
+  if( (CheckFirstClearDataExist( work ) == TRUE) ||
+      (CheckDendouDataExist( work ) == TRUE) )
+  {
+    // 表示の残り時間がある
+    if( 0 < work->champNewsMinutes ) { 
+      return TRUE; 
+    }
+  }
+
+  return FALSE;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 「はじめてクリア」データが存在するかどうかを判定する
+ *
+ * @param work
+ *
+ * @return 「はじめてクリア」のデータが存在する場合 TRUE
+ *          そうでない場合 FALSE
+ */
+//------------------------------------------------------------------------------------------ 
+static BOOL CheckFirstClearDataExist( const GATEWORK* work )
 {
-  if( 0 < work->champNewsMinutes ) {
+  EVENTWORK* evwork;
+
+  evwork  = GAMEDATA_GetEventWork( work->gameData );
+
+  // シナリオクリアフラグ立っている
+  if( EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_GAME_CLEAR ) == TRUE ) {
     return TRUE;
   }
   else {
     return FALSE;
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 「殿堂入り」データが存在するかどうかを判定する
+ *
+ * @param work
+ *
+ * @return 「殿堂入り」のデータが存在する場合 TRUE
+ *          そうでない場合 FALSE
+ */
+//------------------------------------------------------------------------------------------ 
+static BOOL CheckDendouDataExist( const GATEWORK* work )
+{
+  EVENTWORK* evwork;
+
+  evwork  = GAMEDATA_GetEventWork( work->gameData );
+
+  // ゲームクリアフラグが立っている
+  if( EVENTWORK_CheckEventFlag( evwork, SYS_FLAG_CHAMPION_WIN ) == TRUE ) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 「殿堂入り」データのモンスター番号を取得する
+ *
+ * @param work
+ * @param destMonsNo  モンスター番号を格納する配列
+ * @param destMonsNum 取得したモンスター番号の数の格納先
+ */
+//------------------------------------------------------------------------------------------
+static void GetChampMonsNo_byDendouData( const GATEWORK* work, int* destMonsNo, int* destMonsNum )
+{
+  SAVE_CONTROL_WORK* save;
+  LOAD_RESULT result;
+  DENDOU_SAVEDATA* dendouData;
+  int i;
+
+  // データが存在しない
+  GF_ASSERT( CheckDendouDataExist( work ) == TRUE );
+
+  *destMonsNum = 0;
+
+  // 外部データのロード
+  save = GAMEDATA_GetSaveControlWork( work->gameData );
+  result = SaveControl_Extra_Load( save, SAVE_EXTRA_ID_DENDOU, work->heapID );
+
+  // 読み込みに成功
+  if( (result == LOAD_RESULT_OK) || (result == LOAD_RESULT_NG) )
+  {
+    // 殿堂データを取得
+    dendouData = 
+      SaveControl_Extra_DataPtrGet( save, SAVE_EXTRA_ID_DENDOU, EXGMDATA_ID_DENDOU );
+
+    // レコードがある
+    if( 0 < DendouData_GetRecordCount(dendouData) ) {
+
+      // モンスター数を取得
+      *destMonsNum = DendouData_GetPokemonCount( dendouData, 0 );
+
+      // モンスター番号を取得
+      for( i=0; *destMonsNum; i++ )
+      {
+        DENDOU_POKEMON_DATA pokeData;
+        DendouData_GetPokemonData( dendouData, 0, i, &pokeData );
+        destMonsNo[i] = pokeData.monsno;
+      }
+    } 
+    // レコードがない
+    else {
+      GF_ASSERT(0);
+    }
+  }
+  // 読み込みに失敗
+  else {
+    GF_ASSERT(0);
+  }
+
+  // セーブデータ解放
+  SaveControl_Extra_Unload( save, SAVE_EXTRA_ID_DENDOU );
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief「はじめてクリア」データのモンスター番号を取得する
+ *
+ * @param work
+ * @param destMonsNo  モンスター番号を格納する配列
+ * @param destMonsNum 取得したモンスター番号の数の格納先
+ */
+//------------------------------------------------------------------------------------------
+static void GetChampMonsNo_byFirstClear( const GATEWORK* work, int* destMonsNo, int* destMonsNum )
+{
+  SAVE_CONTROL_WORK* save;
+  LOAD_RESULT result;
+  DENDOU_RECORD* record;
+  int i;
+
+  // データが存在しない
+  GF_ASSERT( CheckFirstClearDataExist(work) == TRUE );
+
+  record = GAMEDATA_GetDendouRecord( work->gameData );
+  *destMonsNum = DendouRecord_GetPokemonCount( record );
+
+  for( i=0; i<*destMonsNum; i++ )
+  {
+    DENDOU_POKEMON_DATA pokeData;
+    DendouRecord_GetPokemonData( record, i, &pokeData );
+    destMonsNo[i] = pokeData.monsno;
   }
 }
 
@@ -1793,18 +1946,40 @@ static void AddNews_CHAMPION( GATEWORK* work )
   HEAPID heap_id; 
   NEWS_PARAM news;
   WORDSET* wordset;
+  int monsno[6];
+  int monsnum;
+  int i;
+  u32 strID;
 
   // ワードセット作成
   heap_id = GOBJ_ELBOARD_GetHeapID( work->elboard );
   wordset = WORDSET_Create( heap_id );
 
-  // ポケモン名をセット
-  WORDSET_RegisterPokeMonsNameNo( wordset, 0, 1 );
-  WORDSET_RegisterPokeMonsNameNo( wordset, 1, 2 );
-  WORDSET_RegisterPokeMonsNameNo( wordset, 2, 3 );
-  WORDSET_RegisterPokeMonsNameNo( wordset, 3, 4 );
-  WORDSET_RegisterPokeMonsNameNo( wordset, 4, 5 );
-  WORDSET_RegisterPokeMonsNameNo( wordset, 5, 6 );
+  //「殿堂入り」データがあれば, 参照する
+  if( CheckDendouDataExist( work ) ) {
+    GetChampMonsNo_byDendouData( work, monsno, &monsnum );
+  }
+  //「殿堂入り」データがなければ,「はじめてクリア」データを参照する
+  else {
+    GetChampMonsNo_byFirstClear( work, monsno, &monsnum );
+  }
+
+  // 使用するメッセージを選択
+  switch( monsnum ) {
+  case 1: strID = msg_gate_champ_1; break;
+  case 2: strID = msg_gate_champ_2; break;
+  case 3: strID = msg_gate_champ_3; break;
+  case 4: strID = msg_gate_champ_4; break;
+  case 5: strID = msg_gate_champ_5; break;
+  case 6: strID = msg_gate_champ_6; break;
+  default: GF_ASSERT(0);
+  }
+
+  // ポケモン名をワードセットに登録
+  for( i=0; i<monsnum; i++ )
+  {
+    WORDSET_RegisterPokeMonsNameNo( wordset, i, monsno[i] );
+  }
 
   // ニュースパラメータを作成
   news.animeIndex = news_anm_index[NEWS_INDEX_INFO_A];
@@ -1812,7 +1987,7 @@ static void AddNews_CHAMPION( GATEWORK* work )
   news.pltName    = news_plt_name[NEWS_INDEX_INFO_A];
   news.msgArcID   = ARCID_MESSAGE;
   news.msgDatID   = NARC_message_gate_dat;
-  news.msgStrID   = msg_gate_champ_6;
+  news.msgStrID   = strID;
   news.wordset    = wordset;
 
   // ニュース登録
