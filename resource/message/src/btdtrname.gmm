@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-03-15T17:54:32"/>
+	<create user="morimoto" host="W00220" date="2010-03-29T20:04:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1834,86 +1834,81 @@
 	</row>
 
 	<row id="BTD_TR_301">
-		<language name="JPN">モミ</language>
-		<language name="JPN_KANJI">モミ</language>
+		<language name="JPN">トウヤ</language>
+		<language name="JPN_KANJI">トウヤ</language>
 	</row>
 
 	<row id="BTD_TR_302">
-		<language name="JPN">ミル</language>
-		<language name="JPN_KANJI">ミル</language>
+		<language name="JPN">トウヤ</language>
+		<language name="JPN_KANJI">トウヤ</language>
 	</row>
 
 	<row id="BTD_TR_303">
-		<language name="JPN">ゲン</language>
-		<language name="JPN_KANJI">ゲン</language>
+		<language name="JPN">トウヤ</language>
+		<language name="JPN_KANJI">トウヤ</language>
 	</row>
 
 	<row id="BTD_TR_304">
-		<language name="JPN">マイ</language>
-		<language name="JPN_KANJI">マイ</language>
+		<language name="JPN">トウコ</language>
+		<language name="JPN_KANJI">トウコ</language>
 	</row>
 
 	<row id="BTD_TR_305">
-		<language name="JPN">バク</language>
-		<language name="JPN_KANJI">バク</language>
+		<language name="JPN">トウコ</language>
+		<language name="JPN_KANJI">トウコ</language>
 	</row>
 
 	<row id="BTD_TR_306">
-		<language name="JPN">クロツグ</language>
-		<language name="JPN_KANJI">クロツグ</language>
+		<language name="JPN">トウコ</language>
+		<language name="JPN_KANJI">トウコ</language>
 	</row>
 
 	<row id="BTD_TR_307">
-		<language name="JPN">クロツグ</language>
-		<language name="JPN_KANJI">クロツグ</language>
+		<comment>シングルボス弱</comment>
+		<language name="JPN">ノボリ</language>
+		<language name="JPN_KANJI">ノボリ</language>
 	</row>
 
 	<row id="BTD_TR_308">
-		<comment>プラチナで追加</comment>
-		<language name="JPN">ケイト</language>
-		<language name="JPN_KANJI">ケイト</language>
+		<comment>シングルボス強</comment>
+		<language name="JPN">ノボリ</language>
+		<language name="JPN_KANJI">ノボリ</language>
 	</row>
 
 	<row id="BTD_TR_309">
-		<comment>プラチナで追加</comment>
-		<language name="JPN">ケイト</language>
-		<language name="JPN_KANJI">ケイト</language>
+		<comment>ダブルボス弱</comment>
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
 	</row>
 
 	<row id="BTD_TR_310">
-		<comment>プラチナで追加</comment>
-		<language name="JPN">ネジキ</language>
-		<language name="JPN_KANJI">ネジキ</language>
+		<comment>ダブルボス強</comment>
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
 	</row>
 
 	<row id="BTD_TR_311">
-		<comment>プラチナで追加</comment>
-		<language name="JPN">ネジキ</language>
-		<language name="JPN_KANJI">ネジキ</language>
+		<comment>マルチボス１弱</comment>
+		<language name="JPN">ノボリ</language>
+		<language name="JPN_KANJI">ノボリ</language>
 	</row>
 
 	<row id="BTD_TR_312">
-		<comment>プラチナで追加</comment>
-		<language name="JPN">ダリア</language>
-		<language name="JPN_KANJI">ダリア</language>
+		<comment>マルチボス２弱</comment>
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
 	</row>
 
 	<row id="BTD_TR_313">
-		<comment>プラチナで追加</comment>
-		<language name="JPN">ダリア</language>
-		<language name="JPN_KANJI">ダリア</language>
+		<comment>マルチボス１強</comment>
+		<language name="JPN">ノボリ</language>
+		<language name="JPN_KANJI">ノボリ</language>
 	</row>
 
 	<row id="BTD_TR_314">
-		<comment>プラチナで追加</comment>
-		<language name="JPN">コクラン</language>
-		<language name="JPN_KANJI">コクラン</language>
-	</row>
-
-	<row id="BTD_TR_315">
-		<comment>プラチナで追加</comment>
-		<language name="JPN">コクラン</language>
-		<language name="JPN_KANJI">コクラン</language>
+		<comment>マルチボス２強</comment>
+		<language name="JPN">クダリ</language>
+		<language name="JPN_KANJI">クダリ</language>
 	</row>
 
 	<flowchart-group-list>
