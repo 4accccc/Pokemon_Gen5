@@ -97,7 +97,7 @@
 #define	TRTYPE_SWIMMERW    ( 84 )    //ビキニのおねえさん
 #define	TRTYPE_POLICE    ( 85 )    //おまわりさん
 #define	TRTYPE_MAID    ( 86 )    //メイド
-#define	TRTYPE_BCHAMP    ( 87 )    //ポケモントレーナー（BCHAMP）
+#define	TRTYPE_BCHAMP    ( 87 )    //サブウェイマスター
 #define	TRTYPE_CHAMPION    ( 88 )    //チャンピオン
 #define	TRTYPE_CYCLINGM    ( 89 )    //サイクリング♂
 #define	TRTYPE_CYCLINGW    ( 90 )    //サイクリング♀

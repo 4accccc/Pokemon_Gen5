@@ -818,8 +818,8 @@
 	</row>
 
 	<row id="MSG_TRTYPE_BCHAMP">
-		<language name="JPN" width="216">ポケモントレーナー</language>
-		<language name="JPN_KANJI" width="216">ポケモントレーナー</language>
+		<language name="JPN" width="216">サブウェイマスター</language>
+		<language name="JPN_KANJI" width="216">サブウェイマスター</language>
 	</row>
 
 	<row id="MSG_TRTYPE_CHAMPION">
