@@ -514,14 +514,14 @@
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/boss.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #hakase1.imd
-./mmdl_res/hakase1.imd: ./mmdl_nchara/hakase1.ncg ./mmdl_nchara/hakase1.ncl ./mmdl_res/ncg4x4nflipact.imd fldmmdl_list.csv
+./mmdl_res/hakase1.imd: ./mmdl_nchara/hakase1.ncg ./mmdl_nchara/hakase1.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd hakase1
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hakase1.ncg ./mmdl_res ./mmdl_res/ncg4x4nflipact.imd 4 4 4
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hakase1.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #hakase2.imd
-./mmdl_res/hakase2.imd: ./mmdl_nchara/hakase2.ncg ./mmdl_nchara/hakase2.ncl ./mmdl_res/ncg4x4nflipact.imd fldmmdl_list.csv
+./mmdl_res/hakase2.imd: ./mmdl_nchara/hakase2.ncg ./mmdl_nchara/hakase2.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd hakase2
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hakase2.ncg ./mmdl_res ./mmdl_res/ncg4x4nflipact.imd 4 4 4
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/hakase2.ncg ./mmdl_res ./mmdl_res/ncg4x4nflip.imd 4 4 12
 
 #icpo.imd
 ./mmdl_res/icpo.imd: ./mmdl_nchara/icpo.ncg ./mmdl_nchara/icpo.ncl ./mmdl_res/ncg4x4nflip.imd fldmmdl_list.csv
