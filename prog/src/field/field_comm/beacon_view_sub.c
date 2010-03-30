@@ -1145,10 +1145,10 @@ static void list_UpDownReq( BEACON_VIEW_PTR wk, u8 dir )
 
   if( dir == SCROLL_UP ){
     ofs = wk->ctrl.view_top+wk->ctrl.view_max;
-    wk->ctrl.view_top++;
+    BEACON_STATUS_SetViewTopOffset( wk->b_status, ++wk->ctrl.view_top );
   }else{
     ofs = wk->ctrl.view_top-1;
-    wk->ctrl.view_top--;
+    BEACON_STATUS_SetViewTopOffset( wk->b_status, --wk->ctrl.view_top );
   }
   GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo, &wk->tmpTime, ofs );
   idx = GAMEBEACON_InfoTblRing_Ofs2Idx( wk->infoLog, ofs );

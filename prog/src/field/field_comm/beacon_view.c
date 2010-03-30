@@ -253,6 +253,7 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
 
   switch( wk->event_id ){
   case EV_RETURN_CGEAR:
+    BEACON_STATUS_SetViewTopOffset( wk->b_status, 0 );
     event = EVENT_ChangeSubScreen( wk->gsys, wk->fieldWork, FIELD_SUBSCREEN_NORMAL);
 //    FIELD_SUBSCREEN_SetAction( wk->subscreen , FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_CGEAR );
 //
