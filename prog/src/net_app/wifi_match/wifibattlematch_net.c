@@ -2988,7 +2988,7 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
 
   p_wk->seq             = 0;
   DEBUG_NET_Printf( "GDBW: request[%d]\n", type );
-  GF_ASSERT( p_wk->sake_record_id == 0 );
+  GF_ASSERT( p_wk->sake_record_id != 0 );
 
   switch( type )
   { 

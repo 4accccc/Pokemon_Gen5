@@ -816,6 +816,7 @@ static void WbmRndSeq_Start( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs 
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_Start );
           break;
         case 2:
+          p_param->retmode = WIFIBATTLEMATCH_CORE_RETMODE_NONE;
           *p_seq = SEQ_START_CANCEL_MSG;
           break;
         }
@@ -1038,6 +1039,7 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
         //消したくない情報を常駐に保存
         p_wk->p_param->p_recv_data->record_save_idx = p_wk->rnd_score.record_save_idx;
         p_wk->p_param->p_recv_data->sake_recordID   = WIFIBATTLEMATCH_GDB_GetRecordID( p_wk->p_net );
+        OS_TPrintf(  "レコードID保存%d \n", p_wk->p_param->p_recv_data->sake_recordID );
 
         //自分の情報を表示
         Util_PlayerInfo_Create( p_wk, WIFIBATTLEMATCH_CORE_RETMODE_RATE );

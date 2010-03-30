@@ -750,6 +750,9 @@ static BOOL WBM_CORE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_ad
     break;
   case WIFIBATTLEMATCH_CORE_RETMODE_WIFI: //WIFI‘å‰ï
     break;
+  case WIFIBATTLEMATCH_CORE_RETMODE_NONE:  //‚È‚É‚à‘I‚Î‚¸‚ÉI—¹
+    p_wk->type  = WIFIBATTLEMATCH_TYPE_RNDFREE;
+    break;
   }
 
   //ŽŸ‚Ö‚Ìs‚«æ

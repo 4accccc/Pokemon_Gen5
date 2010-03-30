@@ -2438,7 +2438,7 @@ static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const WIFIBATTLEMATC
 		},
 		//レーティング
 		{	
-			17,5,8,2,
+			15,5,10,2,
 		},
 		//レーティングの数値
 		{	
