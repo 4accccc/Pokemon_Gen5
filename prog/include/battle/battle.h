@@ -255,6 +255,7 @@ typedef struct {
   BSP_TRAINER_DATA*  tr_data[BTL_CLIENT_NUM];
 
   // セーブデータ系
+  GAMEDATA*         gameData;     ///< GameData
   const CONFIG*     configData;   ///< コンフィグデータ
   MYITEM*           itemData;     ///< アイテムデータ
   BAG_CURSOR*       bagCursor;    ///< バッグカーソルデータ
@@ -299,6 +300,9 @@ typedef struct {
   u8 LosePokeNum;   //倒されたポケモン数
   u8 UseWazaNum;    //使用した技の数
 
+  // コマンド不正チェックフラグ
+  //子機のみ操作。親機から送られたコマンドを不正と判断したらTRUEにする。（親機は常にFALSE）
+  u8 cmdIllegalFlag;
 
 }BATTLE_SETUP_PARAM;
 

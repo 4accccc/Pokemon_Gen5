@@ -302,6 +302,8 @@ static void setup_common( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameData, BTL_FIELD
   dst->multiMode = BTL_MULTIMODE_NONE;
   dst->recBuffer = NULL;
   dst->fRecordPlay = FALSE;
+  dst->gameData = gameData;
+  dst->cmdIllegalFlag = FALSE;
 
   for(i=0; i<BTL_CLIENT_NUM; ++i){
     dst->party[i] = NULL;

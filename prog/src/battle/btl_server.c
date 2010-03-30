@@ -988,6 +988,7 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
 
     switch( competitor ){
     case BTL_COMPETITOR_TRAINER:
+    case BTL_COMPETITOR_SUBWAY:
       setMainProc( server, ServerMain_ExitBattle_ForNPC );
       break;
 

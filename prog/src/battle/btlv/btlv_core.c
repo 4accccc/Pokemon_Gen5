@@ -2409,6 +2409,7 @@ void BTLV_WAZAWASURE_Start( BTLV_CORE* wk, u8 pos, WazaID waza )
   wk->plistData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
   wk->plistData.tcb_sys = BTLV_EFFECT_GetTCBSYS();
   wk->plistData.pfd = BTLV_EFFECT_GetPfd();
+  wk->plistData.gamedata = BTL_MAIN_GetGameData( wk->mainModule );
 
   wk->selectItemSeq = 0;
 }
