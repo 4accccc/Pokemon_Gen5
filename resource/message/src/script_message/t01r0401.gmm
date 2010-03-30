@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-30T17:48:48"/>
+	<create user="matsumiya" host="W00224" date="2010-03-30T18:00:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -779,7 +779,7 @@
 		<attribute name="キャラ指定">本棚</attribute>
 		<language name="JPN" width="256">たんけんの　こころえ　その１
 Ｘボタンで　メニューがひらく</language>
-		<language name="JPN_KANJI" width="256">たんけんの　こころえ　その１
+		<language name="JPN_KANJI" width="256">探検の　心得　その１
 Ｘボタンで　メニューがひらく</language>
 	</row>
 
@@ -789,8 +789,8 @@
 		<attribute name="キャラ指定">本棚</attribute>
 		<language name="JPN" width="256">たんけんの　こころえ　その２
 ポケモン　レポートで　きろくできる</language>
-		<language name="JPN_KANJI" width="256">たんけんの　こころえ　その２
-ポケモン　レポートで　きろくできる</language>
+		<language name="JPN_KANJI" width="256">探検の　心得　その２
+ポケモン　レポートで　記録できる</language>
 	</row>
 
 	<row id="msg_t01r0401_photo_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -799,8 +799,8 @@
 		<attribute name="キャラ指定">学術書</attribute>
 		<language name="JPN" width="256">ポケモンに　ついて　かかれた
 ほんが　いっぱい　ある！</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　ついて　かかれた
-ほんが　いっぱい　ある！</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　ついて　書かれた
+本が　いっぱい　ある！</language>
 	</row>
 
 	<row id="msg_t01r0401_photo_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -809,8 +809,8 @@
 		<attribute name="キャラ指定">ノート</attribute>
 		<language name="JPN" width="256">ポケモンに　かんする　しりょうや
 けんきゅうほうこくが　たくさん！</language>
-		<language name="JPN_KANJI" width="256">ポケモンに　かんする　しりょうや
-けんきゅうほうこくが　たくさん！</language>
+		<language name="JPN_KANJI" width="256">ポケモンに　関する　資料や
+研究報告が　たくさん！</language>
 	</row>
 
 	<flowchart-group-list>
