@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-16T19:46:51"/>
+	<create user="matsumiya" host="W00224" date="2010-03-30T17:48:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -571,7 +571,7 @@
 		<language name="JPN" width="256">チェレン『こちらこそ
 よろしく　おねがいします！▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『こちらこそ
-よろしく　おねがいします！▼</language>
+よろしく　お願いします！▼</language>
 	</row>
 
 	<row id="msg_t01r0401_hakase2_12">
