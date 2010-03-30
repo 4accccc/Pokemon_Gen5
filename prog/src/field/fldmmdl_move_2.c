@@ -517,7 +517,7 @@ static int (* const DATA_PairTrMoveTbl[])( MMDL * mmdl, MV_TR_PAIR_WORK *work ) 
  * @retval  MMDL *　相方のMMDL *、NULL=ペア動作ではない
  */
 //--------------------------------------------------------------
-MMDL * MMDL_MovePairSearch( MMDL * mmdl )
+MMDL * MMDL_SearchMovePair( const MMDL * mmdl )
 {
   MMDL * pair;
   u32 no = 0;

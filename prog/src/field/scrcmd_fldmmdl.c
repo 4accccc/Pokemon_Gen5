@@ -520,15 +520,16 @@ static BOOL EvWaitTalkObj( VMHANDLE *core, void *wk )
   
   //話しかけ対象の連れ歩き動作停止チェック
   if( CheckStepWatchBit(OTHER_PAIR_BIT) ){
-    #ifndef SCRCMD_PL_NULL
-    MMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
-    if (FieldOBJ_StatusBitCheck_Move(other_pair) == 0) {
-      FieldOBJ_MovePause(other_pair);
+    MMDL *other_pair = MMDL_SearchMovePair( fmmdl );
+    if( other_pair == NULL ){
+      GF_ASSERT( 0 );
       ResetStepWatchBit(OTHER_PAIR_BIT);
+    }else{
+      if( MMDL_CheckMoveBitMove(other_pair) == FALSE ) {
+        MMDL_OnMoveBitMoveProcPause( other_pair );
+        ResetStepWatchBit(OTHER_PAIR_BIT);
+      }
     }
-    #else
-    GF_ASSERT( 0 );
-    #endif
   }
   
   if( step_watch_bit == 0 ){
@@ -553,13 +554,8 @@ VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk )
   MMDL *fmmdl = SCRIPT_GetTargetObj( sc );
   MMDL *player = scmd_GetMMdlPlayer( work );
   MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
+  MMDL *other_pair = MMDL_SearchMovePair( fmmdl );
   
-#ifndef SCRCMD_PL_NULL
-  MMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
-#else
-  MMDL *other_pair = NULL;
-#endif
-
   InitStepWatchBit();
   MMDLSYS_PauseMoveProc( fmmdlsys );
   

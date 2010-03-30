@@ -1127,6 +1127,8 @@ extern int MMDL_MoveSub( MMDL * mmdl );
 //--------------------------------------------------------------
 //	fldmmdl_move_2.c
 //--------------------------------------------------------------
+extern MMDL * MMDL_SearchMovePair( const MMDL * mmdl );
+
 extern void MMDL_SetMoveHideEffectTask( MMDL * mmdl, FLDEFF_TASK *task );
 extern FLDEFF_TASK * MMDL_GetMoveHideEffectTask( MMDL * mmdl );
 extern void MMDL_MoveHidePullOffFlagSet( MMDL * mmdl );
