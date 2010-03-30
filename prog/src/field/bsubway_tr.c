@@ -1335,10 +1335,7 @@ static BOOL set_BSWayPokemonParam(
         break;
       }
     }
-    if(i!=set_count){
-      continue;
-    }
-
+    
     //ペアを組んでいるトレーナーの持ちポケモンとのチェック
     if(set_poke_no!=NULL){
       //モンスターナンバーのチェック（同一のポケモンは持たない）
