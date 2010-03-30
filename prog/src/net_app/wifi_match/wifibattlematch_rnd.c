@@ -47,9 +47,8 @@
 //外部公開
 #include "wifibattlematch_core.h"
 
-#ifdef PM_DEBUG
 #include "debug/debug_flg.h"
-#endif //PM_DEBUG
+#include "debug/debug_nagihashi.h"
 
 //-------------------------------------
 ///	オーバーレイ
@@ -494,6 +493,17 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Main( GFL_PROC *p_proc, int *p_s
 
 	WIFIBATTLEMATCH_RND_WORK	*p_wk	    = p_wk_adrs;
   WIFIBATTLEMATCH_CORE_PARAM *p_param  = p_param_adrs;
+
+#ifdef PM_DEBUG
+  { 
+    static u32  s_core_buff = 0xFFFFFFFF;
+    static u32  s_sys_buff = 0xFFFFFFFF;
+    static u32  s_app_buff = 0xFFFFFFFF;
+    DEBUG_HEAP_PrintRestUse2( HEAPID_WIFIBATTLEMATCH_CORE, &s_core_buff );
+    DEBUG_HEAP_PrintRestUse2( HEAPID_WIFIBATTLEMATCH_SYS, &s_sys_buff );
+    DEBUG_HEAP_PrintRestUse2( GFL_HEAPID_APP, &s_app_buff );
+  }
+#endif
 
   switch( *p_seq )
   { 

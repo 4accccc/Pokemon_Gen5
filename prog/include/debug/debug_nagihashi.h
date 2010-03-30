@@ -92,10 +92,23 @@ static inline void DEBUG_HEAP_PrintRestUse( HEAPID heapID )
   DEBUG_NAGI_Printf( "HEAPID[0x%x] most low rest size=0x%x\n", heapID, s_max );
 }
 
+static inline void DEBUG_HEAP_PrintRestUse2( HEAPID heapID, u32 *p_buff )
+{ 
+  int rest;
+
+  rest  = GFL_HEAP_GetHeapFreeSize( heapID );
+  if( *p_buff > rest )
+  { 
+    *p_buff = rest;
+  }
+  DEBUG_NAGI_Printf( "HEAPID[0x%x] most low rest size=0x%x\n", heapID, *p_buff );
+}
+
 #else //PM_DEBUG
 #define   DEBUG_NAGI_Printf( ... )  /* */
 #define DEBUG_STRBUF_Print(x)       /* */
 #define DEBUG_TICK_PrintStart       /* */
 #define DEBUG_TICK_PrintEnd         /* */
 #define DEBUG_HEAP_PrintRestUse(x)  /* */
+#define DEBUG_HEAP_PrintRestUse2(x,y)  /* */
 #endif //PM_DEBUG
