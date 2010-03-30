@@ -48,6 +48,10 @@ static int MainSeq_ButtonAnm( DPCMAIN_WORK * wk );
 static int SetFadeIn( DPCMAIN_WORK * wk, int next );
 static int SetFadeOut( DPCMAIN_WORK * wk, int next );
 
+static void ChangePage( DPCMAIN_WORK * wk );
+
+FS_EXTERN_OVERLAY(ui_common);
+
 
 //============================================================================================
 //	グローバル
@@ -81,12 +85,15 @@ int DPCSEQ_MainSeq( DPCMAIN_WORK * wk )
 		return FALSE;
 	}
 
+	DPCOBJ_AnmMain( wk );
+	DPCBMP_PrintUtilTrans( wk );
+
 	return TRUE;
 }
 
 static int MainSeq_Init( DPCMAIN_WORK * wk )
 {
-//	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
+	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
 
 	// 表示初期化
 	GFL_DISP_GX_SetVisibleControlDirect( 0 );
@@ -100,6 +107,8 @@ static int MainSeq_Init( DPCMAIN_WORK * wk )
 	GX_SetMasterBrightness( -16 );
 	GXS_SetMasterBrightness( -16 );
 
+	DPCMAIN_CreatePokeData( wk );
+
 	DPCMAIN_InitVram();
 	DPCMAIN_InitBg();
 	DPCMAIN_LoadBgGraphic();
@@ -107,6 +116,10 @@ static int MainSeq_Init( DPCMAIN_WORK * wk )
 
 	DPCBMP_Init( wk );
 	DPCOBJ_Init( wk );
+
+	DPCUI_Init( wk );
+
+	ChangePage( wk );
 
 	DPCMAIN_SetBlendAlpha();
 
@@ -122,11 +135,15 @@ static int MainSeq_Release( DPCMAIN_WORK * wk )
 {
 	DPCMAIN_ExitVBlank( wk );
 
+	DPCUI_Exit( wk );
+
 	DPCOBJ_Exit( wk );
 	DPCBMP_Exit( wk );
 
 	DPCMAIN_ExitMsg( wk );
 	DPCMAIN_ExitBg();
+
+	DPCMAIN_ExitPokeData( wk );
 
 	// 輝度を最低にしておく
 	GX_SetMasterBrightness( -16 );
@@ -138,7 +155,7 @@ static int MainSeq_Release( DPCMAIN_WORK * wk )
 	GFL_DISP_GX_SetVisibleControlDirect( 0 );
 	GFL_DISP_GXS_SetVisibleControlDirect( 0 );
 
-//	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
+	GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
 
 	return MAINSEQ_END;
 }
@@ -153,14 +170,41 @@ static int MainSeq_Wipe( DPCMAIN_WORK * wk )
 
 static int MainSeq_Main( DPCMAIN_WORK * wk )
 {
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-		wk->dat->retMode = DENDOUPC_RET_NORMAL;
-		return SetFadeOut( wk, MAINSEQ_RELEASE );
-	}
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+	u32	ret = DPCUI_Main( wk );
+
+	switch( ret ){
+	case DPCUI_ID_POKE1:
+	case DPCUI_ID_POKE2:
+	case DPCUI_ID_POKE3:
+	case DPCUI_ID_POKE4:
+	case DPCUI_ID_POKE5:
+	case DPCUI_ID_POKE6:
+	case DPCUI_ID_PAGE_LEFT:
+	case DPCUI_ID_PAGE_RIGHT:
+		break;
+
+	case DPCUI_ID_EXIT:
 		wk->dat->retMode = DENDOUPC_RET_CLOSE;
 		return SetFadeOut( wk, MAINSEQ_RELEASE );
+
+	case DPCUI_ID_RETURN:
+	case CURSORMOVE_CANCEL:					// キャンセル
+		wk->dat->retMode = DENDOUPC_RET_NORMAL;
+		return SetFadeOut( wk, MAINSEQ_RELEASE );
+
+	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
+		break;
+
+	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
+	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
+	case CURSORMOVE_CURSOR_ON:			// カーソル表示
+	case CURSORMOVE_CURSOR_MOVE:		// 移動
+	case CURSORMOVE_NONE:						// 動作なし
+	default:
+		break;
 	}
+
 	return MAINSEQ_MAIN;
 }
 
@@ -190,3 +234,14 @@ static int SetFadeOut( DPCMAIN_WORK * wk, int next )
 	wk->nextSeq = next;
 	return MAINSEQ_WIPE;
 }
+
+
+static void ChangePage( DPCMAIN_WORK * wk )
+{
+	DPCOBJ_AddPoke( wk );
+
+	DPCBMP_PutTitle( wk );
+	DPCBMP_PutPage( wk );
+	DPCBMP_PutInfo( wk );
+}
+

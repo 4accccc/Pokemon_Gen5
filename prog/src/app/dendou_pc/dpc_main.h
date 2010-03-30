@@ -12,6 +12,7 @@
 
 #include "system/main.h"
 #include "system/cursor_move.h"
+#include "savedata/dendou_save.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 
@@ -32,15 +33,28 @@
 #define	DPCMAIN_SBG_PAL_FONT	( 15 )
 
 
+typedef struct {
+	DENDOU_POKEMON_DATA	dat[6];
+	RTCDate	date;
+	u16	pokeMax;
+	u16	recNo;
+}DPC_PARTY_DATA;
+
 // ワーク
 typedef struct {
 	DENDOUPC_PARAM * dat;
+
+	DENDOU_RECORD * rec;
+	DENDOU_SAVEDATA * ex_rec;
+
+	DPC_PARTY_DATA	party[DENDOU_RECORD_MAX+1];
 
 	GFL_TCB * vtask;		// TCB ( VBLANK )
 
 	PRINT_UTIL	win[DPCBMP_WINID_MAX];		// BMPWIN
 
 	GFL_FONT * font;						// 通常フォント
+	GFL_FONT * nfnt;						// 数字フォント
 	GFL_MSGDATA * mman;					// メッセージデータマネージャ
 	WORDSET * wset;							// 単語セット
 	STRBUF * exp;								// メッセージ展開領域
@@ -55,8 +69,10 @@ typedef struct {
 
 	CURSORMOVE_WORK * cmwk;			// カーソル移動ワーク
 
-	u16	page;
-//	u16	pokePos;
+	u8	pokePos;
+	u8	page;
+	u8	pageMax;
+	u8	pokeSwap;
 
 	int	mainSeq;		// メインシーケンス
 	int	nextSeq;		// 次のシーケンス
@@ -102,3 +118,7 @@ extern void DPCMAIN_SetBlendAlpha(void);
 
 extern void DPCMAIN_InitMsg( DPCMAIN_WORK * wk );
 extern void DPCMAIN_ExitMsg( DPCMAIN_WORK * wk );
+
+
+extern void DPCMAIN_CreatePokeData( DPCMAIN_WORK * wk );
+extern void DPCMAIN_ExitPokeData( DPCMAIN_WORK * wk );

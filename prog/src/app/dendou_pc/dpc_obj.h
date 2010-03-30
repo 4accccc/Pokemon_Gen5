@@ -23,3 +23,7 @@
 
 extern void DPCOBJ_Init( DPCMAIN_WORK * wk );
 extern void DPCOBJ_Exit( DPCMAIN_WORK * wk );
+extern void DPCOBJ_AnmMain( DPCMAIN_WORK * wk );
+extern void DPCOBJ_SetVanish( DPCMAIN_WORK * wk, GFL_CLWK * clwk, BOOL flg );
+
+extern void DPCOBJ_AddPoke( DPCMAIN_WORK * wk );

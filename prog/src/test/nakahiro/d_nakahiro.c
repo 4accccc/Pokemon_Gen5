@@ -159,23 +159,35 @@ static const BMPMENULIST_HEADER TopMenuListH = {
 };
 
 static const u16 VSMListMonsL[] = {
-  MONSNO_HUSIGIDANE,
-  MONSNO_HITOKAGE,
-  MONSNO_ZENIGAME,
+  MONSNO_HUSIGIBANA,
+  MONSNO_RIZAADON,
+  MONSNO_KAMEKKUSU,
+  MONSNO_ZYUKAIN,
+  MONSNO_BASYAAMO,
+  MONSNO_RAGURAAZI,
   0,
 };
 static const u16 VSMListMonsR[] = {
   MONSNO_KIMORI,
   MONSNO_ATYAMO,
   MONSNO_MIZUGOROU,
+  MONSNO_HUSIGIDANE,
+  MONSNO_HITOKAGE,
+  MONSNO_ZENIGAME,
   0,
 };
 static const u16 VSMListItemL[] = {
   ITEM_KIZUGUSURI,
   ITEM_KIZUGUSURI,
   ITEM_KIZUGUSURI,
+  ITEM_KIZUGUSURI,
+  ITEM_KIZUGUSURI,
+  ITEM_KIZUGUSURI,
 };
 static const u16 VSMListItemR[] = {
+  ITEM_HAZIMETEMEERU,
+  ITEM_HAZIMETEMEERU,
+  ITEM_HAZIMETEMEERU,
   ITEM_HAZIMETEMEERU,
   ITEM_HAZIMETEMEERU,
   ITEM_HAZIMETEMEERU,
@@ -410,7 +422,14 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     break;
 
 	case  MAIN_SEQ_DENDOU_PC:
-//		wk->dpc_data.sv = ;
+    wk->dpc_data.gamedata = wk->gamedata;
+		{
+			RTCDate	date;
+			RTC_GetDate( &date );
+			wk->vsl_data.myPP = PokeParty_AllocPartyWork( wk->heapID );
+			SetPokeParty( wk, wk->vsl_data.myPP, VSMListMonsL, VSMListItemL );
+			DendouRecord_Add( GAMEDATA_GetDendouRecord(wk->gamedata), wk->vsl_data.myPP, &date, wk->heapID );
+		}
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(dendou_pc), &DENDOUPC_ProcData, &wk->dpc_data );
     wk->main_seq = MAIN_SEQ_END;
 		break;

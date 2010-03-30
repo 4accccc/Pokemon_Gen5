@@ -12,9 +12,10 @@
 
 #include "arc_def.h"
 #include "message.naix"
+#include "gamesystem/game_data.h"
 #include "system/gfl_use.h"
 #include "font/font.naix"
-#include "msg/msg_dendou_pc.h"
+#include "msg/msg_pc_dendou.h"
 
 #include "dpc_main.h"
 #include "dendou_pc_gra.naix"
@@ -25,8 +26,10 @@
 //============================================================================================
 #define	EXP_BUF_SIZE	( 1024 )	// テンポラリメッセージバッファサイズ
 
-#define	BLEND_EV1		( 6 )				// ブレンド係数
-#define	BLEND_EV2		( 10 )			// ブレンド係数
+#define	NAME_BUF_SIZE	( 32 )		// ニックネーム＆親名のバッファサイズ
+
+#define	BLEND_EV1		( 15 )			// ブレンド係数
+#define	BLEND_EV2		( 4 )				// ブレンド係数
 
 
 //============================================================================================
@@ -101,8 +104,8 @@ void DPCMAIN_ExitVBlank( DPCMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void VBlankTask( GFL_TCB * tcb, void * work )
 {
-//	GFL_BG_VBlankFunc();
-//	GFL_CLACT_SYS_VBlankFunc();
+	GFL_BG_VBlankFunc();
+	GFL_CLACT_SYS_VBlankFunc();
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
 
@@ -140,8 +143,8 @@ void DPCMAIN_InitBg(void)
 	}
 	{	// メイン画面：スポットライト
 		GFL_BG_BGCNT_HEADER cnth= {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000,
+			0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
+			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,
 			GX_BG_EXTPLTT_01, 2, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &cnth, GFL_BG_MODE_TEXT );
@@ -149,7 +152,7 @@ void DPCMAIN_InitBg(void)
 	{	// メイン画面：タイトル背景
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,
+			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x8000,
 			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &cnth, GFL_BG_MODE_TEXT );
@@ -157,7 +160,7 @@ void DPCMAIN_InitBg(void)
 	{	// メイン画面：文字
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000,
+			GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x10000, 0x8000,
 			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &cnth, GFL_BG_MODE_TEXT );
@@ -252,7 +255,7 @@ void DPCMAIN_SetBlendAlpha(void)
 {
 	G2_SetBlendAlpha(
 		GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2,
-		GX_BLEND_PLANEMASK_BG0,
+		GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ,
 		BLEND_EV1, BLEND_EV2 );
 }
 
@@ -269,9 +272,12 @@ void DPCMAIN_InitMsg( DPCMAIN_WORK * wk )
 {
 	wk->mman = GFL_MSG_Create(
 							GFL_MSG_LOAD_NORMAL,
-							ARCID_MESSAGE, NARC_message_dendou_pc_dat, HEAPID_DENDOU_PC );
+							ARCID_MESSAGE, NARC_message_pc_dendou_dat, HEAPID_DENDOU_PC );
 	wk->font = GFL_FONT_Create(
 							ARCID_FONT, NARC_font_large_gftr,
+							GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_DENDOU_PC );
+  wk->nfnt = GFL_FONT_Create(
+							ARCID_FONT, NARC_font_num_gftr,
 							GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_DENDOU_PC );
 	wk->wset = WORDSET_Create( HEAPID_DENDOU_PC );
 	wk->que  = PRINTSYS_QUE_Create( HEAPID_DENDOU_PC );
@@ -292,6 +298,67 @@ void DPCMAIN_ExitMsg( DPCMAIN_WORK * wk )
 	GFL_STR_DeleteBuffer( wk->exp );
 	PRINTSYS_QUE_Delete( wk->que );
 	WORDSET_Delete( wk->wset );
+	GFL_FONT_Delete( wk->nfnt );
 	GFL_FONT_Delete( wk->font );
 	GFL_MSG_Delete( wk->mman );
+}
+
+
+
+void DPCMAIN_CreatePokeData( DPCMAIN_WORK * wk )
+{
+	SAVE_CONTROL_WORK * sv;
+	DENDOU_RECORD * rec;
+	DENDOU_SAVEDATA * ex_rec;
+	u16	i, j;
+
+	// 文字列バッファ確保
+	for( i=0; i<DENDOU_RECORD_MAX+1; i++ ){
+		for( j=0; j<6; j++ ){
+			wk->party[i].dat[j].nickname = GFL_STR_CreateBuffer( NAME_BUF_SIZE, HEAPID_DENDOU_PC );
+			wk->party[i].dat[j].oyaname  = GFL_STR_CreateBuffer( NAME_BUF_SIZE, HEAPID_DENDOU_PC );
+		}
+	}
+
+	// 初回データ
+	rec = GAMEDATA_GetDendouRecord( wk->dat->gamedata );
+	wk->party[0].pokeMax = DendouRecord_GetPokemonCount( rec );
+	DendouRecord_GetDate( rec, &wk->party[0].date );
+	for( i=0; i<wk->party[0].pokeMax; i++ ){
+		DendouRecord_GetPokemonData( rec, i, &wk->party[0].dat[i] );
+	}
+	wk->pageMax = 1;
+
+	// 外部セーブデータ
+	sv = GAMEDATA_GetSaveControlWork( wk->dat->gamedata );
+	if( SaveControl_Extra_Load( sv, SAVE_EXTRA_ID_DENDOU, HEAPID_DENDOU_PC ) == LOAD_RESULT_OK ){
+		ex_rec = SaveControl_Extra_DataPtrGet( sv, SAVE_EXTRA_ID_DENDOU, 0 );
+		if( ex_rec != NULL ){
+			for( i=0; i<DENDOU_RECORD_MAX; i++ ){
+				wk->party[i+1].pokeMax = DendouData_GetPokemonCount( ex_rec, i );
+				wk->party[i+1].recNo   = DendouData_GetRecordNumber( ex_rec, i );
+				DendouData_GetDate( ex_rec, i, &wk->party[i+1].date );
+				if( wk->party[i+1].pokeMax != 0 ){
+					for( j=0; j<wk->party[i+1].pokeMax; j++ ){
+						DendouData_GetPokemonData( ex_rec, i, j, &wk->party[i+1].dat[j] );
+					}
+					wk->pageMax++;
+				}
+			}
+		}
+	}
+	SaveControl_Extra_Unload( sv, SAVE_EXTRA_ID_DENDOU );
+}
+
+void DPCMAIN_ExitPokeData( DPCMAIN_WORK * wk )
+{
+	u16	i, j;
+
+	// 文字列バッファ削除
+	for( i=0; i<DENDOU_RECORD_MAX+1; i++ ){
+		for( j=0; j<6; j++ ){
+			GFL_STR_DeleteBuffer( wk->party[i].dat[j].nickname );
+			GFL_STR_DeleteBuffer( wk->party[i].dat[j].oyaname );
+		}
+	}
 }

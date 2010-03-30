@@ -22,6 +22,7 @@
 
 extern void DPCBMP_Init( DPCMAIN_WORK * wk );
 extern void DPCBMP_Exit( DPCMAIN_WORK * wk );
+extern void DPCBMP_PrintUtilTrans( DPCMAIN_WORK * wk );
 
 extern void DPCBMP_PutTitle( DPCMAIN_WORK * wk );
 extern void DPCBMP_PutPage( DPCMAIN_WORK * wk );

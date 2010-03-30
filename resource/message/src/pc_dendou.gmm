@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-23T16:20:20"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-03-30T19:19:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="66" top="234" right="771" bottom="862" maximized="no" rayout="Vertical2">
+	<dialog left="79" top="259" right="784" bottom="887" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="787" top="36" right="1260" bottom="434" visible="no"/>
+		<tag-palette left="787" top="36" right="1260" bottom="434" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -341,14 +341,14 @@
 
 	<row id="mes_pc_dendou_01_02" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>殿堂入りのタイトル</comment>
-		<language name="JPN" width="216" line="2">だい[2:01:２桁:0]かい　でんどういり</language>
-		<language name="JPN_KANJI" width="216" line="2">第[2:01:２桁:0]回　殿堂入り</language>
+		<language name="JPN" width="216" line="2">だい[BD:00:カラー変更:3:4:0][2:01:２桁:0][BD:01:カラー変更リセット]かい　でんどういり</language>
+		<language name="JPN_KANJI" width="216" line="2">第[BD:00:カラー変更:3:4:0][2:01:２桁:0][BD:01:カラー変更リセット]回　殿堂入り</language>
 	</row>
 
 	<row id="mes_pc_dendou_01_03" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>年月日</comment>
-		<language name="JPN" width="216" line="2">[2:03:４桁:0]/[2:01:２桁:1]/[2:01:２桁:2]</language>
-		<language name="JPN_KANJI" width="216" line="2">[2:03:４桁:0]/[2:01:２桁:1]/[2:01:２桁:2]</language>
+		<language name="JPN" width="216" line="2">２０[2:01:２桁:0]/[2:01:２桁:1]/[2:01:２桁:2]</language>
+		<language name="JPN_KANJI" width="216" line="2">２０[2:01:２桁:0]/[2:01:２桁:1]/[2:01:２桁:2]</language>
 	</row>
 
 	<row id="mes_pc_dendou_01_04" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
@@ -384,28 +384,19 @@
 
 	<row id="mes_pc_dendou_02_05" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>ポケモン情報ページの項目名</comment>
-		<language name="JPN" width="216" line="2">なまえ：</language>
-		<language name="JPN_KANJI" width="216" line="2">名前：</language>
-	</row>
-
-	<row id="mes_pc_dendou_02_06" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
-		<comment>対象ポケモンのニックネーム
-0：ニックネーム</comment>
-		<language name="JPN" width="216" line="2">[1:02:ポケモンニックネーム:0]</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN" width="216" line="2">なまえ：[1:02:ポケモンニックネーム:0]</language>
+		<language name="JPN_KANJI" width="216" line="2">名前：[1:02:ポケモンニックネーム:0]</language>
 	</row>
 
 	<row id="mes_pc_dendou_02_07" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>ポケモン情報ページの項目名</comment>
-		<language name="JPN" width="216" line="2">おや</language>
-		<language name="JPN_KANJI" width="216" line="2">親</language>
+		<language name="JPN" width="216" line="2">おや：[1:00:トレーナー名:0]</language>
+		<language name="JPN_KANJI" width="216" line="2">親：[1:00:トレーナー名:0]</language>
 	</row>
 
 	<row id="mes_pc_dendou_02_08" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
-		<comment>対象ポケモンを捕獲した親名
-0：ニックネーム</comment>
-		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]</language>
-		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]</language>
+		<language name="JPN" width="216" line="2">L</language>
+		<language name="JPN_KANJI" width="216" line="2">L</language>
 	</row>
 
 	<row id="mes_pc_dendou_02_09" text-color=",,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
