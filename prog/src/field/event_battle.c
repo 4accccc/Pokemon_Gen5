@@ -802,7 +802,7 @@ static void BeaconReq_BattleEnd( BATTLE_EVENT_WORK* bew )
 
   switch( bp->competitor ){
   case BTL_COMPETITOR_WILD:
-    if( bp->result == BTL_RESULT_CAPTURE ){
+    if( bp->result == BTL_RESULT_RUN ){
       BeaconReq_BtlWild( bp, BTL_BEACON_ST_ESCAPE );
     }else if( bp->result == BTL_RESULT_CAPTURE ){
       BeaconReq_BtlWild( bp, BTL_BEACON_ST_CAPTURE );
