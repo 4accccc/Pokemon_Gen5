@@ -458,8 +458,7 @@ SCRIPT_FUNC_DEF( CurtainDown )
   
   moveWork->tcbObj = STA_SCRIPT_CreateTcbTask( work , SCRIPT_TCB_MoveCurtainTCB , (void*)moveWork , SCRIPT_TCB_PRI_NORMAL );
   
-  PMSND_PlaySE( STA_SE_CLOSE_CURTAIN );
-//  PMSND_PlaySE( SEQ_SE_MSCL_09 );
+  STA_ACT_PlayCurtainCloseSe( work->actWork );
 
   if( autoWait == 1 )
   {

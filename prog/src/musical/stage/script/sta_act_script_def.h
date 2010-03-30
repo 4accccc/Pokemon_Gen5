@@ -114,6 +114,7 @@ extern void  STA_ACT_StopBgm(  ACTING_WORK *work );
 extern void  STA_ACT_SetBgmLinkNumber(  ACTING_WORK *work , const u16 dstNum , const u16 srcNum );
 extern void  STA_ACT_StartSeqBgm( ACTING_WORK *work , const u32 seqNo );
 extern void  STA_ACT_StopSeqBgm( ACTING_WORK *work );
+extern void STA_ACT_PlayCurtainCloseSe( ACTING_WORK *work );
 
 //--------------------------------------------------------------
 //	スクリプト用に外部提供関数

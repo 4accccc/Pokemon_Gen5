@@ -970,7 +970,7 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
         const u16 itemNo = MUSICAL_REWARD_TABLE[type][j];
         if( MUSICAL_SAVE_ChackHaveItem( evWork->musSave , itemNo ) == FALSE )
         {
-          rewardArr[j] = itemNo;
+          rewardArr[rewardNum] = itemNo;
           rewardNum++;
           ARI_TPrintf( "[%2d]",itemNo );
         }
@@ -1018,12 +1018,12 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
           const u8 idx = GFUser_GetPublicRand0(rewardNum);
           fanState->giftType = MUSICAL_GIFT_TYPE_GOODS;
           fanState->giftValue = rewardArr[idx];
+          ARI_TPrintf("%d:%d",fanState->giftType,fanState->giftValue);
           for( j=idx;j<rewardNum-1;j++ )
           {
             rewardArr[j] = rewardArr[j+1];
           }
           rewardNum--;
-          ARI_TPrintf("%d:%d",fanState->giftType,fanState->giftValue);
         }
         else
         {

@@ -173,6 +173,7 @@ struct _ACTING_WORK
   u8      attentionPoke;  //カメラの対象
   u8      attentionLight;  //カメラの対象
   u8      pokeRank[MUSICAL_POKE_MAX];
+  u8      tempPoint[MUSICAL_POKE_MAX];  //アピールボーナス(本計算は外で！
   
   //アイテム使用形
   BOOL    useItemFlg[MUSICAL_POKE_MAX];
@@ -315,21 +316,9 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   //順位の計算
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
-    u8 j;
-    const u16 selfPoint = work->initWork->musPoke[i]->point;
-    work->pokeRank[i] = 0;
-    for( j=0;j<MUSICAL_POKE_MAX;j++ )
-    {
-      if( i != j )
-      {
-        if( work->initWork->musPoke[j]->point > selfPoint )
-        {
-          work->pokeRank[i]++;
-        }
-      }
-    }
-    ARI_TPrintf("Rank[%d:%d][%d]\n",i,work->initWork->musPoke[i]->point,work->pokeRank[i]);
+    work->tempPoint[i] = 0;
   }
+  STA_ACT_CalcRank( work );
   
   //注目ポケ系初期化
   work->isUpdateAttention = TRUE;
@@ -1430,6 +1419,34 @@ void STA_ACT_SetUpdateAttention( ACTING_WORK *work )
   work->isUpdateAttention = TRUE;
 }
 
+void STA_ACT_CalcRank( ACTING_WORK *work )
+{
+  u8 i;
+  //順位の計算
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    work->pokeRank[i] = 0;
+  }
+
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    u8 j;
+    const u16 selfPoint = work->initWork->musPoke[i]->point + work->tempPoint[i];
+    for( j=0;j<MUSICAL_POKE_MAX;j++ )
+    {
+      if( i != j )
+      {
+        const u16 point = work->initWork->musPoke[j]->point + work->tempPoint[j];
+        if( point > selfPoint )
+        {
+          work->pokeRank[i]++;
+        }
+      }
+    }
+    ARI_TPrintf("Rank[%d:%3d(+%2d)][%d]\n",i,work->initWork->musPoke[i]->point,work->tempPoint[i],work->pokeRank[i]);
+  }
+}
+
 #pragma mark [> BGM func
 //--------------------------------------------------------------
 //  BGM関係
@@ -1472,6 +1489,35 @@ void  STA_ACT_StopSeqBgm( ACTING_WORK *work )
 {
   work->isPlayBgm = FALSE;
   PMSND_StopBGM( );
+}
+
+void STA_ACT_PlayCurtainCloseSe( ACTING_WORK *work )
+{
+  u8 i;
+  u8 minPoint = 255;
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    const u16 point = work->initWork->musPoke[i]->point + work->tempPoint[i];
+    if( minPoint > point )
+    {
+      minPoint = point;
+    }
+  }
+  ARI_TPrintf("Curtain cloase SE point[%d]\n",minPoint);
+  if( minPoint >= 70 )
+  {
+    PMSND_PlaySE( STA_SE_CLAP_3 );
+  }
+  else
+  if( minPoint >= 40 )
+  {
+    PMSND_PlaySE( STA_SE_CLAP_2 );
+  }
+  else
+  if( minPoint >= 1 )
+  {
+    PMSND_PlaySE( STA_SE_CLAP_1 );
+  }
 }
 
 #pragma mark [> itemUse func
@@ -1681,6 +1727,9 @@ static u32 STA_ACT_GetUseItemSe( ACTING_WORK *work , const u8 usePoke , const u8
   const u8 conPoint = MUSICAL_PROGRAM_GetConOnePoint( work->initWork->progWork , conType );
   
   //ついでに増やす
+  //本計算は外でやる
+  work->tempPoint[usePoke] += conPoint;
+  STA_ACT_CalcRank( work );
   //work->initWork->musPoke[usePoke]->point += conPoint;
   if( conPoint >= 7 )
   {
