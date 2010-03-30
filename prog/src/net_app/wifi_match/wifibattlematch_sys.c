@@ -65,6 +65,8 @@
  *					定数宣言
 */
 //=============================================================================
+//SAKEサーバー上には78バイトしかとっていない
+SDK_COMPILER_ASSERT( sizeof(WIFIBATTLEMATCH_RECORD_DATA) == 80 );
 
 //=============================================================================
 /**
@@ -108,10 +110,8 @@ typedef struct
   DWCSvlResult                svl_result;         //WIFIログイン時に得るサービスロケータ
   BATTLEMATCH_BATTLE_SCORE    btl_score;          //バトルの成績
   u32                         server_time;        //サーバアクセス時間
-#if 0
-  DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA *p_gpf_data;
-  WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA   *p_sake_data;
-#endif
+  WIFIBATTLEMATCH_RECORD_DATA record_data;        //戦績
+  WIFIBATTLEMATCH_RECV_DATA   recv_data;          //サーバーから受信したデータ
 
 } WIFIBATTLEMATCH_SYS;
 
@@ -166,6 +166,9 @@ static BOOL RECPLAY_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adr
 //=====================================
 static void DATA_CreateBuffer( WIFIBATTLEMATCH_SYS *p_wk, HEAPID heapID );
 static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk );
+
+//その他
+static void Util_SetRecordData( WIFIBATTLEMATCH_RECORD_DATA *p_data, const POKEPARTY *cp_my_poke, const POKEPARTY *cp_you_poke, const WIFIBATTLEMATCH_ENEMYDATA *cp_you_data, const REGULATION *cp_reg, u32 cupNO, BtlResult result, WIFIBATTLEMATCH_TYPE type );
 
 //=============================================================================
 /**
@@ -395,6 +398,29 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
     GF_ASSERT( 0 );
   }
 
+  //自分のデータ初期化
+  {
+    POKEPARTY *p_temoti;
+    WIFIBATTLEMATCH_ENEMYDATA *p_my_data  = p_wk->p_player_data;
+    switch( p_wk->param.poke )
+    {
+    case WIFIBATTLEMATCH_POKE_TEMOTI:
+      p_temoti = GAMEDATA_GetMyPokemon(p_wk->param.p_game_data);
+      GFL_STD_MemCopy( p_temoti, p_my_data->pokeparty, PokeParty_GetWorkSize() );
+      break;
+
+    case WIFIBATTLEMATCH_POKE_BTLBOX:
+      { 
+        SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(p_wk->param.p_game_data);
+        BATTLE_BOX_SAVE *p_btlbox_sv = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
+        p_temoti  = BATTLE_BOX_SAVE_MakePokeParty( p_btlbox_sv, GFL_HEAP_LOWID(HEAPID_WIFIBATTLEMATCH_SYS) );
+        GFL_STD_MemCopy( p_temoti, p_my_data->pokeparty, PokeParty_GetWorkSize() );
+        GFL_HEAP_FreeMemory( p_temoti );
+      }
+      break;
+    }
+  }
+
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -519,7 +545,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, 
       }
 
       //このローカルPROC内でPROC遷移するため、エラーシステムを自分で動かす
-      if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_MAINMENU )
+      //->gamesystem_main上のLOCAL_PROCで動くのですべてで動かす必要がある
+      //if( p_wk->param.mode == WIFIBATTLEMATCH_MODE_MAINMENU  )
       { 
         const GFL_PROC_MAIN_STATUS  status  = WBM_SYS_SUBPROC_GetStatus( p_wk->p_subproc );
         if( status == GFL_PROC_MAIN_CHANGE || status == GFL_PROC_MAIN_NULL )
@@ -688,6 +715,8 @@ static void *WBM_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID,
   p_param->p_enemy_data   = p_wk->p_enemy_data;
   p_param->p_svl_result   = &p_wk->svl_result;
   p_param->p_server_time  = &p_wk->server_time;
+  p_param->p_record_data  = &p_wk->record_data;
+  p_param->p_recv_data    = &p_wk->recv_data;
   { 
     BATTLEMATCH_DATA  *p_btlmatch_sv  = SaveData_GetBattleMatch( GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data ) );
     p_param->p_rndmatch     =  BATTLEMATCH_GetRndMatch( p_btlmatch_sv );
@@ -1169,6 +1198,24 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
   BattleRec_StoreSetupParam( p_param->p_btl_setup_param );
   BattleRec_UnloadToolModule();
 
+  //戦績を残す
+  if( p_wk->type == WIFIBATTLEMATCH_TYPE_WIFICUP )
+  { 
+    SAVE_CONTROL_WORK   *p_sv     = GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data );
+    REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( p_sv );
+    REGULATION_CARDDATA *p_reg_card= RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_WIFI );
+    REGULATION          *p_reg    = RegulationData_GetRegulation( p_reg_card );
+    u32                 cupNO     = Regulation_GetCardParam( p_reg_card, REGULATION_CARD_CUPNO );
+
+    Util_SetRecordData( &p_wk->record_data, p_wk->p_player_btl_party, p_wk->p_enemy_btl_party, p_wk->p_enemy_data, p_reg, cupNO, p_btl_param->result, WIFIBATTLEMATCH_TYPE_WIFICUP );
+  }
+  else if( p_wk->type == WIFIBATTLEMATCH_TYPE_RNDRATE )
+  { 
+    REGULATION          *p_reg    = (REGULATION*)PokeRegulation_LoadDataAlloc( REG_RND_SINGLE + p_wk->param.btl_rule, HEAPID_WIFIBATTLEMATCH_SYS );
+    Util_SetRecordData( &p_wk->record_data, p_wk->p_player_btl_party, p_wk->p_enemy_btl_party, p_wk->p_enemy_data, p_reg, 0, p_btl_param->result, WIFIBATTLEMATCH_TYPE_RNDRATE );
+    GFL_HEAP_FreeMemory( p_reg );
+  }
+
   //破棄
   BATTLE_PARAM_Release( p_param->p_btl_setup_param );
 	GFL_HEAP_FreeMemory( p_param->p_btl_setup_param );
@@ -1618,13 +1665,6 @@ static void DATA_CreateBuffer( WIFIBATTLEMATCH_SYS *p_wk, HEAPID heapID )
   p_wk->p_enemy_data  = GFL_HEAP_AllocMemory( heapID, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
   GFL_STD_MemClear( p_wk->p_enemy_data, WIFIBATTLEMATCH_DATA_ENEMYDATA_SIZE );
 
-#if 0
-  p_wk->p_gpf_data = GFL_HEAP_AllocMemory( heapID, sizeof( DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
-  GFL_STD_MemClear( p_wk->p_gpf_data, sizeof( DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA) );
-
-  p_wk->p_sake_data = GFL_HEAP_AllocMemory( heapID, sizeof(WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA) );
-  GFL_STD_MemClear( p_wk->p_gpf_data, sizeof(WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA) );
-#endif
 }
 //----------------------------------------------------------------------------
 /**
@@ -1635,12 +1675,69 @@ static void DATA_CreateBuffer( WIFIBATTLEMATCH_SYS *p_wk, HEAPID heapID )
 //-----------------------------------------------------------------------------
 static void DATA_DeleteBuffer( WIFIBATTLEMATCH_SYS *p_wk )
 { 
-#if 0
-  GFL_HEAP_FreeMemory( p_wk->p_sake_data );
-  GFL_HEAP_FreeMemory( p_wk->p_gpf_data );
-#endif
   GFL_HEAP_FreeMemory( p_wk->p_player_data );
   GFL_HEAP_FreeMemory( p_wk->p_enemy_data );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データ作成
+ *
+ *	@param	WIFIBATTLEMATCH_RECORD_DATA *p_data ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Util_SetRecordData( WIFIBATTLEMATCH_RECORD_DATA *p_data, const POKEPARTY *cp_my_poke, const POKEPARTY *cp_you_poke, const WIFIBATTLEMATCH_ENEMYDATA *cp_you_data, const REGULATION *cp_reg, u32 cupNO, BtlResult result, WIFIBATTLEMATCH_TYPE type )
+{ 
+  int i;
+  GFL_STD_MemClear( p_data, sizeof(WIFIBATTLEMATCH_RECORD_DATA) );
+
+  //対戦相手のプロフィール
+  p_data->your_gamesyncID = MyStatus_GetProfileID( (MYSTATUS*)cp_you_data->mystatus );
+  p_data->your_profileID  = cp_you_data->profileID;
+
+  //対戦相手のポケモン
+  for( i = 0; i < PokeParty_GetPokeCount(cp_you_poke); i++ )
+  { 
+    POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( cp_you_poke, i );
+    if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) )
+    { 
+      p_data->your_monsno[i] = PP_Get( p_pp, ID_PARA_monsno, NULL );
+      p_data->your_form[i]   = PP_Get( p_pp, ID_PARA_form_no, NULL );
+      p_data->your_lv[i]     = PP_Get( p_pp, ID_PARA_level, NULL );
+      p_data->your_sex[i]    = PP_Get( p_pp, ID_PARA_sex, NULL );
+    }
+  }
+
+  //自分のポケモン
+  for( i = 0; i < PokeParty_GetPokeCount(cp_my_poke); i++ )
+  { 
+    POKEMON_PARAM *p_pp = PokeParty_GetMemberPointer( cp_my_poke, i );
+    if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) )
+    { 
+      p_data->my_monsno[i] = PP_Get( p_pp, ID_PARA_monsno, NULL );
+      p_data->my_form[i]   = PP_Get( p_pp, ID_PARA_form_no, NULL );
+      p_data->my_lv[i]     = PP_Get( p_pp, ID_PARA_level, NULL );
+      p_data->my_sex[i]    = PP_Get( p_pp, ID_PARA_sex, NULL );
+    }
+  }
+
+  //対戦情報
+  { 
+    BOOL ret;
+    RTCDate date;
+    RTCTime time;
+    ret = DWC_GetDateTime( &date, &time );
+    GF_ASSERT( ret );
+
+    p_data->year  = date.year;
+    p_data->month = date.month;
+    p_data->day   = date.day;
+    p_data->hour  = time.hour;
+    p_data->minute= time.minute;
+  }
+  p_data->cupNO   = cupNO;
+  p_data->result  = result;
+  p_data->btl_type= Regulation_GetParam( cp_reg, REGULATION_BATTLETYPE );
 }
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/

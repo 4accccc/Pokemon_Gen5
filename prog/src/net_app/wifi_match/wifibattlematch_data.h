@@ -55,6 +55,7 @@ typedef struct
   PMS_DATA  pms;
   u32       wificup_no;
   u32       btl_server_version;
+  u32       profileID;  
   u32       sake_recordID;
   s8        sign[ NHTTP_RAP_EVILCHECK_RESPONSE_SIGN_LEN ]; //６体分の署名
   u8        pokeparty[0]; //後尾にポケパーティのデータがつく
@@ -85,16 +86,26 @@ typedef struct
   u8  my_sex[TEMOTI_POKEMAX];    //性別      
 
   //対戦情報
-  u32 datetime; //対戦日時
+  u32 year  :7;//年7bit  99
+  u32 month :4;//月4bit  12
+  u32 day   :5;//日5bit  31
+  u32 hour  :5;//時5bit  24
+  u32 minute:6;//分6bit  60
+  u32 dummy :5;//余り5bi
   u32 cupNO;    //大会No.
   u8  result;   //対戦結果
   u8  btl_type; //対戦タイプ
+  u8  padding2;
+  u8  padding3;
 } WIFIBATTLEMATCH_RECORD_DATA;
 
-
-
-
-
+//-------------------------------------
+///	サーバーから受信してきて常駐におくデータ
+//=====================================
+typedef struct 
+{
+  u8    record_save_idx;
+} WIFIBATTLEMATCH_RECV_DATA;
 
 
 

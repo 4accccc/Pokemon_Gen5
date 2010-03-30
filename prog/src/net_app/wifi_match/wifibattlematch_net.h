@@ -147,10 +147,22 @@ typedef struct
       s32 triple_win;
       s32 init_profileID;
       s32 now_profileID;
+      s32 record_save_idx;
+      s32 recordID;
     };
-    s32 arry[21];
+    s32 arry[23];
   };
 } WIFIBATTLEMATCH_GDB_RND_SCORE_DATA;
+
+//-------------------------------------
+///	SAKEへ戦績データ書き込み
+//=====================================
+typedef struct 
+{
+  WIFIBATTLEMATCH_RECORD_DATA record_data;
+  u32                         save_idx;
+} WIFIBATTLEMATCH_GDB_RND_RECORD_DATA;
+
 
 //-------------------------------------
 ///	SAKEからのデータ受け取り
@@ -278,9 +290,9 @@ typedef enum
 }WIFIBATTLEMATCH_GDB_GETTYPE;
 
 //自分のデータから取得する場合
-#define WIFIBATTLEMATCH_GDB_MYRECORD  (0xFFFFFFFF)
+#define WIFIBATTLEMATCH_GDB_MYRECORD  (-1)
 
-extern void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, u32 recordID, WIFIBATTLEMATCH_GDB_GETTYPE type, void *p_wk_adrs );
+extern void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, int recordID, WIFIBATTLEMATCH_GDB_GETTYPE type, void *p_wk_adrs );
 extern BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 //書き込み
@@ -290,6 +302,8 @@ typedef enum
   WIFIBATTLEMATCH_GDB_WRITE_WIFI_SCORE,
   WIFIBATTLEMATCH_GDB_WRITE_LOGIN_DATE, //データは、いりません（内部でログイン時間をバッファに貯めます）
   WIFIBATTLEMATCH_GDB_WRITE_MYINFO, //データは、いりません＋LOGIN_DATEも設定します
+
+  WIFIBATTLEMATCH_GDB_WRITE_RECORD,     //戦績データを書き込み(WIFIBATTLEMATCH_GDB_RND_RECORD_DATA)
 
   WIFIBATTLEMATCH_GDB_WRITE_DEBUGALL,
 }WIFIBATTLEMATCH_GDB_WRITETYPE;

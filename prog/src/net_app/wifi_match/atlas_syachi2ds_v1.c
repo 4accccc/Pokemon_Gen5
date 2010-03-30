@@ -35,6 +35,8 @@ static const char* ATLAS_Rnd_Field_Name[] =
 		"NUM_SINGLE_WIN_COUNTER",
 		"NUM_TRIPLE_LOSE_COUNTER",
 		"NUM_TRIPLE_WIN_COUNTER",
+    "RECORD_SAVE_IDX",        //サケにしかない
+    "recordid",               //サケにしかない
 };
 
 static const char* ATLAS_Wifi_Field_Name[] = 
@@ -44,7 +46,7 @@ static const char* ATLAS_Wifi_Field_Name[] =
 		"DISCONNECTS_WIFICUP_COUNTER",
 		"NUM_WIFICUP_LOSE_COUNTER",
 		"NUM_WIFICUP_WIN_COUNTER",
-    "WIFICUP_POKEMON_PARTY",
+    "WIFICUP_POKEMON_PARTY",  //サケにしかない
 };
 
 const char** ATLAS_RND_GetFieldName( void )

@@ -79,6 +79,23 @@
 #define SAKE_STAT_LAST_LOGIN_DATETIME   "LAST_LOGIN_DATETIME"
 #define SAKE_STAT_WIFICUP_POKEMON_PARTY "WIFICUP_POKEMON_PARTY"
 #define SAKE_STAT_MYSTATUS              "MYSTATUS"
+#define SAKE_STAT_RECORD_DATA_01        "RECORD_DATA_01"
+#define SAKE_STAT_RECORD_DATA_02        "RECORD_DATA_02"
+#define SAKE_STAT_RECORD_DATA_03        "RECORD_DATA_03"
+#define SAKE_STAT_RECORD_DATA_04        "RECORD_DATA_04"
+#define SAKE_STAT_RECORD_DATA_05        "RECORD_DATA_05"
+#define SAKE_STAT_RECORD_DATA_06        "RECORD_DATA_06"
+#define SAKE_STAT_RECORD_SAVE_IDX       "RECORD_SAVE_IDX"
+
+static const char* scp_stat_record_data_tbl[] =
+{ 
+  SAKE_STAT_RECORD_DATA_01,
+  SAKE_STAT_RECORD_DATA_02,
+  SAKE_STAT_RECORD_DATA_03,
+  SAKE_STAT_RECORD_DATA_04,
+  SAKE_STAT_RECORD_DATA_05,
+  SAKE_STAT_RECORD_DATA_06,
+};
 
 //-------------------------------------
 ///	SCのシーケンス
@@ -123,16 +140,16 @@ typedef enum
 //-------------------------------------
 ///	タイミング
 //=====================================
-#define WIFIBATTLEMATCH_SC_SEND_PLAYERDATA_TIMING    (1)
-#define WIFIBATTLEMATCH_SC_RETURN_PLAYERDATA_TIMING  (2)
-#define WIFIBATTLEMATCH_SC_REPORT_TIMING    (3)
+#define WIFIBATTLEMATCH_SC_SEND_PLAYERDATA_TIMING     (1)
+#define WIFIBATTLEMATCH_SC_RETURN_PLAYERDATA_TIMING   (2)
+#define WIFIBATTLEMATCH_SC_REPORT_TIMING              (3)
 
 //-------------------------------------
 ///	その他
 //=====================================
-#define TIMEOUT_MS   100  // HTTP通信のタイムアウト時間
-#define PLAYER_NUM   2          // プレイヤー数
-#define TEAM_NUM     0          // チーム数
+#define TIMEOUT_MS            100       // HTTP通信のタイムアウト時間
+#define PLAYER_NUM            2          // プレイヤー数
+#define TEAM_NUM              0          // チーム数
 #define CANCELSELECT_TIMEOUT (20*60)     //キャンセルセレクトタイムアウト
 #define ASYNC_TIMEOUT (60*60)     //非同期用タイムアウト
 
@@ -293,6 +310,7 @@ struct _WIFIBATTLEMATCH_NET_WORK
   BOOL is_auth;
   int get_recordID;
   u16 playername_unicode[PERSON_NAME_SIZE + EOM_SIZE];
+  WIFIBATTLEMATCH_GDB_RND_RECORD_DATA record_data;
 
   //SENDDATA系
   u8 recv_buffer[RECV_BUFFER_SIZE];//受信バッファ
@@ -377,6 +395,8 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
 //-------------------------------------
 ///	GDB関係
 //=====================================
+static void DwcRap_Gdb_GetCallback(int record_num, DWCGdbField** records, void* user_param);
+
 static void DwcRap_Gdb_Rnd_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
 static void DwcRap_Gdb_Wifi_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
 static void DwcRap_Gdb_RecordID_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
@@ -2394,13 +2414,13 @@ static void WifiBattleMatch_RecvDirtyCnt(const int netID, const int size, const 
  *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, u32 recordID, WIFIBATTLEMATCH_GDB_GETTYPE type, void *p_wk_adrs )
+void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, int recordID, WIFIBATTLEMATCH_GDB_GETTYPE type, void *p_wk_adrs )
 { 
   p_wk->seq           = 0;
   p_wk->p_get_wk      = p_wk_adrs;
   p_wk->get_recordID = recordID;
   DEBUG_NET_Printf( "GDB:request[%d]\n",type );
-  GF_ASSERT( p_wk->get_recordID );
+  GF_ASSERT( p_wk->get_recordID != 0 );
 
 
   switch( type )
@@ -2491,7 +2511,7 @@ BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk )
       if( p_wk->get_recordID == WIFIBATTLEMATCH_GDB_MYRECORD )
       { 
         //自分のレコード取得の場合
-        error = DWC_GdbGetMyRecordsAsync( WIFIBATTLEMATCH_NET_TABLENAME, p_wk->pp_table_name, p_wk->table_name_num, p_wk->gdb_get_record_callback, p_wk->p_get_wk );
+        error = DWC_GdbGetMyRecordsAsync( WIFIBATTLEMATCH_NET_TABLENAME, p_wk->pp_table_name, p_wk->table_name_num, DwcRap_Gdb_GetCallback, p_wk );
       }
       else
       { 
@@ -2501,7 +2521,7 @@ BOOL WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_NET_WORK *p_wk )
                                    1,
                                    p_wk->pp_table_name, 
                                    p_wk->table_name_num, 
-                                   p_wk->gdb_get_record_callback, p_wk->p_get_wk);
+                                   DwcRap_Gdb_GetCallback, p_wk);
       }
       if( error != DWC_GDB_ERROR_NONE )
       { 
@@ -2619,6 +2639,44 @@ static void DwcRap_Gdb_SetMyInfo( WIFIBATTLEMATCH_NET_WORK *p_wk )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  レコード取得コールバック  大元
+ *
+ *	@param	record_num  レコード数
+ *	@param	records     レコードのアドレス
+ *	@param	user_param  自分で設定したワーク
+ */
+//-----------------------------------------------------------------------------
+static void DwcRap_Gdb_GetCallback(int record_num, DWCGdbField** records, void* user_param)
+{ 
+  WIFIBATTLEMATCH_NET_WORK *p_wk  = user_param;
+
+  //設定したコールバックを呼ぶ
+  p_wk->gdb_get_record_callback( record_num, records, p_wk->p_get_wk );
+
+  //自分のレコードからの取得の場合で、レコードIDの受信があれば、
+  //格納
+  if( p_wk->get_recordID == WIFIBATTLEMATCH_GDB_MYRECORD )
+  { 
+    int i,j;
+
+    for (i = 0; i < record_num; i++)
+    {
+      for (j = 0; j < p_wk->table_name_num; j++)   // user_param -> field_num
+      {
+        DWCGdbField* field  = &records[i][j];
+
+        if( !GFL_STD_StrCmp( field->name, SAKE_STAT_RECORDID ) )
+        { 
+          p_wk->sake_record_id  = field->value.int_s32;
+          DEBUG_NET_Printf("recordID取得!\n", p_wk->sake_record_id );
+        }
+      }
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  レコード取得コールバック  ランダムマッチ版
  *
  *	@param	record_num  レコード数
@@ -2714,6 +2772,14 @@ static void DwcRap_Gdb_Rnd_GetRecordsCallback(int record_num, DWCGdbField** reco
         else if( !GFL_STD_StrCmp( field->name, SAKE_STAT_NOW_PROFILE_ID ) )
         { 
           p_data->now_profileID  = field->value.int_s32;
+        }
+        else if( !GFL_STD_StrCmp( field->name, SAKE_STAT_RECORD_SAVE_IDX ) )
+        { 
+          p_data->record_save_idx  = field->value.int_s32;
+        }
+        else if( !GFL_STD_StrCmp( field->name, SAKE_STAT_RECORDID ) )
+        { 
+          p_data->recordID  = field->value.int_s32;
         }
         print_field( field );
         DEBUG_NET_Printf(" ");
@@ -2986,6 +3052,26 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
     break;
   case WIFIBATTLEMATCH_GDB_WRITE_MYINFO:
     DwcRap_Gdb_SetMyInfo( p_wk );
+    break;
+  
+  case WIFIBATTLEMATCH_GDB_WRITE_RECORD:     //戦績データを書き込み
+    { 
+      const WIFIBATTLEMATCH_GDB_RND_RECORD_DATA  *cp_data  = cp_wk_adrs;
+      p_wk->record_data = *cp_data;
+
+      p_wk->table_name_num  = 2;
+      //戦績
+      p_wk->p_field_buff[0].name  = (char*)scp_stat_record_data_tbl[ p_wk->record_data.save_idx ];
+      p_wk->p_field_buff[0].type  = DWC_GDB_FIELD_TYPE_BINARY_DATA;
+      p_wk->p_field_buff[0].value.binary_data.data = (u8*)&p_wk->record_data.record_data;
+      p_wk->p_field_buff[0].value.binary_data.size = sizeof(WIFIBATTLEMATCH_RECORD_DATA);
+      //インデックス
+      p_wk->p_field_buff[1].name          = SAKE_STAT_RECORD_SAVE_IDX;
+      p_wk->p_field_buff[1].type          = DWC_GDB_FIELD_TYPE_BYTE;
+      p_wk->p_field_buff[1].value.int_u8  = (p_wk->record_data.save_idx + 1 ) % NELEMS(scp_stat_record_data_tbl);
+
+      OS_TPrintf( "戦績データを送信開始 今%d 次IDX%d\n", p_wk->record_data.save_idx,p_wk->p_field_buff[1].value.int_u8 );
+    }
     break;
   }
 }

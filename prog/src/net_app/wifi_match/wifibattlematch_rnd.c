@@ -173,13 +173,13 @@ typedef struct
   WIFIBATTLEMATCH_CORE_PARAM    *p_param;
 
   //サーバーからの受信バッファ
-  WIFIBATTLEMATCH_GDB_RND_SCORE_DATA  rnd_score;
+  WIFIBATTLEMATCH_GDB_RND_SCORE_DATA  rnd_score;  //※戦闘後のデータは無効なので注意！！
 
   //不正チェックのときに使用するバッファ（それ以外は参照しない）
   WIFIBATTLEMATCH_NET_EVILCHECK_DATA  evilecheck_data;
 
   //GFPの状態
-  DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA gpf_data;
+  DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA gpf_data; //※戦闘後のデータは無効なので注意！！
 
   //ウエイト
   u32 cnt;
@@ -1030,7 +1030,12 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
 
         *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
 
+        //※１受信してきたデータをセーブワークに入れる
+        Util_SaveRateScore( p_param->p_rndmatch, p_param->p_param->btl_rule, p_wk );
         Util_RenewalMyData( p_param->p_player_data, p_wk );
+
+        //消したくない情報を常駐に保存
+        p_wk->p_param->p_recv_data->record_save_idx  = p_wk->rnd_score.record_save_idx;
 
         //自分の情報を表示
         Util_PlayerInfo_Create( p_wk, WIFIBATTLEMATCH_CORE_RETMODE_RATE );
@@ -1489,20 +1494,48 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   case SEQ_START_MSG_WAIT:
     if( *p_wk->p_param->p_server_time == 0 )
     { 
-      WBM_TEXT_EndWait( p_wk->p_text );
       *p_seq  = SEQ_START_SAKE_RECORD;
     }
     break;
 
   case SEQ_START_SAKE_RECORD:
-    //@todo 履歴を入れる！
+    //履歴を入れる！
+    { 
+      WIFIBATTLEMATCH_GDB_RND_RECORD_DATA data;
+      GFL_STD_MemClear( &data, sizeof(WIFIBATTLEMATCH_GDB_RND_RECORD_DATA) );
+      data.record_data  = *p_wk->p_param->p_record_data;
+      data.save_idx     = p_wk->p_param->p_recv_data->record_save_idx;
+      WIFIBATTLEMATCH_GDB_StartWrite( p_wk->p_net, WIFIBATTLEMATCH_GDB_WRITE_RECORD, &data );
+    }
     *p_seq  = SEQ_WAIT_SAKE_RECORD;
     break;
 
   case SEQ_WAIT_SAKE_RECORD:
-    //@todo
-    *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
-    *p_seq = SEQ_START_RESULT_MSG;
+    {
+      if( WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net ) )
+      { 
+        WBM_TEXT_EndWait( p_wk->p_text );
+        *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
+        *p_seq = SEQ_START_RESULT_MSG;
+      }
+      else
+      { 
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          WBM_TEXT_EndWait( p_wk->p_text );
+          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+          *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
+          break;
+
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+          WBM_TEXT_EndWait( p_wk->p_text );
+          *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
+          *p_seq = SEQ_START_RESULT_MSG;
+          break;
+        }
+      }
+    } 
     break;
 
   case SEQ_START_RESULT_MSG:
@@ -1520,11 +1553,8 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_SAVE );
     break;
   case SEQ_START_SAVE:
-    //レーティングでセーブデータに保存するものは、
-    //自分の戦績のみ
-
-    Util_SaveRateScore( p_param->p_rndmatch, p_param->p_param->btl_rule, p_wk );
-
+    //レーティングでセーブデータに保存するものは、自分のスコアのみ
+    //マッチング前でセーブワークに代入をしている
     GAMEDATA_SaveAsyncStart(p_param->p_param->p_game_data);
     *p_seq       = SEQ_WAIT_SAVE;
     break;
@@ -3010,6 +3040,7 @@ static void Util_Matchkey_SetData( WIFIBATTLEMATCH_MATCH_KEY_DATA *p_data, const
 static void Util_InitMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMATCH_RND_WORK *p_wk )
 { 
   GAMEDATA  *p_game_data  = p_wk->p_param->p_param->p_game_data;
+  SAVE_CONTROL_WORK *p_sv            = GAMEDATA_GetSaveControlWork(p_game_data);
 
   p_my_data->btl_server_version  = BTL_NET_SERVER_VERSION;
   {
@@ -3019,8 +3050,6 @@ static void Util_InitMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMAT
   }
   { 
     const MYPMS_DATA *cp_mypms;
-    SAVE_CONTROL_WORK *p_sv;
-    p_sv            = GAMEDATA_GetSaveControlWork(p_game_data);
     cp_mypms        = SaveData_GetMyPmsDataConst( p_sv );
     MYPMS_GetPms( cp_mypms, MYPMS_PMS_TYPE_INTRODUCTION, &p_my_data->pms );
   }
@@ -3040,6 +3069,12 @@ static void Util_InitMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMAT
           RNDMATCH_TYPE_FREE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_LOSE );
     }
   }
+  { 
+    //PID
+    WIFI_LIST *p_wlist = GAMEDATA_GetWiFiList( p_game_data );
+    p_my_data->profileID  = WifiList_GetMyGSID( p_wlist );
+  }
+#if 0 //sysのprocInitで行っている
   {
     POKEPARTY *p_temoti;
     switch( p_wk->p_param->p_param->poke )
@@ -3051,7 +3086,6 @@ static void Util_InitMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMAT
 
     case WIFIBATTLEMATCH_POKE_BTLBOX:
       { 
-        SAVE_CONTROL_WORK*	p_sv	= GAMEDATA_GetSaveControlWork(p_game_data);
         BATTLE_BOX_SAVE *p_btlbox_sv = BATTLE_BOX_SAVE_GetBattleBoxSave( p_sv );
         p_temoti  = BATTLE_BOX_SAVE_MakePokeParty( p_btlbox_sv, GFL_HEAP_LOWID(HEAPID_WIFIBATTLEMATCH_SYS) );
         GFL_STD_MemCopy( p_temoti, p_my_data->pokeparty, PokeParty_GetWorkSize() );
@@ -3060,6 +3094,7 @@ static void Util_InitMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, WIFIBATTLEMAT
       break;
     }
   }
+#endif
 }
 //----------------------------------------------------------------------------
 /**
@@ -3177,6 +3212,7 @@ static BOOL Util_VerifyPokeData( WIFIBATTLEMATCH_ENEMYDATA *p_data, HEAPID heapI
   return ret;
 
 }
+
 //=============================================================================
 /**
  *    DEBUG

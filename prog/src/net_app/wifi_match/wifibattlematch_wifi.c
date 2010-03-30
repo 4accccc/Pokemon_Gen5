@@ -3981,6 +3981,7 @@ static void Util_InitMyData( WIFIBATTLEMATCH_ENEMYDATA *p_my_data )
 //-----------------------------------------------------------------------------
 static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFIBATTLEMATCH_WIFI_WORK *cp_wk )
 { 
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(cp_wk->p_param->p_param->p_game_data);
   {
     MYSTATUS  *p_my;
     p_my  = GAMEDATA_GetMyStatus(cp_wk->p_param->p_param->p_game_data);
@@ -3988,8 +3989,6 @@ static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFI
   }
   { 
     const MYPMS_DATA *cp_mypms;
-    SAVE_CONTROL_WORK *p_sv;
-    p_sv            = GAMEDATA_GetSaveControlWork(cp_wk->p_param->p_param->p_game_data);
     cp_mypms        = SaveData_GetMyPmsDataConst( p_sv );
     MYPMS_GetPms( cp_mypms, MYPMS_PMS_TYPE_INTRODUCTION, &p_my_data->pms );
   }
@@ -3999,6 +3998,11 @@ static void Util_SetMyDataInfo( WIFIBATTLEMATCH_ENEMYDATA *p_my_data, const WIFI
 
   p_my_data->sake_recordID = WIFIBATTLEMATCH_GDB_GetRecordID( cp_wk->p_net );
 
+  { 
+    //PID
+    WIFI_LIST *p_wlist = GAMEDATA_GetWiFiList( cp_wk->p_param->p_param->p_game_data );
+    p_my_data->profileID  = WifiList_GetMyGSID( p_wlist );
+  }
 
   { 
     const REGULATION_CARDDATA *cp_reg_card  = cp_wk->p_reg;
