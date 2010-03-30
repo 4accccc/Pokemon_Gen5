@@ -338,14 +338,14 @@ void WIFILOGIN_MESSAGE_TitleDisp(WIFILOGIN_MESSAGE_WORK* pWork, int msgid)
 { 
   enum
   { 
-    TITLE_WIN_W = 22,
+    TITLE_WIN_W = 24,
   };
 
   GFL_BMPWIN* pwin;
   if(pWork->titleWin==NULL){
     pWork->titleWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME1_M ,
-      5, 7, TITLE_WIN_W,2,
+      4, 7, TITLE_WIN_W,2,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->titleWin;
