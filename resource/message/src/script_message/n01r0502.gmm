@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-28T15:21:50"/>
+	<create user="matsumiya" host="W00224" date="2010-03-30T17:13:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -449,28 +449,28 @@
 ライトストーンを　使ってみせてよ[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_n01r0502_stone_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_stone_01w" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>ストーン
 ・WHITEver
 ・ここでの専用メッセージ
 ●bag.gmmに記述</comment>
 		<attribute name="キャラ指定">ダークストーン</attribute>
-		<language name="JPN" width="256">……ダークストーンは
-なんの　はんのうも　しめさない</language>
-		<language name="JPN_KANJI" width="256">……ダークストーンは
-なんの　反応も　示さない</language>
+		<language name="JPN" width="256">ダークストーンを　つかったが
+まったく　はんのう　しない……</language>
+		<language name="JPN_KANJI" width="256">ダークストーンを　使ったが
+まったく　反応しない……</language>
 	</row>
 
-	<row id="msg_n01r0502_stone_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_n01r0502_stone_01b" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>ストーン
 ・BLACKver
 ・ここでの専用メッセージ
 ●bag.gmmに記述</comment>
 		<attribute name="キャラ指定">ライトストーン</attribute>
-		<language name="JPN" width="256">……ライトストーンは
-なんの　はんのうも　しめさない</language>
-		<language name="JPN_KANJI" width="256">……ライトストーンは
-なんの　反応も　示さない</language>
+		<language name="JPN" width="256">ライトストーンを　つかったが
+まったく　はんのう　しない……</language>
+		<language name="JPN_KANJI" width="256">ライトストーンを　使ったが
+まったく　反応しない……</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_03w" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
