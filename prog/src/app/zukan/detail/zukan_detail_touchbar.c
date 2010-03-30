@@ -836,8 +836,10 @@ static void Zukan_Detail_Touchbar_DeleteGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
 }
 static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
-  u8 icon = GENERAL_ICON_MAX;
-  int trg = GFL_UI_KEY_GetTrg();
+  u8  icon = GENERAL_ICON_MAX;
+  int trg  = GFL_UI_KEY_GetTrg();
+  int cont = GFL_UI_KEY_GetCont();
+
   if( trg & PAD_KEY_LEFT )
   {
     switch( work->disp )
@@ -896,11 +898,30 @@ static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work 
       break;
     }
   }
+
   // アイコンをキーで押したことにする
   if( icon != GENERAL_ICON_MAX )
   {
     ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[icon].cset->id );
+    return;
   } 
+
+
+  if( trg & ( PAD_KEY_UP | PAD_KEY_DOWN ) )
+  {
+    // 押したときは、ちゃんとタッチバーで判別するので、何もしない
+  }
+  else
+  {
+    if( cont & PAD_KEY_UP )
+    {
+      ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[GENERAL_ICON_CUR_U].cset->id );
+    }
+    else if( cont & PAD_KEY_DOWN )
+    {
+      ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[GENERAL_ICON_CUR_D].cset->id );
+    }
+  }
 }
 
 // GENERALのパレットアニメ
