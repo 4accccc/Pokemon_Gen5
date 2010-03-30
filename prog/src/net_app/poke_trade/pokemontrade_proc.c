@@ -3239,7 +3239,10 @@ static void _savedataHeapEnd(POKEMON_TRADE_WORK* pWork,BOOL bParentWork)
 static void _maxTrayNumInit(POKEMON_TRADE_WORK *pWork)
 {
   int max = BOXDAT_GetTrayMax(pWork->pBox);
-  
+
+#if DEBUG_ONLY_FOR_ohno
+  max = 24;
+#endif
   pWork->TRADEBOX_LINEMAX = max * 6 + 2;
   pWork->BOX_TRAY_MAX = max;
   pWork->_SRCMAX = ((max*_BOXTRAY_SCR_MAX)+_TEMOTITRAY_SCR_MAX);

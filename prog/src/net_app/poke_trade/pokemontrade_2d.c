@@ -649,6 +649,7 @@ void IRC_POKETRADE_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork)
         cellInitData.bgpri = 3;
 
         pWork->pokeIconNcgRes[line][i] = GFL_CLGRP_CGR_Register( arcHandlePoke ,NARC_poke_icon_poke_icon_egg_normal_m_NCGR , FALSE , CLSYS_DRAW_SUB , pWork->heapID );
+
         pWork->pokeIcon[line][i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                         pWork->pokeIconNcgRes[line][i],
                                                         pWork->cellRes[PLT_POKEICON],
@@ -1177,22 +1178,34 @@ static void  _PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork )
 
   pWork->pCharMem = GFL_HEAP_AllocMemory(pWork->heapID, 4*8*4*4*(BOX_POKESET_MAX+TEMOTI_POKEMAX) );
 
-  for(i = 0;i < BOX_MAX_TRAY;i++){
+  for(i = 0;i < BOX_MAX_TRAY+1;i++){
     for( j = 0 ; j < BOX_MAX_POS ; j++ ){
-      const POKEMON_PASO_PARAM* ppp =
-        IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, i, j,  pWork);
-      if(ppp){
-        id = POKEICON_GetCgxArcIndex( ppp );
+      if(BOX_MAX_TRAY == i){
+        if(j==TEMOTI_POKEMAX){
+          break;
+        }
       }
-      else{
-        id = POKEICON_GetCgxArcIndexByMonsNumber( 0, 0, 0, 0 );
+      {
+        const POKEMON_PASO_PARAM* ppp =
+          IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, i, j,  pWork);
+        if(ppp){
+          id = POKEICON_GetCgxArcIndex( ppp );
+        }
+        else{
+          id = POKEICON_GetCgxArcIndexByMonsNumber( 0, 0, 0, 0 );
+        }
+        pMem = GFL_ARCHDL_UTIL_LoadBGCharacter(pokeicon_ah, id, FALSE, &pCharData, pWork->heapID);
+        GFL_STD_MemCopy(pCharData->pRawData, &pWork->pCharMem[4*8*4*4*k] , 4*8*4*4);
+        k++;
+        GFL_HEAP_FreeMemory(pMem);
       }
-      pMem = GFL_ARCHDL_UTIL_LoadBGCharacter(pokeicon_ah, id, FALSE, &pCharData, pWork->heapID);
-      GFL_STD_MemCopy(pCharData->pRawData, &pWork->pCharMem[4*8*4*4*k] , 4*8*4*4);
-      k++;
-      GFL_HEAP_FreeMemory(pMem);
     }
   }
+
+
+
+
+  
   GFL_ARC_CloseDataHandle(pokeicon_ah);
 
 
