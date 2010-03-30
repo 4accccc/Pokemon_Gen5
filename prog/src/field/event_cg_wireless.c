@@ -21,6 +21,7 @@
 
 #include "./event_fieldmap_control.h"
 #include "./event_cg_wireless.h"
+#include "./event_intrude_subscreen.h"
 
 #include "sound/pm_sndsys.h"
 #include "system/main.h"      //GFL_HEAPID_APPŽQÆ
@@ -28,6 +29,7 @@
 #include "net_app/cg_wireless_menu.h"
 #include "field_comm/intrude_work.h"
 #include "field_comm/intrude_main.h"
+#include "arc/fieldmap/zone_id.h"
 
 
 //============================================================================================
@@ -135,26 +137,21 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
   case _FIELD_FADEIN:
     {
       GMEVENT* fade_event;
-      FIELD_SUBSCREEN_WORK * subscreen;
-
-      subscreen = FIELDMAP_GetFieldSubscreenWork(pFieldmap);
-
-      if(dbw->selectType==CG_WIRELESS_RETURNMODE_PALACE){
-        if(NULL==Intrude_Check_CommConnect(pComm)){ //‚Â‚È‚ª‚Á‚Ä‚È‚¢
-          FIELD_SUBSCREEN_SetAction( subscreen , FIELD_SUBSCREEN_ACTION_PALACE_WARP);
-        }
-      }
-
       fade_event = EVENT_FieldFadeIn_Black(gsys, pFieldmap, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
     }
     (*seq) ++;
     break;
   case _POP_BGM:
-//    if(dbw->push){
-  //    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_SHORT, FSND_FADE_NORMAL));
-    //  dbw->push=FALSE;
-//    }
+    {
+      GMEVENT* intrude_event;
+      if(dbw->selectType==CG_WIRELESS_RETURNMODE_PALACE){
+        if(NULL==Intrude_Check_CommConnect(pComm)){ //‚Â‚È‚ª‚Á‚Ä‚È‚¢
+          intrude_event = EVENT_IntrudeTownWarp(gsys, pFieldmap, ZONE_ID_PALACE01);
+          GMEVENT_CallEvent(event,intrude_event);
+        }
+      }
+    }
     (*seq) ++;
     break;
   case _FIELD_END: 
