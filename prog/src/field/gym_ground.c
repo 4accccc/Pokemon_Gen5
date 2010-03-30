@@ -72,8 +72,6 @@ typedef struct GYM_GROUND_TMP_tag
   u16 MainLiftSeq;
   SHAKE_WORK ShakeWork;
   BOOL FogFadeFlg;
-  s32 FogBaseOffset;
-  s32 FogBaseSlope;
   int WallAnmWatch;
   MMDL *LiftMmdl[LIFT_ON_MAX];
 }GYM_GROUND_TMP;
@@ -514,13 +512,6 @@ void GYM_GROUND_Setup(FIELDMAP_WORK *fieldWork)
     }
   }
 
-  //デフォルトフォグ設置を保存
-  {
-    FIELD_ZONEFOGLIGHT * zone_fog = FIELDMAP_GetFieldZoneFog( fieldWork );
-    tmp->FogBaseOffset = FIELD_ZONEFOGLIGHT_GetOffset( zone_fog );
-    tmp->FogBaseSlope = FIELD_ZONEFOGLIGHT_GetSlope( zone_fog );
-    NOZOMU_Printf("fog::%d,%d\n",tmp->FogBaseOffset, tmp->FogBaseSlope);
-  }
   //自機が隔壁より下にいる場合はフォグフェード後の設定に書き換え
   {
     VecFx32 pos;
@@ -1330,9 +1321,11 @@ static void FuncMainLiftOnly(GAMESYS_WORK *gsys)
     {
       if (tmp->NowHeight >= UP_FOG_FADE_START*FIELD_CONST_GRID_FX32_SIZE)
       {
+        FIELD_ZONEFOGLIGHT * zone_fog = FIELDMAP_GetFieldZoneFog( fieldWork );
         fog_start = TRUE;
-        fog_offset = tmp->FogBaseOffset;
-        fog_slope = tmp->FogBaseSlope;
+        fog_offset = FIELD_ZONEFOGLIGHT_GetOffset( zone_fog );
+        fog_slope = FIELD_ZONEFOGLIGHT_GetSlope( zone_fog );
+        NOZOMU_Printf("fog::%d,%d\n",fog_offset, fog_slope);
       }
     }
     else                    //下降
