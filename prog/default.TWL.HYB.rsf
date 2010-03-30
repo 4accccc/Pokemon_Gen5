@@ -135,7 +135,7 @@ Property
 	# BANNER FILE: generated from Banner Spec File
 	#
 	#BannerFile		./etc/myGameBanner.bnr
-	BannerFile		./spec/pokemon_WB.TWL.bnr
+	BannerFile		./spec/pokemon_WB_black.TWL.bnr
 	#BannerFile		$(TWLSDK_ROOT)/include/twl/specfiles/default.bnr
 
 	#
