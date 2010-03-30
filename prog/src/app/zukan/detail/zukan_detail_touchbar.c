@@ -847,7 +847,7 @@ static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work 
         if( ZKND_TBAR_GetVisible( work->tbwk, work->icon_set[GENERAL_ICON_CUSTOM_FORM].cset->id ) )
           icon = GENERAL_ICON_CUSTOM_FORM;
         else
-          icon = GENERAL_ICON_CUSTOM_MAP;
+          icon = GENERAL_ICON_CUSTOM_VOICE;
       }
       break;
     case ZUKAN_DETAIL_TOUCHBAR_DISP_MAP:
