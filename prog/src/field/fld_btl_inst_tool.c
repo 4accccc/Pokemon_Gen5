@@ -814,8 +814,7 @@ static void MakePokePara( const BSUBWAY_POKEMON *src, POKEMON_PARAM *dest )
 static void GetPokemonRomData(
     BSUBWAY_POKEMON_ROM_DATA *prd,int index)
 {
-  //ここは通信はありえないのでプラチナ限定！(AIマルチ)
-  GFL_ARC_LoadData( (void*)prd, ARCID_PL_BTD_PM, index );
+  GFL_ARC_LoadData( (void*)prd, ARCID_BSW_PD, index );
 }
 
 //--------------------------------------------------------------
@@ -833,7 +832,7 @@ static void * GetTrainerRomData( u16 tr_no, HEAPID heapID )
   OS_Printf( "BSUBWAY load TrainerRomData Num = %d\n", tr_no );
 #endif
   //AIマルチ限定なのでプラチナ！
-  return GFL_ARC_UTIL_Load( ARCID_PL_BTD_TR, tr_no, 0, heapID );
+  return GFL_ARC_UTIL_Load( ARCID_BSW_TR, tr_no, 0, heapID );
 }
 
 //--------------------------------------------------------------
@@ -1113,61 +1112,56 @@ static const u16 btower_trtype2objcode[][2] =
  {TRTYPE_TANPAN,  BOY2},  ///<たんパンこぞう
  {TRTYPE_MINI,  GIRL1},  ///<ミニスカート
  {TRTYPE_SCHOOLB,  BOY1},  ///<じゅくがえり
-// {TRTYPE_PL_SCHOOLG,  GIRL3},  ///<じゅくがえり
-// {TRTYPE_PL_PRINCE,  GORGGEOUSM},  ///<おぼっちゃま
-// {TRTYPE_PL_PRINCESS,  GORGGEOUSW},  ///<おじょうさま
-// {TRTYPE_CAMPB,  CAMPBOY},  ///<キャンプボーイ
-// {TRTYPE_PICNICG,  PICNICGIRL},  ///<ピクニックガール
-// {TRTYPE_PL_UKIWAB,  BABYBOY1},  ///<うきわボーイ
-// {TRTYPE_PL_UKIWAG,  BABYGIRL1},  ///<うきわガール
+ {TRTYPE_SCHOOLG, GIRL3 },  ///<じゅくがえり
+ {TRTYPE_PRINCE,  BOY4},  ///<おぼっちゃま
+ {TRTYPE_PRINCESS,  GIRL4},  ///<おじょうさま
+ {TRTYPE_KINDERGARTENM, BABYBOY2},    //えんじ♂
+ {TRTYPE_KINDERGARTENW, BABYGIRL2},    //えんじ♀
+ {TRTYPE_BACKPACKERM, BACKPACKERM},//バックパッカー♂
+ {TRTYPE_BACKPACKERW, BACKPACKERW},//バックパッカー♂
+ {TRTYPE_WAITER,WAITER}, //ウエーター
+ {TRTYPE_WAITRESS,WAITRESS}, //ウエートレス
  {TRTYPE_DAISUKIM,  MIDDLEMAN1},  ///<だいすきクラブ
  {TRTYPE_DAISUKIW,  MIDDLEWOMAN1},  ///<だいすきクラブ
-// {TRTYPE_PL_WAITER,  WAITER},  ///<ウエーター
-// {TRTYPE_PL_WAITRESS,  WAITRESS},  ///<ウエートレス
-// {TRTYPE_PL_BREEDERM,  MAN1},  ///<ポケモンブリーダー
-// {TRTYPE_PL_BREEDERW,  WOMAN1},  ///<ポケモンブリーダー
-// {TRTYPE_PL_CAMERAMAN,  CAMERAMAN},  ///<カメラマン
-// {TRTYPE_PL_REPORTER,  REPORTER},  ///<レポーター
-// {TRTYPE_PL_FARMER,  FARMER},  ///<ぼくじょうおじさん
-// {TRTYPE_PL_COWGIRL,  COWGIRL},  ///<カウガール
-// {TRTYPE_PL_CYCLINGM,  CYCLEM},  ///<サイクリング♂
-// {TRTYPE_PL_CYCLINGW,  CYCLEW},  ///<サイクリング♀
- {TRTYPE_KARATE,  FIGHTERM},  ///<からておう
-// {TRTYPE_PL_BATTLEG,  GIRL2},  ///<バトルガール
-// {TRTYPE_PL_VETERAN,  OLDMAN1},  ///<ベテラントレーナー
-// {TRTYPE_PL_MADAM,  LADY},  ///<マダム
- {TRTYPE_ESPM,  MAN1},  ///<サイキッカー
-// {TRTYPE_PL_ESPW,  MYSTERY},  ///<サイキッカー
-// {TRTYPE_PL_RANGERM,  MAN3},  ///<ポケモンレンジャー
-// {TRTYPE_PL_RANGERW,  WOMAN3},  ///<ポケモンレンジャー
-// {TRTYPE_ELITEM,  MAN3},  ///<エリートトレーナー
-// {TRTYPE_ELITEW,  WOMAN3},  ///<エリートトレーナー
-// {TRTYPE_PL_COLDELITEM,  MAN5},  ///<エリートトレーナー♂（厚着）
-// {TRTYPE_PL_COLDELITEW,  WOMAN5},  ///<エリートトレーナー♀（厚着）
-// {TRTYPE_PL_DRAGON,  MAN3},  ///<ドラゴンつかい
-// {TRTYPE_MUSHI,  BOY3},  ///<むしとりしょうねん
-// {TRTYPE_PL_SHINOBI,  BABYBOY1},  ///<にんじゃごっこ
-// {TRTYPE_PL_JOGGER,  SPORTSMAN},  ///<ジョギング♂
- {TRTYPE_FISHING,  FISHING},  ///<つりびと
-// {TRTYPE_SAILOR,  SEAMAN},  ///<ふなのり
- {TRTYPE_MOUNT,  MAN1},  ///<やまおとこ
-// {TRTYPE_PL_ISEKI,  EXPLORE},  ///<いせきマニア
-// {TRTYPE_GUITARIST,  MAN2},  ///<ギタリスト
-// {TRTYPE_PL_COLLECTOR,  BIGMAN},  ///<ポケモンコレクター
-// {TRTYPE_PL_HEADS,  BADMAN},  ///<スキンヘッズ
-// {TRTYPE_SCIENTIST,  ASSISTANTM},  ///<けんきゅういん♂
+ {TRTYPE_DOCTOR, DOCTOR },   //ドクター
+ {TRTYPE_NURSE,  NURSE},    //ナース
+ {TRTYPE_CYCLINGM,  CYCLEM},  ///<サイクリング♂
+ {TRTYPE_CYCLINGW,  CYCLEW},  ///<サイクリング♀
  {TRTYPE_GENTLE,  GENTLEMAN},  ///<ジェントルマン
-// {TRTYPE_PL_WORKER,  WORKMAN},  ///<さぎょういん
-// {TRTYPE_PL_PIERROT,  CLOWN},  ///<ピエロ
-// {TRTYPE_POLICE,  POLICEMAN},  ///<おまわりさん
-// {TRTYPE_PL_GAMBLER,  GORGGEOUSM},  ///<ギャンブラー
-// {TRTYPE_BIRD,  WOMAN3},  ///<とりつかい
-// {TRTYPE_PL_PARASOL,  AMBRELLA},  ///<パラソルおねえさん
-// {TRTYPE_SISTER,  WOMAN2},  ///<おとなのおねえさん
-// {TRTYPE_PL_AROMA,  WOMAN1},  ///<アロマなおねえさん
-// {TRTYPE_PL_IDOL,  IDOL},  ///<アイドル
-// {TRTYPE_PL_ARTIST,  ARTIST},  ///<げいじゅつか
-// {TRTYPE_PL_POKEGIRL,  PIKACHU},  ///<ポケモンごっこ♀
+ {TRTYPE_MADAM,  LADY},  ///<マダム
+ {TRTYPE_BREEDERM,  MAN1},  ///<ポケモンブリーダー
+ {TRTYPE_BREEDERW,  WOMAN1},  ///<ポケモンブリーダー
+ {TRTYPE_SCIENTISTM,  ASSISTANTM},  //けんきゅういん♂
+ {TRTYPE_SCIENTISTW,  ASSISTANTW},  //けんきゅういん♀
+ {TRTYPE_ESPM,  ESPM},  ///<サイキッカー
+ {TRTYPE_ESPW,  ESPW},  ///<サイキッカー
+ {TRTYPE_KARATE,  FIGHTERM},  //からておう
+ {TRTYPE_BATTLEG,  GIRL2},  ///<バトルガール
+ {TRTYPE_RANGERM,  MAN3},  ///<ポケモンレンジャー
+ {TRTYPE_RANGERW,  WOMAN3},  ///<ポケモンレンジャー
+ {TRTYPE_ELITEM,  MAN3},  ///<エリートトレーナー
+ {TRTYPE_ELITEW,  WOMAN3},  ///<エリートトレーナー
+ {TRTYPE_VETERANM,  OLDMAN1},  ///<ベテラントレーナー
+ {TRTYPE_VETERANW,  OLDWOMAN1},  ///<ベテラントレーナー
+ {TRTYPE_FISHING,  FISHING},  ///<つりびと
+ {TRTYPE_MOUNT,  MAN1},  ///<やまおとこ
+ {TRTYPE_WORKER1,  WORKMAN},  ///<さぎょういん
+ {TRTYPE_WORKER2,  WORKMAN},  ///<さぎょういん
+ {TRTYPE_JUGGLING, CLOWN },   //クラウン
+ {TRTYPE_ARTIST,  OLDMAN1},  ///<げいじゅつか
+ {TRTYPE_POLICE,  POLICEMAN},  ///<おまわりさん
+ {TRTYPE_HEADS,  BADMAN},  ///<スキンヘッズ
+ {TRTYPE_BADRIDER, BADRIDER},   //ぼうそうぞく
+ {TRTYPE_CLEANING, CLEANINGM},   //せいそういん
+ {TRTYPE_RAIL,RAILMAN }, //てつどういん
+ {TRTYPE_PILOT, PILOT},   //パイロット
+ {TRTYPE_BUSINESS1, BUSINESSMAN},    //ビジネスマン1
+ {TRTYPE_BUSINESS2, BUSINESSMAN},    //ビジネスマン2
+ {TRTYPE_PARASOL,  AMBRELLA},  ///<パラソルおねえさん
+ {TRTYPE_BAKER,     BAKER },   //ベーカリー
+ {TRTYPE_CHILDCARE, WOMAN3}, //ほいくし
+ {TRTYPE_MAID, MAID},    //メイド
+ {TRTYPE_OL, OL},    //ＯＬ
 };
 
 #define TRTYPE2OBJCODE_MAX  (NELEMS(btower_trtype2objcode))
