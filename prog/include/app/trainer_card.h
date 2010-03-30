@@ -1,3 +1,11 @@
+//============================================================================================
+/**
+ * @file  trcard_card.h
+ * @bfief トレーナーカードアプリ呼出用ワーク
+ * @author  Akito Mori / Nozomu Saito (WB移植は有泉くん)
+ * @date  10.03.09
+ */
+//============================================================================================
 #ifndef _TRAINER_CARD_H_
 #define _TRAINER_CARD_H_
 
@@ -16,6 +24,9 @@
 #define COUNT_LV4 (200)
 
 #define UNION_TR_NONE (0xff)
+
+#define TRAINERCARD_NEXTPROC_RETURN   ( 0 ) // フィールドメニューに戻る
+#define TRAINERCARD_NEXTPROC_EXIT     ( 1 ) // フィールドに直接戻る
 
 typedef enum{
   TR_CARD_RANK_NORMAL = 0,
@@ -85,6 +96,7 @@ typedef struct TRCARD_CALL_PARAM_tag{
   GAMEDATA      *gameData;      ///< ゲームデータアクセス用ポインタ
   BOOL          edit_possible;  ///< 編集可能か？（TRUE:可能・FALSE：不可能）
   int           value;          ///< リターン値
+  int           next_proc;      ///< トレーナーカード終了時の戻り値
 }TRCARD_CALL_PARAM;
 
 FS_EXTERN_OVERLAY(trainercard);
