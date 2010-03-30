@@ -1749,7 +1749,7 @@ static void WbmRndSeq_Rate_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
         { 
         case 0:
           WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
-          *p_seq  = SEQ_START_SEND_SAKE_TIME;
+          *p_seq  = SEQ_START_MSG_SAKE_TIME;
           break;
         case 1:
           WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupContinue );
