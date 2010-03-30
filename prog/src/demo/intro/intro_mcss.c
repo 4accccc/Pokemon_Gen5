@@ -194,6 +194,7 @@ void INTRO_MCSS_AddPoke( INTRO_MCSS_WORK* wk, fx32 px, fx32 py, fx32 pz, int mon
 
   wk->mcss_work[id] = MCSS_Add( wk->mcss, px, py, pz, &add );
   MCSS_SetScale( wk->mcss_work[id], &scale );
+	MCSS_SetAnmStopFlag( wk->mcss_work[id] );
 }
 
 //-----------------------------------------------------------------------------
