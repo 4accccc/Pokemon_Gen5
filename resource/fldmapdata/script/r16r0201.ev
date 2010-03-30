@@ -349,7 +349,7 @@ backpacker_evt:
   _OBJ_ANIME_WAIT()
  
   //「ゾロアのすみか」
-  _BALLOONWIN_OBJMSG_POS( msg_r16r0201_youngman_04, MMDL_ID_EVENTOBJ_00, POS_UP)
+  _BALLOONWIN_OBJMSG_POS( msg_r16r0201_youngman_04, MMDL_ID_EVENTOBJ_00, POS_U)
   _BALLOONWIN_CLOSE()
 
   //自機下向き
@@ -361,8 +361,8 @@ backpacker_evt:
   _OBJ_ANIME_WAIT()
 
   //青年のメッセージ
-  _BALLOONWIN_OBJMSG_POS( msg_r16r0201_youngman_05, MMDL_ID_EVENTOBJ_00, POS_UP)
-  _BALLOONWIN_OBJMSG_POS( msg_r16r0201_youngman_06, MMDL_ID_EVENTOBJ_00, POS_UP)
+  _BALLOONWIN_OBJMSG_POS( msg_r16r0201_youngman_05, MMDL_ID_EVENTOBJ_00, POS_U)
+  _BALLOONWIN_OBJMSG_POS( msg_r16r0201_youngman_06, MMDL_ID_EVENTOBJ_00, POS_U)
   _BALLOONWIN_CLOSE()
 
   //青年退出
@@ -370,7 +370,7 @@ backpacker_evt:
   _OBJ_ANIME_WAIT()
 
   //「イリュージョン」
-  _BALLOONWIN_OBJMSG_POS( msg_r16r0201_youngman_07, MMDL_ID_EVENTOBJ_00, POS_UP)
+  _BALLOONWIN_OBJMSG_POS( msg_r16r0201_youngman_07, MMDL_ID_EVENTOBJ_00, POS_U)
   _BALLOONWIN_CLOSE()
 
   _OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_backpacker_remove2 )
