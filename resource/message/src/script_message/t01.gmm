@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-21T18:43:59"/>
+	<create user="matsumiya" host="W00224" date="2010-03-30T17:51:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -502,9 +502,15 @@
 ・メッセージ表示後、1番道路へ
 ・続けてwhite_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレン『１ばんどうろに　いくよ
+		<language name="JPN" width="256">チェレン『タウンマップを　つかえば
+じぶんが　どこにいるか　わかる……▽
+これは　うれしいな！▼
+じゃ　１ばんどうろに　いくよ
 はかせが　まってるから▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『１番道路に　行くよ
+		<language name="JPN_KANJI" width="256">チェレン『タウンマップを　使えば
+自分が　どこにいるか　わかる……▽
+これは　うれしいな！▼
+じゃ　１番道路に　行くよ
 博士が　待ってるから▼</language>
 	</row>
 
