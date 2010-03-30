@@ -251,8 +251,9 @@ static void Zukan_Detail_Touchbar_SetIconOfsPosY( ZUKAN_DETAIL_TOUCHBAR_WORK* wo
 // GENERAL
 static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 static void Zukan_Detail_Touchbar_DeleteGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
-static void Zukan_Detail_Touchbar_AnimeBaseInitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
+static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 // GENERALのパレットアニメ
+static void Zukan_Detail_Touchbar_AnimeBaseInitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 static void Zukan_Detail_Touchbar_AnimeBaseExitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 static void Zukan_Detail_Touchbar_AnimeInitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 static void Zukan_Detail_Touchbar_AnimeExitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
@@ -428,6 +429,7 @@ void ZUKAN_DETAIL_TOUCHBAR_Main( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
   // GENERALのパレットアニメ
   if( work->type == ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL )
   {
+    Zukan_Detail_Touchbar_MainGeneral( work );
     Zukan_Detail_Touchbar_AnimeMainGeneral( work );
   }
 }
@@ -832,6 +834,76 @@ static void Zukan_Detail_Touchbar_DeleteGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
   // NULL初期化
   work->tbwk = NULL;
 }
+static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
+{
+  u8 icon = GENERAL_ICON_MAX;
+  int trg = GFL_UI_KEY_GetTrg();
+  if( trg & PAD_KEY_LEFT )
+  {
+    switch( work->disp )
+    {
+    case ZUKAN_DETAIL_TOUCHBAR_DISP_INFO:
+      {
+        if( ZKND_TBAR_GetVisible( work->tbwk, GENERAL_ICON_CUSTOM_FORM ) )
+          icon = GENERAL_ICON_CUSTOM_FORM;
+        else
+          icon = GENERAL_ICON_CUSTOM_MAP;
+      }
+      break;
+    case ZUKAN_DETAIL_TOUCHBAR_DISP_MAP:
+      {
+        icon = GENERAL_ICON_CUSTOM_INFO;
+      }
+      break;
+    case ZUKAN_DETAIL_TOUCHBAR_DISP_VOICE:
+      {
+        icon = GENERAL_ICON_CUSTOM_MAP;
+      }
+      break;
+    case ZUKAN_DETAIL_TOUCHBAR_DISP_FORM:
+      {
+        icon = GENERAL_ICON_CUSTOM_VOICE;
+      }
+      break;
+    }
+  }
+  else if( trg & PAD_KEY_RIGHT )
+  {
+    switch( work->disp )
+    {
+    case ZUKAN_DETAIL_TOUCHBAR_DISP_INFO:
+      {
+        icon = GENERAL_ICON_CUSTOM_MAP;
+      }
+      break;
+    case ZUKAN_DETAIL_TOUCHBAR_DISP_MAP:
+      {
+        icon = GENERAL_ICON_CUSTOM_VOICE;
+      }
+      break;
+    case ZUKAN_DETAIL_TOUCHBAR_DISP_VOICE:
+      {
+        if( ZKND_TBAR_GetVisible( work->tbwk, GENERAL_ICON_CUSTOM_FORM ) )
+          icon = GENERAL_ICON_CUSTOM_FORM;
+        else
+          icon = GENERAL_ICON_CUSTOM_INFO;
+      }
+      break;
+    case ZUKAN_DETAIL_TOUCHBAR_DISP_FORM:
+      {
+        icon = GENERAL_ICON_CUSTOM_INFO;
+      }
+      break;
+    }
+  }
+  // アイコンをキーで押したことにする
+  if( icon != GENERAL_ICON_MAX )
+  {
+    ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[icon].cset->id );
+  } 
+}
+
+// GENERALのパレットアニメ
 static void Zukan_Detail_Touchbar_AnimeBaseInitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
   NNSG2dPaletteData* pal_data;

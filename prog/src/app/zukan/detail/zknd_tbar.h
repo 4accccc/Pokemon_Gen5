@@ -250,5 +250,9 @@ extern BOOL ZKND_TBAR_GetFlip( const ZKND_TBAR_WORK *cp_wk, ZKND_TBAR_ICON icon 
 ///	アイコンのGFL_CLWKを取得する
 //=====================================
 extern GFL_CLWK* ZKND_TBAR_GetClwk( ZKND_TBAR_WORK *p_wk, ZKND_TBAR_ICON icon );
+//-------------------------------------
+///	アイコンをキーで押したことにする
+//=====================================
+extern void ZKND_TBAR_PushByKey( ZKND_TBAR_WORK *p_wk, ZKND_TBAR_ICON icon );
 // ZKND_Modified アイコン個別操作を追加。↑
 

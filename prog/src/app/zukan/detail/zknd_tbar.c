@@ -82,6 +82,7 @@ struct _ICON_WORK
 	PUSH_FUNC						push_func;		//押された時の動作
 	ZKND_TBAR_ICON_MOVETYPE	movetype;	//動作タイプ
 	ZKND_TBAR_ITEM_ICON			data;			//ボタン情報
+  BOOL          is_push_by_key;  // TRUEのときアイコンをキーで押したことにする  // ZKND_Modified アイコン個別操作を追加。
 } ;
 //-------------------------------------
 ///	共通リソース
@@ -684,6 +685,14 @@ GFL_CLWK* ZKND_TBAR_GetClwk( ZKND_TBAR_WORK *p_wk, ZKND_TBAR_ICON icon )
 	ICON_WORK* p_icon	= Zknd_Tbar_Search( p_wk, icon );
   return  p_icon->p_clwk;
 }
+//-------------------------------------
+///	アイコンをキーで押したことにする
+//=====================================
+void ZKND_TBAR_PushByKey( ZKND_TBAR_WORK *p_wk, ZKND_TBAR_ICON icon )
+{
+	ICON_WORK* p_icon	= Zknd_Tbar_Search( p_wk, icon );
+  p_icon->is_push_by_key = TRUE;
+}
 // ZKND_Modified アイコン個別操作を追加。↑
 
 
@@ -925,7 +934,8 @@ static void ICON_Init( ICON_WORK *p_wk, GFL_CLUNIT* p_unit, const RES_WORK *cp_r
 	GFL_STD_MemClear( p_wk ,sizeof(ICON_WORK) );
 	p_wk->data	= *cp_setup;
 	p_wk->is_active	= TRUE;
-	
+  p_wk->is_push_by_key = FALSE;  // TRUEのときアイコンをキーで押したことにする  // ZKND_Modified アイコン個別操作を追加。
+
 	//CLWK作成
 	{	
 		u32 cg, plt, cell;
@@ -1017,7 +1027,7 @@ static BOOL ICON_Main( ICON_WORK *p_wk )
 
 	//判定可能なときのみ
 	if( p_wk->is_active & is_visible )
-	{	
+	{
 		//タッチ判定
 		if( GFL_UI_TP_GetPointTrg( &x, &y ) )
 		{	
@@ -1038,6 +1048,16 @@ static BOOL ICON_Main( ICON_WORK *p_wk )
 				is_update	= TRUE;
 			}
 		}
+
+    // ZKND_Modified アイコン個別操作を追加。↓
+    //アイコンをキーで押したことにする
+    if( p_wk->is_push_by_key )
+    {
+      GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
+      is_update	= TRUE;
+    }
+    p_wk->is_push_by_key = FALSE;  // 1ループでフラグをOFFにする
+    // ZKND_Modified アイコン個別操作を追加。↑
 
 		//動作関数
 		if( is_update )
