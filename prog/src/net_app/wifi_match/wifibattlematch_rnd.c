@@ -249,6 +249,7 @@ static void WbmRndSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, WIFIBATTLEMATCH_CORE_RETMODE mode );
 static void Util_PlayerInfo_Delete( WIFIBATTLEMATCH_RND_WORK *p_wk );
 static BOOL Util_PlayerInfo_Move( WIFIBATTLEMATCH_RND_WORK *p_wk );
+static void Util_PlayerInfo_CreateStay( WIFIBATTLEMATCH_RND_WORK *p_wk, WIFIBATTLEMATCH_CORE_RETMODE mode );
 //対戦相手のカード作成
 static void Util_MatchInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, const WIFIBATTLEMATCH_ENEMYDATA *cp_enemy_data );
 static void Util_MatchInfo_Delete( WIFIBATTLEMATCH_RND_WORK *p_wk );
@@ -366,6 +367,23 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Init( GFL_PROC *p_proc, int *p_s
     WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
 	}
 
+
+  //戦闘後や録画後の場合は既にプレイヤー情報を呼んだ状態にする
+  if( p_param->mode != WIFIBATTLEMATCH_CORE_MODE_START )
+  { 
+    if( p_param->retmode == WIFIBATTLEMATCH_CORE_RETMODE_RATE )
+    { 
+      Util_PlayerInfo_CreateStay( p_wk, WIFIBATTLEMATCH_CORE_RETMODE_RATE );
+    }
+    else if( p_param->retmode == WIFIBATTLEMATCH_CORE_RETMODE_FREE )
+    { 
+      if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE )
+      { 
+        Util_SaveFreeScore( p_param->p_rndmatch, p_param->p_param->btl_rule, p_param->btl_result );
+      }
+      Util_PlayerInfo_CreateStay( p_wk, WIFIBATTLEMATCH_CORE_RETMODE_FREE );
+    }
+  }
 
 #ifdef DEBUGWIN_USE
   DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_wk->p_font );
@@ -1020,6 +1038,7 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
   case SEQ_WAIT_SERVER:
     if( *p_wk->p_param->p_server_time == 0 )
     { 
+      OS_TPrintf( "サーバー待ち%d\n",  *p_wk->p_param->p_server_time );
       *p_seq  = SEQ_WAIT_RECVRATE_SAKE;
     }
     break;
@@ -1498,6 +1517,7 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
   case SEQ_START_MSG_WAIT:
     if( *p_wk->p_param->p_server_time == 0 )
     { 
+      OS_TPrintf( "サーバー待ち%d\n",  *p_wk->p_param->p_server_time );
       *p_seq  = SEQ_START_SAKE_RECORD;
     }
     break;
@@ -1771,8 +1791,15 @@ static void WbmRndSeq_Rate_CupEnd( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     break;
 
   case SEQ_START_SEND_SAKE_TIME:
-    WIFIBATTLEMATCH_GDB_StartWrite( p_wk->p_net, WIFIBATTLEMATCH_GDB_WRITE_MYINFO, NULL );
-    *p_seq  = SEQ_WAIT_SEND_SAKE_TIME;
+    if( *p_wk->p_param->p_server_time == 0 )
+    { 
+      WIFIBATTLEMATCH_GDB_StartWrite( p_wk->p_net, WIFIBATTLEMATCH_GDB_WRITE_MYINFO, NULL );
+      *p_seq  = SEQ_WAIT_SEND_SAKE_TIME;
+    }
+    else
+    { 
+      OS_TPrintf( "サーバー待ち%d\n",  *p_wk->p_param->p_server_time );
+    }
     break;
 
   case SEQ_WAIT_SEND_SAKE_TIME:
@@ -2276,18 +2303,18 @@ static void WbmRndSeq_Free_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     if( WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE ) )
     { 
       //スコアをセーブ
-      Util_SaveFreeScore( p_param->p_rndmatch, p_param->p_param->btl_rule, p_param->btl_result );
+      
       *p_seq  = SEQ_START_CARD;
     }
     break;
 
   case SEQ_START_CARD:
-    Util_PlayerInfo_Create( p_wk, WIFIBATTLEMATCH_CORE_RETMODE_FREE );
+    //Util_PlayerInfo_Create( p_wk, WIFIBATTLEMATCH_CORE_RETMODE_FREE );
     *p_seq  = SEQ_WAIT_CARD;
     break;
 
   case SEQ_WAIT_CARD:
-    if( Util_PlayerInfo_Move( p_wk ) )
+    //if( Util_PlayerInfo_Move( p_wk ) )
     { 
       *p_seq  = SEQ_START_SAVE_MSG;
     }
@@ -2362,12 +2389,12 @@ static void WbmRndSeq_Free_EndRec( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
   switch( *p_seq )
   { 
   case SEQ_START_CARD:
-    Util_PlayerInfo_Create( p_wk, WIFIBATTLEMATCH_CORE_RETMODE_FREE );
+    //Util_PlayerInfo_Create( p_wk, WIFIBATTLEMATCH_CORE_RETMODE_FREE );
     *p_seq  = SEQ_WAIT_CARD;
     break;
 
   case SEQ_WAIT_CARD:
-    if( Util_PlayerInfo_Move( p_wk ) )
+    //if( Util_PlayerInfo_Move( p_wk ) )
     { 
       *p_seq  = SEQ_START;
     }
@@ -2692,43 +2719,13 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, WIFIBATTLEMA
       info_setup.btl_rule = p_wk->p_param->p_param->btl_rule;
       is_rate = TRUE;
 
-      switch( p_wk->p_param->p_param->btl_rule )
-      { 
-      case WIFIBATTLEMATCH_BTLRULE_SINGLE:  
-        info_setup.rate     = p_wk->rnd_score.single_rate;
-        info_setup.win_cnt  = p_wk->rnd_score.single_win;
-        info_setup.lose_cnt = p_wk->rnd_score.single_lose;
-        info_setup.btl_cnt  = p_wk->rnd_score.single_win + p_wk->rnd_score.single_lose;
-        break;
-
-      case WIFIBATTLEMATCH_BTLRULE_DOUBLE:
-        info_setup.rate     = p_wk->rnd_score.double_rate;
-        info_setup.win_cnt  = p_wk->rnd_score.double_win;
-        info_setup.lose_cnt = p_wk->rnd_score.double_lose;
-        info_setup.btl_cnt  = p_wk->rnd_score.double_win + p_wk->rnd_score.double_lose;
-        break;
-
-      case WIFIBATTLEMATCH_BTLRULE_TRIPLE:
-        info_setup.rate     = p_wk->rnd_score.triple_rate;
-        info_setup.win_cnt  = p_wk->rnd_score.triple_win;
-        info_setup.lose_cnt = p_wk->rnd_score.triple_lose;
-        info_setup.btl_cnt  = p_wk->rnd_score.triple_win + p_wk->rnd_score.triple_lose;
-        break;
-
-      case WIFIBATTLEMATCH_BTLRULE_ROTATE:
-        info_setup.rate     = p_wk->rnd_score.rot_rate;
-        info_setup.win_cnt  = p_wk->rnd_score.rot_win;
-        info_setup.lose_cnt = p_wk->rnd_score.rot_lose;
-        info_setup.btl_cnt  = p_wk->rnd_score.rot_win + p_wk->rnd_score.rot_lose;
-        break;
-
-      case WIFIBATTLEMATCH_BTLRULE_SHOOTER:
-        info_setup.rate     = p_wk->rnd_score.shooter_rate;
-        info_setup.win_cnt  = p_wk->rnd_score.shooter_win;
-        info_setup.lose_cnt = p_wk->rnd_score.shooter_lose;
-        info_setup.btl_cnt  = p_wk->rnd_score.shooter_win + p_wk->rnd_score.shooter_lose;
-        break;
-      }
+      info_setup.rate     = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
+          RNDMATCH_TYPE_RATE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_LOSE );
+      info_setup.win_cnt  = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
+          RNDMATCH_TYPE_RATE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_WIN );
+      info_setup.lose_cnt = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, 
+          RNDMATCH_TYPE_RATE_SINGLE + p_wk->p_param->p_param->btl_rule, RNDMATCH_PARAM_IDX_LOSE );
+      info_setup.btl_cnt  = info_setup.win_cnt + info_setup.lose_cnt;
     }
     else if( mode == WIFIBATTLEMATCH_CORE_RETMODE_FREE )
     { 
@@ -2770,6 +2767,23 @@ static void Util_PlayerInfo_Delete( WIFIBATTLEMATCH_RND_WORK *p_wk )
 static BOOL Util_PlayerInfo_Move( WIFIBATTLEMATCH_RND_WORK *p_wk )
 { 
   return PLAYERINFO_MoveMain( p_wk->p_playerinfo );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自分のカードを作成  すでにスライドインしている版
+ *
+ *	@param	WIFIBATTLEMATCH_RND_WORK *p_wk  ワーク
+ *	@param	mode                            モード
+ */
+//-----------------------------------------------------------------------------
+static void Util_PlayerInfo_CreateStay( WIFIBATTLEMATCH_RND_WORK *p_wk, WIFIBATTLEMATCH_CORE_RETMODE mode )
+{ 
+  Util_PlayerInfo_Create( p_wk, mode );
+
+  while( !Util_PlayerInfo_Move( p_wk ) )
+  { 
+
+  }
 }
 //----------------------------------------------------------------------------
 /**
