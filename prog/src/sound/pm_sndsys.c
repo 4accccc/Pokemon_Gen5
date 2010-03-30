@@ -142,7 +142,7 @@ OSThread		soundLoadThread;
 static u64	threadStack[ THREAD_STACKSIZ / sizeof(u64) ];
 THREAD_ARG	threadArg;
 
-static void PMSND_InitCore( void );
+static void PMSND_InitCore( BOOL systemSEload );
 
 static void	PMSND_InitSEplayer( void );
 static void PMSND_InitSystemFadeBGM( void );
@@ -172,14 +172,7 @@ void	PMSND_Init( void )
 	// サウンドの設定
 	NNS_SndArcInitWithResult( &PmSoundArc, "wb_sound_data.sdat", PmSndHeapHandle, FALSE );
 
-  PMSND_InitCore();
-  
-	// 常駐サウンドデータ読み込み
-	systemPresetHandle = SOUNDMAN_PresetGroup(GROUP_GLOBAL);
-	usrPresetHandle1 = NULL;
-#ifdef PM_DEBUG
-	heapRemainsAfterPresetSE = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
-#endif
+  PMSND_InitCore( TRUE );
 }
 
 void	PMSND_InitMultiBoot( void* sndData )
@@ -192,13 +185,13 @@ void	PMSND_InitMultiBoot( void* sndData )
 	// サウンドの設定
 	NNS_SndArcInitOnMemory( &PmSoundArc, sndData );
 
-  PMSND_InitCore();
+  PMSND_InitCore( FALSE );
 }
 
 //---------------------------------------------------
 //  初期化コア部分
 //---------------------------------------------------
-static void PMSND_InitCore( void )
+static void PMSND_InitCore( BOOL systemSEload )
 {
 #ifdef PM_DEBUG
 	heapRemainsAfterSys = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
@@ -211,8 +204,16 @@ static void PMSND_InitCore( void )
 	// サウンド管理初期化
 	SOUNDMAN_Init(&PmSndHeapHandle);
 
+	// 常駐サウンドデータ読み込み
+	if( systemSEload ){
+		systemPresetHandle = SOUNDMAN_PresetGroup(GROUP_GLOBAL);
+		usrPresetHandle1 = NULL;
+#ifdef PM_DEBUG
+		heapRemainsAfterPresetSE = NNS_SndHeapGetFreeSize(PmSndHeapHandle);
+#endif
+	}
 	// 階層プレーヤーリセットのヒープＬＶを更新
-	SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
+	//SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
 
 	// ＳＥプレーヤーデータ初期化
 	PMSND_InitSEplayer();

@@ -216,6 +216,13 @@ void	SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv( void )
 	player->heapLvReset = NNS_SndHeapSaveState(*pSndHeapHandle);
 }
 
+static void	SOUNDMAN_DowngradeHierarchyPlayerSoundHeapLv( void )
+{
+	PLAYER_HIERARCHY* player = &sndHierarchyArray[sndHierarchyArrayPos];
+
+	player->heapLvReset = SOUNDMAN_GetHierarchyPlayerSoundHeapLv();
+}
+
 //--------------------------------------------------------------------------------------------
 /**
  *
@@ -411,6 +418,7 @@ SOUNDMAN_PRESET_HANDLE* SOUNDMAN_PresetSoundTbl( const u32* soundIdxTbl, u32 tbl
 
 	// ƒŠƒŠ[ƒX‚ÌÛ‚É•œ‹A‚·‚éƒq[ƒvó‘Ô‚k‚u‚ð•Û‘¶
 	handle->heapLvRelease = SOUNDMAN_GetHierarchyPlayerSoundHeapLv();
+	OS_Printf("set preset LV %d", handle->heapLvRelease);
 
 	// Œ»Ý‚ÌŠK‘wƒvƒŒ[ƒ„[‚Ìƒq[ƒvƒŒƒxƒ‹Ý’è‚ðXV
 	SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
@@ -435,6 +443,7 @@ SOUNDMAN_PRESET_HANDLE* SOUNDMAN_PresetGroup( u32 groupIdx )
 
 	// ƒŠƒŠ[ƒX‚ÌÛ‚É•œ‹A‚·‚éƒq[ƒvó‘Ô‚k‚u‚ð•Û‘¶
 	handle->heapLvRelease = SOUNDMAN_GetHierarchyPlayerSoundHeapLv();
+	OS_Printf("set preset LV %d", handle->heapLvRelease);
 
 	// Œ»Ý‚ÌŠK‘wƒvƒŒ[ƒ„[‚Ìƒq[ƒvƒŒƒxƒ‹Ý’è‚ðXV
 	SOUNDMAN_UpdateHierarchyPlayerSoundHeapLv();
@@ -454,6 +463,9 @@ void SOUNDMAN_ReleasePresetData( SOUNDMAN_PRESET_HANDLE* handle )
 	GF_ASSERT(pSndHeapHandle);
 
 	NNS_SndHeapLoadState(*pSndHeapHandle, handle->heapLvRelease);
+	OS_Printf("release preset LV %d", handle->heapLvRelease);
+
+	SOUNDMAN_DowngradeHierarchyPlayerSoundHeapLv();
 }
 
 
