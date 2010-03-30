@@ -96,7 +96,7 @@ sub_zukan_setup_local_see:
         _FLAG_SET( FE_ZUKAN_COMPLETE_LOCAL_SEE )
     ENDIF
 
-    _NUMBER( 0, HYOUKA_COUNT, 1 )
+    _NUMBER( 0, HYOUKA_COUNT, 3 )
     _RET
 
 //--------------------------------------------------------------------
@@ -105,7 +105,7 @@ sub_zukan_setup_local_see:
 sub_zukan_setup_local_get:
     _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_GET, HYOUKA_MSGID, HYOUKA_COUNT )
 
-    _NUMBER( 0, HYOUKA_COUNT, 1 )
+    _NUMBER( 0, HYOUKA_COUNT, 3 )
     _RET
 
 //--------------------------------------------------------------------
