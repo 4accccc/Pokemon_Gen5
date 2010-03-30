@@ -1791,6 +1791,15 @@ static void Zukan_Info_Poke2dCreateCLWK( ZUKAN_INFO_WORK* work, u16 pos_x, u16 p
   {
     GFL_CLACT_WK_SetObjMode( work->clwk_poke2d, GX_OAM_MODE_XLU );  // BG‚Æ‚Æ‚à‚É‚±‚ÌOBJ‚àˆÃ‚­‚µ‚½‚¢‚Ì‚Å
   }
+
+  {
+    POKEMON_PERSONAL_DATA* ppd = POKE_PERSONAL_OpenHandle( work->monsno, work->formno, work->heap_id );
+    if( POKE_PERSONAL_GetParam( ppd, POKEPER_ID_reverse ) == 0 )
+    {
+      GFL_CLACT_WK_SetFlip( work->clwk_poke2d, CLWK_FLIP_H, TRUE );
+    }
+    POKE_PERSONAL_CloseHandle( ppd );
+  }
 }
 
 //-------------------------------------

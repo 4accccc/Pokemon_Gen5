@@ -742,6 +742,9 @@ static void Zukan_Detail_Info_ChangePoke( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
       }
       else
       {
+        // 言語ボタンのパレットアニメ
+        Zukan_Detail_Touchbar_AnimeExitLang( param, work, cmn );
+
         work->lang = ZUKAN_INFO_LANG_NONE;
       }
     }
