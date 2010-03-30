@@ -266,6 +266,7 @@ static void Zukan_Detail_Touchbar_DeleteMap( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 // FORM
 static void Zukan_Detail_Touchbar_CreateForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 static void Zukan_Detail_Touchbar_DeleteForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
+static void Zukan_Detail_Touchbar_MainForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 
 
 //=============================================================================
@@ -426,11 +427,17 @@ void ZUKAN_DETAIL_TOUCHBAR_Main( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 
   ZKND_TBAR_Main( work->tbwk );
 
-  // GENERALのパレットアニメ
+  // GENERAL
   if( work->type == ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL )
   {
     Zukan_Detail_Touchbar_MainGeneral( work );
+    // GENERALのパレットアニメ
     Zukan_Detail_Touchbar_AnimeMainGeneral( work );
+  }
+  // FORM
+  else if( work->type == ZUKAN_DETAIL_TOUCHBAR_TYPE_FORM )
+  {
+    Zukan_Detail_Touchbar_MainForm( work );
   }
 }
 
@@ -1285,5 +1292,34 @@ static void Zukan_Detail_Touchbar_DeleteForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 
   // NULL初期化
   work->tbwk = NULL;
+}
+static void Zukan_Detail_Touchbar_MainForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
+{
+  int trg  = GFL_UI_KEY_GetTrg();
+  int cont = GFL_UI_KEY_GetCont();
+
+  if( trg & ( PAD_KEY_UP | PAD_KEY_DOWN | PAD_KEY_LEFT | PAD_KEY_RIGHT ) )
+  {
+    // 押したときは、ちゃんとタッチバーで判別するので、何もしない
+  }
+  else
+  {
+    if( cont & PAD_KEY_UP )
+    {
+      ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[FORM_ICON_CUR_U].cset->id );
+    }
+    else if( cont & PAD_KEY_DOWN )
+    {
+      ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[FORM_ICON_CUR_D].cset->id );
+    }
+    else if( cont & PAD_KEY_LEFT )
+    {
+      ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[FORM_ICON_CUR_L].cset->id );
+    }
+    else if( cont & PAD_KEY_RIGHT )
+    {
+      ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[FORM_ICON_CUR_R].cset->id );
+    }
+  }
 }
 
