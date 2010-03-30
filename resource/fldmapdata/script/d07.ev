@@ -158,6 +158,9 @@ EVENT_START  ev_pos_d07_rival_01
 	//アテグジャンプ
 	 _OBJ_HIGH_JUMP( D07_CHAMPION_01, 142, 0, 206 ) 
 	 
+	 //着地後WAIT
+	 _TIME_WAIT ( 14 )
+	 
 	//アテグライバルに隣接
 	_OBJ_ANIME( D07_CHAMPION_01,anm_d07_champion_jump_to_rival )
 	
