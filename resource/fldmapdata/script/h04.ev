@@ -624,7 +624,7 @@ EVENT_START   ev_h04_leadsinger_01
 		ENDIF
 	
 	ENDIF
-	
+EVENT_END
 //--------------------------------------------------------------------
 // ã§í ÉAÉjÉÅÅFÇ—Ç¡Ç≠ÇËÇ∑ÇÈ                    
 //--------------------------------------------------------------------
@@ -683,4 +683,3 @@ _ANIME_LABEL	anm_common_jump_d
 	_ANIME_DATA AC_JUMP_L_1G_8F,1
 	_ANIME_DATA	ACMD_END,0
 
-EVENT_END
