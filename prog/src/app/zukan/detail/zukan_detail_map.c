@@ -614,6 +614,10 @@ static void Zukan_Detail_Map_UtilPrintSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUK
 static void Zukan_Detail_Map_UtilDrawSeasonArea( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Map_UtilBrightenPlaceIcon( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
+// アルファ設定
+static void Zukan_Detail_Map_AlphaInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Map_AlphaExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
 
 //=============================================================================
 /**
@@ -928,6 +932,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
 
         Zukan_Detail_Map_ObjExistAlphaInit( param, work, cmn );
+        Zukan_Detail_Map_AlphaInit( param, work, cmn );
 
         *seq = SEQ_MAIN;
       }
@@ -937,6 +942,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
     {
       if( work->end_cmd != END_CMD_NONE )
       {
+        Zukan_Detail_Map_AlphaExit( param, work, cmn );
         Zukan_Detail_Map_ObjExistAlphaExit( param, work, cmn );
 
         *seq = SEQ_FADE_OUT;
@@ -2914,5 +2920,23 @@ static void Zukan_Detail_Map_ObjExistAlphaReset( ZUKAN_DETAIL_MAP_PARAM* param, 
 {
   work->obj_exist_ev1                  = OBJ_EXIST_ALPHA_MIN;
   work->obj_exist_alpha_anime_count    = OBJ_EXIST_ALPHA_ANIME_COUNT_MAX / 2;  // cosで1～0にしているので
+}
+
+//-------------------------------------
+/// アルファ設定
+//=====================================
+static void Zukan_Detail_Map_AlphaInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  int ev1 = 12;
+  G2S_SetBlendAlpha(
+        GX_BLEND_PLANEMASK_BG3,
+        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+        ev1,
+        16 - ev1 );
+}
+static void Zukan_Detail_Map_AlphaExit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 一部分フェードの設定を元に戻す
+  ZKNDTL_COMMON_FadeSetPlaneDefault( work->fade_wk_s );
 }
 

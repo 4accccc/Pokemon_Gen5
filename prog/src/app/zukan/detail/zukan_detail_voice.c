@@ -185,7 +185,7 @@ END_CMD;
 #define GRAPH_DATA_X_TO_BITMAP_X(x)  (GRAPH_BITMAP_ORIGIN_X+(x)-GRAPH_DATA_MIN_X)  // ( x<GRAPH_DATA_MIN_X || GRAPH_DATA_MAX_X<x ) のときは使用しないこと
 #define GRAPH_DATA_Y_TO_BITMAP_Y(y)  (GRAPH_BITMAP_ORIGIN_Y-(y))                   // ( y<GRAPH_DATA_MIN_Y || GRAPH_DATA_MAX_Y<y ) のときは使用しないこと
 
-#define GRAPH_COLOR (15)  // グラフの描画色
+#define GRAPH_COLOR (10)  // グラフの描画色
 
 // waveデータの最大値
 #define WAVE_DATA_VALUE_MAX                (128)                     // wave_data_begin[i] * WAVE_DATA_VALUE_MAX_TO_GRAPH_DATA / WAVE_DATA_VALUE_MAX
@@ -337,6 +337,10 @@ static void Zukan_Detail_Voice_GraphMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN
 static void Zukan_Detail_Voice_GraphReset( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Voice_GraphDrawBitmap( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Voice_WaveDataSetup( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn, u16 monsno, u16 formno );
+
+// アルファ設定
+static void Zukan_Detail_Voice_AlphaInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Voice_AlphaExit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 
 //=============================================================================
@@ -601,6 +605,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
       {
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
 
+        Zukan_Detail_Voice_AlphaInit( param, work, cmn );
+
         *seq = SEQ_MAIN;
       }
     }
@@ -609,6 +615,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
     {
       if( work->end_cmd != END_CMD_NONE )
       {
+        Zukan_Detail_Voice_AlphaExit( param, work, cmn );
+        
         *seq = SEQ_FADE_OUT;
 
         // フェード
@@ -1584,6 +1592,24 @@ static void Zukan_Detail_Voice_WaveDataSetup( ZUKAN_DETAIL_VOICE_PARAM* param, Z
     }
   }
 #endif
+}
+
+//-------------------------------------
+/// アルファ設定
+//=====================================
+static void Zukan_Detail_Voice_AlphaInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  int ev1 = 12;
+  G2_SetBlendAlpha(
+        GX_BLEND_PLANEMASK_BG2,
+        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+        ev1,
+        16 - ev1 );
+}
+static void Zukan_Detail_Voice_AlphaExit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 一部分フェードの設定を元に戻す
+  ZKNDTL_COMMON_FadeSetPlaneDefault( work->fade_wk_m );
 }
 
 

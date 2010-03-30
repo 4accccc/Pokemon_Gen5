@@ -49,7 +49,7 @@ enum
 #define OBJ_PAL_OFFSET_GENERAL_ANIME_NONE  (0)
 #define OBJ_PAL_OFFSET_GENERAL_ANIME_EXEC  (2)
 #define RES_PAL_POS_GENERAL_ANIME_START    (1)  // リソースのパレットの列番号
-#define RES_PAL_POS_GENERAL_ANIME_END      (2)  // リソースのパレットの列番号
+#define RES_PAL_POS_GENERAL_ANIME_END      (3)  // リソースのパレットの列番号
 #define GENERAL_ANIME_ADD              (0x400)  // FX_CosIdxを使用するので0<= <0x10000
 
 // セルアクターユニットで使えるワーク数

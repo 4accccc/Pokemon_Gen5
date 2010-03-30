@@ -647,6 +647,10 @@ static void Zukan_Detail_Form_OshidashiMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
 // 階層変更  // TOP_TO_EXCHANGE or EXCHANGE_TO_TOP
 static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
+// アルファ設定
+static void Zukan_Detail_Form_AlphaInit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Form_AlphaExit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+
 
 //=============================================================================
 /**
@@ -1008,6 +1012,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
       {
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
 
+        Zukan_Detail_Form_AlphaInit( param, work, cmn );
+
         *seq = SEQ_MAIN;
       }
     }
@@ -1057,6 +1063,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
 
       if( poke_fade )
       {
+        Zukan_Detail_Form_AlphaExit( param, work, cmn );
+
         *seq = SEQ_FADE_OUT;
 
         // フェード
@@ -4080,6 +4088,59 @@ static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
       Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
     }
   }
+}
+
+//-------------------------------------
+/// アルファ設定
+//=====================================
+static void Zukan_Detail_Form_AlphaInit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  int ev1 = 12;
+
+  // 半透明にしないOBJの設定を変更する
+  {
+    u8 i;
+
+    GFL_CLACT_WK_SetObjMode( work->obj_clwk[OBJ_BAR_RANGE], GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
+    GFL_CLACT_WK_SetObjMode( work->obj_clwk[OBJ_BAR_CURSOR], GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
+
+    for( i=0; i<BUTTON_OBJ_MAX; i++ )
+    {
+      GFL_CLACT_WK_SetObjMode( work->button[i].clwk, GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
+    }
+  }
+
+  G2_SetBlendAlpha(
+        GX_BLEND_PLANEMASK_NONE,
+        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+        ev1,
+        16 - ev1 );
+
+  G2S_SetBlendAlpha(
+        GX_BLEND_PLANEMASK_BG3,
+        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+        ev1,
+        16 - ev1 );
+}
+static void Zukan_Detail_Form_AlphaExit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 半透明にしないOBJの設定を元に戻す
+  {
+    u8 i;
+
+    GFL_CLACT_WK_SetObjMode( work->obj_clwk[OBJ_BAR_RANGE], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+    GFL_CLACT_WK_SetObjMode( work->obj_clwk[OBJ_BAR_CURSOR], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+
+    for( i=0; i<BUTTON_OBJ_MAX; i++ )
+    {
+      GFL_CLACT_WK_SetObjMode( work->button[i].clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+    }
+  }
+
+  // 一部分フェードの設定を元に戻す
+  ZKNDTL_COMMON_FadeSetPlaneDefault( work->fade_wk_m );
+  // 一部分フェードの設定を元に戻す
+  ZKNDTL_COMMON_FadeSetPlaneDefault( work->fade_wk_s );
 }
 
 
