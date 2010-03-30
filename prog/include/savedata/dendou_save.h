@@ -2,8 +2,15 @@
 /**
  * @file    dendou_save.h
  * @brief   殿堂入りセーブデータ
- * @author  matsuda
+ * @author  matsuda / mori
  * @date    2010.03.12(金)
+ *
+ * @note    今回殿堂入りデータは「殿堂入り１５件：外部」と、
+ *          「初クリア時１件：内部」の２箇所に保存される。
+ *          また『殿堂入り』はローテーション構造のDENDOU_SAVEDATAを使用するが、
+ *          『初クリア』は１件のみで済むのでDENDOU_SAVEDATAの中のDENDOU_RECORDを
+ *          表に出してアクセスできるようにしている。
+ *        
  */
 //==============================================================================
 #pragma once
@@ -28,8 +35,8 @@ enum {
  *  殿堂入りセーブデータの不完全型構造体宣言
  */
 //--------------------------------------------------------------
-typedef struct _DENDOU_SAVEDATA   DENDOU_SAVEDATA;
-
+typedef struct _DENDOU_SAVEDATA DENDOU_SAVEDATA;  // 殿堂入りデータ（外部：15匹用
+typedef struct DENDOU_RECORD    DENDOU_RECORD;    // 
 
 //--------------------------------------------------------------
 /**
@@ -57,11 +64,6 @@ typedef struct {
 
 
 
-
-extern u32 DendouData_GetWorkSize( void );
-extern void DendouData_Init( void *work );
-
-
 //------------------------------------------------------------------
 /**
  * 殿堂入りデータ１件追加
@@ -74,14 +76,33 @@ extern void DendouData_Init( void *work );
 //------------------------------------------------------------------
 extern void DendouData_AddRecord( DENDOU_SAVEDATA* data, const POKEPARTY* party, const RTCDate* date, HEAPID heap_id );
 
-
-
-
+// 殿堂入りデータ取得関連
 extern u32  DendouData_GetRecordCount( const DENDOU_SAVEDATA* data );
 extern u32  DendouData_GetRecordNumber( const DENDOU_SAVEDATA* data, int index );
 extern u32  DendouData_GetPokemonCount( const DENDOU_SAVEDATA* data, int index );
 extern void DendouData_GetPokemonData( const DENDOU_SAVEDATA* data, int index, int poke_pos, DENDOU_POKEMON_DATA* poke_data );
 extern void DendouData_GetDate( const DENDOU_SAVEDATA* data, int index, RTCDate* date );
+
+extern u32 DendouData_GetWorkSize( void );
+extern void DendouData_Init( void *work );
+
+//------------------------------------------------------------------
+/**
+ * ゲームクリア時セーブデータ追加(1回しか登録しません）
+ *
+ * @param   data    クリアセーブデータポインタ
+ * @param   party   クリアパーティーのデータ
+ * @param   date    クリア日付データ
+ *
+ */
+//------------------------------------------------------------------
+extern void DendouRecord_Add( DENDOU_RECORD* record, const POKEPARTY* party, const RTCDate* date, HEAPID heap_id );
+
+// ゲームクリアデータ取得関連
+extern u32  DendouRecord_GetPokemonCount( const DENDOU_RECORD* record );
+extern void DendouRecord_GetPokemonData( const DENDOU_RECORD* record, int poke_pos, DENDOU_POKEMON_DATA* poke_data );
+extern void DendouRecord_GetDate( const DENDOU_RECORD* record, RTCDate* date );
+
 
 extern u32  GameClearData_GetWorkSize( void );
 extern void GameClearData_Init( void *work );

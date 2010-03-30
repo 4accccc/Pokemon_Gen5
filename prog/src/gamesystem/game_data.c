@@ -1769,6 +1769,19 @@ TR_CARD_SV_PTR GAMEDATA_GetTrainerCardPtr(GAMEDATA * gamedata)
 
 //----------------------------------------------------------
 /**
+ * @brief   初クリアポケモンデータへのポインタ取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  殿堂入りデータへのポインタ
+ */
+//----------------------------------------------------------
+DENDOU_RECORD *GAMEDATA_GetDendouRecord(GAMEDATA * gamedata)
+{
+  return SaveControl_DataPtrGet( gamedata->sv_control_ptr, GMDATA_ID_GAMECLEAR_POKE);
+}
+
+
+//----------------------------------------------------------
+/**
  * @brief   ミュージカル用スクリプトワークセット
  * @param   gamedata      GAMEDATAへのポインタ
  * @return  nothing
@@ -1808,8 +1821,8 @@ DREAMWORLD_SAVEDATA* GAMEDATA_GetDreamWorkdSaveWork(GAMEDATA * gamedata)
 /**
  * シンボルマップの現在位置をセットする
  *
- * @param   gamedata		
- * @param   symbol_map_id		シンボルマップID
+ * @param   gamedata    
+ * @param   symbol_map_id   シンボルマップID
  */
 //==================================================================
 void GAMEDATA_SetSymbolMapID(GAMEDATA *gamedata, u8 symbol_map_id)
@@ -1821,9 +1834,9 @@ void GAMEDATA_SetSymbolMapID(GAMEDATA *gamedata, u8 symbol_map_id)
 /**
  * シンボルマップの現在位置を取得する
  *
- * @param   gamedata		
+ * @param   gamedata    
  *
- * @retval  u8		シンボルマップID
+ * @retval  u8    シンボルマップID
  */
 //==================================================================
 u8 GAMEDATA_GetSymbolMapID(const GAMEDATA *gamedata)
@@ -1835,7 +1848,7 @@ u8 GAMEDATA_GetSymbolMapID(const GAMEDATA *gamedata)
 /**
  * PLAYTIME カウント処理
  *
- * @param   gamedata		
+ * @param   gamedata    
  * @param   value       カウント値
  */
 //==================================================================
@@ -1848,7 +1861,7 @@ void GAMEDATA_PlayTimeCountUp(GAMEDATA *gamedata, u32 value)
 /**
  * PLAYTIME セーブ時間の設定
  *
- * @param   gamedata		
+ * @param   gamedata    
  */
 //==================================================================
 void GAMEDATA_PlayTimeSetSaveTime(GAMEDATA *gamedata)
@@ -1860,11 +1873,11 @@ void GAMEDATA_PlayTimeSetSaveTime(GAMEDATA *gamedata)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  交換ポケモン　その後　の　セーブデータ取得
+ *  @brief  交換ポケモン　その後　の　セーブデータ取得
  *
- *	@param	gdata     ゲームデータ
+ *  @param  gdata     ゲームデータ
  *    
- *	@return セーブデータ
+ *  @return セーブデータ
  */
 //-----------------------------------------------------------------------------
 TRPOKE_AFTER_SAVE* GAMEDATA_GetTrPokeAfterSaveData( GAMEDATA* gdata )

@@ -15,7 +15,7 @@
 #include "gamesystem/playerwork.h"
 #include "field/eventdata_system.h"
 #include "field/location.h"
-#include "field/rail_location.h"  //RAIL_LOCATION
+#include "field/rail_location.h"       //RAIL_LOCATION
 #include "savedata/myitem_savedata.h"  //BAG_CURSOR MYITEM
 #include "poke_tool/pokeparty.h"
 
@@ -23,21 +23,22 @@
 #include "field/field_sound_proc.h"
 #include "sound/bgm_info.h"
 
-#include "field/field_beacon_message.h" //FIELD_BEACON_MSG_DATA
-//#include "field/field_encount.h" //ENCOUNT_WORK
-#include "savedata/box_savedata.h"      //BOX_MANAGER
-//#include "savedata/intrude_save.h"      //OCCUPY_INFO
-#include "system/shortcut_data.h"     //SHORTCUT_ID
+#include "field/field_beacon_message.h"//FIELD_BEACON_MSG_DATA
+//#include "field/field_encount.h"     //ENCOUNT_WORK
+#include "savedata/box_savedata.h"     //BOX_MANAGER
+//#include "savedata/intrude_save.h"   //OCCUPY_INFO
+#include "system/shortcut_data.h"      //SHORTCUT_ID
 //#include "savedata/gimmickwork.h"
 #include "field/pleasure_boat_ptr.h"
 #include "savedata/wifilist.h"
 #include "savedata/misc.h"
 #include "savedata/wifi_negotiation.h"
 #include "savedata/record.h"
-#include "savedata/musical_save.h"  //MUSICAL_SAVE
-#include "musical/musical_define.h"  //MUSICAL_SCRIPT_WORK
+#include "savedata/musical_save.h"     //MUSICAL_SAVE
+#include "musical/musical_define.h"    //MUSICAL_SCRIPT_WORK
 #include "gamesystem/comm_player_support.h"
 #include "savedata/dreamworld_data.h"  //DREAMWORLD_SAVEDATA
+#include "savedata/dendou_save.h"      // DENDOU_RECORD
 
 #include "field/bsubway_scr_proc.h"
 
@@ -663,6 +664,15 @@ extern TRIAL_HOUSE_WORK_PTR *GAMEDATA_GetTrialHouseWorkPtr(GAMEDATA * gamedata);
 //----------------------------------------------------------
 extern TR_CARD_SV_PTR GAMEDATA_GetTrainerCardPtr(GAMEDATA * gamedata);
 
+//----------------------------------------------------------
+/**
+ * @brief   初クリアポケモンデータへのポインタ取得
+ * @param   gamedata      GAMEDATAへのポインタ
+ * @return  殿堂入りデータへのポインタ
+ */
+//----------------------------------------------------------
+extern DENDOU_RECORD *GAMEDATA_GetDendouRecord(GAMEDATA * gamedata);
+
 
 //----------------------------------------------------------
 /**
@@ -695,8 +705,8 @@ extern DREAMWORLD_SAVEDATA* GAMEDATA_GetDreamWorkdSaveWork(GAMEDATA * gamedata);
 /**
  * シンボルマップの現在位置をセットする
  *
- * @param   gamedata		
- * @param   symbol_map_id		シンボルマップID
+ * @param   gamedata    
+ * @param   symbol_map_id   シンボルマップID
  */
 //==================================================================
 extern void GAMEDATA_SetSymbolMapID(GAMEDATA *gamedata, u8 symbol_map_id);
@@ -705,9 +715,9 @@ extern void GAMEDATA_SetSymbolMapID(GAMEDATA *gamedata, u8 symbol_map_id);
 /**
  * シンボルマップの現在位置を取得する
  *
- * @param   gamedata		
+ * @param   gamedata    
  *
- * @retval  u8		シンボルマップID
+ * @retval  u8    シンボルマップID
  */
 //==================================================================
 extern u8 GAMEDATA_GetSymbolMapID(const GAMEDATA *gamedata);
@@ -717,7 +727,7 @@ extern u8 GAMEDATA_GetSymbolMapID(const GAMEDATA *gamedata);
 /**
  * PLAYTIME カウント処理
  *
- * @param   gamedata		
+ * @param   gamedata    
  * @param   value       カウント値
  */
 //==================================================================
@@ -728,7 +738,7 @@ extern void GAMEDATA_PlayTimeCountUp(GAMEDATA *gamedata, u32 value);
 /**
  * PLAYTIME セーブ時間の設定
  *
- * @param   gamedata		
+ * @param   gamedata    
  */
 //==================================================================
 extern void GAMEDATA_PlayTimeSetSaveTime(GAMEDATA *gamedata);

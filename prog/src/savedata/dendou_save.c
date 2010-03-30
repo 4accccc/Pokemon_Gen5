@@ -58,12 +58,12 @@ typedef struct {
  *  殿堂入り１件レコードデータ（364 bytes）(内部にも１件持ちます）
  */
 //----------------------------------------------------------
-typedef struct {
+struct DENDOU_RECORD{
   DENDOU_POKEMON_DATA_INSIDE  pokemon[ TEMOTI_POKEMAX ];  ///< ポケモンデータ
   u16     year;       ///< 殿堂入り日付（年） 2006 ～
   u8      month;        ///< 殿堂入り日付（月） 1～12
   u8      day;        ///< 殿堂入り日付（日） 1～31
-}DENDOU_RECORD;
+};
 
 
 //----------------------------------------------------------
@@ -122,33 +122,26 @@ void GameClearData_Init( void *work )
   GFL_STD_MemClear( work, sizeof(DENDOU_RECORD) );
 }
 
-//------------------------------------------------------------------
+
+//=============================================================================================
 /**
- * 殿堂入りレコード１件追加
+ * @brief 殿堂入りレコードデータへ手持ちポケモンを確認した上で書き込む
  *
- * @param   data    殿堂入りセーブデータポインタ
- * @param   party   殿堂入りパーティーのデータ
- * @param   date    殿堂入り日付データ（NITROのデータそのまま）
- *
+ * @param   record    
+ * @param   party   
+ * @param   date    
+ * @param   heap_id   
  */
-//------------------------------------------------------------------
-void DendouData_AddRecord( DENDOU_SAVEDATA* data, const POKEPARTY* party, const RTCDate* date, HEAPID heap_id )
+//=============================================================================================
+void DendouRecord_Add( DENDOU_RECORD* record, const POKEPARTY* party, const RTCDate* date, HEAPID heap_id )
 {
-  DENDOU_RECORD*  record;
   POKEMON_PARAM*  pp;
   STRBUF*         strbuf;
   int  pokeCount, i, p;
   BOOL fastFlag;
 
-  GF_ASSERT(data != NULL);
-  GF_ASSERT(data->savePoint < DENDOU_RECORD_MAX);
+  GF_ASSERT(record!=NULL);
 
-  if( data->latestNumber >= DENDOU_NUMBER_MAX )
-  {
-    return;
-  }
-
-  record = &data->record[ data->savePoint ];
   pokeCount = PokeParty_GetPokeCount( party );
 
   strbuf = GFL_STR_CreateBuffer( POKENAME_BUFSIZE, heap_id );
@@ -185,7 +178,7 @@ void DendouData_AddRecord( DENDOU_SAVEDATA* data, const POKEPARTY* party, const 
       else
       {
         record->pokemon[p].nickname[0] = GFL_STR_GetEOMCode();
-        record->pokemon[p].oyaname[0] = GFL_STR_GetEOMCode();
+        record->pokemon[p].oyaname[0]  = GFL_STR_GetEOMCode();
       }
 
       p++;
@@ -197,8 +190,41 @@ void DendouData_AddRecord( DENDOU_SAVEDATA* data, const POKEPARTY* party, const 
   record->year = date->year;
   record->month = date->month;
   record->day = date->day;
+  
+}
 
+//------------------------------------------------------------------
+/**
+ * 殿堂入りレコード(=クリア時データ)１件追加
+ *
+ * @param   data    殿堂入りセーブデータポインタ
+ * @param   party   殿堂入りパーティーのデータ
+ * @param   date    殿堂入り日付データ（NITROのデータそのまま）
+ *
+ */
+//------------------------------------------------------------------
+void DendouData_AddRecord( DENDOU_SAVEDATA* data, const POKEPARTY* party, const RTCDate* date, HEAPID heap_id )
+{
+  DENDOU_RECORD*  record;
+  POKEMON_PARAM*  pp;
+  STRBUF*         strbuf;
+  int  pokeCount, i, p;
+  BOOL fastFlag;
 
+  GF_ASSERT(data != NULL);
+  GF_ASSERT(data->savePoint < DENDOU_RECORD_MAX);
+
+  // 書き込み場所算出（最大値(9999)以降は無視する）
+  if( data->latestNumber >= DENDOU_NUMBER_MAX )
+  {
+    return;
+  }
+  record = &data->record[ data->savePoint ];
+
+  // レコード１件書き込み
+  DendouRecord_Add( record, party, date, heap_id );
+
+  // 書き込みポイント進める
   if(++(data->savePoint) >= DENDOU_RECORD_MAX)
   {
     data->savePoint = 0;
@@ -215,10 +241,91 @@ void DendouData_AddRecord( DENDOU_SAVEDATA* data, const POKEPARTY* party, const 
 
 
 
+//=============================================================================================
+/**
+ * @brief 殿堂レコード(=クリア時データ)の手持ちポケモンの数を返す
+ *
+ * @param   record    
+ *
+ * @retval  u32   手持ちポケモンの数
+ */
+//=============================================================================================
+u32  DendouRecord_GetPokemonCount( const DENDOU_RECORD* record )
+{
+  int i;
+  for(i=0; i<TEMOTI_POKEMAX; i++)
+  {
+    if(record->pokemon[i].monsno == 0)
+    {
+      break;
+    }
+  }
+  return i;
+  
+}
+
+//=============================================================================================
+/**
+ * @brief   殿堂レコード(=クリア時データ)のポケモン情報を返す
+ *
+ * @param   record      
+ * @param   poke_pos    手持ちポケモンの位置（0-5）
+ * @param   poke_data   情報を書き込むポインタ
+ */
+//=============================================================================================
+void DendouRecord_GetPokemonData( const DENDOU_RECORD* record, int poke_pos, DENDOU_POKEMON_DATA* poke_data )
+{
+  const DENDOU_POKEMON_DATA_INSIDE*  recPoke;
+  int i;
+  GF_ASSERT( record != NULL);
+  GF_ASSERT( poke_pos  < 6);
+
+  recPoke = &record->pokemon[poke_pos];
+
+  poke_data->monsno         = recPoke->monsno;
+  poke_data->level          = recPoke->level;
+  poke_data->personalRandom = recPoke->personalRandom;
+  poke_data->idNumber       = recPoke->idNumber;
+  poke_data->formNumber     = recPoke->formNumber;
+  poke_data->sex            = recPoke->sex;
+
+  GFL_STR_SetStringCode( poke_data->nickname, recPoke->nickname );
+  GFL_STR_SetStringCode( poke_data->oyaname,  recPoke->oyaname );
+
+  for(i=0; i<4; i++)
+  {
+    poke_data->waza[i] = recPoke->waza[i];
+  }
+  
+}
+
+
+//=============================================================================================
+/**
+ * @brief   殿堂レコード(=クリア時データ)の日付を返す
+ *
+ * @param   record  
+ * @param   date    日付を書き込むポインタ
+ */
+//=============================================================================================
+void DendouRecord_GetDate( const DENDOU_RECORD* record, RTCDate* date )
+{
+  GF_ASSERT(record != NULL);
+
+  date->year  = record->year;
+  date->month = record->month;
+  date->day   = record->day;
+
+  // 曜日は保存しないが、一応クリアしておく
+  date->week = 0;
+  
+}
+
+
 
 //------------------------------------------------------------------
 /**
- * 殿堂入りレコード件数を返す
+ * 殿堂入りデータ内のレコード件数を返す
  *
  * @param   data  殿堂入りデータポインタ
  *
@@ -238,7 +345,7 @@ u32 DendouData_GetRecordCount( const DENDOU_SAVEDATA* data )
 }
 //------------------------------------------------------------------
 /**
- * 殿堂入りレコードが、何回目の殿堂入りかを返す
+ * 殿堂入りデータが、何回目の殿堂入りかを返す
  *
  * @param   data    殿堂入りデータポインタ
  * @param   index   レコードインデックス（0が最新で、順に旧くなっていく）
@@ -256,7 +363,7 @@ u32 DendouData_GetRecordNumber( const DENDOU_SAVEDATA* data, int index )
 }
 //------------------------------------------------------------------
 /**
- * 殿堂入りレコードから、ポケモン数取得
+ * 殿堂入りデータから、指定の殿堂入りレコードのポケモン数取得
  *
  * @param   data    殿堂入りデータポインタ
  * @param   index   レコードインデックス（0が最新で、順に旧くなっていく）
@@ -273,18 +380,12 @@ u32 DendouData_GetPokemonCount( const DENDOU_SAVEDATA* data, int index )
   GF_ASSERT(index < DENDOU_RECORD_MAX);
 
   index = recIndex_to_datIndex( data, index );
-  for(i=0; i<TEMOTI_POKEMAX; i++)
-  {
-    if(data->record[index].pokemon[i].monsno == 0)
-    {
-      break;
-    }
-  }
-  return i;
+
+  return DendouRecord_GetPokemonCount( &data->record[index] );
 }
 //------------------------------------------------------------------
 /**
- * 殿堂入りレコードから、ポケモンデータ取得
+ * 殿堂入りデータから指定のレコードのポケモンデータ取得
  *
  * @param   data    殿堂入りデータポインタ
  * @param   index   レコードインデックス（0が最新で、順に旧くなっていく）
@@ -294,34 +395,16 @@ u32 DendouData_GetPokemonCount( const DENDOU_SAVEDATA* data, int index )
 //------------------------------------------------------------------
 void DendouData_GetPokemonData( const DENDOU_SAVEDATA* data, int index, int poke_pos, DENDOU_POKEMON_DATA* poke_data )
 {
-  const DENDOU_POKEMON_DATA_INSIDE*  recPoke;
-  int i;
-
   GF_ASSERT(data != NULL);
   GF_ASSERT(data->savePoint < DENDOU_RECORD_MAX);
-  GF_ASSERT(index < DENDOU_RECORD_MAX);
 
   index = recIndex_to_datIndex( data, index );
-  recPoke = &(data->record[index].pokemon[poke_pos]);
 
-  poke_data->monsno = recPoke->monsno;
-  poke_data->level = recPoke->level;
-  poke_data->personalRandom = recPoke->personalRandom;
-  poke_data->idNumber = recPoke->idNumber;
-  poke_data->formNumber = recPoke->formNumber;
-  poke_data->sex = recPoke->sex;
-
-  GFL_STR_SetStringCode( poke_data->nickname, recPoke->nickname );
-  GFL_STR_SetStringCode( poke_data->oyaname, recPoke->oyaname );
-
-  for(i=0; i<4; i++)
-  {
-    poke_data->waza[i] = recPoke->waza[i];
-  }
+  DendouRecord_GetPokemonData( &data->record[index], poke_pos, poke_data );
 }
 //------------------------------------------------------------------
 /**
- * 殿堂入りレコードから、殿堂入り日付取得
+ * 殿堂入りデータから、指定のレコードの殿堂入り日付取得
  *
  * @param   data    殿堂入りデータポインタ
  * @param   index   レコードインデックス（0が最新で、順に旧くなっていく）
@@ -335,14 +418,11 @@ void DendouData_GetDate( const DENDOU_SAVEDATA* data, int index, RTCDate* date )
   GF_ASSERT(index < DENDOU_RECORD_MAX);
 
   index = recIndex_to_datIndex( data, index );
-  date->year = data->record[index].year;
-  date->month = data->record[index].month;
-  date->day = data->record[index].day;
-
-  // 曜日は保存しないが、一応クリアしておく
-  date->week = 0;
-
+  
+  DendouRecord_GetDate( &data->record[index], date );
 }
+
+
 
 
 
