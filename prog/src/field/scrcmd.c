@@ -1410,6 +1410,31 @@ static VMCMD_RESULT EvCmdLastKeyWait( VMHANDLE * core, void *wk )
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * セーブ後下画面・ウェイト処理
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval  BOOL TRUE=終了
+ */
+//--------------------------------------------------------------
+static BOOL EvWaitSaveSubscreen(VMHANDLE * core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork( fieldmap );
+
+  // 下画面の表示が終わるまで待つ。
+  if( FIELD_SUBSCREEN_SetReportEnd( subscreen ) == FALSE ){
+    // まつ
+    return FALSE;
+  }
+  return TRUE;
+}
+
+
+//--------------------------------------------------------------
+/**
  * セーブ・ウェイト処理
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval  BOOL TRUE=終了
@@ -1435,6 +1460,7 @@ static BOOL EvWaitSave(VMHANDLE * core, void *wk )
     break;
 
   // 完了
+  // 結果をret_wkに保存
   case SAVE_RESULT_OK:
     {
       u16* ret_wk = SCRCMD_GetVMWork( core, work );
@@ -1472,14 +1498,15 @@ static BOOL EvWaitSave(VMHANDLE * core, void *wk )
       if( result == SAVE_RESULT_OK ){
         // 下画面の表示が終わるまで待つ。
         if( FIELD_SUBSCREEN_SetReportEnd( subscreen ) == FALSE ){
+          // まつ
           ret = FALSE;
+          VMCMD_SetWait( core, EvWaitSaveSubscreen ); // サブスクリーン待ちへ
         }
       }else{
         FIELD_SUBSCREEN_SetReportBreak( subscreen );
       }
     }
   }
-  
   return ret;
 }
 //--------------------------------------------------------------
