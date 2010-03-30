@@ -437,7 +437,7 @@ static void setup_common_CommTrainer( BATTLE_SETUP_PARAM* dst, GAMEDATA* gameDat
 
   BTL_FIELD_SITUATION_Init(&sit);
   sit.bgType = BATTLE_BG_TYPE_ROOM;
-  sit.bgAttr = BATTLE_BG_ATTR_NORMAL_GROUND;
+  sit.bgAttr = BATTLE_BG_ATTR_GROUND;
 
   setup_common( dst, gameData, &sit );
   setup_player_param( dst, gameData, heapID );

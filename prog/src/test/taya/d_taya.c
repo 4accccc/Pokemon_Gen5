@@ -963,12 +963,12 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 
         if( key & PAD_BUTTON_L ){
           sit.bgType = BATTLE_BG_TYPE_ROOM;
-          sit.bgType = BATTLE_BG_ATTR_NORMAL_GROUND;
+          sit.bgType = BATTLE_BG_ATTR_GROUND;
           BTL_SETUP_Single_Trainer( para, wk->gameData, &sit, 2, HEAPID_CORE );
           BATTLE_PARAM_SetPokeParty( para, wk->partyEnemy, BTL_CLIENT_ENEMY1 );
         }else if( key & PAD_BUTTON_R ){
           sit.bgType = BATTLE_BG_TYPE_ROOM;
-          sit.bgAttr = BATTLE_BG_ATTR_NORMAL_GROUND;
+          sit.bgAttr = BATTLE_BG_ATTR_GROUND;
           BTL_SETUP_Double_Trainer( para, wk->gameData, &sit, 2, HEAPID_CORE );
           BATTLE_PARAM_SetPokeParty( para, wk->partyEnemy, BTL_CLIENT_ENEMY1 );
         }else{
@@ -976,7 +976,7 @@ static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 //          setup_party( HEAPID_CORE, wk->partyEnemy, MONSNO_MANYUURA, 0 );
 //          BTL_SETUP_Single_Wild( para, wk->gameData, wk->partyEnemy, BTL_LANDFORM_ROOM, BTL_WEATHER_NONE );
           sit.bgType = BATTLE_BG_TYPE_GRASS;
-          sit.bgAttr = BATTLE_BG_ATTR_GRASS;
+          sit.bgAttr = BATTLE_BG_ATTR_E_GRASS;
           BTL_SETUP_Wild( para, wk->gameData, wk->partyEnemy, &sit, BTL_RULE_SINGLE, HEAPID_CORE );
         }
 

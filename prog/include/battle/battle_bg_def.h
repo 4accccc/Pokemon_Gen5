@@ -36,41 +36,36 @@ typedef enum {
 
 //--------------------------------------------------------------
 /*
- *  戦闘背景指定アトリビュートID（@todo IDのみ先行定義　091028時点で指定しても意味無し）
+ *  戦闘背景指定アトリビュートID
+ *
+ *  resource/batt_bg_tbl/wb_battle_bg.xlsの列項目と手動で一致させる必要があります
  */
 //--------------------------------------------------------------
 typedef enum {
-//芝生
-BATTLE_BG_ATTR_LAWN,
-//通常地面
-BATTLE_BG_ATTR_NORMAL_GROUND,
-//地面１
-BATTLE_BG_ATTR_GROUND1,
-//地面２
-BATTLE_BG_ATTR_GROUND2,
-//草
-BATTLE_BG_ATTR_GRASS,
-//水上
-BATTLE_BG_ATTR_WATER,
-//雪原
-BATTLE_BG_ATTR_SNOW,
-//砂地
-BATTLE_BG_ATTR_SAND,
-//浅い湿原
-BATTLE_BG_ATTR_MARSH,
-//洞窟
-BATTLE_BG_ATTR_CAVE,
-//水たまり
-BATTLE_BG_ATTR_POOL,
-//浅瀬
-BATTLE_BG_ATTR_SHOAL,
-//氷上
-BATTLE_BG_ATTR_ICE,
-//室内
-BATTLE_BG_ATTR_INDOOR,
-//パレスでの対戦専用
-BATTLE_BG_ATTR_PALACE,
+  BATTLE_BG_ATTR_LAWN,	    ///<	芝生
+  BATTLE_BG_ATTR_GROUND,  	///<	通常地面
+  BATTLE_BG_ATTR_GROUND_S1,	///<	四季変化地面１
+  BATTLE_BG_ATTR_GROUND_S2,	///<	四季変化地面２
+  BATTLE_BG_ATTR_NORMAL,	  ///<	移動可能
+  BATTLE_BG_ATTR_E_GRASS,	  ///<	エンカウント草
+  BATTLE_BG_ATTR_WATER,	    ///<	水上
+  BATTLE_BG_ATTR_SNOW,	    ///<	雪原
+  BATTLE_BG_ATTR_SAND,	    ///<	砂地
+  BATTLE_BG_ATTR_MARSH,	    ///<	浅い湿原
+  BATTLE_BG_ATTR_CAVE,	    ///<	洞窟
+  BATTLE_BG_ATTR_POOL,	    ///<	水たまり
+  BATTLE_BG_ATTR_SHOAL,	    ///<	浅瀬
+  BATTLE_BG_ATTR_ICE,	      ///<	氷上
+  BATTLE_BG_ATTR_E_INDOOR,	///<	室内エンカウント
+  BATTLE_BG_ATTR_PALACE,	  ///<	パレス
+  BATTLE_BG_ATTR_BIGFOUR1,	///<	四天王１(ゴースト)
+  BATTLE_BG_ATTR_BIGFOUR2,	///<	四天王２(格闘)
+  BATTLE_BG_ATTR_BIGFOUR3,	///<	四天王３(悪)
+  BATTLE_BG_ATTR_BIGFOUR4,	///<	四天王４(エスパー)
+  BATTLE_BG_ATTR_BOSS,	    ///<	Ｎ専用
+  BATTLE_BG_ATTR_SAGE1,	    ///<	ゲーチス
+  BATTLE_BG_ATTR_CHAMPION,	///<	チャンピオン
 
-BATTLE_BG_ATTR_MAX,
+  BATTLE_BG_ATTR_MAX,
 }BtlBgAttr;
 

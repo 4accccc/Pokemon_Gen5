@@ -1174,16 +1174,16 @@ static void handler_Hogosyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
     switch( bg ){
 
-    case BATTLE_BG_ATTR_NORMAL_GROUND:  //通常地面
-    case BATTLE_BG_ATTR_GROUND1:        //地面１
-    case BATTLE_BG_ATTR_GROUND2:        //地面２
-    case BATTLE_BG_ATTR_PALACE:         //パレスでの対戦専用
-    case BATTLE_BG_ATTR_SAND:           //砂地
-    case BATTLE_BG_ATTR_MARSH:          //浅い湿原
+    case BATTLE_BG_ATTR_GROUND:     //通常地面
+    case BATTLE_BG_ATTR_GROUND_S1:  //四季あり地面１
+    case BATTLE_BG_ATTR_GROUND_S2:  //四季あり地面２
+    case BATTLE_BG_ATTR_PALACE:     //パレスでの対戦専用
+    case BATTLE_BG_ATTR_SAND:       //砂地
+    case BATTLE_BG_ATTR_MARSH:      //浅い湿原
       type = POKETYPE_JIMEN;
       break;
 
-    case BATTLE_BG_ATTR_INDOOR:         //室内
+    case BATTLE_BG_ATTR_E_INDOOR:   //エンカウント室内
     default:
       type = POKETYPE_NORMAL;
       break;
@@ -1193,7 +1193,7 @@ static void handler_Hogosyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       break;
 
     case BATTLE_BG_ATTR_LAWN:           //芝生
-    case BATTLE_BG_ATTR_GRASS:          //草
+    case BATTLE_BG_ATTR_E_GRASS:        //エンカウント草
       type = POKETYPE_KUSA;
       break;
 
@@ -2053,16 +2053,16 @@ static void handler_HimituNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
       u16        method, method_arg;
 
       switch( bg ){
-      case BATTLE_BG_ATTR_NORMAL_GROUND:  //通常地面
-      case BATTLE_BG_ATTR_GROUND1:        //地面１
-      case BATTLE_BG_ATTR_GROUND2:        //地面２
+      case BATTLE_BG_ATTR_GROUND:         //通常地面
+      case BATTLE_BG_ATTR_GROUND_S1:        //四季あり地面１
+      case BATTLE_BG_ATTR_GROUND_S2:        //四季あり地面２
       case BATTLE_BG_ATTR_PALACE:         //パレスでの対戦専用
       case BATTLE_BG_ATTR_SAND:           //砂地
         method = METHOD_RANK;
         method_arg = BPP_HIT_RATIO;
         break;
 
-      case BATTLE_BG_ATTR_INDOOR:         //室内
+      case BATTLE_BG_ATTR_E_INDOOR:         //室内
       default:
         method = METHOD_SICK;
         method_arg = WAZASICK_MAHI;
@@ -2074,7 +2074,7 @@ static void handler_HimituNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
         break;
 
       case BATTLE_BG_ATTR_LAWN:           //芝生
-      case BATTLE_BG_ATTR_GRASS:          //草
+      case BATTLE_BG_ATTR_E_GRASS:        //エンカウント草
         method = METHOD_SICK;
         method_arg = WAZASICK_NEMURI;
         break;
@@ -8217,15 +8217,15 @@ static void handler_SizenNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 
     switch( bg ){
 
-    case BATTLE_BG_ATTR_NORMAL_GROUND:  //通常地面
-    case BATTLE_BG_ATTR_GROUND1:        //地面１
-    case BATTLE_BG_ATTR_GROUND2:        //地面２
+    case BATTLE_BG_ATTR_GROUND:         //通常地面
+    case BATTLE_BG_ATTR_GROUND_S1:      //四季あり地面１
+    case BATTLE_BG_ATTR_GROUND_S2:      //四季あり地面２
     case BATTLE_BG_ATTR_PALACE:         //パレスでの対戦専用
     case BATTLE_BG_ATTR_SAND:           //砂地
       waza = WAZANO_ZISIN;
       break;
 
-    case BATTLE_BG_ATTR_INDOOR:         //室内
+    case BATTLE_BG_ATTR_E_INDOOR:       //室内エンカウント
     default:
       waza = WAZANO_TORAIATAKKU;
       break;
@@ -8235,7 +8235,7 @@ static void handler_SizenNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       break;
 
     case BATTLE_BG_ATTR_LAWN:           //芝生
-    case BATTLE_BG_ATTR_GRASS:          //草
+    case BATTLE_BG_ATTR_E_GRASS:        //エンカウント草
       waza = WAZANO_TANEBAKUDAN;
       break;
 

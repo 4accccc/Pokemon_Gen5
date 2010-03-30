@@ -523,7 +523,7 @@ GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, 
     PokeParty_Add( partyEnemy, pp );
 
     BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, gdata, fieldmap );
-    sit.bgAttr = BATTLE_BG_ATTR_GRASS;
+    sit.bgAttr = BATTLE_BG_ATTR_E_GRASS;
     sit.bgType = BATTLE_BG_TYPE_GRASS;
     BTL_SETUP_CaptureDemo( bp, gdata, partyMine, partyEnemy, &sit, heapID );
 
