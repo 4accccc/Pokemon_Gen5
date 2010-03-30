@@ -25,7 +25,7 @@ enum {
 #define WO_YESNO_WIN_PY     (10)
 
 // 進行ウィンドウ転送位置
-#define WO_TALK_WIN_CGX   ( WO_YESNO_WIN_CGX + TOUCH_SW_USE_CHAR_NUM )
+#define WO_TALK_WIN_CGX   ( WO_YESNO_WIN_CGX )
 
 #define W_PARAM_PX    (17)
 #define W_PARAM_PY    (6)
@@ -165,8 +165,8 @@ enum {
 #define BG_ABTN_OX    (0)
 #define BG_ABTN_OY    (12)
 
-#define F_WLIST_PP1_OX  (10*8)
-#define F_WLIST_PP2_OX  (F_WLIST_PP1_OX+5*8)
+#define F_WLIST_PP1_OX  (11*8)
+#define F_WLIST_PP2_OX  (F_WLIST_PP1_OX+4*8)
 
 #define F_WLIST_NAME_OX (0)
 #define F_WLIST_LEVEL_OX  (8)

@@ -200,6 +200,7 @@ typedef struct {
   APP_TASKMENU_WORK  *app_menuwork;
   APP_TASKMENU_ITEMWORK menuitem[2];
   APP_TASKMENU_ITEMWORK yn_menuitem[2];
+  PRINT_UTIL            *printUtil;
   PRINT_QUE             *printQue;
   APP_TASKMENU_WIN_WORK *oboe_menu_work[2];
 }WO_WORK;
@@ -918,9 +919,7 @@ static void WO_VBlank( GFL_TCB *tcb, void * work )
   GFL_BG_VBlankFunc( );
 
   // セルアクター
-//  DoVramTransferManager();  // Vram転送マネージャー実行
-//  CATS_RenderOamTrans();
-    GFL_CLACT_SYS_VBlankFunc();
+  GFL_CLACT_SYS_VBlankFunc();
 
   OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
@@ -1020,7 +1019,7 @@ static void WO_BgSet( void )
   { // PARAM FONT (BMP)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, GFL_BG_CHRSIZ_256x256,
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x18000, GFL_BG_CHRSIZ_256x256,
       GX_BG_EXTPLTT_01, SFRM_PARAM_PRI, 0, 0, FALSE
     };
     GFL_BG_SetBGControl( SFRM_PARAM, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -1030,7 +1029,7 @@ static void WO_BgSet( void )
   { // TOUCHBAR_BG (CHAR)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x256,
+      GX_BG_SCRBASE_0xc000, GX_BG_CHARBASE_0x08000, GFL_BG_CHRSIZ_256x128,
       GX_BG_EXTPLTT_01, SFRM_PARAM_PRI, 0, 0, FALSE
     };
     GFL_BG_SetBGControl( SFRM_TOUCHBAR, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -1055,8 +1054,9 @@ static void WO_BgSet( void )
   GFL_BG_SetVisible( SFRM_PARAM,    VISIBLE_ON );
   GFL_BG_SetVisible( SFRM_BACK,     VISIBLE_ON );
 
-  GFL_BG_SetClearCharacter( MFRM_PARAM, 32, 0, HEAPID_WAZAOSHIE );
-  GFL_BG_SetClearCharacter( SFRM_MSG,   32, 0, HEAPID_WAZAOSHIE );
+  GFL_BG_SetClearCharacter( MFRM_PARAM,    32, 0, HEAPID_WAZAOSHIE );
+  GFL_BG_SetClearCharacter( SFRM_MSG,      32, 0, HEAPID_WAZAOSHIE );
+  GFL_BG_SetClearCharacter( SFRM_TOUCHBAR, 32, 0, HEAPID_WAZAOSHIE );
 
   GFL_BG_SetClearCharacter( MFRM_PARAM, 32, 0, HEAPID_WAZAOSHIE );
   GFL_BG_SetClearCharacter( SFRM_MSG,   32, 0, HEAPID_WAZAOSHIE );
@@ -1122,6 +1122,7 @@ static void WO_BgGraphicSet( WO_WORK * wk, ARCHANDLE* p_handle )
   GFL_ARCHDL_UTIL_TransVramPalette( p_handle,NARC_waza_oshie_gra_bgd_NCLR,
                                         PALTYPE_SUB_BG,0,0, HEAPID_WAZAOSHIE);
 
+#if 0
   // タッチバー背景
   {
     ARCHANDLE *c_handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_WAZAOSHIE );
@@ -1137,6 +1138,7 @@ static void WO_BgGraphicSet( WO_WORK * wk, ARCHANDLE* p_handle )
     GFL_ARC_CloseDataHandle( c_handle );
   }
 
+#endif
 
   //スクリーンリソース取得
   wk->pSBufDParts = GFL_ARCHDL_UTIL_LoadScreen(
@@ -1180,7 +1182,6 @@ static void WO_BmpWinSet( WO_WORK * wk )
   GFL_BMP_DATA *bmpdat;
 
   for( i=0; i<WIN_MAX; i++ ){
-//    GF_BGL_BmpWinAddEx( wk->bgl, &wk->win[i], &BmpWinData[i] );
     bmp = &BmpWinData[i];
     OS_Printf("frm=%d, x=%d, y=%d,w=%d, h=%d, pal=%d\n", bmp->frm, bmp->x, bmp->y, bmp->w, bmp->h, bmp->pal);
     wk->win[i] = GFL_BMPWIN_Create( bmp->frm, bmp->x, bmp->y, bmp->w, bmp->h, bmp->pal, GFL_BMP_CHRAREA_GET_B );
@@ -1794,25 +1795,26 @@ static void WO_DefStrWrite( WO_WORK * wk )
   GFL_MSG_GetString( wk->mman, msg_exp_decide, wk->mbuf );
   StrPut( wk, WIN_ABTN, wk->fontHandle, WOFCOL_N_WHITE, STR_MODE_CENTER ,4);
 
+/*
   //　もどる
   GFL_MSG_GetString( wk->mman, msg_exp_back, wk->mbuf );
   StrPut( wk, WIN_BACK, wk->fontHandle, WOFCOL_N_WHITE, STR_MODE_CENTER ,4);
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_BACK] );
-
+*/
 
   // 「ぶんるい」
   GFL_MSG_GetString( wk->mman, msg_waza_oboe_01_01, wk->mbuf );
-  StrPut( wk, WIN_STR_CLASS, wk->fontHandle, WOFCOL_N_WHITE, STR_MODE_LEFT ,0);
+  StrPut( wk, WIN_STR_CLASS, wk->fontHandle, WOFCOL_N_BLACK, STR_MODE_LEFT ,0);
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_STR_CLASS] );
 
   // 「いりょく」
   GFL_MSG_GetString( wk->mman, msg_waza_oboe_01_02, wk->mbuf );
-  StrPut( wk, WIN_STR_ATTACK, wk->fontHandle, WOFCOL_N_WHITE, STR_MODE_LEFT ,0);
+  StrPut( wk, WIN_STR_ATTACK, wk->fontHandle, WOFCOL_N_BLACK, STR_MODE_LEFT ,0);
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_STR_ATTACK] );
 
   // 「めいちゅう」
   GFL_MSG_GetString( wk->mman, msg_waza_oboe_01_03, wk->mbuf );
-  StrPut( wk, WIN_STR_HIT, wk->fontHandle, WOFCOL_N_WHITE, STR_MODE_LEFT ,0);
+  StrPut( wk, WIN_STR_HIT, wk->fontHandle, WOFCOL_N_BLACK, STR_MODE_LEFT ,0);
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_STR_HIT] );
 
   ///////////////////////////////////////////////////////////////////////////
@@ -1823,7 +1825,7 @@ static void WO_DefStrWrite( WO_WORK * wk )
   GFL_MSG_GetString( wk->mman, msg_param_exp, str );
   WORDSET_RegisterPokeNickName( wk->wset, 0, wk->dat->pp );
   WORDSET_ExpandStr( wk->wset, wk->mbuf, str );
-  StrPut( wk, WIN_TITLE, wk->fontHandle, WOFCOL_N_BLACK, STR_MODE_LEFT ,4);
+  StrPut( wk, WIN_TITLE, wk->fontHandle, WOFCOL_N_WHITE, STR_MODE_LEFT ,4);
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_TITLE] );
 
   waza_man = GFL_MSG_Create(
@@ -2260,20 +2262,15 @@ static void WO_TalkMsgSet( WO_WORK * wk, u32 id )
 {
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[WIN_MSG]), 15 );
   BmpWinFrame_Write( wk->win[WIN_MSG], WINDOW_TRANS_ON, WO_TALK_WIN_CGX, WO_PAL_TALK_WIN );
-/*↑[GS_CONVERT_TAG]*/
 
   WO_MsgMake( wk, id );
-//  MsgPrintSkipFlagSet( MSG_SKIP_ON );
-//  wk->midx = GF_STR_PrintSimple(
-//        &wk->win[WIN_MSG], FONT_TALK, wk->mbuf,
-//        0, 0, MSGSPEED_GetWait(), WO_TalkMsgCallBack );
 
   wk->printStream = PRINTSYS_PrintStreamCallBack(
     wk->win[WIN_MSG], 0, 0, wk->mbuf, wk->fontHandle,
     MSGSPEED_GetWait(), wk->pMsgTcblSys,
     0, HEAPID_WAZAOSHIE, 0xffff, WO_TalkMsgCallBack );
 
-  GFL_BMPWIN_MakeTransWindow(wk->win[WIN_MSG]);
+  GFL_BMPWIN_MakeTransWindow( wk->win[WIN_MSG] );
 
 }
 
@@ -2290,7 +2287,6 @@ static void WO_TalkMsgSet( WO_WORK * wk, u32 id )
 static void WO_TalkMsgOff( WO_WORK * wk)
 {
   BmpWinFrame_Clear( wk->win[WIN_MSG],WINDOW_TRANS_OFF);
-/*↑[GS_CONVERT_TAG]*/
   GFL_BMPWIN_ClearTransWindow_VBlank( wk->win[WIN_MSG]);
 }
 
@@ -2626,10 +2622,10 @@ static void WO_ResourceLoad( WO_WORK * wk, ARCHANDLE* p_handle )
   // パレット
   wk->clres[1][WO_PAL_ID_APP_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
                                         c_handle, APP_COMMON_GetBarIconPltArcIdx(),
-                                        CLSYS_DRAW_SUB, 0, 0, 1, HEAPID_WAZAOSHIE );
+                                        CLSYS_DRAW_SUB, 0, 0, 2, HEAPID_WAZAOSHIE );
   wk->clres[1][WO_PAL_ID_OBJ] = GFL_CLGRP_PLTT_RegisterEx(
                                 p_handle, NARC_waza_oshie_gra_oam_dw_NCLR,
-                                CLSYS_DRAW_SUB, 1*32,0,4, HEAPID_WAZAOSHIE );
+                                CLSYS_DRAW_SUB, 2*32,0,1, HEAPID_WAZAOSHIE );
 
   wk->clres[1][WO_PAL_ID_TYPE]   = GFL_CLGRP_PLTT_RegisterEx(
                                     c_handle, APP_COMMON_GetPokeTypePltArcIdx(),
@@ -2892,6 +2888,7 @@ static void WO_ObjInit( WO_WORK * wk, ARCHANDLE* p_handle )
   }
 
   GFL_CLACT_WK_SetAutoAnmFlag(wk->cap[WO_CLA_EXIT],TRUE);
+  GFL_CLACT_WK_SetAutoAnmFlag(wk->cap[WO_CLA_CURSOR],TRUE);
 
 }
 
@@ -3076,7 +3073,7 @@ static void WO_SelCursorChange( WO_WORK * wk, u8 pos, u8 pal )
     GFL_CLACT_WK_SetPos(wk->cap[WO_CLA_CURSOR], &clpos, CLSYS_DEFREND_SUB );
     GFL_CLACT_WK_SetAnmFrame(wk->cap[WO_CLA_CURSOR],2);
   }
-  GFL_CLACT_WK_SetPlttOffs( wk->cap[WO_CLA_CURSOR], pal, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+//  GFL_CLACT_WK_SetPlttOffs( wk->cap[WO_CLA_CURSOR], pal, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 }
 
 
@@ -3456,11 +3453,13 @@ static void EnterButtonOnOff( WO_WORK * wk, BOOL flg )
     wk->enter_flg = 1;
     
   }else {
-    APP_TASKMENU_WIN_Delete( wk->oboe_menu_work[0] );
-    APP_TASKMENU_WIN_Delete( wk->oboe_menu_work[1] );
-    wk->oboe_menu_work[0] = NULL;
-    wk->oboe_menu_work[1] = NULL;
-    wk->enter_flg = 0;
+    if(wk->oboe_menu_work[0]!=NULL){
+      APP_TASKMENU_WIN_Delete( wk->oboe_menu_work[0] );
+      APP_TASKMENU_WIN_Delete( wk->oboe_menu_work[1] );
+      wk->oboe_menu_work[0] = NULL;
+      wk->oboe_menu_work[1] = NULL;
+    }
+      wk->enter_flg = 0;
   }
 
 }
