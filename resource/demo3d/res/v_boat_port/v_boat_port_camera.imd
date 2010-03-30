@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-03-29T04:16:08" source="v_boat_port.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-03-30T14:54:33" source="v_ship_port.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-03-29T04:16:08" source="v_boat_port.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-03-30T14:54:33" source="v_ship_port.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,11 +20,11 @@
 	magnify="1.000000"
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
-	compress_node="none" node_size="2 2"
-	compress_material="off" material_size="1 1"
+	compress_node="merge" node_size="2 1"
+	compress_material="on" material_size="1 1"
 	output_texture="used"
 	force_full_weight="off"
-	use_primitive_strip="off"
+	use_primitive_strip="on"
 />
 
 <box_test pos_scale="7" xyz="-0.129883 3.994629 1.712646" whd="0.009521 0.010498 0.011719"/>
@@ -52,7 +52,7 @@
 </material_array>
 
 <matrix_array size="1">
-	<matrix index="0" mtx_weight="1" node_idx="1"/>
+	<matrix index="0" mtx_weight="1" node_idx="0"/>
 </matrix_array>
 
 <polygon_array size="1">
@@ -70,67 +70,53 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="24">
 					<mtx idx="0"/>
-					<nrm xyz="0.000000 0.000000 0.998047"/>
-					<pos_s xyz="-0.500000 -0.500000 0.500000"/>
-					<pos_xy xy="0.500000 -0.500000"/>
-					<pos_xy xy="0.500000 0.500000"/>
-					<pos_xy xy="-0.500000 0.500000"/>
-					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xy xy="-0.500000 0.500000"/>
-					<pos_xy xy="0.500000 0.500000"/>
-					<pos_xz xz="0.500000 -0.500000"/>
-					<pos_xy xy="-0.500000 0.500000"/>
-					<nrm xyz="0.000000 0.000000 -1.000000"/>
-					<pos_xy xy="-0.500000 0.500000"/>
-					<pos_xy xy="0.500000 0.500000"/>
-					<pos_xy xy="0.500000 -0.500000"/>
-					<pos_xy xy="-0.500000 -0.500000"/>
-					<nrm xyz="0.000000 -1.000000 0.000000"/>
-					<pos_xy xy="-0.500000 -0.500000"/>
-					<pos_xy xy="0.500000 -0.500000"/>
-					<pos_xz xz="0.500000 0.500000"/>
-					<pos_xy xy="-0.500000 -0.500000"/>
-					<nrm xyz="0.998047 0.000000 0.000000"/>
-					<pos_xy xy="0.500000 -0.500000"/>
-					<pos_xz xz="0.500000 -0.500000"/>
-					<pos_xy xy="0.500000 0.500000"/>
-					<pos_xz xz="0.500000 0.500000"/>
 					<nrm xyz="-1.000000 0.000000 0.000000"/>
 					<pos_s xyz="-0.500000 -0.500000 -0.500000"/>
 					<pos_xz xz="-0.500000 0.500000"/>
 					<pos_xy xy="-0.500000 0.500000"/>
 					<pos_xz xz="-0.500000 -0.500000"/>
+					<nrm xyz="0.998047 0.000000 0.000000"/>
+					<pos_s xyz="0.500000 -0.500000 0.500000"/>
+					<pos_xz xz="0.500000 -0.500000"/>
+					<pos_xy xy="0.500000 0.500000"/>
+					<pos_xz xz="0.500000 0.500000"/>
+					<nrm xyz="0.000000 -1.000000 0.000000"/>
+					<pos_s xyz="-0.500000 -0.500000 -0.500000"/>
+					<pos_xy xy="0.500000 -0.500000"/>
+					<pos_xz xz="0.500000 0.500000"/>
+					<pos_xy xy="-0.500000 -0.500000"/>
+					<nrm xyz="0.000000 0.000000 -1.000000"/>
+					<pos_yz yz="0.500000 -0.500000"/>
+					<pos_xy xy="0.500000 0.500000"/>
+					<pos_xy xy="0.500000 -0.500000"/>
+					<pos_xy xy="-0.500000 -0.500000"/>
+					<nrm xyz="0.000000 0.998047 0.000000"/>
+					<pos_yz yz="0.500000 0.500000"/>
+					<pos_xy xy="0.500000 0.500000"/>
+					<pos_xz xz="0.500000 -0.500000"/>
+					<pos_xy xy="-0.500000 0.500000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_yz yz="-0.500000 0.500000"/>
+					<pos_xy xy="0.500000 -0.500000"/>
+					<pos_xy xy="0.500000 0.500000"/>
+					<pos_xy xy="-0.500000 0.500000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
 	</polygon>
 </polygon_array>
 
-<node_array size="2">
-	<node index="0" name="camera" kind="null"
+<node_array size="1">
+	<node index="0" name="pCube1" kind="mesh"
 		parent="-1"
-		child="1"
-		brother_next="-1"
-		brother_prev="-1"
-		draw_mtx="off"
-		billboard="off"
-		scale="1.000000 1.000000 1.000000"
-		rotate="-60.000000 -10.000000 0.000000"
-		translate="-16.000000 512.000000 220.000000"
-		visibility="on"
-		display_size="0"
-	>
-	</node>
-	<node index="1" name="pCube1" kind="mesh"
-		parent="0"
 		child="-1"
 		brother_next="-1"
 		brother_prev="-1"
 		draw_mtx="on"
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
-		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		rotate="-60.000000 -10.000000 0.000000"
+		translate="-16.000000 512.000000 220.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="24" polygon_size="6"
