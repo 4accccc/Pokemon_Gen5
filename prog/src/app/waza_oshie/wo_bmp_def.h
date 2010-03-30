@@ -165,8 +165,8 @@ enum {
 #define BG_ABTN_OX    (0)
 #define BG_ABTN_OY    (12)
 
-#define F_WLIST_PP1_OX  (11*8)
-#define F_WLIST_PP2_OX  (F_WLIST_PP1_OX+4*8)
+#define F_WLIST_PP1_OX  (12*8)
+#define F_WLIST_PP2_OX  (F_WLIST_PP1_OX+3*8)
 
 #define F_WLIST_NAME_OX (0)
 #define F_WLIST_LEVEL_OX  (8)

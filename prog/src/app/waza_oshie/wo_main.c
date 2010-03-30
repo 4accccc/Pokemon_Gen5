@@ -93,7 +93,7 @@ enum {
 
   WIN_TITLE,        // タイトル
   WIN_MWAZA,        // 上　技リスト
-  WIN_MPRM,       // 上　パラメータ
+  WIN_MPRM,         // 上　ポケモン名とレベル
 
   WIN_MAX
 };
@@ -1061,6 +1061,8 @@ static void WO_BgSet( void )
   GFL_BG_SetClearCharacter( MFRM_PARAM, 32, 0, HEAPID_WAZAOSHIE );
   GFL_BG_SetClearCharacter( SFRM_MSG,   32, 0, HEAPID_WAZAOSHIE );
 
+  G2_BlendNone();
+
   //上画面をサブ,下画面をメインに変更
 //  GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
 }
@@ -1821,7 +1823,7 @@ static void WO_DefStrWrite( WO_WORK * wk )
   //上画面
   str = GFL_STR_CreateBuffer( TMP_MSGBUF_SIZ, HEAPID_WAZAOSHIE );
 
-  //タイトル
+  // タイトル
   GFL_MSG_GetString( wk->mman, msg_param_exp, str );
   WORDSET_RegisterPokeNickName( wk->wset, 0, wk->dat->pp );
   WORDSET_ExpandStr( wk->wset, wk->mbuf, str );
@@ -1830,7 +1832,6 @@ static void WO_DefStrWrite( WO_WORK * wk )
 
   waza_man = GFL_MSG_Create(
       GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wazaname_dat, HEAPID_WAZAOSHIE );
-/*↑[GS_CONVERT_TAG]*/
   ppp = PP_GetPPPPointerConst(wk->dat->pp);
 
   //技リスト
@@ -1868,7 +1869,7 @@ static void WO_DefStrWrite( WO_WORK * wk )
   }
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_MWAZA] );
 
-  //ポケモン名他
+  //ポケモン名とレベル
   GFL_MSG_GetString( wk->mman, msg_param_name, str );
   WORDSET_RegisterPokeMonsName(wk->wset,0,wk->dat->pp );
   WORDSET_ExpandStr( wk->wset, wk->mbuf, str );
