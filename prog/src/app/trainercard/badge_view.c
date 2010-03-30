@@ -82,18 +82,40 @@ enum{
 
 // バッジのパレットを汚す為のパレットデータ数
 #define BADGE_POLISH_PAL_NUM    ( 3 )
-
+#define BADGE_KIRAKIRA_NUM      ( 3 )
 
 //--------------------------------------------------------------------------------------------
 // 構造体定義定義
 //--------------------------------------------------------------------------------------------
+
+// ジムリーダースライド情報
 typedef struct{
   u16 on;        // 現在のタッチ状況
   u16 old_on;    // １フレーム前のタッチ状況
   int x, old_x, old2_x;  // X座標、１フレム前のX座標
   int start_x;
   int enable;
+}SLIDE_WORK;
+
+// バッジ磨き情報
+typedef struct{
+  u32 polish[BADGE_NUM];     // 磨き情報
+  u8  grade[BADGE_NUM];      // 磨きフラグ
+  u8  old_grade[BADGE_NUM];  // 磨きフラグ過去
+}BADGE_POLISH;
+
+// バッジ磨き判定用ワーク
+typedef struct {
+  s8 OldDirX;
+  s8 OldDirY;
+  s8 DirX;
+  s8 DirY;
+  u8 Snd;
+  int BeforeX;
+  int BeforeY;
 }SCRATCH_WORK;
+
+  
 
 typedef struct {
   ARCHANDLE     *g_handle;  // グラフィックデータファイルハンドル
@@ -131,7 +153,7 @@ typedef struct {
   int trainer_num;                  // バトルサブウェイデータに存在していた人数
   int scrol_bg;                     // BGスクロール用のワーク
 
-  SCRATCH_WORK scratch;      // ジムリーダー操作用のワーク
+  SLIDE_WORK  slide;      // ジムリーダー操作用のワーク
   int         old_animeFrame;   // ジムリーダーアニメフレーム位置
   int         animeFrame;   // ジムリーダーアニメフレーム位置
   int         animeSpeed;   // ジムリーダーパネルの足し込むスピード
@@ -144,6 +166,9 @@ typedef struct {
   u8          badgeflag[BADGE_NUM];
 
   TR_CARD_SV_PTR trCard;
+  BADGE_POLISH   badge;
+  SCRATCH_WORK   scratch;
+  
 #ifdef PM_DEBUG
   GFL_MSGDATA   *debugname;
 #endif
@@ -195,21 +220,24 @@ static void CursorMoveCallBack_On( void * work, int now_pos, int old_pos );
 static void CursorMoveCallBack_Off( void * work, int now_pos, int old_pos );
 static void CursorMoveCallBack_Move( void * work, int now_pos, int old_pos );
 static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos );
-static BOOL LBSEQ_Main( BADGEVIEW_WORK *wk );
+static BOOL SEQ_Main( BADGEVIEW_WORK *wk );
 static void InfoWinPrint( BADGEVIEW_WORK *wk, int type, int no );
 static void InfoWinPut( BADGEVIEW_WORK *wk );
 static  int TouchBar_KeyControl( BADGEVIEW_WORK *wk );
-static void ExecFunc( BADGEVIEW_WORK *wk, int touch );
+static void ExecFunc( BADGEVIEW_WORK *wk, int trg );
+static void ContFunc( BADGEVIEW_WORK *wk, int cont );
 static void _page_max_init( BADGEVIEW_WORK *wk );
 static void _page_clact_set( BADGEVIEW_WORK *wk, int page, int max );
-static int _page_move_check( BADGEVIEW_WORK *wk, int touch );
+static  int _page_move_check( BADGEVIEW_WORK *wk, int touch );
 static void SetupPage( BADGEVIEW_WORK *wk, int page );
 static void NamePlatePrint_1Page( BADGEVIEW_WORK *wk );
 static void CellActorPosSet( BADGEVIEW_WORK *wk, int id, int x, int y );
 static void Draw3D( BADGEVIEW_WORK* wk );
-static void ScratchFunc( BADGEVIEW_WORK *wk, int trg, int flag, int x );
+static void SlideFunc( BADGEVIEW_WORK *wk, int trg, int flag, int x );
 static void SetRtcData( BADGEVIEW_WORK *wk );
 static void RefreshPolishData( BADGEVIEW_WORK *wk );
+static void Trans_BadgePalette( BADGEVIEW_WORK *wk );
+static void BrushBadge( BADGEVIEW_WORK *wk, u32 touch );
 
 
 #ifdef PM_DEBUG
@@ -277,7 +305,7 @@ GFL_PROC_RESULT BadgeViewProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *
 {
   BADGEVIEW_WORK * wk = mywk;
 
-  if( LBSEQ_Main( wk ) == FALSE ){
+  if( SEQ_Main( wk ) == FALSE ){
     return GFL_PROC_RES_FINISH;
   }
   
@@ -1313,7 +1341,7 @@ static BOOL (*functable[])(BADGEVIEW_WORK *wk) = {
  * @retval  BOOL    
  */
 //----------------------------------------------------------------------------------
-static BOOL LBSEQ_Main( BADGEVIEW_WORK *wk )
+static BOOL SEQ_Main( BADGEVIEW_WORK *wk )
 {
   // サブシーケンス実行
   return functable[wk->seq](wk);
@@ -1354,6 +1382,7 @@ static BOOL SubSuq_Main( BADGEVIEW_WORK *wk )
   if(TouchBar_KeyControl(wk)==GFL_UI_TP_HIT_NONE){
 
   }
+  Trans_BadgePalette(wk);
   return TRUE;
 }
 
@@ -1420,10 +1449,12 @@ static BOOL SubSuq_FadeOutWait( BADGEVIEW_WORK *wk )
 {
   if( WIPE_SYS_EndCheck() ){
     if(wk->next_seq==TOUCH_END){
-      wk->param->value = CALL_NONE;
+      wk->param->value     = CALL_NONE;
+      wk->param->next_proc = TRAINERCARD_NEXTPROC_EXIT;
       wk->seq = 0;
     }else if(wk->next_seq==TOUCH_RETURN){
       wk->param->value = CALL_NONE;
+      wk->param->next_proc = TRAINERCARD_NEXTPROC_RETURN;
       wk->seq = 0;
     }else if(wk->next_seq==TOUCH_CHANGE_CARD){
       wk->param->value = CALL_CARD;
@@ -1525,11 +1556,14 @@ static void InfoWinPrint( BADGEVIEW_WORK *wk, int type, int no )
   switch(type){
   // バッジ情報
   case INFO_TYPE_BADGE:   
-    // 取得日時
-    WORDSET_RegisterNumber( wk->wset, 0, 10, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU);
-    WORDSET_RegisterNumber( wk->wset, 1,  3, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU);
-    WORDSET_RegisterNumber( wk->wset, 2,  4, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU);
-  
+    {
+      // 取得日時
+      SHORT_DATE date = TRCSave_GetBadgeDate( wk->trCard, no );
+    
+      WORDSET_RegisterNumber( wk->wset, 0, date.year,  2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU);
+      WORDSET_RegisterNumber( wk->wset, 1, date.month, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU);
+      WORDSET_RegisterNumber( wk->wset, 2, date.day,   2, STR_NUM_DISP_ZERO, STR_NUM_CODE_ZENKAKU);
+    }
     // 描画（１行目）
     GFL_MSG_GetString( wk->mman, MSG_LEAGUE_BADGE1_01+no*3, strbuf );
     WORDSET_ExpandStr( wk->wset, wk->expbuf, strbuf );
@@ -1612,22 +1646,22 @@ static const int target_frame_tbl[]={
  * @param   x   
  */
 //----------------------------------------------------------------------------------
-static void ScratchFunc( BADGEVIEW_WORK *wk, int trg, int flag, int x )
+static void SlideFunc( BADGEVIEW_WORK *wk, int trg, int flag, int x )
 {
   int i;
     // タッチ開始
-    if(wk->scratch.old_on==0 && flag){
+    if(wk->slide.old_on==0 && flag){
       wk->old_animeFrame = wk->animeFrame;
-      wk->scratch.start_x        = x;
+      wk->slide.start_x        = x;
     //タッチ継続  
-    }else if(wk->scratch.old_on==1 && flag==1){
-      wk->animeFrame = wk->old_animeFrame + (x - wk->scratch.start_x)*1024;
+    }else if(wk->slide.old_on==1 && flag==1){
+      wk->animeFrame = wk->old_animeFrame + (x - wk->slide.start_x)*1024;
       wk->animeFrame = _round_frame( wk->animeFrame, GYMREADER_FRAME_MAX );
       
     // タッチ終了（慣性取得）
-    }else if(wk->scratch.old_on==1 && flag==0){
-      if(wk->scratch.old2_x!=0){
-        wk->animeSpeed = (wk->scratch.old_x - wk->scratch.old2_x)*2048;
+    }else if(wk->slide.old_on==1 && flag==0){
+      if(wk->slide.old2_x!=0){
+        wk->animeSpeed = (wk->slide.old_x - wk->slide.old2_x)*2048;
       }
       if(wk->animeSpeed > 40000){
         wk->animeSpeed = 40000;
@@ -1637,7 +1671,7 @@ static void ScratchFunc( BADGEVIEW_WORK *wk, int trg, int flag, int x )
     // タッチしてない
     }
 
-  if(wk->scratch.old_on==0 && flag==0){
+  if(wk->slide.old_on==0 && flag==0){
     // アニメフレーム計算（回り込みつき）
     wk->animeFrame += wk->animeSpeed;
     wk->animeFrame = _round_frame( wk->animeFrame, GYMREADER_FRAME_MAX );
@@ -1664,11 +1698,11 @@ static void ScratchFunc( BADGEVIEW_WORK *wk, int trg, int flag, int x )
     }
   }
 
-//  OS_Printf(" flag=%d, x=%d, old_x=%d, old2_x=%d, Frame=%d, speed=%d startx=%d\n", flag, x, wk->scratch.old_x, wk->scratch.old2_x,wk->animeFrame, wk->animeSpeed, wk->scratch.start_x);
+//  OS_Printf(" flag=%d, x=%d, old_x=%d, old2_x=%d, Frame=%d, speed=%d startx=%d\n", flag, x, wk->slide.old_x, wk->slide.old2_x,wk->animeFrame, wk->animeSpeed, wk->slide.start_x);
   
-  wk->scratch.old2_x  = wk->scratch.old_x;
-  wk->scratch.old_x  = x;
-  wk->scratch.old_on = flag;
+  wk->slide.old2_x  = wk->slide.old_x;
+  wk->slide.old_x  = x;
+  wk->slide.old_on = flag;
 
   
 
@@ -1738,7 +1772,7 @@ static const GFL_UI_TP_HITTBL TouchButtonHitTbl[] =
 };
 
 // ジムリーダーパネルをドラッグできる領域チェック用
-static const GFL_UI_TP_HITTBL ScratchTbl[]={
+static const GFL_UI_TP_HITTBL SlideTbl[]={
   { 32, 87, 40, 216, },
   { GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
@@ -1754,12 +1788,13 @@ static const GFL_UI_TP_HITTBL ScratchTbl[]={
 //=============================================================================================
 static int TouchBar_KeyControl( BADGEVIEW_WORK *wk )
 {
-  int  trg, trg2, cont;
+  int  trg, trg2, cont,cont2;
   u32  tp_x=0, tp_y=0;
-  trg  = GFL_UI_TP_HitTrg( TouchButtonHitTbl ); // タッチトリガー情報
-  trg2 = GFL_UI_TP_HitTrg( ScratchTbl );       // タッチ情報
-  cont = GFL_UI_TP_HitCont( ScratchTbl );       // タッチ情報
-  GFL_UI_TP_GetPointCont( &tp_x, &tp_y );     // タッチ座標
+  trg    = GFL_UI_TP_HitTrg( TouchButtonHitTbl );   // タッチトリガー情報
+  cont2  = GFL_UI_TP_HitCont( TouchButtonHitTbl ); // タッチトリガー情報
+  trg2   = GFL_UI_TP_HitTrg( SlideTbl );          // タッチ情報
+  cont   = GFL_UI_TP_HitCont( SlideTbl );         // タッチ情報
+  GFL_UI_TP_GetPointCont( &tp_x, &tp_y );         // タッチ座標
 
   // キーでキャンセル
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
@@ -1771,9 +1806,13 @@ static int TouchBar_KeyControl( BADGEVIEW_WORK *wk )
   }
   // 左ページ・右ページ・戻る機能の呼び出し
   ExecFunc(wk, trg);
+//  ContFunc(wk, cont2);
 
   // ジムリーダーをスライドさせる処理
-  ScratchFunc( wk, trg2, cont+1, tp_x );
+  SlideFunc( wk, trg2, cont+1, tp_x );
+
+  // バッジを磨く処理
+  BrushBadge( wk, cont2 );
   
   return trg;
 }
@@ -1808,17 +1847,17 @@ static int _get_front_gymreader( int frame )
  * @brief 各機能（左ページ・右ページ・戻る）の実行
  *
  * @param   wk    
- * @param   touch   
+ * @param   trg 
  */
 //----------------------------------------------------------------------------------
-static void ExecFunc( BADGEVIEW_WORK *wk, int touch )
+static void ExecFunc( BADGEVIEW_WORK *wk, int trg )
 {
-  if(touch==GFL_UI_TP_HIT_NONE){
+  if(trg==GFL_UI_TP_HIT_NONE){
     return;
   }
   
-  OS_Printf("touch=%d\n",touch);
-  switch(touch){
+  OS_Printf("trg=%d\n",trg);
+  switch(trg){
   case TOUCH_BADGE_0:
   case TOUCH_BADGE_1:
   case TOUCH_BADGE_2:
@@ -1827,12 +1866,12 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int touch )
   case TOUCH_BADGE_5:
   case TOUCH_BADGE_6:
   case TOUCH_BADGE_7:
-    if(wk->badgeflag[touch-TOUCH_BADGE_0]){
+    if(wk->badgeflag[trg-TOUCH_BADGE_0]){
       PMSND_PlaySE( SEQ_SE_SYS_32 );
-      InfoWinPrint( wk, INFO_TYPE_BADGE, touch-TOUCH_BADGE_0 );
+      InfoWinPrint( wk, INFO_TYPE_BADGE, trg-TOUCH_BADGE_0 );
       InfoWinPut( wk );
       wk->targetSet   = TOUCH_BADGE_0;   // ジムリーダー移動先指定
-      wk->targetFrame = target_frame_tbl[touch-TOUCH_BADGE_0];
+      wk->targetFrame = target_frame_tbl[trg-TOUCH_BADGE_0];
       wk->animeSpeed  = 40000;
     }
     break;
@@ -1848,13 +1887,13 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int touch )
       int pos = _get_front_gymreader(wk->animeFrame);
       PMSND_PlaySE( SEQ_SE_SYS_31 );
       
-      InfoWinPrint( wk, INFO_TYPE_GYMLEADER, (touch-TOUCH_GYM_READER_0+pos)%BADGE_NUM );
+      InfoWinPrint( wk, INFO_TYPE_GYMLEADER, (trg-TOUCH_GYM_READER_0+pos)%BADGE_NUM );
       InfoWinPut( wk );
     }
     break;
   case TOUCH_CHANGE_CARD:
     wk->seq      = SUBSEQ_ICON_WAIT;
-    wk->next_seq = touch;
+    wk->next_seq = trg;
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_CARD], 12 );
     break;
   case TOUCH_BOOKMARK:
@@ -1867,17 +1906,43 @@ static void ExecFunc( BADGEVIEW_WORK *wk, int touch )
     break;
   case TOUCH_END:
     wk->seq = SUBSEQ_ICON_WAIT;
-    wk->next_seq = touch;
+    wk->next_seq = trg;
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_END], 8 );
     break;
   case TOUCH_RETURN:
     wk->seq = SUBSEQ_ICON_WAIT;
-    wk->next_seq = touch;
+    wk->next_seq = trg;
     GFL_CLACT_WK_SetAnmSeq( wk->clwk[BV_OBJ_RETURN], 9 );
     break;
   }
 
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief タッチし続けてるときの処理
+ *
+ * @param   wk    
+ * @param   cont    
+ */
+//----------------------------------------------------------------------------------
+static void ContFunc( BADGEVIEW_WORK *wk, int cont )
+{
+  switch(cont){
+  case TOUCH_BADGE_0:
+  case TOUCH_BADGE_1:
+  case TOUCH_BADGE_2:
+  case TOUCH_BADGE_3:
+  case TOUCH_BADGE_4:
+  case TOUCH_BADGE_5:
+  case TOUCH_BADGE_6:
+  case TOUCH_BADGE_7:
+    if(wk->badge.polish[cont-TOUCH_BADGE_0]!=255){
+      wk->badge.polish[cont-TOUCH_BADGE_0]++;
+    }
+  }
+}
+
 
 
 //----------------------------------------------------------------------------------
@@ -2137,6 +2202,245 @@ static void RefreshPolishData( BADGEVIEW_WORK *wk )
   now_digit = RTC_ConvertDateTimeToSecond( &now_date, &now_time );
 
   OS_Printf("今-過去 %ld\n", now_digit-digit);
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief バッジの磨き情報でパレットがくすむ
+ *
+ * @param   wk    
+ * @param   no    
+ * @param   grade   
+ */
+//----------------------------------------------------------------------------------
+static void _trans_badge_pal( BADGEVIEW_WORK *wk, int no, int grade )
+{
+  int index;
+  NNSG2dPaletteData *pltt;
+  u16 *buf;
+
+  if(grade>2){
+    grade=2;
+  }
+  
+  pltt  = wk->badgePal[grade];
+  buf   = (u16*)pltt->pRawData;
+  index = no*16;
+  
+  GX_LoadOBJPltt( &buf[index], 32*no, 32);
+  
+}
+
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief バッジの磨き情報に合わせてキラキラが出現する
+ *
+ * @param   wk    
+ * @param   no    
+ * @param   grade   
+ */
+//----------------------------------------------------------------------------------
+static void _set_clact_visible( BADGEVIEW_WORK *wk, int no, int grade )
+{
+  int num = grade-BADGE_POLISH_PAL_NUM;
+  int i;
+  
+  for(i=0;i<BADGE_KIRAKIRA_NUM;i++){
+    if(grade<3){
+      GFL_CLACT_WK_SetDrawEnable( 
+        wk->clwk[BV_OBJ_KIRAKIRA0_0+no*BADGE_KIRAKIRA_NUM+i],  FALSE );
+    }else{
+      if( i<=num ){
+        GFL_CLACT_WK_SetDrawEnable( 
+          wk->clwk[BV_OBJ_KIRAKIRA0_0+no*BADGE_KIRAKIRA_NUM+i],  TRUE );
+      }else{
+        GFL_CLACT_WK_SetDrawEnable( 
+          wk->clwk[BV_OBJ_KIRAKIRA0_0+no*BADGE_KIRAKIRA_NUM+i],  FALSE );
+      }
+    }
+  }
+}
+
+
+#define BADGE_POLISH_RATE   ( 100 )
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief バッジの磨き状態でパレット転送とOBJ表示制御を行う
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void Trans_BadgePalette( BADGEVIEW_WORK *wk )
+{
+  int i;
+  for(i=0;i<BADGE_NUM;i++){
+#ifdef PM_DEBUG
+    if(GFL_UI_KEY_GetCont()&PAD_BUTTON_START){
+      if(wk->badge.polish[i]!=0){
+        wk->badge.polish[i]--;
+      }
+    }
+#endif
+    // 取得済みなら計算
+   if(wk->badgeflag[i]){
+      // 磨き値からグレード算出
+      wk->badge.grade[i] = wk->badge.polish[i]/BADGE_POLISH_RATE;
+      if(wk->badge.grade[i]>5){
+        wk->badge.grade[i] = 5;
+      }
+      
+      // 変更が掛かっていた場合はパレット転送キラキラOBJ表示制御を行う
+      if(wk->badge.grade[i]!=wk->badge.old_grade[i]){
+        _trans_badge_pal( wk, i, wk->badge.grade[i] );
+        _set_clact_visible( wk, i, wk->badge.grade[i] );
+      }
+      wk->badge.old_grade[i] = wk->badge.grade[i];
+    }
+  }
+
+#ifdef PM_DEBUG
+  OS_Printf("badge:");
+  for(i=0;i<BADGE_NUM;i++){
+    OS_Printf("%02d,",wk->badge.polish[i]);
+  }
+  OS_Printf("\n,");
+#endif
+}
+
+
+#define MIN_SCRUCH  (3)
+#define MAX_SCRUCH  (40)
+#define REV_SPEED (FX32_SHIFT - wk->RevSpeed)
+
+static void _play_scratch_se( SCRATCH_WORK *sc )
+{
+
+  PMSND_PlaySE( SEQ_SE_SYS_33 );
+  
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * バッジこすり音制御するための現在方向をクリア
+ *
+ * @param *outScruchSnd バッジこすり音構造体へのポインタ
+ *
+ * @return  none  
+ */
+//--------------------------------------------------------------------------------------------
+static void ClearScratchSndNow( SCRATCH_WORK *sc )
+{
+  sc->DirX = 0;
+  sc->DirY = 0;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * バッジこすり音制御するためのデータをクリア
+ *
+ * @param *outScruchSnd バッジこすり音構造体へのポインタ
+ *
+ * @return  none  
+ */
+//--------------------------------------------------------------------------------------------
+static void ClearScratchSnd( SCRATCH_WORK *sc )
+{
+  sc->OldDirX = 0;
+  sc->OldDirY = 0;
+  sc->DirX = 0;
+  sc->DirY = 0;
+  sc->Snd = 0;
+}
+
+
+static void _badge_polish_up( BADGEVIEW_WORK *wk, int no )
+{
+  if(wk->badge.polish[no]<(BADGE_POLISH_RATE*6-1)){
+    wk->badge.polish[no]++;
+  }
+  
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * バッジ磨き
+ *
+ * @param wk    画面のワーク
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
+static void BrushBadge( BADGEVIEW_WORK *wk, u32 touch )
+{
+  BOOL scruch=FALSE;
+  int sub;
+  u32 tp_x = 0xffff;
+  u32 tp_y = 0xffff;
+  
+  GFL_UI_TP_GetPointCont( &tp_x, &tp_y );         // タッチ座標
+
+
+  //保持座標とタッチ座標の差分を取る
+  if( (tp_x!=0xffff)&&(tp_y!=0xffff)&&
+      (wk->scratch.BeforeX!=0xffff)&&(wk->scratch.BeforeY!=0xffff) ){ //値有効か？
+    //保持座標とタッチ座標が同じバッジ何にあるかを調べる
+    if ( (touch!=GFL_UI_TP_HIT_NONE)&&(touch<BADGE_NUM)){
+      //バッジ所有判定
+      if (wk->badgeflag[touch]){
+        //差分が規定値以上の場合は磨いたことにする
+        if ( wk->scratch.BeforeX > tp_x ){    //前回のほうが値が大きいか？
+          sub = wk->scratch.BeforeX - tp_x;
+          wk->scratch.DirX = -1;
+        }else{
+          sub = tp_x - wk->scratch.BeforeX;
+          wk->scratch.DirX = 1;
+        }
+        if ( (sub>=MIN_SCRUCH)&&(sub<=MAX_SCRUCH) ){
+          if ( wk->scratch.BeforeY > tp_y ){  //前回のほうが値が大きいか？
+            sub = wk->scratch.BeforeY - tp_y;
+            wk->scratch.DirY = -1;
+          }else{
+            sub = tp_y - wk->scratch.BeforeY;
+            wk->scratch.DirY = 1;
+          }
+          if (sub<=MAX_SCRUCH){
+            scruch = TRUE;      //こすった
+            _play_scratch_se( &wk->scratch );
+          }else{
+            ClearScratchSndNow(&wk->scratch);
+          }
+        }else if (sub<=MAX_SCRUCH){
+          if ( wk->scratch.BeforeY > tp_y ){    //前回のほうが値が大きいか？
+            sub = wk->scratch.BeforeY - tp_y;
+            wk->scratch.DirY = -1;
+          }else{
+            sub = tp_y - wk->scratch.BeforeY;
+            wk->scratch.DirY = 1;
+          }
+          if ((sub>=MIN_SCRUCH)&&(sub<=MAX_SCRUCH)){
+            scruch = TRUE;    //こすった
+            _play_scratch_se( &wk->scratch );
+          }else{
+            ClearScratchSndNow(&wk->scratch);
+          }
+        }
+
+        if (scruch){
+          OS_Printf("scruch_%d\n",touch);
+          OS_Printf("sc=%d,%d-%d,%d\n",wk->scratch.BeforeX,wk->scratch.BeforeY,tp_x,tp_y);
+          //磨いた時間更新
+          //レベル更新
+          _badge_polish_up(wk, touch);
+        }
+      }
+    }
+  }
+    //保持座標更新
+  wk->scratch.BeforeX = tp_x;
+  wk->scratch.BeforeY = tp_y;
 }
 
 

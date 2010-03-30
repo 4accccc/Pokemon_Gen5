@@ -90,6 +90,7 @@ typedef enum {
   TRC_KEY_REQ_TP_BEAT,
   TRC_KEY_REQ_TP_BRUSH,
   TRC_KEY_REQ_REV_BUTTON,
+  TRC_KEY_REQ_RETURN_BUTTON,
   TRC_KEY_REQ_END_BUTTON,
   TRC_KEY_REQ_TRAINER_TYPE,
   TRC_KEY_REQ_PERSONALITY,
@@ -1657,7 +1658,7 @@ static int CheckKey(TR_CARD_WORK* wk)
   if( keyTrg & PAD_BUTTON_CANCEL )
   {
     PMSND_PlaySE( SND_TRCARD_CANCEL );   //終了音
-    return TRC_KEY_REQ_END_BUTTON;
+    return TRC_KEY_REQ_RETURN_BUTTON;
   }
   else if(keyTrg & PAD_BUTTON_X )
   {
@@ -1785,7 +1786,7 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
   switch(hitNo){
   case 0:     // 戻る
     PMSND_PlaySE( SND_TRCARD_DECIDE );
-    return TRC_KEY_REQ_END_BUTTON;
+    return TRC_KEY_REQ_RETURN_BUTTON;
     break;
   case 1:     // 終了
     PMSND_PlaySE( SND_TRCARD_END );
@@ -2115,6 +2116,16 @@ static void JumpInputResult( TR_CARD_WORK *wk, int req, int *seq )
     }
     break;
   // 通常終了
+  case TRC_KEY_REQ_RETURN_BUTTON:
+    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BACK,ANMS_BACK_ON,TRUE);
+    WIPE_SYS_Start( WIPE_PATTERN_FSAM, WIPE_TYPE_SHUTTEROUT_UP,
+            WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
+            WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
+    *seq = SEQ_OUT;
+    wk->tcp->value = CALL_NONE;
+    wk->tcp->next_proc = TRAINERCARD_NEXTPROC_RETURN;
+    break;
+  // フィールド直接終了
   case TRC_KEY_REQ_END_BUTTON:
     SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BACK,ANMS_BACK_ON,TRUE);
     WIPE_SYS_Start( WIPE_PATTERN_FSAM, WIPE_TYPE_SHUTTEROUT_UP,
@@ -2122,6 +2133,7 @@ static void JumpInputResult( TR_CARD_WORK *wk, int req, int *seq )
             WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
     *seq = SEQ_OUT;
     wk->tcp->value = CALL_NONE;
+    wk->tcp->next_proc = TRAINERCARD_NEXTPROC_EXIT;
     break;
   // トレーナータイプ切り替え
   case TRC_KEY_REQ_TRAINER_TYPE:

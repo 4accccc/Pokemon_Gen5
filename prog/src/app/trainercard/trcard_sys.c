@@ -224,6 +224,10 @@ GFL_PROC_RESULT TrCardSysProc_Main( GFL_PROC * proc, int * seq , void *pwk, void
 GFL_PROC_RESULT TrCardSysProc_End( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   TR_CARD_SYS* wk = (TR_CARD_SYS*)mywk;
+  TRCARD_CALL_PARAM* param = (TRCARD_CALL_PARAM*)pwk;
+  
+  // I—¹ðŒ‚ðˆø‚«Œp‚®
+  param->next_proc = wk->tcp->next_proc;
 
   GFL_HEAP_FreeMemory( wk->tcp->TrCardData );
   GFL_HEAP_FreeMemory( wk->tcp );
