@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2010-02-25T11:42:15"/>
+	<create user="matsumiya" host="W00224" date="2010-03-30T14:51:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -478,8 +478,8 @@
 ・女の子選択→msg_intro_gender_03</comment>
 		<language name="JPN" width="256">あなたは　おとこのこ？
 それとも　おんなのこ？▼</language>
-		<language name="JPN_KANJI" width="256">あなたは　少年？
-それとも　少女？▼</language>
+		<language name="JPN_KANJI" width="256">あなたは　男の子？
+それとも　女の子？▼</language>
 	</row>
 
 	<row id="msg_intro_gender_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -488,7 +488,7 @@
 ・はい　→msg_intro_name_01
 ・いいえ→msg_intro_gender_01</comment>
 		<language name="JPN" width="256">おとこのこ　なのね？▼</language>
-		<language name="JPN_KANJI" width="256">少年　なのね？▼</language>
+		<language name="JPN_KANJI" width="256">男の子　なのね？▼</language>
 	</row>
 
 	<row id="msg_intro_gender_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -497,19 +497,19 @@
 ・はい　→msg_intro_name_01
 ・いいえ→msg_intro_gender_01</comment>
 		<language name="JPN" width="256">おんなのこ　なのね？▼</language>
-		<language name="JPN_KANJI" width="256">少女　なのね？▼</language>
+		<language name="JPN_KANJI" width="256">女の子　なのね？▼</language>
 	</row>
 
 	<row id="msg_intro_gender_04" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>※グラフィックがないときの選択肢用</comment>
 		<language name="JPN" width="256">おとこのこ</language>
-		<language name="JPN_KANJI" width="256">少年</language>
+		<language name="JPN_KANJI" width="256">男の子</language>
 	</row>
 
 	<row id="msg_intro_gender_05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>※グラフィックがないときの選択肢用</comment>
 		<language name="JPN" width="256">おんなのこ</language>
-		<language name="JPN_KANJI" width="256">少女</language>
+		<language name="JPN_KANJI" width="256">女の子</language>
 	</row>
 
 	<row id="msg_intro_name_01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
