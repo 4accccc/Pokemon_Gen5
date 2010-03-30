@@ -148,18 +148,21 @@ struct _PRINT_STREAM {
   const STRCODE* sp;
 
   u8    org_wait;
-  u8    current_wait;
   u8    org_putPerFrame;
+  u8    current_wait;
   u8    current_putPerFrame;
+  u8    tmp_wait;
+  u8    tmp_putPerFrame;
 
   u8    wait;
-  u8    pauseReleaseFlag;
   u8    pauseWait;
   u8    clearColor;
-
-  u8    stopFlag;
   u8    callbackResult;
-  u8    lineMoningFlag;
+
+  u8    stopFlag         : 1;
+  u8    lineMoningFlag   : 1;
+  u8    pauseReleaseFlag : 1;
+  u8    tmpSpeedFlag     : 1;
 
   pPrintCallBack  callback_func;
   u32       org_arg;
@@ -1005,8 +1008,9 @@ PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
     stwk->org_wait = param.wait;
   }
 
-  stwk->current_wait = stwk->org_wait;
-  stwk->current_putPerFrame = stwk->org_putPerFrame;
+  stwk->current_wait = stwk->tmp_wait = stwk->org_wait;
+  stwk->current_putPerFrame = stwk->tmp_putPerFrame = stwk->org_putPerFrame;
+
 
   stwk->sp = GFL_STR_GetStringCodePointer( str );
   stwk->wait = 0;
@@ -1024,6 +1028,7 @@ PRINT_STREAM* PRINTSYS_PrintStreamCallBack(
   stwk->stopFlag = FALSE;
   stwk->lineMoningFlag = FALSE;
   stwk->callbackResult = FALSE;
+  stwk->tmpSpeedFlag = FALSE;
 
   return stwk;
 }
@@ -1139,6 +1144,52 @@ void PRINTSYS_PrintStreamShortWait( PRINT_STREAM* handle, u16 wait )
     handle->wait = wait;
   }
 }
+//=============================================================================================
+/**
+ * プリントストリームのウェイトを一時的に特定の値にセット（キー押し中のみ早送る場合などに利用）
+ *
+ * @param   handle
+ * @param   wait
+ */
+//=============================================================================================
+void PRINTSYS_PrintStream_StartTempSpeedMode( PRINT_STREAM* handle, int wait )
+{
+  STREAM_SPEED_PARAM  param;
+  WaitValueToSpeedParam( wait, &param );
+
+  handle->tmp_putPerFrame = param.putPerFrame;
+  handle->tmp_wait = param.wait;
+  handle->tmpSpeedFlag = TRUE;
+}
+//=============================================================================================
+/**
+ * プリントストリームの一時ウェイト値をデフォルトに戻す
+ *  （PRINTSYS_PrintStream_StartTempSpeedMode と対で使ってください）
+ *
+ * @param   handle
+ */
+//=============================================================================================
+void PRINTSYS_PrintStream_StopTempSpeedMode( PRINT_STREAM* handle )
+{
+  handle->tmpSpeedFlag = FALSE;
+
+  handle->tmp_putPerFrame = handle->org_putPerFrame;
+  handle->tmp_wait = handle->org_wait;
+}
+//=============================================================================================
+/**
+ * プリントストリームのウェイト値が一時的にセットされた状態か判定
+ *
+ * @param   handle
+ *
+ * @retval  BOOL    一時セット状態ならTRUE
+ */
+//=============================================================================================
+BOOL PRINTSYS_IsTempSpeedMode( PRINT_STREAM* handle )
+{
+  return handle->tmpSpeedFlag;
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -1195,8 +1246,11 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
 
     if( wk->wait == 0 )
     {
-      int i;
-      for(i=0; i<wk->current_putPerFrame; ++i)
+      int i, putPerFrame;
+
+      putPerFrame = (wk->tmpSpeedFlag)? wk->tmp_putPerFrame : wk->current_putPerFrame;
+
+      for(i=0; i<putPerFrame; ++i)
       {
         switch( *(wk->sp) ){
         case EOM_CODE:
@@ -1213,7 +1267,7 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
             }
 
             if( wk->state != PRINTSTREAM_STATE_RUNNING ){
-              i = wk->current_putPerFrame;  // for loop out
+              i = putPerFrame;  // for loop out
             }
             break;
           }
@@ -1227,7 +1281,7 @@ static void print_stream_task( GFL_TCBL* tcb, void* wk_adrs )
             }
             else if( *(wk->sp) != CR_CODE )
             {
-              wk->wait = wk->current_wait;
+              wk->wait = (wk->tmpSpeedFlag)? wk->tmp_wait : wk->current_wait;
             }
 
             GFL_BMPWIN_TransVramCharacter( wk->dstWin );
