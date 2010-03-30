@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-03-30T14:52:18"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-03-30T16:47:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="76" top="51" right="576" bottom="852" maximized="no" rayout="Vertical2">
+	<dialog left="212" top="230" right="712" bottom="1031" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="137" right="1280" bottom="535" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
@@ -433,7 +433,8 @@
 また　おねがい　なんだけど……▼
 いまからさ　わたしと　いっしょに
 かんらんしゃ　のろ！▼
-いいよね！　さ！　のろ　のろ！</language>
+おんなのこの　おねがいだもん！
+いいよね！！　さ！　のろっ！▼</language>
 		<language name="JPN_KANJI" width="256">わっ！　[1:00:トレーナー名:0]くん
 って　強ーい！！▽
 なんていうか　私の▽
@@ -443,7 +444,8 @@
 また　お願い　なんだけど……▼
 今からさ　私と　一緒に
 観覧車　乗ろ！▼
-いいよね！　さ！　乗ろ　乗ろ！</language>
+女の子の　お願いだもん！
+いいよね！！　さ！　乗ろっ！▼</language>
 	</row>
 
 	<row id="msg_wheel_spring_f_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -958,7 +960,7 @@
 エンジョイ　したかったのだが！</language>
 		<language name="JPN_KANJI" width="256">ああ　残念だ　少年！▼
 暑苦しい　夏の　ひととき
-キミの　若い　つぼみと▽
+キミのような　若い　つぼみと▽
 エンジョイ　したかったのだが！</language>
 	</row>
 
@@ -975,7 +977,7 @@
 さあて……▼
 ふたりの　からだも　こころも
 ひつよう　いじょうに▽
-あたたまった　ところで▽
+あたたまった　ところで……▽
 かんらんしゃに　とつにゅうだ！▼
 さあ　ついてこい　しょうねん！</language>
 		<language name="JPN_KANJI" width="256">いやあ　よかったよ　少年！
@@ -984,7 +986,7 @@
 さあて……▼
 二人の　身体も　心も
 必要　以上に▽
-温まった　ところで▽
+温まった　ところで……▽
 観覧車に　突入だ！▼
 さあ　ついて来い　少年！</language>
 	</row>
@@ -1572,7 +1574,7 @@ OL</attribute>
 OL</attribute>
 		<language name="JPN" width="256">あ……　キミは……
 げんき　だった……？▼
-あ　あの　もし　よかったら
+あの……　もし　よかったら
 すこしの　あいだで　いいから▽
 また　アタシに　つきあって▽
 もらえないかな？▼
@@ -1582,7 +1584,7 @@ OL</attribute>
 すごせたら　うれしいんだけどな……</language>
 		<language name="JPN_KANJI" width="256">あ……　キミは……
 元気　だった……？▼
-あ　あの　もし　よかったら
+あの……　もし　よかったら
 少しの　あいだで　いいから▽
 また　アタシに　付き合って▽
 もらえないかな？▼
@@ -1676,7 +1678,7 @@ OL</attribute>
 また　[1:00:トレーナー名:0]に▽
 あまえちゃったな……▼
 アタシの　ほうが　おねーさんなのに
-何か　なさけない……▼
+なんか　なさけない……▼
 でも　[1:00:トレーナー名:0]だから……▼
 いや　イイや　なんでも　ない……▼
 [1:00:トレーナー名:0]！
