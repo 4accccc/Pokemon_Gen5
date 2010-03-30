@@ -31,7 +31,6 @@ SUBDIRS	=	wmi \
 			personal\
 			trdata \
 			trmsg \
-			rebattle_trainer \
 			sound \
 			effect_viewer \
 			bag \
@@ -47,6 +46,7 @@ SUBDIRS	=	wmi \
 			message\
 			fldmmdl \
 			encount \
+			rebattle_trainer \
 			fld3d_ci \
 			battle\
 			batt_bg_tbl\
