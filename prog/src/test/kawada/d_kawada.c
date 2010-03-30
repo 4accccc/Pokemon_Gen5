@@ -1091,9 +1091,19 @@ static void ShinkaDemoExit( KAWADA_MAIN_WORK* wk )
 static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
 {
   u16 poke_list_num = 5;
+  const u8 lang_code[6] =
+  {
+    LANG_ENGLISH,
+    LANG_FRANCE,
+    LANG_GERMANY,
+    LANG_ITALY,
+    LANG_SPAIN, 
+    LANG_KOREA, 
+  };
   ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( wk->gamedata );
   u16 i;
-  
+  u16 lc;
+
   ZUKANSAVE_SetGraphicVersionUpFlag( zukan_savedata );
  
   wk->poke_list[0] = 201;
@@ -1107,6 +1117,7 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
     POKEMON_PARAM* pp = PP_Create( wk->poke_list[i] , 1, 0, wk->heapID );
     ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
     ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
+    
     if( wk->poke_list[i] == 201 )
     {
       u16 j;
@@ -1127,6 +1138,14 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
         ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
       }
     }
+
+    for( lc=0; lc<6; lc++ )
+    {
+      PP_Put( pp, ID_PARA_country_code, lang_code[lc] );
+      ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
+      ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
+    }
+
     GFL_HEAP_FreeMemory( pp );
   }
 

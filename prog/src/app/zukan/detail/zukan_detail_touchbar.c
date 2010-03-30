@@ -120,9 +120,9 @@ enum
   FORM_ICON_RETURN,
   FORM_ICON_CUR_R,
   FORM_ICON_CUR_L,
+  FORM_ICON_CUSTOM_EXCHANGE,
   FORM_ICON_CUR_D,
   FORM_ICON_CUR_U,
-  FORM_ICON_CUSTOM_EXCHANGE,
   FORM_ICON_MAX,
 };
 #define ICON_MAX_MAX (GENERAL_ICON_MAX)  // GENERAL_ICON_MAX, MAP_ICON_MAX, FORM_ICON_MAXの中で最大のもの
@@ -158,11 +158,11 @@ static const ICON_CONST_SET map_icon_const_set[MAP_ICON_MAX] =
 static const ICON_CONST_SET form_icon_const_set[FORM_ICON_MAX] =
 {
   { ZKND_TBAR_ICON_RETURN,    { 232, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_RETURN,   },
-  { ZKND_TBAR_ICON_CUR_R,     { 208, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_R,    },
-  { ZKND_TBAR_ICON_CUR_L,     { 184, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_L,    },
-  { ZKND_TBAR_ICON_CUR_D,     { 160, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_D,    },
-  { ZKND_TBAR_ICON_CUR_U,     { 136, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_U,    },
-  { FORM_CUSTOM_EXCHANGE,     {   0, ZKND_TBAR_ICON_Y       },    48,  ZKNDTL_CMD_FORM_EXCHANGE, },
+  { ZKND_TBAR_ICON_CUR_R,     { 192, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_R,    },
+  { ZKND_TBAR_ICON_CUR_L,     { 168, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_L,    },
+  { FORM_CUSTOM_EXCHANGE,     { 104, ZKND_TBAR_ICON_Y       },    48,  ZKNDTL_CMD_FORM_EXCHANGE, },
+  { ZKND_TBAR_ICON_CUR_D,     {  24, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_D,    },
+  { ZKND_TBAR_ICON_CUR_U,     {   0, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_FORM_CUR_U,    },
 };
 
 
@@ -252,6 +252,7 @@ static void Zukan_Detail_Touchbar_SetIconOfsPosY( ZUKAN_DETAIL_TOUCHBAR_WORK* wo
 static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 static void Zukan_Detail_Touchbar_DeleteGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 static void Zukan_Detail_Touchbar_AnimeBaseInitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
+// GENERALのパレットアニメ
 static void Zukan_Detail_Touchbar_AnimeBaseExitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 static void Zukan_Detail_Touchbar_AnimeInitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 static void Zukan_Detail_Touchbar_AnimeExitGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work );

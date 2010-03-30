@@ -54,6 +54,13 @@ enum
   OBJ_PAL_POS_M_LANG_BTN             = 5,
 };
 
+// 言語ボタンのパレットアニメ用にパレットを変更する
+#define OBJ_PAL_OFFSET_LANG_ANIME_NONE  (0)
+#define OBJ_PAL_OFFSET_LANG_ANIME_EXEC  (2)
+#define RES_PAL_POS_LANG_ANIME_START    (1)  // リソースのパレットの列番号
+#define RES_PAL_POS_LANG_ANIME_END      (2)  // リソースのパレットの列番号
+#define LANG_ANIME_ADD              (0x400)  // FX_CosIdxを使用するので0<= <0x10000
+
 // ProcMainのシーケンス
 enum
 {
@@ -144,6 +151,12 @@ typedef struct
   u32                         lang_ncl;
   u32                         lang_ncg;
   u32                         lang_nce;
+
+  // 言語ボタンのパレットアニメ
+  u16           pal_anime_lang_start[0x10];
+  u16           pal_anime_lang_end[0x10];
+  u16           pal_anime_lang_now[0x10];
+  int           pal_anime_lang_count;
 }
 ZUKAN_DETAIL_INFO_WORK;
 
@@ -182,6 +195,13 @@ static void Zukan_Detail_Info_GetCurrPokeInfo(
                 u32*  a_personal_rnd,
                 BOOL* a_b_get_flag,
                 BOOL* a_lang_exist );  // a_lang_exist[ZUKAN_INFO_LANG_MAX]
+
+// 言語ボタンのパレットアニメ
+static void Zukan_Detail_Touchbar_AnimeBaseInitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Touchbar_AnimeBaseExitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Touchbar_AnimeInitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Touchbar_AnimeExitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Touchbar_AnimeMainLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 
 //=============================================================================
@@ -286,6 +306,10 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcExit( ZKNDTL_PROC* proc, int* se
 {
   ZUKAN_DETAIL_INFO_PARAM*    param    = (ZUKAN_DETAIL_INFO_PARAM*)pwk;
   ZUKAN_DETAIL_INFO_WORK*     work     = (ZUKAN_DETAIL_INFO_WORK*)mywk;
+
+  // 言語ボタンのパレットアニメ
+  Zukan_Detail_Touchbar_AnimeExitLang( param, work, cmn );
+  Zukan_Detail_Touchbar_AnimeBaseExitLang( param, work, cmn );
 
   // 図鑑情報
   ZUKAN_INFO_Exit( work->info_wk_s );
@@ -424,6 +448,10 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
           Zukan_Detail_Info_SetupLangButtonDrawEnable( param, work, cmn,
               lang_exist[0], lang_exist[1], lang_exist[2], lang_exist[3], lang_exist[4], lang_exist[5] );
         }
+
+        // 言語ボタンのパレットアニメ
+        Zukan_Detail_Touchbar_AnimeBaseInitLang( param, work, cmn );
+        Zukan_Detail_Touchbar_AnimeInitLang( param, work, cmn );
       }
     }
     break;
@@ -540,6 +568,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
     // 図鑑情報
     ZUKAN_INFO_Main( work->info_wk_m );
     ZUKAN_INFO_Main( work->info_wk_s );
+
+    // 言語ボタンのパレットアニメ
+    Zukan_Detail_Touchbar_AnimeMainLang( param, work, cmn );
   }
 
   // フェード
@@ -755,7 +786,13 @@ static void Zukan_Detail_Info_ChangeLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
     ZUKAN_INFO_DisplayNormal( work->info_wk_s );
   }
 
+  // 言語ボタンのパレットアニメ
+  Zukan_Detail_Touchbar_AnimeExitLang( param, work, cmn );
+
   work->lang = lang;
+  
+  // 言語ボタンのパレットアニメ
+  Zukan_Detail_Touchbar_AnimeInitLang( param, work, cmn );
 }
 
 //-------------------------------------
@@ -960,3 +997,75 @@ static void Zukan_Detail_Info_GetCurrPokeInfo(
     }
   }
 }
+
+//-------------------------------------
+/// 言語ボタンのパレットアニメ
+//=====================================
+static void Zukan_Detail_Touchbar_AnimeBaseInitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  NNSG2dPaletteData* pal_data;
+  void* buf = GFL_ARC_UTIL_LoadPalette( ARCID_ZUKAN_GRA, NARC_zukan_gra_info_info_obj_NCLR, &pal_data, param->heap_id );
+  u16* raw_data = pal_data->pRawData;
+  GFL_STD_MemCopy( &raw_data[RES_PAL_POS_LANG_ANIME_START*0x10], work->pal_anime_lang_start, 0x20 );
+  GFL_STD_MemCopy( &raw_data[RES_PAL_POS_LANG_ANIME_END*0x10], work->pal_anime_lang_end, 0x20 );
+  GFL_HEAP_FreeMemory( buf );
+  work->pal_anime_lang_count = 0;
+}
+static void Zukan_Detail_Touchbar_AnimeBaseExitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 何もしない
+}
+static void Zukan_Detail_Touchbar_AnimeInitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  if( work->lang != ZUKAN_INFO_LANG_NONE )
+  {
+    GFL_CLACT_WK_SetPlttOffs( work->lang_btn[work->lang].clwk, OBJ_PAL_OFFSET_LANG_ANIME_EXEC, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+  }
+}
+static void Zukan_Detail_Touchbar_AnimeExitLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  if( work->lang != ZUKAN_INFO_LANG_NONE )
+  {
+    GFL_CLACT_WK_SetPlttOffs( work->lang_btn[work->lang].clwk, OBJ_PAL_OFFSET_LANG_ANIME_NONE, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+  }
+}
+static void Zukan_Detail_Touchbar_AnimeMainLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_DETAIL_INFO_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u8 i;
+  fx16 cos;
+
+  if( work->pal_anime_lang_count + LANG_ANIME_ADD >= 0x10000 )
+  {
+    work->pal_anime_lang_count = work->pal_anime_lang_count + LANG_ANIME_ADD - 0x10000;
+  }
+  else
+  {
+    work->pal_anime_lang_count = work->pal_anime_lang_count + LANG_ANIME_ADD;
+  }
+  cos = ( FX_CosIdx( work->pal_anime_lang_count ) + FX16_ONE ) / 2;  // 0<= <=1にしておく
+
+  for( i=0; i<0x10; i++ )
+  {
+    u8 s_r = ( work->pal_anime_lang_start[i] & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+    u8 s_g = ( work->pal_anime_lang_start[i] & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+    u8 s_b = ( work->pal_anime_lang_start[i] & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+    u8 e_r = ( work->pal_anime_lang_end[i]   & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+    u8 e_g = ( work->pal_anime_lang_end[i]   & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+    u8 e_b = ( work->pal_anime_lang_end[i]   & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+
+    u8 r = s_r + (((e_r-s_r)*cos)>>FX16_SHIFT);
+    u8 g = s_g + (((e_g-s_g)*cos)>>FX16_SHIFT);
+    u8 b = s_b + (((e_b-s_b)*cos)>>FX16_SHIFT);
+
+    work->pal_anime_lang_now[i] = GX_RGB( r, g, b );
+  }
+
+  {
+    NNS_GfdRegisterNewVramTransferTask(
+        NNS_GFD_DST_2D_OBJ_PLTT_MAIN,
+        ( OBJ_PAL_POS_M_LANG_BTN + OBJ_PAL_OFFSET_LANG_ANIME_EXEC ) * 0x20,
+        work->pal_anime_lang_now,
+        0x20 );
+  }
+}
+
