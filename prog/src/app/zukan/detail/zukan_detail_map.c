@@ -2062,14 +2062,49 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
   {
   case STATE_TOP:
     {
+      BOOL is_input = FALSE;
       u32 x, y;
       BOOL change_state = FALSE;
+
+      // キー入力
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
       {
         work->ktst = GFL_APP_KTST_KEY;
         change_state = TRUE;
+        is_input = TRUE;
       }
-      else
+      else if( work->appear_rule != APPEAR_RULE_YEAR )
+      {
+        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+        {
+          work->ktst = GFL_APP_KTST_KEY;
+
+          // 変更後の季節にする
+          work->season_id++;
+          if( work->season_id >= PMSEASON_TOTAL ) work->season_id = PMSEASON_SPRING;
+          
+          Zukan_Detail_Map_ChangeSeason( param, work, cmn, TRUE );
+          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+
+          is_input = TRUE;
+        }
+        else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+        {
+          work->ktst = GFL_APP_KTST_KEY;
+ 
+          // 変更後の季節にする
+          if( work->season_id == PMSEASON_SPRING ) work->season_id = PMSEASON_WINTER;
+          else                                     work->season_id--;
+          
+          Zukan_Detail_Map_ChangeSeason( param, work, cmn, FALSE );
+          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+          
+          is_input = TRUE;
+        }
+      }
+
+      // タッチ入力
+      if( !is_input ) 
       {
 		    if( GFL_UI_TP_GetPointTrg( &x, &y ) )
         {
@@ -2129,9 +2164,46 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
     break;
   case STATE_SELECT:
     {
+      BOOL is_input = FALSE;
       u32 x, y;
       BOOL select_enable = TRUE;
-      if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+
+      // キー入力
+      if( work->appear_rule != APPEAR_RULE_YEAR )
+      {
+        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+        {
+          work->ktst = GFL_APP_KTST_KEY;
+
+          // 変更後の季節にする
+          work->season_id++;
+          if( work->season_id >= PMSEASON_TOTAL ) work->season_id = PMSEASON_SPRING;
+          
+          Zukan_Detail_Map_ChangeSeason( param, work, cmn, TRUE );
+          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+
+          is_input = TRUE;
+        }
+        else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+        {
+          work->ktst = GFL_APP_KTST_KEY;
+ 
+          // 変更後の季節にする
+          if( work->season_id == PMSEASON_SPRING ) work->season_id = PMSEASON_WINTER;
+          else                                     work->season_id--;
+          
+          Zukan_Detail_Map_ChangeSeason( param, work, cmn, FALSE );
+          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+          
+          is_input = TRUE;
+        }
+      }
+      if( is_input )  // キー入力の結果
+      {
+        select_enable = FALSE;
+      }
+      // タッチ入力
+      else if( GFL_UI_TP_GetPointTrg( &x, &y ) )
       {
         if( work->appear_rule == APPEAR_RULE_SEASON )
         {
