@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-03-28T18:43:41"/>
+	<create user="obata_toshihiro" host="W00209" date="2010-03-30T21:06:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1572" top="203" right="2268" bottom="820" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="521"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="539"/>
+		<band id="2" index="3" style="0000" width="548"/>
 		<band id="3" index="4" style="0000" width="147"/>
-		<band id="4" index="0" style="0000" width="688"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="4" index="0" style="0000" width="697"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -728,6 +728,16 @@
 		<comment>カナワタウン：転車台イベント用</comment>
 		<language name="JPN" width="256">新しいレア</language>
 		<language name="JPN_KANJI" width="256">新しいレア</language>
+	</row>
+
+	<row id="msg_debug_obata_1" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
+		<language name="JPN" width="256">初回クリア</language>
+		<language name="JPN_KANJI" width="256">初回クリア</language>
+	</row>
+
+	<row id="msg_debug_obata_2" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
+		<language name="JPN" width="256">殿堂入り</language>
+		<language name="JPN_KANJI" width="256">殿堂入り</language>
 	</row>
 
 	<flowchart-group-list>

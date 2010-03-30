@@ -58,8 +58,9 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START ev_debug_test
 {
+  _GOTO_GAMECLEAR_DEMO( 0 )
   //_MAP_CHANGE( ZONE_ID_D09R1501, 5, 7, DIR_UP )
-  _MAP_CHANGE( ZONE_ID_D02R0201, 10, 10, DIR_UP )
+  //_MAP_CHANGE( ZONE_ID_D02R0201, 10, 10, DIR_UP )
   //_MAP_CHANGE( ZONE_ID_C03R0301, 7, 7, DIR_LEFT )
   //_MAP_CHANGE( ZONE_ID_R06R0203, 3, 5, DIR_UP )
   //_GLOBAL_CALL  SCRID_ELEVATOR
@@ -874,8 +875,15 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_debug_obata
 
-  DEFINE_LOCAL ret
-  _CALL_CROSS_COMM_HELLO_MSG_INPUT( ret )
+	_BMPMENU_INIT_EX( 1, 1, 0, 1, SCWK_ANSWER )
+	_BMPMENU_MAKE_LIST( msg_debug_obata_1, 0 )
+	_BMPMENU_MAKE_LIST( msg_debug_obata_2, 1 )
+	_BMPMENU_START()
+
+  SWITCH $SCWK_ANSWER
+  CASE 0 THEN _GOTO_GAMECLEAR_DEMO( 0 )
+  CASE 1 THEN _GOTO_GAMECLEAR_DEMO( 1 )
+  ENDSWITCH
 
 EVENT_END
 
