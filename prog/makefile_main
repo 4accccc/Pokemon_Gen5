@@ -246,9 +246,11 @@ GFL_FILE_TREE	=	titledemo.narc \
 					wb_sound_data.sdat \
 					gfl_font.dat \
 					dl_rom/child.srl \
-					dl_rom/icon.char \
-					dl_rom/icon.plt  \
-					dl_rom/child2.srl 
+					dl_rom/child2.srl \
+					dl_rom/icon_b.char \
+					dl_rom/icon_b.plt  \
+					dl_rom/icon_w.char \
+					dl_rom/icon_w.plt  
 
 
 GFL_MAKEROM_ROMFILES = $(GFL_FILE_TREE)

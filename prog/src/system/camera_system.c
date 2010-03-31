@@ -235,10 +235,6 @@ static void CAMERA_SYS_CallDmaRacv( CAMERA_SYSTEM_WORK *work )
 
 void CAMERA_SYS_UpdateCameta( CAMERA_SYSTEM_WORK *work )
 {
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-  {
-    work->sndState = CSS_WAIT_PLAY_START;
-  }
   switch(work->sndState)
   {
   case CSS_WAIT_PLAY_START:

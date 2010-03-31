@@ -1244,36 +1244,43 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
 //--------------------------------------------------------------
 static void MP_PARENT_SendImage_MBPInit( MB_PARENT_WORK *work )
 {
+  const char *srlPath[2] = {"/dl_rom/child.srl","/dl_rom/child2.srl"};
+  const char *charPath[2] = {"/dl_rom/icon_w.char","/dl_rom/icon_b.char"};
+  const char *plttPath[2] = {"/dl_rom/icon_w.plt","/dl_rom/icon_b.plt"};
+  
   /* このデモがダウンロードさせるプログラム情報 */
   //staticじゃないと動かない！！！
-  MBGameRegistry mbGameListPokeShifter = {
-    "/dl_rom/child.srl",    // 子機バイナリコード
+  MBGameRegistry mbGameList = {
+    NULL,    // 子機バイナリコード
     NULL ,                  // ゲーム名
     NULL ,                  // ゲーム内容説明
-    "/dl_rom/icon.char",    // アイコンキャラクタデータ
-    "/dl_rom/icon.plt",     // アイコンパレットデータ
-    MB_DEF_GGID,            // GGID
-    2,                      // 最大プレイ人数、親機の数も含めた人数
-  };
-  MBGameRegistry mbGameListMovieTrans = {
-    "/dl_rom/child2.srl",    // 子機バイナリコード
-    NULL ,                  // ゲーム名
-    NULL ,                  // ゲーム内容説明
-    "/dl_rom/icon.char",    // アイコンキャラクタデータ
-    "/dl_rom/icon.plt",     // アイコンパレットデータ
+    NULL,                   // アイコンキャラクタデータ
+    NULL,                   // アイコンパレットデータ
     MB_DEF_GGID,            // GGID
     2,                      // 最大プレイ人数、親機の数も含めた人数
   };
 
   const u16 channel = WH_GetMeasureChannel();
   
+  GFL_STD_MemCopy( &mbGameList , &work->gameRegistry , sizeof(MBGameRegistry) );
   if( work->mode == MPM_POKE_SHIFTER )
   {
-    GFL_STD_MemCopy( &mbGameListPokeShifter , &work->gameRegistry , sizeof(MBGameRegistry) );
+    work->gameRegistry.romFilePathp = srlPath[0];
   }
   else
   {
-    GFL_STD_MemCopy( &mbGameListMovieTrans , &work->gameRegistry , sizeof(MBGameRegistry) );
+    work->gameRegistry.romFilePathp = srlPath[1];
+  }
+  
+  if( GET_VERSION() == VERSION_BLACK )
+  {
+    work->gameRegistry.iconCharPathp = charPath[1];
+    work->gameRegistry.iconPalettePathp = plttPath[1];
+  }
+  else
+  {
+    work->gameRegistry.iconCharPathp = charPath[0];
+    work->gameRegistry.iconPalettePathp = plttPath[0];
   }
   
   work->gameRegistry.gameNamep = work->romTitleStr;

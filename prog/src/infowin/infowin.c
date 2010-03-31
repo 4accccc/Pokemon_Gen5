@@ -11,6 +11,7 @@
 #include "system/gfl_use.h"
 #include "system/net_err.h"
 #include "net/network_define.h"
+#include "net/wih_dwc.h"
 
 #include "arc_def.h"
 #include "infowin.naix"
@@ -21,12 +22,6 @@
 //======================================================================
 //  debug
 //======================================================================
-#ifdef PM_DEBUG
-
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
-//#define DEBUG_LO_BATTERY_VOLUME_UP
-#endif //DEBUG_ONLY_FOR_toru_nagihashi
-#endif//PM_DEBUG
 
 //======================================================================
 //  define
@@ -75,12 +70,12 @@ static const u16 INFOWIN_CHR_FLIP_Y = 0x800;
 static const u16 INFOWIN_COLOR_BLACK = 0x0000;
 static const u16 INFOWIN_COLOR_WHITE1 = GX_RGB(31,31,31);
 static const u16 INFOWIN_COLOR_WHITE2 = GX_RGB(19,19,19);
-static const u16 INFOWIN_COLOR_GRAY1 = GX_RGB( 9, 9, 9);
-static const u16 INFOWIN_COLOR_GRAY2 = GX_RGB( 6, 6, 6);
-static const u16 INFOWIN_COLOR_RED1 = GX_RGB(31, 4, 4);
-static const u16 INFOWIN_COLOR_RED2 = GX_RGB(16, 2, 2);
-static const u16 INFOWIN_COLOR_YERROW1 = GX_RGB(31,22, 0);
-static const u16 INFOWIN_COLOR_YERROW2 = GX_RGB(16,11, 0);
+static const u16 INFOWIN_COLOR_GRAY1  = GX_RGB( 9, 9, 9);
+static const u16 INFOWIN_COLOR_GRAY2  = GX_RGB( 6, 6, 6);
+static const u16 INFOWIN_COLOR_RED1   = GX_RGB(31, 4, 4);
+static const u16 INFOWIN_COLOR_RED2   = GX_RGB(16, 2, 2);
+static const u16 INFOWIN_COLOR_YERROW1= GX_RGB(31,22, 0);
+static const u16 INFOWIN_COLOR_YERROW2= GX_RGB(16,11, 0);
 static const u16 INFOWIN_COLOR_GREEN1 = GX_RGB( 0,16,31);
 static const u16 INFOWIN_COLOR_GREEN2 = GX_RGB( 0, 8,16);
 
@@ -220,7 +215,7 @@ void  INFOWIN_Init( const u8 bgplane , const u8 pltNo , GAME_COMM_SYS_PTR commSy
   infoWk->vblankFunc = GFUser_VIntr_CreateTCB( INFOWIN_VBlankFunc , (void*)infoWk , 1 );
 
   infoWk->wifiState = IWS_DISABLE;
-  infoWk->batteryVol = 3;
+  infoWk->batteryVol = GFL_UI_GetBattLevel();
 /*
   //ダミー用通信アイコン
   INFOWIN_SetScrFunc( 0x6e,infoWk->pltNo,
@@ -231,9 +226,6 @@ void  INFOWIN_Init( const u8 bgplane , const u8 pltNo , GAME_COMM_SYS_PTR commSy
   INFOWIN_Update();
   infoWk->isRefresh = INFOWIN_REFRESH_MASK;
 
-#ifdef DEBUG_LO_BATTERY_VOLUME_UP
-  SND_SetMasterVolume(0);
-#endif //DEBUG_LO_BATTERY_VOLUME_UP
 }
 
 void  INFOWIN_Update( void )
@@ -244,30 +236,74 @@ void  INFOWIN_Update( void )
   INFOWIN_UpdateTime();
   //バッテリー
   infoWk->batteryCnt++;
-  if( infoWk->batteryCnt > 200 )
+  if( infoWk->batteryCnt > 60 )
   {
-    PMBattery buf;
-    if( PM_GetBattery(&buf) == PM_RESULT_SUCCESS )
+    const u8 nowVol = GFL_UI_GetBattLevel();
+    if( infoWk->batteryVol != nowVol )
     {
-      const u8 nowVol = (buf==PM_BATTERY_HIGH?3:0);
-      if( infoWk->batteryVol != nowVol )
-      {
-        infoWk->batteryVol = nowVol;
-        infoWk->isRefresh |= INFOWIN_REFRESH_BATTERY;
-      }
-      infoWk->batteryCnt = 0;
-
-#ifdef DEBUG_LO_BATTERY_VOLUME_UP
-      if( nowVol == 0 ){
-        SND_SetMasterVolume(127);
-      }
-#endif //DEBUG_LO_BATTERY_VOLUME_UP
+      infoWk->batteryVol = nowVol;
+      infoWk->isRefresh |= INFOWIN_REFRESH_BATTERY;
     }
+    infoWk->batteryCnt = 0;
   }
 
   //通信系の更新
   if( infoWk->commSys != NULL )
   {
+    const u32 bit = WIH_DWC_GetAllBeaconTypeBit();
+
+    if(bit & GAME_COMM_SBIT_IRC_ALL)
+    {
+      if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_IR) == FALSE )
+      {
+        INFOWIN_SetBit(INFOWIN_REFRESH_IR);
+        INFOWIN_SetBit(INFOWIN_DISP_IR);
+      }
+    }
+    else
+    {
+      if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_IR) == TRUE )
+      {
+        INFOWIN_SetBit(INFOWIN_REFRESH_IR);
+        INFOWIN_ResetBit(INFOWIN_DISP_IR);
+      }
+    }
+    
+    if(bit & GAME_COMM_SBIT_WIRELESS_ALL)
+    {
+      if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON) == FALSE )
+      {
+        INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
+        INFOWIN_SetBit(INFOWIN_DISP_BEACON);
+      }
+    }
+    else
+    {
+      if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON) == TRUE )
+      {
+        INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
+        INFOWIN_ResetBit(INFOWIN_DISP_BEACON);
+      }
+    }
+
+    if(bit & GAME_COMM_SBIT_WIFI_ALL)
+    {
+      if( infoWk->wifiState == IWS_DISABLE )
+      {
+        INFOWIN_SetBit(INFOWIN_REFRESH_WIFI);
+        infoWk->wifiState = IWS_ENABLE;
+      }
+    }
+    else
+    {
+      if( infoWk->wifiState != IWS_DISABLE )
+      {
+        INFOWIN_SetBit(INFOWIN_REFRESH_WIFI);
+        infoWk->wifiState = IWS_DISABLE;
+      }
+    }
+
+/*
     const GAME_COMM_STATUS state = GameCommSys_GetCommStatus( infoWk->commSys );
 
     //ワイヤレス
@@ -323,67 +359,8 @@ void  INFOWIN_Update( void )
         infoWk->wifiState = IWS_DISABLE;
       }
     }
+*/
   }
-#if 0//DEBUG_ONLY_FOR_ariizumi_nobuhiko | DEBUG_ONLY_FOR_toyama
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_UP )
-  {
-    INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
-    INFOWIN_SetBit(INFOWIN_DISP_BEACON);
-    INFOWIN_SetBit(INFOWIN_REFRESH_GPF_SYNC);
-    INFOWIN_SetBit(INFOWIN_DISP_GPF_SYNC);
-    INFOWIN_SetBit(INFOWIN_REFRESH_IR);
-    INFOWIN_SetBit(INFOWIN_DISP_IR);
-    INFOWIN_SetBit(INFOWIN_REFRESH_WIFI);
-    infoWk->wifiState = IWS_ENABLE;
-  }
-  else
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN )
-  {
-    INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
-    INFOWIN_SetBit(INFOWIN_DISP_BEACON);
-    INFOWIN_SetBit(INFOWIN_REFRESH_GPF_SYNC);
-    INFOWIN_SetBit(INFOWIN_DISP_GPF_SYNC);
-    INFOWIN_SetBit(INFOWIN_REFRESH_IR);
-    INFOWIN_SetBit(INFOWIN_DISP_IR);
-    INFOWIN_SetBit(INFOWIN_REFRESH_WIFI);
-    infoWk->wifiState = IWS_LOCKED;
-  }
-  else
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
-  {
-    INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
-    INFOWIN_SetBit(INFOWIN_DISP_BEACON);
-    INFOWIN_SetBit(INFOWIN_REFRESH_GPF_SYNC);
-    INFOWIN_SetBit(INFOWIN_DISP_GPF_SYNC);
-    INFOWIN_SetBit(INFOWIN_REFRESH_IR);
-    INFOWIN_SetBit(INFOWIN_DISP_IR);
-    INFOWIN_SetBit(INFOWIN_REFRESH_WIFI);
-    infoWk->wifiState = IWS_GENERAL;
-  }
-  else
-  if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
-  {
-    INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
-    INFOWIN_SetBit(INFOWIN_DISP_BEACON);
-    INFOWIN_SetBit(INFOWIN_REFRESH_GPF_SYNC);
-    INFOWIN_SetBit(INFOWIN_DISP_GPF_SYNC);
-    INFOWIN_SetBit(INFOWIN_REFRESH_IR);
-    INFOWIN_SetBit(INFOWIN_DISP_IR);
-    INFOWIN_SetBit(INFOWIN_REFRESH_WIFI);
-    infoWk->wifiState = IWS_NINTENDO;
-  }
-  else
-  {
-    INFOWIN_SetBit(INFOWIN_REFRESH_BEACON);
-    INFOWIN_ResetBit(INFOWIN_DISP_BEACON);
-    INFOWIN_SetBit(INFOWIN_REFRESH_GPF_SYNC);
-    INFOWIN_ResetBit(INFOWIN_DISP_GPF_SYNC);
-    INFOWIN_SetBit(INFOWIN_REFRESH_IR);
-    INFOWIN_ResetBit(INFOWIN_DISP_IR);
-    INFOWIN_SetBit(INFOWIN_REFRESH_WIFI);
-    infoWk->wifiState = IWS_DISABLE;
-  }
-#endif
 }
 
 void  INFOWIN_Exit( void )
@@ -547,10 +524,28 @@ static  void  INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
   //バッテリーの更新
   if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_REFRESH_BATTERY) )
   {
-    static const u16 BATTERY_TOP_CHAR[4] = {0x40,0x41,0x42,0x43};
+    static const u16 BATTERY_TOP_CHAR[6] = {0x40,0x41,0x42,0x43,0x44,0x45};
     const u8  flg = INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON);
     u16 scrData[2][2];
-    scrData[0][0] = BATTERY_TOP_CHAR[infoWk->batteryVol] + (infoWk->pltNo<<12) + infoWk->ncgPos;
+    static const dispPosArr[6] = {0,1,1,2,2,3};
+    u8 dispPos;
+    if( OS_IsRunOnTwl() )//DSIなら
+    {
+      dispPos = dispPosArr[infoWk->batteryVol];
+    }
+    else
+    {
+      if( infoWk->batteryVol == GFL_UI_BATTLEVEL_HI )
+      {
+        dispPos = 5;
+      }
+      else
+      {
+        dispPos = 4;
+      }
+    }
+
+    scrData[0][0] = BATTERY_TOP_CHAR[dispPos] + (infoWk->pltNo<<12) + infoWk->ncgPos;
     scrData[1][0] = scrData[0][0] + INFOWIN_LINE_CHRNUM;
     scrData[0][1] = scrData[0][0] + INFOWIN_CHR_FLIP_X;
     scrData[1][1] = scrData[1][0] + INFOWIN_CHR_FLIP_X;
@@ -560,13 +555,8 @@ static  void  INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
               INFOWIN_BATTERY_DRAW_WIDTH , INFOWIN_HEIGHT ,
               scrData,0,0,INFOWIN_BATTERY_DRAW_WIDTH,INFOWIN_HEIGHT);
     {//Pallet
-      static const u16 BEACON_BACK_COLOR[4] = {
-            INFOWIN_COLOR_RED1,
-            INFOWIN_COLOR_WHITE1,
-            INFOWIN_COLOR_WHITE1,
-            INFOWIN_COLOR_WHITE1};
-
-      INFOWIN_SetPltFunc( INFOWIN_PLT_BATTERY_STR , &BEACON_BACK_COLOR[infoWk->batteryVol] , 1 );
+      static const u16 BEACON_BATTERY_COLOR = { INFOWIN_COLOR_WHITE1 };
+      INFOWIN_SetPltFunc( INFOWIN_PLT_BATTERY_STR , &BEACON_BATTERY_COLOR , 1 );
     }
     infoWk->isRefresh -= INFOWIN_REFRESH_BATTERY;
     transReq = TRUE;

@@ -1709,6 +1709,7 @@ static void MUS_COMM_Post_ProgramData( const int netID, const int size , const v
 static u8* MUS_COMM_Post_ProgramDataBuff( int netID, void* pWork , int size )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
+  ARI_TPrintf("MusComm Start Post ProgramData.\n");
   return work->distData->programData;
 }
 
@@ -1737,6 +1738,7 @@ static void MUS_COMM_Post_MessageData( const int netID, const int size , const v
 static u8*    MUS_COMM_Post_MessageDataBuff( int netID, void* pWork , int size )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
+  ARI_TPrintf("MusComm Start Post MessageData.\n");
   return work->distData->messageData;
 }
 
@@ -1765,6 +1767,7 @@ static void MUS_COMM_Post_ScriptData( const int netID, const int size , const vo
 static u8*    MUS_COMM_Post_ScriptDataBuff( int netID, void* pWork , int size )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
+  ARI_TPrintf("MusComm Start Post ScriptData.\n");
   return work->distData->scriptData;
 }
 
