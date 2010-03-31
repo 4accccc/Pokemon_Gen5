@@ -1133,13 +1133,16 @@ static void _modeTemotiOrBoxButtonFlash(IRC_BATTLE_MENU* pWork)
 {
 int i;
   GFL_CLWK_ANM_CALLBACK cbwk;
+  u8 buttonno[]={1,0,2};
+  u8 bno = buttonno[pWork->bBattelBox];
+  
 
   cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
   cbwk.param = (u32)pWork;          // コールバックワーク
   cbwk.p_func = _modeTemotiOrBoxButtonCallback2; // コールバック関数
-  GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[1-pWork->bBattelBox],TRUE);
-  GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[1-pWork->bBattelBox], &cbwk );
-  GFL_CLACT_WK_StartAnm( pWork->buttonObj[1-pWork->bBattelBox] );
+  GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[bno],TRUE);
+  GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[bno], &cbwk );
+  GFL_CLACT_WK_StartAnm( pWork->buttonObj[bno] );
   _CHANGE_STATE(pWork,_modeTemotiOrBoxButtonFlash2);
 }
 
