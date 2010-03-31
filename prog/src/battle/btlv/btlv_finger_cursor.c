@@ -102,7 +102,7 @@ BTLV_FINGER_CURSOR_WORK*  BTLV_FINGER_CURSOR_Init( int pal, HEAPID heapID )
   GFL_ARC_CloseDataHandle( handle );
 
   //アニメフラグ監視TCBセット
-  GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_FINGER_CURSOR_WatchAnmEndFlag, bfcw, 0 );
+	bfcw->tcb = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_FINGER_CURSOR_WatchAnmEndFlag, bfcw, 0 );
 
   return bfcw;
 }
@@ -116,6 +116,8 @@ BTLV_FINGER_CURSOR_WORK*  BTLV_FINGER_CURSOR_Init( int pal, HEAPID heapID )
 //============================================================================================
 void  BTLV_FINGER_CURSOR_Exit( BTLV_FINGER_CURSOR_WORK* bfcw )
 { 
+	GFL_TCB_DeleteTask( bfcw->tcb );
+
   BTLV_FINGER_CURSOR_Delete( bfcw );
 
   GFL_CLGRP_CGR_Release( bfcw->charID );
