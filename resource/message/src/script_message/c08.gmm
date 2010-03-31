@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T16:12:38"/>
+	<create user="matsumiya" host="W00224" date="2010-03-31T10:37:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1083,9 +1083,9 @@ WOMAN2</attribute>
 ・続けてhakase2_01w</comment>
 		<attribute name="キャラクター">アララギ博士（娘）</attribute>
 		<language name="JPN" width="256">アララギ『……ハーイ
-シャガさんは　たくましかった？▼</language>
+アイリスちゃんは　どうだった？▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『……ハーイ
-シャガさんは　たくましかった？▼</language>
+アイリスちゃんは　どうだった？▼</language>
 	</row>
 
 	<row id="msg_c08_hakase2_00b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -1096,9 +1096,9 @@ WOMAN2</attribute>
 ・続けてhakase2_01b</comment>
 		<attribute name="キャラクター">アララギ博士（娘）</attribute>
 		<language name="JPN" width="256">アララギ『……ハーイ
-アイリスちゃんは　どうだった？▼</language>
+シャガさんは　たくましかった？▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『……ハーイ
-アイリスちゃんは　どうだった？▼</language>
+シャガさんは　たくましかった？▼</language>
 	</row>
 
 	<row id="msg_c08_hakase2_01w" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
