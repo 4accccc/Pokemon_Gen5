@@ -1408,30 +1408,6 @@ static VMCMD_RESULT EvCmdLastKeyWait( VMHANDLE * core, void *wk )
 //======================================================================
 //  その他
 //======================================================================
-//--------------------------------------------------------------
-/**
- * セーブ後下画面・ウェイト処理
- * @param  core    仮想マシン制御構造体へのポインタ
- * @retval  BOOL TRUE=終了
- */
-//--------------------------------------------------------------
-static BOOL EvWaitSaveSubscreen(VMHANDLE * core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork( fieldmap );
-
-  // 下画面の表示が終わるまで待つ。
-  if( FIELD_SUBSCREEN_SetReportEnd( subscreen ) == FALSE ){
-    // まつ
-    return FALSE;
-  }
-  return TRUE;
-}
-
 
 //--------------------------------------------------------------
 /**
@@ -1445,68 +1421,77 @@ static BOOL EvWaitSave(VMHANDLE * core, void *wk )
   SCRCMD_WORK *work = wk;
   GAMEDATA*   gdata = SCRCMD_WORK_GetGameData( work );
   SAVE_RESULT result;
-  BOOL ret; // 戻り値
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork( fieldmap );
+  BOOL ret;
 
-  // 分割セーブ実行
-  result = GAMEDATA_SaveAsyncMain( gdata );
+  if( GAMEDATA_GetIsSave( gdata ) == FALSE ){
 
-  // 結果を返す
-  switch( result )
-  {
-  // 続行
-  case SAVE_RESULT_CONTINUE:
-  case SAVE_RESULT_LAST:
-    ret = FALSE;
-    break;
-
-  // 完了
-  // 結果をret_wkに保存
-  case SAVE_RESULT_OK:
-    {
-      u16* ret_wk = SCRCMD_GetVMWork( core, work );
-      *ret_wk = TRUE;
-    }
+    // 完了後
     ret = TRUE;
-    break;
-  case SAVE_RESULT_NG:
-    {
-      u16* ret_wk = SCRCMD_GetVMWork( core, work );
-      *ret_wk = FALSE;
-    }
-    ret = TRUE;
-    break;
-  } 
 
-  // セーブアニメーション破棄
+    // 下画面の表示が終わるまで待つ。
+    if( FIELD_SUBSCREEN_GetMode( subscreen ) == FIELD_SUBSCREEN_REPORT ){
+      if( FIELD_SUBSCREEN_SetReportEnd( subscreen ) == FALSE ){
+        // まつ
+        ret = FALSE;
+      }
+    }
+
+  // セーブ完了待ち
+  }else{
+    // 分割セーブ実行
+    result = GAMEDATA_SaveAsyncMain( gdata );
+
+    // 結果を返す
+    switch( result )
+    {
+    // 続行
+    case SAVE_RESULT_CONTINUE:
+    case SAVE_RESULT_LAST:
+      ret = FALSE;
+      break;
+
+    // 完了
+    // 結果をret_wkに保存
+    case SAVE_RESULT_OK:
+      {
+        u16* ret_wk = SCRCMD_GetVMWork( core, work );
+        *ret_wk = TRUE;
+      }
+      // OKのときは、下画面の完了も待つのでFALSE
+      ret = FALSE;
+      break;
+    case SAVE_RESULT_NG:
+      {
+        u16* ret_wk = SCRCMD_GetVMWork( core, work );
+        *ret_wk = FALSE;
+      }
+      ret = TRUE;
+
+      if( FIELD_SUBSCREEN_GetMode( subscreen ) == FIELD_SUBSCREEN_REPORT ){
+        FIELD_SUBSCREEN_SetReportBreak( subscreen );  // 下画面終了
+      }
+      break;
+    }
+  }
+
+
+  // その他アニメーションの後始末。
+  // 完全にすべてが終わったときのみ行う。
   if( ret == TRUE )
   {
-    SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-    GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-    FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
     FIELD_SAVEANIME* saveanime = SCRIPT_GetSaveAnimeWork( sc );
-    FIELD_SUBSCREEN_WORK* subscreen = FIELDMAP_GetFieldSubscreenWork( fieldmap );
 
     GF_ASSERT( saveanime );
 
     FIELD_SAVEANIME_End( saveanime );
     FIELD_SAVEANIME_Delete( saveanime );
     SCRIPT_SetSaveAnimeWork( sc, NULL );
-
-
-    // もし下画面がレポートであれば、セーブ終了処理
-    if( FIELD_SUBSCREEN_GetMode( subscreen ) == FIELD_SUBSCREEN_REPORT ){
-      if( result == SAVE_RESULT_OK ){
-        // 下画面の表示が終わるまで待つ。
-        if( FIELD_SUBSCREEN_SetReportEnd( subscreen ) == FALSE ){
-          // まつ
-          ret = FALSE;
-          VMCMD_SetWait( core, EvWaitSaveSubscreen ); // サブスクリーン待ちへ
-        }
-      }else{
-        FIELD_SUBSCREEN_SetReportBreak( subscreen );
-      }
-    }
   }
+
   return ret;
 }
 //--------------------------------------------------------------
