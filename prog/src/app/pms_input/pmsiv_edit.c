@@ -15,7 +15,7 @@
 #include "system\bmp_cursor.h"
 #include "system\bmp_winframe.h"
 #include "system\bgwinfrm.h"
-#include "system\touch_subwindow.h"
+//#include "system\touch_subwindow.h"
 #include "print\printsys.h"
 #include "print\wordset.h"
 #include "msg\msg_pms_input.h"
@@ -192,8 +192,6 @@ struct _PMSIV_EDIT {
 	u8					scr_ct;
 	u8					scr_dir;
 
-	TOUCH_SW_SYS		*ynbtn_wk;
-
 	u16					msgwin_cgx;
 	u16					yesno_win_cgx;
 
@@ -358,10 +356,6 @@ void PMSIV_EDIT_Delete( PMSIV_EDIT* wk )
 	GFL_BMPWIN_Delete(wk->win_edit[1]);
 	GFL_BMPWIN_Delete(wk->win_msg[0]);
 	GFL_BMPWIN_Delete(wk->win_msg[1]);
-
-	//YesNoボタンシステムワーク解放
-	TOUCH_SW_FreeWork( wk->ynbtn_wk);
-
 	GFL_HEAP_FreeMemory( wk );
 }
 
@@ -414,12 +408,6 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 						MESSAGE_WIN_WIDTH-8, MESSAGE_WIN_HEIGHT, 
 						PALNUM_MAIN_CATEGORY,GFL_BMP_CHRAREA_GET_B );
 	charpos += MESSAGE_WIN_CHARSIZE;
-
-	wk->yesno_win_cgx = charpos;
-	charpos += TOUCH_SW_USE_CHAR_NUM;//YESNO_WIN_CHARSIZE;
-
-	//YesNoボタンシステムワーク確保
-	wk->ynbtn_wk = TOUCH_SW_AllocWork(HEAPID_PMS_INPUT_VIEW);
 
 	BmpWinFrame_CgxSet( FRM_MAIN_EDITAREA , charpos , MENU_TYPE_SYSTEM , HEAPID_PMS_INPUT_VIEW );
 
@@ -1373,54 +1361,4 @@ void PMSIV_EDIT_MoveCursor( PMSIV_EDIT* wk, int pos )
 
 //======================================================================================
 //======================================================================================
-
-
-void PMSIV_EDIT_DispYesNoWin( PMSIV_EDIT* wk, int cursor_pos )
-{
-	TOUCH_SW_PARAM param;
-
-	MI_CpuClear8(&param,sizeof(TOUCH_SW_PARAM));
-
-	param.bg_frame = FRM_MAIN_EDITAREA;
-	param.char_offs = wk->yesno_win_cgx;
-	param.pltt_offs = PALNUM_MAIN_YESNO;
-	param.x		= YESNO_WIN_X;
-	param.y		= YESNO_WIN_Y;
-	param.kt_st = *wk->p_key_mode;
-	param.key_pos = cursor_pos;
-	TOUCH_SW_Init( wk->ynbtn_wk, &param );
-}
-
-int PMSIV_EDIT_WaitYesNoBtn(PMSIV_EDIT* wk)
-{
-	int ret;
-	int	mode;
-	
-	ret = TOUCH_SW_Main( wk->ynbtn_wk );
-	switch(ret){
-	case TOUCH_SW_RET_YES:
-		ret = TRUE;
-		break;
-	case TOUCH_SW_RET_NO:
-		ret = FALSE;
-		break;
-	default:
-		return -1;
-	}
-	//現在の操作モードを取得
-	mode = TOUCH_SW_GetKTStatus(wk->ynbtn_wk);
-#if 0
-	if(mode != wk->key_mode){
-		//ステータス切替
-		if(wk->key_mode == APP_KTST_KEY){
-			(wk->to_key_func)(wk);
-		}else{
-			(wk->to_touch_func)(wk);
-		}
-		wk->key_mode = mode;
-	}
-#endif
-	TOUCH_SW_Reset( wk->ynbtn_wk);
-	return ret;
-}
 

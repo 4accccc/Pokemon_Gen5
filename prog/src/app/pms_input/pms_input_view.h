@@ -255,8 +255,6 @@ extern void PMSIV_EDIT_VisibleCursor( PMSIV_EDIT* wk, BOOL flag );
 
 extern void PMSIV_EDIT_ChangeSMsgWin(PMSIV_EDIT* wk,u8 mode);
 extern void PMSIV_EDIT_SetSystemMessage( PMSIV_EDIT* wk, u32 msg_type );
-extern void PMSIV_EDIT_DispYesNoWin( PMSIV_EDIT* wk, int cursor_pos );
-extern int  PMSIV_EDIT_WaitYesNoBtn( PMSIV_EDIT* wk);
 extern void PMSIV_EDIT_StopArrow( PMSIV_EDIT* wk );
 extern void PMSIV_EDIT_ActiveArrow( PMSIV_EDIT* wk );
 

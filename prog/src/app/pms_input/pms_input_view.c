@@ -143,8 +143,6 @@ static void Cmd_MoveWordWinCursor( GFL_TCB *tcb, void* wk_adrs  );
 static void Cmd_ScrollWordWin( GFL_TCB *tcb, void* wk_adrs  );
 
 static void Cmd_DispMessageDefault( GFL_TCB *tcb, void* wk_adrs );
-//static void Cmd_DispMessageOK( GFL_TCB *tcb, void* wk_adrs );
-//static void Cmd_DispMessageCancel( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_DispMessageWarn( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_TaskMenuDecide( GFL_TCB *tcb, void* wk_adrs );
 static void Cmd_MoveMenuCursor( GFL_TCB *tcb, void* wk_adrs );
@@ -386,8 +384,6 @@ void PMSIView_SetCommand( PMS_INPUT_VIEW* vwk, int cmd )
 		Cmd_ScrollWordWin,
 
 		Cmd_DispMessageDefault,
-//		Cmd_DispMessageOK,
-//		Cmd_DispMessageCancel,
 		Cmd_DispMessageWarn,
     Cmd_TaskMenuDecide,
 		Cmd_MoveMenuCursor,
@@ -1806,66 +1802,6 @@ static void Cmd_DispMessageDefault( GFL_TCB *tcb, void* wk_adrs )
 	DeleteCommand( wk );
 }
 
-#if 0
-//----------------------------------------------------------------------------------------------
-/**
-	* 描画コマンド：これでいいですか？メッセージ表示
-	*
-	* @param   tcb		
-	* @param   wk_adrs		
-	*
-	*/
-//----------------------------------------------------------------------------------------------
-static void Cmd_DispMessageOK( GFL_TCB *tcb, void* wk_adrs )
-{
-	COMMAND_WORK* wk = wk_adrs;
-	PMS_INPUT_VIEW* vwk = wk->vwk;
-
-	PMSIV_EDIT_SetSystemMessage( vwk->edit_wk, PMSIV_MSG_CONFIRM_DECIDE );
-
-//	if( PMSIV_BUTTON_GetCursorVisibleFlag( vwk->button_wk ) )
-	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH){
-//		PMSIV_BUTTON_UpdateButton(wk->vwk->button_wk,FALSE,FALSE);
-	}else if( vwk->status == PMSI_ST_BUTTON){
-//		PMSIV_BUTTON_UpdateButton(wk->vwk->button_wk,FALSE,FALSE);
-//		PMSIV_BUTTON_StopCursor( vwk->button_wk );
-	}else{
-		PMSIV_EDIT_StopCursor( vwk->edit_wk );
-	}
-	PMSIV_EDIT_DispYesNoWin( vwk->edit_wk, PMSI_GetMenuCursorPos(wk->mwk) );
-
-	DeleteCommand( wk );
-}
-//----------------------------------------------------------------------------------------------
-/**
-	* 描画コマンド：やめますか？メッセージ表示
-	*
-	* @param   tcb		
-	* @param   wk_adrs		
-	*
-	*/
-//----------------------------------------------------------------------------------------------
-static void Cmd_DispMessageCancel( GFL_TCB *tcb, void* wk_adrs )
-{
-	COMMAND_WORK* wk = wk_adrs;
-	PMS_INPUT_VIEW* vwk = wk->vwk;
-
-	PMSIV_EDIT_SetSystemMessage( vwk->edit_wk, PMSIV_MSG_CONFIRM_CANCEL );
-
-//	if( PMSIV_BUTTON_GetCursorVisibleFlag( vwk->button_wk ) )
-	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH){
-//		PMSIV_BUTTON_UpdateButton(wk->vwk->button_wk,FALSE,FALSE);
-	}else if( vwk->status == PMSI_ST_BUTTON){
-//		PMSIV_BUTTON_UpdateButton(wk->vwk->button_wk,FALSE,FALSE);
-//		PMSIV_BUTTON_StopCursor( vwk->button_wk );
-	}else{
-		PMSIV_EDIT_StopCursor( vwk->edit_wk );
-	}
-	PMSIV_EDIT_DispYesNoWin( vwk->edit_wk, PMSI_GetMenuCursorPos(wk->mwk) );
-
-	DeleteCommand( wk );
-}
-#endif
 //----------------------------------------------------------------------------------------------
 /**
 	* 描画コマンド：何かことばを入れてください！メッセージ表示
