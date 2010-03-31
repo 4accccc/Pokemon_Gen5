@@ -213,4 +213,6 @@ extern u32 APP_COMMON_GetPokerusAnimeArcIdx( const APP_COMMON_MAPPING mapping );
 #define MENUBAR_SCRN_START      (2*32*(192/8-3))
 ///メニューバーへのスクリーンサイズ
 #define MENUBAR_SCRN_SIZE       (3*32*2)
+///メニューバーのCGXサイズ
+#define MENUBAR_CGX_SIZE    (4*0x20)
 extern void APP_COMMON_MenuBarScrn_Fusion(ARCHANDLE *app_handle, u8 frmnum, HEAPID temp_heap_id, u32 menubar_pos, int palno);

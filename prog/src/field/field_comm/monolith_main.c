@@ -20,6 +20,8 @@
 #include "gamesystem/g_power.h"
 
 #include "mission.naix"
+#include "app_menu_common.naix"
+#include "app/app_menu_common.h"
 
 
 
@@ -45,6 +47,7 @@ typedef struct{
   u8 proc_up_occ;                   ///<TRUE:上画面PROC有効
   u8 proc_down_occ;                 ///<TRUE:下画面PROC有効
   u8 padding;
+  u32 alloc_menubar_pos;            ///<メニューバー
 }MONOLITH_SYSTEM;
 
 
@@ -62,7 +65,8 @@ static void _Setup_PaletteSetting(MONOLITH_SETUP *setup);
 static void _Setup_PaletteExit(MONOLITH_SETUP *setup);
 static void _Setup_BGFrameSetting(void);
 static void _Setup_BGFrameExit(void);
-static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup);
+static void _Setup_BGGraphicLoad(MONOLITH_SYSTEM *monosys, MONOLITH_SETUP *setup);
+static void _Setup_BGGraphicUnload(MONOLITH_SYSTEM *monosys);
 static void _Setup_MessageSetting(MONOLITH_SETUP *setup);
 static void _Setup_MessageExit(MONOLITH_SETUP *setup);
 static void _Setup_ActorSetting(MONOLITH_SETUP *setup);
@@ -186,7 +190,7 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
     _Setup_LibSetting();
     _Setup_PaletteSetting(&monosys->setup);
     _Setup_BGFrameSetting();
-    _Setup_BGGraphicLoad(&monosys->setup);
+    _Setup_BGGraphicLoad(monosys, &monosys->setup);
     _Setup_MessageSetting(&monosys->setup);
     _Setup_ActorSetting(&monosys->setup);
     _Setup_OBJGraphicLoad(&monosys->setup);
@@ -351,6 +355,7 @@ static GFL_PROC_RESULT MonolithProc_End( GFL_PROC * proc, int * seq, void * pwk,
   _Setup_OBJGraphicUnload(&monosys->setup);
   _Setup_ActorExit(&monosys->setup);
   _Setup_MessageExit(&monosys->setup);
+  _Setup_BGGraphicUnload(monosys);
   _Setup_BGFrameExit();
   _Setup_PaletteExit(&monosys->setup);
   _Setup_LibExit();
@@ -513,7 +518,7 @@ static void _Setup_BGFrameExit(void)
  * @brief   共通素材BGグラフィックをVRAMへ転送
  */
 //--------------------------------------------------------------
-static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup)
+static void _Setup_BGGraphicLoad(MONOLITH_SYSTEM *monosys, MONOLITH_SETUP *setup)
 {
 	//共通パレット
   PaletteWorkSetEx_ArcHandle(setup->pfd, setup->hdl, 
@@ -539,8 +544,38 @@ static void _Setup_BGGraphicLoad(MONOLITH_SETUP *setup)
   PaletteWorkSetEx_Arc(setup->pfd, ARCID_FONT, NARC_font_default_nclr, HEAPID_MONOLITH,
       FADE_SUB_BG, 0, MONOLITH_BG_DOWN_FONT_PALNO * 16, 0);
 
+	//メニューバー
+  {
+    ARCHANDLE *app_handle = GFL_ARC_OpenDataHandle(ARCID_APP_MENU_COMMON, HEAPID_MONOLITH);
+  
+    monosys->alloc_menubar_pos = GFL_BG_AllocCharacterArea(
+      GFL_BG_FRAME3_S, MENUBAR_CGX_SIZE, GFL_BG_CHRAREA_GET_B );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter(
+      app_handle, NARC_app_menu_common_menu_bar_NCGR, GFL_BG_FRAME3_S, monosys->alloc_menubar_pos, 
+      MENUBAR_CGX_SIZE, FALSE, HEAPID_MONOLITH);
+    
+    APP_COMMON_MenuBarScrn_Fusion(app_handle, GFL_BG_FRAME3_S, HEAPID_MONOLITH, 
+      monosys->alloc_menubar_pos, MONOLITH_MENUBAR_PALNO);
+    
+    PaletteWorkSet_ArcHandle(setup->pfd, app_handle, NARC_app_menu_common_menu_bar_NCLR,
+      HEAPID_MONOLITH, FADE_SUB_BG, 0x20, MONOLITH_MENUBAR_PALNO*16);
+  
+  	GFL_ARC_CloseDataHandle(app_handle);
+  	GFL_BG_LoadScreenReq( GFL_BG_FRAME3_S );
+  }
+
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME3_M );
 	GFL_BG_LoadScreenReq( GFL_BG_FRAME3_S );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   共通素材BGグラフィックを解放
+ */
+//--------------------------------------------------------------
+static void _Setup_BGGraphicUnload(MONOLITH_SYSTEM *monosys)
+{
+  GFL_BG_FreeCharacterArea( GFL_BG_FRAME3_S, monosys->alloc_menubar_pos, MENUBAR_CGX_SIZE );
 }
 
 //--------------------------------------------------------------

@@ -30,15 +30,9 @@
 //  定数定義
 //==============================================================================
 ///BMP枠のパレット番号
-#define BMPWIN_FRAME_PALNO        (MONOLITH_BG_DOWN_FONT_PALNO - 1)
+#define BMPWIN_FRAME_PALNO        (MONOLITH_MENUBAR_PALNO - 1)
 ///BMP枠のキャラクタ開始位置
 #define BMPWIN_FRAME_START_CGX    (1)
-
-///メニューバーのパレット番号
-#define _MENUBAR_PALNO    (BMPWIN_FRAME_PALNO-1)
-
-///メニューバーのCGXサイズ
-#define MENUBAR_CGX_SIZE    (4*0x20)
 
 enum{
   _BMPWIN_TALKWIN,    ///<会話ウィンドウ
@@ -635,7 +629,7 @@ static void _Setup_BGGraphicLoad(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *se
 	GFL_ARCHDL_UTIL_TransVramScreen(setup->hdl, NARC_monolith_mono_bgd_title_lz_NSCR, 
 		GFL_BG_FRAME1_S, 0, 0, TRUE, HEAPID_MONOLITH);
 
-	//メニューバー
+	//メニューバー  下にパネルを通す為、commonだけでなくこのBG面にもメニューバーをセット
   {
     ARCHANDLE *app_handle = GFL_ARC_OpenDataHandle(ARCID_APP_MENU_COMMON, HEAPID_MONOLITH);
   
@@ -646,10 +640,7 @@ static void _Setup_BGGraphicLoad(MONOLITH_PWSELECT_WORK *mpw, MONOLITH_SETUP *se
       MENUBAR_CGX_SIZE, FALSE, HEAPID_MONOLITH);
     
     APP_COMMON_MenuBarScrn_Fusion(app_handle, GFL_BG_FRAME1_S, HEAPID_MONOLITH, 
-      mpw->alloc_menubar_pos, _MENUBAR_PALNO);
-    
-    PaletteWorkSet_ArcHandle(setup->pfd, app_handle, NARC_app_menu_common_menu_bar_NCLR,
-      HEAPID_MONOLITH, FADE_SUB_BG, 0x20, _MENUBAR_PALNO*16);
+      mpw->alloc_menubar_pos, MONOLITH_MENUBAR_PALNO);
   
   	GFL_ARC_CloseDataHandle(app_handle);
   	GFL_BG_LoadScreenReq( GFL_BG_FRAME1_S );

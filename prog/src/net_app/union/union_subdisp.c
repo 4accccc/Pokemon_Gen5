@@ -26,6 +26,7 @@
 #include "union_snd_def.h"
 #include "msg/msg_union_sub_disp.h"
 #include "message.naix"
+#include "app/app_menu_common.h"
 
 
 //==============================================================================
@@ -61,11 +62,6 @@ enum{
   UNION_FRAME_S_PLATE = GFL_BG_FRAME2_S,          ///<プレート面
   UNION_FRAME_S_BACKGROUND = GFL_BG_FRAME3_S,     ///<背景面
 };
-
-///メニューバーへのスクリーンオフセット(2byte * 32char * )
-#define MENUBAR_SCRN_START      (2*32*(192/8-3))
-///メニューバーへのスクリーンサイズ
-#define MENUBAR_SCRN_SIZE       (3*32*2)
 
 ///チャットログ用のBMPWINサイズ
 enum{
@@ -151,9 +147,6 @@ enum{
   SCROLL_AREA_TOP = ACT_SCROLL_BAR_Y_TOP,
   SCROLL_AREA_BOTTOM = ACT_SCROLL_BAR_Y_BOTTOM,
 };
-
-///メニューバーのCGXサイズ
-#define MENUBAR_CGX_SIZE    (4*0x20)
 
 ///チャットのフォント色
 #define _CHAT_FONT_LSB      (PRINTSYS_MACRO_LSB(1,2,0))

@@ -42,7 +42,7 @@ enum{
 };
 
 ///BMP枠のパレット番号
-#define BMPWIN_FRAME_PALNO        (MONOLITH_BG_DOWN_FONT_PALNO - 1)
+#define BMPWIN_FRAME_PALNO        (MONOLITH_MENUBAR_PALNO - 1)
 ///BMP枠のキャラクタ開始位置
 #define BMPWIN_FRAME_START_CGX    (1)
 
