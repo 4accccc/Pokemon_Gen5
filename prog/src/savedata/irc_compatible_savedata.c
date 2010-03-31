@@ -43,6 +43,9 @@ typedef struct
   u32     birth_day :  4;
 	u32			dummy			:6;
 	u32			trainerID;														// 4
+  u16     mons_no;
+  u8      form_no;
+  u8      mons_sex;
 }IRC_COMPATIBLE_RANKING_DATA;
 
 //-------------------------------------
