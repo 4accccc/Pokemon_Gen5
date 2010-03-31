@@ -382,7 +382,7 @@ static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_in
   	if(bcon_buff != NULL )
   	{
       FIELD_BEACON_MSG_CheckBeacon( gbs->fbmSys , bcon_buff , GFL_NET_GetBeaconMacAddress(i) );
-    	if(bcon_buff->member_num <= bcon_buff->member_max){
+    	if(bcon_buff->member_num < bcon_buff->member_max){
 //        OS_TPrintf("ビーコン受信　%d番 gsid = %d\n", i, bcon_buff->gsid);
     		if(target_index == -1){
           target_index = i;
