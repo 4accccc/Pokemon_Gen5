@@ -74,13 +74,26 @@ void * GIMMICKWORK_Assign(GIMMICKWORK * gimmick, int gimmick_id)
 /**
  * @brief	仕掛け用ワークの取得
  * @param	gimmick		仕掛けワークへのポインタ
- * @param	gimmick_id		使用するサイズ
+ * @param	gimmick_id		ギミックＩＤ
  */
 //---------------------------------------------------------------------------
 void * GIMMICKWORK_Get(GIMMICKWORK * gimmick, int gimmick_id)
 {
 	GF_ASSERT_MSG(gimmick->id == gimmick_id," %d  %d\n",gimmick->id,gimmick_id);
 	return gimmick->work;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	仕掛け用特定ワークの取得
+ * @param	gimmick		仕掛けワークへのポインタ
+ * @param	gimmick_id		ギミックＩＤ
+ */
+//---------------------------------------------------------------------------
+void * GIMMICKWORK_GetExWork(GIMMICKWORK * gimmick, int gimmick_id)
+{
+	GF_ASSERT_MSG(gimmick->id == gimmick_id," %d  %d\n",gimmick->id,gimmick_id);
+	return gimmick->ex_work;
 }
 
 //---------------------------------------------------------------------------

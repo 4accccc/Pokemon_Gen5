@@ -51,6 +51,7 @@ extern void GIMMICKWORK_ClearWork(GIMMICKWORK * gimmick);
 //---------------------------------------------------------------------------
 extern void * GIMMICKWORK_Assign(GIMMICKWORK * gimmick, int gimmick_id);
 extern void * GIMMICKWORK_Get(GIMMICKWORK * gimmick, int gimmick_id);
+extern void * GIMMICKWORK_GetExWork(GIMMICKWORK * gimmick, int gimmick_id);
 extern int GIMMICKWORK_GetAssignID(const GIMMICKWORK * gimmick);
 
 //---------------------------------------------------------------------------
