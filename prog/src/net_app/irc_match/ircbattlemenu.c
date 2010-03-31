@@ -1137,9 +1137,9 @@ int i;
   cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
   cbwk.param = (u32)pWork;          // コールバックワーク
   cbwk.p_func = _modeTemotiOrBoxButtonCallback2; // コールバック関数
-  GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[pWork->bBattelBox],TRUE);
-  GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[pWork->bBattelBox], &cbwk );
-  GFL_CLACT_WK_StartAnm( pWork->buttonObj[pWork->bBattelBox] );
+  GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[1-pWork->bBattelBox],TRUE);
+  GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[1-pWork->bBattelBox], &cbwk );
+  GFL_CLACT_WK_StartAnm( pWork->buttonObj[1-pWork->bBattelBox] );
   _CHANGE_STATE(pWork,_modeTemotiOrBoxButtonFlash2);
 }
 
