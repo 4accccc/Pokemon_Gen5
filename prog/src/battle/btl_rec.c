@@ -135,7 +135,7 @@ void BTL_REC_Write( BTL_REC* wk, const void* data, u32 size )
     endPtr = wk->writePtr + size;
     if( endPtr <= sizeof(wk->buf) )
     {
-      GFL_STD_MemCopy( data, &wk->buf[wk->writePtr], size );
+      GFL_STD_MemCopy( pData, &wk->buf[wk->writePtr], size );
       wk->writePtr = endPtr;
     }
     else
