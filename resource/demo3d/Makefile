@@ -77,22 +77,6 @@ subdir:
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 
-######################################
-#3dリソースデータコンバート
-# コピー先のnarcが古い場合実行する
-$(demo3d_narc): demo_list.txt $(DEMO_LIST) $(obj_nsx) $(obj_bin)
-	$(MAKE) make_narc
-
-$(demo3d_naix): demo_list.txt $(DEMO_LIST) $(obj_nsx) $(obj_bin)
-	$(MAKE) make_narc
-
-make_narc:
-	-ls bin/*_camera.bin bin/*.nsb* > $(arc_list)
-	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(arc_list)
-	nnsarc -r -l -n -i $(demo3d_narc) -S $(arc_list) > $(TMPDIR)arc_result.txt
-	@echo naixカット
-	$(NAIXCUT) $(demo3d_naix)
-
 $(demoid_def_h): demo_list.txt
 	$(MAKE) make_demoid
 
@@ -123,9 +107,26 @@ $(DATDIR)%.cdat: $(TMPDIR)%.txt
 	unix2dos -D $@
 endif
 
+######################################
+#3dリソースデータコンバート
+# リソースバイナリが古い場合実行する
+$(demo3d_narc): $(obj_nsx) $(obj_bin)
+	$(MAKE) make_narc
+
+$(demo3d_naix): $(obj_nsx) $(obj_bin)
+	$(MAKE) make_narc
+
+make_narc:
+	-ls bin/*_camera.bin bin/*.nsb* > $(arc_list)
+	perl $(PROJECT_ROOT)tools/arc_list_make.pl $(arc_list)
+	nnsarc -r -l -n -i $(demo3d_narc) -S $(arc_list) > $(TMPDIR)arc_result.txt
+	@echo naixカット
+	$(NAIXCUT) $(demo3d_naix)
+
 # narc のコピーだけ実行する
 $(target_narc): $(demo3d_narc)
 	$(COPY) $(demo3d_narc) $(target_narc)
+$(target_naix): $(demo3d_naix)
 	$(COPY) $(demo3d_naix) $(target_naix)
 
 # ヘッダ のコピー
@@ -151,13 +152,13 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(DATDIR)*.*
 	rm -f $(demoid_def_h)
 	rm -f $(demo_res_dat)
-	rm -f $(demo3d_narc)
-	rm -f $(demo3d_naix)
 endif
 	@echo $(DEMO3D_DAT_DIR)
 	rm -f $(target_demoid_def_h)
 	rm -f $(target_demo_res_dat)
 	rm -f $(DEMO3D_DAT_DIR)*.cdat
+	rm -f $(demo3d_narc)
+	rm -f $(demo3d_naix)
 	rm -f $(target_narc)
 	rm -f $(target_naix)
 
