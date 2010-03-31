@@ -463,3 +463,13 @@
 //--------------------------------------------------------------
 #define SCR_GAMECLEAR_MODE_FIRST      (0)     ///<初回ゲームクリア
 #define SCR_GAMECLEAR_MODE_DENDOU     (1)     ///<2回目以降、殿堂入り
+
+//--------------------------------------------------------------
+//    c01ジムカーテン状況
+//--------------------------------------------------------------
+#define SCR_GYM01_CURTAIN_NOTOPEN     (0)     ///<カーテン空いてない
+#define SCR_GYM01_CURTAIN_OPEN_ONE    (1)     ///<カーテン1つ開いている 
+#define SCR_GYM01_CURTAIN_OPEN_TWO    (3)     ///<カーテン2つ開いている 
+#define SCR_GYM01_CURTAIN_OPEN_THREE  (7)     ///<カーテン3つ開いている 
+
+

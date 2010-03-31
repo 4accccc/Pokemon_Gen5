@@ -49,21 +49,32 @@ _EVENT_DATA_END
 //	同マップ内の使用を禁止します。									//
 //	LOCALWORK0～7 ⇒ ポール解除スイッチ								//
 //	LOCALWORK8～9 ⇒ トラップ(騙し絵)トレーナー						//
-//	LOCALWORK10   ⇒ 踏んだスイッチのIDを格納						//
 //																	//
 //------------------------------------------------------------------//
 
+DEFINE_LOCAL SwitchID   //踏んだスイッチのIDを格納
 
 /************************************************************/
 /*					ジムギミック初期化						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_c03gym0101
 	//ジムギミック初期化コマンド
-	_GYM_INSECT_INIT()
+	_GYM_INSECT_INIT(LOCALWORK0,LOCALWORK1,LOCALWORK2,LOCALWORK3,LOCALWORK4,LOCALWORK5,LOCALWORK6,LOCALWORK7)
 
 	//虫ジムのトラップ発動までトレーナーを非表示
 	_FLAG_SET( FV_C03GYM0101_TR01 )
 	_FLAG_SET( FV_C03GYM0101_TR02 )
+
+  {
+    _DEBUG_PRINT_WK(LOCALWORK0)
+    _DEBUG_PRINT_WK(LOCALWORK1)
+    _DEBUG_PRINT_WK(LOCALWORK2)
+    _DEBUG_PRINT_WK(LOCALWORK3)
+    _DEBUG_PRINT_WK(LOCALWORK4)
+    _DEBUG_PRINT_WK(LOCALWORK5)
+    _DEBUG_PRINT_WK(LOCALWORK6)
+    _DEBUG_PRINT_WK(LOCALWORK7)
+  }
 
 INIT_EVENT_END
 
@@ -285,11 +296,11 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_00
 
 	//スイッチアニメをコール
-	$LOCALWORK10 = 0		//スイッチidを格納
+	$SwitchID = 0		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$LOCALWORK10 = 0		//スイッチidを格納
+	$SwitchID = 0		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -308,11 +319,11 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_01
 
 	//スイッチアニメをコール
-	$LOCALWORK10 = 1		//スイッチidを格納
+	$SwitchID = 1		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$LOCALWORK10 = 1		//スイッチidを格納
+	$SwitchID = 1		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -331,11 +342,11 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_02
 
 	//スイッチアニメをコール
-	$LOCALWORK10 = 2		//スイッチidを格納
+	$SwitchID = 2		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$LOCALWORK10 = 2		//スイッチidを格納
+	$SwitchID = 2		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -354,15 +365,15 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_03
 
 	//スイッチアニメをコール
-	$LOCALWORK10 = 3		//スイッチidを格納
+	$SwitchID = 3		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$LOCALWORK10 = 3		//スイッチidを格納
+	$SwitchID = 3		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//ポール解除処理をコール
-	$LOCALWORK10 = 4		//スイッチidを格納
+	$SwitchID = 4		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -381,11 +392,11 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_04
 
 	//スイッチアニメをコール
-	$LOCALWORK10 = 4		//スイッチidを格納
+	$SwitchID = 4		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$LOCALWORK10 = 5		//スイッチidを格納
+	$SwitchID = 5		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -404,11 +415,11 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_05
 
 	//スイッチアニメをコール
-	$LOCALWORK10 = 5		//スイッチidを格納
+	$SwitchID = 5		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$LOCALWORK10 = 6		//スイッチidを格納
+	$SwitchID = 6		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -427,15 +438,15 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_06
 
 	//スイッチアニメをコール
-	$LOCALWORK10 = 6		//スイッチidを格納
+	$SwitchID = 6		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$LOCALWORK10 = 7		//スイッチidを格納
+	$SwitchID = 7		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//ポール解除処理をコール
-	$LOCALWORK10 = 8		//スイッチidを格納
+	$SwitchID = 8		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -454,11 +465,11 @@ EVENT_END
 EVENT_START	ev_pos_c03gym0101_switch_07
 
 	//スイッチアニメをコール
-	$LOCALWORK10 = 7		//スイッチidを格納
+	$SwitchID = 7		//スイッチidを格納
 	_CALL	ev_switch_on
 
 	//ポール解除処理をコール
-	$LOCALWORK10 = 9		//スイッチidを格納
+	$SwitchID = 9		//スイッチidを格納
 	_CALL	ev_pole_unlock
 
 	//========================================//
@@ -636,7 +647,7 @@ ev_switch_on:
 	//ＳＥ再生
 	_SE_PLAY( SEQ_SE_FLD_55 )
 	//足元のスイッチアニメを起動
-	_GYM_INSECT_SW_ON( LOCALWORK10 ) 
+	_GYM_INSECT_SW_ON( SwitchID ) 
 	_SE_WAIT()
 _RET
 
@@ -654,7 +665,7 @@ ev_pole_unlock:
 	//ＳＥ再生
 	_SE_PLAY( SEQ_SE_FLD_56 )
 	//ポール解除処理
-	_GYM_INSECT_PL_ON( LOCALWORK10 )
+	_GYM_INSECT_PL_ON( SwitchID )
 	_SE_WAIT()
 
 	//自機にカメラを戻す 操作スタート処理は↓のコール処理の中ですでにやっています
@@ -674,31 +685,31 @@ ev_camera_move_pole:
     _CAMERA_PURGE()		//対象物とカメラのバインドを解く
 
 	//ポールの前へカメラを移動させる
-	IF $LOCALWORK10 == 0 THEN
+	IF $SwitchID == 0 THEN
 		_CAMERA_MOVE( 8408,1792,970752,1998848,0,1146880,15 )	//一番最後の引数は移動にかかるフレーム数
 
-	ELSIF $LOCALWORK10 == 1 THEN
+	ELSIF $SwitchID == 1 THEN
 		_CAMERA_MOVE( 8408,64896,970752,2260992,0,1146880,15 )
 
-	ELSIF $LOCALWORK10 == 2 THEN
+	ELSIF $SwitchID == 2 THEN
 		_CAMERA_MOVE( 8408,1792,970752,1605632,0,1409024,15 )
 
-	ELSIF $LOCALWORK10 == 3 THEN
+	ELSIF $SwitchID == 3 THEN
 		_CAMERA_MOVE( 8408,64896,970752,1867776,0,1409024,15 )
 
-	ELSIF $LOCALWORK10 == 4 THEN
+	ELSIF $SwitchID == 4 THEN
 		_CAMERA_MOVE( 8408,1792,970752,2392064,0,1409024,15 )
 
-	ELSIF $LOCALWORK10 == 5 THEN
+	ELSIF $SwitchID == 5 THEN
 		_CAMERA_MOVE( 8408,64896,970752,2654208,0,1409024,15 )
 
-	ELSIF $LOCALWORK10 == 6 THEN
+	ELSIF $SwitchID == 6 THEN
 		_CAMERA_MOVE( 8408,64896,970752,1474560,0,1671168,15 )
 
-	ELSIF $LOCALWORK10 == 7 THEN
+	ELSIF $SwitchID == 7 THEN
 		_CAMERA_MOVE( 8408,64896,970752,1867776,0,1998848,15 )
 
-	ELSIF $LOCALWORK10 == 8 THEN
+	ELSIF $SwitchID == 8 THEN
 		_CAMERA_MOVE( 8408,1792,970752,2392064,0,1933312,15 )
 
 	ELSE

@@ -1719,6 +1719,7 @@ GMEVENT* GYM_INSECT_CreateTrTrapEvt(GAMESYS_WORK *gsys,
 static GMEVENT_RESULT SwitchEvt( GMEVENT* event, int* seq, void* work )
 {
   GYM_INSECT_SV_WORK *gmk_sv_work;
+  u16 *ex_wk;
   GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FLD_EXP_OBJ_CNT_PTR ptr = FIELDMAP_GetExpObjCntPtr( fieldWork );
@@ -1728,6 +1729,7 @@ static GMEVENT_RESULT SwitchEvt( GMEVENT* event, int* seq, void* work )
     GAMEDATA *gamedata = GAMESYSTEM_GetGameData( FIELDMAP_GetGameSysWork( fieldWork ) );
     GIMMICKWORK *gmkwork = GAMEDATA_GetGimmickWork(gamedata);
     gmk_sv_work = GIMMICKWORK_Get( gmkwork, FLD_GIMMICK_GYM_INSECT );
+    ex_wk = GIMMICKWORK_GetExWork( gmkwork, FLD_GIMMICK_GYM_INSECT );
   }
 
   switch(*seq){
@@ -1758,6 +1760,7 @@ static GMEVENT_RESULT SwitchEvt( GMEVENT* event, int* seq, void* work )
       {
         //スイッチ押下フラグオン
         gmk_sv_work->Sw[tmp->SwIdx] = TRUE;
+        ex_wk[tmp->SwIdx] = 1;
         //イベント終了
         return GMEVENT_RES_FINISH;
       }

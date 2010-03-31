@@ -6078,14 +6078,15 @@
 //--------------------------------------------------------------
 /**
  * ジムコマンド　ノーマルジム初期化
- * @param rm_idx   ギミックのある部屋インデックス0～1
+ * @param opened    ギミック発動後か？　TRUE：発動後
  */
 //--------------------------------------------------------------
-#define _GYM_NORMAL_INIT() \
-    _ASM_GYM_NORMAL_INIT 
+#define _GYM_NORMAL_INIT( opened) \
+    _ASM_GYM_NORMAL_INIT opened
 
-  .macro  _ASM_GYM_NORMAL_INIT
+  .macro  _ASM_GYM_NORMAL_INIT opened
   .short  EV_SEQ_GYM_NORMAL_INIT
+  .short  \opened
   .endm
 
 //--------------------------------------------------------------
@@ -6130,13 +6131,15 @@
 //--------------------------------------------------------------
 /**
  * ジムコマンド　アンチジム初期化
+ * @param curtain   SCR_GYM01_CURTAIN_～　script_def.h参照
  */
 //--------------------------------------------------------------
-#define _GYM_ANTI_INIT() \
-    _ASM_GYM_ANTI_INIT
+#define _GYM_ANTI_INIT(curtain) \
+    _ASM_GYM_ANTI_INIT curtain
 
-  .macro  _ASM_GYM_ANTI_INIT
+  .macro  _ASM_GYM_ANTI_INIT curtain
   .short  EV_SEQ_GYM_ANTI_INIT
+  .short  \curtain
   .endm
 
 //--------------------------------------------------------------
@@ -6188,11 +6191,19 @@
  * ジムコマンド　虫ジム初期化
  */
 //--------------------------------------------------------------
-#define _GYM_INSECT_INIT() \
-    _ASM_GYM_INSECT_INIT
+#define _GYM_INSECT_INIT(sw0, sw1 ,sw2, sw3, sw4, sw5, sw6, sw7) \
+    _ASM_GYM_INSECT_INIT sw0, sw1 ,sw2, sw3, sw4, sw5, sw6, sw7
 
-  .macro  _ASM_GYM_INSECT_INIT
+  .macro  _ASM_GYM_INSECT_INIT sw0, sw1 ,sw2, sw3, sw4, sw5, sw6, sw7
   .short  EV_SEQ_GYM_INSECT_INIT
+  .short  \sw0
+  .short  \sw1
+  .short  \sw2
+  .short  \sw3
+  .short  \sw4
+  .short  \sw5
+  .short  \sw6
+  .short  \sw7
   .endm
 
 //--------------------------------------------------------------

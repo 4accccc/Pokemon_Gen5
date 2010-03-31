@@ -117,7 +117,7 @@ INIT_EVENT_END
 /*               フィールド初期化スクリプト                   */
 /**************************************************************/
 INIT_EVENT_START ev_zone_c01gym0101
-	_GYM_ANTI_INIT()
+	_GYM_ANTI_INIT(SCR_GYM01_CURTAIN_NOTOPEN)
 INIT_EVENT_END
 
 /**************************************************************/

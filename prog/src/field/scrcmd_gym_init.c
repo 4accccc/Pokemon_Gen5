@@ -68,11 +68,13 @@ VMCMD_RESULT EvCmdGymElec_Init( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGymNormal_Init( VMHANDLE *core, void *wk )
 {
+  u16 opened;
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  opened = SCRCMD_GetVMWorkValue( core, work );
 
   GFL_OVERLAY_Load( FS_OVERLAY_ID(field_gym_init) );		//オーバーレイロード
-  GYM_INIT_Normal(gsys);
+  GYM_INIT_Normal(gsys, opened);
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(field_gym_init));		//オーバーレイアンロード
 
   return VMCMD_RESULT_CONTINUE;
@@ -88,10 +90,12 @@ VMCMD_RESULT EvCmdGymNormal_Init( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGymAnti_Init( VMHANDLE *core, void *wk )
 {
+  u16 curtain;
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  curtain = SCRCMD_GetVMWorkValue( core, work );
   GFL_OVERLAY_Load( FS_OVERLAY_ID(field_gym_init) );		//オーバーレイロード
-  GYM_INIT_Anti(gsys);
+  GYM_INIT_Anti(gsys, curtain);
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(field_gym_init));		//オーバーレイアンロード
 
   return VMCMD_RESULT_CONTINUE;
@@ -107,10 +111,19 @@ VMCMD_RESULT EvCmdGymAnti_Init( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGymInsect_Init( VMHANDLE *core, void *wk )
 {
+  u16 *sw[8];
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  sw[0] = SCRCMD_GetVMWork( core, work );
+  sw[1] = SCRCMD_GetVMWork( core, work );
+  sw[2] = SCRCMD_GetVMWork( core, work );
+  sw[3] = SCRCMD_GetVMWork( core, work );
+  sw[4] = SCRCMD_GetVMWork( core, work );
+  sw[5] = SCRCMD_GetVMWork( core, work );
+  sw[6] = SCRCMD_GetVMWork( core, work );
+  sw[7] = SCRCMD_GetVMWork( core, work );
   GFL_OVERLAY_Load( FS_OVERLAY_ID(field_gym_init) );		//オーバーレイロード
-  GYM_INIT_Insect(gsys);
+  GYM_INIT_Insect(gsys, sw);
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(field_gym_init));		//オーバーレイアンロード
 
   return VMCMD_RESULT_CONTINUE;

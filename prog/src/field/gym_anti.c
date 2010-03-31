@@ -365,6 +365,7 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
         }
       }
     }
+#if 0    
     //スイッチ
     if (gmk_sv_work->PushSwIdx != ANTI_SW_NUM_MAX){
       //アニメセット
@@ -384,6 +385,7 @@ void GYM_ANTI_Setup(FIELDMAP_WORK *fieldWork)
         FLD_EXP_OBJ_SetObjAnmFrm(ptr,GYM_ANTI_UNIT_IDX, sw_obj_idx, 0, last_frm);
       }
     }
+#endif    
   }
 }
 
@@ -530,13 +532,9 @@ static GMEVENT_RESULT PushSwEvt( GMEVENT* event, int* seq, void* work )
         if (tmp->IsOn){
           FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
           frm = FLD_EXP_OBJ_GetAnimeLastFrame(anm);
-          //押したスイッチインデックスを記憶
-          gmk_sv_work->PushSwIdx = tmp->SwIdx;
         }else{
           FLD_EXP_OBJ_ChgAnmStopFlg(anm, 1);
           frm = 0;
-          //押したスイッチインデックスをクリア
-          gmk_sv_work->PushSwIdx = ANTI_SW_NUM_MAX;
         }
         //フレームセット
         FLD_EXP_OBJ_SetObjAnmFrm( ptr, GYM_ANTI_UNIT_IDX, sw_obj_idx, 0, frm );

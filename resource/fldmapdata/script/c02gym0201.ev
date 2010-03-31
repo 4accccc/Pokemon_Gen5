@@ -65,7 +65,7 @@ _EVENT_DATA_END
 /*            ZONE_CHANGE_LABEL                               */
 /**************************************************************/
 INIT_EVENT_START	ev_zone_c02gym0201
-  _GYM_NORMAL_INIT()
+  _GYM_NORMAL_INIT(FALSE)
 INIT_EVENT_END
 
 /**************************************************************/

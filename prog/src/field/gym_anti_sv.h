@@ -13,6 +13,6 @@
 typedef struct GYM_ANTI_SV_WORK_tag
 {
   u8 Door[ANTI_DOOR_NUM_MAX];
-  u8 PushSwIdx;
+  u8 dummy;
 }GYM_ANTI_SV_WORK;
 
