@@ -2950,9 +2950,6 @@ static BOOL CalcCapturePokemon( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke
     // クリティカルチェック
     *fCritical = CheckCaptureCritical( wk, capture_value );
 
-    // @todo テスト用一時的な措置
-    *fCritical = TRUE;
-
     if( capture_value >= FX32_CONST(255) ){
       *yure_cnt = (*fCritical)? 1 : BTL_CAPTURE_BALL_YURE_CNT_MAX;
       return TRUE;
