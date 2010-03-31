@@ -824,10 +824,8 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
  */
 static BOOL Irekae_IsNeedConfirm( BTL_SERVER* server )
 {
-  OS_TPrintf("       “ü‚ê‘Ö‚¦‚é‚ÌH\n");
   if( BTL_MAIN_IsIrekaeMode(server->mainModule) )
   {
-    OS_TPrintf("       “ü‚ê‘Ö‚¦‚é‚Ì‚©H\n");
     if( server->changePokeCnt )
     {
       u32 i;
@@ -838,7 +836,6 @@ static BOOL Irekae_IsNeedConfirm( BTL_SERVER* server )
           return FALSE;
         }
       }
-      OS_TPrintf("       “ü‚ê‘Ö‚¦‚é‚Ì‚¾‚º\n");
       return TRUE;
     }
   }
@@ -1061,13 +1058,11 @@ static BOOL ServerMain_ExitBattle_ForCommPlayer( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
   case 0:
-    TAYA_Printf(" **** Start ExitComm ACMD\n");
     SetAdapterCmdEx( server, BTL_ACMD_EXIT_COMM, &server->btlResultContext, sizeof(server->btlResultContext) );
     (*seq)++;
     break;
   case 1:
     if( WaitAllAdapterReply(server) ){
-      TAYA_Printf(" **** End ExitComm ACMD\n");
       ResetAdapterCmd( server );
       (*seq)++;
     }

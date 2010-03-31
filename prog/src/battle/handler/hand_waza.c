@@ -4194,7 +4194,6 @@ static void handler_RenzokuGiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
           break;
         }
       }
-//      OS_TPrintf("òAë±êÿÇË %d âÒñ⁄ .. à–óÕ=%d\n", cnt, pow );
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
     }
   }

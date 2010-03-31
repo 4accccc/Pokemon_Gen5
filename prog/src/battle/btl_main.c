@@ -322,7 +322,6 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
     Bspstore_KenteiData( wk );
     reflectPartyData( wk );
     wk->setupParam->getMoney = wk->bonusMoney;
-    OS_TPrintf("BTL_PROC_MaIN Finish\n");
     return GFL_PROC_RES_FINISH;
   }
 
@@ -1560,15 +1559,15 @@ static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int*
       BTL_CLIENT_TYPE_UI, bagMode, wk->heapID  );
 
     // コマンド整合性チェックのためサーバを作る
-    wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
+    wk->cmdCheckServer = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
     for(i=0; i<BTL_CLIENT_MAX; ++i)
     {
       if( BTL_MAIN_IsExistClient(wk, i) ){
-        BTL_SERVER_CmdCheckMode( wk->server, i, 1 );
+        BTL_SERVER_CmdCheckMode( wk->cmdCheckServer, i, 1 );
       }
     }
 
-    BTL_CLIENT_AttachCmeCheckServer( wk->client[clientID], wk->server );
+    BTL_CLIENT_AttachCmeCheckServer( wk->client[clientID], wk->cmdCheckServer );
   }
 
   return TRUE;
@@ -1589,12 +1588,11 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
   u8 clientID = wk->myClientID;
   u8 bagMode = checkBagMode( sp );
   u8 numCoverPos = (sp->multiMode==0)? 2 : 1;
+  u32 i;
 
   // 自分がサーバ
   if( wk->ImServer )
   {
-    u8 i;
-
     wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
 
     wk->client[clientID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
@@ -1631,6 +1629,17 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
     wk->client[ clientID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
         clientID, numCoverPos, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID  );
 
+    // コマンド整合性チェックのためサーバを作る
+    wk->cmdCheckServer = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
+    for(i=0; i<BTL_CLIENT_MAX; ++i)
+    {
+      if( BTL_MAIN_IsExistClient(wk, i) ){
+        BTL_SERVER_CmdCheckMode( wk->cmdCheckServer, i, CheckNumCoverPos(wk, i) );
+      }
+    }
+
+    BTL_CLIENT_AttachCmeCheckServer( wk->client[clientID], wk->cmdCheckServer );
+
   }
   return TRUE;
 }
@@ -1653,6 +1662,7 @@ static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int*
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
   u8 clientID = wk->myClientID;
   u8 bagMode = checkBagMode( sp );
+  u32 i;
 
   // 自分がサーバ
   if( wk->ImServer )
@@ -1669,6 +1679,17 @@ static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int*
   {
     wk->client[ clientID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, clientID, NUM_COVERPOS,
     BTL_CLIENT_TYPE_UI, bagMode, wk->heapID  );
+
+    // コマンド整合性チェックのためサーバを作る
+    wk->cmdCheckServer = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
+    for(i=0; i<BTL_CLIENT_MAX; ++i)
+    {
+      if( BTL_MAIN_IsExistClient(wk, i) ){
+        BTL_SERVER_CmdCheckMode( wk->cmdCheckServer, i, CheckNumCoverPos(wk, i) );
+      }
+    }
+
+    BTL_CLIENT_AttachCmeCheckServer( wk->client[clientID], wk->cmdCheckServer );
   }
 
   return TRUE;
