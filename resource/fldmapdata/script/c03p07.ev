@@ -105,16 +105,14 @@ EVENT_START		ev_pos_c03p07_rival_01
 	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
 
-	//自機：一歩下がる
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move0 )
-	_OBJ_ANIME_WAIT()
-
 	//ライバル出現
-	_OBJ_ADD_EX( 23,48,DIR_LEFT,MMDL_ID_EVENTOBJ_00,RIVEL,MV_DMY )
+	_OBJ_ADD_EX( 25,48,DIR_LEFT,MMDL_ID_EVENTOBJ_00,RIVEL,MV_DMY )
+
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gyoe )
+	_OBJ_ANIME_WAIT()
 
 	//自機を押してライバルが１歩進む
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
-	_OBJ_ANIME_WAIT()
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_rival_move )
 	_OBJ_ANIME_WAIT()
 
@@ -170,22 +168,18 @@ EVENT_END
 //--------------------------------------------------------------------
 //	ライバル・自機：アニメ
 //--------------------------------------------------------------------
-_ANIME_LABEL anm_player_move0
-	_ANIME_DATA		AC_DIR_PAUSE_ON,1
-	_ANIME_DATA		AC_WALK_L_8F,1
-	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+
+_ANIME_LABEL anm_player_gyoe
+	_ANIME_DATA		AC_MARK_GYOE,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_rival_move
-	_ANIME_DATA		AC_WAIT_8F,2
-	_ANIME_DATA		AC_WALK_L_8F,2
+	_ANIME_DATA		AC_WALK_L_8F,3
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_player_move
-	_ANIME_DATA		AC_MARK_GYOE,1
-	_ANIME_DATA		AC_DIR_PAUSE_ON,1
-	_ANIME_DATA		AC_WALK_L_8F,2
-	_ANIME_DATA		AC_DIR_PAUSE_OFF,1
+	_ANIME_DATA		AC_WALK_L_8F,3
+	_ANIME_DATA		AC_STAY_WALK_R_8F,1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_rival_leave
