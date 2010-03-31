@@ -24,7 +24,7 @@
 //============================================================================================
 
 enum
-{ 
+{
   BTLV_FINGER_CURSOR_SRC_PALNO      = 0,
   BTLV_FINGER_CURSOR_PAL_TRANS_SIZE = 1,
 
@@ -38,7 +38,7 @@ enum
 //============================================================================================
 
 typedef struct
-{ 
+{
   int         seq_no;
   int         count;
   int         frame;
@@ -79,9 +79,9 @@ static  void  TCB_BTLV_FINGER_CURSOR_WatchAnmEndFlag( GFL_TCB* tcb, void* work )
  */
 //============================================================================================
 BTLV_FINGER_CURSOR_WORK*  BTLV_FINGER_CURSOR_Init( int pal, HEAPID heapID )
-{ 
+{
   BTLV_FINGER_CURSOR_WORK* bfcw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_FINGER_CURSOR_WORK ) );
-  ARCHANDLE*  handle  = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, heapID );
+  ARCHANDLE*  handle  = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(heapID) );
 
   bfcw->heapID  = heapID;
 
@@ -102,7 +102,7 @@ BTLV_FINGER_CURSOR_WORK*  BTLV_FINGER_CURSOR_Init( int pal, HEAPID heapID )
   GFL_ARC_CloseDataHandle( handle );
 
   //アニメフラグ監視TCBセット
-	bfcw->tcb = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_FINGER_CURSOR_WatchAnmEndFlag, bfcw, 0 );
+  bfcw->tcb = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), TCB_BTLV_FINGER_CURSOR_WatchAnmEndFlag, bfcw, 0 );
 
   return bfcw;
 }
@@ -115,8 +115,8 @@ BTLV_FINGER_CURSOR_WORK*  BTLV_FINGER_CURSOR_Init( int pal, HEAPID heapID )
  */
 //============================================================================================
 void  BTLV_FINGER_CURSOR_Exit( BTLV_FINGER_CURSOR_WORK* bfcw )
-{ 
-	GFL_TCB_DeleteTask( bfcw->tcb );
+{
+  GFL_TCB_DeleteTask( bfcw->tcb );
 
   BTLV_FINGER_CURSOR_Delete( bfcw );
 
@@ -136,7 +136,7 @@ void  BTLV_FINGER_CURSOR_Exit( BTLV_FINGER_CURSOR_WORK* bfcw )
  */
 //============================================================================================
 void  BTLV_FINGER_CURSOR_Main( BTLV_FINGER_CURSOR_WORK* bfcw )
-{ 
+{
 
 }
 
@@ -155,25 +155,25 @@ void  BTLV_FINGER_CURSOR_Main( BTLV_FINGER_CURSOR_WORK* bfcw )
  */
 //============================================================================================
 BOOL  BTLV_FINGER_CURSOR_Create( BTLV_FINGER_CURSOR_WORK* bfcw, int pos_x, int pos_y, int count, int frame, int wait )
-{ 
-  GFL_CLWK_AFFINEDATA cursor = {  
-    { 
+{
+  GFL_CLWK_AFFINEDATA cursor = {
+    {
       0, 0,                   //x, y
       0, 0, 0,                //アニメ番号、優先順位、BGプライオリティ
     },
-	  0, 0,		                  // アフィンｘ座標 アフィンｙ座標
-	  FX32_ONE, FX32_ONE,	      // 拡大ｘ値 拡大ｙ値
-	  0,                        // 回転角度(0～0xffff 0xffffが360度)
-	  CLSYS_AFFINETYPE_DOUBLE,  // 上書きアフィンタイプ（CLSYS_AFFINETYPE）
+    0, 0,                     // アフィンｘ座標 アフィンｙ座標
+    FX32_ONE, FX32_ONE,       // 拡大ｘ値 拡大ｙ値
+    0,                        // 回転角度(0～0xffff 0xffffが360度)
+    CLSYS_AFFINETYPE_DOUBLE,  // 上書きアフィンタイプ（CLSYS_AFFINETYPE）
   };
 
   if( bfcw->bfcp.anm_end_flag )
-  { 
+  {
     return FALSE;
   }
 
   if( bfcw->clwk )
-  { 
+  {
     BTLV_FINGER_CURSOR_Delete( bfcw );
     bfcw->clwk = NULL;
   }
@@ -190,20 +190,20 @@ BOOL  BTLV_FINGER_CURSOR_Create( BTLV_FINGER_CURSOR_WORK* bfcw, int pos_x, int p
   GFL_CLACT_WK_SetDrawEnable( bfcw->clwk, TRUE );
 
   if( count )
-  { 
+  {
     bfcw->bfcp.count  = count;
   }
   else
-  { 
+  {
     bfcw->bfcp.count  = 1;  //最低でも1回はループするようにする
   }
 
   if( wait )
-  { 
+  {
     bfcw->bfcp.wait  = wait;
   }
   else
-  { 
+  {
     bfcw->bfcp.wait  = 1;  //最低でも1は待つ
   }
 
@@ -212,14 +212,14 @@ BOOL  BTLV_FINGER_CURSOR_Create( BTLV_FINGER_CURSOR_WORK* bfcw, int pos_x, int p
   bfcw->bfcp.seq_no = 0;
   bfcw->bfcp.anm_end_flag = FALSE;
 
-  { 
-	  GFL_CLWK_ANM_CALLBACK	dat;
-	  dat.param = ( u32 )bfcw;
-	  dat.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM;
-	  dat.frame_idx     = 0;
-	  dat.p_func        = BTLV_FINGER_CURSOR_CallBackFunc;
-  
-	  GFL_CLACT_WK_StartAnmCallBack( bfcw->clwk, &dat );
+  {
+    GFL_CLWK_ANM_CALLBACK dat;
+    dat.param = ( u32 )bfcw;
+    dat.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM;
+    dat.frame_idx     = 0;
+    dat.p_func        = BTLV_FINGER_CURSOR_CallBackFunc;
+
+    GFL_CLACT_WK_StartAnmCallBack( bfcw->clwk, &dat );
   }
 
   return TRUE;
@@ -233,9 +233,9 @@ BOOL  BTLV_FINGER_CURSOR_Create( BTLV_FINGER_CURSOR_WORK* bfcw, int pos_x, int p
  */
 //============================================================================================
 void  BTLV_FINGER_CURSOR_Delete( BTLV_FINGER_CURSOR_WORK* bfcw )
-{ 
+{
   if( bfcw->clwk )
-  { 
+  {
     GFL_CLACT_WK_Remove( bfcw->clwk );
     bfcw->clwk = NULL;
   }
@@ -249,7 +249,7 @@ void  BTLV_FINGER_CURSOR_Delete( BTLV_FINGER_CURSOR_WORK* bfcw )
  */
 //============================================================================================
 BOOL  BTLV_FINGER_CURSOR_CheckExecute( BTLV_FINGER_CURSOR_WORK* bfcw )
-{ 
+{
   return bfcw->bfcp.anm_end_flag;
 }
 
@@ -261,36 +261,36 @@ BOOL  BTLV_FINGER_CURSOR_CheckExecute( BTLV_FINGER_CURSOR_WORK* bfcw )
  */
 //============================================================================================
 static  void  BTLV_FINGER_CURSOR_CallBackFunc( u32 param, fx32 currentFrame )
-{ 
-	BTLV_FINGER_CURSOR_WORK* bfcw = ( BTLV_FINGER_CURSOR_WORK* )param;
+{
+  BTLV_FINGER_CURSOR_WORK* bfcw = ( BTLV_FINGER_CURSOR_WORK* )param;
 
-  switch( bfcw->bfcp.seq_no ){ 
+  switch( bfcw->bfcp.seq_no ){
   case 0:
     if( --bfcw->bfcp.count == 0 )
-    { 
-	    GFL_CLACT_WK_SetAnmSeq( bfcw->clwk, 1 );
+    {
+      GFL_CLACT_WK_SetAnmSeq( bfcw->clwk, 1 );
       bfcw->bfcp.seq_no++;
-      { 
-	      GFL_CLWK_ANM_CALLBACK	dat;
-	      dat.param = param;
-	      dat.callback_type = CLWK_ANM_CALLBACK_TYPE_SPEC_FRM;
-	      dat.frame_idx     = bfcw->bfcp.frame;
-	      dat.p_func        = BTLV_FINGER_CURSOR_CallBackFunc;
-  
-	      GFL_CLACT_WK_StartAnmCallBack( bfcw->clwk, &dat );
+      {
+        GFL_CLWK_ANM_CALLBACK dat;
+        dat.param = param;
+        dat.callback_type = CLWK_ANM_CALLBACK_TYPE_SPEC_FRM;
+        dat.frame_idx     = bfcw->bfcp.frame;
+        dat.p_func        = BTLV_FINGER_CURSOR_CallBackFunc;
+
+        GFL_CLACT_WK_StartAnmCallBack( bfcw->clwk, &dat );
       }
     }
     break;
   case 1:
     bfcw->bfcp.anm_end_flag = TRUE;
     bfcw->bfcp.seq_no++;
-    { 
-      GFL_CLWK_ANM_CALLBACK	dat;
+    {
+      GFL_CLWK_ANM_CALLBACK dat;
       dat.param = param;
       dat.callback_type = CLWK_ANM_CALLBACK_TYPE_EVER_FRM;
       dat.frame_idx     = 0;
       dat.p_func        = BTLV_FINGER_CURSOR_CallBackFunc;
-  
+
       GFL_CLACT_WK_StartAnmCallBack( bfcw->clwk, &dat );
     }
     break;
@@ -311,15 +311,15 @@ static  void  BTLV_FINGER_CURSOR_CallBackFunc( u32 param, fx32 currentFrame )
  */
 //============================================================================================
 static  void  TCB_BTLV_FINGER_CURSOR_WatchAnmEndFlag( GFL_TCB* tcb, void* work )
-{ 
+{
   BTLV_FINGER_CURSOR_WORK* bfcw = ( BTLV_FINGER_CURSOR_WORK* )work;
 
   if( bfcw->clwk )
-  { 
+  {
     if( bfcw->bfcp.anm_end_flag )
-    { 
+    {
       if( --bfcw->bfcp.wait == 0 )
-      { 
+      {
         GFL_CLACT_WK_SetDrawEnable( bfcw->clwk, FALSE );
         bfcw->bfcp.anm_end_flag = FALSE;
       }
