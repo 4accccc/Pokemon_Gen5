@@ -73,7 +73,8 @@ struct _BTL_EVENT_FACTOR {
   u32       numHandlers :  8;  ///< ハンドラテーブル要素数
   u32       callingFlag :  1;  ///< 呼び出し中を再呼び出ししないためのフラグ
   u32       sleepFlag   :  1;  ///< 休眠フラグ
-  u32       dmy         :  2;
+  u32       tmpItemFlag :  1;  ///< アイテム用一時利用フラグ
+  u32       dmy         :  1;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
   u16       subID;      ///< イベント実体ID。ワザならワザID, とくせいならとくせいIDなど
   u8        dependID;   ///< 依存対象物ID。ワザ・とくせい・アイテムならポケID、場所依存なら場所idなど。
@@ -234,6 +235,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     newFactor->subID = subID;
     newFactor->callingFlag = FALSE;
     newFactor->sleepFlag = FALSE;
+    newFactor->tmpItemFlag = FALSE;
     newFactor->skipCheckHandler = NULL;
     newFactor->dependID = dependID;
     if( isDependPokeFactorType(factorType) ){
@@ -396,6 +398,18 @@ int BTL_EVENT_FACTOR_GetWorkValue( const BTL_EVENT_FACTOR* factor, u8 workIdx )
 }
 //=============================================================================================
 /**
+ * アイテム用一時利用フラグをONにする（BTL_EVENT_USE_ITEM_TMP に反応するようになる）
+ *
+ * @param   factor
+ */
+//=============================================================================================
+void BTL_EVENT_FACTOR_SetTmpItemFlag( BTL_EVENT_FACTOR* factor )
+{
+  factor->tmpItemFlag = TRUE;
+}
+
+//=============================================================================================
+/**
  * ワーク内容を設定
  *
  * @param   factor
@@ -453,8 +467,10 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
   {
     next_factor = factor->next;
 
-    if( (factor->callingFlag==FALSE) && (factor->sleepFlag == FALSE) )
-    {
+    if( ( factor->callingFlag == FALSE )
+    &&  ( factor->sleepFlag == FALSE )
+    &&  ( (eventID != BTL_EVENT_USE_ITEM_TMP) || (factor->tmpItemFlag == TRUE) )
+    ){
       const BtlEventHandlerTable* tbl = factor->handlerTable;
       u32 i;
       for(i=0; i<factor->numHandlers; i++)

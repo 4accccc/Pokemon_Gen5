@@ -7854,7 +7854,8 @@ static BOOL scEvent_CheckChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather,
 }
 static BOOL scproc_FieldEffectCore( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect, BPP_SICK_CONT contParam )
 {
-  if( BTL_FIELD_AddEffect(effect, contParam) ){
+  if( BTL_FIELD_AddEffect(effect, contParam) )
+  {
     SCQUE_PUT_OP_AddFieldEffect( wk->que, effect, contParam.raw );
     return TRUE;
   }
