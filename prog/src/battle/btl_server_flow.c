@@ -2637,7 +2637,6 @@ static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
   {
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
-      TAYA_Printf("*** MemberIN Poke=%d\n", BPP_GetID(bpp));
       scEvent_AfterMemberIn( wk, bpp );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       Hem_PopState( &wk->HEManager, hem_state );

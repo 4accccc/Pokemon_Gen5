@@ -755,7 +755,6 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
       {
         server->enemyPutPokeID = Irekae_GetEnemyPutPokeID( server );
 
-        TAYA_Printf("入れ替え促しACMDコマンド送信\n");
         SetAdapterCmdSingle( server, BTL_ACMD_CONFIRM_IREKAE, BTL_CLIENTID_SA_PLAYER,
                 &server->enemyPutPokeID, sizeof(server->enemyPutPokeID) );
       }

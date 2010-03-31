@@ -655,10 +655,8 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
   case SEQ_EXEC_CMD:
     if( wk->subProc(wk, &wk->subSeq) )
     {
-      TAYA_Printf("Cmd End....\n");
       if( RecPlayer_CheckBlackOut(&wk->recPlayer) )
       {
-        TAYA_Printf("  Recplay Ctrl\n");
         wk->myState = SEQ_RECPLAY_CTRL;
       }
       else
@@ -3129,8 +3127,8 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
         BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, strID );
         BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
         BTLV_StartMsg( wk->viewCore, &wk->strParam );
-        (*seq)++;
       }
+      (*seq)++;
     }
     break;
   case 1:
@@ -3138,6 +3136,11 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
     {
       BOOL fExitMsg = TRUE;
       u16  trmsgID;
+
+      u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
+      u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
+      int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
+
       if( resultCode == BTL_RESULT_WIN ){
         trmsgID = TRMSG_FIGHT_LOSE;
       }else if( resultCode == BTL_RESULT_LOSE ){
@@ -3146,22 +3149,20 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
         fExitMsg = FALSE;
       }
 
+      BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
+      BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
+
       if( fExitMsg )
       {
-        u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
-        u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
-        int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
-
-        BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
-        BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
         BTLV_StartMsgTrainer( wk->viewCore, trainerID, trmsgID );
       }
       (*seq)++;
     }
     break;
   case 2:
-    if( BTLV_WaitMsg(wk->viewCore) )
-    {
+    if( !BTLV_EFFECT_CheckExecute()
+    &&  BTLV_WaitMsg(wk->viewCore)
+    ){
       if( BTL_MAIN_IsMultiMode( wk->mainModule ) )
       {
         BTLV_EFFECT_Add( BTLEFF_TRAINER_OUT );
@@ -3180,6 +3181,7 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
       u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
       int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
 
+
       BTLV_EFFECT_DelTrainer( BTLV_MCSS_POS_TR_BB );
       BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
       BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
@@ -3193,6 +3195,7 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
       if( resultCode == BTL_RESULT_WIN )
       {
         u32 getMoney = BTL_MAIN_FixBonusMoney( wk->mainModule );
+
         if( getMoney )
         {
           u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
