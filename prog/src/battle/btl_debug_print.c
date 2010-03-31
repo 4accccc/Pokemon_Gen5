@@ -241,6 +241,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SV_RestoreAction:               return "整合性チェック用サーバ：ClientID=%d, numAction:%d 復元\n";
   case DBGSTR_SV_CmdCheckOK:                  return "整合性チェック用サーバ：チェックOK\n";
   case DBGSTR_SV_CmdCheckNG:                  return "整合性チェック用サーバ：チェックNG!! cmdSize= %d , %d\n";
+  case DBGSTR_SV_SendActRecordFailed:         return "アクション記録送信に失敗した!!\n";
+  case DBGSTR_SV_SendActRecord:               return "アクション記録データを送信する (%dbytes)\n";
 
 
   case DBGSTR_SC_PutCmd:                return "[QUE]PutCmd=%d, Format=%02x, argCnt=%d, args=";

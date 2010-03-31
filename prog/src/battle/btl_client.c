@@ -53,6 +53,20 @@ enum {
   CLIENT_FLDEFF_BITFLAG_SIZE = BTL_CALC_BITFLAG_BUFSIZE( BTL_FLDEFF_MAX ) + 1,
 };
 
+
+/**
+ *  AIトレーナーのメッセージ種類
+ */
+enum {
+  AITRAINER_MSG_FIRST_DAMAGE,   ///< 最初のダメージ後
+  AITRAINER_MSG_HP_HALF,        ///< HP半分以下
+  AITRAINER_MSG_LAST,           ///< 最後の１体登場直後
+  AITRAINER_MSG_LAST_HP_HALF,   ///< 最後の１体ＨＰ半分以下
+  AITRAINER_MSG_MAX,
+};
+
+
+
 /*--------------------------------------------------------------------------*/
 /* Typedefs                                                                 */
 /*--------------------------------------------------------------------------*/
@@ -63,12 +77,7 @@ typedef BOOL (*ServerCmdProc)( BTL_CLIENT*, int*, const int* );
 /*--------------------------------------------------------------------------*/
 /* Structures                                                               */
 /*--------------------------------------------------------------------------*/
-/**
- *  逃げ交換禁止コード管理用構造体
- */
-typedef struct {
-  u8  counter[ BTL_CANTESC_MAX ][ BTL_POKEID_MAX ];
-}CANT_ESC_CONTROL;
+
 
 /**
  *  録画データコントロールコード
@@ -135,6 +144,8 @@ struct _BTL_CLIENT {
   u16            AIItem[ AI_ITEM_MAX ];
   VMHANDLE*      AIHandle;
 
+  u8             AITrainerMsgTalkedFlag[ AITRAINER_MSG_MAX ];
+
 
 
   const BTL_PARTY*  myParty;
@@ -155,7 +166,6 @@ struct _BTL_CLIENT {
 
   BTL_POKESELECT_PARAM    pokeSelParam;
   BTL_POKESELECT_RESULT   pokeSelResult;
-  CANT_ESC_CONTROL        cantEscCtrl;
 
 
   HEAPID heapID;
@@ -168,7 +178,7 @@ struct _BTL_CLIENT {
   u8   escapeClientID;
   u8   change_escape_code;
   u8   fForceQuitSelAct;
-  u8   fCmdCheckReady;
+  u8   cmdCheckTimingCode;
   u16  EnemyPokeHPBase;
 
   u8          myChangePokeCnt;
@@ -375,7 +385,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->mainProc = ClientMain_Normal;
   wk->myState = 0;
   wk->cmdCheckServer = NULL;
-  wk->fCmdCheckReady = FALSE;
+  wk->cmdCheckTimingCode = BTL_RECTIMING_None;
 
   wk->commWaitInfoOn = FALSE;
   wk->shooterEnergy = 0;
@@ -401,6 +411,10 @@ BTL_CLIENT* BTL_CLIENT_Create(
   else
   {
     wk->AIHandle = NULL;
+  }
+
+  for(i=0; i<NELEMS(wk->AITrainerMsgTalkedFlag); ++i){
+    wk->AITrainerMsgTalkedFlag[ i ] = FALSE;
   }
 
   if( (wk->myType == BTL_CLIENT_TYPE_UI)
@@ -639,13 +653,15 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
   case SEQ_EXEC_CMD:
     if( wk->subProc(wk, &wk->subSeq) )
     {
+      TAYA_Printf("Cmd End....\n");
       if( RecPlayer_CheckBlackOut(&wk->recPlayer) )
       {
+        TAYA_Printf("  Recplay Ctrl\n");
         wk->myState = SEQ_RECPLAY_CTRL;
       }
       else
       {
-        BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_RETURN_CMD_START, wk->myID );
+        BTL_N_Printf( DBGSTR_CLIENT_RETURN_CMD_START, wk->myID );
         wk->myState = SEQ_RETURN_TO_SV;
       }
     }
@@ -654,7 +670,7 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
   case SEQ_RETURN_TO_SV:
     if( BTL_ADAPTER_ReturnCmd(wk->adapter, wk->returnDataPtr, wk->returnDataSize) ){
       wk->myState = SEQ_READ_ACMD;
-      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CLIENT_RETURN_CMD_DONE, wk->myID );
+      BTL_N_Printf( DBGSTR_CLIENT_RETURN_CMD_DONE, wk->myID );
     }
     break;
 
@@ -2930,16 +2946,19 @@ static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq )
 
   dataSize = BTL_ADAPTER_GetRecvData( wk->adapter, &dataBuf );
 
+  TAYA_Printf("録画データ記録 %d bytes \n", dataSize);
+
   if( wk->btlRec )
   {
-    BTL_Printf("録画データ %d bytes 書き込み\n", dataSize);
+    TAYA_Printf("録画データ %d bytes 書き込み\n", dataSize);
     BTL_REC_Write( wk->btlRec, dataBuf, dataSize );
   }
 
   if( wk->cmdCheckServer )
   {
     BTL_SERVER_CMDCHECK_RestoreActionData( wk->cmdCheckServer, dataBuf, dataSize );
-    wk->fCmdCheckReady = TRUE;
+    wk->cmdCheckTimingCode = BTL_REC_GetTimingCode( dataBuf );;
+    TAYA_Printf( "整合性チェック TimingCode=%d\n", wk->cmdCheckTimingCode);
   }
 
   return TRUE;
@@ -3239,12 +3258,12 @@ restart:
       SCQUE_Setup( wk->cmdQue, cmdBuf, cmdSize );
 
       if( (wk->cmdCheckServer != NULL)
-      &&  (wk->fCmdCheckReady)
+      &&  (wk->cmdCheckTimingCode != BTL_RECTIMING_None)
       ){
-        if( BTL_SERVER_CMDCHECK_Make(wk->cmdCheckServer, cmdBuf, cmdSize) ){
+        if( BTL_SERVER_CMDCHECK_Make(wk->cmdCheckServer, wk->cmdCheckTimingCode, cmdBuf, cmdSize) ){
           BTL_MAIN_NotifyCmdCheckError( wk->mainModule );
         }
-        wk->fCmdCheckReady = FALSE;
+        wk->cmdCheckTimingCode = BTL_RECTIMING_None;
       }
 
       if( wk->commWaitInfoOn )

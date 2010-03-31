@@ -2580,9 +2580,10 @@ static BOOL subproc_WazaEffect( int* seq, void* wk_adrs )
     }
     break;
   case 3:
-    if( msgWinVisible_Update(&wk->msgwinVisibleWork) ){
+    if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
+    {
+      PMSND_StopSE();
       (*seq)++;
-      return TRUE;
     }
     break;
   default:

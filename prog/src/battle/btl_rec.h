@@ -22,6 +22,7 @@ typedef enum {
  *  コマンド生成タイミング
  */
 typedef enum {
+  BTL_RECTIMING_None = 0,
   BTL_RECTIMING_StartTurn,
   BTL_RECTIMING_PokeInCover,
   BTL_RECTIMING_PokeInChange,
@@ -58,7 +59,7 @@ typedef struct {
 
 extern void BTL_RECTOOL_Init( BTL_RECTOOL* recTool, BOOL fChapter );
 extern void BTL_RECTOOL_PutSelActionData( BTL_RECTOOL* recTool, u8 clientID, const BTL_ACTION_PARAM* action, u8 numAction );
-extern void* BTL_RECTOOL_FixSelActionData( BTL_RECTOOL* recTool, u32* dataSize );
+extern void* BTL_RECTOOL_FixSelActionData( BTL_RECTOOL* recTool, BtlRecTiming timingCode, u32* dataSize );
 extern void BTL_RECTOOL_PutRotationData( BTL_RECTOOL* recTool, u8 clientID, BtlRotateDir dir );
 extern void* BTL_RECTOOL_FixRotationData( BTL_RECTOOL* recTool, u32* dataSize );
 
@@ -81,7 +82,7 @@ extern void BTL_REC_Delete( BTL_REC* wk );
 extern void BTL_REC_Write( BTL_REC* wk, const void* data, u32 size );
 extern BOOL BTL_REC_IsCorrect( const BTL_REC* wk );
 extern const void* BTL_REC_GetDataPtr( const BTL_REC* wk, u32* size );
-
+extern BtlRecTiming BTL_REC_GetTimingCode( const void* data );
 
 typedef struct {
 

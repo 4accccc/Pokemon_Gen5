@@ -297,7 +297,7 @@ struct _BTL_SVFLOW_WORK {
 static void clearWorks( BTL_SVFLOW_WORK* wk );
 static void clearPokeCantActionFlag( BTL_SVFLOW_WORK* wk );
 static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx );
-static BOOL ActOrderProc_PokeIn( BTL_SVFLOW_WORK* wk );
+static BOOL ActOrderProc_PokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction );
 static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk );
 static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk );
 static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk );
@@ -931,7 +931,7 @@ static void clearPokeCantActionFlag( BTL_SVFLOW_WORK* wk )
  * @retval  SvflowResult
  */
 //=============================================================================================
-SvflowResult BTL_SVFLOW_ContinueAfterPokeChange( BTL_SVFLOW_WORK* wk )
+SvflowResult BTL_SVFLOW_ContinueAfterPokeChange( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction )
 {
   BTL_N_Printf( DBGSTR_SVFL_StartAfterPokeChange );
 
@@ -941,7 +941,7 @@ SvflowResult BTL_SVFLOW_ContinueAfterPokeChange( BTL_SVFLOW_WORK* wk )
 
   wk->flowResult = SVFLOW_RESULT_DEFAULT;
 
-  if( ActOrderProc_PokeIn(wk) ){
+  if( ActOrderProc_PokeIn(wk, clientAction) ){
     wk->flowResult = SVFLOW_RESULT_BTL_SHOWDOWN;
     return wk->flowResult;
   }
@@ -1105,10 +1105,10 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
  * @retval  BOOL  入場後の処理でポケモンが死亡、決着が付いた場合にTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL ActOrderProc_PokeIn( BTL_SVFLOW_WORK* wk )
+static BOOL ActOrderProc_PokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAction )
 {
   SVCL_WORK* clwk;
-  const BTL_ACTION_PARAM* action;
+  BTL_ACTION_PARAM action;
   u32 i, j, actionCnt;
 
   for(i=0; i<BTL_CLIENT_MAX; ++i)
@@ -1117,18 +1117,18 @@ static BOOL ActOrderProc_PokeIn( BTL_SVFLOW_WORK* wk )
     if( clwk == NULL ){
       continue;
     }
-    actionCnt = BTL_SVCL_GetNumActPoke( clwk );
 
+    actionCnt = BTL_SVCL_ACTION_GetNumActPoke( clientAction, i );
     for(j=0; j<actionCnt; ++j)
     {
-      action = BTL_SVCL_GetPokeAction( clwk, j );
-      if( action->gen.cmd != BTL_ACTION_CHANGE ){ continue; }
-      if( action->change.depleteFlag ){ continue; }
+      action = BTL_SVCL_ACTION_Get( clientAction, i, j );
+      if( action.gen.cmd != BTL_ACTION_CHANGE ){ continue; }
+      if( action.change.depleteFlag ){ continue; }
 
       BTL_N_Printf( DBGSTR_SVFL_PokeChangeRootInfo,
-            i, action->change.posIdx, action->change.memberIdx );
+            i, action.change.posIdx, action.change.memberIdx );
 
-      scproc_MemberInForChange( wk, i, action->change.posIdx, action->change.memberIdx, TRUE );
+      scproc_MemberInForChange( wk, i, action.change.posIdx, action.change.memberIdx, TRUE );
     }
   }
   scproc_AfterMemberIn( wk );

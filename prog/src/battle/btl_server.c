@@ -129,7 +129,7 @@ static BOOL ServerMain_ExitBattle_ForCommPlayer( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForNPC( BTL_SERVER* server, int* seq );
 static BOOL SendActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL fChapter );
 static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry );
-static void* MakeSelectActionRecord( BTL_SERVER* server, BOOL fChapter, u32* dataSize );
+static void* MakeSelectActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL fChapter, u32* dataSize );
 static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize, const BtlRotateDir* dirAry );
 static void storeClientAction( BTL_SERVER* server );
 static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd );
@@ -754,6 +754,8 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
       if( Irekae_IsNeedConfirm(server) )
       {
         server->enemyPutPokeID = Irekae_GetEnemyPutPokeID( server );
+
+        TAYA_Printf("入れ替え促しACMDコマンド送信\n");
         SetAdapterCmdSingle( server, BTL_ACMD_CONFIRM_IREKAE, BTL_CLIENTID_SA_PLAYER,
                 &server->enemyPutPokeID, sizeof(server->enemyPutPokeID) );
       }
@@ -773,6 +775,7 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
       if( SendActionRecord(server, BTL_RECTIMING_PokeInCover, FALSE) ){
         (*seq)++;
       }else{
+        BTL_N_Printf( DBGSTR_SV_SendActRecordFailed );
         (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
       }
     }
@@ -786,7 +789,7 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
     break;
 
   case 4:
-    SetAdapterCmdEx( server, 4, server->que->buffer, server->que->writePtr );
+    SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
     (*seq)++;
     break;
 
@@ -821,8 +824,10 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
  */
 static BOOL Irekae_IsNeedConfirm( BTL_SERVER* server )
 {
+  OS_TPrintf("       入れ替えるの？\n");
   if( BTL_MAIN_IsIrekaeMode(server->mainModule) )
   {
+    OS_TPrintf("       入れ替えるのか？\n");
     if( server->changePokeCnt )
     {
       u32 i;
@@ -833,6 +838,7 @@ static BOOL Irekae_IsNeedConfirm( BTL_SERVER* server )
           return FALSE;
         }
       }
+      OS_TPrintf("       入れ替えるのだぜ\n");
       return TRUE;
     }
   }
@@ -885,11 +891,12 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
       SCQUE_Init( server->que );
 
       storeClientAction( server );
-      server->flowResult = BTL_SVFLOW_ContinueAfterPokeChange( server->flowWork );
+      server->flowResult = BTL_SVFLOW_ContinueAfterPokeChange( server->flowWork, &server->clientAction );
       BTL_N_Printf( DBGSTR_SERVER_FlowResult, server->flowResult );
       if( SendActionRecord(server, BTL_RECTIMING_PokeInChange, FALSE) ){
         (*seq)++;
       }else{
+
         (*seq) += 2;  /// 何らかの理由で録画データ生成に失敗したらスキップ
       }
     }
@@ -1124,9 +1131,26 @@ void BTL_SERVER_CMDCHECK_RestoreActionData( BTL_SERVER* server, const void* recD
     server->clientAction.count[ clientID ] = numAction;
   }
 }
-BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, const void* recvedCmd, u32 cmdSize )
+BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, BtlRecTiming timingCode, const void* recvedCmd, u32 cmdSize )
 {
-  BTL_SVFLOW_StartTurn( server->flowWork, &server->clientAction );
+  SCQUE_Init( server->que );
+
+  switch( timingCode ){
+  case BTL_RECTIMING_StartTurn:
+    BTL_SVFLOW_StartTurn( server->flowWork, &server->clientAction );
+    break;
+
+  case BTL_RECTIMING_PokeInCover:
+    BTL_SVFLOW_StartAfterPokeIn( server->flowWork, &server->clientAction );
+    break;
+
+  case BTL_RECTIMING_PokeInChange:
+    BTL_SVFLOW_ContinueAfterPokeChange( server->flowWork, &server->clientAction );
+    break;
+
+  default:
+    break;
+  }
 
   if( server->que->writePtr == cmdSize )
   {
@@ -1138,17 +1162,19 @@ BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, const void* recvedCmd, u32 cm
   //BTL_N_Printf( DBGSTR_SV_CmdCheckNG, server->que->writePtr, cmdSize );
   {
     u32 i;
-    OS_TPrintf( "****** コマンド整合性チェック NG   ****** \n" );
+    OS_TPrintf( "****** コマンド整合性 NG timing=%d  ****** \n", timingCode );
     OS_TPrintf( " sc = %d bytes\n", cmdSize );
     for(i=0; i<cmdSize; ++i){
       OS_TPrintf("%02x,", ((u8*)(recvedCmd))[i]);
       if( (i+1)%16 == 0){ OS_TPrintf("\n"); }
     }
+    if( cmdSize%16 ){ OS_TPrintf("\n"); }
     OS_TPrintf( " cc = %d bytes\n", server->que->writePtr );
     for(i=0; i<server->que->writePtr; ++i){
       OS_TPrintf("%02x,", server->que->buffer[i]);
       if( (i+1)%16 == 0){ OS_TPrintf("\n"); }
     }
+    if( server->que->writePtr%16 ){ OS_TPrintf("\n"); }
   }
 
   return TRUE;
@@ -1162,30 +1188,14 @@ static BOOL SendActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL 
 {
   void* recData;
   u32   recDataSize;
-  recData = MakeSelectActionRecord( server, fChapter, &recDataSize );
+  recData = MakeSelectActionRecord( server, timingCode, fChapter, &recDataSize );
   if( recData != NULL ){
-//  BTL_Printf("アクション記録データを送信する (%dbytes)\n", recDataSize);
+    BTL_N_Printf( DBGSTR_SV_SendActRecord, recDataSize);
     SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
     return TRUE;
   }
   return FALSE;
 }
-
-/**
- *  ローテーション記録データ送信開始
- */
-static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry )
-{
-  void* recData;
-  u32   recDataSize;
-  recData = MakeRotationRecord( server, &recDataSize, dirAry );
-  if( recData != NULL ){
-    SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
-    return TRUE;
-  }
-  return FALSE;
-}
-
 /**
  * アクション記録データを生成
  *
@@ -1195,7 +1205,7 @@ static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry )
  *
  * @retval  void*   正しく生成できたら送信データポインタ / できない場合NULL
  */
-static void* MakeSelectActionRecord( BTL_SERVER* server, BOOL fChapter, u32* dataSize )
+static void* MakeSelectActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL fChapter, u32* dataSize )
 {
   u32 ID;
 
@@ -1213,7 +1223,22 @@ static void* MakeSelectActionRecord( BTL_SERVER* server, BOOL fChapter, u32* dat
     }
   }
 
-  return BTL_RECTOOL_FixSelActionData( &server->recTool, dataSize );
+  return BTL_RECTOOL_FixSelActionData( &server->recTool, timingCode, dataSize );
+}
+
+/**
+ *  ローテーション記録データ送信開始
+ */
+static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry )
+{
+  void* recData;
+  u32   recDataSize;
+  recData = MakeRotationRecord( server, &recDataSize, dirAry );
+  if( recData != NULL ){
+    SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
+    return TRUE;
+  }
+  return FALSE;
 }
 /**
  * ローテーション記録データを生成

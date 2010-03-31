@@ -1858,6 +1858,7 @@ u8 BTL_MAIN_GetPlayerBadgeCount( const BTL_MAIN_MODULE* wk )
 //=============================================================================================
 BOOL BTL_MAIN_IsIrekaeMode( const BTL_MAIN_MODULE* wk )
 {
+  TAYA_Printf("competi=%d, rule=%d\n", BTL_MAIN_GetCompetitor(wk), BTL_MAIN_GetRule(wk));
   if( (BTL_MAIN_GetCompetitor(wk) == BTL_COMPETITOR_TRAINER)
   &&  (BTL_MAIN_GetRule(wk) == BTL_RULE_SINGLE)
   &&  (CONFIG_GetBattleRule(wk->setupParam->configData) == BATTLERULE_IREKAE)

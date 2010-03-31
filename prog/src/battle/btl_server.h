@@ -15,6 +15,7 @@
 #include "btl_pokeparam.h"
 #include "btl_adapter.h"
 #include "btl_action.h"
+#include "btl_rec.h"
 #include "btl_server_flow_def.h"
 #include "app/b_bag.h"
 
@@ -60,8 +61,9 @@ extern BOOL BTL_SERVER_IsFrontPokemon( BTL_SERVER* server, const BTL_POKEPARAM* 
 //-------------------------------------
 // client->コマンド整合性チェック処理
 //-------------------------------------
+
 extern void BTL_SERVER_CMDCHECK_RestoreActionData( BTL_SERVER* server, const void* recData, u32 recDataSize );
-extern BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, const void* recvedCmd, u32 cmdSize );
+extern BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, BtlRecTiming timingCode, const void* recvedCmd, u32 cmdSize );
 extern u8 BTL_SVCL_ACTION_GetNumActPoke( const BTL_SVCL_ACTION* clientAction, u8 clientID );
 
 

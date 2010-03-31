@@ -71,6 +71,11 @@ enum {
   BTL_REC_SIZE = 4096,
 };
 
+enum {
+  HEADER_TIMING_CODE = 0,
+  HEADER_FIELD_TAG,
+  HEADER_SIZE,
+};
 
 struct _BTL_REC {
 //  u16  bufSize;
@@ -120,7 +125,14 @@ void BTL_REC_Write( BTL_REC* wk, const void* data, u32 size )
 {
   if( wk->fSizeOver == FALSE )
   {
-    u32 endPtr = wk->writePtr + size;
+    const u8* pData = (const u8*)data;
+    u32 endPtr;
+
+    // HEADER_TIMING_CODE 部分は不要なのでスキップ
+    ++pData;
+    --size;
+
+    endPtr = wk->writePtr + size;
     if( endPtr <= sizeof(wk->buf) )
     {
       GFL_STD_MemCopy( data, &wk->buf[wk->writePtr], size );
@@ -132,6 +144,21 @@ void BTL_REC_Write( BTL_REC* wk, const void* data, u32 size )
     }
   }
 }
+//=============================================================================================
+/**
+ * タイミングコード取得
+ *
+ * @param   data
+ *
+ * @retval  BtlRecTiming
+ */
+//=============================================================================================
+BtlRecTiming BTL_REC_GetTimingCode( const void* data )
+{
+  const u8* pByte = (const void*)data;
+  return (*pByte);
+}
+
 //=============================================================================================
 /**
  * 最後まで正常に書き込まれているかチェック
@@ -401,10 +428,10 @@ void BTL_RECTOOL_Init( BTL_RECTOOL* recTool, BOOL fChapter )
 //=============================================================================================
 void BTL_RECTOOL_PutSelActionData( BTL_RECTOOL* recTool, u8 clientID, const BTL_ACTION_PARAM* action, u8 numAction )
 {
-  // ヘッダ記述用に 1byte 空けておく
+  // ヘッダ記述用に空けておく
   if( recTool->writePtr == 0 ){
     recTool->type = BTL_RECFIELD_ACTION;
-    recTool->writePtr++;
+    recTool->writePtr = HEADER_SIZE;
   }
 
   GF_ASSERT(recTool->type == BTL_RECFIELD_ACTION);
@@ -442,13 +469,14 @@ void BTL_RECTOOL_PutSelActionData( BTL_RECTOOL* recTool, u8 clientID, const BTL_
  * @retval  void*   正常終了ならクライアントに送信するデータポインタ／エラー時はNULL
  */
 //=============================================================================================
-void* BTL_RECTOOL_FixSelActionData( BTL_RECTOOL* recTool, u32* dataSize )
+void* BTL_RECTOOL_FixSelActionData( BTL_RECTOOL* recTool, BtlRecTiming timingCode, u32* dataSize )
 {
   GF_ASSERT(recTool->type == BTL_RECFIELD_ACTION);
 
   if( recTool->fError == 0 )
   {
-    recTool->buffer[0] = MakeRecFieldTag( recTool->type, recTool->numClients, recTool->fChapter );
+    recTool->buffer[ HEADER_TIMING_CODE ] = timingCode;
+    recTool->buffer[ HEADER_FIELD_TAG ]   = MakeRecFieldTag( recTool->type, recTool->numClients, recTool->fChapter );
     *dataSize = recTool->writePtr;
     return recTool->buffer;
   }
@@ -466,10 +494,10 @@ void* BTL_RECTOOL_FixSelActionData( BTL_RECTOOL* recTool, u32* dataSize )
 //=============================================================================================
 void BTL_RECTOOL_PutRotationData( BTL_RECTOOL* recTool, u8 clientID, BtlRotateDir dir )
 {
-  // ヘッダ記述用に 1byte 空けておく
+  // ヘッダ記述用の領域を空けておく
   if( recTool->writePtr == 0 ){
     recTool->type = BTL_RECFIELD_ROTATION;
-    recTool->writePtr++;
+    recTool->writePtr = HEADER_SIZE;
   }
 
   GF_ASSERT(recTool->type == BTL_RECFIELD_ROTATION);
@@ -510,7 +538,9 @@ void* BTL_RECTOOL_FixRotationData( BTL_RECTOOL* recTool, u32* dataSize )
 
   if( recTool->fError == 0 )
   {
-    recTool->buffer[0] = MakeRecFieldTag( recTool->type, recTool->numClients, recTool->fChapter );
+    //
+    recTool->buffer[HEADER_TIMING_CODE] = BTL_RECTIMING_Rotation;
+    recTool->buffer[HEADER_FIELD_TAG]   = MakeRecFieldTag( recTool->type, recTool->numClients, recTool->fChapter );
     *dataSize = recTool->writePtr;
     return recTool->buffer;
   }
@@ -559,7 +589,7 @@ void BTL_RECTOOL_RestoreStart( BTL_RECTOOL* recTool, const void* data, u32 dataS
 BOOL BTL_RECTOOL_RestoreFwd( BTL_RECTOOL* recTool, u32* rp, u8* clientID, u8* numAction, BTL_ACTION_PARAM* action )
 {
   if( (*rp) == 0 ){
-    (*rp) = 1;  // ヘッダ分をスキップ
+    (*rp) = HEADER_SIZE;  // ヘッダ分をスキップ
   }
 
   if( (*rp) < recTool->writePtr )
