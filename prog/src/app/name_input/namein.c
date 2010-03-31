@@ -145,6 +145,7 @@ static void STRINPUT_Delete( STRINPUT_WORK *p_wk );
 static void STRINPUT_SetLongStr( STRINPUT_WORK *p_wk, const STRCODE *cp_code );
 static BOOL STRINPUT_IsInputEnd( const STRINPUT_WORK *cp_wk );
 static u32  STRINPUT_GetStrLength( const STRINPUT_WORK *cp_wk );
+static u32  STRINPUT_GetChangeStrLength( const STRINPUT_WORK *cp_wk );
 static BOOL StrInput_ChangeStrToStr( STRINPUT_WORK *p_wk, BOOL is_shift );
 //-------------------------------------
 /// KEYMAP
@@ -1599,6 +1600,19 @@ static BOOL STRINPUT_IsInputEnd( const STRINPUT_WORK *cp_wk )
 static u32  STRINPUT_GetStrLength( const STRINPUT_WORK *cp_wk )
 { 
   return cp_wk->input_idx;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  変換文字列数を返す
+ *
+ *	@param	const STRINPUT_WORK *cp_wk  ワーク
+ *
+ *	@return 変換文字列数
+ */
+//-----------------------------------------------------------------------------
+static u32  STRINPUT_GetChangeStrLength( const STRINPUT_WORK *cp_wk )
+{ 
+  return cp_wk->change_idx;
 }
 //----------------------------------------------------------------------------
 /**
@@ -4895,38 +4909,47 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       STRINPUT_DeleteChangeStr( &p_wk->strinput );
       break;
     case KEYBOARD_INPUT_EXIT:       //終了  
-      //変換文字列を消す
-      STRINPUT_DeleteChangeStr( &p_wk->strinput );
-      //自分の名前とライバル名入力で、何もいれなかったら、
-      //デフォルト名をいれる
-      if( p_wk->p_param->mode == NAMEIN_MYNAME ||
-          p_wk->p_param->mode == NAMEIN_RIVALNAME )
+      if( STRINPUT_GetChangeStrLength( & p_wk->strinput) == 0 )
       { 
-        if( STRINPUT_GetStrLength( &p_wk->strinput ) == 0 )
+        //変換文字列がなかったら終了
+        //->以前は消してた
+        //STRINPUT_DeleteChangeStr( &p_wk->strinput );
+        //自分の名前とライバル名入力で、何もいれなかったら、
+        //デフォルト名をいれる
+        if( p_wk->p_param->mode == NAMEIN_MYNAME ||
+            p_wk->p_param->mode == NAMEIN_RIVALNAME )
         { 
-          STRBUF  *p_default;
-          p_default = DEFAULTNAME_CreateStr( p_wk, p_wk->p_param->mode, HEAPID_NAME_INPUT );
-
-          //デフォルト名入力
-          if( p_default != NULL )
+          if( STRINPUT_GetStrLength( &p_wk->strinput ) == 0 )
           { 
-            STRINPUT_SetLongStr( &p_wk->strinput, GFL_STR_GetStringCodePointer(p_default) );
-            GFL_STR_DeleteBuffer( p_default );
+            STRBUF  *p_default;
+            p_default = DEFAULTNAME_CreateStr( p_wk, p_wk->p_param->mode, HEAPID_NAME_INPUT );
+
+            //デフォルト名入力
+            if( p_default != NULL )
+            { 
+              STRINPUT_SetLongStr( &p_wk->strinput, GFL_STR_GetStringCodePointer(p_default) );
+              GFL_STR_DeleteBuffer( p_default );
+            }
           }
         }
-      }
 
-      // 入力が終了したときの 文字列を確定する or キャンセルを確定する 処理
-      FinishInput( p_wk );
+        // 入力が終了したときの 文字列を確定する or キャンセルを確定する 処理
+        FinishInput( p_wk );
 
-      if( p_wk->p_param->mode==NAMEIN_POKEMON && p_wk->p_param->box_strbuf!=NULL )  // ポケモン捕獲時でボックス転送
-      {
-        PS_SetupBox( &p_wk->ps, &p_wk->msgwnd, p_wk->p_param, HEAPID_NAME_INPUT );
-        SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
+        if( p_wk->p_param->mode==NAMEIN_POKEMON && p_wk->p_param->box_strbuf!=NULL )  // ポケモン捕獲時でボックス転送
+        {
+          PS_SetupBox( &p_wk->ps, &p_wk->msgwnd, p_wk->p_param, HEAPID_NAME_INPUT );
+          SEQ_SetNext( p_seqwk, SEQFUNC_PrintStream );
+        }
+        else
+        {
+          SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
+        }
       }
       else
       {
-        SEQ_SetNext( p_seqwk, SEQFUNC_FadeIn );
+        //変換文字列があったら確定にする
+        STRINPUT_DecideChangeStr( &p_wk->strinput );
       }
       break;
     case KEYBOARD_INPUT_NONE:       //何もしていない
