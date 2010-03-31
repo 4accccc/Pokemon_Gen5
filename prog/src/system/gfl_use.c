@@ -61,7 +61,7 @@ typedef struct {
 //------------------------------------------------------------------
 static const HEAP_INIT_HEADER hih[]={
   { HEAPSIZE_SYSTEM,  OS_ARENA_MAIN },
-  { 0x180000,   OS_ARENA_MAIN },
+  { HEAPSIZE_APP,   OS_ARENA_MAIN },
 };
 
 static const HEAP_INIT_HEADER hihDSi[]={  //DSI—p
