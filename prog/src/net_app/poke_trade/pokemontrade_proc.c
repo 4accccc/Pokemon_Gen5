@@ -487,6 +487,9 @@ POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_MANAGER* boxData , in
   POKEMON_PASO_PARAM* ppp;
 
   if(trayNo!=-1){
+    if(trayNo > pWork->BOX_TRAY_MAX){
+      return NULL;
+    }
     if(trayNo != pWork->BOX_TRAY_MAX && (index != -1)){
       return BOXDAT_GetPokeDataAddress(boxData,trayNo,index);
     }
@@ -3241,7 +3244,7 @@ static void _maxTrayNumInit(POKEMON_TRADE_WORK *pWork)
   int max = BOXDAT_GetTrayMax(pWork->pBox);
 
 #if DEBUG_ONLY_FOR_ohno
-  max = 24;
+//  max = 24;
 #endif
   pWork->TRADEBOX_LINEMAX = max * 6 + 2;
   pWork->BOX_TRAY_MAX = max;
