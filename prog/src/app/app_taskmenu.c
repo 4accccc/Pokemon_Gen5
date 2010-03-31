@@ -106,6 +106,7 @@ struct _APP_TASKMENU_WORK
   GXRgb transCol;
   BOOL isUpdateMsg;
   BOOL isDecide;
+  BOOL disableKey;  //キー操作無効
 	u32	anmDouble;
 
   GFL_BMPWIN **menuWin;
@@ -165,6 +166,7 @@ APP_TASKMENU_WORK* APP_TASKMENU_OpenMenu( APP_TASKMENU_INITWORK *initWork, const
   GFL_STD_MemCopy16( work->initWork.itemWork , work->itemWork , sizeof(APP_TASKMENU_ITEMWORK) * work->initWork.itemNum );
 
   work->isDecide = FALSE;
+  work->disableKey = FALSE;
   work->cursorPos = 0;
   work->anmCnt = 0;
   work->transAnmCnt = 0;
@@ -461,6 +463,11 @@ static void APP_TASKMENU_ResetPallet( u16 *transBuf, u8 bgFrame , u8 pltNo )
     }
 }
 
+void APP_TASKMENU_SetDisableKey( APP_TASKMENU_WORK *work , const BOOL flg )
+{
+  work->disableKey = flg;
+}
+
 #pragma mark [>main func
 //--------------------------------------------------------------
 //	キー操作更新
@@ -469,6 +476,11 @@ static void APP_TASKMENU_UpdateKey( APP_TASKMENU_WORK *work )
 {
   const int trg = GFL_UI_KEY_GetTrg();
   const int repeat = GFL_UI_KEY_GetRepeat();
+  
+  if( work->disableKey == TRUE )
+  {
+    return;
+  }
 
   //Bは直接選ばれる（キーモードへの変換は下記で）
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH && !(trg&PAD_BUTTON_B)   )
