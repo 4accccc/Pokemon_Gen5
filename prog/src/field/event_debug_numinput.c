@@ -43,6 +43,7 @@
 
 #include "united_nations.h" 
 #include "savedata/intrude_save.h"
+#include "net/net_whpipe.h"
 
 //======================================================================
 //======================================================================
@@ -111,6 +112,9 @@ static u32 DebugGetWhiteLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 para
 static void DebugSetWhiteLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetBlackLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetBlackLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param );
+static void DebugSetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+
 #include "debug_numinput.cdat"
 
 static const DEBUG_NUMINPUT_PARAM DNUM_DATA_EventFlag;
@@ -160,6 +164,9 @@ static  const DEBUG_NUMINPUT_INITIALIZER DATA_Fortune = {
 
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_PalaceLevel = { 
   D_NINPUT_DATA_LIST,   NELEMS( DNI_PalaceLevelList ), DNI_PalaceLevelList, };
+
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_DebugNetConfig = { 
+  D_NINPUT_DATA_LIST,   NELEMS( DNI_DebugNetConfigList ), DNI_DebugNetConfigList, };
 
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_researchTeam = { 
   D_NINPUT_DATA_LIST,   NELEMS(NumInputList_researchTeam), NumInputList_researchTeam, };
@@ -264,6 +271,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_top_scenario, (void*)NULL },
   { dni_top_united_nations, (void*)&DATA_united },
   { dni_top_fortune, (void*)&DATA_Fortune },
+  { dni_debug_net_config, (void*)&DATA_DebugNetConfig },
   { dni_palace_level, (void*)&DATA_PalaceLevel },
   { dni_research_team, (void*)&DATA_researchTeam },
   { dni_q_today, (void*)&DATA_Q_today },
@@ -524,6 +532,7 @@ static void deleteNumWin( DEBUG_NUMINPUT_WORK * wk )
 //--------------------------------------------------------------
 static void printNumWin( DEBUG_NUMINPUT_WORK * wk, u32 num )
 {
+  const DEBUG_NUMINPUT_PARAM * def = wk->dni_param;
   GFL_BMPWIN * bmpwin = wk->bmpwin;
 
   STRBUF * strbuf = GFL_STR_CreateBuffer( 64, wk->heapID );
@@ -536,7 +545,11 @@ static void printNumWin( DEBUG_NUMINPUT_WORK * wk, u32 num )
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp( bmpwin ), WINCLR_COL(FBMP_COL_WHITE) );
 
-  GFL_FONTSYS_SetColor( 1, 2, 15 );
+  if( num < def->min || num > def->max ){
+    GFL_FONTSYS_SetColor( 2, 2, 15 );
+  }else{
+    GFL_FONTSYS_SetColor( 1, 2, 15 );
+  }
 	PRINTSYS_Print( GFL_BMPWIN_GetBmp( bmpwin ), 1, 10, expandBuf, wk->fontHandle );		
 
   GFL_BMPWIN_TransVramCharacter( bmpwin );  //transfer characters
@@ -599,6 +612,9 @@ static GMEVENT_RESULT DebugNumInputEvent( GMEVENT * event , int *seq, void * wor
         break;
       }
       after = before = dni_wk->value;
+      if( dni_wk->value < def->min || dni_wk->value > def->max ){
+        break;
+      }
       diff = 0;
       if (trg & PAD_KEY_UP){
         diff = 1;
@@ -617,14 +633,21 @@ static GMEVENT_RESULT DebugNumInputEvent( GMEVENT * event , int *seq, void * wor
       if(diff == 0){
         break;
       }
-      if( diff < 0 && ( (after-def->min) < (diff*-1))){
-        after = def->max;
-      }else if( diff > 0 && ((def->max-after) < diff)){
-        after = def->min;
+      if( (diff < 0) && ( (after-def->min) < (diff*-1))){
+        if( before > def->min ){
+          after = def->min; //いったんmin
+        }else{
+          after = def->max; //回り込み
+        }
+      }else if( (diff > 0) && ((def->max-after) < diff) ){
+        if( before < def->max ){
+          after = def->max; //いったんmax
+        }else{
+          after = def->min; //回り込み
+        }
       }else{
-        after += diff;
+        after = before+diff;
       }
-
       if (after != before ) {
         printNumWin( dni_wk, after );
         dni_wk->value = after;
@@ -1015,6 +1038,32 @@ static void DebugSetBlackLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 par
 {
   OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
   occupy->black_level = value;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 通信相手制限IDセット
+ */
+//--------------------------------------------------------------
+static u32 DebugGetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param )
+{
+  if( GFL_NET_IsInit() ){
+    return DEBUG_NET_WHPIPE_AloneTestCodeGet();
+  }else{
+    return 255; //無効コード
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 通信相手制限IDセット
+ */
+//--------------------------------------------------------------
+static void DebugSetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  if( GFL_NET_IsInit() && value <= 32 ){
+    DEBUG_NET_WHPIPE_AloneTestCodeSet( value );
+  }
 }
 
 

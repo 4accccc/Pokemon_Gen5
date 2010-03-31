@@ -5,6 +5,10 @@
   @date   09.11.26
 */
 
+#ifdef PM_DEBUG
+
+//////////////////////////////////////////////////////
+///エフェクトエンカウント関連
 static const DEBUG_NUMINPUT_PARAM interval_param = {
  1, 0xFFFF, EFFENC_DEB_NumInputParamGet, EFFENC_DEB_NumInputParamSet,
 };
@@ -26,7 +30,8 @@ static const DEBUG_NUMINPUT_LIST DNI_EffectEncountList[] = {
  { dni_effenc_pos_ofsz, EFFENC_DNI_OFSZ, &ofs_param },
 };
 
-#ifdef PM_DEBUG
+//////////////////////////////////////////////////////
+///国コード関連
 static const DEBUG_NUMINPUT_PARAM country_param = {
  0, 233, DebugGetUnCouontry, DebugSetUnCouontry,
 };
@@ -36,6 +41,8 @@ static const DEBUG_NUMINPUT_LIST DNI_UnitedNationsList[] = {
  { dni_country_code, 0, &country_param },
 };
 
+//////////////////////////////////////////////////////
+///所持金他
 static const DEBUG_NUMINPUT_PARAM gold_param = {
  0, MY_GOLD_MAX, DebugGetGold, DebugSetGold,
 };
@@ -49,9 +56,19 @@ static const DEBUG_NUMINPUT_LIST DNI_FortuneList[] = {
 
 };
 
-#endif  //PM_DEBUG
+//////////////////////////////////////////////////////
+///通信関連
+static const DEBUG_NUMINPUT_PARAM net_whpipe_alonetest_param = {
+ 0, 32, DebugGetNetWhpipeAloneTestCode, DebugSetNetWhpipeAloneTestCode,
+};
 
+static const DEBUG_NUMINPUT_LIST DNI_DebugNetConfigList[] = {
+  //gmm_id, param, dni_param
+ { dni_dnc_alonetest, 0, &net_whpipe_alonetest_param },
+};
 
+//////////////////////////////////////////////////////
+///ブラックシティ・ホワイトフォレスト・パレスレベル
 static const DEBUG_NUMINPUT_PARAM white_level_param = {
  0, OCCUPY_LEVEL_MAX, DebugGetWhiteLevel, DebugSetWhiteLevel,
 };
@@ -64,7 +81,6 @@ static const DEBUG_NUMINPUT_LIST DNI_PalaceLevelList[] = {
   { dni_palace_level_black, 0, &black_level_param },
 
 };
-
 
 
 #include "debug_numinput_research.h"
@@ -663,3 +679,6 @@ static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q30[] = {
   { dni_a144, ANSWER_ID_144, &NumInputParam_totalCountOfA },//「９０ー１００じかん」
   { dni_a145, ANSWER_ID_145, &NumInputParam_totalCountOfA },//「１００じかんー」
 };
+
+
+#endif  //PM_DEBUG

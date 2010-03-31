@@ -32,7 +32,11 @@
 
 // プログラマは基本他の人とつながらない  常に自分のマシンと接続して開発できるように
 // デバッグメニューか何かでで切り替えたら全員とつながることにする
-// 全員とつながる番号は０
+// 全員とつながる番号は０(製品版)
+
+//誰でも繋がる(デバッグ版)　パレスの通信バージョンとして使用 昔の通信と接続で問題があるときにバージョンを上げていく
+#define _DEBUG_ALONETEST_DEFAULT  (105)
+
 #ifdef DEBUG_ONLY_FOR_ohno
 #define _DEBUG_ALONETEST (1)
 #elif DEBUG_ONLY_FOR_sogabe
@@ -73,7 +77,7 @@
 #define _DEBUG_ALONETEST (19)
 #else
 //誰でも繋がる、、、が、パレスの通信バージョンとして使用 昔の通信と接続で問題があるときにバージョンを上げていく
-#define _DEBUG_ALONETEST (105)
+#define _DEBUG_ALONETEST (_DEBUG_ALONETEST_DEFAULT)
 #endif
 
 #define POKEMONWB_BEACON_PRODUCT_NO (0)   //この番号のビーコンは製品版
@@ -928,7 +932,7 @@ void NET_WHPIPE_BeaconSetInfo( void )
     pGF->serviceNo = pInit->gsid;    // ゲームの番号
     pGF->GGID = pInit->ggid;
 #ifdef PM_DEBUG
-    pGF->ProductOrDevelopment = _DEBUG_ALONETEST;
+    pGF->ProductOrDevelopment = pNetWL->mineDebugNo;
 #else
     pGF->ProductOrDevelopment = POKEMONWB_BEACON_PRODUCT_NO;
 #endif
@@ -2072,4 +2076,47 @@ void GFL_NET_WLChangeScanSpeed(int num)
  * @param   
  */
 //-------------------------------------------------------------
+
+
+/////////////////////////////////////////////////////////////////////////
+//デバッグ用ルーチン
+#ifdef PM_DEBUG
+
+//-----------------------------------------------
+/**
+ *  @brief  接続相手限定コードのデバッグ数値入力　
+ */
+//-----------------------------------------------
+u32 DEBUG_NET_WHPIPE_AloneTestCodeGet( void )
+{
+	GFL_NETWL* pNetWL = NULL;
+
+	if( _pNetWL == NULL ){
+		return 255; //通信未初期化なので繋げない
+	}
+	pNetWL = _pNetWL;
+
+  if( pNetWL->mineDebugNo == _DEBUG_ALONETEST_DEFAULT ){
+    return 0;
+  }
+	return pNetWL->mineDebugNo;
+}
+
+///値を設定するための関数
+void DEBUG_NET_WHPIPE_AloneTestCodeSet( u32 value )
+{
+	GFL_NETWL* pNetWL = NULL;
+
+	if( _pNetWL == NULL || value > 32){
+		return; //通信未初期化なので変更しない
+	}
+	pNetWL = _pNetWL;
+  
+  if( value == 0 ){
+    value = _DEBUG_ALONETEST_DEFAULT;
+  }
+  pNetWL->mineDebugNo = value;
+}
+
+#endif  //PM_DEBUG
 

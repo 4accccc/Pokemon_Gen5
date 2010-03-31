@@ -509,3 +509,14 @@ extern void GFL_NET_WLFIXScan(int index);
 
 extern void GFL_NET_WLChangeScanSpeed(BOOL bSlow);
 
+/////////////////////////////////////////////////////////////////////////
+//デバッグ用ルーチン
+#ifdef PM_DEBUG
+
+extern u32 DEBUG_NET_WHPIPE_AloneTestCodeGet( void );
+extern void DEBUG_NET_WHPIPE_AloneTestCodeSet( u32 value );
+
+#endif  //PM_DEBUG
+
+
+
