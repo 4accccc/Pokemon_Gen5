@@ -768,7 +768,11 @@ static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *re
   POKEMON_PARAM *pp;
 
   GFL_STD_MemClear(rec_party, sizeof(REC_POKEPARTY));
-
+  
+  if(PokeParty_GetPokeCount(party) == 0){  //不正チェック用に空の時は全て0でクリアされたまま終了
+    return;
+  }
+  
   rec_party->PokeCountMax = PokeParty_GetPokeCountMax(party);
   rec_party->PokeCount = PokeParty_GetPokeCount(party);
 
@@ -1147,6 +1151,10 @@ void BattleRec_RestoreSetupParam( BATTLE_SETUP_PARAM* setup, HEAPID heapID )
 static void store_Party( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK* rec )
 {
   u32 i;
+  
+  //不正チェック用に未使用領域は全て0で埋める必要がある為、一旦バッファ全体を0クリアしておく
+  GFL_STD_MemClear(rec->rec_party, sizeof(REC_POKEPARTY) * BTL_CLIENT_MAX);
+  
   for(i=0; i<BTL_CLIENT_NUM; ++i)
   {
     if( setup->party[i] ){
