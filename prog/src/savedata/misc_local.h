@@ -67,5 +67,7 @@ struct _MISC
 
   // 電光掲示板
   u16 champ_news_minutes; // チャンピオン情報を流す残り時間[min]
+  
+  u8 player_trainer_data[10];  ///< プレイヤー自身のトレーナーデータ(使用方未定)
 };
 
