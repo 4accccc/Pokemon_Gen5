@@ -40,9 +40,20 @@ EVENT_START ev_scene_r08r0101
   $is_scene_evt = TRUE    //シーンイベント起動フラグ
   //シーンイベント消化 シーンイベント再起動防止シーケンス
   $WK_SCENE_R08R0101_LEG = 1
-  //自機所定の位置へ移動
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
-  _OBJ_ANIME_WAIT()
+  {
+    DEFINE_LOCAL player_x
+    DEFINE_LOCAL player_z
+    //自機の位置を取得
+    _PLAYER_POS_GET( player_x, player_z ) 
+    //自機所定の位置へ移動入り口座標で分岐
+    IF $player_x == 30 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_r )
+    ELSE
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move_l )
+    ENDIF
+  
+   _OBJ_ANIME_WAIT()
+  }
   //条件を満たしたダルタニスが手持ちから検索して今回の対象ポケモンにする
   _GET_EVT_POKE_POS( MONSNO_654, TRUE, target_poke_pos, SCWK_ANSWER )
   IF $SCWK_ANSWER == TRUE THEN
@@ -478,13 +489,23 @@ _ANIME_LABEL	anm_player_up
 	_ANIME_DATA	ACMD_END,0
   
 //--------------------------------------------------------------------
-//自機所定位置に移動
+//自機所定位置に移動　入り口右側のとき
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_move
+_ANIME_LABEL	anm_player_move_r
   _ANIME_DATA	AC_WALK_U_8F,1
   _ANIME_DATA	AC_WALK_L_8F,6
   _ANIME_DATA	AC_WALK_U_8F,7
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//自機所定位置に移動　入り口左側のとき
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_move_l
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_L_8F,5
+  _ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	ACMD_END,0
+  
 
 //--------------------------------------------------------------------
 //自機所定位置に移動  じいさんに左から話しかけた
