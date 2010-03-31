@@ -1589,8 +1589,9 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     }
     break;
   case 6:
-    if( BTLV_WaitMsg(wk->viewCore) )
-    {
+    if( !BTLV_EFFECT_CheckExecute()
+    &&  BTLV_WaitMsg(wk->viewCore)
+    ){
       BTLV_EFFECT_Add( BTLEFF_TRAINER_OUT );
       (*seq)++;
     }
