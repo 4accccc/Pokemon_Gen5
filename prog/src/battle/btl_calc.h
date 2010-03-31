@@ -98,6 +98,8 @@ extern fx32 BTL_CALC_GetWeatherDmgRatio( BtlWeather weather, PokeType wazaType )
 
 extern u8 BTL_CALC_GetResistTypes( PokeType type, PokeType* dst );
 
+extern BOOL BTL_CALC_IsTrtypeGymLeader( u16 trType );
+extern BOOL BTL_CALC_IsTrtypeBig4( u16 trType );
 
 
 //=============================================================================================

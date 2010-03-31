@@ -61,7 +61,7 @@ typedef struct {
 //------------------------------------------------------------------
 static const HEAP_INIT_HEADER hih[]={
   { HEAPSIZE_SYSTEM,  OS_ARENA_MAIN },
-  { HEAPSIZE_APP,   OS_ARENA_MAIN },
+  { 0x180000,   OS_ARENA_MAIN },
 };
 
 static const HEAP_INIT_HEADER hihDSi[]={  //DSI—p
@@ -127,7 +127,7 @@ void GFLUser_Init(void)
     GFL_HEAP_Init(&hih[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0); //ƒƒCƒ“ƒAƒŠ[ƒi
   }
 
-  
+
   GFL_HEAP_DTCM_Init( 0x2000 );       //‚c‚s‚b‚lƒAƒŠ[ƒi
 
 #ifndef MULTI_BOOT_MAKE
@@ -140,7 +140,7 @@ void GFLUser_Init(void)
 #ifndef MULTI_BOOT_MAKE
   GFL_ARC_Init(&ArchiveFileTable[0],ARCID_TABLE_MAX);
 #else
-	GFL_ARC_InitMultiBoot(&ArchiveFileTable[0],ARCID_TABLE_MAX);
+  GFL_ARC_InitMultiBoot(&ArchiveFileTable[0],ARCID_TABLE_MAX);
 #endif //MULTI_BOOT_MAKE
 
   //UIƒVƒXƒeƒ€‰Šú‰»
@@ -199,12 +199,12 @@ void GFLUser_Init(void)
   if( OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER) )
   {
     GFL_OVERLAY_Load( FS_OVERLAY_ID( mcs_lib ) );
-  	GFL_MCS_Init();
+    GFL_MCS_Init();
   }
   MCS_USEMODE_Set( MCS_USEMODE_NONE );
 #endif //MULTI_BOOT_MAKE
 #endif
-	GFUser_ResetVIntrFunc();
+  GFUser_ResetVIntrFunc();
 
   GFUser_SetSleepSoundFunc();
 }
@@ -238,7 +238,7 @@ void GFLUser_Main(void)
   }
   GFL_RTC_Main();
   //GFL_SOUND_Main();
-	//
+  //
 #ifdef PM_DEBUG
 #ifndef MULTI_BOOT_MAKE
   //MCSŽóM
@@ -327,24 +327,24 @@ GFL_TCB * GFUser_HIntr_CreateTCB(GFL_TCB_FUNC * func, void * work, u32 pri)
 //------------------------------------------------------------------
 void GFLUser_VIntr(void)
 {
-	if(GflUseVintrFunc){ GflUseVintrFunc(); }
+  if(GflUseVintrFunc){ GflUseVintrFunc(); }
 }
 
 //VBlankŠ„‚èž‚ÝŠÖ”‚Ì“o˜^
 BOOL GFUser_SetVIntrFunc(GFL_USE_VINTR_FUNC func)
 {
-	if(GflUseVintrFunc){
-		GF_ASSERT(0);
-		return FALSE;
-	}
-	GflUseVintrFunc = func;
-	return TRUE;
+  if(GflUseVintrFunc){
+    GF_ASSERT(0);
+    return FALSE;
+  }
+  GflUseVintrFunc = func;
+  return TRUE;
 }
 
 //VBlankŠ„‚èž‚ÝŠÖ”‚Ì‰ðœ
 void GFUser_ResetVIntrFunc(void)
 {
-	GflUseVintrFunc = NULL;
+  GflUseVintrFunc = NULL;
 }
 
 //------------------------------------------------------------------
@@ -415,7 +415,7 @@ void GFUser_SetStartRandContext(GFL_STD_RandContext *context)
 //------------------------------------------------------------------
 static void GFUser_PublicRandInit(void)
 {
-	GFUser_SetStartRandContext( &gfl_work->publicRandContext );
+  GFUser_SetStartRandContext( &gfl_work->publicRandContext );
   GFL_STD_MtRandInit(GFUser_GetPublicRand(0));
 }
 
@@ -430,7 +430,7 @@ static void GFUser_PublicRandInit(void)
 //------------------------------------------------------------------
 u32 GFUser_GetPublicRand(u32 range)
 {
-	return GFL_STD_Rand( &gfl_work->publicRandContext, range );
+  return GFL_STD_Rand( &gfl_work->publicRandContext, range );
 }
 
 //------------------------------------------------------------------
@@ -443,7 +443,7 @@ u32 GFUser_GetPublicRand(u32 range)
 //------------------------------------------------------------------
 u32 GFUser_GetPublicRand0(u32 range)
 {
-	return GFL_STD_Rand0( &gfl_work->publicRandContext, range );
+  return GFL_STD_Rand0( &gfl_work->publicRandContext, range );
 }
 
 //------------------------------------------------------------------
@@ -513,10 +513,10 @@ BOOL GFUser_SendHeapStatus(void)
 {
   if( OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER) )
   {
-	  GFL_MCS_Resident_SendHeapStatus();
-		return TRUE;
+    GFL_MCS_Resident_SendHeapStatus();
+    return TRUE;
   }
-	return FALSE;
+  return FALSE;
 }
 
 

@@ -9,10 +9,12 @@
 //=============================================================================================
 #include <gflib.h>
 
-#include "btl_common.h"
-#include "btl_calc.h"
+#include "tr_tool\trtype_def.h"
 
+#include "btl_common.h"
 #include "btl_util.h"
+
+#include "btl_calc.h"
 
 //--------------------------------------------------------------
 /**
@@ -787,7 +789,49 @@ u8 BTL_RULE_HandPokeIndex( BtlRule rule, u8 numCoverPos )
   return numCoverPos;
 }
 
+//=============================================================================================
+// トレーナータイプ判別処理
+//=============================================================================================
+BOOL BTL_CALC_IsTrtypeGymLeader( u16 trType )
+{
+  static const u16 typeTbl[] = {
+    TRTYPE_LEADER1A,
+    TRTYPE_LEADER1B,
+    TRTYPE_LEADER1C,
+    TRTYPE_LEADER2,
+    TRTYPE_LEADER3,
+    TRTYPE_LEADER4,
+    TRTYPE_LEADER5,
+    TRTYPE_LEADER6,
+    TRTYPE_LEADER7,
+    TRTYPE_LEADER8A,
+    TRTYPE_LEADER8B,
+  };
+  u32 i;
+  for(i=0; i<NELEMS(typeTbl); ++i){
+    if( typeTbl[i] == trType ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
 
+BOOL BTL_CALC_IsTrtypeBig4( u16 trType )
+{
+  static const u16 typeTbl[] = {
+    TRTYPE_BIGFOUR1,
+    TRTYPE_BIGFOUR2,
+    TRTYPE_BIGFOUR3,
+    TRTYPE_BIGFOUR4,
+  };
+  u32 i;
+  for(i=0; i<NELEMS(typeTbl); ++i){
+    if( typeTbl[i] == trType ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
 
 //=============================================================================================
 // アイテムデータ取得関連

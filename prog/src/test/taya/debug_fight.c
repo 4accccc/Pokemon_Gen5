@@ -2144,7 +2144,8 @@ FS_EXTERN_OVERLAY(battle);
     else
     {
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
-      TrainerID  trID = 1 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+//      TrainerID  trID = 1 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+      TrainerID  trID = TRID_BIGFOUR1_01;
 
       switch( rule ){
       case BTL_RULE_SINGLE:

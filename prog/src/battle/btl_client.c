@@ -58,8 +58,8 @@ enum {
  *  AIトレーナーのメッセージ種類
  */
 enum {
-  AITRAINER_MSG_FIRST_DAMAGE,   ///< 最初のダメージ後
   AITRAINER_MSG_HP_HALF,        ///< HP半分以下
+  AITRAINER_MSG_FIRST_DAMAGE,   ///< 最初のダメージ後
   AITRAINER_MSG_LAST,           ///< 最後の１体登場直後
   AITRAINER_MSG_LAST_HP_HALF,   ///< 最後の１体ＨＰ半分以下
   AITRAINER_MSG_MAX,
@@ -144,7 +144,7 @@ struct _BTL_CLIENT {
   u16            AIItem[ AI_ITEM_MAX ];
   VMHANDLE*      AIHandle;
 
-  u8             AITrainerMsgTalkedFlag[ AITRAINER_MSG_MAX ];
+  u8             AITrainerMsgCheckedFlag[ AITRAINER_MSG_MAX ];
 
 
 
@@ -179,7 +179,9 @@ struct _BTL_CLIENT {
   u8   change_escape_code;
   u8   fForceQuitSelAct;
   u8   cmdCheckTimingCode;
+  u8   fAITrainerBGMChanged;
   u16  EnemyPokeHPBase;
+  u16  AITrainerMsgID;
 
   u8          myChangePokeCnt;
   u8          myPuttablePokeCnt;
@@ -187,8 +189,6 @@ struct _BTL_CLIENT {
 
   u8          fieldEffectFlag[ CLIENT_FLDEFF_BITFLAG_SIZE ];
 
-  //@todo トレーナーメッセージ表示実験
-  BOOL  trainer_msg_check;
 };
 
 
@@ -220,7 +220,7 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Start( BTL_CLIENT* wk, int* seq );
 static void selact_startMsg( BTL_CLIENT* wk, const BTLV_STRPARAM* strParam );
 static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq );
-static  BOOL  check_tr_message( BTL_CLIENT* wk );
+static  BOOL  check_tr_message( BTL_CLIENT* wk, u16* msgID );
 static BOOL selact_Root( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Fight( BTL_CLIENT* wk, int* seq );
 static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq );
@@ -256,8 +256,8 @@ static BOOL SelectPokemonUI_Core( BTL_CLIENT* wk, int* seq, u8 mode );
 static BOOL SubProc_UI_ConfirmIrekae( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq );
-static BtlResult checkResult( BTL_CLIENT* wk, const BTL_RESULT_CONTEXT* resultContext );
-static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq );
+static BtlResult checkResult( BTL_CLIENT* wk );
+static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_NotifyTimeUp( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_ServerCmd( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq );
@@ -391,6 +391,8 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->shooterEnergy = 0;
   wk->cmdLimitTime = 0;
   wk->gameLimitTime = 0;
+  wk->fForceQuitSelAct = FALSE;
+  wk->fAITrainerBGMChanged = FALSE;
 //  wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
 
   wk->bagMode = bagMode;
@@ -413,8 +415,8 @@ BTL_CLIENT* BTL_CLIENT_Create(
     wk->AIHandle = NULL;
   }
 
-  for(i=0; i<NELEMS(wk->AITrainerMsgTalkedFlag); ++i){
-    wk->AITrainerMsgTalkedFlag[ i ] = FALSE;
+  for(i=0; i<NELEMS(wk->AITrainerMsgCheckedFlag); ++i){
+    wk->AITrainerMsgCheckedFlag[ i ] = FALSE;
   }
 
   if( (wk->myType == BTL_CLIENT_TYPE_UI)
@@ -848,8 +850,8 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd )
     { BTL_ACMD_RECORD_DATA,
        { SubProc_UI_RecordData,    NULL,                      NULL                       } },
 
-    { BTL_ACMD_EXIT_WIN_NPC,
-      { SubProc_UI_WinToTrainer,   NULL,  NULL }, },
+    { BTL_ACMD_EXIT_NPC,
+      { SubProc_UI_ExitForNPC,   NULL,  NULL }, },
 
     { BTL_ACMD_EXIT_COMM,
       { SubProc_UI_ExitCommTrainer,   NULL,  NULL }, },
@@ -1329,34 +1331,96 @@ static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq )
 #include  "tr_tool/trtype_def.h"
 #include  "btlv/btlv_effect.h"
 #include  "btlv/btlv_gauge.h"
-static  BOOL  check_tr_message( BTL_CLIENT* wk );
 
-static  BOOL  check_tr_message( BTL_CLIENT* wk )
+
+static  BOOL  check_tr_message( BTL_CLIENT* wk, u16* msgID )
 {
   if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER )
   {
+    static const u16 TRMsgTbl[] = {
+      TRMSG_FIGHT_POKE_HP_HALF,       ///< HP半分以下（初回）
+      TRMSG_FIGHT_FIRST_DAMAGE,       ///< HP満タンでない（初回）
+      TRMSG_FIGHT_POKE_LAST,          ///< 最後の１体登場
+      TRMSG_FIGHT_POKE_LAST_HP_HALF,  ///< 最後の１体がHP半分以下
+    };
+
     u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
     u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
+
     if( trainerID != TRID_NULL )
     {
       BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+      const BTL_POKEPARAM* bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, clientID, 0 );
+      u32 i;
+      int enableIndex;
 
-      if( ( BTL_MAIN_GetRule( wk->mainModule ) != BTL_RULE_SINGLE ) &&
-          ( BTL_MAIN_GetCompetitor( wk->mainModule ) != BTL_COMPETITOR_TRAINER ) )
+      // 場に出ているポケで生きているヤツを探しておく
+      if( BPP_IsDead(bpp) )
       {
-        return FALSE;
-      }
-
-      if( TT_TrainerMessageCheck( trainerID, TRMSG_FIGHT_POKE_LAST_HP_HALF, wk->heapID ) )
-      {
-        //とりあえず最後の1匹判定だけする
-        if( ( BTL_PARTY_GetAliveMemberCount( party ) == 1 ) && ( wk->trainer_msg_check == FALSE ))
-        {
-          wk->trainer_msg_check = TRUE;
-          return TRUE;
+        u32 numCoverPos = BTL_MAIN_GetClientCoverPosCount( wk->mainModule, clientID );
+        for(i=1; i<numCoverPos; ++i){
+          bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, clientID, i );
+          if( !BPP_IsDead(bpp) ){
+            break;
+          }
         }
       }
-    }
+
+      enableIndex = -1;
+      for(i=0; i<NELEMS(TRMsgTbl); ++i)
+      {
+        if( wk->AITrainerMsgCheckedFlag[i] == FALSE )
+        {
+          if( TT_TrainerMessageCheck(trainerID, TRMsgTbl[i], wk->heapID ) )
+          {
+            switch( TRMsgTbl[i] ){
+            case TRMSG_FIGHT_POKE_HP_HALF:
+              if( BPP_GetValue(bpp,BPP_HP) <= BTL_CALC_QuotMaxHP(bpp,2) ){
+                enableIndex = i;
+                wk->AITrainerMsgCheckedFlag[ i ] = TRUE;
+              }
+              break;
+
+            case TRMSG_FIGHT_FIRST_DAMAGE:       ///< HP満タンでない（初回）
+              if( !BPP_IsHPFull(bpp) ){
+                enableIndex = i;
+                wk->AITrainerMsgCheckedFlag[ i ] = TRUE;
+              }
+              break;
+
+            case TRMSG_FIGHT_POKE_LAST:          ///< 最後の１体登場
+              if( (BTL_PARTY_GetMemberCount(party) > 1)
+              &&  (BTL_PARTY_GetAliveMemberCount(party) == 1)
+              ){
+                enableIndex = i;
+                wk->AITrainerMsgCheckedFlag[ i ] = TRUE;
+              }
+              break;
+
+            case TRMSG_FIGHT_POKE_LAST_HP_HALF:  ///< 最後の１体がHP半分以下
+              if( (BTL_PARTY_GetMemberCount(party) > 1)
+              &&  (BTL_PARTY_GetAliveMemberCount(party) == 1)
+              &&  (BPP_GetValue(bpp,BPP_HP) <= BTL_CALC_QuotMaxHP(bpp,2) )
+              ){
+                enableIndex = i;
+                wk->AITrainerMsgCheckedFlag[ i ] = TRUE;
+              }
+            }
+          }
+          else
+          {
+            wk->AITrainerMsgCheckedFlag[i] = TRUE;
+          }
+        }
+      } /* for( i<NELEMS(TRMsgTbl) ) */
+
+      if( enableIndex >= 0 )
+      {
+        *msgID = TRMsgTbl[ enableIndex ];
+        return TRUE;
+      }
+
+    } /* if( trainerID != TRID_NULL ) */
   }
 
   return FALSE;
@@ -1382,7 +1446,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     else{
       //@todo トレーナーメッセージ表示実験
 #if 1
-      if( check_tr_message( wk ) == TRUE )
+      if( check_tr_message( wk, &wk->AITrainerMsgID ) == TRUE )
       {
         (*seq) = 5;
       }
@@ -1508,30 +1572,19 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
       BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
       BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
-      BTLV_StartMsgTrainer( wk->viewCore, trainerID, TRMSG_FIGHT_POKE_LAST_HP_HALF );
-      if( BTLV_GAUGE_GetPinchBGMFlag( BTLV_EFFECT_GetGaugeWork() ) == 0 )
-      {
-        switch( BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID ) ){
+      BTLV_StartMsgTrainer( wk->viewCore, trainerID, wk->AITrainerMsgID );
+
+      // @todo これだとピンチBGM中にはSEQ_BGM_BATTLESUPERIORに移行しないが、これで良いのだろうか？
+      if( ((wk->AITrainerMsgID==TRMSG_FIGHT_POKE_LAST) || (wk->AITrainerMsgID==TRMSG_FIGHT_POKE_LAST_HP_HALF))
+      &&  (BTLV_GAUGE_GetPinchBGMFlag( BTLV_EFFECT_GetGaugeWork() ) == 0)
+      ){
         //現状、曲変化はジムリーダーと四天王だけ
-        case TRTYPE_BIGFOUR1:
-        case TRTYPE_BIGFOUR2:
-        case TRTYPE_BIGFOUR3:
-        case TRTYPE_BIGFOUR4:
-        case TRTYPE_LEADER1A:
-        case TRTYPE_LEADER1B:
-        case TRTYPE_LEADER1C:
-        case TRTYPE_LEADER2:
-        case TRTYPE_LEADER3:
-        case TRTYPE_LEADER4:
-        case TRTYPE_LEADER5:
-        case TRTYPE_LEADER6:
-        case TRTYPE_LEADER7:
-        case TRTYPE_LEADER8A:
-        case TRTYPE_LEADER8B:
+        u16 trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
+        if( (BTL_CALC_IsTrtypeGymLeader(trType) || BTL_CALC_IsTrtypeBig4(trType))
+        &&  (wk->fAITrainerBGMChanged == FALSE)
+        ){
           PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
-          break;
-        default:
-          break;
+          wk->fAITrainerBGMChanged = TRUE;
         }
       }
       (*seq)++;
@@ -1554,6 +1607,9 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
   }
   return FALSE;
 }
+
+
+
 //----------------------------------------------------------------------
 /**
  *  「たたかう」選択後の分岐
@@ -2971,15 +3027,12 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
   switch( *seq ){
   case 0:
     {
-      const void* pResultContext;
       BtlResult  result;
       u16 strID;
       u8  fMulti;
       u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
 
-      BTL_ADAPTER_GetRecvData( wk->adapter, &pResultContext );
-
-      result = checkResult( wk, (const BTL_RESULT_CONTEXT*)pResultContext );
+      result = checkResult( wk );
       fMulti = BTL_MAIN_IsMultiMode( wk->mainModule );
 
       switch( result ){
@@ -3019,8 +3072,12 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
   return FALSE;
 }
 
-static BtlResult checkResult( BTL_CLIENT* wk, const BTL_RESULT_CONTEXT* resultContext )
+static BtlResult checkResult( BTL_CLIENT* wk )
 {
+  const BTL_RESULT_CONTEXT* resultContext;
+
+  BTL_ADAPTER_GetRecvData( wk->adapter, (const void*)(&resultContext) );
+
   switch( resultContext->resultCode ){
   case BTL_RESULT_LOSE:
     if( !BTL_MAINUTIL_IsFriendClientID(resultContext->clientID, wk->myID) ){
@@ -3040,34 +3097,65 @@ static BtlResult checkResult( BTL_CLIENT* wk, const BTL_RESULT_CONTEXT* resultCo
 
 
 //---------------------------------------------------
-// ゲーム内トレーナー戦に勝利
+// ゲーム内トレーナー戦を終了
 //---------------------------------------------------
-static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq )
+static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
 {
+  static BtlResult resultCode = 0;
+
   switch( *seq ){
   case 0:
     {
       u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
-      u16 winBGM = BTL_MAIN_GetWinBGMNo( wk->mainModule );
+      int strID = -1;
 
-      PMSND_PlayBGM( winBGM );
+      resultCode = checkResult( wk );
 
-      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_WinTrainer );
-      BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
-      BTLV_StartMsg( wk->viewCore, &wk->strParam );
-      (*seq)++;
+      switch( resultCode ){
+      case BTL_RESULT_WIN:
+        strID = BTL_STRID_STD_WinTrainer;
+        PMSND_PlayBGM( BTL_MAIN_GetWinBGMNo( wk->mainModule ) );
+        break;
+      case BTL_RESULT_LOSE:
+        strID = BTL_STRID_STD_LoseTrainer;
+        break;
+      case BTL_RESULT_DRAW:
+        strID = BTL_STRID_STD_DrawTrainer;
+        break;
+      }
+
+      if( strID >= 0 )
+      {
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, strID );
+        BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+        BTLV_StartMsg( wk->viewCore, &wk->strParam );
+        (*seq)++;
+      }
     }
     break;
   case 1:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
-      u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
-      u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
-      int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
+      BOOL fExitMsg = TRUE;
+      u16  trmsgID;
+      if( resultCode == BTL_RESULT_WIN ){
+        trmsgID = TRMSG_FIGHT_LOSE;
+      }else if( resultCode == BTL_RESULT_LOSE ){
+        trmsgID = TRMSG_FIGHT_WIN;
+      }else{
+        fExitMsg = FALSE;
+      }
 
-      BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
-      BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
-      BTLV_StartMsgTrainer( wk->viewCore, trainerID, TRMSG_FIGHT_LOSE );
+      if( fExitMsg )
+      {
+        u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
+        u32 trainerID = BTL_MAIN_GetClientTrainerID( wk->mainModule, clientID );
+        int trtype = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
+
+        BTLV_EFFECT_SetTrainer( trtype, BTLV_MCSS_POS_TR_BB, 0, 0, 0 );
+        BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
+        BTLV_StartMsgTrainer( wk->viewCore, trainerID, trmsgID );
+      }
       (*seq)++;
     }
     break;
@@ -3102,20 +3190,22 @@ static BOOL SubProc_UI_WinToTrainer( BTL_CLIENT* wk, int* seq )
   case 4:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
-      u32 getMoney = BTL_MAIN_FixBonusMoney( wk->mainModule );
-      if( getMoney )
+      if( resultCode == BTL_RESULT_WIN )
       {
-        u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+        u32 getMoney = BTL_MAIN_FixBonusMoney( wk->mainModule );
+        if( getMoney )
+        {
+          u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
 
-        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_GetMoney );
-        BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
-        BTLV_STRPARAM_AddArg( &wk->strParam, getMoney );
-        BTLV_StartMsg( wk->viewCore, &wk->strParam );
-        (*seq)++;
+          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_GetMoney );
+          BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+          BTLV_STRPARAM_AddArg( &wk->strParam, getMoney );
+          BTLV_StartMsg( wk->viewCore, &wk->strParam );
+          (*seq)++;
+          break;
+        }
       }
-      else{
-        return TRUE;
-      }
+      return TRUE;
     }
     break;
 

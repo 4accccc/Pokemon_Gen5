@@ -1092,7 +1092,7 @@ static BOOL ServerMain_ExitBattle_ForNPC( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
   case 0:
-    SetAdapterCmdEx( server, BTL_ACMD_EXIT_WIN_NPC, &server->btlResultContext, sizeof(server->btlResultContext) );
+    SetAdapterCmdEx( server, BTL_ACMD_EXIT_NPC, &server->btlResultContext, sizeof(server->btlResultContext) );
     (*seq)++;
     break;
   case 1:

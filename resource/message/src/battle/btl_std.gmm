@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-03-29T17:28:33"/>
+	<create user="taya" host="W00146" date="2010-03-31T13:53:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -716,6 +716,22 @@
 との　しょうぶに　かった！</language>
 		<language name="JPN_KANJI" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]
 との　勝負に　かった！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_LoseTrainer" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>NPCトレーナー戦に敗北</comment>
+		<language name="JPN" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]
+との　しょうぶに　まけた！</language>
+		<language name="JPN_KANJI" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]
+との　勝負に　負けた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_DrawTrainer" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>NPCトレーナー戦に引き分け</comment>
+		<language name="JPN" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]
+との　しょうぶは　ひきわけだ！</language>
+		<language name="JPN_KANJI" width="216">[1:0E:トレーナー種別名:0]の　[1:00:トレーナー名:1]
+との　勝負は　引き分けだ！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_WinComm" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
