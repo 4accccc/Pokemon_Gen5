@@ -3532,6 +3532,13 @@ static BOOL tokwin_disp_progress( TOK_WIN* tokwin )
       tokwin->posX = FX32_CONST( TOKWIN_HIDEPOS_ENEMY );
       tokwin->speedX = FX32_CONST( -TOKWIN_HIDEPOS_ENEMY ) / TOKWIN_MOVE_FRAMES;
     }
+
+    {
+      int x = tokwin->posX >> FX32_SHIFT;
+      GFL_BG_SetScroll( tokwin->bgFrame, GFL_BG_SCROLL_X_SET, x );
+      GFL_BG_SetScroll( tokwin->bgFrame, GFL_BG_SCROLL_Y_SET, 0 );
+    }
+
     PMSND_PlaySE( WAVE_SE_WB_SHOOTER );  // @TODO ‰¼
     tokwin->seq++;
     break;
