@@ -204,7 +204,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/bgwinfrm.c \
         poke_tool/gauge_tool.c \
         system/gra_tool.c \
-        field/field_comm/field_beacon_message.c \
 				system/pokegra.c \
 				system/trgra.c \
 				system/poke2dgra.c \

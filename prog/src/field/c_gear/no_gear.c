@@ -27,7 +27,6 @@
 #include "msg/msg_c_gear.h"
 #include "msg/msg_invasion.h"
 
-#include "field/field_beacon_message.h"
 
 #define _NET_DEBUG (1)  //デバッグ時は１
 

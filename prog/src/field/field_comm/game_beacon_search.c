@@ -15,7 +15,6 @@
 
 #include "field/game_beacon_search.h"
 #include "gamesystem/game_comm.h"
-#include "field/field_beacon_message.h"
 #include "field/intrude_comm.h"
 #include "net/net_whpipe.h"
 
@@ -49,7 +48,6 @@ typedef struct _GAME_BEACON_SYS
   GBS_BEACON beacon_send_data;    ///<送信ビーコンデータ
   GBS_TARGET_INFO target_info;    ///<ビーコンで見つけた相手の情報
   
-  FIELD_BEACON_MSG_SYS *fbmSys;
   WIH_DWC_WORK* pWDWork;
   
 }GAME_BEACON_SYS;
@@ -134,7 +132,6 @@ void * GameBeacon_Init(int *seq, void *pwk)
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
 	
 	gbs = GFL_HEAP_AllocClearMemory(GFL_HEAP_LOWID(HEAPID_PROC), sizeof(GAME_BEACON_SYS));
-	gbs->fbmSys = FIELD_BEACON_MSG_InitSystem( GAMEDATA_GetFieldBeaconMessageData(gamedata) , GFL_HEAP_LOWID(HEAPID_PROC) );
 	return gbs;
 }
 
@@ -218,7 +215,6 @@ BOOL GameBeacon_ExitWait(int *seq, void *pwk, void *pWork)
   GAME_BEACON_SYS_PTR gbs = pWork;
 
   if(gbs->status == GBS_STATUS_NULL){
-    FIELD_BEACON_MSG_ExitSystem( gbs->fbmSys );
     GFL_HEAP_FreeMemory(gbs);
     OS_TPrintf("GameBeaconWait...Finish\n");
     return TRUE;
@@ -381,7 +377,6 @@ static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_in
   	bcon_buff = GFL_NET_GetBeaconData(i);
   	if(bcon_buff != NULL )
   	{
-      FIELD_BEACON_MSG_CheckBeacon( gbs->fbmSys , bcon_buff , GFL_NET_GetBeaconMacAddress(i) );
     	if(bcon_buff->member_num < bcon_buff->member_max){
 //        OS_TPrintf("ビーコン受信　%d番 gsid = %d\n", i, bcon_buff->gsid);
     		if(target_index == -1){
@@ -417,12 +412,8 @@ static void* GameBeacon_GetBeaconData(void* pWork)
   GAME_BEACON_SYS_PTR gbs = pWork;
   
   GameBeacon_SetBeaconParam(&gbs->beacon_send_data);
-#if 0
-  FIELD_BEACON_MSG_SetBeaconMessage( gbs->fbmSys , &gbs->beacon_send_data );
-#else
   GAMEBEACON_SendDataCopy(&gbs->beacon_send_data.info);
   gbs->beacon_send_data.beacon_type = GBS_BEACONN_TYPE_INFO;
-#endif
   return &gbs->beacon_send_data;
 }
 

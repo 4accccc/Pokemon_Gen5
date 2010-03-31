@@ -115,8 +115,6 @@ struct _GAMEDATA{
   OCCUPY_INFO occupy[OCCUPY_ID_MAX];    ///<占拠情報
   FIELD_WFBC_CORE wfbc[GAMEDATA_WFBC_ID_MAX];  ///<WhiteForest BlackCity
   
-  FIELD_BEACON_MSG_DATA *fbmData; //フィールドビーコンメッセージデータ
-  
   ENCOUNT_WORK* enc_work; ///<エンカウント関連データワーク
   
   SHORTCUT_CURSOR shortcut_cursor;  ///<ショートカット画面のカーソル
@@ -242,9 +240,6 @@ GAMEDATA * GAMEDATA_Create(HEAPID heapID)
   //歩数カウント
   gd->fieldmap_walk_count = 0;
 
-  //上にココの時点で名前が入っていると書いてあったので、初期化に使用。
-  gd->fbmData = FIELD_BEACON_MSG_CreateData( heapID , GAMEDATA_GetMyStatus(gd) );
-
   if(SaveControl_NewDataFlagGet(gd->sv_control_ptr) == FALSE){
   }
   
@@ -289,7 +284,6 @@ void GAMEDATA_Delete(GAMEDATA * gamedata)
   BEACON_STATUS_Delete( gamedata->beacon_status );
   COMM_PLAYER_SUPPORT_Free(gamedata->comm_player_support);
   ENCOUNT_WORK_Delete( gamedata->enc_work );
-  FIELD_BEACON_MSG_DeleteData( gamedata->fbmData );
   BGM_INFO_DeleteSystem(gamedata->bgm_info_sys);
   GFL_HEAP_FreeMemory( gamedata->WiFiList );
   BOX_DAT_ExitManager( gamedata->boxMng );
@@ -1231,20 +1225,6 @@ void GAMEDATA_SetAlwaysNetFlag( GAMEDATA *gamedata, BOOL is_on )
 { 
   NETWORK_SEARCH_MODE mode  = is_on? NETWORK_SEARCH_ON: NETWORK_SEARCH_OFF;
   CONFIG_SetNetworkSearchMode( gamedata->config, mode );
-}
-
-//==================================================================
-/**
- * フィールドビーコンメッセージデータ取得
- *
- * @param   gamedata    GAMEDATAへのポインタ
- *
- * @retval  
- */
-//==================================================================
-FIELD_BEACON_MSG_DATA* GAMEDATA_GetFieldBeaconMessageData( GAMEDATA *gamedata )
-{
-  return gamedata->fbmData;
 }
 
 //----------------------------------------------------------------------------

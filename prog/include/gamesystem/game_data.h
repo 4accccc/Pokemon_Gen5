@@ -23,7 +23,9 @@
 #include "field/field_sound_proc.h"
 #include "sound/bgm_info.h"
 
-#include "field/field_beacon_message.h"//FIELD_BEACON_MSG_DATA
+#include "field/game_beacon_search.h"
+#include "savedata/mystatus.h"
+
 //#include "field/field_encount.h"     //ENCOUNT_WORK
 #include "savedata/box_savedata.h"     //BOX_MANAGER
 //#include "savedata/intrude_save.h"   //OCCUPY_INFO
@@ -500,17 +502,6 @@ extern BOOL GAMEDATA_GetAlwaysNetFlag( const GAMEDATA *gamedata );
  */
 //-----------------------------------------------------------------------------
 extern void GAMEDATA_SetAlwaysNetFlag( GAMEDATA *gamedata, BOOL is_on );
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  フィールドビーコンメッセージデータ取得
- *
- *  @param   gamedata   GAMEDATAへのポインタ
- *
- *  @retval  FIELD_BEACON_MSG_DATA* fbmData
- */
-//----------------------------------------------------------------------------
-extern FIELD_BEACON_MSG_DATA* GAMEDATA_GetFieldBeaconMessageData( GAMEDATA *gamedata );
 
 //----------------------------------------------------------------------------
 /**

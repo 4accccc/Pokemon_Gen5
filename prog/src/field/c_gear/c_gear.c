@@ -24,7 +24,6 @@
 
 #include "net/wih_dwc.h"
 
-#include "field/field_beacon_message.h"
 #include "gamesystem/game_beacon_accessor.h"
 #include "../../field/field_comm/intrude_work.h"
 #include "../../field/field_comm/intrude_main.h"
