@@ -268,12 +268,11 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         {
           MISC *misc = SaveData_GetMisc( GAMEDATA_GetSaveControlWork(param->gameData) );
           // 名前入力画面へ
-          GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
           wk->nameinParam = NAMEIN_AllocParamPokemonCapture( wk->heapID, wk->pp, NAMEIN_POKEMON_LENGTH, NULL,
                                                            wk->box_strbuf, boxman, wk->box_tray,  misc );
 
           // ローカルPROC呼び出し
-          GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &NameInputProcData, wk->nameinParam );
+          GFL_PROC_LOCAL_CallProc( wk->local_procsys, FS_OVERLAY_ID(namein), &NameInputProcData, wk->nameinParam );
           (*seq)++;
         }
         else
@@ -297,7 +296,6 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         PP_Put( wk->pp, ID_PARA_nickname, (u32)(wk->strbuf) );
       }
       NAMEIN_FreeParam( wk->nameinParam );
-      GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
       wk->nameinParam = NULL;
       (*seq)++;
     }

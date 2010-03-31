@@ -6273,9 +6273,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
     // ui削除
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
     // 名前入力、コード入力パラメータ作成
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     p_wk->p_namein = CodeIn_NameInParamMake( p_wk, p_data, heapID );
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
     CodeIn_BlockDataMake_4_4_4( block );
     p_wk->p_codein = CodeInput_ParamCreate( heapID, CODEIN_MODE_FRIEND, 0, FRIENDCODE_MAXLEN, block );
@@ -6323,9 +6321,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
 
   case SEQ_CODEIN_END:
     // 名前入力、コード入力画面の破棄
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     NAMEIN_FreeParam( p_wk->p_namein );
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
     CodeInput_ParamDelete( p_wk->p_codein );
     // ui読み込み
     GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
@@ -6338,9 +6334,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
     // ui削除
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
     // 名前入力、コード入力パラメータ作成
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     p_wk->p_namein = CodeIn_NameInParamMake( p_wk, p_data, heapID );
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
     WFNOTE_DrawExit( p_sys ); // 画面ワーク全破棄
     p_wk->p_subproc = GFL_PROC_LOCAL_boot( heapID );
@@ -6374,9 +6368,7 @@ static WFNOTE_STRET CodeIn_Main( WFNOTE_CODEIN* p_wk, WFNOTE_WK* p_sys, WFNOTE_D
 
   case SEQ_CODEIN_NAMEINONLY_END: // 名前入力のみ
     // 名前入力、コード入力画面の破棄
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
     NAMEIN_FreeParam( p_wk->p_namein );
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
     // ui読み込み
     GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
     WFNOTE_DrawInit( p_sys, heapID ); // 画面復帰

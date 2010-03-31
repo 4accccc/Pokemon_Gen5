@@ -253,7 +253,6 @@ static GFL_PROC_RESULT DEBUG_IRC_NAME_PROC_Init( GFL_PROC *p_proc, int *p_seq, v
 {	
 	IRCNAME_MAIN_WORK	*p_wk;
 
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
 
 	//ƒq[ƒvì¬
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_NAGI_DEBUG_SUB, 0x10000 );
@@ -296,7 +295,6 @@ static GFL_PROC_RESULT DEBUG_IRC_NAME_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 	//ƒq[ƒv”jŠü
 	GFL_HEAP_DeleteHeap( HEAPID_NAGI_DEBUG_SUB );
 	
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -346,7 +344,7 @@ static GFL_PROC_RESULT DEBUG_IRC_NAME_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 		break;
 
 	case SEQ_PLAYER1_NAME_INPUT:
-		GFL_PROC_SysCallProc( NO_OVERLAY_ID, &NameInputProcData, p_wk->p_param_adrs );
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(namein), &NameInputProcData, p_wk->p_param_adrs );
 		*p_seq	= SEQ_PLAYER1_NAME_END;
 		break;
 
@@ -366,7 +364,7 @@ static GFL_PROC_RESULT DEBUG_IRC_NAME_PROC_Main( GFL_PROC *p_proc, int *p_seq, v
 		break;
 
 	case SEQ_PLAYER2_NAME_INPUT:
-		GFL_PROC_SysCallProc( NO_OVERLAY_ID, &NameInputProcData, p_wk->p_param_adrs );
+		GFL_PROC_SysCallProc( FS_OVERLAY_ID(namein), &NameInputProcData, p_wk->p_param_adrs );
 		*p_seq	= SEQ_PLAYER2_NAME_END;
 		break;
 

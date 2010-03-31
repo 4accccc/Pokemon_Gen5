@@ -3019,7 +3019,6 @@ static BOOL debugMenuCallProc_ChangeName( DEBUG_MENU_EVENT_WORK *p_wk )
   //デフォルト名
   p_ev_wk->p_default_str  = MyStatus_CreateNameString(p_mystatus, HEAPID_PROC);
 
-  GFL_OVERLAY_Load(FS_OVERLAY_ID(namein) );
   //名前入力ワーク設定
   p_ev_wk->p_param  = NAMEIN_AllocParam( HEAPID_PROC, NAMEIN_MYNAME, MyStatus_GetMySex(p_mystatus), 0, NAMEIN_PERSON_LENGTH, p_ev_wk->p_default_str, NULL );
 
@@ -3051,7 +3050,7 @@ static GMEVENT_RESULT debugEvnetChangeName( GMEVENT *p_event, int *p_seq, void *
   {
   case SEQ_CALL_PROC:
     GMEVENT_CallEvent( p_wk->p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
-        NO_OVERLAY_ID, &NameInputProcData, p_wk->p_param ) );
+        FS_OVERLAY_ID(namein), &NameInputProcData, p_wk->p_param ) );
     *p_seq  = SEQ_PROC_END;
     break;
 
@@ -3071,7 +3070,6 @@ static GMEVENT_RESULT debugEvnetChangeName( GMEVENT *p_event, int *p_seq, void *
     NAMEIN_FreeParam( p_wk->p_param );
     GFL_STR_DeleteBuffer( p_wk->p_default_str );
 
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
     return GMEVENT_RES_FINISH;
   }
 

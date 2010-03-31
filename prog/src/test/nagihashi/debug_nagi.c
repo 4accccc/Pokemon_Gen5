@@ -522,9 +522,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Init( GFL_PROC *p_proc, int *p_seq, void 
 	GFL_STD_MemClear( p_wk, sizeof(DEBUG_NAGI_MAIN_WORK) );
 
 	CreateTemporaryModules( p_wk, HEAPID_NAGI_DEBUG );
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
 	p_wk->p_namein_param	= NAMEIN_AllocParam( HEAPID_NAGI_DEBUG, NAMEIN_FREE_WORD, 1, 0, NAMEIN_FREE_WORD_LENGTH, NULL, p_misc );
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
   NAGI_Printf( "pokeparty size=[%d]\n", PokeParty_GetWorkSize() );
 
@@ -565,9 +563,7 @@ static GFL_PROC_RESULT DEBUG_PROC_NAGI_Exit( GFL_PROC *p_proc, int *p_seq, void 
 				FS_OVERLAY_ID(title), &TitleProcData, NULL );
   }
 
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
 	NAMEIN_FreeParam( p_wk->p_namein_param );
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
 	DeleteTemporaryModules( p_wk );
 

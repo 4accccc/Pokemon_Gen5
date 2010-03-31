@@ -4244,10 +4244,8 @@ int BOX2MAIN_NameInCall( BOX2_SYS_WORK * syswk )
 	wk->name = GFL_STR_CreateBuffer( BOX_TRAYNAME_BUFSIZE, HEAPID_BOX_SYS );
 	BOXDAT_GetBoxName( syswk->dat->sv_box, syswk->box_mv_pos, wk->name );
 
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
 	wk->prm = NAMEIN_AllocParam(
 							HEAPID_BOX_SYS, NAMEIN_BOX, 0, 0, BOX_TRAYNAME_MAXLEN, wk->name, misc );
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 	GFL_PROC_LOCAL_CallProc( syswk->localProc, FS_OVERLAY_ID(namein), &NameInputProcData, wk->prm );
 
 	syswk->subProcWork = wk;
@@ -4273,9 +4271,7 @@ int BOX2MAIN_NameInExit( BOX2_SYS_WORK * syswk )
 	}
 	syswk->subRet = wk->prm->cancel;
 
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
 	NAMEIN_FreeParam( wk->prm );
-	GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 	GFL_STR_DeleteBuffer( wk->name );
 	GFL_HEAP_FreeMemory( syswk->subProcWork );
 

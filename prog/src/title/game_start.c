@@ -255,9 +255,7 @@ static GFL_PROC_RESULT GameStart_FirstProcInit( GFL_PROC * proc, int * seq, void
   work->selModeParam.mystatus   = work->mystatus;
 
   //ŽålŒö‚Ì«•Ê‚ÍA«•ÊÝ’è‚ªI‚í‚Á‚Ä‚©‚ç“ü‚ê‚é
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );  
   work->nameInParam = NAMEIN_AllocParam( GFL_HEAPID_APP , NAMEIN_MYNAME , 0, 0, NAMEIN_PERSON_LENGTH , NULL, NULL );
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
   work->procsys_up = GFL_PROC_LOCAL_boot( GFL_HEAPID_APP );
 
@@ -437,9 +435,7 @@ static GFL_PROC_RESULT GameStart_FirstProcEnd( GFL_PROC * proc, int * seq, void 
 
   init_param = DEBUG_GetGameInitWork(GAMEINIT_MODE_FIRST, 0, &pos, 0 );
 
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
   NAMEIN_FreeParam(work->nameInParam);
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
   GFL_PROC_FreeWork( proc );
   
   GFL_PROC_SysSetNextProc(NO_OVERLAY_ID, &GameMainProcData, init_param);

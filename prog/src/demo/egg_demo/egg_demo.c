@@ -664,10 +664,9 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
         work->trunk_step = TRUNK_STEP_NAMEIN;
 
         // 名前入力へ行く
-        GFL_OVERLAY_Load( FS_OVERLAY_ID(namein) );
         work->namein_param = NAMEIN_AllocParamPokemonByPP( work->heap_id, param->pp, NAMEIN_POKEMON_LENGTH, NULL, misc );
         // ローカルPROC呼び出し
-        GFL_PROC_LOCAL_CallProc( work->local_procsys, NO_OVERLAY_ID, &NameInputProcData, work->namein_param );
+        GFL_PROC_LOCAL_CallProc( work->local_procsys, FS_OVERLAY_ID(namein), &NameInputProcData, work->namein_param );
       }
     }
     break;
@@ -685,7 +684,6 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
           GFL_STR_DeleteBuffer( strbuf );
         }
         NAMEIN_FreeParam( work->namein_param );
-        GFL_OVERLAY_Unload( FS_OVERLAY_ID(namein) );
 
         // 次へ
         work->trunk_step = TRUNK_STEP_NAMEIN_BLACK;
