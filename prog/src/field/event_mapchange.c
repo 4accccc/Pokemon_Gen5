@@ -1048,6 +1048,11 @@ static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo( GMEVENT* event, int* seq, 
     (*seq)++;
     break;
   case 2:
+    //自機のフォームを二足歩行に戻す
+    {
+      PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork(gameData);
+      PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_NORMAL );
+    }
     // BGM変更
     FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound );
@@ -1095,6 +1100,11 @@ static GMEVENT_RESULT EVENT_MapChangeByAnawohoru( GMEVENT* event, int* seq, void
     (*seq)++;
     break;
   case 2:
+    //自機のフォームを二足歩行に戻す
+    {
+      PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork(gameData);
+      PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_NORMAL );
+    }
     // BGM変更
     FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound );
@@ -1141,6 +1151,11 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport( GMEVENT* event, int* seq, void*
     (*seq)++;
     break;
   case 2:
+    //自機のフォームを二足歩行に戻す
+    {
+      PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork(gameData);
+      PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_NORMAL );
+    }
     // BGM変更
     FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
     FSND_PlayStartBGM( fieldSound );
@@ -1891,6 +1906,12 @@ GMEVENT* EVENT_ChangeMapSorawotobu( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fie
 //  return EVENT_ChangeMapPosNoFadeCore( gameSystem, fieldmap, EV_MAPCHG_FLYSKY, zoneID, pos, dir );  
   MAPCHANGE_WORK* work;
   GMEVENT* event;
+  //自機のフォームを二足歩行に戻す
+  {
+    GAMEDATA *gameData = GAMESYSTEM_GetGameData(gameSystem);
+    PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork(gameData);
+    PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_NORMAL );
+  }
 
   event = GMEVENT_Create(gameSystem, NULL, EVENT_MapChangeNoFade, sizeof(MAPCHANGE_WORK));
   work  = GMEVENT_GetEventWork(event);
@@ -2086,6 +2107,13 @@ static GMEVENT_RESULT GMEVENT_GameOver(GMEVENT * event, int * seq, void *work)
 
   // BGM 再生開始
   case 1: 
+    //自機のフォームを二足歩行に戻す
+    {
+      GAMEDATA *gameData = GAMESYSTEM_GetGameData(p_wk->gsys);
+      PLAYER_WORK * player = GAMEDATA_GetMyPlayerWork(gameData);
+      PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_NORMAL );
+    }
+    // BGM 再生開始
     {
       u32 soundIdx = FSND_GetFieldBGM( p_wk->gamedata, p_wk->loc_req.zone_id );
       GMEVENT_CallEvent( event, 
