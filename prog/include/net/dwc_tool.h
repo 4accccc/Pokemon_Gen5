@@ -36,18 +36,17 @@
  *					構造体
 */
 //=============================================================================
-#define DWC_TOOL_BADWORD_STRL_MAX  (10) //暫定で１０文字までです
+#define DWC_TOOL_BADWORD_STR_MAX  (10+EOM_SIZE) //暫定で１０文字+EOMまでです
 //-------------------------------------
 ///	不正文字ワーク
 //=====================================
 typedef struct 
 {
-  STRCODE   badword_str[ DWC_TOOL_BADWORD_STRL_MAX ];
+  STRCODE   badword_str[ DWC_TOOL_BADWORD_STR_MAX ];
   u16       *p_badword_arry[1];
   char      badword_result[1];
   int       badword_num;
 
-  STRBUF    *p_src_str;
   HEAPID    heapID;
 } DWC_TOOL_BADWORD_WORK;
 
@@ -62,16 +61,15 @@ typedef struct
  *	@brief  不正文字チェックをスタート
  *
  *	@param	DWC_TOOL_BADWORD_WORK *p_wk   ワーク
- *	@param	STRCODE *p_str               チェックするSTRBUF(不正文字時はこの中を書き換えます)
+ *	@param	STRCODE *cp_str                チェックするSTRBUF(中でコピーするのですぐ解放して構いません)
  *	@param	heapID                        テンポラリ用ヒープID
  */
 //-----------------------------------------------------------------------------
-static inline void DWC_TOOL_BADWORD_Start( DWC_TOOL_BADWORD_WORK *p_wk, STRBUF *p_str, HEAPID heapID )
+static inline void DWC_TOOL_BADWORD_Start( DWC_TOOL_BADWORD_WORK *p_wk, const STRBUF *cp_str, HEAPID heapID )
 { 
   BOOL ret;
 
   GFL_STD_MemClear( p_wk, sizeof(DWC_TOOL_BADWORD_WORK));
-  p_wk->p_src_str = p_str;
   p_wk->heapID    = heapID;
 
 /*
@@ -84,9 +82,9 @@ static inline void DWC_TOOL_BADWORD_Start( DWC_TOOL_BADWORD_WORK *p_wk, STRBUF *
   */
   { 
     int i;
-    const STRCODE *cp_strcode = GFL_STR_GetStringCodePointer( p_wk->p_src_str );
-    GF_ASSERT( GFL_STR_GetBufferLength( p_wk->p_src_str ) < DWC_TOOL_BADWORD_STRL_MAX );
-    for( i = 0; i < GFL_STR_GetBufferLength( p_wk->p_src_str ); i++ )
+    const STRCODE *cp_strcode = GFL_STR_GetStringCodePointer( cp_str );
+    GF_ASSERT( GFL_STR_GetBufferLength( cp_str )+EOM_SIZE < DWC_TOOL_BADWORD_STR_MAX );
+    for( i = 0; i < GFL_STR_GetBufferLength( cp_str )+EOM_SIZE; i++ )
     { 
       if( GFL_STR_GetEOMCode() == cp_strcode[i] )
       {
@@ -125,29 +123,63 @@ static inline BOOL DWC_TOOL_BADWORD_Wait( DWC_TOOL_BADWORD_WORK *p_wk, BOOL *p_i
 { 
   BOOL ret;
   ret = DWC_CheckProfanityProcess() == DWC_PROF_STATE_SUCCESS;
-
-  if( ret == TRUE )
-  { 
-    *p_is_bad_word  = p_wk->badword_num;
-
-    if( *p_is_bad_word )
-    { 
-      //不正時は名前を入れ替える
-      GFL_MSGDATA *p_msg  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_namein_dat, p_wk->heapID );
-
-      if ( GET_VERSION() == VERSION_BLACK )
-      {
-        //ブラックバージョンの処理
-        GFL_MSG_GetString( p_msg, NAMEIN_DEF_NAME_005, p_wk->p_src_str );
-      }
-      else
-      {
-        //ホワイトバージョンの処理
-        GFL_MSG_GetString( p_msg, NAMEIN_DEF_NAME_004, p_wk->p_src_str );
-      }
-
-      GFL_MSG_Delete( p_msg );
-    }
-  }
   return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ニックネームの不正名を取得
+ *
+ *	@param	heapID              STRBUF作成用ヒープID
+ *	@retval STRBUF              strbuf
+ */
+//-----------------------------------------------------------------------------
+static inline STRBUF * DWC_TOOL_CreateBadNickName( HEAPID heapID )
+{ 
+  GFL_MSGDATA *p_msg  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_namein_dat, heapID );
+  STRBUF      *p_strbuf;
+
+  if ( GET_VERSION() == VERSION_BLACK )
+  {
+    //ブラックバージョンの処理
+    p_strbuf  = GFL_MSG_CreateString( p_msg, NAMEIN_DEF_NAME_005 );
+  }
+  else
+  {
+    //ホワイトバージョンの処理
+    p_strbuf  = GFL_MSG_CreateString( p_msg, NAMEIN_DEF_NAME_004 );
+  }
+
+  GFL_MSG_Delete( p_msg );
+
+  return p_strbuf;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ニックネームの不正名をSTRCODEに設定
+ *
+ *	@param	STRCODE *p_strcode  STRCODE
+ *	@param	len                 EOMを含む長さ
+ *	@param	heapID              テンポラリ用ヒープID
+ */
+//-----------------------------------------------------------------------------
+static inline void DWC_TOOL_SetBadNickName( STRCODE *p_strcode, u16 len, HEAPID heapID )
+{
+  GF_ASSERT( p_strcode );
+  GF_ASSERT( len );
+  { 
+    STRBUF * p_src_buff = DWC_TOOL_CreateBadNickName( heapID );
+    const STRCODE *p_src_code = GFL_STR_GetStringCodePointer( p_src_buff );
+
+    int i;
+    for( i = 0; i < len-1 && i < GFL_STR_GetBufferLength(p_src_buff); i++ ) //-1はEOM分を考慮して
+    { 
+      p_strcode[i]  = p_src_code[i];
+    }
+    p_strcode[i] = GFL_STR_GetEOMCode();
+
+    GFL_STR_DeleteBuffer( p_src_buff );
+  }
 }

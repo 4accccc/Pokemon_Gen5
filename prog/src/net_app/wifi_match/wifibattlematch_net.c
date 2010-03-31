@@ -338,6 +338,7 @@ struct _WIFIBATTLEMATCH_NET_WORK
 
   //以下不正文字チェック用
   DWC_TOOL_BADWORD_WORK badword;
+  MYSTATUS              *p_badword_mystatus;
 
   //以下デバッグ用データ
   BOOL is_debug;
@@ -3981,9 +3982,16 @@ WIFIBATTLEMATCH_SEND_GPFDATA_RET WIFIBATTLEMATCH_NET_WaitSendGpfData( WIFIBATTLE
  *	@param	HEAPID                          ヒープID
  */
 //-----------------------------------------------------------------------------
-void WIFIBATTLEMATCH_NET_StartBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, STRBUF *p_str, HEAPID heapID )
+void WIFIBATTLEMATCH_NET_StartBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, MYSTATUS *p_mystatus, HEAPID heapID )
 { 
-  DWC_TOOL_BADWORD_Start( &p_wk->badword, p_str, heapID );
+  p_wk->p_badword_mystatus  = p_mystatus;
+  {
+
+    STRBUF *p_word_check  = MyStatus_CreateNameString( p_mystatus, p_wk->heapID );
+    DWC_TOOL_BADWORD_Start( &p_wk->badword, p_word_check, heapID );
+
+    GFL_STR_DeleteBuffer( p_word_check );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -3997,7 +4005,20 @@ void WIFIBATTLEMATCH_NET_StartBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, STRBUF *p
 //-----------------------------------------------------------------------------
 BOOL WIFIBATTLEMATCH_NET_WaitBadWord( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL *p_is_bad_word )
 { 
-  return DWC_TOOL_BADWORD_Wait( &p_wk->badword, p_is_bad_word );
+  BOOL ret;
+  ret = DWC_TOOL_BADWORD_Wait( &p_wk->badword, p_is_bad_word );
+
+  if( ret )
+  { 
+    STRBUF  *p_modifiname = DWC_TOOL_CreateBadNickName( p_wk->heapID );
+
+    MyStatus_SetMyNameFromString( p_wk->p_badword_mystatus, p_modifiname);
+
+    GFL_STR_DeleteBuffer(p_modifiname);
+    NAGI_Printf( "わるもしでした\n" );
+  }
+
+  return ret;
 }
 
 //=============================================================================

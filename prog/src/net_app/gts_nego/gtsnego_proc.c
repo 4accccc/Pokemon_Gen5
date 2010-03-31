@@ -182,7 +182,6 @@ struct _GTSNEGO_WORK {
   MATCH_DATA MatchData;
   BOOL keyMode;
   DWC_TOOL_BADWORD_WORK aBadWork;
-  STRBUF  *wordCheck;
 };
 
 
@@ -571,13 +570,14 @@ static void _timingCheck4( GTSNEGO_WORK *pWork )
   EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
   MYSTATUS* pTargetSt;
   MYSTATUS* pMy = pEv->pStatus[1];
-  BOOL res;   // 不正文字検査完了
+  BOOL res  = FALSE;   // 不正文字検査完了
 
   if(DWC_TOOL_BADWORD_Wait( &pWork->aBadWork, &res)){
     if(res){  //不正の場合
-      MyStatus_SetMyNameFromString(pMy, pWork->wordCheck);  //OKなものをいれる
+      STRBUF  *badword  = DWC_TOOL_CreateBadNickName( HEAPID_IRCBATTLE );
+      MyStatus_SetMyNameFromString(pMy, badword);  //OKなものをいれる
+      GFL_STR_DeleteBuffer(badword);
     }
-    GFL_STR_DeleteBuffer(pWork->wordCheck);
     pTargetSt = GAMEDATA_GetMyStatusPlayer(pWork->pGameData, 1-GFL_NET_SystemGetCurrentID());
     MyStatus_Copy(pMy,pTargetSt);
 
@@ -595,14 +595,16 @@ static void _timingCheck5( GTSNEGO_WORK *pWork )
 {
   EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
   MYSTATUS* pMy = pEv->pStatus[1];
+  STRBUF  *wordCheck;
   
   if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_NO3, WB_NET_GTSNEGO)){
     return;
   }
 
   // 不正文字検査
-  pWork->wordCheck  = MyStatus_CreateNameString( pMy, HEAPID_IRCBATTLE );
-  DWC_TOOL_BADWORD_Start( &pWork->aBadWork, pWork->wordCheck,  HEAPID_IRCBATTLE );
+  wordCheck  = MyStatus_CreateNameString( pMy, HEAPID_IRCBATTLE );
+  DWC_TOOL_BADWORD_Start( &pWork->aBadWork, wordCheck,  HEAPID_IRCBATTLE );
+  GFL_STR_DeleteBuffer(wordCheck);
   
   _CHANGE_STATE(pWork,_timingCheck4);
 }

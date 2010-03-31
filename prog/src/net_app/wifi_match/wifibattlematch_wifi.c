@@ -194,9 +194,6 @@ typedef struct
 
   REGULATION_CARDDATA         *p_reg;
 
-
-  STRBUF                      *p_word_check;
-
 } WIFIBATTLEMATCH_WIFI_WORK;
 
 //=============================================================================
@@ -2493,8 +2490,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_START_BADWORD:
-    p_wk->p_word_check  = MyStatus_CreateNameString((MYSTATUS*)p_param->p_enemy_data, HEAPID_WIFIBATTLEMATCH_CORE);
-    WIFIBATTLEMATCH_NET_StartBadWord( p_wk->p_net, p_wk->p_word_check, HEAPID_WIFIBATTLEMATCH_CORE );
+    WIFIBATTLEMATCH_NET_StartBadWord( p_wk->p_net, (MYSTATUS*)p_param->p_enemy_data, HEAPID_WIFIBATTLEMATCH_CORE );
     *p_seq  = SEQ_WAIT_BADWORD;
     break;
   case SEQ_WAIT_BADWORD:
@@ -2505,14 +2501,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       ret = WIFIBATTLEMATCH_NET_WaitBadWord( p_wk->p_net, &is_badword );
       if( ret )
       { 
-        if( is_badword )
-        { 
-          //WIFIBATTLEMATCH_DATA_ModifiName( p_param->p_enemy_data, HEAPID_WIFIBATTLEMATCH_CORE );
-
-          MyStatus_SetMyNameFromString((MYSTATUS*)p_param->p_enemy_data, p_wk->p_word_check);
-          NAGI_Printf( "‚í‚é‚à‚µ‚Å‚µ‚½\n" );
-        }
-        GFL_STR_DeleteBuffer(p_wk->p_word_check);
         *p_seq  = SEQ_START_OK_MATCHING_MSG;
       }
       else
@@ -2521,12 +2509,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE ) )
         { 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //–ß‚é
-          GFL_STR_DeleteBuffer(p_wk->p_word_check);
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
           break;
 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //Ø’f‚µƒƒOƒCƒ“‚©‚ç‚â‚è’¼‚µ
-          GFL_STR_DeleteBuffer(p_wk->p_word_check);
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
           break;
         }
