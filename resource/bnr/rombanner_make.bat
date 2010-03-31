@@ -1,7 +1,5 @@
-ntexconv pm_b_bnr.bmp -no -bg -bgb -bgnc -f palette16
-ntexconv pm_w_bnr.bmp -no -bg -bgb -bgnc -f palette16
-makebanner pokemon_WB_black.txt
-makebanner pokemon_WB_white.txt
+bannercvtr pm_b_bnr.nce
+bannercvtr pm_w_bnr.nce
 makebanner.TWL pokemon_WB_black.txt
 makebanner.TWL pokemon_WB_white.txt
 addbanner pokemon_WB_black.bnr blackbanner.srl
