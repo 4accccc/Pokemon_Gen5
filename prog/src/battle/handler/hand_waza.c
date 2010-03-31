@@ -1253,14 +1253,18 @@ static void handler_TrickRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     else
     {
       BTL_HANDEX_PARAM_REMOVE_FLDEFF* param;
-      BTL_HANDEX_PARAM_MESSAGE*  msg_param;
 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_REMOVE_FLDEFF, pokeID );
       param->effect = BTL_FLDEFF_TRICKROOM;
 
-      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_TrickRoomOff );
-      HANDEX_STR_AddArg( &msg_param->str, pokeID );
+    #if 0
+      {
+        BTL_HANDEX_PARAM_MESSAGE*  msg_param;
+        msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+        HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_TrickRoomOff );
+        HANDEX_STR_AddArg( &msg_param->str, pokeID );
+      }
+    #endif
 
     }
   }
@@ -1432,14 +1436,14 @@ static void handler_Kawarawari_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVF
       BTL_HANDEX_PARAM_SIDEEFF_REMOVE* param;
       BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
+      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_STD, BTL_STRID_STD_Kawarawari_Break );
+
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
       param->side = side;
       BTL_CALC_BITFLG_Construction( param->flags, sizeof(param->flags) );
       BTL_CALC_BITFLG_Set( param->flags, BTL_SIDEEFF_REFRECTOR );
       BTL_CALC_BITFLG_Set( param->flags, BTL_SIDEEFF_HIKARINOKABE );
-
-      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_STD, BTL_STRID_STD_Kawarawari_Break );
     }
   }
 }
