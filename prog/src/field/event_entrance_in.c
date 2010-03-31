@@ -404,12 +404,12 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
   // 処理シーケンス
   enum {
     SEQ_SETUP_CAMERA,                   // カメラのセットアップ
-    SEQ_CAMERA_STOP_TRACE_REQUEST,      // カメラの自機追従OFFリクエスト発行
-    SEQ_WAIT_CAMERA_TRACE,              // カメラの自機追従処理の終了待ち
-    SEQ_CAMERA_TRACE_OFF,               // カメラの自機追従OFF
     SEQ_LOAD_ENTRANCE_CAMERA_SETTINGS,  // カメラ演出データ取得
     SEQ_CREATE_CAMERA_EFFECT_TASK,      // カメラ演出タスクの作成
     SEQ_WAIT_CAMERA_EFFECT_TASK,        // カメラ演出タスク終了待ち
+    SEQ_CAMERA_STOP_TRACE_REQUEST,      // カメラの自機追従OFFリクエスト発行
+    SEQ_WAIT_CAMERA_TRACE,              // カメラの自機追従処理の終了待ち
+    SEQ_CAMERA_TRACE_OFF,               // カメラの自機追従OFF
     SEQ_DOOR_IN_ANIME,                  // ドア進入イベント
     SEQ_RECOVER_CAMERA,                 // カメラの復帰
     SEQ_EXIT,                           // イベント終了
@@ -419,25 +419,6 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
   // カメラのセットアップ
   case SEQ_SETUP_CAMERA:
     SetupCamera( work );
-    *seq = SEQ_CAMERA_STOP_TRACE_REQUEST;
-    break;
-
-  // カメラのトレース処理停止リクエスト発行
-  case SEQ_CAMERA_STOP_TRACE_REQUEST:
-    if( FIELD_CAMERA_CheckTrace( camera ) == TRUE ) {
-      FIELD_CAMERA_StopTraceRequest( camera );
-    }
-    *seq = SEQ_WAIT_CAMERA_TRACE;
-    break;
-
-  // カメラのトレース処理終了待ち
-  case SEQ_WAIT_CAMERA_TRACE: 
-    if( FIELD_CAMERA_CheckTrace( camera ) == FALSE ){ *seq = SEQ_CAMERA_TRACE_OFF; }
-    break;
-
-  // カメラのトレースOFF
-  case SEQ_CAMERA_TRACE_OFF:
-    FIELD_CAMERA_FreeTarget( camera );
     *seq = SEQ_LOAD_ENTRANCE_CAMERA_SETTINGS;
     break;
 
@@ -466,8 +447,27 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
     {
       FIELD_TASK_MAN* taskMan;
       taskMan = FIELDMAP_GetTaskManager( fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ){ *seq = SEQ_DOOR_IN_ANIME; }
+      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ){ *seq = SEQ_CAMERA_STOP_TRACE_REQUEST; }
     }
+    break;
+
+  // カメラのトレース処理停止リクエスト発行
+  case SEQ_CAMERA_STOP_TRACE_REQUEST:
+    if( FIELD_CAMERA_CheckTrace( camera ) == TRUE ) {
+      FIELD_CAMERA_StopTraceRequest( camera );
+    }
+    *seq = SEQ_WAIT_CAMERA_TRACE;
+    break;
+
+  // カメラのトレース処理終了待ち
+  case SEQ_WAIT_CAMERA_TRACE: 
+    if( FIELD_CAMERA_CheckTrace( camera ) == FALSE ){ *seq = SEQ_CAMERA_TRACE_OFF; }
+    break;
+
+  // カメラのトレースOFF
+  case SEQ_CAMERA_TRACE_OFF:
+    FIELD_CAMERA_FreeTarget( camera );
+    *seq = SEQ_DOOR_IN_ANIME;
     break;
 
   // ドア進入アニメ
