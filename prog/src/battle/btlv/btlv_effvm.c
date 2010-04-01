@@ -61,6 +61,15 @@ vu32  volume_up_frame   = EFFVM_CHANGE_VOLUME_UP_FRAME;
 #endif
 #endif
 
+#ifdef PM_DEBUG
+#if defined(DEBUG_ONLY_FOR_kageyama_shota)|\
+    defined(DEBUG_ONLY_FOR_adachi_minako)|\
+    defined(DEBUG_ONLY_FOR_sogabe)|\
+    defined(DEBUG_ONLY_FOR_ichinose)
+#define DEBUG_SE_END_PRINT
+#endif
+#endif
+
 //============================================================================================
 /**
  *  構造体宣言
@@ -3438,6 +3447,59 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   //サブルーチンコールが残っていてはいけない
   GF_ASSERT( bevw->call_count == 0 );
 
+#ifdef DEBUG_SE_END_PRINT
+  { 
+    BOOL  se_end_flag = FALSE;
+
+    OS_TPrintf("WazaNo:%d\n",bevw->waza);
+    //SE終了チェックをおこなう
+    if( bevw->se_play_wait_flag )
+    { 
+      OS_TPrintf("開始待ちのSEが終了していません\n");
+      se_end_flag = TRUE;
+    }
+    if( bevw->se_effect_enable_flag )
+    { 
+      OS_TPrintf("動的変化中のSEが終了していません\n");
+      se_end_flag = TRUE;
+    }
+    if( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SE1 ) )
+    { 
+      OS_TPrintf("SE1が終了していません\n");
+      se_end_flag = TRUE;
+    }
+    if( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SE2 ) )
+    { 
+      OS_TPrintf("SE2が終了していません\n");
+      se_end_flag = TRUE;
+    }
+    if( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SE3 ) )
+    { 
+      OS_TPrintf("SE3が終了していません\n");
+      se_end_flag = TRUE;
+    }
+    if( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SE_PSG ) )
+    { 
+      OS_TPrintf("PSGが終了していません\n");
+      se_end_flag = TRUE;
+    }
+    if( PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SYS ) )
+    { 
+      OS_TPrintf("SYSTEMが終了していません\n");
+      se_end_flag = TRUE;
+    }
+    GF_ASSERT( se_end_flag == FALSE );
+    if( se_end_flag == TRUE )
+    { 
+      OS_TPrintf("se_end_flagのアサート抜けました\n\n");
+    }
+    else
+    { 
+      OS_TPrintf("正常終了しました\n\n");
+    }
+  }
+#endif
+
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -5211,7 +5273,6 @@ static  void  TCB_EFFVM_SEEFFECT( GFL_TCB* tcb, void* work )
       NNS_SndPlayerSetVolume( PMSND_GetSE_SndHandle( bes->player ), value );
       break;
     case BTLEFF_SEEFFECT_PAN:
-      OS_TPrintf( "pan:%d\n", value );
       PMSND_SetStatusSE_byPlayerID( bes->player, PMSND_NOEFFECT, PMSND_NOEFFECT, value );
       break;
     }
