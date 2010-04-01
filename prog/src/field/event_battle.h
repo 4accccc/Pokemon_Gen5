@@ -13,6 +13,7 @@
 #include "gamesystem/game_event.h"
 #include "battle/battle_bg_def.h"
 #include "encount_data.h"    //for ENCOUNT_TYPE
+#include "savedata/tradepoke_after_save.h"    //for TRPOKE_AFTER_SAVE_TYPE
 
 //======================================================================
 //  define
@@ -38,6 +39,9 @@ extern GMEVENT * EVENT_TrialHouseTrainerBattle(
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM *bp );
 
 extern GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, HEAPID heapID );
+
+extern GMEVENT * EVENT_TradeAfterTrainerBattle(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, int rule, int partner_id, int tr_id0, int tr_id1, u32 flags, TRPOKE_AFTER_SAVE_TYPE trade_type );
 
 //--------------------------------------------------------------
 /**

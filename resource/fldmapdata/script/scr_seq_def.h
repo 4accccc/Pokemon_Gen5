@@ -2609,6 +2609,28 @@
     .short  \ret_wk
     .endm
 
+
+//--------------------------------------------------------------
+/**
+ * @def _TRADE_AFTER_TRAINER_BTL_SET
+ * @brief 交換後　ポケモン　再戦　バトル開始
+ * @param tr_id       トレーナーID
+ * @param trade_type  交換　ポケモン　タイプ
+ *
+#define SCR_TRPOKE_AFTER_SAVE_C02 (0)    // シッポウ
+#define SCR_TRPOKE_AFTER_SAVE_C05 (1)    // ホドモエ
+ */
+//--------------------------------------------------------------
+#define _TRADE_AFTER_TRAINER_BTL_SET( tr_id, trade_type ) \
+    _ASM_TRADE_AFTER_TRAINER_BTL_SET tr_id, trade_type
+    .macro  _ASM_TRADE_AFTER_TRAINER_BTL_SET tr_id, trade_type
+    .short  EV_SEQ_TRADE_AFTER_TRAINER_BTL_SET
+    .short  \tr_id
+    .short  0
+    .short  SCR_BATTLE_MODE_NONE
+    .short  \trade_type
+    .endm
+
 //======================================================================
 //
 //    野生ポケモン戦関連
@@ -4960,6 +4982,26 @@
     .macro  _ASM_WAZAMACHINE_LOT ret_wk
     .short  EV_SEQ_WAZAMACHINE_LOT
     .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _TRADEPOKE_AFTER_SAVE
+ * @brief 交換後ポケモン　対戦用のデータ　として保存
+ * @param	party_pos   保存するポケモンの位置
+ * @param	trade_type  保存する交換タイプ
+ *
+#define SCR_TRPOKE_AFTER_SAVE_C02 (0)    // シッポウ
+#define SCR_TRPOKE_AFTER_SAVE_C05 (1)    // ホドモエ
+ */
+//--------------------------------------------------------------
+#define _TRADEPOKE_AFTER_SAVE( party_pos, trade_type ) \
+    _ASM_TRADEPOKE_AFTER_SAVE party_pos, trade_type
+
+    .macro  _ASM_TRADEPOKE_AFTER_SAVE party_pos, trade_type
+    .short  EV_SEQ_TRADEPOKE_AFTER_SAVE
+    .short  \party_pos
+    .short  \trade_type
     .endm
 
 //--------------------------------------------------------------

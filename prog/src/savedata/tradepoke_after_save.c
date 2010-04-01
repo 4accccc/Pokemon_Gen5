@@ -118,8 +118,13 @@ BOOL TRPOKE_AFTER_SV_IsData( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE
 //-----------------------------------------------------------------------------
 u8 TRPOKE_AFTER_SV_GetLevel( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type  )
 {
+  u8 ret;
   GF_ASSERT( type < TRPOKE_AFTER_SAVE_TYPE_MAX );
-  return sv->data[ type ].level;
+  ret = sv->data[ type ].level + TRPOKE_AFTER_LEVEL_ADD;
+  if( ret > TRPOKE_AFTER_LEVEL_MAX ){
+    ret = TRPOKE_AFTER_LEVEL_MAX;
+  }
+  return ret;
 }
 
 //----------------------------------------------------------------------------
@@ -179,10 +184,10 @@ u32 TRPOKE_AFTER_SV_GetRnd( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE 
  *	@param	str     ï∂éöóÒäiî[êÊ
  */
 //-----------------------------------------------------------------------------
-void TRPOKE_AFTER_SV_GetNickName( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type, STRBUF* str )
+const STRCODE* TRPOKE_AFTER_SV_GetNickName( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type )
 {
   GF_ASSERT( type < TRPOKE_AFTER_SAVE_TYPE_MAX );
-  GFL_STR_SetStringCode( str, sv->data[type].nickname );
+  return sv->data[type].nickname;
 }
 
 
@@ -205,6 +210,7 @@ void TRPOKE_AFTER_SV_SetData( TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type
   sv->data[type].speabino = PP_Get( pp, ID_PARA_speabino, NULL );
   sv->data[type].personal_rnd = PP_Get( pp, ID_PARA_personal_rnd, NULL );
   PP_Get( pp, ID_PARA_nickname_raw, sv->data[type].nickname );
+  sv->data[type].indata = TRUE;
 }
 
 

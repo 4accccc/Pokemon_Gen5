@@ -36,3 +36,8 @@ extern VMCMD_RESULT EvCmdFieldPokeTradeCheck( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdFieldPokeTrade( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdWazaMachineLot( VMHANDLE * core, void * wk );
+
+extern VMCMD_RESULT EvCmdTradeAfterSaveSet( VMHANDLE * core, void * wk );
+
+
+

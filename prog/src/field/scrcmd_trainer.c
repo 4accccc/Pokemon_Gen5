@@ -13,6 +13,8 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 
+#include "savedata/tradepoke_after_save.h"
+
 #include "fieldmap.h"
 
 #include "script.h"
@@ -580,3 +582,44 @@ VMCMD_RESULT EvCmdTrainerItemGet( VMHANDLE *core, void *wk )
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  交換後　ポケモンとの対戦を設定
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdGetTradeAfterTrainerBattleSet( VMHANDLE *core, void *wk )
+{
+  u32 fight_type;
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  u16 script_id   = SCRIPT_GetStartScriptID( sc );
+	u16 tr_id_0 = SCRCMD_GetVMWorkValue( core, work );
+	u16 tr_id_1 = SCRCMD_GetVMWorkValue( core, work );
+  u16 flags = SCRCMD_GetVMWorkValue( core, work );
+  u16 trade_type = SCRCMD_GetVMWorkValue( core, work );
+  u8 rule;
+
+  GF_ASSERT( trade_type < TRPOKE_AFTER_SAVE_TYPE_MAX );
+
+  rule = SCRIPT_GetTrainerBtlRule( tr_id_0 );
+
+  //　話しかけからダブルバトルへの対応
+  // tr_id_0 == tr_id_1のとき、ダブルバトルが成立する
+  if (tr_id_1 == 0 && SCRIPT_CheckTrainer2vs2Type( tr_id_0 ) == 1 )
+  {
+    tr_id_1 = tr_id_0;
+  }
+  {
+    GAMESYS_WORK *gsys = SCRIPT_GetGameSysWork( sc );
+    SCRIPT_FLDPARAM * fparam = SCRIPT_GetFieldParam( sc );
+    GMEVENT *ev_battle =
+      EVENT_TradeAfterTrainerBattle( gsys, fparam->fieldMap, rule, TRID_NULL, tr_id_0, tr_id_1, flags, trade_type );
+
+    SCRIPT_CallEvent( sc, ev_battle );
+  }
+	return VMCMD_RESULT_SUSPEND;
+}
+
+

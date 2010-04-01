@@ -841,6 +841,12 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_debug_tomoya
 
+//*
+
+  _TRADEPOKE_AFTER_SAVE( 0, SCR_TRPOKE_AFTER_SAVE_C02 )
+  _TRADE_AFTER_TRAINER_BTL_SET( 2, SCR_TRPOKE_AFTER_SAVE_C02 )
+//*/
+
 /*
   _OBJ_HIGH_JUMP(0, 782, 0, 756)
 //*/
@@ -855,7 +861,7 @@ EVENT_START   ev_debug_tomoya
   
   _CAMERA_END()
 //*/
-//*
+/*
   //_EV_MOVEPOKE_CREATE( MMDL_ID_PLAYER )
   _EV_MOVEPOKE_CREATE( 0 )
 

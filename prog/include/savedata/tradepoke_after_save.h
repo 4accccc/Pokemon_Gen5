@@ -35,6 +35,12 @@ typedef enum{
   TRPOKE_AFTER_SAVE_TYPE_MAX,
 } TRPOKE_AFTER_SAVE_TYPE;
 
+//-------------------------------------
+///	ÉåÉxÉãê¨í∑
+//=====================================
+#define TRPOKE_AFTER_LEVEL_ADD  (10)
+#define TRPOKE_AFTER_LEVEL_MAX  (100)
+
 //-----------------------------------------------------------------------------
 /**
  *					ç\ë¢ëÃêÈåæ
@@ -72,7 +78,7 @@ extern u8 TRPOKE_AFTER_SV_GetLevel( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SA
 extern u8 TRPOKE_AFTER_SV_GetSex( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type  );
 extern u8 TRPOKE_AFTER_SV_GetSpeabino( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type  ); // Ç∆Ç≠ÇπÇ¢
 extern u32 TRPOKE_AFTER_SV_GetRnd( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type  ); // å≈ëÃóêêî
-extern void TRPOKE_AFTER_SV_GetNickName( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type, STRBUF* str );
+extern const STRCODE* TRPOKE_AFTER_SV_GetNickName( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type );
 
 //Å@ê›íË
 extern void TRPOKE_AFTER_SV_SetData( TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type, const POKEMON_PARAM * pp );

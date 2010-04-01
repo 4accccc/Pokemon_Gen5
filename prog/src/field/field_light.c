@@ -354,7 +354,7 @@ FIELD_LIGHT* FIELD_LIGHT_Create( u32 light_no, int rtc_second, int season, FIELD
 {
   FIELD_LIGHT* p_sys;
 
-  //TOMOYA_Printf( "light_no %d\n" );
+  TOMOYA_Printf( "light_no %d\n",light_no );
 
   p_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_LIGHT) );
 

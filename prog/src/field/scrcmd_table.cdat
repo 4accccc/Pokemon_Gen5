@@ -260,7 +260,7 @@
 
   DEF_CMD( EvCmdTrainerSpecialTypeGet, EV_SEQ_TRAINER_SPTYPE_GET )
   DEF_CMD( EvCmdTrainerItemGet, EV_SEQ_TRAINER_ITEM_GET )
-  NO_CMD()
+  DEF_CMD( EvCmdGetTradeAfterTrainerBattleSet, EV_SEQ_TRADE_AFTER_TRAINER_BTL_SET )
   NO_CMD()
   
   //トレーナーフラグ関連
@@ -518,7 +518,7 @@
 
   DEF_CMD( EvCmdGetBreederJudgeResult, EV_SEQ_GET_BREEDER_JUDGE_RESULT )
   DEF_CMD( EvCmdWazaMachineLot, EV_SEQ_WAZAMACHINE_LOT )
-  NO_CMD()
+  DEF_CMD( EvCmdTradeAfterSaveSet, EV_SEQ_TRADEPOKE_AFTER_SAVE )
   NO_CMD()
 
   // ボックス関連

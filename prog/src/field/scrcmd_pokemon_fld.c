@@ -27,6 +27,7 @@
 #include "scrcmd_pokemon_fld.h"
 
 #include "savedata/misc.h"
+#include "savedata/tradepoke_after_save.h"
 #include "pm_define.h"  //TEMOTI_POKEMAX
 
 #include "waza_tool/wazano_def.h" // for WAZANO_xxxx
@@ -1015,6 +1016,33 @@ VMCMD_RESULT EvCmdWazaMachineLot( VMHANDLE * core, void * wk )
 }
 
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  交換その後用　ポケモンをセーブ
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdTradeAfterSaveSet( VMHANDLE * core, void * wk )
+{
+  SCRCMD_WORK*        work = (SCRCMD_WORK*)wk;
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*       gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*           gdata = GAMESYSTEM_GetGameData( gsys );
+  TRPOKE_AFTER_SAVE*  save = GAMEDATA_GetTrPokeAfterSaveData( gdata );
+  POKEPARTY * party = GAMEDATA_GetMyPokemon( gdata );
+  POKEMON_PARAM*     poke;
+  u16     party_pos = SCRCMD_GetVMWorkValue( core, work );  // コマンド第1引数
+  u16     trade_type = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
+
+  poke = PokeParty_GetMemberPointer( party, party_pos );
+
+  GF_ASSERT( trade_type < TRPOKE_AFTER_SAVE_TYPE_MAX );
+
+  // 交換対象の情報を保存する。
+  TRPOKE_AFTER_SV_SetData( save, trade_type, poke );
+
+  return VMCMD_RESULT_CONTINUE;
+}
 
 
 

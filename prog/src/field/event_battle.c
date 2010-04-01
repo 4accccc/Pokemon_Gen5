@@ -544,6 +544,62 @@ GMEVENT * EVENT_CaptureDemoBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, 
   return event;
 }
 
+
+//--------------------------------------------------------------
+/**
+ * フィールドトレーナーバトルイベント
+ * @param gsys  GAMESYS_WORK
+ * @param fieldmap FIELDMAP_WORK
+ * @param BtlRule
+ * @param tr_id
+ * @param flags
+ * @param trade_type    交換後　タイプ
+ * @retval GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT * EVENT_TradeAfterTrainerBattle(
+    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, int rule, int partner_id, int tr_id0, int tr_id1, u32 flags, TRPOKE_AFTER_SAVE_TYPE trade_type )
+{
+  GMEVENT * event;
+  BATTLE_EVENT_WORK * bew;
+  POKEPARTY* enemy_party;
+  GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+  TRPOKE_AFTER_SAVE* trpoke_sv = GAMEDATA_GetTrPokeAfterSaveData( gdata );
+  POKEMON_PARAM* pp;
+
+
+  event = EVENT_TrainerBattle( gsys, fieldmap, rule, partner_id, tr_id0, tr_id1, flags );
+
+
+  if( TRPOKE_AFTER_SV_IsData( trpoke_sv, trade_type ) ){
+    // trade_typeのポケモンに書き換え
+    bew = GMEVENT_GetEventWork(event);
+    enemy_party = bew->battle_param->party[ BTL_CLIENT_ENEMY1 ];
+    
+    // パーティの１番目
+    pp = PokeParty_GetMemberPointer( enemy_party, 0 );
+
+    // @todo ここは、あっているかわからないので曽我部さんにあとで質問すること。
+    PP_FastModeOn( pp );
+
+    PP_Put( pp, ID_PARA_personal_rnd, TRPOKE_AFTER_SV_GetRnd( trpoke_sv, trade_type ) );
+    PP_Put( pp, ID_PARA_speabino, TRPOKE_AFTER_SV_GetSpeabino( trpoke_sv, trade_type ) );
+    PP_Put( pp, ID_PARA_sex, TRPOKE_AFTER_SV_GetSex( trpoke_sv, trade_type ) );
+    PP_Put( pp, ID_PARA_level, TRPOKE_AFTER_SV_GetLevel( trpoke_sv, trade_type ) );
+    PP_Put( pp, ID_PARA_nickname_raw, (u32)TRPOKE_AFTER_SV_GetNickName( trpoke_sv, trade_type ) );
+
+    PP_FastModeOff( pp, TRUE );
+
+  }else{
+
+    // かきかえられていない。
+    GF_ASSERT_MSG( 0, "交換ポケモン情報なし\n" );
+  }
+
+  return event;
+}
+
+
 //--------------------------------------------------------------
 /**
  * フィールドバトルイベント
