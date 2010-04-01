@@ -134,7 +134,7 @@ static const fx32 LIST_DEPTH_BASE = FX32_CONST( 20.0f );
 static const fx32 FIELD_ITEM_DEPTH = FX32_CONST(10.0f); //リストは0～8
 
 //持ってるアイテム系
-static const fx32 HOLD_ITEM_DEPTH = FX32_CONST(60.0f);
+static const fx32 HOLD_ITEM_DEPTH = FX32_CONST(70.0f);
 static const fx32 RETURN_LIST_ITEM_DEPTH = FX32_CONST(30.0f);
 
 //装備アイテム系
@@ -372,6 +372,7 @@ static void DUP_FIT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane 
 static void DUP_FIT_SetupPokemon( FITTING_WORK *work );
 static void DUP_FIT_SetupItem( FITTING_WORK *work );
 static void DUP_FIT_SetupStartItem( FITTING_WORK *work , const u16 itemId );
+static void DUP_FIT_GetRandomItemPos( FITTING_WORK *work , GFL_POINT *pos );
 static void DUP_FIT_TermItem( FITTING_WORK *work );
 static void DUP_FIT_CalcItemListAngle( FITTING_WORK *work , u16 angle , s16 moveAngle , u16 sizeX , u16 sizeY );
 static void DUP_FIT_CheckItemListPallet( FITTING_WORK *work );
@@ -1470,20 +1471,9 @@ static void DUP_FIT_SetupStartItem( FITTING_WORK *work , const u16 itemId )
     return;
   }
   
-  while( TRUE )
   {
     GFL_POINT pos;
-    GFL_POINT subPos;
-    BOOL hitOval;
-    
-    pos.x = 8  +GFUser_GetPublicRand0(256-( 8+ 8));
-    pos.y = 32 +GFUser_GetPublicRand0(192-(32+32));
-    
-    subPos.x = pos.x - LIST_CENTER_X;
-    subPos.y = pos.y - LIST_CENTER_Y;
-    
-    hitOval = DUP_FIT_CheckPointInOval( subPos.x,subPos.y,LIST_TPHIT_MAX_Y,LIST_TPHIT_RATIO_MAX );
-    if( hitOval == FALSE )
+    DUP_FIT_GetRandomItemPos( work , &pos );
     {
       FIT_ITEM_WORK* item;
       VecFx32 vecPos;
@@ -1502,8 +1492,24 @@ static void DUP_FIT_SetupStartItem( FITTING_WORK *work , const u16 itemId )
 
       //アイテムを取った状態に
       itemState->isOutList = TRUE;
-      break;
     }
+  }
+}
+
+static void DUP_FIT_GetRandomItemPos( FITTING_WORK *work , GFL_POINT *pos )
+{
+  BOOL hitOval = TRUE;
+  while( hitOval == TRUE )
+  {
+    GFL_POINT subPos;
+    
+    pos->x = 8  +GFUser_GetPublicRand0(256-( 8+ 8));
+    pos->y = 32 +GFUser_GetPublicRand0(192-(32+32));
+    
+    subPos.x = pos->x - LIST_CENTER_X;
+    subPos.y = pos->y - LIST_CENTER_Y;
+    
+    hitOval = DUP_FIT_CheckPointInOval( subPos.x,subPos.y,LIST_TPHIT_MAX_Y+16,LIST_TPHIT_RATIO_MAX );
   }
 }
 
@@ -2196,8 +2202,7 @@ static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work , const BOOL playSna
   pokePosSub.x = work->tpx - FIT_POKE_POS_X;
   pokePosSub.y = work->tpy - FIT_POKE_POS_Y;
   work->snapPos = DUP_FIT_SearchEquipPosition( work ,itemDrawWork, &pokePosSub , &snapLen );
-  if( work->snapPos != MUS_POKE_EQU_INVALID &&
-    DUP_FIT_CheckIsEquipItem( work , work->snapPos ) == FALSE )
+  if( work->snapPos != MUS_POKE_EQU_INVALID )
   {
     MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , work->snapPos );
     dispPos.x = (int)F32_CONST(equipData->pos.x+equipData->ofs.x)+128;
@@ -2206,18 +2211,24 @@ static void DUP_FIT_UpdateTpHoldingItem( FITTING_WORK *work , const BOOL playSna
     MUS_ITEM_DRAW_SetUseOffset( work->itemDrawSys , itemDrawWork , TRUE );
     if( MUS_ITEM_DRAW_IsBackItem( itemDrawWork ) == TRUE )
     {
-      pos.z = EQUIP_ITEM_DEPTH_BACK;
+      pos.z = EQUIP_ITEM_DEPTH_BACK+FX32_CONST(0.5f);
     }
+    /*
     else
     if( MUS_ITEM_DRAW_IsFrontItem( itemDrawWork ) == TRUE )
     {
-      pos.z = EQUIP_ITEM_DEPTH_FRONT;
+      pos.z = EQUIP_ITEM_DEPTH_FRONT+FX32_CONST(0.5f);
     }
+    */
     
     //一度くっついたらキャンセル時そこへ
-    work->befItemType = IG_EQUIP;
-    work->befItemPos.x = dispPos.x;
-    work->befItemPos.y = dispPos.y;
+    //何もついてなかった時だけ
+    if( DUP_FIT_CheckIsEquipItem( work , work->snapPos ) == FALSE )
+    {
+      work->befItemType = IG_EQUIP;
+      work->befItemPos.x = dispPos.x;
+      work->befItemPos.y = dispPos.y;
+    }
     DUP_FIT_ITEM_SetEquipPos( work->holdItem , work->snapPos );
     
     if( befSnapPos != work->snapPos && playSnapSe == TRUE )
@@ -2419,6 +2430,49 @@ static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work )
   FIT_ITEM_WORK *item;
   MUS_ITEM_DRAW_WORK *drawWork = DUP_FIT_ITEM_GetItemDrawWork( work->holdItem );
   MUS_ITEM_DRAW_WORK *holdDrawWork = DUP_FIT_ITEM_GetItemDrawWork( work->holdItem );
+
+  if( DUP_FIT_CheckIsEquipItem( work , work->snapPos ) == TRUE )
+  {
+    //着いてた物を吹っ飛ばす
+    const MUS_POKE_EQUIP_USER uPos = MUS_ITEM_DATA_EquipPosToUserType( work->snapPos );
+    FIT_ITEM_WORK *equItem = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupEquip );
+    while( equItem != NULL )
+    {
+      const MUS_POKE_EQUIP_USER checkUPos = MUS_ITEM_DATA_EquipPosToUserType( DUP_FIT_ITEM_GetEquipPos( equItem ) );
+      if( uPos == checkUPos )
+      {
+        break;
+      }
+      equItem = DUP_FIT_ITEM_GetNextItem(equItem);
+    }
+    
+    //本当は必ずあるけど、一応チェック
+    if( equItem != NULL )
+    {
+      GFL_POINT movePos;
+      GFL_POINT *dispPos;
+      VecFx32 pos = {0,0,ITEM_RETURN_DEPTH};
+      MUS_ITEM_DRAW_WORK *itemDrawWork = DUP_FIT_ITEM_GetItemDrawWork( equItem );
+
+      DUP_FIT_GetRandomItemPos( work , &movePos );
+      //リストを付け替えて座標を再設定
+      DUP_FIT_ITEMGROUP_RemoveItem( work->itemGroupEquip , equItem );
+      DUP_FIT_ITEMGROUP_AddItemTop( work->itemGroupField , equItem );
+      
+      //動作開始地点設定
+      dispPos = DUP_FIT_ITEM_GetPosition( equItem );
+      pos.x = FX32_CONST(movePos.x);
+      pos.y = FX32_CONST(movePos.y);
+      DUP_FIT_ITEM_SetBefPosition( equItem , dispPos );
+      MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , itemDrawWork , &pos );
+      MUS_ITEM_DRAW_SetRotation( work->itemDrawSys , itemDrawWork , 0 );
+       //動作終了地点設定
+      DUP_FIT_ITEM_SetPosition( equItem , &movePos );
+      DUP_FIT_ITEM_SetCount( equItem , ITEM_RETURN_POS_CNT );
+
+
+    }
+  }
   //リストを付け替えて座標を再設定
   DUP_FIT_ITEMGROUP_RemoveItem( work->itemGroupField , work->holdItem );
   DUP_FIT_ITEMGROUP_AddItemTop( work->itemGroupEquip , work->holdItem );
