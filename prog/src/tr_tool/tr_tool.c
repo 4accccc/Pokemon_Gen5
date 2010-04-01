@@ -22,11 +22,62 @@
 
 #include  "message.naix"
 
+
+//============================================================================================
+/**
+ * 構造体宣言
+ */
+//============================================================================================
+
+/*
+ *  @brief  トレーナータイプに依存して決定する各種パラメータ定義
+ */
+typedef struct _TRTYPE_GRP_PARAM{
+  u16  tr_type:7;      ///<トレーナータイプ 7
+  u16  type_grp:4;     ///<トレーナータイプグループ 4
+  u16  btl_bg_attr:5;  ///<戦闘背景BGアトリビュート 5
+}TRTYPE_GRP_PARAM;
+
 //============================================================================================
 /**
  * 定数宣言
  */
 //============================================================================================
+/*
+ *  @brief  トレーナータイプをグループ化するための対応テーブル
+ *
+ *  拡張する場合、岩澤に確認をお願いします
+ */
+static const TRTYPE_GRP_PARAM DATA_TrTypeGrpParam[TRTYPE_GRP_IDX_MAX] = {
+ { TRTYPE_RIVAL,    TRTYPE_GRP_RIVAL,	  BATTLE_BG_ATTR_MAX },
+ { TRTYPE_SUPPORT,	TRTYPE_GRP_SUPPORT,	BATTLE_BG_ATTR_MAX },
+ { TRTYPE_LEADER1A,	TRTYPE_GRP_LEADER,	BATTLE_BG_ATTR_MAX },
+ { TRTYPE_LEADER1B,	TRTYPE_GRP_LEADER,	BATTLE_BG_ATTR_MAX },
+ { TRTYPE_LEADER1C,	TRTYPE_GRP_LEADER,  BATTLE_BG_ATTR_MAX },
+ { TRTYPE_LEADER2,	TRTYPE_GRP_LEADER,	BATTLE_BG_ATTR_MAX },
+ { TRTYPE_LEADER3,	TRTYPE_GRP_LEADER,	BATTLE_BG_ATTR_MAX },
+ { TRTYPE_LEADER4,	TRTYPE_GRP_LEADER,	BATTLE_BG_ATTR_MAX },
+ { TRTYPE_LEADER5,	TRTYPE_GRP_LEADER,	BATTLE_BG_ATTR_MAX },
+ { TRTYPE_LEADER6,	TRTYPE_GRP_LEADER,	BATTLE_BG_ATTR_MAX },
+ { TRTYPE_LEADER7,	TRTYPE_GRP_LEADER,	BATTLE_BG_ATTR_MAX },
+ { TRTYPE_LEADER8A,	TRTYPE_GRP_LEADER,	BATTLE_BG_ATTR_MAX },
+ { TRTYPE_LEADER8B,	TRTYPE_GRP_LEADER,	BATTLE_BG_ATTR_MAX },
+ { TRTYPE_BIGFOUR1,	TRTYPE_GRP_BIGFOUR,	BATTLE_BG_ATTR_BIGFOUR1 },
+ { TRTYPE_BIGFOUR2,	TRTYPE_GRP_BIGFOUR,	BATTLE_BG_ATTR_BIGFOUR2 },
+ { TRTYPE_BIGFOUR3,	TRTYPE_GRP_BIGFOUR,	BATTLE_BG_ATTR_BIGFOUR3 },
+ { TRTYPE_BIGFOUR4,	TRTYPE_GRP_BIGFOUR,	BATTLE_BG_ATTR_BIGFOUR4 },
+ { TRTYPE_CHAMPION, TRTYPE_GRP_CHAMPION,BATTLE_BG_ATTR_CHAMPION	},
+ { TRTYPE_BOSS,	    TRTYPE_GRP_BOSS,	  BATTLE_BG_ATTR_MAX },
+ { TRTYPE_SAGE1,	  TRTYPE_GRP_SAGE,	  BATTLE_BG_ATTR_SAGE },
+ { TRTYPE_HAKAIM1,	TRTYPE_GRP_PLASMA,	BATTLE_BG_ATTR_MAX },
+ { TRTYPE_HAKAIW1,	TRTYPE_GRP_PLASMA,	BATTLE_BG_ATTR_MAX },
+ { TRTYPE_BCHAMP,	  TRTYPE_GRP_BCHAMP,	BATTLE_BG_ATTR_MAX },
+};
+#ifdef _NITRO
+// 構造体が想定のサイズとなっているかチェック
+SDK_COMPILER_ASSERT(sizeof(TRTYPE_GRP_PARAM) == 2);
+#endif
+
 
 //============================================================================================
 /**
@@ -220,6 +271,52 @@ void  TT_TrainerPokeDataGet( TrainerID tr_id, void* tpd )
 u8  TT_TrainerTypeSexGet( int trtype )
 {
   return TrTypeSexTable[ trtype ];
+}
+
+//----------------------------------------------------------
+/*
+ *  @brief  トレーナータイプをトレーナータイプグループIdxに変換
+ */
+//----------------------------------------------------------
+u8 TT_TrainerTypeGrpEntryIdxGet( int trtype )
+{
+  int i;
+  const TRTYPE_GRP_PARAM* prm;
+
+  for(i = 0;i < TRTYPE_GRP_MAX; i++){
+    if( DATA_TrTypeGrpParam[i].tr_type == trtype ){
+      return i;
+    }
+  }
+  return TRTYPE_GRP_IDX_MAX;
+}
+//----------------------------------------------------------
+/*
+ *  @brief  トレーナータイプをトレーナータイプグループに変換
+ */
+//----------------------------------------------------------
+TRTYPE_GRP_ID TT_TrainerTypeGrpGet( int trtype )
+{
+  u8 idx = TT_TrainerTypeGrpEntryIdxGet( trtype );
+
+  if(idx >= TRTYPE_GRP_IDX_MAX){
+    return TRTYPE_GRP_NONE;
+  }
+  return DATA_TrTypeGrpParam[idx].type_grp;
+}
+//----------------------------------------------------------
+/*
+ *  @brief  トレーナータイプからBtlBgAttrを取得
+ */
+//----------------------------------------------------------
+BtlBgAttr TT_TrainerTypeBtlBgAttrGet( int trtype )
+{
+  u8 idx = TT_TrainerTypeGrpEntryIdxGet( trtype );
+
+  if(idx >= TRTYPE_GRP_IDX_MAX){
+    return BATTLE_BG_ATTR_MAX;
+  }
+  return DATA_TrTypeGrpParam[idx].btl_bg_attr;
 }
 
 //============================================================================================

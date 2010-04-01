@@ -61,11 +61,59 @@
 #define DATATYPE_ITEM     ( 2 )
 #define DATATYPE_MULTI    ( 3 )
 
+
+/*
+ * トレーナータイプグループ
+ * 拡張する場合、岩澤に確認をお願いします
+ */
+#define TRTYPE_GRP_RIVAL    (0) //ライバル
+#define TRTYPE_GRP_SUPPORT  (1) //サポート
+#define TRTYPE_GRP_LEADER   (2) //ジムリーダー
+#define TRTYPE_GRP_BIGFOUR  (3) //四天王
+#define TRTYPE_GRP_CHAMPION (4) //チャンピオン
+#define TRTYPE_GRP_BOSS     (5) //N
+#define TRTYPE_GRP_SAGE     (6) //ゲーチス
+#define TRTYPE_GRP_PLASMA   (7) //プラズマ団
+#define TRTYPE_GRP_BCHAMP   (8) //サブウェイマスター
+#define TRTYPE_GRP_MAX      (9)
+#define TRTYPE_GRP_NONE     (TRTYPE_GRP_MAX)
+
+/*
+ * トレーナータイプをグループ化する変換テーブルの参照インデックス定義
+ * 拡張する場合、岩澤に確認をお願いします
+ */
+#define TRTYPE_GRP_IDX_RIVAL			(0)
+#define TRTYPE_GRP_IDX_SUPPORT		(1)
+#define TRTYPE_GRP_IDX_LEADER1A		(2)
+#define TRTYPE_GRP_IDX_LEADER1B		(3)
+#define TRTYPE_GRP_IDX_LEADER1C		(4)
+#define TRTYPE_GRP_IDX_LEADER2		(5)
+#define TRTYPE_GRP_IDX_LEADER3		(6)
+#define TRTYPE_GRP_IDX_LEADER4		(7)
+#define TRTYPE_GRP_IDX_LEADER5		(8)
+#define TRTYPE_GRP_IDX_LEADER6		(9)
+#define TRTYPE_GRP_IDX_LEADER7		(10)
+#define TRTYPE_GRP_IDX_LEADER8A		(11)
+#define TRTYPE_GRP_IDX_LEADER8B		(12)
+#define TRTYPE_GRP_IDX_BIGFOUR1		(13)
+#define TRTYPE_GRP_IDX_BIGFOUR2		(14)
+#define TRTYPE_GRP_IDX_BIGFOUR3		(15)
+#define TRTYPE_GRP_IDX_BIGFOUR4		(16)
+#define TRTYPE_GRP_IDX_CHAMPION		(17)
+#define TRTYPE_GRP_IDX_BOSS			  (18)
+#define TRTYPE_GRP_IDX_SAGE			  (19)
+#define TRTYPE_GRP_IDX_HAKAIM1		(20)
+#define TRTYPE_GRP_IDX_HAKAIW1		(21)
+#define TRTYPE_GRP_IDX_BCHAMP			(22)
+#define TRTYPE_GRP_IDX_MAX        (23)
+
 //アセンブラでincludeされている場合は、下の宣言を無視できるようにifndefで囲んである
 #ifndef	__ASM_NO_DEF_
 
 #include "battle/battle.h"
 #include "buflen.h"
+
+typedef u8  TRTYPE_GRP_ID;
 
 typedef enum
 { 
@@ -135,6 +183,9 @@ extern	void	TT_TrainerMessageGet( int tr_id, int msgID, STRBUF* msg, HEAPID heap
 extern	void	TT_TrainerDataGet( int tr_id, TRAINER_DATA* td );
 extern	void	TT_TrainerPokeDataGet( int tr_id,void* tpd );
 extern	u8		TT_TrainerTypeSexGet( int trtype );
+extern  u8 TT_TrainerTypeGrpEntryIdxGet( int trtype );
+extern  TRTYPE_GRP_ID TT_TrainerTypeGrpGet( int trtype );
+extern  BtlBgAttr TT_TrainerTypeBtlBgAttrGet( int trtype );
 
 extern void	TT_EncountTrainerPersonalDataMake( TrainerID tr_id, BSP_TRAINER_DATA* data, HEAPID heapID );
 extern void	TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID heapID );
