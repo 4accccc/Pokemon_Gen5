@@ -4163,7 +4163,7 @@ static void handler_Simerike_Effective( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 
     param->header.tokwin_flag = TRUE;
     HANDEX_STR_Setup( &(param->str), BTL_STRTYPE_SET, BTL_STRID_SET_WazaCantUse );
-    HANDEX_STR_AddArg( &(param->str), pokeID );
+    HANDEX_STR_AddArg( &(param->str), targetPokeID );
     HANDEX_STR_AddArg( &(param->str), work[1] );
     work[0] = 0;
   }
