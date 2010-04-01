@@ -9,6 +9,7 @@
  */
 //============================================================================================
 #include <gflib.h>
+#include <calctool.h>
 
 #include "system/poke2dgra.h"
 #include "app/app_menu_common.h"
@@ -148,11 +149,41 @@ void DPCOBJ_AnmMain( DPCMAIN_WORK * wk )
 	GFL_CLACT_SYS_Main();
 }
 
-void DPCOBJ_SetVanish( DPCMAIN_WORK * wk, GFL_CLWK * clwk, BOOL flg )
+void DPCOBJ_SetVanish( DPCMAIN_WORK * wk, u32 id, BOOL flg )
 {
-	if( clwk != NULL ){
-		GFL_CLACT_WK_SetDrawEnable( clwk, flg );
+	if( wk->clwk[id] != NULL ){
+		GFL_CLACT_WK_SetDrawEnable( wk->clwk[id], flg );
 	}
+}
+
+void DPCOBJ_SetAutoAnm( DPCMAIN_WORK * wk, u32 id, u32 anm )
+{
+	GFL_CLACT_WK_SetAnmFrame( wk->clwk[id], 0 );
+	GFL_CLACT_WK_SetAnmSeq( wk->clwk[id], anm );
+	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[id], TRUE );
+}
+
+BOOL DPCOBJ_CheckAnm( DPCMAIN_WORK * wk, u32 id )
+{
+	return GFL_CLACT_WK_CheckAnmActive( wk->clwk[id] );
+}
+
+void DPCOBJ_SetPos( DPCMAIN_WORK * wk, u32 id, s16 x, s16 y )
+{
+	GFL_CLACTPOS	pos;
+
+	pos.x = x;
+	pos.y = y;
+	GFL_CLACT_WK_SetPos( wk->clwk[id], &pos, CLSYS_DRAW_MAIN );
+}
+
+void DPCOBJ_GetPos( DPCMAIN_WORK * wk, u32 id, s16 * x, s16 * y )
+{
+	GFL_CLACTPOS	pos;
+
+	GFL_CLACT_WK_GetPos( wk->clwk[id], &pos, CLSYS_DRAW_MAIN );
+	*x = pos.x;
+	*y = pos.y;
 }
 
 
@@ -219,24 +250,40 @@ static void InitResource( DPCMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+static void ExitResChr( DPCMAIN_WORK * wk, u32 idx )
+{
+	if( wk->chrRes[idx] != RES_NONE ){
+		GFL_CLGRP_CGR_Release( wk->chrRes[idx] );
+		wk->chrRes[idx] = RES_NONE;
+	}
+}
+static void ExitResPal( DPCMAIN_WORK * wk, u32 idx )
+{
+	if( wk->palRes[idx] != RES_NONE ){
+    GFL_CLGRP_PLTT_Release( wk->palRes[idx] );
+		wk->palRes[idx] = RES_NONE;
+	}
+}
+static void ExitResCel( DPCMAIN_WORK * wk, u32 idx )
+{
+	if( wk->celRes[idx] != RES_NONE ){
+    GFL_CLGRP_CELLANIM_Release( wk->celRes[idx] );
+		wk->celRes[idx] = RES_NONE;
+	}
+}
+
 static void ExitResource( DPCMAIN_WORK * wk )
 {
 	u32	i;
 
 	for( i=0; i<DPCOBJ_CHRRES_MAX; i++ ){
-		if( wk->chrRes[i] != RES_NONE ){
-			GFL_CLGRP_CGR_Release( wk->chrRes[i] );
-		}
+		ExitResChr( wk, i );
 	}
 	for( i=0; i<DPCOBJ_PALRES_MAX; i++ ){
-		if( wk->palRes[i] != RES_NONE ){
-	    GFL_CLGRP_PLTT_Release( wk->palRes[i] );
-		}
+		ExitResPal( wk, i );
 	}
 	for( i=0; i<DPCOBJ_CELRES_MAX; i++ ){
-		if( wk->celRes[i] != RES_NONE ){
-	    GFL_CLGRP_CELLANIM_Release( wk->celRes[i] );
-		}
+		ExitResCel( wk, i );
 	}
 }
 
@@ -264,6 +311,12 @@ static void AddClact( DPCMAIN_WORK * wk )
 	for( i=DPCOBJ_ID_ARROW_L; i<=DPCOBJ_ID_RETURN; i++ ){
 		wk->clwk[i] = CleateClact( wk, &ClactParamTbl[i-DPCOBJ_ID_ARROW_L] );
 	}
+
+	// ‚Pƒy[ƒW‚µ‚©‚È‚¢‚Æ‚«
+	if( wk->pageMax == 1 ){
+		DPCOBJ_SetVanish( wk, DPCOBJ_ID_ARROW_L, FALSE );
+		DPCOBJ_SetVanish( wk, DPCOBJ_ID_ARROW_R, FALSE );
+	}
 }
 
 static void DelClact( DPCMAIN_WORK * wk, u32 idx )
@@ -286,19 +339,28 @@ static void DelClactAll( DPCMAIN_WORK * wk )
 
 
 
-
+static const u16 PokePutRad[6][6] =
+{
+	{  90,   0,   0,   0,   0,   0 },
+	{  90, 270,   0,   0,   0,   0 },
+	{  90, 210, 330,   0,   0,   0 },
+	{  90, 180, 270,   0,   0,   0 },
+	{  90, 162, 244, 316,  28,   0 },
+	{  90, 150, 210, 270, 330,  30 },
+};
 
 void DPCOBJ_AddPoke( DPCMAIN_WORK * wk )
 {
 	ARCHANDLE * ah;
 	DPC_PARTY_DATA * pt;
 	GFL_CLWK ** clwk;
-	u32	pal;
+	u16	pal;
+	u16	id;
 	u32	i;
 
 	// ‘S‚Ä‚Ì•\Ž¦‚ðOFF
 	for( i=DPCOBJ_ID_POKE01; i<=DPCOBJ_ID_POKE16; i++ ){
-		DPCOBJ_SetVanish( wk, wk->clwk[i], FALSE );
+		DPCOBJ_SetVanish( wk, i, FALSE );
 	}
 
 	pt = &wk->party[wk->page];
@@ -316,11 +378,13 @@ void DPCOBJ_AddPoke( DPCMAIN_WORK * wk )
 			dat.chrRes += 6;
 			dat.palRes += 6;
 			dat.celRes += 6;
-			pal = PALNUM_POKEGRA + i + 6 * 0x20;
-			clwk = &wk->clwk[DPCOBJ_ID_POKE11+i];
+			pal = ( PALNUM_POKEGRA + i + 6 ) * 0x20;
+			id  = DPCOBJ_ID_POKE11 + i;
+			clwk = &wk->clwk[id];
 		}else{
-			pal = PALNUM_POKEGRA + i * 0x20;
-			clwk = &wk->clwk[DPCOBJ_ID_POKE01+i];
+			pal = ( PALNUM_POKEGRA + i ) * 0x20;
+			id  = DPCOBJ_ID_POKE01 + i;
+			clwk = &wk->clwk[id];
 		}
 
 		wk->chrRes[dat.chrRes] = POKE2DGRA_OBJ_CGR_Register(
@@ -333,7 +397,9 @@ void DPCOBJ_AddPoke( DPCMAIN_WORK * wk )
 															pt->dat[i].monsno, pt->dat[i].formNumber, pt->dat[i].sex, rare, POKEGRA_DIR_FRONT,
 															FALSE, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, HEAPID_DENDOU_PC );
 		*clwk = CleateClact( wk, &dat );
-//		DPCOBJ_SetVanish( wk, *clwk, TRUE );
+
+		DPCOBJ_SetPokePos( wk, id, PokePutRad[pt->pokeMax-1][i] );
+		wk->nowRad[i] = PokePutRad[pt->pokeMax-1][i];
 	}
 
 	GFL_ARC_CloseDataHandle( ah );
@@ -344,11 +410,90 @@ void DPCOBJ_AddPoke( DPCMAIN_WORK * wk )
 		for( i=DPCOBJ_ID_POKE01; i<=DPCOBJ_ID_POKE06; i++ ){
 			DelClact( wk, i );
 		}
+		for( i=DPCOBJ_CHRRES_POKE01; i<=DPCOBJ_CHRRES_POKE06; i++ ){
+			ExitResChr( wk, i );
+		}
+		for( i=DPCOBJ_PALRES_POKE01; i<=DPCOBJ_PALRES_POKE06; i++ ){
+			ExitResPal( wk, i );
+		}
+		for( i=DPCOBJ_CELRES_POKE01; i<=DPCOBJ_CELRES_POKE06; i++ ){
+			ExitResCel( wk, i );
+		}
 	}else{
 		for( i=DPCOBJ_ID_POKE11; i<=DPCOBJ_ID_POKE16; i++ ){
 			DelClact( wk, i );
 		}
+		for( i=DPCOBJ_CHRRES_POKE11; i<=DPCOBJ_CHRRES_POKE16; i++ ){
+			ExitResChr( wk, i );
+		}
+		for( i=DPCOBJ_PALRES_POKE11; i<=DPCOBJ_PALRES_POKE16; i++ ){
+			ExitResPal( wk, i );
+		}
+		for( i=DPCOBJ_CELRES_POKE11; i<=DPCOBJ_CELRES_POKE16; i++ ){
+			ExitResCel( wk, i );
+		}
 	}
 
 	wk->pokeSwap ^= 1;
+}
+
+
+#define	POKE_CX_FX32	( 128 << FX32_SHIFT )		// “®ì’†S‚wÀ•W (fx32Œ^)
+#define	POKE_CY_FX32	( 88 << FX32_SHIFT )		// “®ì’†S‚xÀ•W (fx32Œ^)
+#define	POKE_RX_FX32	( 92 << FX32_SHIFT )		// ‚w”¼Œa (fx32Œ^)
+#define	POKE_RY_FX32	( 44 << FX32_SHIFT )		// ‚x”¼Œa (fx32Œ^)
+
+void DPCOBJ_SetPokePos( DPCMAIN_WORK * wk, u32 id, u32 rad )
+{
+	fx32	vx, vy;
+	s16	px, py;
+
+	vx = FX_MUL( GFL_CALC_Cos360R(rad), POKE_RX_FX32 ) + POKE_CX_FX32;
+	vy = FX_MUL( GFL_CALC_Sin360R(rad), POKE_RY_FX32 ) + POKE_CY_FX32;
+
+	px = ( vx & FX32_INT_MASK ) >> FX32_SHIFT;
+	py = ( vy & FX32_INT_MASK ) >> FX32_SHIFT;
+
+	DPCOBJ_SetPos( wk, id, px, py );
+}
+
+
+void DPCOBJ_ChangePokePriority( DPCMAIN_WORK * wk )
+{
+	u32	id;
+	s16	x1, y1, x2, y2;
+	u8	pri[6];
+	u8	i, j;
+
+	if( wk->pokeSwap == 0 ){
+		id = DPCOBJ_ID_POKE11;
+	}else{
+		id = DPCOBJ_ID_POKE01;
+	}
+
+	for( i=0; i<6; i++ ){
+		pri[i] = id+i;
+	}
+
+	for( i=0; i<wk->party[wk->page].pokeMax-1; i++ ){
+		DPCOBJ_GetPos( wk, pri[i], &x1, &y1 );
+		for( j=i+1; j<wk->party[wk->page].pokeMax; j++ ){
+			DPCOBJ_GetPos( wk, pri[j], &x2, &y2 );
+			if( y1 < y2 ){
+				u8	tmp;
+				tmp = pri[i];
+				pri[i] = pri[j];
+				pri[j] = tmp;
+				y1 = y2;
+			}
+		}
+	}
+
+	for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
+		if( wk->clwk[pri[i]] != NULL ){
+			GFL_CLACT_WK_SetSoftPri( wk->clwk[pri[i]], i );
+			OS_Printf( "pri[%d] = %d, ", i, pri[i] );
+		}
+	}
+	OS_Printf( "\n" );
 }

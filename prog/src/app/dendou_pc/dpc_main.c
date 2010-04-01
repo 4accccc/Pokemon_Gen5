@@ -184,7 +184,7 @@ void DPCMAIN_InitBg(void)
 	}
 
 	GFL_DISP_GX_SetVisibleControl(
-		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 | GX_PLANEMASK_BG3, VISIBLE_ON );
+		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG2 | GX_PLANEMASK_BG3, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl(
 		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1, VISIBLE_ON );
 }
@@ -348,6 +348,24 @@ void DPCMAIN_CreatePokeData( DPCMAIN_WORK * wk )
 		}
 	}
 	SaveControl_Extra_Unload( sv, SAVE_EXTRA_ID_DENDOU );
+
+// ‰¼ˆ—
+#if 1
+	wk->party[wk->pageMax].pokeMax = 3;
+	for( i=0; i<wk->party[wk->pageMax].pokeMax; i++ ){
+		wk->party[wk->pageMax].dat[i].personalRandom = wk->party[0].dat[i].personalRandom;
+		wk->party[wk->pageMax].dat[i].idNumber = wk->party[0].dat[i].idNumber;
+		wk->party[wk->pageMax].dat[i].monsno = MONSNO_HINOARASI + i;
+		wk->party[wk->pageMax].dat[i].level = wk->party[0].dat[i].level;
+		wk->party[wk->pageMax].dat[i].formNumber = 0;
+		wk->party[wk->pageMax].dat[i].sex = wk->party[0].dat[i].sex;
+		for( j=0; j<4; j++ ){
+			wk->party[wk->pageMax].dat[i].waza[j] = wk->party[0].dat[i].waza[j];
+		}
+	}
+	wk->pageMax++;
+#endif
+
 }
 
 void DPCMAIN_ExitPokeData( DPCMAIN_WORK * wk )

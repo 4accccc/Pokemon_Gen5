@@ -11,6 +11,7 @@
 #include <gflib.h>
 
 #include "system/wipe.h"
+#include "app/app_menu_common.h"
 
 #include "dpc_main.h"
 #include "dpc_seq.h"
@@ -28,12 +29,22 @@ enum {
 	MAINSEQ_INIT = 0,
 	MAINSEQ_RELEASE,
 	MAINSEQ_WIPE,
-
-	MAINSEQ_MAIN,
 	MAINSEQ_BUTTON_ANM,
+
+	MAINSEQ_PAGE_MAIN,
+	MAINSEQ_PAGE_CHANGE,
+
+	MAINSEQ_POKE_INIT,
+	MAINSEQ_POKE_MAIN,
+	MAINSEQ_POKE_EXIT,
+	MAINSEQ_POKE_MOVE,
+
+	MAINSEQ_END_SET,
 
 	MAINSEQ_END,
 };
+
+#define	POKE_MOVE_RAD		( 4 )
 
 
 //============================================================================================
@@ -42,13 +53,24 @@ enum {
 static int MainSeq_Init( DPCMAIN_WORK * wk );
 static int MainSeq_Release( DPCMAIN_WORK * wk );
 static int MainSeq_Wipe( DPCMAIN_WORK * wk );
-static int MainSeq_Main( DPCMAIN_WORK * wk );
 static int MainSeq_ButtonAnm( DPCMAIN_WORK * wk );
+static int MainSeq_PageMain( DPCMAIN_WORK * wk );
+static int MainSeq_PageChange( DPCMAIN_WORK * wk );
+static int MainSeq_PokeInit( DPCMAIN_WORK * wk );
+static int MainSeq_PokeMain( DPCMAIN_WORK * wk );
+static int MainSeq_PokeExit( DPCMAIN_WORK * wk );
+static int MainSeq_PokeMove( DPCMAIN_WORK * wk );
+static int MainSeq_EndSet( DPCMAIN_WORK * wk );
 
 static int SetFadeIn( DPCMAIN_WORK * wk, int next );
 static int SetFadeOut( DPCMAIN_WORK * wk, int next );
+static int SetButtonAnime( DPCMAIN_WORK * wk, u32 id, u32 anm, int next );
 
-static void ChangePage( DPCMAIN_WORK * wk );
+static BOOL ChangePage( DPCMAIN_WORK * wk, s8 mv );
+static BOOL ChangePoke( DPCMAIN_WORK * wk, s8 mv );
+
+static void MakePokePosRad( DPCMAIN_WORK * wk, s8 mv );
+static BOOL MovePokeObj( DPCMAIN_WORK * wk );
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -61,12 +83,36 @@ static const pDENDOUPC_FUNC MainSeq[] = {
 	MainSeq_Init,
 	MainSeq_Release,
 	MainSeq_Wipe,
-
-	MainSeq_Main,
 	MainSeq_ButtonAnm,
+
+	MainSeq_PageMain,
+	MainSeq_PageChange,
+
+	MainSeq_PokeInit,
+	MainSeq_PokeMain,
+	MainSeq_PokeExit,
+	MainSeq_PokeMove,
+
+	MainSeq_EndSet,
 };
 
 
+/*
+static void TestPokeMode( DPCMAIN_WORK * wk )
+{
+	u32	i;
+
+	for( i=0; i<6; i++ ){
+		if( wk->clwk[DPCOBJ_ID_POKE01+i] != NULL ){
+			DPCOBJ_SetPokePos( wk, DPCOBJ_ID_POKE01+i, wk->pokeRad[i] );
+		}
+		if( wk->clwk[DPCOBJ_ID_POKE11+i] != NULL ){
+			DPCOBJ_SetPokePos( wk, DPCOBJ_ID_POKE11+i, wk->pokeRad[i] );
+		}
+		wk->pokeRad[i] = ( wk->pokeRad[i] + 1 ) % 360;
+	}
+}
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -84,6 +130,8 @@ int DPCSEQ_MainSeq( DPCMAIN_WORK * wk )
 	if( wk->mainSeq == MAINSEQ_END ){
 		return FALSE;
 	}
+
+//	TestPokeMode( wk );
 
 	DPCOBJ_AnmMain( wk );
 	DPCBMP_PrintUtilTrans( wk );
@@ -117,9 +165,7 @@ static int MainSeq_Init( DPCMAIN_WORK * wk )
 	DPCBMP_Init( wk );
 	DPCOBJ_Init( wk );
 
-	DPCUI_Init( wk );
-
-	ChangePage( wk );
+	MainSeq_PageChange( wk );
 
 	DPCMAIN_SetBlendAlpha();
 
@@ -128,14 +174,12 @@ static int MainSeq_Init( DPCMAIN_WORK * wk )
 
 	DPCMAIN_InitVBlank( wk );
 
-	return SetFadeIn( wk, MAINSEQ_MAIN );
+	return SetFadeIn( wk, MAINSEQ_PAGE_MAIN );
 }
 
 static int MainSeq_Release( DPCMAIN_WORK * wk )
 {
 	DPCMAIN_ExitVBlank( wk );
-
-	DPCUI_Exit( wk );
 
 	DPCOBJ_Exit( wk );
 	DPCBMP_Exit( wk );
@@ -168,49 +212,154 @@ static int MainSeq_Wipe( DPCMAIN_WORK * wk )
 	return MAINSEQ_WIPE;
 }
 
-static int MainSeq_Main( DPCMAIN_WORK * wk )
+static int MainSeq_ButtonAnm( DPCMAIN_WORK * wk )
 {
-	u32	ret = DPCUI_Main( wk );
+	if( DPCOBJ_CheckAnm( wk, wk->buttonID ) == FALSE ){
+		return wk->buttonSeq;
+	}
+	return MAINSEQ_BUTTON_ANM;
+}
+
+
+static int MainSeq_PageMain( DPCMAIN_WORK * wk )
+{
+	int	ret = DPCUI_PageMain( wk );
 
 	switch( ret ){
+	case DPCUI_ID_LEFT:
+		if( ChangePage( wk, -1 ) == TRUE ){
+			return SetButtonAnime( wk, DPCOBJ_ID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT_ON, MAINSEQ_PAGE_CHANGE );
+		}
+		break;
+
+	case DPCUI_ID_RIGHT:
+		if( ChangePage( wk, 1 ) == TRUE ){
+			return SetButtonAnime( wk, DPCOBJ_ID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT_ON, MAINSEQ_PAGE_CHANGE );
+		}
+		break;
+
+	case DPCUI_ID_EXIT:
+		wk->dat->retMode = DENDOUPC_RET_CLOSE;
+		return SetButtonAnime( wk, DPCOBJ_ID_EXIT, APP_COMMON_BARICON_EXIT_ON, MAINSEQ_END_SET );
+
+	case DPCUI_ID_RETURN:
+		wk->dat->retMode = DENDOUPC_RET_NORMAL;
+		return SetButtonAnime( wk, DPCOBJ_ID_RETURN, APP_COMMON_BARICON_RETURN_ON, MAINSEQ_END_SET );
+
+	case DPCUI_ID_MODE_CHANGE:
+		return MAINSEQ_POKE_INIT;
+
 	case DPCUI_ID_POKE1:
 	case DPCUI_ID_POKE2:
 	case DPCUI_ID_POKE3:
 	case DPCUI_ID_POKE4:
 	case DPCUI_ID_POKE5:
 	case DPCUI_ID_POKE6:
-	case DPCUI_ID_PAGE_LEFT:
-	case DPCUI_ID_PAGE_RIGHT:
-		break;
+		wk->pokePos = ret - DPCUI_ID_POKE1;
+		return MAINSEQ_POKE_INIT;
 
-	case DPCUI_ID_EXIT:
-		wk->dat->retMode = DENDOUPC_RET_CLOSE;
-		return SetFadeOut( wk, MAINSEQ_RELEASE );
-
-	case DPCUI_ID_RETURN:
-	case CURSORMOVE_CANCEL:					// キャンセル
-		wk->dat->retMode = DENDOUPC_RET_NORMAL;
-		return SetFadeOut( wk, MAINSEQ_RELEASE );
-
-	case CURSORMOVE_NO_MOVE_LEFT:		// 十字キー左が押されたが、移動なし
-	case CURSORMOVE_NO_MOVE_RIGHT:	// 十字キー右が押されたが、移動なし
-		break;
-
-	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
-	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
-	case CURSORMOVE_CURSOR_ON:			// カーソル表示
-	case CURSORMOVE_CURSOR_MOVE:		// 移動
-	case CURSORMOVE_NONE:						// 動作なし
 	default:
 		break;
 	}
 
-	return MAINSEQ_MAIN;
+	return MAINSEQ_PAGE_MAIN;
 }
 
-static int MainSeq_ButtonAnm( DPCMAIN_WORK * wk )
+static int MainSeq_PageChange( DPCMAIN_WORK * wk )
 {
-	return MAINSEQ_BUTTON_ANM;
+	DPCOBJ_AddPoke( wk );
+
+	DPCBMP_PutTitle( wk );
+	DPCBMP_PutPage( wk );
+//	DPCBMP_PutInfo( wk );
+
+	return MAINSEQ_PAGE_MAIN;
+}
+
+
+
+static int MainSeq_PokeInit( DPCMAIN_WORK * wk )
+{
+	DPCOBJ_SetAutoAnm( wk, DPCOBJ_ID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT_OFF );
+	DPCOBJ_SetAutoAnm( wk, DPCOBJ_ID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT_OFF );
+	DPCOBJ_SetAutoAnm( wk, DPCOBJ_ID_EXIT, APP_COMMON_BARICON_EXIT_OFF );
+
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
+
+	DPCBMP_PutInfo( wk );
+
+	return MAINSEQ_POKE_MAIN;
+}
+
+static int MainSeq_PokeMain( DPCMAIN_WORK * wk )
+{
+	int	ret = DPCUI_PokeMain( wk );
+
+	switch( ret ){
+	case DPCUI_ID_LEFT:
+		if( ChangePoke( wk, 1 ) == TRUE ){
+			MakePokePosRad( wk, -1 );
+			wk->pokeMove = -POKE_MOVE_RAD;
+			return MAINSEQ_POKE_MOVE;
+		}
+		break;
+
+	case DPCUI_ID_RIGHT:
+		if( ChangePoke( wk, -1 ) == TRUE ){
+			MakePokePosRad( wk, 1 );
+			wk->pokeMove = POKE_MOVE_RAD;
+			return MAINSEQ_POKE_MOVE;
+		}
+		break;
+
+	case DPCUI_ID_RETURN:
+		return SetButtonAnime( wk, DPCOBJ_ID_RETURN, APP_COMMON_BARICON_RETURN_ON, MAINSEQ_POKE_EXIT );
+
+	case DPCUI_ID_POKE1:
+	case DPCUI_ID_POKE2:
+	case DPCUI_ID_POKE3:
+	case DPCUI_ID_POKE4:
+	case DPCUI_ID_POKE5:
+	case DPCUI_ID_POKE6:
+		wk->pokePos = ret - DPCUI_ID_POKE1;
+		DPCBMP_PutInfo( wk );
+		break;
+
+	default:
+		break;
+	}
+
+	return MAINSEQ_POKE_MAIN;
+}
+
+static int MainSeq_PokeExit( DPCMAIN_WORK * wk )
+{
+	DPCOBJ_SetAutoAnm( wk, DPCOBJ_ID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT );
+	DPCOBJ_SetAutoAnm( wk, DPCOBJ_ID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT );
+	DPCOBJ_SetAutoAnm( wk, DPCOBJ_ID_EXIT, APP_COMMON_BARICON_EXIT );
+
+	DPCBMP_ClearInfo( wk );
+
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
+
+	return MAINSEQ_PAGE_MAIN;
+}
+
+static int MainSeq_PokeMove( DPCMAIN_WORK * wk )
+{
+	if( MovePokeObj( wk ) == FALSE ){
+		DPCBMP_PutInfo( wk );
+		return MAINSEQ_POKE_MAIN;
+	}
+	return MAINSEQ_POKE_MOVE;
+}
+
+
+
+
+static int MainSeq_EndSet( DPCMAIN_WORK * wk )
+{
+	return SetFadeOut( wk, MAINSEQ_RELEASE );
 }
 
 
@@ -235,13 +384,161 @@ static int SetFadeOut( DPCMAIN_WORK * wk, int next )
 	return MAINSEQ_WIPE;
 }
 
-
-static void ChangePage( DPCMAIN_WORK * wk )
+static int SetButtonAnime( DPCMAIN_WORK * wk, u32 id, u32 anm, int next )
 {
-	DPCOBJ_AddPoke( wk );
-
-	DPCBMP_PutTitle( wk );
-	DPCBMP_PutPage( wk );
-	DPCBMP_PutInfo( wk );
+	DPCOBJ_SetAutoAnm( wk, id, anm );
+	wk->buttonID  = id;
+	wk->buttonSeq = next;
+	return MAINSEQ_BUTTON_ANM;
 }
 
+
+static BOOL ChangePage( DPCMAIN_WORK * wk, s8 mv )
+{
+	s8	tmp = wk->page;
+
+	wk->page += mv;
+	if( wk->page < 0 ){
+		wk->page = wk->pageMax - 1;
+	}else if( wk->page >= wk->pageMax ){
+		wk->page = 0;
+	}
+	if( wk->page == tmp ){
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+static BOOL ChangePoke( DPCMAIN_WORK * wk, s8 mv )
+{
+	s8	tmp = wk->pokePos;
+
+	wk->pokePos += mv;
+	if( wk->pokePos < 0 ){
+		wk->pokePos = wk->party[wk->page].pokeMax - 1;
+	}else if( wk->pokePos >= wk->party[wk->page].pokeMax ){
+		wk->pokePos = 0;
+	}
+	if( wk->pokePos == tmp ){
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+static const u8 PokeMoveCount[] = {
+	DPCOBJ_POKEMAX1_SPACE_RAD / POKE_MOVE_RAD,
+	DPCOBJ_POKEMAX2_SPACE_RAD / POKE_MOVE_RAD,
+	DPCOBJ_POKEMAX3_SPACE_RAD / POKE_MOVE_RAD,
+	DPCOBJ_POKEMAX4_SPACE_RAD / POKE_MOVE_RAD,
+	DPCOBJ_POKEMAX5_SPACE_RAD / POKE_MOVE_RAD,
+	DPCOBJ_POKEMAX6_SPACE_RAD / POKE_MOVE_RAD,
+};
+
+static void MakePokePosRad( DPCMAIN_WORK * wk, s8 mv )
+{
+	s16	pos1, pos2;
+	u32	i;
+
+	pos1 = wk->pokePos;
+	pos2 = wk->pokePos;
+
+	for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
+		pos2 += mv;
+		if( pos2 < 0 ){
+			pos2 = wk->party[wk->page].pokeMax - 1;
+		}else if( pos2 >= wk->party[wk->page].pokeMax ){
+			pos2 = 0;
+		}
+
+		wk->posRad[pos1] = wk->nowRad[pos2];
+
+		pos1 += mv;
+		if( pos1 < 0 ){
+			pos1 = wk->party[wk->page].pokeMax - 1;
+		}else if( pos1 >= wk->party[wk->page].pokeMax ){
+			pos1 = 0;
+		}
+	}
+
+	wk->pokeMoveCnt = PokeMoveCount[wk->party[wk->page].pokeMax-1];
+}
+
+static BOOL MovePokeObj( DPCMAIN_WORK * wk )
+{
+	u32	i;
+
+	for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
+		if( wk->pokeMoveCnt == 0 ){
+			wk->nowRad[i] = wk->posRad[i];
+		}else{
+			wk->nowRad[i] += wk->pokeMove;
+			if( wk->nowRad[i] < 0 ){
+				wk->nowRad[i] += 360;
+			}else if( wk->nowRad[i] >= 360 ){
+				wk->nowRad[i] -= 360;
+			}
+		}
+		if( wk->clwk[DPCOBJ_ID_POKE01+i] != NULL ){
+			DPCOBJ_SetPokePos( wk, DPCOBJ_ID_POKE01+i, wk->nowRad[i] );
+		}
+		if( wk->clwk[DPCOBJ_ID_POKE11+i] != NULL ){
+			DPCOBJ_SetPokePos( wk, DPCOBJ_ID_POKE11+i, wk->nowRad[i] );
+		}
+	}
+	DPCOBJ_ChangePokePriority( wk );
+
+	if( wk->pokeMoveCnt == 0 ){
+		return FALSE;
+	}
+
+	wk->pokeMoveCnt--;
+
+	return TRUE;
+
+
+/*
+//	s16 * rad;
+	BOOL	ret;
+	u32	i;
+
+	ret = TRUE;
+
+	for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
+		wk->nowRad[i] = ( wk->nowRad[i] + wk->pokeMove );
+		if( wk->nowRad[i] < 0 ){
+			wk->nowRad[i] += 360;
+		}else if( wk->nowRad[i] >= 360 ){
+			wk->nowRad[i] -= 360;
+		}
+	}
+//	rad = wk->nowRad;
+
+	if( wk->pokeMove < 0 ){
+		if( wk->nowRad[0] <= wk->posRad[0] ){
+//			rad = wk->posRad;
+			ret = FALSE;
+		}
+	}else{
+		if( wk->nowRad[0] >= wk->posRad[0] ){
+//			rad = wk->posRad;
+			ret = FALSE;
+		}
+	}
+
+	for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
+		if( ret == FALSE ){
+			wk->nowRad[i] = wk->posRad[i];
+		}
+		if( wk->clwk[DPCOBJ_ID_POKE01+i] != NULL ){
+			DPCOBJ_SetPokePos( wk, DPCOBJ_ID_POKE01+i, wk->nowRad[i] );
+		}
+		if( wk->clwk[DPCOBJ_ID_POKE11+i] != NULL ){
+			DPCOBJ_SetPokePos( wk, DPCOBJ_ID_POKE11+i, wk->nowRad[i] );
+		}
+	}
+
+	return ret;
+*/
+}

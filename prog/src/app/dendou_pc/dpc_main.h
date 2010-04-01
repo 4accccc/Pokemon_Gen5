@@ -48,6 +48,8 @@ typedef struct {
 	DENDOU_SAVEDATA * ex_rec;
 
 	DPC_PARTY_DATA	party[DENDOU_RECORD_MAX+1];
+	s16	nowRad[6];
+	s16	posRad[6];
 
 	GFL_TCB * vtask;		// TCB ( VBLANK )
 
@@ -69,14 +71,19 @@ typedef struct {
 
 	CURSORMOVE_WORK * cmwk;			// カーソル移動ワーク
 
-	u8	pokePos;
-	u8	page;
+	s8	pokePos;
+	s8	page;
 	u8	pageMax;
 	u8	pokeSwap;
 
+	s8	pokeMove;
+	u8	pokeMoveCnt;
+
+	u32	buttonID;		// ボタンＯＢＪＩＤ
+	int	buttonSeq;	// ボタンアニメ用シーケンス
+
 	int	mainSeq;		// メインシーケンス
 	int	nextSeq;		// 次のシーケンス
-//	int	wipeSeq;		// ワイプ後のシーケンス
 
 
 

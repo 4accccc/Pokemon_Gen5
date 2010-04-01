@@ -163,8 +163,10 @@ static const u16 VSMListMonsL[] = {
   MONSNO_RIZAADON,
   MONSNO_KAMEKKUSU,
   MONSNO_ZYUKAIN,
-  MONSNO_BASYAAMO,
-  MONSNO_RAGURAAZI,
+//  MONSNO_BASYAAMO,
+	MONSNO_SHEIMI,
+//  MONSNO_RAGURAAZI,
+	MONSNO_HOUOU,
   0,
 };
 static const u16 VSMListMonsR[] = {
@@ -424,6 +426,8 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 	case  MAIN_SEQ_DENDOU_PC:
     wk->dpc_data.gamedata = wk->gamedata;
 		{
+			SAVE_CONTROL_WORK * sv;
+			DENDOU_SAVEDATA * ex_rec;
 			RTCDate	date;
 			RTC_GetDate( &date );
 			wk->vsl_data.myPP = PokeParty_AllocPartyWork( wk->heapID );

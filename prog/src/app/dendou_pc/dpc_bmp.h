@@ -27,3 +27,4 @@ extern void DPCBMP_PrintUtilTrans( DPCMAIN_WORK * wk );
 extern void DPCBMP_PutTitle( DPCMAIN_WORK * wk );
 extern void DPCBMP_PutPage( DPCMAIN_WORK * wk );
 extern void DPCBMP_PutInfo( DPCMAIN_WORK * wk );
+extern void DPCBMP_ClearInfo( DPCMAIN_WORK * wk );

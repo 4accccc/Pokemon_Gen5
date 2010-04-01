@@ -144,7 +144,11 @@ void DPCBMP_PutTitle( DPCMAIN_WORK * wk )
 		GFL_STR_DeleteBuffer( str );
 	}else{
 		str = GFL_MSG_CreateString( wk->mman, mes_pc_dendou_01_02 );
+#if 0
 		WORDSET_RegisterNumber( wk->wset, 0, pt->recNo, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+#else
+		WORDSET_RegisterNumber( wk->wset, 0, 1, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+#endif
 		WORDSET_ExpandStr( wk->wset, wk->exp, str );
 		PRINTTOOL_PrintColor(
 			&wk->win[DPCBMP_WINID_TITLE], wk->que, 0, 0, wk->exp, wk->font, FCOL_MP03WN, PRINTTOOL_MODE_LEFT );
@@ -269,4 +273,10 @@ void DPCBMP_PutInfo( DPCMAIN_WORK * wk )
 	}
 
 	PrintScreenTrans( &wk->win[DPCBMP_WINID_INFO] );
+}
+
+void DPCBMP_ClearInfo( DPCMAIN_WORK * wk )
+{
+	GFL_BMPWIN_ClearScreen( wk->win[DPCBMP_WINID_INFO].win );
+	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(wk->win[DPCBMP_WINID_INFO].win) );
 }
