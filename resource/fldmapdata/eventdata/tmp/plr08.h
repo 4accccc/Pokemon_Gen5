@@ -9,6 +9,7 @@
 #ifndef ZONE_PLR08_EVC_H
 #define ZONE_PLR08_EVC_H
 
+#define PLR08_STOPPER_01                   0
 
 #endif //ZONE_PLR08_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plr08.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

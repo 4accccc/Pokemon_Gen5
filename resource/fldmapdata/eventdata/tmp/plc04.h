@@ -12,6 +12,13 @@
 
 #define PLC04_MAN01_01                     0
 #define PLC04_MAN02_01                     1
+#define STOPPER_01                         2
+#define STOPPER_02                         3
+#define STOPPER_03                         4
+#define STOPER_04                          5
+#define STOPPER_05                         6
+#define STOPPER_06                         7
+#define STTOPER_07                         8
 
 #endif //ZONE_PLC04_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/plc04.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

@@ -2,6 +2,7 @@
 #ifndef ZONE_PLT04_EVD_H
 #define ZONE_PLT04_EVD_H
 
+#define DOOR_ID_PLT04_PLR13_EXIT01        0
 
 #endif //ZONE_PLT04_EVD_H
 //このファイルは../data/plt04.mevから自動生成されました
@@ -10,6 +11,7 @@
 
 #define PLT04_MAN01_01                     0
 #define PLT04_MAN02_01                     1
+#define PLT04_STOPPER_01                   2
 
 #endif //ZONE_PLT04_EVC_H
 //このファイルは../data/plt04.mevから自動生成されました

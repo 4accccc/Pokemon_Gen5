@@ -11,6 +11,8 @@
 
 #define PLC07_MAN02_01                     0
 #define PLC07_MAN01_01                     1
+#define PLC07_STOPPER_01                   2
+#define PLC07_STOPPER_02                   3
 
 #endif //ZONE_PLC07_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plc07.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

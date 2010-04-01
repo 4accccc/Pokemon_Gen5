@@ -1,5 +1,5 @@
 #event data
-#save date:2010/01/21 12:16:25
+#save date:2010/03/31 17:49:39
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\pld07.wms
 #SECTION START:OBJ_EVENT
@@ -48,7 +48,7 @@ ZONE_ID_PLC07
 #Next Door ID Name
 DOOR_ID_PLC07_PLD07_EXIT01
 #Door Direction
-EXIT_DIR_DOWN
+EXIT_DIR_NON
 #Door Type
 EXIT_TYPE_INTRUDE
 #Pos Type

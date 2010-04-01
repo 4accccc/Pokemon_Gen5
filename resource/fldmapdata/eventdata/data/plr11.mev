@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/17 15:49:51
+#save date:2010/04/01 12:17:50
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plr11.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,69 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plr11.wms
 #hold event type:
 1
 #hold event number:
+2
+#event number: 0
+#type
+1
+#ID name
+PLR11_STOPPER_01
+#OBJ CODE Number
+STOPPER
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
 0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+5
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 -24
+#event number: 1
+#type
+1
+#ID name
+PLR11_STOPPER_02
+#OBJ CODE Number
+STOPPER
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+5
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+616 0 -24
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -42,7 +104,58 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
+3
+#event number: 0
+#Pos Event Label
+POSID_DUMMY_01
+#Pos Script Name
+SCRID_DUMMY
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Value
 0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-136 0 40
+#size
+1 5
+#event number: 1
+#Pos Event Label
+POSID_DUMMY_02
+#Pos Script Name
+SCRID_DUMMY
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+616 0 40
+#size
+1 5
+#event number: 2
+#Pos Event Label
+POSID_DUMMY_03
+#Pos Script Name
+SCRID_DUMMY
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+376 0 56
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT
@@ -61,13 +174,13 @@ ZONE_ID_PLC08
 #Next Door ID Name
 DOOR_ID_PLC08_PLR11_EXIT01
 #Door Direction
-EXIT_DIR_RIGHT
+EXIT_DIR_NON
 #Door Type
 EXIT_TYPE_INTRUDE
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--136 0 8
+-104 0 8
 #size
 1 1
 #event number: 1
@@ -78,13 +191,13 @@ ZONE_ID_PLH04
 #Next Door ID Name
 DOOR_ID_PLH04_PLR11_EXIT01
 #Door Direction
-EXIT_DIR_LEFT
+EXIT_DIR_NON
 #Door Type
 EXIT_TYPE_INTRUDE
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-616 0 8
+584 0 8
 #size
 1 1
 #Map Event List Data End
