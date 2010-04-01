@@ -57,6 +57,15 @@ static const DEBUG_NUMINPUT_LIST DNI_FortuneList[] = {
 };
 
 //////////////////////////////////////////////////////
+//フェード関連
+static const DEBUG_NUMINPUT_PARAM debug_fade_param = {
+ 1, 15, DebugGetFadeSpeed, DebugSetFadeSpeed,
+};
+static const DEBUG_NUMINPUT_LIST DNI_DebugFadeList[] = {
+  { dni_top_fadespeed, 0, &debug_fade_param },
+};
+
+//////////////////////////////////////////////////////
 ///通信関連
 static const DEBUG_NUMINPUT_PARAM net_whpipe_alonetest_param = {
  0, 32, DebugGetNetWhpipeAloneTestCode, DebugSetNetWhpipeAloneTestCode,
