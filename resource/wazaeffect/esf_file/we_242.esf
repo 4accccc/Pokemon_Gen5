@@ -8,6 +8,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_242.spa
 制御モード変更	継続
 SE再生	SEQ_SE_W044_02	SE2	防御側	25:-500:127	0:0:0
 SE再生	SEQ_SE_W181_01	SE1	防御側	25:-100:20	0:0:0
+SE再生	SEQ_SE_W044_02	SE3	攻撃側	25:-500:127	0:0:0
+SE再生	SEQ_SE_W181_01	SYSTEM	攻撃側	25:-100:20	0:0:0
 制御モード変更	逐次
 パーティクルデータロード	w_242
 パーティクル再生	w_242	W_242_242_BURN	防御側	方向無し	2:0:0	1:1:1	1
