@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-27T16:39:22"/>
+	<create user="matsumiya" host="W00224" date="2010-04-01T18:45:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="186"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -263,9 +263,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="117" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -292,83 +292,106 @@
 	</lock>
 
 
-	<row id="msg_t04pc0101_glasses_01">
+	<row id="msg_t04pc0101_middleman_01">
 		<comment>♂
+・主人公性別：♂
 ・コイキング購入前
 ・はい/いいえの選択肢表示
 ・はい→glasses_02
 　はい＆金額不足→glasses_03
 　はい＆手持ち一杯→glasses_04
 　いいえ→glasses_05</comment>
-		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">ワターシ
-スゴーイ　ポケモン　もってるよー▼
-いまなら　たったの　５００円
-いま　かおうと　おもったでしょー？</language>
-		<language name="JPN_KANJI" width="256">ワターシ
-スゴーイ　ポケモン　もってるよー▼
-いまなら　たったの　５００円
-いま　買おうと　思ったでしょー？</language>
+		<attribute name="キャラ指定">MIDDLEMAN</attribute>
+		<language name="JPN" width="256">おじさん『ぼっちゃん！
+あ・な・た・だけに…！▽
+いい　おはなしが　ありまして▼
+ひみつの　ポケモン　コイキングが
+なんと　たったの　５００円！▽
+どうだい　かうかね？</language>
+		<language name="JPN_KANJI" width="256">おじさん『ぼっちゃん！
+あ・な・た・だけに…！▽
+いい　お話が　ありまして▼
+秘密の　ポケモン　コイキングが
+なんと　たったの　５００円！▽
+どうだい　買うかね？</language>
 	</row>
 
-	<row id="msg_t04pc0101_glasses_02">
+	<row id="msg_t04pc0101_middleman_02">
+		<comment>♂
+・主人公性別：♀
+・コイキング購入前
+・はい/いいえの選択肢表示
+・はい→glasses_02
+　はい＆金額不足→glasses_03
+　はい＆手持ち一杯→glasses_04
+　いいえ→glasses_05</comment>
+		<attribute name="キャラ指定">MIDDLEMAN</attribute>
+		<language name="JPN" width="256">おじさん『じょうちゃん！
+あ・な・た・だけに…！▽
+いい　おはなしが　ありまして▼
+ひみつの　ポケモン　コイキングが
+なんと　たったの　５００円！▽
+どうだい　かうかね？</language>
+		<language name="JPN_KANJI" width="256">おじさん『じょうちゃん！
+あ・な・た・だけに…！▽
+いい　お話が　ありまして▼
+秘密の　ポケモン　コイキングが
+なんと　たったの　５００円！▽
+どうだい　買うかね？</language>
+	</row>
+
+	<row id="msg_t04pc0101_middleman_03">
 		<comment>♂
 ・はい選択時
 ・ポケモン入手処理＋所持金操作
 　ニックネームの確認</comment>
-		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">この　コイキング
-みためは　ふつー　だけど▽
-けっこー　すごーいよ！▼</language>
-		<language name="JPN_KANJI" width="256">この　コイキング
-見た目は　ふつー　だけど▽
-けっこー　すごーいよ！▼</language>
+		<attribute name="キャラ指定">MIDDLEMAN</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]は　コイキングを
+５００円も　だして　かった！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　コイキングを
+５００円も　だして　買った！▼</language>
 	</row>
 
-	<row id="msg_t04pc0101_glasses_03">
+	<row id="msg_t04pc0101_middleman_04">
+		<attribute name="キャラ指定">MIDDLEMAN</attribute>
+		<language name="JPN" width="256">てにいれた　コイキングに
+ニックネームを　つけますか？</language>
+		<language name="JPN_KANJI" width="256">手に入れた　コイキングに
+ニックネームを　つけますか？</language>
+	</row>
+
+	<row id="msg_t04pc0101_middleman_05">
 		<comment>♂
 ・はい＆金額不足</comment>
-		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">その　おへんじ　だいすきー！
-だけど　おかね　たりてないよー</language>
-		<language name="JPN_KANJI" width="256">その　お返事　大好きー！
-だけど　お金　足りてないよー</language>
+		<attribute name="キャラ指定">MIDDLEMAN</attribute>
+		<language name="JPN" width="256">おかね　たりない　みたいだねえ</language>
+		<language name="JPN_KANJI" width="256">お金　足りない　みたいだねえ</language>
 	</row>
 
-	<row id="msg_t04pc0101_glasses_04">
+	<row id="msg_t04pc0101_middleman_06">
 		<comment>♂
 ・はい＆手持ち一杯</comment>
-		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">その　おへんじ　だいすきー！▼
-だけど　それいじょう
-ポケモン　つれていけないよー！</language>
-		<language name="JPN_KANJI" width="256">その　お返事　大好きー！
-だけど　それ以上
-ポケモン　連れていけないよー！</language>
+		<attribute name="キャラ指定">MIDDLEMAN</attribute>
+		<language name="JPN" width="256">ポケモン　いっぱいで　もてないな</language>
+		<language name="JPN_KANJI" width="256">ポケモン　一杯で　持てないな</language>
 	</row>
 
-	<row id="msg_t04pc0101_glasses_05">
+	<row id="msg_t04pc0101_middleman_07">
 		<comment>♂
 ・いいえ選択時</comment>
-		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">その　おへんじ　すきじゃなーい▼
-だけど　アナタ　きっと
-きがかわって　はなしかけてくるよー！</language>
-		<language name="JPN_KANJI" width="256">その　お返事　好きじゃなーい▼
-だけど　アナタ　きっと
-気が変わって　話しかけてくるよー！</language>
+		<attribute name="キャラ指定">MIDDLEMAN</attribute>
+		<language name="JPN" width="256">そお　ざんねんだねえ…</language>
+		<language name="JPN_KANJI" width="256">そお　残念だねえ…</language>
 	</row>
 
-	<row id="msg_t04pc0101_glasses_06">
+	<row id="msg_t04pc0101_middleman_08">
 		<comment>♂
 ・コイキング購入後</comment>
-		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">アナタに　わたした　コイキング
-みためは　ふつー　だけど▽
-けっこー　すごーいよ！▼</language>
-		<language name="JPN_KANJI" width="256">アナタに　渡した　コイキング
-見た目は　ふつー　だけど▽
-けっこー　すごーいよ！▼</language>
+		<attribute name="キャラ指定">MIDDLEMAN</attribute>
+		<language name="JPN" width="256">おじさん『そうそう　ポケモンの
+へんぴんは　おことわり　だからな</language>
+		<language name="JPN_KANJI" width="256">おじさん『そうそう　ポケモンの
+返品は　お断り　だからな</language>
 	</row>
 
 	<flowchart-group-list>
