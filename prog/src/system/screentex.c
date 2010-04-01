@@ -158,6 +158,14 @@ void GFL_SCRNTEX_DrawDefault(GFL_G3D_OBJ* g3Dobj)
   fx16    s = FX_SinIdx(0x4000);
   fx16    c = FX_CosIdx(0x4000);
 
+  NNS_G3dGlbPerspective(
+      FX_SinIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
+      FX_CosIdx( defaultCameraFovy/2 *PERSPWAY_COEFFICIENT ),
+      defaultCameraAspect,
+      defaultCameraNear,
+      defaultCameraFar
+    );
+
 	NNS_G3dGlbLookAt(&camP, &camU, &camT);
 
 	MTX_RotX33(&status.rotate, s, c);
