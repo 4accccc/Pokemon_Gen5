@@ -653,6 +653,8 @@ ev_d05r0201_vs_plasma_win:
 	_FLAG_SET(FV_D05R0201_PLASMA)
 	_FLAG_SET(FV_D05R0201_WORKMAN_01)
 	_FLAG_SET( FV_D05R0201_SAGE7 )
+	//D05のworkmanを非表示にする
+	_FLAG_SET( FV_D05_WORKMAN_01 )
 	
 	//***ワーク操作：C05のPOSを起動***
 	$WK_SCENE_C05 = 2

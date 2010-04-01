@@ -520,12 +520,12 @@ IF $SCWK_ANSWER == SCR_YES THEN
 	_ME_PLAY( SEQ_ME_CALL )
 	_ME_WAIT()
 	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
 	//ライバル話す
 	_BALLOONWIN_OBJMSG_POS(msg_r01_black_11a,R01_RIVEL_02 , POS_UR )
 	_BALLOONWIN_CLOSE()
-	
-	//プレイヤーネームを格納
-	_PLAYER_NAME(0)
 	
 	//システムメッセージ
 	_SYSWIN_MSG( msg_r01_tvt_01 , POS_DOWN )
@@ -538,7 +538,7 @@ IF $SCWK_ANSWER == SCR_YES THEN
 	_CALL_TVT_DEMO( 1 )
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
-	_BALLOONWIN_OBJMSG_POS(msg_r01_black_12,R01_RIVEL_02 , POS_UL )
+	_BALLOONWIN_OBJMSG_POS(msg_r01_black_12,R01_RIVEL_02 , POS_UR )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート・ライバル退場

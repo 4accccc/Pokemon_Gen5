@@ -67,23 +67,23 @@ EVENT_START   ev_pos_r10_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：アテグさん…チャンピオンリーグに向かったんだって？
-	_BALLOONWIN_OBJMSG( msg_r10_black_01 , R10_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r10_black_01 , R10_RIVAL_01 , POS_UL )
 	_YES_NO_WIN( SCWK_ANSWER )
 	_BALLOONWIN_CLOSE()
 	
 	//はい
 	IF $SCWK_ANSWER == SCR_YES THEN
-	_BALLOONWIN_OBJMSG( msg_r10_black_02 , R10_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r10_black_02 , R10_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//いいえ
 	ELSE
-	_BALLOONWIN_OBJMSG( msg_r10_black_03 , R10_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r10_black_03 , R10_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	ENDIF
 	
 	//ライバル：ぼくは つよくなりたかったくせに
-	_BALLOONWIN_OBJMSG( msg_r10_black_04 , R10_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r10_black_04 , R10_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート：こんなことしかできないけれど
@@ -108,7 +108,7 @@ EVENT_START   ev_pos_r10_rival_01
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル：おもしろい？
-	_BALLOONWIN_OBJMSG( msg_r10_black_05 , R10_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r10_black_05 , R10_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート、ライバルを見る
@@ -124,7 +124,7 @@ EVENT_START   ev_pos_r10_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：そういうことか
-	_BALLOONWIN_OBJMSG( msg_r10_black_06 , R10_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r10_black_06 , R10_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル、主人公をを見る
@@ -132,7 +132,7 @@ EVENT_START   ev_pos_r10_rival_01
 	_OBJ_ANIME_WAIT()
 	
 	//ライバル：ぼくもすぐにおいつく！
-	_BALLOONWIN_OBJMSG( msg_r10_black_07 , R10_RIVAL_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_r10_black_07 , R10_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//ライバル退場

@@ -79,8 +79,23 @@ EVENT_START   ev_pos_d05_rival_01
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 	
-	//ライバル一時的に消去
+	///ドア開ける
+	DEFINE_LOCAL	DOOR_ANIME_ID
+	_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 164, 472 )
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	
+	//入室
+	_OBJ_ANIME( D05_RIVAL_01 , anm_d05_rivalpos_02_end )
+	_OBJ_ANIME_WAIT()
+	
+	//ライバルOBJ消去
 	_OBJ_DEL(D05_RIVAL_01)
+	
+	//ドア閉じる
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
 
 	//======================================//	
 	
@@ -128,7 +143,7 @@ _ANIME_LABEL	anm_d05_rivalpos_01_z476
 
 _ANIME_LABEL	anm_d05_rivalpos_02_z474
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_U_8F,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -137,7 +152,7 @@ _ANIME_LABEL	anm_d05_rivalpos_02_z474
 
 _ANIME_LABEL	anm_d05_rivalpos_02_z475
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,4
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
@@ -146,9 +161,17 @@ _ANIME_LABEL	anm_d05_rivalpos_02_z475
 
 _ANIME_LABEL	anm_d05_rivalpos_02_z476
 	_ANIME_DATA	AC_WALK_L_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,3
 	_ANIME_DATA	ACMD_END,0
 
+
+//--------------------------------------------------------------
+//	D05：ライバルコンテナ内へ入ってゆく
+//--------------------------------------------------------------
+
+_ANIME_LABEL	anm_d05_rivalpos_02_end
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*workman一言メッセージ：コンテナイベント終了まで表示          */

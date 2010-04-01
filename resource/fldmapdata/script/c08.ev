@@ -152,7 +152,7 @@ EVENT_START   ev_pos_c08_champions_01
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//イベント曲再生
-	_START_EVENT_BGM( SEQ_BGM_E_G_CIS )
+	_START_EVENT_BGM( SEQ_BGM_E_SAGE )
 	
 	//ゲーヂスの演説　
 	_BALLOONWIN_OBJMSG( msg_c08_sage1_01 , C08_SAGE1_01 )
@@ -366,7 +366,7 @@ EVENT_START   ev_pos_c08_champions_01
 	_OBJ_ANIME_WAIT()
 	
 	//チャンピオン：ひさしいな
-	_BALLOONWIN_OBJMSG_POS( msg_c08_champion_03 , C08_CHAMPION_01 , POS_DR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_champion_03 , C08_CHAMPION_01 , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//リーダー、チャンピオンを見る
@@ -381,7 +381,7 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_CLOSE()
 	
 	//チャンピオン：ずばり！
-	_BALLOONWIN_OBJMSG_POS( msg_c08_champion_04 , C08_CHAMPION_01 , POS_DR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_champion_04 , C08_CHAMPION_01 , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//バージョンを取得して発言を分岐
@@ -411,7 +411,7 @@ EVENT_START   ev_pos_c08_champions_01
 	ENDIF
 	
 	//チャンピオン：おうよ！
-	_BALLOONWIN_OBJMSG_POS( msg_c08_champion_05 , C08_CHAMPION_01 , POS_DR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_champion_05 , C08_CHAMPION_01 , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//シャガ：…わからんな
@@ -427,7 +427,7 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_CLOSE()
 	
 	//チャンピオン：そうだよなアイリス
-	_BALLOONWIN_OBJMSG_POS( msg_c08_champion_06 , C08_CHAMPION_01 , POS_DR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_champion_06 , C08_CHAMPION_01 , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//チャンピオン主人公に向き合う
@@ -436,7 +436,7 @@ EVENT_START   ev_pos_c08_champions_01
 	_OBJ_ANIME_WAIT()
 	
 	//チャンピオン：さてと…わしは
-	_BALLOONWIN_OBJMSG_POS( msg_c08_champion_07 , C08_CHAMPION_01 , POS_DR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_champion_07 , C08_CHAMPION_01 , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//チャンピオンリーダーの方を向く
@@ -445,7 +445,7 @@ EVENT_START   ev_pos_c08_champions_01
 	
 	
 	//チャンピオン：じゃあな！頼んだぞ
-	_BALLOONWIN_OBJMSG_POS( msg_c08_champion_08 , C08_CHAMPION_01 , POS_DR )
+	_BALLOONWIN_OBJMSG_POS( msg_c08_champion_08 , C08_CHAMPION_01 , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
 	//チャンピオン退場

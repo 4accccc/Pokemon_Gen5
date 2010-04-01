@@ -179,11 +179,30 @@ EVENT_START   ev_scene_c07_leader7_01
 	_FLAG_RESET( FV_C07_READER7 )
 	
 	//======================================//
+	{
+	//自機座標取得変数定義
+	DEFINE_LOCAL  POSX
+	DEFINE_LOCAL  POSZ
+	
+	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
 	
 	//主人公ジムから出てくる
-	_OBJ_ANIME( MMDL_ID_PLAYER , anm_c07_player_exit )
-	_OBJ_ANIME_WAIT()
-
+	SWITCH $POSX
+	CASE 171 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c07_player_exit_x171 )
+		_OBJ_ANIME_WAIT()
+	CASE 172 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c07_player_exit_x172 )
+		_OBJ_ANIME_WAIT()
+	CASE 173 THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c07_player_exit_x173 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c07_player_exit_x172 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	}
 	//ライバルとサポート会話
 	_BALLOONWIN_OBJMSG_POS( msg_c07_black_01 , C07_RIVAL_01 , POS_DL )
 	_BALLOONWIN_CLOSE()
@@ -304,8 +323,26 @@ EVENT_END
 //--------------------------------------------------------------
 //	C07　リュウラセンイベント開始：プレイヤー外に出てくる
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_c07_player_exit
+_ANIME_LABEL	anm_c07_player_exit_x171
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：プレイヤー外に出てくる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_player_exit_x172
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	C07　リュウラセンイベント開始：プレイヤー外に出てくる
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_c07_player_exit_x173
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------

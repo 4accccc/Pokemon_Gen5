@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/14 21:27:01
+#save date:2010/03/31 16:00:18
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r07r0102.wms
 #SECTION START:OBJ_EVENT
@@ -119,7 +119,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_MINI_04
 #Direction Type Number
-DIR_LEFT
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number

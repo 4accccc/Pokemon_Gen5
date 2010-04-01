@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/29 18:23:26
+#save date:2010/03/30 16:47:26
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07.wms
 #SECTION START:OBJ_EVENT
@@ -461,7 +461,7 @@ SCRID_BG_C07_BOARD_03
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 48 120
+-88 48 104
 #event number: 3
 #Bg Event Label
 C07_BOARD_04
@@ -474,7 +474,7 @@ SCRID_BG_C07_BOARD_03
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--24 48 120
+-24 48 104
 #event number: 4
 #Bg Event Label
 C07_HIDE_ITEM_01
