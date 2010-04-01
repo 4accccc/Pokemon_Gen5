@@ -1370,8 +1370,11 @@ static GMEVENT_RESULT ShutterDownInEvent( GMEVENT* event, int* seq, void* wk )
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
 	switch( *seq ) {
-  // フェード開始
   case 0:
+    // フィールドBG復元
+    ResetFieldBG( work->fieldmap );
+    InitFieldBG( work->fieldmap );
+    // フェード開始
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, FIELD_FADE_DEFAULT_WAIT );
 		(*seq)++;
 		break;
@@ -1390,9 +1393,6 @@ static GMEVENT_RESULT ShutterDownInEvent( GMEVENT* event, int* seq, void* wk )
 
   // イベント終了
   case 3:
-    // フィールドBG復元
-    ResetFieldBG( work->fieldmap );
-    InitFieldBG( work->fieldmap );
     return GMEVENT_RES_FINISH;
 	} 
 	return GMEVENT_RES_CONTINUE;
@@ -1410,8 +1410,11 @@ static GMEVENT_RESULT ShutterUpInEvent( GMEVENT* event, int* seq, void* wk )
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
 	switch( *seq ) {
-  // フェード開始
   case 0:
+    // フィールドBG復元
+    ResetFieldBG( work->fieldmap );
+    InitFieldBG( work->fieldmap );
+    // フェード開始
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, FIELD_FADE_DEFAULT_WAIT );
 		(*seq)++;
 		break;
@@ -1430,9 +1433,6 @@ static GMEVENT_RESULT ShutterUpInEvent( GMEVENT* event, int* seq, void* wk )
 
   // イベント終了
   case 3:
-    // フィールドBG復元
-    ResetFieldBG( work->fieldmap );
-    InitFieldBG( work->fieldmap );
     return GMEVENT_RES_FINISH;
 	} 
 	return GMEVENT_RES_CONTINUE;
@@ -1450,8 +1450,11 @@ static GMEVENT_RESULT SlideRightInEvent( GMEVENT* event, int* seq, void* wk )
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
 	switch( *seq ) {
-  // フェード開始
   case 0:
+    // フィールドBG復元
+    ResetFieldBG( work->fieldmap );
+    InitFieldBG( work->fieldmap );
+    // フェード開始
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, FIELD_FADE_DEFAULT_WAIT );
 		(*seq)++;
 		break;
@@ -1470,9 +1473,6 @@ static GMEVENT_RESULT SlideRightInEvent( GMEVENT* event, int* seq, void* wk )
 
   // イベント終了
   case 3:
-    // フィールドBG復元
-    ResetFieldBG( work->fieldmap );
-    InitFieldBG( work->fieldmap );
     return GMEVENT_RES_FINISH;
 	} 
 	return GMEVENT_RES_CONTINUE;
@@ -1490,8 +1490,11 @@ static GMEVENT_RESULT SlideLeftInEvent( GMEVENT* event, int* seq, void* wk )
   FIELDMAP_WORK*   fieldmap   = work->fieldmap;
 
 	switch( *seq ) {
-  // フェード開始
   case 0:
+    // フィールドBG復元
+    ResetFieldBG( work->fieldmap );
+    InitFieldBG( work->fieldmap );
+    // フェード開始
     GFL_FADE_SetMasterBrightReq( work->brightFadeMode, 16, 0, FIELD_FADE_DEFAULT_WAIT );
 		(*seq)++;
 		break;
@@ -1510,9 +1513,6 @@ static GMEVENT_RESULT SlideLeftInEvent( GMEVENT* event, int* seq, void* wk )
 
   // イベント終了
   case 3:
-    // フィールドBG復元
-    ResetFieldBG( work->fieldmap );
-    InitFieldBG( work->fieldmap );
     return GMEVENT_RES_FINISH;
 	} 
 	return GMEVENT_RES_CONTINUE;
