@@ -44,7 +44,7 @@
 #include "savedata/wifihistory_local.h"
 #include "savedata/undata_update.h"
 
-#include "system/touch_subwindow.h"
+
 
 #include "poke_tool/poke_tool_def.h"
 #include "box_m_obj_NANR_LBLDEFS.h"

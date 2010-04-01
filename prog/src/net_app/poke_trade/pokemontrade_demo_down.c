@@ -23,7 +23,7 @@
 #include "ircbattle.naix"
 #include "trade.naix"
 
-#include "system/touch_subwindow.h"
+
 
 #include "poke_tool/poke_tool_def.h"
 #include "box_m_obj_NANR_LBLDEFS.h"

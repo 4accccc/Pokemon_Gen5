@@ -31,7 +31,7 @@
 #include "system/bmp_winframe.h"
 #include "system/bmp_menulist.h"
 #include "system/bmp_menu.h"
-#include "system/touch_subwindow.h"
+
 #include "system/wipe.h"
 
 #include "msg/msg_poke_trade.h"

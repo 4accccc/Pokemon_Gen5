@@ -155,7 +155,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/wipe_sub.c \
         system/wipe_wnd.c \
         system/brightness.c \
-        system/touch_subwindow.c \
         app/trainercard/trcard_sys.c \
         app/pms_input/pmsi_param.c \
         sound/snd_viewer_mcs.c \
@@ -171,7 +170,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/wazatype_icon.c \
         net_app/union/union_gra_tool.c \
         net_app/union/union_beacon_tool.c \
-        system/selbox.c \
         system/point_sel.c \
         system/cursor_move.c \
         gamesystem/game_comm.c \

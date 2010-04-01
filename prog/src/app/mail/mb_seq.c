@@ -719,7 +719,7 @@ static int MainSeq_MailMenuMain( MAILBOX_SYS_WORK * syswk )
     return FadeOutSet( syswk, MBSEQ_MAINSEQ_RELEASE );
 
   case MBMAIN_MENU_CANCEL:  // ‚â‚ß‚é
-  case SBOX_SELECT_CANCEL:
+  case BMPMENU_CANCEL:
     MBMAIN_SelBoxDel( syswk );
     MBBMP_TalkWinDel( syswk );
     BGWINFRM_FrameOff( syswk->app->wfrm, MBMAIN_BGWF_SELMAIL );
@@ -727,7 +727,7 @@ static int MainSeq_MailMenuMain( MAILBOX_SYS_WORK * syswk )
     MBOBJ_Vanish( syswk->app, MBMAIN_OBJ_CURSOR, TRUE );
     return MBSEQ_MAINSEQ_MAIL_SELECT_MAIN;
 
-  case SBOX_SELECT_NULL:
+  case BMPMENU_NULL:
     break;
   }
 

@@ -23,8 +23,8 @@
 #include "system/bmp_menu.h"
 #include "system/bmp_menulist.h"
 #include "system/bmp_winframe.h"
-#include "system/touch_subwindow.h"
-#include "system/selbox.h"
+
+
 #include "system/wipe.h"
 #include "print/wordset.h"
 #include "print/global_msg.h"
@@ -53,7 +53,6 @@
 #include "wifi_note_snd.h"
 
 
-#define USE_SEL_BOX (1)
 #define USE_FRONTIER_DATA (0)
 #define NOTE_TEMP_COMMENT (0)
 #define NOTE_DEBUG (1)
@@ -165,7 +164,7 @@ enum{
 #define BMPL_YESNO_PY   ( 9 )
 #define BMPL_YESNO_FRM    ( DFRM_MSG )
 #define BMPL_YESNO_PAL    ( BGPLT_M_YNWIN )
-#define BMPL_YESNO_CGX_SIZ  ( TOUCH_SW_USE_CHAR_NUM )
+#define BMPL_YESNO_CGX_SIZ  ( 15*4 ) //旧TOUCH_SW_USE_CHAR_NUMと同サイズ
 #define BMPL_YESNO_CGX    ( BMPL_WIN_CGX_MENU+MENU_WIN_CGX_SIZ )
 
 #define BMPL_WIN_CGX_TALK   (BMPL_YESNO_CGX+BMPL_YESNO_CGX_SIZ)
@@ -181,6 +180,7 @@ enum{
 #define BMPL_TITLE_PL_Y ( 4 )
 
 //選択ボックスウィンドウ領域
+#define SBOX_WINCGX_SIZ (27)
 #define SBOX_FLIST_SEL_CT (4)
 #define SBOX_FLIST_WCGX   (BMPL_TITLE_CGX_END)
 #define SBOX_FLIST_W    (17)
@@ -1199,13 +1199,6 @@ typedef struct {
 
   ARCHANDLE* p_handle;    // グラフィックアーカイブハンドル
 
-/*
-#if USE_SEL_BOX
-  SELBOX_SYS      *sbox;  // 選択ボックスシステムワーク
-#endif
-  TOUCH_SW_SYS    *ynbtn_wk;  ///<YesNoボタンワーク
-*/
-
   PRINT_UTIL  title;    // タイトル用ビットマップ
   STRBUF* p_titlestr;     // タイトル文字列
   STRBUF* p_titletmp;     // タイトル文字列
@@ -1323,9 +1316,6 @@ typedef struct {
 //  GF_BGL_BMPWIN menu; // メニューリスト用
 //  BMPLIST_DATA* p_menulist[BMPL_FLIST_MENU_NUM];  // メニューリスト
 //    BMPLIST_WORK* p_listwk; // BMPメニューワーク
-//#if USE_SEL_BOX
-//  SELBOX_WORK*  p_listwk; ///<選択ボックスワーク
-//#endif
   APP_TASKMENU_ITEMWORK list1[4];
   APP_TASKMENU_ITEMWORK list2[4];
   APP_TASKMENU_ITEMWORK ynlist[2];
@@ -1846,20 +1836,6 @@ static const WFNOTE_MENU_DATA DATA_FListMenuTbl[BMPL_FLIST_MENU_NUM][BMPL_FLIST_
   }
 };
 
-#if USE_SEL_BOX
-///セレクトボックス　ヘッダデータ構造体
-static const SELBOX_HEAD_PRM DATA_SBoxHeadParamFList = {
-  TRUE,SBOX_OFSTYPE_CENTER, ///<ループフラグ、左寄せorセンタリング
-
-  4,  ///<項目表示オフセットX座標(dot)
-
-  DFRM_MSG,       ///<フレームNo
-  BGPLT_M_SBOX,     ///<フレームパレットID
-  0,0,          ///oam BG Pri,Software Pri
-  SBOX_FLIST_FCGX,SBOX_FLIST_WCGX,  ///<ウィンドウcgx,フレームcgx
-  SBOX_FLIST_FCGX_SIZ,    ///<BMPウィンドウ占有キャラクタ領域サイズ(char)
-};
-#endif
 //-------------------------------------
 /// FRIENDINFO
 //=====================================
@@ -2881,14 +2857,6 @@ static void Draw_BmpInit( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, HEAPI
   p_draw->p_str = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
   p_draw->p_tmp = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
 
-/*
-#if USE_SEL_BOX
-  p_draw->sbox = SelectBoxSys_AllocWork( heapID, NULL );
-#endif
-
-  //YesNoボタンシステムワーク確保
-  p_draw->ynbtn_wk = TOUCH_SW_AllocWork(heapID);
-*/
 }
 
 //----------------------------------------------------------------------------
@@ -2900,15 +2868,6 @@ static void Draw_BmpInit( WFNOTE_DRAW* p_draw, const WFNOTE_DATA* cp_data, HEAPI
 //-----------------------------------------------------------------------------
 static void Draw_BmpExit( WFNOTE_DRAW* p_draw )
 {
-/*
-  //YesNoボタンシステムワーク解放
-  TOUCH_SW_FreeWork( p_draw->ynbtn_wk );
-
-#if USE_SEL_BOX
-  SelectBoxSys_Free(p_draw->sbox);
-#endif
-*/
-
   GFL_STR_DeleteBuffer( p_draw->p_str );
   GFL_STR_DeleteBuffer( p_draw->p_tmp );
   GFL_STR_DeleteBuffer( p_draw->p_titlestr );
@@ -5310,27 +5269,6 @@ static void FListSeq_MenuInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
 
 //  FListDrawArea_ActiveListWrite( &p_wk->drawdata[WFNOTE_DRAWAREA_MAIN], p_draw, p_wk->pos ,FALSE );
 
-/*
-  {
-#if USE_SEL_BOX
-    SELBOX_HEADER head;
-
-    MI_CpuClear8(&head,sizeof(SELBOX_HEADER));
-
-    head.prm = DATA_SBoxHeadParamFList;
-    if( sex == PM_NEUTRAL ){
-      head.list = (const BMPLIST_DATA*)p_wk->p_menulist[ BMPL_FLIST_MENU_CODE ];
-    }else{
-      head.list = (const BMPLIST_DATA*)p_wk->p_menulist[ BMPL_FLIST_MENU_NML ];
-    }
-    head.count = SBOX_FLIST_SEL_CT;
-    head.fontHandle = p_draw->fontHandle;
-
-    p_wk->p_listwk = SelectBoxSet(p_draw->sbox,&(head),p_data->key_mode,
-        SBOX_FLIST_PX,SBOX_FLIST_PY,SBOX_FLIST_W,0);
-#endif
-  }
-*/
   {
     APP_TASKMENU_INITWORK wk;
 
@@ -5381,13 +5319,6 @@ static u32 FListSeq_MenuWait( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNO
   if( FList_TalkMsgEndCheck( p_wk,p_data,p_draw ) == FALSE ){
     return ret_seq;
   }
-/*
-#if USE_SEL_BOX
-  ret = SelectBoxMain(p_wk->p_listwk);
-#else
-  ret = SBOX_SELECT_CANCEL;
-#endif
-*/
   APP_TASKMENU_UpdateMenu( p_wk->listWork );
   if( APP_TASKMENU_IsFinish( p_wk->listWork ) == TRUE ){
     ret = APP_TASKMENU_GetCursorPos( p_wk->listWork );
@@ -5397,10 +5328,10 @@ static u32 FListSeq_MenuWait( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNO
   }
 
   switch(ret){
-  case SBOX_SELECT_NULL:
+  case BMPMENU_NULL:
     return ret_seq;
   case 3:
-  case SBOX_SELECT_CANCEL:
+  case BMPMENU_CANCEL:
    //   PMSND_PlaySE(WIFINOTE_MENU_BS_SE);
     p_data->key_mode = GFL_UI_CheckTouchOrKey();
     ret_seq = SEQ_FLIST_MAIN;
@@ -5411,12 +5342,6 @@ static u32 FListSeq_MenuWait( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNO
     ret_seq = DATA_FListMenuTbl[p_wk->listType][ret].param;
     break;
   }
-/*
-#if USE_SEL_BOX
-  p_data->key_mode = SelectBoxGetKTStatus(p_wk->p_listwk);
-  SelectBoxExit(p_wk->p_listwk);
-#endif
-*/
 
   // MAINにもどるので矢印を出す
   if( ret_seq == SEQ_FLIST_MAIN ){

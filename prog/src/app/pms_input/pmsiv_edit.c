@@ -15,7 +15,7 @@
 #include "system\bmp_cursor.h"
 #include "system\bmp_winframe.h"
 #include "system\bgwinfrm.h"
-//#include "system\touch_subwindow.h"
+
 #include "print\printsys.h"
 #include "print\wordset.h"
 #include "msg\msg_pms_input.h"

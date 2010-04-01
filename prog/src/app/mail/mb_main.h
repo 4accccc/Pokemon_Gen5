@@ -11,11 +11,13 @@
 
 #include "savedata/mail_util.h"
 #include "system/bmp_winframe.h"
-//#include "system/touch_subwindow.h"
+
 #include "print/wordset.h"
 #include "system/bgwinfrm.h"
 #include "system/cursor_move.h"
-#include "system/selbox.h"
+#include "system/bmp_menuwork.h"
+#include "system/bmp_menu.h"
+
 #include "system/pms_draw.h"
 #include "app/mailbox.h"
 #include "app/app_taskmenu.h"
@@ -164,8 +166,6 @@ typedef struct {
   u32 ynID;             // はい・いいえＩＤ
 
   // メニューリスト
-  SELBOX_SYS * selbox;
-  SELBOX_WORK * sbwk;
   BMPLIST_DATA * sblist;
   u32 sb_old_pos;
 

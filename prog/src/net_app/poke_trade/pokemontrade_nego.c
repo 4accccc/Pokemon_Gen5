@@ -42,7 +42,7 @@
 #include "net/dwc_rapfriend.h"
 #include "savedata/wifilist.h"
 
-#include "system/touch_subwindow.h"
+
 #include "system/wipe.h"
 
 #include "item/item.h"

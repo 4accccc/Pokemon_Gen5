@@ -13,7 +13,7 @@
 #ifndef __OEKAKI_LOCAL_H__
 #define __OEKAKI_LOCAL_H__
 
-#include "system/touch_subwindow.h"
+
 #include "net_app/union_app.h"
 #include "app/app_taskmenu.h"
 

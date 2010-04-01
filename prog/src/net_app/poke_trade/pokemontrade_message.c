@@ -44,7 +44,7 @@
 #include "net/dwc_rapfriend.h"
 #include "savedata/wifilist.h"
 
-#include "system/touch_subwindow.h"
+
 
 #include "item/item.h"
 #include "app/app_menu_common.h"

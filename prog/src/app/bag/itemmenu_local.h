@@ -21,7 +21,7 @@
 #include "gamesystem/game_data.h"
 #include "system/bmp_winframe.h"
 #include "system/bmp_menulist.h"
-#include "system/touch_subwindow.h"
+
 #include "system/palanm.h"
 #include "system/blink_palanm.h"
 
@@ -208,7 +208,6 @@ struct _FIELD_ITEMMENU_PARAM {
   GFL_CLWK  *clwkBarIcon[ BAR_ICON_MAX ];
   GFL_CLWK  *clwkSort;
   GFL_TCBLSYS *pMsgTcblSys;
-  TOUCH_SW_SYS* pTouchSWSys;
   GFL_BMPWIN* winWaza;
   GFL_BMPWIN* winItemName;
   GFL_BMPWIN* winItemNum;

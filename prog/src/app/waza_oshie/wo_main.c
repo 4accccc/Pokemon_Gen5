@@ -35,7 +35,7 @@
 
 #include "system/wipe.h"
 #include "system/bmp_menu.h"
-#include "system/touch_subwindow.h"
+
 #include "system/cursor_move.h"
 #include "sound/pm_sndsys.h"
 

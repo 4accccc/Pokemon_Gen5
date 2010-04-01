@@ -18,7 +18,7 @@
 #include "../../field/event_ircbattle.h"
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/poke_tool_def.h"
-#include "system/touch_subwindow.h"
+
 #include "pokemontrade_snd.h"
 #include "sound/pm_sndsys.h"
 #include "net/network_define.h"
