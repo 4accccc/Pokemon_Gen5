@@ -155,9 +155,13 @@ $libdpw       DPW の ROOT ディレクトリ
 
 【 更新内容 】
 
+ beta25 (Apr. 1, 2010)
+  －世界通信交換－
+    ・Dpw_Tr_Data 構造体の変数 trainerID の型を u16 から u32 に変更し、構造体の変数の順序を一部変更しました。
+   
  beta24 (Jan. 29, 2010)
   －世界通信交換－
-    ・Dpw_Tr_Data 構造体に変数を3バイト追加しました。
+    ・Dpw_Tr_Data 構造体に変数を3バイト(u8 favoriete, u8 countryCount, u8 nature)を追加しました。
     
  beta23 (Dec. 28, 2009)
   －バトルタワー、世界通信交換－

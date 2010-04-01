@@ -129,12 +129,12 @@ typedef struct {
 	Dpw_Tr_PokemonDataSimple postSimple;	//!< 「預ける」ポケモンの簡略データ（サーバー検索用）
 	Dpw_Tr_PokemonSearchData wantSimple;	//!< 「ほしい」ポケモンの簡略データ（サーバー検索用）
 	u8 gender;								//!< 主人公の性別
-	u8 padding;								// パディング
+	u8 nature;								//!< 性格
 	Dpw_Tr_Date postDate;					//!< 預けた日時（サーバーにてセット）
 	Dpw_Tr_Date tradeDate;					//!< 交換成立日時（サーバーにてセット）
 	s32 id;									//!< このデータのID（サーバーにてセット）
+	u32 trainerID;							//!< トレーナーのID
 	u16 name[DPW_TR_NAME_SIZE];				//!< 主人公名
-	u16 trainerID;							//!< トレーナーのID
 	u8 countryCode;							//!< 住んでいる国コード
 	u8 localCode;							//!< 住んでいる地方コード
 	u8 trainerType;							//!< トレーナータイプ
@@ -143,8 +143,6 @@ typedef struct {
 	u8 langCode;							//!< 言語コード
 	u8 favorite;							//!< 趣味
 	u8 countryCount;						//!< 交換した国の回数カウンタ
-	u8 nature;								//!< 性格
-	u8 padding2;							// パディング
 } Dpw_Tr_Data;
 
 /*-----------------------------------------------------------------------*
