@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-27T16:08:00"/>
+	<create user="matsumiya" host="W00224" date="2010-04-01T17:51:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1426" top="136" right="2131" bottom="764" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -306,18 +306,18 @@
 その　ひとみの　かがやき……
 ポケモンへの　やさしさを　かんじる！▼
 きめた！　こだいのしろで　みつけた
-ポケモンを　きみに　たくそう！▼
-この　ポケモン　ラーを
+たからものを　きみに　たくそう！▼
+この　ポケモンの　タマゴを
 うけとり　そだててみないか？</language>
 		<language name="JPN_KANJI" width="256">……ポケモントレーナーか▼
 ……　……　……
 ……　……　……▼
-その　ひとみの　かがやき……
-ポケモンへの　やさしさを　かんじる！▼
-きめた！　こだいのしろで　みつけた
-ポケモンを　きみに　たくそう！▼
-この　ポケモン　ラーを
-うけとり　そだててみないか？</language>
+その　ひとみの　輝き……
+ポケモンへの　優しさを　感じる！▼
+決めた！　古代の城で　発見した
+宝物を　きみに　たくそう！▼
+この　ポケモンの　タマゴを
+受け取り　育ててみないか？</language>
 	</row>
 
 	<row id="msg_r18r0101_00_02">
@@ -329,11 +329,11 @@
 ・いいえ→r18r0101_00_04</comment>
 		<attribute name="キャラ指定">RANGERM</attribute>
 		<language name="JPN" width="256">この　こだいのしろで　みつかた
-ポケモン　ラーを▽
+ポケモンの　タマゴを▽
 うけとり　そだててみないか？</language>
-		<language name="JPN_KANJI" width="256">この　こだいのしろで　みつかた
-ポケモン　ラーを▽
-うけとり　そだててみないか？</language>
+		<language name="JPN_KANJI" width="256">この　古代の城で　発見した
+ポケモンの　タマゴを▽
+受け取り　育ててみないか？</language>
 	</row>
 
 	<row id="msg_r18r0101_00_03">
@@ -342,12 +342,12 @@
 		<attribute name="キャラ指定">RANGERM</attribute>
 		<language name="JPN" width="256">うむ……▼
 って　きもちは　うれしいが
-それいじょう　ポケモンを▽
-つれてあるけない　ようだね</language>
+ポケモンが　いっぱいで▽
+タマゴを　うけとれないようだね</language>
 		<language name="JPN_KANJI" width="256">うむ……▼
-って　きもちは　うれしいが
-それいじょう　ポケモンを▽
-つれてあるけない　ようだね</language>
+って　気持ちは　うれしいが
+ポケモンが　一杯で▽
+タマゴを　受け取れないようだね</language>
 	</row>
 
 	<row id="msg_r18r0101_00_04">
@@ -358,38 +358,38 @@
 		<language name="JPN" width="256">……ふむ
 それも　きみの　じゆうだ！</language>
 		<language name="JPN_KANJI" width="256">……ふむ
-それも　きみの　じゆうだ！</language>
+それも　きみの　自由だ！</language>
 	</row>
 
 	<row id="msg_r18r0101_00_05">
 		<comment>♂
 ・はい選択
 ・ポケモン入手処理
-　No643「ラー」（仮称）</comment>
+　No643「ラー」（仮称）のタマゴ</comment>
 		<attribute name="キャラ指定">RANGERM</attribute>
 		<language name="JPN" width="256">うむ……
 よろしく　たのんだぜ▼</language>
 		<language name="JPN_KANJI" width="256">うむ……
-よろしく　たのんだぜ▼</language>
+よろしく　頼んだぜ▼</language>
 	</row>
 
 	<row id="msg_r18r0101_00_06">
 		<comment>♂
-・ポケモン入手後</comment>
+・ポケモン入手後、自動で表示</comment>
 		<attribute name="キャラ指定">RANGERM</attribute>
-		<language name="JPN" width="256">その　ポケモン
-ラーは　たいようの　めぐみを　あび▽
-いのちを　あたえるという……▼
-……どうやら　タマゴに
-ちからを　わけあたえるようだ</language>
-		<language name="JPN_KANJI" width="256">その　ポケモン
-ラーは　たいようの　めぐみを　あび▽
-いのちを　あたえるという……▼
-……どうやら　タマゴに
-ちからを　わけあたえるようだ</language>
+		<language name="JPN" width="256">ポケモンの　タマゴだが
+げんきな　ポケモンと▽
+いっしょに　しておく……▼
+つまり　つれあるくことで
+なかから　ポケモンが　でてくるんだ</language>
+		<language name="JPN_KANJI" width="256">ポケモンの　タマゴだが
+元気な　ポケモンと▽
+一緒に　しておく……▼
+つまり　連れ歩くことで
+中から　ポケモンが　でてくるんだ</language>
 	</row>
 
-	<row id="msg_r18r0101_00_07">
+	<row id="msg_r18r0101_00_07" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・0＝主人公名
 ・1=ポケモン名</comment>
 		<attribute name="キャラ指定">システム</attribute>
@@ -399,7 +399,7 @@
 [1:01:ポケモン種族名:1]を　てにいれた！</language>
 	</row>
 
-	<row id="msg_r18r0101_00_08">
+	<row id="msg_r18r0101_00_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>・はい/いいえの選択肢表示
 　はい→名前入力画面に
 　いいえ→終了
