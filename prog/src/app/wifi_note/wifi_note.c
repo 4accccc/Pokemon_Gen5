@@ -5324,7 +5324,7 @@ static u32 FListSeq_MenuWait( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNO
     ret = APP_TASKMENU_GetCursorPos( p_wk->listWork );
     APP_TASKMENU_CloseMenu( p_wk->listWork );
   }else{
-   ret = SBOX_SELECT_NULL;
+   ret = BMPMENU_NULL;
   }
 
   switch(ret){
