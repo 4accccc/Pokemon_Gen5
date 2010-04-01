@@ -161,7 +161,7 @@ enum
 static const GFL_CLWK_DATA obj_cell_data[OBJ_CELL_MAX] =
 {
   // pos_x, pos_y, anmseq,               softpri, bgpri
-  {   18,    15,   OBJ_BALL_CELL_ANMSEQ, 0,       BG_FRAME_PRI_M_FRONT },
+  {   18,    17,   OBJ_BALL_CELL_ANMSEQ, 0,       BG_FRAME_PRI_M_FRONT },
   {  175,   136,   OBJ_GF_CELL_ANMSEQ,   0,       BG_FRAME_PRI_M_FRONT },
 };
 
@@ -929,7 +929,7 @@ static void Zenkoku_Zukan_Award_ObjInit( ZENKOKU_ZUKAN_AWARD_WORK* work )
       &obj_cell_data[OBJ_GF_CELL],
       CLSYS_DEFREND_MAIN,
       work->heap_id );
-  GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_GF_CELL], TRUE );
+  GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_GF_CELL], FALSE );
   GFL_CLACT_WK_SetAutoAnmFlag( work->obj_clwk[OBJ_GF_CELL], TRUE );
 }
 static void Zenkoku_Zukan_Award_ObjExit( ZENKOKU_ZUKAN_AWARD_WORK* work )
