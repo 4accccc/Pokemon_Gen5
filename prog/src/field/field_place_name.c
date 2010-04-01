@@ -1,23 +1,23 @@
 //////////////////////////////////////////////////////////////////////////////////////
 /**
- *
- * @file   field_place_name.h
+ * @file   field_place_name.c
  * @brief  地名表示ウィンドウ
  * @author obata_toshihiro
  * @date   2009.07   
- *
  */
 //////////////////////////////////////////////////////////////////////////////////////
 #include <gflib.h>
+#include "system/bmp_oam.h"
 #include "field_place_name.h"
 #include "field/zonedata.h"
+
+#include "pm_define.h"
+#include "field_oam_pal.h"  // for FLDOAM_PALNO_PLACENAME
+
 #include "arc/arc_def.h"
 #include "arc/place_name.naix"
 #include "arc/message.naix"
 #include "msg/msg_place_name.h"
-#include "system/bmp_oam.h"
-#include "pm_define.h"
-#include "field_oam_pal.h"  // for FLDOAM_PALNO_PLACENAME
 
 
 //===================================================================================
@@ -61,7 +61,8 @@
 #define	ARC_DATA_ID_MAX (29) // アーカイブ内データIDの最大値
 
 //-----
-// BG //-----
+// BG 
+//-----
 #define NULL_CHAR_NO       ( 0)								// NULLキャラ番号
 #define	BMPWIN_WIDTH_CHAR  (32)								// ウィンドウ幅(キャラクタ単位)
 #define BMPWIN_HEIGHT_CHAR ( 2)								// ウィンドウ高さ(キャラクタ単位)
@@ -70,57 +71,36 @@
 #define BMPWIN_POS_X_CHAR  ( 0)								// ウィンドウのx座標(キャラクタ単位)
 #define BMPWIN_POS_Y_CHAR  ( 1)								// ウィンドウのy座標(キャラクタ単位)
 
-//------------
-// OBJリソース
-//------------
-// キャラクタ・リソース・インデックス
-enum
-{
-	CGR_RES_INDEX_MAX
-};
-
-// パレット・リソース・インデックス
-enum
-{
-	PLTT_RES_INDEX_CHAR_UNIT,	// 文字ユニットで使用するパレット
-	PLTT_RES_INDEX_MAX
-};
-
-// セルアニメ・リソース・インデックス
-enum
-{
-	CLANM_RES_INDEX_MAX
-};
+// パレットリソース
+typedef enum {
+	PLTT_RES_CHAR_UNIT,	// 文字ユニットで使用するパレット
+	PLTT_RES_NUM        // 総数
+} PLTT_RES_INDEX;
 
 // セルアクター・ユニット
-enum
-{
-	CLUNIT_INDEX_CHAR_UNIT,		// 文字ユニット
-	CLUNIT_INDEX_MAX,
-};
-
-//------------------
-// 各状態の動作設定
-//------------------
-#define PROCESS_TIME_FADE_IN  (10)
-#define PROCESS_TIME_WAIT_LAUNCH   (10)
-#define PROCESS_TIME_WAIT_FADE_OUT   (30)
-#define PROCESS_TIME_FADE_OUT (20)
-
-//-----------------
-// システムの状態
-//-----------------
 typedef enum {
-	STATE_HIDE,			      // 非表示
-  STATE_SETUP,          // 準備
-	STATE_FADE_IN,	      // フェード・イン
-	STATE_WAIT_LAUNCH,		// 発射待ち
-	STATE_LAUNCH,		      // 文字発射
-	STATE_WAIT_FADE_OUT,  // フェードアウト待ち
-	STATE_FADE_OUT,	      // フェード・アウト
-	STATE_NUM,
-  STATE_MAX = STATE_NUM - 1
-} STATE;
+	CLUNIT_CHAR_UNIT, // 文字ユニット
+	CLUNIT_NUM,       // 総数
+} CLUNIT_INDEX;
+
+// 各状態の動作設定
+#define PROCESS_TIME_FADEIN  (10)
+#define PROCESS_TIME_WAIT_LAUNCH   (10)
+#define PROCESS_TIME_WAIT_FADEOUT   (30)
+#define PROCESS_TIME_FADEOUT (20)
+
+// システムの状態
+typedef enum {
+	SYSTEM_STATE_HIDE,			   // 非表示
+  SYSTEM_STATE_SETUP,        // 準備
+	SYSTEM_STATE_FADEIN,	     // フェード・イン
+	SYSTEM_STATE_WAIT_LAUNCH,	 // 発射待ち
+	SYSTEM_STATE_LAUNCH,		   // 文字発射
+	SYSTEM_STATE_WAIT_FADEOUT, // フェードアウト待ち
+	SYSTEM_STATE_FADEOUT,	     // フェード・アウト
+	SYSTEM_STATE_NUM,          // 総数
+  SYSTEM_STATE_MAX = SYSTEM_STATE_NUM - 1
+} SYSTEM_STATE;
 
 
 //===================================================================================
@@ -415,9 +395,9 @@ struct _FIELD_PLACE_NAME
 
   //----------------------
 	// OBJ
-	u32            resPltt[PLTT_RES_INDEX_MAX];  // パレットリソース
+	u32            resPltt[PLTT_RES_NUM];  // パレットリソース
 	BMPOAM_SYS_PTR bmpOamSys;                    // BMPOAMシステム
-	GFL_CLUNIT*    clunit[CLUNIT_INDEX_MAX];     // セルアクターユニット
+	GFL_CLUNIT*    clunit[CLUNIT_NUM];     // セルアクターユニット
 
   //----------------------
 	// 文字ユニット
@@ -425,7 +405,7 @@ struct _FIELD_PLACE_NAME
 
   //----------------------
 	// 動作に使用するデータ
-	STATE state;			    // システム状態
+	SYSTEM_STATE state;			    // システム状態
 	u16	  stateCount;		  // 状態カウンタ
 	u32	  currentZoneID;  // 現在表示中の地名に対応するゾーンID
 	u32   nextZoneID;		  // 次に表示する地名に対応するゾーンID
@@ -459,24 +439,24 @@ static void WriteCharUnitIntoBitmapWindow( FIELD_PLACE_NAME* sys );
 // 地名の更新
 static void UpdatePlaceName( FIELD_PLACE_NAME* sys ); 
 // 状態の変更
-static void SetState( FIELD_PLACE_NAME* sys, STATE next_state );
+static void SetState( FIELD_PLACE_NAME* sys, SYSTEM_STATE next_state );
 static void Cancel( FIELD_PLACE_NAME* sys ); 
 // 各状態時の動作
 static void Process_HIDE( FIELD_PLACE_NAME* sys );
 static void Process_SETUP( FIELD_PLACE_NAME* sys );
-static void Process_FADE_IN( FIELD_PLACE_NAME* sys );
+static void Process_FADEIN( FIELD_PLACE_NAME* sys );
 static void Process_WAIT_LAUNCH( FIELD_PLACE_NAME* sys );
 static void Process_LAUNCH( FIELD_PLACE_NAME* sys );
-static void Process_WAIT_FADE_OUT( FIELD_PLACE_NAME* sys );
-static void Process_FADE_OUT( FIELD_PLACE_NAME* sys ); 
+static void Process_WAIT_FADEOUT( FIELD_PLACE_NAME* sys );
+static void Process_FADEOUT( FIELD_PLACE_NAME* sys ); 
 // 各状態時の描画処理
-static void Draw_HIDE( FIELD_PLACE_NAME* sys );
-static void Draw_SETUP( FIELD_PLACE_NAME* sys );
-static void Draw_FADE_IN( FIELD_PLACE_NAME* sys );
-static void Draw_WAIT_LAUNCH( FIELD_PLACE_NAME* sys );
-static void Draw_LAUNCH( FIELD_PLACE_NAME* sys );
-static void Draw_WAIT_FADE_OUT( FIELD_PLACE_NAME* sys );
-static void Draw_FADE_OUT( FIELD_PLACE_NAME* sys );
+static void Draw_HIDE( const FIELD_PLACE_NAME* sys );
+static void Draw_SETUP( const FIELD_PLACE_NAME* sys );
+static void Draw_FADEIN( const FIELD_PLACE_NAME* sys );
+static void Draw_WAIT_LAUNCH( const FIELD_PLACE_NAME* sys );
+static void Draw_LAUNCH( const FIELD_PLACE_NAME* sys );
+static void Draw_WAIT_FADEOUT( const FIELD_PLACE_NAME* sys );
+static void Draw_FADEOUT( const FIELD_PLACE_NAME* sys );
 
 
 //====================================================================================
@@ -541,13 +521,13 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heap_id, FLDMSGBG* msgbg )
 
 	// セルアクターユニットを作成
 	CreateClactUnit( sys );
-	sys->bmpOamSys = BmpOam_Init( heap_id, sys->clunit[ CLUNIT_INDEX_CHAR_UNIT ] );
+	sys->bmpOamSys = BmpOam_Init( heap_id, sys->clunit[ CLUNIT_CHAR_UNIT ] );
 
 	// 文字ユニットを作成
 	CreateCharUnit( sys );
 
 	// 初期状態を設定
-	SetState( sys, STATE_HIDE );
+	SetState( sys, SYSTEM_STATE_HIDE );
 
 	// 作成したシステムを返す
 	return sys;
@@ -575,13 +555,13 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* sys )
 	BmpOam_Exit( sys->bmpOamSys );
 	
 	// セルアクターユニットの破棄
-	for( i=0; i<CLUNIT_INDEX_MAX; i++ )
+	for( i=0; i<CLUNIT_NUM; i++ )
 	{
 		GFL_CLACT_UNIT_Delete( sys->clunit[i] );
 	}
 	
 	// セルアクター用リソースの破棄
-	for( i=0; i<PLTT_RES_INDEX_MAX; i++ )
+	for( i=0; i<PLTT_RES_NUM; i++ )
 	{
 		GFL_CLGRP_PLTT_Release( sys->resPltt[i] );
 	}
@@ -618,15 +598,14 @@ void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* sys )
 	sys->stateCount++;
 
 	// 状態に応じた動作
-	switch( sys->state )
-	{
-  case STATE_HIDE:          Process_HIDE( sys );		       break;
-  case STATE_SETUP:         Process_SETUP( sys );		       break;
-  case STATE_FADE_IN:       Process_FADE_IN( sys );	       break;
-  case STATE_WAIT_LAUNCH:   Process_WAIT_LAUNCH( sys );	   break;
-  case STATE_LAUNCH:        Process_LAUNCH( sys );	       break;
-  case STATE_WAIT_FADE_OUT: Process_WAIT_FADE_OUT( sys );	 break;
-  case STATE_FADE_OUT:      Process_FADE_OUT( sys );	     break;
+	switch( sys->state ) {
+  case SYSTEM_STATE_HIDE:         Process_HIDE( sys );		       break;
+  case SYSTEM_STATE_SETUP:        Process_SETUP( sys );		       break;
+  case SYSTEM_STATE_FADEIN:       Process_FADEIN( sys );	       break;
+  case SYSTEM_STATE_WAIT_LAUNCH:  Process_WAIT_LAUNCH( sys );	   break;
+  case SYSTEM_STATE_LAUNCH:       Process_LAUNCH( sys );	       break;
+  case SYSTEM_STATE_WAIT_FADEOUT: Process_WAIT_FADEOUT( sys );	 break;
+  case SYSTEM_STATE_FADEOUT:      Process_FADEOUT( sys );	       break;
 	}
 
 	// 文字ユニットを動かす
@@ -640,17 +619,16 @@ void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* sys )
  * @param sys 描画対象システム
  */
 //------------------------------------------------------------------------------------
-void FIELD_PLACE_NAME_Draw( FIELD_PLACE_NAME* sys )
+void FIELD_PLACE_NAME_Draw( const FIELD_PLACE_NAME* sys )
 { 
-	switch( sys->state )
-	{
-  case STATE_HIDE:		        Draw_HIDE( sys );		        break;
-  case STATE_SETUP:		        Draw_SETUP( sys );		      break;
-  case STATE_FADE_IN:		      Draw_FADE_IN( sys );	      break;
-  case STATE_WAIT_LAUNCH:		  Draw_WAIT_LAUNCH( sys );	  break;
-  case STATE_LAUNCH:		      Draw_LAUNCH( sys );	        break;
-  case STATE_WAIT_FADE_OUT:		Draw_WAIT_FADE_OUT( sys );	break;
-  case STATE_FADE_OUT:	      Draw_FADE_OUT( sys );	      break;
+	switch( sys->state ) {
+  case SYSTEM_STATE_HIDE:		      Draw_HIDE( sys );		      break;
+  case SYSTEM_STATE_SETUP:		    Draw_SETUP( sys );		    break;
+  case SYSTEM_STATE_FADEIN:		    Draw_FADEIN( sys );	      break;
+  case SYSTEM_STATE_WAIT_LAUNCH:	Draw_WAIT_LAUNCH( sys );	break;
+  case SYSTEM_STATE_LAUNCH:		    Draw_LAUNCH( sys );	      break;
+  case SYSTEM_STATE_WAIT_FADEOUT:	Draw_WAIT_FADEOUT( sys );	break;
+  case SYSTEM_STATE_FADEOUT:	    Draw_FADEOUT( sys );	    break;
 	} 
 }
 
@@ -706,7 +684,7 @@ extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* sys, u32 zone_id )
 //------------------------------------------------------------------------------------
 void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* sys )
 {
-	SetState( sys, STATE_HIDE );
+	SetState( sys, SYSTEM_STATE_HIDE );
 }
 
 //------------------------------------------------------------------------------------
@@ -905,7 +883,7 @@ static void LoadClactResource( FIELD_PLACE_NAME* sys )
 
 	p_arc_handle = GFL_ARC_OpenDataHandle( ARCID_PLACE_NAME, sys->heapID );
 
-	sys->resPltt[ PLTT_RES_INDEX_CHAR_UNIT ] = 
+	sys->resPltt[ PLTT_RES_CHAR_UNIT ] = 
 		GFL_CLGRP_PLTT_RegisterEx( 
 				p_arc_handle, NARC_place_name_place_name_string_NCLR,
 				CLSYS_DRAW_MAIN, FLDOAM_PALNO_PLACENAME * 32, 0, 1, sys->heapID );
@@ -923,11 +901,11 @@ static void LoadClactResource( FIELD_PLACE_NAME* sys )
 static void CreateClactUnit( FIELD_PLACE_NAME* sys )
 {
 	// セルアクターユニットを作成
-	sys->clunit[ CLUNIT_INDEX_CHAR_UNIT ] = 
+	sys->clunit[ CLUNIT_CHAR_UNIT ] = 
 		GFL_CLACT_UNIT_Create( MAX_NAME_LENGTH, BG_FRAME_PRIORITY, sys->heapID );
 
 	// 初期設定
-	GFL_CLACT_UNIT_SetDrawEnable( sys->clunit[ CLUNIT_INDEX_CHAR_UNIT ], TRUE );
+	GFL_CLACT_UNIT_SetDrawEnable( sys->clunit[ CLUNIT_CHAR_UNIT ], TRUE );
 }
 
 //-----------------------------------------------------------------------------------
@@ -945,7 +923,7 @@ static void CreateCharUnit( FIELD_PLACE_NAME* sys )
 	{
 		CHAR_UNIT_Initialize( 
 				&sys->charUnit[i], sys->bmpOamSys, 
-				sys->resPltt[ PLTT_RES_INDEX_CHAR_UNIT ], sys->heapID );
+				sys->resPltt[ PLTT_RES_CHAR_UNIT ], sys->heapID );
 	} 
 }
 
@@ -1139,7 +1117,7 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* sys )
  * @param next_state 設定する状態
  */
 //-----------------------------------------------------------------------------------
-static void SetState( FIELD_PLACE_NAME* sys, STATE next_state )
+static void SetState( FIELD_PLACE_NAME* sys, SYSTEM_STATE next_state )
 {
 	// 状態を変更し, 状態カウンタを初期化する
 	sys->state      = next_state;
@@ -1148,28 +1126,28 @@ static void SetState( FIELD_PLACE_NAME* sys, STATE next_state )
 	// 遷移先の状態に応じた初期化
 	switch( next_state )
 	{
-		case STATE_HIDE:	
+		case SYSTEM_STATE_HIDE:	
 			GFL_BG_SetVisible( BG_FRAME, VISIBLE_OFF );	// BGを非表示
 			SetAllCharUnitVisibleOff( sys );			      // 文字ユニットを非表示に
 			break;
-    case STATE_SETUP:
+    case SYSTEM_STATE_SETUP:
       UpdatePlaceName( sys );          // 表示する地名を更新
       sys->writeCharNum = 0;          // 書き込み準備
       FIELD_PLACE_NAME_RecoverBG( sys );  // キャラ・スクリーンデータ復帰
       break;
-		case STATE_FADE_IN:
+		case SYSTEM_STATE_FADEIN:
       GFL_BG_SetVisible( BG_FRAME, VISIBLE_ON );	// BGを表示
-      Draw_FADE_IN( sys );
+      Draw_FADEIN( sys );
 			break;
-		case STATE_WAIT_LAUNCH:
+		case SYSTEM_STATE_WAIT_LAUNCH:
 			break;
-		case STATE_LAUNCH:
+		case SYSTEM_STATE_LAUNCH:
 			sys->launchUnitNum = 0;	     // 発射文字数をリセット
 			SetupCharUnitAction( sys );	 // 文字ユニットの動きをセット
 			break;
-		case STATE_WAIT_FADE_OUT:
+		case SYSTEM_STATE_WAIT_FADEOUT:
 			break;
-		case STATE_FADE_OUT:
+		case SYSTEM_STATE_FADEOUT:
 			WriteCharUnitIntoBitmapWindow( sys );	// 現時点での文字をBGに書き込む
 			SetAllCharUnitVisibleOff( sys );		// 文字ユニットを非表示に
 			break;
@@ -1177,15 +1155,14 @@ static void SetState( FIELD_PLACE_NAME* sys, STATE next_state )
 
   // DEBUG:
   OBATA_Printf( "PLACE_NAME: set state ==> " );
-  switch( next_state )
-  {
-  case STATE_HIDE:           OBATA_Printf( "HIDE\n" );           break;
-  case STATE_SETUP:          OBATA_Printf( "SETUP\n" );          break;
-  case STATE_FADE_IN:        OBATA_Printf( "FADE_IN\n" );        break;
-  case STATE_WAIT_LAUNCH:    OBATA_Printf( "WAIT_LAUNCH\n" );    break;
-  case STATE_LAUNCH:         OBATA_Printf( "LAUNCH\n" );         break;
-  case STATE_WAIT_FADE_OUT:  OBATA_Printf( "WAIT_FADE_OUT\n" );  break;
-  case STATE_FADE_OUT:       OBATA_Printf( "FADE_OUT\n" );       break;
+  switch( next_state ) {
+  case SYSTEM_STATE_HIDE:         OBATA_Printf( "HIDE\n" );          break;
+  case SYSTEM_STATE_SETUP:        OBATA_Printf( "SETUP\n" );         break;
+  case SYSTEM_STATE_FADEIN:       OBATA_Printf( "FADEIN\n" );        break;
+  case SYSTEM_STATE_WAIT_LAUNCH:  OBATA_Printf( "WAIT_LAUNCH\n" );   break;
+  case SYSTEM_STATE_LAUNCH:       OBATA_Printf( "LAUNCH\n" );        break;
+  case SYSTEM_STATE_WAIT_FADEOUT: OBATA_Printf( "WAIT_FADEOUT\n" );  break;
+  case SYSTEM_STATE_FADEOUT:      OBATA_Printf( "FADEOUT\n" );       break;
   }
 }
 
@@ -1198,32 +1175,32 @@ static void SetState( FIELD_PLACE_NAME* sys, STATE next_state )
 //-----------------------------------------------------------------------------------
 static void Cancel( FIELD_PLACE_NAME* sys )
 {
-	STATE next_state;
+	SYSTEM_STATE next_state;
 	int   start_count;
 	float passed_rate;
 	
 	// 現在の状態に応じた処理
 	switch( sys->state )
 	{
-  case STATE_HIDE:	
-  case STATE_FADE_OUT:
+  case SYSTEM_STATE_HIDE:	
+  case SYSTEM_STATE_FADEOUT:
     return;
-  case STATE_WAIT_LAUNCH:
-  case STATE_WAIT_FADE_OUT:
-  case STATE_LAUNCH:
-    next_state  = STATE_WAIT_FADE_OUT;
-    start_count = PROCESS_TIME_WAIT_FADE_OUT;
+  case SYSTEM_STATE_WAIT_LAUNCH:
+  case SYSTEM_STATE_WAIT_FADEOUT:
+  case SYSTEM_STATE_LAUNCH:
+    next_state  = SYSTEM_STATE_WAIT_FADEOUT;
+    start_count = PROCESS_TIME_WAIT_FADEOUT;
     break;
-  case STATE_FADE_IN:
-    next_state = STATE_FADE_OUT;
+  case SYSTEM_STATE_FADEIN:
+    next_state = SYSTEM_STATE_FADEOUT;
     // 経過済みフレーム数を算出
     // (stateCountから, 表示位置を算出しているため, 
     //  強制退出させた場合は stateCount を適切に計算する必要がある)
-    passed_rate = sys->stateCount / (float)PROCESS_TIME_FADE_IN;
-    start_count = (int)( (1.0f - passed_rate) * PROCESS_TIME_FADE_OUT );
+    passed_rate = sys->stateCount / (float)PROCESS_TIME_FADEIN;
+    start_count = (int)( (1.0f - passed_rate) * PROCESS_TIME_FADEOUT );
     break;
-  case STATE_SETUP:
-    next_state = STATE_HIDE;
+  case SYSTEM_STATE_SETUP:
+    next_state = SYSTEM_STATE_HIDE;
     start_count = 0;
     break;
 	}
@@ -1245,7 +1222,7 @@ static void Process_HIDE( FIELD_PLACE_NAME* sys )
 	// ゾーンチェンジが通知されたら, 次の状態へ
 	if( sys->currentZoneID != sys->nextZoneID )
 	{
-		SetState( sys, STATE_SETUP );
+		SetState( sys, SYSTEM_STATE_SETUP );
 	}
 }
 
@@ -1264,7 +1241,7 @@ static void Process_SETUP( FIELD_PLACE_NAME* sys )
   // 書き込みが完了したら, 次の状態へ
   if( sys->nameLen <= sys->writeCharNum )
   {
-    SetState( sys, STATE_FADE_IN );
+    SetState( sys, SYSTEM_STATE_FADEIN );
   }
 }
 
@@ -1275,12 +1252,12 @@ static void Process_SETUP( FIELD_PLACE_NAME* sys )
  * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Process_FADE_IN( FIELD_PLACE_NAME* sys )
+static void Process_FADEIN( FIELD_PLACE_NAME* sys )
 {
 	// 一定時間が経過したら, 次の状態へ
-	if( PROCESS_TIME_FADE_IN < sys->stateCount )
+	if( PROCESS_TIME_FADEIN < sys->stateCount )
 	{
-		SetState( sys, STATE_WAIT_LAUNCH );
+		SetState( sys, SYSTEM_STATE_WAIT_LAUNCH );
 	}
 }
 
@@ -1296,7 +1273,7 @@ static void Process_WAIT_LAUNCH( FIELD_PLACE_NAME* sys )
 	// 一定時間が経過したら, 次の状態へ
 	if( PROCESS_TIME_WAIT_LAUNCH < sys->stateCount )
 	{
-		SetState( sys, STATE_LAUNCH );
+		SetState( sys, SYSTEM_STATE_LAUNCH );
 	}
 }
 
@@ -1318,7 +1295,7 @@ static void Process_LAUNCH( FIELD_PLACE_NAME* sys )
 		// すべての文字を発射したら, 次の状態へ
 		if( sys->nameLen <= sys->launchUnitNum )
 		{
-			SetState( sys, STATE_WAIT_FADE_OUT );
+			SetState( sys, SYSTEM_STATE_WAIT_FADEOUT );
 		}
 	}
 }
@@ -1330,12 +1307,12 @@ static void Process_LAUNCH( FIELD_PLACE_NAME* sys )
  * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Process_WAIT_FADE_OUT( FIELD_PLACE_NAME* sys )
+static void Process_WAIT_FADEOUT( FIELD_PLACE_NAME* sys )
 {
 	int i;
 
 	// 一定時間が経過
-	if( PROCESS_TIME_WAIT_FADE_OUT < sys->stateCount )
+	if( PROCESS_TIME_WAIT_FADEOUT < sys->stateCount )
 	{
 		// 動いている文字があるなら, 待機状態を維持
 		for( i=0; i<sys->nameLen; i++ )
@@ -1344,7 +1321,7 @@ static void Process_WAIT_FADE_OUT( FIELD_PLACE_NAME* sys )
 		}
 
 		// 次の状態へ
-		SetState( sys, STATE_FADE_OUT );
+		SetState( sys, SYSTEM_STATE_FADEOUT );
 	}
 }
 
@@ -1355,12 +1332,12 @@ static void Process_WAIT_FADE_OUT( FIELD_PLACE_NAME* sys )
  * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Process_FADE_OUT( FIELD_PLACE_NAME* sys )
+static void Process_FADEOUT( FIELD_PLACE_NAME* sys )
 {
 	// 一定時間が経過したら, 次の状態へ
-	if( PROCESS_TIME_FADE_OUT < sys->stateCount )
+	if( PROCESS_TIME_FADEOUT < sys->stateCount )
 	{
-		SetState( sys, STATE_HIDE );
+		SetState( sys, SYSTEM_STATE_HIDE );
 	}
 }
 
@@ -1371,7 +1348,7 @@ static void Process_FADE_OUT( FIELD_PLACE_NAME* sys )
  * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Draw_HIDE( FIELD_PLACE_NAME* sys )
+static void Draw_HIDE( const FIELD_PLACE_NAME* sys )
 {
 }
 
@@ -1382,7 +1359,7 @@ static void Draw_HIDE( FIELD_PLACE_NAME* sys )
  * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Draw_SETUP( FIELD_PLACE_NAME* sys )
+static void Draw_SETUP( const FIELD_PLACE_NAME* sys )
 {
 }
 
@@ -1393,13 +1370,13 @@ static void Draw_SETUP( FIELD_PLACE_NAME* sys )
  * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Draw_FADE_IN( FIELD_PLACE_NAME* sys )
+static void Draw_FADEIN( const FIELD_PLACE_NAME* sys )
 {
 	int val1, val2;
 	float rate;
 
 	// αブレンディング係数を更新
-	rate  = (float)sys->stateCount / (float)PROCESS_TIME_FADE_IN;
+	rate  = (float)sys->stateCount / (float)PROCESS_TIME_FADEIN;
 	val1 = (int)( ALPHA_VALUE_1 * rate );
 	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * (1.0f - rate) );
 	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, val1, val2 );
@@ -1412,7 +1389,7 @@ static void Draw_FADE_IN( FIELD_PLACE_NAME* sys )
  * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Draw_WAIT_LAUNCH( FIELD_PLACE_NAME* sys )
+static void Draw_WAIT_LAUNCH( const FIELD_PLACE_NAME* sys )
 {
 }
 
@@ -1423,7 +1400,7 @@ static void Draw_WAIT_LAUNCH( FIELD_PLACE_NAME* sys )
  * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Draw_LAUNCH( FIELD_PLACE_NAME* sys )
+static void Draw_LAUNCH( const FIELD_PLACE_NAME* sys )
 {
 }
 
@@ -1434,7 +1411,7 @@ static void Draw_LAUNCH( FIELD_PLACE_NAME* sys )
  * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Draw_WAIT_FADE_OUT( FIELD_PLACE_NAME* sys )
+static void Draw_WAIT_FADEOUT( const FIELD_PLACE_NAME* sys )
 {
 }
 
@@ -1445,13 +1422,13 @@ static void Draw_WAIT_FADE_OUT( FIELD_PLACE_NAME* sys )
  * @param sys 動かすシステム
  */
 //-----------------------------------------------------------------------------------
-static void Draw_FADE_OUT( FIELD_PLACE_NAME* sys )
+static void Draw_FADEOUT( const FIELD_PLACE_NAME* sys )
 {
 	int val1, val2;
 	float rate;
 	
 	// αブレンディング係数を更新
-	rate  = (float)sys->stateCount / (float)PROCESS_TIME_FADE_OUT;
+	rate  = (float)sys->stateCount / (float)PROCESS_TIME_FADEOUT;
 	val1 = (int)( ALPHA_VALUE_1 * (1.0f - rate) );
 	val2 = (int)( ALPHA_VALUE_2 + (16 - ALPHA_VALUE_2) * rate );
 	G2_SetBlendAlpha( ALPHA_PLANE_1, ALPHA_PLANE_2, val1, val2 );

@@ -1,29 +1,14 @@
 //////////////////////////////////////////////////////////////////////////////////////
 /**
- *
  * @file   field_place_name.h
  * @brief  地名表示ウィンドウ
  * @author obata_toshihiro
  * @date   2009.07   
- *
  */
 //////////////////////////////////////////////////////////////////////////////////////
 #pragma once
+#include <gflib.h>
 #include "field/field_msgbg.h"
-
-//====================================================================================
-// ■関数一覧
-//====================================================================================
-/*
-FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heap_id, FLDMSGBG* msgbg );
-void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* p_sys );
-void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* p_sys );
-void FIELD_PLACE_NAME_Draw( FIELD_PLACE_NAME* p_sys );
-void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* p_sys, u32 next_zone_id );
-void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* p_sys, u32 zone_id );
-void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* p_sys );
-void FIELD_PLACE_NAME_RecoverBG(FIELD_PLACE_NAME* sys);
-*/
 
 
 //====================================================================================
@@ -33,29 +18,44 @@ typedef struct _FIELD_PLACE_NAME FIELD_PLACE_NAME;
 
 
 //====================================================================================
-// ■作成・破棄
+// ■index
+//====================================================================================
+/*
+FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heapID, FLDMSGBG* msgbg );
+void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system );
+void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system );
+void FIELD_PLACE_NAME_Draw( const FIELD_PLACE_NAME* system );
+void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* system, u32 zoneID );
+void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* system, u32 zoneID );
+void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* system );
+void FIELD_PLACE_NAME_RecoverBG( FIELD_PLACE_NAME* system );
+*/ 
+
+
+//====================================================================================
+// ■生成・破棄
 //====================================================================================
 
 //------------------------------------------------------------------------------------
 /**
- * @brief 地名表示システムを作成する
+ * @brief 地名表示システムを生成する
  *
- * @param heap_id 使用するヒープID
- * @param msgbg   使用するメッセージ表示システム
+ * @param heapID 使用するヒープID
+ * @param msgbg  使用するメッセージBG
  *
- * @return 地名表示システム・ワークへのポインタ
+ * @return 生成したシステム
  */
 //------------------------------------------------------------------------------------
-extern FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heap_id, FLDMSGBG* msgbg );
+extern FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( HEAPID heapID, FLDMSGBG* msgbg );
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名表示システムを破棄する
  *
- * @param p_sys 破棄するシステム
+ * @param system
  */
 //------------------------------------------------------------------------------------
-extern void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* p_sys );
+extern void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system );
 
 
 //====================================================================================
@@ -66,19 +66,19 @@ extern void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* p_sys );
 /**
  * @brief 地名表示システムの動作処理
  *
- * @param p_sys 動かすシステム
+ * @param system
  */
 //------------------------------------------------------------------------------------
-extern void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* p_sys );
+extern void FIELD_PLACE_NAME_Process( FIELD_PLACE_NAME* system );
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名表示ウィンドウの描画処理
  *
- * @param p_sys 描画対象システム
+ * @param system
  */
 //------------------------------------------------------------------------------------
-extern void FIELD_PLACE_NAME_Draw( FIELD_PLACE_NAME* p_sys );
+extern void FIELD_PLACE_NAME_Draw( const FIELD_PLACE_NAME* system );
 
 
 //====================================================================================
@@ -89,36 +89,36 @@ extern void FIELD_PLACE_NAME_Draw( FIELD_PLACE_NAME* p_sys );
 /**
  * @brief ゾーンの切り替えを通知し, 新しい地名を表示する
  *
- * @param p_sys        ゾーン切り替えを通知するシステム
- * @param next_zone_id 新しいゾーンID
+ * @param system
+ * @param zoneID 表示する場所のゾーンID
  */
 //------------------------------------------------------------------------------------
-extern void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* p_sys, u32 next_zone_id );
+extern void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* system, u32 zoneID );
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名ウィンドウを強制的に表示する
  *
- * @param p_sys   表示するシステム
- * @param zone_id 表示する場所のゾーンID
+ * @param system
+ * @param zoneID 表示する場所のゾーンID
  */
 //------------------------------------------------------------------------------------
-extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* p_sys, u32 zone_id );
+extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* system, u32 zoneID );
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名ウィンドウの表示を強制的に終了する
  *
- * @param p_sys 表示を終了するシステム
+ * @param system
  */
 //------------------------------------------------------------------------------------
-extern void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* p_sys );
+extern void FIELD_PLACE_NAME_Hide( FIELD_PLACE_NAME* system );
 
 //------------------------------------------------------------------------------------
 /**
  * @brief 地名表示ウィンドウのキャラクタデータ, スクリーンデータを復帰させる
  *
- * @param sys 地名表示システム
+ * @param system
  */
 //------------------------------------------------------------------------------------
-extern void FIELD_PLACE_NAME_RecoverBG(FIELD_PLACE_NAME* sys);
+extern void FIELD_PLACE_NAME_RecoverBG( FIELD_PLACE_NAME* system );
