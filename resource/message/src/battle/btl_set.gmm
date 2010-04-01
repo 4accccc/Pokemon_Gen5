@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-03-26T15:12:40"/>
+	<create user="taya" host="W00146" date="2010-04-01T17:57:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2640,6 +2640,25 @@
 あいての　[1:02:ポケモンニックネーム:0]を　おそう！</language>
 		<language name="JPN_KANJI" width="216">あられが
 相手の　[1:02:ポケモンニックネーム:0]を　襲う！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_SimpleDamage">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+ダメージを　受けた！</language>
+	</row>
+	<row id="BTL_STRID_SET_SimpleDamage_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+ダメージを　受けた！</language>
+	</row>
+	<row id="BTL_STRID_SET_SimpleDamage_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+ダメージを　うけた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+ダメージを　受けた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_TokuseiChange">
