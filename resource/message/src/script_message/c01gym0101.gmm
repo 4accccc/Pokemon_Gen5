@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T14:41:48"/>
+	<create user="matsumiya" host="W00224" date="2010-04-01T13:48:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -723,6 +723,57 @@
 スペシャリストに　なってるのかもね</language>
 	</row>
 
+	<row id="msg_c01gym0101_leader1_end_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・クリア後</comment>
+		<attribute name="キャラ指定">LEADER1
+デント（草）</attribute>
+		<language name="JPN" width="256">デント『ぼくたち　イッシュちほう　では
+まだ　かけだしの　ジムリーダーです▼
+ということは　ほかの　ジムリーダーは
+もっと　つよいって　ことですよね▼
+ゆっくりと　のんびりとで　いいから
+ぼくたち　３にん　きそいあって▽
+つよくなって　いきますよ</language>
+		<language name="JPN_KANJI" width="256">デント『ぼくたち　イッシュ地方　では
+まだ　かけだしの　ジムリーダーです▼
+ということは　他の　ジムリーダーは
+もっと　強いって　ことですよね▼
+ゆっくりと　のんびりとで　いいから
+ぼくたち　３人　競い合って▽
+強くなって　いきますよ</language>
+	</row>
+
+	<row id="msg_c01gym0101_leader1_end_01a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>♂
+・クリア後</comment>
+		<attribute name="キャラ指定">LEADER1c
+ポッド（火）</attribute>
+		<language name="JPN" width="256">ポッド『おっ！　おまえ！
+トライバッジを　てにいれたころよりも▽
+はるかに　つよく　なってるのな！</language>
+		<language name="JPN_KANJI" width="256">ポッド『おっ！　おまえ！
+トライバッジを　手に入れたころよりも▽
+はるかに　強くなってるのな！</language>
+	</row>
+
+	<row id="msg_c01gym0101_leader1_end_01b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・クリア後</comment>
+		<attribute name="キャラ指定">LEADER1b
+コーン（水）</attribute>
+		<language name="JPN" width="256">コーン『……ききましたよ
+Ｎのしろ　のこと▼
+この　コーンたち　への
+れんらくが　まにあえば▽
+３にんそろって　ちからに　なれたのに</language>
+		<language name="JPN_KANJI" width="256">コーン『……聞きましたよ
+Ｎの城　のこと▼
+この　コーンたちへの
+連絡が　間に合えば▽
+３人そろって　力に　なれたのに</language>
+	</row>
+
 	<row id="msg_c01gym0101_glasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジムバッジ取得前＋アイテム入手前
@@ -800,6 +851,7 @@
 		<comment>BGメッセージ
 ・ジムバッジ取得後
 ・0＝主人公名前</comment>
+		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">サンヨウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　コーン＆ポッド＆デント
 にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]
@@ -810,9 +862,10 @@
 [1:00:トレーナー名:0]</language>
 	</row>
 
-	<row id="msg_c01gym0101_statue_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_c01gym0101_statue_03" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・r03ライバル戦闘開始時到達後</comment>
+・r03ライバル戦闘時</comment>
+		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">サンヨウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　コーン＆ポッド＆デント
 にんてい　トレーナー！[BE:00:ページ切り替え（行送り）]

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T15:45:26"/>
+	<create user="matsumiya" host="W00224" date="2010-04-01T14:11:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="161"/>
+		<id position="0" width="172"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1334" top="143" right="2039" bottom="771" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -389,6 +389,24 @@
 どれほどのものか　わからんが[BE:01:ページ切り替え（クリア）]
 行けると思うなら　どこまでも[BE:01:ページ切り替え（クリア）]
 やれると思うなら　いつまでも[BE:01:ページ切り替え（クリア）]
+好きなように　やればいいじゃねえか
+限界を決めるのは　自分ってことだ</language>
+	</row>
+
+	<row id="msg_c05gym0101_leader_end_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・クリア後</comment>
+		<attribute name="キャラ指定">LEADER5</attribute>
+		<language name="JPN" width="256">ヤーコン『……ふん！　おまえさんか
+オレの　いったことを　おぼえているか？▼
+いけると　おもうなら　どこまでも▼
+やれると　おもうなら　いつまでも▼
+すきなように　やればいいじゃねえか
+げんかいを　きめるのは　じぶんってことだ</language>
+		<language name="JPN_KANJI" width="256">ヤーコン『……ふん！　おまえさんか
+オレの　いったことを　覚えているか？▼
+行けると思うなら　どこまでも▼
+やれると思うなら　いつまでも▼
 好きなように　やればいいじゃねえか
 限界を決めるのは　自分ってことだ</language>
 	</row>

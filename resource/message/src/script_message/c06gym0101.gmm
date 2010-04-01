@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T15:44:30"/>
+	<create user="matsumiya" host="W00224" date="2010-04-01T14:15:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,11 +398,11 @@
 どういう　人たちなの？</language>
 	</row>
 
-	<row id="msg_c06gym0101_leader_07">
+	<row id="msg_c06gym0101_leader_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・クリアから</comment>
 		<attribute name="キャラ指定">LEADER6</attribute>
-		<language name="JPN" width="256">ポケモンも　アナタも
+		<language name="JPN" width="256">フウロ『ポケモンも　アナタも
 げんきに　してるかな？▼
 あれから　アナタとの
 ポケモンしょうぶを　おもいだして▼
@@ -412,7 +412,7 @@
 ひとは　のせないんだけど▼
 アナタとなら　どこかに
 しゅぎょうに　いっても　いいかも</language>
-		<language name="JPN_KANJI" width="256">ポケモンも　アナタも
+		<language name="JPN_KANJI" width="256">フウロ『ポケモンも　アナタも
 元気に　してるかな？▼
 あれから　アナタとの
 ポケモン勝負を　思い出して▼
