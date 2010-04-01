@@ -1267,10 +1267,10 @@ int i;
   case EVENTIRCBTL_ENTRYMODE_DOUBLE:
     i = 1;
     break;
-  case EVENTIRCBTL_ENTRYMODE_TRADE:
+  case EVENTIRCBTL_ENTRYMODE_TRI:
     i = 2;
     break;
-  case EVENTIRCBTL_ENTRYMODE_MULTH:
+  case EVENTIRCBTL_ENTRYMODE_ROTATE:
     i = 3;
     break;
   default:
