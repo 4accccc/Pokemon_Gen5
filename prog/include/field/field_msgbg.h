@@ -18,6 +18,7 @@
 //======================================================================
 //  define
 //======================================================================
+
 //--------------------------------------------------------------
 /// メニュー戻り値
 //--------------------------------------------------------------
@@ -100,6 +101,15 @@ typedef enum
   CURSOR_STATE_WRITE,
 }KEYWAITCURSOR_STATE;
 
+//--------------------------------------------------------------
+//転送リソース
+//--------------------------------------------------------------
+typedef enum{
+  MSGBG_TRANS_RES_FONTPAL,
+  MSGBG_TRANS_RES_WINFRM,
+  MSGBG_TRANS_RES_SYSWIN,
+}MSGBG_TRANS_RES;
+
 //======================================================================
 //  struct
 //======================================================================
@@ -171,6 +181,7 @@ typedef struct
 //メッセージBG
 extern FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera );
 extern void FLDMSGBG_SetupResource( FLDMSGBG *fmb );
+extern void FLDMSGBG_SetupResourceNoTrans( FLDMSGBG *fmb );
 extern void FLDMSGBG_Delete( FLDMSGBG *fmb );
 extern void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb );
 extern BOOL FLDMSGBG_ReleaseBG2Resource( FLDMSGBG *fmb );
@@ -186,6 +197,7 @@ extern GFL_MSGDATA * FLDMSGBG_CreateMSGDATA( FLDMSGBG *fmb, u32 arcDatIDMsg );
 extern void FLDMSGBG_DeleteMSGDATA( GFL_MSGDATA *msgData );
 extern void FLDMSGBG_ReqResetBG2( FLDMSGBG *fmb );
 extern void FLDMSGBG_TransResource( int bgFrame, HEAPID heapID );
+extern void FLDMSGBG_TranceResourceParts( FLDMSGBG *fmb, MSGBG_TRANS_RES no );
 
 // 再生情報設定
 // 自動キー送り＋メッセージスピード一定

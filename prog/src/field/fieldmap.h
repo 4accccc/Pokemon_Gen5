@@ -151,6 +151,11 @@ extern BOOL FIELDMAP_CheckDoEvent( const FIELDMAP_WORK* fieldWork );
 
 extern void FIELDMAP_InitBGMode( void );
 extern void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork );
+extern void FIELDMAP_InitBgNoTrans( FIELDMAP_WORK* fieldWork );
 
 extern void FIELDMAP_SetMainFuncHookFlg(FIELDMAP_WORK * fieldWork, const BOOLinFlg);
 extern FACEUP_WK_PTR *FIELDMAP_GetFaceupWkPtrAdr(FIELDMAP_WORK *fieldWork);
+#ifdef PM_DEBUG
+extern void FIELDMAP_InitDebugWork( FIELDMAP_WORK* fieldWork );
+#endif  //PM_DEBUG
+

@@ -314,11 +314,12 @@ static GFL_BMPWIN * syswin_InitBmp( u8 pos_y, HEAPID heapID );
 static void syswin_ClearBmp( GFL_BMPWIN *bmpwin );
 static void syswin_DeleteBmp( GFL_BMPWIN *bmpwin );
 
-static void setBGResource( FLDMSGBG *fmb );
+static void setBGResource( FLDMSGBG *fmb, const BOOL trans );
 static void setBG1Resource( FLDMSGBG *fmb );
 static void resetBG2Control( BOOL cnt_set );
 static void resetBG2ControlProc( FLDMSGBG *fmb );
 static void transBGResource( int bgFrame, HEAPID heapID );
+static void transBGResourceParts( int bgFrame, HEAPID heapID, MSGBG_TRANS_RES res );
 static void setBlendAlpha( BOOL on );
 
 static GFL_BMPWIN * winframe_InitBmp( u32 bgFrame, HEAPID heapID,
@@ -444,7 +445,19 @@ FLDMSGBG * FLDMSGBG_Create( HEAPID heapID, GFL_G3D_CAMERA *g3Dcamera )
 //--------------------------------------------------------------
 void FLDMSGBG_SetupResource( FLDMSGBG *fmb )
 {
-  setBGResource( fmb );
+  setBGResource( fmb, TRUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGBG リソースセットアップ転送は後で自前で行う
+ * @param fmb FLDMSGBG
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGBG_SetupResourceNoTrans( FLDMSGBG *fmb )
+{
+  setBGResource( fmb, FALSE );
 }
 
 //--------------------------------------------------------------
@@ -458,6 +471,20 @@ void FLDMSGBG_SetupResource( FLDMSGBG *fmb )
 void FLDMSGBG_TransResource( int bgFrame, HEAPID heapID )
 {
   transBGResource( bgFrame, heapID );
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGBG リソース転送
+ * @param fmb FLDMSGBG
+ * @param res  指定リソース MSGBG_TRANS_RES～
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLDMSGBG_TranceResourceParts( FLDMSGBG *fmb, MSGBG_TRANS_RES res )
+{
+  // パレット・システムウインドウ
+  transBGResourceParts( fmb->bgFrame, fmb->heapID, res );
 }
 
 //--------------------------------------------------------------
@@ -4611,10 +4638,11 @@ static void syswin_DeleteBmp( GFL_BMPWIN *bmpwin )
 /**
  * BGリソース初期化
  * @param fmb FLDMSGBG*
+ * @param trans   アーカイブをロードして転送するか？
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void setBGResource( FLDMSGBG *fmb )
+static void setBGResource( FLDMSGBG *fmb, const BOOL trans )
 {
   fmb->bgFrame = FLDMSGBG_BGFRAME; //不透明BG
   
@@ -4656,10 +4684,12 @@ static void setBGResource( FLDMSGBG *fmb )
     GFL_BG_LoadScreenReq( fmb->bgFrame );
     GFL_BG_LoadScreenReq( fmb->bgFrameBld );
   }
-  
-  // パレット・システムウインドウ
-  transBGResource( fmb->bgFrame, fmb->heapID );
-  
+ 
+  if (trans){
+    // パレット・システムウインドウ
+    transBGResource( fmb->bgFrame, fmb->heapID );
+  }
+
   { //TALKMSGWIN
     if( fmb->g3Dcamera != NULL ){
       TALKMSGWIN_SYS_SETUP setup;
@@ -4841,6 +4871,36 @@ static void transBGResource( int bgFrame, HEAPID heapID )
       PANO_MENU_B, MENU_TYPE_SYSTEM, heapID );
   }
   
+  //SYSWIN
+  {
+    syswin_InitGraphic( heapID );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief ウインドウ用リソースのみ転送　リソース指定型転送
+ *
+ * @param   bgFrame   
+ * @param   heapID
+ * @param   指定リソース
+ */
+//--------------------------------------------------------------
+static void transBGResourceParts( int bgFrame, HEAPID heapID, MSGBG_TRANS_RES res )
+{
+  if (res == MSGBG_TRANS_RES_FONTPAL)
+  { //フォントパレット
+    GFL_ARC_UTIL_TransVramPalette(
+      ARCID_FONT, NARC_font_default_nclr, //黒
+      PALTYPE_MAIN_BG, PANO_FONT_TALKMSGWIN*32, 32, heapID );
+    GFL_ARC_UTIL_TransVramPalette(
+      ARCID_FONT, NARC_font_systemwin_nclr, //白
+      PALTYPE_MAIN_BG, PANO_FONT*32, 32, heapID );    
+  }else if( res == MSGBG_TRANS_RES_WINFRM )  
+  { //window frame
+    BmpWinFrame_GraphicSet( bgFrame, CHARNO_WINFRAME,
+      PANO_MENU_B, MENU_TYPE_SYSTEM, heapID );
+  }else if (res == MSGBG_TRANS_RES_SYSWIN)
   //SYSWIN
   {
     syswin_InitGraphic( heapID );

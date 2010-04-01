@@ -112,8 +112,6 @@ typedef struct
 
 } FADE_EVENT_WORK;
 
-
-
 //============================================================================================
 // ■フェード判定関数
 //============================================================================================
@@ -1085,7 +1083,7 @@ static GMEVENT_RESULT CrossOutEvent( GMEVENT* event, int* seq, void* wk )
 	}
 
 	return GMEVENT_RES_CONTINUE;
-} 
+}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1135,11 +1133,41 @@ static GMEVENT_RESULT CrossInEvent( GMEVENT* event, int* seq, void* wk )
 		//OS_WaitVBlankIntr();	// 画面ちらつき防止用ウエイト
     // フィールドBG復元
     ResetFieldBG( work->fieldmap );
-    InitFieldBG( work->fieldmap );
     (*seq)++;
-		break;
-
-	case 3:	// クロスフェードEND
+    break;
+  case 3:
+    //ＢＧ復帰トランスはあとで。
+    FIELDMAP_InitBgNoTrans(work->fieldmap);
+    (*seq)++;
+    break;
+  case 4:
+    {
+      FLDMSGBG * fmb = FIELDMAP_GetFldMsgBG( work->fieldmap );
+      FLDMSGBG_TranceResourceParts( fmb, MSGBG_TRANS_RES_FONTPAL );
+      (*seq)++;
+    }
+    break;
+  case 5:
+    {
+      FLDMSGBG * fmb = FIELDMAP_GetFldMsgBG( work->fieldmap );
+      FLDMSGBG_TranceResourceParts( fmb, MSGBG_TRANS_RES_WINFRM );
+      (*seq)++;
+    }
+    break;
+  case 6:
+    {
+      FLDMSGBG * fmb = FIELDMAP_GetFldMsgBG( work->fieldmap );
+      FLDMSGBG_TranceResourceParts( fmb, MSGBG_TRANS_RES_SYSWIN );
+      (*seq)++;
+    }
+    break;
+  case 7:
+#ifdef PM_DEBUG
+    FIELDMAP_InitDebugWork( work->fieldmap );
+#endif
+    (*seq)++;
+    //NO BREAK
+	case 8:	// クロスフェードEND
 		return GMEVENT_RES_FINISH;
 	} 
 	return GMEVENT_RES_CONTINUE;

@@ -2092,6 +2092,54 @@ void FIELDMAP_InitBG( FIELDMAP_WORK* fieldWork )
   DebugBGInitEnd = TRUE;
 #endif
 }
+/*
+ *  @brief  フィールドBG Vramデフォルト初期化
+ */
+void FIELDMAP_InitBgNoTrans( FIELDMAP_WORK* fieldWork )
+{
+  /**
+  //アフィン初期化
+  //@note 
+  //アプリケーション等で、ＢＧ２面でアフィンを使用した場合フィールドに戻ってきてもパラメータが残っており、
+  //引き続きＢＧ２面を使用する、カットインやクロスフェード処理で表示の不具合が発生するためここで初期化をします。
+  */
+  {
+    MtxFx22 mtx;
+    GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE, FX32_ONE, GFL_CALC2D_AFFINE_MAX_NORMAL );
+    G2_SetBG2Affine( &mtx, 0, 0, 0, 0 );
+  }
+	//ＢＧコントロール設定
+	GFL_BG_SetBGControl3D( FLDBG_MFRM_3D_PRI );
+
+  // 会話ウインドウリソースセットアップ
+	FLDMSGBG_SetupResourceNoTrans( fieldWork->fldMsgBG );
+#if USE_DEBUGWIN_SYSTEM
+	DEBUGWIN_InitProc( FLDBG_MFRM_MSG , FLDMSGBG_GetFontHandle(fieldWork->fldMsgBG) );
+	DEBUGWIN_ChangeLetterColor( 31,31,31 );
+	FIELD_FUNC_RANDOM_GENERATE_InitDebug
+		( fieldWork->heapID, fieldWork->gamedata );
+#endif  //USE_DEBUGWIN_SYSTEM
+
+#ifdef PM_DEBUG
+  //ＢＧ初期化終了
+  DebugBGInitEnd = TRUE;
+#endif
+}
+
+#ifdef PM_DEBUG
+//--------------------------------------------------------------
+/**
+ * デバッグ関数デバッグワーク初期化
+ * @param fieldWork FIELDMAP_WORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FIELDMAP_InitDebugWork( FIELDMAP_WORK* fieldWork )
+{
+  //フィールドデバッグ初期化
+  fieldWork->debugWork = FIELD_DEBUG_Init( fieldWork, FLDBG_MFRM_EFF1, fieldWork->heapID );
+}
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -3241,7 +3289,6 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
     if ( (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG) &&
         (GFL_UI_KEY_GetCont() & PAD_BUTTON_A) )
     {
-      ;
     }
     else
     {
@@ -3268,7 +3315,7 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
 #if 0    
     if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
-        DEBUG_CreateCamShakeEvt(fieldWork->gsys, 0, 10, 3, 10, 0,1,0,5);
+//      DEBUG_CreateCamShakeEvt(fieldWork->gsys, 0, 10, 3, 10, 0,1,0,5);
 //      FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 0);
     }
 /**    
