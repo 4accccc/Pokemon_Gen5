@@ -207,6 +207,8 @@ void GFLUser_Init(void)
   GFUser_ResetVIntrFunc();
 
   GFUser_SetSleepSoundFunc();
+
+  GFL_FADE_SetFadeSpeed( 2 );
 }
 
 
