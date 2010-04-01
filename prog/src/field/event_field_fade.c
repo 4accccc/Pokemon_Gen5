@@ -1096,6 +1096,9 @@ static GMEVENT_RESULT CrossInEvent( GMEVENT* event, int* seq, void* wk )
 
 	switch( *seq ) {
 	case 0:
+    //メイン処理フック
+    FIELDMAP_SetMainFuncHookFlg(work->fieldmap, TRUE);
+
     work->alphaWork = 16;
     GFL_BG_SetPriority(BG_FRAME_CROSS_FADE, 0);
     GFL_BG_SetPriority(FLDBG_MFRM_3D, 1);
@@ -1168,6 +1171,8 @@ static GMEVENT_RESULT CrossInEvent( GMEVENT* event, int* seq, void* wk )
     (*seq)++;
     //NO BREAK
 	case 8:	// クロスフェードEND
+    //メイン処理フック解除
+    FIELDMAP_SetMainFuncHookFlg(work->fieldmap, FALSE);
 		return GMEVENT_RES_FINISH;
 	} 
 	return GMEVENT_RES_CONTINUE;
