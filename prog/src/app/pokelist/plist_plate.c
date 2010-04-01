@@ -16,6 +16,7 @@
 #include "arc_def.h"
 #include "msg/msg_pokelist.h"
 
+#include "app/app_menu_common.h"
 #include "item/item.h"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/poke_regulation.h"
@@ -79,18 +80,6 @@
 //	enum
 //======================================================================
 #pragma mark [> enum
-//状態異常アイコンのIDX
-enum
-{
-  POKE_CONICON_POKERUSU,
-  POKE_CONICON_MAHI,
-  POKE_CONICON_KOORI,
-  POKE_CONICON_NEMURI,
-  POKE_CONICON_DOKU,
-  POKE_CONICON_YAKEDO,
-  POKE_CONICON_HINSI,
-};
-
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -485,26 +474,26 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
       //レベルの代わりに状態異常アイコン
       if( plateWork->dispHp == 0 )
       {
-        GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_HINSI );
+        GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , APP_COMMON_ST_ICON_HINSI );
       }
       else
       {
         switch(PP_GetSick( plateWork->pp ))
         {
         case POKESICK_MAHI:   ///< まひ
-          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_MAHI );
+          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , APP_COMMON_ST_ICON_MAHI );
           break;
         case POKESICK_NEMURI: ///< ねむり
-          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_NEMURI );
+          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , APP_COMMON_ST_ICON_NEMURI );
           break;
         case POKESICK_KOORI:  ///< こおり
-          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_KOORI );
+          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , APP_COMMON_ST_ICON_KOORI );
           break;
         case POKESICK_YAKEDO: ///< やけど
-          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_YAKEDO );
+          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , APP_COMMON_ST_ICON_YAKEDO );
           break;
         case POKESICK_DOKU:   ///< どく
-          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , POKE_CONICON_DOKU );
+          GFL_CLACT_WK_SetAnmSeq( plateWork->conditionIcon , APP_COMMON_ST_ICON_DOKU );
           break;
         }
       }

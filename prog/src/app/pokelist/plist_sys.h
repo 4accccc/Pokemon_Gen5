@@ -56,6 +56,7 @@ extern void PLIST_UTIL_DrawValueStrFuncSys( PLIST_WORK *work , GFL_BMPWIN *bmpWi
 //アイテム・Demoに渡す用
 extern void PLIST_MessageWaitInit( PLIST_WORK *work , u32 msgId , const BOOL isWaitKey , PLIST_CallbackFunc msgCallBack );
 extern void PLIST_MSGCB_ExitCommon( PLIST_WORK *work );
+extern void PLIST_MSGCB_CheckItemUseContinue( PLIST_WORK *work );
 extern void PLIST_MSGCB_ReturnSelectCommon( PLIST_WORK *work );
 extern void PLIST_MSGCB_ForgetSkill_ForgetCheck( PLIST_WORK *work );
 

@@ -65,6 +65,7 @@ extern u32 PLIST_ITEM_GetWazaListMessage( PLIST_WORK *work , u16 itemNo );
 extern void PLIST_ITEM_CangeAruseusuForm( PLIST_WORK *work , POKEMON_PARAM *pp , const u16 itemNo );
 
 extern void PLIST_ITEM_MSG_CanNotUseItem( PLIST_WORK *work );
+extern void PLIST_ITEM_MSG_CanNotUseItemContinue( PLIST_WORK *work );
 extern const PLIST_ITEM_USE_TYPE PLIST_ITEM_MSG_UseItemFunc( PLIST_WORK *work );
 
 extern void PLIST_MSGCB_LvUp_EvoCheck( PLIST_WORK *work );

@@ -212,6 +212,7 @@ static void PLIST_MSGCB_FormChange( PLIST_WORK *work );
 static void PLIST_LearnSkillEmpty( PLIST_WORK *work , POKEMON_PARAM *pp );
 static void PLIST_LearnSkillFull( PLIST_WORK *work  , POKEMON_PARAM *pp , u8 pos );
 static void PLIST_SetPokeItem( PLIST_WORK *work , POKEMON_PARAM *pp , u16 itemNo );
+static const u16 PLIST_CheckBagItemNum( PLIST_WORK *work , u16 itemNo );
 static void PLIST_SubBagItem( PLIST_WORK *work , u16 itemNo );
 static void PLIST_AddBagItem( PLIST_WORK *work , u16 itemNo );
 
@@ -603,6 +604,20 @@ const BOOL PLIST_UpdatePokeList( PLIST_WORK *work )
   //通信チェックは外で
   //PLIST_COMM_UpdateComm( work );
 
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
+  {
+    u8 i;
+    const u8 partyMax = PokeParty_GetPokeCount( work->plData->pp );
+    for( i=0;i<partyMax;i++ )
+    {
+      POKEMON_PARAM *pp = PokeParty_GetMemberPointer(work->plData->pp, i);
+      PP_Put( pp , ID_PARA_hp , 1 );
+      PP_SetSick( pp , POKESICK_DOKU );
+    }
+  }
+#endif
+  
   return FALSE;
 }
 
@@ -1315,6 +1330,7 @@ static void PLIST_InitMode( PLIST_WORK *work )
       }
       else
       {
+        //全体回復アイテムは戻る！
         PLIST_ITEM_MSG_CanNotUseItem( work );
       }
     }
@@ -1582,7 +1598,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
           }
           else
           {
-            PLIST_ITEM_MSG_CanNotUseItem( work );
+            PLIST_ITEM_MSG_CanNotUseItemContinue( work );
           }
         }
       }
@@ -3074,7 +3090,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
       }
       else
       {
-        PLIST_ITEM_MSG_CanNotUseItem( work );
+        PLIST_ITEM_MSG_CanNotUseItemContinue( work );
       }
     }
     else
@@ -3533,7 +3549,25 @@ void PLIST_MSGCB_ExitCommon( PLIST_WORK *work )
 {
   work->mainSeq = PSMS_FADEOUT;
 }
+//アイテムを連続使用するかのチェック
+void PLIST_MSGCB_CheckItemUseContinue( PLIST_WORK *work )
+{
+  if( PLIST_CheckBagItemNum( work , work->plData->item ) > 0 )
+  {
+    PLIST_MSG_CloseWindow( work , work->msgWork );
+    work->mainSeq = PSMS_SELECT_POKE;
+    PLIST_InitMode_Select( work );
+  }
+  else
+  {
+    PLIST_MSG_CloseWindow( work , work->msgWork );
+    PLIST_MSG_CreateWordSet( work , work->msgWork );
+    PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 0 , work->plData->item );
+    PLIST_MessageWaitInit( work , mes_pokelist_13_08 , TRUE , PLIST_MSGCB_ExitCommon );
+    PLIST_MSG_DeleteWordSet( work , work->msgWork );
 
+  }
+}
 //技がいっぱいで、忘れるかどうか？の選択肢
 void PLIST_MSGCB_ForgetSkill_ForgetCheck( PLIST_WORK *work )
 {
@@ -4003,6 +4037,11 @@ static void PLIST_SetPokeItem( PLIST_WORK *work , POKEMON_PARAM *pp , u16 itemNo
   }
   PP_Put( pp , ID_PARA_item , itemNo );
   PLIST_SubBagItem( work , itemNo );
+}
+//アイテム個数のチェック
+static const u16 PLIST_CheckBagItemNum( PLIST_WORK *work , u16 itemNo )
+{
+  return MYITEM_GetItemNum( work->plData->myitem , itemNo , work->heapId );
 }
 //アイテムを消費する
 static void PLIST_SubBagItem( PLIST_WORK *work , u16 itemNo )

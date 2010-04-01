@@ -1874,18 +1874,24 @@ static void * FMenuCallProc_Evolution(PROCLINK_WORK* wk, u32 param,EVENT_PROCLIN
     {
       type = SHINKA_TYPE_ITEM_CHECK;
       wk->mode = PROCLINK_MODE_EVOLUTION_ITEM;
+      newMonsNo = SHINKA_Check( party , 
+                                PokeParty_GetMemberPointer(party,plistData->ret_sel) , 
+                                type , 
+                                plistData->item , 
+                                &cond , 
+                                HEAPID_PROC );
     }
     else
     {
       type = SHINKA_TYPE_LEVELUP;
       wk->mode = PROCLINK_MODE_EVOLUTION_LEVEL;
+      newMonsNo = SHINKA_Check( party , 
+                                PokeParty_GetMemberPointer(party,plistData->ret_sel) , 
+                                type , 
+                                GAMEDATA_GetMyPlayerWork(gmData)->zoneID , 
+                                &cond , 
+                                HEAPID_PROC );
     }
-    newMonsNo = SHINKA_Check( party , 
-                              PokeParty_GetMemberPointer(party,plistData->ret_sel) , 
-                              type , 
-                              plistData->item , 
-                              &cond , 
-                              HEAPID_PROC );
 
     demoParam = SHINKADEMO_AllocParam(HEAPID_PROC ,
                                       gmData , 

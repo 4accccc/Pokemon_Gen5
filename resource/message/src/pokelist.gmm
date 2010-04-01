@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-23T15:50:21"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-01T16:18:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="274" top="273" right="979" bottom="901" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="148" right="1280" bottom="547" visible="yes"/>
+		<tag-palette left="807" top="148" right="1280" bottom="547" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1745,12 +1745,6 @@ PP値上昇アイテムで技選択するとき</comment>
 		<language name="JPN_KANJI" font=" 1:small" width="216">通信待機中</language>
 	</row>
 
-	<row id="mes_pokelist_deb_01">
-		<comment>道具使用仮</comment>
-		<language name="JPN" width="216">[1:09:どうぐ名:0]を　つかった！</language>
-		<language name="JPN_KANJI" width="216">[1:09:どうぐ名:0]を　使った！</language>
-	</row>
-
 	<row id="mes_pokelist_yes">
 		<comment>はい：汎用</comment>
 		<language name="JPN" width="216">はい</language>
@@ -1761,6 +1755,12 @@ PP値上昇アイテムで技選択するとき</comment>
 		<comment>いいえ：汎用</comment>
 		<language name="JPN" width="216">いいえ</language>
 		<language name="JPN_KANJI" width="216">いいえ</language>
+	</row>
+
+	<row id="mes_pokelist_13_08">
+		<comment>アイテム連続使用アイテム切れ</comment>
+		<language name="JPN" width="216">[1:09:どうぐ名:0]が　なくなりました</language>
+		<language name="JPN_KANJI" width="216">[1:09:どうぐ名:0]が　無くなりました</language>
 	</row>
 
 	<flowchart-group-list>

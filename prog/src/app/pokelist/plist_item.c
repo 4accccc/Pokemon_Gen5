@@ -393,6 +393,15 @@ void PLIST_ITEM_MSG_CanNotUseItem( PLIST_WORK *work )
   PLIST_MessageWaitInit( work , mes_pokelist_04_45 , TRUE , PLIST_MSGCB_ExitCommon );
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
 }
+//続けて選べるVer
+void PLIST_ITEM_MSG_CanNotUseItemContinue( PLIST_WORK *work )
+{
+  work->plData->ret_mode = PL_RET_BAG;
+  PLIST_MSG_CreateWordSet( work , work->msgWork );
+  PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 0 , work->plData->item );
+  PLIST_MessageWaitInit( work , mes_pokelist_04_45 , TRUE , PLIST_MSGCB_ReturnSelectCommon );
+  PLIST_MSG_DeleteWordSet( work , work->msgWork );
+}
 
 //--------------------------------------------------------------------------
 //  アイテム使った時の処理
@@ -539,12 +548,12 @@ void PLIST_HPANMCB_ReturnRecoverHp( PLIST_WORK *work )
   if( work->befHp != 0 )
   {
     PLIST_MSG_AddWordSet_Value( work , work->msgWork , 1 , nowHp-work->befHp , 3 );
-    PLIST_MessageWaitInit( work , mes_pokelist_04_14 , TRUE , PLIST_MSGCB_ExitCommon );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_14 , TRUE , PLIST_MSGCB_CheckItemUseContinue );
   }
   else
   {
     //瀕死から復活
-    PLIST_MessageWaitInit( work , mes_pokelist_04_20 , TRUE , PLIST_MSGCB_ExitCommon );
+    PLIST_MessageWaitInit( work , mes_pokelist_04_20 , TRUE , PLIST_MSGCB_CheckItemUseContinue );
   }
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
 }
@@ -792,7 +801,7 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
   case PIPS_CHECK_SHINKA:
     {
       const u32 monsNo = PP_Get( work->selectPokePara , ID_PARA_monsno , NULL );
-      const u16 evoMonsNo = SHINKA_Check( work->plData->pp , work->selectPokePara , SHINKA_TYPE_LEVELUP , 0 , NULL , work->heapId );
+      const u16 evoMonsNo = SHINKA_Check( work->plData->pp , work->selectPokePara , SHINKA_TYPE_LEVELUP , work->plData->zone_id , NULL , work->heapId );
       OS_TFPrintf(3,"[%d][%d]\n",monsNo,evoMonsNo);
       if( evoMonsNo != 0 )
       {
@@ -802,9 +811,9 @@ void PLIST_UpdateDispParam( PLIST_WORK *work )
       }
       else
       {
-        work->mainSeq = PSMS_FADEOUT;
         work->plData->ret_sel = work->pokeCursor;
         work->plData->ret_mode = PL_RET_BAG;
+        PLIST_MSGCB_CheckItemUseContinue( work );
       }
       
     }
@@ -870,7 +879,7 @@ static void PLIST_ITEM_UTIL_ItemUseMessageCommon( PLIST_WORK *work , u16 msgId )
   work->plData->ret_mode = PL_RET_BAG;
   PLIST_MSG_CreateWordSet( work , work->msgWork );
   PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
-  PLIST_MessageWaitInit( work , msgId , TRUE , PLIST_MSGCB_ExitCommon );
+  PLIST_MessageWaitInit( work , msgId , TRUE , PLIST_MSGCB_CheckItemUseContinue );
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
 }
 
@@ -883,7 +892,7 @@ static void PLIST_ITEM_UTIL_ItemUseMessageParamExp( PLIST_WORK *work , u16 msgId
   PLIST_MSG_CreateWordSet( work , work->msgWork );
   PLIST_MSG_AddWordSet_PokeName( work , work->msgWork , 0 , work->selectPokePara );
   PLIST_MSG_AddWordSet_StatusName( work , work->msgWork , 1 , statusID );
-  PLIST_MessageWaitInit( work , msgId , TRUE , PLIST_MSGCB_ExitCommon );
+  PLIST_MessageWaitInit( work , msgId , TRUE , PLIST_MSGCB_CheckItemUseContinue );
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
   
 }
