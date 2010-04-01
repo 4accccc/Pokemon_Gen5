@@ -2985,6 +2985,8 @@ static void handler_Yuubaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
           BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
           param->pokeID = attackerPokeID;
           param->damage = BTL_CALC_QuotMaxHP( bpp, 4 );
+          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_SimpleDamage );
+          HANDEX_STR_AddArg( &param->exStr, attackerPokeID );
         }
         BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
       }
@@ -3527,8 +3529,9 @@ static void handler_Ganjou_KoraeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 // ‚±‚ç‚¦‚é”­“®ƒnƒ“ƒhƒ‰
 static void handler_Ganjou_KoraeExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( work[0] )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  ( work[0] )
+  ){
     BTL_HANDEX_PARAM_MESSAGE* param;
 
     BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
