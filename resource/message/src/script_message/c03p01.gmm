@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T16:41:28"/>
+	<create user="matsumiya" host="W00224" date="2010-04-01T14:57:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,11 +349,11 @@
 ・ダンサー探しイベント中
 　再会話時</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
-		<language name="JPN" width="256">さかばのある　ストリートと
+		<language name="JPN" width="256">さびれた　ストリートと
 はとばで　ダンスしてる　ヤツが▽
 いるって　ウインドが　トークしてた▼
 あっ　かぜのウワサ　ってこと！</language>
-		<language name="JPN_KANJI" width="256">酒場のある　ストリートと
+		<language name="JPN_KANJI" width="256">さびれた　ストリートと
 波止場で　ダンスしてる　ヤツが▽
 いるって　ウインドが　トークしてた▼
 あっ　風のウワサ　ってこと！</language>
