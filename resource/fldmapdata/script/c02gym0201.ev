@@ -69,7 +69,7 @@ INIT_EVENT_START	ev_zone_c02gym0201
 INIT_EVENT_END
 
 /**************************************************************/
-/*            FIELD_INIT_LABEL                              　 */
+/*            FIELD_INIT_LABEL                              　*/
 /**************************************************************/
 INIT_EVENT_START	ev_init_c02gym0201
 
@@ -77,13 +77,14 @@ INIT_EVENT_START	ev_init_c02gym0201
     DEFINE_LOCAL  LWK_POSZ_INIT    /* {}で囲う場合は連続して書かなければならない */
 
     _PLAYER_POS_GET( LWK_POSX_INIT,LWK_POSZ_INIT ) //自機座標取得
-	
+/*	
 	//博物館側から入った場合、ギミックを初期化する
 	IF $LWK_POSZ_INIT == 30 && $WK_SCENE_C02GYM0201 >= 1 THEN 
 		
 		$WK_SCENE_C02GYM0201 =1
 		
 	ENDIF
+*/
 	
 	//戦ったトレーナーを、本棚の前から移動させる
 	IF FLAG_ON( FE_C02GYM_TRBTL1 ) THEN	
