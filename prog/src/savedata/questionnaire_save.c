@@ -263,10 +263,10 @@ void QuestionnaireWork_AddTodayCount(QUESTIONNAIRE_SAVE_WORK *qsw, int question_
  * @param   qsw		        アンケートセーブワークへのポインタ
  * @param   question_id		質問ID
  *
- * @retval  u16		調査人数
+ * @retval  u32		調査人数
  */
 //==================================================================
-u16 QuestionnaireWork_GetTotalCount(QUESTIONNAIRE_SAVE_WORK *qsw, int question_id)
+u32 QuestionnaireWork_GetTotalCount(QUESTIONNAIRE_SAVE_WORK *qsw, int question_id)
 {
   return qsw->total_count[question_id];
 }
@@ -365,10 +365,10 @@ void QuestionnaireWork_AddTodayAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, int quest
  * @param   question_id		質問ID
  * @param   answer_type		質問ID毎の項目No
  *
- * @retval  u8		回答人数
+ * @retval  u16		回答人数
  */
 //==================================================================
-u8 QuestionnaireWork_GetTotalAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, int question_id, int answer_type)
+u16 QuestionnaireWork_GetTotalAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, int question_id, int answer_type)
 {
   if(answer_type == 0){ //回答0は無回答の為、固定で0を返す
     GF_ASSERT(0); //無回答は加算していくデータではない為、要求される事はおかしい
@@ -386,8 +386,6 @@ u8 QuestionnaireWork_GetTotalAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, int questio
  * @param   question_id		質問ID
  * @param   answer_type		質問ID毎の項目No
  * @param   add_count     加算数
- *
- * @retval  u8		回答人数
  */
 //==================================================================
 void QuestionnaireWork_AddTotalAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, int question_id, int answer_type, int add_count)
