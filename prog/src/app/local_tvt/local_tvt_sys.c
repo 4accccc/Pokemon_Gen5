@@ -337,6 +337,8 @@ static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work )
   WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
   WIPE_ResetWndMask(WIPE_DISP_MAIN);
   WIPE_ResetWndMask(WIPE_DISP_SUB);
+  G2_BlendNone();
+  G2S_BlendNone();
   
   GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
   GFL_DISP_SetBank( &vramBank );
@@ -395,6 +397,7 @@ static void LOCAL_TVT_InitGraphic( LOCAL_TVT_WORK *work )
     LOCAL_TVT_SetupBgFunc( &header_sub3  , LTVT_FRAME_SUB_BG  , GFL_BG_MODE_TEXT );
     
     GFL_STD_MemClear32( (void*)(HW_BG_VRAM) , 0x40000 );
+
   }
   //OBJånÇÃèâä˙âª
   {
