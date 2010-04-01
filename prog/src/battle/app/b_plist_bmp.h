@@ -152,7 +152,7 @@ extern void BPL_HidenMsgPut( BPLIST_WORK * wk, u32 mode );
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BattlePokeList_ItemUseMsgSet( BPLIST_WORK * wk );
+//extern void BattlePokeList_ItemUseMsgSet( BPLIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**

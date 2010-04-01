@@ -78,8 +78,8 @@ enum {
 
   SEQ_BPL_BUTTON_WAIT,  // ボタンアニメ終了待ち
 
-  SEQ_BPL_STRCV,      // ステータス回復
-  SEQ_BPL_PPALLRCV,   // PP全回復
+//  SEQ_BPL_STRCV,      // ステータス回復
+//  SEQ_BPL_PPALLRCV,   // PP全回復
 
   SEQ_BPL_ENDSET,     // 終了フェードセット
   SEQ_BPL_ENDWAIT,    // 終了フェード待ち
@@ -149,8 +149,8 @@ static int BPL_SeqPageChgWazaInfo( BPLIST_WORK * wk );
 static int BPL_SeqPageChgWazaSetSel( BPLIST_WORK * wk );
 static int BPL_SeqPageChgWazaSetEnter( BPLIST_WORK * wk );
 static int BPL_SeqPageChgPPRcv( BPLIST_WORK * wk );
-static int BPL_SeqStRcv( BPLIST_WORK * wk );
-static int BPL_SeqPPAllRcv( BPLIST_WORK * wk );
+//static int BPL_SeqStRcv( BPLIST_WORK * wk );
+//static int BPL_SeqPPAllRcv( BPLIST_WORK * wk );
 static int BPL_SeqEndSet( BPLIST_WORK * wk );
 static int BPL_SeqEndWait( BPLIST_WORK * wk );
 static BOOL BPL_SeqEnd( GFL_TCB* tcb, BPLIST_WORK * wk );
@@ -166,7 +166,7 @@ static void BPL_MsgManExit( BPLIST_WORK * wk );
 static void BPL_PokeDataMake( BPLIST_WORK * wk );
 
 static u8 BPL_PokemonSelect( BPLIST_WORK * wk );
-static int BPL_TPCheck( BPLIST_WORK * wk, const GFL_UI_TP_HITTBL * tbl );
+//static int BPL_TPCheck( BPLIST_WORK * wk, const GFL_UI_TP_HITTBL * tbl );
 static BOOL BPL_PageChange( BPLIST_WORK * wk, u8 next_page );
 static void BPL_PageChgBgScreenChg( BPLIST_WORK * wk, u8 page );
 static u8 BPL_IrekaeCheck( BPLIST_WORK * wk );
@@ -174,10 +174,10 @@ static u8 BPL_NextPokeGet( BPLIST_WORK * wk, s32 pos, s32 mv );
 static void BPL_PokePlateSet( BPLIST_WORK * wk );
 static void BPL_ExpGagePut( BPLIST_WORK * wk, u8 page );
 //static void BPL_P2_ExpGagePut( BPLIST_WORK * wk, u16 cgx, u16 px, u16 py );
-static void BPL_P3_ExpGagePut( BPLIST_WORK * wk, u16 cgx, u16 px, u16 py );
+//static void BPL_P3_ExpGagePut( BPLIST_WORK * wk, u16 cgx, u16 px, u16 py );
 //static void BPL_ContestWazaHeartPut( BPLIST_WORK * wk, u8 page );
 static FIELD_SKILL_CHECK_RET BPL_HidenCheck( BPLIST_WORK * wk );
-static void BPL_HidenOff_Battle( BPLIST_WORK * wk );
+//static void BPL_HidenOff_Battle( BPLIST_WORK * wk );
 //static void BPL_HidenOff_Contest( BPLIST_WORK * wk );
 static u8 BPL_TamagoCheck( BPLIST_WORK * wk );
 
@@ -248,8 +248,8 @@ static const pBPlistFunc MainSeqFunc[] = {
 
   BPL_SeqButtonWait,
 
-  BPL_SeqStRcv,
-  BPL_SeqPPAllRcv,
+//  BPL_SeqStRcv,
+//  BPL_SeqPPAllRcv,
 
   BPL_SeqEndSet,
   BPL_SeqEndWait,
@@ -1808,10 +1808,11 @@ static int BPL_SeqPageChgPPRcv( BPLIST_WORK * wk )
   if( BPL_PageChange( wk, BPLIST_PAGE_PP_RCV ) == FALSE ){
     return SEQ_BPL_PAGECHG_PPRCV;
   }
-
+/*
   if( ITEM_GetParam( wk->dat->item, ITEM_PRM_ALL_PP_RCV, wk->dat->heap ) != 0 ){
     return SEQ_BPL_PPALLRCV;
   }
+*/
   return SEQ_BPL_WAZARCV_SEL;
 }
 
@@ -1936,6 +1937,7 @@ static int BPL_SeqButtonWait( BPLIST_WORK * wk )
  * @return  次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int BPL_SeqStRcv( BPLIST_WORK * wk )
 {
   BPLIST_DATA * dat;
@@ -1949,7 +1951,7 @@ static int BPL_SeqStRcv( BPLIST_WORK * wk )
     wk->poke[pos].pp =
 //      BattleWorkPokemonParamGet( dat->bw, dat->client_no, dat->list_row[dat->sel_poke] );
         NULL;
-    BattlePokeList_ItemUseMsgSet( wk );
+//    BattlePokeList_ItemUseMsgSet( wk );
     if( wk->page == BPLIST_PAGE_PP_RCV ){
   //    wk->rcv_pp[0] = (u16)PP_Get(wk->poke[dat->sel_poke].pp,ID_PARA_pp1+dat->sel_wp,NULL);
       wk->rcv_pp[0] = PP_Get( wk->poke[pos].pp,ID_PARA_pp1+dat->sel_wp,NULL);
@@ -2003,6 +2005,7 @@ static int BPL_SeqStRcv( BPLIST_WORK * wk )
   }
   return SEQ_BPL_STRCV;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2013,6 +2016,7 @@ static int BPL_SeqStRcv( BPLIST_WORK * wk )
  * @return  次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int BPL_SeqPPAllRcv( BPLIST_WORK * wk )
 {
   BPLIST_DATA * dat;
@@ -2031,7 +2035,7 @@ static int BPL_SeqPPAllRcv( BPLIST_WORK * wk )
       if( wk->poke[pos].waza[i].id == 0 ){ continue; }
       wk->rcv_pp[i] = (u16)PP_Get(wk->poke[pos].pp,ID_PARA_pp1+i,NULL);
     }
-    BattlePokeList_ItemUseMsgSet( wk );
+//    BattlePokeList_ItemUseMsgSet( wk );
 //    PMSND_PlaySE( SEQ_SE_DP_KAIFUKU );
     wk->rcv_seq = 1;
     break;
@@ -2062,7 +2066,7 @@ static int BPL_SeqPPAllRcv( BPLIST_WORK * wk )
 
   return SEQ_BPL_PPALLRCV;
 }
-
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2789,19 +2793,21 @@ static u8 BPL_StInfoWazaSelect( BPLIST_WORK * wk )
  * @retval  "GFL_UI_TP_HIT_NONE != 押したボタン番号"
  */
 //--------------------------------------------------------------------------------------------
+/*
 static int BPL_TPCheck( BPLIST_WORK * wk, const GFL_UI_TP_HITTBL * tbl )
 {
   int ret = GFL_UI_TP_HitTrg( tbl );
-/*
+#if 0
   if( ret != GFL_UI_TP_HIT_NONE ){
     u16 pat = 0xfffe;
     if( GFL_BG_CheckDot( wk->bgl, GFL_BG_FRAME3_S, sys.tp_x, sys.tp_y, &pat ) == FALSE ){
       return GFL_UI_TP_HIT_NONE;
     }
   }
-*/
+#endif
   return ret;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2964,7 +2970,9 @@ static void BPL_ExpGagePut( BPLIST_WORK * wk, u8 page )
       cgx = EXP_CGX + dot;
     }
 
-    BPL_P3_ExpGagePut( wk, cgx, P3_EXPGAGE_PX+i, P3_EXPGAGE_PY );
+//    BPL_P3_ExpGagePut( wk, cgx, P3_EXPGAGE_PX+i, P3_EXPGAGE_PY );
+		GFL_BG_FillScreen(
+			GFL_BG_FRAME3_S, cgx, P3_EXPGAGE_PX+i, P3_EXPGAGE_PY, 1, 1, GFL_BG_SCRWRT_PALNL );
 
     if( dot < 8 ){
       dot = 0;
@@ -2983,11 +2991,12 @@ static void BPL_P2_ExpGagePut( BPLIST_WORK * wk, u16 cgx, u16 px, u16 py )
   GFL_BG_FillScreen( wk->bgl, GFL_BG_FRAME3_S, cgx+32, px, py+1, 1, 1, GFL_BG_SCRWRT_PALNL );
 }
 */
-
+/*
 static void BPL_P3_ExpGagePut( BPLIST_WORK * wk, u16 cgx, u16 px, u16 py )
 {
   GFL_BG_FillScreen( GFL_BG_FRAME3_S, cgx, px, py, 1, 1, GFL_BG_SCRWRT_PALNL );
 }
+*/
 
 #define HEART1_CHR_NUM  ( 0x140 )
 #define HEART2_CHR_NUM  ( 0x125 )
@@ -3006,6 +3015,7 @@ static void BPL_P3_ExpGagePut( BPLIST_WORK * wk, u16 cgx, u16 px, u16 py )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BPL_ContestWazaHeartPutMain( BPLIST_WORK * wk, u16 chr, u8 num )
 {
   GFL_BG_FillScreen(
@@ -3017,6 +3027,7 @@ static void BPL_ContestWazaHeartPutMain( BPLIST_WORK * wk, u16 chr, u8 num )
   GFL_BG_FillScreen(
     GFL_BG_FRAME3_S, chr+33, HEART_PX+num*2+1, HEART_PY+1, 1, 1, GFL_BG_SCRWRT_PALNL );
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3027,6 +3038,7 @@ static void BPL_ContestWazaHeartPutMain( BPLIST_WORK * wk, u16 chr, u8 num )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BPL_ContestWazaHeartInit( BPLIST_WORK * wk )
 {
   u16 i;
@@ -3035,7 +3047,7 @@ static void BPL_ContestWazaHeartInit( BPLIST_WORK * wk )
     BPL_ContestWazaHeartPutMain( wk, HEART2_CHR_NUM, i );
   }
 }
-
+*/
 
 
 
@@ -3273,9 +3285,9 @@ static u8 BPL_TamagoCheck( BPLIST_WORK * wk )
  * @retval  "FALSE = ダブルバトル以外"
  */
 //--------------------------------------------------------------------------------------------
+/*
 u8 BattlePokeList_DoubleCheck( BPLIST_WORK * wk )
 {
-/*
   u32 type = BattleWorkFightTypeGet(wk->dat->bw);
 
   if( type != FIGHT_TYPE_2vs2_YASEI && type != FIGHT_TYPE_AI_MULTI &&
@@ -3283,9 +3295,8 @@ u8 BattlePokeList_DoubleCheck( BPLIST_WORK * wk )
     return TRUE;
   }
   return FALSE;
-*/
-  return FALSE;
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3387,9 +3398,9 @@ static FIELD_SKILL_CHECK_RET BPL_HidenCheck( BPLIST_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
+/*
 static void BPL_HidenOff_Battle( BPLIST_WORK * wk )
 {
-/*
   // 分類アイコン
   GFL_CLACT_UNIT_SetDrawEnableCap( wk->cap[BPL_CA_BUNRUI], 0 );
 
@@ -3401,8 +3412,8 @@ static void BPL_HidenOff_Battle( BPLIST_WORK * wk )
 
   // 威力
   GF_BGL_BmpWinOffVReq( &wk->add_win[WIN_P6_POWNUM] );
-*/
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**

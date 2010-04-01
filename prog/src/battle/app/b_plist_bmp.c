@@ -3203,9 +3203,9 @@ void BattlePokeList_TalkMsgStart( BPLIST_WORK * wk )
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
+/*
 void BattlePokeList_ItemUseMsgSet( BPLIST_WORK * wk )
 {
-/*
   POKEMON_PARAM * pp;
   BPLIST_DATA * dat;
   void * item;
@@ -3313,8 +3313,8 @@ void BattlePokeList_ItemUseMsgSet( BPLIST_WORK * wk )
   }
 
   GFL_HEAP_FreeMemory( item );
-*/
 }
+*/
 
 //--------------------------------------------------------------------------------------------
 /**

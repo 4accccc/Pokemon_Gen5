@@ -521,7 +521,7 @@ extern u8 BattlePokeList_PokeSetCheck( BPLIST_WORK * wk, s32 pos );
  * @retval	"FALSE = ダブルバトル以外"
  */
 //--------------------------------------------------------------------------------------------
-extern u8 BattlePokeList_DoubleCheck( BPLIST_WORK * wk );
+//extern u8 BattlePokeList_DoubleCheck( BPLIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
