@@ -15,6 +15,7 @@
 #include "mb_select_gra.naix"
 
 #include "multiboot/mb_poke_icon.h"
+#include "multiboot/mb_util.h"
 #include "mb_sel_poke.h"
 
 //======================================================================
@@ -34,6 +35,7 @@
 struct _MB_SEL_POKE
 {
   POKEMON_PASO_PARAM *ppp;
+  MB_SEL_POKE_INIT_WORK *initWork;
   
   MB_SEL_POKE_TYPE type;
   u8       idx;
@@ -63,7 +65,8 @@ MB_SEL_POKE* MB_SEL_POKE_CreateWork( MB_SELECT_WORK *selWork , MB_SEL_POKE_INIT_
 {
   GFL_CLWK_DATA cellInitData;
   MB_SEL_POKE* pokeWork = GFL_HEAP_AllocClearMemory( initWork->heapId , sizeof(MB_SEL_POKE) );
-
+  
+  pokeWork->initWork = initWork;
   pokeWork->type = initWork->iconType;
   pokeWork->idx  = initWork->idx;
 
@@ -173,13 +176,27 @@ void MB_SEL_POKE_SetPPP( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork , POKEM
   
   if( pokeWork->isValid == TRUE )
   {
+    const MB_UTIL_CHECK_PLAY_RET ret = MB_UTIL_CheckPlay_PalGate( pokeWork->ppp , type );
+    NNSG2dImagePaletteProxy tempPlt;
     NNSG2dCharacterData *tempNcg;
+    u32 pltAdr;
     void *tempRes = GFL_ARCHDL_UTIL_LoadOBJCharacter( iconArcHandle ,
                                           MB_ICON_GetCharResId(pokeWork->ppp,type) ,
                                           FALSE ,
                                           &tempNcg ,
                                           heapId );
     GFL_CLGRP_CGR_Replace( pokeWork->cellResIdx , tempNcg );
+    NNS_G2dInitImagePaletteProxy( &tempPlt );
+    if( ret == MUCPR_OK )
+    {
+      pltAdr = GFL_CLGRP_PLTT_GetAddr( pokeWork->initWork->palResIdx , CLSYS_DRAW_MAIN );
+    }
+    else
+    {
+      pltAdr = GFL_CLGRP_PLTT_GetAddr( pokeWork->initWork->palNoneResIdx , CLSYS_DRAW_MAIN );
+    }
+    NNS_G2dSetImagePaletteLocation( &tempPlt , NNS_G2D_VRAM_TYPE_2DMAIN , pltAdr );
+    GFL_CLACT_WK_SetPlttProxy( pokeWork->pokeIcon , &tempPlt );
     GFL_CLACT_WK_SetPlttOffs( pokeWork->pokeIcon , 
                               MB_ICON_GetPalNumber(pokeWork->ppp) ,
                               CLWK_PLTTOFFS_MODE_PLTT_TOP );

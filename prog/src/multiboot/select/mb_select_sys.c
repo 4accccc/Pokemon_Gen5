@@ -147,6 +147,7 @@ struct _MB_SELECT_WORK
   GFL_BMPWIN  *msgBoxName;
   GFL_BMPWIN  *msgPokeInfo;
 
+  MB_SEL_POKE_INIT_WORK iconWork;
   MB_SEL_POKE *boxPoke[MB_POKE_BOX_POKE];
   MB_SEL_POKE *selPoke[MB_CAP_POKE_NUM];
   MB_SEL_POKE *boxHoldPoke;
@@ -237,27 +238,27 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
 
   //ポケモン設定
   {
-    MB_SEL_POKE_INIT_WORK initWork;
 
-    initWork.heapId = work->heapId;
-    initWork.arcHandle = arcHandle;
-    initWork.iconType  = MSPT_BOX;
-    initWork.cellUnit  = work->cellUnit;
-    initWork.palResIdx = work->cellResIdx[MSCR_PLT_POKEICON];
-    initWork.anmResIdx = work->cellResIdx[MSCR_ANM_POKEICON];
+    work->iconWork.heapId = work->heapId;
+    work->iconWork.arcHandle = arcHandle;
+    work->iconWork.iconType  = MSPT_BOX;
+    work->iconWork.cellUnit  = work->cellUnit;
+    work->iconWork.palResIdx = work->cellResIdx[MSCR_PLT_POKEICON];
+    work->iconWork.palNoneResIdx = work->cellResIdx[MSCR_PLT_POKEICON_NONE];
+    work->iconWork.anmResIdx = work->cellResIdx[MSCR_ANM_POKEICON];
     for( i=0;i<MB_POKE_BOX_POKE;i++ )
     {
-      initWork.idx = i;
-      work->boxPoke[i] = MB_SEL_POKE_CreateWork( work , &initWork );
+      work->iconWork.idx = i;
+      work->boxPoke[i] = MB_SEL_POKE_CreateWork( work , &work->iconWork );
     }
-    initWork.iconType  = MSPT_TRAY;
+    work->iconWork.iconType  = MSPT_TRAY;
     for( i=0;i<MB_CAP_POKE_NUM;i++ )
     {
-      initWork.idx = i;
-      work->selPoke[i] = MB_SEL_POKE_CreateWork( work , &initWork );
+      work->iconWork.idx = i;
+      work->selPoke[i] = MB_SEL_POKE_CreateWork( work , &work->iconWork );
     }
-    initWork.iconType  = MSPT_BOX;
-    work->boxHoldPoke = MB_SEL_POKE_CreateWork( work , &initWork );
+    work->iconWork.iconType  = MSPT_BOX;
+    work->boxHoldPoke = MB_SEL_POKE_CreateWork( work , &work->iconWork );
   }
 
   work->msgBoxName = GFL_BMPWIN_Create( MB_SELECT_FRAME_BAR , 
@@ -692,6 +693,11 @@ static void MB_SELECT_LoadResource( MB_SELECT_WORK *work , ARCHANDLE *arcHandle 
                                   CLSYS_DRAW_MAIN , 
                                   MB_SEL_PLT_OBJ_POKEICON*32 , 
                                   work->heapId  );
+      work->cellResIdx[MSCR_PLT_POKEICON_NONE] = GFL_CLGRP_PLTT_RegisterComp( work->iconArcHandle , 
+                                  MB_ICON_GetPltResId( type ) , 
+                                  CLSYS_DRAW_MAIN , 
+                                  MB_SEL_PLT_OBJ_POKEICON_NONE*32 , 
+                                  work->heapId  );
     }
     else
     {
@@ -700,6 +706,11 @@ static void MB_SELECT_LoadResource( MB_SELECT_WORK *work , ARCHANDLE *arcHandle 
                                   MB_ICON_GetPltResId( type ) , 
                                   CLSYS_DRAW_MAIN , 
                                   MB_SEL_PLT_OBJ_POKEICON*32 , 
+                                  work->heapId  );
+      work->cellResIdx[MSCR_PLT_POKEICON_NONE] = GFL_CLGRP_PLTT_Register( work->iconArcHandle , 
+                                  MB_ICON_GetPltResId( type ) , 
+                                  CLSYS_DRAW_MAIN , 
+                                  MB_SEL_PLT_OBJ_POKEICON_NONE*32 , 
                                   work->heapId  );
       
       /*
@@ -759,6 +770,29 @@ static void MB_SELECT_LoadResource( MB_SELECT_WORK *work , ARCHANDLE *arcHandle 
 
     GFL_ARC_CloseDataHandle( commonArcHandle );
   }
+  
+  //持ってこれないポケモンアイコン黒くする処理
+  {
+    u8 i,j;
+    u16 plt[3][16];
+    u32 pltAdr = GFL_CLGRP_PLTT_GetAddr( work->cellResIdx[MSCR_PLT_POKEICON_NONE] , CLSYS_DRAW_MAIN ) + HW_OBJ_PLTT;
+    GFL_STD_MemCopy( (void*)pltAdr , plt , 2*16*3 );
+    
+    for( i=0;i<3;i++ )
+    {
+      for( j=0;j<16;j++ )
+      {
+        u8 r = (plt[i][j]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+        u8 g = (plt[i][j]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+        u8 b = (plt[i][j]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+        r = r*5/10;
+        g = g*5/10;
+        b = b*5/10;
+        plt[i][j] = GX_RGB(r,g,b);
+      }
+    }
+    GFL_STD_MemCopy( plt , (void*)pltAdr , 2*16*3 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -767,6 +801,7 @@ static void MB_SELECT_LoadResource( MB_SELECT_WORK *work , ARCHANDLE *arcHandle 
 static void MB_SELECT_ReleaseResource( MB_SELECT_WORK *work )
 {
   GFL_CLGRP_PLTT_Release( work->cellResIdx[MSCR_PLT_POKEICON] );
+  GFL_CLGRP_PLTT_Release( work->cellResIdx[MSCR_PLT_POKEICON_NONE] );
   GFL_CLGRP_CELLANIM_Release( work->cellResIdx[MSCR_ANM_POKEICON] );
   
   GFL_CLGRP_PLTT_Release( work->cellResIdx[MSCR_PLT_COMMON] );
@@ -958,23 +993,58 @@ static void MB_SELECT_UpdateUI( MB_SELECT_WORK *work )
           if( MB_SEL_POKE_isValid( work->boxPoke[idx] ) == TRUE &&
               MB_SEL_POKE_GetAlpha( work , work->boxPoke[idx] ) == FALSE )
           {
-            GFL_CLACTPOS cellPos;
-            cellPos.x = tpx;
-            cellPos.y = tpy;
+            POKEMON_PASO_PARAM *ppp = work->initWork->boxData[work->boxPage][idx];
+            const MB_UTIL_CHECK_PLAY_RET checkRet = MB_UTIL_CheckPlay_PalGate( ppp , work->initWork->cardType );
+            if( checkRet == MUCPR_OK )
+            {
+              GFL_CLACTPOS cellPos;
+              cellPos.x = tpx;
+              cellPos.y = tpy;
 
-            work->isHold = TRUE;
-            //work->holdPoke = work->boxPoke[idx];
-            //MB_SEL_POKE_SetPri( work , work->boxPoke[idx] , MSPT_HOLD );
-            //MB_SELECT_SetPokeInfo( work , work->initWork->boxData[work->boxPage][idx] );
-            work->holdPoke = work->boxHoldPoke;
-            MB_SEL_POKE_SetIdx( work->holdPoke , idx );
-            MB_SEL_POKE_SetPPP( work , work->holdPoke , work->initWork->boxData[work->boxPage][idx] );
-            MB_SEL_POKE_SetPri( work , work->holdPoke , MSPT_HOLD );
-            MB_SEL_POKE_SetPos( work , work->holdPoke , &cellPos );
-            MB_SELECT_SetPokeInfo( work , work->initWork->boxData[work->boxPage][idx] );
+              work->isHold = TRUE;
+              //work->holdPoke = work->boxPoke[idx];
+              //MB_SEL_POKE_SetPri( work , work->boxPoke[idx] , MSPT_HOLD );
+              //MB_SELECT_SetPokeInfo( work , work->initWork->boxData[work->boxPage][idx] );
+              work->holdPoke = work->boxHoldPoke;
+              MB_SEL_POKE_SetIdx( work->holdPoke , idx );
+              MB_SEL_POKE_SetPPP( work , work->holdPoke , work->initWork->boxData[work->boxPage][idx] );
+              MB_SEL_POKE_SetPri( work , work->holdPoke , MSPT_HOLD );
+              MB_SEL_POKE_SetPos( work , work->holdPoke , &cellPos );
+              MB_SELECT_SetPokeInfo( work , work->initWork->boxData[work->boxPage][idx] );
+              
+              MB_SEL_POKE_SetAlpha( work , work->boxPoke[idx] , TRUE );
+              PMSND_PlaySE( SEQ_SE_SELECT1 );
+            }
+            else
+            if( checkRet == MUCPR_EGG )
+            {
+              MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
+              MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_SEL_02 );
+              work->state = MSS_MSG_WAIT;
+            }
+            else
+            if( checkRet == MUCPR_HIDEN )
+            {
+              MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
+              MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_SEL_03 );
+              work->state = MSS_MSG_WAIT;
+            }
+            else
+            if( checkRet == MUCPR_GIZAMIMI )
+            {
+              MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE_TALK );
+              MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_SEL_06 , work->initWork->msgSpeed );
+              MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+              work->state = MSS_MSG_WAIT;
+            }
+            else
+            if( checkRet == MUCPR_FUSEI )
+            {
+              MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
+              MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_SEL_04 );
+              work->state = MSS_MSG_WAIT;
+            }
             
-            MB_SEL_POKE_SetAlpha( work , work->boxPoke[idx] , TRUE );
-            PMSND_PlaySE( SEQ_SE_SELECT1 );
           }
         }
       }
@@ -1717,6 +1787,10 @@ static GFL_PROC_RESULT MB_SELECT_ProcInit( GFL_PROC * proc, int * seq , void *pw
                      GFUser_GetPublicRand0(493)+1 ,
                      GFUser_GetPublicRand0(100)+1 ,
                      PTL_SETUP_ID_AUTO );
+          if( GFUser_GetPublicRand0(10) == 0 )
+          {
+            PPP_Put( initWork->boxData[i][j] , ID_PARA_waza1 , 15 );//居合い切り
+          }
         }
       }
       MB_TPrintf(".%d",i);

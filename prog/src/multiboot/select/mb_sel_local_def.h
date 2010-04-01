@@ -21,9 +21,10 @@
 
 #define MB_SEL_PLT_OBJ_COMMON (0)   //3本
 #define MB_SEL_PLT_OBJ_POKEICON (3) //3本
-#define MB_SEL_PLT_OBJ_BAR_BUTTON (6) //3本
-#define MB_SEL_PLT_OBJ_BOX_ICON (7) //1本
-#define MB_SEL_PLT_OBJ_POKE_MARK (8) //1本
+#define MB_SEL_PLT_OBJ_POKEICON_NONE (6) //3本(持ってこれない暗転ポケ
+#define MB_SEL_PLT_OBJ_BAR_BUTTON (9) //3本
+#define MB_SEL_PLT_OBJ_BOX_ICON (12) //1本
+#define MB_SEL_PLT_OBJ_POKE_MARK (13) //1本
 //12からメッセージ系
 
 
@@ -52,6 +53,7 @@
 typedef enum
 {
   MSCR_PLT_POKEICON,
+  MSCR_PLT_POKEICON_NONE,
   MSCR_ANM_POKEICON,
 
   MSCR_PLT_COMMON,

@@ -53,6 +53,7 @@ typedef struct
   
   GFL_CLUNIT  *cellUnit;
   u32   palResIdx;
+  u32   palNoneResIdx;
   u32   anmResIdx;
   
 }MB_SEL_POKE_INIT_WORK;
