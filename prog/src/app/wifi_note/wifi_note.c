@@ -23,8 +23,6 @@
 #include "system/bmp_menu.h"
 #include "system/bmp_menulist.h"
 #include "system/bmp_winframe.h"
-
-
 #include "system/wipe.h"
 #include "print/wordset.h"
 #include "print/global_msg.h"
@@ -51,7 +49,6 @@
 
 #include "wifi_note.naix"
 #include "wifi_note_snd.h"
-
 
 #define USE_FRONTIER_DATA (0)
 #define NOTE_TEMP_COMMENT (0)
@@ -180,7 +177,7 @@ enum{
 #define BMPL_TITLE_PL_Y ( 4 )
 
 //選択ボックスウィンドウ領域
-#define SBOX_WINCGX_SIZ (27)
+/*
 #define SBOX_FLIST_SEL_CT (4)
 #define SBOX_FLIST_WCGX   (BMPL_TITLE_CGX_END)
 #define SBOX_FLIST_W    (17)
@@ -188,7 +185,7 @@ enum{
 #define SBOX_FLIST_FCGX   (SBOX_FLIST_WCGX+SBOX_WINCGX_SIZ)
 #define SBOX_FLIST_PX   (16)
 #define SBOX_FLIST_PY   (5)
-
+*/
 
 // 基本OAMのデータ
 #define WFNOTE_OAM_COMM_CONTID  ( 100 ) // 基本的OAMの管理ID
@@ -386,26 +383,26 @@ enum{ // カーソルデータすう
 #define BMPL_FLIST_TEXT_SIZX  ( 26 )  // サイズｘ
 #define BMPL_FLIST_TEXT_SIZY  ( 17 )  // サイズｙ
 #define BMPL_FLIST_TEXT_CGX0  ( 1 ) // cgx領域1
-#define BMPL_FLIST_TEXT_CGX1  ( BMPL_FLIST_TEXT_CGX0+(BMPL_FLIST_TEXT_SIZX*BMPL_FLIST_TEXT_SIZY) )  // cgx領域2
+//#define BMPL_FLIST_TEXT_CGX1  ( BMPL_FLIST_TEXT_CGX0+(BMPL_FLIST_TEXT_SIZX*BMPL_FLIST_TEXT_SIZY) )  // cgx領域2
 
 #define BMPL_FLIST_BKMSG_X  ( 21 )  // 開始位置ｘ
 #define BMPL_FLIST_BKMSG_Y  ( 21 )  // 開始位置ｙ
 #define BMPL_FLIST_BKMSG_SIZX ( 9 ) // サイズｘ
 #define BMPL_FLIST_BKMSG_SIZY ( 2 ) // サイズｙ
-#define BMPL_FLIST_BKMSG_CGX  (SBOX_FLIST_FCGX+SBOX_FLIST_FCGX_SIZ )
+//#define BMPL_FLIST_BKMSG_CGX  (SBOX_FLIST_FCGX+SBOX_FLIST_FCGX_SIZ )
 
 #define BMPL_FLIST_TALK_X   ( 2 ) // 開始位置（キャラ単位）
 #define BMPL_FLIST_TALK_Y   ( 1 )  // 開始位置（キャラ単位）
 #define BMPL_FLIST_TALK_SIZX  ( 27 )  // サイズ（キャラ単位）
 #define BMPL_FLIST_TALK_SIZY  ( 4 ) // サイズ（キャラ単位）
-#define BMPL_FLIST_TALK_CGX   (BMPL_FLIST_BKMSG_CGX+(BMPL_FLIST_BKMSG_SIZX*BMPL_FLIST_BKMSG_SIZY))  // キャラクタオフセット
+//#define BMPL_FLIST_TALK_CGX   (BMPL_FLIST_BKMSG_CGX+(BMPL_FLIST_BKMSG_SIZX*BMPL_FLIST_BKMSG_SIZY))  // キャラクタオフセット
 
 #define BMPL_FLIST_YESNO_FRM    ( GFL_BG_FRAME1_M )
 #define BMPL_FLIST_YESNO_X    ( 25 )  // 開始位置（キャラ単位）
 #define BMPL_FLIST_YESNO_Y    ( 13 )  // 開始位置（キャラ単位）
 #define BMPL_FLIST_YESNO_SIZX   ( 6 ) // サイズ（キャラ単位）
 #define BMPL_FLIST_YESNO_SIZY   ( 4 ) // サイズ（キャラ単位）
-#define BMPL_FLIST_YESNO_CGX    ( BMPL_FLIST_TALK_CGX+(BMPL_FLIST_TALK_SIZX*BMPL_FLIST_TALK_SIZY) ) // キャラクタオフセット
+//#define BMPL_FLIST_YESNO_CGX    ( BMPL_FLIST_TALK_CGX+(BMPL_FLIST_TALK_SIZX*BMPL_FLIST_TALK_SIZY) ) // キャラクタオフセット
 
 
 // 動作シーケンス
@@ -513,7 +510,7 @@ enum{
   BMPL_FLIST_MENU_CODE, // 友達番号のみ登録時のメニュー
   BMPL_FLIST_MENU_NUM,
 };
-#define BMPL_FLIST_MENU_LISTNUM (SBOX_FLIST_SEL_CT) // メニューリストの項目数
+#define BMPL_FLIST_MENU_LISTNUM (4) // メニューリストの項目数
 
 // 詳細画面へフェードのウエイト
 #define FLIST_INFO_WAIT (8)
@@ -1835,7 +1832,8 @@ static const WFNOTE_MENU_DATA DATA_FListMenuTbl[BMPL_FLIST_MENU_NUM][BMPL_FLIST_
     { msg_wifi_note_12, (u32)SEQ_FLIST_MAIN },
   }
 };
-
+/*
+*/
 //-------------------------------------
 /// FRIENDINFO
 //=====================================
@@ -4545,10 +4543,12 @@ static void FList_DrawInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
   STRBUF* p_str;
   BMPMENULIST_HEADER list_h;
 
+/*
   static const u16 sc_TEXTCGX[ 2 ] = {
     BMPL_FLIST_TEXT_CGX0,
     BMPL_FLIST_TEXT_CGX1,
   };
+*/
 
   // ビットマップ
   for( i=0; i < 2; i++ )
@@ -4560,14 +4560,14 @@ static void FList_DrawInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
         BMPL_FLIST_TEXT_OFSX+MATH_ABS(DATA_ScrnArea[i].scrn_x),
         BMPL_FLIST_TEXT_OFSY+MATH_ABS(DATA_ScrnArea[i].scrn_y),
         BMPL_FLIST_TEXT_SIZX, BMPL_FLIST_TEXT_SIZY,
-        BGPLT_M_MSGFONT, sc_TEXTCGX[i] , 0 );
+        BGPLT_M_MSGFONT, 0, 0 );
   }
 
   //  描画エリア作成
   for( i=0; i < WFNOTE_DRAWAREA_NUM; i++ )
   {
     FListDrawArea_Init( &p_wk->drawdata[ i ], p_draw,
-        &DATA_ScrnArea[i], sc_TEXTCGX[i], heapID );
+        &DATA_ScrnArea[i], 0, heapID );
   }
   p_wk->drawdata[ WFNOTE_DRAWAREA_MAIN ].text = &p_wk->drawBmpWin[0];
   p_wk->drawdata[ WFNOTE_DRAWAREA_RIGHT ].text = &p_wk->drawBmpWin[1];
@@ -4630,7 +4630,7 @@ static void FList_DrawInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNOTE
       &p_wk->talk, DFRM_MSG,
       BMPL_FLIST_TALK_X, BMPL_FLIST_TALK_Y,
       BMPL_FLIST_TALK_SIZX, BMPL_FLIST_TALK_SIZY,
-      BGPLT_M_MSGFONT, BMPL_FLIST_TALK_CGX ,15);
+      BGPLT_M_MSGFONT, 0 ,15);
 
   p_wk->p_talkstr = GFL_STR_CreateBuffer( WFNOTE_STRBUF_SIZE, heapID );
 
@@ -5284,7 +5284,7 @@ static void FListSeq_MenuInit( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFN
     wk.posType  = ATPT_RIGHT_DOWN;
     wk.charPosX = 32;
     wk.charPosY = 24;
-    wk.w        = SBOX_FLIST_W;
+    wk.w        = APP_TASKMENU_PLATE_WIDTH;
     wk.h        = APP_TASKMENU_PLATE_HEIGHT;
 
     p_wk->listWork = APP_TASKMENU_OpenMenu( &wk, p_wk->listRes );
@@ -5324,14 +5324,12 @@ static u32 FListSeq_MenuWait( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WFNO
     ret = APP_TASKMENU_GetCursorPos( p_wk->listWork );
     APP_TASKMENU_CloseMenu( p_wk->listWork );
   }else{
-   ret = BMPMENU_NULL;
+   return ret_seq;
   }
 
   switch(ret){
-  case BMPMENU_NULL:
-    return ret_seq;
   case 3:
-  case BMPMENU_CANCEL:
+//  case BMPMENU_CANCEL:
    //   PMSND_PlaySE(WIFINOTE_MENU_BS_SE);
     p_data->key_mode = GFL_UI_CheckTouchOrKey();
     ret_seq = SEQ_FLIST_MAIN;

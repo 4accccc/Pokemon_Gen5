@@ -21,7 +21,6 @@
 #include "gamesystem/game_data.h"
 #include "system/bmp_winframe.h"
 #include "system/bmp_menulist.h"
-
 #include "system/palanm.h"
 #include "system/blink_palanm.h"
 
