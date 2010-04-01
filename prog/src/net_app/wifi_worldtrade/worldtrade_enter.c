@@ -392,13 +392,13 @@ static int Enter_ConnectYesNoSelect( WORLDTRADE_WORK *wk )
 //	int ret = BmpYesNoSelectMain( wk->YesNoMenuWork, HEAPID_WORLDTRADE );
 	u32 ret = WorldTrade_TouchSwMain(wk);
 
-	if(ret==TOUCH_SW_RET_YES){
+	if(ret==WORLDTRADE_RET_YES){
 			// WIFIせつぞくを開始
     WorldTrade_TouchDelete( wk );
 			//Enter_MessagePrint( wk, wk->LobbyMsgManager, msg_wifilobby_002, 1, 0x0f0f );
 			wk->subprocess_seq  = ENTER_INTERNET_CONNECT;
 			WorldTrade_TimeIconAdd(wk);
-	}else if(ret==TOUCH_SW_RET_NO){
+	}else if(ret==WORLDTRADE_RET_NO){
 			// 終了
     WorldTrade_TouchDelete( wk );
 #if 0
@@ -473,7 +473,7 @@ static int Enter_EndStart( WORLDTRADE_WORK *wk )
 static int Enter_EndYesNoSelect( WORLDTRADE_WORK *wk )
 {
 	u32 ret = WorldTrade_TouchSwMain(wk);
-	if(ret==TOUCH_SW_RET_YES){
+	if(ret==WORLDTRADE_RET_YES){
 		if(!DWC_CheckInet()){		
 			// 接続を開始しますか？
 			wk->subprocess_seq  = ENTER_START;
@@ -488,7 +488,7 @@ static int Enter_EndYesNoSelect( WORLDTRADE_WORK *wk )
 			wk->subprocess_seq    = ENTER_END;
 
 		}
-	}else if(ret==TOUCH_SW_RET_NO ){
+	}else if(ret==WORLDTRADE_RET_NO ){
 		// WIFIせつぞくを終了
 		if(DWC_CheckInet()){		
 			DWC_CleanupInet();
@@ -1258,13 +1258,13 @@ static int Enter_YesNoSelect( WORLDTRADE_WORK *wk)
 {
 	u32 ret = WorldTrade_TouchSwMain(wk);
 
-  if(ret==TOUCH_SW_RET_YES){
+  if(ret==WORLDTRADE_RET_YES){
     // WIFIせつぞくを終了
 
     WorldTrade_TouchDelete( wk );
     WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
     wk->subprocess_seq = ENTER_END;
-	}else if(ret==TOUCH_SW_RET_NO){
+	}else if(ret==WORLDTRADE_RET_NO){
 			// もういっかいトライ
     WorldTrade_TouchDelete( wk );
 			wk->subprocess_seq = ENTER_START;

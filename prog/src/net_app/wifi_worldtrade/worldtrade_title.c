@@ -1120,7 +1120,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 
 	u32 ret = WorldTrade_TouchSwMain(wk);
 
-	if(ret==TOUCH_SW_RET_YES){
+	if(ret==WORLDTRADE_RET_YES){
 		// 主人公帰るデモ
     WorldTrade_TouchDelete( wk );
 		BmpWinFrame_Clear( wk->TalkWin, WINDOW_TRANS_OFF );
@@ -1132,7 +1132,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, MODE_DISCONNECT );
 		wk->subprocess_seq  = SUBSEQ_END_DEMO;
 
-	}else if(ret==TOUCH_SW_RET_NO){
+	}else if(ret==WORLDTRADE_RET_NO){
 		// もういっかいトライ
     WorldTrade_TouchDelete( wk );
 		BmpWinFrame_Clear( wk->TalkWin, WINDOW_TRANS_OFF );

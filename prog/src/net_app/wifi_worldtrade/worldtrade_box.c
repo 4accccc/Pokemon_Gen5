@@ -1599,12 +1599,12 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 
   GF_ASSERT( 0 );
 
-	if(ret==TOUCH_SW_RET_YES){
+	if(ret==WORLDTRADE_RET_YES){
 		// タイトルメニューを終了
     WorldTrade_TouchDelete( wk );
 		wk->subprocess_seq  = SUBSEQ_END;
 		 WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, 0 );
-	}else if(ret==TOUCH_SW_RET_NO){
+	}else if(ret==WORLDTRADE_RET_NO){
 		// もういっかいトライ
     WorldTrade_TouchDelete( wk );
 		wk->subprocess_seq = SUBSEQ_START;
@@ -1666,11 +1666,11 @@ static int SubSeq_CBallYesNoSelect( WORLDTRADE_WORK *wk )
 {
 	u32 ret = WorldTrade_TouchSwMain(wk);
 
-	if(ret==TOUCH_SW_RET_YES){
+	if(ret==WORLDTRADE_RET_YES){
 		// 交換へ
     WorldTrade_TouchDelete( wk );
 		ExchangeCheck(wk);
-	}else if(ret==TOUCH_SW_RET_NO){
+	}else if(ret==WORLDTRADE_RET_NO){
 		// もういっかい
     WorldTrade_TouchDelete( wk );
 		BmpWinFrame_Clear( wk->TalkWin, WINDOW_TRANS_ON );
@@ -1785,7 +1785,7 @@ static int SubSeq_CBallDepositYesNoSelect( WORLDTRADE_WORK *wk )
 
 	u32 ret = WorldTrade_TouchSwMain(wk);
 
-	if(ret==TOUCH_SW_RET_YES){
+	if(ret==WORLDTRADE_RET_YES){
 		// 交換へ
     WorldTrade_TouchDelete( wk );
 		wk->deposit_ppp     = WorldTrade_GetPokePtr( wk->param->myparty, wk->param->mybox, 
@@ -1794,7 +1794,7 @@ static int SubSeq_CBallDepositYesNoSelect( WORLDTRADE_WORK *wk )
 		 WorldTrade_SubProcessChange( wk, WORLDTRADE_DEPOSIT, 0 );
 		OS_Printf("deposit_ppp1 = %08x\n",WorldTrade_GetPokePtr(wk->param->myparty, wk->param->mybox, 
 																wk->BoxTrayNo, wk->BoxCursorPos));
-	}else if(ret==TOUCH_SW_RET_NO){
+	}else if(ret==WORLDTRADE_RET_NO){
 		// もういっかい
     WorldTrade_TouchDelete( wk );
 		BmpWinFrame_Clear( wk->TalkWin, WINDOW_TRANS_ON );

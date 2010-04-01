@@ -759,7 +759,7 @@ void WorldTrade_TouchDelete( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 u32 WorldTrade_TouchSwMain(WORLDTRADE_WORK* wk)
 {
-  u32 ret = TOUCH_SW_RET_NORMAL;
+  u32 ret = WORLDTRADE_RET_NORMAL;
   if( wk->task_work )
   { 
     APP_TASKMENU_UpdateMenu( wk->task_work );
@@ -768,11 +768,11 @@ u32 WorldTrade_TouchSwMain(WORLDTRADE_WORK* wk)
       ret = APP_TASKMENU_GetCursorPos( wk->task_work );
       if( ret == 0 )
       { 
-        ret = TOUCH_SW_RET_YES;
+        ret = WORLDTRADE_RET_YES;
       }
       else if( ret == 1 )
       { 
-        ret = TOUCH_SW_RET_NO;
+        ret = WORLDTRADE_RET_NO;
       }
       //パッシブ解除
       WorldTrade_ClearPassive();

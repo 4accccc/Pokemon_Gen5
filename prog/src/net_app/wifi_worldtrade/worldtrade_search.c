@@ -2177,7 +2177,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 
 	u32 ret = WorldTrade_TouchSwMain(wk);
 
-	if(ret==TOUCH_SW_RET_YES){
+	if(ret==WORLDTRADE_RET_YES){
 		// タイトルメニューへ
     WorldTrade_TouchDelete( wk );
 		wk->subprocess_seq  = SUBSEQ_END;
@@ -2191,7 +2191,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 
 		// 検索結果人数はクリアする
 		wk->SearchResult = 0;
-	}else if(ret==TOUCH_SW_RET_NO){
+	}else if(ret==WORLDTRADE_RET_NO){
 		// もういっかいトライ
     WorldTrade_TouchDelete( wk );
 		wk->subprocess_seq = SUBSEQ_START;

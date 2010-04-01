@@ -893,7 +893,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 {
 	u32 ret = WorldTrade_TouchSwMain(wk);
 
-	if(ret==TOUCH_SW_RET_YES){
+	if(ret==WORLDTRADE_RET_YES){
 		// 自分が出すポケモンの選択へ
     WorldTrade_TouchDelete( wk );
 		wk->subprocess_seq  = SUBSEQ_END;
@@ -901,7 +901,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 		PokeLabelPrint( wk->MsgManager, &wk->InfoWin[P_INFOWIN_HOSII_POKEMON], msg_gtc_04_008, &wk->print, PRINTSYS_LSB_Make(1,2,0) );	// 欲しいポケモン
 		PokeLabelPrint( wk->MsgManager, &wk->InfoWin[P_INFOWIN_SUNDEIRUBASHO], msg_gtc_04_012, &wk->print, PRINTSYS_LSB_Make(15,2,0) );	// 住んでいる場所
 		ChangePage( wk );
-	}else if(ret==TOUCH_SW_RET_NO){
+	}else if(ret==WORLDTRADE_RET_NO){
 		// 交換相手選択に戻る
     WorldTrade_TouchDelete( wk );
 		//メッセージウィンドウクリア

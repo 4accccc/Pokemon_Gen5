@@ -700,7 +700,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 
 	u32 ret = WorldTrade_TouchSwMain(wk);
 
-	if(ret==TOUCH_SW_RET_YES){
+	if(ret==WORLDTRADE_RET_YES){
 		// ‚Í‚¢¨ˆøŽæ‚è‚Ö
     WorldTrade_TouchDelete( wk );
 		wk->subprocess_seq  = SUBSEQ_END;
@@ -710,7 +710,7 @@ static int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk)
 		// ‚Í‚¢E‚¢‚¢‚¦‚Å”wŒi‚ª•ö‚ê‚Ä‚¢‚é‚Ì‚ÅÄ•`‰æ
 		WantPokePrintReWrite( wk );
 
-	}else if(ret==TOUCH_SW_RET_NO){
+	}else if(ret==WORLDTRADE_RET_NO){
 		// ‚¢‚¢‚¦
     WorldTrade_TouchDelete( wk );
 		wk->subprocess_seq = SUBSEQ_START;

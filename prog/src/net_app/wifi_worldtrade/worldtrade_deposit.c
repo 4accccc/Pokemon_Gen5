@@ -1412,7 +1412,7 @@ static int SubSeq_DepositOkYesNoWait( WORLDTRADE_WORK *wk )
 
 	u32 ret = WorldTrade_TouchSwMain(wk);
 
-	if(ret==TOUCH_SW_RET_YES){
+	if(ret==WORLDTRADE_RET_YES){
 		// はい→ポケモンをあずける
     WorldTrade_TouchDelete( wk );
 	 	WorldTrade_SubProcessChange( wk, WORLDTRADE_UPLOAD, MODE_UPLOAD );
@@ -1421,7 +1421,7 @@ static int SubSeq_DepositOkYesNoWait( WORLDTRADE_WORK *wk )
 
 		// サーバーアップロード用のデータを作成
 		DepositPokemonDataMake( &wk->UploadPokemonData, wk );
-	}else if(ret==TOUCH_SW_RET_NO){
+	}else if(ret==WORLDTRADE_RET_NO){
 		// いいえ→ポケモン選択からやり直し
     WorldTrade_TouchDelete( wk );
 		WorldTrade_SubProcessChange( wk, WORLDTRADE_MYBOX, MODE_DEPOSIT_SELECT );

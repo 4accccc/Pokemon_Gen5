@@ -20,7 +20,6 @@
 #define WB_SEARCH_NUM_FLAG
 
 #include "system/bmp_menulist.h"
-#include "system/touch_subwindow.h"
 //#include "system/numfont.h"
 //#include "communication/wm_icon.h"
 //#include "savedata/zukanwork.h"
@@ -353,6 +352,12 @@ enum{
 	EXPLAIN_YOUSU,
 	EXPLAIN_AZUKERU,
 	EXPLAIN_SAGASU,
+};
+
+enum{
+  WORLDTRADE_RET_NORMAL,	// ‰½‚à‚È‚µ
+	WORLDTRADE_RET_YES,		// ‚Í‚¢
+	WORLDTRADE_RET_NO,		// ‚¢‚¢‚¦
 };
 
 //============================================================================================
