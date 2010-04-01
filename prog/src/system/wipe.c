@@ -253,6 +253,9 @@ void WIPE_SYS_Start(int pattern, int wipe_m, int wipe_s, u16 color, int division
 	// 動作中ならとめる
 	GF_ASSERT( WipeSysWork.move_flg == FALSE );
 
+  // 必要シンク数にフェード係数を反映
+  piece_sync /= GFL_FADE_GetFadeSpeed();
+
 	// ワークポインタ設定
 	scw = &WipeSysWork;
 	// ワーク初期化
