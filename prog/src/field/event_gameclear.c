@@ -70,6 +70,9 @@ enum {
 
 
 
+//============================================================================================
+//============================================================================================
+
 //-----------------------------------------------------------------------------
 /**
  * @brief	ゲームクリアイベント
@@ -84,6 +87,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
   GAMECLEAR_WORK * gcwk = work;
   GMEVENT * call_event;
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gcwk->gsys );
+  SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gamedata );
 
 	switch (*seq) {
 	case GMCLEAR_SEQ_INIT:
@@ -101,60 +105,46 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
     GFL_FADE_SetMasterBrightReq( 
         GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
         0, 16, -16 );
-    SCRIPT_CallGameClearScript( gcwk->gsys, HEAPID_PROC );
+    SCRIPT_CallGameClearScript( gcwk->gsys, HEAPID_PROC ); 
+		(*seq) ++;
+		break;
 
-    // 初回クリア
-    if( gcwk->clear_mode == GAMECLEAR_MODE_FIRST ) {
-      DENDOU_RECORD* record;
-      RTCDate date;
-      POKEPARTY* party;
-
-      RTC_GetDate( &date );
-      party = GAMEDATA_GetMyPokemon( gamedata );
-      record = GAMEDATA_GetDendouRecord( gamedata );
-
-      DendouRecord_Add( record, party, &date, HEAPID_PROC );
-    }
-    // 殿堂入り
-    else {
-      SAVE_CONTROL_WORK* save;
-      DENDOU_SAVEDATA* dendouData;
-      LOAD_RESULT result;
+	case GMCLEAR_SEQ_SAVE_START:
+    {
       RTCDate date;
       POKEPARTY* party;
 
       RTC_GetDate( &date );
       party = GAMEDATA_GetMyPokemon( gamedata ); 
-      save = GAMEDATA_GetSaveControlWork( gamedata );
-      result = SaveControl_Extra_Load( save, SAVE_EXTRA_ID_DENDOU, HEAPID_PROC );
-      dendouData = SaveControl_Extra_DataPtrGet( save, SAVE_EXTRA_ID_DENDOU, EXGMDATA_ID_DENDOU );
-      DendouData_AddRecord( dendouData, party, &date, HEAPID_PROC );
 
-      SaveControl_Extra_SaveAsyncInit(save, SAVE_EXTRA_ID_DENDOU);
-      while(1){ //←説明だからwhileで回しているだけです。実際は毎回処理を返してください。
-        SAVE_RESULT save_ret = SaveControl_Extra_SaveAsyncMain(save, SAVE_EXTRA_ID_DENDOU);
-        if(save_ret == SAVE_RESULT_OK || save_ret == SAVE_RESULT_NG){
-          break;
-        }
+      // 初回クリア
+      if( gcwk->clear_mode == GAMECLEAR_MODE_FIRST ) {
+        DENDOU_RECORD* record; 
+
+        record = GAMEDATA_GetDendouRecord( gamedata ); 
+        DendouRecord_Add( record, party, &date, HEAPID_PROC );
+        return GMEVENT_RES_FINISH;
       }
+      // 殿堂入り
+      else {
+        DENDOU_SAVEDATA* dendouData;
+        LOAD_RESULT result; 
 
-      SaveControl_Extra_Unload( save, SAVE_EXTRA_ID_DENDOU );
+        result = SaveControl_Extra_Load( save, SAVE_EXTRA_ID_DENDOU, HEAPID_PROC );
+        dendouData = SaveControl_Extra_DataPtrGet( save, SAVE_EXTRA_ID_DENDOU, EXGMDATA_ID_DENDOU );
+        DendouData_AddRecord( dendouData, party, &date, HEAPID_PROC ); 
+        SaveControl_Extra_SaveAsyncInit( save, SAVE_EXTRA_ID_DENDOU ); 
+        SaveControl_Extra_Unload( save, SAVE_EXTRA_ID_DENDOU );
+        (*seq) ++;
+      }
     }
-
-    
-
+    // 電光掲示板にチャンピオンニュースを表示
     {
       MISC* misc;
       misc = GAMEDATA_GetMiscWork( gamedata );
       MISC_SetChampNewsMinutes( misc, 60*24 );
     }
-
-		(*seq) ++;
-		break;
-
-	case GMCLEAR_SEQ_SAVE_START:
-    (*seq) ++;
-		break;
+    break;
 
   case GMCLEAR_SEQ_SAVE_MESSAGE:
     GMEVENT_CallProc(
@@ -163,10 +153,16 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
 		break;
 
 	case GMCLEAR_SEQ_SAVE_MAIN:
-    return GMEVENT_RES_FINISH;
-		break;
+    {
+      SAVE_RESULT save_ret;
 
-		(*seq) ++;
+      // セーブ実行
+      save_ret = SaveControl_Extra_SaveAsyncMain( save, SAVE_EXTRA_ID_DENDOU ); 
+      // セーブ終了
+      if( save_ret == SAVE_RESULT_OK || save_ret == SAVE_RESULT_NG ) { 
+        return GMEVENT_RES_FINISH; 
+      }
+    }
 		break;
 
 	case GMCLEAR_SEQ_END:
@@ -207,5 +203,3 @@ GMEVENT * EVENT_GameClear( GAMESYS_WORK * gsys, GAMECLEAR_MODE mode )
 
   return event;
 }
-
-
