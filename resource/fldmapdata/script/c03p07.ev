@@ -63,15 +63,9 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_scene_c03p07_tvt_01
 
-	//自機が見える位置まで移動
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk )
-	_OBJ_ANIME_WAIT()
-
 	//TVT着信音を再生
-	_SE_PLAY( SEQ_SE_SYS_35 )
-	_SE_WAIT()
-	_SE_PLAY( SEQ_SE_SYS_35 )
-	_SE_WAIT()
+	_ME_PLAY( SEQ_ME_CALL )
+	_ME_WAIT()
 
 	_PLAYER_NAME(0)
 	_PLAINWIN_MSG_DOWN( msg_c03p07_tvt_01 )
@@ -88,13 +82,6 @@ EVENT_START		ev_scene_c03p07_tvt_01
 	$WK_SCENE_C03P07 = 3
 	
 EVENT_END
-
-//--------------------------------------------------------------------
-//	プレイヤー：歩く
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_walk
-	_ANIME_DATA	AC_WALK_L_8F,4
-	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*		C03P07	ライバル	POSイベント						  */

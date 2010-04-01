@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/09 17:23:25
+#save date:2010/04/01 15:55:12
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c01gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -345,7 +345,7 @@ POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
 WK_SCENE_C01GYM0101
 #Event Trigger Work Value
-0
+3
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -360,9 +360,9 @@ SCRID_POS_C01GYM0101_BUTTON_KUSA_02
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK14
+WK_SCENE_C01GYM0101
 #Event Trigger Work Value
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -377,9 +377,9 @@ SCRID_POS_C01GYM0101_BUTTON_KUSA_03
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK15
+WK_SCENE_C01GYM0101
 #Event Trigger Work Value
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -394,7 +394,7 @@ SCRID_POS_C01GYM0101_BUTTON_HONOO_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK10
+WK_SCENE_C01GYM0101
 #Event Trigger Work Value
 0
 #Pos Type
@@ -411,9 +411,9 @@ SCRID_POS_C01GYM0101_BUTTON_HONOO_02
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK14
+WK_SCENE_C01GYM0101
 #Event Trigger Work Value
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -428,9 +428,9 @@ SCRID_POS_C01GYM0101_BUTTON_HONOO_03
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK15
+WK_SCENE_C01GYM0101
 #Event Trigger Work Value
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -445,7 +445,7 @@ SCRID_POS_C01GYM0101_BUTTON_MIZU_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK10
+WK_SCENE_C01GYM0101
 #Event Trigger Work Value
 0
 #Pos Type
@@ -462,9 +462,9 @@ SCRID_POS_C01GYM0101_BUTTON_MIZU_02
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK14
+WK_SCENE_C01GYM0101
 #Event Trigger Work Value
-0
+1
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -479,9 +479,9 @@ SCRID_POS_C01GYM0101_BUTTON_MIZU_03
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK15
+WK_SCENE_C01GYM0101
 #Event Trigger Work Value
-0
+2
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -496,7 +496,7 @@ SCRID_POS_C01GYM0101_BUTTON_KUSA_01
 #Pos Check Type
 POS_CHECK_TYPE_NORMAL
 #Event Trigger Work Name
-LOCALWORK10
+WK_SCENE_C01GYM0101
 #Event Trigger Work Value
 0
 #Pos Type

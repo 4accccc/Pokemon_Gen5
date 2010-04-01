@@ -37,18 +37,6 @@ _EVENT_DATA		ev_zone_c01gym0101
 _EVENT_DATA		ev_init_c01gym0101
 _EVENT_DATA_END
 
-//------------------------------注意--------------------------------//
-//																	//
-//	LOCALWORK10～15まで使用しました。同マップ内の使用を禁止します。	//
-//				LOCALWORK10⇒１個目のスイッチ						//
-//				LOCALWORK11⇒炎カーテン								//
-//				LOCALWORK12⇒水カーテン								//
-//				LOCALWORK13⇒草カーテン								//
-//				LOCALWORK14⇒２個目のスイッチ						//
-//				LOCALWORK15⇒３個目のスイッチ						//
-//																	//
-//------------------------------------------------------------------//
-
 /************************************************************/
 /*					FIELD_INIT_LABEL						*/
 /************************************************************/
@@ -61,7 +49,7 @@ INIT_EVENT_START	ev_init_c01gym0101
 	IF $SCWK_TEMP0 == 0 THEN
 
 		//ジムリーダー演出イベント後ならば
-		IF $WK_SCENE_C01GYM0101 == 1 THEN
+		IF $WK_SCENE_C01GYM0101 == 4 THEN
 
 			//くさタイプ選択の場合
 			IF $WK_SYS_FIRST_POKETYPE  == FIRST_POKETYPE_KUSA THEN
@@ -111,13 +99,49 @@ INIT_EVENT_START	ev_init_c01gym0101
 	
 	ENDIF
 
+	SWITCH	$WK_SCENE_C01GYM0101
+	CASE 1 THEN
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
+	CASE 2 THEN
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
+	CASE 3 THEN
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_03,24,0,34, DIR_DOWN )
+	CASE 4 THEN
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_01,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_02,24,0,34, DIR_DOWN )
+		_OBJ_POS_CHANGE( C01GYM0101_CURTAIN_03,24,0,34, DIR_DOWN )
+	ENDSWITCH
+	
 INIT_EVENT_END
 
 /**************************************************************/
 /*               フィールド初期化スクリプト                   */
 /**************************************************************/
 INIT_EVENT_START ev_zone_c01gym0101
-	_GYM_ANTI_INIT(SCR_GYM01_CURTAIN_NOTOPEN)
+
+	DEFINE_LOCAL	LWK_CURTAIN
+
+	SWITCH $WK_SCENE_C01GYM0101
+	CASE 0 THEN
+ 		$LWK_CURTAIN = SCR_GYM01_CURTAIN_NOTOPEN
+	CASE 1 THEN
+		$LWK_CURTAIN = SCR_GYM01_CURTAIN_OPEN_ONE
+	CASE 2 THEN
+		$LWK_CURTAIN = SCR_GYM01_CURTAIN_OPEN_TWO
+	CASE 3 THEN
+		$LWK_CURTAIN = SCR_GYM01_CURTAIN_OPEN_THREE
+	CASE 4 THEN
+		$LWK_CURTAIN = SCR_GYM01_CURTAIN_OPEN_THREE
+	DEFAULT
+	//シーンワークに不定の値が入ったときの対処処理　ギミックを解いていないことにする
+		$LWK_CURTAIN = SCR_GYM01_CURTAIN_NOTOPEN
+	ENDSWITCH
+
+	_GYM_ANTI_INIT( LWK_CURTAIN )
+
 INIT_EVENT_END
 
 /**************************************************************/
@@ -355,7 +379,7 @@ EVENT_START	ev_pos_c01gym0101_leader_battle
 	//===========フラグワーク操作===========//
 	
 	//ジムリーダー演出イベント終了
-	$WK_SCENE_C01GYM0101 = 1
+	$WK_SCENE_C01GYM0101 = 4
 	
 	//======================================//
 
@@ -558,8 +582,9 @@ EVENT_START		ev_c01gym0101_leader1b_01
 			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_06b , C01GYM0101_LEADER1B_01 )
 			_BALLOONWIN_CLOSE()
 			
-      //リーダー戦勝利時の情報登録
-      _SET_GYM_VICTORY_INFO( BADGE_ID_01 )
+			//リーダー戦勝利時の情報登録
+			_SET_GYM_VICTORY_INFO( BADGE_ID_01 )
+			
 			//トライバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_01 )
 			_PLAYER_NAME( 0 )
@@ -688,8 +713,9 @@ EVENT_START		ev_c01gym0101_leader1a_01
 			_BALLOONWIN_OBJMSG( msg_c01gym0101_leader1_06a , C01GYM0101_LEADER1A_01 )
 			_BALLOONWIN_CLOSE()
 			
-      //リーダー戦勝利時の情報登録
-      _SET_GYM_VICTORY_INFO( BADGE_ID_01 )
+			//リーダー戦勝利時の情報登録
+			_SET_GYM_VICTORY_INFO( BADGE_ID_01 )
+			
 			//トライバッジ入手処理
 			_SET_BADGE_FLAG( BADGE_ID_01 )
 			_PLAYER_NAME( 0 )
@@ -902,7 +928,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_01
 
 	//分岐：炎カーテンが開いている？
 	//開いていない場合
-	IF $LOCALWORK11 == 0 THEN
+	IF $WK_SCENE_C01GYM0101 == 0 THEN
 		
 		//草ボタン１踏んだアニメーション
 		_GYM_ANTI_SW_ON(5)
@@ -931,7 +957,7 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_01
 	
 	//分岐：炎カーテンが開いている？
 	//開いていない場合
-	IF $LOCALWORK11 == 0 THEN
+	IF $WK_SCENE_C01GYM0101 == 0 THEN
 		
 		//炎ボタン１踏んだアニメーション
 		_GYM_ANTI_SW_ON(3)
@@ -960,7 +986,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_01
 
 	//分岐：炎カーテンが開いている？
 	//開いていない場合
-	IF $LOCALWORK11 == 0 THEN
+	IF $WK_SCENE_C01GYM0101 == 0 THEN
 	
 		//水ボタン１踏んだアニメーション
 		_GYM_ANTI_SW_ON(1)
@@ -990,10 +1016,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_01
 		//===========フラグワーク操作===========//
 
 		//炎カーテン開く
-		$LOCALWORK11 = 1
-		
-		//スイッチを切る
-		$LOCALWORK10 = 1
+		$WK_SCENE_C01GYM0101 = 1
 	
 		//======================================//
 			
@@ -1019,7 +1042,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_02
 	//分岐：水カーテンが開いている？
 	
 	//開いていない場合
-	IF $LOCALWORK12 == 0 THEN
+	IF $WK_SCENE_C01GYM0101 == 1 THEN
 	
 		//草ボタン２踏んだアニメーション
 		_GYM_ANTI_SW_ON(2)
@@ -1049,10 +1072,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_02
 		//===========フラグワーク操作===========//
 	
 		//水カーテン開く
-		$LOCALWORK12 = 1
-		
-		//スイッチを切る
-		$LOCALWORK14 = 1
+		$WK_SCENE_C01GYM0101 = 2
 		
 		//======================================//
 
@@ -1071,7 +1091,7 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_02
 	//分岐：水カーテンが開いている？
 	
 	//開いていない場合
-	IF $LOCALWORK12 == 0 THEN
+	IF $WK_SCENE_C01GYM0101 == 1 THEN
 
 		//炎ボタン２踏んだアニメーション
 		_GYM_ANTI_SW_ON(6)
@@ -1101,7 +1121,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_02
 	//分岐：水カーテンが開いている？
 	
 	//開いていない場合
-	IF $LOCALWORK12 == 0 THEN
+	IF $WK_SCENE_C01GYM0101 == 1 THEN
 		
 		//水ボタン２踏んだアニメーション
 		_GYM_ANTI_SW_ON(4)
@@ -1131,7 +1151,7 @@ EVENT_START	ev_pos_c01gym0101_button_kusa_03
 	//分岐：草カーテンが開いている？
 	
 	//開いていない場合
-	IF $LOCALWORK13 == 0 THEN
+	IF $WK_SCENE_C01GYM0101 == 2 THEN
 		
 		//草ボタン３踏んだアニメーション
 		_GYM_ANTI_SW_ON(8)
@@ -1161,7 +1181,7 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_03
 	//分岐：草カーテンが開いている？
 	
 	//開いていない場合
-	IF $LOCALWORK13 == 0 THEN
+	IF $WK_SCENE_C01GYM0101 == 2 THEN
 	
 		//炎ボタン３踏んだアニメーション
 		_GYM_ANTI_SW_ON(0)
@@ -1191,10 +1211,7 @@ EVENT_START	ev_pos_c01gym0101_button_honoo_03
 		//===========フラグワーク操作===========//
 	
 		//水カーテン開く
-		$LOCALWORK13 = 1
-	
-		//スイッチを切る
-		$LOCALWORK15 = 1
+		$WK_SCENE_C01GYM0101 = 3
 	
 		//======================================//
 			
@@ -1213,7 +1230,7 @@ EVENT_START	ev_pos_c01gym0101_button_mizu_03
 	//分岐：草カーテンが開いている？
 	
 	//開いていない場合
-	IF $LOCALWORK13 == 0 THEN
+	IF $WK_SCENE_C01GYM0101 == 2 THEN
 
 		//水ボタン３踏んだアニメーション
 		_GYM_ANTI_SW_ON(7)

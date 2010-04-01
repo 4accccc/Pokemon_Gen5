@@ -164,8 +164,8 @@ EVENT_START		ev_reserve_d03r0101_event_01
 	_MSGWIN_CLOSE()
 	
 	//TVT着信音を再生
-	_SE_PLAY( SEQ_SE_SYS_35 )
-	_SE_WAIT()
+	_ME_PLAY( SEQ_ME_CALL )
+	_ME_WAIT()
 	
 	//ライバル：自機のほうに向く
 	_OBJ_ANIME( D03R0101_RIVAL_02, anm_stay_u )
