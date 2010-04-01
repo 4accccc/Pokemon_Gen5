@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-03-30T19:29:31"/>
+	<create user="tamada" host="W00139" date="2010-04-01T16:48:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,6 +357,11 @@
 		<comment>おこづかいとかをそうさ</comment>
 		<language name="JPN" width="240">おこづかいとか</language>
 		<language name="JPN_KANJI" width="240">お小遣いとか</language>
+	</row>
+
+	<row id="dni_top_fadespeed">
+		<language name="JPN" width="240">フェードそくど</language>
+		<language name="JPN_KANJI" width="240">フェード速度</language>
 	</row>
 
 	<row id="dni_effenc_interval" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">

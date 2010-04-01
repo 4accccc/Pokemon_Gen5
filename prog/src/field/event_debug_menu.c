@@ -296,7 +296,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR22, debugMenuCallProc_ControlRtcList },  //時間
   { DEBUG_FIELD_STR61, debugMenuCallProc_CaptureList },     //キャプチャ
   { DEBUG_FIELD_STR40, debugMenuCallProc_ChangePlayerSex },   //主人公性別変更
-  { DEBUG_FIELD_STR35, debugMenuCallProc_FadeSpeedChange },   //フェード速度変更
+  //{ DEBUG_FIELD_STR35, debugMenuCallProc_FadeSpeedChange },   //フェード速度変更
 
   { DEBUG_FIELD_TITLE_03, (void*)BMPMENULIST_LABEL },       //○データ作成
   { DEBUG_FIELD_STR41, debugMenuCallProc_DebugMakePoke },   //ポケモン作成

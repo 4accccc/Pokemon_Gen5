@@ -114,6 +114,8 @@ static u32 DebugGetBlackLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 para
 static void DebugSetBlackLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param );
 static void DebugSetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetFadeSpeed(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetFadeSpeed(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 
 #include "debug_numinput.cdat"
 
@@ -167,6 +169,9 @@ static  const DEBUG_NUMINPUT_INITIALIZER DATA_PalaceLevel = {
 
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_DebugNetConfig = { 
   D_NINPUT_DATA_LIST,   NELEMS( DNI_DebugNetConfigList ), DNI_DebugNetConfigList, };
+
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_DebugFadeSpeed = {
+  D_NINPUT_DATA_LIST,   NELEMS(DNI_DebugFadeList),  DNI_DebugFadeList };
 
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_researchTeam = { 
   D_NINPUT_DATA_LIST,   NELEMS(NumInputList_researchTeam), NumInputList_researchTeam, };
@@ -267,6 +272,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_sys_work, (void*)&DATA_sys_work },
   { dni_scene_work, (void*)&DATA_scene_work },
   { dni_other_work, (void*)&DATA_other_work },
+  { dni_top_fadespeed, (void*)&DATA_DebugFadeSpeed },
   { dni_top_effect_encount, (void*)&DATA_eff_enc },
   { dni_top_scenario, (void*)NULL },
   { dni_top_united_nations, (void*)&DATA_united },
@@ -1066,4 +1072,17 @@ static void DebugSetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gamed
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief 
+ */
+//--------------------------------------------------------------
+static u32 DebugGetFadeSpeed(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return GFL_FADE_GetFadeSpeed();
+}
+static void DebugSetFadeSpeed(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  GFL_FADE_SetFadeSpeed( value );
+}
 
