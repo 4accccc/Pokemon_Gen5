@@ -305,7 +305,7 @@ void TRCBmp_AddTrCardBmp( TR_CARD_WORK* wk )
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , SYS_FONT_PAL*32, 16*2, wk->heapId );
 
   //YesNoボタンシステムワーク確保
-  wk->ynbtn_wk = TOUCH_SW_AllocWork(wk->heapId);
+//  wk->ynbtn_wk = TOUCH_SW_AllocWork(wk->heapId);
   GFL_BG_LoadScreenV_Req(FONT_BG);
   GFL_BG_LoadScreenV_Req(MSG_BG);
 
@@ -329,7 +329,7 @@ void TRCBmp_ExitTrCardBmpWin( TR_CARD_WORK* wk)
   PRINTSYS_QUE_Delete( wk->printQue );
 
   //YesNoボタンシステムワーク解放
-  TOUCH_SW_FreeWork( wk->ynbtn_wk);
+//  TOUCH_SW_FreeWork( wk->ynbtn_wk);
 
   for( i=0; i<TR_CARD_WIN_MAX; i++ ){
     GFL_BMPWIN_Delete( wk->win[i] );
@@ -1141,6 +1141,7 @@ void TRCBmp_SignDrawMsgPut(TR_CARD_WORK* wk,const u8 pat)
 //--------------------------------------------------------------------------------------------
 void TRCBmp_SignDrawYesNoCall(TR_CARD_WORK* wk,const u8 pat)
 {
+/*
   TOUCH_SW_PARAM param;
 
   MI_CpuClear8(&param,sizeof(TOUCH_SW_PARAM));
@@ -1154,7 +1155,7 @@ void TRCBmp_SignDrawYesNoCall(TR_CARD_WORK* wk,const u8 pat)
   param.key_pos = 0;
   param.type = TOUCH_SW_TYPE_S;
   TOUCH_SW_Init( wk->ynbtn_wk, &param);
-
+*/
   GFL_BG_LoadScreenV_Req( MSG_BG);
 }
 
@@ -1170,8 +1171,8 @@ void TRCBmp_SignDrawYesNoCall(TR_CARD_WORK* wk,const u8 pat)
 //--------------------------------------------------------------------------------------------
 int TRCBmp_SignDrawYesNoWait(TR_CARD_WORK* wk,const u8 pat)
 {
-  int ret;
-
+  int ret=0;
+/*
   ret = TOUCH_SW_Main( wk->ynbtn_wk );
   switch(ret){
   case TOUCH_SW_RET_YES:
@@ -1191,6 +1192,7 @@ int TRCBmp_SignDrawYesNoWait(TR_CARD_WORK* wk,const u8 pat)
     BmpWinFrame_Clear( wk->win[TRC_BMPWIN_MSG],WINDOW_TRANS_ON);
     GFL_BG_LoadScreenV_Req( MSG_BG);
   }
+*/
   return ret;
 }
 

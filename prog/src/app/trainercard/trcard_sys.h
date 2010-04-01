@@ -10,7 +10,6 @@
 #define _TRCARD_SYS_H_
 
 #include "system/bmp_menu.h"
-#include "system/touch_subwindow.h"
 #include "system/pms_data.h"
 #include "app/trainer_card.h"
 #include "trcard_obj.h"
@@ -130,7 +129,7 @@ typedef struct TR_CARD_WORK_tag
   void             *pScrnBCase;
   NNSG2dScreenData *pSBCase;
   
-  TOUCH_SW_SYS *ynbtn_wk;   // YesNo選択ボタンワーク
+//  TOUCH_SW_SYS *ynbtn_wk;   // YesNo選択ボタンワーク
   GFL_TCB      *vblankFunc;
   GFL_TCBLSYS  *vblankTcblSys;
 
