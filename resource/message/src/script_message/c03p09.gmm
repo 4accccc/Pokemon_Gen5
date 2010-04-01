@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T17:07:21"/>
+	<create user="matsumiya" host="W00224" date="2010-04-01T17:34:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="0" top="173" right="705" bottom="801" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -373,12 +373,12 @@
 ・火曜日
 ・購入済み</comment>
 		<language name="JPN" width="256">うん？　ここでは
-いま　シウンシティで　わだいの▽
+いま　ヒウンシティで　わだいの▽
 スィーツを　かうことが　できるんだよ▼
 でも　きょうは　もう
 ぼくで　うりきれ　みたいだ▼</language>
 		<language name="JPN_KANJI" width="256">うん？　ここでは
-いま　シウンシティで　話題の▽
+いま　ヒウンシティで　話題の▽
 スィーツを　買うことが　できるんだよ▼
 でも　今日は　もう
 ぼくで　売り切れ　みたいだ▼</language>
@@ -388,14 +388,14 @@
 		<comment>♂：アイスイベント
 ・火曜日以外</comment>
 		<language name="JPN" width="256">うん？　ここでは
-いま　シウンシティで　わだいの▽
+いま　ヒウンシティで　わだいの▽
 スィーツを　かうことが　できるんだよ▼
 でも　きょうは　もう
 ぼくで　うりきれ　みたいだ▼
 かようびは　すいてるから
 また　きてごらんよ！▼</language>
 		<language name="JPN_KANJI" width="256">うん？　ここでは
-いま　シウンシティで　話題の▽
+いま　ヒウンシティで　話題の▽
 スィーツを　買うことが　できるんだよ▼
 でも　今日は　もう
 ぼくで　売り切れ　みたいだ▼

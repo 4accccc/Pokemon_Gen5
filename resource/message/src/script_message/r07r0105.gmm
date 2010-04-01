@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-25T21:18:51"/>
+	<create user="matsumiya" host="W00224" date="2010-04-01T17:32:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1451" top="252" right="2156" bottom="880" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -460,6 +460,132 @@
 		<attribute name="キャラ指定">鐘</attribute>
 		<language name="JPN" width="256">かねを　そのままに　しておいた……</language>
 		<language name="JPN_KANJI" width="256">鐘を　そのままに　しておいた……</language>
+	</row>
+
+	<row id="msg_r07r0105_champion_end_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・pos起動
+・鐘のアニメ再生後に
+　上向きのままメッセージ表示
+・続けてchampion_end_02</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">アデク『……▼</language>
+		<language name="JPN_KANJI" width="256">アデク『……▼</language>
+	</row>
+
+	<row id="msg_r07r0105_champion_end_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・右向きでメッセージ表示
+・続けてchampion_end_03</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">この　タワーオブヘブンに
+かつての　パートナーが　ねむっておる▼
+わしが　トレーナーに　なっての
+さいしょの　ポケモンがな……▼
+たましいに　やすらぎを　あたえるため
+ときおり　かねを　ならしに　くるのだ▼</language>
+		<language name="JPN_KANJI" width="256">この　タワーオブヘブンに
+かつての　パートナーが　ねむっておる▼
+わしが　トレーナーに　なっての
+さいしょの　ポケモンがな……▼
+たましいに　やすらぎを　あたえるため
+ときおり　かねを　ならしに　くるのだ▼</language>
+	</row>
+
+	<row id="msg_r07r0105_champion_end_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・下向き、アデクの芝居後に
+　メッセージ表示
+・続けてchampion_end_04</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">つよい　ポケモン　だったぞ！
+おおしく　けだかく　こころやさしく……▼
+わしと　いっしょに
+がむしゃらに　つよさを　もとめたよ▽
+つよさの　いみも　しらずにな▼</language>
+		<language name="JPN_KANJI" width="256">つよい　ポケモン　だったぞ！
+おおしく　けだかく　こころやさしく……▼
+わしと　いっしょに
+がむしゃらに　つよさを　もとめたよ▽
+つよさの　いみも　しらずにな▼</language>
+	</row>
+
+	<row id="msg_r07r0105_champion_end_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・続けてchampion_end_05</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">だが　すべての　ものがたりには
+はじまりと　おわりが　あるように▼
+どんな　いきものの　いのちにも
+おわりが　あり……▽
+そこで　はじめて　きづいた▼
+つよさ　とは　いつまでも
+かわらない　もの　ではない　と▼</language>
+		<language name="JPN_KANJI" width="256">だが　すべての　ものがたりには
+はじまりと　おわりが　あるように▼
+どんな　いきものの　いのちにも
+おわりが　あり……▽
+そこで　はじめて　きづいた▼
+つよさ　とは
+えいえんふへんの　ものではない　と▼</language>
+	</row>
+
+	<row id="msg_r07r0105_champion_end_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・続けて
+　champion_end_06　か
+　champion_end_07</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">だが　ポケモンと
+おなじ　ときを　すごせる……▽
+その　よろこびは　ほんものだ▼
+それを　みなに　つたえようと
+ポケモンリーグを　さり▽
+たびを　つづけていたのだ……！▼
+そう！　たびは　いいな！▼
+いろんな　ポケモン
+いろんな　トレーナー▽
+そして　おまえたちに　あえた！▼</language>
+		<language name="JPN_KANJI" width="256">だが　ポケモンと
+おなじ　ときを　すごせる……▽
+その　よろこびは　ほんものだ▼
+それを　みなに　つたえようと
+ポケモンリーグを　さり▽
+たびを　つづけていたのだ……！▼
+そう！　たびは　いいな！▼
+いろんな　ポケモン
+いろんな　トレーナー▽
+そして　おまえたちに　あえた！▼</language>
+	</row>
+
+	<row id="msg_r07r0105_champion_end_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・すでに殿堂入りしている
+・メッセージ表示後、退場
+　画面外に消えると主人公操作可能
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">せかいには　もっと　おおくの
+トレーナーや　ポケモンが　いる！▼
+[1:00:トレーナー名:0]！　おまえも　できるだけ
+おおくの　ひとと　あえよ！▼</language>
+		<language name="JPN_KANJI" width="256">せかいには　もっと　おおくの
+トレーナーや　ポケモンが　いる！▼
+[1:00:トレーナー名:0]！　おまえも　できるだけ
+おおくの　ひとと　あえよ！▼</language>
+	</row>
+
+	<row id="msg_r07r0105_champion_end_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・まだ殿堂入りしていない
+・メッセージ表示後、退場
+　画面外に消えると主人公操作可能
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">チャンピオン</attribute>
+		<language name="JPN" width="256">さて　[1:00:トレーナー名:0]
+ポケモンリーグで　まっているぞ！▼</language>
+		<language name="JPN_KANJI" width="256">さて　[1:00:トレーナー名:0]
+ポケモンリーグで　まっているぞ！▼</language>
 	</row>
 
 	<flowchart-group-list>
