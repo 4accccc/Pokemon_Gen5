@@ -26,6 +26,8 @@ typedef enum
   BR_BVDELETE_MODE_OTHER1,
   BR_BVDELETE_MODE_OTHER2,
   BR_BVDELETE_MODE_OTHER3,
+
+  BR_BVDELETE_MODE_MAX
 } BR_BVDELETE_MODE;
 
 //=============================================================================
@@ -44,6 +46,8 @@ typedef struct
 	BR_RES_WORK			  *p_res;				//[in]リソース管理
 	BR_PROC_SYS			  *p_procsys;		//[in]プロセス管理
   GAMEDATA          *p_gamedata;  //[in]ゲームデータ
+  const BR_SAVE_INFO*cp_rec_saveinfo;//[in]自分の録画保存状況
+  BOOL              is_delete;      //[out]消去したかどうか
 
 } BR_BVDELETE_PROC_PARAM;
 

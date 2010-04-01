@@ -58,16 +58,11 @@ typedef enum
 typedef enum
 {
   BR_BTN_UNIQUE_NONE,         //特殊ボタンではない
-	BR_BTN_UNIQUE_MYRECORD,			//自分の記録ボタン
-	BR_BTN_UNIQUE_OTHERRECORD1,	//誰かの記録ボタン1
-	BR_BTN_UNIQUE_OTHERRECORD2,	//誰かの記録ボタン2
-	BR_BTN_UNIQUE_OTHERRECORD3,	//誰かの記録ボタン3
-	BR_BTN_UNIQUE_DELETE_MY,		//自分の記録を消すボタン
-	BR_BTN_UNIQUE_DELETE_OTHER1,	//誰かの記録を消すボタン1
-	BR_BTN_UNIQUE_DELETE_OTHER2,	//誰かの記録を消すボタン2
-	BR_BTN_UNIQUE_DELETE_OTHER3,	//誰かの記録を消すボタン3
-  BR_BTN_UNIQUE_BVSEND,	      //バトルビデオを送るボタン
-  BR_BTN_UNIQUE_SHOTSEND,	      //ミュージカルショットを送るボタン
+	BR_BTN_UNIQUE_MYRECORD,			//自分の記録があるか
+	BR_BTN_UNIQUE_OTHERRECORD1,	//誰かの記録があるか
+	BR_BTN_UNIQUE_OTHERRECORD2,	//誰かの記録があるか
+	BR_BTN_UNIQUE_OTHERRECORD3,	//誰かの記録があるか
+  BR_BTN_UNIQUE_MUSICALSHOT,	//ミュージカルショットがあるか
 } BR_BTN_UNIQUE;
 
 //-------------------------------------
@@ -123,6 +118,7 @@ typedef struct
 //=============================================================================
 extern BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPID heapID );
 extern void BR_BTN_DATA_SYS_Exit( BR_BTN_DATA_SYS *p_wk );
+
 //-------------------------------------
 ///	データ取得
 //=====================================

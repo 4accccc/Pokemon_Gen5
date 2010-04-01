@@ -119,7 +119,7 @@ GFL_PROC_RESULT GdsTestProc_Init( GFL_PROC * proc, int * seq, void * pwk, void *
   testsys->sv = GAMEDATA_GetSaveControlWork(gtp->gamedata);
   
   testsys->gds_profile_ptr = GDS_Profile_AllocMemory(HEAPID_GDS_TEST);
-  GDS_Profile_MyDataSet(testsys->gds_profile_ptr, testsys->sv);
+  GDS_Profile_MyDataSet(testsys->gds_profile_ptr, gtp->gamedata);
 
   return GFL_PROC_RES_FINISH;
 }

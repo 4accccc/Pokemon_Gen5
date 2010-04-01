@@ -139,7 +139,7 @@ BR_NET_WORK *BR_NET_Init( GAMEDATA *p_gamedata, DWCSvlResult *p_svl, HEAPID heap
     SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
 
     p_wk->p_gds_profile = GDS_Profile_AllocMemory( heapID );
-    GDS_Profile_MyDataSet( p_wk->p_gds_profile, p_sv );
+    GDS_Profile_MyDataSet( p_wk->p_gds_profile, p_gamedata );
   }
 
   //ó‘ÔŠÇ—

@@ -43,9 +43,13 @@
 #include "savedata/save_control.h"
 #include "savedata/save_tbl.h"
 
+//デバッグ
+#include "debug/debug_nagihashi.h"
+
 //外部参照
 #include "br_core.h"
 
+//オーバーレイ
 FS_EXTERN_OVERLAY( battle_recorder_browse );
 FS_EXTERN_OVERLAY( battle_recorder_musical_look );
 FS_EXTERN_OVERLAY( battle_recorder_musical_send );
@@ -141,6 +145,11 @@ static void BR_MUSICALLOOK_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs )
 //ミュージカルショット写真を送る
 static void BR_MUSICALSEND_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const void *cp_pre_param, u32 preID );
 static void BR_MUSICALSEND_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs );
+//-------------------------------------
+///	その他
+//=====================================
+static void Br_Core_CheckSaveData( BR_SAVE_INFO *p_saveinfo, BOOL is_onece, GAMEDATA *p_gamedata, HEAPID heapID );
+
 //=============================================================================
 /**
  *					外部参照
@@ -332,41 +341,8 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
   }
 
   //メニューで使用する録画データ(ミュージカルモードではしない)
-  {	
-    int i;
-    SAVE_CONTROL_WORK *p_sv;
-    BR_SAVE_INFO  *p_saveinfo = &p_wk->p_param->p_data->rec_saveinfo;
-    
-    if( !p_saveinfo->is_check )
-    { 
-      p_sv = GAMEDATA_GetSaveControlWork( p_wk->p_param->p_param->p_gamedata ); 
-
-      //バトルビデオのセーブ状況を取得
-      for( i = 0; i < BR_SAVEDATA_NUM; i++ )
-      {
-        GDS_PROFILE_PTR p_profile;
-        LOAD_RESULT result;
-
-        BattleRec_Load( p_sv, GFL_HEAP_LOWID( HEAPID_BATTLE_RECORDER_CORE ), &result, i ); 
-        if( result == LOAD_RESULT_OK )
-        { 
-          NAGI_Printf( "戦闘録画読み込み %d\n", i );
-          p_profile = BattleRec_GDSProfilePtrGet();
-          p_saveinfo->is_valid[i] = TRUE;
-          p_saveinfo->p_name[i]   = GDS_Profile_CreateNameString( p_profile, HEAPID_BATTLE_RECORDER_SYS );
-          p_saveinfo->sex[i]      = GDS_Profile_GetSex( p_profile );
-        }
-      }
-
-      //ミュージカルのセーブ状況を取得
-      {
-        MUSICAL_SAVE* p_musical = MUSICAL_SAVE_GetMusicalSave( GAMEDATA_GetSaveControlWork(p_wk->p_param->p_param->p_gamedata) );
-        p_saveinfo->is_musical_valid  = MUSICAL_SAVE_IsValidMusicalShotData( p_musical );
-      }
-
-      p_saveinfo->is_check  = TRUE;
-    }
-  }
+  Br_Core_CheckSaveData( &p_wk->p_param->p_data->rec_saveinfo,
+      TRUE, p_wk->p_param->p_param->p_gamedata, HEAPID_BATTLE_RECORDER_CORE );
 
   //GDSのみ通信ON
   { 
@@ -734,7 +710,7 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
           if( p_param->mode == LOADDATA_MYREC )
           { 
 
-            GDS_Profile_MyDataSet( BattleRec_GDSProfilePtrGet(), p_sv_ctrl);
+            GDS_Profile_MyDataSet( BattleRec_GDSProfilePtrGet(), p_gamedata);
           }
           NAGI_Printf( "戦闘録画読み込み %d\n", p_param->mode );
         }
@@ -1060,11 +1036,21 @@ static void BR_BVDELETE_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, co
 	BR_BVDELETE_PROC_PARAM	*p_param	= p_param_adrs;
 	BR_CORE_WORK						*p_wk			= p_wk_adrs;
 
-	p_param->p_res			= p_wk->p_res;
-  p_param->p_fade     = p_wk->p_fade;
-	p_param->p_procsys	= p_wk->p_procsys;
-	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
-  p_param->p_gamedata = p_wk->p_param->p_param->p_gamedata;
+  if( preID == BR_PROCID_MENU )
+  { 
+    const BR_MENU_PROC_PARAM	*cp_menu_param	= cp_pre_param;
+    p_param->mode				= cp_menu_param->next_mode;
+    p_param->p_res			= p_wk->p_res;
+    p_param->p_fade     = p_wk->p_fade;
+    p_param->p_procsys	= p_wk->p_procsys;
+    p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
+    p_param->p_gamedata = p_wk->p_param->p_param->p_gamedata;
+    p_param->cp_rec_saveinfo = &p_wk->p_param->p_data->rec_saveinfo;
+  }
+  else
+  { 
+    GF_ASSERT(0);
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1076,8 +1062,15 @@ static void BR_BVDELETE_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, co
 //-----------------------------------------------------------------------------
 static void BR_BVDELETE_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs )
 { 
+  BR_BVDELETE_PROC_PARAM	*p_param	= p_param_adrs;
+	BR_CORE_WORK						*p_wk			= p_wk_adrs;
 
-
+  //消していたら、セーブデータをリロードする
+  if( p_param->is_delete )
+  { 
+    Br_Core_CheckSaveData( &p_wk->p_param->p_data->rec_saveinfo,
+      FALSE, p_wk->p_param->p_param->p_gamedata, HEAPID_BATTLE_RECORDER_CORE );
+  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -1147,4 +1140,89 @@ static void BR_MUSICALSEND_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs,
 static void BR_MUSICALSEND_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs )
 { 
 
+}
+//=============================================================================
+/**
+ *    その他
+ */
+//=============================================================================
+//----------------------------------------------------------------------------
+/**
+ *	@brief  外部セーブデータをチェック
+ *	        （外部セーブデータをチェックするときはBRSを上書きしてしまうことに注意）
+ *
+ *	@param	BR_SAVE_INFO *p_saveinfo  セーブデータ状況ワーク
+ *	@param  is_onece                  TRUEで一度チェックしていると行わないFALSEでいつでも行なう
+ *	@param	*p_gamedata               ゲームデータ
+ *	@param	heapID                    テンポラリヒープID
+ */
+//-----------------------------------------------------------------------------
+static void Br_Core_CheckSaveData( BR_SAVE_INFO *p_saveinfo, BOOL is_onece, GAMEDATA *p_gamedata, HEAPID heapID )
+{ 
+  BOOL  is_check  = TRUE;
+
+  if( is_onece )
+  { 
+    is_check  = !p_saveinfo->is_check;
+  }
+
+  if( is_check )
+  { 
+	  int i;
+	  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_gamedata );
+    GDS_PROFILE_PTR p_profile;
+    LOAD_RESULT result;
+
+    //もし一度チェックしていたら解放
+    if( p_saveinfo->is_check )
+    { 
+      for( i = 0; i < BR_SAVEDATA_NUM; i++ )
+      { 
+        if( p_saveinfo->p_name[i] )
+        { 
+          GFL_STR_DeleteBuffer( p_saveinfo->p_name[i] );
+          p_saveinfo->p_name[i] = NULL;
+        }
+      }
+    }
+
+    //今までの情報をクリア
+    GFL_STD_MemClear( p_saveinfo, sizeof(BR_SAVE_INFO) );
+	
+	  //バトルビデオのセーブ状況を取得
+	  for( i = 0; i < BR_SAVEDATA_NUM; i++ )
+	  {	
+	    BattleRec_Load( p_sv, GFL_HEAP_LOWID( heapID ), &result, i ); 
+	    if( result == LOAD_RESULT_OK )
+	    { 
+	      NAGI_Printf( "戦闘録画読み込み %d\n", i );
+	      p_profile = BattleRec_GDSProfilePtrGet();
+
+        if( i == 0 )
+        { 
+          //自分の録画データは自分の情報を常に最新にしておくため設定する
+          GDS_Profile_MyDataSet(p_profile, p_gamedata );
+        }
+
+
+        //設定
+	      p_saveinfo->is_valid[i] = TRUE;
+
+        //解放はbr_main.cで行っています
+        p_saveinfo->p_name[i]   = GDS_Profile_CreateNameString( p_profile, HEAPID_BATTLE_RECORDER_SYS );
+        DEBUG_STRBUF_Print( p_saveinfo->p_name[i] );
+
+	      p_saveinfo->sex[i]      = GDS_Profile_GetSex( p_profile );
+	    }
+	  }
+	
+	  //ミュージカルのセーブ状況を取得
+	  {
+	    MUSICAL_SAVE* p_musical = MUSICAL_SAVE_GetMusicalSave( GAMEDATA_GetSaveControlWork(p_gamedata) );
+      p_saveinfo->is_musical_valid  = MUSICAL_SAVE_IsValidMusicalShotData( p_musical );
+    }
+	
+	  //チェックフラグを立てる
+	  p_saveinfo->is_check  = TRUE;
+  }
 }

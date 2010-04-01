@@ -82,17 +82,16 @@ void GDS_Profile_FreeMemory(GDS_PROFILE_PTR gpp)
  * @brief   自分のGDSプロフィールデータを作成する
  *
  * @param   gpp			データ代入先
- * @param   sv			セーブデータへのポインタ
- * @param   monsno		GDSプロフィールに添付するポケモン番号
+ * @param   gamedata  ゲームデータ
  *
- * @retval  
  */
 //--------------------------------------------------------------
-void GDS_Profile_MyDataSet(GDS_PROFILE_PTR gpp, SAVE_CONTROL_WORK *sv)
+void GDS_Profile_MyDataSet(GDS_PROFILE_PTR gpp, GAMEDATA *gamedata)
 {
-	MYSTATUS *my = SaveData_GetMyStatus(sv);
+  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork( gamedata );
+	MYSTATUS *my = GAMEDATA_GetMyStatus(gamedata);
 	WIFI_HISTORY *wh = SaveData_GetWifiHistory(sv);
-	const MISC * misc = SaveData_GetMiscConst(sv);
+	const MISC * misc = GAMEDATA_GetMiscWork(gamedata);
   const MYPMS_DATA * mypms  = SaveData_GetMyPmsDataConst(sv);
 	int monsno, form_no, egg_flag, mons_sex;
 	int i;

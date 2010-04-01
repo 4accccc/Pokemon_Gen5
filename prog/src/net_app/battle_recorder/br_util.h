@@ -165,6 +165,7 @@ typedef BR_MSGWIN_WORK BR_TEXT_WORK;
 extern BR_TEXT_WORK * BR_TEXT_Init( BR_RES_WORK *p_res, PRINT_QUE *p_que, HEAPID heapID );
 extern void BR_TEXT_Exit( BR_TEXT_WORK *p_wk, BR_RES_WORK *p_res );
 extern void BR_TEXT_Print( BR_TEXT_WORK* p_wk, const BR_RES_WORK *cp_res, u32 strID );
+extern void BR_TEXT_PrintBuff( BR_TEXT_WORK* p_wk, const BR_RES_WORK *cp_res, const STRBUF *cp_strbuf );
 extern BOOL BR_TEXT_PrintMain( BR_TEXT_WORK* p_wk );
 
 

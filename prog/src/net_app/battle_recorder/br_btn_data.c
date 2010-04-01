@@ -331,7 +331,7 @@ static const BR_BTN_DATA sc_btn_data_browse_delete_record[BTN_DATA_BROWSE_DELETE
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
-    BR_BTN_UNIQUE_DELETE_MY,
+    BR_BTN_UNIQUE_MYRECORD,
 	},
 	//誰かの記録
 	{	
@@ -398,7 +398,7 @@ static const BR_BTN_DATA sc_btn_data_browse_delete_other[BTN_DATA_BROWSE_DELETE_
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
-    BR_BTN_UNIQUE_DELETE_OTHER1,
+    BR_BTN_UNIQUE_OTHERRECORD1,
 	},
 	//誰かの記録２
 	{	
@@ -413,7 +413,7 @@ static const BR_BTN_DATA sc_btn_data_browse_delete_other[BTN_DATA_BROWSE_DELETE_
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
-    BR_BTN_UNIQUE_DELETE_OTHER2,
+    BR_BTN_UNIQUE_OTHERRECORD2,
 	},
 	//誰かの記録３
 	{	
@@ -428,7 +428,7 @@ static const BR_BTN_DATA sc_btn_data_browse_delete_other[BTN_DATA_BROWSE_DELETE_
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_000,
-    BR_BTN_UNIQUE_DELETE_OTHER3,
+    BR_BTN_UNIQUE_OTHERRECORD3,
 	},
 	//戻る
 	{	
@@ -501,7 +501,7 @@ static const BR_BTN_DATA sc_btn_data_btlvideo_top[BTN_DATA_BTLVIDEO_TOP_MAX] =
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_726,
-    BR_BTN_UNIQUE_BVSEND,
+    BR_BTN_UNIQUE_MYRECORD,
 	},
 	//やめる
 	{	
@@ -831,7 +831,7 @@ static const BR_BTN_DATA sc_btn_data_musical_top[BTN_DATA_MUSICAL_TOP_MAX] =
 		0,
 		BR_BTN_NONEPROC_NOPUSH,
 		msg_info_021,
-    BR_BTN_UNIQUE_SHOTSEND,
+    BR_BTN_UNIQUE_MUSICALSHOT,
 	},
 	//やめる
 	{	
@@ -1021,7 +1021,12 @@ static const struct
     sc_btn_link_musicalexit_yesno,
   },
 };
-
+//=============================================================================
+/**
+ *          PRIVATE
+ */
+//=============================================================================
+static void BR_BTN_DATA_SYS_ReLoadSaveData( BR_BTN_DATA_SYS *p_wk );
 //=============================================================================
 /**
  *					PUBLIC
@@ -1062,6 +1067,34 @@ BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPI
   p_wk->setup = *cp_setup;
 
 	//バッファに情報設定
+  BR_BTN_DATA_SYS_ReLoadSaveData( p_wk );
+
+	return p_wk;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタンデータバッファ破棄
+ *
+ *	@param	BR_BTN_DATA_SYS *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+void BR_BTN_DATA_SYS_Exit( BR_BTN_DATA_SYS *p_wk )
+{	
+	GFL_HEAP_FreeMemory( p_wk );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタンにセーブデータを再読み込み
+ *	        （内部ではボタンに押せるかどうかを設定させている）
+ *
+ *	@param	BR_BTN_DATA_SYS *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void BR_BTN_DATA_SYS_ReLoadSaveData( BR_BTN_DATA_SYS *p_wk )
+{ 
+  const BR_SAVE_INFO  *cp_saveinfo  = p_wk->setup.cp_saveinfo;
+
+	//バッファに情報設定
 	{	
 		int i,j;
 		u32 max;
@@ -1084,11 +1117,7 @@ BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPI
 				{	
 				//自分の記録がなかったら押せない
 				case BR_BTN_UNIQUE_MYRECORD:
-					/* fallthrough */
-				case BR_BTN_UNIQUE_DELETE_MY:
-					/* fallthrough */
-        case BR_BTN_UNIQUE_BVSEND:
-					p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->cp_saveinfo->is_valid[ 0 ];
+					p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_saveinfo->is_valid[ 0 ];
 					break;
 
 				//誰かの記録がなかったら押せない
@@ -1102,36 +1131,17 @@ BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPI
             u32 id  = p_wk->buff[cnt].param[ BR_BTN_DATA_PARAM_UNIQUE ] - BR_BTN_UNIQUE_OTHERRECORD1;
 
 						GF_ASSERT( id < 4 );
-						p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->cp_saveinfo->is_valid[ id ];
-						if( cp_setup->cp_saveinfo->is_valid[ id ] )
+						p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_saveinfo->is_valid[ 1+id ];
+						if( p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID] )
 						{	
 							p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_MSGID]	= msg_09;
 						}
 					}
           break;
 
-
-				case BR_BTN_UNIQUE_DELETE_OTHER1:
-					/* fallthrough */
-				case BR_BTN_UNIQUE_DELETE_OTHER2:
-					/* fallthrough */
-				case BR_BTN_UNIQUE_DELETE_OTHER3:
-					{	
-            u32 id  = p_wk->buff[cnt].param[ BR_BTN_DATA_PARAM_UNIQUE ] - BR_BTN_UNIQUE_DELETE_OTHER1;
-
-						GF_ASSERT( id < 4 );
-						p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->cp_saveinfo->is_valid[ id ];
-						if( cp_setup->cp_saveinfo->is_valid[ id ] )
-						{	
-							p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_MSGID]	= msg_09;
-						}
-					}
-					break;
-
-
-        case BR_BTN_UNIQUE_SHOTSEND:
+        case BR_BTN_UNIQUE_MUSICALSHOT:
           { 
-            p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_setup->cp_saveinfo->is_musical_valid;
+            p_wk->buff[cnt].param[BR_BTN_DATA_PARAM_VALID]	= cp_saveinfo->is_musical_valid;
           }
           break;
 
@@ -1144,19 +1154,6 @@ BR_BTN_DATA_SYS * BR_BTN_DATA_SYS_Init( const BR_BTN_DATA_SETUP *cp_setup, HEAPI
 			}
 		}
 	}
-
-	return p_wk;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	ボタンデータバッファ破棄
- *
- *	@param	BR_BTN_DATA_SYS *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-void BR_BTN_DATA_SYS_Exit( BR_BTN_DATA_SYS *p_wk )
-{	
-	GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------
 /**
@@ -1312,14 +1309,9 @@ STRBUF *BR_BTN_DATA_CreateString( const BR_BTN_DATA_SYS *cp_sys, const BR_BTN_DA
   u32 id;
   BOOL is_target  = FALSE;
 
-  if( (BR_BTN_UNIQUE_OTHERRECORD1 <= uni && uni <= BR_BTN_UNIQUE_OTHERRECORD2 ) )
+  if( (BR_BTN_UNIQUE_MYRECORD <= uni && uni <= BR_BTN_UNIQUE_OTHERRECORD3 ) )
   { 
-    id  = uni - BR_BTN_UNIQUE_OTHERRECORD1;
-    is_target = TRUE;
-  }
-  if( BR_BTN_UNIQUE_DELETE_OTHER1 <= uni && uni <= BR_BTN_UNIQUE_DELETE_OTHER3 )
-  { 
-    id  = uni - BR_BTN_UNIQUE_DELETE_OTHER1;
+    id  = uni - BR_BTN_UNIQUE_MYRECORD;
     is_target = TRUE;
   }
 
@@ -1336,6 +1328,7 @@ STRBUF *BR_BTN_DATA_CreateString( const BR_BTN_DATA_SYS *cp_sys, const BR_BTN_DA
       WORDSET_RegisterWord( p_word, 0, 
           cp_sys->setup.cp_saveinfo->p_name[ id ],
           cp_sys->setup.cp_saveinfo->sex[ id ], TRUE, PM_LANG );
+
       p_src	= GFL_MSG_CreateString( p_msg, BR_BTN_DATA_GetParam( cp_data, BR_BTN_DATA_PARAM_MSGID) );
       p_strbuf	= GFL_MSG_CreateString( p_msg, BR_BTN_DATA_GetParam( cp_data, BR_BTN_DATA_PARAM_MSGID) );
       WORDSET_ExpandStr( p_word, p_strbuf, p_src );

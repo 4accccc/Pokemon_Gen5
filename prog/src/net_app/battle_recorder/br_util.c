@@ -974,6 +974,22 @@ void BR_TEXT_Print( BR_TEXT_WORK* p_wk, const BR_RES_WORK *cp_res, u32 strID )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  文字表示  バッファ
+ *
+ *	@param	BR_TEXT_WORK* p_wk  ワーク
+ *	@param	*p_res              リソース
+ *	@param	strbuf              文字バッファ
+ */
+//-----------------------------------------------------------------------------
+void BR_TEXT_PrintBuff( BR_TEXT_WORK* p_wk, const BR_RES_WORK *cp_res, const STRBUF *cp_strbuf )
+{ 
+  GFL_FONT    *p_font;
+
+  p_font  = BR_RES_GetFont( cp_res );
+  BR_MSGWIN_PrintBufColor( p_wk, cp_strbuf, p_font, BR_PRINT_COL_INFO );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  表示処理
  *
  *	@param	BR_TEXT_WORK* p_wk  ワーク

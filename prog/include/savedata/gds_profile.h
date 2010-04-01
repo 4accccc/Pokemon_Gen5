@@ -13,6 +13,7 @@
 #include "savedata/save_control.h"
 #include "savedata/gds_local_common.h"
 #include "net_app/gds/gds_profile_local.h"
+#include "gamesystem/game_data.h"
 
 
 //==============================================================================
@@ -27,7 +28,7 @@ typedef GDS_PROFILE * GDS_PROFILE_PTR;
 //==============================================================================
 extern GDS_PROFILE_PTR GDS_Profile_AllocMemory(int heap_id);
 extern void GDS_Profile_FreeMemory(GDS_PROFILE_PTR gpp);
-extern void GDS_Profile_MyDataSet(GDS_PROFILE_PTR gpp, SAVE_CONTROL_WORK *sv);
+extern void GDS_Profile_MyDataSet(GDS_PROFILE_PTR gpp, GAMEDATA *gamedata);
 extern STRBUF * GDS_Profile_CreateNameString(const GDS_PROFILE_PTR gpp, int heapID);
 extern u32 GDS_Profile_GetID(const GDS_PROFILE_PTR gpp);
 extern u32 GDS_Profile_GetSex(const GDS_PROFILE_PTR gpp);

@@ -509,18 +509,14 @@ SAVE_RESULT BattleRec_Save(SAVE_CONTROL_WORK *sv, HEAPID heap_id, BATTLE_MODE re
  * @param   work0   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
  * @param   work1   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
  *
- * @retval  SAVE_RESULT_CONTINUE  セーブ処理継続中
- * @retval  SAVE_RESULT_LAST    セーブ処理継続中、最後の一つ前
- * @retval  SAVE_RESULT_OK      セーブ正常終了
- * @retval  SAVE_RESULT_NG      セーブ失敗終了
  *
  * ※消去はオフラインで行うので分割セーブではなく、一括セーブにしています。
  *    ※check　WBでは常時通信の為、削除も分割セーブに変更する予定 2009.11.18(水)
+ *            ->分割セーブにしましたnagihashi100331
  */
 //--------------------------------------------------------------
-SAVE_RESULT BattleRec_SaveDataErase(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int num)
+void BattleRec_SaveDataEraseStart(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int num)
 {
-  SAVE_RESULT result;
   LOAD_RESULT load_result;
   BATTLE_REC_SAVEDATA *all;
 
@@ -529,11 +525,37 @@ SAVE_RESULT BattleRec_SaveDataErase(SAVE_CONTROL_WORK *sv, HEAPID heap_id, int n
   BattleRec_WorkInit(all);
 
   SaveControl_Extra_SaveAsyncInit(sv, SAVE_EXTRA_ID_REC_MINE + num);
-  do{
-    result = SaveControl_Extra_SaveAsyncMain(sv, SAVE_EXTRA_ID_REC_MINE + num);
-  }while(result == SAVE_RESULT_CONTINUE || result == SAVE_RESULT_LAST);
+}
 
-  SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
+//--------------------------------------------------------------
+/**
+ * @brief   指定位置の録画データを削除(初期化)してセーブ実行
+ *
+ * @param   sv
+ * @param   num
+ * @param   work0   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
+ * @param   work1   セーブ進行を制御するワークへのポインタ(最初は0クリアした状態で呼んで下さい)
+ *
+ * @retval  SAVE_RESULT_CONTINUE  セーブ処理継続中
+ * @retval  SAVE_RESULT_LAST    セーブ処理継続中、最後の一つ前
+ * @retval  SAVE_RESULT_OK      セーブ正常終了
+ * @retval  SAVE_RESULT_NG      セーブ失敗終了
+ *
+ * ※消去はオフラインで行うので分割セーブではなく、一括セーブにしています。
+ *    ※check　WBでは常時通信の為、削除も分割セーブに変更する予定 2009.11.18(水)
+ *            ->分割セーブにしましたnagihashi100331
+ */
+//--------------------------------------------------------------
+SAVE_RESULT BattleRec_SaveDataEraseMain(SAVE_CONTROL_WORK *sv, int num)
+{
+  SAVE_RESULT result;
+
+  result = SaveControl_Extra_SaveAsyncMain(sv, SAVE_EXTRA_ID_REC_MINE + num);
+
+  if( result == SAVE_RESULT_OK || result == SAVE_RESULT_NG )
+  { 
+    SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
+  }
   return result;
 }
 
