@@ -70,6 +70,9 @@
 // 図鑑詳細
 #include "../../app/zukan/detail/zukan_detail.h"
 
+// テスト
+#include "d_test.h"
+
 
 // オーバーレイ
 FS_EXTERN_OVERLAY(zukan_toroku);
@@ -88,7 +91,7 @@ FS_EXTERN_OVERLAY(zukan_detail);
 //============================================================================================
 //	定数定義
 //============================================================================================
-#define	TOP_MENU_SIZ	( 13 )
+#define	TOP_MENU_SIZ	( 14 )
 
 typedef struct {
 	u32	main_seq;
@@ -151,6 +154,9 @@ typedef struct {
   ZUKAN_DETAIL_PARAM* zukan_detail_param;
   u16                 poke_list[5];
 
+  // テスト
+  D_KAWADA_TEST_PARAM*  d_test_param;
+
 }KAWADA_MAIN_WORK;
 
 enum {
@@ -173,6 +179,7 @@ enum {
 	MAIN_SEQ_EGG_DEMO_CALL,
 	MAIN_SEQ_SHINKA_DEMO_CALL,
 	MAIN_SEQ_ZUKAN_DETAIL_CALL,
+	MAIN_SEQ_D_TEST_CALL,
   // ここまで
 
 	MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN,
@@ -188,6 +195,7 @@ enum {
 	MAIN_SEQ_EGG_DEMO_CALL_RETURN,
 	MAIN_SEQ_SHINKA_DEMO_CALL_RETURN,
 	MAIN_SEQ_ZUKAN_DETAIL_CALL_RETURN,
+	MAIN_SEQ_D_TEST_CALL_RETURN,
 	
   MAIN_SEQ_END,
 };
@@ -263,6 +271,10 @@ static void ShinkaDemoExit( KAWADA_MAIN_WORK* wk );
 // 図鑑詳細
 static void ZukanDetailInit( KAWADA_MAIN_WORK* wk );
 static void ZukanDetailExit( KAWADA_MAIN_WORK* wk );
+
+// テスト
+static void D_TestInit( KAWADA_MAIN_WORK* wk );
+static void D_TestExit( KAWADA_MAIN_WORK* wk );
 
 
 //============================================================================================
@@ -549,6 +561,18 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     break;
 
 
+  // テスト
+  case MAIN_SEQ_D_TEST_CALL:
+    D_TestInit(wk);
+		wk->main_seq = MAIN_SEQ_D_TEST_CALL_RETURN;
+    break;
+  case MAIN_SEQ_D_TEST_CALL_RETURN:
+    D_TestExit(wk);
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+
+
 	}
 
   return GFL_PROC_RES_CONTINUE;
@@ -679,6 +703,8 @@ static void TopMenuExit( KAWADA_MAIN_WORK * wk )
 // 図鑑登録
 static void ZukanTorokuInit( KAWADA_MAIN_WORK* wk )
 {
+  ZONEDATA_Open( wk->heapID );
+
     GFL_OVERLAY_Load(FS_OVERLAY_ID(zukan_toroku));
     wk->pp = PP_Create( 1, 1, 0, wk->heapID );
     wk->zukan_toroku_param = ZUKAN_TOROKU_AllocParam(
@@ -696,6 +722,8 @@ static void ZukanTorokuExit( KAWADA_MAIN_WORK* wk )
     GFL_HEAP_FreeMemory( wk->pp );
     ZUKAN_TOROKU_FreeParam( wk->zukan_toroku_param );
     GFL_OVERLAY_Unload(FS_OVERLAY_ID(zukan_toroku));
+
+  ZONEDATA_Close();
 }
 
 // トライアルハウス結果
@@ -1161,5 +1189,18 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
 static void ZukanDetailExit( KAWADA_MAIN_WORK* wk )
 {
   GFL_HEAP_FreeMemory( wk->zukan_detail_param );
+}
+
+// テスト
+static void D_TestInit( KAWADA_MAIN_WORK* wk )
+{
+  wk->d_test_param = D_KAWADA_TEST_AllocParam(
+                              wk->heapID,
+                              0 );
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &D_KAWADA_TEST_ProcData, wk->d_test_param );
+}
+static void D_TestExit( KAWADA_MAIN_WORK* wk )
+{
+  D_KAWADA_TEST_FreeParam( wk->d_test_param );
 }
 
