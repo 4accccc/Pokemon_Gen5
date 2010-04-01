@@ -1424,8 +1424,8 @@ static void handler_Konjou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       // ダメージタイプが物理の時
       if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_PHYSIC )
       {
-        // 威力２倍
-        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
+        // 威力1.5倍
+        BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.5) );
       }
     }
   }
