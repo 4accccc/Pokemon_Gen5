@@ -103,6 +103,7 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
     else{
       ibs->para.commPos = 1;
     }
+    ibs->para.fieldSituation.bgAttr = BATTLE_BG_ATTR_PALACE;
     ibs->para.musicDefault = SND_INTRUDE_BATTLE_BGM;
     ibs->para.commNetIDBit = (1 << GFL_NET_SystemGetCurrentID()) | (1 << ibp->target_netid);
     (*seq)++;
