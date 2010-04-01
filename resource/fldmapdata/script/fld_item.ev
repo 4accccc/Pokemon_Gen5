@@ -1619,10 +1619,10 @@ EVENT_START ev_fld_item_114
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=w17 X=691 Y=748 ITEM=‚Ð‚Å‚ñƒ}ƒVƒ“‚O‚V FLAG=115
+// MAP=w17 X=691 Y=748 ITEM=‚í‚´ƒ}ƒVƒ“‚X‚X FLAG=115
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_115
-  _FLD_ITEM_EVENT ITEM_HIDENMASIN07,1
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN99,1
 EVENT_END
 
 //--------------------------------------------------------------
