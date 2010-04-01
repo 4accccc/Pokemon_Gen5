@@ -789,18 +789,6 @@ u32 WorldTrade_TouchSwMain(WORLDTRADE_WORK* wk)
 #define WORLDTRADESEL_MAX (3)
 #define WORLDTRADESELBOX_PLT (10)
 
-///セレクトボックス　ヘッダデータ構造体
-static const SELBOX_HEAD_PRM sbox_sel = {
-  FALSE,SBOX_OFSTYPE_CENTER,        ///<ループフラグ、左寄せorセンタリング
-  0,                    ///<項目表示オフセットX座標(dot)
-  GFL_BG_FRAME0_M,            ///<フレームNo
-  10,                   ///<フレームパレットID
-  0,0,                  ///oam BG Pri,Software Pri
-  0x3000/32,                ///<ウィンドウcgx
-  0x3000/32+WORLDTRADESELBOX_CGX_SIZE*WORLDTRADESEL_MAX,  // フレームcgx
-  WORLDTRADESELBOX_CGX_SIZE*WORLDTRADESEL_MAX,///<BMPウィンドウ占有キャラクタ領域サイズ(char)
-};
-
 //==============================================================================
 /**
  * @brief   選択ボックスシステム呼び出し
@@ -878,7 +866,7 @@ void WorldTrade_SelBoxInit( WORLDTRADE_WORK *wk, u8 frm, int count, int y )
 //-----------------------------------------------------------------------------
 u32 WorldTrade_SelBoxMain( WORLDTRADE_WORK *wk )
 { 
-  u32 ret = SBOX_SELECT_NULL;
+  u32 ret = BMPMENULIST_NULL;
   if( wk->task_work )
   { 
     APP_TASKMENU_UpdateMenu( wk->task_work );

@@ -839,7 +839,7 @@ static int SubSeq_SelectWait( WORLDTRADE_WORK *wk )
 		}
 		WantPokePrintReWrite(wk);
 	
-	}else if( (ret==2) || (ret==SBOX_SELECT_CANCEL) ){
+	}else if( (ret==2) || (ret==BMPMENULIST_CANCEL) ){
 		// 選択ボックス解放
 		WorldTrade_SelBoxEnd( wk );
 		BmpMenuWork_ListDelete( wk->BmpMenuList );

@@ -16,7 +16,6 @@
 //system
 #include "print/wordset.h"
 #include "print/printsys.h"
-#include "system/selbox.h"
 #include "system/net_err.h"
 #include "pm_define.h"
 
