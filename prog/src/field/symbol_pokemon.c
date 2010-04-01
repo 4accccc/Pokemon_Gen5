@@ -64,6 +64,21 @@ static const MMDL_HEADER data_MMdlHeader =
 
 //==============================================================================
 //==============================================================================
+typedef struct {
+  u16 move_code;
+  u8 limx, limz;
+}SYMPOKE_MV_TABLE;
+
+static const SYMPOKE_MV_TABLE symPokeMoveCode[] = {
+  { MV_DIR_RND, 0, 0 }, // 固定（４方向ランダム）
+  { MV_RND,     1, 1 }, // ランダム移動（狭い）
+  { MV_RND,     2, 2 }, // ランダム移動（広い）
+  { MV_RND_V,   0, 2 }, // 上下移動
+  { MV_RND_H,   2, 0 }, // 左右移動
+  { MV_RND,     2, 0 }, // 左右移動（キョロキョロ）
+  { MV_SPIN_R,  0, 0 }, // 右回転移動
+  { MV_SPIN_L,  0, 0 }, // 左回転移動
+};
 
 //==================================================================
 /**
@@ -86,21 +101,28 @@ static void SYMBOLPOKE_AdMMdl(
   MMDL_HEADER_GRIDPOS *grid_pos;
   MMDLSYS *mmdl_sys;
   ZONEID zone_id;
+  const SYMPOKE_MV_TABLE * move_data;
+  
+  move_data = &symPokeMoveCode[ sympoke->move_type ];
   
   mmdl_sys = FIELDMAP_GetMMdlSys( padd->fieldmap );
   zone_id = FIELDMAP_GetZoneID( padd->fieldmap );
   
   head = data_MMdlHeader;
   head.id = id;
+  // 見た目反映
   head.obj_code = TPOKE_DATA_GetObjCode( padd->tpdata,
       sympoke->monsno, sympoke->sex, sympoke->form_no );
-  head.move_code = GFUser_GetPublicRand0(2) == 0 ? MV_RND_V : MV_RND_H;
+  // 移動タイプ反映
+  head.move_code    = move_data->move_code;
+  head.move_limit_x = move_data->limx;
+  head.move_limit_z = move_data->limz;
   //動作モデルのパラメータにシンボルポケモンの情報を埋め込んでいる
   head.param0 = padd->start_no + id;
   head.param1 = *((u32*)sympoke) & 0xffff;
   head.param2 = *((u32*)sympoke) >> 16;
+
   grid_pos = (MMDL_HEADER_GRIDPOS *)head.pos_buf;
-  
   grid_pos->gx = grid_x;
   grid_pos->gz = grid_z;
   grid_pos->y = fx_y;
