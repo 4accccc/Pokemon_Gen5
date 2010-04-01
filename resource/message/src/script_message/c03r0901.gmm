@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T17:12:28"/>
+	<create user="matsumiya" host="W00224" date="2010-04-01T15:18:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -427,9 +427,11 @@
 ・メッセージ後、アイテム入手処理
 　No032「ミックスオレ」</comment>
 		<attribute name="キャラ指定">WAITER</attribute>
-		<language name="JPN" width="256">はじめて　ですよね▼
+		<language name="JPN" width="256">この　カフェは
+はじめて　ですよね▼
 これを……▼</language>
-		<language name="JPN_KANJI" width="256">はじめて　ですよね▼
+		<language name="JPN_KANJI" width="256">この　カフェ
+はじめて　ですよね▼
 これを……▼</language>
 	</row>
 
