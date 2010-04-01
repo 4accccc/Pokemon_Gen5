@@ -1138,3 +1138,59 @@ VMCMD_RESULT EvCmdObjRailSlipDown( VMHANDLE *core, void *wk )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レールロケーションの設定
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdPlayerRailLocationSet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  MMDL* mmdl = scmd_GetMMdlPlayer( work );
+  RAIL_LOCATION rail_location;
+  FIELD_RAIL_WORK* p_railWork;
+  u16 index, ofs, w_ofs;
+
+
+  // レールのオブジェか？
+  GF_ASSERT( MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) );
+
+  // ロケーションを返す
+  index = SCRCMD_GetVMWorkValue( core, work );
+  ofs = SCRCMD_GetVMWorkValue( core, work );
+  w_ofs = SCRCMD_GetVMWorkValue( core, work );
+
+  p_railWork = MMDL_GetRailWork( mmdl );
+
+  FIELD_RAIL_WORK_SetNotMinusRailParam( p_railWork, index, ofs, w_ofs );
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+VMCMD_RESULT EvCmdObjRailLocationSet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  MMDL *mmdl = MMDLSYS_SearchOBJID(
+      mmdlsys, SCRCMD_GetVMWorkValue(core,work) );
+  RAIL_LOCATION rail_location;
+  FIELD_RAIL_WORK* p_railWork;
+  u16 index, ofs, w_ofs;
+
+
+  // レールのオブジェか？
+  GF_ASSERT( MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) );
+
+  // ロケーションを返す
+  index = SCRCMD_GetVMWorkValue( core, work );
+  ofs = SCRCMD_GetVMWorkValue( core, work );
+  w_ofs = SCRCMD_GetVMWorkValue( core, work );
+
+  p_railWork = MMDL_GetRailWork( mmdl );
+
+  FIELD_RAIL_WORK_SetNotMinusRailParam( p_railWork, index, ofs, w_ofs );
+  
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+

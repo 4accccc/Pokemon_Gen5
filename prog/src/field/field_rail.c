@@ -2055,6 +2055,37 @@ void FIELD_RAIL_WORK_GetNotMinusRailParam( const FIELD_RAIL_WORK* cp_work, u16* 
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パラメータ設定用の、マイナスのないレール座標の設定
+// side_ofsの値を0～幅Maxの値に変換したもの。RAIL_LOCATIONの値とは違う。
+// スクリプトなどマイナスを扱えないものに使用
+ *
+ *	@param	work      ワーク
+ *	@param	index     インデックス格納先
+ *	@param	front     フロントグリッド格納先
+ *	@param	side      サイドグリッド（０～に変換後）格納先
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_WORK_SetNotMinusRailParam( FIELD_RAIL_WORK* p_work, u16 index, u16 front, u16 side )
+{
+  RAIL_LOCATION location;
+  
+  GF_ASSERT( p_work->type == FIELD_RAIL_TYPE_LINE );
+
+  FIELD_RAIL_WORK_GetLocation( p_work, &location );
+
+  location.rail_index = index;
+  location.width_grid = 0;
+  location.line_grid = front;
+
+  FIELD_RAIL_WORK_SetLocation( p_work, &location );
+
+  // サイドを合わせる。
+  p_work->width_ofs = side - p_work->width_ofs_max;
+}
+
+
 
 #ifdef PM_DEBUG
 // レールグリッドデバック出力

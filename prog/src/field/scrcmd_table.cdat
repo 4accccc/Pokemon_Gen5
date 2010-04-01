@@ -272,8 +272,8 @@
   //ìÆçÏÉÇÉfÉã2
   DEF_CMD( EvCmdObjRailSlipDown, EV_SEQ_OBJ_RAIL_SLIPDOWN )
   DEF_CMD( EvCmdObjHighJump, EV_SEQ_OBJ_HIGH_JUMP )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdPlayerRailLocationSet, EV_SEQ_PLAYER_RAIL_LOC_SET )
+  DEF_CMD( EvCmdObjRailLocationSet, EV_SEQ_OBJ_RAIL_LOC_SET )
   
   //BGM
   DEF_CMD( EvCmdBgmPlay, EV_SEQ_BGM_PLAY )

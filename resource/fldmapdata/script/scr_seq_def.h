@@ -2942,6 +2942,48 @@
   .endm
 
 
+//--------------------------------------------------------------
+/**
+ *  @def  _PLAYER_RAIL_LOC_SET
+ *  @brief  自機にレールロケーションを設定
+ * @param index   インデックス
+ * @param front   フロントインデックス
+ * @param side    サイドインデックス
+ */
+//--------------------------------------------------------------
+#define _PLAYER_RAIL_LOC_SET( index, front, side )  \
+    _ASM_PLAYER_RAIL_LOC_SET index, front, side
+
+  .macro  _ASM_PLAYER_RAIL_LOC_SET index, front, side
+  .short  EV_SEQ_PLAYER_RAIL_LOC_SET
+  .short  \index
+  .short  \front
+  .short  \side
+  .endm
+
+
+//--------------------------------------------------------------
+/**
+ *  @def  _SEQ_OBJ_RAIL_LOC_SET
+ *  @brief  動作モデルにレールロケーションを設定
+ * @param objid   動かす動作モデル
+ * @param index   インデックス
+ * @param front   フロントインデックス
+ * @param side    サイドインデックス
+ */
+//--------------------------------------------------------------
+#define _OBJ_RAIL_LOC_SET( objid, index, front, side )  \
+    _ASM_OBJ_RAIL_LOC_SET objid, index, front, side
+
+  .macro  _ASM_OBJ_RAIL_LOC_SET objid, index, front, side
+  .short  EV_SEQ_OBJ_RAIL_LOC_SET
+  .short  \objid
+  .short  \index
+  .short  \front
+  .short  \side
+  .endm
+
+
 //======================================================================
 //  サウンド BGM
 //======================================================================

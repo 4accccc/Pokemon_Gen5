@@ -390,6 +390,7 @@ extern BOOL FIELD_RAIL_TOOL_HitCheckSphere( const VecFx32* person, const VecFx32
 // スクリプトなどマイナスを扱えないものに使用
 //------------------------------------------------------------------
 extern void FIELD_RAIL_WORK_GetNotMinusRailParam( const FIELD_RAIL_WORK* cp_work, u16* p_index, u16* p_front, u16* p_side ); 
+extern void FIELD_RAIL_WORK_SetNotMinusRailParam( FIELD_RAIL_WORK* p_work, u16 index, u16 front, u16 side ); 
 
 #ifdef PM_DEBUG
 // レールグリッドデバック出力

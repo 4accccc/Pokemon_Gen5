@@ -51,5 +51,7 @@ extern VMCMD_RESULT EvCmdObjHighJump( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdPlayerRailLocationGet( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdObjRailLocationGet( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdObjRailSlipDown( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdPlayerRailLocationSet( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdObjRailLocationSet( VMHANDLE *core, void *wk );
 
 
