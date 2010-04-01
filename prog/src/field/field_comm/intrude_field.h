@@ -71,3 +71,7 @@ extern const PALACE_ZONE_SETTING * IntrudeField_GetZoneSettingData(u16 zone_id);
 //  デバッグ用
 //--------------------------------------------------------------
 extern GMEVENT * DEBUG_PalaceJamp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor);
+
+#ifdef PM_DEBUG
+extern GMEVENT * DEBUG_EVENT_PalaceBarrierMove(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir);
+#endif

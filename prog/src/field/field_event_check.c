@@ -1961,6 +1961,16 @@ static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIEL
 		return DEBUG_EVENT_RailEditor( gsys, fieldWork );
 	}
 #endif
+
+
+#if defined(DEBUG_ONLY_FOR_ohkubo_tomohiko) | defined(DEBUG_ONLY_FOR_tomoya_takahashi)
+	if( (req->key_cont & PAD_BUTTON_L) == PAD_BUTTON_L )
+  {
+    if( ZONEDATA_IsPalace( req->map_id ) ){
+  		return DEBUG_EVENT_PalaceBarrierMove( gsys, fieldWork, req->field_player, FIELD_PLAYER_GetDir( req->field_player ) );
+    }
+  }
+#endif
 	
   return NULL;
 }

@@ -1315,3 +1315,14 @@ BOOL IntrudeField_GetPalaceTownZoneID(u16 zone_id, VecFx32 *vec)
   }
   return TRUE;
 }
+
+
+
+
+#ifdef PM_DEBUG
+GMEVENT * DEBUG_EVENT_PalaceBarrierMove(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir)
+{
+  return EVENT_PalaceBarrierMove( gsys, fieldWork, fld_player, dir );
+}
+
+#endif
