@@ -315,13 +315,15 @@ static void cmd_exec( DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, const DEMO3D
 {
   GF_ASSERT( data->type != DEMO3D_CMD_TYPE_NULL );
   GF_ASSERT( data->type < DEMO3D_CMD_TYPE_END );
-      
+  
+#if 1
   OS_TPrintf("call cmd type=%d [%d,%d,%d,%d]\n", data->type,
       data->param[0],
       data->param[1],
       data->param[2],
       data->param[3]
       );
+#endif
 
   DATA_Demo3D_CmdTable[ data->type ]( wk, core, data->param );
 }

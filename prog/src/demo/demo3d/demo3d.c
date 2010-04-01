@@ -46,6 +46,11 @@
 
 FS_EXTERN_OVERLAY(ui_common);
 
+#ifdef PM_DEBUG
+static u32 befVCount = 0;
+static u32 vCountDelay = 0;
+#endif
+
 //=============================================================================
 /**
  *                定数定義
@@ -212,6 +217,12 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   // フェードイン リクエスト
   sub_FadeInOutReq( param->demo_id, WIPE_TYPE_FADEIN, wk->heapID );
 
+#ifdef PM_DEBUG
+  befVCount = OS_GetVBlankCount();
+  vCountDelay = 0;
+  OS_Printf("#Demo3D 処理落ちフレーム数 [%d]!!\n",vCountDelay);
+#endif
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -311,7 +322,20 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
 
   //3D描画
   is_end = Demo3D_ENGINE_Main( wk->engine );
-
+ 
+#ifdef PM_DEBUG
+  {
+    u32 nowVCount = OS_GetVBlankCount();
+    u32 subVCount = nowVCount - befVCount;
+    befVCount = nowVCount;
+   
+    if( subVCount > 1 )
+    {
+      vCountDelay += (subVCount-1);
+      OS_TPrintf("Script Delay[%d]!!\n",subVCount-1);
+    }
+  }
+#endif
   switch( *seq ){
   case 0:
     // ループ検出かキー終了有効の時にはキーでも終了
@@ -325,6 +349,7 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
       if( sub_FadeInOutReq( wk->param->demo_id, WIPE_TYPE_FADEOUT, wk->heapID )){
         return GFL_PROC_RES_FINISH;
       }
+      OS_TPrintf("#Demo3D 処理落ちフレーム数 [%d]!!\n",vCountDelay);
       (*seq)++;
     }
     break;
