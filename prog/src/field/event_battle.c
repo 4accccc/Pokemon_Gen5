@@ -566,6 +566,7 @@ GMEVENT * EVENT_TradeAfterTrainerBattle(
   GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
   TRPOKE_AFTER_SAVE* trpoke_sv = GAMEDATA_GetTrPokeAfterSaveData( gdata );
   POKEMON_PARAM* pp;
+  u32 monsno;
 
 
   event = EVENT_TrainerBattle( gsys, fieldmap, rule, partner_id, tr_id0, tr_id1, flags );
@@ -579,16 +580,18 @@ GMEVENT * EVENT_TradeAfterTrainerBattle(
     // パーティの１番目
     pp = PokeParty_GetMemberPointer( enemy_party, 0 );
 
-    // @todo ここは、あっているかわからないので曽我部さんにあとで質問すること。
-    PP_FastModeOn( pp );
+    monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+    PP_SetupEx( pp, monsno, 
+        TRPOKE_AFTER_SV_GetLevel( trpoke_sv, trade_type ),
+        TRPOKE_AFTER_SV_GetID( trpoke_sv, trade_type ),
+        PTL_SETUP_POW_AUTO,
+        TRPOKE_AFTER_SV_GetRnd( trpoke_sv, trade_type ) );
 
-    PP_Put( pp, ID_PARA_personal_rnd, TRPOKE_AFTER_SV_GetRnd( trpoke_sv, trade_type ) );
-    PP_Put( pp, ID_PARA_speabino, TRPOKE_AFTER_SV_GetSpeabino( trpoke_sv, trade_type ) );
-    PP_Put( pp, ID_PARA_sex, TRPOKE_AFTER_SV_GetSex( trpoke_sv, trade_type ) );
-    PP_Put( pp, ID_PARA_level, TRPOKE_AFTER_SV_GetLevel( trpoke_sv, trade_type ) );
+    // 第３特性に対する処理
+    if( TRPOKE_AFTER_SV_IsSpeabino3( trpoke_sv, trade_type ) ){
+      PP_Put( pp, ID_PARA_speabino, TRPOKE_AFTER_SV_GetSpeabino3( trpoke_sv, trade_type ) );
+    }
     PP_Put( pp, ID_PARA_nickname_raw, (u32)TRPOKE_AFTER_SV_GetNickName( trpoke_sv, trade_type ) );
-
-    PP_FastModeOff( pp, TRUE );
 
   }else{
 

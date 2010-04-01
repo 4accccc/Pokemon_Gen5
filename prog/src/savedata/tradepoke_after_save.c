@@ -20,6 +20,7 @@
  *					定数宣言
 */
 //-----------------------------------------------------------------------------
+#define SPEABINO_THREE_NONE (0xff)  // 第３特性なし　定義
 
 //-----------------------------------------------------------------------------
 /**
@@ -30,14 +31,12 @@
 ///	1データ
 //=====================================
 typedef struct {
-  u8 level;
-  u8 sex;
-  u8 seikaku;
-  u8 speabino;
   u32 personal_rnd;
 	STRCODE	nickname[MONS_NAME_SIZE+EOM_SIZE];	//16h	ニックネーム(MONS_NAME_SIZE=10)+(EOM_SIZE=1)=11
-  u8  indata;
-  u8  pad[1];
+  u8  indata:1;
+  u8  level:7;
+  u8 speabino;
+  u32 id;
 } TRPOKE_AFTER_DATA;
 
 
@@ -129,23 +128,29 @@ u8 TRPOKE_AFTER_SV_GetLevel( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  性別を取得
+ *	@brief  第３とくせいがあるかチェック
  *
  *	@param	sv      ワーク
  *	@param	type    タイプ
  *
- *	@return 性別
+ *	@retval TRUE  ある
+ *	@retval FALSE ない
  */
 //-----------------------------------------------------------------------------
-u8 TRPOKE_AFTER_SV_GetSex( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type  )
+BOOL TRPOKE_AFTER_SV_IsSpeabino3( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type  )
 {
   GF_ASSERT( type < TRPOKE_AFTER_SAVE_TYPE_MAX );
-  return sv->data[ type ].sex;
+  if( sv->data[ type ].speabino == SPEABINO_THREE_NONE )
+  {
+    return FALSE;
+  }
+  return TRUE;
 }
+
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  とくせいを取得
+ *	@brief  第３とくせいを取得
  *
  *	@param	sv      ワーク
  *	@param	type    タイプ
@@ -153,7 +158,7 @@ u8 TRPOKE_AFTER_SV_GetSex( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE t
  *	@return 特性
  */
 //-----------------------------------------------------------------------------
-u8 TRPOKE_AFTER_SV_GetSpeabino( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type  )
+u8 TRPOKE_AFTER_SV_GetSpeabino3( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type  )
 {
   GF_ASSERT( type < TRPOKE_AFTER_SAVE_TYPE_MAX );
   return sv->data[ type ].speabino;
@@ -190,6 +195,22 @@ const STRCODE* TRPOKE_AFTER_SV_GetNickName( const TRPOKE_AFTER_SAVE* sv, TRPOKE_
   return sv->data[type].nickname;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  IDnoの取得
+ *
+ *	@param	sv
+ *	@param	type  
+ *
+ *	@return ID　no
+ */
+//-----------------------------------------------------------------------------
+u32 TRPOKE_AFTER_SV_GetID( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type  )
+{
+  GF_ASSERT( type < TRPOKE_AFTER_SAVE_TYPE_MAX );
+  return sv->data[type].id;
+}
+
 
 //----------------------------------------------------------------------------
 /**
@@ -205,10 +226,13 @@ void TRPOKE_AFTER_SV_SetData( TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type
   GF_ASSERT( type < TRPOKE_AFTER_SAVE_TYPE_MAX );
 
   sv->data[type].level = PP_Get( pp, ID_PARA_level, NULL );
-  sv->data[type].sex = PP_Get( pp, ID_PARA_sex, NULL );
-  sv->data[type].seikaku = PP_Get( pp, ID_PARA_seikaku, NULL );
-  sv->data[type].speabino = PP_Get( pp, ID_PARA_speabino, NULL );
+  if( PP_Get( pp, ID_PARA_tokusei_3_flag, NULL ) ){
+    sv->data[type].speabino = PP_Get( pp, ID_PARA_speabino, NULL );
+  }else{
+    sv->data[type].speabino = SPEABINO_THREE_NONE;
+  }
   sv->data[type].personal_rnd = PP_Get( pp, ID_PARA_personal_rnd, NULL );
+  sv->data[type].id = PP_Get( pp, ID_PARA_id_no, NULL );
   PP_Get( pp, ID_PARA_nickname_raw, sv->data[type].nickname );
   sv->data[type].indata = TRUE;
 }
