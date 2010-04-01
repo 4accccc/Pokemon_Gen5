@@ -219,7 +219,8 @@ FRAMELIST_WORK * FRAMELIST_Create( FRAMELIST_HEADER * hed, HEAPID heapID )
 	wk->oldTpy = 0xffffffff;
 
 	// プリントキュー作成
-	wk->que  = PRINTSYS_QUE_Create( heapID );
+//	wk->que  = PRINTSYS_QUE_Create( heapID );
+	wk->que  = PRINTSYS_QUE_CreateEx( 2048, heapID );
 	// 点滅アニメ作成
 	wk->blink = BLINKPALANM_Create( wk->hed.selPal*16, 16, wk->hed.mainBG, wk->heapID );
 
@@ -867,6 +868,10 @@ static u32 MoveListMain( FRAMELIST_WORK * wk )
 {
 	int	ret;
 
+	if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
+		return FRAMELIST_RET_NONE;
+	}
+
 	ret = MoveListTouch( wk );
 	if( ret == COMMAND_NONE ){
 		ret = MoveListKey( wk );
@@ -1078,6 +1083,10 @@ static void InitListScroll( FRAMELIST_WORK * wk, s8 speed, u8 max, s16 next, BOO
 //--------------------------------------------------------------------------------------------
 static BOOL MainListScroll( FRAMELIST_WORK * wk )
 {
+	if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
+		return TRUE;
+	}
+
 	if( wk->listBgScrollCount == 0 ){
 		// 指定回数スクロール終了
 		if( wk->listBgScrollMax == 0 ){
@@ -1289,6 +1298,10 @@ static BOOL MainRailMove( FRAMELIST_WORK * wk )
 	u32	scroll;
 	u32	max;
 
+	if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
+		return TRUE;
+	}
+
 	if( GFL_UI_TP_HitCont( wk->railHit ) == GFL_UI_TP_HIT_NONE ){
 		wk->mainSeq = MAINSEQ_MAIN;
 		return FALSE;
@@ -1346,6 +1359,10 @@ static BOOL MainSlideMove( FRAMELIST_WORK * wk )
 {
 	int	ret;
 	u32	x, y;
+
+	if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
+		return TRUE;
+	}
 
 	ret = GFL_UI_TP_HitCont( wk->touch );
 	

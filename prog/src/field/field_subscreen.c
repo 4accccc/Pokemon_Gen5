@@ -1345,6 +1345,14 @@ static void draw_report_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
   REPORT_Draw( pWork->reportWork );
 }
 
+// 初期化待ち
+#if 0
+BOOL FIELD_SUBSCREEN_CheckReportInit( FIELD_SUBSCREEN_WORK * pWork )
+{
+	return REPORT_CheckInit( pWork->reportWork );
+}
+#endif
+
 // セーブサイズ設定
 void FIELD_SUBSCREEN_SetReportSize( FIELD_SUBSCREEN_WORK * pWork )
 {

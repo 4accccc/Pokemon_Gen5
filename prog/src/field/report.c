@@ -163,6 +163,7 @@ struct _REPORT_WORK {
 
 	PRINT_QUE * que;							// プリントキュー
 	PRINT_UTIL	win[BMPWIN_MAX];	// BMPWIN
+	GFL_FONT * font;
 
 	// OBJ
 	GFL_CLUNIT * clunit;
@@ -348,6 +349,21 @@ void REPORT_Draw( REPORT_WORK * wk )
 	}
 
 //	OS_Printf( "レポート：DRAWきました\n" );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * 初期化終了待ち
+ *
+ * @param		wk		レポート下画面ワーク
+ *
+ * @retval	"TRUE = 初期化終了"
+ * @retval	"FALSE = 初期化中"
+ */
+//--------------------------------------------------------------------------------------------
+BOOL REPORT_CheckInit( REPORT_WORK * wk )
+{
+	return wk->seq;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -563,7 +579,6 @@ static void InitBmp( REPORT_WORK * wk )
 	WORDSET * wset;
 	STRBUF * exp;
 	STRBUF * str;
-	GFL_FONT * font;
 	GAMEDATA * gd;
 	SAVE_CONTROL_WORK * sv;
 	u32	i;
@@ -582,11 +597,12 @@ static void InitBmp( REPORT_WORK * wk )
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[i].win), 0 );
 	}
 
+	wk->font = GFL_FONT_Create(
+							ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+
 	mman = GFL_MSG_Create(
 					GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_report_dat, wk->heapID );
 	wset = WORDSET_Create( wk->heapID );
-	font = GFL_FONT_Create(
-					ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 	exp  = GFL_STR_CreateBuffer( 256, wk->heapID );
 
 	gd = GAMESYSTEM_GetGameData( wk->gameSys );
@@ -596,7 +612,7 @@ static void InitBmp( REPORT_WORK * wk )
 	str = GFL_MSG_CreateString( mman, REPORT_STR_01 );
 	WORDSET_RegisterPlayerName( wset, 0, GAMEDATA_GetMyStatus(gd) );
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_TITLE], wk->que, 0, 4, exp, font, FCOL_P02WN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_TITLE], wk->que, 0, 4, exp, wk->font, FCOL_P02WN );
 	GFL_STR_DeleteBuffer( str );
 
 	// 日付
@@ -609,7 +625,7 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_RegisterNumber( wset, 2, date.day, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_DATE], wk->que, 0, 0, exp, font, FCOL_P02BN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_DATE], wk->que, 0, 0, exp, wk->font, FCOL_P02BN );
 	GFL_STR_DeleteBuffer( str );
 	// 時間
 	str = GFL_MSG_CreateString( mman, REPORT_STR_03 );
@@ -620,7 +636,7 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_RegisterNumber( wset, 1, time.minute, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_DATE2], wk->que, 0, 0, exp, font, FCOL_P02BN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_DATE2], wk->que, 0, 0, exp, wk->font, FCOL_P02BN );
 	GFL_STR_DeleteBuffer( str );
 
 	// 場所
@@ -630,7 +646,7 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_RegisterPlaceName( wset, 0, num );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_PLACE], wk->que, 0, 0, exp, font, FCOL_P02BN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_PLACE], wk->que, 0, 0, exp, wk->font, FCOL_P02BN );
 	GFL_STR_DeleteBuffer( str );
 
 	// ジムバッジ
@@ -640,7 +656,7 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_RegisterNumber( wset, 0, num, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_BADGE], wk->que, 0, 0, exp, font, FCOL_P02BN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_BADGE], wk->que, 0, 0, exp, wk->font, FCOL_P02BN );
 	GFL_STR_DeleteBuffer( str );
 
 	// 図鑑
@@ -650,7 +666,7 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_RegisterNumber( wset, 0, num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_ZUKAN], wk->que, 0, 0, exp, font, FCOL_P02BN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_ZUKAN], wk->que, 0, 0, exp, wk->font, FCOL_P02BN );
 	GFL_STR_DeleteBuffer( str );
 
 	// プレイ時間
@@ -661,7 +677,7 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_RegisterNumber( wset, 1, PLAYTIME_GetMinute(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 	}
 	WORDSET_ExpandStr( wset, exp, str );
-	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_TIME], wk->que, 0, 0, exp, font, FCOL_P02BN );
+	PRINT_UTIL_PrintColor( &wk->win[BMPWIN_TIME], wk->que, 0, 0, exp, wk->font, FCOL_P02BN );
 	GFL_STR_DeleteBuffer( str );
 
 	// 前回のレポート
@@ -675,12 +691,11 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_RegisterNumber( wset, 3, PLAYTIME_GetSaveHour(ptime), 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 		WORDSET_RegisterNumber( wset, 4, PLAYTIME_GetSaveMinute(ptime), 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 		WORDSET_ExpandStr( wset, exp, str );
-		PRINT_UTIL_PrintColor( &wk->win[BMPWIN_REPORT], wk->que, 0, 4, exp, font, FCOL_P02WN );
+		PRINT_UTIL_PrintColor( &wk->win[BMPWIN_REPORT], wk->que, 0, 4, exp, wk->font, FCOL_P02WN );
 		GFL_STR_DeleteBuffer( str );
 	}
 
 	GFL_STR_DeleteBuffer( exp );
-	GFL_FONT_Delete( font );
 	WORDSET_Delete( wset );
 	GFL_MSG_Delete( mman );
 
@@ -702,6 +717,8 @@ static void InitBmp( REPORT_WORK * wk )
 static void ExitBmp( REPORT_WORK * wk )
 {
 	u32	i;
+
+	GFL_FONT_Delete( wk->font );
 
 	for( i=0; i<BMPWIN_MAX; i++ ){
 		GFL_BMPWIN_Delete( wk->win[i].win );
