@@ -112,7 +112,7 @@ enum
 #define TEXT_COLOR_BLACK  (3)  // スクロールする際の空き領域を黒にしておく
 
 // 文字の色
-#define TEXT_COLOR_VALUE_L   (0x294B)
+#define TEXT_COLOR_VALUE_L   (0x256C)
 #define TEXT_COLOR_VALUE_S   (0x4A74)
 
 static const u8 bmpwin_setup[TEXT_MAX][9] =
