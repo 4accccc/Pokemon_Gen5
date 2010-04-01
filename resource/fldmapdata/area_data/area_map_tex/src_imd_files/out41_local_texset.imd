@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-01-26T19:45:53" source="untitled"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-31T22:02:22" source="untitled"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-01-26T19:45:53" source="untitled"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-03-31T22:02:22" source="untitled"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -20,8 +20,8 @@
 	magnify="1.000000"
 	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="merge" node_size="1 1"
-	compress_material="on" material_size="27 27"
+	compress_node="none" node_size="1 1"
+	compress_material="off" material_size="27 27"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
@@ -32,28 +32,44 @@
 <tex_image_array size="27">
 	<tex_image index="0" name="bgate02_t01"
 		width="32" height="32" original_width="32" original_height="32"
-		format="palette4"
+		format="palette16"
 		color0_mode="color"
 		palette_name="bgate02_t01_pl"
 		path="C:/home/wb_data3d/field/out41/map/tex/bgate02_t01.tga"
 	>
-		<bitmap size="128">
-			faaf ffff ffff ff41 f5bf ffff 7fff fe14
-			fe6f ffff aaff fcaa ffdb ffff fe6f f8bf
-			ffe6 ffff ff8b 92ff fff9 ffff ffe2 47ff
-			fffd f7ff fff4 0bff ffff abff fff8 9bff
-			ffff 1fff fff8 eaff ffff 7fff fff4 e6ff
-			ffff ffff ffa5 f1bf ffff ffff ea57 f06f
-			ffff ffff 957f d15a ffff efff a5ff 556a
-			e429 dbfb aa7f f16a f940 f6a7 aa5f f45a
-			ffea fd5f aa9f f91a ffff fe7f a97f fe55
-			ffff fe7f 64ff ff91 ffff e9af 51ff ffe4
-			ffff 955b 06ff fff9 ffff 56a6 45aa fffe
-			ffff 1aa9 a158 ffff bffa 5aaa 9400 ffff
-			7fe0 1aa9 56a9 56a9 6a82 46aa bffd a401
-			782b 91a9 bffe f906 fe1f e1a9 ffff fe0b
-			fe5f e45f ffff ff8f fe6f f93f ffff ff9f
-			f96f ffff ffff ff9f f96f ffff ffff ff9f
+		<bitmap size="256">
+			5577 6645 6366 8886 8888 6688 2004 7777
+			5777 6644 6346 8888 6889 4666 0000 6664
+			4577 6666 8644 8888 6668 4444 4544 6651
+			7257 4566 8844 8998 2468 6654 4888 6541
+			6425 4444 8654 6688 4146 6664 7888 4204
+			5652 3344 4444 4666 4224 8664 7888 2027
+			5442 6635 4436 4441 4221 8864 7888 1047
+			6667 6666 4666 4314 4411 8866 7888 4257
+			7677 7777 6666 2144 4411 8886 7888 6555
+			7777 9987 6789 4556 6413 8886 7788 7424
+			8777 8888 8998 6666 6212 8886 4778 7702
+			8877 8888 9988 6678 1126 8744 2568 7610
+			8877 8888 9988 6678 1446 6441 2246 7212
+			8777 8888 9988 6688 4466 4410 2244 2222
+			7644 7887 8867 6678 4566 4220 2224 2512
+			6422 6666 6644 8766 4478 4212 2222 2420
+			4444 4466 5444 8976 4479 2221 0222 4452
+			8877 6888 2546 9886 4799 2221 2122 7674
+			8877 8888 1669 8664 6799 2210 4202 7698
+			8877 9888 2469 7541 7899 2201 7420 7889
+			8877 9888 1448 6221 6767 0014 9641 7689
+			8877 9888 1456 2112 6644 1013 9943 7679
+			8777 8888 2156 0124 3440 1102 9944 7766
+			7744 6888 4225 1124 0000 4110 6766 7766
+			6410 5686 4442 0124 1111 4431 4664 2245
+			4104 2444 4774 1024 6664 4666 1234 4410
+			1147 4541 7662 2114 6664 6676 0144 6642
+			1277 6654 6654 4204 8876 7888 0046 6664
+			2277 8864 3278 6220 8886 8899 1077 6666
+			2577 7664 0788 6421 9998 8999 1167 7777
+			2577 6654 1676 7421 9998 8899 2168 7777
+			4577 6642 1366 7662 9988 8889 4178 7777
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="bgate02_t02"
@@ -1603,8 +1619,9 @@
 </tex_image_array>
 
 <tex_palette_array size="27">
-	<tex_palette index="0" name="bgate02_t01_pl" color_size="4">
-		4a95 52f8 5b19 5f3a
+	<tex_palette index="0" name="bgate02_t01_pl" color_size="16">
+		4ad7 4ef8 52f8 5319 5719 5b19 5b3a 5f3a
+		5f5b 635b 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="bgate02_t02_pl" color_size="16">
 		3632 3611 4695 4ab6 4253 56f8 633a 6b7c
