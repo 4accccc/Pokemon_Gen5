@@ -83,6 +83,7 @@ void DEBUG_SetTodayCountOfQuestion(
 u32 DEBUG_GetTotalCountOfQuestion( 
     GAMESYS_WORK* gameSystem, GAMEDATA* gameData, u32 questionID )
 {
+  u32 count;
   SAVE_CONTROL_WORK* save;
   QUESTIONNAIRE_SAVE_WORK* Qsave;
 
@@ -91,7 +92,8 @@ u32 DEBUG_GetTotalCountOfQuestion(
   Qsave = SaveData_GetQuestionnaire( save );
 
   // w’è‚³‚ê‚½¿–â‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”‚ğ•Ô‚·
-  return QuestionnaireWork_GetTotalCount( Qsave, questionID );
+  count = QuestionnaireWork_GetTotalCount( Qsave, questionID );
+  return count;
 }
 //------------------------------------------------------------------------------
 /**
