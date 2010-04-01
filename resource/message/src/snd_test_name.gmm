@@ -8226,13 +8226,13 @@
 		<language name="JPN" width="256">W063-BEEMB</language>
 		<language name="JPN_KANJI" width="256">W063-BEEMB</language>
 	</row>
-	<row id="msg_seq_se_dmy_292">
-		<language name="JPN" width="256">DMY-292</language>
-		<language name="JPN_KANJI" width="256">DMY-292</language>
+	<row id="msg_seq_se_w281_akubi">
+		<language name="JPN" width="256">W281-AKUBI</language>
+		<language name="JPN_KANJI" width="256">W281-AKUBI</language>
 	</row>
-	<row id="msg_seq_se_dmy_293">
-		<language name="JPN" width="256">DMY-293</language>
-		<language name="JPN_KANJI" width="256">DMY-293</language>
+	<row id="msg_seq_se_w248_tikirin">
+		<language name="JPN" width="256">W248-TIKIRIN</language>
+		<language name="JPN_KANJI" width="256">W248-TIKIRIN</language>
 	</row>
 	<row id="msg_seq_se_dmy_294">
 		<language name="JPN" width="256">DMY-294</language>
