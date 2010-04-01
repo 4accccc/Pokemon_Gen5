@@ -857,6 +857,14 @@ SvflowResult BTL_SVFLOW_StartBtlIn( BTL_SVFLOW_WORK* wk )
 
   SCQUE_Init( wk->que );
 
+  {
+    const BTL_FIELD_SITUATION* fSit = BTL_MAIN_GetFieldSituation( wk->mainModule );
+    if( fSit->weather != BTL_WEATHER_NONE )
+    {
+      scproc_ChangeWeatherCore( wk, fSit->weather, BTL_WEATHER_TURN_PERMANENT );
+    }
+  }
+
   for(i=0; i<BTL_CLIENT_MAX; ++i)
   {
     cw = BTL_SERVER_GetClientWorkIfEnable( wk->server, i );
@@ -6516,14 +6524,14 @@ static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 da
 
     if( value )
     {
+      scPut_SimpleHp( wk, bpp, value, TRUE );
+      scproc_CheckItemReaction( wk, bpp );
+      BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_DAMAGED );
+
       if( str != NULL ){
         handexSub_putString( wk, str );
         HANDEX_STR_Clear( str );
       }
-
-      scPut_SimpleHp( wk, bpp, value, TRUE );
-      scproc_CheckItemReaction( wk, bpp );
-      BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_DAMAGED );
 
       if( scproc_CheckDeadCmd(wk, bpp) ){
         if( scproc_CheckShowdown(wk) ){
@@ -6999,6 +7007,15 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
     }
   }
 
+  // こおりタイプは、「こおり」にならない
+  if( sick==WAZASICK_KOORI )
+  {
+    PokeTypePair type = BPP_GetPokeType( target );
+    if( PokeTypePair_IsMatch(type, POKETYPE_KOORI) ){
+      return BTL_ADDSICK_FAIL_OTHER;
+    }
+  }
+
   // くさタイプは、「やどりぎのタネ」にならない
   if( sick==WAZASICK_YADORIGI )
   {
@@ -7007,6 +7024,7 @@ static BtlAddSickFailCode addsick_check_fail( BTL_SVFLOW_WORK* wk, const BTL_POK
       return BTL_ADDSICK_FAIL_OTHER;
     }
   }
+
 
   // 「ねむり」状態の時には「あくび」にならない
   if( sick == WAZASICK_AKUBI )
