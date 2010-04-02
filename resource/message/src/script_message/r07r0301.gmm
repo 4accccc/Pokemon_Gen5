@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-04-01T18:01:23"/>
+	<create user="matsushima" host="W00181" date="2010-04-02T16:29:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -600,12 +600,12 @@ msg_r07r0301_oldman_00
 		<attribute name="キャラ指定">おじいさん</attribute>
 		<language name="JPN" width="256">わるさを　していた　カザカミを
 こらしめる　ポケモンが　いるんじゃ[BE:01:ページ切り替え（クリア）]
-たしか…　１３ばんどうろ　あたりに
+たしか…　１４ばんどうろ　あたりに
 その　ポケモンを　まつった　ほこらが[BE:00:ページ切り替え（行送り）]
 あったと　きいたことが　あるのう…[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">わるさを　していた　カザカミを
 こらしめる　ポケモンが　いるんじゃ[BE:01:ページ切り替え（クリア）]
-確か…　１３番道路　あたりに
+確か…　１４番道路　あたりに
 その　ポケモンを　まつった　ほこらが[BE:00:ページ切り替え（行送り）]
 あったと　きいたことが　あるのう…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
