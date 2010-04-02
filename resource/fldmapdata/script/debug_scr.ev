@@ -28,6 +28,8 @@
   .include "hiden_def.h"
 
   .include "init_scr_def.h"
+  .include "pasokon_def.h"
+
 //--------------------------------------------------------------
 //               スクリプト本体
 //--------------------------------------------------------------
@@ -1105,13 +1107,18 @@ ev_event_jump:
 	//メニュー作成
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, LWK_EVTJUMP )
 	//リスト追加
+	_BMPMENU_MAKE_LIST( msg_debug_09, 9 )	//パソコン呼び出し
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_10, 10 )	//自宅２Fゲーム開始イベント
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_12, 20 )	//C04 サポート父イベント
 	_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
 	//メニュー表示
 	_BMPMENU_START()
 	
-	IF $LWK_EVTJUMP == 10 THEN
+	IF $LWK_EVTJUMP == 9 THEN
+		//パソコン呼び出し
+		_GLOBAL_CALL	SCRID_PC
+
+	ELSIF $LWK_EVTJUMP == 10 THEN
 		//自宅２階のゲーム開始イベントを起動
 		_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE, TRUE )
 		_FLAG_SET( FV_T01R0102_SUPPORT )
