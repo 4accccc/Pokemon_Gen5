@@ -549,7 +549,7 @@ static void D_Test_BtlvInit( D_TEST_WORK* work )
     u16 tr_type[] = { 
       TRTYPE_HERO, TRTYPE_HERO, 0xffff, 0xffff,
     };
-    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, work->heap_id );
+    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, NULL, work->heap_id );
     BTLV_EFFECT_Init( besp, work->font, work->heap_id );
     GFL_HEAP_FreeMemory( besp );
   }
