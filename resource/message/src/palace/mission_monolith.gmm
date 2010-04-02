@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-03-18T20:23:35"/>
+	<create user="ohmori" host="W00223" date="2010-04-01T19:10:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -290,8 +290,8 @@
 
 	<row id="msg_mistype_000">
 		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">[BD:02:Ｘセンタリング]『サポート　ミッション』</language>
-		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]『サポート　ミッション』</language>
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング]『バトル　ミッション』</language>
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]『バトル　ミッション』</language>
 	</row>
 
 	<row id="msg_mistype_001">
@@ -302,14 +302,14 @@
 
 	<row id="msg_mistype_002">
 		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">[BD:02:Ｘセンタリング]『バトル　ミッション』</language>
-		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]『バトル　ミッション』</language>
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング]『サポート　ミッション』</language>
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]『サポート　ミッション』</language>
 	</row>
 
 	<row id="msg_mistype_003">
 		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">[BD:02:Ｘセンタリング]『サポート　ミッション』</language>
-		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]『サポート　ミッション』</language>
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング]『アイテム　ミッション』</language>
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]『アイテム　ミッション』</language>
 	</row>
 
 	<row id="msg_mistype_004">
@@ -320,8 +320,8 @@
 
 	<row id="msg_mistype_005">
 		<comment>ミッション画面：ミッションタイプ</comment>
-		<language name="JPN" width="256">[BD:02:Ｘセンタリング]『アイテム　ミッション』</language>
-		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]『アイテム　ミッション』</language>
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング]『サポート　ミッション』</language>
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]『サポート　ミッション』</language>
 	</row>
 
 	<row id="msg_mistype_006" back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
