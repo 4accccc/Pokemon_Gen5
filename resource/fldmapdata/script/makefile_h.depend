@@ -132,6 +132,9 @@ symbol_encount_scr_def.h: symbol_encount_scr.ev
 wheel_scr_def.h: wheel_scr.ev
 	$(EV_DEF) wheel_scr.ev $(SCR_OFFS_ID_H)
 
+tamagetake_scr_def.h: tamagetake_scr.ev
+	$(EV_DEF) tamagetake_scr.ev $(SCR_OFFS_ID_H)
+
 debug_scr_def.h: debug_scr.ev
 	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 
