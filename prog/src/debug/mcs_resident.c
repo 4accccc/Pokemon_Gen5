@@ -134,7 +134,7 @@ void	GFL_MCS_Resident(void)
 		}
 	}
 #else
-#if 0
+#if 1
 	{
 		if(tickStackP >= TIMER_LEN){ tickStackP = 0; tickMax = 0; }
 
@@ -167,7 +167,7 @@ void	GFL_MCS_Resident(void)
 #endif
 
 #endif
-#if 0
+#if 1
 	if(tickStackP == TIMER_LEN){
 		MCSRSDCOMM_HEADER* commHeader = (MCSRSDCOMM_HEADER*)MCSRSD_sendBuffer;
 		int i;
