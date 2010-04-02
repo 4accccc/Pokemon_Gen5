@@ -305,6 +305,12 @@ INIT_EVENT_START  ev_init_gameclear_script
       //OBJを消していて、捕まえていなければ復活させる
       _FLAG_RESET( FV_D02R0201_LEGEND3 )
   ENDIF
+  
+    //ツチノカミ未捕獲時の復活処理
+  IF FLAG_ON( FV_R14R0201_LEG ) && FLAG_OFF( FE_R14R0201_LEG_GET ) THEN
+      //OBJを消していて、捕まえていなければ復活させる
+      _FLAG_RESET( FV_R14R0201_LEG )
+  ENDIF
 
 }
 INIT_EVENT_END
