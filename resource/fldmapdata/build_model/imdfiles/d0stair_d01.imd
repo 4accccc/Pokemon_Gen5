@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-08-17T17:15:50" source="d0stair_d01.mb"/>
+	<create user="fuchino" host="W00152" date="2010-04-02T15:18:20" source="d0stair_d01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2009-08-17T17:15:50" source="d0stair_d01.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-04-02T15:18:20" source="d0stair_d01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -38,78 +38,78 @@
 		path="C:/home/wb_data3d/build_model/indoor/d0stair_d01/tex/d0stair_d01.tga"
 	>
 		<bitmap size="512">
-			5e8e 05ec 0000 0000 0000 0000 5ce5 4eee
-			4444 bbbb bbbb bbbb bbbb bbbb bbbb 4444
-			c58e 0ecf 0000 0000 0000 0000 cfce 4ee5
-			5444 bbcc bbbb bbbb bbbb bbbb 55bb 4444
-			cc48 ecff 0000 0000 0000 e000 cffc 4eec
-			ff44 cccc cccc cccc cccc cccc cccc 444f
-			c55e ecff 0000 0000 0000 e000 cffc 4e55
-			cf44 cccc cccc cccc cccc cccc cccc 444f
-			5c4e e55f 0000 0000 0000 e000 5f55 455c
-			cf44 cccc ffcc ffff cfff cccc cccc 444f
-			c558 0e55 0000 0000 0000 0000 c55e 4ce5
-			f544 ffff 55ff 5555 f555 ffff ffff 4444
-			c5ea 0e55 0000 0000 0000 0000 c55e 4ce5
-			4444 bb44 bbbb bbbb bbbb bbbb 444b 4444
-			5be4 00e5 0000 0000 0000 0000 55e0 4eeb
-			4444 bbb4 bbbb bbbb bbbb bbbb 44bb 4444
-			e55e 000e 0000 0000 0000 0000 ee40 4584
-			3444 b555 bbbb bbbb bbbb 55bb 3555 4444
-			5cee 004e 0000 0000 0000 0000 5c70 4584
-			c444 5ccc 5555 5555 5555 5555 ccc5 4444
-			ccce 00e5 0000 0000 0000 0000 5540 488e
-			cc44 cccc cccc cccc cccc cccc cccc 444f
-			5cce 00e5 0000 0000 0000 0000 cc54 41e5
-			cc44 cccc cccc cccc cccc cccc cccc 444f
-			c55e 007c 0000 0000 0000 0000 cf55 4ee5
-			cf44 cccc cccc cccc cccc cccc cccc 444f
-			5cee 0075 0000 0000 0000 0000 ffce 4eec
-			ff44 ffff ffff ffff ffff ffff ffff 4444
-			5ce8 0078 0000 0000 0000 0000 cfce 4cec
-			c444 bbcc bbbb bbbb bbbb bbbb 4444 4444
-			b5e8 0007 0000 0000 0000 0000 c5e0 4e45
-			4444 bb44 bbbb bbbb bbbb bbbb 444b 4444
-			7554 0777 0000 0000 0000 0000 5577 4eee
-			4444 bbb4 bbbb bbbb bbbb bbbb 44bb 4444
-			5ee4 75c5 0000 0000 0000 7700 eeee 4eec
-			4444 5554 5555 5555 5555 5555 4455 4444
-			c5ee 55c5 0007 0000 0000 ee70 5c55 4ee8
-			4444 cc55 cccc cccc cccc cccc 455c 4444
-			fcc5 cc5f 0075 0000 0000 55e7 5c5c 4eb5
-			4444 cccc cccc cccc cccc cccc cccc 4444
-			fce5 ffff 0075 7777 0077 cc57 c5ff 4e5c
-			c444 cccc cccc cccc cccc cccc cccc 4444
-			c55e 5ffc 77e5 55ee 075c ffc7 5fff 4e55
-			f444 fccc ffff ffff ffff ffff fccc 4444
-			c44e 5ccc e4e5 5c55 755c ce5c 55ff 4ee5
-			5444 5fff bbb5 bbbb bbbb 55bb 5fff 4444
-			e444 e555 574e ffcc 5cc5 eccc 55cc 4e4e
-			4444 bb44 bbbb bbbb bbbb bbbb 444b 4444
-			ee4e c555 c5c5 ffff 555f 5c5c eeee 48e4
-			4444 bbb4 bbbb bbbb bbbb bbbb 44bb 4444
-			e4ee e5e8 5555 ffce e555 5e55 4e8e 48ee
-			5444 5555 5555 5555 5555 5555 5555 4444
-			8eee e448 ceae ccec 4e55 4eea e884 44ee
-			c544 cccc cccc cccc cccc cccc cccc 4445
-			88ee 4444 544a ee54 44ee 44a4 8844 48ee
-			cc44 cccc cccc cccc cccc cccc cccc 444c
-			4ee8 8e84 e448 ee44 4e44 e884 e448 488e
-			cf44 cccc fffc cccf fccc ccff cccc 444f
-			4844 ae84 448a 4444 4444 eaa8 8448 4444
-			f444 ffff 555f fff5 5fff ff55 ffff 4444
-			4484 ee88 8e44 eeaa e8a8 ee44 4488 4848
-			4444 bbbb bbbb bbbb bbbb bbbb 4bbb 4444
-			8a48 e8ee ee4e aa4a eea8 8ee4 a8ee 4884
-			4444 bbbb bbbb bbbb bbbb bbbb 4bbb 4444
+			9dee 0bbb 0000 0000 0000 0000 9bbb 5eed
+			5555 bbbb bbbb bbbb bbbb bbbb bbbb 5555
+			99de 0c99 0000 0000 0000 0000 999c 5de9
+			5b55 bb99 bbbb bbbb bbbb bbbb 5bbb 555b
+			99ed a99d 0000 0000 0000 a000 9d99 5ed9
+			9455 9999 9999 9999 9999 9999 9999 5554
+			d9de a9dd 0000 0000 0000 a000 ddd9 5e99
+			8855 8888 8888 8888 8888 8888 8888 5558
+			d9de a9dd 0000 0000 0000 a000 ddd9 5eb9
+			8455 8888 8888 8888 8888 8888 8888 5554
+			d99d 0a9d 0000 0000 0000 0000 9d9a 5db9
+			4355 8888 3348 3333 4333 8888 4888 5553
+			99d9 07c9 0000 0000 0000 0000 99c7 5dbb
+			5555 bb55 bbbb bbbb bbbb bbbb 555b 5555
+			c7c9 007c 0000 0000 0000 0000 bc70 5d9b
+			5555 bbb5 bbbb bbbb bbbb bbbb 55bb 5555
+			777c 0007 0000 0000 0000 0000 7770 5bb7
+			b555 b999 bbbb bbbb bbbb 99bb b999 5555
+			c9cc 0077 0000 0000 0000 0000 cc60 5dcc
+			4555 9444 9999 9999 9999 9999 4449 555b
+			d99c 007c 0000 0000 0000 0000 9c70 5cc9
+			4455 4444 4444 4444 4444 4444 8444 5554
+			fd9c 0079 0000 0000 0000 0000 d9c7 5c9d
+			8855 8888 8888 8888 8888 8888 8888 5558
+			ff9c 0069 0000 0000 0000 0000 fdc7 5c9f
+			8855 8888 8888 8888 8888 8888 8888 5554
+			fd99 0069 0000 0000 0000 0000 ffc7 5c9f
+			8455 8888 8888 8888 8888 8888 4888 5553
+			d999 006c 0000 0000 0000 0000 fdc7 5c9f
+			4355 bb44 bbbb bbbb bbbb bbbb 5555 5555
+			c999 0006 0000 0000 0000 0000 dc70 5bc9
+			5555 bb55 bbbb bbbb bbbb bbbb 555b 5555
+			6c79 0666 0000 0000 0000 0000 c766 5d7c
+			5555 bbb5 bbbb bbbb bbbb bbbb 55bb 5555
+			77cd 6777 0000 0000 0000 6600 7cc7 5ed7
+			5555 999b 9999 9999 9999 9999 5b99 5555
+			9a79 77c9 0006 0000 0000 7760 999c 5ebc
+			5555 4499 4444 4444 4444 4444 b994 5555
+			f9a9 7c9d 0067 0000 0000 c776 dfd9 5ec9
+			b555 8884 8888 8888 8888 8888 4888 5555
+			fd9e a9df 0067 6666 0066 9c76 dffd 5dc9
+			4555 8888 8888 8888 8888 8888 8888 5555
+			ddde cdff 666a 7777 0677 99c6 dfff 5dc9
+			8555 8888 8888 8888 8888 8888 8888 5555
+			ddde cddd 767c aaaa 677a 99c6 9ddd 5ec9
+			3555 3444 bbb3 bbbb bbbb 33bb 3444 5555
+			dd9d cddd a67c ddd9 67a9 9976 9999 5ecb
+			5555 bb55 bbbb bbbb bbbb bbbb 555b 5555
+			d9de c9dd b67c dddd 7a9d 9c76 b999 5dbc
+			5555 bbb5 bbbb bbbb bbbb bbbb 55bb 5555
+			9dde cc99 b67c dddd 79dd c766 5bbb 5ed5
+			9b55 9999 9999 9999 9999 9999 9999 555b
+			9ded ccc9 b67a dddd 79dd 7767 5555 5ddb
+			4955 4444 4444 4444 4444 4444 4444 5559
+			c9de accc 5667 ddd9 79dd 7667 bb55 5ded
+			8455 8888 8888 8888 8888 8888 8888 5554
+			ddee 7ab9 6776 dd95 7c9d 56c6 ddbc 5ede
+			8455 8888 8888 8888 8888 8888 8888 5554
+			ddde 7aab 5aa7 5557 7c55 c7bc dedb 5eed
+			4355 8888 3334 8843 3488 8433 4888 5553
+			bded bbbb aaab bbaa cbbb dbdb eded 5dde
+			5555 bbbb bbbb bbbb bbbb bbbb 5bbb 5555
+			deee edee dedd bbbb edbb edee deee 5ede
+			5555 bbbb bbbb bbbb bbbb bbbb 5bbb 5555
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="d0stair_d01_pl" color_size="16">
-		4fe0 1506 0441 1948 1507 196a 1107 0863
-		1528 10c6 1949 1129 1d8c 08a5 1508 1dae
+		3042 1948 1507 196a 1d8c 10e7 0863 10a5
+		1dae 152a 0cc7 1509 10e8 1d4c 29b0 216f
 	</tex_palette>
 </tex_palette_array>
 
@@ -159,19 +159,21 @@
 			<primitive_array size="2">
 				<primitive index="0" type="quads" vertex_size="12">
 					<mtx idx="0"/>
-					<tex st="64.000000 -2.000000"/>
+					<tex st="63.562500 0.250000"/>
 					<clr rgb="25 25 25"/>
 					<pos_s xyz="3.000000 6.000000 -3.000000"/>
-					<tex st="32.000000 -2.000000"/>
+					<tex st="32.000000 0.250000"/>
 					<pos_xy xy="-3.000000 6.000000"/>
 					<tex st="32.000000 64.000000"/>
 					<clr rgb="0 0 0"/>
 					<pos_yz yz="0.000000 3.000000"/>
-					<tex st="64.000000 64.000000"/>
+					<tex st="63.562500 64.000000"/>
 					<pos_xy xy="3.000000 0.000000"/>
 					<tex st="33.937500 16.625000"/>
-					<pos_xy xy="-3.000000 6.000000"/>
-					<pos_xy xy="3.000000 6.000000"/>
+					<clr rgb="19 19 19"/>
+					<pos_xy xy="-3.000000 5.625000"/>
+					<pos_xy xy="3.000000 5.625000"/>
+					<clr rgb="0 0 0"/>
 					<pos_xy xy="3.000000 0.000000"/>
 					<pos_xy xy="-3.000000 0.000000"/>
 					<tex st="30.562500 0.250000"/>
@@ -188,13 +190,15 @@
 					<tex st="33.937500 16.625000"/>
 					<clr rgb="25 25 25"/>
 					<pos_xz xz="-3.000000 -3.000000"/>
+					<clr rgb="19 19 19"/>
+					<pos_yz yz="5.625000 3.000000"/>
 					<clr rgb="0 0 0"/>
-					<pos_xz xz="-3.000000 3.000000"/>
 					<pos_xy xy="-3.000000 0.000000"/>
 					<pos_xy xy="3.000000 0.000000"/>
-					<pos_xy xy="3.000000 6.000000"/>
+					<clr rgb="19 19 19"/>
+					<pos_xy xy="3.000000 5.625000"/>
 					<clr rgb="25 25 25"/>
-					<pos_xz xz="3.000000 -3.000000"/>
+					<pos_yz yz="6.000000 -3.000000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>

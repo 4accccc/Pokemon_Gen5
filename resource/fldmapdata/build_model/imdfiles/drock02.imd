@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-04-27T20:46:31" source="drock02.mb"/>
+	<create user="fuchino" host="W00152" date="2010-03-31T23:36:02" source="drock02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2009-04-27T20:46:31" source="drock02.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-03-31T23:36:02" source="drock02.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -30,29 +30,53 @@
 <box_test pos_scale="2" xyz="-2.000000 0.500000 -2.000000" whd="4.000000 2.000000 4.000000"/>
 
 <tex_image_array size="1">
-	<tex_image index="0" name="drock02"
-		width="16" height="16" original_width="16" original_height="16"
+	<tex_image index="0" name="drock01"
+		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="drock02_pl"
-		path="C:/home/wb_data3d/build_model/indoor/drock02/tex/drock02.tga"
+		palette_name="drock01_pl"
+		path="C:/home/wb_data3d/build_model/indoor/drock01/tex/drock01.tga"
 	>
-		<bitmap size="64">
-			0000 0000 0000 0000 0000 7700 0077 0000
-			0000 5470 0765 0000 0000 5541 1755 0000
-			1000 5557 1765 0001 6100 5566 7666 0021
-			6100 6666 7666 0211 6610 6666 7666 0211
-			6720 6666 1766 0211 1173 6677 1117 3211
-			1113 1111 1111 3221 2123 1111 1111 3322
-			2230 1112 2211 0322 2300 2222 3222 0003
-			3000 2333 3332 0000 0000 3300 0333 0000
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 4400 0444 0000 0000 0000
+			0000 0000 0000 5564 1777 0000 0000 0000
+			0000 0000 4000 7556 4677 0001 0000 0000
+			0000 0000 7400 7775 6767 0014 0000 0000
+			0000 0000 5610 7775 7767 0144 0000 0000
+			0000 0000 5611 7775 7767 1447 0000 0000
+			0000 1000 5411 7777 7767 1447 0001 0000
+			0000 1110 6444 7776 7467 1447 0111 0000
+			0000 1441 6444 7766 4647 1444 0114 0000
+			0000 1441 6444 6666 6466 2444 2114 0000
+			0000 1141 7444 6677 4646 2144 2144 0000
+			1000 1111 7444 6777 4466 2144 1442 0002
+			1000 1141 4446 4777 4144 1114 1442 0002
+			1000 6641 4466 4444 1144 1114 4412 0002
+			1100 6641 4666 4444 1144 1111 4111 0002
+			2100 6644 1666 4444 1144 1111 1111 0022
+			2200 6644 1466 4444 2114 1112 1112 0321
+			4230 4144 1444 1441 2221 4444 1122 0321
+			4230 1114 1111 2411 4222 4444 1222 0321
+			4230 1141 1221 1111 4122 4444 2222 0322
+			1230 1114 1221 1111 1421 4414 2222 0322
+			4230 1141 2222 1111 4111 2141 2222 0332
+			2330 2111 2222 1111 1221 2211 2222 0332
+			2300 2112 2222 1111 2221 2222 2222 0032
+			3300 2222 2222 1111 2221 2222 2222 0033
+			3000 2223 2222 1222 2222 2222 3322 0003
+			0000 2330 2222 2222 2222 3222 0033 0000
+			0000 3000 3333 2222 2222 3322 0033 0000
+			0000 0000 3330 2233 3222 3333 0000 0000
+			0000 0000 0000 3333 3333 0033 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="drock02_pl" color_size="8">
-		0c1f 258e 2109 3daf 5b9a 537a 46f7 3a53
+	<tex_palette index="0" name="drock01_pl" color_size="8">
+		0c1f 1108 08c7 1d4c 152c 2df4 216f 2591
 	</tex_palette>
 </tex_palette_array>
 
@@ -75,7 +99,7 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
-		tex_tiling="repeat repeat"
+		tex_tiling="clamp clamp"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
@@ -102,12 +126,12 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
+					<tex st="0.000000 32.000000"/>
 					<clr rgb="31 31 31"/>
 					<pos_xyz xyz="-0.198242 0.049561 0.198242"/>
-					<tex st="16.000000 16.000000"/>
+					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="0.198242 0.049561"/>
-					<tex st="16.000000 0.000000"/>
+					<tex st="32.000000 0.000000"/>
 					<pos_yz yz="0.247803 -0.198242"/>
 					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="-0.198242 0.247803"/>
