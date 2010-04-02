@@ -20,12 +20,12 @@
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 ff00 00ff 0000 0000 0000 
-			0000 0000 0000 deff ffed 0000 0000 0000 
-			0000 0000 f000 edde edde 000f 0000 0000 
-			0000 ff00 ef00 eedd ddee 00fe 00ff 0000 
-			0000 edf0 eaff eddd ddde ffae 0fde 0000 
-			0000 ddf0 eafe ddde eddd efae 0fdd 0000 
+			0000 0000 0000 fff0 0fff 0000 0000 0000 
+			0000 0000 f000 eddf fdde 000f 0000 0000 
+			0000 0000 df00 eddd dddd 00fd 0000 0000 
+			0000 ff00 ef00 dddd dddd 00fe 00ff 0000 
+			0000 edf0 eaff dddd dddd ffae 0fde 0000 
+			0000 ddf0 eafe ddee eedd efae 0fdd 0000 
 			0000 df00 a4ed eeee eeee de4a 00fd 0000 
 			0000 f000 a4dd aaa4 4aaa dd4a 000f 0000 
 			0000 0000 dddf 4a44 44a4 fddd 0000 0000 
@@ -55,12 +55,12 @@
 	<tex_image name='accordion.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.2.tga' palette_name='accordion' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 ff00 00ff 0000 0000 0000 
-			0000 0000 0000 deff ffed 0000 0000 0000 
-			0000 0000 f000 edde edde 000f 0000 0000 
-			0000 ff00 ef00 eedd ddee 00fe 00ff 0000 
-			0000 edf0 eaff eddd ddde ffae 0fde 0000 
-			0000 ddf0 eafe ddde eddd efae 0fdd 0000 
+			0000 0000 0000 fff0 0fff 0000 0000 0000 
+			0000 0000 f000 eddf fdde 000f 0000 0000 
+			0000 0000 df00 eddd dddd 00fd 0000 0000 
+			0000 ff00 ef00 dddd dddd 00fe 00ff 0000 
+			0000 edf0 eaff dddd dddd ffae 0fde 0000 
+			0000 ddf0 eafe ddee eedd efae 0fdd 0000 
 			0000 df00 a4ed eeee eeee de4a 00fd 0000 
 			0000 f000 a4dd aaa4 4aaa dd4a 000f 0000 
 			0000 0000 dddf 4a44 44a4 fddd 0000 0000 
@@ -91,12 +91,12 @@
 	<tex_image name='accordion.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.3.tga' palette_name='accordion' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 ff00 00ff 0000 0000 0000 
-			0000 0000 0000 deff ffed 0000 0000 0000 
-			0000 0000 f000 edde edde 000f 0000 0000 
-			0000 ff00 ef00 eedd ddee 00fe 00ff 0000 
-			0000 edf0 eaff eddd ddde ffae 0fde 0000 
-			0000 ddf0 eafe ddde eddd efae 0fdd 0000 
+			0000 0000 0000 fff0 0fff 0000 0000 0000 
+			0000 0000 f000 eddf fdde 000f 0000 0000 
+			0000 0000 df00 eddd dddd 00fd 0000 0000 
+			0000 ff00 ef00 dddd dddd 00fe 00ff 0000 
+			0000 edf0 eaff dddd dddd ffae 0fde 0000 
+			0000 ddf0 eafe ddee eedd efae 0fdd 0000 
 			0000 df00 a4ed eeee eeee de4a 00fd 0000 
 			0000 f000 a4dd aaa4 4aaa dd4a 000f 0000 
 			0000 0000 dddf 4a44 44a4 fddd 0000 0000 
@@ -128,24 +128,24 @@
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 ff00 00ff 0000 0000 0000 
-			0000 0000 0000 deff ffed 0000 0000 0000 
-			0000 0000 f000 edde edde 000f 0000 0000 
-			0000 ff00 ef00 eedd ddee 00fe 00ff 0000 
-			0000 edf0 eaff eddd ddde ffae 0fde 0000 
-			0000 edf0 eafe ddde eddd efae 0fde 0000 
+			0000 0000 0000 fff0 0fff 0000 0000 0000 
+			0000 0000 f000 eddf fdde 000f 0000 0000 
+			0000 0000 df00 eddd dddd 00fd 0000 0000 
+			0000 ff00 ef00 dddd dddd 00fe 00ff 0000 
+			0000 edf0 eaff dddd dddd ffae 0fde 0000 
+			0000 edf0 eafe ddee eedd efae 0fde 0000 
 			0000 ddf0 a4ee eeee eeee ee4a 0fdd 0000 
 			0000 df00 a4ee 1144 4411 ee4a 00fd 0000 
 			0000 f000 addd 2144 4412 ddda 000f 0000 
-			0000 f000 eefb 21dd dd11 bfee 000f 0000 
+			0000 f000 eefb 11dd dd12 bfee 000f 0000 
 			0000 f000 6f6b eeee eeee b6f6 000f 0000 
-			0000 f000 b66c ff66 66ff c66b 000f 0000 
-			0000 0000 b6ff bbfd dfbb ff6b 0000 0000 
+			0000 f000 b66c bb66 66bb c66b 000f 0000 
+			0000 0000 b6ff b9fd df9b ff6b 0000 0000 
 			0000 0000 66f0 cccc cccc 0f66 0000 0000 
 			0000 0000 6f00 ccbc cbcc 00f6 0000 0000 
-			0000 0000 6ff0 bcb3 3bcb 0ff6 0000 0000 
+			0000 0000 69f0 acb6 6bca 0ff6 0000 0000 
 			0000 0000 a97f ffff ffff f79a 0000 0000 
-			0000 f000 af34 277a a771 43fa 000f 0000 
+			0000 f000 af34 2f7a a7f1 43fa 000f 0000 
 			0000 f000 9f37 17aa aa71 73f9 000f 0000 
 			0000 7f00 99f7 2999 9991 7f99 00f7 0000 
 			0000 6f00 a9f7 19a9 9a99 7f9a 00f4 0000 
@@ -163,31 +163,31 @@
 	<tex_image name='accordion.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.5.tga' palette_name='accordion' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 ff00 00ff 0000 0000 0000 
-			0000 0000 0000 deff ffed 0000 0000 0000 
-			0000 0000 f000 edde edde 000f 0000 0000 
-			0000 ff00 ef00 eedd ddee 00fe 00ff 0000 
-			0000 edf0 eaff eddd ddde ffae 0fde 0000 
-			0000 edf0 eafe ddde eddd efae 0fde 0000 
+			0000 0000 0000 fff0 0fff 0000 0000 0000 
+			0000 0000 f000 eddf fdde 000f 0000 0000 
+			0000 0000 df00 eddd dddd 00fd 0000 0000 
+			0000 ff00 ef00 dddd dddd 00fe 00ff 0000 
+			0000 edf0 eaff dddd dddd ffae 0fde 0000 
+			0000 edf0 eafe ddee eedd efae 0fde 0000 
 			0000 ddf0 a4ee eeee eeee ee4a 0fdd 0000 
 			0000 df00 a4ee 1144 4411 ee4a 00fd 0000 
 			0000 f000 addd 2144 4412 ddda 000f 0000 
-			0000 f000 eefb 21dd dd11 bfee 000f 0000 
+			0000 f000 eefb 11dd dd12 bfee 000f 0000 
 			0000 f000 6f6b eeee eeee b6f6 000f 0000 
-			0000 f000 b66c ff66 66ff c66b 000f 0000 
-			0000 0000 b6ff bbfd dfbb ff6b 0000 0000 
+			0000 f000 b66c bb66 66bb c66b 000f 0000 
+			0000 0000 b66f b9fd df9b f66b 0000 0000 
 			0000 0000 66f0 cccc cccc 0f66 0000 0000 
-			0000 0000 6f00 ccbc cbcc 00f6 0000 0000 
-			0000 ff00 6ff7 bcb3 3bcb 00f6 0000 0000 
-			0000 6bf0 a947 ffff ffff 0f9a 0000 0000 
-			0000 bcf0 af3f 2f7a a7f1 f4fa 0000 0000 
+			0000 0000 6fff ccbc cbcc 00f6 0000 0000 
+			0000 ff00 6977 acb6 6bca 00f6 0000 0000 
+			0000 6bf0 a947 fffa afff 0f9a 0000 0000 
+			0000 bcf0 af3f 1f7a a7f2 f4fa 0000 0000 
 			0000 ff00 9ff0 19aa aa91 f3f9 0000 0000 
-			0000 0000 99f0 2999 9991 f99f 0000 0000 
-			0000 0000 a9f0 19a9 9a99 9bcf 000f 0000 
-			0000 0000 aaf0 9aaa aaaa 9bbf 000f 0000 
-			0000 0000 a6f0 6aaa aaa6 fff9 0000 0000 
-			0000 0000 69f0 3666 6663 0f96 0000 0000 
-			0000 0000 aaf0 719a a917 0faa 0000 0000 
+			0000 0000 99f0 1999 9992 f99f 0000 0000 
+			0000 0000 a9f0 99a9 9a91 9bcf 000f 0000 
+			0000 0000 aaf0 aaaa aaa9 9bbf 000f 0000 
+			0000 0000 a6f0 6aaa aaa6 fffa 0000 0000 
+			0000 0000 69f0 366a a663 0f96 0000 0000 
+			0000 0000 aaf0 7196 6917 0faa 0000 0000 
 			0000 0000 a9f0 29aa aa91 00fa 0000 0000 
 			0000 0000 af00 9aaa ff91 000f 0000 0000 
 			0000 0000 9f00 aaaa 00f9 0000 0000 0000 
@@ -199,22 +199,22 @@
 	<tex_image name='accordion.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/accordion/accordion.6.tga' palette_name='accordion' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 ff00 00ff 0000 0000 0000 
-			0000 0000 0000 deff ffed 0000 0000 0000 
-			0000 0000 f000 edde edde 000f 0000 0000 
-			0000 ff00 ef00 eedd ddee 00fe 00ff 0000 
-			0000 edf0 eaff eddd ddde ffae 0fde 0000 
-			0000 edf0 eafe ddde eddd efae 0fde 0000 
+			0000 0000 0000 fff0 0fff 0000 0000 0000 
+			0000 0000 f000 eddf fdde 000f 0000 0000 
+			0000 0000 df00 eddd dddd 00fd 0000 0000 
+			0000 ff00 ef00 dddd dddd 00fe 00ff 0000 
+			0000 edf0 eaff dddd dddd ffae 0fde 0000 
+			0000 edf0 eafe ddee eedd efae 0fde 0000 
 			0000 ddf0 a4ee eeee eeee ee4a 0fdd 0000 
 			0000 df00 a4ee 1144 4411 ee4a 00fd 0000 
 			0000 f000 addd 2144 4412 ddda 000f 0000 
-			0000 f000 eefb 21dd dd11 bfee 000f 0000 
+			0000 f000 eefb 11dd dd12 bfee 000f 0000 
 			0000 f000 6f6b eeee eeee b6f6 000f 0000 
-			0000 f000 b66c ff66 66ff c66b 000f 0000 
-			0000 0000 b66f bbfd dfbb f66b 0000 0000 
+			0000 f000 b66c bb66 66bb c66b 000f 0000 
+			0000 0000 b66f b9fd df9b f66b 0000 0000 
 			0000 0000 66f0 cccc cccc 0f66 0000 0000 
 			0000 0000 6f00 ccbc cbcc fff6 0000 0000 
-			0000 0000 6f00 bcb3 3bcb 7796 00ff 0000 
+			0000 0000 6900 acb6 6bca 77f6 00ff 0000 
 			0000 0000 a9f0 ffff ffff 749a 0fb6 0000 
 			0000 0000 af4f 2f7a a7f1 f3fa 0fcb 0000 
 			0000 0000 9f3f 19aa aa91 0ff9 00ff 0000 
@@ -247,11 +247,11 @@
 			0000 1ff0 ff41 ffff eee7 dddd 0fed 0000 
 			0000 feef eeff eeee dddd dddd 0fdd 0000 
 			0000 eff0 deee dddd dddd eddd 00ff 0000 
-			0000 f000 6666 dde6 fddd ffff 0000 0000 
-			0000 f000 dfbb 555b 5555 f555 0000 0000 
-			0000 9000 cccc 55cc 55cc 0ff5 0000 0000 
-			0000 a000 bccc 555c 55cc 0f55 0000 0000 
-			0000 0000 bcbf 555c f5ff 00ff 0000 0000 
+			0000 f000 66ee ddee fddd ffff 0000 0000 
+			0000 f000 df9b 555b 5555 f555 0000 0000 
+			0000 9000 cccc 56cc 55cc 0ff5 0000 0000 
+			0000 a000 bccc 566c 55cc 0f55 0000 0000 
+			0000 0000 bcaf 566c f5ff 00ff 0000 0000 
 			0000 0000 9ff0 7559 0ff7 0000 0000 0000 
 			0000 0000 f000 7972 f977 0000 0000 0000 
 			0000 0000 f000 7a91 fa77 0000 0000 0000 
@@ -282,11 +282,11 @@
 			0000 1ff0 ff41 ffff eee7 dddd 0fed 0000 
 			0000 feef eeff eeee dddd dddd 0fdd 0000 
 			0000 eff0 deee dddd dddd eddd 00ff 0000 
-			0000 f000 6666 dde6 fddd ffff 0000 0000 
-			0000 f000 dfbb 555b 5555 f555 0000 0000 
-			0000 9000 cccc 55cc 55cc 0ff5 0000 0000 
-			0000 a000 bccc 555c 55cc 0f55 0000 0000 
-			0000 0000 bcbf 555c f5ff 00ff 0000 0000 
+			0000 f000 66ee ddee fddd ffff 0000 0000 
+			0000 f000 df9b 555b 5555 f555 0000 0000 
+			0000 9000 cccc 56cc 55cc 0ff5 0000 0000 
+			0000 a000 bccc 566c 55cc 0f55 0000 0000 
+			0000 0000 bcaf 566c f5ff 00ff 0000 0000 
 			0000 0000 9ff0 7559 0ff7 0000 0000 0000 
 			0000 0000 f000 9972 0f77 0000 0000 0000 
 			0000 0000 ff00 7a91 f677 0000 0000 0000 
@@ -318,11 +318,11 @@
 			0000 1ff0 ff41 ffff eee7 dddd 0fed 0000 
 			0000 feef eeff eeee dddd dddd 0fdd 0000 
 			0000 eff0 deee dddd dddd eddd 00ff 0000 
-			0000 f000 6666 dde6 fddd ffff 0000 0000 
-			0000 f000 dfbb 555b 5555 f555 0000 0000 
-			0000 9000 cccc 55cc 55cc 0ff5 0000 0000 
-			0000 a000 bccc 555c 55cc 0f55 0000 0000 
-			0000 0000 bcbf 555c f5ff 00ff 0000 0000 
+			0000 f000 66ee ddee fddd ffff 0000 0000 
+			0000 f000 df9b 555b 5555 f555 0000 0000 
+			0000 9000 cccc 56cc 55cc 0ff5 0000 0000 
+			0000 a000 bccc 566c 55cc 0f55 0000 0000 
+			0000 0000 bcaf 566c f5ff 00ff 0000 0000 
 			0000 0000 9ff0 6559 0ff6 0000 0000 0000 
 			0000 0000 f000 7962 0f77 0000 0000 0000 
 			0000 0000 f000 7a91 f777 0000 0000 0000 
@@ -355,11 +355,11 @@
 			0000 def0 dddd 7eee ffff 14ff 0ff1 0000 
 			0000 ddf0 dddd dddd eeee ffee feef 0000 
 			0000 ff00 ddde dddd dddd eeed 0ffe 0000 
-			0000 0000 ffff dddf 6edd 6666 000f 0000 
-			0000 0000 555f 5555 b555 bbfd 000f 0000 
-			0000 0000 5ff0 cc55 cc55 cccc 0009 0000 
-			0000 0000 55f0 cc55 c555 cccb 000a 0000 
-			0000 0000 ff00 ff5f c555 fbcb 0000 0000 
+			0000 0000 ffff dddf eedd ee66 000f 0000 
+			0000 0000 555f 5555 b555 b9fd 000f 0000 
+			0000 0000 5ff0 cc55 cc65 cccc 0009 0000 
+			0000 0000 55f0 cc55 c665 cccb 000a 0000 
+			0000 0000 ff00 ff5f c665 facb 0000 0000 
 			0000 0000 0000 7ff0 9557 0ff9 0000 0000 
 			0000 0000 0000 779f 2797 000f 0000 0000 
 			0000 0000 0000 77af 19a7 000f 0000 0000 
@@ -390,11 +390,11 @@
 			0000 def0 dddd 7eee ffff 14ff 0ff1 0000 
 			0000 ddf0 dddd dddd eeee ffee feef 0000 
 			0000 ff00 ddde dddd dddd eeed 0ffe 0000 
-			0000 0000 ffff dddf 6edd 6666 000f 0000 
-			0000 0000 555f 5555 b555 bbfd 000f 0000 
-			0000 0000 5ff0 cc55 cc55 cccc 0009 0000 
-			0000 0000 55f0 cc55 c555 cccb 000a 0000 
-			0000 0000 ff00 ff5f c555 fbcb 0000 0000 
+			0000 0000 ffff dddf eedd ee66 000f 0000 
+			0000 0000 555f 5555 b555 b9fd 000f 0000 
+			0000 0000 5ff0 cc55 cc65 cccc 0009 0000 
+			0000 0000 55f0 cc55 c665 cccb 000a 0000 
+			0000 0000 ff00 ff5f c665 facb 0000 0000 
 			0000 0000 0000 7ff0 9557 0ff9 0000 0000 
 			0000 0000 0000 77f0 2799 000f 0000 0000 
 			0000 0000 0000 776f 19a7 00ff 0000 0000 
@@ -426,11 +426,11 @@
 			0000 def0 dddd 7eee ffff 14ff 0ff1 0000 
 			0000 ddf0 dddd dddd eeee ffee feef 0000 
 			0000 ff00 ddde dddd dddd eeed 0ffe 0000 
-			0000 0000 ffff dddf 6edd 6666 000f 0000 
-			0000 0000 555f 5555 b555 bbfd 000f 0000 
-			0000 0000 5ff0 cc55 cc55 cccc 0009 0000 
-			0000 0000 55f0 cc55 c555 cccb 000a 0000 
-			0000 0000 ff00 ff5f c555 fbcb 0000 0000 
+			0000 0000 ffff dddf eedd ee66 000f 0000 
+			0000 0000 555f 5555 b555 b9fd 000f 0000 
+			0000 0000 5ff0 cc55 cc65 cccc 0009 0000 
+			0000 0000 55f0 cc55 c665 cccb 000a 0000 
+			0000 0000 ff00 ff5f c665 facb 0000 0000 
 			0000 0000 0000 6ff0 9556 0ff9 0000 0000 
 			0000 0000 0000 77f0 2697 000f 0000 0000 
 			0000 0000 0000 777f 19a7 000f 0000 0000 
