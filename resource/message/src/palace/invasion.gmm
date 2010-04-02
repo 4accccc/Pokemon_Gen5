@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-03-28T19:44:56"/>
+	<create user="ohmori" host="W00223" date="2010-04-02T20:48:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="178"/>
 		<band id="2" index="2" style="0000" width="625"/>
 		<band id="3" index="3" style="0000" width="625"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -851,17 +851,17 @@
 ワープが　かのうになった！</language>
 	</row>
 
-	<row id="plc_warp_01" back-color="#ffff80,,,#80ff80,,,,,,,,,,,,,,">
+	<row id="plc_warp_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
 		<comment>表フィールドからハイリンクにワープするときに、
 表示されるメッセージ。
 [1:00:トレーナー名:0]は主人公名</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は　ハイリンクに
-ワープした！</language>
+ワープした！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は　ハイリンクに
-ワープした！</language>
+ワープした！▼</language>
 	</row>
 
-	<row id="plc_warp_02" back-color="#ffff80,,,#80ff80,,,,,,,,,,,,,,">
+	<row id="plc_warp_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
 		<comment>表フィールドからハイリンクにワープするとき、
 ワープ不可であることを、伝えるメッセージ。</comment>
 		<language name="JPN" width="256">ここでは　ハイリンクに
