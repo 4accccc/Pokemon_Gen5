@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T19:12:31"/>
+	<create user="matsumiya" host="W00224" date="2010-04-02T20:17:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -726,10 +726,14 @@
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">あっちの　いろの　こい　くさむら……[BE:01:ページ切り替え（クリア）]
 とびだしてくるのは　ちょっぴり
-つよい　ポケモンの　ようだね[BE:01:ページ切り替え（クリア）]</language>
+つよい　ポケモンの　ようだね[BE:01:ページ切り替え（クリア）]
+それに　ときどき　だけど
+どうじに　２ひき　とびだしてくるよ▼</language>
 		<language name="JPN_KANJI" width="256">あっちの　色の濃い　草むら……[BE:01:ページ切り替え（クリア）]
 飛びだしてくるのは　ちょっぴり
-強い　ポケモンの　ようだね[BE:01:ページ切り替え（クリア）]</language>
+強い　ポケモンの　ようだね[BE:01:ページ切り替え（クリア）]
+それに　ときどき　だけど
+同時に　２匹　飛びだしてくるよ▼</language>
 	</row>
 
 	<row id="msg_r03_black_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -808,6 +812,17 @@
 いきの　あった　コンビネーション[BE:01:ページ切り替え（クリア）]
 どんな　トレーナーさんでも
 てんてこまい　するんだよ</language>
+	</row>
+
+	<row id="msg_r03_babyboy_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・GRIDX=754、GRIDZ=555、上向き</comment>
+		<attribute name="キャラ指定">BABYBOY1
+男の子</attribute>
+		<language name="JPN" width="256">ときどき　ポケモンと
+あそばせて　もらってるよ</language>
+		<language name="JPN_KANJI" width="256">ときどき　ポケモンと
+あそばせて　もらってるよ</language>
 	</row>
 
 	<row id="msg_r03_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
