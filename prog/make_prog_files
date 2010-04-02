@@ -345,7 +345,7 @@ SRCS_OVERLAY_DEV_WIFILIB   = net/net_devwifi.c \
 # k.ohno 10.01.12
 #===> main
 SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
-	battle/tr_ai/tr_ai.c \
+	      battle/tr_ai/tr_ai.c \
         musical/musical_event.c \
         musical/dressup/musical_dressup_sys.c \
         musical/stage/musical_stage_sys.c \
@@ -1005,8 +1005,6 @@ SRCS_OVERLAY_TAYA_DEBUG   = test/taya/d_taya.c
 #===> GROUP_OVERLAY_UNION_INTRUDE
 #===> SRCS_OVERLAY_DEV_WIRELESS
 SRCS_OVERLAY_SOGABE_DEBUG		= test/soga/d_soga.c \
-								  test/soga/d_btltest.c \
-								  test/soga/capture.c \
 								  test/soga/effect_viewer.c \
 								  test/soga/pokemon_viewer.c \
 								  test/soga/trainer_viewer.c
