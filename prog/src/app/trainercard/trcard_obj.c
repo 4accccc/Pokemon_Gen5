@@ -95,7 +95,7 @@ void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk , const GFL_DISP_VRAM *vramBank)
 
   // セルアクターリソース転送
   wk->resCell[0].pltIdx = GFL_CLGRP_PLTT_RegisterEx( p_handle, NARC_trainer_case_card_button_NCLR, 
-                                                     CLSYS_DRAW_SUB, 0, 0, 4, wk->heapId );
+                                                     CLSYS_DRAW_SUB, 0, 0, 5, wk->heapId );
   wk->resCell[0].ncgIdx = GFL_CLGRP_CGR_Register( p_handle , NARC_trainer_case_card_button_NCGR, FALSE , 
                                                   CLSYS_DRAW_SUB , wk->heapId );
   wk->resCell[0].anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle , 
@@ -107,7 +107,7 @@ void InitTRCardCellActor( TR_CARD_OBJ_WORK *wk , const GFL_DISP_VRAM *vramBank)
   // タッチバー用リソース転送
   p_handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId() , wk->heapId );
   wk->resCell[1].pltIdx = GFL_CLGRP_PLTT_Register( p_handle, APP_COMMON_GetBarIconPltArcIdx(),
-                                                   CLSYS_DRAW_SUB , 4*32 , wk->heapId );
+                                                   CLSYS_DRAW_SUB , 5*32 , wk->heapId );
   wk->resCell[1].ncgIdx = GFL_CLGRP_CGR_Register( p_handle, APP_COMMON_GetBarIconCharArcIdx(),
                                                    FALSE, CLSYS_DRAW_SUB, wk->heapId );
   wk->resCell[1].anmIdx = GFL_CLGRP_CELLANIM_Register( p_handle, 

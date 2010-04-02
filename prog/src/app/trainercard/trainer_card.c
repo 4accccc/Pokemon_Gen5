@@ -76,9 +76,10 @@
 enum {
   SEQ_IN,
   SEQ_MAIN,
+  SEQ_RETURN_FADEOUT,
+  SEQ_END_FADEOUT,
   SEQ_OUT,
   SEQ_REVERSE,
-  SEQ_PMSINPUT_CALL,
   SEQ_PMSINPUT,
   SEQ_BADGE_VIEW_CALL,
   SEQ_COVER,
@@ -284,7 +285,6 @@ static void Trans_SignScreen( const int inFrame, const int flag );
 static BOOL CardScaling( TR_CARD_WORK *wk );
 static void Change_SignAnimeButton( TR_CARD_WORK *wk, int flag, int OnOff );
 
-static int SignCall( TR_CARD_WORK *wk );
 
 static void Stock_TouchPoint( TR_CARD_WORK *wk, int scale_mode );
 static void _BmpWinPrint_Rap(     GFL_BMPWIN * win, void * src,
@@ -572,6 +572,22 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
     }
     break;
 
+  case SEQ_RETURN_FADEOUT:
+    if(GFL_CLACT_WK_CheckAnmActive(wk->ObjWork.ClActWorkS[ACTS_BTN_BACK])==FALSE){
+      WIPE_SYS_Start( WIPE_PATTERN_FSAM, WIPE_TYPE_SHUTTEROUT_UP,
+              WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
+              WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
+      *seq = SEQ_OUT;
+    }
+    break;
+  case SEQ_END_FADEOUT:
+    if(GFL_CLACT_WK_CheckAnmActive(wk->ObjWork.ClActWorkS[ACTS_BTN_END])==FALSE){
+      WIPE_SYS_Start( WIPE_PATTERN_FSAM, WIPE_TYPE_SHUTTEROUT_UP,
+              WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
+              WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
+      *seq = SEQ_OUT;
+    }
+    break;
   case SEQ_OUT:
     if( WIPE_SYS_EndCheck() ){
       return GFL_PROC_RES_FINISH;
@@ -588,20 +604,6 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
       *seq = SEQ_MAIN;
     }
     break;
-  case SEQ_PMSINPUT_CALL: //サイン処理を呼び出すか？
-    {
-      int ret;
-      ret = SignCall(wk);
-      switch(ret){
-      case 1:
-        *seq = SEQ_MAIN;
-        break;
-      case 2:
-        *seq = SEQ_PMSINPUT;
-        break;
-      }
-    }
-    break;
   case SEQ_PMSINPUT:  //簡易会話処理を呼ぶ
     WIPE_SYS_Start( WIPE_PATTERN_FSAM, WIPE_TYPE_SHUTTEROUT_UP,
             WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
@@ -610,11 +612,13 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
     *seq = SEQ_OUT;
     break;
   case SEQ_BADGE_VIEW_CALL: // バッジ画面遷移
-    WIPE_SYS_Start( WIPE_PATTERN_FSAM, WIPE_TYPE_SHUTTEROUT_UP,
-            WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
-            WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
-    wk->tcp->value = CALL_BADGE;
-    *seq = SEQ_OUT;
+    if(GFL_CLACT_WK_CheckAnmActive(wk->ObjWork.ClActWorkS[ACTS_BTN_CHANGE])==FALSE){
+      WIPE_SYS_Start( WIPE_PATTERN_FSAM, WIPE_TYPE_SHUTTEROUT_UP,
+              WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
+              WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
+      wk->tcp->value = CALL_BADGE;
+      *seq = SEQ_OUT;
+    }
     break;
 
   }
@@ -1352,72 +1356,6 @@ static void DispTouchBarObj( TR_CARD_WORK *wk, int is_back )
  
 }
 
-//--------------------------------------------------------------------------------------------
-/**
- * サインアプリを呼ぶか確認
- *
- * @param wk    画面のワーク
- *
- * @return  BOOL  TRUE:終了 FALSE：処理中
- */
-//--------------------------------------------------------------------------------------------
-static int SignCall( TR_CARD_WORK *wk )
-{
-  int ret = 0;
-
-  switch(wk->sub_seq){
-  case 0: //サインを書きますか？
-    TRCBmp_SignDrawMsgPut(wk,0);
-    wk->sub_seq++;
-    break;
-  case 1:
-    //描画終了待ち
-//    if( GF_MSG_PrintEndCheck( wk->msgIdx ))
-    if( PRINTSYS_PrintStreamGetState( wk->printHandle ) != PRINTSTREAM_STATE_DONE )
-    {
-      return 0;
-    }
-    PRINTSYS_PrintStreamDelete( wk->printHandle );
-    TRCBmp_SignDrawYesNoCall(wk,0);
-    wk->sub_seq++;
-    break;
-  case 2: //選択待ち
-    ret = TRCBmp_SignDrawYesNoWait(wk,0);
-    if(ret < 0){
-      break;
-    }
-    if(ret == 0){
-      return 1;
-    }
-    if(wk->TrCardData->MySignValid){
-      TRCBmp_SignDrawMsgPut(wk,1);
-    }else{
-      return 2; //サインを書く
-    }
-    wk->sub_seq++;
-    break;
-  case 3:
-//    if( GF_MSG_PrintEndCheck( wk->msgIdx ))
-    if( PRINTSYS_PrintStreamGetState( wk->printHandle ) != PRINTSTREAM_STATE_DONE )
-    {
-      return 0;
-    }
-    PRINTSYS_PrintStreamDelete( wk->printHandle );
-    TRCBmp_SignDrawYesNoCall(wk,1);
-    wk->sub_seq++;
-    break;
-  case 4: //元のデータが消えてもいいですか？
-    ret = TRCBmp_SignDrawYesNoWait(wk,1);
-    switch(ret){
-    case 0:
-      return 1;
-    case 1:
-      return 2;
-    }
-    break;
-  }
-  return 0;
-}
 
 #define ROTATE_SPEED (0x400)    //90度のカウントアップ
 #define ROTATE_MAX (0x4000)   //360度 = 0x10000　90度 = 0x4000 = 16384
@@ -1657,11 +1595,13 @@ static int CheckKey(TR_CARD_WORK* wk)
   const int keyTrg = GFL_UI_KEY_GetTrg();
   if( keyTrg & PAD_BUTTON_CANCEL )
   {
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK, 9, TRUE);
     PMSND_PlaySE( SND_TRCARD_CANCEL );   //終了音
     return TRC_KEY_REQ_RETURN_BUTTON;
   }
   else if(keyTrg & PAD_BUTTON_X )
   {
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END, 8, TRUE);
     PMSND_PlaySE( SND_TRCARD_CANCEL );   //終了音
     return TRC_KEY_REQ_END_BUTTON;
     
@@ -1785,10 +1725,12 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
 
   switch(hitNo){
   case 0:     // 戻る
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK, 9, TRUE);
     PMSND_PlaySE( SND_TRCARD_DECIDE );
     return TRC_KEY_REQ_RETURN_BUTTON;
     break;
   case 1:     // 終了
+    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END, 8, TRUE);
     PMSND_PlaySE( SND_TRCARD_END );
     return TRC_KEY_REQ_END_BUTTON;
     break;
@@ -1798,6 +1740,7 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
     break;
   case 3:     // バッジ画面ボタン・アニメON/OFFボタン
     if(wk->is_back){
+      // アニメON／OFF
       if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
         wk->TrCardData->SignAnimeOn ^=1;
         Trans_CardBackScreen(wk, wk->TrCardData->Version);
@@ -1806,7 +1749,9 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
         OS_Printf("SignAnime = %d\n", wk->TrCardData->SignAnimeOn);
         PMSND_PlaySE( SND_TRCARD_ANIME );
       }
-    }else{
+    }else{  
+      // バッジ画面へ
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE, ANMS_BADGE_G, TRUE);
       return TRC_KEY_REQ_BADGE_CALL;
     }
     break;
@@ -2117,21 +2062,13 @@ static void JumpInputResult( TR_CARD_WORK *wk, int req, int *seq )
     break;
   // 通常終了
   case TRC_KEY_REQ_RETURN_BUTTON:
-    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BACK,ANMS_BACK_ON,TRUE);
-    WIPE_SYS_Start( WIPE_PATTERN_FSAM, WIPE_TYPE_SHUTTEROUT_UP,
-            WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
-            WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
-    *seq = SEQ_OUT;
+    *seq = SEQ_RETURN_FADEOUT;
     wk->tcp->value = CALL_NONE;
     wk->tcp->next_proc = TRAINERCARD_NEXTPROC_RETURN;
     break;
   // フィールド直接終了
   case TRC_KEY_REQ_END_BUTTON:
-    SetSActDrawSt(&wk->ObjWork,ACTS_BTN_BACK,ANMS_BACK_ON,TRUE);
-    WIPE_SYS_Start( WIPE_PATTERN_FSAM, WIPE_TYPE_SHUTTEROUT_UP,
-            WIPE_TYPE_SHUTTEROUT_UP, WIPE_FADE_BLACK,
-            WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
-    *seq = SEQ_OUT;
+    *seq = SEQ_END_FADEOUT;
     wk->tcp->value = CALL_NONE;
     wk->tcp->next_proc = TRAINERCARD_NEXTPROC_EXIT;
     break;
