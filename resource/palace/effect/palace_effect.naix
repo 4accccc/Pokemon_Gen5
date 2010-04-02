@@ -15,10 +15,11 @@ enum {
 	NARC_palace_effect_block_nsbmd = 1,
 	NARC_palace_effect_block_nsbta = 2,
 	NARC_palace_effect_p_barrier_nsbca = 3,
-	NARC_palace_effect_p_barrier_nsbmd = 4,
-	NARC_palace_effect_p_barrier_nsbta = 5,
-	NARC_palace_effect_warp01_nsbmd = 6,
-	NARC_palace_effect_warp01_nsbta = 7
+	NARC_palace_effect_p_barrier_nsbma = 4,
+	NARC_palace_effect_p_barrier_nsbmd = 5,
+	NARC_palace_effect_p_barrier_nsbta = 6,
+	NARC_palace_effect_warp01_nsbmd = 7,
+	NARC_palace_effect_warp01_nsbta = 8
 };
 
 /* NARC_PALACE_EFFECT_NAIX_ */

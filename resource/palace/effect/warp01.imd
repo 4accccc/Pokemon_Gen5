@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-29T18:38:14" source="warp01.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-03-30T22:20:38" source="warp01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-03-29T18:38:14" source="warp01.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-03-30T22:20:38" source="warp01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -30,54 +30,54 @@
 <box_test pos_scale="3" xyz="-2.000000 0.375000 -2.000000" whd="4.000000 3.252197 4.000000"/>
 
 <tex_image_array size="2">
-	<tex_image index="0" name="warp01"
+	<tex_image index="0" name="warp01_p"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="gtswarp_g"
-		path="C:/home/wb_data3d/field/out25/warp01/tex/warp01.tga"
+		path="C:/home/wb_data3d/field/out25/warp01/tex/warp01_p.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 6000 4444 4444 0006 0000 0000
-			0000 0000 4466 7776 6777 0644 0000 0000
-			0000 6000 7644 aa87 78aa 4467 0006 0000
-			0000 4600 8776 bbba abbb 6778 0064 0000
-			0000 6460 ba87 cccc cccc 78ab 0646 0000
-			0000 7640 cba8 111c c111 8abc 0467 0000
-			0000 8746 1cba 1111 1111 abc1 6478 0000
-			0000 a764 11cb 3211 1123 bc11 467a 0000
-			6000 b874 111c 3332 2333 c111 478b 0006
-			4000 ca76 211c 5533 3355 c112 67ac 0004
+			0000 0000 0000 4444 4444 0000 0000 0000
+			0000 0000 4400 7776 6777 0044 0000 0000
+			0000 0000 7644 aa87 78aa 4467 0000 0000
+			0000 4000 8776 ccba abcc 6778 0004 0000
+			0000 6400 ba87 bbbc cbbb 78ab 0046 0000
+			0000 7640 cca8 111b b111 8acc 0467 0000
+			0000 8740 1bca 1111 1111 acb1 0478 0000
+			0000 a764 11bc 3211 1123 cb11 467a 0000
+			0000 b874 111c 3332 2333 c111 478b 0000
+			4000 ca76 211b 5533 3355 b112 67ac 0004
 			4000 cb87 3111 5953 3555 1113 78bc 0004
 			4000 cba7 3211 9995 5555 1123 7abc 0004
 			4000 cba7 3311 5955 5555 1133 7abc 0004
 			4000 cba7 3311 5555 5555 1133 7abc 0004
 			4000 cba7 3211 5555 5555 1123 7abc 0004
 			4000 cb87 3111 5553 3555 1113 78bc 0004
-			4000 ca76 211c 5533 3355 c112 67ac 0004
-			6000 b874 111c 3332 2333 c111 478b 0006
-			0000 a764 11cb 3211 1123 bc11 467a 0000
-			0000 8746 ccba 1111 1111 abc1 6478 0000
-			0000 7640 cba8 111c c111 8abc 0467 0000
-			0000 6460 ba87 cccc cccc 78ab 0646 0000
-			0000 4600 a876 bbba abbb 678a 0064 0000
-			0000 6000 7744 aa87 78aa 4477 0006 0000
-			0000 0000 4460 7776 6777 0644 0000 0000
-			0000 0000 6000 4444 4444 0006 0000 0000
+			4000 ca76 211b 5533 3355 b112 67ac 0004
+			0000 b874 111c 3332 2333 c111 478b 0000
+			0000 a764 11bc 3211 1123 bb11 467a 0000
+			0000 8740 bcca 1111 1111 acb1 0478 0000
+			0000 7640 cba8 111b b111 8abc 0467 0000
+			0000 6400 ba87 bbbc cbbb 78ab 0046 0000
+			0000 4000 a876 ccba abcc 678a 0004 0000
+			0000 0000 7744 aa87 78aa 4477 0000 0000
+			0000 0000 4400 7776 6777 0044 0000 0000
+			0000 0000 0000 4444 4444 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="warp_g"
+	<tex_image index="1" name="warp_gp"
 		width="8" height="16" original_width="8" original_height="16"
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="warp_g"
-		path="C:/home/wb_data3d/field/out25/warp01/tex/warp_g.tga"
+		path="C:/home/wb_data3d/field/out25/warp01/tex/warp_gp.tga"
 	>
 		<bitmap size="16">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -88,7 +88,7 @@
 
 <tex_palette_array size="2">
 	<tex_palette index="0" name="gtswarp_g" color_size="16">
-		0000 1e1d 1e3f 2a7f 318c 3adf 3def 4a52
+		0000 1e1d 1e3f 2a7f 35ad 3adf 3def 4a52
 		4e73 4f7f 56b5 5ef7 6b39 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="warp_g" color_size="4">
