@@ -21,6 +21,7 @@
 #include "app/research_radar/question_id.h"
 #include "app/research_radar/questionnaire_index.h"
 #include "savedata/playtime.h"
+#include "field/research_team_def.h"
 
 
 //==============================================================================
@@ -342,6 +343,30 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
           MATSUDA_Printf("QuestionAnswerSet id=%d, answer=%d\n", search_question_id, answer);
         }
       }
+    } 
+  }
+
+  // ’²¸‘à”½‰f
+  {
+    SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(bsys->gamedata);
+    QUESTIONNAIRE_SAVE_WORK *questsave = SaveData_GetQuestionnaire(sv_ctrl);
+    MISC *misc = SaveData_GetMisc(sv_ctrl);
+    int radar_q_id, team_q_id, i, j;
+    u32 answer;
+
+    for(i = 0; i < MAX_QNUM_PER_RESEARCH_REQ; i++) {
+      team_q_id = MISC_GetResearchQuestionID(misc, i);
+      if(team_q_id == QUESTION_ID_DUMMY){ continue; }
+
+      for(j = 0; j < QUESTION_NUM_PER_TOPIC; j++) { 
+        radar_q_id = QuestionnaireWork_GetInvestigatingQuestion(questsave, j);
+        if(team_q_id == radar_q_id) {
+          answer = QuestionnaireAnswer_ReadBit(&info->question_answer, team_q_id);
+          if(answer != 0){  //0‚Í–³‰ñ“š
+            MISC_AddResearchCount(misc, i, 1);
+          }
+        }
+      } 
     }
   }
 
