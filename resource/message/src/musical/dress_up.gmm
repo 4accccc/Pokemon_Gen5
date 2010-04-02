@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-03-29T20:39:33"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-04-02T20:37:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -359,7 +359,7 @@
 		<band id="1" index="1" style="0000" width="222"/>
 		<band id="2" index="2" style="0000" width="268"/>
 		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -385,7 +385,7 @@
 状況は全てこのメッセージ
 
 0:ポケモンのニックネーム</comment>
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]を　きせかえて
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]に　グッズを　つけて
 ドレスアップ　しましょう！</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を　着せ替えて
 ドレスアップ　しましょう！</language>
@@ -393,17 +393,19 @@
 
 	<row id="DUP_MSG_02">
 		<comment>確認画面</comment>
-		<language name="JPN" width="256">この　いしょうで
-よろしいですか？</language>
-		<language name="JPN_KANJI" width="256">この　衣装で
-よろしいですか？</language>
+		<language name="JPN" width="256">ドレスアップは
+これで　よろしいですか？</language>
+		<language name="JPN_KANJI" width="256">ドレスアップは
+これで　よろしいですか？</language>
 	</row>
 
 	<row id="DUP_MSG_03">
 		<comment>通信時に全員のドレスアップが
 確定していない状態</comment>
-		<language name="JPN" width="256">ほかの　さんかしゃを まっています</language>
-		<language name="JPN_KANJI" width="256">他の　参加者を　待っています</language>
+		<language name="JPN" width="256">ほかの　ひとの
+ドレスアップを まっています</language>
+		<language name="JPN_KANJI" width="256">他の　参加者の
+ドレスアップを　待っています</language>
 	</row>
 
 	<row id="DUP_MSG_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
