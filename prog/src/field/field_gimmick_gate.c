@@ -25,6 +25,7 @@
 #include "savedata/misc.h" // for MISC_xxxx
 #include "savedata/save_tbl.h"
 #include "savedata/dendou_save.h"
+#include "savedata/config.h"
 
 #include "gmk_tmp_wk.h"
 #include "gimmick_obj_elboard.h"
@@ -230,9 +231,9 @@ static const GFL_G3D_UTIL_OBJ obj_table_fast[ OBJ_NUM ] =
 
 // ユニットインデックス
 typedef enum {
-  UNIT_ELBOARD,      // 電光掲示板 + モニター
-  UNIT_ELBOARD_FAST, // 電光掲示板(速) + モニター
-  UNIT_NUM           // 総数
+  UNIT_ELBOARD_NORMAL, // 電光掲示板 + モニター
+  UNIT_ELBOARD_FAST,   // 電光掲示板(速) + モニター
+  UNIT_NUM             // 総数
 } UNIT_INDEX;
 static const GFL_G3D_UTIL_SETUP unit[ UNIT_NUM ] =
 {
@@ -524,7 +525,26 @@ void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
   FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
 
   // 拡張オブジェクトのユニットを追加
-  FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[UNIT_ELBOARD_FAST], EXPOBJ_UNIT_ELBOARD );
+  {
+    GAMESYS_WORK* gameSystem;
+    GAMEDATA* gameData;
+    SAVE_CONTROL_WORK* save;
+    MOJIMODE mojiMode;
+    UNIT_INDEX index;
+    CONFIG* config;
+    
+    gameSystem = FIELDMAP_GetGameSysWork( fieldmap );
+    gameData = GAMESYSTEM_GetGameData( gameSystem );
+    save = GAMEDATA_GetSaveControlWork( gameData );
+    config = SaveData_GetConfig( save );
+    mojiMode = CONFIG_GetMojiMode( config );
+    switch( mojiMode ) {
+    case MOJIMODE_HIRAGANA: index = UNIT_ELBOARD_NORMAL; break;
+    case MOJIMODE_KANJI:    index = UNIT_ELBOARD_FAST;   break;
+    default: GF_ASSERT(0);
+    }
+    FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[ index ], EXPOBJ_UNIT_ELBOARD );
+  }
 
   // ギミック管理ワークを作成
   work = CreateGateWork( fieldmap );
