@@ -11,7 +11,7 @@
 #pragma	once
 
 #include "system/main.h"
-#include "system/cursor_move.h"
+#include "system/palanm.h"
 #include "savedata/dendou_save.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -54,6 +54,11 @@ typedef struct {
 	GFL_TCB * vtask;		// TCB ( VBLANK )
 	GFL_TCB * htask;		// TCB ( HBLANK )
 
+	PALETTE_FADE_PTR	pfd;		// パレットフェードデータ
+	u8	posEvy[6];
+	u8	nowEvy[6];
+	u8	tmpEvy[6];
+
 	PRINT_UTIL	win[DPCBMP_WINID_MAX];		// BMPWIN
 
 	GFL_FONT * font;						// 通常フォント
@@ -70,8 +75,6 @@ typedef struct {
 	u32	palRes[DPCOBJ_PALRES_MAX];
 	u32	celRes[DPCOBJ_CELRES_MAX];
 
-	CURSORMOVE_WORK * cmwk;			// カーソル移動ワーク
-
 	s8	pokePos;
 	s8	pokeChg;
 	s8	page;
@@ -87,21 +90,6 @@ typedef struct {
 	int	mainSeq;		// メインシーケンス
 	int	subSeq;			// サブシーケンス
 	int	nextSeq;		// 次のシーケンス
-
-
-
-
-
-
-
-
-/*
-	u16	pokeGraFlag:1;			// ポケモン正面絵表示制御
-	u16	buttonID:15;				// ボタンアニメ用ＩＤ
-	u8	buttonSeq;					// ボタンアニメ用シーケンス
-	u8	buttonCnt;					// ボタンアニメ用カウンタ
-*/
-
 
 }DPCMAIN_WORK;
 
@@ -125,6 +113,11 @@ extern void DPCMAIN_InitBg(void);
 extern void DPCMAIN_ExitBg(void);
 
 extern void DPCMAIN_LoadBgGraphic(void);
+
+extern void DPCMAIN_InitPaletteFade( DPCMAIN_WORK * wk );
+extern void DPCMAIN_ExitPaletteFade( DPCMAIN_WORK * wk );
+extern void DPCMAIN_RequestPaletteFade( DPCMAIN_WORK * wk );
+extern BOOL DPCMAIN_CheckPaletteFade( DPCMAIN_WORK * wk );
 
 extern void DPCMAIN_SetBlendAlpha(void);
 

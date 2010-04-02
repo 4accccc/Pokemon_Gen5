@@ -98,23 +98,9 @@ static const pDENDOUPC_FUNC MainSeq[] = {
 	MainSeq_EndSet,
 };
 
+static const u8 PokeMoveSpeed[] = { 5, 5, 5, 5, 4, 4 };
 
-/*
-static void TestPokeMode( DPCMAIN_WORK * wk )
-{
-	u32	i;
 
-	for( i=0; i<6; i++ ){
-		if( wk->clwk[DPCOBJ_ID_POKE01+i] != NULL ){
-			DPCOBJ_SetPokePos( wk, DPCOBJ_ID_POKE01+i, wk->pokeRad[i] );
-		}
-		if( wk->clwk[DPCOBJ_ID_POKE11+i] != NULL ){
-			DPCOBJ_SetPokePos( wk, DPCOBJ_ID_POKE11+i, wk->pokeRad[i] );
-		}
-		wk->pokeRad[i] = ( wk->pokeRad[i] + 1 ) % 360;
-	}
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -132,8 +118,6 @@ int DPCSEQ_MainSeq( DPCMAIN_WORK * wk )
 	if( wk->mainSeq == MAINSEQ_END ){
 		return FALSE;
 	}
-
-//	TestPokeMode( wk );
 
 	DPCOBJ_AnmMain( wk );
 	DPCBMP_PrintUtilTrans( wk );
@@ -162,6 +146,7 @@ static int MainSeq_Init( DPCMAIN_WORK * wk )
 	DPCMAIN_InitVram();
 	DPCMAIN_InitBg();
 	DPCMAIN_LoadBgGraphic();
+	DPCMAIN_InitPaletteFade( wk );
 	DPCMAIN_InitMsg( wk );
 
 	DPCBMP_Init( wk );
@@ -189,6 +174,7 @@ static int MainSeq_Release( DPCMAIN_WORK * wk )
 	DPCBMP_Exit( wk );
 
 	DPCMAIN_ExitMsg( wk );
+	DPCMAIN_ExitPaletteFade( wk );
 	DPCMAIN_ExitBg();
 
 	DPCMAIN_ExitPokeData( wk );
@@ -294,32 +280,32 @@ static int MainSeq_PokeInit( DPCMAIN_WORK * wk )
 		DPCOBJ_SetAutoAnm( wk, DPCOBJ_ID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT_OFF );
 		DPCOBJ_SetAutoAnm( wk, DPCOBJ_ID_EXIT, APP_COMMON_BARICON_EXIT_OFF );
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_ON );
-		if( wk->pokeChg == wk->pokePos ){
-			wk->pokePos = wk->pokeChg;
-			DPCBMP_PutInfo( wk );
-			return MAINSEQ_POKE_MAIN;
-		}else{
-			// フェードかけて
-			wk->subSeq++;
-		}
+		DPCOBJ_InitFadeEvy( wk, TRUE );
+		DPCMAIN_RequestPaletteFade( wk );
+		wk->subSeq++;
 		break;
 
 	case 1:
-		// フェード待ち
-		if( 1 ){
-			s8	now = wk->pokePos;
-			wk->pokePos = wk->pokeChg;
-			// 左
-			if( GetPokeMoveVec( wk, wk->pokeChg ) == TRUE ){
-				MakePokePosRad( wk, -GetPokeRotationVal(wk,now,wk->pokeChg,1) );
-				wk->pokeMove = -POKE_MOVE_RAD;
-			// 右
-			}else{
-				MakePokePosRad( wk, GetPokeRotationVal(wk,now,wk->pokeChg,-1) );
-				wk->pokeMove = POKE_MOVE_RAD;
-			}
+		if( DPCMAIN_CheckPaletteFade( wk ) == FALSE ){
 			wk->subSeq = 0;
-			return MAINSEQ_POKE_MOVE;
+			if( wk->pokeChg == wk->pokePos ){
+				wk->pokePos = wk->pokeChg;
+				DPCBMP_PutInfo( wk );
+				return MAINSEQ_POKE_MAIN;
+			}else{
+				s8	now = wk->pokePos;
+				wk->pokePos = wk->pokeChg;
+				// 左
+				if( GetPokeMoveVec( wk, wk->pokeChg ) == TRUE ){
+					wk->pokeMove = -PokeMoveSpeed[wk->party[wk->page].pokeMax-1];
+					MakePokePosRad( wk, -GetPokeRotationVal(wk,now,wk->pokeChg,1) );
+				// 右
+				}else{
+					wk->pokeMove = PokeMoveSpeed[wk->party[wk->page].pokeMax-1];
+					MakePokePosRad( wk, GetPokeRotationVal(wk,now,wk->pokeChg,-1) );
+				}
+				return MAINSEQ_POKE_MOVE;
+			}
 		}
 		break;
 	}
@@ -334,16 +320,16 @@ static int MainSeq_PokeMain( DPCMAIN_WORK * wk )
 	switch( ret ){
 	case DPCUI_ID_LEFT:
 		if( ChangePoke( wk, 1 ) == TRUE ){
+			wk->pokeMove = -PokeMoveSpeed[wk->party[wk->page].pokeMax-1];
 			MakePokePosRad( wk, -1 );
-			wk->pokeMove = -POKE_MOVE_RAD;
 			return MAINSEQ_POKE_MOVE;
 		}
 		break;
 
 	case DPCUI_ID_RIGHT:
 		if( ChangePoke( wk, -1 ) == TRUE ){
+			wk->pokeMove = PokeMoveSpeed[wk->party[wk->page].pokeMax-1];
 			MakePokePosRad( wk, 1 );
-			wk->pokeMove = POKE_MOVE_RAD;
 			return MAINSEQ_POKE_MOVE;
 		}
 		break;
@@ -364,12 +350,12 @@ static int MainSeq_PokeMain( DPCMAIN_WORK * wk )
 				wk->pokePos = ret;
 				// 左
 				if( GetPokeMoveVec( wk, ret ) == TRUE ){
+					wk->pokeMove = -PokeMoveSpeed[wk->party[wk->page].pokeMax-1];
 					MakePokePosRad( wk, -GetPokeRotationVal(wk,now,ret,1) );
-					wk->pokeMove = -POKE_MOVE_RAD;
 				// 右
 				}else{
+					wk->pokeMove = PokeMoveSpeed[wk->party[wk->page].pokeMax-1];
 					MakePokePosRad( wk, GetPokeRotationVal(wk,now,ret,-1) );
-					wk->pokeMove = POKE_MOVE_RAD;
 				}
 				return MAINSEQ_POKE_MOVE;
 			}
@@ -385,23 +371,49 @@ static int MainSeq_PokeMain( DPCMAIN_WORK * wk )
 
 static int MainSeq_PokeExit( DPCMAIN_WORK * wk )
 {
-	DPCOBJ_SetAutoAnm( wk, DPCOBJ_ID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT );
-	DPCOBJ_SetAutoAnm( wk, DPCOBJ_ID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT );
-	DPCOBJ_SetAutoAnm( wk, DPCOBJ_ID_EXIT, APP_COMMON_BARICON_EXIT );
+	switch( wk->subSeq ){
+	case 0:
+		DPCOBJ_InitFadeEvy( wk, FALSE );
+		DPCMAIN_RequestPaletteFade( wk );
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
+		wk->subSeq++;
+		break;
 
-	DPCBMP_ClearInfo( wk );
+	case 1:
+		if( DPCMAIN_CheckPaletteFade( wk ) == FALSE ){
+			DPCOBJ_SetAutoAnm( wk, DPCOBJ_ID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT );
+			DPCOBJ_SetAutoAnm( wk, DPCOBJ_ID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT );
+			DPCOBJ_SetAutoAnm( wk, DPCOBJ_ID_EXIT, APP_COMMON_BARICON_EXIT );
+			DPCBMP_ClearInfo( wk );
+			wk->subSeq = 0;
+			return MAINSEQ_PAGE_MAIN;
+		}
+	}
 
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
-
-	return MAINSEQ_PAGE_MAIN;
+	return MAINSEQ_POKE_EXIT;
 }
 
 static int MainSeq_PokeMove( DPCMAIN_WORK * wk )
 {
+	u32	i;
+
 	if( MovePokeObj( wk ) == FALSE ){
+		for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
+			wk->posEvy[i] = wk->tmpEvy[i];
+		}
+		DPCMAIN_CheckPaletteFade( wk );
 		DPCBMP_PutInfo( wk );
 		return MAINSEQ_POKE_MAIN;
 	}
+
+	for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
+		if( wk->nowEvy[i] > wk->tmpEvy[i] ){
+			wk->nowEvy[i]--;
+		}else if( wk->nowEvy[i] < wk->tmpEvy[i] ){
+			wk->nowEvy[i]++;
+		}
+	}
+	DPCMAIN_RequestPaletteFade( wk );
 	return MAINSEQ_POKE_MOVE;
 }
 
@@ -510,12 +522,12 @@ static u8 GetPokeRotationVal( DPCMAIN_WORK * wk, s8 now, s8 pos, s8 mv )
 
 
 static const u8 PokeMoveCount[] = {
-	DPCOBJ_POKEMAX1_SPACE_RAD / POKE_MOVE_RAD,
-	DPCOBJ_POKEMAX2_SPACE_RAD / POKE_MOVE_RAD,
-	DPCOBJ_POKEMAX3_SPACE_RAD / POKE_MOVE_RAD,
-	DPCOBJ_POKEMAX4_SPACE_RAD / POKE_MOVE_RAD,
-	DPCOBJ_POKEMAX5_SPACE_RAD / POKE_MOVE_RAD,
-	DPCOBJ_POKEMAX6_SPACE_RAD / POKE_MOVE_RAD,
+	DPCOBJ_POKEMAX1_SPACE_RAD,
+	DPCOBJ_POKEMAX2_SPACE_RAD,
+	DPCOBJ_POKEMAX3_SPACE_RAD,
+	DPCOBJ_POKEMAX4_SPACE_RAD,
+	DPCOBJ_POKEMAX5_SPACE_RAD,
+	DPCOBJ_POKEMAX6_SPACE_RAD,
 };
 
 static void MakePokePosRad( DPCMAIN_WORK * wk, s8 mv )
@@ -534,6 +546,7 @@ static void MakePokePosRad( DPCMAIN_WORK * wk, s8 mv )
 	for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
 
 		wk->posRad[pos1] = wk->nowRad[pos2];
+		wk->tmpEvy[pos1] = wk->posEvy[pos2];
 
 		pos1 += (mv/GFL_STD_Abs(mv));
 		if( pos1 < 0 ){
@@ -549,7 +562,7 @@ static void MakePokePosRad( DPCMAIN_WORK * wk, s8 mv )
 		}
 	}
 
-	wk->pokeMoveCnt = PokeMoveCount[wk->party[wk->page].pokeMax-1] * GFL_STD_Abs(mv);
+	wk->pokeMoveCnt = PokeMoveCount[wk->party[wk->page].pokeMax-1] / GFL_STD_Abs(wk->pokeMove) * GFL_STD_Abs(mv);
 }
 
 static BOOL MovePokeObj( DPCMAIN_WORK * wk )
@@ -559,24 +572,25 @@ static BOOL MovePokeObj( DPCMAIN_WORK * wk )
 
 	id = DPCOBJ_GetDefaultPoke( wk );
 
-	for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
-		if( wk->pokeMoveCnt == 0 ){
+	if( wk->pokeMoveCnt == 0 ){
+		for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
 			wk->nowRad[i] = wk->posRad[i];
-		}else{
-			wk->nowRad[i] += wk->pokeMove;
-			if( wk->nowRad[i] < 0 ){
-				wk->nowRad[i] += 360;
-			}else if( wk->nowRad[i] >= 360 ){
-				wk->nowRad[i] -= 360;
-			}
+			DPCOBJ_SetPokePos( wk, id+i, wk->nowRad[i] );
+		}
+		DPCOBJ_ChangePokePriority( wk );
+		return FALSE;
+	}
+
+	for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
+		wk->nowRad[i] += wk->pokeMove;
+		if( wk->nowRad[i] < 0 ){
+			wk->nowRad[i] += 360;
+		}else if( wk->nowRad[i] >= 360 ){
+			wk->nowRad[i] -= 360;
 		}
 		DPCOBJ_SetPokePos( wk, id+i, wk->nowRad[i] );
 	}
 	DPCOBJ_ChangePokePriority( wk );
-
-	if( wk->pokeMoveCnt == 0 ){
-		return FALSE;
-	}
 
 	wk->pokeMoveCnt--;
 

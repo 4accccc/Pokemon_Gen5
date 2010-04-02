@@ -105,8 +105,16 @@ void DPCMAIN_ExitVBlank( DPCMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void VBlankTask( GFL_TCB * tcb, void * work )
 {
+	DPCMAIN_WORK * wk;
+	u32	i;
+
+	wk = work;
+
 	GFL_BG_VBlankFunc();
 	GFL_CLACT_SYS_VBlankFunc();
+
+	PaletteFadeTrans( wk->pfd );
+
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
 
@@ -270,6 +278,65 @@ void DPCMAIN_LoadBgGraphic(void)
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		パレットフェード初期化
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void DPCMAIN_InitPaletteFade( DPCMAIN_WORK * wk )
+{
+	wk->pfd = PaletteFadeInit( HEAPID_DENDOU_PC );
+	PaletteFadeWorkAllocSet( wk->pfd, FADE_MAIN_OBJ, FADE_PAL_ALL_SIZE, HEAPID_DENDOU_PC );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットフェード解放
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void DPCMAIN_ExitPaletteFade( DPCMAIN_WORK * wk )
+{
+	PaletteFadeWorkAllocFree( wk->pfd, FADE_MAIN_OBJ );
+	PaletteFadeFree( wk->pfd );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットフェードリクエスト
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void DPCMAIN_RequestPaletteFade( DPCMAIN_WORK * wk )
+{
+	u32	i;
+
+	for( i=0; i<6; i++ ){
+		ColorConceChangePfd( wk->pfd, FADE_MAIN_OBJ, ((1<<i)|(1<<(i+6))), wk->nowEvy[i], 0 );
+	}
+	PaletteTrans_AutoSet( wk->pfd, 1 );
+}
+
+BOOL DPCMAIN_CheckPaletteFade( DPCMAIN_WORK * wk )
+{
+	if( PaletteFadeCheck( wk->pfd ) != 0 ){
+		return TRUE;
+	}
+	PaletteTrans_AutoSet( wk->pfd, 0 );
+	return FALSE;
+}
+
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief		アルファブレンド設定
  *
  * @param		none
@@ -377,19 +444,24 @@ void DPCMAIN_CreatePokeData( DPCMAIN_WORK * wk )
 
 // 仮処理
 #if 1
-	wk->party[wk->pageMax].pokeMax = 3;
-	for( i=0; i<wk->party[wk->pageMax].pokeMax; i++ ){
-		wk->party[wk->pageMax].dat[i].personalRandom = wk->party[0].dat[i].personalRandom;
-		wk->party[wk->pageMax].dat[i].idNumber = wk->party[0].dat[i].idNumber;
-		wk->party[wk->pageMax].dat[i].monsno = MONSNO_HINOARASI + i;
-		wk->party[wk->pageMax].dat[i].level = wk->party[0].dat[i].level;
-		wk->party[wk->pageMax].dat[i].formNumber = 0;
-		wk->party[wk->pageMax].dat[i].sex = wk->party[0].dat[i].sex;
-		for( j=0; j<4; j++ ){
-			wk->party[wk->pageMax].dat[i].waza[j] = wk->party[0].dat[i].waza[j];
+	{
+		u32	k;
+		for( k=5; k>=1; k-- ){
+			wk->party[wk->pageMax].pokeMax = k;
+			for( i=0; i<wk->party[wk->pageMax].pokeMax; i++ ){
+				wk->party[wk->pageMax].dat[i].personalRandom = wk->party[0].dat[i].personalRandom;
+				wk->party[wk->pageMax].dat[i].idNumber = wk->party[0].dat[i].idNumber;
+				wk->party[wk->pageMax].dat[i].monsno = MONSNO_HINOARASI + k*i;
+				wk->party[wk->pageMax].dat[i].level = wk->party[0].dat[i].level;
+				wk->party[wk->pageMax].dat[i].formNumber = 0;
+				wk->party[wk->pageMax].dat[i].sex = wk->party[0].dat[i].sex;
+				for( j=0; j<4; j++ ){
+					wk->party[wk->pageMax].dat[i].waza[j] = wk->party[0].dat[i].waza[j];
+				}
+			}
+			wk->pageMax++;
 		}
 	}
-	wk->pageMax++;
 #endif
 
 }

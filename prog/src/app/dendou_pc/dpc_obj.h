@@ -41,3 +41,5 @@ extern void DPCOBJ_GetPos( DPCMAIN_WORK * wk, u32 id, s16 * x, s16 * y );
 extern void DPCOBJ_AddPoke( DPCMAIN_WORK * wk );
 extern void DPCOBJ_SetPokePos( DPCMAIN_WORK * wk, u32 id, u32 rad );
 extern void DPCOBJ_ChangePokePriority( DPCMAIN_WORK * wk );
+
+extern void DPCOBJ_InitFadeEvy( DPCMAIN_WORK * wk, BOOL flg );

@@ -337,16 +337,19 @@ static void DelClactAll( DPCMAIN_WORK * wk )
 	GFL_CLACT_UNIT_Delete( wk->clunit );
 }
 
+typedef struct {
+	u16	rad;
+	u16	evy;
+}POKE_PUT_DATA;
 
-
-static const u16 PokePutRad[6][6] =
+static const POKE_PUT_DATA PokePutRad[6][6] =
 {
-	{  90,   0,   0,   0,   0,   0 },
-	{  90, 270,   0,   0,   0,   0 },
-	{  90, 210, 330,   0,   0,   0 },
-	{  90, 180, 270,   0,   0,   0 },
-	{  90, 162, 244, 316,  28,   0 },
-	{  90, 150, 210, 270, 330,  30 },
+	{ { 90, 0 }, {   0,  0 }, {   0,  0 }, {   0,  0 }, {   0, 0 }, {  0, 0 } },
+	{ { 90, 0 }, { 270, 12 }, {   0,  0 }, {   0,  0 }, {   0, 0 }, {  0, 0 } },
+	{ { 90, 0 }, { 210,  7 }, { 330,  7 }, {   0,  0 }, {   0, 0 }, {  0, 0 } },
+	{ { 90, 0 }, { 180,  5 }, { 270, 12 }, {   0,  5 }, {   0, 0 }, {  0, 0 } },
+	{ { 90, 0 }, { 162,  5 }, { 234, 10 }, { 306, 10 }, {  18, 5 }, {  0, 0 } },
+	{ { 90, 0 }, { 150,  4 }, { 210,  8 }, { 270, 12 }, { 330, 8 }, { 30, 4 } },
 };
 
 void DPCOBJ_AddPoke( DPCMAIN_WORK * wk )
@@ -378,11 +381,11 @@ void DPCOBJ_AddPoke( DPCMAIN_WORK * wk )
 			dat.chrRes += 6;
 			dat.palRes += 6;
 			dat.celRes += 6;
-			pal = ( PALNUM_POKEGRA + i + 6 ) * 0x20;
+			pal = PALNUM_POKEGRA + i + 6;
 			id  = DPCOBJ_ID_POKE11 + i;
 			clwk = &wk->clwk[id];
 		}else{
-			pal = ( PALNUM_POKEGRA + i ) * 0x20;
+			pal = PALNUM_POKEGRA + i;
 			id  = DPCOBJ_ID_POKE01 + i;
 			clwk = &wk->clwk[id];
 		}
@@ -392,15 +395,18 @@ void DPCOBJ_AddPoke( DPCMAIN_WORK * wk )
 															FALSE, pt->dat[i].personalRandom, CLSYS_DRAW_MAIN, HEAPID_DENDOU_PC );
 		wk->palRes[dat.palRes] = POKE2DGRA_OBJ_PLTT_Register(
 															ah, pt->dat[i].monsno, pt->dat[i].formNumber, pt->dat[i].sex, rare, POKEGRA_DIR_FRONT,
-															FALSE, CLSYS_DRAW_MAIN, pal, HEAPID_DENDOU_PC );
+															FALSE, CLSYS_DRAW_MAIN, pal*0x20, HEAPID_DENDOU_PC );
 		wk->celRes[dat.celRes] = POKE2DGRA_OBJ_CELLANM_Register(
 															pt->dat[i].monsno, pt->dat[i].formNumber, pt->dat[i].sex, rare, POKEGRA_DIR_FRONT,
 															FALSE, APP_COMMON_MAPPING_128K, CLSYS_DRAW_MAIN, HEAPID_DENDOU_PC );
 		*clwk = CleateClact( wk, &dat );
 
-		DPCOBJ_SetPokePos( wk, id, PokePutRad[pt->pokeMax-1][i] );
-		wk->nowRad[i] = PokePutRad[pt->pokeMax-1][i];
+		DPCOBJ_SetPokePos( wk, id, PokePutRad[pt->pokeMax-1][i].rad );
+		wk->nowRad[i] = PokePutRad[pt->pokeMax-1][i].rad;
+
+//		PaletteWorkSet_VramCopy( wk->pfd[i], FADE_MAIN_OBJ, pal*16, 0x20 );
 	}
+	PaletteWorkSet_VramCopy( wk->pfd, FADE_MAIN_OBJ, 0, 0x20*16 );
 
 	GFL_ARC_CloseDataHandle( ah );
 
@@ -450,7 +456,7 @@ u32 DPCOBJ_GetDefaultPoke( DPCMAIN_WORK * wk )
 
 #define	POKE_CX_FX32	( 128 << FX32_SHIFT )		// “®ì’†S‚wÀ•W (fx32Œ^)
 #define	POKE_CY_FX32	( 88 << FX32_SHIFT )		// “®ì’†S‚xÀ•W (fx32Œ^)
-#define	POKE_RX_FX32	( 92 << FX32_SHIFT )		// ‚w”¼Œa (fx32Œ^)
+#define	POKE_RX_FX32	( 100 << FX32_SHIFT )		// ‚w”¼Œa (fx32Œ^)
 #define	POKE_RY_FX32	( 44 << FX32_SHIFT )		// ‚x”¼Œa (fx32Œ^)
 
 void DPCOBJ_SetPokePos( DPCMAIN_WORK * wk, u32 id, u32 rad )
@@ -498,6 +504,28 @@ void DPCOBJ_ChangePokePriority( DPCMAIN_WORK * wk )
 	for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
 		if( wk->clwk[pri[i]] != NULL ){
 			GFL_CLACT_WK_SetSoftPri( wk->clwk[pri[i]], i );
+		}
+	}
+}
+
+void DPCOBJ_InitFadeEvy( DPCMAIN_WORK * wk, BOOL flg )
+{
+	u16	pos;
+	u16	i;
+
+	pos = wk->pokePos;
+
+	for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
+		if( flg == TRUE ){
+			wk->posEvy[pos] = PokePutRad[wk->party[wk->page].pokeMax-1][i].evy;
+			wk->nowEvy[pos] = wk->posEvy[pos];
+			pos++;
+			if( pos >= wk->party[wk->page].pokeMax ){
+				pos = 0;
+			}
+		}else{
+			wk->posEvy[i] = 0;
+			wk->nowEvy[i] = 0;
 		}
 	}
 }
