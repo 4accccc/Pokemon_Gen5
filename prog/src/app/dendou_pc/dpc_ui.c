@@ -59,11 +59,11 @@ int DPCUI_PageMain( DPCMAIN_WORK * wk )
 		return ret;
 	}
 
-	if( GFL_UI_KEY_GetTrg() & (PAD_KEY_LEFT|PAD_BUTTON_L) ){
+	if( GFL_UI_KEY_GetRepeat() & (PAD_KEY_LEFT|PAD_BUTTON_L) ){
 		return DPCUI_ID_LEFT;
 	}
 
-	if( GFL_UI_KEY_GetTrg() & (PAD_KEY_RIGHT|PAD_BUTTON_R) ){
+	if( GFL_UI_KEY_GetRepeat() & (PAD_KEY_RIGHT|PAD_BUTTON_R) ){
 		return DPCUI_ID_RIGHT;
 	}
 
@@ -96,11 +96,11 @@ int DPCUI_PokeMain( DPCMAIN_WORK * wk )
 		return ret;
 	}
 
-	if( GFL_UI_KEY_GetTrg() & (PAD_KEY_LEFT|PAD_BUTTON_L) ){
+	if( GFL_UI_KEY_GetRepeat() & (PAD_KEY_LEFT|PAD_BUTTON_L) ){
 		return DPCUI_ID_LEFT;
 	}
 
-	if( GFL_UI_KEY_GetTrg() & (PAD_KEY_RIGHT|PAD_BUTTON_R) ){
+	if( GFL_UI_KEY_GetRepeat() & (PAD_KEY_RIGHT|PAD_BUTTON_R) ){
 		return DPCUI_ID_RIGHT;
 	}
 
