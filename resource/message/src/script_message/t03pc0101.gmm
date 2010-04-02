@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2009-10-27T12:04:50"/>
+	<create user="matsumiya" host="W00224" date="2010-04-02T22:26:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,20 +292,74 @@
 	</lock>
 
 
-	<row id="msg_t03pc0101_gentleman_01">
+	<row id="msg_t03pc0101_woman2_01">
+		<comment>♀
+・手持ちにシェイミ（配布フラグ）がいて
+　「グラシデアのはな」持っていないとき
+・メッセージ表示後、たいせつなものポケットに
+　「グラシデアのはな」追加
+・プラチナの移植</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">あら　シェイミ！▼
+シェイミと　いえば
+グラシデアのはな　よね！▼
+あたし　たくさん　もっているから
+あなたにも　わけてあげるね▼</language>
+		<language name="JPN_KANJI" width="256">あら　シェイミ！▼
+シェイミと　いえば
+グラシデアのはな　よね！▼
+あたし　たくさん　もっているから
+あなたにも　わけてあげるね▼</language>
+	</row>
+
+	<row id="msg_t03pc0101_woman2_02">
+		<comment>♀
+・手持ちにシェイミがいて
+　「グラシデアのはな」持っているとき
+・プラチナのほぼ移植</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">むかしからね　シンオウちほう　では
+ありがとう　って　きもちを▼
+つたえるときに　グラシデアのはなを
+ブーケにして　あげていたの▽
+なんだか　いい　はなし　でしょう！▼
+だって　グラシデアのはなを　つかえば
+ことばに　ださなくても▼
+ありがとう　って　きもちを
+つたえられるのって　すてきよね</language>
+		<language name="JPN_KANJI" width="256">昔からね　シンオウちほう　では
+ありがとう　って　きもちを▼
+伝えるときに　グラシデアのはなを
+ブーケにして　あげていたの▽
+なんだか　いい　話でしょう！▼
+だって　グラシデアのはなを　使えば
+言葉に　ださなくても▼
+ありがとう　って　気持ちを
+伝えられるのって　すてきよね</language>
+	</row>
+
+	<row id="msg_t03pc0101_woman2_03">
+		<comment>♀
+・手持ちにシェイミがいないとき
+・プラチナの移植</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">グラシデアのはな　しってる？▼
+むかしからね　シンオウちほう　では
+ありがとう　って　きもちを▼
+つたえるときに　グラシデアのはなを
+ブーケにして　あげていたのよ</language>
+		<language name="JPN_KANJI" width="256">グラシデアのはな　知ってる？▼
+むかしからね　シンオウ地方では
+ありがとう　って　気持ちを▼
+伝えるときに　グラシデアのはなを
+ブーケにして　あげていたのよ</language>
+	</row>
+
+	<row id="msg_t03pc0101_gentleman_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 紳士</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_t03pc0101_woman2_01">
-		<comment>♀
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">WOMAN2
-金髪女性</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
