@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="matsumiya" host="W00224" date="2010-04-02T20:02:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,13 +229,13 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="172"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="219"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1429" top="245" right="2134" bottom="865" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,11 +292,33 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_h04r0601_woman3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・HP/PP満タン時</comment>
+		<attribute name="キャラ指定">WOMAN3</attribute>
+		<language name="JPN" width="256">あなたも　あなたの　ポケモンも
+げんき　ハツラツ　よね！▼
+つかれたら　あたしに　こえをかけてよ
+ゆっくり　やすませて　あげるから</language>
+		<language name="JPN_KANJI" width="256">あなたも　あなたの　ポケモンも
+元気ハツラツ　よね！▼
+つかれたら　あたしに　声をかけてよ
+ゆっくり　休ませて　あげるから</language>
+	</row>
+
+	<row id="msg_h04r0601_woman3_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♀
+・HP/PP満タンでない時
+　続けて画面暗転して回復処理</comment>
+		<attribute name="キャラ指定">WOMAN3</attribute>
+		<language name="JPN" width="256">あら　あなたの　ポケモン
+ちょっと　げんきが　ないんじゃない？▼
+えんりょ　なんか　しないで
+ゆっくり　やすんで　いきなさいよ！▼</language>
+		<language name="JPN_KANJI" width="256">あら　あなたの　ポケモン
+ちょっと　元気が　ないんじゃない？▼
+遠慮なんか　しないで
+ゆっくり　休んで　いきなさいよ！▼</language>
 	</row>
 
 	<flowchart-group-list>
