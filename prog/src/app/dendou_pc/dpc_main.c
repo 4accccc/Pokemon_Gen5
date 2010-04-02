@@ -36,6 +36,7 @@
 //	プロトタイプ宣言
 //============================================================================================
 static void VBlankTask( GFL_TCB * tcb, void * work );
+static void HBlankTask( GFL_TCB * tcb, void * work );
 
 
 //============================================================================================
@@ -107,6 +108,31 @@ static void VBlankTask( GFL_TCB * tcb, void * work )
 	GFL_BG_VBlankFunc();
 	GFL_CLACT_SYS_VBlankFunc();
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
+}
+
+void DPCMAIN_InitHBlank( DPCMAIN_WORK * wk )
+{
+	wk->htask = GFUser_HIntr_CreateTCB( HBlankTask, wk, 0 );
+}
+
+void DPCMAIN_ExitHBlank( DPCMAIN_WORK * wk )
+{
+	GFL_TCB_DeleteTask( wk->htask );
+}
+
+static void HBlankTask( GFL_TCB * tcb, void * work )
+{
+	s32	vcount = GX_GetVCount();
+
+	if( vcount >= 168 ){
+		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 1 );		// 背景
+		GFL_BG_SetPriority( GFL_BG_FRAME1_M, 3 );		// スポットライト
+		GFL_BG_SetPriority( GFL_BG_FRAME2_M, 2 );		// タイトル背景
+	}else{
+		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 3 );		// 背景
+		GFL_BG_SetPriority( GFL_BG_FRAME1_M, 2 );		// スポットライト
+		GFL_BG_SetPriority( GFL_BG_FRAME2_M, 1 );		// タイトル背景
+	}
 }
 
 

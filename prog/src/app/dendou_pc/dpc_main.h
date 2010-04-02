@@ -52,6 +52,7 @@ typedef struct {
 	s16	posRad[6];
 
 	GFL_TCB * vtask;		// TCB ( VBLANK )
+	GFL_TCB * htask;		// TCB ( HBLANK )
 
 	PRINT_UTIL	win[DPCBMP_WINID_MAX];		// BMPWIN
 
@@ -72,6 +73,7 @@ typedef struct {
 	CURSORMOVE_WORK * cmwk;			// カーソル移動ワーク
 
 	s8	pokePos;
+	s8	pokeChg;
 	s8	page;
 	u8	pageMax;
 	u8	pokeSwap;
@@ -83,6 +85,7 @@ typedef struct {
 	int	buttonSeq;	// ボタンアニメ用シーケンス
 
 	int	mainSeq;		// メインシーケンス
+	int	subSeq;			// サブシーケンス
 	int	nextSeq;		// 次のシーケンス
 
 
@@ -111,6 +114,8 @@ typedef int (*pDENDOUPC_FUNC)(DPCMAIN_WORK*);
 
 extern void DPCMAIN_InitVBlank( DPCMAIN_WORK * wk );
 extern void DPCMAIN_ExitVBlank( DPCMAIN_WORK * wk );
+extern void DPCMAIN_InitHBlank( DPCMAIN_WORK * wk );
+extern void DPCMAIN_ExitHBlank( DPCMAIN_WORK * wk );
 
 extern void DPCMAIN_InitVram(void);
 extern const GFL_DISP_VRAM * DPCMAIN_GetVramBankData(void);

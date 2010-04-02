@@ -34,6 +34,7 @@ extern void DPCOBJ_AnmMain( DPCMAIN_WORK * wk );
 extern void DPCOBJ_SetVanish( DPCMAIN_WORK * wk, u32 id, BOOL flg );
 extern void DPCOBJ_SetAutoAnm( DPCMAIN_WORK * wk, u32 id, u32 anm );
 extern BOOL DPCOBJ_CheckAnm( DPCMAIN_WORK * wk, u32 id );
+extern u32 DPCOBJ_GetDefaultPoke( DPCMAIN_WORK * wk );
 extern void DPCOBJ_SetPos( DPCMAIN_WORK * wk, u32 id, s16 x, s16 y );
 extern void DPCOBJ_GetPos( DPCMAIN_WORK * wk, u32 id, s16 * x, s16 * y );
 

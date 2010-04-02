@@ -119,31 +119,42 @@ int DPCUI_PokeMain( DPCMAIN_WORK * wk )
 
 #define	POKE_LX(a)	( a - POKE2DGRA_POKEMON_CHARA_WIDTH*8/2 )
 #define	POKE_RX(a)	( a + POKE2DGRA_POKEMON_CHARA_WIDTH*8/2 )
-#define	POKE_UX(a)	( a - POKE2DGRA_POKEMON_CHARA_HEIGHT*8/2 )
-#define	POKE_DX(a)	( a + POKE2DGRA_POKEMON_CHARA_HEIGHT*8/2 )
+#define	POKE_UY(a)	( a - POKE2DGRA_POKEMON_CHARA_HEIGHT*8/2 )
+#define	POKE_DY(a)	( a + POKE2DGRA_POKEMON_CHARA_HEIGHT*8/2 )
 
 static int HitCheckPokeObj( DPCMAIN_WORK * wk )
 {
 	u32	i;
 	u32	tpx, tpy;
 	s16	objx, objy;
-	s16	id, tmpy;
+	s16	id, def;
+	s16	tmpy;
+	s16	lx, rx, uy, dy;
 
 	if( GFL_UI_TP_GetPointTrg( &tpx, &tpy ) == FALSE ){
 		return DPCUI_ID_NONE;
 	}
 
+	def = DPCOBJ_GetDefaultPoke( wk );
 	id = -1;
-	for( i=DPCOBJ_ID_POKE01; i<=DPCOBJ_ID_POKE16; i++ ){
+	for( i=def; i<def+6; i++ ){
 		if( wk->clwk[i] == NULL ){ continue; }
 		DPCOBJ_GetPos( wk, i, &objx, &objy );
-		if( tpx >= POKE_LX(objx) && tpx < POKE_RX(objx) && tpy >= POKE_UX(objy) && tpy < POKE_DX(objy) ){
+		lx = POKE_LX(objx);
+		rx = POKE_RX(objx);
+		uy = POKE_UY(objy);
+		dy = POKE_DY(objy);
+		if( lx < 0 ){ lx = 0; }
+		if( rx > 255 ){ rx = 255; }
+		if( uy < 0 ){ uy = 0; }
+		if( dy > 255 ){ dy = 255; }
+		if( tpx >= lx && tpx < rx && tpy >= uy && tpy < dy ){
 			if( id == -1 ){
-				id = i - DPCOBJ_ID_POKE01;
+				id = i - def;
 				tmpy = objy;
 			}else{
 				if( objy > tmpy ){
-					id = i - DPCOBJ_ID_POKE01;
+					id = i - def;
 					tmpy = objy;
 				}
 			}

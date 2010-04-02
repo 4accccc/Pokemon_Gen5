@@ -435,6 +435,16 @@ void DPCOBJ_AddPoke( DPCMAIN_WORK * wk )
 	}
 
 	wk->pokeSwap ^= 1;
+
+	DPCOBJ_ChangePokePriority( wk );
+}
+
+u32 DPCOBJ_GetDefaultPoke( DPCMAIN_WORK * wk )
+{
+	if( wk->pokeSwap == 0 ){
+		return DPCOBJ_ID_POKE11;
+	}
+	return DPCOBJ_ID_POKE01;
 }
 
 
@@ -465,11 +475,7 @@ void DPCOBJ_ChangePokePriority( DPCMAIN_WORK * wk )
 	u8	pri[6];
 	u8	i, j;
 
-	if( wk->pokeSwap == 0 ){
-		id = DPCOBJ_ID_POKE11;
-	}else{
-		id = DPCOBJ_ID_POKE01;
-	}
+	id = DPCOBJ_GetDefaultPoke( wk );
 
 	for( i=0; i<6; i++ ){
 		pri[i] = id+i;
@@ -492,8 +498,6 @@ void DPCOBJ_ChangePokePriority( DPCMAIN_WORK * wk )
 	for( i=0; i<wk->party[wk->page].pokeMax; i++ ){
 		if( wk->clwk[pri[i]] != NULL ){
 			GFL_CLACT_WK_SetSoftPri( wk->clwk[pri[i]], i );
-			OS_Printf( "pri[%d] = %d, ", i, pri[i] );
 		}
 	}
-	OS_Printf( "\n" );
 }
