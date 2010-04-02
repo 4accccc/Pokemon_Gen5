@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/24 19:51:19
+#save date:2010/04/02 19:24:35
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\wc10.wms
 #SECTION START:OBJ_EVENT
@@ -307,11 +307,11 @@ EVENTDATA_POSTYPE_GRID
 1 3
 #event number: 1
 #Door Event Label
-DOOR_ID_WC10_BC10PCR0101_EXIT01
+DOOR_ID_WC10_WC10PCR0101_EXIT01
 #Next Zone ID Name
-ZONE_ID_BC10PCR0101
+ZONE_ID_WC10PCR0101
 #Next Door ID Name
-DOOR_ID_BC10PCR0101_BC10_EXIT01
+DOOR_ID_WC10PCR0101_WC10_EXIT01
 #Door Direction
 EXIT_DIR_DOWN
 #Door Type

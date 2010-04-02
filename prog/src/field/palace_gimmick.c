@@ -47,6 +47,7 @@ typedef enum {
   RES_BARRIER_MDL,        // バリア演出
   RES_BARRIER_ANM0,       // バリア演出
   RES_BARRIER_ANM1,       // バリア演出
+  RES_BARRIER_ANM2,       // バリア演出
   
   RES_NUM
 } RES_INDEX;
@@ -56,12 +57,14 @@ static const GFL_G3D_UTIL_RES res_table[ RES_NUM ] =
   { ARCID_PALACE_EFFECT, NARC_palace_effect_p_barrier_nsbmd, GFL_G3D_UTIL_RESARC },     // バリア演出
   { ARCID_PALACE_EFFECT, NARC_palace_effect_p_barrier_nsbca, GFL_G3D_UTIL_RESARC },     // バリア演出
   { ARCID_PALACE_EFFECT, NARC_palace_effect_p_barrier_nsbta, GFL_G3D_UTIL_RESARC },     // バリア演出
+  { ARCID_PALACE_EFFECT, NARC_palace_effect_p_barrier_nsbma, GFL_G3D_UTIL_RESARC },     // バリア演出
 };
 
 // アニメーションオブジェ
 typedef enum{
   ANM_BARRIER_ANM0,   // BARRIER　00
   ANM_BARRIER_ANM1,   // BARRIER  01
+  ANM_BARRIER_ANM2,   // BARRIER  02
   
   ANM_BARRIER_NUM
 } ANM_BARRIER_INDEX;
@@ -69,6 +72,7 @@ static const GFL_G3D_UTIL_ANM anm_barrier_table[ ANM_BARRIER_NUM ] =
 {
   { RES_BARRIER_ANM0, 0 }, // BARRIER　00
   { RES_BARRIER_ANM1, 0 }, // BARRIER　01
+  { RES_BARRIER_ANM2, 0 }, // BARRIER　02
 };
 
 
