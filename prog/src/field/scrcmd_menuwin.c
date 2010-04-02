@@ -1427,11 +1427,9 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
   
   u16 tr_id = SCRCMD_GetVMWorkValue( core, work );
   u16 kind_id = SCRCMD_GetVMWorkValue( core, work );
+  u16 obj_id  = SCRCMD_GetVMWorkValue( core, work );
   
-  WORDSET *wordset = SCRIPT_GetWordSet( sc );
   STRBUF *msgbuf = SCRIPT_GetMsgBuffer( sc );
-  STRBUF *tmpbuf = SCRIPT_GetMsgTempBuffer( sc );
-  GFL_MSGDATA *msgData = SCRCMD_WORK_GetMsgData( work );
   
   KAGAYA_Printf( "TR ID =%d, KIND ID =%d\n", tr_id, kind_id );
 
@@ -1450,31 +1448,27 @@ VMCMD_RESULT EvCmdTrainerMessageSet( VMHANDLE *core, void *wk )
       tr_id, kind_id, msgbuf, SCRCMD_WORK_GetHeapID(work) );
   
   { //トレーナーOBJを探す
-    u16 dir;
-    s16 gx,gy,gz;
-    MMDL *jiki,*ncp;
-    MMDLSYS *mmdlsys;
-    FIELD_PLAYER *fld_player;
+    MMDLSYS * mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+    if ( MMDLSYS_SearchOBJID( mmdlsys, obj_id ) == NULL ) {
+      //対象トレーナーOBJが見つからない
+      GF_ASSERT( 0 );
+      obj_id = MMDL_ID_PLAYER;
+    }
+  }
+    
+  {
     SCRCMD_BALLOONWIN_WORK *bwin_work;
+    FIELD_PLAYER *fld_player;
+    u16 dir;
     
     bwin_work = SCRCMD_WORK_GetBalloonWinWork( work );
     MI_CpuClear8( bwin_work, sizeof(SCRCMD_BALLOONWIN_WORK) );
 
-    mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+    bwin_work->obj_id = obj_id;
+    
     fld_player = FIELDMAP_GetFieldPlayer( fparam->fieldMap );
-    jiki = FIELD_PLAYER_GetMMdl( fld_player );
-    dir = MMDL_GetDirDisp( jiki );
+    dir = MMDL_GetDirDisp( FIELD_PLAYER_GetMMdl( fld_player ) );
 
-    FIELD_PLAYER_GetFrontGridPos( fld_player, &gx, &gy, &gz );
-    ncp = MMDLSYS_SearchGridPos( mmdlsys, gx, gz, FALSE );
-    
-    if( ncp == NULL ){ //不明
-      GF_ASSERT( 0 );
-      ncp = jiki;
-    }
-    
-    bwin_work->obj_id = MMDL_GetOBJID( ncp );
-    
     {
       u8 pos_type = SCRCMD_MSGWIN_UPLEFT;
       FLDTALKMSGWIN_IDX idx = FLDTALKMSGWIN_IDX_LOWER;

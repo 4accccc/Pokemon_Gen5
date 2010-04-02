@@ -2286,27 +2286,8 @@
  
 //--------------------------------------------------------------
 /**
- *  @def  _EYE_TRAINER_MOVE_SINGLE
- *  @brief  視線：トレーナー移動　シングル
- *  @param pos 移動させるトレーナー データ番号0,1
- *
- *  @note
- *  トレーナー視線スクリプトから呼ばれている。
- *  通常スクリプトでの使用は禁止とする。
- */
-//--------------------------------------------------------------
-#define _EYE_TRAINER_MOVE_SINGLE( pos ) \
-    _ASM_EYE_TRAINER_MOVE_SINGLE pos
-
-  .macro  _ASM_EYE_TRAINER_MOVE_SINGLE pos
-  .short  EV_SEQ_EYE_TRAINER_MOVE_SINGLE
-  .short  \pos
-  .endm
- 
-//--------------------------------------------------------------
-/**
- *  @def  _EYE_TRAINER_MOVE_DOUBLE
- *  @brief  視線：トレーナー移動　ダブル
+ *  @def  _EYE_TRAINER_MOVE
+ *  @brief  視線：トレーナー移動
  *  @param none
  *
  *  @note
@@ -2314,11 +2295,11 @@
  *  通常スクリプトでの使用は禁止とする。
  */
 //--------------------------------------------------------------
-#define _EYE_TRAINER_MOVE_DOUBLE()  \
-    _ASM_EYE_TRAINER_MOVE_DOUBLE
+#define _EYE_TRAINER_MOVE()  \
+    _ASM_EYE_TRAINER_MOVE
 
-  .macro  _ASM_EYE_TRAINER_MOVE_DOUBLE
-  .short  EV_SEQ_EYE_TRAINER_MOVE_DOUBLE
+  .macro  _ASM_EYE_TRAINER_MOVE
+  .short  EV_SEQ_EYE_TRAINER_MOVE
   .endm
 
 //--------------------------------------------------------------
@@ -2356,6 +2337,26 @@
   _ASM_EYE_TRAINER_ID_GET  pos,ret_wk
   .macro  _ASM_EYE_TRAINER_ID_GET  pos,ret_wk
   .short  EV_SEQ_EYE_TRAINER_ID_GET
+  .short  \pos
+  .short  \ret_wk
+  .endm
+
+//--------------------------------------------------------------
+/**
+ *  @def  _EYE_TRAINER_OBJ_ID_GET
+ *  @brief  視線：トレーナーOBJID取得
+ *  @param  pos     位置指定（SCR_EYE_TR_0 / SCR_EYE_TR_1 )
+ *  @param  ret_wk
+ *
+ *  @note
+ *  トレーナー視線スクリプトから呼ばれている。
+ *  通常スクリプトでの使用は禁止とする。
+ */
+//--------------------------------------------------------------
+#define _EYE_TRAINER_OBJ_ID_GET( pos, ret_wk ) \
+  _ASM_EYE_TRAINER_OBJ_ID_GET  pos,ret_wk
+  .macro  _ASM_EYE_TRAINER_OBJ_ID_GET  pos,ret_wk
+  .short  EV_SEQ_EYE_TRAINER_OBJ_ID_GET
   .short  \pos
   .short  \ret_wk
   .endm
@@ -2441,15 +2442,17 @@
  *  _TRAINER_MSG_SET トレーナー会話呼び出し
  *  @param tr_id メッセージ表示用トレーナーID
  *  @param kind_id 会話種類
+ *  @param  obj_id  ふきだし位置とするOBJID
  */
 //--------------------------------------------------------------
-#define _TRAINER_MSG_SET( tr_id,kind_id ) \
-  _ASM_TRAINER_MSG_SET  tr_id,kind_id
+#define _TRAINER_MSG_SET( tr_id,kind_id,obj_id ) \
+  _ASM_TRAINER_MSG_SET  tr_id,kind_id,obj_id
 
-  .macro  _ASM_TRAINER_MSG_SET  tr_id,kind_id
+  .macro  _ASM_TRAINER_MSG_SET  tr_id,kind_id,obj_id
   .short  EV_SEQ_TRAINER_MSG_SET
   .short  \tr_id
   .short  \kind_id
+  .short  \obj_id
   .endm
 
 //--------------------------------------------------------------

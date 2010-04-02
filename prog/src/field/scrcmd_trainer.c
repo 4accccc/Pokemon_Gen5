@@ -55,13 +55,14 @@ SDK_COMPILER_ASSERT( SCR_EYE_TR_0 == TRAINER_EYE_HIT0 );
 SDK_COMPILER_ASSERT( SCR_EYE_TR_1 == TRAINER_EYE_HIT1 );
 
 //======================================================================
-//	コマンド
+//
+//	コマンド：トレーナー視線関連
+//
+//
 //======================================================================
 //--------------------------------------------------------------
 /**
- * 視線：トレーナー移動呼び出し
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
+ * スクリプコマンド：視線：トレーナー移動セット
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdEyeTrainerMoveSet( VMHANDLE *core, void *wk )
@@ -86,16 +87,13 @@ VMCMD_RESULT EvCmdEyeTrainerMoveSet( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 視線：トレーナー移動　単体
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"1"
+ * スクリプコマンド：視線：トレーナー移動
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdEyeTrainerMoveSingle( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdEyeTrainerMove( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
   
   SCR_TRAINER_HITDATA * eye0 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
   SCR_TRAINER_HITDATA * eye1 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
@@ -109,29 +107,8 @@ VMCMD_RESULT EvCmdEyeTrainerMoveSingle( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 視線：トレーナー移動　ダブル
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"1"
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdEyeTrainerMoveDouble( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK *work = wk;
-  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
-  SCR_TRAINER_HITDATA * eye0 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
-  SCR_TRAINER_HITDATA * eye1 = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
-  
-  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( work );
-  GMEVENT * event = EVENT_TrainerEyeMoveControl( gsys, eye0->ev_eye_move, eye1->ev_eye_move );
-  SCRIPT_CallEvent( sc, event );
-   
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//--------------------------------------------------------------
-/**
- * 視線：トレーナー動作タイプ取得
- * @param	core		仮想マシン制御構造体へのポインタ
+ * スクリプコマンド：視線：トレーナー動作タイプ取得
+ *
  * TR0_TYPEに固定！
  */
 //--------------------------------------------------------------
@@ -147,9 +124,7 @@ VMCMD_RESULT EvCmdEyeTrainerMoveTypeGet( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * 視線：トレーナーID取得
- * @param	core		仮想マシン制御構造体へのポインタ
- * @return	"0"
+ * スクリプコマンド：視線：トレーナーID取得
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdEyeTrainerIdGet( VMHANDLE *core, void *wk )
@@ -167,6 +142,33 @@ VMCMD_RESULT EvCmdEyeTrainerIdGet( VMHANDLE *core, void *wk )
   }
   if ( eye ) {
     *ret_wk = eye->hitdata.tr_id;
+  } else {
+    GF_ASSERT( 0 );
+    *ret_wk = 0;  //エラー回避
+  }
+	return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * スクリプコマンド：視線：トレーナーOBJID取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdEyeTrainerObjIdGet( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+	u16 pos = SCRCMD_GetVMWorkValue( core, work ); //視線データの0,1か？
+	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
+  SCR_TRAINER_HITDATA * eye = NULL;
+
+  if( pos == SCR_EYE_TR_0 ){ //視線0
+    eye = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT0 );
+  }else if( pos == SCR_EYE_TR_1){
+    eye = SCRIPT_GetTrainerHitData( sc, TRAINER_EYE_HIT1 );
+  }
+  if ( eye ) {
+    *ret_wk = MMDL_GetOBJID( eye->hitdata.mmdl );
   } else {
     GF_ASSERT( 0 );
     *ret_wk = 0;  //エラー回避
@@ -316,6 +318,8 @@ VMCMD_RESULT EvCmdTrainerTalkTypeGet( VMHANDLE *core, void *wk )
  * 再戦トレーナー会話の種類取得
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return	"0"
+ *
+ * @todo  使っていない？検証する
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdRevengeTrainerTalkTypeGet( VMHANDLE *core, void *wk )
@@ -434,6 +438,8 @@ VMCMD_RESULT EvCmdTrainerWin( VMHANDLE * core, void *wk )
  * 手持ちチェック 2vs2が可能か取得
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return	"0"
+ *
+ * @todo    使っていないので削除する
  */
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmd2vs2BattleCheck( VMHANDLE *core, void *wk )

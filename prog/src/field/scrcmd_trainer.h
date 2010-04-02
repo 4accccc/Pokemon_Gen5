@@ -11,12 +11,12 @@
 //  extern 
 //======================================================================
 extern VMCMD_RESULT EvCmdEyeTrainerMoveSet(VMHANDLE *core,void *wk);
-extern VMCMD_RESULT EvCmdEyeTrainerMoveSingle( VMHANDLE *core, void *wk );
-extern VMCMD_RESULT EvCmdEyeTrainerMoveDouble( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdEyeTrainerMove( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdTrainerBtlRuleGet( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdEyeTrainerMoveTypeGet( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdEyeTrainerIdGet(VMHANDLE *core,void *wk);
+extern VMCMD_RESULT EvCmdEyeTrainerObjIdGet( VMHANDLE *core, void *wk );
 
 extern VMCMD_RESULT EvCmdTrainerIdGet(VMHANDLE *core,void *wk);
 extern VMCMD_RESULT EvCmdTrainerBattleSet(VMHANDLE *core,void *wk);
