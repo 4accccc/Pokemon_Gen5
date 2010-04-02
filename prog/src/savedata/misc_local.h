@@ -50,7 +50,7 @@ struct _MISC
   // すれ違い調査隊
   u8  research_request_id; // 受けている調査依頼ID ( RESEARCH_REQ_ID_xxxx )
   u8  research_question_id[MAX_QNUM_PER_RESEARCH_REQ]; // 調べている質問ID (3つ)
-  u16 research_start_count[MAX_QNUM_PER_RESEARCH_REQ]; // 調査依頼を受けた時の回答人数 (3つ)
+  u16 research_count[MAX_QNUM_PER_RESEARCH_REQ]; // 調査開始からの調査人数(3つ)
   s64 research_start_time;  // 調査依頼を受けた時の時間[秒]
 
   //ジムリーダー戦勝利時の手持ち記録

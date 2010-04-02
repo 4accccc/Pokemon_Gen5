@@ -10126,35 +10126,33 @@
 
 //--------------------------------------------------------------
 /**
- * @brief 質問に対する, いままでの回答人数を取得する
+ * @brief 依頼の達成状況をチェックする
  *
- * @param qID [in]  質問ID ( QUESTION_ID_xxxx )
- * @param ret [out] 回答人数の格納先
+ * @param RID [in]  依頼ID ( RESEARCH_REQ_ID_xxxx )
+ * @param ret [out] 達成状況の格納先 ( RESEARCH_REQ_STATE_xxxx )
  */
 //--------------------------------------------------------------
-#define _GET_TOTAL_COUNT_OF_QUESTION( qID, ret ) \
-    _ASM_GET_TOTAL_COUNT_OF_QUESTION qID, ret
+#define _CHECK_ACHIEVE_REQUEST( RID, ret ) \
+    _ASM_CHECK_ACHIEVE_REQUEST RID, ret
 
-  .macro _ASM_GET_TOTAL_COUNT_OF_QUESTION qID, ret
-  .short EV_SEQ_GET_TOTAL_COUNT_OF_QUESTION
-  .short \qID
+  .macro _ASM_CHECK_ACHIEVE_REQUEST RID, ret
+  .short EV_SEQ_CHECK_ACHIEVE_REQUEST
+  .short \RID
   .short \ret
-  .endm
+  .endm 
 
 //--------------------------------------------------------------
 /**
- * @brief 質問に対する, 調査開始時の回答人数を取得する
+ * @brief 調査中の依頼の達成までの不足値を取得する
  *
- * @param qID [in]  質問ID ( QUESTION_ID_xxxx )
- * @param ret [out] 回答人数の格納先
+ * @param ret [out] 不足値の格納先
  */
 //--------------------------------------------------------------
-#define _GET_START_COUNT_OF_QUESTION( qID, ret ) \
-    _ASM_GET_START_COUNT_OF_QUESTION qID, ret
+#define _GET_LACK_FOR_ACHIEVE( ret ) \
+    _ASM_GET_LACK_FOR_ACHIEVE ret
 
-  .macro _ASM_GET_START_COUNT_OF_QUESTION qID, ret
-  .short EV_SEQ_GET_START_COUNT_OF_QUESTION
-  .short \qID
+  .macro _ASM_GET_LACK_FOR_ACHIEVE ret
+  .short EV_SEQ_GET_LACK_FOR_ACHIEVE
   .short \ret
   .endm 
 

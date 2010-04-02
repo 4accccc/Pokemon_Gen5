@@ -118,8 +118,9 @@ extern u8 MISC_GetResearchRequestID( const MISC* misc );
 extern void MISC_SetResearchRequestID( MISC* misc, u8 id );
 extern u8 MISC_GetResearchQuestionID( const MISC* misc, u8 idx );
 extern void MISC_SetResearchQuestionID( MISC* misc, u8 idx, u8 id );
-extern u16 MISC_GetResearchStartCount( const MISC* misc, u8 idx );
-extern void MISC_SetResearchStartCount( MISC* misc, u8 idx, u16 count );
+extern u16 MISC_GetResearchCount( const MISC* misc, u8 idx );
+extern void MISC_SetResearchCount( MISC* misc, u8 idx, u16 count );
+extern void MISC_AddResearchCount( MISC* misc, u8 idx, u16 add );
 extern s64 MISC_GetResearchStartTimeBySecond( const MISC* misc );
 extern void MISC_SetResearchStartTimeBySecond( MISC* misc, s64 time );
 //イベントロック

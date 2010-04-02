@@ -15,6 +15,7 @@
 #include "scrcmd.h"
 #include "event_research_team.h"
 
+#include "field/research_team.h"
 #include "field/research_team_def.h"
 #include "savedata/misc.h" 
 #include "savedata/questionnaire_save.h" 
@@ -23,6 +24,19 @@
 #include "../../../resource/research_radar/data/question_id.h"            // for QUESTION_ID_xxxx
 #include "../../../resource/research_radar/data/answer_num_question.cdat" // for AnswerNum_question[]
 #include "../../../resource/research_radar/data/answer_id_question.cdat"  // for AnswerID_question[][]
+
+
+static void CheckCurrentResearchFinish( SAVE_CONTROL_WORK* save, u16* RState );
+static void CheckRequestFinish_inAdvance( SAVE_CONTROL_WORK* save, u8 RID, u16* RState );
+static u32 GetCurrentCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 QID );
+static BOOL CheckNormCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 RID );
+static BOOL CheckMaxCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 RID );
+static BOOL CheckNormTime( SAVE_CONTROL_WORK* save );
+static BOOL CheckResearchOne( SAVE_CONTROL_WORK* save );
+static u16 GetLackTime( SAVE_CONTROL_WORK* save );
+static u16 GetLackCount( SAVE_CONTROL_WORK* save );
+static u16 GetPassedTime( SAVE_CONTROL_WORK* save );
+
 
 
 //-----------------------------------------------------------------------------
@@ -170,53 +184,15 @@ VMCMD_RESULT EvCmdGetResearchPassedTime( VMHANDLE *core, void *wk )
   SCRIPT_WORK*       script   = SCRCMD_WORK_GetScriptWork( work );
   GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
   SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
-  MISC*              misc     = SaveData_GetMisc( save );
 
   u16* ret;
-  s64 startSec;
   u16 passedHour;
   
   // コマンドの引数を取得
   ret = SCRCMD_GetVMWork( core, work ); // 第一引数: 経過時間の格納先
 
-  // 調査の開始時刻を取得
-  startSec = MISC_GetResearchStartTimeBySecond( misc );
-
-  // 調査中でない
-  if( MISC_GetResearchRequestID( misc ) == RESEARCH_REQ_ID_NONE ) {
-    passedHour = 0;
-  }
-  // 調査中
-  else { 
-    s64 nowSec, passedSec;
-    RTCDate passedDate, nowDate;
-    RTCTime passedTime, nowTime;
-
-    // 現在時刻を取得
-    GFL_RTC_GetDateTime( &nowDate, &nowTime );
-    nowSec = RTC_ConvertDateTimeToSecond( &nowDate, &nowTime );
-    OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME: year=%d, month=%d, day=%d\n", nowDate.year, nowDate.month, nowDate.day );
-    OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME: hour=%d, minute=%d, second=%d\n", nowTime.hour, nowTime.minute, nowTime.second );
-    OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME: startSec=%ld, nowSec=%ld\n", startSec, nowSec );
-
-    // 経過時間[h]を算出
-    passedSec = nowSec - startSec;
-    RTC_ConvertSecondToDateTime( &passedDate, &passedTime, passedSec );
-    OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME: startSec=%ld, nowSec=%ld, passedSec=%ld\n", startSec, nowSec, passedSec ); 
-    OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME: year=%d, month=%d, day=%d\n", passedDate.year, passedDate.month, passedDate.day );
-    OS_TFPrintf( 3, "_GET_RESEARCH_PASSED_TIME: hour=%d, minute=%d, second=%d\n", passedTime.hour, passedTime.minute, passedTime.second );
-
-    if( (0 < passedDate.year) ||  // 1年以上が経過
-        (1 < passedDate.month) || // 1月以上が経過
-        (1 < passedDate.day) )    // 1日以上が経過
-    { 
-      passedHour = 24; // 最大24時間とする ( それ以上は必要ないので )
-    }
-    else
-    {
-      passedHour = passedTime.hour;
-    }
-  }
+  // 経過時間を算出
+  passedHour = GetPassedTime( save );
 
   // 経過時間を返す
   *ret = passedHour;
@@ -262,22 +238,8 @@ VMCMD_RESULT EvCmdStartResearch( VMHANDLE *core, void *wk )
 
  for( i=0; i<MAX_QNUM_PER_RESEARCH_REQ; i++ )
  {
-   // 質問IDをセーブ
-   MISC_SetResearchQuestionID( misc, i, qID[i] );
-
-   // ダミーID
-   if( qID[i] == QUESTION_ID_DUMMY ) { continue; }
-
-   // 開始時(現時点)の回答人数をセーブ
-   {
-     int totalCount = QuestionnaireWork_GetTotalCount( qSave, qID[i] );
-     int todayCount = QuestionnaireWork_GetTodayCount( qSave, qID[i] );
-     int sumCount = totalCount + todayCount;  
-     MISC_SetResearchStartCount( misc, i, sumCount );
-
-     // DEBUG:
-     OS_TFPrintf( 3, "_START_RESEARCH: sumCount=%d\n", sumCount );
-   }
+   MISC_SetResearchQuestionID( misc, i, qID[i] ); // 質問IDをセーブ
+   MISC_SetResearchCount( misc, i, 0 ); // 調査人数をクリア
  }
 
   // 調査開始時刻をセーブ
@@ -318,83 +280,6 @@ VMCMD_RESULT EvCmdFinishResearch( VMHANDLE *core, void *wk )
 
   // DEBUG:
   OS_TFPrintf( 3, "_FINISH_RESEARCH\n" );
-
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//-----------------------------------------------------------------------------
-/**
- * @brief 質問に対する, 現時点の回答人数を取得する
- * @param  core
- * @param  wk
- * @retval VMCMD_RESULT
- */
-//-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdGetTotalCountOfQuestion( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK*             work     = (SCRCMD_WORK*)wk;
-  SCRIPT_WORK*             script   = SCRCMD_WORK_GetScriptWork( work );
-  GAMEDATA*                gameData = SCRCMD_WORK_GetGameData( work );
-  SAVE_CONTROL_WORK*       save     = GAMEDATA_GetSaveControlWork( gameData );
-  QUESTIONNAIRE_SAVE_WORK* qSave    = SaveData_GetQuestionnaire( save );
-
-  int i;
-  u16 qID;
-  u16* retWork;
-  int totalCount;
-  int todayCount;
-  int sumCount;
-
-  // コマンドの引数を取得
-  qID     = SCRCMD_GetVMWorkValue( core, work ); // 第一引数: 質問ID
-  retWork = SCRCMD_GetVMWork( core, work );      // 第二引数: 回答人数の格納先
-
-  // いままでの回答人数を取得
-  totalCount = QuestionnaireWork_GetTotalCount( qSave, qID );
-  todayCount = QuestionnaireWork_GetTodayCount( qSave, qID );
-  sumCount   = totalCount + todayCount;
-  *retWork   = sumCount;
-
-  // DEBUG:
-  OS_TFPrintf( 3, "_GET_RESEARCH_TOTAL_COUNT ==> %d\n", *retWork );
-
-  return VMCMD_RESULT_CONTINUE;
-}
-
-//-----------------------------------------------------------------------------
-/**
- * @brief 質問に対する, 調査開始時の回答人数を取得する
- * @param  core
- * @param  wk
- * @retval VMCMD_RESULT
- */
-//-----------------------------------------------------------------------------
-VMCMD_RESULT EvCmdGetStartCountOfQuestion( VMHANDLE *core, void *wk )
-{
-  SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
-  SCRIPT_WORK*       script   = SCRCMD_WORK_GetScriptWork( work );
-  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
-  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
-  MISC*              misc     = SaveData_GetMisc( save );
-
-  int i;
-  u16 qID;
-  u16* retWork;
-
-  // コマンドの引数を取得
-  qID     = SCRCMD_GetVMWorkValue( core, work ); // 第一引数: 質問ID
-  retWork = SCRCMD_GetVMWork( core, work );      // 第二引数: 回答人数の格納先
-
-  // セーブデータから, 該当する質問IDの調査開始時の回答人数を取得する
-  for( i=0; i<MAX_QNUM_PER_RESEARCH_REQ; i++ )
-  {
-    if( MISC_GetResearchQuestionID(misc, i) == qID ) {
-      *retWork = MISC_GetResearchStartCount( misc, i );
-    }
-  }
-
-  // DEBUG:
-  OS_TFPrintf( 3, "_GET_RESEARCH_TODAY_COUNT ==> %d\n", *retWork );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -507,3 +392,486 @@ VMCMD_RESULT EvCmdDispResearchTeamInfo( VMHANDLE *core, void *wk )
   SCRIPT_CallEvent( script, EVENT_DispResearchTeamInfo( gameSystem ) );
   return VMCMD_RESULT_SUSPEND;
 }
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief  指定した依頼を達成しているかどうかをチェックする
+ * @param  core
+ * @param  wk
+ * @retval VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdCheckAchieveRequest( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
+  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
+  const MISC*        misc     = SaveData_GetMiscConst( save );
+
+  u8 RID;
+  u16* ret_wk;
+
+  RID = SCRCMD_GetVMWorkValue( core, work ); // 第一引数: 依頼ID
+  ret_wk = SCRCMD_GetVMWork( core, work );   // 第二引数: 依頼の達成状況の格納先
+
+  // 指定された依頼が現在調査中である場合
+  if( RID == MISC_GetResearchRequestID(misc) ) {
+    CheckCurrentResearchFinish( save, ret_wk );
+  }
+  // 現在調査中でない依頼の場合
+  else {
+    CheckRequestFinish_inAdvance( save, RID, ret_wk );
+  }
+
+  OS_TFPrintf( 3, "_CHECK_ACHIEVE_REQUEST ==> " );
+  switch( *ret_wk ) {
+  case RESEARCH_REQ_STATE_NULL:             OS_TFPrintf( 3, "NULL" );             break;
+  case RESEARCH_REQ_STATE_ACHIEVE:          OS_TFPrintf( 3, "ACHIEVE" );          break;
+  case RESEARCH_REQ_STATE_FALSE_NORM_COUNT: OS_TFPrintf( 3, "FALSE_NORM_COUNT" ); break;
+  case RESEARCH_REQ_STATE_FALSE_NORM_TIME:  OS_TFPrintf( 3, "FALSE_NORM_TIME" );  break;
+  case RESEARCH_REQ_STATE_FALSE_ZERO_COUNT: OS_TFPrintf( 3, "FALSE_ZERO_COUNT" ); break;
+  default: GF_ASSERT(0);
+  }
+  OS_TFPrintf( 3, "\n" );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief  調査中の依頼の不足値を取得する
+ * @param  core
+ * @param  wk
+ * @retval VMCMD_RESULT
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdGetLackForAchieve( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*       work     = (SCRCMD_WORK*)wk;
+  GAMEDATA*          gameData = SCRCMD_WORK_GetGameData( work );
+  SAVE_CONTROL_WORK* save     = GAMEDATA_GetSaveControlWork( gameData );
+  const MISC*        misc     = SaveData_GetMiscConst( save );
+
+  u16* ret_wk;
+  u16 lack;
+  u8 RID;
+  u8 RType;
+
+  // コマンド引数を取得
+  ret_wk = SCRCMD_GetVMWork( core, work ); // 第一引数: 不足値の格納先
+
+  // 調査タイプを取得
+  RID = MISC_GetResearchRequestID( misc );
+  RType = RESEARCH_TEAM_GetResearchType( RID );
+
+  // 達成不足値を取得
+  switch( RType ) {
+  case RESEARCH_REQ_TYPE_TIME:  lack = GetLackTime( save );  break;
+  case RESEARCH_REQ_TYPE_COUNT: lack = GetLackCount( save ); break;
+  default: GF_ASSERT(0);
+  }
+
+  *ret_wk = lack;
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//=============================================================================
+/**
+ * @brief 調査中の依頼の達成をチェックする
+ *
+ * @param save
+ * @param RState 調査状況の格納先
+ */
+//=============================================================================
+static void CheckCurrentResearchFinish( SAVE_CONTROL_WORK* save, u16* RState )
+{
+  QUESTIONNAIRE_SAVE_WORK* QSave = SaveData_GetQuestionnaire( save );
+  const MISC*              misc  = SaveData_GetMiscConst( save );
+
+  u8 RID;
+  u8 RType;
+
+  RID = MISC_GetResearchRequestID( misc ); // 調査依頼IDを取得
+  RType = RESEARCH_TEAM_GetResearchType( RID ); // 依頼タイプを取得
+
+  // 人数調査の場合
+  if( RType == RESEARCH_REQ_TYPE_COUNT ) {
+    // ノルマ達成
+    if( CheckNormCount( QSave, RID ) ) {
+      *RState = RESEARCH_REQ_STATE_ACHIEVE;
+    }
+    // ノルマ未達成
+    else {
+      *RState = RESEARCH_REQ_STATE_FALSE_NORM_COUNT;
+    }
+  }
+  // 時間調査の場合
+  else if( RType == RESEARCH_REQ_TYPE_TIME ) {
+    // ノルマ時間が経過
+    if( CheckNormTime( save ) ) {
+      // 1人以上調査した
+      if( CheckResearchOne( save ) ) {
+        *RState = RESEARCH_REQ_STATE_ACHIEVE;
+      }
+      // 1人も調査していない
+      else {
+        *RState = RESEARCH_REQ_STATE_FALSE_ZERO_COUNT;
+      }
+    }
+    // ノルマ時間が経過していない
+    else {
+      *RState = RESEARCH_REQ_STATE_FALSE_NORM_TIME;
+    }
+  }
+  else {
+    GF_ASSERT(0);
+  }
+}
+
+//=============================================================================
+/**
+ * @brief 指定した依頼をすでに達成しているかどうかをチェックする
+ *
+ * @param save
+ * @param RID    チェックする依頼のID
+ * @param RState 調査状況の格納先
+ */
+//=============================================================================
+static void CheckRequestFinish_inAdvance( SAVE_CONTROL_WORK* save, u8 RID, u16* RState )
+{
+  QUESTIONNAIRE_SAVE_WORK* QSave = SaveData_GetQuestionnaire( save );
+  const MISC*              misc  = SaveData_GetMiscConst( save );
+
+  u8 RType;
+
+  RType = RESEARCH_TEAM_GetResearchType( RID ); // 依頼タイプを取得
+
+  // 人数調査の場合
+  if( RType == RESEARCH_REQ_TYPE_COUNT ) {
+    // ノルマ達成
+    if( CheckNormCount( QSave, RID ) ) {
+      *RState = RESEARCH_REQ_STATE_ACHIEVE;
+    }
+    // ノルマ未達成
+    else {
+      *RState = RESEARCH_REQ_STATE_FALSE_NORM_COUNT;
+    }
+  }
+  // 時間調査の場合
+  else if( RType == RESEARCH_REQ_TYPE_TIME ) {
+    // MAXカウントまで調査している
+    if( CheckMaxCount( QSave, RID ) ) {
+      *RState = RESEARCH_REQ_STATE_ACHIEVE;
+    }
+    // ノルマ時間が経過していない
+    else {
+      *RState = RESEARCH_REQ_STATE_FALSE_NORM_TIME;
+    }
+  }
+  else {
+    GF_ASSERT(0);
+  }
+}
+
+//=============================================================================
+/**
+ * @brief 現在の調査人数を取得する
+ *
+ * @param QID 質問ID ( QUESTION_ID_xxxx )
+ *
+ * @return 指定した質問の, 現時点での調査人数 ( いままで + 今日 )
+ */
+//=============================================================================
+static u32 GetCurrentCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 QID )
+{
+  u32 today = QuestionnaireWork_GetTodayCount( QSave, QID );
+  u32 total = QuestionnaireWork_GetTotalCount( QSave, QID );
+  u32 current = today + total;
+  if( 99999 < current ) { current = 99999; }
+  return current;
+}
+
+//=============================================================================
+/**
+ * @brief ノルマ人数の達成をチェックする
+ *
+ * @param QSave
+ * @param RID   チェックする調査依頼のID ( RESEARCH_REQ_ID_xxxx )
+ *
+ * @return 指定した依頼を達成している場合 TRUE
+ *         そうでなければ FALSE
+ */
+//=============================================================================
+static BOOL CheckNormCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 RID )
+{
+  int i;
+  int norm;
+  u8 QID[ MAX_QNUM_PER_RESEARCH_REQ ];
+  u8 QNum;
+
+  RESEARCH_TEAM_GetQuestionID( RID, QID );
+  QNum = RESEARCH_TEAM_GetQuestionNum( RID );
+  norm = RESEARCH_TEAM_GetNormCount( RID );
+
+  for( i=0; i<QNum; i++ )
+  {
+    u32 count = GetCurrentCount( QSave, QID[i] );
+
+    OS_TFPrintf( 3, 
+        "CheckNormCount: QID=%d, norm=%d, count=%d\n", QID[i], norm, count );
+
+    // ノルマを達成していない
+    if( count < norm ) {
+      return FALSE;
+    }
+  } 
+  return TRUE;
+}
+
+//=============================================================================
+/**
+ * @brief 調査中の依頼について, ノルマ時間の達成をチェックする
+ *
+ * @param save
+ *
+ * @return 調査中の依頼がノルマ時間を達成している場合 TRUE
+ *         そうでなければ FALSE
+ */
+//=============================================================================
+static BOOL CheckNormTime( SAVE_CONTROL_WORK* save )
+{
+  QUESTIONNAIRE_SAVE_WORK* QSave = SaveData_GetQuestionnaire( save );
+  const MISC*              misc  = SaveData_GetMiscConst( save );
+
+  int RID;
+  int pass;
+  int norm;
+
+  RID  = MISC_GetResearchRequestID( misc );
+  pass = GetPassedTime( save ); // 経過時間を取得
+  norm = RESEARCH_TEAM_GetNormTime( RID ); // ノルマ時間を取得
+
+  GF_ASSERT( RESEARCH_TEAM_GetResearchType(RID) == RESEARCH_REQ_TYPE_TIME );
+
+  // 経過している
+  if( norm <= pass ) {
+    return TRUE;
+  }
+  // 経過していない
+  else {
+    return FALSE;
+  }
+}
+
+//=============================================================================
+/**
+ * @brief 調査中の依頼について, 調査の開始から１人でも調査したかどうかをチェックする
+ *
+ * @param save
+ *
+ * @return 調査中の依頼を開始してから, １人以上の調査を行っている場合 TRUE
+ *         そうでなければ FALSE
+ */
+//=============================================================================
+static BOOL CheckResearchOne( SAVE_CONTROL_WORK* save )
+{
+  int i;
+  u8 RID;
+  u8 QNum;
+  const MISC* misc;
+
+  // 調査中の質問数を取得
+  misc = SaveData_GetMiscConst( save );
+  RID  = MISC_GetResearchRequestID( misc );
+  QNum = RESEARCH_TEAM_GetQuestionNum( RID );
+
+  // 調査開始からの, 各質問の調査人数をチェック
+  for( i=0; i<QNum; i++ )
+  {
+    // １人も調査していない質問を発見
+    if( MISC_GetResearchCount( misc, i ) == 0 ) {
+      return FALSE;
+    }
+  }
+  return TRUE;
+}
+
+//=============================================================================
+/**
+ * @brief MAXカウントの達成をチェックする
+ *
+ * @param QSave
+ * @param RID  チェックする依頼のID
+ *
+ * @return 指定した依頼に該当する全質問をMAXカウントまで調査している場合 TRUE
+ *         そうでなければ FALSE
+ */
+//=============================================================================
+static BOOL CheckMaxCount( QUESTIONNAIRE_SAVE_WORK* QSave, u8 RID )
+{
+  int i;
+  u8 QID[ MAX_QNUM_PER_RESEARCH_REQ ];
+  u8 QNum;
+  int norm;
+
+  RESEARCH_TEAM_GetQuestionID( RID, QID );
+  QNum = RESEARCH_TEAM_GetQuestionNum( RID );
+  norm = RESEARCH_TEAM_GetNormCount( RID );
+
+  for( i=0; i<QNum; i++ )
+  {
+    u32 count = GetCurrentCount( QSave, QID[i] );
+
+    // MAXカウントに達していない
+    if( count < 99999 ) {
+      return FALSE;
+    }
+  } 
+  return TRUE;
+}
+
+//=============================================================================
+/**
+ * @brief 調査中の依頼のノルマ達成不足人数を取得する
+ *
+ * @param save
+ *
+ * @return 調査中の依頼について, ノルマ達成までの不足人数
+ */
+//=============================================================================
+static u16 GetLackCount( SAVE_CONTROL_WORK* save )
+{
+  QUESTIONNAIRE_SAVE_WORK* QSave = SaveData_GetQuestionnaire( save );
+  const MISC*              misc  = SaveData_GetMiscConst( save );
+
+  int i;
+  u8 RID;
+  u8 QID[ MAX_QNUM_PER_RESEARCH_REQ ];
+  u8 QNum;
+  u32 norm;
+  u32 lack;
+  u32 minCount;
+
+  RID  = MISC_GetResearchRequestID( misc );
+  norm = RESEARCH_TEAM_GetNormCount( RID );
+  QNum = RESEARCH_TEAM_GetQuestionNum( RID );
+  RESEARCH_TEAM_GetQuestionID( RID, QID );
+
+  // 一番少ない調査人数を取得
+  minCount = 99999;
+  for( i=0; i<QNum; i++ )
+  {
+    u32 count = GetCurrentCount( QSave, QID[i] );
+    if( count < minCount ) { minCount = count; }
+  }
+
+  lack = norm - minCount;
+  if( lack < 0 ) { lack = 0; }
+
+  OS_TFPrintf( 3, 
+      "GetLackCount: RID=%d, norm=%d, minCount=%d, lack=%d\n", 
+      RID, norm, minCount, lack );
+
+  return lack;
+}
+
+//=============================================================================
+/**
+ * @brief 調査中の依頼のノルマ達成不足時間を取得する
+ */
+//=============================================================================
+static u16 GetLackTime( SAVE_CONTROL_WORK* save )
+{
+  QUESTIONNAIRE_SAVE_WORK* QSave = SaveData_GetQuestionnaire( save );
+  const MISC*              misc  = SaveData_GetMiscConst( save );
+
+  int RID;
+  int pass;
+  int norm;
+  int lack;
+
+  RID  = MISC_GetResearchRequestID( misc );
+  pass = GetPassedTime( save ); // 経過時間を取得
+  norm = RESEARCH_TEAM_GetNormTime( RID ); // ノルマ時間を取得
+
+  // 不足時間を算出
+  lack = norm - pass; 
+  if( lack < 0 ) { lack = 0; }
+  return lack;
+}
+
+//=============================================================================
+/**
+ * @brief 調査中の依頼の経過時間を取得する
+ */
+//=============================================================================
+static u16 GetPassedTime( SAVE_CONTROL_WORK* save )
+{
+  MISC* misc = SaveData_GetMisc( save );
+
+  s64 startSec;
+  u16 passedHour;
+
+  // 調査中でない
+  if( MISC_GetResearchRequestID( misc ) == RESEARCH_REQ_ID_NONE ) {
+    GF_ASSERT(0);
+    return 0;
+  }
+  
+  // 調査の開始時刻を取得
+  startSec = MISC_GetResearchStartTimeBySecond( misc );
+
+  { 
+    s64 nowSec, passedSec;
+    RTCDate passedDate, nowDate;
+    RTCTime passedTime, nowTime;
+
+    // 現在時刻を取得
+    GFL_RTC_GetDateTime( &nowDate, &nowTime );
+    nowSec = RTC_ConvertDateTimeToSecond( &nowDate, &nowTime );
+
+    // 経過時間[h]を算出
+    passedSec = nowSec - startSec;
+    RTC_ConvertSecondToDateTime( &passedDate, &passedTime, passedSec );
+
+    if( (0 < passedDate.year) ||  // 1年以上が経過
+        (1 < passedDate.month) || // 1月以上が経過
+        (1 < passedDate.day) )    // 1日以上が経過
+    { 
+      passedHour = 24; // 最大24時間とする ( それ以上は必要ないので )
+    }
+    else
+    {
+      passedHour = passedTime.hour;
+    }
+  }
+
+  return passedHour;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

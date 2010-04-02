@@ -686,33 +686,58 @@ void MISC_SetResearchQuestionID( MISC* misc, u8 idx, u8 id )
 }
 //----------------------------------------------------------
 /**
- * @brief 調査依頼を受けた時の回答人数を取得する
+ * @brief 調査隊として調査中の質問について,
+ *        調査を開始してからの調査人数を取得する
  *
  * @param misc
  * @param idx  調査依頼内の質問インデックス ( 0 ～ MAX_QNUM_PER_RESEARCH_REQ-1 )
  *
- * @return 調査開始時点の回答人数
+ * @return 開始からの調査人数
  */
 //----------------------------------------------------------
-u16 MISC_GetResearchStartCount( const MISC* misc, u8 idx )
+u16 MISC_GetResearchCount( const MISC* misc, u8 idx )
 {
   GF_ASSERT( idx < MAX_QNUM_PER_RESEARCH_REQ );
-  return misc->research_start_count[ idx ];
+  return misc->research_count[ idx ];
 }
 
 //----------------------------------------------------------
 /**
- * @brief 調査依頼を受けた時の回答人数をセットする
+ * @brief 調査隊として調査中の質問について,
+ *        調査を開始してからの調査人数をセットする
  *
  * @param misc
  * @param idx   調査依頼内の質問インデックス ( 0 ～ MAX_QNUM_PER_RESEARCH_REQ-1 ) 
- * @param count 調査開始時点の回答人数
+ * @param count セットする人数
  */
 //----------------------------------------------------------
-void MISC_SetResearchStartCount( MISC* misc, u8 idx, u16 count )
+void MISC_SetResearchCount( MISC* misc, u8 idx, u16 count )
 {
   GF_ASSERT( idx < MAX_QNUM_PER_RESEARCH_REQ );
-  misc->research_start_count[idx] = count;
+  misc->research_count[idx] = count;
+}
+
+//----------------------------------------------------------
+/**
+ * @brief 調査隊として調査中の質問について,
+ *        調査を開始してからの調査人数を加算する
+ *
+ * @param misc
+ * @param idx   調査依頼内の質問インデックス ( 0 ～ MAX_QNUM_PER_RESEARCH_REQ-1 ) 
+ * @param count 加算人数
+ */
+//----------------------------------------------------------
+void MISC_AddResearchCount( MISC* misc, u8 idx, u16 add )
+{
+  u32 now, sum;
+
+  GF_ASSERT( idx < MAX_QNUM_PER_RESEARCH_REQ );
+
+  now = misc->research_count[idx];
+  sum = now + add; 
+  if( 0xffff < sum ) { sum = 0xffff; }
+
+  misc->research_count[idx] = sum;
 }
 
 //----------------------------------------------------------
