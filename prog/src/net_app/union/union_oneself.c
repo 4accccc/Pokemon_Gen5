@@ -2468,9 +2468,20 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
       eibw = GFL_HEAP_AllocClearMemory(HEAPID_UNION, sizeof(POKEMONTRADE_PARAM));
       eibw->gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
       eibw->pParty = PokeParty_AllocPartyWork(HEAPID_UNION);
-      GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-      eibw->shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, eibw->gamedata, eibw->pParty, 0, 0, 0, TRUE );
-      GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+      //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
+      //eibw->shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, eibw->gamedata, eibw->pParty, 0, 0, 0, TRUE );
+      //GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+      {
+        SHINKA_DEMO_PARAM* sdp = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof( SHINKA_DEMO_PARAM ) );
+        sdp->gamedata          = eibw->gamedata;
+        sdp->ppt               = eibw->pParty;
+        sdp->after_mons_no     = 0;
+        sdp->shinka_pos        = 0;
+        sdp->shinka_cond       = 0;
+        sdp->b_field           = TRUE;
+        sdp->b_enable_cancel   = FALSE;
+        eibw->shinka_param     = sdp;
+      }
       eibw->ret = POKEMONTRADE_MOVE_START;
       unisys->parent_work = eibw;
       UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_TRADE, eibw);
@@ -2482,9 +2493,13 @@ static BOOL OneselfSeq_TradeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *
       POKEMONTRADE_PARAM* eibw = unisys->parent_work;
       GFL_HEAP_FreeMemory(eibw->pParty);
       GFL_HEAP_FreeMemory(unisys->parent_work);
-      GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-      SHINKADEMO_FreeParam( eibw->shinka_param );
-      GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+      //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
+      //SHINKADEMO_FreeParam( eibw->shinka_param );
+      //GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+      {
+        SHINKA_DEMO_PARAM* sdp = eibw->shinka_param;
+        GFL_HEAP_FreeMemory( sdp );
+      }
       unisys->parent_work = NULL;
       OS_TPrintf("ÉTÉuPROCèIóπ\n");
       (*seq)++;

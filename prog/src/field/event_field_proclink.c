@@ -316,7 +316,7 @@ static const struct
   },
   //EVENT_PROCLINK_CALL_EVOLUTION
   { 
-    NO_OVERLAY_ID,
+    FS_OVERLAY_ID(shinka_demo),
     &ShinkaDemoProcData,
     FMenuCallProc_Evolution,
     FMenuReturnProc_Evolution,
@@ -1861,7 +1861,7 @@ static void * FMenuCallProc_Evolution(PROCLINK_WORK* wk, u32 param,EVENT_PROCLIN
   GAMEDATA *gmData = GAMESYSTEM_GetGameData( wk->param->gsys );
   SHINKA_DEMO_PARAM *demoParam = NULL;
 
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo));
+  //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo));
   if( pre == EVENT_PROCLINK_CALL_POKELIST )
   {
     const PLIST_DATA *plistData = pre_param_adrs;
@@ -1893,13 +1893,24 @@ static void * FMenuCallProc_Evolution(PROCLINK_WORK* wk, u32 param,EVENT_PROCLIN
                                 HEAPID_PROC );
     }
 
-    demoParam = SHINKADEMO_AllocParam(HEAPID_PROC ,
-                                      gmData , 
-                                      party ,
-                                      newMonsNo ,
-                                      plistData->ret_sel ,
-                                      cond ,
-                                      TRUE );
+    //demoParam = SHINKADEMO_AllocParam(HEAPID_PROC ,
+    //                                  gmData , 
+    //                                  party ,
+    //                                  newMonsNo ,
+    //                                  plistData->ret_sel ,
+    //                                  cond ,
+    //                                  TRUE );
+
+    {
+      demoParam = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof( SHINKA_DEMO_PARAM ) );
+      demoParam->gamedata          = gmData;
+      demoParam->ppt               = party;
+      demoParam->after_mons_no     = newMonsNo;
+      demoParam->shinka_pos        = plistData->ret_sel;
+      demoParam->shinka_cond       = cond;
+      demoParam->b_field           = TRUE;
+      demoParam->b_enable_cancel   = TRUE;
+    }
 
   }
   return demoParam;
@@ -1921,7 +1932,7 @@ static void * FMenuCallProc_Evolution(PROCLINK_WORK* wk, u32 param,EVENT_PROCLIN
 static RETURNFUNC_RESULT FMenuReturnProc_Evolution(PROCLINK_WORK* wk,void* param_adrs)
 { 
   GAMEDATA *gmData = GAMESYSTEM_GetGameData( wk->param->gsys );
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+  //GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
   
   if( wk->mode == PROCLINK_MODE_EVOLUTION_ITEM )
   {

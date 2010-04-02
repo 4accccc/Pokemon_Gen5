@@ -340,10 +340,21 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         wk->shinka_poke_pos++;
         if( after_mons_no )
         {
-          GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-          wk->shinka_param = SHINKADEMO_AllocParam( wk->heapID, param->gameData, party, after_mons_no, pos, cond, FALSE );
+          //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
+          //wk->shinka_param = SHINKADEMO_AllocParam( wk->heapID, param->gameData, party, after_mons_no, pos, cond, FALSE );
+          {
+            SHINKA_DEMO_PARAM* sdp = GFL_HEAP_AllocMemory( wk->heapID, sizeof( SHINKA_DEMO_PARAM ) );
+            sdp->gamedata          = param->gameData;
+            sdp->ppt               = party;
+            sdp->after_mons_no     = after_mons_no;
+            sdp->shinka_pos        = pos;
+            sdp->shinka_cond       = cond;
+            sdp->b_field           = FALSE;
+            sdp->b_enable_cancel   = TRUE;
+            wk->shinka_param       = sdp;
+          }
           // ローカルPROC呼び出し
-          GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ShinkaDemoProcData, wk->shinka_param );
+          GFL_PROC_LOCAL_CallProc( wk->local_procsys, FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, wk->shinka_param );
           (*seq) = 5;
           break;
         }
@@ -358,8 +369,12 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
     // ローカルPROCが終了するのを待つ  // このMainの最初でGFL_PROC_MAIN_VALIDならreturnしているので、ここでは判定しなくてもよいが念のため
     if( local_proc_status != GFL_PROC_MAIN_VALID )
     {
-      SHINKADEMO_FreeParam( wk->shinka_param );
-      GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+      //SHINKADEMO_FreeParam( wk->shinka_param );
+      {
+        SHINKA_DEMO_PARAM* sdp = wk->shinka_param;
+        GFL_HEAP_FreeMemory( sdp );
+      }
+      //GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
       wk->shinka_param = NULL;
       if( wk->shinka_poke_bit )
       {

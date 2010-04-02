@@ -483,11 +483,21 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
         GMEVENT* demo;
 
         // パラメータを生成
-        GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-        work->shinkaDemoParam = SHINKADEMO_AllocParam( 
-            HEAPID_PROC, gameData, pokeParty, afterMonsNo, work->partyPos, cond, TRUE );
-        GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
-
+        //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
+        //work->shinkaDemoParam = SHINKADEMO_AllocParam( 
+        //    HEAPID_PROC, gameData, pokeParty, afterMonsNo, work->partyPos, cond, TRUE );
+        //GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+        {
+          SHINKA_DEMO_PARAM* sdp = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof( SHINKA_DEMO_PARAM ) );
+          sdp->gamedata          = gameData;
+          sdp->ppt               = pokeParty;
+          sdp->after_mons_no     = afterMonsNo;
+          sdp->shinka_pos        = work->partyPos;
+          sdp->shinka_cond       = cond;
+          sdp->b_field           = TRUE;
+          sdp->b_enable_cancel   = FALSE;
+          work->shinkaDemoParam  = sdp;
+        }
         // デモ呼び出し
         demo = EVENT_FieldSubProc( gameSystem, fieldmap, 
             FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, work->shinkaDemoParam );
@@ -501,9 +511,13 @@ static GMEVENT_RESULT FieldPokeTradeEvent( GMEVENT* event, int* seq, void* wk )
   case SEQ_EXIT:
     // 進化デモの後始末
     if( work->shinkaDemoParam ) {
-        GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-      SHINKADEMO_FreeParam( work->shinkaDemoParam );
-      GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+        //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
+      //SHINKADEMO_FreeParam( work->shinkaDemoParam );
+      //GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+      {
+        SHINKA_DEMO_PARAM* sdp = work->shinkaDemoParam;
+        GFL_HEAP_FreeMemory( sdp );
+      }
     }
     // 交換ワーク破棄
     FLD_TRADE_WORK_Delete( work->tradeWork );

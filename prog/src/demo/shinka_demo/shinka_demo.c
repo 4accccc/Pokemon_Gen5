@@ -392,6 +392,9 @@ const GFL_PROC_DATA   ShinkaDemoProcData = {
 *  外部公開関数定義
 */
 //=============================================================================
+
+#if 0
+
 //------------------------------------------------------------------
 /**
  *  @brief       進化デモ用パラメータ構造体生成
@@ -460,6 +463,8 @@ void SHINKADEMO_InitParam( SHINKA_DEMO_PARAM* param,
   param->b_field           = b_field;
   param->b_enable_cancel   = b_enable_cancel;
 }
+
+#endif
 
 
 //=============================================================================
@@ -1064,6 +1069,7 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         PaletteFadeWorkAllocSet( work->pfd, FADE_SUB_OBJ, 0x1e0, work->heap_id );
 
         // バトルステータス
+        work->bplist_data.gamedata    = param->gamedata;
         work->bplist_data.pp          = (POKEPARTY*)param->ppt;
         work->bplist_data.font        = work->font;
         work->bplist_data.heap        = work->heap_id;

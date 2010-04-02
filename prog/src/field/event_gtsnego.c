@@ -169,18 +169,33 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     break;
     
   case _SEQ_EVOLUTION:
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-    dbw->aPokeTr.shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, dbw->aPokeTr.gamedata,
-                                               dbw->aPokeTr.pParty,
-                                               dbw->aPokeTr.after_mons_no,
-                                               0, dbw->aPokeTr.cond, TRUE );
-    GAMESYSTEM_CallProc( gsys, NO_OVERLAY_ID, &ShinkaDemoProcData, dbw->aPokeTr.shinka_param );
+    //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
+    //dbw->aPokeTr.shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, dbw->aPokeTr.gamedata,
+    //                                           dbw->aPokeTr.pParty,
+    //                                           dbw->aPokeTr.after_mons_no,
+    //                                           0, dbw->aPokeTr.cond, TRUE );
+    {
+      SHINKA_DEMO_PARAM* sdp = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof( SHINKA_DEMO_PARAM ) );
+      sdp->gamedata          = dbw->aPokeTr.gamedata;
+      sdp->ppt               = dbw->aPokeTr.pParty;
+      sdp->after_mons_no     = dbw->aPokeTr.after_mons_no;
+      sdp->shinka_pos        = 0;
+      sdp->shinka_cond       = dbw->aPokeTr.cond;
+      sdp->b_field           = TRUE;
+      sdp->b_enable_cancel   = FALSE;
+      dbw->aPokeTr.shinka_param  = sdp;
+    }
+    GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, dbw->aPokeTr.shinka_param );
 		(*seq) ++;
     break;
   case _SEQ_EVOLUTIONEND:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      SHINKADEMO_FreeParam( dbw->aPokeTr.shinka_param );
-      GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+      //SHINKADEMO_FreeParam( dbw->aPokeTr.shinka_param );
+      {
+        SHINKA_DEMO_PARAM* sdp = dbw->aPokeTr.shinka_param;
+        GFL_HEAP_FreeMemory( sdp );
+      }
+      //GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
       dbw->aPokeTr.ret = POKEMONTRADE_MOVE_EVOLUTION;
       (*seq) = _CALL_TRADE;
     }

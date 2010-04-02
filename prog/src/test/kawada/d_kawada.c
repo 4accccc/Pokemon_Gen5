@@ -1088,8 +1088,6 @@ static void EggDemoExit( KAWADA_MAIN_WORK* wk )
 // i‰»ƒfƒ‚
 static void ShinkaDemoInit( KAWADA_MAIN_WORK* wk )
 {
-  GFL_OVERLAY_Load(FS_OVERLAY_ID(shinka_demo));
-  
   ZONEDATA_Open( wk->heapID );
   GAMEBEACON_Setting(wk->gamedata);
 
@@ -1100,19 +1098,25 @@ static void ShinkaDemoInit( KAWADA_MAIN_WORK* wk )
   PokeParty_Init(wk->party, 6);
   PokeParty_Add( wk->party, wk->pp );
   
-  wk->shinka_demo_param = SHINKADEMO_AllocParam(
-                              wk->heapID, wk->gamedata, wk->party,
-                              MONSNO_RIZAADON, 0, SHINKA_COND_LEVELUP, TRUE );
-      
-  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ShinkaDemoProcData, wk->shinka_demo_param );
+  {
+    SHINKA_DEMO_PARAM* sdp = GFL_HEAP_AllocMemory( wk->heapID, sizeof( SHINKA_DEMO_PARAM ) );
+    sdp->gamedata          = wk->gamedata;
+    sdp->ppt               = wk->party;
+    sdp->after_mons_no     = MONSNO_RIZAADON;
+    sdp->shinka_pos        = 0;
+    sdp->shinka_cond       = SHINKA_COND_LEVELUP;
+    sdp->b_field           = TRUE;
+    sdp->b_enable_cancel   = FALSE;
+    wk->shinka_demo_param  = sdp;
+  }
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, wk->shinka_demo_param );
 }
 static void ShinkaDemoExit( KAWADA_MAIN_WORK* wk )
 {
-  SHINKADEMO_FreeParam( wk->shinka_demo_param );
+  GFL_HEAP_FreeMemory( wk->shinka_demo_param );
   GFL_HEAP_FreeMemory( wk->party );
   GFL_HEAP_FreeMemory( wk->pp );
   ZONEDATA_Close();
-  GFL_OVERLAY_Unload(FS_OVERLAY_ID(shinka_demo));
 }
 
 // }ŠÓÚ×

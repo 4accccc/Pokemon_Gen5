@@ -209,8 +209,8 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
           p_param->after_mons_no  = shinkano;
           p_param->shinka_pos     = 0;
           p_param->shinka_cond    = shinka_cond;
-          p_param->b_field        = FALSE;
-          p_param->b_enable_cancel= TRUE;
+          p_param->b_field        = TRUE;
+          p_param->b_enable_cancel= FALSE;
 
           //進化デモ
 #ifndef DEBUG_DEMO_NONE
@@ -260,8 +260,8 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
             p_param->after_mons_no  = shinkano;
             p_param->shinka_pos     = 0;
             p_param->shinka_cond    = shinka_cond;
-            p_param->b_field        = FALSE;
-            p_param->b_enable_cancel= TRUE;
+            p_param->b_field        = TRUE;
+            p_param->b_enable_cancel= FALSE;
 
             //進化デモ
 #ifndef DEBUG_DEMO_NONE

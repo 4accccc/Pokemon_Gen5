@@ -439,18 +439,33 @@ static GFL_PROC_RESULT WifiClubProcMain( GFL_PROC * proc, int * seq, void * pwk,
     }
     break;
   case P2P_EVOLUTION:
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-    ep2p->aPokeTr.shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, GAMESYSTEM_GetGameData(pClub->gsys),
-                                               ep2p->aPokeTr.pParty,
-                                               ep2p->aPokeTr.after_mons_no,
-                                               0, ep2p->aPokeTr.cond, TRUE );
-    GMEVENT_CallProc(pClub->event, NO_OVERLAY_ID, &ShinkaDemoProcData, ep2p->aPokeTr.shinka_param );
+    //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
+    //ep2p->aPokeTr.shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, GAMESYSTEM_GetGameData(pClub->gsys),
+    //                                           ep2p->aPokeTr.pParty,
+    //                                           ep2p->aPokeTr.after_mons_no,
+    //                                           0, ep2p->aPokeTr.cond, TRUE );
+    {
+      SHINKA_DEMO_PARAM* sdp = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof( SHINKA_DEMO_PARAM ) );
+      sdp->gamedata          = GAMESYSTEM_GetGameData(pClub->gsys);
+      sdp->ppt               = ep2p->aPokeTr.pParty;
+      sdp->after_mons_no     = ep2p->aPokeTr.after_mons_no;
+      sdp->shinka_pos        = 0;
+      sdp->shinka_cond       = ep2p->aPokeTr.cond;
+      sdp->b_field           = TRUE;
+      sdp->b_enable_cancel   = FALSE;
+      ep2p->aPokeTr.shinka_param = sdp;
+    }
+    GMEVENT_CallProc(pClub->event, FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, ep2p->aPokeTr.shinka_param );
 //    GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ShinkaDemoProcData, ep2p->aPokeTr.shinka_param );
     ep2p->seq = P2P_EVOLUTION_END;
     break;
   case P2P_EVOLUTION_END:
-    SHINKADEMO_FreeParam( ep2p->aPokeTr.shinka_param );
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+    //SHINKADEMO_FreeParam( ep2p->aPokeTr.shinka_param );
+    //GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+    {
+      SHINKA_DEMO_PARAM* sdp = ep2p->aPokeTr.shinka_param;
+      GFL_HEAP_FreeMemory( sdp );
+    }
     ep2p->aPokeTr.ret = POKEMONTRADE_MOVE_EVOLUTION;
     ep2p->seq = P2P_TRADE_MAIN;
     break;

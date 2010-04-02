@@ -449,14 +449,25 @@ static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP
     }
     break;
   case _SEQ_EVOLUTION:
-    GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-    SHINKADEMO_InitParam( pPTP->shinka_param, pPTP->gamedata,
-                          pPTP->pParty, pPTP->after_mons_no, 0, pPTP->cond, TRUE,FALSE );
-    *child_event = EVENT_FieldSubProc( gsys, fieldWork, NO_OVERLAY_ID, &ShinkaDemoProcData, pPTP->shinka_param );
+    //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
+    //SHINKADEMO_InitParam( pPTP->shinka_param, pPTP->gamedata,
+    //                      pPTP->pParty, pPTP->after_mons_no, 0, pPTP->cond, TRUE,FALSE );
+    {
+      SHINKA_DEMO_PARAM* sdp = pPTP->shinka_param;
+      sdp->gamedata          = pPTP->gamedata;
+      sdp->ppt               = pPTP->pParty;
+      sdp->after_mons_no     = pPTP->after_mons_no;
+      sdp->shinka_pos        = 0;
+      sdp->shinka_cond       = pPTP->cond;
+      sdp->b_field           = TRUE;
+      sdp->b_enable_cancel   = FALSE;
+      pPTP->shinka_param = sdp;
+    }
+    *child_event = EVENT_FieldSubProc( gsys, fieldWork, FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, pPTP->shinka_param );
 		(*seq) ++;
     break;
   case _SEQ_EVOLUTIONEND:
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
+    //GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
     pPTP->ret = POKEMONTRADE_MOVE_EVOLUTION;
     (*seq)=_SEQ_TRADE;
     break;
