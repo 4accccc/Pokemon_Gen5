@@ -149,6 +149,11 @@ select_elec:
       $END_MSG = msg_rotom_11
       _CALL end_msg
       _RET
+    ELSIF $LIST_SEL_RET == EV_WIN_B_CANCEL THEN //Bキャンセル
+      //あきらめた
+      $END_MSG = msg_rotom_11
+      _CALL end_msg
+      _RET
     ENDIF
     
     //選んだ家電をフォルムナンバーに変換
