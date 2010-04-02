@@ -191,6 +191,7 @@ struct _BTLV_SCU {
   GFL_BMPWIN*     lvupWin;
   GFL_BMP_DATA*   lvupBmp;
   u32             lvupWin_frameCharPos;
+  u32             tokwin_CharPos;
 
   PRINT_QUE*      printQue;
   PRINT_UTIL      printUtil;
@@ -385,7 +386,7 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   GFL_ARC_UTIL_TransVramBgCharacter( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_FRIEND,
                               0, 0, FALSE, wk->heapID );
 
-  tokwin_charpos = transWinFrameCgx( wk, ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_FRIEND );
+  wk->tokwin_CharPos = transWinFrameCgx( wk, ARCID_BATTGRA, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_FRIEND );
 
   GFL_ARC_UTIL_TransVramScreen( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w01_NSCR, BGFRAME_TOKWIN_FRIEND,
           0, 0, FALSE, wk->heapID );
@@ -419,7 +420,7 @@ void BTLV_SCU_Setup( BTLV_SCU* wk )
   msgWinVisible_Init( &wk->msgwinVisibleWork, wk->win );
 
   statwin_setupAll( wk );
-  tokwin_setupAll( wk, tokwin_charpos );
+  tokwin_setupAll( wk, wk->tokwin_CharPos );
 
   GFL_BG_LoadScreenReq( BGFRAME_MAIN_MESSAGE  );
   GFL_BG_LoadScreenReq( BGFRAME_TOKWIN_FRIEND );
@@ -469,6 +470,26 @@ void BTLV_SCU_Delete( BTLV_SCU* wk )
   GFL_HEAP_FreeMemory( wk );
 }
 
+
+//=============================================================================================
+/**
+ * ワザエフェクト後、FRAME3用のCGX、スクリーンデータをデフォルトに戻す
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTLV_SCU_RestoreDefaultScreen( BTLV_SCU* wk )
+{
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(wk->heapID) );
+
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_ENEMY,
+              wk->tokwin_CharPos, 0, TRUE, wk->heapID );
+  GFL_ARC_CloseDataHandle( handle );
+
+
+  GFL_ARC_UTIL_TransVramScreen( ARCID_BATTGRA, NARC_battgra_wb_tokusei_w02_NSCR, BGFRAME_TOKWIN_ENEMY,
+          0, 0, FALSE, wk->heapID );
+}
 
 //--------------------------------------------------------------------------
 /**

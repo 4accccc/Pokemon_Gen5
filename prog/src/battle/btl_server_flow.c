@@ -3283,9 +3283,11 @@ static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID
   u8 pokeID = BPP_GetID( bpp );
 
   cnt = BPP_WAZA_GetCount( bpp );
+
   for(i=0; i<cnt; ++i)
   {
     volume = BPP_WAZA_GetPPShort( bpp, i );
+    OS_TPrintf(" PP WazaIdx=%d, volume=%d..\n", i, volume);
     if( volume )
     {
       BTL_HANDEX_PARAM_PP* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_RECOVER_PP, pokeID );

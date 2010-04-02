@@ -438,7 +438,7 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
   switch( *seq ){
   case 0:
     {
-      BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParamBtl( core->mainModule, core->heapID );
+      BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParamBtl( core->mainModule, core->scrnU, core->heapID );
       BTLV_EFFECT_Init( besp, core->smallFontHandle, core->heapID );
       GFL_HEAP_FreeMemory( besp );
     }
