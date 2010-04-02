@@ -155,7 +155,7 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FI
  * @param[in] heapID      ÉqÅ[ÉvID
  */
 //============================================================================================
-BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* mainModule, BTLV_SCU* viewSCU, HEAPID heapID )
+BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* mainModule, const BTLV_SCU* viewSCU, HEAPID heapID )
 {
   int i;
   u16 tr_type[ 4 ];

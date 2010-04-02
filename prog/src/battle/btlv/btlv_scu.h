@@ -15,7 +15,7 @@
  *  モジュールハンドラ型
  */
 //--------------------------------------------------------------
-typedef struct _BTLV_SCU  BTLV_SCU;
+#include "btlv_scu_def.h"
 
 
 
@@ -31,7 +31,7 @@ extern BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE
                 GFL_FONT* defaultFont, GFL_FONT* smallFont, u8 playerClientID, HEAPID heapID );
 extern void BTLV_SCU_Delete( BTLV_SCU* wk );
 extern void BTLV_SCU_Setup( BTLV_SCU* wk );
-extern void BTLV_SCU_RestoreDefaultScreen( BTLV_SCU* wk );
+extern void BTLV_SCU_RestoreDefaultScreen( const BTLV_SCU* wk );
 
 extern void BTLV_SCU_StartBtlIn( BTLV_SCU* wk, BOOL fChapterSkipMode );
 extern BOOL BTLV_SCU_WaitBtlIn( BTLV_SCU* wk );

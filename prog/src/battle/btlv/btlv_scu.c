@@ -478,7 +478,7 @@ void BTLV_SCU_Delete( BTLV_SCU* wk )
  * @param   wk
  */
 //=============================================================================================
-void BTLV_SCU_RestoreDefaultScreen( BTLV_SCU* wk )
+void BTLV_SCU_RestoreDefaultScreen( const BTLV_SCU* wk )
 {
   ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(wk->heapID) );
 
@@ -3425,6 +3425,8 @@ static TokwinSide PokePosToTokwinSide( const BTL_MAIN_MODULE* mainModule, BtlPok
 void BTLV_SCU_TokWin_DispStart( BTLV_SCU* wk, BtlPokePos pos, BOOL fFlash )
 {
   TokwinSide side = PokePosToTokwinSide( wk->mainModule, pos );
+
+  BTLV_SCU_RestoreDefaultScreen( wk );
   tokwin_disp_first( &wk->tokWin[side], pos, fFlash );
 }
 BOOL BTLV_SCU_TokWin_DispWait( BTLV_SCU* wk, BtlPokePos pos )

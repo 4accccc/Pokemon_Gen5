@@ -18,7 +18,7 @@
 #include "btlv_b_gauge.h"
 #include "btlv_timer.h"
 #include "btlv_bg.h"
-#include "btlv_scu.h"
+#include "btlv_scu_def.h"
 
 #include "btlv_efftool.h"
 #include "btlv_effvm.h"
@@ -136,7 +136,8 @@ typedef enum{
 
 extern  BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FIELD_SITUATION* bfs,
                                                               BOOL multi, u16* tr_type, HEAPID heapID );
-extern  BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* mainModule, BTLV_SCU* viewSCU, HEAPID heapID );
+
+extern  BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* mainModule, const BTLV_SCU* viewSCU, HEAPID heapID );
 
 extern  void              BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEAPID heapID );
 extern  void              BTLV_EFFECT_Exit( void );
