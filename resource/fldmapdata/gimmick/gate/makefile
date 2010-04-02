@@ -51,6 +51,13 @@ CONVERTDATA_GATE   = $(GRAPHIC_BIN)/gelboard01.nsbmd \
 							       $(GRAPHIC_BIN)/gelboard01_5.nsbta \
 							       $(GRAPHIC_BIN)/gelboard01_6.nsbta \
 							       $(GRAPHIC_BIN)/gelboard01_7.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_fast_1.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_fast_2.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_fast_3.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_fast_4.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_fast_5.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_fast_6.nsbta \
+							       $(GRAPHIC_BIN)/gelboard01_fast_7.nsbta \
 							       $(GRAPHIC_BIN)/gelboard01_tv01.nsbtp \
 							       $(GRAPHIC_BIN)/gelboard01_tv02.nsbtp \
 							       $(GRAPHIC_BIN)/gelboard01_tv03.nsbtp \
@@ -99,6 +106,13 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_5.ita -o $(GRAPHIC_BIN)/gelboard01_5.nsbta
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_6.ita -o $(GRAPHIC_BIN)/gelboard01_6.nsbta
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_7.ita -o $(GRAPHIC_BIN)/gelboard01_7.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_fast_1.ita -o $(GRAPHIC_BIN)/gelboard01_fast_1.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_fast_2.ita -o $(GRAPHIC_BIN)/gelboard01_fast_2.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_fast_3.ita -o $(GRAPHIC_BIN)/gelboard01_fast_3.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_fast_4.ita -o $(GRAPHIC_BIN)/gelboard01_fast_4.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_fast_5.ita -o $(GRAPHIC_BIN)/gelboard01_fast_5.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_fast_6.ita -o $(GRAPHIC_BIN)/gelboard01_fast_6.nsbta
+	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_fast_7.ita -o $(GRAPHIC_BIN)/gelboard01_fast_7.nsbta
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv01.itp -o $(GRAPHIC_BIN)/gelboard01_tv01.nsbtp
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv02.itp -o $(GRAPHIC_BIN)/gelboard01_tv02.nsbtp
 	g3dcvtr $(GRAPHIC_SOURCE)/gelboard01_tv03.itp -o $(GRAPHIC_BIN)/gelboard01_tv03.nsbtp
