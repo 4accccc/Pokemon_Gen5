@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-24T10:59:37"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-03-27T17:03:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="132" top="460" right="632" bottom="1079" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="249" right="1280" bottom="647" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<tag-palette left="1519" top="279" right="1992" bottom="677" visible="yes"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="370"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -649,6 +649,143 @@ FIGHTERM</attribute>
 あり　だと思うが▼
 それを　[2:07:８桁:1]円で
 ゆずってくれないかね？　かね？</language>
+	</row>
+
+	<row id="msg_appraisal_m2_01" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>※進行フローは共通
+
+●鑑定アイテム：鉱物２
+・話しかけメッセージ１　初回のみ
+・話しかけ後→msg_appraisal_m2_02</comment>
+		<attribute name="キャラ指定">サングラス
+
+SUNGLASSES</attribute>
+		<language name="JPN" width="256">やあ　とつぜんだが　きみに
+ウマい　はなしを　もちかけるよ！▼
+このあたりに　いしころや　いわに
+かくれてる　ポケモンが　いるだろ？▼
+あいつら　からだを　いわに
+かくしてるだけ　じゃなく▽
+いかしたブツも　いっしょに▽
+かくしもってるんだなー　これが！▼
+そこでだ……▼
+もし　きみが　その　いかしたブツを
+てにいれたら　わたしの　ところへ▽
+もって　きてくれないか？▼
+どこよりも　だれよりも　たかーく
+かいとって　あげるからさ……▼</language>
+		<language name="JPN_KANJI" width="256">やあ　突然だが　君に
+ウマい　話を　持ちかけるよ！▼
+この辺りに　石ころや　岩に
+隠れている　ポケモンが　いるだろ？▼
+あいつら　体を　岩に
+隠してるだけ　じゃなく▽
+いかしたブツも　一緒に▽
+隠しもってるんだなー　これが！▼
+そこでだ……▼
+もし　君が　その　いかしたブツを
+手に入れたら　私の　ところへ▽
+持ってきて　くれないか？▼
+どこよりも　だれよりも　高ーく
+買い取って　あげるからさ……▼</language>
+	</row>
+
+	<row id="msg_appraisal_m2_02" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>●鑑定アイテム：鉱物２
+・話しかけメッセージ２　初回以降はここから
+　話しかけ後道具選択画面へ
+・該当する道具※の場合→msg_appraisalm2_03
+　※別途リスト参照
+・該当しない道具の場合→msg_appraisal_m2_06
+・キャンセル→msg_appraisal_m2_07</comment>
+		<attribute name="キャラ指定">サングラス
+
+SUNGLASSES</attribute>
+		<language name="JPN" width="256">どうだい？
+いかしたブツが　あるなら▽
+みせて　くれないかな？</language>
+		<language name="JPN_KANJI" width="256">どうだい？
+いかしたブツが　あるなら▽
+見せて　くれないかな？</language>
+	</row>
+
+	<row id="msg_appraisal_m2_03" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>●鑑定アイテム：鉱物２
+・はい／いいえ表示
+・はい→msg_appraisal_m2_04
+・いいえ→msg_appraisal_m2_07</comment>
+		<attribute name="キャラ指定">サングラス
+
+SUNGLASSES</attribute>
+		<language name="JPN" width="256">イイね　ったら　イイねえ……
+[1:09:どうぐ名:0]じゃない……▼
+それ　だったら　そうだね……
+[2:07:８桁:1]えんで▽
+かいとって　あげるよ？</language>
+		<language name="JPN_KANJI" width="256">イイね　ったら　イイねえ……
+[1:09:どうぐ名:0]じゃない……▼
+それ　だったら　そうだね……
+[2:07:８桁:1]えんで▽
+買い取って　あげるよ？</language>
+	</row>
+
+	<row id="msg_appraisal_m2_04" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>●鑑定アイテム：鉱物２
+・メッセージ終了時取得ＳＥ
+・終了後→msg_appraisal_g_05</comment>
+		<attribute name="キャラ指定">サングラス
+
+SUNGLASSES</attribute>
+		<language name="JPN" width="256">[1:09:どうぐ名:0]　を　わたして
+[2:07:８桁:1]えんを　もらった！</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　を　わたして
+[2:07:８桁:1]えんを　もらった！</language>
+	</row>
+
+	<row id="msg_appraisal_m2_05" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>●鑑定アイテム：鉱物２
+・イベント終了</comment>
+		<attribute name="キャラ指定">サングラス
+
+SUNGLASSES</attribute>
+		<language name="JPN" width="256">ありがとう……▼
+これを　もっと　たかい　ねだんで
+マニアに　うりつければ……▼
+ハハハハ……
+いやあ　ビジネスって　すばらしいね</language>
+		<language name="JPN_KANJI" width="256">ありがとう……▼
+これを　もっと　高い　値段で
+マニアに　売りつければ……▼
+ハハハハ……
+いやあ　ビジネスって　素晴らしいね</language>
+	</row>
+
+	<row id="msg_appraisal_m2_06" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>●鑑定アイテム：鉱物２
+・イベント終了</comment>
+		<attribute name="キャラ指定">サングラス
+
+SUNGLASSES</attribute>
+		<language name="JPN" width="256">わるいけど　ダメだねぇ……
+こいつは　かいとれないねぇ……</language>
+		<language name="JPN_KANJI" width="256">悪いけど　ダメだねぇ……
+こいつは　買い取れないねぇ……</language>
+	</row>
+
+	<row id="msg_appraisal_m2_07" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>●鑑定アイテム：鉱物２　
+・イベント終了</comment>
+		<attribute name="キャラ指定">サングラス
+
+SUNGLASSES</attribute>
+		<language name="JPN" width="256">いかしたブツを　みつけたら
+わたしの　ところへ　おいで！▼
+どこよりも　だれよりも　たかーく
+かいとって　あげるからさ……▼</language>
+		<language name="JPN_KANJI" width="256">いかしたブツを　みつけたら
+わたしの　ところへ　おいで！▼
+どこよりも　だれよりも　高ーく
+買い取って　あげるからさ……▼</language>
 	</row>
 
 	<flowchart-group-list>
