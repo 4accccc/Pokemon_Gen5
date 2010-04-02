@@ -64,7 +64,7 @@ vu32  volume_up_frame   = EFFVM_CHANGE_VOLUME_UP_FRAME;
 #ifdef PM_DEBUG
 #if defined(DEBUG_ONLY_FOR_kageyama_shota)|\
     defined(DEBUG_ONLY_FOR_adachi_minako)|\
-    defined(DEBUG_ONLY_FOR_sogabe)|\
+    defined(DEBUG_ONLY_FOR_sato_hitomi)|\
     defined(DEBUG_ONLY_FOR_ichinose)
 #define DEBUG_SE_END_PRINT
 #endif
