@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-03-26T19:37:29"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-03-29T21:08:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,6 +337,14 @@
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" width="256">the Great king Rifuge</language>
 		<language name="JPN_KANJI" width="256">the Great king Rifuge</language>
+	</row>
+
+	<row id="msg_d20r0801_sys_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<attribute name="キャラ指定">システム</attribute>
+		<language name="JPN" width="256">かべが　うごき
+もときた　みちが　とざされた！</language>
+		<language name="JPN_KANJI" width="256">壁が　動き
+もと来た　道が　閉ざされた！</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-02T18:08:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="537" top="157" right="1242" bottom="777" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,8 +271,8 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -297,6 +297,206 @@
 		<attribute name="キャラ指定">？？？</attribute>
 		<language name="JPN" width="256">テストメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>はい/いいえ分岐</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">ビレッジブリッジ　めいぶつ
+ミネズミショー　みていかない？</language>
+		<language name="JPN_KANJI" width="256">ビレッジブリッジ　名物
+ミネズミショー　見ていかない？</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>はいの場合
+中央に移動
+続いて2_04</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">オッケー　おねえさん
+はりきっちゃうわよー！</language>
+		<language name="JPN_KANJI" width="256">オッケー　お姉さん
+張り切っちゃうわよー！</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_03" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>いいえの場合</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">そっかー……　おもしろさには
+じしんが　あるから　また　きてね！</language>
+		<language name="JPN_KANJI" width="256">そっかー……　面白さには
+自信が　あるから　また　来てね！</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_04" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>メッセージ後
+ミネズミ４匹入場</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">ヨーシ　ミネズミちゃーん！
+ぜんいん　しゅうごーう！</language>
+		<language name="JPN_KANJI" width="256">ヨーシ　ミネズミちゃーん！
+全員　集合！</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_05" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>乱数取得後
+以下のmsgに分岐</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">この　ミネズミちゃんの　なかで
+あなたに　あてて　もらう　こは……</language>
+		<language name="JPN_KANJI" width="256">この　ミネズミちゃんの　中で
+あなたに　当てて　もらう　子は……</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_06a" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>1番目のミネズミ
+このメッセージ後
+入れ替えアニメ
+アニメ後・2_07へ</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">この　いちばん　えがおが　まぶしい
+ミネズミちゃん　でーす！▼
+このこは　[1:09:どうぐ名:0]を
+もってまーす！　では　スタートッ！▼</language>
+		<language name="JPN_KANJI" width="256">この　一番　笑顔が　まぶしい
+ミネズミちゃん　でーす！▼
+この子は　[1:09:どうぐ名:0]を
+持ってまーす！　では　スタートッ！▼</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_06b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>2番目のミネズミ
+このメッセージ後
+入れ替えアニメ
+アニメ後・2_07へ</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">この　いちばん　えくぼが　キュートな
+ミネズミちゃん　でーす！▼
+このこは　[1:09:どうぐ名:0]を
+もってまーす！　では　スタートッ！▼</language>
+		<language name="JPN_KANJI" width="256">この　一番　えくぼが　キュートな
+ミネズミちゃん　でーす！▼
+この子は　[1:09:どうぐ名:0]を
+持ってまーす！　では　スタートッ！▼</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_06c" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>3番目のミネズミ
+このメッセージ後
+入れ替えアニメ
+アニメ後・2_07へ</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">この　いちばん　オシャレな　マユゲの
+ミネズミちゃん　でーす！▼
+このこは　[1:09:どうぐ名:0]を
+もってまーす！　では　スタートッ！▼</language>
+		<language name="JPN_KANJI" width="256">この　一番　オシャレな　マユゲの
+ミネズミちゃん　でーす！▼
+この子は　[1:09:どうぐ名:0]を
+持ってまーす！　では　スタートッ！▼</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_06d" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
+		<comment>4番目のミネズミ
+このメッセージ後
+入れ替えアニメ
+アニメ後・2_07へ</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">この　いちばん　おなかが　おおきい
+ミネズミちゃん　でーす！▼
+このこは　[1:09:どうぐ名:0]を
+もってまーす！　では　スタートッ！▼</language>
+		<language name="JPN_KANJI" width="256">この　一番　お腹が　大きい
+ミネズミちゃん　でーす！▼
+この子は　[1:09:どうぐ名:0]を
+持ってまーす！　では　スタートッ！▼</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_07" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>メッセージ後
+フリームーブ</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">さあ！　さっきの
+ミネズミちゃんを　あててみて！</language>
+		<language name="JPN_KANJI" width="256">さあ！　さっきの
+ミネズミちゃんを　当ててみて！</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_08" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>ミネズミに話しかけた場合
+はい・いいえ</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">その　ミネズミちゃんが
+[1:09:どうぐ名:0]を　もっているのね？</language>
+		<language name="JPN_KANJI" width="256">その　ミネズミちゃんが
+[1:09:どうぐ名:0]を　持っているのね？</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_09" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>あたりの場合</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">こたえは……！！
+……▽
+…………▽
+………………▽
+……………………▽
+おおあたりー！▼
+けいひんの　[1:09:どうぐ名:0]は
+ミネズミちゃんから　もらえまーす！</language>
+		<language name="JPN_KANJI" width="256">答えは……！！
+……▽
+…………▽
+………………▽
+……………………▽
+大当たりー！▼
+景品の　[1:09:どうぐ名:0]は
+ミネズミちゃんから　もらえまーす！</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_10" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>はずれの場合</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">こたえは……！！
+……▽
+…………▽
+………………▽
+ざんねん！　はずれです……</language>
+		<language name="JPN_KANJI" width="256">答えは……！！
+……▽
+…………▽
+………………▽
+残念！　はずれです……</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_11" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>イベント終了
+ミネズミ退場アニメ</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">それでは　ミネズミショー
+しゅうりょう　になります！▽
+ありがとう　ございましたー！</language>
+		<language name="JPN_KANJI" width="256">それでは　ミネズミショー
+終了　になります！▽
+ありがとう　ございましたー！</language>
+	</row>
+
+	<row id="msg_h04r0501_woman2_12" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>一度ショーを見ている場合
+途中退場した場合も
+このメッセージ</comment>
+		<attribute name="キャラ指定">WOMAN2</attribute>
+		<language name="JPN" width="256">また　ミネズミショー　みたいの？▼
+いろいろ　じゅんびとか　あるから
+あした　また　きてね！</language>
+		<language name="JPN_KANJI" width="256">また　ミネズミショー　観たいの？▼
+いろいろ　準備とか　あるから
+明日　また　来てね！</language>
+	</row>
+
+	<row id="msg_h04r0501_poke17_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<attribute name="キャラ指定">POKE17</attribute>
+		<language name="JPN" width="256">ミチャルー！！</language>
+		<language name="JPN_KANJI" width="256">ミチャルー！！</language>
 	</row>
 
 	<flowchart-group-list>
