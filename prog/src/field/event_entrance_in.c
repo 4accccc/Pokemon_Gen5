@@ -396,96 +396,86 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeWarp( GMEVENT* event, int* s
 //---------------------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* seq, void* wk )
 {
-	EVENT_WORK*    work       = wk;
-	GAMESYS_WORK*  gameSystem = work->gameSystem;
-	FIELDMAP_WORK* fieldmap   = work->fieldmap;
-  FIELD_CAMERA*  camera     = FIELDMAP_GetFieldCamera( work->fieldmap );
+	EVENT_WORK*     work       = wk;
+	GAMESYS_WORK*   gameSystem = work->gameSystem;
+	FIELDMAP_WORK*  fieldmap   = work->fieldmap;
+  FIELD_CAMERA*   camera     = FIELDMAP_GetFieldCamera( fieldmap );
+  FIELD_TASK_MAN* taskMan    = FIELDMAP_GetTaskManager( fieldmap );
 
   // 処理シーケンス
   enum {
-    SEQ_SETUP_CAMERA,                   // カメラのセットアップ
-    SEQ_LOAD_ENTRANCE_CAMERA_SETTINGS,  // カメラ演出データ取得
-    SEQ_CREATE_CAMERA_EFFECT_TASK,      // カメラ演出タスクの作成
-    SEQ_WAIT_CAMERA_EFFECT_TASK,        // カメラ演出タスク終了待ち
-    SEQ_CAMERA_STOP_TRACE_REQUEST,      // カメラの自機追従OFFリクエスト発行
-    SEQ_WAIT_CAMERA_TRACE,              // カメラの自機追従処理の終了待ち
-    SEQ_CAMERA_TRACE_OFF,               // カメラの自機追従OFF
-    SEQ_DOOR_IN_ANIME,                  // ドア進入イベント
-    SEQ_RECOVER_CAMERA,                 // カメラの復帰
-    SEQ_EXIT,                           // イベント終了
+    SEQ_INIT,                       // イベント開始
+    SEQ_WAIT_CAMERA_TRACE,          // カメラの自機追従処理の終了待ち
+    SEQ_LOAD_ENTRANCE_CAMERA_DATA,  // カメラ演出データ取得
+    SEQ_SET_ENTRANCE_CAMERA_TASK,   // カメラ演出タスクの作成
+    SEQ_WAIT_ENTRANCE_CAMERA_TASK,  // カメラ演出タスク終了待ち
+    SEQ_DOOR_IN_ANIME,              // ドア進入イベント
+    SEQ_EXIT,                       // イベント終了
   };
 
   switch( *seq ) {
-  // カメラのセットアップ
-  case SEQ_SETUP_CAMERA:
+  case SEQ_INIT:
+    // カメラのセットアップ
     SetupCamera( work );
-    *seq = SEQ_LOAD_ENTRANCE_CAMERA_SETTINGS;
+    // トレースシステムが有効 and トレース処理中
+    if( FIELD_CAMERA_CheckTraceSys(camera) && FIELD_CAMERA_CheckTrace(camera) ) {
+        FIELD_CAMERA_StopTraceRequest( camera );
+        *seq = SEQ_WAIT_CAMERA_TRACE;
+    }
+    else {
+      *seq = SEQ_LOAD_ENTRANCE_CAMERA_DATA;
+    }
+    break;
+
+  // カメラのトレース処理終了待ち
+  case SEQ_WAIT_CAMERA_TRACE: 
+    if( FIELD_CAMERA_CheckTraceSys( camera ) == FALSE ) { 
+      *seq = SEQ_LOAD_ENTRANCE_CAMERA_DATA; 
+    }
+    else if( FIELD_CAMERA_CheckTrace( camera ) == FALSE ) {
+      FIELD_CAMERA_FreeTarget( camera );
+      *seq = SEQ_LOAD_ENTRANCE_CAMERA_DATA;
+    }
     break;
 
   // カメラ演出データ取得
-  case SEQ_LOAD_ENTRANCE_CAMERA_SETTINGS:
-    // データ取得
+  case SEQ_LOAD_ENTRANCE_CAMERA_DATA:
+    // データを取得
     ENTRANCE_CAMERA_LoadData( &work->cameraSettings, work->exitType );
 
-    // データが有効かどうか
+    // 取得したデータが有効
     if( work->cameraSettings.validFlag_IN ) {
-      *seq = SEQ_CREATE_CAMERA_EFFECT_TASK;
+      *seq = SEQ_SET_ENTRANCE_CAMERA_TASK;
     }
+    // 取得したデータが無効
     else {
       *seq = SEQ_DOOR_IN_ANIME;
     } 
     break;
 
   // カメラ演出タスクの作成
-  case SEQ_CREATE_CAMERA_EFFECT_TASK:
+  case SEQ_SET_ENTRANCE_CAMERA_TASK:
     ENTRANCE_CAMERA_AddDoorInTask( fieldmap, &(work->cameraSettings) );
-    *seq = SEQ_WAIT_CAMERA_EFFECT_TASK;
+    *seq = SEQ_WAIT_ENTRANCE_CAMERA_TASK;
     break;
 
   // タスク終了待ち
-  case SEQ_WAIT_CAMERA_EFFECT_TASK:
-    {
-      FIELD_TASK_MAN* taskMan;
-      taskMan = FIELDMAP_GetTaskManager( fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ){ *seq = SEQ_CAMERA_STOP_TRACE_REQUEST; }
-    }
-    break;
-
-  // カメラのトレース処理停止リクエスト発行
-  case SEQ_CAMERA_STOP_TRACE_REQUEST:
-    if( FIELD_CAMERA_CheckTrace( camera ) == TRUE ) {
-      FIELD_CAMERA_StopTraceRequest( camera );
-    }
-    *seq = SEQ_WAIT_CAMERA_TRACE;
-    break;
-
-  // カメラのトレース処理終了待ち
-  case SEQ_WAIT_CAMERA_TRACE: 
-    if( FIELD_CAMERA_CheckTrace( camera ) == FALSE ){ *seq = SEQ_CAMERA_TRACE_OFF; }
-    break;
-
-  // カメラのトレースOFF
-  case SEQ_CAMERA_TRACE_OFF:
-    FIELD_CAMERA_FreeTarget( camera );
-    *seq = SEQ_DOOR_IN_ANIME;
+  case SEQ_WAIT_ENTRANCE_CAMERA_TASK:
+    if( FIELD_TASK_MAN_IsAllTaskEnd(taskMan) ){ *seq = SEQ_DOOR_IN_ANIME; }
     break;
 
   // ドア進入アニメ
   case SEQ_DOOR_IN_ANIME:
     GMEVENT_CallEvent( event, 
-        EVENT_FieldDoorInAnime( 
-          gameSystem, fieldmap, &work->nextLocation, FALSE, work->seasonDisplayFlag, work->fadeOutType ) );
-    *seq = SEQ_RECOVER_CAMERA;
-    break;
-
-  // カメラの復帰
-  case SEQ_RECOVER_CAMERA:
-    RecoverCamera( work );
+        EVENT_FieldDoorInAnime( gameSystem, fieldmap, &work->nextLocation, 
+                                FALSE, work->seasonDisplayFlag, work->fadeOutType ) );
     *seq = SEQ_EXIT;
     break;
 
   // イベント終了
   case SEQ_EXIT:
+    // カメラの復帰
+    RecoverCamera( work );
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
