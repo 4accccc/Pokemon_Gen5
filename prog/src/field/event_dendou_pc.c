@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 /**
- * @brief PC殿堂入り画面呼び出しイベント
+ * @brief 殿堂入り確認画面呼び出しイベント
  * @file  event_dendou_pc.c
  * @author obata
  * @date   2010.03.30
@@ -17,37 +17,39 @@
 
 
 //=====================================================================================
-// ■非公開関数のプロトタイプ宣言
+// ■index
 //=====================================================================================
-static GMEVENT_RESULT DendouPCEvent2( GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT DendouCallEvent( GMEVENT* event, int* seq, void* wk );
 
 
 //=====================================================================================
-// ■
-//===================================================================================== 
-
-//-------------------------------------------------------------------------------------
 // ■イベントワーク
-//-------------------------------------------------------------------------------------
+//===================================================================================== 
 typedef struct {
-	GAMESYS_WORK*  gameSystem;  // ゲームシステム 
-	FIELDMAP_WORK* fieldmap;    // フィールドマップ
+	GAMESYS_WORK*  gameSystem;
+	FIELDMAP_WORK* fieldmap;
   DENDOUPC_PARAM dendouParam;
 } EVENT_WORK; 
 
+
+//=====================================================================================
+// ■public func
+//===================================================================================== 
 //-------------------------------------------------------------------------------------
 /**
+ * @brief 殿堂入り確認画面呼び出しイベントを生成する
  *
+ * @param gameSystem
  */
 //-------------------------------------------------------------------------------------
-GMEVENT* EVENT_DendouPC2( GAMESYS_WORK* gameSystem )
+GMEVENT* EVENT_DendouCall( GAMESYS_WORK* gameSystem )
 {
   GMEVENT* event;
   EVENT_WORK* work;
 
   // イベント生成
   event = GMEVENT_Create( 
-      gameSystem, NULL, DendouPCEvent2, sizeof(EVENT_WORK) );
+      gameSystem, NULL, DendouCallEvent, sizeof(EVENT_WORK) );
 
   // イベントワークを初期化
   work = GMEVENT_GetEventWork( event );
@@ -60,12 +62,15 @@ GMEVENT* EVENT_DendouPC2( GAMESYS_WORK* gameSystem )
   return event;
 }
 
+//=====================================================================================
+// ■private func
+//===================================================================================== 
 //-------------------------------------------------------------------------------------
 /**
- *
+ * @brief 殿堂入り確認画面呼び出しイベント
  */
 //-------------------------------------------------------------------------------------
-static GMEVENT_RESULT DendouPCEvent2( GMEVENT* event, int* seq, void* wk )
+static GMEVENT_RESULT DendouCallEvent( GMEVENT* event, int* seq, void* wk )
 {
   EVENT_WORK* work = wk;
 

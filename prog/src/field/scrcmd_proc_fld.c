@@ -299,6 +299,6 @@ VMCMD_RESULT EvCmdCallDendouProc( VMHANDLE *core, void *wk )
   GMEVENT*           event = NULL;
 
   // イベントを呼び出す
-  SCRIPT_CallEvent( scw, EVENT_DendouPC2( gsys ) );
+  SCRIPT_CallEvent( scw, EVENT_DendouCall( gsys ) );
   return VMCMD_RESULT_SUSPEND;
 }
