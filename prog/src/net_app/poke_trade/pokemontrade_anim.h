@@ -315,7 +315,7 @@ demo_backshot2.ncg
 #define _IRCSTART2_SEQ_SE_KON4	 (547)	//	デモ	IR交換デモ	ボールはねる	コンコンコン…
 
 
-#define _IRCSTART_SEQ_SE_TDEMO_004	 (604)		//デモ	IR交換デモ	ボール光る	ほわ！
+#define _IRCSTART_SEQ_SE_TDEMO_004	 (569)		//デモ	IR交換デモ	ボール光る	ほわ！
 #define _IRCSTART_SEQ_SE_TDEMO_005 (615)			//デモ	IR交換デモ	ボールからポケモン飛び出す	パキーーーン
 #define _IRCSTART2_SEQ_SE_TDEMO_001 (605)			//デモ	IR交換デモ	飛び出したポケモンからキラキラした星が飛び出す	キラリラリラ…
 
