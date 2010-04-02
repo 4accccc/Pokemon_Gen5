@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-03-24T21:13:58"/>
+	<create user="matsumiya" host="W00224" date="2010-04-02T19:52:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -323,7 +323,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="182"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -337,7 +337,7 @@
 			<line position="-1" width="100"/>
 		</language>
 		<language japanese="JPN_KANJI" english="JPN_KANJI">
-			<message position="3" width="246"/>
+			<message position="3" width="270"/>
 			<font default=" 0:large" position="5" width="106">
 				<list entry="0" file="W:\font\large.nftr"/>
 				<list entry="1" file="W:\font\small.nftr"/>
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="57" top="151" right="762" bottom="778" maximized="no" rayout="Vertical2">
+	<dialog left="1295" top="100" right="2000" bottom="728" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -384,67 +384,103 @@
 	</row>
 
 	<row id="CG_HELP_INFO_02">
-		<language name="JPN" width="184">「ワイヤレス」について</language>
-		<language name="JPN_KANJI" width="184">「ワイヤレス」について</language>
+		<comment>見出し</comment>
+		<language name="JPN" width="184">「Ｗｉｒｅｌｅｓｓ」について</language>
+		<language name="JPN_KANJI" width="184">「Ｗｉｒｅｌｅｓｓ」について</language>
 	</row>
 
 	<row id="CG_HELP_INFO_03">
+		<comment>見出し</comment>
 		<language name="JPN" width="184">「Ｗｉ－Ｆｉ」について</language>
 		<language name="JPN_KANJI" width="184">「Ｗｉ－Ｆｉ」について</language>
 	</row>
 
 	<row id="CG_HELP_INFO_04">
+		<comment>見出し</comment>
 		<language name="JPN" width="184">「すれちがいログ」について</language>
 		<language name="JPN_KANJI" width="184">「すれ違いログ」について</language>
 	</row>
 
 	<row id="CG_HELP_INFO_05">
+		<comment>見出し</comment>
 		<language name="JPN" width="184">「ちょうさたんちき」について</language>
 		<language name="JPN_KANJI" width="184">「調査探知機」について</language>
 	</row>
 
 	<row id="CG_HELP_INFO_06">
+		<comment>見出し</comment>
 		<language name="JPN" width="184">「カスタム」について</language>
 		<language name="JPN_KANJI" width="184">「カスタム」について</language>
 	</row>
 
 	<row id="CG_HELP_INFO_07">
-		<language name="JPN" width="184">「ヘルプ」について</language>
-		<language name="JPN_KANJI" width="184">「ヘルプ」について</language>
+		<comment>見出し</comment>
+		<language name="JPN" width="184">「ＯＮ／ＯＦＦ」について</language>
+		<language name="JPN_KANJI" width="184">「ＯＮ／ＯＦＦ」について</language>
 	</row>
 
 	<row id="CG_HELP_MSG_01">
-		<comment>説明文</comment>
-		<language name="JPN" width="224">ダミーメッセージ１
-ダミーメッセージ２
-ダミーメッセージ３
-ダミーメッセージ４
-ダミーメッセージ５
-ダミーメッセージ６</language>
-		<language name="JPN_KANJI" width="224">ダミーメッセージ１
-ダミーメッセージ２
-ダミーメッセージ３
-ダミーメッセージ４
-ダミーメッセージ５
-ダミーメッセージ６</language>
+		<comment>説明文
+「ＩＲ」について</comment>
+		<language name="JPN" width="224">ＩＲは　せきがいせんを　つかって
+めのまえにいる　ともだちと　きがるに
+たいせんや　こうかんが　できます
+また　あいしょうが　わかる
+「フィーリングチェック」や
+ともだちコードの　こうかんも　できます</language>
+		<language name="JPN_KANJI" width="224">ＩＲは　赤外線を　使用して
+目の前ににいる　友達と　気軽に
+ポケモン対戦や　交換が　できます
+また　相性が　わかる
+「フィーリングチェック」や
+ともだちコードの　交換も　できます</language>
 	</row>
 
 	<row id="CG_HELP_MSG_02">
-		<language name="JPN" width="224">ダミーメッセージ１
-ダミーメッセージ２
-ダミーメッセージ３
-ダミーメッセージ４
-ダミーメッセージ５
-ダミーメッセージ６</language>
-		<language name="JPN_KANJI" width="224">ダミーメッセージ１
-ダミーメッセージ２
-ダミーメッセージ３
-ダミーメッセージ４
-ダミーメッセージ５
-ダミーメッセージ６</language>
+		<comment>説明文
+「ワイヤレス」について</comment>
+		<language name="JPN" width="224">Ｗｉｒｅｌｅｓｓは
+じぶんの　まわりで　げんざい
+ユニオンルームに　はいっている
+にんずうが　わかります
+また　ワイヤレスの　はいしんを
+おこなっているかも　わかります▼
+ワイヤレスつうしんを　つかって
+ちかくにいる　ともだちと
+つぎの　あそびが　できます
+・ライブキャスター
+・ハイリンク▼
+ライブキャスターは
+Ｃ－ＧＥＡＲで　ともだちコードを
+こうかんしたり　Ｗｉ－Ｆｉクラブで
+いっしょに　あそんだことの　ある
+ともだちと　ライブキャスターを
+つかって　あそべます▼
+ハイリンクは　ボタンを　タッチすれば
+いっしゅんで　ハイリンクに　いけます</language>
+		<language name="JPN_KANJI" width="224">Ｗｉｒｅｌｅｓｓは
+自分の　周りで　現在
+ユニオンルームに　入っている
+人数が　わかります
+また　ワイヤレスの　配信を
+行っているかも　わかります▼
+ワイヤレス通信を　使って
+近くにいる　友達と
+次の　遊びが　できます
+・ライブキャスター
+・ハイリンク▼
+ライブキャスターは
+Ｃ－ＧＥＡＲで　ともだちコードを
+交換したり　Ｗｉ－Ｆｉクラブで
+一緒に　遊んだことの　ある　友達と
+ライブキャスターで　遊べます▼
+ハイリンクは　ボタンを　タッチすれば
+一瞬で　ハイリンクに　行けます</language>
 	</row>
 
 	<row id="CG_HELP_MSG_03">
+		<comment>説明文
+「Ｗｉ－Ｆｉ」について</comment>
 		<language name="JPN" width="224">ダミーメッセージ１
 ダミーメッセージ２
 ダミーメッセージ３
@@ -460,6 +496,8 @@
 	</row>
 
 	<row id="CG_HELP_MSG_04">
+		<comment>説明文
+「すれちがいログ」について</comment>
 		<language name="JPN" width="224">ダミーメッセージ１
 ダミーメッセージ２
 ダミーメッセージ３
@@ -475,6 +513,8 @@
 	</row>
 
 	<row id="CG_HELP_MSG_05">
+		<comment>説明文
+「ちょうさたんちき」について</comment>
 		<language name="JPN" width="224">ダミーメッセージ１
 ダミーメッセージ２
 ダミーメッセージ３
@@ -489,34 +529,32 @@
 ダミーメッセージ６</language>
 	</row>
 
-	<row id="CG_HELP_MSG_06">
-		<language name="JPN" width="224">ダミーメッセージ１
-ダミーメッセージ２
-ダミーメッセージ３
-ダミーメッセージ４
-ダミーメッセージ５
-ダミーメッセージ６</language>
-		<language name="JPN_KANJI" width="224">ダミーメッセージ１
-ダミーメッセージ２
-ダミーメッセージ３
-ダミーメッセージ４
-ダミーメッセージ５
-ダミーメッセージ６</language>
+	<row id="CG_HELP_MSG_06" text-color=",,,#ff0000,,,,,,,,,,,,,,">
+		<comment>説明文
+「カスタム」について
+・何の色が変わる？</comment>
+		<language name="JPN" width="224">ボタンを　タッチすることで
+いろが　かわります
+また　ボタンを　ならべて
+すきな　もようを　つくれます</language>
+		<language name="JPN_KANJI" width="224">ボタンを　タッチすることで
+色が　変化します
+また　ボタンを　ならべて
+好きな　模様に　できます</language>
 	</row>
 
 	<row id="CG_HELP_MSG_07">
-		<language name="JPN" width="224">ダミーメッセージ１
-ダミーメッセージ２
-ダミーメッセージ３
-ダミーメッセージ４
-ダミーメッセージ５
-ダミーメッセージ６</language>
-		<language name="JPN_KANJI" width="224">ダミーメッセージ１
-ダミーメッセージ２
-ダミーメッセージ３
-ダミーメッセージ４
-ダミーメッセージ５
-ダミーメッセージ６</language>
+		<comment>説明文
+「Ｃ－ＧＥＡＲ　ＯＮ／ＯＦＦ」について</comment>
+		<language name="JPN" width="224">Ｃ－ＧＥＡＲの　もじを　タッチすると
+ＯＮと　ＯＦＦを　きりかえられます
+ＯＦＦにすると　タッチぶぶんが
+くらくなり　どうじに
+むせんの　つうしんが　ＯＦＦになります</language>
+		<language name="JPN_KANJI" width="224">Ｃ－ＧＥＡＲの　文字を　タッチすると
+ＯＮと　ＯＦＦを　切り替えられます
+ＯＦＦにすると　タッチ部分が　暗くなり
+同時に　無線通信が　ＯＦＦになります</language>
 	</row>
 
 	<row id="CG_HELP_SYS_01">
