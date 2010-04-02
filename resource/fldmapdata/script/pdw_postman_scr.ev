@@ -55,7 +55,8 @@ sub_postman_main:
 	_PDW_POSTMAN_REQUEST(	SCR_PDW_POSTMAN_REQ_EXISTS, SCWK_ANSWER )
   IF $SCWK_ANSWER == 0 THEN
   _DEBUG_PRINT_WK( SCWK_ANSWER )
-      _BALLOONWIN_TALKOBJ_MSG( msg_pdw_postman_02 ) //おあずかりしている～もうありません
+      //おあずかりしている～もうありません
+      _BALLOONWIN_OBJMSG_POS( msg_pdw_postman_02, SCWK_TARGET_OBJID, POS_DOWN )
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE()
       _RET
@@ -63,7 +64,8 @@ sub_postman_main:
 
   //あいさつ
   _PLAYER_NAME( 0 )
-  _BALLOONWIN_TALKOBJ_MSG( msg_pdw_postman_01 ) //こんにちは
+  //こんにちは
+  _BALLOONWIN_OBJMSG_POS( msg_pdw_postman_01, SCWK_TARGET_OBJID, POS_DOWN )
   _BALLOONWIN_CLOSE()
 
   //受け取れるか？チェック
@@ -96,7 +98,8 @@ sub_postman_main:
       _SYSWIN_CLOSE()
   ENDIF
 
-  _BALLOONWIN_TALKOBJ_MSG( msg_postman_03 ) //またのごりようをおまちしております
+  //またのごりようをおまちしております
+  _BALLOONWIN_OBJMSG_POS( msg_postman_03, SCWK_TARGET_OBJID, POS_DOWN )
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
 
