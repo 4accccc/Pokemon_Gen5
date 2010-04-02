@@ -55,6 +55,7 @@ struct _BTLV_EFFECT_SETUP_PARAM
   BTL_FIELD_SITUATION bfs;
   u16                 tr_type[ 4 ];
   BOOL                multi;
+  const BTLV_SCU*     scu;
 };
 
 struct _BTLV_EFFECT_WORK
@@ -130,7 +131,7 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
  * @param[in] heapID      ƒq[ƒvID
  */
 //============================================================================================
-BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FIELD_SITUATION* bfs, BOOL multi, u16* tr_type, HEAPID heapID )
+BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FIELD_SITUATION* bfs, BOOL multi, u16* tr_type, const BTLV_SCU* scu, HEAPID heapID )
 {
   BTLV_EFFECT_SETUP_PARAM* besp = GFL_HEAP_AllocMemory( heapID, sizeof( BTLV_EFFECT_SETUP_PARAM ) );
   int i;
@@ -138,6 +139,7 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParam( BtlRule rule, const BTL_FI
   besp->rule  = rule;
   besp->bfs   = *bfs;
   besp->multi = multi;
+  besp->scu   = scu;
 
   for( i = 0 ; i < 4 ; i++ )
   {
@@ -177,7 +179,7 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* 
 
 
   return BTLV_EFFECT_MakeSetUpParam( BTL_MAIN_GetRule( mainModule ), BTL_MAIN_GetFieldSituation( mainModule ),
-                                     BTL_MAIN_IsMultiMode( mainModule ), tr_type, heapID );
+                                     BTL_MAIN_IsMultiMode( mainModule ), tr_type, viewSCU, heapID );
 }
 
 //============================================================================================
@@ -1189,6 +1191,18 @@ int BTLV_EFFECT_GetTrType( int pos )
 {
   GF_ASSERT( pos < 4 );
   return bew->besp.tr_type[ pos ];
+}
+
+//============================================================================================
+/**
+ * @brief  scu‚ðŽæ“¾
+ *
+ * @retval scu
+ */
+//============================================================================================
+const BTLV_SCU* BTLV_EFFECT_GetScu( void )
+{
+  return bew->besp.scu;
 }
 
 //============================================================================================

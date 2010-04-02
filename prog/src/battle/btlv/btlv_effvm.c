@@ -13,6 +13,7 @@
 #include "sound/pm_sndsys.h"
 #include "item/item.h"
 
+#include "btlv_scu.h"
 #include "btlv_effect.h"
 
 #include "btlv_effvm_dat.h"
@@ -114,6 +115,8 @@ typedef struct{
   WazaID            waza;
   int               ball_mode;
   int               call_count;   //サブルーチンコールした回数
+  int               temp_scr_x;
+  int               temp_scr_y;
 #ifdef PM_DEBUG
   const DEBUG_PARTICLE_DATA*  dpd;
   BOOL                        debug_flag;
@@ -2149,8 +2152,12 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
     GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
     GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
+    bevw->temp_scr_x = GFL_BG_GetScrollX( GFL_BG_FRAME3_M );
+    bevw->temp_scr_y = GFL_BG_GetScrollY( GFL_BG_FRAME3_M );
     GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
     GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, 0 );
+
+    bevw->set_priority_flag = 1;
 
     return bevw->control_mode;
   }
@@ -2164,8 +2171,12 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
   GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
   GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
   GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
+  bevw->temp_scr_x = GFL_BG_GetScrollX( GFL_BG_FRAME3_M );
+  bevw->temp_scr_y = GFL_BG_GetScrollY( GFL_BG_FRAME3_M );
   GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
   GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, 0 );
+
+  bevw->set_priority_flag = 1;
 
   return bevw->control_mode;
 }
@@ -3391,8 +3402,16 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   //BG周りの設定をデフォルトに戻しておく
   if( bevw->set_priority_flag )
   {
-    GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
+    const BTLV_SCU* scu = BTLV_EFFECT_GetScu();
+    if( scu != NULL )
+    { 
+      BTLV_SCU_RestoreDefaultScreen( scu );
+    }
+    GFL_BG_SetPriority( GFL_BG_FRAME3_M, 0 );
     bevw->set_priority_flag = 0;
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
+    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, bevw->temp_scr_x );
+    GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, bevw->temp_scr_y );
   }
   if( bevw->set_alpha_flag )
   {
