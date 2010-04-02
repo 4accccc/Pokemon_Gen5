@@ -333,7 +333,7 @@ static GFL_PROC_RESULT TrainerViewerProcInit( GFL_PROC * proc, int * seq, void *
     u16 tr_type[] = { 
       TRTYPE_HERO, TRTYPE_HERO, 0xffff, 0xffff,
     };
-    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, tvw->heapID );
+    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, NULL, tvw->heapID );
 
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, tvw->heapID );
     ZONEDATA_Open( tvw->heapID );

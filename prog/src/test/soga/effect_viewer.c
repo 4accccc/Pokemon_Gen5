@@ -139,6 +139,7 @@ typedef struct
   GFL_BMPWIN    *bmpwin;
   int           key_repeat_speed;
   int           key_repeat_wait;
+  int           trg;
 
   GFL_MSGDATA   *msg;
   GFL_FONT      *font;
@@ -300,7 +301,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     u16 tr_type[] = { 
       TRTYPE_HERO, TRTYPE_HERO, 0xffff, 0xffff,
     };
-    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, evw->heapID );
+    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, NULL, evw->heapID );
 
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, evw->heapID );
     ZONEDATA_Open( evw->heapID );
@@ -601,9 +602,10 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
   switch( evw->seq_no ){
   default:
   case SEQ_IDLE:
-    if( cont & EFFECT_ENABLE_KEY )
+    if( trg & EFFECT_ENABLE_KEY )
     {
       evw->seq_no = SEQ_EFFECT_ENABLE;
+      evw->trg = trg;
     }
     else if( tp )
     {
@@ -623,12 +625,13 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
   case SEQ_EFFECT_ENABLE:
     if( ( evw->sequence_data != NULL ) && ( evw->resource_data != NULL ) )
     {
-      if( cont == PAD_BUTTON_A ){
+      if( evw->trg == PAD_BUTTON_A ){
         BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->sequence_data, evw->resource_data, NULL, evw->viewer_mode );
       }
-      else if( cont == PAD_BUTTON_B ){
+      else if( evw->trg == PAD_BUTTON_B ){
         BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, NULL, evw->viewer_mode );
       }
+#if 0
       else if( cont == PAD_BUTTON_Y ){
         BTLV_EFFVM_PARAM param;
 
@@ -659,6 +662,7 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
 
         BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, &param, evw->viewer_mode );
       }
+#endif
     }
     evw->seq_no++;
     evw->ret_seq_no = SEQ_IDLE;
@@ -676,17 +680,17 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     }
     break;
   case SEQ_EFFECT_VIEW:
-    if( cont == PAD_BUTTON_A ){
+    if( trg == PAD_BUTTON_A ){
       BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->waza_no, NULL );
       evw->ret_seq_no = evw->seq_no;
       evw->seq_no = SEQ_EFFECT_WAIT;
     }
-    else if( cont == PAD_BUTTON_B ){
+    else if( trg == PAD_BUTTON_B ){
       BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->waza_no, NULL );
       evw->ret_seq_no = evw->seq_no;
       evw->seq_no = SEQ_EFFECT_WAIT;
     }
-    else if( cont == PAD_BUTTON_X ){
+    else if( trg == PAD_BUTTON_X ){
       BTLV_EFFVM_PARAM  param;
       param.waza_range = 0;       ///<技の効果範囲
       param.turn_count = 1;       ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
@@ -698,7 +702,7 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
       evw->ret_seq_no = evw->seq_no;
       evw->seq_no = SEQ_EFFECT_WAIT;
     }
-    else if( cont == PAD_BUTTON_Y ){
+    else if( trg == PAD_BUTTON_Y ){
       BTLV_EFFVM_PARAM  param;
       param.waza_range = 0;       ///<技の効果範囲
       param.turn_count = 1;       ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
@@ -718,12 +722,12 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     }
     break;
   case SEQ_STATUS_EFFECT_VIEW:
-    if( cont == PAD_BUTTON_A ){
+    if( trg == PAD_BUTTON_A ){
       BTLV_EFFVM_StartThrough( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->waza_no, NULL );
       evw->ret_seq_no = evw->seq_no;
       evw->seq_no = SEQ_EFFECT_WAIT;
     }
-    else if( cont == PAD_BUTTON_B ){
+    else if( trg == PAD_BUTTON_B ){
       BTLV_EFFVM_StartThrough( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->waza_no, NULL );
       evw->ret_seq_no = evw->seq_no;
       evw->seq_no = SEQ_EFFECT_WAIT;
