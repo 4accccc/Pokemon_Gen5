@@ -35,7 +35,7 @@ typedef enum {
   SC_OP_PP_PLUS,            ///< PPプラス    [ClientID, プラス量]
   SC_OP_RANK_UP,            ///< ステータスランクアップ  [ClientID, StatusType, プラス量]
   SC_OP_RANK_DOWN,          ///< ステータスランクダウン  [ClientID, StatusType, マイナス量]
-  SC_OP_RANK_SET5,          ///< ステータスランク主要５種セット[ pokeID, atk, def, sp_atk, sp_def, agi ]
+  SC_OP_RANK_SET7,          ///< ステータスランク７種セット[ pokeID, atk, def, sp_atk, sp_def, agi ]
   SC_OP_RANK_RECOVER,       ///< ステータスランク（７種）下がっているもののみフラットに
   SC_OP_RANK_RESET,         ///< ステータスランク（７種）全てをフラットに
   SC_OP_ADD_CRITICAL,       ///< クリティカルランク加算[ pokeID, (int)value ]
@@ -196,9 +196,9 @@ static inline void SCQUE_PUT_OP_RankDown( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8
   SCQUE_PUT_Common( que, SC_OP_RANK_DOWN, pokeID, statusType, volume );
 }
 
-static inline void SCQUE_PUT_OP_RankSet5( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 atk, u8 def, u8 sp_atk, u8 sp_def, u8 agi )
+static inline void SCQUE_PUT_OP_RankSet7( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 atk, u8 def, u8 sp_atk, u8 sp_def, u8 agi, u8 hit, u8 avoid )
 {
-  SCQUE_PUT_Common( que, SC_OP_RANK_SET5, pokeID, atk, def, sp_atk, sp_def, agi );
+  SCQUE_PUT_Common( que, SC_OP_RANK_SET7, pokeID, atk, def, sp_atk, sp_def, agi, hit, avoid );
 }
 static inline void SCQUE_PUT_OP_RankRecover( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {

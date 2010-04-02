@@ -308,7 +308,7 @@ static BOOL scProc_OP_HpZero( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankUp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_OP_RankSet5( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_RankSet7( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankRecover( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankReset( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_AddCritical( BTL_CLIENT* wk, int* seq, const int* args );
@@ -3295,7 +3295,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_PP_PLUS,            scProc_OP_PPPlus          },
     { SC_OP_RANK_UP,            scProc_OP_RankUp          },
     { SC_OP_RANK_DOWN,          scProc_OP_RankDown        },
-    { SC_OP_RANK_SET5,          scProc_OP_RankSet5        },
+    { SC_OP_RANK_SET7,          scProc_OP_RankSet7        },
     { SC_OP_RANK_RECOVER,       scProc_OP_RankRecover     },
     { SC_OP_RANK_RESET,         scProc_OP_RankReset       },
     { SC_OP_ADD_CRITICAL,       scProc_OP_AddCritical     },
@@ -5208,7 +5208,7 @@ static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args )
   BPP_RankDown( pp, args[1], args[2] );
   return TRUE;
 }
-static BOOL scProc_OP_RankSet5( BTL_CLIENT* wk, int* seq, const int* args )
+static BOOL scProc_OP_RankSet7( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
   BPP_RankSet( bpp, BPP_ATTACK_RANK,      args[1] );
@@ -5216,6 +5216,8 @@ static BOOL scProc_OP_RankSet5( BTL_CLIENT* wk, int* seq, const int* args )
   BPP_RankSet( bpp, BPP_SP_ATTACK_RANK,   args[3] );
   BPP_RankSet( bpp, BPP_SP_DEFENCE_RANK,  args[4] );
   BPP_RankSet( bpp, BPP_AGILITY_RANK,     args[5] );
+  BPP_RankSet( bpp, BPP_HIT_RATIO,        args[6] );
+  BPP_RankSet( bpp, BPP_AVOID_RATIO,      args[7] );
   return TRUE;
 }
 static BOOL scProc_OP_RankRecover( BTL_CLIENT* wk, int* seq, const int* args )

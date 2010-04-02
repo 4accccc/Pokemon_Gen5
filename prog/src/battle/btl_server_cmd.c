@@ -65,7 +65,7 @@ typedef enum {
   SC_ARGFMT_3311bit_2byte    = SC_ARGFMT(5,2),
 
   // à¯êîÇUå¬ÇÃå^
-  SC_ARGFMT_555555bit = SC_ARGFMT(6,0),
+  SC_ARGFMT_555555bit         = SC_ARGFMT(6,0),
   SC_ARGFMT_32111bit_2byte    = SC_ARGFMT(6,1),
 
   // à¯êîÇWå¬ÇÃå^
@@ -96,7 +96,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_53bit_1byte,      // SC_OP_PP_PLUS
   SC_ARGFMT_53bit_1byte,      // SC_OP_RANK_UP
   SC_ARGFMT_53bit_1byte,      // SC_OP_RANK_DOWN
-  SC_ARGFMT_555555bit,        // SC_OP_RANK_SET5
+  SC_ARGFMT_1x8byte,          // SC_OP_RANK_SET7
   SC_ARGFMT_1byte,            // SC_OP_RANK_RECOVER,
   SC_ARGFMT_1byte,            // SC_OP_RANK_RESET,
   SC_ARGFMT_14byte,           // SC_OP_ADD_CRITICAL

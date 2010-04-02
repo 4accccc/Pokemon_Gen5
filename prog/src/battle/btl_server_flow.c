@@ -12983,8 +12983,12 @@ static u8 scproc_HandEx_setRank( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
     BPP_RankSet( pp_target, BPP_SP_ATTACK_RANK,  param->sp_attack );
     BPP_RankSet( pp_target, BPP_SP_DEFENCE_RANK, param->sp_defence );
     BPP_RankSet( pp_target, BPP_AGILITY_RANK,    param->agility );
-    SCQUE_PUT_OP_RankSet5( wk->que,
-      param->pokeID, param->attack, param->defence, param->sp_attack, param->sp_defence, param->agility );
+    BPP_RankSet( pp_target, BPP_HIT_RATIO,       param->hit_ratio );
+    BPP_RankSet( pp_target, BPP_AVOID_RATIO,     param->avoid_ratio );
+
+    SCQUE_PUT_OP_RankSet7( wk->que,
+      param->pokeID, param->attack, param->defence, param->sp_attack, param->sp_defence, param->agility,
+                     param->hit_ratio, param->avoid_ratio );
     return 1;
   }
   return 0;
