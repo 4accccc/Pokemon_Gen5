@@ -68,7 +68,7 @@ static BOOL LayEggCheck( SODATEYA* sodateya );
 static void CreateEgg( SODATEYA* sodateya, POKEMON_PARAM* egg );
 static void EggCordinate_monsno( 
     const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
-static void EggCordinate_personality(
+static void EggCordinate_seikaku(
     const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
 static void EggCordinate_special_ability(
     HEAPID heap_id, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
@@ -790,7 +790,7 @@ static void CreateEgg( SODATEYA* sodateya, POKEMON_PARAM* egg )
 
   // タマゴを作成
   EggCordinate_monsno( father, mother, egg );              // モンスターナンバー
-  EggCordinate_personality( father, mother, egg );         // 性格
+  EggCordinate_seikaku( father, mother, egg );             // 性格
   EggCordinate_special_ability( heap_id, mother, egg );    // 特性
   EggCordinate_ability_rand( father, mother, egg );        // 個体乱数
   EggCordinate_rare( father, mother, egg );                // レアポケ抽選
@@ -881,47 +881,50 @@ static void EggCordinate_monsno(
  * @param egg    設定するタマゴ
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_personality(
+static void EggCordinate_seikaku(
     const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg )
 {
   BOOL kawarazu_f; // 父親が『かわらずのいし』を持っているかどうか
   BOOL kawarazu_m; // 母親が『かわらずのいし』を持っているかどうか
-  u32 personal_f = PP_Get( father, ID_PARA_personal_rnd, NULL );    // 父親の個性乱数
-  u32 personal_m = PP_Get( mother, ID_PARA_personal_rnd, NULL );    // 母親の個性乱数
+  u32 seikaku_f = PP_Get( father, ID_PARA_seikaku, NULL ); // 父親の性格
+  u32 seikaku_m = PP_Get( mother, ID_PARA_seikaku, NULL ); // 母親の性格
 
   //『かわらずのいし』を持っているかどうかを取得
   kawarazu_f = ( PP_Get( father, ID_PARA_item, NULL ) == ITEM_KAWARAZUNOISI );
   kawarazu_m = ( PP_Get( mother, ID_PARA_item, NULL ) == ITEM_KAWARAZUNOISI );
 
-  //『かわらずのいし』を持っていたら, 個性乱数を継承
-  if( kawarazu_f && kawarazu_m ) // 両親とも持っている
-  {
+  // 両親とも持っている
+  if( kawarazu_f && kawarazu_m ) {
     // 1/2で継承する
-    if( GFUser_GetPublicRand0(100)%2 == 0 )
-    {
-      if( GFUser_GetPublicRand0(100)%2 == 0 )  // 1/2で父親から継承
-      {
-        PP_Put( egg, ID_PARA_personal_rnd, personal_f );
+    if( GFUser_GetPublicRand0(2) == 0 ) {
+      // 父親から継承
+      if( GFUser_GetPublicRand0(2) == 0 )  {
+        PP_Put( egg, ID_PARA_seikaku, seikaku_f );
       }
-      else                             // 1/2で母親から継承
-      {
-        PP_Put( egg, ID_PARA_personal_rnd, personal_m );
+      // 母親から継承
+      else {
+        PP_Put( egg, ID_PARA_seikaku, seikaku_m );
       }
     }
   }
-  else if( kawarazu_f ) // 父親のみ持っている ==> 1/2で継承
-  {
-    if( GFUser_GetPublicRand0(100)%2 == 0 )
-    {
-      PP_Put( egg, ID_PARA_personal_rnd, personal_f );
+  // 父親のみ持っている
+  else if( kawarazu_f ) {
+    // 1/2で継承する
+    if( GFUser_GetPublicRand0(2) == 0 ) {
+      PP_Put( egg, ID_PARA_seikaku, seikaku_f );
     }
   }
-  else if( kawarazu_m ) // 母親のみ持っている ==> 1/2で継承
-  {
-    if( GFUser_GetPublicRand0(100)%2 == 0 ) 
-    {
-      PP_Put( egg, ID_PARA_personal_rnd, personal_m );
+  // 母親のみ持っている
+  else if( kawarazu_m ) {
+    // 1/2で継承する
+    if( GFUser_GetPublicRand0(2) == 0 ) {
+      PP_Put( egg, ID_PARA_seikaku, seikaku_m );
     }
+  }
+  // 両親とも持っていない
+  else {
+    // 乱数で決定
+    PP_Put( egg, ID_PARA_seikaku, GFUser_GetPublicRand0( PTL_SEIKAKU_MAX ) );
   }
 }
 
@@ -975,15 +978,18 @@ static void EggCordinate_special_ability(
   rnd = GFUser_GetPublicRand0(100);  // 乱数取得[0, 99]
   switch( speabi_index )
   {
-  case 0: //---------------------------------------------- 母が特性1
+  // 母が特性1
+  case 0:
     if( rnd < 80 ) speabi_egg = speabi_list[0]; // 80% ==> 子の特性1
     else           speabi_egg = speabi_list[1]; // 20% ==> 子の特性2
     break;
-  case 1: //---------------------------------------------- 母が特性2
+  // 母が特性2
+  case 1: 
     if( rnd < 20 ) speabi_egg = speabi_list[0]; // 20% ==> 子の特性1
     else           speabi_egg = speabi_list[1]; // 80% ==> 子の特性2
     break;
-  case 2: //---------------------------------------------- 母が特性3
+  // 母が特性3
+  case 2: 
     if( rnd < 20 )      speabi_egg = speabi_list[0]; // 20% ==> 子の特性1
     else if( rnd < 40 ) speabi_egg = speabi_list[1]; // 20% ==> 子の特性2
     else                speabi_egg = speabi_list[2]; // 60% ==> 子の特性3
@@ -1024,7 +1030,7 @@ static void EggCordinate_ability_rand(
 
   // 母親が『パワーXXXX』を持っている場合
   if( ( i == 0 ) ||
-      ( GFUser_GetPublicRand0(100)%2 == 0 ) )    // 父親も持っていた場合, 1/2で上書きする
+      ( GFUser_GetPublicRand0(2) == 0 ) )    // 父親も持っていた場合, 1/2で上書きする
   {
     i = 0;
     itemno = PP_Get( father, ID_PARA_item, NULL );
@@ -1060,7 +1066,7 @@ static void EggCordinate_ability_rand(
     u32 arg;
 
     // 父・母のどちらから受け継ぐのかを決定
-    if( GFUser_GetPublicRand0(100)%2 == 0 ) pp = father;
+    if( GFUser_GetPublicRand0(2) == 0 ) pp = father;
     else                             pp = mother;
 
     // 継承
