@@ -74,7 +74,7 @@ STEP;
 
 // マナフィ
 // パーティクルのフレームとポケモンアニメーションのフレームを連携させる
-#define MANAFI_PARTICLE_BURST_FRAME   (380)  // 最終フレーム  // 全部で???個フレームがあった
+#define MANAFI_PARTICLE_BURST_FRAME   (300)  // パーティクルエフェクトDEMO_MANA01, DEMO_MANA02は全部で300フレームあるらしい。
 #define MANAFI_POKE_ANIME_INDEX (0)
 
 
@@ -233,9 +233,11 @@ static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
 
 static const PARTICLE_PLAY_DATA manafi_particle_play_data_tbl[] =
 {
-  {    MANAFI_PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        DEMO_EGG01 },
-  {    MANAFI_PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        DEMO_EGG02 },
-  {    MANAFI_PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        DEMO_EGG03 },
+  {    0,                               PARTICLE_SPA_FILE_0,        DEMO_MANA01 },  // 再生開始フレームが早い順に並べておくこと
+  {    0,                               PARTICLE_SPA_FILE_0,        DEMO_MANA02 },
+  {    MANAFI_PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        DEMO_EGG01  },
+  {    MANAFI_PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        DEMO_EGG02  },
+  {    MANAFI_PARTICLE_BURST_FRAME,     PARTICLE_SPA_FILE_0,        DEMO_EGG03  },
 };
 
 
