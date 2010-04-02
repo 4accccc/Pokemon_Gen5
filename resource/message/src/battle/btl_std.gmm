@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-03-31T13:53:34"/>
+	<create user="taya" host="W00146" date="2010-04-02T14:24:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1079,12 +1079,6 @@
 		<language name="JPN_KANJI" width="216">お互いの体力を　分かちあった！</language>
 	</row>
 
-	<row id="BTL_STRID_STD_Kawarawari_Break">
-		<comment>かわらわり</comment>
-		<language name="JPN" width="216">かべが　こわれた！</language>
-		<language name="JPN_KANJI" width="216">壁が壊れた！</language>
-	</row>
-
 	<row id="BTL_STRID_STD_Mizuasobi">
 		<comment>みずあそび</comment>
 		<language name="JPN" width="216">ほのおの　いりょくが　よわまった！</language>
@@ -1167,17 +1161,17 @@
 	</row>
 
 	<row id="BTL_STRID_STD_ReflectorOff">
-		<language name="JPN" width="216">みかたの　リフレクターの
-こうかが　きれた！</language>
-		<language name="JPN_KANJI" width="216">味方の　リフレクターの
-効果が　切れた！</language>
+		<language name="JPN" width="216">みかたの　リフレクターが
+なくなった！</language>
+		<language name="JPN_KANJI" width="216">味方の　リフレクターが
+無くなった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_ReflectorOff_E">
-		<language name="JPN" width="216">あいての　リフレクターの
-こうかが　きれた！</language>
-		<language name="JPN_KANJI" width="216">相手の　リフレクターの
-効果が　切れた！</language>
+		<language name="JPN" width="216">あいての　リフレクターが
+なくなった！</language>
+		<language name="JPN_KANJI" width="216">相手の　リフレクターが
+無くなった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_HikariNoKabe">
@@ -1196,17 +1190,17 @@
 	</row>
 
 	<row id="BTL_STRID_STD_HikariNoKabeOff">
-		<language name="JPN" width="216">みかたの　ひかりのかべの
-こうかが　きれた！</language>
-		<language name="JPN_KANJI" width="216">味方の　ひかりのかべの
-効果が　切れた！</language>
+		<language name="JPN" width="216">みかたの　ひかりのかべが
+なくなった！</language>
+		<language name="JPN_KANJI" width="216">味方の　ひかりのかべが
+無くなった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_HikariNoKabeOff_E">
-		<language name="JPN" width="216">あいての　ひかりのかべの
-こうかが　きれた！</language>
-		<language name="JPN_KANJI" width="216">相手の　ひかりのかべの
-効果が　切れた！</language>
+		<language name="JPN" width="216">あいての　ひかりのかべが
+なくなった！</language>
+		<language name="JPN_KANJI" width="216">相手の　ひかりのかべが
+無くなった！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_SinpiNoMamori">

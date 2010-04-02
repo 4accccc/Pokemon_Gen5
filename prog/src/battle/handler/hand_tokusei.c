@@ -4605,12 +4605,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yobimizu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_DECIDE_TARGET,          handler_Yobimizu                },  // ワザターゲット決定ハンドラ
-
-//    { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_Yobimizu_DmgToRecvCheck },  // ダメージワザ回復化チェックハンドラ
-//    { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_Yobimizu_DmgToRecvFix   },  // ダメージワザ回復化決定ハンドラ
-      { BTL_EVENT_NOEFFECT_CHECK_L3,     handler_Yobimizu_CheckNoEffect }, // 無効化チェックハンドラ
-
-
+    { BTL_EVENT_NOEFFECT_CHECK_L3,     handler_Yobimizu_CheckNoEffect }, // 無効化チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -4629,26 +4624,6 @@ static void handler_Yobimizu_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
   }
 }
 
-// ダメージワザ回復チェックハンドラ
-static void handler_Yobimizu_DmgToRecvCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  common_DmgToRecover_Check( flowWk, pokeID, work, POKETYPE_MIZU );
-}
-// ダメージワザ回復化決定ハンドラ
-static void handler_Yobimizu_DmgToRecvFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
-  {
-    BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
-
-    param->poke_cnt = 1;
-    param->pokeID[0] = pokeID;
-    param->fAlmost = TRUE;
-    param->rankType = BPP_SP_ATTACK_RANK;
-    param->rankVolume = 1;
-    param->header.tokwin_flag = TRUE;
-  }
-}
 
 //------------------------------------------------------------------------------
 /**
@@ -4658,13 +4633,8 @@ static void handler_Yobimizu_DmgToRecvFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hiraisin( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DECIDE_TARGET,          handler_Hiraisin                },  // ワザターゲット決定ハンドラ
-
-//    { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_Hiraisin_DmgToRecvCheck },  // ダメージワザ回復化チェックハンドラ
-//    { BTL_EVENT_DMG_TO_RECOVER_FIX,     handler_Hiraisin_DmgToRecvFix   },  // ダメージワザ回復化決定ハンドラ
-    { BTL_EVENT_NOEFFECT_CHECK_L3,     handler_Hiraisin_CheckNoEffect }, // 無効化チェックハンドラ
-
-
+    { BTL_EVENT_DECIDE_TARGET,        handler_Hiraisin                },  // ワザターゲット決定ハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L3,    handler_Hiraisin_CheckNoEffect }, // 無効化チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -4681,26 +4651,6 @@ static void handler_Hiraisin_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
   if( common_TypeNoEffect(flowWk, pokeID, POKETYPE_DENKI) )
   {
     common_TypeNoEffect_Rankup( flowWk, pokeID, BPP_SP_ATTACK_RANK, 1 );
-  }
-}
-// ダメージワザ回復チェックハンドラ
-static void handler_Hiraisin_DmgToRecvCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  common_DmgToRecover_Check( flowWk, pokeID, work, POKETYPE_DENKI );
-}
-// ダメージワザ回復化決定ハンドラ
-static void handler_Hiraisin_DmgToRecvFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
-  {
-    BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
-
-    param->poke_cnt = 1;
-    param->pokeID[0] = pokeID;
-    param->fAlmost = TRUE;
-    param->rankType = BPP_SP_ATTACK_RANK;
-    param->rankVolume = 1;
-    param->header.tokwin_flag = TRUE;
   }
 }
 
