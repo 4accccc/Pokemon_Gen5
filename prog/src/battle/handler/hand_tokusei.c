@@ -3163,7 +3163,7 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     {
       bpp = BTL_SVFTOOL_GetPokeParam( flowWk, allPokeID[i] );
       tok = BPP_GetValue( bpp, BPP_TOKUSEI );
-      if( !BTL_CALC_TOK_CheckCantChange(tok) && (tok != POKETOKUSEI_TOREESU) )
+      if( tok != POKETOKUSEI_TOREESU )
       {
         targetPokeID[ targetCnt++ ] = allPokeID[i];
       }
@@ -4069,30 +4069,27 @@ static void handler_FusiginaMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) != pokeID)
   ){
-    // ヌケニンで
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_GetMonsNo(bpp) == MONSNO_NUKENIN )
+
+    // 「わるあがき」以外のダメージワザの場合
+    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+    if( WAZADATA_IsDamage(waza) && (waza != WAZANO_WARUAGAKI) )
     {
-      // 「わるあがき」以外のダメージワザの場合
-      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-      if( WAZADATA_IsDamage(waza) && (waza != WAZANO_WARUAGAKI) )
+      // 効果バツグン以外は無効
+      PokeType waza_type = WAZADATA_GetType( waza );
+      PokeTypePair myType = BPP_GetPokeType( bpp );
+      BtlTypeAff aff = BTL_CALC_TypeAffPair( waza_type, myType );
+      if( aff <= BTL_TYPEAFF_100 )
       {
-        // 効果バツグン以外は無効
-        PokeType waza_type = WAZADATA_GetType( waza );
-        PokeTypePair myType = BPP_GetPokeType( bpp );
-        BtlTypeAff aff = BTL_CALC_TypeAffPair( waza_type, myType );
-        if( aff <= BTL_TYPEAFF_100 )
+        if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
         {
-          if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
+          BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
           {
-            BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
-            {
-              BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-              HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
-              HANDEX_STR_AddArg( &param->str, pokeID );
-            }
-            BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+            BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+            HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
+            HANDEX_STR_AddArg( &param->str, pokeID );
           }
+          BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
         }
       }
     }
@@ -4445,6 +4442,7 @@ static BOOL handler_Katayaburi_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFa
       POKETOKUSEI_JUUNAN,         POKETOKUSEI_MAIPEESU,   POKETOKUSEI_MIZUNOBEERU,
       POKETOKUSEI_HONOONOKARADA,  POKETOKUSEI_RIIFUGAADO, POKETOKUSEI_FUMIN,
       POKETOKUSEI_YARUKI,         POKETOKUSEI_MENEKI,     POKETOKUSEI_MAGUMANOYOROI,
+      POKETOKUSEI_HATOMUNE,
     };
     u32 i;
     for(i=0; i<NELEMS(disableTokTable); ++i)
