@@ -36,25 +36,20 @@ static const u16 INFOWIN_LINE_CHRNUM = 0x10;  //1列の数
 
 static const u8 INFOWIN_TIMECHR_START = 0x01;
 static const u8 INFOWIN_COLONCHR = 0x0B;
-static const u8 INFOWIN_GPFSYNC_CHR_X = 0x00;
-static const u8 INFOWIN_GPFSYNC_CHR_Y = INFOWIN_LINE_CHRNUM*2;
 
 static const u8 INFOWIN_TIME_DRAW_X = 1;
 static const u8 INFOWIN_TIME_DRAW_WIDTH = 5;
 static const u8 INFOWIN_AMPM_DRAW_X = 6;
 static const u8 INFOWIN_AMPM_DRAW_WIDTH = 2;
 
-static const u8 INFOWIN_GPFSYNC_DRAW_X = 10;
-static const u8 INFOWIN_GPFSYNC_DRAW_WIDTH = 6;
-
-static const u8 INFOWIN_IR_DRAW_X = 16;
+static const u8 INFOWIN_IR_DRAW_X = 9;
 static const u8 INFOWIN_IR_DRAW_WIDTH = 4;
 
-static const u8 INFOWIN_WIFI_DRAW_X = 20;
+static const u8 INFOWIN_WIFI_DRAW_X = 14;
 static const u8 INFOWIN_WIFI_DRAW_WIDTH = 4;
 
-static const u8 INFOWIN_BEACON_DRAW_X = 24;
-static const u8 INFOWIN_BEACON_DRAW_WIDTH = 4;
+static const u8 INFOWIN_BEACON_DRAW_X = 19;
+static const u8 INFOWIN_BEACON_DRAW_WIDTH = 7;
 
 static const u8 INFOWIN_WMI_DRAW_X = 30;
 static const u8 INFOWIN_WMI_DRAW_WIDTH = 2;
@@ -87,13 +82,13 @@ static const u16 INFOWIN_BEACON_WAIT_SYNC = 10*60;//30*60;  //30秒ネット開始をま
 enum
 {
   INFOWIN_REFRESH_TIME    = 0x0001,
-  INFOWIN_REFRESH_GPF_SYNC  = 0x0002,
+  INFOWIN_REFRESH_GPF_SYNC  = 0x0002, //未使用
   INFOWIN_REFRESH_IR      = 0x0004,
   INFOWIN_REFRESH_WIFI    = 0x0008,
   INFOWIN_REFRESH_BEACON    = 0x0010,
   INFOWIN_REFRESH_BATTERY   = 0x0020,
 
-  INFOWIN_DISP_GPF_SYNC = 0x0100,
+  INFOWIN_DISP_GPF_SYNC = 0x0100, //未使用
   INFOWIN_DISP_IR     = 0x0200,
   INFOWIN_DISP_BEACON   = 0x0400,
 
@@ -110,8 +105,8 @@ enum
   INFOWIN_PLT_COMMON_BLACK,
   INFOWIN_PLT_COMMON_WHITE,
   INFOWIN_PLT_TIME_STR,
-  INFOWIN_PLT_GPF_SYNC_BACK,
-  INFOWIN_PLT_GPF_SYNC_STR,
+  INFOWIN_PLT_GPF_SYNC_BACK,  //未使用
+  INFOWIN_PLT_GPF_SYNC_STR,   //未使用
   INFOWIN_PLT_IR_BACK,
   INFOWIN_PLT_IR_STR,
   INFOWIN_PLT_WIFI_BACK,
@@ -188,7 +183,7 @@ static inline void INFOWIN_SetBit( const u16 bit );
 static inline void INFOWIN_ResetBit( const u16 bit );
 
 
-INFOWIN_WORK *infoWk = NULL;
+static INFOWIN_WORK *infoWk = NULL;
 //初期化
 //  @param bgplane  BG面 (CHARのVRAMが0x1000必要)
 //  @param pltNo  パレット番号(1本必要)
@@ -250,8 +245,15 @@ void  INFOWIN_Update( void )
   //通信系の更新
   if( infoWk->commSys != NULL )
   {
-    const u32 bit = WIH_DWC_GetAllBeaconTypeBit();
-
+    u32 bit = WIH_DWC_GetAllBeaconTypeBit();
+    
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+    {
+      bit = 0;
+    }
+#endif
+    
     if(bit & GAME_COMM_SBIT_IRC_ALL)
     {
       if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_IR) == FALSE )
@@ -434,28 +436,6 @@ static  void  INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
     infoWk->isRefresh -= INFOWIN_REFRESH_TIME;
     transReq = TRUE;
   }
-
-  //G-SYNCの更新
-  if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_REFRESH_GPF_SYNC) )
-  {
-    static const u16 GPFSYNC_TOP_CHAR[2] = {0x20,0x20};
-    const u8  flg = INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_GPF_SYNC);
-    INFOWIN_SetScrFunc( GPFSYNC_TOP_CHAR[flg],infoWk->pltNo,
-              INFOWIN_GPFSYNC_DRAW_X,0,
-              INFOWIN_GPFSYNC_DRAW_WIDTH,2 );
-    {//Pallet
-      static const u16 GPFSYNC_BACK_COLOR[2][2] = {
-            {INFOWIN_COLOR_GRAY2,INFOWIN_COLOR_GRAY1},
-            {INFOWIN_COLOR_WHITE2,INFOWIN_COLOR_WHITE1} };
-
-      INFOWIN_SetPltFunc( INFOWIN_PLT_GPF_SYNC_BACK , GPFSYNC_BACK_COLOR[flg] , 2 );
-    }
-
-    infoWk->isRefresh -= INFOWIN_REFRESH_GPF_SYNC;
-    transReq = TRUE;
-
-  }
-
   //赤外線の更新
   if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_REFRESH_IR) )
   {
@@ -503,7 +483,7 @@ static  void  INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
   //ワイヤレスの更新
   if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_REFRESH_BEACON) )
   {
-    static const u16 BEACON_TOP_CHAR[2] = {0x2C,0x2C};
+    static const u16 BEACON_TOP_CHAR[2] = {0x20,0x20};
     const u8  flg = INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON);
     INFOWIN_SetScrFunc( BEACON_TOP_CHAR[flg],infoWk->pltNo,
               INFOWIN_BEACON_DRAW_X,0,
@@ -524,10 +504,10 @@ static  void  INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
   //バッテリーの更新
   if( INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_REFRESH_BATTERY) )
   {
-    static const u16 BATTERY_TOP_CHAR[6] = {0x40,0x41,0x42,0x43,0x44,0x45};
-    const u8  flg = INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON);
+    const u16 BATTERY_TOP_CHAR[6] = {0x40,0x41,0x42,0x43,0x44,0x45};
+    const u8 flg = INFOWIN_CHECK_BIT(infoWk->isRefresh,INFOWIN_DISP_BEACON);
+    const u8 dispPosArr[6] = {0,1,1,2,2,3};
     u16 scrData[2][2];
-    static const dispPosArr[6] = {0,1,1,2,2,3};
     u8 dispPos;
     if( OS_IsRunOnTwl() )//DSIなら
     {
@@ -544,7 +524,6 @@ static  void  INFOWIN_VBlankFunc( GFL_TCB* tcb , void* work )
         dispPos = 4;
       }
     }
-
     scrData[0][0] = BATTERY_TOP_CHAR[dispPos] + (infoWk->pltNo<<12) + infoWk->ncgPos;
     scrData[1][0] = scrData[0][0] + INFOWIN_LINE_CHRNUM;
     scrData[0][1] = scrData[0][0] + INFOWIN_CHR_FLIP_X;
@@ -572,8 +551,8 @@ static  void  INFOWIN_SetScrFunc( const u16 topChar , const u8 pltNo , const u8 
 {
   u8 x,y;
   //今のところ最大サイズで確保大きくなったら要変更
-  u16 scrData[12];
-  GF_ASSERT_MSG( sizeY<=6,"Ysize over! Plz fix source!!\n");
+  u16 scrData[14];
+  GF_ASSERT_MSG( sizeX<=7,"Xsize over! Plz fix source!!\n");
   for( x=0;x<sizeX;x++ )
   {
     for( y=0;y<sizeY;y++ )
