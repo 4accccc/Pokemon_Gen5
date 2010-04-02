@@ -493,8 +493,6 @@ IF $SCWK_ANSWER == SCR_YES THEN
 	
 	//ŽèŽ‚¿‚ÆBOX‚Ì”‚ð‘«‚·
 	$LWK_TEMOCHI += $LWK_BOX
-	//Å‰‚Ì1•C‚¾‚¯ˆø‚­
-	$LWK_TEMOCHI -= 1
 	//ƒZƒŠƒt“à‚ÉŠi”[
 	_NUMBER( 0 , LWK_TEMOCHI , 1 )
 	
