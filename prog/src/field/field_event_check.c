@@ -1554,10 +1554,10 @@ static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req )
 {
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( req->gsys );
   FIELD_PLAYER*  player   = FIELDMAP_GetFieldPlayer( fieldmap );
-  u16            zone_id  = FIELDMAP_GetZoneID( fieldmap );
 
   const POS_EVENT_DATA* pos_event;
   VecFx32 pos;
+
   FIELD_PLAYER_GetPos( player, &pos );
 
   // アトリビュートをチェック
@@ -1596,12 +1596,14 @@ static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req )
     PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( player );
     MMDL*            mmdl = FIELD_PLAYER_GetMMdl( player );
     u16              acmd = MMDL_GetAcmdCode( mmdl );
+    OS_TFPrintf( 3, "acmd = 0x%x\n", acmd );
     // 歩き以外ならPOSイベント起動
     if( (form != PLAYER_MOVE_FORM_NORMAL) ||
-        (acmd == AC_DASH_U_6F) ||
-        (acmd == AC_DASH_D_6F) ||
-        (acmd == AC_DASH_L_6F) ||
-        (acmd == AC_DASH_R_6F) ) { 
+        (acmd == AC_DASH_U_4F) || (acmd == AC_DASH_D_4F) ||
+        (acmd == AC_DASH_L_4F) || (acmd == AC_DASH_R_4F) ||
+        (acmd == AC_DASH_U_6F) || (acmd == AC_DASH_D_6F) ||
+        (acmd == AC_DASH_L_6F) || (acmd == AC_DASH_R_6F) )
+    { 
       GMEVENT* event = SCRIPT_SetEventScript( req->gsys, pos_event->id, NULL, req->heapID );
       return event;
     }
