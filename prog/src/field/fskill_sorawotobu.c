@@ -294,8 +294,6 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
       FIELD_CAMERA_ClearRecvCamParam(camera);
       //カメラエリア動作をフック解除
       FIELD_CAMERA_SetCameraAreaActive( camera, TRUE );
-      //ＯＢＪ停止解除
-      ;
       return GMEVENT_RES_FINISH;
     }
   }
