@@ -171,4 +171,5 @@
 #define		TOKUSYU_SUNANOTIKARA				( 159 )		//すなのちから
 #define		TOKUSYU_TETUNOTOGE					( 160 )		//てつのトゲ
 #define		TOKUSYU_DARUMAMOODO					( 161 )		//ダルマモード
-#define		TOKUSYU_MAX						( 161 )
+#define		TOKUSYU_SYOURINOHOSI				( 162 )		//しょうりのほし
+#define		TOKUSYU_MAX						( 162 )
