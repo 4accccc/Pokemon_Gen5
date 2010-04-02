@@ -339,8 +339,8 @@
 #define FE_T05R0301_BTLITEM_TALK           323 /* 0x0143 カナワタウン民家：戦闘用アイテム入手イベント 初回会話フラグ */
 #define FE_C08R0102_ITEMGET_01             324 /* 0x0144 ソウリュウシティ：シャガの家2Fアイテム入手フラグ01 */
 #define FE_C08R0102_ITEMGET_02             325 /* 0x0145 ソウリュウシティ：シャガの家2Fアイテム入手フラグ01 */
-		/* not used   326(0x0146) */
-		/* not used   327(0x0147) */
+#define FE_C04R0201_STYLIST_TALK           326 /* 0x0146 ミュージカルホール：スタイリストに話しかけたフラグ */
+#define FE_MUSICAL_COMM_PLAY               327 /* 0x0147 ミュージカルホール：通信ミュージカルで遊んだ */
 		/* not used   328(0x0148) */
 		/* not used   329(0x0149) */
 		/* not used   330(0x014a) */
