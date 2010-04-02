@@ -25,6 +25,13 @@ _EVENT_DATA    ev_r07r0301_oldman_01
 _EVENT_DATA    ev_init_r07r0301
 _EVENT_DATA_END
 
+//------------------------------注意--------------------------------//
+//																	//
+//	LOCALWORK15を使用しました。同マップ内の使用を禁止します。	//
+//	LOCALWORK15⇒$WK_SCENE_R07_MOVEPOKE == 1の状態で1回目のセリフを聞いた後1// 
+//																	//
+//------------------------------------------------------------------//
+
 /************************************************************/
 /*					FIELD_INIT_LABEL						*/
 /************************************************************/
@@ -203,24 +210,115 @@ _ANIME_LABEL	anm_r07_player_gyoe
 
 
 /************************************************************/	
-/*	【仮】OLDWOMAN											*/
+/*	OLDWOMAN											*/
 /************************************************************/
 EVENT_START ev_r07r0301_oldwoman_01
-	//カザカミ・ライカミイベント起動前
-	//カザカミ・ライカミ捕獲前
-	//カザカミ・ライカミ捕獲後
-	//ツチノカミイベント後でセリフ分岐
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldwoman_00)
+{
+	//バージョンを取得して捕獲チェック条件を変更
+	DEFINE_LOCAL LCWK_VERSION
+	_GET_ROM_VERSION( LCWK_VERSION )
+	//捕獲返り値チェック
+	DEFINE_LOCAL LCWK_HOKAKU_CK
+	
+	//ホワイト：
+	IF $LCWK_VERSION == VERSION_WHITE THEN
+		_GET_MOVE_POKEMON_STATUS( MOVE_POKE_RAIKAMI, LCWK_HOKAKU_CK ) 
+		
+		//イベント起動前 or ツチノカミイベント後
+		IF $WK_SCENE_R07_MOVEPOKE == 0  || $WK_SCENE_R14R0201_LEG >= 1 THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldwoman_00)
+		
+		//捕獲している
+		ELSIF $LCWK_HOKAKU_CK == MVPOKE_STATE_GET THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldwoman_09)
+		
+		//イベント起動後捕獲前
+		ELSE
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldwoman_08)
+		ENDIF
+		
+	//ブラック
+	ELSE
+		_GET_MOVE_POKEMON_STATUS( MOVE_POKE_KAZAKAMI, LCWK_HOKAKU_CK ) 
+	
+		//イベント起動前 or ツチノカミイベント後
+		IF $WK_SCENE_R07_MOVEPOKE == 0  || $WK_SCENE_R14R0201_LEG >= 1 THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldwoman_00)
+		
+		//捕獲している
+		ELSIF $LCWK_HOKAKU_CK == MVPOKE_STATE_GET THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldwoman_09)
+		
+		//イベント起動後捕獲前
+		ELSE
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldwoman_08)
+		ENDIF
+			
+	ENDIF
+}
+
 EVENT_END
 
 /**************************************************************/
-/* 	【仮】OLDMAN											  */
+/* 	OLDMAN											  */
 /**************************************************************/
 EVENT_START		ev_r07r0301_oldman_01
-	//カザカミ・ライカミイベント起動前
-	//カザカミ・ライカミ捕獲前
-	//カザカミ・ライカミ捕獲後
-	//ツチノカミイベント後でセリフ分岐
-	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldman_00)
+{
+	//バージョンを取得して捕獲チェック条件を変更
+	DEFINE_LOCAL LCWK_VERSION
+	_GET_ROM_VERSION( LCWK_VERSION )
+	//捕獲返り値チェック
+	DEFINE_LOCAL LCWK_HOKAKU_CK
+	
+	//ホワイト：
+	IF $LCWK_VERSION == VERSION_WHITE THEN
+		_GET_MOVE_POKEMON_STATUS( MOVE_POKE_RAIKAMI, LCWK_HOKAKU_CK ) 
+		
+		//イベント起動前 or ツチノカミイベント後
+		IF $WK_SCENE_R07_MOVEPOKE == 0  || $WK_SCENE_R14R0201_LEG >= 1 THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldman_00)
+		
+		//捕獲している
+		ELSIF $LCWK_HOKAKU_CK == MVPOKE_STATE_GET THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldman_03)
+		
+		//イベント起動時（室内1回目）
+		ELSIF $WK_SCENE_R07_MOVEPOKE == 2  && $LOCALWORK15 == 0 THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldman_01w)
+			//========================================//
+			$LOCALWORK15 = 1
+			//========================================//
+		
+		//捕獲前（2回目以降と移動ポケモン遭遇後）
+		ELSE
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldman_02)
+		ENDIF
+		
+	//ブラック
+	ELSE
+		_GET_MOVE_POKEMON_STATUS( MOVE_POKE_KAZAKAMI, LCWK_HOKAKU_CK ) 
+	
+		//イベント起動前 or ツチノカミイベント後
+		IF $WK_SCENE_R07_MOVEPOKE == 0  || $WK_SCENE_R14R0201_LEG >= 1 THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldman_00)
+		
+		//捕獲している
+		ELSIF $LCWK_HOKAKU_CK == MVPOKE_STATE_GET THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldman_03)
+		
+		//イベント起動時（室内1回目）
+		ELSIF $WK_SCENE_R07_MOVEPOKE == 2  && $LOCALWORK15 == 0 THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldman_01b)
+			//========================================//
+			$LOCALWORK15 = 1
+			//========================================//
+		
+		//捕獲前（2回目以降と移動ポケモン遭遇後）
+		ELSE
+			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_r07r0301_oldman_02)
+		ENDIF
+			
+	ENDIF
+}
 EVENT_END
 
