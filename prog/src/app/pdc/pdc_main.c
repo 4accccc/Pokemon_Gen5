@@ -107,7 +107,7 @@ PDC_MAIN_WORK* PDC_MAIN_Init( PDC_SETUP_PARAM* psp, HEAPID heapID )
       TRTYPE_HERO, TRTYPE_HERO, 0xffff, 0xffff,
     };
     BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, PDC_GetBFS( psp ), FALSE,
-                                                                tr_type, pmw->heapID );
+                                                                tr_type, NULL, pmw->heapID );
     BTLV_EFFECT_Init( besp, pmw->small_font, pmw->heapID );
     GFL_HEAP_FreeMemory( besp );
   }
