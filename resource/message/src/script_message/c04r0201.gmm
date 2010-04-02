@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-03-26T19:45:58"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-03-31T16:59:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1697" top="510" right="2402" bottom="1138" maximized="no" rayout="Vertical2">
+	<dialog left="414" top="395" right="1119" bottom="1023" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="3" right="1280" bottom="401" visible="yes"/>
 		<band id="0" index="1" style="0000" width="462"/>
@@ -890,7 +890,7 @@
 
 	<row id="msg_c04r0201_gentleman_01" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>♂
-・参加回数＝0</comment>
+・トップ回数＝0</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝お金持ちその２</attribute>
 		<language name="JPN" width="256">すばらしい！　ポケモンを
@@ -903,7 +903,7 @@
 
 	<row id="msg_c04r0201_gentleman_02" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>♂
-・参加回数＝1</comment>
+・トップ回数＝2</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝お金持ちその２</attribute>
 		<language name="JPN" width="256">きみの　ポケモンは　すばらしいね
@@ -918,7 +918,7 @@
 
 	<row id="msg_c04r0201_gentleman_03" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>♂
-・参加回数＝5</comment>
+・トップ回数＝5</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 ＝お金持ちその２</attribute>
 		<language name="JPN" width="256">きみが　さんかする　えんもくは
