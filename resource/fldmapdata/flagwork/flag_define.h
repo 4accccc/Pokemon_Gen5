@@ -2522,7 +2522,7 @@
 #define TMFLG_D01R0201_POKE16_BTL         2748 /* 0x0abc 夢の跡地B2：ムシャーナエンカウントフラグ */
 #define TMFLG_H04R0301_FISHING            2749 /* 0x0abd ビレッジブリッジ民家：釣りイベント */
 #define TMFLG_T05R0301_BTLITEM            2750 /* 0x0abe カナワタウン民家：戦闘用アイテム入手イベント */
-		/* not used  2751(0x0abf) */
+#define TMFLG_C08R0201_BTL                2751 /* 0x0abf ソウリュウシティ：バトルハウストレーナー再戦フラグ */
 		/* not used  2752(0x0ac0) */
 		/* not used  2753(0x0ac1) */
 		/* not used  2754(0x0ac2) */

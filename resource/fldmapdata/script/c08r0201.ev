@@ -29,18 +29,32 @@ _EVENT_DATA_END
 INIT_EVENT_START ev_zone_c08r0201
 	{
 	
-	_FLAG_SET( FV_C08R0201_TRAINERW_01 )
-	_FLAG_SET( FV_C08R0201_TRAINERM_01 )
-	
 	//バージョンチェック
 	DEFINE_LOCAL LCW_VERSION
 	_GET_ROM_VERSION ( LCW_VERSION ) 
 	
-	//★Blackの場合ローテーションバトル
+	//その日最初に入室したならば、トレーナーフラグをRESET
+	IF FLAG_OFF( TMFLG_C08R0201_BTL ) THEN
+		_TRAINER_FLAG_RESET( TRID_ELITEW_18 )
+		_TRAINER_FLAG_RESET( TRID_ELITEM_18 )
+		
+		//==================================//
+				
+		//その日のトレーナーフラグのRESETは終了
+		_FLAG_SET ( TMFLG_C08R0201_BTL )
+		
+		//==================================//
+	ENDIF
+	
+	//OBJ非表示処理
+	_FLAG_SET( FV_C08R0201_TRAINERW_01 )
+	_FLAG_SET( FV_C08R0201_TRAINERM_01 )
+	
+	//★Blackの場合ローテーションバトルOBJを表示
 	IF $LCW_VERSION == VERSION_BLACK THEN
 		_FLAG_RESET( FV_C08R0201_TRAINERW_01 )
 	
-	//★whiteの場合トリプルバトル
+	//★whiteの場合トリプルバトルOBJを表示
 	ELSE
 		_FLAG_RESET( FV_C08R0201_TRAINERM_01 )
 	
