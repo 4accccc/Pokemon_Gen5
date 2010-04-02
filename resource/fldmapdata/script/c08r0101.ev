@@ -23,7 +23,6 @@
 _EVENT_DATA    ev_scene_c08r0101_leader8_01
 _EVENT_DATA    ev_c08r0101_leader8a_01
 _EVENT_DATA    ev_c08r0101_leader8b_01
-_EVENT_DATA    ev_c08r0101_veteranw_01
 _EVENT_DATA_END
 
 /**************************************************************/
@@ -193,22 +192,6 @@ EVENT_START   ev_c08r0101_leader8b_01
 	
 EVENT_END
 
-/**************************************************************/
-/*   C08：VETERANW一言メッセージ                               */
-/**************************************************************/
-EVENT_START   ev_c08r0101_veteranw_01
-
-	//ゲームクリアしていたらドラゴン技について解説
-	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-		_TALK_OBJ_START()
-		_BALLOONWIN_OBJMSG_WB( msg_c08r0101_veteranw_02w , msg_c08r0101_veteranw_02b , C08R0101_VETERANW_01 , POS_DEFAULT)
-		_BALLOONWIN_CLOSE()
-	ELSE
-	//未クリア
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c08r0101_veteranw_01 )
-	ENDIF
-	
-EVENT_END
 
 //--------------------------------------------------------------
 //	C08	歴史解説イベント：主人公二人の前へ

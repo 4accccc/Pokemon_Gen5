@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_C08R0402_MAN1_01 (1)
+#define SCRID_C08R0402_BABYBOY1_01 (2)
 
 #endif //_C08R0402_DEF_H_

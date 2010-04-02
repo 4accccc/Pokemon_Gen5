@@ -9,6 +9,9 @@
 #ifndef ZONE_C08R0102_EVC_H
 #define ZONE_C08R0102_EVC_H
 
+#define C08R0102_VETERANW_01               0
+#define C08R0102_FOOTBALLM_01              1
+#define C08R0102_WOMAN2_01                 2
 
 #endif //ZONE_C08R0102_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08r0102.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

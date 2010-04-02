@@ -10,6 +10,7 @@
 #define ZONE_C08R0402_EVC_H
 
 #define C08R0402_MAN1_01                   0
+#define C08R0402_BABYBOY1_01               1
 
 #endif //ZONE_C08R0402_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c08r0402.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
