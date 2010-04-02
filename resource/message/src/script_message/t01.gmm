@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-30T17:55:02"/>
+	<create user="matsumiya" host="W00224" date="2010-04-02T21:33:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1491" top="289" right="2196" bottom="917" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -525,7 +525,7 @@
 [1:00:トレーナー名:0]も　はやく　来てね▼</language>
 	</row>
 
-	<row id="msg_t01_white_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・msg_t01_white_03表示後にセット
 　ライバル　GRIDX=789、GRIDZ=737　上向き
@@ -541,7 +541,7 @@
 こっち　だよ！▼</language>
 	</row>
 
-	<row id="msg_t01_black_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01_black_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてwhite_05</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
@@ -554,7 +554,7 @@
 みんな　一緒が　いいって▼</language>
 	</row>
 
-	<row id="msg_t01_white_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ後、
 　上入力→white_06
@@ -587,7 +587,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『どこ　いくのさ▼</language>
 	</row>
 
-	<row id="msg_t01_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01_white_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・メッセージ後、3人同時に一歩を踏み出す
 ・続けてライバル（早い）、サポート(普通）の
@@ -599,7 +599,7 @@
 		<language name="JPN_KANJI" width="256">せーの！！▼</language>
 	</row>
 
-	<row id="msg_t01_bigman_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_t01_bigman_01">
 		<comment>♂
 ・仮メッセージ</comment>
 		<attribute name="キャラ指定">BIGMAN
@@ -614,7 +614,7 @@
 あんなことが　できるってよ！</language>
 	</row>
 
-	<row id="msg_t01_woman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t01_woman2_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・はい/いいえの選択肢表示
 　はいだと文字モード切替
@@ -789,45 +789,105 @@
 ブラックシティに　行くつもり！▼</language>
 	</row>
 
-	<row id="msg_t01_black_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01_black_end_04" text-color="#0000ff,,,#ff0000,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてwhite_end_04</comment>
+・続けてhakase1_end_01</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『ああ
 ライモンシティから　つながる▽
 １６ばんどうろの　さきだね▼
 なるほど　あちらの　ほうなら
 まだ　みたことのない　ポケモンと▽
-であえるかも　しれないな！▼</language>
+であえるかも　しれないね！▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『ああ
 ライモンシティから　つながる▽
 １６番道路の　先だね▼
 なるほど　あちらの　方なら
 まだ　みたことのない　ポケモンと▽
-出会えるかも　しれないな！▼</language>
+出会えるかも　しれないね！▼</language>
+	</row>
+
+	<row id="msg_t01_hakase1_end_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♂
+・画面内に登場してメッセージ
+　主人公たち振り向く
+・続けて、主人公たちそばに来て
+　hakase1_end_02</comment>
+		<attribute name="キャラ指定">アララギ博士父</attribute>
+		<language name="JPN" width="256">アララギパパ『お！　これはこれは
+ナイス　タイミング！▽
+おまえさんたち　そろっとるな！▼</language>
+		<language name="JPN_KANJI" width="256">アララギパパ『お！　これはこれは
+ナイス　タイミング！▽
+おまえさんたち　そろっとるな！▼</language>
+	</row>
+
+	<row id="msg_t01_hakase1_end_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・続けてhakase1_end_03</comment>
+		<attribute name="キャラ指定">アララギ博士父</attribute>
+		<language name="JPN" width="256">アララギパパ『ついさきほど
+しりあいから　ぜんこくずかんの▽
+データが　とどいてな▼
+せっかくだから　おまえさんたちの
+ポケモンずかんを　ぜんこくずかんに▽
+パワーアップ　しておこうよ▼
+せかいには　まだまだ　かずおおくの
+ポケモンが　いるからねえ！▼</language>
+		<language name="JPN_KANJI" width="256">アララギパパ『つい先ほど
+知り合いから　全国図鑑の▽
+データが　届いてな▼
+せっかくだから　おまえさんたちの
+ポケモン図鑑を　全国図鑑に▽
+パワーアップ　しておこうよ▼
+世界には　まだまだ　数多くの
+ポケモンが　いるからねえ！▼</language>
+	</row>
+
+	<row id="msg_t01_hakase1_end_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・全国図鑑追加
+・続けてhakase1_end_04</comment>
+		<attribute name="キャラ指定">アララギ博士父</attribute>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンずかんが
+ぜんこくばんに　バージョンアップした！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモン図鑑が
+全国版に　バージョンアップした！▼</language>
+	</row>
+
+	<row id="msg_t01_hakase1_end_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・メッセージ表示後、博士退場
+・続けてwhite_end_04</comment>
+		<attribute name="キャラ指定">アララギ博士父</attribute>
+		<language name="JPN" width="256">アララギパパ『ぜんこくずかんの
+かんせいは　きっと　たいへんだからね▼
+まあ　のんびり　たのしみつつ
+ポケモンと　であってくれよ▼</language>
+		<language name="JPN_KANJI" width="256">アララギパパ『全国図鑑の
+完成は　きっと　大変だからね▼
+まあ　のんびり　たのしみつつ
+ポケモンと　出会ってくれよ▼</language>
 	</row>
 
 	<row id="msg_t01_white_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・クリア後
-・メッセージ表示後、研究所のほうへ移動
+・メッセージ表示後、ベルの家のほうへ移動
 ・画面外に消えると続けてblack_end_05</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『みたことのない　ポケモン？▼
-そうだった！▼
-あたし　けんきゅうじょで
-ポケモンずかんを▽
-パワーアップ　してもらうんだった！▼
-あれ？　そういえば
-ずかん　いえに　おいてきたっけ？▼
+		<language name="JPN" width="256">ベル『へえ　ぜんこくずかん……▼
+あたしの　しらない　ポケモンが
+まだまだ　たくさん　いるんだね▼
+そうだ！　ポケモンずかんを
+パパや　ママに　みせてあげなきゃ！▼
 ということで　ふたりとも
 また　どこかで　あおうねえ！！▼</language>
-		<language name="JPN_KANJI" width="256">ベル『みたことのない　ポケモン？▼
-そうだった！▼
-あたし　研究所で　ポケモン図鑑を
-パワーアップ　してもらうんだった！▼
-あれ？　そういえば
-図鑑　家に　置いてきたっけ？▼
+		<language name="JPN_KANJI" width="256">ベル『へえ　全国図鑑……▼
+あたしの　知らない　ポケモンが
+まだまだ　たくさん　いるんだね▼
+そうだ！　ポケモン図鑑を
+パパや　ママに　みせてあげなきゃ！▼
 ということで　２人とも
 また　どこかで　会おうねえ！！▼</language>
 	</row>
