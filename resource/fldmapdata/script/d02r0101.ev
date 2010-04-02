@@ -58,6 +58,7 @@ INIT_EVENT_START	ev_init_d02r0101
 
 	//シーンチェンジイベント後にジムリーダーアーティをストッパーの位置に移動
 	IF $WK_SCENE_D02R0101 == 2 THEN
+	
 		_OBJ_POS_CHANGE( D02R0101_LEADER3_01, 74, 0, 27, DIR_DOWN )
 	
 	ENDIF
