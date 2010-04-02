@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohnishi_shinichi" host="W00207" date="2010-03-29T21:02:12" source="r7_toh_01c.mb"/>
+	<create user="ohnishi_shinichi" host="W00207" date="2010-03-30T11:00:51" source="r7_toh_01c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohnishi_shinichi" host="W00207" date="2010-03-29T21:02:12" source="r7_toh_01c.mb"/>
+<original_create user="ohnishi_shinichi" host="W00207" date="2010-03-30T11:00:51" source="r7_toh_01c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -51,38 +51,38 @@
 		path="C:/home/wb_data3d/build_model/outdoor/r7_toh_01/tex/r7toh_1.tga"
 	>
 		<bitmap size="256">
-			bbbb bbab babb bbbb aaaa aa9a a9aa aaaa
-			aaaa aa9a a9aa aaaa aaaa aa9a a9aa aaaa
-			aaaa aa9a a9aa aaaa 9999 9989 9899 9999
-			aaaa aa9a a9aa aaaa aaaa aa9a a9aa aaaa
-			aaaa aa9a a9aa 9aaa 9999 9989 9899 9999
-			8888 8878 8788 8888 8888 8878 8788 8888
-			8888 8878 8788 8888 9999 9989 9899 9999
-			8888 8878 8788 8888 8888 8878 8788 8888
-			8888 8878 8788 8888 7777 7777 7777 7777
-			bbbb bbbb bbbb bbbb 6666 6666 6666 6666
+			9999 9999 9999 9999 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa 6666 6666 6666 6666
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa 6666 6666 6666 6666
+			8888 8888 8888 8888 8888 8888 8888 8888
+			8888 8888 8888 8888 6666 6666 6666 6666
+			8888 8888 8888 8888 8888 8888 8888 8888
+			8888 8888 8888 8888 6666 6666 6666 6666
+			9999 9999 9999 9999 7777 7777 7777 7777
 			8888 8888 8888 8888 aaaa aaaa aaaa aaaa
-			aaaa 888a a888 aaaa aaaa bb8a a8bb aaaa
-			aaaa 4b8a a8b4 aaaa aaaa 5b8a a8b5 aaaa
-			aaaa 5b8a a8b5 aaaa bbbb 5bab bab5 bbbb
-			8888 5b88 88b5 8888 aaaa 5b8a a8b5 aaaa
-			9999 4b89 98b4 9999 8888 bb88 88bb 8888
+			aaaa 666a a666 aaaa aaaa 996a a699 aaaa
+			aaaa 596a a695 aaaa aaaa 496a a694 aaaa
+			aaaa 496a a694 aaaa 9999 49a9 9a94 9999
+			6666 4986 6894 6666 aaaa 496a a694 aaaa
+			6666 5986 6895 6666 8888 9978 8799 8888
 			8888 7778 8777 8888 8888 8888 8888 8888
-			7777 7777 7777 7777 bbbb bbbb bbbb bbbb
+			6666 6666 6666 6666 9999 9999 9999 9999
+			7777 7777 7777 7777 8888 8888 8888 8888
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
+			6666 6666 6666 6666 aaaa aaaa aaaa aaaa
+			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
 			6666 6666 6666 6666 8888 8888 8888 8888
-			aaaa aa9a a9aa aaaa aaaa aa9a a9aa aaaa
-			9999 9989 9899 9999 aaaa aa9a a9aa aaaa
-			aaaa aa9a a9aa aaaa aaaa aa9a a9aa aaaa
-			9999 9989 9899 9999 8888 8878 8788 8888
-			8888 8878 8788 8888 8888 8878 8788 8888
-			9999 9989 9899 9999 8888 8878 8788 8888
-			8888 8878 8788 8888 8888 8878 8788 8888
-			7777 7777 7777 7777 aaaa aaaa aaaa aaaa
-			2222 2222 2222 2222 1111 1111 1111 1111
+			8888 8888 8888 8888 8888 8888 8888 8888
+			6666 6666 6666 6666 8888 8888 8888 8888
+			8888 8888 8888 8888 8888 8888 8888 8888
+			6666 6666 6666 6666 aaaa aaaa aaaa aaaa
+			3333 3333 3333 3333 1111 1111 1111 1111
 			1111 1111 1111 1111 1111 1111 1111 1111
 			1111 1111 1111 1111 1111 1111 1111 1111
-			3333 3333 3333 3333 3333 3333 3333 3333
-			2222 2222 2222 2222 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			2222 2222 2222 2222 3333 3333 3333 3333
 		</bitmap>
 	</tex_image>
 	<tex_image index="2" name="r7toh_2"
@@ -93,14 +93,14 @@
 		path="C:/home/wb_data3d/build_model/outdoor/r7_toh_01/tex/r7toh_2.tga"
 	>
 		<bitmap size="64">
-			2222 2222 2222 2222 3333 3333 3333 3333
-			5555 5455 5555 4555 5554 5555 5555 5554
-			5555 5554 5554 5555 3333 3333 3333 3333
-			aaaa aaaa 601a 3666 aaaa aaaa 601a 5666
-			aaaa aaaa 601a 3666 aaaa aaaa 601a 5666
-			aaaa aaaa 333a 3333 aaaa aaaa 333a 3333
-			999a 9999 333a 3333 7779 7777 3339 3333
-			8887 8888 3337 3333 7779 7777 3339 3333
+			0000 0000 0000 0000 5555 5555 5555 5555
+			2222 2622 2222 6222 2226 2222 2222 2226
+			2222 2226 2226 2222 5555 5555 5555 5555
+			aaaa aaaa 314a 5333 aaaa aaaa 314a 2333
+			aaaa aaaa 314a 5333 aaaa aaaa 314a 2333
+			aaaa aaaa 555a 5555 aaaa aaaa 555a 5555
+			888a 8888 555a 5555 7778 7777 5558 5555
+			9997 9999 5557 5555 7778 7777 5558 5555
 		</bitmap>
 	</tex_image>
 </tex_image_array>
@@ -110,12 +110,12 @@
 		0000 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="r7toh_1_pl" color_size="16">
-		4dcc 560e 6691 5e4f 3e2d 2527 56d3 5f35
-		6756 6757 6b78 73da 7fff 7fff 7fff 7fff
+		5e31 51ef 6694 41ad 2527 3dec 6755 56d2
+		5f14 77fa 6b97 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="2" name="r7toh_2_pl" color_size="16">
-		2d89 3e2d 4e90 5f15 6b78 73da 18e5 3211
-		4ef8 1d6c 08c8 7fff 7fff 7fff 7fff 7fff
+		4e90 2d89 73da 18e5 3e2d 5b14 6797 1dd0
+		154c 3276 08c8 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
