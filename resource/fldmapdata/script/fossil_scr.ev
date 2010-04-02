@@ -235,7 +235,7 @@ get_poke:
     
     _SYSWIN_CLOSE()
     //手持ちに追加(Lv25)
-    _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, RECOVER_POKE, 0, TOKUSYU_NULL, 25, 0, ITEM_MONSUTAABOORU )
+    _ADD_POKEMON_TO_PARTY( SCWK_ANSWER, RECOVER_POKE, 0, 25 )
     //ポケモン名をタグ0にセット
     _MONS_NAME(0, RECOVER_POKE)
     //システム：「ニックネームつける？」

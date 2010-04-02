@@ -278,7 +278,7 @@ ev_first_pkeget:
 	_SYSWIN_CLOSE()
 	
 	//ポケモン追加
-	_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, lwk_poke_num, 0, TOKUSYU_NULL, 5, 0, ITEM_MONSUTAABOORU )
+	_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, lwk_poke_num, 0, 5 )
 	
 	//初期３体入手フラグ
 	_FLAG_SET( SYS_FLAG_FIRST_POKE_GET )

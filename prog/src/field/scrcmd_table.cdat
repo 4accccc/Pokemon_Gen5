@@ -493,7 +493,7 @@
 
   DEF_CMD( EvCmdAddPokemonToParty, EV_SEQ_ADD_POKEMON_TO_PARTY )
   DEF_CMD( EvCmdGetPartyFrontPoke, EV_SEQ_GET_PARTY_FRONT_POKEMON )
-  DEF_CMD( EvCmdAddPokemonToBox, EV_SEQ_ADD_POKEMON_TO_BOX )
+  DEF_CMD( EvCmdAddPokemonToPartyEx, EV_SEQ_ADD_POKEMON_TO_PARTY_EX )
   DEF_CMD( EvCmdGetPartyPokeParameter, EV_SEQ_GET_PARTY_POKE_PARAMETER )
 
   DEF_CMD( EvCmdGetMezameruPowerType, EV_SEQ_GET_MEZAMERU_POWER_TYPE )
@@ -519,12 +519,12 @@
   DEF_CMD( EvCmdGetBreederJudgeResult, EV_SEQ_GET_BREEDER_JUDGE_RESULT )
   DEF_CMD( EvCmdWazaMachineLot, EV_SEQ_WAZAMACHINE_LOT )
   DEF_CMD( EvCmdTradeAfterSaveSet, EV_SEQ_TRADEPOKE_AFTER_SAVE )
-  NO_CMD()
+  DEF_CMD( EvCmdAddTamagoToParty, EV_DEQ_ADD_TAMAGO_TO_PARTY)
 
   // ボックス関連
   DEF_CMD( EvCmdGetBoxPokeCount, EV_SEQ_GET_BOX_POKE_COUNT )
-  NO_CMD()
-  NO_CMD()
+  DEF_CMD( EvCmdAddPokemonToBox, EV_SEQ_ADD_POKEMON_TO_BOX )
+  DEF_CMD( EvCmdAddPokemonToBoxEx, EV_SEQ_ADD_POKEMON_TO_BOX_EX )
   NO_CMD()
 
   //画面演出関連

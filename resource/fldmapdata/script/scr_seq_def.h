@@ -5410,19 +5410,47 @@
  * @retval BOOL 追加できたらTRUE
  */
 //--------------------------------------------------------------
-#define _ADD_POKEMON_TO_PARTY( ret_wk, monsno, formno, tokusei, level, itemno, ball ) \
-    _ASM_ADD_POKEMON_TO_PARTY ret_wk, monsno, formno, tokusei, level, itemno, ball
+#define _ADD_POKEMON_TO_PARTY( ret_wk, monsno, formno, level ) \
+    _ASM_ADD_POKEMON_TO_PARTY ret_wk, monsno, formno, level
 
-  .macro _ASM_ADD_POKEMON_TO_PARTY ret_wk, monsno, formno, tokusei, level, itemno, ball
+  .macro _ASM_ADD_POKEMON_TO_PARTY ret_wk, monsno, formno, level
   .short EV_SEQ_ADD_POKEMON_TO_PARTY
   .short \ret_wk
   .short \monsno
   .short \formno
-  .short \tokusei
   .short \level
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _ADD_POKEMON_TO_PARTY_EX
+ * @brief ポケモンを手持ちに追加する  詳細設定型
+ * @param ret_wk 結果を受け取るワーク
+ * @param monsno  モンスターナンバー
+ * @param formno  フォームナンバー
+ * @param tokusei 特性
+ * @param level   レベル
+ * @param itemno  所持アイテム
+ * @param ball    捕獲ボールアイテムナンバー
+ * @retval BOOL 追加できたらTRUE
+ */
+//--------------------------------------------------------------
+#define _ADD_POKEMON_TO_PARTY_EX( ret_wk, monsno, formno, level, tokusei, sex, rare, itemno, ball ) \
+    _ASM_ADD_POKEMON_TO_PARTY_EX ret_wk, monsno, formno, level, tokusei, sex, rare, itemno, ball
+
+  .macro _ASM_ADD_POKEMON_TO_PARTY_EX ret_wk, monsno, formno, level, tokusei, sex, rare, itemno, ball
+  .short EV_SEQ_ADD_POKEMON_TO_PARTY_EX
+  .short \ret_wk
+  .short \monsno
+  .short \formno
+  .short \level
+  .short \tokusei
+  .short \sex
+  .short \rare
   .short \itemno
   .short \ball
   .endm
+  
 
 //--------------------------------------------------------------
 /**
@@ -5438,18 +5466,65 @@
  * @retval BOOL 追加できたらTRUE
  */
 //--------------------------------------------------------------
-#define _ADD_POKEMON_TO_BOX( ret_wk, monsno, formno, tokusei, level, itemno, ball ) \
-    _ASM_ADD_POKEMON_TO_BOX ret_wk, monsno, formno, tokusei, level, itemno, ball
+#define _ADD_POKEMON_TO_BOX( ret_wk, monsno, formno, level ) \
+    _ASM_ADD_POKEMON_TO_BOX ret_wk, monsno, formno, level
 
-  .macro _ASM_ADD_POKEMON_TO_BOX ret_wk, monsno, formno, tokusei, level, itemno, ball
+  .macro _ASM_ADD_POKEMON_TO_BOX ret_wk, monsno, formno, level
   .short EV_SEQ_ADD_POKEMON_TO_BOX
   .short \ret_wk
   .short \monsno
   .short \formno
-  .short \tokusei
   .short \level
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _ADD_POKEMON_TO_BOX_EX
+ * @brief ポケモンをボックスに追加する　詳細設定型
+ * @param ret_wk 結果を受け取るワーク
+ * @param monsno  モンスターナンバー
+ * @param formno  フォームナンバー
+ * @param tokusei 特性
+ * @param level   レベル
+ * @param itemno  所持アイテム
+ * @param ball    捕獲ボールアイテムナンバー
+ * @retval BOOL 追加できたらTRUE
+ */
+//--------------------------------------------------------------
+#define _ADD_POKEMON_TO_BOX_EX( ret_wk, monsno, formno, level, tokusei, sex, rare, itemno, ball ) \
+    _ASM_ADD_POKEMON_TO_BOX_EX ret_wk, monsno, formno, level, tokusei, sex, rare, itemno, ball
+
+  .macro _ASM_ADD_POKEMON_TO_BOX_EX ret_wk, monsno, formno, level, tokusei, sex, rare, itemno, ball
+  .short EV_SEQ_ADD_POKEMON_TO_BOX_EX
+  .short \ret_wk
+  .short \monsno
+  .short \formno
+  .short \level
+  .short \tokusei
+  .short \sex
+  .short \rare
   .short \itemno
   .short \ball
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _ADD_POKEMON_TO_BOX
+ * @brief タマゴを手持ちに追加する
+ * @param ret_wk 結果を受け取るワーク
+ * @param monsno  モンスターナンバー
+ * @param formno  フォームナンバー
+ * @retval BOOL 追加できたらTRUE
+ */
+//--------------------------------------------------------------
+#define _ADD_TAMAGO_TO_PARTY( ret_wk, monsno, formno ) \
+    _ASM_ADD_TAMAGO_TO_PARTY ret_wk, monsno, formno
+
+  .macro _ASM_ADD_TAMAGO_TO_PARTY ret_wk, monsno, formno, tokusei, level, itemno, ball
+  .short EV_SEQ_ADD_TAMAGO_TO_PARTY
+  .short \ret_wk
+  .short \monsno
+  .short \formno
   .endm
   
 //--------------------------------------------------------------
