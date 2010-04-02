@@ -123,7 +123,6 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
 
         record = GAMEDATA_GetDendouRecord( gamedata ); 
         DendouRecord_Add( record, party, &date, HEAPID_PROC );
-        return GMEVENT_RES_FINISH;
       }
       // 殿堂入り
       else {
@@ -134,8 +133,6 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
         dendouData = SaveControl_Extra_DataPtrGet( save, SAVE_EXTRA_ID_DENDOU, EXGMDATA_ID_DENDOU );
         DendouData_AddRecord( dendouData, party, &date, HEAPID_PROC ); 
         SaveControl_Extra_SaveAsyncInit( save, SAVE_EXTRA_ID_DENDOU ); 
-        SaveControl_Extra_Unload( save, SAVE_EXTRA_ID_DENDOU );
-        (*seq) ++;
       }
     }
     // 電光掲示板にチャンピオンニュースを表示
@@ -144,6 +141,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
       misc = GAMEDATA_GetMiscWork( gamedata );
       MISC_SetChampNewsMinutes( misc, 60*24 );
     }
+    (*seq) ++;
     break;
 
   case GMCLEAR_SEQ_SAVE_MESSAGE:
@@ -153,15 +151,20 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
 		break;
 
 	case GMCLEAR_SEQ_SAVE_MAIN:
-    {
+    // 殿堂入りデータをセーブ
+    if( gcwk->clear_mode == GAMECLEAR_MODE_DENDOU ) {
       SAVE_RESULT save_ret;
 
       // セーブ実行
       save_ret = SaveControl_Extra_SaveAsyncMain( save, SAVE_EXTRA_ID_DENDOU ); 
       // セーブ終了
       if( save_ret == SAVE_RESULT_OK || save_ret == SAVE_RESULT_NG ) { 
-        return GMEVENT_RES_FINISH; 
+        SaveControl_Extra_Unload( save, SAVE_EXTRA_ID_DENDOU ); // 外部データを解放
+        *seq = GMCLEAR_SEQ_END;
       }
+    }
+    else {
+      *seq = GMCLEAR_SEQ_END;
     }
 		break;
 
