@@ -483,7 +483,7 @@ void BTLV_SCU_RestoreDefaultScreen( const BTLV_SCU* wk )
   ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(wk->heapID) );
 
     GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_battgra_wb_tokusei_w_NCGR, BGFRAME_TOKWIN_ENEMY,
-              wk->tokwin_CharPos, 0, TRUE, wk->heapID );
+              wk->tokwin_CharPos, 0, FALSE, wk->heapID );
   GFL_ARC_CloseDataHandle( handle );
 
 
@@ -3426,7 +3426,7 @@ void BTLV_SCU_TokWin_DispStart( BTLV_SCU* wk, BtlPokePos pos, BOOL fFlash )
 {
   TokwinSide side = PokePosToTokwinSide( wk->mainModule, pos );
 
-  BTLV_SCU_RestoreDefaultScreen( wk );
+//  BTLV_SCU_RestoreDefaultScreen( wk );
   tokwin_disp_first( &wk->tokWin[side], pos, fFlash );
 }
 BOOL BTLV_SCU_TokWin_DispWait( BTLV_SCU* wk, BtlPokePos pos )
