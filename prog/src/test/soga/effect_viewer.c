@@ -162,6 +162,10 @@ typedef struct
 
   BOOL          viewer_mode;
 
+  int           bgm_flag;
+  int           bgm_fade_flag;
+  int           pinch_bgm_flag;
+
   GFL_PTC_PTR   ptc;
 
 }EFFECT_VIEWER_WORK;
@@ -198,6 +202,7 @@ static  void  set_pokemon( EFFECT_VIEWER_WORK *evw );
 static  void  del_pokemon( EFFECT_VIEWER_WORK *evw );
 static  int   ev_pow( int x, int y );
 static  int   ev_param_get( EFFECT_VIEWER_WORK* evw, int param );
+static  void  pinch_bgm_check( EFFECT_VIEWER_WORK* evw );
 
 static  const int pokemon_pos_table[][2]={
   { BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB },
@@ -288,6 +293,11 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     G3X_AntiAlias( TRUE );
     GFL_BG_SetBGControl3D( 1 );
   }
+
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1,
+                    GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 |
+                    GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+                    31, 7 );
 
   // フォント作成
   evw->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, TRUE, evw->heapID );
@@ -391,6 +401,13 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
 
   EffectViewerInitMenuList( evw, MENULIST_TITLE );
 
+  // 仮想フィールドBGMスタック設定
+  {
+    PMSND_PlayBGM( SEQ_BGM_R_A );
+    PMSND_PauseBGM(TRUE);
+    PMSND_PushBGM();
+  }
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -406,6 +423,8 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
   int rep = GFL_UI_KEY_GetRepeat();
   int tp = GFL_UI_TP_GetTrg();
   EFFECT_VIEWER_WORK *evw = mywk;
+
+  pinch_bgm_check( evw );
 
   if( evw->mcs_enable )
   {
@@ -752,10 +771,16 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     if( trg == PAD_BUTTON_A )
     {
       PMSND_PlayBGM( ev_bgm_table[ evw->bgm_no ] );
+      evw->bgm_flag = 1;
     }
     else if( trg == PAD_BUTTON_B )
     {
       PMSND_StopBGM();
+      evw->bgm_flag = 0;
+    }
+    else if( ( trg == PAD_BUTTON_X ) && ( evw->bgm_flag ) )
+    { 
+      evw->bgm_fade_flag = 1;
     }
     else if( tp )
     {
@@ -1662,5 +1687,28 @@ static  int   ev_param_get( EFFECT_VIEWER_WORK* evw, int param )
   result += (u32)a;
 
   return result;
+}
+
+static  void  pinch_bgm_check( EFFECT_VIEWER_WORK* evw )
+{ 
+  if( evw->bgm_fade_flag )
+  {
+    if( PMSND_CheckFadeOnBGM() == FALSE )
+    {
+      evw->bgm_fade_flag = 0;
+      if( evw->pinch_bgm_flag )
+      {
+        PMSND_PopBGM();
+        PMSND_FadeInBGM( 24 );
+      }
+      else
+      {
+        PMSND_PushBGM();
+        PMSND_PlayBGM( SEQ_BGM_BATTLEPINCH );
+        PMSND_FadeInBGM( 8 );
+      }
+      evw->pinch_bgm_flag ^= 1;
+    }
+  }
 }
 
