@@ -1095,7 +1095,7 @@ void BattleBag_GetDemoCursorPush( BBAG_WORK * wk )
 
 static void InitGetDemoCursor( BBAG_WORK * wk )
 {
-	wk->getdemoCursor = BTLV_FINGER_CURSOR_Init( GETDEMO_DURSOR_PAL, wk->dat->heap );
+	wk->getdemoCursor = BTLV_FINGER_CURSOR_Init( wk->pfd, GETDEMO_DURSOR_PAL, wk->dat->heap );
 }
 
 static void ExitGetDemoCursor( BBAG_WORK * wk )
