@@ -667,6 +667,7 @@ static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, const BTLV_INPUT
 static  void  BTLV_INPUT_DeleteBallGauge( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateCursorOBJ( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_DeleteCursorOBJ( BTLV_INPUT_WORK* biw );
+static  void  BTLV_INPUT_DeleteWazaTypeIcon( BTLV_INPUT_WORK* biw );
 static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl, int hit );
 static  int   BTLV_INPUT_CheckKeyBR( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_PutCursorOBJ( BTLV_INPUT_WORK* biw, const GFL_UI_TP_HITTBL* tp_tbl, const BTLV_INPUT_KEYTBL* key_tbl );
@@ -788,6 +789,8 @@ static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( BTLV_INPUT_TYPE type, BtlCompetit
 //============================================================================================
 void  BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw )
 {
+  if( biw == NULL ) return;
+
   BTLV_INPUT_ExitBG( biw );
 
   GFL_MSG_Delete( biw->msg );
@@ -800,6 +803,7 @@ void  BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw )
   GFL_TCB_Exit( biw->tcbsys );
   GFL_HEAP_FreeMemory( biw->tcbwork );
   GFL_HEAP_FreeMemory( biw );
+  biw = NULL;
 }
 
 //============================================================================================
@@ -893,6 +897,7 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
 //============================================================================================
 void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
 {
+  BTLV_INPUT_DeleteWazaTypeIcon( biw );
   BTLV_INPUT_DeleteBallGauge( biw );
   BTLV_INPUT_DeleteCursorOBJ( biw );
   BTLV_INPUT_DeletePokeIcon( biw );
@@ -948,11 +953,31 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
     biw->wazatype_plttID = GFL_CLGRP_REGISTER_FAILED;
   }
 
-  GFL_CLACT_UNIT_Delete( biw->wazatype_clunit );
-  GFL_CLACT_UNIT_Delete( biw->ballgauge_clunit );
-  GFL_CLACT_UNIT_Delete( biw->cursor_clunit );
-  GFL_CLACT_UNIT_Delete( biw->pokeicon_clunit );
-  GFL_CLACT_UNIT_Delete( biw->weather_clunit );
+  if( biw->wazatype_clunit )
+  { 
+    GFL_CLACT_UNIT_Delete( biw->wazatype_clunit );
+    biw->wazatype_clunit = NULL;
+  }
+  if( biw->ballgauge_clunit )
+  { 
+    GFL_CLACT_UNIT_Delete( biw->ballgauge_clunit );
+    biw->ballgauge_clunit = NULL;
+  }
+  if( biw->cursor_clunit )
+  { 
+    GFL_CLACT_UNIT_Delete( biw->cursor_clunit );
+    biw->cursor_clunit = NULL;
+  }
+  if( biw->pokeicon_clunit )
+  {  
+    GFL_CLACT_UNIT_Delete( biw->pokeicon_clunit );
+    biw->pokeicon_clunit = NULL;
+  }
+  if( biw->weather_clunit )
+  { 
+    GFL_CLACT_UNIT_Delete( biw->weather_clunit );
+    biw->weather_clunit = NULL;
+  }
 
   GFL_BMPWIN_Delete( biw->bmp_win );
 
@@ -3185,14 +3210,7 @@ static  void  BTLV_INPUT_ClearScreen( BTLV_INPUT_WORK* biw )
   GFL_BMP_Clear( biw->bmp_data, 0x00 );
   GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
 
-  for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
-  {
-    if( biw->wazatype_wk[ i ] )
-    {
-      GFL_CLACT_WK_Remove( biw->wazatype_wk[ i ] );
-      biw->wazatype_wk[ i ] = NULL;
-    }
-  }
+  BTLV_INPUT_DeleteWazaTypeIcon( biw );
 
   //攻撃対象選択
   GFL_BG_FillScreen( GFL_BG_FRAME0_S, 0, 32, 2, 32, 32, 0 );
@@ -3586,6 +3604,27 @@ static  void  BTLV_INPUT_DeleteCursorOBJ( BTLV_INPUT_WORK* biw )
     {
       GFL_CLACT_WK_Remove( biw->cursor[ i ].clwk );
       biw->cursor[ i ].clwk = NULL;
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   技タイプアイコン削除
+ *
+ * @param[in] biw   システム管理構造体のポインタ
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_DeleteWazaTypeIcon( BTLV_INPUT_WORK* biw )
+{ 
+  int i;
+
+  for( i = 0 ; i < PTL_WAZA_MAX ; i++ )
+  {
+    if( biw->wazatype_wk[ i ] )
+    {
+      GFL_CLACT_WK_Remove( biw->wazatype_wk[ i ] );
+      biw->wazatype_wk[ i ] = NULL;
     }
   }
 }
