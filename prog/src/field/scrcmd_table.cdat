@@ -926,9 +926,9 @@
   //クイズ
   DEF_CMD( EvCmdGetQuiz, EV_SEQ_GET_QUIZ )
   NO_CMD()
-  NO_CMD()
 
   // 鑑定士
+  DEF_CMD( EvCmdItemJudgeHaveCheck, EV_SEQ_ITEMJUDGE_HAVE_CHECK )
   DEF_CMD( EvCmdItemJudgeCheck, EV_SEQ_ITEMJUDGE_CHECK )
 
   // すれ違い調査隊関連

@@ -10085,6 +10085,28 @@
   .short \ans
   .endm  
 
+
+
+//--------------------------------------------------------------
+/**
+ *  _ITEMJUDGE_HAVE_CHECK     鑑定士がほしがるアイテムを持っているか？
+ *  @param  obj_type  鑑定する人  
+ *                    SCR_ITEM_JUDGE_OBJTYPE_GOURMET      (0)   // グルメ
+ *                    SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA  (1)   // 石マニア
+ *                    SCR_ITEM_JUDGE_OBJTYPE_RICH         (2)   // 大富豪
+ *  @param  ret_wk    持っている：TRUE    もっていない：FALSE
+ */
+//--------------------------------------------------------------
+#define _ITEMJUDGE_HAVE_CHECK( obj_type, ret_wk ) \
+    _ASM_ITEMJUDGE_HAVE_CHECK obj_type, ret_wk
+
+  .macro _ASM_ITEMJUDGE_HAVE_CHECK obj_type, ret_wk
+  .short EV_SEQ_ITEMJUDGE_HAVE_CHECK
+  .short \obj_type
+  .short \ret_wk
+  .endm  
+
+
 //--------------------------------------------------------------
 /**
  *  _ITEMJUDGE     鑑定士
