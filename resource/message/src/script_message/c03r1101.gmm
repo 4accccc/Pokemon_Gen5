@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T14:59:52"/>
+	<create user="matsumiya" host="W00224" date="2010-04-03T22:46:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -319,9 +319,10 @@
 	<row id="msg_c03r1101_pokemon_01">
 		<comment>ポケモン
 ・メッセージ表示とともに鳴き声再生</comment>
-		<attribute name="キャラ指定">ポケモン</attribute>
-		<language name="JPN" width="256">ミネズミ『きりっ！！</language>
-		<language name="JPN_KANJI" width="256">ミネズミ『きりっ！！</language>
+		<attribute name="キャラ指定">ポケモン
+ミネズミ</attribute>
+		<language name="JPN" width="256">きりっ！！</language>
+		<language name="JPN_KANJI" width="256">きりっ！！</language>
 	</row>
 
 	<flowchart-group-list>

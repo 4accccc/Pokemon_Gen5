@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T13:22:36"/>
+	<create user="matsumiya" host="W00224" date="2010-04-03T22:39:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -340,9 +340,9 @@
 		<comment>お金が足りなかった場合</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
-		<language name="JPN" width="256">おかねが　たりません
+		<language name="JPN" width="256">あら？　おかねが　たりませんね
 またの　おこしを　おまちしております</language>
-		<language name="JPN_KANJI" width="256">お金が　たりません
+		<language name="JPN_KANJI" width="256">あら？　お金が　たりませんね
 またの　お越しを　お待ちしております</language>
 	</row>
 
