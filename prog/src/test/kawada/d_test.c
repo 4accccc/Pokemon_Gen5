@@ -553,7 +553,7 @@ static void D_Test_BtlvInit( D_TEST_WORK* work )
     BTLV_EFFECT_Init( besp, work->font, work->heap_id );
     GFL_HEAP_FreeMemory( besp );
   }
-  work->btlv_input_work = BTLV_INPUT_InitEx( BTLV_INPUT_TYPE_SINGLE, work->font, &work->btlv_cursor_flag, work->heap_id );
+  work->btlv_input_work = BTLV_INPUT_InitEx( BTLV_INPUT_TYPE_SINGLE, BTLV_EFFECT_GetPfd(), work->font, &work->btlv_cursor_flag, work->heap_id );
 
   work->sub_main_step = 0;
 }
