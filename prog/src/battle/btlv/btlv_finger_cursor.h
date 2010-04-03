@@ -9,10 +9,11 @@
 //============================================================================================
 
 #pragma once
+#include "system/palanm.h"
 
 typedef struct _BTLV_FINGER_CURSOR_WORK BTLV_FINGER_CURSOR_WORK;
 
-extern  BTLV_FINGER_CURSOR_WORK*  BTLV_FINGER_CURSOR_Init( int pal, HEAPID heapID );
+extern  BTLV_FINGER_CURSOR_WORK*  BTLV_FINGER_CURSOR_Init( PALETTE_FADE_PTR pfd, int pal, HEAPID heapID );
 extern  void                      BTLV_FINGER_CURSOR_Exit( BTLV_FINGER_CURSOR_WORK* bfcw );
 extern  void                      BTLV_FINGER_CURSOR_Main( BTLV_FINGER_CURSOR_WORK* bfcw );
 extern  BOOL                      BTLV_FINGER_CURSOR_Create( BTLV_FINGER_CURSOR_WORK* bfcw,

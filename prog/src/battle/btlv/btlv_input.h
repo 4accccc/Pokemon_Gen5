@@ -12,6 +12,7 @@
 
 #include "..\btl_common.h"
 #include "..\btl_client.h"
+#include "system/palanm.h"
 
 #define BTLV_INPUT_DIR_MAX  ( TEMOTI_POKEMAX )  //対象選択MAX
 #define BTLV_INPUT_POKEICON_MAX ( 3 )           //ポケモンアイコンMAX
@@ -169,8 +170,8 @@ typedef struct
 
 #define BTLV_INPUT_NOMOVE ( -128 )
 
-extern  BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, GFL_FONT* font, u8* cursor_flag, HEAPID heapID );
-extern  BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( BTLV_INPUT_TYPE type, GFL_FONT* font, u8* cursor_flag, HEAPID heapID );
+extern  BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID );
+extern  BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID );
 extern  void              BTLV_INPUT_Exit( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_Main( BTLV_INPUT_WORK* biw );
 extern  void              BTLV_INPUT_InitBG( BTLV_INPUT_WORK* biw );

@@ -12,7 +12,6 @@
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "waza_tool/wazadata.h"
-#include "system/palanm.h"
 #include "system/bmp_oam.h"
 #include "infowin/infowin.h"
 #include "pokeicon/pokeicon.h"
@@ -457,6 +456,7 @@ struct _BTLV_INPUT_WORK
   BTLV_INPUT_SCRTYPE    scr_type;
   GFL_MSGDATA*          msg;
   BTLV_FINGER_CURSOR_WORK*  bfcw;
+  PALETTE_FADE_PTR      pfd;
   u32                   tcb_execute_flag    :1;
   u32                   tcb_execute_count   :3;
   u32                   center_button_type  :1;
@@ -519,7 +519,7 @@ struct _BTLV_INPUT_WORK
 
   //メインループTCB
   GFL_TCB*              main_loop;      //scdにメインループが存在しないのでBTLV_EFFECTのTCBを間借りしてメインを回す
-  BOOL                  main_loop_flag;
+  BOOL                  main_loop_tcb_flag;
 
   HEAPID                heapID;
 
@@ -618,8 +618,8 @@ typedef struct
  *  プロトタイプ宣言
  */
 //============================================================================================
-static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( BTLV_INPUT_TYPE type, BtlCompetitor comp,
-                                               GFL_FONT* font, u8* cursor_flag, BOOL main_loop_flag, HEAPID heapID );
+static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( BTLV_INPUT_TYPE type, BtlCompetitor comp, PALETTE_FADE_PTR pfd,
+                                               GFL_FONT* font, u8* cursor_flag, BOOL main_loop_tcb_flag, HEAPID heapID );
 static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw );
 static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work );
 static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work );
@@ -681,11 +681,14 @@ static  inline  void  SePlayRotateSelect( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw );
 
+static  void  BTLV_INPUT_VBlank( GFL_TCB *tcb, void *work );
+
 //============================================================================================
 /**
  *  @brief  システム初期化（汎用）
  *
  *  @param[in]  type          インターフェースタイプ
+ *  @param[in]  pfd           パレットフェード管理構造体ポインタ
  *  @param[in]  font          使用するフォント
  *  @param[in]  cursor_flag   カーソル表示するかどうかフラグのポインタ（他のアプリとも共用するため）
  *  @param[in]  heapID        ヒープID
@@ -693,9 +696,9 @@ static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw );
  *  @retval システム管理構造体のポインタ
  */
 //============================================================================================
-BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( BTLV_INPUT_TYPE type, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
+BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
 { 
-  return BTLV_INPUT_InitCore( type, BTL_COMPETITOR_WILD, font, cursor_flag, FALSE, heapID );
+  return BTLV_INPUT_InitCore( type, BTL_COMPETITOR_WILD, pfd, font, cursor_flag, FALSE, heapID );
 }
 
 //============================================================================================
@@ -704,6 +707,7 @@ BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( BTLV_INPUT_TYPE type, GFL_FONT* font, u8* c
  *
  *  @param[in]  type          インターフェースタイプ
  *  @param[in]  comp          対戦相手（野生orトレーナーor通信）
+ *  @param[in]  pfd           パレットフェード管理構造体ポインタ
  *  @param[in]  font          使用するフォント
  *  @param[in]  cursor_flag   カーソル表示するかどうかフラグのポインタ（他のアプリとも共用するため）
  *  @param[in]  heapID        ヒープID
@@ -711,9 +715,9 @@ BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( BTLV_INPUT_TYPE type, GFL_FONT* font, u8* c
  *  @retval システム管理構造体のポインタ
  */
 //============================================================================================
-BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
+BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
 {
-  return BTLV_INPUT_InitCore( type, comp, font, cursor_flag, TRUE, heapID );
+  return BTLV_INPUT_InitCore( type, comp, pfd, font, cursor_flag, TRUE, heapID );
 }
 
 //============================================================================================
@@ -722,6 +726,7 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, GFL
  *
  *  @param[in]  type          インターフェースタイプ
  *  @param[in]  comp          対戦相手（野生orトレーナーor通信）
+ *  @param[in]  pfd           パレットフェード管理構造体ポインタ
  *  @param[in]  font          使用するフォント
  *  @param[in]  cursor_flag   カーソル表示するかどうかフラグのポインタ（他のアプリとも共用するため）
  *  @param[in]  heapID        ヒープID
@@ -729,8 +734,8 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( BTLV_INPUT_TYPE type, BtlCompetitor comp, GFL
  *  @retval システム管理構造体のポインタ
  */
 //============================================================================================
-static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( BTLV_INPUT_TYPE type, BtlCompetitor comp,
-                                               GFL_FONT* font, u8* cursor_flag, BOOL main_loop_flag, HEAPID heapID )
+static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( BTLV_INPUT_TYPE type, BtlCompetitor comp, PALETTE_FADE_PTR pfd,
+                                               GFL_FONT* font, u8* cursor_flag, BOOL main_loop_tcb_flag, HEAPID heapID )
 { 
   BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
 
@@ -747,7 +752,10 @@ static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( BTLV_INPUT_TYPE type, BtlCompetit
 
   biw->old_cursor_pos = CURSOR_NOMOVE;
 
-  biw->main_loop_flag = main_loop_flag;
+  biw->main_loop_tcb_flag = main_loop_tcb_flag;
+
+  //パレットフェード初期化
+  biw->pfd = pfd;
 
   {
     int i;
@@ -880,7 +888,7 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
   biw->cursor_decide = 1;
 
   //メインループはTCBで行う
-  if( biw->main_loop_flag == TRUE )
+  if( biw->main_loop_tcb_flag == TRUE )
   { 
     biw->main_loop = GFL_TCB_AddTask( BTLV_EFFECT_GetTCBSYS(), BTLV_INPUT_MainTCB, biw, 0 );
   }
@@ -1042,7 +1050,7 @@ void BTLV_INPUT_SetFadeOut( BTLV_INPUT_WORK* biw )
 {
   TCB_FADE_ACT* tfa = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_FADE_ACT ) );
 
-  PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_ALL, 0xffff, 1, 0, 16, 0, biw->tcbsys );
+  PaletteFadeReq( biw->pfd, PF_BIT_SUB_ALL, 0xffff, 1, 0, 16, 0, biw->tcbsys );
   biw->fade_flag = BTLV_INPUT_FADE_OUT;
 
   tfa->biw           = biw;
@@ -1059,7 +1067,6 @@ void BTLV_INPUT_SetFadeIn( BTLV_INPUT_WORK* biw )
   TCB_FADE_ACT* tfa = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_FADE_ACT ) );
 
   BTLV_INPUT_InitBG( biw );
-  //PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_ALL, 0xffff, 1, 16, 0, 0, biw->tcbsys );
 
   if( GXS_GetMasterBrightness() <= 0 ){
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0 );
@@ -1104,7 +1111,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
   switch( type ){
   case BTLV_INPUT_SCRTYPE_STANDBY:
-    BTLV_GAUGE_RequestYure( BTLV_EFFECT_GetGaugeWork(), BTLV_MCSS_POS_MAX );
     if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
     {
       MtxFx22 mtx;
@@ -1116,7 +1122,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
       GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
-      PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
+      PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
     }
     else
     {
@@ -1136,7 +1142,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       {
         GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Standby, ttw, 1 );
       }
-      PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, 0, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
+      PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, 0, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
     }
     break;
   case BTLV_INPUT_SCRTYPE_COMMAND:
@@ -1164,14 +1170,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       }
       else
       {
-        if( biw->type == BTLV_INPUT_TYPE_SINGLE )
-        { 
-          BTLV_GAUGE_RequestYure( BTLV_EFFECT_GetGaugeWork(), bicp->pos );
-        }
-        else
-        { 
-          BTLV_GAUGE_RequestYure( BTLV_EFFECT_GetGaugeWork(), BTLV_MCSS_POS_A + bicp->pos * 2 );
-        }
         BTLV_INPUT_CreateBallGauge( biw, bicp, BALL_GAUGE_TYPE_MINE );
         if( bicp->trainer_flag )
         {
@@ -1315,7 +1313,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   int hit, hit_tp;
 
   //下画面変形中は入力を無視
-  if( ( biw->tcb_execute_flag ) || ( PaletteFadeCheck( BTLV_EFFECT_GetPfd() ) ) || ( biw->button_reaction ) )
+  if( ( biw->tcb_execute_flag ) || ( PaletteFadeCheck( biw->pfd ) ) || ( biw->button_reaction ) )
   {
     return  GFL_UI_TP_HIT_NONE;
   }
@@ -1337,7 +1335,10 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   }
   else
   { 
-    biw->camera_work_wait++;
+    if( biw->main_loop_tcb_flag == TRUE )
+    { 
+      biw->camera_work_wait++;
+    }
   }
 
   //ローテーション選択は、別判定をする
@@ -1437,10 +1438,13 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
   if( hit != GFL_UI_TP_HIT_NONE )
   { 
     hit = BTLV_INPUT_SetButtonReaction( biw, hit, tp_tbl->button_pltt[ hit ] );
-    //カメラワークエフェクト
-    BTLV_EFFECT_Stop();
-    BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
-    biw->camera_work_wait = 0;
+    if( biw->main_loop_tcb_flag == TRUE )
+    { 
+      //カメラワークエフェクト
+      BTLV_EFFECT_Stop();
+      BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+      biw->camera_work_wait = 0;
+    }
   }
   return hit;
 }
@@ -1460,7 +1464,7 @@ BOOL  BTLV_INPUT_CheckInputDemo( BTLV_INPUT_WORK* biw )
       int cursor_pos[][ 2 ] = { { 128, 72 }, { 64, 48 }, { 40, 152 } };
       if( biw->bfcw == NULL )
       { 
-        biw->bfcw = BTLV_FINGER_CURSOR_Init( 0x0b, biw->heapID );
+        biw->bfcw = BTLV_FINGER_CURSOR_Init( biw->pfd, 0x0b, biw->heapID );
       }
       if( BTLV_FINGER_CURSOR_Create( biw->bfcw,
                                      cursor_pos[ biw->demo_cursor_pos ][ 0 ],
@@ -1500,7 +1504,7 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
                                         GFL_BG_FRAME3_S, 0, 0x8000, FALSE, biw->heapID );
   GFL_ARCHDL_UTIL_TransVramScreen( biw->handle, NARC_battgra_wb_battle_w_bg3_NSCR,
                                    GFL_BG_FRAME3_S, 0, 0, FALSE, biw->heapID );
-  PaletteWorkSet_ArcHandle( BTLV_EFFECT_GetPfd(), biw->handle, NARC_battgra_wb_battle_w_bg_NCLR,
+  PaletteWorkSet_ArcHandle( biw->pfd, biw->handle, NARC_battgra_wb_battle_w_bg_NCLR,
                             biw->heapID, FADE_SUB_BG, 0x1e0, 0 );
 
   biw->objcharID = GFL_CLGRP_CGR_Register( biw->handle, NARC_battgra_wb_battle_w_obj_NCGR, FALSE,
@@ -1508,7 +1512,7 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
   biw->objcellID = GFL_CLGRP_CELLANIM_Register( biw->handle, NARC_battgra_wb_battle_w_obj_NCER,
                                                 NARC_battgra_wb_battle_w_obj_NANR, biw->heapID );
   biw->objplttID = GFL_CLGRP_PLTT_Register( biw->handle, NARC_battgra_wb_battle_w_obj_NCLR, CLSYS_DRAW_SUB, 0, biw->heapID );
-  PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_SUB_OBJ,
+  PaletteWorkSet_VramCopy( biw->pfd, FADE_SUB_OBJ,
                            GFL_CLGRP_PLTT_GetAddr( biw->objplttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 8 );
   biw->cur_charID = GFL_CLGRP_CGR_Register( biw->handle, NARC_battgra_wb_battle_w_cursor_NCGR, FALSE,
                                            CLSYS_DRAW_SUB, biw->heapID );
@@ -1528,7 +1532,7 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
     biw->wazatype_plttID = GFL_CLGRP_PLTT_Register( hdl,
                                                     APP_COMMON_GetPokeTypePltArcIdx(), CLSYS_DRAW_SUB,
                                                     0x20 * 8, biw->heapID );
-    PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_SUB_OBJ,
+    PaletteWorkSet_VramCopy( biw->pfd, FADE_SUB_OBJ,
                              GFL_CLGRP_PLTT_GetAddr( biw->wazatype_plttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
     for( i = 0; i < PTL_WAZA_MAX ; i++ ){
       biw->wazatype_charID[ i ] = GFL_CLGRP_CGR_Register( hdl, APP_COMMON_GetPokeTypeCharArcIdx( POKETYPE_NORMAL ), FALSE,
@@ -1577,7 +1581,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
-    PaletteFadeReqWrite( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+    PaletteFadeReqWrite( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
   case 1:
@@ -1938,7 +1942,7 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
-    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+    PaletteFadeReq( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
   case 1:
@@ -1984,7 +1988,7 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
-    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+    PaletteFadeReq( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
   case 1:
@@ -2049,7 +2053,7 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
-    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+    PaletteFadeReq( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
   case 1:
@@ -2093,7 +2097,7 @@ static  void  TCB_TransformStandby2PDC( GFL_TCB* tcb, void* work )
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
-    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
+    PaletteFadeReq( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
   case 1:
@@ -2481,7 +2485,7 @@ static  void  TCB_Fade( GFL_TCB* tcb, void* work )
 {
   TCB_FADE_ACT* tfa = ( TCB_FADE_ACT* )work;
 
-  if( ( !PaletteFadeCheck( BTLV_EFFECT_GetPfd() ) ) && ( GFL_FADE_CheckFade() == FALSE ) )
+  if( ( !PaletteFadeCheck( tfa->biw->pfd ) ) && ( GFL_FADE_CheckFade() == FALSE ) )
   {
     if( tfa->biw->fade_flag == BTLV_INPUT_FADE_OUT )
     {
@@ -2802,7 +2806,7 @@ static  void  BTLV_INPUT_CreateWazaScreen( BTLV_INPUT_WORK* biw, const BTLV_INPU
       NNSG2dPaletteData* palData;
       void* dat = GFL_ARC_UTIL_LoadPalette( ARCID_BATTGRA, datID, &palData, biw->heapID );
 
-      PaletteWorkSet( BTLV_EFFECT_GetPfd(), palData->pRawData, FADE_SUB_BG, WAZATYPE_PLTT + i * 0x10, 0x20 );
+      PaletteWorkSet( biw->pfd, palData->pRawData, FADE_SUB_BG, WAZATYPE_PLTT + i * 0x10, 0x20 );
 
       GFL_HEAP_FreeMemory( dat );
     }
@@ -3094,7 +3098,7 @@ static  void  BTLV_INPUT_CreateRotatePokeIcon( BTLV_INPUT_WORK* biw )
                                                         biw->heapID );
   biw->pokeicon_plttID = GFL_CLGRP_PLTT_RegisterComp( hdl, POKEICON_GetPalArcIndex(), CLSYS_DRAW_SUB,
                                                         0x20 * 12, biw->heapID );
-  PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_SUB_OBJ,
+  PaletteWorkSet_VramCopy( biw->pfd, FADE_SUB_OBJ,
                            GFL_CLGRP_PLTT_GetAddr( biw->pokeicon_plttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
 
   for( i = 0 ; i < BTLV_INPUT_POKEICON_MAX ; i++ )
@@ -3285,7 +3289,7 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
                                                         biw->heapID );
     biw->pokeicon_plttID = GFL_CLGRP_PLTT_RegisterComp( hdl, POKEICON_GetPalArcIndex(), CLSYS_DRAW_SUB,
                                                         0x20 * 12, biw->heapID );
-    PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_SUB_OBJ,
+    PaletteWorkSet_VramCopy( biw->pfd, FADE_SUB_OBJ,
                              GFL_CLGRP_PLTT_GetAddr( biw->pokeicon_plttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
 
     //ウインドウマスクでアイコンを暗くする実験
@@ -3899,18 +3903,18 @@ static  void  TCB_ButtonReaction( GFL_TCB* tcb, void* work )
 
   switch( tbr->seq_no ){ 
   case 0:
-    PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, tbr->pltt, 0, 0, 8, 0x7fff, tbr->biw->tcbsys );
+    PaletteFadeReq( tbr->biw->pfd, PF_BIT_SUB_BG, tbr->pltt, 0, 0, 8, 0x7fff, tbr->biw->tcbsys );
     tbr->seq_no++;
     break;
   case 1:
-    if( !PaletteFadeCheck( BTLV_EFFECT_GetPfd() ) )
+    if( !PaletteFadeCheck( tbr->biw->pfd ) )
     { 
-      PaletteFadeReq( BTLV_EFFECT_GetPfd(), PF_BIT_SUB_BG, tbr->pltt, 0, 8, 0, 0x7fff, tbr->biw->tcbsys );
+      PaletteFadeReq( tbr->biw->pfd, PF_BIT_SUB_BG, tbr->pltt, 0, 8, 0, 0x7fff, tbr->biw->tcbsys );
       tbr->seq_no++;
     }
     break;
   case 2:
-    if( !PaletteFadeCheck( BTLV_EFFECT_GetPfd() ) )
+    if( !PaletteFadeCheck( tbr->biw->pfd ) )
     { 
       tbr->biw->button_reaction = 0;
       GFL_HEAP_FreeMemory( work );

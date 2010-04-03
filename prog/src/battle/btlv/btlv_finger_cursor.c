@@ -10,8 +10,6 @@
 #include <gflib.h>
 
 #include "btlv_finger_cursor.h"
-
-#include "system/palanm.h"
 #include "btlv_effect.h"
 
 #include "arc_def.h"
@@ -72,13 +70,14 @@ static  void  TCB_BTLV_FINGER_CURSOR_WatchAnmEndFlag( GFL_TCB* tcb, void* work )
 /**
  *  @brief  システム初期化
  *
+ *  @param  pfd     PaletteFadePTR
  *  @param  pal     指カーソルパレットの読み込み先
  *  @param  heapID  ヒープID
  *
  *  @retval システム管理構造体のポインタ
  */
 //============================================================================================
-BTLV_FINGER_CURSOR_WORK*  BTLV_FINGER_CURSOR_Init( int pal, HEAPID heapID )
+BTLV_FINGER_CURSOR_WORK*  BTLV_FINGER_CURSOR_Init( PALETTE_FADE_PTR pfd, int pal, HEAPID heapID )
 {
   BTLV_FINGER_CURSOR_WORK* bfcw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_FINGER_CURSOR_WORK ) );
   ARCHANDLE*  handle  = GFL_ARC_OpenDataHandle( ARCID_BATTGRA, GFL_HEAP_LOWID(heapID) );
@@ -93,7 +92,7 @@ BTLV_FINGER_CURSOR_WORK*  BTLV_FINGER_CURSOR_Init( int pal, HEAPID heapID )
                                             BTLV_FINGER_CURSOR_SRC_PALNO,
                                             BTLV_FINGER_CURSOR_PAL_TRANS_SIZE,
                                             heapID );
-  PaletteWorkSet_VramCopy( BTLV_EFFECT_GetPfd(), FADE_SUB_OBJ,
+  PaletteWorkSet_VramCopy( pfd, FADE_SUB_OBJ,
                            GFL_CLGRP_PLTT_GetAddr( bfcw->plttID, CLSYS_DRAW_SUB ) / 2, 0x20 );
 
   //CLACT初期化

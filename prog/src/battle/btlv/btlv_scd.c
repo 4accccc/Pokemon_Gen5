@@ -187,13 +187,11 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
 
 void BTLV_SCD_Init( BTLV_SCD* wk )
 {
-  wk->biw = BTLV_INPUT_Init( BTL_MAIN_GetRule(wk->mainModule), BTL_MAIN_GetCompetitor(wk->mainModule), wk->font, &wk->cursor_flag, wk->heapID );
+  wk->biw = BTLV_INPUT_Init( BTL_MAIN_GetRule(wk->mainModule), BTL_MAIN_GetCompetitor(wk->mainModule),
+                             BTLV_EFFECT_GetPfd(), wk->font, &wk->cursor_flag, wk->heapID );
 
   ///<obj
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
-
-  //GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG, 0, 0, wk->heapID );
-//  PaletteWorkSet_Arc( BTLV_EFFECT_GetPfd(), ARCID_FONT, NARC_font_default_nclr, wk->heapID, FADE_SUB_BG, 0x10, 0xe0 );
 
   setupMainWin( wk );
 }
@@ -264,6 +262,7 @@ static void setupMainWin( BTLV_SCD* wk )
 void BTLV_SCD_RestartUI( BTLV_SCD* wk )
 {
   BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
+  BTLV_EFFECT_SetGaugeYure( BTLV_MCSS_POS_MAX );
 }
 
 void BTLV_SCD_Delete( BTLV_SCD* wk )
@@ -467,6 +466,8 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
   bicp.pos = BTL_MAIN_BtlPosToViewPos( wk->mainModule,
                                        BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID( wk->bpp ) ) );
 
+  BTLV_EFFECT_SetGaugeYure( bicp.pos );
+
   for( j = 0 ; j < 2 ; j++ )
   {
     if( j == 0 )
@@ -584,6 +585,7 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
     case BTL_ACTION_ESCAPE:
       BTL_ACTION_SetEscapeParam( wk->destActionParam );
       BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
+      BTLV_EFFECT_SetGaugeYure( BTLV_MCSS_POS_MAX );
       break;
     }
 
@@ -1161,6 +1163,7 @@ u8* BTLV_SCD_GetCursorFlagPtr( BTLV_SCD* wk )
 void   BTLV_SCD_ForceQuitInput_Notify( BTLV_SCD* wk )
 {
   BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
+  BTLV_EFFECT_SetGaugeYure( BTLV_MCSS_POS_MAX );
 }
 
 
