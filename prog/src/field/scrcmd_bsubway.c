@@ -1762,26 +1762,45 @@ void BSUBWAY_SCRWORK_DebugCreateWork( GAMESYS_WORK *gsys, u16 mode )
   BSUBWAY_SCRWORK *bsw_scr = BSUBWAY_SCRWORK_CreateWork(
       gsys, BSWAY_PLAY_NEW, mode );
   
-  //ポケモンセレクト
+  { //手持ち使用
+    u8 buf = FALSE;
+     BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
+          BSWAY_PLAYDATA_ID_use_battle_box, &buf );
+  }
+  
+  //フラグ初期化
+  {
+    EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
+    u16 *work = EVENTWORK_GetEventWorkAdrs( ev, WK_OTHER_BSUBWAY_RECEIPT );
+    *work = BSWAY_SCENE_RECEIPT_ERROR;
+    work = EVENTWORK_GetEventWorkAdrs( ev, WK_OTHER_BSUBWAY_TRAIN );
+    *work = BSWAY_SCENE_TRAIN_CONTINUE;
+    
+    EVENTWORK_SetEventFlag( ev, FV_BSUBWAY_RECEIPT_PARTNER );
+    EVENTWORK_SetEventFlag( ev, FV_C04R0111_PARTNER );
+    EVENTWORK_SetEventFlag( ev, FV_C04R0111_NPC );
+  }
+  
+  //ポケモン選択
   {
     int i;
+    
     for( i = 0;  i < bsw_scr->member_num; i++ ){
       bsw_scr->pokelist_select_num[i] = i + 1;
     }
+    
     bsw_scr->pokelist_return_mode = PL_RET_NORMAL;
     bsw_scr->pokelist_result_select = PL_SEL_POS_POKE1;
-  }
-  
-  //メンバーロード
-  {
+    
+    //メンバーロード
     BSUBWAY_SCRWORK_GetEntryPoke( bsw_scr, gsys );
   }
-
+  
   //aiマルチ
   if( mode == BSWAY_MODE_MULTI || mode == BSWAY_MODE_S_MULTI ){
     PLAYER_WORK *player = GAMEDATA_GetMyPlayerWork( gdata );
     u32 sex = MyStatus_GetMySex( &player->mystatus );
-
+    
     if( sex == PM_MALE ){
       sex = PM_FEMALE;
     }else{
@@ -1794,19 +1813,6 @@ void BSUBWAY_SCRWORK_DebugCreateWork( GAMESYS_WORK *gsys, u16 mode )
   
   //対戦トレーナー抽選
   BSUBWAY_SCRWORK_SetBtlTrainerNo( bsw_scr );
-  
-  //フラグ初期化
-  {
-    EVENTWORK *ev = GAMEDATA_GetEventWork( gdata );
-    u16 *work = EVENTWORK_GetEventWorkAdrs( ev, WK_OTHER_BSUBWAY_RECEIPT );
-    *work = BSWAY_SCENE_RECEIPT_ERROR;
-    work = EVENTWORK_GetEventWorkAdrs( ev, WK_OTHER_BSUBWAY_TRAIN );
-    *work = BSWAY_SCENE_TRAIN_FIRST;
-    
-    EVENTWORK_SetEventFlag( ev, FV_BSUBWAY_RECEIPT_PARTNER );
-    EVENTWORK_SetEventFlag( ev, FV_C04R0111_PARTNER );
-    EVENTWORK_SetEventFlag( ev, FV_C04R0111_NPC );
-  }
   
   //デバッグフラグ初期化
   {

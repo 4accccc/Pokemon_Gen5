@@ -172,10 +172,7 @@ static void DrawHero_Init( MMDL *mmdl )
   
   code = MMDL_GetOBJCode( mmdl );
   comManAnmCtrl_Init( &work->anmcnt );
-  
-  if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
-    MMDL_CallDrawProc( mmdl );
-  }
+  MMDL_BLACTCONT_AddActor( mmdl, code, &work->actID );
 }
 
 //--------------------------------------------------------------
@@ -434,10 +431,7 @@ static void DrawBlAct_Init( MMDL *mmdl )
   
   code = MMDL_GetOBJCode( mmdl );
   comManAnmCtrl_Init( &work->anmcnt );
-
-  if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
-    MMDL_CallDrawProc( mmdl );
-  }
+  MMDL_BLACTCONT_AddActor( mmdl, code, &work->actID );
 }
 
 //--------------------------------------------------------------
@@ -1135,10 +1129,7 @@ static void DrawTsurePoke_Init( MMDL *mmdl )
   work->set_anm_dir = DIR_NOT;
 
   code = MMDL_GetOBJCode( mmdl );
-  
-  if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
-    MMDL_CallDrawProc( mmdl );
-  }
+  MMDL_BLACTCONT_AddActor( mmdl, code, &work->actID );
 }
 
 //--------------------------------------------------------------
@@ -1421,10 +1412,7 @@ static void DrawBlActShinMu_Init( MMDL *mmdl )
   
   code = MMDL_GetOBJCode( mmdl );
   comManAnmCtrl_Init( &work->anmcnt );
-
-  if( MMDL_BLACTCONT_AddActor(mmdl,code,&work->actID) == TRUE ){
-    MMDL_CallDrawProc( mmdl );
-  }
+  MMDL_BLACTCONT_AddActor( mmdl, code, &work->actID );
 }
 
 //--------------------------------------------------------------
@@ -1821,14 +1809,6 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
       if( work->set_anm_status != DRAW_STA_STOP ) //移動系アニメを行っていた
       { //次のアニメを表示
         work->next_walk_frmidx = GFL_BBDACT_GetAnimeFrmIdx( actSys, actID );
-
-//        #ifdef DEBUG_ONLY_FOR_kagaya
-        #if 0
-        if( MMDL_GetOBJID(mmdl) == MMDL_ID_PLAYER ){
-          OS_Printf( "自機アニメ切り替え　移動系継続 それまでのIDX=%d\n",
-              work->next_walk_frmidx ); 
-        }       
-        #endif
         
         if( work->next_walk_frmidx >= 2 )
         {
@@ -1848,17 +1828,17 @@ static void comManAnmCtrl_Update( COMMAN_ANMCTRL_WORK *work,
       work->next_set_wait = 0;
     }
   }
-  
+
+#if 0
   //方向初期化後、アニメが繁栄されるまでにアニメ停止バグが現状ある。
   //停止時は無理やり反映させる事で緊急対処
+  //
+  //100331 原因判明
+  //動作モデル更新とビルボード更新が一致しない場合がある為だった。
   if( work->set_anm_status == DRAW_STA_STOP ){
     init_flag = TRUE;
   }
-  
-  #ifdef DEBUG_ONLY_FOR_kagaya
-  {
-  }
-  #endif
+#endif
   
   blact_UpdatePauseVanish( mmdl, actSys, actID, init_flag );
 }
@@ -1920,20 +1900,21 @@ static u16 blact_GetDrawDir( MMDL *mmdl )
 static void blact_UpdatePauseVanish(
     MMDL *mmdl, GFL_BBDACT_SYS *actSys, u16 actID, BOOL force_anm )
 {
-  BOOL flag = TRUE;
+  BOOL flag = TRUE; //アニメフラグ
   
-  if( force_anm == FALSE && MMDL_CheckDrawPause(mmdl) == TRUE ){
-    flag = FALSE;
+  if( force_anm == FALSE && //強制フラグOFF
+      MMDL_CheckDrawPause(mmdl) == TRUE && //描画ポーズON
+      MMDL_BLACTCONT_CheckUpdateBBD(mmdl) == TRUE ){ //アクター更新済み
+    flag = FALSE; //アニメ停止
   }
   
   GFL_BBDACT_SetAnimeEnable( actSys, actID, flag );
   
-  flag = TRUE;
+  flag = TRUE; //表示フラグ
 
   if( MMDL_CheckStatusBitVanish(mmdl) == TRUE ){
-    flag = FALSE;
+    flag = FALSE; //非表示
   }
   
   GFL_BBDACT_SetDrawEnable( actSys, actID, flag );
 }
-

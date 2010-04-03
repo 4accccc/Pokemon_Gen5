@@ -90,6 +90,8 @@ INIT_EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_c04r0111_receipt_talk
 {
+  DEFINE_LOCAL play_mode
+
   _TALK_OBJ_START()
   
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN //途中駅
@@ -111,6 +113,8 @@ EVENT_START ev_c04r0111_receipt_talk
   ELSE //終点
     _CALL sub_mapchg_receipt
   ENDIF
+  
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
 }
 EVENT_END
 
@@ -231,7 +235,7 @@ sub_challenge_continue_comm_multi:
     _CALL sub_demo_train_starting
     
     //ワーク開放
-    _BSUBWAY_WORK_RELEASE()
+//    _BSUBWAY_WORK_RELEASE()
     
     //ホーム制御　無しに
     $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
@@ -357,7 +361,7 @@ sub_mapchg_receipt:
     _CALL sub_demo_train_starting
     
     //ワーク開放
-    _BSUBWAY_WORK_RELEASE()
+//    _BSUBWAY_WORK_RELEASE()
     
     //ホーム制御　無しに
     $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON

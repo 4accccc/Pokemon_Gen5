@@ -1185,6 +1185,7 @@ extern void MMDL_BLACTCONT_Update( MMDLSYS *mmdlsys );
 extern void MMDL_BLACTCONT_ProcVBlank( MMDLSYS *mmdlsys );
 extern void MMDL_BLACTCONT_SetGlobalScaleOne( MMDLSYS *mmdlsys );
 extern BOOL MMDL_BLACTCONT_IsThereReserve( const MMDLSYS *mmdlsys );
+extern BOOL MMDL_BLACTCONT_CheckUpdateBBD( const MMDL *mmdl );
 
 extern void MMDL_BLACTCONT_AddResourceTex(
 	MMDLSYS *mmdlsys, const u16 *code, int max );

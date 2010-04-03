@@ -1553,6 +1553,8 @@ int (* const * const DATA_RailAcmdActionTbl[ACMD_MAX])( MMDL * ) =
   DATA_AC_RailDummy,         //AC_MELODYER_SPIN
   DATA_AC_RailDummy,     //AC_MELODYER_SPIN_POSE
   DATA_AC_RailDummy,        //AC_MELODYER_SHAKE
+  
+  DATA_AC_RailDummy,        //AC_SHIN_MU_OFFS_CLEAR
 };
 
 //==============================================================================

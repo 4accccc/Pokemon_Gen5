@@ -158,7 +158,9 @@ typedef struct
 //--------------------------------------------------------------
 struct _TAG_MMDL_BLACTCONT
 {
-  int resourceMax;
+  u8 bbdUpdateFlag;
+  u8 padding;
+  u16 resourceMax;
   
 	GFL_BBDACT_SYS *pBbdActSys; //ユーザーから
 	GFL_BBDACT_RESUNIT_ID bbdActResUnitID;
@@ -316,6 +318,8 @@ void MMDL_BLACTCONT_Update( MMDLSYS *mmdlsys )
       //リソースパラメタ予約消化
       BlActAddReserve_DigestResourceParam( pBlActCont );
     }
+    
+    pBlActCont->bbdUpdateFlag = 0;
   }
 }
 
@@ -383,6 +387,21 @@ BOOL MMDL_BLACTCONT_IsThereReserve( const MMDLSYS *mmdlsys )
   return( FALSE );
 }
 
+//--------------------------------------------------------------
+/**
+ * MMDL_BLACTCONT ビルボードアクターが動作しているかチェック
+ * @param mmdl MMDL* 利便性からMMDL指定
+ * @retval BOOL TRUE=動作している FALSE=していない
+ */
+//--------------------------------------------------------------
+BOOL MMDL_BLACTCONT_CheckUpdateBBD( const MMDL *mmdl )
+{
+  const MMDLSYS *mmdlsys = MMDL_GetMMdlSys( mmdl );
+	const MMDL_BLACTCONT *pBlActCont =
+    MMDLSYS_GetBlActCont( (MMDLSYS*)mmdlsys );
+  return( pBlActCont->bbdUpdateFlag );
+}
+
 //======================================================================
 //	フィールド動作モデル　ビルボードリソース
 //======================================================================
@@ -434,7 +453,7 @@ static GFL_BBDACT_ACTUNIT_ID blact_AddActorCore(
 	actData.alpha = 31;
 	actData.drawEnable = TRUE;
 	actData.lightMask = GFL_BBD_LIGHTMASK_01;
-	actData.work = NULL;
+	actData.work = pBlActCont;
 	actData.func = BlActFunc;
 	
 	actID = GFL_BBDACT_AddAct(
@@ -852,6 +871,8 @@ void MMDL_BLACTCONT_USER_DeleteActor(
 //--------------------------------------------------------------
 static void BlActFunc( GFL_BBDACT_SYS *bbdActSys, int actIdx, void *work )
 {
+  //ビルボードアクターが動作した事を示す
+	((MMDL_BLACTCONT*)work)->bbdUpdateFlag |= 1;
 }
 
 //======================================================================
