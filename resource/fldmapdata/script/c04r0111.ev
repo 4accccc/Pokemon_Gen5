@@ -22,6 +22,11 @@ _EVENT_DATA ev_c04r0111_npc_talk      //NPC話し掛け
 _EVENT_DATA ev_c04r0111_home          //ゲームクリア後のホーム
 _EVENT_DATA_END
 
+//--------------------------------------------------------------
+//  共通利用ローカル変数
+//--------------------------------------------------------------
+DEFINE_LOCAL msg_id
+  
 //======================================================================
 //  バトルサブウェイ　ホーム　初期化、復帰
 //======================================================================
@@ -35,7 +40,7 @@ INIT_EVENT_START ev_init_c04r0111_home
   _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   //受付座標を変更
-  _OBJ_POS_CHANGE( C04R0111_RECEIPT1, 17, 0, 13, DIR_RIGHT )
+  _OBJ_POS_CHANGE( C04R0111_RECEIPT1, 17, 0, 14, DIR_RIGHT )
   _OBJ_POS_CHANGE( C04R0111_RECEIPT2, 76, 0, 14, DIR_LEFT )
   
   //ゲームクリア直後
@@ -65,7 +70,7 @@ INIT_EVENT_START ev_recover_c04r0111_home
     IF $WK_OTHER_BSUBWAY_HOME != BSWAY_SCENE_HOME_NON THEN
       _BSUBWAY_WORK_CREATE( BSWAY_PLAY_CONTINUE, play_mode )
       
-      //通信マルチの場合は終点にする
+      //通信マルチの場合は通信切れにより終点にする
       IF $play_mode == BSWAY_MODE_COMM_MULTI || $play_mode == BSWAY_MODE_S_COMM_MULTI THEN
         $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_TERMINUS
       ENDIF
@@ -381,7 +386,18 @@ _RET
 //  バトルサブウェイ　ホーム　パートナー話し掛け
 //--------------------------------------------------------------
 EVENT_START ev_c04r0111_partner_talk
-{
+{ 
+  DEFINE_LOCAL sex
+  
+  _GET_MY_SEX( sex )
+  
+  $msg_id = msg_c04r0111_23
+  
+  IF $sex == PM_MALE THEN //自機男 パートナー女
+    $msg_id = msg_c04r0111_24
+  ENDIF
+  
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_id )
 }
 EVENT_END
 
@@ -393,8 +409,6 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_c04r0111_npc_talk
 {
-  DEFINE_LOCAL msg_id
-  
   //HOME NPC用メッセージID取得
   _BSUBWAY_TOOL( BSWTOOL_GET_HOME_NPC_MSGID, SCWK_TARGET_OBJID, BSW_NULL, msg_id )
   _EASY_BALLOONWIN_TALKOBJ_MSG( msg_id )
@@ -707,6 +721,8 @@ _ANIME_LABEL anm_demo_train_arrival_partner
   _ANIME_DATA AC_VANISH_OFF,1
   _ANIME_DATA AC_WAIT_1F,4
   _ANIME_DATA AC_WALK_D_8F,1
+  _ANIME_DATA AC_WALK_L_8F,1
+  _ANIME_DATA AC_WALK_D_8F,1
   _ANIME_DATA AC_STAY_WALK_R_8F,1
   _ANIME_DATA ACMD_END,0
 
@@ -721,7 +737,10 @@ sub_demo_train_starting:
   //マップフェードアウト
   _BLACK_OUT()
   _DISP_FADE_END_CHECK()
-
+  
+  //受付を右に
+  _BSUBWAY_TOOL( BSWTOOL_SET_OBJ_DIR, C04R0111_RECEIPT1, DIR_RIGHT, BSW_NULL )
+  
   //プレイモード取得
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
@@ -739,6 +758,7 @@ sub_demo_train_starting:
   IF $ai_multi == TRUE THEN
     _OBJ_POS_CHANGE( C04R0111_PARTNER, 19, 0, 13, DIR_LEFT )
     _BSUBWAY_TOOL( BSWTOOL_OBJ_HEIGHT_OFF, C04R0111_PARTNER, 0, BSW_NULL )
+    _BSUBWAY_TOOL( BSWTOOL_OBJ_PAUSE, C04R0111_PARTNER, 0, BSW_NULL )
   ENDIF
   
   //マップフェードイン開始

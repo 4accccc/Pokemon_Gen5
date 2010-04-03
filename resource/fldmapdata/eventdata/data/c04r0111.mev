@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/18 13:34:21
+#save date:2010/04/03 22:16:25
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c04r0111.wms
 #SECTION START:OBJ_EVENT
@@ -80,7 +80,7 @@ C04R0111_PARTNER
 #OBJ CODE Number
 WKOBJCODE00
 #MOVE CODE Number
-MV_DMY
+MV_DIR_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
