@@ -41,7 +41,8 @@
 //-------------------------------------
 ///	WEATHER_TASK
 //=====================================
-#define WEATHER_TASK_OBJBUFF_MAX	( 48 )
+#define WEATHER_TASK_OBJBUFF_MAX	( 32 )  // ˆ——Ž‚¿ŒyŒ¸‚Ì‚½‚ß­‚È‚­‚µ‚½B
+//#define WEATHER_TASK_OBJBUFF_MAX	( 48 )
 
 // ó‘Ô‘JˆÚ
 enum{
@@ -1916,6 +1917,8 @@ static void WEATHER_TASK_WK_PushObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p
 
 	// •`‰æON
 	GFL_CLACT_WK_SetDrawEnable( p_obj->p_clwk, TRUE );
+
+  //TOMOYA_Printf( "weather active obj %d\n", p_wk->active_objnum );
 }
 
 //----------------------------------------------------------------------------
@@ -1950,6 +1953,8 @@ static void WEATHER_TASK_WK_PopObjList( WEATHER_TASK* p_wk, WEATHER_OBJ_WORK* p_
 
 	// •`‰æOFF
 	GFL_CLACT_WK_SetDrawEnable( p_obj->p_clwk, FALSE );
+
+//  TOMOYA_Printf( "weather active obj %d\n", p_wk->active_objnum );
 
 }
 

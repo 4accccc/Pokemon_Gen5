@@ -148,6 +148,7 @@ struct _FIELD_WEATHER{
 
 	// セルアクターユニット
 	GFL_CLUNIT*	p_unit;
+  GFL_CLSYS_REND* p_rend;
 
 	// 天気動作システム
 	WEATHER_TASK* p_task[ FIELD_WEATHER_WORK_NUM ];
@@ -332,6 +333,21 @@ FIELD_WEATHER* FIELD_WEATHER_Init( const FIELD_CAMERA* cp_camera, FIELD_LIGHT* p
 
 	// セルユニット初期化
 	p_sys->p_unit = GFL_CLACT_UNIT_Create( FIELD_WEATHER_CLUNIT_WORK_MAX, FIELD_WEATHER_CLUNIT_PRI, heapID );
+  // レンダラーの設定
+  {
+    static const GFL_REND_SURFACE_INIT sc_REND_SURFADE[] = 
+    {
+      {
+        0, 0, 256, 192,
+        CLSYS_DRAW_MAIN,
+        CLSYS_REND_CULLING_TYPE_NOT_AFFINE
+      },
+    };
+    p_sys->p_rend = GFL_CLACT_USERREND_Create( sc_REND_SURFADE, NELEMS(sc_REND_SURFADE), heapID );
+
+    // 設定
+    GFL_CLACT_UNIT_SetUserRend( p_sys->p_unit, p_sys->p_rend );
+  }
 	
 
 	for( i=0; i<FIELD_WEATHER_WORK_NUM; i++ ){
@@ -365,6 +381,9 @@ void FIELD_WEATHER_Exit( FIELD_WEATHER* p_sys )
 
 	// オーバーレイのアンロード
 	FIELD_WEATHER_OVERLAY_UnLoad( p_sys );
+
+  // レンダラーの破棄
+  GFL_CLACT_USERREND_Delete( p_sys->p_rend );
 
 	// セルユニット破棄
 	GFL_CLACT_UNIT_Delete( p_sys->p_unit );

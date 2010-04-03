@@ -2150,7 +2150,8 @@ static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, cons
 		static const GFL_REND_SURFACE_INIT sc_rend_surface_init =
 		{	
 			0,0,256,192,
-			CLSYS_DRAW_MAIN
+			CLSYS_DRAW_MAIN,
+      CLSYS_REND_CULLING_TYPE_NORMAL,
 		};
 		p_wk->p_clunit	= GFL_CLACT_UNIT_Create( 128, 0, heapID );
 		p_wk->p_rend		= GFL_CLACT_USERREND_Create( &sc_rend_surface_init, 1, heapID );

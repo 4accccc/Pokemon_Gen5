@@ -786,6 +786,7 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 	      256,				// サーフェース幅
 	      192*2,				// サーフェース高さ
         CLSYS_DRAW_MAIN,	// サーフェースタイプ(CLSYS_DRAW_TYPE)
+        CLSYS_REND_CULLING_TYPE_NORMAL,       // カリングタイプ
       },
       { 
 
@@ -794,6 +795,7 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 	      256,				// サーフェース幅
 	      192,				// サーフェース高さ
         CLSYS_DRAW_SUB,	// サーフェースタイプ(CLSYS_DRAW_TYPE)
+        CLSYS_REND_CULLING_TYPE_NORMAL,       // カリングタイプ
       }
     };
     p_wk->p_rend  = GFL_CLACT_USERREND_Create( sc_render_tbl, 2, heapID );

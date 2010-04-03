@@ -1748,7 +1748,8 @@ static const GFL_BG_BGCNT_HEADER DATA_BgCntTbl[ WFNOTE_BG_NUM ] = {
 static GFL_REND_SURFACE_INIT DATA_ScrollSurfaceRect = {
   0, 0,
   256, 192,
-  CLSYS_DRAW_MAIN
+  CLSYS_DRAW_MAIN,
+  CLSYS_REND_CULLING_TYPE_NORMAL,
 };
 
 static const GFL_DISP_VRAM vramSetTable = {

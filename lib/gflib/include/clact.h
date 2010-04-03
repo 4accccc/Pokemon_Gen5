@@ -23,6 +23,7 @@
  *	@data   2009.09.30    キャラクタ、パレット再転送関数を作成
  *	@data   2010.1.27    アニメーションコールバックを設定
  *	@data   2010.2.5    OAMAttr単位のカリング作成　GFL_CLACT_USERREND_SetOAMAttrCulling　
+ *	@data   2010.4.2    アフィンを考慮しないカリングを作成　ユーザーレンダラーの初期化時に指定できるように。
  *	                      
  *
  */
@@ -111,6 +112,17 @@ typedef enum{
 	CLSYS_DEFREND_SUB,
 	CLSYS_DEFREND_NUM
 } CLSYS_DEFREND_TYPE;
+
+
+//-------------------------------------
+///	レンダラーカリングタイプ
+//=====================================
+typedef enum{
+  CLSYS_REND_CULLING_TYPE_NORMAL,       // 通常
+  CLSYS_REND_CULLING_TYPE_NOT_AFFINE,   // アフィンを考慮しない     負荷　低
+
+  CLSYS_REND_CULLING_TYPE_MAX,    // システム内で使用
+} CLSYS_REND_CULLING_TYPE;
 
 //-------------------------------------
 ///	パレットオフセット設定モード
@@ -244,6 +256,7 @@ typedef struct {
 	s16	width;				// サーフェース幅
 	s16	height;				// サーフェース高さ
 	CLSYS_DRAW_TYPE	type;	// サーフェースタイプ(CLSYS_DRAW_TYPE)
+  CLSYS_REND_CULLING_TYPE culling;  // カリングタイプ
 } GFL_REND_SURFACE_INIT;
 
 

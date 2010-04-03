@@ -2022,12 +2022,14 @@ const static GFL_REND_SURFACE_INIT sini[] ={
         256,				// サーフェース幅
         192,				// サーフェース高さ
         CLSYS_DRAW_MAIN,	// サーフェースタイプ(CLSYS_DRAW_TYPE)
+        CLSYS_REND_CULLING_TYPE_NORMAL,       // カリングタイプ
     },
     {
         0,256,			// サーフェース左上ｘ座標			// サーフェース左上ｙ座標
         256,				// サーフェース幅
         192,				// サーフェース高さ
         CLSYS_DRAW_SUB,	// サーフェースタイプ(CLSYS_DRAW_TYPE)
+        CLSYS_REND_CULLING_TYPE_NORMAL,       // カリングタイプ
     }};
 
 static void InitCellActor(WIFIP2PMATCH_WORK *wk, ARCHANDLE* p_handle)

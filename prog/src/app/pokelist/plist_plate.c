@@ -174,6 +174,7 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POK
     renderInit.width  = 256;
     renderInit.height = 192;
     renderInit.type = CLSYS_DRAW_MAIN;
+    renderInit.culling = CLSYS_REND_CULLING_TYPE_NORMAL;
     plateWork->cellRender = GFL_CLACT_USERREND_Create( &renderInit , 1 , work->heapId );
     plateWork->cellUnit = GFL_CLACT_UNIT_Create( PLIST_PLATE_CELLNUM , PLIST_CELLUNIT_PRI_PLATE , work->heapId );
     GFL_CLACT_UNIT_SetUserRend( plateWork->cellUnit , plateWork->cellRender );

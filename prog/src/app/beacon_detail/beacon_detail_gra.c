@@ -561,8 +561,8 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
   //Ž©ìƒŒƒ“ƒ_ƒ‰[ì¬
   {
     const GFL_REND_SURFACE_INIT renderInitData[ACT_SF_MAX] = {
-      {0,0,256,192,CLSYS_DRAW_MAIN},
-      {0,512,256,192,CLSYS_DRAW_SUB},
+      {0,0,256,192,CLSYS_DRAW_MAIN, CLSYS_REND_CULLING_TYPE_NORMAL},
+      {0,512,256,192,CLSYS_DRAW_SUB, CLSYS_REND_CULLING_TYPE_NORMAL},
     };
     
     p_wk->cellRender = GFL_CLACT_USERREND_Create( renderInitData , ACT_SF_MAX , heapID );

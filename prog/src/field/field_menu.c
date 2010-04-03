@@ -729,7 +729,7 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   
   //ƒŒƒ“ƒ_ƒ‰[ì¬
   {
-    const GFL_REND_SURFACE_INIT renderInitData = { 0,0,256,191,CLSYS_DRAW_SUB};
+    const GFL_REND_SURFACE_INIT renderInitData = { 0,0,256,191,CLSYS_DRAW_SUB, CLSYS_REND_CULLING_TYPE_NORMAL};
     
     work->cellRender = GFL_CLACT_USERREND_Create( &renderInitData , 1 , work->heapId );
     GFL_CLACT_UNIT_SetUserRend( work->cellUnit , work->cellRender );

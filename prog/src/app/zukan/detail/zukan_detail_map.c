@@ -1304,7 +1304,7 @@ static void Zukan_Detail_Map_ObjInit( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAI
 {
   // レンダラーシステム、セルアクターユニット作成
   {
-    const GFL_REND_SURFACE_INIT surface_init    = { 0, 0, 256, 192, CLSYS_DRAW_MAIN };
+    const GFL_REND_SURFACE_INIT surface_init    = { 0, 0, 256, 192, CLSYS_DRAW_MAIN, CLSYS_REND_CULLING_TYPE_NORMAL };
     const u16                   clunit_work_num = 16; 
     
     // レンダラーシステム

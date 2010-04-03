@@ -42,8 +42,8 @@
 //-------------------------------------
 //	雪管理関数定数
 //=====================================
-#define	WEATHER_SNOW_TIMING_MIN		(10)				// 雪を出すタイミング最小
-#define WEATHER_SNOW_TIMING_MAX		(14)				// 雪を出すタイミング最大
+#define	WEATHER_SNOW_TIMING_MIN		(32)				// 雪を出すタイミング最小
+#define WEATHER_SNOW_TIMING_MAX		(36)				// 雪を出すタイミング最大
 #define WEATHER_SNOW_TIMING_ADD		(5)					// タイミングを減らす数
 #define	WEATHER_SNOW_ADD_TIMING		(1)					// １度のオブジェ登録数を増やすタイミング
 #define	WEATHER_SNOW_ADD			(0)					// オブジェ登録数を足す値
@@ -64,8 +64,9 @@
 /*== 雪オブジェクト ==*/
 #define	WEATHER_SNOW_ADD_TMG_X_BASE	(2)					// 雪のスピードを足すタイミング
 #define	WEATHER_SNOW_ADD_TMG_X_RAN	(2)					// 雪のスピードを足すタイミング乱数値
-#define	WEATHER_SNOW_ADD_TMG_Y_BASE	(2)					// 雪のスピードを足すタイミング
-#define	WEATHER_SNOW_ADD_TMG_Y_RAN	(1)					// 雪のスピードを足すタイミング乱数値
+#define	WEATHER_SNOW_ADD_TMG_Y_BASE	(12)					// 雪のスピードを足すタイミング
+#define	WEATHER_SNOW_ADD_TMG_Y_RAN	(8)					// 雪のスピードを足すタイミング乱数値
+#define	WEATHER_SNOW_ADD_TMG_Y_KETA	(8)					// 雪のスピードを足すタイミング桁
 
 #define	WEATHER_SSNOWTART_X_BASE	(-32)						// ベースになるX開始座標
 #define	WEATHER_SSNOWTART_X_MAX	(414)						// X開始座標乱数の最大値
@@ -77,6 +78,348 @@
 /*== 雪グラフィック構成データ ==*/
 #define WEATHER_SNOW_GRAPHIC_CELL	( 3 )
 #define WEATHER_SNOW_GRAPHIC_BG		( WEATHER_GRAPHIC_NONE )
+
+
+// SNOW OBJ MOVE
+static const s8 sc_SNOW_OBJ_MOVE_X[] = {
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+};
 
 
 
@@ -271,7 +614,7 @@ static const int WEATHER_SSNOW_SPEED_Y_SML[WEATHER_SNOW_S_ADD_SP_TMG_NUM] = {3,6
 ///	普通の雪ワーク
 //=====================================
 typedef struct {
-	s32 work[10];
+	s32 work[12];
 } WEATHER_SNOW_WORK;
 
 
@@ -876,57 +1219,38 @@ static void WEATHER_SNOW_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 
 	// 全破棄要請
 	p_exitflg = (s32*)p_local_wk[7];
-	switch( p_local_wk[8] ){
-	case 0:
+	if( p_local_wk[8] == 0 ){
 		// もし　破棄フラグが立っていたら自動破棄動さへ
 		if( *p_exitflg ){
 			p_local_wk[8] ++;
 		}
-		break;
-
-	case 1:	// ｶｳﾝﾀが0になったら破棄
+  }else{
 		p_local_wk[9] --;
 		if( p_local_wk[9] < 0 ){
 			WEATHER_TASK_DeleteObj( p_wk );
 			return ;
 		}
-		break;
 	}
 	
 
-	
 	WEATHER_OBJ_WORK_GetPos( p_wk, &pos );
 
 	// 動かす
 	// X座標移動
-	if(((p_local_wk[5] & 0xffff) >= p_local_wk[2])){
-		pos.x	+= p_local_wk[1];
-		p_local_wk[4]++;
-		p_local_wk[5] &= 0xffff0000;
-		// スピードチェンジャー
-		if(p_local_wk[4] < 10){
-			p_local_wk[2]--;
-		}else{
-			p_local_wk[2]++;
-		}
-		if(p_local_wk[4] >= 20){	// これで左右にゆらゆら
-			p_local_wk[4] = 0;
-			p_local_wk[1]*=-1;
-		}//*/
-	}
+  pos.x += sc_SNOW_OBJ_MOVE_X[ p_local_wk[5] ];
+  
 	// Y座標移動
-	if(((p_local_wk[5] >> 16) >= p_local_wk[3])){
+	if((p_local_wk[4] > p_local_wk[3])){
 		pos.y += 1;
-		p_local_wk[5] &= 0x0000ffff;
+    p_local_wk[4] %= p_local_wk[3];
 	} 
 
 	// 座標設定
 	WEATHER_OBJ_WORK_SetPos( p_wk, &pos );
 	
 	// カウント設定
-	p_local_wk[6] = (p_local_wk[6] + 1) % 100;
-	p_local_wk[5]++;
-	p_local_wk[5]+=0x10000;
+	p_local_wk[4] += WEATHER_SNOW_ADD_TMG_Y_KETA;
+	p_local_wk[5] = (p_local_wk[5] + 1) % NELEMS(sc_SNOW_OBJ_MOVE_X);
 
 	// 破棄ゾーンにいたら破棄  
 	if(((pos.y < -284) && (pos.y > -296)) ||
@@ -971,33 +1295,25 @@ static void WEATHER_SNOW_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID heapID )
 		}
 		p_obj_wk	= WEATHER_OBJ_WORK_GetWork( p_addobj );
 		p_clwk		= WEATHER_OBJ_WORK_GetClWk( p_addobj );
-		
+
 		frame = GFUser_GetPublicRand( WEATHER_SNOW_OBJ_NUM );
 		GFL_CLACT_WK_SetAnmIndex( p_clwk, frame );
 		
-		p_obj_wk[4] = 10;	// 横の動く方向変更カウンタ	
+		p_obj_wk[4] = 0;	
 		p_obj_wk[5] = 0;
-		p_obj_wk[6] = 0;	// 輝きカウンタ
 		p_obj_wk[8] = 0;							// シーケンス
 		
 		rand = GFUser_GetPublicRand(0);
 
 		p_obj_wk[9] = WEATHER_SNOW_OBJ_AUTODEST_TIMING_MIN + (rand % WEATHER_SNOW_OBJ_AUTODEST_TIMING_MAX);		// 自滅ｶｳﾝﾀ
 	
-		// スピード
-		if((rand % 2) == 0){
-			p_obj_wk[1] = 1;
-		}else{
-			p_obj_wk[1] = -1;
-		}
-		p_obj_wk[2] = WEATHER_SNOW_ADD_TMG_X_BASE + (GFUser_GetPublicRand(WEATHER_SNOW_ADD_TMG_X_RAN));
 		p_obj_wk[3] = WEATHER_SNOW_ADD_TMG_Y_BASE + (GFUser_GetPublicRand(WEATHER_SNOW_ADD_TMG_Y_RAN));
 
 		p_obj_wk[0] = (s32)&p_local_wk->work[1];		// 下まで行ったらフラグを立てるポインタを保存
 		p_obj_wk[7] = (s32)&p_local_wk->work[2];		// 破棄フラグポインタON
 		
 		// 座標を設定
-		pos.x = ( WEATHER_SSNOWTART_X_BASE + (GFUser_GetPublicRand(WEATHER_SSNOWTART_X_MAX)) );
+	  pos.x = ( WEATHER_SSNOWTART_X_BASE + (GFUser_GetPublicRand(WEATHER_SSNOWTART_X_MAX)) );
 		
 		if((p_local_wk->work[1] == 1) &&
 			(i >= (num /2)) ){	// 半分出す
@@ -2533,7 +2849,9 @@ static void WEATHER_DIAMONDDUST_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID hea
 	int i;		// ループ用
 	WEATHER_OBJ_WORK* add_obj;		// 登録オブジェ
 	WEATHER_DIAMONDDUST_WORK*	p_local_wk;	// システムワーク
-	int	rand;
+	int	rand0;
+	int	rand1;
+  int x_rand;
 	int sum_y;	// y座標計算
 	int	big_d;	// 大きいダイヤモンドダストにするかチェック
 	int frame;	// フレーム数
@@ -2554,13 +2872,15 @@ static void WEATHER_DIAMONDDUST_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID hea
 
 		obj_w = WEATHER_OBJ_WORK_GetWork( add_obj );		// オブジェワーク作成
 		p_clwk	= WEATHER_OBJ_WORK_GetClWk( add_obj );
+
+		rand0 = GFUser_GetPublicRand(0);
+		rand1 = GFUser_GetPublicRand(0);
 		
 		obj_w[0] = 0;		// カウンタ
-		obj_w[1] = WEATHER_DIAMONDDUST_SPARK_NUM_MIN + GFUser_GetPublicRand(WEATHER_DIAMONDDUST_SPARK_NUM_RAN);
-		rand = GFUser_GetPublicRand(1000);
+		obj_w[1] = WEATHER_DIAMONDDUST_SPARK_NUM_MIN + (rand0 % WEATHER_DIAMONDDUST_SPARK_NUM_RAN);
 
 		
-		if((rand % 2) == 0){			// 横の移動のプラスマイナス
+		if((rand0 % 2) == 0){			// 横の移動のプラスマイナス
 			obj_w[2] = 1;
 		}else{
 			obj_w[2] = -1;
@@ -2568,29 +2888,29 @@ static void WEATHER_DIAMONDDUST_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID hea
 		obj_w[3] = 1;
 		
 
-		obj_w[4] = WEATHER_DIAMONDDUST_SP_ADD_TMG_X_MIN + GFUser_GetPublicRand(WEATHER_DIAMONDDUST_SP_ADD_TMG_X_MAX);
-		obj_w[5] = WEATHER_DIAMONDDUST_SP_ADD_TMG_Y_MIN + GFUser_GetPublicRand(WEATHER_DIAMONDDUST_SP_ADD_TMG_Y_MAX);
+		obj_w[4] = WEATHER_DIAMONDDUST_SP_ADD_TMG_X_MIN + (rand0 % WEATHER_DIAMONDDUST_SP_ADD_TMG_X_MAX);
+		obj_w[5] = WEATHER_DIAMONDDUST_SP_ADD_TMG_Y_MIN + (rand1 % WEATHER_DIAMONDDUST_SP_ADD_TMG_Y_MAX);
 		
 	
 		// 小さい光を出す
-		frame = GFUser_GetPublicRand(WEATHER_DIAMONDDUST_SPARK_NO);
+		frame = (rand0 % WEATHER_DIAMONDDUST_SPARK_NO);
 		
 		// 座標
 		{
-			mat.x = WEATHER_DIAMONDDUST_START_X_MIN + GFUser_GetPublicRand(WEATHER_DIAMONDDUST_START_X_DIS);
-			mat.y = WEATHER_DIAMONDDUST_START_Y + GFUser_GetPublicRand(WEATHER_DIAMONDDUST_START_Y_MAX);
+			mat.x = WEATHER_DIAMONDDUST_START_X_MIN + (rand0 % WEATHER_DIAMONDDUST_START_X_DIS);
+			mat.y = WEATHER_DIAMONDDUST_START_Y + (rand1 % WEATHER_DIAMONDDUST_START_Y_MAX);
 		  WEATHER_OBJ_WORK_SetPos( add_obj, &mat );
 		}
 		
 		
 		// Xの値から方程式で求める
 		sum_y = 50 - (mat.x/3);
-		rand = 206 - (mat.x/3);
-		if(rand < 0){
-			rand*=-1;
-			big_d = sum_y - (GFUser_GetPublicRand(rand));		
+		x_rand = 206 - (mat.x/3);
+		if(x_rand < 0){
+			x_rand*=-1;
+			big_d = sum_y - (rand1 % x_rand);		
 		}else{
-			big_d = sum_y + (GFUser_GetPublicRand(rand));		
+			big_d = sum_y + (rand1 % x_rand);		
 		}
 		if((sum_y <= mat.y) &&
 			(big_d >= mat.y)){
@@ -2599,7 +2919,7 @@ static void WEATHER_DIAMONDDUST_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID hea
 //			obj_w[6] = 4;		// おそ点滅
 		}else{
 			// 小さい光にする
-			frame = GFUser_GetPublicRand(4);
+			frame = (rand0 % 4);
 //			obj_w[6] = 1;		// 半透明
 		}
 		GFL_CLACT_WK_SetAnmIndex( p_clwk, frame );

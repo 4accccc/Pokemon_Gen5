@@ -1411,14 +1411,14 @@ static void WEATHER_RAIN_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 	switch(obj_w[3]){
 	case 0:		// 動作
 		// 動かす
-		mat.x += (obj_w[4]*2);
-		mat.y += (obj_w[2]*2);
+		mat.x += (obj_w[4]);
+		mat.y += (obj_w[2]);
 	
 		// 破棄するかチェック
 		obj_w[0] += 2;
 		if(obj_w[0] > obj_w[1]){
 			// アニメーションさせるかチェック
-			if(GFUser_GetPublicRand(10) < 7){		// 7/10は破棄
+			if(obj_w[5] < 7){		// 7/10は破棄
 				// 破棄
 				obj_w[3] = 2;
 			}else{
@@ -1503,6 +1503,12 @@ static void WEATHER_RAIN_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID heapID )
 		mat.x = ( WEATHER_RAIN_START_X_BASE + (frame * WEATHER_RAIN_MUL_X) + (rand % WEATHER_RAIN_START_X_MAX) );
 		mat.y = WEATHER_RAIN_START_Y;
 		WEATHER_OBJ_WORK_SetPosNoTurn( add_obj, &mat );
+
+
+    obj_w[4] *= 2;
+    obj_w[2] *= 2;
+
+    obj_w[5] = GFUser_GetPublicRand(10);
 	}
 }
 
@@ -1814,14 +1820,14 @@ static void WEATHER_SPARKRAIN_OBJ_Move( WEATHER_OBJ_WORK* p_wk )
 	switch(obj_w[3]){
 	case 0:		// 動作
 		// 動かす
-		mat.x += (obj_w[4]*2);
-		mat.y += (obj_w[2]*2);
+		mat.x += (obj_w[4]);
+		mat.y += (obj_w[2]);
 	
 		// 破棄するかチェック
 		obj_w[0] += 2;
 		if(obj_w[0] > obj_w[1]){
 			// アニメーションさせるかチェック
-			if(GFUser_GetPublicRand(10) < 5){		// 7/10は破棄
+			if(obj_w[5] < 5){		// 7/10は破棄
 				// 破棄
 				obj_w[3] = 2;
 			}else{
@@ -1892,6 +1898,8 @@ static void WEATHER_SPARKRAIN_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID heapI
 		obj_w[2] = WEATHER_STRAIN_SPEED_Y * (frame+1);
 		obj_w[4] *= WEATHER_STRAIN_OBJ_MUL[p_local_wk->work[2]/WEATHER_STRAIN_OBJ_MUL_CHG];
 		obj_w[2] *= WEATHER_STRAIN_OBJ_MUL[p_local_wk->work[2]/WEATHER_STRAIN_OBJ_MUL_CHG];
+    obj_w[4] *= 2;
+    obj_w[2] *= 2;
 		
 		obj_w[3] = 0;			// 破棄アニメフラグ
 		
@@ -1906,6 +1914,8 @@ static void WEATHER_SPARKRAIN_OBJ_Add( WEATHER_TASK* p_wk, int num, HEAPID heapI
 
 			WEATHER_OBJ_WORK_SetPosNoTurn( add_obj, &mat );
 		}
+
+    obj_w[5] = GFUser_GetPublicRand(10);
 		
 	}
 
