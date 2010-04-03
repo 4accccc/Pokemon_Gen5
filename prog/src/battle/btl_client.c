@@ -2484,6 +2484,11 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
         }
       }
 
+      // 入れ替えチェック
+      {
+
+      }
+
       if( BPP_CheckSick(pp, WAZASICK_ENCORE)
       ||  BPP_CheckSick(pp, WAZASICK_WAZALOCK)
       ){
@@ -3349,16 +3354,19 @@ restart:
       const void* cmdBuf;
 
       cmdSize = BTL_ADAPTER_GetRecvData( wk->adapter, &cmdBuf );
-      SCQUE_Setup( wk->cmdQue, cmdBuf, cmdSize );
 
       if( (wk->cmdCheckServer != NULL)
       &&  (wk->cmdCheckTimingCode != BTL_RECTIMING_None)
       ){
         if( BTL_SERVER_CMDCHECK_Make(wk->cmdCheckServer, wk->cmdCheckTimingCode, cmdBuf, cmdSize) ){
           BTL_MAIN_NotifyCmdCheckError( wk->mainModule );
+          OS_TPrintf("!!!! recvedCmd=%p, %02x, %02x, %02x, ...\n", cmdBuf,
+              ((const u8*)cmdBuf)[0], ((const u8*)cmdBuf)[1], ((const u8*)cmdBuf)[2] );
         }
         wk->cmdCheckTimingCode = BTL_RECTIMING_None;
       }
+
+      SCQUE_Setup( wk->cmdQue, cmdBuf, cmdSize );
 
       if( wk->commWaitInfoOn )
       {
@@ -3389,7 +3397,7 @@ restart:
 
       wk->serverCmd = SCQUE_Read( wk->cmdQue, wk->cmdArgs );
 
-      for(i=0; i<NELEMS(scprocTbl); i++)
+      for(i=0; i<NELEMS(scprocTbl); ++i)
       {
         if( scprocTbl[i].cmd == wk->serverCmd ){ break; }
       }
@@ -3397,7 +3405,7 @@ restart:
       if( i == NELEMS(scprocTbl) )
       {
         BTL_N_Printf( DBGSTR_CLIENT_UnknownServerCmd, wk->serverCmd);
-        (*seq)=1;
+        (*seq) = 1;
         goto restart;
       }
 

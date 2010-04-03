@@ -936,6 +936,10 @@ u8 SCQUE_READ_ArgOnly( BTL_SERVER_CMD_QUE* que )
 
 void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
 {
+  enum {
+    PRINT_FLAG = FALSE,
+  };
+
   {
     va_list   list;
     ScMsgArg   arg;
@@ -947,23 +951,23 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
     scque_put2byte( que, scType );
     scque_put2byte( que, strID );
 
-    BTL_N_Printf( DBGSTR_SC_PutMsgParam, scType, strID );
+    BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_SC_PutMsgParam, scType, strID );
 
     if( scType == SC_MSG_STD_SE ){
       u16 seID = va_arg( list, int );
       scque_put2byte( que, seID );
-      BTL_N_PrintfSimple( DBGSTR_SC_PutMsg_SE, seID );
+      BTL_N_PrintfSimpleEx( PRINT_FLAG, DBGSTR_SC_PutMsg_SE, seID );
     }
-    BTL_N_PrintfSimple( DBGSTR_SC_ArgsEqual );
+    BTL_N_PrintfSimpleEx( PRINT_FLAG, DBGSTR_SC_ArgsEqual );
 
     do {
       arg = va_arg( list, int );
       if( arg != MSGARG_TERMINATOR ){
-        BTL_N_PrintfSimple( DBGSTR_csv, arg );
+        BTL_N_PrintfSimpleEx( PRINT_FLAG, DBGSTR_csv, arg );
       }
       scque_put4byte( que, arg );
     }while( arg != MSGARG_TERMINATOR );
-    BTL_N_PrintfSimple( DBGSTR_LF );
+    BTL_N_PrintfSimpleEx( PRINT_FLAG, DBGSTR_LF );
 
     va_end( list );
   }
@@ -971,18 +975,22 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
 
 static void read_core_msg( BTL_SERVER_CMD_QUE* que, u8 scType, int* args )
 {
+  enum {
+    PRINT_FLAG = FALSE,
+  };
+
   int idx_begin = 1;
 
   args[0] = scque_read2byte( que );
 
-  BTL_N_Printf( DBGSTR_SC_ReadMsgParam, scType, args[0] );
+  BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_SC_ReadMsgParam, scType, args[0] );
 
   if( scType == SC_MSG_STD_SE ){
     args[1] = scque_read2byte( que );
-    BTL_N_Printf( DBGSTR_SC_PutMsg_SE, args[1] );
+    BTL_N_PrintfEx( PRINT_FLAG, DBGSTR_SC_PutMsg_SE, args[1] );
     ++idx_begin;
   }
-  BTL_N_PrintfSimple( DBGSTR_SC_ArgsEqual );
+  BTL_N_PrintfSimpleEx( PRINT_FLAG, DBGSTR_SC_ArgsEqual );
 
   {
     int i = idx_begin;
@@ -991,9 +999,9 @@ static void read_core_msg( BTL_SERVER_CMD_QUE* que, u8 scType, int* args )
       if( args[i] == MSGARG_TERMINATOR ){
         break;
       }
-      BTL_N_PrintfSimple( DBGSTR_csv, args[i] );
+      BTL_N_PrintfSimple( PRINT_FLAG, DBGSTR_csv, args[i] );
     }
-    BTL_N_PrintfSimple( DBGSTR_LF );
+    BTL_N_PrintfSimpleEx( PRINT_FLAG, DBGSTR_LF );
 
     if( i == BTL_SERVERCMD_ARG_MAX ){
       GF_ASSERT(0); // à¯êîégÇ¢Ç∑Ç¨

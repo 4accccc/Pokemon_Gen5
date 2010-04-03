@@ -8,6 +8,8 @@
  */
 //=============================================================================================
 #include <gflib.h>
+#include <isdbglib.h>
+
 #include "waza_tool\wazadata.h"
 #include "gamesystem\game_beacon.h"
 #include "sound\pm_sndsys.h"
@@ -127,9 +129,11 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_KeyWait( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForCommPlayer( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForNPC( BTL_SERVER* server, int* seq );
+static void print_client_action( const BTL_SVCL_ACTION* clientAction );
+static void print_que_info( BTL_SERVER_CMD_QUE* que, const char* caption );
 static BOOL SendActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL fChapter );
-static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry );
 static void* MakeSelectActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL fChapter, u32* dataSize );
+static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry );
 static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize, const BtlRotateDir* dirAry );
 static void storeClientAction( BTL_SERVER* server );
 static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd );
@@ -175,6 +179,8 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, const GFL_STD_RandCo
   sv->escapeClientID = BTL_CLIENTID_NULL;
   sv->randContext = *randContext;
   sv->strbuf = GFL_STR_CreateBuffer( SERVER_STRBUF_SIZE, heapID );
+
+  BTL_CALC_ResetSys( randContext );
 
 
   {
@@ -606,6 +612,9 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 
   case 5:
       BTL_N_Printf( DBGSTR_SVFL_SendServerCmd, server->flowResult);
+      print_client_action( &server->clientAction );
+      print_que_info( server->que, "Server Send ... ");
+
       SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;
       break;
@@ -1125,6 +1134,89 @@ void BTL_SERVER_CMDCHECK_RestoreActionData( BTL_SERVER* server, const void* recD
     server->clientAction.count[ clientID ] = numAction;
   }
 }
+
+static void print_client_action( const BTL_SVCL_ACTION* clientAction )
+{
+  u32 i;
+  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    if( clientAction->count[i] )
+    {
+      u32 j;
+      OS_TPrintf("  Client(%d) action cnt=%d\n", i, clientAction->count[ i ] );
+      for(j=0; j<clientAction->count[i]; ++j)
+      {
+        const BTL_ACTION_PARAM* action = &(clientAction->param[i][j]);
+
+        OS_TPrintf("   Action(%d) = %d:", j, action->gen.cmd );
+        if( action->gen.cmd == BTL_ACTION_FIGHT )
+        {
+          OS_TPrintf(" waza=%d, targetPos=%d\n", action->fight.waza, action->fight.targetPos );
+        }
+        OS_TPrintf("\n");
+      }
+    }
+  }
+}
+
+static void print_que_info( BTL_SERVER_CMD_QUE* que, const char* caption )
+{
+  OS_TPrintf("  * %s : %d bytes\n", caption, que->writePtr );
+  {
+    static int args[ BTL_SERVERCMD_ARG_MAX ];
+    ServerCmd  cmd;
+    int i;
+
+    for(i=0; i<que->writePtr; ++i)
+    {
+      OS_TPrintf("%02x,", que->buffer[i] );
+      if( (i+1)%16==0 ){ OS_TPrintf("\n"); }
+    }
+    OS_TPrintf("\n");
+
+    que->readPtr = 0;
+
+    do {
+      const char* scname;
+      for(i=0; i<NELEMS(args); ++i){
+        args[ i ] = -1;
+      }
+
+      cmd = SCQUE_Read( que, args );
+      scname = BTL_DEBUGPRINT_GetServerCmdName(cmd);
+      if( scname == NULL ){
+        OS_TPrintf(" UnKnown Command [%d]  \n", cmd );
+        return;
+      }
+      OS_TPrintf(" cmd=%04x ", cmd);
+      OS_TPrintf( scname );
+      OS_TPrintf(" args=" );
+      for(i=0; i<NELEMS(args); ++i){
+        OS_TPrintf(" %d,", args[i]);
+      }
+      // 追加引数のあるコマンド処理
+      {
+        u32 j, exArgCnt = 0;
+        switch( cmd ){
+        case SC_ACT_WAZA_DMG_PLURAL:  exArgCnt = args[0]; break;
+        case SC_ACT_WEATHER_DMG:      exArgCnt = args[1]; break;
+        }
+        if( exArgCnt )
+        {
+          OS_TPrintf("\n   ExArg=");
+          for(j=0; j<exArgCnt; ++j){
+            OS_TPrintf("%d, ", SCQUE_READ_ArgOnly(que) );
+          }
+          OS_TPrintf("\n");
+        }
+      }
+      OS_TPrintf( "\n" );
+
+    } while( !SCQUE_IsFinishRead(que) );
+
+  }
+}
+
 BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, BtlRecTiming timingCode, const void* recvedCmd, u32 cmdSize )
 {
   SCQUE_Init( server->que );
@@ -1153,23 +1245,23 @@ BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, BtlRecTiming timingCode, cons
       return FALSE;
     }
   }
-  //BTL_N_Printf( DBGSTR_SV_CmdCheckNG, server->que->writePtr, cmdSize );
+
+  // 以下、コマンド内容が完全一致しなかった場合のデバッグ出力
+  ISDPrintSetBlockingMode( 1 );
   {
-    u32 i;
     OS_TPrintf( "****** コマンド整合性 NG timing=%d  ****** \n", timingCode );
-    OS_TPrintf( " sc = %d bytes\n", cmdSize );
-    for(i=0; i<cmdSize; ++i){
-      OS_TPrintf("%02x,", ((u8*)(recvedCmd))[i]);
-      if( (i+1)%16 == 0){ OS_TPrintf("\n"); }
-    }
-    if( cmdSize%16 ){ OS_TPrintf("\n"); }
-    OS_TPrintf( " cc = %d bytes\n", server->que->writePtr );
-    for(i=0; i<server->que->writePtr; ++i){
-      OS_TPrintf("%02x,", server->que->buffer[i]);
-      if( (i+1)%16 == 0){ OS_TPrintf("\n"); }
-    }
-    if( server->que->writePtr%16 ){ OS_TPrintf("\n"); }
+
+    print_client_action( &server->clientAction );
+
+    print_que_info( server->que, "cmd by check_server" );
+//    SCQUE_Init( server->que );
+    SCQUE_Setup( server->que, recvedCmd, cmdSize );
+    OS_TPrintf("  True Server Cmd = %d bytes, adrs=%p, %02x, %02x, %02x, ... %02x, %02x, %02x\n", cmdSize, recvedCmd,
+        ((const u8*)recvedCmd)[0], ((const u8*)recvedCmd)[1], ((const u8*)recvedCmd)[2],
+        server->que->buffer[0], server->que->buffer[1], server->que->buffer[2] );
+    print_que_info( server->que, "cmd by true_server" );
   }
+  ISDPrintSetBlockingMode( 0 );
 
   return TRUE;
 }

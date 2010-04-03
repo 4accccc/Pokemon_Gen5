@@ -117,8 +117,8 @@ typedef enum {
  */
 //--------------------------------------------------------------
 typedef struct {
-  u16   writePtr;
-  u16   readPtr;
+  u32   writePtr;
+  u32   readPtr;
   u8    buffer[BTL_SERVER_CMD_QUE_SIZE];
 }BTL_SERVER_CMD_QUE;
 

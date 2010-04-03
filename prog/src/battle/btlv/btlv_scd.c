@@ -164,7 +164,7 @@ static void printCommWait( BTLV_SCD* wk );
 BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule,
         const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, const BTL_CLIENT* client, HEAPID heapID )
 {
-  BTLV_SCD* wk = GFL_HEAP_AllocMemory( heapID, sizeof(BTLV_SCD) );
+  BTLV_SCD* wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTLV_SCD) );
 
   wk->vcore = vcore;
   wk->mainModule = mainModule;

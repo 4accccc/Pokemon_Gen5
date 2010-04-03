@@ -256,3 +256,6 @@ extern void BTL_DEBUGPRINT_PrintHeader( const char* fileName, u32 line );
 extern void BTL_DEBUGPRINT_PrintDump( const char* caption, const void* data, u32 size );
 extern const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID );
 
+extern const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd );
+
+
