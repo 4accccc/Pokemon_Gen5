@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-27T16:41:08"/>
+	<create user="matsumiya" host="W00224" date="2010-04-03T22:05:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -438,10 +438,10 @@
 ・家族全員勝ち抜いた後、話しかけた場合。</comment>
 		<attribute name="キャラ指定">姉
 お嬢様</attribute>
-		<language name="JPN" width="256">？？？？？け　あげてでも
+		<language name="JPN" width="256">ブルジョワールけ　あげてでも
 かなうことのない　その　おつよさ……▽
 けいふく　いたしますわ！</language>
-		<language name="JPN_KANJI" width="256">？？？？？家　あげてでも
+		<language name="JPN_KANJI" width="256">ブルジョワール家　あげてでも
 敵うことのない　その　お強さ……▽
 敬服　いたしますわ！</language>
 	</row>
@@ -626,10 +626,10 @@
 		<attribute name="キャラ指定">母
 ベテラントレーナー</attribute>
 		<language name="JPN" width="256">ようこそ
-？？？？？けの　しんの　つよさ
+ブルジョワールけの　しんの　つよさ
 きょうこそ　おみせ　いたしますわ！</language>
 		<language name="JPN_KANJI" width="256">ようこそ
-？？？？？家の　真の　強さ
+ブルジョワール家の　真の　強さ
 今日こそ　お見せ　いたしますわ！</language>
 	</row>
 
@@ -639,11 +639,11 @@
 		<attribute name="キャラ指定">母
 ベテラントレーナー</attribute>
 		<language name="JPN" width="256">かんぱい　ですわ▼
-この　？？？？？け
+この　ブルジョワールけ
 あなたの　こんごを　こころから▽
 おうえん　いたします</language>
 		<language name="JPN_KANJI" width="256">完敗　ですわ▼
-この　？？？？？家
+この　ブルジョワール家
 あなたの　今後を　心から▽
 応援　いたします</language>
 	</row>
@@ -654,9 +654,9 @@
 　主人公の目の前まで移動する。</comment>
 		<attribute name="キャラ指定">兄
 お坊ちゃま</attribute>
-		<language name="JPN" width="256">きみたち　それでも　？？？？？家の
+		<language name="JPN" width="256">きみたち　それでも　ブルジョワール家の
 いちいんかい？▼</language>
-		<language name="JPN_KANJI" width="256">きみたち　それでも　？？？？？家の
+		<language name="JPN_KANJI" width="256">きみたち　それでも　ブルジョワール家の
 一員かい？▼</language>
 	</row>
 
@@ -665,11 +665,11 @@
 ・移動終了後、戦闘前のセリフ</comment>
 		<attribute name="キャラ指定">兄
 お坊ちゃま</attribute>
-		<language name="JPN" width="256">？？？？？け
+		<language name="JPN" width="256">ブルジョワールけ
 じきとうしゅ　▲▲▲▲▲！▼
 いっかの　めいよは
 この　ボクが　まもろう！▼</language>
-		<language name="JPN_KANJI" width="256">？？？？？家
+		<language name="JPN_KANJI" width="256">ブルジョワール家
 次期当主　▲▲▲▲▲！▼
 一家の　名誉は
 このボクが　護ろう！▼</language>
@@ -681,10 +681,12 @@
 		<attribute name="キャラ指定">兄
 お坊ちゃま</attribute>
 		<language name="JPN" width="256">また　あしたも　くるがいい▼
-だが　？？？？？けの　なに　かけて
+だが　ブルジョワールけの
+なまえに　かけて▽
 ボクは　まけるつもりは　ないよ</language>
 		<language name="JPN_KANJI" width="256">また　明日も　来るがいい▼
-だが　？？？？？家の　名に　かけて
+だが　ブルジョワール家の
+名前に　かけて▽
 ボクは　負けるつもりは　ないよ</language>
 	</row>
 
