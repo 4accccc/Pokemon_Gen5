@@ -20,6 +20,8 @@
 #endif  // 同一ビットマップでGFL_BMP_Printすると危険かもしれない、と思い、2つ用意した。(memcpy, memmoveどちらとして働くのか分からないから)
         // どうもGFL_BMP_Printに時間が掛かっているようだ。VRAMにおいてVRAM同士でコピーすれば速いだろうか？
 
+//#define TIME_BMPWIN        // これが定義されているとき、時間を文字として表示する
+
 
 // インクルード
 #include <gflib.h>
@@ -63,8 +65,8 @@
 #define BG_FRAME_M_TIME            (GFL_BG_FRAME3_M)
 #define BG_FRAME_M_REAR            (GFL_BG_FRAME0_M)
 // メインBGフレームのプライオリティ
-#define BG_FRAME_PRI_M_PANEL       (2)
-#define BG_FRAME_PRI_M_TIME        (1)
+#define BG_FRAME_PRI_M_PANEL       (1)
+#define BG_FRAME_PRI_M_TIME        (2)
 #define BG_FRAME_PRI_M_REAR        (3)
 
 // メインBGパレット
@@ -87,12 +89,12 @@ enum
 // 本数
 enum
 {
-  OBJ_PAL_NUM_M_             = 0,
+  OBJ_PAL_NUM_M_NUMBER       = 4,
 };
 // 位置
 enum
 {
-  OBJ_PAL_POS_M_             = 0,
+  OBJ_PAL_POS_M_NUMBER       = 0,
 };
 
 
@@ -121,11 +123,13 @@ enum
 enum
 {
   OBJ_PAL_NUM_S_POKE             = 1,
+  OBJ_PAL_NUM_S_FIELD            = 1,
 };
 // 位置
 enum
 {
   OBJ_PAL_POS_S_POKE             = 0,
+  OBJ_PAL_POS_S_FIELD            = 1,
 };
 
 
@@ -152,6 +156,63 @@ typedef enum
   END_CMD_OUTSIDE,
 }
 END_CMD;
+
+
+// OBJ
+enum
+{
+  OBJ_RES_NUMBER_NCG,
+  OBJ_RES_NUMBER_NCL,
+  OBJ_RES_NUMBER_NCE,
+  OBJ_RES_FIELD_NCG,
+  OBJ_RES_FIELD_NCL,
+  OBJ_RES_FIELD_NCE,
+  OBJ_RES_MAX,
+};
+enum
+{
+  OBJ_CELL_TIME_START   = 0,
+  OBJ_CELL_NUMBER0      = OBJ_CELL_TIME_START,
+  OBJ_CELL_NUMBER1,
+  OBJ_CELL_NUMBER2,
+  OBJ_CELL_NUMBER3,
+  OBJ_CELL_DASH1,
+  OBJ_CELL_DASH2,
+  OBJ_CELL_TIME_END,
+
+  OBJ_CELL_FIELD        = OBJ_CELL_TIME_END,
+  OBJ_CELL_MAX,
+};
+static const u8 obj_setup_info[OBJ_CELL_MAX][9] =
+{
+  //  pos_x,  pos_y,  anmseq,  softpri,  bgpri,                ncg,                ncl,                nce,                surface
+  {    25*8,   15*8,      28,        0,  BG_FRAME_PRI_M_PANEL, OBJ_RES_NUMBER_NCG, OBJ_RES_NUMBER_NCL, OBJ_RES_NUMBER_NCE, CLSYS_DEFREND_MAIN },
+  {    26*8,   15*8,      28,        0,  BG_FRAME_PRI_M_PANEL, OBJ_RES_NUMBER_NCG, OBJ_RES_NUMBER_NCL, OBJ_RES_NUMBER_NCE, CLSYS_DEFREND_MAIN },
+  {    28*8,   15*8,      28,        0,  BG_FRAME_PRI_M_PANEL, OBJ_RES_NUMBER_NCG, OBJ_RES_NUMBER_NCL, OBJ_RES_NUMBER_NCE, CLSYS_DEFREND_MAIN },
+  {    29*8,   15*8,      28,        0,  BG_FRAME_PRI_M_PANEL, OBJ_RES_NUMBER_NCG, OBJ_RES_NUMBER_NCL, OBJ_RES_NUMBER_NCE, CLSYS_DEFREND_MAIN },
+  {    27*8,   15*8,      29,        0,  BG_FRAME_PRI_M_PANEL, OBJ_RES_NUMBER_NCG, OBJ_RES_NUMBER_NCL, OBJ_RES_NUMBER_NCE, CLSYS_DEFREND_MAIN },
+  {    30*8,   15*8,      30,        0,  BG_FRAME_PRI_M_PANEL, OBJ_RES_NUMBER_NCG, OBJ_RES_NUMBER_NCL, OBJ_RES_NUMBER_NCE, CLSYS_DEFREND_MAIN },
+  {     128,     96,       0,        0,  BG_FRAME_PRI_S_REAR,  OBJ_RES_FIELD_NCG,  OBJ_RES_FIELD_NCL,  OBJ_RES_FIELD_NCE,  CLSYS_DEFREND_SUB  },
+};
+
+// ポケモンの鳴きアニメ(縦スケール拡大)
+#define POKE_CLWK_SIZE         (96)    // ポケグラの縦横ピクセルサイズ
+#define POKE_CLWK_BASE_POS_X   (128)
+#define POKE_CLWK_BASE_POS_Y   (128)
+#define POKE_CLWK_BASE_SCALE_X (1.0f)
+#define POKE_CLWK_BASE_SCALE_Y (1.0f)
+#define POKE_CLWK_SCALE_Y_MAX  (1.1f)   // ポケモンが鳴くときのスケールの最大値
+#define POKE_CLWK_SCALE_Y_INC  (0.01f)  // ポケモンが鳴くときのスケールの1フレームの増加分
+#define POKE_CLWK_SCALE_Y_DEC  (0.01f)  // ポケモンが鳴くときのスケールの1フレームの減少分
+typedef enum
+{
+  POKE_CLWK_STATE_SILENT,
+  POKE_CLWK_STATE_CRY_OPEN,
+  POKE_CLWK_STATE_CRY_STOP,
+  POKE_CLWK_STATE_CRY_CLOSE,
+}
+POKE_CLWK_STATE;
+
 
 // グラフ
 #define GRAPH_BITMAP_CHAR_SIZE_X    (30)
@@ -185,7 +246,7 @@ END_CMD;
 #define GRAPH_DATA_X_TO_BITMAP_X(x)  (GRAPH_BITMAP_ORIGIN_X+(x)-GRAPH_DATA_MIN_X)  // ( x<GRAPH_DATA_MIN_X || GRAPH_DATA_MAX_X<x ) のときは使用しないこと
 #define GRAPH_DATA_Y_TO_BITMAP_Y(y)  (GRAPH_BITMAP_ORIGIN_Y-(y))                   // ( y<GRAPH_DATA_MIN_Y || GRAPH_DATA_MAX_Y<y ) のときは使用しないこと
 
-#define GRAPH_COLOR (10)  // グラフの描画色
+#define GRAPH_COLOR (15)  // グラフの描画色
 
 // waveデータの最大値
 #define WAVE_DATA_VALUE_MAX                (128)                     // wave_data_begin[i] * WAVE_DATA_VALUE_MAX_TO_GRAPH_DATA / WAVE_DATA_VALUE_MAX
@@ -240,9 +301,11 @@ typedef struct
 
   // ここで作成するもの
   GFL_BMPWIN*                 name_bmpwin;
-  
+ 
+#ifdef TIME_BMPWIN
   GFL_BMPWIN*                 time_bmpwin;
   GFL_MSGDATA*                time_msgdata;
+#endif
 
 #ifdef GRAPH_SWAP_BMPWIN
   GRAPH_SWAP_BMPWIN_IDX       graph_swap_bmpwin_idx;  // これから描画するビットマップウィンドウ
@@ -272,7 +335,8 @@ typedef struct
   u32                         poke_ncl;
   u32                         poke_nce;
   GFL_CLWK*                   poke_clwk;
-  
+  POKE_CLWK_STATE             poke_state;
+
   u32                         voice_idx;
   BOOL                        voice_play;  // 時間を更新中はTRUEにしておく(なので、ボイスの再生が終わってもTRUEのままのこともある)
   OSTick                      voice_start;
@@ -283,6 +347,10 @@ typedef struct
 
   ZKNDTL_COMMON_REAR_WORK*    rear_wk_m;
   ZKNDTL_COMMON_REAR_WORK*    rear_wk_s;
+
+  // OBJ
+  u32                         obj_res[OBJ_RES_MAX];
+  GFL_CLWK*                   obj_cell[OBJ_CELL_MAX];
 
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
@@ -305,9 +373,19 @@ ZUKAN_DETAIL_VOICE_WORK;
 // VBlank関数
 static void Zukan_Detail_Voice_VBlankFunc( GFL_TCB* tcb, void* wk );
 
+// OBJ
+static void Zukan_Detail_Voice_ObjInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Voice_ObjExit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Voice_ObjTimeDisplay( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                                               u16 disp_sec, u16 disp_milli );
+
 // ポケモン2D
 static void Zukan_Detail_Voice_CreatePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Voice_DeletePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+// ポケモンの鳴きアニメ(縦スケール拡大)
+static void Zukan_Detail_Voice_PokeCryMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Voice_PokeCryStart( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Voice_PokeCryEnd( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 // ポケモン名
 static void Zukan_Detail_Voice_CreateNameBase( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -454,6 +532,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcExit( ZKNDTL_PROC* proc, int* s
 
   // グラフ
   Zukan_Detail_Voice_GraphExit( param, work, cmn );
+  // OBJ
+  Zukan_Detail_Voice_ObjExit( param, work, cmn );
   // 最背面
   ZKNDTL_COMMON_RearExit( work->rear_wk_s );
   ZKNDTL_COMMON_RearExit( work->rear_wk_m );
@@ -535,6 +615,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
 
       // ポケモン2D
       Zukan_Detail_Voice_CreatePoke( param, work, cmn );
+      GFL_CLACT_WK_SetObjMode( work->poke_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
       // ポケモン名
       Zukan_Detail_Voice_CreateNameBase( param, work, cmn );
       Zukan_Detail_Voice_CreateName( param, work, cmn );
@@ -548,7 +629,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
                               BG_FRAME_M_PANEL,
                               BG_PAL_NUM_M_PANEL,
                               BG_PAL_POS_M_PANEL,
-                              0,
+                              5,
                               ARCID_ZUKAN_GRA,
                               NARC_zukan_gra_info_info_bgd_NCLR,
                               NARC_zukan_gra_info_info_bgd_NCGR,
@@ -559,6 +640,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
           BG_FRAME_M_REAR, BG_PAL_POS_M_REAR +0, BG_PAL_POS_M_REAR +1 );
       work->rear_wk_s = ZKNDTL_COMMON_RearInit( param->heap_id, ZKNDTL_COMMON_REAR_TYPE_VOICE,
           BG_FRAME_S_REAR, BG_PAL_POS_S_REAR +0, BG_PAL_POS_S_REAR +1 );
+      // OBJ
+      Zukan_Detail_Voice_ObjInit( param, work, cmn );
+      Zukan_Detail_Voice_ObjTimeDisplay( param, work, cmn, 0, 0 );
       // グラフ
       Zukan_Detail_Voice_GraphInit( param, work, cmn );
     }
@@ -685,6 +769,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
     Zukan_Detail_Voice_UpdateTime( param, work, cmn );
     // グラフ 
     Zukan_Detail_Voice_GraphMain( param, work, cmn );
+    // ポケモンの鳴きアニメ(縦スケール拡大)
+    Zukan_Detail_Voice_PokeCryMain( param, work, cmn );
   }
 
   // 最背面
@@ -793,6 +879,137 @@ static void Zukan_Detail_Voice_VBlankFunc( GFL_TCB* tcb, void* wk )
 }
 
 //-------------------------------------
+/// OBJ
+//=====================================
+static void Zukan_Detail_Voice_ObjInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // リソース読み込み
+  {
+    ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, param->heap_id );
+
+    work->obj_res[OBJ_RES_NUMBER_NCL] = GFL_CLGRP_PLTT_RegisterEx( 
+                                     handle,
+                                     NARC_zukan_gra_info_info_obj_NCLR,
+                                     CLSYS_DRAW_MAIN,
+                                     OBJ_PAL_POS_M_NUMBER*0x20,
+                                     0,
+                                     OBJ_PAL_NUM_M_NUMBER,
+                                     param->heap_id );	
+    work->obj_res[OBJ_RES_NUMBER_NCG] = GFL_CLGRP_CGR_Register(
+                                     handle,
+                                     NARC_zukan_gra_info_info_obj_NCGR,
+                                     FALSE,
+                                     CLSYS_DRAW_MAIN,
+                                     param->heap_id );
+    work->obj_res[OBJ_RES_NUMBER_NCE] = GFL_CLGRP_CELLANIM_Register(
+                                     handle,
+                                     NARC_zukan_gra_info_info_obj_NCER,
+                                     NARC_zukan_gra_info_info_obj_NANR,
+                                     param->heap_id );
+
+    work->obj_res[OBJ_RES_FIELD_NCL] = GFL_CLGRP_PLTT_RegisterEx( 
+                                     handle,
+                                     NARC_zukan_gra_info_voicewin_obj_NCLR,
+                                     CLSYS_DRAW_SUB,
+                                     OBJ_PAL_POS_S_FIELD*0x20,
+                                     0,
+                                     OBJ_PAL_NUM_S_FIELD,
+                                     param->heap_id );	
+    work->obj_res[OBJ_RES_FIELD_NCG] = GFL_CLGRP_CGR_Register(
+                                     handle,
+                                     NARC_zukan_gra_info_voicewin_obj_NCGR,
+                                     FALSE,
+                                     CLSYS_DRAW_SUB,
+                                     param->heap_id );
+    work->obj_res[OBJ_RES_FIELD_NCE] = GFL_CLGRP_CELLANIM_Register(
+                                     handle,
+                                     NARC_zukan_gra_info_voicewin_obj_NCER,
+                                     NARC_zukan_gra_info_voicewin_obj_NANR,
+                                     param->heap_id );
+
+    GFL_ARC_CloseDataHandle( handle );
+  }
+
+  // CLWK作成
+  {
+    u8 i;
+    GFL_CLWK_DATA cldata;
+
+    for( i=0; i<OBJ_CELL_MAX; i++ )
+    {
+      GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+      cldata.pos_x      = obj_setup_info[i][0];
+      cldata.pos_y      = obj_setup_info[i][1];
+      cldata.anmseq     = obj_setup_info[i][2];
+      cldata.softpri    = obj_setup_info[i][3];
+      cldata.bgpri      = obj_setup_info[i][4];
+
+      work->obj_cell[i] = GFL_CLACT_WK_Create(
+                             work->clunit,
+                             work->obj_res[obj_setup_info[i][5]], work->obj_res[obj_setup_info[i][6]], work->obj_res[obj_setup_info[i][7]],
+                             &cldata,
+                             obj_setup_info[i][8],
+                             param->heap_id );
+
+      GFL_CLACT_WK_SetDrawEnable( work->obj_cell[i], TRUE );
+      GFL_CLACT_WK_SetObjMode( work->obj_cell[i], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+    }
+
+    GFL_CLACT_WK_SetAutoAnmFlag( work->obj_cell[OBJ_CELL_FIELD], TRUE );
+  }
+}
+static void Zukan_Detail_Voice_ObjExit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // CLWK破棄
+  {
+    u8 i;
+    for( i=0; i<OBJ_CELL_MAX; i++ )
+    {
+      GFL_CLACT_WK_Remove( work->obj_cell[i] );
+    }
+  }
+
+  // リソース破棄
+  {
+    GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_RES_NUMBER_NCL] );
+    GFL_CLGRP_CGR_Release( work->obj_res[OBJ_RES_NUMBER_NCG] );
+    GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_RES_NUMBER_NCE] );
+
+    GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_RES_FIELD_NCL] );
+    GFL_CLGRP_CGR_Release( work->obj_res[OBJ_RES_FIELD_NCG] );
+    GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_RES_FIELD_NCE] );
+  }
+}
+static void Zukan_Detail_Voice_ObjTimeDisplay( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn,
+                                               u16 disp_sec, u16 disp_milli )
+{
+  // この関数の呼び出し元で、四捨五入やら上限内に収めるやらはやってくれている
+  u8  cell_idx[4] =
+  {
+    OBJ_CELL_NUMBER0,
+    OBJ_CELL_NUMBER1,
+    OBJ_CELL_NUMBER2,
+    OBJ_CELL_NUMBER3,
+  };
+  u16 n[4];
+  u8  i;
+
+  n[0] = disp_sec / 10;
+  if( n[0] > 9 ) n[0] = 9;
+  n[1] = disp_sec % 10;
+
+  n[2] = disp_milli /10;
+  if( n[2] > 9 ) n[2] = 9;
+  n[3] = disp_milli %10;
+
+  for( i=0; i<4; i++ )
+  {
+    GFL_CLACT_WK_SetAnmIndex( work->obj_cell[ cell_idx[i] ], n[i] );
+  }
+}
+
+
+//-------------------------------------
 /// ポケモン2D
 //=====================================
 static void Zukan_Detail_Voice_CreatePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
@@ -842,6 +1059,7 @@ static void Zukan_Detail_Voice_CreatePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
     GFL_ARC_CloseDataHandle( handle );
   }
 
+#if 0
   // OBJを生成する
   {
     GFL_CLWK_DATA cldata;
@@ -857,6 +1075,42 @@ static void Zukan_Detail_Voice_CreatePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
   
     GFL_CLACT_WK_SetObjMode( work->poke_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
   }
+#endif
+
+  // 拡縮可能なOBJを生成する
+  {
+    GFL_CLWK_AFFINEDATA claffinedata;
+    GFL_STD_MemClear( &claffinedata, sizeof(GFL_CLWK_AFFINEDATA) );
+
+    claffinedata.clwkdata.pos_x    = POKE_CLWK_BASE_POS_X;
+    claffinedata.clwkdata.pos_y    = POKE_CLWK_BASE_POS_Y;
+    claffinedata.clwkdata.anmseq   = 0;
+    claffinedata.clwkdata.softpri  = 0;
+    claffinedata.clwkdata.bgpri    = 0;
+
+    claffinedata.affinepos_x    = 0;
+    claffinedata.affinepos_y    = 0;
+    claffinedata.scale_x        = FX_F32_TO_FX32( POKE_CLWK_BASE_SCALE_X );
+    claffinedata.scale_y        = FX_F32_TO_FX32( POKE_CLWK_BASE_SCALE_Y );
+    claffinedata.rotation       = 0;  // 回転角度(0～0xffff 0xffffが360度)
+    claffinedata.affine_type    = CLSYS_AFFINETYPE_DOUBLE;
+
+    work->poke_clwk = GFL_CLACT_WK_CreateAffine(
+        work->clunit,
+        work->poke_ncg,
+        work->poke_ncl,
+        work->poke_nce,
+        &claffinedata,
+        CLSYS_DEFREND_SUB,
+        param->heap_id );
+
+    //GFL_CLACT_WK_SetObjMode( work->poke_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+    GFL_CLACT_WK_SetObjMode( work->poke_clwk, GX_OAM_MODE_NORMAL );  // BGとともにこのOBJも暗くしたいのは、フェードインとフェードアウトのときだけであり、
+                                                                     // ポケモンを変更しただけのときは、暗くしたり半透明にしたりしたくない。
+                                                                     // BGとともにこのOBJも暗くしたいときは、この関数の後に設定すること。
+  }
+
+  work->poke_state = POKE_CLWK_STATE_SILENT;
 }
 static void Zukan_Detail_Voice_DeletePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
@@ -870,6 +1124,88 @@ static void Zukan_Detail_Voice_DeletePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
     GFL_CLGRP_PLTT_Release( work->poke_ncl );
     GFL_CLGRP_CGR_Release( work->poke_ncg );
     GFL_CLGRP_CELLANIM_Release( work->poke_nce );
+  }
+}
+
+// ポケモンの鳴きアニメ(縦スケール拡大)
+static void Zukan_Detail_Voice_PokeCryMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  GFL_CLACTPOS  pos;
+  GFL_CLSCALE   scale;
+  f32           sy;
+
+  switch( work->poke_state )
+  {
+  case POKE_CLWK_STATE_SILENT:
+    {
+    }
+    break;
+  case POKE_CLWK_STATE_CRY_OPEN:
+    {
+      GFL_CLACT_WK_GetPos( work->poke_clwk, &pos, CLSYS_DEFREND_SUB );
+      GFL_CLACT_WK_GetScale( work->poke_clwk, &scale );
+      sy = FX_FX32_TO_F32( scale.y );
+      sy += POKE_CLWK_SCALE_Y_INC;
+      if( sy >= POKE_CLWK_SCALE_Y_MAX )
+      {
+        sy = POKE_CLWK_SCALE_Y_MAX;
+        work->poke_state = POKE_CLWK_STATE_CRY_STOP;
+      }
+      pos.y = POKE_CLWK_BASE_POS_Y - (s16)( POKE_CLWK_SIZE * ( sy - 1.0f ) / 2.0f );
+      scale.y = FX_F32_TO_FX32( sy );
+
+      GFL_CLACT_WK_SetPos( work->poke_clwk, &pos, CLSYS_DEFREND_SUB );
+      GFL_CLACT_WK_SetScale( work->poke_clwk, &scale );
+    }
+    break;
+  case POKE_CLWK_STATE_CRY_STOP:
+    {
+    }
+    break;
+  case POKE_CLWK_STATE_CRY_CLOSE:
+    {
+      GFL_CLACT_WK_GetPos( work->poke_clwk, &pos, CLSYS_DEFREND_SUB );
+      GFL_CLACT_WK_GetScale( work->poke_clwk, &scale );
+      sy = FX_FX32_TO_F32( scale.y );
+      sy -= POKE_CLWK_SCALE_Y_DEC;
+      if( sy <= POKE_CLWK_BASE_SCALE_Y )
+      {
+        sy = POKE_CLWK_BASE_SCALE_Y;
+        work->poke_state = POKE_CLWK_STATE_SILENT;
+        pos.y = POKE_CLWK_BASE_POS_Y;
+      }
+      else
+      {
+        pos.y = POKE_CLWK_BASE_POS_Y - (s16)( POKE_CLWK_SIZE * ( sy - 1.0f ) / 2.0f );
+      }
+      scale.y = FX_F32_TO_FX32( sy );
+
+      GFL_CLACT_WK_SetPos( work->poke_clwk, &pos, CLSYS_DEFREND_SUB );
+      GFL_CLACT_WK_SetScale( work->poke_clwk, &scale );
+    }
+    break;
+  }
+}
+static void Zukan_Detail_Voice_PokeCryStart( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  GFL_CLACTPOS  pos;
+  GFL_CLSCALE   scale;
+
+  pos.x = POKE_CLWK_BASE_POS_X;
+  pos.y = POKE_CLWK_BASE_POS_Y;
+  scale.x = FX_F32_TO_FX32( POKE_CLWK_BASE_SCALE_X );
+  scale.y = FX_F32_TO_FX32( POKE_CLWK_BASE_SCALE_Y );
+
+  GFL_CLACT_WK_SetPos( work->poke_clwk, &pos, CLSYS_DEFREND_SUB );
+  GFL_CLACT_WK_SetScale( work->poke_clwk, &scale );
+
+  work->poke_state = POKE_CLWK_STATE_CRY_OPEN;
+}
+static void Zukan_Detail_Voice_PokeCryEnd( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  if( work->poke_state == POKE_CLWK_STATE_CRY_OPEN || work->poke_state == POKE_CLWK_STATE_CRY_STOP )
+  {
+    work->poke_state = POKE_CLWK_STATE_CRY_CLOSE;
   }
 }
 
@@ -916,7 +1252,8 @@ static void Zukan_Detail_Voice_CreateName( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
   u16 bmp_height = GFL_BMP_GetSizeY( GFL_BMPWIN_GetBmp(work->name_bmpwin) );
   u16 y = ( bmp_height - str_height ) / 2;
 */
-  u16 y = 10;  // 計算で出した位置は中心より上に見えるので
+  //u16 y = 10;  // 計算で出した位置は中心より上に見えるので
+  u16 y = 1;  // OBJ_CELL_FIELDに合わせて 
 
   PRINTSYS_PrintQueColor( work->print_que, GFL_BMPWIN_GetBmp( work->name_bmpwin ),
                           x, y, strbuf, work->font, PRINTSYS_LSB_Make(15,2,0) );
@@ -949,6 +1286,7 @@ static void Zukan_Detail_Voice_CreateTimeBase( ZUKAN_DETAIL_VOICE_PARAM* param, 
        BG_PAL_NUM_M_TIME * 0x20,
        param->heap_id );
 
+#ifdef TIME_BMPWIN
   // ビットマップウィンドウ
   work->time_bmpwin = GFL_BMPWIN_Create( BG_FRAME_M_TIME,
                                          26, 18, 5, 2,
@@ -962,15 +1300,19 @@ static void Zukan_Detail_Voice_CreateTimeBase( ZUKAN_DETAIL_VOICE_PARAM* param, 
   work->time_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
                            ARCID_MESSAGE, NARC_message_zkn_dat,
                            param->heap_id );
+#endif
 }
 static void Zukan_Detail_Voice_DeleteTimeBase( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+#ifdef TIME_BMPWIN
   GFL_MSG_Delete( work->time_msgdata );
   GFL_BMPWIN_Delete( work->time_bmpwin );
+#endif
 }
 static void Zukan_Detail_Voice_CreateTime( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn,
                                            u16 disp_sec, u16 disp_milli )
 {
+#ifdef TIME_BMPWIN
   WORDSET* wordset = WORDSET_Create( param->heap_id );
   STRBUF* src_strbuf = GFL_MSG_CreateString( work->time_msgdata, ZKN_VOICE_TEXT_01 );
   STRBUF* strbuf = GFL_STR_CreateBuffer( STRBUF_TIME_LENGTH, param->heap_id );
@@ -986,13 +1328,16 @@ static void Zukan_Detail_Voice_CreateTime( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
   WORDSET_Delete( wordset );
 
   GFL_BMPWIN_MakeTransWindow_VBlank( work->time_bmpwin );
+#endif
 }
 static void Zukan_Detail_Voice_DeleteTime( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+#ifdef TIME_BMPWIN
   // クリア
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->time_bmpwin ), 0 );
 
   GFL_BMPWIN_TransVramCharacter( work->time_bmpwin );
+#endif
 }
 
 #ifdef GRAPH_GATHER
@@ -1021,6 +1366,8 @@ static void Zukan_Detail_Voice_UpdateTime( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
     {
       work->voice_disp_millisec = work->wave_full_millisec;
       work->voice_play = FALSE;
+      // ポケモンの鳴きアニメ(縦スケール拡大)
+      Zukan_Detail_Voice_PokeCryEnd( param, work, cmn );
     }
   }
 
@@ -1033,6 +1380,7 @@ static void Zukan_Detail_Voice_UpdateTime( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
 
     Zukan_Detail_Voice_DeleteTime( param, work, cmn );
     Zukan_Detail_Voice_CreateTime( param, work, cmn, disp_sec, disp_milli );
+    Zukan_Detail_Voice_ObjTimeDisplay( param, work, cmn, disp_sec, disp_milli );
 
     work->voice_prev_disp_millisec = work->voice_disp_millisec;
   }
@@ -1080,6 +1428,7 @@ static void Zukan_Detail_Voice_UpdateTime( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
 
     Zukan_Detail_Voice_DeleteTime( param, work, cmn );
     Zukan_Detail_Voice_CreateTime( param, work, cmn, disp_sec, disp_milli );
+    Zukan_Detail_Voice_ObjTimeDisplay( param, work, cmn, disp_sec, disp_milli );
 
     work->voice_prev_disp_millisec = work->voice_disp_millisec;
   }
@@ -1145,6 +1494,9 @@ static void Zukan_Detail_Voice_TouchPlayButton( ZUKAN_DETAIL_VOICE_PARAM* param,
       work->voice_play = TRUE;
 
       Zukan_Detail_Voice_WaveDataSetup( param, work, cmn, monsno, (u16)formno );
+
+      // ポケモンの鳴きアニメ(縦スケール拡大)
+      Zukan_Detail_Voice_PokeCryStart( param, work, cmn );
     }
   }
 }
@@ -1599,17 +1951,54 @@ static void Zukan_Detail_Voice_WaveDataSetup( ZUKAN_DETAIL_VOICE_PARAM* param, Z
 //=====================================
 static void Zukan_Detail_Voice_AlphaInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
-  int ev1 = 12;
-  G2_SetBlendAlpha(
+  // 半透明にしないOBJの設定を変更する
+  {
+    u8 i;
+
+    GFL_CLACT_WK_SetObjMode( work->poke_clwk, GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
+
+    for( i=OBJ_CELL_TIME_START; i<OBJ_CELL_TIME_END; i++ )
+    {
+      GFL_CLACT_WK_SetObjMode( work->obj_cell[i], GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
+    }
+  }
+
+  {
+    int ev1 = 16;
+    int ev2 = 4;
+    G2_SetBlendAlpha(
         GX_BLEND_PLANEMASK_BG2,
         GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
         ev1,
+        ev2 );  // ev1+ev2=16にならないけど、デザイナーさん指定の値なので。
+  }
+  {
+    int ev1 = 12;
+    G2S_SetBlendAlpha(
+        GX_BLEND_PLANEMASK_NONE,
+        GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
+        ev1,
         16 - ev1 );
+  }
 }
 static void Zukan_Detail_Voice_AlphaExit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  // 半透明にしないOBJの設定を元に戻す
+  {
+    u8 i;
+
+    GFL_CLACT_WK_SetObjMode( work->poke_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+
+    for( i=OBJ_CELL_TIME_START; i<OBJ_CELL_TIME_END; i++ )
+    {
+      GFL_CLACT_WK_SetObjMode( work->obj_cell[i], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+    }
+  }
+
   // 一部分フェードの設定を元に戻す
   ZKNDTL_COMMON_FadeSetPlaneDefault( work->fade_wk_m );
+  // 一部分フェードの設定を元に戻す
+  ZKNDTL_COMMON_FadeSetPlaneDefault( work->fade_wk_s );
 }
 
 
