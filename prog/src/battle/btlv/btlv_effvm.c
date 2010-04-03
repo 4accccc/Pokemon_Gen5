@@ -3394,11 +3394,6 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   //仮想マシン停止
   VM_End( vmh );
 
-#ifdef PM_DEBUG
-  //デバッグフラグを落としておく
-  bevw->debug_flag = FALSE;
-#endif
-
   //BG周りの設定をデフォルトに戻しておく
   if( bevw->set_priority_flag )
   {
@@ -3423,6 +3418,19 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
 
     bevw->set_alpha_flag = 0;
   }
+
+#ifdef PM_DEBUG
+  { 
+    const BTLV_SCU* scu = BTLV_EFFECT_GetScu();
+    if( scu == NULL )
+    { 
+      GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
+    }
+    //デバッグフラグを落としておく
+    bevw->debug_flag = FALSE;
+  }
+#endif
+
 
   //SUSPENDモードに切り替えておく
   bevw->control_mode = VMCMD_RESULT_SUSPEND;
