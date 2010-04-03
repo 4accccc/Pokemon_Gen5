@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T16:51:26"/>
+	<create user="matsumiya" host="W00224" date="2010-04-03T22:27:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -384,9 +384,9 @@
 ・なつき度120～255</comment>
 		<attribute name="キャラ指定">女の子</attribute>
 		<language name="JPN" width="256">あなたに　なついているのね
-いっしょにいると　しあわせ　なのね</language>
+いっしょにいると　しあわせ　なんだ</language>
 		<language name="JPN_KANJI" width="256">あなたに　なついているのね
-一緒にいると　しあわせ　なのね</language>
+一緒にいると　しあわせ　なんだ</language>
 	</row>
 
 	<row id="msg_c02r0301_girl1_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
