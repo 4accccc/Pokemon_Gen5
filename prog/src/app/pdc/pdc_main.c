@@ -112,7 +112,7 @@ PDC_MAIN_WORK* PDC_MAIN_Init( PDC_SETUP_PARAM* psp, HEAPID heapID )
     GFL_HEAP_FreeMemory( besp );
   }
 
-  pmw->biw = BTLV_INPUT_InitEx( BTLV_INPUT_TYPE_SINGLE, pmw->large_font, &pmw->cursor_flag, pmw->heapID );
+  pmw->biw = BTLV_INPUT_InitEx( BTLV_INPUT_TYPE_SINGLE, BTLV_EFFECT_GetPfd(), pmw->large_font, &pmw->cursor_flag, pmw->heapID );
   pmw->tcbl = GFL_TCBL_Init( heapID, heapID, 64, 128 );
 
   pmw->pp = PDC_GetPP( psp );
