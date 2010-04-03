@@ -720,7 +720,7 @@ void FIELD_PLACE_NAME_RecoverBG(FIELD_PLACE_NAME* sys)
 static void SetupBG( FIELD_PLACE_NAME* sys )
 { 
   // パレットデータ
-	LoadBGPalette( sys, ARCID_PLACE_NAME, NARC_place_name_place_name_back_NCLR );
+	LoadBGPalette( sys, ARCID_PLACE_NAME, NARC_place_name_place_name_string_NCLR );
 
 	// NULLキャラクタデータ
   AllocBGNullCharArea( sys );
