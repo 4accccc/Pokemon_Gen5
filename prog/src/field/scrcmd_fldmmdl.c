@@ -1150,6 +1150,7 @@ VMCMD_RESULT EvCmdPlayerRailLocationSet( VMHANDLE *core, void *wk )
   RAIL_LOCATION rail_location;
   FIELD_RAIL_WORK* p_railWork;
   u16 index, ofs, w_ofs;
+  RAIL_LOCATION location;
 
 
   // レールのオブジェか？
@@ -1163,6 +1164,8 @@ VMCMD_RESULT EvCmdPlayerRailLocationSet( VMHANDLE *core, void *wk )
   p_railWork = MMDL_GetRailWork( mmdl );
 
   FIELD_RAIL_WORK_SetNotMinusRailParam( p_railWork, index, ofs, w_ofs );
+  FIELD_RAIL_WORK_GetLocation( p_railWork, &location );
+  MMDL_SetRailLocation( mmdl, &location );
   
   return VMCMD_RESULT_CONTINUE;
 }
@@ -1175,6 +1178,7 @@ VMCMD_RESULT EvCmdObjRailLocationSet( VMHANDLE *core, void *wk )
   RAIL_LOCATION rail_location;
   FIELD_RAIL_WORK* p_railWork;
   u16 index, ofs, w_ofs;
+  RAIL_LOCATION location;
 
 
   // レールのオブジェか？
@@ -1188,6 +1192,8 @@ VMCMD_RESULT EvCmdObjRailLocationSet( VMHANDLE *core, void *wk )
   p_railWork = MMDL_GetRailWork( mmdl );
 
   FIELD_RAIL_WORK_SetNotMinusRailParam( p_railWork, index, ofs, w_ofs );
+  FIELD_RAIL_WORK_GetLocation( p_railWork, &location );
+  MMDL_SetRailLocation( mmdl, &location );
   
   return VMCMD_RESULT_CONTINUE;
 }

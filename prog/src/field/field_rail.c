@@ -2083,6 +2083,15 @@ void FIELD_RAIL_WORK_SetNotMinusRailParam( FIELD_RAIL_WORK* p_work, u16 index, u
 
   // サイドを合わせる。
   p_work->width_ofs = side - p_work->width_ofs_max;
+  location.width_grid = RAIL_OFS_TO_GRID(p_work->width_ofs);
+
+  // 位置やロケーションをサイド設定しなおす
+  // 座標の初期化
+  getRailPosition(p_work, &p_work->pos);
+
+  // ロケーションの初期化
+  p_work->now_location = location;
+  p_work->last_location = location;
 }
 
 
