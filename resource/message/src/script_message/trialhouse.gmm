@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T15:45:01"/>
+	<create user="matsumiya" host="W00224" date="2010-04-03T22:00:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -389,13 +389,13 @@
 	</row>
 
 	<row id="msg_trialhouse_004">
-		<language name="JPN" width="256">ごめんなさい…▼
+		<language name="JPN" width="256">ごめんなさい……▼
 あなたに　バトルけんていは
 まだ　はやいわ▼
 すべてのことを　おわらせて
 もっと　つよくなってから▽
 また　きてちょーだい</language>
-		<language name="JPN_KANJI" width="256">ごめんなさい…▼
+		<language name="JPN_KANJI" width="256">ごめんなさい……▼
 あなたに　バトル検定は
 まだ　はやいわ▼
 すべてのことを　終わらせて
@@ -547,11 +547,11 @@
 	</row>
 
 	<row id="msg_trialhouse_024" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<language name="JPN" width="256">ダウンロードするものが
+		<language name="JPN" width="256">ダウンロードする　ものが
 みあたらない　ですね……▼
 どうする？</language>
-		<language name="JPN_KANJI" width="256">ダウンロードするものが
-みあたらない　ですね……▼
+		<language name="JPN_KANJI" width="256">ダウンロードする　ものが
+見当たらない　ですね……▼
 どうする？</language>
 	</row>
 
