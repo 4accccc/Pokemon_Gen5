@@ -612,8 +612,11 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
 
   case 5:
       BTL_N_Printf( DBGSTR_SVFL_SendServerCmd, server->flowResult);
-      print_client_action( &server->clientAction );
-      print_que_info( server->que, "Server Send ... ");
+
+      if( BTL_MAIN_GetCommMode(server->mainModule) != BTL_COMM_NONE ){
+        print_client_action( &server->clientAction );
+        print_que_info( server->que, "Server Send ... ");
+      }
 
       SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;
@@ -1137,6 +1140,7 @@ void BTL_SERVER_CMDCHECK_RestoreActionData( BTL_SERVER* server, const void* recD
 
 static void print_client_action( const BTL_SVCL_ACTION* clientAction )
 {
+  #ifdef PM_DEBUG
   u32 i;
   for(i=0; i<BTL_CLIENT_MAX; ++i)
   {
@@ -1157,10 +1161,12 @@ static void print_client_action( const BTL_SVCL_ACTION* clientAction )
       }
     }
   }
+  #endif
 }
 
 static void print_que_info( BTL_SERVER_CMD_QUE* que, const char* caption )
 {
+  #ifdef PM_DEBUG
   OS_TPrintf("  * %s : %d bytes\n", caption, que->writePtr );
   {
     static int args[ BTL_SERVERCMD_ARG_MAX ];
@@ -1215,6 +1221,7 @@ static void print_que_info( BTL_SERVER_CMD_QUE* que, const char* caption )
     } while( !SCQUE_IsFinishRead(que) );
 
   }
+  #endif
 }
 
 BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, BtlRecTiming timingCode, const void* recvedCmd, u32 cmdSize )
@@ -1247,6 +1254,7 @@ BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, BtlRecTiming timingCode, cons
   }
 
   // 以下、コマンド内容が完全一致しなかった場合のデバッグ出力
+  #ifdef PM_DEBUG
   ISDPrintSetBlockingMode( 1 );
   {
     OS_TPrintf( "****** コマンド整合性 NG timing=%d  ****** \n", timingCode );
@@ -1262,6 +1270,7 @@ BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, BtlRecTiming timingCode, cons
     print_que_info( server->que, "cmd by true_server" );
   }
   ISDPrintSetBlockingMode( 0 );
+  #endif
 
   return TRUE;
 }

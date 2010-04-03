@@ -999,7 +999,7 @@ static void read_core_msg( BTL_SERVER_CMD_QUE* que, u8 scType, int* args )
       if( args[i] == MSGARG_TERMINATOR ){
         break;
       }
-      BTL_N_PrintfSimple( PRINT_FLAG, DBGSTR_csv, args[i] );
+      BTL_N_PrintfSimpleEx( PRINT_FLAG, DBGSTR_csv, args[i] );
     }
     BTL_N_PrintfSimpleEx( PRINT_FLAG, DBGSTR_LF );
 
