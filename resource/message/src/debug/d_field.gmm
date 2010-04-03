@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2010-03-30T15:19:15"/>
+	<create user="kagaya" host="W00143" date="2010-04-03T23:11:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1325,6 +1325,21 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_BSW_26">
 		<language name="JPN" width="160">レギュOFF</language>
 		<language name="JPN_KANJI" width="160">レギュOFF</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_27">
+		<language name="JPN" width="160">Ｓシングル４８戦から</language>
+		<language name="JPN_KANJI" width="160">Ｓシングル４８戦から</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_28">
+		<language name="JPN" width="160">Ｓダブル４８戦から</language>
+		<language name="JPN_KANJI" width="160">Ｓダブル４８戦から</language>
+	</row>
+
+	<row id="DEBUG_FIELD_BSW_29">
+		<language name="JPN" width="160">Ｓマルチ４８戦から</language>
+		<language name="JPN_KANJI" width="160">Ｓマルチ４８戦から</language>
 	</row>
 
 	<row id="DEBUG_FIELD_WIFI_BSW_01">

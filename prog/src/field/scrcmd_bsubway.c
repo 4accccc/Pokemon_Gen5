@@ -589,6 +589,34 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       BSUBWAY_GIMMICK_SetTrain( fieldmap, type, pos );
     }
     break;
+  //OBJの向きをセットする
+  case BSWTOOL_SET_OBJ_DIR:
+    {
+      u16 obj_id = param0;
+      u16 dir = param1;
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+      GF_ASSERT( mmdl != NULL );
+      
+      if( mmdl != NULL ){
+        GF_ASSERT( dir < DIR_MAX4 );
+        MMDL_SetDirDisp( mmdl, dir );
+      }
+    }
+    break;
+  //OBJをポーズする
+  case BSWTOOL_OBJ_PAUSE:
+    {
+      u16 obj_id = param0;
+      MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
+      MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+      GF_ASSERT( mmdl != NULL );
+      
+      if( mmdl != NULL ){
+        MMDL_OnMoveBitMoveProcPause( mmdl );
+      }
+    }
+    break;
   //----TOOL Wifi関連
   //Wifiアップロードフラグをセット
   case BSWTOOL_WIFI_SET_UPLOAD_FLAG:
@@ -1854,6 +1882,25 @@ void BSUBWAY_SCRWORK_DebugFight21( GAMESYS_WORK *gsys )
   BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, 6 );
   BSUBWAY_SCOREDATA_SetStageNo( bsw_scr->scoreData, bsw_scr->play_mode, 2 );
   BSUBWAY_SCOREDATA_SetRenshou( bsw_scr->scoreData, bsw_scr->play_mode, (7*2+6) );
+  
+  //対戦トレーナー抽選
+  BSUBWAY_SCRWORK_SetBtlTrainerNo( bsw_scr );
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　ワーク　４８戦状態に
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_DebugFight48( GAMESYS_WORK *gsys )
+{
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  BSUBWAY_SCRWORK *bsw_scr = GAMEDATA_GetBSubwayScrWork( gdata );
+  GF_ASSERT( bsw_scr != NULL );
+  
+  BSUBWAY_PLAYDATA_SetRoundNo( bsw_scr->playData, 6 );
+  BSUBWAY_SCOREDATA_SetStageNo( bsw_scr->scoreData, bsw_scr->play_mode, 6 );
+  BSUBWAY_SCOREDATA_SetRenshou( bsw_scr->scoreData, bsw_scr->play_mode, (7*6+6) );
   
   //対戦トレーナー抽選
   BSUBWAY_SCRWORK_SetBtlTrainerNo( bsw_scr );

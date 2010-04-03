@@ -5251,6 +5251,10 @@ enum
   DEBUG_BSWAY_BTL_SINGLE_21,
   DEBUG_BSWAY_BTL_DOUBLE_21,
   DEBUG_BSWAY_BTL_MULTI_21,
+  DEBUG_BSWAY_BTL_S_SINGLE_48,
+  DEBUG_BSWAY_BTL_S_DOUBLE_48,
+  DEBUG_BSWAY_BTL_S_MULTI_48,
+
   DEBUG_BSWAY_SET_REGU_OFF,
   DEBUG_BSWAY_SET_BTL_SKIP,
 };
@@ -5265,7 +5269,7 @@ static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
   { DEBUG_FIELD_BSW_06, (void*)DEBUG_BSWAY_ZONE_S_DOUBLE},
   { DEBUG_FIELD_BSW_07, (void*)DEBUG_BSWAY_ZONE_S_MULTI},
   { DEBUG_FIELD_BSW_08, (void*)DEBUG_BSWAY_ZONE_TRAIN},
-  { DEBUG_FIELD_BSW_09, (void*)DEBUG_BSWAY_ZONE_TRAIN},
+  { DEBUG_FIELD_BSW_09, (void*)DEBUG_BSWAY_ZONE_HOME},
   
   { DEBUG_FIELD_BSW_10, (void*)DEBUG_BSWAY_SCDATA_VIEW },
   { DEBUG_FIELD_WIFI_BSW_01, (void*)DEBUG_BSWAY_WIFI_GAMEDATA_DOWNLOAD },
@@ -5287,6 +5291,9 @@ static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
   { DEBUG_FIELD_BSW_20, (void*)DEBUG_BSWAY_BTL_SINGLE_21},
   { DEBUG_FIELD_BSW_21, (void*)DEBUG_BSWAY_BTL_DOUBLE_21},
   { DEBUG_FIELD_BSW_22, (void*)DEBUG_BSWAY_BTL_MULTI_21},
+  { DEBUG_FIELD_BSW_27, (void*)DEBUG_BSWAY_BTL_S_SINGLE_48},
+  { DEBUG_FIELD_BSW_28, (void*)DEBUG_BSWAY_BTL_S_DOUBLE_48},
+  { DEBUG_FIELD_BSW_29, (void*)DEBUG_BSWAY_BTL_S_MULTI_48},
 };
 
 #define DEBUG_BSUBWAY_LIST_MAX ( NELEMS(DATA_BSubwayMenuList) )
@@ -5492,6 +5499,24 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
           BSUBWAY_SCRWORK_DebugSetFlag( work->gmSys, flag );
         }
         break;
+      case DEBUG_BSWAY_BTL_S_SINGLE_48: //‚rƒVƒ“ƒOƒ‹‚S‚Wí‚©‚ç
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_SINGLE );
+        BSUBWAY_SCRWORK_DebugFight48( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
+      case DEBUG_BSWAY_BTL_S_DOUBLE_48: //‚rƒ_ƒuƒ‹‚S‚Wí‚©‚ç
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_DOUBLE );
+        BSUBWAY_SCRWORK_DebugFight48( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
+      case DEBUG_BSWAY_BTL_S_MULTI_48: //‚rƒ}ƒ‹ƒ`‚S‚Wí‚©‚ç
+        BSUBWAY_SCRWORK_DebugCreateWork( work->gmSys, BSWAY_MODE_S_MULTI );
+        BSUBWAY_SCRWORK_DebugFight48( work->gmSys );
+        SCRIPT_ChangeScript(
+            event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        return( GMEVENT_RES_CONTINUE );
       default:
         break;
       }

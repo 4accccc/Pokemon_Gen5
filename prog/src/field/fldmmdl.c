@@ -1398,7 +1398,7 @@ BOOL MMDL_CheckPossibleAcmd( const MMDL * mmdl )
 //--------------------------------------------------------------
 void MMDL_SetAcmd( MMDL * mmdl, u16 code )
 {
-  GF_ASSERT( code < ACMD_MAX );
+  GF_ASSERT( code < ACMD_MAX && "MMDL ACMD CODE ERROR" );
   MMDL_SetAcmdCode( mmdl, code );
   MMDL_SetAcmdSeq( mmdl, 0 );
   MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_ACMD );
