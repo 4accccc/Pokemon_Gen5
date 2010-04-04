@@ -518,8 +518,8 @@ VMCMD_RESULT EvCmdGetMapReplaceFlag( VMHANDLE * core, void *wk )
   SCRCMD_WORK* work = wk;
   GAMEDATA*        gamedata = SCRCMD_WORK_GetGameData( wk );
 
-  u16 * ret_wk = SCRCMD_GetVMWork( core, work );
   u16       id = SCRCMD_GetVMWorkValue( core, work );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, work );
 
   *ret_wk = MAPREPLACE_GetFlag( gamedata, id );
   return VMCMD_RESULT_CONTINUE;

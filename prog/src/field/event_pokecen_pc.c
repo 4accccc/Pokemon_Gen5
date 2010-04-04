@@ -50,7 +50,7 @@ static GMEVENT_RESULT PcOnEvent( GMEVENT* event, int* seq, void* wk )
     {
       FIELD_PLAYER* player;
       VecFx32 pos;
-      G3DMAPOBJST** objst;
+      G3DMAPOBJST* objst;
       FLDHIT_RECT rect;
       u32 objnum;
       FLDMAPPER* mapper;
@@ -65,13 +65,12 @@ static GMEVENT_RESULT PcOnEvent( GMEVENT* event, int* seq, void* wk )
       // PCを検索
       mapper = FIELDMAP_GetFieldG3Dmapper( work->fieldmap );
       man    = FLDMAPPER_GetBuildModelManager( mapper );
-      objst  = FIELD_BMODEL_MAN_CreateObjStatusList( man, &rect, BM_SEARCH_ID_PC, &objnum );
+      objst  = FIELD_BMODEL_MAN_SearchObjStatusRect( man, BM_SEARCH_ID_PC, &rect );
       // アニメ再生
       if( objst )
       { 
-        work->pcStatus = objst[0];
-        G3DMAPOBJST_setAnime( man, objst[0], 0, BMANM_REQ_START );
-        GFL_HEAP_FreeMemory( objst );
+        work->pcStatus = objst;
+        G3DMAPOBJST_setAnime( man, objst, 0, BMANM_REQ_START );
       }
     }
     ++(*seq);
@@ -151,7 +150,7 @@ static GMEVENT_RESULT PcRunEvent( GMEVENT* event, int* seq, void* wk )
     {
       FIELD_PLAYER* player;
       VecFx32 pos;
-      G3DMAPOBJST** objst;
+      G3DMAPOBJST* objst;
       FLDHIT_RECT rect;
       u32 objnum;
       FLDMAPPER* mapper;
@@ -166,13 +165,12 @@ static GMEVENT_RESULT PcRunEvent( GMEVENT* event, int* seq, void* wk )
       // PCを検索
       mapper = FIELDMAP_GetFieldG3Dmapper( work->fieldmap );
       man    = FLDMAPPER_GetBuildModelManager( mapper );
-      objst  = FIELD_BMODEL_MAN_CreateObjStatusList( man, &rect, BM_SEARCH_ID_PC, &objnum );
+      objst  = FIELD_BMODEL_MAN_SearchObjStatusRect( man, BM_SEARCH_ID_PC, &rect );
       // アニメ再生
       if( objst )
       { 
-        work->pcStatus = objst[0];
-        G3DMAPOBJST_setAnime( man, objst[0], 1, BMANM_REQ_LOOP );
-        GFL_HEAP_FreeMemory( objst );
+        work->pcStatus = objst;
+        G3DMAPOBJST_setAnime( man, objst, 1, BMANM_REQ_LOOP );
       }
     }
     ++(*seq);
@@ -232,7 +230,7 @@ static GMEVENT_RESULT PcOffEvent( GMEVENT* event, int* seq, void* wk )
     {
       FIELD_PLAYER* player;
       VecFx32 pos;
-      G3DMAPOBJST** objst;
+      G3DMAPOBJST* objst;
       FLDHIT_RECT rect;
       u32 objnum;
       FLDMAPPER* mapper;
@@ -247,13 +245,12 @@ static GMEVENT_RESULT PcOffEvent( GMEVENT* event, int* seq, void* wk )
       // PCを検索
       mapper = FIELDMAP_GetFieldG3Dmapper( work->fieldmap );
       man    = FLDMAPPER_GetBuildModelManager( mapper );
-      objst  = FIELD_BMODEL_MAN_CreateObjStatusList( man, &rect, BM_SEARCH_ID_PC, &objnum );
+      objst  = FIELD_BMODEL_MAN_SearchObjStatusRect( man, BM_SEARCH_ID_PC, &rect );
       // アニメ再生
       if( objst )
       { 
-        work->pcStatus = objst[0];
-        G3DMAPOBJST_setAnime( man, objst[0], 2, BMANM_REQ_START );
-        GFL_HEAP_FreeMemory( objst );
+        work->pcStatus = objst;
+        G3DMAPOBJST_setAnime( man, objst, 2, BMANM_REQ_START );
       }
     }
     ++(*seq);
