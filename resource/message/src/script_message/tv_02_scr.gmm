@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T12:37:09"/>
+	<create user="matsumiya" host="W00224" date="2010-04-04T18:23:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1559" top="16" right="2264" bottom="636" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -356,202 +356,424 @@
 
 
 	<row id="msg_tv_02_01">
+		<comment>技説明
+・エコーボイス</comment>
+		<language name="JPN" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
+ハーイ　アナタ！
+ワタシ　バトリーン　デス！▼
+きょうも　アナタの　よくシラナイ
+あんな　わざや　こんな　ワザを▽
+ステキに　レクチャー　シマス！▼
+きょうの　レクチャーは
+エコーボイス！▼
+エコーボイスは　まいターン
+つかっていると　いりょくが▽
+どんどん　あがっていくワー▼
+この　まいターン　っていうのは
+ワタシでも　アナタでも▽
+だれが　つかっても　いいんデス！▼
+だいたい　こんな　カンジデス！
+これで　アナタも　バトルマスター！▼
+じかいも　みてみて！
+クダサイ　ネー！</language>
+		<language name="JPN_KANJI" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
+ハーイ　アナタ！
+ワタシ　バトリーン　デス！▼
+きょうも　アナタの　よくシラナイ
+あんな　わざや　こんな　ワザを▽
+ステキに　レクチャー　シマス！▼
+きょうの　レクチャーは
+エコーボイス！▼
+エコーボイスは　まいターン
+つかっていると　いりょくが▽
+どんどん　あがっていくワー▼
+この　まいターン　っていうのは
+ワタシでも　アナタでも▽
+だれが　つかっても　いいんデス！▼
+だいたい　こんな　カンジデス！
+これで　アナタも　バトルマスター！▼
+じかいも　みてみて！
+クダサイ　ネー！</language>
+	</row>
+
+	<row id="msg_tv_02_02">
+		<comment>技説明
+・りんしょう</comment>
+		<language name="JPN" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
+ハーイ　アナタ！
+ワタシ　バトリーン　デス！▼
+きょうも　アナタの　よくシラナイ
+あんな　わざや　こんな　ワザを▽
+ステキに　レクチャー　シマス！▼
+きょうの　レクチャーは
+りんしょう！▼
+りんしょうは　ワタシや　アナタが
+おなじ　ターンないに　つかうと▼
+ワン・ツー・スリー！と
+つづけて　だせちゃう　ワザデース！▼
+アナタと　ワタシで
+ワン・ツー・スリー！▼
+だいたい　こんな　カンジデス！
+これで　アナタも　バトルマスター！▼
+じかいも　みてみて！
+クダサイ　ネー！</language>
+		<language name="JPN_KANJI" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
+ハーイ　アナタ！
+ワタシ　バトリーン　デス！▼
+きょうも　アナタの　よくシラナイ
+あんな　わざや　こんな　ワザを▽
+ステキに　レクチャー　シマス！▼
+きょうの　レクチャーは
+りんしょう！▼
+りんしょうは　ワタシや　アナタが
+おなじ　ターンないに　つかうと▼
+ワン・ツー・スリー！と
+つづけて　だせちゃう　ワザデース！▼
+アナタと　ワタシで
+ワン・ツー・スリー！▼
+だいたい　こんな　カンジデス！
+これで　アナタも　バトルマスター！▼
+じかいも　みてみて！
+クダサイ　ネー！</language>
+	</row>
+
+	<row id="msg_tv_02_03">
+		<comment>技説明
+・イカサマ</comment>
+		<language name="JPN" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
+ハーイ　アナタ！
+ワタシ　バトリーン　デス！▼
+きょうも　アナタの　よくシラナイ
+あんな　わざや　こんな　ワザを▽
+ステキに　レクチャー　シマス！▼
+きょうの　レクチャーは
+イカサマ！▼
+イカサマは　よくないわネー！▼
+でも　ポケモンの　つかう　イカサマは
+たたかっている　あいての▼
+とくこうが　パワーになる
+とっても　テクニカルな　ワザ　デス！▼
+テクニカルな　アナタに　ピッタリネ！▼
+だいたい　こんな　カンジデス！
+これで　アナタも　バトルマスター！▼
+じかいも　みてみて！
+クダサイ　ネー！</language>
+		<language name="JPN_KANJI" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
+ハーイ　アナタ！
+ワタシ　バトリーン　デス！▼
+きょうも　アナタの　よくシラナイ
+あんな　わざや　こんな　ワザを▽
+ステキに　レクチャー　シマス！▼
+きょうの　レクチャーは
+イカサマ！▼
+イカサマは　よくないわネー！▼
+でも　ポケモンの　つかう　イカサマは
+たたかっている　あいての▼
+とくこうが　パワーになる
+とっても　テクニカルな　ワザ　デス！▼
+テクニカルな　アナタに　ピッタリネ！▼
+だいたい　こんな　カンジデス！
+これで　アナタも　バトルマスター！▼
+じかいも　みてみて！
+クダサイ　ネー！</language>
+	</row>
+
+	<row id="msg_tv_02_04">
+		<comment>技説明
+・フリーフォール</comment>
+		<language name="JPN" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
+ハーイ　アナタ！
+ワタシ　バトリーン　デス！▼
+きょうも　アナタの　よくシラナイ
+あんな　わざや　こんな　ワザを▽
+ステキに　レクチャー　シマス！▼
+きょうの　レクチャーは
+フリーフォール！▼
+あいての　ポケモンと　おそらで
+デートしちゃう　ワザ　デスネ！▼
+デートに　さそった　ポケモンは
+つぎの　ターンに▽
+あいてを　おとされちゃうの！▼
+でも　あいてが　ひこうタイプだと
+うまく　フラれちゃうから▽
+ノーダメージに　なっちゃうワ！▼
+だいたい　こんな　カンジデス！
+これで　アナタも　バトルマスター！▼
+じかいも　みてみて！
+クダサイ　ネー！</language>
+		<language name="JPN_KANJI" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
+ハーイ　アナタ！
+ワタシ　バトリーン　デス！▼
+きょうも　アナタの　よくシラナイ
+あんな　わざや　こんな　ワザを▽
+ステキに　レクチャー　シマス！▼
+きょうの　レクチャーは
+フリーフォール！▼
+あいての　ポケモンと　おそらで
+デートしちゃう　ワザ　デスネ！▼
+デートに　さそった　ポケモンは
+つぎの　ターンに▽
+あいてを　おとされちゃうの！▼
+でも　あいてが　ひこうタイプだと
+うまく　フラれちゃうから▽
+ノーダメージに　なっちゃうワ！▼
+だいたい　こんな　カンジデス！
+これで　アナタも　バトルマスター！▼
+じかいも　みてみて！
+クダサイ　ネー！</language>
+	</row>
+
+	<row id="msg_tv_02_05">
+		<comment>技説明
+・ガードシェア</comment>
+		<language name="JPN" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
+ハーイ　アナタ！
+ワタシ　バトリーン　デス！▼
+きょうも　アナタの　よくシラナイ
+あんな　わざや　こんな　ワザを▽
+ステキに　レクチャー　シマス！▼
+きょうの　レクチャーは
+ガードシェア！▼
+とっても　ミステリアス！▼
+ソフトな　ポケモンと
+ハードな　ポケモンが▼
+どっちも　おなじくらいの
+かたさに　なっちゃいマス！▼
+じぶんと　あいての　ぼうぎょや
+とくぼうが　はなれているほど▽
+こうかが　ス　スゴーイ！▼
+だいたい　こんな　カンジデス！
+これで　アナタも　バトルマスター！▼
+じかいも　みてみて！
+クダサイ　ネー！</language>
+		<language name="JPN_KANJI" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
+ハーイ　アナタ！
+ワタシ　バトリーン　デス！▼
+きょうも　アナタの　よくシラナイ
+あんな　わざや　こんな　ワザを▽
+ステキに　レクチャー　シマス！▼
+きょうの　レクチャーは
+ガードシェア！▼
+とっても　ミステリアス！▼
+ソフトな　ポケモンと
+ハードな　ポケモンが▼
+どっちも　おなじくらいの
+かたさに　なっちゃいマス！▼
+じぶんと　あいての　ぼうぎょや
+とくぼうが　はなれているほど▽
+こうかが　ス　スゴーイ！▼
+だいたい　こんな　カンジデス！
+これで　アナタも　バトルマスター！▼
+じかいも　みてみて！
+クダサイ　ネー！</language>
+	</row>
+
+	<row id="msg_tv_02_06">
 		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
-	<row id="msg_tv_02_02">
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_tv_02_03">
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_tv_02_04">
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_tv_02_05">
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
-	<row id="msg_tv_02_06">
-		<language name="JPN" width="256">かりメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
 	<row id="msg_tv_02_07">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_08">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_09">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_10">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_11">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_12">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_13">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_14">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_15">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_16">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_17">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_18">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_19">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_20">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_21">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_22">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_23">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_24">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_25">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_26">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_27">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_28">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_29">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_30">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_31">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_32">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_33">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_34">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_35">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_36">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_37">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_38">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_39">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_40">
+		<comment>技・特性・道具・説明関連</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
