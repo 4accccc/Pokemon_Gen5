@@ -108,6 +108,10 @@ typedef enum
 #define ZKND_TBAR_SE_CLOSE	  (SEQ_SE_CLOSE1)
 #define ZKND_TBAR_SE_Y_REG		(SEQ_SE_SYS_07)
 
+// ZKND_Modified SE追加。↓
+#define ZKND_TBAR_SE_SELECT	(SEQ_SE_SELECT1)
+// ZKND_Modified SE追加。↓
+
 //=============================================================================
 /**
  *					構造体宣言
@@ -250,6 +254,10 @@ extern BOOL ZKND_TBAR_GetFlip( const ZKND_TBAR_WORK *cp_wk, ZKND_TBAR_ICON icon 
 ///	アイコンのGFL_CLWKを取得する
 //=====================================
 extern GFL_CLWK* ZKND_TBAR_GetClwk( ZKND_TBAR_WORK *p_wk, ZKND_TBAR_ICON icon );
+//-------------------------------------
+///	アイコンの位置を変更する
+//=====================================
+extern void ZKND_TBAR_SetPos( ZKND_TBAR_WORK *p_wk, ZKND_TBAR_ICON icon, const GFL_CLACTPOS* pos );
 //-------------------------------------
 ///	アイコンをキーで押したことにする
 //=====================================

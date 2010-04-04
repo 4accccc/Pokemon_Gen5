@@ -97,3 +97,7 @@ extern void ZUKAN_DETAIL_TOUCHBAR_SetDispOfGeneral(
                    ZUKAN_DETAIL_TOUCHBAR_WORK* work,
                    ZUKAN_DETAIL_TOUCHBAR_DISP  disp );
 
+extern void ZUKAN_DETAIL_TOUCHBAR_SetVisibleOfFormCurLR(
+                   ZUKAN_DETAIL_TOUCHBAR_WORK* work,
+                   BOOL                        is_visible );
+

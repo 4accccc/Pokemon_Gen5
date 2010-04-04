@@ -1136,6 +1136,8 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
   u16 i;
   u16 lc;
 
+  ZONEDATA_Open( wk->heapID );
+  
   ZUKANSAVE_SetGraphicVersionUpFlag( zukan_savedata );
  
   wk->poke_list[0] = 201;
@@ -1193,6 +1195,8 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
 static void ZukanDetailExit( KAWADA_MAIN_WORK* wk )
 {
   GFL_HEAP_FreeMemory( wk->zukan_detail_param );
+  
+  ZONEDATA_Close();
 }
 
 // ƒeƒXƒg

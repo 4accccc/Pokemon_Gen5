@@ -149,6 +149,18 @@ static const ICON_CONST_SET general_icon_const_set[GENERAL_ICON_MAX] =
   { ZKND_TBAR_ICON_CUR_D,     {  24, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_CUR_D,         },
   { ZKND_TBAR_ICON_CUR_U,     {   0, ZKND_TBAR_ICON_Y       },    24,  ZKNDTL_CMD_CUR_U,         },
 };
+static const GFL_CLACTPOS general_icon_const_pos_no_form[GENERAL_ICON_MAX] =
+{
+  { 232, ZKND_TBAR_ICON_Y       }, 
+  { 208, ZKND_TBAR_ICON_Y       }, 
+  { 184, ZKND_TBAR_ICON_Y_CHECK }, 
+  { 168, ZKND_TBAR_ICON_Y       }, 
+  { 136, ZKND_TBAR_ICON_Y       }, 
+  {  96, ZKND_TBAR_ICON_Y       }, 
+  {  56, ZKND_TBAR_ICON_Y       }, 
+  {  24, ZKND_TBAR_ICON_Y       }, 
+  {   0, ZKND_TBAR_ICON_Y       }, 
+};
 // MAP
 static const ICON_CONST_SET map_icon_const_set[MAP_ICON_MAX] =
 {
@@ -598,6 +610,26 @@ void ZUKAN_DETAIL_TOUCHBAR_SetDispOfGeneral(
   }
 }
 
+//------------------------------------------------------------------
+/**
+ *  @brief        
+ *
+ *  @param[in,out]   
+ *
+ *  @retval          
+ */
+//------------------------------------------------------------------
+void ZUKAN_DETAIL_TOUCHBAR_SetVisibleOfFormCurLR(
+                   ZUKAN_DETAIL_TOUCHBAR_WORK* work,
+                   BOOL                        is_visible )
+{
+  if( work->type == ZUKAN_DETAIL_TOUCHBAR_TYPE_FORM )
+  {
+    ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[FORM_ICON_CUR_R].cset->id, is_visible );
+    ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[FORM_ICON_CUR_L].cset->id, is_visible );
+  }
+}
+
 
 //=============================================================================
 /**
@@ -665,7 +697,9 @@ static void Zukan_Detail_Touchbar_SetIconOfsPosY( ZUKAN_DETAIL_TOUCHBAR_WORK* wo
   u8 i;
   for( i=0; i<work->icon_set_num; i++ )
   {
-    GFL_CLACTPOS pos = work->icon_set[i].cset->pos;
+    GFL_CLACTPOS pos;
+    GFL_CLACT_WK_GetWldPos( work->icon_set[i].clwk, &pos );
+    pos.y = work->icon_set[i].cset->pos.y;
     pos.y += ofs_pos_y;
     GFL_CLACT_WK_SetWldPos( work->icon_set[i].clwk, &pos );
   }
@@ -742,7 +776,7 @@ static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
         icon_tbl[i].noactive_anmseq   = 3;                        // ノンアクティブのときのアニメ
         icon_tbl[i].push_anmseq       = 7;                        // 押したときのアニメ（STOPになっていること）
         icon_tbl[i].key               = 0;                         // キーで押したときに動作させたいならば、ボタン番号
-        icon_tbl[i].se                = SEQ_SE_DECIDE1;            // 押したときにSEならしたいならば、SEの番号
+        icon_tbl[i].se                = SEQ_SE_SELECT3;            // 押したときにSEならしたいならば、SEの番号
       }
       i=GENERAL_ICON_CUSTOM_VOICE;
       {
@@ -753,7 +787,7 @@ static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
         icon_tbl[i].noactive_anmseq   = 2;                        // ノンアクティブのときのアニメ
         icon_tbl[i].push_anmseq       = 6;                        // 押したときのアニメ（STOPになっていること）
         icon_tbl[i].key               = 0;                         // キーで押したときに動作させたいならば、ボタン番号
-        icon_tbl[i].se                = SEQ_SE_DECIDE1;            // 押したときにSEならしたいならば、SEの番号
+        icon_tbl[i].se                = SEQ_SE_SELECT3;            // 押したときにSEならしたいならば、SEの番号
       }
       i=GENERAL_ICON_CUSTOM_MAP;
       {
@@ -764,7 +798,7 @@ static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
         icon_tbl[i].noactive_anmseq   = 1;                        // ノンアクティブのときのアニメ
         icon_tbl[i].push_anmseq       = 5;                        // 押したときのアニメ（STOPになっていること）
         icon_tbl[i].key               = 0;                         // キーで押したときに動作させたいならば、ボタン番号
-        icon_tbl[i].se                = SEQ_SE_DECIDE1;            // 押したときにSEならしたいならば、SEの番号
+        icon_tbl[i].se                = SEQ_SE_SELECT3;            // 押したときにSEならしたいならば、SEの番号
       }
       i=GENERAL_ICON_CUSTOM_INFO;
       {
@@ -775,7 +809,7 @@ static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
         icon_tbl[i].noactive_anmseq   = 0;                        // ノンアクティブのときのアニメ
         icon_tbl[i].push_anmseq       = 4;                        // 押したときのアニメ（STOPになっていること）
         icon_tbl[i].key               = 0;                         // キーで押したときに動作させたいならば、ボタン番号
-        icon_tbl[i].se                = SEQ_SE_DECIDE1;            // 押したときにSEならしたいならば、SEの番号
+        icon_tbl[i].se                = SEQ_SE_SELECT3;            // 押したときにSEならしたいならば、SEの番号
       }
     }
 
@@ -811,6 +845,11 @@ static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
     }
     else
     {
+      u8 i;
+      for( i=0; i<GENERAL_ICON_MAX; i++ )
+      {
+        ZKND_TBAR_SetPos( work->tbwk, work->icon_set[i].cset->id, &general_icon_const_pos_no_form[i] );
+      }
       ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[GENERAL_ICON_CUSTOM_FORM].cset->id, FALSE );
     }
   }
@@ -845,9 +884,9 @@ static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work 
 {
   u8  icon = GENERAL_ICON_MAX;
   int trg  = GFL_UI_KEY_GetTrg();
-  int cont = GFL_UI_KEY_GetCont();
+  int rept = GFL_UI_KEY_GetRepeat();
 
-  if( trg & PAD_KEY_LEFT )
+  if( rept & PAD_KEY_LEFT )
   {
     switch( work->disp )
     {
@@ -876,7 +915,7 @@ static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work 
       break;
     }
   }
-  else if( trg & PAD_KEY_RIGHT )
+  else if( rept & PAD_KEY_RIGHT )
   {
     switch( work->disp )
     {
@@ -920,11 +959,11 @@ static void Zukan_Detail_Touchbar_MainGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work 
   }
   else
   {
-    if( cont & PAD_KEY_UP )
+    if( rept & PAD_KEY_UP )
     {
       ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[GENERAL_ICON_CUR_U].cset->id );
     }
-    else if( cont & PAD_KEY_DOWN )
+    else if( rept & PAD_KEY_DOWN )
     {
       ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[GENERAL_ICON_CUR_D].cset->id );
     }
@@ -1224,6 +1263,12 @@ static void Zukan_Detail_Touchbar_CreateForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
     } 
   }
 
+  // Key設定を追加する
+  {
+    ZKND_TBAR_SetUseKey( work->tbwk, work->icon_set[FORM_ICON_CUR_R].cset->id, ( PAD_KEY_RIGHT | PAD_BUTTON_R ) );
+    ZKND_TBAR_SetUseKey( work->tbwk, work->icon_set[FORM_ICON_CUR_L].cset->id, ( PAD_KEY_LEFT  | PAD_BUTTON_L ) );
+  }
+
   /*
   {
     // パレットの0番から読み込んでいれば、
@@ -1296,27 +1341,27 @@ static void Zukan_Detail_Touchbar_DeleteForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 static void Zukan_Detail_Touchbar_MainForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
   int trg  = GFL_UI_KEY_GetTrg();
-  int cont = GFL_UI_KEY_GetCont();
+  int rept = GFL_UI_KEY_GetRepeat();
 
-  if( trg & ( PAD_KEY_UP | PAD_KEY_DOWN | PAD_KEY_LEFT | PAD_KEY_RIGHT ) )
+  if( trg & ( PAD_KEY_UP | PAD_KEY_DOWN | PAD_KEY_LEFT | PAD_KEY_RIGHT | PAD_BUTTON_L | PAD_BUTTON_R ) )
   {
     // 押したときは、ちゃんとタッチバーで判別するので、何もしない
   }
   else
   {
-    if( cont & PAD_KEY_UP )
+    if( rept & PAD_KEY_UP )
     {
       ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[FORM_ICON_CUR_U].cset->id );
     }
-    else if( cont & PAD_KEY_DOWN )
+    else if( rept & PAD_KEY_DOWN )
     {
       ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[FORM_ICON_CUR_D].cset->id );
     }
-    else if( cont & PAD_KEY_LEFT )
+    else if( rept & ( PAD_KEY_LEFT | PAD_BUTTON_L ) )
     {
       ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[FORM_ICON_CUR_L].cset->id );
     }
-    else if( cont & PAD_KEY_RIGHT )
+    else if( rept & ( PAD_KEY_RIGHT | PAD_BUTTON_R ) )
     {
       ZKND_TBAR_PushByKey( work->tbwk, work->icon_set[FORM_ICON_CUR_R].cset->id );
     }

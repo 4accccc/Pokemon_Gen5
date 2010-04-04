@@ -702,7 +702,7 @@ static BOOL Zukan_Detail_Info_TouchLangButton( ZUKAN_DETAIL_INFO_PARAM* param, Z
           {
             work->lang_btn[i].state = LANG_BTN_STATE_PUSH_START;
             GFL_CLACT_WK_SetAnmSeq( work->lang_btn[i].clwk, work->lang_btn[i].push_anmseq );
-            PMSND_PlaySE( SEQ_SE_DECIDE1 );
+            PMSND_PlaySE( SEQ_SE_SELECT3 );
 
             // 言語を変更する
             Zukan_Detail_Info_ChangeLang( param, work, cmn, i );
@@ -726,11 +726,13 @@ static BOOL Zukan_Detail_Info_KeyLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUK
   u8 i;
 
   // キー判定
-  int trg = GFL_UI_KEY_GetTrg();
+  int rept = GFL_UI_KEY_GetRepeat();
+  int trg  = GFL_UI_KEY_GetTrg();
  
   if( work->lang == ZUKAN_INFO_LANG_NONE )  // まだどれも選んでいないとき
   {
-    if( trg & ( PAD_BUTTON_R | PAD_BUTTON_L ) )
+    if(    ( rept & ( PAD_BUTTON_R | PAD_BUTTON_L ) )
+        || ( trg & PAD_BUTTON_A ) )
     {
       for( i=0; i<ZUKAN_INFO_LANG_MAX; i++ )  // 一番左にある言語ボタンを選ぶ
       {
@@ -738,7 +740,7 @@ static BOOL Zukan_Detail_Info_KeyLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUK
         {
           work->lang_btn[i].state = LANG_BTN_STATE_PUSH_START;
           GFL_CLACT_WK_SetAnmSeq( work->lang_btn[i].clwk, work->lang_btn[i].push_anmseq );
-          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+          PMSND_PlaySE( SEQ_SE_SELECT3 );
           
           // 言語を変更する
           Zukan_Detail_Info_ChangeLang( param, work, cmn, i );
@@ -750,7 +752,8 @@ static BOOL Zukan_Detail_Info_KeyLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUK
   }
   else  // 既にどれかを選んでいるとき
   {
-    if( trg & PAD_BUTTON_R )
+    if(    ( rept & PAD_BUTTON_R )
+        || ( trg & PAD_BUTTON_A ) )
     {
       i = 1;
       while( i < ZUKAN_INFO_LANG_MAX )
@@ -760,7 +763,7 @@ static BOOL Zukan_Detail_Info_KeyLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUK
         {
           work->lang_btn[j].state = LANG_BTN_STATE_PUSH_START;
           GFL_CLACT_WK_SetAnmSeq( work->lang_btn[j].clwk, work->lang_btn[j].push_anmseq );
-          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+          PMSND_PlaySE( SEQ_SE_SELECT3 );
           
           // 言語を変更する
           Zukan_Detail_Info_ChangeLang( param, work, cmn, j );
@@ -770,7 +773,7 @@ static BOOL Zukan_Detail_Info_KeyLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUK
         i++;
       }
     }
-    else if( trg & PAD_BUTTON_L )
+    else if( rept & PAD_BUTTON_L )
     {
       i = 1;
       while( i < ZUKAN_INFO_LANG_MAX )
@@ -780,7 +783,7 @@ static BOOL Zukan_Detail_Info_KeyLangButton( ZUKAN_DETAIL_INFO_PARAM* param, ZUK
         {
           work->lang_btn[j].state = LANG_BTN_STATE_PUSH_START;
           GFL_CLACT_WK_SetAnmSeq( work->lang_btn[j].clwk, work->lang_btn[j].push_anmseq );
-          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+          PMSND_PlaySE( SEQ_SE_SELECT3 );
           
           // 言語を変更する
           Zukan_Detail_Info_ChangeLang( param, work, cmn, j );

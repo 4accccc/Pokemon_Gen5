@@ -192,7 +192,7 @@ static const struct
 		APP_COMMON_BARICON_CURSOR_DOWN,
 		APP_COMMON_BARICON_CURSOR_DOWN_OFF,
 		APP_COMMON_BARICON_CURSOR_DOWN_ON,
-		ZKND_TBAR_SE_DECIDE,
+    ZKND_TBAR_SE_SELECT,  // ZKND_Modified SE追加。
 		PAD_KEY_DOWN,
 		ZKND_TBAR_ICON_MOVETYPE_PUSH,
 	},
@@ -201,7 +201,7 @@ static const struct
 		APP_COMMON_BARICON_CURSOR_UP,
 		APP_COMMON_BARICON_CURSOR_UP_OFF,
 		APP_COMMON_BARICON_CURSOR_UP_ON,
-		ZKND_TBAR_SE_DECIDE,
+    ZKND_TBAR_SE_SELECT,  // ZKND_Modified SE追加。
 		PAD_KEY_UP,
 		ZKND_TBAR_ICON_MOVETYPE_PUSH,
 	},
@@ -210,7 +210,7 @@ static const struct
 		APP_COMMON_BARICON_CURSOR_LEFT,
 		APP_COMMON_BARICON_CURSOR_LEFT_OFF,
 		APP_COMMON_BARICON_CURSOR_LEFT_ON,
-		ZKND_TBAR_SE_DECIDE,
+    ZKND_TBAR_SE_SELECT,  // ZKND_Modified SE追加。
 		PAD_KEY_LEFT,
 		ZKND_TBAR_ICON_MOVETYPE_PUSH,
 	},
@@ -219,7 +219,7 @@ static const struct
 		APP_COMMON_BARICON_CURSOR_RIGHT,
 		APP_COMMON_BARICON_CURSOR_RIGHT_OFF,
 		APP_COMMON_BARICON_CURSOR_RIGHT_ON,
-		ZKND_TBAR_SE_DECIDE,
+    ZKND_TBAR_SE_SELECT,  // ZKND_Modified SE追加。
 		PAD_KEY_RIGHT,
 		ZKND_TBAR_ICON_MOVETYPE_PUSH,
 	},
@@ -696,6 +696,24 @@ GFL_CLWK* ZKND_TBAR_GetClwk( ZKND_TBAR_WORK *p_wk, ZKND_TBAR_ICON icon )
 {
 	ICON_WORK* p_icon	= Zknd_Tbar_Search( p_wk, icon );
   return  p_icon->p_clwk;
+}
+//-------------------------------------
+///	アイコンの位置を変更する
+//=====================================
+void ZKND_TBAR_SetPos( ZKND_TBAR_WORK *p_wk, ZKND_TBAR_ICON icon, const GFL_CLACTPOS* pos )
+{
+  CLSYS_DEFREND_TYPE	clsys_def_type;
+  ICON_WORK* p_icon	= Zknd_Tbar_Search( p_wk, icon );
+  p_icon->data.pos = *pos;
+  if( p_wk->res.bg_frm >= GFL_BG_FRAME0_S )
+  {
+    clsys_def_type = CLSYS_DEFREND_SUB;
+  }
+  else
+  {
+    clsys_def_type = CLSYS_DEFREND_MAIN;
+  }
+  GFL_CLACT_WK_SetPos( p_icon->p_clwk, pos, clsys_def_type );
 }
 //-------------------------------------
 ///	アイコンをキーで押したことにする

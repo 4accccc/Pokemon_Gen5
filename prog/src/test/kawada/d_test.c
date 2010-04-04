@@ -208,6 +208,7 @@ typedef struct
   GFL_MSGDATA*                btlv_msgdata;
   u8                          btlv_cursor_flag;
   BTLV_INPUT_WORK*            btlv_input_work;
+  PALETTE_FADE_PTR            btlv_pfd;
 
 
 }
@@ -349,6 +350,11 @@ static GFL_PROC_RESULT D_Test_ProcInit( GFL_PROC* proc, int* seq, void* pwk, voi
 
   // フェードイン(黒→見える)
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
+
+
+  // 0で初期化
+  work->btlv_pfd = NULL;
+
 
   return GFL_PROC_RES_FINISH;
 }
@@ -517,6 +523,11 @@ static GFL_PROC_RESULT D_Test_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
 static void D_Test_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   D_TEST_WORK* work = (D_TEST_WORK*)wk;
+
+  if( work->btlv_pfd )
+  {
+    PaletteFadeTrans( work->btlv_pfd );
+  }
 }
 
 
@@ -542,7 +553,7 @@ static void D_Test_BtlvInit( D_TEST_WORK* work )
   work->btlv_cursor_flag = ( GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_KEY ) ? ( 1 ) : ( 0 );
 
   GFL_OVERLAY_Load(FS_OVERLAY_ID(battle_view));
-  {
+/*  {
     BTL_FIELD_SITUATION bfs = { 
       0, 0, 0, 0, 0
     };
@@ -553,14 +564,39 @@ static void D_Test_BtlvInit( D_TEST_WORK* work )
     BTLV_EFFECT_Init( besp, work->font, work->heap_id );
     GFL_HEAP_FreeMemory( besp );
   }
-  work->btlv_input_work = BTLV_INPUT_InitEx( BTLV_INPUT_TYPE_SINGLE, BTLV_EFFECT_GetPfd(), work->font, &work->btlv_cursor_flag, work->heap_id );
+*/
+  {
+    // prog/src/battle/btlv/btlv_effect.c
+    // void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEAPID heapID )
+    work->btlv_pfd = PaletteFadeInit( work->heap_id );
+    PaletteTrans_AutoSet( work->btlv_pfd, TRUE );
+    PaletteFadeWorkAllocSet( work->btlv_pfd, FADE_MAIN_BG,  0x200, work->heap_id );
+    PaletteFadeWorkAllocSet( work->btlv_pfd, FADE_SUB_BG,   0x1e0, work->heap_id );
+    PaletteFadeWorkAllocSet( work->btlv_pfd, FADE_MAIN_OBJ, 0x200, work->heap_id );
+    PaletteFadeWorkAllocSet( work->btlv_pfd, FADE_SUB_OBJ,  0x1e0, work->heap_id );
+  }
+
+  //work->btlv_input_work = BTLV_INPUT_InitEx( BTLV_INPUT_TYPE_SINGLE, BTLV_EFFECT_GetPfd(), work->font, &work->btlv_cursor_flag, work->heap_id );
+  work->btlv_input_work = BTLV_INPUT_InitEx( BTLV_INPUT_TYPE_SINGLE, work->btlv_pfd, work->font, &work->btlv_cursor_flag, work->heap_id );
 
   work->sub_main_step = 0;
 }
 static void D_Test_BtlvExit( D_TEST_WORK* work )
 {
   BTLV_INPUT_Exit( work->btlv_input_work );
-  BTLV_EFFECT_Exit();
+
+  {
+    // prog/src/battle/btlv/btlv_effect.c
+    // void  BTLV_EFFECT_Exit( void )
+    PaletteFadeWorkAllocFree( work->btlv_pfd, FADE_MAIN_BG  );
+    PaletteFadeWorkAllocFree( work->btlv_pfd, FADE_SUB_BG   );
+    PaletteFadeWorkAllocFree( work->btlv_pfd, FADE_MAIN_OBJ );
+    PaletteFadeWorkAllocFree( work->btlv_pfd, FADE_SUB_OBJ  );
+    PaletteFadeFree( work->btlv_pfd );
+    work->btlv_pfd = NULL;
+  }
+
+  //BTLV_EFFECT_Exit();
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(battle_view));
  
   GFL_UI_SetTouchOrKey( ( work->btlv_cursor_flag ) ? ( GFL_APP_KTST_KEY ) : ( GFL_APP_KTST_TOUCH ) );
@@ -597,9 +633,9 @@ static void D_Test_BtlvMain( D_TEST_WORK* work )
     int input = BTLV_INPUT_CheckInput( work->btlv_input_work, &YesNoTouchData, YesNoKeyData );
     if( input != GFL_UI_TP_HIT_NONE )
     {
-      BTLV_EFFECT_Stop();  // BTLV_INPUT_CheckInputの結果がGFL_UI_TP_HIT_NONEのとき、BTLV_EFFECT_Addしているので。
+/*      BTLV_EFFECT_Stop();  // BTLV_INPUT_CheckInputの結果がGFL_UI_TP_HIT_NONEのとき、BTLV_EFFECT_Addしているので。
                            // BTLV_EFFECT_Mainを回していれば解放されるが、回していないときは解放されずに残ってしまう。
-      BTLV_INPUT_CreateScreen( work->btlv_input_work, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
+*/      BTLV_INPUT_CreateScreen( work->btlv_input_work, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
       work->sub_main_step = 0;
     }
   }

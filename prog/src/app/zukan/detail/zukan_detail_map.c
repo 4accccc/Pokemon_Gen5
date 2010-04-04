@@ -2075,7 +2075,7 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
       }
       else if( work->appear_rule != APPEAR_RULE_YEAR )
       {
-        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+        if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R )
         {
           work->ktst = GFL_APP_KTST_KEY;
 
@@ -2084,11 +2084,11 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
           if( work->season_id >= PMSEASON_TOTAL ) work->season_id = PMSEASON_SPRING;
           
           Zukan_Detail_Map_ChangeSeason( param, work, cmn, TRUE );
-          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+          PMSND_PlaySE( SEQ_SE_SELECT3 );
 
           is_input = TRUE;
         }
-        else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+        else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L )
         {
           work->ktst = GFL_APP_KTST_KEY;
  
@@ -2097,7 +2097,7 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
           else                                     work->season_id--;
           
           Zukan_Detail_Map_ChangeSeason( param, work, cmn, FALSE );
-          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+          PMSND_PlaySE( SEQ_SE_SELECT3 );
           
           is_input = TRUE;
         }
@@ -2128,7 +2128,7 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
               if( work->season_id >= PMSEASON_TOTAL ) work->season_id = PMSEASON_SPRING;
 
               Zukan_Detail_Map_ChangeSeason( param, work, cmn, TRUE );
-              PMSND_PlaySE( SEQ_SE_DECIDE1 );
+              PMSND_PlaySE( SEQ_SE_SELECT3 );
             }
             else if(    SEASON_L_ARROW_POS_X<=x&&x<SEASON_L_ARROW_POS_X+SEASON_L_ARROW_SIZE_X
                      && SEASON_L_ARROW_POS_Y<=y&&y<SEASON_L_ARROW_POS_Y+SEASON_L_ARROW_SIZE_Y )
@@ -2140,7 +2140,7 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
               else                                     work->season_id--;
 
               Zukan_Detail_Map_ChangeSeason( param, work, cmn, FALSE );
-              PMSND_PlaySE( SEQ_SE_DECIDE1 );
+              PMSND_PlaySE( SEQ_SE_SELECT3 );
             }
             else if(    SEASON_PANEL_POS_X<=x&&x<SEASON_PANEL_POS_X+SEASON_PANEL_SIZE_X
                      && SEASON_PANEL_POS_Y<=y&&y<SEASON_PANEL_POS_Y+SEASON_PANEL_SIZE_Y )
@@ -2171,7 +2171,7 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
       // ƒL[“ü—Í
       if( work->appear_rule != APPEAR_RULE_YEAR )
       {
-        if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+        if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_R )
         {
           work->ktst = GFL_APP_KTST_KEY;
 
@@ -2180,11 +2180,11 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
           if( work->season_id >= PMSEASON_TOTAL ) work->season_id = PMSEASON_SPRING;
           
           Zukan_Detail_Map_ChangeSeason( param, work, cmn, TRUE );
-          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+          PMSND_PlaySE( SEQ_SE_SELECT3 );
 
           is_input = TRUE;
         }
-        else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+        else if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L )
         {
           work->ktst = GFL_APP_KTST_KEY;
  
@@ -2193,7 +2193,7 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
           else                                     work->season_id--;
           
           Zukan_Detail_Map_ChangeSeason( param, work, cmn, FALSE );
-          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+          PMSND_PlaySE( SEQ_SE_SELECT3 );
           
           is_input = TRUE;
         }
@@ -2217,7 +2217,7 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
             if( work->season_id >= PMSEASON_TOTAL ) work->season_id = PMSEASON_SPRING;
 
             Zukan_Detail_Map_ChangeSeason( param, work, cmn, TRUE );
-            PMSND_PlaySE( SEQ_SE_DECIDE1 );
+            PMSND_PlaySE( SEQ_SE_SELECT3 );
             select_enable = FALSE;
           }
           else if(    SEASON_L_ARROW_POS_X<=x&&x<SEASON_L_ARROW_POS_X+SEASON_L_ARROW_SIZE_X
@@ -2230,7 +2230,7 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
             else                                     work->season_id--;
 
             Zukan_Detail_Map_ChangeSeason( param, work, cmn, FALSE );
-            PMSND_PlaySE( SEQ_SE_DECIDE1 );
+            PMSND_PlaySE( SEQ_SE_SELECT3 );
             select_enable = FALSE;
           }
           else if(    SEASON_PANEL_POS_X<=x&&x<SEASON_PANEL_POS_X+SEASON_PANEL_SIZE_X

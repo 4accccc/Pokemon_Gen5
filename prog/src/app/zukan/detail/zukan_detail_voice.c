@@ -36,6 +36,8 @@
 #include "print/gf_font.h"
 #include "print/wordset.h"
 #include "print/global_msg.h"
+#include "sound/pm_sndsys.h"             // BGM
+#include "../../../field/field_sound.h"  // BGM
 #include "sound/pm_wb_voice.h"  // wbではpm_voiceではなくこちらを使う
 
 #include "zukan_detail_def.h"
@@ -156,6 +158,17 @@ typedef enum
   END_CMD_OUTSIDE,
 }
 END_CMD;
+
+
+// BGM
+typedef enum
+{
+  BGM_STATE_PLAY,      // 普通に再生中
+  BGM_STATE_FADE_OUT,  // フェードアウト中
+  BGM_STATE_PUSH,      // push中
+  BGM_STATE_FADE_IN,   // フェードイン中
+}
+BGM_STATE;
 
 
 // OBJ
@@ -352,6 +365,9 @@ typedef struct
   u32                         obj_res[OBJ_RES_MAX];
   GFL_CLWK*                   obj_cell[OBJ_CELL_MAX];
 
+  // BGM
+  BGM_STATE                   bgm_state;
+
   // VBlank中TCB
   GFL_TCB*                    vblank_tcb;
 
@@ -372,6 +388,11 @@ ZUKAN_DETAIL_VOICE_WORK;
 //=============================================================================
 // VBlank関数
 static void Zukan_Detail_Voice_VBlankFunc( GFL_TCB* tcb, void* wk );
+
+// BGM
+static void Zukan_Detail_Voice_BgmInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Voice_BgmExit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Voice_BgmMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 // OBJ
 static void Zukan_Detail_Voice_ObjInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -405,8 +426,8 @@ static void Zukan_Detail_Voice_ResetTime( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN
 // ポケモン変更
 static void Zukan_Detail_Voice_ChangePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
-// 再生ボタンのタッチ
-static void Zukan_Detail_Voice_TouchPlayButton( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+// 再生ボタンのキーorタッチ
+static void Zukan_Detail_Voice_KeyTouchPlayButton( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 // グラフ
 static void Zukan_Detail_Voice_GraphInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -501,6 +522,10 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcInit( ZKNDTL_PROC* proc, int* s
   work->voice_disp_millisec = 0;
   work->voice_prev_disp_millisec = 1;  // 最初の描画がされるように、voice_disp_millisecと異なる値で初期化しておく
 
+  // BGM
+  work->bgm_state = BGM_STATE_PLAY;
+  Zukan_Detail_Voice_BgmInit( param, work, cmn );
+
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Zukan_Detail_Voice_VBlankFunc, work, 1 );
 
@@ -554,6 +579,12 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcExit( ZKNDTL_PROC* proc, int* s
   {
     ZKNDTL_COMMON_FadeExit( work->fade_wk_s );
     ZKNDTL_COMMON_FadeExit( work->fade_wk_m );
+  }
+
+  // BGM
+  if( work->bgm_state != BGM_STATE_FADE_IN )  // Mainでフェードインしているので大丈夫のはずだが、念のためここでも呼んでおく
+  {
+    Zukan_Detail_Voice_BgmExit( param, work, cmn );
   }
 
   // VBlank中TCB
@@ -715,11 +746,14 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
           // タッチバー
           ZUKAN_DETAIL_TOUCHBAR_Disappear( touchbar, ZUKAN_DETAIL_TOUCHBAR_SPEED_OUTSIDE );
         }
+
+        // BGM
+        Zukan_Detail_Voice_BgmExit( param, work, cmn );
       }
       else
       {
-        // 再生ボタンのタッチ
-        Zukan_Detail_Voice_TouchPlayButton( param, work, cmn );
+        // 再生ボタンのキーorタッチ
+        Zukan_Detail_Voice_KeyTouchPlayButton( param, work, cmn );
       }
     }
     break;
@@ -782,6 +816,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
 
   // フェード
   ZKNDTL_COMMON_FadeMain( work->fade_wk_m, work->fade_wk_s );
+
+  // BGM
+  Zukan_Detail_Voice_BgmMain( param, work, cmn );
 
   return ZKNDTL_PROC_RES_CONTINUE;
 }
@@ -876,6 +913,37 @@ static void Zukan_Detail_Voice_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* p
 static void Zukan_Detail_Voice_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   ZUKAN_DETAIL_VOICE_WORK*     work     = (ZUKAN_DETAIL_VOICE_WORK*)wk;
+}
+
+//-------------------------------------
+/// BGM
+//=====================================
+static void Zukan_Detail_Voice_BgmInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  PMSND_FadeOutBGM( FSND_FADE_SHORT );
+  work->bgm_state = BGM_STATE_FADE_OUT;
+}
+static void Zukan_Detail_Voice_BgmExit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  if( work->bgm_state == BGM_STATE_PUSH )
+  {
+    PMSND_PopBGM();
+    PMSND_PauseBGM( FALSE );
+  }
+  PMSND_FadeInBGM( FSND_FADE_NORMAL );
+  work->bgm_state = BGM_STATE_FADE_IN;
+}
+static void Zukan_Detail_Voice_BgmMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  if( work->bgm_state == BGM_STATE_FADE_OUT )
+  {
+    if( !PMSND_CheckFadeOnBGM() )
+    {
+      PMSND_PauseBGM( TRUE );
+      PMSND_PushBGM();
+      work->bgm_state = BGM_STATE_PUSH;
+    }
+  }
 }
 
 //-------------------------------------
@@ -1467,18 +1535,30 @@ static void Zukan_Detail_Voice_ChangePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
 }
 
 //-------------------------------------
-/// 再生ボタンのタッチ
+/// 再生ボタンのキーorタッチ
 //=====================================
-static void Zukan_Detail_Voice_TouchPlayButton( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+static void Zukan_Detail_Voice_KeyTouchPlayButton( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
-  u32 x, y;
+  BOOL b_push = FALSE;
+  u32  x, y;
 
+  // キー判定
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    b_push = TRUE;
+  }
   // タッチ判定
-  if( GFL_UI_TP_GetPointTrg(&x, &y) )
+  else if( GFL_UI_TP_GetPointTrg(&x, &y) )
   {
     if(    0<=x && x<256
         && 0<=y && y<168 )
     {
+      b_push = TRUE;
+    }
+  }
+
+  if( b_push )
+  {
       ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( ZKNDTL_COMMON_GetGamedata(cmn) );
       u16  monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
       u32  formno;
@@ -1497,7 +1577,6 @@ static void Zukan_Detail_Voice_TouchPlayButton( ZUKAN_DETAIL_VOICE_PARAM* param,
 
       // ポケモンの鳴きアニメ(縦スケール拡大)
       Zukan_Detail_Voice_PokeCryStart( param, work, cmn );
-    }
   }
 }
 
