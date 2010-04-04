@@ -788,16 +788,16 @@
 #define FV_C08R0201_TRAINERW_01            764 /* 0x02fc ソウリュウシティ：ローテーションバトルの館 */
 #define FV_C08R0201_TRAINERM_01            765 /* 0x02fd ソウリュウシティ：トリプルバトルの館 */
 #define FV_D08R0901_PACKAGE_POKE           766 /* 0x02fe リュウラセンの塔（屋上）：パッケージポケモン */
-		/* not used   767(0x02ff) */
-		/* not used   768(0x0300) */
-		/* not used   769(0x0301) */
-		/* not used   770(0x0302) */
-		/* not used   771(0x0303) */
-		/* not used   772(0x0304) */
-		/* not used   773(0x0305) */
-		/* not used   774(0x0306) */
-		/* not used   775(0x0307) */
-		/* not used   776(0x0308) */
+#define FV_FIELDITEM_POKE_01               767 /* 0x02ff タマゲタケ（フィールドアイテム型）１匹目 */
+#define FV_FIELDITEM_POKE_02               768 /* 0x0300 タマゲタケ（フィールドアイテム型）２匹目 */
+#define FV_FIELDITEM_POKE_03               769 /* 0x0301 タマゲタケ（フィールドアイテム型）３匹目 */
+#define FV_FIELDITEM_POKE_04               770 /* 0x0302 タマゲタケ（フィールドアイテム型）４匹目 */
+#define FV_FIELDITEM_POKE_05               771 /* 0x0303 タマゲタケ（フィールドアイテム型）５匹目 */
+#define FV_FIELDITEM_POKE_06               772 /* 0x0304 タマゲタケ（フィールドアイテム型）６匹目 */
+#define FV_FIELDITEM_POKE_07               773 /* 0x0305 タマゲタケ（フィールドアイテム型）７匹目 */
+#define FV_FIELDITEM_POKE_08               774 /* 0x0306 タマゲタケ（フィールドアイテム型）８匹目 */
+#define FV_FIELDITEM_POKE_09               775 /* 0x0307 タマゲタケ（フィールドアイテム型）９匹目 */
+#define FV_FIELDITEM_POKE_10               776 /* 0x0308 タマゲタケ（フィールドアイテム型）１０匹目 */
 		/* not used   777(0x0309) */
 		/* not used   778(0x030a) */
 		/* not used   779(0x030b) */
