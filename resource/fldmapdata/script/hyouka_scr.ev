@@ -91,8 +91,6 @@ sub_zukan_setup_local_see:
     _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE, HYOUKA_MSGID, HYOUKA_COUNT )
 
     IF $HYOUKA_COUNT >= 150 THEN
-        //地方図鑑を完成させたら、全国図鑑に機能アップ可能になる
-        _FLAG_SET( FE_ZUKAN_GRADEUP )
         _FLAG_SET( FE_ZUKAN_COMPLETE_LOCAL_SEE )
     ENDIF
 
