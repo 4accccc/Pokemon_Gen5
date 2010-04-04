@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-04T19:37:54"/>
+	<create user="matsumiya" host="W00224" date="2010-04-04T20:01:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1475" top="340" right="2180" bottom="967" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="279" right="1280" bottom="677" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,12 +292,14 @@
 	</lock>
 
 
-	<row id="msg_appraisal_g_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
+	<row id="msg_appraisal_g_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,#c0c0c0,,">
 		<comment>※進行フローはグルメも鉱物も共通
 
 ●鑑定アイテム：グルメ
 ・話しかけメッセージ１　初回のみ
-・話しかけ後→msg_appraisal_g_02</comment>
+・話しかけ後→msg_appraisal_g_02
+・話しかけ後、買い取れるものがない
+　→msg_appraisal_g_08</comment>
 		<attribute name="キャラ指定">メイド
 MAID</attribute>
 		<language name="JPN" width="256">ハアイ！
@@ -326,14 +328,14 @@ MAID</attribute>
 MAID</attribute>
 		<language name="JPN" width="256">クンクン……　クンカ　クンカ……[BE:01:ページ切り替え（クリア）]
 なんか　アンタのバッグから
-とっても　グルメな　スメルが▼
-プウンとするなあ……[BE:01:ページ切り替え（クリア）]
+とっても　グルメな　スメルが▽
+プウンとするなあ……▼
 よかったら　そのスメルの　しょうたい
 アタイに　ゆずって　くんないかな？▼</language>
 		<language name="JPN_KANJI" width="256">クンクン……　クンカ　クンカ……[BE:01:ページ切り替え（クリア）]
 なんか　アンタのバッグから
-とっても　グルメな　スメルが▼
-プウンとするなあ……[BE:01:ページ切り替え（クリア）]
+とっても　グルメな　スメルが▽
+プウンとするなあ……▼
 よかったら　そのスメルの　正体
 アタイに　譲って　くんないかな？▼</language>
 	</row>
@@ -412,7 +414,28 @@ MAID</attribute>
 見つけたら　アタイに　教えてね！</language>
 	</row>
 
-	<row id="msg_appraisal_m_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+	<row id="msg_appraisal_g_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#c0c0c0,,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">
+		<comment>●鑑定アイテム：グルメ
+・買い取れる道具が一つもない</comment>
+		<attribute name="キャラ指定">メイド
+MAID</attribute>
+		<language name="JPN" width="256">クンクン……　クンカ　クンカ……[BE:01:ページ切り替え（クリア）]
+うーん　ざんねんだけど
+アンタの　バッグから▽
+ビビッと　きちゃう　グルメなスメル……▽
+ちっとも　しないねえ……▼
+グルメな　しょくざいを　みつけたら
+アタイに　おしえてくれよ▼</language>
+		<language name="JPN_KANJI" width="256">クンクン……　クンカ　クンカ……[BE:01:ページ切り替え（クリア）]
+うーん　残念だけど
+アンタの　バッグから▽
+ビビッと　きちゃう　グルメなスメル……▽
+ちっとも　しないねえ……▼
+グルメな　食材を　みつけたら
+アタイに　教えてくれよ▼</language>
+	</row>
+
+	<row id="msg_appraisal_m_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
 		<comment>※進行フローはグルメも鉱物も共通
 
 ●鑑定アイテム：鉱物
@@ -517,7 +540,7 @@ GENTLEMAN</attribute>
 変わらんし　いつか譲って欲しいのー</language>
 	</row>
 
-	<row id="msg_appraisal_r_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
+	<row id="msg_appraisal_r_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
 		<comment>※進行フローは大富豪もグルメも鉱物も共通
 
 ●鑑定アイテム：大富豪
@@ -541,7 +564,7 @@ FIGHTERM</attribute>
 きみには　わかるかね？　かね？▼</language>
 	</row>
 
-	<row id="msg_appraisal_r_02" text-color=",,,#0000ff,,,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
+	<row id="msg_appraisal_r_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
 		<comment>●鑑定アイテム：大富豪
 ・話しかけメッセージ２　初回以降はここから
 
@@ -564,7 +587,7 @@ FIGHTERM</attribute>
 持ってないかね？　かね？▼</language>
 	</row>
 
-	<row id="msg_appraisal_r_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
+	<row id="msg_appraisal_r_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
 		<comment>●鑑定アイテム：大富豪
 ・はい／いいえ表示
 ・はい→msg_appraisal_r_04
@@ -579,7 +602,7 @@ FIGHTERM</attribute>
 ゆずってくれないかね？　かね？</language>
 	</row>
 
-	<row id="msg_appraisal_r_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
+	<row id="msg_appraisal_r_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
 		<comment>●鑑定アイテム：大富豪
 ・メッセージ終了時取得ＳＥ
 ・終了後→msg_appraisal_r_05</comment>
@@ -591,7 +614,7 @@ FIGHTERM</attribute>
 [2:07:８桁:1]円を　もらった！</language>
 	</row>
 
-	<row id="msg_appraisal_r_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
+	<row id="msg_appraisal_r_05" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
 		<comment>●鑑定アイテム：大富豪
 ・イベント終了</comment>
 		<attribute name="キャラ指定">格闘家♂
@@ -602,7 +625,7 @@ FIGHTERM</attribute>
 すごいと　思わんかね　かね？</language>
 	</row>
 
-	<row id="msg_appraisal_r_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
+	<row id="msg_appraisal_r_06" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
 		<comment>●鑑定アイテム：大富豪
 ・イベント終了</comment>
 		<attribute name="キャラ指定">格闘家♂
@@ -613,7 +636,7 @@ FIGHTERM</attribute>
 きみも　そう思わんかね　かね？</language>
 	</row>
 
-	<row id="msg_appraisal_r_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
+	<row id="msg_appraisal_r_07" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
 		<comment>●鑑定アイテム：大富豪
 ・イベント終了</comment>
 		<attribute name="キャラ指定">格闘家♂
@@ -624,7 +647,7 @@ FIGHTERM</attribute>
 ゆずってくれないかね　かね？</language>
 	</row>
 
-	<row id="msg_appraisal_r_08" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
+	<row id="msg_appraisal_r_08" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ffffff,,,#ffffff,,#ff8080,#ffffff,,,#ffffff,,">
 		<comment>●鑑定アイテム：大富豪
 ・No634「こだいのおうかん」を持っているとき
 　1回のみ発生
@@ -651,14 +674,13 @@ FIGHTERM</attribute>
 ゆずってくれないかね？　かね？</language>
 	</row>
 
-	<row id="msg_appraisal_m2_01" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+	<row id="msg_appraisal_m2_01" text-color="#0000ff,,,#000000,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
 		<comment>※進行フローは共通
 
 ●鑑定アイテム：鉱物２
 ・話しかけメッセージ１　初回のみ
 ・話しかけ後→msg_appraisal_m2_02</comment>
 		<attribute name="キャラ指定">サングラス
-
 SUNGLASSES</attribute>
 		<language name="JPN" width="256">やあ　とつぜんだが　きみに
 ウマい　はなしを　もちかけるよ！▼
@@ -699,7 +721,6 @@ SUNGLASSES</attribute>
 ・該当しない道具の場合→msg_appraisal_m2_06
 ・キャンセル→msg_appraisal_m2_07</comment>
 		<attribute name="キャラ指定">サングラス
-
 SUNGLASSES</attribute>
 		<language name="JPN" width="256">どうだい？
 いかしたブツが　あるなら▽
@@ -715,7 +736,6 @@ SUNGLASSES</attribute>
 ・はい→msg_appraisal_m2_04
 ・いいえ→msg_appraisal_m2_07</comment>
 		<attribute name="キャラ指定">サングラス
-
 SUNGLASSES</attribute>
 		<language name="JPN" width="256">イイね　ったら　イイねえ……
 [1:09:どうぐ名:0]じゃない……▼
@@ -725,7 +745,7 @@ SUNGLASSES</attribute>
 		<language name="JPN_KANJI" width="256">イイね　ったら　イイねえ……
 [1:09:どうぐ名:0]じゃない……▼
 それ　だったら　そうだね……
-[2:07:８桁:1]えんで▽
+[2:07:８桁:1]円で▽
 買い取って　あげるよ？</language>
 	</row>
 
@@ -734,19 +754,17 @@ SUNGLASSES</attribute>
 ・メッセージ終了時取得ＳＥ
 ・終了後→msg_appraisal_g_05</comment>
 		<attribute name="キャラ指定">サングラス
-
 SUNGLASSES</attribute>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]　を　わたして
 [2:07:８桁:1]えんを　もらった！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　を　わたして
-[2:07:８桁:1]えんを　もらった！</language>
+[2:07:８桁:1]円を　もらった！</language>
 	</row>
 
 	<row id="msg_appraisal_m2_05" text-color="#0000ff,,,,,,,,,,,,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
 		<comment>●鑑定アイテム：鉱物２
 ・イベント終了</comment>
 		<attribute name="キャラ指定">サングラス
-
 SUNGLASSES</attribute>
 		<language name="JPN" width="256">ありがとう……▼
 これを　もっと　たかい　ねだんで
@@ -764,7 +782,6 @@ SUNGLASSES</attribute>
 		<comment>●鑑定アイテム：鉱物２
 ・イベント終了</comment>
 		<attribute name="キャラ指定">サングラス
-
 SUNGLASSES</attribute>
 		<language name="JPN" width="256">わるいけど　ダメだねぇ……
 こいつは　かいとれないねぇ……</language>
@@ -776,7 +793,6 @@ SUNGLASSES</attribute>
 		<comment>●鑑定アイテム：鉱物２　
 ・イベント終了</comment>
 		<attribute name="キャラ指定">サングラス
-
 SUNGLASSES</attribute>
 		<language name="JPN" width="256">いかしたブツを　みつけたら
 わたしの　ところへ　おいで！▼
