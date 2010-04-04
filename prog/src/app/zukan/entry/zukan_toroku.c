@@ -41,7 +41,7 @@ FS_EXTERN_OVERLAY(ui_common);
 *  定数定義
 */
 //=============================================================================
-#define ZUKAN_TOROKU_HEAP_SIZE (0x30000)  ///< ヒープサイズ
+#define ZUKAN_TOROKU_HEAP_SIZE (0x80000)  ///< ヒープサイズ
 
 #define ZUKAN_TOROKU_FADE_IN_WAIT  (2)  ///< フェードインのスピード
 #define ZUKAN_TOROKU_FADE_OUT_WAIT (2)  ///< フェードアウトのスピード
@@ -290,6 +290,10 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcInit( GFL_PROC* proc, int* seq, void* pw
     }
   }
 
+  // 通信アイコン
+  //GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );  // この位置ではうまく表示されなかったので、ZUKAN_NICKNAME_Initで
+  //GFL_NET_ReloadIcon();                                      // 下画面を生成した後に行うようにした。
+
   // 上画面
   work->zukan_info_work = ZUKAN_INFO_Init( work->heap_id, param->pp, param->b_zenkoku_flag, TRUE,
                                            (param->launch==ZUKAN_TOROKU_LAUNCH_TOROKU)?(ZUKAN_INFO_LAUNCH_TOROKU):(ZUKAN_INFO_LAUNCH_NICKNAME),
@@ -304,7 +308,11 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcInit( GFL_PROC* proc, int* seq, void* pw
                                                    ZUKAN_TOROKU_GRAPHIC_GetClunit(work->graphic),
                                                    work->font,
                                                    work->print_que );
-
+  
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
+  GFL_NET_ReloadIcon();
+  
   // 上画面
   if( work->state == ZUKAN_TOROKU_STATE_NICKNAME )
   {
@@ -338,7 +346,10 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcExit( GFL_PROC* proc, int* seq, void* pw
   ZUKAN_NICKNAME_Exit( work->zukan_nickname_work );
   // 上画面
   ZUKAN_INFO_Exit( work->zukan_info_work );
- 
+
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_DefaultLCD();
+
   // 後片付け
   {
     PRINTSYS_QUE_Delete( work->print_que );
@@ -399,12 +410,14 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcMain( GFL_PROC* proc, int* seq, void* pw
           BOOL next = FALSE;
           BOOL tp_trg = GFL_UI_TP_GetTrg();
           int trg = GFL_UI_KEY_GetTrg();
-          if( trg & PAD_BUTTON_A )
+          if( trg & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
           {
+            GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
             next = TRUE;
           }
           if( tp_trg )
           {
+            GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
             next = TRUE;
           }
 

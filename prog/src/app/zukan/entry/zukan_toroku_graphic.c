@@ -164,6 +164,7 @@ static const struct
 		TRUE,	//初期表示
 	},
 
+#if 0  // バトルの下画面 prog/src/battle/btlv/btlv_input.c  BTLV_INPUT_Init(BTLV_INPUT_InitEx) が設定してくれるので、コメントアウト
 	//SUB---------------------------
 	{	
 		GFL_BG_FRAME0_S,	//設定するフレーム
@@ -210,6 +211,7 @@ static const struct
 		GFL_BG_MODE_TEXT,//BGの種類
 		TRUE,	//初期表示
 	},
+#endif
 #endif
 };
 
