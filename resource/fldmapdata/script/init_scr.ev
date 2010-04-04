@@ -341,9 +341,6 @@ ev_first_gameclear:
   //Ｎの城移動用のワープＮＰＣを非表示
   _FLAG_SET( FV_C09R0701_WARPMAN )
 
-  //全国図鑑の入手可能フラグをセット
-  _FLAG_SET( FE_ZUKAN_GRADEUP )
-
   //ボックス壁紙追加
   _GET_BOX_WALLPAPER( SCR_BOX_EX_WALLPAPER1 )
 

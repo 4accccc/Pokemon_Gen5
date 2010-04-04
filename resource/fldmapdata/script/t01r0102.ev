@@ -100,7 +100,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_black_02 , T01R0102_RIVAL_01, POS_DR )
 	_BALLOONWIN_CLOSE()
 	
-	_CAMERA_DEF_MOVE( 30 )		//カメラ主人公位置に復帰]
+	_CAMERA_DEF_MOVE( 30 )		//カメラ主人公位置に復帰
 	
 	//サポート：主人公前へ
 	_OBJ_ANIME( T01R0102_SUPPORT_01, anm_gamestart_support_move_02 )
@@ -114,7 +114,7 @@ EVENT_START	ev_scene_t01r0102_gamestart
 	
 	//サポート会話：ごめんなさい
 	_PLAYER_NAME( 0 )		//主人公名取得
-	_BALLOONWIN_OBJMSG( msg_t01r0102_white_02, T01R0102_SUPPORT_01 )
+	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_white_02, T01R0102_SUPPORT_01, POS_UL )
 	_BALLOONWIN_CLOSE()
 	
 	//サポート：主人公横へ
@@ -271,7 +271,7 @@ ev_first_pkeget:
 
 	ENDIF
 	
-	//～～を手に入れた
+/*	//～～を手に入れた
 	_PLAYER_NAME( 0 )	 //プレイヤー名を反映
 	_SYSWIN_MSG( msg_t01r0102_ball_get_01, POS_DOWN )
 	
@@ -286,7 +286,7 @@ ev_first_pkeget:
 	
 	//初期３体入手フラグ
 	_FLAG_SET( SYS_FLAG_FIRST_POKE_GET )
-	
+*/	
 	}
 	//=====================================================//
 
@@ -413,11 +413,11 @@ ev_first_pkeget:
 	_BALLOONWIN_OBJMSG_POS( msg_t01r0102_black_09, T01R0102_RIVAL_01, POS_UR )
 	_MSGWIN_CLOSE()
 
-	//チェレンはキズぐすりを使った
-	_SE_PLAY( SEQ_SE_RECOVERY )
+	//チェレンはポケモンを回復させた
+//	_SE_PLAY( SEQ_SE_RECOVERY )
 	_SYSWIN_MSG( msg_t01r0102_black_10, POS_DEFAULT )
 	_MSGWIN_CLOSE()
-	_SE_WAIT()
+//	_SE_WAIT()
 	
 	//ライバル：主人公を見て
 	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_l )
@@ -440,16 +440,17 @@ ev_first_pkeget:
 		_BALLOONWIN_OBJMSG_POS( msg_t01r0102_black_11 , T01R0102_RIVAL_01, POS_UR )
 		_MSGWIN_CLOSE()
 		
-		//システム：チェレンはキズぐすりを使った▼
-		_SE_PLAY( SEQ_SE_RECOVERY )
-		_SYSWIN_MSG( msg_t01r0102_black_10, POS_DEFAULT )
-		_MSGWIN_CLOSE()
-		_SE_WAIT()
-		
-		//回復処理
-		_TEMOTI_POKEMON_KAIFUKU()
-		
 	ENDIF
+
+	//システム：～～のポケモンを回復してくれた
+//	_SE_PLAY( SEQ_SE_RECOVERY )
+	_PLAYER_NAME( 0 )
+	_SYSWIN_MSG( msg_t01r0102_black_12, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+//	_SE_WAIT()
+
+	//回復処理
+	_TEMOTI_POKEMON_KAIFUKU()
 
 	//サポート：！マーク
 	_OBJ_ANIME( T01R0102_SUPPORT_01, anm_mark_gyoe )

@@ -175,9 +175,6 @@ EVENT_START	ev_t01_rival_01
 		_OBJ_ANIME( T01_SUPPORT_01, anm_labo_support_move_01 )
 		_OBJ_ANIME_WAIT()
 
-		//階段SE
-		_SE_PLAY( SEQ_SE_KAIDAN )
-
 		//主人公：研究所内へ
 		
 		//主人公向きで分岐

@@ -471,43 +471,11 @@ EVENT_START   ev_t01r0401_hakase1_01
 		
 	ELSE
 	//入手前
-		
-		//全国図鑑入手条件満たしている？【仮】不要になった
-		IF FLAG_ON( FE_ZUKAN_GRADEUP ) THEN
-			//満たしている
-			_PLAYER_NAME( 0 )
-			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase1_02 )
-			_MSGWIN_CLOSE()
-			
-			//博士：机の方を向いてから振り向く
-			_OBJ_ANIME( T01R0401_HAKASE1_01, anm_stay_walk_u )
-			_OBJ_ANIME_WAIT()
-			_TIME_WAIT( 8 )
-			_OBJ_ANIME( T01R0401_HAKASE1_01, anm_stay_walk_l )
-			_OBJ_ANIME_WAIT()
-			
-			//全国版にバージョンアップした！
-			_ME_PLAY( SEQ_ME_KEYITEM )
-			_SYSWIN_MSG( msg_t01r0401_hakase1_03, POS_DEFAULT  )
-			_ME_WAIT()
-			_MSGWIN_CLOSE()
-			
-			//全国図鑑入手フラグをセット
-			_SET_ZENKOKU_ZUKAN_FLAG()
-			
-			//あらよっと！
-			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase1_04 )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-			
-		ELSE
-			//満たしていない
-			_PLAYER_NAME( 0 )
-			_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase1_01 )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-			
-		ENDIF
+	
+		_PLAYER_NAME( 0 )
+		_BALLOONWIN_TALKOBJ_MSG( msg_t01r0401_hakase1_01 )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
 	
 	ENDIF
 	
