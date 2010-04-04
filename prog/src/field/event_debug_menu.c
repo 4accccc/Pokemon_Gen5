@@ -61,6 +61,7 @@
 #include "script.h" //SCRIPT_ChangeScript
 #include "../../../resource/fldmapdata/script/debug_scr_def.h"  //SCRID_DEBUG_COMMON
 #include "../../../resource/fldmapdata/script/hiden_def.h"  //SCRID_HIDEN_DIVING
+#include "../../../resource/fldmapdata/script/pasokon_def.h"  //SCRID_PC
 
 #include "eventwork.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
@@ -245,6 +246,7 @@ static BOOL debugMenuCallProc_Zukan( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_DebugZoneJump( DEBUG_MENU_EVENT_WORK *p_wk );
 static BOOL debugMenuCallProc_AllMapCheck( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_RingTone( DEBUG_MENU_EVENT_WORK * p_wk );
+static BOOL debugMenuCallProc_PCScript( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_EventPokeCreate( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_SymbolPokeCreate( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_SymbolPokeList( DEBUG_MENU_EVENT_WORK *wk );
@@ -329,6 +331,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_DEMO3D,   debugMenuCallProc_Demo3d },             //３Dデモ
 
   { DEBUG_FIELD_TITLE_05, (void*)BMPMENULIST_LABEL },       //○スタッフ用
+  { DEBUG_FIELD_STR70, debugMenuCallProc_PCScript },        //パソコン呼び出し
   { DEBUG_FIELD_STR47, debugMenu_ControlShortCut },           //Yボタン登録最大
   { DEBUG_FIELD_STR51  , debugMenuCallProc_OpenGTSNegoMenu }, //GTSネゴ
   { DEBUG_FIELD_STR55,   debugMenuCallProc_CGEARPictureSave },//Cギアー写真
@@ -698,9 +701,6 @@ const FLDMENUFUNC_HEADER DATA_DebugMenuList_ZoneSel =
 static BOOL debugMenuCallProc_EventFlagScript( DEBUG_MENU_EVENT_WORK *now_wk )
 {
   SCRIPT_ChangeScript( now_wk->gmEvent, SCRID_DEBUG_COMMON, NULL, HEAPID_FIELDMAP );
-  //GMEVENT * new_event = DEBUG_EVENT_FLDMENU_DebugScript( now_wk );
-  //GMEVENT_ChangeEvent( now_wk->gmEvent, new_event );
-
   return TRUE;
 }
 //--------------------------------------------------------------
@@ -4554,6 +4554,17 @@ static BOOL debugMenuCallProc_RingTone( DEBUG_MENU_EVENT_WORK * p_wk )
     FSND_StopTVTRingTone( fsnd );
   }
   return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * パソコン
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_PCScript( DEBUG_MENU_EVENT_WORK *wk )
+{
+  SCRIPT_ChangeScript( wk->gmEvent, SCRID_PC, NULL, HEAPID_FIELDMAP );
+  return TRUE;
 }
 
 //======================================================================
