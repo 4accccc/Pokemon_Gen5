@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-04-27T14:59:02" source="poster01.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-01T17:53:40" source="poster01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2009-04-27T14:59:02" source="poster01.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-04-01T17:53:40" source="poster01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -34,25 +34,25 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
-		palette_name="idr_bed01"
+		palette_name="idr_poster01_pl"
 		path="C:/home/wb_data3d/build_model/indoor/poster01/tex/idr_poster01.tga"
 	>
 		<bitmap size="64">
-			2222 2222 2222 2222 0222 0220 0220 2220
-			2222 2222 2222 2222 3332 3333 3333 2333
-			4432 4444 4444 2344 1432 4114 1411 2341
-			4432 4444 4444 2344 4432 4114 4111 2341
-			4432 4444 4444 2344 4432 1141 1141 2341
-			4432 4444 4444 2344 4432 4444 1144 2341
-			4432 4444 4444 2344 3332 3333 3333 2333
-			2222 2222 2222 2222 2222 2222 2222 2222
+			0000 0000 0000 0000 1110 1111 1111 0111
+			4110 5515 5514 0114 4110 4111 4414 0114
+			1110 1111 1111 0111 2210 2222 2222 0122
+			3210 3333 3333 0123 3210 6376 7377 0123
+			3210 3333 3333 0123 3210 7673 6763 0123
+			3210 3333 3333 0123 3210 6776 6773 0123
+			3210 3333 3333 0123 2210 2222 2222 0122
+			1110 1111 1111 0111 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="idr_bed01" color_size="8">
-		33ff 56b5 768b 7f31 7f97 7fff 7fff 7fff
+	<tex_palette index="0" name="idr_poster01_pl" color_size="8">
+		6628 768b 7f31 7fbb 33d3 33ff 6318 56b5
 	</tex_palette>
 </tex_palette_array>
 
@@ -63,7 +63,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="16"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"

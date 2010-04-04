@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2009-06-18T13:23:33" source="art02.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-02T17:28:48" source="art02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2009-06-18T13:23:33" source="art02.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-04-02T17:28:48" source="art02.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -38,46 +38,46 @@
 		path="C:/home/wb_data3d/build_model/indoor/art02/tex/art02a.tga"
 	>
 		<bitmap size="256">
-			1111 1111 1111 1111 1111 1111 1111 1111
-			1000 0001 0110 0001 1100 1000 0000 1110
-			0100 0000 0000 0100 0000 0100 0002 0000
-			0000 0000 2222 2002 0000 0000 0000 1000
-			4000 4444 4444 4444 4444 4444 4444 2004
-			4012 3333 5bbb 3b55 3333 3333 3333 2004
-			4002 54b3 5555 4555 3334 4444 3333 2004
-			4002 44b3 6a64 cc66 feda ccaf 3334 0114
-			4002 a5b3 ca64 eddc feea deff 33cc 0014
-			4100 6553 eaa4 fdce ffff 4dff 33cc 2094
-			4000 c6b3 f7fe feff ffff deff 333c 0004
-			4000 dbb3 aa4a efff ffff cdde 333c 2004
-			4002 ecb3 aaff eeff efaf ddcd 333c 0004
-			4002 cc33 ffff deff cdad 4efd 333c 0004
-			4002 dc33 ffff cdef c344 4aff 33c4 2204
-			4012 dcc3 dddd 6ddd dbbb aaff 3334 2204
-			4000 fd33 deff ccdd cb65 eeef 33cd 2004
-			4000 fe33 efff 6cde cc65 ccec 3bcd 2204
-			4012 ff33 ffff bbff 6655 ddcc 3bc4 2204
-			4012 9f33 afaf bbff 55b3 ed33 3b6d 2004
-			4012 f9c3 9ff4 33ff 36b3 fff3 33ce 2004
-			4012 eef3 ffff ce9f 3b6c fff3 33ce 2104
-			4002 fffc fedf 4eff 3366 efdc 335c 2004
-			4000 eff3 dccc 6ffd f3b6 cdee 335b 2104
-			4000 dff3 f333 5cff f3b6 d4ee 335b 0004
-			4010 cfc3 f333 5bcf c556 cde4 3355 0104
-			4000 3c33 d333 533c 3335 bbbc 3333 2104
-			4002 3333 3333 3333 3333 3333 3333 2014
-			1022 1111 1111 1111 1111 1111 1111 2012
-			0024 1000 0000 1101 0100 0000 1111 2000
-			2044 0000 0000 1100 0000 0002 0000 4220
-			2444 0222 2442 0022 4200 2444 4422 4422
+			7721 0177 7732 0177 7732 0177 7732 1277
+			2210 2222 2222 2222 2222 2222 2222 0122
+			2211 0122 2237 0122 2237 0122 2237 1122
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 0000 0000 0000 0000 0000 0000 2222
+			0222 6661 6666 6666 6666 6666 1666 2220
+			3212 a996 bbbb 555d bbd5 abbb 699a 2123
+			7202 ba96 8bbb 5555 8d55 bbdd 69ab 2027
+			7272 ba96 dbbb 5555 d555 bd55 69bb 2727
+			7232 bba6 ddd8 cccd d555 d555 6abb 2327
+			7222 dba6 5555 ccd5 cdcc d555 6bbb 2227
+			7222 c8a6 5555 cd55 ccdc d55c 6bb5 2227
+			7222 cda6 5555 dc55 c8b8 5dcc 6b85 2227
+			7222 cda6 555c bcc5 8bbb 5cdd 6bd5 2227
+			7222 c8a6 cccc bdcc bbbb cccb 6bdc 2227
+			7212 daa6 cccc bbdc bbbb 5cbb 6b85 2127
+			7202 8aa6 555d b8d5 bbbb 5cdb 6bd5 2027
+			7272 d8a6 5555 8d55 bbbb ccdb 6bbd 2727
+			7232 48a6 5555 8455 bbbb bdd8 6bbb 2327
+			7222 48a6 5555 8455 dbbb d55c 6abb 2227
+			7222 48a6 555c 84c5 dbbb d55c 6abb 2227
+			7222 d8a6 cccc 8dcc 8bbb 8ccc 6abb 2227
+			7222 8b96 cccc b8cc 8bbb b8dd 69ab 2227
+			7212 5896 8885 8558 555b bbb8 69ab 2127
+			7202 5896 babd 85db 558b bbb8 699a 2027
+			7272 8996 aaa8 b88b 58bb aabb 6999 2727
+			3232 6661 6666 6666 6666 6666 1666 2323
+			2222 7773 7777 7777 7777 7777 3777 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 7322 2210 7322 2210 7322 2210 2222
+			2211 3332 2333 3332 2333 3332 2333 1122
+			2210 2222 2222 2222 2222 2222 2222 0122
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="art02a_pl" color_size="16">
-		3bbe 7fff 375a 531a 3295 7332 5f15 1e6b
-		3b5a 3fbe 15f0 5719 46d9 3678 21f7 0d96
+		01d2 0214 0299 02fb 0d4c 0df6 0e4f 0f3d
+		1297 12d1 1713 1755 1953 2237 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -88,7 +88,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="16"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -128,7 +128,7 @@
 				<primitive index="0" type="quads" vertex_size="16">
 					<mtx idx="0"/>
 					<tex st="0.312500 32.000000"/>
-					<clr rgb="26 26 26"/>
+					<clr rgb="21 20 22"/>
 					<pos_s xyz="-2.000000 0.625000 -0.125000"/>
 					<pos_xz xz="-2.000000 0.125000"/>
 					<tex st="0.312500 0.000000"/>
@@ -149,13 +149,13 @@
 					<tex st="0.000000 0.437500"/>
 					<pos_xy xy="-2.000000 4.000000"/>
 					<tex st="0.000000 32.000000"/>
-					<clr rgb="26 26 26"/>
 					<pos_yz yz="0.625000 0.125000"/>
 					<tex st="32.000000 32.000000"/>
 					<pos_xy xy="2.000000 0.625000"/>
-					<tex st="32.000000 0.000000"/>
+					<tex st="32.000000 1.000000"/>
+					<clr rgb="24 23 26"/>
 					<pos_xy xy="2.000000 4.000000"/>
-					<tex st="0.000000 0.000000"/>
+					<tex st="0.000000 1.000000"/>
 					<pos_xy xy="-2.000000 4.000000"/>
 				</primitive>
 			</primitive_array>
