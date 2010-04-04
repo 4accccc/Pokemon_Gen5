@@ -209,7 +209,7 @@ static void setFrontPos(const EV_REQUEST * req, VecFx32 * pos);
 static BOOL checkConnectExitDir(const CONNECT_DATA* cnct, u16 player_dir);
 static BOOL checkConnectIsFreeExit( const CONNECT_DATA * cnct );
 static int getConnectID(const EV_REQUEST * req, const VecFx32 * now_pos);
-static void rememberExitInfo(EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const VecFx32 * pos);
+static void rememberExitInfo(EV_REQUEST * req, int idx, const VecFx32 * pos);
 static GMEVENT * getChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx,
     const VecFx32 * pos);
 static GMEVENT * DEBUG_checkKeyEvent(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldWork);
@@ -247,7 +247,7 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work );
 static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
 static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
 static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK * fieldWork);
-static void rememberExitRailInfo(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const RAIL_LOCATION* loc);
+static void rememberExitRailInfo(const EV_REQUEST * req, int idx, const RAIL_LOCATION* loc);
 static GMEVENT * getRailChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx,
     const RAIL_LOCATION* loc);
 static BOOL checkRailFrontMove( const FIELD_PLAYER* cp_player );
@@ -2012,7 +2012,7 @@ static GMEVENT * checkExit(EV_REQUEST * req,
   }
 
 	//マップ遷移発生の場合、出入口を記憶しておく
-  rememberExitInfo(req, fieldWork, idx, now_pos);
+  rememberExitInfo(req, idx, now_pos);
   return getChangeMapEvent(req, fieldWork, idx, now_pos);
 }
 
@@ -2067,10 +2067,11 @@ static GMEVENT * getChangeMapEvent(const EV_REQUEST * req, FIELDMAP_WORK * field
 }
 
 //--------------------------------------------------------------
+//マップ遷移発生の場合、出入口を記憶しておく
 //--------------------------------------------------------------
-static void rememberExitInfo(EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const VecFx32 * pos)
+static void rememberExitInfo(EV_REQUEST * req, int idx, const VecFx32 * pos)
 {
-	//マップ遷移発生の場合、出入口を記憶しておく
+  FIELDMAP_WORK * fieldWork = req->fieldWork;
   LOCATION ent_loc;
   LOCATION_Set( &ent_loc, FIELDMAP_GetZoneID(fieldWork), idx, 0, LOCATION_DEFAULT_EXIT_OFS,
       pos->x, pos->y, pos->z);
@@ -2190,7 +2191,7 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
     const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID(req->evdata, idx);
     if ( CONNECTDATA_IsClosedExit(cnct) == FALSE && CONNECTDATA_GetExitType(cnct) == EXIT_TYPE_MAT )
     {
-      rememberExitInfo(req, fieldWork, idx, req->now_pos);
+      rememberExitInfo(req, idx, req->now_pos);
       return getChangeMapEvent(req, fieldWork, idx, req->now_pos);
     }
   }
@@ -2203,7 +2204,8 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
     if ( CONNECTDATA_IsClosedExit(cnct) == FALSE )
     {
       //マップ遷移発生の場合、出入口を記憶しておく
-      rememberExitInfo(req, fieldWork, idx, &front_pos);
+      //rememberExitInfo(req, idx, &front_pos);
+      rememberExitInfo(req, idx, req->now_pos);
       return getChangeMapEvent(req, fieldWork, idx, &front_pos);
     }
   }
@@ -2376,7 +2378,7 @@ static GMEVENT * checkRailExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELD
     return NULL;
   }
   
-  rememberExitRailInfo( req, fieldWork, idx, &pos );
+  rememberExitRailInfo( req, idx, &pos );
   return getRailChangeMapEvent(req, fieldWork, idx, &pos);
 }
 
@@ -2414,7 +2416,7 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
       if( CONNECTDATA_GetExitType( cnct ) == EXIT_TYPE_MAT)
       {
         // GO
-        rememberExitRailInfo( req, fieldWork, idx, &pos );
+        rememberExitRailInfo( req, idx, &pos );
         return getRailChangeMapEvent(req, fieldWork, idx, &pos);
       }
     }
@@ -2432,7 +2434,7 @@ static GMEVENT * checkRailPushExit(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
 
   if( CONNECTDATA_IsClosedExit(cnct) == FALSE && checkConnectExitDir( cnct, req->player_dir ) )
   {
-    rememberExitRailInfo( req, fieldWork, idx, &pos );  // front_posは移動不可なので、posにする
+    rememberExitRailInfo( req, idx, &pos );  // front_posは移動不可なので、posにする
     return getRailChangeMapEvent(req, fieldWork, idx, &pos);
   }
 
@@ -2577,9 +2579,10 @@ static GMEVENT * checkRailSlipDown(const EV_REQUEST * req, GAMESYS_WORK *gsys, F
  *	@brief  レールマップの出入り口情報を保存
  */
 //--------------------------------------------------------------
-static void rememberExitRailInfo(const EV_REQUEST * req, FIELDMAP_WORK * fieldWork, int idx, const RAIL_LOCATION* loc)
+static void rememberExitRailInfo(const EV_REQUEST * req, int idx, const RAIL_LOCATION* loc)
 {
 	//マップ遷移発生の場合、出入口を記憶しておく
+  FIELDMAP_WORK * fieldWork = req->fieldWork;
   LOCATION ent_loc;
   LOCATION_SetRail( &ent_loc, FIELDMAP_GetZoneID(fieldWork), idx, 0, LOCATION_DEFAULT_EXIT_OFS,
       loc->rail_index, loc->line_grid, loc->width_grid);
