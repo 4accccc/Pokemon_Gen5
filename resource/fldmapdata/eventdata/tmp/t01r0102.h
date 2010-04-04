@@ -12,6 +12,11 @@
 #define T01R0102_RIVAL_01                  0
 #define T01R0102_SUPPORT_01                1
 #define T01R0102_PRESENT_01                2
+#define T01R0102_PRIZE1_01                 3
+#define T01R0102_PRIZE2_01                 4
+#define T01R0102_TRORHY1_01                5
+#define T01R0102_TRORHY2_01                6
+#define T01R0102_TRORHY3_01                7
 
 #endif //ZONE_T01R0102_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t01r0102.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

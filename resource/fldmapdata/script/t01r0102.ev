@@ -23,12 +23,16 @@ _EVENT_DATA    ev_bg_t01r0102_game_01
 _EVENT_DATA    ev_bg_t01r0102_tv_01
 _EVENT_DATA    ev_bg_t01r0102_pc_01
 _EVENT_DATA    ev_bg_t01r0102_bed_01
-_EVENT_DATA    ev_scene_t01r0102_gamestart		//ゲーム開始時のイベント
-_EVENT_DATA    ev_pos_t01r0102_stopper			//ポケモン３匹入手イベントのライバルストッパー
+_EVENT_DATA    ev_scene_t01r0102_gamestart	//ゲーム開始時のイベント
+_EVENT_DATA    ev_pos_t01r0102_stopper		//ポケモン３匹入手イベントのライバルストッパー
 _EVENT_DATA    ev_t01r0102_rival_01
 _EVENT_DATA    ev_t01r0102_support_01
-_EVENT_DATA    ev_t01r0102_present_01			//三匹選択アプリ
-
+_EVENT_DATA    ev_t01r0102_present_01		//三匹選択アプリ
+_EVENT_DATA    ev_t01r0102_prize1_01		//表彰状（地方）
+_EVENT_DATA    ev_t01r0102_prize2_01		//表彰状（全国）
+_EVENT_DATA    ev_t01r0102_trorhy1_01		//バトルサブウェイトロフィ（シングル）
+_EVENT_DATA    ev_t01r0102_trorhy2_01		//バトルサブウェイトロフィ（ダブル）
+_EVENT_DATA    ev_t01r0102_trorhy3_01		//バトルサブウェイトロフィ（マルチ）
 _EVENT_DATA_END
 
 
@@ -433,7 +437,7 @@ ev_first_pkeget:
 		
 		//～～のポケモンも…
 		_PLAYER_NAME( 0 )
-		_BALLOONWIN_OBJMSG_POS( msg_t01r0102_black_13 , T01R0102_RIVAL_01, POS_UR )
+		_BALLOONWIN_OBJMSG_POS( msg_t01r0102_black_11 , T01R0102_RIVAL_01, POS_UR )
 		_MSGWIN_CLOSE()
 		
 		//システム：チェレンはキズぐすりを使った▼
@@ -717,21 +721,14 @@ EVENT_END
 EVENT_START   ev_bg_t01r0102_game_01
 	_TALK_START_SE_PLAY()
 	
-	IF FLAG_ON( FE_T01R0102_SUPPORTBTL ) THEN
-		
-		//サポート戦後
-		IF FLAG_ON( SYS_FLAG_ARRIVE_T02 ) THEN
-			//T02到着後ならwiiのメッセージ戻す
-			_PLAINWIN_MSG_DOWN( msg_t01r0102_game_01 )
-			
-		ELSE
-			//サポート戦後からT02到着するまで
-			//ウィーがある全く壊れていない！
-			_PLAINWIN_MSG_DOWN( msg_t01r0102_game_02 )
-		ENDIF
+	//部屋の状態でメッセージ分岐
+	_GET_MAPREPLACE_FLAG( MAPREPLACE_ID_07, SCWK_ANSWER )
 	
+	IF $SCWK_ANSWER == TRUE THEN
+		//置き換えフラグON ＝ 部屋が荒れてる
+		_PLAINWIN_MSG_DOWN( msg_t01r0102_game_02 )
 	ELSE
-		//サポート戦前
+		//置き換えフラグOFF ＝ 普段の状態
 		_PLAINWIN_MSG_DOWN( msg_t01r0102_game_01 )
 	ENDIF
 	_LAST_KEYWAIT()
@@ -768,13 +765,84 @@ EVENT_END
 /*  T01R0102 BEDのBG用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_bg_t01r0102_bed_01
-	//【仮】メッセージ分岐が未作成
 	_TALK_START_SE_PLAY()
 	
-	_PLAINWIN_MSG_DOWN( msg_t01r0102_bed_01 )
+	//部屋の状態でメッセージ分岐
+	_GET_MAPREPLACE_FLAG( MAPREPLACE_ID_07, SCWK_ANSWER )
+	
+	IF $SCWK_ANSWER == TRUE THEN
+		//置き換えフラグON ＝ 部屋が荒れてる
+		_PLAINWIN_MSG_DOWN( msg_t01r0102_bed_02 )
+	ELSE
+		//置き換えフラグOFF ＝ 普段の状態
+		_PLAINWIN_MSG_DOWN( msg_t01r0102_bed_01 )
+	ENDIF
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
+EVENT_END
+
+
+/************************************************************/
+/*						表彰状（地方）						*/
+/************************************************************/
+EVENT_START   ev_t01r0102_prize1_01
+	_TALK_START_SE_PLAY()
+	
+	//イッシュ図鑑完成の賞状だ！
+	_PLAINWIN_MSG_DOWN( msg_t01r0102_award1_01 )
+	_MSGWIN_CLOSE()
+	
+	_CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_CHIHOU, 1 )
+	
+EVENT_END
+
+
+/************************************************************/
+/*						表彰状（全国）						*/
+/************************************************************/
+EVENT_START   ev_t01r0102_prize2_01
+	_TALK_START_SE_PLAY()
+	
+	//イッシュ図鑑完成の賞状だ！
+	_PLAINWIN_MSG_DOWN( msg_t01r0102_award2_01 )
+	_MSGWIN_CLOSE()
+	
+	_CALL_ZUKAN_AWARD( SCR_ZUKAN_AWARD_ZENKOKU, 1 )
+	
+EVENT_END
+
+
+/************************************************************/
+/*			バトルサブウェイトロフィ（シングル）			*/
+/************************************************************/
+EVENT_START   ev_t01r0102_trorhy1_01
+	_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_t01r0102_trophy1_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*			バトルサブウェイトロフィ（ダブル）				*/
+/************************************************************/
+EVENT_START   ev_t01r0102_trorhy2_01
+	_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_t01r0102_trophy2_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*			バトルサブウェイトロフィ（マルチ）				*/
+/************************************************************/
+EVENT_START   ev_t01r0102_trorhy3_01
+	_TALK_START_SE_PLAY()
+	_PLAINWIN_MSG_DOWN( msg_t01r0102_trophy3_01 )
+	_LAST_KEYWAIT()
+	_MSGWIN_CLOSE()
 EVENT_END
 
 

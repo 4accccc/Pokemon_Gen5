@@ -243,6 +243,13 @@ init_flags:
 	//H04 配達物イベント　イベント起動時まで非表示
 	_FLAG_SET(FV_H04_ITEM_02)
 
+	//自宅２F：表彰状、バトルサブウェイのトロフィを非表示
+	_FLAG_SET( FV_T01R0102_AWARD_01 )
+	_FLAG_SET( FV_T01R0102_AWARD_02 )
+	_FLAG_SET( FV_T01R0102_TROPHY_01 )
+	_FLAG_SET( FV_T01R0102_TROPHY_02 )
+	_FLAG_SET( FV_T01R0102_TROPHY_03 )
+
 }
 _RET
 
