@@ -119,7 +119,7 @@ enum {
   PLUS_RESULT      //”äŠrŒ‹‰Ê‚ªƒvƒ‰ƒX
 };
 
-#ifdef  DEBUG_ONLY_FOR_tamada
+#if 0 //def  DEBUG_ONLY_FOR_tamada
 #define TAMADA_FPrintf( ... ) \
   OS_TFPrintf( 3, __VA_ARGS__ )
 #else

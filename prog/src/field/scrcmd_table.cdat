@@ -496,7 +496,7 @@
   DEF_CMD( EvCmdAddPokemonToPartyEx, EV_SEQ_ADD_POKEMON_TO_PARTY_EX )
   DEF_CMD( EvCmdGetPartyPokeParameter, EV_SEQ_GET_PARTY_POKE_PARAMETER )
 
-  DEF_CMD( EvCmdGetMezameruPowerType, EV_SEQ_GET_MEZAMERU_POWER_TYPE )
+  DEF_CMD( EvCmdGetPartyPokeParameter, EV_SEQ_SET_PARTY_POKE_PARAMETER )
   DEF_CMD( EvCmdGetParamEXP, EV_SEQ_GET_PARAM_EXP )
   DEF_CMD( EvCmdCheckPokeOwner, EV_SEQ_CHECK_POKE_OWNER )
   DEF_CMD( EvCmdGetPartyPokeCountByMonsNo, EV_SEQ_GET_PARTY_POKE_COUNT_BY_MONSNO )
@@ -516,8 +516,8 @@
   DEF_CMD( EvCmdSetGymVictoryInfo, EV_SEQ_SET_GYM_VICTORY_INFO )
   DEF_CMD( EvCmdGetGymVictoryInfo, EV_SEQ_GET_GYM_VICTORY_INFO )
 
-  DEF_CMD( EvCmdGetBreederJudgeResult, EV_SEQ_GET_BREEDER_JUDGE_RESULT )
-  DEF_CMD( EvCmdWazaMachineLot, EV_SEQ_WAZAMACHINE_LOT )
+  NO_CMD()
+  NO_CMD()
   DEF_CMD( EvCmdTradeAfterSaveSet, EV_SEQ_TRADEPOKE_AFTER_SAVE )
   DEF_CMD( EvCmdAddTamagoToParty, EV_DEQ_ADD_TAMAGO_TO_PARTY)
 
@@ -994,6 +994,17 @@
   //トレインタウン用
   DEF_CMD( EvCmdGetTrainModelID, EV_SEQ_GET_TRAIN_MODEL_ID )
   DEF_CMD( EvCmdGetTrainTownCondition, EV_SEQ_GET_TRAIN_TOWN_COND )
+  NO_CMD()
+  NO_CMD()
+
+  //ポケモン関連イベント用
+  DEF_CMD( EvCmdGetMezameruPowerType, EV_SEQ_GET_MEZAMERU_POWER_TYPE )
+  DEF_CMD( EvCmdGetBreederJudgeResult, EV_SEQ_GET_BREEDER_JUDGE_RESULT )
+  DEF_CMD( EvCmdWazaMachineLot, EV_SEQ_WAZAMACHINE_LOT )
+  NO_CMD()
+
+  NO_CMD()
+  NO_CMD()
   NO_CMD()
   NO_CMD()
 

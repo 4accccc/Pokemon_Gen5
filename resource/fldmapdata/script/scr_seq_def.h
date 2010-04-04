@@ -5348,6 +5348,7 @@
  * @param pos         モンスターナンバーを調べる手持ちポケモン番号
  *
  * @note
+ * SCR_POKEPARA_～のうち、ROもしくはRWと書かれているものを指定することができます。
  */
 //--------------------------------------------------------------
 #define _GET_PARTY_POKE_PARAM( ret_wk, pos, para_id ) \
@@ -5358,6 +5359,28 @@
     .short  \ret_wk
     .short  \pos
     .short  \para_id
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SET_TEMOTI_POKE_PARAM
+ * @brief
+ * @param para_id     取得したいパラメータ指定ID（script_def.hのSCR_POKEPARA_～）
+ * @param pos         モンスターナンバーを調べる手持ちポケモン番号
+ * @param value       セットする値
+ *
+ * @note
+ * SCR_POKEPARA_～のうち、WOもしくはRWと書かれているものを指定することができます。
+ */
+//--------------------------------------------------------------
+#define _SET_PARTY_POKE_PARAM( pos, para_id, value ) \
+    _ASM_SET_PARTY_POKE_PARAM pos, para_id, value
+
+    .macro  _ASM_SET_PARTY_POKE_PARAM pos, para_id, value
+    .short  EV_SEQ_GET_PARTY_POKE_PARAMETER
+    .short  \pos
+    .short  \para_id
+    .short  \value
     .endm
 
 //--------------------------------------------------------------

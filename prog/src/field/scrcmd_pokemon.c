@@ -132,7 +132,27 @@ u32 SCRCMD_GetTemotiPPValue( SCRCMD_WORK * work, u16 pos, int param_id )
   }
   return 0;
 }
-
+//--------------------------------------------------------------
+/**
+ * @brief ツール関数：指定位置の手持ちポケモンのパラメータをセットする
+ * @param work
+ * @param pos
+ * @param param_id
+ * @param value
+ * @return  BOOL  セットできた場合TRUEを返す
+ *
+ */
+//--------------------------------------------------------------
+BOOL SCRCMD_SetTemotiPPValue( SCRCMD_WORK *work, u16 pos, int param_id, u32 value )
+{
+  POKEMON_PARAM * pp;
+  if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == TRUE )
+  {
+    PP_Put( pp, param_id, value );
+    return TRUE;
+  }
+  return FALSE;
+}
 //--------------------------------------------------------------
 /**
  * @brief ツール関数：指定したわざを持っているか？のチェック
@@ -390,15 +410,8 @@ VMCMD_RESULT EvCmdGetPartyPokeMonsNo( VMHANDLE * core, void *wk )
   SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
   u16*          ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
-  POKEMON_PARAM* pp;
-  if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == TRUE )
-  {
-    *ret_wk = PP_Get( pp, ID_PARA_monsno, NULL );
-  }
-  else
-  {
-    *ret_wk = 0;
-  }
+
+  *ret_wk = SCRCMD_GetTemotiPPValue( work, pos, ID_PARA_monsno );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -415,15 +428,8 @@ VMCMD_RESULT EvCmdGetPartyPokeFormNo( VMHANDLE * core, void *wk )
   SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
   u16*          ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
-  POKEMON_PARAM * pp;
-  if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == TRUE )
-  {
-    *ret_wk = PP_Get( pp, ID_PARA_form_no, NULL );
-  }
-  else
-  {
-    *ret_wk = 0;
-  }
+
+  *ret_wk = SCRCMD_GetTemotiPPValue( work, pos, ID_PARA_form_no );
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -831,32 +837,6 @@ VMCMD_RESULT EvCmdAddPokemonToPartyEx( VMHANDLE *core, void *wk )
 
 //--------------------------------------------------------------
 /**
- * ポケモンを選択する
- * @param	core		仮想マシン制御構造体へのポインタ
- * @param wk      SCRCMD_WORKへのポインタ
- * @retval VMCMD_RESULT
- */
-//--------------------------------------------------------------
-VMCMD_RESULT EvCmdPartyPokeSelect( VMHANDLE *core, void *wk )
-{
-  int i;
-  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
-  u16*         ret_decide = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
-  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第2引数
-  u16               value = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数(予備値)
-  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
-  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
-  
-  {
-    GMEVENT *event = EVENT_CreatePokeSelect( gsys , ret_decide , ret_wk );
-    SCRIPT_CallEvent( scw, event );
-  }
-  
-  return VMCMD_RESULT_SUSPEND;
-}
-
-//--------------------------------------------------------------
-/**
  * 手持ちポケモンの技個数取得
  * @param	core		仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
@@ -1189,11 +1169,23 @@ VMCMD_RESULT EvCmdGetPartyPokeGetDate( VMHANDLE* core, void* wk )
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
+//--------------------------------------------------------------
+typedef struct {
+  u16 para_id;
+  u16 max;
+}SET_PARAM_DEF;
+//--------------------------------------------------------------
 //  定義とのズレがあればコンパイル時エラーにする
 //--------------------------------------------------------------
 SDK_COMPILER_ASSERT( SCR_POKEPARA_MONSNO == ID_PARA_monsno );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_ITEMNO == ID_PARA_item );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_COUNTRY_CODE == ID_PARA_country_code );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_HP_RND == ID_PARA_hp_rnd );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_POW_RND == ID_PARA_pow_rnd );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_DEF_RND == ID_PARA_def_rnd );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_AGI_RND == ID_PARA_agi_rnd );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_SPEPOW_RND == ID_PARA_spepow_rnd );
+SDK_COMPILER_ASSERT( SCR_POKEPARA_SPEDEF_RND == ID_PARA_spedef_rnd );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_HAIHU_FLAG == ID_PARA_event_get_flag );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_SEX == ID_PARA_sex );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_FORMNO == ID_PARA_form_no );
@@ -1210,6 +1202,50 @@ SDK_COMPILER_ASSERT( SCR_POKEPARA_BIRTH_PLACE == ID_PARA_birth_place );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_GET_LEVEL == ID_PARA_get_level );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_OYA_SEX == ID_PARA_oyasex );
 SDK_COMPILER_ASSERT( SCR_POKEPARA_LEVEL == ID_PARA_level );
+
+//--------------------------------------------------------------
+/**
+ * @brief 手持ちポケモンのパラメータセット
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdSetPartyPokeParameter( VMHANDLE* core, void* wk )
+{
+  SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
+  u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
+  u16               id = SCRCMD_GetVMWorkValue( core, wk );  // 
+  u16            value = SCRCMD_GetVMWorkValue( core, wk );  // セットする値
+  static const SET_PARAM_DEF tbl[] = {
+    { SCR_POKEPARA_HP_RND,     31 },
+    { SCR_POKEPARA_POW_RND,    31 },
+    { SCR_POKEPARA_DEF_RND,    31 },
+    { SCR_POKEPARA_AGI_RND,    31 },
+    { SCR_POKEPARA_SPEPOW_RND, 31 },
+    { SCR_POKEPARA_SPEDEF_RND, 31 },
+  };
+  int i;
+  for ( i = 0; i < NELEMS(tbl); i++ )
+  {
+    if ( id == tbl[i].para_id )
+    {
+      if ( value <= tbl[i].max )
+      {
+        POKEMON_PARAM * pp;
+        if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == TRUE )
+        {
+          PP_Put( pp, id, value );
+          PP_Renew( pp ); //PPを再計算
+        }
+      }
+      else
+      {
+        GF_ASSERT( 0 ); //設定値が大きすぎる
+      }
+      return VMCMD_RESULT_CONTINUE;
+    }
+  }
+  GF_ASSERT_MSG(0, "SCRCMD:POKEMON PARAMETER id=%dは未対応\n", id );
+  return VMCMD_RESULT_CONTINUE;
+}
 
 //--------------------------------------------------------------
 /**
@@ -1257,6 +1293,13 @@ VMCMD_RESULT EvCmdGetPartyPokeParameter( VMHANDLE* core, void* wk )
   return VMCMD_RESULT_CONTINUE;
 }
 
+
+
+//======================================================================
+//
+//  ポケモン入手処理関連
+//
+//======================================================================
 //--------------------------------------------------------------
 /**
  * ポケモンをボックスに追加

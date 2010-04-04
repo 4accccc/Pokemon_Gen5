@@ -57,6 +57,32 @@
 //======================================================================
 //--------------------------------------------------------------
 /**
+ * ポケモンを選択する
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @param wk      SCRCMD_WORKへのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPartyPokeSelect( VMHANDLE *core, void *wk )
+{
+  int i;
+  SCRCMD_WORK*       work = (SCRCMD_WORK*)wk;
+  u16*         ret_decide = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
+  u16*             ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第2引数
+  u16               value = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数(予備値)
+  SCRIPT_WORK*        scw = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
+  
+  {
+    GMEVENT *event = EVENT_CreatePokeSelect( gsys , ret_decide , ret_wk );
+    SCRIPT_CallEvent( scw, event );
+  }
+  
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief お気に入りポケモンのセット
  */
 //--------------------------------------------------------------

@@ -15,6 +15,7 @@
 //  extern 
 //======================================================================
 
+extern VMCMD_RESULT EvCmdPartyPokeSelect( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdSetFavoritePoke( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdSetGymVictoryInfo( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdGetGymVictoryInfo( VMHANDLE * core, void *wk );

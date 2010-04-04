@@ -15,6 +15,7 @@
 //======================================================================
 extern BOOL SCRCMD_GetTemotiPP( SCRCMD_WORK * work, u16 pos, POKEMON_PARAM ** poke_para );
 extern u32 SCRCMD_GetTemotiPPValue( SCRCMD_WORK * work, u16 pos, int param_id );
+extern BOOL SCRCMD_SetTemotiPPValue( SCRCMD_WORK *work, u16 pos, int param_id, u32 value );
 extern BOOL SCRCMD_CheckTemotiWaza( const POKEMON_PARAM * pp, u16 wazano );
 
 
@@ -49,7 +50,6 @@ extern VMCMD_RESULT EvCmdAddPokemonToBox( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdAddPokemonToBoxEx( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdAddTamagoToParty( VMHANDLE *core, void *wk );
 
-extern VMCMD_RESULT EvCmdPartyPokeSelect( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetPokemonWazaNum( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdGetPokemonWazaID( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdSetPokemonWaza( VMHANDLE *core, void *wk );
@@ -65,4 +65,5 @@ extern VMCMD_RESULT EvCmdCheckPartyPokeGetPlace( VMHANDLE* core, void* wk );
 extern VMCMD_RESULT EvCmdGetPartyPokeGetDate( VMHANDLE* core, void* wk );
 
 extern VMCMD_RESULT EvCmdGetPartyPokeParameter( VMHANDLE* core, void* wk );
+extern VMCMD_RESULT EvCmdSetPartyPokeParameter( VMHANDLE* core, void* wk );
 
