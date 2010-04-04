@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-04T18:23:01"/>
+	<create user="matsumiya" host="W00224" date="2010-04-04T18:35:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1559" top="16" right="2264" bottom="636" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -719,61 +719,71 @@
 	</row>
 
 	<row id="msg_tv_02_31">
-		<comment>技・特性・道具・説明関連</comment>
+		<comment>道具説明
+・しんかのきせき</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_32">
-		<comment>技・特性・道具・説明関連</comment>
+		<comment>道具説明
+・かるいし</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_33">
-		<comment>技・特性・道具・説明関連</comment>
+		<comment>道具説明
+・ゴツゴツメット</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_34">
-		<comment>技・特性・道具・説明関連</comment>
+		<comment>道具説明
+・ふうせん</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_35">
-		<comment>技・特性・道具・説明関連</comment>
+		<comment>道具説明
+・レッドカード</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_36">
-		<comment>技・特性・道具・説明関連</comment>
+		<comment>道具説明
+・ねらいのまと</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_37">
-		<comment>技・特性・道具・説明関連</comment>
+		<comment>道具説明
+・しめつけバンド</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_38">
-		<comment>技・特性・道具・説明関連</comment>
+		<comment>道具説明
+・きゅうこん</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_39">
-		<comment>技・特性・道具・説明関連</comment>
+		<comment>道具説明
+・じゅうでんち</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_40">
-		<comment>技・特性・道具・説明関連</comment>
+		<comment>道具説明
+・だっしゅつポッド</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
