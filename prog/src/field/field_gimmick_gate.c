@@ -539,8 +539,8 @@ void GATE_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
     config = SaveData_GetConfig( save );
     mojiMode = CONFIG_GetMojiMode( config );
     switch( mojiMode ) {
-    case MOJIMODE_HIRAGANA: index = UNIT_ELBOARD_NORMAL; break;
-    case MOJIMODE_KANJI:    index = UNIT_ELBOARD_FAST;   break;
+    case MOJIMODE_KANJI:    index = UNIT_ELBOARD_NORMAL; break;
+    case MOJIMODE_HIRAGANA: index = UNIT_ELBOARD_FAST;   break;
     default: GF_ASSERT(0);
     }
     FLD_EXP_OBJ_AddUnit( exobj_cnt, &unit[ index ], EXPOBJ_UNIT_ELBOARD );
