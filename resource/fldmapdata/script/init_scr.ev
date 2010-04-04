@@ -30,9 +30,6 @@ INIT_EVENT_END
 
 init_flags:
 {
-	//カノコタウン：研究所前のサポート
-	_FLAG_SET( FV_T01_SUPPORT )
-	
 	//R03道路：ハカイ団と遭遇イベント
 	_FLAG_SET( FV_R03_RIVAL_01 )
 	_FLAG_SET( FV_R03_SUPPORT_01 )

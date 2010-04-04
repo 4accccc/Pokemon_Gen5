@@ -32,6 +32,7 @@ _EVENT_DATA   ev_scene_t01_mama_01		//タウンマップ入手イベント
 _EVENT_DATA   ev_init_t01
 _EVENT_DATA   ev_pos_t01_firststep_01	//最初の一歩イベント
 _EVENT_DATA   ev_scene_t01_friends_01
+_EVENT_DATA   ev_scene_t01_support_01	//ゲーム開始直後、サポートが自宅に向かう演出
 _EVENT_DATA_END //データ終端を指定しています。
 
 
@@ -39,6 +40,11 @@ _EVENT_DATA_END //データ終端を指定しています。
 /*					FIELD_INIT_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START   ev_init_t01
+
+	IF $WK_SCENE_T01_SUPPORT == 1 THEN
+		//ゲーム開始直後なら、サポートの位置を変更
+		_OBJ_POS_CHANGE( T01_SUPPORT_01, 781, 0, 753, DIR_DOWN )
+	ENDIF
 
 	IF $WK_SCENE_T01 == 1 THEN
 		//研究所で図鑑をもらった直後なら、ライバルとサポートの位置を変更
@@ -108,6 +114,33 @@ EVENT_START   ev_t01_woman2_01
 	ENDIF
 
 EVENT_END
+
+
+/************************************************************/
+/*				ゲーム開始直後：サポートイベント			*/
+/************************************************************/
+EVENT_START ev_scene_t01_support_01
+	_OBJ_ANIME( T01_SUPPORT_01, anm_first_support_move_01 )
+	_OBJ_ANIME_WAIT()
+	_TIME_WAIT( 8 )
+	
+	_OBJ_DEL( T01_SUPPORT_01 )
+	
+	//========================================//
+	$WK_SCENE_T01_SUPPORT = 2
+	
+	_FLAG_SET( FV_T01_SUPPORT )
+	//========================================//
+	
+EVENT_END
+
+//--------------------------------------------------------------------
+//サポート：自宅へ向かう
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_first_support_move_01
+	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	ACMD_END,0
+
 
 /************************************************************/
 /*				ライバル：研究所ストッパー					*/

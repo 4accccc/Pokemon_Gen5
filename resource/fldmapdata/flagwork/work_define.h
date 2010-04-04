@@ -120,7 +120,7 @@
 #define WK_SCENE_R01                     16508 /* 0x407c １番道路：イベント用ワーク */
 #define WK_SCENE_R02                     16509 /* 0x407d ２番道路：イベント用ワーク */
 #define WK_SCENE_R03                     16510 /* 0x407e ３番道路：イベント用ワーク */
-		/* not used 16511(0x407f) */
+#define WK_SCENE_T01_SUPPORT             16511 /* 0x407f カノコタウン：サポートが自宅へ向かう演出用 */
 #define WK_SCENE_T01                     16512 /* 0x4080 カノコタウン（フィールド）：イベント用ワーク */
 #define WK_SCENE_T01R0102                16513 /* 0x4081 主人公宅２階：イベント用ワーク */
 #define WK_SCENE_C01GYM0101              16514 /* 0x4082 C01ジム（三色ジム）：イベント用ワーク */
