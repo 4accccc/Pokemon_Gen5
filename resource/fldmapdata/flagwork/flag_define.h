@@ -523,9 +523,9 @@
 
 #define FV_T01R0102_RIVAL                  500 /* 0x01f4 自宅２階：ポケモン入手イベントのライバル */
 #define FV_T01R0102_SUPPORT                501 /* 0x01f5 自宅２階：ポケモン入手イベントのサポート */
-#define FV_T01R0102_BALL00                 502 /* 0x01f6 自宅２階：ポケモン入手イベントのボール１ */
-#define FV_T01R0102_BALL01                 503 /* 0x01f7 自宅２階：ポケモン入手イベントのボール２ */
-#define FV_T01R0102_BALL02                 504 /* 0x01f8 自宅２階：ポケモン入手イベントのボール３ */
+		/* not used   502(0x01f6) */
+		/* not used   503(0x01f7) */
+		/* not used   504(0x01f8) */
 #define FV_T01R0401_HAKASE2                505 /* 0x01f9 カノコタウン研究所：アララギ博士(娘) */
 #define FV_T01R0401_RIVAL                  506 /* 0x01fa カノコタウン研究所：ライバル */
 #define FV_T01R0401_SUPPORT                507 /* 0x01fb カノコタウン研究所：サポート */
