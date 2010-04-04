@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-03T22:05:59"/>
+	<create user="matsumiya" host="W00224" date="2010-04-04T14:04:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -666,11 +666,11 @@
 		<attribute name="キャラ指定">兄
 お坊ちゃま</attribute>
 		<language name="JPN" width="256">ブルジョワールけ
-じきとうしゅ　▲▲▲▲▲！▼
+じきとうしゅ　ジリオン！▼
 いっかの　めいよは
 この　ボクが　まもろう！▼</language>
 		<language name="JPN_KANJI" width="256">ブルジョワール家
-次期当主　▲▲▲▲▲！▼
+次期当主　ジリオン！▼
 一家の　名誉は
 このボクが　護ろう！▼</language>
 	</row>
@@ -708,17 +708,17 @@
 ・家族全員勝ち抜いた後、話しかけた場合。</comment>
 		<attribute name="キャラ指定">兄
 お坊ちゃま</attribute>
-		<language name="JPN" width="256">……　……
-……　……▼
-……　……
-……　……▼
+		<language name="JPN" width="256">……　……　……
+……　……　……▼
+……　……　……
+……　……　……▼
 ……フッ▼
 まだ　とうしゅを　なのるには
 はやい……　そういう　ことか</language>
-		<language name="JPN_KANJI" width="256">……　……
-……　……▼
-……　……
-……　……▼
+		<language name="JPN_KANJI" width="256">……　……　……
+……　……　……▼
+……　……　……
+……　……　……▼
 ……フッ▼
 まだ　当主を　名乗るには
 早い……　そういう　ことか</language>
