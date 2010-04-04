@@ -34,7 +34,6 @@
 
 // オーバーレイ
 FS_EXTERN_OVERLAY(ui_common);
-FS_EXTERN_OVERLAY(zukan_toroku);
 
 
 //=============================================================================
@@ -269,7 +268,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcInit( ZKNDTL_PROC* proc, int* se
 
   // オーバーレイ
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(zukan_toroku) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(zukan_info) );
 
   // ヒープ
   {
@@ -333,7 +332,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcExit( ZKNDTL_PROC* proc, int* se
   ZKNDTL_PROC_FreeWork( proc );
  
   // オーバーレイ
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(zukan_toroku) );
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(zukan_info) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
 
 #ifdef DEBUG_KAWADA

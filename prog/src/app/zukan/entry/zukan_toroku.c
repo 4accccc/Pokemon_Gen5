@@ -259,6 +259,7 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcInit( GFL_PROC* proc, int* seq, void* pw
 
   // オーバーレイ読み込み
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(zukan_info) );
 
   // ヒープ
   {
@@ -352,6 +353,7 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcExit( GFL_PROC* proc, int* seq, void* pw
   }
   
   // オーバーレイ破棄
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(zukan_info) );
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
 
   return GFL_PROC_RES_FINISH;
