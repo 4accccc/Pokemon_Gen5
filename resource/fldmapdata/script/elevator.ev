@@ -25,10 +25,18 @@ _EVENT_DATA   ev_elevator_c03r10
 _EVENT_DATA   ev_elevator_c03r11
 _EVENT_DATA   ev_elevator_c03r12
 _EVENT_DATA   ev_elevator_c03r13
+_EVENT_DATA   ev_elevator_c03r03_front
+_EVENT_DATA   ev_elevator_c03r04_front
+_EVENT_DATA   ev_elevator_c03r05_front
+_EVENT_DATA   ev_elevator_c03r10_front
+_EVENT_DATA   ev_elevator_c03r11_front
+_EVENT_DATA   ev_elevator_c03r12_front
+_EVENT_DATA   ev_elevator_c03r13_front
 _EVENT_DATA_END
 
 
 
+DEFINE_LOCAL  TALK_POS
 DEFINE_LOCAL  HEROX
 DEFINE_LOCAL  HEROZ
 DEFINE_LOCAL  ELEVATOR_ID
@@ -37,6 +45,13 @@ DEFINE_LOCAL  ELEVATOR_ID
 /*        C03R030?用エレベーター                              */
 /**************************************************************/
 EVENT_START   ev_elevator_c03r03
+    $TALK_POS = 0
+    _ELEVATOR_ENTRY_LIST( elevator_c03r03 )
+    _CALL sub_elevator_main
+EVENT_END
+
+EVENT_START   ev_elevator_c03r03_front
+    $TALK_POS = 1
     _ELEVATOR_ENTRY_LIST( elevator_c03r03 )
     _CALL sub_elevator_main
 EVENT_END
@@ -51,6 +66,13 @@ _ELEVATOR_DATA_END
 /*        C03R040?用エレベーター                              */
 /**************************************************************/
 EVENT_START   ev_elevator_c03r04
+    $TALK_POS = 0
+    _ELEVATOR_ENTRY_LIST( elevator_c03r04 )
+    _CALL sub_elevator_main
+EVENT_END
+
+EVENT_START   ev_elevator_c03r04_front
+    $TALK_POS = 1
     _ELEVATOR_ENTRY_LIST( elevator_c03r04 )
     _CALL sub_elevator_main
 EVENT_END
@@ -64,6 +86,13 @@ _ELEVATOR_DATA_END
 /*        C03R050?用エレベーター                              */
 /**************************************************************/
 EVENT_START   ev_elevator_c03r05
+    $TALK_POS = 0
+    _ELEVATOR_ENTRY_LIST( elevator_c03r05 )
+    _CALL sub_elevator_main
+EVENT_END
+
+EVENT_START   ev_elevator_c03r05_front
+    $TALK_POS = 1
     _ELEVATOR_ENTRY_LIST( elevator_c03r05 )
     _CALL sub_elevator_main
 EVENT_END
@@ -77,6 +106,13 @@ _ELEVATOR_DATA_END
 /*        C03R100?用エレベーター                              */
 /**************************************************************/
 EVENT_START   ev_elevator_c03r10
+    $TALK_POS = 0
+    _ELEVATOR_ENTRY_LIST( elevator_c03r10 )
+    _CALL sub_elevator_main
+EVENT_END
+
+EVENT_START   ev_elevator_c03r10_front
+    $TALK_POS = 1
     _ELEVATOR_ENTRY_LIST( elevator_c03r10 )
     _CALL sub_elevator_main
 EVENT_END
@@ -90,6 +126,13 @@ _ELEVATOR_DATA_END
 /*        C03R110?用エレベーター                              */
 /**************************************************************/
 EVENT_START   ev_elevator_c03r11
+    $TALK_POS = 0
+    _ELEVATOR_ENTRY_LIST( elevator_c03r11 )
+    _CALL sub_elevator_main
+EVENT_END
+
+EVENT_START   ev_elevator_c03r11_front
+    $TALK_POS = 1
     _ELEVATOR_ENTRY_LIST( elevator_c03r11 )
     _CALL sub_elevator_main
 EVENT_END
@@ -103,6 +146,13 @@ _ELEVATOR_DATA_END
 /*        C03R100?用エレベーター                              */
 /**************************************************************/
 EVENT_START   ev_elevator_c03r12
+    $TALK_POS = 0
+    _ELEVATOR_ENTRY_LIST( elevator_c03r12 )
+    _CALL sub_elevator_main
+EVENT_END
+
+EVENT_START   ev_elevator_c03r12_front
+    $TALK_POS = 1
     _ELEVATOR_ENTRY_LIST( elevator_c03r12 )
     _CALL sub_elevator_main
 EVENT_END
@@ -116,6 +166,13 @@ _ELEVATOR_DATA_END
 /*        C03R130?用エレベーター                              */
 /**************************************************************/
 EVENT_START   ev_elevator_c03r13
+    $TALK_POS = 0
+    _ELEVATOR_ENTRY_LIST( elevator_c03r13 )
+    _CALL sub_elevator_main
+EVENT_END
+
+EVENT_START   ev_elevator_c03r13_front
+    $TALK_POS = 1
     _ELEVATOR_ENTRY_LIST( elevator_c03r13 )
     _CALL sub_elevator_main
 EVENT_END
@@ -138,6 +195,9 @@ _ELEVATOR_DATA_END
 /**************************************************************/
 sub_elevator_main:
     _TALK_START_SE_PLAY()
+
+    _CALL sub_elevator_in
+
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
     _ELEVATOR_MAKE_LIST()
     _BMPMENU_MAKE_LIST( msg_elevator_cancel, 0xff )
@@ -146,7 +206,10 @@ sub_elevator_main:
     _DEBUG_PRINT_WK( SCWK_ANSWER )
     IF $SCWK_ANSWER != 0xff && $SCWK_ANSWER != EV_WIN_B_CANCEL THEN
         //エレベーターに乗り込む
-        _CALL sub_elevator_in
+        //_CALL sub_elevator_in
+
+        _TIME_WAIT( 10 )
+        _SE_PLAY( SEQ_SE_FLD_23 ) //エレベーター移動音
 
         _MAP_FADE_BLACK_OUT()
         _MAP_FADE_END_CHECK()
@@ -157,7 +220,13 @@ sub_elevator_main:
         _MAP_FADE_BLACK_IN()
         _MAP_FADE_END_CHECK()
 
+        _TIME_WAIT( 60 )
+        _SE_STOP()
+        _SE_PLAY( SEQ_SE_FLD_87 ) //エレベーター到着音
+        _SE_WAIT()
         //エレベーターから出てくる
+        _CALL sub_elevator_out
+    ELSE
         _CALL sub_elevator_out
     ENDIF
     _RET
@@ -181,19 +250,27 @@ sub_elevator_in:
     _BMODEL_ANIME_SET( ELEVATOR_ID, SCR_BMANM_DOOR_OPEN )
     _BMODEL_ANIME_WAIT( ELEVATOR_ID )
 
-    _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in )
+    IF $TALK_POS == 0 THEN
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in_from_board )
+    ELSE
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_in_from_front )
+    ENDIF
     _OBJ_ANIME_WAIT()
 
     _BMODEL_ANIME_SET( ELEVATOR_ID, SCR_BMANM_DOOR_CLOSE )
     _BMODEL_ANIME_WAIT( ELEVATOR_ID )
     _BMODEL_ANIME_DELETE( ELEVATOR_ID )
 
-    _TIME_WAIT( 10 )
-    _SE_PLAY( SEQ_SE_FLD_23 ) //エレベーター移動音
+    //_TIME_WAIT( 10 )
+    //_SE_PLAY( SEQ_SE_FLD_23 ) //エレベーター移動音
     _RET
 
-_ANIME_LABEL anm_player_in
-    _ANIME_DATA AC_WALK_R_8F, 2
+_ANIME_LABEL anm_player_in_from_front
+    _ANIME_DATA AC_WALK_U_8F, 2
+    _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_player_in_from_board
+    _ANIME_DATA AC_WALK_R_8F, 1
     _ANIME_DATA AC_WALK_U_8F, 2
     _ANIME_DATA ACMD_END,0
     
@@ -202,11 +279,10 @@ _ANIME_LABEL anm_player_in
 /*    エレベーターから出てくる演出                            */
 /**************************************************************/
 sub_elevator_out:
-    //_SE_PLAY( SEQ_SE_FLD_23 )
-    _TIME_WAIT( 60 )
-    _SE_STOP()
-    _SE_PLAY( SEQ_SE_FLD_87 ) //エレベーター到着音
-    _SE_WAIT()
+    //_TIME_WAIT( 60 )
+    //_SE_STOP()
+    //_SE_PLAY( SEQ_SE_FLD_87 ) //エレベーター到着音
+    //_SE_WAIT()
     _PLAYER_POS_GET( HEROX, HEROZ )
     $HEROZ += 1
     _BMODEL_ANIME_CREATE( ELEVATOR_ID, SCR_BMID_DOOR, HEROX, HEROZ )
