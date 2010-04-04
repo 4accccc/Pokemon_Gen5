@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-03-08T19:37:21"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-03T18:11:19"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -35,41 +35,41 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="art02a_pl"
-		path="C:/home/wb_data3d/field/in61/chip/tex/art02a.tga"
+		path="C:/home/wb_data3d/build_model/indoor/art02/tex/art02a.tga"
 	>
 		<bitmap size="256">
-			1111 1111 1111 1111 1111 1111 1111 1111
-			1000 0001 0110 0001 1100 1000 0000 1110
-			0100 0000 0000 0100 0000 0100 0002 0000
-			0000 0000 2222 2002 0000 0000 0000 1000
-			4000 4444 4444 4444 4444 4444 4444 2004
-			4012 3333 5bbb 3b55 3333 3333 3333 2004
-			4002 54b3 5555 4555 3334 4444 3333 2004
-			4002 44b3 6a64 cc66 feda ccaf 3334 0114
-			4002 a5b3 ca64 eddc feea deff 33cc 0014
-			4100 6553 eaa4 fdce ffff 4dff 33cc 2094
-			4000 c6b3 f7fe feff ffff deff 333c 0004
-			4000 dbb3 aa4a efff ffff cdde 333c 2004
-			4002 ecb3 aaff eeff efaf ddcd 333c 0004
-			4002 cc33 ffff deff cdad 4efd 333c 0004
-			4002 dc33 ffff cdef c344 4aff 33c4 2204
-			4012 dcc3 dddd 6ddd dbbb aaff 3334 2204
-			4000 fd33 deff ccdd cb65 eeef 33cd 2004
-			4000 fe33 efff 6cde cc65 ccec 3bcd 2204
-			4012 ff33 ffff bbff 6655 ddcc 3bc4 2204
-			4012 9f33 afaf bbff 55b3 ed33 3b6d 2004
-			4012 f9c3 9ff4 33ff 36b3 fff3 33ce 2004
-			4012 eef3 ffff ce9f 3b6c fff3 33ce 2104
-			4002 fffc fedf 4eff 3366 efdc 335c 2004
-			4000 eff3 dccc 6ffd f3b6 cdee 335b 2104
-			4000 dff3 f333 5cff f3b6 d4ee 335b 0004
-			4010 cfc3 f333 5bcf c556 cde4 3355 0104
-			4000 3c33 d333 533c 3335 bbbc 3333 2104
-			4002 3333 3333 3333 3333 3333 3333 2014
-			1022 1111 1111 1111 1111 1111 1111 2012
-			0024 1000 0000 1101 0100 0000 1111 2000
-			2044 0000 0000 1100 0000 0002 0000 4220
-			2444 0222 2442 0022 4200 2444 4422 4422
+			7721 0177 7732 0177 7732 0177 7732 1277
+			2210 2222 2222 2222 2222 2222 2222 0122
+			2211 0122 2237 0122 2237 0122 2237 1122
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 0000 0000 0000 0000 0000 0000 2222
+			0222 6661 6666 6666 6666 6666 1666 2220
+			3212 a996 bbbb 555d bbd5 abbb 699a 2123
+			7202 ba96 8bbb 5555 8d55 bbdd 69ab 2027
+			7272 ba96 dbbb 5555 d555 bd55 69bb 2727
+			7232 bba6 ddd8 cccd d555 d555 6abb 2327
+			7222 dba6 5555 ccd5 cdcc d555 6bbb 2227
+			7222 c8a6 5555 cd55 ccdc d55c 6bb5 2227
+			7222 cda6 5555 dc55 c8b8 5dcc 6b85 2227
+			7222 cda6 555c bcc5 8bbb 5cdd 6bd5 2227
+			7222 c8a6 cccc bdcc bbbb cccb 6bdc 2227
+			7212 daa6 cccc bbdc bbbb 5cbb 6b85 2127
+			7202 8aa6 555d b8d5 bbbb 5cdb 6bd5 2027
+			7272 d8a6 5555 8d55 bbbb ccdb 6bbd 2727
+			7232 48a6 5555 8455 bbbb bdd8 6bbb 2327
+			7222 48a6 5555 8455 dbbb d55c 6abb 2227
+			7222 48a6 555c 84c5 dbbb d55c 6abb 2227
+			7222 d8a6 cccc 8dcc 8bbb 8ccc 6abb 2227
+			7222 8b96 cccc b8cc 8bbb b8dd 69ab 2227
+			7212 5896 8885 8558 555b bbb8 69ab 2127
+			7202 5896 babd 85db 558b bbb8 699a 2027
+			7272 8996 aaa8 b88b 58bb aabb 6999 2727
+			3232 6661 6666 6666 6666 6666 1666 2323
+			2222 7773 7777 7777 7777 7777 3777 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 7322 2210 7322 2210 7322 2210 2222
+			2211 3332 2333 3332 2333 3332 2333 1122
+			2210 2222 2222 2222 2222 2222 2222 0122
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="black"
@@ -158,14 +158,14 @@
 		width="8" height="16" original_width="8" original_height="16"
 		format="palette16"
 		color0_mode="color"
-		palette_name="idr_bed01"
+		palette_name="idr_dust01_pl"
 		path="C:/home/wb_data3d/field/in61/chip/tex/idr_dust01.tga"
 	>
 		<bitmap size="32">
-			0000 0000 2222 2222 0000 0000 2222 2222
-			1232 3210 2321 2321 3210 1232 2100 0123
-			3210 1232 2321 2321 1232 3210 2222 2222
-			1111 1111 3333 3333 2222 2222 0000 0000
+			0000 0000 4444 4444 3333 3333 2222 2222
+			1111 1111 2322 2321 3432 3432 4321 2343
+			3211 1234 4321 2343 3432 3432 2323 2321
+			4444 4444 3333 3333 2222 2222 1111 1111
 		</bitmap>
 	</tex_image>
 	<tex_image index="7" name="idr_plant01"
@@ -228,21 +228,21 @@
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0110 0000 0000 0000 0000
-			0000 0110 0880 0120 0000 0000 8800 0007
-			6700 0110 0770 0120 0000 1200 7700 0006
-			6700 0110 0670 0270 0770 2700 6600 0006
-			6700 0110 0670 1127 0660 2200 7700 0006
-			6700 1111 0670 1127 0670 1120 7701 0006
-			6700 1111 7778 1111 067b 1120 7771 0066
-			7780 8116 6777 1116 6678 1110 7781 0067
-			7780 8116 6777 8816 6667 1166 7778 0667
-			7778 8166 5777 7886 7997 1666 aaa8 066a
-			7778 7165 5666 7766 9aa9 1667 99a7 0669
-			5778 6165 5555 7666 9aa9 1667 99a7 0669
-			5778 6465 5555 6616 7996 1166 7777 4667
-			6663 3436 6666 3443 6666 4443 7773 4366
-			3330 4043 3333 0004 3333 0044 3334 0433
+			0000 0000 0000 0000 0000 0000 0000 0000
+			2000 2222 0002 0000 0000 0000 0000 0000
+			5200 5555 0025 0000 0000 0000 0000 0000
+			4520 4444 2254 0000 0000 0000 0000 0000
+			5452 5555 2545 0000 0000 0000 0000 0000
+			5452 5555 2545 0000 0000 0000 0000 0000
+			4521 4444 1254 2000 2222 0000 0000 0000
+			5242 5555 2425 4200 4555 0002 2220 0000
+			2421 2222 1242 3420 3333 0024 5552 0022
+			4242 4444 2424 3420 3333 2024 3335 0225
+			2421 2222 1242 5320 5555 2023 5554 2524
+			4241 4444 1424 4320 4444 2023 4443 2323
+			2410 2222 0142 4310 4555 2023 4443 1223
+			4100 4444 0014 4110 4555 1011 3332 1112
+			1000 1111 0001 1100 1111 0001 1111 0011
 		</bitmap>
 	</tex_image>
 	<tex_image index="11" name="in61_bar04"
@@ -366,22 +366,22 @@
 		path="C:/home/wb_data3d/field/in61/chip/tex/kabinn.tga"
 	>
 		<bitmap size="64">
-			0000 0000 0000 0000 0000 3300 0000 0000
-			0000 3330 0333 0000 0000 3231 3323 0000
-			3000 3323 3233 0000 3000 2132 0333 0000
-			3000 2313 1132 0000 0000 3771 1133 0000
-			0000 6560 0076 0000 0000 6460 0076 0000
-			0000 6460 0077 0000 0000 6460 0077 0000
-			0000 6589 0987 0000 9000 6899 9998 0000
-			0000 9999 0999 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 1110 0001 0000
+			7000 2451 1116 0000 9700 6545 5446 0001
+			2100 2252 4422 0074 4410 4522 2224 0079
+			5610 5662 6624 0071 4610 4644 5662 0001
+			3100 5453 4562 0001 9700 2229 4469 0007
+			7700 99da 7ae9 0007 0000 dfda 0afd 0000
+			8000 deca 8acd 0000 8000 cca8 88ac 0000
+			0000 bb88 088b 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="20">
+<tex_palette_array size="21">
 	<tex_palette index="0" name="art02a_pl" color_size="16">
-		3bbe 7fff 375a 531a 3295 7332 5f15 1e6b
-		3b5a 3fbe 15f0 5719 46d9 3678 21f7 0d96
+		01d2 0214 0299 02fb 0d4c 0df6 0e4f 0f3d
+		1297 12d1 1713 1755 1953 2237 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="black_pl" color_size="4">
 		0000 7fff 7fff 7fff
@@ -402,48 +402,50 @@
 	<tex_palette index="6" name="idr_bed01" color_size="8">
 		2529 3def 4e73 5ef7 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="7" name="idr_plant01_pl" color_size="16">
+	<tex_palette index="7" name="idr_dust01_pl" color_size="8">
+		18c6 2529 3def 4e73 5ef7 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="8" name="idr_plant01_pl" color_size="16">
 		7fff 0dc6 0965 1628 168d 4b5c 26de 0cec
 		154f 0cc9 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="8" name="in61_bar01_pl" color_size="8">
+	<tex_palette index="9" name="in61_bar01_pl" color_size="8">
 		00fa 10a7 57df 6bff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="9" name="in61_bar02_pl" color_size="8">
+	<tex_palette index="10" name="in61_bar02_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="10" name="in61_bar03_pl" color_size="16">
-		0000 0429 084b 1084 18c6 1c6b 20ce 290f
-		3972 3df5 5efb 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="11" name="in61_bar03_pl" color_size="8">
+		0000 252f 39d6 4218 56ba 6f7d 7fff 7fff
 	</tex_palette>
-	<tex_palette index="11" name="in61_bar04_pl" color_size="8">
+	<tex_palette index="12" name="in61_bar04_pl" color_size="8">
 		0000 4631 4e73 56b5 6318 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="12" name="in61_bar05_pl" color_size="4">
+	<tex_palette index="13" name="in61_bar05_pl" color_size="4">
 		010f 01da 05fb 10a7
 	</tex_palette>
-	<tex_palette index="13" name="in61_bar06_pl" color_size="8">
+	<tex_palette index="14" name="in61_bar06_pl" color_size="8">
 		04e4 0ce5 0d88 1527 160b 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="14" name="in61_kabe01_pl" color_size="16">
+	<tex_palette index="15" name="in61_kabe01_pl" color_size="16">
 		010f 01da 05fb 0a1c 0a5e 10a7 129f 1adf
 		22ff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="15" name="in61_kabe02_pl" color_size="4">
+	<tex_palette index="16" name="in61_kabe02_pl" color_size="4">
 		048d 04ae 7fff 7fff
 	</tex_palette>
-	<tex_palette index="16" name="in61_yuka01_pl" color_size="4">
+	<tex_palette index="17" name="in61_yuka01_pl" color_size="4">
 		008e 008f 00b0 7fff
 	</tex_palette>
-	<tex_palette index="17" name="kabinn_pl" color_size="16">
-		7c1f 1ea4 4fdf 21bd 7fff 6b5a 56b5 5294
-		4a52 318c 7fff 7fff 7fff 7fff 7fff 7fff
+	<tex_palette index="18" name="kabinn_pl" color_size="16">
+		0000 088d 0cb1 10d0 10d4 10d7 10fb 1121
+		14a5 19e2 2108 2529 5ad6 6318 739c 7fff
 	</tex_palette>
-	<tex_palette index="18" name="m_club_kabe01" color_size="16">
+	<tex_palette index="19" name="m_club_kabe01" color_size="16">
 		021c 0a3d 0d94 127d 14a7 1a9e 298f 2adf
 		36ff 3b1f 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="19" name="m_club_yuka01" color_size="4">
+	<tex_palette index="20" name="m_club_yuka01" color_size="4">
 		0151 0130 0152 7fff
 	</tex_palette>
 </tex_palette_array>
@@ -573,7 +575,7 @@
 		<ex_tex_image index="16" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="17" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="20">
+	<ex_tex_palette_array size="21">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -594,6 +596,7 @@
 		<ex_tex_palette index="17" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="18" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="19" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="20" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="1">
 		<ex_material index="0" disp_pos="0.000000 240.000000"/>

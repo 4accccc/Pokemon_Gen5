@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-03-23T15:35:15"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-02T21:41:53"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -129,7 +129,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="black_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/black.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/black.tga"
 	>
 		<bitmap size="8">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -681,19 +681,19 @@
 	<tex_image index="11" name="c3_bar_kanban"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
-		color0_mode="color"
+		color0_mode="transparency"
 		palette_name="c3_bar_kanban_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/c3_bar_kanban.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_bar_kanban.tga"
 	>
 		<bitmap size="64">
-			0000 6660 0666 0000 2210 0001 1000 0122
-			2210 1101 1011 0122 0000 1100 0011 0000
-			0000 0000 0000 0000 3300 3333 3333 0033
-			3030 0000 0000 0303 0330 4000 0004 0330
-			0030 5000 0005 0300 0030 5400 0045 0300
-			0030 5500 0055 0300 0030 5500 0055 0300
-			0330 5400 0045 0330 3030 0000 0000 0303
-			3300 3333 3333 0033 0000 0000 0000 0000
+			1111 0001 1000 1111 3321 1112 2111 1233
+			3321 2212 2122 1233 1111 2211 1122 1111
+			1111 1111 1111 1111 5511 5555 5555 1155
+			5151 1111 1111 1515 1551 1111 1111 1551
+			1151 4441 1144 1511 1151 6661 6666 1511
+			1151 6661 4166 1511 1151 6641 1446 1511
+			1551 4411 1114 1551 5151 1111 1111 1515
+			5511 5555 5555 1155 1111 1111 1111 1111
 		</bitmap>
 	</tex_image>
 	<tex_image index="12" name="c3_bay1"
@@ -1323,7 +1323,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3_buil01_a_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/c3_buil01_a.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_buil01_a.tga"
 	>
 		<bitmap size="256">
 			4444 4444 4444 4444 4444 4444 4444 4444
@@ -1365,7 +1365,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_buil01_b_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/c3_buil01_b.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_buil01_b.tga"
 	>
 		<bitmap size="64">
 			7779 0157 3322 4433 7779 0157 3322 4433
@@ -1425,7 +1425,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="c3_buil03_a_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/c3_buil03_a.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_buil03_a.tga"
 	>
 		<bitmap size="32">
 			ffff ffff 5557 d555 02a7 daaa 80a7 daaa
@@ -1439,7 +1439,7 @@
 		format="palette4"
 		color0_mode="transparency"
 		palette_name="c3_buil04_a_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/c3_buil04_a.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_buil04_a.tga"
 	>
 		<bitmap size="64">
 			aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa
@@ -3437,7 +3437,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_fire_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/c3_fire.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_fire.tga"
 	>
 		<bitmap size="16">
 			0000 2222 4440 5555 4440 5335 4440 5335
@@ -3449,7 +3449,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3_g_dust_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/c3_g_dust.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_g_dust.tga"
 	>
 		<bitmap size="256">
 			6666 6666 6666 4666 7777 7777 9777 7777
@@ -3491,7 +3491,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_g_dust2_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/c3_g_dust2.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_g_dust2.tga"
 	>
 		<bitmap size="256">
 			5555 5555 5555 5555 5555 5555 5555 5555
@@ -4541,7 +4541,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3_manhole_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/c3_manhole.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_manhole.tga"
 	>
 		<bitmap size="64">
 			0000 0000 0000 0000 0444 0000 0000 0000
@@ -4889,7 +4889,7 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3_road_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/c3_road.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_road.tga"
 	>
 		<bitmap size="512">
 			999b 7999 99bb 4999 999b 7999 999b 4999
@@ -5101,7 +5101,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="c3_road2_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/c3_road2.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_road2.tga"
 	>
 		<bitmap size="128">
 			5554 1555 5555 0555 a951 1a56 a569 115a
@@ -5752,7 +5752,7 @@
 		width="16" height="32" original_width="16" original_height="32"
 		format="a3i5"
 		palette_name="c3_test"
-		path="C:/home/wb_data3d/field/out47/map/tex/c3_test.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3_test.tga"
 	>
 		<bitmap size="256">
 			eaea eaea eaea eaea eaea eaea eaea eaea
@@ -6162,41 +6162,41 @@
 		format="palette16"
 		color0_mode="color"
 		palette_name="c3bay_yuka1_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/c3bay_yuka1.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3bay_yuka1.tga"
 	>
 		<bitmap size="256">
-			2000 7531 ffde ffff ffff cfff 6ecc 4866
-			2000 7531 ffde f666 ffff cfff 6ecc 4866
-			2000 7531 ffde f666 fccf cfff 6ecc 4866
-			2000 7531 ffde e666 ecce ffee eeff 4866
-			2000 7531 ffde efff effe ffee eecc 4ee6
-			0000 7831 ffde ffff ffff ffee eecc 4ee6
-			0000 7831 ffab ffff ffff ffff 666f 48ee
-			2000 7531 ffab ffff ffff ffff 666f 48ee
-			2000 7531 ffab efff cccf ffff 666f 48ee
-			2000 7531 ffde ffff cccf ffff efff 486e
-			2000 7531 ffde ffff cccf ffff eeff 486e
-			2000 7531 ffde ffff ffff ffff eeff 486e
-			2000 7531 feae ffff 666f ffff eefe 486e
-			2000 7531 feae ffff 666e ffff eefe 4866
-			2000 7531 ffde cccf 666e ffff eeee e866
-			2000 7531 ffde cccf feee ffff eeef 4866
-			2000 7531 fc9f cccf ffff ffff eeef 4866
-			2000 7531 fcab ffff ffff ffee efff 4866
-			2000 7531 fcab ffff ffff ffee efff 486e
-			2000 7531 ffab ccff fffc ffff efff 486e
-			2000 7531 ffde ccff ffec ffff efff 486e
-			2000 7531 ffde ccff ffec ffff eeff 486e
-			2000 7531 ffde efff ffee ffff eeff 486e
-			2000 7531 ffde ffff ffff cccf eeff 48ee
-			2000 7531 eeae ffff ffff cccf eeff 48ee
-			2000 7531 eeae ffff ffff ffff eeff 48ee
-			2000 7531 eeae fccc ffff ffff ccff 48ee
-			2000 7531 cfde fccc ffff ffff c666 48ee
-			2000 7531 cfde fccc cfff ffcc e666 486e
-			2000 7531 eede fcce cfff ffcc e666 486e
-			2000 7531 eede fffe cfff ffcc eeff 486e
-			2000 7531 ffde ffff ffff ffff eeff 486e
+			1100 2222 2222 2222 2222 3222 0133 0000
+			1100 2222 2222 2000 2222 3222 0133 0000
+			1000 2222 2222 2000 2332 3222 0133 0000
+			1000 2221 2222 1000 1331 2211 1122 0000
+			1000 2221 2222 1222 1221 2211 1133 0110
+			0000 3321 2222 2222 2222 2211 1133 0110
+			0000 1321 2211 2222 2222 2222 0002 0011
+			1000 1221 2211 2222 2222 2222 0002 0011
+			1000 1221 2211 1222 3332 2222 0002 0011
+			1000 2222 2222 2222 3332 2222 1222 0001
+			1000 2222 2222 2222 3332 2222 1122 0001
+			2100 2222 2222 2222 2222 2222 1122 0001
+			2100 2222 2112 2222 0002 2222 1121 0001
+			2100 2222 2112 2222 0001 2222 1121 0000
+			2100 2222 2222 3332 0001 2222 1111 1000
+			2100 2222 2222 3332 2111 2222 1112 0000
+			2100 2222 2333 3332 2222 2222 1112 0000
+			1100 1222 2311 2222 2222 2211 1222 0000
+			1100 1222 2311 2222 2222 2211 1222 0001
+			1000 1221 2211 3322 2223 2222 1222 0001
+			1000 2221 2222 3322 2213 2222 1222 0001
+			1000 2221 2222 3322 2213 2222 1122 0001
+			1000 2221 2222 1222 2211 2222 1122 0001
+			1000 2233 2222 2222 2222 3332 1122 0011
+			1000 2233 1112 2222 2222 3332 1122 0011
+			1100 2222 1112 2222 2222 2222 1122 0011
+			1100 2222 1112 2333 2222 2222 3322 0011
+			2100 2222 3222 2333 2222 2222 3000 0011
+			3100 2223 3222 2333 3222 2233 1000 0001
+			3100 2223 1122 2331 3222 2233 1000 0001
+			1000 2223 1122 2221 3222 2233 1122 0001
+			1000 2222 2222 2222 2222 2222 1122 0001
 		</bitmap>
 	</tex_image>
 	<tex_image index="92" name="c3bay_yuka1_2"
@@ -6676,7 +6676,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c3test_buil3_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/c3test_buil3.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/c3test_buil3.tga"
 	>
 		<bitmap size="64">
 			0000 2234 4322 0000 0000 2234 4322 0000
@@ -7388,7 +7388,7 @@
 		width="16" height="16" original_width="16" original_height="16"
 		format="a5i3"
 		palette_name="gra_w_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/gra_w.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/gra_w.tga"
 	>
 		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -7551,7 +7551,7 @@
 		width="8" height="8" original_width="8" original_height="8"
 		format="a3i5"
 		palette_name="h_kage_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/h_kage.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/h_kage.tga"
 	>
 		<bitmap size="32">
 			2020 2020 2020 2020 2020 2020 2020 2020
@@ -7565,7 +7565,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="h_mado_pl"
-		path="C:/home/wb_data3d/field/out47/map/tex/h_mado.tga"
+		path="C:/home/wb_data3d/field/out47/map/tex/1sp/h_mado.tga"
 	>
 		<bitmap size="32">
 			0000 aaa4 0000 6aa9 4000 1aaa 9000 06aa
@@ -8380,7 +8380,7 @@
 		7fff 4a31 3df5 4213 5ad6 5294 4e73 7fff
 	</tex_palette>
 	<tex_palette index="17" name="c3_bar_kanban_pl" color_size="8">
-		0ca7 10e9 192b 218e 2db0 4ed7 7fff 7fff
+		0000 0ca7 10e9 192b 1d2c 218e 2db0 7fff
 	</tex_palette>
 	<tex_palette index="18" name="c3_bay1_pl" color_size="48">
 		7fff 7e0c 5d89 3127 4da7 55c8 2906 3569
@@ -8736,9 +8736,8 @@
 	<tex_palette index="101" name="c3bay_yuka1_2_pl" color_size="4">
 		358c 39ad 3dce 41ef
 	</tex_palette>
-	<tex_palette index="102" name="c3bay_yuka1_pl" color_size="16">
-		2929 2d4a 2929 2d4a 316b 316b 358c 358c
-		316b 41ce 39ad 358c 41ef 3dce 39ad 3dce
+	<tex_palette index="102" name="c3bay_yuka1_pl" color_size="8">
+		358c 39ad 3dce 41ef 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="103" name="c3bay_yuka2_pl" color_size="8">
 		52b4 4a73 52b5 4e94 56d6 56b5 4632 4a73
