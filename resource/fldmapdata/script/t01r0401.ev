@@ -472,7 +472,7 @@ EVENT_START   ev_t01r0401_hakase1_01
 	ELSE
 	//入手前
 		
-		//全国図鑑入手条件満たしている？
+		//全国図鑑入手条件満たしている？【仮】不要になった
 		IF FLAG_ON( FE_ZUKAN_GRADEUP ) THEN
 			//満たしている
 			_PLAYER_NAME( 0 )

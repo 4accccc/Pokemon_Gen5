@@ -129,6 +129,7 @@ EVENT_START	ev_t01_rival_01
 
 		//ドア演出
 		//ローカル定義
+		{
 		DEFINE_LOCAL	DOOR_ANIME_ID
 
 		//ドアセット
@@ -171,6 +172,7 @@ EVENT_START	ev_t01_rival_01
 		_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
 		_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
 		_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+		}
 
 	ELSE
 		//悪いけど　ホワイティの家まで…
@@ -701,7 +703,7 @@ EVENT_START ev_scene_t01_friends_01
 	
 	//やあ
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_t01_black_end_01, T01_RIVAL_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_POS( msg_t01_black_end_01, T01_RIVAL_01, POS_DR )
 	_MSGWIN_CLOSE()
 	
 	//サポート：ゆっくり一歩前へ
@@ -730,6 +732,8 @@ EVENT_START ev_scene_t01_friends_01
 	
 	//ライバル：サポート横へ
 	_OBJ_ANIME( T01_RIVAL_01, anm_clear_rival_move_02 )
+	//サポート：ライバルを見る
+	_OBJ_ANIME( T01_SUPPORT_01, anm_stay_walk_r )
 	_OBJ_ANIME_WAIT()
 	
 	//こんどおしえるよ
@@ -745,12 +749,120 @@ EVENT_START ev_scene_t01_friends_01
 	_BALLOONWIN_OBJMSG_WB( msg_t01_white_end_03w, msg_t01_white_end_03b, T01_SUPPORT_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
-	_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_l )
-	_OBJ_ANIME_WAIT()
-	
 	//ああ ライモンシティから
 	_BALLOONWIN_OBJMSG_POS( msg_t01_black_end_04, T01_RIVAL_01, POS_DEFAULT )
 	_MSGWIN_CLOSE()
+	
+	
+	{
+	DEFINE_LOCAL	DOOR_ANIME_ID
+
+	//ドア開く
+	_BMODEL_ANIME_CREATE( DOOR_ANIME_ID, SCR_BMID_DOOR, 777, 740 )
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	
+	_START_EVENT_BGM( SEQ_BGM_E_DOCTOR2 )	//イベントBGM開始
+	
+	//博士追加
+	_OBJ_ADD_EX( 777, 740, DIR_DOWN, MMDL_ID_EVENTOBJ_00, HAKASE1, MV_DMY )
+	
+	//博士：一歩前へ
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_doctor_move_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ドア閉める
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	
+	//博士：主人公の家の前まで移動
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_doctor_move_02 )
+	_OBJ_ANIME_WAIT()
+	
+	//主人公たち：博士を見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+	_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_l )
+	_OBJ_ANIME( T01_SUPPORT_01, anm_stay_walk_l )
+	_OBJ_ANIME_WAIT()
+	
+	//お！ナイスタイミング
+	_BALLOONWIN_OBJMSG_POS( msg_t01_hakase1_end_01, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//博士：主人公たちに近寄って
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_doctor_move_03 )
+	_OBJ_ANIME_WAIT()
+	
+	//ついさきほど
+	_BALLOONWIN_OBJMSG_POS( msg_t01_hakase1_end_02, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//博士：サポート前へ
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_doctor_move_04 )
+	//サポート：博士を見る
+	_OBJ_ANIME( T01_SUPPORT_01, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG_POS( msg_t01_hakase1_end_03, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//博士：ライバル前へ
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_doctor_move_05 )
+	//ライバル：博士を見る
+	_OBJ_ANIME( T01_RIVAL_01, anm_stay_walk_u )
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG_POS( msg_t01_hakase1_end_04, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//博士：主人公を見て
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_stay_walk_u )
+	//主人公：博士を見る
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_d )
+	_OBJ_ANIME_WAIT()
+	
+	_BALLOONWIN_OBJMSG_POS( msg_t01_hakase1_end_05, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//------------全国図鑑入手------------//
+	
+	_ME_PLAY( SEQ_ME_KEYITEM )
+	_PLAYER_NAME( 0 )
+	_SYSWIN_MSG( msg_t01_hakase1_end_06, POS_DEFAULT )		//図鑑がパワーアップした
+	_ME_WAIT()
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
+	
+	//全国図鑑入手フラグをセット
+	_SET_ZENKOKU_ZUKAN_FLAG()
+	//------------------------------------//
+	
+	//あらよっと！
+	_BALLOONWIN_OBJMSG_POS( msg_t01_hakase1_end_07, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
+	_MSGWIN_CLOSE()
+	
+	//博士：去る
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_doctor_goaway_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//ドア開く
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	
+	//博士：一歩前へ
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_clear_doctor_goaway_02 )
+	_OBJ_ANIME_WAIT()
+	
+	_END_EVENT_BGM()
+	
+	//ドア閉まる
+	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
+	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
+	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
+	}
+	
+	//博士消す
+	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	
 	//見たことないポケモン？
 	_BALLOONWIN_OBJMSG_POS( msg_t01_white_end_04, T01_SUPPORT_01, POS_DEFAULT )
@@ -837,7 +949,63 @@ _ANIME_LABEL	anm_clear_support_move_02
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_clear_rival_move_02
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士：一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_doctor_move_01
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士：主人公の家の前まで移動
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_doctor_move_02
+	_ANIME_DATA	AC_WALK_D_8F,6
+	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	AC_WALK_D_6F,3
+	_ANIME_DATA	AC_STAY_WALK_R_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士：主人公たちに近寄って
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_doctor_move_03
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士：サポート前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_doctor_move_04
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士：ライバル前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_doctor_move_05
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士：去る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_doctor_goaway_01
+	_ANIME_DATA	AC_WALK_L_8F,5
+	_ANIME_DATA	AC_WALK_U_8F,9
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//博士：一歩前へ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_clear_doctor_goaway_02
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_VANISH_ON,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
