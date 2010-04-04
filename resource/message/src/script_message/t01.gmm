@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-04-04T18:57:44"/>
+	<create user="matsumiya" host="W00224" date="2010-04-04T19:40:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -728,14 +728,14 @@
 ぜんぶ　終わっちゃってて……▼</language>
 	</row>
 
-	<row id="msg_t01_black_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01_black_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・クリア後
 ・続けてwhite_end_02</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……それをいうなら
 ぼくだって　ゲーチスを▽
-ダークトリニティに　だっかんされたし▼</language>
+ダークトリニティに　つれさられたし▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……それをいうなら
 ぼくだって　ゲーチスを▽
 ダークトリニティに　奪還されたし▼</language>
@@ -752,7 +752,7 @@
 ダークトリニティ？▼</language>
 	</row>
 
-	<row id="msg_t01_black_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01_black_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・クリア後
 ・続けてwhite_end_03w　か
@@ -760,10 +760,10 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『……こんど　おしえるよ▼
-それよりもさ　[1:00:トレーナー名:0]　ベル
+それよりもさ　ベル
 きみたちは　これから　どうするの？▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……今度　教えるよ▼
-それよりもさ　[1:00:トレーナー名:0]　ベル
+それよりもさ　ベル
 きみたちは　これから　どうするの？▼</language>
 	</row>
 
@@ -827,7 +827,7 @@
 ・続けて、ライバルの前に移動して
 hakase1_end_03</comment>
 		<attribute name="キャラ指定">アララギ博士父</attribute>
-		<language name="JPN" width="256">アララギパパ『ついさきほど
+		<language name="JPN" width="256">つい　さきほど
 しりあいから　ぜんこくずかんの▽
 データが　とどいてな▼
 せっかくだから　おまえさんたちの
@@ -838,7 +838,7 @@ hakase1_end_03</comment>
 となれば　とうぜん　であう
 ポケモンも　ふえるからねえ▼
 ちょいと　ずかんを　かしとくれ！▼</language>
-		<language name="JPN_KANJI" width="256">アララギパパ『つい先ほど
+		<language name="JPN_KANJI" width="256">つい先ほど
 知り合いから　全国図鑑の▽
 データが　届いてな▼
 せっかくだから　おまえさんたちの
@@ -857,8 +857,8 @@ hakase1_end_03</comment>
 hakase1_end_04
 </comment>
 		<attribute name="キャラ指定">アララギ博士父</attribute>
-		<language name="JPN" width="256">アララギ『あそーれ▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『あそーれ▼</language>
+		<language name="JPN" width="256">ほいよ　ベル！▼</language>
+		<language name="JPN_KANJI" width="256">ほいよ　ベル！▼</language>
 	</row>
 
 	<row id="msg_t01_hakase1_end_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
@@ -867,16 +867,16 @@ hakase1_end_04
 hakase1_end_05
 </comment>
 		<attribute name="キャラ指定">アララギ博士父</attribute>
-		<language name="JPN" width="256">アララギ『あそーれ▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『あそーれ▼</language>
+		<language name="JPN" width="256">おつぎは　チェレン！▼</language>
+		<language name="JPN_KANJI" width="256">お次は　チェレン！▼</language>
 	</row>
 
 	<row id="msg_t01_hakase1_end_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてwhite_end_06</comment>
 		<attribute name="キャラ指定">アララギ博士父</attribute>
-		<language name="JPN" width="256">アララギ『さいごに　あそーれ▼</language>
-		<language name="JPN_KANJI" width="256">アララギ『さいごに　あそーれ▼</language>
+		<language name="JPN" width="256">さいごに　おまえさん！▼</language>
+		<language name="JPN_KANJI" width="256">最後に　おまえさん！▼</language>
 	</row>
 
 	<row id="msg_t01_hakase1_end_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -890,20 +890,20 @@ hakase1_end_05
 全国版に　バージョンアップした！</language>
 	</row>
 
-	<row id="msg_t01_hakase1_end_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01_hakase1_end_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・メッセージ表示後、博士退場
 ・続けてwhite_end_04</comment>
 		<attribute name="キャラ指定">アララギ博士父</attribute>
-		<language name="JPN" width="256">アララギパパ『あらよっと！▼
-これで　おまえさんの　ポケモンずかんを
+		<language name="JPN" width="256">アララギパパ『これで
+おまえさんたちの　ポケモンずかんを▽
 ぜんこくずかんにも　きりかえられる▼
 ぜんこくずかんの　かんせいは
 ちょいと　たいへんかも　しれぬが▼
 まあ　のんびり　たのしみつつ
 ポケモンと　であってくれよ▼</language>
-		<language name="JPN_KANJI" width="256">アララギパパ『あらよっと！▼
-これで　おまえさんの　ポケモン図鑑を
+		<language name="JPN_KANJI" width="256">アララギパパ『これで
+おまえさんたちの　ポケモン図鑑を▽
 全国図鑑にも　切り替えられる▼
 全国図鑑の　完成は
 ちょいと　大変かも　しれぬが▼
