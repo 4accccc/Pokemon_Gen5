@@ -5,6 +5,6 @@
 #define _TAMAGETAKE_SCR_DEF_H_
 
 //スクリプトデータID定義
-#define SCRID_DUMMY (10510)
+#define SCRID_TAMAGETAKE (10510)
 
 #endif //_TAMAGETAKE_SCR_DEF_H_

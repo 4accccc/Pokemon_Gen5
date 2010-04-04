@@ -18,13 +18,31 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_dummy
+_EVENT_DATA    ev_tamagetake
 _EVENT_DATA_END
 
 
 
-/**************************************************************/
-/*                      ダミースクリプト                      */
-/**************************************************************/
-EVENT_START ev_dummy
-EVENT_END 
+/************************************************************/
+/*						タマゲタケ							*/
+/************************************************************/
+EVENT_START	ev_tamagetake
+	_TALK_OBJ_START()
+	
+	_TIME_WAIT( 16 )
+	_WILD_BTL_SET( MONSNO_580, 10 )
+	
+	_WILD_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		//暗転中にモンスターボールを消しておく
+		_GET_OBJ_EV_FLAG( SCWK_TARGET_OBJID, SCWK_ANSWER )
+		_FLAG_SET( SCWK_ANSWER )
+		_OBJ_DEL( SCWK_TARGET_OBJID )
+		_WILD_WIN()
+	ELSE
+		_WILD_LOSE()
+	ENDIF
+
+EVENT_END
+
+
