@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-03-16T19:10:50"/>
+	<create user="matsumiya" host="W00224" date="2010-04-04T14:30:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="668" top="313" right="1141" bottom="711" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -396,7 +396,7 @@
 ごめんなさい　[1:00:トレーナー名:0]▼</language>
 	</row>
 
-	<row id="msg_t01r0102_white_02_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_t01r0102_white_02_01" text-color="#ff0000,,,,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>♀
 ・続けてblack_03
 ・0＝主人公名前</comment>
@@ -668,7 +668,7 @@
 ポケモン勝負は　ダメだよ▼</language>
 	</row>
 
-	<row id="msg_t01r0102_white_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_t01r0102_white_06">
 		<comment>♀
 ・会話後、ポケモン戦闘に
 ・0＝主人公名前</comment>
@@ -856,20 +856,20 @@
 回復を　してあげるよ……▼</language>
 	</row>
 
-	<row id="msg_t01r0102_black_10" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0102_black_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・システムウインドウ
 ・続けて主人公のポケモンのHPが
 　満タン以外→black_11
 　満タン→black_12</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレンは
-キズぐすりを　つかった▼</language>
-		<language name="JPN_KANJI" width="256">チェレンは
-キズぐすりを　つかった▼</language>
+		<language name="JPN" width="256">チェレンは　ベルの　ポケモンを
+かいふく　させた！▼</language>
+		<language name="JPN_KANJI" width="256">チェレンは　ベルの　ポケモンを
+回復させた！▼</language>
 	</row>
 
-	<row id="msg_t01r0102_black_11" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0102_black_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてblack_12
 ・0＝主人公名前</comment>
@@ -880,30 +880,30 @@
 元気に　してあげないとね▼</language>
 	</row>
 
-	<row id="msg_t01r0102_black_12" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0102_black_12" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けてwhite_13</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
-		<language name="JPN" width="256">チェレンは
-キズぐすりを　つかった▼</language>
-		<language name="JPN_KANJI" width="256">チェレンは
-キズぐすりを　つかった▼</language>
+		<language name="JPN" width="256">チェレンは　[1:01:ポケモン種族名:1]の
+かいふくを　してくれた▼</language>
+		<language name="JPN_KANJI" width="256">チェレンは　[1:01:ポケモン種族名:1]の
+回復を　してくれた▼</language>
 	</row>
 
 	<row id="msg_t01r0102_black_13" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてwhite_13</comment>
+・続けてblack_12</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『ポケモンの　たいりょく……
 ＨＰを　へらすことなく▽
 かつだなんて　すごいね！▼
-これなら　キズぐすりを　つかう
-ひつようは　ないよね▼</language>
+だけど　ポケモンの　わざポイント……
+ＰＰが　へっているからね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『ポケモンの　体力……
 ＨＰを　減らすことなく▽
 勝つだなんて　すごいね！▼
-これなら　キズぐすりを　使う
-必要は　ないよね▼</language>
+だけど　ポケモンの　わざポイント……
+ＰＰが　減っているからね▼</language>
 	</row>
 
 	<row id="msg_t01r0102_white_13">
@@ -922,7 +922,7 @@
 上手に　戦えるでしょ！▼</language>
 	</row>
 
-	<row id="msg_t01r0102_black_14" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0102_black_14" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・続けて主人公を向いて
 　black_18</comment>
@@ -990,7 +990,7 @@
 ぼくとも　勝負してくれるかい</language>
 	</row>
 
-	<row id="msg_t01r0102_black_18" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0102_black_18" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・はい選択時
 　続けてトレーナー戦闘に
@@ -1103,7 +1103,7 @@
 		<language name="JPN_KANJI" width="256">ベッドも　ぐちゃぐちゃ……！</language>
 	</row>
 
-	<row id="msg_t01r0102_pc_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_t01r0102_pc_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ＢＧメッセージ
 ・仮：プラチナと同じ
 ・0＝主人公名</comment>
@@ -1120,11 +1120,11 @@
 ポケモン　基礎知識▼
 この世界では　ポケモンと
 人が　一緒に　暮らしています▼
-ポケモンを　たたかわせる人を
+ポケモンを　戦わせる人を
 ポケモントレーナーと　いいます</language>
 	</row>
 
-	<row id="msg_t01r0102_award1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0102_award1_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ
 ・続けて表彰状アプリ呼び出し</comment>
 		<attribute name="キャラ指定">地方図鑑の表彰状</attribute>
@@ -1133,7 +1133,7 @@
 		<language name="JPN_KANJI" width="256">イッシュ図鑑　完成の　表彰状だ！▼</language>
 	</row>
 
-	<row id="msg_t01r0102_award2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0102_award2_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ
 ・続けて表彰状アプリ呼び出し</comment>
 		<attribute name="キャラ指定">全国図鑑の表彰状</attribute>
@@ -1142,7 +1142,7 @@
 		<language name="JPN_KANJI" width="256">全国図鑑　完成の　表彰状だ！▼</language>
 	</row>
 
-	<row id="msg_t01r0102_trophy1_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0102_trophy1_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">バトルサブウェイのトロフィ
 ・シングル</attribute>
@@ -1154,7 +1154,7 @@
 証の　トロフィーだ！</language>
 	</row>
 
-	<row id="msg_t01r0102_trophy2_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0102_trophy2_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">バトルサブウェイのトロフィ
 ・ダブル</attribute>
@@ -1166,7 +1166,7 @@
 証の　トロフィーだ！</language>
 	</row>
 
-	<row id="msg_t01r0102_trophy3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0102_trophy3_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">バトルサブウェイのトロフィ
 ・マルチ</attribute>
