@@ -10,6 +10,12 @@ extern "C" {
 #ifndef _G3D_SYSTEM_H_
 #define _G3D_SYSTEM_H_
 
+#define GFL_DRAW_CALLBACK   //定義を有効にすると、描画処理のときのコールバック関数有効
+
+#ifdef GFL_DRAW_CALLBACK
+typedef void (*GFL_DRAW_CALLBACK_FUNC)( NNSG3dRenderObj *renderobj, void *work );
+#endif  //GFL_DRAW_CALLBACK 
+
 //=============================================================================================
 /**
  *
@@ -1154,6 +1160,10 @@ extern BOOL
 //--------------------------------------------------------------------------------
 // レンダラーの描画のみ行う。
 extern void GFL_G3D_Draw( NNSG3dRenderObj* renderobj );
+
+#ifdef GFL_DRAW_CALLBACK
+extern void GFL_G3D_SetDrawCallBack( GFL_DRAW_CALLBACK_FUNC func, void *work );
+#endif
 
 //=============================================================================================
 /**
