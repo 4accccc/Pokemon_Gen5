@@ -117,6 +117,8 @@
 
 #include "calender.h"
 
+#include "savedata/record.h"
+
 #ifdef PM_DEBUG
 #include "pleasure_boat.h"    //for PL_BOAT_
 #endif
@@ -1508,6 +1510,10 @@ BOOL FIELDMAP_SetPlayerItemCycle( FIELDMAP_WORK *fieldWork )
   {
     PMSND_PlaySE( SEQ_SE_BICYCLE );
     FIELD_PLAYER_SetRequest( fieldWork->field_player, FIELD_PLAYER_REQBIT_CYCLE );
+		{	// レコードデータ＋
+			RECORD * rec = GAMEDATA_GetRecordPtr( fieldWork->gamedata );
+			RECORD_Inc( rec, RECID_RIDE_CYCLE );
+		}
     return( TRUE );
   }
 

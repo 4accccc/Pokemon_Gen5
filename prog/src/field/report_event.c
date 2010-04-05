@@ -11,6 +11,7 @@
 #include "gamesystem/msgspeed.h"
 #include "system/bmp_winframe.h"
 #include "sound/pm_sndsys.h"
+#include "savedata/record.h"
 #include "font/font.naix"
 #include "app/app_keycursor.h"
 
@@ -324,6 +325,10 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
       }
       SetReportMsgBuff( wk );
       TILEICON_Exit( wk->local->timeIcon );
+			{	// レコードデータ＋
+				RECORD * rec = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData(wk->gsys) );
+				RECORD_Inc( rec, RECID_REPORT_COUNT );
+			}
       *seq = REPORT_SEQ_RESULT_OK_WAIT;
     }
     break;
