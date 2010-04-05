@@ -4712,7 +4712,7 @@ static const ZONEDATA ZoneData[] = {
 		FALSE,
     FALSE,
     FALSE,
-		MATRIX_ID_LEAGIN01, // camera_area
+		NARC_camera_scroll_original_C09P01_bin, // camera_area
 		0, // padding
 		32,
 		0,

@@ -1,0 +1,23 @@
+								
+タグ名#START	範囲判定タイプ	管理タイプ	パラメータ1	パラメータ2	パラメータ3	パラメータ4	パラメータ5	パラメータ6
+RECT_CONT	FIELD_CAMERA_AREA_RECT	FIELD_CAMERA_AREA_CONT_TARGET	0	1024	0	1000		
+#END								
+
+
+設定データ								
+範囲判定タイプ		管理タイプ						
+FIELD_CAMERA_AREA_RECT	矩形範囲外判定	FIELD_CAMERA_AREA_CONT_TARGET	ターゲット座標を管理					
+FIELD_CAMERA_AREA_CIRCLE	円範囲外判定	FIELD_CAMERA_AREA_CONT_CAMERA	カメラ座標を管理					
+FIELD_CAMERA_AREA_RECT_IN	矩形範囲内判定							
+								
+
+
+								
+パラメータ情報								
+FIELD_CAMERA_AREA_RECT系	FIELD_CAMERA_AREA_CIRCLE系
+x_min	center_x
+x_max	center_z
+z_min	r
+z_max	min_rot
+	max_rot
+	
