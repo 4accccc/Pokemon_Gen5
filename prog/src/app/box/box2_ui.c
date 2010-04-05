@@ -1787,6 +1787,10 @@ u32 BOX2UI_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 	u32	ret = CURSORMOVE_MainCont( syswk->app->cmwk );
 
 	if( ret == CURSORMOVE_NONE ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+			BOX2MAIN_ChgCursorButton( syswk );
+			return BOX2UI_ARRANGE_PGT_STATUS;
+		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_PGT_LEFT;
@@ -1965,6 +1969,10 @@ u32 BOX2UI_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 	u32	ret = CURSORMOVE_MainCont( syswk->app->cmwk );
 
 	if( ret == CURSORMOVE_NONE ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+			BOX2MAIN_ChgCursorButton( syswk );
+			return BOX2UI_ARRANGE_PTGT_STATUS;
+		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			return BOX2UI_ARRANGE_PTGT_LEFT;

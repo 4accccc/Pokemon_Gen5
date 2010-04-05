@@ -1459,7 +1459,7 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
 	u32	ret;
 
 	// ‚xƒ{ƒ^ƒ“
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
 		syswk->get_start_mode = 0;
 		return ChgSeqYButton( syswk, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_INIT );
 	}
@@ -1793,7 +1793,7 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 	}
 
 	// ‚xƒ{ƒ^ƒ“
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
 		if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			syswk->mv_cnv_mode = 0;
@@ -2389,7 +2389,7 @@ static int MainSeq_ArrangePartyMain( BOX2_SYS_WORK * syswk )
 	u32	ret;
 
 	// ‚xƒ{ƒ^ƒ“
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
 		syswk->get_start_mode = 1;
 		return ChgSeqYButton( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
 	}
@@ -2749,7 +2749,7 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 	}
 
 	// ‚xƒ{ƒ^ƒ“
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
 		if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			syswk->mv_cnv_mode = 0;
@@ -3088,7 +3088,7 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
 	u32	ret;
 
 	// ‚xƒ{ƒ^ƒ“
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
 		syswk->get_start_mode = 0;
 		return ChgSeqYButton( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
 	}
@@ -3378,7 +3378,7 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 	u32	ret;
 
 	// ‚xƒ{ƒ^ƒ“
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
 		syswk->get_start_mode = 1;
 		return ChgSeqYButton( syswk, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
 	}
@@ -4531,7 +4531,7 @@ static int MainSeq_ItemMain( BOX2_SYS_WORK * syswk )
 	u32	ret;
 
 	// ‚xƒ{ƒ^ƒ“
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
 		int	next = ChgSeqYButton( syswk, BOX2SEQ_MAINSEQ_ITEMGET_INIT );
 		if( syswk->mv_cnv_mode == 1 ){
 			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
@@ -4897,7 +4897,7 @@ static int MainSeq_ItemGetMain( BOX2_SYS_WORK * syswk )
 	}
 
 	// ‚xƒ{ƒ^ƒ“
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
 		if( syswk->mv_cnv_mode != 0 && syswk->poke_get_key == 0 ){
 			BOX2MAIN_ChgCursorButton( syswk );
 			syswk->mv_cnv_mode = 0;
@@ -5448,7 +5448,7 @@ static int MainSeq_ItemPartyMain( BOX2_SYS_WORK * syswk )
 	u32	ret;
 
 	// ‚xƒ{ƒ^ƒ“
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
+	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
 		int	next = ChgSeqYButton( syswk, BOX2SEQ_MAINSEQ_ITEMGET_INIT );
 		if( syswk->mv_cnv_mode == 1 ){
 			u8	pos = CURSORMOVE_PosGet( syswk->app->cmwk );
