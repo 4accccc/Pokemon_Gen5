@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-03-15T17:54:46"/>
+	<create user="morimoto" host="W00220" date="2010-04-05T22:33:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -8015,160 +8015,319 @@
 	</row>
 
 	<row id="mes_tower_tr_301_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>ごにんしゅう１用ダミー１
-※実際には表示しません</comment>
+		<comment>トウヤ</comment>
 		<language name="JPN">ダミー</language>
 		<language name="JPN_KANJI">ダミー</language>
 	</row>
 
 	<row id="mes_tower_tr_301_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>ごにんしゅう１用ダミー２
-※実際には表示しません</comment>
+		<comment>トウヤ</comment>
 		<language name="JPN">ダミー▼</language>
 		<language name="JPN_KANJI">ダミー▼</language>
 	</row>
 
 	<row id="mes_tower_tr_301_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>ごにんしゅう１用ダミー３
-※実際には表示しません</comment>
+		<comment>トウヤ</comment>
 		<language name="JPN">ダミー▼</language>
 		<language name="JPN_KANJI">ダミー▼</language>
 	</row>
 
 	<row id="mes_tower_tr_302_01">
-		<comment>ごにんしゅう2用ダミー１
-※実際には表示しません</comment>
+		<comment>トウヤ</comment>
 		<language name="JPN">ダミー</language>
 		<language name="JPN_KANJI">ダミー</language>
 	</row>
 
 	<row id="mes_tower_tr_302_02">
-		<comment>ごにんしゅう2用ダミー２
-※実際には表示しません</comment>
+		<comment>トウヤ</comment>
 		<language name="JPN">ダミー▼</language>
 		<language name="JPN_KANJI">ダミー▼</language>
 	</row>
 
 	<row id="mes_tower_tr_302_03">
-		<comment>ごにんしゅう2用ダミー３
-※実際には表示しません</comment>
+		<comment>トウヤ</comment>
 		<language name="JPN">ダミー▼</language>
 		<language name="JPN_KANJI">ダミー▼</language>
 	</row>
 
 	<row id="mes_tower_tr_303_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>ごにんしゅう3用ダミー１
-※実際には表示しません</comment>
+		<comment>トウヤ</comment>
 		<language name="JPN">ダミー</language>
 		<language name="JPN_KANJI">ダミー</language>
 	</row>
 
 	<row id="mes_tower_tr_303_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>ごにんしゅう3用ダミー２
-※実際には表示しません</comment>
+		<comment>トウヤ</comment>
 		<language name="JPN">ダミー▼</language>
 		<language name="JPN_KANJI">ダミー▼</language>
 	</row>
 
 	<row id="mes_tower_tr_303_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>ごにんしゅう3用ダミー３
-※実際には表示しません</comment>
+		<comment>トウヤ</comment>
 		<language name="JPN">ダミー▼</language>
 		<language name="JPN_KANJI">ダミー▼</language>
 	</row>
 
 	<row id="mes_tower_tr_304_01">
-		<comment>ごにんしゅう4用ダミー１
-※実際には表示しません</comment>
+		<comment>トウコ</comment>
 		<language name="JPN">ダミー</language>
 		<language name="JPN_KANJI">ダミー</language>
 	</row>
 
 	<row id="mes_tower_tr_304_02">
-		<comment>ごにんしゅう4用ダミー２
-※実際には表示しません</comment>
+		<comment>トウコ</comment>
 		<language name="JPN">ダミー▼</language>
 		<language name="JPN_KANJI">ダミー▼</language>
 	</row>
 
 	<row id="mes_tower_tr_304_03">
-		<comment>ごにんしゅう4用ダミー３
-※実際には表示しません</comment>
+		<comment>トウコ</comment>
 		<language name="JPN">ダミー▼</language>
 		<language name="JPN_KANJI">ダミー▼</language>
 	</row>
 
 	<row id="mes_tower_tr_305_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>ごにんしゅう5用ダミー１
-※実際には表示しません</comment>
+		<comment>トウコ</comment>
 		<language name="JPN">ダミー</language>
 		<language name="JPN_KANJI">ダミー</language>
 	</row>
 
 	<row id="mes_tower_tr_305_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>ごにんしゅう5用ダミー２
-※実際には表示しません</comment>
+		<comment>トウコ</comment>
 		<language name="JPN">ダミー▼</language>
 		<language name="JPN_KANJI">ダミー▼</language>
 	</row>
 
 	<row id="mes_tower_tr_305_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>ごにんしゅう5用ダミー３
-※実際には表示しません</comment>
+		<comment>トウコ</comment>
 		<language name="JPN">ダミー▼</language>
 		<language name="JPN_KANJI">ダミー▼</language>
 	</row>
 
-	<row id="mes_tower_tr_306_01" text-color=",,,#ff0000,,,,,,,,,,,,,,">
-		<comment>タイクーン／挨拶セリフダミー 　（1週目）
-
-※実際には表示しません</comment>
-		<language name="JPN">さあ　サブウェイマスターの　わたしに
-その　じつりょく　みせてくれたまえ！</language>
-		<language name="JPN_KANJI">さあ　サブウェイマスターの　わたしに
-その　じつりょく　みせてくれたまえ！</language>
+	<row id="mes_tower_tr_306_01" text-color=",,,#000000,,,,,,,,,,,,,,">
+		<comment>トウコ</comment>
+		<language name="JPN">ダミー</language>
+		<language name="JPN_KANJI">ダミー</language>
 	</row>
 
 	<row id="mes_tower_tr_306_02">
-		<comment>タイクーン／勝ち台詞　（1週目）</comment>
-		<language name="JPN">すばらしい　しょうぶ　だった！
-また　きてくれたまえ！▼</language>
-		<language name="JPN_KANJI">すばらしい　しょうぶ　だった！
-また　きてくれたまえ！▼</language>
+		<comment>トウコ</comment>
+		<language name="JPN">ダミー▼</language>
+		<language name="JPN_KANJI">ダミー▼</language>
 	</row>
 
 	<row id="mes_tower_tr_306_03">
-		<comment>タイクーン／負け台詞　（1週目）</comment>
-		<language name="JPN">きみのような　すごい　トレーナーに
-まけたのであれば　なっとく　だ！▼</language>
-		<language name="JPN_KANJI">きみのような　すごい　トレーナーに
-まけたのであれば　なっとく　だ！▼</language>
+		<comment>トウコ</comment>
+		<language name="JPN">ダミー▼</language>
+		<language name="JPN_KANJI">ダミー▼</language>
 	</row>
 
-	<row id="mes_tower_tr_307_01" text-color=",,,#ff0000,,,,,,,,,,,,,," back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>タイクーン／挨拶セリフダミー　（２週目）
-
-※実際には表示しません</comment>
+	<row id="mes_tower_tr_307_01" text-color=",,,#000000,,,,,,,,,,,,,," back-color=",,,#ff8080,,,,,,,,,,,,,,">
+		<comment>サブウェイマスター
+ノボリ</comment>
 		<language name="JPN">さあ　サブウェイマスターの　わたしに
 その　じつりょく　みせてくれたまえ！</language>
-		<language name="JPN_KANJI">さあ　サブウェイマスターの　わたしに
-その　じつりょく　みせてくれたまえ！</language>
+		<language name="JPN_KANJI">さあ　サブウェイマスターの　私に
+その　実力を　見せてくれたまえ！</language>
 	</row>
 
 	<row id="mes_tower_tr_307_02" text-color=",,,#000000,,,,,,,,,,,,,," back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>タイクーン／勝ち台詞　（２週目）</comment>
+		<comment>サブウェイマスター
+ノボリ</comment>
 		<language name="JPN">すばらしい　しょうぶ　だった！
 また　きてくれたまえ！▼</language>
-		<language name="JPN_KANJI">すばらしい　しょうぶ　だった！
-また　きてくれたまえ！▼</language>
+		<language name="JPN_KANJI">素晴らしい　勝負だった！
+また　来てくれたまえ！▼</language>
 	</row>
 
 	<row id="mes_tower_tr_307_03" text-color=",,,#000000,,,,,,,,,,,,,," back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>タイクーン／負け台詞　（２週目）</comment>
+		<comment>サブウェイマスター
+ノボリ</comment>
 		<language name="JPN">きみのような　すごい　トレーナーに
 まけたのであれば　なっとく　だ！▼</language>
 		<language name="JPN_KANJI">きみのような　すごい　トレーナーに
+負けたのであれば　納得だ！▼</language>
+	</row>
+
+	<row id="mes_tower_tr_308_01">
+		<comment>サブウェイマスター
+ノボリ</comment>
+		<language name="JPN">また　あえたね！</language>
+		<language name="JPN_KANJI">また　会えたね！</language>
+	</row>
+
+	<row id="mes_tower_tr_308_02">
+		<comment>サブウェイマスター
+ノボリ</comment>
+		<language name="JPN">すばらしい　しょうぶ　だった！
+また　きてくれたまえ！▼</language>
+		<language name="JPN_KANJI">素晴らしい　勝負だった！
+また　来てくれたまえ！▼</language>
+	</row>
+
+	<row id="mes_tower_tr_308_03">
+		<comment>サブウェイマスター
+ノボリ</comment>
+		<language name="JPN">きみのような　すごい　トレーナーに
 まけたのであれば　なっとく　だ！▼</language>
+		<language name="JPN_KANJI">きみのような　すごい　トレーナーに
+負けたのであれば　納得だ！▼</language>
+	</row>
+
+	<row id="mes_tower_tr_309_01">
+		<comment>サブウェイマスター
+クダリ</comment>
+		<language name="JPN">さあ　サブウェイマスターの　わたしに
+その　うでまえを　みせてくれたまえ！</language>
+		<language name="JPN_KANJI">さあ　サブウェイマスターの　私に
+その　腕前を　見せてくれたまえ！</language>
+	</row>
+
+	<row id="mes_tower_tr_309_02">
+		<comment>サブウェイマスター
+クダリ</comment>
+		<language name="JPN">すばらしい　しょうぶ　だった！
+また　きてくれたまえ！▼</language>
+		<language name="JPN_KANJI">素晴らしい　勝負だった！
+また　来てくれたまえ！▼</language>
+	</row>
+
+	<row id="mes_tower_tr_309_03">
+		<comment>サブウェイマスター
+クダリ</comment>
+		<language name="JPN">きみのような　すごい　トレーナーに
+まけたのであれば　なっとく　だ！▼</language>
+		<language name="JPN_KANJI">きみのような　すごい　トレーナーに
+負けたのであれば　納得だ！▼</language>
+	</row>
+
+	<row id="mes_tower_tr_310_01">
+		<comment>サブウェイマスター
+クダリ</comment>
+		<language name="JPN">また　あえたな！</language>
+		<language name="JPN_KANJI">また　会えたな！</language>
+	</row>
+
+	<row id="mes_tower_tr_310_02">
+		<comment>サブウェイマスター
+クダリ</comment>
+		<language name="JPN">すばらしい　しょうぶ　だった！
+また　きてくれたまえ！▼</language>
+		<language name="JPN_KANJI">素晴らしい　勝負だった！
+また　来てくれたまえ！▼</language>
+	</row>
+
+	<row id="mes_tower_tr_310_03">
+		<comment>サブウェイマスター
+クダリ</comment>
+		<language name="JPN">きみのような　すごい　トレーナーに
+まけたのであれば　なっとく　だ！▼</language>
+		<language name="JPN_KANJI">きみのような　すごい　トレーナーに
+負けたのであれば　納得だ！▼</language>
+	</row>
+
+	<row id="mes_tower_tr_311_01">
+		<comment>サブウェイマスター
+ノボリ</comment>
+		<language name="JPN">さあ　サブウェイマスターの　わたしに
+その　じつりょく　みせてくれたまえ！</language>
+		<language name="JPN_KANJI">さあ　サブウェイマスターの　私に
+その　実力を　見せてくれたまえ！</language>
+	</row>
+
+	<row id="mes_tower_tr_311_02">
+		<comment>サブウェイマスター
+ノボリ</comment>
+		<language name="JPN">すばらしい　しょうぶ　だった！
+また　きてくれたまえ！▼</language>
+		<language name="JPN_KANJI">素晴らしい　勝負だった！
+また　来てくれたまえ！▼</language>
+	</row>
+
+	<row id="mes_tower_tr_311_03">
+		<comment>サブウェイマスター
+ノボリ</comment>
+		<language name="JPN">きみのような　すごい　トレーナーに
+まけたのであれば　なっとく　だ！▼</language>
+		<language name="JPN_KANJI">きみのような　すごい　トレーナーに
+負けたのであれば　納得だ！▼</language>
+	</row>
+
+	<row id="mes_tower_tr_312_01">
+		<comment>サブウェイマスター
+クダリ</comment>
+		<language name="JPN">さあ　サブウェイマスターの　わたしに
+その　うでまえを　みせてくれたまえ！</language>
+		<language name="JPN_KANJI">さあ　サブウェイマスターの　私に
+その　腕前を　見せてくれたまえ！</language>
+	</row>
+
+	<row id="mes_tower_tr_312_02">
+		<comment>サブウェイマスター
+クダリ</comment>
+		<language name="JPN">すばらしい　しょうぶ　だった！
+また　きてくれたまえ！▼</language>
+		<language name="JPN_KANJI">素晴らしい　勝負だった！
+また　来てくれたまえ！▼</language>
+	</row>
+
+	<row id="mes_tower_tr_312_03">
+		<comment>サブウェイマスター
+クダリ</comment>
+		<language name="JPN">きみのような　すごい　トレーナーに
+まけたのであれば　なっとく　だ！▼</language>
+		<language name="JPN_KANJI">きみのような　すごい　トレーナーに
+負けたのであれば　納得だ！▼</language>
+	</row>
+
+	<row id="mes_tower_tr_313_01">
+		<comment>サブウェイマスター
+ノボリ</comment>
+		<language name="JPN">また　あえたね！</language>
+		<language name="JPN_KANJI">また　会えたね！</language>
+	</row>
+
+	<row id="mes_tower_tr_313_02">
+		<comment>サブウェイマスター
+ノボリ</comment>
+		<language name="JPN">すばらしい　しょうぶ　だった！
+また　きてくれたまえ！▼</language>
+		<language name="JPN_KANJI">素晴らしい　勝負だった！
+また　来てくれたまえ！▼</language>
+	</row>
+
+	<row id="mes_tower_tr_313_03">
+		<comment>サブウェイマスター
+ノボリ</comment>
+		<language name="JPN">きみのような　すごい　トレーナーに
+まけたのであれば　なっとく　だ！▼</language>
+		<language name="JPN_KANJI">きみのような　すごい　トレーナーに
+負けたのであれば　納得だ！▼</language>
+	</row>
+
+	<row id="mes_tower_tr_314_01">
+		<comment>サブウェイマスター
+クダリ</comment>
+		<language name="JPN">また　あえたな！</language>
+		<language name="JPN_KANJI">また　会えたな！</language>
+	</row>
+
+	<row id="mes_tower_tr_314_02">
+		<comment>サブウェイマスター
+クダリ</comment>
+		<language name="JPN">すばらしい　しょうぶ　だった！
+また　きてくれたまえ！▼</language>
+		<language name="JPN_KANJI">素晴らしい　勝負だった！
+また　来てくれたまえ！▼</language>
+	</row>
+
+	<row id="mes_tower_tr_314_03">
+		<comment>サブウェイマスター
+クダリ</comment>
+		<language name="JPN">きみのような　すごい　トレーナーに
+まけたのであれば　なっとく　だ！▼</language>
+		<language name="JPN_KANJI">きみのような　すごい　トレーナーに
+負けたのであれば　納得だ！▼</language>
 	</row>
 
 	<flowchart-group-list>
