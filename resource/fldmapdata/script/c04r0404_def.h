@@ -6,5 +6,7 @@
 
 //スクリプトデータID定義
 #define SCRID_ZONE_C04R0404 (1)
+#define SCRID_C04R0404_BASKETM_01 (2)
+#define SCRID_C04R0404_BASKETM_02 (3)
 
 #endif //_C04R0404_DEF_H_
