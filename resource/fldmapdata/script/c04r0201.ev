@@ -11,6 +11,7 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c04r0201.h"
   .include  "c04r0201.h"
+  .include  "musical_scr_def.h"
   .include  "musical_scr_local.h" //ミュージカルの定義が入っています
 
 //--------------------------------------------------------------
@@ -426,7 +427,96 @@ EVENT_END
 /*				ミュージカル：オーナー						*/
 /************************************************************/
 EVENT_START		ev_c04r0201_owner_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_01 )
+
+  //すでに何かイベントを行ったか？
+  DEFINE_LOCAL isEvent
+  $isEvent = FALSE
+  
+  //誕生日イベント
+  //ケーキを持っているか？
+  _GET_MUSICAL_VALUE( MUSICAL_VALUE_CHECK_HAVE_GOODS , MUSICAL_GOODS_KEEKI , SCWK_ANSWER )
+  IF $SCWK_ANSWER == FALSE THEN
+  {
+    DEFINE_LOCAL birthDay
+    DEFINE_LOCAL birthMonth
+    DEFINE_LOCAL nowDay
+    DEFINE_LOCAL nowMonth
+    
+    _GET_BIRTHDAY( birthMonth , birthDay )
+    _GET_DATE( nowMonth , nowDay )
+    
+    IF $birthMonth == $nowMonth && $birthDay && $nowDay THEN
+      $isEvent = TRUE
+      //ハッピーバースデイ！
+      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_05_01 )
+     
+      $SCWK_TEMP0 = MUSICAL_GOODS_KEEKI
+      _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
+    ENDIF
+  }
+  ENDIF
+
+  //通信参加記念
+  IF $isEvent == FALSE THEN
+    //ティアラを持っているか？
+    _GET_MUSICAL_VALUE( MUSICAL_VALUE_CHECK_HAVE_GOODS , MUSICAL_GOODS_THIARA , SCWK_ANSWER )
+    IF $SCWK_ANSWER == FALSE THEN
+      //通信参加フラグが立っているか？
+      _FLAG_CHECK( FE_MUSICAL_COMM_PLAY, SCWK_ANSWER )
+      IF $SCWK_ANSWER == TRUE THEN
+        $isEvent = TRUE
+        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_02 )
+
+        $SCWK_TEMP0 = MUSICAL_GOODS_THIARA
+        _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
+        
+        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_03 )
+      ENDIF
+    ENDIF
+  ENDIF
+
+  //トップ5回以上
+  IF $isEvent == FALSE THEN
+    //クラウンを持っているか？
+    _GET_MUSICAL_VALUE( MUSICAL_VALUE_CHECK_HAVE_GOODS , MUSICAL_GOODS_KURAUN , SCWK_ANSWER )
+    IF $SCWK_ANSWER == FALSE THEN
+      //トップ回数の取得
+      _GET_MUSICAL_VALUE( MUSICAL_VALUE_TOPNUM , 0 , SCWK_ANSWER )
+      IF $SCWK_ANSWER >= 5 THEN
+        $isEvent = TRUE
+        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_03_01 )
+
+        $SCWK_TEMP0 = MUSICAL_GOODS_KURAUN
+        _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
+        
+        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_04 )
+      ENDIF
+    ENDIF
+  ENDIF
+
+  //トップ10回以上
+  IF $isEvent == FALSE THEN
+    //優勝ベルトを持っているか？
+    _GET_MUSICAL_VALUE( MUSICAL_VALUE_CHECK_HAVE_GOODS , MUSICAL_GOODS_YUUSHOUBERUTO , SCWK_ANSWER )
+    IF $SCWK_ANSWER == FALSE THEN
+      //トップ回数の取得
+      _GET_MUSICAL_VALUE( MUSICAL_VALUE_TOPNUM , 0 , SCWK_ANSWER )
+      IF $SCWK_ANSWER >= 10 THEN
+        $isEvent = TRUE
+        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_04_01 )
+
+        $SCWK_TEMP0 = MUSICAL_GOODS_YUUSHOUBERUTO
+        _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
+        
+        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_05 )
+      ENDIF
+    ENDIF
+  ENDIF
+
+  //何も無かったら通常メッセージ
+  IF $isEvent == FALSE THEN
+    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_01 )
+  ENDIF
 EVENT_END
 
 /************************************************************/

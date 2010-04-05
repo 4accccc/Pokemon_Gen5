@@ -9,6 +9,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_musical_scr.h"
+  .include  "musical_scr_def.h"
   .include  "musical_scr_local.h" //ミュージカルの定義が入っています
   .include  "c04r0201.h"
 
@@ -35,6 +36,7 @@ _EVENT_DATA   ev_musical_fan_07
 _EVENT_DATA   ev_musical_fan_08
 _EVENT_DATA   ev_musical_fan_09
 _EVENT_DATA   ev_musical_fan_10
+_EVENT_DATA   ev_musical_add_goods
 _EVENT_DATA_END
 
 
@@ -799,13 +801,8 @@ fan_main_routine:
       _AB_KEYWAIT ()
       _BALLOONWIN_CLOSE()
       
-      //仮メッセージ
-      _SYSWIN_MSG( msg_musical_fan_get_goods , POS_DOWN )
-      _AB_KEYWAIT ()
-      _SYSWIN_CLOSE()
-      
-      //追加処理
-      _ADD_MUSICAL_GOODS( gift_number)
+      $SCWK_TEMP0 = gift_number
+      _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
       
       //渡たすフラグ落とし
       _RESET_MUSICAL_FAN_GIFT_FLG( fan_number )
@@ -870,3 +867,33 @@ EVENT_START ev_musical_fan_10
   $fan_number = 9
   _CALL fan_main_routine
 EVENT_END
+
+
+/*************************************************************/
+/*            共通コマンド             */
+/*************************************************************/
+
+//グッズの追加
+//$SCWK_TEMP0にグッズ番号
+EVENT_START ev_musical_add_goods
+
+  _PLAYER_NAME( 0 )
+  _MUSICAL_WORD_GOODS_NAME( 1 , SCWK_TEMP0 )
+  
+  //ME再生
+  _ME_PLAY(	SEQ_ME_ACCE )
+  //メッセージ
+  _SYSWIN_MSG( msg_musical_fan_get_goods , POS_DOWN )
+  _ME_WAIT()
+
+  _SYSWIN_MSG( msg_musical_fan_get_goods_02 , POS_DOWN )
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+
+  //追加処理
+  _ADD_MUSICAL_GOODS( SCWK_TEMP0 )
+
+  _CHG_LOCAL_SCR  // ローカルスクリプトに切り替え
+
+EVENT_END
+

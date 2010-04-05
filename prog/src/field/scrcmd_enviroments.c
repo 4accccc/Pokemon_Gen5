@@ -263,6 +263,16 @@ VMCMD_RESULT EvCmdGetBirthDay( VMHANDLE * core, void*wk )
 {
   u16 *month_wk = SCRCMD_GetVMWork( core, wk );
   u16 *day_wk = SCRCMD_GetVMWork( core, wk );
+#if (defined(SDK_TWL))
+  OSOwnerInfoEx ownerInfo;
+  OS_GetOwnerInfoEx( &ownerInfo );
+#else
+  OSOwnerInfo ownerInfo;
+  OS_GetOwnerInfo( &ownerInfo );
+#endif
+  *month_wk = ownerInfo.birthday.month;
+  *day_wk   = ownerInfo.birthday.day;
+
   /* –¢ŽÀ‘• */
   return VMCMD_RESULT_CONTINUE;
 }

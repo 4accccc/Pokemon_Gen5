@@ -462,6 +462,17 @@ VMCMD_RESULT EvCmdGetMusicalValue( VMHANDLE *core, void *wk )
     }
     break;
   
+    //指定グッズを持っているか？
+  case MUSICAL_VALUE_CHECK_HAVE_GOODS:
+    if( MUSICAL_SAVE_ChackHaveItem( musSave , val ) == TRUE )
+    {
+      *ret_wk = 1;
+    }
+    else
+    {
+      *ret_wk = 0;
+    }
+    break;
     //--------------------------------------------------------------------
     //以下控え室用
     //--------------------------------------------------------------------
