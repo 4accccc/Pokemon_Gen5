@@ -12,9 +12,17 @@
 #include "print/printsys.h"  // for PRINTSYSS_xxxx
 
 
-//=========================================================================
+
+//===========================================================================
+// ■ デバッグ
+//===========================================================================
+#define DEBUG_MODE
+#define PRINT_TARGET (3) // 出力先
+
+
+//===========================================================================
 // ■ 定数・マクロ
-//==========================================================================
+//=========================================================================== 
 #define CHAR_SIZE (8) // 1キャラ = 8ドット
 
 #define BMP_XSIZE_CHR (2) // ビットマップの x サイズ ( キャラ単位 )
@@ -26,9 +34,9 @@
 
 
 
-//=========================================================================
+//===========================================================================
 // ■ 文字オブジェクトの移動パラメータ
-//=========================================================================
+//===========================================================================
 typedef struct {
 
 	float x;		// 座標
@@ -49,9 +57,9 @@ typedef struct {
 } PN_LETTER_PARAM;
 
 
-//=========================================================================
+//===========================================================================
 // ■文字オブジェクト
-//=========================================================================
+//===========================================================================
 struct _PN_LETTER {
 
   HEAPID          heapID;       // ヒープID
@@ -67,10 +75,9 @@ struct _PN_LETTER {
 };
 
 
-//=========================================================================
+//===========================================================================
 // ■index
-//=========================================================================
-
+//========================================================================= ==
 // 初期化・生成・破棄
 static PN_LETTER* CreateLetter( HEAPID heapID ); // 文字オブジェクトを生成する
 static void DeleteLetter( PN_LETTER* letter ); // 文字オブジェクトを破棄する
@@ -82,18 +89,19 @@ static void DeleteBmpOamActor( PN_LETTER* letter ); // BMPOAMアクターを破棄する
 // アクセッサ
 static HEAPID GetHeapID( const PN_LETTER* letter ); // ヒープIDを取得する
 static void SetHeapID( PN_LETTER* letter, HEAPID heapID ); // ヒープIDを設定する
-static GFL_FONT* GetLetterFont( const PN_LETTER* letter ); // フォントを取得する
-static void SetLetterFont( PN_LETTER* letter, GFL_FONT* font ); // フォントを設定する
-static STRCODE GetLetterCode( const PN_LETTER* letter ); // 文字コードを取得する
-static void SetLetterCode( PN_LETTER* letter, STRCODE code ); // 文字コードを設定する
-static int GetLetterWidth( const PN_LETTER* letter ); // 文字の幅を取得する
-static void SetLetterWidth( PN_LETTER* letter, u8 width ); // 文字の幅を設定する
-static int GetLetterHeight( const PN_LETTER* letter ); //文字の高さを取得する
-static void SetLetterHeight( PN_LETTER* letter, u8 height ); //文字の高さを設定する
-static const PN_LETTER_PARAM* GetLetterMoveParam( const PN_LETTER* letter ); // 移動パラメータを取得する
-static void SetLetterMoveParam( PN_LETTER* letter, const PN_LETTER_PARAM* param ); // 移動パラメータを設定する
+static GFL_FONT* GetFont( const PN_LETTER* letter ); // フォントを取得する
+static void SetFont( PN_LETTER* letter, GFL_FONT* font ); // フォントを設定する
+static STRCODE GetStrCode( const PN_LETTER* letter ); // 文字コードを取得する
+static void SetStrCode( PN_LETTER* letter, STRCODE code ); // 文字コードを設定する
+static int GetStrWidth( const PN_LETTER* letter ); // 文字の幅を取得する
+static void SetStrWidth( PN_LETTER* letter, u8 width ); // 文字の幅を設定する
+static int GetStrHeight( const PN_LETTER* letter ); //文字の高さを取得する
+static void SetStrHeight( PN_LETTER* letter, u8 height ); //文字の高さを設定する
+static const PN_LETTER_PARAM* GetMoveParam( const PN_LETTER* letter ); // 移動パラメータを取得する
+static void SetMoveParam( PN_LETTER* letter, const PN_LETTER_PARAM* param ); // 移動パラメータを設定する
+static GFL_BMP_DATA* GetBitmap( const PN_LETTER* letter ); // ビットマップを取得する
 // 判定
-static BOOL CheckLetterMoving( const PN_LETTER* letter ); // 移動中かどうかをチェックする
+static BOOL CheckMoving( const PN_LETTER* letter ); // 移動中かどうかをチェックする
 static BOOL CheckMoveEnd( const PN_LETTER* letter ); // 移動が終了したかどうかをチェックする
 static BOOL CheckXMoveEnd( const PN_LETTER* letter ); // x 方向の移動が終了したかどうかをチェックする
 static BOOL CheckYMoveEnd( const PN_LETTER* letter ); // y 方向の移動が終了したかどうかをチェックする
@@ -105,6 +113,7 @@ static void LetterMoveY( PN_LETTER* letter ); // y 方向に動かす
 static void StartMove( PN_LETTER* letter ); // 移動を開始する
 static void EndMove( PN_LETTER* letter ); // 移動を終了する
 static void SetupMoveParam( PN_LETTER* letterl ); // 移動パラメータをセットアップする
+static void SetupMoveParam_bySetupParam( PN_LETTER* letter, const PN_LETTER_SETUP_PARAM* setup ); // セットアップパラメータから移動パラメータをセットアップする
 // ビットマップ操作
 static void ClearBitmap( PN_LETTER* letter ); // ビットマップをクリアする
 static void PrintLetterToBitmap( PN_LETTER* letter ); // 文字をビットマップに書き込む
@@ -115,9 +124,9 @@ static void GetPrintSize( GFL_FONT* font, STRCODE code, HEAPID heapID, int* dest
 
 
 
-//=========================================================================
+//===========================================================================
 // ■public method
-//=========================================================================
+//===========================================================================
 
 
 //---------------------------------------------------------------------------
@@ -136,11 +145,19 @@ PN_LETTER* PN_LETTER_Create(
 {
   PN_LETTER* letter;
 
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "◇PN_LETTER: create\n" );
+#endif
+
   letter = CreateLetter( heapID ); // 本体を生成
   InitLetter( letter ); // 初期化
   SetHeapID( letter, heapID ); // ヒープIDをセット
   CreateBitmap( letter ); // ビットマップを生成
   CreateBmpOamActor( letter, bmpOamSys, plttRegIdx ); // BMPOAMアクターを生成
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "◆PN_LETTER: create\n" );
+#endif
 
   return letter;
 }
@@ -156,9 +173,17 @@ void PN_LETTER_Delete( PN_LETTER* letter )
 {
   GF_ASSERT( letter );
 
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "◇PN_LETTER: delete\n" );
+#endif
+
   DeleteBmpOamActor( letter ); // BMPOAMアクターを破棄
   DeleteBitmap( letter ); // ビットマップを破棄
   DeleteLetter( letter ); // 本体を破棄
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "◆PN_LETTER: delete\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -173,8 +198,19 @@ void PN_LETTER_Setup( PN_LETTER* letter, const PN_LETTER_SETUP_PARAM* param )
 {
   GF_ASSERT( letter );
 
-  SetLetterFont( letter, param->font );
-  SetLetterCode( letter, param->code );
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "◇PN_LETTER: setup\n" );
+#endif
+
+  SetFont( letter, param->font );
+  SetStrCode( letter, param->code );
+  ClearBitmap( letter );
+  PrintLetterToBitmap( letter );
+  SetupMoveParam_bySetupParam( letter, param );
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "◆PN_LETTER: setup\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -201,6 +237,8 @@ void PN_LETTER_Main( PN_LETTER* letter )
 void PN_LETTER_MoveStart( PN_LETTER* letter )
 {
   GF_ASSERT( letter );
+
+  StartMove( letter );
 }
 
 //---------------------------------------------------------------------------
@@ -215,14 +253,14 @@ const GFL_BMP_DATA* PN_LETTER_GetBitmap( const PN_LETTER* letter )
   GF_ASSERT( letter );
   GF_ASSERT( letter->bmp );
 
-  return letter->bmp;
+  return GetBitmap( letter );
 }
 
 
 
-//=========================================================================
+//===========================================================================
 // ■private method
-//=========================================================================
+//===========================================================================
 
 
 //---------------------------------------------------------------------------
@@ -240,6 +278,10 @@ static PN_LETTER* CreateLetter( HEAPID heapID )
 
   letter = GFL_HEAP_AllocMemory( heapID, sizeof(PN_LETTER) );
 
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: create letter\n" );
+#endif
+
   return letter;
 }
 
@@ -253,6 +295,10 @@ static PN_LETTER* CreateLetter( HEAPID heapID )
 static void DeleteLetter( PN_LETTER* letter )
 {
   GFL_HEAP_FreeMemory( letter );
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: delete letter\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -270,6 +316,10 @@ static void InitLetter( PN_LETTER* letter )
   // 初期化
   letter->moveFlag = FALSE;
   letter->strcode  = GFL_STR_GetEOMCode();
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: init letter\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -286,6 +336,10 @@ static void CreateBitmap( PN_LETTER* letter )
 
 	letter->bmp = GFL_BMP_Create( 
       BMP_XSIZE_CHR, BMP_YSIZE_CHR, GFL_BMP_16_COLOR, letter->heapID );
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: create bitmap\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -301,6 +355,10 @@ static void DeleteBitmap( PN_LETTER* letter )
     GFL_BMP_Delete( letter->bmp );
     letter->bmp = NULL;
   } 
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: delete bitmap\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -335,6 +393,10 @@ static void CreateBmpOamActor(
 
   // 非表示にする
 	BmpOam_ActorSetDrawEnable( letter->bmpOamActor, FALSE );  
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: create BMPOAM actor\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -350,6 +412,10 @@ static void DeleteBmpOamActor( PN_LETTER* letter )
     BmpOam_ActorDel( letter->bmpOamActor );
     letter->bmpOamActor = NULL;
   } 
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: delete BMPOAM actor\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -377,6 +443,10 @@ static HEAPID GetHeapID( const PN_LETTER* letter )
 static void SetHeapID( PN_LETTER* letter, HEAPID heapID )
 {
   letter->heapID = heapID;
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: set heapID\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -388,7 +458,7 @@ static void SetHeapID( PN_LETTER* letter, HEAPID heapID )
  * @return フォント
  */
 //---------------------------------------------------------------------------
-static GFL_FONT* GetLetterFont( const PN_LETTER* letter )
+static GFL_FONT* GetFont( const PN_LETTER* letter )
 {
   GF_ASSERT( letter->font );
 
@@ -403,9 +473,13 @@ static GFL_FONT* GetLetterFont( const PN_LETTER* letter )
  * @param font   フォント
  */
 //---------------------------------------------------------------------------
-static void SetLetterFont( PN_LETTER* letter, GFL_FONT* font )
+static void SetFont( PN_LETTER* letter, GFL_FONT* font )
 {
   letter->font = font;
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: set font\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -417,7 +491,7 @@ static void SetLetterFont( PN_LETTER* letter, GFL_FONT* font )
  * @return 文字コード
  */
 //---------------------------------------------------------------------------
-static STRCODE GetLetterCode( const PN_LETTER* letter )
+static STRCODE GetStrCode( const PN_LETTER* letter )
 {
   return letter->strcode;
 }
@@ -430,9 +504,13 @@ static STRCODE GetLetterCode( const PN_LETTER* letter )
  * @param code   文字コード
  */
 //---------------------------------------------------------------------------
-static void SetLetterCode( PN_LETTER* letter, STRCODE code )
+static void SetStrCode( PN_LETTER* letter, STRCODE code )
 {
   letter->strcode = code;
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: set strcode\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -444,7 +522,7 @@ static void SetLetterCode( PN_LETTER* letter, STRCODE code )
  * @return 移動中なら TRUE, そうでないなら FALSE.
  */
 //---------------------------------------------------------------------------
-static BOOL CheckLetterMoving( const PN_LETTER* letter )
+static BOOL CheckMoving( const PN_LETTER* letter )
 {
   return letter->moveFlag;
 }
@@ -458,7 +536,7 @@ static BOOL CheckLetterMoving( const PN_LETTER* letter )
  * @return 文字の幅
  */
 //---------------------------------------------------------------------------
-static int GetLetterWidth( const PN_LETTER* letter )
+static int GetStrWidth( const PN_LETTER* letter )
 {
   return letter->width;
 }
@@ -471,7 +549,7 @@ static int GetLetterWidth( const PN_LETTER* letter )
  * @param width  文字の幅
  */
 //---------------------------------------------------------------------------
-static void SetLetterWidth( PN_LETTER* letter, u8 width )
+static void SetStrWidth( PN_LETTER* letter, u8 width )
 {
   letter->width = width;
 }
@@ -485,7 +563,7 @@ static void SetLetterWidth( PN_LETTER* letter, u8 width )
  * @return 文字の高さ
  */
 //---------------------------------------------------------------------------
-static int GetLetterHeight( const PN_LETTER* letter )
+static int GetStrHeight( const PN_LETTER* letter )
 {
   return letter->height;
 }
@@ -498,7 +576,7 @@ static int GetLetterHeight( const PN_LETTER* letter )
  * @param height  文字の高さ
  */
 //---------------------------------------------------------------------------
-static void SetLetterHeight( PN_LETTER* letter, u8 height )
+static void SetStrHeight( PN_LETTER* letter, u8 height )
 {
   letter->height = height;
 }
@@ -512,7 +590,7 @@ static void SetLetterHeight( PN_LETTER* letter, u8 height )
  * @return 移動パラメータ
  */
 //---------------------------------------------------------------------------
-static const PN_LETTER_PARAM* GetLetterMoveParam( const PN_LETTER* letter )
+static const PN_LETTER_PARAM* GetMoveParam( const PN_LETTER* letter )
 {
   return &(letter->moveParam);
 }
@@ -525,9 +603,23 @@ static const PN_LETTER_PARAM* GetLetterMoveParam( const PN_LETTER* letter )
  * @param param 移動パラメータ
  */
 //---------------------------------------------------------------------------
-static void SetLetterMoveParam( PN_LETTER* letter, const PN_LETTER_PARAM* param )
+static void SetMoveParam( PN_LETTER* letter, const PN_LETTER_PARAM* param )
 {
   letter->moveParam = *param;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief ビットマップデータを取得する
+ *
+ * @param letter
+ *
+ * @return ビットマップ
+ */
+//---------------------------------------------------------------------------
+static GFL_BMP_DATA* GetBitmap( const PN_LETTER* letter )
+{
+  return letter->bmp;
 }
 
 //---------------------------------------------------------------------------
@@ -543,7 +635,7 @@ static void SetLetterMoveParam( PN_LETTER* letter, const PN_LETTER_PARAM* param 
 static BOOL CheckMoveEnd( const PN_LETTER* letter )
 { 
   // 移動していない
-  if( CheckLetterMoving(letter) == FALSE ) { return TRUE; }
+  if( CheckMoving(letter) == FALSE ) { return TRUE; }
 
   // x 方向, y 方向 ともに移動が終了
 	if( CheckXMoveEnd(letter) && CheckYMoveEnd(letter) ) {
@@ -568,10 +660,10 @@ static BOOL CheckXMoveEnd( const PN_LETTER* letter )
 {
   const PN_LETTER_PARAM* param;
 
-  param = GetLetterMoveParam( letter );
+  param = GetMoveParam( letter );
 
   // 移動していない
-  if( CheckLetterMoving(letter) == FALSE ) { return TRUE; }
+  if( CheckMoving(letter) == FALSE ) { return TRUE; }
 
   // x 方向の移動が終了
 	if( param->tx <= 0 ) {
@@ -596,10 +688,10 @@ static BOOL CheckYMoveEnd( const PN_LETTER* letter )
 {
   const PN_LETTER_PARAM* param;
 
-  param = GetLetterMoveParam( letter );
+  param = GetMoveParam( letter );
 
   // 移動していない
-  if( CheckLetterMoving(letter) == FALSE ) { return TRUE; }
+  if( CheckMoving(letter) == FALSE ) { return TRUE; }
 
   // y 方向の移動が終了
 	if( param->ty <= 0 ) {
@@ -620,7 +712,7 @@ static BOOL CheckYMoveEnd( const PN_LETTER* letter )
 static void LetterMain( PN_LETTER* letter )
 {
 	// 動いていない
-	if( CheckLetterMoving(letter) == FALSE ) { return; }
+	if( CheckMoving(letter) == FALSE ) { return; }
 
   // 移動
   LetterMoveX( letter );
@@ -646,7 +738,7 @@ static void LetterMoveX( PN_LETTER* letter )
 {
   PN_LETTER_PARAM* param;
 
-  GF_ASSERT( CheckLetterMoving(letter) == TRUE );
+  GF_ASSERT( CheckMoving(letter) == TRUE );
 
   // 移動完了済み
   if( CheckXMoveEnd(letter) == TRUE ) { return; }
@@ -669,7 +761,7 @@ static void LetterMoveY( PN_LETTER* letter )
 {
   PN_LETTER_PARAM* param;
 
-  GF_ASSERT( CheckLetterMoving(letter) == TRUE );
+  GF_ASSERT( CheckMoving(letter) == TRUE );
 
   // 移動完了済み
   if( CheckYMoveEnd(letter) == TRUE ) { return; }
@@ -691,6 +783,10 @@ static void LetterMoveY( PN_LETTER* letter )
 static void StartMove( PN_LETTER* letter )
 {
   letter->moveFlag = TRUE;
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: start move\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -703,6 +799,10 @@ static void StartMove( PN_LETTER* letter )
 static void EndMove( PN_LETTER* letter )
 {
   letter->moveFlag = FALSE;
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: end move\n" );
+#endif
 }
 
 //--------------------------------------------------------------------------
@@ -741,6 +841,39 @@ static void SetupMoveParam( PN_LETTER* letter )
 	if( param->ay != 0 ) {
     param->ty = (int)( ( param->dsy - param->sy ) / param->ay );
   }
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: setup move param\n" );
+#endif
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief セットアップパラメータから移動パラメータを求める
+ *
+ * @param letter
+ * @param setup セットアップパラメータ
+ */
+//---------------------------------------------------------------------------
+static void SetupMoveParam_bySetupParam( 
+    PN_LETTER* letter, const PN_LETTER_SETUP_PARAM* setup )
+{
+  // 移動パラメータのセットアップに必要なデータを設定
+  letter->moveParam.x = setup->x;
+  letter->moveParam.y = setup->y;
+  letter->moveParam.sx = setup->sx;
+  letter->moveParam.sy = setup->sy;
+  letter->moveParam.dx = setup->dx;
+  letter->moveParam.dy = setup->dy;
+  letter->moveParam.dsx = setup->dsx;
+  letter->moveParam.dsy = setup->dsy;
+
+  // 移動パラメータをセットアップ
+  SetupMoveParam( letter );
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: setup move param by setup param\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -753,6 +886,10 @@ static void SetupMoveParam( PN_LETTER* letter )
 static void ClearBitmap( PN_LETTER* letter )
 {
 	GFL_BMP_Clear( letter->bmp, 0 );
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: create bitmap\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -768,7 +905,7 @@ static void PrintLetterToBitmap( PN_LETTER* letter )
 	STRBUF* strbuf;
   PRINTSYS_LSB color;
 
-	string[0] = GetLetterCode( letter );
+	string[0] = GetStrCode( letter );
 	string[1] = GFL_STR_GetEOMCode();
 	strbuf    = GFL_STR_CreateBuffer( 2, letter->heapID );
 	GFL_STR_SetStringCodeOrderLength( strbuf, string, 2 );
@@ -779,6 +916,10 @@ static void PrintLetterToBitmap( PN_LETTER* letter )
 	BmpOam_ActorBmpTrans( letter->bmpOamActor );
 
 	GFL_STR_DeleteBuffer( strbuf );
+
+#ifdef DEBUG_MODE
+  OS_TFPrintf( PRINT_TARGET, "PN_LETTER: print letter to bitmap\n" );
+#endif
 }
 
 //---------------------------------------------------------------------------
@@ -792,7 +933,7 @@ static void UpdateBmpOamActorPos( PN_LETTER* letter )
 {
   const PN_LETTER_PARAM* param;
 
-  param = GetLetterMoveParam( letter );
+  param = GetMoveParam( letter );
 
 	BmpOam_ActorSetPos( letter->bmpOamActor, param->x, param->y );
 }
@@ -824,36 +965,4 @@ static void GetPrintSize(
 	*destY = PRINTSYS_GetStrHeight( strbuf, font );
 
 	GFL_STR_DeleteBuffer( strbuf );
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+} 

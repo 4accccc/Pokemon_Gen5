@@ -38,6 +38,9 @@ typedef struct {
 } PN_LETTER_SETUP_PARAM;
 
 
+//=========================================================================
+// Å°public functions
+//=========================================================================
 extern PN_LETTER* PN_LETTER_Create( HEAPID heapID, BMPOAM_SYS_PTR bmpOamSys, u32 plttRegIdx );
 extern void PN_LETTER_Delete( PN_LETTER* letter );
 extern void PN_LETTER_Setup( PN_LETTER* letter, const PN_LETTER_SETUP_PARAM* param );
