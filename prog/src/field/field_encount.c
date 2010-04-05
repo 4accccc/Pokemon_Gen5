@@ -336,6 +336,7 @@ void* FIELD_ENCOUNT_CheckFishingEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_ty
   
   //釣り戦闘フラグ
   BATTLE_PARAM_SetBtlStatusFlag( bp, BTL_STATUS_FLAG_FISHING );
+  bp->fieldSituation.bgAttr = BATTLE_BG_ATTR_WATER; //釣り戦闘は必ず水タイプ
 
   return bp;
 }
@@ -684,6 +685,18 @@ void FIELD_ENCOUNT_SetTrainerBattleParam(
 
   BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, enc->gdata, enc->fwork );
 
+  //トレーナータイプによって、バトルBGアトリビュートを上書き
+  {
+    BtlBgAttr attr = TT_TrainerTypeBtlBgAttrGet(TT_TrainerDataParaGet( tr_id0, ID_TD_tr_type ));
+    if(attr != BATTLE_BG_ATTR_MAX){
+      bp->fieldSituation.bgAttr = attr;
+    }
+    else if( tr_id0 == TRID_BOSS_06 || tr_id0 == TRID_BOSS_07 ){
+      //N最終戦はタイプでは識別できないので直書き
+      bp->fieldSituation.bgAttr = BATTLE_BG_ATTR_BOSS;
+    }
+  }
+
   switch(rule){
   case BTL_RULE_DOUBLE:
     if( partner_id != TRID_NULL )
@@ -724,7 +737,7 @@ static BtlWeather btlparam_GetBattleWeather( FIELDMAP_WORK* fieldWork )
   switch( weather )
   {
   case WEATHER_NO_SUNNY:
-    return BTL_WEATHER_SHINE;
+    return BTL_WEATHER_NONE;
   case WEATHER_NO_RAIN:
   case WEATHER_NO_STORM:
     return BTL_WEATHER_RAIN;
@@ -735,7 +748,6 @@ static BtlWeather btlparam_GetBattleWeather( FIELDMAP_WORK* fieldWork )
   }
   return BTL_WEATHER_NONE;
 }
-
 
 //======================================================================
 //  パーツ
