@@ -3064,7 +3064,7 @@ static void handler_Kodawari_Common_WazaExe( BTL_EVENT_FACTOR* myHandle, BTL_SVF
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_CheckSick(bpp, KODAWARI_SICKID) )
+    if( !BPP_CheckSick(bpp, KODAWARI_SICKID) )
     {
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
@@ -3076,14 +3076,17 @@ static void handler_Kodawari_Common_WazaExe( BTL_EVENT_FACTOR* myHandle, BTL_SVF
     }
   }
 }
-// ワザ出し確定ハンドラ（アイテム変更確定ハンドラ）
+// アイテム変更確定ハンドラ
 static void handler_Kodawari_Common_ItemChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_HANDEX_PARAM_RESET_CONTFLAG* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_CONTFLAG, pokeID );
-    param->pokeID = pokeID;
-    param->flag = BPP_CONTFLG_KODAWARI_LOCK;
+    BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+
+    param->sickCode = WAZASICK_KODAWARI;
+    param->pokeID[0] = pokeID;
+    param->poke_cnt = 1;
+    param->fStdMsgDisable = TRUE;
   }
 }
 

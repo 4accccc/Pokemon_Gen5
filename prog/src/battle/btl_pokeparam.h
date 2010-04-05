@@ -106,7 +106,6 @@ typedef enum {
 typedef enum {
 
   BPP_CONTFLG_ACTION_DONE,      ///< 行動した
-  BPP_CONTFLG_KODAWARI_LOCK,    ///< 最初に使ったワザしか出せなくなる
   BPP_CONTFLG_CANT_CHANGE,      ///< にげる・入れ替えが出来なくなる
   BPP_CONTFLG_TAME,
   BPP_CONTFLG_SORAWOTOBU,

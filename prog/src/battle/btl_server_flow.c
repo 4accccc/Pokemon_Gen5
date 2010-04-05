@@ -1197,7 +1197,7 @@ BOOL BTL_SVFLOW_CreatePlayerEscapeCommand( BTL_SVFLOW_WORK* wk )
 
   SCQUE_Init( wk->que );
 
-  if( scproc_NigeruCmd( wk, bpp ) )
+  if( scproc_NigeruCmd(wk, bpp) )
   {
     wk->escapeClientID = clientID;
     return TRUE;
