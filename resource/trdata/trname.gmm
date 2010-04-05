@@ -3102,6 +3102,21 @@
 		<language name="JPN_KANJI" width="216">ハルカ</language>
 	</row>
 
+	<row id="badrider_05">
+		<language name="JPN" width="216">サトシ</language>
+		<language name="JPN_KANJI" width="216">サトシ</language>
+	</row>
+
+	<row id="badrider_06">
+		<language name="JPN" width="216">サトシ</language>
+		<language name="JPN_KANJI" width="216">サトシ</language>
+	</row>
+
+	<row id="nurse_03">
+		<language name="JPN" width="216">ミリア</language>
+		<language name="JPN_KANJI" width="216">ミリア</language>
+	</row>
+
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>
