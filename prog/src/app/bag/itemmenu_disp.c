@@ -102,14 +102,14 @@ enum
 #define ITEMWIN_FRAME (GFL_BG_FRAME1_S)
 #define ITEMREPORT_FRAME (GFL_BG_FRAME2_S)
 
-#define _UP_ITEMNAME_INITX (8)
+#define _UP_ITEMNAME_INITX (7)
 #define _UP_ITEMNAME_INITY (5)
-#define _UP_ITEMNAME_SIZEX (15)
+#define _UP_ITEMNAME_SIZEX (18)
 #define _UP_ITEMNAME_SIZEY (3)
 #define _UP_ITEMNAME_DOTOFS_Y (4)
 
-#define _UP_ITEMNUM_INITX (23)
-#define _UP_ITEMNUM_INITY (5)
+#define _UP_ITEMNUM_INITX (20)
+#define _UP_ITEMNUM_INITY (8)
 #define _UP_ITEMNUM_SIZEX (6)
 #define _UP_ITEMNUM_SIZEY (3)
 
@@ -118,7 +118,7 @@ enum
 #define _UP_ITEMREPORT_INITX (2)
 #define _UP_ITEMREPORT_INITY (12)
 #define _UP_ITEMREPORT_SIZEX (26)
-#define _UP_ITEMREPORT_SIZEY (9)
+#define _UP_ITEMREPORT_SIZEY (7)
 
 #define _ITEMICON_SCR_X (14)
 #define _ITEMICON_SCR_Y (8)
@@ -539,7 +539,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
   {
     GFL_CLWK_DATA cellInitData1,cellInitData2;
     cellInitData1.pos_x = 10*8;
-    cellInitData1.pos_y = 20*8+20;
+    cellInitData1.pos_y = 22*8+8;
     cellInitData1.softpri = 1;
     cellInitData1.bgpri = 1;
     cellInitData1.anmseq = 0;
@@ -550,7 +550,7 @@ void ITEMDISP_graphicInit(FIELD_ITEMMENU_WORK* pWork)
       &cellInitData1 ,CLSYS_DEFREND_SUB , pWork->heapID );
 
     cellInitData2.pos_x = 10*8;
-    cellInitData2.pos_y = 20*8+2;
+    cellInitData2.pos_y = 19*8+12;
     cellInitData2.softpri = 1;
     cellInitData2.bgpri = 1;
     cellInitData2.anmseq = 0;
@@ -727,7 +727,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
     GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR001, pWork->pStrBuf );
     ITEMMENU_WordsetItemName( pWork, 0, item->id);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 16, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemName), 0, _UP_ITEMNAME_DOTOFS_Y, pWork->pExpStrBuf, pWork->fontHandle);
 
     //「×」
     GFL_MSG_GetString(  pWork->MsgManager, MSG_ITEM_STR002, pWork->pStrBuf );
@@ -750,7 +750,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 
   // アイテムの説明文
   GFL_MSG_GetString(  pWork->MsgManagerItemInfo, item->id, pWork->pStrBuf );
-  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemReport), 0, 0, pWork->pStrBuf, pWork->fontHandle);
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp(pWork->winItemReport), 0, 4, pWork->pStrBuf, pWork->fontHandle);
 
   // キャラ転送
   GFL_BMPWIN_TransVramCharacter(pWork->winItemName);
