@@ -435,6 +435,7 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
     if( GFL_FONTSYS_IsDifferentColor( defL, defS, defB ) ){
       GFL_FONTSYS_SetColor( defL, defS, defB );
     }
+    que->fColorChanged = FALSE;
   }
 
   return TRUE;
