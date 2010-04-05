@@ -1898,20 +1898,12 @@ u32   POKETOOL_CalcPersonalRandEx( u32 id, u16 mons_no, u16 form_no, u8 sex, u8 
 //============================================================================================
 u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpec sex, PtlTokuseiSpec tokusei, PtlRareSpec rare_flag )
 {
-  u32 rare_mask = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) );
-  u32 rare_false_rnd = 0;
   u32 rnd;
 
   //特性ナンバーではないので、2以上はアサートにする
   GF_ASSERT( sex        < PTL_SEX_SPEC_MAX );
   GF_ASSERT( tokusei    < PTL_TOKUSEI_SPEC_MAX );
   GF_ASSERT( rare_flag  < PTL_RARE_SPEC_MAX );
-
-  if( rare_flag == PTL_RARE_SPEC_FALSE )
-  { 
-    rare_false_rnd = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) ) & 0xff00;
-    rare_false_rnd = ( rare_false_rnd ^ 0xff00 ) << 16;
-  }
 
   if( sex == PTL_SEX_SPEC_UNKNOWN )
   { 
@@ -1924,65 +1916,106 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
 
   switch( rare_flag ){ 
   case PTL_RARE_SPEC_TRUE:
-    if( tokusei != PTL_TOKUSEI_SPEC_BOTH )
     { 
-
-    }
-  case PTL_RARE_SPEC_FALSE:
-  case PTL_RARE_SPEC_BOTH:
-  default:
-  }
-
-  if( rare_flag )
-  {
-    u32 mask = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) );
-
-    rnd = POKETOOL_CalcPersonalRand( mons_no, form_no, sex );
-    if( ( rnd & 0x00000001 ) != tokusei )
-    {
-      if( sex == PTL_SEX_MALE )
-      {
-        rnd++;
+      u32 rare_mask = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) );
+      rnd &= 0x000000ff;
+      if( tokusei != PTL_TOKUSEI_SPEC_BOTH )
+      { 
+        if( ( rnd & 0x00000001 ) != tokusei )
+        {
+          if( sex == PTL_SEX_FEMALE )
+          {
+            //乱数が０のときは、思ったような値にならないがあきらめてもらうしかない
+            if( rnd )
+            {
+              rnd--;
+            }
+          }
+          else
+          {
+            rnd++;
+          }
+        }
       }
       else
+      { 
+        if( sex == PTL_SEX_FEMALE )
+        {
+          //乱数が０のときは、思ったような値にならないがあきらめてもらうしかない
+          if( rnd )
+          {
+            rnd--;
+            if( ( GFUser_GetPublicRand( 2 ) ) && ( rnd ) )
+            { 
+              rnd--;
+            }
+          }
+        }
+        else
+        {
+          rnd++;
+          if( GFUser_GetPublicRand( 2 ) )
+          { 
+            rnd++;
+          }
+        }
+      }
+      rnd |= ( rare_mask ^ ( rnd & 0x0000ffff ) ) << 16;
+    }
+    break;
+  case PTL_RARE_SPEC_FALSE:
+    { 
+      u32 rare_false_rnd = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) ) & 0xff00;
+      rare_false_rnd = ( rare_false_rnd ^ 0xff00 ) << 16;
+      rnd &= 0x000000ff;
+      rnd = rare_false_rnd | rnd;
+    }
+    /* fallthru */
+  case PTL_RARE_SPEC_BOTH:
+    if( tokusei != PTL_TOKUSEI_SPEC_BOTH )
+    { 
+      if( ( rnd & 0x00000001 ) != tokusei )
+      {
+        if( sex == PTL_SEX_FEMALE )
+        {
+          //乱数が０のときは、思ったような値にならないがあきらめてもらうしかない
+          if( rnd )
+          {
+            rnd--;
+          }
+        }
+        else
+        {
+          rnd++;
+        }
+      }
+    }
+    else
+    { 
+      if( sex == PTL_SEX_FEMALE )
       {
         //乱数が０のときは、思ったような値にならないがあきらめてもらうしかない
         if( rnd )
         {
           rnd--;
-        }
-      }
-    }
-    rnd |= ( mask ^ ( rnd & 0x0000ffff ) ) << 16;
-  }
-  else
-  {
-    POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
-    u8 per_sex = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
-
-    rnd = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) ) & 0xff00;
-    rnd = ( rnd ^ 0xff00 ) << 16;
-
-    if( PokePersonal_SexVecTypeGet( per_sex ) != POKEPER_SEXTYPE_FIX )
-    {
-      rnd |= per_sex;
-      if( sex == PTL_SEX_MALE )
-      {
-        if( ( rnd & 1 ) != tokusei )
-        {
-          rnd++;
+          if( ( GFUser_GetPublicRand( 2 ) ) && ( rnd ) )
+          { 
+            rnd--;
+          }
         }
       }
       else
       {
-        rnd--;
-        if( ( rnd & 1 ) != tokusei )
-        {
-          rnd--;
+        rnd++;
+        if( GFUser_GetPublicRand( 2 ) )
+        { 
+          rnd++;
         }
       }
     }
+    break;
   }
+
   return rnd;
 }
 
