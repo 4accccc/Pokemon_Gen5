@@ -14,6 +14,7 @@
 #define UN_WKOBJCODE02                     3
 #define UN_WKOBJCODE03                     4
 #define UN_WKOBJCODE04                     5
+#define DUMMY_OBJ                          6
 
 #endif //ZONE_C11R0201_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c11r0201.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
