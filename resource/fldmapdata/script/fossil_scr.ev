@@ -251,7 +251,7 @@ get_poke:
     //依頼フラグをクリアする
     $WK_OTHER_KASEKI_NUM = 0
     //化石復元回数加算
-    _ADD_RECORD( RECID_FOSSIL_RESTORE, 1 )
+//    _ADD_RECORD( RECID_FOSSIL_RESTORE, 1 )
   ENDIF
 _RET
 
