@@ -82,7 +82,7 @@ static BOOL _NetTestParent(void* pCtl);
 
 static void _endCallBack(void* pWork);
 static u8* _recvMemory(int netID, void* pWork, int size);
-static void _debug_bsubData(BSUBWAY_PARTNER_DATA* pData);
+static void _debug_bsubData(BSUBWAY_PARTNER_DATA* pData,BOOL bSingle);
 
 
 static const NetRecvFuncTable _CommPacketTbl[] = {
@@ -789,6 +789,7 @@ static GFL_PROC_RESULT NetDeliverySendProc_Init(GFL_PROC * proc, int * seq, void
 static void _debug_bsubDataMain(DEBUG_OHNO_CONTROL * pDOC)
 {
   BATTLE_EXAMINATION_SAVEDATA* pDG;
+  BOOL bSingle = FALSE;
 
   
   pDOC->aInit.NetDevID = WB_NET_BATTLE_EXAMINATION;   // //’ÊMŽí—Þ
@@ -803,11 +804,16 @@ static void _debug_bsubDataMain(DEBUG_OHNO_CONTROL * pDOC)
   pDG = (BATTLE_EXAMINATION_SAVEDATA* )pDOC->aInit.data[0].pData;
 
   pDG->bActive = BATTLE_EXAMINATION_MAGIC_KEY;
-  _debug_bsubData( &pDG->trainer[0] );
-  _debug_bsubData( &pDG->trainer[1] );
-  _debug_bsubData( &pDG->trainer[2] );
-  _debug_bsubData( &pDG->trainer[3] );
-  _debug_bsubData( &pDG->trainer[4] );
+  if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){
+    bSingle = TRUE;
+  }
+  pDG->bSingle = bSingle;
+
+  _debug_bsubData( &pDG->trainer[0],bSingle );
+  _debug_bsubData( &pDG->trainer[1],bSingle );
+  _debug_bsubData( &pDG->trainer[2],bSingle );
+  _debug_bsubData( &pDG->trainer[3],bSingle );
+  _debug_bsubData( &pDG->trainer[4],bSingle );
   pDG->titleName[0] = L'‚Ä';
   pDG->titleName[1] = L'‚·';
   pDG->titleName[2] = 0xffff;
@@ -1283,7 +1289,7 @@ struct _BSUBWAY_PARTNER_DATA
 #endif
 
 
-static void _debug_bsubData(BSUBWAY_PARTNER_DATA* pData)
+static void _debug_bsubData(BSUBWAY_PARTNER_DATA* pData, BOOL bSingle)
 {
   int i;
 
@@ -1305,16 +1311,32 @@ static void _debug_bsubData(BSUBWAY_PARTNER_DATA* pData)
   pData->bt_trd.lose_word[1]=2;
   pData->bt_trd.lose_word[2]=3;
   pData->bt_trd.lose_word[3]=4;
-  for(i=0;i<4;i++){
-    BSUBWAY_POKEMON* pPoke = &pData->btpwd[i];
-    pPoke->mons_param = 1;
-    pPoke->item_no=0;
-    pPoke->waza[0]=WAZANO_HAPPAKATTAA;
-    pPoke->waza[1]=WAZANO_NULL;
-    pPoke->waza[2]=WAZANO_NULL;
-    pPoke->waza[3]=WAZANO_NULL;
-    pPoke->id_no = 12;
-    pPoke->nickname[0]=0xffff;
+  if(bSingle){
+    for(i=0;i<3;i++){
+      BSUBWAY_POKEMON* pPoke = &pData->btpwd[i];
+      pPoke->mons_param = 101;
+      pPoke->item_no=0;
+      pPoke->waza[0]=WAZANO_KAMINARI;
+      pPoke->waza[1]=WAZANO_NULL;
+      pPoke->waza[2]=WAZANO_NULL;
+      pPoke->waza[3]=WAZANO_NULL;
+      pPoke->id_no = 12;
+      pPoke->nickname[0]= L'‚ ';
+      pPoke->nickname[1]= 0xffff;
+    }
+  }
+  else{
+    for(i=0;i<4;i++){
+      BSUBWAY_POKEMON* pPoke = &pData->btpwd[i];
+      pPoke->mons_param = 1;
+      pPoke->item_no=0;
+      pPoke->waza[0]=WAZANO_HAPPAKATTAA;
+      pPoke->waza[1]=WAZANO_NULL;
+      pPoke->waza[2]=WAZANO_NULL;
+      pPoke->waza[3]=WAZANO_NULL;
+      pPoke->id_no = 12;
+      pPoke->nickname[0]=0xffff;
+    }
   }
 }
 

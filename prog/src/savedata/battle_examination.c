@@ -70,6 +70,18 @@ BOOL BATTLE_EXAMINATION_SAVE_IsInData(BATTLE_EXAMINATION_SAVEDATA* pSV)
   return FALSE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   シングルバトルかどうか
+ * @return	SINGLEならTRUE
+ */
+//--------------------------------------------------------------------------------------------
+
+BOOL BATTLE_EXAMINATION_SAVE_IsSingleBattle(BATTLE_EXAMINATION_SAVEDATA* pSV)
+{
+  return pSV->bSingle;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	データのポインタ取得

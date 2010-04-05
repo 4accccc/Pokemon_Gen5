@@ -24,7 +24,7 @@ typedef struct {
   BSUBWAY_PARTNER_DATA trainer[BATTLE_EXAMINATION_MAX];
   STRCODE titleName[BATTLE_EXAMINATION_TITLE_MSG_MAX];    //34byte
   u16 bActive;
-  u16 padding;
+  u16 bSingle;  ///< シングルかダブルか
   u16 crc;
 }BATTLE_EXAMINATION_SAVEDATA;
 
