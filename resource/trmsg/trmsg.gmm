@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-29T17:43:49"/>
+	<create user="taya" host="W00146" date="2010-04-05T10:56:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -238,6 +238,9 @@
 			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
 		</group>
 
 		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
@@ -354,7 +357,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1409" top="308" right="2114" bottom="936" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -2651,11 +2654,15 @@
 		<language name="JPN" width="216">ポケモンと　いっしょに
 ためしのいわに　こぶしを　つきだす！▼
 あなたも　かくとうタイプの　ポケモンと
-ためしのいわを　しらべたら？</language>
+ためしのいわを　しらべたら？▼
+あたしの　ともだちから　いわくだきの
+わざマシン　もらったでしょ！？</language>
 		<language name="JPN_KANJI" width="216">ポケモンと　一緒に
 試しの岩に　こぶしを　つきだす！▼
 あなたも　かくとうタイプの　ポケモンと
-試しの岩を　調べたら？</language>
+試しの岩を　調べたら？▼
+あたしの　友達から　いわくだきの
+わざマシン　もらったでしょ！？</language>
 	</row>
 
 	<row id="TRID_BUSINESS1_01_TRMSG_FIGHT_START">
@@ -5566,9 +5573,16 @@
 
 	<row id="TRID_BIGFOUR1_01_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">いい　しょうせつと　おなじで
-さいしょの　わざは　だいじですよね</language>
+たたかいの　でだしは　だいじですよね</language>
 		<language name="JPN_KANJI" width="216">いい小説と　同じで
-最初の　技は　大事ですよね</language>
+戦いの　出だしは　大事ですよね</language>
+	</row>
+
+	<row id="TRID_BIGFOUR1_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">……アタシの　さいしゅうしょうが
+いま　はじまるのですね</language>
+		<language name="JPN_KANJI" width="216">……アタシの　最終章が
+いま　はじまるのですね</language>
 	</row>
 
 	<row id="TRID_BIGFOUR1_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
@@ -5606,6 +5620,13 @@
 それでこそ　心躍る！</language>
 	</row>
 
+	<row id="TRID_BIGFOUR2_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">ラスト　１ぴき！
+のこりの　ちからを　ふりしぼる！</language>
+		<language name="JPN_KANJI" width="216">ラスト　１匹！
+残りの　力を　振り絞る！</language>
+	</row>
+
 	<row id="TRID_BIGFOUR2_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
 		<language name="JPN" width="216">……さいご　かもしれない
 つぎの　わざに　すべてを　こめる！</language>
@@ -5641,6 +5662,13 @@
 いいねえ　ホレボレするよ</language>
 	</row>
 
+	<row id="TRID_BIGFOUR3_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">さてと……　どんな　しょうぶも
+じぶんから　おりたりしないぜ</language>
+		<language name="JPN_KANJI" width="216">さてと……　どんな　勝負も
+自分から　降りたりしないぜ</language>
+	</row>
+
 	<row id="TRID_BIGFOUR3_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
 		<language name="JPN" width="216">まだ　こんな　じょうきょうでも
 かてる　やりかた……　あるはずだぜ</language>
@@ -5665,9 +5693,16 @@
 
 	<row id="TRID_BIGFOUR4_01_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">すてきな　じかんが　はじまりそうで
-なんだか　ワクワク　してきちゃう</language>
+なんだか　ワクワクして　きちゃう</language>
 		<language name="JPN_KANJI" width="216">すてきな　時間が　始まりそうで
-なんだか　ワクワク　してきちゃう</language>
+なんだか　ワクワクして　きちゃう</language>
+	</row>
+
+	<row id="TRID_BIGFOUR4_01_TRMSG_FIGHT_POKE_LAST">
+		<language name="JPN" width="216">こんなときでも
+あわてず　さわがずに……</language>
+		<language name="JPN_KANJI" width="216">こんなときでも
+慌てず　騒がずに……</language>
 	</row>
 
 	<row id="TRID_BIGFOUR4_01_TRMSG_FIGHT_POKE_LAST_HP_HALF">
@@ -6310,7 +6345,7 @@
 	<row id="TRID_ELITEW_10_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">あおい　ゆかから　とびおりなさい！▼
 うでの　スイッチに　のれば
-ドラゴンの　くびが　うごき
+ドラゴンの　くびが　うごき▽
 さきに　すすめるように　なるから！</language>
 		<language name="JPN_KANJI" width="216">青い　床から　飛び降りなさい！▼
 うでの　スイッチに　乗れば
@@ -10504,10 +10539,12 @@
 	</row>
 
 	<row id="TRID_KINDERGARTENM_05_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">ムムム！　しんかの　はやい
-むしポケモン　そだてよっかな</language>
-		<language name="JPN_KANJI" width="216">ムムム！　しんかの　はやい
-むしポケモン　そだてよっかな</language>
+		<language name="JPN" width="216">むしポケモンは　どくにしたり
+マヒさせたり　けっこう　あなどれない▽
+こうげきを　するんだよね</language>
+		<language name="JPN_KANJI" width="216">むしポケモンは　どくにしたり
+マヒさせたり　けっこう　あなどれない▽
+こうげきを　するんだよね</language>
 	</row>
 
 	<row id="TRID_KINDERGARTENW_04_TRMSG_FIGHT_START">
@@ -11333,6 +11370,44 @@
 数多の　トレーナー……▼
 あと　何人と　戦えるか
 そう思うと　一戦一戦が　大事だ</language>
+	</row>
+
+	<row id="TRID_NURSE_03_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">ヤグルマのもりに　いくの？
+それとも　ためしのいわ？▼
+どちらにしても　たくましくないと
+たちつくす　ことに　なるわよ！▼</language>
+		<language name="JPN_KANJI" width="216">ヤグルマの森に　行くの？
+それとも　試しの岩？▼
+どちらにしても　たくましくないと
+立ち往生　しちゃうわよ！▼</language>
+	</row>
+
+	<row id="TRID_NURSE_03_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">あら　やだ……
+すごく　たくましいのね！</language>
+		<language name="JPN_KANJI" width="216">あら　やだ……
+すごく　たくましいのね！</language>
+	</row>
+
+	<row id="TRID_NURSE_03_TRMSG_FIGHT_AFTER_RECOVER_BEFORE">
+		<language name="JPN" width="216">たくましい　トレーナーさん！▼
+あなたの　ポケモンを
+アタシが　げんきに　してあげますね▼</language>
+		<language name="JPN_KANJI" width="216">たくましい　トレーナーさん！▼
+あなたの　ポケモンを
+アタシが　元気に　してあげますね▼</language>
+	</row>
+
+	<row id="TRID_NURSE_03_TRMSG_FIGHT_AFTER_RECOVER_AFTER">
+		<language name="JPN" width="216">ヤグルマのもりの　ちかくには
+どくなど　じょうたいいじょうに　なる▽
+わざを　つかう　ポケモンが　おおいわ▼
+なにかあれば　アタシに　いってね！</language>
+		<language name="JPN_KANJI" width="216">ヤグルマの森の　近くには
+どくや　まひの　状態異常に　なる▽
+技を使う　ポケモンが　多いわ▼
+なにかあれば　アタシに　いってね！</language>
 	</row>
 
 	<flowchart-group-list>
