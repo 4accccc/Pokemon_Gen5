@@ -199,7 +199,7 @@
 #define FE_LEGEND2_BATTLE                  183 /* 0x00b7 伝説ポケモン：ポルトスと戦った */
 #define FE_LEGEND3_BATTLE                  184 /* 0x00b8 伝説ポケモン：アラミスと戦った */
 #define FE_C09_FORBIDDEN                   185 /* 0x00b9 ポケモンリーグ立ち入り禁止状態フラグ。Ｎ城出現&#xff5e;チャンプ復帰まで */
-#define FE_ZUKAN_GRADEUP                   186 /* 0x00ba 全国図鑑入手可能フラグ（地方を全て「見た」にするか、ゲームクリアでセット） */
+		/* not used   186(0x00ba) */
 #define FE_C01_ITEMGET_01                  187 /* 0x00bb C01サンヨウシティ：釣り人のアイテム入手フラグ */
 #define FE_ZUKAN_COMPLETE_LOCAL_SEE        188 /* 0x00bc 地方図鑑「みた」モードを完成 */
 #define FE_C01_ITEMGET_02                  189 /* 0x00bd C01サンヨウシティ：ビル裏の人アイテム入手フラグ */
@@ -341,7 +341,7 @@
 #define FE_C08R0102_ITEMGET_02             325 /* 0x0145 ソウリュウシティ：シャガの家2Fアイテム入手フラグ01 */
 #define FE_C04R0201_STYLIST_TALK           326 /* 0x0146 ミュージカルホール：スタイリストに話しかけたフラグ */
 #define FE_MUSICAL_COMM_PLAY               327 /* 0x0147 ミュージカルホール：通信ミュージカルで遊んだ */
-		/* not used   328(0x0148) */
+#define FE_C03R1201_ITEM_01                328 /* 0x0148 ヒウンビル１Ｆ：アイテム入手フラグ */
 		/* not used   329(0x0149) */
 		/* not used   330(0x014a) */
 		/* not used   331(0x014b) */
