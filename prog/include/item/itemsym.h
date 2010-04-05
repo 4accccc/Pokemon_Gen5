@@ -125,8 +125,6 @@
 #define ITEM_INAZUMAKASETTO		( 117 )		// イナズマカセット
 #define ITEM_BUREIZUKASETTO		( 118 )		// ブレイズカセット
 #define ITEM_HURIIZUKASETTO		( 119 )		// フリーズカセット
-#define ITEM_KAMENOKASEKI		( 120 )		// かめのカセキ
-#define ITEM_TORINOKASEKI		( 121 )		// とりのカセキ
 #define ITEM_KURITHIKATTAA		( 122 )		// クリティカッター
 #define ITEM_KONGOUDAMA		( 135 )		// こんごうだま
 #define ITEM_SIRATAMA		( 136 )		// しらたま
