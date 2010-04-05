@@ -56,7 +56,7 @@ static inline void DEBUG_PrintData( SHORTCUT *p_wk )
 	}
 }
 #else
-#define DEBUG_PRINT_ON(x)	/*  */
+#define DEBUG_PrintData(x)	/*  */
 #endif
 
 //=============================================================================
