@@ -827,6 +827,8 @@
 "item_663.NCLR"
 "item_664.NCGR"
 "item_664.NCLR"
+"item_665.NCGR"
+"item_665.NCLR"
 "item_dumy.NCGR"
 "item_dumy.NCLR"
 "item_yaji.NCGR"
