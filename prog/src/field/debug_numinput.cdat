@@ -91,7 +91,6 @@ static const DEBUG_NUMINPUT_LIST DNI_PalaceLevelList[] = {
 
 };
 
-
 #include "debug_numinput_research.h"
 #include "field/research_team_def.h"
 #include "../../../resource/research_radar/data/question_id.h"// for QUESTION_ID_xxxx
@@ -690,4 +689,32 @@ static const DEBUG_NUMINPUT_LIST NumInputList_totalCountOfA_Q30[] = {
 };
 
 
+//////////////////////////////////////////////////////
+///ミュージカル関係
+static const DEBUG_NUMINPUT_PARAM musEntryNum = {
+ 0, MUS_SAVE_ENTRY_NUM_MAX, DebugGetMusEntryNum, DebugSetMusEntryNum,
+};
+static const DEBUG_NUMINPUT_PARAM musTopNum = {
+ 0, MUS_SAVE_ENTRY_NUM_MAX, DebugGetMusTopNum, DebugSetMusTopNum,
+};
+static const DEBUG_NUMINPUT_PARAM musConDition = {
+ 0, 255, DebugGetMusBefCon, DebugSetMusBefCon,
+};
+static const DEBUG_NUMINPUT_PARAM musBefPoint = {
+ 0, MUS_SAVE_ENTRY_NUM_MAX, DebugGetMusBefPoint, DebugSetMusBefPoint,
+};
+static const DEBUG_NUMINPUT_PARAM musSumPoint = {
+ 0, MUS_SAVE_ENTRY_NUM_MAX, DebugGetMusSumPoint, DebugSetMusSumPoint,
+};
+static const DEBUG_NUMINPUT_LIST DNI_MusicalList[] = {
+  //gmm_id, param, dni_param
+  { dni_mus_02, 0, &musEntryNum },
+  { dni_mus_03, 0, &musTopNum },
+  { dni_mus_04, 0, &musConDition },
+  { dni_mus_05, 1, &musConDition },
+  { dni_mus_06, 2, &musConDition },
+  { dni_mus_07, 3, &musConDition },
+  { dni_mus_08, 0, &musBefPoint },
+  { dni_mus_09, 0, &musSumPoint },
+};
 #endif  //PM_DEBUG

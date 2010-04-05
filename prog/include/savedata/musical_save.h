@@ -82,8 +82,10 @@ extern MUSICAL_FAN_STATE* MUSICAL_SAVE_GetFanState( MUSICAL_SAVE *musSave , cons
 
 extern const u16 MUSICAL_SAVE_GetEntryNum( const MUSICAL_SAVE *musSave );
 extern void MUSICAL_SAVE_AddEntryNum( MUSICAL_SAVE *musSave );
+extern void MUSICAL_SAVE_SetEntryNum( MUSICAL_SAVE *musSave , const u32 val );
 extern const u16 MUSICAL_SAVE_GetTopNum( const MUSICAL_SAVE *musSave );
 extern void MUSICAL_SAVE_AddTopNum( MUSICAL_SAVE *musSave );
+extern void MUSICAL_SAVE_SetTopNum( MUSICAL_SAVE *musSave , const u32 val );
 extern const u8 MUSICAL_SAVE_GetBefCondition( MUSICAL_SAVE *musSave , const MUSICAL_CONDITION_TYPE conType );
 extern const MUSICAL_CONDITION_TYPE MUSICAL_SAVE_GetMaxBefConditionType( MUSICAL_SAVE *musSave );
 extern void MUSICAL_SAVE_SetBefCondition( MUSICAL_SAVE *musSave , const MUSICAL_CONDITION_TYPE conType , const u8 value );

@@ -12,9 +12,7 @@
 
 enum {
 	NARC_camera_sys_videorec_sound_begin_32730_wav = 0,
-	NARC_camera_sys_videorec_sound_begin_47610_wav = 1,
-	NARC_camera_sys_videorec_sound_end_32730_wav = 2,
-	NARC_camera_sys_videorec_sound_end_47610_wav = 3
+	NARC_camera_sys_videorec_sound_end_32730_wav = 1
 };
 
 /* NARC_CAMERA_SYS_NAIX_ */

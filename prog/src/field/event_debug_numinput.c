@@ -116,6 +116,16 @@ static u32 DebugGetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gameda
 static void DebugSetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetFadeSpeed(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetFadeSpeed(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetMusEntryNum(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetMusEntryNum(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetMusTopNum(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetMusTopNum(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetMusBefCon(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetMusBefCon(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetMusBefPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetMusBefPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetMusSumPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetMusSumPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 
 #include "debug_numinput.cdat"
 
@@ -239,6 +249,9 @@ static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q28 = { D_NINPUT_DATA_LIST,
 static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q29 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q29), NumInputList_totalCountOfA_Q29 };
 static const DEBUG_NUMINPUT_INITIALIZER DATA_A_total_Q30 = { D_NINPUT_DATA_LIST, NELEMS(NumInputList_totalCountOfA_Q30), NumInputList_totalCountOfA_Q30 };
 
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_Musical = { 
+  D_NINPUT_DATA_LIST,   NELEMS( DNI_MusicalList ), DNI_MusicalList, };
+
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
 {
@@ -342,6 +355,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_a_total_q28, (void*)&DATA_A_total_Q28 },
   { dni_a_total_q29, (void*)&DATA_A_total_Q29 },
   { dni_a_total_q30, (void*)&DATA_A_total_Q30 },
+  { dni_mus_01, (void*)&DATA_Musical },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -1086,3 +1100,49 @@ static void DebugSetFadeSpeed(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 para
   GFL_FADE_SetFadeSpeed( value );
 }
 
+//--------------------------------------------------------------
+/**
+ * @brief ミュージカル関係
+ */
+//--------------------------------------------------------------
+static u32 DebugGetMusEntryNum(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return MUSICAL_SAVE_GetEntryNum( GAMEDATA_GetMusicalSavePtr( gamedata ) );
+}
+static void DebugSetMusEntryNum(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  MUSICAL_SAVE_SetEntryNum( GAMEDATA_GetMusicalSavePtr( gamedata ) , value );
+}
+static u32 DebugGetMusTopNum(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return MUSICAL_SAVE_GetTopNum( GAMEDATA_GetMusicalSavePtr( gamedata ) );
+}
+static void DebugSetMusTopNum(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  MUSICAL_SAVE_SetTopNum( GAMEDATA_GetMusicalSavePtr( gamedata ) , value );
+}
+static u32 DebugGetMusBefCon(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return MUSICAL_SAVE_GetBefCondition( GAMEDATA_GetMusicalSavePtr( gamedata ) , param );
+}
+static void DebugSetMusBefCon(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  MUSICAL_SAVE_SetBefCondition( GAMEDATA_GetMusicalSavePtr( gamedata ) , param , value );
+}
+static u32 DebugGetMusBefPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return MUSICAL_SAVE_GetBefPoint( GAMEDATA_GetMusicalSavePtr( gamedata ) );
+}
+static void DebugSetMusBefPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  MUSICAL_SAVE_SetBefPoint( GAMEDATA_GetMusicalSavePtr( gamedata ) , value );
+}
+static u32 DebugGetMusSumPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return MUSICAL_SAVE_GetSumPoint( GAMEDATA_GetMusicalSavePtr( gamedata ) );
+}
+static void DebugSetMusSumPoint(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  MUSICAL_SAVE_ResetSumPoint( GAMEDATA_GetMusicalSavePtr( gamedata ) );
+  MUSICAL_SAVE_AddSumPoint( GAMEDATA_GetMusicalSavePtr( gamedata ) , value );
+}

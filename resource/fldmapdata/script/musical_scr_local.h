@@ -50,6 +50,7 @@
 #define MUSICAL_WORD_CONDITION (4)  //コンディション名
 #define MUSICAL_WORD_NPC_NAME (5)  //※参加者名前
 #define MUSICAL_WORD_POKE_NAME (6)  //※参加者名前
+#define MUSICAL_WORD_OB_STYLIST (7)  //先輩スタイリスト専用(中で0～2をセットします)
 
 //_MUSICAL_CALL 用
 #define MUSICAL_CALL_LOCAL (0)        //非通信

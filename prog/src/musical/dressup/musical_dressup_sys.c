@@ -22,6 +22,7 @@
 //======================================================================
 //  define
 //======================================================================
+FS_EXTERN_OVERLAY(dressup);
 
 //======================================================================
 //  enum
@@ -69,6 +70,7 @@ static GFL_PROC_RESULT DressUpProc_Init( GFL_PROC * proc, int * seq , void *pwk,
   DRESSUP_LOCAL_WORK *work;
   DRESSUP_INIT_WORK *initWork = pwk;
   *seq = DUP_SEQ_INIT_FITTING;
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(dressup));
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_DRESSUP, 0x40000 );
 
@@ -111,6 +113,8 @@ static GFL_PROC_RESULT DressUpProc_Term( GFL_PROC * proc, int * seq , void *pwk,
   GFL_PROC_FreeWork( proc );
 
   GFL_HEAP_DeleteHeap( HEAPID_MUSICAL_DRESSUP );
+
+  GFL_OVERLAY_Unload(FS_OVERLAY_ID(dressup));
 
   return GFL_PROC_RES_FINISH;
 }

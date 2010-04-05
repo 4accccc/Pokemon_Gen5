@@ -196,17 +196,38 @@ void MUSICAL_SAVE_AddEntryNum( MUSICAL_SAVE *musSave )
     musSave->entryNum++;
   }
 }
+void MUSICAL_SAVE_SetEntryNum( MUSICAL_SAVE *musSave , const u32 val )
+{
+  if( musSave->entryNum+val < MUS_SAVE_ENTRY_NUM_MAX )
+  {
+    musSave->entryNum+=val;
+  }
+  else
+  {
+    musSave->entryNum =MUS_SAVE_ENTRY_NUM_MAX;
+  }
+}
 
 const u16 MUSICAL_SAVE_GetTopNum( const MUSICAL_SAVE *musSave )
 {
   return musSave->topNum;
 }
-
 void MUSICAL_SAVE_AddTopNum( MUSICAL_SAVE *musSave )
 {
   if( musSave->topNum < MUS_SAVE_ENTRY_NUM_MAX )
   {
     musSave->topNum++;
+  }
+}
+void MUSICAL_SAVE_SetTopNum( MUSICAL_SAVE *musSave , const u32 val )
+{
+  if( musSave->topNum+val < MUS_SAVE_ENTRY_NUM_MAX )
+  {
+    musSave->topNum += val;
+  }
+  else
+  {
+    musSave->topNum += MUS_SAVE_ENTRY_NUM_MAX;
   }
 }
 

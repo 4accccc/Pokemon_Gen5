@@ -621,8 +621,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
   case MUSICAL_WORD_TITLE:        //セーブにある演目
     {
       GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
-      SAVE_CONTROL_WORK *svWork = GAMEDATA_GetSaveControlWork( gdata );
-      MUSICAL_SAVE* musSave = MUSICAL_SAVE_GetMusicalSave( svWork );
+      MUSICAL_SAVE* musSave = GAMEDATA_GetMusicalSavePtr( gdata );
 
       STRBUF *tmpBuf = GFL_STR_CreateBuffer( MUSICAL_PROGRAM_NAME_MAX , heapId );
 
@@ -693,6 +692,64 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
       MUSICAL_EVENT_WORK *evWork = musScriptWork->eventWork;
       
       MUSICAL_EVENT_SetPosPokeName_Wordset( evWork , val , wordset , idx );
+    }
+    break;
+  case MUSICAL_WORD_OB_STYLIST:
+    {
+      GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
+      MUSICAL_SAVE* musSave = GAMEDATA_GetMusicalSavePtr( gdata );
+      u16 msg[3];
+      u8 i,j;
+      //ややこしいのでプログラム内処理
+      u8 conArr[4];
+      u8 pointArr[4];
+      
+      for( i=0;i<MCT_MAX;i++ )
+      {
+        conArr[i] = i;
+        pointArr[i] = MUSICAL_SAVE_GetBefCondition( musSave , i );
+      }
+      for( i=0;i<MCT_MAX;i++ )
+      {
+        for( j=i+1;j<MCT_MAX;j++ )
+        {
+          if( pointArr[i] < pointArr[j] )
+          {
+            u8 temp = pointArr[i];
+            pointArr[i] = pointArr[j];
+            pointArr[j] = temp;
+            temp = conArr[i];
+            conArr[i] = conArr[j];
+            conArr[j] = temp;
+          }
+        }
+      }
+      //上位3~4つが一緒
+      if( pointArr[0] == pointArr[1] &&
+          pointArr[0] == pointArr[2] )
+      {
+        msg[0] = MUSICAL_AUDIENCE_CON_06;
+        msg[1] = MUSICAL_AUDIENCE_CON_05;
+      }
+      else
+      {
+        msg[0] = conArr[0]+MUSICAL_AUDIENCE_CON_01;
+        msg[1] = conArr[1]+MUSICAL_AUDIENCE_CON_01;
+      }
+      msg[2] = conArr[3]+MUSICAL_AUDIENCE_CON_01;
+      {
+        GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_common_dat , heapId );
+        for( i=0;i<3;i++ )
+        {
+          STRBUF * tmpBuf;
+
+          tmpBuf = GFL_MSG_CreateString( msgHandle , msg[i] );
+          WORDSET_RegisterWord( wordset, i, tmpBuf, 0, TRUE, PM_LANG );
+
+          GFL_STR_DeleteBuffer( tmpBuf );
+        }
+        GFL_MSG_Delete( msgHandle );
+      }
     }
     break;
   }

@@ -1463,8 +1463,6 @@ SRCS_OVERLAY_POKE_STATUS = app/p_status/p_sta_sys.c \
 #===> SRCS_OVERLAY_POKE_STATUS
 #===> SRCS_OVERLAY_MUSICAL_SHOT
 SRCS_OVERLAY_MUSICAL = musical/mus_poke_data.c \
-        musical/dressup/dup_fitting.c \
-        musical/dressup/dup_fitting_item.c \
         musical/stage/sta_acting.c \
         musical/stage/sta_act_effect.c \
 		musical/stage/sta_act_audience.c \
@@ -1475,6 +1473,11 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_data.c \
 		musical/comm/mus_comm_lobby.c \
 		musical/comm/mus_comm_func.c \
         test/ariizumi/musical_editor.c
+
+# ミュージカルドレスアップ
+#===> SRCS_OVERLAY_DEV_WIFI
+SRCS_OVERLAY_DRESSUP = musical/dressup/dup_fitting.c \
+        musical/dressup/dup_fitting_item.c
 
 
 #Wifiクラブ対戦用サブプロック
