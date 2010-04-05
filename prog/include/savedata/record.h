@@ -218,8 +218,6 @@ extern u32 RECORD_Score_Get(RECORD * rec);
 #define RECID_RENSHOU_WIFI             (SMALL_REC_START+61)  ///< @タワー:Wi-Fiバトル最大連勝数
 #define RECID_RENSHOU_WIFI_CNT         (SMALL_REC_START+62)  ///< @タワー:Wi-Fiバトル連勝数
 #define RECID_SURECHIGAI_THANKS        (SMALL_REC_START+63)  ///< @すれちがい通信でお礼を受けた回数
-#define RECID_RENSHOU_WIFI_CNT         (SMALL_REC_START+62)  ///< @タワー:Wi-Fiバトル連勝数
-#define RECID_SURECHIGAI_THANKS        (SMALL_REC_START+63)  ///< @すれちがい通信でお礼を受けた回数
 #define RECID_TRIALHOUSE_RANK          (SMALL_REC_START+64)  ///< @トライアルハウス最高ランク
 #define RECID_TRIALHOUSE_SCORE         (SMALL_REC_START+65)  ///< @トライアルハウス最高スコア
 
