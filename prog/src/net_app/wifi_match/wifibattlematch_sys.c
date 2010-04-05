@@ -59,13 +59,14 @@
 //-------------------------------------
 ///	PROCエクスターン
 //=====================================
+FS_EXTERN_OVERLAY( wifibattlematch_proc );
 
 //=============================================================================
 /**
  *					定数宣言
 */
 //=============================================================================
-//SAKEサーバー上には78バイトしかとっていない
+//SAKEサーバー上には80バイトしかとっていない
 SDK_COMPILER_ASSERT( sizeof(WIFIBATTLEMATCH_RECORD_DATA) == 80 );
 
 //=============================================================================
@@ -259,7 +260,7 @@ static const WBM_SYS_SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
 	},
   //SUBPROCID_POKELIST,
   { 
-	  NO_OVERLAY_ID,
+	  FS_OVERLAY_ID( wifibattlematch_proc ),
     &WifiBattleMatch_Sub_ProcData,
     POKELIST_AllocParam,
     POKELIST_FreeParam,
@@ -280,7 +281,7 @@ static const WBM_SYS_SUBPROC_DATA sc_subproc_data[SUBPROCID_MAX]	=
   },
   //SUBPROCID_LISTAFTER,
   { 
-		NO_OVERLAY_ID,
+		FS_OVERLAY_ID( wifibattlematch_proc ),
 		&WifiBattleMatch_ListAfter_ProcData,
 		WBM_LISTAFTER_AllocParam,
 		WBM_LISTAFTER_FreeParam,

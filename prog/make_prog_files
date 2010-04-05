@@ -1651,9 +1651,7 @@ SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
 #===> SRCS_OVERLAY_BATTLE_PLIST
 #===> SRCS_OVERLAY_VS_MULTI_LIST
 SRCS_OVERLAY_WIFIBATTLEMATCH_SYS  = net_app/wifi_match/wifibattlematch_sys.c \
-                                    net_app/wifi_match/wifibattlematch_subproc.c \
-                                    net_app/wifi_match/wifibattlematch_battle.c \
-                                    net_app/wifi_match/wifibattlematch_utilproc.c
+                                    net_app/wifi_match/wifibattlematch_battle.c
 
 # WIFIバトルマッチングフロー周り＋WIFネット部分
 #===> SRCS_OVERLAY_DPW_COMMON
@@ -1685,6 +1683,11 @@ SRCS_OVERLAY_BATTLE_CHAMPIONSHIP = net_app/wifi_match/battle_championship_core.c
 SRCS_OVERLAY_WIFIBATTLEMATCH_VIEW = net_app/wifi_match/wifibattlematch_graphic.c \
 								net_app/wifi_match/wifibattlematch_view.c \
                 net_app/wifi_match/wifibattlematch_util.c
+
+#バトルマッチ 繋がりプロセス部分
+#===> SRCS_OVERLAY_WIFIBATTLEMATCH_CORE
+SRCS_OVERLAY_WIFIBATTLEMATCH_PROC = net_app/wifi_match/wifibattlematch_subproc.c \
+                                    net_app/wifi_match/wifibattlematch_utilproc.c
 
 # コマンドデモ
 #===> SRCS_OVERLAY_DEV_WIFI
