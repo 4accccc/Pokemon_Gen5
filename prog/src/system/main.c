@@ -140,6 +140,8 @@ void NitroMain(void)
 		DEBUG_PerformanceMain();
 		DEBUG_PerformanceStartLine(PERFORMANCE_ID_MAIN);
 
+    DEBUG_PerformanceStartTick(PERFORMANCE_ID_MAIN);
+
 #endif //PM_DEBUG
 
 #ifdef PM_DEBUG
@@ -148,6 +150,8 @@ void NitroMain(void)
 
 #ifdef PM_DEBUG
 		DEBUG_StackOverCheck();
+
+    DEBUG_PerformanceSetStress();
 #endif	//PM_DEBUG
 
 		MachineSystem_Main();
@@ -164,6 +168,8 @@ void NitroMain(void)
 
 #ifdef PM_DEBUG
 		//DEBUG_PerformanceDisp();
+    DEBUG_PerformanceEndTick(PERFORMANCE_ID_MAIN);
+
 		DEBUG_PerformanceEndLine(PERFORMANCE_ID_MAIN);
 		DEB_SD_PRINT_UpdateSystem();
 #endif //PM_DEBUG
