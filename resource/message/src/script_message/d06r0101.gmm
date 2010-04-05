@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T14:26:43"/>
+	<create user="matsumiya" host="W00224" date="2010-04-05T18:41:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1362" top="233" right="2067" bottom="879" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -751,12 +751,13 @@
 おまえを　待ち構えている▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_01" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・GRIDX=69、GRIDZ=13、左向きで待機
 ・pos（GRIDX=67、GRIDZ=12~14）を踏むと
 　主人公に隣接してメッセージ表示
-・はい/いいえの選択肢表示</comment>
+・はい/いいえの選択肢表示
+・0＝主人公名前</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]おおくの　かんがえが　まじりあい
 せかいは　はいいろに　なっていく……▽
@@ -766,7 +767,10 @@
 そうしてこそ
 ポケモンは　かんぜんな▽
 そんざいに　なれるんだ▼
-キミも　そう　おもうだろう？[BE:09:速度コントロール:0]</language>
+そう！　これこそが　ボクの　ゆめ！
+かなえるべき　ゆめ　なんだ！▼
+[1:00:トレーナー名:0]！
+キミにも　ゆめは　あるのかい？[BE:09:速度コントロール:0]</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]多くの　価値観が　交じり合い
 世界は　灰色になっていく……▽
 ボクには　それが　許せない▼
@@ -775,40 +779,44 @@
 そうしてこそ
 ポケモンは　完全な▽
 存在に　なれるんだ▼
-キミも　そう　思うだろう？[BE:09:速度コントロール:0]</language>
+そう！　これこそが　ボクの　夢！
+かなえるべき　夢なんだ！▼
+[1:00:トレーナー名:0]！
+キミにも　夢は　あるのかい？[BE:09:速度コントロール:0]</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_02" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・はい選択時
 ・メッセージ表示後、戦闘へ</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]……ほんとうか　どうか
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]ゆめが　ある……
+それは　すばらしい▼
+……キミの　ゆめが　どれほどか
 しょうぶで　たしかめるよ[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……真意か　どうか
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]夢が　ある……
+それは　すばらしい▼
+……キミの　夢が　どれほどか
 勝負で　確かめるよ[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_d06r0101_boss_03" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・いいえ選択時
 ・メッセージ表示後、戦闘へ</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]……どうして
-わかって　くれない！▼
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]……ゆめを　もたない
+にんげんに　ボクが　りかい　できるか！▼
 くっ……　キミの……
 ココロを　おるしかないのか！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……どうして
-わかって　くれない！▼
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]……夢を　持たない
+人間に　ボクが　理解できるか！▼
 くっ……　キミの……
 ココロを　折るしかないのか！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・戦闘後メッセージ
-（頭上に「？マーク」表示？）
-・続けてmsg_d06r0101_white_06</comment>
+	<row id="msg_d06r0101_boss_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>削除ラベル</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ふしぎだな▼
 なぜ　キミのような　にんげんが
@@ -820,7 +828,7 @@
 ……？[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_04w" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d06r0101_boss_04w" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・WHITEver
 ・戦闘後メッセージ
@@ -842,7 +850,7 @@
 トモダチに　ならねば……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
-	<row id="msg_d06r0101_boss_04b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_d06r0101_boss_04b" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・戦闘後メッセージ
