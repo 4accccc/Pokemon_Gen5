@@ -431,6 +431,7 @@ EVENT_START		ev_c04r0201_owner_01
   //すでに何かイベントを行ったか？
   DEFINE_LOCAL isEvent
   $isEvent = FALSE
+  _TALK_OBJ_START()
   
   //誕生日イベント
   //ケーキを持っているか？
@@ -474,7 +475,9 @@ EVENT_START		ev_c04r0201_owner_01
         $SCWK_TEMP1 = TRUE
         _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
         
-        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_03 )
+        _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_03 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
       ENDIF
     ENDIF
   ENDIF
@@ -495,7 +498,9 @@ EVENT_START		ev_c04r0201_owner_01
         $SCWK_TEMP1 = TRUE
         _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
         
-        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_04 )
+        _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_04 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
       ENDIF
     ENDIF
   ENDIF
@@ -516,14 +521,18 @@ EVENT_START		ev_c04r0201_owner_01
         $SCWK_TEMP1 = TRUE
         _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
         
-        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_05 )
+        _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_05 )
+        _LAST_KEYWAIT()
+        _MSGWIN_CLOSE()
       ENDIF
     ENDIF
   ENDIF
 
   //何も無かったら通常メッセージ
   IF $isEvent == FALSE THEN
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_01 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_01 )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
   ENDIF
 EVENT_END
 
@@ -540,6 +549,7 @@ EVENT_END
 /*						ジェントル							*/
 /************************************************************/
 EVENT_START		ev_c04r0201_gentleman_01
+  _TALK_OBJ_START()
 
   //トップ回数でメッセージ分岐
   _GET_MUSICAL_VALUE_TOP_NUM( SCWK_ANSWER )
