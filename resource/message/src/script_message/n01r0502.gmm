@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-30T17:13:41"/>
+	<create user="matsumiya" host="W00224" date="2010-04-05T22:44:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1135,7 +1135,7 @@
 その点は　よくやってくれました▼</language>
 	</row>
 
-	<row id="msg_n01r0502_sage1_02b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_n01r0502_sage1_02b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・所定のpos（詳細未定）で停止しメッセージ表示
@@ -1148,7 +1148,7 @@
 「ワタクシの」
 プラズマだんに　けんいを　つけるため！▽
 おそれた　みんなを　あやつるため！▼
-その　てんは　よくやってくれたがね▼</language>
+その　てんは　よくやってくれました▼</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『もともと　ワタクシが▼
 Ｎに　理想を　追い求めさせ
 伝説の　ポケモンを▽
@@ -1156,7 +1156,7 @@
 「ワタクシの」
 プラズマ団に　権威を　つけるため！▽
 恐れおののいた　民衆を　操るため！▼
-その点は　よくやってくれたがね▼</language>
+その点は　よくやってくれました▼</language>
 	</row>
 
 	<row id="msg_n01r0502_sage1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1203,11 +1203,11 @@
 		<attribute name="キャラ指定">ゲーチス</attribute>
 		<language name="JPN" width="256">さて　プラズマだんが……▼
 いや　ワタクシが
-せかいを　しはいするため▽
+せかいを　かんぜんに　しはいするため▽
 ジャマなものは　とりのぞきましょう▼</language>
 		<language name="JPN_KANJI" width="256">さて　プラズマ団が……▼
 いや　この　ワタクシが
-世界を　支配するため▽
+世界を　完全に　支配するため▽
 不要な存在は　排除しましょう▼</language>
 	</row>
 
@@ -1314,13 +1314,13 @@
 		<language name="JPN" width="256">ゲーチス『……どういうことだ？▼
 この　ワタクシは
 プラズマだんを　つくりあげた▽
-すばらしい　おとこ　なんだぞ！▼
+かんぜんな　おとこ　なんだぞ！▼
 せかいを　かえる
 しんじつの　えいゆう　なんだぞおッ！？▼</language>
 		<language name="JPN_KANJI" width="256">ゲーチス『……どういうことだ？▼
 この　ワタクシは
 プラズマ団を　つくりあげた▽
-すばらしい　男なんだぞ！▼
+完全な　男なんだぞ！▼
 世界を　変える
 真実の　英雄なんだぞおッ！？▼</language>
 	</row>
