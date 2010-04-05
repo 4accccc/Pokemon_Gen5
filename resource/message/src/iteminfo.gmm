@@ -1207,12 +1207,12 @@
 	</row>
 
 	<row id="ITEMINFO_120">
-		<language name="JPN" width="256">ー
-ー
-ー</language>
-		<language name="JPN_KANJI" width="256">ー
-ー
-ー</language>
+		<language name="JPN" width="256">もたせて　わざを　うけると
+せんとうから　だっしゅつして
+てもちと　いれかわる　ことができる。</language>
+		<language name="JPN_KANJI" width="256">持たせて　技を　受けると
+戦闘から　脱出して
+手持ちと　いれかわる　ことができる。</language>
 	</row>
 
 	<row id="ITEMINFO_121">

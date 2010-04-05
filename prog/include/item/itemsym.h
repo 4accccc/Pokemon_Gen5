@@ -125,6 +125,7 @@
 #define ITEM_INAZUMAKASETTO		( 117 )		// イナズマカセット
 #define ITEM_BUREIZUKASETTO		( 118 )		// ブレイズカセット
 #define ITEM_HURIIZUKASETTO		( 119 )		// フリーズカセット
+#define ITEM_DASSYUTUPODDO		( 120 )		// だっしゅつポッド
 #define ITEM_KURITHIKATTAA		( 122 )		// クリティカッター
 #define ITEM_KONGOUDAMA		( 135 )		// こんごうだま
 #define ITEM_SIRATAMA		( 136 )		// しらたま
@@ -538,7 +539,7 @@
 #define ITEM_SIMETUKEBANDO		( 544 )		// しめつけバンド
 #define ITEM_KYUUKON		( 545 )		// きゅうこん
 #define ITEM_ZYUUDENTI		( 546 )		// じゅうでんち
-#define ITEM_DASSYUTUPODDO		( 547 )		// だっしゅつポッド
+#define ITEM_DASSYUTUBOTAN		( 547 )		// だっしゅつボタン
 #define ITEM_HONOONOZYUERU		( 548 )		// ほのおのジュエル
 #define ITEM_MIZUNOZYUERU		( 549 )		// みずのジュエル
 #define ITEM_DENKINOZYUERU		( 550 )		// でんきのジュエル
