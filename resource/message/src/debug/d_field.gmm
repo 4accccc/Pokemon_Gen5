@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="saitou" host="W00158" date="2010-04-05T15:54:19"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-05T20:20:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="164" top="189" right="869" bottom="817" maximized="no" rayout="Vertical2">
+	<dialog left="32" top="189" right="737" bottom="817" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="752" top="242" right="1280" bottom="764" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1628,18 +1628,53 @@ LR→補完&quot;</language>
 LR→補完&quot;</language>
 	</row>
 
-	<row id="DEBUG_FIELD_SYMBOL_03">
-		<language name="JPN" width="160">ポケモン性別
-Y：オス　X：不明　 A：メス</language>
-		<language name="JPN_KANJI" width="160">ポケモン性別
-Y：オス　X：不明　 A：メス</language>
+	<row id="DEBUG_FIELD_SYMBOL_03_01">
+		<language name="JPN" width="160">ポケモン性別(上下切り替え・A決定)
+オス</language>
+		<language name="JPN_KANJI" width="160">ポケモン性別(上下切り替え・A決定)
+オス</language>
 	</row>
 
-	<row id="DEBUG_FIELD_SYMBOL_04">
-		<language name="JPN" width="240">場所
-Y：キープL　X：キープS　B：フリーL　A：フリーS</language>
-		<language name="JPN_KANJI" width="240">場所
-Y：キープL　X：キープS　B：フリーL　A：フリーS</language>
+	<row id="DEBUG_FIELD_SYMBOL_03_02">
+		<language name="JPN" width="160">ポケモン性別(上下切り替え・A決定)
+メス</language>
+		<language name="JPN_KANJI" width="160">ポケモン性別(上下切り替え・A決定)
+メス</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_03_03">
+		<language name="JPN" width="160">ポケモン性別(上下切り替え・A決定)
+不明</language>
+		<language name="JPN_KANJI" width="160">ポケモン性別(上下切り替え・A決定)
+不明</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_04_01">
+		<language name="JPN" width="240">場所(上下切り替え・A決定)
+キープL</language>
+		<language name="JPN_KANJI" width="240">場所(上下切り替え・A決定)
+キープL</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_04_02">
+		<language name="JPN" width="240">場所(上下切り替え・A決定)
+キープS</language>
+		<language name="JPN_KANJI" width="240">場所(上下切り替え・A決定)
+キープS</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_04_03">
+		<language name="JPN" width="240">場所(上下切り替え・A決定)
+フリーL</language>
+		<language name="JPN_KANJI" width="240">場所(上下切り替え・A決定)
+フリーL</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_04_04">
+		<language name="JPN" width="240">場所(上下切り替え・A決定)
+フリーS</language>
+		<language name="JPN_KANJI" width="240">場所(上下切り替え・A決定)
+フリーS</language>
 	</row>
 
 	<row id="DEBUG_FIELD_SYMBOL_05">
@@ -1677,6 +1712,62 @@ Y：キープL　X：キープS　B：フリーL　A：フリーS</language>
 	<row id="DEBUG_FIELD_SYMBOL_11">
 		<language name="JPN" width="240">単独追加</language>
 		<language name="JPN_KANJI" width="240">単独追加</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_12_01">
+		<language name="JPN" width="240">移動タイプ(上下切り替え・A決定)
+移動１</language>
+		<language name="JPN_KANJI" width="240">移動タイプ(上下切り替え・A決定)
+移動１</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_12_02">
+		<language name="JPN" width="240">移動タイプ(上下切り替え・A決定)
+移動２</language>
+		<language name="JPN_KANJI" width="240">移動タイプ(上下切り替え・A決定)
+移動２</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_12_03">
+		<language name="JPN" width="240">移動タイプ(上下切り替え・A決定)
+移動３</language>
+		<language name="JPN_KANJI" width="240">移動タイプ(上下切り替え・A決定)
+移動３</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_12_04">
+		<language name="JPN" width="240">移動タイプ(上下切り替え・A決定)
+移動４</language>
+		<language name="JPN_KANJI" width="240">移動タイプ(上下切り替え・A決定)
+移動４</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_12_05">
+		<language name="JPN" width="240">移動タイプ(上下切り替え・A決定)
+移動５</language>
+		<language name="JPN_KANJI" width="240">移動タイプ(上下切り替え・A決定)
+移動５</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_12_06">
+		<language name="JPN" width="240">移動タイプ(上下切り替え・A決定)
+移動６</language>
+		<language name="JPN_KANJI" width="240">移動タイプ(上下切り替え・A決定)
+移動６</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_12_07">
+		<language name="JPN" width="240">移動タイプ(上下切り替え・A決定)
+移動７</language>
+		<language name="JPN_KANJI" width="240">移動タイプ(上下切り替え・A決定)
+移動７</language>
+	</row>
+
+	<row id="DEBUG_FIELD_SYMBOL_12_08">
+		<language name="JPN" width="240">移動タイプ(上下切り替え・A決定)
+移動８</language>
+		<language name="JPN_KANJI" width="240">移動タイプ(上下切り替え・A決定)
+移動８</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR70">

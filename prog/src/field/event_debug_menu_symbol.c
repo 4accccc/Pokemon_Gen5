@@ -444,6 +444,7 @@ typedef struct
   u16 wazaNo;
   u16 sex;
   u16 place;
+  u8  moveType;
   
   DEBUG_SKB_WORK *skbWork;
   
@@ -526,67 +527,130 @@ static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void 
   case 4:
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(work->bmpWin), 0x0f );
     {
-      STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_03 );
+      STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_03_01 );
       PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->bmpWin), 0, 0, str, work->fontHandle);
       GFL_STR_DeleteBuffer( str );
     }
     GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
+    work->sex = PTL_SEX_MALE;
     *seq += 1;
     break;
   
   case 5:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
-      work->sex = PTL_SEX_FEMALE;
-      *seq += 1;
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
-    {
-      work->sex = PTL_SEX_UNKNOWN;
-      *seq += 1;
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
-    {
-      work->sex = PTL_SEX_MALE;
-      *seq += 1;
+      BOOL isUpdate = FALSE;
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      {
+        *seq += 1;
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+      {
+        work->sex = (work->sex+2)%3;
+        isUpdate = TRUE;
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+      {
+        work->sex = (work->sex+1)%3;
+        isUpdate = TRUE;
+      }
+      if( isUpdate == TRUE )
+      {
+        STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_03_01+work->sex );
+        GFL_BMP_Clear(GFL_BMPWIN_GetBmp(work->bmpWin), 0x0f );
+        PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->bmpWin), 0, 0, str, work->fontHandle);
+        GFL_STR_DeleteBuffer( str );
+        GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
+      }
     }
     break;
   
   case 6:
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(work->bmpWin), 0x0f );
     {
-      STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_04 );
+      STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_04_01 );
       PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->bmpWin), 0, 0, str, work->fontHandle);
       GFL_STR_DeleteBuffer( str );
     }
     GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
     *seq += 1;
+    work->place = 0;
     break;
   
   case 7:
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
     {
-      work->place = SYMBOL_ZONE_TYPE_KEEP_LARGE;
-      *seq += 1;
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
-    {
-      work->place = SYMBOL_ZONE_TYPE_KEEP_SMALL;
-      *seq += 1;
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
-    {
-      work->place = SYMBOL_ZONE_TYPE_FREE_LARGE;
-      *seq += 1;
-    }
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-    {
-      work->place = SYMBOL_ZONE_TYPE_FREE_SMALL;
-      *seq += 1;
+      BOOL isUpdate = FALSE;
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      {
+        *seq += 1;
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+      {
+        work->place = (work->place+3)%4;
+        isUpdate = TRUE;
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+      {
+        work->place = (work->place+1)%4;
+        isUpdate = TRUE;
+      }
+      if( isUpdate == TRUE )
+      {
+        STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_04_01+work->place );
+        GFL_BMP_Clear(GFL_BMPWIN_GetBmp(work->bmpWin), 0x0f );
+        PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->bmpWin), 0, 0, str, work->fontHandle);
+        GFL_STR_DeleteBuffer( str );
+        GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
+      }
     }
     break;
 
   case 8:
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(work->bmpWin), 0x0f );
+    {
+      STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_12_01 );
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->bmpWin), 0, 0, str, work->fontHandle);
+      GFL_STR_DeleteBuffer( str );
+    }
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
+    *seq += 1;
+    work->moveType = 0;
+    break;
+    
+  case 9:
+    {
+      BOOL isUpdate = FALSE;
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      {
+        *seq += 1;
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+      {
+        work->moveType = (work->moveType+7)%8;
+        isUpdate = TRUE;
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+      {
+        work->moveType = (work->moveType+1)%8;
+        isUpdate = TRUE;
+      }
+      if( isUpdate == TRUE )
+      {
+        STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_12_01+work->moveType );
+        GFL_BMP_Clear(GFL_BMPWIN_GetBmp(work->bmpWin), 0x0f );
+        PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->bmpWin), 0, 0, str, work->fontHandle);
+        GFL_STR_DeleteBuffer( str );
+        GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
+      }
+    }
+    break;
+  
+  case 10:
     {
       TPOKE_DATA * tpdata = TPOKE_DATA_Create(work->heapId);
       SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(work->gmSys));
@@ -598,9 +662,8 @@ static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void 
         BOOL isLargeType = ( work->place == SYMBOL_ZONE_TYPE_FREE_LARGE
             || work->place == SYMBOL_ZONE_TYPE_KEEP_LARGE );
         if ( ( isLargePoke && isLargeType ) || ( !isLargePoke && !isLargeType ) ) {
-          u16 move_type = GFUser_GetPublicRand0( 8 );
           SymbolSave_Field_Set(
-              symbolSave , work->monsNo , work->wazaNo , work->sex , 0 , move_type, work->place );
+              symbolSave , work->monsNo , work->wazaNo , work->sex , 0 , work->moveType, work->place );
           PMSND_PlaySE( SEQ_SE_DECIDE1 );
         } else {
           PMSND_PlaySE( SEQ_SE_CANCEL1 );
@@ -611,7 +674,7 @@ static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void 
     *seq += 1;
     break;
   
-  case 9:
+  case 11:
     GFL_BMPWIN_ClearTransWindow_VBlank( work->bmpWin );
     GFL_BMPWIN_Delete( work->bmpWin );
     GFL_MSG_Delete( work->msgHandle );

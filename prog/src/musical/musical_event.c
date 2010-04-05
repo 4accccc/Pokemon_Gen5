@@ -27,6 +27,7 @@
 #include "field/field_sound.h"
 #include "savedata/save_control.h"
 #include "savedata/musical_save.h"
+#include "savedata/record.h"
 #include "sound/pm_sndsys.h"
 #include "musical/musical_system.h"
 #include "musical/musical_local.h"
@@ -857,19 +858,22 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
 //--------------------------------------------------------------
 static void MUSICAL_EVENT_SetSaveData( MUSICAL_EVENT_WORK *evWork )
 {
+  const u8 selfPoint = MUSICAL_EVENT_GetPoint( evWork , evWork->selfIdx );
+  const u8 topPoint = MUSICAL_EVENT_GetPoint( evWork , evWork->rankIndex[0] );
+
   //参加回数・トップ回数
   MUSICAL_SAVE_AddEntryNum( evWork->musSave );
 
-  if( evWork->selfIdx == evWork->rankIndex[0] )
+  if( selfPoint == topPoint &&
+      selfPoint > 0 )
   {
     MUSICAL_SAVE_AddTopNum( evWork->musSave );
   }
   
   //最高点・累計点
   {
-    const u8 point = MUSICAL_EVENT_GetPoint( evWork , evWork->selfIdx );
-    MUSICAL_SAVE_SetBefPoint( evWork->musSave , point );
-    MUSICAL_SAVE_AddSumPoint( evWork->musSave , point );
+    MUSICAL_SAVE_SetBefPoint( evWork->musSave , selfPoint );
+    MUSICAL_SAVE_AddSumPoint( evWork->musSave , selfPoint );
   }
 
   //コンディションの保存
@@ -898,6 +902,34 @@ static void MUSICAL_EVENT_SetSaveData( MUSICAL_EVENT_WORK *evWork )
     const ZONEID zoneId = GAMEDATA_GetMyPlayerWork(evWork->gameData)->zoneID;
     NATSUKI_Calc( evWork->pokePara , CALC_NATSUKI_MUSICAL , zoneId , HEAPID_PROC );
     
+  }
+  
+  //レコード系処理
+  {
+    RECORD *record = GAMEDATA_GetRecordPtr(evWork->gameData);
+    if( evWork->isComm == FALSE )
+    {
+      //非通信の参加回数・勝利回数
+      RECORD_Inc( record , RECID_MUSICAL_PLAY_NUM );
+      if( selfPoint == topPoint &&
+          selfPoint > 0 )
+      {
+        RECORD_Inc( record , RECID_MUSICAL_WINNER_NUM );
+      }
+    }
+    else
+    {
+      //通信の参加回数・勝利回数
+      RECORD_Inc( record , RECID_MUSICAL_COMM_NUM );
+      if( selfPoint == topPoint &&
+          selfPoint > 0 )
+      {
+        RECORD_Inc( record , RECID_MUSICAL_COMM_WINNER_NUM );
+      }
+    }
+    
+    //累計点
+    RECORD_Add( record , RECID_MUSICAL_TOTAL_POINT , selfPoint );
   }
 }
 
