@@ -87,7 +87,6 @@ class Topic
     outData << "captionJPN            = #{@captionJPN}"
     outData << "captionJPN_KANJI      = #{@captionJPN_KANJI}"
     @questions.each do |question|
-      puts question.titleStringJPN
       outData << "Q.#{question.titleStringJPN} (#{question.titleStringJPN_KANJI})"
     end
     # o—Í
