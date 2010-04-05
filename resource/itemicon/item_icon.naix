@@ -840,10 +840,12 @@ enum {
 	NARC_item_icon_item_663_NCLR = 826,
 	NARC_item_icon_item_664_NCGR = 827,
 	NARC_item_icon_item_664_NCLR = 828,
-	NARC_item_icon_item_dumy_NCGR = 829,
-	NARC_item_icon_item_dumy_NCLR = 830,
-	NARC_item_icon_item_yaji_NCGR = 831,
-	NARC_item_icon_item_yaji_NCLR = 832
+	NARC_item_icon_item_665_NCGR = 829,
+	NARC_item_icon_item_665_NCLR = 830,
+	NARC_item_icon_item_dumy_NCGR = 831,
+	NARC_item_icon_item_dumy_NCLR = 832,
+	NARC_item_icon_item_yaji_NCGR = 833,
+	NARC_item_icon_item_yaji_NCLR = 834
 };
 
 /* NARC_ITEM_ICON_NAIX_ */
