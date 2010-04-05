@@ -748,6 +748,7 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
   wk->pageNum = 0;
   wk->selectItem = SELITEM_POKE_SELF_1;
 
+  GAMEBEACON_Setting( wk->gameData );
   setupBagItem( wk->gameData, wk->heapID );
 
   // 仮想フィールドBGMスタック設定
@@ -2144,8 +2145,8 @@ FS_EXTERN_OVERLAY(battle);
     else
     {
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
-//      TrainerID  trID = 1 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
-      TrainerID  trID = TRID_BIGFOUR1_01;
+      TrainerID  trID = 1 + GFL_STD_MtRand( 100 ); // てきとーにランダムで
+//      TrainerID  trID = TRID_LEADER1A_01;
 
       switch( rule ){
       case BTL_RULE_SINGLE:
