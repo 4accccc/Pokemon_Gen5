@@ -557,7 +557,8 @@
 #define	TRID_BADRIDER_05   ( 544 ) 
 #define	TRID_BADRIDER_06   ( 545 ) 
 #define	TRID_NURSE_03   ( 546 ) 
-#define TRID_MAX  ( 547 )
+#define	TRID_PRINCESS_08   ( 547 ) 
+#define TRID_MAX  ( 548 )
 
 #ifndef __ASM_NO_DEF_  //‚±‚êˆÈ~‚ÍƒAƒZƒ“ƒuƒ‰‚Å‚Í–³‹
 typedef  int TrainerID;

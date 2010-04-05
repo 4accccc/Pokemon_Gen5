@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-03-29T17:43:49"/>
+	<create user="taya" host="W00146" date="2010-04-05T10:56:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -238,6 +238,9 @@
 			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
 		</group>
 
 		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
@@ -354,7 +357,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1409" top="308" right="2114" bottom="936" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -3115,6 +3118,11 @@
 	<row id="nurse_03">
 		<language name="JPN" width="216">ミリア</language>
 		<language name="JPN_KANJI" width="216">ミリア</language>
+	</row>
+
+	<row id="princess_08">
+		<language name="JPN" width="216">ハルカ</language>
+		<language name="JPN_KANJI" width="216">ハルカ</language>
 	</row>
 
 	<flowchart-group-list>
