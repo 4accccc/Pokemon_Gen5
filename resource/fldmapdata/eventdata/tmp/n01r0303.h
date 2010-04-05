@@ -9,6 +9,7 @@
 #ifndef ZONE_N01R0303_EVC_H
 #define ZONE_N01R0303_EVC_H
 
+#define N01R0303_HAKAIM_01                 0
 
 #endif //ZONE_N01R0303_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/n01r0303.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
