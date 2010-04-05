@@ -544,6 +544,35 @@ typedef enum
 #define PTL_TASTE_DISLIKE ( -1 )
 typedef s8  PtlTasteJudge;
 
+typedef enum
+{ 
+  PTL_SEX_SPEC_MALE = 0,  //♂
+  PTL_SEX_SPEC_FEMALE,    //♀
+  PTL_SEX_SPEC_UNKNOWN,   //どちらでも可
+  PTL_SEX_SPEC_MAX,
+}PtlSexSpec;
+
+typedef enum
+{ 
+  PTL_TOKUSEI_SPEC_1 = 0,  //特性1をセット
+  PTL_TOKUSEI_SPEC_2,      //特性2をセット
+  PTL_TOKUSEI_SPEC_BOTH,   //どちらでも可
+  PTL_TOKUSEI_SPEC_MAX,
+}PtlTokuseiSpec;
+
+typedef enum
+{ 
+  PTL_RARE_SPEC_FALSE = 0,  //レアにしない
+  PTL_RARE_SPEC_TRUE,       //レアにする
+  PTL_RARE_SPEC_BOTH,       //どちらでも可
+  PTL_RARE_SPEC_MAX,
+}PtlRareSpec;
+
+#define  PTL_SEIKAKU_CHG_VALUE_FLAT (  0 )
+#define  PTL_SEIKAKU_CHG_VALUE_UP   (  1 )
+#define  PTL_SEIKAKU_CHG_VALUE_DOWN ( -1 )
+typedef s8  PtlSeikakuChgValue;
+
 //-----------------------------------------------------------------------------
 /**
  *  SetupEx系関数の引数
@@ -736,6 +765,9 @@ extern  void POKETOOL_CopyPPtoPP( POKEMON_PARAM* pp_src, POKEMON_PARAM* pp_dst )
 
 //アイテムナンバーからタイプ取得
 extern  PokeType  POKETOOL_GetPokeTypeFromItem( u16 item );
+
+//性格によるパラメータ変化値を取得
+extern  PtlSeikakuChgValue  POKETOOL_GetSeikakuChangeValue( u8 chr, u8 cond );
 
 #endif __ASM_NO_DEF_
 
