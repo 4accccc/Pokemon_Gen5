@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-17T17:38:18"/>
+	<create user="matsumiya" host="W00224" date="2010-04-05T22:36:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1499" top="185" right="2204" bottom="805" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -378,11 +378,15 @@
 		<language name="JPN" width="256">……ゲーチスさまが
 それらを　どこで　てにいれたのか？▽
 なにを　するつもり　だったか？▽
-いまでは　たしかめようが　ない▼</language>
+いまでは　たしかめようが　ない▼
+……おまえを　ためすのか？
+……おまえを　りよう　するのか？▼</language>
 		<language name="JPN_KANJI" width="256">……ゲーチスさまが
 それらを　どこで　入手したのか？▽
 なにを　するつもり　だったか？▽
-いまでは　確かめようが　ない▼</language>
+いまでは　確かめようが　ない▼
+……おまえを　試すのか？
+……おまえを　利用するのか？▼</language>
 	</row>
 
 	<row id="msg_h05_ninja2_03">
@@ -393,11 +397,15 @@
 		<language name="JPN" width="256">なぜ　わたすのかも　わからないが
 われら　ダークトリニティは▽
 いままでも　いまも　これからも▽
-ゲーチスさまの　ちゅうじつな　ぶか▼</language>
+ゲーチスさまの　ちゅうじつな　ぶか▼
+そして　ゲーチスさまの
+やぼうは　けっして　とどまらない！▼</language>
 		<language name="JPN_KANJI" width="256">なぜ　渡すのかも　わからないが
 われら　ダークトリニティは▽
 今までも　今も　これからも▽
-ゲーチスさまの　忠実な　部下▼</language>
+ゲーチスさまの　忠実な　部下▼
+そして　ゲーチスさまの
+野望は　けっして　とどまらない！▼</language>
 	</row>
 
 	<row id="msg_h05_ninja3_03">
