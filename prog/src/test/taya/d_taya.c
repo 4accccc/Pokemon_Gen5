@@ -1217,7 +1217,10 @@ static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk 
 
       set_test_playername( (MYSTATUS*)(para->playerStatus[BTL_CLIENT_PLAYER]) );
 
+      #if PM_DEBUG
       DEBUG_PerformanceSetActive( FALSE );
+      #endif
+
       GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(battle), &BtlProcData, para );
       (*seq)++;
     }
@@ -1396,7 +1399,10 @@ static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk
         break;
       }
 
+      #if PM_DEBUG
       DEBUG_PerformanceSetActive( FALSE );
+      #endif
+
       GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(battle), &BtlProcData, para );
       (*seq)++;
     }
