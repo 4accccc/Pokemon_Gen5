@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-02T22:20:21"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-05T12:20:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="482" top="347" right="982" bottom="973" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
-		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="2" index="3" style="0000" width="325"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -355,13 +355,228 @@
 ブーケにして　あげていたのよ</language>
 	</row>
 
-	<row id="msg_t03_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_t03_sign1_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ここは　カゴメタウン
 カゴメは　あんでできた　さんかくけい</language>
 		<language name="JPN_KANJI" width="256">ここは　カゴメタウン
 カゴメは　編んでできた　三角形</language>
+	</row>
+
+	<row id="msg_t03_middlewoman1_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>♀
+
+※夜になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+ 
+
+GRIDX=６５４、GRIDZ=１８７辺り</comment>
+		<attribute name="キャラ指定">middlewoman1</attribute>
+		<language name="JPN" width="256">ここは　カゴメタウン▼
+おはようから　おやすみまで
+きそく　ただしく　くらす　まちよ▼
+たいようの　ひかりを　いっぱい
+あびて　せいかつすれば▽
+よるも　ぐっすり　ねむれるわ</language>
+		<language name="JPN_KANJI" width="256">ここは　カゴメタウン▼
+おはようから　おやすみまで
+規則　正しく　暮らす　町よ▼
+太陽の　光を　いっぱい
+浴びて　生活すれば▽
+夜も　ぐっすり　眠れるわ</language>
+	</row>
+
+	<row id="sg_t03_oldwoman1_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>♀
+
+※夜になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+ 
+
+GRIDX=６７０、GRIDZ=１６８辺り
+
+※はい→02
+　いいえ→03</comment>
+		<attribute name="キャラ指定">oldwoman1</attribute>
+		<language name="JPN" width="256">ちょいと　そこの　たびびとさんや
+カゴメ　むかし　ばなしでも▽
+きいて　いかんかね？▼
+バーさんの　はなし　じゃから
+ちと　ながくなるがな▼</language>
+		<language name="JPN_KANJI" width="256">ちょいと　そこの　旅人さんや
+カゴメ　昔話　でも▽
+聞いて　いかんかね？▼
+バーさんの　話　じゃから
+ちと　長くなるがな▼</language>
+	</row>
+
+	<row id="sg_t03_oldwoman1_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>♀
+
+イベント終了</comment>
+		<attribute name="キャラ指定">oldwoman1</attribute>
+		<language name="JPN" width="256">この　まちの　うらには　ものすごーく
+でっかい　あなが　あいとるんじゃ▼
+そのあなはな　むかし　むかし
+そらから　おおきな　いんせきが▽
+ふってきて　できた　そうじゃ▼
+そして　その　いんせきの　なかには
+よにも　おそろしい　ばけもんが▽
+ひそんで　おったそうな▼　
+その　ばけもんは　ばんに　なると
+ひとざとに　あらわれては▽
+ひとや　ポケモンを▽
+とって　くうと　いわれとった▼
+じゃから　むかしの　もんは
+まちを　へいでかこって　ばけもんが▽
+はいって　こられんように　したり▼
+ひが　くれたら　おもてに　でるのを
+きんじて　うちで　すごすことを▽
+まちの　おきてに　したそうじゃ▼
+……　……　……　……　……
+ま　いまじゃ　こんな　はなし▽
+だれも　しんじとらん▼
+じゃけどな▼
+いまでも　カゴメに　すんどる　もんは
+ばんに　なったら　ちゃんと　うちに▽
+かえるから　ふしぎじゃの……▼
+むかしばなしや　ふるい　いいつたえ
+ちゅうもんは　いまの　せいかつに▽
+なにかしらの　えいきょうを▽
+あたえとる　っちゅうことかのう</language>
+		<language name="JPN_KANJI" width="256">この　町の　裏には　ものすごーく
+でっかい　穴が　開いとるんじゃ▼
+その穴はな　昔々
+空から　大きな　いんせきが▽
+降って来て　出来た　そうじゃ▼
+そして　その　いんせきの　中には
+世にも　恐ろしい　化けもんが▽
+潜んで　おったそうな▼　
+その　化けもんは　晩に　なると
+人里に　現れては▽
+人や　ポケモンを▽
+取って　食うと　言われとった▼
+じゃから　昔の　もんは
+町を　塀で囲って　化けもんが▽
+入って　来られんように　したり▼
+日が　暮れたら　表に　出るのを
+禁じて　家で　過ごすことを▽
+町の　おきてに　したそうじゃ▼
+……　……　……　……　……
+ま　今じゃ　こんな　話▽
+だれも　信じとらん▼
+じゃけどな▼
+今でも　カゴメに　住んどる　もんは
+晩に　なったら　ちゃんと　家に▽
+帰るから　不思議じゃの……▼
+昔話や　古い　言い伝え
+ちゅうもんは　今の　生活に▽
+何かしらの　影響を▽
+与えとる　っちゅうことかのう</language>
+	</row>
+
+	<row id="sg_t03_oldwoman1_03" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>♀
+
+イベント終了</comment>
+		<attribute name="キャラ指定">oldwoman1</attribute>
+		<language name="JPN" width="256">ああ　そうかいな
+ヒマに　なったら　また　くるとええ</language>
+		<language name="JPN_KANJI" width="256">ああ　そうかいな
+ヒマに　なったら　また　来るとええ</language>
+	</row>
+
+	<row id="msg_t03_babyboy2_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>♂
+
+※夜になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+
+GRIDX=６６１、GRIDZ=１８９辺り</comment>
+		<attribute name="キャラ指定">BABYBOY2</attribute>
+		<language name="JPN" width="256">よるに　なると　おおきな　あなから
+おばけが　でてくるから　おうちに▽
+いないと　ダメなんだって！</language>
+		<language name="JPN_KANJI" width="256">夜に　なると　大きな　穴から
+お化けが　出て来るから　お家に▽
+いないと　ダメなんだって！</language>
+	</row>
+
+	<row id="msg_t03_fishing_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>♂
+
+※夜になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+
+GRIDX=６７０、GRIDZ=１８７辺り</comment>
+		<attribute name="キャラ指定">FISHING</attribute>
+		<language name="JPN" width="256">このさきの　どうろには　つりずきには
+たまらん　わんがんが　ひろがっとる▼
+きょうも　あしたも　じまんの
+サオが　ビンビンと　うなるわい！</language>
+		<language name="JPN_KANJI" width="256">この先の　道路には　釣り好きには
+たまらん　湾岸が　広がっとる▼
+今日も　明日も　自慢の
+サオが　ビンビンと　うなるわい！</language>
+	</row>
+
+	<row id="msg_t03_badman_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>♂
+
+※夜になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+
+GRIDX=６６５、GRIDZ=１６１辺り</comment>
+		<attribute name="キャラ指定">BADMAN</attribute>
+		<language name="JPN" width="256">オレの　バーちゃん　さあ
+むかしばなしが　すきでさ▽
+しょっちゅう　ながーい　はなしに▽
+つきあわされるんだぜ</language>
+		<language name="JPN_KANJI" width="256">オレの　バーちゃん　さあ
+昔話が　好きでさ▽
+しょっちゅう　長ーい　話に▽
+付き合わされるんだぜ</language>
+	</row>
+
+	<row id="msg_t03_waitress_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>♀
+
+※夜になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+
+GRIDX=６５２、GRIDZ=１７８辺り
+
+※このＯＢＪは立体交差の誘導のため
+移動させません
+ 
+
+</comment>
+		<attribute name="キャラ指定">waitress</attribute>
+		<language name="JPN" width="256">よのなか　たくさんの　ひとがいて
+そのひとの　かずだけ　こせいや▽
+かんがえが　あるんだよね</language>
+		<language name="JPN_KANJI" width="256">世の中　沢山の　人がいて
+その人の　数だけ　個性や▽
+考えが　あるんだよね</language>
+	</row>
+
+	<row id="msg_t03_policeman_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+		<comment>♂
+
+※夜になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+
+GRIDX=６６１、GRIDZ=１７７辺り</comment>
+		<attribute name="キャラ指定">POLICEMAN</attribute>
+		<language name="JPN" width="256">ほんかん　ここに　ふにんしてから
+なーんも　することが　ないのだ▼
+よるは　そとに　だれも　いないし
+へいわ　そのもの　だからなー</language>
+		<language name="JPN_KANJI" width="256">本官　ここに　赴任してから
+なーんも　することが　ないのだ▼
+夜は　外に　だれも　いないし
+平和　そのもの　だからなー</language>
 	</row>
 
 	<flowchart-group-list>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-12T14:07:36"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-04-02T16:52:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -229,7 +229,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="152"/>
+		<id position="0" width="175"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,8 +292,10 @@
 	</lock>
 
 
-	<row id="msg_powerful_01">
-		<comment>♂：究極技教え
+	<row id="msg_powerful_01" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
+		<comment>※Ｒ１３Ｒ０３０１へ移行
+
+♂：究極技教え
 ・初めての会話
 ・はい/いいえの選択肢表示
 　はい　→03
@@ -315,7 +317,7 @@
 おぬしの　ポケモンに　教えるのか？</language>
 	</row>
 
-	<row id="msg_powerful_02">
+	<row id="msg_powerful_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>♂：究極技教え
 ・２回目以降の会話
 　あるいは技を習得したあと
@@ -328,7 +330,7 @@
 おぬしの　ポケモンに　教えるのか？</language>
 	</row>
 
-	<row id="msg_powerful_03">
+	<row id="msg_powerful_03" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>♂：究極技教え
 ・はい選択時
 　メッセージ表示後、ポケモン選択画面に</comment>
@@ -338,7 +340,7 @@
 技を　覚えさせるのじゃ？▼</language>
 	</row>
 
-	<row id="msg_powerful_04">
+	<row id="msg_powerful_04" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>♂：究極技教え
 ・いいえ選択時</comment>
 		<language name="JPN" width="256">ふむう　それも　よかろう……
@@ -347,7 +349,7 @@
 気が向けば　また　足を運べよ</language>
 	</row>
 
-	<row id="msg_powerful_05">
+	<row id="msg_powerful_05" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>・ポケモン選択
 　最初から覚えられないポケモン→06
 　タマゴ→07
@@ -364,7 +366,7 @@
 技を　覚えさせるのじゃ？</language>
 	</row>
 
-	<row id="msg_powerful_06">
+	<row id="msg_powerful_06" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>・最初から覚えられないポケモンを選択</comment>
 		<language name="JPN" width="256">その　ポケモンでは　おぼえられんぞ！
 はりがみを　よむのじゃ！　カッ！！</language>
@@ -372,7 +374,7 @@
 張り紙を　読むのじゃ！　カッ！！</language>
 	</row>
 
-	<row id="msg_powerful_07">
+	<row id="msg_powerful_07" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>・タマゴ選択</comment>
 		<language name="JPN" width="256">タマゴに　わざを　おしえることは
 わしとて　ふかのうじゃ！　カッ！！</language>
@@ -380,7 +382,7 @@
 わしとて　不可能じゃ！　カッ！！</language>
 	</row>
 
-	<row id="msg_powerful_08">
+	<row id="msg_powerful_08" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>・なつき度がたりないポケモンを選択</comment>
 		<language name="JPN" width="256">おぬしと　ポケモンの　きずなが
 たりておらぬぞ！　カッ！！</language>
@@ -388,7 +390,7 @@
 足りておらぬぞ！　カッ！！</language>
 	</row>
 
-	<row id="msg_powerful_09">
+	<row id="msg_powerful_09" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>・すでに技を習得済みのポケモンを選択</comment>
 		<language name="JPN" width="256">その　ポケモンは　すでに
 わざを　おぼえているぞ　カッ！！</language>
@@ -396,7 +398,7 @@
 技を　覚えているぞ　カッ！！</language>
 	</row>
 
-	<row id="msg_powerful_10">
+	<row id="msg_powerful_10" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>・習得ＯＫで炎ポケモン選択
 ・はい/いいえの選択肢表示
 　はい（わざ３つ以下）→13
@@ -410,7 +412,7 @@
 覚えさせるのじゃな！　カッ！！</language>
 	</row>
 
-	<row id="msg_powerful_11">
+	<row id="msg_powerful_11" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>・習得ＯＫで水ポケモン選択
 ・はい/いいえの選択肢表示
 　はい（わざ３つ以下）→13
@@ -424,7 +426,7 @@
 おぼえさせるのじゃな！　カッ！！</language>
 	</row>
 
-	<row id="msg_powerful_12">
+	<row id="msg_powerful_12" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>・習得ＯＫで草ポケモン選択
 ・はい/いいえの選択肢表示
 ・はい/いいえの選択肢表示
@@ -439,7 +441,7 @@
 覚えさせるのじゃな！　カッ！！</language>
 	</row>
 
-	<row id="msg_powerful_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_powerful_13" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>・はいを選択
 ・わざが３つ以下</comment>
 		<attribute name="キャラ指定">システム</attribute>
@@ -449,7 +451,7 @@
 [1:07:わざ名:1]を　覚えた！</language>
 	</row>
 
-	<row id="msg_powerful_14" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_powerful_14" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>・はいを選択
 ・わざが４つ
 　再度、はい/いいえの選択肢表示</comment>
@@ -468,7 +470,7 @@
 他の　技を　忘れさせますか？</language>
 	</row>
 
-	<row id="msg_powerful_15" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_powerful_15" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>・はい/いいえの選択肢表示
 　はい　→16
 　いいえ→18</comment>
@@ -479,7 +481,7 @@
 忘れさせて　よろしいですね？</language>
 	</row>
 
-	<row id="msg_powerful_16" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_powerful_16" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">１　２の　……ポカン！▼
 [1:01:ポケモン種族名:0]は　[1:07:わざ名:1]の
@@ -495,7 +497,7 @@
 [1:07:わざ名:2]を　覚えた！</language>
 	</row>
 
-	<row id="msg_powerful_17" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_powerful_17" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>・いいえ選択
 ・再度、はい/いいえの選択肢表示
 　はい　→18
@@ -507,7 +509,7 @@
 覚えさせるのを　あきらめますか？</language>
 	</row>
 
-	<row id="msg_powerful_18" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_powerful_18" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:01:ポケモン種族名:0]は　[1:07:わざ名:1]を
 おぼえずに　おわった！</language>
@@ -515,7 +517,7 @@
 覚えずに　終わった！</language>
 	</row>
 
-	<row id="msg_poster_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_poster_01" back-color="#ff8000,,,#ff8000,,#ff8000,#ff8000,#ff8000,,,#ff8000,,#ff8000,#ff8000,,,#ff8000,,">
 		<comment>ＢＧメッセージ
 ・今後WBの最初3匹（の進化系)を追加</comment>
 		<attribute name="キャラ指定">ポスター</attribute>
@@ -547,6 +549,77 @@
 　フシギバナ　メガニウム▽
 　ジュカイン　ドダイトス▽
 　？？？？？</language>
+	</row>
+
+	<row id="msg_t03r0101_middleman2_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>※金曜日のみ出現しない
+
+※朝になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+
+
+♂
+</comment>
+		<attribute name="キャラ指定">middleman2</attribute>
+		<language name="JPN" width="256">オレの　ポケモン　いつも　かってに
+あそびに　いっちゃうんだよ▼
+よるに　なったら　だいたい　うちに
+かえってくるから　いいんだけどさ</language>
+		<language name="JPN_KANJI" width="256">オレの　ポケモン　いつも　勝手に
+遊びに　行っちゃうんだよ▼
+夜に　なったら　大体　家に
+帰って来るから　いいんだけどさ</language>
+	</row>
+
+	<row id="msg_t03r0101_poke_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>※土曜日のみ出現しない
+
+※朝になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+
+
+♂</comment>
+		<attribute name="キャラ指定">POKE19</attribute>
+		<language name="JPN" width="256">チラーミィ『グッググ……</language>
+		<language name="JPN_KANJI" width="256">チラーミィ『グッググ……</language>
+	</row>
+
+	<row id="msg_t03r0101_middlewoman1_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
+		<comment>※朝になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+
+♀</comment>
+		<attribute name="キャラ指定">middlewoman1</attribute>
+		<language name="JPN" width="256">ここは　カゴメタウン▼
+おはようから　おやすみまで
+きそく　ただしく　くらす　まちよ</language>
+		<language name="JPN_KANJI" width="256">ここは　カゴメタウン▼
+おはようから　おやすみまで
+規則　正しく　暮らす　町よ</language>
+	</row>
+
+	<row id="msg_t03r0101_babyboy2_01" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
+		<comment>※月曜日のみ出現しない
+
+※朝になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+
+
+♂
+</comment>
+		<attribute name="キャラ指定">BABYBOY2</attribute>
+		<language name="JPN" width="256">よるに　なると　おおきな　あなから
+おばけが　でてくるから　おうちに▽
+いないと　ダメなんだって！▼
+おばけなんて　どうせ　ポケモンさ！
+こわく　なんか　ないやい！▽
+それより　おうちは　たいくつさ！</language>
+		<language name="JPN_KANJI" width="256">夜に　なると　大きな　穴から
+お化けが　出て来るから　お家に▽
+いないと　ダメなんだって！▼
+お化けなんて　どうせ　ポケモンさ！
+怖く　なんか　ないやい！▽
+それより　お家は　退屈さ！</language>
 	</row>
 
 	<flowchart-group-list>

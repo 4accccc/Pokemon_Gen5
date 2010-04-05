@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2009-07-15T19:04:53"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-03-30T11:16:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,7 +235,7 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="263"/>
 		<erase position="-1" width="100"/>
 		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
 		</attribute>
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="185" top="9" right="890" bottom="629" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,11 +292,95 @@
 	</lock>
 
 
-	<row id="msg_mapscript_dummy">
-		<comment>？？？</comment>
-		<attribute name="キャラ指定">？？？</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
+	<row id="msg_t03r0201_oldwoman1_01">
+		<comment>※朝になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+
+
+♂
+
+
+♀
+はい→msg_t03_oldwoman1_02
+いいいえ→msg_t03_oldwoman1_03</comment>
+		<attribute name="キャラ指定">oldwoman1</attribute>
+		<language name="JPN" width="256">ぐごご……　ぐごごご………
+……ん　んんう？　なんじゃ？▼
+バーさんの　はなしでも
+ききに　きたんか……？</language>
+		<language name="JPN_KANJI" width="256">ぐごご……　ぐごごご………
+……ん　んんう？　なんじゃ？▼
+バーさんの　話でも
+聞きに　来たんか……？</language>
+	</row>
+
+	<row id="msg_t03r0201_oldwoman1_02">
+		<comment>※朝になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+</comment>
+		<attribute name="キャラ指定">oldwoman1</attribute>
+		<language name="JPN" width="256">んん……　じゃあ　はなしてやろう……
+この　まちの　うらには……▽
+でっかい　あなが　あいとるんじゃ▼
+そのあなはな　むかし　むかし……
+ふあ……　だめじゃ　ねむい……▼
+そらから　おおきな……
+ふってきて　できた……▼
+そして　その……　なかには
+よにも　おそろしい……▼
+……　……　よにも……
+ぐう……　ぐう……　ぐごご……</language>
+		<language name="JPN_KANJI" width="256">んん……　じゃあ　話してやろう……
+この　町の　裏には……▽
+でっかい　穴が　開いとるんじゃ▼
+その穴はな　昔々……
+ふあ……　だめじゃ　眠いわ……▼
+空から　大きな……
+降って　出来た……▼
+そして　その……　中には
+世にも　恐ろしい……▼
+……　……　世にも……
+ぐう……　ぐう……　ぐごご……</language>
+	</row>
+
+	<row id="msg_t03r0201_oldwoman1_03">
+		<comment>イベント終了</comment>
+		<attribute name="キャラ指定">oldwoman1</attribute>
+		<language name="JPN" width="256">ふあ……　ああ　そうかい……
+じゃあ　ワシは　ねる……▼
+おやすみな……　ぐう……
+ぐう……　ぐう……▼</language>
+		<language name="JPN_KANJI" width="256">ふあ……　ああ　そうかい……
+じゃあ　ワシは　寝る……▼
+おやすみな……　ぐう……
+ぐう……　ぐう……▼</language>
+	</row>
+
+	<row id="msg_t03r0201_badman_01">
+		<comment>※水曜日のみ出現しない
+
+※朝になるといなくなる
+※消すタイミングはzoneチェンジ＋時間参照
+
+♂
+</comment>
+		<attribute name="キャラ指定">BADMAN</attribute>
+		<language name="JPN" width="256">オレの　バーちゃん　さあ
+むかしばなしが　すきでさ▽
+しょっちゅう　ながーい　はなし▽
+つきあわされるんだぜ▼
+よるに　なったら　はなしてる
+とちゅうでも　ねちまうし▽
+まったく　フリーダムな▽
+バーちゃんだよ</language>
+		<language name="JPN_KANJI" width="256">オレの　バーちゃん　さあ
+昔話が　好きでさ▽
+しょっちゅう　長ーい　話▽
+付き合わされるんだぜ▼
+夜に　なったら　話してる
+途中でも　寝ちまうし▽
+全く　フリーダムな▽
+バーちゃんだよ</language>
 	</row>
 
 	<flowchart-group-list>
