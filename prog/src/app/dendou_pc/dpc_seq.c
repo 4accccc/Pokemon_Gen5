@@ -261,8 +261,10 @@ static int MainSeq_PageMain( DPCMAIN_WORK * wk )
 	case DPCUI_ID_POKE4:
 	case DPCUI_ID_POKE5:
 	case DPCUI_ID_POKE6:
-		PMSND_PlaySE( DPC_SE_POKE_MODE );
 		wk->pokeChg = ret - DPCUI_ID_POKE1;
+//		if( wk->pokeChg == wk->pokePos ){
+			PMSND_PlaySE( DPC_SE_POKE_MODE );
+//		}
 		return MAINSEQ_POKE_INIT;
 
 	default:
