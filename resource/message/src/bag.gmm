@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-30T17:13:00"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-04-05T17:06:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1527" top="191" right="2232" bottom="819" maximized="no" rayout="Vertical2">
+	<dialog left="10" top="162" right="715" bottom="790" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="737" top="230" right="1210" bottom="628" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -888,7 +888,7 @@ const u8 msg_pc_mons_box_max[] </comment>
 		<language name="JPN_KANJI" font=" 1:small">ボックスが　いっぱい　です！</language>
 	</row>
 
-	<row id="msg_bag_071">
+	<row id="msg_bag_071" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
 		<comment>バッグ / アイテム関連
 const u8 str_konanoryou[]
 ０＝数字４桁（粉の最大量）</comment>
@@ -900,8 +900,8 @@ const u8 str_konanoryou[]
 		<comment>const u8 str_bag_NoXX[]
 ０＝数字（ナンバー、２桁）
 １＝わざ名</comment>
-		<language name="JPN" font=" 1:small">[BD:02:Ｘセンタリング]Ｎｏ[2:02:３桁:0][1:07:わざ名:1]</language>
-		<language name="JPN_KANJI" font=" 1:small">[BD:02:Ｘセンタリング]Ｎｏ[2:02:３桁:0][1:07:わざ名:1]</language>
+		<language name="JPN" font=" 1:small">[BD:02:Ｘセンタリング]Ｎｏ[2:02:３桁:0]　[1:07:わざ名:1]</language>
+		<language name="JPN_KANJI" font=" 1:small">[BD:02:Ｘセンタリング]Ｎｏ[2:02:３桁:0]　[1:07:わざ名:1]</language>
 	</row>
 
 	<row id="msg_bag_087">
