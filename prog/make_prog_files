@@ -96,9 +96,6 @@ SRCS  +=    $(SOUNDSRC) \
         field/zonedata.c \
         field/areadata.c \
         field/location.c \
-        field/script_sys.c \
-        field/script_work.c \
-        field/scrcmd.c \
         field/eventwork.c \
         field/fldmmdl.c \
         field/field_location.c \
@@ -360,6 +357,9 @@ SRCS_OVERLAY_NOTWIFI = field/event_ircbattle.c \
         net_app/union/colosseum_comm_command.c \
         net_app/union/colosseum.c \
         map/dp3format.c \
+        field/script_sys.c \
+        field/script_work.c \
+        field/scrcmd.c \
 				field/map_matrix.c \
         field/map_replace.c \
         field/warpdata.c \
