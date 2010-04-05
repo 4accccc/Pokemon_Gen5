@@ -476,6 +476,32 @@ VMCMD_RESULT EvCmdObjEventFlagGet( VMHANDLE *core, void *wk )
   return( VMCMD_RESULT_CONTINUE );
 }
 
+//--------------------------------------------------------------
+/**
+ * OBJに指定されているパラメータを取得
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdObjParamGet( VMHANDLE *core, void *wk )
+{
+  SDK_COMPILER_ASSERT( SCR_OBJPARAM0 == MMDL_PARAM_0 );
+  SDK_COMPILER_ASSERT( SCR_OBJPARAM1 == MMDL_PARAM_1 );
+  SDK_COMPILER_ASSERT( SCR_OBJPARAM2 == MMDL_PARAM_2 );
+  SCRCMD_WORK *work = wk;
+	u16 obj_id	= SCRCMD_GetVMWorkValue( core, work );
+  u16 prm_no  = SCRCMD_GetVMWorkValue( core, work );
+  u16 *ret_wk = SCRCMD_GetVMWork( core, work );
+  MMDLSYS *mmdlsys = SCRCMD_WORK_GetMMdlSys( work );
+  MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, obj_id );
+  
+  if( prm_no > MMDL_PARAM_2 ) {
+    GF_ASSERT_MSG(0, "EvCmdObjParamGet:param no(%d)が大きすぎます\n", prm_no );
+  } else if( mmdl == NULL ){
+    GF_ASSERT_MSG(0, "EvCmdObjParamGet:OBJ ID(%d)が居ません\n", obj_id );
+  } else {
+    *ret_wk = MMDL_GetParam( mmdl, prm_no );
+  }
+  return( VMCMD_RESULT_CONTINUE );
+}
 //======================================================================
 //  動作モデル　イベント関連
 //======================================================================

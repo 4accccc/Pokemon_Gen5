@@ -1642,6 +1642,24 @@
 
 //--------------------------------------------------------------
 /**
+ * @def _OBJ_GET_PARAM
+ * @brief 動作モデルのパラメータを取得する
+ * @param obj_id  対象のOBJID
+ * @param prm_no  取得するパラメータの指定（script_def.hのSCR_OBJPARAM?を参照）
+ * @param ret_wk  結果を受け取るためのワーク
+ */
+//--------------------------------------------------------------
+#define _OBJ_GET_PARAM( obj_id, prm_no, ret_wk )  \
+      _ASM_OBJ_GET_PARAM obj_id, prm_no, ret_wk
+      .macro  _ASM_OBJ_GET_PARAM obj_id, prm_no, ret_wk
+      .short  EV_SEQ_OBJ_PARAM_GET
+      .short  \obj_id
+      .short  \prm_no
+      .short  \ret_wk
+      .endm
+
+//--------------------------------------------------------------
+/**
  * _GET_OBJ_EV_FLAG 指定のOBJに指定されているイベントフラグを取得
  * @param id OBJ ID
  * @param ret_id フラグ格納先
@@ -5342,7 +5360,7 @@
 //--------------------------------------------------------------
 /**
  * @def _GET_TEMOTI_POKE_PARAM
- * @brief
+ * @brief 手持ちポケモンのパラメータ取得
  * @param ret_wk      結果を受け取るワーク
  * @param para_id     取得したいパラメータ指定ID（script_def.hのSCR_POKEPARA_～）
  * @param pos         モンスターナンバーを調べる手持ちポケモン番号
@@ -5364,7 +5382,7 @@
 //--------------------------------------------------------------
 /**
  * @def _SET_TEMOTI_POKE_PARAM
- * @brief
+ * @brief 手持ちポケモンのパラメータセット
  * @param para_id     取得したいパラメータ指定ID（script_def.hのSCR_POKEPARA_～）
  * @param pos         モンスターナンバーを調べる手持ちポケモン番号
  * @param value       セットする値

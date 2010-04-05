@@ -226,17 +226,18 @@
   DEF_CMD( EvCmdPlayerUpDown, EV_SEQ_PLAYER_UPDOWN )
   DEF_CMD( EvCmdPosPlayerTurn, EV_SEQ_POS_PLAYER_TURN )
   
+  DEF_CMD( EvCmdGetPlayerFrom, EV_SEQ_GET_PLAYER_FORM )
+  DEF_CMD( EvCmdObjParamGet,  EV_SEQ_OBJ_PARAM_GET )
+
   //視線トレーナー関連
+  DEF_CMD( EvCmdEyeTrainerIdGet, EV_SEQ_EYE_TRAINER_ID_GET )
+  NO_CMD()
+  
   DEF_CMD( EvCmdEyeTrainerMoveSet, EV_SEQ_EYE_TRAINER_MOVE_SET )
   DEF_CMD( EvCmdEyeTrainerMove, EV_SEQ_EYE_TRAINER_MOVE )
   DEF_CMD( EvCmdEyeTrainerObjIdGet, EV_SEQ_EYE_TRAINER_OBJ_ID_GET )
   DEF_CMD( EvCmdEyeTrainerMoveTypeGet, EV_SEQ_EYE_TRAINER_MOVE_TYPE_GET )
 
-  DEF_CMD( EvCmdEyeTrainerIdGet, EV_SEQ_EYE_TRAINER_ID_GET )
-  DEF_CMD( EvCmdGetPlayerFrom, EV_SEQ_GET_PLAYER_FORM )
-  NO_CMD()
-  NO_CMD()
-  
   //トレーナーバトル関連
   DEF_CMD( EvCmdTrainerIdGet, EV_SEQ_TRAINER_ID_GET )
   DEF_CMD( EvCmdTrainerBattleSet, EV_SEQ_TRAINER_BTL_SET )
