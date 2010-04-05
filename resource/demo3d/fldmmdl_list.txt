@@ -1,0 +1,14 @@
+#コンバート対象にするfldmmdlリソースのリスト
+
+FLDMMDL_LIST =	hero.imd \
+				heroine.imd \
+				dancer.imd \
+				trainerm.imd \
+				waitress.imd \
+				boy4.imd \
+				girl2.imd \
+				mountman.imd \
+				ol.imd \
+				babygirl2.imd
+
+

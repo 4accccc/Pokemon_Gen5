@@ -12,6 +12,12 @@ include	make_users
 #共通ルールファイルのインクルード
 include	$(PROJECT_RSCDIR)\macro_define
 
+ifneq	(,$(filter $(USERNAME),$(CMD_USERS)))
+CMDONLY_USER	= true
+else
+CMDONLY_USER = false
+endif
+
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
 #------------------------------------------------------------------------------
@@ -24,6 +30,9 @@ TARGETDIR = $(PROJECT_ARCDIR)
 DATDIR = data/
 TMPDIR = tmp/
 BINDIR = bin/
+
+FLDMMDL_DIR = ../fldmmdl/mmdl_res/
+FLDMMDL_RES_PREFIX = res/fldmmdl/fmdl_
 
 DEMO_INC_DIR = $(PROJECT_PROGDIR)include/demo/
 DEMO3D_DIR	= $(PROJECT_PROGDIR)src/demo/demo3d/
@@ -48,6 +57,11 @@ DEMO_LIST_DAT = $(addprefix $(DATDIR),$(DEMO_LIST:.xls=.cdat))
 DEMO_LIST_TMP = $(addprefix $(TMPDIR),$(DEMO_LIST:.xls=.txt))
 TARGET_DEMO_LIST_DAT = $(addprefix $(DEMO3D_DAT_DIR),$(notdir $(DEMO_LIST_DAT)))
 
+#コンバート対称にするfldmmdlのリストをインクルード
+include fldmmdl_list.txt	#$(FLDMMDL_LIST)定義
+FLDMMDL_IMD = $(addprefix $(FLDMMDL_RES_PREFIX),$(FLDMMDL_LIST))
+FLDMMDL_SRC = $(addprefix $(FLDMMDL_DIR),$(FLDMMDL_LIST))
+
 # NARCの依存ターゲットを集める
 obj_nsx:=$(wildcard ./bin/*.ns*)
 obj_bin:=$(wildcard ./bin/*.bin)
@@ -67,7 +81,13 @@ XLS2TAB = $(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 #------------------------------------------------------------------------------
 COMMON_TARGET = $(target_narc) $(target_naix) $(target_demoid_def_h) $(target_demo_res_dat) $(TARGET_DEMO_LIST_DAT)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
-do-build:	make_res_dat subdir $(COMMON_TARGET)
+
+ifeq	($(CMDONLY_USER),true)
+do-build:	make_res_dat $(COMMON_TARGET)
+else
+do-build:	$(FLDMMDL_IMD) subdir make_res_dat $(COMMON_TARGET)
+endif
+
 else
 do-build:	$(COMMON_TARGET)
 endif
@@ -77,6 +97,8 @@ subdir:
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 
+######################################
+#demo_idコンバート
 $(demoid_def_h): demo_list.txt
 	$(MAKE) make_demoid
 
@@ -84,13 +106,16 @@ $(demo_res_dat): demo_list.txt
 	$(MAKE) make_demoid
 
 make_demoid:
-	@echo 
 	@echo	デモID/Resourceテーブルコンバート開始
 	ruby conv/make_demoid.rb $(demoid_def_h) $(demo_res_dat) $(DEMO_LIST)
 	unix2dos -D $(demoid_def_h)
 	unix2dos -D $(demo_res_dat)
 
-#	ruby make_header.rb
+######################################
+#fldmmdlコピー
+$(FLDMMDL_IMD): $(FLDMMDL_SRC)
+	@echo	fldmmdl resコピー開始
+	$(COPY) $(addprefix $(FLDMMDL_DIR),$(notdir $(subst fmdl_,,$@))) $@
 
 ######################################
 #シーンデータコンバート
@@ -146,12 +171,17 @@ $(DEMO3D_DAT_DIR)%.cdat: $(DATDIR)%.cdat
 #※生成ファイルを削除するように記述を変更してください
 #------------------------------------------------------------------------------
 clean:
-	@$(MAKE_SUBDIR)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
+
+ifeq	($(CMDONLY_USER),false)
+	@$(MAKE_SUBDIR)
+	rm -f $(FLDMMDL_IMD)
+endif
 	rm -f $(TMPDIR)*.*
 	rm -f $(DATDIR)*.*
 	rm -f $(demoid_def_h)
 	rm -f $(demo_res_dat)
+
 endif
 	@echo $(DEMO3D_DAT_DIR)
 	rm -f $(target_demoid_def_h)

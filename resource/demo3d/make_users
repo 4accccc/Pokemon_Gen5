@@ -1,5 +1,9 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
+# Excel管理表しか編集しないユーザーは CMD_USERSに追加
+# 3Dリソースの編集もするユーザーは ALL_USERSに追加
 #------------------------------------------------------------------------------
-USERS	= genya_hosaka unno james_turner fujiwara_maiko iwasawa lee_hyunjung adachi_minako kageyama_shota
+CMD_USERS	= adachi_minako kageyama_shota
+ALL_USERS = genya_hosaka unno james_turner fujiwara_maiko lee_hyunjung iwasawa
+USERS	= $(ALL_USERS) $(CMD_USERS)
 

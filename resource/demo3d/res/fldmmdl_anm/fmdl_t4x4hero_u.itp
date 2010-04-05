@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="iwasawa" host="W00107" date="2010-04-05T18:56:26" source="t4x4hero_anm.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20051121"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="1"
+	tool_start_frame="0"
+	tool_end_frame="0"
+	compress_material="off" material_size="1 1"
+/>
+
+<tex_pattern_list_data image_size="32" palette_size="1">
+	<image_name index="0" name="t4x4hero.1"/>
+	<image_name index="1" name="t4x4hero.2"/>
+	<image_name index="2" name="t4x4hero.4"/>
+	<image_name index="3" name="t4x4hero.5"/>
+	<image_name index="4" name="t4x4hero.6"/>
+	<image_name index="5" name="t4x4hero.7"/>
+	<image_name index="6" name="t4x4hero.8"/>
+	<image_name index="7" name="t4x4hero.9"/>
+	<image_name index="8" name="t4x4hero.3"/>
+	<image_name index="9" name="t4x4hero.10"/>
+	<image_name index="10" name="t4x4hero.11"/>
+	<image_name index="11" name="t4x4hero.12"/>
+	<image_name index="12" name="t4x4hero.13"/>
+	<image_name index="13" name="t4x4hero.14"/>
+	<image_name index="14" name="t4x4hero.15"/>
+	<image_name index="15" name="t4x4hero.16"/>
+	<image_name index="16" name="t4x4hero.17"/>
+	<image_name index="17" name="t4x4hero.18"/>
+	<image_name index="18" name="t4x4hero.19"/>
+	<image_name index="19" name="t4x4hero.20"/>
+	<image_name index="20" name="t4x4hero.21"/>
+	<image_name index="21" name="t4x4hero.22"/>
+	<image_name index="22" name="t4x4hero.23"/>
+	<image_name index="23" name="t4x4hero.24"/>
+	<image_name index="24" name="t4x4hero.25"/>
+	<image_name index="25" name="t4x4hero.26"/>
+	<image_name index="26" name="t4x4hero.27"/>
+	<image_name index="27" name="t4x4hero.28"/>
+	<image_name index="28" name="t4x4hero.29"/>
+	<image_name index="29" name="t4x4hero.30"/>
+	<image_name index="30" name="t4x4hero.31"/>
+	<image_name index="31" name="t4x4hero.32"/>
+	<palette_name index="0" name="t4x4hero"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="1">
+		0
+	</frame_idx>
+	<image_idx size="1">
+		2
+	</image_idx>
+	<palette_idx size="1">
+		0
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="1">
+	<tex_pattern_anm index="0" material_name="obj" data_size="1" data_head="0"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>

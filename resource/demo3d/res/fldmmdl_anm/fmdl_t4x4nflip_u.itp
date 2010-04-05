@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="iwasawa" host="W00107" date="2010-04-05T18:56:26" source="t4x4nflip_anm.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20051121"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="1"
+	tool_start_frame="0"
+	tool_end_frame="0"
+	compress_material="off" material_size="1 1"
+/>
+
+<tex_pattern_list_data image_size="12" palette_size="1">
+	<image_name index="0" name="t4x4nflip.1"/>
+	<image_name index="1" name="t4x4nflip.2"/>
+	<image_name index="2" name="t4x4nflip.3"/>
+	<image_name index="3" name="t4x4nflip.4"/>
+	<image_name index="4" name="t4x4nflip.5"/>
+	<image_name index="5" name="t4x4nflip.6"/>
+	<image_name index="6" name="t4x4nflip.7"/>
+	<image_name index="7" name="t4x4nflip.8"/>
+	<image_name index="8" name="t4x4nflip.9"/>
+	<image_name index="9" name="t4x4nflip.10"/>
+	<image_name index="10" name="t4x4nflip.11"/>
+	<image_name index="11" name="t4x4nflip.12"/>
+	<palette_name index="0" name="t4x4nflip"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="1">
+		0
+	</frame_idx>
+	<image_idx size="1">
+		3
+	</image_idx>
+	<palette_idx size="1">
+		0
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="1">
+	<tex_pattern_anm index="0" material_name="obj" data_size="1" data_head="0"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>
