@@ -7,6 +7,8 @@
  * @date  2008.11.13
  */
 //======================================================================
+#ifdef  PM_DEBUG
+
 #include <gflib.h>
 #include "system/gfl_use.h"
 #include "system/main.h"
@@ -6816,3 +6818,5 @@ static BOOL debugMenuCallProc_SymbolPokeList( DEBUG_MENU_EVENT_WORK *wk )
 
   return TRUE;
 }
+
+#endif  //  PM_DEBUG

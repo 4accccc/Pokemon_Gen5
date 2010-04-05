@@ -6,6 +6,8 @@
  * @date  2009.11.29
  */
 //======================================================================
+#ifdef  PM_DEBUG
+
 #include <gflib.h>
 
 #include "system/main.h"      //HEAPID_
@@ -156,3 +158,4 @@ GMEVENT * DEBUG_EVENT_FLDMENU_DebugScript( const DEBUG_MENU_EVENT_WORK * now_wk 
   return new_event;
 }
 
+#endif  //  PM_DEBUG
