@@ -285,7 +285,7 @@ int GDSRAP_Tool_Send_BattleVideoUpload(GDS_RAP_WORK *gdsrap, GDS_PROFILE_PTR gpp
         sizeof(REC_POKEPARA) * br_send->rec.rec_party[i].PokeCount);//temoti_max);
       gdsrap->evil_check_count += br_send->rec.rec_party[i].PokeCount;
     }
-    
+
     //不正検査 コネクション作成
     ret = NHTTP_RAP_PokemonEvilCheckConectionCreate(gdsrap->p_nhttp);
     GF_ASSERT(ret);

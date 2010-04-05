@@ -72,7 +72,14 @@ enum
 //-------------------------------------
 ///外部セーブデータの状況
 //=====================================
-#define BR_SAVEDATA_NUM  4
+enum
+{ 
+  BR_SAVEDATA_PLAYER,
+  BR_SAVEDATA_OTHER_00,
+  BR_SAVEDATA_OTHER_01,
+  BR_SAVEDATA_OTHER_02,
+  BR_SAVEDATA_NUM,
+};
 typedef struct 
 {
   BOOL    is_valid[BR_SAVEDATA_NUM]; //セーブデータが存在するか
@@ -111,6 +118,21 @@ typedef struct
 #define BR_VIDEO_NUMBER_BLOCK0_FIG  2  //バトルビデオナンバーブロック０の桁
 #define BR_VIDEO_NUMBER_BLOCK1_FIG  5  //バトルビデオナンバーブロック１の桁
 #define BR_VIDEO_NUMBER_BLOCK2_FIG  5  //バトルビデオナンバーブロック２の桁
+
+
+//-------------------------------------
+///	便利マクロ
+//=====================================
+static inline void BR_TOOL_GetVideoNumberToBlock( u64 number, u32 tbl[], u32 block_num )
+{ 
+  GF_ASSERT( block_num == 3 );
+
+  tbl[ 0 ] = number % 100000;	///< 3block
+  number /= 100000;
+  tbl[ 1 ] = number % 100000;	///< 2block
+  number /= 100000;
+  tbl[ 2 ] = number;				    ///< 1block
+}
 
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/

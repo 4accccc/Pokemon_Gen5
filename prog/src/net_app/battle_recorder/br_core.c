@@ -14,6 +14,7 @@
 //システム
 #include "system/gfl_use.h"
 #include "system/main.h"  //HEAPID
+#include "src\field\field_sound.h"
 
 //自分のモジュール
 #include "br_graphic.h"
@@ -22,6 +23,7 @@
 #include "br_fade.h"
 #include "br_sidebar.h"
 #include "br_net.h"
+#include "br_snd.h"
 
 //各プロセス
 #include "br_start_proc.h"
@@ -33,9 +35,10 @@
 #include "br_bvsearch_proc.h"
 #include "br_codein_proc.h"
 #include "br_bvsend_proc.h"
+#include "br_bvdelete_proc.h"
+#include "br_bvsave_proc.h"
 #include "br_musicallook_proc.h"
 #include "br_musicalsend_proc.h"
-#include "br_bvdelete_proc.h"
 
 //セーブデータ
 #include "savedata/battlematch_savedata.h"
@@ -139,6 +142,9 @@ static void BR_BVSEND_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs );
 //ビデオ消去
 static void BR_BVDELETE_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const void *cp_pre_param, u32 preID );
 static void BR_BVDELETE_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs );
+//ビデオ保存
+static void BR_BVSAVE_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const void *cp_pre_param, u32 preID );
+static void BR_BVSAVE_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs );
 //ミュージカルショット写真をみる
 static void BR_MUSICALLOOK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const void *cp_pre_param, u32 preID );
 static void BR_MUSICALLOOK_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs );
@@ -255,6 +261,14 @@ static const BR_PROC_SYS_DATA sc_procdata_tbl[BR_PROCID_MAX]	=
 		BR_BVDELETE_PROC_BeforeFunc,
 		BR_BVDELETE_PROC_AfterFunc,
   },
+  //BR_PROCID_BV_SAVE,    //バトルビデオ保存画面
+  { 
+		&BR_BVSAVE_ProcData,
+		sizeof( BR_BVSAVE_PROC_PARAM ),
+    FS_OVERLAY_ID( battle_recorder_browse ),
+		BR_BVSAVE_PROC_BeforeFunc,
+		BR_BVSAVE_PROC_AfterFunc,
+  },
 	//	BR_PROCID_MUSICAL_LOOK,	//ミュージカルショット	写真を見る画面
 	{	
 		&BR_MUSICALLOOK_ProcData,
@@ -355,6 +369,18 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
     }
   }
 
+  //ブラウザモードのみボリュームを下げる
+  if( p_wk->p_param->p_param->mode == BR_MODE_BROWSE )
+  { 
+    FIELD_SOUND *p_fld_snd  = GAMEDATA_GetFieldSound( p_wk->p_param->p_param->p_gamedata );
+    FSND_HoldBGMVolume_inApp( p_fld_snd );
+  }
+  else
+  { 
+    //それ以外のモードはGDSの曲をかける
+    PMSND_PlayBGM( BR_SND_BGM_MAIN );
+  }
+
 	return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -372,6 +398,13 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 static GFL_PROC_RESULT BR_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
 	BR_CORE_WORK	*p_wk	= p_wk_adrs;
+
+  //ブラウザモードのみボリュームを元に戻す
+  if( p_wk->p_param->p_param->mode == BR_MODE_BROWSE )
+  { 
+    FIELD_SOUND *p_fld_snd  = GAMEDATA_GetFieldSound( p_wk->p_param->p_param->p_gamedata );
+    FSND_ReleaseBGMVolume_inApp( p_fld_snd );
+  }
 
   if( p_wk->p_net )
   { 
@@ -565,6 +598,7 @@ static void BR_MENU_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const 
 	BR_CORE_WORK				*p_wk			= p_wk_adrs;
 
   p_param->fade_type = BR_FADE_TYPE_ALPHA_BG012OBJ;
+  p_param->p_result   = &p_wk->p_param->p_param->result;
 
   //バトルから戻ってきたとき
   if( p_wk->p_param->mode == BR_CORE_MODE_RETURN )
@@ -594,13 +628,24 @@ static void BR_MENU_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const 
     case BR_PROCID_RECORD:
       { 
         const BR_RECORD_PROC_PARAM	*cp_record_param	= cp_pre_param;
-        if( cp_record_param->mode == BR_RECODE_PROC_MY )
+        switch( cp_record_param->mode )
         {	
+        case BR_RECODE_PROC_MY:
           p_param->menuID			= BR_BROWSE_MENUID_BTLVIDEO;
-        }
-        else
-        {
+          break;
+        case BR_RECODE_PROC_OTHER_00:
+        case BR_RECODE_PROC_OTHER_01:
+        case BR_RECODE_PROC_OTHER_02:
           p_param->menuID			= BR_BROWSE_MENUID_OTHER_RECORD;
+          break;
+        case BR_RECODE_PROC_DOWNLOAD_RANK:
+          GF_ASSERT( 0 ); //ここはこない
+          p_param->menuID			= BR_BTLVIDEO_MENUID_RANK;
+          break;
+        case BR_RECODE_PROC_DOWNLOAD_NUMBER:
+          GF_ASSERT( 0 ); //ここはこない
+          p_param->menuID			= BR_BTLVIDEO_MENUID_RANK;
+          break;
         }
       }
       break;
@@ -688,7 +733,8 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
   p_param->p_net        = p_wk->p_net;
   p_param->p_gamedata   = p_wk->p_param->p_param->p_gamedata;
   p_param->p_record     = &p_wk->p_param->p_data->record;
-  p_param->is_btl_return= FALSE;
+  p_param->is_return    = FALSE;
+  p_param->cp_rec_saveinfo  = &p_wk->p_param->p_data->rec_saveinfo;
 
   switch( preID )
   { 
@@ -697,6 +743,8 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
       const BR_MENU_PROC_PARAM	*cp_menu_param	= cp_pre_param;
       p_param->mode				= cp_menu_param->next_mode;
       p_param->p_outline  = NULL;
+
+      p_wk->p_param->p_data->record_mode  = p_param->mode;
 
       //メモリへバトルビデオ読み込み
       {
@@ -727,6 +775,8 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
       const BR_BVRANK_PROC_PARAM  *cp_rank_param  = cp_pre_param;
       p_param->mode       = BR_RECODE_PROC_DOWNLOAD_RANK;
       p_param->p_outline  = &p_wk->p_param->p_data->outline;
+
+      p_wk->p_param->p_data->record_mode  = p_param->mode;
     }
     break;
 
@@ -736,26 +786,37 @@ static void BR_RECORD_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
       p_param->mode         = BR_RECODE_PROC_DOWNLOAD_NUMBER;
       p_param->video_number = cp_codein_param->video_number;
       p_param->p_outline    = NULL;
+
+      p_wk->p_param->p_data->record_mode  = p_param->mode;
     }
     break;
 
+  case BR_PROCID_BV_SAVE:
+    //保存からの戻り
+    //一旦BRS上に読み込むが、そのあとセーブチェックをするため
+    //BRS上は外部セーブデータの可能性がある
+    { 
+      const BR_BVSAVE_PROC_PARAM  *cp_bvsave_param  = cp_pre_param;
+      p_param->mode				    = p_wk->p_param->p_data->record_mode;
+      p_param->p_outline      = &p_wk->p_param->p_data->outline;
+      p_param->video_number   = cp_bvsave_param->video_number;
+    }
+    break;
+    
   case BR_PROC_SYS_RECOVERY_ID:
     //戦闘からの復帰時
     { 
       //戦闘から帰ってきたということは、録画データはBRS上にある
       p_param->mode				    = p_wk->p_param->p_data->record_mode;
       p_param->p_outline      = &p_wk->p_param->p_data->outline;
-      p_param->is_btl_return  = TRUE;
+      p_param->is_return      = TRUE;
     }
     break;
 
   default:
-    GF_ASSERT_MSG( 0, "メニューとランキング、コード入力、復帰以外からは来ない %d", preID );
+    GF_ASSERT_MSG( 0, "メニューとランキング、コード入力、保存、復帰以外からは来ない %d", preID );
     break;
   }
-
-  //戦闘へ行ったときのためにモードを保存
-  p_wk->p_param->p_data->record_mode  = p_param->mode;
 }
 //----------------------------------------------------------------------------
 /**
@@ -797,12 +858,6 @@ static void BR_BTLSUBWAY_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, c
 
 	//メニュー以外から来ない
 	GF_ASSERT_MSG( preID == BR_PROCID_MENU, "メニュー以外からは来ない %d", preID );
-/*
-	switch( cp_menu_param->next_data )
-	{	
-		
-	}
-*/
 	p_param->p_res			= p_wk->p_res;
   p_param->p_fade     = p_wk->p_fade;
 	p_param->p_procsys	= p_wk->p_procsys;
@@ -1072,6 +1127,55 @@ static void BR_BVDELETE_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs )
       FALSE, p_wk->p_param->p_param->p_gamedata, HEAPID_BATTLE_RECORDER_CORE );
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	プロック処理前関数
+ *
+ *	@param	void *p_param_adrs	アロケートされた引数ワーク
+ *	@param	*p_wk_adrs					メインワーク
+ *	@param	void *cp_pre_param	このプロセスの前の引数ワーク
+ *	@param	preID								このプロセスの前のID
+ */
+//-----------------------------------------------------------------------------
+static void BR_BVSAVE_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, const void *cp_pre_param, u32 preID )
+{ 
+	BR_BVSAVE_PROC_PARAM	    *p_param	= p_param_adrs;
+	BR_CORE_WORK						  *p_wk			= p_wk_adrs;
+  const BR_RECORD_PROC_PARAM	*cp_record_param	= cp_pre_param;
+
+  GF_ASSERT( preID == BR_PROCID_RECORD );
+
+  p_param->p_res			= p_wk->p_res;
+  p_param->p_fade     = p_wk->p_fade;
+  p_param->p_net      = p_wk->p_net;
+  p_param->p_procsys	= p_wk->p_procsys;
+  p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
+  p_param->video_number = cp_record_param->video_number;
+  p_param->p_gamedata = p_wk->p_param->p_param->p_gamedata;
+  p_param->cp_rec_saveinfo = &p_wk->p_param->p_data->rec_saveinfo;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	プロック処理後関数
+ *
+ *	@param	void *p_param_adrs	引数ワーク
+ *	@param	*p_wk_adrs					メインワーク
+ */
+//-----------------------------------------------------------------------------
+static void BR_BVSAVE_PROC_AfterFunc( void *p_param_adrs, void *p_wk_adrs )
+{ 
+  BR_BVSAVE_PROC_PARAM	*p_param	= p_param_adrs;
+	BR_CORE_WORK						*p_wk			= p_wk_adrs;
+
+  //保存していたら、セーブデータをリロードする
+  if( p_param->is_save )
+  { 
+    Br_Core_CheckSaveData( &p_wk->p_param->p_data->rec_saveinfo,
+      FALSE, p_wk->p_param->p_param->p_gamedata, HEAPID_BATTLE_RECORDER_CORE );
+  }
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	プロック処理前関数

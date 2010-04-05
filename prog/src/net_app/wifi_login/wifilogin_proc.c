@@ -1107,11 +1107,9 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
     WIFILOGIN_MESSAGE_TitleDisp(pWork->pMessageWork, dwc_title_0000);
 
     PMSND_PlayBGM( SEQ_BGM_WIFI_ACCESS );
-    PMSND_FadeInBGM( 8 );
   }
   else{
     PMSND_PlayBGM(SEQ_BGM_GAME_SYNC);
-    PMSND_FadeInBGM( 8 );
   }
 
   return GFL_PROC_RES_FINISH;

@@ -27,6 +27,7 @@
 #include "br_inner.h"
 #include "br_util.h"
 #include "br_btn.h"
+#include "br_snd.h"
 
 //外部公開
 #include "br_bvrank_proc.h"
@@ -558,6 +559,7 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       //受信しなおすのでクリア
       GFL_STD_MemClear( p_wk->p_param->p_outline, sizeof(BR_OUTLINE_DATA ) );
 
+      PMSND_PlaySE( BR_SND_SE_SEARCH );
       BR_NET_StartRequest( p_wk->p_param->p_net, type, &req_param );
       *p_seq  = SEQ_DOWNLOAD_WAIT;
     }
@@ -565,6 +567,7 @@ static void Br_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   case SEQ_DOWNLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
+      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
       BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_DOWNLOAD_END;
     }
@@ -940,7 +943,7 @@ static void Br_Rank_CreatePokeIcon( BR_RANK_WORK *p_wk, GFL_CLUNIT *p_unit, HEAP
         GFL_CLACT_WK_SetPlttOffs( p_wk->p_poke[i][j], POKEICON_GetPalNum( temp, sort_data.form_tbl[j], sort_data.gender_tbl[j], FALSE) , CLWK_PLTTOFFS_MODE_OAM_COLOR );
         GFL_CLACT_WK_SetObjMode( p_wk->p_poke[i][j], GX_OAM_MODE_XLU );
 
-        if( temp == 0 )
+        if( sort_data.mons_tbl[j] == 0 )
         { 
           GFL_CLACT_WK_SetDrawEnable( p_wk->p_poke[i][j], FALSE );
         }
@@ -998,11 +1001,9 @@ static void Br_Rank_ScrollPokeIcon( BR_RANK_WORK *p_wk, u32 list, s8 dir, HEAPID
 { 
   int i, j;
   ARCHANDLE *p_handle;
-  NNSG2dCharacterData *p_chr_data;
-  void *p_chr_buff;
   BR_RANK_SORT_POKE_DATA  sort_data;
 
-  //CLWk作成
+  //リソース読み替え
   for( i = 0; i < BR_RANK_LIST_LINE; i++ )
   { 
     for( j = 0; j < TEMOTI_POKEMAX; j++ )
@@ -1012,24 +1013,44 @@ static void Br_Rank_ScrollPokeIcon( BR_RANK_WORK *p_wk, u32 list, s8 dir, HEAPID
       //方向によって読み替え順番が違う
       if( dir == 1 && i != BR_RANK_LIST_LINE-1 )
       { 
-        //CLWK素材読み替え
-        NNSG2dImageProxy  img;
-        u8                plt_ofs;
-        GFL_CLACT_WK_GetImgProxy( p_wk->p_poke[i + 1 ][j], &img );
-        plt_ofs = GFL_CLACT_WK_GetPlttOffs( p_wk->p_poke[i+ 1 ][j] );
-        GFL_CLACT_WK_SetImgProxy( p_wk->p_poke[i ][j], &img );
-        GFL_CLACT_WK_SetPlttOffs( p_wk->p_poke[i ][j], plt_ofs, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+        const GFL_CLWK  *cp_src = p_wk->p_poke[i + 1 ][j];
+        GFL_CLWK        *p_dst  = p_wk->p_poke[i ][j];
+        if( GFL_CLACT_WK_GetDrawEnable( cp_src ) )
+        { 
+          //CLWK素材読み替え
+          NNSG2dImageProxy  img;
+          u8                plt_ofs;
+          GFL_CLACT_WK_GetImgProxy( cp_src, &img );
+          plt_ofs = GFL_CLACT_WK_GetPlttOffs( cp_src );
+          GFL_CLACT_WK_SetImgProxy( p_dst, &img );
+          GFL_CLACT_WK_SetPlttOffs( p_dst, plt_ofs, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+          GFL_CLACT_WK_SetDrawEnable( p_dst, TRUE );
+        }
+        else
+        { 
+          GFL_CLACT_WK_SetDrawEnable( p_dst, FALSE );
+        }
       }
       else if( dir == -1 && i != BR_RANK_LIST_LINE-1 )
       { 
-        //CLWK素材読み替え
-        //逆から読み替える
-        NNSG2dImageProxy  img;
-        u8                plt_ofs;
-        GFL_CLACT_WK_GetImgProxy( p_wk->p_poke[BR_RANK_LIST_LINE - 2 -i][j], &img );
-        plt_ofs = GFL_CLACT_WK_GetPlttOffs( p_wk->p_poke[BR_RANK_LIST_LINE - 2 -i][j] );
-        GFL_CLACT_WK_SetImgProxy( p_wk->p_poke[BR_RANK_LIST_LINE - 1 -i][j], &img );
-        GFL_CLACT_WK_SetPlttOffs( p_wk->p_poke[BR_RANK_LIST_LINE - 1 -i][j], plt_ofs, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+        const GFL_CLWK  *cp_src = p_wk->p_poke[BR_RANK_LIST_LINE - 2 -i][j];
+        GFL_CLWK        *p_dst  = p_wk->p_poke[BR_RANK_LIST_LINE - 1 -i][j];
+        if( GFL_CLACT_WK_GetDrawEnable( cp_src ) )
+        { 
+          //CLWK素材読み替え
+          //逆から読み替える
+          NNSG2dImageProxy  img;
+          u8                plt_ofs;
+          GFL_CLACT_WK_GetImgProxy( cp_src, &img );
+          plt_ofs = GFL_CLACT_WK_GetPlttOffs( cp_src );
+          GFL_CLACT_WK_SetImgProxy( p_dst, &img );
+          GFL_CLACT_WK_SetPlttOffs( p_dst, plt_ofs, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+          GFL_CLACT_WK_SetDrawEnable( p_dst, TRUE );
+        }
+        else
+        { 
+          GFL_CLACT_WK_SetDrawEnable( p_dst, FALSE );
+        }
       }
     }
   }
@@ -1062,10 +1083,11 @@ static void Br_Rank_ScrollPokeIcon( BR_RANK_WORK *p_wk, u32 list, s8 dir, HEAPID
     Br_Rank_SortPoke( &p_wk->cp_data->data[ i + list ], &sort_data );
 
 
-    if( sort_data.mons_tbl[j] == 0)
+    if( sort_data.mons_tbl[j] != 0)
     {
+      NNSG2dCharacterData *p_chr_data;
       NNSG2dImageProxy  img;
-      p_chr_buff  = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, POKEICON_GetCgxArcIndexByMonsNumber( sort_data.mons_tbl[j], sort_data.form_tbl[j], sort_data.gender_tbl[j], FALSE ), FALSE, &p_chr_data, GFL_HEAP_LOWID(heapID) );
+      void *p_chr_buff  = GFL_ARCHDL_UTIL_LoadOBJCharacter( p_handle, POKEICON_GetCgxArcIndexByMonsNumber( sort_data.mons_tbl[j], sort_data.form_tbl[j], sort_data.gender_tbl[j], FALSE ), FALSE, &p_chr_data, GFL_HEAP_LOWID(heapID) );
       GFL_CLGRP_CGR_Replace( p_wk->cgr[ p_wk->cgr_idx ][j], p_chr_data );
       GFL_CLGRP_CGR_GetProxy( p_wk->cgr[ p_wk->cgr_idx ][j], &img );
       GFL_CLACT_WK_SetImgProxy( p_wk->p_poke[i][j], &img );
@@ -1118,9 +1140,17 @@ static void Br_Rank_SortPoke( const BATTLE_REC_OUTLINE_RECV *cp_recv, BR_RANK_SO
     //@todo ダブルとシングルで詰め方が違う
     for( i = 0; i < TEMOTI_POKEMAX; i++ )
     { 
+
       monsno  = cp_recv->head.monsno[ i ];
       formno  = cp_recv->head.form_no_and_sex[ i ] & HEADER_FORM_NO_MASK;
       gender  = ( cp_recv->head.form_no_and_sex[ i ] & HEADER_GENDER_MASK ) >> HEADER_GENDER_SHIFT;
+
+      if( monsno >= MONSNO_MAX )
+      { 
+        OS_TPrintf( "！！！モンスター番号が不正ですmonsno=%d！！！",monsno );
+        monsno  = 0;
+      }
+
       if( monsno == 0 )
       { 
         continue;
@@ -1146,12 +1176,20 @@ static void Br_Rank_SortPoke( const BATTLE_REC_OUTLINE_RECV *cp_recv, BR_RANK_SO
 static BOOL Br_Rank_IsPushBattleBV( u32 x, u32 y )
 { 
 	GFL_RECT rect;
+  BOOL ret;
 
 	rect.left		= (10)*8;
 	rect.right	= (21)*8;
 	rect.top		= (4)*8;
 	rect.bottom	= (11)*8;
 
-  return ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
             & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
+
+  if( ret )
+  { 
+    PMSND_PlaySE( BR_SND_SE_OK );
+  }
+
+  return ret;
 }

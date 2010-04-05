@@ -27,6 +27,7 @@
 #include "br_inner.h"
 #include "br_util.h"
 #include "br_btn.h"
+#include "br_snd.h"
 
 //外部公開
 #include "br_musicallook_proc.h"
@@ -459,6 +460,8 @@ static void Br_MusicalLook_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
       BR_NET_REQUEST_PARAM  req_param;
       GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
       req_param.download_musical_shot_search_monsno = p_wk->mons_no;
+
+      PMSND_PlaySE( BR_SND_SE_SEARCH );
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_MUSICAL_SHOT_DOWNLOAD, &req_param );
     }
     *p_seq  = SEQ_DOWNLOAD_WAIT;
@@ -467,6 +470,7 @@ static void Br_MusicalLook_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
 
+      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
       BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_DOWNLOAD_END;
     } 
@@ -977,7 +981,7 @@ static void Br_MusicalLook_Photo_CreateSubDisplay( BR_MUSICALLOOK_WORK	*p_wk, BR
 
     { 
       //プロフィールをみるしまう
-      p_wk->p_msgwin  = BR_MSGWIN_Init( BG_FRAME_S_FONT, 9, 3, 14, 2, PLT_BG_S_FONT, p_wk->p_que, p_wk->heapID );
+      p_wk->p_msgwin  = BR_MSGWIN_Init( BG_FRAME_S_FONT, 8, 3, 16, 2, PLT_BG_S_FONT, p_wk->p_que, p_wk->heapID );
       BR_MSGWIN_PrintColor( p_wk->p_msgwin, p_msg, msg_718, p_font, BR_PRINT_COL_NORMAL );
     }
 

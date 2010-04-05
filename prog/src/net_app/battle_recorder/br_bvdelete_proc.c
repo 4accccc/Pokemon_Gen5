@@ -20,6 +20,7 @@
 
 //内部モジュール
 #include "br_util.h"
+#include "br_snd.h"
 
 //外部参照
 #include "br_bvdelete_proc.h"
@@ -52,7 +53,6 @@ typedef struct
 {
   PRINT_QUE             *p_que;   //プリントキュー
   BR_TEXT_WORK          *p_text;  //テキスト
-  WORDSET               *p_word;
   BR_SEQ_WORK           *p_seq;
   BR_MSGWIN_WORK        *p_msgwin_s[ BR_BVDELETE_MSGWINID_S_MAX ];
   BR_BALLEFF_WORK       *p_balleff;
@@ -91,8 +91,8 @@ static void Br_BvDelete_DeleteDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_
 //-------------------------------------
 ///	その他
 //=====================================
-static BOOL Br_Record_GetTrgYes( u32 x, u32 y );
-static BOOL Br_Record_GetTrgNo( u32 x, u32 y );
+static BOOL Br_BvDelete_GetTrgYes( u32 x, u32 y );
+static BOOL Br_BvDelete_GetTrgNo( u32 x, u32 y );
 
 //=============================================================================
 /**
@@ -148,7 +148,6 @@ static GFL_PROC_RESULT BR_BVDELETE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
   //モジュール初期化
   p_wk->p_seq = BR_SEQ_Init( p_wk, Br_BvDelete_Seq_FadeIn, p_wk->heapID );
   p_wk->p_que = PRINTSYS_QUE_Create( p_wk->heapID );
-  p_wk->p_word= WORDSET_Create( p_wk->heapID );
 
 	//グラフィック初期化
   Br_BvDelete_CreateDisplay( p_wk, p_param );
@@ -178,7 +177,6 @@ static GFL_PROC_RESULT BR_BVDELETE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void
   Br_BvDelete_DeleteDisplay( p_wk, p_param );
 
 	//モジュール破棄
-  WORDSET_Delete( p_wk->p_word );
   PRINTSYS_QUE_Delete( p_wk->p_que );
   BR_SEQ_Exit( p_wk->p_seq );
 
@@ -365,14 +363,14 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       u32 x, y;
       if( GFL_UI_TP_GetPointTrg( &x, &y ) )
       { 
-        if( Br_Record_GetTrgYes( x, y ) )
+        if( Br_BvDelete_GetTrgYes( x, y ) )
         { 
           BR_TEXT_Print( p_wk->p_text, p_wk->p_param->p_res, msg_info_014 );
           *p_seq  = SEQ_CONFIRM;
           break;
         }
 
-        if( Br_Record_GetTrgNo( x, y ) )
+        if( Br_BvDelete_GetTrgNo( x, y ) )
         { 
           *p_seq  = SEQ_RETURN;
           break;
@@ -386,13 +384,13 @@ static void Br_BvDelete_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       u32 x, y;
       if( GFL_UI_TP_GetPointTrg( &x, &y ) )
       { 
-        if( Br_Record_GetTrgYes( x, y ) )
+        if( Br_BvDelete_GetTrgYes( x, y ) )
         { 
           *p_seq  = SEQ_FADEOUT_SUB_INIT;
           break;
         }
 
-        if( Br_Record_GetTrgNo( x, y ) )
+        if( Br_BvDelete_GetTrgNo( x, y ) )
         { 
           *p_seq  = SEQ_RETURN;
           break;
@@ -482,16 +480,17 @@ static void Br_BvDelete_CreateDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_
   }
 
   { 
+    WORDSET *p_word     = BR_RES_GetWordSet( p_param->p_res );
     GFL_MSGDATA *p_msg  = BR_RES_GetMsgData( p_param->p_res );
     STRBUF  *p_src  = GFL_MSG_CreateString( p_msg, msg_info_013 );
     STRBUF  *p_dst  = GFL_STR_CreateCopyBuffer( p_src, p_wk->heapID );
 
-    WORDSET_RegisterWord( p_wk->p_word, 0, 
+    WORDSET_RegisterWord( p_word, 0, 
         p_param->cp_rec_saveinfo->p_name[ p_param->mode ],
         p_param->cp_rec_saveinfo->sex[ p_param->mode ],
         TRUE, PM_LANG );
 
-    WORDSET_ExpandStr( p_wk->p_word, p_dst, p_src );
+    WORDSET_ExpandStr( p_word, p_dst, p_src );
 
     BR_TEXT_PrintBuff( p_wk->p_text, p_param->p_res, p_dst );
 
@@ -583,17 +582,25 @@ static void Br_BvDelete_DeleteDisplay( BR_BVDELETE_WORK *p_wk, BR_BVDELETE_PROC_
  *	@return TRUE入力  FALSE何もしない
  */
 //-----------------------------------------------------------------------------
-static BOOL Br_Record_GetTrgYes( u32 x, u32 y )
+static BOOL Br_BvDelete_GetTrgYes( u32 x, u32 y )
 { 
 	GFL_RECT rect;
+  BOOL ret;
 
 	rect.left		= (4)*8;
 	rect.right	= (4 + 9)*8;
 	rect.top		= (6)*8;
 	rect.bottom	= (6 + 2)*8;
 
-  return ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
             & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
+
+  if( ret )
+  { 
+    PMSND_PlaySE( BR_SND_SE_OK );
+  }
+
+  return ret;
 }
 //----------------------------------------------------------------------------
 /**
@@ -605,15 +612,23 @@ static BOOL Br_Record_GetTrgYes( u32 x, u32 y )
  *	@return TRUE入力  FALSE何もしない
  */
 //-----------------------------------------------------------------------------
-static BOOL Br_Record_GetTrgNo( u32 x, u32 y )
+static BOOL Br_BvDelete_GetTrgNo( u32 x, u32 y )
 { 
 	GFL_RECT rect;
+  BOOL ret;
 
 	rect.left		= (18)*8;
 	rect.right	= (18 + 9)*8;
 	rect.top		= (6)*8;
 	rect.bottom	= (6 + 2)*8;
 
-  return ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+
+  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
             & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
+
+  if( ret )
+  { 
+    PMSND_PlaySE( BR_SND_SE_OK );
+  }
+  return ret;
 }

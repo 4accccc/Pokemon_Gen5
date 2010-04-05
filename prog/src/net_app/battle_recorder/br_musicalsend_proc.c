@@ -27,6 +27,7 @@
 #include "br_inner.h"
 #include "br_util.h"
 #include "br_btn.h"
+#include "br_snd.h"
 
 //ŠO•”ŽQÆ
 #include "br_musicalsend_proc.h"
@@ -451,6 +452,7 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
       GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
       req_param.cp_upload_musical_shot_data = p_wk->p_musical_shot;
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_MUSICAL_SHOT_UPLOAD, &req_param );
+      PMSND_PlaySE( BR_SND_SE_SEARCH );
     }
     *p_seq  = SEQ_UPLOAD_WAIT;
     break;
@@ -458,6 +460,7 @@ static void Br_MusicalSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
   case SEQ_UPLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
+      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
       BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_UPLOAD_END;
     }

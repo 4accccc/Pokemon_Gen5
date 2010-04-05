@@ -21,6 +21,7 @@
 //自分のモジュール
 #include "br_btn.h"
 #include "br_util.h"
+#include "br_snd.h"
 
 //外部参照
 #include "br_rndmatch_proc.h"
@@ -1235,6 +1236,7 @@ static BR_RNDMATCH_SELECT Br_RndMatch_GetSelect( BR_RNDMATCH_WORK *p_wk, u32 x, 
       if( ((u32)( x - sc_select_rect[i].left) <= (u32)(sc_select_rect[i].right - sc_select_rect[i].left))
           & ((u32)( y - sc_select_rect[i].top) <= (u32)(sc_select_rect[i].bottom - sc_select_rect[i].top)))
       { 
+        PMSND_PlaySE( BR_SND_SE_OK );
         return i;
       }
     }

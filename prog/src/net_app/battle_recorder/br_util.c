@@ -18,6 +18,7 @@
 
 //自分のモジュール
 #include "br_inner.h"
+#include "br_snd.h"
 
 //アーカイブ
 #include "arc_def.h"
@@ -538,6 +539,7 @@ void BR_LIST_Main( BR_LIST_WORK* p_wk )
       //タッチモードならばリストが直接動く
       if( p_wk->move_callback( p_wk, p_wk->value ) )
       { 
+        PMSND_PlaySE( BR_SND_SE_SLIDE );
         Br_List_Write( p_wk, p_wk->list );
       }
 
@@ -571,7 +573,8 @@ void BR_LIST_Main( BR_LIST_WORK* p_wk )
       int ret;
       ret = GFL_UI_TP_HitTrg( p_wk->hittbl );
       if( ret != GFL_UI_TP_HIT_NONE )
-      { 
+      {
+        PMSND_PlaySE( BR_SND_SE_OK );
         p_wk->select_param  = p_wk->param.cp_list[ ret + p_wk->list ].param;
       }
     }
@@ -1353,6 +1356,8 @@ void BR_PROFILE_DeleteMainDisplay( BR_PROFILE_WORK *p_wk )
   BR_RES_UnLoadBG( p_wk->p_res, BR_RES_BG_RECORD_M_PROFILE );
 
   GFL_HEAP_FreeMemory( p_wk );
+
+  GFL_BG_LoadScreenReq( BG_FRAME_M_FONT );
 }
 //----------------------------------------------------------------------------
 /**

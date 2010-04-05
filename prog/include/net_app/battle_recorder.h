@@ -25,6 +25,15 @@ typedef enum
 	BR_MODE_GLOBAL_MUSICAL,	///<ミュージカルショット
 } BR_MODE;
 
+//-------------------------------------
+///	終了モード
+//=====================================
+typedef enum 
+{
+  BR_RESULT_RETURN,       ///<通常の終了
+  BR_RESULT_EXIT,         ///<Xボタンの終了
+} BR_RESULT;
+
 //=============================================================================
 /**
  *					データ
@@ -38,6 +47,7 @@ typedef struct
 	BR_MODE				mode;			    ///<[in ]	バトルレコーダー起動モード
 	GAMEDATA      *p_gamedata;	///<[in ]	ゲームデータ
   DWCSvlResult  *p_svl;       ///<[in ] WIFILOGINで得たサービスロケータ
+  BR_RESULT     result;       ///<[out] 終了モード
 } BATTLERECORDER_PARAM;
 
 

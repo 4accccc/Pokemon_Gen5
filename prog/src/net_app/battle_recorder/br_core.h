@@ -34,6 +34,7 @@ typedef enum
 	BR_PROCID_CODEIN,				//バトルビデオナンバー入力画面
 	BR_PROCID_BV_SEND,			//バトルビデオ送信画面
 	BR_PROCID_BV_DELETE,	  //バトルビデオ消去画面
+  BR_PROCID_BV_SAVE,      //バトルビデオ保存画面
 	BR_PROCID_MUSICAL_LOOK,	//ミュージカルショット	写真を見る画面
 	BR_PROCID_MUSICAL_SEND,	//ミュージカルショット	写真を送る画面
 

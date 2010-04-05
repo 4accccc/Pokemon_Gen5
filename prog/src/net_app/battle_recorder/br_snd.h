@@ -17,8 +17,10 @@
  *					定数宣言
 */
 //=============================================================================
-#define BR_SND_SE_TOUCHHERE	  SEQ_SE_BREC_03	//画面に滴が落ちる音（touch here）
-#define BR_SND_SE_BOOT	      SEQ_SE_BREC_02	//起動音
+#define BR_SND_BGM_MAIN	      SEQ_BGM_GLTERMINAL	    //メインBGM
+
+#define BR_SND_SE_TOUCHHERE	  SEQ_SE_BREC_02	//画面に滴が落ちる音（touch here）
+#define BR_SND_SE_BOOT	      SEQ_SE_BREC_03	//起動音
 #define BR_SND_SE_OK	        SEQ_SE_BREC_06	//タッチOK
 #define BR_SND_SE_NG	        SEQ_SE_BREC_07	//タッチNG
 #define BR_SND_SE_SLIDE	      SEQ_SE_BREC_01	//スクロールバーを動かす

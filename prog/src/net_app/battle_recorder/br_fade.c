@@ -21,9 +21,9 @@
  *					定数宣言
 */
 //=============================================================================
-#define BR_FADE_DEFAULT_SYNC  (0)
-#define BR_FADE_DEFAULT_EV1   (16)
-#define BR_FADE_DEFAULT_EV2   (16)
+#define BR_FADE_DEFAULT_SYNC    (0)
+#define BR_FADE_DEFAULT_EV      (16)
+#define BR_FADE_DEFAULT_EV_MAX  (16/GFL_FADE_GetFadeSpeed())
 
 #define BR_FADE_ALPHA_PLANEMASK_M_01  (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 )
 #define BR_FADE_ALPHA_PLANEMASK_M_02  (GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_BG3)
@@ -254,13 +254,13 @@ void BR_FADE_PALETTE_TransColor( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display )
   //画面による設定
   if( display & BR_FADE_DISPLAY_MAIN )
   { 
-//    ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_OBJ, 0x3FFE, 16, p_wk->pfd_color );	///< main	oam
-    ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_BG,  0xBFFF, 16, p_wk->pfd_color );	///< main	bg
+//    ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_OBJ, 0x3FFE, BR_FADE_DEFAULT_EV, p_wk->pfd_color );	///< main	oam
+    ColorConceChangePfd( p_wk->p_pfd, FADE_MAIN_BG,  0xBFFF, BR_FADE_DEFAULT_EV, p_wk->pfd_color );	///< main	bg
   }
   if( display & BR_FADE_DISPLAY_SUB )
   { 
-//    ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_OBJ, 0xFFFE, 16, p_wk->pfd_color );	///< sub	oam
-    ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_BG,  0xBFFF, 16, p_wk->pfd_color );	///< sub	bg
+//    ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_OBJ, 0xFFFE, BR_FADE_DEFAULT_EV, p_wk->pfd_color );	///< sub	oam
+    ColorConceChangePfd( p_wk->p_pfd, FADE_SUB_BG,  0xBFFF, BR_FADE_DEFAULT_EV, p_wk->pfd_color );	///< sub	bg
   }
 
   PaletteTransSwitch( p_wk->p_pfd, TRUE );
@@ -283,7 +283,7 @@ void BR_FADE_ALPHA_SetAlpha( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display, u8 ev 
         BR_FADE_ALPHA_PLANEMASK_M_01,
         BR_FADE_ALPHA_PLANEMASK_M_02,
         ev,
-        16-ev
+        BR_FADE_DEFAULT_EV-ev
         );
     if( ev == 0 )
     { 
@@ -305,7 +305,7 @@ void BR_FADE_ALPHA_SetAlpha( BR_FADE_WORK *p_wk, BR_FADE_DISPLAY display, u8 ev 
         BR_FADE_ALPHA_PLANEMASK_S_01,
         BR_FADE_ALPHA_PLANEMASK_S_02,
         ev,
-        16-ev
+        BR_FADE_DEFAULT_EV-ev
         );
     if( ev == 0 )
     { 
@@ -362,13 +362,13 @@ static BOOL Br_Fade_MainMasterBrightBlack( BR_FADE_WORK *p_wk, u32 *p_seq )
       //方向による設定
       if( p_wk->dir == BR_FADE_DIR_IN )
       { 
-        start = 16;
+        start = BR_FADE_DEFAULT_EV;
         end   = 0;
       }
       else if( p_wk->dir == BR_FADE_DIR_OUT )
       { 
         start = 0;
-        end   = 16;
+        end   = BR_FADE_DEFAULT_EV;
       }
 
       GFL_FADE_SetMasterBrightReq( mode, start, end, p_wk->sync );
@@ -427,13 +427,13 @@ static BOOL Br_Fade_MainMasterBrightWhite( BR_FADE_WORK *p_wk, u32 *p_seq )
       //方向による設定
       if( p_wk->dir == BR_FADE_DIR_IN )
       { 
-        start = 16;
+        start = BR_FADE_DEFAULT_EV;
         end   = 0;
       }
       else if( p_wk->dir == BR_FADE_DIR_OUT )
       { 
         start = 0;
-        end   = 16;
+        end   = BR_FADE_DEFAULT_EV;
       }
 
       GFL_FADE_SetMasterBrightReq( mode, start, end, p_wk->sync );
@@ -483,11 +483,11 @@ static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
       if( p_wk->dir == BR_FADE_DIR_IN )
       { 
         ev1 = 0;
-        ev2 = 16;
+        ev2 = BR_FADE_DEFAULT_EV;
       }
       else if( p_wk->dir == BR_FADE_DIR_OUT )
       { 
-        ev1 = 16;
+        ev1 = BR_FADE_DEFAULT_EV;
         ev2 = 0;
       }
 
@@ -511,7 +511,7 @@ static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
       }
 
       p_wk->cnt = 0;
-      p_wk->max = p_wk->sync == 0? 16: p_wk->sync;
+      p_wk->max = p_wk->sync == 0? BR_FADE_DEFAULT_EV_MAX: p_wk->sync;
       *p_seq    = SEQ_AL_MAIN;
     }
     break;
@@ -523,13 +523,13 @@ static BOOL Br_Fade_MainAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
       //フェード方向
       if( p_wk->dir == BR_FADE_DIR_IN )
       { 
-        ev1 = 0 + 16 * p_wk->cnt / p_wk->max;
-        ev2 = 16 - 16 * p_wk->cnt / p_wk->max;
+        ev1 = 0 + BR_FADE_DEFAULT_EV * p_wk->cnt / p_wk->max;
+        ev2 = BR_FADE_DEFAULT_EV - BR_FADE_DEFAULT_EV * p_wk->cnt / p_wk->max;
       }
       else if( p_wk->dir == BR_FADE_DIR_OUT )
       { 
-        ev1 = 16 - 16 * p_wk->cnt / p_wk->max;
-        ev2 = 0 + 16 * p_wk->cnt / p_wk->max;
+        ev1 = BR_FADE_DEFAULT_EV - BR_FADE_DEFAULT_EV * p_wk->cnt / p_wk->max;
+        ev2 = 0 + BR_FADE_DEFAULT_EV * p_wk->cnt / p_wk->max;
       }
 
       //上画面
@@ -604,7 +604,7 @@ static BOOL Br_Fade_MainPallete( BR_FADE_WORK *p_wk, u32 *p_seq )
       int i;
 
       p_wk->cnt = 0;
-      p_wk->max = p_wk->sync == 0? 16: p_wk->sync;
+      p_wk->max = p_wk->sync == 0? BR_FADE_DEFAULT_EV_MAX: p_wk->sync;
 
       PaletteTransSwitch( p_wk->p_pfd, TRUE );
 
@@ -618,11 +618,11 @@ static BOOL Br_Fade_MainPallete( BR_FADE_WORK *p_wk, u32 *p_seq )
       //フェード方向
       if( p_wk->dir == BR_FADE_DIR_IN )
       { 
-        ev = 16 - 16 * p_wk->cnt / p_wk->max;
+        ev = BR_FADE_DEFAULT_EV - BR_FADE_DEFAULT_EV * p_wk->cnt / p_wk->max;
       }
       else if( p_wk->dir == BR_FADE_DIR_OUT )
       { 
-        ev = 0 + 16 * p_wk->cnt / p_wk->max;
+        ev = 0 + BR_FADE_DEFAULT_EV * p_wk->cnt / p_wk->max;
       }
 
       //画面による設定
@@ -692,22 +692,22 @@ static BOOL Br_Fade_MainMasterBrightAndAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
       //方向による設定
       if( p_wk->dir == BR_FADE_DIR_IN )
       { 
-        start = 16;
+        start = BR_FADE_DEFAULT_EV;
         end   = 0;
       }
       else if( p_wk->dir == BR_FADE_DIR_OUT )
       { 
         start = 0;
-        end   = 16;
+        end   = BR_FADE_DEFAULT_EV;
       }
       if( p_wk->dir == BR_FADE_DIR_IN )
       { 
         ev1 = 0;
-        ev2 = 16;
+        ev2 = BR_FADE_DEFAULT_EV;
       }
       else if( p_wk->dir == BR_FADE_DIR_OUT )
       { 
-        ev1 = 16;
+        ev1 = BR_FADE_DEFAULT_EV;
         ev2 = 0;
       }
 
@@ -720,7 +720,7 @@ static BOOL Br_Fade_MainMasterBrightAndAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
           ev2
           );
       p_wk->cnt = 0;
-      p_wk->max = p_wk->sync == 0? 16: p_wk->sync;
+      p_wk->max = p_wk->sync == 0? BR_FADE_DEFAULT_EV_MAX: p_wk->sync;
 
       *p_seq  = SEQ_MBA_MAIN;
     }
@@ -734,13 +734,13 @@ static BOOL Br_Fade_MainMasterBrightAndAlpha( BR_FADE_WORK *p_wk, u32 *p_seq )
       //フェード方向
       if( p_wk->dir == BR_FADE_DIR_IN )
       { 
-        ev1 = 0 + 16 * p_wk->cnt / p_wk->max;
-        ev2 = 16 - 16 * p_wk->cnt / p_wk->max;
+        ev1 = 0 + BR_FADE_DEFAULT_EV * p_wk->cnt / p_wk->max;
+        ev2 = BR_FADE_DEFAULT_EV - BR_FADE_DEFAULT_EV * p_wk->cnt / p_wk->max;
       }
       else if( p_wk->dir == BR_FADE_DIR_OUT )
       { 
-        ev1 = 16 - 16 * p_wk->cnt / p_wk->max;
-        ev2 = 0 + 16 * p_wk->cnt / p_wk->max;
+        ev1 = BR_FADE_DEFAULT_EV - BR_FADE_DEFAULT_EV * p_wk->cnt / p_wk->max;
+        ev2 = 0 + BR_FADE_DEFAULT_EV * p_wk->cnt / p_wk->max;
       }
 
       //アルファの処理

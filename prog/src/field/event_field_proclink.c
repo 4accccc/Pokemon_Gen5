@@ -1985,14 +1985,34 @@ static void * FMenuCallProc_BattleRecorder(PROCLINK_WORK* wk, u32 param,EVENT_PR
 //-----------------------------------------------------------------------------
 static RETURNFUNC_RESULT FMenuReturnProc_BattleRecorder(PROCLINK_WORK* wk,void* param_adrs)
 { 
+  BATTLERECORDER_PARAM* p_param = param_adrs;
+
   if( wk->param->call == EVENT_PROCLINK_CALL_BTLRECORDER )
   { 
-    return RETURNFUNC_RESULT_RETURN;
+    switch( p_param->result )
+    { 
+    case BR_RESULT_RETURN:
+      return RETURNFUNC_RESULT_RETURN;
+    case RETURNFUNC_RESULT_EXIT:
+      return RETURNFUNC_RESULT_EXIT;
+    default:
+      GF_ASSERT(0);
+      return RETURNFUNC_RESULT_RETURN;
+    }
   }
   else
   {
-    wk->next_type = EVENT_PROCLINK_CALL_BAG;
-    return RETURNFUNC_RESULT_NEXT;
+    switch( p_param->result )
+    { 
+    case BR_RESULT_RETURN:
+      wk->next_type = EVENT_PROCLINK_CALL_BAG;
+      return RETURNFUNC_RESULT_NEXT;
+    case RETURNFUNC_RESULT_EXIT:
+      return RETURNFUNC_RESULT_EXIT;
+    default:
+      GF_ASSERT(0);
+      return RETURNFUNC_RESULT_RETURN;
+    }
   }
 }
 

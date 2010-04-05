@@ -233,6 +233,8 @@ static GFL_PROC_RESULT BR_MENU_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
     case BR_BTN_SYS_INPUT_EXIT:
       NAGI_Printf( "MENU: Exit!\n" );
       BR_PROC_SYS_Pop( p_param->p_procsys );
+
+      *p_param->p_result = BR_BTN_SYS_GetExitType( p_wk->p_btn );
       return GFL_PROC_RES_FINISH;
     }
     break;

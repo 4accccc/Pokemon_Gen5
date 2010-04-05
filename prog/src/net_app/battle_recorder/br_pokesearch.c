@@ -25,6 +25,7 @@
 //自分のモジュール
 #include "br_util.h"
 #include "br_btn.h"
+#include "br_snd.h"
 
 //外部公開
 #include "br_pokesearch.h"
@@ -716,7 +717,12 @@ static BR_POKESEARCH_ORDER BR_POKESEARCH_HEAD_GetSelect( const BR_POKESEARCH_WOR
   { 
     if( cp_wk->head_order[ ret ] )
     { 
+      PMSND_PlaySE( BR_SND_SE_OK );
       return ret;
+    }
+    else
+    {
+      PMSND_PlaySE( BR_SND_SE_NG );
     }
   }
 

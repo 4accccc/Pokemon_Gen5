@@ -69,6 +69,7 @@ typedef struct
 	BR_RES_WORK			*p_res;				//[in ]リソース管理
 	BR_PROC_SYS			*p_procsys;		//[in ]プロセス管理
   const BR_SAVE_INFO  *cp_saveinfo; //[in]外部データ状況
+  BR_RESULT       *p_result;    //<[out] 終了モードへのポインタ
 } BR_MENU_PROC_PARAM;
 
 

@@ -23,6 +23,7 @@
 //自分のモジュール
 #include "br_btn.h"
 #include "br_util.h"
+#include "br_snd.h"
 
 //外部参照
 #include "br_btlsubway_proc.h"
@@ -495,7 +496,7 @@ static void Br_BtlSubway_CreateMainDisplayNone( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
 
   { 
     const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
-    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 88, 88, p_wk->heapID );
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 88+16, 88, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
@@ -632,7 +633,7 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
   { 
     const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
-    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144+16, 32, p_wk->heapID );
   }
 
 }
@@ -769,7 +770,7 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
   { 
     const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
-    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144+16, 32, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
@@ -982,7 +983,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
 
   { 
     const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
-    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144+16, 32, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
@@ -1084,7 +1085,7 @@ static void Br_BtlSubway_CreateMainDisplayWifi( BR_BTLSUBWAY_WORK	*p_wk, BR_BTLS
   }
   { 
     const u16 bp  = BSUBWAY_SCOREDATA_GetBattlePoint( p_param->p_subway );
-    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144, 32, p_wk->heapID );
+    OBJNUMBER_Init( &p_wk->objnum, p_param->p_unit, bp, 144+16, 32, p_wk->heapID );
   }
 }
 //----------------------------------------------------------------------------
@@ -1287,6 +1288,8 @@ static BR_BTLSUBWAY_SELECT Br_BtlSubway_GetSelect( BR_BTLSUBWAY_WORK *p_wk, u32 
       if( ((u32)( x - sc_select_rect[i].left) <= (u32)(sc_select_rect[i].right - sc_select_rect[i].left))
           & ((u32)( y - sc_select_rect[i].top) <= (u32)(sc_select_rect[i].bottom - sc_select_rect[i].top)))
       { 
+
+        PMSND_PlaySE( BR_SND_SE_OK );
         return i;
       }
     }
@@ -1352,7 +1355,7 @@ static void OBJNUMBER_Init( OBJNUMBER_WORK *p_wk, GFL_CLUNIT *p_clunit, int numb
     //数字
     for( i = 0; i < OBJNUMBER_MAX; i++ )
     {
-      cldata.pos_x  = x + 32 + i * 16;
+      cldata.pos_x  = x + 16 + i * 16;
       cldata.pos_y  = y;
 
       p_wk->p_num[i] = GFL_CLACT_WK_Create( p_clunit,

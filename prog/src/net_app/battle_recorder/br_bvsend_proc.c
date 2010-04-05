@@ -15,8 +15,13 @@
 #include "system/gfl_use.h"
 #include "system/main.h"  //HEAPID
 
+//アーカイブ
+#include "arc_def.h"
+#include "msg/msg_battle_rec.h"
+
 //内部モジュール
 #include "br_util.h"
+#include "br_snd.h"
 
 //外部参照
 #include "br_bvsend_proc.h"
@@ -37,8 +42,11 @@
 //=====================================
 typedef struct 
 {
+  PRINT_QUE             *p_que;
   BR_SEQ_WORK           *p_seq;
 	HEAPID                heapID;
+  BR_TEXT_WORK          *p_text;
+  BR_BALLEFF_WORK       *p_balleff;
   BR_BVSEND_PROC_PARAM	*p_param;
 } BR_BVSEND_WORK;
 
@@ -114,10 +122,20 @@ static GFL_PROC_RESULT BR_BVSEND_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   p_wk->p_param = p_param;
 	p_wk->heapID	= BR_PROC_SYS_GetHeapID( p_param->p_procsys );
 
-	//グラフィック初期化
-
   //モジュール初期化
   p_wk->p_seq = BR_SEQ_Init( p_wk, Br_BvSend_Seq_FadeIn, p_wk->heapID );
+  p_wk->p_que   = PRINTSYS_QUE_Create( p_wk->heapID );
+  p_wk->p_text  = BR_TEXT_Init( p_param->p_res, p_wk->p_que, p_wk->heapID );
+  BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_716 );
+  p_wk->p_balleff = BR_BALLEFF_Init( p_param->p_unit, p_param->p_res, CLSYS_DRAW_MAIN, p_wk->heapID );
+  { 
+    GFL_POINT pos = 
+    { 
+      256/2,
+      192/2,
+    };
+    BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_BIG_CIRCLE, &pos );
+  }
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -139,6 +157,9 @@ static GFL_PROC_RESULT BR_BVSEND_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 	BR_BVSEND_PROC_PARAM	*p_param	= p_param_adrs;
 
 	//モジュール破棄
+  BR_BALLEFF_Exit( p_wk->p_balleff );
+  BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
+  PRINTSYS_QUE_Delete( p_wk->p_que );
   BR_SEQ_Exit( p_wk->p_seq );
 
 	//プロセスワーク破棄
@@ -160,14 +181,21 @@ static GFL_PROC_RESULT BR_BVSEND_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT BR_BVSEND_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
-
 	BR_BVSEND_WORK	*p_wk	= p_wk_adrs;
 
+  //シーケンス
   BR_SEQ_Main( p_wk->p_seq );
   if( BR_SEQ_IsEnd( p_wk->p_seq ) )
   { 
     return GFL_PROC_RES_FINISH;
   }
+
+  //ボール演出
+  BR_BALLEFF_Main( p_wk->p_balleff );
+
+  //表示
+  PRINTSYS_QUE_Main( p_wk->p_que );
+  BR_TEXT_PrintMain( p_wk->p_text );
 
 	return GFL_PROC_RES_CONTINUE;
 }
@@ -300,6 +328,7 @@ static void Br_BvSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     break;
 
   case SEQ_UPLOAD_START:
+    PMSND_PlaySE( BR_SND_SE_SEARCH );
     BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_UPLOAD, NULL );
     *p_seq  = SEQ_UPLOAD_WAIT;
     break;
@@ -308,10 +337,34 @@ static void Br_BvSend_Seq_Upload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
       u64 number  = 0;
+      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
       if( BR_NET_GetUploadBattleVideoNumber( p_wk->p_param->p_net, &number ) )
       { 
         OS_TPrintf( "送信したビデオナンバー%d\n", number );
+        //@todo すでに　とうろくされいます
+
+        //おくりました
+        {
+          GFL_MSGDATA *p_msg  = BR_RES_GetMsgData( p_wk->p_param->p_res );
+          WORDSET     *p_word = BR_RES_GetWordSet( p_wk->p_param->p_res );
+          STRBUF  *p_src    = GFL_MSG_CreateString( p_msg, msg_info_026 );
+          STRBUF  *p_strbuf = GFL_STR_CreateBuffer( 128, GFL_HEAP_LOWID(HEAPID_BATTLE_RECORDER_SYS) );
+
+          u32 block[3];
+
+          BR_TOOL_GetVideoNumberToBlock( number, block, 3 );
+
+          WORDSET_RegisterNumber( p_word, 2, block[0], 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+          WORDSET_RegisterNumber( p_word, 1, block[1], 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+          WORDSET_RegisterNumber( p_word, 0, block[2], 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+          WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+          BR_TEXT_PrintBuff( p_wk->p_text, p_wk->p_param->p_res, p_strbuf );
+
+          GFL_STR_DeleteBuffer( p_strbuf );
+          GFL_STR_DeleteBuffer( p_src );
+        }
       }
+      BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_UPLOAD_END;
     }
     break;

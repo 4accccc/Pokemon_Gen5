@@ -361,7 +361,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
  */
 //------------------------------------------------------------------------
 #if defined DEBUG_ONLY_FOR_toru_nagihashi
-  #define QuickJumpStart   DEBUG_FIELD_STR56
+  #define QuickJumpStart   DEBUG_FIELD_STR48
 #elif defined DEBUG_ONLY_FOR_matsumiya
   #define QuickJumpStart   DEBUG_FIELD_STR03
   #define QuickJumpSelect  DEBUG_FIELD_STR17

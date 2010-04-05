@@ -21,6 +21,9 @@
 //自分のモジュール
 #include "br_util.h"
 #include "br_btn_data.h"
+#include "br_snd.h"
+
+//外部公開
 #include "br_btn.h"
 
 //=============================================================================
@@ -122,19 +125,6 @@ struct _BR_BTNEX_WORK
 };
 
 //-------------------------------------
-///	シーケンス管理
-//=====================================
-typedef struct _SEQ_WORK SEQ_WORK;	//関数型作るため前方宣言
-typedef void (*SEQ_FUNCTION)( SEQ_WORK *p_wk, int *p_seq, void *p_wk_adrs );
-struct _SEQ_WORK
-{
-	SEQ_FUNCTION	seq_function;		//実行中のシーケンス関数
-	BOOL is_end;									//シーケンスシステム終了フラグ
-	int seq;											//実行中のシーケンス関数の中のシーケンス
-	void *p_wk_adrs;							//実行中のシーケンス関数に渡すワーク
-};
-
-//-------------------------------------
 ///	バトルレコーダー　ボタン管理
 //=====================================
 struct _BR_BTN_SYS_WORK
@@ -142,7 +132,7 @@ struct _BR_BTN_SYS_WORK
 	HEAPID						heapID;       //ヒープID
 	BR_RES_WORK				*p_res;		    //リソース
 	GFL_CLUNIT				*p_unit;	    //セルユニット
-  SEQ_WORK          seq;
+  BR_SEQ_WORK       *p_seq;       //シーケンス
   BR_RES_OBJID      use_resID;    //ボタンに使用するリソースID
 
 	BR_BTN_SYS_STATE	state;	      //ボタン管理の状態
@@ -166,6 +156,8 @@ struct _BR_BTN_SYS_WORK
   PRINT_QUE         *p_que;       //プリントキュー 
 
   BR_TEXT_WORK      *p_text;      //文字表示
+
+  BR_EXIT_TYPE      exit_type;    //文字列
 };
 //=============================================================================
 /**
@@ -187,16 +179,6 @@ typedef enum
 static void Br_Btn_Sys_ChangePalleteOffsetStack( BR_BTN_SYS_WORK *p_wk, BR_BTN_SYS_CHANGE_PALLETE_OFFSET_STACK_MODE mode );
 
 //-------------------------------------
-///	SEQ
-//=====================================
-static void SEQ_Init( SEQ_WORK *p_wk, void *p_wk_adrs, SEQ_FUNCTION seq_function );
-static void SEQ_Exit( SEQ_WORK *p_wk );
-static void SEQ_Main( SEQ_WORK *p_wk );
-static BOOL SEQ_IsEnd( const SEQ_WORK *cp_wk );
-static void SEQ_SetNext( SEQ_WORK *p_wk, SEQ_FUNCTION seq_function );
-static void SEQ_End( SEQ_WORK *p_wk );
-
-//-------------------------------------
 ///	SEQFUNC
 //    次のボタンへいくとき
 //      Touch -> HideBtn -> ChangePage -> UpTag -> AppearBtn
@@ -208,17 +190,17 @@ static void SEQ_End( SEQ_WORK *p_wk );
 //      Touch -> HideBtn -> ChangePage -> UpTag
 //
 //=====================================
-static void SEQFUNC_Start( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_Touch( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_HideBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_HideBtn2( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_ChangePage( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_AppearBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_LeaveBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_UpTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_DownTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_Decide( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void SEQFUNC_NotPushMessage( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_Start( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_Touch( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_HideBtn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_HideBtn2( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_ChangePage( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_AppearBtn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_LeaveBtn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_UpTag( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_DownTag( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_Decide( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void SEQFUNC_NotPushMessage( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 ///	BTNの処理
@@ -407,7 +389,7 @@ BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_W
 	}
 
   //モジュール作成
-	SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_Start );
+	p_wk->p_seq = BR_SEQ_Init( p_wk, SEQFUNC_Start, heapID );
 
 	return p_wk;
 }
@@ -421,7 +403,7 @@ BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_W
 void BR_BTN_SYS_Exit( BR_BTN_SYS_WORK *p_wk )
 {	
   //モジュール破棄
-  SEQ_Exit( &p_wk->seq );
+  BR_SEQ_Exit( p_wk->p_seq );
 
   //テキスト面破棄
   if( p_wk->p_text )
@@ -473,7 +455,7 @@ void BR_BTN_SYS_Exit( BR_BTN_SYS_WORK *p_wk )
 void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk )
 {
   //シーケンス
-	SEQ_Main( &p_wk->seq );
+	BR_SEQ_Main( p_wk->p_seq );
 
   //プリント
   PRINTSYS_QUE_Main( p_wk->p_que );
@@ -519,6 +501,19 @@ BR_BTN_SYS_INPUT BR_BTN_SYS_GetInput( const BR_BTN_SYS_WORK *cp_wk, u32 *p_seq, 
 BR_BTN_SYS_STATE BR_BTN_SYS_GetState( const BR_BTN_SYS_WORK *cp_wk )
 {	
 	return cp_wk->state;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	バトルレコーダー	終了タイプを取得
+ *
+ *	@param	const BR_BTN_SYS_WORK *cp_wk  ワーク
+ *
+ *	@return 終了タイプを取得
+ */
+//-----------------------------------------------------------------------------
+BR_EXIT_TYPE BR_BTN_SYS_GetExitType( const BR_BTN_SYS_WORK *cp_wk )
+{ 
+  return cp_wk->exit_type;
 }
 //=============================================================================
 /**
@@ -660,99 +655,6 @@ static void Br_Btn_Sys_ChangePalleteOffsetStack( BR_BTN_SYS_WORK *p_wk, BR_BTN_S
 
 //=============================================================================
 /**
- *						SEQ
- */
-//=============================================================================
-//----------------------------------------------------------------------------
-/**
- *	@brief	SEQ	初期化
- *
- *	@param	SEQ_WORK *p_wk	ワーク
- *	@param	*p_param				パラメータ
- *	@param	seq_function		シーケンス
- *
- */
-//-----------------------------------------------------------------------------
-static void SEQ_Init( SEQ_WORK *p_wk, void *p_wk_adrs, SEQ_FUNCTION seq_function )
-{	
-	//クリア
-	GFL_STD_MemClear( p_wk, sizeof(SEQ_WORK) );
-
-	//初期化
-	p_wk->p_wk_adrs	= p_wk_adrs;
-
-	//セット
-	SEQ_SetNext( p_wk, seq_function );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	SEQ	破棄
- *
- *	@param	SEQ_WORK *p_wk	ワーク
- */
-//-----------------------------------------------------------------------------
-static void SEQ_Exit( SEQ_WORK *p_wk )
-{	
-	//クリア
-	GFL_STD_MemClear( p_wk, sizeof(SEQ_WORK) );
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	SEQ	メイン処理
- *
- *	@param	SEQ_WORK *p_wk ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void SEQ_Main( SEQ_WORK *p_wk )
-{	
-	if( !p_wk->is_end )
-	{	
-		p_wk->seq_function( p_wk, &p_wk->seq, p_wk->p_wk_adrs );
-	}
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	SEQ	終了取得
- *
- *	@param	const SEQ_WORK *cp_wk		ワーク
- *
- *	@return	TRUEならば終了	FALSEならば処理中
- */	
-//-----------------------------------------------------------------------------
-static BOOL SEQ_IsEnd( const SEQ_WORK *cp_wk )
-{	
-	return cp_wk->is_end;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	SEQ	次のシーケンスを設定
- *
- *	@param	SEQ_WORK *p_wk	ワーク
- *	@param	seq_function		シーケンス
- *
- */
-//-----------------------------------------------------------------------------
-static void SEQ_SetNext( SEQ_WORK *p_wk, SEQ_FUNCTION seq_function )
-{	
-	p_wk->seq_function	= seq_function;
-	p_wk->seq	= 0;
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	SEQ	終了
- *
- *	@param	SEQ_WORK *p_wk	ワーク
- *
- */
-//-----------------------------------------------------------------------------
-static void SEQ_End( SEQ_WORK *p_wk )
-{	
-	p_wk->is_end	= TRUE;
-}
-
-//=============================================================================
-/**
  *  SEQFUNC
  */
 //=============================================================================
@@ -760,27 +662,27 @@ static void SEQ_End( SEQ_WORK *p_wk )
 /**
  *	@brief	開始
  *
- *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	BR_SEQ_WORK *p_seqwk	シーケンスワーク
  *	@param	*p_seq					シーケンス
  *	@param	*p_wk_adrs				ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_Start( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_Start( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
 
   BR_BTN_SYS_WORK *p_wk = p_wk_adrs;
-  SEQ_SetNext( p_seqwk, SEQFUNC_Touch );
+  BR_SEQ_SetNext( p_seqwk, SEQFUNC_Touch );
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief	タッチメイン
  *
- *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	BR_SEQ_WORK *p_seqwk	シーケンスワーク
  *	@param	*p_seq					シーケンス
  *	@param	*p_wk_adrs				ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_Touch( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_Touch( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   int i;
   u32 x, y;
@@ -789,6 +691,37 @@ static void SEQFUNC_Touch( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
   BR_BTN_SYS_WORK *p_wk = p_wk_adrs;
 
   p_wk->input	= BR_BTN_SYS_INPUT_NONE;
+
+  //キー押し検知
+  {
+    BR_MENUID menuID  = BR_BTNEX_GetParam( &p_wk->p_btn_now[0], BR_BTN_PARAM_MENUID );
+    if( menuID == BR_BROWSE_MENUID_TOP
+        || menuID == BR_BTLVIDEO_MENUID_TOP
+        || menuID == BR_MUSICAL_MENUID_TOP
+        )
+    { 
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
+      { 
+        PMSND_PlaySE( BR_SND_SE_OK );
+
+        for( i = 0; i < p_wk->btn_now_max; i++ )
+        {	
+          if( BR_BTN_TYPE_EXIT == BR_BTNEX_GetParam( &p_wk->p_btn_now[i], BR_BTN_PARAM_TYPE ) )
+          { 
+            if( p_wk->p_text )
+            { 
+              BR_TEXT_Exit( p_wk->p_text, p_wk->p_res );
+              p_wk->p_text  = NULL;
+            }
+            p_wk->trg_btn	= i;
+            is_trg				= TRUE;
+            p_wk->exit_type = BR_EXIT_TYPE_EXIT;
+            break;
+          }
+        }
+      }
+    }
+  }
 
   //ボタン押し検知
   if( GFL_UI_TP_GetPointTrg( &x, &y ) )
@@ -806,9 +739,11 @@ static void SEQFUNC_Touch( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
             BR_TEXT_Exit( p_wk->p_text, p_wk->p_res );
             p_wk->p_text  = NULL;
           }
+          PMSND_PlaySE( BR_SND_SE_OK );
           //押せるのでおした
           p_wk->trg_btn	= i;
           is_trg				= TRUE;
+          p_wk->exit_type = BR_EXIT_TYPE_RETURN;
           break;
         }
         else
@@ -816,11 +751,12 @@ static void SEQFUNC_Touch( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
           //押せないときの動作
           BR_BTN_NONEPROC proc  = BR_BTNEX_GetParam(&p_wk->p_btn_now[i],BR_BTN_PARAM_NONE_PROC );
           u16 proc_data  = BR_BTNEX_GetParam(&p_wk->p_btn_now[i],BR_BTN_PARAM_NONE_DATA );
+          PMSND_PlaySE( BR_SND_SE_NG );
           switch( proc )
           { 
           case BR_BTN_NONEPROC_NOPUSH:
             p_wk->trg_btn	= i;
-            SEQ_SetNext( p_seqwk, SEQFUNC_NotPushMessage );
+            BR_SEQ_SetNext( p_seqwk, SEQFUNC_NotPushMessage );
             break;
           }
           break;
@@ -857,7 +793,7 @@ static void SEQFUNC_Touch( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     switch( p_wk->next_type )
     {
     case BR_BTN_TYPE_RETURN:
-      SEQ_SetNext( p_seqwk, SEQFUNC_LeaveBtn );
+      BR_SEQ_SetNext( p_seqwk, SEQFUNC_LeaveBtn );
       break;
 
     case BR_BTN_TYPE_SELECT_MSG:
@@ -865,11 +801,11 @@ static void SEQFUNC_Touch( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     case BR_BTN_TYPE_SELECT:
       /* fallthrough */
     case BR_BTN_TYPE_CHANGESEQ:
-      SEQ_SetNext( p_seqwk, SEQFUNC_HideBtn );
+      BR_SEQ_SetNext( p_seqwk, SEQFUNC_HideBtn );
       break;
 
     default:
-      SEQ_SetNext( p_seqwk, SEQFUNC_Decide );
+      BR_SEQ_SetNext( p_seqwk, SEQFUNC_Decide );
     }
   }
 
@@ -879,12 +815,12 @@ static void SEQFUNC_Touch( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 /**
  *	@brief	ボタンが隠れる
  *
- *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	BR_SEQ_WORK *p_seqwk	シーケンスワーク
  *	@param	*p_seq					シーケンス
  *	@param	*p_wk_adrs				ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_HideBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_HideBtn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
@@ -939,11 +875,11 @@ static void SEQFUNC_HideBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     switch( p_wk->next_type )
     {
     case BR_BTN_TYPE_CHANGESEQ:
-      SEQ_SetNext( p_seqwk, SEQFUNC_ChangePage );
+      BR_SEQ_SetNext( p_seqwk, SEQFUNC_ChangePage );
       break;
 
     default:
-      SEQ_SetNext( p_seqwk, SEQFUNC_ChangePage );
+      BR_SEQ_SetNext( p_seqwk, SEQFUNC_ChangePage );
       break;
     }
     break;
@@ -955,12 +891,12 @@ static void SEQFUNC_HideBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 /**
  *	@brief	ボタンが隠れる  ターゲットは降りてきたもの
  *
- *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	BR_SEQ_WORK *p_seqwk	シーケンスワーク
  *	@param	*p_seq					シーケンス
  *	@param	*p_wk_adrs				ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_HideBtn2( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_HideBtn2( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
@@ -1010,11 +946,11 @@ static void SEQFUNC_HideBtn2( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     switch( p_wk->next_type )
     {
     case BR_BTN_TYPE_CHANGESEQ:
-      SEQ_SetNext( p_seqwk, SEQFUNC_ChangePage );
+      BR_SEQ_SetNext( p_seqwk, SEQFUNC_ChangePage );
       break;
 
     default:
-      SEQ_SetNext( p_seqwk, SEQFUNC_ChangePage );
+      BR_SEQ_SetNext( p_seqwk, SEQFUNC_ChangePage );
       break;
     }
     break;
@@ -1025,12 +961,12 @@ static void SEQFUNC_HideBtn2( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 /**
  *	@brief	ページ切り替え演出
  *
- *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	BR_SEQ_WORK *p_seqwk	シーケンスワーク
  *	@param	*p_seq					シーケンス
  *	@param	*p_wk_adrs				ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_ChangePage( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_ChangePage( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   BR_BTN_SYS_WORK *p_wk = p_wk_adrs;
 
@@ -1056,7 +992,7 @@ static void SEQFUNC_ChangePage( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     pos.y = -32;
     Br_Btn_Sys_ReLoadBtn( p_wk, nextID, &pos );
 
-    SEQ_SetNext( p_seqwk, SEQFUNC_UpTag );
+    BR_SEQ_SetNext( p_seqwk, SEQFUNC_UpTag );
   }
   else if( p_wk->next_type == BR_BTN_TYPE_RETURN )
   { 
@@ -1091,7 +1027,7 @@ static void SEQFUNC_ChangePage( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       //削除
       BR_BTNEX_Exit( &btn );
 
-      SEQ_SetNext( p_seqwk, SEQFUNC_AppearBtn );
+      BR_SEQ_SetNext( p_seqwk, SEQFUNC_AppearBtn );
     }
   } 
   else
@@ -1113,19 +1049,19 @@ static void SEQFUNC_ChangePage( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     }
 
 
-    SEQ_SetNext( p_seqwk, SEQFUNC_UpTag );
+    BR_SEQ_SetNext( p_seqwk, SEQFUNC_UpTag );
   }
 }
 //----------------------------------------------------------------------------
 /**
  *	@brief	出現
  *
- *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	BR_SEQ_WORK *p_seqwk	シーケンスワーク
  *	@param	*p_seq					シーケンス
  *	@param	*p_wk_adrs				ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_AppearBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_AppearBtn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
@@ -1175,15 +1111,15 @@ static void SEQFUNC_AppearBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     case BR_BTN_TYPE_SELECT_MSG:
       /* fallthrough */
     case BR_BTN_TYPE_SELECT:
-      SEQ_SetNext( p_seqwk, SEQFUNC_Decide );
+      BR_SEQ_SetNext( p_seqwk, SEQFUNC_Decide );
       break;
 
     case BR_BTN_TYPE_CHANGESEQ:
-      SEQ_SetNext( p_seqwk, SEQFUNC_UpTag ); 
+      BR_SEQ_SetNext( p_seqwk, SEQFUNC_UpTag ); 
       break;
 
     default:
-      SEQ_SetNext( p_seqwk, SEQFUNC_Decide );
+      BR_SEQ_SetNext( p_seqwk, SEQFUNC_Decide );
       break;
     }
     break;
@@ -1193,12 +1129,12 @@ static void SEQFUNC_AppearBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 /**
  *	@brief	ボタンが下へ去る
  *
- *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	BR_SEQ_WORK *p_seqwk	シーケンスワーク
  *	@param	*p_seq					シーケンス
  *	@param	*p_wk_adrs				ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_LeaveBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_LeaveBtn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
@@ -1247,7 +1183,7 @@ static void SEQFUNC_LeaveBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 
   case SEQ_END:
 
-    SEQ_SetNext( p_seqwk, SEQFUNC_DownTag );
+    BR_SEQ_SetNext( p_seqwk, SEQFUNC_DownTag );
     break;
   }
 }
@@ -1255,12 +1191,12 @@ static void SEQFUNC_LeaveBtn( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 /**
  *	@brief	タグが上に
  *
- *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	BR_SEQ_WORK *p_seqwk	シーケンスワーク
  *	@param	*p_seq					シーケンス
  *	@param	*p_wk_adrs				ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_UpTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_UpTag( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
@@ -1336,10 +1272,10 @@ static void SEQFUNC_UpTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     case BR_BTN_TYPE_SELECT_MSG:
       /* fallthrough */
     case BR_BTN_TYPE_SELECT:
-      SEQ_SetNext( p_seqwk, SEQFUNC_AppearBtn ); 
+      BR_SEQ_SetNext( p_seqwk, SEQFUNC_AppearBtn ); 
       break;
     default:
-      SEQ_SetNext( p_seqwk, SEQFUNC_Decide ); 
+      BR_SEQ_SetNext( p_seqwk, SEQFUNC_Decide ); 
     }
     break;
   }
@@ -1348,12 +1284,12 @@ static void SEQFUNC_UpTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 /**
  *	@brief	タグを下に移動
  *
- *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	BR_SEQ_WORK *p_seqwk	シーケンスワーク
  *	@param	*p_seq					シーケンス
  *	@param	*p_wk_adrs				ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_DownTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_DownTag( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
@@ -1418,7 +1354,7 @@ static void SEQFUNC_DownTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
     break;
     
   case SEQ_END:
-    SEQ_SetNext( p_seqwk, SEQFUNC_ChangePage ); 
+    BR_SEQ_SetNext( p_seqwk, SEQFUNC_ChangePage ); 
     break;
   }
 }
@@ -1427,12 +1363,12 @@ static void SEQFUNC_DownTag( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 /**
  *	@brief	入力決定
  *
- *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	BR_SEQ_WORK *p_seqwk	シーケンスワーク
  *	@param	*p_seq					シーケンス
  *	@param	*p_wk_adrs				ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_Decide( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_Decide( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
@@ -1465,7 +1401,7 @@ static void SEQFUNC_Decide( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
       }
     }
 
-    SEQ_SetNext( p_seqwk, SEQFUNC_Touch ); 
+    BR_SEQ_SetNext( p_seqwk, SEQFUNC_Touch ); 
     break;
   }
 }
@@ -1474,12 +1410,12 @@ static void SEQFUNC_Decide( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 /**
  *	@brief	押せないメッセージ表示
  *
- *	@param	SEQ_WORK *p_seqwk	シーケンスワーク
+ *	@param	BR_SEQ_WORK *p_seqwk	シーケンスワーク
  *	@param	*p_seq					  シーケンス
  *	@param	*p_wk_adrs				ワーク
  */
 //-----------------------------------------------------------------------------
-static void SEQFUNC_NotPushMessage( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void SEQFUNC_NotPushMessage( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
@@ -1510,7 +1446,7 @@ static void SEQFUNC_NotPushMessage( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
     break;
 
   case SEQ_END:
-    SEQ_SetNext( p_seqwk, SEQFUNC_Touch );
+    BR_SEQ_SetNext( p_seqwk, SEQFUNC_Touch );
     break;
   }
 }
@@ -1602,13 +1538,15 @@ static void BR_BTNEX_Exit( BR_BTNEX_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static BOOL BR_BTNEX_GetTrg( const BR_BTNEX_WORK *cp_wk, u32 x, u32 y )
 {	
-	if( !cp_wk->is_use )
+  
+  if( !cp_wk->is_use )
 	{	
 		return FALSE;
 	}
 
-  return BR_BTN_GetTrg( cp_wk->p_btn, x, y );
+  return BR_BTN_GetHit( cp_wk->p_btn, x, y );
 }
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	ボタンの動作開始
@@ -2394,9 +2332,33 @@ void BR_BTN_Exit( BR_BTN_WORK *p_wk )
  */
 //-----------------------------------------------------------------------------
 BOOL BR_BTN_GetTrg( const BR_BTN_WORK *cp_wk, u32 x, u32 y )
+{
+  BOOL ret;
+  ret = BR_BTN_GetHit( cp_wk, x, y );
+
+  if( ret )
+  { 
+    PMSND_PlaySE( BR_SND_SE_OK );
+  }
+
+  return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	ボタンと点の衝突判定  (GetTrgとの違いはSEがなるかならないかです)
+ *
+ *	@param	const BR_BTN_WORK *cp_wk	ワーク
+ *	@param	x													タッチ座標X
+ *	@param	y													タッチ座標Y
+ *
+ *	@return	TRUEで衝突	FALSEで衝突していない
+ */
+//-----------------------------------------------------------------------------
+BOOL BR_BTN_GetHit( const BR_BTN_WORK *cp_wk, u32 x, u32 y )
 {	
 	GFL_RECT rect;
 	GFL_CLACTPOS	pos;
+  BOOL ret;
 
 	GFL_CLACT_WK_GetPos( cp_wk->p_clwk, &pos, cp_wk->display );
 
@@ -2405,8 +2367,10 @@ BOOL BR_BTN_GetTrg( const BR_BTN_WORK *cp_wk, u32 x, u32 y )
 	rect.top		= pos.y - BR_BTN_DATA_HEIGHT/2;
 	rect.bottom	= pos.y + BR_BTN_DATA_HEIGHT/2;
 
-  return ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
             & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
+
+  return ret;
 }
 //----------------------------------------------------------------------------
 /**

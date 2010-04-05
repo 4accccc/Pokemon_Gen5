@@ -18,6 +18,7 @@
 //バトルレコーダー内モジュール
 #include "br_util.h"
 #include "br_inner.h"
+#include "br_snd.h"
 
 //アーカイブ
 #include "msg/msg_battle_rec.h"
@@ -274,6 +275,7 @@ static void Br_Start_Seq_Open( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       pos.x = 128;
       pos.y = 96;
       BR_BALLEFF_StartMove( p_wk->p_balleff[CLSYS_DRAW_MAIN], BR_BALLEFF_MOVE_LINE, &pos );
+      PMSND_PlaySE( BR_SND_SE_BOOT );
     }
     *p_seq  = SEQ_BALLEFF_UP_WAIT;
     break;
@@ -335,6 +337,7 @@ static void Br_Start_Seq_Open( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_TOUCH:
     if( GFL_UI_TP_GetTrg() )
     { 
+      PMSND_PlaySE( BR_SND_SE_TOUCHHERE );
       BR_MSGWIN_Exit( p_wk->p_here );
       p_wk->p_here  = NULL;
       GFL_BG_LoadScreenReq( BG_FRAME_S_FONT );

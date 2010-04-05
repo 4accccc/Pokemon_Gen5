@@ -23,6 +23,7 @@
 //自分のモジュール
 #include "br_btn.h"
 #include "br_util.h"
+#include "br_snd.h"
 
 //セーブデータ
 #include "savedata/battle_rec.h"
@@ -40,17 +41,20 @@
 //=====================================
 typedef enum
 {
-	BR_RECORD_BTNID_RETURN,
-	BR_RECORD_BTNID_SAVE,
-	BR_RECORD_BTNID_MAX
-} BR_RECORD_BTNID;
+	BR_RECORD_MAIN_BTNID_START,
+	BR_RECORD_MAIN_BTNID_RETURN = BR_RECORD_MAIN_BTNID_START,
+	BR_RECORD_MAIN_BTNID_SAVE,
+	BR_RECORD_MAIN_BTNID_MAX,
+
+	BR_RECORD_BTNID_MAX,
+} BR_RECORD_MAIN_BTNID;
 
 //-------------------------------------
 ///	MSGWIN
 //=====================================
 typedef enum
 {
-  BR_RECORD_MSGWINID_S_PROFILE,  //プロフィールをみる／しまう
+  BR_RECORD_MSGWINID_S_PROFILE,       //プロフィールをみる／しまう
   BR_RECORD_MSGWINID_S_MAX,
 } BR_RECORD_MSGWINID_S;
 typedef enum
@@ -99,6 +103,7 @@ typedef struct
 
   BOOL                  can_save;
 
+
   BR_RECORD_PROC_PARAM	*p_param;
 } BR_RECORD_WORK;
 
@@ -127,8 +132,7 @@ static void Br_Record_Seq_FadeOutAfter( BR_SEQ_WORK *p_seqwk, int *p_seq, void *
 static void Br_Record_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_Record_Seq_ChangeDrawUp( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
-static void Br_Record_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
+static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
 ///	画面作成
@@ -138,10 +142,10 @@ static void Br_Record_CreateMainDisplayDouble( BR_RECORD_WORK * p_wk, BR_RECORD_
 static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, BATTLE_REC_HEADER_PTR p_header, HEAPID heapID );
 static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 static void Br_Record_DeleteMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
-
+//レコードメイン下画面
 static void Br_Record_CreateSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
-
+//ダウンロード画面
 static void Br_Record_Download_CreateDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 static void Br_Record_Download_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param );
 
@@ -151,6 +155,8 @@ static void Br_Record_Download_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_P
 static BOOL Br_Record_Check2vs2( BATTLE_REC_HEADER_PTR p_head );
 static BOOL Br_Record_GetTrgProfile( BR_RECORD_WORK * p_wk, u32 x, u32 y );
 static BOOL Br_Record_GetTrgStart( u32 x, u32 y );
+static BOOL Br_Record_GetTrgYes( u32 x, u32 y );
+static BOOL Br_Record_GetTrgNo( u32 x, u32 y );
 
 //=============================================================================
 /**
@@ -225,7 +231,7 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
 
   case BR_RECODE_PROC_DOWNLOAD_NUMBER:
     //番号から来たときは先によみにいくので、まだない
-    if( !p_wk->p_param->is_btl_return )
+    if( !p_wk->p_param->is_return )
     { 
       p_wk->p_header  = NULL;
       p_wk->p_profile = NULL;
@@ -244,7 +250,7 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *
   if( p_wk->p_param->mode == BR_RECODE_PROC_DOWNLOAD_NUMBER )
   { 
     //番号指定から来た場合はヘッダろプロファイルがないのですぐダウンロード
-    if( !p_wk->p_param->is_btl_return )
+    if( !p_wk->p_param->is_return )
     { 
       BR_SEQ_SetNext( p_wk->p_seq, Br_Record_Seq_NumberDownload );
     }
@@ -329,6 +335,7 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
 
 	BR_RECORD_WORK	*p_wk	= p_wk_adrs;
 
+  //シーケンス処理
   BR_SEQ_Main( p_wk->p_seq );
   if( BR_SEQ_IsEnd( p_wk->p_seq ) )
   { 
@@ -339,6 +346,7 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
   BR_BALLEFF_Main( p_wk->p_balleff );
 
   //文字表示
+  PRINTSYS_QUE_Main( p_wk->p_que );
   { 
     int i;
     for( i = 0; i < BR_RECORD_MSGWINID_S_MAX; i++ )
@@ -360,9 +368,13 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *
   if( p_wk->p_profile_disp )
   { 
     BR_PROFILE_PrintMain( p_wk->p_profile_disp );
+  } 
+  
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_PrintMain( p_wk->p_text );
   }
 
-  PRINTSYS_QUE_Main( p_wk->p_que );
 
 
 	return GFL_PROC_RES_CONTINUE;
@@ -484,6 +496,7 @@ static void Br_Record_Seq_FadeOutAfter( BR_SEQ_WORK *p_seqwk, int *p_seq, void *
   if( p_wk->is_profile )
   { 
     BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
+    p_wk->p_profile_disp  = NULL;
   }
   else
   { 
@@ -518,7 +531,7 @@ static void Br_Record_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     }
 
     //終了チェック
-    if( BR_BTN_GetTrg( p_wk->p_btn[BR_RECORD_BTNID_RETURN], x, y ) )
+    if( BR_BTN_GetTrg( p_wk->p_btn[BR_RECORD_MAIN_BTNID_RETURN], x, y ) )
     {	
       p_wk->p_param->ret  = BR_RECORD_RETURN_FINISH;
       BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
@@ -526,13 +539,14 @@ static void Br_Record_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     }	
 
     //録画ボタン
-    if( p_wk->p_btn[BR_RECORD_BTNID_SAVE] )
+    if( p_wk->p_btn[BR_RECORD_MAIN_BTNID_SAVE] )
     { 
-      if( BR_BTN_GetTrg( p_wk->p_btn[BR_RECORD_BTNID_SAVE], x, y ) )
+      if( BR_BTN_GetTrg( p_wk->p_btn[BR_RECORD_MAIN_BTNID_SAVE], x, y ) )
       {	
-        p_wk->p_param->ret  = BR_RECORD_RETURN_FINISH;
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_Save );
+        //ダウンロード後録画へ行く
+        BR_PROC_SYS_Push( p_wk->p_param->p_procsys, BR_PROCID_BV_SAVE );
+        p_wk->p_param->video_number = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_DATA_NUMBER, 0 );
+        BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeOut );
       }	
     }
 
@@ -543,7 +557,7 @@ static void Br_Record_Seq_Main( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
           || p_wk->p_param->mode == BR_RECODE_PROC_DOWNLOAD_NUMBER )
       { 
         //データダウンロード
-        BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_VideoDownload );
+        BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_VideoDownloadRecPlay );
       }
       else
       { 
@@ -677,8 +691,7 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
       GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
       req_param.download_video_number = p_wk->p_param->video_number;
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD, &req_param );
-
-
+      PMSND_PlaySE( BR_SND_SE_SEARCH );
 
       *p_seq  = SEQ_DOWNLOAD_WAIT;
     }
@@ -686,6 +699,7 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
   case SEQ_DOWNLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
+      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
       BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_DOWNLOAD_END;
     }
@@ -703,11 +717,9 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
       }
       else
       { 
-        BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );  //コードインも抜ける
         BR_PROC_SYS_Pop( p_wk->p_param->p_procsys );
-        BR_SEQ_End( p_seqwk );
+        *p_seq  = SEQ_FADEOUT_START_EXIT;
       }
-      *p_seq  = SEQ_FADEOUT_START_EXIT;
     }
     break;
   case SEQ_FADEOUT_START:
@@ -736,25 +748,22 @@ static void Br_Record_Seq_NumberDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void
     }
     break;
   case SEQ_END_EXIT:
-    if( p_wk->p_text )
-    { 
-      BR_TEXT_Exit( p_wk->p_text, p_wk->p_param->p_res );
-      p_wk->p_text  = NULL;
-    }
+    Br_Record_Download_DeleteDisplay( p_wk, p_wk->p_param );
+
     BR_SEQ_End( p_seqwk );
     break;
   }
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  録画データ本体をダウンロード
+ *	@brief  録画データ本体をダウンロードをして録画再生へいく
  *
  *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
  *	@param	*p_seq                シーケンス変数
  *	@param	*p_wk_adrs            ワークアドレス
  */
 //-----------------------------------------------------------------------------
-static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
+static void Br_Record_Seq_VideoDownloadRecPlay( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
 { 
   enum
   { 
@@ -783,7 +792,7 @@ static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
   switch( *p_seq )
   { 
   case SEQ_CHANGE_FADEOUT_START:
-    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
     *p_seq  = SEQ_CHANGE_FADEOUT_WAIT;
     break;
   case SEQ_CHANGE_FADEOUT_WAIT:
@@ -798,6 +807,7 @@ static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
     if( p_wk->is_profile )
     { 
       BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
+      p_wk->p_profile_disp  = NULL;
     }
     else
     { 
@@ -811,7 +821,7 @@ static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
     *p_seq  = SEQ_CHANGE_FADEIN_START;
     break;
   case SEQ_CHANGE_FADEIN_START:
-    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
     *p_seq  = SEQ_CHANGE_FADEIN_WAIT;
     break;
   case SEQ_CHANGE_FADEIN_WAIT:
@@ -827,6 +837,7 @@ static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
       GFL_STD_MemClear( &req_param, sizeof(BR_NET_REQUEST_PARAM) );
       req_param.download_video_number = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_DATA_NUMBER, 0 );
       BR_NET_StartRequest( p_wk->p_param->p_net, BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD, &req_param );
+      PMSND_PlaySE( BR_SND_SE_SEARCH );
 
       *p_seq  = SEQ_DOWNLOAD_WAIT;
     }
@@ -834,6 +845,7 @@ static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
   case SEQ_DOWNLOAD_WAIT:
     if( BR_NET_WaitRequest( p_wk->p_param->p_net ) )
     { 
+      PMSND_PlaySE( BR_SND_SE_SEARCH_OK );
       BR_BALLEFF_StartMove( p_wk->p_balleff, BR_BALLEFF_MOVE_NOP, NULL );
       *p_seq  = SEQ_DOWNLOAD_END;
     }
@@ -899,19 +911,6 @@ static void Br_Record_Seq_VideoDownload( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
     BR_SEQ_SetNext( p_seqwk, Br_Record_Seq_FadeInBefore );
     break;
   }
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief  保存シーケンス
- *
- *	@param	BR_SEQ_WORK *p_seqwk  シーケンスワーク
- *	@param	*p_seq                シーケンス変数
- *	@param	*p_wk_adrs            ワークアドレス
- */
-//-----------------------------------------------------------------------------
-static void Br_Record_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs )
-{ 
-
 }
 //=============================================================================
 /**
@@ -1002,16 +1001,12 @@ static void Br_Record_CreateMainDisplaySingle( BR_RECORD_WORK * p_wk, BR_RECORD_
         break;
       case BR_RECORD_MSGWINID_M_BTL_NUMBER:    //ビデオナンバー
         { 
-          const u64 number  = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_DATA_NUMBER, 0);
-          u64 dtmp1 = number;
+          u64 number  = RecHeader_ParamGet( p_wk->p_header, RECHEAD_IDX_DATA_NUMBER, 0);
           u32 dtmp2[3];
-
-          dtmp2[ 0 ] = dtmp1 % 100000;	///< 3block
-          dtmp1 /= 100000;
-          dtmp2[ 1 ] = dtmp1 % 100000;	///< 2block
-          dtmp1 /= 100000;
-          dtmp2[ 2 ] = dtmp1;				///< 1block
           
+          //ナンバーを３ブロックに
+          BR_TOOL_GetVideoNumberToBlock( number, dtmp2, 3 );
+
           { 
             int check1 = ( dtmp2[ 2 ] / 10 ) % 10;
 
@@ -1257,6 +1252,8 @@ static void Br_Record_DeleteMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_P
   }
 
   BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_RECORD_M_BTL_SINGLE );
+
+  GFL_BG_LoadScreenReq( BG_FRAME_M_FONT );
 }
 
 //----------------------------------------------------------------------------
@@ -1278,9 +1275,9 @@ static void Br_Record_CreateSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
   } sc_msgwin_data[BR_RECORD_MSGWINID_S_MAX]  =
   { 
     {
-      9,
+      8,
       3,
-      14,
+      16,
       2,
       msg_718
     }
@@ -1312,11 +1309,11 @@ static void Br_Record_CreateSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
 
       BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
 
-      p_wk->p_btn[BR_RECORD_BTNID_RETURN] = BR_BTN_Init( &cldata, msg_05, BR_BTN_DATA_SHORT_WIDTH,CLSYS_DRAW_SUB, p_param->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
+      p_wk->p_btn[BR_RECORD_MAIN_BTNID_RETURN] = BR_BTN_Init( &cldata, msg_05, BR_BTN_DATA_SHORT_WIDTH,CLSYS_DRAW_SUB, p_param->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
 
       cldata.pos_x    = 136;
       cldata.anmseq   = 3;
-      p_wk->p_btn[BR_RECORD_BTNID_SAVE] = BR_BTN_Init( &cldata, msg_602, BR_BTN_DATA_SHORT_WIDTH,CLSYS_DRAW_SUB, p_param->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
+      p_wk->p_btn[BR_RECORD_MAIN_BTNID_SAVE] = BR_BTN_Init( &cldata, msg_602, BR_BTN_DATA_SHORT_WIDTH,CLSYS_DRAW_SUB, p_param->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
     }
   }
   else
@@ -1334,18 +1331,15 @@ static void Br_Record_CreateSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
 
       BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
 
-      p_wk->p_btn[BR_RECORD_BTNID_RETURN] = BR_BTN_Init( &cldata, msg_05, BR_BTN_DATA_SHORT_WIDTH,CLSYS_DRAW_SUB, p_param->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
+      p_wk->p_btn[BR_RECORD_MAIN_BTNID_RETURN] = BR_BTN_Init( &cldata, msg_05, BR_BTN_DATA_SHORT_WIDTH,CLSYS_DRAW_SUB, p_param->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
     }
   }
 
   //メッセージWIN作成
   {
-    int i;
-    for( i = 0; i < BR_RECORD_MSGWINID_S_MAX; i++ )
-    { 
-      p_wk->p_msgwin_s[i]  = BR_MSGWIN_Init( BG_FRAME_S_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_S_FONT, p_wk->p_que, p_wk->heapID );
-      BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
-    }
+    int i = BR_RECORD_MSGWINID_S_PROFILE;
+    p_wk->p_msgwin_s[i]  = BR_MSGWIN_Init( BG_FRAME_S_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_S_FONT, p_wk->p_que, p_wk->heapID );
+    BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
   }
 }
 //----------------------------------------------------------------------------
@@ -1359,8 +1353,7 @@ static void Br_Record_CreateSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
 static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
 { 
   {
-    int i;
-    for( i = 0; i < BR_RECORD_MSGWINID_S_MAX; i++ )
+    int i = BR_RECORD_MSGWINID_S_PROFILE;
     {
       if( p_wk->p_msgwin_s[i] )
       { 
@@ -1373,7 +1366,7 @@ static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
   //ボタン破棄
   { 
     int i;
-    for( i = 0; i < BR_RECORD_BTNID_MAX; i++ )
+    for( i = BR_RECORD_MAIN_BTNID_START; i < BR_RECORD_MAIN_BTNID_MAX; i++ )
     { 
       if( p_wk->p_btn[i] )
       { 
@@ -1382,6 +1375,7 @@ static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
       }
     }
   }
+  GFL_BG_LoadScreenReq( BG_FRAME_S_FONT );
 
   BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S ); 
 	BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_RECORD_S );
@@ -1471,14 +1465,22 @@ static BOOL Br_Record_Check2vs2( BATTLE_REC_HEADER_PTR p_head )
 static BOOL Br_Record_GetTrgProfile( BR_RECORD_WORK * p_wk, u32 x, u32 y )
 { 
 	GFL_RECT rect;
+  BOOL ret;
 
 	rect.left		= (8)*8;
 	rect.right	= (8 + 15)*8;
 	rect.top		= (2)*8;
 	rect.bottom	= (2 + 4)*8;
 
-  return ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
             & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
+
+  if( ret )
+  { 
+    PMSND_PlaySE( BR_SND_SE_OK );
+  }
+
+  return ret;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1493,12 +1495,80 @@ static BOOL Br_Record_GetTrgProfile( BR_RECORD_WORK * p_wk, u32 x, u32 y )
 static BOOL Br_Record_GetTrgStart( u32 x, u32 y )
 { 
 	GFL_RECT rect;
+  BOOL ret;
 
 	rect.left		= (10)*8;
 	rect.right	= (10 + 12)*8;
 	rect.top		= (7)*8;
 	rect.bottom	= (7 + 8)*8;
 
-  return ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
             & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
+  if( ret )
+  { 
+    PMSND_PlaySE( BR_SND_SE_OK );
+  }
+
+  return ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  はいを選択
+ *
+ *	@param	x     X座標
+ *	@param	y     Y座標
+ *
+ *	@return TRUE入力  FALSE何もしない
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_Record_GetTrgYes( u32 x, u32 y )
+{ 
+	GFL_RECT rect;
+  BOOL ret;
+
+	rect.left		= (4)*8;
+	rect.right	= (4 + 9)*8;
+	rect.top		= (6)*8;
+	rect.bottom	= (6 + 2)*8;
+
+  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+            & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
+
+  
+  if( ret )
+  { 
+    PMSND_PlaySE( BR_SND_SE_OK );
+  }
+
+  return  ret;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  いいえを選択
+ *
+ *	@param	x     X座標
+ *	@param	y     Y座標
+ *
+ *	@return TRUE入力  FALSE何もしない
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_Record_GetTrgNo( u32 x, u32 y )
+{ 
+	GFL_RECT rect;
+  BOOL  ret;
+
+	rect.left		= (18)*8;
+	rect.right	= (18 + 9)*8;
+	rect.top		= (6)*8;
+	rect.bottom	= (6 + 2)*8;
+
+  ret = ( ((u32)( x - rect.left) <= (u32)(rect.right - rect.left))
+            & ((u32)( y - rect.top) <= (u32)(rect.bottom - rect.top)));
+
+  
+  if( ret )
+  { 
+    PMSND_PlaySE( BR_SND_SE_OK );
+  }
+  return ret;
 }

@@ -47,6 +47,14 @@ typedef enum
 	BR_BTN_SYS_INPUT_EXIT,			//終了
 } BR_BTN_SYS_INPUT;
 
+//-------------------------------------
+///	終了タイプ
+//=====================================
+typedef enum
+{
+  BR_EXIT_TYPE_RETURN,
+  BR_EXIT_TYPE_EXIT,
+} BR_EXIT_TYPE;
 
 //=============================================================================
 /**
@@ -68,6 +76,7 @@ extern void BR_BTN_SYS_Exit( BR_BTN_SYS_WORK *p_wk );
 extern void BR_BTN_SYS_Main( BR_BTN_SYS_WORK *p_wk );
 extern BR_BTN_SYS_INPUT BR_BTN_SYS_GetInput( const BR_BTN_SYS_WORK *cp_wk, u32 *p_seq, u32 *p_param );
 extern BR_BTN_SYS_STATE BR_BTN_SYS_GetState( const BR_BTN_SYS_WORK *cp_wk );
+extern BR_EXIT_TYPE BR_BTN_SYS_GetExitType( const BR_BTN_SYS_WORK *cp_wk );
 
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 /**
@@ -82,6 +91,7 @@ typedef struct _BR_BTN_WORK BR_BTN_WORK;
 extern BR_BTN_WORK * BR_BTN_Init( const GFL_CLWK_DATA *cp_cldata, u16 msgID, u16 w, CLSYS_DRAW_TYPE display, GFL_CLUNIT *p_unit, BMPOAM_SYS_PTR p_bmpoam, GFL_FONT *p_font, GFL_MSGDATA *p_msg, const BR_RES_OBJ_DATA *cp_res, HEAPID heapID );
 extern BR_BTN_WORK * BR_BTN_InitEx( const GFL_CLWK_DATA *cp_cldata, const STRBUF *cp_strbuf, u16 w, CLSYS_DRAW_TYPE display, GFL_CLUNIT *p_unit, BMPOAM_SYS_PTR p_bmpoam, GFL_FONT *p_font, const BR_RES_OBJ_DATA *cp_res, HEAPID heapID );
 extern void BR_BTN_Exit( BR_BTN_WORK *p_wk );
+static BOOL BR_BTN_GetHit( const BR_BTN_WORK *cp_wk, u32 x, u32 y );
 extern BOOL BR_BTN_GetTrg( const BR_BTN_WORK *cp_wk, u32 x, u32 y );
 extern void BR_BTN_SetPos( BR_BTN_WORK *p_wk, s16 x, s16 y );
 extern void BR_BTN_GetPos( const BR_BTN_WORK *cp_wk, s16 *p_x, s16 *p_y );

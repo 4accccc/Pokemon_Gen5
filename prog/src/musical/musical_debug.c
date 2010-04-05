@@ -75,7 +75,7 @@ const BOOL MUSICAL_DEBUG_CreateDummyData( MUSICAL_SHOT_DATA* shotData , const u1
     //‘•”õ‰ÓŠ‚Ì‰Šú‰»
     for( j=0;j<MUSICAL_ITEM_EQUIP_MAX;j++ )
     {
-      shotData->shotPoke[i].equip[j].itemNo = MUSICAL_ITEM_INVALID;
+      shotData->shotPoke[i].equip[j].itemNo = 65535;
       shotData->shotPoke[i].equip[j].angle = 0;
       shotData->shotPoke[i].equip[j].equipPos = MUS_POKE_EQU_INVALID;
     }

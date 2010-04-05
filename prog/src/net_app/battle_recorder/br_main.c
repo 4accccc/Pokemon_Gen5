@@ -26,6 +26,7 @@
 //自分のモジュール
 #include "br_core.h"
 #include "br_data.h"
+#include "br_snd.h"
 
 //外部公開
 #include "net_app/battle_recorder.h"
@@ -533,15 +534,17 @@ static void *BR_BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procI
   GAMEDATA            *p_gamedata;
 
   p_param = GFL_HEAP_AllocMemory( heapID, sizeof(BATTLE_SETUP_PARAM) );
+  GFL_STD_MemClear( p_param, sizeof(BATTLE_SETUP_PARAM) );
   p_gamedata  = p_wk->p_param->p_gamedata;
-
-
 
   BTL_SETUP_InitForRecordPlay( p_param, p_gamedata, heapID );
 
   BattleRec_LoadToolModule();
-    BattleRec_RestoreSetupParam( p_param, heapID );
+  BattleRec_RestoreSetupParam( p_param, heapID );
   BattleRec_UnloadToolModule();
+
+  PMSND_PushBGM();
+  PMSND_PlayBGM( p_param->musicDefault );
 
   return p_param;
 }
@@ -557,6 +560,8 @@ static void BR_BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 {
   BR_SYS_WORK         *p_wk     = p_wk_adrs;
   BATTLE_SETUP_PARAM  *p_param  = p_param_adrs;
+
+  PMSND_PopBGM();
 
   GFL_HEAP_FreeMemory( p_param->playerStatus[ BTL_CLIENT_PLAYER ] );  //@todo プレイヤーのMySatusは開放されないので
   BTL_SETUP_QuitForRecordPlay( p_param );
