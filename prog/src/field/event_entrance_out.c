@@ -23,7 +23,6 @@
 #include "event_fldmmdl_control.h"     // for EVENT_PlayerOneStepAnime
 #include "field_place_name.h"          // for FIELD_PLACE_NAME_Display
 #include "fieldmap.h"                  // for FIELDMAP_GetPlaceNameSys
-#include "entrance_camera.h"           // for ENTRANCE_CAMERA
 
 #include "sound/pm_sndsys.h"
 #include "sound/bgm_info.h"
@@ -65,9 +64,7 @@ typedef struct {
   BOOL              seasonDisplayFlag; // 季節表示を行うかどうか
   u8                startSeason;       // 最初に表示する季節
   u8                endSeason;         // 最後に表示する季節
-  ENTRANCE_CAMERA   cameraSettings;    // 特殊出入り口のカメラ設定データ
   FIELD_FADE_TYPE   fadeInType;        // 季節表示がない場合のF/Iタイプ
-  FIELD_CAMERA_MODE initCameraMode;    // イベント開始時のカメラモード
 
 } EVENT_WORK;
 
@@ -81,9 +78,6 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeDoor( GMEVENT* event, int* 
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeWarp( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT* event, int* seq, void* wk );
-// カメラの設定・復帰
-static void SetupCamera( EVENT_WORK* work ); // カメラをセットアップする
-static void RecoverCamera( EVENT_WORK* work ); // カメラを元に戻す
 
 
 //=======================================================================================
@@ -197,7 +191,6 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone( GMEVENT* event, int* 
   switch( *seq ) {
   // カメラのセットアップ
   case 0:
-    SetupCamera( work );
     (*seq)++;
     break;
 
@@ -224,7 +217,6 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeNone( GMEVENT* event, int* 
 
   // イベント終了
   case 3:
-    RecoverCamera( work ); // カメラの復帰
     FIELD_PLACE_NAME_Display( 
         FIELDMAP_GetPlaceNameSys(fieldmap), work->location.zone_id ); // 地名表示更新リクエスト
     return GMEVENT_RES_FINISH;
@@ -244,23 +236,17 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeDoor( GMEVENT* event, int* 
 	FIELDMAP_WORK* fieldmap   = work->fieldmap;
 
   switch( *seq ) {
-  // カメラのセットアップ
   case 0:
-    SetupCamera( work );
-    (*seq)++;
-    break;
-
-  case 1:
     // ドア退出イベント
     GMEVENT_CallEvent( event, 
         EVENT_FieldDoorOutAnime( gameSystem, fieldmap, TRUE, work->seasonDisplayFlag, 
-                                 work->startSeason, work->endSeason, work->fadeInType ) );
+                                 work->startSeason, work->endSeason, work->fadeInType,
+                                 work->exitType ) );
     (*seq)++;
     break;
 
   // イベント終了
-  case 2:
-    RecoverCamera( work ); // カメラの復帰
+  case 1:
     FIELD_PLACE_NAME_Display( 
         FIELDMAP_GetPlaceNameSys(fieldmap), work->location.zone_id ); // 地名表示更新リクエスト
     return GMEVENT_RES_FINISH;
@@ -282,14 +268,8 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT * event, int 
   FIELD_SOUND*   fieldSound = GAMEDATA_GetFieldSound( work->gameData );
 
   switch( *seq ) {
-  // カメラのセットアップ
-  case 0:
-    SetupCamera( work );
-    (*seq)++;
-    break;
-
   // 画面フェードイン開始
-  case 1: 
+  case 0: 
     if( work->seasonDisplayFlag ) { 
       // 季節フェード
       GMEVENT_CallEvent( event, 
@@ -304,7 +284,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT * event, int 
     break;
 
   // BGM 操作
-  case 2:  
+  case 1:  
     { 
       BGM_INFO_SYS* bgm_info = GAMEDATA_GetBGMInfoSys( gameData );
       u8 season = GAMEDATA_GetSeasonID( gameData );
@@ -326,14 +306,13 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeStep( GMEVENT * event, int 
     break;
 
   // 自機の一歩移動アニメ
-  case 3:
+  case 2:
     GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime(gameSystem, fieldmap) );
     (*seq)++;
     break;
 
   // イベント終了
-  case 4:
-    RecoverCamera( work ); // カメラの復帰
+  case 3:
     FIELD_PLACE_NAME_Display(
         FIELDMAP_GetPlaceNameSys(fieldmap), work->location.zone_id ); // 地名表示更新リクエスト
     return GMEVENT_RES_FINISH;
@@ -354,21 +333,14 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeWarp( GMEVENT * event, int 
 	GAMEDATA*      gameData   = work->gameData;
 
   switch( *seq ) {
-  // カメラのセットアップ
-  case 0:
-    SetupCamera( work );
-    (*seq)++;
-    break;
-
   // ワープ出現イベント
-  case 1:
+  case 0:
 		GMEVENT_CallEvent(event, EVENT_APPEAR_Warp( NULL, gameSystem, fieldmap ) );
     (*seq)++;
     break;
 
   // イベント終了
-  case 2:
-    RecoverCamera( work ); // カメラの復帰
+  case 1:
     FIELD_PLACE_NAME_Display( 
         FIELDMAP_GetPlaceNameSys(fieldmap), work->location.zone_id ); // 地名表示更新リクエスト
     return GMEVENT_RES_FINISH;
@@ -376,6 +348,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeWarp( GMEVENT * event, int 
   return GMEVENT_RES_CONTINUE;
 }
 
+#if 0
 //---------------------------------------------------------------------------------------
 /**
  * @breif 退出イベント( SPx )
@@ -477,51 +450,37 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *
   }
   return GMEVENT_RES_CONTINUE;
 } 
-
-
+#endif
 //---------------------------------------------------------------------------------------
 /**
- * @brief カメラをセットアップする
- *
- * @param work
+ * @breif 退出イベント( SPx )
  */
 //---------------------------------------------------------------------------------------
-static void SetupCamera( EVENT_WORK* work )
+static GMEVENT_RESULT EVENT_FUNC_EntranceOut_ExitTypeSPx( GMEVENT * event, int *seq, void * wk )
 {
-  FIELDMAP_WORK* fieldmap = work->fieldmap;
-  FIELD_CAMERA*  camera   = FIELDMAP_GetFieldCamera( work->fieldmap );
+	EVENT_WORK*    work       = wk;
+	GAMESYS_WORK*  gameSystem = work->gameSystem;
+	FIELDMAP_WORK* fieldmap   = work->fieldmap;
+  FIELD_CAMERA*  camera     = FIELDMAP_GetFieldCamera( work->fieldmap );
 
-  // レールシステムのカメラ制御を停止
-  if( FIELDMAP_GetBaseSystemType( fieldmap ) == FLDMAP_BASESYS_RAIL ) {
-    FLDNOGRID_MAPPER* NGMapper = FIELDMAP_GetFldNoGridMapper( fieldmap );
-    FLDNOGRID_MAPPER_SetRailCameraActive( NGMapper, FALSE );
+  switch( *seq ) {
+  // ドア退出イベント
+  case 0:
+    GMEVENT_CallEvent( event, 
+        EVENT_FieldDoorOutAnime( gameSystem, fieldmap, FALSE, 
+                                 work->seasonDisplayFlag, work->startSeason, work->endSeason, work->fadeInType, work->exitType ) );
+    (*seq)++;
+    break;
+
+  // 地名表示更新リクエスト発行
+  case 1:
+    FIELD_PLACE_NAME_Display( FIELDMAP_GetPlaceNameSys(fieldmap), work->location.zone_id );
+    (*seq)++;
+    break;
+
+  // イベント終了
+  case 2:
+    return GMEVENT_RES_FINISH;
   }
-
-  // カメラモードを記憶
-  work->initCameraMode = FIELD_CAMERA_GetMode( camera ); 
-
-  // カメラモードを変更
-  FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
-}
-
-//---------------------------------------------------------------------------------------
-/**
- * @brief カメラを元に戻す
- *
- * @param work
- */
-//---------------------------------------------------------------------------------------
-static void RecoverCamera( EVENT_WORK* work )
-{
-  FIELDMAP_WORK* fieldmap = work->fieldmap;
-  FIELD_CAMERA*  camera   = FIELDMAP_GetFieldCamera( work->fieldmap );
-
-  // カメラモードを復帰
-  FIELD_CAMERA_ChangeMode( camera, work->initCameraMode );
-
-  // レールシステムのカメラ制御を復帰
-  if( FIELDMAP_GetBaseSystemType( fieldmap ) == FLDMAP_BASESYS_RAIL ) {
-    FLDNOGRID_MAPPER* NGMapper = FIELDMAP_GetFldNoGridMapper( fieldmap );
-    FLDNOGRID_MAPPER_SetRailCameraActive( NGMapper, TRUE );
-  }
-}
+  return GMEVENT_RES_CONTINUE;
+} 

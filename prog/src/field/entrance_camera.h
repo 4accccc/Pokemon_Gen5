@@ -12,37 +12,39 @@
 #include "field/fieldmap_proc.h"  // for FIELDMAP_WORK
 
 
-//===================================================================
-// ■特殊進入イベントのカメラ動作データ
-//===================================================================
-typedef struct {
-
-  u32 exitType;        // 出入り口タイプ
-  u32 pitch;           // ピッチ
-  u32 yaw;             // ヨー
-  u32 length;          // 距離
-  u32 targetOffsetX;   // ターゲットオフセットx
-  u32 targetOffsetY;   // ターゲットオフセットy
-  u32 targetOffsetZ;   // ターゲットオフセットz
-  u32 frame;           // 動作フレーム数
-  u8  validFlag_IN;    // 進入時に有効なデータかどうか
-  u8  validFlag_OUT;   // 退出時に有効なデータかどうか
-
-} ENTRANCE_CAMERA;
+typedef struct _ECAM_WORK ECAM_WORK;
 
 
-// 特殊出入り口のカメラ動作データを読み込む
-extern void ENTRANCE_CAMERA_LoadData( 
-    ENTRANCE_CAMERA* dest, EXIT_TYPE exitType );
+// 自機の一歩移動の有無
+typedef enum {
+  ECAM_ONESTEP_ON,  // 一歩移動あり
+  ECAM_ONESTEP_OFF, // 一歩移動なし
+} ECAM_ONESTEP;
 
-// 特殊出入り口に入る時のカメラ動作タスクを登録する
-extern void ENTRANCE_CAMERA_AddDoorInTask( 
-    FIELDMAP_WORK* fieldmap, const ENTRANCE_CAMERA* data );
+// シチュエーション
+typedef enum {
+  ECAM_SITUATION_IN,  // 出入り口へ入る
+  ECAM_SITUATION_OUT, // 出入り口から出る
+} ECAM_SITUATION;
 
-// 特殊出入り口から出る時のカメラ動作タスクを登録する
-extern void ENTRANCE_CAMERA_AddDoorOutTask( 
-    FIELDMAP_WORK* fieldmap, const ENTRANCE_CAMERA* data );
 
-// 特殊出入り口から出る時のカメラ動作タスクのための初期化を行う
-extern void ENTRANCE_CAMERA_PrepareForDoorOut( 
-    FIELDMAP_WORK* fieldmap, const ENTRANCE_CAMERA* data );
+// 演出パラメータ
+typedef struct { 
+
+  EXIT_TYPE      exitType;  // 出入り口タイプ
+  ECAM_SITUATION situation; // 入る or 出る
+  ECAM_ONESTEP   oneStep;   // 自機の一歩移動があるかどうか
+
+} ECAM_PARAM;
+
+
+// ワークの生成・破棄
+extern ECAM_WORK* ENTRANCE_CAMERA_CreateWork( FIELDMAP_WORK* fieldmap );
+extern void ENTRANCE_CAMERA_DeleteWork( ECAM_WORK* work );
+
+// 演出をセットアップする
+extern void ENTRANCE_CAMERA_Setup( ECAM_WORK* work, const ECAM_PARAM* param );
+// 演出を開始する
+extern void ENTRANCE_CAMERA_Start( ECAM_WORK* work );
+// 演出によって操作したカメラを復帰する
+extern void ENTRANCE_CAMERA_Recover( ECAM_WORK* work );

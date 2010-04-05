@@ -634,7 +634,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/fldeff_reflect.c \
         field/field_place_name.c \
         field/place_name_letter.c \
-        field/event_camera_act.c \
         field/event_entrance_in.c \
         field/event_entrance_out.c \
         field/entrance_camera.c \
@@ -674,6 +673,7 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/field_task_fade.c \
         field/field_task_player_drawoffset.c \
         field/field_task_target_offset.c \
+        field/field_task_target_pos.c \
         field/field_flash.c \
         field/fieldskill_mapeff.c \
         field/fld_wipe_3dobj.c \

@@ -24,7 +24,7 @@
 #include "event_fldmmdl_control.h"  //EVENT_PlayerOneStepAnime
 #include "event_entrance_effect.h"
 
-#include "event_camera_act.h" 
+#include "entrance_camera.h"
 
 #include "sound/pm_sndsys.h"      //PMSND_PlaySE
 #include "field/field_sound.h"    // for FIELD_SOUND_ChangePlayZoneBGM
@@ -48,6 +48,9 @@ typedef struct {
   u8              startSeason;     //<<<最初に表示する季節 ( 四季表示を行う場合のみ有効 )
   u8              endSeason;       //<<<最後に表示する季節 ( 四季表示を行う場合のみ有効 )
   FIELD_FADE_TYPE fadeType;        //<<<季節表示を行わない場合のフェードタイプ
+  ECAM_WORK*      ECamWork;        //<<<カメラ演出ワーク
+  ECAM_PARAM      ECamParam;       //<<<カメラ演出パラメータ
+  EXIT_TYPE       exitType;        //<<<出入り口タイプ
 
   // 以下はシーケンス動作中にセットされる
   FIELD_BMODEL * ctrl;
@@ -77,11 +80,11 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
     SEQ_DOOROUT_CAMERA_TRACE_WAIT,
     SEQ_DOOROUT_BGM_START,
     SEQ_DOOROUT_FADEIN,
-    SEQ_DOOROUT_CAMERA_ACT_START,
     SEQ_DOOROUT_SOUND_LOAD_WAIT,
     SEQ_DOOROUT_OPENANIME_START,
     SEQ_DOOROUT_OPENANIME_WAIT,
     SEQ_DOOROUT_PLAYER_STEP,
+    SEQ_DOOROUT_CAMERA_ACT_START,
     SEQ_DOOROUT_CLOSEANIME_START,
     SEQ_DOOROUT_CLOSEANIME_WAIT,
     SEQ_DOOROUT_END,
@@ -100,10 +103,6 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
   switch( *seq ) {
   // イベント初期設定
   case SEQ_DOOROUT_INIT:
-    // フェードインする前に, カメラの初期設定を行う
-    if( work->cameraAnimeFlag ) {
-      EVENT_CAMERA_ACT_PrepareForDoorOut( fieldmap );
-    }
     // 自機を消す
     MAPCHANGE_setPlayerVanish( fieldmap, TRUE );
 
@@ -126,8 +125,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
     }
     break;
 
-  // BGM 再生開始
   case SEQ_DOOROUT_BGM_START:
+    ENTRANCE_CAMERA_Setup( work->ECamWork, &work->ECamParam );
     FSND_PlayStartBGM( fieldSound );
     *seq = SEQ_DOOROUT_FADEIN;
     break;
@@ -162,22 +161,10 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
     work->ctrl = FIELD_BMODEL_Create_Search( bmodel_man, BM_SEARCH_ID_DOOR, &work->doorPos );
     if( CheckDoorExist( work ) == TRUE ) {
       StartDoorOpen( work );
+      *seq = SEQ_DOOROUT_OPENANIME_WAIT;
     }
-    *seq = SEQ_DOOROUT_CAMERA_ACT_START;
-    break;
-
-  // カメラ演出開始
-  case SEQ_DOOROUT_CAMERA_ACT_START:
-    if( work->cameraAnimeFlag ) {
-      EVENT_CAMERA_ACT_CallDoorOutEvent( event, gameSystem, fieldmap );
-    }
-    // ドアがない場合
-    if( CheckDoorExist(work) == FALSE ) {
-      *seq = SEQ_DOOROUT_PLAYER_STEP; 
-    }
-    // ドアがある場合
     else {
-      *seq = SEQ_DOOROUT_OPENANIME_WAIT; 
+      *seq = SEQ_DOOROUT_PLAYER_STEP;
     }
     break;
 
@@ -192,18 +179,31 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
   case SEQ_DOOROUT_PLAYER_STEP:
     MAPCHANGE_setPlayerVanish( fieldmap, FALSE );
     GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime( gameSystem, fieldmap ) );
-    *seq = SEQ_DOOROUT_CLOSEANIME_START;
+    // ドアがある場合
+    if( CheckDoorExist(work) == TRUE ) {
+      *seq = SEQ_DOOROUT_CLOSEANIME_START;
+    }
+    // ドアがない場合
+    else {
+      *seq = SEQ_DOOROUT_CAMERA_ACT_START;
+    }
     break;
 
   // ドアクローズ開始
   case SEQ_DOOROUT_CLOSEANIME_START:
+    StartDoorClose( work );
+    *seq = SEQ_DOOROUT_CAMERA_ACT_START;
+    break;
+
+  // カメラ演出開始
+  case SEQ_DOOROUT_CAMERA_ACT_START:
+    ENTRANCE_CAMERA_Start( work->ECamWork );
     // ドアがない場合
     if( CheckDoorExist(work) == FALSE ) {
-      *seq = SEQ_DOOROUT_END;
+      *seq = SEQ_DOOROUT_END; 
     }
     // ドアがある場合
     else {
-      StartDoorClose( work );
       *seq = SEQ_DOOROUT_CLOSEANIME_WAIT;
     }
     break;
@@ -218,7 +218,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
 
   // イベント終了
   case SEQ_DOOROUT_END:
-    EVENT_CAMERA_ACT_ResetCameraParameter( fieldmap );  // カメラの設定をデフォルトに戻す
+    ENTRANCE_CAMERA_Recover( work->ECamWork );
+    ENTRANCE_CAMERA_DeleteWork( work->ECamWork );
     FIELD_BMODEL_Delete( work->ctrl );
     return GMEVENT_RES_FINISH;
   }
@@ -243,7 +244,8 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
 GMEVENT * EVENT_FieldDoorOutAnime ( GAMESYS_WORK * gameSystem, FIELDMAP_WORK * fieldmap, 
                                     BOOL cameraAnimeFlag,
                                     BOOL seasonDispFlag, u8 startSeason, u8 endSeason,
-                                    FIELD_FADE_TYPE fadeType )
+                                    FIELD_FADE_TYPE fadeType,
+                                    EXIT_TYPE exitType )
 {
   GMEVENT * event;
   FIELD_DOOR_ANIME_WORK * work;
@@ -265,6 +267,12 @@ GMEVENT * EVENT_FieldDoorOutAnime ( GAMESYS_WORK * gameSystem, FIELDMAP_WORK * f
   work->endSeason       = endSeason;
   work->fadeType        = fadeType;
   work->ctrl            = NULL;
+  work->exitType        = exitType;
+
+  work->ECamWork = ENTRANCE_CAMERA_CreateWork( fieldmap );
+  work->ECamParam.exitType  = exitType;
+  work->ECamParam.situation = ECAM_SITUATION_OUT;
+  work->ECamParam.oneStep   = ECAM_ONESTEP_ON;
 
   return event;
 }
@@ -298,6 +306,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * wk)
   switch( *seq ) { 
   // ドアオープン開始
   case SEQ_DOORIN_OPENANIME_START:
+    ENTRANCE_CAMERA_Setup( work->ECamWork, &work->ECamParam );
     work->ctrl = FIELD_BMODEL_Create_Search( bmodel_man, BM_SEARCH_ID_DOOR, &work->doorPos );
     if( CheckDoorExist( work ) == TRUE ) {
       StartDoorOpen( work );
@@ -307,9 +316,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * wk)
 
   // カメラ演出開始
   case SEQ_DOORIN_CAMERA_ACT: 
-    if( work->cameraAnimeFlag ) {
-      EVENT_CAMERA_ACT_CallDoorInEvent( event, gameSystem, fieldmap ); 
-    }
+    ENTRANCE_CAMERA_Start( work->ECamWork );
 
     // ドアがない場合
     if (work->ctrl == NULL) {
@@ -357,9 +364,8 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * wk)
 
   // イベント終了
   case SEQ_DOORIN_END:
-    if( work->cameraAnimeFlag ) {
-      EVENT_CAMERA_ACT_ResetCameraParameter( fieldmap );  // カメラの設定をデフォルトに戻す
-    }
+    ENTRANCE_CAMERA_Recover( work->ECamWork );
+    ENTRANCE_CAMERA_DeleteWork( work->ECamWork );
     FIELD_BMODEL_Delete( work->ctrl );
     return GMEVENT_RES_FINISH;
   }
@@ -382,7 +388,8 @@ static GMEVENT_RESULT ExitEvent_DoorIn(GMEVENT * event, int *seq, void * wk)
 //------------------------------------------------------------------
 GMEVENT* EVENT_FieldDoorInAnime ( 
     GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, const LOCATION* loc, 
-    BOOL cameraAnimeFlag, BOOL seasonDispFlag, FIELD_FADE_TYPE fadeType )
+    BOOL cameraAnimeFlag, BOOL seasonDispFlag, FIELD_FADE_TYPE fadeType,
+    EXIT_TYPE exitType )
 {
   GMEVENT * event;
   FIELD_DOOR_ANIME_WORK * work;
@@ -403,6 +410,12 @@ GMEVENT* EVENT_FieldDoorInAnime (
   work->seasonDispFlag  = seasonDispFlag;
   work->fadeType        = fadeType;
   work->ctrl            = NULL;
+  work->exitType        = exitType;
+
+  work->ECamWork = ENTRANCE_CAMERA_CreateWork( fieldmap );
+  work->ECamParam.exitType  = exitType;
+  work->ECamParam.situation = ECAM_SITUATION_IN;
+  work->ECamParam.oneStep   = ECAM_ONESTEP_ON;
 
   return event;
 }
