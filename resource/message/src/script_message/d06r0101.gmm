@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-05T18:41:46"/>
+	<create user="matsumiya" host="W00224" date="2010-04-05T19:25:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1362" top="233" right="2067" bottom="879" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -770,7 +770,7 @@
 そう！　これこそが　ボクの　ゆめ！
 かなえるべき　ゆめ　なんだ！▼
 [1:00:トレーナー名:0]！
-キミにも　ゆめは　あるのかい？[BE:09:速度コントロール:0]</language>
+キミにも　ゆめは　あるのか？[BE:09:速度コントロール:0]</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]多くの　価値観が　交じり合い
 世界は　灰色になっていく……▽
 ボクには　それが　許せない▼
@@ -782,7 +782,7 @@
 そう！　これこそが　ボクの　夢！
 かなえるべき　夢なんだ！▼
 [1:00:トレーナー名:0]！
-キミにも　夢は　あるのかい？[BE:09:速度コントロール:0]</language>
+キミにも　夢は　あるのか？[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_d06r0101_boss_02" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
