@@ -149,12 +149,9 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
     break;
 
   case REPORT_SEQ_INIT_WAIT:              // ƒTƒu‰æ–Ê‰Šú‰»‘Ò‚¿
-#if 0
     if( FIELD_SUBSCREEN_CanChange(FIELDMAP_GetFieldSubscreenWork(wk->fieldWork)) == TRUE &&
 				FIELD_SUBSCREEN_CheckReportInit(FIELDMAP_GetFieldSubscreenWork(wk->fieldWork)) == TRUE ){
-#else
-		if( FIELD_SUBSCREEN_CanChange(FIELDMAP_GetFieldSubscreenWork(wk->fieldWork)) == TRUE ){
-#endif
+
       wk->local = GFL_HEAP_AllocMemory( wk->heapID, sizeof(REPORT_EVENT_LOCAL) );
       wk->local->msgData = GFL_MSG_Create(
                         GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,

@@ -584,6 +584,7 @@ static void InitBmp( REPORT_WORK * wk )
 	u32	i;
 
 	wk->que = PRINTSYS_QUE_Create( wk->heapID );
+//  PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );      // ƒeƒXƒg
 
 	for( i=0; i<BMPWIN_MAX; i++ ){
 		wk->win[i].win = GFL_BMPWIN_Create(
