@@ -1882,6 +1882,110 @@ u32   POKETOOL_CalcPersonalRandEx( u32 id, u16 mons_no, u16 form_no, u8 sex, u8 
   return rnd;
 }
 
+//============================================================================================
+/**
+ *  指定されたパラメータになるように個性乱数を計算する（性別、特性、レア指定およびそれぞれの不問も指定可能版）
+ *
+ * @param[in] id          トレーナーID
+ * @param[in] mons_no     個性乱数を計算するモンスターナンバー
+ * @param[in] form_no     フォルムーナンバー（不要なら PTR_FORM_NONE）
+ * @param[in] sex         性別(オスメスのあるポケモンでPTL_SEX_UNKNOWNを指定すると不問になる）
+ * @param[in] tokusei     特性（ 0 or 1 で指定 ）進化後に特性１or特性２になるかを指定するためのものです
+ * @param[in] rare_flag   レアにするかどうか( FALSE:レアではない　TRUE:レアにする ）
+ *
+ * @retval  計算した個性乱数
+ */
+//============================================================================================
+u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpec sex, PtlTokuseiSpec tokusei, PtlRareSpec rare_flag )
+{
+  u32 rare_mask = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) );
+  u32 rare_false_rnd = 0;
+  u32 rnd;
+
+  //特性ナンバーではないので、2以上はアサートにする
+  GF_ASSERT( sex        < PTL_SEX_SPEC_MAX );
+  GF_ASSERT( tokusei    < PTL_TOKUSEI_SPEC_MAX );
+  GF_ASSERT( rare_flag  < PTL_RARE_SPEC_MAX );
+
+  if( rare_flag == PTL_RARE_SPEC_FALSE )
+  { 
+    rare_false_rnd = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) ) & 0xff00;
+    rare_false_rnd = ( rare_false_rnd ^ 0xff00 ) << 16;
+  }
+
+  if( sex == PTL_SEX_SPEC_UNKNOWN )
+  { 
+    rnd = GFUser_GetPublicRand(GFL_STD_RAND_MAX);
+  }
+  else
+  { 
+    rnd = POKETOOL_CalcPersonalRand( mons_no, form_no, sex );
+  }
+
+  switch( rare_flag ){ 
+  case PTL_RARE_SPEC_TRUE:
+    if( tokusei != PTL_TOKUSEI_SPEC_BOTH )
+    { 
+
+    }
+  case PTL_RARE_SPEC_FALSE:
+  case PTL_RARE_SPEC_BOTH:
+  default:
+  }
+
+  if( rare_flag )
+  {
+    u32 mask = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) );
+
+    rnd = POKETOOL_CalcPersonalRand( mons_no, form_no, sex );
+    if( ( rnd & 0x00000001 ) != tokusei )
+    {
+      if( sex == PTL_SEX_MALE )
+      {
+        rnd++;
+      }
+      else
+      {
+        //乱数が０のときは、思ったような値にならないがあきらめてもらうしかない
+        if( rnd )
+        {
+          rnd--;
+        }
+      }
+    }
+    rnd |= ( mask ^ ( rnd & 0x0000ffff ) ) << 16;
+  }
+  else
+  {
+    POKEMON_PERSONAL_DATA* ppd = Personal_Load( mons_no, form_no );
+    u8 per_sex = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
+
+    rnd = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) ) & 0xff00;
+    rnd = ( rnd ^ 0xff00 ) << 16;
+
+    if( PokePersonal_SexVecTypeGet( per_sex ) != POKEPER_SEXTYPE_FIX )
+    {
+      rnd |= per_sex;
+      if( sex == PTL_SEX_MALE )
+      {
+        if( ( rnd & 1 ) != tokusei )
+        {
+          rnd++;
+        }
+      }
+      else
+      {
+        rnd--;
+        if( ( rnd & 1 ) != tokusei )
+        {
+          rnd--;
+        }
+      }
+    }
+  }
+  return rnd;
+}
+
 //=============================================================================================
 /**
  * ワザ「めざめるパワー」の実行時タイプ取得
@@ -3562,6 +3666,24 @@ static  u16 calc_abi_seikaku( u8 chr, u16 para, u8 cond )
       break;
   }
   return  ret;
+}
+
+//============================================================================================
+/**
+ *  性格によるパラメータ変化値を取得
+ *
+ * @param[in] chr   取得する性格
+ * @param[in] cond  取り出すパラメータ変化値テーブルのインデックス（poke_tool.hに定義）
+ *
+ * @return  0 or 1 or -1
+ */
+//============================================================================================
+PtlSeikakuChgValue  POKETOOL_GetSeikakuChangeValue( u8 chr, u8 cond )
+{ 
+  GF_ASSERT( cond != PTL_ABILITY_HP );
+  GF_ASSERT( cond < PTL_ABILITY_MAX );
+
+  return ( SeikakuAbiTbl[ chr ][ cond - 1 ] );
 }
 
 //============================================================================================
