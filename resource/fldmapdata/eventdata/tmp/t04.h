@@ -14,6 +14,7 @@
 #ifndef ZONE_T04_EVC_H
 #define ZONE_T04_EVC_H
 
+#define T04_BOY3_01                        0
 
 #endif //ZONE_T04_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

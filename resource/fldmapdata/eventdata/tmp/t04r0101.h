@@ -10,6 +10,12 @@
 #define ZONE_T04R0101_EVC_H
 
 #define T04R0101_FIGHTERM_01               0
+#define T04R0101_BOY3_01                   1
+#define T04R0101_GIRL4_01                  2
+#define T04R0101_GENTLEMAN_01              3
+#define T04R0101_LADY_01                   4
+#define T04R0101_VETERANW_01               5
+#define T04R0101_BOY4_01                   6
 
 #endif //ZONE_T04R0101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/t04r0101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

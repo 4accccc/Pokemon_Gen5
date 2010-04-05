@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_BG_T04_SIGN1_01 (1)
+#define SCRID_T04_BOY3_01 (2)
 
 #endif //_T04_DEF_H_

@@ -10,7 +10,8 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_t04.h"
-  //.include  "t04.h"
+  .include  "t04.h"
+  .include  "t04r0101_def.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -20,14 +21,213 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA		ev_bg_t04_sign1_01
+_EVENT_DATA		ev_t04_boy3_01
 _EVENT_DATA_END
 
 
 /**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
+/*  T04 巨大別荘イベント用BOY3                      */
 /**************************************************************/
-//ev_t04_flag_change:
-//  _END
+EVENT_START	ev_t04_boy3_01
+	_TALK_OBJ_START()
+	
+	//今日既にイベントを終えたかチェック
+	IF FLAG_ON( TMFLG_T04R0101_BTL_FAMILY ) THEN
+	
+		//また明日
+		_BALLOONWIN_OBJMSG( msg_t04_boy3_01c , T04_BOY3_01 )
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE() 
+	
+	//今日初回である
+	ELSE
+		{
+		_BALLOONWIN_OBJMSG( msg_t04_boy3_04 , T04_BOY3_01 )
+		_YES_NO_WIN( SCWK_ANSWER )
+		
+		//はい
+		IF $SCWK_ANSWER == 0 THEN
+			
+			_BALLOONWIN_CLOSE() 
+			
+			//戦闘処理
+			_TRAINER_BTL_SET( TRID_SCHOOLB_09, 0 )
+			
+			DEFINE_LOCAL SCWK_ANSWER01
+			//結果チェック
+			_TRAINER_LOSE_CHECK( SCWK_ANSWER01 )
+			IF $SCWK_ANSWER01 == SCR_BATTLE_RESULT_WIN THEN
+
+				//======================================//
+				
+				//今日のイベントを終了する
+				_FLAG_SET(TMFLG_T04R0101_BTL_FAMILY)
+				
+				//======================================//
+			
+				_TRAINER_WIN()
+				
+				//暗転後誘導イベントを開始
+				_CALL ev_t04_boy_to_house
+				
+			ELSE
+				//======================================//
+				
+				//今日のイベントを終了する
+				_FLAG_SET(TMFLG_T04R0101_BTL_FAMILY)
+					
+				//======================================//
+				_TRAINER_LOSE()
+			ENDIF
+		
+		//いいえ
+		ELSE
+			_BALLOONWIN_OBJMSG( msg_t04_boy3_01b , T04_BOY3_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE() 
+		
+		ENDIF
+		}
+	ENDIF
+	
+	
+EVENT_END
+
+/**************************************************************/
+/*CALL：巨大別荘に誘導                              */
+/**************************************************************/
+ev_t04_boy_to_house:
+	
+	_BALLOONWIN_OBJMSG( msg_t04_boy3_01d , T04_BOY3_01 )
+	_BALLOONWIN_CLOSE()
+	
+	{
+	DEFINE_LOCAL LWK_DIR
+	
+	//話しかけた方向によって演出を分岐
+	_PLAYER_DIR_GET( LWK_DIR )
+	SWITCH $LWK_DIR
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( T04_BOY3_01, anm_left_goto_house_01 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_left_goto_house_01 )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( T04_BOY3_01, anm_left_goto_house_02 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_left_goto_house_02 )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( T04_BOY3_01, anm_right_goto_house_01 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_right_goto_house_01 )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( T04_BOY3_01, anm_right_goto_house_02 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_right_goto_house_02 )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_UP THEN
+		_OBJ_ANIME( T04_BOY3_01, anm_down_goto_house_01 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_down_goto_house_01 )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( T04_BOY3_01, anm_down_goto_house_02 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_down_goto_house_02 )
+		_OBJ_ANIME_WAIT()
+	CASE DIR_DOWN THEN
+		_OBJ_ANIME( T04_BOY3_01, anm_down_goto_house_01 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_down_goto_house_01 )
+		_OBJ_ANIME_WAIT()
+		_OBJ_ANIME( T04_BOY3_01, anm_down_goto_house_02 )
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_down_goto_house_02 )
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
+	
+	//息子のOBJを消去
+	_OBJ_DEL(T04_BOY3_01)
+	
+	//主人公R02へ
+	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_down_goto_house_end )
+	_OBJ_ANIME_WAIT()
+	
+	//===========フラグワーク操作===========//
+	
+	//T04の息子のOBJを非表示にする
+	_FLAG_SET(FV_T04_BOY3_01)
+	//T04R0101の息子のOBJを表示
+	_FLAG_RESET(FV_T04R0101_BOY3_01)
+	
+	//======================================//
+	
+	//予約スクリプト
+	_RESERVE_SCRIPT( SCRID_RESERVE_T04R0101_FIRST )
+	
+	//シーン切り替え
+	_MAP_CHANGE( ZONE_ID_T04R0101, 18, 20, DIR_UP )
+	
+	}
+	
+_RET
+
+//--------------------------------------------------------------------
+//	巨大別荘：主人公誘導される
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_player_left_goto_house_01
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_player_right_goto_house_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_down_goto_house_01
+	_ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_left_goto_house_02
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_player_right_goto_house_02
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_down_goto_house_02
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_player_down_goto_house_end
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//	巨大別荘：息子誘導アニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_left_goto_house_01
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_right_goto_house_01
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_down_goto_house_01
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_left_goto_house_02
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+	
+_ANIME_LABEL	anm_right_goto_house_02
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_down_goto_house_02
+	_ANIME_DATA	AC_WALK_U_8F,6
+	_ANIME_DATA	ACMD_END,0
 
 /**************************************************************/
 /*			T04		看板									  */
