@@ -932,10 +932,32 @@ static u32 eps_EncPokeCalcPersonalRand(
       break;  //指定無し
     }
   }while(1);
+  
+  //レア禁止してる場合の処理
+  if ( poke->rare == POKE_RARE_SEL_NOT ){
+    return p_rnd;
+  }
+  { //HGSS以前よりレアを出しやすくする処理
 
+    /*
+     *  (my_idの上位16bit,下位16bit,p_rndの上位16bit,下位16bitの4つをxorした値)が8未満ならレア
+     *  なので、レアになる確率はそのままだと1/8192。これを倍の1/4096にしたい。
+     *
+     *　そこで、
+     *  (my_id上位16bit、下位16bit、p_rndの下位16bitの3つをxorした値)の最上位bitと、
+     *  p_rndの最上位ビットが同じ値になるように、p_rndの32bit目を上書きし、
+     *  比較値の最大が0xFFFFから0x7FFFになるようにする。
+     *
+     *  と、確率は8/65536から8/32768になるので、レア発生率が倍になる  by 森本さん 10.04.2
+     */
+    u32 bit = ((efp->myID >> 16) ^ (efp->myID & 0xFFFF) ^ (p_rnd & 0xFFFF));
+    if( bit & 0x8000 == 0x8000 ){
+      p_rnd |= 0x80000000;  //32bit目を1にする 
+    }else{
+      p_rnd &= 0x7FFFFFFF;  //32bit目を0にする
+    }
+  }
   //todo POKETOOL_CalcPersonalRandExはつかえるのか？
-
-
   return p_rnd;
 }
 
