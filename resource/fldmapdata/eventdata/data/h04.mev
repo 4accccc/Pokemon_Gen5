@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/30 12:04:07
+#save date:2010/04/05 16:00:08
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h04.wms
 #SECTION START:OBJ_EVENT
@@ -419,7 +419,7 @@ EVENTDATA_POSTYPE_RAIL
 #ID name
 H04_POKE100_01
 #OBJ CODE Number
-PIKACHU
+TPOKE_0305
 #MOVE CODE Number
 MV_RAIL_DIR_RND_ULR
 #EVENT TYPE Number
