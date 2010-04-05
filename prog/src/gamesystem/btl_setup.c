@@ -240,36 +240,24 @@ static void setup_trainer_param( BATTLE_SETUP_PARAM* dst, BTL_CLIENT_ID client, 
     TT_EncountTrainerPokeDataMake( tr_id, *party, heapID );
   }
 
-  switch( dst->tr_data[client]->tr_type ){
-  case TRTYPE_LEADER1A:
-  case TRTYPE_LEADER1C:
-  case TRTYPE_LEADER1B:
-  case TRTYPE_LEADER2:
-  case TRTYPE_LEADER3:
-  case TRTYPE_LEADER4:
-  case TRTYPE_LEADER5:
-  case TRTYPE_LEADER6:
-  case TRTYPE_LEADER7:
-  case TRTYPE_LEADER8A:
-  case TRTYPE_LEADER8B:
-    dst->musicWin = SEQ_BGM_WIN3;
-    break;
+  {
+    u8 grp = TT_TrainerTypeGrpGet( dst->tr_data[client]->tr_type);
 
-  case TRTYPE_BOSS:
-  case TRTYPE_HAKAIM1:
-  case TRTYPE_HAKAIW1:
-  case TRTYPE_SAGE1:
-    dst->musicWin = SEQ_BGM_WIN4;
+    switch( grp ){
+    case TRTYPE_GRP_LEADER:
+      dst->musicWin = SEQ_BGM_WIN3;
+      break;
+    case TRTYPE_GRP_BOSS:
+    case TRTYPE_GRP_PLASMA:
+    case TRTYPE_GRP_SAGE:
+      dst->musicWin = SEQ_BGM_WIN4;
+      break;
+    case TRTYPE_GRP_BIGFOUR:
+    case TRTYPE_GRP_BCHAMP:
+    case TRTYPE_GRP_CHAMPION:
+      dst->musicWin = SEQ_BGM_WIN5;
     break;
-
-  case TRTYPE_BIGFOUR1:
-  case TRTYPE_BIGFOUR2:
-  case TRTYPE_BIGFOUR3:
-  case TRTYPE_BIGFOUR4:
-  case TRTYPE_BCHAMP:
-  case TRTYPE_CHAMPION:
-    dst->musicWin = SEQ_BGM_WIN5;
-    break;
+    }
   }
 }
 
