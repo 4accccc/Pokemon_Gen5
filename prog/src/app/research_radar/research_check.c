@@ -1084,8 +1084,7 @@ static void CountUpSeqCount( RESEARCH_CHECK_WORK* work )
   work->seqCount++;
 
   // 最大値を決定
-  switch( work->seq )
-  {
+  switch( work->seq ) {
   case RESEARCH_CHECK_SEQ_SETUP:      maxCount = 0xffffffff;           break;
   case RESEARCH_CHECK_SEQ_STANDBY:    maxCount = 0xffffffff;           break;
   case RESEARCH_CHECK_SEQ_KEY_WAIT:   maxCount = 0xffffffff;           break;
@@ -1546,6 +1545,7 @@ static void FinishSeq_UPDATE( RESEARCH_CHECK_WORK* work )
   SetMenuCursorOn( work );            // カーソルが乗っている状態にする
   UpdateBGFont_DataReceiving( work ); //「データしゅとくちゅう」の表示を更新する
   UpdateBGFont_Answer( work );        // 回答を更新する
+  UpdateBGFont_Count( work );         // 回答人数を更新する
   UpdateArrow( work );                // 矢印を更新する
   UpdateControlCursor( work );        // 左右のカーソル表示を更新する
   DispAllPercentage( work );          // ％表記を表示する
@@ -5363,8 +5363,7 @@ static void DebugPrint_seqQueue( const RESEARCH_CHECK_WORK* work )
   { 
     value = QUEUE_PeekData( work->seqQueue, i );
     
-    switch( value )
-    {
+    switch( value ) {
     case RESEARCH_CHECK_SEQ_SETUP:      OS_TFPrintf( PRINT_TARGET, "SETUP " );      break;
     case RESEARCH_CHECK_SEQ_STANDBY:    OS_TFPrintf( PRINT_TARGET, "STANDBY " );    break;
     case RESEARCH_CHECK_SEQ_KEY_WAIT:   OS_TFPrintf( PRINT_TARGET, "KEY-WAIT " );   break;

@@ -252,7 +252,7 @@
 #define BMPOAM_ACTOR_ANALYZE_BUTTON_CHARA_SIZE_Y   (3)   // y サイズ ( キャラ単位 )
 #define BMPOAM_ACTOR_ANALYZE_BUTTON_POS_X          (0)   // 左上x座標 ( ドット単位 )
 #define BMPOAM_ACTOR_ANALYZE_BUTTON_POS_Y          (168) // 左上y座標 ( ドット単位 )
-#define BMPOAM_ACTOR_ANALYZE_BUTTON_PALETTE_OFFSET (0)   // パレットオフセット
+#define BMPOAM_ACTOR_ANALYZE_BUTTON_PALETTE_OFFSET (1)   // パレットオフセット
 #define BMPOAM_ACTOR_ANALYZE_BUTTON_SOFT_PRIORITY  (0)   // ソフトプライオリティ
 #define BMPOAM_ACTOR_ANALYZE_BUTTON_BG_PRIORITY    (0)   // BGプライオリティ
 #define BMPOAM_ACTOR_ANALYZE_BUTTON_STRING_OFFSET_X (0)  // 文字の書き込み先 x 座標オフセット

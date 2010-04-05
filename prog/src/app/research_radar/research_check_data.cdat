@@ -638,8 +638,8 @@ static const PALETTE_ANIME_DATA PaletteAnimeData[ PALETTE_ANIME_NUM ] =
   },
   //「ほうこくをみる」ボタン選択リアクション
   { 
-    (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
-    (u16*)( HW_OBJ_PLTT + (4 * ONE_PALETTE_SIZE) ),  // 元データのアドレス
+    (u16*)( HW_OBJ_PLTT + (5 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
+    (u16*)( HW_OBJ_PLTT + (5 * ONE_PALETTE_SIZE) ),  // 元データのアドレス
     16,                                              // 転送カラー数
     ANIME_TYPE_BLINK,                                // アニメーションタイプ
     0xffff,                                          // フェードカラー
