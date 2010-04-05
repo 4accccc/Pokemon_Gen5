@@ -26,6 +26,8 @@
 #include "item/itemsym.h"
 #include "gamesystem/game_data.h"
 
+#if PM_DEBUG
+
 enum{
   BACK_COL = 0,
   SHADOW_COL = 2,
@@ -407,3 +409,4 @@ static  void  pdc_init( SOGA_WORK* wk )
   ZUKANSAVE_Init( zw );
 }
 
+#endif

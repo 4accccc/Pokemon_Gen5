@@ -33,7 +33,7 @@
 #include "message.naix"
 #include "pokegra/pokegra_wb.naix"
 
-
+#if PM_DEBUG
 
 //============================================================================================
 //  íËêîíËã`
@@ -1510,3 +1510,5 @@ static  void  del_pokemon( POKEMON_VIEWER_WORK *pvw )
   BTLV_MCSS_Del( BTLV_EFFECT_GetMcssWork(), BTLV_MCSS_POS_BB );
 }
 #endif
+
+#endif PM_DEBUG

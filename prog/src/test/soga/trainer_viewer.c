@@ -29,6 +29,7 @@
 #include "font/font.naix"
 #include "message.naix"
 
+#if PM_DEBUG
 
 //============================================================================================
 //  ’è”’è‹`
@@ -945,3 +946,4 @@ static  void  set_trainer( TRAINER_VIEWER_WORK *tvw, int num )
   BTLV_EFFECT_SetTrainer( tvw->trtype_no[ num ], tr_pos[ num ], 0, 0, 0 );
 }
 
+#endif
