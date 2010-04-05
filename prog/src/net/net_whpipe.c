@@ -370,7 +370,7 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 		return FALSE;   //パレスの為
 	}
 #else
-  if(GF->ProductOrDevelopment != POKEMONWB_BEACON_PRODUCT_NO)
+  if(pGF->ProductOrDevelopment != POKEMONWB_BEACON_PRODUCT_NO){
 		return FALSE;   //パレスの為
   }
 #endif

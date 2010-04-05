@@ -27,7 +27,7 @@
 
 #else // GFL_NET_DEBUG
 
-#define NET_MEMORY_DEBUG  (1)
+#define NET_MEMORY_DEBUG  (0)
 
 #endif// GFL_NET_DEBUG 
 

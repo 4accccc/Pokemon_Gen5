@@ -952,8 +952,16 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
 
 
 
+
+
+
 static void _levelSelectDecide( GTSNEGO_WORK *pWork )
 {
+  if(!APP_TASKMENU_WIN_IsFinish(pWork->pAppWin)){
+    return;
+  }
+
+  
   APP_TASKMENU_WIN_Delete(pWork->pAppWin);
   pWork->pAppWin = NULL;
 
@@ -967,6 +975,7 @@ static void _levelSelectDecide( GTSNEGO_WORK *pWork )
 //  pWork->pAppWin = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork,GTSNEGO_020);
   _CHANGE_STATE(pWork, _matchKeyMake);
 }
+
 
 
 //------------------------------------------------------------------
@@ -1030,6 +1039,7 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
     if(pWork->key2 == _CROSSCUR_TYPE_ANY4){
       PMSND_PlaySystemSE(_SE_DECIDE);
       GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork , pWork->key2);
+      APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
       _CHANGE_STATE(pWork, _levelSelectDecide);
       return;
     }
@@ -1043,7 +1053,7 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
   switch(GFL_UI_TP_HitTrg(_tp_data)){
   case 0:
     PMSND_PlaySystemSE(_SE_DECIDE);
-//    pApp
+    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
     _CHANGE_STATE(pWork, _levelSelectDecide);
     return;
     break;
@@ -1179,6 +1189,19 @@ static void _MatchingCancelState(GTSNEGO_WORK* pWork)
   _CHANGE_STATE(pWork,_MatchingCancelState2);
 }
 
+
+
+static void _cancelFlash(GTSNEGO_WORK* pWork)
+{
+  if(!GTSNEGO_MESSAGE_CancelButtonDelete(pWork->pMessageWork)){
+    return;
+  }
+  GTSNEGO_DISP_ResetDispSet(pWork->pDispWork);
+  GTSNEGO_MESSAGE_ResetDispSet(pWork->pMessageWork);
+  GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, _CROSSCUR_TYPE_NONE);
+  _CHANGE_STATE(pWork,_modeSelectMenuInit);
+}
+
 //------------------------------------------------------------------------------
 /**
  * @brief   キャンセルボタンのコールバック
@@ -1197,11 +1220,9 @@ static void _cancelButtonCallback(u32 bttnid, u32 event,void* p_work)
   //    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_043);
  //     _CHANGE_STATE(pWork , _MatchingCancelState);
 
+      APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
       GFL_NET_StateWifiMatchEnd(TRUE);
-      GTSNEGO_DISP_ResetDispSet(pWork->pDispWork);
-      GTSNEGO_MESSAGE_ResetDispSet(pWork->pMessageWork);
-      GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, _CROSSCUR_TYPE_NONE);
-      _CHANGE_STATE(pWork,_modeSelectMenuInit);
+      _CHANGE_STATE(pWork,_cancelFlash);
 
 
     }

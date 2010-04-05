@@ -1521,7 +1521,7 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
       break;
     case EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER:
       net_ini_data.GsidOverwrite = WB_NET_MUSICAL;
-      net_ini_data.gsid = WB_NET_MUSICAL_CHILD;
+      net_ini_data.gsid = WB_NET_MUSICAL_LEADER;
       net_ini_data.bMPMode = TRUE;
       net_ini_data.maxConnectNum = pWork->pBattleWork->netInitWork->maxConnectNum;         ///< 最大接続人数
       net_ini_data.maxSendSize = pWork->pBattleWork->netInitWork->maxSendSize;           ///< 送信サイズ
@@ -1530,7 +1530,7 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
       break;
     case EVENTIRCBTL_ENTRYMODE_MUSICAL:
       net_ini_data.GsidOverwrite = WB_NET_MUSICAL;
-      net_ini_data.gsid = WB_NET_MUSICAL;
+      net_ini_data.gsid = WB_NET_MUSICAL_CHILD;
       net_ini_data.bMPMode = TRUE;
       net_ini_data.maxConnectNum = pWork->pBattleWork->netInitWork->maxConnectNum;         ///< 最大接続人数
       net_ini_data.maxSendSize = pWork->pBattleWork->netInitWork->maxSendSize;           ///< 送信サイズ

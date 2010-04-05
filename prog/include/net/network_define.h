@@ -170,6 +170,7 @@ typedef enum  {
   WB_NET_IRCMENU,       ///相性チェック　RHYTHMチェック
   WB_NET_MUSICAL,       ///ミュージカル      （IRC親機＋無線共通）        順番変更禁止
   WB_NET_MUSICAL_CHILD,       ///ミュージカル  (IRC子機)         順番変更禁止
+  WB_NET_MUSICAL_LEADER,       ///ミュージカル  (IRC認証)         順番変更禁止
   WB_NET_UNION,           ///<ユニオンルーム
   WB_NET_COLOSSEUM,       ///<コロシアム
   WB_NET_IRCTRADE,       ///<赤外線ぽけ交換
