@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T17:23:49"/>
+	<create user="matsumiya" host="W00224" date="2010-04-05T12:39:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1567" top="198" right="2272" bottom="826" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,8 +292,8 @@
 	</lock>
 
 
-	<row id="msg_t04_boy3_04" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>♂
+	<row id="msg_t04_boy3_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：巨大別荘
 ・初回：波際に立っている。
 ・この後、「はい／いいえ」を選択
 ・「はい」で連戦スタート
@@ -310,8 +310,8 @@
 この　ボクが　相手してやろう！</language>
 	</row>
 
-	<row id="msg_t04_boy3_01b" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>♂
+	<row id="msg_t04_boy3_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：巨大別荘
 ・msg_t04_boy3_01で「いいえ」を選択</comment>
 		<attribute name="キャラ指定">息子
 じゅくがえり</attribute>
@@ -319,8 +319,8 @@
 		<language name="JPN_KANJI" width="256">なんだよう　暇じゃないのか……</language>
 	</row>
 
-	<row id="msg_t04_boy3_01c" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>♂
+	<row id="msg_t04_boy3_01c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：巨大別荘
 ・主人公がまけた場合</comment>
 		<attribute name="キャラ指定">息子
 じゅくがえり</attribute>
@@ -332,8 +332,8 @@
 相手して　やっても　いいぞ!</language>
 	</row>
 
-	<row id="msg_t04_boy3_01d" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>♂
+	<row id="msg_t04_boy3_01d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂：巨大別荘
 ・初戦闘勝利後
 ・この後、豪邸まで主人公を連れ歩く</comment>
 		<attribute name="キャラ指定">息子
@@ -346,11 +346,12 @@
 うちに　こい！▼</language>
 	</row>
 
-	<row id="msg_t04_girl4_01" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t04_girl4_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・季節に関係なく出現
 ・アイテム入手処理
-　No604「ダイビング」</comment>
+　No604「ダイビング」
+　GRIDX=762、GRIDZ=302</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
 		<language name="JPN" width="256">うみ♪　それは　いのちのみなもと♪▼
 うみ♪　それは　たくさんのみず♪▼
@@ -364,7 +365,7 @@
 覚えさせて　海に潜りなさい！▼</language>
 	</row>
 
-	<row id="msg_t04_girl4_02" text-color="#ff0000,,,,,,,,,,,,,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t04_girl4_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">GIRL4</attribute>
@@ -380,6 +381,78 @@
 海底へ　潜っていけるわ！</language>
 	</row>
 
+	<row id="msg_t04_man3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・夏だけ出現
+　GRIDX=744、GRIDZ=308、下向き
+・ぎざぎざウインドウで</comment>
+		<attribute name="キャラ指定">MAN3</attribute>
+		<language name="JPN" width="256">うみー！！</language>
+		<language name="JPN_KANJI" width="256">うみー！！</language>
+	</row>
+
+	<row id="msg_t04_trainerm_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂
+・夏だけ出現
+　GRIDX=734、GRIDZ=307付近</comment>
+		<attribute name="キャラ指定">TRAINERM</attribute>
+		<language name="JPN" width="256">ああ　シロナさん……▼
+どうして　あなたは　そんなに
+シロナさん　なんですか……</language>
+		<language name="JPN_KANJI" width="256">ああ　シロナさん……▼
+どうして　あなたは　そんなに
+シロナさん　なんですか……</language>
+	</row>
+
+	<row id="msg_t04_maid_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・夏だけ出現
+　GRIDX=727、GRIDZ=300付近</comment>
+		<attribute name="キャラ指定">MAID</attribute>
+		<language name="JPN" width="256">メイドだって　たまには
+はねやすみを　しないとね……▼
+はっ！　はねやすみの　わざは
+つかうと　ポケモンの　たいりょくが▽
+かいふく　いたしますわ！▼
+ちなみに　ひとの　ばあいは
+ホネやすみ　ですわね……</language>
+		<language name="JPN_KANJI" width="256">メイドだって　たまには
+はねやすみを　しないとね……▼
+はっ！　はねやすみの　技は
+使うと　ポケモンの　体力が▽
+回復いたしますわ！▼
+ちなみに　人の　場合は
+ホネやすみ　ですわね……</language>
+	</row>
+
+	<row id="msg_t04_ambrella_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・夏だけ出現
+　GRIDX=742、GRIDZ=293、左向き</comment>
+		<attribute name="キャラ指定">AMBRELLA</attribute>
+		<language name="JPN" width="256">ひざしが　つよい……▼
+たたかう　ポケモンに　よっては
+ゆうり　ふりが　でそうですわ▼
+だって　みずタイプの　わざは
+いりょくが　さがりますもの</language>
+		<language name="JPN_KANJI" width="256">ひざしが　つよい……▼
+戦う　ポケモンに　よっては
+有利　不利が　でそうですわ▼
+だって　みずタイプの　技は
+威力が　さがりますもの</language>
+	</row>
+
+	<row id="msg_t04_babygirl1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+		<comment>♀
+・夏だけ出現
+　GRIDX=711、GRIDZ=306付近を移動している</comment>
+		<attribute name="キャラ指定">BABYGIRL1</attribute>
+		<language name="JPN" width="256">わーい！　わーい！
+サザナミー！！</language>
+		<language name="JPN_KANJI" width="256">わーい！　わーい！
+サザナミー！！</language>
+	</row>
+
 	<row id="msg_t04_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
@@ -387,6 +460,16 @@
 おしては　かえす　なみのおと</language>
 		<language name="JPN_KANJI" width="256">サザナミタウン
 押しては返す　波の音</language>
+	</row>
+
+	<row id="msg_t04_sign1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>BGメッセージ
+・巨大別荘用</comment>
+		<attribute name="キャラ指定">看板</attribute>
+		<language name="JPN" width="256">この　おおきな　べっそうは
+ブルジョワール　いっかの　もの！</language>
+		<language name="JPN_KANJI" width="256">この　大きな　別荘は
+ブルジョワール　一家の　もの！</language>
 	</row>
 
 	<flowchart-group-list>
