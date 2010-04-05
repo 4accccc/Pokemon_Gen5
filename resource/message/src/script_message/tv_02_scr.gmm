@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-04T18:35:54"/>
+	<create user="matsumiya" host="W00224" date="2010-04-05T18:11:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,7 +357,9 @@
 
 	<row id="msg_tv_02_01">
 		<comment>技説明
-・エコーボイス</comment>
+・エコーボイス
+
+・担当：岩尾</comment>
 		<language name="JPN" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
 ハーイ　アナタ！
 ワタシ　バトリーン　デス！▼
@@ -398,7 +400,9 @@
 
 	<row id="msg_tv_02_02">
 		<comment>技説明
-・りんしょう</comment>
+・りんしょう
+
+・担当：岩尾</comment>
 		<language name="JPN" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
 ハーイ　アナタ！
 ワタシ　バトリーン　デス！▼
@@ -439,7 +443,9 @@
 
 	<row id="msg_tv_02_03">
 		<comment>技説明
-・イカサマ</comment>
+・イカサマ
+
+・担当：岩尾</comment>
 		<language name="JPN" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
 ハーイ　アナタ！
 ワタシ　バトリーン　デス！▼
@@ -480,7 +486,9 @@
 
 	<row id="msg_tv_02_04">
 		<comment>技説明
-・フリーフォール</comment>
+・フリーフォール
+
+・担当：岩尾</comment>
 		<language name="JPN" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
 ハーイ　アナタ！
 ワタシ　バトリーン　デス！▼
@@ -525,7 +533,9 @@
 
 	<row id="msg_tv_02_05">
 		<comment>技説明
-・ガードシェア</comment>
+・ガードシェア
+
+・担当：岩尾</comment>
 		<language name="JPN" width="256">わ・ざ・お・し・え・Ｔ・Ｖ！▼
 ハーイ　アナタ！
 ワタシ　バトリーン　デス！▼
@@ -720,70 +730,90 @@
 
 	<row id="msg_tv_02_31">
 		<comment>道具説明
-・しんかのきせき</comment>
+・しんかのきせき
+
+・担当：松宮</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_32">
 		<comment>道具説明
-・かるいし</comment>
+・かるいし
+
+・担当：松宮</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_33">
 		<comment>道具説明
-・ゴツゴツメット</comment>
+・ゴツゴツメット
+
+・担当：松宮</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_34">
 		<comment>道具説明
-・ふうせん</comment>
+・ふうせん
+
+・担当：松宮</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_35">
 		<comment>道具説明
-・レッドカード</comment>
+・レッドカード
+
+・担当：松宮</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_36">
 		<comment>道具説明
-・ねらいのまと</comment>
+・ねらいのまと
+
+・担当：松宮</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_37">
 		<comment>道具説明
-・しめつけバンド</comment>
+・しめつけバンド
+
+・担当：松宮</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_38">
 		<comment>道具説明
-・きゅうこん</comment>
+・きゅうこん
+
+・担当：松宮</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_39">
 		<comment>道具説明
-・じゅうでんち</comment>
+・じゅうでんち
+
+・担当：松宮</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<row id="msg_tv_02_40">
 		<comment>道具説明
-・だっしゅつポッド</comment>
+・だっしゅつポッド
+
+・担当：松宮</comment>
 		<language name="JPN" width="256">かりメッセージ</language>
 		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
