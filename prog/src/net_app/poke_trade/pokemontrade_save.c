@@ -53,6 +53,8 @@
 #include "poke_tool/status_rcv.h"
 #include "poke_tool/poke_memo.h"
 #include "tradedemo.naix"
+#include "gamesystem/game_data.h"
+#include "savedata/record.h"
 
 #include "pokemontrade_local.h"
 #include "app/mailtool.h"
@@ -282,12 +284,27 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
 
   {
     POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
-
+    RECORD* pRec = GAMEDATA_GetRecordPtr(pWork->pGameData);
+    
     STATUS_RCV_PokeParam_RecoverAll(pp); //回復
     //ポケメモ
     POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_EGG_TRADE,
                                 pWork->pMy, 
                                 POKE_MEMO_PLACE_HUMAN_TRADE, pWork->heapID );
+
+    
+    switch(pWork->type){
+    case POKEMONTRADE_TYPE_GTSNEGO:
+    case POKEMONTRADE_TYPE_WIFICLUB:
+      RECORD_Inc(pRec, RECID_WIFI_TRADE);///< @WiFi通信交換をした回数
+      break;
+    case POKEMONTRADE_TYPE_UNION:
+      RECORD_Inc(pRec, RECID_COMM_TRADE); ///< @ワイヤレス通信交換をした回数
+      break;
+    case POKEMONTRADE_TYPE_IRC:
+      RECORD_Inc(pRec, RECID_IRC_TRADE);
+      break;
+    }
 
     //国連
     
@@ -451,6 +468,7 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
     }
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_51, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
+    POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
     _CHANGE_STATE(pWork, _changeTimingSaveStart);
   }
 }
@@ -471,6 +489,7 @@ void POKMEONTRADE_EVOLUTION_TimingStart(POKEMON_TRADE_WORK* pWork)
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_51, pWork->pMessageStrBuf );
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
   POKETRADE_MESSAGE_WindowOpen(pWork);
+  POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
   _setNextAnim(pWork, 0);
 
   GFL_BG_SetVisible( GFL_BG_FRAME2_S , TRUE );
@@ -504,6 +523,7 @@ void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork)
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_51, pWork->pMessageStrBuf );
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
   POKETRADE_MESSAGE_WindowOpen(pWork);
+  POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
   _setNextAnim(pWork, 0);
 
   GFL_BG_SetVisible( GFL_BG_FRAME2_S , TRUE );

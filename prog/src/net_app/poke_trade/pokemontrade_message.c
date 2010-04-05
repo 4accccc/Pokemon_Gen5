@@ -284,6 +284,7 @@ void POKETRADE_MESSAGE_WindowClose(POKEMON_TRADE_WORK* pWork)
 {
   if(pWork->pTimeIcon){
     TILEICON_Exit(pWork->pTimeIcon);
+    pWork->pTimeIcon=NULL;
   }
   if(pWork->mesWin){
 		GFL_BMPWIN_Delete(pWork->mesWin);
@@ -303,6 +304,7 @@ void POKETRADE_MESSAGE_WindowClear(POKEMON_TRADE_WORK* pWork)
 {
   if(pWork->pTimeIcon){
     TILEICON_Exit(pWork->pTimeIcon);
+    pWork->pTimeIcon=NULL;
   }
 	if(pWork->mesWin){
 		GFL_BMPWIN_ClearScreen(pWork->mesWin);
@@ -368,11 +370,7 @@ void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
     GFL_BMPWIN_Delete(pWork->MyInfoWin);
     pWork->MyInfoWin=NULL;
   }
-
-  if(pWork->mesWin){
-    GFL_BMPWIN_Delete(pWork->mesWin);
-    pWork->mesWin=NULL;
-  }
+  POKETRADE_MESSAGE_WindowClose(pWork);
 
   for(i=0;i<2;i++){
     if(pWork->StatusWin[i]){

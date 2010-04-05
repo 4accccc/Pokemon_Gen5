@@ -168,7 +168,8 @@ typedef enum  {
   WB_NET_IRCAURA,         ///相性チェック オーラチェック
   WB_NET_IRCRHYTHM,       ///相性チェック　RHYTHMチェック
   WB_NET_IRCMENU,       ///相性チェック　RHYTHMチェック
-  WB_NET_MUSICAL,       ///ミュージカル
+  WB_NET_MUSICAL,       ///ミュージカル      （IRC親機＋無線共通）        順番変更禁止
+  WB_NET_MUSICAL_CHILD,       ///ミュージカル  (IRC子機)         順番変更禁止
   WB_NET_UNION,           ///<ユニオンルーム
   WB_NET_COLOSSEUM,       ///<コロシアム
   WB_NET_IRCTRADE,       ///<赤外線ぽけ交換
@@ -181,6 +182,7 @@ typedef enum  {
 	WB_NET_DEBUG_BEACON_FRIENDCODE,	///<デバッグ　ビーコンでの友達コード交換
   WB_NET_WIFIMATCH,         ///<WIFI世界対戦
   WB_NET_IRCBATTLE_MULTI,  ///< 赤外線バトルマルチ
+  WB_NET_IRCBATTLE_MULTI_IRC,  ///< 赤外線バトルマルチ赤外線
   WB_NET_COMM_ENTRY_MENU,   ///<通信エントリーメニュー
   WB_NET_GURUGURU,        ///<ぐるぐる交換
   WB_NET_PICTURE,         ///<お絵かき

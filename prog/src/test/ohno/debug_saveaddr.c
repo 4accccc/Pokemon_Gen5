@@ -358,7 +358,7 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       ZUKAN_SAVEDATA *pZukan = ZUKAN_SAVEDATA_GetZukanSave( pWork->pSaveData );
 
       pAddr = (u8*)&pZukan->get_flag[0];
-      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","POKEMONGET_BIT_ARRAY", (u32)pAddr-(u32)topAddr, POKEZUKAN_ARRAY_LEN);
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","POKEMONGET_BIT_ARRAY", (u32)pAddr-(u32)topAddr, sizeof(u32)*POKEZUKAN_ARRAY_LEN);
       
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","ZUKANSAVE_ZENKOKU_MONSMAX", (u32)0, ZUKANSAVE_ZENKOKU_MONSMAX);
       

@@ -62,6 +62,7 @@ FS_EXTERN_OVERLAY(shinka_demo);
 FS_EXTERN_OVERLAY(app_mail);
 
 #define _LOCALMATCHNO (100)
+#define _IRC_BATTEL_LEVEL (50)
 
 enum _EVENT_IRCBATTLE {
   _IRCBATTLE_START,
@@ -95,6 +96,26 @@ enum _EVENT_IRCBATTLE {
   _WAIT_IRCCOMMPATIBLE,
 };
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ÉåÉxÉãï‚ê≥ÇÇ©ÇØÇÈ
+ */
+//-----------------------------------------------------------------------------
+static void _ModifyLevelPokeParty(  POKEPARTY *party )
+{ 
+  int i;
+  POKEMON_PARAM *pp;
+  const u32 modfity_level = _IRC_BATTEL_LEVEL;
+
+  for( i = 0; i < PokeParty_GetPokeCount( party ); i++ )
+  {
+    pp  = PokeParty_GetMemberPointer( party, i );
+    POKETOOL_MakeLevelRevise(pp, modfity_level);
+  }
+}
+
+
+
 static void _PartySet(BOOL bBattleBox,EVENT_IRCBATTLE_WORK *dbw)
 {
   BATTLE_BOX_SAVE * bxsv;
@@ -107,6 +128,7 @@ static void _PartySet(BOOL bBattleBox,EVENT_IRCBATTLE_WORK *dbw)
   else{
     PokeParty_Copy(BATTLE_BOX_SAVE_MakePokeParty( bxsv, HEAPID_PROC ), dbw->pParty);
   }
+  _ModifyLevelPokeParty(dbw->pParty);
 }
 
 

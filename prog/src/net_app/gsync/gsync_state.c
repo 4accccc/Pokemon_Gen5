@@ -1591,6 +1591,11 @@ static void _updateSave(G_SYNC_WORK* pWork)
   }
   pWork->percent=_UPLOAD_PROCESS_PERCENT;
 
+  {
+    RECORD* pRec = GAMEDATA_GetRecordPtr(pWork->pGameData);
+    RECORD_Inc(pRec, RECID_PDW_SLEEP_POKEMON);///< @PDW‚Åƒ|ƒPƒ‚ƒ“‚ðQ‚©‚¹‚½‰ñ”
+  }
+
   GAMEDATA_SaveAsyncStart(pWork->pGameData);
   
   _CHANGE_STATE(_updateSave2);

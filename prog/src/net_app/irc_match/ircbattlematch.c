@@ -156,6 +156,8 @@ static u8* _getPokePartyBuff(int netID, void* pWork, int size);
 static void _firstConnectMessage(IRC_BATTLE_MATCH* pWork);
 static void _msgWindowCreate(int* pMsgBuff,IRC_BATTLE_MATCH* pWork);
 static void _friendNumWindowCreate(int msgno,IRC_BATTLE_MATCH* pWork);
+static void _returnMessage(IRC_BATTLE_MATCH* pWork);
+static void _modeCheckStartTok(IRC_BATTLE_MATCH* pWork);
 
 
 ///通信コマンド
@@ -170,6 +172,7 @@ typedef enum {
 #define _TIMINGNO_CS (120)
 #define _TIMINGNO_DS (121)
 #define _TIMINGNO_DSF (123)
+#define _TIMINGNO_TYPECHECK (124)
 #define _TIMINGNO_POKEP (122)
 
 //--------------------------------------------
@@ -221,11 +224,14 @@ static BOOL IrcBattleBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
 
 ///通信コマンドテーブル
 static const NetRecvFuncTable _PacketTbl[] = {
-  {_RecvModeCheckData,          NULL},  ///_NETCMD_TYPESEND
+  {_RecvModeCheckData,          NULL},  ///_NETCMD_TYPESEND  相手の赤外線タイプを受信
   {_RecvMyStatusData,          NULL},  ///_NETCMD_MYSTATUSSEND
   {_RecvPokePartyData,       _getPokePartyBuff},  ///_NETCMD_POKEPARTY_SEND
   {_recvFriendCode,         NULL},    ///_NETCMD_FRIENDCODE
 };
+
+
+#define _IRCMATCH_MAX (4)  //４人とくっつける
 
 #define _MAXNUM   (2)         // 最大接続人数
 #define _MAXSIZE  (100)        // 最大送信バイト数
@@ -282,6 +288,7 @@ struct _IRC_BATTLE_MATCH {
   IRC_MATCH_WORK* pBattleWork;
   StateFunc* state;      ///< ハンドルのプログラム状態
   int selectType;   // 接続タイプ
+  int selectTypeNet[_IRCMATCH_MAX];   // 接続タイプ
   HEAPID heapID;
   GFL_BMPWIN* buttonWin[_WINDOW_MAXNUM]; /// ウインドウ管理
   GFL_MSGDATA *pMsgData;  //
@@ -594,7 +601,7 @@ static void _ircConnectEndCallback(void* pWk)
 
 //--------------------------------------------------------------
 /**
- * @brief   移動コマンド受信関数
+ * @brief   送られてきた相手のモードの確認  _NETCMD_TYPESEND
  * @param   netID      送ってきたID
  * @param   size       パケットサイズ
  * @param   pData      データ
@@ -612,14 +619,8 @@ static void _RecvModeCheckData(const int netID, const int size, const void* pDat
     return;	//自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
 
-  if(netID == GFL_NET_SystemGetCurrentID()){
-    return;	//自分のデータは無視
-  }
-  if(pWork->selectType > pType[0] ){
-    NET_PRINT("BattleChange %d ->%d\n",pWork->selectType, pType[0]);
-    pWork->pBattleWork->selectType = pType[0];
-    //pWork->selectType = pType[0];
-  }
+  ///ここに送られてくるものは、完全に通信違いはけられた後
+  pWork->selectTypeNet[netID]=pType[0];
 }
 
 //--------------------------------------------------------------
@@ -712,7 +713,7 @@ static void _recvFriendCode(const int netID, const int size, const void* pData, 
 
 static void _modeSuccessMessageKeyWait(IRC_BATTLE_MATCH* pWork)
 {
-  if(GFL_UI_KEY_GetTrg() | GFL_UI_TP_GetTrg()){
+  if(GFL_UI_TP_GetTrg()){
     pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
     GFL_NET_Exit(NULL);
     _CHANGE_STATE(pWork,_modeFadeoutStart);
@@ -746,8 +747,6 @@ static int _searchPokeParty(IRC_BATTLE_MATCH* pWork)
 
 
 
-
-
 static void _modeCheckStart5(IRC_BATTLE_MATCH* pWork)
 {
  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_POKEP, WB_NET_IRCBATTLE)){
@@ -769,7 +768,9 @@ static void _modeCheckStart5(IRC_BATTLE_MATCH* pWork)
        pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;
        break;
      case 2:
-       pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_DOUBLE;
+       if(pWork->pBattleWork->selectType > EVENTIRCBTL_ENTRYMODE_DOUBLE){
+         pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_DOUBLE;
+       }
        break;
        
      }
@@ -825,9 +826,11 @@ static void _modeCheckStart33(IRC_BATTLE_MATCH* pWork)
 
 static void _modeCheckStart3(IRC_BATTLE_MATCH* pWork)
 {
+  
+  
   OS_TPrintf("mystatus %x\n",(u32)GAMEDATA_GetMyStatus(pWork->pBattleWork->gamedata));
   OS_TPrintf("gamedata %x\n",(u32)pWork->pBattleWork->gamedata);
-
+  
   if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_MYSTATUSSEND,
                       MyStatus_GetWorkSize(), GAMEDATA_GetMyStatus(pWork->pBattleWork->gamedata))){
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMINGNO_DSF, WB_NET_IRCBATTLE);
@@ -835,29 +838,35 @@ static void _modeCheckStart3(IRC_BATTLE_MATCH* pWork)
   }
 }
 
+
 static void _modeCheckStart31(IRC_BATTLE_MATCH* pWork)
 {
-  switch(pWork->selectType){
-  case EVENTIRCBTL_ENTRYMODE_SINGLE:
-  case EVENTIRCBTL_ENTRYMODE_DOUBLE:
-  case EVENTIRCBTL_ENTRYMODE_TRI:
-  case EVENTIRCBTL_ENTRYMODE_ROTATE:
-  case EVENTIRCBTL_ENTRYMODE_FRIEND:
-    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_TYPESEND,
-                        sizeof(pWork->selectType), &pWork->selectType)){
-      _CHANGE_STATE(pWork,_modeCheckStart3);
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_TYPECHECK, WB_NET_IRCBATTLE)){
+    int id = GFL_NET_SystemGetCurrentID();
+    
+    switch(pWork->selectType){
+    case EVENTIRCBTL_ENTRYMODE_SINGLE:
+    case EVENTIRCBTL_ENTRYMODE_DOUBLE:
+    case EVENTIRCBTL_ENTRYMODE_TRI:
+    case EVENTIRCBTL_ENTRYMODE_ROTATE:
+      //ルールを下にそろえる仕様
+      if(pWork->selectType > pWork->selectTypeNet[1-id] ){
+        pWork->pBattleWork->selectType = pWork->selectTypeNet[1-id];
+      }
+      break;
     }
-    break;
-  default:
+
     _CHANGE_STATE(pWork,_modeCheckStart3);
-    break;
   }
 }
 
 static void _modeCheckStart2(IRC_BATTLE_MATCH* pWork)
 {
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_CS,WB_NET_IRCBATTLE)){
-    _CHANGE_STATE(pWork,_modeCheckStart31);
+    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_TYPESEND, sizeof(pWork->selectType), &pWork->selectType)){
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMINGNO_TYPECHECK, WB_NET_IRCBATTLE);
+      _CHANGE_STATE(pWork,_modeCheckStart31);
+    }
   }
 }
 
@@ -902,7 +911,8 @@ static void _wirelessPreConnectCallback(void* pWk,BOOL bParent)
   pWork->irccenterflg=TRUE;
   pWork->ircCenterAnim=TRUE;
 
-
+  OS_TPrintf("-_wirelessPreConnectCallback-\n",bParent);
+  
   if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MULTH){
     if(!bParent){
       pWork->ircmatchflg=TRUE;
@@ -1281,6 +1291,14 @@ static void _graphicEnd(IRC_BATTLE_MATCH* pWork)
 }
 
 
+static void clactSafeRemove(IRC_BATTLE_MATCH* pWork,int i)
+{
+  if(pWork->curIcon[i]){
+    GFL_CLACT_WK_Remove(pWork->curIcon[i]);
+    pWork->curIcon[i]=NULL;
+  }
+}
+
 
 static void _firstConnectMessage(IRC_BATTLE_MATCH* pWork)
 {
@@ -1489,7 +1507,7 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
       net_ini_data.gsid = WB_NET_IRCBATTLE;
       break;
     case EVENTIRCBTL_ENTRYMODE_MULTH:
-      net_ini_data.gsid = WB_NET_IRCBATTLE_MULTI;
+      net_ini_data.gsid = WB_NET_IRCBATTLE_MULTI_IRC;
       net_ini_data.maxConnectNum = 4;
       break;
     case EVENTIRCBTL_ENTRYMODE_FRIEND:
@@ -1501,8 +1519,17 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
     case EVENTIRCBTL_ENTRYMODE_SUBWAY:
       net_ini_data.gsid = WB_NET_BSUBWAY;
       break;
-    case EVENTIRCBTL_ENTRYMODE_MUSICAL:
     case EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER:
+      net_ini_data.GsidOverwrite = WB_NET_MUSICAL;
+      net_ini_data.gsid = WB_NET_MUSICAL_CHILD;
+      net_ini_data.bMPMode = TRUE;
+      net_ini_data.maxConnectNum = pWork->pBattleWork->netInitWork->maxConnectNum;         ///< 最大接続人数
+      net_ini_data.maxSendSize = pWork->pBattleWork->netInitWork->maxSendSize;           ///< 送信サイズ
+      net_ini_data.maxMPParentSize = pWork->pBattleWork->netInitWork->maxMPParentSize;           ///< 送信サイズ
+      pWork->musicalNum = net_ini_data.maxConnectNum;
+      break;
+    case EVENTIRCBTL_ENTRYMODE_MUSICAL:
+      net_ini_data.GsidOverwrite = WB_NET_MUSICAL;
       net_ini_data.gsid = WB_NET_MUSICAL;
       net_ini_data.bMPMode = TRUE;
       net_ini_data.maxConnectNum = pWork->pBattleWork->netInitWork->maxConnectNum;         ///< 最大接続人数
@@ -1515,12 +1542,19 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
       break;
     }
     GFL_NET_Init(&net_ini_data, NULL, pWork);	//通信初期化
-    
-    if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL){
+
+    switch(pWork->selectType){
+    case EVENTIRCBTL_ENTRYMODE_MUSICAL:
       GFL_NET_ReserveNetID_IRCWIRELESS(1);
-    }
-    else if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER){
+      GFL_NET_IRCWIRELESS_SetChangeGSID(WB_NET_MUSICAL);
+      break;
+    case EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER:
       GFL_NET_ReserveNetID_IRCWIRELESS(0);
+      GFL_NET_IRCWIRELESS_SetChangeGSID(WB_NET_MUSICAL);
+      break;
+    case EVENTIRCBTL_ENTRYMODE_MULTH:
+      GFL_NET_IRCWIRELESS_SetChangeGSID(WB_NET_IRCBATTLE_MULTI);
+      break;
     }
   }
   _ReturnButtonStart(pWork);
@@ -1665,10 +1699,11 @@ static void _ircActionWait(IRC_BATTLE_MATCH* pWork)
 
 static void _ircEndKeyWait(IRC_BATTLE_MATCH* pWork)
 {
-  if(GFL_UI_KEY_GetTrg() != 0){
+  if(GFL_UI_TP_GetTrg()){
 
 
     pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_RETRY;
+//    pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
 //    EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_RETRY);
     GFL_NET_Exit(NULL);
     _CHANGE_STATE(pWork,_modeFadeoutStart);
@@ -1937,6 +1972,83 @@ static void _modeFlashCallback4(u32 param, fx32 currentFrame )
 }
 
 
+static void _returnMessage(IRC_BATTLE_MATCH* pWork)
+{
+
+  int aMsgBuff[]={IRCBTL_STR_25};
+  _buttonWindowDelete(pWork);
+  _msgWindowCreate(aMsgBuff, pWork);
+  _CHANGE_STATE(pWork,_ircEndKeyWait);
+
+}
+
+
+
+static void _ircFourMatch2TwoMatch(IRC_BATTLE_MATCH* pWork)
+{
+
+  _buttonWindowDelete(pWork);
+  if(pWork->irccenterflg == TRUE){
+
+    if(pWork->bParent){  //リーダー
+      int aMsgBuff[]={IRCBTL_STR_12};
+      _msgWindowCreate(aMsgBuff, pWork);
+    }
+    else{
+      int aMsgBuff[]={IRCBTL_STR_13};
+      _msgWindowCreate(aMsgBuff, pWork);
+      clactSafeRemove(pWork,CELL_IRDS1);
+      clactSafeRemove(pWork,CELL_IRDS3);
+    }
+    
+    clactSafeRemove(pWork,CELL_IRWAVE3);
+    clactSafeRemove(pWork,CELL_IRWAVE4);
+    clactSafeRemove(pWork,CELL_IRWAVE1);
+    clactSafeRemove(pWork,CELL_IRWAVE2);
+    clactSafeRemove(pWork,CELL_IRDS2);
+    clactSafeRemove(pWork,CELL_IRDS4);
+
+    if(pWork->bParent){
+      GFL_CLWK_ANM_CALLBACK cbwk;
+      cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
+      cbwk.param = (u32)pWork;          // コールバックワーク
+      cbwk.p_func = _modeFlashCallback3; // コールバック関数
+      GFL_CLACT_WK_StartAnmCallBack( pWork->curIcon[CELL_IRDS1], &cbwk );
+      cbwk.p_func = _modeFlashCallback4; // コールバック関数
+      GFL_CLACT_WK_StartAnmCallBack( pWork->curIcon[CELL_IRDS3], &cbwk );
+    }
+
+    pWork->irccenterflg =FALSE;
+  }
+  pWork->ircCenterAnimCount++;
+
+  if((pWork->ircCenterAnimCount > 8) &&  pWork->bBGBlack){
+    pWork->ircCenterAnim=FALSE;
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
+  }
+
+}
+
+static int _ansmessagebuff[]={
+  IRCBTL_STR_31,//EVENTIRCBTL_ENTRYMODE_NONE=0,
+  IRCBTL_STR_31,//EVENTIRCBTL_ENTRYMODE_SINGLE,
+  IRCBTL_STR_31,//EVENTIRCBTL_ENTRYMODE_DOUBLE,
+  IRCBTL_STR_31,//EVENTIRCBTL_ENTRYMODE_TRI,
+  IRCBTL_STR_31,//EVENTIRCBTL_ENTRYMODE_ROTATE,
+  IRCBTL_STR_31,//EVENTIRCBTL_ENTRYMODE_MULTH,
+  IRCBTL_STR_30,//EVENTIRCBTL_ENTRYMODE_TRADE,
+  IRCBTL_STR_30,//EVENTIRCBTL_ENTRYMODE_FRIEND,
+	IRCBTL_STR_24,//EVENTIRCBTL_ENTRYMODE_COMPATIBLE,
+	IRCBTL_STR_24,//EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER,
+	IRCBTL_STR_24,//EVENTIRCBTL_ENTRYMODE_MUSICAL,
+	IRCBTL_STR_31,//EVENTIRCBTL_ENTRYMODE_SUBWAY,
+  IRCBTL_STR_24,//EVENTIRCBTL_ENTRYMODE_EXIT,
+  IRCBTL_STR_24,//EVENTIRCBTL_ENTRYMODE_RETRY,
+};
+
+
+
+
 static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 {
   if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND){
@@ -1950,86 +2062,34 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
   }
 
   
-  if(pWork->ircCenterAnim &&   //4台の時2台を真ん中に
-    (pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER) &&
-     (pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL)
-     ){
-    _buttonWindowDelete(pWork);
-    if(pWork->irccenterflg == TRUE){
-
-      if(pWork->bParent){  //リーダー
-        int aMsgBuff[]={IRCBTL_STR_12};
-        _msgWindowCreate(aMsgBuff, pWork);
-      }
-      else{
-        int aMsgBuff[]={IRCBTL_STR_13};
-        _msgWindowCreate(aMsgBuff, pWork);
-      }
-
-      GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE3]);
-      pWork->curIcon[CELL_IRWAVE3]=NULL;
-      GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE4]);
-      pWork->curIcon[CELL_IRWAVE4]=NULL;
-      GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE1]);
-      pWork->curIcon[CELL_IRWAVE1]=NULL;
-      GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE2]);
-      pWork->curIcon[CELL_IRWAVE2]=NULL;
-      GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRDS2]);
-      pWork->curIcon[CELL_IRDS2]=NULL;
-      GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRDS4]);
-      pWork->curIcon[CELL_IRDS4]=NULL;
-
-      {
-        GFL_CLWK_ANM_CALLBACK cbwk;
-        cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
-        cbwk.param = (u32)pWork;          // コールバックワーク
-        cbwk.p_func = _modeFlashCallback3; // コールバック関数
-        GFL_CLACT_WK_StartAnmCallBack( pWork->curIcon[CELL_IRDS1], &cbwk );
-        cbwk.p_func = _modeFlashCallback4; // コールバック関数
-        GFL_CLACT_WK_StartAnmCallBack( pWork->curIcon[CELL_IRDS3], &cbwk );
-      }
-
-
-
-      pWork->irccenterflg =FALSE;
-    }
-
-
-    pWork->ircCenterAnimCount++;
-
- //   _CLACT_AddPos(pWork, -2,+2,CELL_IRDS2);
- //   _CLACT_AddPos(pWork, 2,-2,CELL_IRDS1);
-//    _CLACT_AddPos(pWork, -2,+2,CELL_IRWAVE2);
-//    _CLACT_AddPos(pWork, 2,-2,CELL_IRWAVE1);
-
-//    G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG1, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BD , 16-(pWork->ircCenterAnimCount*2), 16);
-
-    if((pWork->ircCenterAnimCount > 8) &&  pWork->bBGBlack){
-      pWork->ircCenterAnim=FALSE;
-      GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
-    }
+ // if(pWork->ircCenterAnim &&   //4台の時2台を真ん中に
+//    (pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER) &&
+//     (pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL)
+//     ){
+  if(pWork->ircCenterAnim && (EVENTIRCBTL_ENTRYMODE_MULTH==pWork->selectType)){ //2vs2//4台の時2台を真ん中に
+    _ircFourMatch2TwoMatch(pWork);
   }
   else if((pWork->ircmatchanim==TRUE) && (pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER)){  //2台の時お互いを引く
     if(pWork->ircmatchflg==TRUE){
       _buttonWindowDelete(pWork);
-      if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
-      {
-        int aMsgBuff[]={IRCBTL_STR_30};
-        _msgWindowCreate(aMsgBuff, pWork);
-      }
-      else{
-        int aMsgBuff[]={IRCBTL_STR_31};
-        _msgWindowCreate(aMsgBuff, pWork);
-      }
-      GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE1]);
-      pWork->curIcon[CELL_IRWAVE1]=NULL;
-      GFL_CLACT_WK_Remove(pWork->curIcon[CELL_IRWAVE2]);
-      pWork->curIcon[CELL_IRWAVE2]=NULL;
+   //   if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
+     // {
+//        int aMsgBuff[]={IRCBTL_STR_30};
+      _msgWindowCreate(&_ansmessagebuff[pWork->selectType], pWork);
+//      }
+  //    else
+      
+    //  else{
+      //  int aMsgBuff[]={IRCBTL_STR_31};
+        //_msgWindowCreate(aMsgBuff, pWork);
+//      }
+      clactSafeRemove(pWork,CELL_IRWAVE1);
+      clactSafeRemove(pWork,CELL_IRWAVE2);
       pWork->ircmatchflg=FALSE;
       
       //アニメ終了コールバック登録
       
-      {
+      if(pWork->curIcon[CELL_IRDS1]){
         GFL_CLWK_ANM_CALLBACK cbwk;
         cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
         cbwk.param = (u32)pWork;          // コールバックワーク
@@ -2042,13 +2102,6 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
       
     }
     pWork->ircmatchanimCount++;
-    //プログラムで動かす場合
-    //if(EVENTIRCBTL_ENTRYMODE_MULTH!=pWork->selectType){ //1vs1
-//    _CLACT_AddPos(pWork, 0,-1,CELL_IRDS1);
- //   _CLACT_AddPos(pWork, 0, 1,CELL_IRDS2);
- //   GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_IRDS1] , FALSE );
-  //  GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[CELL_IRDS2] , FALSE );
-    //    }
     if(pWork->ircmatchanimCount > 25){;
       pWork->ircmatchanim=FALSE;
     }
@@ -2057,12 +2110,14 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 
   if(GFL_NET_IsInit()){
     if(GFL_NET_NEG_TYPE_TYPE_ERROR==GFL_NET_HANDLE_GetNegotiationType(GFL_NET_HANDLE_GetCurrentHandle())){  ///< モードが異なる接続エラー
-      int aMsgBuff[]={IRCBTL_STR_25};
-      _buttonWindowDelete(pWork);
-      _msgWindowCreate(aMsgBuff, pWork);
-      _CHANGE_STATE(pWork,_ircEndKeyWait);
+      _CHANGE_STATE(pWork, _returnMessage);
       return;
     }
+//    if(GFL_NET_GetTypeErrorIRCWIRELESS()){
+  //    _CHANGE_STATE(pWork, _returnMessage);
+    //  return;
+//    }
+    
   }
   if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER){
     if(pWork->musicalNum != GFL_NET_GetNowConnectNum_IRCWIRELESS()){

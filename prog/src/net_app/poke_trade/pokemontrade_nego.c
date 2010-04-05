@@ -667,6 +667,7 @@ static void _changePokemonSendData(POKEMON_TRADE_WORK* pWork)
       _rapTimingStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_F,pWork);
       GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
+      POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
       pWork->NegoWaitTime = _GTSINFO04_WAIT;
       _CHANGE_STATE(pWork,_changePokemonSendDataOk);
       break;
@@ -674,6 +675,7 @@ static void _changePokemonSendData(POKEMON_TRADE_WORK* pWork)
       _rapTimingStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_F,pWork);
       GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
+      POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
       pWork->NegoWaitTime = _GTSINFO04_WAIT;
       _CHANGE_STATE(pWork,_changePokemonSendDataNg);
       break;
@@ -787,6 +789,7 @@ static void _friendSelectWait(POKEMON_TRADE_WORK* pWork)
 
   GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
   POKETRADE_MESSAGE_WindowOpen(pWork);
+      POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
   pWork->NegoWaitTime = _GTSINFO13_WAIT;
 
   if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
@@ -1115,6 +1118,7 @@ static void _NEGO_Select6CancelWait2(POKEMON_TRADE_WORK* pWork)
       //友達の選択をまっていますメッセージ
       GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
+      POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
       pWork->NegoWaitTime = _GTSINFO04_WAIT;
       _CHANGE_STATE(pWork, _NEGO_Select6CancelWait22);
       break;
@@ -1690,6 +1694,7 @@ static void _Select6MessageInit5(POKEMON_TRADE_WORK* pWork)
       //もう一回選択待ち
       GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
+      POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
       pWork->NegoWaitTime = _GTSINFO04_WAIT;
       _CHANGE_STATE(pWork,_Select6MessageInit6);
       break;
@@ -1799,6 +1804,7 @@ static void _Select6MessageInit2(POKEMON_TRADE_WORK* pWork)
     case 0:  //はい
       GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
+      POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
       POKE_GTS_SelectStatusMessageDisp(pWork, 0, TRUE);
       pWork->NegoWaitTime = _GTSINFO03_WAIT;
       _CHANGE_STATE(pWork,_Select6MessageInit11);

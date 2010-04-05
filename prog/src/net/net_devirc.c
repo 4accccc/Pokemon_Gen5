@@ -50,6 +50,7 @@ static BOOL _DevGetSendTurnFunc(void);
 static BOOL _DevIsConnectSystemFunc(void);
 static BOOL _DevGetSendLockFlagFunc(void);
 static void _DevConnectWorkInitFunc(void);
+static void _DevSetTimeOutFunc(int time);
 
 
 
@@ -106,7 +107,8 @@ static GFLNetDevTable netDevTbl={
 	NULL, //DevSetClientConnectFunc DevSetClientConnect; ///< 子機がつながってよいかどうかハードレベルで調整
   NULL, //DevCrossScanFunc
   NULL, //DevCrossScanChangeSpeedFunc
-
+  _DevSetTimeOutFunc, //DevSetTimeOutFunc
+  
 #if 0
 	NULL, //DevLobbyLoginFunc DevLobbyLogin;		///<Wi-Fi広場にログイン	DWC_LOBBY_Login
 	NULL, //DevDebugSetRoomFunc DevDebugSetRoom;	///<デバッグ用 部屋データ設定 DWC_LOBBY_DEBUG_SetRoomData
@@ -301,6 +303,11 @@ static void _DevConnectWorkInitFunc(void)
 	GFL_NET_IRC_FirstConnect();
 }
 
+static void _DevSetTimeOutFunc(int time)
+{
+  GFL_NET_IRC_ChangeTimeoutTime(time);
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -312,4 +319,5 @@ GFLNetDevTable *NET_GetIrcDeviceTable(void)
 {
 	return &netDevTbl;
 }
+
 

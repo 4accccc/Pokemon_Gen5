@@ -927,6 +927,7 @@ static void _YesNoStart(GAMESYNC_MENU* pWork)
   GFL_MSG_GetString(pWork->pMsgData, GAMESYNC_006, pWork->appitem[1].str);
   pWork->appitem[1].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
   pWork->pAppTask			= APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
+  APP_TASKMENU_SetDisableKey(pWork->pAppTask, TRUE);  //ƒL[—}§
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );

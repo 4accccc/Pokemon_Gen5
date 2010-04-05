@@ -984,6 +984,7 @@ static void _YesNoStart(CG_WIRELESS_MENU* pWork)
   pWork->appitem[1].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
   pWork->appitem[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
   pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
+  APP_TASKMENU_SetDisableKey(pWork->pAppTask, TRUE);  //ƒL[—}§
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );

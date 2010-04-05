@@ -112,6 +112,7 @@ static GFLNetDevTable netDevTbl={
 	_DevSetClinetConnect, //DevSetClientConnectFunc DevSetClientConnect; ///< 子機がつながってよいかどうかハードレベルで調整
   _DevCrossScan, //すれ違い通信
   _DevCrossScanChangeSpeed, //すれ違い速度変更
+  NULL, //DevSetTimeOutFunc
 
 #if 0
 	NULL, //DevLobbyLoginFunc DevLobbyLogin;		///<Wi-Fi広場にログイン	DWC_LOBBY_Login
@@ -641,9 +642,6 @@ static void _DevCrossScanChangeSpeed(int num)
 {
   GFL_NET_WLChangeScanSpeed(num);
 }
-
-
-
 
 
 

@@ -1833,12 +1833,17 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
 
 static void _touchState_BeforeTimeing2(POKEMON_TRADE_WORK* pWork)
 {
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
   if(!POKEMONTRADEPROC_IsNetworkMode(pWork) || GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_POKECOLOR,WB_NET_TRADE_SERVICEID))
   {
     IRC_POKETRADE3D_SetColorTex(pWork);
  //   POKETRADE_MESSAGE_WindowClear(pWork);
 
     GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+
+    POKETRADE_MESSAGE_WindowClear(pWork);
     
     if(POKEMONTRADEPROC_IsTriSelect(pWork)){
 
@@ -1916,14 +1921,14 @@ static void _touchState_BeforeTimeing1(POKEMON_TRADE_WORK* pWork)
 {
 
   
-//  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
-//  POKETRADE_MESSAGE_WindowOpen(pWork);
+  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
+  POKETRADE_MESSAGE_WindowOpen(pWork);
   //メッセージ時計アイコン
-//  POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
+  POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
 
-  WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEIN ,
-                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG2 );
+  WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
+                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_FIRSTBOTH, WB_NET_TRADE_SERVICEID );
@@ -2018,6 +2023,7 @@ static void _endCancelState(POKEMON_TRADE_WORK* pWork)
     if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_51, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
+      POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
       _CHANGE_STATE(pWork, _cancelTimingSync);
     }
     else{
@@ -2078,6 +2084,7 @@ static void _endWaitStateNetwork(POKEMON_TRADE_WORK* pWork)
     if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR,1, &cmd)){
       GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_03, pWork->pMessageStrBuf );
       POKETRADE_MESSAGE_WindowOpen(pWork);
+      POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_B,WB_NET_TRADE_SERVICEID);
       _CHANGE_STATE(pWork, _networkFriendsStandbyWait);
     }

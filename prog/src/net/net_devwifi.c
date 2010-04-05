@@ -114,6 +114,7 @@ static GFLNetDevTable netDevTbl={
 	_DevSetClinetConnect, //DevSetClientConnectFunc DevSetClientConnect; ///< 子機がつながってよいかどうかハードレベルで調整
   NULL, //DevCrossScanFunc
   NULL, //DevCrossScanChangeSpeedFunc
+  NULL, //DevSetTimeOutFunc
 
 #if 0
   //-- 以下、Wi-Fi広場専用
