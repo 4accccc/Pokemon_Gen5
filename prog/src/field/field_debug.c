@@ -24,6 +24,14 @@
 //	typedef struct
 //======================================================================
 
+typedef struct RENDER_INFO_tag
+{
+  int Vtx;
+  int Ply;
+  int Mat;
+  int Shp;
+}RENDER_INFO;
+
 //--------------------------------------------------------------
 ///	FIELD_DEBUG_WORK 
 //--------------------------------------------------------------
@@ -38,6 +46,9 @@ struct _TAG_FIELD_DEBUG_WORK
 	u16 flag_pos_update;	//座標表示更新可能フラグ
 };
 
+RENDER_INFO DbgRenderInfo = {0,0,0,0};
+
+
 //======================================================================
 //	proto
 //======================================================================
@@ -48,6 +59,8 @@ static void DebugFont_Print(
 static void DebugFont_ClearLine( FIELD_DEBUG_WORK *work, u16 y );
 
 static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work );
+
+static void DbgDrawCallBackFunc( NNSG3dRenderObj *renderobj, void *work );
 
 //======================================================================
 //	フィールドデバッグシステム
@@ -606,4 +619,70 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 		DebugFont_ClearLine( work, 9 );
 		DebugFont_Print( work, 0, 9, str );
   }
+
+  //3D描画情報
+  {
+    sprintf( str, "VTX:%d",DbgRenderInfo.Vtx);
+    DebugFont_ClearLine( work, 10 );
+		DebugFont_Print( work, 0, 10, str );
+    sprintf( str, "PLY:%d",DbgRenderInfo.Ply);
+    DebugFont_ClearLine( work, 11 );
+		DebugFont_Print( work, 0, 11, str );
+    sprintf( str, "MAT:%d",DbgRenderInfo.Mat);
+    DebugFont_ClearLine( work, 12 );
+		DebugFont_Print( work, 0, 12, str );
+    sprintf( str, "SHP:%d",DbgRenderInfo.Shp);
+    DebugFont_ClearLine( work, 13 );
+		DebugFont_Print( work, 0, 13, str );
+  }
+
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画コールバック関数セット
+ * @param	sw    TRUE:セット　FALSE:リセット
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FIELD_DEBUG_SetDrawCallBackFunc(const BOOL sw)
+{
+  if (sw){
+    GFL_G3D_SetDrawCallBack( DbgDrawCallBackFunc, &DbgRenderInfo );
+  }else {
+    GFL_G3D_SetDrawCallBack( NULL, NULL );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画コールバックワーククリア
+ * @param	none
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+void FIELD_DEBUG_ClearDrawCallBackWork(void)
+{
+  DbgRenderInfo.Vtx = 0;
+  DbgRenderInfo.Ply = 0;
+  DbgRenderInfo.Mat = 0;
+  DbgRenderInfo.Shp = 0;
+}
+
+//--------------------------------------------------------------
+/**
+ * 描画コールバック関数
+ * @param	renderobj     レンダーオブジェポインタ
+ * @pamra work          コールバックワークポインタ
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DbgDrawCallBackFunc( NNSG3dRenderObj *renderobj, void *work )
+{
+  RENDER_INFO * info = (RENDER_INFO*)(work);
+  info->Vtx += renderobj->resMdl->info.numVertex;
+  info->Ply += renderobj->resMdl->info.numPolygon;
+  info->Mat += renderobj->resMdl->info.numMat;
+  info->Shp += renderobj->resMdl->info.numShp;
+
 }

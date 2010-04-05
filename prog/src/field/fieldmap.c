@@ -134,7 +134,6 @@
 
 #define DEBUG_FIELDMAP_ZONE_CHANGE_SYNC    // ゾーンチェンジに必要なシンク数を監視
 
-
 #endif
 
 // フィールドマップ描画にかかる処理時間を求める
@@ -1134,6 +1133,9 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
 //--------------------------------------------------------------
 static void DrawTop(FIELDMAP_WORK *fieldWork)
 {
+#ifdef PM_DEBUG
+  FIELD_DEBUG_ClearDrawCallBackWork();
+#endif  
   GFL_G3D_ClearG3dInfo();
   FIELD_CAMERA_Main( fieldWork->camera_control, GFL_UI_KEY_GetCont() );
 
@@ -1329,6 +1331,11 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 
   //フィールド3Ｄカットインヒープ解放
   GFL_HEAP_DeleteHeap( HEAPID_FLD3DCUTIN );
+
+#ifdef PM_DEBUG
+  //3Ｄ描画コールバックリセット
+  FIELD_DEBUG_SetDrawCallBackFunc(FALSE);
+#endif  
 
   return MAINSEQ_RESULT_NEXTSEQ;
 }

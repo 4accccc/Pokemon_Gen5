@@ -39,4 +39,7 @@ extern void FIELD_DEBUG_SetPosPrint( FIELD_DEBUG_WORK *work );
 extern void FIELD_DEBUG_SetPosUpdateFlag( FIELD_DEBUG_WORK *work, BOOL flag );
 extern void FIELD_DEBUG_RecoverBgCont( FIELD_DEBUG_WORK *work );
 
+extern void FIELD_DEBUG_SetDrawCallBackFunc(const BOOL sw);
+extern void FIELD_DEBUG_ClearDrawCallBackWork(void);
+
 #endif //FIELD_DEBUG_H_FILE

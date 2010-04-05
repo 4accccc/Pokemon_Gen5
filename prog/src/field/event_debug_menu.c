@@ -2224,6 +2224,10 @@ static BOOL debugMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk )
 {
   FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( wk->fieldWork );
   FIELD_DEBUG_SetPosPrint( debug );
+
+  //描画コールバックのセット
+  FIELD_DEBUG_SetDrawCallBackFunc(TRUE);
+  
   return( FALSE );
 }
 
@@ -6803,4 +6807,3 @@ static BOOL debugMenuCallProc_SymbolPokeList( DEBUG_MENU_EVENT_WORK *wk )
 
   return TRUE;
 }
-
