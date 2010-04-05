@@ -45,6 +45,7 @@
 #include "tr_tool/trtype_def.h"
 #include "tr_tool/tr_tool.h"
 #include "battle/battle.h"
+#include "savedata/record.h"
 
 #include "event_mission_help_after.h"
 
@@ -86,36 +87,6 @@ static const TR_BEACON_SET_FUNC DATA_TrBeaconSetFuncTbl[TR_BEACON_TYPE_MAX][2] =
  { GAMEBEACON_Set_BattleBigFourStart, GAMEBEACON_Set_BattleBigFourVictory },
  { GAMEBEACON_Set_BattleChampionStart, GAMEBEACON_Set_BattleChampionVictory },
 };
-
-static u8 DATA_TrBeaconLeaderTbl[] = {
- TRTYPE_LEADER1A,
- TRTYPE_LEADER1B,
- TRTYPE_LEADER1C,
- TRTYPE_LEADER2,
- TRTYPE_LEADER3,
- TRTYPE_LEADER4,
- TRTYPE_LEADER5,
- TRTYPE_LEADER6,
- TRTYPE_LEADER7,
- TRTYPE_LEADER8A,
- TRTYPE_LEADER8B,
-};
-#define TR_BEACON_LEADER_NUM NELEMS( DATA_TrBeaconLeaderTbl)
-
-static u8 DATA_TrBeaconBigFourTbl[] = {
- TRTYPE_BIGFOUR1,
- TRTYPE_BIGFOUR2,
- TRTYPE_BIGFOUR3,
- TRTYPE_BIGFOUR4,
-};
-#define TR_BEACON_BIGFOUR_NUM NELEMS( DATA_TrBeaconLeaderTbl)
-
-static u8 DATA_TrBeaconChampTbl[] = {
- TRTYPE_SAGE1,
-};
-#define TR_BEACON_CHAMP_NUM NELEMS( DATA_TrBeaconChampTbl )
-
-
 
 //======================================================================
 //  struct
@@ -287,21 +258,6 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
 //--------------------------------------------------------------
 GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BATTLE_SETUP_PARAM* bp, BOOL sub_event_f, ENCOUNT_TYPE enc_type )
 {
-#if 0
-  GMEVENT * event;
-  BATTLE_EVENT_WORK * bew;
-
-  event = GMEVENT_Create( gsys, NULL, fieldBattleEvent, sizeof(BATTLE_EVENT_WORK) );
-
-#ifdef PM_DEBUG
-  debug_FieldDebugFlagSet( bp );
-#endif
-
-  bew = GMEVENT_GetEventWork(event);
-  BEW_Initialize( bew, gsys, bp );
-  bew->is_sub_event = sub_event_f;
-  bew->EncEffNo = enc_eff_no;     //エンカウントエフェクトセット
-#endif
   GMEVENT * event = GMEVENT_Create( gsys, NULL, wildBattleEvent, sizeof(WILD_BATTLE_EVENT_WORK) );
   WILD_BATTLE_EVENT_WORK * wbew = GMEVENT_GetEventWork( event );
   wbew->gsys = gsys;
@@ -314,6 +270,10 @@ GMEVENT * EVENT_WildPokeBattle( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldmap, BAT
 #endif
   //すれ違いビーコン送信リクエスト
   BeaconReq_BtlWild( bp, BTL_BEACON_ST_START );
+  {
+    RECORD* record = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData(gsys));
+    RECORD_Inc( record, RECID_BTL_ENCOUNT );
+  }
 
   //エフェクトエンカウト　エフェクト復帰キャンセル
   EFFECT_ENC_EffectRecoverCancel( FIELDMAP_GetEncount(fieldmap));
@@ -345,32 +305,15 @@ GMEVENT * EVENT_TrainerBattle(
 
   {
     FIELD_ENCOUNT* enc = FIELDMAP_GetEncount(fieldmap);
+    RECORD* record = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData( gsys ) );
 
     bp = BATTLE_PARAM_Create(HEAPID_PROC);
     FIELD_ENCOUNT_SetTrainerBattleParam( enc, bp, rule, partner_id, tr_id0, tr_id1, HEAPID_PROC );
 
     BeaconReq_BtlTrainer( tr_id0, BTL_BEACON_ST_START );
-
-#if 0
-    //2009年12月末ロム用処理：ジムリーダー戦のみ、BGMを変更する
-    switch (tr_id0)
-    {
-    case TRID_LEADER1A_01:
-    case TRID_LEADER1B_01:
-    case TRID_LEADER1C_01:
-    case TRID_LEADER2_01:
-    case TRID_LEADER3_01:
-    case TRID_LEADER4_01:
-    case TRID_LEADER5_01:
-    case TRID_LEADER6_01:
-    case TRID_LEADER7_01:
-    case TRID_LEADER8A_01:
-    case TRID_LEADER8B_01:
-      bp->musicDefault = SEQ_BGM_VS_GYMLEADER;
-    }
-#endif
+    RECORD_Inc( record, RECID_BTL_TRAINER);
+    RECORD_Inc( record, RECID_DAYCNT_TRAINER_BATTLE);
   }
-
 #ifdef PM_DEBUG
   debug_FieldDebugFlagSet( bp );
 #endif
@@ -755,23 +698,15 @@ static GMEVENT_RESULT fieldBattleEvent(
 //--------------------------------------------------------------
 static u8 btl_trainer_GetBeaconType( u16 tr_id )
 {
-  int i;
-  u16 tr_type = TT_TrainerDataParaGet( tr_id, ID_TD_tr_type );
-  
-  for(i = 0;i < TR_BEACON_CHAMP_NUM;i++){
-    if( tr_type == DATA_TrBeaconChampTbl[i] ){
-      return TR_BEACON_CHAMPION;
-    }
-  }
-  for(i = 0;i < TR_BEACON_BIGFOUR_NUM;i++){
-    if( tr_type == DATA_TrBeaconBigFourTbl[i] ){
-      return TR_BEACON_BIGFOUR;
-    }
-  }
-  for(i = 0;i < TR_BEACON_LEADER_NUM;i++){
-    if( tr_type == DATA_TrBeaconLeaderTbl[i] ){
-      return TR_BEACON_LEADER;
-    }
+  u8 grp = TT_TrainerTypeGrpGet(TT_TrainerDataParaGet( tr_id, ID_TD_tr_type ) );
+ 
+  switch( grp ){
+  case TRTYPE_GRP_LEADER:
+    return TR_BEACON_LEADER;
+  case TRTYPE_GRP_BIGFOUR:
+    return TR_BEACON_BIGFOUR;
+  case TRTYPE_GRP_CHAMPION:
+    return TR_BEACON_CHAMPION;
   }
   return TR_BEACON_NORMAL;
 }

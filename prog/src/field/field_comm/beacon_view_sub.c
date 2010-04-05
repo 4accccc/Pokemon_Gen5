@@ -226,7 +226,9 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
     return TRUE;
   }
   //新規
-  wk->log_count = MISC_CrossComm_IncSuretigaiCount( wk->misc_sv );
+  wk->log_count = MISC_CrossComm_IncSuretigaiCount( wk->misc_sv );    
+  RECORD_Inc( wk->record_sv, RECID_SURECHIGAI_NUM );
+
   draw_LogNumWindow( wk );
   draw_MenuWindow( wk, msg_sys_now_record );
   obj_ThanksViewSet( wk );
@@ -1421,6 +1423,7 @@ static void effReq_PopupMsg( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, BOOL new
   case GAMEBEACON_ACTION_THANKYOU:
     //御礼を受けた回数インクリメント
     GAMEBEACON_Set_ThankyouOver( MISC_CrossComm_IncThanksRecvCount( wk->misc_sv ) );
+    RECORD_Inc( wk->record_sv, RECID_SURECHIGAI_THANKS );
 
     //ブレイクスルー
   default:

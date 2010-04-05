@@ -24,6 +24,7 @@
 #include "field_encount.h"
 #include "effect_encount.h"
 #include "event_battle.h"
+#include "savedata/record.h"
 
 #include "event_fishing.h"
 
@@ -60,6 +61,7 @@ typedef struct _FISHING_WORK{
   GAMEDATA* gdata;
   FIELDMAP_WORK *fieldWork;
   FIELD_ENCOUNT* fld_enc;
+  RECORD* record;
   MMDLSYS* mmdl_sys;
 
   FIELD_PLAYER *fplayer;
@@ -147,6 +149,7 @@ GMEVENT * EVENT_FieldFishing( FIELDMAP_WORK* fieldmap, GAMESYS_WORK* gsys )
   wk->fieldWork = fieldmap;
   wk->gdata = GAMESYSTEM_GetGameData(gsys);
   wk->fld_enc = FIELDMAP_GetEncount( wk->fieldWork );
+  wk->record = GAMEDATA_GetRecordPtr( wk->gdata);
 
   wk->mmdl_sys = FIELDMAP_GetMMdlSys( wk->fieldWork );
   wk->fplayer = FIELDMAP_GetFieldPlayer( fieldmap );
@@ -255,6 +258,9 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
     if(wk->bsp != NULL){
       BATTLE_PARAM_Delete(wk->bsp);
     }
+    //つりそこなった回数  
+    RECORD_Inc( wk->record, RECID_FISHING_FAILURE );
+
     MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_END );
     SCRIPT_CallScript( event,SCRID_FLD_EV_FISHING_FAILED_ENCOUNT+(*seq-SEQ_ENCOUNT_FAILED), NULL, NULL, HEAPID_FIELDMAP );
 		(*seq) = SEQ_END;
@@ -266,6 +272,8 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
 
   //エンカウントイベントへ移行
   case SEQ_HIT_SUCCESS:
+    //釣り上げた回数  
+    RECORD_Inc( wk->record, RECID_FISHING_SUCCESS );
     GMEVENT_ChangeEvent( event, EVENT_WildPokeBattle( wk->gsys, wk->fieldWork, wk->bsp, FALSE, ENC_TYPE_FISHING ) );
 	  return GMEVENT_RES_CONTINUE;
 	}
