@@ -21,8 +21,143 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_d08R0901_boss_01
+_EVENT_DATA		ev_d08r0901_poke_01
+_EVENT_DATA		ev_init_d08R0901
 _EVENT_DATA_END
 
+/**************************************************************/
+/*            FIELD_INIT_LABEL                              　 */
+/**************************************************************/
+INIT_EVENT_START	ev_init_d08R0901
+	
+	//バージョンを取得してOBJを変化させる
+	_GET_ROM_VERSION( SCWK_ANSWER )
+	IF FLAG_ON(FV_D08R0901_PACKAGE_POKE) THEN
+		//BlackVERならム
+		IF $SCWK_ANSWER == VERSION_BLACK THEN
+			$OBJCHRWORK0 = SHIN_B
+		//Whiteならシン
+		ELSE
+			$OBJCHRWORK0 = MU_B
+		ENDIF
+	ELSE
+	ENDIF
+	
+INIT_EVENT_END
+
+/**************************************************************/
+/* パッケージポケモンの復活POSイベント                                                          
+/**************************************************************/
+EVENT_START    ev_d08r0901_poke_01
+	_OBJ_ANIME(D08R0901_POKE_01, anm_legend_hoeru )
+	_OBJ_ANIME_WAIT()
+
+	//WHITE版の場合
+{
+	DEFINE_LOCAL	LWK_ROM
+	_GET_ROM_VERSION( LWK_ROM )
+		IF $LWK_ROM == VERSION_BLACK THEN
+			_VOICE_PLAY( MONSNO_651, 0 )
+			_GIZAWIN_OBJMSG_POS( msg_d08r0901_poke8_01 ,D08R0901_POKE_01, WIN_NONE )
+			_MSGWIN_CLOSE()
+			_VOICE_WAIT()
+
+			_WILD_BTL_SET_LEGEND( MONSNO_651, 50 )
+			_BATTLE_RESULT_GET( SCWK_ANSWER )
+			//倒した場合
+			IF $SCWK_ANSWER == 0 THEN
+				
+				
+				//========================================/
+				
+				//シンのOBJ削除
+				_OBJ_DEL(D08R0901_POKE_01)
+				
+				//フラグセット
+				_FLAG_SET(FV_D08R0901_PACKAGE_POKE)
+				
+				//自機の位置調整
+				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 12, DIR_UP )
+				
+				//========================================/
+				
+				_WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			
+			//負けた場合
+			ELSE
+			
+				_WILD_LOSE()		//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			
+			ENDIF
+			
+		ELSE
+			_VOICE_PLAY( MONSNO_650, 0 )
+			_GIZAWIN_OBJMSG_POS( msg_d08r0901_poke7_01 , D08R0901_POKE_01, WIN_NONE )
+			_MSGWIN_CLOSE()
+			_VOICE_WAIT()
+
+			_WILD_BTL_SET_LEGEND( MONSNO_650, 50 )
+			_BATTLE_RESULT_GET( SCWK_ANSWER )
+			//倒した場合
+			IF $SCWK_ANSWER == 0 THEN
+				
+				//========================================/
+				
+				//ムのOBJ削除
+				_OBJ_DEL(D08R0901_POKE_01)
+
+				//フラグセット
+				_FLAG_SET(FV_D08R0901_PACKAGE_POKE)
+
+				//自機の位置調整
+				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 12, DIR_UP )
+
+				//========================================/
+				
+				_WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			
+			//負けた場合
+			ELSE
+			
+				_WILD_LOSE()		//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+			
+			ENDIF
+			
+		ENDIF
+}
+{
+	_WILD_RETRY_CHECK( SCWK_ANSWER )
+
+	SWITCH $SCWK_ANSWER
+	CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
+		//勝利した場合、あるいは逃げた場合
+		DEFINE_LOCAL	LWK_ROM
+		_GET_ROM_VERSION( LWK_ROM )
+		IF $LWK_ROM == VERSION_WHITE THEN
+			_SYSWIN_MSG( msg_d08r0901_poke8_02 , POS_DOWN )
+			_SYSWIN_CLOSE()
+		ELSE
+			_SYSWIN_MSG( msg_d08r0901_poke7_02 , POS_DOWN )
+			_SYSWIN_CLOSE()
+		ENDIF
+        
+	CASE SCR_WILD_BTL_RET_CAPTURE THEN
+	//捕まえた場合
+
+		_FLAG_SET( FE_PACKAGE_POKE_GET )
+
+	ENDSWITCH
+}
+
+EVENT_END
+
+//--------------------------------------------------------------------
+//		シンとム専用のアニメ
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_legend_hoeru
+	_ANIME_DATA	AC_SHIN_MU_HOERU,1
+	_ANIME_DATA	ACMD_END,0
+	
 /**************************************************************/
 /* パッケージポケモンの復活POSイベント                                                          
 /**************************************************************/

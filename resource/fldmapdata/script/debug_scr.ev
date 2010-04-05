@@ -659,6 +659,7 @@ EVENT_START   ev_debug_murakami
 		ELSIF $SCWK_TEMP1 == 11 THEN
 			//R02のランニングシューズイベントを有効にする
 			$WK_SCENE_R02 = 0
+			_MAP_CHANGE( ZONE_ID_R02, 760, 648, DIR_LEFT)
 
 		ELSIF $SCWK_TEMP1 == 12 THEN
 			//R02のサポートイベントを有効にする

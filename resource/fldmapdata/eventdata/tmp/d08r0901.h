@@ -12,6 +12,7 @@
 #define D08R0901_RIVEL_01                  0
 #define D08R0901_LEADER7_01                1
 #define D08R0901_BOSS_01                   2
+#define D08R0901_POKE_01                   3
 
 #endif //ZONE_D08R0901_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/d08r0901.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
