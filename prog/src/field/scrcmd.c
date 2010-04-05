@@ -97,6 +97,7 @@
 #include "scrcmd_rebattle_trainer.h"
 #include "scrcmd_evt_lock.h"
 #include "scrcmd_traintown.h"
+#include "scrcmd_record.h"
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 

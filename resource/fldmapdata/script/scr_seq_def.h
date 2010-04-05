@@ -10582,3 +10582,19 @@
   .short \lock_no
   .short \ret
   .endm
+
+//--------------------------------------------------------------
+/**
+ * @brief レコード加算
+ *
+ * @param id    対象レコードＩＤ    RECID_～　savedata/record.h参照
+ * @param val   加算値
+ */
+//--------------------------------------------------------------
+#define _ADD_RECORD( id, val ) _ASM_ADD_RECORD id, val
+
+  .macro _ASM_ADD_RECORD id, val
+  .short EV_SEQ_ADD_RECORD
+  .short \id
+  .short \val
+  .endm

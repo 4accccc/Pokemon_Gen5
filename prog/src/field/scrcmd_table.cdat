@@ -1009,6 +1009,12 @@
   NO_CMD()
   NO_CMD()
 
+  //レコード数え上げ関連
+  DEF_CMD( EvCmdAddRecord, EV_SEQ_ADD_RECORD )
+  NO_CMD()
+  NO_CMD()
+  NO_CMD()
+
   END_CMD
 
   //スクリプトコマンドテーブル終了
