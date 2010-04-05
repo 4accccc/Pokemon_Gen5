@@ -297,7 +297,7 @@ typedef struct{
   u32 irc_timeout;			///< 赤外線再接続時のタイムアウト時間
 #endif	//GFL_NET_IRC
   u16 maxMPParentSize;    ///< MP通信時に親の送信量を増やしたい場合サイズ指定 そうしない場合０
-  u16 dummy;
+  u16 GsidOverwrite;               ///< GSID ここに数字が入っている場合、 gsidを比較に使わずに こちらと比較する
 } GFLNetInitializeStruct;
 
 //-------------------------------
@@ -477,6 +477,14 @@ extern void GFL_NET_WorkChange_IRCWIRELESS(void* pWork);
 
 //==============================================================================
 /**
+ * @brief    赤外線+ワイヤレスエラーかどうか
+ * @return   none
+ */
+//==============================================================================
+extern BOOL GFL_NET_GetTypeErrorIRCWIRELESS(void);
+
+//==============================================================================
+/**
  * @brief    親機子機を繰り返す
  * @param    pHandle  通信ハンドルのポインタ
  * @return   none
@@ -494,6 +502,13 @@ extern void GFL_NET_Changeover(NetStepEndCallback callback);
 //==================================================================
 extern void GFL_NET_ChangeoverModeSet(int mode, BOOL bAuto, const u8 *macAddress);
 
+//==============================================================================
+/**
+ * @brief    タイムアウト時間セット
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_SetTimeOut(int timer);
 
 
 //==============================================================================
@@ -512,6 +527,16 @@ extern BOOL GFL_NET_ForceParentStart_IRCWIRELESS(void);
  */
 //==============================================================================
 extern void GFL_NET_ReserveNetID_IRCWIRELESS(int netID);
+
+//==============================================================================
+/**
+ * @brief    赤外線接続後何のGSIDになるか予約
+ * @param    netID  無線netid   親になるなら子になるかしかない
+ * @return   none
+ */
+//==============================================================================
+extern void GFL_NET_IRCWIRELESS_SetChangeGSID(u8 gsid);
+
 
 //==============================================================================
 /**
@@ -754,6 +779,15 @@ extern BOOL GFL_NET_ChangeMpMode(GFL_NETHANDLE* pNet,NetModeChangeFunc func);
  */
 //==============================================================================
 extern void GFL_NET_ChangeGameService(GameServiceID gsid,int connectnum);
+
+
+//==============================================================================
+/**
+ * @brief   サービスモードを取得する
+ * @retval  gsid         サービスモード
+ */
+//==============================================================================
+extern GameServiceID GFL_NET_GetGameServiceID(void);
 
 //==============================================================================
 /**
