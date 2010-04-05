@@ -867,6 +867,13 @@ static int Subseq_UploadFinish( WORLDTRADE_WORK *wk )
 	// ここに来ている時点でセーブには成功しているので、DepsitFlagを立てておかないと
 	// 通信エラーになった時にもう一度「預ける」が表示されてしまう
 	wk->DepositFlag = 1;
+
+
+  //アップロードに成功したので、預けた回数をカウント
+  { 
+    RECORD  *p_rec  = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData( wk->param->gamesys ) );
+    RECORD_Inc( p_rec, RECID_GTS_PUT );
+  }
 	
 	return SEQ_MAIN;
 }

@@ -17,6 +17,8 @@
 
 //	module
 #include "infowin/infowin.h"
+#include "gamesystem/game_data.h"
+#include "savedata/record.h"
 
 #include "print/gf_font.h"
 #include "print/printsys.h"
@@ -1858,6 +1860,12 @@ static void SEQFUNC_StartGame( RESULT_MAIN_WORK *p_wk, u16 *p_seq )
         p_you->barth_day, 
         MyStatus_GetID( p_mystatus ) );
 	}
+
+  //相性チェックをプレイした回数をレコードに登録する
+  { 
+    RECORD  *p_rec  = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys ) );
+    RECORD_Inc( p_rec, RECID_AFFINITY_CHECK_NUM);
+  }
 
 	//BACKOBJ_StartGather( &p_wk->backobj[BACKOBJ_SYS_MAIN], FALSE );
 	SEQ_Change( p_wk, SEQFUNC_DecideScore );
