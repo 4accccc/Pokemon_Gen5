@@ -236,6 +236,18 @@ extern const u16 * FIELD_CAMERA_GetAngleYawAddress( const FIELD_CAMERA *camera )
 extern fx32 FIELD_CAMERA_GetAngleLen(const FIELD_CAMERA * camera );
 extern void FIELD_CAMERA_SetAngleLen(FIELD_CAMERA * camera, fx32 length );
 
+//-----------------------------------------------------------------------------
+/**
+ * @brief アングルを求める
+ *
+ * @param cp_vec  ターゲット→カメラ ベクトル
+ * @param p_pitch 求めたピッチを受け取るu16へのポインタ
+ * @param p_yaw   求めたヨーを受け取るu16へのポインタ
+ * @param p_len   求めた距離を受け取るfx32へのポインタ
+ */
+//-----------------------------------------------------------------------------
+extern void FIELD_CAMERA_CalcVecAngle( const VecFx32* cp_vec, u16* p_pitch, u16* p_yaw, fx32* p_len );
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	カメラ視野角操作
