@@ -448,9 +448,11 @@ EVENT_START		ev_c04r0201_owner_01
     IF $birthMonth == $nowMonth && $birthDay && $nowDay THEN
       $isEvent = TRUE
       //ハッピーバースデイ！
-      _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_05_01 )
-     
+      _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_05_01 )
+      _MSGWIN_CLOSE()
+   
       $SCWK_TEMP0 = MUSICAL_GOODS_KEEKI
+      $SCWK_TEMP1 = FALSE
       _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
     ENDIF
   }
@@ -465,9 +467,11 @@ EVENT_START		ev_c04r0201_owner_01
       _FLAG_CHECK( FE_MUSICAL_COMM_PLAY, SCWK_ANSWER )
       IF $SCWK_ANSWER == TRUE THEN
         $isEvent = TRUE
-        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_02 )
+        _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_02 )
+        _MSGWIN_CLOSE()
 
         $SCWK_TEMP0 = MUSICAL_GOODS_THIARA
+        $SCWK_TEMP1 = TRUE
         _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
         
         _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_03 )
@@ -484,9 +488,11 @@ EVENT_START		ev_c04r0201_owner_01
       _GET_MUSICAL_VALUE( MUSICAL_VALUE_TOPNUM , 0 , SCWK_ANSWER )
       IF $SCWK_ANSWER >= 5 THEN
         $isEvent = TRUE
-        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_03_01 )
+        _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_03_01 )
+        _MSGWIN_CLOSE()
 
         $SCWK_TEMP0 = MUSICAL_GOODS_KURAUN
+        $SCWK_TEMP1 = TRUE
         _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
         
         _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_04 )
@@ -503,9 +509,11 @@ EVENT_START		ev_c04r0201_owner_01
       _GET_MUSICAL_VALUE( MUSICAL_VALUE_TOPNUM , 0 , SCWK_ANSWER )
       IF $SCWK_ANSWER >= 10 THEN
         $isEvent = TRUE
-        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_04_01 )
+        _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_04_01 )
+        _MSGWIN_CLOSE()
 
         $SCWK_TEMP0 = MUSICAL_GOODS_YUUSHOUBERUTO
+        $SCWK_TEMP1 = TRUE
         _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
         
         _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_05 )

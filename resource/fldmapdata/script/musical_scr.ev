@@ -798,10 +798,10 @@ fan_main_routine:
       _MUSICAL_WORD_GOODS_NAME( 1 , gift_number )
       //贈るメッセージ
       _BALLOONWIN_TALKOBJ_MSG( msg_id )
-      _AB_KEYWAIT ()
       _BALLOONWIN_CLOSE()
       
-      $SCWK_TEMP0 = gift_number
+      $SCWK_TEMP0 = $gift_number
+      $SCWK_TEMP1 = FALSE
       _CHG_COMMON_SCR SCRID_MUSICAL_ADD_GOODS
       
       //渡たすフラグ落とし
@@ -885,11 +885,16 @@ EVENT_START ev_musical_add_goods
   //メッセージ
   _SYSWIN_MSG( msg_musical_fan_get_goods , POS_DOWN )
   _ME_WAIT()
+  _AB_KEYWAIT_MARK()
 
-  _SYSWIN_MSG( msg_musical_fan_get_goods_02 , POS_DOWN )
-  _LAST_KEYWAIT()
+  IF $SCWK_TEMP1 == TRUE THEN
+    _SYSWIN_MSG( msg_musical_fan_get_goods_03 , POS_DOWN )
+  ELSE
+    _SYSWIN_MSG( msg_musical_fan_get_goods_02 , POS_DOWN )
+    _LAST_KEYWAIT()
+  ENDIF
+
   _SYSWIN_CLOSE()
-
   //追加処理
   _ADD_MUSICAL_GOODS( SCWK_TEMP0 )
 
