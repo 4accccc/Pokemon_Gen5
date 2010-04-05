@@ -20,6 +20,8 @@
 #endif  // 同一ビットマップでGFL_BMP_Printすると危険かもしれない、と思い、2つ用意した。(memcpy, memmoveどちらとして働くのか分からないから)
         // どうもGFL_BMP_Printに時間が掛かっているようだ。VRAMにおいてVRAM同士でコピーすれば速いだろうか？
 
+#define USE_SGRAPH  // これが定義されているとき、SGRAPH(Scroll GRAPH)を使用する
+
 //#define TIME_BMPWIN        // これが定義されているとき、時間を文字として表示する
 
 
@@ -227,6 +229,8 @@ typedef enum
 POKE_CLWK_STATE;
 
 
+#ifndef USE_SGRAPH
+
 // グラフ
 #define GRAPH_BITMAP_CHAR_SIZE_X    (30)
 #define GRAPH_BITMAP_CHAR_SIZE_Y    (15)
@@ -290,6 +294,59 @@ typedef enum
 GRAPH_SWAP_BMPWIN_IDX;
 #endif
 
+#endif  // #ifndef USE_SGRAPH
+
+
+#ifdef USE_SGRAPH
+
+// SGRAPH, SWAVE
+#define SGRAPH_BITMAP_CHAR_SIZE_X            (31)  // ビットマップのキャラサイズ
+#define SGRAPH_BITMAP_CHAR_SIZE_Y            (15)
+#define SGRAPH_BITMAP_DISP_CHAR_SIZE_X       (30)  // 見えているビットマップのキャラサイズ
+#define SGRAPH_BITMAP_DISP_CHAR_SIZE_Y       (15)  // SGRAPH_BITMAP_DISP_CHAR_SIZE_? <= SGRAPH_BITMAP_CHAR_SIZE_?
+#define SGRAPH_BITMAP_DISP_LAST_PIXEL_NUM_X  (6)   // 見えているビットマップの最後のキャラの、見えているピクセル数
+#define SGRAPH_BITMAP_DISP_LAST_PIXEL_NUM_Y  (8)   // [SGRAPH_BITMAP_DISP_CHAR_SIZE_? -1]の何ピクセルが見えているか
+#define SGRAPH_BITMAP_PIXEL_SIZE_X           ( SGRAPH_BITMAP_CHAR_SIZE_X *8 )                                                    // ビットマップのピクセル数
+#define SGRAPH_BITMAP_DISP_PIXEL_SIZE_X      ( ( SGRAPH_BITMAP_DISP_CHAR_SIZE_X -1 ) *8 + SGRAPH_BITMAP_DISP_LAST_PIXEL_NUM_X )  // 見えているビットマップのピクセル数
+#define SGRAPH_BITMAP_SCREEN_SCROLL_BASE_X   (-1)  // スクリーンをどれだけスクロールさせたところを基準とするか
+#define SGRAPH_BITMAP_SCREEN_SCROLL_BASE_Y   ( 0)  // 左上はビットマップの[0][0]と合わせたいので、スクロールさせておく
+#define SGRAPH_BITMAP_SCREEN_POS_X           (1)   // スクリーンの位置キャラ座標
+#define SGRAPH_BITMAP_SCREEN_POS_Y           (2)
+
+#define SGRAPH_DATA_MOVE_WAIT    (0)//(0)  // このフレームだけ待ってSGRAPH_DATA_MOVE_SPEEDだけ移動する  // 0の場合、x x x  // 2の場合、x 0 0 x 0 0 x
+#define SGRAPH_DATA_MOVE_SPEED   (2)//(2)(1)  // 移動する際の移動量  // [x] = [x+SGRAPH_DATA_MOVE_SPEED] となる  // 1,2,4,8のどれかで
+
+#define SGRAPH_DATA_MOVE_SPEED_SCROLL_LIMIT  (8)  // スクロールとの兼ね合いから来る移動量の限界値
+
+                                          // ビットマップの左上を(0,0)としたときのビットマップ座標
+#define SGRAPH_BITMAP_ORIGIN_X     ( 0)   // ( 0,  y )
+#define SGRAPH_BITMAP_ORIGIN_Y     (55)   // ( x, 55 )
+
+#define SGRAPH_DATA_MAX_Y          ( 55)  // ( x, 55 -( 55) )  // ここまで(含む)書いていい  // SGRAPH_BITMAP_ORIGIN_Yを0としたときの最大値
+#define SGRAPH_DATA_MIN_Y          (-55)  // ( x, 55 -(-55) )  // ここまで(含む)書いていい  // SGRAPH_BITMAP_ORIGIN_Yを0としたときの最小値
+
+#define SGRAPH_DATA_SATURATION_MAX_Y  ( 500)  // これより大きな値は、この値にしておく
+#define SGRAPH_DATA_SATURATION_MIN_Y  (-500)  // これより大きな値は、この値にしておく
+
+// データ座標からビットマップの左上を(0,0)としたときのビットマップ座標を求める
+#define SGRAPH_DATA_Y_TO_BITMAP_Y(y)  (SGRAPH_BITMAP_ORIGIN_Y-(y))  // ( y<SGRAPH_DATA_MIN_Y || SGRAPH_DATA_MAX_Y<y ) のときは使用しないこと
+
+#define SGRAPH_COLOR (15)
+
+// waveデータの最大値
+#define SWAVE_DATA_VALUE_MAX                (128)                    // wave_data_begin[i] * SWAVE_DATA_VALUE_MAX_TO_SGRAPH_DATA / SWAVE_DATA_VALUE_MAX
+#define SWAVE_DATA_VALUE_MAX_TO_SGRAPH_DATA ( SGRAPH_DATA_MAX_Y -8 ) // としてグラフに表示する
+
+#define SWAVE_DATA_SIZE_MAX    (26000)    // pokemon_wb/prog/src/sound/pm_voice.c  PMVOICE_WAVESIZE_MAX 参考
+
+#define SGRAPH_DATA_FULL_SIZE_X_MAX  (30*8*4)  // 前もって用意しておく完全なグラフの最大横ピクセル数(画面上に書ける横範囲より大きくてもいい)
+                                               // 縦は SGRAPH_BITMAP_CHAR_SIZE_Y *8 ぴったりにしておく
+
+#define SWAVE_DATA_SPEED_ONE  (32768)  // NNS_SndWaveOutStart  再生スピードspeedは、再生する速さを指定します。speed÷32768倍の速さで再生されます。
+#define SWAVE_DATA_PLAY_FPS   (60)     // 60フレームで再生
+
+#endif  // #ifdef USE_SGRAPH
+
 
 #ifdef DEBUG_SOUND_TEST  // これが定義されているとき、サウンドのテストが可能
 static int speed;
@@ -320,6 +377,29 @@ typedef struct
   GFL_MSGDATA*                time_msgdata;
 #endif
 
+
+#ifdef USE_SGRAPH
+  u16*                        graph_screen;                     // スクリーン
+
+  s16                         graph_x_scroll;                   // スクロール  // 0<= <8で、8までいったら0に戻す
+  s16                         graph_x_chara_offset;             // スクリーンのx方向0キャラ目には何キャラ目のデータを書くか
+  BOOL                        graph_req;                        // TRUEのときVBlankで転送する
+
+  GFL_BMPWIN*                 graph_bmpwin;
+  
+  u8                          graph_data_move_wait_count;       // グラフが移動するまでに待つフレーム数(0のとき毎フレーム進む)
+  
+  u16                         full_monsno;                      // 前もって用意しておく完全なグラフの持ち主のmonsno(0のときなし)
+  u16                         full_formno;                      // 前もって用意しておく完全なグラフの持ち主のformno
+  GFL_BMP_DATA*               graph_full_bmp_data;              // 前もって用意しておく完全なグラフ
+  s16                         graph_data_full_size;             // 前もって用意しておく完全なデータは横何ピクセルあるか
+  s16                         graph_data_full_print;            // 次に書く横ピクセルの位置(0=これから書く; 例3=3ピクセル目から書く; graph_data_full_size=書き終わっている;)
+  
+  const s8*                   wave_data_begin;                  // waveデータ
+  u32                         wave_full_millisec;               // 前もって用意しておくwaveデータの総時間
+
+#else  // #ifdef USE_SGRAPH
+
 #ifdef GRAPH_SWAP_BMPWIN
   GRAPH_SWAP_BMPWIN_IDX       graph_swap_bmpwin_idx;  // これから描画するビットマップウィンドウ
   GFL_BMPWIN*                 graph_bmpwin[GRAPH_SWAP_BMPWIN_IDX_MAX];
@@ -344,8 +424,11 @@ typedef struct
   u32                         wave_full_millisec;               // 前もって用意しておくwaveデータの総時間
 #endif
 
-  u32                         poke_ncg;
+#endif  // #ifdef USE_SGRAPH
+
+
   u32                         poke_ncl;
+  u32                         poke_ncg;
   u32                         poke_nce;
   GFL_CLWK*                   poke_clwk;
   POKE_CLWK_STATE             poke_state;
@@ -437,6 +520,11 @@ static void Zukan_Detail_Voice_GraphReset( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
 static void Zukan_Detail_Voice_GraphDrawBitmap( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Voice_WaveDataSetup( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn, u16 monsno, u16 formno );
 
+#ifdef USE_SGRAPH
+static void Zukan_Detail_Voice_GraphMakeTransScreen_VBlank( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+#endif  // #ifdef USE_SGRAPH
+
+
 // アルファ設定
 static void Zukan_Detail_Voice_AlphaInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Voice_AlphaExit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -517,6 +605,13 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcInit( ZKNDTL_PROC* proc, int* s
     work->print_que   = ZKNDTL_COMMON_GetPrintQue(cmn);
   }
 
+
+#ifdef USE_SGRAPH
+  // グラフ
+  work->graph_req = FALSE;
+#endif  // #ifdef USE_SGRAPH
+
+  
   // ボイス
   work->voice_play = FALSE;
   work->voice_disp_millisec = 0;
@@ -913,6 +1008,18 @@ static void Zukan_Detail_Voice_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* p
 static void Zukan_Detail_Voice_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   ZUKAN_DETAIL_VOICE_WORK*     work     = (ZUKAN_DETAIL_VOICE_WORK*)wk;
+
+  if( work->graph_req )
+  {
+    GFL_BMPWIN_TransVramCharacter( work->graph_bmpwin );
+ 
+    GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_X_SET, SGRAPH_BITMAP_SCREEN_SCROLL_BASE_X + work->graph_x_scroll );
+    GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_Y_SET, SGRAPH_BITMAP_SCREEN_SCROLL_BASE_Y );
+    
+    GFL_BG_LoadScreenReq( BG_FRAME_M_TIME );
+    
+    work->graph_req = FALSE;
+  }
 }
 
 //-------------------------------------
@@ -1585,6 +1692,22 @@ static void Zukan_Detail_Voice_KeyTouchPlayButton( ZUKAN_DETAIL_VOICE_PARAM* par
 //=====================================
 static void Zukan_Detail_Voice_GraphInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+#ifdef USE_SGRAPH
+
+  work->graph_screen = GFL_HEAP_AllocClearMemory( param->heap_id, sizeof(u16) * SGRAPH_BITMAP_CHAR_SIZE_X * SGRAPH_BITMAP_CHAR_SIZE_Y );
+
+  work->graph_bmpwin = GFL_BMPWIN_Create(
+                           BG_FRAME_M_TIME,
+                           SGRAPH_BITMAP_SCREEN_POS_X, SGRAPH_BITMAP_SCREEN_POS_Y,
+                           SGRAPH_BITMAP_CHAR_SIZE_X, SGRAPH_BITMAP_CHAR_SIZE_Y,
+                           BG_PAL_POS_M_TIME,
+                           GFL_BMP_CHRAREA_GET_B );
+  Zukan_Detail_Voice_GraphReset( param, work, cmn );
+
+  work->graph_full_bmp_data = GFL_BMP_Create( SGRAPH_DATA_FULL_SIZE_X_MAX /8 +1, SGRAPH_BITMAP_CHAR_SIZE_Y, GFL_BMP_16_COLOR, param->heap_id );
+
+#else  // #ifdef USE_SGRAPH
+
 #ifdef GRAPH_SWAP_BMPWIN
   u8 i;
   for( i=0; i<GRAPH_SWAP_BMPWIN_IDX_MAX; i++ )
@@ -1613,9 +1736,19 @@ static void Zukan_Detail_Voice_GraphInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN
 #ifdef GRAPH_GATHER
   work->graph_full_bmp_data = GFL_BMP_Create( GRAPH_DATA_FULL_SIZE_X_MAX /8 +1, GRAPH_BITMAP_CHAR_SIZE_Y, GFL_BMP_16_COLOR, param->heap_id );
 #endif
+
+#endif  // #ifdef USE_SGRAPH
 }
 static void Zukan_Detail_Voice_GraphExit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+#ifdef USE_SGRAPH
+
+  GFL_BMP_Delete( work->graph_full_bmp_data );
+  GFL_BMPWIN_Delete( work->graph_bmpwin );
+  GFL_HEAP_FreeMemory( work->graph_screen );
+  
+#else  // #ifdef USE_SGRAPH
+
 #ifdef GRAPH_GATHER
   GFL_BMP_Delete( work->graph_full_bmp_data );
 #endif
@@ -1631,7 +1764,26 @@ static void Zukan_Detail_Voice_GraphExit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN
 #else
   GFL_BMPWIN_Delete( work->graph_bmpwin );
 #endif
+
+#endif  // #ifdef USE_SGRAPH
 }
+
+#ifdef USE_SGRAPH
+
+static void Zukan_Detail_Voice_GraphMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  if( work->graph_data_move_wait_count > 0 )
+  {
+    work->graph_data_move_wait_count--;
+  }
+  else
+  {
+    Zukan_Detail_Voice_GraphDrawBitmap( param, work, cmn );
+    work->graph_data_move_wait_count = SGRAPH_DATA_MOVE_WAIT;
+  }
+}
+
+#else  // #ifdef USE_SGRAPH
 
 #ifdef GRAPH_GATHER
 
@@ -1694,6 +1846,42 @@ static void Zukan_Detail_Voice_GraphMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN
 }
 
 #endif
+
+#endif  // #ifdef USE_SGRAPH
+
+#ifdef USE_SGRAPH
+
+static void Zukan_Detail_Voice_GraphReset( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  work->graph_x_scroll        = 0;
+  work->graph_x_chara_offset  = 0;
+
+  work->graph_data_move_wait_count = SGRAPH_DATA_MOVE_WAIT;
+  
+  work->full_monsno             = 0;
+  work->full_formno             = 0;
+  work->graph_data_full_size    = 0;
+  work->graph_data_full_print   = work->graph_data_full_size;  // 書き終わっている
+
+  work->wave_full_millisec      = 0;
+
+  {
+    // 横一直線を書いて初期化
+    GFL_BMP_DATA* bmp_data = GFL_BMPWIN_GetBmp( work->graph_bmpwin );
+   
+    s16 bitmap_min_x  = 0;  // 含む
+    s16 bitmap_max_x  = bitmap_min_x + SGRAPH_BITMAP_DISP_PIXEL_SIZE_X -1;  // 含む
+    s16 bitmap_size_x = bitmap_max_x - bitmap_min_x +1;
+
+    GFL_BMP_Clear( bmp_data, 0 );  // クリアしておく
+    GFL_BMP_Fill( bmp_data, bitmap_min_x, SGRAPH_DATA_Y_TO_BITMAP_Y(0), bitmap_size_x, 1, SGRAPH_COLOR );
+    GFL_BMPWIN_TransVramCharacter( work->graph_bmpwin );
+  }
+
+  Zukan_Detail_Voice_GraphMakeTransScreen_VBlank( param, work, cmn );
+}
+
+#else  // #ifdef USE_SGRAPH
 
 #ifdef GRAPH_GATHER
 
@@ -1758,6 +1946,98 @@ static void Zukan_Detail_Voice_GraphReset( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
 }
 
 #endif
+
+#endif  // #ifdef USE_SGRAPH
+
+#ifdef USE_SGRAPH
+
+static void Zukan_Detail_Voice_GraphDrawBitmap( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 今書いてあるグラフをそのままSGRAPH_DATA_MOVE_SPEEDだけずらす
+  // ずらしてできた空きにwork->graph_full_bmp_dataを書く
+  // work->graph_data_full_printを書いた分だけ進める
+  // …ということをしたいときにこの関数を呼び出すこと。
+
+  GFL_BMP_DATA* bmp_data = GFL_BMPWIN_GetBmp( work->graph_bmpwin );
+
+  s16 draw_start_pixel;  // 後方の空きの開始横ピクセル位置(トータル(0<= <SGRAPH_BITMAP_CHAR_SIZE_X*8)で見たピクセル位置)
+  s16 draw_size;         // 後方の空きに書き終わった横ピクセル数
+
+  // ずらす前に、後方の空きを確認しておく
+  {
+    s16 pixel_offset = work->graph_x_chara_offset *8 + work->graph_x_scroll;
+    draw_start_pixel = ( pixel_offset + SGRAPH_BITMAP_DISP_PIXEL_SIZE_X ) % SGRAPH_BITMAP_PIXEL_SIZE_X;
+    draw_size = 0;
+  }
+
+  // 今書いてあるグラフをそのままSGRAPH_DATA_MOVE_SPEEDだけずらす
+  work->graph_x_scroll += SGRAPH_DATA_MOVE_SPEED;
+  while( work->graph_x_scroll >= SGRAPH_DATA_MOVE_SPEED_SCROLL_LIMIT )
+  {
+    // ずらして後ろに回ることになった部分をクリアする
+    GFL_BMP_Fill( bmp_data, work->graph_x_chara_offset *8, 0, 8, SGRAPH_BITMAP_CHAR_SIZE_Y *8, 0 );
+
+    // ずらす
+    work->graph_x_chara_offset = ( work->graph_x_chara_offset +1 ) % SGRAPH_BITMAP_CHAR_SIZE_X;
+    work->graph_x_scroll -= SGRAPH_DATA_MOVE_SPEED_SCROLL_LIMIT;
+  }
+
+  // ずらしてできた前方のはみ出し部分をクリアする
+  if( work->graph_x_scroll > 0 )
+  {
+    GFL_BMP_Fill( bmp_data, work->graph_x_chara_offset *8, 0, work->graph_x_scroll, SGRAPH_BITMAP_CHAR_SIZE_Y *8, 0 );
+  }
+
+  // work->graph_full_bmp_dataを書けるとき
+  while( draw_size < SGRAPH_DATA_MOVE_SPEED )
+  {
+    s16 print_size_max = work->graph_data_full_size - work->graph_data_full_print;
+    s16 owari = draw_start_pixel + SGRAPH_DATA_MOVE_SPEED - draw_size;  // draw_start_pixel<= <owari
+    if( print_size_max <= 0 )
+    {
+      break;
+    }
+    if( owari > SGRAPH_BITMAP_PIXEL_SIZE_X )
+    {
+      owari = SGRAPH_BITMAP_PIXEL_SIZE_X;
+    }
+    if( owari - draw_start_pixel > print_size_max )
+    {
+      owari = draw_start_pixel + print_size_max;
+    }
+    GFL_BMP_Print(
+        work->graph_full_bmp_data,
+        bmp_data,
+        work->graph_data_full_print, 0,
+        draw_start_pixel, 0,
+        owari - draw_start_pixel, SGRAPH_BITMAP_CHAR_SIZE_Y*8,  // y方向は全部書いていい。書いちゃいけないところは透明にしてあるので。
+        GF_BMPPRT_NOTNUKI );
+    draw_size += owari - draw_start_pixel;
+    owari = owari % SGRAPH_BITMAP_PIXEL_SIZE_X;
+    draw_start_pixel = owari;
+    work->graph_data_full_print += draw_size;
+  }
+
+  // work->graph_full_bmp_dataが書けないとき、もしくは、書いたが足りないとき
+  while( draw_size < SGRAPH_DATA_MOVE_SPEED )
+  {
+    s16 owari = draw_start_pixel + SGRAPH_DATA_MOVE_SPEED - draw_size;  // draw_start_pixel<= <owari
+    if( owari > SGRAPH_BITMAP_PIXEL_SIZE_X )
+    {
+      owari = SGRAPH_BITMAP_PIXEL_SIZE_X;
+    }
+    GFL_BMP_Fill( bmp_data, draw_start_pixel, SGRAPH_DATA_Y_TO_BITMAP_Y(0), owari - draw_start_pixel, 1, SGRAPH_COLOR );
+    draw_size += owari - draw_start_pixel;
+    owari = owari % SGRAPH_BITMAP_PIXEL_SIZE_X;
+    draw_start_pixel = owari;
+  }
+
+  //GFL_BMPWIN_TransVramCharacter( work->graph_bmpwin );
+
+  Zukan_Detail_Voice_GraphMakeTransScreen_VBlank( param, work, cmn );
+}
+
+#else  // #ifdef USE_SGRAPH
 
 #ifdef GRAPH_GATHER
 
@@ -1925,8 +2205,105 @@ static void Zukan_Detail_Voice_GraphDrawBitmap( ZUKAN_DETAIL_VOICE_PARAM* param,
 
 #endif
 
+#endif  // #ifdef USE_SGRAPH
+
 static void Zukan_Detail_Voice_WaveDataSetup( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn, u16 monsno, u16 formno )
 {
+#ifdef USE_SGRAPH
+
+  work->wave_data_begin = PMV_GetWave( work->voice_idx );
+
+  work->graph_data_full_print = 0;  // これから書く
+
+  // ポケモンが(フォルムが)変わっている場合、新たに用意する
+  if( monsno != work->full_monsno || formno != work->full_formno )
+  {
+    work->full_monsno = monsno;
+    work->full_formno = formno;
+
+    work->wave_full_millisec = (u32)(                                                      \
+          (f32)PMVOICE_GetWaveSize( work->voice_idx ) * (f32)SWAVE_DATA_SPEED_ONE          \
+        / (f32)PMV_GetWaveRate( work->voice_idx ) / (f32)PMV_GetSpeed( work->voice_idx )   \
+        * 1000.0f                                                                          \
+        + 0.5f );  // 四捨五入
+    // waveデータの総時間[millisec] = データ数 / レート(即ち1秒当たりのデータ数) / 速度(例えば速度2倍なら時間は1/2倍) * 1000
+
+    GFL_BMP_Clear( work->graph_full_bmp_data, 0 );
+
+    {
+      u32 dot_idx = 0;
+      u32 data_idx_start = 0;  // data_idx_start<=  <data_idx_end
+      u32 data_idx_end;
+
+      // 1フレームで消費されるデータ数 = レート(即ち1秒当たりのデータ数) * 速度(例えば速度2倍なら消費されるのも2倍) / FPS
+      // 1ドット移動するのに掛かるフレーム数 = (SGRAPH_DATA_MOVE_WAIT+1) / SGRAPH_DATA_MOVE_SPEED
+      // 1ドットに書かれるデータ数 = 1フレームで消費されるデータ数 * 1ドット移動するのに掛かるフレーム数
+
+      while( data_idx_start < PMVOICE_GetWaveSize( work->voice_idx ) )
+      {
+        data_idx_end =                                                                                                  \
+            (f32)PMV_GetWaveRate( work->voice_idx ) * (f32)PMV_GetSpeed( work->voice_idx ) / (f32)SWAVE_DATA_SPEED_ONE  \
+          / (f32)SWAVE_DATA_PLAY_FPS                                                                                    \
+          * (f32)(SGRAPH_DATA_MOVE_WAIT+1) / (f32)SGRAPH_DATA_MOVE_SPEED                                                \
+          * (f32)(dot_idx+1);
+      
+        if( data_idx_end > PMVOICE_GetWaveSize( work->voice_idx ) )  data_idx_end = PMVOICE_GetWaveSize( work->voice_idx );
+
+        // 描画
+        if( dot_idx < SGRAPH_DATA_FULL_SIZE_X_MAX )
+        {
+          u32  i;
+          s16  min = SGRAPH_DATA_SATURATION_MAX_Y;
+          s16  max = SGRAPH_DATA_SATURATION_MIN_Y;
+          s16  value;
+          for( i=data_idx_start; i<data_idx_end; i++ )
+          {
+            value =                                                                                                                       \
+                  (s16)( ( (s32)(work->wave_data_begin[i]) * SWAVE_DATA_VALUE_MAX_TO_SGRAPH_DATA * PMVOICE_GetVolume( work->voice_idx ) ) \
+                / SWAVE_DATA_VALUE_MAX / SWAVE_DATA_VALUE_MAX );
+            // work->wave_data_begin[i]は、小さな音も大きな音も関係なく、最大最小が全ポケモンで揃えられたデータが入っている(と思われる)。
+            // そのデータを、PMVOICE_GetVolumeで小さくしたり大きくしたりして再生している(と思われる)。
+            // だから、波形の大きさを音の大きさと合わせるには、
+            // (音の大きさも考慮した波形の大きさ) = work->wave_data_begin[i] * PMVOICE_GetVolume / SWAVE_DATA_VALUE_MAX
+            // としてやる(SWAVE_DATA_VALUE_MAXはwork->wave_data_begin[i]が取り得る最大値)。
+            // それを更に、描画範囲の縦方向に収まるようにしたいので、
+            // (音の大きさも考慮した波形の大きさ) * SWAVE_DATA_VALUE_MAX_TO_SGRAPH_DATA / SWAVE_DATA_VALUE_MAX
+            // としてやる(SWAVE_DATA_VALUE_MAX_TO_SGRAPH_DATAは描画範囲の縦方向の最大値)。
+            value = MATH_CLAMP( value, SGRAPH_DATA_SATURATION_MIN_Y, SGRAPH_DATA_SATURATION_MAX_Y );
+            if( value < min ) min = value;
+            if( value > max ) max = value;
+          }
+          if( min <= max )
+          {
+            if( min < SGRAPH_DATA_MIN_Y ) min = SGRAPH_DATA_MIN_Y;  // 縦の塗り潰されるピクセル数はmax-min+1となる
+            if( max > SGRAPH_DATA_MAX_Y ) max = SGRAPH_DATA_MAX_Y;
+            GFL_BMP_Fill( work->graph_full_bmp_data, dot_idx, SGRAPH_DATA_Y_TO_BITMAP_Y(max), 1, max-min+1, SGRAPH_COLOR );
+          }
+
+          {
+            // ここで、dot_idx>0のとき、[dot_idx-1]は後ろのデータ1つと繋ぎ、[dot_idx]は前のデータ1つと繋ぐことをする
+          }
+
+        }
+        else
+        {
+          GF_ASSERT_MSG( dot_idx < SGRAPH_DATA_FULL_SIZE_X_MAX, "ZUKAN_DETAIL_VOICE : waveデータがビットマップの横範囲内に描画しきれません。\n" );
+        }
+
+        // 次へ
+        dot_idx++;
+        data_idx_start = data_idx_end +1;
+      }
+
+      if( dot_idx > SGRAPH_DATA_FULL_SIZE_X_MAX ) dot_idx = SGRAPH_DATA_FULL_SIZE_X_MAX;
+      work->graph_data_full_size = dot_idx;
+
+      // work->graph_full_bmp_dataのwork->graph_data_full_sizeからのドットには何も書かれていない
+    }
+  }
+
+#else  // #ifdef USE_SGRAPH
+
   work->wave_data_begin = PMV_GetWave( work->voice_idx );
   work->wave_data_curr_pos = 0;
   work->wave_data_interval = WAVE_DATA_INTERVAL( PMV_GetWaveRate( work->voice_idx ) / 60 );
@@ -2023,7 +2400,43 @@ static void Zukan_Detail_Voice_WaveDataSetup( ZUKAN_DETAIL_VOICE_PARAM* param, Z
     }
   }
 #endif
+
+#endif  // #ifdef USE_SGRAPH
 }
+
+#ifdef USE_SGRAPH
+static void Zukan_Detail_Voice_GraphMakeTransScreen_VBlank( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  u16 chr_num = GFL_BMPWIN_GetChrNum( work->graph_bmpwin );
+  u16 h = 0;
+  u16 i, j;
+
+  for( j=0; j<SGRAPH_BITMAP_CHAR_SIZE_Y; j++ )
+  {
+    for( i=0; i<SGRAPH_BITMAP_CHAR_SIZE_X; i++ )
+    {
+      u16 chara_name = chr_num + ( SGRAPH_BITMAP_CHAR_SIZE_X * j ) + ( ( i + work->graph_x_chara_offset ) % SGRAPH_BITMAP_CHAR_SIZE_X );
+      u16 flip_h     = 0;
+      u16 flip_v     = 0;
+      u16 pal        = BG_PAL_POS_M_TIME;
+      work->graph_screen[h] = ( pal << 12 ) | ( flip_v << 11 ) | ( flip_h << 10 ) | ( chara_name << 0 );
+      h++;
+    }
+  }
+
+  GFL_BG_WriteScreen( BG_FRAME_M_TIME, work->graph_screen, 
+                      SGRAPH_BITMAP_SCREEN_POS_X, SGRAPH_BITMAP_SCREEN_POS_Y,
+                      SGRAPH_BITMAP_CHAR_SIZE_X, SGRAPH_BITMAP_CHAR_SIZE_Y );
+
+  //GFL_BG_SetScrollReq( BG_FRAME_M_TIME, GFL_BG_SCROLL_X_SET, SGRAPH_BITMAP_SCREEN_SCROLL_BASE_X + work->graph_x_scroll );
+  //GFL_BG_SetScrollReq( BG_FRAME_M_TIME, GFL_BG_SCROLL_Y_SET, SGRAPH_BITMAP_SCREEN_SCROLL_BASE_Y );
+
+  //GFL_BG_LoadScreenV_Req( BG_FRAME_M_TIME );
+
+  work->graph_req = TRUE;
+}
+#endif  // #ifdef USE_SGRAPH
+
 
 //-------------------------------------
 /// アルファ設定
