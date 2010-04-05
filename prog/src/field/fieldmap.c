@@ -119,9 +119,7 @@
 
 #include "savedata/record.h"
 
-#ifdef PM_DEBUG
 #include "pleasure_boat.h"    //for PL_BOAT_
-#endif
 
 
 //======================================================================
