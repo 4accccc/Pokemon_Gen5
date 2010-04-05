@@ -608,8 +608,8 @@ static void UI_GetParam( const UI_WORK *cp_wk, UI_INPUT_PARAM param, GFL_POINT *
 //=====================================
 static void MSGWND_Init( MSGWND_WORK* p_wk, GFL_BMPWIN *p_bmpwin, GFL_FONT *p_font, GFL_MSGDATA *p_msg, GFL_TCBLSYS *p_tcbl, PRINT_QUE *p_que, HEAPID heapID );
 static void MSGWND_Exit( MSGWND_WORK* p_wk );
-static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait );
-static void MSGWND_PrintEx( MSGWND_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, int wait );
+static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait, BOOL is_stream );
+static void MSGWND_PrintEx( MSGWND_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, int wait, BOOL is_stream );
 static BOOL MSGWND_IsEndMsg( MSGWND_WORK* p_wk );
 //-------------------------------------
 /// APPBAR
@@ -2419,9 +2419,9 @@ static void MSGWND_Exit( MSGWND_WORK* p_wk )
  *  @param  MSGWND_WORK* p_wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait )
+static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait, BOOL is_stream )
 {
-  MSGWND_PrintEx( p_wk, p_wk->p_msg, strID, wait );
+  MSGWND_PrintEx( p_wk, p_wk->p_msg, strID, wait, is_stream );
 }
 //----------------------------------------------------------------------------
 /**
@@ -2431,9 +2431,10 @@ static void MSGWND_Print( MSGWND_WORK* p_wk, u32 strID, int wait )
  *	@param	*p_msg  メッセージ
  *	@param	strID 文字
  *	@param	wait  メッセージスピード
+ *	@param  is_stream TRUEならばストリーム  is_streamならば一括表示
  */
 //-----------------------------------------------------------------------------
-static void MSGWND_PrintEx( MSGWND_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, int wait )
+static void MSGWND_PrintEx( MSGWND_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, int wait, BOOL is_stream )
 { 
   //一端消去
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_wk->p_bmpwin), p_wk->clear_chr );
@@ -2449,7 +2450,7 @@ static void MSGWND_PrintEx( MSGWND_WORK* p_wk, GFL_MSGDATA *p_msg, u32 strID, in
   }
 
   //文字描画が違う
-  if( wait == 0 )
+  if( !is_stream )
   { 
     PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
 
@@ -3127,16 +3128,19 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
     if( CONFIG_LIST_INIT < p_wk->select && p_wk->select < CONFIG_LIST_MAX )
     {
       int speed;
+      BOOL is_stream;
       if( p_wk->select == CONFIG_LIST_MSGSPEED )
       { 
+        is_stream = TRUE;
         speed = CONFIGPARAM_GetMsgSpeed(&p_wk->now);
       }
       else
       { 
+        is_stream = FALSE;
         speed = 0;
       }
       GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_TEXT_S), TRUE );
-      MSGWND_Print( p_msg, sc_list_info[ p_wk->select ].infoID, speed );
+      MSGWND_Print( p_msg, sc_list_info[ p_wk->select ].infoID, speed, is_stream );
       p_wk->is_info_update  = FALSE;
     }
   }
@@ -3699,7 +3703,7 @@ static void CONFIRM_Start( CONFIRM_WORK *p_wk, int wait )
   G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_OBJ , 8 );
   GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_DECIDE_M), TRUE );
 
-  MSGWND_Print( &p_wk->msg, mes_config_comment20, wait );
+  MSGWND_Print( &p_wk->msg, mes_config_comment20, wait, FALSE );
 
   if( GFL_NET_IsInit() )
   { 
@@ -3737,7 +3741,7 @@ static void CONFIRM_PrintErrMessage( CONFIRM_WORK *p_wk, u32 strID, int wait )
 
   { 
     GFL_MSGDATA *p_msg  = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, NARC_script_message_common_scr_dat, GFL_HEAP_LOWID(HEAPID_CONFIG) );
-    MSGWND_PrintEx( &p_wk->msg, p_msg, strID, wait );
+    MSGWND_PrintEx( &p_wk->msg, p_msg, strID, wait, TRUE );
 
     GFL_MSG_Delete( p_msg );
   }
@@ -3760,7 +3764,7 @@ static void CONFIRM_PrintMessage( CONFIRM_WORK *p_wk, u32 strID, int wait )
 { 
   G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_OBJ , 8 );
   GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_DECIDE_M), TRUE );
-  MSGWND_Print( &p_wk->msg, strID, wait );
+  MSGWND_Print( &p_wk->msg, strID, wait, TRUE );
 
   if( GFL_NET_IsInit() )
   { 
