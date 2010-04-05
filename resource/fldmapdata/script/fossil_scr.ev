@@ -9,7 +9,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_kaseki_scr.h"
-  .include  "c02gym0101.h
+  .include  "c02gym0101.h"
 
 //----------------------------------------------------------------------
 //               スクリプトテーブル
@@ -140,21 +140,21 @@ select_fossil:
   IF $SCWK_ANSWER == TRUE THEN
     _BMPMENU_MAKE_LIST( msg_kaseki_select_09, ITEM_ZUGAINOKASEKI )
   ENDIF
-  //かめのかせき
-  $LIST_ITEM_NO = ITEM_KAMENOKASEKI
+  //ふたのかせき
+  $LIST_ITEM_NO = ITEM_HUTANOKASEKI
   _ITEM_CHK(LIST_ITEM_NO, 1, SCWK_ANSWER)
   IF $SCWK_ANSWER == TRUE THEN
     //どうぐ名をタグ0にセット
-    _ITEM_NAME( 0, ITEM_KAMENOKASEKI )
-    _BMPMENU_MAKE_LIST( msg_kaseki_select_01, ITEM_KAMENOKASEKI )
+    _ITEM_NAME( 0, ITEM_HUTANOKASEKI )
+    _BMPMENU_MAKE_LIST( msg_kaseki_select_01, ITEM_HUTANOKASEKI )
   ENDIF
-  //とりのかせき
-  $LIST_ITEM_NO = ITEM_TORINOKASEKI
+  //はねのかせき
+  $LIST_ITEM_NO = ITEM_HANENOKASEKI
   _ITEM_CHK(LIST_ITEM_NO, 1, SCWK_ANSWER)
   IF $SCWK_ANSWER == TRUE THEN
     //どうぐ名をタグ1にセット
-    _ITEM_NAME( 1, ITEM_TORINOKASEKI )
-    _BMPMENU_MAKE_LIST( msg_kaseki_select_02, ITEM_TORINOKASEKI )
+    _ITEM_NAME( 1, ITEM_HANENOKASEKI )
+    _BMPMENU_MAKE_LIST( msg_kaseki_select_02, ITEM_HANENOKASEKI )
   ENDIF
   //やめる
   _BMPMENU_MAKE_LIST( msg_kaseki_select_10, 0 )
@@ -250,6 +250,8 @@ get_poke:
     ENDIF
     //依頼フラグをクリアする
     $WK_OTHER_KASEKI_NUM = 0
+    //化石復元回数加算
+    _ADD_RECORD( RECID_FOSSIL_RESTORE, 1 )
   ENDIF
 _RET
 
