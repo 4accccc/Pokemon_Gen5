@@ -36,6 +36,8 @@
 #include "msg/msg_ev_bgm_list.h"
 #include "ev_bgm_list.cdat"
 
+#if PM_DEBUG
+
 #define PAD_BUTTON_EXIT ( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
 
 #define CAMERA_SPEED    ( FX32_ONE * 2 )
@@ -1712,3 +1714,4 @@ static  void  pinch_bgm_check( EFFECT_VIEWER_WORK* evw )
   }
 }
 
+#endif
