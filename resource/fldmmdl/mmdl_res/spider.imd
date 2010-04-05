@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2008-02-28T14:07:51' host='W00151' user='yoshida' source='swimhero.mb'/>
+	<create date='2008-02-28T14:07:51' host='W00151' user='yoshida' source='ncg4x4spider.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2008-02-28T14:07:51' host='W00151' user='yoshida' source='swimhero.mb'/>
+<original_create date='2008-02-28T14:07:51' host='W00151' user='yoshida' source='ncg4x4spider.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
 <model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='all' node_size='1 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
@@ -16,7 +16,7 @@
 <box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='3'/>
 
 <tex_image_array size='4'>
-	<tex_image name='pl_swimhiro.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/platinum/pl_data/graphic/field_obj/obj_tga/swimhero/pl_swimhiro.1.tga' palette_name='pl_swimhiro' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4spider.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='t4x4spider.1.tga' palette_name='t4x4spider' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			00ff 0000 0000 0000 0000 0fe0 0000 ef00 
 			0eef 0000 0000 0000 d000 0eed 0000 fee0 
@@ -52,7 +52,7 @@
 			0000 f000 000e 0000 0ff0 0000 0000 ff00 
 		</bitmap>
 	</tex_image>
-	<tex_image name='pl_swimhiro.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/home/platinum/pl_data/graphic/field_obj/obj_tga/swimhero/pl_swimhiro.2.tga' palette_name='pl_swimhiro' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4spider.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='t4x4spider.2.tga' palette_name='t4x4spider' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0077 0000 0000 0000 0000 0760 0000 6700 
 			0667 0000 0000 0000 5000 0655 0000 7560 
@@ -88,7 +88,7 @@
 			0000 7000 0006 0000 0770 0000 0000 7700 
 		</bitmap>
 	</tex_image>
-	<tex_image name='pl_swimhiro.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/home/platinum/pl_data/graphic/field_obj/obj_tga/swimhero/pl_swimhiro.3.tga' palette_name='pl_swimhiro' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4spider.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='t4x4spider.3.tga' palette_name='t4x4spider' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			00aa 0000 0000 0000 0000 0a90 0000 9a00 
 			099a 0000 0000 0000 8000 0988 0000 a890 
@@ -124,7 +124,7 @@
 			0000 a000 0009 0000 0aa0 0000 0000 aa00 
 		</bitmap>
 	</tex_image>
-	<tex_image name='pl_swimhiro.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/home/platinum/pl_data/graphic/field_obj/obj_tga/swimhero/pl_swimhiro.4.tga' palette_name='pl_swimhiro' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4spider.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='t4x4spider.4.tga' palette_name='t4x4spider' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -163,7 +163,7 @@
 </tex_image_array>
 
 <tex_palette_array size='1'>
-	<tex_palette name='pl_swimhiro' color_size='16' index='0'>
+	<tex_palette name='t4x4spider' color_size='16' index='0'>
 		558c 21b2 29f3 2a35 3a96 3dce 2529 0c63 
 		2529 14a5 0c63 0842 0000 0296 016c 0109 
 	</tex_palette>
@@ -200,7 +200,7 @@
 </polygon_array>
 
 <node_array size='1'>
-	<node name='pPlane1' kind='mesh' volume_max='2.000000 4.000000 0.000000' parent='-1' scale='1.000000 1.000000 1.000000' display_size='1' draw_mtx='on' billboard='on' triangle_size='0' volume_min='-2.000000 0.000000 0.000000' volume_r='4.472168' translate='0.000000 0.000000 0.000000' polygon_size='1' index='0' rotate='0.000000 0.000000 0.000000' quad_size='1' child='-1' vertex_size='4' brother_next='-1' brother_prev='-1' visibility='on'>
+	<node name='mesh0' kind='mesh' volume_max='2.000000 4.000000 0.000000' parent='-1' scale='1.000000 1.000000 1.000000' display_size='1' draw_mtx='on' billboard='on' triangle_size='0' volume_min='-2.000000 0.000000 0.000000' volume_r='4.472168' translate='0.000000 0.000000 0.000000' polygon_size='1' index='0' rotate='0.000000 0.000000 0.000000' quad_size='1' child='-1' vertex_size='4' brother_next='-1' brother_prev='-1' visibility='on'>
 		<display polygon='0' priority='0' index='0' material='0'/>
 	</node>
 </node_array>

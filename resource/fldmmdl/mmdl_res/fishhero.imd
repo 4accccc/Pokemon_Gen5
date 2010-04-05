@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2009-12-19T13:58:18' host='W00154A' user='lee_hyunjung' source='ncg8x8fishgirl.mb'/>
+	<create date='2009-12-19T13:58:18' host='W00154A' user='lee_hyunjung' source='ncgt8x8fishgirl.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2009-12-19T13:58:18' host='W00154A' user='lee_hyunjung' source='ncg8x8fishgirl.mb'/>
+<original_create date='2009-12-19T13:58:18' host='W00154A' user='lee_hyunjung' source='ncgt8x8fishgirl.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
 <model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='4' tex_matrix_mode='maya' use_primitive_strip='on'/>
@@ -16,7 +16,7 @@
 <box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='4'/>
 
 <tex_image_array size='12'>
-	<tex_image name='8x8fishgirl.1' format='palette16' original_width='64' original_height='64' index='0' height='64' path='C:/home/wb_data3d/field_obj/test/8x8fishgirl.1.tga' palette_name='8x8fishgirl0' width='64' color0_mode='transparency'>
+	<tex_image name='t8x8fishgirl.1' format='palette16' original_width='64' original_height='64' index='0' height='64' path='t8x8fishgirl.1.tga' palette_name='t8x8fishgirl' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -84,7 +84,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='8x8fishgirl.10' format='palette16' original_width='64' original_height='64' index='1' height='64' path='C:/home/wb_data3d/field_obj/test/8x8fishgirl.10.tga' palette_name='8x8fishgirl0' width='64' color0_mode='transparency'>
+	<tex_image name='t8x8fishgirl.10' format='palette16' original_width='64' original_height='64' index='1' height='64' path='t8x8fishgirl.10.tga' palette_name='t8x8fishgirl' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -152,7 +152,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='8x8fishgirl.11' format='palette16' original_width='64' original_height='64' index='2' height='64' path='C:/home/wb_data3d/field_obj/test/8x8fishgirl.11.tga' palette_name='8x8fishgirl0' width='64' color0_mode='transparency'>
+	<tex_image name='t8x8fishgirl.11' format='palette16' original_width='64' original_height='64' index='2' height='64' path='t8x8fishgirl.11.tga' palette_name='t8x8fishgirl' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -220,7 +220,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='8x8fishgirl.12' format='palette16' original_width='64' original_height='64' index='3' height='64' path='C:/home/wb_data3d/field_obj/test/8x8fishgirl.12.tga' palette_name='8x8fishgirl0' width='64' color0_mode='transparency'>
+	<tex_image name='t8x8fishgirl.12' format='palette16' original_width='64' original_height='64' index='3' height='64' path='t8x8fishgirl.12.tga' palette_name='t8x8fishgirl' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -288,7 +288,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='8x8fishgirl.2' format='palette16' original_width='64' original_height='64' index='4' height='64' path='C:/home/wb_data3d/field_obj/test/8x8fishgirl.2.tga' palette_name='8x8fishgirl0' width='64' color0_mode='transparency'>
+	<tex_image name='t8x8fishgirl.2' format='palette16' original_width='64' original_height='64' index='4' height='64' path='t8x8fishgirl.2.tga' palette_name='t8x8fishgirl' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -356,7 +356,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='8x8fishgirl.3' format='palette16' original_width='64' original_height='64' index='5' height='64' path='C:/home/wb_data3d/field_obj/test/8x8fishgirl.3.tga' palette_name='8x8fishgirl0' width='64' color0_mode='transparency'>
+	<tex_image name='t8x8fishgirl.3' format='palette16' original_width='64' original_height='64' index='5' height='64' path='t8x8fishgirl.3.tga' palette_name='t8x8fishgirl' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -424,7 +424,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='8x8fishgirl.4' format='palette16' original_width='64' original_height='64' index='6' height='64' path='C:/home/wb_data3d/field_obj/test/8x8fishgirl.4.tga' palette_name='8x8fishgirl0' width='64' color0_mode='transparency'>
+	<tex_image name='t8x8fishgirl.4' format='palette16' original_width='64' original_height='64' index='6' height='64' path='t8x8fishgirl.4.tga' palette_name='t8x8fishgirl' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -492,7 +492,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='8x8fishgirl.5' format='palette16' original_width='64' original_height='64' index='7' height='64' path='C:/home/wb_data3d/field_obj/test/8x8fishgirl.5.tga' palette_name='8x8fishgirl0' width='64' color0_mode='transparency'>
+	<tex_image name='t8x8fishgirl.5' format='palette16' original_width='64' original_height='64' index='7' height='64' path='t8x8fishgirl.5.tga' palette_name='t8x8fishgirl' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -560,7 +560,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='8x8fishgirl.6' format='palette16' original_width='64' original_height='64' index='8' height='64' path='C:/home/wb_data3d/field_obj/test/8x8fishgirl.6.tga' palette_name='8x8fishgirl0' width='64' color0_mode='transparency'>
+	<tex_image name='t8x8fishgirl.6' format='palette16' original_width='64' original_height='64' index='8' height='64' path='t8x8fishgirl.6.tga' palette_name='t8x8fishgirl' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -628,7 +628,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='8x8fishgirl.7' format='palette16' original_width='64' original_height='64' index='9' height='64' path='C:/home/wb_data3d/field_obj/test/8x8fishgirl.7.tga' palette_name='8x8fishgirl0' width='64' color0_mode='transparency'>
+	<tex_image name='t8x8fishgirl.7' format='palette16' original_width='64' original_height='64' index='9' height='64' path='t8x8fishgirl.7.tga' palette_name='t8x8fishgirl' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -696,7 +696,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='8x8fishgirl.8' format='palette16' original_width='64' original_height='64' index='10' height='64' path='C:/home/wb_data3d/field_obj/test/8x8fishgirl.8.tga' palette_name='8x8fishgirl0' width='64' color0_mode='transparency'>
+	<tex_image name='t8x8fishgirl.8' format='palette16' original_width='64' original_height='64' index='10' height='64' path='t8x8fishgirl.8.tga' palette_name='t8x8fishgirl' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -764,7 +764,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='8x8fishgirl.9' format='palette16' original_width='64' original_height='64' index='11' height='64' path='C:/home/wb_data3d/field_obj/test/8x8fishgirl.9.tga' palette_name='8x8fishgirl0' width='64' color0_mode='transparency'>
+	<tex_image name='t8x8fishgirl.9' format='palette16' original_width='64' original_height='64' index='11' height='64' path='t8x8fishgirl.9.tga' palette_name='t8x8fishgirl' width='64' color0_mode='transparency'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -835,14 +835,14 @@
 </tex_image_array>
 
 <tex_palette_array size='1'>
-	<tex_palette name='8x8fishgirl0' color_size='16' index='0'>
+	<tex_palette name='t8x8fishgirl' color_size='16' index='0'>
 		2e4b 416b 2d08 35bd 3573 728e 61e8 4d47 
 		1ca7 7779 3a7a 190c 5f5f 7fff 6af5 0000 
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size='1'>
-	<material name='lambert2' tex_translate='0.000000 0.000000' tex_image_idx='0' tex_gen_mode='none' polygon_id='0' tex_palette_idx='0' light0='on' fog_flag='off' render_1_pixel='off' diffuse='25 25 25' shininess_table_flag='off' light1='off' specular='0 0 0' tex_tiling='repeat repeat' light2='off' ambient='31 31 31' index='0' light3='off' emission='0 0 0' polygon_mode='modulate' depth_test_decal='off' tex_rotate='0.000000' face='front' wire_mode='off' tex_scale='1.000000 1.000000' alpha='31' translucent_update_depth='off' far_clipping='off'/>
+	<material name='obj' tex_translate='0.000000 0.000000' tex_image_idx='0' tex_gen_mode='none' polygon_id='0' tex_palette_idx='0' light0='on' fog_flag='off' render_1_pixel='off' diffuse='25 25 25' shininess_table_flag='off' light1='off' specular='0 0 0' tex_tiling='repeat repeat' light2='off' ambient='31 31 31' index='0' light3='off' emission='0 0 0' polygon_mode='modulate' depth_test_decal='off' tex_rotate='0.000000' face='front' wire_mode='off' tex_scale='1.000000 1.000000' alpha='31' translucent_update_depth='off' far_clipping='off'/>
 </material_array>
 
 <matrix_array size='1'>
@@ -872,7 +872,7 @@
 </polygon_array>
 
 <node_array size='1'>
-	<node name='pPlane1' kind='mesh' volume_max='2.000000 4.000000 0.000000' parent='-1' scale='1.000000 1.000000 1.000000' display_size='1' draw_mtx='on' billboard='on' triangle_size='0' volume_min='-2.000000 0.000000 0.000000' volume_r='4.472168' translate='0.000000 0.000000 0.000000' polygon_size='1' index='0' rotate='0.000000 0.000000 0.000000' quad_size='1' child='-1' vertex_size='4' brother_next='-1' brother_prev='-1' visibility='on'>
+	<node name='mesh0' kind='mesh' volume_max='2.000000 4.000000 0.000000' parent='-1' scale='1.000000 1.000000 1.000000' display_size='1' draw_mtx='on' billboard='on' triangle_size='0' volume_min='-2.000000 0.000000 0.000000' volume_r='4.472168' translate='0.000000 0.000000 0.000000' polygon_size='1' index='0' rotate='0.000000 0.000000 0.000000' quad_size='1' child='-1' vertex_size='4' brother_next='-1' brother_prev='-1' visibility='on'>
 		<display polygon='0' priority='0' index='0' material='0'/>
 	</node>
 </node_array>

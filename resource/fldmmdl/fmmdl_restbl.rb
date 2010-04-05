@@ -55,20 +55,22 @@ RET_TRUE = (1)
 RET_ERROR = (-1)
 
 #モデル用ダミーファイル名
-FPATH_DUMMY_IMD = "mmdl_res/dummy.imd"
+FPATH_DUMMY_IMD = "mmdl_dmy/mdl_dummy.imd"
 
 ARGVNO_FNAME_RESCSV = (0)
 ARGVNO_FNAME_RESTBL = (1)
 ARGVNO_DIR_RES = (2)
-ARGVNO_FLAG_SELECT_RES = (3)
-ARGVNO_FNAME_NCGIMDCSV = (4)
-ARGVNO_FNAME_NCGIMDLIST = (5)
-ARGVNO_FNAME_MKNCGIMD = (6)
-ARGVNO_DIR_NCG = (7)
-ARGVNO_PATH_NCGIMDCV = (8)
-ARGVNO_FLAG_CREATE_DUMMY = (9)
-ARGVNO_FNAME_RESCSV_POKE = (10)
-ARGVNO_FNAME_RESCSV_MDL = (11)
+ARGVNO_DIR_TEXSRC = (3)
+ARGVNO_DIR_MDLSRC = (4)
+ARGVNO_FLAG_SELECT_RES = (5)
+ARGVNO_FNAME_NCGIMDCSV = (6)
+ARGVNO_FNAME_NCGIMDLIST = (7)
+ARGVNO_FNAME_MKNCGIMD = (8)
+ARGVNO_DIR_NCG = (9)
+ARGVNO_PATH_NCGIMDCV = (10)
+ARGVNO_FLAG_CREATE_DUMMY = (11)
+ARGVNO_FNAME_RESCSV_POKE = (12)
+ARGVNO_FNAME_RESCSV_MDL = (13)
 
 #=======================================================================
 #  異常終了
@@ -346,7 +348,7 @@ end
 # 戻り値 RET_TRUE=リソースを追加した。
 #=======================================================================
 def conv_drawtype_blact(
-  fname_listcsv, file_listcsv, no, dir_res, sel_res, flag_dummy,
+  fname_listcsv, file_listcsv, no, dir_res, dir_texsrc, sel_res, flag_dummy,
   file_prmcsv_ncgimd,
   file_make_ncgimd, dir_res_ncgimd, path_conv_ncgimd,
   buf_imdtex, buf_ncgimd )
@@ -382,14 +384,15 @@ def conv_drawtype_blact(
   mdltype = str[RBDEF_NUM_BBD_MDLSIZE]
   anmtype = str[RBDEF_NUM_BBD_ANMID]
   param = ncgparam_get( file_prmcsv_ncgimd, mdltype, anmtype )
-  
+ 
+  #iwasawa
   imdpath = sprintf( "%s\/%s", dir_res, imdname )
   
   #ncg変換対象ではない
   if( param == nil )
     if( FileTest.exist?(imdpath) != true )
       if( flag_dummy == 0 )
-        printf( "ERROR %s がありません\n", imdname )
+        printf( "ERROR1 %s がありません\n", imdpath )
         return RET_ERROR
       end
       
@@ -414,12 +417,12 @@ def conv_drawtype_blact(
   
   if( FileTest.exist?(ncgpath) != true )
     if( flag_dummy == 0 )
-      printf( "ERROR %s がありません\n", ncgpath )
+      printf( "ERROR2 %s がありません\n", ncgpath )
       return RET_ERROR
     end
     
     dummy_file = sprintf(
-      "%s/%s.ncg", dir_res_ncgimd, param['str_flag_dummy'] )
+      "%s/%s.ncg", dir_texsrc, param['str_flag_dummy'] )
     file_copy( dummy_file, ncgpath )
     printf( "%sをダミーファイルから作成しました\n", ncgpath )
   end
@@ -428,12 +431,12 @@ def conv_drawtype_blact(
 
   if( FileTest.exist?(nclpath) != true )
     if( flag_dummy == 0 )
-      printf( "ERROR %s がありません\n", nclpath )
+      printf( "ERROR3 %s がありません\n", nclpath )
       return RET_ERROR
     end
     
     dummy_file = sprintf(
-      "%s/%s.ncl", dir_res_ncgimd, param['str_flag_dummy'] )
+      "%s/%s.ncl", dir_texsrc, param['str_flag_dummy'] )
     file_copy( dummy_file, nclpath )
     printf( "%sをダミーファイルから作成しました\n", nclpath )
   end
@@ -442,7 +445,7 @@ def conv_drawtype_blact(
   buf_ncgimd << sprintf( "\t%s", imdname )
   
   #make object
-  dmyimdpath = sprintf( "%s\/%s", dir_res, param['str_imdfile'] )
+  dmyimdpath = sprintf( "%s\/%s", dir_texsrc, param['str_imdfile'] )
   
   file_make_ncgimd.printf( "#%s\n", imdname )
   file_make_ncgimd.printf(
@@ -459,7 +462,7 @@ end
 # 戻り値 RET_TRUE=リソースを追加した。
 #=======================================================================
 def conv_drawtype_mdl(
-  file_listcsv, no, dir_res, sel_res, flag_dummy,
+  file_listcsv, no, dir_mdlsrc, sel_res, flag_dummy,
   buf_imd, buf_imdtex, buf_itp, buf_ica, buf_ita, buf_ima, buf_iva )
   
   str = listcsv_getlinestr( file_listcsv, no )
@@ -485,16 +488,16 @@ def conv_drawtype_mdl(
   
   buf_imd << " \\\n"
 
-  path = sprintf( "%s\/%s", dir_res, name )
+  path = sprintf( "%s\/%s", dir_mdlsrc, name )
   
   if( FileTest.exist?(path) != true ) #ファイルが存在しない
     if( flag_dummy == 0 )
-      printf( "ERROR %s がありません\n", name )
+      printf( "ERROR4 %s がありません\n", path )
       return RET_ERROR
     end
      
     #ダミーファイル作成
-    imdpath = sprintf( "%s\/%s", dir_res, name )
+    imdpath = sprintf( "%s\/%s", dir_mdlsrc, name )
     file_copy( FPATH_DUMMY_IMD, imdpath )
     buf_imd << sprintf( "\t%s", name )
     
@@ -509,11 +512,11 @@ def conv_drawtype_mdl(
   
   if( name != "" && name != nil )
     if( csvlist_check_repeat_filename(buf_imdtex,name) != RET_TRUE )
-      path = sprintf( "%s\/%s", dir_res, name )
+      path = sprintf( "%s\/%s", dir_mdlsrc, name )
       p path
       
       if( FileTest.exist?(path) != true ) #ファイルが存在しない
-        printf( "ERROR %s がありません\n", name )
+        printf( "ERROR5 %s がありません\n", name )
         return RET_ERROR
       end
    
@@ -531,10 +534,10 @@ def conv_drawtype_mdl(
         csvlist_check_repeat_filename(buf_ita,name) != RET_TRUE &&
         csvlist_check_repeat_filename(buf_ima,name) != RET_TRUE &&
         csvlist_check_repeat_filename(buf_iva,name) != RET_TRUE )
-      path = sprintf( "%s\/%s", dir_res, name )
+      path = sprintf( "%s\/%s", dir_mdlsrc, name )
       
       if( FileTest.exist?(path) != true ) #ファイルが存在しない
-        printf( "ERROR %s がありません\n", name )
+        printf( "ERROR6 %s がありません\n", name )
         return RET_ERROR
       end
    
@@ -552,10 +555,10 @@ def conv_drawtype_mdl(
         csvlist_check_repeat_filename(buf_ita,name) != RET_TRUE &&
         csvlist_check_repeat_filename(buf_ima,name) != RET_TRUE &&
         csvlist_check_repeat_filename(buf_iva,name) != RET_TRUE )
-      path = sprintf( "%s\/%s", dir_res, name )
+      path = sprintf( "%s\/%s", dir_mdlsrc, name )
     
       if( FileTest.exist?(path) != true ) #ファイルが存在しない
-        printf( "ERROR %s がありません\n", name )
+        printf( "ERROR7 %s がありません\n", name )
         return RET_ERROR
       end
    
@@ -573,10 +576,10 @@ def conv_drawtype_mdl(
         csvlist_check_repeat_filename(buf_ita,name) != RET_TRUE &&
         csvlist_check_repeat_filename(buf_ima,name) != RET_TRUE &&
         csvlist_check_repeat_filename(buf_iva,name) != RET_TRUE )
-      path = sprintf( "%s\/%s", dir_res, name )
+      path = sprintf( "%s\/%s", dir_mdlsrc, name )
     
       if( FileTest.exist?(path) != true ) #ファイルが存在しない
-        printf( "ERROR %s がありません\n", name )
+        printf( "ERROR8 %s がありません\n", name )
         return RET_ERROR
       end
    
@@ -632,6 +635,26 @@ end
 
 if( FileTest.directory?(dir_res) != true )
   printf( "ERROR!! fmmdl_restbl.rb resdir\n" )
+  exit 1
+end
+
+$dir_texsrc = ARGV[ARGVNO_DIR_TEXSRC] 
+if( $dir_texsrc == nil )
+  printf( "ERROR!! fmmdl_restbl.rb %s is null\n",$dir_texsrc )
+  exit 1
+end
+if( FileTest.directory?($dir_texsrc) != true )
+  printf( "ERROR!! fmmdl_restbl.rb %s folder don't exist\n",$dir_texsrc )
+  exit 1
+end
+
+$dir_mdlsrc = ARGV[ARGVNO_DIR_MDLSRC] 
+if( $dir_mdlsrc == nil )
+  printf( "ERROR!! fmmdl_restbl.rb %s is null\n",$dir_mdlsrc )
+  exit 1
+end
+if( FileTest.directory?($dir_mdlsrc) != true )
+  printf( "ERROR!! fmmdl_restbl.rb %s folder don't exist\n",$dir_mdlsrc )
   exit 1
 end
 
@@ -734,7 +757,7 @@ loop{
     #現状無し
   when "DRAWTYPE_BLACT"
     ret = conv_drawtype_blact(
-      fname_listcsv, file_listcsv, no, dir_res, sel_res, flag_dummy,
+      fname_listcsv, file_listcsv, no, dir_res, $dir_texsrc, sel_res, flag_dummy,
       file_prmcsv_ncgimd,
       file_make_ncgimd, dir_res_ncgimd, path_conv_ncgimd,
       buf_imdtex, buf_ncgimd )
@@ -782,7 +805,7 @@ loop{
     #現状無し
   when "DRAWTYPE_BLACT"
     ret = conv_drawtype_blact(
-      fname_listcsv, file_listcsv_poke, no, dir_res, sel_res, flag_dummy,
+      fname_listcsv, file_listcsv_poke, no, dir_res, $dir_texsrc, sel_res, flag_dummy,
       file_prmcsv_ncgimd,
       file_make_ncgimd,
       dir_res_ncgimd + "\/pokemon\/",
@@ -838,7 +861,7 @@ loop{
             file_prmcsv_ncgimd, file_restbl_ncgimd, file_make_ncgimd )
   when "DRAWTYPE_MDL"
     ret = conv_drawtype_mdl(
-      file_listcsv_mdl, no, dir_res, sel_res, flag_dummy,
+      file_listcsv_mdl, no, $dir_mdlsrc, sel_res, flag_dummy,
       buf_imd, buf_imdtex, buf_itp, buf_ica, buf_ita, buf_ima, buf_iva )
   when STR_END
     break

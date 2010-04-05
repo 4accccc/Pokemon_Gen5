@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2010-03-17T21:41:58' host='W00154A' user='lee_hyunjung' source='ncg8x8x20poke.mb'/>
+	<create date='2010-03-17T21:41:58' host='W00154A' user='lee_hyunjung' source='ncg8x8x15poke.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2010-03-17T21:41:58' host='W00154A' user='lee_hyunjung' source='ncg8x8x20poke.mb'/>
+<original_create date='2010-03-17T21:41:58' host='W00154A' user='lee_hyunjung' source='ncg8x8x15poke.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
 <model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='merge' material_size='1 1' vertex_style='direct' compress_material='on' output_texture='used' node_size='1 1' pos_scale='4' tex_matrix_mode='maya' use_primitive_strip='on'/>
@@ -16,7 +16,7 @@
 <box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='4'/>
 
 <tex_image_array size='15'>
-	<tex_image name='64_anmimd.1' format='palette16' original_width='64' original_height='64' index='0' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.1.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.1' format='palette16' original_width='64' original_height='64' index='0' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.1.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -84,7 +84,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.10' format='palette16' original_width='64' original_height='64' index='1' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.10.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.10' format='palette16' original_width='64' original_height='64' index='1' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.10.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -152,7 +152,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.11' format='palette16' original_width='64' original_height='64' index='2' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.11.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.11' format='palette16' original_width='64' original_height='64' index='2' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.11.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -220,7 +220,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.12' format='palette16' original_width='64' original_height='64' index='3' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.12.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.12' format='palette16' original_width='64' original_height='64' index='3' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.12.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -288,7 +288,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.13' format='palette16' original_width='64' original_height='64' index='4' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.13.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.13' format='palette16' original_width='64' original_height='64' index='4' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.13.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -356,7 +356,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.14' format='palette16' original_width='64' original_height='64' index='5' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.14.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.14' format='palette16' original_width='64' original_height='64' index='5' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.14.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -424,7 +424,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.15' format='palette16' original_width='64' original_height='64' index='6' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.15.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.15' format='palette16' original_width='64' original_height='64' index='6' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.15.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -492,7 +492,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.2' format='palette16' original_width='64' original_height='64' index='7' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.2.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.2' format='palette16' original_width='64' original_height='64' index='7' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.2.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -560,7 +560,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.3' format='palette16' original_width='64' original_height='64' index='8' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.3.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.3' format='palette16' original_width='64' original_height='64' index='8' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.3.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -628,7 +628,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.4' format='palette16' original_width='64' original_height='64' index='9' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.4.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.4' format='palette16' original_width='64' original_height='64' index='9' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.4.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -696,7 +696,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.5' format='palette16' original_width='64' original_height='64' index='10' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.5.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.5' format='palette16' original_width='64' original_height='64' index='10' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.5.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -764,7 +764,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.6' format='palette16' original_width='64' original_height='64' index='11' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.6.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.6' format='palette16' original_width='64' original_height='64' index='11' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.6.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -832,7 +832,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.7' format='palette16' original_width='64' original_height='64' index='12' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.7.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.7' format='palette16' original_width='64' original_height='64' index='12' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.7.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -900,7 +900,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.8' format='palette16' original_width='64' original_height='64' index='13' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.8.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.8' format='palette16' original_width='64' original_height='64' index='13' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.8.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -968,7 +968,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='64_anmimd.9' format='palette16' original_width='64' original_height='64' index='14' height='64' path='C:/home/wb_data3d/field/fldobj/64_anmimd.9.tga' palette_name='64_anmimd' width='64' color0_mode='color'>
+	<tex_image name='t8x8x15poke.9' format='palette16' original_width='64' original_height='64' index='14' height='64' path='C:/home/wb_data3d/field/fldobj/t8x8x15poke.9.tga' palette_name='t8x8x15poke' width='64' color0_mode='color'>
 		<bitmap size='1024'>
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 
@@ -1039,14 +1039,14 @@
 </tex_image_array>
 
 <tex_palette_array size='1'>
-	<tex_palette name='64_anmimd' color_size='16' index='0'>
+	<tex_palette name='t8x8x15poke' color_size='16' index='0'>
 		42d4 45fc 146b 7c3f 1e57 0842 14a5 1ce7 
 		2529 39ce 3164 4a44 7328 6b32 7798 7fdd 
 	</tex_palette>
 </tex_palette_array>
 
 <material_array size='1'>
-	<material name='anmimd_1' tex_translate='0.000000 0.000000' tex_image_idx='0' tex_gen_mode='none' polygon_id='0' tex_palette_idx='0' light0='on' fog_flag='on' render_1_pixel='off' diffuse='25 25 25' shininess_table_flag='off' light1='off' specular='0 0 0' tex_tiling='repeat repeat' light2='off' ambient='31 31 31' index='0' light3='off' emission='0 0 0' polygon_mode='modulate' depth_test_decal='off' tex_rotate='0.000000' face='front' wire_mode='off' tex_scale='1.000000 1.000000' alpha='31' translucent_update_depth='off' far_clipping='off'/>
+	<material name='obj' tex_translate='0.000000 0.000000' tex_image_idx='0' tex_gen_mode='none' polygon_id='0' tex_palette_idx='0' light0='on' fog_flag='on' render_1_pixel='off' diffuse='25 25 25' shininess_table_flag='off' light1='off' specular='0 0 0' tex_tiling='repeat repeat' light2='off' ambient='31 31 31' index='0' light3='off' emission='0 0 0' polygon_mode='modulate' depth_test_decal='off' tex_rotate='0.000000' face='front' wire_mode='off' tex_scale='1.000000 1.000000' alpha='31' translucent_update_depth='off' far_clipping='off'/>
 </material_array>
 
 <matrix_array size='1'>
@@ -1076,7 +1076,7 @@
 </polygon_array>
 
 <node_array size='1'>
-	<node name='pPlane1' kind='mesh' volume_max='2.000000 4.000000 0.000000' parent='-1' scale='1.000000 1.000000 1.000000' display_size='1' draw_mtx='on' billboard='on' triangle_size='0' volume_min='-2.000000 0.000000 0.000000' volume_r='4.472168' translate='0.000000 0.000000 0.000000' polygon_size='1' index='0' rotate='0.000000 0.000000 0.000000' quad_size='1' child='-1' vertex_size='4' brother_next='-1' brother_prev='-1' visibility='on'>
+	<node name='mesh0' kind='mesh' volume_max='2.000000 4.000000 0.000000' parent='-1' scale='1.000000 1.000000 1.000000' display_size='1' draw_mtx='on' billboard='on' triangle_size='0' volume_min='-2.000000 0.000000 0.000000' volume_r='4.472168' translate='0.000000 0.000000 0.000000' polygon_size='1' index='0' rotate='0.000000 0.000000 0.000000' quad_size='1' child='-1' vertex_size='4' brother_next='-1' brother_prev='-1' visibility='on'>
 		<display polygon='0' priority='0' index='0' material='0'/>
 	</node>
 </node_array>

@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2009-08-31T18:22:31' host='W00154A' user='lee_hyunjung' source='hero.mb'/>
+	<create date='2009-08-31T18:22:31' host='W00154A' user='lee_hyunjung' source='ncg4x4hero.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2009-08-31T18:22:31' host='W00154A' user='lee_hyunjung' source='hero.mb'/>
+<original_create date='2009-08-31T18:22:31' host='W00154A' user='lee_hyunjung' source='ncg4x4hero.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
 <model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
@@ -16,7 +16,7 @@
 <box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='3'/>
 
 <tex_image_array size='32'>
-	<tex_image name='hero.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.1.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='t4x4hero.1.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -52,7 +52,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.2.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='t4x4hero.2.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -88,7 +88,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.3.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='t4x4hero.3.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -124,7 +124,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.4.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='t4x4hero.4.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -160,7 +160,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.5.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='t4x4hero.5.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -196,7 +196,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.6.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='t4x4hero.6.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -232,7 +232,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.7' format='palette16' original_width='32' original_height='32' index='6' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.7.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.7' format='palette16' original_width='32' original_height='32' index='6' height='32' path='t4x4hero.7.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -268,7 +268,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.8' format='palette16' original_width='32' original_height='32' index='7' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.8.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.8' format='palette16' original_width='32' original_height='32' index='7' height='32' path='t4x4hero.8.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -304,7 +304,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.9' format='palette16' original_width='32' original_height='32' index='8' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.9.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.9' format='palette16' original_width='32' original_height='32' index='8' height='32' path='t4x4hero.9.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -340,7 +340,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.10' format='palette16' original_width='32' original_height='32' index='9' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.10.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.10' format='palette16' original_width='32' original_height='32' index='9' height='32' path='t4x4hero.10.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -376,7 +376,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.11' format='palette16' original_width='32' original_height='32' index='10' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.11.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.11' format='palette16' original_width='32' original_height='32' index='10' height='32' path='t4x4hero.11.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -412,7 +412,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.12' format='palette16' original_width='32' original_height='32' index='11' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.12.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.12' format='palette16' original_width='32' original_height='32' index='11' height='32' path='t4x4hero.12.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -448,7 +448,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.13' format='palette16' original_width='32' original_height='32' index='12' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.13.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.13' format='palette16' original_width='32' original_height='32' index='12' height='32' path='t4x4hero.13.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -484,7 +484,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.14' format='palette16' original_width='32' original_height='32' index='13' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.14.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.14' format='palette16' original_width='32' original_height='32' index='13' height='32' path='t4x4hero.14.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -520,7 +520,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.15' format='palette16' original_width='32' original_height='32' index='14' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.15.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.15' format='palette16' original_width='32' original_height='32' index='14' height='32' path='t4x4hero.15.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -556,7 +556,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.16' format='palette16' original_width='32' original_height='32' index='15' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.16.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.16' format='palette16' original_width='32' original_height='32' index='15' height='32' path='t4x4hero.16.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -592,7 +592,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.17' format='palette16' original_width='32' original_height='32' index='16' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.17.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.17' format='palette16' original_width='32' original_height='32' index='16' height='32' path='t4x4hero.17.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -628,7 +628,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.18' format='palette16' original_width='32' original_height='32' index='17' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.18.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.18' format='palette16' original_width='32' original_height='32' index='17' height='32' path='t4x4hero.18.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -664,7 +664,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.19' format='palette16' original_width='32' original_height='32' index='18' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.19.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.19' format='palette16' original_width='32' original_height='32' index='18' height='32' path='t4x4hero.19.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -700,7 +700,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.20' format='palette16' original_width='32' original_height='32' index='19' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.20.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.20' format='palette16' original_width='32' original_height='32' index='19' height='32' path='t4x4hero.20.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -736,7 +736,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.21' format='palette16' original_width='32' original_height='32' index='20' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.21.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.21' format='palette16' original_width='32' original_height='32' index='20' height='32' path='t4x4hero.21.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -772,7 +772,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.22' format='palette16' original_width='32' original_height='32' index='21' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.22.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.22' format='palette16' original_width='32' original_height='32' index='21' height='32' path='t4x4hero.22.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -808,7 +808,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.23' format='palette16' original_width='32' original_height='32' index='22' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.23.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.23' format='palette16' original_width='32' original_height='32' index='22' height='32' path='t4x4hero.23.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -844,7 +844,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.24' format='palette16' original_width='32' original_height='32' index='23' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.24.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.24' format='palette16' original_width='32' original_height='32' index='23' height='32' path='t4x4hero.24.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -880,7 +880,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.25' format='palette16' original_width='32' original_height='32' index='24' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.25.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.25' format='palette16' original_width='32' original_height='32' index='24' height='32' path='t4x4hero.25.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -916,7 +916,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.26' format='palette16' original_width='32' original_height='32' index='25' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.26.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.26' format='palette16' original_width='32' original_height='32' index='25' height='32' path='t4x4hero.26.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -952,7 +952,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.27' format='palette16' original_width='32' original_height='32' index='26' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.27.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.27' format='palette16' original_width='32' original_height='32' index='26' height='32' path='t4x4hero.27.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -988,7 +988,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.28' format='palette16' original_width='32' original_height='32' index='27' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.28.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.28' format='palette16' original_width='32' original_height='32' index='27' height='32' path='t4x4hero.28.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -1024,7 +1024,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.29' format='palette16' original_width='32' original_height='32' index='28' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.29.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.29' format='palette16' original_width='32' original_height='32' index='28' height='32' path='t4x4hero.29.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -1060,7 +1060,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.30' format='palette16' original_width='32' original_height='32' index='29' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.30.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.30' format='palette16' original_width='32' original_height='32' index='29' height='32' path='t4x4hero.30.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -1096,7 +1096,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.31' format='palette16' original_width='32' original_height='32' index='30' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.31.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.31' format='palette16' original_width='32' original_height='32' index='30' height='32' path='t4x4hero.31.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -1132,7 +1132,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='hero.32' format='palette16' original_width='32' original_height='32' index='31' height='32' path='C:/home/pokemon_wb/resource/fldmmdl/mmdl_pict/hero/hero.32.tga' palette_name='hero' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4hero.32' format='palette16' original_width='32' original_height='32' index='31' height='32' path='t4x4hero.32.tga' palette_name='t4x4hero' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -1171,7 +1171,7 @@
 </tex_image_array>
 
 <tex_palette_array size='1'>
-	<tex_palette name='hero' color_size='16' index='0'>
+	<tex_palette name='t4x4hero' color_size='16' index='0'>
 		2e4b 416b 2d08 35bd 3573 728e 61e8 4d47 
 		1ca7 7779 3a7a 190c 5f5f 7fff 6af5 0000 
 	</tex_palette>
@@ -1208,7 +1208,7 @@
 </polygon_array>
 
 <node_array size='1'>
-	<node name='pPlane1' kind='mesh' volume_max='2.000000 4.000000 0.000000' parent='-1' scale='1.000000 1.000000 1.000000' display_size='1' draw_mtx='on' billboard='on' triangle_size='0' volume_min='-2.000000 0.000000 0.000000' volume_r='4.472168' translate='0.000000 0.000000 0.000000' polygon_size='1' index='0' rotate='0.000000 0.000000 0.000000' quad_size='1' child='-1' vertex_size='4' brother_next='-1' brother_prev='-1' visibility='on'>
+	<node name='mesh0' kind='mesh' volume_max='2.000000 4.000000 0.000000' parent='-1' scale='1.000000 1.000000 1.000000' display_size='1' draw_mtx='on' billboard='on' triangle_size='0' volume_min='-2.000000 0.000000 0.000000' volume_r='4.472168' translate='0.000000 0.000000 0.000000' polygon_size='1' index='0' rotate='0.000000 0.000000 0.000000' quad_size='1' child='-1' vertex_size='4' brother_next='-1' brother_prev='-1' visibility='on'>
 		<display polygon='0' priority='0' index='0' material='0'/>
 	</node>
 </node_array>

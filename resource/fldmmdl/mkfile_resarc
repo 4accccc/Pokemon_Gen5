@@ -48,36 +48,37 @@ RESDATA_NSBVA = $(addprefix $(DIR_TMP)/,$(RESLIST_NSBVA))
 #	ägí£éqï èàóù
 #---------------------------------------------------------------
 #imd --> nsbmd
-$(DIR_TMP)/%.nsbmd: $(DIR_RES)/%.imd
-	@echo Texture Data Convert: $^ Å® $@
+$(DIR_TMP)/%.nsbmd: $(DIR_MDLSRC)/%.imd
+	@echo Model Data Convert: $^ Å® $@
 	@$(G3DCVTR) $^ -o $@
 
 #imd --> nsbtxÇ÷ÇÃïœä∑ÉãÅ[ÉãíËã`
 $(DIR_TMP)/%.nsbtx: $(DIR_RES)/%.imd
+	@echo Texture Data Convert: $^ Å® $@
 	@$(G3DCVTR) $^ -o $@ -etex -tex-nomerge
 
 #itp --> nsbtp
-$(DIR_TMP)/%.nsbtp: $(DIR_RES)/%.itp
-	@echo Anime Data Convert: $^ Å® $@
+$(DIR_TMP)/%.nsbtp: $(DIR_MDLSRC)/%.itp
+	@echo Itp Anime Data Convert: $^ Å® $@
 	@$(G3DCVTR) $^ -o $@
 
 #ica --> nsbca
-$(DIR_TMP)/%.nsbca: $(DIR_RES)/%.ica
-	@echo Anime Data Convert: $^ Å® $@
+$(DIR_TMP)/%.nsbca: $(DIR_MDLSRC)/%.ica
+	@echo Ica Anime Data Convert: $^ Å® $@
 	@$(G3DCVTR) $^ -o $@
 
 #ita --> nsbta
-$(DIR_TMP)/%.nsbta: $(DIR_RES)/%.ita
+$(DIR_TMP)/%.nsbta: $(DIR_MDLSRC)/%.ita
 	@echo Anime Data Convert: $^ Å® $@
 	@$(G3DCVTR) $^ -o $@
 
 #ima --> nsbma
-$(DIR_TMP)/%.nsbma: $(DIR_RES)/%.ima
+$(DIR_TMP)/%.nsbma: $(DIR_MDLSRC)/%.ima
 	@echo Anime Data Convert: $^ Å® $@
 	@$(G3DCVTR) $^ -o $@
 
 #iva --> nsbva
-$(DIR_TMP)/%.nsbva: $(DIR_RES)/%.iva
+$(DIR_TMP)/%.nsbva: $(DIR_MDLSRC)/%.iva
 	@echo Anime Data Convert: $^ Å® $@
 	@$(G3DCVTR) $^ -o $@
 

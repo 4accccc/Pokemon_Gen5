@@ -4,7 +4,7 @@
 #======================================================================
 #コンバート対象ユーザー定義
 #
-USERS = kagaya lee_hyunjung takahashi saya_tsuruta fuchino
+USERS = kagaya lee_hyunjung takahashi saya_tsuruta fuchino iwasawa
 
 #対象ディレクトリ
 #
@@ -21,6 +21,12 @@ DIR_RES = ./mmdl_res
 #ncg格納ディレクトリ
 #
 DIR_NCG = ./mmdl_nchara
+
+#テクスチャコンバートソースimd&ダミー格納ディレクトリ
+DIR_DUMMY = ./mmdl_dmy
+
+#DRAWTYPE_MDLコンバートソースimd格納ディレクトリ
+DIR_MDLSRC = ./mmdl_mdl
 
 #テンポラリディレクトリ
 #
