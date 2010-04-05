@@ -46,7 +46,7 @@ INIT_EVENT_START	ev_init_d08R0901
 INIT_EVENT_END
 
 /**************************************************************/
-/* パッケージポケモンの復活POSイベント                                                          
+/* パッケージポケモン 話しかけ                                                          
 /**************************************************************/
 EVENT_START    ev_d08r0901_poke_01
 	_OBJ_ANIME(D08R0901_POKE_01, anm_legend_hoeru )
@@ -57,12 +57,12 @@ EVENT_START    ev_d08r0901_poke_01
 	DEFINE_LOCAL	LWK_ROM
 	_GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_BLACK THEN
-			_VOICE_PLAY( MONSNO_651, 0 )
+			_VOICE_PLAY( MONSNO_650, 0 )
 			_GIZAWIN_OBJMSG_POS( msg_d08r0901_poke8_01 ,D08R0901_POKE_01, WIN_NONE )
 			_MSGWIN_CLOSE()
 			_VOICE_WAIT()
 
-			_WILD_BTL_SET_LEGEND( MONSNO_651, 50 )
+			_WILD_BTL_SET_LEGEND( MONSNO_650, 50 )
 			_BATTLE_RESULT_GET( SCWK_ANSWER )
 			//倒した場合
 			IF $SCWK_ANSWER == 0 THEN
@@ -91,12 +91,12 @@ EVENT_START    ev_d08r0901_poke_01
 			ENDIF
 			
 		ELSE
-			_VOICE_PLAY( MONSNO_650, 0 )
+			_VOICE_PLAY( MONSNO_651, 0 )
 			_GIZAWIN_OBJMSG_POS( msg_d08r0901_poke7_01 , D08R0901_POKE_01, WIN_NONE )
 			_MSGWIN_CLOSE()
 			_VOICE_WAIT()
 
-			_WILD_BTL_SET_LEGEND( MONSNO_650, 50 )
+			_WILD_BTL_SET_LEGEND( MONSNO_651, 50 )
 			_BATTLE_RESULT_GET( SCWK_ANSWER )
 			//倒した場合
 			IF $SCWK_ANSWER == 0 THEN
@@ -135,9 +135,11 @@ EVENT_START    ev_d08r0901_poke_01
 		_GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_WHITE THEN
 			_SYSWIN_MSG( msg_d08r0901_poke8_02 , POS_DOWN )
+			_LAST_KEYWAIT()
 			_SYSWIN_CLOSE()
 		ELSE
 			_SYSWIN_MSG( msg_d08r0901_poke7_02 , POS_DOWN )
+			_LAST_KEYWAIT()
 			_SYSWIN_CLOSE()
 		ENDIF
         

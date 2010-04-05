@@ -254,6 +254,9 @@ init_flags:
 	_FLAG_SET( FV_T04R0101_GENTLEMAN_01 )
 	_FLAG_SET( FV_T04R0101_VETERANW_01 )
 	_FLAG_SET( FV_T04R0101_BOY4_01 )
+	
+	//リュウラセンの塔のパッケージポケモンを消しておく
+	_FLAG_SET(FV_D08R0901_PACKAGE_POKE)
 
 }
 _RET
@@ -327,7 +330,7 @@ INIT_EVENT_START  ev_init_gameclear_script
      //シンとム未捕獲時の復活処理
   IF FLAG_ON(FV_D08R0901_PACKAGE_POKE) && FLAG_OFF(FE_PACKAGE_POKE_GET) THEN
       //OBJを消していて、捕まえていなければ復活させる
-      _FLAG_RESET( FV_R14R0201_LEG )
+      _FLAG_RESET( FV_D08R0901_PACKAGE_POKE )
   ENDIF
 }
 INIT_EVENT_END
