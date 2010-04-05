@@ -559,6 +559,9 @@ _EVENT_DATA ev_TRID_RIVAL_20
 _EVENT_DATA ev_TRID_RIVAL_21
 _EVENT_DATA ev_TRID_VETERANM_08
 _EVENT_DATA ev_TRID_MAID_02
+_EVENT_DATA ev_TRID_BADRIDER_05
+_EVENT_DATA ev_TRID_BADRIDER_06
+_EVENT_DATA ev_TRID_NURSE_03
 _EVENT_DATA ev_TRID_MAX
 _EVENT_DATA ev_trainer_talk_battle
 _EVENT_DATA ev_trainer_move_battle
@@ -1108,6 +1111,9 @@ ev_TRID_RIVAL_20:
 ev_TRID_RIVAL_21:
 ev_TRID_VETERANM_08:
 ev_TRID_MAID_02:
+ev_TRID_BADRIDER_05:
+ev_TRID_BADRIDER_06:
+ev_TRID_NURSE_03:
 ev_TRID_MAX:
 
 //----------------------------------------------------------------------
