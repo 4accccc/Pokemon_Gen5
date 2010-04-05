@@ -198,10 +198,12 @@ sub_elevator_main:
 
     _CALL sub_elevator_in
 
+    _SYSWIN_MSG( msg_elevator_01, POS_DOWN )
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
     _ELEVATOR_MAKE_LIST()
     _BMPMENU_MAKE_LIST( msg_elevator_cancel, 0xff )
     _BMPMENU_START()
+    _SYSWIN_CLOSE()
 
     _DEBUG_PRINT_WK( SCWK_ANSWER )
     IF $SCWK_ANSWER != 0xff && $SCWK_ANSWER != EV_WIN_B_CANCEL THEN
@@ -238,11 +240,11 @@ sub_elevator_main:
 /**************************************************************/
 sub_elevator_in:
     _TIME_WAIT( 15 )          //キー選択音終了待ち
-    _SE_PLAY( SEQ_SE_FLD_23 ) //エレベーター移動音
-    _TIME_WAIT( 45 )
-    _SE_STOP()
-    _SE_PLAY( SEQ_SE_FLD_87 ) //エレベーター到着音
-    _SE_WAIT()
+    //_SE_PLAY( SEQ_SE_FLD_23 ) //エレベーター移動音
+    //_TIME_WAIT( 45 )
+    //_SE_STOP()
+    //_SE_PLAY( SEQ_SE_FLD_87 ) //エレベーター到着音
+    //_SE_WAIT()
     _PLAYER_POS_GET( HEROX, HEROZ )
     $HEROX += 2
     $HEROZ -= 1
