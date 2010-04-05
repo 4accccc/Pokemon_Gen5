@@ -56,7 +56,7 @@ static  void  GameVBlankFunc(void);
 #ifdef PM_DEBUG
 static void DEBUG_StackOverCheck(void);
 
-#define DEBUG_MAIN_TIME_AVERAGE (0) // 時間AVERAGE　表示 １：ON　０：OFF
+#define DEBUG_MAIN_TIME_AVERAGE (1) // 時間AVERAGE　表示 １：ON　０：OFF
 
 #else
 
@@ -182,6 +182,7 @@ void NitroMain(void)
 		GFL_G3D_SwapBuffers();
 		if(GFL_NET_SystemGetConnectNum() > 1){
 			OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+
 			GameVBlankFunc();
 		}
 		else{

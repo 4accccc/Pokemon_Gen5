@@ -112,6 +112,9 @@ extern void FILED_WFBC_EventDataOverwrite( const FIELD_WFBC* cp_wk, EVENTDATA_SY
 // ƒJƒƒ‰İ’è
 extern void FIELD_WFBC_SetUpCamera( const FIELD_WFBC* cp_wk, FIELD_CAMERA* p_camera, HEAPID heapID );
 
+// “®ìƒ‚ƒfƒ‹İ’è
+extern void FIELD_WFBC_SetUpMmdlSys( FIELD_WFBC* p_wk, MMDLSYS* p_mmdlsys );
+
 //-------------------------------------
 ///	‘S‘Ìî•ñ‚Ìİ’è
 //=====================================

@@ -743,11 +743,10 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
         gray_scale  = Intrude_CheckGrayScaleMap( game_comm, fieldWork->gamedata );
         FIELD_BMODEL_MAN_Load(bmodel_man, fieldWork->map_id, fieldWork->areadata, gray_scale);
       }
-
-      // WFBC街情報を設定
-      setupWfbc( gdata, fieldWork, fieldWork->map_id );
     }
 
+    // WFBC街情報を設定 影を操作するためにギミックのセットアップに位置を変更
+    setupWfbc( gdata, fieldWork, fieldWork->map_id );
     break;
 
   case 2:
@@ -2266,7 +2265,16 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
   //ZONEFOGLIGHT
   FIELD_ZONEFOGLIGHT_Update( fieldWork->zonefog, fieldWork->heapID ); 
 	
+/*#ifdef PM_DEBUG
+  INIT_CHECK();   //デバッグ：処理負荷計測用
+#endif*/
 	FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_FIELD_PRBUF );
+/*#ifdef PM_DEBUG
+  {
+    OSTick debug_fieldmap_end_tick = OS_TicksToMicroSeconds (TAIL_CHECK() );
+    OS_TPrintf( "weather_tick %d\n", debug_fieldmap_end_tick );
+  }
+#endif*/
 	FIELD_FOG_Main( fieldWork->fog );
 	FIELD_LIGHT_Main( fieldWork->light, GFL_RTC_GetTimeBySecond() );
 }
@@ -2940,6 +2948,9 @@ static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id )
     
     // カメラのセットアップ
     FIELD_WFBC_SetUpCamera( p_wfbc, fieldWork->camera_control, fieldWork->heapID );
+
+    // MMDLSYSのセットアップ
+    FIELD_WFBC_SetUpMmdlSys( p_wfbc, GAMEDATA_GetMMdlSys( fieldWork->gamedata ) );
   }
 }
 

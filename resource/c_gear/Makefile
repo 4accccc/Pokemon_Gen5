@@ -7,7 +7,7 @@
 #------------------------------------------------------------------------------
 #※コンバートを行う人のユーザーIDをここに書く
 #------------------------------------------------------------------------------
-USERS	= ohno ariizumi_nobuhiko
+USERS	= ohno ariizumi_nobuhiko tomoya_takahashi
 
 #------------------------------------------------------------------------------
 #※ここに作成するnarc名を書く
@@ -80,11 +80,16 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするル
 $(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) Makefile ./panel/pattern.xls ./panel.rb
 	ruby ../../tools/exceltool/xls2xml/tab_out_direct.rb panel/pattern.xls -s > ./pattern.txt
 	ruby ./panel.rb ./pattern.txt
-	nnsarc -r -l -n -i $(targetname) $^
+
+	-ls *.N*R > list.txt
+	-ls *.bin >> list.txt
+
+	$(ARCLIST_MAKE) list.txt
+	nnsarc -c -l -n -i $(targetname) -S list.txt
 	$(NAIXCUT) $(targetname).naix
 	$(DIFFCOPY) c_gear_obj_NANR_LBLDEFS.h  ../../prog/src/field/c_gear/
 	$(DIFFCOPY) c_gear2_obj_NANR_LBLDEFS.h  ../../prog/src/field/c_gear/
-
+	-rm	list.txt
 endif
 
 #------------------------------------------------------------------------------
@@ -99,6 +104,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.NSCR
 	rm -f *.NCGR
 	rm -f *.NCLR
+	rm -f *.bin
 	rm -f *.narc
 	rm -f *.naix
 	rm -f $(targetname).narc

@@ -212,6 +212,9 @@ struct _FIELD_WFBC
 
   // 描画生成パラメータ
   WFBC_DRAW_PARAM draw_param;
+
+  // 動作モデルシステム
+  MMDLSYS* p_mmdlsys;
 };
 
 
@@ -297,6 +300,11 @@ void FIELD_WFBC_Delete( FIELD_WFBC* p_wk )
   GF_ASSERT( p_wk );
 
   WFBC_ExitSystem( p_wk );
+
+  // 動作モデルの影を復帰
+  if( p_wk->p_mmdlsys ){
+    MMDLSYS_SetJoinShadow( p_wk->p_mmdlsys, TRUE );
+  }
 
   GFL_HEAP_FreeMemory( p_wk );
 }
@@ -556,6 +564,22 @@ void FIELD_WFBC_SetUpCamera( const FIELD_WFBC* cp_wk, FIELD_CAMERA* p_camera, HE
   FIELD_CAMERA_SetCameraType( p_camera, p_buff->camera_no[ people_num ] );
 
   GFL_HEAP_FreeMemory( p_buff );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  動作モデルシステムの設定
+ *
+ *	@param	cp_wk       ワーク
+ *	@param	p_mmdlsys   動作モデル
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_SetUpMmdlSys( FIELD_WFBC* p_wk, MMDLSYS* p_mmdlsys )
+{
+  p_wk->p_mmdlsys = p_mmdlsys;
+  //@todo もしどうしても、処理落ちが軽減できなかったら、
+  //影をけすことで300 ms軽くなる。
+  //MMDLSYS_SetJoinShadow( p_mmdlsys, FALSE );
 }
 
 

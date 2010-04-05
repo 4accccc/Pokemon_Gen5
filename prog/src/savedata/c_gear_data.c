@@ -59,9 +59,9 @@ static u8 _inittable[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT]={
 		CGEAR_PANELTYPE_BASE,
 		CGEAR_PANELTYPE_BASE,
 		CGEAR_PANELTYPE_BASE},
-	{CGEAR_PANELTYPE_IR,
-		CGEAR_PANELTYPE_WIFI,
-		CGEAR_PANELTYPE_WIRELESS,
+	{CGEAR_PANELTYPE_GET_ICON_TYPE(CGEAR_PANELTYPE_IR),
+		CGEAR_PANELTYPE_GET_ICON_TYPE(CGEAR_PANELTYPE_WIFI),
+		CGEAR_PANELTYPE_GET_ICON_TYPE(CGEAR_PANELTYPE_WIRELESS),
 		CGEAR_PANELTYPE_NONE},
 	//--------------------------------------
 	{CGEAR_PANELTYPE_BASE,
@@ -119,6 +119,7 @@ void CGEAR_SV_Init(CGEAR_SAVEDATA* pSV)
 	GFL_STD_MemClear(pSV, CGEAR_SV_GetWorkSize());
 	GFL_STD_MemCopy(_inittable,pSV->type,sizeof(_inittable));
 }
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -200,7 +201,7 @@ u16 CGEAR_SV_GetCGearPictureCRC(CGEAR_SAVEDATA* pSV)
  * @return	type  パネルタイプ CGEAR_PANELTYPE_ENUM
  */
 //--------------------------------------------------------------------------------------------
-CGEAR_PANELTYPE_ENUM CGEAR_SV_GetPanelType(CGEAR_SAVEDATA* pSV,int x, int y)
+CGEAR_PANELTYPE_ENUM CGEAR_SV_GetPanelType(const CGEAR_SAVEDATA* pSV,int x, int y)
 {
 	GF_ASSERT(x < C_GEAR_PANEL_WIDTH);
   if(!(x < C_GEAR_PANEL_WIDTH)){
@@ -210,7 +211,38 @@ CGEAR_PANELTYPE_ENUM CGEAR_SV_GetPanelType(CGEAR_SAVEDATA* pSV,int x, int y)
   if(!(y < C_GEAR_PANEL_HEIGHT)){
     return CGEAR_PANELTYPE_NONE;
   }
-	return pSV->type[x][y];
+  // 上位1ビットはカット
+	return pSV->type[x][y] & 0x7f;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  CGEAR パネルタイプがICONつきかチェック
+ *
+ *	@param	pSV セーブ
+ *	@param	x   ｘ
+ *	@param	y　 ｙ
+ *
+ *	@retval TRUE  ICONつきの場所
+ *	@retval FALSE ICONつきじゃないばしょ
+ */
+//-----------------------------------------------------------------------------
+BOOL CGEAR_SV_IsPanelTypeIcon(const CGEAR_SAVEDATA* pSV,int x, int y)
+{
+	GF_ASSERT(x < C_GEAR_PANEL_WIDTH);
+	GF_ASSERT(y < C_GEAR_PANEL_HEIGHT);
+  if(!(x < C_GEAR_PANEL_WIDTH)){
+    return FALSE;
+  }
+  if(!(y < C_GEAR_PANEL_HEIGHT)){
+    return FALSE;
+  }
+  // 上位1ビットはカット
+  if( pSV->type[x][y] & 0x80 ){
+  	return TRUE;
+  }
+
+  return FALSE;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -224,8 +256,10 @@ CGEAR_PANELTYPE_ENUM CGEAR_SV_GetPanelType(CGEAR_SAVEDATA* pSV,int x, int y)
 //--------------------------------------------------------------------------------------------
 void CGEAR_SV_SetPanelType(CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENUM type)
 {
-	GF_ASSERT(type < CGEAR_PANELTYPE_MAX);
-  if(!(type < CGEAR_PANELTYPE_MAX)){
+  u32 org_type;
+  org_type = type & 0x7f;
+	GF_ASSERT(org_type < CGEAR_PANELTYPE_MAX);
+  if(!(org_type < CGEAR_PANELTYPE_MAX)){
     return;
   }
 	GF_ASSERT(x < C_GEAR_PANEL_WIDTH);
@@ -237,6 +271,20 @@ void CGEAR_SV_SetPanelType(CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENU
     return;
   }
 	pSV->type[x][y] = type;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パネルタイプのセーブバッファを取得
+ *
+ *	@param	pSV   ワーク
+ *
+ *	@return バッファ
+ */
+//-----------------------------------------------------------------------------
+u8* CGEAR_SV_GetPanelTypeBuff( CGEAR_SAVEDATA* pSV )
+{
+  return &pSV->type[0][0];
 }
 
 //----------------------------------------------------------

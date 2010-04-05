@@ -253,7 +253,7 @@ static const FIELD_SUBSCREEN_FUNC_TABLE funcTable[] =
     init_firstget_subscreen,
     update_normal_subscreen,
     NULL ,
-    NULL ,
+    evcheck_nomal_subscreen,
     exit_normal_subscreen,
     actioncallback_normal_subscreen,
   },

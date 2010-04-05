@@ -1701,8 +1701,6 @@ FIELD_WFBC* FLDMAPPER_GetWfbcWork( const FLDMAPPER* g3Dmapper)
 void FLDMAPPER_SetWfbcData( FLDMAPPER* g3Dmapper, FIELD_WFBC_CORE* p_core, MAPMODE mapmode )
 {
   GF_ASSERT( g3Dmapper );
-  // @TODO 後々は以下のようになる
-  //if( g3Dmapper->g3DmapFileType == FLDMAPPER_FILETYPE_RANDOM )
   {
     // ランダム生成マップではセットアップする
     FIELD_WFBC_SetUp( g3Dmapper->wfbcwork, p_core, mapmode, g3Dmapper->heapID );
