@@ -37,6 +37,8 @@
 
 #include "effect_encount.h"
 
+#include "../../../resource/message/dst/msg_tower_trainer.h"
+
 FS_EXTERN_OVERLAY(pokelist);
 
 //======================================================================
@@ -340,20 +342,29 @@ GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
   work->strBuf = GFL_STR_CreateBuffer( 92, HEAPID_PROC );
   
   if( bsw_scr->tr_data[tr_idx].bt_trd.appear_word[0] == 0xffff ){ //ROM MSG
+    u16 msg_no = 0;
     GFL_MSGDATA *msgdata;
     
     msgdata =  GFL_MSG_Create(
       GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
       NARC_message_tower_trainer_dat, HEAPID_PROC );
     
-    GFL_MSG_GetString(
-        msgdata, 
-        bsw_scr->tr_data[tr_idx].bt_trd.appear_word[1],
-        work->strBuf );
+    msg_no = bsw_scr->tr_data[tr_idx].bt_trd.appear_word[1];
+
+    OS_Printf( "BSW TRAINER BEFORE MSG : IDX = %d, ROM MSG NUM %d\n",
+        tr_idx, msg_no );
     
+    if( msg_no >= msg_tower_trainer_max ){
+      GF_ASSERT( 0 && "ERROR BSW TRAINER MSG : INDEX OVER" );
+      msg_no = 0;
+    }
+
+    GFL_MSG_GetString( msgdata, msg_no, work->strBuf );
     GFL_MSG_Delete( msgdata );
   }else{ //ŠÈˆÕ‰ï˜b kari
     GFL_MSGDATA *msgdata;
+    
+    OS_Printf( "BSW TRAINER BEFORE MSG : IDX = %d, KAIWA MSG\n", tr_idx );
     
     msgdata =  GFL_MSG_Create(
       GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,

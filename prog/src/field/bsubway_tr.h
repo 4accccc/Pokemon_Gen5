@@ -7,7 +7,7 @@ extern BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys );
 
 extern u16 BSUBWAY_SCRWORK_GetTrainerNo(
-    BSUBWAY_SCRWORK* wk, u16 stage, u8 round, int play_mode );
+    BSUBWAY_SCRWORK* wk, u16 stage, u8 round, int play_mode, u8 pair_no );
 
 extern BOOL BSUBWAY_SCRWORK_MakeRomTrainerData(
     BSUBWAY_SCRWORK *bsw_scr, BSUBWAY_PARTNER_DATA *tr_data,

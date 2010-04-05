@@ -739,7 +739,8 @@ void BSUBWAY_SCRWORK_SetBtlTrainerNo( BSUBWAY_SCRWORK *bsw_scr )
     {
       do
       {
-        no = BSUBWAY_SCRWORK_GetTrainerNo( bsw_scr, stage, i/2, play_mode );
+        no = BSUBWAY_SCRWORK_GetTrainerNo(
+            bsw_scr, stage, i/2, play_mode, (i)&0x01 );
       }while( is_ConflictTrainer(bsw_scr->trainer,no,i) );
       
       bsw_scr->trainer[i] = no;
@@ -752,7 +753,7 @@ void BSUBWAY_SCRWORK_SetBtlTrainerNo( BSUBWAY_SCRWORK *bsw_scr )
       do
       {
         no = BSUBWAY_SCRWORK_GetTrainerNo(
-            bsw_scr, stage, i, bsw_scr->play_mode );
+            bsw_scr, stage, i, bsw_scr->play_mode, 0 );
       }while( is_ConflictTrainer(bsw_scr->trainer,no,i) );
       
       bsw_scr->trainer[i] = no;
@@ -1166,8 +1167,11 @@ u32 BSUBWAY_SCRWORK_GetPlayModeMemberNum( u16 mode )
 static BOOL is_ConflictTrainer( u16 * trainer, u16 id, u16 num )
 {
   u16 i;
+
   for( i = 0;i < num;i++){
     if( trainer[i] == id ){
+      OS_Printf( "BSW is_ConflictTrainer() CONFLICT!! : " );
+      OS_Printf( "TR NO = %d : DATA NO = %d : HIT NO = %d\n", id, num, i );
       return TRUE;
     }
   }

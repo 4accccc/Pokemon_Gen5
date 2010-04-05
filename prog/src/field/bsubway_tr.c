@@ -836,7 +836,7 @@ static const u16 TrainerNoRangeTable[][2]={
 };
 
 //--------------------------------------------------------------
-//  トレーナー番号テーブル　その１２
+//  トレーナー番号テーブル　その２
 //--------------------------------------------------------------
 static const u16 TrainerNoRangeTable2[][2]={
   {101-1,120-1},
@@ -849,8 +849,10 @@ static const u16 TrainerNoRangeTable2[][2]={
   {201-1,300-1},
 };
 
+#if 0 //old gs
 #define TOWER_MASTER_FIRST  (305)    //0オリジン
 #define TOWER_MASTER_SECOND  (306)
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -863,14 +865,14 @@ static const u16 TrainerNoRangeTable2[][2]={
  */
 //--------------------------------------------------------------
 u16 BSUBWAY_SCRWORK_GetTrainerNo(
-    BSUBWAY_SCRWORK* wk, u16 stage, u8 round, int play_mode )
+    BSUBWAY_SCRWORK* wk, u16 stage, u8 round, int play_mode, u8 pair_no )
 {
-  u16  no;
-
-  OS_Printf( "stage = %d\n", stage );
-  OS_Printf( "round = %d\n", round );
-
-#if 0 //gs
+  u16 no = 0;
+  s16 boss_no = -1;
+  
+  OS_Printf( "BSW GET TRAINER NO stage = %d round = %d\n", stage, round );
+  
+#if 0 //old gs
   //タワータイクーンはシングルのみ
   if( play_mode == BSWAY_MODE_SINGLE ){
     //タワータイクーン1回目
@@ -883,60 +885,70 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
     }
   }
 #else //wb
-  //タワータイクーンはシングルのみ
-  if( play_mode == BSWAY_MODE_SINGLE ||
-      play_mode == BSWAY_MODE_S_SINGLE ){
-    //タワータイクーン1回目
-    if( (stage==2) && (round==6) ){
-      return 306;
-    }
-    //タワータイクーン2回目
-    if((stage==6)&&(round==6)){
-      return 307;
-    }
-  }else if( play_mode == BSWAY_MODE_DOUBLE ||
-            play_mode == BSWAY_MODE_S_DOUBLE ){
-    //タワータイクーン1回目
-    if( (stage==2) && (round==6) ){
-      return 308;
-    }
-    //タワータイクーン2回目
-    if((stage==6)&&(round==6)){
-      return 309;
-    }
-  }else if( play_mode == BSWAY_MODE_MULTI ||
-            play_mode == BSWAY_MODE_S_MULTI ||
-            play_mode == BSWAY_MODE_COMM_MULTI ||
-            play_mode == BSWAY_MODE_S_COMM_MULTI ){
-    //タワータイクーン1回目
-    if( (stage==2) && (round==6) ){
-      return 310;
-    }
-    //タワータイクーン2回目
-    if((stage==6)&&(round==6)){
-      return 311;
+  
+  if( round == 6 ){ //最後列
+    if( stage == 2 ){
+      boss_no = 0;
+    }else if( stage == 6 ){
+      boss_no = 1;
     }
   }
-#endif
-
-  if(stage<7){
-    if(round==(6)){
-      no=(TrainerNoRangeTable2[stage][1]-TrainerNoRangeTable2[stage][0])+1;
-//      no=TrainerNoRangeTable2[stage][0]+(gf_rand()%no);
+  
+  if( boss_no != -1 ){
+    switch( play_mode ){
+    case BSWAY_MODE_SINGLE:
+    case BSWAY_MODE_S_SINGLE:
+      if( boss_no == 0 ){
+        no = BSW_TR_DATANO_SINGLE;
+      }else if( boss_no == 1 ){
+        no = BSW_TR_DATANO_S_SINGLE;
+      }
+      break;
+    case BSWAY_MODE_DOUBLE:
+    case BSWAY_MODE_S_DOUBLE:
+      if( boss_no == 0 ){
+        no = BSW_TR_DATANO_DOUBLE;
+      }else if( boss_no == 1 ){
+        no = BSW_TR_DATANO_S_DOUBLE;
+      }
+      break;
+    case BSWAY_MODE_MULTI:
+    case BSWAY_MODE_COMM_MULTI:
+    case BSWAY_MODE_S_MULTI:
+    case BSWAY_MODE_S_COMM_MULTI:
+      if( boss_no == 0 ){
+        if( pair_no == 0 ){
+          no = BSW_TR_DATANO_MULTI0;
+        }else{
+          no = BSW_TR_DATANO_MULTI1;
+        }
+      }else if( boss_no == 1 ){
+        if( pair_no == 0 ){
+          no = BSW_TR_DATANO_S_MULTI0;
+        }else{
+          no = BSW_TR_DATANO_S_MULTI1;
+        }
+      }
+      break;
+    default:
+      GF_ASSERT( 0 );
+    }
+  }else if( stage < 7 ){
+    if( round == 6 ){
+      no = TrainerNoRangeTable2[stage][1]-TrainerNoRangeTable2[stage][0]+1;
       no= TrainerNoRangeTable2[stage][0]+(get_Rand(wk)%no);
+    }else{
+      no = TrainerNoRangeTable[stage][1]-TrainerNoRangeTable[stage][0]+1;
+      no = TrainerNoRangeTable[stage][0]+(get_Rand(wk)%no);
     }
-    else{
-      no=(TrainerNoRangeTable[stage][1]-TrainerNoRangeTable[stage][0])+1;
-//      no=TrainerNoRangeTable[stage][0]+(gf_rand()%no);
-      no=TrainerNoRangeTable[stage][0]+(get_Rand(wk)%no);
-    }
+  }else{
+    no = TrainerNoRangeTable[7][1]-TrainerNoRangeTable[7][0]+1;
+    no = TrainerNoRangeTable[7][0]+(get_Rand(wk)%no);
   }
-  else{
-    no=(TrainerNoRangeTable[7][1]-TrainerNoRangeTable[7][0])+1;
-//    no=TrainerNoRangeTable[7][0]+(gf_rand()%no);
-    no=TrainerNoRangeTable[7][0]+(get_Rand(wk)%no);
-  }
+  
+  OS_Printf( "BSW GET TRAINER NO GET NUM = %d\n", no );
   return no;
+#endif
 }
 
 //--------------------------------------------------------------

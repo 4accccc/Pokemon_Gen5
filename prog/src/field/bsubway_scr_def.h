@@ -118,6 +118,16 @@
 #define BSWAY_SF_CM50  (6)
 #define BSWAY_SF_W50    (7)
 
+//トレーナーデータ番号
+#define BSW_TR_DATANO_SINGLE (306) //シングル
+#define BSW_TR_DATANO_S_SINGLE (307) //スーパーシングル
+#define BSW_TR_DATANO_DOUBLE (308) //ダブル
+#define BSW_TR_DATANO_S_DOUBLE (309) //スーパーダブル
+#define BSW_TR_DATANO_MULTI0 (310) //マルチ0
+#define BSW_TR_DATANO_MULTI1 (311) //マルチ1
+#define BSW_TR_DATANO_S_MULTI0 (312) //スーパーマルチ0
+#define BSW_TR_DATANO_S_MULTI1 (313) //スーパーマルチ1
+
 //--------------------------------------------------------------
 /// バトルサブウェイシーン制御
 //--------------------------------------------------------------
