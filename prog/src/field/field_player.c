@@ -951,7 +951,7 @@ void FIELD_PLAYER_GetDirPos(
     RAIL_LOCATION location;
     VecFx32 now_pos;
     FLDNOGRID_MAPPER* p_mapper = FIELDMAP_GetFldNoGridMapper( fld_player->fieldWork );
-    FIELD_RAIL_MAN* p_railman = FLDNOGRID_MAPPER_DEBUG_GetRailMan( p_mapper );
+    const FIELD_RAIL_MAN* p_railman = FLDNOGRID_MAPPER_GetRailMan( p_mapper );
 
     // 今の位置と、DIRキーの３D方向取得
     MMDL_GetRailLocation( fldmmdl, &location );
