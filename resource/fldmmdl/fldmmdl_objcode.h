@@ -202,9 +202,9 @@
 #define GCIS (0xc2) //194(194,total 194) ゲーチス
 #define POKE22 (0xc3) //195(195,total 195) ポケモン２２
 #define POKE23 (0xc4) //196(196,total 196) ポケモン２３
-#define TRORHY1 (0xc5) //197(197,total 197) トロフィ１
-#define TRORHY2 (0xc6) //198(198,total 198) トロフィ２
-#define TRORHY3 (0xc7) //199(199,total 199) トロフィ３
+#define TROPHY1 (0xc5) //197(197,total 197) トロフィ１
+#define TROPHY2 (0xc6) //198(198,total 198) トロフィ２
+#define TROPHY3 (0xc7) //199(199,total 199) トロフィ３
 #define PRIZE1 (0xc8) //200(200,total 200) 表彰状１
 #define PRIZE2 (0xc9) //201(201,total 201) 表彰状２
 #define HIDEGRASS (0xca) //202(202,total 202) 盛り草
