@@ -11,6 +11,7 @@
 #include <gflib.h>
 
 #include "system/wipe.h"
+#include "sound/pm_sndsys.h"
 #include "app/app_menu_common.h"
 
 #include "dpc_main.h"
@@ -18,6 +19,7 @@
 #include "dpc_bmp.h"
 #include "dpc_obj.h"
 #include "dpc_ui.h"
+#include "dpc_snd_def.h"
 
 
 //============================================================================================
@@ -196,8 +198,10 @@ static int MainSeq_Release( DPCMAIN_WORK * wk )
 
 static int MainSeq_Wipe( DPCMAIN_WORK * wk )
 {
-	if( WIPE_SYS_EndCheck() == TRUE ){
-		return wk->nextSeq;
+	if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
+		if( WIPE_SYS_EndCheck() == TRUE ){
+			return wk->nextSeq;
+		}
 	}
 	return MAINSEQ_WIPE;
 }
@@ -213,30 +217,41 @@ static int MainSeq_ButtonAnm( DPCMAIN_WORK * wk )
 
 static int MainSeq_PageMain( DPCMAIN_WORK * wk )
 {
-	int	ret = DPCUI_PageMain( wk );
+	int	ret;
+
+	if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
+		return MAINSEQ_PAGE_MAIN;
+	}
+
+	ret = DPCUI_PageMain( wk );
 
 	switch( ret ){
 	case DPCUI_ID_LEFT:
 		if( ChangePage( wk, -1 ) == TRUE ){
+			PMSND_PlaySE( DPC_SE_PAGE_CHANGE );
 			return SetButtonAnime( wk, DPCOBJ_ID_ARROW_L, APP_COMMON_BARICON_CURSOR_LEFT_ON, MAINSEQ_PAGE_CHANGE );
 		}
 		break;
 
 	case DPCUI_ID_RIGHT:
 		if( ChangePage( wk, 1 ) == TRUE ){
+			PMSND_PlaySE( DPC_SE_PAGE_CHANGE );
 			return SetButtonAnime( wk, DPCOBJ_ID_ARROW_R, APP_COMMON_BARICON_CURSOR_RIGHT_ON, MAINSEQ_PAGE_CHANGE );
 		}
 		break;
 
 	case DPCUI_ID_EXIT:
+		PMSND_PlaySE( DPC_SE_EXIT );
 		wk->dat->retMode = DENDOUPC_RET_CLOSE;
 		return SetButtonAnime( wk, DPCOBJ_ID_EXIT, APP_COMMON_BARICON_EXIT_ON, MAINSEQ_END_SET );
 
 	case DPCUI_ID_RETURN:
+		PMSND_PlaySE( DPC_SE_CANCEL );
 		wk->dat->retMode = DENDOUPC_RET_NORMAL;
 		return SetButtonAnime( wk, DPCOBJ_ID_RETURN, APP_COMMON_BARICON_RETURN_ON, MAINSEQ_END_SET );
 
 	case DPCUI_ID_MODE_CHANGE:
+		PMSND_PlaySE( DPC_SE_POKE_MODE );
 		wk->pokeChg = wk->pokePos;
 		return MAINSEQ_POKE_INIT;
 
@@ -246,7 +261,7 @@ static int MainSeq_PageMain( DPCMAIN_WORK * wk )
 	case DPCUI_ID_POKE4:
 	case DPCUI_ID_POKE5:
 	case DPCUI_ID_POKE6:
-//		wk->pokePos = ret - DPCUI_ID_POKE1;
+		PMSND_PlaySE( DPC_SE_POKE_MODE );
 		wk->pokeChg = ret - DPCUI_ID_POKE1;
 		return MAINSEQ_POKE_INIT;
 
@@ -304,6 +319,7 @@ static int MainSeq_PokeInit( DPCMAIN_WORK * wk )
 					wk->pokeMove = PokeMoveSpeed[wk->party[wk->page].pokeMax-1];
 					MakePokePosRad( wk, GetPokeRotationVal(wk,now,wk->pokeChg,-1) );
 				}
+				PMSND_PlaySE( DPC_SE_POKE_CHANGE );
 				return MAINSEQ_POKE_MOVE;
 			}
 		}
@@ -315,13 +331,20 @@ static int MainSeq_PokeInit( DPCMAIN_WORK * wk )
 
 static int MainSeq_PokeMain( DPCMAIN_WORK * wk )
 {
-	int	ret = DPCUI_PokeMain( wk );
+	int	ret;
+
+	if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
+		return MAINSEQ_POKE_MAIN;
+	}
+
+	ret = DPCUI_PokeMain( wk );
 
 	switch( ret ){
 	case DPCUI_ID_LEFT:
 		if( ChangePoke( wk, 1 ) == TRUE ){
 			wk->pokeMove = -PokeMoveSpeed[wk->party[wk->page].pokeMax-1];
 			MakePokePosRad( wk, -1 );
+			PMSND_PlaySE( DPC_SE_POKE_CHANGE );
 			return MAINSEQ_POKE_MOVE;
 		}
 		break;
@@ -330,11 +353,13 @@ static int MainSeq_PokeMain( DPCMAIN_WORK * wk )
 		if( ChangePoke( wk, -1 ) == TRUE ){
 			wk->pokeMove = PokeMoveSpeed[wk->party[wk->page].pokeMax-1];
 			MakePokePosRad( wk, 1 );
+			PMSND_PlaySE( DPC_SE_POKE_CHANGE );
 			return MAINSEQ_POKE_MOVE;
 		}
 		break;
 
 	case DPCUI_ID_RETURN:
+		PMSND_PlaySE( DPC_SE_CANCEL );
 		return SetButtonAnime( wk, DPCOBJ_ID_RETURN, APP_COMMON_BARICON_RETURN_ON, MAINSEQ_POKE_EXIT );
 
 	case DPCUI_ID_POKE1:
@@ -357,6 +382,7 @@ static int MainSeq_PokeMain( DPCMAIN_WORK * wk )
 					wk->pokeMove = PokeMoveSpeed[wk->party[wk->page].pokeMax-1];
 					MakePokePosRad( wk, GetPokeRotationVal(wk,now,ret,-1) );
 				}
+				PMSND_PlaySE( DPC_SE_POKE_CHANGE );
 				return MAINSEQ_POKE_MOVE;
 			}
 		}

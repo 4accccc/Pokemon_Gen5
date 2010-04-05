@@ -375,6 +375,8 @@ void DPCMAIN_InitMsg( DPCMAIN_WORK * wk )
 	wk->wset = WORDSET_Create( HEAPID_DENDOU_PC );
 	wk->que  = PRINTSYS_QUE_Create( HEAPID_DENDOU_PC );
 	wk->exp  = GFL_STR_CreateBuffer( EXP_BUF_SIZE, HEAPID_DENDOU_PC );
+
+//  PRINTSYS_QUE_ForceCommMode( wk->que, TRUE );      // ƒeƒXƒg
 }
 
 //--------------------------------------------------------------------------------------------
