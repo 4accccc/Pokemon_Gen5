@@ -135,103 +135,48 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
 void ENCEFFNO_GetTrEncEffNoBgmNo( const int inTrID, FIELDMAP_WORK *fieldmap,
                                   int *outEffNo, u16 *outBgmNo )
 {
-  int tr_type;
-  tr_type = TT_TrainerDataParaGet( inTrID, ID_TD_tr_type );
+  int tr_type = TT_TrainerDataParaGet( inTrID, ID_TD_tr_type );
+  u8  type_grp = TT_TrainerTypeGrpGet( tr_type );
+  u8  grp_idx = TT_TrainerTypeGrpEntryIdxGet( tr_type );
 
-  switch(tr_type){
-  //ジムリーダー
-  case TRTYPE_LEADER1A:
-    *outBgmNo = SEQ_BGM_VS_GYMLEADER;
-    *outEffNo = ENCEFFID_LEADER1A;
-    return;
-  case TRTYPE_LEADER1B:
-    *outBgmNo = SEQ_BGM_VS_GYMLEADER;
-    *outEffNo = ENCEFFID_LEADER1B;
-    return;
-  case TRTYPE_LEADER1C:
-    *outBgmNo = SEQ_BGM_VS_GYMLEADER;
-    *outEffNo = ENCEFFID_LEADER1C;
-    return;
-  case TRTYPE_LEADER2:
-    *outBgmNo = SEQ_BGM_VS_GYMLEADER;
-    *outEffNo = ENCEFFID_LEADER2;
-    return;
-  case TRTYPE_LEADER3:
-    *outBgmNo = SEQ_BGM_VS_GYMLEADER;
-    *outEffNo = ENCEFFID_LEADER3;
-    return;
-  case TRTYPE_LEADER4:
-    *outBgmNo = SEQ_BGM_VS_GYMLEADER;
-    *outEffNo = ENCEFFID_LEADER4;
-    return;
-  case TRTYPE_LEADER5:
-    *outBgmNo = SEQ_BGM_VS_GYMLEADER;
-    *outEffNo = ENCEFFID_LEADER5;
-    return;
-  case TRTYPE_LEADER6:
-    *outBgmNo = SEQ_BGM_VS_GYMLEADER;
-    *outEffNo = ENCEFFID_LEADER6;
-    return;
-  case TRTYPE_LEADER7:
-     *outBgmNo = SEQ_BGM_VS_GYMLEADER;
-     *outEffNo = ENCEFFID_LEADER7;
-    return;
-  case TRTYPE_LEADER8A:
-    *outBgmNo = SEQ_BGM_VS_GYMLEADER;
-    *outEffNo = ENCEFFID_LEADER8A;
-    return;
-  case TRTYPE_LEADER8B:
-    *outBgmNo = SEQ_BGM_VS_GYMLEADER;    
-    *outEffNo = ENCEFFID_LEADER8B;
-    return;
-  //四天王
-  case TRTYPE_BIGFOUR1:
-    *outBgmNo = SEQ_BGM_VS_SHITENNO;
-    *outEffNo = ENCEFFID_BIGFOUR1;
-    return;
-  case TRTYPE_BIGFOUR2:
-    *outBgmNo = SEQ_BGM_VS_SHITENNO;
-    *outEffNo = ENCEFFID_BIGFOUR2;
-    return;
-  case TRTYPE_BIGFOUR3:
-    *outBgmNo = SEQ_BGM_VS_SHITENNO;
-    *outEffNo = ENCEFFID_BIGFOUR3;
-    return;
-  case TRTYPE_BIGFOUR4:
-    *outBgmNo = SEQ_BGM_VS_SHITENNO;
-    *outEffNo = ENCEFFID_BIGFOUR4;
-    return;
-  //ライバル
-  case TRTYPE_RIVAL:
-    *outBgmNo = SEQ_BGM_VS_RIVAL;
-    *outEffNo = ENCEFFID_RIVAL;
-    return;
-  //サポーター
-  case TRTYPE_SUPPORT:
-    *outBgmNo = SEQ_BGM_VS_RIVAL;
-    *outEffNo = ENCEFFID_SUPPORT;
-    return;
-  //プラズマ団
-  case TRTYPE_HAKAIM1:
-  case TRTYPE_HAKAIW1:
-    *outBgmNo = SEQ_BGM_VS_PLASMA;
-    *outEffNo = ENCEFFID_PRAZUMA;
-    return;
-  //Ｎ
-  case TRTYPE_BOSS:
-    *outBgmNo = SEQ_BGM_VS_N;
-    *outEffNo = ENCEFFID_BOSS;
-    return;
-  //ゲーツィス
-  case TRTYPE_SAGE1:
-    *outBgmNo = SEQ_BGM_VS_G_CIS;
-    *outEffNo = ENCEFFID_SAGE;
-    return;
-  //チャンプ
-  case TRTYPE_CHAMPION:
-    *outBgmNo = SEQ_BGM_VS_CHAMP;
-    *outEffNo = ENCEFFID_CHAMP;
-    return;
+  static const u16 DATA_VsBgmTbl[] = {
+		SEQ_BGM_VS_RIVAL,   	///<TRTYPE_GRP_RIVAL ライバル
+		SEQ_BGM_VS_RIVAL,   	///<TRTYPE_GRP_SUPPORT サポート
+		SEQ_BGM_VS_GYMLEADER,	///<TRTYPE_GRP_LEADER ジムリーダー
+		SEQ_BGM_VS_SHITENNO,	///<TRTYPE_GRP_BIGFOUR 四天王
+		SEQ_BGM_VS_CHAMP,	    ///<TRTYPE_GRP_CHAMPION チャンピオン
+		SEQ_BGM_VS_N,	        ///<TRTYPE_GRP_BOSS N
+		SEQ_BGM_VS_G_CIS,	    ///<TRTYPE_GRP_SAGE ゲーチス
+		SEQ_BGM_VS_PLASMA,	  ///<TRTYPE_GRP_PLASMA プラズマ団
+  };
+  static const u8 DATA_EncEffTbl[] = {
+		ENCEFFID_RIVAL,	    ///<TRTYPE_GRP_IDX_RIVAL
+		ENCEFFID_SUPPORT,	  ///<TRTYPE_GRP_IDX_SUPPORT
+		ENCEFFID_LEADER1A,	///<TRTYPE_GRP_IDX_LEADER1A
+		ENCEFFID_LEADER1B,	///<TRTYPE_GRP_IDX_LEADER1B
+		ENCEFFID_LEADER1C,	///<TRTYPE_GRP_IDX_LEADER1C
+		ENCEFFID_LEADER2,	  ///<TRTYPE_GRP_IDX_LEADER2
+		ENCEFFID_LEADER3,	  ///<TRTYPE_GRP_IDX_LEADER3
+		ENCEFFID_LEADER4,	  ///<TRTYPE_GRP_IDX_LEADER4
+		ENCEFFID_LEADER5,	  ///<TRTYPE_GRP_IDX_LEADER5
+		ENCEFFID_LEADER6,	  ///<TRTYPE_GRP_IDX_LEADER6
+		ENCEFFID_LEADER7,	  ///<TRTYPE_GRP_IDX_LEADER7
+		ENCEFFID_LEADER8A,	///<TRTYPE_GRP_IDX_LEADER8A
+		ENCEFFID_LEADER8B,	///<TRTYPE_GRP_IDX_LEADER8B
+		ENCEFFID_BIGFOUR1,	///<TRTYPE_GRP_IDX_BIGFOUR1
+		ENCEFFID_BIGFOUR2,	///<TRTYPE_GRP_IDX_BIGFOUR2
+		ENCEFFID_BIGFOUR3,	///<TRTYPE_GRP_IDX_BIGFOUR3
+		ENCEFFID_BIGFOUR4,	///<TRTYPE_GRP_IDX_BIGFOUR4
+		ENCEFFID_CHAMP,	    ///<TRTYPE_GRP_IDX_CHAMPION
+		ENCEFFID_BOSS,	    ///<TRTYPE_GRP_IDX_BOSS
+		ENCEFFID_SAGE,	    ///<TRTYPE_GRP_IDX_SAGE
+		ENCEFFID_PRAZUMA,	  ///<TRTYPE_GRP_IDX_HAKAIM1
+		ENCEFFID_PRAZUMA,	  ///<TRTYPE_GRP_IDX_HAKAIW1
+  };
+
+  if( type_grp < TRTYPE_GRP_BCHAMP ){
+    *outBgmNo = DATA_VsBgmTbl[type_grp];
+    *outEffNo = DATA_EncEffTbl[grp_idx];
   }
 
   //それ以外
