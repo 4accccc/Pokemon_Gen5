@@ -99,14 +99,28 @@ typedef struct{
 	s32 peek_num;				//現在までの最大ピーク値
 }PFM_APP_WORK;
 
+typedef struct{
+  OSTick TickStart;
+  OSTick TickEnd;
+  OSTick TickTotal;
+  u16 Count;
+  u16 AvePer;
+}AVERAGE_PRM;
+
 ///パフォーマンスシステム構造体
 typedef struct{
 	PFM_APP_WORK app[PERFORMANCE_ID_MAX];
 	BOOL on_off;
 	s16 num_oam_pos;				//数値表示ポジション
-	s16 dummy;
+	s16 AveTest;
+
+  AVERAGE_PRM AvePrm[PERFORMANCE_ID_MAX];
+
 }PERFORMANCE_SYSTEM;
 
+#define  AVE_DISP
+#define  AVE_COUNT  (60)
+#define  AVE_PER_POS (128)
 
 //==============================================================================
 //	変数定義
@@ -231,7 +245,7 @@ static void Performance_Num(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 
 static void Performance_NumTrans(s32 num, int peek_oam);
 static void Performance_AllOffOam(void);
 
-
+static void DrawStress(int meter_type, PERFORMANCE_ID id, int per );
 
 //==============================================================================
 //
@@ -268,6 +282,7 @@ void DEBUG_PerformanceMain(void)
 #if DEBUG_ONLY_FOR_none
   return;
 #endif
+
 	if(debugButtonTrg){
 		pfm_sys.on_off ^= TRUE;
 	}
@@ -298,6 +313,8 @@ void DEBUG_PerformanceStartLine(PERFORMANCE_ID id)
 	if(pfm_sys.on_off == FALSE){
 		return;
 	}
+
+  if ( pfm_sys.AveTest ) return;
 	
 	app = &pfm_sys.app[id];
 	app->start_vblank_count = OS_GetVBlankCount();
@@ -324,6 +341,7 @@ void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 	if(pfm_sys.on_off == FALSE){
 		return;
 	}
+  if ( pfm_sys.AveTest ) return;
 	
 	app = &pfm_sys.app[id];
 	end_vblank_count = OS_GetVBlankCount();
@@ -592,7 +610,7 @@ static BOOL Performance_Draw(int meter_type, PERFORMANCE_ID id, s32 v_count, u32
 		char_no -= 512;
 		break;
 	}
-	
+
 	//キャラデータ転送
 	Performance_CGXTrans();
 	
@@ -611,7 +629,6 @@ static BOOL Performance_Draw(int meter_type, PERFORMANCE_ID id, s32 v_count, u32
 		METER_PALNO,				//cParam
 		0							//rsParam
 	);
-	
 #if 0
 	{
 		PFM_APP_WORK *app;
@@ -637,6 +654,132 @@ static BOOL Performance_Draw(int meter_type, PERFORMANCE_ID id, s32 v_count, u32
 
 	return peek_update;
 }
+#if 0
+//--------------------------------------------------------------
+/**
+ * @brief   パフォーマンスメーター描画
+ *
+ * @param   meter_type			メータータイプ
+ * @param   id					パフォーマンスメーターID
+ * @param   v_count				Vカウンタ
+ * @param   end_vblank_count	End時のVブランクカウンタ
+ *
+ * @retval  TRUE:ピーク計測更新
+ */
+//--------------------------------------------------------------
+static BOOL Performance_DrawAve(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 end_vblank_count)
+{
+	GXOamAttr *meter_oam;
+	GXOamEffect effect_type;
+	s32 x, char_no;
+	s32 calc_v_count;
+	s32 check_peek = 0;
+	BOOL delay;
+	PFM_APP_WORK *app;
+	BOOL peek_update = 0;
+
+  s32 cvc;
+	
+	app = &pfm_sys.app[id];
+	delay = app->start_vblank_count != end_vblank_count;
+	meter_oam = &(((GXOamAttr *)HW_OAM)[127 - id*2 - meter_type]);
+	
+	calc_v_count = v_count;
+	if(calc_v_count < 192){	//VBlank期間を画面上左端にするので期間内と期間外の数値を反転する
+		calc_v_count += 262-192;
+	}
+	else{
+		calc_v_count -= 192;
+	}
+
+  pfm_sys.AvePrm[meter_type][id].cvc += calc_v_count;
+  pfm_sys.AvePrm[meter_type][id].count++;
+  if ( pfm_sys.AvePrm[meter_type][id].count>AVE_COUNT )
+  {
+    cvc = pfm_sys.AvePrm[meter_type][id].cvc / AVE_COUNT;
+    pfm_sys.AvePrm[meter_type][id].count = 0;
+    pfm_sys.AvePrm[meter_type][id].cvc = 0;
+  }else{
+    return FALSE;
+  }
+
+	x = 255 * cvc / 262;	//Vカウンタを画面横幅サイズの割合に変換
+	if(id & 1){	//VBlank期間の処理負荷を調べるID
+		if(v_count < 192){
+			delay = TRUE;	//VBlank期間外
+		}
+	}
+	
+	if(meter_type == METER_TYPE_START){
+		effect_type = GX_OAM_EFFECT_NONE;
+	}
+	else{
+		effect_type = GX_OAM_EFFECT_FLIP_H;
+		x -= 8;
+	}
+	
+	if(x > 259){	//ちょっと画面端に食い込んでる方が処理負荷が見やすいので。
+		x %= 256;
+	}
+
+	//ピーク更新確認
+	if(meter_type == METER_TYPE_END){
+		check_peek = (end_vblank_count - app->start_vblank_count) * 1000;
+		if(end_vblank_count != app->start_vblank_count && v_count < 192){
+			check_peek += v_count + 262;
+		}
+		else{
+			check_peek += v_count;
+		}
+		
+		if(check_peek > app->peek_vcount){
+			app->peek_vcount = check_peek;
+			app->peek_wait = 0;
+			app->peek_x = x;
+			peek_update = TRUE;
+		}
+		else{
+			x = app->peek_x;
+			app->peek_wait++;
+			if(app->peek_wait > PEEK_WAIT){
+				app->peek_wait = 0;
+				app->peek_vcount = 0;
+			}
+		}
+	}
+
+
+	char_no = (delay == TRUE) ? METER_DELAY_CHARNO : METER_CHARNO;
+	switch(GX_GetBankForOBJ()){
+	case GX_VRAM_OBJ_16_F:
+	case GX_VRAM_OBJ_16_G:
+		char_no -= 512;
+		break;
+	}
+
+
+	//キャラデータ転送
+	Performance_CGXTrans();
+	
+	//OAMセット
+	G2_SetOBJAttr(
+		meter_oam,
+		x,							//x
+		MeterPosY[id],				//y
+		0,							//priority
+		GX_OAM_MODE_NORMAL,			//mode
+		0,							//mosaic
+		effect_type,				//effect
+		GX_OAM_SHAPE_8x8,			//shape
+		GX_OAM_COLORMODE_16,		//color
+		char_no,					//charName
+		METER_PALNO,				//cParam
+		0							//rsParam
+	);
+
+	return peek_update;
+}
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -750,6 +893,157 @@ static void Performance_AllOffOam(void)
 		);
 		meter_oam++;
 	}
+}
+
+void DEBUG_PerformanceSetStress(void)
+{
+  int diff;
+  OSTick start_tick;
+  if ( !pfm_sys.AveTest ) return;
+  start_tick = OS_GetTick();
+  do{
+    OSTick end_tick = OS_GetTick();
+    diff = OS_TicksToMicroSeconds(end_tick-start_tick);
+  }while(diff < 6000);
+}
+
+void DEBUG_PerformanceStartTick(int id)
+{
+  AVERAGE_PRM *prm;
+  prm = &pfm_sys.AvePrm[id];
+
+  if ( !pfm_sys.AveTest ) return;
+
+  prm->TickStart = OS_GetTick();
+}
+
+void DEBUG_PerformanceEndTick(int id)
+{
+  OSTick sub;
+  AVERAGE_PRM *prm;
+  prm = &pfm_sys.AvePrm[id];
+
+  if ( !pfm_sys.AveTest ) return;
+
+  prm->TickEnd = OS_GetTick();
+
+  sub = prm->TickEnd - prm->TickStart;
+  prm->TickTotal += sub;
+  prm->Count++;
+
+  if (prm->Count > AVE_COUNT)
+  {
+    OSTick ave;
+    int ave_sec;
+    int per;
+    ave = (prm->TickTotal / AVE_COUNT);
+    ave_sec = OS_TicksToMicroSeconds(ave);
+    per = (ave_sec * 100) / 16000;
+    //更新
+    prm->AvePer = per;
+
+    NOZOMU_Printf("ave_sec %d\n",ave_sec);
+
+    prm->Count = 0;
+    prm->TickTotal = 0;
+  }
+  //描画
+  DrawStress(METER_TYPE_END, PERFORMANCE_ID_MAIN, prm->AvePer );
+}
+
+static void DrawStress(int meter_type, PERFORMANCE_ID id, int per )
+{
+	GXOamAttr *meter_oam;
+	GXOamEffect effect_type;
+	s32 x, char_no;
+	BOOL delay;
+	PFM_APP_WORK *app;
+
+  if ( !pfm_sys.AveTest ) return;
+
+	app = &pfm_sys.app[id];
+	meter_oam = &(((GXOamAttr *)HW_OAM)[127 - id*2 - meter_type]);
+
+  x = (per*AVE_PER_POS) / 100;
+
+  if (x >= AVE_PER_POS)
+  {
+    delay = TRUE;
+    if (x>= 255) x = 255;
+  }
+  else delay = FALSE;
+	
+	if(meter_type == METER_TYPE_START){
+		effect_type = GX_OAM_EFFECT_NONE;
+	}
+	else{
+		effect_type = GX_OAM_EFFECT_FLIP_H;
+		x -= 8;
+	}
+	
+	char_no = (delay == TRUE) ? METER_DELAY_CHARNO : METER_CHARNO;
+	switch(GX_GetBankForOBJ()){
+	case GX_VRAM_OBJ_16_F:
+	case GX_VRAM_OBJ_16_G:
+		char_no -= 512;
+		break;
+	}
+
+	//キャラデータ転送
+	Performance_CGXTrans();
+	
+	//OAMセット
+	G2_SetOBJAttr(
+		meter_oam,
+		x,							//x
+		MeterPosY[id],				//y
+		0,							//priority
+		GX_OAM_MODE_NORMAL,			//mode
+		0,							//mosaic
+		effect_type,				//effect
+		GX_OAM_SHAPE_8x8,			//shape
+		GX_OAM_COLORMODE_16,		//color
+		char_no,					//charName
+		METER_PALNO,				//cParam
+		0							//rsParam
+	);
+
+  if (delay){
+    GXOamAttr *ov_meter_oam;
+    ov_meter_oam = &(((GXOamAttr *)HW_OAM)[127 - id*2]);
+    //OAMセット
+    G2_SetOBJAttr(
+		  ov_meter_oam,
+		  120,							//x
+		  MeterPosY[id],				//y
+		  0,							//priority
+		  GX_OAM_MODE_NORMAL,			//mode
+		  0,							//mosaic
+		  GX_OAM_EFFECT_FLIP_H,				//effect
+		  GX_OAM_SHAPE_8x8,			//shape
+		  GX_OAM_COLORMODE_16,		//color
+		  METER_CHARNO,					//charName
+		  METER_PALNO,				//cParam
+		  0							//rsParam
+	  );
+  }
+
+  //グラフィック転送
+	Performance_NumTrans(per, FALSE);
+}
+
+void DEBUG_PerformanceSetAveTest(void)
+{
+  pfm_sys.AveTest = !pfm_sys.AveTest;
+  if ( pfm_sys.AveTest ){
+    OS_Printf("平均負荷チェック開始\n");
+    pfm_sys.on_off = TRUE;
+  }
+  else
+  {
+    pfm_sys.on_off = FALSE;
+    OS_Printf("平均負荷チェック終了\n");
+  }
 }
 
 #endif //PM_DEBUG

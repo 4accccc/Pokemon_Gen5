@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2010-04-04T18:25:28"/>
+	<create user="saitou" host="W00158" date="2010-04-05T15:54:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 
 	<dialog left="164" top="189" right="869" bottom="817" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="752" top="242" right="1280" bottom="764" visible="yes"/>
+		<tag-palette left="752" top="242" right="1280" bottom="764" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -1682,6 +1682,11 @@ Y：キープL　X：キープS　B：フリーL　A：フリーS</language>
 	<row id="DEBUG_FIELD_STR70">
 		<language name="JPN" width="240">パソコンよびだし</language>
 		<language name="JPN_KANJI" width="240">パソコン呼び出し</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STRESS">
+		<language name="JPN" width="240">へいきんふかチェック</language>
+		<language name="JPN_KANJI" width="240">平均負荷チェック</language>
 	</row>
 
 	<flowchart-group-list>

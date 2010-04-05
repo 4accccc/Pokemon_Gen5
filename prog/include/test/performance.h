@@ -39,5 +39,9 @@ extern void DEBUG_PerformanceStartLine(PERFORMANCE_ID id);
 extern void DEBUG_PerformanceEndLine(PERFORMANCE_ID id);
 extern void DEBUG_PerformanceSetActive( BOOL isActive );
 
+extern void DEBUG_PerformanceSetStress(void);
+extern void DEBUG_PerformanceStartTick(int id);
+extern void DEBUG_PerformanceEndTick(int id);
+extern void DEBUG_PerformanceSetAveTest(void);
 
 #endif //PM_DEBUG

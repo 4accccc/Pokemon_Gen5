@@ -110,6 +110,8 @@
 #include "event_gts.h"
 #include "src\musical\musical_debug.h"
 
+#include "test/performance.h"
+
 FS_EXTERN_OVERLAY( d_iwasawa );
 
 //======================================================================
@@ -170,6 +172,8 @@ static BOOL debugMenuCallProc_ControlFog( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_WeatherList( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_CaptureList( DEBUG_MENU_EVENT_WORK *wk );
+
+static BOOL debugMenuCallProc_FieldAveStress( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk );
 
@@ -275,6 +279,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR09, debugMenuCallProc_AllMapCheck }, //オールマップチェック
 
   { DEBUG_FIELD_TITLE_02, (void*)BMPMENULIST_LABEL },       //○フィールド
+  { DEBUG_FIELD_STRESS, debugMenuCallProc_FieldAveStress },    //平均負荷
   { DEBUG_FIELD_STR17, debugMenuCallProc_FieldPosData },    //座標をみる
   { DEBUG_FIELD_STR02, debugMenuCallProc_ControlLinerCamera },  //カメラ簡単操作
   { DEBUG_FIELD_STR52, debugMenuCallProc_ControlDelicateCamera }, //カメラ全部操作
@@ -2187,6 +2192,23 @@ static GMEVENT_RESULT debugMenuWeatherListEvent(
 
   return( GMEVENT_RES_CONTINUE );
 }
+
+//======================================================================
+//  デバッグメニュー　平均負荷
+//======================================================================
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー呼び出し　平均負荷計測開始
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_FieldAveStress( DEBUG_MENU_EVENT_WORK *wk )
+{
+  DEBUG_PerformanceSetAveTest();
+  return( FALSE );
+}
+
 
 //======================================================================
 //  デバッグメニュー　位置情報
@@ -4932,7 +4954,7 @@ typedef struct
 }DEBUG_ENCEFF_LIST_EVENT_WORK;
 
 ///リスト最大
-#define ENCEFFLISTMAX (35)
+#define ENCEFFLISTMAX (36)
 
 ///リスト メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DebugMenuList_EncEffList =
@@ -4995,6 +5017,7 @@ static const FLDMENUFUNC_LIST DATA_EncEffMenuList[ENCEFFLISTMAX] =
   { DEBUG_FIELD_ENCEFF33, (void*)32 },
   { DEBUG_FIELD_ENCEFF34, (void*)33 },
   { DEBUG_FIELD_ENCEFF35, (void*)34 },
+  { DEBUG_FIELD_ENCEFF35, (void*)35 },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugEncEffMenuListData = {
