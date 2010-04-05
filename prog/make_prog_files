@@ -874,13 +874,17 @@ SRCS_OVERLAY_FIELD_GIMMICK_H01 = field/field_gimmick_h01.c
 #GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_FIELD_GIMMICK_H03 = field/field_gimmick_h03.c
 
-#===> GROUP_OVERLAY_SUBSCREEN
+#群集は、C03の路地＋H03でも使用することになった。
+#H03のギミックと共存するために特別に、OVERLAYをH03とは並列でなくする。
+#この書き方は、まねしないように。
+#===> SRCS_OVERLAY_FIELD_GIMMICK_H03
 #GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_FIELD_EVENT_FOURKINGS = field/event_fourkings.c
+SRCS_OVERLAY_FIELD_CROWD_PEOPLE = field/field_crowd_people.c
+
 
 #===> GROUP_OVERLAY_SUBSCREEN
 #GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_FIELD_CROWD_PEOPLE = field/field_crowd_people.c
+SRCS_OVERLAY_FIELD_EVENT_FOURKINGS = field/event_fourkings.c
 
 
 #===> GROUP_OVERLAY_SUBSCREEN
