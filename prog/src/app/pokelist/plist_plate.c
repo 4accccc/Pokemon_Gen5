@@ -698,6 +698,11 @@ static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     u8 inCol,outCol;
     GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( plateWork->bmpWin );
     
+    if( len == 0 && rate != 0 )
+    {
+      len = 1;
+    }
+    
     //FŒˆ’è
     if( rate <= 25 )
     {

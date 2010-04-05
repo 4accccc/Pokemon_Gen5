@@ -90,10 +90,10 @@
 //色
 #define PSTATUS_SKILL_HPBAR_COL_GREEN_IN  (0x5)
 #define PSTATUS_SKILL_HPBAR_COL_GREEN_OUT (0x6)
-#define PSTATUS_SKILL_HPBAR_COL_YELLOW_IN  (0x7)
-#define PSTATUS_SKILL_HPBAR_COL_YELLOW_OUT (0x8)
-#define PSTATUS_SKILL_HPBAR_COL_RED_IN  (0x9)
-#define PSTATUS_SKILL_HPBAR_COL_RED_OUT (0xa)
+#define PSTATUS_SKILL_HPBAR_COL_YELLOW_IN  (0x9)
+#define PSTATUS_SKILL_HPBAR_COL_YELLOW_OUT (0xa)
+#define PSTATUS_SKILL_HPBAR_COL_RED_IN  (0x7)
+#define PSTATUS_SKILL_HPBAR_COL_RED_OUT (0x8)
 
 //SkillPlate
 #define PSTATUS_SKILL_PLATE_NUM (5)
@@ -251,6 +251,7 @@ static void PSTATUS_SKILL_UpdateCursorPos( PSTATUS_WORK *work , PSTATUS_SKILL_WO
 static void PSTATUS_SKILL_SwapSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 pos1 , const u8 pos2 );
 static void PSTATUS_SKILL_ChangeForgetConfirmPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const BOOL isDisp );
 static void PSTATUS_SKILL_DispForgetError( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const FIELD_SKILL_CHECK_RET skillRet );
+static const u16 PSTATUS_SKILL_CheckDrawStatusTitleCol( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 seikaku , const u8 type );
 
 static void PSTATUS_SKILL_InitPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , PSTATUS_SKILL_PLATE *plateWork , const u8 idx );
 static void PSTATUS_SKILL_TermPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , PSTATUS_SKILL_PLATE *plateWork );
@@ -784,14 +785,15 @@ static void PSTATUS_SKILL_DispSkillInfoPage_Trans( PSTATUS_WORK *work , PSTATUS_
   }
 }
 
-
 //--------------------------------------------------------------
 //  文字の描画(ステータス
 //--------------------------------------------------------------
 static void PSTATUS_SKILL_DrawStrStatus( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
 {
   const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
-
+  u32 seikaku = PP_Get( pp , ID_PARA_seikaku , NULL );
+  u16 strCol;
+  
   //HP
   PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_HP] , mes_status_04_02 ,
                             PSTATUS_SKILL_STR_HP_X , PSTATUS_SKILL_STR_HP_Y , PSTATUS_STR_COL_TITLE );
@@ -818,8 +820,9 @@ static void PSTATUS_SKILL_DrawStrStatus( PSTATUS_WORK *work , PSTATUS_SKILL_WORK
   }
 
   //攻撃
+  strCol = PSTATUS_SKILL_CheckDrawStatusTitleCol( work , skillWork , seikaku , PTL_ABILITY_ATK );
   PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_ATK] , mes_status_04_03 ,
-                            PSTATUS_SKILL_STR_PARAM_X , PSTATUS_SKILL_STR_PARAM_Y , PSTATUS_STR_COL_TITLE );
+                            PSTATUS_SKILL_STR_PARAM_X , PSTATUS_SKILL_STR_PARAM_Y , strCol );
   {
     WORDSET *wordSet = WORDSET_Create( work->heapId );
     u32 no = PP_Get( pp , ID_PARA_pow , NULL );
@@ -830,8 +833,9 @@ static void PSTATUS_SKILL_DrawStrStatus( PSTATUS_WORK *work , PSTATUS_SKILL_WORK
   }
 
   //防御
+  strCol = PSTATUS_SKILL_CheckDrawStatusTitleCol( work , skillWork , seikaku , PTL_ABILITY_DEF );
   PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_DEF] , mes_status_04_04 ,
-                            PSTATUS_SKILL_STR_PARAM_X , PSTATUS_SKILL_STR_PARAM_Y , PSTATUS_STR_COL_TITLE );
+                            PSTATUS_SKILL_STR_PARAM_X , PSTATUS_SKILL_STR_PARAM_Y , strCol );
   {
     WORDSET *wordSet = WORDSET_Create( work->heapId );
     u32 no = PP_Get( pp , ID_PARA_def , NULL );
@@ -842,8 +846,9 @@ static void PSTATUS_SKILL_DrawStrStatus( PSTATUS_WORK *work , PSTATUS_SKILL_WORK
   }
 
   //特攻
+  strCol = PSTATUS_SKILL_CheckDrawStatusTitleCol( work , skillWork , seikaku , PTL_ABILITY_SPATK );
   PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_SATK] , mes_status_04_05 ,
-                            PSTATUS_SKILL_STR_PARAM_X , PSTATUS_SKILL_STR_PARAM_Y , PSTATUS_STR_COL_TITLE );
+                            PSTATUS_SKILL_STR_PARAM_X , PSTATUS_SKILL_STR_PARAM_Y , strCol );
   {
     WORDSET *wordSet = WORDSET_Create( work->heapId );
     u32 no = PP_Get( pp , ID_PARA_spepow , NULL );
@@ -854,8 +859,9 @@ static void PSTATUS_SKILL_DrawStrStatus( PSTATUS_WORK *work , PSTATUS_SKILL_WORK
   }
 
   //特防
+  strCol = PSTATUS_SKILL_CheckDrawStatusTitleCol( work , skillWork , seikaku , PTL_ABILITY_SPDEF );
   PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_SDEF] , mes_status_04_06 ,
-                            PSTATUS_SKILL_STR_PARAM_X , PSTATUS_SKILL_STR_PARAM_Y , PSTATUS_STR_COL_TITLE );
+                            PSTATUS_SKILL_STR_PARAM_X , PSTATUS_SKILL_STR_PARAM_Y , strCol );
   {
     WORDSET *wordSet = WORDSET_Create( work->heapId );
     u32 no = PP_Get( pp , ID_PARA_spedef , NULL );
@@ -866,8 +872,9 @@ static void PSTATUS_SKILL_DrawStrStatus( PSTATUS_WORK *work , PSTATUS_SKILL_WORK
   }
 
   //素早さ
+  strCol = PSTATUS_SKILL_CheckDrawStatusTitleCol( work , skillWork , seikaku , PTL_ABILITY_AGI );
   PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_SPD] , mes_status_04_07 ,
-                            PSTATUS_SKILL_STR_PARAM_X , PSTATUS_SKILL_STR_PARAM_Y , PSTATUS_STR_COL_TITLE );
+                            PSTATUS_SKILL_STR_PARAM_X , PSTATUS_SKILL_STR_PARAM_Y , strCol );
   {
     WORDSET *wordSet = WORDSET_Create( work->heapId );
     u32 no = PP_Get( pp , ID_PARA_agi , NULL );
@@ -1963,6 +1970,26 @@ static void PSTATUS_SKILL_DispForgetError( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   
   PMSND_PlaySystemSE(PSTATUS_SND_ERROR);
 }
+//--------------------------------------------------------------
+//  ステータスの性格補正での色チェック
+//--------------------------------------------------------------
+static const u16 PSTATUS_SKILL_CheckDrawStatusTitleCol( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 seikaku , const u8 type )
+{
+  const PtlSeikakuChgValue ret = POKETOOL_GetSeikakuChangeValue( seikaku , type );
+  switch( ret )
+  {
+    case PTL_SEIKAKU_CHG_VALUE_UP:
+      return PSTATUS_STR_COL_TITLE_R;
+      break;
+    case PTL_SEIKAKU_CHG_VALUE_DOWN:
+      return PSTATUS_STR_COL_TITLE_B;
+      break;
+    case PTL_SEIKAKU_CHG_VALUE_FLAT:
+    default:
+      return PSTATUS_STR_COL_TITLE;
+      break;
+  }
+}
 
 #pragma mark [>SkillPlate
 //--------------------------------------------------------------
@@ -2105,6 +2132,15 @@ static void PSTATUS_SKILL_DispPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
                                 PSTATUS_SKILL_PLATE_NONE_X , PSTATUS_SKILL_PLATE_NONE_Y , col );
     }
   }
+  plateWork->isUpdateStr = TRUE;
+}
+
+//--------------------------------------------------------------
+//  スキルプレートの表示
+//--------------------------------------------------------------
+static void PSTATUS_SKILL_DispPlate_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , PSTATUS_SKILL_PLATE *plateWork )
+{
+  const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
   //文字用OAM
   {
     PSTA_OAM_ACT_DATA oamData;
@@ -2120,41 +2156,33 @@ static void PSTATUS_SKILL_DispPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
     plateWork->bmpOam = PSTA_OAM_ActorAdd( skillWork->bmpOamSys , &oamData );
   }
 
-  plateWork->isUpdateStr = TRUE;
-}
-
-//--------------------------------------------------------------
-//  スキルプレートの表示
-//--------------------------------------------------------------
-static void PSTATUS_SKILL_DispPlate_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , PSTATUS_SKILL_PLATE *plateWork )
-{
-  const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
-
-  const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+plateWork->idx , NULL );
-  if( plateWork->isUpdateStr == TRUE )
   {
-    if( wazaNo != 0 )
+    const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+plateWork->idx , NULL );
+    if( plateWork->isUpdateStr == TRUE )
     {
-      NNSG2dImageProxy imageProxy;
-      const PokeType type = WAZADATA_GetType( wazaNo );
-      GFL_CLGRP_CGR_GetProxy( work->cellResTypeNcg[type] , &imageProxy );
-      GFL_CLACT_WK_SetImgProxy( plateWork->clwkType , &imageProxy );
-      GFL_CLACT_WK_SetPlttOffs( plateWork->clwkType ,
-                                APP_COMMON_GetPokeTypePltOffset(type) ,
-                                CLWK_PLTTOFFS_MODE_PLTT_TOP );
+      if( wazaNo != 0 )
+      {
+        NNSG2dImageProxy imageProxy;
+        const PokeType type = WAZADATA_GetType( wazaNo );
+        GFL_CLGRP_CGR_GetProxy( work->cellResTypeNcg[type] , &imageProxy );
+        GFL_CLACT_WK_SetImgProxy( plateWork->clwkType , &imageProxy );
+        GFL_CLACT_WK_SetPlttOffs( plateWork->clwkType ,
+                                  APP_COMMON_GetPokeTypePltOffset(type) ,
+                                  CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
-      GFL_CLACT_WK_SetDrawEnable( plateWork->clwkType , TRUE );
+        GFL_CLACT_WK_SetDrawEnable( plateWork->clwkType , TRUE );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetDrawEnable( plateWork->clwkType , FALSE );
+      }
+
+      //GFL_BMPWIN_MakeTransWindow_VBlank( plateWork->bmpWin );
+      PSTA_OAM_ActorBmpTrans( plateWork->bmpOam );
+      GFL_CLACT_WK_SetDrawEnable( plateWork->clwkPlate , TRUE );
+
+      plateWork->isUpdateStr = FALSE;
     }
-    else
-    {
-      GFL_CLACT_WK_SetDrawEnable( plateWork->clwkType , FALSE );
-    }
-
-    //GFL_BMPWIN_MakeTransWindow_VBlank( plateWork->bmpWin );
-    PSTA_OAM_ActorBmpTrans( plateWork->bmpOam );
-    GFL_CLACT_WK_SetDrawEnable( plateWork->clwkPlate , TRUE );
-
-    plateWork->isUpdateStr = FALSE;
   }
 }
 
@@ -2213,3 +2241,4 @@ static void PSTATUS_SKILL_ChangeColor( PSTATUS_SKILL_PLATE *plateWork , const u8
 {
   GFL_CLACT_WK_SetAnmSeq( plateWork->clwkPlate , plateWork->idx + colType*PSTATUS_SKILL_PLATE_NUM );
 }
+

@@ -384,10 +384,10 @@ void PSTATUS_INFO_ClearPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoW
   GFL_BG_FillScreen( PSTATUS_BG_PARAM , 0 , 0 , 0 , 
                      PSTATUS_MAIN_PAGE_WIDTH , 21 ,
                      GFL_BG_SCRWRT_PALNL );
-  GFL_BG_LoadScreenReq( PSTATUS_BG_PARAM );
+  GFL_BG_LoadScreenV_Req( PSTATUS_BG_PARAM );
 
   GFL_BG_ClearScreenCodeVReq( PSTATUS_BG_SUB_STR , 0 );
-  GFL_BG_LoadScreenReq( PSTATUS_BG_SUB_STR );
+  GFL_BG_LoadScreenV_Req( PSTATUS_BG_SUB_STR );
 
   GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[0] , FALSE );
   GFL_CLACT_WK_SetDrawEnable( work->clwkTypeIcon[1] , FALSE );
