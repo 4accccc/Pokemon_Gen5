@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-03T22:00:31"/>
+	<create user="morimoto" host="W00220" date="2010-04-05T11:29:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -638,12 +638,10 @@
 	</row>
 
 	<row id="msg_trialhouse_033" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
-		<language name="JPN" width="256">つうじょうの　けんていけっかと
-とくべつな　けんていのけっか▽
-どちらを　みますか？</language>
-		<language name="JPN_KANJI" width="256">通常の　検定結果と
-特別な　検定結果▽
-どちらを　みますか？</language>
+		<language name="JPN" width="256">どちらの　けんていけっかを
+みますか？</language>
+		<language name="JPN_KANJI" width="256">どちらの　検定結果を
+みますか？</language>
 	</row>
 
 	<row id="msg_trialhouse_str1">
