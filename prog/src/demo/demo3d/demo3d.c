@@ -386,7 +386,8 @@ static BOOL sub_FadeInOutReq( u8 demo_id, u8 wipe, HEAPID heapID )
     color = WIPE_FADE_WHITE;
   }
   if( sync > 0 ){
-    WIPE_SYS_Start( WIPE_PATTERN_WMS, wipe, wipe, color, sync, 1, heapID );
+    u8 spd = GFL_FADE_GetFadeSpeed();
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, wipe, wipe, color, sync*spd, 1, heapID );
     return FALSE;
   }
   WIPE_SetBrightnessFadeOut( color );
