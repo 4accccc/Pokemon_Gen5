@@ -239,10 +239,12 @@ static GMEVENT_RESULT FirstMapInEvent(GMEVENT * event, int *seq, void *work)
       break;
 
     case GAMEINIT_MODE_DEBUG:
+#if PM_DEBUG
       SCRIPT_CallDebugGameStartInitScript( gsys, GFL_HEAPID_APP );
       FIELD_STATUS_SetFieldInitFlag( GAMEDATA_GetFieldStatus(gamedata), TRUE );
       MAPCHG_setupMapTools( gsys, &fmw->loc_req ); //新しいマップモードなど機能指定を行う
       MAPCHG_updateGameData( gsys, &fmw->loc_req ); //新しいマップID、初期位置をセット
+#endif
       break;
 
     case GAMEINIT_MODE_CONTINUE:
