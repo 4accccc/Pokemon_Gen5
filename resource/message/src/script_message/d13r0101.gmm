@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T15:03:50"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T14:51:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1470" top="194" right="2175" bottom="822" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -454,7 +454,7 @@
 		<language name="JPN_KANJI" width="256">今　渡した　道具は
 インセクタの　ために　つくったもの[BE:01:ページ切り替え（クリア）]
 装備させると　テクノバスターという
-技の　タイプが　かわるのだ[BE:01:ページ切り替え（クリア）]</language>
+技の　タイプが　変わるのだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d13r0101_assistm_13" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
@@ -504,7 +504,7 @@
 メモを　よむ？</language>
 		<language name="JPN_KANJI" width="256">パソコンモニターの　わきに
 メモが　はってある……[BE:01:ページ切り替え（クリア）]
-メモを　よむ？</language>
+メモを　読む？</language>
 	</row>
 
 	<row id="msg_d13r0101_pc_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">

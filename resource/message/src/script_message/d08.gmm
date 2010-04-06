@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-25T20:19:31"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T14:47:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1990" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="529"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="542"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="696"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -495,7 +495,7 @@
 待っていた……　そう　伝わっておる</language>
 	</row>
 
-	<row id="msg_d08_hakase1_00_05" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_d08_hakase1_00_05" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてwhite_00_03</comment>
 		<attribute name="キャラ指定">博士（父）</attribute>
@@ -505,10 +505,10 @@
 ことを　かまえるのは▽
 あまり　かんしん　できんが……▼</language>
 		<language name="JPN_KANJI" width="256">で　おまえさんたちも　チェレンのように
-プラズマだんを　おいかけるのかね？▼
-だが　プラズマだん　あいてに
-ことを　かまえるのは▽
-あまり　かんしん　できんが……▼</language>
+プラズマ団を　追いかけるのかね？▼
+だが　プラズマ団　相手に
+事を　構えるのは▽
+あまり　感心できんが……▼</language>
 	</row>
 
 	<row id="msg_d08_white_00_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -903,13 +903,31 @@
 		<language name="JPN" width="256">アデク『あいさつは　ぬきだ▼
 とうから　はなたれた
 あの　すさまじい　ひばしら……▼
-あれを　どう　つかわれるのか
-ちょっと　かんがえたくないな……▼</language>
+せかいを　ほろぼす
+ちからを　もった　ポケモン……▼
+それを　したがえた　ものが　みなに
+ポケモンを　ときはなてと　いう……▼
+おそれ　か
+あこがれ　か……▼
+いずれにせよ
+せかいは　かわりかねない▼
+われわれと　ポケモンは
+はなればなれに　なる▽
+そんな　せかいに……▼</language>
 		<language name="JPN_KANJI" width="256">アデク『あいさつは　ぬきだ▼
 塔から　放たれた
 あの　すさまじい　火柱……▼
-あれを　どう使われるのか
-ちょっと　考えたくないな……▼</language>
+世界を　滅ぼす
+力を　持った　ポケモン……▼
+それを　従えた　ものが　みなに
+ポケモンを　解き放てと　いう……▼
+恐怖か
+崇拝か……▼
+いずれにせよ
+世界は　変わりかねない▼
+われわれと　ポケモンは
+もう　手を取り合うことが　なくなる▽
+そんな世界に……▼</language>
 	</row>
 
 	<row id="msg_d08_champion_02b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -920,13 +938,31 @@
 		<language name="JPN" width="256">アデク『あいさつは　ぬきだ▼
 とうから　はなたれた
 あの　はげしい　いなびかり……▼
-あれを　どう　つかわれるのか
-ちょっと　かんがえたくないな……▼</language>
+せかいを　ほろぼす
+ちからを　もった　ポケモン……▼
+それを　したがえた　ものが　みなに
+ポケモンを　ときはなてと　いう……▼
+おそれ　か
+あこがれ　か……▼
+いずれにせよ
+せかいは　かわりかねない▼
+われわれと　ポケモンは
+はなればなれに　なる▽
+そんな　せかいに……▼</language>
 		<language name="JPN_KANJI" width="256">アデク『あいさつは　ぬきだ▼
 塔から　放たれた
 あの　激しい　稲光……▼
-あれを　どう使われるのか
-ちょっと　考えたくないな……▼</language>
+世界を　滅ぼす
+力を　持った　ポケモン……▼
+それを　従えた　ものが　みなに
+ポケモンを　解き放てと　いう……▼
+恐怖か
+崇拝か……▼
+いずれにせよ
+世界は　変わりかねない▼
+われわれと　ポケモンは
+もう　手を取り合うことが　なくなる▽
+そんな世界に……▼</language>
 	</row>
 
 	<row id="msg_d08_hakase1_08w" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">

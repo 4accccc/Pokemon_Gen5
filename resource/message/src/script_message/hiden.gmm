@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-14T12:42:12"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T14:56:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="485" top="91" right="1190" bottom="711" maximized="no" rayout="Vertical2">
+	<dialog left="1616" top="198" right="2321" bottom="818" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="109" right="1280" bottom="507" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -361,7 +361,7 @@
 		<language name="JPN" width="256">おおきな　いわ　だけど……
 ポケモンの　わざで　おせるかも？▼
 かいりきを　つかいますか？</language>
-		<language name="JPN_KANJI" width="256">大きな　岩　だけど……
+		<language name="JPN_KANJI" width="256">大きな　岩だけど……
 ポケモンの　技で　押せるかも？▼
 かいりきを　使いますか？</language>
 	</row>
@@ -385,7 +385,7 @@
 ・秘伝使用不可能時</comment>
 		<language name="JPN" width="256">おおきな　いわ　だけど……
 ポケモンの　わざで　おせるかも？</language>
-		<language name="JPN_KANJI" width="256">大きな　岩　だけど……
+		<language name="JPN_KANJI" width="256">大きな　岩だけど……
 ポケモンの　技で　押せるかも？</language>
 	</row>
 
