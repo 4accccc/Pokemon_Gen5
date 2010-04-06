@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T15:28:42"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T16:31:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1440" top="326" right="2145" bottom="954" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="101" right="1261" bottom="499" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -508,20 +508,19 @@
 自宅で　よろしくね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_white_04">
+	<row id="msg_r01_white_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・メッセージ表示後、友達♂と♀
-　画面上に移動する
-　※できればばらばらに
+・メッセージ表示後、友達♂と♀画面上に移動する
 ・友達♂と友達♀、T02側に出現
 ・2人の動作モデルが画面外に消えると
-　操作可能に</comment>
+　操作可能に
+・0＝サポートの選んだポケモン</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
 		<language name="JPN" width="256">ベル『あたしと
-ポケモンの　コンビが[BE:00:ページ切り替え（行送り）]
+[1:01:ポケモン種族名:0]の　コンビが[BE:00:ページ切り替え（行送り）]
 いちばんに　きまってるもん！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ベル『あたしと
-ポケモンの　コンビが[BE:00:ページ切り替え（行送り）]
+[1:01:ポケモン種族名:0]の　コンビが[BE:00:ページ切り替え（行送り）]
 一番に　決まってるもん！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
