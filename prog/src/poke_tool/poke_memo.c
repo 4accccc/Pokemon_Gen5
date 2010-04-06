@@ -358,6 +358,14 @@ const BOOL POKE_MEMO_CheckEventPokePPP( POKEMON_PASO_PARAM *ppp , const POKE_MEM
       return TRUE;
     }
     break;
+  case POKE_MEMO_EVENT_SHEIMI:
+    //配布シェイミ
+    if( monsNo == MONSNO_SHEIMI &&
+        isEvent == 1 )
+    {
+      return TRUE;
+    }
+    break;
   }
   return FALSE;
 }

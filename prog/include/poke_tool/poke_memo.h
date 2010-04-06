@@ -57,6 +57,7 @@ typedef enum
   POKE_MEMO_EVENT_DARUTANISU,           //配布ダルタニス
   POKE_MEMO_EVENT_MERODHIA,             //配布メロディア
   POKE_MEMO_EVENT_INSEKUTA,             //配布インセクタ
+  POKE_MEMO_EVENT_SHEIMI,               //配布シェイミ
 
 }POKE_MEMO_EVENT_TYPE;
 

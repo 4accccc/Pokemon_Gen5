@@ -218,6 +218,9 @@ VMCMD_RESULT EvCmdGetEvtPokePos( VMHANDLE *core, void *wk )
   case MONSNO_656:
     evt_flg = POKE_MEMO_EVENT_INSEKUTA;
     skill_no = WAZANO_NULL;
+  case MONSNO_SHEIMI:
+    evt_flg = POKE_MEMO_EVENT_SHEIMI;
+    skill_no = WAZANO_NULL;
   default:
     *ret = FALSE;
     return VMCMD_RESULT_CONTINUE;
