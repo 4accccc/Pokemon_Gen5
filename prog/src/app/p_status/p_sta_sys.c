@@ -90,6 +90,7 @@ static const BOOL PSTATUS_UpdateKey_Page( PSTATUS_WORK *work );
 static void PSTATUS_UpdateTP( PSTATUS_WORK *work );
 
 static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder );
+static const BOOL PSTATUS_CanChangeData( PSTATUS_WORK *work , const BOOL isUpOder );
 static void PSTATUS_RefreshData( PSTATUS_WORK *work );
 static void PSTATUS_RefreshDisp( PSTATUS_WORK *work );
 static void PSTATUS_WaitDisp( PSTATUS_WORK *work );
@@ -119,6 +120,8 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   work->befVCount = OS_GetVBlankCount();
   work->befPage = PPT_MAX;
   work->isActiveBarButton = TRUE;
+  work->isAnimeBarCursor[0] = FALSE;
+  work->isAnimeBarCursor[1] = FALSE;
   work->retVal = SRT_CONTINUE;
   work->isWaitDisp = TRUE;
   work->mosaicEffSeq = SMES_NONE;
@@ -166,6 +169,10 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
   {
     u32 palAdr = (HW_OBJ_PLTT+PSTATUS_PALANIM_PAL_NO*32+PSTATUS_PALANIM_PAL_POS*2);
     GFL_STD_MemCopy16( (void*)(palAdr) , work->anmPalBase , PSTATUS_PALANIM_PAL_POS*2 );
+  }
+  {
+    u32 palAdr = (HW_OBJ_PLTT+PSTATUS_OBJPLT_SKILL_PLATE*32);
+    GFL_STD_MemCopy16( (void*)(palAdr) , work->anmSkillPalBase , 32*2 );
   }
   
   //最初の表示処理
@@ -381,7 +388,37 @@ const PSTATUS_RETURN_TYPE PSTATUS_UpdatePokeStatus( PSTATUS_WORK *work )
       work->scrollCnt -= PSTATUS_SCROLL_SPD;
     }
   }
-
+  
+  //上下ボタンのアニメ待ち後の暗転チェック
+  if( work->isAnimeBarCursor[0] == TRUE &&
+      GFL_CLACT_WK_CheckAnmActive( work->clwkBarIcon[SBT_CURSOR_UP] ) == FALSE )
+  {
+    const BOOL isChange = PSTATUS_CanChangeData( work , FALSE );
+    if( isChange == TRUE )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_OFF );
+    }
+    work->isAnimeBarCursor[0] = FALSE;
+  }
+  if( work->isAnimeBarCursor[1] == TRUE &&
+      GFL_CLACT_WK_CheckAnmActive( work->clwkBarIcon[SBT_CURSOR_DOWN] ) == FALSE )
+  {
+    const BOOL isChange = PSTATUS_CanChangeData( work , TRUE );
+    if( isChange == TRUE )
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_OFF );
+    }
+    work->isAnimeBarCursor[1] = FALSE;
+  }
+  
   //パレット転送
   PSTATUS_PALANIM_UpdatePalletAnime( work );
   
@@ -646,7 +683,7 @@ static void PSTATUS_LoadResource( PSTATUS_WORK *work )
         PSTATUS_OBJPLT_ICON*32 , 0 , APP_COMMON_BARICON_PLT_NUM+1 , work->heapId  );
   work->cellRes[SCR_PLT_SKILL] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_p_st_skill_plate_NCLR , CLSYS_DRAW_MAIN , 
-        PSTATUS_OBJPLT_SKILL_PLATE*32 , 0 , 1 , work->heapId  );
+        PSTATUS_OBJPLT_SKILL_PLATE*32 , 0 , 2 , work->heapId  );
   work->cellRes[SCR_PLT_RIBBON_ICON] = GFL_CLGRP_PLTT_RegisterEx( archandle , 
         NARC_p_status_gra_ribbon_NCLR , CLSYS_DRAW_SUB , 
         PSTATUS_OBJPLT_SUB_RIBBON*32 , 0 , 5 , work->heapId  );
@@ -1033,7 +1070,10 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     if( isChange == TRUE )
     {
       PSTATUS_RefreshDisp( work );
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP );
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_ON );
+      work->isAnimeBarCursor[0] = FALSE;
+      work->isAnimeBarCursor[1] = TRUE;
       PMSND_PlaySystemSE(PSTATUS_SND_PAGE_UD);
       return TRUE;
     }
@@ -1046,6 +1086,9 @@ static const BOOL PSTATUS_UpdateKey( PSTATUS_WORK *work )
     {
       PSTATUS_RefreshDisp( work );
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_ON );
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN );
+      work->isAnimeBarCursor[0] = TRUE;
+      work->isAnimeBarCursor[1] = FALSE;
       PMSND_PlaySystemSE(PSTATUS_SND_PAGE_UD);
       return TRUE;
     }
@@ -1218,6 +1261,9 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
       {
         PSTATUS_RefreshDisp( work );
         GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_ON );
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN );
+        work->isAnimeBarCursor[0] = TRUE;
+        work->isAnimeBarCursor[1] = FALSE;
         PMSND_PlaySystemSE(PSTATUS_SND_PAGE_UD);
       }
     }
@@ -1228,7 +1274,10 @@ static void PSTATUS_UpdateTP( PSTATUS_WORK *work )
       if( isChange == TRUE )
       {
         PSTATUS_RefreshDisp( work );
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP );
         GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_ON );
+        work->isAnimeBarCursor[0] = FALSE;
+        work->isAnimeBarCursor[1] = TRUE;
         PMSND_PlaySystemSE(PSTATUS_SND_PAGE_UD);
       }
     }
@@ -1295,6 +1344,8 @@ static void PSTATUS_PALANIM_UpdatePalletAnime( PSTATUS_WORK *work )
 
   }
   */
+  
+  //BARのカテゴリアイコン
   {
     //青
 //    const u16 startCol[PSTATUS_PALANIM_NUM] = { 0x4e2c,0x39a9,0x2506,0x1083 };
@@ -1306,37 +1357,65 @@ static void PSTATUS_PALANIM_UpdatePalletAnime( PSTATUS_WORK *work )
 //    const u16 startCol[PSTATUS_PALANIM_NUM] = { 0x7fff,0x7fff,0x5e52,0x5231 };
 //    const u16 endCol[PSTATUS_PALANIM_NUM] = { 0x7f96,0x7332,0x62af,0x522b };
     const float rate = FX_FX32_TO_F32((FX_SinIdx(work->anmCnt)+FX16_ONE)/2);
-  for( i=0;i<PSTATUS_PALANIM_NUM;i++ )
-  {
-    s8 r,b,g;
-    s8 sr = (startCol[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
-    s8 sg = (startCol[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
-    s8 sb = (startCol[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
-    s8 er = (endCol[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
-    s8 eg = (endCol[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
-    s8 eb = (endCol[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+    for( i=0;i<PSTATUS_PALANIM_NUM;i++ )
+    {
+      s8 r,b,g;
+      s8 sr = (startCol[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+      s8 sg = (startCol[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+      s8 sb = (startCol[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+      s8 er = (endCol[i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+      s8 eg = (endCol[i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+      s8 eb = (endCol[i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
 
-    r = sr + ((er-sr)*rate);
-    g = sg + ((eg-sg)*rate);
-    b = sb + ((eb-sb)*rate);
+      r = sr + ((er-sr)*rate);
+      g = sg + ((eg-sg)*rate);
+      b = sb + ((eb-sb)*rate);
 
-    if( r < 0 ) r = 0;
-    if( g < 0 ) g = 0;
-    if( b < 0 ) b = 0;
-    if( r > 31 ) r = 31;
-    if( g > 31 ) g = 31;
-    if( b > 31 ) b = 31;
-    work->anmPal[i] = GX_RGB(r,g,b);
-    
-//    OS_TPrintf("[%4x]",GX_RGB(r,g,b));
+      if( r < 0 ) r = 0;
+      if( g < 0 ) g = 0;
+      if( b < 0 ) b = 0;
+      if( r > 31 ) r = 31;
+      if( g > 31 ) g = 31;
+      if( b > 31 ) b = 31;
+      work->anmPal[i] = GX_RGB(r,g,b);
+      
+  //    OS_TPrintf("[%4x]",GX_RGB(r,g,b));
+    }
+  //  OS_TPrintf("\n");
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_MAIN ,
+                                        PSTATUS_PALANIM_PAL_NO * 32 + PSTATUS_PALANIM_PAL_POS * 2 ,
+                                        work->anmPal , 2*PSTATUS_PALANIM_NUM );
+
+    //スキルカーソル
+    for( i=0;i<16;i++ )
+    {
+      s8 r,b,g;
+      s8 sr = (work->anmSkillPalBase[0][i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+      s8 sg = (work->anmSkillPalBase[0][i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+      s8 sb = (work->anmSkillPalBase[0][i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+      s8 er = (work->anmSkillPalBase[1][i]&GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
+      s8 eg = (work->anmSkillPalBase[1][i]&GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
+      s8 eb = (work->anmSkillPalBase[1][i]&GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
+
+      r = sr + ((er-sr)*rate);
+      g = sg + ((eg-sg)*rate);
+      b = sb + ((eb-sb)*rate);
+
+      if( r < 0 ) r = 0;
+      if( g < 0 ) g = 0;
+      if( b < 0 ) b = 0;
+      if( r > 31 ) r = 31;
+      if( g > 31 ) g = 31;
+      if( b > 31 ) b = 31;
+      work->anmSkillPal[i] = GX_RGB(r,g,b);
+      
+  //    OS_TPrintf("[%4x]",GX_RGB(r,g,b));
+    }
+  //  OS_TPrintf("\n");
+    NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_MAIN ,
+                                        (PSTATUS_OBJPLT_SKILL_PLATE+1) * 32 ,
+                                        work->anmSkillPal , 32 );
   }
-//  OS_TPrintf("\n");
-
-  }
-  NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_PLTT_MAIN ,
-                                      PSTATUS_PALANIM_PAL_NO * 32 + PSTATUS_PALANIM_PAL_POS * 2 ,
-                                      work->anmPal , 2*PSTATUS_PALANIM_NUM );
-  
 }
 
 //外部からの操作関数
@@ -1444,6 +1523,37 @@ void PSTATUS_SetActiveBarButton( PSTATUS_WORK *work , const BOOL isActive )
 //--------------------------------------------------------------
 static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder )
 {
+  BOOL isChange = PSTATUS_CanChangeData( work , isUpOder );
+
+  if( isChange == TRUE )
+  {
+    if( isUpOder == TRUE )
+    {
+      work->dataPos++;
+    }
+    else
+    {
+      work->dataPos--;
+    }
+    if( work->psData->ppt == PST_PP_TYPE_POKEPASO )
+    {
+      if( work->calcPP != NULL )
+      {
+        PP_Clear( work->calcPP );
+        GFL_HEAP_FreeMemory( work->calcPP );
+      }
+      {
+        const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP(work);
+        work->calcPP = PP_CreateByPPP( ppp , work->heapId );
+      }
+    }
+    PSTATUS_RefreshData( work );
+  }
+  return isChange;
+}
+
+static const BOOL PSTATUS_CanChangeData( PSTATUS_WORK *work , const BOOL isUpOder )
+{
   BOOL isFinish = FALSE;
   BOOL isChange = FALSE;
   u8 befDataPos = work->dataPos;
@@ -1465,35 +1575,10 @@ static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder )
       if( isUpOder == TRUE )
       {
         work->dataPos++;
-#if PM_DEBUG
-        if( work->psData->ppt == PST_PP_TYPE_DEBUG &&
-            GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
-        {
-          work->dataPos+=9;
-          if( work->dataPos >= work->psData->max-1 )
-          {
-            work->dataPos = work->psData->max-1;
-          }
-        }
-#endif
       }
       else
       {
         work->dataPos--;
-#if PM_DEBUG
-        if( work->psData->ppt == PST_PP_TYPE_DEBUG &&
-            GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
-        {
-          if( work->dataPos >= 9 )
-          {
-            work->dataPos-=9;
-          }
-          else
-          {
-            work->dataPos = 0;
-          }
-        }
-#endif
       }
       
       {
@@ -1522,28 +1607,8 @@ static const BOOL PSTATUS_ChangeData( PSTATUS_WORK *work , const BOOL isUpOder )
         }
       }
     }
-    
   }
-  if( isChange == FALSE )
-  {
-    work->dataPos = befDataPos;
-  }
-  else
-  {
-    if( work->psData->ppt == PST_PP_TYPE_POKEPASO )
-    {
-      if( work->calcPP != NULL )
-      {
-        PP_Clear( work->calcPP );
-        GFL_HEAP_FreeMemory( work->calcPP );
-      }
-      {
-        const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP(work);
-        work->calcPP = PP_CreateByPPP( ppp , work->heapId );
-      }
-    }
-    PSTATUS_RefreshData( work );
-  }
+  work->dataPos = befDataPos;
   return isChange;
 }
 
@@ -1743,6 +1808,31 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
       GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE2] , FALSE );
       GFL_CLACT_WK_SetDrawEnable( work->clwkBarIcon[SBT_PAGE3] , FALSE );
     }
+
+    if( work->isAnimeBarCursor[0] == FALSE )
+    {
+      const BOOL isChange = PSTATUS_CanChangeData( work , FALSE );
+      if( isChange == TRUE )
+      {
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_UP] , APP_COMMON_BARICON_CURSOR_UP_OFF );
+      }
+    }
+    if( work->isAnimeBarCursor[1] == FALSE )
+    {
+      const BOOL isChange = PSTATUS_CanChangeData( work , TRUE );
+      if( isChange == TRUE )
+      {
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_CURSOR_DOWN] , APP_COMMON_BARICON_CURSOR_DOWN_OFF );
+      }
+    }
     
     if( work->page < PPT_SKILL_ADD )
     {
@@ -1768,6 +1858,7 @@ static void PSTATUS_WaitDisp( PSTATUS_WORK *work )
         PMVOICE_Play( monsNo , formNo , 64 , FALSE , 0 , 0 , FALSE , 0 );
       }
     }
+    
     
     if( work->mosaicEffSeq == SMES_WAIT )
     {

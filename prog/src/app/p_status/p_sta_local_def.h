@@ -76,9 +76,9 @@
 #define PSTATUS_OBJPLT_MARK (0x5)  //1本
 #define PSTATUS_OBJPLT_BALL (0x6)  //1本
 #define PSTATUS_OBJPLT_POKE_TYPE (0x7)  //3本
-#define PSTATUS_OBJPLT_SKILL_PLATE (0xa)
-#define PSTATUS_OBJPLT_RIBBON_BAR (0xb)
-#define PSTATUS_OBJPLT_CURSOR_COMMON (0xc)
+#define PSTATUS_OBJPLT_SKILL_PLATE (0xa)  //2本
+#define PSTATUS_OBJPLT_RIBBON_BAR (0xc)
+#define PSTATUS_OBJPLT_CURSOR_COMMON (0xd)
 
 #define PSTATUS_OBJPLT_SUB_HPBAR (0x8)
 #define PSTATUS_OBJPLT_SUB_POKE_TYPE (0x5)  //3本
@@ -249,6 +249,7 @@ typedef struct
   u32  isHaveRibbon;
   
   BOOL isActiveBarButton;
+  BOOL isAnimeBarCursor[2]; //上下ボタンのアニメ後に暗転チェック用
   PSTATUS_MAIN_SEQ    mainSeq;
   PSTATUS_RETURN_TYPE retVal;
     
@@ -284,6 +285,9 @@ typedef struct
   u16   anmCnt;
   u16   anmPalBase[PSTATUS_PALANIM_NUM];
   u16   anmPal[PSTATUS_PALANIM_NUM];
+
+  u16   anmSkillPalBase[2][16];
+  u16   anmSkillPal[16];
 
   //pppの時ppに変換するよう
   //PSTATUS_UTIL_GetCurrentPPで取得

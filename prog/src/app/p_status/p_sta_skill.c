@@ -517,7 +517,7 @@ void PSTATUS_SKILL_InitCell( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork 
               &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
     GFL_CLACT_WK_SetDrawEnable( skillWork->clwkCur , FALSE );
 
-    cellInitData.anmseq = 1;
+    cellInitData.anmseq = 5;
     cellInitData.softpri = 8;
     skillWork->clwkTargetCur = GFL_CLACT_WK_Create( work->cellUnit ,
               work->cellRes[SCR_NCG_SKILL_CUR],
@@ -525,6 +525,7 @@ void PSTATUS_SKILL_InitCell( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork 
               work->cellRes[SCR_ANM_SKILL_CUR],
               &cellInitData ,CLSYS_DEFREND_MAIN , work->heapId );
     GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
+    GFL_CLACT_WK_SetAutoAnmFlag( skillWork->clwkTargetCur , TRUE );
 
     cellInitData.anmseq = PSCC_ARROW_BOTH;
     cellInitData.softpri = 4;
@@ -1310,6 +1311,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
       PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
       GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
       GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
+      GFL_CLACT_WK_ResetAnm( skillWork->clwkTargetCur );
       PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
     }
     else
@@ -1323,6 +1325,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
       }
       else
       {
+        GFL_CLACTPOS cellPos;
         skillWork->isChangeMode = FALSE;
         PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
         GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
@@ -1340,6 +1343,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
     //入れ替えの取り消し
     PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
     PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+    GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
     GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
     skillWork->isChangeMode = FALSE;
     skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
@@ -1396,6 +1400,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
         const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
         if( PPP_Get( ppp , ID_PARA_waza1+ret , NULL ) != 0 )
         {
+          GFL_CLACTPOS cellPos;
           if( work->isActiveBarButton == TRUE )
           {
             PSTATUS_SetActiveBarButton( work , FALSE );
@@ -1406,7 +1411,6 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
           //キーで入れ替え中に来たらchangeTargetを変えない！
           if( skillWork->isChangeMode == TRUE )
           {
-            GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
           }
           else
           {
@@ -1435,6 +1439,10 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
           PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
           skillWork->holdTpx = work->tpx;
           skillWork->holdTpy = work->tpy;
+          PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
+          GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
+          GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
+          GFL_CLACT_WK_ResetAnm( skillWork->clwkTargetCur );
           PMSND_PlaySystemSE(PSTATUS_SND_WAZA_SELECT);
 
         }
@@ -1478,6 +1486,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
           {
             //範囲外キャンセル
             PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
+            GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
             skillWork->isChangeMode = FALSE;
             skillWork->isHoldTp = FALSE;
             PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
@@ -1491,6 +1500,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
       if( skillWork->isHoldTp == TRUE )
       {
         GFL_CLACT_WK_SetDrawEnable( skillWork->clwkArrow , FALSE );
+        GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
         //離されたとき
         if( skillWork->isChangeMode == TRUE )
         {
@@ -1518,7 +1528,6 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
           {
             skillWork->isChangeMode = FALSE;
             PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
-            GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
           }
         }
       }
@@ -1557,6 +1566,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
       skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
       PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
 
+      GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
       PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , FALSE );
       PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
     }
@@ -1625,6 +1635,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
           PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
           GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
           GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
+          GFL_CLACT_WK_ResetAnm( skillWork->clwkTargetCur );
 
           PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
           PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
@@ -1750,7 +1761,8 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
 
                 PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
                 GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
-                GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
+                GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , TRUE );
+                GFL_CLACT_WK_ResetAnm( skillWork->clwkTargetCur );
 
                 PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , TRUE );
                 PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
@@ -1846,7 +1858,8 @@ static void PSTATUS_SKILL_UpdateCursorPos( PSTATUS_WORK *work , PSTATUS_SKILL_WO
     GFL_CLACTPOS cellPos;
     PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[newPos] , &cellPos );
     GFL_CLACT_WK_SetPos( skillWork->clwkCur , &cellPos , CLSYS_DEFREND_MAIN );
-    GFL_CLACT_WK_SetDrawEnable( skillWork->clwkCur , TRUE );
+    //GFL_CLACT_WK_SetDrawEnable( skillWork->clwkCur , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( skillWork->clwkCur , FALSE );
   }
   else
   {
@@ -1860,11 +1873,13 @@ static void PSTATUS_SKILL_UpdateCursorPos( PSTATUS_WORK *work , PSTATUS_SKILL_WO
       PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 0 );
     }
   }
-  if( newPos != skillWork->changeTarget ||
-      skillWork->isChangeMode == FALSE )
+  else
   {
-    PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[newPos] , 1 );
+    PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 2 );
   }
+
+  PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[newPos] , 1 );
+
   if( skillWork->cursorPos != newPos )
   {
     skillWork->cursorPos = newPos;
