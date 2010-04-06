@@ -77,6 +77,18 @@ STEP;
 #define MANAFI_PARTICLE_BURST_FRAME   (300)  // パーティクルエフェクトDEMO_MANA01, DEMO_MANA02は全部で300フレームあるらしい。
 #define MANAFI_POKE_ANIME_INDEX (0)
 
+#define MANAFI_EGG_SE_FRAME_01  ( 10)  // 1つ目
+//#define MANAFI_EGG_SE_FRAME_02  (100)  // 2つ目  // 2つ目は1つ目が終わってからすぐ鳴らすことにする
+
+typedef enum
+{
+  MANAFI_EGG_SE_STATE_BEFORE_PLAY,  // 再生前で何も再生していない
+  MANAFI_EGG_SE_STATE_01,           // 1つ目再生中
+  MANAFI_EGG_SE_STATE_02,           // 2つ目再生中
+  MANAFI_EGG_SE_STATE_AFTER_PLAY,   // 再生後で何も再生していない
+}
+MANAFI_EGG_SE_STATE;
+
 
 // 3D
 // 3D個別
@@ -291,9 +303,12 @@ struct _EGG_DEMO_VIEW_WORK
   BOOL                     b_white;
   u32                      voicePlayerIdx;
   u32                      wait_count;
-  
+ 
+  // マナフィのSEの状態
+  MANAFI_EGG_SE_STATE      manafi_egg_se_state;
+
   // VBlank中TCB
-  GFL_TCB*                    vblank_tcb;
+  GFL_TCB*                 vblank_tcb;
 
   // MCSS
   MCSS_SYS_WORK*           mcss_sys_wk;
@@ -422,6 +437,11 @@ EGG_DEMO_VIEW_WORK* EGG_DEMO_VIEW_Init(
     work->wait_count       = 0;
   }
 
+  // マナフィのSEの状態
+  {
+    work->manafi_egg_se_state = MANAFI_EGG_SE_STATE_BEFORE_PLAY;
+  }
+
   // VBlank中TCB
   {
     work->vblank_tcb = GFUser_VIntr_CreateTCB( Egg_Demo_View_VBlankFunc, work, 1 );
@@ -519,6 +539,39 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
       work->wait_count++;
       if( work->monsno == MONSNO_MANAFI )
       {
+        switch( work->manafi_egg_se_state )
+        {
+        case MANAFI_EGG_SE_STATE_BEFORE_PLAY:
+          {
+            if( work->wait_count == MANAFI_EGG_SE_FRAME_01 )
+            {
+              PMSND_PlaySE( SEQ_SE_EDEMO_02 );
+              work->manafi_egg_se_state = MANAFI_EGG_SE_STATE_01;
+            }
+          }
+          break;
+        case MANAFI_EGG_SE_STATE_01:
+          {
+            if( !PMSND_CheckPlaySE() )
+            {
+              PMSND_PlaySE( SEQ_SE_EDEMO_03 );
+              work->manafi_egg_se_state = MANAFI_EGG_SE_STATE_02;
+            }
+          }
+          break;
+        case MANAFI_EGG_SE_STATE_02:
+          {
+            if( !PMSND_CheckPlaySE() )
+            {
+              work->manafi_egg_se_state = MANAFI_EGG_SE_STATE_AFTER_PLAY;
+            }
+          }
+          break;
+        case MANAFI_EGG_SE_STATE_AFTER_PLAY:
+          {
+          }
+          break;
+        }
       }
       else
       {
@@ -528,11 +581,13 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
         }
         else if( work->wait_count == EGG_CRACK_FRAME_02 )
         {
-          PMSND_PlaySE( SEQ_SE_EDEMO_02 );
+          //PMSND_PlaySE( SEQ_SE_EDEMO_02 );
+          PMSND_PlaySE( SEQ_SE_EDEMO_01 );
         }
         else if( work->wait_count == EGG_CRACK_FRAME_03 )
         {
-          PMSND_PlaySE( SEQ_SE_EDEMO_02 );
+          //PMSND_PlaySE( SEQ_SE_EDEMO_02 );
+          PMSND_PlaySE( SEQ_SE_EDEMO_01 );
         }
       }
       if( work->wait_count == particle_burst_frame )
