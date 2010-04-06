@@ -19,7 +19,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_h03_fighterw_01
+_EVENT_DATA    	ev_h03_fighterw_01
+_EVENT_DATA		ev_h03_middlewoman1_01
 _EVENT_DATA		ev_init_h03
 _EVENT_DATA		ev_recover_h03
 _EVENT_DATA		ev_zone_h03
@@ -116,4 +117,13 @@ EVENT_START    ev_h03_fighterw_01
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
+EVENT_END
+
+/**************************************************************/
+/*    MIDDLEWOMAN1の話しかけイベント           */                                                           
+/**************************************************************/
+EVENT_START    ev_h03_middlewoman1_01
+	
+	_EASY_BALLOONWIN_TALKOBJ_MSG(msg_h03_middlewoman_01)
+	
 EVENT_END
