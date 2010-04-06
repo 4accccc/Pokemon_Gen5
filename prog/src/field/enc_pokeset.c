@@ -967,7 +967,6 @@ static u32 eps_EncPokeCalcPersonalRand(
       p_rnd &= 0x7FFFFFFF;  //32bit–Ú‚ğ0‚É‚·‚é
     }
   }
-  //todo POKETOOL_CalcPersonalRandEx‚Í‚Â‚©‚¦‚é‚Ì‚©H
   return p_rnd;
 }
 
