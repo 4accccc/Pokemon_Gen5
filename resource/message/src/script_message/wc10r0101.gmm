@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T15:42:19"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T16:13:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -235,9 +235,9 @@
 			<list entry="1" japanese="グループ 1" english="グループ 1" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="4" width="124"/>
+		<comment position="4" width="349"/>
 		<erase position="-1" width="100"/>
-		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="100">
+		<attribute japanese="キャラ指定" english="キャラ指定" type="string" default="" position="1" width="210">
 		</attribute>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -439,6 +439,62 @@
 きのみ　とってきてね</language>
 		<language name="JPN_KANJI" width="256">明日の　ご飯にするから
 きのみ　とってきてね</language>
+	</row>
+
+	<row id="msg_wc10r0101_boy3a_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・はい/いいえ選択肢表示
+・はい→戦闘（trmsg.gmm）
+　はい＆2匹以下（trmsg.gmm）
+　いいえ→boy3a_02</comment>
+		<attribute name="キャラ指定">BOY3
+・トレーナーID=schoolb_10</attribute>
+		<language name="JPN" width="256">ぼくが　いっしょうけんめい
+そだてた　ポケモンで▽
+トリプルバトル　しようよ！</language>
+		<language name="JPN_KANJI" width="256">ぼくが　いっしょうけんめい
+育てた　ポケモンで▽
+トリプルバトル　しようよ！</language>
+	</row>
+
+	<row id="msg_wc10r0101_boy3a_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">BOY3
+・トレーナーID=schoolb_10</attribute>
+		<language name="JPN" width="256">そうか……　きみの　そだてた
+ポケモン　みてみたかったな</language>
+		<language name="JPN_KANJI" width="256">そうか……　きみの　育てた
+ポケモン　みてみたかったな</language>
+	</row>
+
+	<row id="msg_wc10r0101_woman3_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・はい/いいえ選択肢表示
+・はい→戦闘（trmsg.gmm）
+　はい＆2匹以下（trmsg.gmm）
+　いいえ→woman3_02</comment>
+		<attribute name="キャラ指定">WOMAN3
+・トレーナーID=childcare_04</attribute>
+		<language name="JPN" width="256">わたし　この　ポケモンと
+ずっと　いっしょに　くらしているの▼
+ねえ　いっしょに
+トリプルバトル　しましょ？</language>
+		<language name="JPN_KANJI" width="256">わたし　この　ポケモンと
+ずっと　一緒に　暮らしているの▼
+ねえ　一緒に
+トリプルバトル　しましょ？</language>
+	</row>
+
+	<row id="msg_wc10r0101_woman3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">WOMAN3
+・トレーナーID=childcare_04</attribute>
+		<language name="JPN" width="256">そう……
+また　いつか　みせてね！</language>
+		<language name="JPN_KANJI" width="256">そう……
+また　いつか　みせてね！</language>
 	</row>
 
 	<flowchart-group-list>
