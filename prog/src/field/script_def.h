@@ -70,7 +70,7 @@
 
 #define SCR_TR_SPTYPE_NONE        0   ///<トレーナー特殊タイプ：なし
 #define SCR_TR_SPTYPE_RECOVER     1   ///<トレーナー特殊タイプ：回復
-#define SCR_TR_SPTYPE_ITEM        1   ///<トレーナー特殊タイプ：アイテム
+#define SCR_TR_SPTYPE_ITEM        2   ///<トレーナー特殊タイプ：アイテム
 
 //======================================================================
 //    各コマンド依存の定義
