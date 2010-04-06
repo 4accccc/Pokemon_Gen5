@@ -361,31 +361,39 @@ u32 RECORD_Get(RECORD * rec, int id)
   }
 }
 
-//----------------------------------------------------------
+
+// レコードデータ1日更新処理用テーブル
+static const u16 oneday_update_tbl[][2]={
+  { RECID_DAYMAX_EXP,     RECID_DAYCNT_EXP },    // 1日に稼いだ経験値の最大値
+  { RECID_DAYMAX_KILL,    RECID_DAYCNT_KILL},    // 1日に倒したポケモンの最大数
+  { RECID_DAYMAX_CAPTURE, RECID_DAYCNT_CAPTURE,},// 1日に捕獲したポケモンの最大数
+  { RECID_DAYMAX_TRAINER_BATTLE, RECID_DAYCNT_TRAINER_BATTLE }, // 1日にトレーナー戦をした最大回数
+  { RECID_DAYMAX_EVOLUTION, RECID_DAYCNT_EVOLUTION }, //1日にポケモン進化させた最大回数
+};
+
+//=============================================================================================
 /**
- * @brief スコアの加算( WBでは存在しない）
- * @param rec   RECORDへのポインタ
- * @param id    スコア指定のID
+ * @brief 1日に一回行うデータ更新処理
+ *
+ * @param   rec   
  */
-//----------------------------------------------------------
-void RECORD_Score_Add(RECORD * rec, int id)
+//=============================================================================================
+void RECORD_1day_Update( RECORD *rec )
 {
+  int i;
+  u32 ret;
 
-  return ;
-
-#if 0
-  u32 score;
-  
-  GF_ASSERT(id < SCOREID_MAX);
-
-  //カンストチェックする
-  score = RECORD_Get(rec, RECID_SCORE);
-  if ( score+get_score_number(id) > SCORE_MAX ){
-    RECORD_Set(rec, RECID_SCORE, SCORE_MAX);
-  }else{
-    RECORD_Add(rec, RECID_SCORE, get_score_number(id));
+  // レコードデータ1日更新処理
+  for(i=0;i<NELEMS(oneday_update_tbl);i++){
+    ret=RECORD_SetIfLarge( rec, oneday_update_tbl[i][0], 
+                           RECORD_Get(rec, oneday_update_tbl[i][1]));
+    if(RECORD_Get(rec, oneday_update_tbl[i][1])==ret){
+      OS_Printf("%d番目の値が更新されました\n", i);
+    }
+    RECORD_Set( rec, oneday_update_tbl[i][1], 0);
   }
-#endif
+
+
 }
 
 
@@ -472,6 +480,25 @@ void RECORD_Score_DebugSet(RECORD * rec, const u32 inScore)
 
   RECORD_Set(rec, RECID_REPORT_COUNT, score);
 }
+
+
+static const u16 debug_tbl[][2]={
+  {    0,    1},
+  { 1000, 1001},
+  { 9999, 1000},
+  { 5000, 4999},
+  { 5000, 5000},
+};
+
+void RECORD_DebugSet( RECORD *rec )
+{
+  int i;
+  for(i=0;i<NELEMS(oneday_update_tbl);i++){
+    RECORD_Set(rec, oneday_update_tbl[i][0], debug_tbl[i][0]);
+    RECORD_Set(rec, oneday_update_tbl[i][1], debug_tbl[i][1]);
+  }
+}
+
 
 #endif  //PM_DEBUG
 

@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	ev_time.c
- * @brief	ゲーム内時間制御関連
- * @author	tamada
- * @date	2006.02.03
+ * @file  ev_time.c
+ * @brief ゲーム内時間制御関連
+ * @author  tamada
+ * @date  2006.02.03
  */
 //============================================================================================
 #include <gflib.h>
@@ -49,7 +49,7 @@ static void UpdateMinuteEvent(GAMEDATA * gdata, s32 diff_minute, const RTCTime *
 
 static void UpdateDateCheck(GAMEDATA * gdata, GMTIME * tm, const RTCDate * now_date);
 static void UpdateMinuteCheck(GAMEDATA * gdata, GMTIME * tm,
-		const RTCDate * now_date, const RTCTime * now_time);
+    const RTCDate * now_date, const RTCTime * now_time);
 
 //============================================================================================
 //============================================================================================
@@ -59,18 +59,18 @@ static void UpdateMinuteCheck(GAMEDATA * gdata, GMTIME * tm,
 //------------------------------------------------------------------
 void EVTIME_Update(GAMEDATA * gdata)
 {
-	RTCDate now_date;
-	RTCTime now_time;
-	GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( gdata ) );
+  RTCDate now_date;
+  RTCTime now_time;
+  GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( gdata ) );
 
-	if (tm->use_flag == FALSE) {
-		return;
-	}
+  if (tm->use_flag == FALSE) {
+    return;
+  }
 
-	GFL_RTC_GetDateTime(&now_date, &now_time);
+  GFL_RTC_GetDateTime(&now_date, &now_time);
 
-	UpdateDateCheck(gdata, tm, &now_date);
-	UpdateMinuteCheck(gdata, tm, &now_date, &now_time);
+  UpdateDateCheck(gdata, tm, &now_date);
+  UpdateMinuteCheck(gdata, tm, &now_date, &now_time);
 }
 
 //------------------------------------------------------------------
@@ -78,68 +78,68 @@ void EVTIME_Update(GAMEDATA * gdata)
 //------------------------------------------------------------------
 static void UpdateDateCheck(GAMEDATA * gdata, GMTIME * tm, const RTCDate * now_date)
 {
-	s32 now_day;
-	now_day = RTC_ConvertDateToDay(now_date);
+  s32 now_day;
+  now_day = RTC_ConvertDateToDay(now_date);
 
-	if (now_day < tm->sv_day) {
-		//現在　＜　過去　…ありえないはず
-		//現在時間をセットするだけで戻る
-		tm->sv_day = now_day;
-	}
-	else if (now_day > tm->sv_day) {
-		UpdateDayEvent(gdata, now_day - tm->sv_day);
-		tm->sv_day = now_day;
-	}
+  if (now_day < tm->sv_day) {
+    //現在　＜　過去　…ありえないはず
+    //現在時間をセットするだけで戻る
+    tm->sv_day = now_day;
+  }
+  else if (now_day > tm->sv_day) {
+    UpdateDayEvent(gdata, now_day - tm->sv_day);
+    tm->sv_day = now_day;
+  }
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_SYSTEM_DATA)
-	SVLD_SetCrc(GMDATA_ID_SYSTEM_DATA);
-#endif //CRC_LOADCHECK	
+  SVLD_SetCrc(GMDATA_ID_SYSTEM_DATA);
+#endif //CRC_LOADCHECK  
 }
 
 //------------------------------------------------------------------
 ///秒数経過を見る
 //------------------------------------------------------------------
 static void UpdateMinuteCheck(GAMEDATA * gdata, GMTIME * tm,
-		const RTCDate * now_date, const RTCTime * now_time)
+    const RTCDate * now_date, const RTCTime * now_time)
 {
-	s64 now, sv;
-	s32 diff_sec,diff_minute;
-	now = RTC_ConvertDateTimeToSecond(now_date, now_time);
-	sv = RTC_ConvertDateTimeToSecond(&tm->sv_date, &tm->sv_time);
-	if (now < sv) {
-		//現在　＜　過去　…ありえないはず
-		//現在時間をセットするだけで戻る
-		tm->sv_date = *now_date;
-		tm->sv_time = *now_time;
-	}
-	else{
-		//秒
-		diff_sec = (now-sv);
+  s64 now, sv;
+  s32 diff_sec,diff_minute;
+  now = RTC_ConvertDateTimeToSecond(now_date, now_time);
+  sv = RTC_ConvertDateTimeToSecond(&tm->sv_date, &tm->sv_time);
+  if (now < sv) {
+    //現在　＜　過去　…ありえないはず
+    //現在時間をセットするだけで戻る
+    tm->sv_date = *now_date;
+    tm->sv_time = *now_time;
+  }
+  else{
+    //秒
+    diff_sec = (now-sv);
 #if 0
-		if(diff_sec > 0){
-		}
+    if(diff_sec > 0){
+    }
 #endif
-		//分
-		diff_minute = diff_sec / 60;
-		if (diff_minute > 0) {
-			GMTIME_CountDownPenaltyTime(tm, diff_minute);
-			UpdateMinuteEvent(gdata, diff_minute, now_time);
+    //分
+    diff_minute = diff_sec / 60;
+    if (diff_minute > 0) {
+      GMTIME_CountDownPenaltyTime(tm, diff_minute);
+      UpdateMinuteEvent(gdata, diff_minute, now_time);
 
-			tm->sv_date = *now_date;
-			tm->sv_time = *now_time;
-		}
-	}
+      tm->sv_date = *now_date;
+      tm->sv_time = *now_time;
+    }
+  }
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_SYSTEM_DATA)
-	SVLD_SetCrc(GMDATA_ID_SYSTEM_DATA);
-#endif //CRC_LOADCHECK	
+  SVLD_SetCrc(GMDATA_ID_SYSTEM_DATA);
+#endif //CRC_LOADCHECK  
 }
 
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
 /**
- * @brief	時間によるデータ更新：日数単位
- * @param	gdata			フィールド制御ワークへのポインタ
- * @param	diff_days		経過した時間（日数）
+ * @brief 時間によるデータ更新：日数単位
+ * @param gdata     フィールド制御ワークへのポインタ
+ * @param diff_days   経過した時間（日数）
  *
  * 引数にGAMEDATAをとっているが、基本的にはSAVEDATAのみで
  * 更新できるような仕組みの関数を呼ぶべき。
@@ -147,38 +147,42 @@ static void UpdateMinuteCheck(GAMEDATA * gdata, GMTIME * tm,
 //------------------------------------------------------------------
 static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
 {
-	BOOL is_penalty = EVTIME_IsPenaltyMode(gdata);
+  BOOL is_penalty = EVTIME_IsPenaltyMode(gdata);
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata );
 
   TAMADA_Printf("Update Day Event\n");
-	//下記のような感じで時間関連イベント更新処理を追加する
-	//
-	//TVData_Update(gdata, diff_days);
-	//ZukanHyouka_Update
-	//…
+  //下記のような感じで時間関連イベント更新処理を追加する
+  //
+  //TVData_Update(gdata, diff_days);
+  //ZukanHyouka_Update
+  //…
 
-	//1日毎にクリアするフラグ
+  //1日毎にクリアするフラグ
   EVENTWORK_ClearTimeFlags( GAMEDATA_GetEventWork( gdata ) );
-//	TimeEventFlagClear(gdata);
+//  TimeEventFlagClear(gdata);
 
-	// 乱数の種グループ更新
-//	RandomGroup_Update(SaveData_GetRandomGroup(gdata->savedata), diff_days);
+  // 乱数の種グループ更新
+//  RandomGroup_Update(SaveData_GetRandomGroup(gdata->savedata), diff_days);
 
-	//エンカウント関連ランダムの種更新
+  //エンカウント関連ランダムの種更新
   EncDataSave_UpdateGenerate( save );
 
-	//ポケルス感染の経過を見る
-	{
-		POKEPARTY *ppt;
+  //ポケルス感染の経過を見る
+  {
+    POKEPARTY *ppt;
 
-		ppt = GAMEDATA_GetMyPokemon( gdata );
-		POKERUS_DecCounter( ppt, diff_days );
-	}
+    ppt = GAMEDATA_GetMyPokemon( gdata );
+    POKERUS_DecCounter( ppt, diff_days );
+  }
 
-	//ポケモンクジ
-	{
-//		SysWorkUpdatePokeLot(gdata->savedata, diff_days);
-	}
+  // レコードデータ1日1回更新処理
+  RECORD_1day_Update( GAMEDATA_GetRecordPtr(gdata) );
+
+
+  //ポケモンクジ
+  {
+//    SysWorkUpdatePokeLot(gdata->savedata, diff_days);
+  }
 
   // WFBC人物、アイテム
   {
@@ -186,21 +190,21 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
     FIELD_WFBC_CORE_CalcOneDataStart( gdata, diff_days, HEAPID_PROC );
   }
 
-	//WIFI通信履歴データの更新処理
-//	WIFIHISTORY_Update(SaveData_GetWifiHistory(gdata->savedata));
+  //WIFI通信履歴データの更新処理
+//  WIFIHISTORY_Update(SaveData_GetWifiHistory(gdata->savedata));
 
   //調査レーダー：本日のすれ違い人数を合計に移動
   QuestionnaireWork_DateChangeUpdate( SaveData_GetQuestionnaire(save) );
   
-	if(!is_penalty){	//ペナルティタイムでないときだけ処理する
-	}
+  if(!is_penalty){  //ペナルティタイムでないときだけ処理する
+  }
 }
 
 //------------------------------------------------------------------
 /**
- * @brief	時間によるデータ更新：分単位
- * @param	gdata			フィールド制御ワークへのポインタ
- * @param	diff_minute		経過した時間（分単位）
+ * @brief 時間によるデータ更新：分単位
+ * @param gdata     フィールド制御ワークへのポインタ
+ * @param diff_minute   経過した時間（分単位）
  *
  * 引数にGAMEDATAをとっているが、基本的にはSAVEDATAのみで
  * 更新できるような仕組みの関数を呼ぶべき。
@@ -208,15 +212,15 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
 //------------------------------------------------------------------
 static void UpdateMinuteEvent(GAMEDATA * gdata, s32 diff_minute, const RTCTime * now)
 {  
-	//夜になった(経過した)ならば変わった手持ちシェイミのフォルムを戻す
-	{
-		POKEPARTY *ppt;
+  //夜になった(経過した)ならば変わった手持ちシェイミのフォルムを戻す
+  {
+    POKEPARTY *ppt;
     int season;
     SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork(gdata);
-		ppt = SaveData_GetTemotiPokemon(sv);
+    ppt = SaveData_GetTemotiPokemon(sv);
     season = GAMEDATA_GetSeasonID(gdata);
-		SHEIMI_NFORM_ChangeNormal_TimeUpdate(ppt, diff_minute, now, season);
-	}  
+    SHEIMI_NFORM_ChangeNormal_TimeUpdate(ppt, diff_minute, now, season);
+  }  
 
   // 電光掲示板のチャンピオンニュース表示残り時間をデクリメント
   {
@@ -234,21 +238,21 @@ static void UpdateMinuteEvent(GAMEDATA * gdata, s32 diff_minute, const RTCTime *
 //------------------------------------------------------------------
 /**
  * @brief   イベント時間：RTCDateの取得
- * @param	gdata	フィールド制御ワークへのポインタ
+ * @param gdata フィールド制御ワークへのポインタ
  * @return  RTCDateへのポインタ
  */
 //------------------------------------------------------------------
 const RTCDate * EVTIME_GetRTCDate( const GAMEDATA * gdata )
 {
-	const GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
+  const GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
   return &tm->sv_date;
 }
 
 //------------------------------------------------------------------
 /**
- * @brief	時間帯の取得
- * @param	gdata	フィールド制御ワークへのポインタ
- * @return	int		時間帯（field/timezone.hを参照）
+ * @brief 時間帯の取得
+ * @param gdata フィールド制御ワークへのポインタ
+ * @return  int   時間帯（field/timezone.hを参照）
  *
  *デフォルト季節の時間帯を取得します。
  * 
@@ -258,15 +262,15 @@ const RTCDate * EVTIME_GetRTCDate( const GAMEDATA * gdata )
 //------------------------------------------------------------------
 int EVTIME_GetTimeZone(const GAMEDATA * gdata)
 {
-	GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
-	return GFL_RTC_ConvertHourToTimeZone( tm->sv_time.hour);
+  GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
+  return GFL_RTC_ConvertHourToTimeZone( tm->sv_time.hour);
 }
 
 //------------------------------------------------------------------
 /**
- * @brief	時間帯の取得
- * @param	gdata	フィールド制御ワークへのポインタ
- * @return	int		時間帯（field/timezone.hを参照）
+ * @brief 時間帯の取得
+ * @param gdata フィールド制御ワークへのポインタ
+ * @return  int   時間帯（field/timezone.hを参照）
  *
  * 季節の時間帯になります。
  *
@@ -276,129 +280,129 @@ int EVTIME_GetTimeZone(const GAMEDATA * gdata)
 //------------------------------------------------------------------
 int EVTIME_GetSeasonTimeZone(const GAMEDATA * gdata)
 {
-	GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
+  GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
   u16 season = GAMEDATA_GetSeasonID( gdata );
-	return PM_RTC_ConvertHourToTimeZone( season, tm->sv_time.hour);
+  return PM_RTC_ConvertHourToTimeZone( season, tm->sv_time.hour);
 
 }
 
 //------------------------------------------------------------------
 /**
- * @brief	イベント時間（月）の取得
- * @param	gdata	フィールド制御ワークへのポインタ
- * @return	int		月
+ * @brief イベント時間（月）の取得
+ * @param gdata フィールド制御ワークへのポインタ
+ * @return  int   月
  */
 //------------------------------------------------------------------
 int EVTIME_GetMonth(const GAMEDATA * gdata)
 {
-	GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
-	return tm->sv_date.month;
+  GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
+  return tm->sv_date.month;
 }
 //------------------------------------------------------------------
 /**
- * @brief	イベント時間（日）の取得
- * @param	gdata	フィールド制御ワークへのポインタ
- * @return	int		日
+ * @brief イベント時間（日）の取得
+ * @param gdata フィールド制御ワークへのポインタ
+ * @return  int   日
  */
 //------------------------------------------------------------------
 int EVTIME_GetDay(const GAMEDATA * gdata)
 {
-	GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
-	return tm->sv_date.day;
+  GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
+  return tm->sv_date.day;
 }
 //------------------------------------------------------------------
 /**
- * @brief	イベント時間（曜日）の取得
- * @param	gdata	フィールド制御ワークへのポインタ
- * @return	int		曜日
+ * @brief イベント時間（曜日）の取得
+ * @param gdata フィールド制御ワークへのポインタ
+ * @return  int   曜日
  */
 //------------------------------------------------------------------
 int EVTIME_GetWeek(const GAMEDATA * gdata)
 {
-	GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
-	return tm->sv_date.week;
+  GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
+  return tm->sv_date.week;
 }
 //------------------------------------------------------------------
 /**
- * @brief	イベント時間（時）の取得
- * @param	gdata	フィールド制御ワークへのポインタ
- * @return	int		時間
+ * @brief イベント時間（時）の取得
+ * @param gdata フィールド制御ワークへのポインタ
+ * @return  int   時間
  */
 //------------------------------------------------------------------
 int EVTIME_GetHour(const GAMEDATA * gdata)
 {
-	GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
-	return tm->sv_time.hour;
+  GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
+  return tm->sv_time.hour;
 }
 //------------------------------------------------------------------
 /**
- * @brief	イベント時間（分）の取得
- * @param	gdata	フィールド制御ワークへのポインタ
- * @return	int		分
+ * @brief イベント時間（分）の取得
+ * @param gdata フィールド制御ワークへのポインタ
+ * @return  int   分
  */
 //------------------------------------------------------------------
 int EVTIME_GetMinute(const GAMEDATA * gdata)
 {
-	GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
-	return tm->sv_time.minute;
+  GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
+  return tm->sv_time.minute;
 }
 
 
 //------------------------------------------------------------------
 /**
- * @brief	ゲーム開始の日付＆時間取得
- * @param	gdata	フィールド制御ワークへのポインタ
- * @param	date	ゲーム開始の日付を受け取るためのRTCDate型へのポインタ
- * @param	time	ゲーム開始の時間を受け取るためのRTCTime型へのポインタ
+ * @brief ゲーム開始の日付＆時間取得
+ * @param gdata フィールド制御ワークへのポインタ
+ * @param date  ゲーム開始の日付を受け取るためのRTCDate型へのポインタ
+ * @param time  ゲーム開始の時間を受け取るためのRTCTime型へのポインタ
  */
 //------------------------------------------------------------------
 void EVTIME_GetGameStartDateTime(const GAMEDATA * gdata, RTCDate * date, RTCTime * time)
 {
-	GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
-	RTC_ConvertSecondToDateTime(date, time, tm->start_sec);
+  GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
+  RTC_ConvertSecondToDateTime(date, time, tm->start_sec);
 }
 
 //------------------------------------------------------------------
 /**
- * @brief	ゲームクリアの日付＆時間取得
- * @param	gdata	フィールド制御ワークへのポインタ
- * @param	date	ゲーム開始の日付を受け取るためのRTCDate型へのポインタ
- * @param	time	ゲーム開始の時間を受け取るためのRTCTime型へのポインタ
+ * @brief ゲームクリアの日付＆時間取得
+ * @param gdata フィールド制御ワークへのポインタ
+ * @param date  ゲーム開始の日付を受け取るためのRTCDate型へのポインタ
+ * @param time  ゲーム開始の時間を受け取るためのRTCTime型へのポインタ
  */
 //------------------------------------------------------------------
 void EVTIME_GetGameClearDateTime(const GAMEDATA * gdata, RTCDate * date, RTCTime * time)
 {
-	GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
-	RTC_ConvertSecondToDateTime(date, time, tm->clear_sec);
+  GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
+  RTC_ConvertSecondToDateTime(date, time, tm->clear_sec);
 }
 
 //------------------------------------------------------------------
 /**
- * @brief	ゲームクリアの日付＆時間セット
- * @param	gdata	フィールド制御ワークへのポインタ
+ * @brief ゲームクリアの日付＆時間セット
+ * @param gdata フィールド制御ワークへのポインタ
  */
 //------------------------------------------------------------------
 void EVTIME_SetGameClearDateTime(const GAMEDATA * gdata)
 {
-	GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
-	tm->clear_sec = GFL_RTC_GetDateTimeBySecond();
+  GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( (GAMEDATA*)gdata ) );
+  tm->clear_sec = GFL_RTC_GetDateTimeBySecond();
 
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_SYSTEM_DATA)
-	SVLD_SetCrc(GMDATA_ID_SYSTEM_DATA);
+  SVLD_SetCrc(GMDATA_ID_SYSTEM_DATA);
 #endif //CRC_LOADCHECK
 }
 
 //------------------------------------------------------------------
 /**
- * @brief	DS設定変更のペナルティモードかどうかの判定
- * @param	gdata	フィールド制御ワークへのポインタ
- * @return	BOOL	TRUEのとき、ペナルティ中
+ * @brief DS設定変更のペナルティモードかどうかの判定
+ * @param gdata フィールド制御ワークへのポインタ
+ * @return  BOOL  TRUEのとき、ペナルティ中
  */
 //------------------------------------------------------------------
 BOOL EVTIME_IsPenaltyMode(GAMEDATA * gdata)
 {
-	GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( gdata ) );
-	return GMTIME_IsPenaltyMode(tm);
+  GMTIME * tm = SaveData_GetGameTime( GAMEDATA_GetSaveControlWork( gdata ) );
+  return GMTIME_IsPenaltyMode(tm);
 }
 
 
