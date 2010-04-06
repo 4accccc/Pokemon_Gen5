@@ -29,7 +29,7 @@ _EVENT_DATA_END
 /*							‚¨‚¶‚¢‚³‚ñ						*/
 /************************************************************/
 EVENT_START	ev_h04r0101_oldman1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0101_oldman1_01 )
+//	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0101_oldman1_01 )
 EVENT_END
 
 
@@ -37,7 +37,7 @@ EVENT_END
 /*							—cŽ™							*/
 /************************************************************/
 EVENT_START	ev_h04r0101_babygirl1_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0101_babygirl1_01 )
+//	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0101_babygirl1_01 )
 EVENT_END
 
 

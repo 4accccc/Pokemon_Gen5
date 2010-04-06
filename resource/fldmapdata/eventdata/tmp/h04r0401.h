@@ -9,6 +9,8 @@
 #ifndef ZONE_H04R0401_EVC_H
 #define ZONE_H04R0401_EVC_H
 
+#define H04R0401_BREEDERM1_01              0
+#define H04R0401_POKE19_01                 1
 
 #endif //ZONE_H04R0401_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/h04r0401.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
