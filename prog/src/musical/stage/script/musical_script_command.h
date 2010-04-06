@@ -935,7 +935,7 @@
  *
  * #param_num 2
  * @param msgNo メッセージ番号
- * @param speed メッセージ速度(1文字辺りのフレーム数)
+ * @param speed メッセージ速度(1文字辺りのフレーム数・255で瞬間表示)
  *
  * #param VALUE_INT messageNo
  * #param VALUE_INT messageSpeed

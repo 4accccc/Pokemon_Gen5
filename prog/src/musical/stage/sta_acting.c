@@ -166,6 +166,8 @@ struct _ACTING_WORK
   PRINT_STREAM    *printHandle;
   GFL_MSGDATA     *msgHandle;
   STRBUF          *msgStr;
+  BOOL        updateQue;
+  PRINT_QUE   *printQue;
   
   //’–Úƒ|ƒP—p
   BOOL    isUpdateAttention;
@@ -421,6 +423,8 @@ void  STA_ACT_TermActing( ACTING_WORK *work )
   {
     GFL_STR_DeleteBuffer( work->msgStr );
   }
+  PRINTSYS_QUE_Clear( work->printQue );
+  PRINTSYS_QUE_Delete( work->printQue );
   GFL_MSG_Delete( work->msgHandle );
   GFL_BMPWIN_Delete( work->msgWin );
   GFL_FONT_Delete( work->fontHandle );
@@ -1261,6 +1265,8 @@ static void STA_ACT_SetupMessage( ACTING_WORK *work )
   work->tcblSys = GFL_TCBL_Init( work->heapId , work->heapId , 3 , 0x100 );
   work->printHandle = NULL;
   work->msgStr = NULL;
+  work->updateQue = FALSE;
+  work->printQue = PRINTSYS_QUE_Create( work->heapId );
 }
 
 static void STA_ACT_UpdateMessage( ACTING_WORK *work )
@@ -1275,9 +1281,19 @@ static void STA_ACT_UpdateMessage( ACTING_WORK *work )
       work->printHandle = NULL;
     }
   }
+  
+  if( work->updateQue == TRUE )
+  {
+    PRINTSYS_QUE_Main( work->printQue );
+    if( PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
+    {
+      GFL_BMPWIN_TransVramCharacter( work->msgWin );
+      work->updateQue = FALSE;
+    }
+  }
 }
 
-void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 msgSpd )
+void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const s32 msgSpd )
 {
   if( work->printHandle != NULL )
   {
@@ -1287,18 +1303,27 @@ void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 msgSpd 
     PRINTSYS_PrintStreamDelete( work->printHandle );
     work->printHandle = NULL;
   }
-
+  
+  if( work->msgStr != NULL )
   {
-    if( work->msgStr != NULL )
-    {
-      GFL_STR_DeleteBuffer( work->msgStr );
-      work->msgStr = NULL;
-    }
-    
-    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0 );
-    work->msgStr = GFL_MSG_CreateString( work->msgHandle , msgNo );
+    GFL_STR_DeleteBuffer( work->msgStr );
+    work->msgStr = NULL;
+  }
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->msgWin ) , 0 );
+  work->msgStr = GFL_MSG_CreateString( work->msgHandle , msgNo );
+
+  if( msgSpd != 255 )
+  {
     work->printHandle = PRINTSYS_PrintStream( work->msgWin , 0,0, work->msgStr ,work->fontHandle ,
                         msgSpd , work->tcblSys , 2 , work->heapId , 0 );
+  }
+  else
+  {
+    PRINTSYS_PrintQue( work->printQue , GFL_BMPWIN_GetBmp( work->msgWin ) , 
+            0 , 0 , work->msgStr , work->fontHandle );
+    work->updateQue = TRUE;
+    GFL_STR_DeleteBuffer( work->msgStr );
+    work->msgStr = NULL;
   }
 }
 

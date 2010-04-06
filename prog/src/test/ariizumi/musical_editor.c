@@ -217,7 +217,7 @@ static GFL_PROC_RESULT MusicalEditProc_Init( GFL_PROC * proc, int * seq , void *
 {
   int ePos;
   MUS_EDIT_LOCAL_WORK *work;
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x80000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0xE0000 );
   GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_shot));
 
   work = GFL_PROC_AllocWork( proc, sizeof(MUS_EDIT_LOCAL_WORK), HEAPID_MUSICAL_STAGE );

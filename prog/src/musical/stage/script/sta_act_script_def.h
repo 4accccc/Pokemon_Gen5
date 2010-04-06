@@ -106,7 +106,7 @@ extern void STA_SCRIPT_DeleteTcbTask( STA_SCRIPT_SYS *work , STA_SCRIPT_TCB_OBJE
 extern void STA_ACT_StartMainPart( ACTING_WORK *work );
 extern void STA_ACT_FinishMainPart( ACTING_WORK *work );
 extern void	STA_ACT_LoadBg( ACTING_WORK *work , const u8 bgNo );
-extern void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const u8 msgSpd );
+extern void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const s32 msgSpd );
 extern void STA_ACT_HideMessage( ACTING_WORK *work );
 extern void  STA_ACT_ReadyBgm( ACTING_WORK *work );
 extern void  STA_ACT_StartBgm(  ACTING_WORK *work );
