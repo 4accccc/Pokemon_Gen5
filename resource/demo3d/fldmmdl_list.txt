@@ -2,6 +2,7 @@
 
 FLDMMDL_LIST =	hero.imd \
 				heroine.imd \
+				boss.imd \
 				dancer.imd \
 				trainerm.imd \
 				waitress.imd \
