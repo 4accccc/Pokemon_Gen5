@@ -800,7 +800,7 @@
 #define FV_FLDMONS_10                      776 /* 0x0308 タマゲタケ（フィールドアイテム型）１０匹目 */
 #define FV_H03_BADRIDER                    777 /* 0x0309 シリンダーブリッジ：暴走族リーダーと子分 */
 #define FV_H03_GENERALPERSON               778 /* 0x030a シリンダーブリッジ：おばさんと格闘家（女） */
-		/* not used   779(0x030b) */
+#define FV_D12R0102_POKE14_01              779 /* 0x030b リバティ島：ビクティ */
 		/* not used   780(0x030c) */
 		/* not used   781(0x030d) */
 		/* not used   782(0x030e) */
