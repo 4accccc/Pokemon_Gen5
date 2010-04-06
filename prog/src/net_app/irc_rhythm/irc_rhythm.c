@@ -661,8 +661,10 @@ static void PLTFADE_Exit( PLTFADE_WORK *p_wk );
 static void PLTFADE_Main( PLTFADE_WORK *p_wk );
 static void PLTFADE_Start( PLTFADE_WORK *p_wk );
 
+#ifdef PM_DEBUG
 static STRBUF * DEBUGPRINT_CreateWideChar( const u16 *cp_str, HEAPID heapID );
 static STRBUF * DEBUGPRINT_CreateWideCharNumber( const u16 *cp_str, int number, HEAPID heapID );
+#endif
 
 //=============================================================================
 /**
@@ -3581,6 +3583,8 @@ static void PLTFADE_Start( PLTFADE_WORK *p_wk )
 { 
   p_wk->is_start  = TRUE;
 }
+
+#ifdef PM_DEBUG
 //----------------------------------------------------------------------------
 /**
  *	@brief	Wide•¶Žš—ñ‚ðSTRBUF‚ÉŠi”[
@@ -3626,4 +3630,4 @@ static STRBUF * DEBUGPRINT_CreateWideCharNumber( const u16 *cp_str, int number, 
 	swprintf( str, 128, cp_str, number ); 
 	return DEBUGPRINT_CreateWideChar( str, heapID );
 }
-//#endif //DEBUG_RHYTHM_MSG 
+#endif
