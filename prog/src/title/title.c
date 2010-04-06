@@ -299,7 +299,11 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
     break;
 
   case SEQ_FADEOUT:
-    if(GFL_FADE_CheckFade() == FALSE){ tw->seq = SEQ_END; }
+    if( GFL_FADE_CheckFade() == FALSE &&
+				PMSND_CheckFadeOnBGM() == FALSE ){
+			PMSND_StopBGM();
+			tw->seq = SEQ_END;
+		}
     MainFunc(tw);
     break;
 

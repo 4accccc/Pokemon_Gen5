@@ -637,9 +637,12 @@ static BOOL CMD_BRIGHTNESS_WAIT( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int
 static BOOL CMD_BGM( INTRO_CMD_WORK* wk, INTRO_STORE_DATA* sdat, int* param )
 {
   OS_Printf( "play bgm =%d fadeInFrame=%d, fadeOutFrame=%d \n", param[0], param[1], param[2] );
-//  PMSND_PlayBGM( param[0] );
-  PMSND_PlayNextBGM( param[0], param[1], param[2] );
 
+	if( PMSND_CheckPlayBGM() == TRUE ){
+	  PMSND_PlayNextBGM( param[0], param[1], param[2] );
+	}else{
+		PMSND_PlayBGM( param[0] );
+	}
   return TRUE;
 }
 

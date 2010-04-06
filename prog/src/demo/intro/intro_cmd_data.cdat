@@ -52,8 +52,8 @@ static const INTRO_CMD_DATA c_intro_scene_01[] =
 {
 //  { INTRO_CMD_TYPE_PRINT_MSG, { msg_intro_00, 1 } }, // ……ごめんなさい ちょっと待ってね！
 
-  { INTRO_CMD_TYPE_BGM_FADEOUT, { 16 }, CMD_READ_NEXT }, // BGMフェードアウト
-  { INTRO_CMD_TYPE_WAIT, { 16 } }, // ウェイト
+//  { INTRO_CMD_TYPE_BGM_FADEOUT, { 16 }, CMD_READ_NEXT }, // BGMフェードアウト
+//  { INTRO_CMD_TYPE_WAIT, { 16 } }, // ウェイト
   { INTRO_CMD_TYPE_BGM, { SEQ_BGM_STARTING2 }, CMD_READ_NEXT }, // BGM切替
   { INTRO_CMD_TYPE_MCSS_LOAD, {0, 0, 0, 0x5a0c }, CMD_READ_NEXT },    // 博士ロード
   { INTRO_CMD_TYPE_MCSS_LOAD, {1, MONSNO_533, -FX32_CONST(14), -FX32_CONST(11.5) }, CMD_READ_NEXT },    // ポケモンロード
