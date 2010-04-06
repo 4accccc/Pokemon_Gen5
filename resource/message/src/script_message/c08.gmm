@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-31T10:37:32"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T13:54:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1046,7 +1046,7 @@ WOMAN2</attribute>
 		<language name="JPN_KANJI" width="256">ジムリーダーの　アイリスちゃん！[BE:01:ページ切り替え（クリア）]
 まだ　子供だけれど　
 市長である　シャガさまが[BE:00:ページ切り替え（行送り）]
-認めた　実力者　なの！</language>
+認めた　実力者なの！</language>
 	</row>
 
 	<row id="msg_c08_iss_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -1356,7 +1356,7 @@ WOMAN2</attribute>
 りゅうの　こころを　しる　むすめ</language>
 		<language name="JPN_KANJI" width="256">ウリュウシティ　ポケモンジム
 リーダー　アイリス[BE:00:ページ切り替え（行送り）]
-りゅうの　こころを　しる　むすめ</language>
+竜の心を　知る　娘</language>
 	</row>
 
 	<row id="msg_c08_gymsign_01b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
