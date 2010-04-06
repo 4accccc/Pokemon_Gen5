@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-04-02T17:28:48" source="art02.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-04-06T20:24:21" source="art02.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-04-02T17:28:48" source="art02.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-04-06T20:24:21" source="art02.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -18,7 +18,7 @@
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="1"
+	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="1 1"
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="3" xyz="-2.000000 0.625000 -0.125000" whd="4.000000 3.375000 0.250000"/>
+<box_test pos_scale="3" xyz="-2.000000 0.625000 -0.125000" whd="4.000000 3.500000 0.250000"/>
 
 <tex_image_array size="1">
 	<tex_image index="0" name="art02a"
@@ -43,28 +43,28 @@
 			2211 0122 2237 0122 2237 0122 2237 1122
 			2222 2222 2222 2222 2222 2222 2222 2222
 			2222 0000 0000 0000 0000 0000 0000 2222
-			0222 6661 6666 6666 6666 6666 1666 2220
-			3212 a996 bbbb 555d bbd5 abbb 699a 2123
-			7202 ba96 8bbb 5555 8d55 bbdd 69ab 2027
-			7272 ba96 dbbb 5555 d555 bd55 69bb 2727
-			7232 bba6 ddd8 cccd d555 d555 6abb 2327
-			7222 dba6 5555 ccd5 cdcc d555 6bbb 2227
-			7222 c8a6 5555 cd55 ccdc d55c 6bb5 2227
-			7222 cda6 5555 dc55 c8b8 5dcc 6b85 2227
-			7222 cda6 555c bcc5 8bbb 5cdd 6bd5 2227
-			7222 c8a6 cccc bdcc bbbb cccb 6bdc 2227
-			7212 daa6 cccc bbdc bbbb 5cbb 6b85 2127
-			7202 8aa6 555d b8d5 bbbb 5cdb 6bd5 2027
-			7272 d8a6 5555 8d55 bbbb ccdb 6bbd 2727
-			7232 48a6 5555 8455 bbbb bdd8 6bbb 2327
-			7222 48a6 5555 8455 dbbb d55c 6abb 2227
-			7222 48a6 555c 84c5 dbbb d55c 6abb 2227
-			7222 d8a6 cccc 8dcc 8bbb 8ccc 6abb 2227
-			7222 8b96 cccc b8cc 8bbb b8dd 69ab 2227
-			7212 5896 8885 8558 555b bbb8 69ab 2127
-			7202 5896 babd 85db 558b bbb8 699a 2027
-			7272 8996 aaa8 b88b 58bb aabb 6999 2727
-			3232 6661 6666 6666 6666 6666 1666 2323
+			0222 aaa1 aaaa aaaa aaaa aaaa 1aaa 2220
+			3212 aaaa aaaa aaaa aaaa aaaa aaaa 2123
+			7202 bbba bbbb bbbb bbbb bbbb abbb 2027
+			7272 ccba cccc cccc cccc cccc abcc 2727
+			7232 ccba bbbb bbbb bbbb bbbb abcc 2327
+			7222 ccba 555b 5855 5855 b855 abcc 2227
+			7222 ccba 555b 5855 5855 b855 abcc 2227
+			7222 ccba 555b 5855 5855 b855 abcc 2227
+			7222 ccba 555b 5855 9855 b999 abcc 2227
+			7222 ccba 999b 9899 8999 b888 abcc 2227
+			7212 ccba 999b 6899 5666 b555 abcc 2127
+			7202 ccba 555b 8555 5666 b555 abcc 2027
+			7272 ccba 555b 8445 9666 b999 abcc 2727
+			7232 ccba 555b 8445 8866 b668 abcc 2327
+			7222 ccba 555b 8445 5566 b665 abcc 2227
+			7222 ccba 555b 8555 5566 b665 abcc 2227
+			7222 ccba 999b 8999 9966 b669 abcc 2227
+			7222 ccba bbbb bbbb bbbb bbbb abcc 2227
+			7212 ccba cccc cccc cccc cccc abcc 2127
+			7202 ccba cccc cccc cccc cccc abcc 2027
+			7272 ccba cccc cccc cccc cccc abcc 2727
+			3232 aaa1 aaaa aaaa aaaa aaaa 1aaa 2323
 			2222 7773 7777 7777 7777 7777 3777 2222
 			2222 2222 2222 2222 2222 2222 2222 2222
 			2222 7322 2210 7322 2210 7322 2210 2222
@@ -76,8 +76,8 @@
 
 <tex_palette_array size="1">
 	<tex_palette index="0" name="art02a_pl" color_size="16">
-		01d2 0214 0299 02fb 0d4c 0df6 0e4f 0f3d
-		1297 12d1 1713 1755 1953 2237 7fff 7fff
+		01d2 0214 0299 02fb 0971 0df6 0e4f 0f3d
+		1297 1953 5ad6 6b5a 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -117,8 +117,8 @@
 		vertex_size="16" polygon_size="4"
 		triangle_size="0" quad_size="4"
 		volume_min="-2.000000 0.625000 -0.125000"
-		volume_max="2.000000 4.000000 0.125000"
-		volume_r="4.473877"
+		volume_max="2.000000 4.125000 0.125000"
+		volume_r="4.585938"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -133,21 +133,21 @@
 					<pos_xz xz="-2.000000 0.125000"/>
 					<tex st="0.312500 0.000000"/>
 					<pos_xy xy="-2.000000 4.000000"/>
-					<pos_xz xz="-2.000000 -0.125000"/>
+					<pos_yz yz="4.125000 -0.125000"/>
 					<tex st="31.375000 32.000000"/>
 					<pos_s xyz="2.000000 0.625000 0.125000"/>
 					<pos_xz xz="2.000000 -0.125000"/>
 					<tex st="31.375000 0.000000"/>
-					<pos_xy xy="2.000000 4.000000"/>
-					<pos_xz xz="2.000000 0.125000"/>
+					<pos_xy xy="2.000000 4.125000"/>
+					<pos_yz yz="4.000000 0.125000"/>
 					<tex st="0.000000 0.437500"/>
 					<clr rgb="31 31 31"/>
 					<pos_xy xy="-2.000000 4.000000"/>
 					<tex st="32.000000 0.437500"/>
 					<pos_xy xy="2.000000 4.000000"/>
-					<pos_xz xz="2.000000 -0.125000"/>
+					<pos_yz yz="4.125000 -0.125000"/>
 					<tex st="0.000000 0.437500"/>
-					<pos_xy xy="-2.000000 4.000000"/>
+					<pos_xy xy="-2.000000 4.125000"/>
 					<tex st="0.000000 32.000000"/>
 					<pos_yz yz="0.625000 0.125000"/>
 					<tex st="32.000000 32.000000"/>
@@ -179,8 +179,8 @@
 		vertex_size="16" polygon_size="4"
 		triangle_size="0" quad_size="4"
 		volume_min="-2.000000 0.625000 -0.125000"
-		volume_max="2.000000 4.000000 0.125000"
-		volume_r="4.473877"
+		volume_max="2.000000 4.125000 0.125000"
+		volume_r="4.585938"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
