@@ -1230,6 +1230,7 @@ typedef struct {
   HEAPID    heapID;
 
   BLINKPALANM_WORK * bpawk;
+  BLINKPALANM_WORK * bpawk_obj;
 
 } WFNOTE_DRAW;
 
@@ -4267,6 +4268,7 @@ static WFNOTE_STRET FList_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WF
     // リスト動作
   case SEQ_FLIST_MAIN:
     BLINKPALANM_Main( p_draw->bpawk );
+    BLINKPALANM_Main( p_draw->bpawk_obj );
     result = FListSeq_Main( p_wk, p_data,  p_draw );
     switch( result ){
     case RCODE_FLIST_SEQMAIN_NONE:
@@ -4274,10 +4276,16 @@ static WFNOTE_STRET FList_Main( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, WF
 
     case RCODE_FLIST_SEQMAIN_PCHG_LEFT:// ページ変更
       FList_ScrSeqChange( p_wk, p_data, WF_COMMON_LEFT );
+	    ChangeListPageNumAnime( p_wk, p_wk->page );
+			BLINKPALANM_InitAnimeCount( p_draw->bpawk_obj );
+	    BLINKPALANM_Main( p_draw->bpawk_obj );
       break;
 
     case RCODE_FLIST_SEQMAIN_PCHG_RIGHT:// ページ変更
       FList_ScrSeqChange( p_wk, p_data, WF_COMMON_RIGHT );
+	    ChangeListPageNumAnime( p_wk, p_wk->page );
+			BLINKPALANM_InitAnimeCount( p_draw->bpawk_obj );
+	    BLINKPALANM_Main( p_draw->bpawk_obj );
       break;
 
     case RCODE_FLIST_SEQMAIN_CANCEL:  // 戻る
@@ -9092,7 +9100,11 @@ static void Draw_BlinkAnmInit( WFNOTE_DRAW * p_draw, HEAPID heapID )
 {
   p_draw->bpawk = BLINKPALANM_Create( BGPLT_M_BACK_3*16, 16, GFL_BG_FRAME0_M, heapID );
   BLINKPALANM_SetPalBufferArcHDL(
-    p_draw->bpawk, p_draw->p_handle, NARC_wifi_note_friend_bg_d_NCLR, BGPLT_M_BACK_3*16, BGPLT_M_BACK_2*16 );
+    p_draw->bpawk, p_draw->p_handle, NARC_wifi_note_friend_bg_d_NCLR, BGPLT_M_BACK_2*16, BGPLT_M_BACK_3*16 );
+
+  p_draw->bpawk_obj = BLINKPALANM_Create( (CLACT_PALNUM_WIFINOTE+1)*16, 16, BLINKPALANM_MODE_MAIN_OBJ, heapID );
+  BLINKPALANM_SetPalBufferArcHDL(
+    p_draw->bpawk_obj, p_draw->p_handle, NARC_wifi_note_friend_obj_d2_NCLR, 0*16, 1*16 );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -9106,6 +9118,7 @@ static void Draw_BlinkAnmInit( WFNOTE_DRAW * p_draw, HEAPID heapID )
 //--------------------------------------------------------------------------------------------
 static void Draw_BlinkAnmExit( WFNOTE_DRAW * p_draw )
 {
+  BLINKPALANM_Exit( p_draw->bpawk_obj );
   BLINKPALANM_Exit( p_draw->bpawk );
 }
 
