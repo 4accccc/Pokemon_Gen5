@@ -139,7 +139,7 @@ u32   POKETOOL_GetWorkSize( void )
 
 //=============================================================================================
 /**
- * ポケモンパラメータ実体を生成
+ * ポケモンパラメータ実体を生成（Setupを呼ぶ）
  *
  * @param   mons_no       ポケモンナンバー
  * @param   level         レベル
@@ -160,6 +160,33 @@ POKEMON_PARAM* PP_Create( u16 mons_no, u16 level, u64 id, HEAPID heapID )
 
   return pp;
 }
+
+//=============================================================================================
+/**
+ * ポケモンパラメータ実体を生成(SetupEXを呼ぶ）
+ *
+ * @param   mons_no       ポケモンナンバー
+ * @param   level         レベル
+ * @param   id            ID
+ * @param   pow           パワー乱数
+ * @param   rnd           個性乱数
+ * @param   heapID        実体確保用のヒープID
+ *
+ * @retval  POKEMON_PARAM*
+ */
+//=============================================================================================
+POKEMON_PARAM* PP_CreateEx( u16 mons_no, u16 level, u64 id, PtlSetupPow pow, u64 rnd, HEAPID heapID )
+{
+  POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( heapID, POKETOOL_GetWorkSize() );
+
+  if( pp )
+  {
+    PP_SetupEx( pp, mons_no, level, id, pow, rnd );
+  }
+
+  return pp;
+}
+
 //=============================================================================================
 /**
  * ポケモンパソコンパラメータから、ポケモンパラメータを構築する
