@@ -4055,6 +4055,7 @@ static void PLIST_AddBagItem( PLIST_WORK *work , u16 itemNo )
 }
 
 #pragma mark [>debug
+#if USE_DEBUGWIN_SYSTEM
 
 struct _PLIST_DEBUG_WORK
 {
@@ -4254,3 +4255,4 @@ static void PLIST_DEB_Draw_TimeLimit( void* userWork , DEBUGWIN_ITEM* item )
   PLIST_WORK *work = (PLIST_WORK*)userWork;
   DEBUGWIN_ITEM_SetNameV( item , "Žc‚èŽžŠÔ[%d]",work->plData->time_limit);
 }
+#endif //USE_DEBUGWIN_SYSTEM
