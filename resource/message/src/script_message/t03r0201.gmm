@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-03-30T11:16:10"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T15:56:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,10 +296,6 @@
 		<comment>※朝になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
 
-
-♂
-
-
 ♀
 はい→msg_t03_oldwoman1_02
 いいいえ→msg_t03_oldwoman1_03</comment>
@@ -362,8 +358,7 @@
 ※朝になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
 
-♂
-</comment>
+♂</comment>
 		<attribute name="キャラ指定">BADMAN</attribute>
 		<language name="JPN" width="256">オレの　バーちゃん　さあ
 むかしばなしが　すきでさ▽

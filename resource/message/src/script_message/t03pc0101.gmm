@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-05T18:14:02"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T15:55:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_t03pc0101_woman2_01">
+	<row id="msg_t03pc0101_woman2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・手持ちにシェイミ（配布フラグ）がいて
 　「グラシデアのはな」持っていないとき
@@ -312,7 +312,7 @@
 あなたにも　わけてあげるね▼</language>
 	</row>
 
-	<row id="msg_t03pc0101_woman2_02">
+	<row id="msg_t03pc0101_woman2_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・手持ちにシェイミがいて
 　「グラシデアのはな」持っているとき
@@ -338,7 +338,7 @@
 伝えられるのって　すてきよね</language>
 	</row>
 
-	<row id="msg_t03pc0101_woman2_03">
+	<row id="msg_t03pc0101_woman2_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・手持ちにシェイミがいないとき
 ・プラチナの移植</comment>
@@ -355,15 +355,6 @@
 ブーケにして　あげていたのよ</language>
 	</row>
 
-	<row id="msg_t03pc0101_gentleman_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
-		<attribute name="キャラ指定">GENTLEMAN
-紳士</attribute>
-		<language name="JPN" width="256">テストメッセージ</language>
-		<language name="JPN_KANJI" width="256">仮メッセージ</language>
-	</row>
-
 	<row id="msg_t03pc0101_policeman_01" back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,,#ffffff,#ffffff,,,#ffffff,,">
 		<comment>♂
 ※朝になるといなくなる
@@ -377,11 +368,6 @@
 なーんも　することが　ないのだ▼
 夜は　外に　だれも　いないし
 平和　そのもの　だからなー</language>
-	</row>
-
-	<row id="msg_t03pc0101_policeman_02" back-color="#ffffff,,,,,,,#ffffff,,,#ffffff,,,#ffffff,,,#ffffff,,">
-		<language name="JPN" width="256"></language>
-		<language name="JPN_KANJI" width="256"></language>
 	</row>
 
 	<flowchart-group-list>
