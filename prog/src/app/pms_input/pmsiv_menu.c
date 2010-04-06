@@ -8,6 +8,16 @@
  *
  */
 //=============================================================================
+
+/*
+パレットアニメーション
+素材メモ
+pms_obj_main.ncl
+2行B列～F列 プログラムで使用する。3行と4行の間で変化する色。
+3行B列～F列 暗い色。
+4行B列～F列 明るい色。
+*/
+
 #include <gflib.h>
 
 #include "arc_def.h"
@@ -142,6 +152,48 @@ typedef enum
 }
 MARK;
 
+//--------------------------------------------------------------
+///	パレットアニメーション
+//==============================================================
+#define PAL_ANIME_ROW_ORIGINAL  (  6)
+#define PAL_ANIME_ROW_START     (  4)
+#define PAL_ANIME_ROW_END       (  3)
+#define PAL_ANIME_ROW_NOW       (  2)
+#define PAL_ANIME_CLM_START     (0xB)
+#define PAL_ANIME_CLM_NUM       (  5)
+#define PAL_ANIME_ADD           (0x400)
+
+//--------------------------------------------------------------
+///	アイコンのアニメ番号
+//==============================================================
+  static const u8 menuClwkIconAnmIdx[ MENU_CLWKICON_MAX ][2] = 
+  {
+    {
+      NANR_pms2_obj_main_hidari, NANR_pms2_obj_main_hidari_tp,
+    },
+    {
+      NANR_pms2_obj_main_mail_off, NANR_pms2_obj_main_mail_on,
+    },
+    {
+      NANR_pms2_obj_main_sentoumae_off, NANR_pms2_obj_main_sentoumae_on,
+    },
+    {
+      NANR_pms2_obj_main_win_off, NANR_pms2_obj_main_win_on,
+    },
+    {
+      NANR_pms2_obj_main_lose_off, NANR_pms2_obj_main_lose_on,
+    },
+    {
+      NANR_pms2_obj_main_yunion_off, NANR_pms2_obj_main_yunion_on,
+    },
+    {
+      NANR_pms2_obj_main_migi, NANR_pms2_obj_main_migi_tp,
+    },
+    {
+      NANR_pms2_obj_main_change_off, NANR_pms2_obj_main_change_on,
+    },
+  };
+
 
 //=============================================================================
 /**
@@ -167,6 +219,12 @@ struct _PMSIV_MENU {
   APP_TASKMENU_WIN_WORK*  menu_win[ TASKMENU_WIN_MAX ];
   GFL_CLWK*               clwk_icon[ MENU_CLWKICON_MAX ];
   GFL_CLWK*               mark_clwk[MARK_MAX];
+
+  // パレットアニメーション
+  u16  pal_anime_start[PAL_ANIME_CLM_NUM];
+  u16  pal_anime_end[PAL_ANIME_CLM_NUM];
+  u16  pal_anime_now[PAL_ANIME_CLM_NUM];
+  int  pal_anime_count;
 };
 
 //=============================================================================
@@ -182,6 +240,14 @@ static void _mark_delete( PMSIV_MENU* wk );  // 必ず_clwk_deleteの前に呼ぶこと
 static TOUCHBAR_WORK* _touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id );
 static void _setup_category_group( PMSIV_MENU* wk );
 static void _setup_category_initial( PMSIV_MENU* wk );
+
+// パレットアニメーション
+static void _pal_anime_create( PMSIV_MENU* wk );
+static void _pal_anime_delete( PMSIV_MENU* wk );
+static void _pal_anime_main( PMSIV_MENU* wk );
+static void _pal_anime_start( PMSIV_MENU* wk, int i );
+static void _pal_anime_end( PMSIV_MENU* wk, int i );
+
 
 //=============================================================================
 /**
@@ -252,6 +318,8 @@ PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, c
   _clwk_create( wk );
   // MARK
   _mark_create( wk );
+  // パレットアニメーション
+  _pal_anime_create( wk );
 
   return wk;
 }
@@ -285,6 +353,7 @@ void PMSIV_MENU_Delete( PMSIV_MENU* wk )
     }
   }
 
+  _pal_anime_delete( wk );  // パレットアニメーション
   _mark_delete( wk );
   _clwk_delete( wk );
 
@@ -321,6 +390,8 @@ void PMSIV_MENU_Main( PMSIV_MENU* wk )
   // タッチバー
   TOUCHBAR_Main( wk->touchbar );
 
+  // パレットアニメーション
+  _pal_anime_main( wk );
 }
 
 //-----------------------------------------------------------------------------
@@ -498,13 +569,52 @@ void PMSIV_MENU_UpdateEditIcon( PMSIV_MENU* wk )
   int i;
   enum PMS_TYPE type;
 
+  // 選択が変更されたか
+  int before = -1;  // -1のとき選択されているものがない
+  int after  = -1;
+
   type = PMSI_GetSentenceType( wk->mwk );
+
+  // 選択が変更されたか
+  {
+    // 変更前
+    for( i=MENU_CLWKICON_EDIT_MAIL; i<=MENU_CLWKICON_EDIT_UNION; i++ )
+    {
+      u16 anmseq = GFL_CLACT_WK_GetAnmSeq( wk->clwk_icon[i] );
+      if( anmseq == menuClwkIconAnmIdx[i][1] )
+      {
+        before = i;
+        break;
+      }
+    }
+    // 変更後
+    for( i=0; i<PMS_TYPE_USER_MAX; i++ )
+    {
+      if( i == type )
+      {
+        after = iconIdx[i];
+        break;
+      }
+    }
+  }
+
+  // 変更前に元に戻す
+  if( before >= 0 && before != after )
+  {
+    _pal_anime_end( wk, before );
+  }
 
   for( i=0; i<PMS_TYPE_USER_MAX; i++ )
   {
     BOOL is_on = ( i == type );
 
     _clwk_setanm( wk, iconIdx[i], is_on );
+  }
+
+  // 変更後にアニメーションにする
+  if( after >= 0 && before != after )
+  {
+    _pal_anime_start( wk, after );
   }
 }
 
@@ -989,37 +1099,9 @@ static void _clwk_delete( PMSIV_MENU* wk )
 //-----------------------------------------------------------------------------
 static void _clwk_setanm( PMSIV_MENU* wk, MENU_CLWKICON iconIdx, BOOL is_on )
 {
-  static const u8 anmIdx[ MENU_CLWKICON_MAX ][2] = 
-  {
-    {
-      NANR_pms2_obj_main_hidari, NANR_pms2_obj_main_hidari_tp,
-    },
-    {
-      NANR_pms2_obj_main_mail_off, NANR_pms2_obj_main_mail_on,
-    },
-    {
-      NANR_pms2_obj_main_sentoumae_off, NANR_pms2_obj_main_sentoumae_on,
-    },
-    {
-      NANR_pms2_obj_main_win_off, NANR_pms2_obj_main_win_on,
-    },
-    {
-      NANR_pms2_obj_main_lose_off, NANR_pms2_obj_main_lose_on,
-    },
-    {
-      NANR_pms2_obj_main_yunion_off, NANR_pms2_obj_main_yunion_on,
-    },
-    {
-      NANR_pms2_obj_main_migi, NANR_pms2_obj_main_migi_tp,
-    },
-    {
-      NANR_pms2_obj_main_change_off, NANR_pms2_obj_main_change_on,
-    },
-  };
-
   GF_ASSERT( iconIdx < MENU_CLWKICON_MAX );
     
-  GFL_CLACT_WK_SetAnmSeq( wk->clwk_icon[ iconIdx ], anmIdx[ iconIdx ][ is_on ] );
+  GFL_CLACT_WK_SetAnmSeq( wk->clwk_icon[ iconIdx ], menuClwkIconAnmIdx[ iconIdx ][ is_on ] );
 }
 
 //-----------------------------------------------------------------------------
@@ -1172,5 +1254,120 @@ static void _setup_category_initial( PMSIV_MENU* wk )
   GFL_BG_LoadScreenReq( FRM_MAIN_TASKMENU );
 
   HOSAKA_Printf(" _setup_category_initial \n");
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  パレットアニメーション 生成
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _pal_anime_create( PMSIV_MENU* wk )
+{
+  NNSG2dPaletteData* pal_data;
+  void* buf = GFL_ARC_UTIL_LoadPalette( ARCID_PMSI_GRAPHIC, NARC_pmsi_pms_obj_main_NCLR, &pal_data, HEAPID_PMS_INPUT_VIEW );
+  u16* raw_data = pal_data->pRawData;
+  GFL_STD_MemCopy( &raw_data[ PAL_ANIME_ROW_START*0x10 + PAL_ANIME_CLM_START ], wk->pal_anime_start, PAL_ANIME_CLM_NUM*0x2 );
+  GFL_STD_MemCopy( &raw_data[ PAL_ANIME_ROW_END  *0x10 + PAL_ANIME_CLM_START ], wk->pal_anime_end,   PAL_ANIME_CLM_NUM*0x2 );
+  GFL_HEAP_FreeMemory( buf );
+
+  GFL_STD_MemCopy( wk->pal_anime_start, wk->pal_anime_now, PAL_ANIME_CLM_NUM*0x2 );
+  wk->pal_anime_count = 0;
+}
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  パレットアニメーション 破棄
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _pal_anime_delete( PMSIV_MENU* wk )
+{
+  // 何もしない
+}
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  パレットアニメーション ループ
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _pal_anime_main( PMSIV_MENU* wk )
+{
+  u8 i;
+  fx16 cos;
+
+  if( wk->pal_anime_count + PAL_ANIME_ADD >= 0x10000 )
+  {
+    wk->pal_anime_count = wk->pal_anime_count + PAL_ANIME_ADD - 0x10000;
+  }
+  else
+  {
+    wk->pal_anime_count = wk->pal_anime_count + PAL_ANIME_ADD;
+  }
+  cos = ( FX_CosIdx( wk->pal_anime_count ) + FX16_ONE ) / 2;  // 0<= <=1にしておく
+
+  for( i=0; i<PAL_ANIME_CLM_NUM; i++ )
+  {
+    u8 s_r = ( wk->pal_anime_start[i] & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+    u8 s_g = ( wk->pal_anime_start[i] & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+    u8 s_b = ( wk->pal_anime_start[i] & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+    u8 e_r = ( wk->pal_anime_end[i]   & GX_RGB_R_MASK ) >> GX_RGB_R_SHIFT;
+    u8 e_g = ( wk->pal_anime_end[i]   & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
+    u8 e_b = ( wk->pal_anime_end[i]   & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
+
+    u8 r = s_r + (((e_r-s_r)*cos)>>FX16_SHIFT);
+    u8 g = s_g + (((e_g-s_g)*cos)>>FX16_SHIFT);
+    u8 b = s_b + (((e_b-s_b)*cos)>>FX16_SHIFT);
+
+    wk->pal_anime_now[i] = GX_RGB( r, g, b );
+  }
+
+  NNS_GfdRegisterNewVramTransferTask(
+        NNS_GFD_DST_2D_OBJ_PLTT_MAIN,
+        PAL_ANIME_ROW_NOW*0x20 + PAL_ANIME_CLM_START*0x2,
+        wk->pal_anime_now,
+        PAL_ANIME_CLM_NUM*0x2 );
+}
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  パレットアニメーション 選択が変更された直後に呼ぶ開始処理
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _pal_anime_start( PMSIV_MENU* wk, int i )
+{
+  // アニメーションにする
+  //GFL_CLACT_WK_SetPlttOffs( wk->clwk_icon[i], PAL_ANIME_ROW_NOW, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+  GFL_CLACT_WK_SetPlttOffs( wk->clwk_icon[i], PAL_ANIME_ROW_NOW, CLWK_PLTTOFFS_MODE_PLTT_TOP );
+
+  GFL_STD_MemCopy( wk->pal_anime_start, wk->pal_anime_now, PAL_ANIME_CLM_NUM*0x2 );
+  wk->pal_anime_count = 0;
+}
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  パレットアニメーション 選択が変更される直前に呼ぶ終了処理
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void _pal_anime_end( PMSIV_MENU* wk, int i )
+{
+  // 元に戻す
+  //GFL_CLACT_WK_SetPlttOffs( wk->clwk_icon[i], PAL_ANIME_ROW_ORIGINAL, CLWK_PLTTOFFS_MODE_OAM_COLOR );
+  GFL_CLACT_WK_SetPlttOffs( wk->clwk_icon[i], PAL_ANIME_ROW_ORIGINAL, CLWK_PLTTOFFS_MODE_PLTT_TOP );
 }
 
