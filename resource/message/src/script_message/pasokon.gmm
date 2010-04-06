@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-05T20:44:51"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T15:16:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="32" top="207" right="684" bottom="826" maximized="no" rayout="Vertical2">
+	<dialog left="1490" top="210" right="2142" bottom="829" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="477"/>
@@ -419,7 +419,7 @@
 だいじょうぶ　です▼</language>
 		<language name="JPN_KANJI" width="256">殿堂入りの
 データが　壊れています▼
-もういちど　殿堂入り　すれば
+もう一度　殿堂入り　すれば
 大丈夫　です▼</language>
 	</row>
 

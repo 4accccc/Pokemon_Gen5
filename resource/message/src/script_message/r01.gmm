@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-30T18:58:08"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T15:28:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1440" top="326" right="2145" bottom="954" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="101" right="1261" bottom="499" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -545,7 +545,7 @@
 つかまえたか　いってしまった……</language>
 	</row>
 
-	<row id="msg_r01_white_10" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r01_white_10">
 		<comment>♀
 ・msg_r01_white_06表示後
 　T02側に出現
@@ -564,7 +564,7 @@
 捕まえたか　比べてみる？</language>
 	</row>
 
-	<row id="msg_r01_white_11" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r01_white_11">
 		<comment>♀
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -574,7 +574,7 @@
 じゃあ　ここで　待ってるね</language>
 	</row>
 
-	<row id="msg_r01_white_12" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r01_white_12">
 		<comment>♀
 ・はい選択＆3匹以上
 ・0＝捕獲数</comment>
@@ -587,7 +587,7 @@
 そんなに　ポケモン　捕まえたんだ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_white_13" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_r01_white_13">
 		<comment>♀
 ・はい選択＆2匹</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
@@ -601,16 +601,13 @@
 
 	<row id="msg_r01_white_14" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・はい選択＆1匹以下</comment>
+・はい選択＆1匹以下
+・0＝主人公が最初に選んだポケモン</comment>
 		<attribute name="キャラ指定">友達♀</attribute>
-		<language name="JPN" width="256">ベル『いっぴき　なの？[BE:01:ページ切り替え（クリア）]
-その　ちょうしだと
-ポケモンずかんの　かんせいは[BE:00:ページ切り替え（行送り）]
-ちょっと　きびしいかもね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『……１匹なの？[BE:01:ページ切り替え（クリア）]
-その　調子だと
-ポケモン図鑑の　完成は[BE:00:ページ切り替え（行送り）]
-ちょっと　厳しいかもね[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">ベル『もっと　つかまえないと
+[1:01:ポケモン種族名:0]が　さみしくないかなあ？▼</language>
+		<language name="JPN_KANJI" width="256">ベル『もっと　捕まえないと
+[1:01:ポケモン種族名:0]が　さみしくないかなあ？▼</language>
 	</row>
 
 	<row id="msg_r01_black_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -618,11 +615,11 @@
 ・表示後、ＴＶトランシーバーのコール音再生</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『じゃあ
-カラクサタウンに　いこうか[BE:00:ページ切り替え（行送り）]
-はかせも　まっているし[BE:01:ページ切り替え（クリア）]</language>
+カラクサタウンに　いこう[BE:00:ページ切り替え（行送り）]
+はかせも　まっているからね[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">チェレン『じゃあ
-カラクサタウンに　行こうか[BE:00:ページ切り替え（行送り）]
-博士も　待っているし[BE:01:ページ切り替え（クリア）]</language>
+カラクサタウンに　行こう[BE:00:ページ切り替え（行送り）]
+博士も　待っているからね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r01_black_11a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -666,7 +663,8 @@ TVTトランシーバー</attribute>
 	<row id="msg_r01_girl1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・一度も会話していないとき
-　No017「キズぐすり」入手処理（１回）</comment>
+・アイテム入手処理
+　No017「キズぐすり」</comment>
 		<attribute name="キャラ指定">少女</attribute>
 		<language name="JPN" width="256">あなたの　ポケモンさん
 たいりょくは　ばっちり　かしら？[BE:01:ページ切り替え（クリア）]

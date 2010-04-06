@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T15:11:26"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T14:57:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -457,9 +457,9 @@
 たいせつに　あずかっておくので
 また　とりに　きてくださいね！</language>
 		<language name="JPN_KANJI" width="256">と　思いましたが
-ポケモンが　いっぱい　ですね▼
+ポケモンが　一杯ですね▼
 大切に　預かっておくので
-また　とりに　きてくださいね！</language>
+また　取りに　来てくださいね！</language>
 	</row>
 
 	<row id="msg_kaseki_11">
@@ -472,14 +472,14 @@
 	</row>
 
 	<row id="msg_kaseki_select_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>・No595「かめのカセキ」</comment>
+		<comment>・No595「ふたのカセキ」</comment>
 		<attribute name="キャラ指定">選択肢ウインドウ用</attribute>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]</language>
 	</row>
 
 	<row id="msg_kaseki_select_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>・No596「とりのカセキ」</comment>
+		<comment>・No596「はねのカセキ」</comment>
 		<attribute name="キャラ指定">選択肢ウインドウ用</attribute>
 		<language name="JPN" width="256">[1:09:どうぐ名:1]</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:1]</language>
@@ -533,7 +533,7 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_kaseki_12" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_kaseki_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・盗難イベント発生時
 ・通常時はカセキの復元</comment>
