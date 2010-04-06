@@ -423,12 +423,12 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
   {
   case 0:
     GFL_FADE_SetMasterBrightReq(
-        GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, -1 );
+        GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, FLASH_SPEED );
     (*seq)++;
   case 1:
     if( GFL_FADE_CheckFade() == FALSE ){
       GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, -1 );
+          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, FLASH_SPEED );
       (*seq)++;
     }
     break;
@@ -438,7 +438,7 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
       
       if( work->count < 3 ){
         GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, -1 );
+          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, FLASH_SPEED );
         (*seq) = 1;
       }
       else

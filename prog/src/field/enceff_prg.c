@@ -187,12 +187,12 @@ static GMEVENT_RESULT MainEvt( GMEVENT* event, int* seq, void* work )
   switch(*seq){
   case 0:
     GFL_FADE_SetMasterBrightReq(
-        GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, -1 );
+        GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, FLASH_SPEED );
     (*seq)++;
   case 1:
     if( GFL_FADE_CheckFade() == FALSE ){
       GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, -1 );
+          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 16, 0, FLASH_SPEED );
       (*seq)++;
     }
     break;
@@ -202,7 +202,7 @@ static GMEVENT_RESULT MainEvt( GMEVENT* event, int* seq, void* work )
       
       if( evt_work->BrightCount < 3 ){
         GFL_FADE_SetMasterBrightReq(
-          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, -1 );
+          GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, FLASH_SPEED );
         (*seq) = 1;
       }else{
 				(*seq)++;

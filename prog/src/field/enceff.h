@@ -14,6 +14,8 @@
 
 #include "enceffno_def.h"
 
+#define FLASH_SPEED (0)   //フェードフラッシュのスピード
+
 typedef struct ENCEFF_CNT_tag * ENCEFF_CNT_PTR;
 
 extern ENCEFF_CNT_PTR ENCEFF_CreateCntPtr(const HEAPID inHeapID, FIELDMAP_WORK * fieldmap);
