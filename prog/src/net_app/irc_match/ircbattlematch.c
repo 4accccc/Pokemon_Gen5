@@ -355,7 +355,7 @@ enum{
 
 
 
-#ifdef _NET_DEBUG
+#if _NET_DEBUG
 #define   _CHANGE_STATE(pWork, state)  _changeStateDebug(pWork ,state, __LINE__)
 #else  //_NET_DEBUG
 #define   _CHANGE_STATE(pWork, state)  _changeState(pWork ,state)
