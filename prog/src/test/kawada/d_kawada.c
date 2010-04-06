@@ -1068,7 +1068,6 @@ static void EggDemoInit( KAWADA_MAIN_WORK* wk )
 {
   u16 monsno = MONSNO_KAMEKKUSU;
 
-  GFL_OVERLAY_Load(FS_OVERLAY_ID(egg_demo));
   ZONEDATA_Open( wk->heapID );
 
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )  monsno = MONSNO_MANAFI;
@@ -1086,7 +1085,6 @@ static void EggDemoExit( KAWADA_MAIN_WORK* wk )
   GFL_HEAP_FreeMemory( wk->pp );
 
   ZONEDATA_Close();
-  GFL_OVERLAY_Unload(FS_OVERLAY_ID(egg_demo));
 }
 
 // êiâªÉfÉÇ
