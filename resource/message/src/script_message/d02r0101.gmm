@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T18:29:53"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T14:07:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -354,10 +354,10 @@
 ・GRIDX=78、GRIDZ=74</comment>
 		<attribute name="キャラ指定">ＨＡＫＡＩＭ
 プラズマ団♂</attribute>
-		<language name="JPN" width="256">ひとは　なぜ
-ポケモンを　したがえるのか？</language>
-		<language name="JPN_KANJI" width="256">ひとは　なぜ
-ポケモンを　従えるのか？</language>
+		<language name="JPN" width="256">おまえらは　ポケモンと　はなれる
+もう　いっしょに　あそぶこともない！</language>
+		<language name="JPN_KANJI" width="256">おまえらは　ポケモンと　離れる
+もう　一緒に　遊ぶこともない！</language>
 	</row>
 
 	<row id="msg_d02r0101_hakaiw_stop1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -853,13 +853,13 @@
 		<attribute name="キャラ指定">C03ジムリーダー
 アーティ</attribute>
 		<language name="JPN" width="256">アーティ『いやあ……▼
-ぬすまれた　ものは　とりかえしたし
+ぬすまれた　ホネは　とりかえしたし
 あんまり　おいつめると▽
 なにを　しでかすか　わかんないです▼
 じゃあ　アロエねえさん
 ボク　もどりますから……▼</language>
 		<language name="JPN_KANJI" width="256">アーティ『いやあ……▼
-盗まれた　物は　取り返したし
+盗まれた　ホネは　取り返したし
 あんまり　追い詰めると▽
 なにを　しでかすか　わかんないです▼
 じゃあ　アロエねえさん
@@ -1010,8 +1010,8 @@
 		<attribute name="キャラ指定">苔生した岩</attribute>
 		<language name="JPN" width="256">ひょうめんが　コケで　おおわれている
 さわると　なんとなく　きもちいい</language>
-		<language name="JPN_KANJI" width="256">ひょうめんが　コケで　おおわれている
-さわると　なんとなく　きもちいい</language>
+		<language name="JPN_KANJI" width="256">表面が　コケで　覆われている
+触ると　なんとなく　気持ちいい</language>
 	</row>
 
 	<row id="msg_d02r0101_sign1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,,,,,,,,,,,,,">
