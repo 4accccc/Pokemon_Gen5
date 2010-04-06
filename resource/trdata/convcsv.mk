@@ -17,6 +17,7 @@ include user.def
 NO_HEADER = trno_def.h
 TYPE_HEADER = trtype_def.h
 GENDER_HEADER = trtype_sex.h
+GRA_HEADER = trtype_gra.h
 NAME_GMMFILE = trname.gmm
 TYPE_GMMFILE = trtype.gmm
 HASH = trtype_hash.rb
@@ -30,6 +31,7 @@ TARGETDIR	= ../../prog/include/tr_tool/
 GMMDIR	= ../../resource/message/src/
 GRADIR	= ../../resource/trgra/
 HASHDIR	= ../../tools/hash/
+GRAHEADERDIR	= ../../prog/src/system/
 
 #------------------------------------------------------------------------------
 #※サブディレクトリでもMakeしたい場合、ここにディレクトリ名を書く
@@ -47,9 +49,9 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)$(NO_HEADER) $(TARGETDIR)$(TYPE_HEADER) $(TARGETDIR)$(GENDER_HEADER) $(GMMDIR)$(NAME_GMMFILE) $(GMMDIR)$(TYPE_GMMFILE) $(HASHDIR)$(HASH)
+LDIRT_CLEAN = $(TARGETDIR)$(NO_HEADER) $(TARGETDIR)$(TYPE_HEADER) $(TARGETDIR)$(GENDER_HEADER) $(GMMDIR)$(NAME_GMMFILE) $(GMMDIR)$(TYPE_GMMFILE) $(HASHDIR)$(HASH) $(GRAHEADERDIR)$(GRA_HEADER)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-LDIRT_CLEAN += *.s $(NO_HEADER) $(TYPE_HEADER) $(GENDER_HEADER) $(NAME_GMMFILE) $(TYPE_GMMFILE) $(HASH) *.scr out_end
+LDIRT_CLEAN += *.s $(NO_HEADER) $(TYPE_HEADER) $(GENDER_HEADER) $(NAME_GMMFILE) $(TYPE_GMMFILE) $(HASH) $(GRA_HEADER) *.scr out_end
 endif
 
 .PHONY:	do-build
@@ -65,10 +67,10 @@ do-build: out_end
 
 out_end: trainer_wb.csv
 	ruby ../../tools/trdata_conv/trdata_conv.rb $< ../message/template.gmm
-	ruby ../../tools/trdata_conv/file_exist.rb $(LSTFILE) ../../../pokemon_wb_doc/trgra/
+#	ruby ../../tools/trdata_conv/file_exist.rb $(LSTFILE) ../../../pokemon_wb_doc/trgra/
 endif
 
-do-build: $(TARGETDIR)$(NO_HEADER) $(TARGETDIR)$(TYPE_HEADER) $(TARGETDIR)$(GENDER_HEADER) $(GMMDIR)$(NAME_GMMFILE) $(GMMDIR)$(TYPE_GMMFILE) $(GRADIR)$(SCRFILE) $(HASHDIR)$(HASH)
+do-build: $(TARGETDIR)$(NO_HEADER) $(TARGETDIR)$(TYPE_HEADER) $(TARGETDIR)$(GENDER_HEADER) $(GMMDIR)$(NAME_GMMFILE) $(GMMDIR)$(TYPE_GMMFILE) $(GRADIR)$(SCRFILE) $(HASHDIR)$(HASH) $(GRAHEADERDIR)$(GRA_HEADER)
 
 $(TARGETDIR)$(NO_HEADER):	$(NO_HEADER)
 	$(COPY)	$(NO_HEADER) $(TARGETDIR)
@@ -90,4 +92,7 @@ $(GRADIR)$(SCRFILE):	$(SCRFILE)
 
 $(HASHDIR)$(HASH):	$(HASH)
 	$(COPY)	$(HASH) $(HASHDIR)
+
+$(GRAHEADERDIR)$(GRA_HEADER):	$(GRA_HEADER)
+	$(COPY)	$(GRA_HEADER) $(GRAHEADERDIR)
 

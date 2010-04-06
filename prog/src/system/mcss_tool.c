@@ -111,17 +111,14 @@ void	MCSS_TOOL_MakeMAWParam( int	mons_no, int form_no, int sex, int rare, BOOL e
 //============================================================================================
 void	MCSS_TOOL_MakeMAWTrainer( int	tr_type, MCSS_ADD_WORK *maw, int dir )
 {
-	int	file_start = TRGRA_FILE_MAX * tr_type;	//トレーナータイプからファイルのオフセットを計算
-	int	file_offset = 0;	//向きの計算（現状はない）
-
-	maw->arcID = ARCID_TRFGRA;
-	maw->ncbr = file_start + file_offset + TRGRA_NCBR;
-	maw->nclr = file_start + file_offset + TRGRA_NCLR;
-	maw->ncer = file_start + file_offset + TRGRA_NCER;
-	maw->nanr = file_start + file_offset + TRGRA_NANR;
-	maw->nmcr = file_start + file_offset + TRGRA_NMCR;
-	maw->nmar = file_start + file_offset + TRGRA_NMAR;
-	maw->ncec = file_start + file_offset + TRGRA_NCEC;
+	maw->arcID = TRGRA_GetArcID();
+	maw->ncbr = TRGRA_GetCbrArcIndex( tr_type );
+	maw->nclr = TRGRA_GetPalArcIndex( tr_type );
+	maw->ncer = TRGRA_GetCelArcIndex( tr_type );
+	maw->nanr = TRGRA_GetAnmArcIndex( tr_type );
+	maw->nmcr = TRGRA_GetMCelArcIndex( tr_type );
+	maw->nmar = TRGRA_GetMAnmArcIndex( tr_type );
+	maw->ncec = TRGRA_GetNcecArcIndex( tr_type );
 }
 
 //----------------------------------------------------------------------------

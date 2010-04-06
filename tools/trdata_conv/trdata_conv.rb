@@ -270,6 +270,22 @@ end
 	fp_trtypesex.print( "\tPTL_SEX_MALE,		//男主人公\n" )
 	fp_trtypesex.print( "\tPTL_SEX_FEMALE,	//女主人公\n" )
 
+	#トレーナーグラフィックインデックスファイル生成
+	fp_trtypegra = open( "trtype_gra.h", "w" )
+
+  fp_trtypegra.print( "//============================================================================================\n" )
+  fp_trtypegra.print( "/**\n" )
+  fp_trtypegra.print( " * @file	trtype_gra.h\n" )
+	fp_trtypegra.print( " * @bfief	トレーナーグラフィックインデックスファイル定義\n")
+  fp_trtypegra.print( " * @author	TrainerDataConverter\n" )
+	fp_trtypegra.print( " * @author	このファイルは、コンバータが吐き出したファイルです\n" )
+  fp_trtypegra.print( "*/\n")
+  fp_trtypegra.print( "//============================================================================================\n" )
+  fp_trtypegra.print( "\n#pragma once\n\n" )
+	fp_trtypegra.print( "static	const	u8	TrTypeGraTable[]={\n" )
+	fp_trtypegra.print( "\t0, //男主人公\n" )
+	fp_trtypegra.print( "\t1,	//女主人公\n" )
+
 	#gmmファイル生成
   gmm_name = GMM::new
   gmm_type = GMM::new
@@ -432,7 +448,8 @@ end
       cnt += 1
     }
 		if flag == 0
-      trainer[ cnt ] = [ str, split_data[ PARA::TR_TYPE ], gender[ split_data[ PARA::GENDER ] ], split_data[ PARA::TR_ID ][ 0..split_data[ PARA::TR_ID ].size - 4 ], split_data[ PARA::TR_TYPE ] ]
+      label = split_data[ PARA::TR_ID ][ 0..(split_data[ PARA::TR_ID ].index("_")-1) ]
+      trainer[ cnt ] = [ str, split_data[ PARA::TR_TYPE ], gender[ split_data[ PARA::GENDER ] ], label, split_data[ PARA::TR_TYPE ] ]
       tr_type[ str ] = cnt + 2
     end
 
@@ -445,7 +462,7 @@ end
 	  }
 
     4.times { |no|
-			if split_data[ PARA::USE_ITEM1 + no ] != ""
+			if split_data[ PARA::USE_ITEM1 + no ] != "" && split_data[ PARA::USE_ITEM1 + no ] != nil
         item = $item_hash[ split_data[ PARA::USE_ITEM1 + no ] ]
 			else
         item = 0
@@ -564,16 +581,30 @@ end
   }
 
   no = 2
+  trfgra = []
   trainer.size.times { |i|
     fp_trgra.printf( "trwb_%s,%s\n", trainer[ i ][ TR::LABEL ], trainer[ i ][ TR::GENDER ] )
-    fp_trfgra.printf( "\"trwb_%s.NCGR\"\n", trainer[ i ][ TR::LABEL ] )
-    fp_trfgra.printf( "\"trwb_%s.NCBR\"\n", trainer[ i ][ TR::LABEL ] )
-    fp_trfgra.printf( "\"trwb_%s.NCER\"\n", trainer[ i ][ TR::LABEL ] )
-    fp_trfgra.printf( "\"trwb_%s.NANR\"\n", trainer[ i ][ TR::LABEL ] )
-    fp_trfgra.printf( "\"trwb_%s.NMCR\"\n", trainer[ i ][ TR::LABEL ] )
-    fp_trfgra.printf( "\"trwb_%s.NMAR\"\n", trainer[ i ][ TR::LABEL ] )
-    fp_trfgra.printf( "\"trwb_%s.NCEC\"\n", trainer[ i ][ TR::LABEL ] )
-    fp_trfgra.printf( "\"trwb_%s.NCLR\"\n", trainer[ i ][ TR::LABEL ] )
+    find = 0
+    idx = 2
+    trfgra.size.times {|j|
+      if trfgra[ j ] == trainer[ i ][ TR::LABEL ]
+        find = 1
+        break
+      end
+      idx += 1
+    }
+    if find == 0
+      fp_trfgra.printf( "\"trwb_%s.NCGR\"\n", trainer[ i ][ TR::LABEL ] )
+      fp_trfgra.printf( "\"trwb_%s.NCBR\"\n", trainer[ i ][ TR::LABEL ] )
+      fp_trfgra.printf( "\"trwb_%s.NCER\"\n", trainer[ i ][ TR::LABEL ] )
+      fp_trfgra.printf( "\"trwb_%s.NANR\"\n", trainer[ i ][ TR::LABEL ] )
+      fp_trfgra.printf( "\"trwb_%s.NMCR\"\n", trainer[ i ][ TR::LABEL ] )
+      fp_trfgra.printf( "\"trwb_%s.NMAR\"\n", trainer[ i ][ TR::LABEL ] )
+      fp_trfgra.printf( "\"trwb_%s.NCEC\"\n", trainer[ i ][ TR::LABEL ] )
+      fp_trfgra.printf( "\"trwb_%s.NCLR\"\n", trainer[ i ][ TR::LABEL ] )
+      trfgra << trainer[ i ][ TR::LABEL ]
+    end
+    fp_trtypegra.printf( "\t%d,\t\t//%s\n", idx, trainer[ i ][ TR::STR ] )
 		fp_trtype.printf( "#define	%s    ( %d )    //%s\n", trainer[ i ][ TR::TRTYPE ].upcase, no, trainer[ i ][ TR::STR_HASH ] )
     str = "MSG_" + trainer[ i ][ TR::TRTYPE ]
     gmm_type.make_row_kanji( str, trainer[ i ][ TR::STR ], trainer[ i ][ TR::STR ] )
@@ -590,6 +621,10 @@ end
 	fp_trgra.close
 	fp_trfgra.close
 	fp_trtype.close
+
+	fp_trtypegra.print( "};\n" )
+	fp_trtypegra.print( "\n" )
+	fp_trtypegra.close
 
 	fp_trtypesex.print( "};\n" )
 	fp_trtypesex.print( "\n" )

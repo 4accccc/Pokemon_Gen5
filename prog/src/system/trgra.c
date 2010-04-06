@@ -22,6 +22,8 @@
 //外部参照
 #include "system/trgra.h"
 
+#include "trtype_gra.h"
+
 //=============================================================================
 /**
  *					定数宣言
@@ -46,6 +48,7 @@ enum{
  *					プロトタイプ宣言
 */
 //=============================================================================
+static  inline  const u8 get_gra_index( int tr_type );
 
 //=============================================================================
 /**
@@ -74,7 +77,7 @@ ARCID TRGRA_GetArcID( void )
 //-----------------------------------------------------------------------------
 ARCDATID TRGRA_GetCgrArcIndex( int tr_type )
 {	
-	int	file_start = TRGRA_FILE_MAX * tr_type;	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NCGR;
 }
@@ -90,7 +93,7 @@ ARCDATID TRGRA_GetCgrArcIndex( int tr_type )
 //-----------------------------------------------------------------------------
 ARCDATID TRGRA_GetCbrArcIndex( int tr_type )
 {	
-	int	file_start = TRGRA_FILE_MAX * tr_type;	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NCBR;
 }
@@ -106,7 +109,7 @@ ARCDATID TRGRA_GetCbrArcIndex( int tr_type )
 //-----------------------------------------------------------------------------
 ARCDATID TRGRA_GetPalArcIndex( int tr_type )
 {	
-	int	file_start = TRGRA_FILE_MAX * tr_type;	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NCLR;
 }
@@ -122,7 +125,7 @@ ARCDATID TRGRA_GetPalArcIndex( int tr_type )
 //-----------------------------------------------------------------------------
 ARCDATID TRGRA_GetCelArcIndex( int tr_type )
 {	
-	int	file_start = TRGRA_FILE_MAX * tr_type;	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NCER;
 }
@@ -138,7 +141,7 @@ ARCDATID TRGRA_GetCelArcIndex( int tr_type )
 //-----------------------------------------------------------------------------
 ARCDATID TRGRA_GetAnmArcIndex( int tr_type )
 {	
-	int	file_start = TRGRA_FILE_MAX * tr_type;	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NANR;
 }
@@ -154,7 +157,7 @@ ARCDATID TRGRA_GetAnmArcIndex( int tr_type )
 //-----------------------------------------------------------------------------
 ARCDATID TRGRA_GetMCelArcIndex( int tr_type )
 {	
-	int	file_start = TRGRA_FILE_MAX * tr_type;	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NMCR;
 }
@@ -170,9 +173,9 @@ ARCDATID TRGRA_GetMCelArcIndex( int tr_type )
 //-----------------------------------------------------------------------------
 ARCDATID TRGRA_GetMAnmArcIndex( int tr_type )
 {	
-	int	file_start = TRGRA_FILE_MAX * tr_type;	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
 
-	return file_start + TRGRA_NMCR;
+	return file_start + TRGRA_NMAR;
 }
 
 //----------------------------------------------------------------------------
@@ -186,8 +189,19 @@ ARCDATID TRGRA_GetMAnmArcIndex( int tr_type )
 //-----------------------------------------------------------------------------
 ARCDATID TRGRA_GetNcecArcIndex( int tr_type )
 {	
-	int	file_start = TRGRA_FILE_MAX * tr_type;	//トレーナータイプからファイルのオフセットを計算
+	int	file_start = TRGRA_FILE_MAX * get_gra_index( tr_type );	//トレーナータイプからファイルのオフセットを計算
 
 	return file_start + TRGRA_NCEC;
 }
 
+static  inline  const u8 get_gra_index( int tr_type )
+{ 
+  GF_ASSERT( NELEMS( TrTypeGraTable ) > tr_type );
+
+  if( NELEMS( TrTypeGraTable ) < tr_type )
+  { 
+    return 0;
+  }
+
+  return TrTypeGraTable[ tr_type ];
+}

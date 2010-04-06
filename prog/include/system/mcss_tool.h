@@ -13,6 +13,7 @@
 #include "system/mcss.h"
 #include "poke_tool/poke_tool.h"
 #include "system/pokegra.h"
+#include "system/trgra.h"
 
 typedef enum
 { 
