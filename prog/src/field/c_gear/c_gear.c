@@ -198,47 +198,52 @@ typedef struct {
 #define _SLEEP_START_TIME_WAIT (16)
 
 
-#define _WAIT (3)
+// スリープ復帰アニメ
+enum{
+  BOOT_ANIME_SEQ_ALL_ON,
+  BOOT_ANIME_SEQ_ALL_WAIT,
+  BOOT_ANIME_SEQ_SMOOTHIN_MAIN,
+  BOOT_ANIME_SEQ_END,
+};
 
 // スリープ復帰
 const static _ANIM_DATA screenTable[]={
-  { 0+_WAIT, 4, 1, 6+_WAIT},
+  { 0, 0, 0, 11},
+  { 0, 0, 1, 11},
+  { 0, 0, 2, 11},
+  { 0, 8, 0, 11},
+  { 0, 8, 1, 11},
+  { 0, 8, 2, 11},
 
-  { 1+_WAIT, 4, 0, 7+_WAIT},
-  { 1+_WAIT, 4, 2, 7+_WAIT},
+  { 1, 1, 0, 10},
+  { 1, 1, 1, 10},
+  { 1, 1, 2, 10},
+  { 1, 1, 3, 10},
+  { 1, 7, 0, 10},
+  { 1, 7, 1, 10},
+  { 1, 7, 2, 10},
+  { 1, 7, 3, 10},
 
-  { 2+_WAIT, 3, 0, 8+_WAIT},
-  { 2+_WAIT, 3, 1, 8+_WAIT},
-  { 2+_WAIT, 3, 2, 8+_WAIT},
-  { 2+_WAIT, 3, 3, 8+_WAIT},
-  { 2+_WAIT, 5, 0, 8+_WAIT},
-  { 2+_WAIT, 5, 1, 8+_WAIT},
-  { 2+_WAIT, 5, 2, 8+_WAIT},
-  { 2+_WAIT, 5, 3, 8+_WAIT},
+  { 2, 2, 0, 9},
+  { 2, 2, 1, 9},
+  { 2, 2, 2, 9},
+  { 2, 6, 0, 9},
+  { 2, 6, 1, 9},
+  { 2, 6, 2, 9},
 
-  { 3+_WAIT, 2, 0, 9+_WAIT},
-  { 3+_WAIT, 2, 1, 9+_WAIT},
-  { 3+_WAIT, 2, 2, 9+_WAIT},
-  { 3+_WAIT, 6, 0, 9+_WAIT},
-  { 3+_WAIT, 6, 1, 9+_WAIT},
-  { 3+_WAIT, 6, 2, 9+_WAIT},
+  { 3, 3, 0, 8},
+  { 3, 3, 1, 8},
+  { 3, 3, 2, 8},
+  { 3, 3, 3, 8},
+  { 3, 5, 0, 8},
+  { 3, 5, 1, 8},
+  { 3, 5, 2, 8},
+  { 3, 5, 3, 8},
 
-  { 4+_WAIT, 1, 0, 10+_WAIT},
-  { 4+_WAIT, 1, 1, 10+_WAIT},
-  { 4+_WAIT, 1, 2, 10+_WAIT},
-  { 4+_WAIT, 1, 3, 10+_WAIT},
-  { 4+_WAIT, 7, 0, 10+_WAIT},
-  { 4+_WAIT, 7, 1, 10+_WAIT},
-  { 4+_WAIT, 7, 2, 10+_WAIT},
-  { 4+_WAIT, 7, 3, 10+_WAIT},
+  { 4, 4, 0, 7},
+  { 4, 4, 2, 7},
 
-  { 5+_WAIT, 0, 0, 11+_WAIT},
-  { 5+_WAIT, 0, 1, 11+_WAIT},
-  { 5+_WAIT, 0, 2, 11+_WAIT},
-  { 5+_WAIT, 8, 0, 11+_WAIT},
-  { 5+_WAIT, 8, 1, 11+_WAIT},
-  { 5+_WAIT, 8, 2, 11+_WAIT},
-
+  { 5, 4, 1, 6},
 };
 
 // 起動アニメ
@@ -315,6 +320,58 @@ enum
 };
 
 
+//-------------------------------------
+///	パネルのカラーアニメ
+//=====================================
+enum{
+
+  // アニメタイプ
+  PANEL_ANIME_TYPE_ON_OFF = 0,
+  PANEL_ANIME_TYPE_ON,
+  PANEL_ANIME_TYPE_OFF,
+  PANEL_ANIME_TYPE_MAX,
+
+  // カラータイプ
+  PANEL_COLOR_TYPE_NONE = 0,
+  PANEL_COLOR_TYPE_RED,
+  PANEL_COLOR_TYPE_YELLOW,
+  PANEL_COLOR_TYPE_BLUE,
+  PANEL_COLOR_TYPE_BASE,
+  PANEL_COLOR_TYPE_MAX,
+
+  // アニメーション段階
+  PANEL_COLOR_PATTERN_NUM = 5,
+
+  // アニメーションフレーム
+  PANEL_ANIME_DEF_FRAME = 2,
+  
+
+};
+static const u8 sc_PANEL_COLOR_ANIME_END_INDEX[] = { 0, 1, 2, 3, 4, 3, 2, 1, 0 };
+// カラーPATTERN情報
+static const u8 sc_PANEL_COLOR_ANIME_TBL[ PANEL_COLOR_TYPE_MAX ][ PANEL_COLOR_PATTERN_NUM ] = 
+{
+  // NONE
+  { 0x9, 0x9, 0x9, 0x9, 0x9 },
+  // RED
+  { 0x1, 0x1, 0x1, 0x1, 0x1 },
+  // YELLOW
+  { 0x2, 0x2, 0x2, 0x2, 0x2 },
+  // BLUE
+  { 0x3, 0x3, 0x3, 0x3, 0x3 },
+  // BASE
+  { 0x7, 0x6, 0x5, 0x4, 0xb },
+};
+// カラータイプのパネルタイプ
+static const u16 sc_PANEL_TYPE_TO_COLOR[] = {
+  PANEL_COLOR_TYPE_NONE,
+  PANEL_COLOR_TYPE_RED,
+  PANEL_COLOR_TYPE_YELLOW,
+  PANEL_COLOR_TYPE_BLUE,
+  PANEL_COLOR_TYPE_BASE,
+  PANEL_COLOR_TYPE_BASE,
+};
+
 //-------------------------------------------------------------------------
 ///	文字表示色定義(default)	-> gflib/fntsys.hへ移動
 //------------------------------------------------------------------
@@ -336,6 +393,20 @@ enum
 
 typedef void (StateFunc)(C_GEAR_WORK* pState);
 typedef BOOL (TouchFunc)(int no, C_GEAR_WORK* pState);
+
+//-------------------------------------
+///	パネル　マーク　アニメ
+//=====================================
+typedef struct {
+  u16 anime_on:1;
+  u16 count:15;
+  u16 one_frame;
+  u8  color;
+  u8  end_anime_index;
+  u8  x;
+  u8  y;
+} PANEL_MARK_ANIME;
+
 
 
 struct _C_GEAR_WORK {
@@ -377,6 +448,9 @@ struct _C_GEAR_WORK {
   u16 palChangeCol[_CGEAR_NET_PALTYPE_MAX][_CGEAR_NET_CHANGEPAL_NUM];
   u16 tpx;
   u16 tpy;
+
+  // パネル
+  PANEL_MARK_ANIME panel_mark[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
 
   u8 typeAnim[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
 
@@ -422,7 +496,7 @@ static void _setUpSubAlpha( C_GEAR_WORK* pWork );
 // スクリーン操作
 static void _gearPanelBgScreenMake(C_GEAR_WORK* pWork,int xs,int ys, CGEAR_PANELTYPE_ENUM type,BOOL bNoneWrite);
 static void _gearBootInitScreen(C_GEAR_WORK* pWork);
-static void _gearBootMain(C_GEAR_WORK* pWork);
+static BOOL _gearBootMain(C_GEAR_WORK* pWork);
 static BOOL _gearStartUpMain(C_GEAR_WORK* pWork);
 
 static void _timeAnimation(C_GEAR_WORK* pWork);
@@ -450,6 +524,17 @@ static void _PaletteMake(C_GEAR_WORK* pWork,const u16* pltt,int type);
 static void _PanelPaletteChange(C_GEAR_WORK* pWork);
 static void _PanelPaletteUpdate( C_GEAR_WORK* pWork );
 static void _PanelPaletteColorSetUp( C_GEAR_WORK* pWork );
+
+
+static void _PanelMarkAnimeSysInit( C_GEAR_WORK* pWork );
+static void _PanelMarkAnimeSysMain( C_GEAR_WORK* pWork );
+static BOOL _PanelMarkAnimeSysIsAnime( const C_GEAR_WORK* cpWork );
+
+static void _PanelMarkAnimeInit( PANEL_MARK_ANIME* p_mark, int x, int y );
+static void _PanelMarkAnimeStart( PANEL_MARK_ANIME* p_mark, C_GEAR_WORK* pWork, u8 color_type, u8 anime_type, CGEAR_PANELTYPE_ENUM panel_type, u16 frame );
+static void _PanelMarkAnimeMain( PANEL_MARK_ANIME* p_mark, const C_GEAR_WORK* cp_work );
+static void _PanelMarkAnimeWriteScreen( const PANEL_MARK_ANIME* cp_mark, u32 anime_index );
+static BOOL _PanelMarkAnimeIsAnime( const PANEL_MARK_ANIME* cp_mark );
 
 // 選択アニメ
 static void _modeSelectAnimInit(C_GEAR_WORK* pWork);
@@ -878,6 +963,195 @@ static void _PaletteSetColType( C_GEAR_WORK* pWork, int panel,int type )
 
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パネルマークアニメシステム　初期化
+ *
+ *	@param	pWork   
+ */
+//-----------------------------------------------------------------------------
+static void _PanelMarkAnimeSysInit( C_GEAR_WORK* pWork )
+{
+  int i, j;
+  for( i=0; i<C_GEAR_PANEL_WIDTH; i++ ){
+    for( j=0; j<C_GEAR_PANEL_HEIGHT; j++ ){
+      _PanelMarkAnimeInit( &pWork->panel_mark[i][j], i, j );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パネルマーク　アニメシステム　メイン
+ */
+//-----------------------------------------------------------------------------
+static void _PanelMarkAnimeSysMain( C_GEAR_WORK* pWork )
+{
+  int i, j;
+  for( i=0; i<C_GEAR_PANEL_WIDTH; i++ ){
+    for( j=0; j<C_GEAR_PANEL_HEIGHT; j++ ){
+      _PanelMarkAnimeMain( &pWork->panel_mark[i][j], pWork );
+    }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パネルマーク　アニメシステム　メイン
+ *
+ *	@retval TRUE  アニメ中
+ *	@retval FALSE  アニメ完了
+ */
+//-----------------------------------------------------------------------------
+static BOOL _PanelMarkAnimeSysIsAnime( const C_GEAR_WORK* cpWork )
+{
+  int i, j;
+  BOOL result = FALSE;
+  for( i=0; i<C_GEAR_PANEL_WIDTH; i++ ){
+    for( j=0; j<C_GEAR_PANEL_HEIGHT; j++ ){
+      if( _PanelMarkAnimeIsAnime( &cpWork->panel_mark[i][j] ) ){
+        result = TRUE;
+        break;
+      }
+    }
+  }
+
+  return result;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パネルマークのスクリーンパレットアニメーション  初期化
+ *
+ *	@param	p_mark      マークワーク
+ *	@param  x           インデックスｘ
+ *	@param  y           インデックスｙ
+ */
+//-----------------------------------------------------------------------------
+static void _PanelMarkAnimeInit( PANEL_MARK_ANIME* p_mark, int x, int y )
+{
+  GFL_STD_MemClear( p_mark, sizeof(PANEL_MARK_ANIME) );
+
+  p_mark->x = x;
+  p_mark->y = y;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パネルマークのスクリーンパレットアニメーション　開始
+ *
+ *	@param	p_mark        マークワーク
+ *	@param	color_type    カラータイプ
+ *	@param  panel_type    パネルタイプ
+ *	@param	anime_type    アニメタイプ
+ */
+//-----------------------------------------------------------------------------
+static void _PanelMarkAnimeStart( PANEL_MARK_ANIME* p_mark, C_GEAR_WORK* pWork, u8 color_type, u8 anime_type, CGEAR_PANELTYPE_ENUM panel_type, u16 frame )
+{
+  GF_ASSERT( color_type < PANEL_COLOR_TYPE_MAX );
+  GF_ASSERT( anime_type < PANEL_ANIME_TYPE_MAX );
+  
+  p_mark->count       = 0;
+  p_mark->color       = color_type;
+  p_mark->anime_on    = TRUE;
+  p_mark->one_frame   = frame;
+
+  if( anime_type == PANEL_ANIME_TYPE_ON_OFF ){
+    p_mark->end_anime_index  = 0;  // アニメーションインデックスの終了値
+  }else if( anime_type == PANEL_ANIME_TYPE_ON ){
+    p_mark->end_anime_index  = PANEL_COLOR_PATTERN_NUM-1;  // アニメーションインデックスの終了値
+  }else if( anime_type == PANEL_ANIME_TYPE_OFF ){
+    // 0, 1, 2, 3, 4, 3, 2, 1, 0
+    p_mark->end_anime_index  = sc_PANEL_COLOR_ANIME_END_INDEX[ p_mark->x ];  // アニメーションインデックスの終了値
+    p_mark->count       = frame * PANEL_COLOR_PATTERN_NUM;
+  }
+
+  // color用のパネルを書き込み。
+  _gearPanelBgScreenMake(pWork, p_mark->x, p_mark->y, panel_type, FALSE);
+  _PanelMarkAnimeWriteScreen( p_mark, p_mark->count/frame );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パネルマークのスクリーンパレットアニメーション　メイン
+ *
+ *	@param	p_mark      マークワーク
+ *	@param	cp_work     ワーク
+ */
+//-----------------------------------------------------------------------------
+static void _PanelMarkAnimeMain( PANEL_MARK_ANIME* p_mark, const C_GEAR_WORK* cp_work )
+{
+  u32 anime_index;
+  BOOL screen_write;
+  
+  if( p_mark->anime_on ){
+
+    p_mark->count ++;
+
+    anime_index = p_mark->count / p_mark->one_frame;
+    screen_write = FALSE;
+
+    
+    // アニメインデックスがPANEL_COLOR_PATTERN_NUMまでは、同じ
+    if( (anime_index >= PANEL_COLOR_PATTERN_NUM) ){
+      anime_index = (PANEL_COLOR_PATTERN_NUM-1) - (anime_index % PANEL_COLOR_PATTERN_NUM);
+
+      // 終了チェック
+      if( anime_index == p_mark->end_anime_index ){
+        p_mark->anime_on = FALSE;
+      }
+    }
+
+    if( (anime_index < PANEL_COLOR_PATTERN_NUM) && 
+        ((p_mark->count % p_mark->one_frame) == 0) ){
+      //スクリーン書き換え
+      screen_write = TRUE;
+    }
+
+    if( screen_write ){
+      _PanelMarkAnimeWriteScreen( p_mark, anime_index );
+    }
+  }
+  
+  // 
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スクリーンのパレット切り替え
+ */
+//-----------------------------------------------------------------------------
+static void _PanelMarkAnimeWriteScreen( const PANEL_MARK_ANIME* cp_mark, u32 anime_index )
+{
+  int scrn_x, scrn_y;
+  u32 pal_index;
+
+  pal_index    = sc_PANEL_COLOR_ANIME_TBL[ cp_mark->color ][ anime_index ];
+
+  _gearXY2PanelScreen(cp_mark->x, cp_mark->y, &scrn_x, &scrn_y );
+  
+  GFL_BG_ChangeScreenPalette( GEAR_BUTTON_FRAME, 
+      scrn_x, scrn_y, PANEL_SIZEXY, PANEL_SIZEXY, pal_index );
+
+  GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アニメーション中チェック
+ *
+ *	@param	cp_mark 
+ */
+//-----------------------------------------------------------------------------
+static BOOL _PanelMarkAnimeIsAnime( const PANEL_MARK_ANIME* cp_mark )
+{
+  return cp_mark->anime_on;
+}
+
+
+
 
 
 //------------------------------------------------------------------------------
@@ -942,22 +1216,6 @@ static void _PFadeFromBlack( C_GEAR_WORK* pWork )
 
 
 
-static BOOL _IsGearBootMain(C_GEAR_WORK* pWork)
-{
-  if(pWork->startCounter>=20+_WAIT){
-    return FALSE;
-  }
-  return TRUE;
-}
-
-static BOOL _IsGearNormalDisp(C_GEAR_WORK* pWork)
-{
-  if(pWork->startCounter < 5+_WAIT){
-    return TRUE;
-  }
-  return FALSE;
-}
-
 static void _gearBootInitScreen(C_GEAR_WORK* pWork)
 {
   int i;
@@ -974,34 +1232,72 @@ static void _gearBootInitScreen(C_GEAR_WORK* pWork)
 
 
 
-static void _gearBootMain(C_GEAR_WORK* pWork)
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スリープ復帰アニメ
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static BOOL _gearBootMain(C_GEAR_WORK* pWork)
 {
   int i;
   int x , y;
   int yloop[2] = {PANEL_HEIDHT1,PANEL_HEIGHT2};
 
-  for(x = 0; x < PANEL_WIDTH; x++){   // XはPANEL_WIDTH回
-    for(y = 0; y < yloop[ x % 2]; y++){ //Yは xの％２でyloopの繰り返し
-      if(_IsGearNormalDisp(pWork)){
-        _gearPanelBgScreenMake(pWork, x, y, CGEAR_PANELTYPE_NONE, TRUE);
-      }
-      else{
-        _gearPanelBgScreenMake(pWork, x, y, CGEAR_SV_GetPanelType(pWork->pCGSV,x,y), FALSE);
-      }
-    }
-  }
-
-  for(i=0;i < elementof(screenTable);i++){
-    if(screenTable[i].time <= pWork->startCounter+_WAIT){
-      if(screenTable[i].downtime >= pWork->startCounter+_WAIT){
-        _gearPanelBgScreenMake(pWork, screenTable[i].x, screenTable[i].y, CGEAR_PANELTYPE_BOOT, FALSE);
+  switch( pWork->state_seq ){
+  case BOOT_ANIME_SEQ_ALL_ON:
+    // まず全体を点等
+    for(x = 0; x < PANEL_WIDTH; x++){   // XはPANEL_WIDTH回
+      for(y = 0; y < yloop[ x % 2]; y++){ //Yは xの％２でyloopの繰り返し
+        _PanelMarkAnimeStart( &pWork->panel_mark[ x ][ y ], pWork, PANEL_COLOR_TYPE_BASE, PANEL_ANIME_TYPE_ON, CGEAR_PANELTYPE_BOOT, PANEL_ANIME_DEF_FRAME );
       }
     }
+    pWork->state_seq ++;
+    break;
+
+  case BOOT_ANIME_SEQ_ALL_WAIT:
+    if( _PanelMarkAnimeSysIsAnime( pWork ) == FALSE ){
+
+      pWork->state_seq ++;
+    }
+    break;
+
+  case BOOT_ANIME_SEQ_SMOOTHIN_MAIN:
+    {
+      u32 panel_type;
+      for(i=0;i < elementof(screenTable);i++){
+        if(screenTable[i].time == pWork->startCounter){
+          panel_type = CGEAR_SV_GetPanelType( pWork->pCGSV, screenTable[i].x, screenTable[i].y );
+          _PanelMarkAnimeStart( &pWork->panel_mark[ screenTable[i].x ][ screenTable[i].y ], 
+              pWork, sc_PANEL_TYPE_TO_COLOR[ panel_type ], PANEL_ANIME_TYPE_OFF, panel_type, PANEL_ANIME_DEF_FRAME );
+        }
+      }
+
+      if( pWork->startCounter >= screenTable[ NELEMS(screenTable)-1 ].time ){
+        _PFadeFromBlack(pWork);
+        _gearMarkObjDrawEnable(pWork,TRUE);
+        pWork->state_seq ++;
+      }
+
+      // ずっとカウントアップ
+      pWork->startCounter++;
+    }
+    break;
+    
+  case BOOT_ANIME_SEQ_END:
+    if( _PanelMarkAnimeSysIsAnime( pWork ) == FALSE ){
+      return TRUE;
+    }
+    break;
+
+  default:
+    break;
   }
-  pWork->startCounter++;
 
-  GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
 
+
+  return FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -1017,19 +1313,22 @@ static BOOL _gearStartUpMain(C_GEAR_WORK* pWork)
 
 
   if( StartUpScreenTable[0].downtime <= pWork->startCounter ){
-    return TRUE;
+    if( _PanelMarkAnimeSysIsAnime( pWork ) == FALSE ){
+      return TRUE;
+    }
+    return FALSE;
   }
 
 
   // 徐々に枠が増えていく
   for(i=0;i < elementof(StartUpScreenTable);i++){
-    if(StartUpScreenTable[i].time == pWork->startCounter){
-      _gearPanelBgScreenMake(pWork, StartUpScreenTable[i].x, StartUpScreenTable[i].y, 
-          CGEAR_PANELTYPE_BOOT, FALSE);
+    if(StartUpScreenTable[i].time == pWork->startCounter) {
+      _PanelMarkAnimeStart( &pWork->panel_mark[ StartUpScreenTable[i].x ][ StartUpScreenTable[i].y ], pWork, PANEL_COLOR_TYPE_BASE, PANEL_ANIME_TYPE_ON_OFF, CGEAR_PANELTYPE_BASE, PANEL_ANIME_DEF_FRAME );
+      
+      //_gearPanelBgScreenMake(pWork, StartUpScreenTable[i].x, StartUpScreenTable[i].y, 
+      //    CGEAR_PANELTYPE_BOOT, FALSE);
     }
   }
-
-  GFL_BG_LoadScreenReq( GEAR_BUTTON_FRAME );
 
   pWork->startCounter++;
   return FALSE;
@@ -1974,7 +2273,7 @@ static void _modeInit(C_GEAR_WORK* pWork,BOOL bBoot)
   _gearArcCreate(pWork, bgno);  //ARC読み込み BG&OBJ
   _gearObjResCreate(pWork);
   if(bBoot){
-    _gearBootMain(pWork);
+    _gearBootInitScreen(pWork);
   }
   else{
     _gearPanelBgCreate(pWork);	// パネル作成
@@ -2213,14 +2512,7 @@ static void _modeSelectMenuWait(C_GEAR_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait2(C_GEAR_WORK* pWork)
 {
-  if(pWork->startCounter==12+_WAIT){
-    _PFadeFromBlack(pWork);
-  }
-  if(pWork->startCounter==16+_WAIT){
-    _gearMarkObjDrawEnable(pWork,TRUE);
-  }
-  if(_IsGearBootMain(pWork)){
-    _gearBootMain(pWork);	// パネル作成
+  if(_gearBootMain(pWork) == FALSE){
     if(pWork->pCall){
       pWork->pCall(pWork->pWork);
     }
@@ -2503,6 +2795,9 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   GFL_UI_SleepGoSetFunc(&_SLEEPGO_FUNC,  pWork);
   GFL_UI_SleepReleaseSetFunc(&_SLEEPRELEASE_FUNC,  pWork);
 
+  // パネルアニメのシステムクリア
+  _PanelMarkAnimeSysInit( pWork );
+
 
   //  _PFadeToBlack(pWork);
   //  OS_TPrintf("zzzz start field_heap = %x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_FIELD_SUBSCREEN));
@@ -2596,6 +2891,10 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
   }
   _gearCrossObjMain(pWork);
   if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
+
+
+  // パネルアニメのシステムメイン
+  _PanelMarkAnimeSysMain( pWork );
 }
 
 
