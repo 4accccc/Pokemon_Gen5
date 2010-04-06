@@ -30,6 +30,7 @@ _EVENT_DATA		ev_un_wkobjcode03
 _EVENT_DATA		ev_un_wkobjcode04
 _EVENT_DATA   ev_un_elevator
 _EVENT_DATA   ev_reserve_c11r0201
+_EVENT_DATA   ev_un_elevator_guide
 _EVENT_DATA_END
 
 //ローカル定義
@@ -95,9 +96,23 @@ EVENT_END
 /*		エレベーター	                      									  */
 /**************************************************************/
 EVENT_START		ev_un_elevator
+  //案内人が自機のほうを向く
+  _OBJ_ANIME( DUMMY_OBJ, anm_dir_right )
+  _OBJ_ANIME_WAIT()
+  //自機が案内人の方を向く
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_dir_step_left )
+  _OBJ_ANIME_WAIT()
+
+  _CALL elevator_common
+    
+EVENT_END
+
+//エレベーター共通部分
+elevator_common:
   DEFINE_LOCAL	EleList
   //「戻る？」
-  _SYSWIN_MSG(msg_un_elevator_00, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_un_elevator_00 , DUMMY_OBJ, POS_D )
+//  _SYSWIN_MSG(msg_un_elevator_00, POS_DOWN )
 
   _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1,0,1,EleList )
   _BMPMENU_MAKE_LIST( msg_un_elevator_01, 0 )
@@ -105,7 +120,8 @@ EVENT_START		ev_un_elevator
   _BMPMENU_MAKE_LIST( msg_un_elevator_03, 2 )
   _BMPMENU_START()
 
-  _SYSWIN_CLOSE()
+  _BALLOONWIN_CLOSE()
+//  _SYSWIN_CLOSE()
 
   //キャンセルチェック
   IF $EleList != EV_WIN_B_CANCEL THEN
@@ -116,7 +132,19 @@ EVENT_START		ev_un_elevator
       //予約スクリプト マップチェンジ後、エレベータから出てくるスクリプトを起動する
 		  _RESERVE_SCRIPT( SCRID_RESERVE_C11R0101 )
       //マップチェンジ
-      _MAP_CHANGE( ZONE_ID_C11R0101, 14, 5, DIR_DOWN )
+      {
+        _SE_PLAY( SEQ_SE_FLD_23 ) //エレベーター移動音
+        _MAP_FADE_BLACK_OUT()
+        _MAP_FADE_END_CHECK()
+        _MAP_CHANGE_NO_FADE(ZONE_ID_C11R0101, 14, 0, 5, DIR_DOWN)
+        _MAP_FADE_BLACK_IN()
+        _MAP_FADE_END_CHECK()
+        _TIME_WAIT( 60 )
+        _SE_STOP()
+        _SE_PLAY( SEQ_SE_FLD_87 ) //エレベーター到着音
+        _SE_WAIT()
+      }
+      //_MAP_CHANGE( ZONE_ID_C11R0101, 14, 5, DIR_DOWN )
     CASE 1 THEN
       {
         DEFINE_LOCAL NowFloor
@@ -143,14 +171,26 @@ EVENT_START		ev_un_elevator
           //予約スクリプト マップチェンジ後、エレベータから出てくるスクリプトを起動する
 		      _RESERVE_SCRIPT( SCRID_RESERVE_C11R0201 )
           //マップチェンジ
-          _MAP_CHANGE( ZONE_ID_C11R0201, 10, 5, DIR_DOWN )
+          {
+            _SE_PLAY( SEQ_SE_FLD_23 ) //エレベーター移動音
+            _MAP_FADE_BLACK_OUT()
+            _MAP_FADE_END_CHECK()
+            _MAP_CHANGE_NO_FADE(ZONE_ID_C11R0201, 10, 0, 5, DIR_DOWN)
+            _MAP_FADE_BLACK_IN()
+            _MAP_FADE_END_CHECK()
+            _TIME_WAIT( 60 )
+            _SE_STOP()
+            _SE_PLAY( SEQ_SE_FLD_87 ) //エレベーター到着音
+            _SE_WAIT()
+          }
+          //_MAP_CHANGE( ZONE_ID_C11R0201, 10, 5, DIR_DOWN )
         ENDIF
       }  
     DEFAULT
       //そのほかは何もしない
     ENDSWITCH
-  ENDIF  
-EVENT_END
+  ENDIF
+_RET
 
 /**************************************************************/
 /*		エレベーターの近くの人										              */
@@ -183,6 +223,16 @@ EVENT_START		ev_un_room_talker
   _BALLOONWIN_TALKOBJ_MSG( TalkerMsg )
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
+EVENT_END
+
+/**************************************************************/
+/*		エレベーターの案内人									              */
+/**************************************************************/
+EVENT_START		ev_un_elevator_guide
+  _TALK_OBJ_START()
+
+  _CALL elevator_common
+
 EVENT_END
 
 /**************************************************************/
@@ -278,9 +328,24 @@ player_elev_in:
 	_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_OPEN )
 	_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
 
-  //自機エレベータへ
-  _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in )
-	_OBJ_ANIME_WAIT()
+  //自機の位置でアニメ分岐
+  {
+    DEFINE_LOCAL x
+    DEFINE_LOCAL z
+    _PLAYER_POS_GET(x, z)
+    SWITCH $x
+    CASE 8 THEN     //案内人の左
+      //自機エレベータへ
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in_l )
+    CASE 9 THEN     //案内人の下
+      //自機エレベータへ
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in_d )
+    CASE 10 THEN    //案内人の右
+      //自機エレベータへ  
+      _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_elev_in_r )
+    ENDSWITCH
+  }
+  _OBJ_ANIME_WAIT()
 
   //エレベータ閉まる
   _BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
@@ -300,8 +365,41 @@ _ANIME_LABEL	anm_move_elev_out
 //--------------------------------------------------------------------
 //エレベーターに入る
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_move_elev_in
-	_ANIME_DATA	AC_WALK_R_8F,2
+_ANIME_LABEL	anm_move_elev_in_r
   _ANIME_DATA	AC_WALK_U_8F,2
   _ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0  
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//エレベーターに入る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_elev_in_l
+  _ANIME_DATA	AC_WALK_U_8F,1
+  _ANIME_DATA	AC_WALK_R_8F,2
+  _ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//エレベーターに入る
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_move_elev_in_d
+  _ANIME_DATA	AC_WALK_R_8F,1
+  _ANIME_DATA	AC_WALK_U_8F,2
+  _ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//右向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_right
+  _ANIME_DATA	AC_DIR_R,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//左向く
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_dir_step_left
+  _ANIME_DATA	AC_STAY_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+

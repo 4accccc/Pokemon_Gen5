@@ -111,7 +111,20 @@ EVENT_START ev_c11r0101_reception01
       //予約スクリプト マップチェンジ後、エレベータから出てくるスクリプトを起動する
 		  _RESERVE_SCRIPT( SCRID_RESERVE_C11R0201 )
       //マップチェンジ
-      _MAP_CHANGE( ZONE_ID_C11R0201, 10, 5, DIR_DOWN )
+      {
+        _SE_PLAY( SEQ_SE_FLD_23 ) //エレベーター移動音
+        _MAP_FADE_BLACK_OUT()
+        _MAP_FADE_END_CHECK()
+        _MAP_CHANGE_NO_FADE(ZONE_ID_C11R0201, 10, 0, 5, DIR_DOWN)
+        _MAP_FADE_BLACK_IN()
+        _MAP_FADE_END_CHECK()
+        _TIME_WAIT( 60 )
+        _SE_STOP()
+        _SE_PLAY( SEQ_SE_FLD_87 ) //エレベーター到着音
+        _SE_WAIT()
+      }
+      //_MAP_CHANGE( ZONE_ID_C11R0201, 10, 5, DIR_DOWN )
+      
     ENDIF  
   ELSE
     //「またね」
