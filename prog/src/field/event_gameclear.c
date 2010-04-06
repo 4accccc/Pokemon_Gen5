@@ -35,6 +35,10 @@
 #include "proc_gameclear_save.h"
 
 #include "savedata/save_tbl.h"
+#include "savedata/record.h"
+#include "savedata/gametime.h"
+#include "savedata/playtime.h"
+#include "ev_time.h"
 
 //==============================================================================================
 //==============================================================================================
@@ -140,6 +144,27 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
       MISC* misc;
       misc = GAMEDATA_GetMiscWork( gamedata );
       MISC_SetChampNewsMinutes( misc, 60*24 );
+    }
+    // レコード登録
+    if( gcwk->clear_mode == GAMECLEAR_MODE_FIRST ) {
+      RECORD* record = GAMEDATA_GetRecordPtr( gamedata );
+      GMTIME* gmtime = SaveData_GetGameTime( save );
+      EVTIME_SetGameClearDateTime( gamedata ); // 初回クリアの日時を記録
+      {
+        PLAYTIME* ptime = SaveData_GetPlayTime( save );
+        u32 hour = PLAYTIME_GetHour( ptime );
+        u32 minute = PLAYTIME_GetMinute( ptime );
+        u32 second = PLAYTIME_GetSecond( ptime );
+        u32 time = hour * 10000 + minute * 100 + second;
+        GF_ASSERT( hour <= PTIME_HOUR_MAX );
+        GF_ASSERT( minute <= PTIME_MINUTE_MAX );
+        GF_ASSERT( second <= PTIME_SECOND_MAX );
+        RECORD_Set( record, RECID_CLEAR_TIME, time );
+      }
+    }
+    else if( gcwk->clear_mode == GAMECLEAR_MODE_DENDOU ) {
+      RECORD* record = GAMEDATA_GetRecordPtr( gamedata );
+      RECORD_Add( record, RECID_DENDOU_CNT, 1 );
     }
     (*seq) ++;
     break;
