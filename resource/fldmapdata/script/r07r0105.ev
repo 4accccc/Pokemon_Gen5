@@ -134,6 +134,9 @@ EVENT_START   ev_bg_r07r0105_bell
 	
 		//【仮】鐘ME再生
 		_ME_PLAY( SEQ_ME_POKEGET )
+		
+		//トレーナーは鐘を鳴らした
+		_PLAINWIN_MSG_DOWN ( msg_r07r0105_chime_02  )
 	
 		DEFINE_LOCAL	BM_ANIME_ID1
 		
@@ -145,8 +148,6 @@ EVENT_START   ev_bg_r07r0105_bell
 		//鐘アニメ破棄
 		_BMODEL_ANIME_DELETE( BM_ANIME_ID1 )
 		
-		//トレーナーは鐘を鳴らした
-		_PLAINWIN_MSG_DOWN ( msg_r07r0105_chime_02  )
 		_ME_WAIT()
 		_AB_KEYWAIT_MARK()
 		_PLAINWIN_CLOSE()
