@@ -107,6 +107,7 @@ enum{
   GMDATA_ID_THSV,             // トライアルハウスランキング表示用
   GMDATA_ID_GAMECLEAR_POKE,   // ゲームクリアてもちポケモンデータ
   GMDATA_ID_TRPOKE_AFTER,     // 交換ポケモンのその後
+  GMDATA_ID_ETC,              // 未分類ワークその２
   GMDATA_ID_MAX,
 };
 

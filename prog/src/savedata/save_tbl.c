@@ -57,6 +57,7 @@
 #include "savedata/trialhouse_save.h"
 #include "savedata/tradepoke_after_save.h"
 #include "savedata/dendou_save.h"
+#include "savedata/etc_save.h"
 
 //==============================================================================
 //  íËêîíËã`
@@ -439,6 +440,11 @@ static const GFL_SAVEDATA_TABLE SaveDataTbl_Normal[] = {
     GMDATA_ID_TRPOKE_AFTER,
     (FUNC_GET_SIZE)TRPOKE_AFTER_SV_GetWorkSize,
     (FUNC_INIT_WORK)TRPOKE_AFTER_SV_Init,
+  },
+  { //ñ¢ï™óﬁÉèÅ[ÉNÇªÇÃÇQ
+    GMDATA_ID_ETC,
+    (FUNC_GET_SIZE)EtcSave_GetWorkSize,
+    (FUNC_INIT_WORK)EtcSave_WorkInit,
   },
 
 };

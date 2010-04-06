@@ -59,7 +59,8 @@ SAVEDATASRC =   savedata/save_tbl.c \
         savedata/trialhouse_save.c \
         savedata/livematch_savedata.c \
         savedata/battlematch_savedata.c \
-        savedata/dendou_save.c
+        savedata/dendou_save.c \
+				savedata/etc_save.c \
 
 
 #’ÊM‚Ìí’“
