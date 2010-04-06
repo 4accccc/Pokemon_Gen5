@@ -49,25 +49,17 @@ extern u32 RECORD_Get(RECORD * rec, int id);
 extern u32 RECORD_Add(RECORD * rec, int id, u32 add_value);
 
 extern void RECORD_SetThScore(RECORD * rec, u32 inScore);
-extern u32 RECORD_GetThScore(RECORD * rec);
+extern u32  RECORD_GetThScore(RECORD * rec);
 extern void RECORD_SetThRank(RECORD * rec, u8 inRank);
-extern u8 RECORD_GetThRank(RECORD * rec);
+extern u8   RECORD_GetThRank(RECORD * rec);
+extern void RECORD_1day_Update( RECORD *rec );
+
 
 #ifdef PM_DEBUG
 //スコアのセット
 extern void RECORD_Score_DebugSet(RECORD * rec, const u32 inScore);
 #endif
 
-//----------------------------------------------------------
-//----------------------------------------------------------
-//スコアの加算処理
-extern void RECORD_Score_Add(RECORD * rec, int id);
-//スコアを取得する
-extern u32 RECORD_Score_Get(RECORD * rec);
-
-//FIXME 図鑑未対応
-//図鑑スコア加算
-//extern void RECORD_Score_AddZukanScore(RECORD * rec, const ZUKAN_WORK * zw, u16 const inMonsno);
 
 #endif  //__ASM_NO_DEF_
 
@@ -195,7 +187,7 @@ extern u32 RECORD_Score_Get(RECORD * rec);
 #define RECID_RANDOM_RATE_SHOOTER_WIN  (SMALL_REC_START+38)  ///< @ランダムレートシューター勝利数
 #define RECID_RANDOM_RATE_SHOOTER_LOSE (SMALL_REC_START+39)  ///< @ランダムレートシューター敗北数
 #define RECID_USE_SHOOTER_COUNT        (SMALL_REC_START+40)  ///< @シューター使用回数
-#define RECID_SYMBOL_ENCOUNT_NUM       (SMALL_REC_START+41)  ///< @シンボルエンカウントをした回数
+#define RECID_EFFECT_ENCOUNT_NUM       (SMALL_REC_START+41)  ///< @エフェクトエンカウントをした回数
 #define RECID_AFFINITY_CHECK_NUM       (SMALL_REC_START+42)  ///< @相性チェックをした回数
 #define RECID_MUSICAL_PLAY_NUM         (SMALL_REC_START+43)  ///< @ミュージカル参加回数
 #define RECID_MUSICAL_WINNER_NUM       (SMALL_REC_START+44)  ///< @ミュージカル勝利回数
@@ -203,20 +195,20 @@ extern u32 RECORD_Score_Get(RECORD * rec);
 #define RECID_MUSICAL_COMM_WINNER_NUM  (SMALL_REC_START+46)  ///< @ミュージカル通信勝利回数
 #define RECID_MUSICAL_TOTAL_POINT      (SMALL_REC_START+47)  ///< @ミュージカル通算取得得点
 #define RECID_PDW_SLEEP_POKEMON        (SMALL_REC_START+48)  ///< @PDWでポケモンを寝かせた回数
-#define RECID_RENSHOU_SINGLE           (SMALL_REC_START+49)   ///< @タワー:シングルバトル連勝数
-#define RECID_RENSHOU_SINGLE_CNT       (SMALL_REC_START+50)  ///< @タワー:シングルバトル連勝数
-#define RECID_RENSHOU_S_SINGLE         (SMALL_REC_START+51)   ///< @タワー:スーパーシングルバトル連勝数
-#define RECID_RENSHOU_S_SINGLE_CNT     (SMALL_REC_START+52)  ///< @タワー:スーパーシングルバトル連勝数
-#define RECID_RENSHOU_DOUBLE           (SMALL_REC_START+53)  ///< @タワー:ダブルバトル連勝数
-#define RECID_RENSHOU_DOUBLE_CNT       (SMALL_REC_START+54)  ///< @タワー:ダブルバトル連勝数
-#define RECID_RENSHOU_S_DOUBLE         (SMALL_REC_START+55)  ///< @タワー:スーパーダブルバトル連勝数
-#define RECID_RENSHOU_S_DOUBLE_CNT     (SMALL_REC_START+56)  ///< @タワー:スーパーダブルバトル連勝数
-#define RECID_RENSHOU_MULTI            (SMALL_REC_START+57)  ///< @タワー:マルチバトル連勝数
-#define RECID_RENSHOU_MULTI_CNT        (SMALL_REC_START+58)  ///< @タワー:マルチバトル連勝数
-#define RECID_RENSHOU_S_MULTI          (SMALL_REC_START+59)  ///< @タワー:スーパーマルチバトル連勝数
-#define RECID_RENSHOU_S_MULTI_CNT      (SMALL_REC_START+60)  ///< @タワー:スーパーマルチバトル連勝数
-#define RECID_RENSHOU_WIFI             (SMALL_REC_START+61)  ///< @タワー:Wi-Fiバトル最大連勝数
-#define RECID_RENSHOU_WIFI_CNT         (SMALL_REC_START+62)  ///< @タワー:Wi-Fiバトル連勝数
+#define RECID_RENSHOU_SINGLE           (SMALL_REC_START+49)   ///< @タワー:シングルバトル連勝数（未使用）
+#define RECID_RENSHOU_SINGLE_CNT       (SMALL_REC_START+50)  ///< @タワー:シングルバトル連勝数（未使用）
+#define RECID_RENSHOU_S_SINGLE         (SMALL_REC_START+51)   ///< @タワー:スーパーシングルバトル連勝数（未使用）
+#define RECID_RENSHOU_S_SINGLE_CNT     (SMALL_REC_START+52)  ///< @タワー:スーパーシングルバトル連勝数（未使用）
+#define RECID_RENSHOU_DOUBLE           (SMALL_REC_START+53)  ///< @タワー:ダブルバトル連勝数（未使用）
+#define RECID_RENSHOU_DOUBLE_CNT       (SMALL_REC_START+54)  ///< @タワー:ダブルバトル連勝数（未使用）
+#define RECID_RENSHOU_S_DOUBLE         (SMALL_REC_START+55)  ///< @タワー:スーパーダブルバトル連勝数（未使用）
+#define RECID_RENSHOU_S_DOUBLE_CNT     (SMALL_REC_START+56)  ///< @タワー:スーパーダブルバトル連勝数（未使用）
+#define RECID_RENSHOU_MULTI            (SMALL_REC_START+57)  ///< @タワー:マルチバトル連勝数（未使用）
+#define RECID_RENSHOU_MULTI_CNT        (SMALL_REC_START+58)  ///< @タワー:マルチバトル連勝数（未使用）
+#define RECID_RENSHOU_S_MULTI          (SMALL_REC_START+59)  ///< @タワー:スーパーマルチバトル連勝数（未使用）
+#define RECID_RENSHOU_S_MULTI_CNT      (SMALL_REC_START+60)  ///< @タワー:スーパーマルチバトル連勝数（未使用）
+#define RECID_RENSHOU_WIFI             (SMALL_REC_START+61)  ///< @タワー:Wi-Fiバトル最大連勝数（未使用）
+#define RECID_RENSHOU_WIFI_CNT         (SMALL_REC_START+62)  ///< @タワー:Wi-Fiバトル連勝数（未使用）
 #define RECID_SURECHIGAI_THANKS        (SMALL_REC_START+63)  ///< @すれちがい通信でお礼を受けた回数
 #define RECID_TRIALHOUSE_RANK          (SMALL_REC_START+64)  ///< @トライアルハウス最高ランク
 #define RECID_TRIALHOUSE_SCORE         (SMALL_REC_START+65)  ///< @トライアルハウス最高スコア
