@@ -53,24 +53,21 @@
 
 #ifdef DEBUG_ONLY_FOR_toru_nagihashi	//担当者が変わったら変えてください
 #define DEBUG_AUTHER_ONLY				//現在ONになっているとadapter以外で行っていないところをワーニングで知らせます
-#endif //PM_DEBUG
-
-//担当者プリント
-#ifdef DEBUG_AUTHER_ONLY
-#define MORI_PRINT(...)				OS_Printf( __VA_ARGS__ )
-#else
-#define MORI_PRINT(...)				((void)0)
-#endif //DEBUG_AUTHER_ONLY
+#endif //DEBUG_ONLY_FOR_toru_nagihashi
 
 //アルセウスイベントチェック
 //#define ARUCEUSU_EVENT_CHECK
 
 //PHC解放チェック
 //#define PHC_EVENT_CHECK
-
-
 #endif //PM_DEBUG
 
+//担当者プリント
+#ifdef DEBUG_AUTHER_ONLY
+#define MORI_PRINT(...)				OS_Printf( __VA_ARGS__ )
+#else
+#define MORI_PRINT(...)				/*  */
+#endif //DEBUG_AUTHER_ONLY
 
 // Proc_Mainシーケンス定義
 enum {
