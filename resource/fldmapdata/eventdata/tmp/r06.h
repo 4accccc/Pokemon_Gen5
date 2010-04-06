@@ -26,6 +26,8 @@
 #define R06_FLD_ITEM_03                   12
 #define R06_FLD_ITEM_04                   13
 #define R06_FLD_ITEM_05                   14
+#define R06_FLDMONS_01                    15
+#define R06_FLDMONS_02                    16
 
 #endif //ZONE_R06_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r06.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
