@@ -24,6 +24,7 @@ _EVENT_DATA    ev_pos_d09_lfront_connect	//リーグフロント(C09)への接続イベント
 _EVENT_DATA    ev_d09_veteranm_01
 _EVENT_DATA    ev_d09_trainerm_01
 _EVENT_DATA    ev_pos_d09_slipdown_01
+_EVENT_DATA    ev_d09_rangerm_01
 _EVENT_DATA_END
 
 //------------------------！注意！------------------------------//
@@ -171,6 +172,14 @@ EVENT_START	ev_d09_trainerm_01
 	_BALLOONWIN_TALKOBJ_MSG( msg_d09_trainerm_01 )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
+EVENT_END
+
+
+/************************************************************/
+/*						レンジャー							*/
+/************************************************************/
+EVENT_START	ev_d09_rangerm_01
+	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d09_rangerm_01 )
 EVENT_END
 
 

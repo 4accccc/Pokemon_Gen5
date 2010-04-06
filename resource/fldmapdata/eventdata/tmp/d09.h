@@ -35,6 +35,7 @@
 #define D09_VETERANM_01                    5
 #define D09_TRAINERM_01                    6
 #define D09_VETERANM_02                    7
+#define D09_RANGERM_01                     8
 
 #endif //ZONE_D09_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d09.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
