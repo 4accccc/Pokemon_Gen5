@@ -495,6 +495,30 @@
 #define SCR_GYM01_CURTAIN_NOTOPEN     (0)     ///<カーテン空いてない
 #define SCR_GYM01_CURTAIN_OPEN_ONE    (1)     ///<カーテン1つ開いている 
 #define SCR_GYM01_CURTAIN_OPEN_TWO    (3)     ///<カーテン2つ開いている 
-#define SCR_GYM01_CURTAIN_OPEN_THREE  (7)     ///<カーテン3つ開いている 
+#define SCR_GYM01_CURTAIN_OPEN_THREE  (7)     ///<カーテン3つ開いている
 
 
+//--------------------------------------------------------------
+//    ポケモン作成 性別指定
+//    @note poke_tool.hの PtlSexSpecと一致
+//    @note オスメスのあるポケモンでSCR_PTL_SEX_UNKNOWNを指定すると不問になる
+//--------------------------------------------------------------
+#define SCR_SEX_SPEC_MALE     (0)   //♂
+#define SCR_SEX_SPEC_FEMALE   (1)   //♀
+#define SCR_SEX_SPEC_UNKNOWN  (2)   //どちらでも可
+
+//--------------------------------------------------------------
+//    ポケモン作成 特性指定
+//    @note poke_tool.hの PtlTokuseiSpecと一致
+//--------------------------------------------------------------
+#define SCR_TOKUSEI_SPEC_1    (0)     //特性1をセット
+#define SCR_TOKUSEI_SPEC_2    (1)     //特性2をセット
+#define SCR_TOKUSEI_SPEC_BOTH (2)     //どちらでも可
+
+//--------------------------------------------------------------
+//    ポケモン作成 レア指定
+//    @note poke_tool.hの PtlRareSpecと一致
+//--------------------------------------------------------------
+#define SCR_RARE_SPEC_FALSE   (0)  //レアにしない
+#define SCR_RARE_SPEC_TRUE    (1)  //レアにする
+#define SCR_RARE_SPEC_BOTH    (2)  //どちらでも可
