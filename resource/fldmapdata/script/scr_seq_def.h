@@ -5444,10 +5444,7 @@
  * @param ret_wk 結果を受け取るワーク
  * @param monsno  モンスターナンバー
  * @param formno  フォームナンバー
- * @param tokusei 特性
  * @param level   レベル
- * @param itemno  所持アイテム
- * @param ball    捕獲ボールアイテムナンバー
  * @retval BOOL 追加できたらTRUE
  */
 //--------------------------------------------------------------
@@ -5469,8 +5466,10 @@
  * @param ret_wk 結果を受け取るワーク
  * @param monsno  モンスターナンバー
  * @param formno  フォームナンバー
- * @param tokusei 特性
  * @param level   レベル
+ * @param tokusei 特性指定    SCR_TOKUSEI_SPEC～を指定  script_def.h参照
+ * @param sex     性別指定    SCR_SEX_SPEC～を指定  script_def.h参照
+ * @param rare    レア指定    SCR_RARE_SPEC～を指定  script_def.h参照
  * @param itemno  所持アイテム
  * @param ball    捕獲ボールアイテムナンバー
  * @retval BOOL 追加できたらTRUE
@@ -5500,10 +5499,7 @@
  * @param ret_wk 結果を受け取るワーク
  * @param monsno  モンスターナンバー
  * @param formno  フォームナンバー
- * @param tokusei 特性
  * @param level   レベル
- * @param itemno  所持アイテム
- * @param ball    捕獲ボールアイテムナンバー
  * @retval BOOL 追加できたらTRUE
  */
 //--------------------------------------------------------------
@@ -5525,8 +5521,10 @@
  * @param ret_wk 結果を受け取るワーク
  * @param monsno  モンスターナンバー
  * @param formno  フォームナンバー
- * @param tokusei 特性
  * @param level   レベル
+ * @param tokusei 特性指定    SCR_TOKUSEI_SPEC～を指定  script_def.h参照
+ * @param sex     性別指定    SCR_SEX_SPEC～を指定  script_def.h参照
+ * @param rare    レア指定    SCR_RARE_SPEC～を指定  script_def.h参照
  * @param itemno  所持アイテム
  * @param ball    捕獲ボールアイテムナンバー
  * @retval BOOL 追加できたらTRUE
