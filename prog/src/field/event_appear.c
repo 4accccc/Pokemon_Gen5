@@ -45,6 +45,9 @@ typedef struct
   FIELDMAP_WORK*      fieldmap;   // 動作フィールドマップ
   GAMESYS_WORK*           gsys;   // ゲームシステム
 
+  // カメラ復帰パラメータ
+  fx32 length;
+
 } EVENT_WORK;
 
 
@@ -307,6 +310,8 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq,
 
   switch( *seq ) {
   case 0:
+    // カメラの復帰パラメータを取得
+    work->length = FIELD_CAMERA_GetAngleLen( camera );
     // カメラモードの設定
     work->cameraMode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
@@ -323,15 +328,12 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Ananukenohimo( GMEVENT* event, int* seq,
   case 2:
     // タスクを登録
     { 
-      FLD_CAMERA_PARAM def_param; 
       fx32 dist;
       FIELD_TASK* rot;
       FIELD_TASK* zoom;
       FIELD_TASK_MAN* man;
-      FIELD_CAMERA_GetInitialParameter( camera, &def_param );
-      dist = def_param.Distance << FX32_SHIFT;
       rot  = FIELD_TASK_PlayerRotate_SpeedDown( fieldmap, 60, 8 );
-      zoom = FIELD_TASK_CameraLinearZoom( fieldmap, ZOOM_OUT_FRAME, dist );
+      zoom = FIELD_TASK_CameraLinearZoom( fieldmap, ZOOM_OUT_FRAME, work->length );
       man  = FIELDMAP_GetTaskManager( fieldmap ); 
       FIELD_TASK_MAN_AddTask( man, rot, NULL );
       FIELD_TASK_MAN_AddTask( man, zoom, NULL );
@@ -379,6 +381,8 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, voi
 
   switch( *seq ) {
   case 0:
+    // カメラの復帰パラメータを取得
+    work->length = FIELD_CAMERA_GetAngleLen( camera );
     // カメラモードの設定
     work->cameraMode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
@@ -395,15 +399,12 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Anawohoru( GMEVENT* event, int* seq, voi
   case 2:
     // タスクの追加
     { 
-      FLD_CAMERA_PARAM def_param; 
       fx32 dist;
       FIELD_TASK* rot;
       FIELD_TASK* zoom;
       FIELD_TASK_MAN* man;
-      FIELD_CAMERA_GetInitialParameter( camera, &def_param );
-      dist = def_param.Distance << FX32_SHIFT;
       rot  = FIELD_TASK_PlayerRotate_SpeedDown( fieldmap, 60, 8 );
-      zoom = FIELD_TASK_CameraLinearZoom( fieldmap, ZOOM_OUT_FRAME, dist );
+      zoom = FIELD_TASK_CameraLinearZoom( fieldmap, ZOOM_OUT_FRAME, work->length );
       man  = FIELDMAP_GetTaskManager( fieldmap ); 
       FIELD_TASK_MAN_AddTask( man, rot, NULL );
       FIELD_TASK_MAN_AddTask( man, zoom, NULL );
@@ -450,6 +451,8 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void
 
   switch( *seq ) {
   case 0:
+    // カメラの復帰パラメータを取得
+    work->length = FIELD_CAMERA_GetAngleLen( camera );
     // カメラモードの設定
     work->cameraMode = FIELD_CAMERA_GetMode( camera );
     FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
@@ -466,15 +469,12 @@ static GMEVENT_RESULT EVENT_FUNC_APPEAR_Teleport( GMEVENT* event, int* seq, void
   case 2:
     // タスクの追加
     { 
-      FLD_CAMERA_PARAM def_param; 
       fx32 dist;
       FIELD_TASK* rot;
       FIELD_TASK* zoom;
       FIELD_TASK_MAN* man;
-      FIELD_CAMERA_GetInitialParameter( camera, &def_param );
-      dist = def_param.Distance << FX32_SHIFT;
       rot  = FIELD_TASK_PlayerRotate_SpeedDown( fieldmap, 60, 8 );
-      zoom = FIELD_TASK_CameraLinearZoom( fieldmap, ZOOM_OUT_FRAME, dist );
+      zoom = FIELD_TASK_CameraLinearZoom( fieldmap, ZOOM_OUT_FRAME, work->length );
       man  = FIELDMAP_GetTaskManager( fieldmap ); 
       FIELD_TASK_MAN_AddTask( man, rot, NULL );
       FIELD_TASK_MAN_AddTask( man, zoom, NULL );
