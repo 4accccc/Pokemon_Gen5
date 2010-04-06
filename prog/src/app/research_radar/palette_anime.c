@@ -42,11 +42,11 @@
 #define BLINK_LONG_MIN_EVY      (0) // 最小フェード係数[0, 16]
 #define BLINK_LONG_MAX_EVY      (6) // 最大フェード係数[0, 16]
 // 暗転
-#define HOLD_FRAMES (40) // 暗転までのフレーム数
+#define HOLD_FRAMES (20) // 暗転までのフレーム数
 #define HOLD_MIN_EVY (0) // 最小フェード係数[0, 16]
 #define HOLD_MAX_EVY (7) // 最大フェード係数[0, 16]
 // 暗転からの復帰
-#define RECOVER_FRAMES (40) // アニメーションフレーム数
+#define RECOVER_FRAMES (30) // アニメーションフレーム数
 #define RECOVER_MIN_EVY (0) // 最小フェード係数[0, 16]
 #define RECOVER_MAX_EVY (7) // 最大フェード係数[0, 16]
 
