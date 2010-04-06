@@ -8,6 +8,8 @@
  * ÉÇÉWÉÖÅ[ÉãñºÅFDEBUG_FLG
  */
 //======================================================================
+#if PM_DEBUG
+
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
@@ -231,3 +233,4 @@ static void DEBWIN_Draw_Flg( void* userWork , DEBUGWIN_ITEM* item )
 }
 
 
+#endif //PM_DEBUG

@@ -10,6 +10,9 @@
 //======================================================================
 #pragma once
 
+#if PM_DEBUG
+
+
 #define DEBUG_FLG_DEF(flgName,dispName) DEBUG_FLG_ ## flgName , //dispName
 enum
 {
@@ -55,3 +58,4 @@ extern void DEBUG_FLG_CreateDebugGoupe( const HEAPID heapId );
 extern void DEBUG_FLG_DeleteDebugGoupe( void );
 
 
+#endif //PM_DEBUG

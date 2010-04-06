@@ -48,10 +48,12 @@ const BOOL DS_SYSTEM_IsRunOnTwl( void )
 //--------------------------------------------------------------
 const BOOL DS_SYSTEM_IsRestrictPhotoExchange( void )
 {
+#if PM_DEBUG
   if( DEBUG_FLG_GetFlg( DEBUG_FLG_RestricPhoto ) == TRUE )
   {
     return TRUE;
   }
+#endif //PM_DEBUG
   
 #if (defined(SDK_TWL))
   if( DS_SYSTEM_IsRunOnTwl() )
@@ -71,10 +73,12 @@ const BOOL DS_SYSTEM_IsRestrictPhotoExchange( void )
 //--------------------------------------------------------------
 const BOOL DS_SYSTEM_IsRestrictUGC( void )
 {
+#if PM_DEBUG
   if( DEBUG_FLG_GetFlg( DEBUG_FLG_RestricUGC ) == TRUE )
   {
     return TRUE;
   }
+#endif //PM_DEBUG
 
 #if (defined(SDK_TWL))
   if( DS_SYSTEM_IsRunOnTwl() )
@@ -94,10 +98,12 @@ const BOOL DS_SYSTEM_IsRestrictUGC( void )
 //--------------------------------------------------------------
 const BOOL DS_SYSTEM_IsAvailableWireless( void )
 {
+#if PM_DEBUG
   if( DEBUG_FLG_GetFlg( DEBUG_FLG_DisableWL ) == TRUE )
   {
     return FALSE;
   }
+#endif //PM_DEBUG
 
 #if (defined(SDK_TWL))
   return OS_IsAvailableWireless();
@@ -115,10 +121,12 @@ const BOOL DS_SYSTEM_IsAvailableWireless( void )
 //--------------------------------------------------------------
 const BOOL DS_SYSTEM_IsAgreeEULA( void )
 {
+#if PM_DEBUG
   if( DEBUG_FLG_GetFlg( DEBUG_FLG_DisableEULA ) == TRUE )
   {
     return FALSE;
   }
+#endif //PM_DEBUG
 
 #if (defined(SDK_TWL))
   if( DS_SYSTEM_IsRunOnTwl() == TRUE )

@@ -1218,7 +1218,9 @@ static const void MUSICAL_EVENT_JumpMusicalHall( GMEVENT *event, MUSICAL_EVENT_W
 //--------------------------------------------------------------
 static const void MUSICAL_EVENT_RunScript( GMEVENT *event, MUSICAL_EVENT_WORK *evWork , u16 scriptId )
 {
+#if PM_DEBUG
   if( DEBUG_FLG_GetFlg( DEBUG_FLG_MusicalEventSkip ) == FALSE )
+#endif
   {
     GMEVENT *newEvent;
     SCRIPT_FLDPARAM fparam;
