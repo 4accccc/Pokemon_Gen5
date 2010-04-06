@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-17T15:33:59"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T14:11:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,9 +297,9 @@
 		<attribute name="キャラ指定">INFOMATIONW
 汎用受付</attribute>
 		<language name="JPN" width="256">リゾートデザートの　めいしょは
-こだいの　いせきと　なっております</language>
+こだいのしろと　なっております</language>
 		<language name="JPN_KANJI" width="256">リゾートデザートの　名所は
-古代の　遺跡と　なっております</language>
+古代の城と　なっております</language>
 	</row>
 
 	<row id="msg_d03r0201_boy3_01">
