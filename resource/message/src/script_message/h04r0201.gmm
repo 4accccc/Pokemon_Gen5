@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-05T20:41:09"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-04-06T16:11:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="239" top="263" right="944" bottom="883" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,22 +292,36 @@
 	</lock>
 
 
-	<row id="msg_h04r0201_man1_01">
-		<attribute name="キャラ指定">MAN1</attribute>
-		<language name="JPN" width="256">はしの　うえに　いえが　あるなんて
-ほかを　どこ　さがしても　ないよ！</language>
-		<language name="JPN_KANJI" width="256">橋の　上に　家が　あるなんて
-他を　どこ　探しても　ないよ！</language>
+	<row id="msg_h04r0201_man3_01">
+		<attribute name="キャラ指定">MAN3</attribute>
+		<language name="JPN" width="256">そとで　うってる
+ビレッジサンドに　やみつきでさ▽
+まいにち　たべたくて　ひっこしたんだ</language>
+		<language name="JPN_KANJI" width="256">外で　売ってる
+ビレッジサンドに　病み付きでさ▽
+毎日　食べたくて　引っ越したんだ</language>
 	</row>
 
 	<row id="msg_h04r0201_woman1_01">
 		<attribute name="キャラ指定">WOMAN1</attribute>
-		<language name="JPN" width="256">ふるい　はしだけど
-じょうぶに　つくって　あるから▽
-あと　５０ねんは　こわれない　そうよ</language>
-		<language name="JPN_KANJI" width="256">古い　橋だけど
-丈夫に　つくって　あるから▽
-あと　５０年は　壊れない　そうよ</language>
+		<language name="JPN" width="256">すっごく　ふるい　はしだけど▼
+おとなりの　おじいさんが
+ていれを　してくれている　おかげで▽
+いつまでも　キレイな　ままね！</language>
+		<language name="JPN_KANJI" width="256">すっごく　古い　橋だけど▼
+おとなりの　おじいさんが
+手入れを　してくれている　おかげで▽
+いつまでも　キレイな　ままね！</language>
+	</row>
+
+	<row id="msg_h04r0201_boy3_01">
+		<attribute name="キャラ指定">BOY3</attribute>
+		<language name="JPN" width="256">きょうかしょに　のってる
+イッシュで　いちばん　ふるいはし▽
+それが　ここ　ビレッジブリッジさ！</language>
+		<language name="JPN_KANJI" width="256">教科書に　載ってる
+イッシュで　一番　古い橋▽
+それが　ここ　ビレッジブリッジさ！</language>
 	</row>
 
 	<flowchart-group-list>
