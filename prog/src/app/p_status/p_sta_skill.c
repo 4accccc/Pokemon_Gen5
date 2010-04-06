@@ -2132,15 +2132,6 @@ static void PSTATUS_SKILL_DispPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *sk
                                 PSTATUS_SKILL_PLATE_NONE_X , PSTATUS_SKILL_PLATE_NONE_Y , col );
     }
   }
-  plateWork->isUpdateStr = TRUE;
-}
-
-//--------------------------------------------------------------
-//  スキルプレートの表示
-//--------------------------------------------------------------
-static void PSTATUS_SKILL_DispPlate_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , PSTATUS_SKILL_PLATE *plateWork )
-{
-  const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
   //文字用OAM
   {
     PSTA_OAM_ACT_DATA oamData;
@@ -2156,6 +2147,15 @@ static void PSTATUS_SKILL_DispPlate_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WO
     plateWork->bmpOam = PSTA_OAM_ActorAdd( skillWork->bmpOamSys , &oamData );
   }
 
+  plateWork->isUpdateStr = TRUE;
+}
+
+//--------------------------------------------------------------
+//  スキルプレートの表示
+//--------------------------------------------------------------
+static void PSTATUS_SKILL_DispPlate_Trans( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , PSTATUS_SKILL_PLATE *plateWork )
+{
+  const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
   {
     const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+plateWork->idx , NULL );
     if( plateWork->isUpdateStr == TRUE )
