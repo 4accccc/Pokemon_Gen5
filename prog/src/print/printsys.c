@@ -840,10 +840,14 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
     {
       u8 colL, colS, colB;
 
+      PRINTSYS_LSB_GetLSB( wk->defColor, &colL, &colS, &colB );
+      wk->defColor = PRINTSYS_LSB_Make( colL, colS, colB );
+
       colL = STR_TOOL_GetTagParam(sp, 0);
       colS = STR_TOOL_GetTagParam(sp, 1);
       colB = STR_TOOL_GetTagParam(sp, 2);
 
+      OS_TPrintf("Set Ctrl Tag Color= %d %d %d\n", colL, colS, colB );
       GFL_FONTSYS_SetColor( colL, colS, colB );
     }
     break;
@@ -852,6 +856,7 @@ static const STRCODE* ctrlGeneralTag( PRINT_JOB* wk, const STRCODE* sp )
     {
       u8 colL, colS, colB;
       PRINTSYS_LSB_GetLSB( wk->defColor, &colL, &colS, &colB );
+      OS_TPrintf("Rest Ctrl Tag Color= %d %d %d\n", colL, colS, colB );
       GFL_FONTSYS_SetColor( colL, colS, colB );
     }
     break;
