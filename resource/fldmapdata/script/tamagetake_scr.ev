@@ -18,7 +18,8 @@
 //--------------------------------------------------------------
 //               スクリプトテーブル
 //--------------------------------------------------------------
-_EVENT_DATA    ev_tamagetake
+_EVENT_DATA    ev_tamagetake_enc
+_EVENT_DATA    ev_morobareru_enc
 _EVENT_DATA_END
 
 
@@ -26,11 +27,19 @@ _EVENT_DATA_END
 /************************************************************/
 /*						タマゲタケ							*/
 /************************************************************/
-EVENT_START	ev_tamagetake
+EVENT_START	ev_tamagetake_enc
+{
+	DEFINE_LOCAL	lwk_poke_lv
+
 	_TALK_OBJ_START()
 	
 	_TIME_WAIT( 16 )
-	_WILD_BTL_SET( MONSNO_580, 10 )
+	_OBJ_GET_PARAM( SCWK_TARGET_OBJID, SCR_OBJPARAM0, lwk_poke_lv ) 
+	//parameter0に間違って 0 が入力されている場合 5 に修正
+	IF $lwk_poke_lv == 0 THEN
+		$lwk_poke_lv = 5
+	ENDIF
+	_WILD_BTL_SET( MONSNO_580, lwk_poke_lv )
 	
 	_WILD_LOSE_CHECK( SCWK_ANSWER )
 	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
@@ -43,6 +52,39 @@ EVENT_START	ev_tamagetake
 		_WILD_LOSE()
 	ENDIF
 
+}
+EVENT_END
+
+
+/************************************************************/
+/*						モロバレル							*/
+/************************************************************/
+EVENT_START	ev_morobareru_enc
+{
+	DEFINE_LOCAL	lwk_poke_lv
+
+	_TALK_OBJ_START()
+	
+	_TIME_WAIT( 16 )
+	_OBJ_GET_PARAM( SCWK_TARGET_OBJID, SCR_OBJPARAM0, lwk_poke_lv ) 
+	//parameter0に間違って 0 が入力されている場合 5 に修正
+	IF $lwk_poke_lv == 0 THEN
+		$lwk_poke_lv = 5
+	ENDIF
+	_WILD_BTL_SET( MONSNO_581, lwk_poke_lv )
+	
+	_WILD_LOSE_CHECK( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+		//暗転中にモンスターボールを消しておく
+		_GET_OBJ_EV_FLAG( SCWK_TARGET_OBJID, SCWK_ANSWER )
+		_FLAG_SET( SCWK_ANSWER )
+		_OBJ_DEL( SCWK_TARGET_OBJID )
+		_WILD_WIN()
+	ELSE
+		_WILD_LOSE()
+	ENDIF
+
+}
 EVENT_END
 
 

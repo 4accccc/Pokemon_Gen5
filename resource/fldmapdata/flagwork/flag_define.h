@@ -343,9 +343,9 @@
 #define FE_MUSICAL_COMM_PLAY               327 /* 0x0147 ミュージカルホール：通信ミュージカルで遊んだ */
 #define FE_C03R1201_ITEM_01                328 /* 0x0148 ヒウンビル１Ｆ：アイテム入手フラグ */
 #define FE_T03PC0101_ITEMGET_01            329 /* 0x0149 カゴメタウン：グラシデアのはな入手フラグ */
-		/* not used   330(0x014a) */
-		/* not used   331(0x014b) */
-		/* not used   332(0x014c) */
+#define FE_H03_BADRIDER_WIN                330 /* 0x014a シリンダーブリッジ：暴走族に勝利したフラグ */
+#define FE_WALLPAPER_OPEN_MSG_01           331 /* 0x014b ボックス壁紙、１段階目追加メッセージを表示した */
+#define FE_WALLPAPER_OPEN_MSG_02           332 /* 0x014c ボックス壁紙、２段階目追加メッセージを表示した */
 		/* not used   333(0x014d) */
 		/* not used   334(0x014e) */
 		/* not used   335(0x014f) */
@@ -788,18 +788,18 @@
 #define FV_C08R0201_TRAINERW_01            764 /* 0x02fc ソウリュウシティ：ローテーションバトルの館 */
 #define FV_C08R0201_TRAINERM_01            765 /* 0x02fd ソウリュウシティ：トリプルバトルの館 */
 #define FV_D08R0901_PACKAGE_POKE           766 /* 0x02fe リュウラセンの塔（屋上）：パッケージポケモン */
-#define FV_FIELDITEM_POKE_01               767 /* 0x02ff タマゲタケ（フィールドアイテム型）１匹目 */
-#define FV_FIELDITEM_POKE_02               768 /* 0x0300 タマゲタケ（フィールドアイテム型）２匹目 */
-#define FV_FIELDITEM_POKE_03               769 /* 0x0301 タマゲタケ（フィールドアイテム型）３匹目 */
-#define FV_FIELDITEM_POKE_04               770 /* 0x0302 タマゲタケ（フィールドアイテム型）４匹目 */
-#define FV_FIELDITEM_POKE_05               771 /* 0x0303 タマゲタケ（フィールドアイテム型）５匹目 */
-#define FV_FIELDITEM_POKE_06               772 /* 0x0304 タマゲタケ（フィールドアイテム型）６匹目 */
-#define FV_FIELDITEM_POKE_07               773 /* 0x0305 タマゲタケ（フィールドアイテム型）７匹目 */
-#define FV_FIELDITEM_POKE_08               774 /* 0x0306 タマゲタケ（フィールドアイテム型）８匹目 */
-#define FV_FIELDITEM_POKE_09               775 /* 0x0307 タマゲタケ（フィールドアイテム型）９匹目 */
-#define FV_FIELDITEM_POKE_10               776 /* 0x0308 タマゲタケ（フィールドアイテム型）１０匹目 */
-		/* not used   777(0x0309) */
-		/* not used   778(0x030a) */
+#define FV_FLDMONS_01                      767 /* 0x02ff タマゲタケ（フィールドアイテム型）１匹目 */
+#define FV_FLDMONS_02                      768 /* 0x0300 タマゲタケ（フィールドアイテム型）２匹目 */
+#define FV_FLDMONS_03                      769 /* 0x0301 タマゲタケ（フィールドアイテム型）３匹目 */
+#define FV_FLDMONS_04                      770 /* 0x0302 タマゲタケ（フィールドアイテム型）４匹目 */
+#define FV_FLDMONS_05                      771 /* 0x0303 タマゲタケ（フィールドアイテム型）５匹目 */
+#define FV_FLDMONS_06                      772 /* 0x0304 タマゲタケ（フィールドアイテム型）６匹目 */
+#define FV_FLDMONS_07                      773 /* 0x0305 タマゲタケ（フィールドアイテム型）７匹目 */
+#define FV_FLDMONS_08                      774 /* 0x0306 タマゲタケ（フィールドアイテム型）８匹目 */
+#define FV_FLDMONS_09                      775 /* 0x0307 タマゲタケ（フィールドアイテム型）９匹目 */
+#define FV_FLDMONS_10                      776 /* 0x0308 タマゲタケ（フィールドアイテム型）１０匹目 */
+#define FV_H03_BADRIDER                    777 /* 0x0309 シリンダーブリッジ：暴走族リーダーと子分 */
+#define FV_H03_GENERALPERSON               778 /* 0x030a シリンダーブリッジ：おばさんと格闘家（女） */
 		/* not used   779(0x030b) */
 		/* not used   780(0x030c) */
 		/* not used   781(0x030d) */
@@ -2523,7 +2523,7 @@
 #define TMFLG_H04R0301_FISHING            2749 /* 0x0abd ビレッジブリッジ民家：釣りイベント */
 #define TMFLG_T05R0301_BTLITEM            2750 /* 0x0abe カナワタウン民家：戦闘用アイテム入手イベント */
 #define TMFLG_C08R0201_BTL                2751 /* 0x0abf ソウリュウシティ：バトルハウストレーナー再戦フラグ */
-		/* not used  2752(0x0ac0) */
+#define TMFLG_H03_EMPEROR_BTL             2752 /* 0x0ac0 シリンダーブリッジ：暴走族と対戦したフラグ */
 		/* not used  2753(0x0ac1) */
 		/* not used  2754(0x0ac2) */
 		/* not used  2755(0x0ac3) */
