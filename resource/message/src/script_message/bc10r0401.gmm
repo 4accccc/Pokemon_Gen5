@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T16:07:51"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T19:46:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -493,6 +493,17 @@
 怖がってんな！？</language>
 	</row>
 
+	<row id="msg_bc10r0401_badman1_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後</comment>
+		<attribute name="キャラ指定">BADMAN
+・トレーナーID=badraider_04</attribute>
+		<language name="JPN" width="256">ローテーションバトルは
+ピリピリするぜー！！</language>
+		<language name="JPN_KANJI" width="256">ローテーションバトルは
+ピリピリするぜー！！</language>
+	</row>
+
 	<row id="msg_bc10r0401_backpackerm_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・はい/いいえ選択肢表示
@@ -518,6 +529,17 @@
 ・トレーナーID=backpackerm_15</attribute>
 		<language name="JPN" width="256">おれの　うんのつよさ　こわがったな</language>
 		<language name="JPN_KANJI" width="256">おれの　運の強さ　怖がったな</language>
+	</row>
+
+	<row id="msg_bc10r0401_backpackerm_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・戦闘後</comment>
+		<attribute name="キャラ指定">BACKPACKERM
+・トレーナーID=backpackerm_15</attribute>
+		<language name="JPN" width="256">ふん！　きょうは
+ウンが　なかっただけださ</language>
+		<language name="JPN_KANJI" width="256">ふん！　今日は
+運が　なかっただけださ</language>
 	</row>
 
 	<flowchart-group-list>
