@@ -20,6 +20,7 @@ typedef enum {
   RESEARCH_CHECK_SEQ_FLASH_IN,  // 画面フラッシュ ( イン )
   RESEARCH_CHECK_SEQ_UPDATE,    // 更新
   RESEARCH_CHECK_SEQ_FADE_OUT,  // フェードアウト
+  RESEARCH_CHECK_SEQ_FRAME_WAIT,// フレーム経過待ち
   RESEARCH_CHECK_SEQ_CLEAN_UP,  // 後片付け
   RESEARCH_CHECK_SEQ_FINISH,    // 終了
 } RESEARCH_CHECK_SEQ;
@@ -52,6 +53,8 @@ typedef enum {
   PALETTE_ANIME_CURSOR_ON, // カーソルON
   PALETTE_ANIME_CURSOR_SET,// カーソルSET
   PALETTE_ANIME_SELECT,    //「ほうこくをみる」ボタン選択リアクション
+  PALETTE_ANIME_HOLD,      //「ほうこくをみる」ボタン暗転
+  PALETTE_ANIME_RECOVER,   //「ほうこくをみる」ボタン復帰
   PALETTE_ANIME_RECEIVE_BUTTON, //「データじゅしんちゅう」ボタンフェード
   PALETTE_ANIME_NUM,       // 総数
 } PALETTE_ANIME_INDEX;

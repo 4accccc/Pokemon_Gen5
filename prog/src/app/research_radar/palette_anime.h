@@ -22,11 +22,13 @@ typedef struct _PALETTE_ANIME PALETTE_ANIME;
 // アニメーションタイプ
 typedef enum {
   ANIME_TYPE_SIN_FADE,      // sin フェード
-  ANIME_TYPE_SIN_FADE_FAST, // sin フェード ( 早 )
+  ANIME_TYPE_SIN_FADE_FAST, // sin フェード ( 速 )
   ANIME_TYPE_SIN_FADE_SLOW, // sin フェード ( 遅 )
   ANIME_TYPE_BLINK,         // 点滅
   ANIME_TYPE_BLINK_SHORT,   // 点滅 ( 短 )
   ANIME_TYPE_BLINK_LONG,    // 点滅 ( 長 )
+  ANIME_TYPE_HOLD,          // 暗転
+  ANIME_TYPE_RECOVER,       // 暗転からの復帰
 } ANIME_TYPE;
 
 

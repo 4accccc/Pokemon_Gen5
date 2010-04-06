@@ -65,6 +65,7 @@ struct _RESEARCH_SELECT_WORK
   u32                    seqCount;      // ÉVÅ[ÉPÉìÉXÉJÉEÉìÉ^
   BOOL                   seqFinishFlag; // åªç›ÇÃÉVÅ[ÉPÉìÉXÇ™èIóπÇµÇΩÇ©Ç«Ç§Ç©
   RESEARCH_SELECT_RESULT result;        // âÊñ èIóπåãâ 
+  u32                    waitFrame;     // ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘
 
   // ÉÅÉjÉÖÅ[çÄñ⁄
   MENU_ITEM menuCursorPos; // ÉJÅ[É\Éãà íu
@@ -131,6 +132,7 @@ static void InitSeq_CONFIRM( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SE
 static void InitSeq_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
 static void InitSeq_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
 static void InitSeq_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
+static void InitSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FRAME_WAIT
 static void InitSeq_SCROLL_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_RESET
 static void InitSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
 static void InitSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
@@ -144,6 +146,7 @@ static void MainSeq_CONFIRM( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SE
 static void MainSeq_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
 static void MainSeq_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
 static void MainSeq_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
+static void MainSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FRAME_WAIT
 static void MainSeq_SCROLL_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_RESET
 static void MainSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
 static void MainSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
@@ -157,6 +160,7 @@ static void FinishSeq_CONFIRM( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_
 static void FinishSeq_DETERMINE( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_DETERMINE
 static void FinishSeq_FADE_IN( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_IN 
 static void FinishSeq_FADE_OUT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FADE_OUT
+static void FinishSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_FRAME_WAIT
 static void FinishSeq_SCROLL_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_SCROLL_RESET
 static void FinishSeq_PALETTE_RESET( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_PALETTE_RESET
 static void FinishSeq_CLEAN_UP( RESEARCH_SELECT_WORK* work ); // RESEARCH_SELECT_SEQ_CLEAN_UP 
@@ -167,6 +171,8 @@ static void FinishCurrentSeq( RESEARCH_SELECT_WORK* work ); // åªç›ÇÃÉVÅ[ÉPÉìÉXÇ
 static void SwitchSeq( RESEARCH_SELECT_WORK* work ); // èàóùÉVÅ[ÉPÉìÉXÇïœçXÇ∑ÇÈ
 static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq ); // èàóùÉVÅ[ÉPÉìÉXÇê›íËÇ∑ÇÈ
 static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result ); // âÊñ èIóπåãâ Çê›íËÇ∑ÇÈ
+static void SetWaitFrame( RESEARCH_SELECT_WORK* work, u32 frame ); // ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘Çê›íËÇ∑ÇÈ
+static u32 GetWaitFrame( const RESEARCH_SELECT_WORK* work ); // ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘ÇéÊìæÇ∑ÇÈ
 // VBlankÉ^ÉXÉN
 static void RegisterVBlankTask( RESEARCH_SELECT_WORK* work ); // VBlankÉ^ÉXÉNÇìoò^Ç∑ÇÈ
 static void ReleaseVBlankTask ( RESEARCH_SELECT_WORK* work ); // VBlankÉ^ÉXÉNÇÃìoò^ÇâèúÇ∑ÇÈ
@@ -366,6 +372,7 @@ RESEARCH_SELECT_WORK* CreateResearchSelectWork( RESEARCH_COMMON_WORK* commonWork
   work->seqCount              = 0;
   work->seqFinishFlag         = FALSE;
   work->result                = RESEARCH_SELECT_RESULT_NONE;
+  work->waitFrame             = WAIT_FRAME_BUTTON;
   work->menuCursorPos         = MENU_ITEM_DETERMINATION_OK;
   work->topicCursorPos        = 0;
   work->topicCursorNextPos    = 0;
@@ -438,6 +445,7 @@ RESEARCH_SELECT_RESULT ResearchSelectMain( RESEARCH_SELECT_WORK* work )
   case RESEARCH_SELECT_SEQ_DETERMINE:       MainSeq_DETERMINE( work );       break;
   case RESEARCH_SELECT_SEQ_FADE_IN:         MainSeq_FADE_IN( work );         break;
   case RESEARCH_SELECT_SEQ_FADE_OUT:        MainSeq_FADE_OUT( work );        break;
+  case RESEARCH_SELECT_SEQ_FRAME_WAIT:      MainSeq_FRAME_WAIT( work );      break;
   case RESEARCH_SELECT_SEQ_SCROLL_RESET:    MainSeq_SCROLL_RESET( work );    break;
   case RESEARCH_SELECT_SEQ_PALETTE_RESET:   MainSeq_PALETTE_RESET( work );   break;
   case RESEARCH_SELECT_SEQ_CLEAN_UP:        MainSeq_CLEAN_UP( work );        break;
@@ -545,6 +553,7 @@ static void MainSeq_STANDBY( RESEARCH_SELECT_WORK* work )
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
     RESEARCH_COMMON_StartPaletteAnime( work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // ÉLÉÉÉìÉZÉãâπ
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_OUT );
     SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
     SetNextSeq( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
@@ -603,6 +612,7 @@ static void MainSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
     RESEARCH_COMMON_StartPaletteAnime( 
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_CANCEL1 );      // ÉLÉÉÉìÉZÉãâπ
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_OUT );
     SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
     SetNextSeq( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
@@ -655,7 +665,10 @@ static void MainSeq_KEY_WAIT( RESEARCH_SELECT_WORK* work )
 
   // BÉ{É^Éì
   if( trg & PAD_BUTTON_B ) {
+    RESEARCH_COMMON_StartPaletteAnime( 
+        work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_CANCEL1 ); // ÉLÉÉÉìÉZÉãâπ
+    SetNextSeq( work, RESEARCH_SELECT_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_SELECT_SEQ_FADE_OUT );
     SetNextSeq( work, RESEARCH_SELECT_SEQ_PALETTE_RESET );
     SetNextSeq( work, RESEARCH_SELECT_SEQ_CLEAN_UP );
@@ -873,6 +886,21 @@ static void MainSeq_FADE_OUT( RESEARCH_SELECT_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
+ * @brief ÉtÉåÅ[ÉÄåoâﬂë“Çø ÉVÅ[ÉPÉìÉX ( RESEARCH_SELECT_SEQ_FRAME_WAIT ) ÇÃèàóù
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void MainSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work )
+{
+  // ë“Çøéûä‘Ç™åoâﬂ
+  if( GetWaitFrame(work) < work->seqCount ) {
+    FinishCurrentSeq( work ); 
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
  * @brief ÉpÉåÉbÉgïúãAÉVÅ[ÉPÉìÉX ( RESEARCH_SELECT_SEQ_PALETTE_RESET ) ÇÃèàóù
  *
  * @param work
@@ -989,6 +1017,7 @@ static void CountUpSeqCount( RESEARCH_SELECT_WORK* work )
   case RESEARCH_SELECT_SEQ_DETERMINE:      maxCount = SEQ_DETERMINE_WAIT_FRAMES; break;
   case RESEARCH_SELECT_SEQ_FADE_IN:        maxCount = 0xffffffff;                break;
   case RESEARCH_SELECT_SEQ_FADE_OUT:       maxCount = 0xffffffff;                break;
+  case RESEARCH_SELECT_SEQ_FRAME_WAIT:     maxCount = 0xffffffff;                break;
   case RESEARCH_SELECT_SEQ_SCROLL_RESET:   maxCount = 0xffffffff;                break;
   case RESEARCH_SELECT_SEQ_PALETTE_RESET:  maxCount = 0xffffffff;                break;
   case RESEARCH_SELECT_SEQ_CLEAN_UP:       maxCount = 0xffffffff;                break;
@@ -1059,6 +1088,33 @@ static void SetResult( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_RESULT result
 
 //-----------------------------------------------------------------------------------------
 /**
+ * @brief ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘Çê›íËÇ∑ÇÈ
+ *
+ * @param work
+ * @param frame ê›íËÇ∑ÇÈë“ÇøÉtÉåÅ[ÉÄêî
+ */
+//-----------------------------------------------------------------------------------------
+static void SetWaitFrame( RESEARCH_SELECT_WORK* work, u32 frame )
+{
+  work->waitFrame = frame;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘ÇéÊìæÇ∑ÇÈ
+ *
+ * @param work
+ *
+ * @return ë“ÇøÉtÉåÅ[ÉÄêî
+ */
+//-----------------------------------------------------------------------------------------
+static u32 GetWaitFrame( const RESEARCH_SELECT_WORK* work )
+{
+  return work->waitFrame;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
  * @brief ÉVÅ[ÉPÉìÉXÇïœçXÇ∑ÇÈ
  *
  * @param work
@@ -1100,6 +1156,7 @@ static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
   case RESEARCH_SELECT_SEQ_DETERMINE:        FinishSeq_DETERMINE( work );        break;
   case RESEARCH_SELECT_SEQ_FADE_IN:          FinishSeq_FADE_IN( work );          break;
   case RESEARCH_SELECT_SEQ_FADE_OUT:         FinishSeq_FADE_OUT( work );         break;
+  case RESEARCH_SELECT_SEQ_FRAME_WAIT:       FinishSeq_FRAME_WAIT( work );       break;
   case RESEARCH_SELECT_SEQ_SCROLL_RESET:     FinishSeq_SCROLL_RESET( work );     break;
   case RESEARCH_SELECT_SEQ_PALETTE_RESET:    FinishSeq_PALETTE_RESET( work );    break;
   case RESEARCH_SELECT_SEQ_CLEAN_UP:         FinishSeq_CLEAN_UP( work );         break;
@@ -1123,6 +1180,7 @@ static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
   case RESEARCH_SELECT_SEQ_DETERMINE:        InitSeq_DETERMINE( work );        break;
   case RESEARCH_SELECT_SEQ_FADE_IN:          InitSeq_FADE_IN( work );          break;
   case RESEARCH_SELECT_SEQ_FADE_OUT:         InitSeq_FADE_OUT( work );         break;
+  case RESEARCH_SELECT_SEQ_FRAME_WAIT:       InitSeq_FRAME_WAIT( work );       break;
   case RESEARCH_SELECT_SEQ_SCROLL_RESET:     InitSeq_SCROLL_RESET( work );     break;
   case RESEARCH_SELECT_SEQ_PALETTE_RESET:    InitSeq_PALETTE_RESET( work );    break;
   case RESEARCH_SELECT_SEQ_CLEAN_UP:         InitSeq_CLEAN_UP( work );         break;
@@ -1142,6 +1200,7 @@ static void SetSeq( RESEARCH_SELECT_WORK* work, RESEARCH_SELECT_SEQ nextSeq )
   case RESEARCH_SELECT_SEQ_DETERMINE:        OS_TFPrintf( PRINT_TARGET, "DETERMINE\n" );        break;
   case RESEARCH_SELECT_SEQ_FADE_IN:          OS_TFPrintf( PRINT_TARGET, "FADE_IN\n" );          break;
   case RESEARCH_SELECT_SEQ_FADE_OUT:         OS_TFPrintf( PRINT_TARGET, "FADE_OUT\n" );         break;
+  case RESEARCH_SELECT_SEQ_FRAME_WAIT:       OS_TFPrintf( PRINT_TARGET, "FRAME_WAIT\n" );       break;
   case RESEARCH_SELECT_SEQ_SCROLL_RESET:     OS_TFPrintf( PRINT_TARGET, "SCROLL_RESET\n" );     break;
   case RESEARCH_SELECT_SEQ_PALETTE_RESET:    OS_TFPrintf( PRINT_TARGET, "PALETTE_RESET\n" );    break;
   case RESEARCH_SELECT_SEQ_CLEAN_UP:         OS_TFPrintf( PRINT_TARGET, "CLEAN_UP\n" );         break;
@@ -1382,6 +1441,19 @@ static void InitSeq_FADE_OUT( RESEARCH_SELECT_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
+ * @brief ÉVÅ[ÉPÉìÉXÇèâä˙âªÇ∑ÇÈ ( ==> RESEARCH_SELECT_SEQ_FRAME_WAIT )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: init seq FRAME WAIT\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
  * @brief ÉVÅ[ÉPÉìÉXÇèâä˙âªÇ∑ÇÈ ( ==> RESEARCH_SELECT_SEQ_PALETTE_RESET )
  *
  * @param work
@@ -1613,6 +1685,19 @@ static void FinishSeq_FADE_OUT( RESEARCH_SELECT_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq FADE_OUT\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ÉVÅ[ÉPÉìÉXèIóπèàóù ( ==> RESEARCH_SELECT_SEQ_FRAME_WAIT )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void FinishSeq_FRAME_WAIT( RESEARCH_SELECT_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-SELECT: finish seq FRAME_WAIT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4873,6 +4958,7 @@ static void DebugPrint_seqQueue( const RESEARCH_SELECT_WORK* work )
     case RESEARCH_SELECT_SEQ_DETERMINE:        OS_TFPrintf( PRINT_TARGET, "DETERMINE " );        break;
     case RESEARCH_SELECT_SEQ_FADE_IN:          OS_TFPrintf( PRINT_TARGET, "FADE_IN " );          break;
     case RESEARCH_SELECT_SEQ_FADE_OUT:         OS_TFPrintf( PRINT_TARGET, "FADE_OUT " );         break;
+    case RESEARCH_SELECT_SEQ_FRAME_WAIT:       OS_TFPrintf( PRINT_TARGET, "FRAME_WAIT " );       break;
     case RESEARCH_SELECT_SEQ_SCROLL_RESET:     OS_TFPrintf( PRINT_TARGET, "SCROLL_RESET " );     break;
     case RESEARCH_SELECT_SEQ_PALETTE_RESET:    OS_TFPrintf( PRINT_TARGET, "PALETTE_RESET " );    break;
     case RESEARCH_SELECT_SEQ_CLEAN_UP:         OS_TFPrintf( PRINT_TARGET, "CLEAN_UP " );         break;

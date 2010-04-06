@@ -78,6 +78,7 @@ struct _RESEARCH_CHECK_WORK
   BOOL                  seqFinishFlag; // åªç›ÇÃÉVÅ[ÉPÉìÉXÇ™èIóπÇµÇΩÇ©Ç«Ç§Ç©
   u32                   seqCount;      // ÉVÅ[ÉPÉìÉXÉJÉEÉìÉ^
   RESEARCH_CHECK_RESULT result;        // âÊñ èIóπåãâ 
+  u32                   waitFrame;     // ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘
 
   // ÉJÅ[É\Éã
   MENU_ITEM      cursorPos;     // ÉJÅ[É\Éãà íu
@@ -151,6 +152,7 @@ static void InitSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SE
 static void InitSeq_FLASH_IN( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
 static void InitSeq_UPDATE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
 static void InitSeq_FADE_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
+static void InitSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FRAME_WAIT
 static void InitSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP
 // ÉVÅ[ÉPÉìÉXèàóù
 static void MainSeq_SETUP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_SETUP
@@ -162,6 +164,7 @@ static void MainSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SE
 static void MainSeq_FLASH_IN( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
 static void MainSeq_UPDATE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
 static void MainSeq_FADE_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
+static void MainSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FRAME_WAIT
 static void MainSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP 
 // ÉVÅ[ÉPÉìÉXèIóπèàóù
 static void FinishSeq_SETUP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_SETUP
@@ -173,6 +176,7 @@ static void FinishSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_
 static void FinishSeq_FLASH_IN( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FLASH_IN
 static void FinishSeq_UPDATE( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_UPDATE
 static void FinishSeq_FADE_OUT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FADE_OUT
+static void FinishSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_FRAME_WAIT
 static void FinishSeq_CLEAN_UP( RESEARCH_CHECK_WORK* work ); // RESEARCH_CHECK_SEQ_CLEAN_UP
 // ÉVÅ[ÉPÉìÉXêßå‰
 static void CountUpSeqCount( RESEARCH_CHECK_WORK* work ); // ÉVÅ[ÉPÉìÉXÉJÉEÉìÉ^ÇçXêVÇ∑ÇÈ
@@ -181,6 +185,8 @@ static void FinishCurrentSeq( RESEARCH_CHECK_WORK* work ); // åªç›ÇÃÉVÅ[ÉPÉìÉXÇ
 static void SwitchSeq( RESEARCH_CHECK_WORK* work ); // èàóùÉVÅ[ÉPÉìÉXÇïœçXÇ∑ÇÈ
 static void SetSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq ); // èàóùÉVÅ[ÉPÉìÉXÇê›íËÇ∑ÇÈ
 static void SetResult( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_RESULT result ); // âÊñ èIóπåãâ Çê›íËÇ∑ÇÈ
+static void SetWaitFrame( RESEARCH_CHECK_WORK* work, u32 frame ); // ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘Çê›íËÇ∑ÇÈ
+static u32 GetWaitFrame( const RESEARCH_CHECK_WORK* work ); // ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘ÇéÊìæÇ∑ÇÈ
 //-----------------------------------------------------------------------------------------
 // ÅûLAYER 3 ã@î\
 //-----------------------------------------------------------------------------------------
@@ -213,6 +219,9 @@ static void ShiftAnswerIdx( RESEARCH_CHECK_WORK* work, int stride ); // ëIëíÜÇÃ
 static void ResetAnswerIdx( RESEARCH_CHECK_WORK* work );             // ëIëíÜÇÃâÒìöÉCÉìÉfÉbÉNÉXÇÉäÉZÉbÉgÇ∑ÇÈ
 // í≤ç∏ÉfÅ[É^ï\é¶É^ÉCÉv
 static void SetDataDisplayType( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispType ); // í≤ç∏ÉfÅ[É^ÇÃï\é¶É^ÉCÉvÇê›íËÇ∑ÇÈ
+//ÅuïÒçêÇå©ÇÈÅvÉ{É^Éì
+static void UpdateAnalyzeButton( RESEARCH_CHECK_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇçXêVÇ∑ÇÈ
+static void BlinkAnalyzeButton( RESEARCH_CHECK_WORK* work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇì_ñ≈Ç≥ÇπÇÈ
 // â~ÉOÉâÉt
 static void UpdateCircleGraphs( RESEARCH_CHECK_WORK* work ); // Ç∑Ç◊ÇƒÇÃâ~ÉOÉâÉtÇçXêVÇ∑ÇÈ
 static void DrawCircleGraphs( const RESEARCH_CHECK_WORK* work ); // Ç∑Ç◊ÇƒÇÃâ~ÉOÉâÉtÇï`âÊÇ∑ÇÈ
@@ -279,6 +288,7 @@ static void SetupPaletteAnime( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[É
 static void CleanUpPaletteAnime( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÉèÅ[ÉNÇÉNÉäÅ[ÉìÉAÉbÉvÇ∑ÇÈ
 static void StartPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇäJénÇ∑ÇÈ
 static void StopPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇí‚é~Ç∑ÇÈ
+static BOOL CheckPaletteAnime( const RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìíÜÇ©Ç«Ç§Ç©ÇÉ`ÉFÉbÉNÇ∑ÇÈ
 static void UpdatePaletteAnime( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇçXêVÇ∑ÇÈ
 // ÉpÉåÉbÉgÉtÉFÅ[Éh
 static void InitPaletteFadeSystem( RESEARCH_CHECK_WORK* work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhÉVÉXÉeÉÄ èâä˙âª
@@ -393,6 +403,7 @@ RESEARCH_CHECK_WORK* CreateResearchCheckWork( RESEARCH_COMMON_WORK* commonWork )
   work->seqFinishFlag   = FALSE;
   work->seqCount        = 0;
   work->result          = RESEARCH_CHECK_RESULT_NONE;
+  work->waitFrame       = WAIT_FRAME_BUTTON;
   work->cursorPos       = MENU_ITEM_QUESTION;
   work->analyzeFlag     = FALSE;
   work->updateFlag      = FALSE;
@@ -460,17 +471,18 @@ RESEARCH_CHECK_RESULT ResearchCheckMain( RESEARCH_CHECK_WORK* work )
 {
   // ÉVÅ[ÉPÉìÉXÇ≤Ç∆ÇÃèàóù
   switch( work->seq ) {
-  case RESEARCH_CHECK_SEQ_SETUP:      MainSeq_SETUP( work );      break;
-  case RESEARCH_CHECK_SEQ_STANDBY:    MainSeq_STANDBY( work );    break;
-  case RESEARCH_CHECK_SEQ_KEY_WAIT:   MainSeq_KEY_WAIT( work );   break;
-  case RESEARCH_CHECK_SEQ_ANALYZE:    MainSeq_ANALYZE( work );    break;
-  case RESEARCH_CHECK_SEQ_PERCENTAGE: MainSeq_PERCENTAGE( work ); break;
-  case RESEARCH_CHECK_SEQ_FLASH_OUT:  MainSeq_FLASH_OUT( work );  break;
-  case RESEARCH_CHECK_SEQ_FLASH_IN:   MainSeq_FLASH_IN( work );   break;
-  case RESEARCH_CHECK_SEQ_UPDATE:     MainSeq_UPDATE( work );     break;
-  case RESEARCH_CHECK_SEQ_FADE_OUT:   MainSeq_FADE_OUT( work );   break;
-  case RESEARCH_CHECK_SEQ_CLEAN_UP:   MainSeq_CLEAN_UP( work );   break;
-  case RESEARCH_CHECK_SEQ_FINISH:     return work->result;
+  case RESEARCH_CHECK_SEQ_SETUP:        MainSeq_SETUP( work );        break;
+  case RESEARCH_CHECK_SEQ_STANDBY:      MainSeq_STANDBY( work );      break;
+  case RESEARCH_CHECK_SEQ_KEY_WAIT:     MainSeq_KEY_WAIT( work );     break;
+  case RESEARCH_CHECK_SEQ_ANALYZE:      MainSeq_ANALYZE( work );      break;
+  case RESEARCH_CHECK_SEQ_PERCENTAGE:   MainSeq_PERCENTAGE( work );   break;
+  case RESEARCH_CHECK_SEQ_FLASH_OUT:    MainSeq_FLASH_OUT( work );    break;
+  case RESEARCH_CHECK_SEQ_FLASH_IN:     MainSeq_FLASH_IN( work );     break;
+  case RESEARCH_CHECK_SEQ_UPDATE:       MainSeq_UPDATE( work );       break;
+  case RESEARCH_CHECK_SEQ_FADE_OUT:     MainSeq_FADE_OUT( work );     break;
+  case RESEARCH_CHECK_SEQ_FRAME_WAIT:   MainSeq_FRAME_WAIT( work );   break;
+  case RESEARCH_CHECK_SEQ_CLEAN_UP:     MainSeq_CLEAN_UP( work );     break;
+  case RESEARCH_CHECK_SEQ_FINISH:       return work->result;
   default: GF_ASSERT(0);
   }
 
@@ -584,6 +596,7 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
     RESEARCH_COMMON_StartPaletteAnime( 
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // ÉLÉÉÉìÉZÉãâπ
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FADE_OUT );
     SetNextSeq( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
     FinishCurrentSeq( work );
@@ -614,7 +627,7 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
   //ÅuÇŸÇ§Ç±Ç≠ÇÇ›ÇÈÅvÉ{É^Éì
   if( touch == TOUCH_AREA_ANALYZE_BUTTON ) {
     if( GetCountOfQuestion(work) != 0 ) {
-      StartPaletteAnime( work, PALETTE_ANIME_SELECT );
+      BlinkAnalyzeButton( work );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
@@ -693,7 +706,11 @@ static void MainSeq_STANDBY( RESEARCH_CHECK_WORK* work )
 
   // B É{É^Éì
   if( trg & PAD_BUTTON_B ) {
+    RESEARCH_COMMON_StartPaletteAnime( 
+        work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // ÉLÉÉÉìÉZÉãâπ
     // ÉVÅ[ÉPÉìÉXïœçX
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FADE_OUT );
     SetNextSeq( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
     FinishCurrentSeq( work );
@@ -748,6 +765,7 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
     RESEARCH_COMMON_StartPaletteAnime( 
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // ÉLÉÉÉìÉZÉãâπ
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FADE_OUT );
     SetNextSeq( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
     FinishCurrentSeq( work );
@@ -780,7 +798,7 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
   //ÅuÇŸÇ§Ç±Ç≠ÇÇ›ÇÈÅvÉ{É^Éì
   if( touch == TOUCH_AREA_ANALYZE_BUTTON ) {
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
-      StartPaletteAnime( work, PALETTE_ANIME_SELECT );
+      BlinkAnalyzeButton( work );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_ANALYZE );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_OUT );
       SetNextSeq( work, RESEARCH_CHECK_SEQ_FLASH_IN );
@@ -854,7 +872,11 @@ static void MainSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
 
   // B É{É^Éì
   if( trg & PAD_BUTTON_B ) {
+    RESEARCH_COMMON_StartPaletteAnime( 
+        work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // ÉLÉÉÉìÉZÉãâπ
     // ÉVÅ[ÉPÉìÉXïœçX
+    SetNextSeq( work, RESEARCH_CHECK_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_CHECK_SEQ_FADE_OUT );
     SetNextSeq( work, RESEARCH_CHECK_SEQ_CLEAN_UP );
     FinishCurrentSeq( work );
@@ -972,6 +994,21 @@ static void MainSeq_FADE_OUT( RESEARCH_CHECK_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
+ * @brief í≤ç∏çÄñ⁄ämíËÇÃämîFÉVÅ[ÉPÉìÉXÇ÷ÇÃèÄîıÉVÅ[ÉPÉìÉX ( RESEARCH_CHECK_SEQ_FRAME_WAIT ) ÇÃèàóù
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void MainSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work )
+{
+  // ë“Çøéûä‘Ç™åoâﬂ
+  if( GetWaitFrame(work) < work->seqCount ) {
+    FinishCurrentSeq( work );
+  } 
+}
+
+//-----------------------------------------------------------------------------------------
+/**
  * @brief å„ï–ïtÇØÉVÅ[ÉPÉìÉX ( RESEARCH_CHECK_SEQ_CLEAN_UP ) ÇÃèàóù
  *
  * @param work
@@ -1071,6 +1108,33 @@ static void SetResult( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_RESULT result )
 
 //-----------------------------------------------------------------------------------------
 /**
+ * @brief ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘Çê›íËÇ∑ÇÈ
+ *
+ * @param work
+ * @param frame ê›íËÇ∑ÇÈë“ÇøÉtÉåÅ[ÉÄêî
+ */
+//-----------------------------------------------------------------------------------------
+static void SetWaitFrame( RESEARCH_CHECK_WORK* work, u32 frame )
+{
+  work->waitFrame = frame;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘ÇéÊìæÇ∑ÇÈ
+ *
+ * @param work
+ *
+ * @return ë“ÇøÉtÉåÅ[ÉÄêî
+ */
+//-----------------------------------------------------------------------------------------
+static u32 GetWaitFrame( const RESEARCH_CHECK_WORK* work )
+{
+  return work->waitFrame;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
  * @brief ÉVÅ[ÉPÉìÉXÉJÉEÉìÉ^ÇçXêVÇ∑ÇÈ
  * 
  * @param work
@@ -1094,6 +1158,7 @@ static void CountUpSeqCount( RESEARCH_CHECK_WORK* work )
   case RESEARCH_CHECK_SEQ_FLASH_IN:   maxCount = SEQ_FLASH_IN_FRAMES;  break;
   case RESEARCH_CHECK_SEQ_UPDATE:     maxCount = SEQ_UPDATE_FRAMES;    break;
   case RESEARCH_CHECK_SEQ_FADE_OUT:   maxCount = 0xffffffff;           break;
+  case RESEARCH_CHECK_SEQ_FRAME_WAIT: maxCount = 0xffffffff;           break;
   case RESEARCH_CHECK_SEQ_CLEAN_UP:   maxCount = 0xffffffff;           break;
   case RESEARCH_CHECK_SEQ_FINISH:     maxCount = 0xffffffff;           break;
   default: GF_ASSERT(0);
@@ -1167,6 +1232,7 @@ static void SetSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
   case RESEARCH_CHECK_SEQ_FLASH_IN:   FinishSeq_FLASH_IN( work );    break;
   case RESEARCH_CHECK_SEQ_UPDATE:     FinishSeq_UPDATE( work );      break;
   case RESEARCH_CHECK_SEQ_FADE_OUT:   FinishSeq_FADE_OUT( work );    break;
+  case RESEARCH_CHECK_SEQ_FRAME_WAIT: FinishSeq_FRAME_WAIT( work );  break;
   case RESEARCH_CHECK_SEQ_CLEAN_UP:   FinishSeq_CLEAN_UP( work );    break;
   case RESEARCH_CHECK_SEQ_FINISH:     break;
   default:  GF_ASSERT(0);
@@ -1188,6 +1254,7 @@ static void SetSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
   case RESEARCH_CHECK_SEQ_FLASH_IN:   InitSeq_FLASH_IN( work );    break;
   case RESEARCH_CHECK_SEQ_UPDATE:     InitSeq_UPDATE( work );      break;
   case RESEARCH_CHECK_SEQ_FADE_OUT:   InitSeq_FADE_OUT( work );    break;
+  case RESEARCH_CHECK_SEQ_FRAME_WAIT: InitSeq_FRAME_WAIT( work );  break;
   case RESEARCH_CHECK_SEQ_CLEAN_UP:   InitSeq_CLEAN_UP( work );    break;
   case RESEARCH_CHECK_SEQ_FINISH:     break;
   default:  GF_ASSERT(0);
@@ -1205,6 +1272,7 @@ static void SetSeq( RESEARCH_CHECK_WORK* work, RESEARCH_CHECK_SEQ nextSeq )
   case RESEARCH_CHECK_SEQ_FLASH_IN:   OS_TFPrintf( PRINT_TARGET, "FLASH_IN" );    break;
   case RESEARCH_CHECK_SEQ_UPDATE:     OS_TFPrintf( PRINT_TARGET, "UPDATE" );      break;
   case RESEARCH_CHECK_SEQ_FADE_OUT:   OS_TFPrintf( PRINT_TARGET, "FADE_OUT" );    break;
+  case RESEARCH_CHECK_SEQ_FRAME_WAIT: OS_TFPrintf( PRINT_TARGET, "FRAME_WAIT" );  break;
   case RESEARCH_CHECK_SEQ_CLEAN_UP:   OS_TFPrintf( PRINT_TARGET, "CLEAN_UP" );    break;
   case RESEARCH_CHECK_SEQ_FINISH:     OS_TFPrintf( PRINT_TARGET, "FINISH" );      break;
   default:  GF_ASSERT(0);
@@ -1248,6 +1316,7 @@ static void InitSeq_STANDBY( RESEARCH_CHECK_WORK* work )
 static void InitSeq_KEY_WAIT( RESEARCH_CHECK_WORK* work )
 {
   SetMenuCursorOn( work );     // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
+  UpdateAnalyzeButton( work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇçXêVÇ∑ÇÈ
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init seq KEY_WAIT\n" );
@@ -1304,8 +1373,8 @@ static void InitSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void InitSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work )
 {
-  // ÉpÉåÉbÉgÉtÉFÅ[ÉhäJén
-  StartPaletteFadeFlashOut( work );
+  StopPaletteAnime( work, PALETTE_ANIME_HOLD ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇÃà√ì]ÉAÉjÉÅÇí‚é~
+  StartPaletteFadeFlashOut( work ); // ÉpÉåÉbÉgÉtÉFÅ[ÉhäJén
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init seq FLASH_OUT\n" );
@@ -1388,6 +1457,19 @@ static void InitSeq_FADE_OUT( RESEARCH_CHECK_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
+ * @brief ÉVÅ[ÉPÉìÉXÇèâä˙âªÇ∑ÇÈ ( ==> RESEARCH_CHECK_SEQ_FRAME_WAIT )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void InitSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work )
+{ 
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: init seq FRAME_WAIT\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
  * @brief ÉVÅ[ÉPÉìÉXÇèâä˙âªÇ∑ÇÈ ( ==> RESEARCH_CHECK_SEQ_CLEAN_UP )
  *
  * @param work
@@ -1422,6 +1504,7 @@ static void FinishSeq_SETUP( RESEARCH_CHECK_WORK* work )
   BmpOamSetDrawEnable( work, BMPOAM_ACTOR_ANALYZE_BUTTON, TRUE ); //ÅuÇŸÇ§Ç±Ç≠ÇÇ›ÇÈÅvÉ{É^ÉìÇï\é¶
   StartPaletteAnime( work, PALETTE_ANIME_CURSOR_ON ); // ÉJÅ[É\ÉãONÉpÉåÉbÉgÉAÉjÉÅÇäJén
   StartPaletteAnime( work, PALETTE_ANIME_RECEIVE_BUTTON ); //ÅuÉfÅ[É^éÛêMíÜÅvÉ{É^ÉìÇÃÉpÉåÉbÉgÉAÉjÉÅÇäJén
+  UpdateAnalyzeButton( work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇçXêVÇ∑ÇÈ
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq SETUP\n" );
@@ -1504,7 +1587,7 @@ static void FinishSeq_PERCENTAGE( RESEARCH_CHECK_WORK* work )
  */
 //-----------------------------------------------------------------------------------------
 static void FinishSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work )
-{
+{ 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq FLASH_OUT\n" );
 }
@@ -1518,6 +1601,8 @@ static void FinishSeq_FLASH_OUT( RESEARCH_CHECK_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void FinishSeq_FLASH_IN( RESEARCH_CHECK_WORK* work )
 {
+  UpdateAnalyzeButton( work ); //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇçXêVÇ∑ÇÈ
+
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq FLASH_IN\n" );
 }
@@ -1568,6 +1653,19 @@ static void FinishSeq_FADE_OUT( RESEARCH_CHECK_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq FADE_OUT\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ÉVÅ[ÉPÉìÉXèIóπèàóù ( ==> RESEARCH_CHECK_SEQ_FRAME_WAIT )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void FinishSeq_FRAME_WAIT( RESEARCH_CHECK_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: finish seq FRAME_WAIT\n" );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1836,6 +1934,7 @@ static void ChangeQuestionToNext( RESEARCH_CHECK_WORK* work )
   UpdateBGFont_NoData( work );          //ÅuÇΩÇæÇ¢Ç‹ ÇøÇÂÇ§Ç≥ÇøÇ„Ç§ÅvÇÃï\é¶ÇçXêVÇ∑ÇÈ
   VanishAllPercentage( work );          // Åìï\é¶ÇëSè¡ãé
   UpdateMyAnswerIconOnButton( work );   // é©ï™ÇÃâÒìöÉAÉCÉRÉì ( É{É^Éìè„ ) ÇçXêVÇ∑ÇÈ
+  UpdateAnalyzeButton( work );          //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇçXêVÇ∑ÇÈ
 
   // ÉJÅ[É\Éãà⁄ìÆâπ
   PMSND_PlaySE( SEQ_SE_SELECT1 );
@@ -1871,6 +1970,7 @@ static void ChangeQuestionToPrev( RESEARCH_CHECK_WORK* work )
   UpdateBGFont_NoData( work );          //ÅuÇΩÇæÇ¢Ç‹ ÇøÇÂÇ§Ç≥ÇøÇ„Ç§ÅvÇÃï\é¶ÇçXêVÇ∑ÇÈ
   VanishAllPercentage( work );          // Åìï\é¶ÇëSè¡ãé
   UpdateMyAnswerIconOnButton( work );   // é©ï™ÇÃâÒìöÉAÉCÉRÉì ( É{É^Éìè„ ) ÇçXêVÇ∑ÇÈ
+  UpdateAnalyzeButton( work );          //ÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇçXêVÇ∑ÇÈ
 
   // ÉJÅ[É\Éãà⁄ìÆâπ
   PMSND_PlaySE( SEQ_SE_SELECT1 );
@@ -2126,6 +2226,48 @@ static void SetDataDisplayType( RESEARCH_CHECK_WORK* work, DATA_DISP_TYPE dispTy
   default: GF_ASSERT(0);
   }
   OS_TFPrintf( PRINT_TARGET, "\n" );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @briefÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇçXêVÇ∑ÇÈ
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void UpdateAnalyzeButton( RESEARCH_CHECK_WORK* work )
+{
+  // É{É^ÉìÇ™âüÇπÇ»Ç¢
+  if( (work->analyzeFlag == TRUE) || // âêÕçœÇ›
+      (work->updateFlag == TRUE) || // çXêVíÜ
+      (GetCountOfQuestion(work) == 0) ) { //ÅuÇΩÇæÇ¢Ç‹í≤ç∏íÜÅv
+    // à√ì]ÇµÇƒÇ¢Ç»Ç¢
+    if( CheckPaletteAnime( work, PALETTE_ANIME_HOLD ) == FALSE ) {
+      StartPaletteAnime( work, PALETTE_ANIME_HOLD ); // à√ì]Ç≥ÇπÇÈ
+    }
+  }
+  // É{É^ÉìÇ™âüÇπÇÈ
+  else {
+    // à√ì]ÇµÇƒÇ¢ÇÈ
+    if( CheckPaletteAnime( work, PALETTE_ANIME_HOLD ) == TRUE ) {
+      StopPaletteAnime( work, PALETTE_ANIME_HOLD ); // à√ì]ÇèIóπ
+      StartPaletteAnime( work, PALETTE_ANIME_RECOVER ); // ïúãAÇ≥ÇπÇÈ
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @briefÅuïÒçêÇå©ÇÈÅvÉ{É^ÉìÇì_ñ≈Ç≥ÇπÇÈ 
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void BlinkAnalyzeButton( RESEARCH_CHECK_WORK* work )
+{
+  StopPaletteAnime( work, PALETTE_ANIME_HOLD );
+  StopPaletteAnime( work, PALETTE_ANIME_RECOVER );
+  StartPaletteAnime( work, PALETTE_ANIME_SELECT );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -4594,6 +4736,7 @@ static void StartPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX in
  * @brief ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìÇí‚é~Ç∑ÇÈ
  *
  * @param work
+ * @param index í‚é~Ç∑ÇÈÉAÉjÉÅÅ[ÉVÉáÉìÇéwíË
  */
 //------------------------------------------------------------------------------------
 static void StopPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index )
@@ -4602,6 +4745,22 @@ static void StopPaletteAnime( RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX ind
 
   // DEBUG;
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-CHECK: stop palette anime [%d]\n", index );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ÉpÉåÉbÉgÉAÉjÉÅÅ[ÉVÉáÉìíÜÇ©Ç«Ç§Ç©ÇÉ`ÉFÉbÉNÇ∑ÇÈ
+ *
+ * @param work
+ * @param index É`ÉFÉbÉNÇ∑ÇÈÉAÉjÉÅÅ[ÉVÉáÉìÇéwíË
+ *
+ * @return ÉAÉjÉÅÅ[ÉVÉáÉìíÜÇ»ÇÁ TRUE
+ *         ÇªÇ§Ç≈Ç»ÇØÇÍÇŒ FALSE
+ */
+//------------------------------------------------------------------------------------
+static BOOL CheckPaletteAnime( const RESEARCH_CHECK_WORK* work, PALETTE_ANIME_INDEX index )
+{
+  return PALETTE_ANIME_CheckAnime( work->paletteAnime[ index ] );
 }
 
 //------------------------------------------------------------------------------------
@@ -5373,6 +5532,7 @@ static void DebugPrint_seqQueue( const RESEARCH_CHECK_WORK* work )
     case RESEARCH_CHECK_SEQ_FLASH_IN:   OS_TFPrintf( PRINT_TARGET, "FLASH_IN " );   break;
     case RESEARCH_CHECK_SEQ_UPDATE:     OS_TFPrintf( PRINT_TARGET, "UPDATE " );     break;
     case RESEARCH_CHECK_SEQ_FADE_OUT:   OS_TFPrintf( PRINT_TARGET, "FADE_OUT " );   break;
+    case RESEARCH_CHECK_SEQ_FRAME_WAIT: OS_TFPrintf( PRINT_TARGET, "FRAME_WAIT " ); break;
     case RESEARCH_CHECK_SEQ_CLEAN_UP:   OS_TFPrintf( PRINT_TARGET, "CLEAN-UP " );   break;
     case RESEARCH_CHECK_SEQ_FINISH:     OS_TFPrintf( PRINT_TARGET, "FINISH " );     break;
     default: GF_ASSERT(0);

@@ -41,6 +41,14 @@
 #define BLINK_LONG_WAIT_FRAMES  (4) // “_–Å‘Ò‚¿ƒtƒŒ[ƒ€”
 #define BLINK_LONG_MIN_EVY      (0) // Å¬ƒtƒF[ƒhŒW”[0, 16]
 #define BLINK_LONG_MAX_EVY      (6) // Å‘åƒtƒF[ƒhŒW”[0, 16]
+// ˆÃ“]
+#define HOLD_FRAMES (40) // ˆÃ“]‚Ü‚Å‚ÌƒtƒŒ[ƒ€”
+#define HOLD_MIN_EVY (0) // Å¬ƒtƒF[ƒhŒW”[0, 16]
+#define HOLD_MAX_EVY (7) // Å‘åƒtƒF[ƒhŒW”[0, 16]
+// ˆÃ“]‚©‚ç‚Ì•œ‹A
+#define RECOVER_FRAMES (40) // ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€”
+#define RECOVER_MIN_EVY (0) // Å¬ƒtƒF[ƒhŒW”[0, 16]
+#define RECOVER_MAX_EVY (7) // Å‘åƒtƒF[ƒhŒW”[0, 16]
 
 
 //=============================================================================
@@ -77,6 +85,8 @@ static void UpdateAnime_SIN_FADE_SLOW( PALETTE_ANIME* work ); // ƒAƒjƒ[ƒVƒ‡ƒ“‚
 static void UpdateAnime_BLINK( PALETTE_ANIME* work ); // ƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é ( “_–Å )
 static void UpdateAnime_BLINK_SHORT( PALETTE_ANIME* work ); // ƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é ( “_–ÅE’Z )
 static void UpdateAnime_BLINK_LONG( PALETTE_ANIME* work ); // ƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é ( “_–ÅE’· )
+static void UpdateAnime_HOLD( PALETTE_ANIME* work ); // ƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é ( ˆÃ“] )
+static void UpdateAnime_RECOVER( PALETTE_ANIME* work ); // ƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é ( ˆÃ“]‚©‚ç‚Ì•œ‹A )
 //-----------------------------------------------------------------------------
 // ŸLAYER 1 §Œä
 //-----------------------------------------------------------------------------
@@ -274,6 +284,8 @@ static void UpdateAnime( PALETTE_ANIME* work )
   case ANIME_TYPE_BLINK:         UpdateAnime_BLINK( work );         break;
   case ANIME_TYPE_BLINK_SHORT:   UpdateAnime_BLINK_SHORT( work );   break;
   case ANIME_TYPE_BLINK_LONG:    UpdateAnime_BLINK_LONG( work );    break;
+  case ANIME_TYPE_HOLD:          UpdateAnime_HOLD( work );          break;
+  case ANIME_TYPE_RECOVER:       UpdateAnime_RECOVER( work );       break;
   default: GF_ASSERT(0);
   }
 }
@@ -474,6 +486,67 @@ static void UpdateAnime_BLINK_LONG( PALETTE_ANIME* work )
 
   // ƒAƒjƒ[ƒVƒ‡ƒ“I—¹
   if( BLINK_LONG_FRAMES < work->frameCount ) {
+    StopAnime( work );
+    ResetPalette( work );
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief ƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é ( ˆÃ“] )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void UpdateAnime_HOLD( PALETTE_ANIME* work )
+{
+  u8 evy;
+
+  GF_ASSERT( work->animeFlag ); // ƒAƒjƒ[ƒVƒ‡ƒ“’â~’†
+  GF_ASSERT( work->setupFlag ); // ƒZƒbƒgƒAƒbƒv‚³‚ê‚Ä‚¢‚È‚¢
+
+  // ƒtƒF[ƒhŒW”‚ğŒˆ’è
+  if( work->frameCount < HOLD_FRAMES ) {
+    evy = HOLD_MIN_EVY 
+        + (HOLD_MAX_EVY - HOLD_MIN_EVY) * work->frameCount / HOLD_FRAMES;
+  }
+  else {
+    evy = HOLD_MAX_EVY;
+  }
+
+  // ƒpƒŒƒbƒg‘‚«Š·‚¦
+  SoftFade( work->originalColor, work->transDest, work->colorNum, evy, work->fadeColor ); 
+
+  // ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€”‚ğƒCƒ“ƒNƒŠƒƒ“ƒg
+  work->frameCount++;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief ƒAƒjƒ[ƒVƒ‡ƒ“‚ğXV‚·‚é ( ˆÃ“]‚©‚ç‚Ì•œ‹A )
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void UpdateAnime_RECOVER( PALETTE_ANIME* work )
+{
+  u8 evy;
+
+  GF_ASSERT( work->animeFlag ); // ƒAƒjƒ[ƒVƒ‡ƒ“’â~’†
+  GF_ASSERT( work->setupFlag ); // ƒZƒbƒgƒAƒbƒv‚³‚ê‚Ä‚¢‚È‚¢
+
+  // ƒtƒF[ƒhŒW”‚ğŒˆ’è
+  evy = RECOVER_MAX_EVY 
+      - (RECOVER_MAX_EVY - RECOVER_MIN_EVY) * work->frameCount / RECOVER_FRAMES;
+
+  // ƒpƒŒƒbƒg‘‚«Š·‚¦
+  SoftFade( work->originalColor, work->transDest, work->colorNum, evy, work->fadeColor ); 
+
+  // ƒAƒjƒ[ƒVƒ‡ƒ“ƒtƒŒ[ƒ€”‚ğƒCƒ“ƒNƒŠƒƒ“ƒg
+  work->frameCount++;
+
+  // ƒAƒjƒ[ƒVƒ‡ƒ“I—¹
+  if( RECOVER_FRAMES < work->frameCount ) {
     StopAnime( work );
     ResetPalette( work );
   }

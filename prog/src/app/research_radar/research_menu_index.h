@@ -14,7 +14,7 @@ typedef enum {
   RESEARCH_MENU_SEQ_SETUP,      // 準備
   RESEARCH_MENU_SEQ_STAND_BY,   // 最初のキー入力待ち
   RESEARCH_MENU_SEQ_KEY_WAIT,   // キー入力待ち
-  RESEARCH_MENU_SEQ_FRAME_WAIT, // 指定フレーム経過待ち
+  RESEARCH_MENU_SEQ_FRAME_WAIT, // フレーム経過待ち
   RESEARCH_MENU_SEQ_FADE_OUT,   // フェードアウト
   RESEARCH_MENU_SEQ_CLEAN_UP,   // 後片付け
   RESEARCH_MENU_SEQ_FINISH,     // 終了

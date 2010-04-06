@@ -644,6 +644,22 @@ static const PALETTE_ANIME_DATA PaletteAnimeData[ PALETTE_ANIME_NUM ] =
     ANIME_TYPE_BLINK,                                // アニメーションタイプ
     0xffff,                                          // フェードカラー
   },
+  //「ほうこくをみる」ボタン暗転
+  { 
+    (u16*)( HW_OBJ_PLTT + (5 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
+    (u16*)( HW_OBJ_PLTT + (5 * ONE_PALETTE_SIZE) ),  // 元データのアドレス
+    16,                                              // 転送カラー数
+    ANIME_TYPE_HOLD,                                 // アニメーションタイプ
+    0x0000,                                          // フェードカラー
+  },
+  //「ほうこくをみる」ボタン復帰
+  { 
+    (u16*)( HW_OBJ_PLTT + (5 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
+    (u16*)( HW_OBJ_PLTT + (5 * ONE_PALETTE_SIZE) ),  // 元データのアドレス
+    16,                                              // 転送カラー数
+    ANIME_TYPE_RECOVER,                              // アニメーションタイプ
+    0x0000,                                          // フェードカラー
+  },
   //「データ受信中」ボタンフェード
   { 
     (u16*)( HW_BG_PLTT + (11 * ONE_PALETTE_SIZE) ),  // 転送先アドレス
