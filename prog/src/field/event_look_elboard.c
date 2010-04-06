@@ -45,6 +45,12 @@ typedef struct
 
   u16 cameraAnimeFrame;  // カメラ移動に要するフレーム数
 
+  // カメラの復帰パラメータ
+  u16     pitch;
+  u16     yaw;
+  fx32    length;
+  VecFx32 targetOffset;
+
 } EVENT_WORK;
 
 
@@ -62,6 +68,11 @@ static GMEVENT_RESULT SeasonDisplay( GMEVENT* event, int* seq, void* wk )
   {
   // イベント初期化
   case SEQ_INIT:
+    // カメラの復帰パラメータを取得
+    work->pitch = FIELD_CAMERA_GetAnglePitch( camera );
+    work->yaw = FIELD_CAMERA_GetAngleYaw( camera );
+    work->length = FIELD_CAMERA_GetAngleLen( camera );
+    FIELD_CAMERA_GetTargetOffset( camera, &work->targetOffset );
     ++(*seq);
     break;
   // カメラ移動タスクの作成
@@ -125,25 +136,16 @@ static GMEVENT_RESULT SeasonDisplay( GMEVENT* event, int* seq, void* wk )
   // カメラリセット タスクの作成
   case SEQ_CREATE_RESET_TASK:
     {
-      u16 pitch, yaw;
-      fx32 length;
-      VecFx32 targetOffset = {0, 0, 0};
-      FLD_CAMERA_PARAM defaultParam;
-      // デフォルトパラメータ取得
-      FIELD_CAMERA_GetInitialParameter( camera, &defaultParam );
-      pitch  = defaultParam.Angle.x;
-      yaw    = defaultParam.Angle.y;
-      length = defaultParam.Distance << FX32_SHIFT;
       // タスク登録
       {
         FIELD_TASK* zoomTask;
         FIELD_TASK* pitchTask;
         FIELD_TASK* yawTask;
         FIELD_TASK* targetOffsetTask;
-        zoomTask  = FIELD_TASK_CameraLinearZoom( fieldmap, work->cameraAnimeFrame, length );
-        pitchTask = FIELD_TASK_CameraRot_Pitch( fieldmap, work->cameraAnimeFrame, pitch );
-        yawTask   = FIELD_TASK_CameraRot_Yaw( fieldmap, work->cameraAnimeFrame, yaw );
-        targetOffsetTask = FIELD_TASK_CameraTargetOffset( fieldmap, work->cameraAnimeFrame, &targetOffset );
+        zoomTask  = FIELD_TASK_CameraLinearZoom( fieldmap, work->cameraAnimeFrame, work->length );
+        pitchTask = FIELD_TASK_CameraRot_Pitch( fieldmap, work->cameraAnimeFrame, work->pitch );
+        yawTask   = FIELD_TASK_CameraRot_Yaw( fieldmap, work->cameraAnimeFrame, work->yaw );
+        targetOffsetTask = FIELD_TASK_CameraTargetOffset( fieldmap, work->cameraAnimeFrame, &work->targetOffset );
         FIELD_TASK_MAN_AddTask( taskManager, zoomTask, NULL );
         FIELD_TASK_MAN_AddTask( taskManager, pitchTask, NULL );
         FIELD_TASK_MAN_AddTask( taskManager, yawTask, NULL );
