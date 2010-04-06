@@ -17,6 +17,7 @@
 #include "system/main.h"
 
 #include "gamesystem/game_data.h"
+#include "savedata/record.h"
 #include "gamesystem/msgspeed.h"
 #include "system/palanm.h"
 #include "system/bmp_winframe.h"
@@ -682,6 +683,12 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
           NAMEIN_CopyStr( work->namein_param, strbuf );
           PP_Put( param->pp, ID_PARA_nickname, (u32)strbuf );
           GFL_STR_DeleteBuffer( strbuf );
+
+          // ポケモンにニックネームを付けた回数
+          {
+            RECORD* rec = GAMEDATA_GetRecordPtr(param->gamedata); 
+            RECORD_Inc(rec, RECID_NICKNAME);
+          }
         }
         NAMEIN_FreeParam( work->namein_param );
 

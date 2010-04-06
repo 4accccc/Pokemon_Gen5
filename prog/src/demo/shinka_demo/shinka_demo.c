@@ -36,6 +36,8 @@ FS_EXTERN_OVERLAY(battle_plist);
 
 #include "gamesystem/msgspeed.h"
 #include "system/bmp_winframe.h"
+#include "gamesystem/game_data.h"
+#include "savedata/record.h"
 
 #include "ui/yesno_menu.h"
 
@@ -822,6 +824,14 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         { 
           GAMEBEACON_Set_PokemonEvolution( PP_Get( work->pp, ID_PARA_monsno, NULL ), work->poke_nick_name_strbuf );
           // (古い)ニックネームは(新しい)種族名に進化した
+        }
+
+        // 進化させたポケモンの数
+        // 1日にポケモン進化させた回数
+        {
+          RECORD* rec = GAMEDATA_GetRecordPtr(param->gamedata); 
+          RECORD_Inc(rec, RECID_POKE_EVOLUTION);    // 進化させたポケモンの数
+          RECORD_Inc(rec, RECID_DAYCNT_EVOLUTION);  // 1日にポケモン進化させた回数
         }
 
         // 次へ

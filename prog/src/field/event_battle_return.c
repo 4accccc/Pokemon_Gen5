@@ -21,6 +21,8 @@
 #include "app/zukan_toroku.h"
 #include "poke_tool/poke_memo.h"
 #include "field/zonedata.h"  //ZONEDATA_GetPlaceNameID
+#include "gamesystem/game_data.h"
+#include "savedata/record.h"
 
 #include "arc_def.h"
 #include "message.naix"
@@ -294,6 +296,12 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
       if( !NAMEIN_IsCancel(wk->nameinParam) ){
         NAMEIN_CopyStr( wk->nameinParam, wk->strbuf );
         PP_Put( wk->pp, ID_PARA_nickname, (u32)(wk->strbuf) );
+
+        // ポケモンにニックネームを付けた回数
+        {
+          RECORD* rec = GAMEDATA_GetRecordPtr(param->gameData); 
+          RECORD_Inc(rec, RECID_NICKNAME);
+        }
       }
       NAMEIN_FreeParam( wk->nameinParam );
       wk->nameinParam = NULL;
