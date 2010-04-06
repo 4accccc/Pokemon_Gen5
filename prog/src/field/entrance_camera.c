@@ -513,12 +513,12 @@ static void ECamSetup_OUT( ECAM_WORK* work )
       startParam->length = U_DOOR_LENGTH; 
       break;
     case DIR_LEFT:  
-      endParam->pitch = R_DOOR_PITCH;
+      startParam->pitch = R_DOOR_PITCH;
       startParam->yaw = R_DOOR_YAW;    
       startParam->length = R_DOOR_LENGTH; 
       break;
     case DIR_RIGHT: 
-      endParam->pitch = L_DOOR_PITCH;
+      startParam->pitch = L_DOOR_PITCH;
       startParam->yaw = L_DOOR_YAW;    
       startParam->length = L_DOOR_LENGTH; 
       break;
