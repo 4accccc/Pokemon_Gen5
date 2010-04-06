@@ -34,10 +34,6 @@ _EVENT_DATA_END
 /**************************************************************/
 
 EVENT_START   ev_r01_poke_getdemo_01
-
-
-	//【仮】専用曲鳴らす
-	_START_EVENT_BGM( SEQ_BGM_E_DOCTOR )
 	
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
@@ -82,18 +78,21 @@ EVENT_START   ev_r01_poke_getdemo_01
     ENDSWITCH
   } //ローカル変数の参照制限範囲、ここまで。
 
-//上に移動
+	//上に移動
     _OBJ_ANIME( MMDL_ID_PLAYER,anm_r01_guide_up )
     _OBJ_ANIME_WAIT()
 
-//ライバル、アニメ＋メッセージ
+	//ライバル、アニメ＋メッセージ
 	_OBJ_ANIME( R01_RIVAL_01,anm_R01_pokeget_rival_look_hakase )
 	_OBJ_ANIME( R01_SUPPORT_01,anm_R01_pokeget_support_look_hakase )
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_r01_black_01,R01_RIVAL_01 , POS_DL )
 	_BALLOONWIN_CLOSE()
+	
+	//専用曲鳴らす
+	_START_EVENT_BGM( SEQ_BGM_E_DOCTOR )
 
-//博士、メッセージ＋アニメ
+	//博士、メッセージ＋アニメ
 	_BALLOONWIN_OBJMSG_POS( msg_r01_hakase2_01,R01_HAKASE2_01 , POS_DL )
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME( R01_HAKASE2_01,anm_R01_pokeget1 )
@@ -180,8 +179,12 @@ EVENT_START   ev_r01_poke_getdemo_01
 //ライバル
 	_BALLOONWIN_OBJMSG_POS( msg_r01_black_04,R01_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
+	
+	//サポートその場歩き
+	_OBJ_ANIME( R01_SUPPORT_01,anm_R01_pokeget_support_staystep )
+	_OBJ_ANIME_WAIT()
 
-//サポート
+//サポート：ちゃんときいてよもう！
 	_BALLOONWIN_OBJMSG_POS( msg_r01_white_03,R01_SUPPORT_01 , POS_UR )
 	_BALLOONWIN_CLOSE()
 
@@ -190,6 +193,15 @@ EVENT_START   ev_r01_poke_getdemo_01
 	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_OBJMSG_POS( msg_r01_black_05,R01_RIVAL_01 , POS_UL )
 	_BALLOONWIN_CLOSE()
+	
+	//サポート入手ポケモンの種族名をセット
+	IF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_KUSA THEN
+		_MONS_NAME( 0, MONSNO_557 )
+	ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN
+		_MONS_NAME( 0, MONSNO_551 )
+	ELSE
+		_MONS_NAME( 0, MONSNO_554 )
+	ENDIF
 
 //サポート
 	_BALLOONWIN_OBJMSG_POS( msg_r01_white_04,R01_SUPPORT_01 , POS_UR )
@@ -352,6 +364,12 @@ _ANIME_LABEL	anm_R01_pokeget4
 //--------------------------------------------------------------
 	_ANIME_LABEL	anm_R01_pokeget5
 	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R01　捕獲デモ用：サポート！
+//--------------------------------------------------------------
+	_ANIME_LABEL	anm_R01_pokeget_support_staystep
 	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
 
