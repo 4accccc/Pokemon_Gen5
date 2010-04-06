@@ -20,25 +20,14 @@
 //----------------------------------------------------------
 
 struct _CGEAR_SAVEDATA {
-#if 0
+	u8 type[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
   u16 CGearPictCRC;
+  u8 CGearPictureON;
+  u8 CGearON;
   u8 gearType;
-  u8 dummy;
-	u8 type[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
-  u8 irMarkx;
-  u8 irMarky;
-  u8 wirlessMarkx;
-  u8 wirlessMarky;
-  u8 wifiMarkx;
-  u8 wifiMarkx;
-  u8 CGearPictureON;
-  u8 CGearON;
-#else
-	u8 type[C_GEAR_PANEL_WIDTH][C_GEAR_PANEL_HEIGHT];
-  u16 CGearPictCRC;
-  u8 CGearPictureON;
-  u8 CGearON;
-#endif
+  u8 dummy1;
+  u8 dummy2;
+  u8 dummy3;
 };
 
 
@@ -144,6 +133,34 @@ BOOL CGEAR_SV_GetCGearONOFF(CGEAR_SAVEDATA* pSV)
 {
   return pSV->CGearON;
 }
+
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   CGEARの絵柄の記録をおこなう
+ * @param   pSV     CGEARセーブ構造体
+ * @param   type    タイプ
+ */
+//--------------------------------------------------------------------------------------------
+void CGEAR_SV_SetCGearType(CGEAR_SAVEDATA* pSV,u8 type)
+{
+  pSV->gearType = type;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   CGEARの絵柄を得る
+ * @param   pSV     CGEARセーブ構造体
+ * @return  type    タイプ
+ */
+//--------------------------------------------------------------------------------------------
+u8 CGEAR_SV_GetCGearType(CGEAR_SAVEDATA* pSV)
+{
+  return pSV->gearType;
+}
+
+
 
 //--------------------------------------------------------------------------------------------
 /**

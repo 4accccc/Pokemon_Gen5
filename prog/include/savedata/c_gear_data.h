@@ -50,6 +50,10 @@ extern void CGEAR_SV_Init(CGEAR_SAVEDATA* pSV);
 
 extern void CGEAR_SV_SetCGearONOFF(CGEAR_SAVEDATA* pSV,BOOL bON);
 extern BOOL CGEAR_SV_GetCGearONOFF(CGEAR_SAVEDATA* pSV);
+
+extern void CGEAR_SV_SetCGearType(CGEAR_SAVEDATA* pSV,u8 type);
+extern u8 CGEAR_SV_GetCGearType(CGEAR_SAVEDATA* pSV);
+
 extern void CGEAR_SV_SetCGearPictureONOFF(CGEAR_SAVEDATA* pSV,BOOL bON);
 extern BOOL CGEAR_SV_GetCGearPictureONOFF(CGEAR_SAVEDATA* pSV);
 extern void CGEAR_SV_SetCGearPictureCRC(CGEAR_SAVEDATA* pSV,u16 pictureCRC);
