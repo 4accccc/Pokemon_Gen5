@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_c09r0101.h"
-  .include  "c09r0101.h"
+  //.include  "c09r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -119,32 +119,6 @@ EVENT_START	ev_c09r0101_bigfour1_01
 			//戦闘前メッセージ
 			_BALLOONWIN_TALKOBJ_MSG( msg_c09r0101_bigfour1_01 )
 			_MSGWIN_CLOSE()
-			
-			//主人公＆四天王：向かい合う
-			_PLAYER_DIR_GET( SCWK_ANSWER )
-			IF $SCWK_ANSWER == DIR_UP THEN
-				//上向き
-				_OBJ_ANIME( MMDL_ID_PLAYER, anm_btl_ply_move_01u )
-			ELSIF $SCWK_ANSWER == DIR_DOWN THEN
-				//下向き
-				_OBJ_ANIME( MMDL_ID_PLAYER, anm_btl_ply_move_01d )
-				_TIME_WAIT( 24 )
-				_OBJ_ANIME( C09R0101_BIGFOUR1_01, anm_stay_walk_d )
-			ELSIF $SCWK_ANSWER == DIR_LEFT THEN
-				//左向き
-				_OBJ_ANIME( MMDL_ID_PLAYER, anm_btl_ply_move_01l )
-				_TIME_WAIT( 8 )
-				_OBJ_ANIME( C09R0101_BIGFOUR1_01, anm_stay_walk_d )
-			ELSE
-				//右向き
-				_OBJ_ANIME( MMDL_ID_PLAYER, anm_btl_ply_move_01r )
-				_TIME_WAIT( 8 )
-				_OBJ_ANIME( C09R0101_BIGFOUR1_01, anm_stay_walk_d )
-			ENDIF
-			_OBJ_ANIME_WAIT()
-			
-			//【仮】四天王芝居演出
-			
 			
 			
 			//========================================//
@@ -280,42 +254,6 @@ EVENT_START	ev_c09r0101_bigfour1_01
 
 
 EVENT_END
-
-//--------------------------------------------------------------------
-//その場歩き
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_stay_walk_d
-	_ANIME_DATA	AC_STAY_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------------
-//主人公：一歩下がる
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_btl_ply_move_01u
-	_ANIME_DATA	AC_DIR_PAUSE_ON,1
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_DIR_PAUSE_OFF,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_btl_ply_move_01d
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_WALK_D_8F,3
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_btl_ply_move_01l
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_btl_ply_move_01r
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
 
 
 /************************************************************/
