@@ -39,6 +39,10 @@
 //アプリ共通素材
 #include "app/app_menu_common.h"
 
+// レコード用
+#include "net/network_define.h"
+
+
 //アーカイブ
 #include "arc_def.h"
 
@@ -494,6 +498,7 @@ static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id );
 static void G3D_AnimeDel( COMM_BTL_DEMO_G3D_WORK* g3d );
 static void G3D_AnimeExit( COMM_BTL_DEMO_G3D_WORK* g3d );
 static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d );
+static void _Set_RecordData( COMM_BTL_DEMO_MAIN_WORK *wk );
 
   //-------------------------------------
 /// PROC
@@ -737,6 +742,9 @@ static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk
 #ifdef DEBUG_SET_PARAM
   debug_param_del( pwk );
 #endif
+  
+  // レコード埋込
+  _Set_RecordData(wk);
   
   // シーンコントーラ削除
   UI_SCENE_CNT_Delete( wk->cntScene );
@@ -2297,6 +2305,93 @@ static void TRAINER_UNIT_CNT_BallSetStart( COMM_BTL_DEMO_MAIN_WORK* wk )
   }
 }
 
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief   対戦結果を格納する（勝ち・負け・引分）
+ *
+ * @param   record  レコードデータ
+ * @param   id      レコードID
+ * @param   result  勝敗結果
+ */
+//----------------------------------------------------------------------------------
+static void _set_record_result( RECORD *record, int id, COMM_BTL_DEMO_RESULT result )
+{
+  switch(id){
+  // ワイヤレスは勝敗を数える
+  case RECID_COMM_BATTLE:
+    if(result==COMM_BTL_DEMO_RESULT_WIN){
+      RECORD_Inc( record, RECID_COMM_BTL_WIN);
+    }else if(result==COMM_BTL_DEMO_RESULT_LOSE){
+      RECORD_Inc( record,RECID_COMM_BTL_LOSE );
+    }
+    break;
+    
+  // IRCは勝敗を数える
+  case RECID_IRC_BATTLE:
+    if(result==COMM_BTL_DEMO_RESULT_WIN){
+      RECORD_Inc( record,RECID_IRC_BTL_WIN );
+    }else if(result==COMM_BTL_DEMO_RESULT_LOSE){
+      RECORD_Inc( record,RECID_IRC_BTL_LOSE );
+    }
+    break;
+  // Wifiのみ勝敗・引分を数える
+  case RECID_WIFI_BATTLE:
+    if(result==COMM_BTL_DEMO_RESULT_WIN){
+      RECORD_Inc( record,RECID_WIFI_BTL_WIN );
+    }else if(result==COMM_BTL_DEMO_RESULT_LOSE){
+      RECORD_Inc( record,RECID_WIFI_BTL_LOSE );
+    }else if(result==COMM_BTL_DEMO_RESULT_DRAW){
+      RECORD_Inc( record,RECID_WIFI_BTL_DRAW );
+    }
+    break;
+  }
+
+  // 各通信対戦の回数を＋１する
+  RECORD_Inc( record, id );
+}
+
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief レコードデータ埋込(ワイヤレス・赤外線・Wifiの＜勝・負・引分＞)
+ 
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void _Set_RecordData( COMM_BTL_DEMO_MAIN_WORK *wk )
+{
+    GameServiceID id;
+  // アサートにすると動作確認ができなくなるので
+  if(wk->pwk->record==NULL){
+    OS_Printf("----------------レコード構造体ポインタが入っていない\n");
+    return;
+  }
+  
+  id = GFL_NET_GetGameServiceID();
+
+  // 対戦回数＋１と、勝敗数え上げ処理
+  switch(id){
+  case WB_NET_IRCBATTLE:       //赤外線
+  case WB_NET_IRCBATTLE_MULTI: //赤外線
+  case WB_NET_IRC_BATTLE:      //赤外線大会
+    _set_record_result( wk->pwk->record, RECID_IRC_BATTLE, wk->result );
+    break;
+  case WB_NET_WIFICLUB:        //wifiCLUB
+  case WB_NET_WIFIMATCH:       //wifi世界大戦
+    _set_record_result( wk->pwk->record, RECID_WIFI_BATTLE, wk->result );
+    break;
+  case WB_NET_UNION:           //UNION
+  case WB_NET_COLOSSEUM:       //UNION
+    _set_record_result( wk->pwk->record, RECID_COMM_BATTLE, wk->result );
+    break;
+  }
+
+}
+
 //-----------------------------------------------------------------------------
 /**
  *  @brief  勝敗ユニット生成
@@ -3003,6 +3098,7 @@ static void G3D_AnimeExit( COMM_BTL_DEMO_G3D_WORK* g3d )
     G3D_AnimeDel( g3d );
   }
 }
+
 
 //-----------------------------------------------------------------------------
 /**
