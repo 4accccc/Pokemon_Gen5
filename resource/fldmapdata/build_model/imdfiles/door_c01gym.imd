@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="james_turner" host="W00212" date="2010-02-24T15:12:12" source="door_c1gym.mb"/>
+	<create user="james_turner" host="W00212" date="2010-05-05T20:27:17" source="door_c1gym.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="james_turner" host="W00212" date="2010-02-24T15:12:12" source="door_c1gym.mb"/>
+<original_create user="james_turner" host="W00212" date="2010-05-05T20:27:17" source="door_c1gym.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -138,7 +138,7 @@
 		wire_mode="off"
 		polygon_mode="modulate"
 		polygon_id="17"
-		fog_flag="on"
+		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
 		render_1_pixel="off"
@@ -201,21 +201,21 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="8">
 					<mtx idx="0"/>
-					<tex st="0.000000 15.625000"/>
+					<tex st="16.000000 15.625000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xyz xyz="5.987305 -7.000977 -0.001221"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="5.987305 6.000000"/>
 					<tex st="16.000000 0.000000"/>
+					<pos_xy xy="5.987305 6.000000"/>
+					<tex st="0.000000 0.000000"/>
 					<pos_xy xy="1.012695 6.000000"/>
-					<tex st="16.000000 15.625000"/>
+					<tex st="0.000000 15.625000"/>
 					<pos_xy xy="1.012695 -6.999023"/>
 					<tex st="0.000000 16.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
 					<pos_xyz xyz="5.987305 -7.000000 0.827881"/>
-					<tex st="0.000000 15.625000"/>
-					<pos_yz yz="-7.000977 -0.001221"/>
 					<tex st="16.000000 15.625000"/>
+					<pos_yz yz="-7.000977 -0.001221"/>
+					<tex st="0.000000 15.625000"/>
 					<pos_xy xy="1.012695 -6.999023"/>
 					<tex st="16.000000 16.000000"/>
 					<pos_yz yz="-7.000000 0.827881"/>
@@ -361,7 +361,7 @@
 </polygon_array>
 
 <node_array size="3">
-	<node index="0" name="world_root" kind="null"
+	<node index="0" name="top1" kind="null"
 		parent="-1"
 		child="1"
 		brother_next="-1"
