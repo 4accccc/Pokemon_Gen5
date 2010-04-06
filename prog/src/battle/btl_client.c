@@ -425,7 +425,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   if( (wk->myType == BTL_CLIENT_TYPE_AI) && (!fRecPlayMode) )
   {
     //@todo 本来はBattleSetupParamのトレーナーデータからAIビットを取得したい
-    u32 ai_bit = 0x01;
+    u32 ai_bit = 0x07;
     BTL_SVFLOW_WORK* svf_work = BTL_MAIN_GetSVFWorkForAI( wk->mainModule );
     wk->AIHandle = TR_AI_Init( wk->mainModule, svf_work, wk->pokeCon, ai_bit, wk->heapID );
   }
@@ -1603,14 +1603,25 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
         if( (BTL_CALC_IsTrtypeGymLeader(trType) || BTL_CALC_IsTrtypeBig4(trType))
         &&  (wk->fAITrainerBGMChanged == FALSE)
         ){
-          PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
-          wk->fAITrainerBGMChanged = TRUE;
+          //PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
+          //wk->fAITrainerBGMChanged = TRUE;
+          PMSND_FadeOutBGM( 8 );
+          (*seq) = 6;
+          break;
         }
       }
-      (*seq)++;
+      (*seq) = 7;
     }
     break;
   case 6:
+    if( PMSND_CheckFadeOnBGM() == FALSE )
+    { 
+      PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
+      wk->fAITrainerBGMChanged = TRUE;
+      (*seq)++;
+    }
+    break;
+  case 7:
     if( !BTLV_EFFECT_CheckExecute()
     &&  BTLV_WaitMsg(wk->viewCore)
     ){
@@ -1618,7 +1629,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
       (*seq)++;
     }
     break;
-  case 7:
+  case 8:
     if( !BTLV_EFFECT_CheckExecute() )
     {
       BTLV_EFFECT_DelTrainer( BTLV_MCSS_POS_TR_BB );
@@ -5075,13 +5086,12 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
   case SEQ_LVUP_INFO_MSG_WAIT:
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
       PMSND_PauseBGM( TRUE );
-      PMSND_PlaySE( SEQ_SE_LVUP );
+      PMSND_PushBGM();
+      PMSND_PlayBGM( SEQ_ME_LVUP );
     }
-    if( !PMSND_CheckPlaySE() )
-    {
+    if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlayBGM() ){
+      PMSND_PopBGM();
       PMSND_PauseBGM( FALSE );
-    }
-    if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlaySE() ){
       subSeq = 0;
       (*seq) = SEQ_LVUP_INFO_PARAM_START;
     }
@@ -5200,13 +5210,12 @@ static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp )
     //技覚え処理
     if( BTLV_IsJustDoneMsg(wk->viewCore) ){
       PMSND_PauseBGM( TRUE );
-      PMSND_PlaySE( SEQ_SE_LVUP );
+      PMSND_PushBGM();
+      PMSND_PlayBGM( SEQ_ME_LVUP );
     }
-    if( !PMSND_CheckPlaySE() )
-    {
+    if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlayBGM() ){
+      PMSND_PopBGM();
       PMSND_PauseBGM( FALSE );
-    }
-    if( BTLV_WaitMsg(wk->viewCore) && !PMSND_CheckPlaySE() ){
       (*seq) = 4;
     }
     break;
