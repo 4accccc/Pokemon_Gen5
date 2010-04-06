@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-05T12:20:26"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T15:54:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,70 +292,7 @@
 	</lock>
 
 
-	<row id="msg_t03_woman2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・手持ちにシェイミ（配布フラグ）がいて
-　「グラシデアのはな」持っていないとき
-・メッセージ表示後、たいせつなものポケットに
-　「グラシデアのはな」追加
-・プラチナの移植</comment>
-		<attribute name="キャラ指定">WOMAN2</attribute>
-		<language name="JPN" width="256">あら　シェイミ！▼
-シェイミと　いえば
-グラシデアのはな　よね！▼
-あたし　たくさん　もっているから
-あなたにも　わけてあげるね▼</language>
-		<language name="JPN_KANJI" width="256">あら　シェイミ！▼
-シェイミと　いえば
-グラシデアのはな　よね！▼
-あたし　たくさん　もっているから
-あなたにも　わけてあげるね▼</language>
-	</row>
-
-	<row id="msg_t03_woman2_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・手持ちにシェイミがいて
-　「グラシデアのはな」持っているとき
-・プラチナのほぼ移植</comment>
-		<attribute name="キャラ指定">WOMAN2</attribute>
-		<language name="JPN" width="256">むかしからね　シンオウちほう　では
-ありがとう　って　きもちを▼
-つたえるときに　グラシデアのはなを
-ブーケにして　あげていたの▽
-なんだか　いい　はなし　でしょう！▼
-だって　グラシデアのはなを　つかえば
-ことばに　ださなくても▼
-ありがとう　って　きもちを
-つたえられるのって　すてきよね</language>
-		<language name="JPN_KANJI" width="256">昔からね　シンオウちほう　では
-ありがとう　って　きもちを▼
-伝えるときに　グラシデアのはなを
-ブーケにして　あげていたの▽
-なんだか　いい　話でしょう！▼
-だって　グラシデアのはなを　使えば
-言葉に　ださなくても▼
-ありがとう　って　気持ちを
-伝えられるのって　すてきよね</language>
-	</row>
-
-	<row id="msg_t03_woman2_03" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・手持ちにシェイミがいないとき
-・プラチナの移植</comment>
-		<attribute name="キャラ指定">WOMAN2</attribute>
-		<language name="JPN" width="256">グラシデアのはな　しってる？▼
-むかしからね　シンオウちほう　では
-ありがとう　って　きもちを▼
-つたえるときに　グラシデアのはなを
-ブーケにして　あげていたのよ</language>
-		<language name="JPN_KANJI" width="256">グラシデアのはな　知ってる？▼
-むかしからね　シンオウ地方では
-ありがとう　って　気持ちを▼
-伝えるときに　グラシデアのはなを
-ブーケにして　あげていたのよ</language>
-	</row>
-
-	<row id="msg_t03_sign1_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+	<row id="msg_t03_sign1_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：街</attribute>
 		<language name="JPN" width="256">ここは　カゴメタウン
@@ -364,13 +301,11 @@
 カゴメは　編んでできた　三角形</language>
 	</row>
 
-	<row id="msg_t03_middlewoman1_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+	<row id="msg_t03_middlewoman1_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
 		<comment>♀
-
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
  
-
 GRIDX=６５４、GRIDZ=１８７辺り</comment>
 		<attribute name="キャラ指定">middlewoman1</attribute>
 		<language name="JPN" width="256">ここは　カゴメタウン▼
@@ -387,12 +322,10 @@ GRIDX=６５４、GRIDZ=１８７辺り</comment>
 夜も　ぐっすり　眠れるわ</language>
 	</row>
 
-	<row id="sg_t03_oldwoman1_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+	<row id="sg_t03_oldwoman1_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
 		<comment>♀
-
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
- 
 
 GRIDX=６７０、GRIDZ=１６８辺り
 
@@ -411,9 +344,8 @@ GRIDX=６７０、GRIDZ=１６８辺り
 ちと　長くなるがな▼</language>
 	</row>
 
-	<row id="sg_t03_oldwoman1_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+	<row id="sg_t03_oldwoman1_02" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
 		<comment>♀
-
 イベント終了</comment>
 		<attribute name="キャラ指定">oldwoman1</attribute>
 		<language name="JPN" width="256">この　まちの　うらには　ものすごーく
@@ -476,9 +408,8 @@ GRIDX=６７０、GRIDZ=１６８辺り
 与えとる　っちゅうことかのう</language>
 	</row>
 
-	<row id="sg_t03_oldwoman1_03" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+	<row id="sg_t03_oldwoman1_03" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
 		<comment>♀
-
 イベント終了</comment>
 		<attribute name="キャラ指定">oldwoman1</attribute>
 		<language name="JPN" width="256">ああ　そうかいな
@@ -487,9 +418,8 @@ GRIDX=６７０、GRIDZ=１６８辺り
 ヒマに　なったら　また　来るとええ</language>
 	</row>
 
-	<row id="msg_t03_babyboy2_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+	<row id="msg_t03_babyboy2_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
 		<comment>♂
-
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
 
@@ -503,7 +433,7 @@ GRIDX=６６１、GRIDZ=１８９辺り</comment>
 いないと　ダメなんだって！</language>
 	</row>
 
-	<row id="msg_t03_fishing_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+	<row id="msg_t03_fishing_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
 		<comment>♂
 
 ※夜になるといなくなる
@@ -521,9 +451,8 @@ GRIDX=６７０、GRIDZ=１８７辺り</comment>
 サオが　ビンビンと　うなるわい！</language>
 	</row>
 
-	<row id="msg_t03_badman_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+	<row id="msg_t03_badman_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
 		<comment>♂
-
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
 
@@ -539,19 +468,15 @@ GRIDX=６６５、GRIDZ=１６１辺り</comment>
 付き合わされるんだぜ</language>
 	</row>
 
-	<row id="msg_t03_waitress_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+	<row id="msg_t03_waitress_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
 		<comment>♀
-
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
 
 GRIDX=６５２、GRIDZ=１７８辺り
 
 ※このＯＢＪは立体交差の誘導のため
-移動させません
- 
-
-</comment>
+移動させません</comment>
 		<attribute name="キャラ指定">waitress</attribute>
 		<language name="JPN" width="256">よのなか　たくさんの　ひとがいて
 そのひとの　かずだけ　こせいや▽
@@ -561,9 +486,8 @@ GRIDX=６５２、GRIDZ=１７８辺り
 考えが　あるんだよね</language>
 	</row>
 
-	<row id="msg_t03_policeman_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,#00ffff,,,#00ffff,,#00ffff,#00ffff,,,#00ffff,,">
+	<row id="msg_t03_policeman_01" back-color="#00ffff,,,#00ffff,,#00ffff,#00ffff,,,,,,#00ffff,,,,,,">
 		<comment>♂
-
 ※夜になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
 

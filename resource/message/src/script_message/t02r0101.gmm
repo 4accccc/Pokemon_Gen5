@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-13T17:51:33"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T15:51:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -295,16 +295,14 @@
 	<row id="msg_t02r0101_middlewoman1_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">おばさん１</attribute>
-		<language name="JPN" width="256">おや　トレーナーさん▼
-ポケモンを　そだてるため
+		<language name="JPN" width="256">あんた！　ポケモンを　そだてるため
 たたかわせるのも　だいじだけど▼
 たいりょくが　へったときは
 ポケモンセンターに　つれていきなよ</language>
-		<language name="JPN_KANJI" width="256">おや　トレーナーさん▼
-ポケモンを　育てるため
+		<language name="JPN_KANJI" width="256">あんた！　ポケモンを　育てるため
 戦わせるのも　大事だけど▼
 体力が　減ったときは
-ポケモンセンターに　連れて行きなよ</language>
+ポケモンセンターに　連れていきなよ</language>
 	</row>
 
 	<row id="msg_t02r0101_woman1_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
