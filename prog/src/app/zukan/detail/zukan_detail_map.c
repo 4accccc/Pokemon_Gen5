@@ -939,6 +939,12 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
             touchbar,
             ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
       }
+      {
+        GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+        ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
+            touchbar,
+            GAMEDATA_GetShortCut( gamedata, SHORTCUT_ID_ZUKAN_MAP ) );
+      }
       // タイトルバー
       if( ZUKAN_DETAIL_HEADBAR_GetState( headbar ) != ZUKAN_DETAIL_HEADBAR_STATE_APPEAR )
       {
@@ -1218,10 +1224,10 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
     case ZKNDTL_CMD_CHECK:
       {
         GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
-        ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( gamedata );
-        u16 monsno_curr;
-        monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
-        ZUKANSAVE_SetShortcutMons( zukan_savedata, monsno_curr );
+        GAMEDATA_SetShortCut(
+            gamedata,
+            SHORTCUT_ID_ZUKAN_MAP,
+            ZUKAN_DETAIL_TOUCHBAR_GetCheckFlipOfGeneral( touchbar ) );
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
@@ -2616,6 +2622,12 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
             touchbar,
             ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
             ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
+        {
+          GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+          ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
+              touchbar,
+              GAMEDATA_GetShortCut( gamedata, SHORTCUT_ID_ZUKAN_MAP ) );
+        }
       }
     }
     break;

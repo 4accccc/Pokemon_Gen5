@@ -21,6 +21,7 @@
 #include "ui/ui_easy_clwk.h"
 #include "pokeicon/pokeicon.h"
 #include "gamesystem/gamedata_def.h"
+#include "gamesystem/game_data.h"
 #include "savedata/zukan_savedata.h"
 #include "poke_tool/poke_personal.h"
 #include "system/bmp_winframe.h"
@@ -977,6 +978,12 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
               touchbar,
               ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
         }
+        {
+          GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+          ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
+              touchbar,
+              GAMEDATA_GetShortCut( gamedata, SHORTCUT_ID_ZUKAN_FORM ) );
+        }
         // タイトルバー
         if( ZUKAN_DETAIL_HEADBAR_GetState( headbar ) != ZUKAN_DETAIL_HEADBAR_STATE_APPEAR )
         {
@@ -1404,10 +1411,10 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
     case ZKNDTL_CMD_CHECK:
       {
         GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
-        ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( gamedata );
-        u16 monsno_curr;
-        monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
-        ZUKANSAVE_SetShortcutMons( zukan_savedata, monsno_curr );
+        GAMEDATA_SetShortCut(
+            gamedata,
+            SHORTCUT_ID_ZUKAN_FORM,
+            ZUKAN_DETAIL_TOUCHBAR_GetCheckFlipOfGeneral( touchbar ) );
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
@@ -3196,6 +3203,12 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
               touchbar,
               ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
               ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
+          {
+            GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+            ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
+                touchbar,
+                GAMEDATA_GetShortCut( gamedata, SHORTCUT_ID_ZUKAN_FORM ) );
+          }
         }
         break;
       case STATE_EXCHANGE_IREKAE:
@@ -3259,7 +3272,12 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
               touchbar,
               ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
               ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
-
+          {
+            GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+            ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
+                touchbar,
+                GAMEDATA_GetShortCut( gamedata, SHORTCUT_ID_ZUKAN_FORM ) );
+          }
           // タイトルバー
           ZUKAN_DETAIL_HEADBAR_SetType(
               headbar,

@@ -479,6 +479,12 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
             touchbar,
             ZUKAN_DETAIL_TOUCHBAR_DISP_INFO );
       }
+      {
+        GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
+        ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
+            touchbar,
+            GAMEDATA_GetShortCut( gamedata, SHORTCUT_ID_ZUKAN_INFO ) );
+      }
       // タイトルバー
       if( ZUKAN_DETAIL_HEADBAR_GetState( headbar ) != ZUKAN_DETAIL_HEADBAR_STATE_APPEAR )
       {
@@ -648,10 +654,10 @@ static void Zukan_Detail_Info_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
     case ZKNDTL_CMD_CHECK:
       {
         GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
-        ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( gamedata );
-        u16 monsno_curr;
-        monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
-        ZUKANSAVE_SetShortcutMons( zukan_savedata, monsno_curr );
+        GAMEDATA_SetShortCut(
+            gamedata,
+            SHORTCUT_ID_ZUKAN_INFO,
+            ZUKAN_DETAIL_TOUCHBAR_GetCheckFlipOfGeneral( touchbar ) );
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;

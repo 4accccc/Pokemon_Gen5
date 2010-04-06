@@ -630,6 +630,43 @@ void ZUKAN_DETAIL_TOUCHBAR_SetVisibleOfFormCurLR(
   }
 }
 
+//------------------------------------------------------------------
+/**
+ *  @brief        
+ *
+ *  @param[in]  is_flip  TRUEならチェックを入れる、FALSEならチェックをはずす 
+ *
+ *  @retval          
+ */
+//------------------------------------------------------------------
+void ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
+                   ZUKAN_DETAIL_TOUCHBAR_WORK* work,
+                   BOOL                        is_flip )
+{
+  if( work->type == ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL )
+  {
+    ZKND_TBAR_SetFlip( work->tbwk, work->icon_set[GENERAL_ICON_CHECK].cset->id, is_flip );
+  }
+}
+//------------------------------------------------------------------
+/**
+ *  @brief        
+ *
+ *  @param[in,out]   
+ *
+ *  @retval         TRUEならチェックが入っている、FALSEならチェックがはずれている
+ */
+//------------------------------------------------------------------
+BOOL ZUKAN_DETAIL_TOUCHBAR_GetCheckFlipOfGeneral(
+                   ZUKAN_DETAIL_TOUCHBAR_WORK* work )
+{
+  if( work->type == ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL )
+  {
+    return ZKND_TBAR_GetFlip( work->tbwk, work->icon_set[GENERAL_ICON_CHECK].cset->id );
+  }
+  return FALSE;
+}
+
 
 //=============================================================================
 /**

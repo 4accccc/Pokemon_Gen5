@@ -101,3 +101,9 @@ extern void ZUKAN_DETAIL_TOUCHBAR_SetVisibleOfFormCurLR(
                    ZUKAN_DETAIL_TOUCHBAR_WORK* work,
                    BOOL                        is_visible );
 
+extern void ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
+                   ZUKAN_DETAIL_TOUCHBAR_WORK* work,
+                   BOOL                        is_flip );
+extern BOOL ZUKAN_DETAIL_TOUCHBAR_GetCheckFlipOfGeneral(
+                   ZUKAN_DETAIL_TOUCHBAR_WORK* work );
+
