@@ -324,10 +324,10 @@ SCROLL_STATE;
 #define DATA_IDX_NONE (0xFF)
 
 // カーソルの移動可能範囲 MIN<= <=MAX
-#define CURSOR_MOVE_RECT_X_MIN (0)
-#define CURSOR_MOVE_RECT_Y_MIN (16)
-#define CURSOR_MOVE_RECT_X_MAX (256 -16 -1)
-#define CURSOR_MOVE_RECT_Y_MAX (168 -1)
+#define CURSOR_MOVE_RECT_X_MIN (0)                     // prog/src/app/townmap/townmap.c  // CURSOR_MOVE_LIMIT_TOPなどを参考にした。
+#define CURSOR_MOVE_RECT_Y_MIN (8)//(16)
+#define CURSOR_MOVE_RECT_X_MAX (256-8)//(256 -16 -1)
+#define CURSOR_MOVE_RECT_Y_MAX (168)//(168 -1)
 // カーソルのデフォルト位置
 #define CURSOR_DEFAULT_POS_X (128)
 #define CURSOR_DEFAULT_POS_Y (96)
@@ -2254,8 +2254,11 @@ static void Zukan_Detail_Map_Input( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_
       }
       if( change_state )
       {
-        Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_SELECT );
-        PMSND_PlaySE( SEQ_SE_DECIDE1 );
+        if( !( work->appear_rule == APPEAR_RULE_YEAR && work->habitat == HABITAT_UNKNOWN ) )  // 一年中生息地不明の場合はトップから降りられない
+        {
+          Zukan_Detail_Map_ChangeState( param, work, cmn, STATE_SELECT );
+          PMSND_PlaySE( SEQ_SE_DECIDE1 );
+        }
       }
     }
     break;
@@ -2569,7 +2572,17 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
           }
           else
           {
-            work->select_data_idx = DATA_IDX_NONE;
+            u32 x, y;
+            if( GFL_UI_TP_GetPointTrg( &x, &y ) )
+            {
+              // ヒット判定
+              work->select_data_idx = Zukan_Detail_Map_Hit( param, work, cmn, (u8)x, (u8)y );
+              if( work->select_data_idx != DATA_IDX_NONE )
+              {
+                // リングを表示する
+                GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_RING_CUR], TRUE );
+              }
+            }
           }
           Zukan_Detail_Map_ChangePlace( param, work, cmn );
         }
@@ -2822,12 +2835,12 @@ static void Zukan_Detail_Map_ChangeSeason( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_
 //=====================================
 static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARCHANDLE* handle )
 {
-#if 0
+//#if 0
   u32 size;
   AREA_DATA* area_data = GFL_ARCHDL_UTIL_LoadEx( handle, NARC_zukan_area_zkn_area_monsno_001_dat + monsno -1, FALSE, heap_id, &size );
   GF_ASSERT_MSG( sizeof(AREA_DATA) == size, "ZUKAN_DETAIL_MAP : AREA_DATAのサイズが異なります。\n" );
   return area_data;
-#endif
+//#endif
 
 #if 0
   // 仮データ
@@ -2874,7 +2887,7 @@ static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARC
     break;
   }
   return area_data;
-#elif 1 
+#elif 0 
   // 生息する場所に置くOBJのアニメ指定、位置指定用のデータ
   AREA_DATA* area_data = GFL_HEAP_AllocClearMemory( heap_id, sizeof(AREA_DATA) );
   u8 i;
