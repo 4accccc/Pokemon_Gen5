@@ -106,12 +106,41 @@ pc_box:
   DEFINE_LOCAL exit
   DEFINE_LOCAL select_pos
   DEFINE_LOCAL box_end_mode
+  DEFINE_LOCAL game_clear
+  DEFINE_LOCAL champ_win
+
+  _FLAG_CHECK( SYS_FLAG_GAME_CLEAR, game_clear )
+  _FLAG_CHECK( SYS_FLAG_CHAMPION_WIN, champ_win )
 
   _SE_PLAY( SEQ_SE_PC_LOGIN )
 
   //「ポケモンの あずかりシステムを …」
   _SYSWIN_MSG( msg_pc_box_01 , POS_DOWN ) 
   _SYSWIN_CLOSE()
+
+  // 殿堂入りしている
+  IF $champ_win == TRUE THEN
+    _FLAG_CHECK( FE_WALLPAPER_OPEN_MSG_01, SCWK_ANSWER ) // メッセージ表示済みか？
+    // メッセージをまだ表示していない
+    IF $SCWK_ANSWER == FALSE THEN
+	    _ME_PLAY(	SEQ_ME_ITEM ) 
+      _ME_WAIT()
+      _SYSWIN_MSG( msg_pc_on_06 , POS_DOWN ) 
+      _SYSWIN_CLOSE()
+      _FLAG_SET( FE_WALLPAPER_OPEN_MSG_01 )
+    ENDIF
+  // 初回クリア済み
+  ELSIF $game_clear == TRUE THEN
+    _FLAG_CHECK( FE_WALLPAPER_OPEN_MSG_02, SCWK_ANSWER ) // メッセージ表示済みか？
+    // メッセージをまだ表示していない
+    IF $SCWK_ANSWER == FALSE THEN
+	    _ME_PLAY(	SEQ_ME_ITEM ) 
+      _ME_WAIT()
+      _SYSWIN_MSG( msg_pc_on_05 , POS_DOWN ) 
+      _SYSWIN_CLOSE()
+      _FLAG_SET( FE_WALLPAPER_OPEN_MSG_02 )
+    ENDIF
+  ENDIF
 
   $exit = FALSE
   WHILE $exit == FALSE
