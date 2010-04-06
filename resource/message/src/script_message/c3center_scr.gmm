@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-01T14:57:29"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T12:57:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c03center_dancer1_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03center_dancer1_01">
 		<comment>♂
 ・会話でダンサーイベント開始
 　この会話後、踊るアニメ</comment>
@@ -303,7 +303,7 @@
 レッツ　ダンシング！▼</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03center_dancer1_02">
 		<comment>♂
 ・続けてdancer1_03</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
@@ -317,23 +317,24 @@
 もっと　グッとくると　思わない？▼</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03center_dancer1_03">
 		<comment>♂
 ・ダンサー探しイベント開始
 ・はい/いいえ選択肢
 　はい→dancer1_04
 　いいえ→dancer1_07</comment>
+		<attribute name="キャラ指定">DANCER</attribute>
 		<language name="JPN" width="256">そうだ　キミ！
 ダンサーに　こえ　かけてくれない？▼
 ふたり　さそって　くれれば
 トリオのチームで　ダンスできるっしょ！</language>
 		<language name="JPN_KANJI" width="256">そうだ　キミ！
-ダンサーに　こえ　かけてくれない？▼
+ダンサーに　声　かけてくれない？▼
 ２人　さそって　くれれば
 トリオのチームで　ダンスできるっしょ！</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03center_dancer1_04">
 		<comment>♂
 ・ダンサー探しイベント中</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
@@ -343,7 +344,7 @@
 そいつは　ダンサー！！</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c03center_dancer1_05">
 		<comment>♂
 ・ダンサー探しイベント中
 　再会話時</comment>
@@ -358,7 +359,7 @@
 あっ　風のウワサ　ってこと！</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03center_dancer1_06">
 		<comment>♂
 ・会話後、メンバーの方を見て
 　ステイウォーク</comment>
@@ -369,7 +370,7 @@
 ステップを　確かめ合ってるのさ！</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03center_dancer1_07">
 		<comment>♂
 ・いいえ選択時
 ・再度会話したときはdancer1_03</comment>
@@ -380,7 +381,7 @@
 すごい　ステップ　みせるのにさ</language>
 	</row>
 
-	<row id="msg_c03center_dancer2_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_c03center_dancer2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・C03P12のダンサー会話後・表示</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
@@ -390,7 +391,7 @@
 仲間が　できたよ！　うれしいよ！</language>
 	</row>
 
-	<row id="msg_c03center_dancer3_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c03center_dancer3_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・C03P14のダンサー会話後・表示</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
@@ -404,7 +405,7 @@
 世界は　ハッピー！</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_08" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c03center_dancer1_08">
 		<comment>♂
 ・全員探した後に話しかけるとこのセリフ
 ・アイテム入手処理
@@ -418,7 +419,7 @@
 これは　オレからの　気持ち！▼</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_09" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03center_dancer1_09">
 		<comment>♂
 ・アイテム入手後自動で表示
 ・再度会話はdancer1_09</comment>
@@ -435,7 +436,7 @@
 輝いてる　ってことを！</language>
 	</row>
 
-	<row id="msg_c03center_dancer1_10" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_c03center_dancer1_10">
 		<comment>♂
 ・メッセージ表示後、3人で踊れ</comment>
 		<attribute name="キャラ指定">DANCER</attribute>
