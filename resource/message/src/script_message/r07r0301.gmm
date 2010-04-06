@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-04-02T16:29:20"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T15:43:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,13 +263,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1330" top="129" right="2035" bottom="749" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="548"/>
-		<band id="3" index="4" style="0000" width="147"/>
+		<band id="2" index="3" style="0000" width="543"/>
+		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
@@ -291,41 +291,6 @@
 		<operation add_message="no" header_setting="no" tag_setting="no" output_setting="no" display="no" sort="no" flowchart_window="no"/>
 	</lock>
 
-
-	<row id="msg_r07r0301_middlewoman1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">MIDDLEWOMAN1</attribute>
-		<language name="JPN" width="256">なんだか　つかれているようね……
-すこし　やすんで　いきなさい</language>
-		<language name="JPN_KANJI" width="256">なんだか　つかれているようね……
-すこし　やすんで　いきなさい</language>
-	</row>
-
-	<row id="msg_r07r0301_middlewoman1_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">MIDDLEWOMAN1</attribute>
-		<language name="JPN" width="256">あなたも　ポケモンも
-すっかり　げんきに　なったわね！</language>
-		<language name="JPN_KANJI" width="256">あなたも　ポケモンも
-すっかり　げんきに　なったわね！</language>
-	</row>
-
-	<row id="msg_r07r0301_middlewoman1_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">MIDDLEWOMAN1</attribute>
-		<language name="JPN" width="256">わかいからって　むりは　きんもつよ
-やすめるときには　やすみなさい</language>
-		<language name="JPN_KANJI" width="256">わかいからって　むりは　きんもつよ
-やすめるときには　やすみなさい</language>
-	</row>
-
-	<row id="msg_r07r0301_pokemon_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">POKEMON
-チュリネ</attribute>
-		<language name="JPN" width="256">ちゅりゅりゅ♪</language>
-		<language name="JPN_KANJI" width="256">ちゅりゅりゅ♪</language>
-	</row>
 
 	<row id="msg_r07r0301_oldwoman_00" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>●移動ポケモンイベント起動前のセリフ。

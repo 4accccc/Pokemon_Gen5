@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-01T17:32:15"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T15:41:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -473,7 +473,7 @@
 		<language name="JPN_KANJI" width="256">アデク『……▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r07r0105_champion_end_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・右向きでメッセージ表示
 ・続けてchampion_end_03</comment>
@@ -485,14 +485,14 @@
 たましいに　やすらぎを　あたえるため
 ときおり　かねを　ならしに　くるのだ▼</language>
 		<language name="JPN_KANJI" width="256">この　タワーオブヘブンに
-かつての　パートナーが　ねむっておる▼
+かつての　パートナーが　眠っておる▼
 わしが　トレーナーに　なっての
-さいしょの　ポケモンがな……▼
-たましいに　やすらぎを　あたえるため
-ときおり　かねを　ならしに　くるのだ▼</language>
+最初の　ポケモンがな……▼
+魂に　安らぎを　あたえるため
+ときおり　鐘を　鳴らしに　くるのだ▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r07r0105_champion_end_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・下向き、アデクの芝居後に
 　メッセージ表示
@@ -501,16 +501,16 @@
 		<language name="JPN" width="256">つよい　ポケモン　だったぞ！
 おおしく　けだかく　こころやさしく……▼
 わしと　いっしょに
-がむしゃらに　つよさを　もとめたよ▽
+がむしゃらに　つよさを　もとめた▽
 つよさの　いみも　しらずにな▼</language>
-		<language name="JPN_KANJI" width="256">つよい　ポケモン　だったぞ！
-おおしく　けだかく　こころやさしく……▼
-わしと　いっしょに
-がむしゃらに　つよさを　もとめたよ▽
-つよさの　いみも　しらずにな▼</language>
+		<language name="JPN_KANJI" width="256">強い　ポケモン　だったぞ！
+雄雄しく　気高く　心優しく……▼
+わしと　一緒に
+がむしゃらに　強さを　求めた▽
+強さの　意味も　知らずにな▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r07r0105_champion_end_04" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・続けてchampion_end_05</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
@@ -521,44 +521,44 @@
 そこで　はじめて　きづいた▼
 つよさ　とは　いつまでも
 かわらない　もの　ではない　と▼</language>
-		<language name="JPN_KANJI" width="256">だが　すべての　ものがたりには
-はじまりと　おわりが　あるように▼
-どんな　いきものの　いのちにも
-おわりが　あり……▽
-そこで　はじめて　きづいた▼
-つよさ　とは
-えいえんふへんの　ものではない　と▼</language>
+		<language name="JPN_KANJI" width="256">だが　すべての　物語には
+始まりと　終わりが　あるように▼
+あらゆる　命には
+終わりが　あり……▽
+そこで　はじめて　気づいた▼
+強さとは
+永遠普遍の　ものではない　と▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r07r0105_champion_end_05" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・続けて
 　champion_end_06　か
 　champion_end_07</comment>
 		<attribute name="キャラ指定">チャンピオン</attribute>
 		<language name="JPN" width="256">だが　ポケモンと
-おなじ　ときを　すごせる……▽
+いっしょに　すごせる……▽
 その　よろこびは　ほんものだ▼
 それを　みなに　つたえようと
 ポケモンリーグを　さり▽
 たびを　つづけていたのだ……！▼
-そう！　たびは　いいな！▼
+そう！　たびは　よい！▼
 いろんな　ポケモン
 いろんな　トレーナー▽
 そして　おまえたちに　あえた！▼</language>
 		<language name="JPN_KANJI" width="256">だが　ポケモンと
-おなじ　ときを　すごせる……▽
-その　よろこびは　ほんものだ▼
-それを　みなに　つたえようと
-ポケモンリーグを　さり▽
-たびを　つづけていたのだ……！▼
-そう！　たびは　いいな！▼
+同じ　時間　空間を　過ごせる……▽
+その喜びは　本物だ▼
+それを　みなに　伝えようと
+ポケモンリーグを　去り▽
+旅を　続けていたのだ……！▼
+そう！　旅は　よい！▼
 いろんな　ポケモン
 いろんな　トレーナー▽
-そして　おまえたちに　あえた！▼</language>
+そして　おまえたちに　会えた！▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r07r0105_champion_end_06" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・すでに殿堂入りしている
 ・メッセージ表示後、退場
@@ -569,13 +569,13 @@
 トレーナーや　ポケモンが　いる！▼
 [1:00:トレーナー名:0]！　おまえも　できるだけ
 おおくの　ひとと　あえよ！▼</language>
-		<language name="JPN_KANJI" width="256">せかいには　もっと　おおくの
+		<language name="JPN_KANJI" width="256">世界には　もっと　多くの
 トレーナーや　ポケモンが　いる！▼
 [1:00:トレーナー名:0]！　おまえも　できるだけ
-おおくの　ひとと　あえよ！▼</language>
+多くの　人と　会えよ！▼</language>
 	</row>
 
-	<row id="msg_r07r0105_champion_end_07" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_r07r0105_champion_end_07" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
 		<comment>♂
 ・まだ殿堂入りしていない
 ・メッセージ表示後、退場
@@ -585,7 +585,7 @@
 		<language name="JPN" width="256">さて　[1:00:トレーナー名:0]
 ポケモンリーグで　まっているぞ！▼</language>
 		<language name="JPN_KANJI" width="256">さて　[1:00:トレーナー名:0]
-ポケモンリーグで　まっているぞ！▼</language>
+ポケモンリーグで　待っているぞ！▼</language>
 	</row>
 
 	<flowchart-group-list>
