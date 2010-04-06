@@ -505,7 +505,7 @@ static void set_camera_disp_offset( DEMO3D_ENGINE_WORK* wk, GFL_G3D_CAMERA* p_ca
 #else
   // ƒNƒŠƒbƒv–Ê‚ð‚¸‚ç‚·
   GFL_G3D_CAMERA_SetTop( p_camera, top+wk->def_top );
-  GFL_G3D_CAMERA_SetBottom( p_camera, buttom+wk->def_bottom );
+  GFL_G3D_CAMERA_SetBottom( p_camera, bottom+wk->def_bottom );
 #endif
 }
 
