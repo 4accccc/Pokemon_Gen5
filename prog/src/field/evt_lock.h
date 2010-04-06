@@ -17,6 +17,6 @@
 
 #define EVT_MAX (8)
 
-extern void EVTROCK_SetEvtRock( MISC * misc, const int inNo, MYSTATUS *my );
-extern BOOL EVTROCK_ChekcEvtRock( MISC * misc, const int inNo, MYSTATUS *my );
+extern void EVTROCK_SetEvtLock( MISC * misc, const int inNo, MYSTATUS *my );
+extern BOOL EVTROCK_ChekcEvtLock( MISC * misc, const int inNo, MYSTATUS *my );
 
