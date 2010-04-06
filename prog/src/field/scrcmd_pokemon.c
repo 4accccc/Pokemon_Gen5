@@ -68,9 +68,9 @@ typedef struct ADD_POKE_PRM_tag
   int FormNo;
   int Level;
   int ItemNo;
-  int Tokusei;
-  int SexSel;
-  int RareSel;
+  PtlTokuseiSpec Tokusei;
+  PtlSexSpec SexSel;
+  PtlRareSpec RareSel;
   int Ball;
 }ADD_POKE_PRM;
 
@@ -769,10 +769,7 @@ VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk )
   u16*        ret_wk = SCRCMD_GetVMWork( core, work );       // コマンド第1引数
   u16         monsno = SCRCMD_GetVMWorkValue( core, work );  // コマンド第2引数
   u16         formno = SCRCMD_GetVMWorkValue( core, work );  // コマンド第3引数
-  u16        tokusei = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数
-  u16          level = SCRCMD_GetVMWorkValue( core, work );  // コマンド第5引数
-  u16         itemno = SCRCMD_GetVMWorkValue( core, work );  // コマンド第6引数
-  u16         ball   = SCRCMD_GetVMWorkValue( core, work );  // コマンド第7引数
+  u16          level = SCRCMD_GetVMWorkValue( core, work );  // コマンド第4引数
 
   //パラメータセット
   {
@@ -780,11 +777,11 @@ VMCMD_RESULT EvCmdAddPokemonToParty( VMHANDLE *core, void *wk )
     prm.MonsNo = monsno;
     prm.FormNo = formno;
     prm.Level = level;
-    prm.ItemNo = 0;
-    prm.Tokusei = TOKUSYU_NULL;
-    prm.SexSel = 0;   //@todo
-    prm.RareSel = 0; //@todo
-    prm.Ball = ITEM_MONSUTAABOORU;
+    prm.ItemNo = 0; //アイテムなし
+    prm.Tokusei = PTL_TOKUSEI_SPEC_BOTH;  //不問
+    prm.SexSel = PTL_SEX_SPEC_UNKNOWN;    //不問
+    prm.RareSel = PTL_RARE_SPEC_BOTH;     //不問
+    prm.Ball = ITEM_MONSUTAABOORU;        //モンスターボール
   }
 
   *ret_wk = AddPokeToParty(gdata, &prm);
@@ -825,9 +822,23 @@ VMCMD_RESULT EvCmdAddPokemonToPartyEx( VMHANDLE *core, void *wk )
     prm.FormNo = formno;
     prm.Level = level;
     prm.ItemNo = itemno;
-    prm.Tokusei = tokusei;
+    if ( prm.Tokusei >= PTL_TOKUSEI_SPEC_MAX)
+    {
+      GF_ASSERT_MSG(0,"%d:tokusei error",prm.Tokusei);
+      prm.Tokusei = PTL_TOKUSEI_SPEC_BOTH;
+    }
     prm.SexSel = sex;
+    if ( prm.SexSel >= PTL_SEX_SPEC_MAX)
+    {
+      GF_ASSERT_MSG(0,"%d:sex error",prm.SexSel);
+      prm.SexSel = PTL_SEX_SPEC_UNKNOWN;
+    }
     prm.RareSel = rare;
+    if ( prm.RareSel >= PTL_RARE_SPEC_MAX)
+    {
+      GF_ASSERT_MSG(0,"%d:rare error",prm.RareSel);
+      prm.RareSel = PTL_RARE_SPEC_BOTH;
+    }
     prm.Ball = ball;
   }
 
@@ -1328,11 +1339,11 @@ VMCMD_RESULT EvCmdAddPokemonToBox( VMHANDLE *core, void *wk )
     prm.MonsNo = monsno;
     prm.FormNo = formno;
     prm.Level = level;
-    prm.ItemNo = 0;
-    prm.Tokusei = TOKUSYU_NULL;
-    prm.SexSel = 0;   //@todo
-    prm.RareSel = 0; //@todo
-    prm.Ball = ITEM_MONSUTAABOORU;
+    prm.ItemNo = 0; //アイテムなし
+    prm.Tokusei = PTL_TOKUSEI_SPEC_BOTH;  //不問
+    prm.SexSel = PTL_SEX_SPEC_UNKNOWN;    //不問
+    prm.RareSel = PTL_RARE_SPEC_BOTH;     //不問
+    prm.Ball = ITEM_MONSUTAABOORU;        //モンスターボール
   }
 
   *ret_wk = AddPokeToBox(gdata, &prm);
@@ -1374,8 +1385,23 @@ VMCMD_RESULT EvCmdAddPokemonToBoxEx( VMHANDLE *core, void *wk )
     prm.Level = level;
     prm.ItemNo = itemno;
     prm.Tokusei = tokusei;
+    if ( prm.Tokusei >= PTL_TOKUSEI_SPEC_MAX)
+    {
+      GF_ASSERT_MSG(0,"%d:tokusei error",prm.Tokusei);
+      prm.Tokusei = PTL_TOKUSEI_SPEC_BOTH;
+    }
     prm.SexSel = sex;
+    if ( prm.SexSel >= PTL_SEX_SPEC_MAX)
+    {
+      GF_ASSERT_MSG(0,"%d:sex error",prm.SexSel);
+      prm.SexSel = PTL_SEX_SPEC_UNKNOWN;
+    }
     prm.RareSel = rare;
+    if ( prm.RareSel >= PTL_RARE_SPEC_MAX)
+    {
+      GF_ASSERT_MSG(0,"%d:rare error",prm.RareSel);
+      prm.RareSel = PTL_RARE_SPEC_BOTH;
+    }
     prm.Ball = ball;
   }
 
@@ -1483,11 +1509,15 @@ static POKEMON_PARAM* MakePokeParam( GAMEDATA *gdata, ADD_POKE_PRM *prm )
     if (item_type == ITEMTYPE_BALL) PP_Put( pp, ID_PARA_get_ball, prm->Ball );     // 捕獲ボールセット
   }
 
-  if( prm->Tokusei != TOKUSYU_NULL ){
-    PP_Put( pp, ID_PARA_speabino, prm->Tokusei );  // 特性
+  //性別、レア、特性から個性乱数を選出して、セット
+  {
+    u32 rnd;
+    u32 id;
+    MYSTATUS *my = GAMEDATA_GetMyStatus( gdata );
+    id = MyStatus_GetID(my);
+    rnd = POKETOOL_CalcPersonalRandSpec( id, prm->MonsNo, prm->FormNo, prm->SexSel, prm->Tokusei, prm->RareSel );
+    PP_Put( pp, ID_PARA_personal_rnd, rnd );
   }
-
-  //@todo   性別、レア、特性から個性乱数を選出して、セット
 
   {
     PLAYER_WORK* player_wk = GAMEDATA_GetMyPlayerWork( gdata );
