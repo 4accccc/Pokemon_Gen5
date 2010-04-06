@@ -257,6 +257,10 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 		if( CheckPlayerAnime( wk ) == FALSE ){
 			break;
 		}
+		{	// レコードデータ＋
+			RECORD * rec = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData(wk->gsys) );
+			RECORD_Inc( rec, RECID_REPORT_COUNT );
+		}
 		wk->local->timeIcon = TIMEICON_Create(
 														GFUser_VIntr_GetTCBSYS(),
 														wk->local->util.win, 15, TIMEICON_DEFAULT_WAIT, wk->heapID );
@@ -325,10 +329,6 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
       }
       SetReportMsgBuff( wk );
       TILEICON_Exit( wk->local->timeIcon );
-			{	// レコードデータ＋
-				RECORD * rec = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData(wk->gsys) );
-				RECORD_Inc( rec, RECID_REPORT_COUNT );
-			}
       *seq = REPORT_SEQ_RESULT_OK_WAIT;
     }
     break;
