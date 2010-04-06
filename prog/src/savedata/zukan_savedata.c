@@ -1201,8 +1201,6 @@ void ZUKANSAVE_SetPokeGet( ZUKAN_SAVEDATA * zw, POKEMON_PARAM * pp )
  * @param		mons		ポケモン番号
  *
  * @return	最大フォルム数
- *
- * @li	♂♀しかない場合は０を返す
  */
 //-----------------------------------------------------------------------------
 u32	ZUKANSAVE_GetFormMax( u16 mons )
@@ -1212,7 +1210,7 @@ u32	ZUKANSAVE_GetFormMax( u16 mons )
 	if( pos != -1 ){
 		return FormTable[pos][1];
 	}
-	return 0;
+	return 1;
 }
 
 // 

@@ -6395,6 +6395,7 @@ static const DEBUG_MENU_INITIALIZER DebugMenuZukanImitializer = {
 static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk );
 static void SetZukanDataOne( DEBUG_ZUKAN_WORK * wk, u16 mons, u16 form, u16 lang, u32 mode );
 static void SetZukanLocal( DEBUG_ZUKAN_WORK * wk, u16 count, u32 mode );
+static void SetZukanDataAll( DEBUG_ZUKAN_WORK * wk );
 
 
 //--------------------------------------------------------------
@@ -6484,29 +6485,28 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
           rand = GFL_STD_MtRand( 3 );
           if( rand == 2 ){ continue; }
           max = ZUKANSAVE_GetFormMax( i );
-          if( max != 0 ){
-            SetZukanDataOne( wk, i, GFL_STD_MtRand(max), PM_LANG, rand );
-          }else{
-            SetZukanDataOne( wk, i, 0, PM_LANG, rand );
-          }
+					SetZukanDataOne( wk, i, GFL_STD_MtRand(max), PM_LANG, rand );
         }
       }
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 
     case DEBUG_ZKNCMD_FORM_FULL:     // フォルム
+/*
       {
         u32 max;
         u16 i, j;
         for( i=1; i<=MONSNO_END; i++ ){
           max = ZUKANSAVE_GetFormMax( i );
-          if( max != 0 ){
+          if( max != 1 ){
             for( j=0; j<max; j++ ){
               SetZukanDataOne( wk, i, j, PM_LANG, 0 );
             }
           }
         }
       }
+*/
+			SetZukanDataAll( wk );
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 
@@ -6622,6 +6622,98 @@ static void SetZukanDataOne( DEBUG_ZUKAN_WORK * wk, u16 mons, u16 form, u16 lang
 
   GFL_HEAP_FreeMemory( pp );
 }
+
+
+static void SetZukanDataAllOne( DEBUG_ZUKAN_WORK * wk, POKEMON_PARAM * pp, u32 sex, BOOL rare, BOOL first )
+{
+	u32	mons;
+	u32	id;
+	u32	rand;
+	u32	form_max;
+	u32	i;
+
+	mons = PP_Get( pp, ID_PARA_monsno, NULL );
+	id   = PP_Get( pp, ID_PARA_id_no, NULL );
+	rand = POKETOOL_CalcPersonalRandEx( id, mons, 0, sex, 0, rare );
+	PP_SetupEx( pp, mons, 50, id, PTL_SETUP_POW_AUTO, rand );
+
+	form_max = ZUKANSAVE_GetFormMax( mons );
+
+	if( first == TRUE ){
+		ZUKANSAVE_SetPokeGet( wk->sv, pp );
+	}else{
+		ZUKANSAVE_SetPokeSee( wk->sv, pp );
+	}
+
+	for( i=1; i<form_max; i++ ){
+		rand = POKETOOL_CalcPersonalRandEx( id, mons, i, sex, 0, rare );
+		PP_Put( pp, ID_PARA_personal_rnd, rand );
+		PP_Put( pp, ID_PARA_form_no, i );
+    ZUKANSAVE_SetPokeSee( wk->sv, pp );
+	}
+}
+
+static void SetZukanDataAll( DEBUG_ZUKAN_WORK * wk )
+{
+	POKEMON_PERSONAL_DATA * ppd;
+	POKEMON_PARAM * pp;
+	BOOL fast;
+	u32	sex_vec;
+	u32	rand;
+	u16	i, j;
+
+	for( i=1; i<MONSNO_END; i++ ){
+		// 性別ベクトル取得
+		ppd = POKE_PERSONAL_OpenHandle( i, 0, wk->heapID );
+		sex_vec = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
+		POKE_PERSONAL_CloseHandle( ppd );
+		// POKEMON_PARAM作成
+		pp = PP_Create( i, 50, 0, wk->heapID );
+		fast = PP_FastModeOn( pp );
+		PP_Put( pp, ID_PARA_form_no, 0 );
+	  PP_Put( pp, ID_PARA_country_code, LANG_JAPAN );
+
+		// 性別なし
+		if( sex_vec == POKEPER_SEX_UNKNOWN ){
+			SetZukanDataAllOne( wk, pp, PTL_SEX_UNKNOWN, FALSE, TRUE );		// レアじゃない
+			SetZukanDataAllOne( wk, pp, PTL_SEX_UNKNOWN, TRUE, FALSE );		// レア
+		// 性別あり
+		}else{
+			// ♂もいる
+			if( sex_vec != POKEPER_SEX_FEMALE ){
+//				PP_Put( pp, ID_PARA_sex, PTL_SEX_MALE );
+				SetZukanDataAllOne( wk, pp, PTL_SEX_MALE, FALSE, TRUE );		// レアじゃない
+				SetZukanDataAllOne( wk, pp, PTL_SEX_MALE, TRUE, FALSE );		// レア
+			}
+			// ♀もいる
+			if( sex_vec != POKEPER_SEX_MALE ){
+//				PP_Put( pp, ID_PARA_sex, PTL_SEX_FEMALE );
+				SetZukanDataAllOne( wk, pp, PTL_SEX_FEMALE, FALSE, TRUE );	// レアじゃない
+				SetZukanDataAllOne( wk, pp, PTL_SEX_FEMALE, TRUE, FALSE );	// レア
+			}
+		}
+
+		// 各言語セット
+	  PP_Put( pp, ID_PARA_country_code, LANG_ENGLISH );
+    ZUKANSAVE_SetPokeGet( wk->sv, pp );
+	  PP_Put( pp, ID_PARA_country_code, LANG_FRANCE );
+    ZUKANSAVE_SetPokeGet( wk->sv, pp );
+	  PP_Put( pp, ID_PARA_country_code, LANG_ITALY );
+    ZUKANSAVE_SetPokeGet( wk->sv, pp );
+	  PP_Put( pp, ID_PARA_country_code, LANG_GERMANY );
+    ZUKANSAVE_SetPokeGet( wk->sv, pp );
+	  PP_Put( pp, ID_PARA_country_code, LANG_SPAIN );
+    ZUKANSAVE_SetPokeGet( wk->sv, pp );
+	  PP_Put( pp, ID_PARA_country_code, LANG_KOREA );
+    ZUKANSAVE_SetPokeGet( wk->sv, pp );
+
+		PP_FastModeOff( pp, fast );
+	  GFL_HEAP_FreeMemory( pp );
+
+		OS_Printf( "No.%d : 図鑑追加\n", i );
+  }
+}
+
 
 
 //======================================================================================
