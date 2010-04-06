@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-02-01T21:44:46" source="m_siten02_00_00.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-04-02T18:11:44" source="m_siten02_00_00.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -24,20 +24,20 @@
 	<image_name index="3" name="c09_fire.3"/>
 	<image_name index="4" name="c09_fire.4"/>
 	<image_name index="5" name="c09_fire.5"/>
-	<image_name index="6" name="hero.1"/>
-	<image_name index="7" name="hero.10"/>
-	<image_name index="8" name="hero.4"/>
-	<image_name index="9" name="hero.7"/>
+	<image_name index="6" name="jhero.1"/>
+	<image_name index="7" name="jhero.10"/>
+	<image_name index="8" name="jhero.4"/>
+	<image_name index="9" name="jhero.7"/>
 	<palette_name index="0" name="c09_fire.0_pl"/>
 	<palette_name index="1" name="c09_fire.1_pl"/>
 	<palette_name index="2" name="c09_fire.2_pl"/>
 	<palette_name index="3" name="c09_fire.3_pl"/>
 	<palette_name index="4" name="c09_fire.4_pl"/>
 	<palette_name index="5" name="c09_fire.5_pl"/>
-	<palette_name index="6" name="hero.10_pl"/>
-	<palette_name index="7" name="hero.1_pl"/>
-	<palette_name index="8" name="hero.4_pl"/>
-	<palette_name index="9" name="hero.7_pl"/>
+	<palette_name index="6" name="jhero.10_pl"/>
+	<palette_name index="7" name="jhero.1_pl"/>
+	<palette_name index="8" name="jhero.4_pl"/>
+	<palette_name index="9" name="jhero.7_pl"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>
