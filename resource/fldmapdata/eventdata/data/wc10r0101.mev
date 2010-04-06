@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/03 18:09:33
+#save date:2010/04/06 20:20:00
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\wc10r0101.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\wc10r0101.wms
 #hold event type:
 1
 #hold event number:
-4
+6
 #event number: 0
 #type
 1
@@ -40,7 +40,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--136 0 152
+-168 0 168
 #event number: 1
 #type
 1
@@ -57,7 +57,7 @@ EV_TYPE_NORMAL
 #Event Script Name
 SCRID_WC10R0101_BOY2_01
 #Direction Type Number
-DIR_UP
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -71,7 +71,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--168 0 216
+-184 0 200
 #event number: 2
 #type
 1
@@ -133,7 +133,69 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--104 0 184
+-136 0 184
+#event number: 4
+#type
+1
+#ID name
+WC10R0101_BOY3_02
+#OBJ CODE Number
+BOY3
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_WC10R0101_BOY3_02
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 0 152
+#event number: 5
+#type
+1
+#ID name
+WC10R0101_WOMAN3_01
+#OBJ CODE Number
+WOMAN3
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_WC10R0101_WOMAN3_01
+#Direction Type Number
+DIR_RIGHT
+#Parameter 0 Number
+0
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-200 0 136
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
