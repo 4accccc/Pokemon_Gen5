@@ -204,6 +204,12 @@ static GMEVENT_RESULT EVENT_FUNC_NameInput_PartyPoke( GMEVENT* event, int* seq, 
     }
     // 入力結果をワークに返す
     *(pniw->retWork) = (pniw->nameInParam->cancel != TRUE);
+    if( *(pniw->retWork) == TRUE){
+      //名前を入力していたら、レコードを加算する
+      GAMEDATA *gdata = GAMESYSTEM_GetGameData( pniw->gameSystem );
+      RECORD * rec = GAMEDATA_GetRecordPtr( gdata );
+      RECORD_Inc( rec, RECID_NICKNAME );
+    }
     NAMEIN_FreeParam( pniw->nameInParam );
     return GMEVENT_RES_FINISH;
   }

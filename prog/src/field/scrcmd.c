@@ -101,6 +101,8 @@
 
 #include "../../../resource/fldmapdata/script/usescript.h"
 
+#include "savedata/record.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -1535,6 +1537,10 @@ static VMCMD_RESULT EvCmdReportCall( VMHANDLE * core, void *wk )
   // 保存
   SCRIPT_SetSaveAnimeWork( sc, saveanime );
   
+  { //レポートを書いた数を記録
+    RECORD * rec = GAMEDATA_GetRecordPtr( gdata );
+    RECORD_Inc( rec, RECID_REPORT_COUNT );
+  }
   // 分割セーブ開始
   GAMEDATA_SaveAsyncStart( gdata );
   

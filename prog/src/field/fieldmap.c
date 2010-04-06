@@ -620,7 +620,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 			GFL_G3D_VMANLNK, FIELD_3D_VRAM_SIZE,
       GFL_G3D_VMANLNK, FIELD_3D_PLTT_SIZE,
 			FIELD_3D_DTCM_SIZE, fieldWork->heapID, fldmap_G3D_CallBackSetUp );
+#ifdef  PM_DEBUG
 	DEBUG_GFL_G3D_SetVManSize( FIELD_3D_VRAM_SIZE, FIELD_3D_PLTT_SIZE );
+#endif
 
 	//３Ｄデータのロード
 	fldmap_G3D_Load( fieldWork );
