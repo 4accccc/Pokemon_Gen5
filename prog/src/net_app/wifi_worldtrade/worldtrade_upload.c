@@ -868,13 +868,6 @@ static int Subseq_UploadFinish( WORLDTRADE_WORK *wk )
 	// 通信エラーになった時にもう一度「預ける」が表示されてしまう
 	wk->DepositFlag = 1;
 
-
-  //アップロードに成功したので、預けた回数をカウント
-  { 
-    RECORD  *p_rec  = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData( wk->param->gamesys ) );
-    RECORD_Inc( p_rec, RECID_GTS_PUT );
-  }
-	
 	return SEQ_MAIN;
 }
 
@@ -1709,8 +1702,8 @@ static void AfterTradeCheck_ProcessControl( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp )
 {
-	// スコア加算
-	RECORD_Score_Add( wk->param->record, SCORE_ID_WORLD_TRADE );
+	// スコア加算->なくなりました
+	//RECORD_Score_Add( wk->param->record, SCORE_ID_WORLD_TRADE );
 
 	OS_Printf("exchange poke adr = %08x\n", (u32)pp);
 
