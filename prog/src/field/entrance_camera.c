@@ -39,11 +39,13 @@
 #define U_DOOR_FRAME  (10)
 #define U_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 // 左ドアへの出入り
-#define L_DOOR_FRAME (0)
-#define L_DOOR_YAW   (0x4000)
+#define L_DOOR_FRAME  (0)
+#define L_DOOR_YAW    (0x4000)
+#define L_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 // 右ドアへの出入り
-#define R_DOOR_FRAME (0)
-#define R_DOOR_YAW   (0xc051)
+#define R_DOOR_FRAME  (0)
+#define R_DOOR_YAW    (0xc051)
+#define R_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 //-------------------------------------
 // 通常出入り口のカメラ動作 ( 通常版 )
 //-------------------------------------
@@ -52,11 +54,13 @@
 #define U_DOOR_FRAME  (10)
 #define U_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 // 左ドアへの出入り
-#define L_DOOR_FRAME (20)
-#define L_DOOR_YAW   (0x0e0f)
+#define L_DOOR_FRAME  (20)
+#define L_DOOR_YAW    (0x0e0f)
+#define L_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 // 右ドアへの出入り
-#define R_DOOR_FRAME (20)
-#define R_DOOR_YAW   (0xf2cc)
+#define R_DOOR_FRAME  (20)
+#define R_DOOR_YAW    (0xf2cc)
+#define R_DOOR_LENGTH (0x00b4 << FX32_SHIFT) 
 #endif
 
 
@@ -70,12 +74,16 @@ typedef struct {
   u32 pitch;           // ピッチ
   u32 yaw;             // ヨー
   u32 length;          // 距離
-  u32 targetOffsetX;   // ターゲットオフセットx
-  u32 targetOffsetY;   // ターゲットオフセットy
-  u32 targetOffsetZ;   // ターゲットオフセットz
+  u32 manualTargetFlag;// ターゲット座標が有効かどうか
+  u32 targetPosX;      // ターゲット座標 x
+  u32 targetPosY;      // ターゲット座標 y
+  u32 targetPosZ;      // ターゲット座標 z
+  u32 targetOffsetX;   // ターゲットオフセット x
+  u32 targetOffsetY;   // ターゲットオフセット y
+  u32 targetOffsetZ;   // ターゲットオフセット z
   u32 frame;           // 動作フレーム数
-  u8  validFlag_IN;    // 進入時に有効なデータかどうか
-  u8  validFlag_OUT;   // 退出時に有効なデータかどうか
+  u32 validFlag_IN;    // 進入時に有効なデータかどうか
+  u32 validFlag_OUT;   // 退出時に有効なデータかどうか
 
 } ECAM_LOAD_DATA; 
 
@@ -399,11 +407,22 @@ static void ECamSetup_IN( ECAM_WORK* work )
     endParam->targetOffset = ofs;
 
     switch( playerDir ) {
-    case DIR_UP:    endParam->length = U_DOOR_LENGTH; break;
-    case DIR_LEFT:  endParam->yaw    = L_DOOR_YAW;    break;
-    case DIR_RIGHT: endParam->yaw    = R_DOOR_YAW;    break;
-    case DIR_DOWN: break;
-    default: GF_ASSERT(0); break;
+    case DIR_UP:    
+      endParam->length = U_DOOR_LENGTH; 
+      break;
+    case DIR_LEFT:  
+      endParam->yaw = L_DOOR_YAW;    
+      endParam->length = L_DOOR_LENGTH; 
+      break;
+    case DIR_RIGHT: 
+      endParam->yaw = R_DOOR_YAW;    
+      endParam->length = R_DOOR_LENGTH; 
+      break;
+    case DIR_DOWN: 
+      break;
+    default: 
+      GF_ASSERT(0); 
+      break;
     }
   }
 
@@ -426,8 +445,13 @@ static void ECamSetup_IN( ECAM_WORK* work )
 //-----------------------------------------------------------------------------
 static void ECamSetup_OUT( ECAM_WORK* work )
 {
-  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  u16 playerDir = FIELD_PLAYER_GetDir( player );
+  ANIME_DATA*   anime      = &work->animeData;
+  CAMERA_PARAM* startParam = &anime->startParam;
+  CAMERA_PARAM* endParam   = &anime->endParam;
+  FIELD_CAMERA* camera     = GetCamera( work );
+  FIELD_PLAYER* player     = FIELDMAP_GetFieldPlayer( work->fieldmap );
+  u16           playerDir  = FIELD_PLAYER_GetDir( player );
+
   VecFx32 stepPos;
 
   // アニメの有無を決定
@@ -435,12 +459,12 @@ static void ECamSetup_OUT( ECAM_WORK* work )
   case DIR_DOWN:
   case DIR_LEFT:
   case DIR_RIGHT:
-    work->animeData.validFlag_IN  = FALSE;
-    work->animeData.validFlag_OUT = TRUE; 
+    anime->validFlag_IN  = FALSE;
+    anime->validFlag_OUT = TRUE; 
     break;
   case DIR_UP:
-    work->animeData.validFlag_IN  = FALSE;
-    work->animeData.validFlag_OUT = FALSE; 
+    anime->validFlag_IN  = FALSE;
+    anime->validFlag_OUT = FALSE; 
     return; // 以下の処理は不要
   default: 
     GF_ASSERT(0); 
@@ -457,46 +481,55 @@ static void ECamSetup_OUT( ECAM_WORK* work )
 
   // アニメフレーム数
   switch( playerDir ) {
-  case DIR_UP:    work->animeData.frame = 0;            break;
-  case DIR_DOWN:  work->animeData.frame = U_DOOR_FRAME; break;
-  case DIR_LEFT:  work->animeData.frame = R_DOOR_FRAME; break;
-  case DIR_RIGHT: work->animeData.frame = L_DOOR_FRAME; break;
+  case DIR_UP:    anime->frame = 0;            break;
+  case DIR_DOWN:  anime->frame = U_DOOR_FRAME; break;
+  case DIR_LEFT:  anime->frame = R_DOOR_FRAME; break;
+  case DIR_RIGHT: anime->frame = L_DOOR_FRAME; break;
   default: GF_ASSERT(0); break;
   }
 
   // 自機を一歩移動させた状態にカメラを更新
   if( CheckOneStep(work) ) {
-    SetupCameraTargetPos( work->camera, &stepPos );
+    SetupCameraTargetPos( camera, &stepPos );
   }
 
   SetupCamera( work ); // カメラの設定を変更
-  AdjustCameraAngle( work->camera ); // カメラアングルを再計算
+  AdjustCameraAngle( camera ); // カメラアングルを再計算
 
   // 開始パラメータ
   {
-    GetCurrentCameraParam( work->camera, &work->animeData.startParam );
+    GetCurrentCameraParam( camera, startParam );
 
     switch( playerDir ) {
-    case DIR_UP: break;
-    case DIR_DOWN:  work->animeData.startParam.length = U_DOOR_LENGTH; break;
-    case DIR_LEFT:  work->animeData.startParam.yaw    = R_DOOR_YAW;    break;
-    case DIR_RIGHT: work->animeData.startParam.yaw    = L_DOOR_YAW;    break;
+    case DIR_UP:
+      break;
+    case DIR_DOWN:  
+      startParam->length = U_DOOR_LENGTH; 
+      break;
+    case DIR_LEFT:  
+      startParam->yaw = R_DOOR_YAW;    
+      startParam->length = R_DOOR_LENGTH; 
+      break;
+    case DIR_RIGHT: 
+      startParam->yaw = L_DOOR_YAW;    
+      startParam->length = L_DOOR_LENGTH; 
+      break;
     default: GF_ASSERT(0); break;
     }
-    work->animeData.startParam.targetPos = stepPos;
-    VEC_Set( &work->animeData.startParam.targetOffset, 0, 0, 0 );
+    startParam->targetPos = stepPos;
+    VEC_Set( &startParam->targetOffset, 0, 0, 0 );
   }
 
   // 最終パラメータ ( = 現在値 )
-  GetCurrentCameraParam( work->camera, &work->animeData.endParam );
+  GetCurrentCameraParam( camera, endParam );
 
   // 開始カメラ設定
-  if( work->animeData.validFlag_OUT ) {
-    FIELD_CAMERA_SetAnglePitch( work->camera, work->animeData.startParam.pitch );
-    FIELD_CAMERA_SetAngleYaw( work->camera, work->animeData.startParam.yaw );
-    FIELD_CAMERA_SetAngleLen( work->camera, work->animeData.startParam.length );
-    FIELD_CAMERA_SetTargetPos( work->camera, &work->animeData.startParam.targetPos );
-    FIELD_CAMERA_SetTargetOffset( work->camera, &work->animeData.startParam.targetOffset );
+  if( anime->validFlag_OUT ) {
+    FIELD_CAMERA_SetAnglePitch( camera, startParam->pitch );
+    FIELD_CAMERA_SetAngleYaw( camera, startParam->yaw );
+    FIELD_CAMERA_SetAngleLen( camera, startParam->length );
+    FIELD_CAMERA_SetTargetPos( camera, &startParam->targetPos );
+    FIELD_CAMERA_SetTargetOffset( camera, &startParam->targetOffset );
   } 
 
 }
@@ -510,18 +543,23 @@ static void ECamSetup_OUT( ECAM_WORK* work )
 //-----------------------------------------------------------------------------
 static void ECamSetup_SP_IN( ECAM_WORK* work )
 {
-  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  u16 playerDir = FIELD_PLAYER_GetDir( player );
+  ANIME_DATA*   anime      = &work->animeData;
+  CAMERA_PARAM* startParam = &anime->startParam;
+  CAMERA_PARAM* endParam   = &anime->endParam;
+  FIELD_CAMERA* camera     = GetCamera( work );
+  FIELD_PLAYER* player     = FIELDMAP_GetFieldPlayer( work->fieldmap );
+  u16           playerDir  = FIELD_PLAYER_GetDir( player );
+
   VecFx32 stepPos;
-  ECAM_LOAD_DATA load_data;
+  ECAM_LOAD_DATA loadData;
 
   // 演出データをロード
-  LoadSpData( &load_data, GetExitType(work) );
+  LoadSpData( &loadData, GetExitType(work) );
 
   // 演出の有無を決定
-  work->animeData.validFlag_IN  = load_data.validFlag_IN;
-  work->animeData.validFlag_OUT = load_data.validFlag_OUT;
-  if( work->animeData.validFlag_IN == FALSE ) { 
+  anime->validFlag_IN  = loadData.validFlag_IN;
+  anime->validFlag_OUT = loadData.validFlag_OUT;
+  if( anime->validFlag_IN == FALSE ) { 
     return; // 以下の処理は不要
   }
 
@@ -534,22 +572,30 @@ static void ECamSetup_SP_IN( ECAM_WORK* work )
   }
 
   SetupCamera( work ); // カメラの設定を変更
-  AdjustCameraAngle( work->camera ); // カメラアングルを再計算
-  SetCurrentCameraTargetPos( work->camera ); // ターゲット座標を初期化
+  AdjustCameraAngle( camera ); // カメラアングルを再計算
+  SetCurrentCameraTargetPos( camera ); // ターゲット座標を初期化
 
   // 開始パラメータ ( = 現在値 )
-  GetCurrentCameraParam( work->camera, &work->animeData.startParam );
+  GetCurrentCameraParam( camera, startParam );
 
   // 最終パラメータ
-  work->animeData.frame = load_data.frame;
-  work->animeData.endParam.pitch     = load_data.pitch;
-  work->animeData.endParam.yaw       = load_data.yaw;
-  work->animeData.endParam.length    = load_data.length << FX32_SHIFT;
-  work->animeData.endParam.targetPos = stepPos;
-  VEC_Set( &work->animeData.endParam.targetOffset,
-      load_data.targetOffsetX << FX32_SHIFT,
-      load_data.targetOffsetY << FX32_SHIFT,
-      load_data.targetOffsetZ << FX32_SHIFT );
+  anime->frame = loadData.frame;
+  endParam->pitch  = loadData.pitch;
+  endParam->yaw    = loadData.yaw;
+  endParam->length = loadData.length << FX32_SHIFT;
+  VEC_Set( &endParam->targetOffset,
+      loadData.targetOffsetX << FX32_SHIFT,
+      loadData.targetOffsetY << FX32_SHIFT,
+      loadData.targetOffsetZ << FX32_SHIFT );
+  if( loadData.manualTargetFlag ) {
+    VEC_Set( &endParam->targetPos,
+        loadData.targetPosX << FX32_SHIFT,
+        loadData.targetPosY << FX32_SHIFT,
+        loadData.targetPosZ << FX32_SHIFT );
+  }
+  else {
+    endParam->targetPos = stepPos;
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -561,18 +607,23 @@ static void ECamSetup_SP_IN( ECAM_WORK* work )
 //-----------------------------------------------------------------------------
 static void ECamSetup_SP_OUT( ECAM_WORK* work )
 {
-  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->fieldmap );
-  u16 playerDir = FIELD_PLAYER_GetDir( player );
+  ANIME_DATA*   anime      = &work->animeData;
+  CAMERA_PARAM* startParam = &anime->startParam;
+  CAMERA_PARAM* endParam   = &anime->endParam;
+  FIELD_CAMERA* camera     = GetCamera( work );
+  FIELD_PLAYER* player     = FIELDMAP_GetFieldPlayer( work->fieldmap );
+  u16           playerDir  = FIELD_PLAYER_GetDir( player );
+
   VecFx32 stepPos;
-  ECAM_LOAD_DATA load_data;
+  ECAM_LOAD_DATA loadData;
 
   // 演出データをロード
-  LoadSpData( &load_data, GetExitType(work) );
+  LoadSpData( &loadData, GetExitType(work) );
 
   // 演出の有無を決定
-  work->animeData.validFlag_IN  = load_data.validFlag_IN;
-  work->animeData.validFlag_OUT = load_data.validFlag_OUT;
-  if( work->animeData.validFlag_OUT == FALSE ) { 
+  anime->validFlag_IN  = loadData.validFlag_IN;
+  anime->validFlag_OUT = loadData.validFlag_OUT;
+  if( anime->validFlag_OUT == FALSE ) { 
     return; // 以下の処理は不要
   }
 
@@ -586,55 +637,42 @@ static void ECamSetup_SP_OUT( ECAM_WORK* work )
 
   // 自機を一歩移動させた状態にカメラを更新
   if( CheckOneStep(work) ) {
-    SetupCameraTargetPos( work->camera, &stepPos );
+    SetupCameraTargetPos( camera, &stepPos );
   }
 
   SetupCamera( work );
-  AdjustCameraAngle( work->camera );
+  AdjustCameraAngle( camera );
 
   // 最終パラメータ ( = 現在値 )
-  GetCurrentCameraParam( work->camera, &work->animeData.endParam );
+  GetCurrentCameraParam( camera, endParam );
 
   // 開始パラメータ
-  work->animeData.frame = load_data.frame;
-  work->animeData.startParam.pitch     = load_data.pitch;
-  work->animeData.startParam.yaw       = load_data.yaw;
-  work->animeData.startParam.length    = load_data.length << FX32_SHIFT;
-  work->animeData.startParam.targetPos = stepPos;
-  VEC_Set( &work->animeData.startParam.targetOffset,
-      load_data.targetOffsetX << FX32_SHIFT,
-      load_data.targetOffsetY << FX32_SHIFT,
-      load_data.targetOffsetZ << FX32_SHIFT );
-  work->animeData.validFlag_IN  = load_data.validFlag_IN;
-  work->animeData.validFlag_OUT = load_data.validFlag_OUT;
+  anime->frame = loadData.frame;
+  startParam->pitch  = loadData.pitch;
+  startParam->yaw    = loadData.yaw;
+  startParam->length = loadData.length << FX32_SHIFT;
+  VEC_Set( &startParam->targetOffset,
+      loadData.targetOffsetX << FX32_SHIFT,
+      loadData.targetOffsetY << FX32_SHIFT,
+      loadData.targetOffsetZ << FX32_SHIFT );
+  if( loadData.manualTargetFlag ) {
+    VEC_Set( &startParam->targetPos,
+        loadData.targetPosX << FX32_SHIFT,
+        loadData.targetPosY << FX32_SHIFT,
+        loadData.targetPosZ << FX32_SHIFT );
+  }
+  else {
+    startParam->targetPos = stepPos;
+  }
 
   // 開始カメラ設定
-  if( work->animeData.validFlag_OUT ) {
-    FIELD_CAMERA_SetAnglePitch( work->camera, work->animeData.startParam.pitch );
-    FIELD_CAMERA_SetAngleYaw( work->camera, work->animeData.startParam.yaw );
-    FIELD_CAMERA_SetAngleLen( work->camera, work->animeData.startParam.length );
-    FIELD_CAMERA_SetTargetPos( work->camera, &work->animeData.startParam.targetPos );
-    FIELD_CAMERA_SetTargetOffset( work->camera, &work->animeData.startParam.targetOffset );
+  if( anime->validFlag_OUT ) {
+    FIELD_CAMERA_SetAnglePitch( camera, startParam->pitch );
+    FIELD_CAMERA_SetAngleYaw( camera, startParam->yaw );
+    FIELD_CAMERA_SetAngleLen( camera, startParam->length );
+    FIELD_CAMERA_SetTargetPos( camera, &startParam->targetPos );
+    FIELD_CAMERA_SetTargetOffset( camera, &startParam->targetOffset );
   } 
-}
-
-//-----------------------------------------------------------------------------
-/**
- * @brief アニメーションデータを初期化する
- *
- * @param data
- */
-//-----------------------------------------------------------------------------
-static void InitAnimeData( ANIME_DATA* data )
-{
-  // ゼロクリア
-  GFL_STD_MemClear( data, sizeof(ANIME_DATA) );
-
-  // 初期化
-
-#ifdef DEBUG_PRINT_ENABLE
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: InitAnimeData\n" );
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -661,15 +699,20 @@ static void LoadSpData( ECAM_LOAD_DATA* dest, EXIT_TYPE exitType )
 
 #ifdef DEBUG_PRINT_ENABLE
   OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: LoadSpData\n" );
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - frame         = %d\n", dest->frame );
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - pitch         = %x\n", dest->pitch );
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - yaw           = %x\n", dest->yaw );
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - length        = %x\n", dest->length );
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - offsetX       = %x\n", dest->targetOffsetX );
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - offsetY       = %x\n", dest->targetOffsetX );
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - offsetZ       = %x\n", dest->targetOffsetX );
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - validFlag_IN  = %x\n", dest->validFlag_IN );
-  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - validFlag_OUT = %x\n", dest->validFlag_OUT );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - exitType         = %d\n", dest->exitType );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - pitch            = 0x%x\n", dest->pitch );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - yaw              = 0x%x\n", dest->yaw );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - length           = 0x%x\n", dest->length );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - manualTargetFlag = %d\n", dest->manualTargetFlag );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - targetPosX       = 0x%x\n", dest->targetPosX );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - targetPosY       = 0x%x\n", dest->targetPosY );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - targetPosZ       = 0x%x\n", dest->targetPosZ );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - targetOffsetX    = 0x%x\n", dest->targetOffsetX );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - targetOffsetY    = 0x%x\n", dest->targetOffsetY );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - targetOffsetZ    = 0x%x\n", dest->targetOffsetZ );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - frame            = %d\n", dest->frame );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - validFlag_IN     = %d\n", dest->validFlag_IN );
+  OS_TFPrintf( DEBUG_PRINT_TARGET, "ENTRANCE-CAMERA: - validFlag_OUT    = %d\n", dest->validFlag_OUT );
 #endif
 }
 
