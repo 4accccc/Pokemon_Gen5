@@ -303,6 +303,12 @@ extern BOOL ZONEDATA_IsSeaTempleDungeon( u16 zone_id );
 extern BOOL ZONEDATA_IsSeaTempleDungeon2F( u16 zone_id );
 extern BOOL ZONEDATA_IsSeaTempleDungeon3F( u16 zone_id );
 
+
+//------------------------------------------------------------------
+// C04再戦施設か？
+//------------------------------------------------------------------
+extern BOOL ZONEDATA_IsC04RebattleZone( u16 zone_id );
+
 //------------------------------------------------------------------
 // 地名IDがパレスのものか？
 //------------------------------------------------------------------

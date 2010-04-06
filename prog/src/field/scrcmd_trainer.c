@@ -12,8 +12,11 @@
 
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
+#include "gamesystem/game_data.h"
 
 #include "savedata/tradepoke_after_save.h"
+#include "savedata/record.h"
+
 
 #include "fieldmap.h"
 
@@ -35,7 +38,10 @@
 
 #include "event_battle.h"
 
+#include "field/zonedata.h"      // FSND_～
+
 #include "field_sound.h"      // FSND_～
+
 
 #include "trainer_eye_data.h"
 
@@ -53,6 +59,11 @@ SDK_COMPILER_ASSERT( SCR_TR_BTL_RULE_ROTATION == BTL_RULE_ROTATION );
 
 SDK_COMPILER_ASSERT( SCR_EYE_TR_0 == TRAINER_EYE_HIT0 );
 SDK_COMPILER_ASSERT( SCR_EYE_TR_1 == TRAINER_EYE_HIT1 );
+
+
+// C04再戦施設でのバトル　レコード加算処理
+static void TrainerBattle_C04RebattleRecordAdd( SCRCMD_WORK *work );
+
 
 //======================================================================
 //
@@ -232,6 +243,13 @@ VMCMD_RESULT EvCmdTrainerBattleSet( VMHANDLE *core, void *wk )
       EVENT_TrainerBattle( gsys, fparam->fieldMap, rule, TRID_NULL, tr_id_0, tr_id_1, flags );
     SCRIPT_CallEvent( sc, ev_battle );
   }
+
+  // レコード情報
+  {
+    // C04再戦バトル施設
+    TrainerBattle_C04RebattleRecordAdd( work );
+  }
+  
 	return VMCMD_RESULT_SUSPEND;
 }
 
@@ -257,6 +275,14 @@ VMCMD_RESULT EvCmdTrainerMultiBattleSet( VMHANDLE *core, void *wk )
       EVENT_TrainerBattle( gsys, fparam->fieldMap, BTL_RULE_DOUBLE, partner_id, tr_id_0, tr_id_1, flags );
     SCRIPT_CallEvent( sc, ev_battle );
   }
+
+  // レコード情報
+  {
+    // C04再戦バトル施設
+    TrainerBattle_C04RebattleRecordAdd( work );
+  }
+  
+
 	return VMCMD_RESULT_SUSPEND;
 }
 
@@ -628,4 +654,29 @@ VMCMD_RESULT EvCmdGetTradeAfterTrainerBattleSet( VMHANDLE *core, void *wk )
 	return VMCMD_RESULT_SUSPEND;
 }
 
+
+
+
+
+// 
+//----------------------------------------------------------------------------
+/**
+ *	@brief C04再戦施設でのバトル　レコード加算処理
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void TrainerBattle_C04RebattleRecordAdd( SCRCMD_WORK *work )
+{
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM * fparam = SCRIPT_GetFieldParam( sc );
+  GAMEDATA *gamedata = SCRCMD_WORK_GetGameData( work );
+  RECORD* record = GAMEDATA_GetRecordPtr( gamedata );
+
+  // C04再戦施設で対戦回数
+  if( ZONEDATA_IsC04RebattleZone( FIELDMAP_GetZoneID( fparam->fieldMap ) ) )
+  {
+    RECORD_Inc( record, RECID_LEADERHOUSE_BATTLE );
+  }
+}
 

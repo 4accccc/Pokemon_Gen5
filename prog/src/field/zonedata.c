@@ -1061,6 +1061,33 @@ BOOL ZONEDATA_IsSeaTempleDungeon3F( u16 zone_id )
 
 
 //------------------------------------------------------------------
+// C04再戦施設か？
+//------------------------------------------------------------------
+//----------------------------------------------------------------------------
+/**
+ *	@brief  C04再戦施設　チェック
+ *
+ *	@param	zone_id   
+ *
+ *	@retval TRUE    はい
+ *	@retval FALSE   いいえ
+ */
+//-----------------------------------------------------------------------------
+BOOL ZONEDATA_IsC04RebattleZone( u16 zone_id )
+{
+  if( (zone_id == ZONE_ID_C04R0303) ||
+      (zone_id == ZONE_ID_C04R0304) ||
+      (zone_id == ZONE_ID_C04R0305) ||
+      (zone_id == ZONE_ID_C04R0403) ||
+      (zone_id == ZONE_ID_C04R0404) ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+
+//------------------------------------------------------------------
 /**
  * @brief  地名ID(ZoneIDではなくPlaceNameId)がパレスのものか？
  * @param  PlaceNameId 地名ID

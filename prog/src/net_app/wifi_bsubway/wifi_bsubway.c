@@ -605,7 +605,9 @@ static GFL_PROC_RESULT WiFiBsubway_ProcInit( GFL_PROC * p_proc, int * p_seq, voi
   ERROR_DATA_Init( &p_wk->bt_error );
   
   // DEBUGèoóÕON
+#ifdef PM_DEBUG
   GFL_NET_DebugPrintOn();
+#endif
 
   return GFL_PROC_RES_FINISH;  
 }
