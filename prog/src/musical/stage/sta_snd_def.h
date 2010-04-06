@@ -11,7 +11,7 @@
 
 #include "sound/pm_sndsys.h"
 
-#define STA_SE_TRANS_SE (SEQ_SE_W112_02)
+#define STA_SE_TRANS_SE (SEQ_SE_MSCL_20)
 
 #define STA_SE_USEITEM_SPIN (SEQ_SE_MSCL_16)
 #define STA_SE_USEITEM_FLASH (SEQ_SE_MSCL_17)

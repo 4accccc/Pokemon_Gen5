@@ -273,8 +273,7 @@ void MUSICAL_SYSTEM_LoadDistributeData( MUSICAL_DISTRIBUTE_DATA *distData , SAVE
   }
   else
   {
-    //arcHandle = GFL_ARC_OpenDataHandle( ARCID_MUSICAL_PROGRAM_01+programNo , GFL_HEAP_LOWID(heapId) );
-    arcHandle = GFL_ARC_OpenDataHandle( ARCID_MUSICAL_PROGRAM_05 , GFL_HEAP_LOWID(heapId) );
+    arcHandle = GFL_ARC_OpenDataHandle( ARCID_MUSICAL_PROGRAM_01+programNo , GFL_HEAP_LOWID(heapId) );
   }
   distData->programData = GFL_ARCHDL_UTIL_LoadEx( arcHandle , MUSICAL_ARCDATAID_PROGDATA , FALSE , heapId , &distData->programDataSize );
   distData->messageData = GFL_ARCHDL_UTIL_LoadEx( arcHandle , MUSICAL_ARCDATAID_GMMDATA , FALSE , heapId , &distData->messageDataSize );

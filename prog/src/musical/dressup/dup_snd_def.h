@@ -14,7 +14,7 @@
 //決定音
 #define DUP_SE_DECIDE (SEQ_SE_MSCL_01)
 //キャンセル音
-#define DUP_SE_CANCEL (SEQ_SE_CANCEL1)
+#define DUP_SE_CANCEL (SEQ_SE_MSCL_21)
 //ドレスアップ終了時キラキラ音
 #define DUP_SE_KIRAKIRA (SEQ_SE_DECIDE3)
 
