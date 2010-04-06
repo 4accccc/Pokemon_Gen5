@@ -42,8 +42,11 @@ ev_egg_birth:
   _AB_KEYWAIT()
   _SYSWIN_CLOSE()
 
-  // @todo 孵化デモ画面呼び出し
+  // 孵化デモ画面呼び出し
   _PARTY_POKE_EGG_BIRTH( ret )
+
+  // レコード加算
+  _ADD_RECORD( RECID_TAMAGO_HATCHING, 1 )
 } 
 _END
 

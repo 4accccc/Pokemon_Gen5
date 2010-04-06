@@ -325,6 +325,9 @@ sodateya_adopt_pokemon_core:
       // 育て屋へデータ移動
       _POKE_TO_SODATEYA( select_party_pos )
 
+      // レコード加算
+      _ADD_RECORD( RECID_SODATEYA_CNT, 1 )
+
       $retval_adopt_core = 2
     ENDIF
   //------------------------
