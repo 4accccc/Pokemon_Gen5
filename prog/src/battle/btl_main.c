@@ -618,10 +618,10 @@ static BOOL setup_alone_single( int* seq, void* work )
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 1,
-              BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+              BTL_CLIENT_TYPE_UI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
 
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 1,
-              BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+              BTL_CLIENT_TYPE_AI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
 
   if( sp->fRecordPlay )
   {
@@ -732,10 +732,10 @@ static BOOL setup_alone_double( int* seq, void* work )
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
-            BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+            BTL_CLIENT_TYPE_UI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
 
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
-            BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+            BTL_CLIENT_TYPE_AI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
 
   if( sp->fRecordPlay )
   {
@@ -850,7 +850,8 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
     {
       u8 numCoverPos = GetClientCoverPosNum( wk, i );
       wk->client[i] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, i, numCoverPos,
-                (i==BTL_CLIENT_PLAYER)?BTL_CLIENT_TYPE_UI : BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+                (i==BTL_CLIENT_PLAYER)?BTL_CLIENT_TYPE_UI : BTL_CLIENT_TYPE_AI, bagMode,
+                sp->fRecordPlay, &wk->randomContext, wk->heapID );
     }
   }
 
@@ -925,10 +926,10 @@ static BOOL setup_alone_triple( int* seq, void* work )
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 3,
-          BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+          BTL_CLIENT_TYPE_UI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
 
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 3,
-          BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+          BTL_CLIENT_TYPE_AI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
 
   if( sp->fRecordPlay )
   {
@@ -993,9 +994,9 @@ static BOOL setup_alone_rotation( int* seq, void* work )
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
-    BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+    BTL_CLIENT_TYPE_UI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
-    BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+    BTL_CLIENT_TYPE_AI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
 
   // 描画エンジン生成
   wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, HEAPID_BTL_VIEW );
@@ -1546,7 +1547,7 @@ static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int*
     wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
 
     wk->client[clientID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-        clientID, 1, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+        clientID, 1, BTL_CLIENT_TYPE_UI, bagMode, FALSE, &wk->randomContext, wk->heapID );
     BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[clientID]), clientID, 1 );
     BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, !clientID, 1 );
   }
@@ -1556,7 +1557,7 @@ static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int*
     u32 i;
 
     wk->client[ clientID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, clientID, 1,
-      BTL_CLIENT_TYPE_UI, bagMode, wk->heapID  );
+      BTL_CLIENT_TYPE_UI, bagMode, FALSE, &wk->randomContext, wk->heapID  );
 
     // コマンド整合性チェックのためサーバを作る
     wk->cmdCheckServer = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
@@ -1596,7 +1597,7 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
     wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
 
     wk->client[clientID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-        clientID, numCoverPos, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+        clientID, numCoverPos, BTL_CLIENT_TYPE_UI, bagMode, FALSE, &wk->randomContext, wk->heapID );
     BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[clientID]), clientID, numCoverPos );
 
     // 通信タッグの場合
@@ -1604,11 +1605,11 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
     if( (sp->multiMode == BTL_MULTIMODE_PP_AA) )
     {
       wk->client[BTL_CLIENT_ENEMY1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-          BTL_CLIENT_ENEMY1, numCoverPos, BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+          BTL_CLIENT_ENEMY1, numCoverPos, BTL_CLIENT_TYPE_AI, bagMode, FALSE, &wk->randomContext, wk->heapID );
       BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[BTL_CLIENT_ENEMY1]), BTL_CLIENT_ENEMY1, numCoverPos );
 
       wk->client[BTL_CLIENT_ENEMY2] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-          BTL_CLIENT_ENEMY2, numCoverPos, BTL_CLIENT_TYPE_AI, bagMode, wk->heapID );
+          BTL_CLIENT_ENEMY2, numCoverPos, BTL_CLIENT_TYPE_AI, bagMode, FALSE, &wk->randomContext, wk->heapID );
       BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[BTL_CLIENT_ENEMY2]), BTL_CLIENT_ENEMY2, numCoverPos );
 
       BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, BTL_CLIENT_PARTNER, numCoverPos );
@@ -1627,7 +1628,7 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
   else
   {
     wk->client[ clientID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-        clientID, numCoverPos, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID  );
+        clientID, numCoverPos, BTL_CLIENT_TYPE_UI, bagMode, FALSE, &wk->randomContext, wk->heapID );
 
     // コマンド整合性チェックのためサーバを作る
     wk->cmdCheckServer = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
@@ -1670,7 +1671,8 @@ static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int*
     wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
 
     wk->client[clientID] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle,
-        clientID, NUM_COVERPOS, BTL_CLIENT_TYPE_UI, bagMode, wk->heapID );
+        clientID, NUM_COVERPOS, BTL_CLIENT_TYPE_UI, bagMode, FALSE, &wk->randomContext, wk->heapID );
+
     BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[clientID]), clientID, NUM_COVERPOS );
     BTL_SERVER_ReceptionNetClient( wk->server, sp->commMode, sp->netHandle, !clientID, NUM_COVERPOS );
   }
@@ -1678,7 +1680,7 @@ static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int*
   else
   {
     wk->client[ clientID ] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, sp->commMode, sp->netHandle, clientID, NUM_COVERPOS,
-    BTL_CLIENT_TYPE_UI, bagMode, wk->heapID  );
+    BTL_CLIENT_TYPE_UI, bagMode, FALSE, &wk->randomContext, wk->heapID  );
 
     // コマンド整合性チェックのためサーバを作る
     wk->cmdCheckServer = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );

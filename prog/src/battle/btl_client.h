@@ -73,8 +73,13 @@ typedef struct {
 extern BTL_CLIENT* BTL_CLIENT_Create(
   BTL_MAIN_MODULE* mainModule, BTL_POKE_CONTAINER* pokecon,
   BtlCommMode commMode, GFL_NETHANDLE* netHandle, u16 clientID, u16 numCoverPos,
-  BtlClientType clientType, BtlBagMode bagMode,
-  HEAPID heapID );
+  BtlClientType clientType, BtlBagMode bagMode, BOOL fRecPlayMode,
+  const GFL_STD_RandContext* randContext, HEAPID heapID );
+
+
+//  wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 1,
+//              BTL_CLIENT_TYPE_UI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
+
 
 extern void BTL_CLIENT_Delete( BTL_CLIENT* wk );
 

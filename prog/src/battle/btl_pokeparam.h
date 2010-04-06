@@ -60,7 +60,7 @@ typedef enum {
   BPP_EXP,
 
   BPP_RANKVALUE_START = BPP_ATTACK_RANK,
-  BPP_RANKVALUE_END = BPP_AGILITY_RANK,
+  BPP_RANKVALUE_END = BPP_AVOID_RATIO,
   BPP_RANKVALUE_RANGE = (BPP_RANKVALUE_END - BPP_RANKVALUE_START) + 1,
 
 }BppValueID;
@@ -183,7 +183,7 @@ enum {
 typedef struct {
   u16         wazaID;    ///< ワザID
   u16         damage;    ///< ダメージ量
-  u8          wazaType;  ///< ほのお、みず等のタイプ
+  u8          wazaType;  ///< ワザタイプ（ほのお、みず、等々...）
   u8          pokeID;    ///< 攻撃したポケモンID
   BtlPokePos  pokePos;   ///< 攻撃したポケモン位置
 }BPP_WAZADMG_REC;

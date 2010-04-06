@@ -67,6 +67,7 @@ typedef enum {
   // à¯êîÇUå¬ÇÃå^
   SC_ARGFMT_555555bit         = SC_ARGFMT(6,0),
   SC_ARGFMT_32111bit_2byte    = SC_ARGFMT(6,1),
+  SC_ARGFMT_5555bit_22byte    = SC_ARGFMT(6,2),
 
   // à¯êîÇWå¬ÇÃå^
   SC_ARGFMT_1x8byte = SC_ARGFMT(8,0),
@@ -128,6 +129,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_44bit,            // SC_OP_SHOOTER_CHARGE
   SC_ARGFMT_44bit,            // SC_OP_SET_FAKESRC
   SC_ARGFMT_1byte,            // SC_OP_CLEAR_CONSUMED_ITEM
+  SC_ARGFMT_5555bit_22byte,   // SC_OP_WAZADMG_REC
   SC_ARGFMT_5_5_14bit,        // SC_ACT_WAZA_EFFECT
   SC_ARGFMT_5_5_14bit_1byte,  // SC_ACT_WAZA_EFFECT_EX
   SC_ARGFMT_53bit,            // SC_ACT_TAMEWAZA_HIDE
@@ -545,6 +547,14 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
       scque_put2byte( que, args[5] );
     }
     break;
+  case SC_ARGFMT_5555bit_22byte:
+    {
+      u32 pack = pack_4args( 3, args[0],args[1],args[2],args[3], 5,5,5,5 );
+      scque_put3byte( que, pack );
+      scque_put2byte( que, args[4] );
+      scque_put2byte( que, args[5] );
+    }
+    break;
   case SC_ARGFMT_1x8byte:
     {
       int i;
@@ -709,6 +719,15 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
     {
       u8 pack = scque_read1byte( que );
       unpack_5args( 1, pack, 3, 2, 1, 1, 1, args, 0 );
+      args[5] = scque_read2byte( que );
+    }
+    break;
+  case SC_ARGFMT_5555bit_22byte:
+    {
+      u32 pack = scque_read3byte( que );
+
+      unpack_4args( 3, pack, 5,5,5,5, args, 0 );
+      args[4] = scque_read2byte( que );
       args[5] = scque_read2byte( que );
     }
     break;

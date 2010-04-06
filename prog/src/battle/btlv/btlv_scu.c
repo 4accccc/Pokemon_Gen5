@@ -835,10 +835,13 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
  */
 static u16 GetWildSingleEncountStrID( BTLV_SCU* wk )
 {
+  if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_LEGEND) ){
+    return BTL_STRID_STD_Encount_Wild_Legend;
+  }
   if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_MOVE_POKE) ){
     return BTL_STRID_STD_Encount_Wild_Move;
   }
-  if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_LEGEND) ){
+  if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_WILD_TALK) ){
     return BTL_STRID_STD_Encount_Wild_Talk;
   }
   if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_SYMBOL) ){

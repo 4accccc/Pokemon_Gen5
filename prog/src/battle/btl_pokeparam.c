@@ -136,6 +136,7 @@ struct _BTL_POKEPARAM {
   u16 prevSelectWazaID;       ///< 直前に選択したワザID（WAZALOCK状態等で強制的に選択されたワザ > クライアントが選択した所持ワザ）
   u16 prevActWazaID;          ///< 直前に実行されたワザID（派生ワザを使った場合にprevSelectWazaIDと異なる）
   u16 wazaContCounter;        ///< 同ワザ連続成功カウンタ（prevActWazaIDのワザを何回連続で成功させたか。直前失敗ならゼロ）
+  u16 prevDamagedWaza;        ///< 直前にダメージを受けたワザ
   BtlPokePos  prevTargetPos;  ///< 直前に狙った相手
 
   u8  turnFlag[ TURNFLG_BUF_SIZE ];

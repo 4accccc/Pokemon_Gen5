@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-04-02T14:24:36"/>
+	<create user="taya" host="W00146" date="2010-04-05T20:31:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -408,6 +408,12 @@
 [1:01:ポケモン種族名:0]が　あらわれた！</language>
 		<language name="JPN_KANJI" width="216">夢で　出会った
 [1:01:ポケモン種族名:0]が　現れた！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_Encount_Wild_Legend" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
+		<comment>伝説ポケエンカウント</comment>
+		<language name="JPN" width="216">[1:01:ポケモン種族名:0]が　あらわれた！</language>
+		<language name="JPN_KANJI" width="216">[1:01:ポケモン種族名:0]が　現れた！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Encount_NPC1" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">

@@ -5988,10 +5988,13 @@ static void scEvent_KoraeruExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppKora
 static void wazaDmgRec_Add( BTL_SVFLOW_WORK* wk, BtlPokePos atkPos, const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, u16 damage )
 {
   BPP_WAZADMG_REC rec;
-  u8 pokeID = BPP_GetID( attacker );
+  u8 atkPokeID = BPP_GetID( attacker );
+  u8 defPokeID = BPP_GetID( defender );
 
-  BPP_WAZADMG_REC_Setup( &rec, pokeID, atkPos, wazaParam->wazaID, wazaParam->wazaType, damage );
+  BPP_WAZADMG_REC_Setup( &rec, atkPokeID, atkPos, wazaParam->wazaID, wazaParam->wazaType, damage );
   BPP_WAZADMGREC_Add( defender, &rec );
+
+  SCQUE_OP_AddWazaDmgRec( wk->que, defPokeID, atkPokeID, atkPos, wazaParam->wazaType, wazaParam->wazaID, damage );
 }
 
 //--------------------------------------------------------------------------
