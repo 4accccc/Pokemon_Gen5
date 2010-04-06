@@ -342,7 +342,7 @@
 #define FE_C04R0201_STYLIST_TALK           326 /* 0x0146 ミュージカルホール：スタイリストに話しかけたフラグ */
 #define FE_MUSICAL_COMM_PLAY               327 /* 0x0147 ミュージカルホール：通信ミュージカルで遊んだ */
 #define FE_C03R1201_ITEM_01                328 /* 0x0148 ヒウンビル１Ｆ：アイテム入手フラグ */
-		/* not used   329(0x0149) */
+#define FE_T03PC0101_ITEMGET_01            329 /* 0x0149 カゴメタウン：グラシデアのはな入手フラグ */
 		/* not used   330(0x014a) */
 		/* not used   331(0x014b) */
 		/* not used   332(0x014c) */
