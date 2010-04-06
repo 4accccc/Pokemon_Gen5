@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T16:59:13"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T12:54:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -320,9 +320,13 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BOY2</attribute>
 		<language name="JPN" width="256">クリティカッター？　イッシュじゃ
-クリティカットって　なまえ　なんだよ</language>
+クリティカットって　なまえ　なんだよ▼
+しょうぶのとき　わざが　きゅうしょに
+あたるって　かなり　きょうりょくだぜ</language>
 		<language name="JPN_KANJI" width="256">クリティカッター？　イッシュじゃ
-クリティカットって　名称なんだよ</language>
+クリティカットって　名称なんだよ▼
+勝負のとき　技が　急所に
+当たるって　かなり　協力だぜ！</language>
 	</row>
 
 	<row id="msg_c02r0401_shopm_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -331,11 +335,9 @@
 ・購入できるのは
 　クリティカットなど</comment>
 		<attribute name="キャラ指定">SHOPM</attribute>
-		<language name="JPN" width="256">この　そうこで　いちじてきに
-おみせを　はじめたんだ▽
+		<language name="JPN" width="256">この　そうこで　おみせを　はじめたんだ
 よければ　なにか　かっていってよ！▼</language>
-		<language name="JPN_KANJI" width="256">この倉庫で　一時的に
-お店を　始めたんだ▽
+		<language name="JPN_KANJI" width="256">この倉庫で　お店を　始めたんだ
 よければ　なにか　買っていってよ！▼</language>
 	</row>
 

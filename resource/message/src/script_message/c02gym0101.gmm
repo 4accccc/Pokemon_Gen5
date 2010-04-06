@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T16:46:33"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T12:47:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -311,7 +311,7 @@
 いったい　なにもの　ですか？</language>
 		<language name="JPN_KANJI" width="256">あの　ドロボウって……▼
 プラズマ団　って
-いったい　なにもの　ですか？</language>
+いったい　何者ですか？</language>
 	</row>
 
 	<row id="msg_c02gym0101_counter2_01">
@@ -545,7 +545,7 @@
 		<language name="JPN" width="256">キダチ『あっ　あっ！？
 おいかけないと　いけないですよね</language>
 		<language name="JPN_KANJI" width="256">キダチ『あっ　あっ！？
-おいかけないと　いけないですよね</language>
+追いかけないと　いけないですよね</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -578,10 +578,10 @@
 ・削除タイミングは盗難イベントクリア時（仮）</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『プラズマだんの　せいで
-ジムリーダー　いないのか……▽
+ジムリーダーが　いないのか……▽
 なんとも　めいわくな　はなしだね</language>
 		<language name="JPN_KANJI" width="256">チェレン『プラズマ団のせいで
-ジムリーダー　いないのか……▽
+ジムリーダーが　いないのか……▽
 なんとも　迷惑な　話だね</language>
 	</row>
 
@@ -590,7 +590,7 @@
 ・盗難イベント解決後</comment>
 		<attribute name="キャラ指定">副館長（Assistant　Director）
 助手♂</attribute>
-		<language name="JPN" width="256">こっかくひょうほん　って
+		<language name="JPN" width="256">ホネの　ひょうほん　って
 ふしぎ　なんですよ……▼
 きのうてきで　むだのない　デザインも
 がいけん　からは　みえない▼
@@ -671,9 +671,9 @@ OLDMAN1</attribute>
 		<attribute name="キャラ指定">見物客その３
 OLDMAN1</attribute>
 		<language name="JPN" width="256">あの　プラズマだん　というのは
-いったい　なにもの　なんだ！？</language>
+いったい　なにを　かんがえている！？</language>
 		<language name="JPN_KANJI" width="256">あの　プラズマ団　というのは
-いったい　なにもの　なんだ！？</language>
+いったい　何を　考えている！？</language>
 	</row>
 
 	<row id="msg_c02gym0101_plate_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -681,7 +681,7 @@ OLDMAN1</attribute>
 ・カイリューの骨格標本</comment>
 		<attribute name="キャラ指定">展示物の解説プレート</attribute>
 		<language name="JPN" width="256">せかいじゅうを　とびまわっていた
-ポケモンの　こっかくひょうほん</language>
+ポケモンの　ホネの　ひょうほん</language>
 		<language name="JPN_KANJI" width="256">世界中を　飛び回っていた
 ポケモンの　骨格標本</language>
 	</row>

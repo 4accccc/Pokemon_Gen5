@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T11:41:07"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T12:43:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1380" top="330" right="2085" bottom="958" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="806" top="169" right="1280" bottom="567" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -379,11 +379,11 @@
 ・画面外に消えると、主人公操作可能</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">このまま　まっすぐ　すすめば
-ポケモンセンター▼
+ポケモンセンター　さ▼
 じゃあ　ぼくは
 むこうの　そうこを　みてるから▼</language>
 		<language name="JPN_KANJI" width="256">このまま　まっすぐ　進めば
-ポケモンセンター▼
+ポケモンセンター　さ▼
 じゃあ　ぼくは
 向こうの　倉庫を　見てるから▼</language>
 	</row>
@@ -466,12 +466,14 @@
 ポケモンを　すくいだせない……▼
 せかいを　かえるための
 すうしきは　とけない……▼
-ボクには　ちからが　ひつようだ……[BE:09:速度コントロール:0]▼</language>
+ボクには　ちからが　ひつようだ……
+だれもが　なっとくする　ちから……[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]今の　ボクの　トモダチとでは
 すべての　ポケモンを　救いだせない……▼
 世界を　変えるための
 数式は　解けない……▼
-ボクには　力が　必要だ……[BE:09:速度コントロール:0]▼</language>
+ボクには　力が　必要だ……
+だれもが　納得する　力……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c02_boss_05" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
@@ -580,7 +582,7 @@ C02ジムリーダー</attribute>
 アーティって　いうんだよ！▼</language>
 	</row>
 
-	<row id="msg_c02_leader3_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c02_leader3_02" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・盗難イベント中
 ・続けてmsg_c02_leader2_03</comment>
@@ -589,11 +591,11 @@ C03ジムリーダー</attribute>
 		<language name="JPN" width="256">アーティ『……んうん？
 なんとなく　きぶんてんかん　かな？▼
 でさ　なんとなく　たいへんそうだけど
-ひょっとして　なんか　あった？▼</language>
+ひょっとして　なんか　ありまして？▼</language>
 		<language name="JPN_KANJI" width="256">アーティ『……んうん？
 なんとなく　気分転換　かな？▼
 でさ　なんとなく　大変そうだけど
-ひょっとして　なんか　あった？▼</language>
+ひょっとして　なんか　ありまして？▼</language>
 	</row>
 
 	<row id="msg_c02_leader2_03" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -763,7 +765,7 @@ C03ジムリーダー</attribute>
 めには　みえないけれど▼
 かくれている　どうぐの
 ばしょが　わかるんだって！▼</language>
-		<language name="JPN_KANJI" width="256">ダウジングマシンを　つかうと
+		<language name="JPN_KANJI" width="256">ダウジングマシンを　使うと
 目には見えないけれど　隠れている▽
 道具の　場所が　わかるんだって！▼</language>
 	</row>
