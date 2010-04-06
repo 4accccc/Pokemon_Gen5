@@ -46,9 +46,13 @@
 //--------------------------------------------------------------
 typedef struct {
   GAMESYS_WORK * gsys;
+  GAMEDATA* gamedata;
   GAMECLEAR_MODE clear_mode;
   BOOL saveSuccessFlag;
   const MYSTATUS * mystatus;
+
+  BOOL dendouSaveInitFlag;   //「殿堂入り」データの分割セーブ初期化が完了したかどうか
+  BOOL dendouSaveFinishFlag; //「殿堂入り」データの分割セーブが完了したかどうか
 
   GAMECLEAR_MSG_PARAM para_child;
 }GAMECLEAR_WORK;
@@ -59,20 +63,28 @@ typedef struct {
 // メインシーケンス
 enum {
 	GMCLEAR_SEQ_INIT = 0,			// 初期化
-	GMCLEAR_SEQ_DENDOU_DEMO,		// 殿堂入りデモ
-	GMCLEAR_SEQ_SAVE_START,			// セーブ開始
-	GMCLEAR_SEQ_SAVE_MESSAGE,		// セーブ中メッセージ表示
-	GMCLEAR_SEQ_SAVE_MAIN,			// セーブメイン
+	GMCLEAR_SEQ_DENDOU_DEMO,	// 殿堂入りデモ
+	GMCLEAR_SEQ_SAVE_START,		// セーブ開始
+	GMCLEAR_SEQ_SAVE_MESSAGE,	// セーブ中メッセージ表示
+	GMCLEAR_SEQ_SAVE_MAIN,		// セーブメイン
 	GMCLEAR_SEQ_SAVE_END,			// セーブ終了
 	GMCLEAR_SEQ_WAIT1,				// ウェイト１
 	GMCLEAR_SEQ_FADE_OUT,			// フェードアウトセット
-	GMCLEAR_SEQ_BGM_FADE_OUT,		// BGMフェードアウトセット
+	GMCLEAR_SEQ_BGM_FADE_OUT,	// BGMフェードアウトセット
 	GMCLEAR_SEQ_WAIT2,				// ウェイト２
-	GMCLEAR_SEQ_ENDING_DEMO,		// エンディングデモ
-	GMCLEAR_SEQ_END,				// 終了
+	GMCLEAR_SEQ_ENDING_DEMO,	// エンディングデモ
+	GMCLEAR_SEQ_END,				  // 終了
 };
 
 
+//============================================================================================
+//============================================================================================
+static void ElboardStartChampNews( GAMECLEAR_WORK* work ); // 電光掲示板にチャンピオンニュースの表示を開始する
+static void UpdateFirstClearDendouData( GAMECLEAR_WORK* work ); // 初回クリア時の殿堂入りデータを登録する
+static void UpdateFirstClearRecord( GAMECLEAR_WORK* work ); // 初回クリア時のレコードを登録する
+static void UpdateDendouRecord( GAMECLEAR_WORK* work ); // 殿堂入り時のレコードを登録する
+static void DendouSave_init( GAMECLEAR_WORK* work ); // 殿堂入りデータの更新準備
+static void DendouSave_main( GAMECLEAR_WORK* work ); // 殿堂入りデータの更新処理
 
 //============================================================================================
 //============================================================================================
@@ -90,7 +102,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
 {
   GAMECLEAR_WORK * gcwk = work;
   GMEVENT * call_event;
-  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gcwk->gsys );
+  GAMEDATA * gamedata = gcwk->gamedata;
   SAVE_CONTROL_WORK* save = GAMEDATA_GetSaveControlWork( gamedata );
 
 	switch (*seq) {
@@ -105,7 +117,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
 		break;
 
 	case GMCLEAR_SEQ_DENDOU_DEMO:
-    if ( PMSND_CheckFadeOnBGM() == FALSE ) break;
+    if ( PMSND_CheckFadeOnBGM() == FALSE ) { break; }
     GFL_FADE_SetMasterBrightReq( 
         GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 
         0, 16, -16 );
@@ -114,57 +126,18 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
 		break;
 
 	case GMCLEAR_SEQ_SAVE_START:
-    {
-      RTCDate date;
-      POKEPARTY* party;
-
-      RTC_GetDate( &date );
-      party = GAMEDATA_GetMyPokemon( gamedata ); 
-
-      // 初回クリア
-      if( gcwk->clear_mode == GAMECLEAR_MODE_FIRST ) {
-        DENDOU_RECORD* record; 
-
-        record = GAMEDATA_GetDendouRecord( gamedata ); 
-        DendouRecord_Add( record, party, &date, HEAPID_PROC );
-      }
-      // 殿堂入り
-      else {
-        DENDOU_SAVEDATA* dendouData;
-        LOAD_RESULT result; 
-
-        result = SaveControl_Extra_Load( save, SAVE_EXTRA_ID_DENDOU, HEAPID_PROC );
-        dendouData = SaveControl_Extra_DataPtrGet( save, SAVE_EXTRA_ID_DENDOU, EXGMDATA_ID_DENDOU );
-        DendouData_AddRecord( dendouData, party, &date, HEAPID_PROC ); 
-        SaveControl_Extra_SaveAsyncInit( save, SAVE_EXTRA_ID_DENDOU ); 
-      }
-    }
     // 電光掲示板にチャンピオンニュースを表示
-    {
-      MISC* misc;
-      misc = GAMEDATA_GetMiscWork( gamedata );
-      MISC_SetChampNewsMinutes( misc, 60*24 );
-    }
-    // レコード登録
+    ElboardStartChampNews( gcwk );
+    //「初回クリア」をセーブ
     if( gcwk->clear_mode == GAMECLEAR_MODE_FIRST ) {
-      RECORD* record = GAMEDATA_GetRecordPtr( gamedata );
-      GMTIME* gmtime = SaveData_GetGameTime( save );
-      EVTIME_SetGameClearDateTime( gamedata ); // 初回クリアの日時を記録
-      {
-        PLAYTIME* ptime = SaveData_GetPlayTime( save );
-        u32 hour = PLAYTIME_GetHour( ptime );
-        u32 minute = PLAYTIME_GetMinute( ptime );
-        u32 second = PLAYTIME_GetSecond( ptime );
-        u32 time = hour * 10000 + minute * 100 + second;
-        GF_ASSERT( hour <= PTIME_HOUR_MAX );
-        GF_ASSERT( minute <= PTIME_MINUTE_MAX );
-        GF_ASSERT( second <= PTIME_SECOND_MAX );
-        RECORD_Set( record, RECID_CLEAR_TIME, time );
-      }
+      UpdateFirstClearDendouData( gcwk ); // 初「殿堂入り」データ
+      EVTIME_SetGameClearDateTime( gamedata ); // 初回クリアの日時
+      UpdateFirstClearRecord( gcwk ); // レコードデータ
     }
-    else if( gcwk->clear_mode == GAMECLEAR_MODE_DENDOU ) {
-      RECORD* record = GAMEDATA_GetRecordPtr( gamedata );
-      RECORD_Add( record, RECID_DENDOU_CNT, 1 );
+    //「殿堂入り」をセーブ
+    else {
+      UpdateDendouRecord( gcwk );
+      DendouSave_init( gcwk );
     }
     (*seq) ++;
     break;
@@ -177,14 +150,11 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *work)
 
 	case GMCLEAR_SEQ_SAVE_MAIN:
     // 殿堂入りデータをセーブ
-    if( gcwk->clear_mode == GAMECLEAR_MODE_DENDOU ) {
-      SAVE_RESULT save_ret;
+    if( gcwk->dendouSaveInitFlag ) {
+      DendouSave_main( gcwk );
 
-      // セーブ実行
-      save_ret = SaveControl_Extra_SaveAsyncMain( save, SAVE_EXTRA_ID_DENDOU ); 
       // セーブ終了
-      if( save_ret == SAVE_RESULT_OK || save_ret == SAVE_RESULT_NG ) { 
-        SaveControl_Extra_Unload( save, SAVE_EXTRA_ID_DENDOU ); // 外部データを解放
+      if( gcwk->dendouSaveFinishFlag ) {
         *seq = GMCLEAR_SEQ_END;
       }
     }
@@ -216,11 +186,16 @@ GMEVENT * EVENT_GameClear( GAMESYS_WORK * gsys, GAMECLEAR_MODE mode )
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
 	GMEVENT * event;
   GAMECLEAR_WORK * gcwk;
+
   event = GMEVENT_Create( gsys, NULL, GMEVENT_GameClear, sizeof(GAMECLEAR_WORK) );
+
   gcwk = GMEVENT_GetEventWork( event );
   gcwk->gsys = gsys;
+  gcwk->gamedata = gamedata;
   gcwk->clear_mode = mode;
   gcwk->mystatus = GAMEDATA_GetMyStatus( gamedata );
+  gcwk->dendouSaveInitFlag = FALSE;
+  gcwk->dendouSaveFinishFlag = FALSE;
 
   //子プロセスに渡すパラメータ
   gcwk->para_child.gsys = gsys;
@@ -230,4 +205,137 @@ GMEVENT * EVENT_GameClear( GAMESYS_WORK * gsys, GAMECLEAR_MODE mode )
   MP_RecoverMovePoke( gamedata );
 
   return event;
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 電光掲示板にチャンピオンニュースの表示を開始する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void ElboardStartChampNews( GAMECLEAR_WORK* work )
+{
+  MISC* misc;
+  int minutes;
+
+  misc = GAMEDATA_GetMiscWork( work->gamedata );
+  minutes = 60 * 24; // 表示する時間[min]
+  MISC_SetChampNewsMinutes( misc, minutes );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 初回クリア時の殿堂入りデータを登録する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void UpdateFirstClearDendouData( GAMECLEAR_WORK* work )
+{
+  RTCDate date;
+  POKEPARTY* party; 
+  DENDOU_RECORD* record; 
+
+  RTC_GetDate( &date );
+  party  = GAMEDATA_GetMyPokemon( work->gamedata ); 
+  record = GAMEDATA_GetDendouRecord( work->gamedata ); 
+  DendouRecord_Add( record, party, &date, HEAPID_PROC );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 初回クリア時のレコードを登録する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void UpdateFirstClearRecord( GAMECLEAR_WORK* work )
+{
+  SAVE_CONTROL_WORK* save;
+  RECORD* record;
+  PLAYTIME* ptime;
+  u32 hour, minute, second, time;
+
+  save   = GAMEDATA_GetSaveControlWork( work->gamedata );
+  record = GAMEDATA_GetRecordPtr( work->gamedata );
+  ptime  = SaveData_GetPlayTime( save );
+
+  // プレイ時間を取得
+  hour   = PLAYTIME_GetHour( ptime );
+  minute = PLAYTIME_GetMinute( ptime );
+  second = PLAYTIME_GetSecond( ptime ); 
+  GF_ASSERT( hour   <= PTIME_HOUR_MAX );
+  GF_ASSERT( minute <= PTIME_MINUTE_MAX );
+  GF_ASSERT( second <= PTIME_SECOND_MAX );
+
+  // プレイ時間を登録
+  time = hour * 10000 + minute * 100 + second;
+  RECORD_Set( record, RECID_CLEAR_TIME, time );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 殿堂入り時のレコードを登録する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void UpdateDendouRecord( GAMECLEAR_WORK* work )
+{
+  RECORD* record;
+
+  record = GAMEDATA_GetRecordPtr( work->gamedata );
+  RECORD_Add( record, RECID_DENDOU_CNT, 1 );
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 殿堂入りデータの更新準備
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void DendouSave_init( GAMECLEAR_WORK* work )
+{
+  RTCDate date;
+  POKEPARTY* party;
+  SAVE_CONTROL_WORK* save;
+  DENDOU_SAVEDATA* dendouData;
+  LOAD_RESULT result; 
+
+  RTC_GetDate( &date );
+  party = GAMEDATA_GetMyPokemon( work->gamedata ); 
+  save = GAMEDATA_GetSaveControlWork( work->gamedata );
+  result = SaveControl_Extra_Load( save, SAVE_EXTRA_ID_DENDOU, HEAPID_PROC );
+  dendouData = SaveControl_Extra_DataPtrGet( save, SAVE_EXTRA_ID_DENDOU, EXGMDATA_ID_DENDOU );
+
+  DendouData_AddRecord( dendouData, party, &date, HEAPID_PROC ); 
+  SaveControl_Extra_SaveAsyncInit( save, SAVE_EXTRA_ID_DENDOU ); 
+
+  work->dendouSaveInitFlag = TRUE;
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief 殿堂入りデータの更新処理
+ *
+ * @param work 
+ */
+//-----------------------------------------------------------------------------
+static void DendouSave_main( GAMECLEAR_WORK* work )
+{
+  SAVE_CONTROL_WORK* save;
+  SAVE_RESULT save_ret;
+
+  // セーブ実行
+  save     = GAMEDATA_GetSaveControlWork( work->gamedata );
+  save_ret = SaveControl_Extra_SaveAsyncMain( save, SAVE_EXTRA_ID_DENDOU ); 
+
+  // セーブ終了
+  if( save_ret == SAVE_RESULT_OK || save_ret == SAVE_RESULT_NG ) { 
+    SaveControl_Extra_Unload( save, SAVE_EXTRA_ID_DENDOU ); // 外部データを解放
+    work->dendouSaveFinishFlag = TRUE;
+  }
 }

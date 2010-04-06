@@ -64,10 +64,6 @@ FIELD_TASK* FIELD_TASK_CameraTargetMove( FIELDMAP_WORK* fieldmap, u16 frame, con
   work->startPos = *startPos;
   work->endPos    = *endPos;
   VEC_Subtract( &work->endPos, &work->startPos, &work->moveVec );
-  OS_TFPrintf( 3, "startPos: %d, %d, %d\n", 
-      FX_Whole(work->startPos.x), FX_Whole(work->startPos.y), FX_Whole(work->startPos.z) );
-  OS_TFPrintf( 3, "endPos: %d, %d, %d\n", 
-      FX_Whole(work->endPos.x), FX_Whole(work->endPos.y), FX_Whole(work->endPos.z) );
 
   return task;
 }
@@ -100,7 +96,7 @@ static FIELD_TASK_RETVAL TargetPosMove( void* wk )
       float t = work->frame / (float)work->endFrame;
       VEC_MultAdd( FX_F32_TO_FX32(t), &work->moveVec, &work->startPos, &pos );
       FIELD_CAMERA_SetTargetPos( camera, &pos );
-      OS_TFPrintf( 3, "%d: %d, %d, %d\n", 
+      OBATA_Printf( "TASK-TPOS: frame = %d, target = 0x%x, 0x%x, 0x%x\n", 
           work->frame, FX_Whole(pos.x), FX_Whole(pos.y), FX_Whole(pos.z) );
     }
     if( work->endFrame <= work->frame ) {

@@ -98,6 +98,8 @@ static FIELD_TASK_RETVAL UpdateOffset( void* wk )
       GFL_CALC3D_VEC_MulScalar( &work->endOffset,   w1, &v1 );
       VEC_Add( &v0, &v1, &v2 );
       FIELD_CAMERA_SetTargetOffset( camera, &v2 );
+      OBATA_Printf( "TASK-TOFS: frame = %d, offset = 0x%x, 0x%x, 0x%x\n", 
+          work->frame, FX_Whole(v2.x), FX_Whole(v2.y), FX_Whole(v2.z) );
     }
     // 終了チェック
     if( work->endFrame <= work->frame )
