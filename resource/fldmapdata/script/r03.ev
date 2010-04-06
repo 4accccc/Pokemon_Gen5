@@ -419,11 +419,17 @@ EVENT_START   ev_pos_r03_rival_01
 	_BALLOONWIN_OBJMSG(msg_r03_black_02,R03_RIVAL_01)
 	_BALLOONWIN_CLOSE()
 	
-	//プラズマ団駆け抜けてゆく
+	//どけどけー！
 	_PLAINWIN_MSG_DOWN( msg_r03_hakaim_01 )
+	_MSGWIN_CLOSE()
+	
+	//トラブル曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_TROUBLE )
+	
+	//プラズマ団駆け抜けてゆく
 	_OBJ_ANIME( R03_HAKAIM_01 , anm_hakai_dash_01 )
 	_OBJ_ANIME( R03_HAKAIM_02, anm_hakai_dash_01 )
-	_MSGWIN_CLOSE()
+
 	
 	//主人公よける
 	_OBJ_ANIME( R03_RIVAL_01 , anm_hakai_bikkuri_rival )
@@ -499,6 +505,9 @@ EVENT_START   ev_pos_r03_rival_01
 	//ライバル洞窟方面へ
 	_OBJ_ANIME( R03_RIVAL_01 , anm_rival_go01 )
 	_OBJ_ANIME_WAIT()
+	
+	//トラブル曲停止
+	_END_EVENT_BGM()
 	
 	
 	//======================================//

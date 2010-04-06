@@ -10,7 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_t03pc0101.h"
-  //.include  "t03pc0101.h"
+  .include  "t03pc0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -21,6 +21,7 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_t03pc0101_shop
 _EVENT_DATA    ev_t03pc0101_fix_shop
+_EVENT_DATA    ev_t03pc0101_girl2_01
 _EVENT_DATA_END
 
 
@@ -28,14 +29,61 @@ _EVENT_DATA_END
 //ショップカウンター 変動ショップ
 //=============================================================
 EVENT_START ev_t03pc0101_shop
-  _TALK_OBJ_START()
-  _SHOP_CALL()
+	_TALK_OBJ_START()
+	_SHOP_CALL()
 EVENT_END
 
 //=============================================================
 //ショップカウンター 固定ショップ
 //=============================================================
 EVENT_START ev_t03pc0101_fix_shop
-  _TALK_OBJ_START()
-  _FIX_SHOP_CALL( T03_FS )
+	_TALK_OBJ_START()
+	_FIX_SHOP_CALL( T03_FS )
+EVENT_END
+
+//=============================================================
+//グラシデアの花入手イベント
+//=============================================================
+EVENT_START ev_t03pc0101_girl2_01
+{
+	//手持ちにシェイミがいるかチェック
+	DEFINE_LOCAL LWK_POKE_POS
+	DEFINE_LOCAL LWK_POKE_CK
+	_GET_EVT_POKE_POS ( MONSNO_492 , FALSE , LWK_POKE_POS , LWK_POKE_CK)
+	
+	_DEBUG_PRINT_WK ( LWK_POKE_CK )
+	
+	//手持ちにシェイミがいる
+	IF $LWK_POKE_CK == TRUE THEN
+	
+		//既にグラシデアの花を入手している
+		IF FLAG_ON( FE_T03PC0101_ITEMGET_01 ) THEN
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t03pc0101_woman2_02 )
+		
+		//グラシデアの花未入手
+		ELSE
+			_TALK_OBJ_START()
+			_BALLOONWIN_OBJMSG( msg_t03pc0101_woman2_01 , T03PC0101_GIRL2_01 )
+			_BALLOONWIN_CLOSE()
+			
+			//グラシデアの花入手処理
+			_ITEM_EVENT_KEYWAIT ( ITEM_GURASIDEANOHANA , 1  )
+			
+			_BALLOONWIN_OBJMSG( msg_t03pc0101_woman2_02 , T03PC0101_GIRL2_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			
+			//==================================//
+			
+			//入手済みにフラグをセット
+			_FLAG_SET ( FE_T03PC0101_ITEMGET_01 )
+			
+			//==================================//
+		ENDIF
+		
+	//手持ちにシェイミはいない
+	ELSE
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t03pc0101_woman2_03 )
+	ENDIF
+}
 EVENT_END
