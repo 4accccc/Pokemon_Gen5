@@ -220,8 +220,16 @@ _ANIME_LABEL	anm_right_back
 /**************************************************************/
 EVENT_START		ev_reserve_d20r0601_event_01
 	
+	_SE_PLAY( SEQ_SE_FLD_126 )
+	_SE_WAIT()
+	
 	_TIME_WAIT( 60 )
 
 	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
+	
+	_SYSWIN_MSG( msg_d20r0601_sys_03 , POS_DOWN )
+	_LAST_KEYWAIT()
+	_SYSWIN_CLOSE()
+	
 EVENT_END

@@ -192,9 +192,12 @@ EVENT_START		ev_bg_d20r0501_bg19_01
 		//‰æ–Ê‚ð—h‚ç‚·ƒfƒ‚‚ð“ü‚ê‚é
 		_SHAKE_CAMERA(0,1,3,6,0,0,0,0)
 
+		_SE_PLAY( SEQ_SE_FLD_126 )
+
 		_OBJ_ANIME( D20R0501_STOPPER_01, anm_left_move )
 		_OBJ_ANIME( D20R0501_CUBE_01, anm_left_move )
 		_OBJ_ANIME_WAIT()
+		_SE_WAIT()
 		
 		_SYSWIN_MSG( msg_d20r0501_sys_01 , POS_DOWN )
 		_LAST_KEYWAIT()
