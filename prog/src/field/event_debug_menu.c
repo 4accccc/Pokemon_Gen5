@@ -928,7 +928,7 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
  */
 //--------------------------------------------------------------
 #endif
-#if 0
+#if 1
 static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 {
   u16 crc=0;
@@ -988,7 +988,7 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 }
 #endif
 
-#if 1    //図鑑テスト
+#if 0    //図鑑テスト
 
 #include "include/savedata/zukan_wp_savedata.h"
 // セーブデータ
