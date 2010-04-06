@@ -683,8 +683,9 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
     GFL_G3D_CAMERA_Switching( work->camera );
   }
   */
+#if USE_STATUS_DEBUG
   PSTATUS_SUB_SetShadowScale( work , subWork );
-
+#endif
 }
 
 //--------------------------------------------------------------
