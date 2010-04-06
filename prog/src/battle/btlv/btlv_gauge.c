@@ -1822,6 +1822,7 @@ int  BTLV_GAUGE_GetPinchBGMFlag( BTLV_GAUGE_WORK* bgw )
 static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
 {
   int i;
+  BOOL  not_check_flag = FALSE;
 
   if( bgw->bgm_fade_flag )
   {
@@ -1831,13 +1832,14 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
       if( bgw->pinch_bgm_flag )
       {
         PMSND_PopBGM();
+        PMSND_PauseBGM( FALSE );
         PMSND_FadeInBGM( 24 );
       }
       else
       {
+        PMSND_PauseBGM( TRUE );
         PMSND_PushBGM();
         PMSND_PlayBGM( SEQ_BGM_BATTLEPINCH );
-        PMSND_FadeInBGM( 8 );
       }
       bgw->pinch_bgm_flag ^= 1;
     }
@@ -1848,20 +1850,28 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
 
     for( i = 0 ; i < BTLV_GAUGE_NUM_MAX ; i++ )
     {
+      //いずれかの計算最中はチェックをしない
+      if( ( bgw->bgcl[ i ].hp_calc_req ) ||
+          ( bgw->bgcl[ i ].exp_calc_req ) ||
+          ( bgw->bgcl[ i ].level_up_req ) )
+      { 
+        not_check_flag = TRUE;
+        continue;
+      }
       if( ( bgw->bgcl[ i ].gauge_dir == 0 ) &&
           ( bgw->bgcl[ i ].gauge_enable ) &&
           ( bgw->bgcl[ i ].gauge_type != BTLV_GAUGE_TYPE_SAFARI ) )
       {
         u8  color = GAUGETOOL_GetHPGaugeDottoColor( bgw->bgcl[ i ].hp, bgw->bgcl[ i ].hpmax, BTLV_GAUGE_HP_DOTTOMAX );
 
-        if( color == GAUGETOOL_HP_DOTTO_RED )
+        if( ( color == GAUGETOOL_HP_DOTTO_RED ) || ( color == GAUGETOOL_HP_DOTTO_NULL ) )
         {
           pinch_flag = TRUE;
         }
       }
     }
     //勝利ジングルとかに変化していたら、ピンチBGMチェックはしないようにする
-    if( ( bgw->pinch_bgm_flag ) || ( PMSND_GetBGMsoundNo() == bgw->now_bgm_no ) )
+    if( ( ( bgw->pinch_bgm_flag ) || ( PMSND_GetBGMsoundNo() == bgw->now_bgm_no ) ) && ( not_check_flag == FALSE ) )
     {
       if( ( ( bgw->pinch_bgm_flag ) && ( pinch_flag == FALSE ) ) ||
           ( ( bgw->pinch_bgm_flag == 0 ) && ( pinch_flag == TRUE ) ) )
