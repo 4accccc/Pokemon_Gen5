@@ -7,6 +7,7 @@
  */
 //==============================================================================
 #include <gflib.h>
+#if PM_DEBUG
 #include "system/main.h"
 //#include "savedata/contest_savedata.h"
 #include "savedata/save_tbl.h"
@@ -305,7 +306,6 @@ static GFL_PROC_RESULT DebugOhnoMainProcInit( GFL_PROC * proc, int * seq, void *
 	};
 
 	D_OHNO_WORK* wk;
-
 
 	DEBUG_PerformanceSetActive(FALSE);
 	  //デバッグ
@@ -753,4 +753,4 @@ const GFL_PROC_DATA DebugOhnoListProcData = {
 	DebugOhnoMainProcEnd,
 };
 
-
+#endif //PM_DEBUG
