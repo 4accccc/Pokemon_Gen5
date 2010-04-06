@@ -141,7 +141,7 @@ const ITEMDATA_INDEX ItemDataIndex[] =
 	{ NARC_item_data_item000_dat, NARC_item_icon_item_dumy_NCGR, NARC_item_icon_item_dumy_NCLR, 0 },
 	{ NARC_item_data_item000_dat, NARC_item_icon_item_dumy_NCGR, NARC_item_icon_item_dumy_NCLR, 0 },
 	{ NARC_item_data_item000_dat, NARC_item_icon_item_dumy_NCGR, NARC_item_icon_item_dumy_NCLR, 0 },
-	{ NARC_item_data_item000_dat, NARC_item_icon_item_dumy_NCGR, NARC_item_icon_item_dumy_NCLR, 0 },
+	{ NARC_item_data_item134_dat, NARC_item_icon_item_dumy_NCGR, NARC_item_icon_item_dumy_NCLR, 0 },
 	{ NARC_item_data_item135_dat, NARC_item_icon_item_475_NCGR, NARC_item_icon_item_475_NCLR, 0 },
 	{ NARC_item_data_item136_dat, NARC_item_icon_item_474_NCGR, NARC_item_icon_item_474_NCLR, 0 },
 	{ NARC_item_data_item137_dat, NARC_item_icon_item_647_NCGR, NARC_item_icon_item_647_NCLR, 0 },
