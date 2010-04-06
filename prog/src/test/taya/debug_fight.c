@@ -748,6 +748,7 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
   wk->pageNum = 0;
   wk->selectItem = SELITEM_POKE_SELF_1;
 
+  ZONEDATA_Open( HEAPID_BTL_DEBUG_SYS );
   GAMEBEACON_Setting( wk->gameData );
   setupBagItem( wk->gameData, wk->heapID );
 
@@ -757,7 +758,6 @@ static GFL_PROC_RESULT DebugFightProcInit( GFL_PROC * proc, int * seq, void * pw
     PMSND_PauseBGM(TRUE);
     PMSND_PushBGM();
   }
-  ZONEDATA_Open( HEAPID_BTL_DEBUG_SYS );
 
   setMainProc( wk, mainProc_Setup );
 
