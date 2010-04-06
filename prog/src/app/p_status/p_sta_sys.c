@@ -2097,6 +2097,7 @@ void PSTATUS_UTIL_DebugCreatePP( PSTATUS_WORK *work )
 
 #pragma mark [>debug menu
 
+#if USE_STATUS_DEBUG
 #define PSTATUS_DEBUG_GROUP_NUMBER (60)
 #define MEMO_DEBUG_GROUP_NUMBER (61)
 #define MEMOINFO_DEBUG_GROUP_NUMBER (62)
@@ -2748,3 +2749,5 @@ static void PSTD_D_ribbon( void* userWork , DEBUGWIN_ITEM* item )
   PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
   DEBUGWIN_ITEM_SetNameV( item , "RibbonAll[%s]",(work->isDevRibbon?"ON":"OFF") );  
 }
+
+#endif //USE_STATUS_DEBUG
