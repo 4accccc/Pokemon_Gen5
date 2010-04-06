@@ -153,6 +153,9 @@ EVENT_START ev_debug_masafumi
 //		_MAP_CHANGE( ZONE_ID_C04R0305, 10, 27, DIR_UP )
 
 	ELSIF $SCWK_TEMP1 == 2 THEN
+		$WK_SCENE_T01_SUPPORT = 1
+		_FLAG_RESET( FV_T01_SUPPORT )
+		_MAP_CHANGE( ZONE_ID_T01R0101, 6, 9, DIR_DOWN )
 		
 		_FLAG_RESET( FV_T01R0102_AWARD_01 )
 		_FLAG_RESET( FV_T01R0102_AWARD_02 )
@@ -164,7 +167,10 @@ EVENT_START ev_debug_masafumi
 
 	ELSIF $SCWK_TEMP1 == 3 THEN
 
-		_MAP_CHANGE( ZONE_ID_C04R0303, 9, 28, DIR_DOWN )
+		_MAP_CHANGE( ZONE_ID_T01R0101, 6, 9, DIR_DOWN )
+		$WK_SCENE_T01 = 4
+		_FLAG_RESET( FV_T01_RIVAL )
+		_FLAG_RESET( FV_T01_SUPPORT )
 
 	ELSIF $SCWK_TEMP1 == 4 THEN
 		//観覧車トレーナー
@@ -1050,7 +1056,7 @@ ev_event_off:
 		$WK_SCENE_C09R0501 = 1
 		_FLAG_SET( FV_C09R0501_BOSS_01 )
 		_FLAG_SET( FV_C09R0501_CHAMPION_01 )
-		_MAP_CHANGE( ZONE_ID_C09R0501, 16, 37, DIR_UP )
+		_MAP_CHANGE( ZONE_ID_C09R0501, 16, 9, DIR_UP )
 
 	ELSIF $SCWK_ANSWER == 1 THEN
 		//T01の初回イベントを全部OFF
@@ -1073,13 +1079,13 @@ ev_event_off:
 
 	ELSIF $SCWK_ANSWER == 2 THEN
 		//Ｎの城１Ｆの初回イベント無効
-		$WK_SCENE_N01R0101 = 2
+		$WK_SCENE_N01R0101 = 20
 		//Ｎの城２Ｆのダークトリニティイベント無効
-		$WK_SCENE_N01R0201 = 1
+		$WK_SCENE_N01R0201 = 20
 		//Ｎの城・謁見の間イベント無効
-		$WK_SCENE_N01R0502 = 5
+		$WK_SCENE_N01R0502 = 20
 		
-		_MAP_CHANGE( ZONE_ID_N01R0502, 20, 20, DIR_UP )
+		_MAP_CHANGE( ZONE_ID_N01R0101, 25, 17, DIR_UP )
 
 	ELSIF $SCWK_ANSWER == 3 THEN
 		//ポケモンリーグ手前の初回誘導POSイベントを無効
@@ -1110,18 +1116,14 @@ ev_event_jump:
 	//メニュー作成
 	_BMPMENU_INIT_EX( 1, 1, 0, 1, LWK_EVTJUMP )
 	//リスト追加
-	_BMPMENU_MAKE_LIST( msg_debug_09, 9 )	//パソコン呼び出し
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_10, 10 )	//自宅２Fゲーム開始イベント
 	_BMPMENU_MAKE_LIST( msg_debug_masafumi_12, 20 )	//C04 サポート父イベント
-	_BMPMENU_MAKE_LIST( msg_debug_00, 10 )	//やめる
+	_BMPMENU_MAKE_LIST( msg_debug_09, 30 )	//復帰チャンピオン戦
+	_BMPMENU_MAKE_LIST( msg_debug_00, 0 )	//やめる
 	//メニュー表示
 	_BMPMENU_START()
 	
-	IF $LWK_EVTJUMP == 9 THEN
-		//パソコン呼び出し
-		_GLOBAL_CALL	SCRID_PC
-
-	ELSIF $LWK_EVTJUMP == 10 THEN
+	IF $LWK_EVTJUMP == 10 THEN
 		//自宅２階のゲーム開始イベントを起動
 		_CHANGE_MAPREPLACE_FLAG( MAPREPLACE_ID_07, FALSE, TRUE )
 		_FLAG_SET( FV_T01R0102_SUPPORT )
@@ -1131,7 +1133,7 @@ ev_event_jump:
 		_MAP_CHANGE( ZONE_ID_T01R0102, 5, 6, DIR_DOWN )
 
 	ELSIF $LWK_EVTJUMP == 20 THEN
-		//イベント無効
+		//ミュージカルホール内、イベント無効
 		$WK_SCENE_C04R0201 = 1
 		//C04フィールド：サポートパパイベントを有効にする
 		$WK_SCENE_C04 = 2
@@ -1140,6 +1142,15 @@ ev_event_jump:
 		_FLAG_RESET( FV_C04_SUPPORT_01 )
 		_MAP_CHANGE( ZONE_ID_C04R0201, 10, 10, DIR_UP )
 
+	ELSIF $LWK_EVTJUMP == 30 THEN
+		//ポケモンリーグのチャンピオンとライバルを非表示
+		_FLAG_SET( FV_C09R0501_RIVAL_01 )
+		_FLAG_SET( FV_C09R0501_CHAMPION_01 )
+		//チャンピオン部屋：復帰チャンピオンを表示
+		_FLAG_RESET( FV_C09R0501_CHAMPION_02 )
+		//復帰チャンピオン戦を有効
+		$WK_SCENE_C09R0501 = 2
+		_MAP_CHANGE( ZONE_ID_C09R0501, 16, 20, DIR_UP )
 	ENDIF
 	}
 	
