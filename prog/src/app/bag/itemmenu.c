@@ -3349,7 +3349,6 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
   OS_Printf("tbl[BAG_MENU_USE]=%d\n",   tbl[BAG_MENU_USE]);
   OS_Printf("tbl[BAG_MENU_GIVE]=%d\n",  tbl[BAG_MENU_GIVE]);
   OS_Printf("tbl[BAG_MENU_SUB]=%d\n",   tbl[BAG_MENU_SUB]);
-  OS_Printf("tbl[BAG_MENU_MOVE]=%d\n",   tbl[BAG_MENU_ITEMMOVE]);
 
 #if 0
   for(i=0;i<BAG_MENUTBL_MAX;i++){
@@ -3377,40 +3376,33 @@ static void ItemMenuMake( FIELD_ITEMMENU_WORK * pWork, u8* tbl )
 //-----------------------------------------------------------------------------
 static void _itemUseWindowRewrite(FIELD_ITEMMENU_WORK* pWork)
 {
-  BMPMENULIST_HEADER list_h = _itemMenuListHeader;
-  int length,i,j;
+	int strtbl[]= {
+		msg_bag_001,   ///< ‚Â‚©‚¤
+		msg_bag_007,   ///< ‚¨‚è‚é
+		msg_bag_017,   ///< ‚Ý‚é
+		msg_bag_002,   ///< ‚·‚Ä‚é
+		msg_bag_003,   ///< ‚Æ‚¤‚ë‚­
+		msg_bag_019,   ///< ‚©‚¢‚¶‚å
+		msg_bag_004,   ///< ‚à‚½‚¹‚é
+		msg_bag_006,   ///< ‚¯‚Á‚Ä‚¢
+		msg_bag_009,   ///< ‚â‚ß‚é
+		mes_shop_103,  ///< ‚¤‚é
+		msg_bag_001,   ///< ‚Â‚©‚¤
+	};
+	u8	tbl[BAG_MENUTBL_MAX] = { 255, 255, 255, 255 };
+    
+	int stringbuff[BAG_MENUTBL_MAX];
+	int i, j;
 
-  length = BAG_MENUTBL_MAX;
+	ItemMenuMake( pWork, tbl );
 
-  {
-    u8  tbl[BAG_MENUTBL_MAX]={255, 255, 255, 255, 255};
-    int strtbl[]=
-      {msg_bag_001,   ///< ‚Â‚©‚¤
-       msg_bag_007,   ///< ‚¨‚è‚é
-       msg_bag_017,   ///< ‚Ý‚é
-       msg_bag_002,   ///< ‚·‚Ä‚é
-       msg_bag_003,   ///< ‚Æ‚¤‚ë‚­
-       msg_bag_019,   ///< ‚©‚¢‚¶‚å
-       msg_bag_004,   ///< ‚à‚½‚¹‚é
-       msg_bag_006,   ///< ‚¯‚Á‚Ä‚¢
-       msg_bag_009,   ///< ‚â‚ß‚é
-       mes_shop_103,  ///< ‚¤‚é
-       msg_bag_001,   ///< ‚Â‚©‚¤
-    };
-    int stringbuff[BAG_MENUTBL_MAX];
-
-    ItemMenuMake(pWork, tbl);
-
-    for(i=0,j=0; i< BAG_MENUTBL_MAX ; i++){
-      if(tbl[i]==255){
-        continue;
-      }
-      pWork->submenuList[j]=tbl[i];
-      stringbuff[j] = strtbl[tbl[i]];
-      j++;
-    }
-    ITEMDISP_MenuWinDisp(pWork,stringbuff,j);
-  }
+	for( i=0,j=0; i<BAG_MENUTBL_MAX; i++ ){
+		if( tbl[i] == 255 ){ continue; }
+		pWork->submenuList[j] = tbl[i];
+		stringbuff[j] = strtbl[tbl[i]];
+		j++;
+	}
+	ITEMDISP_MenuWinDisp( pWork, stringbuff, j );
 }
 
 

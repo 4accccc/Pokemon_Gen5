@@ -32,9 +32,8 @@ enum {
 // メニュー項目格納場所
 enum{
   BAG_MENU_USE=0,     // つかう・みる・おりる
-  BAG_MENU_SUB,       // すてる・とうろく・かいじょ
   BAG_MENU_GIVE,      // もたせる
-  BAG_MENU_ITEMMOVE,  // いどう
+  BAG_MENU_SUB,       // すてる・とうろく・かいじょ
   BAG_MENU_CANCEL,
   BAG_MENUTBL_MAX,
 };
