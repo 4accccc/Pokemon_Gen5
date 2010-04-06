@@ -27,6 +27,9 @@
 #include "enc_cutin_no.h"
 #include "../../arc/enc_ci_face.naix"
 
+#include "fldmmdl.h"  //for MMDLSYS
+#include "fieldmap.h" //for FIELDMAP_Å`
+
 #define EMITCOUNT_MAX  (2)
 #define OBJCOUNT_MAX  (2)
 #define ANM_TYPE_MAX  (4)
@@ -48,12 +51,6 @@
 
 #define FLYSKY_WHITE_FADE_SPD (0)
 
-#ifdef PM_DEBUG
-
-#include "fieldmap.h" //for FIELDMAP_Å`
-#include "event_mapchange.h"
-
-#endif  //PM_DEBUG
 
 #define ENC_CUTIN_MDL_Z_OFS (700)
 
