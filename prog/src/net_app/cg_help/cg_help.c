@@ -72,6 +72,8 @@ typedef enum
 {
   CG_HELP_PAGE_IR,
   CG_HELP_PAGE_WIRELESS,
+  CG_HELP_PAGE_WIRELESS2,
+  CG_HELP_PAGE_WIRELESS3,
   CG_HELP_PAGE_WIFI,
   CG_HELP_PAGE_SURETIGAI,
   CG_HELP_PAGE_RESARCH,
@@ -444,6 +446,7 @@ static void CG_HELP_InitMessage( CG_HELP_WORK *work )
 {
   //フォント読み込み
   work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  GFL_FONTSYS_SetColor( 0xf, 2, 0);
   
   //メッセージ
   work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_cg_help_dat , work->heapId );
@@ -521,6 +524,7 @@ static void CG_HELP_TermMessage( CG_HELP_WORK *work )
   GFL_BMPWIN_Delete( work->infoWin );
   GFL_MSG_Delete( work->msgHandle );
   GFL_FONT_Delete( work->fontHandle );
+  GFL_FONTSYS_SetDefaultColor();
 }
 
 static void CG_HELP_UpdateUI( CG_HELP_WORK *work )
@@ -581,14 +585,15 @@ static void CG_HELP_DispPage( CG_HELP_WORK *work , const u8 page)
 
 static void CG_HELP_DispPageIcon( CG_HELP_WORK *work , const u8 page)
 {
-  static const anmArr[CG_HELP_PAGE_MAX] = {8,9,10,39,17,14,38};
+  static const anmArr[CG_HELP_PAGE_MAX] = {8,9,9,9,10,39,17,14,38};
   GFL_CLACT_WK_SetAnmSeq( work->clwkIcon , anmArr[page] );
   GFL_CLACT_WK_SetDrawEnable( work->clwkIcon , TRUE );
   
   //BMP設定
   if( page <= CG_HELP_PAGE_WIFI )
   {
-    void *transBase = (void*)((u32)work->commIconPlt->pRawData + 32*(1+page));
+    static const colArr[CG_HELP_PAGE_WIFI+1] = {1,2,2,2,3};
+    void *transBase = (void*)((u32)work->commIconPlt->pRawData + 32*(colArr[page]));
     NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_BG_PLTT_SUB ,
                                         CG_HELP_PLT_MAIN_ICONBASE * 32 ,
                                         transBase , 32 );

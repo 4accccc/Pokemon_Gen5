@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-06T17:35:57"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-04-06T21:24:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="97" top="134" right="802" bottom="762" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -357,7 +357,7 @@
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -391,29 +391,41 @@
 
 	<row id="CG_HELP_INFO_03">
 		<comment>見出し</comment>
+		<language name="JPN" width="184">「Ｗｉｒｅｌｅｓｓ」について</language>
+		<language name="JPN_KANJI" width="184">「Ｗｉｒｅｌｅｓｓ」について</language>
+	</row>
+
+	<row id="CG_HELP_INFO_04">
+		<comment>見出し</comment>
+		<language name="JPN" width="184">「Ｗｉｒｅｌｅｓｓ」について</language>
+		<language name="JPN_KANJI" width="184">「Ｗｉｒｅｌｅｓｓ」について</language>
+	</row>
+
+	<row id="CG_HELP_INFO_05">
+		<comment>見出し</comment>
 		<language name="JPN" width="184">「Ｗｉ－Ｆｉ」について</language>
 		<language name="JPN_KANJI" width="184">「Ｗｉ－Ｆｉ」について</language>
 	</row>
 
-	<row id="CG_HELP_INFO_04">
+	<row id="CG_HELP_INFO_06">
 		<comment>見出し</comment>
 		<language name="JPN" width="184">「すれちがいログ」について</language>
 		<language name="JPN_KANJI" width="184">「すれ違いログ」について</language>
 	</row>
 
-	<row id="CG_HELP_INFO_05">
+	<row id="CG_HELP_INFO_07">
 		<comment>見出し</comment>
 		<language name="JPN" width="184">「ちょうさたんちき」について</language>
 		<language name="JPN_KANJI" width="184">「調査探知機」について</language>
 	</row>
 
-	<row id="CG_HELP_INFO_06">
+	<row id="CG_HELP_INFO_08">
 		<comment>見出し</comment>
 		<language name="JPN" width="184">「カスタム」について</language>
 		<language name="JPN_KANJI" width="184">「カスタム」について</language>
 	</row>
 
-	<row id="CG_HELP_INFO_07">
+	<row id="CG_HELP_INFO_09">
 		<comment>見出し</comment>
 		<language name="JPN" width="184">「ＯＮ／ＯＦＦ」について</language>
 		<language name="JPN_KANJI" width="184">「ＯＮ／ＯＦＦ」について</language>
@@ -478,18 +490,32 @@
 
 	<row id="CG_HELP_MSG_03">
 		<comment>説明文
+「ワイヤレス」について</comment>
+		<language name="JPN" width="224">ワイヤレス２</language>
+		<language name="JPN_KANJI" width="224">ワイヤレス２</language>
+	</row>
+
+	<row id="CG_HELP_MSG_04">
+		<comment>説明文
+「ワイヤレス」について</comment>
+		<language name="JPN" width="224">ワイヤレス３</language>
+		<language name="JPN_KANJI" width="224">ワイヤレス３</language>
+	</row>
+
+	<row id="CG_HELP_MSG_05">
+		<comment>説明文
 「Ｗｉ－Ｆｉ」について</comment>
-		<language name="JPN" width="224">[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]という　ボタンで
+		<language name="JPN" width="224">[BD:00:カラー変更:3:4:0]ＧａｍｅＳｙｎｃ[BD:01:カラー変更リセット]という　ボタンで
 ねむらせる　ポケモンを　えらび
 Ｗｉ－Ｆｉコネクションで
 レポートを　おくることが　できます</language>
-		<language name="JPN_KANJI" width="224">[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]という　ボタンで
+		<language name="JPN_KANJI" width="224">[BD:00:カラー変更:3:4:0]ＧａｍｅＳｙｎｃ[BD:01:カラー変更リセット]という　ボタンで
 眠らせる　ポケモンを　選び
 Ｗｉ－Ｆｉコネクションで
 レポートを　送信することが　できます</language>
 	</row>
 
-	<row id="CG_HELP_MSG_04">
+	<row id="CG_HELP_MSG_06" text-color=",,,#ff0000,,,,,,,,,,,,,,">
 		<comment>説明文
 「すれちがいログ」について</comment>
 		<language name="JPN" width="224">すれちがった　ひとが
@@ -506,7 +532,7 @@
 自由に　発言することが　できます</language>
 	</row>
 
-	<row id="CG_HELP_MSG_05">
+	<row id="CG_HELP_MSG_07">
 		<comment>説明文
 「ちょうさたんちき」について</comment>
 		<language name="JPN" width="224">すれちがった　ひとの
@@ -523,7 +549,7 @@
 データを　みることが　できます</language>
 	</row>
 
-	<row id="CG_HELP_MSG_06" text-color=",,,#ff0000,,,,,,,,,,,,,,">
+	<row id="CG_HELP_MSG_08">
 		<comment>説明文
 「カスタム」について
 ・何の色が変わる？</comment>
@@ -537,7 +563,7 @@
 好きな　模様に　できます</language>
 	</row>
 
-	<row id="CG_HELP_MSG_07">
+	<row id="CG_HELP_MSG_09">
 		<comment>説明文
 「Ｃ－ＧＥＡＲ　ＯＮ／ＯＦＦ」について</comment>
 		<language name="JPN" width="224">Ｃ－ＧＥＡＲの　もじを　タッチすると
