@@ -2985,9 +2985,9 @@
 		<language name="JPN_KANJI" width="216">ヒサオ</language>
 	</row>
 
-	<row id="schoolb_09">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+	<row id="schoolb_1_09">
+		<language name="JPN" width="216">ドレイク</language>
+		<language name="JPN_KANJI" width="216">ドレイク</language>
 	</row>
 
 	<row id="elitew_20">
@@ -3000,19 +3000,19 @@
 		<language name="JPN_KANJI" width="216">サトシ</language>
 	</row>
 
-	<row id="veteranw_07">
-		<language name="JPN" width="216">ハルカ</language>
-		<language name="JPN_KANJI" width="216">ハルカ</language>
+	<row id="veteranw_1_07">
+		<language name="JPN" width="216">トリッシュ</language>
+		<language name="JPN_KANJI" width="216">トリッシュ</language>
 	</row>
 
-	<row id="madam_05">
-		<language name="JPN" width="216">ハルカ</language>
-		<language name="JPN_KANJI" width="216">ハルカ</language>
+	<row id="madam_1_05">
+		<language name="JPN" width="216">クアドナ</language>
+		<language name="JPN_KANJI" width="216">クアドナ</language>
 	</row>
 
-	<row id="gentle_05">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+	<row id="gentle_1_05">
+		<language name="JPN" width="216">ジリオン</language>
+		<language name="JPN_KANJI" width="216">ジリオン</language>
 	</row>
 
 	<row id="scientistm_12">
@@ -3120,9 +3120,24 @@
 		<language name="JPN_KANJI" width="216">ミリア</language>
 	</row>
 
-	<row id="princess_08">
-		<language name="JPN" width="216">ハルカ</language>
-		<language name="JPN_KANJI" width="216">ハルカ</language>
+	<row id="princess_1_08">
+		<language name="JPN" width="216">スーザン</language>
+		<language name="JPN_KANJI" width="216">スーザン</language>
+	</row>
+
+	<row id="prince_1_08">
+		<language name="JPN" width="216">マイル</language>
+		<language name="JPN_KANJI" width="216">マイル</language>
+	</row>
+
+	<row id="rangerw_11">
+		<language name="JPN" width="216">エリー</language>
+		<language name="JPN_KANJI" width="216">エリー</language>
+	</row>
+
+	<row id="rangerm_11">
+		<language name="JPN" width="216">フレッド</language>
+		<language name="JPN_KANJI" width="216">フレッド</language>
 	</row>
 
 	<flowchart-group-list>

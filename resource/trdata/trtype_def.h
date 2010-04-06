@@ -101,4 +101,10 @@
 #define	TRTYPE_CHAMPION    ( 88 )    //チャンピオン
 #define	TRTYPE_CYCLINGM    ( 89 )    //サイクリング♂
 #define	TRTYPE_CYCLINGW    ( 90 )    //サイクリング♀
-#define	TRTYPE_MAX	( 91 )
+#define	TRTYPE_SCHOOLB_1    ( 91 )    //ブルジョワールけ11111
+#define	TRTYPE_VETERANW_1    ( 92 )    //ブルジョワールけ11111
+#define	TRTYPE_MADAM_1    ( 93 )    //ブルジョワールけ11111
+#define	TRTYPE_GENTLE_1    ( 94 )    //ブルジョワールけ11111
+#define	TRTYPE_PRINCESS_1    ( 95 )    //ブルジョワールけ11111
+#define	TRTYPE_PRINCE_1    ( 96 )    //ブルジョワールけ11111
+#define	TRTYPE_MAX	( 97 )
