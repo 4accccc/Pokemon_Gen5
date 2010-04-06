@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2009-12-21T19:48:03" source="fishing_lure.mb"/>
+	<create user="iwasawa" host="W00157" date="2010-04-06T16:54:02" source="fishing_lure.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2009-12-21T19:48:03" source="fishing_lure.mb"/>
+<original_create user="iwasawa" host="W00157" date="2010-04-06T16:54:02" source="fishing_lure.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="2" xyz="-2.000000 0.267822 -1.000000" whd="4.000000 3.464111 2.000000"/>
+<box_test pos_scale="2" xyz="-2.000000 -1.875000 0.000000" whd="4.000000 3.500000 0.000000"/>
 
 <tex_image_array size="3">
 	<tex_image index="0" name="fishing_lure.1"
@@ -127,9 +127,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 0.535889 -2.000000"
-		volume_max="4.000000 7.464111 2.000000"
-		volume_r="8.701416"
+		volume_min="-4.000000 -3.750000 0.000000"
+		volume_max="4.000000 3.250000 0.000000"
+		volume_r="5.482910"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -138,15 +138,15 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="0.000000 16.000000"/>
-					<nrm xyz="0.000000 0.500000 0.865234"/>
-					<pos_xyz xyz="-4.000000 0.535889 2.000000"/>
-					<tex st="16.000000 16.000000"/>
-					<pos_xy xy="4.000000 0.535889"/>
-					<tex st="16.000000 0.000000"/>
-					<pos_yz yz="7.464111 -2.000000"/>
-					<tex st="0.000000 0.000000"/>
-					<pos_xy xy="-4.000000 7.464111"/>
+					<tex st="0.500000 16.000000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
+					<pos_s xyz="-4.000000 -3.750000 0.000000"/>
+					<tex st="16.500000 16.000000"/>
+					<pos_xy xy="4.000000 -3.750000"/>
+					<tex st="16.500000 0.000000"/>
+					<pos_xy xy="4.000000 3.250000"/>
+					<tex st="0.500000 0.000000"/>
+					<pos_xy xy="-4.000000 3.250000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -168,9 +168,9 @@
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-4.000000 0.535889 -2.000000"
-		volume_max="4.000000 7.464111 2.000000"
-		volume_r="8.701416"
+		volume_min="-4.000000 -3.750000 0.000000"
+		volume_max="4.000000 3.250000 0.000000"
+		volume_r="5.482910"
 	>
 		<display index="0" material="0" polygon="0" priority="0"/>
 	</node>
