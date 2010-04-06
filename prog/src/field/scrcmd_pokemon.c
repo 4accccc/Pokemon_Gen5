@@ -1497,26 +1497,24 @@ VMCMD_RESULT EvCmdAddTamagoToParty( VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 static POKEMON_PARAM* MakePokeParam( GAMEDATA *gdata, ADD_POKE_PRM *prm )
 {
+  u32 rnd;
+  u32 id;
   POKEMON_PARAM*  pp = NULL;
   MYSTATUS*   status = GAMEDATA_GetMyStatus( gdata );
+  //性別、レア、特性から個性乱数を選出して、セット
+  {
+    MYSTATUS *my = GAMEDATA_GetMyStatus( gdata );
+    id = MyStatus_GetID(my);
+    rnd = POKETOOL_CalcPersonalRandSpec( id, prm->MonsNo, prm->FormNo, prm->SexSel, prm->Tokusei, prm->RareSel );
+  }
   // 追加するポケモンを作成
-  pp = PP_Create( prm->MonsNo, prm->Level, PTL_SETUP_ID_AUTO, prm->HeapID );
+  pp = PP_CreateEx( prm->MonsNo, prm->Level, id, PTL_SETUP_ID_AUTO, rnd, prm->HeapID );
   PP_Put( pp, ID_PARA_form_no, prm->FormNo );    // フォーム
   PP_Put( pp, ID_PARA_item, prm->ItemNo );       // 所持アイテム
   {
     //捕獲ボールセット
     int item_type = ITEM_GetParam( prm->Ball, ITEM_PRM_ITEM_TYPE, prm->HeapID );
     if (item_type == ITEMTYPE_BALL) PP_Put( pp, ID_PARA_get_ball, prm->Ball );     // 捕獲ボールセット
-  }
-
-  //性別、レア、特性から個性乱数を選出して、セット
-  {
-    u32 rnd;
-    u32 id;
-    MYSTATUS *my = GAMEDATA_GetMyStatus( gdata );
-    id = MyStatus_GetID(my);
-    rnd = POKETOOL_CalcPersonalRandSpec( id, prm->MonsNo, prm->FormNo, prm->SexSel, prm->Tokusei, prm->RareSel );
-    PP_Put( pp, ID_PARA_personal_rnd, rnd );
   }
 
   {
