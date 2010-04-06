@@ -51,6 +51,7 @@ struct _RESEARCH_MENU_WORK
   u32                  seqCount;      // ÉVÅ[ÉPÉìÉXÉJÉEÉìÉ^
   BOOL                 seqFinishFlag; // åªç›ÇÃÉVÅ[ÉPÉìÉXÇ™èIóπÇµÇΩÇ©Ç«Ç§Ç©
   RESEARCH_MENU_RESULT result;        // âÊñ èIóπåãâ 
+  u32                  waitFrame;     // FRAME_WAIT ÉVÅ[ÉPÉìÉXÇ≈ÇÃë“ÇøÉtÉåÅ[ÉÄêî
 
   MENU_ITEM cursorPos;     // ÉJÅ[É\Éãà íu
   BOOL      newEntryFlag;  // êVÇµÇ¢êlï®Ç∆Ç∑ÇÍà·Ç¡ÇΩÇ©Ç«Ç§Ç©
@@ -81,19 +82,22 @@ struct _RESEARCH_MENU_WORK
 // ÉVÅ[ÉPÉìÉXèâä˙âªèàóù
 static void InitSeq_SETUP( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_SETUP
 static void InitSeq_STAND_BY( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_STAND_BY
-static void InitSeq_KEY_WAIT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_WAIT
+static void InitSeq_KEY_WAIT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_KEY_WAIT
+static void InitSeq_FRAME_WAIT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_FRAME_WAIT
 static void InitSeq_FADE_OUT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_FADE_OUT
 static void InitSeq_CLEAN_UP( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_CLEAN_UP 
 // ÉVÅ[ÉPÉìÉXèàóù
 static void Main_SETUP( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_SETUP
 static void Main_STAND_BY( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_STAND_BY
-static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_WAIT
+static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_KEY_WAIT
+static void Main_FRAME_WAIT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_FRAME_WAIT
 static void Main_FADE_OUT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_FADE_OUT
 static void Main_CLEAN_UP( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_CLEAN_UP 
 // ÉVÅ[ÉPÉìÉXèIóπèàóù
 static void FinishSeq_SETUP( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_SETUP
 static void FinishSeq_STAND_BY( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_STAND_BY
-static void FinishSeq_KEY_WAIT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_WAIT
+static void FinishSeq_KEY_WAIT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_KEY_WAIT
+static void FinishSeq_FRAME_WAIT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_FRAME_WAIT
 static void FinishSeq_FADE_OUT( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_FADE_OUT
 static void FinishSeq_CLEAN_UP( RESEARCH_MENU_WORK* work ); // RESEARCH_MENU_SEQ_CLEAN_UP 
 // ÉVÅ[ÉPÉìÉXêßå‰
@@ -103,6 +107,8 @@ static void FinishCurrentSeq( RESEARCH_MENU_WORK* work ); // åªç›ÇÃÉVÅ[ÉPÉìÉXÇè
 static void SwitchSeq( RESEARCH_MENU_WORK* work ); // èàóùÉVÅ[ÉPÉìÉXÇïœçXÇ∑ÇÈ
 static void SetSeq( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq ); // èàóùÉVÅ[ÉPÉìÉXÇê›íËÇ∑ÇÈ
 static void SetResult( RESEARCH_MENU_WORK* work, RESEARCH_MENU_RESULT result ); // âÊñ èIóπåãâ Çê›íËÇ∑ÇÈ
+static void SetWaitFrame( RESEARCH_MENU_WORK* work, u32 frame ); // FRAME_WAIT ÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘Çê›íËÇ∑ÇÈ
+static u32 GetWaitFrame( const RESEARCH_MENU_WORK* work ); // FRAME_WAIT ÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘ÇéÊìæÇ∑ÇÈ
 //------------------------------------------------------------------------------------
 // ÅüLAYER 2 ã@î\
 //------------------------------------------------------------------------------------
@@ -229,6 +235,7 @@ RESEARCH_MENU_WORK* CreateResearchMenuWork( RESEARCH_COMMON_WORK* commonWork )
   work->seqFinishFlag= FALSE;
   work->seqCount     = 0;
   work->result       = RESEARCH_MENU_RESULT_NONE;
+  work->waitFrame    = WAIT_FRAME_BUTTON;
   work->cursorPos    = MENU_ITEM_CHANGE_RESEARCH;
   work->newEntryFlag = FALSE;
 
@@ -281,12 +288,13 @@ RESEARCH_MENU_RESULT ResearchMenuMain( RESEARCH_MENU_WORK* work )
 {
   // ÉVÅ[ÉPÉìÉXÇ≤Ç∆ÇÃèàóù
   switch( work->seq ) {
-  case RESEARCH_MENU_SEQ_SETUP:    Main_SETUP   ( work ); break;
-  case RESEARCH_MENU_SEQ_STAND_BY: Main_STAND_BY( work ); break;
-  case RESEARCH_MENU_SEQ_KEY_WAIT: Main_KEY_WAIT( work ); break;
-  case RESEARCH_MENU_SEQ_FADE_OUT: Main_FADE_OUT( work ); break;
-  case RESEARCH_MENU_SEQ_CLEAN_UP: Main_CLEAN_UP( work ); break;
-  case RESEARCH_MENU_SEQ_FINISH:   return work->result;
+  case RESEARCH_MENU_SEQ_SETUP:      Main_SETUP   ( work );   break;
+  case RESEARCH_MENU_SEQ_STAND_BY:   Main_STAND_BY( work );   break;
+  case RESEARCH_MENU_SEQ_KEY_WAIT:   Main_KEY_WAIT( work );   break;
+  case RESEARCH_MENU_SEQ_FRAME_WAIT: Main_FRAME_WAIT( work ); break;
+  case RESEARCH_MENU_SEQ_FADE_OUT:   Main_FADE_OUT( work );   break;
+  case RESEARCH_MENU_SEQ_CLEAN_UP:   Main_CLEAN_UP( work );   break;
+  case RESEARCH_MENU_SEQ_FINISH:     return work->result;
   default:  GF_ASSERT(0);
   }
 
@@ -346,6 +354,19 @@ static void InitSeq_KEY_WAIT( RESEARCH_MENU_WORK* work )
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init seq KEY_WAIT\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉX ( RESEARCH_MENU_SEQ_FRAME_WAIT ) ÇÃèâä˙âªèàóù
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void InitSeq_FRAME_WAIT( RESEARCH_MENU_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: init seq FRAME_WAIT\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -419,6 +440,19 @@ static void FinishSeq_KEY_WAIT( RESEARCH_MENU_WORK* work )
 {
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: finish seq KEY_WAIT\n" );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉX ( RESEARCH_MENU_SEQ_FRAME_WAIT ) ÇÃèâä˙âªèàóù
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void FinishSeq_FRAME_WAIT( RESEARCH_MENU_WORK* work )
+{
+  // DEBUG:
+  OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: finish seq FRAME_WAIT\n" );
 }
 
 //------------------------------------------------------------------------------------
@@ -517,6 +551,7 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // ÉLÉÉÉìÉZÉãâπ
     SetResult( work, RESEARCH_MENU_RESULT_EXIT );        // âÊñ èIóπåãâ ÇåàíË
+    SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );
     SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );
     FinishCurrentSeq( work );
@@ -540,6 +575,7 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
     StartPaletteAnime( work, PALETTE_ANIME_SELECT );     // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                      // åàíËâπ
     SetResult( work, RESEARCH_MENU_RESULT_TO_SELECT );   // âÊñ èIóπåãâ ÇåàíË
+    SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );
     SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );
     FinishCurrentSeq( work );
@@ -553,6 +589,7 @@ static void Main_STAND_BY( RESEARCH_MENU_WORK* work )
     StartPaletteAnime( work, PALETTE_ANIME_SELECT );    // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                     // åàíËâπ
     SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK );   // âÊñ èIóπåãâ ÇåàíË
+    SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );
     SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );
     SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );
     FinishCurrentSeq( work );
@@ -590,8 +627,9 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
         work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // ÉLÉÉÉìÉZÉãâπ
     SetResult( work, RESEARCH_MENU_RESULT_EXIT );        // âÊñ èIóπåãâ ÇåàíË
-    SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );
-    SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );
+    SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );    // Å® ë“Çø
+    SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );      // Å® ÉtÉFÅ[ÉhÉAÉEÉg
+    SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );      // Å® ÉNÉäÅ[ÉìÉAÉbÉv
     FinishCurrentSeq( work );
     return;
   }
@@ -618,8 +656,9 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
     case MENU_ITEM_CHECK_RESEARCH:  SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK );  break;
     default: GF_ASSERT(0)
     }
-    SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );
-    SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );
+    SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );  // Å® ë“Çø
+    SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );    // Å® ÉtÉFÅ[ÉhÉAÉEÉg
+    SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );    // Å® ÉNÉäÅ[ÉìÉAÉbÉv
     FinishCurrentSeq( work );
     return;
   }
@@ -632,8 +671,9 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
     StartPaletteAnime( work, PALETTE_ANIME_SELECT );      // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                       // åàíËâπ
     SetResult( work, RESEARCH_MENU_RESULT_TO_SELECT );    // âÊñ èIóπåãâ ÇåàíË
-    SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );
-    SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );
+    SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );     // Å® ë“Çø
+    SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );       // Å® ÉtÉFÅ[ÉhÉAÉEÉg
+    SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );       // Å® ÉNÉäÅ[ÉìÉAÉbÉv
     FinishCurrentSeq( work );
     return;
   }
@@ -645,8 +685,9 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
     StartPaletteAnime( work, PALETTE_ANIME_SELECT );    // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
     PMSND_PlaySE( SEQ_SE_DECIDE1 );                     // åàíËâπ
     SetResult( work, RESEARCH_MENU_RESULT_TO_CHECK );   // âÊñ èIóπåãâ ÇåàíË
-    SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );
-    SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );
+    SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );   // Å® ë“Çø
+    SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );     // Å® ÉtÉFÅ[ÉhÉAÉEÉg
+    SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );     // Å® ÉNÉäÅ[ÉìÉAÉbÉv
     FinishCurrentSeq( work );
     return;
   }
@@ -654,10 +695,13 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
   //----------
   // B É{É^Éì
   if( trg & PAD_BUTTON_B ) {
-    PMSND_PlaySE( SEQ_SE_CANCEL1 );               // ÉLÉÉÉìÉZÉãâπ
-    SetResult( work, RESEARCH_MENU_RESULT_EXIT ); // âÊñ èIóπåãâ ÇåàíË
-    SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );
-    SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );
+    RESEARCH_COMMON_StartPaletteAnime( 
+        work->commonWork, COMMON_PALETTE_ANIME_RETURN ); // ëIëÉpÉåÉbÉgÉAÉjÉÅäJén
+    PMSND_PlaySE( SEQ_SE_CANCEL1 );                      // ÉLÉÉÉìÉZÉãâπ
+    SetResult( work, RESEARCH_MENU_RESULT_EXIT );        // âÊñ èIóπåãâ ÇåàíË
+    SetNextSeq( work, RESEARCH_MENU_SEQ_FRAME_WAIT );    // Å® ë“Çø
+    SetNextSeq( work, RESEARCH_MENU_SEQ_FADE_OUT );      // Å® ÉtÉFÅ[ÉhÉAÉEÉg
+    SetNextSeq( work, RESEARCH_MENU_SEQ_CLEAN_UP );      // Å® ÉNÉäÅ[ÉìÉAÉbÉv
     FinishCurrentSeq( work );
     return;
   }
@@ -667,6 +711,21 @@ static void Main_KEY_WAIT( RESEARCH_MENU_WORK* work )
     DEBUG_GAMEBEACON_Set_NewEntry();
   }
 #endif
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief ÉtÉåÅ[ÉÄåoâﬂë“ÇøÉVÅ[ÉPÉìÉX ( RESEARCH_MENU_SEQ_FRAME_WAIT ) ÇÃèàóù
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static void Main_FRAME_WAIT( RESEARCH_MENU_WORK* work )
+{
+  // ë“Çøéûä‘Ç™åoâﬂ
+  if( GetWaitFrame(work) < work->seqCount ) {
+    FinishCurrentSeq( work );
+  }
 }
 
 //------------------------------------------------------------------------------------
@@ -746,18 +805,18 @@ static void CountUpSeqCount( RESEARCH_MENU_WORK* work )
 
   // ç≈ëÂílÇåàíË
   switch( work->seq ) {
-  case RESEARCH_MENU_SEQ_SETUP:     maxCount = 0xffffffff;  break;
-  case RESEARCH_MENU_SEQ_STAND_BY:  maxCount = 0xffffffff;  break;
-  case RESEARCH_MENU_SEQ_KEY_WAIT:  maxCount = 0xffffffff;  break;
-  case RESEARCH_MENU_SEQ_FADE_OUT:  maxCount = 0xffffffff;  break;
-  case RESEARCH_MENU_SEQ_CLEAN_UP:  maxCount = 0xffffffff;  break;
-  case RESEARCH_MENU_SEQ_FINISH:    maxCount = 0xffffffff;  break;
+  case RESEARCH_MENU_SEQ_SETUP:       maxCount = 0xffffffff;  break;
+  case RESEARCH_MENU_SEQ_STAND_BY:    maxCount = 0xffffffff;  break;
+  case RESEARCH_MENU_SEQ_KEY_WAIT:    maxCount = 0xffffffff;  break;
+  case RESEARCH_MENU_SEQ_FRAME_WAIT:  maxCount = 0xffffffff;  break;
+  case RESEARCH_MENU_SEQ_FADE_OUT:    maxCount = 0xffffffff;  break;
+  case RESEARCH_MENU_SEQ_CLEAN_UP:    maxCount = 0xffffffff;  break;
+  case RESEARCH_MENU_SEQ_FINISH:      maxCount = 0xffffffff;  break;
   default: GF_ASSERT(0);
   }
 
   // ç≈ëÂílï‚ê≥
-  if( maxCount < work->seqCount )
-  { 
+  if( maxCount < work->seqCount ) { 
     work->seqCount = maxCount;
   }
 }
@@ -833,12 +892,13 @@ static void SetSeq( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq )
 { 
   // ÉVÅ[ÉPÉìÉXÇÃèIóπèàóù
   switch( work->seq ) {
-  case RESEARCH_MENU_SEQ_SETUP:    FinishSeq_SETUP( work );     break;
-  case RESEARCH_MENU_SEQ_STAND_BY: FinishSeq_STAND_BY( work );  break;
-  case RESEARCH_MENU_SEQ_KEY_WAIT: FinishSeq_KEY_WAIT( work );  break;
-  case RESEARCH_MENU_SEQ_FADE_OUT: FinishSeq_FADE_OUT( work );  break;
-  case RESEARCH_MENU_SEQ_CLEAN_UP: FinishSeq_CLEAN_UP( work );  break;
-  case RESEARCH_MENU_SEQ_FINISH:   break;
+  case RESEARCH_MENU_SEQ_SETUP:      FinishSeq_SETUP( work );       break;
+  case RESEARCH_MENU_SEQ_STAND_BY:   FinishSeq_STAND_BY( work );    break;
+  case RESEARCH_MENU_SEQ_KEY_WAIT:   FinishSeq_KEY_WAIT( work );    break;
+  case RESEARCH_MENU_SEQ_FRAME_WAIT: FinishSeq_FRAME_WAIT( work );  break;
+  case RESEARCH_MENU_SEQ_FADE_OUT:   FinishSeq_FADE_OUT( work );    break;
+  case RESEARCH_MENU_SEQ_CLEAN_UP:   FinishSeq_CLEAN_UP( work );    break;
+  case RESEARCH_MENU_SEQ_FINISH:     break;                         
   default:  GF_ASSERT(0);
   }
 
@@ -849,24 +909,26 @@ static void SetSeq( RESEARCH_MENU_WORK* work, RESEARCH_MENU_SEQ nextSeq )
 
   // ÉVÅ[ÉPÉìÉXÇÃèâä˙âªèàóù
   switch( nextSeq ) {
-  case RESEARCH_MENU_SEQ_SETUP:    InitSeq_SETUP( work );     break;
-  case RESEARCH_MENU_SEQ_STAND_BY: InitSeq_STAND_BY( work );  break;
-  case RESEARCH_MENU_SEQ_KEY_WAIT: InitSeq_KEY_WAIT( work );  break;
-  case RESEARCH_MENU_SEQ_FADE_OUT: InitSeq_FADE_OUT( work );  break;
-  case RESEARCH_MENU_SEQ_CLEAN_UP: InitSeq_CLEAN_UP( work );  break;
-  case RESEARCH_MENU_SEQ_FINISH:   break;
+  case RESEARCH_MENU_SEQ_SETUP:      InitSeq_SETUP( work );       break;
+  case RESEARCH_MENU_SEQ_STAND_BY:   InitSeq_STAND_BY( work );    break;
+  case RESEARCH_MENU_SEQ_KEY_WAIT:   InitSeq_KEY_WAIT( work );    break;
+  case RESEARCH_MENU_SEQ_FRAME_WAIT: InitSeq_FRAME_WAIT( work );  break;
+  case RESEARCH_MENU_SEQ_FADE_OUT:   InitSeq_FADE_OUT( work );    break;
+  case RESEARCH_MENU_SEQ_CLEAN_UP:   InitSeq_CLEAN_UP( work );    break;
+  case RESEARCH_MENU_SEQ_FINISH:     break;                       
   default:  GF_ASSERT(0);
   }
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: set seq ==> " );
   switch( nextSeq ) {
-  case RESEARCH_MENU_SEQ_SETUP:    OS_TFPrintf( PRINT_TARGET, "SETUP" );     break;
-  case RESEARCH_MENU_SEQ_STAND_BY: OS_TFPrintf( PRINT_TARGET, "STAND_BY" );  break;
-  case RESEARCH_MENU_SEQ_KEY_WAIT: OS_TFPrintf( PRINT_TARGET, "KEY_WAIT" );  break;
-  case RESEARCH_MENU_SEQ_FADE_OUT: OS_TFPrintf( PRINT_TARGET, "FADE_OUT" );  break;
-  case RESEARCH_MENU_SEQ_CLEAN_UP: OS_TFPrintf( PRINT_TARGET, "CLEAN_UP" );  break;
-  case RESEARCH_MENU_SEQ_FINISH:   OS_TFPrintf( PRINT_TARGET, "FINISH" );    break;
+  case RESEARCH_MENU_SEQ_SETUP:      OS_TFPrintf( PRINT_TARGET, "SETUP" );       break;
+  case RESEARCH_MENU_SEQ_STAND_BY:   OS_TFPrintf( PRINT_TARGET, "STAND_BY" );    break;
+  case RESEARCH_MENU_SEQ_KEY_WAIT:   OS_TFPrintf( PRINT_TARGET, "KEY_WAIT" );    break;
+  case RESEARCH_MENU_SEQ_FRAME_WAIT: OS_TFPrintf( PRINT_TARGET, "FRAME_WAIT" );  break;
+  case RESEARCH_MENU_SEQ_FADE_OUT:   OS_TFPrintf( PRINT_TARGET, "FADE_OUT" );    break;
+  case RESEARCH_MENU_SEQ_CLEAN_UP:   OS_TFPrintf( PRINT_TARGET, "CLEAN_UP" );    break;
+  case RESEARCH_MENU_SEQ_FINISH:     OS_TFPrintf( PRINT_TARGET, "FINISH" );      break;
   default:  GF_ASSERT(0);
   }
   OS_TFPrintf( PRINT_TARGET, "\n" );
@@ -1050,6 +1112,31 @@ static void SetResult( RESEARCH_MENU_WORK* work, RESEARCH_MENU_RESULT result )
 
   // DEBUG:
   OS_TFPrintf( PRINT_TARGET, "RESEARCH-MENU: set result (%d)\n", result );
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief FRAME_WAIT ÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘Çê›íËÇ∑ÇÈ
+ *
+ * @param work
+ * @param frame ë“ÇøÉtÉåÅ[ÉÄêî
+ */
+//------------------------------------------------------------------------------------
+static void SetWaitFrame( RESEARCH_MENU_WORK* work, u32 frame )
+{
+  work->waitFrame = frame;
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief FRAME_WAIT ÉVÅ[ÉPÉìÉXÇÃë“Çøéûä‘ÇéÊìæÇ∑ÇÈ
+ *
+ * @param work
+ */
+//------------------------------------------------------------------------------------
+static u32 GetWaitFrame( const RESEARCH_MENU_WORK* work )
+{
+  return work->waitFrame;
 }
 
 
@@ -2331,12 +2418,13 @@ static void DebugPrint_seqQueue( const RESEARCH_MENU_WORK* work )
     value = QUEUE_PeekData( work->seqQueue, i );
     
     switch( value ) {
-    case RESEARCH_MENU_SEQ_SETUP:    OS_TFPrintf( PRINT_TARGET, "SETUP " );    break;
-    case RESEARCH_MENU_SEQ_STAND_BY: OS_TFPrintf( PRINT_TARGET, "STAND_BY " ); break;
-    case RESEARCH_MENU_SEQ_KEY_WAIT: OS_TFPrintf( PRINT_TARGET, "KEY-WAIT " ); break;
-    case RESEARCH_MENU_SEQ_FADE_OUT: OS_TFPrintf( PRINT_TARGET, "FADE_OUT " ); break;
-    case RESEARCH_MENU_SEQ_CLEAN_UP: OS_TFPrintf( PRINT_TARGET, "CLEAN-UP " ); break;
-    case RESEARCH_MENU_SEQ_FINISH:   OS_TFPrintf( PRINT_TARGET, "FINISH " );   break;
+    case RESEARCH_MENU_SEQ_SETUP:      OS_TFPrintf( PRINT_TARGET, "SETUP " );      break;
+    case RESEARCH_MENU_SEQ_STAND_BY:   OS_TFPrintf( PRINT_TARGET, "STAND_BY " );   break;
+    case RESEARCH_MENU_SEQ_KEY_WAIT:   OS_TFPrintf( PRINT_TARGET, "KEY-WAIT " );   break;
+    case RESEARCH_MENU_SEQ_FRAME_WAIT: OS_TFPrintf( PRINT_TARGET, "FRAME-WAIT " ); break;
+    case RESEARCH_MENU_SEQ_FADE_OUT:   OS_TFPrintf( PRINT_TARGET, "FADE_OUT " );   break;
+    case RESEARCH_MENU_SEQ_CLEAN_UP:   OS_TFPrintf( PRINT_TARGET, "CLEAN-UP " );   break;
+    case RESEARCH_MENU_SEQ_FINISH:     OS_TFPrintf( PRINT_TARGET, "FINISH " );     break;
     default: GF_ASSERT(0);
     }
   }
