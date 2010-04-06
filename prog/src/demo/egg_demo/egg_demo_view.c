@@ -581,7 +581,7 @@ void EGG_DEMO_VIEW_Main( EGG_DEMO_VIEW_WORK* work )
         }
         else if( work->wait_count == EGG_CRACK_FRAME_02 )
         {
-          PMSND_PlaySE( SEQ_SE_W181_01 );
+          PMSND_PlaySE( SEQ_SE_EDEMO_01 );
         }
         else if( work->wait_count == EGG_CRACK_FRAME_03 )
         {
