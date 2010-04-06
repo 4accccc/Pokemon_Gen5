@@ -67,7 +67,7 @@ vu32  volume_up_frame   = EFFVM_CHANGE_VOLUME_UP_FRAME;
     defined(DEBUG_ONLY_FOR_adachi_minako)|\
     defined(DEBUG_ONLY_FOR_sato_hitomi)|\
     defined(DEBUG_ONLY_FOR_ichinose)
-#define DEBUG_SE_END_PRINT
+//#define DEBUG_SE_END_PRINT
 #endif
 #endif
 
@@ -3474,6 +3474,8 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   //サブルーチンコールが残っていてはいけない
   GF_ASSERT( bevw->call_count == 0 );
 
+  //SEを強制的にストップ
+  PMSND_StopSE();
 #ifdef DEBUG_SE_END_PRINT
   { 
     BOOL  se_end_flag = FALSE;
