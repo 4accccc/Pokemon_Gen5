@@ -99,8 +99,6 @@ static GFL_PROC_RESULT GdsMainProc_Init( GFL_PROC * proc, int * seq, void * pwk,
 	
   gmw->proc_sys = GFL_PROC_LOCAL_boot(HEAPID_GDS_MAIN);
 
-	PMSND_PlayBGM(SEQ_BGM_WIN1);
-
 	return GFL_PROC_RES_FINISH;
 }
 
