@@ -15,6 +15,7 @@ typedef struct _GSYNC_DISP_WORK  GSYNC_DISP_WORK;
 #define _SUBLIST_NORMAL_PAL   (9)   //サブメニューの通常パレット
 #define _TOUCHBAR_PAL  (8)  //タッチバーのパレット
 
+
 // はいいいえのタイプ
 #define GSYNC_YESNOTYPE_INFO (0)
 #define GSYNC_YESNOTYPE_SYS  (1)

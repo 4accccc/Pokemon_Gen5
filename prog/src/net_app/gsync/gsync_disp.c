@@ -51,8 +51,8 @@
 
 #define _OBJPLT_POKEICON_OFFSET (0)  //ポケモンパレット
 #define _OBJPLT_GSYNC_OFFSET (3)     //ゲームシンク素材
-#define _OBJPLT_HAND_OFFSET (6)    //手
-#define _OBJPLT_ITEM_OFFSET (7)    //手
+#define _OBJPLT_HAND_OFFSET (7)    //手
+#define _OBJPLT_ITEM_OFFSET (8)    //手
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -92,6 +92,9 @@ typedef enum
   CELL_CUR_RUG_ANI4,
   CELL_CUR_ZZZ_ANI ,
   CELL_CUR_YUME_1  ,
+  CELL_CUR_MU,
+  CELL_CUR_KAGE_MU,
+  CELL_CUR_KAGE_BED,
   CELL_CUR_POKE_PLAYER,
   CELL_CUR_HAND,
   CELL_CUR_HUTON,
@@ -106,7 +109,8 @@ typedef enum  //お互いのセルの表示順序
   _FUTON_CELL_PRI,
   _POKEMON_CELL_PRI,
     _BED_CELL_PRI,
-
+  _SHADOW_CELL_PRI,
+  
 } _CELL_PRI_ENUM;
 
 
@@ -183,16 +187,18 @@ typedef struct {
 
 
 static _GSYNCOBJPOS_STRUCT gsyncObjPosTable[]={
-  {124,160,_BED_CELL_PRI},   //NANR_gsync_obj_bed    0 // 
-  {124,160,_BED_CELL_PRI},   //NANR_gsync_obj_bed_ani    1 // 
+  {124,150,_BED_CELL_PRI},   //NANR_gsync_obj_bed    0 // 
+  {124,150,_BED_CELL_PRI},   //NANR_gsync_obj_bed_ani    1 // 
   {132,155,_SMOKE_CELL_PRI},   //NANR_gsync_obj_kemuri_r    2 //
   {122,155,_SMOKE_CELL_PRI},   //NANR_gsync_obj_kemuri_l    3 //
-  {124,125,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani1    4 //
-  {124,125,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani2    5 //
-  {124,125,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani3    5 //
-  {124,125,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani4    5 //
+  {124,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani1    4 //
+  {124,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani2    5 //
+  {124,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani3    5 //
+  {124,145,_FUTON_CELL_PRI},   //NANR_gsync_obj_rug_ani4    5 //
   {100,125,_ZZZ_CELL_PRI},   //NANR_gsync_obj_zzz_ani    6 // 
-  {128,160,_SMOKE_CELL_PRI},   //NANR_gsync_obj_yume_1    7 // 
+  {128,160,_SMOKE_CELL_PRI},   //NANR_gsync_obj_musha    7 // 
+  {128,160,_SHADOW_CELL_PRI},   //NANR_gsync_obj_musha_shadow    7 // 
+  {128,160,_SHADOW_CELL_PRI},   //NANR_gsync_obj_bed_shadow    7 // 
 };
 
 
@@ -207,7 +213,6 @@ static GFL_BG_SYS_HEADER BGsys_data = {
 
 static void dispInit(GSYNC_DISP_WORK* pWork);
 static void settingSubBgControl(GSYNC_DISP_WORK* pWork);
-static void _TOUCHBAR_Init(GSYNC_DISP_WORK* pWork);
 static void	_VBlank( GFL_TCB *tcb, void *work );
 static void _SetHand(GSYNC_DISP_WORK* pWork,int x,int y);
 static void _SetBed(GSYNC_DISP_WORK* pWork,int no);
@@ -246,10 +251,8 @@ GSYNC_DISP_WORK* GSYNC_DISP_Init(HEAPID id)
 
   pWork->performCnt=200;
   
-  //_TOUCHBAR_Init(pWork);
-
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
-  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
   
   return pWork;
 }
@@ -317,26 +320,35 @@ static void settingSubBgControl(GSYNC_DISP_WORK* pWork)
     int frame = GFL_BG_FRAME0_M;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x6800, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
-      3, 0, 0, FALSE
+      GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x00000, 0x8000, GX_BG_EXTPLTT_01,
+      2, 0, 0, FALSE
       };
     GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-    GFL_BG_ClearFrame( frame );
-    GFL_BG_LoadScreenReq( frame );
 		GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_LoadScreenReq( frame );
+  }
+  {
+    int frame = GFL_BG_FRAME1_M;
+    GFL_BG_BGCNT_HEADER TextBgCntDat = {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      3, 0, 0, FALSE
+      };
+
+    GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
+    GFL_BG_SetVisible( frame, VISIBLE_ON );
+    GFL_BG_LoadScreenReq( frame );
   }
   {
     int frame = GFL_BG_FRAME3_M;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x1000, 0, GFL_BG_SCRSIZ_512x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-      2, 0, 0, FALSE
+      1, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl( frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_SetVisible( frame, VISIBLE_ON );
-    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame,	0x0000, 0, 0, 64, 24, GFL_BG_SCRWRT_PALIN );
     GFL_BG_LoadScreenReq( frame );
   }
 
@@ -345,7 +357,7 @@ static void settingSubBgControl(GSYNC_DISP_WORK* pWork)
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
       GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-      3, 0, 0, FALSE
+      2, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -357,8 +369,8 @@ static void settingSubBgControl(GSYNC_DISP_WORK* pWork)
     int frame = GFL_BG_FRAME1_S;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
-      1, 0, 0, FALSE
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
+      0, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -372,8 +384,8 @@ static void settingSubBgControl(GSYNC_DISP_WORK* pWork)
     int frame = GFL_BG_FRAME2_S;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x10000, 0x8000,GX_BG_EXTPLTT_01,
-      2, 0, 0, FALSE
+      GX_BG_SCRBASE_0xe000, GX_BG_CHARBASE_0x18000, 0x8000,GX_BG_EXTPLTT_01,
+      1, 0, 0, FALSE
       };
 
     GFL_BG_SetBGControl(
@@ -388,8 +400,8 @@ static void settingSubBgControl(GSYNC_DISP_WORK* pWork)
     int frame = GFL_BG_FRAME3_S;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x18000, 0x8000,GX_BG_EXTPLTT_01,
-      0, 0, 0, FALSE
+      GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      3, 0, 0, FALSE
       };
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
@@ -430,6 +442,10 @@ static void dispInit(GSYNC_DISP_WORK* pWork)
                                               GFL_BG_FRAME0_S, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
                                               pWork->heapID);
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gsync_upper_bg2_NSCR,
+                                              GFL_BG_FRAME3_S, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
+                                              pWork->heapID);
 
 
     GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_gsync_gsync_bg_NCLR,
@@ -443,13 +459,17 @@ static void dispInit(GSYNC_DISP_WORK* pWork)
                                               GFL_BG_FRAME0_M, 0,
                                               GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
                                               pWork->heapID);
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(   p_handle, NARC_gsync_upper_bg2_NSCR,
+                                              GFL_BG_FRAME1_M, 0,
+                                              GFL_ARCUTIL_TRANSINFO_GetPos(pWork->mainchar), 0, 0,
+                                              pWork->heapID);
 
     pWork->cellRes[CHAR_GSYNC] =
       GFL_CLGRP_CGR_Register( p_handle , NARC_gsync_gsync_obj_NCGR ,
                               FALSE , CLSYS_DRAW_MAX , pWork->heapID );
     pWork->cellRes[PLT_GSYNC] =
       GFL_CLGRP_PLTT_RegisterEx(
-        p_handle ,NARC_gsync_gsync_obj_NCLR , CLSYS_DRAW_MAX, _OBJPLT_GSYNC_OFFSET*0x20, 0, 3, pWork->heapID  );
+        p_handle ,NARC_gsync_gsync_obj_NCLR , CLSYS_DRAW_MAX, _OBJPLT_GSYNC_OFFSET*0x20, 0, 4, pWork->heapID  );
     pWork->cellRes[ANM_GSYNC] =
       GFL_CLGRP_CELLANIM_Register(
         p_handle , NARC_gsync_gsync_obj_NCER, NARC_gsync_gsync_obj_NANR , pWork->heapID  );
@@ -467,6 +487,7 @@ static void dispInit(GSYNC_DISP_WORK* pWork)
 
 
     _SetBed(pWork, NANR_gsync_obj_bed);
+    _SetBed(pWork, NANR_gsync_obj_bed_shadow);
     _CreatePokeIconResource(pWork);
 
     GFL_ARC_CloseDataHandle(p_handle);
@@ -499,40 +520,6 @@ void GSYNC_DISP_ObjEnd(GSYNC_DISP_WORK* pWork,int no)
 }
 
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief	TOUCHBAR初期化
- *	@param	POKEMON_TRADE_WORK
- *	@return	none
- */
-//-----------------------------------------------------------------------------
-
-static void _TOUCHBAR_Init(GSYNC_DISP_WORK* pWork)
-{
-  //アイコンの設定
-  //数分作る
-  TOUCHBAR_ITEM_ICON touchbar_icon_tbl[]	=
-  {
-    {
-      TOUCHBAR_ICON_RETURN,
-      {	TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_Y },
-    },
-  };
-  TOUCHBAR_SETUP	touchbar_setup;
-
-  GFL_STD_MemClear( &touchbar_setup, sizeof(TOUCHBAR_SETUP) );
-
-  touchbar_setup.p_item		= touchbar_icon_tbl;				//上の窓情報
-  touchbar_setup.item_num	= NELEMS(touchbar_icon_tbl);//いくつ窓があるか
-  touchbar_setup.p_unit		= pWork->cellUnit;										//OBJ読み込みのためのCLUNIT
-  touchbar_setup.is_notload_bg = FALSE;
-  touchbar_setup.bar_frm	= GFL_BG_FRAME1_S;						//BG読み込みのためのBG面上下画面判定にも必要
-  touchbar_setup.bg_plt		= _TOUCHBAR_PAL;			//BGﾊﾟﾚｯﾄ
-  touchbar_setup.obj_plt	= _TOUCHBAR_PAL;			//OBJﾊﾟﾚｯﾄ
-  touchbar_setup.mapping	= APP_COMMON_MAPPING_128K;	//マッピングモード
-  pWork->pTouchWork = TOUCHBAR_Init(&touchbar_setup, pWork->heapID);
-}
 
 //----------------------------------------------------------------------------
 /**
@@ -594,8 +581,13 @@ static void _SetHand(GSYNC_DISP_WORK* pWork,int x,int y)
 
 static void _SetBed(GSYNC_DISP_WORK* pWork,int no)
 {
-  GF_ASSERT(pWork->curIcon[no]==NULL);
-  {
+  if(pWork->curIcon[no]){
+    GFL_CLACT_WK_SetAnmFrame(pWork->curIcon[no],0);
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->curIcon[no] , TRUE );
+    GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[no], TRUE );
+    
+  }
+  else{
     GFL_CLWK_DATA cellInitData;
 
     cellInitData.pos_x = gsyncObjPosTable[no].x;
@@ -773,7 +765,7 @@ void GSYNC_DISP_DreamSmokeBgStart(GSYNC_DISP_WORK* pWork)
 
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GSYNC, pWork->heapID );
 
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BD , 0, 16);
+  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BD , 0, 16);
   
   GFL_ARCHDL_UTIL_TransVramScreenCharOfs(
     p_handle, NARC_gsync_downner_bg2_NSCR,

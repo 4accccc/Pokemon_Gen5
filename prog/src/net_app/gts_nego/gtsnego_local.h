@@ -208,6 +208,7 @@ extern void GTSNEGO_MESSAGE_InfoMessageDispLine(GTSNEGO_MESSAGE_WORK* pWork,int 
 extern void GTSNEGO_MESSAGE_FriendListRenew(GTSNEGO_MESSAGE_WORK* pWork,GAMEDATA* pGameData, int no);
 extern void GTSNEGO_MESSAGE_FindPlayer(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMy, int num);
 extern void GTSNEGO_MESSAGE_ResetDispSet(GTSNEGO_MESSAGE_WORK* pWork);
+extern void GTSNEGO_MESSAGE_CancelButtonDecide(GTSNEGO_MESSAGE_WORK* pWork);
 
 extern MYSTATUS* GTSNEGO_GetMyStatus( GAMEDATA* pGameData, int index);
 

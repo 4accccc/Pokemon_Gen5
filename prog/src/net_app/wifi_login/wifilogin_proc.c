@@ -706,7 +706,9 @@ static void _modeProfileWait2(WIFILOGIN_WORK* pWork)
     WIFILOGIN_MESSAGE_TitleDisp(pWork->pMessageWork, dwc_title_0000);
     WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
     pWork->pSelectWork=NULL;
-    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
+    if(pWork->dbw->bg==WIFILOGIN_BG_NORMAL){
+  //    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
+    }
   }
 }
 
@@ -727,7 +729,9 @@ static void _modeLoginWait2(WIFILOGIN_WORK* pWork)
     WIFILOGIN_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
     WIFILOGIN_MESSAGE_YesNoEnd(pWork->pSelectWork);
     pWork->pSelectWork=NULL;
-    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
+    if(pWork->dbw->bg==WIFILOGIN_BG_NORMAL){
+  //    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , 0 );
+    }
   }
 }
 
@@ -742,7 +746,7 @@ static void _modeProfileWait(WIFILOGIN_WORK* pWork)
   if(!WIFILOGIN_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
-  pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
+  pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS,(pWork->dbw->bg==WIFILOGIN_BG_NORMAL));
   _CHANGE_STATE(pWork,_modeProfileWait2);
 }
 
@@ -750,7 +754,7 @@ static void _modeErrorRetry(WIFILOGIN_WORK* pWork)
 {
   if(GFL_UI_KEY_GetTrg() & APP_PRINTSYS_COMMON_TRG_KEY){
     WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
-    pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_INFO);
+    pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_INFO,(pWork->dbw->bg==WIFILOGIN_BG_NORMAL));
     _CHANGE_STATE(pWork,_modeLoginWait2);
   }
 }
@@ -761,7 +765,7 @@ static void _modeLoginWait(WIFILOGIN_WORK* pWork)
   if(!WIFILOGIN_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
     return;
   }
- pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_INFO);
+ pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_INFO,(pWork->dbw->bg==WIFILOGIN_BG_NORMAL));
   _CHANGE_STATE(pWork,_modeLoginWait2);
 }
 
@@ -798,7 +802,7 @@ static void _modeDifferDSWait7(WIFILOGIN_WORK* pWork)
 
 static void _modeDifferDSWait6(WIFILOGIN_WORK* pWork)
 {
-  pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
+  pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS,(pWork->dbw->bg==WIFILOGIN_BG_NORMAL));
   _CHANGE_STATE(pWork,_modeDifferDSWait7);
 }
 
@@ -846,7 +850,7 @@ static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
 static void _modeDifferDSWait4(WIFILOGIN_WORK* pWork)
 {
 
-  pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
+  pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS,(pWork->dbw->bg==WIFILOGIN_BG_NORMAL));
   _CHANGE_STATE(pWork,_modeDifferDSWait5);
 }
 
@@ -879,7 +883,7 @@ static void _modeDifferDSWait2(WIFILOGIN_WORK* pWork)
 {
 
 
-  pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS);
+  pWork->pSelectWork = WIFILOGIN_MESSAGE_YesNoStart(pWork->pMessageWork,WIFILOGIN_YESNOTYPE_SYS,(pWork->dbw->bg==WIFILOGIN_BG_NORMAL));
   _CHANGE_STATE(pWork,_modeDifferDSWait3);
 }
 

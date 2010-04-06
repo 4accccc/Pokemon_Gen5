@@ -371,7 +371,7 @@ APP_TASKMENU_WORK* GSYNC_MESSAGE_YesNoStart(GSYNC_MESSAGE_WORK* pWork,int type)
   pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
-  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
+  G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_OBJ , -8 );
   return pAppTask;
 }
 

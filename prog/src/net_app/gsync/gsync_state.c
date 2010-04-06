@@ -1102,6 +1102,7 @@ static void _wakeupAction12(G_SYNC_WORK* pWork)
 {
   GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
 
+  GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed);
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_rug_ani3);
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_zzz_ani);
 

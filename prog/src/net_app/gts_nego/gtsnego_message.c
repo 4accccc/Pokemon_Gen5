@@ -1251,6 +1251,20 @@ void GTSNEGO_MESSAGE_CancelButtonCreate(GTSNEGO_MESSAGE_WORK* pWork,pBmnCallBack
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   キャンセルボタンを決定
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void GTSNEGO_MESSAGE_CancelButtonDecide(GTSNEGO_MESSAGE_WORK* pWork)
+{
+  APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
+}
+
+
+
+//------------------------------------------------------------------------------
+/**
  * @brief   キャンセルボタンを消す
  * @retval  none
  */

@@ -119,11 +119,18 @@ static void _ModifyLevelPokeParty(  POKEPARTY *party )
 static void _PartySet(BOOL bBattleBox,EVENT_IRCBATTLE_WORK *dbw)
 {
   BATTLE_BOX_SAVE * bxsv;
+  int i;
+
   bxsv = BATTLE_BOX_SAVE_GetBattleBoxSave(dbw->ctrl);
-  
   if(!bBattleBox){
-    NET_PRINT("‚Ä‚à‚¿\n");
-    PokeParty_Copy(GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(dbw->gsys)), dbw->pParty);
+    POKEPARTY* party = GAMEDATA_GetMyPokemon(GAMESYSTEM_GetGameData(dbw->gsys));
+    POKEMON_PARAM *pp;
+    for( i = 0; i < PokeParty_GetPokeCount( party ); i++ ){
+      pp  = PokeParty_GetMemberPointer( party, i );
+      if(!PP_Get( pp, ID_PARA_tamago_flag, NULL )){
+        PokeParty_Add(dbw->pParty, pp);
+      }
+    }
   }
   else{
     PokeParty_Copy(BATTLE_BOX_SAVE_MakePokeParty( bxsv, HEAPID_PROC ), dbw->pParty);

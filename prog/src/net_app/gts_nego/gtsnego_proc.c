@@ -1220,7 +1220,7 @@ static void _cancelButtonCallback(u32 bttnid, u32 event,void* p_work)
   //    GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_043);
  //     _CHANGE_STATE(pWork , _MatchingCancelState);
 
-      APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
+      GTSNEGO_MESSAGE_CancelButtonDecide(pWork->pMessageWork);
       GFL_NET_StateWifiMatchEnd(TRUE);
       _CHANGE_STATE(pWork,_cancelFlash);
 

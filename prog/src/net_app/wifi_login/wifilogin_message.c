@@ -388,7 +388,7 @@ void WIFILOGIN_MESSAGE_TitleEnd(WIFILOGIN_MESSAGE_WORK* pWork)
 
 
 
-WIFILOGIN_YESNO_WORK* WIFILOGIN_MESSAGE_YesNoStart(WIFILOGIN_MESSAGE_WORK* pWork,int type)
+WIFILOGIN_YESNO_WORK* WIFILOGIN_MESSAGE_YesNoStart(WIFILOGIN_MESSAGE_WORK* pWork,int type,int brightness)
 {
   WIFILOGIN_YESNO_WORK* yesno_wk  = &pWork->yesno_wk;
   yesno_wk->display = pWork->display;
@@ -429,7 +429,9 @@ WIFILOGIN_YESNO_WORK* WIFILOGIN_MESSAGE_YesNoStart(WIFILOGIN_MESSAGE_WORK* pWork
       yesno_wk->pAppTask = APP_TASKMENU_OpenMenu(&appinit,yesno_wk->pAppTaskRes);
       GFL_STR_DeleteBuffer(yesno_wk->appitem[0].str);
       GFL_STR_DeleteBuffer(yesno_wk->appitem[1].str);
-      G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
+      if(brightness){
+        G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_OBJ , -8 );
+      }
     }
     break;
 
