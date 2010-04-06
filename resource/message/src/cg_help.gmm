@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-02T19:52:36"/>
+	<create user="matsumiya" host="W00224" date="2010-04-06T17:35:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,14 +349,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1295" top="100" right="2000" bottom="728" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -422,14 +422,14 @@
 	<row id="CG_HELP_MSG_01">
 		<comment>説明文
 「ＩＲ」について</comment>
-		<language name="JPN" width="224">ＩＲは　せきがいせんを　つかって
+		<language name="JPN" width="224">せきがいせんを　つかって
 めのまえにいる　ともだちと　きがるに
 たいせんや　こうかんが　できます
 また　あいしょうが　わかる
 「フィーリングチェック」や
 ともだちコードの　こうかんも　できます</language>
-		<language name="JPN_KANJI" width="224">ＩＲは　赤外線を　使用して
-目の前ににいる　友達と　気軽に
+		<language name="JPN_KANJI" width="224">赤外線を　使用して
+目の前にいる　友達と　気軽に
 ポケモン対戦や　交換が　できます
 また　相性が　わかる
 「フィーリングチェック」や
@@ -439,8 +439,7 @@
 	<row id="CG_HELP_MSG_02">
 		<comment>説明文
 「ワイヤレス」について</comment>
-		<language name="JPN" width="224">Ｗｉｒｅｌｅｓｓは
-じぶんの　まわりで　げんざい
+		<language name="JPN" width="224">じぶんの　まわりで　げんざい
 ユニオンルームに　はいっている
 にんずうが　わかります
 また　ワイヤレスの　はいしんを
@@ -458,8 +457,7 @@
 つかって　あそべます▼
 ハイリンクは　ボタンを　タッチすれば
 いっしゅんで　ハイリンクに　いけます</language>
-		<language name="JPN_KANJI" width="224">Ｗｉｒｅｌｅｓｓは
-自分の　周りで　現在
+		<language name="JPN_KANJI" width="224">自分の　周りで　現在
 ユニオンルームに　入っている
 人数が　わかります
 また　ワイヤレスの　配信を
@@ -481,52 +479,48 @@
 	<row id="CG_HELP_MSG_03">
 		<comment>説明文
 「Ｗｉ－Ｆｉ」について</comment>
-		<language name="JPN" width="224">ダミーメッセージ１
-ダミーメッセージ２
-ダミーメッセージ３
-ダミーメッセージ４
-ダミーメッセージ５
-ダミーメッセージ６</language>
-		<language name="JPN_KANJI" width="224">ダミーメッセージ１
-ダミーメッセージ２
-ダミーメッセージ３
-ダミーメッセージ４
-ダミーメッセージ５
-ダミーメッセージ６</language>
+		<language name="JPN" width="224">[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]という　ボタンで
+ねむらせる　ポケモンを　えらび
+Ｗｉ－Ｆｉコネクションで
+レポートを　おくることが　できます</language>
+		<language name="JPN_KANJI" width="224">[FF:00:色:1]ＧａｍｅＳｙｎｃ[FF:00:色:0]という　ボタンで
+眠らせる　ポケモンを　選び
+Ｗｉ－Ｆｉコネクションで
+レポートを　送信することが　できます</language>
 	</row>
 
 	<row id="CG_HELP_MSG_04">
 		<comment>説明文
 「すれちがいログ」について</comment>
-		<language name="JPN" width="224">ダミーメッセージ１
-ダミーメッセージ２
-ダミーメッセージ３
-ダミーメッセージ４
-ダミーメッセージ５
-ダミーメッセージ６</language>
-		<language name="JPN_KANJI" width="224">ダミーメッセージ１
-ダミーメッセージ２
-ダミーメッセージ３
-ダミーメッセージ４
-ダミーメッセージ５
-ダミーメッセージ６</language>
+		<language name="JPN" width="224">すれちがった　ひとが
+どんなことを　しているのかが
+リアルタイムで　ひょうじされます
+タッチすることで　あいてについて
+くわしく　みたり
+じゆうに　はつげん　できます</language>
+		<language name="JPN_KANJI" width="224">すれ違った　人が
+どんなことを　しているのかが
+リアルタイムで　表示されます
+タッチすることで
+相手についての　詳細を　みたり
+自由に　発言することが　できます</language>
 	</row>
 
 	<row id="CG_HELP_MSG_05">
 		<comment>説明文
 「ちょうさたんちき」について</comment>
-		<language name="JPN" width="224">ダミーメッセージ１
-ダミーメッセージ２
-ダミーメッセージ３
-ダミーメッセージ４
-ダミーメッセージ５
-ダミーメッセージ６</language>
-		<language name="JPN_KANJI" width="224">ダミーメッセージ１
-ダミーメッセージ２
-ダミーメッセージ３
-ダミーメッセージ４
-ダミーメッセージ５
-ダミーメッセージ６</language>
+		<language name="JPN" width="224">すれちがった　ひとの
+このみや　しゅみを　ちょうさできます
+ちょうさしたい　ないようを　きめれば
+きょう　すれちがった　ひとの　データ
+いままでに　すれちがった　ひとの
+データを　みることが　できます</language>
+		<language name="JPN_KANJI" width="224">すれ違った　人の
+好みや　趣味を　調査できます
+調査したい　内容を　決定すれば
+今日　すれ違った　人の　データと
+今までに　すれ違った　人の
+データを　みることが　できます</language>
 	</row>
 
 	<row id="CG_HELP_MSG_06" text-color=",,,#ff0000,,,,,,,,,,,,,,">
