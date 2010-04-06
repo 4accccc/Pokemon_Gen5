@@ -409,6 +409,8 @@ static void DwcRap_Gdb_SetMyInfo( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 #ifdef PM_DEBUG
 static void print_field(DWCGdbField* field); // レコードをデバッグ出力する。
+#else
+#define print_field(...) /*  */
 #endif
 
 //-------------------------------------
@@ -536,7 +538,9 @@ WIFIBATTLEMATCH_NET_WORK * WIFIBATTLEMATCH_NET_Init( u32 sake_recordID, GAMEDATA
   p_wk->p_field_buff  = GFL_HEAP_AllocMemory( heapID, WBM_GDB_FIELD_TABLE_MAX * sizeof(DWCGdbField) );
   GFL_STD_MemClear(p_wk->p_field_buff, WBM_GDB_FIELD_TABLE_MAX * sizeof(DWCGdbField) );
 
+#ifdef PM_DEBUG
   GFL_NET_DebugPrintOn();
+#endif //PM_DEBUG
 
   if(!GFL_NET_IsInit())
   {
