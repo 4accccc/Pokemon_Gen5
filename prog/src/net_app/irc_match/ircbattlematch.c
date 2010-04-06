@@ -385,7 +385,7 @@ static void _changeState(IRC_BATTLE_MATCH* pWork,StateFunc state)
  * @retval  none
  */
 //------------------------------------------------------------------------------
-#if PM_DEBUG
+#if _NET_DEBUG
 static void _changeStateDebug(IRC_BATTLE_MATCH* pWork,StateFunc state, int line)
 {
   NET_PRINT("ircmatch: %d\n",line);
