@@ -127,5 +127,7 @@ extern int NHTTP_RAP_ProcessPercent(NHTTP_RAP_WORK* pWork);
 
 #if PM_DEBUG
 void NHTTP_DEBUG_GPF_HEADER_PRINT(gs_response* prep);
+#else
+inline void NHTTP_DEBUG_GPF_HEADER_PRINT(gs_response* prep){}
 #endif
 
